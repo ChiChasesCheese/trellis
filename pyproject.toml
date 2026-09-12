@@ -13,6 +13,8 @@ dependencies = [
 dev = ["pytest>=7.0"]
 # `trellis clip` only: article extraction straight to markdown
 clip = ["trafilatura>=2.0"]
+# `trellis ingest` of a pdf only; epub and markdown need nothing extra
+ingest = ["pymupdf>=1.24"]
 
 [project.scripts]
 trellis = "trellis.cli:main"

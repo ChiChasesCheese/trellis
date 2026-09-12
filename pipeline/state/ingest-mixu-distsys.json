@@ -1,5 +1,5 @@
 {
-  "book": "mixu-distsys",
+  "corpus": "mixu-distsys",
   "chapters": {
     "https://book.mixu.net/distsys/abstractions.html": {
       "file": "sources/archive/mixu-distsys/02-abstractions.md",

@@ -1,5 +1,5 @@
 {
-  "book": "sre-book",
+  "corpus": "sre-book",
   "chapters": {
     "https://sre.google/sre-book/addressing-cascading-failures/": {
       "file": "sources/archive/sre-book/03-addressing-cascading-failures.md",

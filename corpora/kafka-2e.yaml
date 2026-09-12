@@ -1,0 +1,10 @@
+# Kafka: The Definitive Guide, 2nd edition, in its Chinese translation.
+# Commercial: the text is ingested into sources/local/ (gitignored) and never
+# committed; cards are written from it in Chinese, self-contained.
+title: Kafka权威指南（第2版）
+author: Gwen Shapira, Todd Palino, Rajini Sivaram, Krit Petty（薛命灯 译）
+license: commercial
+domain: kafka
+lang: zh
+home: https://www.ituring.com.cn/book/2937
+file: "~/Downloads/Kafka权威指南（第2版） ( etc.) (z-library.sk, 1lib.sk, z-lib.sk) 2.epub"

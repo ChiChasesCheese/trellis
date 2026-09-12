@@ -12,3 +12,7 @@ dist/
 
 # Browser-automation scratch output (screenshots, page snapshots) — never source
 .playwright-mcp/
+
+# A book you paid for is ingested here for triage and digest, and stays on
+# this machine: the outline (titles only) is committed under sources/outlines/.
+sources/local/

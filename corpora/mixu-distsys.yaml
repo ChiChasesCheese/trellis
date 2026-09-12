@@ -1,0 +1,11 @@
+title: "Distributed Systems for Fun and Profit"
+author: "Mikito Takada"
+license: free-online           # published free by the author at book.mixu.net
+domain: system-design
+home: https://book.mixu.net/distsys/
+chapters:
+  - https://book.mixu.net/distsys/intro.html
+  - https://book.mixu.net/distsys/abstractions.html
+  - https://book.mixu.net/distsys/time.html
+  - https://book.mixu.net/distsys/replication.html
+  - https://book.mixu.net/distsys/eventual.html
