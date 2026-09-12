@@ -244,9 +244,9 @@ def test_real_repo_wikilinks_resolve():
                 targets |= {getattr(i, "id", None) or i.link_target for i in items}
     link_re = re.compile(r"\[\[([^\]|#]+)")
     for path in (REPO / "vault").rglob("*.md"):
-        # map notes and the study path are generated; clippings are other
-        # people's pages, whose links are theirs and not ours to resolve
-        if ({"map", CLIPPINGS_DIRNAME} & set(path.parts)
+        # map notes, corpus notes and the study path are generated; clippings
+        # are other people's pages, whose links are theirs and not ours
+        if ({"map", "Corpora", CLIPPINGS_DIRNAME} & set(path.parts)
                 or path.name == "Study Path.md"):
             continue
         for target in link_re.findall(path.read_text(encoding="utf-8")):

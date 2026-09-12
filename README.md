@@ -19,8 +19,13 @@ Cards and readings reference each other with ordinary wikilinks, and every node'
 generated map note lists both — so the Obsidian graph connects topic ↔ reading ↔
 card.
 
-Ships with six domains (four fully carded, plus Markets & Factors and Quant
-Infrastructure as skeleton + readings). **System Design** — a 100-node map
+Ships with seven domains (five fully carded, plus Markets & Factors and Quant
+Infrastructure as skeleton + readings). **Kafka** — a 79-node map in Chinese
+(340 cards, 88 readings) digested end to end from Kafka权威指南（第2版）with
+the flow under [Digesting a corpus](#digesting-a-corpus): ingest the epub,
+seed the skeleton from its outline, triage 140 sections onto 66 leaves, write
+cards leaf by leaf from the text, and read back what the book never reached.
+**System Design** — a 100-node map
 (465 cards, 81 readings) structured against DDIA 2nd edition and spanning the interview canon
 plus what the 2017-era resources miss: consensus, CRDTs, encoding and schema
 evolution, delivery semantics, idempotency/outbox/saga/ledger, OLAP and
@@ -40,7 +45,8 @@ triangle, five-out), all eleven defensive leaves from closeout to pick-and-roll
 coverage to the rotation that actually breaks, the reads that make up
 basketball IQ, special situations, analytics you can play with, physical
 preparation, practice design, and the rules that change decisions. Every leaf
-in all four is covered.
+in those four is covered; Kafka's four empty leaves are the ones the book
+does not teach, listed in its Corpus note as the reading list.
 
 That last domain is why a **video** is a first-class source: tag a reading
 `video` and it counts as readable without being clipped — a watch page

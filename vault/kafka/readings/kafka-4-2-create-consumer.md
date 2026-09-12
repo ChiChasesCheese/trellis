@@ -12,3 +12,8 @@ tags:
 # 创建Kafka消费者
 
 本节演示如何创建KafkaConsumer对象，讲解bootstrap.servers、group.id、key.deserializer、value.deserializer等必要属性的作用。是写第一段消费者代码前必须掌握的基础操作。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.ituring.com.cn/book/2937)
+%% trellis:end %%

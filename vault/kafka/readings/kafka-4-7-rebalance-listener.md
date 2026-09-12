@@ -12,3 +12,8 @@ tags:
 # 再均衡监听器
 
 本节讲解ConsumerRebalanceListener接口如何让消费者在即将失去分区所有权前完成收尾工作(如提交偏移量、关闭资源)，以及在获得新分区时执行初始化逻辑。是将再均衡这一群组级事件与应用层清理逻辑结合起来的关键机制。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.ituring.com.cn/book/2937)
+%% trellis:end %%
