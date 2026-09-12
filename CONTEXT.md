@@ -111,10 +111,10 @@ is only compared against our own language.
 _Avoid_: category, type, material
 
 **Triage**:
-Deciding, artefact by artefact, which lens and which leaf a piece of a codebase
-belongs to and what it should become. Produces a proposal for review, never
-writes into the vault directly.
-_Avoid_: ingestion, import, classification
+Deciding, artefact by artefact or section by section, which lens and which
+leaf a piece of a codebase or a corpus belongs to and what it should become.
+Produces a proposal for review, never writes into the vault directly.
+_Avoid_: import, classification
 
 **Case**:
 A decision taken from a codebase and rewritten in a lens's vocabulary, frozen at
@@ -124,7 +124,62 @@ artefact and never restates it as a card.
 _Avoid_: example, sample, exhibit, snippet
 
 **Gap**:
-Either an artefact triage could not place — which is a proposal to grow the
-skeleton, not an error — or a leaf carrying no cards. Gaps are the point of
-mapping a codebase onto a skeleton authored independently of it.
+Either an artefact or section triage could not place — which is a proposal to
+grow the skeleton, not an error — or a leaf carrying no cards. Gaps are the
+point of mapping a codebase or a corpus onto a skeleton authored
+independently of it.
 _Avoid_: miss, unmatched, hole
+
+### Digesting a corpus
+
+**Corpus**:
+One body of material registered for digestion — a book as an epub, a pdf, or
+freely published chapters; a blog series; a course. Declared by one
+`corpora/<id>.yaml`. Its license decides whether its text may be committed.
+_Avoid_: book, material, source, text
+
+**Outline**:
+A corpus's own hierarchy of sections, as its author organised it. It is never
+the skeleton and never becomes one by copying; the two are related only
+through triage.
+_Avoid_: table of contents, ToC, structure
+
+**Section**:
+The unit a corpus is split into — a chapter, or a heading below it, as the
+outline defines. What triage places.
+_Avoid_: chapter, part, page range, chunk
+
+**Ingest**:
+Turning a registered corpus into archived sections plus its outline,
+resumable where fetching is involved.
+_Avoid_: download, extract, parse
+
+**Seed**:
+Drafting a skeleton for a subject that has none from a canonical corpus's
+outline, then reviewing the draft as a map of the field. The corpus is
+triaged onto the result like any other; what it never reaches is listed, not
+lost.
+_Avoid_: derive, generate, bootstrap
+
+**Digest**:
+Writing cards leaf by leaf from the sections triaged onto that leaf. Produces
+prompts and validates answers; never writes into the vault on its own. A leaf
+is done when cards from the corpus exist on it — nothing else records it.
+_Avoid_: generation, card writing
+
+**Provenance**:
+The corpus, and where possible the section, a card or reading was written
+from. Carried in the note's frontmatter and shown as an Anki tag.
+_Avoid_: origin, attribution, citation
+
+**Corpus view**:
+The subset of a domain's content that came from one corpus — a filtered build
+and a generated note. The same cards with the same identities, never a second
+deck.
+_Avoid_: book deck, corpus deck
+
+**Language**:
+The language a domain is written in. A domain has one; a card is in it, and
+may carry an appended translation. There is no "original" language a domain
+must be written in first.
+_Avoid_: locale, translation (for the primary text)

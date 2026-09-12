@@ -1,6 +1,11 @@
 # Translating cards
 
-A card is written in English and keeps that English forever. A translation is
+This spec is for a domain written in English that carries a Chinese
+translation. A domain written in Chinese from the start (`lang: zh` in its
+skeleton — a subject digested from a Chinese book) has no English original
+and needs none of this; only the rule on technical terms applies to it.
+
+A card written in English keeps that English forever. A translation is
 **added beside it**, never in place of it, so a bad translation is always one
 deletion away from being undone and the deck still builds if a card was missed.
 

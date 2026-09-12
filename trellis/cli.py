@@ -159,6 +159,9 @@ def cmd_build(args, project: Project) -> int:
             print(f"{project.skeleton.domain}: skeleton only, no cards to build yet")
             return 0
         _fail(f"{project.skeleton.domain}: no cards to build")
+    if args.lang == project.skeleton.lang:
+        _fail(f"{project.skeleton.domain} is written in {args.lang} — build it "
+              "without --lang; a translation is something appended to another language")
     if args.lang:
         from .cards import suspect_translations
         suspect = [c for c in cards if args.lang in suspect_translations(c)]

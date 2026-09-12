@@ -1,0 +1,420 @@
+You are drafting the study map (a "skeleton") for a subject, using a book's
+table of contents as evidence of what the field contains. Answer with one
+JSON object (no prose).
+
+## Subject
+domain slug: `kafka` — the book: Kafka权威指南（第2版） by Gwen Shapira, Todd Palino, Rajini Sivaram, Krit Petty（薛命灯 译）
+Cards written for this domain will be in: Chinese (简体中文).
+
+## The book's outline
+- `001-section` 外版申明 【有想看的书找不到，就到公众号：东东电子书】
+- `002-o-reilly-media-inc` O'Reilly Media, Inc.介绍
+  - `003-section` 业界评论
+- `004-section` 本书赞誉
+- `005-2` 第2版序
+- `006-1` 第1版序
+- `007-section` 前言
+  - `008-section` 读者对象
+  - `009-section` 排版约定
+  - `010-section` 使用代码示例
+  - `011-section` 致谢
+- `012-1-kafka` 第1章 初识Kafka
+  - `013-1-1` 1.1 发布与订阅消息系统
+      - 1.1.1 如何开始
+      - 1.1.2 独立的队列系统
+  - `014-1-2-kafka` 1.2 Kafka登场
+      - 1.2.1 消息和批次
+      - 1.2.2 模式
+      - 1.2.3 主题和分区
+      - 1.2.4 生产者和消费者
+      - 1.2.5 broker和集群
+      - 1.2.6 多集群
+  - `015-1-3-kafka` 1.3 为什么选择Kafka
+      - 1.3.1 多个生产者
+      - 1.3.2 多个消费者
+      - 1.3.3 基于磁盘的数据保留
+      - 1.3.4 伸缩性
+      - 1.3.5 高性能
+      - 1.3.6 平台特性
+  - `016-1-4` 1.4 数据生态系统
+      - 应用场景
+  - `017-1-5` 1.5 起源故事
+      - 1.5.1 LinkedIn的问题
+      - 1.5.2 Kafka的诞生
+      - 1.5.3 走向开源
+      - 1.5.4 商业化
+      - 1.5.5 命名
+  - `018-1-6-kafka` 1.6 开始Kafka之旅
+- `019-2-kafka` 第2章 安装Kafka
+  - `020-2-1` 2.1 环境配置
+      - 2.1.1 选择操作系统
+      - 2.1.2 安装Java
+      - 2.1.3 安装ZooKeeper
+  - `021-2-2-broker` 2.2 安装broker
+  - `022-2-3-broker` 2.3 配置broker
+      - 2.3.1 常规配置参数
+      - 2.3.2 主题的默认配置
+  - `023-2-4` 2.4 选择硬件
+      - 2.4.1 磁盘吞吐量
+      - 2.4.2 磁盘容量
+      - 2.4.3 内存
+      - 2.4.4 网络
+      - 2.4.5 CPU
+  - `024-2-5-kafka` 2.5 云端的Kafka
+      - 2.5.1 微软Azure
+      - 2.5.2 AWS
+  - `025-2-6-kafka` 2.6 配置Kafka集群
+      - 2.6.1 需要多少个broker
+      - 2.6.2 broker配置
+      - 2.6.3 操作系统调优
+  - `026-2-7` 2.7 生产环境的注意事项
+      - 2.7.1 垃圾回收器选项
+      - 2.7.2 数据中心布局
+      - 2.7.3 共享ZooKeeper
+  - `027-2-8` 2.8 小结
+- `028-3-kafka-kafka` 第3章 Kafka生产者——向Kafka写入数据
+  - `029-3-1` 3.1 生产者概览
+  - `030-3-2-kafka` 3.2 创建Kafka生产者
+  - `031-3-3-kafka` 3.3 发送消息到Kafka
+      - 3.3.1 同步发送消息
+      - 3.3.2 异步发送消息
+  - `032-3-4` 3.4 生产者配置
+      - 3.4.1 client.id
+      - 3.4.2 acks
+      - 3.4.3 消息传递时间
+      - 3.4.4 linger.ms
+      - 3.4.5 buffer.memory
+      - 3.4.6 compression.type
+      - 3.4.7 batch.size
+      - 3.4.8 max.in.flight.requests.per.connection
+      - 3.4.9 max.request.size
+      - 3.4.10 receive.buffer.bytes和send.buffer.bytes
+      - 3.4.11 enable.idempotence
+  - `033-3-5` 3.5 序列化器
+      - 3.5.1 自定义序列化器
+      - 3.5.2 使用Avro序列化数据
+      - 3.5.3 在Kafka中使用Avro记录
+  - `034-3-6` 3.6 分区
+      - 自定义分区策略
+  - `035-3-7` 3.7 标头
+  - `036-3-8` 3.8 拦截器
+  - `037-3-9` 3.9 配额和节流
+  - `038-3-10` 3.10 小结
+- `039-4-kafka-kafka` 第4章 Kafka消费者——从Kafka读取数据
+  - `040-4-1-kafka` 4.1 Kafka消费者相关概念
+      - 4.1.1 消费者和消费者群组
+      - 4.1.2 消费者群组和分区再均衡
+      - 4.1.3 群组固定成员
+  - `041-4-2-kafka` 4.2 创建Kafka消费者
+  - `042-4-3` 4.3 订阅主题
+  - `043-4-4` 4.4 轮询
+      - 线程安全
+  - `044-4-5` 4.5 配置消费者
+      - 4.5.1 fetch.min.bytes
+      - 4.5.2 fetch.max.wait.ms
+      - 4.5.3 fetch.max.bytes
+      - 4.5.4 max.poll.records
+      - 4.5.5 max.partition.fetch.bytes
+      - 4.5.6 session.timeout.ms和heartbeat.interval.ms
+      - 4.5.7 max.poll.interval.ms
+      - 4.5.8 default.api.timeout.ms
+      - 4.5.9 request.timeout.ms
+      - 4.5.10 auto.offset.reset
+      - 4.5.11 enable.auto.commit
+      - 4.5.12 partition.assignment.strategy
+      - 4.5.13 client.id
+      - 4.5.14 client.rack
+      - 4.5.15 group.instance.id
+      - 4.5.16 receive.buffer.bytes和send.buffer.bytes
+      - 4.5.17 offsets.retention.minutes
+  - `045-4-6` 4.6 提交和偏移量
+      - 4.6.1 自动提交
+      - 4.6.2 提交当前偏移量
+      - 4.6.3 异步提交
+      - 4.6.4 同步和异步组合提交
+      - 4.6.5 提交特定的偏移量
+  - `046-4-7` 4.7 再均衡监听器
+  - `047-4-8` 4.8 从特定偏移量位置读取记录
+  - `048-4-9` 4.9 如何退出
+  - `049-4-10` 4.10 反序列化器
+      - 4.10.1 自定义反序列化器
+      - 4.10.2 在消费者里使用Avro反序列器
+  - `050-4-11` 4.11 独立的消费者：为什么以及怎样使用不属于任何群组的消费者
+  - `051-4-12` 4.12 小结
+- `052-5-kafka` 第5章 编程式管理Kafka
+  - `053-5-1-adminclient` 5.1 AdminClient概览
+      - 5.1.1 异步和最终一致性API
+      - 5.1.2 配置参数
+      - 5.1.3 扁平的结构
+      - 5.1.4 额外的话
+  - `054-5-2-adminclient` 5.2 AdminClient生命周期：创建、配置和关闭
+      - 5.2.1 client.dns.lookup
+      - 5.2.2 request.timeout.ms
+  - `055-5-3` 5.3 基本的主题管理操作
+  - `056-5-4` 5.4 配置管理
+  - `057-5-5` 5.5 消费者群组管理
+      - 5.5.1 查看消费者群组
+      - 5.5.2 修改消费者群组
+  - `058-5-6` 5.6 集群元数据
+  - `059-5-7` 5.7 高级的管理操作
+      - 5.7.1 为主题添加分区
+      - 5.7.2 从主题中删除消息
+      - 5.7.3 首领选举
+      - 5.7.4 重新分配副本
+  - `060-5-8` 5.8 测试
+  - `061-5-9` 5.9 小结
+- `062-6-kafka` 第6章 深入Kafka
+  - `063-6-1` 6.1 集群的成员关系
+  - `064-6-2` 6.2 控制器
+      - 新控制器KRaft
+  - `065-6-3` 6.3 复制
+  - `066-6-4` 6.4 处理请求
+      - 6.4.1 生产请求
+      - 6.4.2 获取请求
+      - 6.4.3 其他请求
+  - `067-6-5` 6.5 物理存储
+      - 6.5.1 分层存储
+      - 6.5.2 分区的分配
+      - 6.5.3 文件管理
+      - 6.5.4 文件格式
+      - 6.5.5 索引
+      - 6.5.6 压实
+      - 6.5.7 压实的工作原理
+      - 6.5.8 被删除的事件
+      - 6.5.9 何时会压实主题
+  - `068-6-6` 6.6 小结
+- `069-7` 第7章 可靠的数据传递
+  - `070-7-1` 7.1 可靠性保证
+  - `071-7-2` 7.2 复制
+  - `072-7-3-broker` 7.3 broker配置
+      - 7.3.1 复制系数
+      - 7.3.2 不彻底的首领选举
+      - 7.3.3 最少同步副本
+      - 7.3.4 保持副本同步
+      - 7.3.5 持久化到磁盘
+  - `073-7-4` 7.4 在可靠的系统中使用生产者
+      - 7.4.1 发送确认
+      - 7.4.2 配置生产者的重试参数
+      - 7.4.3 额外的错误处理
+  - `074-7-5` 7.5 在可靠的系统中使用消费者
+      - 7.5.1 消费者的可靠性配置
+      - 7.5.2 手动提交偏移量
+  - `075-7-6` 7.6 验证系统可靠性
+      - 7.6.1 验证配置
+      - 7.6.2 验证应用程序
+      - 7.6.3 在生产环境中监控可靠性
+  - `076-7-7` 7.7 小结
+- `077-8` 第8章 精确一次性语义
+  - `078-8-1` 8.1 幂等生产者
+      - 8.1.1 幂等生产者的工作原理
+      - 8.1.2 幂等生产者的局限性
+      - 8.1.3 如何使用幂等生产者
+  - `079-8-2` 8.2 事务
+      - 8.2.1 事务的应用场景
+      - 8.2.2 事务可以解决哪些问题
+      - 8.2.3 事务是如何保证精确一次性的
+      - 8.2.4 事务不能解决哪些问题
+      - 8.2.5 如何使用事务
+      - 8.2.6 事务ID和隔离
+      - 8.2.7 事务的工作原理
+  - `080-8-3` 8.3 事务的性能
+  - `081-8-4` 8.4 小结
+- `082-9` 第9章 构建数据管道
+  - `083-9-1` 9.1 构建数据管道时需要考虑的问题
+      - 9.1.1 及时性
+      - 9.1.2 可靠性
+      - 9.1.3 高吞吐量和动态吞吐量
+      - 9.1.4 数据格式
+      - 9.1.5 转换
+      - 9.1.6 安全性
+      - 9.1.7 故障处理
+      - 9.1.8 耦合性和灵活性
+  - `084-9-2-connect-api-api` 9.2 何时使用Connect API或客户端API
+  - `085-9-3-kafkaconnect` 9.3 KafkaConnect
+      - 9.3.1 运行Connect
+      - 9.3.2 连接器示例：文件数据源和文件数据池
+      - 9.3.3 连接器示例：从MySQL到ElasticSearch
+      - 9.3.4 单一消息转换
+      - 9.3.5 深入理解Connect
+  - `086-9-4-connect` 9.4 Connect之外的选择
+      - 9.4.1 其他数据存储系统的数据摄入框架
+      - 9.4.2 基于图形界面的ETL工具
+      - 9.4.3 流式处理框架
+  - `087-9-5` 9.5 小结
+- `088-11-kafka` 第11章 保护Kafka
+  - `089-11-1-kafka` 11.1 锁住Kafka
+  - `090-11-2` 11.2 安全协议
+  - `091-11-3` 11.3 身份验证
+      - 11.3.1 SSL
+      - 11.3.2 SASL
+      - 11.3.3 重新认证
+      - 11.3.4 安全更新不停机
+  - `092-11-4` 11.4 加密
+      - 端到端加密
+  - `093-11-5` 11.5 授权
+      - 11.5.1 AclAuthorizer
+      - 11.5.2 自定义授权
+      - 11.5.3 安全方面的考虑
+  - `094-11-6` 11.6 审计
+  - `095-11-7-zookeeper` 11.7 保护ZooKeeper
+      - 11.7.1 SASL
+      - 11.7.2 SSL
+      - 11.7.3 授权
+  - `096-11-8` 11.8 保护平台
+      - 保护密码
+  - `097-11-9` 11.9 小结
+- `098-12-kafka` 第12章 管理Kafka
+  - `099-12-1` 12.1 主题操作
+      - 12.1.1 创建新主题
+      - 12.1.2 列出集群中的所有主题
+      - 12.1.3 列出主题详情
+      - 12.1.4 增加分区
+      - 12.1.5 减少分区
+      - 12.1.6 删除主题
+  - `100-12-2` 12.2 消费者群组
+      - 12.2.1 列出并描述消费者群组信息
+      - 12.2.2 删除消费者群组
+      - 12.2.3 偏移量管理
+  - `101-12-3` 12.3 动态配置变更
+      - 12.3.1 覆盖主题的默认配置
+      - 12.3.2 覆盖客户端和用户的默认配置
+      - 12.3.3 覆盖broker的默认配置
+      - 12.3.4 查看被覆盖的配置
+      - 12.3.5 移除被覆盖的配置
+  - `102-12-4` 12.4 生产和消费
+      - 12.4.1 控制台生产者
+      - 12.4.2 控制台消费者
+  - `103-12-5` 12.5 分区管理
+      - 12.5.1 首选首领选举
+      - 12.5.2 修改分区的副本
+      - 12.5.3 转储日志片段
+      - 12.5.4 副本验证
+  - `104-12-6` 12.6 其他工具
+  - `105-12-7` 12.7 不安全的操作
+      - 12.7.1 移动集群控制器
+      - 12.7.2 移除待删除的主题
+      - 12.7.3 手动删除主题
+  - `106-12-8` 12.8 小结
+- `107-10` 第10章 跨集群数据镜像
+  - `108-10-1` 10.1 跨集群镜像的应用场景
+  - `109-10-2` 10.2 多集群架构
+      - 10.2.1 跨数据中心通信的一些现实情况
+      - 10.2.2 星型架构
+      - 10.2.3 双活架构
+      - 10.2.4 主备架构
+      - 10.2.5 延展集群
+  - `110-10-3-mirrormaker` 10.3 MirrorMaker
+      - 10.3.1 配置MirrorMaker
+      - 10.3.2 多集群复制拓扑
+      - 10.3.3 保护MirrorMaker
+      - 10.3.4 在生产环境中部署MirrorMaker
+      - 10.3.5 MirrorMaker调优
+  - `111-10-4` 10.4 其他跨集群镜像方案
+      - 10.4.1 Uber的uReplicator
+      - 10.4.2 LinkedIn的Brooklin
+      - 10.4.3 Confluent的跨数据中心镜像解决方案
+  - `112-10-5` 10.5 小结
+- `113-13-kafka` 第13章 监控Kafka
+  - `114-13-1` 13.1 指标基础
+      - 13.1.1 指标来自哪里
+      - 13.1.2 需要哪些指标
+      - 13.1.3 应用程序健康检测
+  - `115-13-2` 13.2 服务级别目标
+      - 13.2.1 服务级别定义
+      - 13.2.2 哪些指标是好的SLI
+      - 13.2.3 将SLO用于告警
+  - `116-13-3-broker` 13.3 broker的指标
+      - 13.3.1 诊断集群问题
+      - 13.3.2 非同步分区的艺术
+      - 13.3.3 broker指标
+      - 13.3.4 主题的指标和分区的指标
+      - 13.3.5 Java虚拟机监控
+      - 13.3.6 操作系统监控
+      - 13.3.7 日志
+  - `117-13-4` 13.4 客户端监控
+      - 13.4.1 生产者指标
+      - 13.4.2 消费者指标
+      - 13.4.3 配额
+  - `118-13-5` 13.5 滞后监控
+  - `119-13-6` 13.6 端到端监控
+  - `120-13-7` 13.7 小结
+- `121-14` 第14章 流式处理
+  - `122-14-1` 14.1 什么是流式处理
+  - `123-14-2` 14.2 流式处理相关概念
+      - 14.2.1 拓扑
+      - 14.2.2 时间
+      - 14.2.3 状态
+      - 14.2.4 流和表
+      - 14.2.5 时间窗口
+      - 14.2.6 处理保证
+  - `124-14-3` 14.3 流式处理设计模式
+      - 14.3.1 单事件处理
+      - 14.3.2 使用本地状态
+      - 14.3.3 多阶段处理和重分区
+      - 14.3.4 使用外部查找：流和表的连接
+      - 14.3.5 表与表的连接
+      - 14.3.6 流与流的连接
+      - 14.3.7 乱序事件
+      - 14.3.8 重新处理
+      - 14.3.9 交互式查询
+  - `125-14-4-streams` 14.4 Streams示例
+      - 14.4.1 字数统计
+      - 14.4.2 股票市场统计
+      - 14.4.3 填充点击事件流
+  - `126-14-5-streams` 14.5 Streams架构概览
+      - 14.5.1 构建拓扑
+      - 14.5.2 优化拓扑
+      - 14.5.3 测试拓扑
+      - 14.5.4 扩展拓扑
+      - 14.5.5 在故障中存活下来
+  - `127-14-6` 14.6 流式处理应用场景
+  - `128-14-7` 14.7 如何选择流式处理框架
+  - `129-14-8` 14.8 小结
+- `130-a-kafka` 附录A 在其他操作系统中安装Kafka
+  - `131-a-1-windows-kafka` A.1 在Windows系统中安装Kafka
+      - A.1.1 使用Windows的Linux子系统
+      - A.1.2 使用原生Java包
+  - `132-a-2-macos-kafka` A.2 在macOS系统中安装Kafka
+      - A.2.1 使用Homebrew
+      - A.2.2 手动安装
+- `133-b-kafka` 附录B 其他Kafka工具
+  - `134-b-1` B.1 综合性平台
+  - `135-b-2` B.2 集群部署和管理
+  - `136-b-3` B.3 监控和查看数据
+  - `137-b-4` B.4 客户端开发库
+  - `138-b-5` B.5 流式处理
+- `139-section` 关于作者
+- `140-section` 关于封面 【有想看的书找不到，就到公众号：东东电子书】
+
+## What a skeleton is
+- A tree of topics. Top-level nodes are branches; a node with no children
+  is a LEAF, and a leaf is ONE probe: narrow enough that "I'm weak here"
+  names something specific to drill, wide enough to carry 3-6 cards.
+- ids are dotted lowercase slugs; a child's id starts with its parent's id
+  plus a dot (`producer.acks`). Study order = list order. `requires` lists
+  ids of nodes that must be understood first (cross-branch edges only;
+  a parent is implied). No node may be ordered before one it requires.
+- Every node has a one-line `summary` in Chinese (简体中文) naming what the leaf
+  teaches, not what the chapter is called.
+
+## Rules
+- Map the SUBJECT, not the book. Merge chapters that teach one thing;
+  split a chapter that teaches several. Drop front matter, installation
+  walkthroughs, and anything that teaches nothing an engineer must know.
+- Then add what the field considers canon that this edition omits or
+  treats lightly (newer mechanisms, superseded ones the reader will meet
+  in the wild, the questions an interviewer asks). List those leaf ids
+  under `uncovered` — they are the reader's reading list, not padding.
+- Aim for 8-14 branches and 40-70 leaves. Titles in Chinese (简体中文)
+  with the term of art in English where one exists.
+
+## Answer format
+{"corpus": "kafka-2e",
+  "skeleton": {"domain": "kafka", "title": "...", "lang": "zh",
+    "nodes": [
+      {"id": "producer", "title": "...", "summary": "...", "children": [
+        {"id": "producer.acks", "title": "...", "summary": "...",
+          "requires": ["replication.isr"]}
+      ]}
+    ]},
+  "uncovered": ["controller.kraft"]}

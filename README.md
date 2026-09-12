@@ -191,7 +191,14 @@ the live collection follow.
 
 ## Languages
 
-A card is written in English and keeps it. A translation is **appended**, never
+A domain is written in the language you study it in — `lang: zh` in its
+skeleton, and every card's `## Q`/`## A` is simply in that language. There is
+no English original to keep: a domain digested from a Chinese book is
+Chinese, and its deck is Chinese with nothing else. Terms of art stay English
+in any language (`consumer group（消费者群组）`), because that is how the
+reader will meet them in code and docs.
+
+A domain written in English may carry a translation, **appended**, never
 substituted, so nothing is lost if one is wrong or missing:
 
 ```markdown
@@ -267,6 +274,71 @@ trellis import batch.json                     # all-or-nothing validation, then 
 trellis sync && trellis build
 ```
 
+## Digesting a corpus
+
+A **corpus** is one body of material with an outline of its own — a book as
+an epub or a pdf, a freely published one as chapter URLs, a markdown file
+you converted by hand. It is declared, like a codebase:
+
+```yaml
+# corpora/kafka-2e.yaml
+title: Kafka权威指南（第2版）
+license: commercial            # decides where the text may live
+domain: kafka                  # the skeleton it lands on — seeded if absent
+lang: zh                       # cards are written in the book's language
+home: https://www.ituring.com.cn/book/2937
+file: ~/Books/kafka-2e.epub    # or  chapters: [https://…, …]  for a free book
+```
+
+```bash
+trellis ingest kafka-2e          # sections + outline (pdf needs pip install -e '.[ingest]')
+trellis seed kafka-2e            # no skeleton/kafka.yaml yet: draft one from the outline
+trellis accept proposals/kafka-2e.seed.json
+trellis triage kafka-2e          # every section beside every leaf -> a proposal
+trellis accept proposals/kafka-2e.json        # readings with provenance, gaps listed
+trellis digest kafka-2e --status              # leaves the book reaches: todo / done
+trellis digest kafka-2e --next -o prompt.md   # the next leaf, grounded in its sections
+trellis digest kafka-2e --import cards.json --leaf producer.acks
+trellis --domain kafka sync && trellis --domain kafka build --corpus kafka-2e
+```
+
+Every step that involves an LLM has the same shape: a prompt out, JSON back,
+validated all-or-nothing before a file is written. The LLM never touches the
+vault. Who answers the prompt is up to you — a chat window, or agents
+digesting disjoint leaves in parallel: nothing is recorded that can be
+derived, so `--status` is read off the vault (readings carrying `corpus:`,
+cards carrying `source:`) and parallel writers share no state file.
+
+**Where the text lives** is decided by the license. Freely published
+material archives into `sources/archive/<id>/` and is committed; sections a
+triage accepts get clipped beside their readings like any web article. A
+book you paid for is ingested into `sources/local/<id>/`, which git ignores:
+the text is needed on this machine to triage and digest, and nowhere else.
+Its outline — titles only — is committed either way, so the Corpus note and
+`digest --status` work everywhere. Web chapters checkpoint per fetch in
+`pipeline/state/ingest-<id>.json`; re-running resumes, `--retry` re-attempts
+failures.
+
+**The book's structure is not the skeleton.** Its outline stays its own
+thing, and the two are related only by triage, section by leaf. What the
+book never reaches is the most useful output: `vault/Corpora/<id>.md` shows
+the outline annotated with what each section became, and underneath it the
+leaves of the domain the book does not teach — your reading list. A subject
+with no skeleton may be *seeded* from a canonical book's outline, judged as
+a map of the field with the leaves the book omits added by that review; see
+[ADR 0006](docs/adr/0006-a-corpus-enters-as-readings-and-may-seed-a-skeleton.md).
+
+**A deck for the book is a filter.** `build --corpus <id>` writes the subset
+of the domain's cards written from it, with the same ids and therefore the
+same Anki note GUIDs — never a second deck. Every card from a corpus also
+carries the tag `src::<id>`, so a filtered deck inside Anki does the same.
+
+**Cards written from a book must teach without it.** The digest prompt says
+so in as many words: the question carries its own situation, the answer
+defines every term it uses and says why, and "as discussed in chapter 3" is
+forbidden. A reader who has never opened the book must understand the card
+from the card alone.
+
 ## Drill format
 
 One file per drill under `vault/<domain>/drills/`; same frontmatter as
@@ -331,6 +403,9 @@ with cross-domain wikilinks, which work because `vault/` is one Obsidian vault.
 pip install -e .[dev]
 pytest -q
 ```
+
+Optional extras: `[clip]` for `trellis clip` (article extraction), `[ingest]`
+for pdf corpora (PyMuPDF). Epub, markdown, and web corpora need nothing extra.
 
 CI validates the skeleton, runs the tests, and uploads a fresh `.apkg` on every
 push.
