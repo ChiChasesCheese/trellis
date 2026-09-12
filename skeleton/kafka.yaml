@@ -75,6 +75,11 @@ nodes:
     summary: 掌握自动提交与手动同步/异步提交组合的权衡，以及如何提交特定偏移量。
     requires:
     - core.offsets
+  - id: consumer.seek-and-replay
+    title: 定位读取位置：seek、按时间戳查找与重放（replay）
+    summary: 掌握用 seekToBeginning/seekToEnd、offsetsForTimes 与 seek() 把消费者跳到任意偏移量，用于重放历史、跳过积压或按时间点恢复。
+    requires:
+    - consumer.offset-commit
   - id: consumer.deserialization
     title: 反序列化器与Avro反序列化
     summary: 掌握自定义反序列化器的实现，以及在消费者中使用Avro反序列化记录的做法。
