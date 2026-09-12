@@ -146,6 +146,14 @@ def test_digest_status_prompt_and_import(root, capsys):
     run(root, "digest", "kafka-test", "--next", "-o", str(root / "p2.md"))
     assert "consumer group" in (root / "p2.md").read_text(encoding="utf-8")
 
+    # A card that needs the book to make sense is refused whole.
+    leaning = [{"id": "kt-leans", "type": "qa", "q": "为什么书中建议 acks=all？", "a": "因为安全。"}]
+    (root / "l.json").write_text(json.dumps(leaning, ensure_ascii=False), encoding="utf-8")
+    with pytest.raises(SystemExit):
+        run(root, "digest", "kafka-test", "--import", str(root / "l.json"), "--leaf", "producer.acks")
+    assert "leans on the book ('书中')" in capsys.readouterr().err
+    assert not (root / "vault/kafka/cards/producer/kt-leans.md").exists()
+
     # A card aimed at a different leaf is refused whole.
     wrong = [{"id": "kt-stray", "node": "consumer.groups", "type": "qa", "q": "x?", "a": "y."}]
     (root / "w.json").write_text(json.dumps(wrong), encoding="utf-8")

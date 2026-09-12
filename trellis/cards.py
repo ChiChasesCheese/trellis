@@ -263,3 +263,25 @@ def load_cards(cards_dir: str | Path) -> tuple[list[Card], list[str]]:
         except CardError as exc:
             errors.append(str(exc))
     return cards, errors
+
+
+# A card written from a book must not need the book. These are the tells of
+# one that does — "the book recommends", "as discussed above" — and the
+# importer refuses them, because a reader reviewing in Anki has no book.
+SOURCE_LEANING = (
+    "书中", "本书", "作者建议", "作者认为", "如前所述", "前面提到", "上一节", "本节", "本章",
+    "第一章", "第二章", "第三章", "第四章", "第五章", "第六章", "第七章", "第八章", "第九章",
+    "the book", "this chapter", "as discussed", "as mentioned above", "see chapter",
+    "earlier in this",
+)
+_CHAPTER_REF = re.compile(r"第\s*\d+\s*章|chapter\s+\d+", re.IGNORECASE)
+
+
+def leans_on_source(text: str) -> str:
+    """The first phrase that makes the card depend on its source, or ''."""
+    low = text.lower()
+    for phrase in SOURCE_LEANING:
+        if phrase in low:
+            return phrase
+    m = _CHAPTER_REF.search(text)
+    return m.group(0) if m else ""

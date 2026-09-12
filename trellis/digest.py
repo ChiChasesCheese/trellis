@@ -15,10 +15,11 @@ book. The importer is `import_cards` with the provenance stamped on.
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from .cards import Card
+from .cards import Card, leans_on_source
 from .corpus import Corpus, Outline, Section
 from .project import Project
 from .readings import Reading
@@ -40,7 +41,9 @@ support; if the text is silent on something, leave it to another card.
 - SELF-CONTAINED. A reader who has never heard of {subject} must understand
   the card from the card alone: the question carries the situation it is
   asking about, the answer defines every term it uses and says WHY, not
-  only what. Never "as discussed", "the book says", "see chapter 3".
+  only what. Never "as discussed", "the book says", "see chapter 3" — nor
+  their equivalents ("书中建议", "本书", "如前所述"): the importer refuses a
+  card that leans on its source. State the advice as a fact.
 - Prefer questions whose answer is a mechanism or a decision ("what happens
   when…", "why would you set…") over ones whose answer is a name.
 - Do not set `source`; the importer records where these cards came from.
@@ -151,7 +154,7 @@ def import_digest(project: Project, corpus: Corpus, leaf_id: str,
     """`import_cards`, with every card forced onto the leaf it was asked
     for and stamped with the corpus it came from. All-or-nothing."""
     raw = Path(json_path).read_text(encoding="utf-8")
-    import re
+
     raw = re.sub(r"^\s*```(?:json)?\s*|\s*```\s*$", "", raw)
     try:
         items = json.loads(raw)
@@ -165,6 +168,12 @@ def import_digest(project: Project, corpus: Corpus, leaf_id: str,
             if item.get("node") not in (None, leaf_id):
                 errors.append(f"{json_path}[{i}]: node {item.get('node')!r} is not the "
                               f"leaf being digested ({leaf_id})")
+            leaning = leans_on_source(" ".join(
+                str(item.get(k, "")) for k in ("q", "a", "text")))
+            if leaning:
+                errors.append(f"{json_path}[{i}] {item.get('id', '?')}: leans on the "
+                              f"book ({leaning!r}) — a card must teach without it; "
+                              "state the advice or the mechanism as a fact")
             item["node"] = leaf_id
             item["source"] = corpus.id
     if errors:
