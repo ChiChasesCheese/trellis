@@ -75,6 +75,14 @@ def _now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 
 
+def _public(job: "Job") -> dict:
+    """A job as the page sees it: everything but the prompt, which is
+    long and lives in the job file for anyone who wants to read it."""
+    row = asdict(job)
+    row.pop("prompt", None)
+    return row
+
+
 class Workbench:
     """The application: state reads, and the few actions. Holds nothing
     the vault does not, except the job list."""
@@ -95,10 +103,18 @@ class Workbench:
 
     def _load_jobs(self) -> None:
         for path in sorted(self._jobs_dir().glob("*.json")):
+            if path.stem.startswith("_") or path.name.endswith(".answer.json"):
+                continue
             try:
-                self.jobs[path.stem] = Job(**json.loads(path.read_text(encoding="utf-8")))
+                job = Job(**json.loads(path.read_text(encoding="utf-8")))
             except (ValueError, TypeError):
                 continue
+            if job.status == "running":
+                # Its thread died with the server that started it.
+                job.status, job.errors = "failed", ["the Workbench was restarted while this job ran"]
+                job.finished = _now()
+                self._save(job)
+            self.jobs[job.id] = job
 
     def _save(self, job: Job) -> None:
         (self._jobs_dir() / f"{job.id}.json").write_text(
@@ -347,11 +363,11 @@ def _handler(app: Workbench):
                 elif url.path == "/api/history":
                     self._json(200, app.history(q.get("domain", "")))
                 elif url.path == "/api/jobs":
-                    self._json(200, {"jobs": [asdict(j) for j in
+                    self._json(200, {"jobs": [_public(j) for j in
                                               sorted(app.jobs.values(), key=lambda j: j.created, reverse=True)]})
                 elif url.path.startswith("/api/jobs/"):
                     job = app.jobs.get(url.path.rsplit("/", 1)[-1])
-                    self._json(200, asdict(job)) if job else self._json(404, {"error": "no such job"})
+                    self._json(200, _public(job)) if job else self._json(404, {"error": "no such job"})
                 else:
                     self._json(404, {"error": "not found"})
             except AnkiConnectError as exc:
@@ -366,11 +382,11 @@ def _handler(app: Workbench):
                 elif url.path == "/api/grow":
                     job = app.start_grow(str(body.get("key", "")), int(body.get("count") or 4),
                                          str(body.get("guidance", "")), str(body.get("model") or "sonnet"))
-                    self._json(202, asdict(job))
+                    self._json(202, _public(job))
                 elif url.path.startswith("/api/jobs/") and url.path.endswith("/accept"):
                     job_id = url.path.split("/")[3]
                     try:
-                        self._json(200, asdict(app.accept(job_id, bool(body.get("push")))))
+                        self._json(200, _public(app.accept(job_id, bool(body.get("push")))))
                     except ValueError as exc:
                         self._json(422, {"errors": app.jobs[job_id].errors or [str(exc)]})
                 elif url.path == "/api/focus":
