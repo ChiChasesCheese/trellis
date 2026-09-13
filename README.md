@@ -403,6 +403,90 @@ codebases are mapped onto them afterwards — see
 [ADR 0002](docs/adr/0002-skeletons-are-authored-from-the-field.md) and
 [ADR 0003](docs/adr/0003-a-codebase-enters-as-cases-and-subject-material.md).
 
+## The loop
+
+Everything above flows one way: a skeleton decides, content hangs off it, a
+deck is built. The way back is `pull` → `brief`.
+
+```bash
+trellis --all pull          # read the review history out of Anki into traces/
+trellis brief               # write vault/Brief.md: what to do next
+trellis feed                # the filtered-deck recipe for spare minutes
+```
+
+`pull` is the only command that asks Anki a question. It writes
+`traces/<domain>.json` and stops; everything downstream reads that file, so the
+Brief regenerates on a phone that cloned the repo, in CI, and with Anki closed
+([ADR 0004](docs/adr/0004-traces-are-pulled-into-a-file-the-repo-owns.md)).
+Notes are matched back to cards by an `id::<card-id>` tag the build now writes —
+a note GUID is a hash and cannot be reversed, a tag can. Cards imported before
+that tag existed are counted and named; one `anki-push` repairs them.
+
+Four things are then computed from the Traces, and they are the vocabulary the
+Brief speaks in:
+
+- **Hold** — how well a node is retained, read off the interval the scheduler
+  already trusts and normalised against Anki's own 21-day maturity bar. A curve,
+  not a badge: nothing changes discontinuously as a card crosses a threshold.
+- **Bearing** — how much of the skeleton rests on a node, from the transitive
+  `requires` graph. High bearing × low hold is what to repair first; that is the
+  80/20, computed rather than asserted.
+- **Sealed** — a leaf whose prerequisites are not holding. Its cards are
+  withheld from the Feed until the ground under them takes
+  ([ADR 0005](docs/adr/0005-a-leaf-is-sealed-until-its-prerequisites-hold.md)).
+- **Uncovered** — a leaf with no cards. Nothing to fail, so it wants writing,
+  not practice. That is the distinction `trellis brief` exists to keep straight.
+
+Thin evidence is shrunk toward the branch it hangs from, so one unlucky card
+cannot shout as loud as forty measured ones — and a leaf nobody has reviewed is
+reported as unproven rather than weak. "No data", "not enough data" and "really
+weak" are three different situations wanting three different actions.
+
+There is exactly **one Brief and it spans every domain**, with a cap on how many
+rows any one domain may take. A per-domain report would be a better dashboard
+and a worse instrument: it would let you sink into the subject you are already
+best at.
+
+### The Feed
+
+The deck tree is how you author. It is a bad way to review in the four minutes
+before a train arrives, because it makes you choose a deck before you have
+learned anything. `trellis feed` prints the search for one Anki **filtered
+deck** spanning every domain, in random order, with sealed leaves held back —
+one stream, no decision, and consecutive cards from different subjects.
+
+That last property is the point twice over: mixing topics is what makes a feed
+hold attention, and interleaving is also what makes retrieval practice stick
+better than blocking it. A filtered deck rather than a new app because a note
+lives in exactly one deck — this keeps one scheduler and one review history.
+
+### Content made somewhere else
+
+Domains are discovered from `skeleton/*.yaml`, so a folder of perfectly good
+cards written on another machine is invisible to every command. `trellis adopt`
+fixes that: it reads the `node:` lines the cards already carry, rebuilds the
+tree those dotted ids imply, and writes the skeleton that was latent in them.
+
+```bash
+trellis adopt                      # list vault folders no skeleton claims
+trellis adopt stripe               # write skeleton/stripe.yaml from their node ids
+trellis --domain stripe validate
+```
+
+Nothing is invented — every node is a prefix of an id some real card claimed,
+and titles come from the map notes when they exist. What it cannot recover is
+study order, because that is not in a pile of cards; children come out sorted
+and the file header says so. Reordering them, adding `summary:` lines and adding
+`requires:` edges are the three edits that turn a valid skeleton into a useful
+one.
+
+`validate` also now checks that cards are **self-contained** — no question
+opening on a pronoun with no antecedent, no pointing at another card, no answer
+so long it is testing three things. Those rules are narrow on purpose (each was
+checked against the whole collection and anything producing a false positive was
+dropped), and their real job is guarding this way in: imported cards never
+passed through the scaffold prompt that asks for atomicity.
+
 ## Adding a domain
 
 Drop `skeleton/<domain>.yaml` (same shape as `system-design.yaml`), put content

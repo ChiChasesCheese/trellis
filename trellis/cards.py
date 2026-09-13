@@ -285,3 +285,64 @@ def leans_on_source(text: str) -> str:
             return phrase
     m = _CHAPTER_REF.search(text)
     return m.group(0) if m else ""
+
+
+# Rules a card must satisfy to be readable cold, on a phone, six months
+# later, with nothing else on screen. They are deliberately few and
+# deliberately narrow: a lint that fires on a tenth of the collection
+# gets ignored, and an ignored lint is worse than none. Each phrase below
+# was checked against the whole corpus first — anything that produced a
+# false positive (`the former`, a bare `the previous`, which are normal
+# *within* one card) was dropped rather than tolerated.
+#
+# Their real job is guarding the way in. Cards written somewhere else and
+# dropped into the vault never passed through the scaffold prompt that
+# asks for atomicity, so this is the only thing standing between an
+# imported pile and a deck full of cards that only make sense next to
+# each other.
+#
+# What cannot be mechanised, and is left to judgement: whether the answer
+# is true, whether the card tests one idea or three, and whether the
+# question was worth asking.
+
+_ORPHAN_OPENER_RE = re.compile(
+    r"^(?:what|why|how|when|which|where)\s+(?:does|do|is|are|was|were|would|"
+    r"will|can|should)?\s*(?:it|this|that|these|those|they)\b",
+    re.IGNORECASE)
+_DANGLING_RE = re.compile(
+    r"\b(?:the (?:above|previous|last) (?:card|note|question|topic|slide)|"
+    r"as (?:mentioned|discussed|shown|described) (?:above|earlier|previously)|"
+    r"see (?:above|the previous)|refer back to)\b", re.IGNORECASE)
+_MCQ_RE = re.compile(r"\bwhich of the (?:following|options|below)\b",
+                     re.IGNORECASE)
+
+# The 98th percentile of the existing collection. Set here rather than at
+# the ~4 sentences the scaffold prompt asks for, because the collection
+# has settled around a median of ~100 words and re-litigating that is a
+# content decision, not a lint. This catches the genuine outliers only.
+MAX_ANSWER_WORDS = 250
+
+
+def not_self_contained(card: "Card") -> list[str]:
+    """Ways this card leans on something it does not carry. Empty is good."""
+    problems: list[str] = []
+    question = (card.question or card.text or "").strip()
+    answer = card.answer or ""
+    first_line = question.splitlines()[0] if question else ""
+
+    if _ORPHAN_OPENER_RE.match(first_line):
+        problems.append("opens with a pronoun that has no antecedent on the "
+                        "card — name the subject in the question")
+    if _DANGLING_RE.search(question) or _DANGLING_RE.search(answer):
+        problems.append("points at another card ('as discussed above') — a "
+                        "card is always read alone")
+    if _MCQ_RE.search(question):
+        problems.append("asks the reader to choose from a list that is not on "
+                        "the card")
+    if card.type == "qa" and not question:
+        problems.append("has no question")
+    words = len((answer or card.text or "").split())
+    if words > MAX_ANSWER_WORDS:
+        problems.append(f"{words}-word answer — past the point where one card "
+                        f"is testing one thing; split it")
+    return problems

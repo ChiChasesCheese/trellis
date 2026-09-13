@@ -1,0 +1,194 @@
+# The Narrative Round: the interview that is about you rather than about a
+# system — and the round an engineer with a 100-node system-design map is most
+# likely to walk into cold.
+#
+# The bias throughout is away from scripts and toward diagnosis: what the
+# interviewer is actually scoring, why a technically true story reads as
+# junior, what a good ending to a conflict story looks like, and how to repair
+# an answer that is going wrong while you are still inside it. Nothing here is
+# a template to recite.
+#
+# The `bank` branch is deliberately empty of general knowledge — it holds YOUR
+# stories, and it is the branch spaced repetition genuinely earns its keep on:
+# written once, retrieved cold, months later, with the number still in it.
+#
+# Negotiation lives here as the last branch rather than as its own domain. It
+# is a small body of knowledge used in a two-week window every few years, and
+# it rides an existing review habit better than it carries one.
+#
+# Study order is top-to-bottom; `requires` marks the real cross-branch
+# prerequisites.
+domain: narrative
+title: Narrative Round
+nodes:
+  - id: round
+    order: 1
+    title: The Round Itself
+    summary: What the human round measures, who is measuring it, and what they are allowed to reject you for.
+    children:
+      - id: round.what-is-scored
+        title: The Signals Behind the Questions
+        summary: The short rubric almost every behavioral question maps onto — scope, ownership, judgment under cost, conflict, and self-correction.
+      - id: round.seniority-ladder
+        title: What Makes an Answer Senior
+        summary: Why two engineers telling the same factual story land at different levels — blast radius, who you moved, and what you refused to build.
+        requires: [round.what-is-scored]
+      - id: round.interviewer-model
+        title: The Interviewer's Constraints
+        summary: They are filling a rubric and writing notes under time pressure; what makes an answer writable down, and what makes it unquotable.
+      - id: round.formats
+        title: Formats and Their Veto Powers
+        summary: Hiring manager, peer values, bar raiser, skip-level, founder — what each is scoring and which one can reject you alone.
+      - id: round.red-flags
+        title: The Disqualifiers
+        summary: What overrides an otherwise good story — blame, a failure with no cost, no specifics, and the rehearsed cadence that reads as coached.
+        requires: [round.what-is-scored]
+
+  - id: story
+    order: 2
+    title: Building a Story
+    summary: Turning your own history into material — the shape a story has before anyone hears it.
+    requires: [round.what-is-scored]
+    children:
+      - id: story.inventory
+        title: Mining Your Own History
+        summary: Where candidate stories actually live — the incident, the disagreement, the thing you killed, the thing nobody asked you to do.
+      - id: story.star-and-its-limits
+        title: STAR and Where It Fails
+        summary: STAR as a container that helps the listener, and its specific failure — it buries the decision under the setup.
+      - id: story.decision-spine
+        title: The Decision Spine
+        summary: The shape that scores better — situation, the decision you personally owned, the option you rejected and why, the result, and what it changed in how you work.
+        requires: [story.star-and-its-limits]
+      - id: story.numbers
+        title: A Number That Survives a Follow-up
+        summary: Baseline, instrument, window, and what you would have accepted instead — plus the honest move when you genuinely have no number.
+        requires: [story.decision-spine]
+      - id: story.i-vs-we
+        title: I, We, and Honest Credit
+        summary: Crediting a team truthfully while still being the grammatical subject of your own story.
+        requires: [story.decision-spine]
+      - id: story.length
+        title: Ninety Seconds and Three Layers
+        summary: The first pass short enough that the interviewer's follow-up chooses which layer you expand.
+        requires: [story.decision-spine]
+      - id: story.coverage-matrix
+        title: The Coverage Matrix
+        summary: Six to eight stories mapped onto signals rather than onto questions, so twenty questions already have an answer.
+        requires: [story.decision-spine, round.what-is-scored]
+
+  - id: themes
+    order: 3
+    title: The Recurring Themes
+    summary: The question families that appear in nearly every loop, and what a strong answer to each actually contains.
+    requires: [story.decision-spine]
+    children:
+      - id: themes.conflict
+        title: Disagreement
+        summary: Conflict with a peer, a manager, or a partner team — and why "I convinced them and I was right" is the weaker ending.
+      - id: themes.failure
+        title: Failure With a Cost
+        summary: A failure you can price, and the line between a lesson and a disguised excuse.
+      - id: themes.ambiguity
+        title: Acting Without a Spec
+        summary: No spec, no owner, no data — how you chose a direction and what made it defensible before the outcome was known.
+      - id: themes.influence
+        title: Influence Without Authority
+        summary: Shipping something across a boundary where nobody involved reported to you.
+      - id: themes.prioritization
+        title: What You Did Not Build
+        summary: The cut you made deliberately, and how you defended it to the person who wanted the thing.
+      - id: themes.disagree-and-commit
+        title: Losing and Executing Anyway
+        summary: The version that is genuine commitment rather than quiet martyrdom or an I-told-you-so.
+        requires: [themes.conflict]
+      - id: themes.mentoring
+        title: Raising Someone Else's Level
+        summary: The senior-specific signal that individual output cannot substitute for.
+      - id: themes.deep-dive
+        title: Being Pushed Three Levels Down
+        summary: The technical interrogation of your own story, run by someone checking whether you were really the one who did it.
+
+  - id: delivery
+    order: 4
+    title: Delivering It Live
+    summary: Saying it out loud, under time pressure, to a person whose attention is finite and already partly spent.
+    children:
+      - id: delivery.opening
+        title: The First Fifteen Seconds
+        summary: The opening that buys the next ninety, and the setup-heavy opening that spends them.
+        requires: [story.length]
+      - id: delivery.reading-the-room
+        title: Reading the Room
+        summary: Signs the interviewer wants depth, wants you to stop, or has stopped scoring altogether.
+      - id: delivery.followups
+        title: Answering the Probe You Were Asked
+        summary: Treating a follow-up as a request for one specific layer rather than a cue to restart the story.
+        requires: [story.length]
+      - id: delivery.recovery
+        title: Recovering a Wrong Story
+        summary: You are ninety seconds in and it does not answer the question — landing it or switching, without an apology tour.
+        requires: [story.coverage-matrix]
+      - id: delivery.dont-know
+        title: The Honest Non-Answer
+        summary: Saying you have not faced that, in a way that still produces signal — and the bluff that costs the round.
+      - id: delivery.questions-back
+        title: Your Questions as Evidence
+        summary: The questions you ask read as evidence of how you think, not as end-of-interview courtesy.
+
+  - id: bank
+    order: 5
+    title: Your Story Bank
+    summary: Your own stories, written once and retrieved cold — the branch spaced repetition does the real work on.
+    requires: [story.coverage-matrix]
+    children:
+      - id: bank.ownership
+        title: Your Ownership Story
+        summary: The thing that was yours from the decision through to the consequence, with nobody above you deciding it.
+      - id: bank.incident
+        title: Your Incident Story
+        summary: Detection, a decision made under uncertainty with the clock running, and the mechanism you changed afterwards.
+        requires: [themes.failure]
+      - id: bank.conflict
+        title: Your Disagreement Story
+        summary: The ending you would still defend if the person you disagreed with were in the room.
+        requires: [themes.conflict]
+      - id: bank.failure
+        title: Your Failure Story
+        summary: The one with a cost you can name out loud without flinching or hedging.
+        requires: [themes.failure]
+      - id: bank.ambiguity
+        title: Your Zero-to-One Story
+        summary: The thing with no spec and no owner that you scoped yourself and then had to defend.
+        requires: [themes.ambiguity]
+      - id: bank.influence
+        title: Your Cross-Team Story
+        summary: The thing you shipped through people who did not report to you and could have said no.
+        requires: [themes.influence]
+      - id: bank.why-here
+        title: Why Here and Why Leaving
+        summary: Both halves said without lying and without complaining, since the second half is where candidates actually lose points.
+
+  - id: offer
+    order: 6
+    title: Offer and Negotiation
+    summary: The last conversation, where a few sentences move more money than a quarter of engineering work.
+    children:
+      - id: offer.recruiter-screen
+        title: The Number Asked Too Early
+        summary: The compensation question that arrives before you have any leverage, and how to defer it without sounding coached.
+      - id: offer.leverage
+        title: What Actually Moves a Number
+        summary: A competing offer, your position in the band, and a real timeline — versus the things that feel like leverage and are not.
+      - id: offer.anatomy
+        title: Anatomy of a Senior Package
+        summary: Base, equity, sign-on, refresher, cliff — which components are elastic, which are policy, and which are upstream of the rest.
+        requires: [offer.leverage]
+      - id: offer.the-ask
+        title: Making One Specific Ask
+        summary: One justified, non-adversarial number instead of a range, and why the justification matters more than the number.
+        requires: [offer.anatomy]
+      - id: offer.closing
+        title: Deadlines and Declining Well
+        summary: Exploding offers, extension requests, and saying no in a way that leaves the door open two years from now.
+        requires: [offer.the-ask]

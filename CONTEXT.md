@@ -72,6 +72,12 @@ A generated note mirroring one node, listing its prerequisites, children, cards,
 readings, and drills. Everything outside its managed block is the reader's own.
 _Avoid_: index note, MOC, hub
 
+**Feed**:
+A deck built to be reviewed rather than authored: one stream across every
+Domain, ordered so that consecutive cards come from different subjects. The
+surface for spare minutes, where the Brief is the surface for deciding.
+_Avoid_: mix, shuffle, stream, playlist, feed deck
+
 **Go deeper**:
 The footer on a built card carrying its node's readings — as `obsidian://` links
 when the reading has been clipped, and as web links otherwise.
@@ -89,6 +95,55 @@ The share of cards that have a road onward — an inline link, or a reading
 inherited from their node or its ancestors. Tracked because a card with no way
 deeper is a gap in the index.
 _Avoid_: link rate, source coverage
+
+**Card coverage**:
+The share of leaves carrying at least one card. An uncovered leaf offers
+nothing to review, so nothing can ever be learned about how well it is known —
+which is what separates it from a [Weakness], a leaf whose cards exist and
+fail.
+_Avoid_: gap, completeness, fill rate
+
+### The loop
+
+Everything above flows one way: a skeleton decides, content hangs off it, a
+deck is built. These are the terms for the way back — what reviewing a card
+teaches the trellis about itself.
+
+**Trace**:
+One card's review history as Anki recorded it: how many times it was answered,
+how often it lapsed, and how it is scheduled now. A Trace is pulled, never
+authored — it is the only thing in the vault we do not write.
+_Avoid_: stats, history, telemetry, metrics
+
+**Hold**:
+How well a node is retained, computed from the Traces beneath it and rolled up
+the skeleton. A leaf holds or it does not; a branch's hold is its leaves'.
+Always measured, never declared.
+_Avoid_: retention, mastery, score, strength, level
+
+**Weakness**:
+A leaf carrying enough Traces to judge, whose Hold is below target. A Weakness
+wants practice — a drill, a reading, more cards. Distinct from an uncovered
+leaf, which has nothing to fail and wants writing instead.
+_Avoid_: gap, weak spot, problem area, struggle
+
+**Bearing**:
+How much of the skeleton rests on a node — the nodes that reach it through
+`requires`, directly or transitively. A load-bearing Weakness is the first
+thing worth repairing, because everything standing on it is repaired with it.
+_Avoid_: importance, priority, centrality, leverage, weight
+
+**Sealed**:
+A leaf whose prerequisites do not yet Hold. Its cards exist and are withheld,
+so nothing new is ever introduced on ground that has not taken. Sealing is what
+makes the study curve smooth rather than merely ordered.
+_Avoid_: locked, blocked, gated, not ready
+
+**Brief**:
+The one generated note that says what to do next: the load-bearing Weaknesses,
+the leaves worth writing for, and a single opening move. Derived from Traces on
+every regeneration, and short enough to read standing up.
+_Avoid_: dashboard, report, summary, digest, progress
 
 ### Ingesting a codebase
 
@@ -124,10 +179,10 @@ artefact and never restates it as a card.
 _Avoid_: example, sample, exhibit, snippet
 
 **Gap**:
-Either an artefact or section triage could not place — which is a proposal to
-grow the skeleton, not an error — or a leaf carrying no cards. Gaps are the
-point of mapping a codebase or a corpus onto a skeleton authored
-independently of it.
+An artefact or section triage could not place on any leaf — a proposal to
+grow the skeleton, not an error. Gaps are the point of mapping a codebase or
+a corpus onto a skeleton authored independently of it. A leaf that merely has
+no cards is not a Gap; that is [card coverage].
 _Avoid_: miss, unmatched, hole
 
 ### Digesting a corpus

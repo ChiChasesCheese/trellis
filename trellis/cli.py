@@ -551,9 +551,124 @@ def cmd_digest(args) -> int:
     return 0
 
 
+
+def cmd_pull(args, project: Project) -> int:
+    """Read this domain's review history out of Anki into traces/."""
+    from .anki import AnkiConnectError, pull
+    from .traces import save_traces, traces_path
+    try:
+        file = pull(project.skeleton, url=args.anki_url)
+    except AnkiConnectError as exc:
+        _fail(str(exc))
+    path = save_traces(traces_path(args.root, project.skeleton.domain), file)
+    seen = sum(1 for t in file.traces.values() if t.seen)
+    print(f"{project.skeleton.title}: {len(file.traces)} card(s) traced, "
+          f"{seen} reviewed → {path}")
+    if file.unmapped:
+        print(f"  warning: {file.unmapped} note(s) carry no id:: tag and were "
+              f"skipped — run `trellis --domain {project.skeleton.domain} "
+              f"anki-push` to tag them")
+    return 0
+
+
+def _assess_all(root: Path, domains: list[str]):
+    """Load every domain and read its Traces back onto it. Domains with no
+    cards yet are skipped rather than reported as perfectly held."""
+    from .hold import assess
+    from .traces import load_traces, traces_path
+    assessments, skeletons, drills, readings, ages = {}, {}, {}, {}, {}
+    for domain in domains:
+        project = _load(root, domain)
+        # A domain with no cards is included deliberately: every one of
+        # its leaves is uncovered, which is exactly what the "worth
+        # writing" section exists to say. The per-domain cap keeps a
+        # skeleton-only domain from drowning the page.
+        file = load_traces(traces_path(root, domain))
+        traces = file.traces if file else {}
+        assessments[domain] = assess(project.skeleton, project.cards, traces)
+        skeletons[domain] = project.skeleton
+        ages[domain] = file.age_days if file else None
+        for drill in project.drills:
+            for node_id in drill.nodes:
+                drills.setdefault(node_id, []).append(drill)
+        for reading in project.readings:
+            for node_id in reading.nodes:
+                readings.setdefault(node_id, []).append(reading)
+    return assessments, skeletons, drills, readings, ages
+
+
+def cmd_brief(args) -> int:
+    """Write the one note that says what to do next, across every domain."""
+    from .brief import brief_body
+    domains = domains(args.root)
+    if not domains:
+        _fail(f"no skeleton files in {args.root / 'skeleton'}")
+    assessments, skeletons, drills, readings, ages = _assess_all(args.root, domains)
+    if not assessments:
+        _fail("no domain has any cards yet — nothing to brief on")
+    body = brief_body(assessments, skeletons, drills, readings, ages)
+    out = args.root / "vault" / "Brief.md"
+    changed = write_managed(out, body)
+    print(f"{'updated' if changed else 'unchanged'}: {out}")
+    if args.print:
+        print()
+        print(body)
+    return 0
+
+
+def cmd_feed(args) -> int:
+    """Print the filtered-deck recipe for one interleaved cross-domain
+    stream — the surface for spare minutes."""
+    from .feed import plan
+    assessments, _, _, _, _ = _assess_all(args.root, domains(args.root))
+    feed = plan(assessments, limit=args.limit, include_sealed=args.include_sealed)
+    if not feed.search:
+        _fail("no domain has any cards yet")
+    print("Anki → Tools → Create Filtered Deck. Paste this search, set the")
+    print("card limit, choose 'Random' order, and untick 'Reschedule cards")
+    print("based on my answers in this deck' only if you want a pure browse.")
+    print()
+    for line in feed.as_lines():
+        print(line)
+    return 0
+
+
+def cmd_adopt(args) -> int:
+    """Turn a correctly-shaped folder of content into a real domain."""
+    from .adopt import derive_skeleton, find_adoptable
+    found = find_adoptable(args.root)
+    if args.name is None:
+        if not found:
+            print("nothing to adopt: every vault folder with content already "
+                  "has a skeleton")
+            return 0
+        print("content in the vault that no skeleton claims:")
+        for item in found:
+            print(f"  {item.name:<20} {item.cards:>4} cards, "
+                  f"{item.readings:>3} readings, {len(item.node_ids)} node id(s)"
+                  f"  →  trellis adopt {item.name}")
+        return 0
+    match = next((f for f in found if f.name == args.name), None)
+    if match is None:
+        _fail(f"vault/{args.name} has no cards or readings carrying node ids "
+              f"(or a skeleton for it already exists)")
+    out = args.root / "skeleton" / f"{args.name}.yaml"
+    if out.exists() and not args.force:
+        _fail(f"{out} already exists; pass --force to overwrite")
+    yaml_text = derive_skeleton(match.node_ids, args.name, match.path, args.title)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(yaml_text, encoding="utf-8")
+    print(f"wrote {out} — {len(match.node_ids)} node id(s) from "
+          f"{match.cards} card(s)")
+    print(f"next: trellis --domain {args.name} validate, then put the children "
+          f"in study order")
+    return 0
+
+
 CROSS_DOMAIN = {
     "ingest": cmd_ingest, "seed": cmd_seed, "triage": cmd_triage,
     "accept": cmd_accept, "digest": cmd_digest,
+    "brief": cmd_brief, "adopt": cmd_adopt, "feed": cmd_feed,
 }
 
 HANDLERS = {
@@ -567,6 +682,7 @@ HANDLERS = {
     "path": cmd_path,
     "scaffold": cmd_scaffold,
     "import": cmd_import,
+    "pull": cmd_pull,
 }
 SINGLE_DOMAIN_ONLY = {"scaffold", "import"}
 
@@ -690,6 +806,41 @@ def main(argv: list[str] | None = None) -> int:
     p_push.add_argument("--lang", default="", help="publish this language's build")
     p_push.add_argument("--apkg", type=Path, help="override the package path")
     p_push.add_argument("--anki-url", default="http://127.0.0.1:8765")
+    p_pull = _subcommand(
+        "pull",
+        help="read this domain's review history out of Anki into traces/ — "
+             "the only command that asks Anki a question (needs desktop "
+             "Anki + AnkiConnect)",
+    )
+    p_pull.add_argument("--anki-url", default="http://127.0.0.1:8765")
+    p_brief = _subcommand(
+        "brief",
+        help="write vault/Brief.md: what to do next, ranked across every "
+             "domain, from the Traces `pull` last brought back",
+    )
+    p_brief.add_argument("--print", action="store_true",
+                         help="also print the Brief to stdout")
+    p_feed = _subcommand(
+        "feed",
+        help="print the filtered-deck recipe for one interleaved stream "
+             "across every domain — spare-minutes review with no deck to "
+             "choose and sealed leaves held back",
+    )
+    p_feed.add_argument("-n", "--limit", type=int, default=40)
+    p_feed.add_argument("--include-sealed", action="store_true",
+                        help="do not withhold leaves whose prerequisites are "
+                             "not holding")
+    p_adopt = _subcommand(
+        "adopt",
+        help="turn a vault folder of correctly-formatted content into a real "
+             "domain by deriving its skeleton from the node ids its cards "
+             "carry; with no name, lists what is adoptable",
+    )
+    p_adopt.add_argument("name", nargs="?",
+                         help="the vault/<name> folder to adopt")
+    p_adopt.add_argument("--title", help="display name (default: from the name)")
+    p_adopt.add_argument("--force", action="store_true",
+                         help="overwrite an existing skeleton")
     p_align = _subcommand(
         "anki-align",
         help="move cards in a live Anki collection to the decks the current "

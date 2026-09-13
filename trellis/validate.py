@@ -85,6 +85,20 @@ def validate(
             f"{len(bare)} leaf node(s) have no cards yet: " + ", ".join(bare)
         )
 
+    # Self-containment. A card is read alone, on a phone, months later —
+    # and cards written on another machine and dropped into the vault
+    # never passed through the scaffold prompt that asks for that.
+    from .cards import not_self_contained
+    leaning = [(c, problems) for c in cards
+               if (problems := not_self_contained(c))]
+    if leaning:
+        report.warnings.append(
+            f"{len(leaning)} card(s) lean on context they do not carry: "
+            + "; ".join(f"{c.path.name if c.path else c.id} — {problems[0]}"
+                        for c, problems in leaning[:3])
+            + (f"; and {len(leaning) - 3} more" if len(leaning) > 3 else "")
+        )
+
     if cards and clippings is not None:
         from .links import leaves_without_readable_source
         hunting = leaves_without_readable_source(skeleton, readings or [], clippings)
