@@ -130,6 +130,18 @@ def test_brief_and_feed_run_on_the_same_traces_and_point_at_grow(root, capsys):
     assert "search:" in capsys.readouterr().out
 
 
+def test_grow_can_be_held_to_one_domain(root, capsys):
+    (root / "skeleton" / "other.yaml").write_text(yaml.safe_dump({
+        "domain": "other", "title": "Other",
+        "nodes": [{"id": "x", "title": "X", "children": [{"id": "x.y", "title": "Y"}]}]}),
+        encoding="utf-8")
+    assert run(root, "grow") == 0
+    assert "other:x.y" in capsys.readouterr().out
+    assert run(root, "--domain", "demo", "grow") == 0
+    out = capsys.readouterr().out
+    assert "other:x.y" not in out and "demo:mid.a" in out
+
+
 def test_a_leaf_that_is_neither_weak_nor_uncovered_is_refused(root):
     with pytest.raises(SystemExit):
         run(root, "grow", "--leaf", "demo:base.two")

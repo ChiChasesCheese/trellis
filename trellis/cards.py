@@ -55,7 +55,15 @@ class Card:
     text: str = ""  # cloze body
     tags: list[str] = field(default_factory=list)
     source: str = ""
+    # The Anki note id when the note was authored by another tool and
+    # merely mirrored here: placed on a leaf and read for its Trace, but
+    # never built, pushed or moved by Trellis.
+    anki: int = 0
     tr: dict = field(default_factory=dict)  # lang -> {question, answer} | {text}
+
+    @property
+    def adopted(self) -> bool:
+        return bool(self.anki)
 
     def render(self, lang: str = "") -> tuple[str, str]:
         """(question, answer) for a qa card, (text, "") for a cloze —
@@ -222,9 +230,12 @@ def parse_card(path: str | Path) -> Card:
     tags = meta.get("tags", []) or []
     if not (isinstance(tags, list) and all(isinstance(t, str) for t in tags)):
         raise CardError(f"{path}: tags must be a list of strings")
-    unknown = set(meta) - {"id", "node", "type", "tags", "source"}
+    unknown = set(meta) - {"id", "node", "type", "tags", "source", "anki"}
     if unknown:
         raise CardError(f"{path}: unknown frontmatter keys {sorted(unknown)}")
+    anki = meta.get("anki", 0) or 0
+    if not isinstance(anki, int):
+        raise CardError(f"{path}: anki must be the note's integer id")
 
     card = Card(
         id=card_id,
@@ -233,6 +244,7 @@ def parse_card(path: str | Path) -> Card:
         path=path,
         tags=list(tags),
         source=str(meta.get("source", "") or ""),
+        anki=anki,
     )
     try:
         preamble, sections = _sections(body)

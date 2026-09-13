@@ -151,7 +151,10 @@ def build_package(
 
     study_order = {n.id: i for i, n in enumerate(skeleton.walk())}
     note_count = 0
-    for card in sorted(cards, key=lambda c: (study_order[c.node], c.path.name)):
+    # An adopted card mirrors a note another tool owns; building it would
+    # put a second copy in the collection.
+    own = [c for c in cards if not c.adopted]
+    for card in sorted(own, key=lambda c: (study_order[c.node], c.path.name)):
         node = skeleton.by_id[card.node]
         crumb = " › ".join(n.title for n in node.path())
         tags = [skeleton.domain + "::" + card.node.replace(".", "::")] + card.tags

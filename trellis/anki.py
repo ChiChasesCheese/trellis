@@ -27,6 +27,8 @@ from .traces import (TYPE_RELEARNING, Trace, TraceFile, card_id_from_tags,
                      now_stamp)
 
 DEFAULT_URL = "http://127.0.0.1:8765"
+# A note mirrored from a deck another tool owns; see trellis/adopt.py.
+ADOPTED_TAG = "trellis::adopted"
 
 
 class AnkiConnectError(RuntimeError):
@@ -59,8 +61,10 @@ def align(skeleton: Skeleton, call: Callable = invoke, url: str = DEFAULT_URL) -
         deck = skeleton.deck_name(node)
         tag = skeleton.domain + "::" + node.id.replace(".", "::")
         # tag:X also matches child tags, so exclude them — a card belongs
-        # to exactly the deck of the node its own tag names
-        query = f'tag:{tag} -tag:{tag}::* -deck:"{deck}"'
+        # to exactly the deck of the node its own tag names. An adopted
+        # note was authored by another tool and stays in the deck that
+        # tool put it in.
+        query = f'tag:{tag} -tag:{tag}::* -tag:{ADOPTED_TAG} -deck:"{deck}"'
         card_ids = call("findCards", url, query=query)
         if card_ids:
             call("createDeck", url, deck=deck)

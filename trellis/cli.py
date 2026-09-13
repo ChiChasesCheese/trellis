@@ -446,7 +446,15 @@ def cmd_accept(args) -> int:
         _fail(f"{args.file}: a proposal is a JSON object")
     if "skeleton" in data:
         from .seed import accept_seed
-        corpus = _corpus(root, str(data.get("corpus", "")))
+        if "deck" in data:
+            # A skeleton drafted from an Anki deck's inventory: the deck
+            # stands where a corpus would, and there is nothing to ingest.
+            domain = str(data["skeleton"].get("domain", "")) if isinstance(data["skeleton"], dict) else ""
+            corpus = Corpus(id=f"anki:{data['deck']}", title=str(data["deck"]),
+                            license="commercial", domain=domain,
+                            lang=str(data["skeleton"].get("lang", "zh")) if isinstance(data["skeleton"], dict) else "zh")
+        else:
+            corpus = _corpus(root, str(data.get("corpus", "")))
         path, errors, uncovered = accept_seed(args.file, root, corpus)
         for e in errors:
             print(f"error: {e}", file=sys.stderr)
@@ -455,8 +463,10 @@ def cmd_accept(args) -> int:
         print(f"wrote {path}")
         for leaf in uncovered:
             print(f"uncovered: {leaf}")
+        following = (f"trellis adopt {corpus.domain} --anki \"{corpus.title}\""
+                     if corpus.id.startswith("anki:") else f"trellis triage {corpus.id}")
         print(f"seeded skeleton/{corpus.domain}.yaml with {len(uncovered)} leaf/leaves the "
-              f"book does not cover; next: trellis triage {corpus.id}")
+              f"source does not cover; next: {following}")
         return 0
     if "corpus" in data:
         corpus = _corpus(root, str(data["corpus"]))
@@ -640,9 +650,37 @@ def cmd_feed(args) -> int:
     return 0
 
 
+def _anki_call(url: str):
+    """The one AnkiConnect client the CLI hands to modules; tests replace it."""
+    from functools import partial
+    from .anki import invoke
+    return partial(invoke, url=url)
+
+
 def cmd_adopt(args) -> int:
-    """Turn a correctly-shaped folder of content into a real domain."""
-    from .adopt import derive_skeleton, find_adoptable
+    """Turn a correctly-shaped folder of content — or a deck that lives
+    only in Anki — into a real domain."""
+    from .adopt import AdoptResult, adopt_deck, derive_skeleton, find_adoptable
+    if args.anki:
+        if not args.name:
+            _fail("adopt --anki needs the domain slug to adopt the deck as")
+        from .anki import AnkiConnectError
+        try:
+            outcome = adopt_deck(args.root, args.name, args.anki, call=_anki_call(args.anki_url),
+                                 prefix=args.prefix)
+        except AnkiConnectError as exc:
+            _fail(str(exc))
+        if not isinstance(outcome, AdoptResult):
+            print(f"no skeleton/{args.name}.yaml yet — wrote the seed prompt: "
+                  f"{outcome.relative_to(args.root)}")
+            print(f"answer it with JSON, then: trellis accept proposals/{args.name}.seed.json, "
+                  f"then run this command again")
+            return 0
+        for line in outcome.unmapped:
+            print(f"unmapped: {line}", file=sys.stderr)
+        print(f"{args.name}: {len(outcome.written)} note(s) adopted from '{args.anki}', "
+              f"{outcome.tagged} tagged in Anki, {len(outcome.unmapped)} unmapped")
+        return 0 if not outcome.unmapped else 1
     found = find_adoptable(args.root)
     if args.name is None:
         if not found:
@@ -681,6 +719,12 @@ def cmd_grow(args) -> int:
     names = domains(root)
     if not names:
         _fail(f"no skeleton files in {root / 'skeleton'}")
+    if args.domain:
+        # Grow one domain when asked: the Brief's breadth rule is for
+        # deciding what to study, not for someone who has decided.
+        if args.domain not in names:
+            _fail(f"no skeleton/{args.domain}.yaml")
+        names = [args.domain]
     projects, assessments, traces, _ = _read_loop(root, names)
     targets = plan(root, projects, assessments, traces)
     by_key = {t.key: t for t in targets}
@@ -932,6 +976,13 @@ def main(argv: list[str] | None = None) -> int:
     p_adopt.add_argument("--title", help="display name (default: from the name)")
     p_adopt.add_argument("--force", action="store_true",
                          help="overwrite an existing skeleton")
+    p_adopt.add_argument("--anki", metavar="DECK",
+                         help="adopt a deck that lives only in Anki: first a seed "
+                              "prompt for its skeleton, then (once the skeleton "
+                              "exists) its notes mirrored onto the leaves as "
+                              "adopted cards and tagged in Anki")
+    p_adopt.add_argument("--prefix", help="card id prefix for --anki (default: the slug)")
+    p_adopt.add_argument("--anki-url", default="http://127.0.0.1:8765")
     p_align = _subcommand(
         "anki-align",
         help="move cards in a live Anki collection to the decks the current "
