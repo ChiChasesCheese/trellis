@@ -9,13 +9,13 @@
 
 ## 怎么用
 
-1. **先读 `evidence-base.md`** —— 素材总纲:Chi 画像 + 9 个旗舰故事(S1~S9)+ Ziyang 协作框定。所有面试答案从这里取材。
-2. **`interview-manual/`** —— 逐题答案手册。每题两版:**答案 A(影响导向,60-90 秒)** + **答案 B(技术深度,追问 how/why 时展开)**。
-3. **`resume-evidence-map/`** —— 学习画像。每个技术主题:**Baseline**(Chi 已有的真实实现,起点)→ **★ 往哪里看齐**(跨 repo 挑出的最精华实现,学习标杆)→ **知识点体系** → **学习锚点** → **面试话术**。**从 baseline 到标杆之间的 gap,就是 Chi 的学习路径。**
+1. **先读 `../../../../../core/stories/evidence-base.md`**（已升到 `vault/interviews/core/stories/`，与公司无关） —— 素材总纲:Chi 画像 + 9 个旗舰故事(S1~S9)+ Ziyang 协作框定。所有面试答案从这里取材。
+2. **`../../../../../core/answers/`（原 `interview-manual/`，已升到 core）** —— 逐题答案手册；本目录只留 Stripe 特定的 `stripe-fit.md`。每题两版:**答案 A(影响导向,60-90 秒)** + **答案 B(技术深度,追问 how/why 时展开)**。
+3. **`../../../../../core/stories/resume-evidence-map/`（已升到 core）** —— 学习画像。每个技术主题:**Baseline**(Chi 已有的真实实现,起点)→ **★ 往哪里看齐**(跨 repo 挑出的最精华实现,学习标杆)→ **知识点体系** → **学习锚点** → **面试话术**。**从 baseline 到标杆之间的 gap,就是 Chi 的学习路径。**
 
 ---
 
-## Part 1 · 逐题面试手册 `interview-manual/`
+## Part 1 · 逐题面试手册（`core/answers/` + 本目录 `stripe-fit.md`）
 
 | 文件 | 覆盖 | 题数 |
 |---|---|---|
@@ -25,7 +25,7 @@
 | `dim6-hr-behavioral.md` | HR 行为题(ready for promotion / 优势 / 规划 / 批评反馈) | Q21–Q24 |
 | `stripe-fit.md` | Stripe 公司特定 + 纯 HR fit(Why Stripe / 自我介绍 / 弱点 / 反问 等) | 10 题 |
 
-**旗舰故事速查**(细节见 `evidence-base.md`):
+**旗舰故事速查**(细节见 `core/stories/evidence-base.md`):
 - **S1** AMEX GRRCN 端到端管线(Ruby→Snowflake 迁移,$138.6B/21.96M 笔)
 - **S2** Quality-Check & Handshake 框架 + 自我修正 ADR(平台化信号)
 - **S3/S4/S8/S9** ACH / AU-Amex / Terraform / DoorDash 四个 RCA(go-to person)
@@ -33,7 +33,7 @@
 - **S6** Fee Anomaly Detector ROI gate(staff 级判断)
 - **S7** snowglobe-tools(自发基建)
 
-## Part 2 · 完美 Sr Eng 学习画像 `resume-evidence-map/`
+## Part 2 · 完美 Sr Eng 学习画像（`core/stories/resume-evidence-map/`）
 
 四个主题,每份含 Baseline + 跨 repo 看齐标杆(每份 8-9 个)+ 知识点体系 + 面试话术:
 
@@ -56,4 +56,4 @@
 - **Sentry**:确实在用(braintree.sentry.io runbook + PagerDuty/Sentry 告警 + connector config `SENTRY_DSN`,三处独立确认),是 DALM/ingestion 层错误追踪。Datadog + Sentry + 自建 Streamlit(`ptf_explorer.py`)是完整可观测性三件套(见 `03`)。
 - **Airflow/Spark**:Spark Validators 真实存在(DTBTPRWIZ-39/53/54);批处理校验学习重点见 `04`。
 
-`interview-manual/` 里的 `【预估：xxx】` / `【待 Chi 补充：xxx】` 占位符,是需要 Chi 用真实数字/细节替换的地方(尤其带教题的日常 1:1/pairing 细节)。
+`core/answers/` 里的 `【预估：xxx】` / `【待 Chi 补充：xxx】` 占位符,是需要 Chi 用真实数字/细节替换的地方(尤其带教题的日常 1:1/pairing 细节)。
