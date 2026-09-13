@@ -11,6 +11,7 @@ Fixed decimals, zero padding, separators, currency symbols, trailing newline and
 ## Drills
 - [[csv-parse-validate-report|Drill: parse, validate and report over a hostile CSV]]
 - [[exact-output-port-sprint|Drill: twenty minutes to an exact-output contract]]
+- [[oa-q04-card-range-obfuscation|Drill: fill and merge brand intervals across a card BIN]]
 - [[tiered-billing-exact-output|Drill: tiered billing with an exact-output contract]]
 
 ## Cards (5)

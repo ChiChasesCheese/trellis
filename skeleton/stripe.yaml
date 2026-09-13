@@ -1,0 +1,46 @@
+# Stripe: the OA (online assessment) as eleven probe groups, in Chinese.
+# The domain folder also holds essentials/ (the study handouts) and one
+# question.md + solution.md pair per problem; the raw research behind
+# them lives in vault/Quick_Check/.
+domain: stripe
+title: Stripe
+lang: zh
+nodes:
+- id: stripe
+  order: 1
+  title: OA 考点
+  summary: Stripe 在线笔试（HackerRank，60 分钟一题多 Part）的考点分组，配套 essentials/ 讲义和 q01–q40、qA01–qA13 题解。
+  children:
+  - id: stripe.solving
+    title: 解题方法论
+    summary: 读完整题面、先解析后计算、分 Part 增量实现与自测的 60 分钟解题纪律。
+  - id: stripe.parsing-validation
+    title: 解析与校验
+    summary: 把 stdin 文本变成记录：分隔符、字段校验、非法行的处理与报告。
+  - id: stripe.modeling
+    title: 数据建模与聚合
+    summary: 用 dict / 按 key 分组 / 有序事件表把业务状态建出来，再在上面聚合。
+  - id: stripe.money
+    title: 金额与计费
+    summary: 金额用整数分或 Decimal、四舍五入规则、多币种换算与费用计算。
+  - id: stripe.time
+    title: 时间与区间
+    summary: 时间戳、区间重叠与合并、按时间窗口聚合的套路。
+  - id: stripe.output
+    title: 排序与输出格式
+    summary: 排序键、tie-break、字节精确的输出格式。
+  - id: stripe.streams
+    title: 事件流与幂等
+    summary: 事件流的顺序处理、状态回滚、幂等去重与 dispute/refund 类反向事件。
+  - id: stripe.strings
+    title: 字符串处理
+    summary: 掩码、校验位（Luhn）、字符串展开与模式匹配。
+  - id: stripe.balances-limits
+    title: 阈值 / 限流 / 余额
+    summary: 余额、阈值、限流与配额类规则的判定与累计。
+  - id: stripe.algorithms
+    title: 算法套路（A01–A16）
+    summary: Stripe OA 里反复出现的十六个算法套路（前缀和、滑动窗口、区间合并、图路径……）。
+  - id: stripe.vocab
+    title: 领域词汇
+    summary: 支付领域词汇：charge、dispute、payout、MCC 等在题面里的含义。

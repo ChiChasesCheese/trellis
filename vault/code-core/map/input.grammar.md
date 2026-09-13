@@ -7,6 +7,10 @@ When rules arrive as nested expressions — tokenizer plus recursive descent, pr
 ## Readings
 - [[python-re|re — regular expression operations]]
 
+## Drills
+- [[oa-q12-platform-balance-radar-rules|Drill: a platform balance ledger behind a hand-written Radar rule language]]
+- [[oa-qa03-lc1087-brace-expansion|Drill: brace expansion, from a stack parser to nesting, counting and indexing]]
+
 ## Cards (5)
 - [[cc-input-gram-operand-symmetry]]
 - [[cc-input-gram-parens-recursion]]

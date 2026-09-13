@@ -1,0 +1,11 @@
+title: "Site Reliability Engineering"
+author: "Google (Beyer, Jones, Petoff, Murphy eds.)"
+license: free-online           # published free by Google at sre.google
+domain: system-design
+home: https://sre.google/sre-book/table-of-contents/
+chapters:
+  - https://sre.google/sre-book/service-level-objectives/
+  - https://sre.google/sre-book/handling-overload/
+  - https://sre.google/sre-book/addressing-cascading-failures/
+  - https://sre.google/sre-book/managing-critical-state/
+  - https://sre.google/sre-book/data-integrity/

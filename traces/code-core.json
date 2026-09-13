@@ -1,0 +1,1844 @@
+{
+ "domain": "code-core",
+ "pulled_at": "2026-09-13T03:36:41+00:00",
+ "unmapped": 434,
+ "traces": {
+  "cc-algorithms-backtracking-canonical-order": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-backtracking-count-not-enumerate": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-backtracking-feasibility-pruning": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-backtracking-safe-pruning": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-backtracking-undo": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-binary-search-bounds": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-binary-search-continuous": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-binary-search-loop-shape": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-binary-search-monotone-check": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-binary-search-on-answer": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-dp-banded": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-dp-bitmask": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-dp-k-segments": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-dp-rolling-rows": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-dp-state-and-transition": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-graph-traversal-bfs-layers": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1788038180
+  },
+  "cc-algorithms-graph-traversal-components": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788051956
+  },
+  "cc-algorithms-graph-traversal-cycle-detection": {
+   "reps": 2,
+   "type": 1,
+   "due": 1788055268,
+   "last_review": 1788054520
+  },
+  "cc-algorithms-graph-traversal-iterative": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788052250
+  },
+  "cc-algorithms-graph-traversal-visited-on-push": {
+   "reps": 1,
+   "ease": 2.5,
+   "last_review": 1788052304
+  },
+  "cc-algorithms-greedy-counterexample": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-greedy-exchange-argument": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-greedy-feasibility-first": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-greedy-sort-key": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-greedy-with-heap": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-prefix-argmin-tiebreak": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-prefix-best-window": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-prefix-difference-array": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-prefix-incremental-update": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-prefix-range-query": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-prefix-suffix-pair": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-recognition-brute-force-first": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 757,
+   "last_review": 1787799620
+  },
+  "cc-algorithms-recognition-constraint-sizes": {
+   "reps": 2,
+   "ease": 2.5,
+   "last_review": 1787799615
+  },
+  "cc-algorithms-recognition-cue-to-technique": {
+   "reps": 1,
+   "ease": 2.5,
+   "last_review": 1787799190
+  },
+  "cc-algorithms-recognition-optimize-hot-operation": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788037814
+  },
+  "cc-algorithms-recognition-restate": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788037980
+  },
+  "cc-algorithms-settlement-assignment-capacity": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-settlement-fifo-lots": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-settlement-floor-and-feasibility": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-settlement-min-transfers": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-settlement-net-first": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-shortest-path-bounded-hops": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-shortest-path-dijkstra-heap": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-shortest-path-longer-can-win": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-shortest-path-product-weights": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-shortest-path-reconstruct": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-sliding-window-covering": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-sliding-window-fixed-vs-variable": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-sliding-window-k-in-window": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-sliding-window-monotone-requirement": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-sliding-window-shrink": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-strings-canonical-form": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-strings-luhn": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-strings-numeronym": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-strings-one-edit": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-strings-wildcard-count": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-topological-critical-path": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-topological-cycle-shortfall": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-topological-deterministic-order": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-topological-kahn": {
+   "last_review": 1787793957
+  },
+  "cc-algorithms-topological-longest-path": {
+   "last_review": 1787793957
+  },
+  "cc-chrono-arithmetic-calendar-vs-duration": {
+   "last_review": 1787793957
+  },
+  "cc-chrono-arithmetic-extend-from-expiry": {
+   "last_review": 1787793957
+  },
+  "cc-chrono-arithmetic-inclusive-end": {
+   "last_review": 1787793957
+  },
+  "cc-chrono-arithmetic-month-end-clamp": {
+   "last_review": 1787793957
+  },
+  "cc-chrono-arithmetic-offset-day-wrap": {
+   "last_review": 1787793957
+  },
+  "cc-chrono-intervals-complement": {
+   "last_review": 1787793957
+  },
+  "cc-chrono-intervals-covered-sort": {
+   "last_review": 1787793957
+  },
+  "cc-chrono-intervals-endpoints": {
+   "last_review": 1787793957
+  },
+  "cc-chrono-intervals-merge-sweep": {
+   "last_review": 1787793957
+  },
+  "cc-chrono-intervals-subtract-sweep": {
+   "last_review": 1787793957
+  },
+  "cc-chrono-parsing-canonical-form": {
+   "last_review": 1787793957
+  },
+  "cc-chrono-parsing-hhmm-minutes": {
+   "last_review": 1787793957
+  },
+  "cc-chrono-parsing-naive-vs-aware": {
+   "last_review": 1787793957
+  },
+  "cc-chrono-parsing-strict-validation": {
+   "last_review": 1787793957
+  },
+  "cc-chrono-parsing-weekday-tokens": {
+   "last_review": 1787793957
+  },
+  "cc-chrono-windows-boundary": {
+   "reps": 2,
+   "ease": 2.5,
+   "last_review": 1788003674
+  },
+  "cc-chrono-windows-bucket-vs-rolling": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788003714
+  },
+  "cc-chrono-windows-denied-not-recorded": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1788003765
+  },
+  "cc-chrono-windows-no-midnight-wrap": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788003873
+  },
+  "cc-chrono-windows-per-key-state": {
+   "last_review": 1787793957
+  },
+  "cc-chrono-windows-token-bucket": {
+   "last_review": 1787793957
+  },
+  "cc-input-del-csv-vs-split": {
+   "last_review": 1788005716
+  },
+  "cc-input-del-header-driven": {
+   "last_review": 1788005716
+  },
+  "cc-input-del-maxsplit": {
+   "last_review": 1788005716
+  },
+  "cc-input-del-variable-length-rows": {
+   "last_review": 1788005716
+  },
+  "cc-input-del-writing-back": {
+   "last_review": 1788005716
+  },
+  "cc-input-gram-operand-symmetry": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1787956812
+  },
+  "cc-input-gram-parens-recursion": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1788050537
+  },
+  "cc-input-gram-parse-error-policy": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1788051632
+  },
+  "cc-input-gram-precedence-one-function-per-level": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1788050664
+  },
+  "cc-input-gram-tokenizer-separate": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1788052488
+  },
+  "cc-input-lp-blank-lines-and-spaces": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 762,
+   "last_review": 1788219009
+  },
+  "cc-input-lp-dispatch-on-keyword": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 761,
+   "last_review": 1788219119
+  },
+  "cc-input-lp-optional-trailing-field": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 761,
+   "last_review": 1788219712
+  },
+  "cc-input-lp-part-header": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 762,
+   "last_review": 1788219813
+  },
+  "cc-input-lp-setup-before-events": {
+   "reps": 1,
+   "ease": 2.5,
+   "last_review": 1788219857
+  },
+  "cc-input-mal-corrupt-row-participates-in-nothing": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788003432
+  },
+  "cc-input-mal-one-validator": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1787956615
+  },
+  "cc-input-mal-skip-default-fatal": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788003440
+  },
+  "cc-input-mal-unknown-vocabulary": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1787956875
+  },
+  "cc-input-mal-validate-before-mutate": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1787956925
+  },
+  "cc-input-norm-casefold-vs-lower": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 762,
+   "last_review": 1788227142
+  },
+  "cc-input-norm-key-canonical-print-original": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788227276
+  },
+  "cc-input-norm-once-at-the-boundary": {
+   "reps": 1,
+   "type": 1,
+   "due": 1788228040,
+   "last_review": 1788227395
+  },
+  "cc-input-norm-suffix-and-article": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 761,
+   "last_review": 1788227478
+  },
+  "cc-input-norm-whitespace-collapse": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 761,
+   "last_review": 1788227575
+  },
+  "cc-input-num-decimal-to-cents": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 762,
+   "last_review": 1788220733
+  },
+  "cc-input-num-float-loses-digits": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788220895
+  },
+  "cc-input-num-integer-validation": {
+   "last_review": 1788005716
+  },
+  "cc-input-num-literal-shape": {
+   "last_review": 1788005716
+  },
+  "cc-input-num-zero-vs-negative": {
+   "last_review": 1788005716
+  },
+  "cc-input-struct-json-lines": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 761,
+   "last_review": 1788219943
+  },
+  "cc-input-struct-keep-unknown-keys": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 762,
+   "last_review": 1788220101
+  },
+  "cc-input-struct-missing-key-policy": {
+   "reps": 1,
+   "ease": 2.5,
+   "last_review": 1788220233
+  },
+  "cc-input-struct-query-string": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 761,
+   "last_review": 1788220312
+  },
+  "cc-input-struct-repeated-keys": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788220640
+  },
+  "cc-model-ev-current-vs-ever": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 763,
+   "last_review": 1788304498
+  },
+  "cc-model-ev-incremental-vs-replay": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 761,
+   "last_review": 1788312496
+  },
+  "cc-model-ev-input-order-not-timestamp-order": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 761,
+   "last_review": 1788312629
+  },
+  "cc-model-ev-passes-vs-interleaved": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 763,
+   "last_review": 1788312671
+  },
+  "cc-model-ev-same-timestamp-ties": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 763,
+   "last_review": 1788312714
+  },
+  "cc-model-idem-dedupe-key-choice": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1788003632
+  },
+  "cc-model-idem-double-free": {
+   "reps": 1,
+   "ease": 2.5,
+   "last_review": 1787795253
+  },
+  "cc-model-idem-replay-no-second-row": {
+   "reps": 2,
+   "interval": 18,
+   "ease": 2.65,
+   "type": 2,
+   "due": 775,
+   "last_review": 1788218851
+  },
+  "cc-model-idem-reused-id-after-close": {
+   "reps": 2,
+   "interval": 22,
+   "ease": 2.65,
+   "type": 2,
+   "due": 780,
+   "last_review": 1788304543
+  },
+  "cc-model-idem-same-key-different-payload": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788050159
+  },
+  "cc-model-idem-second-occurrence-noop": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788050205
+  },
+  "cc-model-idx-composite-tuple-key": {
+   "reps": 1,
+   "ease": 2.5,
+   "last_review": 1788217421
+  },
+  "cc-model-idx-entry-lifetime": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 761,
+   "last_review": 1788218454
+  },
+  "cc-model-idx-keep-in-step": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 761,
+   "last_review": 1788217881
+  },
+  "cc-model-idx-key-is-the-hot-query": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 762,
+   "last_review": 1788218616
+  },
+  "cc-model-idx-secondary-index": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 761,
+   "last_review": 1788218620
+  },
+  "cc-model-rec-class-earns-behavior": {
+   "last_review": 1788005716
+  },
+  "cc-model-rec-dict-vs-dataclass": {
+   "last_review": 1788005716
+  },
+  "cc-model-rec-mutable-vs-tuple": {
+   "last_review": 1788005716
+  },
+  "cc-model-rec-parallel-dicts-are-an-object": {
+   "last_review": 1788005716
+  },
+  "cc-model-rec-typed-at-construction": {
+   "last_review": 1788005716
+  },
+  "cc-model-rev-can-raise-a-ratio": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 762,
+   "last_review": 1788218018
+  },
+  "cc-model-rev-double-reversal-noop": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 763,
+   "last_review": 1788303654
+  },
+  "cc-model-rev-partial-and-cap": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 761,
+   "last_review": 1788218611
+  },
+  "cc-model-rev-subtract-both-counters": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 762,
+   "last_review": 1788218691
+  },
+  "cc-model-rev-unknown-id-ignored": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 763,
+   "last_review": 1788303696
+  },
+  "cc-model-rev-zero-over-zero": {
+   "reps": 1,
+   "ease": 2.5,
+   "last_review": 1788303842
+  },
+  "cc-model-sm-boolean-soup": {
+   "reps": 1,
+   "type": 1,
+   "due": 1788313454,
+   "last_review": 1788312765
+  },
+  "cc-model-sm-effect-on-edge": {
+   "last_review": 1787793957
+  },
+  "cc-model-sm-guard-then-effect": {
+   "last_review": 1787793957
+  },
+  "cc-model-sm-reverse-edge": {
+   "last_review": 1787793957
+  },
+  "cc-model-sm-transition-table": {
+   "last_review": 1787793957
+  },
+  "cc-model-state-derived-vs-stored": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 763,
+   "last_review": 1788312546
+  },
+  "cc-model-state-implicit-entity-creation": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 761,
+   "last_review": 1788312532
+  },
+  "cc-model-state-reevaluate-only-touched": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 762,
+   "last_review": 1788312589
+  },
+  "cc-model-state-two-counters-not-a-list": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 763,
+   "last_review": 1788304260
+  },
+  "cc-model-state-zero-vs-absent": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 763,
+   "last_review": 1788304391
+  },
+  "cc-output-formatting-decimal-shapes": {
+   "last_review": 1787793957
+  },
+  "cc-output-formatting-fixed-width": {
+   "last_review": 1787793957
+  },
+  "cc-output-formatting-minor-units": {
+   "last_review": 1787793957
+  },
+  "cc-output-formatting-one-place": {
+   "last_review": 1787793957
+  },
+  "cc-output-formatting-separators": {
+   "last_review": 1787793957
+  },
+  "cc-output-ordering-cmp-to-key": {
+   "last_review": 1787793957
+  },
+  "cc-output-ordering-mixed-directions": {
+   "last_review": 1787793957
+  },
+  "cc-output-ordering-rank-unrounded": {
+   "last_review": 1787793957
+  },
+  "cc-output-ordering-stable-two-pass": {
+   "last_review": 1787793957
+  },
+  "cc-output-ordering-string-vs-numeric": {
+   "last_review": 1787793957
+  },
+  "cc-output-ordering-total-order": {
+   "last_review": 1787793957
+  },
+  "cc-output-sentinels-empty-input": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1788037604
+  },
+  "cc-output-sentinels-error-contract": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788037628
+  },
+  "cc-output-sentinels-none-vs-blank": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787798632
+  },
+  "cc-output-sentinels-null-vs-empty": {
+   "last_review": 1787793957
+  },
+  "cc-output-sentinels-zero-rows": {
+   "last_review": 1787793957
+  },
+  "cc-performance-amortized-append-doubling": {
+   "last_review": 1787793957
+  },
+  "cc-performance-amortized-cache-derived": {
+   "last_review": 1787793957
+  },
+  "cc-performance-amortized-incremental-aggregate": {
+   "last_review": 1787793957
+  },
+  "cc-performance-amortized-lazy-heap": {
+   "last_review": 1787793957
+  },
+  "cc-performance-amortized-while-inside-for": {
+   "last_review": 1787793957
+  },
+  "cc-performance-budget-bounds-multiply": {
+   "reps": 1,
+   "type": 1,
+   "due": 1788237458,
+   "last_review": 1788237391
+  },
+  "cc-performance-budget-decide-before-coding": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 761,
+   "last_review": 1788237444
+  },
+  "cc-performance-budget-from-n": {
+   "reps": 1,
+   "type": 1,
+   "due": 1788238324,
+   "last_review": 1788237601
+  },
+  "cc-performance-budget-ops-per-second": {
+   "last_review": 1787793957
+  },
+  "cc-performance-budget-small-n-unlocks": {
+   "last_review": 1787793957
+  },
+  "cc-performance-hot-loop-membership-in-list": {
+   "last_review": 1787793957
+  },
+  "cc-performance-hot-loop-recompiled-rules": {
+   "last_review": 1787793957
+  },
+  "cc-performance-hot-loop-rescan-entities": {
+   "last_review": 1787793957
+  },
+  "cc-performance-hot-loop-resort": {
+   "last_review": 1787793957
+  },
+  "cc-performance-hot-loop-string-concat": {
+   "last_review": 1787793957
+  },
+  "cc-performance-memory-input-is-resident": {
+   "last_review": 1787793957
+  },
+  "cc-performance-memory-object-cost": {
+   "last_review": 1787793957
+  },
+  "cc-performance-memory-repeated-strings": {
+   "last_review": 1787793957
+  },
+  "cc-performance-memory-sort-key-cost": {
+   "last_review": 1787793957
+  },
+  "cc-performance-memory-three-copies": {
+   "last_review": 1787793957
+  },
+  "cc-python-classes-dataclass-ordering": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788049381
+  },
+  "cc-python-classes-default-factory": {
+   "last_review": 1787793957
+  },
+  "cc-python-classes-eq-hash-pair": {
+   "last_review": 1787793957
+  },
+  "cc-python-classes-repr-for-failures": {
+   "last_review": 1787793957
+  },
+  "cc-python-classes-slots": {
+   "last_review": 1787793957
+  },
+  "cc-python-idioms-comprehensions": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1788049466
+  },
+  "cc-python-idioms-fstring-format": {
+   "reps": 2,
+   "ease": 2.5,
+   "last_review": 1788049506
+  },
+  "cc-python-idioms-setdefault-vs-defaultdict": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1788049610
+  },
+  "cc-python-idioms-sorted-key-mechanics": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1788049677
+  },
+  "cc-python-idioms-unpacking-enumerate-zip": {
+   "reps": 2,
+   "interval": 12,
+   "ease": 2.65,
+   "type": 2,
+   "due": 767,
+   "last_review": 1788054570
+  },
+  "cc-python-io-exact-stdout": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1788049201
+  },
+  "cc-python-io-main-seam": {
+   "reps": 2,
+   "interval": 8,
+   "ease": 2.65,
+   "type": 2,
+   "due": 763,
+   "last_review": 1788051983
+  },
+  "cc-python-io-part-dispatch": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788049252
+  },
+  "cc-python-io-read-all-stdin": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787800798
+  },
+  "cc-python-io-stderr-debug": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1788049316
+  },
+  "cc-python-pitfalls-float-equality": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787801031
+  },
+  "cc-python-pitfalls-late-binding-closures": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1788049350
+  },
+  "cc-python-pitfalls-mutable-default": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 761,
+   "last_review": 1788224208
+  },
+  "cc-python-pitfalls-mutate-while-iterating": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 761,
+   "last_review": 1788224276
+  },
+  "cc-python-pitfalls-negative-floordiv": {
+   "reps": 1,
+   "ease": 2.5,
+   "last_review": 1788224290
+  },
+  "cc-python-pitfalls-shallow-copy": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 761,
+   "last_review": 1788224540
+  },
+  "cc-python-portability-integer-division": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 761,
+   "last_review": 1788224595
+  },
+  "cc-python-portability-language-cost": {
+   "last_review": 1787793957
+  },
+  "cc-python-portability-money-and-ints": {
+   "last_review": 1787793957
+  },
+  "cc-python-portability-sort-comparators": {
+   "last_review": 1787793957
+  },
+  "cc-python-portability-structure-map": {
+   "last_review": 1787793957
+  },
+  "cc-python-stdlib-bisect-calls": {
+   "last_review": 1787793957
+  },
+  "cc-python-stdlib-collections-calls": {
+   "last_review": 1787793957
+  },
+  "cc-python-stdlib-decimal-calls": {
+   "last_review": 1787793957
+  },
+  "cc-python-stdlib-functools-calls": {
+   "last_review": 1787793957
+  },
+  "cc-python-stdlib-heapq-calls": {
+   "last_review": 1787793957
+  },
+  "cc-python-stdlib-itertools-calls": {
+   "last_review": 1787793957
+  },
+  "cc-round-ambiguity-comment-the-assumption": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1788004927
+  },
+  "cc-round-ambiguity-decide-then-move": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788005008
+  },
+  "cc-round-ambiguity-one-flag-away": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788005073
+  },
+  "cc-round-ambiguity-pick-the-extendable-reading": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1788005121
+  },
+  "cc-round-ambiguity-write-both-readings": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1788005193
+  },
+  "cc-round-comm-confirm-with-a-test-case": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788004629
+  },
+  "cc-round-comm-disagree": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1788004677
+  },
+  "cc-round-comm-narrate-decision": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1788004715
+  },
+  "cc-round-comm-questions-that-pay": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1788004792
+  },
+  "cc-round-comm-taking-a-hint": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788004852
+  },
+  "cc-round-debug-bisect-the-input": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1788005258
+  },
+  "cc-round-debug-diff-the-bytes": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1788005287
+  },
+  "cc-round-debug-failing-test-id": {
+   "last_review": 1788005716
+  },
+  "cc-round-debug-minimal-repro": {
+   "last_review": 1788005716
+  },
+  "cc-round-debug-stderr-only": {
+   "last_review": 1788005716
+  },
+  "cc-round-formats-hidden-vs-human": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 757,
+   "last_review": 1787797217
+  },
+  "cc-round-formats-machine-coding": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787797259
+  },
+  "cc-round-formats-multipart-unlock": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788003651
+  },
+  "cc-round-formats-proctored-ide": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 757,
+   "last_review": 1787797464
+  },
+  "cc-round-formats-take-home": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787797506
+  },
+  "cc-round-hidden-empty-cases": {
+   "last_review": 1788005716
+  },
+  "cc-round-hidden-exact-threshold": {
+   "last_review": 1788005716
+  },
+  "cc-round-hidden-read-the-ignore-clauses": {
+   "last_review": 1788005716
+  },
+  "cc-round-hidden-reversal-changes-an-earlier-answer": {
+   "last_review": 1788005716
+  },
+  "cc-round-hidden-second-occurrence": {
+   "last_review": 1788005716
+  },
+  "cc-round-reading-all-parts-first": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1788004025
+  },
+  "cc-round-reading-example-beats-prose": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1788004083
+  },
+  "cc-round-reading-later-part-flips-a-rule": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1788004165
+  },
+  "cc-round-reading-noun-inventory": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788004951
+  },
+  "cc-round-reading-output-spec-first": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1788004368
+  },
+  "cc-round-submit-debug-output-removed": {
+   "last_review": 1788005716
+  },
+  "cc-round-submit-final-sweep": {
+   "last_review": 1788005716
+  },
+  "cc-round-submit-format-recheck": {
+   "last_review": 1788005716
+  },
+  "cc-round-submit-no-half-refactor": {
+   "last_review": 1788005716
+  },
+  "cc-round-submit-rerun-every-part": {
+   "last_review": 1788005716
+  },
+  "cc-round-time-budget-60-minutes": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788004418
+  },
+  "cc-round-time-lock-before-next": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1788004460
+  },
+  "cc-round-time-no-late-refactor": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1788004483
+  },
+  "cc-round-time-stuck-rule": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788005151
+  },
+  "cc-round-time-triage-what-to-abandon": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1788004546
+  },
+  "cc-rules-fee-basis-points": {
+   "last_review": 1787793957
+  },
+  "cc-rules-fee-conditional-and-zero": {
+   "last_review": 1787793957
+  },
+  "cc-rules-fee-net-vs-gross": {
+   "last_review": 1787793957
+  },
+  "cc-rules-fee-percent-plus-fixed": {
+   "last_review": 1787793957
+  },
+  "cc-rules-fee-split-sums-back": {
+   "last_review": 1787793957
+  },
+  "cc-rules-grp-cancel-whole-group": {
+   "last_review": 1787793957
+  },
+  "cc-rules-grp-empty-groups-printed": {
+   "last_review": 1787793957
+  },
+  "cc-rules-grp-key-defines-independence": {
+   "last_review": 1787793957
+  },
+  "cc-rules-grp-once-per-group": {
+   "last_review": 1787793957
+  },
+  "cc-rules-grp-parameter-from-current-row": {
+   "last_review": 1787793957
+  },
+  "cc-rules-grp-running-count-includes-current": {
+   "last_review": 1787793957
+  },
+  "cc-rules-money-decimal-from-string": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1788003925
+  },
+  "cc-rules-money-float-symptom": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788003933
+  },
+  "cc-rules-money-integer-minor-units": {
+   "reps": 2,
+   "ease": 2.5,
+   "last_review": 1788037577
+  },
+  "cc-rules-money-negative-formatting": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788051781
+  },
+  "cc-rules-money-unit-in-the-name": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1788051847
+  },
+  "cc-rules-money-zero-decimal-currencies": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1788051875
+  },
+  "cc-rules-ratio-cross-multiply": {
+   "last_review": 1787793957
+  },
+  "cc-rules-ratio-decimal-literal-as-fraction": {
+   "last_review": 1787793957
+  },
+  "cc-rules-ratio-denominator-sign": {
+   "last_review": 1787793957
+  },
+  "cc-rules-ratio-fraction-escape-hatch": {
+   "last_review": 1787793957
+  },
+  "cc-rules-ratio-never-compare-floats": {
+   "last_review": 1787793957
+  },
+  "cc-rules-round-floor-vs-truncate": {
+   "last_review": 1787793957
+  },
+  "cc-rules-round-half-up-vs-bankers": {
+   "last_review": 1787793957
+  },
+  "cc-rules-round-integer-half-up": {
+   "last_review": 1787793957
+  },
+  "cc-rules-round-name-the-modes": {
+   "last_review": 1787793957
+  },
+  "cc-rules-round-once-at-the-edge": {
+   "last_review": 1787793957
+  },
+  "cc-rules-round-x-xx5-table": {
+   "last_review": 1787793957
+  },
+  "cc-rules-thr-band-edges": {
+   "last_review": 1787793957
+  },
+  "cc-rules-thr-bucket-boundary": {
+   "last_review": 1787793957
+  },
+  "cc-rules-thr-count-vs-ratio": {
+   "last_review": 1787793957
+  },
+  "cc-rules-thr-min-volume-gate": {
+   "last_review": 1787793957
+  },
+  "cc-rules-thr-strict-vs-non-strict": {
+   "last_review": 1787793957
+  },
+  "cc-rules-tier-allowance": {
+   "last_review": 1787793957
+  },
+  "cc-rules-tier-band-boundaries": {
+   "last_review": 1787793957
+  },
+  "cc-rules-tier-flat-band": {
+   "last_review": 1787793957
+  },
+  "cc-rules-tier-graduated-vs-volume": {
+   "last_review": 1787793957
+  },
+  "cc-rules-tier-proration": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-cache-expiry-index": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-cache-lru-ordereddict": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-cache-lru-tiebreak": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-cache-ttl": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-cache-versioned-map": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-deque-bfs-frontier": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1788038223
+  },
+  "cc-toolbox-deque-monotonic-max": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1788048994
+  },
+  "cc-toolbox-deque-monotonic-stack": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788049088
+  },
+  "cc-toolbox-deque-popleft": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-deque-window-sum": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-graph-directed-and-inverse": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-graph-implicit-edges": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-graph-representation-choice": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-graph-reverse-edges": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-graph-string-ids": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-hash-counter": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-hash-defaultdict-read-creates": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-hash-insertion-order": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-hash-set-vs-dict": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-hash-tuple-keys": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-heap-heapify": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1787956454
+  },
+  "cc-toolbox-heap-lazy-invalidation": {
+   "reps": 3,
+   "interval": 4,
+   "ease": 2.65,
+   "type": 2,
+   "due": 759,
+   "last_review": 1788050341
+  },
+  "cc-toolbox-heap-max-negation": {
+   "reps": 2,
+   "ease": 2.5,
+   "last_review": 1787956553
+  },
+  "cc-toolbox-heap-park-and-restore": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1788049752
+  },
+  "cc-toolbox-heap-topk": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788049821
+  },
+  "cc-toolbox-heap-tuple-key": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1788049903
+  },
+  "cc-toolbox-prefix-longest-match": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1788052475
+  },
+  "cc-toolbox-prefix-node-counts": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1788054447
+  },
+  "cc-toolbox-prefix-sorted-bisect": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-prefix-trie-build": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-prefix-when-not-a-trie": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-sorted-bisect-left-right": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-sorted-insort-cost": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-sorted-key-once": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-sorted-maintain-vs-resort": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-sorted-range-count": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-union-find-by-size": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-union-find-find": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-union-find-shared-key-edges": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-union-find-vs-bfs": {
+   "last_review": 1787793957
+  },
+  "cc-toolbox-union-find-weighted": {
+   "last_review": 1787793957
+  },
+  "cc-transfer-amazon-shape": {
+   "reps": 2,
+   "interval": 19,
+   "ease": 2.65,
+   "type": 2,
+   "due": 776,
+   "last_review": 1788232189
+  },
+  "cc-transfer-amazon-star-with-a-number": {
+   "reps": 1,
+   "type": 1,
+   "due": 1788232818,
+   "last_review": 1788232137
+  },
+  "cc-transfer-amazon-two-problems-clock": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 762,
+   "last_review": 1788232264
+  },
+  "cc-transfer-amazon-work-simulation": {
+   "due": 3,
+   "last_review": 1788954480
+  },
+  "cc-transfer-oa-four-stage-pipeline": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1787973880
+  },
+  "cc-transfer-oa-not-leetcode": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1787973901
+  },
+  "cc-transfer-oa-partial-credit": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1787973907
+  },
+  "cc-transfer-oa-payments-vocabulary": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 757,
+   "last_review": 1787974034
+  },
+  "cc-transfer-oa-shape": {
+   "reps": 3,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1787974128
+  },
+  "cc-transfer-playbook-card-the-rule": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1788005415
+  },
+  "cc-transfer-playbook-failure-log": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 760,
+   "last_review": 1788005472
+  },
+  "cc-transfer-playbook-find-the-general-leaf": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1788005515
+  },
+  "cc-transfer-playbook-gap-grows-the-map": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 759,
+   "last_review": 1788005529
+  },
+  "cc-transfer-playbook-problem-as-evidence": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1788005548
+  },
+  "cc-transfer-quant-market-making-brainteaser": {
+   "last_review": 1787793957
+  },
+  "cc-transfer-quant-numerical-care": {
+   "last_review": 1787793957
+  },
+  "cc-transfer-quant-shape": {
+   "last_review": 1787793957
+  },
+  "cc-transfer-quant-simulate-vs-closed-form": {
+   "last_review": 1787793957
+  },
+  "cc-verification-determinism-repeatable-runs": {
+   "last_review": 1787793957
+  },
+  "cc-verification-determinism-rollout-boundary": {
+   "last_review": 1787793957
+  },
+  "cc-verification-determinism-seeded-random": {
+   "last_review": 1787793957
+  },
+  "cc-verification-determinism-set-iteration": {
+   "last_review": 1787793957
+  },
+  "cc-verification-determinism-stable-hash": {
+   "last_review": 1787793957
+  },
+  "cc-verification-edge-catalog-eight": {
+   "last_review": 1787793957
+  },
+  "cc-verification-edge-duplicate-and-out-of-order": {
+   "last_review": 1787793957
+  },
+  "cc-verification-edge-empty-and-single": {
+   "last_review": 1787793957
+  },
+  "cc-verification-edge-exact-threshold-triple": {
+   "last_review": 1787793957
+  },
+  "cc-verification-edge-zero-negative-and-max": {
+   "last_review": 1787793957
+  },
+  "cc-verification-invariant-assert-cost": {
+   "last_review": 1787793957
+  },
+  "cc-verification-invariant-brute-force-oracle": {
+   "last_review": 1787793957
+  },
+  "cc-verification-invariant-conservation": {
+   "last_review": 1787793957
+  },
+  "cc-verification-invariant-name-it": {
+   "last_review": 1787793957
+  },
+  "cc-verification-invariant-two-indexes": {
+   "last_review": 1787793957
+  },
+  "cc-verification-tests-can-it-fail": {
+   "last_review": 1787793957
+  },
+  "cc-verification-tests-table-driven": {
+   "last_review": 1787793957
+  },
+  "cc-verification-tests-two-or-three-per-part": {
+   "last_review": 1787793957
+  },
+  "cc-verification-tests-unit-plus-one-io": {
+   "last_review": 1787793957
+  },
+  "cc-verification-tests-worked-example-first": {
+   "last_review": 1787793957
+  }
+ }
+}

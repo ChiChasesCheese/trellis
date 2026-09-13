@@ -21,6 +21,7 @@ from .cards import Card
 from .links import go_deeper
 from .readings import Reading
 from .skeleton import Skeleton
+from .traces import ID_TAG_PREFIX
 
 _MD = markdown.Markdown(extensions=["fenced_code", "tables", "sane_lists"])
 
@@ -150,12 +151,19 @@ def build_package(
 
     study_order = {n.id: i for i, n in enumerate(skeleton.walk())}
     note_count = 0
-    for card in sorted(cards, key=lambda c: (study_order[c.node], c.path.name)):
+    # An adopted card mirrors a note another tool owns; building it would
+    # put a second copy in the collection.
+    own = [c for c in cards if not c.adopted]
+    for card in sorted(own, key=lambda c: (study_order[c.node], c.path.name)):
         node = skeleton.by_id[card.node]
         crumb = " › ".join(n.title for n in node.path())
         tags = [skeleton.domain + "::" + card.node.replace(".", "::")] + card.tags
         if card.source:
             tags.append(f"src::{card.source}")
+        # The note GUID is a hash of the card id and cannot be reversed,
+        # so the id also travels as a tag — that is how `trellis pull`
+        # reads a review history back onto the card that earned it.
+        tags.append(ID_TAG_PREFIX + card.id)
         footer = _sources_html(skeleton, readings, card.node, vault,
                                clippings, cases)
         question, answer = card.render(lang)

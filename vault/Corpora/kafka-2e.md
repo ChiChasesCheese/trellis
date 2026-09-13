@@ -1,0 +1,159 @@
+%% trellis:begin %%
+# Kafka权威指南（第2版）
+
+Gwen Shapira, Todd Palino, Rajini Sivaram, Krit Petty（薛命灯 译） · commercial · [[Kafka MOC|Kafka]]
+[Home ↗](https://www.ituring.com.cn/book/2937)
+
+140 sections · 88 readings · 340 cards · 62/66 leaves reached
+
+## Outline
+- 外版申明 【有想看的书找不到，就到公众号：东东电子书】 — *skipped*
+- O'Reilly Media, Inc.介绍 — *skipped*
+    - 业界评论 — *skipped*
+- 本书赞誉 — *skipped*
+- 第2版序 — *skipped*
+- 第1版序 — *skipped*
+- 前言 — *skipped*
+    - 读者对象 — *skipped*
+    - 排版约定 — *skipped*
+    - 使用代码示例 — *skipped*
+    - 致谢 — *skipped*
+- 第1章 初识Kafka — *skipped*
+    - **1.1 发布与订阅消息系统** — [[kafka-1-1-pubsub-model|发布与订阅消息系统入门]] → [[core.pubsub-why|发布/订阅模型与Kafka的定位（为何选择Kafka）]] · 6 cards
+    - **1.2 Kafka登场** — [[kafka-1-2-core-concepts|Kafka核心概念全景：消息、主题、偏移量、broker与集群]] → [[core.topics-partitions|主题（topic）、分区（partition）与数据模型]], [[core.offsets|偏移量（offset）：仅追加日志中的位置]], [[core.cluster-roles|broker、集群与多集群架构中的角色分工]] · 15 cards
+    - **1.3 为什么选择Kafka** — [[kafka-1-3-why-kafka|为什么选择Kafka]] → [[core.pubsub-why|发布/订阅模型与Kafka的定位（为何选择Kafka）]] · 6 cards
+    - 1.4 数据生态系统 — *skipped*
+    - 1.5 起源故事 — *skipped*
+    - 1.6 开始Kafka之旅 — *skipped*
+- 第2章 安装Kafka — *skipped*
+    - 2.1 环境配置 — *skipped*
+    - 2.2 安装broker — *skipped*
+    - **2.3 配置broker** — [[kafka-2-3-broker-topic-defaults|broker与主题的默认配置：从num.partitions说起]] → [[core.topics-partitions|主题（topic）、分区（partition）与数据模型]] · 5 cards
+    - **2.4 选择硬件** — [[kafka-2-4-hardware-sizing|为Kafka选择合适的硬件]] → [[practice.sizing-tuning|容量规划与生产环境调优]] · 6 cards
+    - **2.5 云端的Kafka** — [[kafka-2-5-cloud-kafka|云端部署Kafka的注意事项]] → [[practice.cloud-deployment|在云端运行Kafka]] · 5 cards
+    - **2.6 配置Kafka集群** — [[kafka-2-6-cluster-os-tuning|配置Kafka集群：broker数量与操作系统调优]] → [[practice.sizing-tuning|容量规划与生产环境调优]] · 6 cards
+    - **2.7 生产环境的注意事项** — [[kafka-2-7-production-readiness|生产环境部署前的准备：GC选择与数据中心布局]] → [[practice.sizing-tuning|容量规划与生产环境调优]] · 6 cards
+    - 2.8 小结 — *skipped*
+- 第3章 Kafka生产者——向Kafka写入数据 — *skipped*
+    - **3.1 生产者概览** — [[kafka-3-1-producer-overview|生产者概览：一条消息的发送流程]] → [[producer.client-basics|创建生产者与同步/异步发送]] · 5 cards
+    - **3.2 创建Kafka生产者** — [[kafka-3-2-create-producer|创建Kafka生产者]] → [[producer.client-basics|创建生产者与同步/异步发送]] · 5 cards
+    - **3.3 发送消息到Kafka** — [[kafka-3-3-send-modes|同步发送与异步发送]] → [[producer.client-basics|创建生产者与同步/异步发送]] · 5 cards
+    - **3.4 生产者配置** — [[kafka-3-4-producer-config|生产者关键配置：acks、批处理与幂等性]] → [[producer.acks-durability|acks与生产端持久性保证]], [[producer.batching-throughput|批处理、linger.ms与压缩（compression）对吞吐量的影响]], [[producer.timeouts-retries|消息传递超时与重试（max.in.flight.requests.per.connection）]], [[producer.idempotence-ordering|幂等生产者开关（enable.idempotence）与顺序保证]] · 20 cards
+    - **3.5 序列化器** — [[kafka-3-5-serializers|序列化器：自定义序列化与Avro]] → [[producer.serialization|序列化器与使用Avro序列化数据]] · 5 cards
+    - **3.6 分区** — [[kafka-3-6-partitioning|分区：默认策略与自定义分区器]] → [[producer.extensibility|分区策略、消息标头（headers）与拦截器]] · 5 cards
+    - **3.7 标头** — [[kafka-3-7-headers|标头：在不解析消息体的情况下携带元数据]] → [[producer.extensibility|分区策略、消息标头（headers）与拦截器]] · 5 cards
+    - **3.8 拦截器** — [[kafka-3-8-interceptors|拦截器：无侵入地修改客户端行为]] → [[producer.extensibility|分区策略、消息标头（headers）与拦截器]] · 5 cards
+    - **3.9 配额和节流** — [[kafka-3-9-quotas-throttling|配额与节流：限制客户端对broker资源的占用]] → [[monitoring.client-metrics|客户端监控：生产者、消费者指标与配额]] · 6 cards
+    - 3.10 小结 — *skipped*
+- 第4章 Kafka消费者——从Kafka读取数据 — *skipped*
+    - **4.1 Kafka消费者相关概念** — [[kafka-4-1-consumer-groups|消费者与消费者群组]] → [[consumer.groups-rebalance|消费者群组（consumer group）与再均衡（rebalance）]] · 6 cards
+    - **4.2 创建Kafka消费者** — [[kafka-4-2-create-consumer|创建Kafka消费者]] → [[consumer.client-basics|创建消费者、订阅与轮询循环]] · 5 cards
+    - **4.3 订阅主题** — [[kafka-4-3-subscribe|订阅主题]] → [[consumer.client-basics|创建消费者、订阅与轮询循环]] · 5 cards
+    - **4.4 轮询** — [[kafka-4-4-poll-loop|轮询循环与线程安全]] → [[consumer.client-basics|创建消费者、订阅与轮询循环]] · 5 cards
+    - **4.5 配置消费者** — [[kafka-4-5-consumer-config|配置消费者：拉取参数与存活检测]] → [[consumer.poll-config|拉取与存活相关配置]] · 6 cards
+    - **4.6 提交和偏移量** — [[kafka-4-6-commit-offsets|提交和偏移量]] → [[consumer.offset-commit|提交与偏移量管理]] · 6 cards
+    - **4.7 再均衡监听器** — [[kafka-4-7-rebalance-listener|再均衡监听器]] → [[consumer.groups-rebalance|消费者群组（consumer group）与再均衡（rebalance）]] · 6 cards
+    - **4.8 从特定偏移量位置读取记录** — [[kafka-4-8-seek-and-replay|从特定偏移量位置读取记录：seek 与按时间戳定位]] → [[consumer.seek-and-replay|定位读取位置：seek、按时间戳查找与重放（replay）]] · 4 cards
+    - **4.9 如何退出** — [[kafka-4-9-graceful-exit|如何优雅退出轮询循环]] → [[consumer.client-basics|创建消费者、订阅与轮询循环]] · 5 cards
+    - **4.10 反序列化器** — [[kafka-4-10-deserializers|反序列化器：自定义与Avro]] → [[consumer.deserialization|反序列化器与Avro反序列化]] · 4 cards
+    - **4.11 独立的消费者：为什么以及怎样使用不属于任何群组的消费者** — [[kafka-4-11-standalone-consumer|独立的消费者]] → [[consumer.standalone|独立消费者：脱离消费者群组的场景]] · 4 cards
+    - 4.12 小结 — *skipped*
+- 第5章 编程式管理Kafka — *skipped*
+    - **5.1 AdminClient概览** — [[kafka-5-1-adminclient-overview|AdminClient概览：异步且最终一致的管理API]] → [[admin.topic-ops|主题运维：AdminClient与命令行工具]] · 6 cards
+    - **5.2 AdminClient生命周期：创建、配置和关闭** — [[kafka-5-2-adminclient-lifecycle|AdminClient生命周期：创建、配置和关闭]] → [[admin.topic-ops|主题运维：AdminClient与命令行工具]] · 6 cards
+    - **5.3 基本的主题管理操作** — [[kafka-5-3-topic-admin-ops|用AdminClient管理主题]] → [[admin.topic-ops|主题运维：AdminClient与命令行工具]] · 6 cards
+    - **5.4 配置管理** — [[kafka-5-4-config-admin|用AdminClient管理配置]] → [[admin.dynamic-config|动态配置变更]] · 6 cards
+    - **5.5 消费者群组管理** — [[kafka-5-5-consumer-group-admin|用AdminClient管理消费者群组]] → [[admin.consumer-group-ops|消费者群组管理与偏移量运维]] · 6 cards
+    - 5.6 集群元数据 — *skipped*
+    - **5.7 高级的管理操作** — [[kafka-5-7-advanced-admin-ops|高级管理操作：分区、消息删除与首领选举]] → [[admin.partition-reassignment|分区管理与应急操作]] · 6 cards
+    - 5.8 测试 — *skipped*
+    - 5.9 小结 — *skipped*
+- 第6章 深入Kafka — *skipped*
+    - **6.1 集群的成员关系** — [[kafka-6-1-cluster-membership|集群的成员关系：broker如何注册与被发现]] → [[internals.controller|控制器（controller）的角色与选举]] · 5 cards
+    - **6.2 控制器** — [[kafka-6-2-controller-kraft|控制器的选举与职责，以及KRaft带来的变革]] → [[internals.controller|控制器（controller）的角色与选举]], [[internals.kraft-mode|KRaft模式与ZooKeeper的移除]] · 10 cards
+    - **6.3 复制** — [[kafka-6-3-replication-protocol|复制协议：首领、跟随者与ISR]] → [[core.replication-isr|副本、首领/追随者与同步副本集合（ISR）]], [[internals.replication-protocol|复制协议：首领/追随者同步与副本滞后]] · 10 cards
+    - **6.4 处理请求** — [[kafka-6-4-request-handling|broker如何处理请求]] → [[internals.request-handling|broker如何处理生产请求与获取请求]] · 6 cards
+    - **6.5 物理存储** — [[kafka-6-5-physical-storage|物理存储：分层存储、分区分配、索引与压实]] → [[internals.tiered-storage|分层存储（tiered storage, KIP-405）]], [[internals.storage-segments|物理存储：分区分配与日志片段（log segment）]], [[internals.indexes|索引：偏移量索引与时间索引]], [[internals.compaction|日志压实（log compaction）]] · 21 cards
+    - 6.6 小结 — *skipped*
+- 第7章 可靠的数据传递 — *skipped*
+    - **7.1 可靠性保证** — [[kafka-7-1-reliability-guarantees|可靠性保证]] → [[reliability.guarantees|Kafka的可靠性保证及其边界]] · 5 cards
+    - **7.2 复制** — [[kafka-7-2-replication-reliability|复制如何支撑可靠性]] → [[reliability.guarantees|Kafka的可靠性保证及其边界]] · 5 cards
+    - **7.3 broker配置** — [[kafka-7-3-broker-reliability-config|broker配置：复制系数、不彻底首领选举与最少同步副本]] → [[reliability.broker-config|broker层可靠性配置]] · 6 cards
+    - **7.4 在可靠的系统中使用生产者** — [[kafka-7-4-reliable-producer|在可靠的系统中使用生产者]] → [[reliability.producer-reliable|在可靠系统中配置生产者]] · 6 cards
+    - **7.5 在可靠的系统中使用消费者** — [[kafka-7-5-reliable-consumer|在可靠的系统中使用消费者]] → [[reliability.consumer-reliable|在可靠系统中配置消费者]] · 6 cards
+    - **7.6 验证系统可靠性** — [[kafka-7-6-validate-reliability|验证系统可靠性]] → [[reliability.validation|验证系统可靠性]] · 6 cards
+    - 7.7 小结 — *skipped*
+- 第8章 精确一次性语义 — *skipped*
+    - **8.1 幂等生产者** — [[kafka-8-1-idempotent-producer|幂等生产者]] → [[eos.idempotent-producer|幂等生产者的工作原理与局限性]] · 6 cards
+    - **8.2 事务** — [[kafka-8-2-transactions|事务：跨分区的原子写入]] → [[eos.transactions|事务：应用场景、隔离与实现原理]] · 6 cards
+    - **8.3 事务的性能** — [[kafka-8-3-transaction-performance|事务的性能开销]] → [[eos.transactions-perf|事务的性能开销]] · 4 cards
+    - 8.4 小结 — *skipped*
+- 第9章 构建数据管道 — *skipped*
+    - **9.1 构建数据管道时需要考虑的问题** — [[kafka-9-1-pipeline-design|构建数据管道时需要考虑的问题]] → [[connect.pipeline-design|构建数据管道的设计考量]] · 6 cards
+    - **9.2 何时使用Connect API或客户端API** — [[kafka-9-2-connect-vs-client-api|何时使用Connect API或客户端API]] → [[connect.connect-basics|Kafka Connect：适用场景与架构]] · 6 cards
+    - **9.3 KafkaConnect** — [[kafka-9-3-kafka-connect|Kafka Connect：worker、连接器与单一消息转换]] → [[connect.connect-basics|Kafka Connect：适用场景与架构]], [[connect.smt|单一消息转换（SMT）与Connect内部机制]] · 12 cards
+    - **9.4 Connect之外的选择** — [[kafka-9-4-connect-alternatives|Connect之外的数据集成选择]] → [[connect.alternatives|Connect之外的数据集成选择]] · 4 cards
+    - 9.5 小结 — *skipped*
+- 第11章 保护Kafka — *skipped*
+    - **11.1 锁住Kafka** — [[kafka-11-1-security-overview|锁住Kafka：安全模型总览]] → [[security.protocols-auth-encryption|安全协议、身份验证（SSL/SASL）与加密]] · 7 cards
+    - **11.2 安全协议** — [[kafka-11-2-security-protocols|安全协议：监听器与协议选择]] → [[security.protocols-auth-encryption|安全协议、身份验证（SSL/SASL）与加密]] · 7 cards
+    - **11.3 身份验证** — [[kafka-11-3-authentication|身份验证：SSL与SASL]] → [[security.protocols-auth-encryption|安全协议、身份验证（SSL/SASL）与加密]] · 7 cards
+    - **11.4 加密** — [[kafka-11-4-encryption|加密：保护传输中的数据]] → [[security.protocols-auth-encryption|安全协议、身份验证（SSL/SASL）与加密]] · 7 cards
+    - **11.5 授权** — [[kafka-11-5-authorization|授权：基于ACL的访问控制]] → [[security.authorization|授权：ACL与自定义授权]] · 6 cards
+    - **11.6 审计** — [[kafka-11-6-auditing|审计：记录谁做了什么]] → [[security.audit-hardening|审计与平台整体加固]] · 6 cards
+    - **11.7 保护ZooKeeper** — [[kafka-11-7-secure-zookeeper|保护ZooKeeper]] → [[security.audit-hardening|审计与平台整体加固]] · 6 cards
+    - **11.8 保护平台** — [[kafka-11-8-secure-platform|保护整个平台]] → [[security.audit-hardening|审计与平台整体加固]] · 6 cards
+    - 11.9 小结 — *skipped*
+- 第12章 管理Kafka — *skipped*
+    - **12.1 主题操作** — [[kafka-12-1-topic-cli-ops|用kafka-topics.sh管理主题]] → [[admin.topic-ops|主题运维：AdminClient与命令行工具]] · 6 cards
+    - **12.2 消费者群组** — [[kafka-12-2-consumer-group-cli|用kafka-consumer-groups.sh管理消费者群组]] → [[admin.consumer-group-ops|消费者群组管理与偏移量运维]] · 6 cards
+    - **12.3 动态配置变更** — [[kafka-12-3-dynamic-config-cli|用kafka-configs.sh做动态配置变更]] → [[admin.dynamic-config|动态配置变更]] · 6 cards
+    - **12.4 生产和消费** — [[kafka-12-4-console-producer-consumer|控制台生产者与消费者]] → [[admin.topic-ops|主题运维：AdminClient与命令行工具]] · 6 cards
+    - **12.5 分区管理** — [[kafka-12-5-partition-management|分区管理：首选首领选举与副本重分配]] → [[admin.partition-reassignment|分区管理与应急操作]] · 6 cards
+    - 12.6 其他工具 — *skipped*
+    - **12.7 不安全的操作** — [[kafka-12-7-unsafe-operations|不安全的操作：紧急情况下的应急手段]] → [[admin.partition-reassignment|分区管理与应急操作]] · 6 cards
+    - 12.8 小结 — *skipped*
+- 第10章 跨集群数据镜像 — *skipped*
+    - **10.1 跨集群镜像的应用场景** — [[kafka-10-1-mirroring-use-cases|跨集群镜像的应用场景]] → [[mirroring.architectures|跨集群镜像的应用场景与多集群架构]] · 6 cards
+    - **10.2 多集群架构** — [[kafka-10-2-multi-cluster-architectures|多集群架构模式]] → [[mirroring.architectures|跨集群镜像的应用场景与多集群架构]] · 6 cards
+    - **10.3 MirrorMaker** — [[kafka-10-3-mirrormaker|MirrorMaker：配置、拓扑与生产化调优]] → [[mirroring.mirrormaker|MirrorMaker：配置、拓扑与调优]] · 6 cards
+    - **10.4 其他跨集群镜像方案** — [[kafka-10-4-mirroring-alternatives|MirrorMaker之外的跨集群镜像方案]] → [[mirroring.alternatives|其他跨集群镜像方案]] · 6 cards
+    - 10.5 小结 — *skipped*
+- 第13章 监控Kafka — *skipped*
+    - **13.1 指标基础** — [[kafka-13-1-metrics-basics|指标基础：来源、选择与健康检测]] → [[monitoring.metrics-and-slo|指标基础与服务级别目标（SLO）]] · 6 cards
+    - **13.2 服务级别目标** — [[kafka-13-2-slo|服务级别目标：把指标变成SLO]] → [[monitoring.metrics-and-slo|指标基础与服务级别目标（SLO）]] · 6 cards
+    - **13.3 broker的指标** — [[kafka-13-3-broker-metrics|broker的指标：诊断集群问题]] → [[monitoring.broker-metrics|broker指标与集群问题诊断]] · 6 cards
+    - **13.4 客户端监控** — [[kafka-13-4-client-metrics|客户端监控：生产者、消费者指标与配额]] → [[monitoring.client-metrics|客户端监控：生产者、消费者指标与配额]] · 6 cards
+    - **13.5 滞后监控** — [[kafka-13-5-lag-monitoring|滞后监控：消费者落后了多少]] → [[monitoring.lag-e2e|消费滞后监控与端到端监控]] · 6 cards
+    - **13.6 端到端监控** — [[kafka-13-6-e2e-monitoring|端到端监控：验证消息从生产到消费的完整链路]] → [[monitoring.lag-e2e|消费滞后监控与端到端监控]] · 6 cards
+    - 13.7 小结 — *skipped*
+- 第14章 流式处理 — *skipped*
+    - **14.1 什么是流式处理** — [[kafka-14-1-what-is-stream-processing|什么是流式处理]] → [[streams.concepts|流式处理核心概念]] · 6 cards
+    - **14.2 流式处理相关概念** — [[kafka-14-2-stream-processing-concepts|流式处理核心概念：拓扑、时间、状态与流表对偶]] → [[streams.concepts|流式处理核心概念]] · 6 cards
+    - **14.3 流式处理设计模式** — [[kafka-14-3-stream-design-patterns|流式处理设计模式]] → [[streams.design-patterns|流式处理设计模式]] · 6 cards
+    - **14.4 Streams示例** — [[kafka-14-4-streams-examples|Streams示例：字数统计、股票统计与点击流填充]] → [[streams.streams-api|Kafka Streams API与拓扑构建]] · 6 cards
+    - **14.5 Streams架构概览** — [[kafka-14-5-streams-architecture|Streams架构概览：优化、测试、扩展与故障恢复]] → [[streams.streams-architecture|Kafka Streams架构]] · 6 cards
+    - **14.6 流式处理应用场景** — [[kafka-14-6-stream-processing-use-cases|流式处理的应用场景]] → [[streams.choosing-framework|流式处理的应用场景与框架选型]] · 6 cards
+    - **14.7 如何选择流式处理框架** — [[kafka-14-7-choosing-stream-framework|如何选择流式处理框架]] → [[streams.choosing-framework|流式处理的应用场景与框架选型]] · 6 cards
+    - 14.8 小结 — *skipped*
+- 附录A 在其他操作系统中安装Kafka — *skipped*
+    - A.1 在Windows系统中安装Kafka — *skipped*
+    - A.2 在macOS系统中安装Kafka — *skipped*
+- 附录B 其他Kafka工具 — *skipped*
+    - **B.1 综合性平台** — [[kafka-appendix-b1-managed-platforms|综合性托管平台一览]] → [[practice.cloud-deployment|在云端运行Kafka]] · 5 cards
+    - **B.2 集群部署和管理** — [[kafka-appendix-b2-kubernetes-strimzi|在Kubernetes上部署与管理Kafka：Strimzi等工具]] → [[practice.kubernetes-strimzi|在Kubernetes上运行Kafka（Strimzi）]] · 5 cards
+    - **B.3 监控和查看数据** — [[kafka-appendix-b3-monitoring-tools|监控工具一览：Xinfra Monitor与Burrow]] → [[monitoring.lag-e2e|消费滞后监控与端到端监控]] · 6 cards
+    - **B.4 客户端开发库** — [[kafka-appendix-b4-other-clients|其他语言的客户端开发库]] → [[practice.other-clients|非JVM语言客户端生态]] · 4 cards
+    - **B.5 流式处理** — [[kafka-appendix-b5-stream-frameworks|Kafka生态外的流式处理框架]] → [[streams.choosing-framework|流式处理的应用场景与框架选型]] · 6 cards
+- 关于作者 — *skipped*
+- 关于封面 【有想看的书找不到，就到公众号：东东电子书】 — *skipped*
+
+## Leaves this corpus never reached (4)
+Your reading list: the map says these exist and the book does not teach them.
+- [[producer.schema-registry|Schema Registry实践：模式演进与兼容性]] — 理解Schema Registry在生产环境中如何管理模式版本、执行兼容性检查以支撑生产者/消费者的独立演进。
+- [[consumer.kafka4-protocol-changes|新一代消费者协议：增量再均衡（KIP-848）与共享群组（KIP-932）]] — 理解Kafka 4.0引入的服务端驱动增量再均衡协议如何消除停止世界式再均衡，以及共享群组（share group）如何为Kafka带来类队列的消费语义。
+- [[monitoring.observability-otel|用OpenTelemetry构建现代可观测性]] — 理解如何用OpenTelemetry等标准化可观测性技术栈统一采集Kafka客户端与broker的指标、日志与链路追踪。
+- [[practice.positioning|Kafka与Pulsar/RabbitMQ/Redpanda等的定位取舍]] — 理解Kafka与Pulsar、RabbitMQ、Redpanda等消息系统在架构假设与适用场景上的关键差异，从而判断何时该选谁。
+%% trellis:end %%
+
+## Notes

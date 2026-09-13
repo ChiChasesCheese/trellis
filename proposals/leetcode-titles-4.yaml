@@ -1,0 +1,100 @@
+moore-voting: [摩尔投票法（moore-voting）, 数组中若存在出现次数严格超过一半的元素，可用 摩尔投票法。]
+multi-source-bfs: [多源 BFS（multi-source-bfs）, 要求每个点到最近多个起点之一的无权距离时，用 多源 BFS。]
+negative-mod-normalization: [负数取模规范化（negative-mod-normalization）, '在 C++/Java 等语言中，对负数取模可能得到负结果，此时应使用
+    (x mod m + m) mod m 将结果规范到 [0, m-1]。']
+offline-query-ordering: [离线算法（offline-query-ordering）, 查询彼此独立且改变顺序能复用状态时，用 离线算法。]
+opposite-direction-two-pointers: [相向双指针（opposite-direction-two-pointers）, '数组反转、有序数组两数之和等需要从两端向中间处理的场景,应使用相向双指针。']
+optimized-dp-data-structures: [单调队列（optimized-dp-data-structures）, 转移来源是随 i 移动的连续窗口最值时，用
+    单调队列 优化。]
+palindrome-enumeration: [镜像前半部分（palindrome-enumeration）, 候选必须是回文数时，应通过 镜像前半部分 构造，而非扫描全部整数。]
+palindrome-frequency-greedy: [奇偶性（palindrome-frequency-greedy）, 可重排字符构造回文时，先关注每个字符频次的
+    奇偶性。]
+partition-and-subsequence-dp: [划分型 DP（partition-and-subsequence-dp）, 答案可按“最后一段从哪里开始”归因时，用
+    划分型 DP。]
+partition-dp: [最后一段的左端点（partition-dp）, 把序列划成连续段时，常通过枚举 最后一段的左端点 转移。]
+permutation-backtracking-with-duplicates: [排列型回溯（permutation-backtracking-with-duplicates）,
+  每层都能从所有剩余元素任选一个，且顺序影响答案时，用 排列型回溯。]
+permutation-bitmask-dp: [排列型状压 DP（permutation-bitmask-dp）, n 不大且要枚举访问顺序时，考虑 排列型状压
+    DP。]
+polynomial-string-hash: [字符串哈希（polynomial-string-hash）, 当题目有大量子串相等判断，并可接受概率判定或双模时，使用
+    字符串哈希。]
+prefix-suffix-and-difference: [差分数组（prefix-suffix-and-difference）, 有大量“给区间统一加值，最后查看数组”的操作时，用
+    差分数组。]
+prefix-suffix-and-difference-array: [前后缀分解（prefix-suffix-and-difference-array）, 切分点答案能写成左侧聚合与右侧聚合组合时，用
+    前后缀分解。]
+prefix-suffix-decomposition: [前后缀分解（prefix-suffix-decomposition）, 每个切分点的答案能由左右两侧独立信息合成时，用
+    前后缀分解。]
+prefix-suffix-heaps: [前后缀堆（prefix-suffix-heaps）, 每个切分点都要比较左右两侧各自最优的固定数量元素时，用 前后缀堆。]
+prefix-sum-and-prefix-hash: [前缀和或前缀状态（prefix-sum-and-prefix-hash）, 子数组条件能写成两个累计状态之差时，用
+    前缀和或前缀状态。]
+prefix-sum-difference-array: [差分数组（prefix-sum-difference-array）, 大量区间加法、最后再读取数组时，用
+    差分数组。]
+prefix-sum-hash-counting: [前缀和加哈希计数（prefix-sum-hash-counting）, 区间条件能改写为两个前缀状态的关系时，用
+    前缀和加哈希计数。]
+prefix-sum-parity: [±1（prefix-sum-parity）, '在计数满足条件子数组的前缀和技巧中，将原数组转化为 ±1 序列（符合条件记为+1，不符合记为-1）后，子数组[i,j]满足条件当且仅当
+    {{c2。']
+prime-exponent-prefix-sums: [质因子指数前缀和（prime-exponent-prefix-sums）, 乘积目标能按元素拆成质因子幂之和时，用
+    质因子指数前缀和。]
+prime-factorization: [质因数指数（prime-factorization）, 题目中的乘积、整除关系能按质数独立处理时，应转成 质因数指数。]
+prime-factorization-sieve: [质因数分解（prime-factorization-sieve）, 整除、互质或乘积的因子性质是核心时，考虑
+    质因数分解。]
+prime-sieve-and-divisor-enumeration: [埃氏筛（prime-sieve-and-divisor-enumeration）, 需要批量判断
+    0..n 中的质数时，用 埃氏筛。]
+prime-test: [试除到平方根（prime-test）, 判断单个整数是否为质数且 n 不大时，可使用 试除到平方根。]
+priority-queue-greedy: [优先队列贪心（priority-queue-greedy）, 算法每一步都要从动态候选中取当前最小或最大值时，用 优先队列/堆。]
+probability-expectation-dp: [期望 DP 方程（probability-expectation-dp）, 求随机过程的平均步数且状态可描述时，可建立
+    期望 DP 方程。]
+product-and-inequality-greedy: [尽量均衡（product-and-inequality-greedy）, 固定正数总和并最大化乘积时，优先让各部分
+    尽量均衡。]
+q1-two-pointer-near-palindromic-deletion: [双指针从两端向中心匹配（q1-two-pointer-near-palindromic-deletion）,
+  当题目要求“删除恰好一个元素后能否变成回文”时，应使用 双指针从两端向中心匹配，一旦发现不对称立即分两种情况验证。]
+q2-small-constant-brute-force: [很小的常数（如不超过一千）（q2-small-constant-brute-force）, 看到题目规模上限是
+    很小的常数（如不超过一千），且候选之间相互独立时，应优先考虑直接枚举取最优而非设计复杂算法。]
+q3-binary-search-on-answer-arithmetic-sum: [二分最后一次操作对应的阈值（q3-binary-search-on-answer-arithmetic-sum）,
+  当贪心策略等价于反复取当前最大值（可用堆模拟），但取值范围过大导致逐步模拟超时时，应考虑 二分最后一次操作对应的阈值。]
+q4-complement-counting: [逆向计数（先算总数再减去不满足的数量）（q4-complement-counting）, 当直接统计满足某关系的组合数很复杂，而其反面条件容易刻画时，应考虑
+    逆向计数（先算总数再减去不满足的数量）。]
+q4-subset-enumeration-bitmask-hashmap: [子集枚举 + 位掩码编码存入哈希表（q4-subset-enumeration-bitmask-hashmap）,
+  当每个元素对应一个很小的集合（如长度 ≤4），且要判断集合间的子集/超集关系并计数时，应使用 子集枚举 + 位掩码编码存入哈希表的技巧。]
+queue-bfs-and-deque: [BFS 队列（queue-bfs-and-deque）, 无权图中求最少边数最短路，用 BFS 队列。]
+randomized-algorithms: [随机化（randomized-algorithms）, 要打散可能对抗的输入顺序或选随机枢轴时，可使用 随机化。]
+range-query: [静态区间查询（range-query）, Sparse Table 用两个可能重叠的区间在 O(1) 时间内完成静态区间查询，这依赖于聚合操作满足
+    幂等性（idempoten。]
+range-query-structures: [树状数组（range-query-structures）, 需要交错执行点更新与前缀和查询时，用 树状数组。]
+rearrangement-inequality: [排序不等式（rearrangement-inequality）, 两个数组可各自重排，目标为配对乘积和时，使用
+    排序不等式。]
+reconstruct-dp-solution: [还原 DP 最优方案（reconstruct-dp-solution）, DP 题要求输出一个最优方案时，额外记录
+    前驱/决策。]
+regret-greedy-heap: [堆维护反悔贪心（regret-greedy-heap）, 按序选择但后来的元素可能替换旧选择，并且需快速删掉最差旧选择时，用
+    堆维护反悔贪心。]
+regret-greedy-with-heap: [反悔贪心（regret-greedy-with-heap）, 先选局部最优、后续可能以更好候选替换历史最差选择时，用
+    反悔贪心。]
+rerooting-dp: [换根 DP（rerooting-dp）, 要求每个节点作为根的树答案时，使用 换根 DP。]
+reverse-thinking: [目标状态倒推前驱（reverse-thinking）, 正向操作分支大而终态明确时，尝试从 目标状态倒推前驱。]
+rooted-tree-topological-order: [Kahn 拓扑排序（rooted-tree-topological-order）, 有向先修依赖需要合法顺序或判环时，用
+    Kahn 拓扑排序。]
+same-direction-two-pointers: [同向双指针（same-direction-two-pointers）, '滑动窗口本质上是同向双指针的一种特例,右指针负责扩展、左指针负责收缩。']
+segment-tree-point-update: [线段树（segment-tree-point-update）, 数组可修改且要查询任意区间的 max/min/gcd
+    时，用 线段树。]
+segment-tree-range-aggregate: [线段树（segment-tree-range-aggregate）, 区间聚合查询和在线更新交错出现时，用
+    线段树。]
+separate-identical-items: [相同物品间隔排列（separate-identical-items）, 相邻不同重排可行当且仅当 m <= n-m+1。]
+set-bitwise-set-operations: [位运算做集合运算（set-bitwise-set-operations）, 当问题涉及判断两个用整数表示的集合是否存在交集、并集或子集关系时，应联想到直接用
+    按位与(&)/按位或(|)/按位异或(^) 对二进制表示运算，。]
+set-element-bitwise-ops: [位运算判断集合成员（set-element-bitwise-ops）, 当需要判断整数 i 是否属于位压缩集合
+    s 时，应使用 (s >> i) & 1 而不是遍历集合逐一比较。]
+shortest-path-dijkstra-floyd: [Dijkstra（shortest-path-dijkstra-floyd）, 非负权图的单源最短路使用
+    Dijkstra。]
+shrink-window-for-longest: [收缩式滑动窗口求最长（shrink-window-for-longest）, '题目要求''最长/最大的满足某条件的子数组'',且窗口越长越容易破坏条件时,应使用收缩式(越短越合法)的不定长滑动窗口。']
+sliding-window: [滑动窗口（sliding-window）, 当连续区间的约束能靠右移左端点恢复，优先考虑 滑动窗口。]
+sliding-window-frequency-map: [滑动窗口配合频次表（sliding-window-frequency-map）, '在 Sliding
+    Window With Frequency Map 模板中，right 右移时先 freq[s[right]] += 1，一。']
+sliding-window-two-pointers: [滑动窗口（sliding-window-two-pointers）, 连续区间约束可随端点移动增量维护，且失效后收缩左端能恢复条件时，用
+    滑动窗口。]
+small-to-large-tree-merging: [small-to-large（small-to-large-tree-merging）, 每个子树需合并集合或频次统计时，可用
+    small-to-large。]
+sorted-extremal-pairing: [最小或最大元素（sorted-extremal-pairing）, 极值配对贪心的核心不变式是：已处理的 最小或最大元素
+    已在某个最优解中完成处理。]
+sparse-table: [Sparse Table（sparse-table）, 静态数组上有大量 RMQ 且无修改时，用 Sparse Table。]
+special-case-to-general: [证明或反例检验（special-case-to-general）, 从特殊到一般得到的规律，必须经过 证明或反例检验
+    才能用于算法。]

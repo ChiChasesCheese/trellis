@@ -6,6 +6,9 @@
 
 **Unlocks:** [[algorithms.sliding-window|Two Pointers & Sliding Windows]]
 
+## Drills
+- [[oa-q23-rate-limiter|Drill: rate-limit a request stream, then swap the algorithm for a token bucket]]
+
 ## Cards (5)
 - [[cc-toolbox-deque-bfs-frontier]]
 - [[cc-toolbox-deque-monotonic-max]]

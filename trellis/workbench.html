@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trellis 工作台</title>
+<style>
+  :root {
+    --paper: #F6F7F4; --paper-2: #EEF1EC; --ink: #14211A; --ink-2: #5E6B63; --line: #D9DED9;
+    --vine: #2E7D4F; --vine-2: #6FAF86; --leaf: #A9D3B5; --leaf-2: #D7EADB;
+    --unproven: #C9CFCA; --amber: #C98B1E; --amber-2: #F3E4C4; --danger: #B2432E;
+    --rail: 248px; --drawer: 440px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--paper); color: var(--ink);
+    font: 14px/1.6 "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-variant-numeric: tabular-nums; }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; background: none; border: 1px solid var(--ink); border-radius: 4px;
+    padding: 6px 12px; cursor: pointer; }
+  button:hover { background: var(--paper-2); }
+  button.primary { background: var(--vine); border-color: var(--vine); color: #fff; }
+  button.primary:hover { background: #256a42; }
+  button:disabled { opacity: .45; cursor: default; }
+  button:focus-visible, a:focus-visible, textarea:focus-visible, select:focus-visible, input:focus-visible {
+    outline: 2px solid var(--amber); outline-offset: 2px; }
+  code { font-family: "SF Mono", Menlo, monospace; font-size: 12.5px; background: var(--paper-2); padding: 1px 4px; border-radius: 3px; }
+
+  .app { display: grid; grid-template-columns: var(--rail) 1fr; min-height: 100vh; }
+  .rail { border-right: 1px solid var(--line); padding: 28px 20px; position: sticky; top: 0; height: 100vh; overflow: auto; }
+  .brand { font-weight: 600; font-size: 18px; letter-spacing: -.01em; margin: 0 0 4px; }
+  .brand small { display: block; font-weight: 400; color: var(--ink-2); font-size: 12.5px; }
+  .rail nav { margin-top: 24px; }
+  .dom { display: block; width: 100%; text-align: left; border: 0; padding: 10px 10px; border-radius: 6px; margin: 2px 0; }
+  .dom.on { background: var(--paper-2); }
+  .dom .t { display: flex; justify-content: space-between; align-items: baseline; }
+  .dom .t b { font-weight: 600; }
+  .dom .t span { color: var(--ink-2); font-size: 12.5px; }
+  .strip { display: flex; gap: 1px; height: 5px; margin-top: 6px; }
+  .strip i { flex: 1; background: var(--unproven); border-radius: 1px; }
+  .rail .foot { margin-top: 28px; color: var(--ink-2); font-size: 12.5px; }
+  .rail .foot button { width: 100%; margin-top: 8px; }
+
+  .main { padding: 28px 40px 80px; max-width: 1180px; }
+  header.top { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+  h1 { font-size: 30px; line-height: 1.2; margin: 0; letter-spacing: -.015em; font-weight: 600; }
+  .sub { color: var(--ink-2); margin-top: 6px; }
+  .sub b { color: var(--ink); font-weight: 600; }
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  section { margin-top: 40px; }
+  h2 { font-size: 16px; font-weight: 600; margin: 0 0 12px; display: flex; align-items: baseline; gap: 12px; }
+  h2 span { color: var(--ink-2); font-weight: 400; font-size: 13px; }
+
+  /* the lattice */
+  .lattice { border-top: 1px solid var(--line); }
+  .row { display: grid; grid-template-columns: 180px 1fr 64px; gap: 16px; align-items: center;
+    padding: 9px 0; border-bottom: 1px solid var(--line); }
+  .row .name { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .row .pct { text-align: right; color: var(--ink-2); font-size: 12.5px; }
+  .cells { display: flex; flex-wrap: wrap; gap: 3px; }
+  .cell { width: 15px; height: 15px; border-radius: 3px; border: 1px solid transparent; padding: 0; cursor: pointer;
+    background: var(--unproven); position: relative; }
+  .cell.empty { background: transparent; border-color: var(--line); }
+  .cell.sealed { background-image: repeating-linear-gradient(135deg, transparent 0 3px, rgba(20,33,26,.35) 3px 4px); }
+  .cell.on { outline: 2px solid var(--ink); outline-offset: 1px; }
+  .cell:hover { transform: scale(1.25); }
+  .legend { display: flex; gap: 18px; color: var(--ink-2); font-size: 12.5px; margin: 10px 0 0; flex-wrap: wrap; }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -2px; margin-right: 5px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .cell { animation: bloom .5s ease-out both; }
+    @keyframes bloom { from { opacity: 0; transform: scale(.4); } to { opacity: 1; transform: none; } }
+  }
+
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  table { border-collapse: collapse; width: 100%; }
+  th { text-align: left; font-weight: 500; color: var(--ink-2); font-size: 12.5px; padding: 0 8px 8px 0; border-bottom: 1px solid var(--line); }
+  td { padding: 8px 8px 8px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr.leaf { cursor: pointer; }
+  tr.leaf:hover td { background: var(--paper-2); }
+  .bar { display: inline-block; width: 72px; height: 8px; background: var(--leaf-2); border-radius: 2px; vertical-align: middle; margin-right: 6px; }
+  .bar i { display: block; height: 100%; background: var(--vine); border-radius: 2px; }
+  .muted { color: var(--ink-2); }
+  .empty-note { color: var(--ink-2); padding: 14px 0; }
+
+  .spark { display: flex; gap: 24px; align-items: flex-end; flex-wrap: wrap; }
+  .spark svg { width: 320px; height: 84px; }
+  .stat { min-width: 120px; }
+  .stat b { display: block; font-size: 22px; font-weight: 600; line-height: 1.1; }
+  .stat span { color: var(--ink-2); font-size: 12.5px; }
+
+  .brief { max-width: 72ch; }
+  .brief h1, .brief h2, .brief h3 { font-size: 15px; margin: 18px 0 6px; }
+  .brief table td, .brief table th { font-size: 13px; }
+  .brief a.wiki { text-decoration: underline dotted; cursor: pointer; }
+
+  .jobs .job { padding: 10px 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 90px 1fr auto; gap: 12px; align-items: baseline; }
+  .tag { display: inline-block; font-size: 12px; padding: 1px 7px; border-radius: 10px; background: var(--paper-2); color: var(--ink-2); }
+  .tag.review { background: var(--amber-2); color: #6b4a08; }
+  .tag.done { background: var(--leaf-2); color: #1f5a37; }
+  .tag.failed { background: #f4d9d4; color: var(--danger); }
+
+  /* drawer */
+  .drawer { position: fixed; top: 0; right: 0; width: var(--drawer); height: 100vh; background: #fff; border-left: 1px solid var(--line);
+    transform: translateX(100%); transition: transform .25s ease; overflow: auto; padding: 28px 28px 60px; z-index: 5; }
+  .drawer.open { transform: none; }
+  @media (prefers-reduced-motion: reduce) { .drawer { transition: none; } .cell:hover { transform: none; } }
+  .drawer .close { position: absolute; top: 18px; right: 18px; border: 0; font-size: 18px; padding: 4px 8px; }
+  .drawer h3 { font-size: 20px; margin: 0 40px 4px 0; line-height: 1.3; }
+  .crumb { color: var(--ink-2); font-size: 12.5px; }
+  .standing { margin: 16px 0; padding: 12px 14px; background: var(--paper); border-radius: 6px; }
+  .standing b { font-weight: 600; }
+  .slipped li { margin: 6px 0; }
+  .slipped small { color: var(--ink-2); }
+  .drawer .actions { margin: 14px 0; }
+  .onward { display: grid; grid-template-columns: 40px 1fr; gap: 4px 10px; margin: 12px 0; color: var(--ink-2); font-size: 13px; }
+  .onward dt { font-weight: 500; color: var(--ink); }
+  .onward dd { margin: 0; }
+  textarea { width: 100%; min-height: 96px; padding: 10px; border: 1px solid var(--line); border-radius: 6px; font: inherit; resize: vertical; background: #fff; }
+  select, input[type=number] { font: inherit; padding: 6px 8px; border: 1px solid var(--line); border-radius: 4px; background: #fff; }
+  .grow-form .line { display: flex; gap: 10px; align-items: center; margin: 10px 0; flex-wrap: wrap; }
+  .card-review { border-top: 1px solid var(--line); margin-top: 14px; }
+  .card-review .c { padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .card-review .c .q { font-weight: 500; }
+  .card-review .c .a { color: var(--ink-2); margin-top: 4px; white-space: pre-wrap; }
+  .status { margin: 10px 0; color: var(--ink-2); }
+  .status.err { color: var(--danger); }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--ink); color: #fff;
+    padding: 10px 16px; border-radius: 6px; opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 9; }
+  .toast.show { opacity: 1; }
+
+  @media (max-width: 900px) {
+    .app { grid-template-columns: 1fr; }
+    .rail { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
+    .main { padding: 20px 16px 60px; }
+    .cols { grid-template-columns: 1fr; }
+    .drawer { width: 100%; }
+    .row { grid-template-columns: 1fr; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="rail">
+    <p class="brand">Trellis 工作台<small>复习告诉格架哪里弱，格架长出新卡</small></p>
+    <nav id="domains"></nav>
+    <div class="foot">
+      <div id="pull-note">尚未拉取复习记录</div>
+      <button id="pull-all">从 Anki 拉取全部记录</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="top">
+      <div>
+        <h1 id="title">—</h1>
+        <div class="sub" id="subtitle"></div>
+      </div>
+      <div class="actions">
+        <button id="pull-one">拉取这个域</button>
+        <button id="grow-next" class="primary">从最弱的叶子开始生长</button>
+      </div>
+    </header>
+
+    <section>
+      <h2>格架 <span>每个格子是一个叶子，颜色是它的握持程度；点开看细节</span></h2>
+      <div class="lattice" id="lattice"></div>
+      <div class="legend">
+        <span><i style="background:var(--vine)"></i>握得牢</span>
+        <span><i style="background:var(--leaf)"></i>握得松</span>
+        <span><i style="background:var(--unproven)"></i>复习太少，还看不出</span>
+        <span><i style="border:1px solid var(--line)"></i>还没有卡</span>
+        <span><i style="background:var(--unproven);background-image:repeating-linear-gradient(135deg,transparent 0 3px,rgba(20,33,26,.35) 3px 4px)"></i>前置没握住，先封着</span>
+      </div>
+    </section>
+
+    <section class="cols">
+      <div>
+        <h2>该修的 <span>握持低于 55%，按压在它上面的话题数排</span></h2>
+        <table id="weak"></table>
+      </div>
+      <div>
+        <h2>该写的 <span>还没有卡的叶子，压得越重越靠前</span></h2>
+        <table id="uncovered"></table>
+      </div>
+    </section>
+
+    <section>
+      <h2>走势 <span>每次拉取并提交后的握持</span></h2>
+      <div class="spark" id="spark"></div>
+    </section>
+
+    <section>
+      <h2>简报 <span>跨所有域，读一遍就知道下一步</span></h2>
+      <div class="brief" id="brief"></div>
+    </section>
+
+    <section class="jobs">
+      <h2>生长记录 <span>Claude 写的、你审过的</span></h2>
+      <div id="jobs"></div>
+    </section>
+  </main>
+</div>
+
+<aside class="drawer" id="drawer" aria-label="叶子详情">
+  <button class="close" id="drawer-close" aria-label="关闭">×</button>
+  <div id="drawer-body"></div>
+</aside>
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = (s, el=document) => el.querySelector(s);
+const state = { data: null, domain: null, leaf: null, jobs: [], history: null };
+
+async function api(path, body) {
+  const r = await fetch(path, body ? {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)} : {});
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.error || (j.errors && j.errors.join('；')) || r.statusText);
+  return j;
+}
+function toast(msg, ms=2600) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), ms); }
+const pct = v => v == null ? '—' : Math.round(v*100) + '%';
+function shade(l) {
+  if (l.uncovered) return 'transparent';
+  if (l.hold == null) return 'var(--unproven)';
+  const t = Math.max(0, Math.min(1, l.hold));
+  // 嫩绿 → 藤绿
+  const a = [0xA9,0xD3,0xB5], b = [0x2E,0x7D,0x4F];
+  const c = a.map((x,i) => Math.round(x + (b[i]-x)*t));
+  return `rgb(${c.join(',')})`;
+}
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+async function load(domain) {
+  const data = await api('/api/state' + (domain ? `?domain=${encodeURIComponent(domain)}` : ''));
+  if (!domain) {
+    const best = [...data.domains].sort((a,b) => (b.weak - a.weak) || (b.reviewed - a.reviewed))[0];
+    if (best) return load(best.id);
+  }
+  state.data = data; state.domain = domain;
+  renderRail(); renderHead(); renderLattice(); renderLists(); renderBrief();
+  loadJobs(); loadHistory();
+}
+
+function renderRail() {
+  const nav = $('#domains'); nav.innerHTML = '';
+  for (const d of state.data.domains) {
+    const b = document.createElement('button'); b.className = 'dom' + (d.id === state.domain ? ' on' : '');
+    b.innerHTML = `<div class="t"><b>${esc(d.title)}</b><span>${d.reviewed}/${d.cards}</span></div>
+      <div class="strip" title="握持 ${pct(d.hold)}"></div>`;
+    const strip = b.querySelector('.strip');
+    const n = Math.min(24, Math.max(6, Math.round(d.leaves/4)));
+    for (let i=0;i<n;i++) { const s = document.createElement('i'); s.style.background = d.hold == null ? 'var(--unproven)' : (i/n < d.hold ? 'var(--vine)' : 'var(--leaf-2)'); strip.appendChild(s); }
+    b.onclick = () => load(d.id);
+    nav.appendChild(b);
+  }
+  const ages = state.data.domains.map(d => d.age_days).filter(a => a != null);
+  $('#pull-note').textContent = ages.length ? `最近一次拉取：${Math.round(Math.min(...ages)*10)/10} 天前` : '尚未拉取复习记录';
+}
+
+function renderHead() {
+  const d = state.data.domains.find(x => x.id === state.domain);
+  $('#title').textContent = d.title;
+  const bits = [`握持 <b>${pct(d.hold)}</b>`, `${d.reviewed}/${d.cards} 张卡复习过`,
+    `${d.weak} 个弱叶子`, `${d.uncovered} 个空叶子`, `${d.sealed} 个封着`];
+  if (d.adopted) bits.push(`${d.adopted} 张卡由 Anki 里的其他工具持有`);
+  $('#subtitle').innerHTML = bits.join(' · ');
+}
+
+function renderLattice() {
+  const sel = state.data.selected; const box = $('#lattice'); box.innerHTML = '';
+  const byId = Object.fromEntries(sel.leaves.map(l => [l.id, l]));
+  sel.branches.forEach((br, bi) => {
+    const row = document.createElement('div'); row.className = 'row';
+    row.innerHTML = `<div class="name" title="${esc(br.title)}">${esc(br.title)}</div><div class="cells"></div><div class="pct">${pct(br.hold)}</div>`;
+    const cells = row.querySelector('.cells');
+    br.leaves.forEach((id, i) => {
+      const l = byId[id]; const c = document.createElement('button'); c.className = 'cell';
+      if (l.uncovered) c.classList.add('empty'); if (l.sealed) c.classList.add('sealed');
+      if (state.leaf === id) c.classList.add('on');
+      c.style.background = l.uncovered ? '' : shade(l);
+      c.style.animationDelay = `${Math.min(900, bi*70 + i*12)}ms`;
+      c.title = `${l.title} · 握持 ${pct(l.hold)} · ${l.seen}/${l.cards} 张复习过`;
+      c.setAttribute('aria-label', c.title);
+      c.onclick = () => openLeaf(id);
+      cells.appendChild(c);
+    });
+    box.appendChild(row);
+  });
+}
+
+function leafRow(l, kind) {
+  const held = kind === 'weak'
+    ? `<span class="bar"><i style="width:${Math.round((l.hold||0)*100)}%"></i></span>${pct(l.hold)}`
+    : `<span class="muted">${l.bearing} 个话题压着</span>`;
+  const extra = kind === 'weak' ? `<span class="muted">最没握住：${esc((l.slipped[0]||{}).q||'').slice(0,40)}</span>` : `<span class="muted">${esc(l.grounding || '没有原文可依')}</span>`;
+  return `<tr class="leaf" data-id="${esc(l.id)}"><td><b>${esc(l.title)}</b><br><span class="muted">${esc(l.branch_title)}</span></td><td>${held}</td><td>${extra}</td></tr>`;
+}
+function renderLists() {
+  const sel = state.data.selected;
+  const weak = sel.leaves.filter(l => l.weak).sort((a,b) => (b.bearing - a.bearing) || (a.hold - b.hold));
+  const unc = sel.leaves.filter(l => l.uncovered).sort((a,b) => b.bearing - a.bearing);
+  $('#weak').innerHTML = weak.length ? `<tr><th>叶子</th><th>握持</th><th></th></tr>` + weak.slice(0,12).map(l => leafRow(l,'weak')).join('') : `<tr><td class="empty-note">没有握不住的叶子。复习一阵再拉取。</td></tr>`;
+  $('#uncovered').innerHTML = unc.length ? `<tr><th>叶子</th><th>为什么先写</th><th>能从哪写</th></tr>` + unc.slice(0,12).map(l => leafRow(l,'unc')).join('') : `<tr><td class="empty-note">每个叶子都有卡了。</td></tr>`;
+  document.querySelectorAll('tr.leaf').forEach(tr => tr.onclick = () => openLeaf(tr.dataset.id));
+}
+
+function mdToHtml(md) {
+  const lines = md.split('\n'); let out = [], inTable = false, inList = false;
+  const inline = s => esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/`(.+?)`/g,'<code>$1</code>')
+    .replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g,(m,id,t)=>`<a class="wiki" data-id="${id}">${t}</a>`).replace(/\[\[([^\]]+)\]\]/g,(m,id)=>`<a class="wiki" data-id="${id}">${id}</a>`)
+    .replace(/\*(.+?)\*/g,'<i>$1</i>');
+  for (const raw of lines) {
+    const line = raw.trimEnd();
+    if (line.startsWith('|')) { if (!inTable) { out.push('<table>'); inTable = true; }
+      if (/^\|\s*-+/.test(line)) continue;
+      // a wikilink's own "|" must not split the row
+      const safe = line.replace(/\[\[([^\]]+)\]\]/g, m => m.replace(/\|/g, ''));
+      out.push('<tr>' + safe.split('|').slice(1,-1).map(c => `<td>${inline(c.replace(//g, '|').trim())}</td>`).join('') + '</tr>'); continue; }
+    if (inTable) { out.push('</table>'); inTable = false; }
+    if (line.startsWith('- ')) { if (!inList) { out.push('<ul>'); inList = true; } out.push(`<li>${inline(line.slice(2))}</li>`); continue; }
+    if (inList) { out.push('</ul>'); inList = false; }
+    const h = line.match(/^(#{1,3})\s+(.*)/); if (h) { out.push(`<h${h[1].length}>${inline(h[2])}</h${h[1].length}>`); continue; }
+    if (line.trim()) out.push(`<p>${inline(line)}</p>`);
+  }
+  if (inTable) out.push('</table>'); if (inList) out.push('</ul>');
+  return out.join('\n');
+}
+function renderBrief() {
+  const b = $('#brief'); b.innerHTML = mdToHtml(state.data.brief || '');
+  b.querySelectorAll('a.wiki').forEach(a => a.onclick = () => {
+    const id = a.dataset.id; const l = state.data.selected.leaves.find(x => x.id === id);
+    if (l) openLeaf(id); else toast('这个叶子在别的域里，先在左边切过去');
+  });
+}
+
+async function loadHistory() {
+  const h = await api(`/api/history?domain=${encodeURIComponent(state.domain)}`);
+  const d = state.data.domains.find(x => x.id === state.domain);
+  const box = $('#spark'); const pts = h.points;
+  let svg = '';
+  if (pts.length >= 2) {
+    const W=320,H=84,p=6; const xs = pts.map((_,i) => p + i*(W-2*p)/(pts.length-1));
+    const ys = pts.map(q => H-p-(q.hold||0)*(H-2*p));
+    svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="握持走势"><polyline fill="none" stroke="var(--vine)" stroke-width="2" points="${xs.map((x,i)=>`${x},${ys[i]}`).join(' ')}"/>${xs.map((x,i)=>`<circle cx="${x}" cy="${ys[i]}" r="3" fill="var(--vine)"><title>${pts[i].at.slice(0,10)} 握持 ${pct(pts[i].hold)}</title></circle>`).join('')}</svg>`;
+  }
+  box.innerHTML = (svg || `<div class="empty-note">提交两次以上的拉取记录后，这里会画出走势。</div>`) +
+    `<div class="stat"><b>${pct(d.hold)}</b><span>当前握持</span></div>
+     <div class="stat"><b>${d.cards ? Math.round(d.reviewed/d.cards*100) : 0}%</b><span>复习过的卡</span></div>
+     <div class="stat"><b>${d.weak}</b><span>弱叶子</span></div>
+     <div class="stat"><b>${d.age_days == null ? '—' : Math.round(d.age_days*10)/10 + ' 天'}</b><span>记录新鲜度</span></div>`;
+}
+
+async function loadJobs() {
+  const j = await api('/api/jobs'); state.jobs = j.jobs;
+  const mine = j.jobs.filter(x => x.key.startsWith(state.domain + ':'));
+  $('#jobs').innerHTML = mine.length ? mine.map(x => `<div class="job"><span class="tag ${x.status}">${{running:'写作中',review:'待审',done:'已写入',failed:'失败'}[x.status]||x.status}</span>
+     <span><b>${esc(x.key.split(':')[1])}</b> · ${x.count} 张 · ${esc(x.guidance||'无指引').slice(0,60)}${x.pushed?' · 已推送':''}</span>
+     <button data-job="${x.id}">${x.status==='review'?'审阅':'查看'}</button></div>`).join('') : `<div class="empty-note">还没有生长过。点一个弱叶子，写一句指引，让 Claude 写。</div>`;
+  $('#jobs').querySelectorAll('button[data-job]').forEach(b => b.onclick = () => { const job = state.jobs.find(x => x.id === b.dataset.job); openLeaf(job.key.split(':')[1], job); });
+}
+
+function openLeaf(id, job) {
+  state.leaf = id; renderLattice();
+  const l = state.data.selected.leaves.find(x => x.id === id); if (!l) return;
+  const key = `${state.domain}:${id}`;
+  const stand = l.uncovered ? '还没有卡。' : l.unproven ? `有 ${l.cards} 张卡，复习过 ${l.seen} 张，还看不出握没握住。` : `握持 <b>${pct(l.hold)}</b>，${l.seen}/${l.cards} 张复习过${l.weak ? '，<b>低于目标</b>' : ''}。`;
+  const sealed = l.sealed ? `<div>先封着：前置 ${l.sealed_by.map(esc).join('、')} 还没握住。</div>` : '';
+  const slipped = l.slipped.length ? `<h4>最没握住的卡</h4><ul class="slipped">${l.slipped.map(s => `<li>${esc(s.q)}<br><small><code>${esc(s.id)}</code> · 复习 ${s.reps} 次 · 忘 ${s.lapses} 次 · 间隔 ${s.interval} 天</small></li>`).join('')}</ul>` : '';
+  const onward = (l.readings.length || l.drills.length)
+    ? `<dl class="onward">${l.readings.length ? `<dt>可读</dt><dd>${l.readings.map(esc).join('<br>')}</dd>` : ''}${l.drills.length ? `<dt>可练</dt><dd>${l.drills.map(esc).join('<br>')}</dd>` : ''}</dl>` : '';
+  const can = l.weak || l.uncovered;
+  $('#drawer-body').innerHTML = `
+    <div class="crumb">${esc(l.branch_title)} › <code>${esc(l.id)}</code></div>
+    <h3>${esc(l.title)}</h3>
+    <div class="muted">${esc(l.summary||'')}</div>
+    <div class="standing">${stand}${sealed}${l.adopted ? `<div>${l.adopted} 张卡由 Anki 里的其他工具持有，Trellis 只读它们的复习记录。</div>` : ''}${l.grown ? `<div>已长出 ${l.grown} 张。</div>` : ''}</div>
+    ${onward}
+    <div class="actions">
+      <a href="${esc(l.obsidian)}"><button>在 Obsidian 打开</button></a>
+      <button data-act="browse">在 Anki 浏览</button>
+      <button data-act="today" ${l.cards ? '' : 'disabled'}>今天就学这些卡</button>
+      <button data-act="review">复习这个 deck</button>
+    </div>
+    ${slipped}
+    <div class="grow-form">
+      <h4>生长</h4>
+      ${can ? '' : `<div class="muted">这个叶子既不弱也不空，格架不会在这里长；要加卡请用命令行的 scaffold。</div>`}
+      <textarea id="guidance" placeholder="指引（可选）：想强调什么、从哪个角度、带上什么背景。例如：多给会写错的代码片段；和上一题对比着讲。"></textarea>
+      <div class="line">
+        <label>张数 <input id="count" type="number" min="1" max="10" value="4"></label>
+        <label>模型 <select id="model"><option value="sonnet">Sonnet</option><option value="opus">Opus</option></select></label>
+        <button id="run" class="primary" ${can ? '' : 'disabled'}>让 Claude 写</button>
+      </div>
+      <div class="status" id="job-status"></div>
+      <div class="card-review" id="card-review"></div>
+    </div>`;
+  $('#drawer').classList.add('open');
+  $('#drawer-body').querySelectorAll('button[data-act]').forEach(b => b.onclick = () => focus([key], b.dataset.act));
+  $('#run').onclick = () => startGrow(key);
+  if (job) showJob(job);
+}
+
+async function focus(keys, action) {
+  try {
+    const r = await api('/api/focus', {keys, action});
+    toast(action === 'today' ? `${r.cards} 张卡已设为今天到期` : action === 'browse' ? '已在 Anki 浏览器里打开' : '已切到那个 deck');
+  } catch (e) { toast('Anki 没有回应：' + e.message, 5000); }
+}
+
+async function startGrow(key) {
+  const body = { key, count: +$('#count').value || 4, guidance: $('#guidance').value, model: $('#model').value };
+  $('#job-status').textContent = '正在让 Claude 写……通常一两分钟。'; $('#job-status').className = 'status';
+  $('#run').disabled = true;
+  try {
+    let job = await api('/api/grow', body);
+    while (job.status === 'running') { await new Promise(r => setTimeout(r, 2500)); job = await api(`/api/jobs/${job.id}`); }
+    showJob(job); loadJobs();
+  } catch (e) { $('#job-status').textContent = e.message; $('#job-status').className = 'status err'; }
+  $('#run').disabled = false;
+}
+
+function showJob(job) {
+  const st = $('#job-status'), rv = $('#card-review'); if (!st) return;
+  if (job.status === 'failed') { st.textContent = '没写成：' + job.errors.join('；'); st.className = 'status err'; rv.innerHTML = ''; return; }
+  st.className = 'status';
+  st.textContent = job.status === 'review' ? `写了 ${job.cards.length} 张，审一遍再写入。` : job.status === 'done' ? `已写入 ${job.written.length} 张${job.pushed ? '，并推到了 Anki' : ''}。` : '';
+  rv.innerHTML = job.cards.map(c => `<div class="c"><div class="q">${esc(c.q || c.text)}</div>${c.a ? `<div class="a">${esc(c.a)}</div>` : ''}</div>`).join('') +
+    (job.status === 'review' ? `<div class="line" style="margin-top:12px"><button id="acc" class="primary">写入</button><button id="acc-push">写入并推到 Anki</button></div>` : '');
+  const accept = async (push) => {
+    st.textContent = push ? '写入并推送中……' : '写入中……';
+    try { const done = await api(`/api/jobs/${job.id}/accept`, {push}); showJob(done); toast(push ? '已写入并推送' : '已写入'); load(state.domain); }
+    catch (e) { st.textContent = '没有写入：' + e.message; st.className = 'status err'; }
+  };
+  if ($('#acc')) $('#acc').onclick = () => accept(false);
+  if ($('#acc-push')) $('#acc-push').onclick = () => accept(true);
+}
+
+$('#drawer-close').onclick = () => { $('#drawer').classList.remove('open'); state.leaf = null; renderLattice(); };
+document.addEventListener('keydown', e => { if (e.key === 'Escape') $('#drawer-close').click(); });
+$('#pull-one').onclick = async () => { toast('正在从 Anki 拉取……'); try { const r = await api('/api/pull', {domain: state.domain}); toast(`拉到 ${r.domains[0].traced} 张卡的记录`); load(state.domain); } catch (e) { toast('拉取失败：' + e.message, 5000); } };
+$('#pull-all').onclick = async () => { toast('正在拉取全部域……'); try { const r = await api('/api/pull', {}); toast(`拉取了 ${r.domains.length} 个域`); load(state.domain); } catch (e) { toast('拉取失败：' + e.message, 5000); } };
+$('#grow-next').onclick = () => { const t = state.data.selected.targets[0]; if (!t) return toast('这个域没有该修或该写的叶子'); openLeaf(t.key.split(':')[1]); };
+load();
+</script>
+</body>
+</html>

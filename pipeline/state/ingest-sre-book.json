@@ -1,0 +1,26 @@
+{
+  "corpus": "sre-book",
+  "chapters": {
+    "https://sre.google/sre-book/addressing-cascading-failures/": {
+      "file": "sources/archive/sre-book/03-addressing-cascading-failures.md",
+      "status": "done"
+    },
+    "https://sre.google/sre-book/data-integrity/": {
+      "file": "sources/archive/sre-book/05-data-integrity.md",
+      "status": "done"
+    },
+    "https://sre.google/sre-book/handling-overload/": {
+      "file": "sources/archive/sre-book/02-handling-overload.md",
+      "status": "done"
+    },
+    "https://sre.google/sre-book/managing-critical-state/": {
+      "file": "sources/archive/sre-book/04-managing-critical-state.md",
+      "status": "done"
+    },
+    "https://sre.google/sre-book/service-level-objectives/": {
+      "file": "sources/archive/sre-book/01-service-level-objectives.md",
+      "status": "done"
+    }
+  },
+  "updated": "2026-08-30T03:28:15+00:00"
+}

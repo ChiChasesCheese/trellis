@@ -1,0 +1,367 @@
+You are drafting the study map (a "skeleton") for a subject, from the
+inventory of an Anki deck that already holds its cards. Answer with one JSON
+object (no prose).
+
+## Subject
+domain slug: `leetcode` — the deck: LeetCode (1050 notes). Cards are in
+Chinese (简体中文); write titles and summaries in Chinese (简体中文), terms of art in English.
+
+## The deck's inventory
+Every line is a slug that MUST appear as the last segment of exactly one
+leaf id in your skeleton (`<branch>.<slug>`, the slug unchanged). A family in
+brackets is the list the concept came from — concepts sharing a family
+usually share a branch, but group by what the concept IS, not by the label.
+
+### Concepts (291)
+- `aho-corasick` [endlesscheng-sjfwqi] — 3 note(s) · e.g. “同一文本需要同时匹配很多模式串时，Trie 加 failure 指针得到 {{c1::AC 自动机}}。”
+- `and-or-logtrick` [endlesscheng-dhn9vk] — 3 note(s) · e.g. “需要处理所有子数组的不同 AND/OR 值，且 n² 枚举过慢时，用 {{c1::按右端点维护去重后缀聚合值}}。”
+- `array-index-as-hash` [other] — 1 note(s) · e.g. “在 442 题的负号标记解法中，遍历到当前槽位的值时必须取 {{c1::abs(value)}} 而不能直接用 value，因为该槽位可能早已被之前遇到的某个值”
+- `backtracking-enumeration` [endlesscheng-v2rxsn] — 3 note(s) · e.g. “解由逐步选择组成、规模允许指数搜索时，考虑 {{c1::回溯}}。”
+- `bfs-layered-and-multi-source` [endlesscheng-g0n5iy] — 3 note(s) · e.g. “BFS 中节点第一次设置 dist 时，该值就是 {{c1::最短距离}}。”
+- `binary-search` [endlesscheng-v2rxsn] — 3 note(s) · e.g. “当“答案不超过 x 是否可行”随 x 单调变化时，应使用 {{c1::二分答案}}。”
+- `binary-search-answer-maximize` [endlesscheng-sqopeo] — 3 note(s) · e.g. “题目形如“求最大的 x 使得某条件成立”，且该条件是{{c1::x 越小越容易满足}}时，用二分答案求最大值，check 为真时更新的变量就是{{c2::最终答”
+- `binary-search-answer-minimize` [endlesscheng-sqopeo] — 3 note(s) · e.g. “题目形如“求最小的 x 使得某条件成立”，且条件关于 x 具有{{c1::单调性}}（越大越容易满足）时，应使用{{c2::二分答案}}而非直接搜索。”
+- `binary-search-indirect-target` [endlesscheng-sqopeo] — 3 note(s) · e.g. “当直接对答案设计单调 check 很困难，但存在一个与答案{{c1::单调对应}}的中间变量时，应改为二分这个{{c2::代理值}}。”
+- `binary-search-kth-smallest-largest` [endlesscheng-sqopeo] — 3 note(s) · e.g. “题目要求“第 k 小/第 k 大的值”，且能设计出关于 x 单调的计数函数时，可将其转化为{{c1::二分答案}}问题，其中第 k 小等价于求满足 count(”
+- `binary-search-lower-bound` [endlesscheng-sqopeo] — 3 note(s) · e.g. “当数组已经{{c1::非递减（排序）}}，且题目问某值的第一个/最后一个位置或某比较关系的元素个数时，考虑用 {{c2::lowerBound}} 转化。”
+- `binary-search-maximize-minimum` [endlesscheng-sqopeo] — 3 note(s) · e.g. “题目要求“选取/分配后使最小值尽可能大”时，属于{{c1::最大化最小值}}模式，本质是二分答案求{{c2::最大}}。”
+- `binary-search-minimize-maximum` [endlesscheng-sqopeo] — 3 note(s) · e.g. “题目要求“分组/分配后使每组的最大值尽可能小”时，属于{{c1::最小化最大值}}模式，本质是二分答案求{{c2::最小}}。”
+- `binary-search-on-answer` [endlesscheng-luu0kb] — 9 note(s) · e.g. “优化题能在给定阈值时判断可行，并且结果单调时，用 {{c1::二分答案}}。”
+- `binary-search-red-blue` [other] — 1 note(s) · e.g. “在红蓝分区二分模板（while l < r）中，若mid被判断为红色（不满足条件），执行 {{c1::l = mid + 1}}；若mid被判断为蓝色（满足条件”
+- `binary-search-sort-then-search` [endlesscheng-sqopeo] — 3 note(s) · e.g. “当数据本身{{c1::无序}}，但排序后能建立单调关系以便二分时，应先对数组做 {{c2::排序}} 再复用二分查找模板。”
+- `binary-tree-lca-postorder` [endlesscheng-k0n2go] — 3 note(s) · e.g. “普通二叉树求两个节点 LCA 时，优先用 {{c1::后序 DFS}}。”
+- `binary-trie-xor` [endlesscheng-luu0kb] — 3 note(s) · e.g. “需要在数集合中寻找与 x {{c1::异或最大}} 的元素时，用 0-1 字典树。”
+- `bit-contribution-counting` [endlesscheng-dhn9vk] — 3 note(s) · e.g. “当答案是大量 AND/OR/XOR 结果的总和，并且每一位可独立判断时，用 {{c1::按位贡献法}} 把问题拆成计数。”
+- `bit-mask-operations` [endlesscheng-dhn9vk] — 3 note(s) · e.g. “当状态只是多个“是否选择”的布尔量，且需要快速合并或修改时，优先考虑用 {{c1::位掩码}} 表示状态。”
+- `bitmask-enumeration-and-bitwise-window` [endlesscheng-wr1mjp] — 3 note(s) · e.g. “当选取对象数量很小且每个对象只有选/不选两种状态时，可用 {{c1::二进制掩码枚举}}。”
+- `bitmask-state-dp` [endlesscheng-g0n5iy] — 3 note(s) · e.g. “对象数很小且“已选集合”足以描述历史时，用 {{c1::状态压缩 DP}}。”
+- `bitwise-and-or-monotonicity` [endlesscheng-dhn9vk] — 3 note(s) · e.g. “不断向区间加入数并聚合时，累计 AND 的 1 位只会 {{c1::减少}}，累计 OR 的 1 位只会 {{c2::增加}}。”
+- `bitwise-greedy-and-bitmask-parity` [endlesscheng-luu0kb] — 3 note(s) · e.g. “属性出现次数只影响奇偶性时，可用 {{c1::XOR 位掩码}} 压缩状态。”
+- `bitwise-greedy-construction` [endlesscheng-dhn9vk] — 3 note(s) · e.g. “要最大化一个按位定义的整数，且能验证候选掩码是否可行时，用 {{c1::从高位到低位的试填贪心}}。”
+- `bitwise-prefix-xor` [endlesscheng-v2rxsn] — 3 note(s) · e.g. “统计子数组 XOR 为零的数量时，用 {{c1::前缀异或频次}}。”
+- `bst-order-invariant` [endlesscheng-k0n2go] — 3 note(s) · e.g. “节点值决定每步只需进入一侧子树时，利用 {{c1::BST 有序性}}。”
+- `center-expansion-palindrome` [endlesscheng-sjfwqi] — 3 note(s) · e.g. “只求一个最长回文、且 O(n²) 能接受时，最直接模板是 {{c1::中心扩展}}。”
+- `centroid-decomposition` [endlesscheng-k0n2go] — 3 note(s) · e.g. “树上路径问题可按是否经过一个中心点拆分时，考虑 {{c1::点分治}}。”
+- `combination-precompute` [endlesscheng-mdfnkw] — 3 note(s) · e.g. “题目需要多次查询组合数 C(n,m) mod p 且给出数据范围上限时，应预处理{{c1::阶乘及其逆元数组}}，而不是每次现算。”
+- `combinatorics-and-inclusion-exclusion` [endlesscheng-luu0kb] — 3 note(s) · e.g. “多个“违反上界/禁用条件”的并集难直接计数、交集容易计数时，用 {{c1::容斥原理}}。”
+- `complexity-budget-from-constraints` [endlesscheng-rvfutj] — 3 note(s) · e.g. “题目给出数据范围但不确定用什么复杂度算法时，应先用{{c1::数据范围反推允许的时间复杂度}}来缩小候选算法范围。”
+- `component-swapping` [endlesscheng-g6ktkl] — 3 note(s) · e.g. “允许沿若干位置对反复交换时，应把位置看作图，并在 {{c1::连通块}} 内重排。”
+- `computational-geometry-primitives` [endlesscheng-iyt3ss] — 3 note(s) · e.g. “判断三点的左转、右转或共线，应计算 {{c1::叉积}}。”
+- `congruence-definition` [endlesscheng-mdfnkw] — 3 note(s) · e.g. “若整数 a、b 满足 {{c1::(a-b) mod m == 0}}，则称 a 与 b 关于模 m 同余，记作 {{c2::a≡b (mod m)}}。”
+- `congruence-transposition` [endlesscheng-mdfnkw] — 3 note(s) · e.g. “当同余式形如 a+b≡c+d (mod m) 时，可以像普通等式一样{{c1::移项}}，得到 {{c2::a-c≡d-b}} (mod m)。”
+- `constraint-driven-construction` [endlesscheng-g6ktkl] — 3 note(s) · e.g. “题目要求输出任意满足约束的对象而非最优值时，这是 {{c1::构造题}} 信号。”
+- `constraint-search-backtracking` [endlesscheng-k0n2go] — 3 note(s) · e.g. “部分选择已能证明不可能完成合法解时，应使用 {{c1::回溯剪枝}}。”
+- `contribution-counting` [endlesscheng-g6ktkl] — 9 note(s) · e.g. “需要统计所有子数组或子串的总值，且单个元素可独立计值时，用 {{c1::贡献法}}。”
+- `convex-hull-and-wqs-dp` [endlesscheng-txls3i] — 3 note(s) · e.g. “DP 转移能写成 min(m*x+b) 时，考虑 {{c1::Convex Hull Trick}}。”
+- `count-subarrays-expand-valid` [endlesscheng-0vinmk] — 3 note(s) · e.g. “统计满足条件的子数组个数,且条件满足'子数组越长越合法'时,应使用{{c1::越长越合法的计数滑窗}},每轮累加left。”
+- `count-subarrays-shrink-valid` [endlesscheng-0vinmk] — 3 note(s) · e.g. “统计满足条件的子数组个数,且条件满足'子数组越短越合法'时,应使用{{c1::越短越合法的计数滑窗}},每轮累加right - left + 1。”
+- `dag-game-probability-expectation-dp` [endlesscheng-txls3i] — 3 note(s) · e.g. “状态依赖图无环时，可按 {{c1::拓扑序}} 做图 DP。”
+- `dfs-path-collection` [other] — 1 note(s) · e.g. “在DFS收集路径时，若用可变的list（path_stack）传递路径状态，必须在递归返回后显式{{c1::pop}}该元素以撤销修改；而用字符串拼接（如 pa”
+- `difference-array` [endlesscheng-ffmcgb] — 3 note(s) · e.g. “当题目要求对数组的若干个连续子区间分别整体加上某个值，且所有更新可以离线处理、最后统一输出结果时，应使用 {{c1::差分数组}} 技巧；若更新和查询交替进行则”
+- `digit-dp` [endlesscheng-txls3i] — 12 note(s) · e.g. “统计区间内满足数位限制的整数时，使用 {{c1::数位 DP}}。”
+- `dijkstra-multi-distance-meeting` [endlesscheng-g0n5iy] — 3 note(s) · e.g. “非负权多路径题允许在某节点汇合并共享后缀时，可用 {{c1::多次 Dijkstra 加枚举汇合点}}。”
+- `direct-simulation` [endlesscheng-wr1mjp] — 3 note(s) · e.g. “模拟的核心不变量是：每一步后的 state 必须与 {{c1::题意执行到同一步的真实状态}}一致。”
+- `directional-partition-greedy` [endlesscheng-g6ktkl] — 3 note(s) · e.g. “原顺序不能改变且答案由若干连续合法段组成时，尝试 {{c1::单向扫描、在最早合法或最早必要处切分}}。”
+- `disjoint-set-union` [endlesscheng-v2rxsn] — 3 note(s) · e.g. “图只会加边，并反复查询两点是否连通时，用 {{c1::并查集}}。”
+- `disjoint-set-union-and-offline` [endlesscheng-wr1mjp] — 3 note(s) · e.g. “图不断加边，核心问题是连通性或连通块大小时，用 {{c1::并查集 DSU}}。”
+- `divergent-two-pointers` [endlesscheng-0vinmk] — 3 note(s) · e.g. “需要以某个中心位置向左右两侧扩展探测(如回文中心扩展法)时,应使用{{c1::背向双指针}}。”
+- `divisor-enumeration` [endlesscheng-iyt3ss] — 3 note(s) · e.g. “若每个整数都要聚合其所有约数，可用 {{c1::枚举因子并遍历其倍数}}。”
+- `dp-optimizations-monotonic-queue-fenwick` [endlesscheng-luu0kb] — 3 note(s) · e.g. “dp[i] 只依赖一个滑动区间内 dp 的最值时，用 {{c1::单调队列优化 DP}}。”
+- `dp-stock-trading-states` [other] — 1 note(s) · e.g. “在股票交易的多状态DP中，hold（持有股票）状态应初始化为 {{c1::负无穷（-inf）}}，以避免出现「没有买入就卖出」的非法转移路径；而未持有状态初始化”
+- `dual-heap-shared-mutable-object-sync` [endlesscheng-7c1ifr] — 3 note(s) · e.g. “当需要用两把按 {{c1::不同键}} 排序的堆维护同一批会被部分消耗或过期的元素时，应考虑让两把堆共享同一个 {{c2::可变对象}} 的引用，而不是各自存值”
+- `dynamic-programming-memo-tabulation` [endlesscheng-v2rxsn] — 3 note(s) · e.g. “最优解或计数可由重叠子问题组合时，用 {{c1::动态规划}}。”
+- `dynamic-programming-memo-to-tabulation` [endlesscheng-wr1mjp] — 3 note(s) · e.g. “暴力递归反复求解相同参数的子问题时，应改为 {{c1::记忆化搜索/动态规划}}。”
+- `edit-distance-dp` [other] — 1 note(s) · e.g. “在编辑距离DP中，当 s[i-1] == t[j-1] 时，dp[i][j] = {{c1::dp[i-1][j-1]}}（不需要任何操作）；当字符不匹配时，d”
+- `enumerate-all-subsets-bitmask` [endlesscheng-caoj45] — 3 note(s) · e.g. “当元素个数 n 很小（一般不超过 20）且需要考虑所有可能的选择组合时，应联想到用 {{c1::状态压缩 (bitmask)}} 枚举 [0, 2^n) 区间中”
+- `enumerate-middle-and-diagonals` [endlesscheng-mor1u6] — 3 note(s) · e.g. “i<j<k 的左右计算互不依赖时，优先 {{c1::枚举中间 j}}。”
+- `enumerate-nonempty-subsets-of-mask` [endlesscheng-caoj45] — 3 note(s) · e.g. “当需要枚举一个具体集合 s（而非全集）的所有非空子集时，应使用 {{c1::sub = (sub - 1) & s}} 这一跳转公式，而不是对全集逐个整数枚举再”
+- `enumerate-right-maintain-left` [endlesscheng-mor1u6] — 3 note(s) · e.g. “当约束是 i<j 且右端元素能推出左端所需状态时，用 {{c1::枚举右端并维护左侧状态}}。”
+- `enumerate-subsets-including-empty` [endlesscheng-caoj45] — 3 note(s) · e.g. “当题目要求枚举集合 s 的所有子集且明确包含空集时，应在非空子集枚举模板基础上，把空集判断放在处理逻辑{{c1::之后}}再决定是否退出循环。”
+- `enumerate-supersets-of-mask` [endlesscheng-caoj45] — 3 note(s) · e.g. “当需要枚举某个集合 t 的所有超集（在大小为 n 的全集范围内）时，应使用 {{c1::s = (s + 1) | t}} 递推公式，而不是对全集所有子集逐一过”
+- `enumerate-then-greedy` [endlesscheng-g6ktkl] — 3 note(s) · e.g. “当一个小范围选择决定后续贪心结构时，用 {{c1::枚举该选择，再求固定条件下的贪心最优}}。”
+- `equivalence-transformation` [endlesscheng-g6ktkl] — 3 note(s) · e.g. “原目标难直接优化，但补集或另一种表示更简单时，尝试 {{c1::等价转化}}。”
+- `eratosthenes-sieve` [endlesscheng-iyt3ss] — 3 note(s) · e.g. “需要范围内全部质数或大量质数查询时，优先使用 {{c1::埃氏筛}}。”
+- `event-endpoint-counting` [endlesscheng-g0n5iy] — 3 note(s) · e.g. “区间对查询点的贡献仅取决于是否已经开始和是否已经结束时，可用 {{c1::端点计数}}。”
+- `exactly-k-via-two-at-least` [endlesscheng-0vinmk] — 3 note(s) · e.g. “当题目要求统计子数组和'恰好等于k'的个数,而直接维护该条件不具有单调性时,应把问题转化为{{c1::两个'至少'问题相减}}。”
+- `exchange-argument` [endlesscheng-g6ktkl] — 3 note(s) · e.g. “解由处理顺序组成时，要证明排序贪心，可比较 {{c1::相邻两个元素交换前后}} 的结果。”
+- `exchange-argument-greedy` [endlesscheng-g0n5iy] — 3 note(s) · e.g. “若能比较相邻任务 AB 与 BA，并证明其中一个顺序永远不差，应考虑 {{c1::邻项交换贪心}}。”
+- `expand-window-for-shortest` [endlesscheng-0vinmk] — 3 note(s) · e.g. “题目要求'最短/最小的满足某条件的子数组',且窗口越长越容易满足条件时,应使用{{c1::扩张式(越长越合法)}}的不定长滑动窗口。”
+- `fast-exponentiation` [endlesscheng-mdfnkw] — 3 note(s) · e.g. “计算 x^y mod m 且指数 y 很大（如 1e9 级别）时，不能逐次相乘，应使用{{c1::快速幂}}（二进制幂）在 O(log y) 时间内完成。”
+- `fast-slow-pointers-linked-list` [other] — 1 note(s) · e.g. “在快慢指针模式中，慢指针每次走1步，快指针每次走{{c1::2}}步；当快指针到达链表末尾（fast为None或fast.next为None）时，慢指针恰好停在”
+- `fast-walsh-hadamard-transform` [endlesscheng-iyt3ss] — 3 note(s) · e.g. “要统计按位 XOR、OR 或 AND 卷积且值域为 2 的幂时，考虑 {{c1::FWT}}。”
+- `fenwick-and-segment-tree` [endlesscheng-wr1mjp] — 3 note(s) · e.g. “需要在线单点更新和前缀/区间和查询时，优先考虑 {{c1::树状数组 Fenwick}}。”
+- `fenwick-tree` [endlesscheng-v2rxsn] — 3 note(s) · e.g. “频繁单点更新并查询动态前缀和或区间和时，用 {{c1::树状数组}}。”
+- `fenwick-tree-and-inversion-count` [endlesscheng-mor1u6] — 3 note(s) · e.g. “单点更新与前缀/区间可加聚合并存时，用 {{c1::树状数组}}。”
+- `fenwick-tree-prefix-counts` [endlesscheng-g0n5iy] — 3 note(s) · e.g. “频繁单点更新并查询前缀计数或区间计数时，用 {{c1::树状数组}}。”
+- `finite-state-machine-dp` [endlesscheng-txls3i] — 3 note(s) · e.g. “历史只需压缩成少量模式时，使用 {{c1::状态机 DP}}。”
+- `fixed-length-sliding-window` [endlesscheng-0vinmk] — 3 note(s) · e.g. “定长滑动窗口的核心不变量是:完成入队操作后,窗口[left, right]的长度恒等于{{c1::k}}。”
+- `floor-division-grouping` [endlesscheng-iyt3ss] — 3 note(s) · e.g. “求和中频繁出现 n//i 且 n 很大时，考虑 {{c1::数论分块}}。”
+- `floyd-warshall` [endlesscheng-luu0kb] — 3 note(s) · e.g. “节点较少且需要 {{c1::所有点对最短路}} 时，考虑 Floyd-Warshall。”
+- `functional-graph-and-binary-lifting` [endlesscheng-luu0kb] — 3 note(s) · e.g. “每点只有一个后继且要反复跳转时，识别为 {{c1::基环树加倍增}}。”
+- `functional-graph-cycle-and-lca` [endlesscheng-wr1mjp] — 3 note(s) · e.g. “每个节点至多有一条出边且需要找环时，识别为 {{c1::基环树/函数图}}。”
+- `functional-graph-topological-pruning` [endlesscheng-g0n5iy] — 3 note(s) · e.g. “每个节点恰有一个后继，且需要分离环与入树时，用 {{c1::基环树拓扑剥离}}。”
+- `gcd-divisor-counting` [endlesscheng-g0n5iy] — 3 note(s) · e.g. “数对条件是 a*b 被 k 整除时，应优先把每个数压缩为 {{c1::gcd(x, k)}}。”
+- `gcd-lcm-factorization-and-congruence` [endlesscheng-wr1mjp] — 3 note(s) · e.g. “题目核心是多个数的共同整除关系时，优先检查 {{c1::GCD 或 LCM}}。”
+- `gcd-lcm-modular-arithmetic` [endlesscheng-iyt3ss] — 3 note(s) · e.g. “两个周期首次同时发生，通常要计算 {{c1::LCM}}。”
+- `gcd-logtrick` [endlesscheng-dhn9vk] — 3 note(s) · e.g. “要统计所有子数组的 GCD 分布时，维护每个右端点的 {{c1::不同后缀 GCD 及其数量}}。”
+- `gcd-modular-arithmetic` [endlesscheng-v2rxsn] — 3 note(s) · e.g. “反复加减若干固定步长并问能否到达目标时，关键量通常是步长的 {{c1::gcd}}。”
+- `generating-functions` [endlesscheng-iyt3ss] — 3 note(s) · e.g. “独立选择的计数能按总和合并时，可把每种选择编码为 {{c1::生成函数}}。”
+- `graph-bfs-shortest-path-unweighted` [endlesscheng-01luak] — 3 note(s) · e.g. “当图的边权全部相同（或视为单位权重）且要求最短路径长度时，应使用 {{c1::BFS}} 而不是 Dijkstra。”
+- `graph-bfs-state-space-modeling` [endlesscheng-01luak] — 3 note(s) · e.g. “当问题要求“从状态 A 变到状态 B 的最少操作次数”而非显式给出图结构时，应先做 {{c1::状态到图节点}} 的建模，再跑 BFS。”
+- `graph-bipartite-coloring` [endlesscheng-01luak] — 3 note(s) · e.g. “需要判断一张图能否被划分成两个互不相邻的集合时，应使用{{c1::二分图染色}}（交替染色法）。”
+- `graph-dfs-bfs` [endlesscheng-v2rxsn] — 3 note(s) · e.g. “无权图中求最少边数或最少操作次数时，用 {{c1::BFS}}。”
+- `graph-dfs-connected-components` [endlesscheng-01luak] — 3 note(s) · e.g. “当题目要求统计图中{{c1::连通块}}的数量或大小，且边权都相同/无权时，优先考虑 DFS 或 BFS 遍历。”
+- `graph-dfs-state-and-timestamps` [endlesscheng-g0n5iy] — 3 note(s) · e.g. “路径合法性依赖累计摘要，或需快速判断树上祖先关系时，用 {{c1::DFS 状态与时间戳}}。”
+- `graph-dijkstra-shortest-path` [endlesscheng-01luak] — 3 note(s) · e.g. “求单源最短路且所有边权{{c1::非负}}时，应使用 Dijkstra 算法而不是 BFS 或 Bellman-Ford。”
+- `graph-euler-path-hierholzer` [endlesscheng-01luak] — 3 note(s) · e.g. “当题目要求把图中每条边恰好使用一次走完（欧拉路径/回路），应使用 {{c1::Hierholzer}} 算法。”
+- `graph-floyd-warshall` [endlesscheng-01luak] — 3 note(s) · e.g. “需要一次性求出任意两点间最短路（全源最短路），且节点数不大时，应使用 {{c1::Floyd}} 算法。”
+- `graph-functional-graph-cycle` [endlesscheng-01luak] — 3 note(s) · e.g. “当图中每个节点的出度恰好为 1，且题目暗示存在唯一环时，应识别为{{c1::基环树}}（内向基环图）结构。”
+- `graph-mst-kruskal` [endlesscheng-01luak] — 3 note(s) · e.g. “求连通所有节点的最小总边权（最小生成树），且图比较稀疏时，优先使用 {{c1::Kruskal}} 算法。”
+- `graph-network-flow-max-flow` [endlesscheng-01luak] — 3 note(s) · e.g. “当问题可以抽象成源点到汇点在容量限制下的最大可行流量时，应考虑用 {{c1::网络流（最大流）}} 建模。”
+- `graph-scc-tarjan` [endlesscheng-01luak] — 3 note(s) · e.g. “需要在有向图中找出所有“互相可达”的节点集合（强连通分量），标准做法是 {{c1::Tarjan}} 算法。”
+- `graph-topological-order-dp` [endlesscheng-01luak] — 3 note(s) · e.g. “在 DAG 上做依赖顺序明确的 DP（如求最长路径），且想用非递归方式实现时，可以在{{c1::拓扑排序}}的同时进行刷表法 DP。”
+- `graph-topological-sort-kahn` [endlesscheng-01luak] — 3 note(s) · e.g. “当题目给出若干“先修课程”式的有向依赖约束，要求给出一个合法学习顺序或判断是否有环时，应使用 {{c1::拓扑排序}}。”
+- `graph-traversal-and-shortest-path` [endlesscheng-wr1mjp] — 3 note(s) · e.g. “无权图中求起点到各点最少边数，应使用 {{c1::BFS}}。”
+- `greedy-and-constructive` [endlesscheng-v2rxsn] — 3 note(s) · e.g. “若局部选择可用交换论证证明不损失最优性，使用 {{c1::贪心}}。”
+- `greedy-exchange-and-median-transform` [endlesscheng-wr1mjp] — 3 note(s) · e.g. “贪心可用的关键不是“看起来合理”，而是能证明 {{c1::局部选择可交换进某个全局最优解}}。”
+- `greedy-interval-coverage` [endlesscheng-luu0kb] — 3 note(s) · e.g. “已能表示的目标是连续前缀，且要最少补资源扩张覆盖时，用 {{c1::区间覆盖贪心}}。”
+- `grid-connected-components-dfs` [endlesscheng-yixpxw] — 3 note(s) · e.g. “网格题要求统计岛屿、区域或房间的数量/面积，且只沿相邻可通行格移动时，优先考虑 {{c1::从每个未访问格启动一次 DFS 枚举连通块}}。”
+- `grid-dijkstra` [endlesscheng-yixpxw] — 3 note(s) · e.g. “Dijkstra 从最小堆弹出条目后，只有当其距离 {{c1::等于当前 distance 状态值}} 时才处理；否则它是旧条目。”
+- `grid-path-dp` [endlesscheng-txls3i] — 3 note(s) · e.g. “网格中只能从已处理方向移动时，状态通常定义为 {{c1::到达某个格子的答案}}。”
+- `grid-unweighted-bfs` [endlesscheng-yixpxw] — 3 note(s) · e.g. “网格中每一步代价都相同，并要求最少步数时，应使用 {{c1::BFS}}，而不是普通 DFS。”
+- `grid-zero-one-bfs` [endlesscheng-yixpxw] — 3 note(s) · e.g. “网格最短路的每次转移代价严格属于 0 和 1 时，使用 {{c1::0-1 BFS 加双端队列}} 可替代 Dijkstra 的堆。”
+- `grouped-knapsack-dp` [endlesscheng-g0n5iy] — 3 note(s) · e.g. “物品分组且每组最多选一个方案时，使用 {{c1::分组背包}}。”
+- `grouping-loop` [endlesscheng-0vinmk] — 3 note(s) · e.g. “当数组按规则被分割成若干组,且每组处理逻辑相同时,应使用{{c1::分组循环}},避免对最后一组做特判。”
+- `hash-union-find` [endlesscheng-g0n5iy] — 3 note(s) · e.g. “需要动态维护可传递的连通分组，且节点键不连续时，用 {{c1::哈希并查集}}。”
+- `heap-priority-queue` [endlesscheng-v2rxsn] — 3 note(s) · e.g. “反复获取动态集合当前最小或最大元素时，用 {{c1::堆}}。”
+- `heap-regret-lazy-and-dual` [endlesscheng-mor1u6] — 3 note(s) · e.g. “贪心过程中允许用更好选择替换旧选择时，用 {{c1::反悔堆}}。”
+- `heap-selection-and-rearrangement` [endlesscheng-mor1u6] — 3 note(s) · e.g. “持续加入数据、持续取当前最优候选时，用 {{c1::堆}}。”
+- `impartial-game-dp` [endlesscheng-iyt3ss] — 3 note(s) · e.g. “轮流行动、无随机且不能走者失败的题，优先尝试 {{c1::胜负态 DP}}。”
+- `inclusion-exclusion` [endlesscheng-iyt3ss] — 3 note(s) · e.g. “多个条件集合有重叠，要求“至少满足一个”时，使用 {{c1::容斥原理}}。”
+- `incubation-effect-when-stuck` [endlesscheng-rvfutj] — 3 note(s) · e.g. “当一道题思考{{c1::十分钟到数小时}}仍没有思路时，应该考虑暂离问题而不是持续死磕。”
+- `induction-greedy-proof` [endlesscheng-g6ktkl] — 3 note(s) · e.g. “贪心每步移除一个对象且剩余问题同构时，可用 {{c1::数学归纳法}} 证明正确性。”
+- `integer-partition-dp` [endlesscheng-iyt3ss] — 3 note(s) · e.g. “将 n 拆成正整数之和且忽略加数顺序时，使用 {{c1::完全背包计数}}。”
+- `interval-dp` [endlesscheng-txls3i] — 3 note(s) · e.g. “问题的答案属于子数组 [l,r] 且依赖更短区间时，是 {{c1::区间 DP}}。”
+- `interval-grouping-heap` [endlesscheng-g6ktkl] — 3 note(s) · e.g. “所有区间都要分配，且同组不能重叠、要求组数最少时，用 {{c1::左端点排序加最小堆}}。”
+- `interval-selection-stabbing` [endlesscheng-g6ktkl] — 3 note(s) · e.g. “最大化不相交区间数或最少点刺穿区间时，标准排序键是 {{c1::右端点升序}}。”
+- `iterate-set-bits` [endlesscheng-caoj45] — 3 note(s) · e.g. “当集合是稀疏的（全集范围很大但集合内元素很少）时，遍历集合元素应优先选择 {{c1::lowbit 剥离法（t & -t）}}，而不是对 0..n-1 逐位扫描”
+- `kadane-maximum-subarray` [endlesscheng-txls3i] — 6 note(s) · e.g. “求最大 {{c1::连续}} 子数组和时，使用 Kadane。”
+- `kadane-variant` [other] — 1 note(s) · e.g. “在股票买卖一次求最大利润问题中，将 prices 转化为相邻差分数组后，用 Kadane 思想求最大子数组和；核心递推是 cur = {{c1::max(0, ”
+- `kmp-prefix-function` [endlesscheng-sjfwqi] — 3 note(s) · e.g. “当题目要求在线性时间内找模式串全部出现位置，且可能有重叠匹配时，优先考虑 {{c1::KMP}}。”
+- `knapsack-dp` [endlesscheng-luu0kb] — 6 note(s) · e.g. “选择物品并受总和、容量或预算限制时，优先识别 {{c1::背包 DP}}。”
+- `knapsack-family` [endlesscheng-txls3i] — 3 note(s) · e.g. “每件物品只能取一次的容量选择问题是 {{c1::0-1 背包}}。”
+- `knapsack-subset-sum` [other] — 1 note(s) · e.g. “在0/1背包子集和DP中，内层容量循环必须{{c1::逆序遍历（从target到num）}}，这样才能保证每个元素在更新dp数组时{{c2::最多被选一次}}。”
+- `lagrange-interpolation` [endlesscheng-iyt3ss] — 3 note(s) · e.g. “已知函数是低次数多项式且给出足够样本点时，可用 {{c1::拉格朗日插值}} 外推。”
+- `largest-rectangle-histogram` [endlesscheng-9ozfk9] — 3 note(s) · e.g. “答案形如“区间最小高度 × 区间宽度”的最大化问题，常转成 {{c1::直方图最大矩形}}。”
+- `lazy-dynamic-persistent-segment-tree` [endlesscheng-mor1u6] — 3 note(s) · e.g. “区间更新和区间查询交错时，用 {{c1::Lazy 线段树}}。”
+- `lazy-segment-tree` [endlesscheng-v2rxsn] — 3 note(s) · e.g. “需要频繁区间更新和区间查询，且两者都不能降为简单前缀操作时，用 {{c1::Lazy 线段树}}。”
+- `lca-binary-lifting` [endlesscheng-k0n2go] — 6 note(s) · e.g. “静态树有大量 LCA 或第 k 个祖先查询时，预处理 {{c1::倍增祖先表}}。”
+- `lcs-alignment-dp` [endlesscheng-txls3i] — 3 note(s) · e.g. “两个序列保持相对顺序的共同部分问题，优先考虑 {{c1::LCS}}。”
+- `lexicographic-greedy` [endlesscheng-g6ktkl] — 3 note(s) · e.g. “目标优化字典序时，优先优化 {{c1::最早能不同的位置}}。”
+- `linear-and-state-machine-dp` [endlesscheng-luu0kb] — 3 note(s) · e.g. “处理顺序固定，未来只依赖有限历史摘要时，用 {{c1::线性或状态机 DP}}。”
+- `linear-dp-state-transition` [endlesscheng-g0n5iy] — 3 note(s) · e.g. “按位置处理且当前选择只依赖有限历史摘要时，用 {{c1::线性 DP}}。”
+- `linked-list-fast-slow-cycle` [endlesscheng-k0n2go] — 3 note(s) · e.g. “单链表不能标记访问节点却要判环时，用 {{c1::快慢指针}}。”
+- `linked-list-gap-pointers` [endlesscheng-k0n2go] — 3 note(s) · e.g. “寻找链表倒数第 k 个位置，可让 fast 先走 {{c1::k 步}}。”
+- `linked-list-reversal` [endlesscheng-k0n2go] — 3 note(s) · e.g. “单链表要求原地反转且空间受限时，用 {{c1::prev-cur-nxt 三指针}}。”
+- `linked-list-sentinel-splice` [endlesscheng-k0n2go] — 3 note(s) · e.g. “链表操作可能改写原头节点时，先创建 {{c1::dummy 哨兵节点}}。”
+- `lis-patience-sorting` [endlesscheng-txls3i] — 3 note(s) · e.g. “求 LIS 长度且 n 较大时，使用 {{c1::耐心排序加二分}}。”
+- `lowbit-and-bit-library-functions` [endlesscheng-caoj45] — 3 note(s) · e.g. “看到需要反复剥离整数二进制表示的最低位 1（例如逐一取出集合最小元素）时，应联想到 {{c1::lowbit = s & -s}} 这一固定写法。”
+- `manacher-palindrome-radii` [endlesscheng-sjfwqi] — 3 note(s) · e.g. “需要一次预处理后获得所有中心的最长回文信息时，用 {{c1::Manacher}}，而不是对每个中心重复扩展。”
+- `manhattan-chebyshev-transform` [endlesscheng-iyt3ss] — 3 note(s) · e.g. “二维点集的最大曼哈顿距离，可转化为维护 {{c1::x+y 与 x-y 的极差}}。”
+- `matrix-bfs-state` [other] — 1 note(s) · e.g. “在矩阵BFS处理带约束（如健康值）的最短路径时，visited 集合必须记录每个坐标 (x, y) 对应的{{c1::最优约束值（如最大health）}}，而不”
+- `matrix-exponentiation-dp` [endlesscheng-txls3i] — 3 note(s) · e.g. “n 很大且 DP 是固定系数线性递推时，用 {{c1::矩阵快速幂}}。”
+- `median-minimize-l1` [endlesscheng-g6ktkl] — 3 note(s) · e.g. “目标为最小化 sum(abs(x-target)) 时，target 取 {{c1::中位数}}。”
+- `meet-in-the-middle` [endlesscheng-k0n2go] — 3 note(s) · e.g. “子集枚举 n 约 40、2^n 不可行而 2^(n/2) 可行时，用 {{c1::meet in the middle}}。”
+- `memoized-search-to-bottom-up-dp` [endlesscheng-txls3i] — 3 note(s) · e.g. “当递归反复调用同一组参数时，应先尝试 {{c1::记忆化搜索}}。”
+- `merge-intervals` [endlesscheng-g6ktkl] — 3 note(s) · e.g. “要求合并重叠区间或求区间并集时，先按 {{c1::左端点升序}} 排序。”
+- `merge-sort-linked-lists` [endlesscheng-k0n2go] — 3 note(s) · e.g. “多个已排序链表要高效合并时，用 {{c1::两两分治归并}}。”
+- `min-cost-max-flow` [endlesscheng-g0n5iy] — 3 note(s) · e.g. “带容量的全局分配既要满足供需又要优化总成本时，用 {{c1::最小费用最大流}}。”
+- `minimum-interval-cover` [endlesscheng-g6ktkl] — 3 note(s) · e.g. “最少区间连续覆盖目标线段时，在所有左端点不超过当前前沿的区间中选 {{c1::右端点最远}} 的。”
+- `minimum-rotation` [endlesscheng-sjfwqi] — 3 note(s) · e.g. ““任意次循环左移后字典序最小”是 {{c1::最小表示法}} 的直接信号。”
+- `mobius-inversion` [endlesscheng-iyt3ss] — 3 note(s) · e.g. “已知“被 d 整除”的统计，想得到 gcd 恰为 1 的统计时，可使用 {{c1::莫比乌斯反演}}。”
+- `mod-add-mul-identity` [endlesscheng-mdfnkw] — 3 note(s) · e.g. “当题目要求结果对 {{c1::1e9+7}} 取模，且计算过程含有连续的加法或乘法时，应该在{{c2::循环内部的每一步}}取模，而不是等到最后再取模。”
+- `modular-combinatorics` [endlesscheng-iyt3ss] — 6 note(s) · e.g. “相同球分到 k 个可为空的盒子且总数为 n，方案数是 {{c1::C(n+k-1,k-1)}}。”
+- `modular-inverse-fermat` [endlesscheng-mdfnkw] — 3 note(s) · e.g. “推导出的公式包含除法且模数是质数（如 1e9+7）时，应联想到用{{c1::费马小定理}}求模逆元，把除法转换成乘法。”
+- `modular-residue-enumeration` [endlesscheng-g0n5iy] — 3 note(s) · e.g. “条件只依赖个位或余数、而模数很小时，应枚举 {{c1::同余类}} 而不是枚举目标值。”
+- `monotone-chain-convex-hull` [endlesscheng-iyt3ss] — 3 note(s) · e.g. “需要二维点集的最小凸包边界时，可用 {{c1::Andrew 单调链}}。”
+- `monotonic-queue` [endlesscheng-mor1u6] — 3 note(s) · e.g. “滑动窗口不断右移且每次要最大值或最小值时，用 {{c1::单调双端队列}}。”
+- `monotonic-stack` [endlesscheng-v2rxsn] — 6 note(s) · e.g. “寻找每个元素左侧或右侧第一个更大/更小元素时，用 {{c1::单调栈}}。”
+- `monotonic-stack-and-contribution` [endlesscheng-luu0kb] — 3 note(s) · e.g. “需要每个位置左、右第一个更大或更小边界时，用 {{c1::单调栈}}。”
+- `monotonic-stack-and-queue` [endlesscheng-wr1mjp] — 3 note(s) · e.g. “要求每个位置的“下一个更大/更小元素”时，优先想到 {{c1::单调栈}}。”
+- `monotonic-stack-boundaries` [endlesscheng-g0n5iy] — 3 note(s) · e.g. “要求每个元素的第一个更小或更大邻居、或其贡献边界时，用 {{c1::单调栈}}。”
+- `monotonic-stack-contribution` [endlesscheng-9ozfk9] — 3 note(s) · e.g. “求所有子数组最小值或最大值之和时，应把“枚举子数组”改成 {{c1::枚举元素贡献}}。”
+- `monotonic-stack-greedy` [other] — 1 note(s) · e.g. “在单调栈贪心构造字典序最小子序列时，只有当栈顶元素 {{c1::大于当前字符 ch 且 remainings[栈顶元素] {{c2::> 0}}}} 时才能弹出”
+- `monotonic-stack-lexicographic-subsequence` [endlesscheng-9ozfk9] — 3 note(s) · e.g. “保持原相对顺序并要求字典序最小、且选择可撤销时，使用 {{c1::贪心单调栈}}。”
+- `monotonic-stack-nearest-boundary` [endlesscheng-9ozfk9] — 3 note(s) · e.g. “当题目要批量求每个元素一侧最近的更大或更小元素时，优先考虑 {{c1::单调栈}}。”
+- `moore-voting` [endlesscheng-iyt3ss] — 3 note(s) · e.g. “数组中若存在出现次数严格超过一半的元素，可用 {{c1::摩尔投票法}}。”
+- `multi-source-bfs` [endlesscheng-luu0kb] — 3 note(s) · e.g. “要求每个点到最近多个起点之一的无权距离时，用 {{c1::多源 BFS}}。”
+- `negative-mod-normalization` [endlesscheng-mdfnkw] — 3 note(s) · e.g. “在 C++/Java 等语言中，对负数取模可能得到负结果，此时应使用 {{c1::(x mod m + m) mod m}} 将结果规范到 [0, m-1]。”
+- `offline-query-ordering` [endlesscheng-mor1u6] — 3 note(s) · e.g. “查询彼此独立且改变顺序能复用状态时，用 {{c1::离线算法}}。”
+- `opposite-direction-two-pointers` [endlesscheng-0vinmk] — 3 note(s) · e.g. “数组反转、有序数组两数之和等需要从两端向中间处理的场景,应使用{{c1::相向双指针}}。”
+- `optimized-dp-data-structures` [endlesscheng-txls3i] — 3 note(s) · e.g. “转移来源是随 i 移动的连续窗口最值时，用 {{c1::单调队列}} 优化。”
+- `palindrome-enumeration` [endlesscheng-iyt3ss] — 3 note(s) · e.g. “候选必须是回文数时，应通过 {{c1::镜像前半部分}} 构造，而非扫描全部整数。”
+- `palindrome-frequency-greedy` [endlesscheng-g6ktkl] — 3 note(s) · e.g. “可重排字符构造回文时，先关注每个字符频次的 {{c1::奇偶性}}。”
+- `partition-and-subsequence-dp` [endlesscheng-luu0kb] — 3 note(s) · e.g. “答案可按“最后一段从哪里开始”归因时，用 {{c1::划分型 DP}}。”
+- `partition-dp` [endlesscheng-txls3i] — 3 note(s) · e.g. “把序列划成连续段时，常通过枚举 {{c1::最后一段的左端点}} 转移。”
+- `permutation-backtracking-with-duplicates` [endlesscheng-k0n2go] — 3 note(s) · e.g. “每层都能从所有剩余元素任选一个，且顺序影响答案时，用 {{c1::排列型回溯}}。”
+- `permutation-bitmask-dp` [endlesscheng-txls3i] — 3 note(s) · e.g. “n 不大且要枚举访问顺序时，考虑 {{c1::排列型状压 DP}}。”
+- `polynomial-string-hash` [endlesscheng-sjfwqi] — 3 note(s) · e.g. “当题目有大量子串相等判断，并可接受概率判定或双模时，使用 {{c1::字符串哈希}}。”
+- `prefix-suffix-and-difference` [endlesscheng-wr1mjp] — 3 note(s) · e.g. “有大量“给区间统一加值，最后查看数组”的操作时，用 {{c1::差分数组}}。”
+- `prefix-suffix-and-difference-array` [endlesscheng-luu0kb] — 3 note(s) · e.g. “切分点答案能写成左侧聚合与右侧聚合组合时，用 {{c1::前后缀分解}}。”
+- `prefix-suffix-decomposition` [endlesscheng-v2rxsn] — 3 note(s) · e.g. “每个切分点的答案能由左右两侧独立信息合成时，用 {{c1::前后缀分解}}。”
+- `prefix-suffix-heaps` [endlesscheng-g0n5iy] — 3 note(s) · e.g. “每个切分点都要比较左右两侧各自最优的固定数量元素时，用 {{c1::前后缀堆}}。”
+- `prefix-sum-and-prefix-hash` [endlesscheng-mor1u6] — 3 note(s) · e.g. “子数组条件能写成两个累计状态之差时，用 {{c1::前缀和或前缀状态}}。”
+- `prefix-sum-difference-array` [endlesscheng-v2rxsn] — 3 note(s) · e.g. “大量区间加法、最后再读取数组时，用 {{c1::差分数组}}。”
+- `prefix-sum-hash-counting` [endlesscheng-luu0kb] — 3 note(s) · e.g. “区间条件能改写为两个前缀状态的关系时，用 {{c1::前缀和加哈希计数}}。”
+- `prefix-sum-parity` [other] — 1 note(s) · e.g. “在计数满足条件子数组的前缀和技巧中，将原数组转化为 {{c1::±1}} 序列（符合条件记为+1，不符合记为-1）后，子数组[i,j]满足条件当且仅当 {{c2”
+- `prime-exponent-prefix-sums` [endlesscheng-g0n5iy] — 3 note(s) · e.g. “乘积目标能按元素拆成质因子幂之和时，用 {{c1::质因子指数前缀和}}。”
+- `prime-factorization` [endlesscheng-iyt3ss] — 3 note(s) · e.g. “题目中的乘积、整除关系能按质数独立处理时，应转成 {{c1::质因数指数}}。”
+- `prime-factorization-sieve` [endlesscheng-v2rxsn] — 3 note(s) · e.g. “整除、互质或乘积的因子性质是核心时，考虑 {{c1::质因数分解}}。”
+- `prime-sieve-and-divisor-enumeration` [endlesscheng-luu0kb] — 3 note(s) · e.g. “需要批量判断 0..n 中的质数时，用 {{c1::埃氏筛}}。”
+- `prime-test` [endlesscheng-iyt3ss] — 3 note(s) · e.g. “判断单个整数是否为质数且 n 不大时，可使用 {{c1::试除到平方根}}。”
+- `priority-queue-greedy` [endlesscheng-wr1mjp] — 3 note(s) · e.g. “算法每一步都要从动态候选中取当前最小或最大值时，用 {{c1::优先队列/堆}}。”
+- `probability-expectation-dp` [endlesscheng-iyt3ss] — 3 note(s) · e.g. “求随机过程的平均步数且状态可描述时，可建立 {{c1::期望 DP 方程}}。”
+- `product-and-inequality-greedy` [endlesscheng-g6ktkl] — 3 note(s) · e.g. “固定正数总和并最大化乘积时，优先让各部分 {{c1::尽量均衡}}。”
+- `q1-two-pointer-near-palindromic-deletion` [endlesscheng-yfxfdf] — 3 note(s) · e.g. “当题目要求“删除恰好一个元素后能否变成回文”时，应使用 {{c1::双指针从两端向中心匹配}}，一旦发现不对称立即分两种情况验证。”
+- `q2-small-constant-brute-force` [endlesscheng-yfxfdf] — 3 note(s) · e.g. “看到题目规模上限是 {{c1::很小的常数（如不超过一千）}}，且候选之间相互独立时，应优先考虑直接枚举取最优而非设计复杂算法。”
+- `q3-binary-search-on-answer-arithmetic-sum` [endlesscheng-yfxfdf] — 3 note(s) · e.g. “当贪心策略等价于反复取当前最大值（可用堆模拟），但取值范围过大导致逐步模拟超时时，应考虑 {{c1::二分最后一次操作对应的阈值}}。”
+- `q4-complement-counting` [endlesscheng-yfxfdf] — 3 note(s) · e.g. “当直接统计满足某关系的组合数很复杂，而其反面条件容易刻画时，应考虑 {{c1::逆向计数（先算总数再减去不满足的数量）}}。”
+- `q4-subset-enumeration-bitmask-hashmap` [endlesscheng-yfxfdf] — 3 note(s) · e.g. “当每个元素对应一个很小的集合（如长度 ≤4），且要判断集合间的子集/超集关系并计数时，应使用 {{c1::子集枚举 + 位掩码编码存入哈希表}}的技巧。”
+- `queue-bfs-and-deque` [endlesscheng-mor1u6] — 3 note(s) · e.g. “无权图中求最少边数最短路，用 {{c1::BFS 队列}}。”
+- `randomized-algorithms` [endlesscheng-iyt3ss] — 3 note(s) · e.g. “要打散可能对抗的输入顺序或选随机枢轴时，可使用 {{c1::随机化}}。”
+- `range-query` [other] — 1 note(s) · e.g. “Sparse Table 用两个可能重叠的区间在 {{c1::O(1)}} 时间内完成静态区间查询，这依赖于聚合操作满足 {{c2::幂等性（idempoten”
+- `range-query-structures` [endlesscheng-luu0kb] — 3 note(s) · e.g. “需要交错执行点更新与前缀和查询时，用 {{c1::树状数组}}。”
+- `rearrangement-inequality` [endlesscheng-g6ktkl] — 3 note(s) · e.g. “两个数组可各自重排，目标为配对乘积和时，使用 {{c1::排序不等式}}。”
+- `reconstruct-dp-solution` [endlesscheng-txls3i] — 3 note(s) · e.g. “DP 题要求输出一个最优方案时，额外记录 {{c1::前驱/决策}}。”
+- `regret-greedy-heap` [endlesscheng-g6ktkl] — 3 note(s) · e.g. “按序选择但后来的元素可能替换旧选择，并且需快速删掉最差旧选择时，用 {{c1::堆维护反悔贪心}}。”
+- `regret-greedy-with-heap` [endlesscheng-luu0kb] — 3 note(s) · e.g. “先选局部最优、后续可能以更好候选替换历史最差选择时，用 {{c1::反悔贪心}}。”
+- `rerooting-dp` [endlesscheng-txls3i] — 3 note(s) · e.g. “要求每个节点作为根的树答案时，使用 {{c1::换根 DP}}。”
+- `reverse-thinking` [endlesscheng-g6ktkl] — 3 note(s) · e.g. “正向操作分支大而终态明确时，尝试从 {{c1::目标状态倒推前驱}}。”
+- `rooted-tree-topological-order` [endlesscheng-k0n2go] — 3 note(s) · e.g. “有向先修依赖需要合法顺序或判环时，用 {{c1::Kahn 拓扑排序}}。”
+- `same-direction-two-pointers` [endlesscheng-0vinmk] — 3 note(s) · e.g. “滑动窗口本质上是{{c1::同向双指针}}的一种特例,右指针负责扩展、左指针负责收缩。”
+- `segment-tree-point-update` [endlesscheng-mor1u6] — 3 note(s) · e.g. “数组可修改且要查询任意区间的 max/min/gcd 时，用 {{c1::线段树}}。”
+- `segment-tree-range-aggregate` [endlesscheng-g0n5iy] — 3 note(s) · e.g. “区间聚合查询和在线更新交错出现时，用 {{c1::线段树}}。”
+- `separate-identical-items` [endlesscheng-g6ktkl] — 3 note(s) · e.g. “相邻不同重排可行当且仅当 {{c1::m <= n-m+1}}。”
+- `set-bitwise-set-operations` [endlesscheng-caoj45] — 3 note(s) · e.g. “当问题涉及判断两个用整数表示的集合是否存在交集、并集或子集关系时，应联想到直接用 {{c1::按位与(&)/按位或(|)/按位异或(^)}} 对二进制表示运算，”
+- `set-element-bitwise-ops` [endlesscheng-caoj45] — 3 note(s) · e.g. “当需要判断整数 i 是否属于位压缩集合 s 时，应使用 {{c1::(s >> i) & 1}} 而不是遍历集合逐一比较。”
+- `shortest-path-dijkstra-floyd` [endlesscheng-v2rxsn] — 3 note(s) · e.g. “非负权图的单源最短路使用 {{c1::Dijkstra}}。”
+- `shrink-window-for-longest` [endlesscheng-0vinmk] — 3 note(s) · e.g. “题目要求'最长/最大的满足某条件的子数组',且窗口越长越容易破坏条件时,应使用{{c1::收缩式(越短越合法)}}的不定长滑动窗口。”
+- `sliding-window` [endlesscheng-luu0kb] — 3 note(s) · e.g. “当连续区间的约束能靠右移左端点恢复，优先考虑 {{c1::滑动窗口}}。”
+- `sliding-window-frequency-map` [other] — 1 note(s) · e.g. “在 Sliding Window With Frequency Map 模板中，right 右移时先 {{c1::freq[s[right]] += 1}}，一”
+- `sliding-window-two-pointers` [endlesscheng-g0n5iy] — 3 note(s) · e.g. “连续区间约束可随端点移动增量维护，且失效后收缩左端能恢复条件时，用 {{c1::滑动窗口}}。”
+- `small-to-large-tree-merging` [endlesscheng-k0n2go] — 3 note(s) · e.g. “每个子树需合并集合或频次统计时，可用 {{c1::small-to-large}}。”
+- `sorted-extremal-pairing` [endlesscheng-g6ktkl] — 3 note(s) · e.g. “极值配对贪心的核心不变式是：已处理的 {{c1::最小或最大元素}} 已在某个最优解中完成处理。”
+- `sparse-table` [endlesscheng-mor1u6] — 3 note(s) · e.g. “静态数组上有大量 RMQ 且无修改时，用 {{c1::Sparse Table}}。”
+- `special-case-to-general` [endlesscheng-g6ktkl] — 3 note(s) · e.g. “从特殊到一般得到的规律，必须经过 {{c1::证明或反例检验}} 才能用于算法。”
+- `splay-tree` [endlesscheng-mor1u6] — 3 note(s) · e.g. “需要自适应有序集合并可接受均摊界时，可用 {{c1::Splay 树}}。”
+- `sqrt-decomposition-and-mo` [endlesscheng-mor1u6] — 3 note(s) · e.g. “可离线的区间查询能通过单元素增删维护时，考虑 {{c1::莫队算法}}。”
+- `stack-parsing-and-cancellation` [endlesscheng-mor1u6] — 3 note(s) · e.g. “新输入只会处理最近一个未完成状态时，使用 {{c1::栈}}。”
+- `stack-reduction-merge` [endlesscheng-g0n5iy] — 3 note(s) · e.g. “新元素与最近保留元素合并后可能继续触发冲突时，用 {{c1::栈式归约}}。”
+- `subsequence-automaton` [endlesscheng-sjfwqi] — 3 note(s) · e.g. “固定文本面对大量“某串是否为其子序列”的查询时，建立 {{c1::子序列自动机}}。”
+- `subset-enumeration-dp` [endlesscheng-txls3i] — 3 note(s) · e.g. “对每个集合都要枚举其子集，整体复杂度通常是 {{c1::O(3^n)}}。”
+- `subset-partition-combination-backtracking` [endlesscheng-k0n2go] — 3 note(s) · e.g. “每个元素最多使用一次且选择顺序无关时，用 {{c1::start 下标单调递增}} 的组合回溯。”
+- `suffix-array` [endlesscheng-sjfwqi] — 3 note(s) · e.g. “题目核心是“所有后缀的字典序”或最长重复子串时，考虑 {{c1::后缀数组}}。”
+- `suffix-automaton` [endlesscheng-sjfwqi] — 3 note(s) · e.g. “要在线处理一个字符串的全部子串、不同子串数或出现次数时，考虑 {{c1::后缀自动机}}。”
+- `take-or-skip-linear-dp` [endlesscheng-txls3i] — 3 note(s) · e.g. “顺序选择且选当前位置会排斥邻近元素时，识别为 {{c1::选或不选线性 DP}}。”
+- `ternary-search-unimodal` [endlesscheng-sqopeo] — 3 note(s) · e.g. “当目标函数关于自变量是{{c1::单峰}}（先增后减）而非单调时，二分答案的 check 无法直接使用，应改用{{c2::三分法}}。”
+- `three-pointer-sliding-window` [endlesscheng-0vinmk] — 3 note(s) · e.g. “当恰好型滑窗需要调用两次结构相同、仅阈值不同的滑窗函数时,可以合并为一次遍历的{{c1::三指针滑动窗口}}。”
+- `topic-based-spiral-practice` [endlesscheng-rvfutj] — 3 note(s) · e.g. “当发现自己面对新专题{{c1::不知道从哪道题入手}}，且题目难度分布悬殊时，应采用专题螺旋式刷题法而非随机刷题。”
+- `topic-to-random-transfer-training` [endlesscheng-rvfutj] — 3 note(s) · e.g. “当刷题者已完成专题训练，却在比赛中{{c1::无法判断题目属于哪种算法类型}}（例如把动态规划误判为贪心）时，说明需要补充随机训练。”
+- `topological-sort` [endlesscheng-v2rxsn] — 3 note(s) · e.g. “存在有向前置依赖并需要合法处理顺序时，用 {{c1::拓扑排序}}。”
+- `topological-sort-and-bipartite-check` [endlesscheng-wr1mjp] — 3 note(s) · e.g. “有向约束要求“a 必须在 b 之前”时，使用 {{c1::拓扑排序}}。”
+- `tree-build-from-traversals` [endlesscheng-k0n2go] — 3 note(s) · e.g. “唯一值二叉树给定先序和中序时，可用 {{c1::分治重建}}。”
+- `tree-dfs-direction-and-return` [endlesscheng-k0n2go] — 3 note(s) · e.g. “状态表示根到当前节点的路径时，在 DFS 的 {{c1::递}} 阶段更新。”
+- `tree-diameter-height-dp` [endlesscheng-k0n2go] — 3 note(s) · e.g. “树的最长简单路径问题通常识别为 {{c1::直径}}，用两条向下链合并。”
+- `tree-dp-and-center-expansion` [endlesscheng-wr1mjp] — 3 note(s) · e.g. “当树上答案可由各子树答案合并，且选定根不会改变问题时，用 {{c1::树形 DP}}。”
+- `tree-dp-and-rerooting` [endlesscheng-luu0kb] — 3 note(s) · e.g. “子问题天然是子树，且父节点只需汇总孩子信息时，用 {{c1::树形 DP}}。”
+- `tree-dp-combine-children` [endlesscheng-g0n5iy] — 3 note(s) · e.g. “节点答案由多个独立子树贡献合并而成时，用 {{c1::树形 DP}}。”
+- `tree-dp-independent-set-diameter-domination` [endlesscheng-txls3i] — 3 note(s) · e.g. “树上选择相邻节点互斥时，使用 {{c1::树上最大独立集 DP}}。”
+- `tree-dp-rerooting` [endlesscheng-v2rxsn] — 3 note(s) · e.g. “状态由各个子树合并得到时，用 {{c1::树形 DP}}。”
+- `tree-dp-state-merge` [endlesscheng-k0n2go] — 3 note(s) · e.g. “父节点决策只依赖子节点少量结果时，建模为 {{c1::树形 DP}}。”
+- `tree-euler-tour-flattening` [endlesscheng-k0n2go] — 3 note(s) · e.g. “频繁对子树做数组型区间操作时，用 {{c1::DFS Euler 序拍平}}。”
+- `tree-level-order-bfs` [endlesscheng-k0n2go] — 3 note(s) · e.g. “题目要求按深度分组或最少边数时，优先考虑 {{c1::BFS 队列}}。”
+- `tree-path-sliding-window` [endlesscheng-k0n2go] — 3 note(s) · e.g. “约束只作用于根到当前节点路径时，可把 DFS 路径视作 {{c1::可回滚滑动窗口}}。”
+- `tree-prune-by-returning-root` [endlesscheng-k0n2go] — 3 note(s) · e.g. “树上删除节点会改变父子连接时，让 dfs 返回 {{c1::处理后子树的新根}}。”
+- `trie-and-xor-trie` [endlesscheng-mor1u6] — 3 note(s) · e.g. “大量字符串共享前缀并需查询前缀或完整词时，用 {{c1::Trie}}。”
+- `trie-prefix-tree` [endlesscheng-wr1mjp] — 6 note(s) · e.g. “大量字符串需要反复按公共前缀查询或计数时，使用 {{c1::Trie 字典树}}。”
+- `two-dimensional-prefix-and-difference` [endlesscheng-mor1u6] — 3 note(s) · e.g. “静态矩阵的重复矩形求和，用 {{c1::二维前缀和}}。”
+- `two-dimensional-prefix-sum` [endlesscheng-uuurex] — 3 note(s) · e.g. “当需要对{{c1::不再被修改}}的矩阵进行{{c2::多次}}子矩阵元素和查询时，应预处理二维前缀和以将每次查询降到O(1)。”
+- `two-directional-scans` [endlesscheng-g6ktkl] — 3 note(s) · e.g. “每个位置同时依赖左边和右边信息时，使用 {{c1::从左到右与从右到左各扫描一次}}。”
+- `two-pointers-and-group-scan` [endlesscheng-luu0kb] — 3 note(s) · e.g. “相邻关系决定状态、且每段可独立结算时，用 {{c1::分组循环}} 一次扫描极大段。”
+- `two-pointers-and-sliding-window` [endlesscheng-wr1mjp] — 3 note(s) · e.g. “连续区间问题中，若右端扩张后能靠不断移动左端恢复条件，应考虑 {{c1::双指针/可变滑动窗口}}。”
+- `two-pointers-sliding-window` [endlesscheng-v2rxsn] — 3 note(s) · e.g. “连续区间约束能通过加入或删除一个元素维护，并且左右端点只前进时，用 {{c1::滑动窗口}}。”
+- `two-pointers-sorted-array` [other] — 1 note(s) · e.g. “在排序数组上做 Two Pointers 时，循环条件应为 {{c1::l < r}}（严格小于），且每次跳过重复元素的检查应该在 {{c2::移动指针之后}}”
+- `two-stack-editor` [endlesscheng-g0n5iy] — 3 note(s) · e.g. “文本操作围绕可移动光标，且需频繁左右移动时，用 {{c1::对顶栈}}。”
+- `union-find-connectivity` [other] — 1 note(s) · e.g. “在按秩合并（union by rank）的并查集实现中，union 时应把秩较小的树根挂到秩较大的树根下；当两棵树的秩{{c1::相等}}时，合并后新根的秩需要”
+- `union-find-connectivity-variants` [endlesscheng-mor1u6] — 3 note(s) · e.g. “关系只会合并、频繁查询是否同组时，用 {{c1::并查集}}。”
+- `value-keyed-subsequence-dp` [endlesscheng-txls3i] — 3 note(s) · e.g. “若转移由前一个{{c1::元素值}}决定而不是下标决定，可按值建 DP。”
+- `virtual-tree` [endlesscheng-k0n2go] — 3 note(s) · e.g. “单次树查询只涉及少量特殊点及连接路径时，用 {{c1::虚树}} 压缩。”
+- `weighted-union-find` [endlesscheng-mor1u6] — 3 note(s) · e.g. “连通性之外还给出 x、y 的相对差值约束时，用 {{c1::带权并查集}}。”
+- `wildcard-parentheses-range` [endlesscheng-g6ktkl] — 3 note(s) · e.g. “括号串含可作左、右或空的通配符时，维护未匹配左括号数的 {{c1::最小值 low 与最大值 high}}。”
+- `xor-linear-basis` [endlesscheng-dhn9vk] — 6 note(s) · e.g. “从很多数中任选子集并最大化 XOR，且位数远小于元素数时，使用 {{c1::XOR 线性基}}。”
+- `xor-parity-cancellation` [endlesscheng-dhn9vk] — 3 note(s) · e.g. “数组中其余数都出现偶数次、只有一个数未配对时，用 {{c1::全部元素的 XOR}} 可直接得到该数。”
+- `xor-range-construction` [other] — 1 note(s) · e.g. “在 XOR 值域构造问题中，若 n >= 3，可能的 XOR 结果集合恰好覆盖 {{c1::严格大于 n 的最小 2 的幂}} 减一为止的完整区间；这是因为所有”
+- `z-function-lcp` [endlesscheng-sjfwqi] — 3 note(s) · e.g. “若要批量得到“每个后缀和整串前缀相同多长”，应计算 {{c1::Z 函数}}。”
+- `zero-one-bfs` [endlesscheng-g0n5iy] — 3 note(s) · e.g. “最短路图的边权只为 0 或 1 时，用 {{c1::0-1 BFS}}。”
+- `zero-one-knapsack` [endlesscheng-wr1mjp] — 3 note(s) · e.g. “每个物品只能选一次，并受总容量/总和限制时，识别为 {{c1::0/1 背包}}。”
+
+### Topics standing in for notes that name no concept (39)
+- `0-1-knapsack` (0-1 Knapsack) — 1 note(s) · e.g. “如何用动态规划判断数组能否划分为两个和相等的子集（0/1背包子集和问题）？”
+- `bidirectional-search` (Bidirectional Search) — 1 note(s) · e.g. “如何用 BFS 求解「转动密码锁」类问题（如 LeetCode 752 Open the Lock）？核心思路是什么？”
+- `binary-search` (Binary Search) — 2 note(s) · e.g. “如何用二分查找快速求循环数组中「同值最近位置」的距离（如 LC 3488 Closest Equal Element Queries）？”
+- `binary-tree` (Binary Tree) — 4 note(s) · e.g. “如何用 BFS 求二叉树每一层的最大值？”
+- `bit-manipulation` (Bit Manipulation) — 7 note(s) · e.g. “如何求一个整数 num 的按位补数（Number Complement）？核心技巧是什么？”
+- `bitmask` (Bitmask) — 1 note(s) · e.g. “回溯解决「划分为k个相等的子集」(LC 698) 时，如何用状态压缩剪枝减少无效搜索？”
+- `boyer-moore-majority-vote-algorithm` (Boyer–Moore Majority Vote Algorithm) — 1 note(s) · e.g. “求数组中出现次数超过 n/2 的多数元素，如何在 O(n) 时间、O(1) 空间内解决？”
+- `bubble-sort` (Bubble Sort) — 1 note(s) · e.g. “如何判断数组中每个位置的元素是否处于「排序后应处的位置」？(如 LC 1051 Height Checker)”
+- `combinatorics` (Combinatorics) — 2 note(s) · e.g. “网格DP：机器人从左上到右下只能右/下移动，求路径数——如何设计状态转移？”
+- `counting` (Counting) — 3 note(s) · e.g. “给定字符串 s 和整数 k，要求删除最少字符使得剩余字符串中不同字符种类数 ≤ k，如何贪心求解？”
+- `design` (Design) — 1 note(s) · e.g. “如何设计支持“按时间戳查询最近版本”的 Time Based Key-Value Store（TimeMap）？”
+- `directed-acyclic-graph` (Directed Acyclic Graph) — 3 note(s) · e.g. “矩阵中求最长严格递增路径（LeetCode 329），常见套路是什么？”
+- `doubly-linked-list` (Doubly-Linked List) — 1 note(s) · e.g. “BST 转排序双向链表：为什么用中序遍历收集节点，再统一连接，而不是边遍历边连接？”
+- `dynamic-programming` (Dynamic Programming) — 3 note(s) · e.g. “「买卖股票最佳时机」(只能交易一次)有哪几种等价的解法思路？”
+- `enumeration` (Enumeration) — 3 note(s) · e.g. “数组中，一部分数字之和等于另一部分的固定倍数关系（如“special 数字之和 = outlier 之外所有数的和”），如何枚举求解？”
+- `floyd-s-cycle-finding-algorithm` (Floyd's Cycle Finding Algorithm) — 1 note(s) · e.g. “写 findDuplicate 时用了原地交换（cycle sort）思路，为什么这个解法不满足题目要求？”
+- `game-theory` (Game Theory) — 3 note(s) · e.g. “1927. Sum Game：字符串对半分，含 '?' 的博弈论求和问题，如何在 O(n) 内判断先手（Alice）是否必胜？”
+- `geometry` (Geometry) — 2 note(s) · e.g. “如何统计“跨分组配对数量”这类问题(例如:按 y 分组统计点对，再统计不同组线段两两组合的梯形数)？”
+- `graph-theory` (Graph Theory) — 2 note(s) · e.g. “如何判断无向图中两个节点 source 和 destination 是否连通？”
+- `greedy` (Greedy) — 4 note(s) · e.g. “为什么最初写的 4 分支公式（被注释掉的代码）比最终解法多了一项？”
+- `hash-table` (Hash Table) — 2 note(s) · e.g. “如何在 O(n) 时间、O(1) 空间内求数组中缺失的最小正整数（First Missing Positive）？”
+- `heap-priority-queue` (Heap (Priority Queue)) — 2 note(s) · e.g. “数组中找『数位和相等的两数之和』的最大值，如何用一次遍历（不排序、不存全部数字）解决？”
+- `linear-algebra` (Linear Algebra) — 1 note(s) · e.g. “如何计算两个稀疏矩阵 mat1 (m1×n1) 和 mat2 (m2×n2) 的乘积？（暴力做法）”
+- `linked-list` (Linked List) — 1 note(s) · e.g. “如何一次遍历找到链表的所有临界点（局部极大/极小值），并求出相邻临界点间的最小距离与首尾临界点间的最大距离？”
+- `math` (Math) — 6 note(s) · e.g. “脑筋急转弯类构造题：题目问「能否构造出某种数组」时，先想清楚极端情况——是否无论输入什么都恒成立？”
+- `matrix` (Matrix) — 11 note(s) · e.g. “网格图 DP + 有限次「中和」操作（如最多消除k次负数格子）该如何建模状态？”
+- `memoization` (Memoization) — 1 note(s) · e.g. “爬楼梯问题（LeetCode 70）：为什么状态转移是 f(n) = f(n-1) + f(n-2)？如何把空间优化到 O(1)？”
+- `number-theory` (Number Theory) — 2 note(s) · e.g. “如何用 BFS 求解“通过质数传送到达终点的最少跳数”问题（如 LC 3629）？”
+- `persistent-data-structure` (Persistent Data Structure) — 2 note(s) · e.g. “Snapshot Array 如何做到 set/snap O(1)、get O(log n)？”
+- `prefix-sum` (Prefix Sum) — 4 note(s) · e.g. “给定数组，需要对每个下标 i 同时知道「前缀最值」和「后缀最值」，如何在 O(n) 内完成？”
+- `simulation` (Simulation) — 2 note(s) · e.g. “给定 0-based 排列 nums，要求 O(1) 额外空间构造 ans[i] = nums[nums[i]]，思路是什么？”
+- `sliding-window` (Sliding Window) — 1 note(s) · e.g. “给定二进制字符串 s 和整数 k，要求找出恰好包含 k 个 '1' 的最短且字典序最小的子串（beautiful substring），如何避免暴力枚举所有子串”
+- `sorting` (Sorting) — 5 note(s) · e.g. “遇到「若两元素满足某条件（如差值 ≤ limit）则可以交换」这类题目，如何设计算法？”
+- `stack` (Stack) — 1 note(s) · e.g. “如何在一次遍历中计算含 +、-、*、/ 的表达式（无括号）？”
+- `string` (String) — 4 note(s) · e.g. “Buddy Strings：如何用 O(n) 判断能否通过一次交换让 s 变成 goal？”
+- `topological-sort` (Topological Sort) — 1 note(s) · e.g. “如何在无向树中求最小高度树(MHT)的根节点（LC 310）？”
+- `two-pointers` (Two Pointers) — 2 note(s) · e.g. “有序数组原地去重（LeetCode 26），双指针怎么设计？”
+- `uncategorised` (uncategorised) — 71 note(s) · e.g. “电梯按顺序处理请求队列，求总耗时——用什么模式？”
+- `zero-sum-game` (Zero-Sum Game) — 2 note(s) · e.g. “Stone Game IX（2029）：如何用余数分类 + 计数判断先手是否必胜？”
+
+## What a skeleton is
+- A tree: branches at the top, leaves below. ids are dotted lowercase slugs;
+  a child's id starts with its parent's id plus a dot. Study order = list
+  order — put fundamentals first. `requires` lists ids of nodes that must
+  be understood first (cross-branch only, sparse).
+- Every node has a one-line `summary` in Chinese (简体中文) saying what the leaf
+  teaches. Every leaf listed above must exist; you may add a few leaves the
+  deck lacks and list them under `uncovered`.
+- Aim for 14-24 branches.
+
+## Answer format
+{"deck": "LeetCode",
+  "skeleton": {"domain": "leetcode", "title": "...", "lang": "zh",
+    "nodes": [
+      {"id": "window", "title": "...", "summary": "...", "children": [
+        {"id": "window.shrink-window-for-longest", "title": "...", "summary": "..."}
+      ]}
+    ]},
+  "uncovered": []}

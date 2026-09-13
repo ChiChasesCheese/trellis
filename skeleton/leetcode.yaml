@@ -1,0 +1,1095 @@
+# LeetCode: seeded from the outline of `anki:LeetCode` (LeetCode), then reviewed as a map of the
+# subject — see ADR 0006. Leaves the source does not cover are the
+# reading list, not a defect.
+domain: leetcode
+title: LeetCode
+lang: zh
+nodes:
+- id: fundamentals
+  title: 刷题方法论与复杂度预估（problem-solving meta）
+  summary: 建立数据范围反推复杂度、专题螺旋刷题、卡壳后暂离等元认知习惯，作为后续所有专题的思维框架。
+  order: 1
+  children:
+  - id: fundamentals.complexity-budget-from-constraints
+    title: 数据范围反推允许的时间复杂度（complexity-budget-from-constraints）
+    summary: 题目给出数据范围但不确定用什么复杂度算法时，应先用数据范围反推允许的时间复杂度来缩小候选算法范围。
+  - id: fundamentals.equivalence-transformation
+    title: 等价转化（equivalence-transformation）
+    summary: 原目标难直接优化，但补集或另一种表示更简单时，尝试 等价转化。
+  - id: fundamentals.incubation-effect-when-stuck
+    title: 十分钟到数小时（incubation-effect-when-stuck）
+    summary: 当一道题思考十分钟到数小时仍没有思路时，应该考虑暂离问题而不是持续死磕。
+  - id: fundamentals.randomized-algorithms
+    title: 随机化（randomized-algorithms）
+    summary: 要打散可能对抗的输入顺序或选随机枢轴时，可使用 随机化。
+  - id: fundamentals.reverse-thinking
+    title: 目标状态倒推前驱（reverse-thinking）
+    summary: 正向操作分支大而终态明确时，尝试从 目标状态倒推前驱。
+  - id: fundamentals.special-case-to-general
+    title: 证明或反例检验（special-case-to-general）
+    summary: 从特殊到一般得到的规律，必须经过 证明或反例检验 才能用于算法。
+  - id: fundamentals.topic-based-spiral-practice
+    title: 不知道从哪道题入手（topic-based-spiral-practice）
+    summary: 当发现自己面对新专题不知道从哪道题入手，且题目难度分布悬殊时，应采用专题螺旋式刷题法而非随机刷题。
+  - id: fundamentals.topic-to-random-transfer-training
+    title: 无法判断题目属于哪种算法类型（topic-to-random-transfer-training）
+    summary: 当刷题者已完成专题训练，却在比赛中无法判断题目属于哪种算法类型（例如把动态规划误判为贪心）时，说明需要补充随机训练。
+- id: arrays-hash-prefix
+  title: 数组、哈希与前缀和（arrays / hashing / prefix sum）
+  summary: 用哈希计数、前缀和与贡献法处理数组上的统计与子数组问题，是几乎所有专题的地基。
+  order: 2
+  children:
+  - id: arrays-hash-prefix.array-index-as-hash
+    title: 用数组下标充当哈希表（array-index-as-hash）
+    summary: 在 442 题的负号标记解法中，遍历到当前槽位的值时必须取 abs(value) 而不能直接用 value，因为该槽位可能早已被之前遇到的某个值。
+  - id: arrays-hash-prefix.boyer-moore-majority-vote-algorithm
+    title: 摩尔投票算法（Boyer–Moore Majority Vote Algorithm）
+    summary: 求数组中出现次数超过 n/2 的多数元素，如何在 O(n) 时间、O(1) 空间内解决？
+  - id: arrays-hash-prefix.contribution-counting
+    title: 贡献法（contribution-counting）
+    summary: 需要统计所有子数组或子串的总值，且单个元素可独立计值时，用 贡献法。
+  - id: arrays-hash-prefix.counting
+    title: 计数（Counting）
+    summary: 给定字符串 s 和整数 k，要求删除最少字符使得剩余字符串中不同字符种类数 ≤ k，如何贪心求解？
+  - id: arrays-hash-prefix.difference-array
+    title: 差分数组（difference-array）
+    summary: 当题目要求对数组的若干个连续子区间分别整体加上某个值，且所有更新可以离线处理、最后统一输出结果时，应使用 差分数组 技巧；若更新和查询交替进行则。
+  - id: arrays-hash-prefix.enumerate-middle-and-diagonals
+    title: 枚举中间 j（enumerate-middle-and-diagonals）
+    summary: i<j<k 的左右计算互不依赖时，优先 枚举中间 j。
+  - id: arrays-hash-prefix.enumerate-right-maintain-left
+    title: 枚举右端并维护左侧状态（enumerate-right-maintain-left）
+    summary: 当约束是 i<j 且右端元素能推出左端所需状态时，用 枚举右端并维护左侧状态。
+  - id: arrays-hash-prefix.enumeration
+    title: 枚举（Enumeration）
+    summary: 数组中，一部分数字之和等于另一部分的固定倍数关系（如“special 数字之和 = outlier 之外所有数的和”），如何枚举求解？
+  - id: arrays-hash-prefix.grouping-loop
+    title: 分组循环（grouping-loop）
+    summary: 当数组按规则被分割成若干组,且每组处理逻辑相同时,应使用分组循环,避免对最后一组做特判。
+  - id: arrays-hash-prefix.hash-table
+    title: 哈希表（Hash Table）
+    summary: 如何在 O(n) 时间、O(1) 空间内求数组中缺失的最小正整数（First Missing Positive）？
+  - id: arrays-hash-prefix.kadane-maximum-subarray
+    title: 连续（kadane-maximum-subarray）
+    summary: 求最大 连续 子数组和时，使用 Kadane。
+  - id: arrays-hash-prefix.kadane-variant
+    title: kadane variant
+    summary: 在股票买卖一次求最大利润问题中，将 prices 转化为相邻差分数组后，用 Kadane 思想求最大子数组和；核心递推是 cur = max(0,。
+  - id: arrays-hash-prefix.moore-voting
+    title: 摩尔投票法（moore-voting）
+    summary: 数组中若存在出现次数严格超过一半的元素，可用 摩尔投票法。
+  - id: arrays-hash-prefix.prefix-suffix-and-difference
+    title: 差分数组（prefix-suffix-and-difference）
+    summary: 有大量“给区间统一加值，最后查看数组”的操作时，用 差分数组。
+  - id: arrays-hash-prefix.prefix-suffix-and-difference-array
+    title: 前后缀分解（prefix-suffix-and-difference-array）
+    summary: 切分点答案能写成左侧聚合与右侧聚合组合时，用 前后缀分解。
+  - id: arrays-hash-prefix.prefix-suffix-decomposition
+    title: 前后缀分解（prefix-suffix-decomposition）
+    summary: 每个切分点的答案能由左右两侧独立信息合成时，用 前后缀分解。
+  - id: arrays-hash-prefix.prefix-sum
+    title: 前缀和（Prefix Sum）
+    summary: 给定数组，需要对每个下标 i 同时知道「前缀最值」和「后缀最值」，如何在 O(n) 内完成？
+  - id: arrays-hash-prefix.prefix-sum-and-prefix-hash
+    title: 前缀和或前缀状态（prefix-sum-and-prefix-hash）
+    summary: 子数组条件能写成两个累计状态之差时，用 前缀和或前缀状态。
+  - id: arrays-hash-prefix.prefix-sum-difference-array
+    title: 差分数组（prefix-sum-difference-array）
+    summary: 大量区间加法、最后再读取数组时，用 差分数组。
+  - id: arrays-hash-prefix.prefix-sum-hash-counting
+    title: 前缀和加哈希计数（prefix-sum-hash-counting）
+    summary: 区间条件能改写为两个前缀状态的关系时，用 前缀和加哈希计数。
+  - id: arrays-hash-prefix.prefix-sum-parity
+    title: ±1（prefix-sum-parity）
+    summary: 在计数满足条件子数组的前缀和技巧中，将原数组转化为 ±1 序列（符合条件记为+1，不符合记为-1）后，子数组[i,j]满足条件当且仅当 {{c2。
+  - id: arrays-hash-prefix.two-dimensional-prefix-and-difference
+    title: 二维前缀和（two-dimensional-prefix-and-difference）
+    summary: 静态矩阵的重复矩形求和，用 二维前缀和。
+  - id: arrays-hash-prefix.two-dimensional-prefix-sum
+    title: 不再被修改（two-dimensional-prefix-sum）
+    summary: 当需要对不再被修改的矩阵进行多次子矩阵元素和查询时，应预处理二维前缀和以将每次查询降到O(1)。
+  - id: arrays-hash-prefix.two-directional-scans
+    title: 从左到右与从右到左各扫描一次（two-directional-scans）
+    summary: 每个位置同时依赖左边和右边信息时，使用 从左到右与从右到左各扫描一次。
+- id: two-pointers-window
+  title: 双指针与滑动窗口（two pointers / sliding window）
+  summary: 用相向、同向或背向指针以及定长/变长窗口，把区间统计问题从平方级降到线性级。
+  order: 3
+  children:
+  - id: two-pointers-window.count-subarrays-expand-valid
+    title: 越长越合法的计数滑窗（count-subarrays-expand-valid）
+    summary: 统计满足条件的子数组个数,且条件满足'子数组越长越合法'时,应使用越长越合法的计数滑窗,每轮累加left。
+  - id: two-pointers-window.count-subarrays-shrink-valid
+    title: 越短越合法的计数滑窗（count-subarrays-shrink-valid）
+    summary: 统计满足条件的子数组个数,且条件满足'子数组越短越合法'时,应使用越短越合法的计数滑窗,每轮累加right - left + 1。
+  - id: two-pointers-window.divergent-two-pointers
+    title: 背向双指针（divergent-two-pointers）
+    summary: 需要以某个中心位置向左右两侧扩展探测(如回文中心扩展法)时,应使用背向双指针。
+  - id: two-pointers-window.exactly-k-via-two-at-least
+    title: 两个'至少'问题相减（exactly-k-via-two-at-least）
+    summary: 当题目要求统计子数组和'恰好等于k'的个数,而直接维护该条件不具有单调性时,应把问题转化为两个'至少'问题相减。
+  - id: two-pointers-window.expand-window-for-shortest
+    title: 扩张式滑动窗口求最短（expand-window-for-shortest）
+    summary: 题目要求'最短/最小的满足某条件的子数组',且窗口越长越容易满足条件时,应使用扩张式(越长越合法)的不定长滑动窗口。
+  - id: two-pointers-window.fixed-length-sliding-window
+    title: k（fixed-length-sliding-window）
+    summary: 定长滑动窗口的核心不变量是:完成入队操作后,窗口[left, right]的长度恒等于k。
+  - id: two-pointers-window.opposite-direction-two-pointers
+    title: 相向双指针（opposite-direction-two-pointers）
+    summary: 数组反转、有序数组两数之和等需要从两端向中间处理的场景,应使用相向双指针。
+  - id: two-pointers-window.same-direction-two-pointers
+    title: 同向双指针（same-direction-two-pointers）
+    summary: 滑动窗口本质上是同向双指针的一种特例,右指针负责扩展、左指针负责收缩。
+  - id: two-pointers-window.shrink-window-for-longest
+    title: 收缩式滑动窗口求最长（shrink-window-for-longest）
+    summary: 题目要求'最长/最大的满足某条件的子数组',且窗口越长越容易破坏条件时,应使用收缩式(越短越合法)的不定长滑动窗口。
+  - id: two-pointers-window.sliding-window
+    title: 滑动窗口（sliding-window）
+    summary: 当连续区间的约束能靠右移左端点恢复，优先考虑 滑动窗口。
+  - id: two-pointers-window.sliding-window-frequency-map
+    title: 滑动窗口配合频次表（sliding-window-frequency-map）
+    summary: 在 Sliding Window With Frequency Map 模板中，right 右移时先 freq[s[right]] += 1，一。
+  - id: two-pointers-window.sliding-window-two-pointers
+    title: 滑动窗口（sliding-window-two-pointers）
+    summary: 连续区间约束可随端点移动增量维护，且失效后收缩左端能恢复条件时，用 滑动窗口。
+  - id: two-pointers-window.three-pointer-sliding-window
+    title: 三指针滑动窗口（three-pointer-sliding-window）
+    summary: 当恰好型滑窗需要调用两次结构相同、仅阈值不同的滑窗函数时,可以合并为一次遍历的三指针滑动窗口。
+  - id: two-pointers-window.two-pointers
+    title: 双指针（Two Pointers）
+    summary: 有序数组原地去重（LeetCode 26），双指针怎么设计？
+  - id: two-pointers-window.two-pointers-and-group-scan
+    title: 分组循环（two-pointers-and-group-scan）
+    summary: 相邻关系决定状态、且每段可独立结算时，用 分组循环 一次扫描极大段。
+  - id: two-pointers-window.two-pointers-and-sliding-window
+    title: 双指针与可变滑动窗口（two-pointers-and-sliding-window）
+    summary: 连续区间问题中，若右端扩张后能靠不断移动左端恢复条件，应考虑 双指针/可变滑动窗口。
+  - id: two-pointers-window.two-pointers-sliding-window
+    title: 滑动窗口（two-pointers-sliding-window）
+    summary: 连续区间约束能通过加入或删除一个元素维护，并且左右端点只前进时，用 滑动窗口。
+  - id: two-pointers-window.two-pointers-sorted-array
+    title: 有序数组上的双指针（two-pointers-sorted-array）
+    summary: 在排序数组上做 Two Pointers 时，循环条件应为 l < r（严格小于），且每次跳过重复元素的检查应该在 移动指针之后。
+- id: binary-search
+  title: 二分查找与二分答案（binary search）
+  summary: 从有序数组上的二分模板扩展到「二分答案」，把最优化问题转化为单调性判定问题。
+  order: 4
+  children:
+  - id: binary-search.binary-search
+    title: 二分答案（binary-search）
+    summary: 当“答案不超过 x 是否可行”随 x 单调变化时，应使用 二分答案。
+  - id: binary-search.binary-search-answer-maximize
+    title: x 越小越容易满足（binary-search-answer-maximize）
+    summary: 题目形如“求最大的 x 使得某条件成立”，且该条件是x 越小越容易满足时，用二分答案求最大值，check 为真时更新的变量就是最终答。
+  - id: binary-search.binary-search-answer-minimize
+    title: 单调性（binary-search-answer-minimize）
+    summary: 题目形如“求最小的 x 使得某条件成立”，且条件关于 x 具有单调性（越大越容易满足）时，应使用二分答案而非直接搜索。
+  - id: binary-search.binary-search-indirect-target
+    title: 单调对应（binary-search-indirect-target）
+    summary: 当直接对答案设计单调 check 很困难，但存在一个与答案单调对应的中间变量时，应改为二分这个代理值。
+  - id: binary-search.binary-search-kth-smallest-largest
+    title: 二分答案（binary-search-kth-smallest-largest）
+    summary: 题目要求“第 k 小/第 k 大的值”，且能设计出关于 x 单调的计数函数时，可将其转化为二分答案问题，其中第 k 小等价于求满足 count(。
+  - id: binary-search.binary-search-lower-bound
+    title: 非递减（排序）（binary-search-lower-bound）
+    summary: 当数组已经非递减（排序），且题目问某值的第一个/最后一个位置或某比较关系的元素个数时，考虑用 lowerBound 转化。
+  - id: binary-search.binary-search-maximize-minimum
+    title: 最大化最小值（binary-search-maximize-minimum）
+    summary: 题目要求“选取/分配后使最小值尽可能大”时，属于最大化最小值模式，本质是二分答案求最大。
+  - id: binary-search.binary-search-minimize-maximum
+    title: 最小化最大值（binary-search-minimize-maximum）
+    summary: 题目要求“分组/分配后使每组的最大值尽可能小”时，属于最小化最大值模式，本质是二分答案求最小。
+  - id: binary-search.binary-search-on-answer
+    title: 二分答案（binary-search-on-answer）
+    summary: 优化题能在给定阈值时判断可行，并且结果单调时，用 二分答案。
+  - id: binary-search.binary-search-red-blue
+    title: 红蓝分区二分模板（binary-search-red-blue）
+    summary: 在红蓝分区二分模板（while l < r）中，若mid被判断为红色（不满足条件），执行 l = mid + 1；若mid被判断为蓝色（满足条件。
+  - id: binary-search.binary-search-sort-then-search
+    title: 无序（binary-search-sort-then-search）
+    summary: 当数据本身无序，但排序后能建立单调关系以便二分时，应先对数组做 排序 再复用二分查找模板。
+  - id: binary-search.ternary-search-unimodal
+    title: 单峰（ternary-search-unimodal）
+    summary: 当目标函数关于自变量是单峰（先增后减）而非单调时，二分答案的 check 无法直接使用，应改用三分法。
+- id: stack-queue-monotonic
+  title: 栈、队列与单调结构（stack / queue / monotonic structures）
+  summary: 用单调栈、单调队列与普通栈处理「下一个更大/更小元素」「表达式解析」等结构化匹配问题。
+  order: 5
+  children:
+  - id: stack-queue-monotonic.largest-rectangle-histogram
+    title: 直方图最大矩形（largest-rectangle-histogram）
+    summary: 答案形如“区间最小高度 × 区间宽度”的最大化问题，常转成 直方图最大矩形。
+  - id: stack-queue-monotonic.monotonic-queue
+    title: 单调双端队列（monotonic-queue）
+    summary: 滑动窗口不断右移且每次要最大值或最小值时，用 单调双端队列。
+  - id: stack-queue-monotonic.monotonic-stack
+    title: 单调栈（monotonic-stack）
+    summary: 寻找每个元素左侧或右侧第一个更大/更小元素时，用 单调栈。
+  - id: stack-queue-monotonic.monotonic-stack-and-contribution
+    title: 单调栈（monotonic-stack-and-contribution）
+    summary: 需要每个位置左、右第一个更大或更小边界时，用 单调栈。
+  - id: stack-queue-monotonic.monotonic-stack-and-queue
+    title: 单调栈（monotonic-stack-and-queue）
+    summary: 要求每个位置的“下一个更大/更小元素”时，优先想到 单调栈。
+  - id: stack-queue-monotonic.monotonic-stack-boundaries
+    title: 单调栈（monotonic-stack-boundaries）
+    summary: 要求每个元素的第一个更小或更大邻居、或其贡献边界时，用 单调栈。
+  - id: stack-queue-monotonic.monotonic-stack-contribution
+    title: 枚举元素贡献（monotonic-stack-contribution）
+    summary: 求所有子数组最小值或最大值之和时，应把“枚举子数组”改成 枚举元素贡献。
+  - id: stack-queue-monotonic.monotonic-stack-greedy
+    title: 单调栈贪心构造（monotonic-stack-greedy）
+    summary: 在单调栈贪心构造字典序最小子序列时，只有当栈顶元素 大于当前字符 ch 且 remainings[栈顶元素] > 0 时才能弹出。
+  - id: stack-queue-monotonic.monotonic-stack-lexicographic-subsequence
+    title: 贪心单调栈（monotonic-stack-lexicographic-subsequence）
+    summary: 保持原相对顺序并要求字典序最小、且选择可撤销时，使用 贪心单调栈。
+  - id: stack-queue-monotonic.monotonic-stack-nearest-boundary
+    title: 单调栈（monotonic-stack-nearest-boundary）
+    summary: 当题目要批量求每个元素一侧最近的更大或更小元素时，优先考虑 单调栈。
+  - id: stack-queue-monotonic.queue-bfs-and-deque
+    title: BFS 队列（queue-bfs-and-deque）
+    summary: 无权图中求最少边数最短路，用 BFS 队列。
+  - id: stack-queue-monotonic.stack
+    title: 栈（Stack）
+    summary: 如何在一次遍历中计算含 +、-、*、/ 的表达式（无括号）？
+  - id: stack-queue-monotonic.stack-parsing-and-cancellation
+    title: 栈（stack-parsing-and-cancellation）
+    summary: 新输入只会处理最近一个未完成状态时，使用 栈。
+  - id: stack-queue-monotonic.stack-reduction-merge
+    title: 栈式归约（stack-reduction-merge）
+    summary: 新元素与最近保留元素合并后可能继续触发冲突时，用 栈式归约。
+  - id: stack-queue-monotonic.two-stack-editor
+    title: 对顶栈（two-stack-editor）
+    summary: 文本操作围绕可移动光标，且需频繁左右移动时，用 对顶栈。
+- id: linked-list
+  title: 链表操作（linked list）
+  summary: 掌握快慢指针、哨兵节点与原地反转等链表专属技巧。
+  order: 6
+  children:
+  - id: linked-list.doubly-linked-list
+    title: 双向链表（Doubly-Linked List）
+    summary: BST 转排序双向链表：为什么用中序遍历收集节点，再统一连接，而不是边遍历边连接？
+  - id: linked-list.fast-slow-pointers-linked-list
+    title: 2（fast-slow-pointers-linked-list）
+    summary: 在快慢指针模式中，慢指针每次走1步，快指针每次走2步；当快指针到达链表末尾（fast为None或fast.next为None）时，慢指针恰好停在。
+  - id: linked-list.floyd-s-cycle-finding-algorithm
+    title: Floyd 判圈算法（Floyd's Cycle Finding Algorithm）
+    summary: 写 findDuplicate 时用了原地交换（cycle sort）思路，为什么这个解法不满足题目要求？
+  - id: linked-list.linked-list
+    title: 链表（Linked List）
+    summary: 如何一次遍历找到链表的所有临界点（局部极大/极小值），并求出相邻临界点间的最小距离与首尾临界点间的最大距离？
+  - id: linked-list.linked-list-fast-slow-cycle
+    title: 快慢指针（linked-list-fast-slow-cycle）
+    summary: 单链表不能标记访问节点却要判环时，用 快慢指针。
+  - id: linked-list.linked-list-gap-pointers
+    title: k 步（linked-list-gap-pointers）
+    summary: 寻找链表倒数第 k 个位置，可让 fast 先走 k 步。
+  - id: linked-list.linked-list-reversal
+    title: prev-cur-nxt 三指针（linked-list-reversal）
+    summary: 单链表要求原地反转且空间受限时，用 prev-cur-nxt 三指针。
+  - id: linked-list.linked-list-sentinel-splice
+    title: dummy 哨兵节点（linked-list-sentinel-splice）
+    summary: 链表操作可能改写原头节点时，先创建 dummy 哨兵节点。
+  - id: linked-list.merge-sort-linked-lists
+    title: 两两分治归并（merge-sort-linked-lists）
+    summary: 多个已排序链表要高效合并时，用 两两分治归并。
+- id: trees
+  title: 二叉树基础（binary tree basics）
+  summary: 用前中后序遍历与层序 BFS 处理二叉树的构造、路径与性质问题。
+  order: 7
+  children:
+  - id: trees.binary-tree
+    title: 二叉树（Binary Tree）
+    summary: 如何用 BFS 求二叉树每一层的最大值？
+  - id: trees.binary-tree-lca-postorder
+    title: 后序 DFS（binary-tree-lca-postorder）
+    summary: 普通二叉树求两个节点 LCA 时，优先用 后序 DFS。
+  - id: trees.bst-order-invariant
+    title: BST 有序性（bst-order-invariant）
+    summary: 节点值决定每步只需进入一侧子树时，利用 BST 有序性。
+  - id: trees.tree-build-from-traversals
+    title: 分治重建（tree-build-from-traversals）
+    summary: 唯一值二叉树给定先序和中序时，可用 分治重建。
+  - id: trees.tree-dfs-direction-and-return
+    title: 递（tree-dfs-direction-and-return）
+    summary: 状态表示根到当前节点的路径时，在 DFS 的 递 阶段更新。
+  - id: trees.tree-diameter-height-dp
+    title: 直径（tree-diameter-height-dp）
+    summary: 树的最长简单路径问题通常识别为 直径，用两条向下链合并。
+  - id: trees.tree-level-order-bfs
+    title: BFS 队列（tree-level-order-bfs）
+    summary: 题目要求按深度分组或最少边数时，优先考虑 BFS 队列。
+  - id: trees.tree-path-sliding-window
+    title: 可回滚滑动窗口（tree-path-sliding-window）
+    summary: 约束只作用于根到当前节点路径时，可把 DFS 路径视作 可回滚滑动窗口。
+  - id: trees.tree-prune-by-returning-root
+    title: 处理后子树的新根（tree-prune-by-returning-root）
+    summary: 树上删除节点会改变父子连接时，让 dfs 返回 处理后子树的新根。
+- id: tree-advanced
+  title: 树形结构进阶（tree DP / LCA / 虚树）
+  summary: 在树上做倍增求 LCA、换根 DP、点分治与虚树等更高级的树上算法。
+  order: 8
+  children:
+  - id: tree-advanced.centroid-decomposition
+    title: 点分治（centroid-decomposition）
+    summary: 树上路径问题可按是否经过一个中心点拆分时，考虑 点分治。
+  - id: tree-advanced.lca-binary-lifting
+    title: 倍增祖先表（lca-binary-lifting）
+    summary: 静态树有大量 LCA 或第 k 个祖先查询时，预处理 倍增祖先表。
+  - id: tree-advanced.rerooting-dp
+    title: 换根 DP（rerooting-dp）
+    summary: 要求每个节点作为根的树答案时，使用 换根 DP。
+  - id: tree-advanced.small-to-large-tree-merging
+    title: small-to-large（small-to-large-tree-merging）
+    summary: 每个子树需合并集合或频次统计时，可用 small-to-large。
+  - id: tree-advanced.tree-dp-and-center-expansion
+    title: 树形 DP（tree-dp-and-center-expansion）
+    summary: 当树上答案可由各子树答案合并，且选定根不会改变问题时，用 树形 DP。
+  - id: tree-advanced.tree-dp-and-rerooting
+    title: 树形 DP（tree-dp-and-rerooting）
+    summary: 子问题天然是子树，且父节点只需汇总孩子信息时，用 树形 DP。
+  - id: tree-advanced.tree-dp-combine-children
+    title: 树形 DP（tree-dp-combine-children）
+    summary: 节点答案由多个独立子树贡献合并而成时，用 树形 DP。
+  - id: tree-advanced.tree-dp-independent-set-diameter-domination
+    title: 树上最大独立集 DP（tree-dp-independent-set-diameter-domination）
+    summary: 树上选择相邻节点互斥时，使用 树上最大独立集 DP。
+  - id: tree-advanced.tree-dp-rerooting
+    title: 树形 DP（tree-dp-rerooting）
+    summary: 状态由各个子树合并得到时，用 树形 DP。
+  - id: tree-advanced.tree-dp-state-merge
+    title: 树形 DP（tree-dp-state-merge）
+    summary: 父节点决策只依赖子节点少量结果时，建模为 树形 DP。
+  - id: tree-advanced.tree-euler-tour-flattening
+    title: DFS Euler 序拍平（tree-euler-tour-flattening）
+    summary: 频繁对子树做数组型区间操作时，用 DFS Euler 序拍平。
+  - id: tree-advanced.virtual-tree
+    title: 虚树（virtual-tree）
+    summary: 单次树查询只涉及少量特殊点及连接路径时，用 虚树 压缩。
+- id: backtracking-search
+  title: 回溯与穷举搜索（backtracking / exhaustive search）
+  summary: 用回溯枚举排列组合子集，并用折半搜索、双向搜索压缩指数级搜索空间。
+  order: 9
+  children:
+  - id: backtracking-search.backtracking-enumeration
+    title: 回溯（backtracking-enumeration）
+    summary: 解由逐步选择组成、规模允许指数搜索时，考虑 回溯。
+  - id: backtracking-search.bidirectional-search
+    title: 双向搜索（Bidirectional Search）
+    summary: 如何用 BFS 求解「转动密码锁」类问题（如 LeetCode 752 Open the Lock）？核心思路是什么？
+  - id: backtracking-search.constraint-search-backtracking
+    title: 回溯剪枝（constraint-search-backtracking）
+    summary: 部分选择已能证明不可能完成合法解时，应使用 回溯剪枝。
+  - id: backtracking-search.meet-in-the-middle
+    title: meet in the middle（meet-in-the-middle）
+    summary: 子集枚举 n 约 40、2^n 不可行而 2^(n/2) 可行时，用 meet in the middle。
+  - id: backtracking-search.permutation-backtracking-with-duplicates
+    title: 排列型回溯（permutation-backtracking-with-duplicates）
+    summary: 每层都能从所有剩余元素任选一个，且顺序影响答案时，用 排列型回溯。
+  - id: backtracking-search.q2-small-constant-brute-force
+    title: 很小的常数（如不超过一千）（q2-small-constant-brute-force）
+    summary: 看到题目规模上限是 很小的常数（如不超过一千），且候选之间相互独立时，应优先考虑直接枚举取最优而非设计复杂算法。
+  - id: backtracking-search.subset-partition-combination-backtracking
+    title: start 下标单调递增（subset-partition-combination-backtracking）
+    summary: 每个元素最多使用一次且选择顺序无关时，用 start 下标单调递增 的组合回溯。
+- id: graphs-traversal
+  title: 图的遍历、连通性与拓扑排序（graph traversal / topological sort）
+  summary: 用 DFS/BFS 求连通块、二分图判定与拓扑序，处理有向依赖与基环树等图结构问题。
+  order: 10
+  children:
+  - id: graphs-traversal.bfs-layered-and-multi-source
+    title: 最短距离（bfs-layered-and-multi-source）
+    summary: BFS 中节点第一次设置 dist 时，该值就是 最短距离。
+  - id: graphs-traversal.component-swapping
+    title: 连通块（component-swapping）
+    summary: 允许沿若干位置对反复交换时，应把位置看作图，并在 连通块 内重排。
+  - id: graphs-traversal.directed-acyclic-graph
+    title: 有向无环图（Directed Acyclic Graph）
+    summary: 矩阵中求最长严格递增路径（LeetCode 329），常见套路是什么？
+  - id: graphs-traversal.functional-graph-and-binary-lifting
+    title: 基环树加倍增（functional-graph-and-binary-lifting）
+    summary: 每点只有一个后继且要反复跳转时，识别为 基环树加倍增。
+  - id: graphs-traversal.functional-graph-cycle-and-lca
+    title: 基环树找环（functional-graph-cycle-and-lca）
+    summary: 每个节点至多有一条出边且需要找环时，识别为 基环树/函数图。
+  - id: graphs-traversal.functional-graph-topological-pruning
+    title: 基环树拓扑剥离（functional-graph-topological-pruning）
+    summary: 每个节点恰有一个后继，且需要分离环与入树时，用 基环树拓扑剥离。
+  - id: graphs-traversal.graph-bfs-shortest-path-unweighted
+    title: BFS（graph-bfs-shortest-path-unweighted）
+    summary: 当图的边权全部相同（或视为单位权重）且要求最短路径长度时，应使用 BFS 而不是 Dijkstra。
+  - id: graphs-traversal.graph-bfs-state-space-modeling
+    title: 状态到图节点（graph-bfs-state-space-modeling）
+    summary: 当问题要求“从状态 A 变到状态 B 的最少操作次数”而非显式给出图结构时，应先做 状态到图节点 的建模，再跑 BFS。
+  - id: graphs-traversal.graph-bipartite-coloring
+    title: 二分图染色（graph-bipartite-coloring）
+    summary: 需要判断一张图能否被划分成两个互不相邻的集合时，应使用二分图染色（交替染色法）。
+  - id: graphs-traversal.graph-dfs-bfs
+    title: BFS（graph-dfs-bfs）
+    summary: 无权图中求最少边数或最少操作次数时，用 BFS。
+  - id: graphs-traversal.graph-dfs-connected-components
+    title: 连通块（graph-dfs-connected-components）
+    summary: 当题目要求统计图中连通块的数量或大小，且边权都相同/无权时，优先考虑 DFS 或 BFS 遍历。
+  - id: graphs-traversal.graph-dfs-state-and-timestamps
+    title: DFS 状态与时间戳（graph-dfs-state-and-timestamps）
+    summary: 路径合法性依赖累计摘要，或需快速判断树上祖先关系时，用 DFS 状态与时间戳。
+  - id: graphs-traversal.graph-euler-path-hierholzer
+    title: Hierholzer（graph-euler-path-hierholzer）
+    summary: 当题目要求把图中每条边恰好使用一次走完（欧拉路径/回路），应使用 Hierholzer 算法。
+  - id: graphs-traversal.graph-functional-graph-cycle
+    title: 基环树（graph-functional-graph-cycle）
+    summary: 当图中每个节点的出度恰好为 1，且题目暗示存在唯一环时，应识别为基环树（内向基环图）结构。
+  - id: graphs-traversal.graph-scc-tarjan
+    title: Tarjan（graph-scc-tarjan）
+    summary: 需要在有向图中找出所有“互相可达”的节点集合（强连通分量），标准做法是 Tarjan 算法。
+  - id: graphs-traversal.graph-theory
+    title: 图论（Graph Theory）
+    summary: 如何判断无向图中两个节点 source 和 destination 是否连通？
+  - id: graphs-traversal.graph-topological-order-dp
+    title: 拓扑排序（graph-topological-order-dp）
+    summary: 在 DAG 上做依赖顺序明确的 DP（如求最长路径），且想用非递归方式实现时，可以在拓扑排序的同时进行刷表法 DP。
+  - id: graphs-traversal.graph-topological-sort-kahn
+    title: 拓扑排序（graph-topological-sort-kahn）
+    summary: 当题目给出若干“先修课程”式的有向依赖约束，要求给出一个合法学习顺序或判断是否有环时，应使用 拓扑排序。
+  - id: graphs-traversal.graph-traversal-and-shortest-path
+    title: BFS（graph-traversal-and-shortest-path）
+    summary: 无权图中求起点到各点最少边数，应使用 BFS。
+  - id: graphs-traversal.grid-connected-components-dfs
+    title: 网格 DFS 求连通块（grid-connected-components-dfs）
+    summary: 网格题要求统计岛屿、区域或房间的数量/面积，且只沿相邻可通行格移动时，优先考虑 从每个未访问格启动一次 DFS 枚举连通块。
+  - id: graphs-traversal.grid-unweighted-bfs
+    title: BFS（grid-unweighted-bfs）
+    summary: 网格中每一步代价都相同，并要求最少步数时，应使用 BFS，而不是普通 DFS。
+  - id: graphs-traversal.multi-source-bfs
+    title: 多源 BFS（multi-source-bfs）
+    summary: 要求每个点到最近多个起点之一的无权距离时，用 多源 BFS。
+  - id: graphs-traversal.rooted-tree-topological-order
+    title: Kahn 拓扑排序（rooted-tree-topological-order）
+    summary: 有向先修依赖需要合法顺序或判环时，用 Kahn 拓扑排序。
+  - id: graphs-traversal.topological-sort
+    title: 拓扑排序（topological-sort）
+    summary: 存在有向前置依赖并需要合法处理顺序时，用 拓扑排序。
+  - id: graphs-traversal.topological-sort-and-bipartite-check
+    title: 拓扑排序（topological-sort-and-bipartite-check）
+    summary: 有向约束要求“a 必须在 b 之前”时，使用 拓扑排序。
+- id: shortest-path-uf-flow
+  title: 最短路、并查集与网络流（shortest path / union-find / flow）
+  summary: 用 Dijkstra、Floyd、0-1 BFS 求最短路，用并查集维护连通性，用最小生成树与最大流解决网络优化问题。
+  order: 11
+  children:
+  - id: shortest-path-uf-flow.dijkstra-multi-distance-meeting
+    title: 多次 Dijkstra 求汇合最短路（dijkstra-multi-distance-meeting）
+    summary: 非负权多路径题允许在某节点汇合并共享后缀时，可用 多次 Dijkstra 加枚举汇合点。
+  - id: shortest-path-uf-flow.disjoint-set-union
+    title: 并查集（disjoint-set-union）
+    summary: 图只会加边，并反复查询两点是否连通时，用 并查集。
+  - id: shortest-path-uf-flow.disjoint-set-union-and-offline
+    title: 并查集 DSU（disjoint-set-union-and-offline）
+    summary: 图不断加边，核心问题是连通性或连通块大小时，用 并查集 DSU。
+  - id: shortest-path-uf-flow.floyd-warshall
+    title: 所有点对最短路（floyd-warshall）
+    summary: 节点较少且需要 所有点对最短路 时，考虑 Floyd-Warshall。
+  - id: shortest-path-uf-flow.graph-dijkstra-shortest-path
+    title: 非负（graph-dijkstra-shortest-path）
+    summary: 求单源最短路且所有边权非负时，应使用 Dijkstra 算法而不是 BFS 或 Bellman-Ford。
+  - id: shortest-path-uf-flow.graph-floyd-warshall
+    title: Floyd（graph-floyd-warshall）
+    summary: 需要一次性求出任意两点间最短路（全源最短路），且节点数不大时，应使用 Floyd 算法。
+  - id: shortest-path-uf-flow.graph-mst-kruskal
+    title: Kruskal（graph-mst-kruskal）
+    summary: 求连通所有节点的最小总边权（最小生成树），且图比较稀疏时，优先使用 Kruskal 算法。
+  - id: shortest-path-uf-flow.graph-network-flow-max-flow
+    title: 网络流（最大流）（graph-network-flow-max-flow）
+    summary: 当问题可以抽象成源点到汇点在容量限制下的最大可行流量时，应考虑用 网络流（最大流） 建模。
+  - id: shortest-path-uf-flow.grid-dijkstra
+    title: 网格上的 Dijkstra 过期条目判断（grid-dijkstra）
+    summary: Dijkstra 从最小堆弹出条目后，只有当其距离 等于当前 distance 状态值 时才处理；否则它是旧条目。
+  - id: shortest-path-uf-flow.grid-zero-one-bfs
+    title: 0-1 BFS 加双端队列（grid-zero-one-bfs）
+    summary: 网格最短路的每次转移代价严格属于 0 和 1 时，使用 0-1 BFS 加双端队列 可替代 Dijkstra 的堆。
+  - id: shortest-path-uf-flow.hash-union-find
+    title: 哈希并查集（hash-union-find）
+    summary: 需要动态维护可传递的连通分组，且节点键不连续时，用 哈希并查集。
+  - id: shortest-path-uf-flow.min-cost-max-flow
+    title: 最小费用最大流（min-cost-max-flow）
+    summary: 带容量的全局分配既要满足供需又要优化总成本时，用 最小费用最大流。
+  - id: shortest-path-uf-flow.shortest-path-dijkstra-floyd
+    title: Dijkstra（shortest-path-dijkstra-floyd）
+    summary: 非负权图的单源最短路使用 Dijkstra。
+  - id: shortest-path-uf-flow.union-find-connectivity
+    title: 相等（union-find-connectivity）
+    summary: 在按秩合并（union by rank）的并查集实现中，union 时应把秩较小的树根挂到秩较大的树根下；当两棵树的秩相等时，合并后新根的秩需要。
+  - id: shortest-path-uf-flow.union-find-connectivity-variants
+    title: 并查集（union-find-connectivity-variants）
+    summary: 关系只会合并、频繁查询是否同组时，用 并查集。
+  - id: shortest-path-uf-flow.weighted-union-find
+    title: 带权并查集（weighted-union-find）
+    summary: 连通性之外还给出 x、y 的相对差值约束时，用 带权并查集。
+  - id: shortest-path-uf-flow.zero-one-bfs
+    title: 0-1 BFS（zero-one-bfs）
+    summary: 最短路图的边权只为 0 或 1 时，用 0-1 BFS。
+- id: dp-linear-knapsack
+  title: 动态规划：线性与背包（linear DP / knapsack）
+  summary: 从记忆化搜索到递推的线性 DP，以及 0/1 背包、完全背包与分组背包等背包家族。
+  order: 12
+  children:
+  - id: dp-linear-knapsack.0-1-knapsack
+    title: 0/1 背包（0-1 Knapsack）
+    summary: 如何用动态规划判断数组能否划分为两个和相等的子集（0/1背包子集和问题）？
+  - id: dp-linear-knapsack.convex-hull-and-wqs-dp
+    title: Convex Hull Trick（convex-hull-and-wqs-dp）
+    summary: DP 转移能写成 min(m*x+b) 时，考虑 Convex Hull Trick。
+  - id: dp-linear-knapsack.dp-optimizations-monotonic-queue-fenwick
+    title: 单调队列优化 DP（dp-optimizations-monotonic-queue-fenwick）
+    summary: dp[i] 只依赖一个滑动区间内 dp 的最值时，用 单调队列优化 DP。
+  - id: dp-linear-knapsack.dp-stock-trading-states
+    title: 负无穷（-inf）（dp-stock-trading-states）
+    summary: 在股票交易的多状态DP中，hold（持有股票）状态应初始化为 负无穷（-inf），以避免出现「没有买入就卖出」的非法转移路径；而未持有状态初始化。
+  - id: dp-linear-knapsack.dynamic-programming
+    title: 动态规划（Dynamic Programming）
+    summary: 「买卖股票最佳时机」(只能交易一次)有哪几种等价的解法思路？
+  - id: dp-linear-knapsack.dynamic-programming-memo-tabulation
+    title: 动态规划（dynamic-programming-memo-tabulation）
+    summary: 最优解或计数可由重叠子问题组合时，用 动态规划。
+  - id: dp-linear-knapsack.dynamic-programming-memo-to-tabulation
+    title: 记忆化搜索改递推（dynamic-programming-memo-to-tabulation）
+    summary: 暴力递归反复求解相同参数的子问题时，应改为 记忆化搜索/动态规划。
+  - id: dp-linear-knapsack.finite-state-machine-dp
+    title: 状态机 DP（finite-state-machine-dp）
+    summary: 历史只需压缩成少量模式时，使用 状态机 DP。
+  - id: dp-linear-knapsack.grouped-knapsack-dp
+    title: 分组背包（grouped-knapsack-dp）
+    summary: 物品分组且每组最多选一个方案时，使用 分组背包。
+  - id: dp-linear-knapsack.integer-partition-dp
+    title: 完全背包计数（integer-partition-dp）
+    summary: 将 n 拆成正整数之和且忽略加数顺序时，使用 完全背包计数。
+  - id: dp-linear-knapsack.knapsack-dp
+    title: 背包 DP（knapsack-dp）
+    summary: 选择物品并受总和、容量或预算限制时，优先识别 背包 DP。
+  - id: dp-linear-knapsack.knapsack-family
+    title: 0-1 背包（knapsack-family）
+    summary: 每件物品只能取一次的容量选择问题是 0-1 背包。
+  - id: dp-linear-knapsack.knapsack-subset-sum
+    title: 逆序遍历（从target到num）（knapsack-subset-sum）
+    summary: 在0/1背包子集和DP中，内层容量循环必须逆序遍历（从target到num），这样才能保证每个元素在更新dp数组时最多被选一次。
+  - id: dp-linear-knapsack.linear-and-state-machine-dp
+    title: 线性或状态机 DP（linear-and-state-machine-dp）
+    summary: 处理顺序固定，未来只依赖有限历史摘要时，用 线性或状态机 DP。
+  - id: dp-linear-knapsack.linear-dp-state-transition
+    title: 线性 DP（linear-dp-state-transition）
+    summary: 按位置处理且当前选择只依赖有限历史摘要时，用 线性 DP。
+  - id: dp-linear-knapsack.matrix-exponentiation-dp
+    title: 矩阵快速幂（matrix-exponentiation-dp）
+    summary: n 很大且 DP 是固定系数线性递推时，用 矩阵快速幂。
+  - id: dp-linear-knapsack.memoization
+    title: 记忆化搜索（Memoization）
+    summary: 爬楼梯问题（LeetCode 70）：为什么状态转移是 f(n) = f(n-1) + f(n-2)？如何把空间优化到 O(1)？
+  - id: dp-linear-knapsack.memoized-search-to-bottom-up-dp
+    title: 记忆化搜索（memoized-search-to-bottom-up-dp）
+    summary: 当递归反复调用同一组参数时，应先尝试 记忆化搜索。
+  - id: dp-linear-knapsack.optimized-dp-data-structures
+    title: 单调队列（optimized-dp-data-structures）
+    summary: 转移来源是随 i 移动的连续窗口最值时，用 单调队列 优化。
+  - id: dp-linear-knapsack.reconstruct-dp-solution
+    title: 还原 DP 最优方案（reconstruct-dp-solution）
+    summary: DP 题要求输出一个最优方案时，额外记录 前驱/决策。
+  - id: dp-linear-knapsack.take-or-skip-linear-dp
+    title: 选或不选线性 DP（take-or-skip-linear-dp）
+    summary: 顺序选择且选当前位置会排斥邻近元素时，识别为 选或不选线性 DP。
+  - id: dp-linear-knapsack.value-keyed-subsequence-dp
+    title: 元素值（value-keyed-subsequence-dp）
+    summary: 若转移由前一个元素值决定而不是下标决定，可按值建 DP。
+  - id: dp-linear-knapsack.zero-one-knapsack
+    title: 0/1 背包（zero-one-knapsack）
+    summary: 每个物品只能选一次，并受总容量/总和限制时，识别为 0/1 背包。
+- id: dp-grid-interval-string
+  title: 动态规划：网格、区间与子序列（grid / interval / subsequence DP）
+  summary: 处理网格路径、区间合并型 DP 以及最长公共子序列、编辑距离、数位 DP 等序列匹配类 DP。
+  order: 13
+  children:
+  - id: dp-grid-interval-string.bitmask-state-dp
+    title: 状态压缩 DP（bitmask-state-dp）
+    summary: 对象数很小且“已选集合”足以描述历史时，用 状态压缩 DP。
+  - id: dp-grid-interval-string.digit-dp
+    title: 数位 DP（digit-dp）
+    summary: 统计区间内满足数位限制的整数时，使用 数位 DP。
+  - id: dp-grid-interval-string.edit-distance-dp
+    title: dp[i-1][j-1]（edit-distance-dp）
+    summary: 在编辑距离DP中，当 s[i-1] == t[j-1] 时，dp[i][j] = dp[i-1][j-1]（不需要任何操作）；当字符不匹配时，d。
+  - id: dp-grid-interval-string.enumerate-all-subsets-bitmask
+    title: 状态压缩枚举全部子集（enumerate-all-subsets-bitmask）
+    summary: 当元素个数 n 很小（一般不超过 20）且需要考虑所有可能的选择组合时，应联想到用 状态压缩 (bitmask) 枚举 [0, 2^n) 区间中。
+  - id: dp-grid-interval-string.grid-path-dp
+    title: 到达某个格子的答案（grid-path-dp）
+    summary: 网格中只能从已处理方向移动时，状态通常定义为 到达某个格子的答案。
+  - id: dp-grid-interval-string.interval-dp
+    title: 区间 DP（interval-dp）
+    summary: 问题的答案属于子数组 [l,r] 且依赖更短区间时，是 区间 DP。
+  - id: dp-grid-interval-string.lcs-alignment-dp
+    title: LCS（lcs-alignment-dp）
+    summary: 两个序列保持相对顺序的共同部分问题，优先考虑 LCS。
+  - id: dp-grid-interval-string.lis-patience-sorting
+    title: 耐心排序加二分（lis-patience-sorting）
+    summary: 求 LIS 长度且 n 较大时，使用 耐心排序加二分。
+  - id: dp-grid-interval-string.matrix
+    title: 矩阵（Matrix）
+    summary: 网格图 DP + 有限次「中和」操作（如最多消除k次负数格子）该如何建模状态？
+  - id: dp-grid-interval-string.partition-and-subsequence-dp
+    title: 划分型 DP（partition-and-subsequence-dp）
+    summary: 答案可按“最后一段从哪里开始”归因时，用 划分型 DP。
+  - id: dp-grid-interval-string.partition-dp
+    title: 最后一段的左端点（partition-dp）
+    summary: 把序列划成连续段时，常通过枚举 最后一段的左端点 转移。
+  - id: dp-grid-interval-string.permutation-bitmask-dp
+    title: 排列型状压 DP（permutation-bitmask-dp）
+    summary: n 不大且要枚举访问顺序时，考虑 排列型状压 DP。
+  - id: dp-grid-interval-string.subset-enumeration-dp
+    title: 子集枚举的复杂度（subset-enumeration-dp）
+    summary: 对每个集合都要枚举其子集，整体复杂度通常是 O(3^n)。
+- id: dp-game-probability
+  title: 动态规划：博弈与期望（game / probability DP）
+  summary: 用状态化的胜负博弈与期望方程建模轮流决策和随机过程问题。
+  order: 14
+  children:
+  - id: dp-game-probability.dag-game-probability-expectation-dp
+    title: 拓扑序（dag-game-probability-expectation-dp）
+    summary: 状态依赖图无环时，可按 拓扑序 做图 DP。
+  - id: dp-game-probability.game-theory
+    title: 博弈论（Game Theory）
+    summary: 1927. Sum Game：字符串对半分，含 '?' 的博弈论求和问题，如何在 O(n) 内判断先手（Alice）是否必胜？
+  - id: dp-game-probability.impartial-game-dp
+    title: 胜负态 DP（impartial-game-dp）
+    summary: 轮流行动、无随机且不能走者失败的题，优先尝试 胜负态 DP。
+  - id: dp-game-probability.probability-expectation-dp
+    title: 期望 DP 方程（probability-expectation-dp）
+    summary: 求随机过程的平均步数且状态可描述时，可建立 期望 DP 方程。
+  - id: dp-game-probability.zero-sum-game
+    title: 零和博弈（Zero-Sum Game）
+    summary: Stone Game IX（2029）：如何用余数分类 + 计数判断先手是否必胜？
+- id: greedy-sorting
+  title: 贪心与排序构造（greedy / sorting constructions）
+  summary: 用交换论证证明贪心的正确性，涵盖区间调度、反悔堆、字典序构造与排序不等式等贪心套路。
+  order: 15
+  children:
+  - id: greedy-sorting.bubble-sort
+    title: 冒泡排序（Bubble Sort）
+    summary: 如何判断数组中每个位置的元素是否处于「排序后应处的位置」？(如 LC 1051 Height Checker)。
+  - id: greedy-sorting.constraint-driven-construction
+    title: 构造题（constraint-driven-construction）
+    summary: 题目要求输出任意满足约束的对象而非最优值时，这是 构造题 信号。
+  - id: greedy-sorting.directional-partition-greedy
+    title: 单向扫描切分贪心（directional-partition-greedy）
+    summary: 原顺序不能改变且答案由若干连续合法段组成时，尝试 单向扫描、在最早合法或最早必要处切分。
+  - id: greedy-sorting.enumerate-then-greedy
+    title: 先枚举再贪心（enumerate-then-greedy）
+    summary: 当一个小范围选择决定后续贪心结构时，用 枚举该选择，再求固定条件下的贪心最优。
+  - id: greedy-sorting.event-endpoint-counting
+    title: 端点计数（event-endpoint-counting）
+    summary: 区间对查询点的贡献仅取决于是否已经开始和是否已经结束时，可用 端点计数。
+  - id: greedy-sorting.exchange-argument
+    title: 相邻两个元素交换前后（exchange-argument）
+    summary: 解由处理顺序组成时，要证明排序贪心，可比较 相邻两个元素交换前后 的结果。
+  - id: greedy-sorting.exchange-argument-greedy
+    title: 邻项交换贪心（exchange-argument-greedy）
+    summary: 若能比较相邻任务 AB 与 BA，并证明其中一个顺序永远不差，应考虑 邻项交换贪心。
+  - id: greedy-sorting.greedy
+    title: 贪心（Greedy）
+    summary: 为什么最初写的 4 分支公式（被注释掉的代码）比最终解法多了一项？
+  - id: greedy-sorting.greedy-and-constructive
+    title: 贪心（greedy-and-constructive）
+    summary: 若局部选择可用交换论证证明不损失最优性，使用 贪心。
+  - id: greedy-sorting.greedy-exchange-and-median-transform
+    title: 局部选择可交换进某个全局最优解（greedy-exchange-and-median-transform）
+    summary: 贪心可用的关键不是“看起来合理”，而是能证明 局部选择可交换进某个全局最优解。
+  - id: greedy-sorting.greedy-interval-coverage
+    title: 区间覆盖贪心（greedy-interval-coverage）
+    summary: 已能表示的目标是连续前缀，且要最少补资源扩张覆盖时，用 区间覆盖贪心。
+  - id: greedy-sorting.heap-regret-lazy-and-dual
+    title: 反悔堆（heap-regret-lazy-and-dual）
+    summary: 贪心过程中允许用更好选择替换旧选择时，用 反悔堆。
+  - id: greedy-sorting.induction-greedy-proof
+    title: 数学归纳法（induction-greedy-proof）
+    summary: 贪心每步移除一个对象且剩余问题同构时，可用 数学归纳法 证明正确性。
+  - id: greedy-sorting.interval-grouping-heap
+    title: 左端点排序加最小堆（interval-grouping-heap）
+    summary: 所有区间都要分配，且同组不能重叠、要求组数最少时，用 左端点排序加最小堆。
+  - id: greedy-sorting.interval-selection-stabbing
+    title: 右端点升序（interval-selection-stabbing）
+    summary: 最大化不相交区间数或最少点刺穿区间时，标准排序键是 右端点升序。
+  - id: greedy-sorting.lexicographic-greedy
+    title: 最早能不同的位置（lexicographic-greedy）
+    summary: 目标优化字典序时，优先优化 最早能不同的位置。
+  - id: greedy-sorting.median-minimize-l1
+    title: 中位数（median-minimize-l1）
+    summary: 目标为最小化 sum(abs(x-target)) 时，target 取 中位数。
+  - id: greedy-sorting.merge-intervals
+    title: 左端点升序（merge-intervals）
+    summary: 要求合并重叠区间或求区间并集时，先按 左端点升序 排序。
+  - id: greedy-sorting.minimum-interval-cover
+    title: 右端点最远（minimum-interval-cover）
+    summary: 最少区间连续覆盖目标线段时，在所有左端点不超过当前前沿的区间中选 右端点最远 的。
+  - id: greedy-sorting.palindrome-frequency-greedy
+    title: 奇偶性（palindrome-frequency-greedy）
+    summary: 可重排字符构造回文时，先关注每个字符频次的 奇偶性。
+  - id: greedy-sorting.product-and-inequality-greedy
+    title: 尽量均衡（product-and-inequality-greedy）
+    summary: 固定正数总和并最大化乘积时，优先让各部分 尽量均衡。
+  - id: greedy-sorting.rearrangement-inequality
+    title: 排序不等式（rearrangement-inequality）
+    summary: 两个数组可各自重排，目标为配对乘积和时，使用 排序不等式。
+  - id: greedy-sorting.regret-greedy-heap
+    title: 堆维护反悔贪心（regret-greedy-heap）
+    summary: 按序选择但后来的元素可能替换旧选择，并且需快速删掉最差旧选择时，用 堆维护反悔贪心。
+  - id: greedy-sorting.regret-greedy-with-heap
+    title: 反悔贪心（regret-greedy-with-heap）
+    summary: 先选局部最优、后续可能以更好候选替换历史最差选择时，用 反悔贪心。
+  - id: greedy-sorting.separate-identical-items
+    title: 相同物品间隔排列（separate-identical-items）
+    summary: 相邻不同重排可行当且仅当 m <= n-m+1。
+  - id: greedy-sorting.sorted-extremal-pairing
+    title: 最小或最大元素（sorted-extremal-pairing）
+    summary: 极值配对贪心的核心不变式是：已处理的 最小或最大元素 已在某个最优解中完成处理。
+  - id: greedy-sorting.sorting
+    title: 排序（Sorting）
+    summary: 遇到「若两元素满足某条件（如差值 ≤ limit）则可以交换」这类题目，如何设计算法？
+  - id: greedy-sorting.wildcard-parentheses-range
+    title: 通配符括号的可行区间（wildcard-parentheses-range）
+    summary: 括号串含可作左、右或空的通配符时，维护未匹配左括号数的 最小值 low 与最大值 high。
+- id: math-number-theory
+  title: 数学与数论（math / number theory）
+  summary: 涵盖同余、模逆元、质因数分解、组合数学与计算几何等数学工具。
+  order: 16
+  children:
+  - id: math-number-theory.combination-precompute
+    title: 阶乘及其逆元数组（combination-precompute）
+    summary: 题目需要多次查询组合数 C(n,m) mod p 且给出数据范围上限时，应预处理阶乘及其逆元数组，而不是每次现算。
+  - id: math-number-theory.combinatorics
+    title: 组合数学（Combinatorics）
+    summary: 网格DP：机器人从左上到右下只能右/下移动，求路径数——如何设计状态转移？
+  - id: math-number-theory.combinatorics-and-inclusion-exclusion
+    title: 容斥原理（combinatorics-and-inclusion-exclusion）
+    summary: 多个“违反上界/禁用条件”的并集难直接计数、交集容易计数时，用 容斥原理。
+  - id: math-number-theory.computational-geometry-primitives
+    title: 叉积（computational-geometry-primitives）
+    summary: 判断三点的左转、右转或共线，应计算 叉积。
+  - id: math-number-theory.congruence-definition
+    title: 同余的定义（congruence-definition）
+    summary: 若整数 a、b 满足 (a-b) mod m == 0，则称 a 与 b 关于模 m 同余，记作 a≡b (mod m)。
+  - id: math-number-theory.congruence-transposition
+    title: 移项（congruence-transposition）
+    summary: 当同余式形如 a+b≡c+d (mod m) 时，可以像普通等式一样移项，得到 a-c≡d-b (mod m)。
+  - id: math-number-theory.divisor-enumeration
+    title: 枚举因子并遍历其倍数（divisor-enumeration）
+    summary: 若每个整数都要聚合其所有约数，可用 枚举因子并遍历其倍数。
+  - id: math-number-theory.eratosthenes-sieve
+    title: 埃氏筛（eratosthenes-sieve）
+    summary: 需要范围内全部质数或大量质数查询时，优先使用 埃氏筛。
+  - id: math-number-theory.fast-exponentiation
+    title: 快速幂（fast-exponentiation）
+    summary: 计算 x^y mod m 且指数 y 很大（如 1e9 级别）时，不能逐次相乘，应使用快速幂（二进制幂）在 O(log y) 时间内完成。
+  - id: math-number-theory.fast-walsh-hadamard-transform
+    title: FWT（fast-walsh-hadamard-transform）
+    summary: 要统计按位 XOR、OR 或 AND 卷积且值域为 2 的幂时，考虑 FWT。
+  - id: math-number-theory.floor-division-grouping
+    title: 数论分块（floor-division-grouping）
+    summary: 求和中频繁出现 n//i 且 n 很大时，考虑 数论分块。
+  - id: math-number-theory.gcd-divisor-counting
+    title: 按 gcd 压缩计数（gcd-divisor-counting）
+    summary: 数对条件是 a*b 被 k 整除时，应优先把每个数压缩为 gcd(x, k)。
+  - id: math-number-theory.gcd-lcm-factorization-and-congruence
+    title: GCD 或 LCM（gcd-lcm-factorization-and-congruence）
+    summary: 题目核心是多个数的共同整除关系时，优先检查 GCD 或 LCM。
+  - id: math-number-theory.gcd-lcm-modular-arithmetic
+    title: LCM（gcd-lcm-modular-arithmetic）
+    summary: 两个周期首次同时发生，通常要计算 LCM。
+  - id: math-number-theory.gcd-logtrick
+    title: 不同后缀 GCD 及其数量（gcd-logtrick）
+    summary: 要统计所有子数组的 GCD 分布时，维护每个右端点的 不同后缀 GCD 及其数量。
+  - id: math-number-theory.gcd-modular-arithmetic
+    title: gcd（gcd-modular-arithmetic）
+    summary: 反复加减若干固定步长并问能否到达目标时，关键量通常是步长的 gcd。
+  - id: math-number-theory.generating-functions
+    title: 生成函数（generating-functions）
+    summary: 独立选择的计数能按总和合并时，可把每种选择编码为 生成函数。
+  - id: math-number-theory.geometry
+    title: 计算几何（Geometry）
+    summary: 如何统计“跨分组配对数量”这类问题(例如:按 y 分组统计点对，再统计不同组线段两两组合的梯形数)？
+  - id: math-number-theory.inclusion-exclusion
+    title: 容斥原理（inclusion-exclusion）
+    summary: 多个条件集合有重叠，要求“至少满足一个”时，使用 容斥原理。
+  - id: math-number-theory.lagrange-interpolation
+    title: 拉格朗日插值（lagrange-interpolation）
+    summary: 已知函数是低次数多项式且给出足够样本点时，可用 拉格朗日插值 外推。
+  - id: math-number-theory.linear-algebra
+    title: 线性代数（Linear Algebra）
+    summary: 如何计算两个稀疏矩阵 mat1 (m1×n1) 和 mat2 (m2×n2) 的乘积？（暴力做法）。
+  - id: math-number-theory.manhattan-chebyshev-transform
+    title: 曼哈顿距离转切比雪夫距离（manhattan-chebyshev-transform）
+    summary: 二维点集的最大曼哈顿距离，可转化为维护 x+y 与 x-y 的极差。
+  - id: math-number-theory.math
+    title: 数学（Math）
+    summary: 脑筋急转弯类构造题：题目问「能否构造出某种数组」时，先想清楚极端情况——是否无论输入什么都恒成立？
+  - id: math-number-theory.mobius-inversion
+    title: 莫比乌斯反演（mobius-inversion）
+    summary: 已知“被 d 整除”的统计，想得到 gcd 恰为 1 的统计时，可使用 莫比乌斯反演。
+  - id: math-number-theory.mod-add-mul-identity
+    title: 取模的加乘同余律（mod-add-mul-identity）
+    summary: 当题目要求结果对 1e9+7 取模，且计算过程含有连续的加法或乘法时，应该在循环内部的每一步取模，而不是等到最后再取模。
+  - id: math-number-theory.modular-combinatorics
+    title: 模意义下的组合计数（modular-combinatorics）
+    summary: 相同球分到 k 个可为空的盒子且总数为 n，方案数是 C(n+k-1,k-1)。
+  - id: math-number-theory.modular-inverse-fermat
+    title: 费马小定理（modular-inverse-fermat）
+    summary: 推导出的公式包含除法且模数是质数（如 1e9+7）时，应联想到用费马小定理求模逆元，把除法转换成乘法。
+  - id: math-number-theory.modular-residue-enumeration
+    title: 同余类（modular-residue-enumeration）
+    summary: 条件只依赖个位或余数、而模数很小时，应枚举 同余类 而不是枚举目标值。
+  - id: math-number-theory.monotone-chain-convex-hull
+    title: Andrew 单调链（monotone-chain-convex-hull）
+    summary: 需要二维点集的最小凸包边界时，可用 Andrew 单调链。
+  - id: math-number-theory.negative-mod-normalization
+    title: 负数取模规范化（negative-mod-normalization）
+    summary: 在 C++/Java 等语言中，对负数取模可能得到负结果，此时应使用 (x mod m + m) mod m 将结果规范到 [0, m-1]。
+  - id: math-number-theory.number-theory
+    title: 数论（Number Theory）
+    summary: 如何用 BFS 求解“通过质数传送到达终点的最少跳数”问题（如 LC 3629）？
+  - id: math-number-theory.prime-exponent-prefix-sums
+    title: 质因子指数前缀和（prime-exponent-prefix-sums）
+    summary: 乘积目标能按元素拆成质因子幂之和时，用 质因子指数前缀和。
+  - id: math-number-theory.prime-factorization
+    title: 质因数指数（prime-factorization）
+    summary: 题目中的乘积、整除关系能按质数独立处理时，应转成 质因数指数。
+  - id: math-number-theory.prime-factorization-sieve
+    title: 质因数分解（prime-factorization-sieve）
+    summary: 整除、互质或乘积的因子性质是核心时，考虑 质因数分解。
+  - id: math-number-theory.prime-sieve-and-divisor-enumeration
+    title: 埃氏筛（prime-sieve-and-divisor-enumeration）
+    summary: 需要批量判断 0..n 中的质数时，用 埃氏筛。
+  - id: math-number-theory.prime-test
+    title: 试除到平方根（prime-test）
+    summary: 判断单个整数是否为质数且 n 不大时，可使用 试除到平方根。
+- id: bitwise-tricks
+  title: 位运算技巧（bitwise tricks / bitmask）
+  summary: 用位掩码枚举子集、按位贡献法与线性基等技巧处理位运算相关的计数与构造问题。
+  order: 17
+  children:
+  - id: bitwise-tricks.and-or-logtrick
+    title: 按右端点维护去重后缀聚合值（and-or-logtrick）
+    summary: 需要处理所有子数组的不同 AND/OR 值，且 n² 枚举过慢时，用 按右端点维护去重后缀聚合值。
+  - id: bitwise-tricks.binary-trie-xor
+    title: 异或最大（binary-trie-xor）
+    summary: 需要在数集合中寻找与 x 异或最大 的元素时，用 0-1 字典树。
+  - id: bitwise-tricks.bit-contribution-counting
+    title: 按位贡献法（bit-contribution-counting）
+    summary: 当答案是大量 AND/OR/XOR 结果的总和，并且每一位可独立判断时，用 按位贡献法 把问题拆成计数。
+  - id: bitwise-tricks.bit-manipulation
+    title: 位运算（Bit Manipulation）
+    summary: 如何求一个整数 num 的按位补数（Number Complement）？核心技巧是什么？
+  - id: bitwise-tricks.bit-mask-operations
+    title: 位掩码（bit-mask-operations）
+    summary: 当状态只是多个“是否选择”的布尔量，且需要快速合并或修改时，优先考虑用 位掩码 表示状态。
+  - id: bitwise-tricks.bitmask
+    title: 状态压缩（Bitmask）
+    summary: 回溯解决「划分为k个相等的子集」(LC 698) 时，如何用状态压缩剪枝减少无效搜索？
+  - id: bitwise-tricks.bitmask-enumeration-and-bitwise-window
+    title: 二进制掩码枚举（bitmask-enumeration-and-bitwise-window）
+    summary: 当选取对象数量很小且每个对象只有选/不选两种状态时，可用 二进制掩码枚举。
+  - id: bitwise-tricks.bitwise-and-or-monotonicity
+    title: 减少（bitwise-and-or-monotonicity）
+    summary: 不断向区间加入数并聚合时，累计 AND 的 1 位只会 减少，累计 OR 的 1 位只会 增加。
+  - id: bitwise-tricks.bitwise-greedy-and-bitmask-parity
+    title: XOR 位掩码（bitwise-greedy-and-bitmask-parity）
+    summary: 属性出现次数只影响奇偶性时，可用 XOR 位掩码 压缩状态。
+  - id: bitwise-tricks.bitwise-greedy-construction
+    title: 从高位到低位的试填贪心（bitwise-greedy-construction）
+    summary: 要最大化一个按位定义的整数，且能验证候选掩码是否可行时，用 从高位到低位的试填贪心。
+  - id: bitwise-tricks.bitwise-prefix-xor
+    title: 前缀异或频次（bitwise-prefix-xor）
+    summary: 统计子数组 XOR 为零的数量时，用 前缀异或频次。
+  - id: bitwise-tricks.enumerate-nonempty-subsets-of-mask
+    title: 枚举子集的非空子集（enumerate-nonempty-subsets-of-mask）
+    summary: 当需要枚举一个具体集合 s（而非全集）的所有非空子集时，应使用 sub = (sub - 1) & s 这一跳转公式，而不是对全集逐个整数枚举再。
+  - id: bitwise-tricks.enumerate-subsets-including-empty
+    title: 之后（enumerate-subsets-including-empty）
+    summary: 当题目要求枚举集合 s 的所有子集且明确包含空集时，应在非空子集枚举模板基础上，把空集判断放在处理逻辑之后再决定是否退出循环。
+  - id: bitwise-tricks.enumerate-supersets-of-mask
+    title: 枚举掩码的超集（enumerate-supersets-of-mask）
+    summary: 当需要枚举某个集合 t 的所有超集（在大小为 n 的全集范围内）时，应使用 s = (s + 1) | t 递推公式，而不是对全集所有子集逐一过。
+  - id: bitwise-tricks.iterate-set-bits
+    title: lowbit 剥离法（t & -t）（iterate-set-bits）
+    summary: 当集合是稀疏的（全集范围很大但集合内元素很少）时，遍历集合元素应优先选择 lowbit 剥离法（t & -t），而不是对 0..n-1 逐位扫描。
+  - id: bitwise-tricks.lowbit-and-bit-library-functions
+    title: lowbit 与位运算库函数（lowbit-and-bit-library-functions）
+    summary: 看到需要反复剥离整数二进制表示的最低位 1（例如逐一取出集合最小元素）时，应联想到 lowbit = s & -s 这一固定写法。
+  - id: bitwise-tricks.set-bitwise-set-operations
+    title: 位运算做集合运算（set-bitwise-set-operations）
+    summary: 当问题涉及判断两个用整数表示的集合是否存在交集、并集或子集关系时，应联想到直接用 按位与(&)/按位或(|)/按位异或(^) 对二进制表示运算，。
+  - id: bitwise-tricks.set-element-bitwise-ops
+    title: 位运算判断集合成员（set-element-bitwise-ops）
+    summary: 当需要判断整数 i 是否属于位压缩集合 s 时，应使用 (s >> i) & 1 而不是遍历集合逐一比较。
+  - id: bitwise-tricks.xor-linear-basis
+    title: XOR 线性基（xor-linear-basis）
+    summary: 从很多数中任选子集并最大化 XOR，且位数远小于元素数时，使用 XOR 线性基。
+  - id: bitwise-tricks.xor-parity-cancellation
+    title: 全部元素的 XOR（xor-parity-cancellation）
+    summary: 数组中其余数都出现偶数次、只有一个数未配对时，用 全部元素的 XOR 可直接得到该数。
+  - id: bitwise-tricks.xor-range-construction
+    title: 严格大于 n 的最小 2 的幂（xor-range-construction）
+    summary: 在 XOR 值域构造问题中，若 n >= 3，可能的 XOR 结果集合恰好覆盖 严格大于 n 的最小 2 的幂 减一为止的完整区间；这是因为所有。
+- id: strings
+  title: 字符串算法（string algorithms）
+  summary: 涵盖 KMP、Z 函数、Manacher、后缀结构与字典树等经典字符串匹配与压缩技巧。
+  order: 18
+  children:
+  - id: strings.aho-corasick
+    title: AC 自动机（aho-corasick）
+    summary: 同一文本需要同时匹配很多模式串时，Trie 加 failure 指针得到 AC 自动机。
+  - id: strings.center-expansion-palindrome
+    title: 中心扩展（center-expansion-palindrome）
+    summary: 只求一个最长回文、且 O(n²) 能接受时，最直接模板是 中心扩展。
+  - id: strings.kmp-prefix-function
+    title: KMP（kmp-prefix-function）
+    summary: 当题目要求在线性时间内找模式串全部出现位置，且可能有重叠匹配时，优先考虑 KMP。
+  - id: strings.manacher-palindrome-radii
+    title: Manacher（manacher-palindrome-radii）
+    summary: 需要一次预处理后获得所有中心的最长回文信息时，用 Manacher，而不是对每个中心重复扩展。
+  - id: strings.minimum-rotation
+    title: 最小表示法（minimum-rotation）
+    summary: “任意次循环左移后字典序最小”是 最小表示法 的直接信号。
+  - id: strings.palindrome-enumeration
+    title: 镜像前半部分（palindrome-enumeration）
+    summary: 候选必须是回文数时，应通过 镜像前半部分 构造，而非扫描全部整数。
+  - id: strings.polynomial-string-hash
+    title: 字符串哈希（polynomial-string-hash）
+    summary: 当题目有大量子串相等判断，并可接受概率判定或双模时，使用 字符串哈希。
+  - id: strings.q1-two-pointer-near-palindromic-deletion
+    title: 双指针从两端向中心匹配（q1-two-pointer-near-palindromic-deletion）
+    summary: 当题目要求“删除恰好一个元素后能否变成回文”时，应使用 双指针从两端向中心匹配，一旦发现不对称立即分两种情况验证。
+  - id: strings.string
+    title: 字符串（String）
+    summary: Buddy Strings：如何用 O(n) 判断能否通过一次交换让 s 变成 goal？
+  - id: strings.subsequence-automaton
+    title: 子序列自动机（subsequence-automaton）
+    summary: 固定文本面对大量“某串是否为其子序列”的查询时，建立 子序列自动机。
+  - id: strings.suffix-array
+    title: 后缀数组（suffix-array）
+    summary: 题目核心是“所有后缀的字典序”或最长重复子串时，考虑 后缀数组。
+  - id: strings.suffix-automaton
+    title: 后缀自动机（suffix-automaton）
+    summary: 要在线处理一个字符串的全部子串、不同子串数或出现次数时，考虑 后缀自动机。
+  - id: strings.trie-and-xor-trie
+    title: Trie（trie-and-xor-trie）
+    summary: 大量字符串共享前缀并需查询前缀或完整词时，用 Trie。
+  - id: strings.trie-prefix-tree
+    title: Trie 字典树（trie-prefix-tree）
+    summary: 大量字符串需要反复按公共前缀查询或计数时，使用 Trie 字典树。
+  - id: strings.z-function-lcp
+    title: Z 函数（z-function-lcp）
+    summary: 若要批量得到“每个后缀和整串前缀相同多长”，应计算 Z 函数。
+- id: design-simulation
+  title: 设计与模拟（design / simulation）
+  summary: 按题意直接模拟状态演化，或设计支持特定查询的数据结构。
+  order: 19
+  children:
+  - id: design-simulation.design
+    title: 设计题（Design）
+    summary: 如何设计支持“按时间戳查询最近版本”的 Time Based Key-Value Store（TimeMap）？
+  - id: design-simulation.dfs-path-collection
+    title: pop（dfs-path-collection）
+    summary: 在DFS收集路径时，若用可变的list（path_stack）传递路径状态，必须在递归返回后显式pop该元素以撤销修改；而用字符串拼接（如 pa。
+  - id: design-simulation.direct-simulation
+    title: 题意执行到同一步的真实状态（direct-simulation）
+    summary: 模拟的核心不变量是：每一步后的 state 必须与 题意执行到同一步的真实状态一致。
+  - id: design-simulation.dual-heap-shared-mutable-object-sync
+    title: 不同键（dual-heap-shared-mutable-object-sync）
+    summary: 当需要用两把按 不同键 排序的堆维护同一批会被部分消耗或过期的元素时，应考虑让两把堆共享同一个 可变对象 的引用，而不是各自存值。
+  - id: design-simulation.matrix-bfs-state
+    title: 最优约束值（如最大health）（matrix-bfs-state）
+    summary: 在矩阵BFS处理带约束（如健康值）的最短路径时，visited 集合必须记录每个坐标 (x, y) 对应的最优约束值（如最大health），而不。
+  - id: design-simulation.simulation
+    title: 模拟（Simulation）
+    summary: 给定 0-based 排列 nums，要求 O(1) 额外空间构造 ans[i] = nums[nums[i]]，思路是什么？
+- id: advanced-ds-heap
+  title: 线段树、树状数组与堆（segment tree / Fenwick tree / heap）
+  summary: 用线段树、树状数组、ST 表和堆等高级数据结构支持区间更新查询与动态取最值。
+  order: 20
+  children:
+  - id: advanced-ds-heap.fenwick-and-segment-tree
+    title: 树状数组 Fenwick（fenwick-and-segment-tree）
+    summary: 需要在线单点更新和前缀/区间和查询时，优先考虑 树状数组 Fenwick。
+  - id: advanced-ds-heap.fenwick-tree
+    title: 树状数组（fenwick-tree）
+    summary: 频繁单点更新并查询动态前缀和或区间和时，用 树状数组。
+  - id: advanced-ds-heap.fenwick-tree-and-inversion-count
+    title: 树状数组（fenwick-tree-and-inversion-count）
+    summary: 单点更新与前缀/区间可加聚合并存时，用 树状数组。
+  - id: advanced-ds-heap.fenwick-tree-prefix-counts
+    title: 树状数组（fenwick-tree-prefix-counts）
+    summary: 频繁单点更新并查询前缀计数或区间计数时，用 树状数组。
+  - id: advanced-ds-heap.heap-priority-queue
+    title: 堆（heap-priority-queue）
+    summary: 反复获取动态集合当前最小或最大元素时，用 堆。
+  - id: advanced-ds-heap.heap-selection-and-rearrangement
+    title: 堆（heap-selection-and-rearrangement）
+    summary: 持续加入数据、持续取当前最优候选时，用 堆。
+  - id: advanced-ds-heap.lazy-dynamic-persistent-segment-tree
+    title: Lazy 线段树（lazy-dynamic-persistent-segment-tree）
+    summary: 区间更新和区间查询交错时，用 Lazy 线段树。
+  - id: advanced-ds-heap.lazy-segment-tree
+    title: Lazy 线段树（lazy-segment-tree）
+    summary: 需要频繁区间更新和区间查询，且两者都不能降为简单前缀操作时，用 Lazy 线段树。
+  - id: advanced-ds-heap.offline-query-ordering
+    title: 离线算法（offline-query-ordering）
+    summary: 查询彼此独立且改变顺序能复用状态时，用 离线算法。
+  - id: advanced-ds-heap.persistent-data-structure
+    title: 可持久化数据结构（Persistent Data Structure）
+    summary: Snapshot Array 如何做到 set/snap O(1)、get O(log n)？
+  - id: advanced-ds-heap.prefix-suffix-heaps
+    title: 前后缀堆（prefix-suffix-heaps）
+    summary: 每个切分点都要比较左右两侧各自最优的固定数量元素时，用 前后缀堆。
+  - id: advanced-ds-heap.priority-queue-greedy
+    title: 优先队列贪心（priority-queue-greedy）
+    summary: 算法每一步都要从动态候选中取当前最小或最大值时，用 优先队列/堆。
+  - id: advanced-ds-heap.range-query
+    title: 静态区间查询（range-query）
+    summary: Sparse Table 用两个可能重叠的区间在 O(1) 时间内完成静态区间查询，这依赖于聚合操作满足 幂等性（idempoten。
+  - id: advanced-ds-heap.range-query-structures
+    title: 树状数组（range-query-structures）
+    summary: 需要交错执行点更新与前缀和查询时，用 树状数组。
+  - id: advanced-ds-heap.segment-tree-point-update
+    title: 线段树（segment-tree-point-update）
+    summary: 数组可修改且要查询任意区间的 max/min/gcd 时，用 线段树。
+  - id: advanced-ds-heap.segment-tree-range-aggregate
+    title: 线段树（segment-tree-range-aggregate）
+    summary: 区间聚合查询和在线更新交错出现时，用 线段树。
+  - id: advanced-ds-heap.sparse-table
+    title: Sparse Table（sparse-table）
+    summary: 静态数组上有大量 RMQ 且无修改时，用 Sparse Table。
+  - id: advanced-ds-heap.splay-tree
+    title: Splay 树（splay-tree）
+    summary: 需要自适应有序集合并可接受均摊界时，可用 Splay 树。
+  - id: advanced-ds-heap.sqrt-decomposition-and-mo
+    title: 莫队算法（sqrt-decomposition-and-mo）
+    summary: 可离线的区间查询能通过单元素增删维护时，考虑 莫队算法。
+- id: contest-misc
+  title: 比赛技巧与杂题（contest tricks / misc）
+  summary: 处理数据范围极小的暴力枚举、补集计数等赛场上常见的杂项技巧。
+  order: 21
+  children:
+  - id: contest-misc.q3-binary-search-on-answer-arithmetic-sum
+    title: 二分最后一次操作对应的阈值（q3-binary-search-on-answer-arithmetic-sum）
+    summary: 当贪心策略等价于反复取当前最大值（可用堆模拟），但取值范围过大导致逐步模拟超时时，应考虑 二分最后一次操作对应的阈值。
+  - id: contest-misc.q4-complement-counting
+    title: 逆向计数（先算总数再减去不满足的数量）（q4-complement-counting）
+    summary: 当直接统计满足某关系的组合数很复杂，而其反面条件容易刻画时，应考虑 逆向计数（先算总数再减去不满足的数量）。
+  - id: contest-misc.q4-subset-enumeration-bitmask-hashmap
+    title: 子集枚举 + 位掩码编码存入哈希表（q4-subset-enumeration-bitmask-hashmap）
+    summary: 当每个元素对应一个很小的集合（如长度 ≤4），且要判断集合间的子集/超集关系并计数时，应使用 子集枚举 + 位掩码编码存入哈希表的技巧。
+- id: topics
+  title: 按主题兜底（uncategorised）
+  summary: 收纳没有更合适专题归属、仅带主题标签的笔记。
+  order: 22
+  children:
+  - id: topics.uncategorised
+    title: 未分类（uncategorised）
+    summary: 电梯按顺序处理请求队列，求总耗时——用什么模式？

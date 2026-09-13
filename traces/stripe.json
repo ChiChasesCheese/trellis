@@ -1,0 +1,167 @@
+{
+ "domain": "stripe",
+ "pulled_at": "2026-09-13T03:36:41+00:00",
+ "unmapped": 0,
+ "traces": {
+  "a01-prefix-sum-argmin": {
+   "due": 4,
+   "last_review": 1789269867
+  },
+  "a02-graph-division-values": {
+   "due": 3,
+   "last_review": 1789269867
+  },
+  "a03-bounded-hops-shortest-path": {
+   "due": 9,
+   "last_review": 1789269867
+  },
+  "a04-string-expansion-backtracking": {
+   "due": 14,
+   "last_review": 1789269867
+  },
+  "a05-hash-sort-record-validation": {
+   "due": 1,
+   "last_review": 1789269867
+  },
+  "a06-graduated-tax-brackets": {
+   "due": 6,
+   "last_review": 1789269867
+  },
+  "a07-per-key-sliding-window": {
+   "due": 2,
+   "last_review": 1789269867
+  },
+  "a08-stateful-simulation-with-validation": {
+   "due": 10,
+   "last_review": 1789269867
+  },
+  "a09-interval-merge-coverage": {
+   "due": 16,
+   "last_review": 1789269867
+  },
+  "a10-min-transfers-settle-debts": {
+   "due": 11,
+   "last_review": 1789269867
+  },
+  "a11-weighted-topological-order": {
+   "due": 7,
+   "last_review": 1789269867
+  },
+  "a12-one-edit-distance": {
+   "due": 5,
+   "last_review": 1789269867
+  },
+  "a13-grid-hash-counting": {
+   "due": 15,
+   "last_review": 1789269867
+  },
+  "a14-lru-time-keyed-cache": {
+   "due": 8,
+   "last_review": 1789269867
+  },
+  "a15-heap-topk-least-loaded": {
+   "due": 13,
+   "last_review": 1789269867
+  },
+  "a16-union-find-components": {
+   "due": 12,
+   "last_review": 1789269867
+  },
+  "s01-read-full-spec-first": {
+   "due": 3,
+   "last_review": 1789269867
+  },
+  "s02-line-oriented-parsing": {
+   "due": 1,
+   "last_review": 1789269867
+  },
+  "s03-small-record-modeling": {
+   "due": 1,
+   "last_review": 1789269867
+  },
+  "s04-group-then-aggregate": {
+   "due": 2,
+   "last_review": 1789269867
+  },
+  "s05-threshold-semantics": {
+   "due": 1,
+   "last_review": 1789269867
+  },
+  "s06-money-integer-cents": {
+   "due": 1,
+   "last_review": 1789269867
+  },
+  "s07-tiered-metered-proration": {
+   "due": 2,
+   "last_review": 1789269867
+  },
+  "s08-deterministic-sort-tiebreak": {
+   "due": 1,
+   "last_review": 1789269867
+  },
+  "s09-byte-exact-output-format": {
+   "due": 2,
+   "last_review": 1789269867
+  },
+  "s10-event-stream-reversal": {
+   "due": 1,
+   "last_review": 1789269867
+  },
+  "s11-idempotency-dedup": {
+   "due": 2,
+   "last_review": 1789269867
+  },
+  "s12-time-and-dates": {
+   "due": 1,
+   "last_review": 1789269867
+  },
+  "s13-closed-intervals-offbyone": {
+   "due": 2,
+   "last_review": 1789269867
+  },
+  "s14-string-normalization": {
+   "due": 1,
+   "last_review": 1789269867
+  },
+  "s15-masked-input-combinatorics": {
+   "due": 2,
+   "last_review": 1789269867
+  },
+  "s16-sliding-window-token-bucket": {
+   "due": 2,
+   "last_review": 1789269867
+  },
+  "s17-ledger-balance-tracking": {
+   "due": 3,
+   "last_review": 1789269867
+  },
+  "s18-validation-error-paths": {
+   "due": 2,
+   "last_review": 1789269867
+  },
+  "s19-incremental-design-parse-model-compute-render": {
+   "due": 4,
+   "last_review": 1789269867
+  },
+  "s20-self-test-discipline": {
+   "due": 2,
+   "last_review": 1789269867
+  },
+  "s21-python-stdlib-fluency": {
+   "due": 5,
+   "last_review": 1789269867
+  },
+  "s22-timeboxing": {
+   "due": 6,
+   "last_review": 1789269867
+  },
+  "s23-browser-ide-print-debugging": {
+   "due": 1,
+   "last_review": 1789269867
+  },
+  "s24-payments-domain-vocab": {
+   "due": 1,
+   "last_review": 1789269867
+  }
+ }
+}

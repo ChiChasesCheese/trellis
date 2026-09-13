@@ -1,0 +1,100 @@
+enumerate-middle-and-diagonals: [枚举中间 j（enumerate-middle-and-diagonals）, i<j<k 的左右计算互不依赖时，优先
+    枚举中间 j。]
+enumerate-nonempty-subsets-of-mask: [枚举子集的非空子集（enumerate-nonempty-subsets-of-mask）,
+  当需要枚举一个具体集合 s（而非全集）的所有非空子集时，应使用 sub = (sub - 1) & s 这一跳转公式，而不是对全集逐个整数枚举再。]
+enumerate-right-maintain-left: [枚举右端并维护左侧状态（enumerate-right-maintain-left）, 当约束是 i<j
+    且右端元素能推出左端所需状态时，用 枚举右端并维护左侧状态。]
+enumerate-subsets-including-empty: [之后（enumerate-subsets-including-empty）, 当题目要求枚举集合
+    s 的所有子集且明确包含空集时，应在非空子集枚举模板基础上，把空集判断放在处理逻辑之后再决定是否退出循环。]
+enumerate-supersets-of-mask: [枚举掩码的超集（enumerate-supersets-of-mask）, 当需要枚举某个集合 t 的所有超集（在大小为
+    n 的全集范围内）时，应使用 s = (s + 1) | t 递推公式，而不是对全集所有子集逐一过。]
+enumerate-then-greedy: [先枚举再贪心（enumerate-then-greedy）, 当一个小范围选择决定后续贪心结构时，用 枚举该选择，再求固定条件下的贪心最优。]
+equivalence-transformation: [等价转化（equivalence-transformation）, 原目标难直接优化，但补集或另一种表示更简单时，尝试
+    等价转化。]
+eratosthenes-sieve: [埃氏筛（eratosthenes-sieve）, 需要范围内全部质数或大量质数查询时，优先使用 埃氏筛。]
+event-endpoint-counting: [端点计数（event-endpoint-counting）, 区间对查询点的贡献仅取决于是否已经开始和是否已经结束时，可用
+    端点计数。]
+exactly-k-via-two-at-least: [两个'至少'问题相减（exactly-k-via-two-at-least）, '当题目要求统计子数组和''恰好等于k''的个数,而直接维护该条件不具有单调性时,应把问题转化为两个''至少''问题相减。']
+exchange-argument: [相邻两个元素交换前后（exchange-argument）, 解由处理顺序组成时，要证明排序贪心，可比较 相邻两个元素交换前后
+    的结果。]
+exchange-argument-greedy: [邻项交换贪心（exchange-argument-greedy）, 若能比较相邻任务 AB 与 BA，并证明其中一个顺序永远不差，应考虑
+    邻项交换贪心。]
+expand-window-for-shortest: [扩张式滑动窗口求最短（expand-window-for-shortest）, '题目要求''最短/最小的满足某条件的子数组'',且窗口越长越容易满足条件时,应使用扩张式(越长越合法)的不定长滑动窗口。']
+fast-exponentiation: [快速幂（fast-exponentiation）, 计算 x^y mod m 且指数 y 很大（如 1e9 级别）时，不能逐次相乘，应使用快速幂（二进制幂）在
+    O(log y) 时间内完成。]
+fast-slow-pointers-linked-list: [2（fast-slow-pointers-linked-list）, 在快慢指针模式中，慢指针每次走1步，快指针每次走2步；当快指针到达链表末尾（fast为None或fast.next为None）时，慢指针恰好停在。]
+fast-walsh-hadamard-transform: [FWT（fast-walsh-hadamard-transform）, 要统计按位 XOR、OR 或
+    AND 卷积且值域为 2 的幂时，考虑 FWT。]
+fenwick-and-segment-tree: [树状数组 Fenwick（fenwick-and-segment-tree）, 需要在线单点更新和前缀/区间和查询时，优先考虑
+    树状数组 Fenwick。]
+fenwick-tree: [树状数组（fenwick-tree）, 频繁单点更新并查询动态前缀和或区间和时，用 树状数组。]
+fenwick-tree-and-inversion-count: [树状数组（fenwick-tree-and-inversion-count）, 单点更新与前缀/区间可加聚合并存时，用
+    树状数组。]
+fenwick-tree-prefix-counts: [树状数组（fenwick-tree-prefix-counts）, 频繁单点更新并查询前缀计数或区间计数时，用
+    树状数组。]
+finite-state-machine-dp: [状态机 DP（finite-state-machine-dp）, 历史只需压缩成少量模式时，使用 状态机 DP。]
+fixed-length-sliding-window: [k（fixed-length-sliding-window）, '定长滑动窗口的核心不变量是:完成入队操作后,窗口[left,
+    right]的长度恒等于k。']
+floor-division-grouping: [数论分块（floor-division-grouping）, 求和中频繁出现 n//i 且 n 很大时，考虑 数论分块。]
+floyd-warshall: [所有点对最短路（floyd-warshall）, 节点较少且需要 所有点对最短路 时，考虑 Floyd-Warshall。]
+functional-graph-and-binary-lifting: [基环树加倍增（functional-graph-and-binary-lifting）,
+  每点只有一个后继且要反复跳转时，识别为 基环树加倍增。]
+functional-graph-cycle-and-lca: [基环树找环（functional-graph-cycle-and-lca）, 每个节点至多有一条出边且需要找环时，识别为
+    基环树/函数图。]
+functional-graph-topological-pruning: [基环树拓扑剥离（functional-graph-topological-pruning）,
+  每个节点恰有一个后继，且需要分离环与入树时，用 基环树拓扑剥离。]
+gcd-divisor-counting: [按 gcd 压缩计数（gcd-divisor-counting）, '数对条件是 a*b 被 k 整除时，应优先把每个数压缩为
+    gcd(x, k)。']
+gcd-lcm-factorization-and-congruence: [GCD 或 LCM（gcd-lcm-factorization-and-congruence）,
+  题目核心是多个数的共同整除关系时，优先检查 GCD 或 LCM。]
+gcd-lcm-modular-arithmetic: [LCM（gcd-lcm-modular-arithmetic）, 两个周期首次同时发生，通常要计算 LCM。]
+gcd-logtrick: [不同后缀 GCD 及其数量（gcd-logtrick）, 要统计所有子数组的 GCD 分布时，维护每个右端点的 不同后缀 GCD 及其数量。]
+gcd-modular-arithmetic: [gcd（gcd-modular-arithmetic）, 反复加减若干固定步长并问能否到达目标时，关键量通常是步长的
+    gcd。]
+generating-functions: [生成函数（generating-functions）, 独立选择的计数能按总和合并时，可把每种选择编码为 生成函数。]
+graph-bfs-shortest-path-unweighted: [BFS（graph-bfs-shortest-path-unweighted）, 当图的边权全部相同（或视为单位权重）且要求最短路径长度时，应使用
+    BFS 而不是 Dijkstra。]
+graph-bfs-state-space-modeling: [状态到图节点（graph-bfs-state-space-modeling）, 当问题要求“从状态
+    A 变到状态 B 的最少操作次数”而非显式给出图结构时，应先做 状态到图节点 的建模，再跑 BFS。]
+graph-bipartite-coloring: [二分图染色（graph-bipartite-coloring）, 需要判断一张图能否被划分成两个互不相邻的集合时，应使用二分图染色（交替染色法）。]
+graph-dfs-bfs: [BFS（graph-dfs-bfs）, 无权图中求最少边数或最少操作次数时，用 BFS。]
+graph-dfs-connected-components: [连通块（graph-dfs-connected-components）, 当题目要求统计图中连通块的数量或大小，且边权都相同/无权时，优先考虑
+    DFS 或 BFS 遍历。]
+graph-dfs-state-and-timestamps: [DFS 状态与时间戳（graph-dfs-state-and-timestamps）, 路径合法性依赖累计摘要，或需快速判断树上祖先关系时，用
+    DFS 状态与时间戳。]
+graph-dijkstra-shortest-path: [非负（graph-dijkstra-shortest-path）, 求单源最短路且所有边权非负时，应使用
+    Dijkstra 算法而不是 BFS 或 Bellman-Ford。]
+graph-euler-path-hierholzer: [Hierholzer（graph-euler-path-hierholzer）, 当题目要求把图中每条边恰好使用一次走完（欧拉路径/回路），应使用
+    Hierholzer 算法。]
+graph-floyd-warshall: [Floyd（graph-floyd-warshall）, 需要一次性求出任意两点间最短路（全源最短路），且节点数不大时，应使用
+    Floyd 算法。]
+graph-functional-graph-cycle: [基环树（graph-functional-graph-cycle）, 当图中每个节点的出度恰好为 1，且题目暗示存在唯一环时，应识别为基环树（内向基环图）结构。]
+graph-mst-kruskal: [Kruskal（graph-mst-kruskal）, 求连通所有节点的最小总边权（最小生成树），且图比较稀疏时，优先使用
+    Kruskal 算法。]
+graph-network-flow-max-flow: [网络流（最大流）（graph-network-flow-max-flow）, 当问题可以抽象成源点到汇点在容量限制下的最大可行流量时，应考虑用
+    网络流（最大流） 建模。]
+graph-scc-tarjan: [Tarjan（graph-scc-tarjan）, 需要在有向图中找出所有“互相可达”的节点集合（强连通分量），标准做法是 Tarjan
+    算法。]
+graph-topological-order-dp: [拓扑排序（graph-topological-order-dp）, 在 DAG 上做依赖顺序明确的 DP（如求最长路径），且想用非递归方式实现时，可以在拓扑排序的同时进行刷表法
+    DP。]
+graph-topological-sort-kahn: [拓扑排序（graph-topological-sort-kahn）, 当题目给出若干“先修课程”式的有向依赖约束，要求给出一个合法学习顺序或判断是否有环时，应使用
+    拓扑排序。]
+graph-traversal-and-shortest-path: [BFS（graph-traversal-and-shortest-path）, 无权图中求起点到各点最少边数，应使用
+    BFS。]
+greedy-and-constructive: [贪心（greedy-and-constructive）, 若局部选择可用交换论证证明不损失最优性，使用 贪心。]
+greedy-exchange-and-median-transform: [局部选择可交换进某个全局最优解（greedy-exchange-and-median-transform）,
+  贪心可用的关键不是“看起来合理”，而是能证明 局部选择可交换进某个全局最优解。]
+greedy-interval-coverage: [区间覆盖贪心（greedy-interval-coverage）, 已能表示的目标是连续前缀，且要最少补资源扩张覆盖时，用
+    区间覆盖贪心。]
+grid-connected-components-dfs: [网格 DFS 求连通块（grid-connected-components-dfs）, 网格题要求统计岛屿、区域或房间的数量/面积，且只沿相邻可通行格移动时，优先考虑
+    从每个未访问格启动一次 DFS 枚举连通块。]
+grid-dijkstra: [网格上的 Dijkstra 过期条目判断（grid-dijkstra）, Dijkstra 从最小堆弹出条目后，只有当其距离 等于当前
+    distance 状态值 时才处理；否则它是旧条目。]
+grid-path-dp: [到达某个格子的答案（grid-path-dp）, 网格中只能从已处理方向移动时，状态通常定义为 到达某个格子的答案。]
+grid-unweighted-bfs: [BFS（grid-unweighted-bfs）, 网格中每一步代价都相同，并要求最少步数时，应使用 BFS，而不是普通
+    DFS。]
+grid-zero-one-bfs: [0-1 BFS 加双端队列（grid-zero-one-bfs）, 网格最短路的每次转移代价严格属于 0 和 1 时，使用
+    0-1 BFS 加双端队列 可替代 Dijkstra 的堆。]
+grouped-knapsack-dp: [分组背包（grouped-knapsack-dp）, 物品分组且每组最多选一个方案时，使用 分组背包。]
+grouping-loop: [分组循环（grouping-loop）, '当数组按规则被分割成若干组,且每组处理逻辑相同时,应使用分组循环,避免对最后一组做特判。']
+hash-union-find: [哈希并查集（hash-union-find）, 需要动态维护可传递的连通分组，且节点键不连续时，用 哈希并查集。]

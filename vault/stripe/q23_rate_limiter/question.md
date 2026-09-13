@@ -1,0 +1,92 @@
+# q23 · Rate Limiter — sliding window (global → per client → weighted) and token bucket with idle cleanup
+
+## Context
+Every Stripe API key is rate limited (the public docs quote 100 req/s live, 25 req/s sandbox,
+and `429 rate_limit` errors); Stripe's own engineering blog describes four limiters (request
+rate = token bucket, concurrent requests, fleet load shedder, worker utilisation). The interview
+version: implement the in-memory core. Requests arrive as `(timestamp_ms, client_id)` in time
+order; decide `ALLOW` or `DENY` for each. Part 1 is a single global window, Part 2 keys the
+window by client, Part 3 lets requests carry a weight (cost), Part 4 swaps the algorithm for a
+token bucket with lazy refill and a memory-cleanup follow-up ("what about clients that go idle
+forever?" — the recurring follow-up in the 1point3acres reports).
+
+## Input (stdin)
+```
+PART n
+LIMIT <limit> <window_ms>        (Parts 1–3; default "LIMIT 5 2000" when absent)
+BUCKET <capacity> <refill_per_sec> (Part 4; default "BUCKET 5 2")
+<ts_ms> [<client>] [<weight>]    one request per line
+CLEANUP <now_ms> <idle_ms>       (Part 4 only) evict idle clients
+```
+* `ts_ms` is a non-negative integer, **non-decreasing per client** (see the out-of-order rule).
+* `client` is a token without spaces; Part 1 ignores it (a missing client is `-`).
+* `weight` (Part 3+) is a positive integer, default 1. Up to 10^6 request lines.
+
+## Output
+One line per request line, in order: `ALLOW` or `DENY`; an out-of-order request prints `ERROR`.
+`CLEANUP` prints `EVICTED <n>`.
+
+## Rules
+### Part 1 — global sliding window  `SlidingWindow(limit, window_ms).allow(ts_ms, weight=1) -> bool`
+A request at time `t` is allowed iff the number of **previously allowed** requests with timestamps
+in **`(t − window_ms, t]`** (left-open, right-closed) is `< limit` — i.e. `count + 1 ≤ limit`.
+Denied requests are **not** recorded and never consume capacity. `5 per 2000 ms`: requests at
+0,1,2,3,4 → all `ALLOW`; at 5 → `DENY`; at 1999 → `DENY` (0 is still inside `(−1, 1999]`);
+at 2000 → `ALLOW` (0 has left the window: `(0, 2000]`). Requests with equal timestamps are
+processed in input order.
+
+### Part 2 — per client  `RateLimiter(limit, window_ms).allow(client, ts_ms, weight=1) -> bool`
+One independent window per `client` key (a `deque` per client, created on first sight). Clients
+never affect each other.
+
+### Part 3 — weighted requests
+Each request carries a `weight` (cost). Allow iff `sum(weights in window) + weight ≤ limit`.
+`weight > limit` is always denied (and still not recorded); `weight ≤ 0` → `ValueError`.
+Parts 1–2 are the special case `weight = 1`.
+
+### Out-of-order timestamps (all parts)
+Timestamps must be non-decreasing **per client**. A request whose `ts` is smaller than that
+client's last **seen** timestamp (allowed or denied) raises `ValueError("out-of-order timestamp")`;
+`main()` prints `ERROR` for that line and continues. (Reconstructed — sources only say "assume
+requests arrive in order".)
+
+### Part 4 — token bucket + cleanup  `TokenBucket(capacity, refill_per_sec).allow(client, ts_ms, cost=1) -> bool`
+Each client owns a bucket that **starts full** (`capacity` tokens) at its first request.
+Lazy refill: on every request add `(ts − last_ts) × refill_per_sec / 1000` tokens (exact
+integer arithmetic in milli-tokens — no floats), capped at `capacity`; then allow iff
+`tokens ≥ cost`, and subtract `cost`. Denied requests leave the bucket unchanged (the refill is
+kept). `capacity 5, refill 2/s`: 5 requests at t=0 → `ALLOW`×5; t=0 again → `DENY`;
+t=500 → `ALLOW` (1 token refilled); t=600 → `DENY` (0.2 tokens); t=5000 → `ALLOW`.
+`cleanup(now_ms, idle_ms) -> int` removes every client whose last seen request is at or
+before `now_ms − idle_ms` (idle **for at least** `idle_ms`) and returns how many were removed. An
+evicted client that comes back starts with a full bucket — which is exactly what it would have
+had anyway once `idle_ms ≥ capacity / refill_per_sec × 1000`. `RateLimiter.cleanup` has the
+same signature and evicts clients whose window `(now − window_ms, now]` is empty and whose last
+seen request is ≥ `idle_ms` old.
+
+## Worked examples
+```
+PART 1 / LIMIT 5 2000 : ts 0,1,2,3,4,5,1999,2000,2001,2002
+  -> ALLOW ALLOW ALLOW ALLOW ALLOW DENY DENY ALLOW ALLOW ALLOW
+     (at 2001 the window (1, 2001] holds 2,3,4,2000 = 4 -> ALLOW; at 2002 holds 3,4,2000,2001 -> ALLOW)
+PART 2 / LIMIT 2 1000 : 0 a / 0 b / 1 a / 2 a / 2 b / 1000 a / 1001 a
+  -> ALLOW ALLOW ALLOW DENY ALLOW ALLOW ALLOW
+     (a: 0,1 allowed; 2 denied (window {0,1}); 1000 -> (0,1000] = {1} -> ALLOW;
+      1001 -> (1,1001] = {1000} -> ALLOW.  b: 0 and 2 allowed — clients are independent)
+```
+PART 3 / LIMIT 5 2000 : 0 a 3 / 1 a 2 / 2 a 1 / 3 a 6 / 2000 a 3 / 2001 a 3
+  -> ALLOW (3) ALLOW (5) DENY (6>5) DENY (6>5 always) ALLOW ((0,2000] has 2 -> 5) DENY ((1,2001] has 2+3=5, +3 = 8)
+PART 4 / BUCKET 5 2 : 0 a ×6 / 500 a / 600 a / 5000 a / CLEANUP 20000 10000 / 20000 a
+  -> ALLOW ALLOW ALLOW ALLOW ALLOW DENY ALLOW DENY ALLOW EVICTED 1 ALLOW
+```
+
+## 关联知识点
+
+- [[a07-per-key-sliding-window|A07 每 key 上按时间排序的滑动窗口]]
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s05-threshold-semantics|S05 阈值语义：严格 vs 非严格、计数 vs 比例、最小量门槛]]
+- [[s12-time-and-dates|S12 时间与日期]]
+- [[s16-sliding-window-token-bucket|S16 滑动窗口计数器 / 令牌桶]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]
+- [[s21-python-stdlib-fluency|S21 语言熟练度与标准库]]

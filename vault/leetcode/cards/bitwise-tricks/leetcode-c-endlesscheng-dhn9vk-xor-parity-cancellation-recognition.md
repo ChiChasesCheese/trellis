@@ -1,0 +1,16 @@
+---
+id: leetcode-c-endlesscheng-dhn9vk-xor-parity-cancellation-recognition
+node: bitwise-tricks.xor-parity-cancellation
+type: cloze
+anki: 1787272405605
+tags: [concept-cloze, leetcode, recall, recognition]
+---
+数组中其余数都出现偶数次、只有一个数未配对时，用 {{c1::全部元素的 XOR}} 可直接得到该数。
+
+顺序不影响结果。
+
+**Evidence**
+
+二、异或（XOR）的性质
+
+[原文 ↗](obsidian://open?vault=lc&file=concepts%2F%E7%81%B5%E8%8C%B6%E5%B1%B1%E8%89%BE%E5%BA%9C%2F05.02%20-%20XOR%20%E5%A5%87%E5%81%B6%E6%B6%88%E5%8E%BB)

@@ -9,6 +9,8 @@ Processing events in arrival order, what "current" means at each point, and the 
 
 ## Drills
 - [[event-stream-with-reversals|Drill: an event stream with reversals, in four unlocking parts]]
+- [[oa-q07-subscription-notifications|Drill: schedule and rewrite subscription lifecycle emails]]
+- [[oa-q37-fraud-rule-timestamps|Drill: replay authorizations against a history of fraud rules]]
 
 ## Cards (5)
 - [[cc-model-ev-current-vs-ever]]

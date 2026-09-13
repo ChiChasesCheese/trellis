@@ -6,6 +6,7 @@ Translating 10^5 or 10^6 into an allowed complexity class, the operations-per-se
 
 ## Drills
 - [[least-loaded-assignment-heap|Drill: least-loaded assignment under a performance budget]]
+- [[oa-q09-jupyter-load-balancer|Drill: route sticky, capacity-limited connections across a fleet with shutdowns]]
 - [[settlement-minimum-transfers|Drill: settling a group of debts in the fewest transfers]]
 
 ## Cards (5)

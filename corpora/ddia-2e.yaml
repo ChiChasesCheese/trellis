@@ -1,0 +1,12 @@
+# The backbone of the Distributed Data region of the system-design map.
+# Commercial and not owned as a file, so nothing is ingested: the entry
+# records the lens it belongs to, and the deepening pass worked from the
+# freely published companion material (https://github.com/ept/ddia-references,
+# Kleppmann's essays, the referenced papers — many are readings already).
+# Cards were written from understanding, never from the text.
+title: "Designing Data-Intensive Applications, 2nd edition"
+author: "Martin Kleppmann & Chris Riccomini"
+license: commercial
+domain: system-design
+home: https://dataintensive.net/
+file: ~/Books/ddia-2e.epub   # not present; register a copy here to digest it

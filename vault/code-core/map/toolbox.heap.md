@@ -9,6 +9,9 @@
 
 ## Drills
 - [[least-loaded-assignment-heap|Drill: least-loaded assignment under a performance budget]]
+- [[oa-q09-jupyter-load-balancer|Drill: route sticky, capacity-limited connections across a fleet with shutdowns]]
+- [[oa-q24-server-allocator|Drill: hand out the smallest free server number per host type]]
+- [[oa-q28-worker-task-assignment|Drill: route tasks to the least-busy qualified worker]]
 
 ## Cards (6)
 - [[cc-toolbox-heap-heapify]]

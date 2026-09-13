@@ -64,6 +64,7 @@ class Artefact:
     lens: str
     path: Path       # absolute, inside the cache
     rel: str         # repo-relative
+    excerpt: str = ""  # a few lines of the content, so triage sees more than a name
 
 
 def load_codebase(path: str | Path) -> Codebase:
@@ -136,5 +137,20 @@ def artefacts(codebase: Codebase, root: Path) -> list[Artefact]:
                 lens=harvest.lens,
                 path=match,
                 rel=str(match.relative_to(cache)),
+                excerpt=excerpt_of(match),
             ))
     return out
+
+
+def excerpt_of(path: Path, chars: int = 240) -> str:
+    """The first lines of a text file, frontmatter dropped — enough for a
+    triage prompt to place it without reading it whole."""
+    try:
+        raw = path.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return ""
+    if raw.startswith("---\n"):
+        parts = raw.split("---\n", 2)
+        raw = parts[2] if len(parts) == 3 else raw
+    text = " ".join(raw.split())
+    return text[:chars] + ("…" if len(text) > chars else "")

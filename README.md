@@ -19,8 +19,21 @@ Cards and readings reference each other with ordinary wikilinks, and every node'
 generated map note lists both — so the Obsidian graph connects topic ↔ reading ↔
 card.
 
-Ships with six domains (four fully carded, plus Markets & Factors and Quant
-Infrastructure as skeleton + readings). **System Design** — a 100-node map
+Ships with nine domains (seven fully carded, plus Markets & Factors and Quant
+Infrastructure as skeleton + readings). **CDN Content** — a 75-node map
+(198 bilingual cards, 52 readings, 4 drills) for serving content at the edge:
+the request path, HTTP, caching semantics, Go/Node/OpenResty runtimes, the
+content lifecycle from SSG to ISR, distributed architecture, reliability,
+safe delivery, and security and cost. **Stripe** — the online assessment as
+eleven probe groups in Chinese (40 cards), with the study handouts and one
+question/solution pair per problem beside them; the raw research behind it
+(catalog, rounds, reports) is archived as plain notes under
+`vault/Quick_Check/`. **Kafka** — a 79-node map in Chinese
+(340 cards, 88 readings) digested end to end from Kafka权威指南（第2版）with
+the flow under [Digesting a corpus](#digesting-a-corpus): ingest the epub,
+seed the skeleton from its outline, triage 140 sections onto 66 leaves, write
+cards leaf by leaf from the text, and read back what the book never reached.
+**System Design** — a 100-node map
 (465 cards, 81 readings) structured against DDIA 2nd edition and spanning the interview canon
 plus what the 2017-era resources miss: consensus, CRDTs, encoding and schema
 evolution, delivery semantics, idempotency/outbox/saga/ledger, OLAP and
@@ -40,7 +53,8 @@ triangle, five-out), all eleven defensive leaves from closeout to pick-and-roll
 coverage to the rotation that actually breaks, the reads that make up
 basketball IQ, special situations, analytics you can play with, physical
 preparation, practice design, and the rules that change decisions. Every leaf
-in all four is covered.
+in those four is covered; Kafka's four empty leaves are the ones the book
+does not teach, listed in its Corpus note as the reading list.
 
 That last domain is why a **video** is a first-class source: tag a reading
 `video` and it counts as readable without being clipped — a watch page
@@ -191,7 +205,14 @@ the live collection follow.
 
 ## Languages
 
-A card is written in English and keeps it. A translation is **appended**, never
+A domain is written in the language you study it in — `lang: zh` in its
+skeleton, and every card's `## Q`/`## A` is simply in that language. There is
+no English original to keep: a domain digested from a Chinese book is
+Chinese, and its deck is Chinese with nothing else. Terms of art stay English
+in any language (`consumer group（消费者群组）`), because that is how the
+reader will meet them in code and docs.
+
+A domain written in English may carry a translation, **appended**, never
 substituted, so nothing is lost if one is wrong or missing:
 
 ```markdown
@@ -267,6 +288,71 @@ trellis import batch.json                     # all-or-nothing validation, then 
 trellis sync && trellis build
 ```
 
+## Digesting a corpus
+
+A **corpus** is one body of material with an outline of its own — a book as
+an epub or a pdf, a freely published one as chapter URLs, a markdown file
+you converted by hand. It is declared, like a codebase:
+
+```yaml
+# corpora/kafka-2e.yaml
+title: Kafka权威指南（第2版）
+license: commercial            # decides where the text may live
+domain: kafka                  # the skeleton it lands on — seeded if absent
+lang: zh                       # cards are written in the book's language
+home: https://www.ituring.com.cn/book/2937
+file: ~/Books/kafka-2e.epub    # or  chapters: [https://…, …]  for a free book
+```
+
+```bash
+trellis ingest kafka-2e          # sections + outline (pdf needs pip install -e '.[ingest]')
+trellis seed kafka-2e            # no skeleton/kafka.yaml yet: draft one from the outline
+trellis accept proposals/kafka-2e.seed.json
+trellis triage kafka-2e          # every section beside every leaf -> a proposal
+trellis accept proposals/kafka-2e.json        # readings with provenance, gaps listed
+trellis digest kafka-2e --status              # leaves the book reaches: todo / done
+trellis digest kafka-2e --next -o prompt.md   # the next leaf, grounded in its sections
+trellis digest kafka-2e --import cards.json --leaf producer.acks
+trellis --domain kafka sync && trellis --domain kafka build --corpus kafka-2e
+```
+
+Every step that involves an LLM has the same shape: a prompt out, JSON back,
+validated all-or-nothing before a file is written. The LLM never touches the
+vault. Who answers the prompt is up to you — a chat window, or agents
+digesting disjoint leaves in parallel: nothing is recorded that can be
+derived, so `--status` is read off the vault (readings carrying `corpus:`,
+cards carrying `source:`) and parallel writers share no state file.
+
+**Where the text lives** is decided by the license. Freely published
+material archives into `sources/archive/<id>/` and is committed; sections a
+triage accepts get clipped beside their readings like any web article. A
+book you paid for is ingested into `sources/local/<id>/`, which git ignores:
+the text is needed on this machine to triage and digest, and nowhere else.
+Its outline — titles only — is committed either way, so the Corpus note and
+`digest --status` work everywhere. Web chapters checkpoint per fetch in
+`pipeline/state/ingest-<id>.json`; re-running resumes, `--retry` re-attempts
+failures.
+
+**The book's structure is not the skeleton.** Its outline stays its own
+thing, and the two are related only by triage, section by leaf. What the
+book never reaches is the most useful output: `vault/Corpora/<id>.md` shows
+the outline annotated with what each section became, and underneath it the
+leaves of the domain the book does not teach — your reading list. A subject
+with no skeleton may be *seeded* from a canonical book's outline, judged as
+a map of the field with the leaves the book omits added by that review; see
+[ADR 0006](docs/adr/0006-a-corpus-enters-as-readings-and-may-seed-a-skeleton.md).
+
+**A deck for the book is a filter.** `build --corpus <id>` writes the subset
+of the domain's cards written from it, with the same ids and therefore the
+same Anki note GUIDs — never a second deck. Every card from a corpus also
+carries the tag `src::<id>`, so a filtered deck inside Anki does the same.
+
+**Cards written from a book must teach without it.** The digest prompt says
+so in as many words: the question carries its own situation, the answer
+defines every term it uses and says why, and "as discussed in chapter 3" is
+forbidden. A reader who has never opened the book must understand the card
+from the card alone.
+
 ## Drill format
 
 One file per drill under `vault/<domain>/drills/`; same frontmatter as
@@ -317,6 +403,160 @@ codebases are mapped onto them afterwards — see
 [ADR 0002](docs/adr/0002-skeletons-are-authored-from-the-field.md) and
 [ADR 0003](docs/adr/0003-a-codebase-enters-as-cases-and-subject-material.md).
 
+## The loop
+
+Everything above flows one way: a skeleton decides, content hangs off it, a
+deck is built. The way back is `pull` → `brief`.
+
+```bash
+trellis --all pull          # read the review history out of Anki into traces/
+trellis brief               # write vault/Brief.md: what to do next
+trellis feed                # the filtered-deck recipe for spare minutes
+```
+
+`pull` is the only command that asks Anki a question. It writes
+`traces/<domain>.json` and stops; everything downstream reads that file, so the
+Brief regenerates on a phone that cloned the repo, in CI, and with Anki closed
+([ADR 0004](docs/adr/0004-traces-are-pulled-into-a-file-the-repo-owns.md)).
+Notes are matched back to cards by an `id::<card-id>` tag the build now writes —
+a note GUID is a hash and cannot be reversed, a tag can. Cards imported before
+that tag existed are counted and named; one `anki-push` repairs them.
+
+Four things are then computed from the Traces, and they are the vocabulary the
+Brief speaks in:
+
+- **Hold** — how well a node is retained, read off the interval the scheduler
+  already trusts and normalised against Anki's own 21-day maturity bar. A curve,
+  not a badge: nothing changes discontinuously as a card crosses a threshold.
+- **Bearing** — how much of the skeleton rests on a node, from the transitive
+  `requires` graph. High bearing × low hold is what to repair first; that is the
+  80/20, computed rather than asserted.
+- **Sealed** — a leaf whose prerequisites are not holding. Its cards are
+  withheld from the Feed until the ground under them takes
+  ([ADR 0005](docs/adr/0005-a-leaf-is-sealed-until-its-prerequisites-hold.md)).
+- **Uncovered** — a leaf with no cards. Nothing to fail, so it wants writing,
+  not practice. That is the distinction `trellis brief` exists to keep straight.
+
+Thin evidence is shrunk toward the branch it hangs from, so one unlucky card
+cannot shout as loud as forty measured ones — and a leaf nobody has reviewed is
+reported as unproven rather than weak. "No data", "not enough data" and "really
+weak" are three different situations wanting three different actions.
+
+There is exactly **one Brief and it spans every domain**, with a cap on how many
+rows any one domain may take. A per-domain report would be a better dashboard
+and a worse instrument: it would let you sink into the subject you are already
+best at.
+
+### The Feed
+
+The deck tree is how you author. It is a bad way to review in the four minutes
+before a train arrives, because it makes you choose a deck before you have
+learned anything. `trellis feed` prints the search for one Anki **filtered
+deck** spanning every domain, in random order, with sealed leaves held back —
+one stream, no decision, and consecutive cards from different subjects.
+
+That last property is the point twice over: mixing topics is what makes a feed
+hold attention, and interleaving is also what makes retrieval practice stick
+better than blocking it. A filtered deck rather than a new app because a note
+lives in exactly one deck — this keeps one scheduler and one review history.
+
+### Grow: the verdicts become cards
+
+The Brief names a weak leaf or an empty one; `trellis grow` is what happens
+next, and it closes the loop: review → Trace → Brief → new cards → review.
+
+```bash
+trellis grow                              # the weak and uncovered leaves, what each can be written from
+trellis grow --next -o prompt.md          # a prompt for the top one
+trellis grow --leaf kafka:producer.acks -o prompt.md
+trellis grow --import answer.json --leaf kafka:producer.acks
+```
+
+The two kinds of target get two different prompts. A **Weakness** already
+has cards and they slipped, so the prompt carries the ones that lapsed
+most — front and back — and asks for cards that reach the same mechanism
+from *another angle*: a scenario, a contrast, a failure story, a number.
+Restating a card that already failed teaches the same failure twice. An
+**uncovered** leaf gets the scaffold's prompt, grounded in whatever the
+vault already holds for it: the sections of a corpus that reaches the leaf
+(then growing is digesting, and the cards carry the corpus as `source:`)
+or the clipped readings on it. Either way the answer lands through the same
+importer as every other card — forced onto the leaf, refused if it leans on
+its source — and is tagged `grown`, so the next Brief can say whether the
+repair took. `grow` only writes where the loop pointed; anywhere else is
+`scaffold` or `digest`.
+
+### The Workbench
+
+```bash
+trellis serve                # http://127.0.0.1:8777 — opens in the browser
+```
+
+The loop as a page, in Chinese, served from the repository on this machine
+and doing only what the commands above do (ADR 0007). The left rail lists
+every domain with its Hold; the page is one domain at a time. Its centre is
+the **lattice**: one row per branch, one cell per leaf, the cell's green the
+leaf's Hold, hollow when the leaf has no cards, hatched when it is sealed.
+Click a cell or a row in *该修的* / *该写的* and a drawer opens with the leaf's
+standing, the cards held least, what there is to read and practise, and four
+actions: open the map note in Obsidian, open the leaf's cards in the Anki
+browser, make them due today (Focus), or review the deck. Below the lattice:
+the Hold trend over past pulls (from `traces/`' git history), the Brief, and
+the grow log.
+
+Growing from the page is the same `grow` as on the command line with one
+addition, **Guidance**: a text box for what to emphasise or which angle to
+take, appended to the prompt. The answer comes from Claude Code on this
+machine (`claude -p`, the Runner) and is shown for review; *写入* lands it
+through the same importer as everything else, *写入并推到 Anki* also builds and
+publishes. Jobs live under `.trellis/jobs/` so a reload keeps them.
+
+### Adopting a deck that lives only in Anki
+
+```bash
+trellis adopt leetcode --anki "LeetCode"        # 1: writes the seed prompt from the deck's inventory
+trellis accept proposals/leetcode.seed.json     # 2: the drafted skeleton
+trellis adopt leetcode --anki "LeetCode"        # 3: mirrors every note onto its leaf, tags it in Anki
+trellis --domain leetcode pull                  # its reviews now reach the loop
+```
+
+A deck another tool wrote straight into Anki — no markdown anywhere — can
+still stand on a skeleton. Each note becomes an **adopted card**: `anki:
+<noteId>` in its frontmatter, placed on the leaf whose id ends in the concept
+the note is tagged with (a question's concept-less notes borrow the concept
+their siblings carry; the rest fall back to the note's most specific topic),
+and tagged in Anki with the id and node Trellis knows it by. Adopted cards
+are read for their Traces and grown beside; `build` skips them and `align`
+leaves a note tagged `trellis::adopted` where its owner put it. Re-running
+step 3 refreshes the mirrors.
+
+### Content made somewhere else
+
+Domains are discovered from `skeleton/*.yaml`, so a folder of perfectly good
+cards written on another machine is invisible to every command. `trellis adopt`
+fixes that: it reads the `node:` lines the cards already carry, rebuilds the
+tree those dotted ids imply, and writes the skeleton that was latent in them.
+
+```bash
+trellis adopt                      # list vault folders no skeleton claims
+trellis adopt stripe               # write skeleton/stripe.yaml from their node ids
+trellis --domain stripe validate
+```
+
+Nothing is invented — every node is a prefix of an id some real card claimed,
+and titles come from the map notes when they exist. What it cannot recover is
+study order, because that is not in a pile of cards; children come out sorted
+and the file header says so. Reordering them, adding `summary:` lines and adding
+`requires:` edges are the three edits that turn a valid skeleton into a useful
+one.
+
+`validate` also now checks that cards are **self-contained** — no question
+opening on a pronoun with no antecedent, no pointing at another card, no answer
+so long it is testing three things. Those rules are narrow on purpose (each was
+checked against the whole collection and anything producing a false positive was
+dropped), and their real job is guarding this way in: imported cards never
+passed through the scaffold prompt that asks for atomicity.
+
 ## Adding a domain
 
 Drop `skeleton/<domain>.yaml` (same shape as `system-design.yaml`), put content
@@ -331,6 +571,9 @@ with cross-domain wikilinks, which work because `vault/` is one Obsidian vault.
 pip install -e .[dev]
 pytest -q
 ```
+
+Optional extras: `[clip]` for `trellis clip` (article extraction), `[ingest]`
+for pdf corpora (PyMuPDF). Epub, markdown, and web corpora need nothing extra.
 
 CI validates the skeleton, runs the tests, and uploads a fresh `.apkg` on every
 push.

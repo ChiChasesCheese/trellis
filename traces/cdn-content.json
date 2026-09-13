@@ -1,0 +1,885 @@
+{
+ "domain": "cdn-content",
+ "pulled_at": "2026-09-13T03:36:40+00:00",
+ "unmapped": 0,
+ "traces": {
+  "cache-eviction-admission": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787612880
+  },
+  "cache-eviction-byte-value": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787612905
+  },
+  "cache-eviction-lru-lfu": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 751,
+   "last_review": 1787612963
+  },
+  "cache-failure-bypass": {
+   "last_review": 1787603849
+  },
+  "cache-failure-negative": {
+   "last_review": 1787603849
+  },
+  "cache-failure-stale": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787656152
+  },
+  "cache-freshness-age": {
+   "last_review": 1787603849
+  },
+  "cache-freshness-no-cache": {
+   "last_review": 1787603849
+  },
+  "cache-freshness-s-maxage": {
+   "last_review": 1787603849
+  },
+  "cache-hierarchy-local-remote": {
+   "last_review": 1787603849
+  },
+  "cache-hierarchy-placement": {
+   "last_review": 1787603849
+  },
+  "cache-hierarchy-shield": {
+   "reps": 1,
+   "type": 1,
+   "due": 1787657502,
+   "last_review": 1787656809
+  },
+  "cache-invalidation-consistency": {
+   "last_review": 1787603849
+  },
+  "cache-invalidation-purge-scope": {
+   "last_review": 1787603849
+  },
+  "cache-invalidation-versioned": {
+   "reps": 1,
+   "type": 1,
+   "due": 1787657481,
+   "last_review": 1787656842
+  },
+  "cache-key-cookie-cardinality": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787655510
+  },
+  "cache-key-minimal-complete": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787719082
+  },
+  "cache-key-vary": {
+   "last_review": 1787603849
+  },
+  "cache-model-hit-ratio": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787655372
+  },
+  "cache-model-origin-execution": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 751,
+   "last_review": 1787655423
+  },
+  "cache-model-private-shared": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787611971
+  },
+  "cache-stampede-failure": {
+   "last_review": 1787603849
+  },
+  "cache-stampede-jitter": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787685161
+  },
+  "cache-stampede-singleflight": {
+   "last_review": 1787603849
+  },
+  "cache-validator-304": {
+   "last_review": 1787603849
+  },
+  "cache-validator-etag": {
+   "last_review": 1787603849
+  },
+  "cache-validator-stale": {
+   "last_review": 1787603849
+  },
+  "content-compression-choice": {
+   "last_review": 1787603849
+  },
+  "content-images-derived-key": {
+   "last_review": 1787603849
+  },
+  "content-images-publish-on-success": {
+   "last_review": 1787603849
+  },
+  "content-images-resource-limits": {
+   "last_review": 1787603849
+  },
+  "content-isr-failure-policy": {
+   "last_review": 1787603849
+  },
+  "content-isr-on-demand-invalidation": {
+   "reps": 1,
+   "type": 1,
+   "due": 1787685348,
+   "last_review": 1787684705
+  },
+  "content-isr-stale-revalidate": {
+   "last_review": 1787603849
+  },
+  "content-negotiation-encoding-layer": {
+   "last_review": 1787603849
+  },
+  "content-negotiation-server-choice": {
+   "reps": 1,
+   "type": 1,
+   "due": 1787685791,
+   "last_review": 1787685047
+  },
+  "content-negotiation-vary": {
+   "last_review": 1787603849
+  },
+  "content-ppr-boundary-placement": {
+   "last_review": 1787603849
+  },
+  "content-ppr-cache-contract": {
+   "reps": 1,
+   "type": 1,
+   "due": 1787685641,
+   "last_review": 1787684968
+  },
+  "content-ppr-stream-failure": {
+   "last_review": 1787603849
+  },
+  "content-range-compressed-bytes": {
+   "last_review": 1787603849
+  },
+  "content-range-conditional": {
+   "reps": 1,
+   "type": 1,
+   "due": 1787685464,
+   "last_review": 1787684787
+  },
+  "content-rendering-hydration-budget": {
+   "last_review": 1787603849
+  },
+  "content-rendering-mode-choice": {
+   "reps": 1,
+   "type": 1,
+   "due": 1787685473,
+   "last_review": 1787684846
+  },
+  "content-rendering-personalization-leak": {
+   "reps": 1,
+   "type": 1,
+   "due": 1787685629,
+   "last_review": 1787684902
+  },
+  "content-static-generation-fallback": {
+   "last_review": 1787603849
+  },
+  "content-static-generation-immutable-assets": {
+   "last_review": 1787603849
+  },
+  "content-static-generation-manifest-atomicity": {
+   "last_review": 1787603849
+  },
+  "content-versioning-cache-cleanup": {
+   "last_review": 1787603849
+  },
+  "content-versioning-deployment-id": {
+   "last_review": 1787603849
+  },
+  "content-versioning-rollback-pointer": {
+   "last_review": 1787603849
+  },
+  "delivery-aws-failure-boundary": {
+   "last_review": 1787603849
+  },
+  "delivery-aws-origin-access": {
+   "reps": 1,
+   "type": 1,
+   "due": 1787661014,
+   "last_review": 1787660296
+  },
+  "delivery-aws-transfer-cost": {
+   "reps": 1,
+   "type": 1,
+   "due": 1787661329,
+   "last_review": 1787660614
+  },
+  "delivery-canary-cohort": {
+   "last_review": 1787603849
+  },
+  "delivery-canary-ramp-guardrail": {
+   "last_review": 1787603849
+  },
+  "delivery-canary-significance": {
+   "last_review": 1787603849
+  },
+  "delivery-cicd-promote-artifact": {
+   "last_review": 1787603849
+  },
+  "delivery-cicd-release-evidence": {
+   "last_review": 1787603849
+  },
+  "delivery-cicd-reproducible": {
+   "last_review": 1787603849
+  },
+  "delivery-compatibility-expand-contract": {
+   "reps": 1,
+   "type": 1,
+   "due": 1787661172,
+   "last_review": 1787660532
+  },
+  "delivery-compatibility-unknown-config": {
+   "last_review": 1787603849
+  },
+  "delivery-compatibility-version-skew": {
+   "reps": 1,
+   "type": 1,
+   "due": 1787661176,
+   "last_review": 1787660470
+  },
+  "delivery-flags-kill-switch-scope": {
+   "last_review": 1787603849
+  },
+  "delivery-flags-lifecycle": {
+   "last_review": 1787603849
+  },
+  "delivery-flags-safe-default": {
+   "reps": 1,
+   "type": 1,
+   "due": 1787661549,
+   "last_review": 1787660802
+  },
+  "delivery-kubernetes-probe-choice": {
+   "last_review": 1787603849
+  },
+  "delivery-kubernetes-rollout-capacity": {
+   "last_review": 1787603849
+  },
+  "delivery-rollback-forward-or-back": {
+   "last_review": 1787603849
+  },
+  "delivery-rollback-prove-recovery": {
+   "reps": 1,
+   "type": 1,
+   "due": 1787661356,
+   "last_review": 1787660654
+  },
+  "delivery-rollback-state": {
+   "last_review": 1787603849
+  },
+  "delivery-shadow-capacity": {
+   "last_review": 1787603849
+  },
+  "delivery-shadow-divergence": {
+   "last_review": 1787603849
+  },
+  "delivery-shadow-side-effects": {
+   "last_review": 1787603849
+  },
+  "delivery-terraform-plan-state": {
+   "last_review": 1787603849
+  },
+  "dist-consistency-quorum-limit": {
+   "last_review": 1787603849
+  },
+  "dist-consistency-staleness-contract": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787681032
+  },
+  "dist-consistency-version-wins": {
+   "last_review": 1787603849
+  },
+  "dist-cross-region-active-mode": {
+   "last_review": 1787603849
+  },
+  "dist-cross-region-failover-capacity": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787681039
+  },
+  "dist-cross-region-invalidation": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787681095
+  },
+  "dist-object-storage-conditional-publish": {
+   "last_review": 1787603849
+  },
+  "dist-object-storage-key-layout": {
+   "last_review": 1787603849
+  },
+  "dist-object-storage-transfer-cost": {
+   "last_review": 1787603849
+  },
+  "dist-overload-bounded-queue": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787613648
+  },
+  "dist-overload-circuit-breaker": {
+   "reps": 3,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787680757
+  },
+  "dist-overload-degradation-order": {
+   "last_review": 1787603849
+  },
+  "dist-regional-cache-eviction-policy": {
+   "last_review": 1787603849
+  },
+  "dist-regional-cache-outage-bypass": {
+   "last_review": 1787603849
+  },
+  "dist-regional-cache-redis-vs-memcached": {
+   "last_review": 1787603849
+  },
+  "dist-retries-budget": {
+   "reps": 1,
+   "type": 1,
+   "due": 1787719222,
+   "last_review": 1787718494
+  },
+  "dist-retries-hedging": {
+   "last_review": 1787603849
+  },
+  "dist-retries-idempotency-key": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787718452
+  },
+  "dist-routing-affinity-tradeoff": {
+   "last_review": 1787603849
+  },
+  "dist-routing-consistent-hash": {
+   "last_review": 1787603849
+  },
+  "dist-routing-membership-version": {
+   "last_review": 1787603849
+  },
+  "dist-skew-detect-hot-key": {
+   "reps": 1,
+   "type": 1,
+   "due": 1787719249,
+   "last_review": 1787718607
+  },
+  "dist-skew-headroom-and-warming": {
+   "last_review": 1787603849
+  },
+  "dist-skew-replicate-hot-object": {
+   "last_review": 1787603849
+  },
+  "fnd-capacity-bandwidth": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787604954
+  },
+  "fnd-capacity-bottleneck": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787607029
+  },
+  "fnd-capacity-resource-model": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787607010
+  },
+  "fnd-concurrency-bounded-queue": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787609097
+  },
+  "fnd-concurrency-little-law": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787610823
+  },
+  "fnd-concurrency-parallelism": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787610794
+  },
+  "fnd-io-blocking": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787654180
+  },
+  "fnd-io-fd-exhaustion": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787654174
+  },
+  "fnd-io-zero-copy": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787654116
+  },
+  "fnd-perf-coordinated-omission": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787611405
+  },
+  "fnd-perf-percentiles": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787611422
+  },
+  "fnd-perf-throughput-tail": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787654097
+  },
+  "fnd-request-hit-miss": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787610836
+  },
+  "fnd-request-latency-budget": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787653654
+  },
+  "fnd-request-trace": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787653774
+  },
+  "net-http-conditional-status": {
+   "last_review": 1787603849
+  },
+  "net-http-representation": {
+   "last_review": 1787603849
+  },
+  "net-http-safe-idempotent": {
+   "last_review": 1787603849
+  },
+  "net-proxy-forwarded-trust": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787680159
+  },
+  "net-proxy-hop-headers": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787718779
+  },
+  "net-proxy-upstream-selection": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787718831
+  },
+  "net-setup-diagnosis": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787654383
+  },
+  "net-setup-reuse": {
+   "last_review": 1787603849
+  },
+  "net-setup-rtt-budget": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787680219
+  },
+  "net-stream-backpressure": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787680430
+  },
+  "net-stream-buffering": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787680613
+  },
+  "net-stream-cancellation": {
+   "last_review": 1787603849
+  },
+  "net-version-connection-scope": {
+   "last_review": 1787603849
+  },
+  "net-version-hol": {
+   "last_review": 1787603849
+  },
+  "net-version-selection": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787718789
+  },
+  "reliability-alerting-dashboard-decision": {
+   "last_review": 1787603849
+  },
+  "reliability-alerting-hit-ratio-page": {
+   "last_review": 1787603849
+  },
+  "reliability-alerting-multiwindow-burn": {
+   "last_review": 1787603849
+  },
+  "reliability-incidents-command-roles": {
+   "last_review": 1787603849
+  },
+  "reliability-incidents-first-mitigation": {
+   "last_review": 1787603849
+  },
+  "reliability-incidents-postmortem-action": {
+   "last_review": 1787603849
+  },
+  "reliability-load-cache-scenarios": {
+   "last_review": 1787603849
+  },
+  "reliability-load-fault-success": {
+   "last_review": 1787603849
+  },
+  "reliability-load-open-model": {
+   "last_review": 1787603849
+  },
+  "reliability-logging-redaction-boundary": {
+   "last_review": 1787603849
+  },
+  "reliability-logging-request-event": {
+   "last_review": 1787603849
+  },
+  "reliability-logging-sampling-evidence": {
+   "last_review": 1787603849
+  },
+  "reliability-metrics-cache-ratio-denominator": {
+   "last_review": 1787603849
+  },
+  "reliability-metrics-cardinality-budget": {
+   "last_review": 1787603849
+  },
+  "reliability-metrics-histogram-aggregation": {
+   "last_review": 1787603849
+  },
+  "reliability-slos-error-budget-release": {
+   "last_review": 1787603849
+  },
+  "reliability-slos-latency-segmentation": {
+   "last_review": 1787603849
+  },
+  "reliability-slos-user-centered-sli": {
+   "last_review": 1787603849
+  },
+  "reliability-testing-cache-state-matrix": {
+   "last_review": 1787603849
+  },
+  "reliability-testing-production-fixture": {
+   "last_review": 1787603849
+  },
+  "reliability-testing-real-protocol": {
+   "last_review": 1787603849
+  },
+  "reliability-tracing-baggage-privacy": {
+   "last_review": 1787603849
+  },
+  "reliability-tracing-cache-hit-span": {
+   "last_review": 1787603849
+  },
+  "reliability-tracing-tail-sampling": {
+   "last_review": 1787603849
+  },
+  "runtime-go-concurrency-bounded-fanout": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787657145
+  },
+  "runtime-go-concurrency-channel-ownership": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787613589
+  },
+  "runtime-go-concurrency-mutex-or-channel": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787698763
+  },
+  "runtime-go-http-error-after-headers": {
+   "last_review": 1787603849
+  },
+  "runtime-go-http-reverse-proxy-boundary": {
+   "last_review": 1787603849
+  },
+  "runtime-go-http-transport-reuse": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787699296
+  },
+  "runtime-go-lifecycle-deadline-budget": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787686799
+  },
+  "runtime-go-lifecycle-graceful-shutdown": {
+   "last_review": 1787603849
+  },
+  "runtime-go-lifecycle-timeout-layers": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787718231
+  },
+  "runtime-go-quality-benchmark-allocation": {
+   "last_review": 1787603849
+  },
+  "runtime-go-quality-pprof-diagnosis": {
+   "last_review": 1787603849
+  },
+  "runtime-go-quality-race-vs-load": {
+   "last_review": 1787603849
+  },
+  "runtime-node-event-loop-abort": {
+   "last_review": 1787603849
+  },
+  "runtime-node-event-loop-cpu-block": {
+   "last_review": 1787603849
+  },
+  "runtime-node-event-loop-worker-pool": {
+   "last_review": 1787603849
+  },
+  "runtime-node-streams-pipeline-errors": {
+   "last_review": 1787603849
+  },
+  "runtime-node-streams-respect-backpressure": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787699468
+  },
+  "runtime-node-streams-type-boundary": {
+   "last_review": 1787603849
+  },
+  "runtime-openresty-nonblocking-io": {
+   "last_review": 1787603849
+  },
+  "runtime-openresty-request-phase": {
+   "last_review": 1787603849
+  },
+  "runtime-openresty-shared-dict": {
+   "last_review": 1787603849
+  },
+  "runtime-polyglot-contract-first": {
+   "last_review": 1787603849
+  },
+  "runtime-polyglot-error-vocabulary": {
+   "last_review": 1787603849
+  },
+  "runtime-polyglot-hot-path-placement": {
+   "reps": 1,
+   "type": 1,
+   "due": 1787719053,
+   "last_review": 1787718343
+  },
+  "security-abuse-image-bomb": {
+   "reps": 1,
+   "type": 1,
+   "due": 1787658564,
+   "last_review": 1787657958
+  },
+  "security-abuse-key-amplification": {
+   "last_review": 1787603849
+  },
+  "security-abuse-layered-limits": {
+   "last_review": 1787603849
+  },
+  "security-economics-attribution": {
+   "last_review": 1787603849
+  },
+  "security-economics-hit-egress": {
+   "last_review": 1787603849
+  },
+  "security-economics-unit-cost": {
+   "last_review": 1787603849
+  },
+  "security-isolation-auth-before-cache": {
+   "last_review": 1787603849
+  },
+  "security-isolation-invalidation-scope": {
+   "last_review": 1787603849
+  },
+  "security-isolation-private-response": {
+   "last_review": 1787603849
+  },
+  "security-optimization-compression": {
+   "last_review": 1787603849
+  },
+  "security-optimization-hit-value": {
+   "last_review": 1787603849
+  },
+  "security-optimization-observability-cost": {
+   "last_review": 1787603849
+  },
+  "security-poisoning-cache-deception": {
+   "last_review": 1787603849
+  },
+  "security-poisoning-normalization": {
+   "last_review": 1787603849
+  },
+  "security-poisoning-unkeyed-input": {
+   "last_review": 1787603849
+  },
+  "security-request-integrity-hop-headers": {
+   "last_review": 1787603849
+  },
+  "security-request-integrity-message-length": {
+   "last_review": 1787603849
+  },
+  "security-request-integrity-trusted-proxy": {
+   "last_review": 1787603849
+  },
+  "security-signed-cache-scope": {
+   "last_review": 1787603849
+  },
+  "security-signed-canonical-input": {
+   "last_review": 1787603849
+  },
+  "security-signed-key-rotation": {
+   "last_review": 1787603849
+  }
+ }
+}

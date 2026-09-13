@@ -72,6 +72,12 @@ A generated note mirroring one node, listing its prerequisites, children, cards,
 readings, and drills. Everything outside its managed block is the reader's own.
 _Avoid_: index note, MOC, hub
 
+**Feed**:
+A deck built to be reviewed rather than authored: one stream across every
+Domain, ordered so that consecutive cards come from different subjects. The
+surface for spare minutes, where the Brief is the surface for deciding.
+_Avoid_: mix, shuffle, stream, playlist, feed deck
+
 **Go deeper**:
 The footer on a built card carrying its node's readings — as `obsidian://` links
 when the reading has been clipped, and as web links otherwise.
@@ -89,6 +95,93 @@ The share of cards that have a road onward — an inline link, or a reading
 inherited from their node or its ancestors. Tracked because a card with no way
 deeper is a gap in the index.
 _Avoid_: link rate, source coverage
+
+**Card coverage**:
+The share of leaves carrying at least one card. An uncovered leaf offers
+nothing to review, so nothing can ever be learned about how well it is known —
+which is what separates it from a [Weakness], a leaf whose cards exist and
+fail.
+_Avoid_: gap, completeness, fill rate
+
+### The loop
+
+Everything above flows one way: a skeleton decides, content hangs off it, a
+deck is built. These are the terms for the way back — what reviewing a card
+teaches the trellis about itself.
+
+**Trace**:
+One card's review history as Anki recorded it: how many times it was answered,
+how often it lapsed, and how it is scheduled now. A Trace is pulled, never
+authored — it is the only thing in the vault we do not write.
+_Avoid_: stats, history, telemetry, metrics
+
+**Hold**:
+How well a node is retained, computed from the Traces beneath it and rolled up
+the skeleton. A leaf holds or it does not; a branch's hold is its leaves'.
+Always measured, never declared.
+_Avoid_: retention, mastery, score, strength, level
+
+**Weakness**:
+A leaf carrying enough Traces to judge, whose Hold is below target. A Weakness
+wants practice — a drill, a reading, more cards. Distinct from an uncovered
+leaf, which has nothing to fail and wants writing instead.
+_Avoid_: gap, weak spot, problem area, struggle
+
+**Bearing**:
+How much of the skeleton rests on a node — the nodes that reach it through
+`requires`, directly or transitively. A load-bearing Weakness is the first
+thing worth repairing, because everything standing on it is repaired with it.
+_Avoid_: importance, priority, centrality, leverage, weight
+
+**Sealed**:
+A leaf whose prerequisites do not yet Hold. Its cards exist and are withheld,
+so nothing new is ever introduced on ground that has not taken. Sealing is what
+makes the study curve smooth rather than merely ordered.
+_Avoid_: locked, blocked, gated, not ready
+
+**Brief**:
+The one generated note that says what to do next: the load-bearing Weaknesses,
+the leaves worth writing for, and a single opening move. Derived from Traces on
+every regeneration, and short enough to read standing up.
+_Avoid_: dashboard, report, summary, digest, progress
+
+**Adopted card**:
+A card whose note lives in Anki and was authored by another tool. Trellis holds
+a mirror of it — placed on a leaf, read for its Trace, grown beside — and never
+builds, pushes or moves it; the other tool keeps owning the note.
+_Avoid_: imported card, foreign card, external card, mirror (as a noun)
+
+**Guidance**:
+Free text the learner attaches to a grow request — what to emphasise, which
+angle to take, what context to bring — appended to the prompt as it is.
+_Avoid_: instruction, hint, context, prompt
+
+**Runner**:
+What answers a prompt: Claude Code on this machine, or a person pasting JSON.
+Trellis never calls a model directly; it hands a prompt to a Runner and
+validates what comes back.
+_Avoid_: LLM, model, generator, agent
+
+**Focus**:
+A leaf the learner has chosen to study now: its cards are made due today, its
+weak spots are grown first. A Focus is an act on the collection, not a state
+the vault records.
+_Avoid_: priority, pin, spotlight, filter
+
+**Workbench**:
+The local page that shows the loop and lets the learner act on it — see every
+domain's Hold at once, pull, read the Brief, grow with Guidance, Focus, open a
+leaf in Obsidian or Anki. It does only what the command line does.
+_Avoid_: dashboard, app, UI, console, frontend
+
+**Grow**:
+Writing new cards where the loop says it pays: for a Weakness, cards that reach
+the mechanism from another angle than the ones that slipped; for an uncovered
+leaf, its first cards. Grounded in what the vault already holds for the leaf —
+a corpus's sections or a clipped reading — and never anywhere the loop did not
+point. A grown card is tagged so the next Brief can say whether the repair
+took.
+_Avoid_: generate, populate, backfill, fill in, repair (for the act of writing)
 
 ### Ingesting a codebase
 
@@ -111,10 +204,10 @@ is only compared against our own language.
 _Avoid_: category, type, material
 
 **Triage**:
-Deciding, artefact by artefact, which lens and which leaf a piece of a codebase
-belongs to and what it should become. Produces a proposal for review, never
-writes into the vault directly.
-_Avoid_: ingestion, import, classification
+Deciding, artefact by artefact or section by section, which lens and which
+leaf a piece of a codebase or a corpus belongs to and what it should become.
+Produces a proposal for review, never writes into the vault directly.
+_Avoid_: import, classification
 
 **Case**:
 A decision taken from a codebase and rewritten in a lens's vocabulary, frozen at
@@ -124,7 +217,62 @@ artefact and never restates it as a card.
 _Avoid_: example, sample, exhibit, snippet
 
 **Gap**:
-Either an artefact triage could not place — which is a proposal to grow the
-skeleton, not an error — or a leaf carrying no cards. Gaps are the point of
-mapping a codebase onto a skeleton authored independently of it.
+An artefact or section triage could not place on any leaf — a proposal to
+grow the skeleton, not an error. Gaps are the point of mapping a codebase or
+a corpus onto a skeleton authored independently of it. A leaf that merely has
+no cards is not a Gap; that is [card coverage].
 _Avoid_: miss, unmatched, hole
+
+### Digesting a corpus
+
+**Corpus**:
+One body of material registered for digestion — a book as an epub, a pdf, or
+freely published chapters; a blog series; a course. Declared by one
+`corpora/<id>.yaml`. Its license decides whether its text may be committed.
+_Avoid_: book, material, source, text
+
+**Outline**:
+A corpus's own hierarchy of sections, as its author organised it. It is never
+the skeleton and never becomes one by copying; the two are related only
+through triage.
+_Avoid_: table of contents, ToC, structure
+
+**Section**:
+The unit a corpus is split into — a chapter, or a heading below it, as the
+outline defines. What triage places.
+_Avoid_: chapter, part, page range, chunk
+
+**Ingest**:
+Turning a registered corpus into archived sections plus its outline,
+resumable where fetching is involved.
+_Avoid_: download, extract, parse
+
+**Seed**:
+Drafting a skeleton for a subject that has none from a canonical corpus's
+outline, then reviewing the draft as a map of the field. The corpus is
+triaged onto the result like any other; what it never reaches is listed, not
+lost.
+_Avoid_: derive, generate, bootstrap
+
+**Digest**:
+Writing cards leaf by leaf from the sections triaged onto that leaf. Produces
+prompts and validates answers; never writes into the vault on its own. A leaf
+is done when cards from the corpus exist on it — nothing else records it.
+_Avoid_: generation, card writing
+
+**Provenance**:
+The corpus, and where possible the section, a card or reading was written
+from. Carried in the note's frontmatter and shown as an Anki tag.
+_Avoid_: origin, attribution, citation
+
+**Corpus view**:
+The subset of a domain's content that came from one corpus — a filtered build
+and a generated note. The same cards with the same identities, never a second
+deck.
+_Avoid_: book deck, corpus deck
+
+**Language**:
+The language a domain is written in. A domain has one; a card is in it, and
+may carry an appended translation. There is no "original" language a domain
+must be written in first.
+_Avoid_: locale, translation (for the primary text)

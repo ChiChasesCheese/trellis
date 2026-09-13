@@ -10,6 +10,10 @@
 - [[python-bisect|bisect — array bisection algorithm]]
 - [[python-sorting-howto|Sorting Techniques (Python HOWTO)]]
 
+## Drills
+- [[oa-q36-time-kv-map|Drill: a time-based key-value store with history and TTL]]
+- [[oa-q40-query-words-within-k|Drill: proximity search over word positions, then a minimal window and document ranking]]
+
 ## Cards (5)
 - [[cc-toolbox-sorted-bisect-left-right]]
 - [[cc-toolbox-sorted-insort-cost]]

@@ -7,6 +7,9 @@
 ## Readings
 - [[python-collections|collections — container datatypes]]
 
+## Drills
+- [[oa-qa11-lc2768-number-of-black-blocks|Drill: count sparse-grid blocks by their black-cell count, without building the grid]]
+
 ## Cards (5)
 - [[cc-toolbox-hash-counter]]
 - [[cc-toolbox-hash-defaultdict-read-creates]]

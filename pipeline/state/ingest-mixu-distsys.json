@@ -1,0 +1,26 @@
+{
+  "corpus": "mixu-distsys",
+  "chapters": {
+    "https://book.mixu.net/distsys/abstractions.html": {
+      "file": "sources/archive/mixu-distsys/02-abstractions.md",
+      "status": "done"
+    },
+    "https://book.mixu.net/distsys/eventual.html": {
+      "file": "sources/archive/mixu-distsys/05-eventual.md",
+      "status": "done"
+    },
+    "https://book.mixu.net/distsys/intro.html": {
+      "file": "sources/archive/mixu-distsys/01-intro.md",
+      "status": "done"
+    },
+    "https://book.mixu.net/distsys/replication.html": {
+      "file": "sources/archive/mixu-distsys/04-replication.md",
+      "status": "done"
+    },
+    "https://book.mixu.net/distsys/time.html": {
+      "file": "sources/archive/mixu-distsys/03-time.md",
+      "status": "done"
+    }
+  },
+  "updated": "2026-08-30T03:28:03+00:00"
+}

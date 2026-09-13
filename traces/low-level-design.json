@@ -1,0 +1,422 @@
+{
+ "domain": "low-level-design",
+ "pulled_at": "2026-09-13T03:36:41+00:00",
+ "unmapped": 0,
+ "traces": {
+  "concurrency-bounded-queue-invariants": {
+   "last_review": 1786778026
+  },
+  "concurrency-cas-aba": {
+   "last_review": 1786778026
+  },
+  "concurrency-check-then-act": {
+   "last_review": 1786778026
+  },
+  "concurrency-condvar-wait-loop": {
+   "last_review": 1786778026
+  },
+  "concurrency-data-race-definition": {
+   "last_review": 1786778026
+  },
+  "concurrency-deadlock-detect-vs-prevent": {
+   "last_review": 1787388126
+  },
+  "concurrency-deadlock-four-conditions": {
+   "last_review": 1786778026
+  },
+  "concurrency-double-checked-locking": {
+   "last_review": 1786778026
+  },
+  "concurrency-happens-before-edges": {
+   "last_review": 1786778026
+  },
+  "concurrency-livelock-vs-starvation": {
+   "last_review": 1786778026
+  },
+  "concurrency-lock-free-trap": {
+   "last_review": 1787388126
+  },
+  "concurrency-lock-ordering-transfer": {
+   "last_review": 1786778026
+  },
+  "concurrency-mutex-vs-semaphore": {
+   "last_review": 1786778026
+  },
+  "concurrency-rwlock-when": {
+   "last_review": 1786778026
+  },
+  "concurrency-single-condvar-lost-signal": {
+   "last_review": 1786778026
+  },
+  "concurrency-thread-pool-backpressure": {
+   "last_review": 1786778026
+  },
+  "concurrency-visibility-stale-flag": {
+   "last_review": 1786778026
+  },
+  "method-cross-object-invariant": {
+   "reps": 1,
+   "type": 1,
+   "due": 1787440192,
+   "last_review": 1787439475
+  },
+  "method-design-pitch-before-coding": {
+   "last_review": 1787388126
+  },
+  "method-extension-live-change": {
+   "reps": 1,
+   "type": 1,
+   "due": 1787439877,
+   "last_review": 1787439240
+  },
+  "method-extension-probe": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 749,
+   "last_review": 1787439121
+  },
+  "method-final-twenty-minutes": {
+   "last_review": 1787388126
+  },
+  "method-invariant-ownership": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787439187
+  },
+  "method-noun-verb-extraction": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 751,
+   "last_review": 1787439358
+  },
+  "method-rubric-dimensions": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 749,
+   "last_review": 1787439147
+  },
+  "method-running-out-of-time": {
+   "last_review": 1786778026
+  },
+  "method-scope-first-move": {
+   "last_review": 1786778026
+  },
+  "method-self-verification": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 750,
+   "last_review": 1787363870
+  },
+  "method-sequence-before-classes": {
+   "reps": 1,
+   "type": 1,
+   "due": 1787440041,
+   "last_review": 1787439430
+  },
+  "method-splitting-one-entity": {
+   "reps": 1,
+   "type": 1,
+   "due": 1787440202,
+   "last_review": 1787439585
+  },
+  "method-testability-signals": {
+   "reps": 1,
+   "type": 1,
+   "due": 1787439998,
+   "last_review": 1787439286
+  },
+  "method-time-budget": {
+   "last_review": 1786778026
+  },
+  "oop-abstract-partial-implementation-cost": {
+   "last_review": 1787388126
+  },
+  "oop-association-vs-dependency": {
+   "last_review": 1786778026
+  },
+  "oop-bidirectional-association": {
+   "last_review": 1787388126
+  },
+  "oop-cascade-delete-decision": {
+   "last_review": 1787388126
+  },
+  "oop-composition-vs-aggregation": {
+   "last_review": 1786778026
+  },
+  "oop-default-methods": {
+   "last_review": 1786778026
+  },
+  "oop-encapsulation-anemic-model": {
+   "last_review": 1786778026
+  },
+  "oop-entity-vs-value-object": {
+   "last_review": 1786778026
+  },
+  "oop-enum-with-behavior": {
+   "last_review": 1786778026
+  },
+  "oop-equals-hashcode-contract": {
+   "last_review": 1787388126
+  },
+  "oop-getter-collection-leak": {
+   "last_review": 1787388126
+  },
+  "oop-immutability-payoff": {
+   "last_review": 1786778026
+  },
+  "oop-inheritance-price": {
+   "last_review": 1786778026
+  },
+  "oop-interface-vs-abstract-class": {
+   "last_review": 1786778026
+  },
+  "oop-interface-width-by-client": {
+   "last_review": 1787388126
+  },
+  "oop-polymorphism-vs-switch": {
+   "last_review": 1786778026
+  },
+  "oop-primitive-obsession-fix": {
+   "last_review": 1787388126
+  },
+  "oop-program-to-interface-scope": {
+   "last_review": 1786778026
+  },
+  "oop-self-use-override-trap": {
+   "last_review": 1787388126
+  },
+  "oop-uml-arrows": {
+   "last_review": 1786778026
+  },
+  "patterns-adapter-vs-facade": {
+   "last_review": 1786778026
+  },
+  "patterns-bridge-when": {
+   "last_review": 1786778026
+  },
+  "patterns-builder-when": {
+   "last_review": 1786778026
+  },
+  "patterns-chain-of-responsibility": {
+   "last_review": 1786778026
+  },
+  "patterns-command-when": {
+   "last_review": 1786778026
+  },
+  "patterns-composite-when": {
+   "last_review": 1786778026
+  },
+  "patterns-creational-cues": {
+   "last_review": 1786778026
+  },
+  "patterns-decorator-vs-proxy": {
+   "last_review": 1786778026
+  },
+  "patterns-extensibility-followup": {
+   "last_review": 1786778026
+  },
+  "patterns-factory-method-vs-abstract-factory": {
+   "last_review": 1786778026
+  },
+  "patterns-flyweight-when": {
+   "last_review": 1786778026
+  },
+  "patterns-memento-vs-command-undo": {
+   "last_review": 1786778026
+  },
+  "patterns-misuse-traps": {
+   "last_review": 1786778026
+  },
+  "patterns-observer-mediator-pubsub": {
+   "last_review": 1786778026
+  },
+  "patterns-prototype-when": {
+   "last_review": 1786778026
+  },
+  "patterns-proxy-kinds": {
+   "last_review": 1786778026
+  },
+  "patterns-selection-cues": {
+   "last_review": 1786778026
+  },
+  "patterns-simple-factory-enough": {
+   "last_review": 1786778026
+  },
+  "patterns-singleton-costs": {
+   "last_review": 1786778026
+  },
+  "patterns-strategy-vs-state": {
+   "last_review": 1786778026
+  },
+  "patterns-template-method-vs-strategy": {
+   "last_review": 1786778026
+  },
+  "patterns-visitor-tradeoff": {
+   "last_review": 1786778026
+  },
+  "patterns-when-to-refuse": {
+   "last_review": 1786778026
+  },
+  "principles-cohesion-signal": {
+   "last_review": 1786778026
+  },
+  "principles-delegation-boilerplate": {
+   "last_review": 1787388126
+  },
+  "principles-demeter-train-wreck": {
+   "last_review": 1786778026
+  },
+  "principles-di-seam": {
+   "last_review": 1786778026
+  },
+  "principles-dip-trigger": {
+   "last_review": 1786778026
+  },
+  "principles-dry-limit": {
+   "last_review": 1786778026
+  },
+  "principles-hierarchy-explosion": {
+   "last_review": 1786778026
+  },
+  "principles-isp-trigger": {
+   "last_review": 1786778026
+  },
+  "principles-lsp-signals": {
+   "last_review": 1786778026
+  },
+  "principles-mixins-vs-delegation": {
+   "last_review": 1787388126
+  },
+  "principles-ocp-trigger": {
+   "last_review": 1786778026
+  },
+  "principles-shallow-abstraction-test": {
+   "last_review": 1787388126
+  },
+  "principles-solid-acronym": {
+   "last_review": 1786778026
+  },
+  "principles-speculative-generality": {
+   "last_review": 1786778026
+  },
+  "principles-srp-trigger": {
+   "last_review": 1786778026
+  },
+  "principles-stable-dependencies": {
+   "last_review": 1787388126
+  },
+  "principles-stack-extends-arraylist": {
+   "last_review": 1786778026
+  },
+  "principles-temporal-coupling": {
+   "last_review": 1787388126
+  },
+  "principles-unwinding-wrong-abstraction": {
+   "last_review": 1787388126
+  },
+  "principles-when-inherit": {
+   "last_review": 1786778026
+  },
+  "principles-yagni-in-round": {
+   "last_review": 1786778026
+  },
+  "quality-bloaters-refactorings": {
+   "last_review": 1786778026
+  },
+  "quality-constructor-injection": {
+   "last_review": 1786778026
+  },
+  "quality-couplers-refactorings": {
+   "last_review": 1786778026
+  },
+  "quality-divergent-vs-shotgun": {
+   "last_review": 1786778026
+  },
+  "quality-exception-design": {
+   "last_review": 1786778026
+  },
+  "quality-exceptions-vs-results": {
+   "last_review": 1786778026
+  },
+  "quality-extract-method-triggers": {
+   "last_review": 1786778026
+  },
+  "quality-global-state-tests": {
+   "last_review": 1786778026
+  },
+  "quality-guard-clauses": {
+   "last_review": 1786778026
+  },
+  "quality-null-returns": {
+   "last_review": 1786778026
+  },
+  "quality-parameter-object": {
+   "last_review": 1786778026
+  },
+  "quality-replace-conditional-polymorphism": {
+   "last_review": 1786778026
+  },
+  "quality-seams-di": {
+   "last_review": 1786778026
+  },
+  "quality-smell-families": {
+   "last_review": 1786778026
+  },
+  "quality-test-doubles": {
+   "last_review": 1786778026
+  },
+  "quality-validate-boundary": {
+   "last_review": 1786778026
+  },
+  "structure-api-builder-required-fields": {
+   "last_review": 1786778026
+  },
+  "structure-api-evolving-without-breaking": {
+   "last_review": 1786778026
+  },
+  "structure-api-leaking-internals": {
+   "last_review": 1786778026
+  },
+  "structure-api-rich-return-contract": {
+   "last_review": 1786778026
+  },
+  "structure-state-entry-exit-actions": {
+   "last_review": 1787388126
+  },
+  "structure-state-enum-vs-boolean-soup": {
+   "last_review": 1786778026
+  },
+  "structure-state-guards-and-illegal-events": {
+   "last_review": 1787388126
+  },
+  "structure-state-table-vs-state-pattern": {
+   "last_review": 1786778026
+  },
+  "structure-state-transition-table": {
+   "last_review": 1786778026
+  },
+  "structure-storage-chm-compound-ops": {
+   "last_review": 1786778026
+  },
+  "structure-storage-id-generation": {
+   "last_review": 1786778026
+  },
+  "structure-storage-repository-boundary": {
+   "last_review": 1786778026
+  },
+  "structure-storage-secondary-index": {
+   "last_review": 1786778026
+  }
+ }
+}

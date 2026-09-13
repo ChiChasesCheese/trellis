@@ -6,6 +6,9 @@ Kahn's algorithm, detecting a cycle by shortfall, longest path as earliest-finis
 
 **Requires:** [[algorithms.graph-traversal|BFS, DFS & Components]]
 
+## Drills
+- [[oa-qa09-lc2050-parallel-courses-iii|Drill: longest path through a weighted job DAG, then its critical path, then k workers]]
+
 ## Cards (5)
 - [[cc-algorithms-topological-critical-path]]
 - [[cc-algorithms-topological-cycle-shortfall]]

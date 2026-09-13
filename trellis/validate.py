@@ -67,11 +67,36 @@ def validate(
                 "(allowed, but prefer leaves)"
             )
 
+    from .cards import leans_on_source
+    leaning = [(c.id, leans_on_source(c.question + " " + c.answer + " " + c.text))
+               for c in cards]
+    leaning = [(cid, phrase) for cid, phrase in leaning if phrase]
+    if leaning:
+        shown = ", ".join(f"{cid} ({phrase!r})" for cid, phrase in leaning[:6])
+        report.warnings.append(
+            f"{len(leaning)} card(s) lean on their source — a reviewer has no book "
+            f"open, so state the advice as a fact: {shown}"
+            + (" …" if len(leaning) > 6 else ""))
+
     covered = {c.node for c in cards}
     bare = [n.id for n in skeleton.leaves() if n.id not in covered]
     if bare:
         report.warnings.append(
             f"{len(bare)} leaf node(s) have no cards yet: " + ", ".join(bare)
+        )
+
+    # Self-containment. A card is read alone, on a phone, months later —
+    # and cards written on another machine and dropped into the vault
+    # never passed through the scaffold prompt that asks for that.
+    from .cards import not_self_contained
+    leaning = [(c, problems) for c in cards
+               if (problems := not_self_contained(c))]
+    if leaning:
+        report.warnings.append(
+            f"{len(leaning)} card(s) lean on context they do not carry: "
+            + "; ".join(f"{c.path.name if c.path else c.id} — {problems[0]}"
+                        for c, problems in leaning[:3])
+            + (f"; and {len(leaning) - 3} more" if len(leaning) > 3 else "")
         )
 
     if cards and clippings is not None:

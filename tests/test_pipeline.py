@@ -243,13 +243,23 @@ def test_real_repo_wikilinks_resolve():
                 items, _ = loader(vault / sub)
                 targets |= {getattr(i, "id", None) or i.link_target for i in items}
     link_re = re.compile(r"\[\[([^\]|#]+)")
-    for path in (REPO / "vault").rglob("*.md"):
-        # map notes and the study path are generated; clippings are other
-        # people's pages, whose links are theirs and not ours to resolve
-        if ({"map", CLIPPINGS_DIRNAME} & set(path.parts)
-                or path.name == "Study Path.md"):
+    # Only the content the tool owns is checked: a domain's cards, readings,
+    # drills and cases. Map notes, corpus notes and the study path are
+    # generated; clippings are other people's pages; and a domain folder
+    # may also hold plain notes (handouts, problem archives) whose `[[…]]`
+    # is code, not a link.
+    content_dirs = [
+        REPO / "vault" / load_skeleton(f).domain / sub
+        for f in (REPO / "skeleton").glob("*.yaml")
+        for sub in ("cards", "readings", "drills", "cases")
+    ]
+    for path in (p for d in content_dirs if d.exists() for p in d.rglob("*.md")):
+        text = path.read_text(encoding="utf-8")
+        # an adopted card mirrors another tool's note: its text is theirs,
+        # and `[[0]*n` in a code block is a list, not a link
+        if "\nanki: " in text.split("---", 2)[1] if text.startswith("---") else False:
             continue
-        for target in link_re.findall(path.read_text(encoding="utf-8")):
+        for target in link_re.findall(text):
             target = target.strip()
             # embeds of clipped articles are expected to be missing here:
             # clippings are gitignored, so a clean checkout has none
@@ -281,7 +291,8 @@ def test_every_deck_link_resolves_to_exactly_one_note(tmp_path):
             skeleton, cards, tmp_path / f"{skeleton.domain}.apkg", readings,
             vault=vault_name(vault_root),
         )
-        assert result["notes"] == len(cards)
+        # adopted cards mirror notes another tool owns and are never built
+        assert result["notes"] == sum(1 for c in cards if not c.adopted)
 
         with zipfile.ZipFile(tmp_path / f"{skeleton.domain}.apkg") as z:
             (tmp_path / "c.db").write_bytes(z.read("collection.anki2"))

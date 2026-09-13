@@ -1,0 +1,1577 @@
+{
+ "domain": "system-design",
+ "pulled_at": "2026-09-13T03:36:42+00:00",
+ "unmapped": 0,
+ "traces": {
+  "ai-ann-tradeoff": {
+   "last_review": 1787481076
+  },
+  "ai-chunking-failure-modes": {
+   "last_review": 1786778027
+  },
+  "ai-context-window-budget": {
+   "last_review": 1786778027
+  },
+  "ai-continuous-batching": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787481076
+  },
+  "ai-corpus-freshness": {
+   "last_review": 1787481076
+  },
+  "ai-embeddings-as-coordinates": {
+   "last_review": 1786778027
+  },
+  "ai-eval-set-vs-ab": {
+   "last_review": 1786778027
+  },
+  "ai-filtered-vector-search": {
+   "last_review": 1787481076
+  },
+  "ai-generation-loop": {
+   "last_review": 1786778027
+  },
+  "ai-gpu-utilization-economics": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 750,
+   "last_review": 1787481076
+  },
+  "ai-grounding-citations": {
+   "last_review": 1786778027
+  },
+  "ai-guardrails-validation": {
+   "last_review": 1786778027
+  },
+  "ai-hnsw-vs-ivf": {
+   "last_review": 1787481076
+  },
+  "ai-hybrid-retrieval": {
+   "last_review": 1787481076
+  },
+  "ai-index-maintenance": {
+   "last_review": 1787481076
+  },
+  "ai-inference-cost-levers": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 751,
+   "last_review": 1787481076
+  },
+  "ai-kv-cache": {
+   "last_review": 1787481076
+  },
+  "ai-llm-judge-biases": {
+   "last_review": 1786778027
+  },
+  "ai-pipeline-tracing": {
+   "last_review": 1786778027
+  },
+  "ai-prefill-vs-decode": {
+   "last_review": 1787481076
+  },
+  "ai-prompt-regression-testing": {
+   "last_review": 1786778027
+  },
+  "ai-quantization-tradeoffs": {
+   "last_review": 1787481076
+  },
+  "ai-rag-two-pipelines": {
+   "last_review": 1786778027
+  },
+  "ai-rag-vs-finetune-vs-longcontext": {
+   "last_review": 1786778027
+  },
+  "ai-retrieval-eval": {
+   "last_review": 1787481076
+  },
+  "ai-retrieve-then-rerank": {
+   "last_review": 1786778027
+  },
+  "ai-speculative-decoding": {
+   "last_review": 1787481076
+  },
+  "ai-temperature-sampling": {
+   "last_review": 1786778027
+  },
+  "ai-tokens-as-units": {
+   "last_review": 1786778027
+  },
+  "analytics-backfill-cdc": {
+   "last_review": 1786776138
+  },
+  "analytics-batch-vs-stream": {
+   "last_review": 1786776138
+  },
+  "analytics-cache-as-derived": {
+   "last_review": 1786776138
+  },
+  "analytics-column-store-writes": {
+   "last_review": 1786776138
+  },
+  "analytics-columnar-compression": {
+   "last_review": 1786776138
+  },
+  "analytics-data-cubes": {
+   "last_review": 1788065074
+  },
+  "analytics-data-locality-shift": {
+   "last_review": 1788065074
+  },
+  "analytics-derived-data-framing": {
+   "last_review": 1786776138
+  },
+  "analytics-derived-view-versioning": {
+   "last_review": 1786776138
+  },
+  "analytics-idempotent-reruns": {
+   "last_review": 1786776138
+  },
+  "analytics-intermediate-state-pipelining": {
+   "last_review": 1788065074
+  },
+  "analytics-join-strategies": {
+   "last_review": 1786776138
+  },
+  "analytics-lake-vs-warehouse-vs-lakehouse": {
+   "last_review": 1786776138
+  },
+  "analytics-lakehouse-compaction": {
+   "last_review": 1786776138
+  },
+  "analytics-lakehouse-snapshot-isolation": {
+   "last_review": 1786776138
+  },
+  "analytics-lambda-vs-kappa": {
+   "last_review": 1788065074
+  },
+  "analytics-materialized-view-maintenance": {
+   "last_review": 1786776138
+  },
+  "analytics-replica-analytics-limits": {
+   "last_review": 1788065074
+  },
+  "analytics-row-vs-column-layout": {
+   "last_review": 1786776138
+  },
+  "analytics-shuffle-mechanics": {
+   "last_review": 1786776138
+  },
+  "analytics-skew-stragglers": {
+   "last_review": 1786776138
+  },
+  "analytics-star-schema": {
+   "last_review": 1786776138
+  },
+  "analytics-table-formats": {
+   "last_review": 1786776138
+  },
+  "analytics-time-travel-retention": {
+   "last_review": 1786776138
+  },
+  "analytics-vectorized-execution": {
+   "last_review": 1786776138
+  },
+  "architecture-api-versioning-strategies": {
+   "last_review": 1786776138
+  },
+  "architecture-boundaries-data-ownership": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 751,
+   "last_review": 1787363408
+  },
+  "architecture-cold-starts": {
+   "last_review": 1786776138
+  },
+  "architecture-conways-law": {
+   "last_review": 1786776138
+  },
+  "architecture-discovery-mechanisms": {
+   "last_review": 1786776138
+  },
+  "architecture-distributed-monolith": {
+   "last_review": 1786776138
+  },
+  "architecture-expand-contract": {
+   "last_review": 1786776138
+  },
+  "architecture-microservices-tax": {
+   "last_review": 1786776138
+  },
+  "architecture-registry-compat-modes": {
+   "last_review": 1786776138
+  },
+  "architecture-schema-compat-rules": {
+   "last_review": 1786776138
+  },
+  "architecture-serverless-backpressure": {
+   "last_review": 1786776138
+  },
+  "architecture-serverless-constraints": {
+   "last_review": 1786776138
+  },
+  "architecture-serverless-economics": {
+   "last_review": 1786776138
+  },
+  "architecture-serverless-orchestration": {
+   "last_review": 1786776138
+  },
+  "architecture-sync-call-chains": {
+   "last_review": 1786776138
+  },
+  "architecture-when-to-split": {
+   "last_review": 1786776138
+  },
+  "async-broker-selection": {
+   "last_review": 1786776138
+  },
+  "async-cdc-initial-snapshot": {
+   "last_review": 1788068927
+  },
+  "async-cdc-mechanism": {
+   "last_review": 1788068927
+  },
+  "async-command-vs-event": {
+   "last_review": 1788065074
+  },
+  "async-compacted-topic-bootstrap": {
+   "last_review": 1788065074
+  },
+  "async-competing-consumers-ordering": {
+   "last_review": 1786776138
+  },
+  "async-consumer-groups-offsets": {
+   "last_review": 1786776138
+  },
+  "async-consumer-lag-monitoring": {
+   "last_review": 1788065074
+  },
+  "async-delivery-semantics-cloze": {
+   "last_review": 1787481075
+  },
+  "async-dlq-poison-pill": {
+   "last_review": 1787481075
+  },
+  "async-eos-boundary-choice": {
+   "last_review": 1787388127
+  },
+  "async-eos-sink-determinism": {
+   "last_review": 1787388127
+  },
+  "async-event-sourcing-vs-cdc": {
+   "last_review": 1788068927
+  },
+  "async-event-time-watermarks": {
+   "last_review": 1788068927
+  },
+  "async-exactly-once-myth": {
+   "last_review": 1787481075
+  },
+  "async-idempotent-producer": {
+   "last_review": 1787481075
+  },
+  "async-kafka-transactions-eos": {
+   "last_review": 1787481075
+  },
+  "async-late-event-policy": {
+   "last_review": 1788065074
+  },
+  "async-log-backfill-reprocessing": {
+   "last_review": 1786776138
+  },
+  "async-log-compaction": {
+   "last_review": 1786776138
+  },
+  "async-log-ordering-partitions": {
+   "last_review": 1786776138
+  },
+  "async-log-throughput-design": {
+   "last_review": 1788065074
+  },
+  "async-log-vs-queue": {
+   "last_review": 1786776138
+  },
+  "async-loss-vs-duplicate-asymmetry": {
+   "last_review": 1788065074
+  },
+  "async-materialized-view-refresh": {
+   "last_review": 1788068927
+  },
+  "async-producer-retry-reordering": {
+   "last_review": 1787481075
+  },
+  "async-queue-backpressure": {
+   "last_review": 1786776138
+  },
+  "async-queue-vs-pubsub": {
+   "last_review": 1786776138
+  },
+  "async-rebalancing-protocols": {
+   "last_review": 1786776138
+  },
+  "async-redelivery-causes": {
+   "last_review": 1787388127
+  },
+  "async-retry-delay-implementation": {
+   "last_review": 1786776138
+  },
+  "async-stale-event-ordering": {
+   "last_review": 1787388127
+  },
+  "async-stream-joins": {
+   "last_review": 1788068927
+  },
+  "async-streaming-state-recovery": {
+   "last_review": 1788065074
+  },
+  "async-when-async-is-wrong": {
+   "last_review": 1786776138
+  },
+  "async-window-types": {
+   "last_review": 1788065074
+  },
+  "caching-aside-vs-read-through": {
+   "last_review": 1786776138
+  },
+  "caching-cache-shard-blast-radius": {
+   "last_review": 1786776138
+  },
+  "caching-cache-warming": {
+   "last_review": 1786776138
+  },
+  "caching-cdc-invalidation": {
+   "last_review": 1786776138
+  },
+  "caching-delete-not-update": {
+   "last_review": 1786776138
+  },
+  "caching-hit-rate-outage-math": {
+   "last_review": 1786776138
+  },
+  "caching-hot-key-replication": {
+   "last_review": 1786776138
+  },
+  "caching-key-version-invalidation": {
+   "last_review": 1786776138
+  },
+  "caching-layer-absorption": {
+   "last_review": 1786776138
+  },
+  "caching-lease-cas": {
+   "last_review": 1786776138
+  },
+  "caching-local-vs-remote": {
+   "last_review": 1786776138
+  },
+  "caching-lru-vs-lfu": {
+   "last_review": 1786776138
+  },
+  "caching-memcached-vs-redis": {
+   "last_review": 1786776138
+  },
+  "caching-negative-caching": {
+   "last_review": 1786776138
+  },
+  "caching-placement-cost-of-depth": {
+   "last_review": 1786776138
+  },
+  "caching-refresh-ahead-fit": {
+   "last_review": 1786776138
+  },
+  "caching-ttl-jitter": {
+   "last_review": 1786776138
+  },
+  "caching-write-through-vs-behind": {
+   "last_review": 1786776138
+  },
+  "correctness-balance-derivation": {
+   "last_review": 1786776138
+  },
+  "correctness-dedup-window": {
+   "last_review": 1786776138
+  },
+  "correctness-double-entry-invariant": {
+   "last_review": 1786776138
+  },
+  "correctness-dual-write-problem": {
+   "last_review": 1786776138
+  },
+  "correctness-idempotency-concurrent-retries": {
+   "last_review": 1786776138
+  },
+  "correctness-idempotency-key-design": {
+   "last_review": 1786776138
+  },
+  "correctness-idempotency-partial-failure": {
+   "last_review": 1786776138
+  },
+  "correctness-idempotency-payload-hash": {
+   "last_review": 1786776138
+  },
+  "correctness-idempotency-response-replay": {
+   "last_review": 1786776138
+  },
+  "correctness-idempotent-consumer-patterns": {
+   "last_review": 1786776138
+  },
+  "correctness-ledger-clearing-metric": {
+   "last_review": 1788065074
+  },
+  "correctness-ledger-cutoff-settlement": {
+   "last_review": 1786776138
+  },
+  "correctness-ledger-hot-accounts": {
+   "last_review": 1786776138
+  },
+  "correctness-ledger-immutability": {
+   "last_review": 1786776138
+  },
+  "correctness-ledger-multi-currency": {
+   "last_review": 1786776138
+  },
+  "correctness-ledger-three-way-recon": {
+   "last_review": 1786776138
+  },
+  "correctness-outbox-cleanup": {
+   "last_review": 1786776138
+  },
+  "correctness-outbox-event-payload": {
+   "last_review": 1786776138
+  },
+  "correctness-outbox-mechanism": {
+   "last_review": 1786776138
+  },
+  "correctness-outbox-ordering-cloze": {
+   "last_review": 1786776138
+  },
+  "correctness-outbox-relay-lag": {
+   "last_review": 1786776138
+  },
+  "correctness-reconciliation": {
+   "last_review": 1786776138
+  },
+  "correctness-saga-compensation-limits": {
+   "last_review": 1786776138
+  },
+  "correctness-saga-compensation-race": {
+   "last_review": 1786776138
+  },
+  "correctness-saga-isolation": {
+   "last_review": 1786776138
+  },
+  "correctness-saga-orchestration-choreography": {
+   "last_review": 1786776138
+  },
+  "correctness-saga-orchestrator-recovery": {
+   "last_review": 1786776138
+  },
+  "correctness-saga-vs-2pc": {
+   "last_review": 1786776138
+  },
+  "distributed-2pc-avoidance": {
+   "last_review": 1787481075
+  },
+  "distributed-2pc-blocking-window": {
+   "last_review": 1787388127
+  },
+  "distributed-2pc-mechanics": {
+   "last_review": 1787388127
+  },
+  "distributed-2pl-vs-ssi": {
+   "last_review": 1787481075
+  },
+  "distributed-actual-serial-execution": {
+   "last_review": 1788065074
+  },
+  "distributed-anti-entropy-cost": {
+   "last_review": 1787388127
+  },
+  "distributed-avoiding-scatter-gather": {
+   "last_review": 1787388127
+  },
+  "distributed-cap-per-operation": {
+   "last_review": 1786776138
+  },
+  "distributed-cap-proof-sketch": {
+   "last_review": 1786776138
+  },
+  "distributed-cap-real-claim": {
+   "last_review": 1786776138
+  },
+  "distributed-causal-in-practice": {
+   "last_review": 1788065074
+  },
+  "distributed-causal-vs-eventual": {
+   "last_review": 1786776138
+  },
+  "distributed-clock-error-sources": {
+   "last_review": 1788065074
+  },
+  "distributed-collab-editing-replication": {
+   "last_review": 1788065074
+  },
+  "distributed-conflict-detection-siblings": {
+   "last_review": 1787388127
+  },
+  "distributed-consensus-in-practice": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 764,
+   "last_review": 1788384543
+  },
+  "distributed-consistency-ladder": {
+   "last_review": 1788065074
+  },
+  "distributed-consistent-hashing": {
+   "last_review": 1787481074
+  },
+  "distributed-coordination-service-primitives": {
+   "last_review": 1788065074
+  },
+  "distributed-cp-partition-behavior": {
+   "last_review": 1786776138
+  },
+  "distributed-crdt-convergence": {
+   "last_review": 1786776138
+  },
+  "distributed-crdt-counters": {
+   "last_review": 1786776138
+  },
+  "distributed-crdt-state-vs-op": {
+   "last_review": 1786776138
+  },
+  "distributed-data-skew-vs-access-skew": {
+   "last_review": 1787388127
+  },
+  "distributed-deadlock-handling": {
+   "last_review": 1787388127
+  },
+  "distributed-dirty-write": {
+   "last_review": 1788065074
+  },
+  "distributed-dynamic-split-merge": {
+   "last_review": 1787388127
+  },
+  "distributed-election-disruption": {
+   "last_review": 1788065074
+  },
+  "distributed-epoch-numbers": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 762,
+   "last_review": 1788384642
+  },
+  "distributed-failover-mechanics": {
+   "last_review": 1787481074
+  },
+  "distributed-failure-detection": {
+   "last_review": 1788068926
+  },
+  "distributed-fencing-tokens": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 762,
+   "last_review": 1788384791
+  },
+  "distributed-fixed-partition-count": {
+   "last_review": 1787388127
+  },
+  "distributed-flp-and-escape": {
+   "last_review": 1788065074
+  },
+  "distributed-global-index-staleness": {
+   "last_review": 1787388127
+  },
+  "distributed-hash-vs-range": {
+   "last_review": 1787481074
+  },
+  "distributed-hot-key": {
+   "last_review": 1787481074
+  },
+  "distributed-hot-key-detection": {
+   "last_review": 1787388127
+  },
+  "distributed-hybrid-logical-clocks": {
+   "last_review": 1788065074
+  },
+  "distributed-index-write-amplification": {
+   "last_review": 1787388127
+  },
+  "distributed-internal-vs-heterogeneous-2pc": {
+   "last_review": 1788065074
+  },
+  "distributed-isolation-anomalies": {
+   "last_review": 1787481074
+  },
+  "distributed-lag-anomalies": {
+   "last_review": 1787481074
+  },
+  "distributed-lamport-vs-vector": {
+   "last_review": 1788068926
+  },
+  "distributed-leaderless-failed-write": {
+   "last_review": 1788065074
+  },
+  "distributed-leaderless-monotonic-reads": {
+   "last_review": 1787388127
+  },
+  "distributed-leaderless-staleness-monitoring": {
+   "last_review": 1788065074
+  },
+  "distributed-linearizability-composability": {
+   "last_review": 1786776138
+  },
+  "distributed-linearizability-vs-serializability": {
+   "last_review": 1786776138
+  },
+  "distributed-linearizability-when-needed": {
+   "last_review": 1786776138
+  },
+  "distributed-local-first-limits": {
+   "last_review": 1786776138
+  },
+  "distributed-lost-update-vs-write-skew": {
+   "last_review": 1788065074
+  },
+  "distributed-lww-danger": {
+   "last_review": 1788068926
+  },
+  "distributed-materializing-conflicts": {
+   "last_review": 1788065074
+  },
+  "distributed-monotonic-vs-wallclock": {
+   "last_review": 1788068926
+  },
+  "distributed-multi-leader-conflict-timing": {
+   "last_review": 1787388127
+  },
+  "distributed-multi-leader-fit": {
+   "last_review": 1787481074
+  },
+  "distributed-multi-leader-retrofit-hazards": {
+   "last_review": 1788065074
+  },
+  "distributed-multi-leader-topologies": {
+   "last_review": 1787388127
+  },
+  "distributed-mvcc-defaults": {
+   "last_review": 1787481075
+  },
+  "distributed-mvcc-visibility": {
+   "last_review": 1787481075
+  },
+  "distributed-network-delay-queueing": {
+   "last_review": 1788065074
+  },
+  "distributed-new-follower-setup": {
+   "last_review": 1788065074
+  },
+  "distributed-offline-client-writes": {
+   "last_review": 1787388127
+  },
+  "distributed-or-set": {
+   "last_review": 1786776138
+  },
+  "distributed-pacelc": {
+   "last_review": 1786776138
+  },
+  "distributed-partition-hash-properties": {
+   "last_review": 1788065074
+  },
+  "distributed-phantoms-predicate-locks": {
+   "last_review": 1787481074
+  },
+  "distributed-process-pause-causes": {
+   "last_review": 1788065074
+  },
+  "distributed-quorum-math": {
+   "last_review": 1787481074
+  },
+  "distributed-quorum-not-linearizable": {
+   "last_review": 1786776138
+  },
+  "distributed-quorum-sizing": {
+   "last_review": 1786776138
+  },
+  "distributed-raft-guarantees": {
+   "last_review": 1786776138
+  },
+  "distributed-raft-linearizable-reads": {
+   "last_review": 1786776138
+  },
+  "distributed-read-committed-anomalies": {
+   "last_review": 1787388127
+  },
+  "distributed-read-repair-anti-entropy": {
+   "last_review": 1787481074
+  },
+  "distributed-read-your-writes": {
+   "last_review": 1786776138
+  },
+  "distributed-rebalance-throttling": {
+   "last_review": 1787388127
+  },
+  "distributed-rebalancing": {
+   "last_review": 1787481074
+  },
+  "distributed-rebalancing-strategy-choice": {
+   "last_review": 1788065074
+  },
+  "distributed-rendezvous-hashing": {
+   "last_review": 1787388127
+  },
+  "distributed-repeatable-read-dialects": {
+   "last_review": 1787388127
+  },
+  "distributed-replication-log-formats": {
+   "last_review": 1787481074
+  },
+  "distributed-request-routing": {
+   "last_review": 1787481074
+  },
+  "distributed-saga-tradeoffs": {
+   "last_review": 1787388127
+  },
+  "distributed-salting-read-cost": {
+   "last_review": 1787388127
+  },
+  "distributed-scatter-gather-fanout-math": {
+   "last_review": 1787388127
+  },
+  "distributed-secondary-index-partitioning": {
+   "last_review": 1787481074
+  },
+  "distributed-semi-sync-fallback": {
+   "last_review": 1788065074
+  },
+  "distributed-sequence-crdt-positions": {
+   "last_review": 1788065074
+  },
+  "distributed-shard-key-one-way-door": {
+   "last_review": 1787388127
+  },
+  "distributed-sloppy-quorum-handoff": {
+   "last_review": 1787388127
+  },
+  "distributed-ssi-abort-behavior": {
+   "last_review": 1787388127
+  },
+  "distributed-ssi-detection-points": {
+   "last_review": 1788065074
+  },
+  "distributed-sync-vs-async-replication": {
+   "last_review": 1787481074
+  },
+  "distributed-system-models": {
+   "last_review": 1788068926
+  },
+  "distributed-tenant-isolation-limits": {
+   "last_review": 1787388127
+  },
+  "distributed-total-order-broadcast": {
+   "last_review": 1786776138
+  },
+  "distributed-truetime": {
+   "last_review": 1788068926
+  },
+  "distributed-vnode-count": {
+   "last_review": 1787388127
+  },
+  "distributed-write-skew": {
+   "last_review": 1787481074
+  },
+  "distributed-xa-in-practice": {
+   "last_review": 1787388127
+  },
+  "foundations-availability-vs-consistency-axis": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787438910
+  },
+  "foundations-clarifying-questions-worth-asking": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 751,
+   "last_review": 1787457476
+  },
+  "foundations-coordinated-omission": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787470382
+  },
+  "foundations-dau-to-qps": {
+   "reps": 2,
+   "ease": 2.5,
+   "last_review": 1787363302
+  },
+  "foundations-driving-the-40-minutes": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787439055
+  },
+  "foundations-elastic-vs-manual-scaling": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 751,
+   "last_review": 1787438918
+  },
+  "foundations-fanout-estimation": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 751,
+   "last_review": 1787363319
+  },
+  "foundations-interview-opening-moves": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787457505
+  },
+  "foundations-latency-memory-ssd-disk": {
+   "reps": 1,
+   "ease": 2.5,
+   "last_review": 1787458003
+  },
+  "foundations-latency-network-rtts": {
+   "reps": 2,
+   "ease": 2.5,
+   "last_review": 1787458770
+  },
+  "foundations-latency-numbers-in-arguments": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787470412
+  },
+  "foundations-latency-requirement-precision": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 749,
+   "last_review": 1787458584
+  },
+  "foundations-latency-sequential-reads": {
+   "reps": 2,
+   "ease": 2.5,
+   "last_review": 1787601146
+  },
+  "foundations-latency-vs-throughput": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787438920
+  },
+  "foundations-littles-law": {
+   "reps": 1,
+   "ease": 2.5,
+   "last_review": 1787438881
+  },
+  "foundations-load-parameters": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787458693
+  },
+  "foundations-maintainability-design-input": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787458757
+  },
+  "foundations-p999-cost": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787601245
+  },
+  "foundations-performance-vs-scalability": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787457414
+  },
+  "foundations-scale-up-vs-out": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787457422
+  },
+  "foundations-storage-estimate-method": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787438887
+  },
+  "foundations-tail-latency-amplification": {
+   "reps": 2,
+   "ease": 2.5,
+   "last_review": 1787458539
+  },
+  "foundations-three-pillars": {
+   "last_review": 1788065074
+  },
+  "foundations-utilization-latency-knee": {
+   "last_review": 1788065074
+  },
+  "foundations-when-estimates-change-design": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787438906
+  },
+  "infra-canary-automation": {
+   "last_review": 1786778027
+  },
+  "infra-containers-vs-vms": {
+   "last_review": 1786778027
+  },
+  "infra-flags-deploy-release": {
+   "last_review": 1786778027
+  },
+  "infra-k8s-overkill": {
+   "last_review": 1786778027
+  },
+  "infra-k8s-primitives": {
+   "last_review": 1786778027
+  },
+  "infra-mesh-sidecar-intercept": {
+   "last_review": 1786778027
+  },
+  "infra-mesh-tax-ambient": {
+   "last_review": 1786778027
+  },
+  "infra-mesh-vs-code": {
+   "last_review": 1786778027
+  },
+  "infra-mesh-when-not": {
+   "last_review": 1786778027
+  },
+  "infra-pipeline-quality-gates": {
+   "last_review": 1786778027
+  },
+  "infra-requests-limits-noisy-neighbor": {
+   "last_review": 1786778027
+  },
+  "infra-rollback-safety": {
+   "last_review": 1788065074
+  },
+  "infra-schema-migration-deploys": {
+   "last_review": 1786778027
+  },
+  "infra-two-phase-format-rollout": {
+   "last_review": 1788065074
+  },
+  "networking-anycast-vs-geodns": {
+   "last_review": 1786776138
+  },
+  "networking-cdn-cache-key": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787601368
+  },
+  "networking-cdn-dynamic-acceleration": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 751,
+   "last_review": 1787458494
+  },
+  "networking-cdn-purge-vs-versioning": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787601386
+  },
+  "networking-cdn-stale-while-revalidate": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787601419
+  },
+  "networking-cdn-what-belongs-at-edge": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787655095
+  },
+  "networking-connection-pooling": {
+   "reps": 1,
+   "type": 1,
+   "due": 749,
+   "last_review": 1787482723
+  },
+  "networking-connection-setup-cost": {
+   "last_review": 1786776138
+  },
+  "networking-cursor-vs-offset-pagination": {
+   "last_review": 1786776138
+  },
+  "networking-dns-lb-failover-layers": {
+   "last_review": 1786776138
+  },
+  "networking-dns-negative-caching": {
+   "last_review": 1786776138
+  },
+  "networking-dns-record-types": {
+   "last_review": 1786776138
+  },
+  "networking-dns-resolution-path": {
+   "last_review": 1786776138
+  },
+  "networking-dns-ttl-failover": {
+   "last_review": 1786776138
+  },
+  "networking-graphql-when-and-cost": {
+   "last_review": 1786776138
+  },
+  "networking-grpc-over-rest": {
+   "last_review": 1786776138
+  },
+  "networking-grpc-streaming-modes": {
+   "last_review": 1786776138
+  },
+  "networking-heartbeats-idle-timeouts": {
+   "last_review": 1786776138
+  },
+  "networking-http1-hol-workarounds": {
+   "last_review": 1786776138
+  },
+  "networking-http2-vs-http3": {
+   "last_review": 1786776138
+  },
+  "networking-long-polling-costs": {
+   "last_review": 1786776138
+  },
+  "networking-push-vs-pull-cdn": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787655202
+  },
+  "networking-realtime-backpressure": {
+   "last_review": 1786776138
+  },
+  "networking-realtime-transport-choice": {
+   "last_review": 1786776138
+  },
+  "networking-rest-as-default": {
+   "last_review": 1786776138
+  },
+  "networking-sse-mechanics": {
+   "last_review": 1786776138
+  },
+  "networking-tcp-vs-udp": {
+   "last_review": 1786776138
+  },
+  "networking-tls-resumption": {
+   "last_review": 1786776138
+  },
+  "networking-webhooks-vs-polling": {
+   "last_review": 1786776138
+  },
+  "networking-websocket-scaling-cost": {
+   "last_review": 1786776138
+  },
+  "reliability-active-active-vs-passive": {
+   "last_review": 1786776138
+  },
+  "reliability-async-rpo-math": {
+   "last_review": 1786776138
+  },
+  "reliability-avoid-fallback": {
+   "last_review": 1788065074
+  },
+  "reliability-bulkhead-vs-shedding": {
+   "last_review": 1787481076
+  },
+  "reliability-burn-rate-alerting": {
+   "last_review": 1786776138
+  },
+  "reliability-canonical-log-lines": {
+   "last_review": 1788065074
+  },
+  "reliability-chaos-hypothesis": {
+   "last_review": 1787481076
+  },
+  "reliability-circuit-breaker-states": {
+   "last_review": 1787481076
+  },
+  "reliability-config-deploy-risk": {
+   "last_review": 1787481076
+  },
+  "reliability-constant-work": {
+   "last_review": 1788065074
+  },
+  "reliability-correlated-failures": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 750,
+   "last_review": 1787363355
+  },
+  "reliability-data-residency-conflict": {
+   "last_review": 1786776138
+  },
+  "reliability-deadline-propagation": {
+   "last_review": 1787481075
+  },
+  "reliability-deploy-strategies": {
+   "last_review": 1787481076
+  },
+  "reliability-error-budget-throttle": {
+   "last_review": 1786776138
+  },
+  "reliability-exemplars": {
+   "last_review": 1786776138
+  },
+  "reliability-failover-modes-tradeoff": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 751,
+   "last_review": 1787363358
+  },
+  "reliability-fault-vs-failure": {
+   "last_review": 1786776138
+  },
+  "reliability-gray-failure": {
+   "last_review": 1786776138
+  },
+  "reliability-latency-sli-form": {
+   "last_review": 1786776138
+  },
+  "reliability-logs-metrics-traces": {
+   "last_review": 1786776138
+  },
+  "reliability-metric-cardinality": {
+   "last_review": 1786776138
+  },
+  "reliability-nines-downtime-budgets": {
+   "last_review": 1786776138
+  },
+  "reliability-percentile-aggregation": {
+   "last_review": 1786776138
+  },
+  "reliability-percentiles-over-averages": {
+   "last_review": 1786776138
+  },
+  "reliability-red-vs-use": {
+   "last_review": 1786776138
+  },
+  "reliability-retry-storm": {
+   "last_review": 1787481075
+  },
+  "reliability-retryable-errors": {
+   "last_review": 1787388127
+  },
+  "reliability-rpo-vs-rto": {
+   "last_review": 1786776138
+  },
+  "reliability-serial-parallel-composition": {
+   "last_review": 1786776138
+  },
+  "reliability-server-driven-backoff": {
+   "last_review": 1787388127
+  },
+  "reliability-shuffle-sharding-blast-radius": {
+   "last_review": 1788065074
+  },
+  "reliability-shuffle-sharding-mechanism": {
+   "last_review": 1788065074
+  },
+  "reliability-slo-dependency-ceiling": {
+   "last_review": 1786776138
+  },
+  "reliability-symptom-vs-cause-alerts": {
+   "last_review": 1786776138
+  },
+  "reliability-three-region-quorum": {
+   "last_review": 1786776138
+  },
+  "reliability-timeout-budget-arithmetic": {
+   "last_review": 1787388127
+  },
+  "reliability-trace-sampling": {
+   "last_review": 1786776138
+  },
+  "reliability-untested-failover": {
+   "last_review": 1786776138
+  },
+  "security-access-refresh-tokens": {
+   "last_review": 1787481076
+  },
+  "security-account-recovery": {
+   "last_review": 1787388127
+  },
+  "security-api-keys-vs-user-tokens": {
+   "last_review": 1787481076
+  },
+  "security-confused-deputy": {
+   "last_review": 1787481076
+  },
+  "security-credential-stuffing": {
+   "last_review": 1787388127
+  },
+  "security-mtls-vs-tokens-s2s": {
+   "last_review": 1787481076
+  },
+  "security-oauth-browser-token-storage": {
+   "last_review": 1787388127
+  },
+  "security-oauth-code-pkce": {
+   "last_review": 1787481076
+  },
+  "security-oauth-grant-selection": {
+   "last_review": 1787388127
+  },
+  "security-oauth-scopes-vs-audience": {
+   "last_review": 1787388127
+  },
+  "security-oauth-vs-oidc": {
+   "last_review": 1787481076
+  },
+  "security-passkeys-phishing": {
+   "last_review": 1787481076
+  },
+  "security-password-hashing-params": {
+   "last_review": 1787388127
+  },
+  "security-rbac-vs-abac": {
+   "last_review": 1787481076
+  },
+  "security-refresh-rotation-reuse": {
+   "last_review": 1787481076
+  },
+  "security-secrets-handling": {
+   "last_review": 1787481076
+  },
+  "security-secrets-rotation-live": {
+   "last_review": 1787481076
+  },
+  "security-sender-constrained-tokens": {
+   "last_review": 1787481076
+  },
+  "security-sessions-vs-jwt": {
+   "last_review": 1787481076
+  },
+  "security-webauthn-ceremony": {
+   "last_review": 1787388127
+  },
+  "storage-amplification-triangle": {
+   "last_review": 1788068926
+  },
+  "storage-avro-evolution-defaults": {
+   "last_review": 1788065074
+  },
+  "storage-avro-schema-resolution": {
+   "last_review": 1786776138
+  },
+  "storage-bloom-filter-properties": {
+   "last_review": 1788065074
+  },
+  "storage-btree-branching-depth": {
+   "last_review": 1788065074
+  },
+  "storage-btree-clustered-vs-heap": {
+   "last_review": 1788065074
+  },
+  "storage-btree-latches": {
+   "last_review": 1788065074
+  },
+  "storage-btree-page-split": {
+   "last_review": 1788065074
+  },
+  "storage-btree-single-copy-locking": {
+   "last_review": 1788065074
+  },
+  "storage-btree-vs-lsm": {
+   "last_review": 1788068926
+  },
+  "storage-btree-wal-recovery": {
+   "last_review": 1788068925
+  },
+  "storage-compaction-interference": {
+   "last_review": 1788065074
+  },
+  "storage-compaction-strategies": {
+   "last_review": 1788068926
+  },
+  "storage-compute-separation": {
+   "last_review": 1786776138
+  },
+  "storage-connection-pooling": {
+   "last_review": 1787481074
+  },
+  "storage-covering-index": {
+   "last_review": 1787481073
+  },
+  "storage-dataflow-modes": {
+   "last_review": 1788065074
+  },
+  "storage-document-locality-cost": {
+   "last_review": 1788065074
+  },
+  "storage-document-to-graph-signal": {
+   "last_review": 1788065074
+  },
+  "storage-document-vs-relational": {
+   "last_review": 1786776138
+  },
+  "storage-encoding-compat-directions": {
+   "last_review": 1786776138
+  },
+  "storage-graph-db-fit": {
+   "last_review": 1786776138
+  },
+  "storage-hash-index-limits": {
+   "last_review": 1788065074
+  },
+  "storage-index-leftmost-prefix": {
+   "last_review": 1787481073
+  },
+  "storage-index-selectivity": {
+   "last_review": 1787388127
+  },
+  "storage-index-write-cost": {
+   "last_review": 1787388127
+  },
+  "storage-inmemory-advantage": {
+   "last_review": 1788068926
+  },
+  "storage-inverted-index": {
+   "last_review": 1786776138
+  },
+  "storage-json-contract-pitfalls": {
+   "last_review": 1786776138
+  },
+  "storage-keyvalue-fit": {
+   "last_review": 1788065074
+  },
+  "storage-language-serialization-trap": {
+   "last_review": 1788065074
+  },
+  "storage-lsm-range-scan": {
+   "last_review": 1788065074
+  },
+  "storage-lsm-read-path": {
+   "last_review": 1788068926
+  },
+  "storage-lsm-write-path": {
+   "last_review": 1788065074
+  },
+  "storage-multicolumn-vs-bitmap-and": {
+   "last_review": 1788065074
+  },
+  "storage-multipart-ranged-io": {
+   "last_review": 1786776138
+  },
+  "storage-mvcc-vacuum": {
+   "last_review": 1787481074
+  },
+  "storage-normalization-tradeoff": {
+   "last_review": 1787481074
+  },
+  "storage-object-vs-filesystem": {
+   "last_review": 1786776138
+  },
+  "storage-online-migration-four-phase": {
+   "last_review": 1788065074
+  },
+  "storage-online-migration-vs-one-shot": {
+   "last_review": 1788065074
+  },
+  "storage-partial-expression-index": {
+   "last_review": 1787388127
+  },
+  "storage-protobuf-tag-rules": {
+   "last_review": 1786776138
+  },
+  "storage-record-discriminator-column": {
+   "last_review": 1788065074
+  },
+  "storage-replica-lag-ops": {
+   "last_review": 1788065074
+  },
+  "storage-rolling-upgrade-compat": {
+   "last_review": 1786776138
+  },
+  "storage-s3-conditional-writes": {
+   "last_review": 1786776138
+  },
+  "storage-s3-numbers": {
+   "last_review": 1786776138
+  },
+  "storage-scaling-ladder": {
+   "last_review": 1787481074
+  },
+  "storage-schema-on-read": {
+   "last_review": 1786776138
+  },
+  "storage-search-deep-pagination": {
+   "last_review": 1786776138
+  },
+  "storage-search-not-sot": {
+   "last_review": 1786776138
+  },
+  "storage-search-nrt-refresh": {
+   "last_review": 1786776138
+  },
+  "storage-search-segments": {
+   "last_review": 1786776138
+  },
+  "storage-search-sync": {
+   "last_review": 1786776138
+  },
+  "storage-secondary-index-partitioning": {
+   "last_review": 1786776138
+  },
+  "storage-small-objects-cost": {
+   "last_review": 1786776138
+  },
+  "storage-sparse-attributes": {
+   "last_review": 1788065074
+  },
+  "storage-sstable-structure": {
+   "last_review": 1788065074
+  },
+  "storage-tombstone-deletes": {
+   "last_review": 1786776138
+  },
+  "storage-unknown-field-roundtrip": {
+   "last_review": 1788065074
+  },
+  "storage-vocabulary-collision": {
+   "last_review": 1788065074
+  },
+  "storage-wide-column-modeling": {
+   "last_review": 1786776138
+  },
+  "traffic-bff-pattern": {
+   "last_review": 1786776138
+  },
+  "traffic-bounded-load-consistent-hashing": {
+   "last_review": 1786776138
+  },
+  "traffic-critical-capacity-reservation": {
+   "last_review": 1788065074
+  },
+  "traffic-distributed-rate-limiting": {
+   "last_review": 1786776138
+  },
+  "traffic-gateway-buffering": {
+   "last_review": 1786776138
+  },
+  "traffic-gateway-centralizes": {
+   "last_review": 1786776138
+  },
+  "traffic-gateway-risks": {
+   "last_review": 1786776138
+  },
+  "traffic-http2-connection-pinning": {
+   "last_review": 1786776138
+  },
+  "traffic-l4-vs-l7": {
+   "last_review": 1786776138
+  },
+  "traffic-lb-algorithm-choice": {
+   "last_review": 1786776138
+  },
+  "traffic-lb-health-and-ha": {
+   "last_review": 1786776138
+  },
+  "traffic-rate-limit-key-choice": {
+   "last_review": 1786776138
+  },
+  "traffic-rate-limiting-vs-load-shedding": {
+   "last_review": 1786776138
+  },
+  "traffic-rate-vs-concurrency-limiter": {
+   "last_review": 1788065074
+  },
+  "traffic-request-hedging": {
+   "last_review": 1786776138
+  },
+  "traffic-reverse-proxy-vs-gateway": {
+   "last_review": 1786776138
+  },
+  "traffic-shedding-response": {
+   "last_review": 1786776138
+  },
+  "traffic-sliding-window-counter": {
+   "last_review": 1786776138
+  },
+  "traffic-timeout-budget-propagation": {
+   "last_review": 1786776138
+  },
+  "traffic-token-bucket-vs-sliding-window": {
+   "last_review": 1786776138
+  }
+ }
+}

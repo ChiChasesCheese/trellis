@@ -1,0 +1,66 @@
+- id: fundamentals
+  title: 刷题方法论与复杂度预估（problem-solving meta）
+  summary: 建立数据范围反推复杂度、专题螺旋刷题、卡壳后暂离等元认知习惯，作为后续所有专题的思维框架。
+- id: arrays-hash-prefix
+  title: 数组、哈希与前缀和（arrays / hashing / prefix sum）
+  summary: 用哈希计数、前缀和与贡献法处理数组上的统计与子数组问题，是几乎所有专题的地基。
+- id: two-pointers-window
+  title: 双指针与滑动窗口（two pointers / sliding window）
+  summary: 用相向、同向或背向指针以及定长/变长窗口，把区间统计问题从平方级降到线性级。
+- id: binary-search
+  title: 二分查找与二分答案（binary search）
+  summary: 从有序数组上的二分模板扩展到「二分答案」，把最优化问题转化为单调性判定问题。
+- id: stack-queue-monotonic
+  title: 栈、队列与单调结构（stack / queue / monotonic structures）
+  summary: 用单调栈、单调队列与普通栈处理「下一个更大/更小元素」「表达式解析」等结构化匹配问题。
+- id: linked-list
+  title: 链表操作（linked list）
+  summary: 掌握快慢指针、哨兵节点与原地反转等链表专属技巧。
+- id: trees
+  title: 二叉树基础（binary tree basics）
+  summary: 用前中后序遍历与层序 BFS 处理二叉树的构造、路径与性质问题。
+- id: tree-advanced
+  title: 树形结构进阶（tree DP / LCA / 虚树）
+  summary: 在树上做倍增求 LCA、换根 DP、点分治与虚树等更高级的树上算法。
+- id: backtracking-search
+  title: 回溯与穷举搜索（backtracking / exhaustive search）
+  summary: 用回溯枚举排列组合子集，并用折半搜索、双向搜索压缩指数级搜索空间。
+- id: graphs-traversal
+  title: 图的遍历、连通性与拓扑排序（graph traversal / topological sort）
+  summary: 用 DFS/BFS 求连通块、二分图判定与拓扑序，处理有向依赖与基环树等图结构问题。
+- id: shortest-path-uf-flow
+  title: 最短路、并查集与网络流（shortest path / union-find / flow）
+  summary: 用 Dijkstra、Floyd、0-1 BFS 求最短路，用并查集维护连通性，用最小生成树与最大流解决网络优化问题。
+- id: dp-linear-knapsack
+  title: 动态规划：线性与背包（linear DP / knapsack）
+  summary: 从记忆化搜索到递推的线性 DP，以及 0/1 背包、完全背包与分组背包等背包家族。
+- id: dp-grid-interval-string
+  title: 动态规划：网格、区间与子序列（grid / interval / subsequence DP）
+  summary: 处理网格路径、区间合并型 DP 以及最长公共子序列、编辑距离、数位 DP 等序列匹配类 DP。
+- id: dp-game-probability
+  title: 动态规划：博弈与期望（game / probability DP）
+  summary: 用状态化的胜负博弈与期望方程建模轮流决策和随机过程问题。
+- id: greedy-sorting
+  title: 贪心与排序构造（greedy / sorting constructions）
+  summary: 用交换论证证明贪心的正确性，涵盖区间调度、反悔堆、字典序构造与排序不等式等贪心套路。
+- id: math-number-theory
+  title: 数学与数论（math / number theory）
+  summary: 涵盖同余、模逆元、质因数分解、组合数学与计算几何等数学工具。
+- id: bitwise-tricks
+  title: 位运算技巧（bitwise tricks / bitmask）
+  summary: 用位掩码枚举子集、按位贡献法与线性基等技巧处理位运算相关的计数与构造问题。
+- id: strings
+  title: 字符串算法（string algorithms）
+  summary: 涵盖 KMP、Z 函数、Manacher、后缀结构与字典树等经典字符串匹配与压缩技巧。
+- id: design-simulation
+  title: 设计与模拟（design / simulation）
+  summary: 按题意直接模拟状态演化，或设计支持特定查询的数据结构。
+- id: advanced-ds-heap
+  title: 线段树、树状数组与堆（segment tree / Fenwick tree / heap）
+  summary: 用线段树、树状数组、ST 表和堆等高级数据结构支持区间更新查询与动态取最值。
+- id: contest-misc
+  title: 比赛技巧与杂题（contest tricks / misc）
+  summary: 处理数据范围极小的暴力枚举、补集计数等赛场上常见的杂项技巧。
+- id: topics
+  title: 按主题兜底（uncategorised）
+  summary: 收纳没有更合适专题归属、仅带主题标签的笔记。

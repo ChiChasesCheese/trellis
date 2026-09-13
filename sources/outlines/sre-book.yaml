@@ -1,0 +1,23 @@
+corpus: sre-book
+title: Site Reliability Engineering
+sections:
+- id: 01-service-level-objectives
+  title: Service Level Objectives
+  level: 1
+  locator: https://sre.google/sre-book/service-level-objectives/
+- id: 02-handling-overload
+  title: Handling Overload
+  level: 1
+  locator: https://sre.google/sre-book/handling-overload/
+- id: 03-addressing-cascading-failures
+  title: Addressing Cascading Failures
+  level: 1
+  locator: https://sre.google/sre-book/addressing-cascading-failures/
+- id: 04-managing-critical-state
+  title: 'Managing Critical State: Distributed Consensus for Reliability'
+  level: 1
+  locator: https://sre.google/sre-book/managing-critical-state/
+- id: 05-data-integrity
+  title: 'Data Integrity: What You Read Is What You Wrote'
+  level: 1
+  locator: https://sre.google/sre-book/data-integrity/

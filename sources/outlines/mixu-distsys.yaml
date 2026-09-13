@@ -1,0 +1,23 @@
+corpus: mixu-distsys
+title: Distributed Systems for Fun and Profit
+sections:
+- id: 01-intro
+  title: Distributed systems for fun and profit
+  level: 1
+  locator: https://book.mixu.net/distsys/intro.html
+- id: 02-abstractions
+  title: Distributed systems for fun and profit
+  level: 1
+  locator: https://book.mixu.net/distsys/abstractions.html
+- id: 03-time
+  title: Distributed systems for fun and profit
+  level: 1
+  locator: https://book.mixu.net/distsys/time.html
+- id: 04-replication
+  title: Distributed systems for fun and profit
+  level: 1
+  locator: https://book.mixu.net/distsys/replication.html
+- id: 05-eventual
+  title: Distributed systems for fun and profit
+  level: 1
+  locator: https://book.mixu.net/distsys/eventual.html

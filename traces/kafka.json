@@ -1,0 +1,1367 @@
+{
+ "domain": "kafka",
+ "pulled_at": "2026-09-13T03:36:41+00:00",
+ "unmapped": 0,
+ "traces": {
+  "kafka-admin-adminclient-eventual-consistency": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-admin-alter-offsets-requires-inactive-group": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-admin-alterconfigop-types": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-admin-cancel-reassignment-risk": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-admin-cannot-decrease-partitions": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-admin-client-dns-lookup-modes": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-admin-client-id-vs-group-naming": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-admin-consumer-lag-calculation": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-admin-delete-group-requires-empty": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-admin-delete-offset-vs-reset-offset": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-admin-describe-shows-overrides-only": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-admin-describeconfigs-isdefault": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-admin-force-move-controller": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-admin-kafkafuture-nonblocking": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-admin-keyed-topic-partition-increase": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-admin-manual-topic-delete-requires-full-shutdown": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-admin-offset-export-import-dry-run": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-admin-preferred-vs-unclean-leader-election": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-admin-quota-throttle-per-broker": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-admin-reassignment-throttle": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-admin-reset-offset-stateful-app-pitfall": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-admin-restart-broker-before-decommission": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-admin-topic-deletion-caution": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-admin-unclean-leader-election-tradeoff": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-connect-alt-flume-logstash-vs-connect": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-connect-alt-gui-etl-tools-tradeoff": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-connect-alt-kafka-as-integration-platform": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-connect-alt-stream-framework-shortcut-risk": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-connect-connector-vs-task-division": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-connect-converter-decouples-format": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-connect-pipeline-delivery-guarantee-levels": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-connect-pipeline-etl-vs-elt": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-connect-pipeline-overprocessing-coupling": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-connect-pipeline-schema-loss-coupling": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-connect-pipeline-throughput-decoupling": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-connect-pipeline-timeliness-buffer": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-connect-prefer-over-custom-app": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-connect-smt-common-types": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-connect-smt-config-not-connector-specific": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-connect-smt-error-tolerance-dlq": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-connect-smt-insertheader-lineage-example": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-connect-smt-timestamprouter-usecase": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-connect-smt-vs-streams-boundary": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-connect-source-offset-atleastonce-mechanism": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-connect-vs-client-api-decision": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-connect-worker-separation-of-concerns": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-assign-vs-subscribe-exclusive": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-auto-commit-duplicate-window": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-auto-offset-reset-choices": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-avro-deserializer-early-error-detection": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-avro-specific-reader-config": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-commit-async-then-sync-on-shutdown": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-commit-offset-duplicate-vs-loss": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-commit-specific-offset-mid-batch": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-commitsync-vs-commitasync": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-custom-deserializer-tight-coupling": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-eager-vs-cooperative-rebalance": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-fetch-max-bytes-vs-partition-fetch-bytes": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-fetch-max-wait-ms-with-fetch-min-bytes": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-fetch-min-bytes-tradeoff": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-graceful-shutdown-wakeup": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-group-partition-sharing": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-heartbeat-session-timeout-death-detection": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-max-poll-interval-ms-purpose": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-multiple-groups-full-data": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-offset-commit-meaning": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-offsetsfortimes-seek-mechanism": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-one-thread-per-consumer-rule": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-poll-liveness-requirement": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-rebalance-listener-commit-before-revoke": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-required-config": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-seek-changes-poll-position-not-commit": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-seek-use-cases": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-seektobeginning-seektoend-purpose": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-serializer-deserializer-must-match": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-session-timeout-heartbeat-interval-ratio": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-standalone-new-partitions-blind-spot": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-standalone-still-needs-group-id": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-standalone-when-to-use": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-static-membership-avoids-rebalance": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-consumer-subscribe-regex-tradeoff": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-core-batch-latency-throughput-tradeoff": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-core-broker-role-capacity": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-core-consumer-group-shared-once": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-core-consumer-independence-vs-traditional-queue": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-core-controller-role": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-core-disk-retention-benefit": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-core-follower-reads-latency-tradeoff": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-core-isr-definition": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-core-isr-leader-election-eligibility": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-core-leader-follower-roles": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-core-message-key-partition-routing": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-core-mirrormaker-architecture": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-core-multi-producer-unified-topic": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-core-multicluster-reasons": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-core-offset-not-strictly-sequential": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-core-offset-tracks-consumer-progress": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-core-offset-uniqueness-per-partition": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-core-offset-vs-key": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-core-offset-what-is": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-core-partition-ordering-scope": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-core-partitions-enable-scale": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-core-preferred-leader-rebalance": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-core-pubsub-vs-pointtopoint": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-core-replication-scoped-to-single-cluster": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-core-scalability-no-downtime": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-core-schema-avro-vs-json": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-eos-idempotent-broker-failover-state-transfer": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-eos-idempotent-limit-app-level-duplicate-send": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-eos-idempotent-limit-multiple-producer-instances": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-eos-idempotent-out-of-order-seq-error": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-eos-idempotent-pid-sequence-dedup": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-eos-idempotent-producer-restart-blindspot": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-eos-transactions-atomic-multipartition-write": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-eos-transactions-external-side-effects-not-covered": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-eos-transactions-isolation-level-tradeoff": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-eos-transactions-two-phase-commit-mechanism": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-eos-transactions-why-needed-duplicates": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-eos-transactions-zombie-fencing-epoch": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-eos-txn-perf-batch-amortizes-overhead": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-eos-txn-perf-consumer-latency-not-throughput": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-eos-txn-perf-producer-overhead-sources": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-eos-txn-perf-short-vs-long-transaction-tradeoff": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-internals-active-segment-retention": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-internals-client-routes-to-leader-via-metadata": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-internals-compact-vs-delete-policy": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-internals-compaction-clean-dirty-map": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-internals-compaction-map-memory-limit": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-internals-compaction-tombstone": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-internals-compaction-trigger-and-lag-config": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-internals-controller-election": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-internals-controller-epoch-zombie": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-internals-controller-leader-election-flow": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-internals-controller-role": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-internals-controller-startup-load-latency": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-internals-delete-and-compact-combo": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-internals-fetch-min-max-bytes-tradeoff": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-internals-fetch-only-sees-committed": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-internals-fetch-zero-copy": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-internals-follower-fetch-protocol": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-internals-follower-read-highwatermark": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-internals-index-corruption-recovery": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-internals-index-segmented-with-log": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-internals-isr-matters-leader-election": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-internals-isr-out-condition": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-internals-kraft-active-standby-controller": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-internals-kraft-broker-fencing": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-internals-kraft-metadata-as-log": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-internals-kraft-motivation": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-internals-kraft-pull-metadata-fetch": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-internals-log-segment-basics": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-internals-network-io-thread-pipeline": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-internals-offset-index-purpose": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-internals-open-file-handles": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-internals-partition-allocation-goals": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-internals-partition-allocation-roundrobin": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-internals-partition-disk-assignment": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-internals-preferred-leader-rebalance": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-internals-purgatory-delayed-response": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-internals-tiered-storage-decouple-storage-compute": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-internals-tiered-storage-isolation-benchmark": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-internals-tiered-storage-motivation": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-internals-tiered-storage-read-path-choice": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-internals-tiered-storage-two-layers": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-internals-time-index-purpose": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-mirroring-active-active-avoid-cyclic-mirror": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-mirroring-active-active-conflict-challenge": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-mirroring-active-standby-tradeoff": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-mirroring-alt-brooklin-general-purpose": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-mirroring-alt-cluster-linking-no-connect": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-mirroring-alt-cluster-linking-no-sync-manual-failover": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-mirroring-alt-mrc-observer-auto-promote": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-mirroring-alt-replicator-vs-mirrormaker-diffs": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-mirroring-alt-ureplicator-helix-controller": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-mirroring-cross-dc-realities-principles": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-mirroring-star-architecture-limitation": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-mirroring-stretch-cluster-quorum": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-mirrormaker-custom-partition-assignment": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-mirrormaker-deploy-near-target-remote-consume": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-mirrormaker-offset-migration-safety": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-mirrormaker-replication-lag-two-imperfect-methods": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-mirrormaker-tasks-max-tuning-approach": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-mirrormaker-topic-write-acl-not-migrated": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-monitoring-alert-vs-debug-metrics-retention": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-monitoring-automation-vs-human-metrics": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-monitoring-burrow-no-static-threshold": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-monitoring-burrow-vs-xinfra-scope": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-monitoring-consumer-rate-min-alert-pitfall": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-monitoring-e2e-two-questions": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-monitoring-external-lag-tool-vs-client-metric": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-monitoring-find-culprit-broker-multi-urp": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-monitoring-health-check-stale-metrics-tradeoff": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-monitoring-lag-threshold-per-partition-problem": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-monitoring-outbound-vs-inbound-bytes": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-monitoring-percentile-bad-sli": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-monitoring-quota-three-types": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-monitoring-record-error-vs-retry-rate": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-monitoring-records-lag-max-not-recommended": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-monitoring-request-handler-idle-and-msg-format": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-monitoring-sli-slo-sla-ola-terms": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-monitoring-slo-burn-rate-alerting": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-monitoring-static-vs-dynamic-quota": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-monitoring-throttle-silent-must-monitor": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-monitoring-two-active-controllers": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-monitoring-urp-not-a-good-alert": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-monitoring-urp-stable-vs-fluctuating": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-monitoring-xinfra-per-broker-not-per-topic": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-practice-akhq-vs-conduktor-oss-vs-proprietary": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-practice-aws-i2-d2-tradeoff": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-practice-aws-m4-vs-r3-instance": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-practice-azure-disk-tier-sla": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-practice-azure-managed-vs-ephemeral-disk": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-practice-cruise-control-scale-purpose": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-practice-g1gc-small-heap-tuning": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-practice-go-two-client-options": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-practice-julieops-gitops-vs-akhq-gui": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-practice-librdkafka-reused-by-other-langs": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-practice-managed-kafka-integration-depth": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-practice-network-10gbe-fanout": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-practice-python-two-client-options": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-practice-rack-awareness-new-partitions-only": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-practice-rest-proxy-language-agnostic-alt": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-practice-shared-zookeeper-multi-cluster-ok-other-apps-not": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-practice-ssd-vs-hdd-choice": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-practice-strimzi-bridge-no-schema-registry": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-practice-strimzi-operator-not-managed-service": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-practice-vm-swappiness-one-not-zero": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-producer-acks-0-fire-and-forget-risk": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-producer-acks-1-leader-crash-risk": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-producer-acks-all-isr-safety": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-producer-acks-end-to-end-latency-same": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-producer-acks-speed-vs-durability-tradeoff": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-producer-avro-generic-vs-specific-record": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-producer-avro-schema-evolution-example": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-producer-avro-writer-reader-schema-compatibility": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-producer-batch-size-bytes-not-full-required": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-producer-batching-config-interaction": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-producer-bootstrap-servers-multiple-hosts": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-producer-buffer-memory-backpressure": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-producer-callback-ordering-and-blocking": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-producer-compression-snappy-vs-gzip": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-producer-custom-partitioner-hotkey-isolation": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-producer-custom-serializer-fragility": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-producer-delivery-timeout-strategy": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-producer-delivery-timeout-vs-request-timeout": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-producer-headers-purpose": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-producer-idempotence-config-cloze": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-producer-idempotence-duplicate-scenario": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-producer-idempotence-exactly-once-relation": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-producer-idempotence-sequence-number-mechanism": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-producer-idempotence-solves-ordering": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-producer-interceptor-hooks": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-producer-key-hash-partition-consistency": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-producer-key-null-sticky-partitioning": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-producer-linger-ms-latency-throughput": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-producer-max-block-ms": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-producer-max-in-flight-ordering-risk": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-producer-required-config-three-props": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-producer-retries-retryable-vs-nonretryable": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-producer-schema-registry-purpose": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-producer-sync-send-throughput-problem": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-producer-three-send-modes": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-acks-all-needs-exception-handling": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-acks1-silent-loss-scenario": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-app-fault-injection-testing": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-auto-commit-risk": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-auto-offset-reset-tradeoff": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-commit-after-processing-rule": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-commit-frequency-tradeoff": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-committed-not-flushed-to-disk": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-consumer-lag-metric": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-consumer-retry-patterns": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-endtoend-and-broker-error-metrics": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-flush-to-disk-vs-replication": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-follower-isr-three-conditions": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-four-core-guarantees": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-groupid-full-vs-subset-read": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-guarantee-vs-full-reliability": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-idempotence-dedupes-retries": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-lag-timeouts-tuning": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-lagging-isr-vs-out-of-isr-tradeoff": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-manual-error-handling-categories": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-min-insync-replicas": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-monitor-producer-error-retry": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-rack-awareness": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-replication-factor-tradeoffs": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-retry-config-at-least-once": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-retryable-vs-nonretryable-errors": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-three-validation-levels": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-unclean-leader-election-tradeoff": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-reliability-verifiable-producer-consumer": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-security-acl-deny-priority": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-security-acl-fields": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-security-allow-everyone-tradeoff": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-security-audit-log-level-split": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-security-config-provider-no-plaintext-password": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-security-custom-authorizer-context": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-security-e2e-audit-header-integrity": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-security-e2e-encryption-why": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-security-e2e-key-rotation-compaction": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-security-protocol-choice": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-security-reauth-mechanism": {
+   "due": 7,
+   "last_review": 1789269660
+  },
+  "kafka-security-sasl-mechanism-choice": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-security-sasl-plain-must-use-ssl": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-security-service-credentials-long-running": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-security-ssl-vs-sasl-choice": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-security-super-users-vs-acl": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-security-zk-digest-md5-not-for-prod": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-security-zk-multi-principal-or-logic": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-security-zk-node-acl-defaults": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-streams-application-id-role": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-streams-async-microservice-requirements": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-streams-cluster-no-external-scheduler": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-streams-complex-analytics-requires-local-storage": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-streams-dsl-vs-processor-api": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-streams-exactly-once-config": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-streams-external-lookup-vs-table-join": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-streams-groupbykey-noop-when-key-unchanged": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-streams-ingestion-connect-vs-streamproc": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-streams-join-requires-copartition": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-streams-joinwindows-asymmetric-before": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-streams-leftjoin-stream-table-vs-stream-stream": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-streams-local-state-recovery-changelog": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-streams-local-vs-external-state": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-streams-low-latency-event-vs-microbatch": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-streams-multistage-repartition": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-streams-out-of-order-late-result-overwrite": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-streams-repartition-splits-subtopology": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-streams-reprocessing-two-versions-safer": {
+   "due": 1,
+   "last_review": 1789269660
+  },
+  "kafka-streams-samza-spark-flink-beam": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-streams-selection-criteria-beyond-usecase": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-streams-standby-replica-and-compaction-speedup": {
+   "due": 4,
+   "last_review": 1789269660
+  },
+  "kafka-streams-stream-table-duality": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-streams-table-join-vs-stream-join-windowing": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-streams-testcontainers-vs-embedded-cluster": {
+   "due": 5,
+   "last_review": 1789269660
+  },
+  "kafka-streams-time-semantics-choice": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-streams-topology-optimization-flag": {
+   "due": 2,
+   "last_review": 1789269660
+  },
+  "kafka-streams-topologytestdriver-limitation": {
+   "due": 6,
+   "last_review": 1789269660
+  },
+  "kafka-streams-tumbling-hopping-session-window": {
+   "due": 3,
+   "last_review": 1789269660
+  },
+  "kafka-streams-window-grace-period": {
+   "due": 1,
+   "last_review": 1789269660
+  }
+ }
+}
