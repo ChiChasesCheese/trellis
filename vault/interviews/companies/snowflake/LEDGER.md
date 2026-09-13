@@ -13,3 +13,4 @@
 | 2026-09-13 | T3.A1/B/C 启动（sonnet ×3：problems/ 10 题 · 04_ood 8 题 · 05_system_design 11 题）| fable | — | — | — | **违规记录**：启动时收割代理 C 尚未结束，瞬时并行 4 > 3；后续不再叠加 |
 | 2026-09-13 | T3.C 系统设计 sd01–sd11（prompt · rubric 五维 · model_answer §0–8 · followups ≥8） | sonnet | `loop/rounds/05_system_design/` | 44 文件齐；每题 followups=8、answer 9 段、rubric 5 维；`mock.py list` 显示 11 题；抽读 sd02：唯一约束+CAS 认领+租约兜底、反例具体 | 检查点 4 | 一手追问：sd03/04/05/07；sd09 题面一手但追问为推断（已标注） |
 | 2026-09-13 | P4 学习面（不依赖题库部分）：study/README · 20-cards/snowflake_internals · 20-cards/sd_checklist · 00-prereq/04-snowflake-primitives | fable | `study/` | check_tree prereq 缺失项减少 | 检查点 4 | |
+| 2026-09-13 | T3.B OOD od01–od06 · od08 · od09（problem.md 中文 · starter · solution · test · REPORT）| sonnet | `loop/rounds/04_ood/` | 编排者独立复跑 `verify_suites.py`：8/8 solution 绿、starter 红；154 测试；od06 自查出 O(n²) 已修 | 检查点 5 | 重建部分：od01 P4 持久化、od08 P3 冷热两级、od09 P2 ack/visibility |
