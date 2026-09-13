@@ -18,3 +18,4 @@
 | 2026-09-13 | T1.C 收割：Reddit 6 板块×17 查询（416 命中，35 帖全文+评论，其余 429 限流仅元数据）· HN 6 条相关 · 1p3a Telegram 镜像 21 帖 · TRIAGE.md 46 行 | sonnet | `catalog/discovery/`（1.3 MB） | README 有命令与状态码；1p3a `__NEXT_DATA__` 直连 3/3 次 403（Stripe 时期的绕行已失效） | 检查点 7 | |
 | 2026-09-13 | 收割回写：q19 Maximize OR-Sum、od10 Student/Result OOP 升级一手；新增 sd22 PB 级数据库同步（IC2，不许澄清需求）；Table D 加 offer 后换组失联；格式事实加 onsite NDA；PARETO 重跑 66 行 80% @ 35 | fable | `catalog/`、`loop/LOOP_GUIDE.md` | pareto 输出与 CATALOG 一致 | 检查点 7 | sd22、q19、od10 尚未建题（第二批） |
 | 2026-09-13 | P4 每轮准备章节 study/10-rounds 00–08（事实层引用 LOOP_GUIDE，本层写练法、时间分配、挂点对策、命令） | fable | `study/10-rounds/` | 9 章齐 | 检查点 7 | |
+| 2026-09-13 | T3.C2 sd22 PB 级数据库同步（prompt · rubric · model_answer · followups 8，追问标注推断）| fable | `loop/rounds/05_system_design/sd22_*` | 4 文件齐；`mock.py list` 可见 | 检查点 8 | 一手仅题面 + "不许澄清需求" |
