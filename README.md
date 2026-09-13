@@ -19,8 +19,16 @@ Cards and readings reference each other with ordinary wikilinks, and every node'
 generated map note lists both — so the Obsidian graph connects topic ↔ reading ↔
 card.
 
-Ships with seven domains (five fully carded, plus Markets & Factors and Quant
-Infrastructure as skeleton + readings). **Kafka** — a 79-node map in Chinese
+Ships with nine domains (seven fully carded, plus Markets & Factors and Quant
+Infrastructure as skeleton + readings). **CDN Content** — a 75-node map
+(198 bilingual cards, 52 readings, 4 drills) for serving content at the edge:
+the request path, HTTP, caching semantics, Go/Node/OpenResty runtimes, the
+content lifecycle from SSG to ISR, distributed architecture, reliability,
+safe delivery, and security and cost. **Stripe** — the online assessment as
+eleven probe groups in Chinese (40 cards), with the study handouts and one
+question/solution pair per problem beside them; the raw research behind it
+(catalog, rounds, reports) is archived as plain notes under
+`vault/Quick_Check/`. **Kafka** — a 79-node map in Chinese
 (340 cards, 88 readings) digested end to end from Kafka权威指南（第2版）with
 the flow under [Digesting a corpus](#digesting-a-corpus): ingest the epub,
 seed the skeleton from its outline, triage 140 sections onto 66 leaves, write

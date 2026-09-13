@@ -1,0 +1,109 @@
+# q21 · Currency Conversion — direct, inverse and multi-hop best rate
+
+## Context
+Stripe settles payouts in the merchant's local currency. The treasury desk publishes a small
+table of exchange rates, but not every pair is quoted directly: `AUD → JPY` may only be
+reachable through `USD`. Given the rate table, compute the rate between any two currencies —
+first only direct quotes, then allowing the inverse of a quote, then multi-hop paths, and
+finally apply the rates to a batch of payouts, rounding to cents.
+
+## Input (stdin)
+```
+PART n
+<rate string>
+<query lines...>
+```
+* `<rate string>`: comma-separated `FROM:TO:RATE` triples, e.g.
+  `USD:AUD:1.4,CAD:USD:0.8,USD:JPY:110`. Spaces around separators are tolerated. Currency codes
+  are compared as given (case-sensitive). `RATE` is a positive decimal; **a rate ≤ 0 or a
+  non-numeric rate is invalid and the whole input is rejected (`ValueError`)**. If the same
+  ordered pair appears twice, **the last quote wins**.
+* Parts 1–3 queries: one `SRC DST` per line. Part 4 queries: one `amount,from,to` per line.
+* Blank lines are ignored. Up to ~50 currencies, ~100 quotes, up to 10^5 query lines.
+
+## Output
+One line per query line, in input order.
+* Parts 1–3: the rate formatted with **`f"{x:.6f}".rstrip("0").rstrip(".")`** (at most 6
+  decimals, trailing zeros and a trailing dot removed: `1.4`, `0.714286`, `88`, `1`), or `N/A`
+  when no conversion exists. Part 3 appends the path: `78.571429 AUD->USD->JPY`.
+* Part 4: `<amount> <from> -> <to> = <x.xx>` with the converted amount rounded **half-up** to
+  2 decimals (`decimal.Decimal`, `ROUND_HALF_UP`), or `= N/A`.
+
+## Rules
+### Part 1 — direct rate  `convert(rates, src, dst) -> float | None`
+Return the quoted rate for the ordered pair `(src, dst)`, `None` if it is not quoted or either
+currency is unknown. **`src == dst` always returns `1.0`** (identity; needs no quote).
+
+### Part 2 — inverse rate  `convert_with_inverse(rates, src, dst) -> float | None`
+As Part 1, but if `(src, dst)` is not quoted and `(dst, src)` is, return `1 / rate(dst, src)`.
+A direct quote always beats the inverse of the opposite quote (even when both exist and are
+inconsistent).
+
+### Part 3 — multi-hop  `find_path(rates, src, dst) -> list[str] | None` and `best_conversion(rates, src, dst) -> tuple[float, list[str]] | None`
+Build the graph with every quote and (when the opposite pair is not quoted) its inverse.
+* `find_path` (BFS): *any* path with the fewest hops; neighbours are explored in the order
+  their quotes first appear in the rate string. Returns the currency list, e.g.
+  `['AUD', 'USD', 'JPY']`, `[src]` when `src == dst`, `None` if disconnected/unknown.
+* `best_conversion` (DFS): the rate is the **maximum product of edge rates over all simple
+  paths** from `src` to `dst`; the path that attains it is returned with it. **Cycles are
+  ignored** (each currency at most once on a path), so inconsistent quotes cannot create an
+  arbitrage loop that inflates the answer. Ties: fewer hops first, then lexicographically
+  smaller path. `src == dst` → `(1.0, [src])`.
+The rate to print in Part 3 is `best_conversion`'s rate and path.
+
+### Part 4 — payouts (reconstructed)  `convert_payouts(rates, payouts) -> list[str]`
+Each payout line is `amount,from,to` (`amount` is a decimal string, may be `0`). Rate = Part 3's
+best path, but the product is **recomputed in `Decimal`** along that path (inverse = `1 /
+Decimal(rate)` at 28 significant digits) so the cent rounding is not disturbed by float noise.
+Result = `Decimal(amount) × product`, quantized to `0.01` with `ROUND_HALF_UP`. Unknown or
+disconnected → `N/A`. Best rates are cached per `(from, to)` so 10^5 payouts stay fast.
+
+## Worked examples
+Rates: `USD:AUD:1.4,CAD:USD:0.8,USD:JPY:110`
+```
+PART 1
+USD AUD   -> 1.4
+CAD USD   -> 0.8
+AUD USD   -> N/A          (only USD->AUD is quoted)
+USD USD   -> 1
+USD GBP   -> N/A          (unknown currency)
+
+PART 2
+AUD USD   -> 0.714286     (1 / 1.4 = 0.7142857…)
+USD CAD   -> 1.25         (1 / 0.8)
+USD AUD   -> 1.4          (direct still wins)
+
+PART 3
+AUD JPY   -> 78.571429 AUD->USD->JPY     ((1/1.4) × 110)
+CAD AUD   -> 1.12 CAD->USD->AUD          (0.8 × 1.4)
+CAD JPY   -> 88 CAD->USD->JPY
+JPY JPY   -> 1 JPY
+```
+Best path (the source's `AUD->GBP->CAD` vs `AUD->USD->CAD` comparison), rates
+`AUD:USD:0.7,USD:CAD:1.2,AUD:GBP:0.5,GBP:CAD:1.7`:
+```
+PART 3
+AUD CAD   -> 0.85 AUD->GBP->CAD          (0.5 × 1.7 = 0.85 beats 0.7 × 1.2 = 0.84)
+```
+(`find_path` would return `['AUD', 'USD', 'CAD']` — the first 2-hop path BFS finds.)
+
+Part 4, rates `USD:AUD:1.4,CAD:USD:0.8,USD:JPY:110`:
+```
+PART 4
+100,USD,AUD        -> 100 USD -> AUD = 140.00
+100,AUD,JPY        -> 100 AUD -> JPY = 7857.14        (7857.142857…)
+0.375,USD,AUD      -> 0.375 USD -> AUD = 0.53         (0.525 → half-up 0.53; banker's would give 0.52)
+0.15625,CAD,USD    -> 0.15625 CAD -> USD = 0.13       (0.125 → 0.13)
+50,USD,GBP         -> 50 USD -> GBP = N/A
+7,EUR,EUR          -> 7 EUR -> EUR = 7.00
+```
+
+## 关联知识点
+
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s06-money-integer-cents|S06 金额用整数最小单位；显式舍入；两位小数格式]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s09-byte-exact-output-format|S09 字节级精确的输出格式]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]

@@ -1,0 +1,465 @@
+# CDN Content: performance foundations, HTTP, caching, serving runtimes,
+# content lifecycle, distributed architecture, reliability, safe delivery,
+# security and cost. Rebuilt from the generated map notes (which were
+# committed) after the skeleton file itself was not.
+domain: cdn-content
+title: CDN Content
+nodes:
+- id: foundations
+  title: Performance Foundations
+  summary: The operating-system, latency, throughput, and measurement model needed before optimizing a serving path.
+  order: 1
+  children:
+  - id: foundations.request-path
+    title: End-to-End Request Path
+    summary: Follow one content request from client and DNS through edge, cache tiers, origin, storage, and back.
+  - id: foundations.os-io
+    title: Processes, Sockets & I/O
+    summary: Processes, threads, file descriptors, sockets, blocking and non-blocking I/O, and where kernel work
+      enters request latency.
+  - id: foundations.concurrency
+    title: Concurrency, Parallelism & Queues
+    summary: Work scheduling, synchronization, queue growth, Little's Law, and why concurrency is not the same as
+      parallel execution.
+  - id: foundations.performance
+    title: Latency, Throughput & Tail Behavior
+    summary: TTFB, throughput, utilization, percentiles, coordinated omission, and why averages hide serving-path
+      failures.
+  - id: foundations.capacity
+    title: Capacity & Bottleneck Estimation
+    summary: Estimate QPS, bandwidth, storage, CPU, memory, connection counts, and the resource that saturates first.
+    requires:
+    - foundations.performance
+- id: networking
+  title: Networking & HTTP
+  summary: How a request reaches an edge, how HTTP expresses content semantics, and where proxies participate.
+  order: 2
+  children:
+  - id: networking.dns-tcp-tls
+    title: DNS, TCP, TLS & Connection Setup
+    summary: Resolution, handshakes, connection reuse, certificates, and the latency paid before HTTP content can
+      flow.
+    requires:
+    - foundations.request-path
+  - id: networking.http-semantics
+    title: HTTP Semantics
+    summary: Methods, status codes, request and response headers, representation metadata, conditional requests,
+      and intermediaries.
+    requires:
+    - networking.dns-tcp-tls
+  - id: networking.http-versions
+    title: HTTP/1.1, HTTP/2 & HTTP/3
+    summary: Keep-alive, pipelining limits, multiplexing, head-of-line blocking, QUIC, and when protocol differences
+      affect content delivery.
+    requires:
+    - networking.http-semantics
+  - id: networking.proxies
+    title: Reverse Proxies, Gateways & Routing
+    summary: Forward versus reverse proxy, TLS termination, hop-by-hop headers, upstream selection, and request
+      transformation boundaries.
+    requires:
+    - networking.http-semantics
+  - id: networking.streaming
+    title: Streaming & Backpressure
+    summary: Chunked bodies, streams, cancellation, buffering, flow control, and preventing a slow consumer from
+      exhausting a service.
+    requires:
+    - foundations.concurrency
+    - networking.http-semantics
+- id: caching
+  title: CDN & Caching
+  summary: Correct shared-cache behavior, cache keys, freshness, revalidation, invalidation, and multi-tier policy.
+  order: 3
+  children:
+  - id: caching.model
+    title: Browser, Shared Cache & CDN Model
+    summary: Private and shared caches, edge and shield roles, cache hits and misses, and when an origin executes.
+    requires:
+    - networking.proxies
+  - id: caching.freshness
+    title: Freshness & Cache-Control
+    summary: Cache-Control directives, Age, Date, freshness lifetime, heuristic caching, s-maxage, and shared-cache
+      eligibility.
+    requires:
+    - caching.model
+  - id: caching.validators
+    title: Validators & Revalidation
+    summary: ETag, Last-Modified, If-None-Match, 304, strong and weak validators, stale-while-revalidate, and stale-if-error.
+    requires:
+    - caching.freshness
+  - id: caching.keys
+    title: Cache Keys, Vary & Representation Safety
+    summary: Host, path, query, headers, cookies, Vary, normalization, personalization, and avoiding collisions
+      or cardinality explosions.
+    requires:
+    - caching.freshness
+  - id: caching.hierarchy
+    title: Multi-Tier Cache Hierarchy
+    summary: In-process, regional, shield, and object-store tiers; inclusive versus exclusive policies; latency,
+      capacity, and cost trade-offs.
+    requires:
+    - caching.keys
+  - id: caching.invalidation
+    title: Expiration, Purge & Invalidation
+    summary: TTL expiry, versioned keys, tag and path purge, soft purge, propagation, and defining consistency during
+      invalidation.
+    requires:
+    - caching.validators
+    - caching.hierarchy
+  - id: caching.stampede
+    title: Stampede & Request Collapsing
+    summary: Hot-key expiry, singleflight, request coalescing, early refresh, TTL jitter, lock scope, and avoiding
+      origin overload.
+    requires:
+    - caching.hierarchy
+  - id: caching.eviction
+    title: Admission, Eviction & Hot Objects
+    summary: LRU, LFU, admission policy, object sizing, hot-object residency, churn, and measuring useful hit ratio.
+    requires:
+    - caching.hierarchy
+  - id: caching.failure
+    title: Negative Caching & Failure Policy
+    summary: Cacheable errors, stale serving, fail-open versus fail-closed, bypass, poisoned failures, and recovery
+      after dependency degradation.
+    requires:
+    - caching.validators
+    - caching.hierarchy
+- id: runtimes
+  title: Serving Runtimes
+  summary: Building and profiling the hot path in Go, TypeScript and Node.js, and Lua/OpenResty.
+  order: 4
+  children:
+  - id: runtimes.go-http
+    title: Go HTTP Services
+    summary: Packages, interfaces, errors, net/http servers and clients, transports, connection pools, and reverse-proxy
+      construction.
+    requires:
+    - networking.proxies
+  - id: runtimes.go-concurrency
+    title: Go Concurrency & Synchronization
+    summary: Goroutines, channels, mutexes, atomics, worker pools, bounded concurrency, ownership, and avoiding
+      leaks and races.
+    requires:
+    - foundations.concurrency
+    - runtimes.go-http
+  - id: runtimes.go-lifecycle
+    title: Go Context, Timeouts & Shutdown
+    summary: Cancellation propagation, deadline budgets, server and client timeouts, resource cleanup, and graceful
+      shutdown.
+    requires:
+    - runtimes.go-concurrency
+  - id: runtimes.go-quality
+    title: Go Testing, Benchmarking & Profiling
+    summary: Table tests, httptest, race detection, fuzzing, benchmarks, pprof, execution traces, and production-safe
+      diagnostics.
+    requires:
+    - runtimes.go-lifecycle
+  - id: runtimes.node-event-loop
+    title: Node.js Event Loop
+    summary: Event-loop phases, promises, libuv worker pool, blocking hazards, AbortSignal, and event-loop lag.
+    requires:
+    - foundations.concurrency
+  - id: runtimes.node-streams
+    title: TypeScript, Node Streams & Backpressure
+    summary: Type narrowing, async failure, readable and writable streams, pipeline, highWaterMark, cancellation,
+      and safe HTTP streaming.
+    requires:
+    - networking.streaming
+    - runtimes.node-event-loop
+  - id: runtimes.lua-openresty
+    title: Lua & OpenResty Hot Path
+    summary: Lua tables and closures, Nginx request phases, cosockets, shared dictionaries, worker isolation, and
+      avoiding blocking work.
+    requires:
+    - networking.proxies
+  - id: runtimes.polyglot
+    title: Polyglot Boundaries
+    summary: Contracts across Go, TypeScript, and Lua, serialization, error vocabulary, ownership, compatibility,
+      and deciding where hot-path logic belongs.
+    requires:
+    - runtimes.go-http
+    - runtimes.node-event-loop
+    - runtimes.lua-openresty
+- id: content
+  title: Content Lifecycle
+  summary: Static and dynamic rendering, ISR, PPR, image optimization, representation negotiation, and deployment
+    lifecycle.
+  order: 5
+  children:
+  - id: content.rendering
+    title: CSR, SSR, SSG & Dynamic Rendering
+    summary: Build-time versus request-time work, personalization boundaries, hydration, static assets, and choosing
+      a rendering mode.
+    requires:
+    - caching.model
+  - id: content.static-generation
+    title: Static Generation & Build Output
+    summary: Pre-rendered artifacts, route metadata, immutable assets, content-addressed naming, deployment manifests,
+      and fallback generation.
+    requires:
+    - content.rendering
+  - id: content.isr
+    title: Incremental Static Regeneration
+    summary: Time-based and on-demand revalidation, durable ISR storage, request collapsing, stale serving, failure
+      behavior, and global purge.
+    requires:
+    - caching.validators
+    - caching.stampede
+    - content.static-generation
+  - id: content.ppr
+    title: Partial Prerendering & Streaming
+    summary: Cached static shells, dynamic holes, Suspense boundaries, streaming response order, and cacheability
+      at component boundaries.
+    requires:
+    - networking.streaming
+    - content.rendering
+  - id: content.images
+    title: Image Optimization Pipeline
+    summary: Decode, resize, crop, quality, metadata, format conversion, resource limits, derived-object keys, and
+      transformation caching.
+    requires:
+    - caching.keys
+  - id: content.negotiation
+    title: Content Negotiation
+    summary: Accept, Accept-Encoding, Content-Type, Content-Encoding, Vary, WebP and AVIF selection, and representation-safe
+      caching.
+    requires:
+    - networking.http-semantics
+    - caching.keys
+  - id: content.range-compression
+    title: Range Requests & Compression
+    summary: Byte ranges, 206 and Content-Range, resumable delivery, gzip and Brotli, precompressed assets, and
+      avoiding double compression.
+    requires:
+    - networking.http-semantics
+  - id: content.versioning
+    title: Deployment, Versioning & Rollback
+    summary: Immutable deployment identity, cache reuse across releases, atomic metadata updates, rollback, and
+      preventing mixed-version responses.
+    requires:
+    - content.static-generation
+    - caching.invalidation
+- id: distributed
+  title: Distributed Architecture
+  summary: Regional caches, object storage, routing, consistency, partial failure, overload, and cross-region operation.
+  order: 6
+  children:
+  - id: distributed.regional-cache
+    title: Regional Cache Services
+    summary: Redis and Memcached data models, sharding, connection behavior, expiration, eviction, replication,
+      and cache-service failure modes.
+    requires:
+    - caching.hierarchy
+  - id: distributed.object-storage
+    title: Object Storage
+    summary: S3 keys and metadata, conditional and range requests, consistency, multipart transfer, lifecycle policy,
+      replication, and request cost.
+    requires:
+    - content.static-generation
+  - id: distributed.routing
+    title: Partitioning, Hashing & Request Routing
+    summary: Shard keys, consistent and rendezvous hashing, virtual nodes, rebalancing, affinity, scatter-gather,
+      and routing metadata.
+    requires:
+    - distributed.regional-cache
+  - id: distributed.consistency
+    title: Replication & Consistency
+    summary: Leader-based and leaderless replication, quorums, read-after-write, monotonic reads, eventual consistency,
+      conflict resolution, and staleness budgets.
+    requires:
+    - distributed.object-storage
+  - id: distributed.cross-region
+    title: Cross-Region Architecture
+    summary: Region placement, replication lag, active-active and active-passive trade-offs, failover, data residency,
+      and global invalidation.
+    requires:
+    - distributed.routing
+    - distributed.consistency
+  - id: distributed.retries
+    title: Timeouts, Retries & Idempotency
+    summary: Timeout budgets, retry safety, exponential backoff and jitter, retry storms, idempotency keys, deduplication,
+      and hedging.
+    requires:
+    - runtimes.go-lifecycle
+    - distributed.consistency
+  - id: distributed.overload
+    title: Backpressure, Load Shedding & Circuit Breaking
+    summary: Queue bounds, concurrency limits, admission control, circuit breakers, graceful degradation, and protecting
+      critical work under overload.
+    requires:
+    - networking.streaming
+    - distributed.retries
+  - id: distributed.skew
+    title: Hot Keys, Skew & Fleet Capacity
+    summary: Detecting data and access skew, splitting or replicating hot objects, load-aware routing, cache warming,
+      and capacity headroom.
+    requires:
+    - caching.eviction
+    - distributed.routing
+- id: reliability
+  title: Reliability & Observability
+  summary: SLOs, telemetry, testing, load validation, alerting, on-call response, and learning from incidents.
+  order: 7
+  children:
+  - id: reliability.slos
+    title: SLIs, SLOs & Error Budgets
+    summary: User-centered availability and latency indicators, objectives, windows, burn rates, and using error
+      budgets to govern change.
+    requires:
+    - foundations.performance
+  - id: reliability.metrics
+    title: Metrics & Cardinality
+    summary: Counters, gauges, histograms, RED and USE, labels, aggregation, percentile estimation, and the cost
+      of high cardinality.
+    requires:
+    - reliability.slos
+  - id: reliability.logging
+    title: Structured Logging
+    summary: Event design, request and deployment context, levels, sampling, redaction, retention, and turning logs
+      into a searchable diagnostic surface.
+    requires:
+    - reliability.slos
+  - id: reliability.tracing
+    title: Distributed Tracing
+    summary: Trace and span context, propagation, sampling, baggage, exemplars, and attributing latency across the
+      serving path.
+    requires:
+    - reliability.metrics
+    - reliability.logging
+  - id: reliability.alerting
+    title: Dashboards & Alerts
+    summary: Golden signals, cache and origin dashboards, symptom-based paging, burn-rate alerts, change annotations,
+      and actionable runbooks.
+    requires:
+    - reliability.metrics
+  - id: reliability.testing
+    title: Unit, Integration & End-to-End Testing
+    summary: Protocol conformance, cache-state matrices, fakes versus real dependencies, production-shaped fixtures,
+      e2e paths, and regression ownership.
+    requires:
+    - caching.failure
+    - runtimes.go-quality
+  - id: reliability.load-testing
+    title: Load, Soak & Failure Testing
+    summary: Workload models, warm and cold cache scenarios, saturation, soak tests, fault injection, chaos scope,
+      and production-data validation.
+    requires:
+    - foundations.capacity
+    - reliability.testing
+  - id: reliability.incidents
+    title: On-Call, Incidents & Postmortems
+    summary: Triage, mitigation, incident command, communication, rollback, evidence collection, blameless causal
+      analysis, and durable follow-ups.
+    requires:
+    - reliability.alerting
+    - reliability.load-testing
+- id: delivery
+  title: Safe Delivery & Infrastructure
+  summary: Feature flags, shadowing, canaries, progressive rollout, rollback, CI/CD, AWS, Terraform, and Kubernetes.
+  order: 8
+  children:
+  - id: delivery.flags
+    title: Feature Flags & Kill Switches
+    summary: Decoupling deploy from release, targeting, defaults, failure behavior, ownership, expiration, and operational
+      kill switches.
+    requires:
+    - reliability.alerting
+  - id: delivery.shadow
+    title: Shadow Mode & Dark Launches
+    summary: Mirroring production inputs, suppressing side effects, comparing old and new decisions, sampling, privacy,
+      and interpreting divergence.
+    requires:
+    - delivery.flags
+    - reliability.metrics
+  - id: delivery.canary
+    title: Canary & Progressive Deployment
+    summary: Cohort selection, 1-10-50-100 ramps, statistical and practical significance, bake time, guardrails,
+      and fleet heterogeneity.
+    requires:
+    - delivery.flags
+    - reliability.slos
+  - id: delivery.rollback
+    title: Post-Ship Validation & Rollback
+    summary: Baselines, control groups, stop conditions, automatic and manual rollback, roll-forward, cache cleanup,
+      and proving recovery.
+    requires:
+    - delivery.shadow
+    - delivery.canary
+  - id: delivery.compatibility
+    title: Compatibility & Configuration Changes
+    summary: Backward and forward compatibility, expand-contract, config validation, version skew, safe defaults,
+      and avoiding irreversible releases.
+    requires:
+    - content.versioning
+  - id: delivery.cicd
+    title: CI/CD & Release Evidence
+    summary: Reproducible builds, test gates, artifact provenance, environment promotion, deployment records, and
+      evidence that a rollout is safe.
+    requires:
+    - reliability.testing
+    - delivery.compatibility
+  - id: delivery.aws
+    title: AWS for Content Serving
+    summary: Regions and Availability Zones, S3, ElastiCache, IAM, CloudWatch, load balancing, quotas, failure boundaries,
+      and data-transfer cost.
+    requires:
+    - distributed.regional-cache
+    - distributed.object-storage
+  - id: delivery.terraform-kubernetes
+    title: Terraform & Kubernetes Basics
+    summary: Declarative state, plans, drift, modules, pods, services, probes, resources, rolling updates, autoscaling,
+      and rollback.
+    requires:
+    - delivery.cicd
+    - delivery.aws
+- id: security-cost
+  title: Security & Cost
+  summary: Tenant isolation, cache attacks, abuse controls, signed delivery, and the unit economics of global content
+    serving.
+  order: 9
+  children:
+  - id: security-cost.isolation
+    title: Tenant & Personalization Isolation
+    summary: Authentication and authorization boundaries, private responses, cookie handling, cache partitioning,
+      and preventing cross-tenant content leaks.
+    requires:
+    - caching.keys
+  - id: security-cost.poisoning
+    title: Cache Poisoning & Key Confusion
+    summary: Unkeyed input, host and header ambiguity, normalization disagreement, response splitting, cache deception,
+      and defense by explicit key policy.
+    requires:
+    - security-cost.isolation
+  - id: security-cost.request-integrity
+    title: Proxy Request Integrity
+    summary: Request smuggling, hop-by-hop headers, conflicting message lengths, trusted proxy headers, origin exposure,
+      and parser consistency.
+    requires:
+    - networking.proxies
+  - id: security-cost.abuse
+    title: Abuse, DDoS & Resource Limits
+    summary: Rate and concurrency limits, bot and tenant quotas, amplification, decompression and image bombs, overload
+      isolation, and safe rejection.
+    requires:
+    - distributed.overload
+  - id: security-cost.signed-content
+    title: Signed URLs & Private Content
+    summary: Time-bounded authorization, canonical signing input, key rotation, replay scope, origin access control,
+      and cache-safe private delivery.
+    requires:
+    - security-cost.isolation
+  - id: security-cost.economics
+    title: CDN Unit Economics
+    summary: Egress, regional transfer, cache storage, object requests, compute, image transformation, observability,
+      and cost per delivered request or byte.
+    requires:
+    - foundations.capacity
+    - delivery.aws
+  - id: security-cost.optimization
+    title: Performance-Cost Optimization
+    summary: Hit-ratio value, object sizing, compression, tier placement, origin shielding, retention, sampling,
+      and proving savings without harming correctness.
+    requires:
+    - caching.hierarchy
+    - reliability.metrics
+    - security-cost.economics

@@ -243,12 +243,17 @@ def test_real_repo_wikilinks_resolve():
                 items, _ = loader(vault / sub)
                 targets |= {getattr(i, "id", None) or i.link_target for i in items}
     link_re = re.compile(r"\[\[([^\]|#]+)")
-    for path in (REPO / "vault").rglob("*.md"):
-        # map notes, corpus notes and the study path are generated; clippings
-        # are other people's pages, whose links are theirs and not ours
-        if ({"map", "Corpora", CLIPPINGS_DIRNAME} & set(path.parts)
-                or path.name == "Study Path.md"):
-            continue
+    # Only the content the tool owns is checked: a domain's cards, readings,
+    # drills and cases. Map notes, corpus notes and the study path are
+    # generated; clippings are other people's pages; and a domain folder
+    # may also hold plain notes (handouts, problem archives) whose `[[…]]`
+    # is code, not a link.
+    content_dirs = [
+        REPO / "vault" / load_skeleton(f).domain / sub
+        for f in (REPO / "skeleton").glob("*.yaml")
+        for sub in ("cards", "readings", "drills", "cases")
+    ]
+    for path in (p for d in content_dirs if d.exists() for p in d.rglob("*.md")):
         for target in link_re.findall(path.read_text(encoding="utf-8")):
             target = target.strip()
             # embeds of clipped articles are expected to be missing here:
