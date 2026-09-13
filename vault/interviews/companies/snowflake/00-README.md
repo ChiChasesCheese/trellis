@@ -30,6 +30,7 @@
 | `05-applied-scenarios.md` | 后端应用场景 6 题：pipeline 算错 / 计量不重复计费 / 无停机 schema 变更 / 慢查询 / 事故 / 幂等重试 |
 | `06-questions-to-ask.md` | 反问：对 AI 的 3 个 + 后续轮次按对象分的清单 |
 | `07-mock.md` | 20 分钟计时自测 + 追问池 + 价值观直击 + 录音回听清单 |
+| `CARD.md` | 03 的浓缩卡：时间表 + 英文稿 + 危险追问 + 考前清单，手机 / 贴摄像头旁用 |
 | `fit.md` | Why Snowflake / What do you know about Snowflake / Why leave PayPal（英文） |
 | `raw/` | `emails.md`（邀请原文）· `chakra.md`（Chakra 机制调研）· `process_research.md`（流程调研）· `company_research.md`（公司调研，44 KB，全部带 URL） |
 
