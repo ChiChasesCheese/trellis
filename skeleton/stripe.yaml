@@ -1,7 +1,7 @@
 # Stripe: the OA (online assessment) as eleven probe groups, in Chinese.
 # The domain folder also holds essentials/ (the study handouts) and one
 # question.md + solution.md pair per problem; the raw research behind
-# them lives in vault/Quick_Check/.
+# them lives in vault/interviews/companies/stripe/.
 domain: stripe
 title: Stripe
 lang: zh

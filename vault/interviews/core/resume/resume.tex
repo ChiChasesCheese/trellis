@@ -1,0 +1,240 @@
+% Author: Chi Zhang
+% Canonical resume source — vault/interviews/core/resume/resume.tex
+% Build:  latexmk -pdf resume.tex     (TeX Live at /Library/TeX/texbin)
+% Ship:   cp resume.pdf Chi_Zhang_SDE.pdf  and copy to iCloud/个人文件 — see README.md
+
+\documentclass[letterpaper,10pt]{article}
+
+%-----------------------------------------------------------
+% Package imports
+%-----------------------------------------------------------
+\usepackage{graphicx}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontawesome5}
+\usepackage{multicol}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage{pdfpages}
+\usepackage{geometry}
+\usepackage{microtype}
+
+\tolerance=1000
+\emergencystretch=3em
+\uchyph=0
+
+\input{glyphtounicode}
+
+%-----------------------------------------------------------
+% Font settings
+%-----------------------------------------------------------
+\usepackage[default, scale=1.05, lining, light]{sourcesanspro}
+
+% Redefine \textbf to use semibold instead of bold
+\DeclareRobustCommand\sbseries{\fontseries{m}\selectfont}
+\DeclareTextFontCommand{\textsb}{\sbseries}
+\let\textbf\textsb
+
+%-----------------------------------------------------------
+% Page layout
+%-----------------------------------------------------------
+\geometry{
+    left=0.5in,
+    right=0.5in,
+    top=0.4in,
+    bottom=0.4in,
+    marginparwidth=0in
+}
+
+\setlength{\multicolsep}{-5.0pt}
+\setlength{\columnsep}{-1pt}
+\setlength{\tabcolsep}{0in}
+\setlength\parindent{0pt}
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\renewcommand{\arraystretch}{1.05}
+
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large\sbseries
+}{}{0em}{}[\color{black}\titlerule \vspace{1pt}]
+\titlespacing*{\section}{0pt}{8pt}{4pt}
+
+%-----------------------------------------------------------
+% Custom commands
+%-----------------------------------------------------------
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[3]{
+  \item
+    \begin{tabular*}{\textwidth}[t]{@{}l@{\extracolsep{\fill}}r@{}}
+      \textbf{#1\hspace{0.5em}}#2 & \textbf{\small #3} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeSubheadingx}[4]{
+  \vspace{-2pt}\item
+    \begin{tabularx}{\textwidth}{lXr}
+      #1 & & \textbf{\small #2} \\
+      #3 & & \textbf{\small #4} \\
+    \end{tabularx}\vspace{-20pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & \textbf{\small #2}\\
+    \end{tabular*}\vspace{-3pt}
+}
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}\vspace{-1pt}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-2pt}}
+
+%===========================================================
+\begin{document}
+
+\begin{center}
+\vspace{-80pt}
+
+  {\Huge \scshape Chi Zhang} \\[7pt]
+  \footnotesize
+  \raisebox{-0.1\height}\faPhone\ (929)-705-4920 \quad
+  \href{mailto:chizhang2048@gmail.com}{\raisebox{-0.2\height}\faEnvelope\ \underline{chizhang2048@gmail.com}} \quad
+  \href{https://chizhang.love}{\raisebox{-0.2\height}\faGlobe\ \underline{chizhang.love}} \quad
+  \href{https://www.linkedin.com/in/chizhang111/}{\raisebox{-0.2\height}\faLinkedin\ \underline{@chizhang111}} \quad
+  \href{https://github.com/chichasescheese}{\raisebox{-0.2\height}\faGithub\ \underline{@chichasescheese}} \quad
+  \href{https://leetcode.com/scofieldacreep}{\includegraphics[height=9pt,width=9pt]{leetcode-svgrepo-com.pdf}\raisebox{0.2\height}\ \underline{@scofieldacreep}} \quad
+\end{center}
+
+\vspace{-12pt}
+
+{\color{ForestGreen}\section{Education}}
+\resumeSubHeadingListStart
+\resumeSubheadingx
+{\textbf{New York University} $|$ \emph{MS in Computer Science } \hspace{35pt}}{Sep. 2023 -- Jan. 2025}
+{\textbf{Tianjin University\quad} $|$ \emph{BS in Construction Management} }
+{Sep. 2018 -- Jun. 2023}
+\resumeSubHeadingListEnd
+
+\vspace{6pt}
+
+{\color{ForestGreen}\section{Technical Skills}}
+
+\vspace{-12pt}
+
+\begin{table}[h]
+\small
+\begin{tabular}{@{}p{0.15\textwidth}p{0.85\textwidth}@{}}
+\textbf{Languages}       & : Python, C/C++, Java, TypeScript/JavaScript, Kotlin, Rust, SQL \\
+\textbf{Quant \& ML}     & : pandas, NumPy, PyTorch, scikit-learn, NautilusTrader, DuckDB, Prefect; backtesting, time-series, portfolio \& factor-risk modeling, OpenAI API / LLM agents \\
+\textbf{Systems \& Data} & : Kubernetes, Docker, Kafka, gRPC, Spark, Snowflake, PostgreSQL, Redis, MongoDB, AWS, GCP, CI/CD \\
+\textbf{Web}             & : React, Next.js, Vue.js, FastAPI, Spring Boot, Node.js \hfill \textbf{Certificate}: AWS Certified Developer Associate (DVA-C02) \\
+\end{tabular}
+\end{table}
+
+\vspace{-6pt}
+
+{\color{ForestGreen}\section{Work Experience}}
+\resumeSubHeadingListStart
+
+\resumeSubheading
+{PayPal}{-- Software Engineer @ San Jose}{Feb 2025 -- Present}
+\resumeItemListStart
+\resumeItem{
+Led development of the American Express transaction-fee calculation system (\textbf{Snowflake}, \textbf{PostgreSQL}) processing \textbf{\$600B+} in annual transaction volume, owning the full pipeline end-to-end from file ingestion through fee calculation to fund transfer.
+}
+\resumeItem{
+Spearheaded Braintree's net settlement project, enabling next-day fund transfers and improving cash-flow efficiency, an estimated hundreds of millions in working-capital savings.
+}
+\resumeItem{
+Owned production reliability as an on-call engineer for the \$600B+-scale fee pipeline, building a transaction-tracing and observability stack (\textbf{Sentry}, \textbf{Datadog}) and driving root-cause investigations end-to-end to prevent recurrence.
+}
+\resumeItem{
+Migrated legacy \textbf{Ruby}/\textbf{Kotlin} business logic to \textbf{Snowflake}/\textbf{Java} using an AI-native development workflow (\textbf{Claude Code} for code review, test generation, and refactoring), ensuring behavioral parity through comprehensive testing while accelerating delivery.
+}
+\resumeItemListEnd
+
+\resumeSubheading
+{PayPal}{-- Software Engineer Intern @ Chicago}{May 2024 -- Aug 2024}
+\resumeItemListStart
+\resumeItem{
+Developed the B2B backend service using \textbf{Kotlin} and \textbf{Spring Boot} to calculate and deduct transaction fees and generate compliance reports for PayPal's merchants who use our billing gateway.
+}
+\resumeItem{
+Built an efficient \textbf{Kafka} message queue for accurate transaction-event processing, using Kafka proxies within \textbf{Kubernetes} for distributed node operations and stability.
+}
+\resumeItem{
+Optimized logic of transaction verification, settlement, chargeback, and audit compliance with newly designed multiple \textbf{Airflow} DAGs for efficient scheduling of \textbf{Spark} jobs.
+}
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+\vspace{4pt}
+
+{\color{ForestGreen}\section{Projects}}
+
+\resumeSubHeadingListStart
+
+\resumeProjectHeading
+{\textbf{Quant-Stroller -- Multi-Market Quant Research Platform \href{https://chizhang.love}{\raisebox{0pt}\faGlobe\ \underline{}}} $|$ \emph{Python, NautilusTrader, DuckDB, React}}{Jun 2026 -- Present}
+\resumeItemListStart
+\resumeItem{
+Architected a quantitative research and backtesting platform (Python, 66K+ lines, 470+ test files) spanning US equities, crypto, China A-shares, and FX; narrow DataSource / Factor / Strategy / Broker seams onboard a new market or vendor as a thin adapter with zero strategy-code changes.
+}
+\resumeItem{
+Enforced anti-overfitting discipline via a dual-gate pipeline (purged cross-validation, Deflated Sharpe Ratio, PBO, plus execution replay on \textbf{NautilusTrader}), logging 340+ experiments to an append-only ledger with calibrated per-market transaction-cost models.
+}
+\resumeItem{
+Validated a China small-cap monthly strategy through both gates (excess Sharpe 1.39 net of 10 bps costs); deployed to a live paper-trading loop with \textbf{Alpaca}/\textbf{CCXT} broker routing, pre-trade risk checks, and 5-factor risk reporting.
+}
+\resumeItem{
+Built a point-in-time data plane (raw $\rightarrow$ bars $\rightarrow$ panel) on \textbf{DuckDB}/Parquet with a 2,300+ factor catalog across 9 vendors; ran 5,500-stock A-share panels and \textbf{PyTorch} training on an 8-GPU server with self-hosted CI; shipped a \textbf{FastAPI} + \textbf{React} research console.
+}
+\resumeItemListEnd
+
+\resumeProjectHeading
+{\textbf{AikiCard -- AI Learning Platform \href{https://aikicard.com/}{\raisebox{0pt}\faGlobe\ \underline{}}} $|$ \emph{React, Next.js, TypeScript, OpenAI API, Vercel}}{Jun 2025}
+\resumeItemListStart
+\resumeItem{
+Built a web platform using \textbf{React} and \textbf{Next.js} with \textbf{TypeScript} that transforms EPUB books into interactive learning content, serving users with fast global access via \textbf{Vercel} edge caching.
+}
+\resumeItem{
+Implemented a spaced-repetition algorithm (SM-2) with progress tracking and adaptive review scheduling.
+}
+\resumeItem{
+Designed a responsive UI with \textbf{React} and \textbf{TailwindCSS}, optimized for performance across devices.
+}
+\resumeItemListEnd
+
+\resumeProjectHeading
+{\textbf{Aiki -- AI Driven Memo Card \href{https://apps.apple.com/us/app/aikicard/id6747163240}{\raisebox{0pt}\faAppStore\ \underline{}}} $|$ \emph{iOS, SwiftUI, LLM, SwiftData}}{Mar 2024}
+\resumeItemListStart
+\resumeItem{
+Developed an iOS flashcard app using \textbf{OpenAI}'s o3 for intelligent content generation and adaptive learning paths.
+}
+\resumeItem{
+Implemented local storage with \textbf{Core Data} and \textbf{CloudKit} sync, and an intuitive \textbf{SwiftUI} UI with \textbf{StoreKit} in-app purchases, achieving a 4.5+ App Store rating.
+}
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+\end{document}

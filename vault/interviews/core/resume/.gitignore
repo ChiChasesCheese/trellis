@@ -1,0 +1,8 @@
+# LaTeX build artefacts — only resume.tex, the icon, and the shipped PDFs are tracked
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
