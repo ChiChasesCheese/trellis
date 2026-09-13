@@ -1,0 +1,168 @@
+# Snowflake 面试 Loop 知识树（受限 YAML：2 空格缩进、`key: value`、`- item`、行内列表 `[a, b]`）
+# 校验：python3 loop/tree/check_tree.py [--strict]   （目录未建 = warning；--strict 视为 error）
+# 节点：round → skill → problems（rounds ID；OA 题为 problems/ 下 qNN，用 `q` 前缀）→ study（loop/ 下相对路径）
+# 非编码轮 ID：rc = 01_recruiter · exp = 06_project_deep_dive · hm = 07_hm_behavioral · tm = 08_team_matching（bank.json）
+version: 1
+prereq:
+  study: [study/00-prereq/01-python-for-interviews.md, study/00-prereq/02-concurrency-basics.md, study/00-prereq/03-distributed-systems-vocab.md, study/00-prereq/04-snowflake-primitives.md]
+  cards: [study/20-cards/patterns.md, study/20-cards/snowflake_internals.md, study/20-cards/sd_checklist.md]
+
+rounds:
+  - id: 00_ai_screen
+    name: Chakra AI 语音筛（20 min，BQ + 项目）
+    duration_min: 20
+    study: [study/10-rounds/00-ai-screen.md]
+    skills:
+      - id: evidence_bearing_answers
+        name: headline → mechanism → number → learning；rubric 关键词说出口
+        problems: [rc]
+      - id: applied_scenarios_verbal
+        name: 口述场景题骨架（clarify → 3 步 → 真实例子 → trade-off）
+        problems: [rc]
+
+  - id: 01_recruiter
+    name: Recruiter / HR call
+    duration_min: 30
+    study: [study/10-rounds/01-recruiter.md]
+    skills:
+      - id: why_snowflake_specific
+        name: 具体化的 why Snowflake（产品/技术方向 + 自己的桥）
+        problems: [rc]
+      - id: logistics_level
+        name: 时间线、地点、level/薪资不报数字、team matching 问 headcount
+        problems: [rc]
+
+  - id: 02_oa
+    name: HackerRank OA（2–3 题 / 90–135 min）
+    duration_min: 120
+    study: [study/10-rounds/02-oa.md, study/00-essentials/02-dp-patterns.md, study/00-essentials/03-graph-tree-patterns.md]
+    skills:
+      - id: dp_counting
+        name: 计数/最优化 DP（元音游程、paid/free server、加权区间调度、2D DP）
+        problems: [q02, q01, q04, q09]
+      - id: tree_height
+        name: 树高压缩（删叶子 / 换根 / 计数）
+        problems: [q03]
+      - id: graph_bfs_topo
+        name: 图 BFS / 拓扑排序 / valid tree
+        problems: [q10, q08]
+      - id: intervals_counting
+        name: 区间与计数（Paint the Ceiling、Patching Array、Inorder/Morris）
+        problems: [q05, q06, q07]
+
+  - id: 03_phone_coding
+    name: 技术电面 coding（60 min：10 介绍 / 40 题 / 10 反问）
+    duration_min: 40
+    study: [study/10-rounds/03-phone-coding.md, study/00-essentials/01-solving-framework.md, study/00-essentials/03-graph-tree-patterns.md]
+    skills:
+      - id: rbac_dag_inheritance
+        name: RBAC / DAG 权限继承（继承 → deny 覆盖 → 反向查询）
+        problems: [pc01]
+      - id: grid_multi_source_bfs
+        name: 网格多源 BFS 与路径重建
+        problems: [pc02, pc04]
+      - id: stream_window
+        name: 事件流滑窗（去重计数 / 最频 key）
+        problems: [pc03]
+      - id: message_state_machine
+        name: 消息传递状态机 / 分布式聚合模拟
+        problems: [pc10]
+      - id: lc_with_followup
+        name: LC 原题 + 更难 follow-up（1751 变体、Happy Number O(1)、Word Search II）
+        problems: [pc05, pc06, pc07]
+
+  - id: 04_ood
+    name: OOD / 类设计（电面或 onsite，默认并发追问）
+    duration_min: 45
+    study: [study/10-rounds/04-ood.md, study/00-essentials/04-class-design-and-concurrency.md]
+    skills:
+      - id: priority_scheduler
+        name: 优先级任务调度器（tie-break、重复 ID 抑制、并发、持久化）
+        problems: [od01]
+      - id: in_memory_fs
+        name: 内存文件系统（trie、rm、分块、锁、WAL）
+        problems: [od02]
+      - id: transactional_kv
+        name: 事务 KV（嵌套 begin/commit/rollback、每线程事务栈）
+        problems: [od03]
+      - id: rate_limiter_class
+        name: 限流器（滑窗单规则 → 多规则排队 → 线程安全）
+        problems: [od04]
+      - id: cron_scheduler_class
+        name: Cron 调度器类（schedule/pause/resume/tick、多副本 lease）
+        problems: [od05]
+      - id: queue_to_service
+        name: 队列类 → 云端队列服务（故障语义）
+        problems: [od09]
+      - id: audit_log_class
+        name: 审计日志类（时间窗访问查询 / 未访问集合）
+        problems: [od06]
+      - id: cache_eviction
+        name: LRU / TTL 缓存（warehouse SSD cache 框架）
+        problems: [od08]
+
+  - id: 05_system_design
+    name: 系统设计（45–60 min，infra/data 题）
+    duration_min: 45
+    study: [study/10-rounds/05-system-design.md, study/00-essentials/05-sd-framework-snowflake-primitives.md]
+    skills:
+      - id: kv_store
+        name: KV store（版本、time travel、Raft、跨分区事务）
+        problems: [sd01]
+      - id: scheduler_queue
+        name: 调度器 / 队列（cron、幂等重试、多副本、背压）
+        problems: [sd02, sd05]
+      - id: query_result_delivery
+        name: SQL notebook / 查询结果分发（异步、流式、排队）
+        problems: [sd03]
+      - id: quota_rate_limit
+        name: 配额与限流（强一致 vs 本地缓存、多区域）
+        problems: [sd04, sd07]
+      - id: audit_governance
+        name: 审计日志 / 访问治理（多租户、防篡改、时间窗）
+        problems: [sd06]
+      - id: dag_materialized_views
+        name: DAG 缓存 / 物化视图（≈ Dynamic Tables）
+        problems: [sd08]
+      - id: automation_pipeline
+        name: Jira→PR 自动化（异步任务、人审门）
+        problems: [sd11]
+      - id: security_storage
+        name: 密码存储 / 对象存储去重
+        problems: [sd09]
+      - id: crawler
+        name: 并发爬虫（去重、分片、礼貌性）
+        problems: [sd10]
+
+  - id: 06_project_deep_dive
+    name: Expertise / 项目深挖（早期职业：coding 前 15–20 min + resume 轮）
+    duration_min: 40
+    study: [study/10-rounds/06-project-deep-dive.md]
+    skills:
+      - id: decision_why_alternatives
+        name: 每个决策的 why + 被否方案 + 现在怎么重做
+        problems: [exp]
+      - id: system_properties
+        name: 可用性 / 容错 / 扩展性 / 监控
+        problems: [exp]
+
+  - id: 07_hm_behavioral
+    name: HM / Behavioral（8 条价值观）
+    duration_min: 45
+    study: [study/10-rounds/07-hm-behavioral.md]
+    skills:
+      - id: values_mapping
+        name: 故事 ↔ 8 条价值观映射（Own It / Get It Done / Integrity Always 优先）
+        problems: [hm]
+      - id: conflict_pushback
+        name: 分歧 / pushback / disagree-and-commit
+        problems: [hm]
+
+  - id: 08_team_matching
+    name: Team matching（GenSWE 最后一步）
+    duration_min: 45
+    study: [study/10-rounds/08-team-matching.md]
+    skills:
+      - id: org_preference
+        name: 偏好方向与理由；问 headcount
+        problems: [tm]

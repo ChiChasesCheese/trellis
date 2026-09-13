@@ -8,7 +8,7 @@
 
 检查项：
   1. 每个 `problems: [..]` 里的 ID 能唯一解析到 loop/rounds/<round>/<id>_* 目录，
-     非编码轮 ID（rc/hm/bq）解析到 loop/rounds/01_recruiter|02_hm|08_behavioral/bank.json
+     非编码轮 ID（rc/exp/hm/tm）解析到 loop/rounds/<round>/bank.json；qNN 解析到 ../problems/qNN_*
   2. 每个 `study: [..]` / `cards: [..]` 路径存在于 loop/ 下
   3. round `id` 对应 loop/rounds/<id>/ 目录存在
   4. 同一 round 内 skill id 不重复；problem ID 至少被一个 skill 引用一次（信息性）
@@ -23,7 +23,8 @@ from pathlib import Path
 LOOP = Path(__file__).resolve().parents[1]
 ROUNDS = LOOP / "rounds"
 YAML = LOOP / "tree" / "interview-loop.yaml"
-NONCODE = {"rc": "01_recruiter", "hm": "02_hm", "bq": "08_behavioral"}
+NONCODE = {"rc": "01_recruiter", "exp": "06_project_deep_dive", "hm": "07_hm_behavioral", "tm": "08_team_matching"}
+PROBLEMS = LOOP.parent / "problems"  # OA 题（qNN）在公司根目录 problems/ 下，不在 loop/rounds/
 
 _LIST = re.compile(r"^\s*(problems|study|cards):\s*\[(.*)\]\s*$")
 _ID = re.compile(r"^(\s*)-\s*id:\s*(\S+)\s*$")
@@ -60,6 +61,9 @@ def resolve(pid: str) -> Path | None:
     if pid in NONCODE:
         p = ROUNDS / NONCODE[pid] / "bank.json"
         return p if p.exists() else None
+    if re.match(r"^q\d+$", pid):
+        hits = list(PROBLEMS.glob(f"{pid}_*"))
+        return hits[0] if len(hits) == 1 else None
     hits = list(ROUNDS.glob(f"*/{pid}_*"))
     return hits[0] if len(hits) == 1 else None
 
