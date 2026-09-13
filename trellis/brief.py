@@ -74,30 +74,26 @@ def _opening_move(
     so plainly rather than inventing an errand."""
     if weak:
         domain, s = weak[0]
-        because = (f"holding {s.hold:.0%}" if not s.bearing else
-                   f"holding {s.hold:.0%}, and {s.bearing} "
-                   f"topic{'s' if s.bearing != 1 else ''} stand"
-                   f"{'' if s.bearing != 1 else 's'} on it")
-        bits = [f"**Open with** {_link(domain, s)} — {because}."]
+        because = (f"握持 {s.hold:.0%}" if not s.bearing else
+                   f"握持 {s.hold:.0%}，还有 {s.bearing} 个话题压在它上面")
+        bits = [f"**先做** {_link(domain, s)}：{because}。"]
         onward = []
         for drill in drills_by_node.get(s.node.id, [])[:1]:
-            onward.append(f"drill [[{drill.link_target}|{drill.title}]]")
+            onward.append(f"练 [[{drill.link_target}|{drill.title}]]")
         for reading in readings_by_node.get(s.node.id, [])[:1]:
-            onward.append(f"read [[{reading.link_target}|{reading.title}]]")
+            onward.append(f"读 [[{reading.link_target}|{reading.title}]]")
         if onward:
             bits.append("→ " + " · ".join(onward))
         else:
-            bits.append(f"→ nothing to practise on it yet: "
-                        f"`trellis grow --leaf {domain}:{s.node.id}`")
+            bits.append(f"→ 还没有可练可读的：`trellis grow --leaf {domain}:{s.node.id}`")
         return "\n".join(bits)
     if uncovered:
         domain, s = uncovered[0]
-        because = (f"{s.bearing} topics stand on it and it has no cards"
-                   if s.bearing else "it has no cards yet")
-        return (f"**Open with** writing for {_link(domain, s)} — {because}.\n"
+        because = (f"{s.bearing} 个话题压在它上面，而它还没有卡"
+                   if s.bearing else "它还没有卡")
+        return (f"**先写** {_link(domain, s)}：{because}。\n"
                 f"→ `trellis grow --leaf {domain}:{s.node.id}`")
-    return ("**Nothing is slipping.** Everything reviewed is holding, and "
-            "every leaf has cards. Pull again after your next session.")
+    return "**没有在滑落的。** 复习过的都握住了，每个叶子都有卡。下次复习后再拉取。"
 
 
 def brief_body(
@@ -122,33 +118,31 @@ def brief_body(
     ))
     sealed = [(d, s) for d, a in assessments.items() for s in a.sealed()][:SECTION_LIMIT]
 
-    lines = ["# Brief", ""]
+    lines = ["# 简报", ""]
     lines += [_opening_move(weak, uncovered, drills_by_node, readings_by_node), ""]
 
     if weak:
-        lines += ["## Slipping", "",
-                  "| | topic | hold | bears |", "|---|---|---|---|"]
+        lines += ["## 在滑落", "",
+                  "| 域 | 话题 | 握持 | 压着 |", "|---|---|---|---|"]
         for domain, s in weak:
             lines.append(f"| {skeletons[domain].title} | {_link(domain, s)} "
                          f"| `{_bar(s.hold)}` {s.hold:.0%} | {s.bearing} |")
-        lines += ["", "*A slipping topic wants a second route in: "
-                  "`trellis grow --next` writes cards from what lapsed.*", ""]
+        lines += ["", "*滑落的话题需要第二条路进去：`trellis grow --next` 会从没握住的卡出发写新卡。*", ""]
 
     if uncovered:
-        lines += ["## Worth writing", ""]
+        lines += ["## 值得写", ""]
         for domain, s in uncovered:
-            lines.append(f"- {_link(domain, s)} — {s.bearing} topics stand on it, "
-                         f"no cards yet · `trellis grow --leaf {domain}:{s.node.id}`")
+            lines.append(f"- {_link(domain, s)}：{s.bearing} 个话题压在它上面，还没有卡 · "
+                         f"`trellis grow --leaf {domain}:{s.node.id}`")
         lines.append("")
 
     if sealed:
-        lines += ["## Sealed", "",
-                  "*Cards exist but are held back until the ground under them "
-                  "takes.*", ""]
+        lines += ["## 封着", "",
+                  "*卡已经有了，但先不放出来，等它们脚下的前置握住。*", ""]
         for domain, s in sealed:
             waiting = ", ".join(
                 f"[[{r}|{skeletons[domain].by_id[r].title}]]" for r in s.sealed_by)
-            lines.append(f"- {_link(domain, s)} — waiting on {waiting}")
+            lines.append(f"- {_link(domain, s)}：等 {waiting}")
         lines.append("")
 
     lines += ["---", ""]
@@ -156,8 +150,8 @@ def brief_body(
         a = assessments[domain]
         hold = f"{a.hold:.0%}" if a.hold is not None else "—"
         age = stale_days.get(domain)
-        when = "never pulled" if age is None else (
-            "pulled today" if age < 1 else f"pulled {age:.0f}d ago")
-        lines.append(f"- **{skeletons[domain].title}** — {a.reviewed}/{a.total} "
-                     f"cards seen, hold {hold} · {when}")
+        when = "从未拉取" if age is None else (
+            "今天拉取" if age < 1 else f"{age:.0f} 天前拉取")
+        lines.append(f"- **{skeletons[domain].title}**：{a.reviewed}/{a.total} "
+                     f"张卡复习过，握持 {hold} · {when}")
     return "\n".join(lines)

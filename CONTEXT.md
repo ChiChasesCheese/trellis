@@ -145,6 +145,35 @@ the leaves worth writing for, and a single opening move. Derived from Traces on
 every regeneration, and short enough to read standing up.
 _Avoid_: dashboard, report, summary, digest, progress
 
+**Adopted card**:
+A card whose note lives in Anki and was authored by another tool. Trellis holds
+a mirror of it — placed on a leaf, read for its Trace, grown beside — and never
+builds, pushes or moves it; the other tool keeps owning the note.
+_Avoid_: imported card, foreign card, external card, mirror (as a noun)
+
+**Guidance**:
+Free text the learner attaches to a grow request — what to emphasise, which
+angle to take, what context to bring — appended to the prompt as it is.
+_Avoid_: instruction, hint, context, prompt
+
+**Runner**:
+What answers a prompt: Claude Code on this machine, or a person pasting JSON.
+Trellis never calls a model directly; it hands a prompt to a Runner and
+validates what comes back.
+_Avoid_: LLM, model, generator, agent
+
+**Focus**:
+A leaf the learner has chosen to study now: its cards are made due today, its
+weak spots are grown first. A Focus is an act on the collection, not a state
+the vault records.
+_Avoid_: priority, pin, spotlight, filter
+
+**Workbench**:
+The local page that shows the loop and lets the learner act on it — see every
+domain's Hold at once, pull, read the Brief, grow with Guidance, Focus, open a
+leaf in Obsidian or Anki. It does only what the command line does.
+_Avoid_: dashboard, app, UI, console, frontend
+
 **Grow**:
 Writing new cards where the loop says it pays: for a Weakness, cards that reach
 the mechanism from another angle than the ones that slipped; for an uncovered

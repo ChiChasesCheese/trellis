@@ -582,20 +582,11 @@ def cmd_pull(args, project: Project) -> int:
 
 
 def _read_loop(root: Path, names: list[str]):
-    """Every domain loaded, with its Traces read back onto it. A domain
-    with no cards is included deliberately: every one of its leaves is
-    uncovered, which is exactly what "worth writing" exists to say."""
-    from .hold import assess
-    from .traces import load_traces, traces_path
-    projects, assessments, traces, ages = {}, {}, {}, {}
-    for domain in names:
-        project = _load(root, domain)
-        file = load_traces(traces_path(root, domain))
-        traces[domain] = file.traces if file else {}
-        projects[domain] = project
-        assessments[domain] = assess(project.skeleton, project.cards, traces[domain])
-        ages[domain] = file.age_days if file else None
-    return projects, assessments, traces, ages
+    from .project import load_loop
+    try:
+        return load_loop(root, names)
+    except SkeletonError as exc:
+        _fail(str(exc))
 
 
 def _assess_all(root: Path, domains: list[str]):
@@ -785,10 +776,25 @@ def cmd_grow(args) -> int:
     return 0
 
 
+def cmd_serve(args) -> int:
+    """The Workbench: the loop as a page on this machine."""
+    from .web import serve
+    server = serve(args.root, port=args.port, open_browser=not args.no_open)
+    port = server.server_address[1]
+    print(f"Trellis 工作台 → http://127.0.0.1:{port}/   (Ctrl-C to stop)")
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        server.server_close()
+    return 0
+
+
 CROSS_DOMAIN = {
     "ingest": cmd_ingest, "seed": cmd_seed, "triage": cmd_triage,
     "accept": cmd_accept, "digest": cmd_digest, "grow": cmd_grow,
-    "brief": cmd_brief, "adopt": cmd_adopt, "feed": cmd_feed,
+    "brief": cmd_brief, "adopt": cmd_adopt, "feed": cmd_feed, "serve": cmd_serve,
 }
 
 HANDLERS = {
@@ -931,6 +937,13 @@ def main(argv: list[str] | None = None) -> int:
     p_grow.add_argument("--budget", type=int, default=24000,
                         help="max characters of source text embedded in a prompt")
     p_grow.add_argument("-o", "--output", type=Path)
+    p_serve = _subcommand(
+        "serve",
+        help="open the Workbench: every domain's Hold, the Brief, grow with "
+             "guidance answered by Claude Code, focus in Anki — a local page",
+    )
+    p_serve.add_argument("--port", type=int, default=8777)
+    p_serve.add_argument("--no-open", action="store_true", help="do not open the browser")
     p_import = _subcommand("import", help="import LLM-generated JSON as cards")
     p_import.add_argument("file", type=Path)
     p_push = _subcommand(

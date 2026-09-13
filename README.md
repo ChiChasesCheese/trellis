@@ -486,6 +486,50 @@ its source — and is tagged `grown`, so the next Brief can say whether the
 repair took. `grow` only writes where the loop pointed; anywhere else is
 `scaffold` or `digest`.
 
+### The Workbench
+
+```bash
+trellis serve                # http://127.0.0.1:8777 — opens in the browser
+```
+
+The loop as a page, in Chinese, served from the repository on this machine
+and doing only what the commands above do (ADR 0007). The left rail lists
+every domain with its Hold; the page is one domain at a time. Its centre is
+the **lattice**: one row per branch, one cell per leaf, the cell's green the
+leaf's Hold, hollow when the leaf has no cards, hatched when it is sealed.
+Click a cell or a row in *该修的* / *该写的* and a drawer opens with the leaf's
+standing, the cards held least, what there is to read and practise, and four
+actions: open the map note in Obsidian, open the leaf's cards in the Anki
+browser, make them due today (Focus), or review the deck. Below the lattice:
+the Hold trend over past pulls (from `traces/`' git history), the Brief, and
+the grow log.
+
+Growing from the page is the same `grow` as on the command line with one
+addition, **Guidance**: a text box for what to emphasise or which angle to
+take, appended to the prompt. The answer comes from Claude Code on this
+machine (`claude -p`, the Runner) and is shown for review; *写入* lands it
+through the same importer as everything else, *写入并推到 Anki* also builds and
+publishes. Jobs live under `.trellis/jobs/` so a reload keeps them.
+
+### Adopting a deck that lives only in Anki
+
+```bash
+trellis adopt leetcode --anki "LeetCode"        # 1: writes the seed prompt from the deck's inventory
+trellis accept proposals/leetcode.seed.json     # 2: the drafted skeleton
+trellis adopt leetcode --anki "LeetCode"        # 3: mirrors every note onto its leaf, tags it in Anki
+trellis --domain leetcode pull                  # its reviews now reach the loop
+```
+
+A deck another tool wrote straight into Anki — no markdown anywhere — can
+still stand on a skeleton. Each note becomes an **adopted card**: `anki:
+<noteId>` in its frontmatter, placed on the leaf whose id ends in the concept
+the note is tagged with (a question's concept-less notes borrow the concept
+their siblings carry; the rest fall back to the note's most specific topic),
+and tagged in Anki with the id and node Trellis knows it by. Adopted cards
+are read for their Traces and grown beside; `build` skips them and `align`
+leaves a note tagged `trellis::adopted` where its owner put it. Re-running
+step 3 refreshes the mirrors.
+
 ### Content made somewhere else
 
 Domains are discovered from `skeleton/*.yaml`, so a folder of perfectly good

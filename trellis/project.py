@@ -70,6 +70,27 @@ def load_project(root: Path, domain: str) -> Project:
     return project
 
 
+def load_loop(root: Path, names: list[str] | None = None):
+    """Every domain loaded, with its Traces read back onto it: the view the
+    Brief, the Feed, grow and the Workbench all share. A domain with no
+    cards is included deliberately — every one of its leaves is uncovered,
+    which is exactly what "worth writing" exists to say. Returns
+    (projects, assessments, traces, ages) keyed by domain."""
+    from .hold import assess
+    from .traces import load_traces, traces_path
+    root = Path(root)
+    names = names if names is not None else domains(root)
+    projects, assessments, traces, ages = {}, {}, {}, {}
+    for domain in names:
+        project = load_project(root, domain)
+        file = load_traces(traces_path(root, domain))
+        traces[domain] = file.traces if file else {}
+        projects[domain] = project
+        assessments[domain] = assess(project.skeleton, project.cards, traces[domain])
+        ages[domain] = file.age_days if file else None
+    return projects, assessments, traces, ages
+
+
 def all_skeletons(root: Path) -> dict[str, Skeleton]:
     return {d: load_skeleton(Path(root) / "skeleton" / f"{d}.yaml") for d in domains(root)}
 

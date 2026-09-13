@@ -227,7 +227,7 @@ def test_no_domain_may_monopolise_the_brief(skeleton):
 def test_the_brief_opens_with_one_move(skeleton):
     a = assess(skeleton, [], {})
     body = brief_body({"demo": a}, {"demo": skeleton})
-    assert body.splitlines()[2].startswith("**Open with**")
+    assert body.splitlines()[2].startswith(("**先做**", "**先写**"))
 
 
 # --- feed -----------------------------------------------------------------
