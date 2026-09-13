@@ -21,7 +21,8 @@
 | 通过线 | 电面"只是 screens"；**onsite 每轮都要 Hire** | Blind 2025-10 |
 | 定级 | 1.5 YOE ≈ IC1（Bay Area 中位 $236K）；IC2 $341K；down-level 有报道 | levels.fyi 2026-09-13 · Blind |
 | 拒信 | 两轮电面后无 onsite 直接拒、无反馈的案例 | Blind 2025-03 |
-| Team match | 全过后因 headcount 被搁置 10+ 天的一手案例 | Blind 2025-06 |
+| Team match | 全过后因 headcount 被搁置 10+ 天的一手案例；offer 后被推去换组再失联（HN 2026-07） | Blind 2025-06 · HN 49061416 |
+| NDA | onsite 需签 NDA（与 Databricks、Stripe 同） | HN 42580120（2025-01） |
 
 **贯穿所有技术轮的评分主线**：① 先讲清 approach 再写（面试官会给 hint，但沉默型也存在）② 每题至少准备一个更难 follow-up（O(n)→O(1)、加并发、加持久化、加多副本）③ OOD 题默认有**并发 / 分布式正确性**追问（5/10 OOD 题明确）④ SD 题是 infra/data 题不是 Twitter 题，先说不变量再画图 ⑤ 每轮前 15–20 min 可能先讲项目——项目故事要能被追问三层（why · alternatives · availability/fault tolerance）。
 **语言**：Python 最快；JD 里 Java 4/6、C++ 2/6，电面用 Python 无报道被扣分；OA 历史上曾限 Java/C++（2022 实习），开考前看语言列表。
@@ -59,7 +60,7 @@
 - **通过线**："只是 screens，不 signal"——但两轮后可直接拒。
 - **挂点 top5**：① follow-up 接不住（O(n)→O(1)、并发）② 项目讲 20 min 讲不出 why ③ 类设计没先定 API 契约 ④ 反向查询（"谁拥有某权限"）没想到倒排 ⑤ 沉默面试官下自己不说话。
 - **备考动作**：每题 40 min 计时；先写接口与 3 个自测；讲 trade-off；`03_phone_coding/pc01` RBAC 四阶段必做；`04_ood` 每题做完加"并发版"口述。
-- **练习**：`python3 loop/mock.py start pc01 -m 40` … `test pc01 -k part1` … `ref pc01`；材料 `study/10-rounds/04-phone-coding.md`。
+- **练习**：`python3 loop/mock.py start pc01 -m 40` … `test pc01 -k part1` … `ref pc01`；材料 `study/10-rounds/03-phone-coding.md`。
 
 ## 5. Onsite · Coding（60 min，1–2 轮）
 
@@ -70,9 +71,9 @@
 ## 6. Onsite · System Design（45–60 min）
 
 - **形式**：一段业务描述；白板工具未证实（Stripe 用 Whimsical，Snowflake 无报道）；面试官两极。
-- **题型**（Table C）：KV store（含 time travel / Raft）· cron/job scheduler / "SQL engine as cron"· SQL notebook 结果分发 · quota · audit log · rate limiter · distributed queue · Jira→PR 自动化 · DAG cache（≈ Dynamic Tables）· password storage · web crawler。
+- **题型**（Table C）：**PB 级数据库间同步（IC2 一手：不允许需求澄清，直接设计）** · KV store（含 time travel / Raft）· cron/job scheduler / "SQL engine as cron"· SQL notebook 结果分发 · quota · audit log · rate limiter · distributed queue · Jira→PR 自动化 · DAG cache（≈ Dynamic Tables）· password storage · web crawler。
 - **评什么**：需求与不变量抽取 → API/数据模型 → 失败模式与规模 → 分层 → rollout/监控（沿用 Stripe 五维 rubric）；**能把 Snowflake 自己的原语当参照**（Execution Anchor 单写者、FDB 元数据、serverless Tasks、Streams offset、Dynamic Tables 增量刷新）是差异化加分。
-- **挂点**：直接画框图不说不变量；exactly-once 说成能做到；沉默面试官下不自问自答；quota/rate limiter 说不清强一致 vs 本地缓存。
+- **挂点**：面试官不给澄清时停住——要自己口头声明假设再推进（sd22 一手）；直接画框图不说不变量；exactly-once 说成能做到；沉默面试官下不自问自答；quota/rate limiter 说不清强一致 vs 本地缓存。
 - **备考动作**：`05_system_design/sd01–sd11` 每题 45 min 口述 + 对照 rubric 自评 + followups 逐条能脱口而出；`../05-applied-scenarios.md` 的六个骨架先背熟。
 - **练习**：`python3 loop/mock.py start sd01 -m 45`（打印 prompt，rubric 作提示）。
 

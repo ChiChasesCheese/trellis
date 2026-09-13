@@ -71,3 +71,6 @@
 | pc14 | Meeting Rooms II（LC 253 型，2026 实习 VO） | onsite | 2026 | 1 | LOW |
 | pc15 | Parentheses Matching（栈） | 电面 PS | 2026-03 | 1 | LOW |
 | pc16 | Reverse Alphanumeric Segments（1p3a 标题） | 电面 PS | 2026 | 1 | LOW-MED |
+| q19 | Maximize OR-Sum（AIML 实习 OA 一手） | OA | 2026-05 | 2 | MED-HIGH |
+| od10 | Student / Result OOP（OA 内嵌） | OA | 2026-05 | 2 | MED |
+| sd22 | PB 级数据库间同步（IC2 一手，不许澄清需求） | SD 电面+onsite | 2026-03 | 1 | HIGH |

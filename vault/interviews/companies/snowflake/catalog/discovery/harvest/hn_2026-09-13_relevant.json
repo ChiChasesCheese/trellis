@@ -1,0 +1,892 @@
+[
+ {
+  "id": "49061416",
+  "title": "Did they ghost you?",
+  "text": "I got email offer from Snowflake with numbers after a full round of office interviews. They first matched me with a team and then themselves decided to pivot me to another team. I wasn't feeling fully interested in second team's work; the manager told me it's completely OK to explore with 1-2 hiring managers before accepting. I asked the recruiter to help connect. The next email was \"Thank you for your time!\" and ghosting on all follow ups.",
+  "author": "rahul342",
+  "created_at": "2026-07-26T19:17:22Z",
+  "url": "https://news.ycombinator.com/item?id=49061416",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "47375328",
+  "title": "I beg you to follow Crocker's Rules, even if you will be rude to me",
+  "text": "What a strange post... The linked sl4 source (http://sl4.org/crocker.html) is short enough it could have been quoted in full. It's Yudkowsky's version, I think this is the first I'm hearing via jandrog's comment that it's not exactly faithful to the original (which I presume originated on an extropian mailing list). On the SL4 mailing list, people would sometimes join and note that they operated under the rules. Stuart Armstrong had an aside to such a declaration once:\"I'm not convinced that Crocker's rules are particularly useful\n(rephrasing the same idea to make it more polite doesn't lose\nanything, can be more convincing to the target, and will often\ngenerate more insights in yourself than a curt dismissal), but it's up\nto everyone to choose their approach.\"I think that aside is part of the same strangeness and confusion as this post. Operating under the rules is something you do for yourself -- the \"begging\" that you're doing to other people is asking them to communicate to you in a manner that is optimized for information, not for being nice. The problem isn't necessarily that people dance around the issues (though that can and often is a problem), the problem is that they simply won't communicate the issues or other information in the first place, and so leave such out, especially if they can't figure out a nice way to say it. Also, if you are writing for someone who is operating under the rules, for you to respect their wishes that doesn't mean you have to be rude or omit politeness or be blunt, it just means you should include all the information you want to say, and not worry about it not being phrased nicely, though of course you can phrase things how you please.To beg others to follow Crocker's rules is basically saying \"I am tired of having to use delicate language and sometimes having to avoid talking about things for you, can't you just grow up and let me be lazy and direct and sometimes rude as I tell you everything I have to say?\" There are more sensitive ways to make such requests (and ruder ones too), it's probably better to use such methods if you want people to adopt your preferences in receiving information. It's also important to ask if people want certain information in the first place -- I asked a departing intern once (who sadly ended up not being very strong, at least compared to most interns our team had) if they would like some more candid feedback from me before they left, and they declined. That's fine. I think it's usually better to lead by example and just ask people to be direct if you notice them communicating to you in overly sensitive ways and perhaps leaving important things out, and link them to Crocker's rules if you want. Often the rules aren't needed and you can just create a direct and information-rich culture to begin with, or in specific circumstances (e.g. code reviews) use short hand symbols like \"Nit: \" or \"Blocker: \" that compress all the niceties you'd otherwise be encouraged to say. When someone new joins, they can read the room, but pay attention if some people express things like \"I wish people were nicer here\". Maybe they're a snowflake who needs to grow up, or maybe your environment is just toxic and so unpleasant and full of assholes that it gets in the way of productive work. Again, Crocker's rules is about receiving information independent of nice/rude presentation, it doesn't require rudeness or even directness or bluntness since none of those are automatically implied by efficient communication. (Efficient communication optimized for information is not just a character count.)A personal example from 12 years ago: after I was rejected after an onsite job interview, with such rejections notoriously (and for sound legal reasons) omitting many details about the precise whys for the rejection, I invoked Crocker's rules in my request for further feedback and actually received some more useful information than the initial rejection. \"The particular role ... required more experience ... There was also the sense that the manner in which you had answered questions came off a bit rough around the edges ... We tend to look for engineers who are very curious, passionate, and large drive/motivation to learn more - it seemed we didn't get those senses from you.\" The last bit especially was kind of an oof, but it was certainly useful feedback that going forward I, believing myself to actually be curious and wanting to learn more (passion has always been a problem though), would need to make more efforts to show those traits.",
+  "author": "Jach",
+  "created_at": "2026-03-14T10:48:28Z",
+  "url": "https://news.ycombinator.com/item?id=47375328",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "47280144",
+  "title": "Tech employment now significantly worse than the 2008 or 2020 recessions",
+  "text": "> When I was doing a lot of hiring we wouldn't take the job posting down until we were done hiring people with that titleIt's a small engineering org, allegedly head-hunting one principal engineer for the whole org, so it's a single opening. 10 months later they are still hunting for their special snowflake.> I can recall some specific job listings we had open for years because none of the people we interviewed really had the specific experience we neededThis is exactly what I mean. If you can go for years without filling a role, it's non-essential , and are in effect, \"seeing what's out there\". More and more companies are getting very picky on mundane roles, such as insisting on past experience in specific industries: \"Oh, your extensive experience in low-latency comms is in telecoms? We prefer someone who's worked in TV broadcast, using these niche standards specifically, even though your knowledge is directly transferable. We don't want to waste 5 days on training\"",
+  "author": "overfeed",
+  "created_at": "2026-03-06T19:47:14Z",
+  "url": "https://news.ycombinator.com/item?id=47280144",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "46669109",
+  "title": "Ask HN: How to bullet proof yourself from AI?",
+  "text": "(Yes I know the trend I’m about to talk about was different in BigTech and adjacent. I did an almost 4 year stint at a FAANG 2 years ago and have no need or desire to go back at 51.  That’s not where most developers work)Back around 2013-2014 well before AI, I saw the trend that it wasn’t going to take much to be a “good enough” enterprise “full stack” developer meaning the market was going to be commoditized and if i  was  just a “I codez good and pull tickets off the board” developer, it was going to be hard to stand out from the crowd.I was prescient, when companies reach out to me now for standard enterprise dev jobs in Atlanta (no longer live there but a large part of my network is still there) I see the same salaries I saw in 2016.I worked over the next six years to move “up the stack”.  I learned soft skills, learned AWS and how to treat it more than just a glorified Colo, learned how to lead projects, talk to the “business”, focused on business value, started getting closer to sales and how they operate etc.Out of everything I said, the take away should not be to “learn cloud”.  Everyone and their dog knows AWS (except for one niche that has opened a few doors to me).The take away is to incease the “scope and impact” of your work beyond just being a code monkey.  Also learn how to work at an increased level of ambiguity.https://www.levels.fyi/blog/swe-level-framework.htmlAI is just another part of the commoditization and devaluation of the generic developer.  There is no “moat” around being a generic full stack/mobile/web developer.As of 2020, I work in cloud consulting specializing in app dev.  I have been working full time for consulting departments (the internal one at AWS) and after being Amazoned in late 2023, it took me all of three weeks to have three offers.  After I made a bad choice between the three in 2023, it again took me two weeks to have an offer.I haven’t had to do a coding interview in over a decade because I know how to communicate my value and experience and I don’t try to compete on “I codez real gud”. I’m not a super special snowflake",
+  "author": "raw_anon_1111",
+  "created_at": "2026-01-18T16:26:16Z",
+  "url": "https://news.ycombinator.com/item?id=46669109",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "44556573",
+  "title": "The North Korean fake IT worker problem is ubiquitous",
+  "text": "Maybe this is a real problem, IDK. But this article is so scant on actual details, and is mostly just weasel-wording it's way to \"it's a problem, trust us.\"> Chief among these disconnects were \"shallow\" LinkedIn profiles paired with \"beefy resumes,\" she explained, citing job-seeker claims of working at Meta, attending Ivy League schools, developing major tech companies' flagship products … but then only having 25 LinkedIn connections.LinkedIn is not the end-all be-all of résumés, and my coworkers have wildly varying numbers of connections.> \"We've certainly seen applicants that fit into this category with various IOCs [indicators of compromise] that we've shared with partners and peers,\" Snowflake CISO Brad Jones told The Register.This is an abuse of the technical term IoC to try and dress up what amounts to \"my gut hunch\".> Once the recruitment team began meeting via video conferences with some of the applicants, they noted extremely Western-sounding names, like James Anderson, paired with East Asian appearances and accented English, in much higher numbers than they expected.That's just discriminatory.> \"You can't profile people, […] *But*sigh> The fraudster's answers weren't word-for-word ChatGPT, Little noted. \"These people are smart, they're not unskilled, they're sophisticated,\" she said.… no, that's because that's not how LLMs work.> routing everything through a VPNI'm not even sure how you would know this about a candidate.> These IOCs, or indicators of compromise, include email addresses, physical addresses, and phone numbers that have been flagged as associated with non-legitimate candidates.This is begging the question: the candidate is suss because they're suss. What makes the email address et al. \"flagged\"?> The final step is always an in-person interview.I mean … if you're not doing that, then … okay, I see how the scammers got to you.> \"We require people to come to the office to pick up their computer,\" Robinson said as an example.I mean, if you pay for the plane tickets, the hotels, the taxis, the meals, and the time, sure, I guess.If this is truly a problem — and maybe it is — the Register's reporting is so unspecific that it leaves us with no details of how we might tell, what to look out for (in ways that doesn't run afoul of racial discrimination, or seen elsewhere in the comments, political discrimination). It leaves me thinking this is an ad designed to leave me going \"I'd have to hire a company that specializes in this to know if I'm being affected by it.\"",
+  "author": "deathanatos",
+  "created_at": "2025-07-14T04:52:44Z",
+  "url": "https://news.ycombinator.com/item?id=44556573",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "44153847",
+  "title": "Canonicals Interview Process",
+  "text": "It's really great. Snowflake ghosted me when I asked politely for interview feedback. I identified their likely DPO via LinkedIn, sent them my compliant and quickly recieved all of the interview notes and feedback.",
+  "author": "Kudos",
+  "created_at": "2025-06-01T21:25:13Z",
+  "url": "https://news.ycombinator.com/item?id=44153847",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "43150619",
+  "title": "Rust, C++, and Python trends in jobs on Hacker News (February 2025)",
+  "text": "Well, how ironic we're in the same boat, it seems. Only I can't get hired because I'm 40 and have many years of experience and everyone seems to assume I'm either a snowflake or will cost them. Granted, I can only afford remote positions at the moment, but then I'm not asking for a lot of money either and I'm fairly easy going. I sure have my preferences, but they're few. What's really making it all unbearable is this leetcode and multiple-round-interviews are just exhausting and they don't lead anywhere, it seems. Nobody's even looking at your published open-source code (which is what I used to do first when I used to hire people). I don't really know if I'll ever work as a software-engineer ever again. Reduced to a hobby, I suppose.",
+  "author": "usrbinenv",
+  "created_at": "2025-02-23T16:36:16Z",
+  "url": "https://news.ycombinator.com/item?id=43150619",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "43141790",
+  "title": "Why Ruby on Rails still matters",
+  "text": "As someone who co-founded one of the most successful Ruby on Rails consultancies in the world: building CRUD apps is a _fantastic_ business.There are two types of complexity: essential and incidental. Sometimes, a straightforward CRUD app won't work because the product's essential complexity demands it. But at least as often, apps (and architectures, and engineering orgs, and businesses) are really just CRUD apps with a bunch of incidental complexity cluttering up the joint and making everything confusing, painful, and expensive.I've served dozens of clients over my career, and I can count on one hand the number of times I've found a company whose problem couldn't more or less be solved with \"CRUD app plus zero-to-one interesting features.\" No technologist wants to think they're just building a series of straightforward CRUD apps, so they find ways to complicate it. No businessperson wants to believe their company isn't a unique snowflake, so they find ways to complicate it. No investor wants to pour their money into yet another CRUD app, so they invent a story to complicate it.IME, >=90% of application developers working today are either building CRUD apps or would be better off if they realized they were building CRUD apps. To a certain extent, we're all just putting spreadsheets on the Internet. I think this—more than anything else—explains Rails' staying power. I remember giving this interview on Changelog ( https://changelog.com/podcast/521 ) and the host Adam asking about the threat Next.js posed to Rails, and—maybe I'd just seen this movie too many times since 2005—it didn't even register as a possible contender.Any framework that doesn't absolutely nail a batteries-included CRUD feature-set as THE primary concern will inevitably see each app hobbled with so much baggage trying to roundaboutly back into CRUD that it'll fall over on itself.",
+  "author": "searls",
+  "created_at": "2025-02-22T18:46:39Z",
+  "url": "https://news.ycombinator.com/item?id=43141790",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "42778362",
+  "title": "Show HN: Power Growth Campaigns from Your BI Dashboards",
+  "text": "Hello HN! I'm Hoshang, Co-founder of Airbook.We're a team of former data and ops leaders who often struggled with a fragmented analytics landscape—various specialized tools for data pipelines, SQL explorers, BI dashboards, and ad-hoc automation scripts.These tools, tailored for distinct skill sets, unfortunately failed to integrate effectively, leaving valuable insights isolated within dashboards and disconnected from the operational tools teams use daily to act on these insights.That’s why we created Airbook. Our platform is as intuitive as 'Notion' but fully equipped to handle everything from data ingestion and BI to activation.It’s designed to break down silos and bring all your data workflows into a single, cohesive environment.We're inviting 20 tech startups (typically Series A+ or >$100K MRR) to join our no-risk, 2-week pilot.We'll set everything up and demonstrate how Airbook can streamline your data operations.Ideal for:- Heads of Data or Ops (RevOps, BizOps etc) in growing tech startups.This is perfect if you’re:- Looking to set up your first data stack or consolidate multiple tools into one platform.- Keen on building cross-functional insights across tools like GA, HubSpot, SFDC, PostgreSQL, and Snowflake—whether you code or not.- Aiming to automate customer segments or engage audiences more effectively with tools like CustomerIO, Clay, HubSpot and moreIf this resonates, let’s chat!We’re happy to have a 15-minute call to discuss your needs and see if we’re a good fit.Here's my Calendly link - https://calendly.com/meet-airbook/interview-with-airbookYour feedback would mean a lot! Thanks in advance!",
+  "author": "Hoshang07",
+  "created_at": "2025-01-21T10:13:03Z",
+  "url": "https://news.ycombinator.com/item?id=42778362",
+  "query": "snowflake interview",
+  "kind": "story"
+ },
+ {
+  "id": "42580120",
+  "title": "Ask HN: How is your job search going?",
+  "text": "Databricks, Snowflake and Stripe required NDAs for the onsite portion of the loop.The NDAs covered anything internal discussed during the hiring loop.",
+  "author": "j-scott",
+  "created_at": "2025-01-02T23:17:01Z",
+  "url": "https://news.ycombinator.com/item?id=42580120",
+  "query": "snowflake onsite",
+  "kind": "comment"
+ },
+ {
+  "id": "42577740",
+  "title": "Ask HN: How is your job search going?",
+  "text": "Started prepping/interviewing in Oct after reading this post: https://news.ycombinator.com/item?id=41402581Secured interviews with Facebook, Databricks, Snowflake, and Stripe (3 referrals, 1 recruiter reach out).Bombed the FB phone screen due to nerves/first interview of the cycle. Completed the remaining three loops by December, and got offers from Databricks and Snowflake (Stripe went on two week holiday break and hasn’t gotten back to me yet).Accepted the Databricks offer!Happy to talk about practice/process (within the limits of the interview NDAs)!",
+  "author": "j-scott",
+  "created_at": "2025-01-02T19:21:17Z",
+  "url": "https://news.ycombinator.com/item?id=42577740",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "42530890",
+  "title": "Ghost jobs – 7 in 10 hiring managers consider them morally acceptable",
+  "text": "Agree to disagree.My experience is that it’s quite a bit more nuanced and complex than that.The uncertainty works both ways. I don’t know at the moment I open a position when or if someone qualified will apply or be hired. I don’t even know with precision exactly when positions open up. How long is the grace period for taking down open job positions after one is filled? 3 days? 1? An hour? Just the mechanics of filling out HR paperwork means there’s lag between reality and the job posting. If I’m constantly opening/closing positions (as one would be at a team size of 500) there’s just as much chance of a position actually being open and not having a listing as the other way around if I’m attempting to always update the posting.I do know that a chunk of applicants will be baristas, uber drivers, and construction works, another chunk will have keyword-optimized resumes that are incomprehensible, and many more will simply be too junior for a role because everyone is aiming high hoping to make to their next move. Employers are absolutely flooded with garbage.Similarly, when trying to hire I spend most of my time on it between resume reviews, phone screenings, and actual interviews. It’s incredibly labor intensive to hire good engineers and/or technical managers. I’m working just as hard as the applicants.I don’t use vague language. If it’s the case that I don’t have a position open at the moment of a phone screen, I tell an applicant when and how many positions I expect to have open.And it’s not just the time spent on the process. It takes weeks to months to restart the process after it’s shut down. You have to update job descriptions, train your talent team on what to look for in resumes, train engineers on how to do technical interviews, and may sure they are “calibrated”. If they are out of practice they fumble the interviews and the company looks bad to applicants, and they tend over-estimate an interviewee’s performance because they don’t have a recent point of comparison to work with. This means I have to do 5-10 throw-away interviews to grease the wheels. If I fully stopped a pipeline and treated each position as a special snowflake, and everyone else in the world did the same, it’d just create even _more_ overhead for all parties involved.I’m not saying it’s a good system. But humans are human and on balance any system is going to be gamed. There’s no way around that. For every one applicant who’s only applying to jobs they are interested in and qualified for there's 10 more just spamming every posting they come across. As a hiring manager I have to deal with that reality. The only way I know to reduce that overhead is to not add more by grinding the hiring pipeline to a halt whenever a position is filled.",
+  "author": "narnarpapadaddy",
+  "created_at": "2024-12-28T13:25:20Z",
+  "url": "https://news.ycombinator.com/item?id=42530890",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "42451086",
+  "title": "Arctic Embed 2.0 interview with Authors",
+  "text": "The Arctic Embedding model series from Snowflake has been one of the most impactful open-source text embedding models! In addition to the open model, which has helped a lot of companies kick off their own inference and fine-tuning services (including us at Weaviate), the Snowflake team has also published incredible research breaking down all the components of how to train these models!I am SUPER EXCITED to share the 110th Weaviate Podcast interviewing Arctic Embed co-authors Luke Merrick and Puxuan Yu -- further joined by Charles Pierse from Weaviate, discussing all things Arctic Embed!The podcast covers the origin of Arctic Embed, pre-training embedding models, Matryoshka Representation Learning, fine-tuning embedding models, synthetic query generation, hard negative mining, and lastly a topic I personally find very interesting: Perspectives on single-vector embedding models compared to ColBERT, SPLADE, or Re-rankers.I hope you enjoy the podcast!YouTube: https://www.youtube.com/watch?v=Kjqv4uk3RCsSpotify: https://creators.spotify.com/pod/show/weaviate/episodes/Arctic-Embed-with-Luke-Merrick--Puxuan-Yu--and-Charles-Pierse---Weaviate-Podcast-110-e2sg168/a-abmi4qd",
+  "author": "CShorten",
+  "created_at": "2024-12-18T15:14:19Z",
+  "url": "https://news.ycombinator.com/item?id=42451086",
+  "query": "snowflake interview",
+  "kind": "story"
+ },
+ {
+  "id": "42150371",
+  "title": "Please stop the coding challenges",
+  "text": "That's assuming they don't pre-bikeshed before even looking at what you did.Candidate: writes code matching current style as much as possible to show that you can adaptReviewer: Rejected. Didn't even use autoformatter, which takes literally zero effort, so clearly does not follow best practices.Candidate: autoformatsReviewer: Rejected. Changed more code than was really needed (separate commit or not), clearly showing they didn't try to keep the change as small as possible. If this were a real PR, they would be making life more difficult to the reviewers making it harder to spot the parts that were actually modified.Candidate: keeps existing code as-is, but writes own changes following the currently accepted conventionsReviewer: Rejected. They clearly can't follow an existing style and prefer to be a snowflake and \"leave their mark\" in the codebase.Candidate: does any of the options above, and adds comment explaining the reasoning, including mentioning the other possible options that they thought about and their tradeoffsReviewer: Rejected. Candidate thinks too hard about trivial stuff, showing lack of focus on what really matters.---Granted, being rejected for those reasons above could mean that you dodged a bullet.But yeah, like you mentioned in a different response, a live interview (coding or not) helps reduce these kinds of uncertainties to some extent, but of course these live interviews have other trade-offs compared to take-home tests.",
+  "author": "quectophoton",
+  "created_at": "2024-11-15T20:05:57Z",
+  "url": "https://news.ycombinator.com/item?id=42150371",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "40958888",
+  "title": "Ask HN: How do you prepare for interviews?",
+  "text": "Most of the time I do nothing to prepare, except maybe wear a nicer shirt. There are some exceptionally few rare times I do some research on the prospective employer.I absolutely do not cram some information about a technology which I have not used prior. I just don’t know it and leave it at that.If you want to be awesome at interviewing then speak with confidence, answer only the questions that were asked, be honest. It’s really that simple, but the actual preparation takes years of reality.There are three things that comprise high confidence. The first is strong social intelligence. That means listening to people: verbal, vocal, and physical. Take it all in and respond appropriately. Second is actual real world technical experience doing the work asked about. Mastery of a craft results in emotional comfort when discussing interconnection between deep moving parts. Third is strong communication skills, which is a mastery of expression, especially speech. Strong speaking skills allow precise conveyance of a subject’s technical minutiae without pause, stutter, or repetition. It also allows for strong persuasive dialogue.Good confident interviewers are looking for the fakers: liars, pretenders, and narcissists. These are people, for whatever reason, struggle and fold in the face of brutal honesty. Weak interviewers, people who lack confidence or exhibit low self esteem, are more likely fooled by fakers. The primary goal of a faker is selling their own fragile ego, the amazing snowflake unicorn gift to the world that only exists in their own mind. Converse that to a high confidence person whose goal is some form of product creation, because it’s not about them or their ego but the thing that gets delivered, which they have done multiple times in the past.You cannot just prep your confidence before an interview. You have years of experience with some collection of skills and talking with people or you don’t. Fakers will try to convince people otherwise, and some people are easily charmed by their foolishness.",
+  "author": "austin-cheney",
+  "created_at": "2024-07-14T04:43:49Z",
+  "url": "https://news.ycombinator.com/item?id=40958888",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "40769338",
+  "title": "Ask HN: Will salaries of software engineers regress?",
+  "text": "Yes, no, maybe.  For people who are just doing glue code with no real understanding, yes. That market is going south.For the high end it’s more complicated:Comp (not salaries) took a huge upward swing because of an influx of VC money as well as a bull market.  People at FAANG type companies could leverage their unvested stock to get higher comp at new companies.  Let me explain.Bob joins Amazon in 2016.  His initial comp was targeting 250k but by year 3 he was going to make 350k due to stock appreciation on his 4 year stock grant.Bob has a smashing interview at Google and they know he won't take less than 350k.  So they offer 370k PER YEAR (with an initial stock grant) even though Bob wasn't going to always make that much at Amazon.Bob works at Google for a bit, his stock goes up even MORE, bob is bored and interviews at Uber/Databricks/Snowflake who has billions in VC money and they offer him 450k (sure some is less liquid, but maybe he knows there's a secondary market).Without a bull market and without the VC market, comp is going to be a LOT less for the top of band offers.However, it's probably not going to be a lot lower than the bottom of band offers, because Jim who cracked google but didn't have a boatload of unvested stock and competing offers wasn't getting near as much as Bob anyway.Finally, Software Engineer fuck ups are still very expensive for companies.  So any profitable company that can afford it is going to to to pay close to top of market because paying 2x as much for an engineer who is even 20% better is WORTH IT for them.It's just likely top of market is down a bit.",
+  "author": "VirusNewbie",
+  "created_at": "2024-06-23T18:07:59Z",
+  "url": "https://news.ycombinator.com/item?id=40769338",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "40714158",
+  "title": "Ask HN: How can I effectively restart my dev career?",
+  "text": "I'm familiar with this situation myself, so I can empathize. However, I can also see it from the other / hiring side of the equation.I hope you will excuse me for delivering some tough love, as a lot of your narrative around this is not as objective as it could be.* Nobody cares about your \"unique experience\", \"unique set of circumstances\", \"this confluence of unfortunate events\", \"heavily scripted and impersonal to a fault\" etc... \"You are not special. You're not a beautiful and unique snowflake. You're the same decaying organic matter as everything else. We're all part of the same compost heap.\" The only thing anyone cares about is demonstrable ability to develop software.* Nobody cares about \"20+ years of software development\". If they did, they'd put it in their job descriptions / requirements. Rather, they care about 3, 5, maybe 7 years of experience. Anything that comes before that is irrelevant. Only in highly specialized fields, or senior management, is extensive experience an asset.* \"what have you done lately?\" - well, what _have_ you done lately? Do you have a good answer to this question, mentioning only things that you have done, and not any mentions of uniqueness? The reality is that people hiring for software developers see having developed software in the very recent past as indicative of someone who can be productive in the very near future. Explanations of unique circumstances and software development experience several years ago won't cut it.* \"Does someone with my experience really have to grind leetcode and memorize algorithms to prove his capability?\". Well, yes. Frankly, given your level of experience, brushing up and kicking ass on leetcode should be a walk in the part, and nothing to get indignant about. If entry level / fresh grad folks are expected to be able to do this, you should be able to do it too (and more). \"20+ years of software development\" doesn't get you a free pass on this, you should be able to do it all day, every day, in your sleep at this point.* \"Is it realistic for me to expect to be able to work on a software team again after having transitioned away from software development?\" - only if you can demonstrate your ability to develop software here and now, and in the near future, as distinct from years in the past.* \"I'd be interested in management\" - do you have management experience, which is articulated in your resume, profile, applications, etc? That means performance management, hiring, firing, project management, powerpoint, stakeholders, etc., etc... it's not a given after \"20+ years of software development\", it's a distinct skillset that you may or may not have developed.* \"I know I'm fully capable but I've found it difficult to prove that to ornery employers employing what I see as broken hiring practices\" - nobody cares about your opinions on hiring practices. When you start your own company, you'll be able to institute your own, superior hiring practices. Until then, it would be in your best interests to focus on the hiring practices as they exist, rather than how you wish they were. Proving your capability, given the hiring practices that exist, is what it's all about.* \"I've been involved myself in hiring for several years and I always made an effort to take an empathetic approach with people I interviewed. Sadly, I seem to be one of few who take that approach.\" Nobody cares about empathetic approaches. They only care about demonstrated ability to develop software.",
+  "author": "tacostakohashi",
+  "created_at": "2024-06-18T04:46:00Z",
+  "url": "https://news.ycombinator.com/item?id=40714158",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "38106645",
+  "title": "US consumer spending dashboard built on data from 50M+ cards now on Snowflake",
+  "text": "I’ve seen a lot of people promising to sell (aggregated, cleaned, private, inferred) data on Snowflake — using the database as a platform. Snowflake themselves have been listing this idea as a key value proposition.This is the first that I’ve seen “in the wild” (i.e. outside of an interview with a start-up that yet had to find a lot of paying customers).Is that common? Do you know of other companies doing that? Do they typically offer additional individual data (say: lead generation), inferred insights (say: likely spending by post-code based on local shops and disposable income), or something else (custom dashboard)?",
+  "author": "bertil",
+  "created_at": "2023-11-01T23:05:29Z",
+  "url": "https://news.ycombinator.com/item?id=38106645",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "37297750",
+  "title": "Why I’m not learning to code (and why tech needs more humanists)",
+  "text": "have a BFA in Painting and am a Snowflake DBA.The true ideal, imo, is to be a scientist AND an artist. Society in general does need more of the humanities. However, I learn everything I can, from dbt nuances  to baking nuances to how to make a clean suture to sharpening a chainsaw. They feed back to each other. Learning drumming gave rhythm to my paintings. Learning coding helped optimize the organization of my pantry.If you haven't read it, you might enjoy Kevin Kelly's interview with Brian Eno from 1995 with the famous quote \"Do you know what I hate about computers? The problem with computers is that there is not enough Africa in them.\"https://www.wired.com/1995/05/eno-2/",
+  "author": "ompogUe",
+  "created_at": "2023-08-28T17:40:57Z",
+  "url": "https://news.ycombinator.com/item?id=37297750",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "36973747",
+  "title": "Stopping at 90%",
+  "text": "I am at a point in my career that aside from my current company, I haven’t done a traditional submit my resume and interview in years. Even this job kind of fell into my lap without me seeking it out.My prior two jobs came from knowing someone who knew someone looking for my particular combination of experience and meeting them.I’m not saying I’m a special snowflake.  But I’ve previously been hired for more strategy/architect type positions where the CxO or director wanted someone who was vetted.",
+  "author": "scarface_74",
+  "created_at": "2023-08-02T17:12:29Z",
+  "url": "https://news.ycombinator.com/item?id=36973747",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "36364840",
+  "title": "John Carmack on shorter work weeks (2016)",
+  "text": "Maybe I'm a jaded 44yo at this point, but why would you put your maximum into it unless it's your own business or you have a guaranteed payout for that effort? Not everyone works at a startup, nor are all startups successful.Look at the big tech layoffs earlier this year - they were letting both the cruft and top tier talent go. Is it easy to say you are truly safe where you are at?No one will remember or care about your title, your salary, or the effort you put into wherever you work. Your next employer will have no insight into any of that at all outside of your interviews; they'll measure your worth on the job unless you are a world class snowflake.I'm not saying don't continue to learn and excel! But there's more to life than your day job. Spoken as someone who discovered way too late a proper life/work balance.",
+  "author": "bojo",
+  "created_at": "2023-06-16T22:31:47Z",
+  "url": "https://news.ycombinator.com/item?id=36364840",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "36013925",
+  "title": "We will be shutting down neeva.com",
+  "text": "I hadn't heard of this website, SiliconAngle.com, before this week but they interviewed someone from the company that I work at (not for this Neeva article; for a different article), so they're actually a real news reporting organization. I was reading that article with my colleague's interview this week when I saw the Snowflake + Neeva article title in the sidebar on SiliconAngle.comhttps://siliconangle.com/2023/05/17/report-claims-snowflake-...The Silicon Angle article cites another article from The Information as being the source of the Snowflake + Neeva news:  https://www.theinformation.com/articles/snowflake-in-talks-t...(I don't have a subscription to The Information, so unfortunately I cannot read that article's whole text. If someone with a subscription to The Information could summarize that article and share their summary with the community here I'd appreciate it!)",
+  "author": "lobstersammich",
+  "created_at": "2023-05-20T17:40:58Z",
+  "url": "https://news.ycombinator.com/item?id=36013925",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "34486497",
+  "title": "NRC Certifies First U.S. Small Modular Reactor Design",
+  "text": "First of all you're double-counting decommissioning costs because as I said operators are collecting decommissioning costs during operation. So that XXc/kWh includes the cost of decommissioning but you're talking about it like it's a surprise on top after the fact. It's not.While you are actually underestimating the cost of Indian Point decommissioning (the scale of which was a surprise to me too - but likely attributable to there being 3 reactors), it has a $2.4B fund that's already been collected and held in trust for its clean-up. But of course Indian Point is in New York, home of the most expensive subway track on earth - $3.9B per mile for the Q line extension. So decommissioning a 67 year old 3-reactor NPP costs the same as 0.58 miles of Q line extension.Since commissioning, it generated 777TWh based on a 73% lifetime capacity factor (src: Wikipedia). About 1/4 of NYC's entire energy needs for 60 years. Decommissioning cost $0.0029/kWh generated. Why are we still pretending this is expensive?On the other hand you know who isn't responsible for collecting the cost of recycling during operation? Solar and wind operators.I don't know why people saying that nuclear has a waste problem when even cursory research will show you it simply doesn't due to the sheer energy density of the fuel. Further, fast neutron reactors produce two orders of magnitude less waste, and with incredibly short half lives.The reality is we've been okay with the quantity of waste in large part because the input uranium is just so cheap it hasn't been economically effective to reprocess and reuse it, and nuclear has been such a whipping boy of the so-called environmentalist movement that we just haven't meaningfully invested in developing the technology in decades. The outcome of this so-called environmentalism in the 60s though was 60 years of coal and oil plants.We've had a renewable, effectively-unlimited source of clean zero-carbon energy for decades now. We've simply elected not to pursue it.We know the biggest cost of nuclear is the up-front expenditure and there was a really good interview recently with the head of the DOE loan program, Jigar Shah.* He talked about how a ton of the cost was simply that each NPP is a one-off snowflake, and that there were huge savings to be realized by standardizing designs and copy-pasting them onto favorable spots. There are tons of low hanging fruit that we can actually invest in addressing that would dramatically reduce the cost. We just lack the motivation. Stop mistaking the current state with the potential.* I believe this was on Odd Lots.",
+  "author": "arcticbull",
+  "created_at": "2023-01-23T07:55:28Z",
+  "url": "https://news.ycombinator.com/item?id=34486497",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "32716145",
+  "title": "Questions to ask a prospective employer during a job interview",
+  "text": "I haven't personally been in any interviews where I was asked something so opinionated, like being asked \"do you write bad code?\" straight-up. These questions are very leading and direct, not open-ended at all - look at how limited the set of \"right answers\" is for most of them.A question like:> \"Does this team or any of the related teams have a person who actively rejects proposals to improve the code base?\"is a flag because it implies that the person asking the question thinks their definition of \"improve the code base\" is the only one that matters. It also is asked in a way that suggests a lack of maturity around disagreement and communication.\"If someone sees something they think would improve the code base, what should they do to try to get that done?\" would be a much improved version.> \"Suppose the team needs to start a new web service like a private Gitlab, add new type of CI to the testing pipeline or something similar. Could you explain the exact steps needed to get it fully operational? Please list all people who need to do work to make this happen (including just giving authorization), and time estimates for each individual step.\"This one is less of a \"bad question\" if you're OK with filtering out places that don't work that way (a place that spins up random new infrastructure shit in a couple days super frequently seems like a terrible each-service-is-a-special-snowflake hard-to-maintain/hard-to-debug/hard-to-improve sort of hell, IMO) but if you're just more interested in process and bureaucracy, I'd suggest something more like \"what are your thoughts on standardized shared infrastructure and tooling vs specialized things per-project?\"EDIT: actually, to borrow a page from some frequent advice for interviewers - for bonus points you can rewrite both of those \"better\" versions to ask for specifics, along the lines of \"can you tell me about a time someone on the team proposed a code improvement change that was controversial.\" Only ask for the vaguer \"philosophical approach\" part if they can't give you a specific story.",
+  "author": "majormajor",
+  "created_at": "2022-09-04T18:28:35Z",
+  "url": "https://news.ycombinator.com/item?id=32716145",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "32677081",
+  "title": "Ask HN: A job interview you enjoyed?",
+  "text": "A few months ago I had a pleasant technical interview with Snowflake.First, the interviewer was very supportive and cooperative, it felt almost like a friendly talk between two colleagues. He did not try to outsmart me or catch on some tricky detail.Also, the questions were very good - we discussed how to build a distributed data processing system, a very relevant and on the right level for the position I applied (Engineering Manager).",
+  "author": "playing_colours",
+  "created_at": "2022-09-01T14:49:20Z",
+  "url": "https://news.ycombinator.com/item?id=32677081",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "32652430",
+  "title": "Show HN: Live Sync Google Analytics Data to Google Sheets",
+  "text": "For analysis. In the future we'll also offer syncing to, for example, BigQuery, Redshift, Snowflake and all the other data warehouses. However most of the marketers we interviewd analyse and create charts of their data in Sheets or Excel.",
+  "author": "avianion",
+  "created_at": "2022-08-30T16:45:48Z",
+  "url": "https://news.ycombinator.com/item?id=32652430",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "30681593",
+  "title": "Why is it hard to buy things that work well?",
+  "text": "I think that's kind of the point. Dan Luu can change his priorities to do a performative display of what interviewers expect and then Dan Luu can pass a job interview. In which case you are not hiring Dan Luu, but a different guy who has most likely internalised a different world-view and set of values. Even if you assume he can compartmentalize his interview performance skills, he will have at least devoted time to that, instead of to something \"more useful\".I don't think Dan Luu is struggling for work.So the question is do you want to hire someone like Dan Luu or not? If the answer is yes, then you might want to consider how your interview process might interact with such a person. If you are thinking from the perspective of someone doing the hiring (as those articles seem to be), it is nonsensical to simply respond by saying \"well, the candidates just need to be more submissive and compliant to whatever our process is.\"Perhaps Dan Luu is a unique snowflake and/or nobody needs to hire someone like that. Or it could be that there are quite a large number of developers with attitudes and experience that lead to similarly unproductive or inefficient interactions with tech interview processes because those processes may be fixating on having the candidate do a specific performance rather than trying to understand what individuals can offer and whether that would be useful when added to the existing team. It could be that such developers would be as good or better fit, in a lot of cases, than people who can do oscar-winning interview performances.",
+  "author": "scaramanga",
+  "created_at": "2022-03-15T04:12:57Z",
+  "url": "https://news.ycombinator.com/item?id=30681593",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "29879416",
+  "title": "Ask HN: Steps from Analyst to Data Engineering?",
+  "text": "I took a similar route, albeit much less intentionally and spanning almost a decade. Software QA -> Business Intelligence Analyst -> Data Scientist -> Data Engineer.Here what I'd recommend today:1. get very comfortable with Python. Scripting isn't enough, you'll need good OO principles, understand how to manage projects/libraries/dependencies, etc. This will take the longest, so start it first.2. Read and re-read Designing Data-Intensive Applications by Kleppmann. This is the bible of data engineering and far outclasses anything else currently available.3. Get your hands dirty with modern tools and the whole data lifecycle. DBT, Airflow, Snowflake, Postgres should be obvious (feel free to substitute prefect, clickhouse, etc. if desired). You'll also want familiarity with a cloud stack and how to manage it (terraform, pulumi, or CDK). A public portfolio project would be great, but being able to talk confidently about the how and why of these things is probably enough.The hard part is getting that next job. Look for junior roles at big companies, and mid-level roles at startups who don't understand the data ecosystem yet (almost any startup whose product is not ML or ELT). The former will give more mentorship, the latter will be easier to get if you can talk the talk in an interview.",
+  "author": "claytonjy",
+  "created_at": "2022-01-10T18:40:44Z",
+  "url": "https://news.ycombinator.com/item?id=29879416",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "29791546",
+  "title": "Ask HN: Are you happy with your current job?",
+  "text": "Just about every (software) workplace I can think of in my area. My current workplace isn't a startup; startups are far worse with their work culture.I fled a toxic startup for my current workplace about a year ago. Many things are better here. I'm pretty decent at what I do but no good at leetcoding, so interviews are a hard proposition for me.The 11 pm meetings are an unfortunate consequence of timezone differences and the madness that is DST. I wouldn't mind it so much if they switch about the timings a bit (my evenings sometime and their evenings sometime), but not everybody thinks too much about these things, I guess. I can't kick up a fuss about it because I don't want to be a snowflake.The working on weekends ... is again a sad consequence of covid-related WFH combined with workaholic tendencies that some of the senior folks have. I strictly stay away from my laptop on weekends, but I'm definitely and painfully aware that many co-workers including my boss are available on most weekends. I try not to let it bother me, and there are no spoken or written injunctions, but it's hard to hold your own against this all the time.The money is decent. It's definitely not top-tier, but I'm not looking for top-tier pay in any case. A sane workplace is my holy grail :)",
+  "author": "mangamadaiyan",
+  "created_at": "2022-01-04T04:59:51Z",
+  "url": "https://news.ycombinator.com/item?id=29791546",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "28708821",
+  "title": "PostgreSQL 14",
+  "text": "Oh wow, by \"work on\" you mean \"the core maintainer of\".  Thank you for replying.  :)The main part I reconsidered based on was the level of effort taking the data from kafka and landing into snowflake, especially around handle postgres schema changes safely.  I also have no experience with kafka, so I'd be out of my depth's pretty quickly for a critical part of the architecture.  He also expressed the need for building quality checks into the kafka to snowflake code, but those details were a bit sparse (if i recall correctly).Note: all of the above are probably outside the scope of debezium.  :)Note 2: your article [1] on using cdc to build audit logs w/ a \"transactions\" table blew my mind.  Once I listened to your data engineering podcast interview [2], I knew there was some implementation of \"event sourcing lite w/ a crud app\" possible, so I was excited to see you had already laid it out.1) https://debezium.io/blog/2019/10/01/audit-logs-with-change-d...2) https://www.dataengineeringpodcast.com/debezium-change-data-...",
+  "author": "tomhallett",
+  "created_at": "2021-09-30T17:27:58Z",
+  "url": "https://news.ycombinator.com/item?id=28708821",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "28268514",
+  "title": "SWE interviews should be paid",
+  "text": "Alternatively, stop pretending this industry is a precious snowflake and conduct reasonable-duration, non-exploitative interviews like everyone else in the history of modern employment.",
+  "author": "Sanguinaire",
+  "created_at": "2021-08-22T19:11:17Z",
+  "url": "https://news.ycombinator.com/item?id=28268514",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "27632951",
+  "title": "As the Pandemic Recedes, Millions of Workers Are Saying 'I Quit'",
+  "text": "Possible reason from my own anecdata: I joined a new company in a new industry in the middle of the pandemic. I definitely prefer working remotely (I'm just past 30), but as a new hire I felt some disadvantages.Mainly: my co-workers who have been at the company longer than I weren't very helpful with onboarding me! We're a little company, so documentation of a bunch of our software is non-existent and the specialized hardware setup we have has a lot of quirks I had to slowly teach myself the last year. I'd hit lots of problems that'd take 5 seconds of their time to diagnose and fix and I'd end up stuck for over an hour while waiting for them to answer a Slack message - or they'd randomly drop offline.So there I am, working in my bedroom in a new job wondering if I'm a needy little snowflake not digging hard enough or whether the people I work with are just unhelpful because... reasons (still haven't met them in-person since my pre-pandemic interview). After a year I think it really is the latter, but it made me grumpy my early months here.That could be a possible source of resentment from newer, younger employees. Set us up for success!I still prefer working from home, but I did commute to the office for a happy hour recently. It was nice to randomly get coffee with the CTO in the morning and hang out with new friends in the evening - none of the \"unhelpful\" people showed up! :P",
+  "author": "tomkat0789",
+  "created_at": "2021-06-25T16:30:11Z",
+  "url": "https://news.ycombinator.com/item?id=27632951",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "27387125",
+  "title": "Snowflake CEO Says Worker Merit Should Outweigh Diversity Goals",
+  "text": "such a narrow view for a CEO. from what he says I take that he sees no value in a diverse workforce; he sees it only as a cost and he can't spare anything because he needs to deliver growth.> We can’t get distracted in that mission.he sees diversity as a distraction.I read somewhere an interview where he says some time ago he was rejected for a job because they gave it to a diverse candidate. this is his revenge I guess.edit: it was here https://archive.is/dMTEM> In 2019, during an all-hands meeting at Snowflake, Slootman told the story of how early in his career he was rejected for a job he was well qualified for because the company needed to fill a quota of hiring more minorities, a former senior Snowflake employee said.",
+  "author": "supergirl",
+  "created_at": "2021-06-03T20:51:29Z",
+  "url": "https://news.ycombinator.com/item?id=27387125",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "25343972",
+  "title": "Why Senior Engineers Hate Coding Interviews",
+  "text": "This is a strange point. The empirical results from audition-style interviews have been in for many years, and the results are indisputable. Software engineering is extremely lacking in diversity. So maybe try something else for a change? Not sure how it could possibly be worse than what has already been demonstrated over and over again to be absolutely awful.My suggestion isn't particularly novel. It's often how hiring works in other industries that aren't as insane as tech. Software engineers have their own special snowflake hiring process that they hold onto almost like a cult. They rhetorically ask \"What's the alternative?\" without actually empirically looking at the rest of the world outside of software engineering. The fact that \"FizzBuzz\" and \"LeetCode\" are words everyone recognizes just shows how much of a cargo cult software engineering has become.",
+  "author": "_qulr",
+  "created_at": "2020-12-08T11:26:42Z",
+  "url": "https://news.ycombinator.com/item?id=25343972",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "24055487",
+  "title": "In spite of an increase in Internet speed, webpage speeds have not improved",
+  "text": "I'll bring some demos of my snowflake animations and cartoon character gifs that follow the cursor around to the interviewI actually quite like writing vanilla js in my spare time, but I can never tell if I'm doing everything horribly wrong or not",
+  "author": "asddubs",
+  "created_at": "2020-08-04T23:08:31Z",
+  "url": "https://news.ycombinator.com/item?id=24055487",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "23730350",
+  "title": "In defense of hiring based on side projects",
+  "text": "I code to make money. I have a passion for being able to feed  myself and put a roof over my head. I leave work at the end of the day. I spend time with my family and friends and engaging in hobbies.If you have an interview process that doesn’t allow you to discern my skillset and I am able to clearly demonstrate my skills without doing a side project, that says a lot about your interview process.It amazes me when I see companies that aren’t paying at the level of big tech think their company is a special snowflake. I am [1] an average journeyman enterprise developer/architect and sometimes team lead. Pre-Covid, I could just make a few phone calls to my network and have a couple of job offers within a couple of weeks. This is true for most experienced developers who have kept their skills in sync with the market and live in any major city in the US - outside of the west coast.I have spent my entire 25 year career working at small companies except for my brief stint at a large non tech company 8 years ago and my current job at Big Tech.",
+  "author": "scarface74",
+  "created_at": "2020-07-04T05:30:20Z",
+  "url": "https://news.ycombinator.com/item?id=23730350",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "23142730",
+  "title": "My Mid-Career Job-Hunt: A Data Point for Job-Seeking Devs",
+  "text": "As an interviewer, I'd hope the applicant has done similar workEspecially in this market, unless you are, you’re not a special snowflake. You need them a lot more than they need you. Why would you expect them to put in any level of work pre interview?My last two jobs where I was coming in because they needed my set of skills and I had three offers on the table and probably would have had at least one more of I had waited, yeah the company I worked for spent as much time selling me as I did them. They made sure that they moved fast and made an offer (less than two weeks from application to offer).But, I’ve applied for my first role at a $BigTech. I started the process near the end of April. I had my first technical interview last week and the next rounds are probably not for two weeks. Who knows how long it will take them to make a decision. I would never have accepted that turn around at smaller companies. But $BigTech doesn’t need me to rescue a failing project or process like my last two companies.",
+  "author": "scarface74",
+  "created_at": "2020-05-11T14:49:59Z",
+  "url": "https://news.ycombinator.com/item?id=23142730",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "23031653",
+  "title": "Rules of thumb for a 1x developer",
+  "text": "I’m in my 40s, I have had dozens of interviews. My non rejection  rate from application (via a local recruiter) -> phone screen -> in person interview is close to zero. Not because I am a special snowflake, but I’ve built up a network of coworkers, former managers, and local trusted recruiters.I have never in my life had anything approaching a hard algorithm coding interview and  I didn’t know such a thing existed until three years ago after being on HN and reading r/cscareerquestions.I’m a standard enterprise dev living in Atlanta. Pre-Covid, the job market has usually been good for me since 2000 when I got my second job after leaving my first job I got based on an internship.There were even jobs/contracts available between 2008-2011I think I am above average soft skill interviewer FWIW.",
+  "author": "scarface74",
+  "created_at": "2020-04-30T15:09:46Z",
+  "url": "https://news.ycombinator.com/item?id=23031653",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "22864972",
+  "title": "The myth of the developer that can't code",
+  "text": "I live in a major metropolitan city in the US that is not on the west coast. Most jobs are bog standard software as a service CRUD/bespoked internal system roles. They all pay about the same at the same level of experience - maybe there is a $20K variance but you can usually negotiate that. Also, senior engineers come on the market infrequently and there are many open reqs (I’m speaking pre-Covid). Meaning that historically (over two decades) its never taken me more than a month to go from looking for a job to offer. Most interviews in my pure software engineering roles have involved soft skills questions, explaining past projects, sometimes standard multiple choice prescribing tests and occasionally simple  on site at the computer coding tests.All that to say if I both have a job and have two or three companies vying for me at about the same salary - I’m no special snowflake. I’ve just done a lot of targeted resume driven development and have built a strong network - why would I do a take home test?I’ve scheduled six phone screens with different companies in one day.My record for looking for a job, to having an offer is four days. I called an external recruiter on Monday, had a phone screen on Wednesday, in person Thursday morning and offer that evening. It was for a job at a recently acquired subsidiary of what was then a Fortune 10 company.",
+  "author": "scarface74",
+  "created_at": "2020-04-14T12:20:29Z",
+  "url": "https://news.ycombinator.com/item?id=22864972",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "22567557",
+  "title": "Launch HN: Castodia (YC W20) – Populate Google Sheets from databases",
+  "text": "Hey HN, we’re Jimmy and Ayazhan, founders of Castodia (https://www.castodia.com). We help pull data from databases directly into Google Sheets. It’s basically a live database connector for Google Sheets that allows for data refreshes.Before we started working on this, we were working on an idea around data pipelines. It didn’t take off so we had to pivot mid-batch. We had less than 1 month to do user interviews, build our product, get it approved, and launch it. To start with, we knew we wanted to stay in the data space. We spent the first week talking to over 30 people at different companies. In those conversations, we noticed that sales, marketing, and operations teams constantly need to ask developers to help them export data from the database and often have to submit follow-on data requests because they forgot to add a dimension needed for analysis (they often do this by submitting Jira tickets). This is an inefficient yet surprisingly common thing at companies today. Perhaps even more surprising is that data scientists at big companies like Facebook, who have invested heavily in data infrastructure and analytics tools, often use spreadsheets as a step in their data analysis workflow. While they can pull data for analysis themselves, they too export data into CSV and then open it in a spreadsheet. This means that their data doesn’t update automatically and the process has to be repeated each time.At first, we were considering building our own BI tool to solve this problem. However, during our conversations we noticed that people feel new-tool fatigue, especially when their companies rotate through different tools that are used for the same purpose. For instance, we’ve heard of companies going from Tableau to Looker and back to Tableau. Or from Kibana to Sisense to Looker. Sometimes it feels like companies are paying a lot of money for tools that people aren’t really using just because it’s the thing everybody “needs to have”. Each one comes with its own structure, data modeling and steep learning curve. It's overwhelming. At some point people just realize that whatever tool they learn will likely change once a new VP gets hired and wants to do things in a new way. In anticipation of that, they default to the one tool they know how to use and likely won’t be replaced soon. Spreadsheets also happen to be an elegant solution for simple calculations, quick pivots, and high level data exploration. They are elegant in a way that no $50k a year enterprise visualization tool can be - not because they can’t do those things, but because people don’t know how to do it quickly with them. It’s also hard to change workflows for people who live in spreadsheets. Spreadsheets are a pretty good for ad-hoc analysis and summaries that are used for presentations and reports.So instead of another BI tool, we built a Google Sheets add-on that connects to a database and lets them search through tables, filter/order the data, and then load it into Sheets directly. In the future, we’ll let them schedule data refreshes for any saved query, so all their calculations and pivot tables update with the latest data from the database. We’ve built our first integration with Postgres and testing a MySQL, MongoDB, and public dataset connector. We plan to add integrations to more data sources, including data warehouses such as Snowflake and BigQuery.We implemented it to only get read-access to the database and we don’t store connection credentials or replicate data in our database. We are focused on data analysis at the moment, but a few customers have requested features to also write into database (write access to the database). Not sure yet how to do this safely with spreadsheets or whether we should at all. We’ve heard suggestions such as database write roll-backs or some intermediate data queue that can be approved by table owners.Other challenges include: (1) building data connectors because many data sources spits out data differently, which means we have to parse it differently to make it accessible from a uniform interface. (2) We make connections to databases and perform all queries using AWS lambda functions (thank you serverless!) Some queries are taking minutes to execute, but AWS drops connection after 29 seconds. (3) It is hard and, as HN often points out, risky to build a product that depends on Google. We're also running into Google Sheets' row limitations - still figuring out a way to work around this for large databases. We’ve been bouncing ideas around building a back-end to perform heavy computations while only displaying a sampled subset of data in the spreadsheet. We think it's worth it to plunge ahead despite all these issues, though, because having a spreadsheet interface to their data is very much what our users want. We plan to charge users a monthly fee for use of our product and we'll have a HN discount on our basic plan.We’d love to hear about your data analysis workflows, the tools you use to do this, any problems you’ve had getting data for analysis, and of course, your thoughts and experiences on this use of spreadsheets! Questions and specific integration requests are also welcome, and if you would like to be beta users, feel free to email us at founders@castodia.com.",
+  "author": "jimmyechan",
+  "created_at": "2020-03-13T14:36:28Z",
+  "url": "https://news.ycombinator.com/item?id=22567557",
+  "query": "snowflake interview",
+  "kind": "story"
+ },
+ {
+  "id": "22365874",
+  "title": "Every software company giving a take home coding test",
+  "text": "I live in a major metropolitan area not on the west coast. When I’m looking for a job, I change my LinkedIn status to “actively looking”, call a list of recruiters that I have worked with in the past, and usually have two or three offers in hand within two weeks to a month.For whatever level I’m at at the time, usually companies pay within a narrow band ($10-$20K). Why should I waste time doing an at home coding test when I can get a job that pays just as much just by answering a few behavioral interview questions and describe my past career history?I’m no special snowflake. I’m just your average everyday CRUD/SAAS software developer/architect/team lead depending on how the wind is blowing.",
+  "author": "scarface74",
+  "created_at": "2020-02-19T14:50:06Z",
+  "url": "https://news.ycombinator.com/item?id=22365874",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "20957606",
+  "title": "What happens to tech workers when their skills become obsolete?",
+  "text": "Having any STEM degree from anywhere has probably lowered your risks of a gap (or level drop) and potentially permanent drop in salary considerably, with more for it being in CS.I’ve been working in the industry, in Atlanta for 20+ years. I’ve been on the market 6 times (stayed at one company almost a decade) and it has never taken me more than three weeks to have multiple offers. I can guarantee you that none of those jobs or interviews cared about my CS degree. The quickest was when my contract was over, I called a recruiter, had an interview four days later and an offer the same day. I’m no special snowflake, any halfway connected, developer with buzzword compliant resume could tell a similar story.My second job out of college my manager cared a lot more about my then encyclopedic knowledge of C from spending way too much time on comp.lang.c, my (self taught) experience with x86 assembly and that I was a big enough geek to be able to talk about some of the 65C02 assembly language hobby projects  I did in middle and high school than my courses in Pascal, Basic, FORTRAN, and COBOL or even my one simple data structures class in college.Do you think consulting companies are recruiting me now based on my 20+ year old degree or my more recent experience as a team lead, AWS architect, and my being able to be talk about “The Well Architected Framework”, Domain Driven Design, and the Cloud Maturity Model? Yes these are all buzzwords to a certain extent but consultants get paid a lot for them.Whether I had a degree or not, if I couldn’t negotiate a salary commensurate with my experience - I would be doing it wrong.But that competition will sound exhausting and the level you put in will be exhausting your other options in life while still probably being less energy than the bootstrap-only graduate.Considering what I learned in college and how useless it was compared to what I taught myself even when I graduated or even more importantly the experience and networking I’ve done in the past twenty years, I really don’t see my career trajectory being that much different.The only thing college did useful for me was get my first job based on an internship the year before. In today’s world, if a boot camp (which didn’t exist back then) could have gotten my foot in the door, it wouldn’t have made any difference.As far as pension, it’s nothing special. A pension is just worth the present value of all the payments you hope to make after you retire, considering the difference in pay - and the flexibility - in the private industry even in Atlanta, you can easily save/invest enough over your career to create a greater annuitized income in retirement.",
+  "author": "scarface74",
+  "created_at": "2019-09-12T23:31:18Z",
+  "url": "https://news.ycombinator.com/item?id=20957606",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "20918583",
+  "title": "Questions to ask a company during a job interview",
+  "text": "Company is interviewing the candidate not the other way around, no matter what we like to think.I’ve worked for 20+ years but have only gotten serious about job hopping and interviewing for the last ten.At any given time when I am job hunting I usually have three or four offers within three weeks. Not saying I am a special snowflake. That’s just the reality of the market. I’m very much interviewing the company. I usually have a BATNA of just keeping my current job.Ofcourse you have leverage when you are interviewing at your local java enterprise shop. But who cares about those jobs, pointless to interview them with your smartass questions, we all know they are pretty much all the same more or less.Despite the HN bubble where every developer lives on the west coast and works for a FAANG or the next unicorn, that’s the reality for most developers. But there is definitely a difference.",
+  "author": "scarface74",
+  "created_at": "2019-09-09T14:38:16Z",
+  "url": "https://news.ycombinator.com/item?id=20918583",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "20184886",
+  "title": "I got asked LeetCode questions for a dev-ops systems engineering job today",
+  "text": "I’m on the opposite end of the spectrum. I work for small companies mostly and I’ve conducted interviews for small companies. We have a limited budget for a limited number of positions. One developer can be working on a project that can individually move the needle. We need to hire “engineers” in the truest sense of the word not “coders”.For instance, currently my title is “senior software engineer”. But I am the “Directly Responsible Individual” for a project that one of our clients is paying for. It will be added to our core product.This means that I’m expected to interact with the client and BA to come up with the SOW, work with the product manager/UX person to design the interface, do some of the web work, write the backend using one of our approved languages (C#, Javascript, Python) , design the database schema, do all of the CI/CD setup and to know the AWS fiddly bits and know which services are appropriate for the asynchronous processing requirements.I’m no special snowflake, this is life in small companies since my first job 20 years ago.I don’t interview candidates for algorithms. I interview them to know whether they can hit the ground running on as much of our (industry standard) technology stack as possible, will they make good architectural decisions, can they ship a feature across the finish line, how fast they pick up new frameworks and will they embarrass us with customers and senior management.LeetCode ability does us no good. I want to know whether you can translate real world business requirements into a working system - including knowing which questions to ask when customers/product managers  come to you with “XY Problems”.",
+  "author": "scarface74",
+  "created_at": "2019-06-14T17:36:34Z",
+  "url": "https://news.ycombinator.com/item?id=20184886",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "20051969",
+  "title": "Buyer's Remorse: High Debt and Low Pay Leave Some College Grads Rueful",
+  "text": "Well fortunately, unless you are interviewing for one of five or six tech companies. Your company is not that special and probably not paying more than average.No I’m not going to spend months studying leetCode and reading “Cracking the Code”  instead of just calling my carefully curated network of contacts that are itching to either hire me (former managers who have moved on to other companies) or refer me.I’m no special snowflake. Anyone with 10+ years of experience, a decent network, can competently talk about architecture, and who knows how to answer soft skill questions can have multiple offers quickly.To be blunt, there are more of you - companies  looking to pay quite well for seasoned software engineers/architects with practical skills than there are of me - people who have those skills. Statistically,  I can find a job a lot more quickly that pays well than you could find someone who has practical experience and who is looking for a job.",
+  "author": "scarface74",
+  "created_at": "2019-05-30T15:06:58Z",
+  "url": "https://news.ycombinator.com/item?id=20051969",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "19352046",
+  "title": "The Planned Obsolescence of Old Coders",
+  "text": "I’ve resurrected an old associated email account to keep this conversation out of  HN email me. My email address in my profile.But for the more generic comments that are germane to the topic....Fair feed back. The Summary of Skills is mostly a Keyword hack for passive job hunting I can move it around.You don’t need to move it around, you need to get rid of it. Your resume should express how you’ve used a technology/framework/language in a method that added business value to a company.Besides, if you’re waiting for the job tooth fairy to show up and hand you a job because you list a bunch of keywords on your resume -\nyou’re doing it wrong. At some point in your career you should have built a network of former coworkers, managers, and even good local recruiters that you can reach out to.I can deep dive into Elixir, Embedded C, C/C++, Java, C#, and PHP. I've used all of these on the job excluding perl, python and ruby in the last 5 years, and python and ruby i've used on side projects or for tutoring a friend on algorithmic programming for a evangelical role google asked her to do a follow up interview on.“Deep diving” is not knowing the syntax of a language. It is having enough experience to know the ecosystem, libraries, frameworks, pros and cons and to have written and being involved in large projects using the language. By definition, you can’t have been \nfocused on five languages in five years. What exactly is your focus? Your resume doesn’t give a clue with what you’re good at.Again, you come across as someone who thinks they are a special snowflake because you “learned C when you were 14”- you’re not. You’re posting in a forum with a lot of greybeards who are looking at this entire exchange just thinking “that’s cute”. IAnd “knowing algorithms”, leetCode and how to invert a binary tree in Python puts you about on the experience level of a new grad.So how do I stress that flexibility on my resume, or tell that story with out coming off as braggadocious?From your responses you come across very much as an “expert beginner” (https://daedtech.com/how-developers-stop-learning-rise-of-th...).I’m a reformed former dev lead, what you call “showing flexibility”, I would see as a jack of all trades and a master of none. If in 2019, you’re in any major metropolitan city in the US with years of experience as a software engineer and you’re not getting lots of hits - it’s you.Your resume doesn’t (A) tell a coherent story with where you’ve been, which technologies you’ve used to bring business value or your focus and (B) where you are trying to go.",
+  "author": "scarface74",
+  "created_at": "2019-03-10T14:08:33Z",
+  "url": "https://news.ycombinator.com/item?id=19352046",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "19004785",
+  "title": "Coding Problems from Programming Job Interviews",
+  "text": "When I was applying for a job about 3 years ago, I scheduled six phone screens from different companies in one day. They all led to invitations for in person interviews, and all four in person interviews I ended up doing led to “40 hour a week, six figure jobs”. I’m no special snowflake - except for my network of local recruiters.Why would I go through the song and dance? The salary ranges for senior developers/architects were all around $20K of each other. Unless the company is offering salaries in the 80th percentile, why would I jump through hoops just to work on a company’s software as a service CRUD app?My last job hunt, I found the job that met all of my criteria (salary, technology, commute distance, size of company) within two weeks of looking.",
+  "author": "scarface74",
+  "created_at": "2019-01-26T04:35:11Z",
+  "url": "https://news.ycombinator.com/item?id=19004785",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "18129572",
+  "title": "Ask HN: What is your best advice for a junior software developer?",
+  "text": "I agree with actions but not the reasons.You should get confirmation in writing to verify your understanding and protect against a non malicious, honest manager who has a lot of things on his plate and may honestly forget the details of a conversation.But, if you hope written communication will help you as a CYA move if you have a conflict with your manager and your manager is being purposefully underhanded, that rarely works.The organizations primary job is to protect the organization. Unless you’re a special snowflake, your manager’s manager or your HR department will always take the side of a manager.That’s just like getting a PIP. Once you get one, learn from your mistakes and take an honest self assessment - but do it at another job. If you interview while having a job, it’s much easier than trying to interview if you got fired.",
+  "author": "scarface74",
+  "created_at": "2018-10-03T12:38:39Z",
+  "url": "https://news.ycombinator.com/item?id=18129572",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "17883137",
+  "title": "Ask HN: I want to be a 40h/week intermediate developer.How do I stay employable?",
+  "text": "> I can't believe I'm the only one thinking this way, I know there are plenty of so-called \"clock punchers/pragmatists\"[0] who refuse to play the game. So I'm asking you:> how do you pull it off?I'm honest to a fault in every way, with my own personality.\nWhen I'm depressed this is self-destructive, but when I'm happy it seems to invigorating to the team mates and friends around me. This seems to click positively with people in general, gives me a lot of rope ;). Confidence in your own truth, I think is the key one-liner here.> How do you survive?Living true is freeing, the privilege to be able to do it a blessing. But if your 'truth' is that you're a bitter, shitty person. It will kill you.Live true but have your core-motives, your convictions, in order. 'Be a positive influence on everyone and anyone I interact with' is a good start.> What do you tell your managers and your interviewers?Interviews: play the game. Haven't ever tried the snowflake approach to interviews, haven't seen any evidence to give me the confidence needed to pull it off.Managers: truth, it's a slow build before you can dump deep truth on people, but bit by bit, let them know what you're about and WHY.Depending on the temperament of the manager, they either become mates, or they respect/disapprove from a distance.Hopefully you can pull some value from this stranger <3",
+  "author": "TheLilHipster",
+  "created_at": "2018-08-31T05:19:24Z",
+  "url": "https://news.ycombinator.com/item?id=17883137",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "17882899",
+  "title": "Convincing engineers to join your team",
+  "text": "That's fair(er), but after you've gone through a service like Triplebyte, you're supposed to be screened. Extra screening steps beyond the onsite are excessive.The promise of something like Triplebyte (for the candidate) is that I do one round of technical interview, and then proceed directly to my favorite companies for culture fit and personal evaluation. But every company believes that they're the special snowflake who deserves extra screening.",
+  "author": "timr",
+  "created_at": "2018-08-31T04:11:32Z",
+  "url": "https://news.ycombinator.com/item?id=17882899",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "17796476",
+  "title": "What to say when recruiters ask you to name the first number",
+  "text": "For example, they're highly selective, and you're the first candidate to pass their interviews in months. Congrats!Most jobs aren’t that selective and aren’t doing work so specialized that that need someone in the 90th percentile.Or maybe you just successfully completed the exact same technology project they're looking to do themselves.Congratulations - you are then that “special snowflake”. You would know that if you ask the standard “what type of challenges are you facing” question when you are interviewing.Or maybe they're just doing really well and willing to pay above-market.Why would a company pay above market value for a new employee out of the goodness of thier heart? I could see the paying a bonus to existing employees.Trust me, there are companies out there with crazy-high turnover. They typically will not tell you that as an interviewee, for obvious reasons.I found that out the hard way during my second outing after my awkening. It was a contract to perm job that was so bad. That I just up and quit in a month without having anything lined up or even in the pipeline.  I had an offer for what was then a Fortune 10 company within 4 days. Thanks to a recruiter. It also paid more than I was making.",
+  "author": "scarface74",
+  "created_at": "2018-08-19T22:16:07Z",
+  "url": "https://news.ycombinator.com/item?id=17796476",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "17796201",
+  "title": "What to say when recruiters ask you to name the first number",
+  "text": "Sure. But if the top of my range is $150k, and I'm talking to a company that would be willing to pay me $175k, it's not in my best interest to tell them that $150k is enough to hire me.Unless you are special snowflake, why would the company’s range be that far outside of the range for the local market?  Either the company is incompetent, you’re about to step into some crap,  or the employee doesn’t actually know the market.Generally, yes. But the exact percentage may differ from company to company.\nTypical example are bad employers with high turnover. They need the recruiters to get a lot of new people in the door every year, while convincing these candidates to walk in the door is typically harder due to the employer's poor reputation. So they end up paying recruiters more, sometimes a lot more, per successful candidate.Every job I’ve gotten through recruiters, the employer was adding people not replacing them. Well, except for one where they fired the most  senior developer, three weeks after I came in. I didn’t know I was being watched as his replacement and being made the team lead.In hindsight it was obvious when half the interview was asking me to come up with a 90 day plan to create a modern software development shop on the spot after he told me about the challenges they were having....",
+  "author": "scarface74",
+  "created_at": "2018-08-19T21:12:07Z",
+  "url": "https://news.ycombinator.com/item?id=17796201",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "17784389",
+  "title": "How to Hire",
+  "text": "Sounds like you've had good luck, but you're saying you know it hasn't happened to you because of documented social phenomena in the industry.It’s not luck, it’s focus....1. Don’t randomly submit your resume to job boards. I have always used local recruiters who submit my resume and have a vested interest in staying in contact with both me and the hiring manager.2.  Don’t waste time having your resume submitted to jobs that you don’t have the must haves. I’ve been on both sides of dealing with recruiters - the candidate and the “hiring manager”. A good recruiter will talk to the hiring manager about what the must haves and the nice to haves are. You can also talk to the recruiter to see if you have the must have skills.3. Keep in touch with recruiters even if you aren’t looking. They will usually put you on a mailing list with the job openings. You can find out what the market wants. I have a few recruiters that will give you a salary range in the mailing list.Once you know what the in demand technologies are at the salary range for which you are looking, focus on those.4.  Make sure you live in a market where the jobs are. In over 20 years and 7 job changes, it’s never taken me over three weeks to get a job, usually with a bump in salary that I am looking for and the technology stack. I’ve sacrifuced major salary bumps when changing jobs for a better tech stack/shorter commute before.Again,I’m no special snowflake. I’m just a “senior full stack enterprise developer”, Architect, or consultant depending on how the wind is blowing.I’m not only not  White I am not young (mid 40s).If you have untempered interest in your profession, there's likely some overlap in who benefits from your training, but largely I think it makes more sense to consider your _employer_ to be the main benefactor of your skills, not you.No, I’m just as much the benefactor of my skills as my employer. Increasing my skill set and staying marketable gives me the ability and optionality to change jobs - and usually for higher pay. I don’t have an “untempured interest in my profession”. It’s just a means to make money. But to continue to be competitive and to be able to ask for an increasing salary. I have to keep learning.After all, when you're hired you don't have agency to change the direction of the product with the other workers, you don't have total control over your working environment, the technologies you choose, your schedule, etc. You may have input into these things, but in a legal sense your employer is the arbiter of these conditions, and ultimately you develop skills not simply to build the things you like, but to make yourself marketable to people who set the terms for your ability to earn a living.The company I work for isn’t the main determining  factor on me earning a living until I retire, my marketable skillset is. If my job closes its doors tomorrow and I have a marketable skillset and a healthy network, I can make calls and usually get another permant job or at least a contract gig in less than a month. Not bragging, anyone who has my not so rare skillset in my market can do it.You do have agency if you have the skillset. I can’t choose the product I work on, but I chose the technology I wanted to work on by choosing the company I work for. I get to choose the how based on “expert power”. I haven’t been questioned about the how in four or five years across three companies. I’ve had to champion my position but if it made business sense, no one stopped me.Once the technology I’m using starts getting out of step with what the market wants, it’s time for me to change jobs.I also haven’t done but one “whiteboard coding interview” in the past 10 years, numerous interviews and 5 job changes.I’ve done one pair programming in an IDE test and plenty of white boarding of architecture.My last two jobs I was asked basically how would I go about solving thier real world architecture issues - yes I’m still 60-80% a hands on developer.",
+  "author": "scarface74",
+  "created_at": "2018-08-17T17:25:41Z",
+  "url": "https://news.ycombinator.com/item?id=17784389",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "17783623",
+  "title": "How to Hire",
+  "text": "> I'm no special snowflake and I am definitely not a White male and I can say with almost certainty that I haven't been discriminated against in all of the many interviews I've had. I know because I've always gone through recruiters, my resume never went down a \"black hole\", and my success rate from being submitted to a job to not being rejected (I've taken myself out of the running after getting an offer is high). I'm also not in Silicon Valley.Sounds like you've had good luck, but you're saying you know it hasn't happened to you because of documented social phenomena in the industry.> What training does the company need to provide software developers? All the training I've needed I taught myself. It was for my benefit.If you have untempered interest in your profession, there's likely some overlap in who benefits from your training, but largely I think it makes more sense to consider your _employer_ to be the main benefactor of your skills, not you. After all, when you're hired you don't have agency to change the direction of the product with the other workers, you don't have total control over your working environment, the technologies you choose, your schedule, etc. You may have input into these things, but in a legal sense your employer is the arbiter of these conditions, and ultimately you develop skills not simply to build the things you like, but to make yourself marketable to people who set the terms for your ability to earn a living.",
+  "author": "almostdeadguy",
+  "created_at": "2018-08-17T15:44:50Z",
+  "url": "https://news.ycombinator.com/item?id=17783623",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "17779735",
+  "title": "How to Hire",
+  "text": "Interviews for software engineers are the most nepotistic bullshit and full of every variant of petty bias and discrimination possible.I'm no special snowflake and I am definitely not a White male and I can say with almost certainty that I haven't been discriminated against in all of the many interviews I've had. I know because I've always gone through recruiters, my resume never went down a \"black hole\", and my success rate from being submitted to a job to not being rejected (I've taken myself out of the running after getting an offer is high). I'm also not in Silicon Valley.What training does the company need to provide software developers? All the training I've needed I taught myself. It was for my benefit.",
+  "author": "scarface74",
+  "created_at": "2018-08-17T01:44:41Z",
+  "url": "https://news.ycombinator.com/item?id=17779735",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "17476810",
+  "title": "Say Hello to Full Employment",
+  "text": "I kept a spreadsheet of when I was looking for a job in 2015 using recruiters. This was after filtering for location and salary. This was all within a two week period.I network like crazy - with people who know where the jobs are.Leads: 16Position filled: 4Phone Screens: 9I didn’t like tech stack: 2Didn’t have qualifications and didn’t apply: 1In person interviews: 4Offers: 4Rejections: 0 - I took myself out of the running after accepting an offer.I actually had 6 phone screens in one day from different companies.Notice that out of the 16 “leads” none of my resumes disappeared down a black hole. I always knew where I was in the process and I knew that someone in the position to hire me was considering my resume.Also, I don’t contribute my 100% non failure rate to being a special snowflake. I was able to discuss each lead with a recruiter and had inside knowledge of what the hiring manager was looking for.I’ve worked with recruiters to hire people. The good ones form a professional relationship with the hiring company.Back in 2012, I left a job with nothing in the pipeline for a new job. I called one of the recruiters I had been working with and within 4 days I had an offer making $10K more with what was then a Fortune 10 company.My last job search last year took 7 days from the time I started looking to getting an offer with the salary, (slightly higher), the technology stack, the location, and the company size I wanted. The pickings do of course get a lot slimmer though the higher your salary requirements.",
+  "author": "scarface74",
+  "created_at": "2018-07-07T03:31:47Z",
+  "url": "https://news.ycombinator.com/item?id=17476810",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "17104409",
+  "title": "Show HN: Whiteboardfree – Developer Jobs at Companies That Don't Whiteboard",
+  "text": "Yes, my comment has a few  assumptions1. That you are in an area of the country with a lot of opportunities2. That you kept your eye on the market and made sure that your skill set in demand3. That you kept your resume updated4. That you kept your network of recruiters, former coworkers, and references fresh.If you have limited savings like the vast majority of Americans -- time is your enemyWith the unemployment rate of software developers being extremely low, the chances are that someone looking for a job that you are interviewing, already has a job. When I said my turn around from looking for a job to getting a job is about three weeks, I didn't mean to imply that I was a special snowflake.A company I was working for went through a few rounds of layoffs before everyone was let go -- this was in 2011.  Without fail, every developer and even L2 support person had another comparable job within a month.If a company makes the hiring process too long, more than likely if you are in the right market and you are just a regular old \"Full Stack Developer\", by the time you go through the process, you've already received a couple of offersBesides, if I'm looking for a job and I am unemployed, the time I am taking to do homework, I can be meeting with recruiters, preparing for interviews, brushing up on my skillset, etc...",
+  "author": "scarface74",
+  "created_at": "2018-05-18T19:46:39Z",
+  "url": "https://news.ycombinator.com/item?id=17104409",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "16880253",
+  "title": "The latest trend for tech interviews: Days of unpaid homework",
+  "text": "On the flip-side I've worked with engineers that were so entitled it completely undermined their ability to work with others in the company.Work is going to involve some bullshit. That's life. If you can't jump through a few hoops for a job then you don't want the job very badly or have an ego problem.Don't get me wrong, expecting someone to spend three days on a technical solution is nonsense. But the \"special snowflake rockstar\" mentality of some developers is not helpful and important to check for during an interview process.",
+  "author": "the-pigeon",
+  "created_at": "2018-04-19T21:18:16Z",
+  "url": "https://news.ycombinator.com/item?id=16880253",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "16171160",
+  "title": "Your recruiter is not your friend",
+  "text": "Unless you're a special snowflake and you know your market, how much of a salary negotiating is there? I ask for X which I believe is in the middle of the range, I work with 7-8 recruiting companies and they send me jobs offering X. I don't believe I've ever been that much off the mark from my market value.Especially since I was always looking for a job with the next job in my mind it was always some combination of pay and new skills I could learn.If my market value got to out of whack with my salary I start interviewing again.",
+  "author": "scarface74",
+  "created_at": "2018-01-17T19:52:05Z",
+  "url": "https://news.ycombinator.com/item?id=16171160",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "16149719",
+  "title": "Stanford CS9: Problem-Solving for the CS Technical Interview",
+  "text": "Similar experience, spent the same time preparing for the interview as for any other company + couple of hours of browsing some slides from university classes on data structures (sorry Google, you are not a special snowflake) - rejected after the first call:)",
+  "author": "expertentipp",
+  "created_at": "2018-01-15T10:33:32Z",
+  "url": "https://news.ycombinator.com/item?id=16149719",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "16038231",
+  "title": "Things I have learnt as the software engineering lead of a multinational",
+  "text": "When I compare opportunities for mobility that we have as developers, I'm grateful for the industry. I can't imagine being \"stuck\" at a job I don't like. In the last 20 years it's only taken a month to find a new job once I started looking. One time, I quit a job on Monday without any job in the pipeline, I hadn't interviewed with anyone when I quit  and by that Thursday, I received an offer from what was then one of the 10 most valuable companies in the U.S. (not a tech firm) making 10K more.I'm not claiming to be a special snowflake. I'm just a regular old \"Enterprise Developer\".But the thought of working 30 years at one company and receiving a pension, horrifies me.Just like we are just \"resources\" to an employer, they are just resources for us to make money. No loyalty either way, no expectations.They give me a paycheck every two weeks and I work hard and do my best work for those two weeks. Nothing more, nothing less.",
+  "author": "scarface74",
+  "created_at": "2017-12-30T23:03:39Z",
+  "url": "https://news.ycombinator.com/item?id=16038231",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "15595644",
+  "title": "We only hire the best means we only hire the trendiest (2016)",
+  "text": "His point is that Google's and everyone else's hiring process is subject to large amounts of randomness and capriciousness. Google themselves have at various times mentioned how their hiring scores don't strongly correlate to performance.Don't feel because you got in that you are some ordained snowflake. If you had interviewed on another day or with another group within Google you very possibly wouldn't have gotten in.There are many variables at work when it comes to getting hired and hiring.",
+  "author": "skellington",
+  "created_at": "2017-10-31T18:58:35Z",
+  "url": "https://news.ycombinator.com/item?id=15595644",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "15469432",
+  "title": "Questions to ask in interviews",
+  "text": "A lot of these work culture and life and tech questions can be backed into.My series of questions when I get the chance to talk to an engineer on the team I'm interviewing for is just this, \"What's a normal day at work look like for you? Not a fire drill day or anything crazy. Just walk me through what you think of as your routine.\"And once you can get that conversation going, you can pretty easily suss out the answer to very many questions in the article without coming across as even really asking questions, let alone seeming like a special snowflake.Some questions can be more direct than others. But I think many of them can be figured out through a healthy conversation in the interview process.If you can't engage someone in that kind of a conversation someone ought to be seeing some red flags.",
+  "author": "ianamartin",
+  "created_at": "2017-10-13T21:45:33Z",
+  "url": "https://news.ycombinator.com/item?id=15469432",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "14490772",
+  "title": "Ask HN: Women in tech, how do you find non-toxic work environments?",
+  "text": "You need to interview the company just as they interview you. Ask some questions like what kind of development processes they follow, how they organize themselves and what kind of offsite activities they have. You can tell a lot from the answers about the culture in general. For example do they respect employee's time and do they show good team collaboration and cohesion or are they a 'hero/special snowflake culture'.If you don't like the answers, then it might not be a good fit for you.",
+  "author": "fyrepuffs",
+  "created_at": "2017-06-05T19:38:32Z",
+  "url": "https://news.ycombinator.com/item?id=14490772",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "13833154",
+  "title": "Triplebyte expands its recruiting platform beyond YC, signs up Apple, Facebook",
+  "text": "I failed the 3rd round interview because I hadn't studied garbage collection.  C# handles it for me, I could have learned, I just hadn't prioritized that yet and folks want to say now you aren't very senior.  I was told I could apply again, but haven't been offered a chance to even after a couple of follow ups.  The problem that ultimately stumped me in the 3 round was the exercise of drawing a spiral in a console window.  Sounds easy, but when you are timed and nervous, almost impossible.  After I bombed the 3rd round knowing the rejection was coming, I ended up successfully implementing it in Excel and VBA.  Good coders are like a snowflake and I think TripleByte doesn't have a business if they buy that.",
+  "author": "throwawayact01",
+  "created_at": "2017-03-09T20:23:31Z",
+  "url": "https://news.ycombinator.com/item?id=13833154",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "13188780",
+  "title": "Is Software Development Really a Dead-End Job After 35-40?",
+  "text": "(As a sidenote, the author just comes across as whiny because he's not treated as the special snowflake he really is. If you're so insulted by being asked to do FizzBuzz, then you ought to be able to knock it out in Brainfuck if required. But maybe you can't, eh, Mr. Hotshot?)I remember going through a phase, probably around my mid-20s, when I got quite insulted by being asked to do such simple tasks in interviews. I never showed that during the interviews, obviously, but I had qualifications and several years of experience writing real production software, so what kind of idiot did they think I was and how was writing fizz-buzz going to demonstrate what I could do?!A few years later, having more often sat on the other side of the interview table, I had learned that the number of people who have somehow achieved impressive looking qualifications from reputable institutions, gained several years of professional experience, and yet really can't write fizz-buzz, is astonishing.Trivial programming exercises aren't there to determine a good programmer's level of skill, they're there to stop the interviewer wasting several hours on a no-chance candidate who slipped past the screening process and accidentally wound up face-to-face. You get to the interesting stuff that actually tells you something about the candidate after that, and if they're any good at all, your trivial challenge will be a two minute diversion that they solve while probably having a friendly chat with you about something else at the same time.It's a little surprising to me that someone with as much experience as the author describes here hasn't realised this yet. It was one of the very first lessons I learned as soon as I started helping with interviewing candidates.",
+  "author": "Silhouette",
+  "created_at": "2016-12-15T21:49:27Z",
+  "url": "https://news.ycombinator.com/item?id=13188780",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "12889033",
+  "title": "Don’t Get Attached, It’s Just Luck. My Interviewing Advice and Tips",
+  "text": "I can't imagine going through that much trouble trying to find a job as a developer. My m.o.:1. Contact my list of (currently) 14 local recruiters from different companies with my resume, and tell them what type of job I'm looking for, salary, and location within the metro area.2. They send me a list of jobs with the descriptions abd salary range - something you can't usually get without a recruiter - and I tell them which one I want to be submitted to.3. Keep a list of the jobs, status (submitted, phone interview scheduled, in person interview scheduled, waiting for response), recruiter information, etc. so I don't get double submitted.Historically, since 1999 and three years out of college, it has taken me about a two-four weeks to find a job, usually paying significantly more.The last round I just went through. I had 13 prospects, 7 phone interviews, 3 in person interviews, trying to schedule the other 4, and will probably have four offers by the end of the week. This is with me being picky on  location, salary, and environment.I'm not trying to say that I'm a special snowflake. I know a lot of people that I work with that could do the same.",
+  "author": "scarface74",
+  "created_at": "2016-11-07T05:37:16Z",
+  "url": "https://news.ycombinator.com/item?id=12889033",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "12234889",
+  "title": "Praise for Intelligence Can Undermine Children's Motivation (1998) [pdf]",
+  "text": "I was not a special snowflake and I was not praised for anything ever by my parents. My exam results were below average and every school report was along the lines of must try harder. Recently I did think about this and whether I developed a co-dependent aspect to my personality along the way. Co-dependency does hold people back in life and I feel that a little bit of praise along the way would not have gone amiss.I worked from age 14 doing paper rounds, gardening jobs, babysitting and I also had a Saturday job in a bicycle shop. All of these opportunities I made for myself, there was no nepotism or anything like that. I never got into trouble or had must-try-harder in these environments. My customers/clients/bosses were not easy to please, but I did please them and the feedback I received was genuine praise and thanks. I had much more disposable income than any of my teachers, I also worked as many hours a week than them. (I know they mark homework and do other stuff after the bell goes). I did have some development issues from doing 40-60 hours of on-your feet hard work week in week out with no holidays ever (plus school, with the equivalent of at least a 10K jog every day) so painful ankles was normal to me.From this experience I gained quite a few mentors, and, in the world of business, if you have customers to serve, and if time is money, then failures (e.g. breaking something) could be dealt with more sensibly - no inquisition/detention, just don`t do it again and everyone is happy.Meanwhile...Amongst my clique of school friends, nobody else got the work thing. They had pocket money and school dinner money instead of their own earnings. They also had parents that helped them along to posh universities (or art schools) and quiet, warm places to study. If they wanted a bicycle then one would appear for them if they behaved. To them money was something you held onto, it wasn`t something you just walked out the door to get. They had a limited reservoir of money not a flowing river of the stuff. They would also have exciting activities in the after school hours - swimming, piano lessons, you know the drill - none of these things they personally had to pay for, the parents did. Consequently they could be assertive to get what they wanted - they developed a sense of entitlement for things whereas I went the other way - servitude to others!!! That was how I got my praise, building customer/client/employer relationships and school. I always felt that any praise that did come from school was lip-service and utterly worthless. On the flipside I knew that I could always get work and didn`t have to be beholden to any employer. I still see this aspect today as a programmer. If I have a bad day I could just pick up the phone and be somewhere else next Monday, no references or interview needed. My regular office colleagues don`t have this, moving up the hierarchy by doing as they are told is how it works.I don`t see small children with 25Kgs of newspapers on their backs at the crack of dawn or small children pushing heavy lawnmowers or serving people in shops. The world has moved on from that possibility.However I do see people who want to win the lottery, be a pop star or a footballer. I also see a lot of young people getting validation through Facebook likes from their peers. None of these things are real... It is only in the area of software development that kids can actually do something to get praise denied by parents and teachers. So, if you are 14 and reading this, that is my advice - write code, get happy customers and get some real world praise.",
+  "author": "Theodores",
+  "created_at": "2016-08-05T18:53:04Z",
+  "url": "https://news.ycombinator.com/item?id=12234889",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "11252815",
+  "title": "Let’s ban elementary homework",
+  "text": "The TLDR is you're getting the best 1900 education money can buy, and middle class people spend most of their time competing in a self created parody of what they think is upper class sensibilities, because they are The special snowflake who will experience upward mobility (LOL).The German educational system that \"the west\" generally uses hasn't had a \"git push\" in at least 150 years.  Until widespread recorded music technology and broadcast technology existed, being a musician was a very realistic vocational choice.  Relative pay was much higher than now.  Sure the pay wouldn't be as good as a carpenter or plumber, but its a nice mostly indoor and clean job, true the employer might want you to cross train as a waiter or bartender, but patrons like hearing music and before radio and records, music came directly from middle-class-ish hands.  Some day public schools will advance beyond 1900 in general.  Some day.Another aspect of mass aspirational education is its a window into what the middle class thinks the upper class does all day.  The fact that it has nothing to do with what the upper class actually does is completely irrelevant, as long as they can easily and visibly compete among themselves for superiority in their imaginary game.  So the middle class has built a whole elaborate mythology about the path into the promised land being reading the finest literature to each other and poetry and gazing into fine art paintings and, yes, playing and listening to classical music.  That way you can fool the college admissions and interview counselors into thinking you're actually a Vanderbilt, or come from old European royalty, etc.  I assure you they are not that stupid, but its an unstoppable belief, its an article of faith for middle class people.  Amusingly due to my grandparents, I spent time as a little kid with the kids of extremely wealthy people, and I can assure you that in reality the 7 year old of a billionaire digs in the mud and plays catch and makes sand castles just like any other kid, and very rarely indeed recite Greek poetry, listen to Mahler, or gaze into old dutch master paintings.  They do have very interesting \"money is no object\" life experiences but most of their time is spent not spending money at \"no object\" rates of speed.  Very early I learned upper class people get very pissed off when you compliment them on their stuff, on the implication that they don't have enough money for the best.  With the side effect that they feel no need to show off (showing off is a middle to upper middle class thing) so you'll never see a real Picasso in an upper class kids bedroom, but you will see a Picasso reproduction or poster in an upper middle to middle class kids bedroom.",
+  "author": "VLM",
+  "created_at": "2016-03-09T13:31:11Z",
+  "url": "https://news.ycombinator.com/item?id=11252815",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "10712011",
+  "title": "‘Serial’ Season 2 Lets Bowe Bergdahl Tell His Side of Afghan Story",
+  "text": "According to him, he had deep grievances with his battalion leadership, and decided to leave his combat outpost, run 20 miles back to FOB Sharana, thereby creating a Dust 1 (missing servicemember in theater), get everyone's attention that wayAnd that, of course, was very dangerous to his comrades[1] and irresponsible, and doesn't seem to have achieved his objective, since he was captured by the Taliban along the way. It's probably quite difficult being a commander in a combat zone with special snowflake soldiers like this in the unit.[1] \"Two soldiers died while searching for Bergdahl.\"http://www.newsweek.com/serial-season-2-interview-bowe-bergd...",
+  "author": "tokenadult",
+  "created_at": "2015-12-10T17:45:34Z",
+  "url": "https://news.ycombinator.com/item?id=10712011",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "10503637",
+  "title": "Why I pulled my son out of a school for 'gifted' kids",
+  "text": "Make no mistakes this whole smart people/student/kid/employees kind of an elite club makes a mediocre person out of many people.If you are thinking this is limited to schools alone, you are wrong. What do you think happens to all those employees at Google after they are made to go through all that algorithm acrobatics. You may be listed as someone who aced all interviews, has big grades on your mark sheet. But you will go there only find your self to be another face in the crowd. Your promotions/growth/rewards will come in a trickle. No matter how good you might actually be, you are no special snowflake in a crowd like that. The net result is you will end up demotivated, if not feeling bad about yourself.Even a performance evaluation in situations like that will make you feel like crap.And it always happens that the 'low performers' in the group are always given fewer of those plum opportunities. No matter how good you individually might be, you will end up getting labelled as mediocre. And worse, you will be made to believe that you are.",
+  "author": "kamaal",
+  "created_at": "2015-11-03T23:59:33Z",
+  "url": "https://news.ycombinator.com/item?id=10503637",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "9396374",
+  "title": "Female programmer denied job because of her 'unprofessional' attire",
+  "text": "As I said: \"One may think it's stupid but this company has a dress code and wants its employees to look put together period.\"I don't disagree that it's idiotic, but this seems to be the company's policy, they have the right to be idiotic.Many comments pointed out that it is customary for an applicant to ask if there is a dress code prior to showing up for the interview.  This person didn't know that, that's ok, she's inexperienced, still going to school. Maybe it was her first interview, I don't know.The thing is, a grown-up would learn from this experience and say \"next time I'll ask my HR contact if there is a strong policy regarding clothing\", but no, not this very special snowflake.  The world has to bend over to accomodate her uniqueness.",
+  "author": "dudul",
+  "created_at": "2015-04-17T18:51:22Z",
+  "url": "https://news.ycombinator.com/item?id=9396374",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "6847525",
+  "title": "I will not hack on your codebase for free in an interview",
+  "text": "A voice of reason. I've had too much personal experience with bad companies and bad interviewing processes for my own good.I think that #3 is spot on. Most companies AREN'T that special snowflake. Just like I would not tolerate a company with ridiculous demands, I imagine a company would not tolerate me. I'm not a snowflake, neither are they. This is a business negotiation between two parties.As far as \"what is appropriate\", you're spot on, too. I'd just like to add on some details per point from what I've seen:1. you can easily tell when a project is just NOT theirs. I've heard of people (from hiring managers that interviewed them) that copy (not fork!) someone else's projects and slap their name on it. If you're a programmer, you should see these stick out. If you're still concerned, go talk to them about the project. You'll learn a lot about their knowledge.2. Exactly. Just like you would not ask a mathematician to calculate if a train with thirty tons of coal is going at the speed of 70mph from NY to LA, and another train with sixty tons of radioactive material is going the opposite direction at 230 mph but accelerating at 3 mph...you know what I mean.3. This is the best point. You'll quickly find if someone IS or IS NOT knowledgeable about a subject. Not just by talking about the \"top article on HN!\" or some brand new framework, but having a conversation about work, problems they've encountered and how they've solved them, how they like to work etc. You learn not just about the person but a lot about their experience.4. i've never really seen probationary employment in practice but companies seem willing to do contract work or contract-to-full-time type deals. Sounds very similar5. Spot on. I find these annoying however, because I've been in a situation where I had 3 projects like these to finish. All of them small 2-4 hour projects but all to do over the weekend. I guess it wasn't that much of a big deal in the end and I do prefer this to any other type of \"test\".",
+  "author": "antjanus",
+  "created_at": "2013-12-04T15:36:24Z",
+  "url": "https://news.ycombinator.com/item?id=6847525",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "6847228",
+  "title": "I will not hack on your codebase for free in an interview",
+  "text": "This topic comes up here all the time and I'm always shocked to see that this is even considered as a hiring practice and I'm surprised it's not outright illegal.This problem exists in every field and for every kind of job. Nobody takes seriously the notion that a book-keeper candidate should do your accounting for a day to see if they should be hired, or have a contract manager negotiate a contract for a day for free, or a designer design for you for a day. So why are developers freed from this?Because it's feasible for a developer to sit down in front of a terminal for a few hours and start hacking away?Here's part of the problem from the candidate PoV1) It's slave labor (obvious) and opens you up for a never ending series of small, but annoying lawsuits if you don't hire the candidates.2) Candidate doesn't know if you're serious about hiring, or just doing a cattle call. There's a lot of reasons companies do this, but it's a practice used by some very well funded startups that wastes unbelievable amounts of people's time and is like a cancer in the industry.3) Candidate likely has plenty of other irons in the fire, and your company isn't a special snowflake. If they're currently employed it's even worse as they have to figure out how to take time off of work to waste doing free work for somebody else. Now let's say they have to do this for the 20 companies they applied to, that's a month off of work!4) Development on complex codebases is hard, most engineering companies don't really expect a new hire to be very productive on their codebase for a few months at best. It doesn't actually test them on their day-to-day as much as anybody might think, because their day-to-day job function will rapidly change over their first six months as they start to wrap their brains around the work.What is appropriate?1) Ask for a portfolio, open source projects, other work they've done, etc. Hopefully they have some kind of work history they can show off.2) Irritating, but ask them to complete basic development tasks -- fizzbuzz is a good example. Surprisingly, most bad engineers will be stumped by surprisingly simple questions like \"write a for loop\" or \"write a basic SQL query\". If they pass that, ask more and more complex questions until they're at the level you need. You can usually figure out a candidate's skillset within 10 questions. But please, don't waste anybody's time with brain teasers and puzzles and other nonsense. Keep it focused and keep it real.3) Actually have a conversation with the candidate. Plumb their knowledge. Ask them about various frameworks they've used, or languages they've experimented with or whatever. People who know their stuff can usually talk endlessly about their past experiences, people who don't can't and you end up with \"well....C++ is nice, but Lisp is a great language!\". Too many hiring processes forget this part of interviewing because it takes practice to get good at \"interrogating\". But it gets you so much soft information about a person as well.4) With questionable candidates that you're 50-50 on, be open to offering probationary employment. 30-days, or 90-days or something. It must be well structured (weekly check-points, options to leave after the first 30 days, etc.), and you have to take it seriously. It's up-to the candidate if they want to take this or move on to other opportunities. If they move on, nobody's time was wasted. If they really need something right now and they take it, you have some exit valves if they stink, and if they're promising you can adjust final employment one-way or the other.5) Something I hated at first, but have come around to a bit is the idea of a take-home problem they can work on at their leisure. Perhaps a problem that wouldn't take more than 2-4 hours to work on. Why is this different then having them hack on your code? Because you can make it not-your actual code, and can use it to concisely test exactly what you're looking for. Plus they're not taking time off of work to do this. They can spit-shine and polish their response as much as possible and really show off if they want.",
+  "author": "bane",
+  "created_at": "2013-12-04T14:56:36Z",
+  "url": "https://news.ycombinator.com/item?id=6847228",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "6821589",
+  "title": "Unseen JD Salinger stories leaked on to filesharing site",
+  "text": "SORT-OF SUMMARY (I didn't write this - it was posted on What.cd's forum by a user)The story so far. Corrections welcome -- just add them.Three short stories by J.D. Salinger (1919-2010) were to remain unpublished\nuntil 2060, but were released onto the Internet late 27Nov2013 and removed\nearly the next day (Thanksgiving morning in the USA).TWO LIVESJ.D. Salinger (1919-2010) enjoyed his personal creativity better if he\npublished less because he felt the presence of a public following -- not to\nmention reviewers and critics -- was a constraint on his freedom. Salinger\nstopped publishing and instructed his estate to release his works piecemeal\nover many decades, as if his life as a famous author would only begin after\nhis life as a private person had ended.Manuscripts to be kept unpublished could be viewed by scholars (any eager person)\nin libraries. The libraries had typescripts of the three stories here, \nannotated in margins by Salinger, but not in final form. Why that kind of release? \nBecause it was society's hubbub over artists that Salinger found constraining, \nnot the world of the mind.STORIES IN LIBRARIES\nThe three short stories now released that were available in libraries:--\"Ocean Full of Bowling Balls\" (typescript; important precursor to \"Catcher in in the Rye\")\n--\"Paula\" (early draft typed by Salinger, his notations in margins)\n--\"Birthday Boy (1946; early draft typed by Salinger, his notations in margins)The drafts could be read by scholars under supervision, the first at\nPrinceton, and the other two at the University of Texas at Austin's Ransom\nCenter. UT/Austin permitted scholars to make photocopies they were pledged\nnot to circulate, as did Princeton until the mid-1980s.The Internet leak did not come from either library, but . . .25 BOOKS IN LONDONThe three stories were published as a little paperback in London, 1999, in a\nlimited edition of 25 numbered copies, each of which declared that this\npresumably unauthorized act did not constitute publication of the works. The\norigin of this private publication is unknown. Old photocopies of the library\ntypescripts is a possible source, or perhaps Salinger himself had a publisher review\nthe manuscripts before ceasing all publication a few years later.THREE BOOKS ON EBAYA British bookseller specializing in Salinger sold three of the 25 London\nbooks, the first on 17Nov2012. Prices ranged up to 65.50 pounds sterling plus\nshipping (ca $110).\nhttp://feedback.ebay.co.uk/ws/eBayISAPI.dll?ViewFeedback2&ft...The sales attracted no apparent attention from either eBay or the estate of J.D. Salinger.ON THE INTERNETThe third book sold on eBay was scanned and pdfs of the page images were \nuploaded to what.cd. Site administrators removed the copy after being contacted by \nlawyers for the estate of J.D. Salinger. However, other sites began to carry copies \n(search Salinger Three Stories download).Scholars say the book is faithful to the manuscripts they saw in libraries.BOUNTYThe uploader dtauris will keep the bounty.A what.cd member requested the community at large to provide a copy of some\nSalinger short stories (not exactly these three, but these three became acceptable).\nThat was five years ago, about a year after what.cd was launched. The\nautonomous request system permits other members to show their approval of any\nrequest by donating part of their upload credits, creating a community-funded\nbounty. The bounty for the 84.49MB Three Stories file grew to over 6\nterabytes, the largest in site history.In 2002, Robert Reid (listen.com, Rhapsody) claimed the \"active catalog\" \nof all 5 major record company labels was 25,000 CDs (Gilder Technology Report 2/2002), \nso a 6TB bounty can download every CD in print 2 1/2 times over with \nV0/VBR encoding (100MB/CD; some are 60MB), and nearly the whole catalog in flac.What now? \"Download all of What.CD just in case [we go off the air]. We will\nneed you for a backup,\" user Alcahofa advised:\nforums.php?action=viewthread&threadid=185074&postid=5029235#post5029235What.cd has a collage of \"1 TB Bounty Fills\"; about 20 entries are listed.\nTwenty-six requests for at least 1/2 TB are currently pending (user tpchuckles, 401-500 block).CENSORSHIP AND COMMUNITYOnly two items have ever been removed from what.cd: Microsoft's COFEE forensic\nsoftware (see SoldierX) and Salinger's Three Stories.Letting a member keep a bounty after the desired item has been removed from\nthe community seems unfair to the community. There is a local contradiction\nbetween donating a bounty here, and not getting the item here (\"the local\ncontradiction\"). But in a larger sense, the global community now has \"Three\nStories\". So the uploader gifted our community, and our community -- your\nbounty -- has gifted all of humanity.Solving the \"local contradiction\" by removing a request before it is filled\nhas problems.1. The removal staff is forced to practice self-censorship.2. The self-censorship must proceed without any data about world reaction.\nHere, there was no apparent reaction to three sales of the forbidden\nmaterial on eBay, but there has been world reaction (search Salinger\nleaked) to the same material on Internet file-sharing sites.\nTo get \"the perspective granted by fallout\", one must post the material.3. Removing requests forces staff to take responsibility for\nan autonomous requests program available to users.4. Staff complicity in an act of deception could hide a torrent's origins.\nLet staff hold the high-bounty upload in escrow,\nwhile the uploader makes it go public with an upload elsewhere first.\nWhat.cd admins would then release their duplicate (escrowed) copy\nto our community. If you don't appear to be first,\nyou don't appear to be guilty. Technology, score one;\nlegality and morality, zero. At trial and sentencing,\nyou have handed the moral high ground to opponents.The two removal decisions (DECAFF, Salinger) have been based upon unwanted\ngeneral publicity (10 pages of hits 1 day later to \"Salinger leaked online\")\nas well as upon legal pressure. Legal pressure depends on focus as well as\nresources: compared to the RIAA, the Salinger estate could focus on a single\nadversary.The site was taken off line until early Thursday morning (5 to 8 AM EST) in\npart to avoid the steadily building \"curiosity\" traffic.Site administrators stated their first priority is preservation of the site,\nand thus preservation of the community. what.cd was founded the day that an\nearlier site was forcible shuttered (Wikipedia what.cd). The\nbeginning-of-the-end for the earlier site may have been an e-book posting\n(user Binjo).Members who asked for stronger resistance did not mention financial contributions to\nlegal costs. The existential seriousness of the moment is apparent in the comments of Administrator Irimias (201-300 block).USER ANXIETYSome users (cocabottle) want a commemorative T-shirt. Others are more anxious.\nIf an ebook incident brought anxiety, some some users suggest banning ebooks.\nIf a high-bounty request brought grief, some users suggest self-censorship of\nrequests with high bounties. User sav0y suggests Cafe Del Mar (ambient,\nelectronic, downtempo, future.jazz); others rushed to download anything.\nSuspending interview-based invites might be prudent.Big practical and political differences between us (quiet invites) and The\nPirate Bay (in-your-face politics) were summarized by mediaferret (401-500\nblock).SOLID LEADERSHIPUsers praising Administrators conveniently forgot about the threatened return\nof Drone.The [Manchester] Guardian quoted Administrator DixieFlatline:\n\"Due to this case's rare and unlikely circumstances, due to the\nunnecessary and unwanted attention the Salinger leak has brought, and due\nto our desire to comply with the desires of the Salinger estate or other\ninvolved parties in this matter, the content has been removed … It is not\nto be re-uploaded under any circumstances, and anyone found doing so will\nhave their account disabled.\"\nConcluded the Guardian, \"Salinger could hardly have put it better.\"User Snowflake (301-400 block) noted: The Guardian confirms what we already\nknew, Dixie's announcement writing skills are on par with Salinger's work.\"Strong leaders\" for the site and \"weak--zero?-- democracy\" were linked in\ncomments that did not also mention the vast amount of work done by members to\nproduce the text, files and metadata here, or the fact that most staff are\nunpaid volunteers, or the many opportunities--this thread, for example--for users to\nexpress themselves, make suggestions, and provide the effort to carry them out.LITERARY AGENTS AND ESTATESUser AGuyCalledMike reminds us how bad it can get with a grandson of James\nJoyce. https://en.wikipedia.org/wiki/Stephen_James_JoyceThen there is Andrew Wylie:\" If I have to read James Michener, Danielle Steel, Tom Clancy, I’m toast.\nFuck it. This is not about making money. I know where the money is. It’s on Wall\nStreet. I’m not going to sit around reading this drivel in order to get paid\nless than a clerk at Barclays. That’s just stupid. ... I want to be\ninterested in what I read, ...\"His living clients\nMartin Amis\nAl Gore\nPhilip Roth\nSalman Rushdie\nDixie Flatline?The dead clients, he handles their estates\nSaul Bellow\nJorge Luis Borges\nNorman Mailer\nVladimir Nabokov\nJohn Updike\nEvelyn Waugh",
+  "author": "whatcdhappened",
+  "created_at": "2013-11-30T00:03:50Z",
+  "url": "https://news.ycombinator.com/item?id=6821589",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "6664639",
+  "title": "Why having an MBA is a negative hiring signal for startups (2012)",
+  "text": "The conclusion to draw from this is that you shouldn't draw conclusions on broadly general situations that you know nothing about, not that you should draw conclusions that are likely wrong anyway.\"MBAs are bad for startups\" or \"Dalton Caldwell is full of shit\" or \"All of parent poster's startups have failed; why should we listen to him?\" are not useful conclusions.  Exactly what actionable intelligence have you gained from them, other than the fact that you have gained no actionable intelligence?  If you take \"MBAs are bad for startups\" at face value, all you do is disqualify a number of candidates who might otherwise be good.  If you take \"Dalton Caldwell is full of shit\" at face value, all you do is disqualify a bunch of information that might come in handy at some point.  If you take \"All of parent poster's startups have failed\" at face value, ditto.Rather, the useful information is in the supporting details.  You can take Dalton's statement that \"MBAs think they are beautiful, unique snowflakes that must be better than their peers\", and then when you're sitting across the interview table from an MBA, determine whether this MBA believes he's a beautiful, unique snowflake.  You have a lot more information at that point, namely his answers to the interview questions, his past work experience, and just the general vibe in the room.  Similarly, you can take the parent poster's assertion that he learned things with his MBA, but that doesn't take away from his basic technical skills, and factor that information into your evaluation.  It's about having multiple perspectives available to you to decide a specific situation, not about drawing broad conclusions that are ultimately useless.",
+  "author": "nostrademons",
+  "created_at": "2013-11-03T19:35:33Z",
+  "url": "https://news.ycombinator.com/item?id=6664639",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "6549957",
+  "title": "D3 visualization of San Francisco BART employees' salaries and union membership",
+  "text": "Actually, you're the pretentious one here, using a device specifically labeled for emergencies to complain at someone every day about the cleanliness of the elevator. They're telling you it's not their job because you're ringing the fucking police, not custodial staff. You are diverting police resources away from, you know, responding to rapes and stabbings because you're a precious snowflake that can't handle a bit of piss on his way to work (undoubtedly in a city that also smells like piss). I'm surprised you haven't been arrested or shot yet, particularly since you are arrogant enough to believe that the rules do not apply to you. Take your bike in the elevator and suck it up. I bet you sneak on with your bike during rush hour, as well.Those of us that ride BART daily are smart enough to understand that BART has culturally drifted into a transportation service that is inappropriate for children. Particularly during rush hour, BART is an extremely unsafe place for children, and the reason you are disgusted by bringing your children onto BART is because you are taking an unnecessary risk by doing so. You are correct that it shouldn't be this way, but you are a terrible human being for abusing BART employees for the situation in the manner that you do.We get it. BART is disgusting in some places. You know what? It still beats the hell out of traffic for me every day that I rode it, and I don't walk around making my problems everyone else's problems because I expect perfection out of everything I do. It's a public transportation service, not your personal train. Hop off your horse, get in line with the rest of us and shut up, or go on Craigslist and buy a car, for crying out loud. You're a technologist. You can afford one.God, I hated people like you when I commuted daily on BART. People like you are too self-absorbed to realize that they make everybody else's commute suck by broadcasting and/or protesting how much the commute sucks. If I had a dollar for every time someone tried to sneak a bike on during rush hour and then had a standoff with the train operator, making the rest of us miss our transfers, I could buy a car.The only person broken in this situation is you. You wouldn't last a second in New York. I'd think twice about letting these comments stand attached to your name, because they make you look really bad. Like, I hope I never interview you bad.",
+  "author": "throwaway86",
+  "created_at": "2013-10-14T22:08:45Z",
+  "url": "https://news.ycombinator.com/item?id=6549957",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "6434328",
+  "title": "Open Letter to My Students: No, You Cannot be a Professor (2011)",
+  "text": "\"The thing about grad school is that everyone else is at least as special as you, and most of them are more so. They all had 4.0 GPAs, they all have gone through life in the same insulating cocoon of praise, they all really, really love history. Hell, some of them shoot rainbows out of their butts and smell like a pine forest after a spring rain--and they mostly aren't going to get jobs either.\"Oh man, does this ring true.  If I had a nickel for every snotty remark by an arrogant first-year grad student about how they're not going to have trouble finding a professorship, I think I'd have enhanced my earning power more than the actual degree.  In academia, everyone is a unique snowflake.If you ever interview for a PhD program, you may notice that the people at the recruiting party are all first or second year students.  There are many reasons for this, but a big one is that there are very few students past the second year of a PhD program who are under any illusions about their specialness in the order of the academic world.  These are not the people you want recruiting new grist for the research mill.",
+  "author": "timr",
+  "created_at": "2013-09-23T21:37:31Z",
+  "url": "https://news.ycombinator.com/item?id=6434328",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "6430906",
+  "title": "How to interview engineers as a startup",
+  "text": "My list:1) Be respectful of candidates: their knowledge, their background, communicating with them, and most importantly their time. You may think your startup is a very special snowflake, but to a candidate, it's application #107 out of 243. Nothing gets my goat more than a company that absurdly and absolutely wastes my time.2) If a candidate makes it through a contact, that means they made it through a level of the interview process and were downselected and are now part of a smaller pool. That's how they'll perceive it, that's how you should perceive it. I've seen all kinds of nonsense about repeated interviews where the candidate thinks they're getting close to landing the job, but the company's internal processes are just getting enough interviews to fill out the hiring committee before rejecting the candidate.3) If you're going to do the wrong thing and make a nepotistic selection, save everybody the time and energy and just hire that person from the start. Don't engage in kangaroo application processes just so you can claim it was competitive. It wasn't.4) Have a solid idea of what position the candidate it interviewing for. Don't engage in \"holistic\" and speculative hiring where you hire a guy because he seems swell and you end up bouncing him around from position to position to try and make him fit.5) Ask questions that are actually relevant for the work the person will be doing and might grow into. If it's a CRUD developer working on backend data stuff in SQL and Python, don't waste their time with irrelevant algorithm questions and score them based on their knowledge of node.js and functional programming -- or even worse, non-engineery things like how to negotiate a fulfillment center contract and keep inventory loss to a minimum. Chances are you need them to do lots and lots of X, not write bubblesort or regular expression optimizers or b-trees. If you do need them to do that kind of work, interview them for that.6) If you want to have a quiz, or coding challenge or whatever, give them problems that represent the simplest possible version of what you need them to do. Fizzbuzz is a great example. It exercises very basic programming skills without spending time asking them to write a bubblesort. If they list SQL on their resume, have them write a very simple SQL statement. 9/10 can't do these basic skills tests and there's no reason freaking them out and wasting your time on more advanced questions. You already know that if they can't do these things they won't fit in.7) Contact your candidates and reply to them. When they apply, acknowledge the application. If you reject them, be a grownup and at least send them a nicely worded email, \"...wouldn't be a good fit here...\". When you are looking for a job, and you don't know the outcome of an interview at a place you really want to work for, you might delay or pass on faster moving opportunities to wait it out. Rip off the bandage and let them know they didn't make it so they can close it out and move on. It's just common courtesy.8) Don't be confrontational. Many engineers are terrible at the soft skills during an interview and are already freaked out by the experience. It's on your home turf, you have all of the advantage, and it's concerning something that might have impact on the rest of the candidate's life. Be a good host!9) Interviewers need to show up or make themselves available by some alternate means. You won't believe how many times I've heard stories of people showing up for an all-day interview (hard to get the time to do that if you already have a job), only for half the panel to not show up that day. Those people shouldn't be part of the interview panel if they don't take it seriously. Remember, #2 above, if the candidate finishes out those who are there, and is then called back in to interview with those who couldn't be bothered to make it...they perceive that as advancing in the process, not filling out your internal hiring board process.",
+  "author": "bane",
+  "created_at": "2013-09-23T13:58:58Z",
+  "url": "https://news.ycombinator.com/item?id=6430906",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "6418102",
+  "title": "Interviews are Broken",
+  "text": "This person sounds completely insufferable.  He basically is declaring himself too good for interviews (except for C-level execs, whom he apparently tolerates).  Heaven forbid you don't just assume Ernie Miller is god's gift to your job position, because he is Ernie Miller and he is a special unique snowflake who is not to be insulted with petty questions pertaining to his ability to do the job.Anyway, good luck with that.",
+  "author": "balloot",
+  "created_at": "2013-09-20T14:58:53Z",
+  "url": "https://news.ycombinator.com/item?id=6418102",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "5968051",
+  "title": "Startup Investing Trends",
+  "text": "this is one of my hobbyhorses, but recruiting really isn't that hard.  If you're finding it hard, let me ask:(1) are you paying market salaries?(1a) are you really paying market salaries, or are employees supposed to join your company because you're a special snowflake(1b) even if you are paying market, why should an employee go to your firm?  What is the upside to them for leaving a boss and company that they know?  Because it would be really convenient for you, the hirer, is not a good answer.(2) do you make the interviewing process decent, or do you scatter caltrops in front of potential employees(2a) good employees do not need to crash study then regurgitate graph algorithms that your company never uses on the whiteboard.  They also have jobs and value their vacation time and don't care to spend a week consulting for you(2b) how long does it take you to respond to resumes that come in?  You should be able to say yes/no/maybe within 2 business days.  Do your recruiters / interviewers actually read the cover letters / resumes?  Last time I changed job a big sf / yc startup let my first interviewer roll into the interview room just shy of 20 minutes late without having read my resume.  That's a complete fucking dick move, and it's part of why I turned them down.(2c) when potential employees send you github links, do you have an engineer actually bloody look at them (almost never in my experience)(2d) do you actually expend effort to meet potential employees / grow a bunch of warm leads, or do you wait until 3 weeks before you want someone to start then gripe because you can't convert cold leads in 1 week plus a 2 week resignation period for their current employee?(2e) do you use shit software like that jobvite bullshit that badly ocrs then expects me to hand proof their shitty ocr job?  Or do you directly accept pdf resumes.(2f) for the love of god, I do not have a copy of ms word and wouldn't take one if it were free.  I will not put my resume into word format.(3) do you take some pains to grow employees?  Hire people out of university?  Take a chance on people?(3b)  Like one of my former employers, do you do a good job hiring new grads from schools besides stanford / berkeley / mit / cmu, but then 18 months in after employees have demonstrated their value refuse to bring them up to market rates and lose them?(4) when you send out offers, do you actually put out a good offer or do you throw numbers out that are 10% or more under your ceiling then expect employees to negotiate hard with you?  I just turned down an sf startup because they did this; the ceo who hired me said, \"x0x0: when I was an employee I hated negotiating, so I'm going to make you a great offer.  This also means I'm not going to negotiate.\"  And you know what?  It was a great offer, and I said yes the next morning.  It also avoids starting your new job after a confrontational exercise.(5) if you have recruiters contacting people, do you have them make clear they're internal not external?(5b) do your recruiters actually read peoples' linkedin profiles before contacting them?  I used rails a bit 3 employers ago and had to remove that word from my profile because I got spammed with rails stuff.(6) do your job postings on LI/craigslist/message boards tell potential employees why he or she should work for you, or is it simply a long list of desiderata like the vast majority?(7) like Rand says, do you know off the top of your head the career goals of your employees?  What are you doing to help them get there?(7b) just like the easiest sale is an upsell to a customer you have, the easiest recruit is the good employee you already have that you keep happy and prevent from leaving(7c) do you give your employees raises to keep them at or above market, or can they get a $20k raise by swapping companies?  If that raise is on offer, exactly why should they continue to work for you?(7d) on that note... 0.2% of an A round company isn't golden handcuffs.  It's more like paper handcuffs.",
+  "author": "x0x0",
+  "created_at": "2013-07-01T01:03:31Z",
+  "url": "https://news.ycombinator.com/item?id=5968051",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "5426048",
+  "title": "How To Hire Me (or any other programmer)",
+  "text": "Ok, so here's the problem. None of the recommendations in this are actually actionable. Consider:- Be InterestingWell, the company either is or it isn't. If you're an auto parts distributor who needs to convert your application from Cobol on AIX to ASP.NET on Windows, then well, you aren't really very interesting. And there's not one thing the recruiter can possibly do to change that.* CarePerhaps you genuinely care, but what if you don't? The recruiter is human too. Maybe they just want to do their job and go home. You can't decide to genuinely care. You either already do, or not. And we're saying they absolutely must not pretend to care. So ... the only remaining option is not caring.* Acknowledge ApplicantsI don't think Matt appreciates the sheer volume of resumés that come in for an advertised position. I know some HR departments that insist on sending an acknowledgement for every received application, and they spend a lot of man-hours on it, and are constantly having to defend this practice to executives. And honestly, why does the typical badly-formatted, ungrammatical resumé actually deserve a response, anyway? Matt may be a special unique snowflake, but trust me, all those other people aren't.* Get to Know ProgrammersYou can't do this without getting to know programming. And the whole point of specialization of labor is that you shouldn't have to. You can hire a doctor, lawyer or plumber while knowing nothing about plumbing, doctoring or lawyering. Why should it be different for programmers? As a profession, why should the rest of the world bow to our desires, instead of us creating a better product for them to buy?* Let Me Code, DammitThis is the one piece of good advice. The best way to interview in any field is to engage the applicant in job-related task behaviors and observe the results. With programming, we're lucky that this happens to be pretty easy. But I don't understand how this squares with the earlier rejection of having the applicant code a Fibonacci function.",
+  "author": "ghjm",
+  "created_at": "2013-03-22T21:54:47Z",
+  "url": "https://news.ycombinator.com/item?id=5426048",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "4716801",
+  "title": "No, I still don't want to work for Google",
+  "text": "I realize the problem. But their current approach has the outcome of alienating a lot of their target audience from even wanting to work there, or at the very least wanting to subject themselves to the hiring process.The result is that a lot of people who are good enough to find it easy to find competitive jobs elsewhere self-selects out of the process, leaving the people who either really badly want to work specifically at Google, or who don't have other alternatives, in their hiring process.The former group likely will contain lots of great people still, given that there's still a lot of people who see Google as a great place to work. The latter group likely isn't who they want.Clearly the former group is not enough, given that Google has an army of recruiters who keep hassling a lot of us who have never applied to Google and/or who have turned them down for interviews or jobs before, or who have even worked for them and left.They recognise they are losing out on a lot of good candidates, or they wouldn't have these people calling the same potential candidates over and over and over.And from personal experience I know a lot of their recruiters are frustrated at how hard it is for them to fill many positions, and how often they approach candidates and are explicitly turned down because people don't consider it worthwhile subjecting themselves to their interview process when they can easily get jobs with competitive packages and terms elsewhere.The last Google recruiter who contacted me called me to plead for me to do a second round management interview after I was lukewarm after the totally botched tech interview I've mentioned in this thread - she'd gotten approval to simply skip doing another tech interview completely after the tech interviewer did his ridiculous nonsense.But who would I keep putting myself through that shit? No other potential employer, many of whom offer better terms than Google are likely to do, have ever tried to subject me to that type of employment process. I know I'm good at what I do. I'm used to being rapidly pursued with face to face interviews, being taken out for lunches and dinners, having the recruiter and potential employer actively sell me on the prospects and the benefits of working there, being told upfront exactly what I will work on and having them make it very clear that they can meet my salary and stock expectations. It's not that I need to be treated like some special snowflake, but I'd put a premium on working somewhere where I know I am appreciated.Googles recruitment process scream \"we don't care\".",
+  "author": "vidarh",
+  "created_at": "2012-10-30T10:20:48Z",
+  "url": "https://news.ycombinator.com/item?id=4716801",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "4390491",
+  "title": "A Review of Airbnb's SRE Hiring Process, from someone who just interviewed there",
+  "text": "I'm going to say something potentially very stupid hoping someone will correct me: I don't understand why technical interviews exist in the general case.I mean, I understand why companies like AirBnB would like them to exist.  What I don't understand is why engineers participate in them.I totally get selling yourself to the potential employer.  Spending an hour on the phone talking through a technical problem.  Having IRL conversations where you see if you \"gel\" with the team in a bunch of hard-to-quantify ways.But why would any engineer in today's market take two days to respond to asinine pet/trick questions that random engineers lob at them in order for a shot to spend additional time for people higher up the food chain to lob hypothetically less-asinine questions in a way that makes them directly comparable with the other 19 people jockeying for the spot?Do companies like AirBnB believe that there are top-tier people with nothing better to do?  Or do they believe they have some perk that is different than the perks of every other startup currently hiring that would motivate top-tier people to create such time?Maybe my perception of market demand leads me to overestimate it.  I get so many \"please work for us\" emails (from actual founders, even, let alone recruiters) that my inbox is out of control.  I've gotten a job offer while writing this comment.  I can't even reply at that scale.  Perhaps one offer a month is lucky enough to receive an actual e-mailed decline; I never even consider doing a phone interview.  Am I a precious snowflake, is my experience non-representative?",
+  "author": "drewcrawford",
+  "created_at": "2012-08-16T08:53:35Z",
+  "url": "https://news.ycombinator.com/item?id=4390491",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "4313912",
+  "title": "Divide a number by 3 without using * / + - % operators",
+  "text": "As a hiring manager for the last 15+ years, I would LOVE that kind of response.That kind of response would save me a tremendous amount of time and enormous headaches dealing with a bad hire.  I would thank you for your honesty, ask you a couple of perfunctory questions so it didn't seem too awkward and then let you go on your way in life to be someone else's problem.Working on real projects that people actually want to pay for means working somewhat on the edge.  Things go wrong.  There are crunch time when solutions have to be delivered.  The last thing I want at those times is to have to depend upon some mommie's special little snowflake who was too self-important to gamely work through some puzzle exercises during an interview for a job he claimed he wanted.  That little snowflake will melt every time and leave me and the rest of his team to fend for itself.  No thanks.",
+  "author": "crusso",
+  "created_at": "2012-07-30T18:37:55Z",
+  "url": "https://news.ycombinator.com/item?id=4313912",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "3645772",
+  "title": "Ask HN: Help a Hacker Out",
+  "text": "Hmmm... I applied at Twitter and got the coding problem done right. I also contributed to one of Twitter's open source projects, \"Snowflake.\" Either you got to have a great story like this Iowa guy, or hiring at Twitter is broken. :-( This might be my next HN post: \"How I Interviewed Great at Twitter but a bad coder got my job.\"",
+  "author": "barce",
+  "created_at": "2012-02-29T00:20:43Z",
+  "url": "https://news.ycombinator.com/item?id=3645772",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "2358670",
+  "title": "MIT is a national treasure",
+  "text": "Speaking as someone who applied for MIT a few years ago, something like this is no longer possible and the \"rat race\" description used for comparision is now in fact valid for MIT as well.Nowhere in the recrutation process you have much possiblity to show your \"software code\" - everything is very formalized and you have to submit your grades, essays on specified topics, pass the SATs and go through a interview (but the interviewer doesn't have to know anything about the discipline you want to study). Yes, you can describe your most interesting projects as part of your application, but if you read the admission blogs and other MIT materials, it is quite clearly implied that unless you have near-perfect grades and/or near-perfect SAT scores, they won't even look at the project descriptions, essays etc. Also there is no way of knowing why you were accepted or rejected, because the whole proccess is 100% opaque to the outside world.I still think the MIT is awesome and the admission process probably has to look more or less like it looks like because of the volume of applications they have to go through. But the post and some of the comments seem to leave the impression that the MIT addmission comitee will look at every person as a \"unique snowflake\" to find the really outstanding candidates. In reality, the admission process has to be quite mechanical so that they can at all manage it and only after the initial 90% of the applications gets rejected, they can be scrutinize the remaining 10% in more detail. So, if you want to get-in, you have to \"optimize grades and SAT\" and \"speaking French and Chinese, playing piano and painting abstract art\" won't hurt either.",
+  "author": "jarekr",
+  "created_at": "2011-03-23T09:25:40Z",
+  "url": "https://news.ycombinator.com/item?id=2358670",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "1253630",
+  "title": "How to Find Crappy Programmers",
+  "text": "Hmm.. this viewpoint needs a bit of balancing:\n- An employer has money and needs a developer. A developer needs the money. If the employer has foresight, then the developer is at a disadvantage in this early stage of the relationship because it allows the employer to put out a ridiculous sounding job requirement yet still get a decent developer by playing the numbers game (interview lots of devs; hire one temporarily and fire them if they're no good.. then hire another etc...).With that in mind, lets look at the points:\n#1) We need some guy who should probably know all these things because we use them all.. somewhere.. in our organization. The more they know all these thing, the more useful they'll be to us from day 1.#2) We need someone who has a pair. Either from experience or sheer will. Come in and show us that you're the one we need. If the big numbers scare you, then you're probably not our guy anyway. We also use a few old technologies that have served us very well - it would be fantastic if you already know them.#3) You're not a unique or a beautiful little snowflake. You'll find out how we work when you get here. If you can't adapt, you'll leave - probably against your will.#4) The last guy who did this job was awesome. He worked hard to help us become who we are now. We expect no less of you.#5) We do things a certain way and it seems to be working for us. We expect you to respect that, considering we don't even know you yet. You'll have plenty of opportunity to help make this a more welcoming place if a) we hire you, and b) you don't forget all these pain points once you come on board, and are motivated to do more than just your job description.Jobs are like girlfriends (or boyfriends) are like most relationships. They may or may not start out smoothly. You'll find out that they're single (existence of job ad), kinda cute ($, benefits), and maybe, but they might only be nice to their friends and a firewall to everyone else (job description / initial response etc..). They are all different, and it is up to you to find one to fall in-love with.",
+  "author": "vishaldpatel",
+  "created_at": "2010-04-09T19:40:43Z",
+  "url": "https://news.ycombinator.com/item?id=1253630",
+  "query": "snowflake interview",
+  "kind": "comment"
+ },
+ {
+  "id": "210097",
+  "title": "Try This Idea to Get Your Resume Noticed",
+  "text": "People who look at resumes all day spend 15 seconds looking at  most resumes because that's how long it takes to find something stupid or disqualifying for the job, not because they look for something awesome for 15 seconds and then chuck it if they aren't grabbed by your whimsical creativity.Your resume should get you in the door -- use your interview to convey what a unique and special snowflake you are.",
+  "author": "jraines",
+  "created_at": "2008-06-05T17:34:24Z",
+  "url": "https://news.ycombinator.com/item?id=210097",
+  "query": "snowflake interview",
+  "kind": "comment"
+ }
+]

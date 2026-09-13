@@ -1,7 +1,7 @@
 # Snowflake 面试题目总表（GenSWE / Software Engineer - Backend，IC1–IC2）
 
-**日期：** 2026-09-13 · **输入：** `catalog/raw/{coding_oa,coding_phone_onsite,ood,TALLY,system_design,bq_hm_recruiter,process_and_jd,sources_index}.md` + `catalog/discovery/`（收割）+ `../raw/{process_research,company_research,chakra}.md`（AI 轮 dossier）
-**排序：** `RANK.md`（打分输入）→ `tools/pareto.py` → `PARETO.md`（输出）。**cut line = 前 33 行（63 行的 52%）**，refs 分布平（大量单来源），所以宽于 Stripe 的 20/42。
+**日期：** 2026-09-13 · **输入：** `catalog/raw/{coding_oa,coding_phone_onsite,ood,TALLY,system_design,bq_hm_recruiter,process_and_jd,sources_index}.md` + `catalog/discovery/`（Reddit 35 帖全文 · HN 6 · 1p3a 镜像 21 帖；`TRIAGE.md` 46 行）+ `../raw/{process_research,company_research,chakra}.md`（AI 轮 dossier）
+**排序：** `RANK.md`（打分输入）→ `tools/pareto.py` → `PARETO.md`（输出）。**cut line = 前 35 行（66 行的 53%，2026-09-13 收割回写后重跑）**，refs 分布平（大量单来源），所以宽于 Stripe 的 20/42。
 
 ## 格式事实（多源交叉，细节与 URL 在 raw/）
 
@@ -10,6 +10,7 @@
 - **电面**：LC medium 为主 + 更难 follow-up；OOD/类设计频率高（task scheduler、KV、文件系统、限流器）；"coding wasn't LC style but something random" 与 "LC hard on the screens" 并存——按 org 不同。前 15–20 min 常先讲项目。
 - **SD**：45–60 min；infra/data 味（KV、quota、调度器、队列、审计日志、DAG 缓存、SQL 引擎）；面试官两极（多数给 hint，至少一例全程沉默）；白板工具未证实；coding 用 CoderPad。
 - **通过线**：电面"只是 screens，不 signal"；onsite **每一轮都要 Hire**；1.5 YOE 大概率 IC1（Bay Area 中位 TC $236K），可能 down-level；team matching 是真实门槛（有全过后因 headcount 被搁置的一手案例）。
+- **onsite 需签 NDA**（HN 2025-01 一手，Databricks/Snowflake/Stripe 同）；被拒后可要求反馈，有人经 GDPR DPO 请求拿到面试记录（HN 2025-06，EU 适用）。
 - **岗位 must-have**（6 份 JD）：SQL 5/6 · 分布式系统 5/6 · 数据库内部 5/6 · 算法与数据结构 5/6 · Java 4/6 · 大规模生产系统 4/6 · C++ 2/6 · 并发明确写出 1/6。
 
 ## 计数与置信度
@@ -53,8 +54,9 @@
 | pc14 | Meeting Rooms II（LC 253 型，2026 实习 VO） | VO | 1 | 2026 | 1 | LOW | 1p3a post/7546739（登录墙） |
 | pc15 | Parentheses Matching | PS | 1 | 2026-03 | 1 | LOW | linkjob |
 | pc16 | Reverse Alphanumeric Segments | PS | ? | 2026 | 1 | LOW-MED | 1p3a 索引标题 |
+| **q19** | **Maximize OR-Sum**（k 次翻倍操作最大化按位或之和；贪心 + 位运算） | OA（AIML 实习） | 2：暴力 → 前后缀 OR + 把所有翻倍给一个数 | 2026-05 | 2 | MED-HIGH | Reddit r/cscareerquestions 1t0ogu7 一手（2026-05-01）· interviewfox；discovery/TRIAGE #4 |
 
-**Table A：29 行**（含 6 条 LC 原题合并行）。
+**Table A：30 行**（含 6 条 LC 原题合并行；q19 由 2026-09-13 收割一手升级）。
 
 ## Table B — OOD / 类设计 / 并发（每题都有并发追问，见 raw/ood.md "Cross-cutting"）
 
@@ -85,6 +87,7 @@
 | **sd08** | **DAG Cache for Query Views / Materialized Views**（≈ Dynamic Tables） | PS/VO | 依赖图、增量 vs 全量刷新判定、一致快照、失效传播 | 2026-03 | 2 | LOW-MED |
 | **sd10** | **Concurrent Web Crawler** | PS/VO | 去重（Bloom）、礼貌性、分布式分片、扩展 | 2026-03 | 3 | LOW-MED |
 | **sd09** | **User Password Storage**（一手，配 Happy Number 同场） | PS/VO | 哈希算法与参数、盐、密钥轮换、泄露响应 | 2026-07 | 1 | HIGH |
+| **sd22** | **在两个 PB 级数据库之间同步数据**（IC2 Backend 一手；**不允许需求澄清**，候选人称"worst 30 minutes"） | PS/VO | CDC vs 快照 + 增量、一致性校验、回填、限速、schema 演进、断点续传 | 2026-03 | 1 | HIGH |
 | **sd12** | Object Store with Deduplication | VO | 内容寻址、引用计数、GC | 2025-12 | 2 | LOW |
 | sd13–sd20 | ACL Authorization Service · Metadata Catalog/Schema Registry · Multi-Tenant Analytics Platform · Resilient Auth with Flaky Tokens · Geolocation Search · Event Subscription（1M/s）· REST API Abstraction Layer · Dynamic Blacklist Filter（1p3a 标题） | VO | — | 2025–2026 | 1 each | LOW |
 | sd21 | Metering & Billing —— **未见面试报道**，仅 Billing Platform JD；作为 expertise 轮/team 面试话题准备，不当必考 | — | credits/秒、10% Cloud Services 免费额、AI token 计量 | — | 0 | JD |
@@ -97,11 +100,11 @@
 | **Recruiter/HR** | 15–30 min | 背景、infra 经验、方向偏好、why Snowflake、时间线；不报薪资数字 | 具体化的 why（不是"大厂"）| raw/bq_hm_recruiter §1 |
 | **Expertise / 项目深挖** | 早期职业：嵌在 coding 轮前 15–20 min + onsite 一轮 resume；IC3 独立 40 min | 选一个项目：why/how 每个决策、备选方案、外部库、可用性/容错 | 只会"做了什么"讲不出"为什么、还有什么选项、现在怎么重做" | raw/bq_hm_recruiter §3 |
 | **HM / BQ** | onsite 一轮 30–45 min，逐题记笔记 | mistake · ownership · 陌生团队协作 · teamwork · conflict · pushback（disagree-and-commit）· prioritize · customer first · raise the bar | 8 条价值观逐条对应（Own It / Get It Done / Integrity Always 最常）| raw/bq_hm_recruiter §2 |
-| **Team Matching** | GenSWE 最后一步，HM 30–45 min | 团队需求、scope、工作方式、长期匹配 | headcount 真实风险（全过后被搁置的一手案例）；主动问 org 与 headcount | raw/bq_hm_recruiter §4 |
+| **Team Matching** | GenSWE 最后一步，HM 30–45 min | 团队需求、scope、工作方式、长期匹配 | headcount 真实风险（全过后被搁置的一手案例；另一例拿到带数字的 offer 后被推去换组再失联，HN 2026-07）；主动问 org 与 headcount | raw/bq_hm_recruiter §4 · discovery/TRIAGE #41 |
 
 ## Table E — 仅题名 / 未证实（不建题，留档）
 
-OA：Drawing Edge · Horizontal Pod Autoscaler（pod count）· Efficient Deployments · Minimum Total Weight · Unequal Elements · Person and Cake · Simple Array Rotation Game · Grid Traversal（min jumps）· Good Subsequence I · Maximize OR-Sum · Text Scoring · String Transformation · Non-Overlapping Intervals 变体 · Lexicographically Largest Array（MEX）· Minimize/Maximum Array Value · Largest Sub Grid · Same Bit Pair · Prime String / Work Schedule（2025 Infra 实习，403）· Solve Matrix Equations · Max Element Indexes After Rotations · Student Enrollment System（OOP，interviewfox 单源）。
+OA：Drawing Edge · Horizontal Pod Autoscaler（pod count）· Efficient Deployments · Minimum Total Weight · Unequal Elements · Person and Cake · Simple Array Rotation Game · Grid Traversal（min jumps）· Good Subsequence I · Text Scoring · String Transformation · Non-Overlapping Intervals 变体 · Lexicographically Largest Array（MEX）· Minimize/Maximum Array Value · Largest Sub Grid · Same Bit Pair · Prime String / Work Schedule（2025 Infra 实习，403）· Solve Matrix Equations · Max Element Indexes After Rotations。
 电面/前端：React Kanban（前端赛道）· GFE coding。
 **剔除**：Grid Land / Kth Smallest Instructions（Lucid 2020 OA 误标）。
 
