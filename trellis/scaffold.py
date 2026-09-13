@@ -143,12 +143,17 @@ def import_cards(
                 errors.append(f"{where}: qa card missing q or a")
                 continue
             body = f"## Q\n{q}\n\n## A\n{a}\n"
+            # A translation travels beside the card, never instead of it.
+            if item.get("q_zh") and item.get("a_zh"):
+                body += f"\n## Q zh\n{item['q_zh']}\n\n## A zh\n{item['a_zh']}\n"
         elif ctype == "cloze":
             text = item.get("text", "")
             if not text or not _CLOZE_RE.search(text):
                 errors.append(f"{where}: cloze card missing text or {{{{c1::...}}}}")
                 continue
             body = text.rstrip() + "\n"
+            if item.get("text_zh"):
+                body += f"\n## zh\n{str(item['text_zh']).rstrip()}\n"
         else:
             errors.append(f"{where}: bad type {ctype!r}")
             continue

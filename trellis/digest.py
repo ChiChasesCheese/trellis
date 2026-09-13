@@ -106,11 +106,28 @@ def status_lines(plans: list[LeafPlan]) -> list[str]:
     return lines
 
 
+TRANSLATION_RULE = """
+- This domain's cards also carry a Chinese translation, and its deck is
+  reviewed in Chinese. Give every card one: `q_zh` and `a_zh` (for a cloze,
+  `text_zh` with every `{{{{cN::…}}}}` deletion byte-identical), a faithful
+  translation of your English — same structure, terms of art kept in
+  English, nothing added or dropped.
+"""
+
+
 def language_rules(project: Project) -> str:
     """The rules every card written into this domain follows, whatever it
-    is written from: its language, and that it must teach alone."""
+    is written from: its language, and that it must teach alone. A domain
+    whose cards mostly carry a translation asks for one on new cards too,
+    or the deck the learner actually reviews would go silently bilingual."""
     lang = LANG_NAMES.get(project.skeleton.lang, project.skeleton.lang)
-    return LANGUAGE_RULES.format(lang=lang, subject=project.skeleton.title)
+    rules = LANGUAGE_RULES.format(lang=lang, subject=project.skeleton.title)
+    cards = project.cards
+    if cards and project.skeleton.lang != "zh":
+        translated = sum(1 for c in cards if c.tr.get("zh"))
+        if translated / len(cards) >= 0.5:
+            rules += TRANSLATION_RULE
+    return rules
 
 
 def embed(blocks: list[tuple[str, str, Path]], root: Path, budget: int) -> str:

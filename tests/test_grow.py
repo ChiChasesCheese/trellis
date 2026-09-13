@@ -130,6 +130,26 @@ def test_brief_and_feed_run_on_the_same_traces_and_point_at_grow(root, capsys):
     assert "search:" in capsys.readouterr().out
 
 
+def test_a_translated_domain_asks_for_and_keeps_a_translation(root):
+    # every existing card carries a zh translation, so a grown card must too
+    for path in (root / "vault" / "demo" / "cards").rglob("*.md"):
+        path.write_text(path.read_text(encoding="utf-8") + "\n## Q zh\n问？\n\n## A zh\n答。\n",
+                        encoding="utf-8")
+    assert run(root, "grow", "--leaf", "demo:mid.a", "-o", str(root / "p.md")) == 0
+    assert "q_zh" in (root / "p.md").read_text(encoding="utf-8")
+    answer = [{"id": "a-both", "type": "qa", "q": "What moves A?", "a": "The lever.",
+               "q_zh": "什么推动 A？", "a_zh": "杠杆。"},
+              {"id": "a-cloze", "type": "cloze", "text": "A moves by {{c1::the lever}}.",
+               "text_zh": "A 靠 {{c1::the lever}} 移动。"}]
+    (root / "a.json").write_text(json.dumps(answer, ensure_ascii=False), encoding="utf-8")
+    assert run(root, "grow", "--import", str(root / "a.json"), "--leaf", "demo:mid.a") == 0
+    card = (root / "vault" / "demo" / "cards" / "mid" / "a-both.md").read_text(encoding="utf-8")
+    assert "## Q zh\n什么推动 A？" in card and "## A zh\n杠杆。" in card
+    cloze = (root / "vault" / "demo" / "cards" / "mid" / "a-cloze.md").read_text(encoding="utf-8")
+    assert "## zh\nA 靠 {{c1::the lever}} 移动。" in cloze
+    assert run(root, "--domain", "demo", "build", "--lang", "zh") == 0
+
+
 def test_grow_can_be_held_to_one_domain(root, capsys):
     (root / "skeleton" / "other.yaml").write_text(yaml.safe_dump({
         "domain": "other", "title": "Other",
