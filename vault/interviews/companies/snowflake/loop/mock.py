@@ -13,12 +13,11 @@
                                                  # draw N random non-coding questions and time them
 
 Rounds:
-  ps  03_phone_screen    45 min   problem.md   (has starter_template.py/starter.py/solution.py)
-  cd  06_coding_onsite   60 min   problem.md   (same shape as ps)
-  int 05_integration     60 min   problem.md   (same shape; `serve` starts its mockserver)
-  bs  04_bug_squash      60 min   README.md    (whole dir minus solution/ copied to loop/work/<id>/)
-  sd  07_system_design   45 min   prompt.md    (no automated test; rubric.md printed as a hint)
-  01_recruiter / 02_hm / 08_behavioral: bank.json question banks, drawn via `bq`, no ids.
+  pc  03_phone_coding    40 min   problem.md   (starter_template.py/starter.py/solution.py/test_*.py)
+  od  04_ood             45 min   problem.md   (same shape; class-design rounds)
+  sd  05_system_design   45 min   prompt.md    (no automated test; rubric.md printed as a hint)
+  01_recruiter / 06_project_deep_dive / 07_hm_behavioral / 08_team_matching: bank.json banks, drawn via `bq`
+  (aliases: recruiter · expertise/exp · hm/behavioral · team). OA problems live in ../problems (use drill.py).
 """
 from __future__ import annotations
 
@@ -43,10 +42,17 @@ ROUNDS = LOOP / "rounds"
 WORK = LOOP / "work"
 MOCKSERVER = LOOP / "mockserver"
 
-DEFAULT_MINUTES = {"ps": 45, "cd": 60, "int": 60, "bs": 60, "sd": 45}
+DEFAULT_MINUTES = {"pc": 40, "od": 45, "sd": 45, "ps": 45, "cd": 60, "int": 60, "bs": 60}
 SHOW_FILE = {"bs": "README.md", "sd": "prompt.md"}  # everything else: problem.md
 
-NONCODING_ALIASES = {"recruiter": "01_recruiter", "hm": "02_hm", "behavioral": "08_behavioral"}
+NONCODING_ALIASES = {
+    "recruiter": "01_recruiter",
+    "expertise": "06_project_deep_dive",
+    "exp": "06_project_deep_dive",
+    "hm": "07_hm_behavioral",
+    "behavioral": "07_hm_behavioral",
+    "team": "08_team_matching",
+}
 NONCODING_ROUNDS = list(NONCODING_ALIASES.values())
 
 
