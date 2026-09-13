@@ -162,6 +162,20 @@ def test_digest_status_prompt_and_import(root, capsys):
     assert not (root / "vault/kafka/cards/producer/kt-stray.md").exists()
 
 
+def test_grow_grounds_an_uncovered_leaf_in_its_corpus_sections(root, capsys):
+    """Where a corpus reaches the leaf, growing it is digesting it: the
+    prompt carries the book's text and the cards carry its provenance."""
+    _seed_and_triage(root, capsys)
+    assert run(root, "grow", "--leaf", "kafka:producer.acks", "-o", str(root / "g.md")) == 0
+    prompt = (root / "g.md").read_text(encoding="utf-8")
+    assert "acks=all 全部同步副本" in prompt and "Kafka测试" in prompt
+    answer = [{"id": "kt-grown", "type": "qa", "q": "acks=0 时会怎样？", "a": "不等待确认。"}]
+    (root / "g.json").write_text(json.dumps(answer, ensure_ascii=False), encoding="utf-8")
+    assert run(root, "grow", "--import", str(root / "g.json"), "--leaf", "kafka:producer.acks") == 0
+    card = (root / "vault/kafka/cards/producer/kt-grown.md").read_text(encoding="utf-8")
+    assert "source: kafka-test" in card and "tags: [grown]" in card
+
+
 def test_corpus_build_is_a_filter_and_the_note_annotates_the_outline(root, capsys):
     _seed_and_triage(root, capsys)
     answer = [{"id": "kt-acks-all", "type": "qa", "q": "q?", "a": "a."}]

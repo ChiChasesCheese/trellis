@@ -145,6 +145,15 @@ the leaves worth writing for, and a single opening move. Derived from Traces on
 every regeneration, and short enough to read standing up.
 _Avoid_: dashboard, report, summary, digest, progress
 
+**Grow**:
+Writing new cards where the loop says it pays: for a Weakness, cards that reach
+the mechanism from another angle than the ones that slipped; for an uncovered
+leaf, its first cards. Grounded in what the vault already holds for the leaf —
+a corpus's sections or a clipped reading — and never anywhere the loop did not
+point. A grown card is tagged so the next Brief can say whether the repair
+took.
+_Avoid_: generate, populate, backfill, fill in, repair (for the act of writing)
+
 ### Ingesting a codebase
 
 **Codebase**:

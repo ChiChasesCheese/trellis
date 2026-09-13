@@ -40,7 +40,7 @@ def _link(domain: str, standing: LeafStanding) -> str:
     return f"[[{standing.node.id}|{standing.node.title}]]"
 
 
-def _interleave(
+def interleave_by_domain(
     rows: list[tuple[str, LeafStanding]],
     cap: int = PER_DOMAIN_CAP,
     limit: int = SECTION_LIMIT,
@@ -88,14 +88,14 @@ def _opening_move(
             bits.append("→ " + " · ".join(onward))
         else:
             bits.append(f"→ nothing to practise on it yet: "
-                        f"`trellis scaffold {s.node.id}`")
+                        f"`trellis grow --leaf {domain}:{s.node.id}`")
         return "\n".join(bits)
     if uncovered:
         domain, s = uncovered[0]
         because = (f"{s.bearing} topics stand on it and it has no cards"
                    if s.bearing else "it has no cards yet")
         return (f"**Open with** writing for {_link(domain, s)} — {because}.\n"
-                f"→ `trellis --domain {domain} scaffold {s.node.id}`")
+                f"→ `trellis grow --leaf {domain}:{s.node.id}`")
     return ("**Nothing is slipping.** Everything reviewed is holding, and "
             "every leaf has cards. Pull again after your next session.")
 
@@ -112,11 +112,11 @@ def brief_body(
     readings_by_node = readings_by_node or {}
     stale_days = stale_days or {}
 
-    weak = _interleave(sorted(
+    weak = interleave_by_domain(sorted(
         ((d, s) for d, a in assessments.items() for s in a.weaknesses()),
         key=lambda r: -r[1].urgency,
     ))
-    uncovered = _interleave(sorted(
+    uncovered = interleave_by_domain(sorted(
         ((d, s) for d, a in assessments.items() for s in a.uncovered()),
         key=lambda r: -r[1].bearing,
     ))
@@ -131,14 +131,14 @@ def brief_body(
         for domain, s in weak:
             lines.append(f"| {skeletons[domain].title} | {_link(domain, s)} "
                          f"| `{_bar(s.hold)}` {s.hold:.0%} | {s.bearing} |")
-        lines.append("")
+        lines += ["", "*A slipping topic wants a second route in: "
+                  "`trellis grow --next` writes cards from what lapsed.*", ""]
 
     if uncovered:
         lines += ["## Worth writing", ""]
         for domain, s in uncovered:
             lines.append(f"- {_link(domain, s)} — {s.bearing} topics stand on it, "
-                         f"no cards yet · `trellis --domain {domain} "
-                         f"scaffold {s.node.id}`")
+                         f"no cards yet · `trellis grow --leaf {domain}:{s.node.id}`")
         lines.append("")
 
     if sealed:

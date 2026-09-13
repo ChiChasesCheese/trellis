@@ -460,6 +460,32 @@ hold attention, and interleaving is also what makes retrieval practice stick
 better than blocking it. A filtered deck rather than a new app because a note
 lives in exactly one deck — this keeps one scheduler and one review history.
 
+### Grow: the verdicts become cards
+
+The Brief names a weak leaf or an empty one; `trellis grow` is what happens
+next, and it closes the loop: review → Trace → Brief → new cards → review.
+
+```bash
+trellis grow                              # the weak and uncovered leaves, what each can be written from
+trellis grow --next -o prompt.md          # a prompt for the top one
+trellis grow --leaf kafka:producer.acks -o prompt.md
+trellis grow --import answer.json --leaf kafka:producer.acks
+```
+
+The two kinds of target get two different prompts. A **Weakness** already
+has cards and they slipped, so the prompt carries the ones that lapsed
+most — front and back — and asks for cards that reach the same mechanism
+from *another angle*: a scenario, a contrast, a failure story, a number.
+Restating a card that already failed teaches the same failure twice. An
+**uncovered** leaf gets the scaffold's prompt, grounded in whatever the
+vault already holds for it: the sections of a corpus that reaches the leaf
+(then growing is digesting, and the cards carry the corpus as `source:`)
+or the clipped readings on it. Either way the answer lands through the same
+importer as every other card — forced onto the leaf, refused if it leans on
+its source — and is tagged `grown`, so the next Brief can say whether the
+repair took. `grow` only writes where the loop pointed; anywhere else is
+`scaffold` or `digest`.
+
 ### Content made somewhere else
 
 Domains are discovered from `skeleton/*.yaml`, so a folder of perfectly good

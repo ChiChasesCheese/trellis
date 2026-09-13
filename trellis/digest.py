@@ -27,13 +27,15 @@ from .scaffold import import_cards, scaffold_prompt
 from .seed import LANG_NAMES
 from .skeleton import Node
 
-GROUNDING = """
+SOURCE_HEADER = """
 ## Source material
 These cards are written from *{title}*. The sections below were judged to
 teach this topic. Write from them — not from memory — and only what they
 support; if the text is silent on something, leave it to another card.
 {sections}
+"""
 
+LANGUAGE_RULES = """
 ## Language and self-containment
 - Write every card in {lang}. Terms of art stay in English (the reader will
   meet them in code, configs and docs): write the English term and gloss
@@ -104,19 +106,21 @@ def status_lines(plans: list[LeafPlan]) -> list[str]:
     return lines
 
 
-def digest_prompt(project: Project, corpus: Corpus, lp: LeafPlan, root: Path,
-                  count: int = 5, budget: int = 24000) -> str:
-    """The scaffold prompt for the leaf, grounded in its sections' text.
-    `budget` caps the characters of source text embedded; what is cut is
-    said, and the file paths are always given so a reader with a
-    filesystem can open the rest."""
-    base = scaffold_prompt(project.skeleton, lp.leaf.id, project.cards, count=count)
-    text_dir = corpus.text_dir(root)
-    blocks: list[str] = []
+def language_rules(project: Project) -> str:
+    """The rules every card written into this domain follows, whatever it
+    is written from: its language, and that it must teach alone."""
+    lang = LANG_NAMES.get(project.skeleton.lang, project.skeleton.lang)
+    return LANGUAGE_RULES.format(lang=lang, subject=project.skeleton.title)
+
+
+def embed(blocks: list[tuple[str, str, Path]], root: Path, budget: int) -> str:
+    """Source texts for a prompt, within a character budget. Each block is
+    (title, id, path-to-markdown). What is cut is said, and every path is
+    given, so a reader with a filesystem can open the rest."""
+    out: list[str] = []
     remaining = budget
-    for section in lp.sections:
-        path = text_dir / f"{section.id}.md"
-        text = _section_text(path)
+    for i, (title, block_id, path) in enumerate(blocks):
+        text = _body_text(path)
         note = f"(full text: `{path.relative_to(root)}`)"
         if len(text) > remaining:
             cut = text[:max(0, remaining)]
@@ -124,23 +128,33 @@ def digest_prompt(project: Project, corpus: Corpus, lp: LeafPlan, root: Path,
         else:
             text = text + f"\n\n{note}"
         remaining -= len(text)
-        blocks.append(SECTION_BLOCK.format(title=section.title, id=section.id, text=text))
+        out.append(SECTION_BLOCK.format(title=title, id=block_id, text=text))
         if remaining <= 0:
-            for rest in lp.sections[lp.sections.index(section) + 1:]:
-                blocks.append(f"\n### {rest.title}  (`{rest.id}`)\n[not embedded — read "
-                              f"`{(text_dir / (rest.id + '.md')).relative_to(root)}`]\n")
+            for rest_title, rest_id, rest_path in blocks[i + 1:]:
+                out.append(f"\n### {rest_title}  (`{rest_id}`)\n[not embedded — read "
+                           f"`{rest_path.relative_to(root)}`]\n")
             break
-    lang = LANG_NAMES.get(project.skeleton.lang, project.skeleton.lang)
-    grounding = GROUNDING.format(
-        title=corpus.title, sections="".join(blocks), lang=lang,
-        subject=project.skeleton.title,
-    )
-    return base + grounding
+    return "".join(out)
 
 
-def _section_text(path: Path) -> str:
+def section_blocks(corpus: Corpus, sections: list[Section], root: Path,
+                   ) -> list[tuple[str, str, Path]]:
+    text_dir = corpus.text_dir(root)
+    return [(s.title, s.id, text_dir / f"{s.id}.md") for s in sections]
+
+
+def digest_prompt(project: Project, corpus: Corpus, lp: LeafPlan, root: Path,
+                  count: int = 5, budget: int = 24000) -> str:
+    """The scaffold prompt for the leaf, grounded in its sections' text."""
+    base = scaffold_prompt(project.skeleton, lp.leaf.id, project.cards, count=count)
+    sections = embed(section_blocks(corpus, lp.sections, root), root, budget)
+    return base + SOURCE_HEADER.format(title=corpus.title, sections=sections) \
+        + language_rules(project)
+
+
+def _body_text(path: Path) -> str:
     if not path.exists():
-        return f"[section text is not on this machine: {path.name}]"
+        return f"[text is not on this machine: {path.name}]"
     raw = path.read_text(encoding="utf-8")
     if raw.startswith("---\n"):
         parts = raw.split("---\n", 2)
@@ -153,8 +167,16 @@ def import_digest(project: Project, corpus: Corpus, leaf_id: str,
                   ) -> tuple[list[Path], list[str]]:
     """`import_cards`, with every card forced onto the leaf it was asked
     for and stamped with the corpus it came from. All-or-nothing."""
-    raw = Path(json_path).read_text(encoding="utf-8")
+    return import_leaf(project, leaf_id, json_path, cards_dir, source=corpus.id)
 
+
+def import_leaf(project: Project, leaf_id: str, json_path: str | Path,
+                cards_dir: Path, source: str = "", tags: tuple[str, ...] = (),
+                ) -> tuple[list[Path], list[str]]:
+    """Land an answer on one leaf: every card is forced onto it, given the
+    provenance and tags asked for, and refused if it leans on its source.
+    All-or-nothing."""
+    raw = Path(json_path).read_text(encoding="utf-8")
     raw = re.sub(r"^\s*```(?:json)?\s*|\s*```\s*$", "", raw)
     try:
         items = json.loads(raw)
@@ -175,7 +197,10 @@ def import_digest(project: Project, corpus: Corpus, leaf_id: str,
                               f"book ({leaning!r}) — a card must teach without it; "
                               "state the advice or the mechanism as a fact")
             item["node"] = leaf_id
-            item["source"] = corpus.id
+            if source:
+                item["source"] = source
+            if tags:
+                item["tags"] = [t for t in (item.get("tags") or []) if t not in tags] + list(tags)
     if errors:
         return [], errors
     stamped = Path(json_path).with_suffix(".stamped.json")

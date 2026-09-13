@@ -571,23 +571,30 @@ def cmd_pull(args, project: Project) -> int:
     return 0
 
 
-def _assess_all(root: Path, domains: list[str]):
-    """Load every domain and read its Traces back onto it. Domains with no
-    cards yet are skipped rather than reported as perfectly held."""
+def _read_loop(root: Path, names: list[str]):
+    """Every domain loaded, with its Traces read back onto it. A domain
+    with no cards is included deliberately: every one of its leaves is
+    uncovered, which is exactly what "worth writing" exists to say."""
     from .hold import assess
     from .traces import load_traces, traces_path
-    assessments, skeletons, drills, readings, ages = {}, {}, {}, {}, {}
-    for domain in domains:
+    projects, assessments, traces, ages = {}, {}, {}, {}
+    for domain in names:
         project = _load(root, domain)
-        # A domain with no cards is included deliberately: every one of
-        # its leaves is uncovered, which is exactly what the "worth
-        # writing" section exists to say. The per-domain cap keeps a
-        # skeleton-only domain from drowning the page.
         file = load_traces(traces_path(root, domain))
-        traces = file.traces if file else {}
-        assessments[domain] = assess(project.skeleton, project.cards, traces)
-        skeletons[domain] = project.skeleton
+        traces[domain] = file.traces if file else {}
+        projects[domain] = project
+        assessments[domain] = assess(project.skeleton, project.cards, traces[domain])
         ages[domain] = file.age_days if file else None
+    return projects, assessments, traces, ages
+
+
+def _assess_all(root: Path, domains: list[str]):
+    """The Brief's and the Feed's view: assessments plus what hangs off
+    each node to point the reader at."""
+    projects, assessments, _, ages = _read_loop(root, domains)
+    skeletons, drills, readings = {}, {}, {}
+    for domain, project in projects.items():
+        skeletons[domain] = project.skeleton
         for drill in project.drills:
             for node_id in drill.nodes:
                 drills.setdefault(node_id, []).append(drill)
@@ -665,9 +672,78 @@ def cmd_adopt(args) -> int:
     return 0
 
 
+def cmd_grow(args) -> int:
+    """Write where the loop says it pays: a Weakness gets cards from
+    another angle, an uncovered leaf gets its first, each grounded in what
+    the vault already holds for it."""
+    from .grow import grow_prompt, import_grown, plan, shortlist, status_lines
+    root = args.root
+    names = domains(root)
+    if not names:
+        _fail(f"no skeleton files in {root / 'skeleton'}")
+    projects, assessments, traces, _ = _read_loop(root, names)
+    targets = plan(root, projects, assessments, traces)
+    by_key = {t.key: t for t in targets}
+
+    target = None
+    if args.leaf:
+        if ":" not in args.leaf:
+            _fail("name the leaf as <domain>:<leaf id>, e.g. kafka:producer.acks")
+        target = by_key.get(args.leaf)
+        if target is None:
+            _fail(f"{args.leaf} is not a leaf the loop wants written for — it is "
+                  "neither weak nor uncovered (use `scaffold` or `digest` to add "
+                  "cards anywhere)")
+    elif args.next or args.import_file:
+        if args.import_file:
+            _fail("--import needs --leaf <domain>:<leaf id>")
+        target = next(iter(shortlist(targets)), None)
+        if target is None:
+            print("nothing to grow: every reviewed leaf is holding and every leaf has cards")
+            return 0
+
+    if args.import_file:
+        project = projects[target.domain]
+        if project.card_errors:
+            for e in project.card_errors:
+                print(f"error: {e}", file=sys.stderr)
+            _fail("fix existing card errors before growing")
+        written, errors = import_grown(project, target, args.import_file,
+                                       project.content_dir(root) / "cards")
+        for e in errors:
+            print(f"error: {e}", file=sys.stderr)
+        if errors:
+            _fail("nothing imported")
+        for path in written:
+            print(f"wrote {path.relative_to(root)}")
+        print(f"{target.key}: {len(written)} card(s) grown"
+              + (f" from {target.corpus.id}" if target.sections else ""))
+        return 0
+
+    if target is not None:
+        prompt = grow_prompt(projects[target.domain], target, root,
+                             count=args.count, budget=args.budget)
+        if args.output:
+            Path(args.output).write_text(prompt, encoding="utf-8")
+            print(f"{target.key} ({target.kind}, {target.grounding}): wrote {args.output}")
+        else:
+            print(prompt)
+        return 0
+
+    listed = shortlist(targets)
+    weak = sum(1 for t in targets if t.kind == "weakness")
+    print(f"{weak} weak leaf/leaves and {len(targets) - weak} uncovered across "
+          f"{len(names)} domain(s); showing {len(listed)}:")
+    for line in status_lines(listed):
+        print(line)
+    print("next: trellis grow --next -o prompt.md, answer it, then "
+          "trellis grow --import answer.json --leaf <domain>:<leaf>")
+    return 0
+
+
 CROSS_DOMAIN = {
     "ingest": cmd_ingest, "seed": cmd_seed, "triage": cmd_triage,
-    "accept": cmd_accept, "digest": cmd_digest,
+    "accept": cmd_accept, "digest": cmd_digest, "grow": cmd_grow,
     "brief": cmd_brief, "adopt": cmd_adopt, "feed": cmd_feed,
 }
 
@@ -796,6 +872,21 @@ def main(argv: list[str] | None = None) -> int:
                           help="max characters of source text embedded in a prompt")
     p_digest.add_argument("-o", "--output", type=Path)
 
+    p_grow = _subcommand(
+        "grow",
+        help="write cards where the loop says it pays: list the weak and "
+             "uncovered leaves; --next / --leaf D:ID for a prompt grounded in "
+             "what slipped and what the vault holds; --import FILE --leaf D:ID "
+             "to land the answer, tagged `grown`",
+    )
+    p_grow.add_argument("--next", action="store_true", help="prompt for the top target")
+    p_grow.add_argument("--leaf", help="<domain>:<leaf id> to prompt for or import into")
+    p_grow.add_argument("--import", dest="import_file", type=Path,
+                        help="a JSON answer to validate and write as cards")
+    p_grow.add_argument("-n", "--count", type=int, default=5, help="cards to ask for")
+    p_grow.add_argument("--budget", type=int, default=24000,
+                        help="max characters of source text embedded in a prompt")
+    p_grow.add_argument("-o", "--output", type=Path)
     p_import = _subcommand("import", help="import LLM-generated JSON as cards")
     p_import.add_argument("file", type=Path)
     p_push = _subcommand(
