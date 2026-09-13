@@ -1,53 +1,58 @@
-# ps04 Transaction Data Validation / Fraud Report — 报告
+# ps04 Transaction Data Validation / Fraud Report — report
 
-## 概述
-四阶段交易分诊：记录是否完整、是否违反硬性规则（金额范围、被封禁的支付方式）、是否符合
-用户自身历史行为，以及 —— 当多项都出错时 —— 打印哪两项、按什么顺序。全部难点在于跨分节
-stdin 协议（rules/blocklist/profiles/transactions）的状态管理，以及在 Part 4 中把
-"优先级 + 截断"规则做得完全正确，而不在于任何单一算法。
+## Summary
+Four-stage transaction triage: is the record complete, does it break a hard rule (amount range,
+blocked payment method), does it match the user's own history, and — when several things are
+wrong — which two to print and in what order. The whole difficulty is state management across a
+sectioned stdin protocol (rules/blocklist/profiles/transactions) and getting the priority-and-
+truncation rule exactly right in Part 4, not any single algorithm.
 
-## 来源与可信度
-四部分结构的可信度高：一篇 2025-11-30 的 LeetCode Discuss 面经（经 programhelp 转载）
-逐一点名了全部四个部分，每个部分附一句话规则，包括关键短语"至少 50% 的行为属性"（Part 3）
-和"最多两个错误码...保持列对齐"（Part 4）。interviewdb.io 证实这道题（作为两个分别追踪
-的条目"Data Validation"和"Fraud Reports"）在 2026 年仍然活跃。精确的输入协议
-（分节名称/顺序）、profile schema 和优先级顺序都是本仓库自行重构的 —— 不同于 q03/q05
-那种有仓库自带样例的题目，本题没有逐字的 I/O 样例可参考。
+## Sources & confidence
+High for the four-part shape: a 2025-11-30 LeetCode Discuss write-up (via programhelp) names all
+four parts with one-line rules each, including the load-bearing phrases "at least 50% of the
+behavioral attributes" (Part 3) and "up to two error codes... maintaining column alignment" (Part
+4). interviewdb.io corroborates the question (as two separately-tracked listings, "Data
+Validation" and "Fraud Reports") is still active in 2026. The exact input protocol (section
+names/order), the profile schema, and the priority order are this repo's reconstruction — no
+verbatim I/O sample is available, unlike q03/q05's repo-sourced examples.
 
-## 各部分思路
-1. `check_row(fields, checks=1, ...)`：7 个 trim 后的字段中任意一个为空（包括补齐的缺失
-   末尾列）-> `MISSING_FIELD`。
-2. `checks=2` 增加：`Decimal` 金额相对 `RULES` 的闭区间范围检查，以及对 `payment_method`
-   不区分大小写的 `BLOCKLIST` 成员检查。两者互相独立评估，也独立于 `MISSING_FIELD`。
-3. `checks=3` 增加对用户 `PROFILES` 行的 3 属性比较（国家归属、一天中的小时范围、
-   profile 专属的金额范围）；`< 2` 项匹配 -> `SUSPICIOUS`。用户没有 profile ->
-   该检查完全跳过（永不标记）。
-4. `part4` 复用 `checks=3` 的完整评估，然后截断为 `codes[:2]`（构造时已按优先级顺序，
-   无需重新排序），并将 `txn_id` 按本次调用中实际出现的最长 id 做列对齐。
+## Approach by part
+1. `check_row(fields, checks=1, ...)`: any of the 7 trimmed fields empty (including a padded-in
+   missing trailing column) -> `MISSING_FIELD`.
+2. `checks=2` adds: `Decimal` amount inclusive-range check against `RULES`, and a case-insensitive
+   `BLOCKLIST` membership check on `payment_method`. Both evaluated independently of each other
+   and of `MISSING_FIELD`.
+3. `checks=3` adds a 3-attribute compare against the user's `PROFILES` row (country membership,
+   hour-of-day range, profile-specific amount range); `< 2` matches -> `SUSPICIOUS`. No profile
+   for the user -> the check is skipped entirely (never flagged).
+4. `part4` reuses `checks=3`'s full evaluation, then truncates to `codes[:2]` (already in priority
+   order by construction, so no re-sort needed) and column-aligns `txn_id` to the widest id
+   actually present in that call.
 
-## 隐藏测试针对的坑点
-- 用固定常量而不是本批次实际最长的 `txn_id` 计算列宽
-- 把"3 项中匹配 2 项"当成可疑（">= 2" 和 "> 2" 的差一错误 —— 3 的 50% 四舍五入是 2，
-  不是"超过一半"，超过一半其实也是 2，所以这个坑只在代码层面隐蔽，数学上并不模糊）
-- 在评估 `SUSPICIOUS` 时，对没有 profile 行的 `user_id` 崩溃（或错误地标记
-  `AMOUNT_OUT_OF_RANGE`）
-- 在 Part 4 截断前对代码列表重新排序或去重，而不是依赖插入顺序本身已经是优先级顺序
-- 在 `PART 1`/`PART 2` 下评估了 Part 3/4 的规则（`checks` 门控必须真正生效）
-- 金额上使用浮点累加 —— 本方案全程不接触 `float`，只用 `Decimal`
+## Pitfalls hidden tests target
+- computing width from a fixed constant instead of the actual batch's longest `txn_id`
+- treating "2 of 3 matches" as suspicious (off-by-one on ">= 2" vs "> 2" — 50% of 3 rounds to 2,
+  not to "more than half" which would also be 2, so this is subtle only in the code, not the math)
+- crashing (or wrongly flagging `AMOUNT_OUT_OF_RANGE`) on a transaction whose `user_id` has no
+  profile row when evaluating `SUSPICIOUS`
+- re-sorting or deduping the code list before truncating in Part 4 instead of relying on
+  insertion order already being priority order
+- evaluating Part 3/4's rules under `PART 1`/`PART 2` (the `checks` gate must actually gate)
+- float accumulation on money — this solution never touches `float`, only `Decimal`
 
-## 复杂度与实测开销
-交易数量上 O(n)，profile 数量上 O(u)，都是单次遍历配合 dict 查找（没有嵌套扫描）。
-10 万条交易 / 2000 个 profile（Part 4，完整评估）：约 0.4 秒，约 15 MB RSS（预算
-2 秒 / 256 MB）。
+## Complexity & measured cost
+O(n) in transaction count, O(u) in profile count, both single passes with dict lookups (no nested
+scans). 100,000 transactions / 2,000 profiles (Part 4, full evaluation): ~0.4 s, ~15 MB RSS
+(budget 2 s / 256 MB).
 
-## 测试清单
-17 个测试 —— part1: 3 · part2: 3 · part3: 3 · part4: 5（含 1 个 io、1 个 perf、1 个
-fmt）· 另有 1 个 io 测试归在 part1 下（空 stdin）。edge: 6 · fmt: 1 · io: 2 · perf: 1。
+## Test inventory
+17 tests — part1: 3 · part2: 3 · part3: 3 · part4: 5 (incl. 1 io, 1 perf, 1 fmt) · plus 1 io test
+filed under part1 (empty stdin). edge: 6 · fmt: 1 · io: 2 · perf: 1.
 
-## 涉及技能
-S02 分节 stdin 解析 · S05 闭区间检查 · S06 `Decimal` 货币 · S08 确定性排序 · S09 精确
-列对齐格式化 · S18 校验与优先级错误码 · S19 增量式规则类别（`checks` 门控）· S24 领域知识
-（风控分诊，与 q15 的 KYC 不同）
+## Skills exercised
+S02 sectioned-stdin parsing · S05 inclusive range checks · S06 `Decimal` money · S08 deterministic
+ordering · S09 exact column-aligned formatting · S18 validation & prioritized error codes · S19
+incremental rule categories (`checks` gate) · S24 domain (fraud triage, distinct from q15's KYC)
 
 ## 电面话术：边写边说什么
 - 先把优先级和"最多两个错误码"复述给面试官确认："如果一笔交易同时命中三四条规则，Part 4 只保留优先级最高
@@ -61,7 +66,7 @@ S02 分节 stdin 解析 · S05 闭区间检查 · S06 `Decimal` 货币 · S08 �
 - 收尾如果还有时间：主动提出加一个 `--part 4` 的列宽在流式场景下如何处理（要不要固定宽度而不是动态计算，
   因为流式场景取不到"最长 id"）——展示对边界条件的延伸思考。
 
-## 复盘（2026-09-02）
+## Review（2026-09-02）
 - 逐条对照 `loop/tasks/review_checklist.md` 复核：problem.md 四个 Part 的 worked examples 已用
   `solution.py` 逐字重跑核对（直接喂 stdin，对比 stdout），四段输出与文档字符级一致，未发现规则歧义或
   文档-代码不一致。

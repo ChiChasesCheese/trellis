@@ -1,0 +1,15 @@
+"""
+Debugging Mako Template
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/4fcffd09-040e-4d28-a1eb-291fe460d631
+Source Type: OJ / More Problems
+Repository: https://github.com/sqlalchemy/mako
+
+Question Summary:
+Debug the given Mako template code, identify the errors present and fix them.
+
+The interviewer drops you into a fork of the Mako template engine with
+injected bugs (likely in template compilation or rendering). Clone the
+repo above and familiarize yourself with the codebase before the interview.
+"""

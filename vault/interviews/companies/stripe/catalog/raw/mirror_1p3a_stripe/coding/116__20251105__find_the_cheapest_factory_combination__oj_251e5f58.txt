@@ -1,0 +1,22 @@
+"""
+Find the Cheapest Factory Combination
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/251e5f58-031a-44ae-8092-c82caaff9a5f
+Source Type: OJ / More Problems
+
+Question Summary:
+Given a list representing three stages of a process and their respective factory bids, output the lowest total cost for the entire process. Each stage has several factories to choose from, and each factory has its bid. Note: In the chosen combination of factories, you can only select one factory for each stage.
+
+Input:
+```plaintext
+[[100,50,30],[100,20,10],[10,12,5]]
+```
+
+Output:
+```plaintext
+45
+```
+
+When selecting the factory bids for each stage, find the lowest price incrementally and add them. Ensure the input format is a valid non-empty list, and the bids are non-negative integers.
+"""

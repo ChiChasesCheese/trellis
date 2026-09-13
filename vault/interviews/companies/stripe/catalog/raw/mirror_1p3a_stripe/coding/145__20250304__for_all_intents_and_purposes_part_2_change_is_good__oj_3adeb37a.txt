@@ -1,0 +1,14 @@
+"""
+For All Intents And Purposes Part 2 - Change Is Good! 
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/3adeb37a-4f02-4b97-8eba-979e94169e19
+Source Type: OJ / More Problems
+
+Question Summary:
+### Problem Overview
+- Extend the payment system to support updating a Payment Intent’s amount.
+- Input: UPDATE <payment_intent_id> <new amount>; Output: update only if state is REQUIRES_ACTION and amount is non‑negative; otherwise do nothing.
+- Context: shoppers change cart items during checkout, requiring amount adjustments without state transitions.
+- From Stripe interviews; this coding interview problem is a Stripe interview question in a multi‑part series.
+"""

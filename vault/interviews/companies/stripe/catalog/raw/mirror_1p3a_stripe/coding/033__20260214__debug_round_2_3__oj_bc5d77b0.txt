@@ -1,0 +1,14 @@
+"""
+Debug Round (2/3)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/bc5d77b0-9cb3-438e-a931-2f9b31355d2e
+Source Type: OJ / More Problems
+
+Question Summary:
+## Debug round (3-part) — Incomplete prompt
+
+Debug an existing codebase/system through multiple parts.
+
+> Missing code, language, failing behavior, and I/O details; cannot be reconstructed.
+"""

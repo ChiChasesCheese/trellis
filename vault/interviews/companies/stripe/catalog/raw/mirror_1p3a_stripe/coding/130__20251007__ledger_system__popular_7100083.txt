@@ -1,0 +1,16 @@
+"""
+Ledger System
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/post/7100083
+Source Type: Popular Questions / External Thread
+
+Question Summary:
+Design a ledger service for a payments platform that tracks all financial activity on behalf of merchants.
+
+Public Section Headings:
+- Ledger System Design
+- What We Need to Build
+- Helpful Study Materials
+- What to Expect in the Interview
+"""

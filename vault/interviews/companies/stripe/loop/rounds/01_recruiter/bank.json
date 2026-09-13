@@ -1,0 +1,86 @@
+[
+  {
+    "round": "recruiter",
+    "q": "What do you know about Stripe?",
+    "principle": "",
+    "source": "Prepfully (2026-08-13)"
+  },
+  {
+    "round": "recruiter",
+    "q": "What about Stripe makes you want to work here?",
+    "principle": "",
+    "source": "Prepfully (2026-08-13)"
+  },
+  {
+    "round": "recruiter",
+    "q": "What are your career aspirations?",
+    "principle": "",
+    "source": "Prepfully (2026-08-13); InterviewKickstart (2024-12-22, worded \"Tell me about your career aspirations.\")"
+  },
+  {
+    "round": "recruiter",
+    "q": "Talk about a project you're most proud of.",
+    "principle": "",
+    "source": "Prepfully (2026-08-13); InterviewKickstart (2024-12-22, worded \"Talk about a project you've worked on in the past that you're really proud of.\")"
+  },
+  {
+    "round": "recruiter",
+    "q": "Why Stripe?",
+    "principle": "Macro-optimistic",
+    "source": "InterviewKickstart (2024-12-22); The Interview Guys (2026-05-31, worded \"Why do you want to work at Stripe?\")"
+  },
+  {
+    "round": "recruiter",
+    "q": "How did you hear about Stripe?",
+    "principle": "",
+    "source": "InterviewKickstart (2024-12-22)"
+  },
+  {
+    "round": "recruiter",
+    "q": "What is your understanding of Stripe?",
+    "principle": "",
+    "source": "InterviewKickstart (2024-12-22)"
+  },
+  {
+    "round": "recruiter",
+    "q": "Tell me about yourself.",
+    "principle": "",
+    "source": "The Interview Guys (2026-05-31)"
+  },
+  {
+    "round": "recruiter",
+    "q": "Walk me through your resume.",
+    "principle": "",
+    "source": "多家 prep 站汇总 [搜索摘要]，访问 2026-09-01"
+  },
+  {
+    "round": "recruiter",
+    "q": "What does Stripe's mission mean to you personally?",
+    "principle": "Macro-optimistic",
+    "source": "The Interview Guys (2026-05-31)"
+  },
+  {
+    "round": "recruiter",
+    "q": "What's your greatest weakness?",
+    "principle": "Humble",
+    "source": "The Interview Guys (2026-05-31)"
+  },
+  {
+    "round": "recruiter",
+    "q": "Tell me about your background, your distributed-systems experience, why Stripe, and your salary expectations and timeline.",
+    "principle": "",
+    "source": "InterviewQuery [搜索摘要]，访问 2026-09-01"
+  },
+  {
+    "round": "recruiter",
+    "q": "What are your salary expectations?",
+    "principle": "",
+    "source": "interviewing.io (访问 2026-09-01，据其\"此阶段不要透露薪资期望\"的建议转述该轮实际会问的问题); codinginterview.com (访问 2026-09-01)"
+  },
+  {
+    "round": "recruiter",
+    "q": "Are you currently interviewing with other companies?",
+    "principle": "",
+    "source": "interviewing.io (访问 2026-09-01，据其\"不要提在面的其他公司\"的建议转述该轮实际会问的问题)"
+  }
+]

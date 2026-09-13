@@ -1,0 +1,19 @@
+"""
+Http Request Language Preference
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/post/7100091
+Source Type: Popular Questions / External Thread
+
+Question Summary:
+You are building a content delivery system that serves localized content to users in their preferred language.
+
+Public Section Headings:
+- HTTP Request Language Matching
+- Problem Summary
+- Part 1: Exact Matches
+- Part 2: Prefix Matching
+- Part 3: Handling Wildcards
+- Part 4: Quality Scores (q-factors)
+- How to Solve It
+"""

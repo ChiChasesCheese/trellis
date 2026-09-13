@@ -1,60 +1,64 @@
-# cd07 · Transactions + Rules (AI Programming Exercise) — 关键字匹配 → 比较运算 → AND/OR/NOT
+# cd07 · Transactions + Rules (AI Programming Exercise) — keyword match → comparisons → AND/OR/NOT
 
-**类型：** 现场面试 "AI Programming Exercise"（2026 新增轮，HackerRank 内嵌 AI 聊天窗口）· **阶段：**
-有 AI 辅助约 30 分钟（"有点像轻量版 Cursor"）/ 本仓库也把它当作 60 分钟手写轮来演练，共 3 个 Part ·
-**最近一次出现：** 2026-06-09 的写作（滚动更新，截至该日期属于"新近加入"）· **出现频率：** 2 个独立
-提及（interviewdb.io 的 AI-exercise 指南；interviewfox.ai 的 OA/HackerRank 指南），加上
-`en_forums.md` §9 自己的整理（C11）· **可信度：** 中等——递进关系（"关键字/字符串匹配 → AND/OR
-布尔逻辑，多阶段"）和评分标准（能否指挥/验证/调试 AI，是否自己写测试）都被两个独立来源明确点名；
-确切的输入协议、字段列表和实测数字是本仓库的重建（没有公开的逐字 I/O 样例）。
+**Type:** onsite "AI Programming Exercise" (2026 新增轮，HackerRank 内嵌 AI 聊天窗口) · **Stage:** ~30 min with AI assistance ("kind of like a lightweight Cursor") / this repo also drills it as a 60 min hand-written round, 3 parts · **Last asked:** 2026-06-09 write-up (rolling, "recently added" as of that date) · **Frequency:** 2 independent mentions (interviewdb.io AI-exercise guide; interviewfox.ai OA/HackerRank guide) plus `en_forums.md` §9's own collation (C11) · **Confidence:** medium — the progression ("keyword/string match → AND/OR boolean logic, multi-stage") and the grading criteria (can you direct/verify/debug the AI, do you write your own tests) are both named explicitly by two independent sources; the exact input protocol, field list, and worked numbers are this repo's reconstruction (no verbatim I/O sample is public).
 
-## 背景
-Stripe 在 2026 年新增的 "AI Programming Exercise" 轮，把候选人放进一个带内嵌 AI 聊天面板的
-HackerRank 环境，评分点在于**你怎么指挥它**，而不是你打字快不快。题目本身刻意做得很普通——一个基于
-规则的交易过滤器，结构上和 Radar 真实的规则引擎同形（生产版本见 `problems/q12_platform_balance_radar_rules`
-的 `ACCEPT`/`BLOCK if (:field: = "const")`），但更小：没有带引号的常量、没有 `:field:` 标记、没有
-`API:`/`BAL:` 余额账本——只是针对一批交易求值的 `ALLOW|BLOCK if <condition>` 规则，共三个 Part，
-每个 Part 增加一层表达能力。本目录刻意**不**重复 q12 的语法或它带余额账本的 Part 1——把这两题当作
-在不同的"AI 辅助 vs. 手写"节奏下考察同一个规则引擎技能的姊妹题。
+## Context
+Stripe's 2026-added "AI Programming Exercise" round drops candidates into a HackerRank environment
+with an embedded AI chat panel and grades **how you direct it**, not whether you can type fast.
+The task itself is deliberately ordinary — a rules-based transaction filter, structurally the same
+shape as Radar's real rule engine (see `problems/q12_platform_balance_radar_rules` for the
+`ACCEPT`/`BLOCK if (:field: = "const")` production version) but smaller: no quoted constants, no
+`:field:` markers, no `API:`/`BAL:` balance ledger — just `ALLOW|BLOCK if <condition>` rules
+evaluated against a batch of transactions, three parts, each adding one layer of expressiveness.
+This directory intentionally does **not** duplicate q12's grammar or its balance-ledger Part 1 —
+treat the two as siblings testing the same rule-engine skill at different levels of AI-assisted vs.
+hand-written pacing.
 
-## 输入（stdin）
-第一行是 `PART n`（n ∈ 1..3）。然后是两个 section，顺序固定，各自的 header 独占一行；空行处处忽略：
+## Input (stdin)
+First line `PART n` (n ∈ 1..3). Then two sections, in this fixed order, header on its own line;
+blank lines ignored everywhere:
 ```
 RULES
 ALLOW|BLOCK if <condition>          one rule per line, in registration order
 TRANSACTIONS
 id,amount,currency,country,card_brand,merchant
 ```
-`amount` 是非负整数（单位为分）；`currency`、`country`、`card_brand`、`merchant` 都是裸的
-字母数字/下划线 token（不含逗号、不含空格——这个协议没有 CSV 引号转义）。交易行如果列数少于 6 列，
-缺的尾部列一律当作空字符串处理。规则行最多 10^5 条，交易行最多 10^5 行。
+`amount` is a non-negative integer (cents); `currency`, `country`, `card_brand`, `merchant` are
+bare alphanumeric/underscore tokens (no embedded commas, no embedded spaces — this protocol has no
+CSV quoting). A transaction row with fewer than 6 columns has its missing trailing columns treated
+as empty strings. Up to 10^5 rule lines and 10^5 transaction rows.
 
-## 输出
-每笔交易一行，**按输入顺序**：`id ALLOW (rule k)` 或 `id BLOCK (rule k)`，其中 `k` 是**该匹配规则在
-`RULES` 块内的 1-索引行号**（计入每一条规则行，包括 Part 3 里后来被判定无效而跳过的行——不管文件里
-还有什么解析失败，编号都保持稳定）。如果没有规则匹配，这一行就只是 `id ALLOW`——没有 `(rule k)`
-后缀；因为没有可引用的规则。（Part 3 还会打印 `ERROR line k: <reason>` 行，每条无效规则在解析时
-打印一次，全部先于任何交易输出——见 Part 3。）
+## Output
+One line per transaction, **in input order**: `id ALLOW (rule k)` or `id BLOCK (rule k)` where `k`
+is the **1-indexed line number of the matching rule within the `RULES` block** (counting every
+rule line, including ones later skipped as invalid in Part 3 — the numbering is stable regardless
+of what else in the file failed to parse). If no rule matches, the line is just `id ALLOW` — no
+`(rule k)` suffix; there is no rule to cite. (Part 3 also prints `ERROR line k: <reason>` lines,
+emitted once per invalid rule at parse time, all before any transaction output — see Part 3.)
 
-## 规则
-### Part 1 — 关键字相等
-`<condition> := <field> == <value>`，仅此一种形式。`<field> ∈ {id, amount, currency, country,
-card_brand, merchant}`；`<value>` 是一个裸 token，按去空格后的字符串比较（所以即使 `amount` 是数值，
-`amount == 10000` 依然有效——数字位当字符串比较也相等）。规则按**注册顺序**求值；**第一条条件为真的
-规则生效**。无匹配 → 默认 `ALLOW`。
+## Rules
+### Part 1 — keyword equality
+`<condition> := <field> == <value>` only. `<field> ∈ {id, amount, currency, country, card_brand,
+merchant}`; `<value>` is a bare token compared as a trimmed string (so `amount == 10000` still
+works even though `amount` is numeric — the digits compare equal as strings). Rules are evaluated
+**in registration order; the first rule whose condition is true decides**. No match → default
+`ALLOW`.
 
-### Part 2 — 比较运算符和 `in`
-`<condition>` 新增五个运算符——`!=`、`>`、`<`、`>=`、`<=`——外加一个成员判断形式：
-`<field> in [v1, v2, v3]`（逗号后和方括号周围的空格可选）。每条规则依然只能有一个比较（还没有布尔
-组合，那是 Part 3 的事）。运算符两侧的空白始终可选（`amount>=5000`、`amount >= 5000`、
-`amount>= 5000` 解析结果相同）。比较语义（Part 3 也复用）：对 `==`/`!=`，如果**两边**都能解析成
-整数，就按数字比较（`amount==0100` 匹配 `100`）；否则比较去空格后的字符串。排序运算符
-（`>`、`<`、`>=`、`<=`）只针对 `amount`（唯一的数值字段）——把两边都解析成整数。`in [...]` 是把该
-字段的字符串形式与列表中每个字面量比较（`country in [US, CA, MX]`）。
+### Part 2 — comparisons and `in`
+`<condition>` gains five more operators — `!=`, `>`, `<`, `>=`, `<=` — plus a membership form:
+`<field> in [v1, v2, v3]` (spaces after commas and around brackets are optional). Still exactly one
+comparison per rule (no boolean combinators yet — that's Part 3). Whitespace around the operator
+is optional in every case (`amount>=5000`, `amount >= 5000`, `amount>= 5000` all parse the same).
+Comparison semantics (reused by Part 3 too): for `==`/`!=`, if **both** sides parse as integers,
+compare numerically (`amount==0100` matches `100`); otherwise compare the trimmed strings. The
+ordering operators (`>`, `<`, `>=`, `<=`) are only exercised against `amount` (the one numeric
+field) — parse both sides as integers. `in [...]` compares the field's string form against each
+literal in the list (`country in [US, CA, MX]`).
 
-### Part 3 — AND / OR / NOT / 括号
-递归下降语法，**`not` 比 `and` 绑得紧，`and` 又比 `or` 绑得紧**（关键字 `and`/`or`/`not`/`in`
-大小写不敏感；字段名、`ALLOW`/`BLOCK`、以及值都大小写敏感）：
+### Part 3 — AND / OR / NOT / parentheses
+Recursive-descent grammar, **`not` binds tighter than `and`, which binds tighter than `or`**
+(keywords `and`/`or`/`not`/`in` case-insensitive; field names, `ALLOW`/`BLOCK`, and values are
+case-sensitive):
 ```
 expr        := or_expr
 or_expr     := and_expr ("or" and_expr)*
@@ -63,15 +67,18 @@ unary       := "not" unary | primary
 primary     := "(" expr ")" | comparison
 comparison  := field OP value | field "in" "[" value ("," value)* "]"   # OP as in Part 2
 ```
-`field` token 是 `{id, amount, currency, country, card_brand, merchant}` 中的任意一个名字；操作数
-位置上任何其它裸 token 都是字面量值（这就是该语法怎么区分"和交易的 `country` 比较"和"和字面量字符串
-`country` 比较"而不需要引号的关键所在）。`not` 只作用于紧跟着的那一个 `unary`（所以 `not a and b` 是
-`(not a) and b`，而不是 `not (a and b)`）。一条规则的条件解析失败——运算符写错、括号不匹配、末尾有
-多余内容、该填操作数的地方用了关键字等等——会产生 **`ERROR line k: <reason>`**（k 是该规则在 `RULES`
-中的 1-索引行号），该规则**被跳过**（永远不会用于匹配任何交易，且不影响后面规则的行号）。`<reason>`
-文本的具体措辞由实现自定；隐藏测试只检查 `ERROR line k:` 前缀和行号，不检查具体措辞。
+A `field` token is any name in `{id, amount, currency, country, card_brand, merchant}`; any other
+bare token in operand position is a literal value (this is how the grammar tells "compare against
+the transaction's `country`" apart from "compare against the literal string `country`" without
+needing quotes). `not` applies to the single following `unary` (so `not a and b` is `(not a) and
+b`, not `not (a and b)`). A rule whose condition fails to parse — bad operator, unbalanced
+parens, trailing garbage, a keyword used where an operand was expected, etc. — emits
+**`ERROR line k: <reason>`** (k = that rule's 1-indexed line number within `RULES`) and the rule is
+**skipped** (never matched against any transaction, and later rules' line numbers are unaffected).
+`<reason>` text is implementation-defined; hidden tests check the `ERROR line k:` prefix and the
+line number, not the exact wording.
 
-## 实测示例
+## Worked examples
 ### Part 1
 ```
 RULES
@@ -108,7 +115,8 @@ t2 ALLOW
 t3 BLOCK (rule 3)
 t4 ALLOW (rule 2)
 ```
-（`t2`：金额没超过 5000，国家 MX 不在列表里，货币 USD 不满足 `!= USD`——没有规则命中，默认 ALLOW。）
+(`t2`: amount not over 5000, country MX not in the list, currency USD is not `!= USD` — no rule
+fires, default ALLOW.)
 
 ### Part 3
 ```
@@ -130,76 +138,91 @@ t2 ALLOW (rule 2)
 t3 ALLOW
 t4 ALLOW
 ```
-（`t3`：规则 1 为假（country 不是 US）；规则 2 的 `not currency == EUR` 为假，因为 currency
-*正是* `EUR`，所以整个 `and` 为假；规则 3 因无效被丢弃——没有规则匹配，默认 ALLOW。`t4`：什么都不
-匹配——FR 既不是 CA 也不是 MX——默认 ALLOW。）
+(`t3`: rule 1 false (country isn't US); rule 2's `not currency == EUR` is false because currency
+*is* `EUR`, so the whole `and` is false; rule 3 was dropped as invalid — no rule matches, default
+ALLOW. `t4`: nothing matches — FR isn't CA or MX — default ALLOW.)
 
 ```python
 part3(["RULES", 'BLOCK if not country == US', "TRANSACTIONS", "t1,0,USD,CA,visa,acme"]) == ["t1 BLOCK (rule 1)"]
 part3(["RULES", "ALLOW if a or b and c", "TRANSACTIONS"]) == []   # a/b/c aren't real fields — see edge cases
 ```
 
-## 隐藏测试已知瞄准的边界情况
-- 默认-ALLOW **没有** `(rule k)` 后缀；任何匹配到的规则都一定有，哪怕是 `(rule 1)`
-- `(rule k)` 的编号计入*每一条* `RULES` 行，包括后来被报 `ERROR` 的行（Part 3）——被跳过的规则之后
-  的规则保留其真实行号，不会往前移
-- 运算符空白：`amount>=5000`、`amount >=5000`、`amount>= 5000`、`amount >= 5000` 解析结果完全相同
-  （Part 2 及以后）
-- `==`/`!=` 的数值/字符串兜底：`amount == 0100` 匹配 `amount == 100`（两边都能解析成整数，按数字
-  比较）；`country == us` **不**匹配 `country == US`（字符串，不做大小写折叠——字段名/值大小写敏感，
-  只有布尔关键字不敏感）
-- `in [...]` 分别测零个、一个、多个元素；逗号后的空格可选；元素不存在 → 不匹配（不是错误）
-- `not` 优先级：`not a and b` 是 `(not a) and b`；`a or b and c` 是 `a or (b and c)`（`and` 比
-  `or` 紧）；嵌套括号 `(a and (b or not c))`
-- 即使输入交易*也可能*匹配后面的规则，第一条匹配的规则依然获胜——一旦有规则命中，后面的规则永远不会
-  被求值
-- 一条规则把字段名当作*值*来引用是可以的，只要比较的另一边是真实字段（`country == country` 恒真，
-  两边都解析成同一个交易字段）——这不是作为"陷阱"来考的，只是确认字段 vs. 字面量的判定是按操作数
-  逐个进行，而不是按规则整体
-- Part 3 中能正常分词、但结构有问题的畸形规则：括号不匹配、比较缺右操作数、`and`/`or` 缺操作数、
-  该填字段/值的地方出现裸关键字（`and`/`or`/`not`/`in`）——每种都恰好产生一条 `ERROR line k:`，
-  而不是崩溃
-- 空的 `RULES` 块（每笔交易都默认 `ALLOW`）；空的 `TRANSACTIONS` 块（没有输出行，若有则只有
-  `RULES` 相关的 `ERROR` 行）；列数少于 6 列的交易行（缺的尾部字段当作 `""`，针对它们的比较只是不
-  匹配，而不会崩溃）
-- 最多 10^5 条规则 × 10^5 笔交易，针对每笔交易不能是二次方复杂度（每条规则的 AST 只编译一次，在
-  所有交易间复用）
+## Edge cases hidden tests are known to target
+- default-ALLOW has **no** `(rule k)` suffix; a matched rule always does, even `(rule 1)`
+- `(rule k)` numbers count *every* `RULES` line, including ones later reported as `ERROR` (Part 3) —
+  a rule after a skipped one keeps its true line number, it does not shift down
+- operator whitespace: `amount>=5000`, `amount >=5000`, `amount>= 5000`, `amount >= 5000` all parse
+  identically (Part 2+)
+- `==`/`!=` numeric-vs-string fallback: `amount == 0100` matches `amount == 100` (both parse as
+  ints, compared numerically); `country == us` does **not** match `country == US` (strings, no
+  case-folding — field names/values are case-sensitive, only the boolean keywords are not)
+- `in [...]` with zero, one, and several items; spaces after commas optional; item not present →
+  no match (not an error)
+- `not` precedence: `not a and b` is `(not a) and b`; `a or b and c` is `a or (b and c)` (`and`
+  tighter than `or`); nested parens `(a and (b or not c))`
+- first matching rule wins even when the input transaction *could* also match a later rule — later
+  rules are never evaluated once one has already matched
+- a rule referencing a field name as a *value* is fine as long as it's on the other side of a
+  comparison with a real field (`country == country` always true, both sides resolve to the same
+  transaction field) — not exercised as a "gotcha", just confirms field vs. literal resolution is
+  per-operand, not per-rule
+- malformed rule text in Part 3 that still tokenizes cleanly but has bad structure: unbalanced
+  parens, a comparison with no right-hand operand, `and`/`or` with a missing operand, a bare
+  keyword (`and`/`or`/`not`/`in`) used where a field/value was expected — each produces exactly one
+  `ERROR line k:` line, not a crash
+- empty `RULES` block (every transaction defaults to `ALLOW`); empty `TRANSACTIONS` block (no
+  output lines, `RULES`-only `ERROR` lines if any); a transaction row with fewer than 6 columns
+  (missing trailing fields treated as `""`, comparisons against them just don't match rather than
+  crashing)
+- up to 10^5 rules × 10^5 transactions must not be quadratic per transaction (compile every rule's
+  AST once, reuse across all transactions)
 
-## 现实中见过的变体
-- 描述这一轮的两个来源都认可其形态（"关键字/字符串匹配，升级为 AND/OR 布尔逻辑，多个渐进阶段"），但
-  都没有公布逐字的 I/O 样例或字段列表——本仓库的 `RULES`/`TRANSACTIONS` stdin 协议、六字段交易
-  schema，以及确切的语法产生式都是为了可测试性而做的重建，参照了本题库自己的
-  `problems/q12_platform_balance_radar_rules`（同一个"规则字符串 → AST → 求值"技能的生产级姊妹题，
-  它还记录了真实的 Radar 语法：https://docs.stripe.com/radar/rules/reference）。
-- 本仓库用两种方式演练这道题：`loop/mock.py start cd07` 给你完整的 60 分钟手写预算（本演练环境没有
-  AI 面板）；下面"用 AI 做这题的流程"一节说的是如果*允许*使用编码助手时会有什么不同，依据来源里的
-  评分说明。
+## Variants seen in the wild
+- The two sources describing this round agree on the shape ("keyword/string match, upgraded to
+  AND/OR boolean logic, multiple progressive stages") but neither publishes a verbatim I/O sample
+  or field list — this repo's `RULES`/`TRANSACTIONS` stdin protocol, the six-field transaction
+  schema, and the exact grammar productions are a reconstruction built to be testable, modelled on
+  this suite's own `problems/q12_platform_balance_radar_rules` (the production-grade sibling of
+  this same "rule string → AST → evaluate" skill, which also documents the real Radar grammar at
+  https://docs.stripe.com/radar/rules/reference).
+- This repo drills the exercise both ways: `loop/mock.py start cd07` gives you the full 60-minute
+  hand-written budget (no AI panel available in this harness); the "用 AI 做这题的流程" section
+  below is what changes if you *are* allowed a coding assistant, per the sources' grading notes.
 
 ## 用 AI 做这题的流程
-这一轮评分的是**你怎么驾驭助手**，而不是打字速度——两个来源都明确点名"能否有效使用 AI 而不关掉自己
-的脑子"（interviewdb）和"从架构、测试、优化几个维度打分你怎么用它"（interviewfox）作为明确的评分
-标准。推荐流程（interviewdb 自己的总结）：**AI 总结题面 → 你和它一起敲定实现方案 → AI 生成代码 →
-你自己写测试 → 你调试并确认自己理解生成出来的东西**，而不是"复制提示词、复制输出、直接提交"。
+This round is graded on **how you drive the assistant**, not on typing speed — both sources name
+"whether you can use AI effectively without turning your brain off" (interviewdb) and "scores how
+you use it on architecture, testing, and optimization" (interviewfox) as the explicit rubric.
+Recommended flow (interviewdb's own summary): **AI summarizes the spec → you agree on an
+implementation plan together → AI generates code → you write your own tests → you debug and
+confirm you understand what got built**, not "paste the prompt, paste the output, submit."
 
-**AI 生成的这道题解法常犯的五个错误**——接受 diff 之前逐条检查：
-1. **把 `in [US, CA]` 当成子串测试而不是集合成员判断**——写成 `value in raw_condition_text` 或
-   `field_value in "US,CA"`，而不是拆分方括号内容再逐个精确比较。症状：`country == USA` 会错误地
-   满足 `country in [US]`，因为 `"US"` 是 `"USA"` 的子串。
-2. **`and`/`or` 优先级写反或拍平**——把它们实现成同一优先级从左到右（`a or b and c` →
-   `(a or b) and c`，错误），而不是 `and` 绑得更紧；或者自底向上搭建解析器，导致 `or` 最终嵌套在
-   `and` 内部而不是相反。
-3. **跳过短路求值**——无条件地对 `and`/`or` 两边都求值。这本身不算致命（这里没有任何场景会因为
-   良构交易而在两种做法下给出不同*结果*——每个字段都存在），但要留意 AI 用防御性
-   `try/except` 把每次比较都包一层来"修复"这个不存在的问题，这样反而会悄悄吞掉真正的 bug（真的
-   缺字段、运算符打错字），而不是把它按 Part 3 真正想要的方式呈现成 `ERROR line k`。
-4. **默认方向写反**——把未匹配的交易默认成 `BLOCK` 而不是 `ALLOW`，或者打印一个占位符比如
-   `(rule None)`/`(rule -1)`，而不是完全省掉后缀。这是候选人之后让 AI "加上 Part 3 支持"时，
-   AI 顺手悄悄重写了 Part 1/2 默认处理逻辑，最常见的一种回归。
-5. **tokenizer 要么欠造要么过造**——欠造：对原始文本做 `condition.split(" ")`，一旦间距不是精确
-   一个空格就会崩（`amount>=5000` 完全没有空格）；过造：同一口气生成了一个带算术运算符、带引号字符串
-   常量、带可插拔函数注册表的通用表达式引擎，而题面根本没要求这些，白白烧掉 30 分钟的 AI 预算
-   （或 60 分钟的手写预算）在评分者从没要求的范围上。这两种极端的错误都源于接受生成代码之前没有
-   重新对照题面的语法。
+**Five mistakes AI-generated solutions to this exact problem commonly make** — check for every one
+before you accept the diff:
+1. **Treats `in [US, CA]` as a substring test instead of set membership** — `value in
+   raw_condition_text` or `field_value in "US,CA"` instead of splitting the bracket contents and
+   comparing each item exactly. Symptom: `country == USA` wrongly satisfies `country in [US]`
+   because `"US"` is a substring of `"USA"`.
+2. **Gets `and`/`or` precedence backwards or flat** — implements them at the same precedence
+   left-to-right (`a or b and c` → `(a or b) and c`, wrong) instead of `and` binding tighter, or
+   builds the parser bottom-up so `or` ends up nested *inside* `and` instead of the reverse.
+3. **Skips short-circuit evaluation** — evaluates both operands of `and`/`or` unconditionally. This
+   is not disqualifying by itself (there's nothing here that fails on a well-formed transaction
+   either way — every field exists) as long as the *result* is still correct, but watch for AI
+   "fixing" the non-issue with a defensive `try/except` wrapped around every comparison, which
+   quietly swallows a real bug (a genuinely missing field, a typo'd operator) instead of surfacing
+   it as an `ERROR line k` the way Part 3 actually wants.
+4. **Gets the default direction backwards** — defaults an unmatched transaction to `BLOCK` instead
+   of `ALLOW`, or prints a placeholder like `(rule None)` / `(rule -1)` instead of omitting the
+   suffix entirely. This is the single most common regression when a candidate later asks the AI to
+   "add Part 3 support" and it silently rewrites Part 1/2's default-handling in the process.
+5. **Either under- or over-builds the tokenizer** — under: `condition.split(" ")` on raw text, which
+   breaks the moment spacing isn't exactly one space per token (`amount>=5000` with no spaces at
+   all); over: in the same breath, generates a general-purpose expression engine with arithmetic
+   operators, quoted-string constants, and a pluggable-function registry that nothing in this spec
+   asked for, burning the 30-minute AI budget (or the 60-minute hand-written one) on scope the
+   grader never requested. Both ends of this mistake come from not re-reading the grammar in the
+   spec before accepting generated code.
 
 ## 面试官会怎么追问
 1. "这是 AI 轮，评分标准是'你怎么指挥 AI'——如果面试官现在问你'你让 AI 生成的第一版代码有什么问题、
@@ -224,29 +247,34 @@ part3(["RULES", "ALLOW if a or b and c", "TRANSACTIONS"]) == []   # a/b/c aren't
    还是"这是值"？" — 检验候选人是否理解这套语法的核心设计取舍：**字段 vs. 字面量的判定是按 token
    的拼写、不是按值的语义**，这是省掉引号语法（不像 q12 需要 `:field:` 标记）所必须付出的代价。
 
-## 本题考察什么
-技能：S02 条件字符串的分词/解析 · S06 数值/字符串比较兜底 · S10 first-match-wins 的有序规则求值 ·
-S18 校验（Part 3 按规则报 `ERROR` 而不崩溃整批）· S19 渐进式语法（Part n 是 Part n+1 的严格语法
-子集）· S24 Radar 规则引擎词汇（与 q12 共用，在 AI 辅助轮的规模上）· S25 指挥/审查 AI 生成代码
-（理解题面、自己写测试、抓过度工程——这一轮真正的评分轴，依据 Sources）
+## What this tests
+skills: S02 tokenizing/parsing condition strings · S06 numeric-vs-string comparison fallback ·
+S10 ordered rule evaluation with first-match-wins · S18 validation (Part 3's per-rule `ERROR`
+reporting without crashing the batch) · S19 incremental grammar (Part n is a strict grammar subset
+of Part n+1) · S24 Radar rule-engine vocabulary (shared with q12, at AI-assisted-round scope) ·
+S25 directing/reviewing AI-generated code (spec comprehension, own test authorship, catching
+over-engineering — this round's actual grading axis, per Sources)
 
-## 来源
-- https://www.interviewdb.io/guides/stripe-ai-programming-exercise（2026-06-09："给一份交易列表和
-  一份规则列表，每条规则说明是否接受或拦截一笔交易，后面跟一个 if 条件"；评分标准："能否有效使用 AI
-  而不关掉自己的脑子"；流程："AI 总结 README，你们一起敲定实现方案，AI 生成代码，你自己写测试，
-  你调试并确认自己理解"）
-- https://interviewfox.ai/interview-questions/stripe-oa-hackerrank-guide/（2026："从架构、测试、
-  优化几个维度打分你怎么用它"；约 30 分钟，HackerRank 内嵌 AI 聊天，"有点像轻量版 Cursor"）
-- `loop/raw/en_forums.md` §9 "2026 新增：AI Programming Exercise 轮" 和 §6.2 C11（本仓库对上述
-  两个来源的自行整理）
-- `problems/q12_platform_balance_radar_rules/problem.md`（本仓库的生产级姊妹题；这里的
-  RULES/比较运算符/布尔语法设计刻意做成那道题技能的更小、不重叠子集，而不是照搬它的
-  `API:`/`BAL:`/`:field:` 语法）
+## Sources
+- https://www.interviewdb.io/guides/stripe-ai-programming-exercise (2026-06-09: "given a list of
+  transactions and a list of rules, where each rule says whether to accept or block a transaction
+  followed by an if condition"; grading: "whether you can use AI effectively without turning your
+  brain off"; flow: "AI summarizes the README, you agree on an implementation plan, AI generates
+  code, you write your own tests, you debug and confirm understanding")
+- https://interviewfox.ai/interview-questions/stripe-oa-hackerrank-guide/ (2026: "scores how you
+  use it on architecture, testing, and optimization"; ~30 min, HackerRank-embedded AI chat, "kind
+  of like a lightweight Cursor")
+- `loop/raw/en_forums.md` §9 "2026 新增：AI Programming Exercise 轮" and §6.2 C11 (this repo's own
+  collation of the above two sources)
+- `problems/q12_platform_balance_radar_rules/problem.md` (this repo's production-grade sibling
+  problem; the RULES/comparison-op/boolean-grammar design here is deliberately built as a smaller,
+  non-overlapping subset of that one's skill, not a copy of its `API:`/`BAL:`/`:field:` syntax)
 
-## 澄清说明（作者自加，非来源内容）
-- 两个来源都没有给出输入输出协议、交易字段列表或确切语法——本仓库的 `RULES`/`TRANSACTIONS` stdin
-  分节、六字段交易 schema、`(rule k)` 输出后缀，以及 Part 3 的 `ERROR line k:` 报告都是为可测试性
-  而做的重建，选择向 `problems/q12` 自身的 house style 靠拢（parse → model → evaluate、
-  first-match-wins、默认接受），而不是为同一个底层技能再发明第四种约定。
-- "默认 ALLOW 不带后缀"（而不是例如 `(default)`）是本仓库自己的选择，之所以在这里写明，是因为来源
-  的一句话描述完全没有指定输出格式。
+## Clarifications (author's own, not sourced)
+- Neither source specifies an input/output protocol, a transaction field list, or exact grammar —
+  this repo's `RULES`/`TRANSACTIONS` stdin sections, six-field transaction schema, `(rule k)`
+  output suffix, and Part 3's `ERROR line k:` reporting are reconstructions built for testability,
+  chosen to parallel `problems/q12`'s own house style (parse → model → evaluate, first-match-wins,
+  default-accept) rather than invent a fourth convention for the same underlying skill.
+- "No suffix on default ALLOW" (vs. e.g. `(default)`) is this repo's choice, made explicit here
+  because the source's one-line description does not specify the output format at all.

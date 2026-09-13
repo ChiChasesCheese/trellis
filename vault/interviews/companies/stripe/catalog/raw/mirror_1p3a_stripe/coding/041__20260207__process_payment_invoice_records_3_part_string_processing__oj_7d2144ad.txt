@@ -1,0 +1,14 @@
+"""
+Process payment invoice records (3-part string processing)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/7d2144ad-2c89-44d5-8e91-d71a35e79931
+Source Type: OJ / More Problems
+
+Question Summary:
+## Problem: Process Payment Invoice text records (3-part string processing)
+
+You are given multiple lines of text, where each line represents an invoice-related record. Implement **three subtasks** that involve basic string parsing/formatting/aggregation.
+
+> Note: The source post only mentions “payment invoice, original question, three parts, basic string operations” but provides no concrete input format nor the three part requirements, so it cannot be completed into an answerable coding question and is therefore omitted as a fully specified problem.
+"""

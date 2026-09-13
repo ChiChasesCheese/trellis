@@ -1,0 +1,23 @@
+"""
+Invoice Management System with CRUD Operations and Efficient Retrieval
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/57dece2f-db5a-4aa1-b7b0-d08140e5bcd8
+Source Type: OJ / More Problems
+
+Question Summary:
+Design an invoice generation system by implementing a function. In this system, users can:
+
+1. Create an invoice with a unique ID, customer information, and a list of items. Each item in the list includes a name, quantity, and unit price.
+2. Update an existing invoice's information, including customer information and the list of items.
+3. Delete an invoice.
+4. Retrieve an invoice's details based on its ID.
+
+Use appropriate data structures to ensure the efficiency of all operations. Test cases include:
+- Creating an invoice and retrieving it
+- Updating an invoice and retrieving it
+- Deleting an invoice and making sure retrieval fails
+- Updating and deleting non-existent invoices to test error handling
+
+Assume the number of items in the item list will not exceed 1000 and the total number of invoices will not exceed 10000.
+"""

@@ -1,69 +1,74 @@
-# ps04 · Transaction Data Validation / Fraud Report — 范围 + 黑名单 + 行为匹配 + 优先级报告
+# ps04 · Transaction Data Validation / Fraud Report — range + blocklist + behavior match + priority report
 
-**类型：** 技术电面（"Team Screen"） · **阶段：** 60 分钟（45 分钟写代码 + 15 分钟问答），4 个部分 · **最近一次出现：** 2025-11-30（programhelp，转载至 LeetCode Discuss）
-**出现频率：** LeetCode Discuss 面经（programhelp 记录，2025-11-30）；interviewdb.io 分别列出"Data Validation"（发布 2 周）和"Fraud Reports"（发布 1 个月）两个独立追踪、截至 2026-07 仍活跃的条目 · **可信度：** 四部分结构和每部分的一句话规则概要可信度高（来源明确点名全部四个部分）；精确的输入协议、"最多两个码"之外的优先级顺序、以及演示数字都是本仓库的重构 —— 见来源部分。
+**Type:** technical phone screen ("Team Screen") · **Stage:** 60 min (45 coding + 15 Q&A), 4 parts · **Last asked:** 2025-11-30 (programhelp, cross-posted to LeetCode Discuss)
+**Frequency:** LeetCode Discuss report (programhelp write-up, 2025-11-30); interviewdb.io lists "Data Validation" (2 weeks old) and "Fraud Reports" (1 month old) as separately-tracked, still-active listings as of 2026-07 · **Confidence:** high for the four-part shape and each part's one-line rule summary (all four are named explicitly in the source); the exact input protocol, priority order beyond "up to two codes", and worked numbers are this repo's reconstruction — see Sources.
 
-## 背景
-Stripe Radar 分阶段筛查交易：记录是否完整、是否违反硬性业务规则（金额范围、被封禁的支付
-方式）、是否符合用户自身历史行为，以及 —— 如果同时出错多项 —— 哪两项最重要需要打印出来。
-本题刻意**不是** `problems/q15_kyc_verification`（KYC：入驻 CSV、账单描述符规则、带引号
-的逗号、重构的循环依赖检查）。ps04 是入驻之后的**风控分诊**：数字范围检查、黑名单，以及
-对每用户行为画像的 3 属性匹配 —— 没有 CSV 引号，没有描述符规则。
+## Context
+Stripe Radar screens transactions in stages: is the record even complete, does it violate a hard
+business rule (amount range, blocked payment method), does it look like the user's own history,
+and — if several things are wrong at once — which two matter most to print. This is deliberately
+**not** `problems/q15_kyc_verification` (KYC: onboarding CSV, statement-descriptor rules, quoted
+commas, reconstructed circular-dependency checks). ps04 is post-onboarding **fraud triage**: a
+numeric range check, a blocklist, and a 3-attribute match against a per-user behavioral profile —
+no CSV quoting, no descriptor rules.
 
-## 输入（stdin）
-第一行 `PART n`（n ∈ 1..4）。之后是固定顺序的四个分节，各自的标题独占一行；空行在任何
-地方都忽略。四个分节始终全部存在（其内容对更早的 part 可能无关紧要 —— 照样解析；这样
-协议在各个 part 之间保持一致，只有*被评估*的规则会变化）。
+## Input (stdin)
+First line `PART n` (n ∈ 1..4). Then four sections, in this fixed order, headers on their own
+line; blank lines are ignored everywhere. All four sections are always present (their content may
+be irrelevant to an earlier part — parse them anyway; this keeps the protocol identical across
+parts, only the *evaluated* rules change).
 ```
 RULES
-min_amount,max_amount                                    十进制美元，闭区间边界
+min_amount,max_amount                                    decimal dollars, inclusive bounds
 BLOCKLIST
-method1,method2,...                                      可能是空行（没有被封禁的方式）
+method1,method2,...                                      may be an empty line (no blocked methods)
 PROFILES
 user_id,countries,hour_min,hour_max,amount_min,amount_max
-                                                           countries 用 ';' 连接（例如 US;CA）；
-                                                           hour_min/hour_max 是 0-23 闭区间的整数；
-                                                           amount_min/amount_max 是十进制美元
+                                                           countries is ';'-joined (e.g. US;CA);
+                                                           hour_min/hour_max integers 0-23 inclusive;
+                                                           amount_min/amount_max decimal dollars
 TRANSACTIONS
 txn_id,user_id,amount,currency,payment_method,country,timestamp
-                                                           标题行始终存在，始终跳过；
-                                                           timestamp 是 ISO-8601 'YYYY-MM-DDTHH:MM:SS'
+                                                           header row always present, always skipped;
+                                                           timestamp is ISO-8601 'YYYY-MM-DDTHH:MM:SS'
 ```
-字段按 `,` 分割（不做引号处理 —— 这些字段都不含内嵌逗号）；每个值都会 trim。少于 7 列的
-交易行，缺失的末尾列视为空字符串；多余的列忽略。最多 10^5 条交易行。
+Fields are split on `,` (no quoting — none of these fields contain embedded commas); every value
+is trimmed. A transaction row with fewer than 7 columns has its missing trailing columns treated
+as empty strings; extra columns are ignored. Up to 10^5 transaction rows.
 
-## 输出
-API：`partN(lines: list[str]) -> list[str]`，每条交易一行输出，**按输入顺序**。
-Part 1–3：`txn_id: CODE1,CODE2,...` 或 `txn_id: OK`。Part 4：列对齐的报告（见下文）。
+## Output
+API: `partN(lines: list[str]) -> list[str]`, one output line per transaction, **in input order**.
+Parts 1–3: `txn_id: CODE1,CODE2,... ` or `txn_id: OK`. Part 4: a column-aligned report (see below).
 
-## 规则（累积式 —— Part n 评估类别 1..n；每个激活的类别都独立检查，所以一行可能触发多个码）
-### Part 1 — 完整性 → `MISSING_FIELD`
-7 个字段（`txn_id,user_id,amount,currency,payment_method,country,timestamp`）中任意一个
-trim 后为空（包括缺失的末尾列）→ `MISSING_FIELD`。
+## Rules (cumulative — Part n evaluates categories 1..n; every active category is checked
+independently, so a row can trigger several codes)
+### Part 1 — completeness → `MISSING_FIELD`
+Any of the 7 fields (`txn_id,user_id,amount,currency,payment_method,country,timestamp`) empty
+after trimming (including a missing trailing column) → `MISSING_FIELD`.
 
-### Part 2 — 范围 + 黑名单 → `AMOUNT_OUT_OF_RANGE`, `BLOCKED_METHOD`
-`amount` 必须能解析为数字**且**落在 `RULES` 分节的 `[min_amount, max_amount]`**闭区间**内
-（金额缺失/为空这里不额外标记 —— `MISSING_FIELD` 已经覆盖）。`payment_method`
-（不区分大小写，已 trim）不能出现在 `BLOCKLIST` 中。违反任一条即触发对应的码；两者可以
-在同一行同时触发。
+### Part 2 — range + blocklist → `AMOUNT_OUT_OF_RANGE`, `BLOCKED_METHOD`
+`amount` must parse as a number **and** lie in `[min_amount, max_amount]` **inclusive**, from the
+`RULES` section (a missing/empty amount is not additionally flagged here — `MISSING_FIELD`
+already covers it). `payment_method` (case-insensitive, trimmed) must not be in `BLOCKLIST`.
+Violating either fires the matching code; both can fire on the same row.
 
-### Part 3 — 行为匹配 → `SUSPICIOUS`
-将交易与其用户的 `PROFILES` 行在**3 个属性**上比较：`country` 是否在 profile 的国家集合中；
-timestamp 的小时是否落在 `[hour_min, hour_max]`；`amount` 是否落在 `[amount_min,
-amount_max]`（*profile 自身*的范围 —— 独立于 Part 2 的全局 `RULES` 范围）。统计 3 个属性中
-匹配了多少个。**匹配数少于 2（即 0 或 1 —— "至少 50%" 四舍五入为"至少 3 项中的 2 项"）→
-`SUSPICIOUS`。** 没有 profile 行的用户永远不会被标记为可疑（没有比较对象 —— 这条规则对
-该用户直接跳过）。
+### Part 3 — behavioral match → `SUSPICIOUS`
+Compare the transaction against its user's `PROFILES` row on **3 attributes**: `country` in the
+profile's country set; the timestamp's hour-of-day in `[hour_min, hour_max]`; `amount` in
+`[amount_min, amount_max]` (the *profile's* range — independent of Part 2's global `RULES`
+range). Count how many of the 3 attributes match. **Fewer than 2 matches (i.e. 0 or 1 — "at least
+50%" rounds to "at least 2 of 3") → `SUSPICIOUS`.** A user with **no profile row** is never
+flagged suspicious (nothing to compare against — this rule is simply skipped for that user).
 
-### Part 4 — 优先级报告
-与 Part 3 相同的规则集，但输出变成一份报告：按优先级最多保留**前 2 个**码（其余丢弃），
-格式化为一个对齐的代码块。优先级从高到低：
-`MISSING_FIELD > BLOCKED_METHOD > AMOUNT_OUT_OF_RANGE > SUSPICIOUS`。每行格式为
-`txn_id`**左对齐，宽度为本次运行中最长 `txn_id` 的宽度**，之后恰好**两个空格**，然后是
-（≤2 个）码用 `,` 连接，如果没有触发任何码则是 `OK`。
+### Part 4 — priority report
+Same rule set as Part 3, but the output is a report: at most the **top 2** codes by priority
+(dropping the rest), formatted as one aligned block. Priority, highest first:
+`MISSING_FIELD > BLOCKED_METHOD > AMOUNT_OUT_OF_RANGE > SUSPICIOUS`. Each line is
+`txn_id` **left-justified to the width of the longest `txn_id` in this run**, then exactly **two
+spaces**, then the (≤2) codes joined by `,`, or `OK` if none fired.
 
-## 演示样例
-以下每个样例共享同一个设置：
+## Worked examples
+Shared setup for every example below:
 ```
 RULES
 10.00,5000.00
@@ -88,35 +93,35 @@ t7,u1,9000.00,USD,gift_card,DE,2026-08-01T02:00:00
 t1: OK
 t2: OK
 t3: OK
-t4: MISSING_FIELD          (country 为空)
-t5: MISSING_FIELD          (currency 为空)
+t4: MISSING_FIELD          (country empty)
+t5: MISSING_FIELD          (currency empty)
 t6: OK
 t7: OK
-: MISSING_FIELD            (txn_id 本身为空 -- 显示为空字符串)
+: MISSING_FIELD            (txn_id itself empty -- displayed as the empty string)
 ```
-`PART 2`（加入范围 + 黑名单）→
+`PART 2` (adds range + blocklist) →
 ```
 t1: OK
-t2: BLOCKED_METHOD                       (prepaid_card 被封禁)
+t2: BLOCKED_METHOD                       (prepaid_card is blocked)
 t3: AMOUNT_OUT_OF_RANGE                  (6000.00 > 5000.00)
 t4: MISSING_FIELD
 t5: MISSING_FIELD
 t6: OK
-t7: BLOCKED_METHOD,AMOUNT_OUT_OF_RANGE   (gift_card 被封禁 且 9000.00 > 5000.00)
+t7: BLOCKED_METHOD,AMOUNT_OUT_OF_RANGE   (gift_card blocked AND 9000.00 > 5000.00)
 : MISSING_FIELD
 ```
-`PART 3`（加入行为匹配；u1 的 profile：国家在 {US,CA} 内，小时 8-20，金额 10.00-500.00）→
+`PART 3` (adds behavior match; u1's profile: country in {US,CA}, hour 8-20, amount 10.00-500.00) →
 ```
-t1: OK                                                  (国家 US、小时 14、金额 150 -- 3/3 匹配)
-t2: BLOCKED_METHOD                                      (同样 3/3 匹配，所以不可疑)
-t3: AMOUNT_OUT_OF_RANGE                                 (国家+小时匹配，金额 6000 不匹配 -- 2/3，仍是 OK)
-t4: MISSING_FIELD                                       (国家 '' 不匹配，小时+金额匹配 -- 2/3，仍是 OK)
-t5: MISSING_FIELD,SUSPICIOUS                            (国家 FR 不匹配，小时 3 不匹配，金额 150 匹配 -- 1/3 < 2)
-t6: OK                                                  (u3 没有 profile -- SUSPICIOUS 从不评估)
-t7: BLOCKED_METHOD,AMOUNT_OUT_OF_RANGE,SUSPICIOUS       (国家 DE 不匹配，小时 2 不匹配，金额 9000 不匹配 -- 0/3)
+t1: OK                                                  (country US, hour 14, amount 150 -- 3/3 match)
+t2: BLOCKED_METHOD                                      (same 3/3 match, so not suspicious)
+t3: AMOUNT_OUT_OF_RANGE                                 (country+hour match, amount 6000 doesn't -- 2/3, still OK)
+t4: MISSING_FIELD                                       (country '' doesn't match, hour+amount do -- 2/3, still OK)
+t5: MISSING_FIELD,SUSPICIOUS                            (country FR no, hour 3 no, amount 150 yes -- 1/3 < 2)
+t6: OK                                                  (u3 has no profile -- SUSPICIOUS never evaluated)
+t7: BLOCKED_METHOD,AMOUNT_OUT_OF_RANGE,SUSPICIOUS       (country DE no, hour 2 no, amount 9000 no -- 0/3)
 : MISSING_FIELD
 ```
-`PART 4`（按优先级取前 2 个，列对齐；这里最长 txn_id 是 `t1`..`t7`，宽度 2）→
+`PART 4` (top-2 by priority, column-aligned; longest txn_id here is `t1`..`t7`, width 2) →
 ```
 t1  OK
 t2  BLOCKED_METHOD
@@ -127,60 +132,67 @@ t6  OK
 t7  BLOCKED_METHOD,AMOUNT_OUT_OF_RANGE
     MISSING_FIELD
 ```
-（`t7` 的第 3 个码 `SUSPICIOUS` 因为前 2 规则被丢弃。空 `txn_id` 行的 id 列是 2 个空格
-（填充宽度），后面跟着必须的 2 个空格分隔符，所以 `MISSING_FIELD` 前面共 4 个空格。）
+(`t7`'s 3rd code, `SUSPICIOUS`, is dropped by the top-2 rule. The empty-`txn_id` row's id column is
+2 blank spaces — the padding width — followed by the mandatory 2-space separator, so 4 spaces
+before `MISSING_FIELD`.)
 
-## 隐藏测试已知会针对的边界情况
-- 只有空白字符的值 trim 后为空（`"  "` → `MISSING_FIELD`）
-- 金额恰好等于 `min_amount` / `max_amount`（闭区间边界，两端都测）→ 不算超出范围
-- 少于 7 列的行（缺失末尾列）→ 那些列为空 → `MISSING_FIELD`
-- `BLOCKLIST` 比较不区分大小写（如果 `prepaid_card` 在列表中，`Prepaid_Card` 也被封禁）；
-  空的 `BLOCKLIST` 行不封禁任何东西
-- 3 个行为属性中恰好匹配 2 个**不算**可疑（">= 2" 边界，不是 "> 2"）
-- 3 个中恰好匹配 1 个**算**可疑；0 个匹配也算可疑
-- 没有 `PROFILES` 行的用户永远不是 `SUSPICIOUS`，无论交易看起来多异常 —— 没有比较对象
-- 触发了 3 个以上码的一行：Part 1–3 全部打印（按优先级顺序）；Part 4 只保留前 2 个，
-  丢弃其余，绝不重新排序
-- 全部通过的行打印 `OK`，不是空码列表或空字符串
-- `PART n` 真正门控评估：`BLOCKED_METHOD`/`AMOUNT_OUT_OF_RANGE`/`SUSPICIOUS` 违规在
-  `PART 1` 下不可见（行打印 `OK`）
-- txn_id 本身为空（仍触发 `MISSING_FIELD`；显示为空字符串，在 Part 4 对齐列中也是纯填充 ——
-  见演示样例）
-- Part 4 的列宽是本次运行按实际出现的最长 `txn_id` 重新计算的，不是固定常量
-- 无法解析为数字的金额（非数字、非空）超出文档规定范围，隐藏测试不会触及（该字段要么为空，
-  要么是合法十进制数）
-- 最多 10^5 条交易行，最多 10^5 个 profile —— 不能是平方级复杂度（用 dict 查找，不能扫描）
+## Edge cases hidden tests are known to target
+- a value that is only whitespace is empty after trimming (`"  "` → `MISSING_FIELD`)
+- amount exactly at `min_amount` / `max_amount` (inclusive boundary, both ends) → not out of range
+- a fewer-than-7-column row (missing trailing columns) → those columns are empty → `MISSING_FIELD`
+- `BLOCKLIST` comparison is case-insensitive (`Prepaid_Card` blocked if `prepaid_card` is listed);
+  an empty `BLOCKLIST` line blocks nothing
+- exactly 2 of 3 behavioral attributes matching is **not** suspicious (the ">= 2" boundary, not "> 2")
+- exactly 1 of 3 matching **is** suspicious; 0 of 3 is suspicious
+- a user with no `PROFILES` row is never `SUSPICIOUS`, regardless of how anomalous the transaction
+  looks — there is nothing to compare against
+- a row with 3+ triggered codes: Parts 1–3 print all of them (priority order); Part 4 keeps only
+  the top 2 and drops the rest, never re-ordered
+- an all-passing row prints `OK`, not an empty code list or an empty string
+- `PART n` truly gates evaluation: a `BLOCKED_METHOD`/`AMOUNT_OUT_OF_RANGE`/`SUSPICIOUS` violation
+  is invisible (row prints `OK`) under `PART 1`
+- txn_id itself empty (still triggers `MISSING_FIELD`; displayed as the empty string, and as pure
+  padding in Part 4's aligned column — see worked example)
+- Part 4 column width is recomputed per run from the widest `txn_id` actually present, not a fixed
+  constant
+- amount that fails to parse as a number (non-numeric, non-empty) is out of documented scope and
+  is not exercised by hidden tests (the field is either empty, or a valid decimal)
+- up to 10^5 transaction rows, up to 10^5 profiles — must not be quadratic (dict lookups, not scans)
 
-## 见过的变体
-- 来源的 Part 2 说"金额必须在业务定义的范围内"和"支付方式不在被封禁列表中"，但没有说明
-  两者是放在一个规则块还是两个；本版本为了便于解析把它们分成独立的 `RULES` / `BLOCKLIST`
-  分节。
-- "至少 50% 的行为属性匹配"（来源原话）在这里实现为字面意义的 3 项中 `>= 2` 项，即向上取整
-  到多数，不是分数阈值 —— 恰好 3 个属性的情况下没有歧义（2/3 = 66.7% >= 50%，
-  1/3 = 33.3% < 50%），但本仓库显式定义了整数阈值，而不是每次都从百分比重新推导。
-- 来源没有明确 Part 4 保留的输出码数量，只说"最多两个"，也没有指定平局优先级；本仓库
-  确定了两者（`MISSING_FIELD > BLOCKED_METHOD > AMOUNT_OUT_OF_RANGE > SUSPICIOUS`），
-  因为电面评分标准需要一个确定的顺序。
+## Variants seen in the wild
+- The source's Part 2 says "amounts must be within a business-defined range" and "payment methods
+  not on a blocked list" without specifying whether both live in one rule block or two; this
+  version keeps them in separate `RULES` / `BLOCKLIST` sections for parseability.
+- "At least 50% of the behavioral attributes match" (source's own wording) is implemented here as
+  literally `>= 2` of 3, i.e. round-up-to-majority, not a fractional threshold — with exactly 3
+  attributes there is no ambiguity (2/3 = 66.7% >= 50%, 1/3 = 33.3% < 50%), but this repo makes
+  the integer threshold explicit rather than re-deriving it from a percentage every call.
+- The source does not specify the number of output codes kept in Part 4 beyond "up to two" and
+  does not name a tie-break priority; this repo fixes both
+  (`MISSING_FIELD > BLOCKED_METHOD > AMOUNT_OUT_OF_RANGE > SUSPICIOUS`) since a phone-screen
+  rubric needs one.
 
-## 本题考察点
-skills: S02 解析（分节 stdin）· S05 闭区间检查 · S06 `Decimal` 货币，绝不用浮点 · S08
-确定性排序（全程保留输入顺序）· S09 精确格式化（列对齐）· S18 校验与优先级错误路径 ·
-S19 增量式规则（Part n 评估类别 1..n）· S24 领域知识（Radar 式风控分诊，与 q15 的
-KYC 领域不同）
+## What this tests
+skills: S02 parsing (sectioned stdin) · S05 inclusive range checks · S06 `Decimal` money, never
+float · S08 deterministic ordering (input order preserved throughout) · S09 exact formatting
+(column alignment) · S18 validation & prioritized error paths · S19 incremental rules (Part n
+evaluates categories 1..n) · S24 domain (Radar-style fraud triage, distinct from q15's KYC domain)
 
-## 来源
-- https://leetcode.com/discuss/post/7384225/stripe-phone-screen-4-part-interview-exp-dhoy/ （programhelp 记录，2025-11-30："Part 1：读取一份 6 字段的 CSV [原文如此 —— 本仓库使用 7 字段，见说明部分]，校验所有字段非空。Part 2：金额必须在业务定义的范围内，支付方式不能在被封禁列表中，否则标记为可疑。Part 3：与历史行为比较（消费国家、时间范围、金额范围）—— 至少 50% 的行为属性必须匹配，否则 SUSPICIOUS。Part 4：输出一份错误报告，每笔交易最多两个错误码，按优先级排列，保持列对齐以便阅读。"）
-- https://www.interviewdb.io/question/stripe （"Data Validation" — 发布 2 周；"Fraud Reports" — 发布 1 个月，截至 2026-07 抓取）
-- `loop/raw/en_forums.md` §3.3 P6 "交易风控四段题（Data Validation / Fraud Reports）"（本仓库对上述内容的自行整理）
+## Sources
+- https://leetcode.com/discuss/post/7384225/stripe-phone-screen-4-part-interview-exp-dhoy/ (programhelp write-up, 2025-11-30: "Part 1: read a CSV of 6 fields [sic — this repo uses 7, see Clarifications], validate all fields are non-empty. Part 2: amount must be within a business-defined range, payment method must not be on a blocked list, else mark suspicious. Part 3: compare against historical behavior (spending countries, time range, amount range) — at least 50% of the behavioral attributes must match, else SUSPICIOUS. Part 4: output an error report with up to two error codes per transaction, prioritized, maintaining column alignment for readability.")
+- https://www.interviewdb.io/question/stripe ("Data Validation" — 2 weeks old; "Fraud Reports" — 1 month old, as scraped 2026-07)
+- `loop/raw/en_forums.md` §3.3 P6 "交易风控四段题（Data Validation / Fraud Reports）" (this repo's own collation of the above)
 
-## 说明（作者本人添加，非来源内容）
-- 来源在完整性检查部分说的是"6 字段"，但领域描述（金额、货币、支付方式、国家、timestamp
-  用于行为匹配）需要 7 个命名列（`txn_id,user_id,amount,currency,payment_method,
-  country,timestamp`）才能让 Part 2–4 有明确定义；本仓库使用 7 字段，把"6"视为来源自身的
-  转述误差（这是一份二手记录，不是逐字的原始题面）。
-- 来源转述中 Part 2 的"标记为可疑"，一旦 Part 4 的"错误码，按优先级排列"这句话表明到
-  Part 4 时存在多个不同的码，就被更具体的 `AMOUNT_OUT_OF_RANGE` / `BLOCKED_METHOD`
-  取代 —— `SUSPICIOUS` 专门保留给 Part 3 的行为匹配失败，依据来源自身 Part 3 的措辞。
-- 精确的分节名称（`RULES`/`BLOCKLIST`/`PROFILES`/`TRANSACTIONS`）、profile schema 和
-  优先级顺序都是本仓库的重构（没有逐字的 I/O 样例可参考），参照本题集自身
-  `problems/q02_merchant_fraud_score` 的分节 stdin 惯例建模。
+## Clarifications (author's own, not sourced)
+- The source says "6 fields" for the completeness check but the domain description (amount,
+  currency, payment method, country, timestamp for behavior matching) needs 7 named columns
+  (`txn_id,user_id,amount,currency,payment_method,country,timestamp`) to make Parts 2–4 well
+  defined; this repo uses 7 and treats "6" as the source's own paraphrase (it is a secondhand
+  write-up, not a verbatim problem statement).
+- "Marked suspicious" for Part 2 in the source's paraphrase is superseded by the more specific
+  `AMOUNT_OUT_OF_RANGE` / `BLOCKED_METHOD` codes once Part 4's "error codes, prioritized" language
+  makes clear multiple distinct codes exist by Part 4 — `SUSPICIOUS` is reserved for Part 3's
+  behavioral-match failure specifically, per the source's own Part 3 wording.
+- Exact section names (`RULES`/`BLOCKLIST`/`PROFILES`/`TRANSACTIONS`), the profile schema, and the
+  priority order are this repo's reconstruction (no verbatim I/O sample is available), modelled on
+  this suite's own `problems/q02_merchant_fraud_score` sectioned-stdin convention.

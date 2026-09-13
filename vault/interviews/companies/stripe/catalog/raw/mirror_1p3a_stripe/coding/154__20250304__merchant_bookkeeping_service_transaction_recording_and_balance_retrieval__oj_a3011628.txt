@@ -1,0 +1,17 @@
+"""
+Merchant Bookkeeping Service: Transaction Recording and Balance Retrieval
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/a3011628-e83d-4ecd-b251-383e5321e534
+Source Type: OJ / More Problems
+
+Question Summary:
+Design and implement a bookkeeping service that records money sent and received on behalf of a merchant, and allows retrieving the account balance for a given merchant.
+
+### Requirements:
+1. Implement an API to record money sent or received on behalf of a merchant.
+2. Implement an API to get the account balance for a given merchant.
+3. Consider how to build the system, including data storage, system architecture, and methods to ensure data consistency.
+
+Please detail each API's functionality and parameters, and explain your design choices.
+"""

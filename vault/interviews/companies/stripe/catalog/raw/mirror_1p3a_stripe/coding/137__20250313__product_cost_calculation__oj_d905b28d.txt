@@ -1,0 +1,26 @@
+"""
+Product Cost Calculation
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/d905b28d-5aff-49fe-8163-f77f34eaec00
+Source Type: OJ / More Problems
+
+Question Summary:
+Given a product catalog where each product has a cost and pricing information, design a function to calculate the total cost of the products. If there are no products or the list is empty, return 0.
+
+Example:
+
+Input:
+```json
+[
+  {"name": "Product A", "cost": 30.0, "price": 50.0},
+  {"name": "Product B", "cost": 45.5, "price": 60.0},
+  {"name": "Product C", "cost": 25.0, "price": 35.0}
+]
+```
+
+Output:
+```
+100.5
+```
+"""

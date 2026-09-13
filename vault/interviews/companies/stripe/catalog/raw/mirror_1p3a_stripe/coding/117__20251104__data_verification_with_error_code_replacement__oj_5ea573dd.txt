@@ -1,0 +1,26 @@
+"""
+Data Verification with Error Code Replacement
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/5ea573dd-4b18-4feb-a3e4-07260359d8fb
+Source Type: OJ / More Problems
+
+Question Summary:
+Given a string containing data where some parts are marked as `not verified`. You need to replace all occurrences of `not verified` with a provided `error code`. Implement a program to accomplish this.
+
+Input:
+- A string of data containing `not verified`.
+- An `error code` string.
+
+Output:
+- The string after replacing all `not verified` with the `error code`.
+
+Example:
+
+Input:
+    Data: "abc not verified def not verified ghi"
+    Error Code: "error123"
+
+Output:
+    "abc error123 def error123 ghi"
+"""

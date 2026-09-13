@@ -1,0 +1,10 @@
+"""
+Calculate Shipping Costs
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/26643743-f78b-4683-b510-5d3ec0314675
+Source Type: OJ / More Problems
+
+Question Summary:
+Given shipping cost strategies for various countries and goods, write a function to calculate the shipping cost for different goods to different countries. The shipping cost data is provided in JSON format, with different costs for different countries and goods.
+"""

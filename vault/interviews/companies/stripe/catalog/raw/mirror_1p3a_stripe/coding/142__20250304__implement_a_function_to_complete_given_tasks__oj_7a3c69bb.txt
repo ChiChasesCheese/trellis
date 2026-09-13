@@ -1,0 +1,28 @@
+"""
+Implement a Function to Complete Given Tasks
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/7a3c69bb-ffcd-4b8d-9431-f54de6fdeff4
+Source Type: OJ / More Problems
+
+Question Summary:
+Implement a function to complete given tasks, divided into multiple parts. Complete each part before proceeding to the next. Input and output formats are as follows:
+
+### Part 1:
+
+- **Input**: A list of integers and a target integer.
+- **Task**: Return pairs of numbers in the list whose sum equals the target integer.
+- **Example**: `Input: [2, 7, 11, 15], 9` → `Output: [(2, 7)]`
+
+### Part 2:
+
+- **Input**: A list of strings and a target string.
+- **Task**: Return pairs of strings in the list that can form the target string.
+- **Example**: `Input: ["ab", "cde", "fg"], "abfg"` → `Output: ["ab", "fg"]`
+
+### Part 3:
+
+- **Input**: A dictionary object representing employee salary data and a target salary.
+- **Task**: Return a list of employee names with salaries equal to the target.
+- **Example**: `Input: {"Alice": 5000, "Bob": 6000, "Carol": 5000}, 5000` → `Output: ["Alice", "Carol"]`
+"""

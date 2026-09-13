@@ -1,85 +1,91 @@
-# ps02 · Shipping Cost Pricing — 统一定价 → 数量分档 → incremental/fixed 混合计费
+# ps02 · Shipping Cost Pricing — flat price → quantity tiers → incremental/fixed mixed billing
 
-**类型：** 电面 / 实习技术电面（解锁式，HackerRank） · **阶段：** 技术电面（约 1 小时，"时间紧张"） · **最近一次出现：** 2025-10-20（learncswithus.com） · **出现频率：** 2 篇独立记录（learncswithus.com 的详细三级拆解；1point3acres.com/interview/post/7100079 的"Shipping Cost Calculator"目录，逐步骤完全一致）+ linkjob.ai P9"会计/分档定价"实习技术电面（`en_forums.md` 第 151 行，2025，"Part 1 订单+运费总额 → Part 2 分档定价，单价随数量增加而降低 → Part 3 两种计费模型：incremental vs fixed-pricing"），从英文侧独立证实了同一个三级结构 · **可信度：** 高（两个中文来源目录几乎一致 + 一个英文来源证实同样的三部分递进结构，且关键的是 Part 3 精确一致的 `incremental` / `fixed` 术语）
+**Type:** phone screen / intern tech screen (unlock-next-part, HackerRank) · **Stage:** Technical Phone Screen (~1 hour, "time is tight") · **Last asked:** 2025-10-20 (learncswithus.com) · **Frequency:** 2 independent write-ups (learncswithus.com detailed three-level breakdown; 1point3acres.com/interview/post/7100079 "Shipping Cost Calculator" TOC that matches it step-for-step) + linkjob.ai P9 "Accounting / tiered pricing" intern tech screen (`en_forums.md` line 151, 2025, "Part 1 order+shipping total → Part 2 tiered pricing, unit price decreases as quantity increases → Part 3 two billing models: incremental vs fixed-pricing") independently confirming the same three-level shape from the English-language side · **Confidence:** high (two Chinese sources with near-identical TOC + one English source confirming the same 3-part progression and, critically, the exact `incremental` / `fixed` terminology for Part 3)
 
-## 背景
-一个基于 Stripe 的电商平台需要在结账时对运费定价：一张国家/产品费率表 + 一份订单列表。
-Level 1 是简单的单位定价查找（dict）。Level 2 把费率变成数量**分档**（volume bands）——
-真实候选人反馈这是"最难的一级，因为没有明确的类型标记来区分它和 Level 1，必须自己发现
-区间逻辑"。Level 3 给每个档位加上一个 `type`（`incremental` vs `fixed`），这正是
-累进计费 vs 单一统一费率档位的区别 —— 与 Stripe Billing 自身在 `graduated` 和
-`tiered`（`volume`）定价之间的区分完全一致。
+## Context
+An e-commerce platform on Stripe needs to price shipping at checkout: a country/product rate
+table plus a list of orders. Level 1 is a flat per-unit price lookup (dict). Level 2 turns the
+rate into quantity **tiers** (volume bands) — candidates in the wild report this as "the hardest
+level, because there's no explicit type to distinguish it from Level 1, you have to notice the
+interval logic yourself." Level 3 adds a `type` per band (`incremental` vs `fixed`), which is
+exactly graduated/tiered pricing vs. a single flat-rate band — the same distinction Stripe
+Billing's own pricing model draws between `graduated` and `tiered` (`volume`) pricing.
 
-## 输入（stdin）
+## Input (stdin)
 ```
 PART n
 RATES
-<费率行>
-<费率行>
+<rate row>
+<rate row>
 ...
 ORDERS
-<订单行>
-<订单行>
+<order row>
+<order row>
 ...
 ```
-* `PART n` —— `n` ∈ {1,2,3}。`RATES` 和 `ORDERS` 字面标记行是必须的且大小写敏感；
-  两者之间的都是费率行，之后的都是订单行。
-* **订单行**（所有 part 通用）：`order_id,country,product,quantity` —— `quantity`
-  是非负整数。输出是**每个订单一行，按输入顺序**（订单是独立查询，不聚合/分组/排序 ——
-  不同于 ps01/q03 的按用户分组）。
-* **费率行**，schema 取决于 `PART n`：
-  - Part 1（统一定价）：`country,product,unit_cost`
-  - Part 2（分档）：`country,product,min_qty,max_qty,cost` —— `cost` 是该档位的
-    **单位**费率。
-  - Part 3（混合）：`country,product,min_qty,max_qty,cost,type` —— `type` ∈
-    `{incremental, fixed}`。
-* 所有货币字段（`unit_cost`、`cost`）都是**0-2 位小数**的普通十进制字符串，没有货币符号，
-  没有千位分隔符（`5`、`5.0`、`5.00`、`12.50` 都合法；`12.5000` 是格式错误）。解析为整数分 ——
-  **绝不使用浮点数**。
-* `min_qty`/`max_qty` 都是整数；`max_qty` 可以是**字面 token `inf`**（小写，精确匹配），
-  表示无上限。区间是**两端都闭合**：`[min_qty, max_qty]`（恰好等于某一边界的数量属于该档）。
-* 同一个 `(country, product)` 的各档位**不会重叠**，但在费率表中**可能以任意顺序出现**
-  （使用前按 `min_qty` 排序 —— 不要假设文件已排序）。
-* 最多约 200 条费率行，10^5 条订单行。
+* `PART n` — `n` ∈ {1,2,3}. The `RATES` and `ORDERS` literal marker lines are required and
+  case-sensitive; everything between them is a rate row, everything after is an order row.
+* **Order row** (all parts): `order_id,country,product,quantity` — `quantity` is a non-negative
+  integer. Output is **one line per order, in input order** (orders are independent queries,
+  not aggregated/grouped/sorted — unlike ps01/q03's per-user grouping).
+* **Rate row**, schema depends on `PART n`:
+  - Part 1 (flat): `country,product,unit_cost`
+  - Part 2 (tiered): `country,product,min_qty,max_qty,cost` — `cost` is the **per-unit** rate
+    for that band.
+  - Part 3 (mixed): `country,product,min_qty,max_qty,cost,type` — `type` ∈
+    `{incremental, fixed}`.
+* All money fields (`unit_cost`, `cost`) are plain decimal strings with **0–2 decimal digits**,
+  no currency symbol, no thousands separator (`5`, `5.0`, `5.00`, `12.50` all valid; `12.5000`
+  is a format error). Parsed to integer cents — **never floats**.
+* `min_qty`/`max_qty` are integers; `max_qty` may be the **literal token `inf`** (lowercase,
+  exact) meaning open-ended. The interval is **closed on both ends**: `[min_qty, max_qty]`
+  (a quantity exactly equal to either boundary is inside that band).
+* Bands for the same `(country, product)` **do not overlap**, but **may appear in any order**
+  in the rate table (sort by `min_qty` before using them — do not assume the file is sorted).
+* Up to ~200 rate rows and 10^5 order rows.
 
-## 输出
-每个订单一行，按输入顺序：`order_id: $x.xx`（两位小数，`$` 符号，`: ` 分隔符，与 OA 惯例
-一致），或对被拒订单输出 `order_id: ERROR <message>` —— 见下方三种错误信息格式（精确固定，
-隐藏测试逐字匹配）。
+## Output
+One line per order, in input order: `order_id: $x.xx` (two decimals, `$` sign, `: ` separator,
+same style as the OA convention), or `order_id: ERROR <message>` for a rejected order — see the
+three error message formats below (pinned exactly, hidden tests match them verbatim).
 
-## 规则
+## Rules
 
-### Part 1 — 统一单位定价
-`unit_cost × quantity`。如果 `(country, product)` 完全没有费率行：
-`ERROR unknown product <country>/<product>`。`quantity = 0` 始终定价为 `$0.00`
-（仍要求产品存在于费率表中 —— 未知产品的零数量订单仍然报错）。
+### Part 1 — flat unit price
+`unit_cost × quantity`. If `(country, product)` has no rate row at all:
+`ERROR unknown product <country>/<product>`. `quantity = 0` always prices at `$0.00` (still
+requires the product to exist in the rate table — a zero-quantity order for an unknown product
+is still an error).
 
-### Part 2 — 数量分档，单一命中档位定价
-找到 `[min_qty, max_qty]` 包含订单 `quantity` 的档位（闭区间，`max_qty = inf` 表示无上限）。
-**整个**订单数量都按该档位的费率计费：`cost × quantity`（不是累加式 —— 15 单位的订单落在
-"11–20"档，就按 `15 × band_11_20.cost` 计价，仅此而已；这就是下方 Part 3 所称的
-`fixed` 计费类型）。
-错误（按此顺序检查）：
-1. `(country, product)` 完全没有费率行 → `ERROR unknown product <country>/<product>`
-2. 有费率行但没有任何档位的区间包含 `quantity`（覆盖范围中的**缺口**，或 `quantity`
-   低于第一档的 `min_qty`）→ `ERROR no tier for <country>/<product> at qty=<quantity>`
-`quantity = 0` 不做档位查找直接定价为 `$0.00`（与 Part 1 相同的产品必须存在规则）。
+### Part 2 — quantity tiers, single matched-band rate
+Find the band whose `[min_qty, max_qty]` contains the order's `quantity` (closed interval,
+`max_qty = inf` = no upper bound). The **entire** order quantity is billed at that one band's
+rate: `cost × quantity` (not cumulative — a 15-unit order that lands in the "11–20" band pays
+`15 × band_11_20.cost`, full stop; this is what Part 3 below calls the `fixed` billing type).
+Errors (checked in this order):
+1. `(country, product)` has no rate rows at all → `ERROR unknown product <country>/<product>`
+2. rate rows exist but no band's interval contains `quantity` (a **gap** in coverage, or
+   `quantity` below the first band's `min_qty`) → `ERROR no tier for <country>/<product> at qty=<quantity>`
+`quantity = 0` prices at `$0.00` without a tier lookup (same product-must-exist rule as Part 1).
 
-### Part 3 — incremental/fixed 混合计费
-与 Part 2 相同的档位查找（找到包含 `quantity` 的档位；同样的两种错误情形和相同的信息）。
-**命中档位的 type**（不是任何其他档位的）决定整笔订单如何定价：
-* **`fixed`**：与 Part 2 相同 —— `matched_band.cost × quantity`。
-* **`incremental`**：累进/阶梯式计费（类似个税阶梯）。从 `min_qty = 1` 开始，按 `min_qty`
-  升序遍历每一档直到命中档位；每一档贡献"落在该档内的数量" × "该档自身费率"，其中"落在
-  该档内"对最后（命中）档位以 `quantity` 为上限截断。所遍历的档位**必须从 1 开始连续**
-  （`band[i].min_qty == band[i-1].max_qty + 1`，第一档的 `min_qty == 1`）—— 命中档位
-  **及之前**的链条出现断裂是一种独立的错误：`ERROR incremental gap for <country>/<product>
-  at qty=<quantity>`（只有当订单数量真的需要穿过缺口时才触发 —— 一个完全落在缺口**之前**
-  某档内的数量永远不会遇到它，见下方演示样例）。
-* 缺口检查是按订单进行的，不是费率表的静态校验 —— 一张费率表可能存在缺口但从未被任何订单
-  查询到，这不算错误。
+### Part 3 — mixed incremental/fixed billing
+Same tier lookup as Part 2 (find the band containing `quantity`; same two error cases with the
+same messages). The **type of the matched band** — not any other band — decides how the whole
+order is priced:
+* **`fixed`**: identical to Part 2 — `matched_band.cost × quantity`.
+* **`incremental`**: graduated/progressive billing (tax-bracket style). Starting from `min_qty
+  = 1`, walk every band in ascending `min_qty` order up through the matched band; each band
+  contributes `(units of quantity that fall inside it) × that band's own cost`, where "falls
+  inside it" is capped at `quantity` for the last (matched) band. The bands walked **must be
+  contiguous starting at 1** (`band[i].min_qty == band[i-1].max_qty + 1`, first band's
+  `min_qty == 1`) — a break in that chain **below or at** the matched band is a distinct error:
+  `ERROR incremental gap for <country>/<product> at qty=<quantity>` (only raised if the order's
+  quantity actually requires walking through the gap — a quantity fully inside a band **before**
+  a gap never sees it, see worked example below).
+* A gap check is per-order, not a rate-table validation pass — a rate table may contain gaps
+  that no order ever queries into, and that is not an error.
 
-## 演示样例
+## Worked examples
 ```
 # Part 1
 RATES
@@ -94,7 +100,7 @@ o1: $15.00
 o2: $14.50
 o3: ERROR unknown product US/gadget
 
-# Part 2（费率表中的档位故意乱序 —— 使用前必须按 min_qty 排序）
+# Part 2 (tiers unsorted in the file on purpose — must sort by min_qty before use)
 RATES
 US,widget,21,inf,4.00
 US,widget,1,10,5.00
@@ -104,11 +110,11 @@ o1,US,widget,5
 o2,US,widget,15
 o3,US,widget,50
 -->
-o1: $25.00     (5 单位，全按 1-10 档的 5.00 -> 5 * 5.00)
-o2: $67.50     (15 单位，全按 11-20 档的 4.50 -> 15 * 4.50，不是累加式)
-o3: $200.00    (50 单位，全按 21-inf 档的 4.00 -> 50 * 4.00)
+o1: $25.00     (5 units, all at the 1-10 band's 5.00 -> 5 * 5.00)
+o2: $67.50     (15 units, all at the 11-20 band's 4.50 -> 15 * 4.50, NOT cumulative)
+o3: $200.00    (50 units, all at the 21-inf band's 4.00 -> 50 * 4.00)
 
-# Part 3（同样的 1-10/11-20/21-inf 美国阶梯，现在是 'incremental'；另一条独立的加拿大阶梯，'fixed'）
+# Part 3 (same 1-10/11-20/21-inf US ladder, now 'incremental'; a separate CA ladder, 'fixed')
 RATES
 US,widget,1,10,5.00,incremental
 US,widget,11,20,4.50,incremental
@@ -119,10 +125,10 @@ ORDERS
 o1,US,widget,15
 o2,CA,widget,15
 -->
-o1: $72.50     (incremental: 10 单位 @ 5.00 = 50.00，+ 5 单位 @ 4.50 = 22.50 -> 72.50)
-o2: $67.50     (fixed: 命中档位是 11-20 @ 4.50 -> 15 * 4.50，与 Part 2 的 o2 数字相同)
+o1: $72.50     (incremental: 10 units @ 5.00 = 50.00, + 5 units @ 4.50 = 22.50 -> 72.50)
+o2: $67.50     (fixed: matched band is 11-20 @ 4.50 -> 15 * 4.50, same number as Part 2's o2)
 
-# Part 3 — incremental 缺口，取决于具体订单（这是最微妙的一个，务必手算验证）
+# Part 3 — incremental gap, order-dependent (this is the subtle one; verify it by hand)
 RATES
 US,widget,1,10,5.00,incremental
 US,widget,15,inf,3.00,incremental
@@ -130,55 +136,60 @@ ORDERS
 o1,US,widget,5
 o2,US,widget,20
 -->
-o1: $25.00                                          (5 单位，完全落在 1-10 内，从未触及
-                                                       11-14 的缺口 -> 不报错)
-o2: ERROR incremental gap for US/widget at qty=20    (命中档位是 15-inf，但从 1 开始遍历
-                                                       链条时先撞上 11-14 的空缺)
+o1: $25.00                                          (5 units, entirely inside 1-10, never
+                                                       touches the 11-14 gap -> no error)
+o2: ERROR incremental gap for US/widget at qty=20    (matched band is 15-inf, but walking the
+                                                       chain from 1 hits the 11-14 hole first)
 ```
 
-## 隐藏测试已知会针对的边界情况
-- Part 1：未知的 `(country, product)` 组合；`quantity = 0`；0/1/2 位小数的金额字符串
-  （`"5"`、`"5.5"`、`"5.50"` 都表示相同的 5.50）。
-- Part 2：档位行在文件中乱序（必须排序）；数量恰好落在档位边界上（`min_qty` 和 `max_qty`
-  都闭合 —— 同一档位的两端都要测试）；数量落在两档之间真正的缺口中；`max_qty = inf` 的
-  开放顶档；`quantity = 0`。
-- Part 3：**相同数量**下 `fixed` 和 `incremental` 必须给出不同但都正确的结果
-  （上方演示样例，数量 15 时的 `$67.50` vs `$72.50`）；数量完全落在第一档内的订单永远
-  不会遇到下游的缺口（不误报错误）；数量需要穿过缺口的订单**确实**报错，且报的是
-  `incremental gap` 信息（不是 `no tier` 信息 —— 命中档位查找本身是成功的）。
-- 格式：货币输出始终两位小数，始终带 `$` 符号；错误信息**逐字**匹配三种模板
-  （`unknown product`、`no tier`、`incremental gap`）—— 隐藏测试做精确字符串比较，
-  不是子串/前缀匹配。
-- 性能：最多约 200 条费率行和 10^5 条订单行；一个 dict-of-lists 的费率表，每笔订单
-  `O(log bands-per-product)` 的查找足以留有充足预算（实际每个产品的档位数很少 —— 在这个
-  规模下每笔订单线性扫描也完全没问题，也是参考实现的做法；`bisect` 替代方案作为后续追问
-  提及，不要提前过度设计）。
+## Edge cases hidden tests are known to target
+- Part 1: unknown `(country, product)` pair; `quantity = 0`; money strings with 0/1/2 decimal
+  digits (`"5"`, `"5.5"`, `"5.50"` all mean the same 5.50).
+- Part 2: tier rows out of order in the file (must sort); quantity exactly on a band boundary
+  (`min_qty` and `max_qty` both inclusive — test both edges of the same band); quantity in a
+  genuine gap between two bands; `max_qty = inf` open-ended top band; `quantity = 0`.
+- Part 3: `fixed` vs `incremental` on the **same quantity** must give different, both-correct
+  answers (the worked example above, `$67.50` vs `$72.50` on quantity 15); an order whose
+  quantity is fully inside the first band never sees a downstream gap (no false error); an
+  order whose quantity requires crossing a gap **does** error, with the `incremental gap`
+  message (not the `no tier` message — the matched-band lookup itself succeeded).
+- Format: money output always two decimals, always a `$` sign; error messages match the three
+  templates **verbatim** (`unknown product`, `no tier`, `incremental gap`) — hidden tests do
+  exact string comparison, not substring/prefix matching.
+- Performance: up to ~200 rate rows and 10^5 order rows; a dict-of-lists rate table with O(log
+  bands-per-product) lookup per order keeps this comfortably under budget (bands per product
+  are few in practice — a linear scan per order is also fine at this scale, and is what the
+  reference solution does; mention the `bisect` alternative as a follow-up, don't over-engineer
+  it up front).
 
-## 见过的变体
-- learncswithus.com 明确报告"没有明确的类型标记来区分 [Level 2 与 Level 1]，必须自己
-  发现区间逻辑"—— 也就是说在真实面试中，分档 schema 不会像本练习的五字段 CSV 这么干净地
-  交给你；预计需要从自然语言描述或嵌套 dict 中推断出结构，并主动询问关于半开还是闭区间的
-  澄清问题（本练习已经把这点敲定；真实面试可能没有）。
-- linkjob.ai 的 P9 记录（`en_forums.md` 第 151 行）把 Part 1 描述为"订单 + 运费总额"，
-  而非纯粹的单位查找 —— 即某些变体会把统一运费附加费折入 Part 1 的总额中。本题未实现
-  （按中文来源的三级目录属于范围之外），但值得作为现场追问提起（"如果还有一笔固定的每单
-  运费怎么办？"）。
-- 来自主要来源的评分说明：真实面试中**没有自动化测试框架**（"你自己写测试用例并运行"），
-  评分是"逻辑正确性 + 代码结构，不强制要求边界处理"—— 也就是说真实候选人在精确区间边界
-  情况上的评分会比本练习的隐藏测试宽松得多。把这里的严格性视为面试*练习*，而非声称
-  Stripe 真实评分标准如此苛刻。
+## Variants seen in the wild
+- learncswithus.com explicitly reports "no explicit type to distinguish [Level 2 from Level 1],
+  you have to notice the interval logic yourself" — i.e. in the real interview the tier schema
+  isn't handed to you as cleanly as this drill's five-field CSV; expect to have to infer the
+  shape from a natural-language spec or a nested dict, and to ask clarifying questions about
+  half-open vs closed intervals (this drill nails that down; the real interview may not).
+- linkjob.ai's P9 write-up (`en_forums.md` line 151) frames Part 1 as "order + shipping cost"
+  rather than a pure per-unit lookup — i.e. some variants fold a flat shipping surcharge into
+  Part 1's total. Not implemented here (out of scope per the CN source's three-level TOC), but
+  worth naming as a live follow-up ("what if there's also a flat per-order shipping fee?").
+- The grading note from the primary source: **no automated test harness in the real interview**
+  ("you write and run your own test cases") and grading is "logic correctness + code structure,
+  boundary handling not enforced" — i.e. real candidates are graded more leniently on the exact
+  interval edge cases this drill's hidden tests pin down strictly. Treat the strictness here as
+  interview *practice*, not a claim that Stripe's real rubric is this exacting.
 
-## 来源
-- https://learncswithus.com/2025/10/20/stripe-intern-screen/ (Stripe SDE Intern 面经｜Technical Screen, 2025-10-20) —— 主要来源：三级结构（统一 -> 分档 -> incremental/fixed 混合），HackerRank 平台，约 1 小时，"没有自动化测试用例"，"时间紧张"评分说明。
-- https://www.1point3acres.com/interview/post/7100079 ("Shipping Cost Calculator" — Problem Summary -> Step 1 Simple Fixed Price -> Step 2 Volume Discounts -> Step 3 Mixed Pricing Types -> How to Solve It -> Bonus Discussion Topics) —— 从第二个独立中文来源交叉证实完全相同的三级递进。
-- `loop/raw/en_forums.md` 第 151 行，P9"Accounting / tiered pricing"（linkjob.ai 实习技术电面记录，2025）—— 英文侧证实同样的三部分结构和 Part 3 的 `incremental` / `fixed` 术语。
-- `loop/raw/cn_forums.md` 第 43–56 行（汇总中文摘要，与上述两个来源交叉引用）。
+## Sources
+- https://learncswithus.com/2025/10/20/stripe-intern-screen/ (Stripe SDE Intern 面经｜Technical Screen, 2025-10-20) — primary source: three-level structure (flat -> tiered -> mixed incremental/fixed), HackerRank platform, ~1 hour, "no automated test cases", "time is tight" grading note.
+- https://www.1point3acres.com/interview/post/7100079 ("Shipping Cost Calculator" — Problem Summary -> Step 1 Simple Fixed Price -> Step 2 Volume Discounts -> Step 3 Mixed Pricing Types -> How to Solve It -> Bonus Discussion Topics) — cross-confirms the exact same 3-level progression from a second, independent CN source.
+- `loop/raw/en_forums.md` line 151, P9 "Accounting / tiered pricing" (linkjob.ai intern tech screen write-up, 2025) — English-side confirmation of the same 3-part shape and the `incremental` / `fixed` terminology for Part 3.
+- `loop/raw/cn_forums.md` lines 43–56 (aggregated CN summary, cross-references both sources above).
 
-## 本题考察点
-skills: S02 解析（定宽 vs 变宽 CSV 行，分节标记）· S06 整数货币（分为单位，绝不用浮点）·
-S07 分档/计量定价数学（闭区间档位查找，累进 vs 统一计费）· S09 精确格式化（货币 + 逐字
-错误字符串）· S10 明确的错误处理（三种独立、固定的错误信息）· S19 增量式设计（Part 2 的
-单一查找原样复用为 Part 3 的 `fixed` 分支）
+## What this tests
+skills: S02 parsing (fixed-width vs variable-width CSV rows, section markers) · S06 integer
+money (cents, never floats) · S07 tiered/metered pricing math (closed-interval band lookup,
+graduated vs flat billing) · S09 exact formatting (money + verbatim error strings) · S10 defined
+error handling (three distinct, pinned error messages) · S19 incremental design (Part 2's single
+lookup is reused unmodified as Part 3's `fixed` branch)
 
 ## 面试官会怎么追问
 1. "如果同一个 `(country,product)` 在 Part 2 的费率表里出现了两条区间重叠的行,你的代码会怎么样?"

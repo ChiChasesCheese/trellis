@@ -1,0 +1,10 @@
+"""
+orderShippingCost
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/c08408fe-0609-43cc-8412-73a547d5afb2
+Source Type: OJ / More Problems
+
+Question Summary:
+Calculate the shipping cost for an order. Given an order, compute the corresponding shipping cost. The order will include information such as item quantity, weight, destination, etc.
+"""

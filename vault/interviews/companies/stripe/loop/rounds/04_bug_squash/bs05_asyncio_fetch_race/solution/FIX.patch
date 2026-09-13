@@ -1,0 +1,30 @@
+diff --git a/src/fetchrace/crawler.py b/src/fetchrace/crawler.py
+index e2ba5a1..fce7a7c 100644
+--- a/src/fetchrace/crawler.py
++++ b/src/fetchrace/crawler.py
+@@ -52,8 +52,10 @@ async def fetch_one(sem: asyncio.Semaphore, url: str, fetcher) -> FetchResult:
+     return a FetchResult. `fetcher` is any coroutine function taking a single `url` argument
+     (normally `retry.fetch_with_retry`, swappable in tests)."""
+     await sem.acquire()
+-    result = await fetcher(url)
+-    sem.release()
++    try:
++        result = await fetcher(url)
++    finally:
++        sem.release()
+     return FetchResult(url, result)
+ 
+ 
+@@ -65,10 +67,11 @@ def aggregate(results: list) -> Stats:
+     `gather` and cancelling every other still-running task."""
+     stats = Stats(total=len(results))
+     for item in results:
+-        stats.succeeded += 1
+         if isinstance(item, Exception):
++            stats.failed += 1
+             stats.errors.append(item)
+         else:
++            stats.succeeded += 1
+             stats.bodies[item.url] = item.body
+     return stats
+ 

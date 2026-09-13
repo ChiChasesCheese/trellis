@@ -7,7 +7,7 @@
 medium-high for 题目形状（"三份 JSON → 字典 → 双向 ETL"这句话是 linkjob 面经原话，独立于 Exponent 的题型分类
 交叉印证）；具体文件名、字段名、异常分类、CLI 参数是本仓库复刻（面经原文没有给出 I/O 细节，见 Sources）。
 
-## 背景
+## Context
 Stripe 内部经常需要把"当前系统"的数据和"迁移中/遗留系统"的导出文件对账：字段名不一样、有的记录缺字段、
 同一个人在两边各有一条记录（谁是"权威"版本？），下游报表还要再 join 一份订单数据。这道题模拟这个场景：三份
 独立生成的 JSON 文件（`customers.json` 当前系统导出、`legacy_export.json` 旧系统导出、`orders.json` 订单
@@ -63,7 +63,7 @@ Stripe 内部经常需要把"当前系统"的数据和"迁移中/遗留系统"�
 统一后的 `Customer` 就是 `{"id": str, "email": str, "name": str, "created": str}` 这四个键，不多不少
 ——`to_legacy`/`from_legacy` 的往返等价（见 Part 2）依赖这一点。
 
-## 规则
+## Rules
 ### Part 1 — 读取与统一
 `class EtlError(Exception)`：任何格式错误的输入文件都抛这个异常，消息必须包含**文件路径**，JSON 语法错误时还要
 包含 `json.JSONDecodeError` 报出的**行号/列号**（如 `"...: invalid JSON at line 3 column 5: ..."`）。
@@ -134,7 +134,7 @@ PART 3
                             report.json / anomalies.csv 写到 out_dir）
 ```
 
-## 演示样例
+## Worked examples
 最小三文件示例（省略磁盘路径，直接给内容）：
 ```
 customers.json:
@@ -204,7 +204,7 @@ to_legacy(c) == {"legacy_id": "L001", "cust": {"mail": "carol@example.com", "ful
 from_legacy(to_legacy(c)) == c   # True
 ```
 
-## 隐藏测试已知会针对的边界情况
+## Edge cases hidden tests are known to target
 - `email`/`mail` 缺失键 vs 空字符串 vs 纯空白字符串，三种都要判定为"无邮箱"并丢弃 + 记异常
 - 同一 email 在 `customers.json` **内部**重复、在 `customers.json` 和 `legacy_export.json` **之间**重复，
   两种情况 `unify_customers` 都要生效（它接受任意多个列表，不只是两个固定参数）
@@ -223,7 +223,7 @@ from_legacy(to_legacy(c)) == c   # True
 - 10^5 量级订单（`join_orders`/`build_report`）在 2 秒内完成——用 dict 查找，不要对 `customers` 做线性扫描
   找归属
 
-## 见过的变体
+## Variants seen in the wild
 - linkjob 原文只说"reading three JSON files, converting them into dictionaries, and performing
   bidirectional ETL operations"，没有给出具体字段名、异常分类、CLI 形状；本仓库的三份 schema、"数据字典"
   映射表、`anomalies.csv` 的四类异常（`missing_email`/`duplicate_customer`/`orphan_order`/
@@ -233,7 +233,7 @@ from_legacy(to_legacy(c)) == c   # True
   题目（后者需要网络调用，属于 int01 那一类）；本题只对应前者，刻意不引入网络依赖。
   [`loop/raw/en_forums.md` 第 269 行]
 
-## 本题考察点
+## What this tests
 skills: S02 防御性 JSON 解析（区分"结构错误"与"业务缺失"）· S04 多源数据按 key 合并去重 · S06 整数分金额 ·
 S08 确定性排序（`most_recent_order`/report 按 email） · S18 自定义异常归一化（`EtlError`，含文件名+位置） ·
 S19 增量设计（Part 2/3 复用 Part 1 的 `Customer` 形状）· S24 领域知识（ETL 幂等性、双向格式转换的往返测试）
@@ -259,14 +259,14 @@ S19 增量设计（Part 2/3 复用 Part 1 的 `Customer` 形状）· S24 领域�
    换 email 会被当成两个不同客户，讨论要不要额外按 `id` 做二次校验/合并（当前实现的已知局限，写清楚而不是
    假装没有）。
 
-## 来源
+## Sources
 - `loop/raw/en_forums.md` 第 258 行（linkjob 2025-12 面经："BikeMap task requiring..." 段落前一句提到的另一
   个 2025 年版本："reading three JSON files, converting them into dictionaries, and performing
   bidirectional ETL operations"）
 - `loop/raw/en_forums.md` 第 269 行（Exponent 收录的 Integration 题型清单："读多个 JSON 文件互转格式"作为
   独立一类，与"clone repo 调 API"、"本地文件抽字段调外部 API"并列）
 
-## 澄清说明（本仓库自定，非题面原文）
+## Clarifications（本仓库自定，非题面原文）
 - linkjob 原文没有给出具体文件名/字段名/异常分类/CLI 参数，本仓库按"三份异构 JSON、字段名不一致、双向转换
   往返等价"这几个关键词自行设计了一套可测试、可复现（`random.Random(0)` 生成 `data/` 下的三份文件）的完整
   契约。异常分类（`missing_email`/`duplicate_customer`/`orphan_order`/`duplicate_order`）、`created` 最早

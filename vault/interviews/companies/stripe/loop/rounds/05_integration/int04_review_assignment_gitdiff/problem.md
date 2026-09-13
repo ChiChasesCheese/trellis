@@ -9,7 +9,7 @@
 可离线复现、只用标准库，换成 `git` 命令行工具 + `subprocess`（见 Variants）。平局规则、CSV 精确格式、CLI
 参数是本仓库按题面"边界情况"清单补全的具体实现。
 
-## 背景
+## Context
 Stripe（以及几乎所有用 monorepo 的公司）需要一个自动化的 code review 分配工具：给定一个 PR 改了哪些文件，
 再给定一份"谁负责哪些路径"的映射（类似 GitHub 的 `CODEOWNERS` 文件），算出这个 PR 应该主要找哪位 owner
 review。题面原文明确列出的边界情况——"变更文件不在 CSV 里""一个文件匹配多个 owner""路径大小写差异""大仓库
@@ -36,7 +36,7 @@ review。题面原文明确列出的边界情况——"变更文件不在 CSV �
 本仓库把这份边界情况清单落成具体规则（见 Rules），并补充：rename 是否算一个文件还是两个（题面未提及，本仓库
 定死）、"匹配多个 owner"的具体判定方式（最长前缀/通配匹配 + 同一 pattern 多行都记）。
 
-## 规则
+## Rules
 ### Part 1 — 计算变更文件（`changed_files`）
 `class RepoError(Exception)`：`git` 不存在于 PATH、`repo` 不是一个 git 仓库、`base`/`head` 不能解析成
 commit，三种情况都抛这个异常，消息里带上原始 `git` 命令的 stderr，方便定位。
@@ -115,7 +115,7 @@ PART 3
                             输出: top_owners() 的结果，每行 "{owner}: {count}"
 ```
 
-## 演示样例
+## Worked examples
 仓库场景（`main` 分支初始提交，`feature` 分支基于 `main` 做了 4 处改动）：
 ```
 main 分支（初始提交）文件：
@@ -171,7 +171,7 @@ src/utils/helper_v2.py      -> 无匹配 -> UNOWNED
 `assign(...)` → `"alice"`（alice/bob/carol 并列最多 2 个文件，字典序最小的是 alice）。
 `top_owners(..., k=3)` → `[("alice", 2), ("bob", 2), ("carol", 2)]`。
 
-## 隐藏测试已知会针对的边界情况
+## Edge cases hidden tests are known to target
 - rename 贡献两个路径，而不是被当成一次改动只算一个文件（`src/utils/helpers.py`/`helper_v2.py` 都要出现在
   `changed_files` 结果里，且各自独立参与 owner 统计）
 - 同一具体程度下"一个文件匹配多个 owner"：`src/payments/gateway.py` 必须同时给 alice/bob/carol 各 +1，不是
@@ -196,7 +196,7 @@ src/utils/helper_v2.py      -> 无匹配 -> UNOWNED
 - 10^4 变更文件规模下 `changed_files` 依然只发一次 `git diff --name-status` 请求（不是对每个文件单独查询），
   `tally_owners`/`top_owners` 在这个规模 + 数十条 owner 规则下 < 2s
 
-## 见过的变体
+## Variants seen in the wild
 - 题面原文（1point3acres `interview/problems/1eb955cf-...`）要求用 **JGit**（Java 库）计算 diff；本仓库为了
   60 分钟内可离线复现、且保持"only stdlib"的仓库约定，换成 `git` 命令行工具通过 `subprocess` 调用——两者在
   语义上等价（都是"计算两个 commit/分支之间变更了哪些文件"），JGit 的 API 形状不同但边界情况（rename 算不
@@ -205,7 +205,7 @@ src/utils/helper_v2.py      -> 无匹配 -> UNOWNED
   本仓库按"最长前缀/通配匹配 + casefold 比较"补全成可测试的具体规则。
 - 题面原文没有指定平局规则，明确写"若未指定需自行定义（如取字典序最小）"——本仓库直接采用这个建议。
 
-## 本题考察点
+## What this tests
 skills: S02 外部命令输出解析（`git diff --name-status` 的 tab 分隔格式，rename 行的三段式） · S04 CSV
 规则匹配与最具体规则优先 · S08 确定性排序（tally 平局的字典序 tie-break） · S18 子进程调用的错误归一化
 （`RepoError` 包 `subprocess`/`FileNotFoundError`） · S19 增量设计（Part 3 复用 Part 1-2 的纯函数）· S24
@@ -239,7 +239,7 @@ skills: S02 外部命令输出解析（`git diff --name-status` 的 tab 分隔�
    `changed_files` 的耗时和文件数（帮助发现异常大的 PR）、`RepoError` 发生时把完整的 git stderr 记到日志
    而不是吞掉、`assign` 结果和实际人工 review 分配的偏差率作为长期质量信号。
 
-## 来源
+## Sources
 - `loop/raw/cn_forums.md` 第 262 行：《Integration: Review Assignment via Git Diff + CSV Owners (JGit)》
   ——1point3acres `interview/problems/1eb955cf-71e3-400e-aad7-3b9520cb1388`，站方标注为 `oj` 类型（正文完整
   可读，非仅标题的 `external` 类型）："实现一个'审阅者分配'工具——给定同一 Git 仓库的两个分支，计算两分支间
@@ -252,7 +252,7 @@ skills: S02 外部命令输出解析（`git diff --name-status` 的 tab 分隔�
   两张表或 JSON/CSV blob）、按 key 做 join"，与本题"两路输入（git diff + CSV）按 owner 聚合"的题目形状
   同源，作为交叉印证但不是本题的直接来源。
 
-## 澄清说明（本仓库自定，非题面原文）
+## Clarifications（本仓库自定，非题面原文）
 - 题面原文要求用 JGit（Java）；本仓库按仓库"only stdlib"的约定换成 `git` CLI + `subprocess`，语义等价（都
   是标准 `git diff --name-status` 对两个 ref 的比较），JGit 的 Java API 细节（`DiffFormatter`/
   `TreeWalk` 等）不在本仓库复刻范围内。

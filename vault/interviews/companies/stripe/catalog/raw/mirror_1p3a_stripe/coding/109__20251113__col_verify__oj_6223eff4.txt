@@ -1,0 +1,36 @@
+"""
+Col-Verify
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/6223eff4-79aa-4470-835c-f60f7c9c8898
+Source Type: OJ / More Problems
+
+Question Summary:
+Given a list `data` containing strings and integers, implement a function to check if each string meets certain rules (e.g., does it contain only lowercase letters). The function should return a boolean list, where each boolean corresponds to an element in the `data` list. Consider the efficiency of your code when handling large datasets. Implement the function `def col_verify(data: List[Union[str, int]]) -> List[bool]:`.
+
+**Input**:
+
+- `data`: A list containing strings and integers.
+
+**Output**:
+
+- A boolean list indicating whether each string meets the rules.
+
+**Example**:
+
+```python
+col_verify(['abc', '123', 'aBC', 'xyz'])
+```
+
+Output:
+
+```python
+[True, False, False, True]
+```
+
+**Constraints**:
+
+- The list can contain up to 10^6 elements.
+- String lengths are up to 100.
+- Integers are non-negative and up to 10^9.
+"""

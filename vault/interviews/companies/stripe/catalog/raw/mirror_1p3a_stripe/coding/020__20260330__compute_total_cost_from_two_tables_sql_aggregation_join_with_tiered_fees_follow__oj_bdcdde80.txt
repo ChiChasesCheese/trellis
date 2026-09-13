@@ -1,0 +1,70 @@
+"""
+Compute Total Cost from Two Tables (SQL Aggregation + Join) with Tiered Fees Follow-up
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/bdcdde80-7010-4c5f-b26c-7fc83901d0f9
+Source Type: OJ / More Problems
+
+Question Summary:
+## Problem: Compute Total Cost from Two Tables (and a Tiered Fee Follow-up)
+
+You are given two relational tables used to compute each order’s **total_cost**.
+
+### Table schemas
+
+**Table 1: `order_items`**
+
+| Column | Type | Meaning |
+|---|---|---|
+| `order_id` | int | Order ID |
+| `item_id` | int | Item/Product ID |
+| `quantity` | int | Quantity purchased |
+| `unit_price` | decimal | Unit price |
+
+**Table 2: `order_fees`**
+
+| Column | Type | Meaning |
+|---|---|---|
+| `order_id` | int | Order ID |
+| `fee_type` | string | Fee type (e.g., `shipping`, `service`) |
+| `fee_amount` | decimal | Fee amount (an order may have multiple rows) |
+
+### Task 1: Compute `total_cost` per order
+
+Return one row per `order_id` with:
+
+- `order_id`
+- `items_cost = SUM(quantity * unit_price)`
+- `fees_cost = SUM(fee_amount)`
+- `total_cost = items_cost + fees_cost`
+
+If an order has no rows in `order_fees`, treat `fees_cost` as 0.
+
+### Follow-up: What if fees are tiered?
+
+Replace `order_fees` with two tables:
+
+**Table 2A: `order_fee_usage`**
+
+| Column | Type | Meaning |
+|---|---|---|
+| `order_id` | int | Order ID |
+| `usage` | int | Usage amount to compute a service fee |
+
+**Table 2B: `fee_tiers`**
+
+| Column | Type | Meaning |
+|---|---|---|
+| `tier_start` | int | Inclusive tier start |
+| `tier_end` | int | Inclusive tier end (NULL means no upper bound) |
+| `rate` | decimal | Price per usage unit within this tier |
+
+For each order, compute `tier_fee` from `usage` and return:
+
+- `order_id`
+- `items_cost`
+- `tier_fee`
+- `total_cost = items_cost + tier_fee`
+
+> Assume **incremental** tiering: if usage spans multiple tiers, charge each tier’s portion at that tier’s `rate` and sum them up.
+"""

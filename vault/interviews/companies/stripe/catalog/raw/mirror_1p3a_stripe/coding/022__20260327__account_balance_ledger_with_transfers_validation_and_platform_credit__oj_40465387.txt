@@ -1,0 +1,40 @@
+"""
+Account Balance Ledger With Transfers Validation and Platform Credit
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/40465387-d104-4dfd-8c13-6976c521fdb3
+Source Type: OJ / More Problems
+
+Question Summary:
+## Problem: Account Balance Ledger (Stripe-style)
+
+You are given a list of transfer/transaction records. Each record contains at least:
+
+- `timestamp`: a comparable time value
+- `from`: sender account
+- `to`: receiver account
+- `amount`: a positive integer
+
+### Tasks
+
+1. **Process in chronological order**:
+   - Sort records by increasing `timestamp` (if ties, keep input order).
+   - Maintain balances per account (initially 0).
+   - For each record, subtract `amount` from `from` and add `amount` to `to`.
+
+2. **Validate / reject illegal transfers**:
+   - Before applying a transfer, check whether it is allowed (e.g., sender has sufficient funds).
+   - If not allowed, reject it (apply no balance changes) and continue.
+
+3. **Reconciliation extension**:
+   - 3a: On top of (2), allow a platform/system credit source to temporarily lend money so a transfer can proceed, to be repaid by later incoming funds.
+   - 3b: Mentioned by the author but not described; omitted.
+
+### Output
+
+Return/print the final balance for each account (in the required format).
+
+### Constraints
+
+Not provided in the post; candidates are typically expected to clarify `N`, number of accounts, and ordering of timestamps.
+"""

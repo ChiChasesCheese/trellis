@@ -1,0 +1,258 @@
+"""
+Incremental Filtering and Transformation on Tabular User Records (Follow-up Chain)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/e87e6d70-76be-4731-83ba-552f57a706d7
+Source Type: OJ / More Problems
+
+================================================================================
+INTERVIEW PROMPT (as it would be delivered by the interviewer)
+================================================================================
+
+Hey, glad to meet you. Today's problem looks small at first but I want
+to flag something up front: it has an open-ended number of follow-ups.
+We'll start with a tiny ask, and every time you finish I'll add another
+constraint. The total number of those follow-ups depends on how far we
+get; some candidates do three, some do six. The point is to design a
+data model that LETS me keep adding things without you rewriting the
+core every time.
+
+So: spend the first couple of minutes on structure, even though Part 1
+is a one-liner.
+
+Read input from stdin, write output to stdout. Use any language.
+
+--------------------------------------------------------------------------------
+Input
+--------------------------------------------------------------------------------
+
+CSV with a header line. Comma-separated, no quoting. Example:
+
+    user_id,country,plan,monthly_charge_cents,signup_ts,is_active
+    u1,US,pro,2500,2025-01-15T00:00:00Z,true
+    u2,US,free,0,2025-03-04T00:00:00Z,true
+    u3,CA,pro,2500,2025-02-19T00:00:00Z,false
+    u4,GB,enterprise,15000,2024-12-01T00:00:00Z,true
+    ...
+
+Treat values according to the column:
+  - integers (`monthly_charge_cents`) parse as int
+  - booleans (`is_active`) parse as `true`/`false`
+  - timestamps parse as ISO 8601 in UTC
+  - everything else is a string
+
+You don't know the column set ahead of time -- additional columns may
+appear in later parts.
+
+--------------------------------------------------------------------------------
+PART 1 -- Filter
+--------------------------------------------------------------------------------
+
+Print every row whose `is_active` is true and `country` is "US",
+preserving the original column order, with the same header line.
+
+--------------------------------------------------------------------------------
+PART 2 -- Compose two filters
+--------------------------------------------------------------------------------
+
+[Revealed when Part 1 prints right.]
+
+Now also require `monthly_charge_cents >= 1000`. Same output format.
+
+The interviewer is watching for: did you write a separate function or
+just stuff another `if` into Part 1? The answer they want is "filter
+function takes a row, returns bool, and we AND them together."
+
+--------------------------------------------------------------------------------
+PART 3 -- Transform
+--------------------------------------------------------------------------------
+
+[Then.]
+
+After filtering, replace `monthly_charge_cents` with `monthly_charge_usd`
+(integer dollars, floor of cents/100). Keep all other columns and
+their order, but the header should reflect the new column name in the
+same position.
+
+--------------------------------------------------------------------------------
+PART 4 -- Group + summarize
+--------------------------------------------------------------------------------
+
+[Then.]
+
+Skip the row-level output. Instead group by `plan` (after the Part 1+2
+filters; do NOT apply the Part 3 transform), and print:
+
+    plan,row_count,total_monthly_charge_cents
+
+Sorted alphabetically by plan.
+
+--------------------------------------------------------------------------------
+PART 5 -- Keep a sliding window
+--------------------------------------------------------------------------------
+
+[Then.]
+
+Apply Parts 1+2 filters, then keep only rows whose `signup_ts` falls in
+the most recent 90 days, where "most recent" is measured against
+`max(signup_ts)` across the post-filter set. Output as in Part 3
+(transform to USD), header included.
+
+--------------------------------------------------------------------------------
+PART 6 onward -- ???
+--------------------------------------------------------------------------------
+
+If we get here, I'll make something up. The shape will keep being
+"add or change a step". Be ready.
+
+--------------------------------------------------------------------------------
+Constraints
+--------------------------------------------------------------------------------
+
+- 1 <= rows <= 200_000.
+- Up to 30 columns.
+- We don't care about asymptotic optimality much in this round; we
+  care about how easy it is for me to ask for the next thing.
+
+--------------------------------------------------------------------------------
+What I'm looking for
+--------------------------------------------------------------------------------
+
+[Interviewer notes]
+
+- The structure I want them to converge on is something like:
+
+      pipeline = [filter_country_is_us, filter_active, ...]
+      for step in pipeline:
+          rows = step(rows)
+
+  Where each step is a function `rows -> rows`. Filters and transforms
+  become the same shape. New steps are appended without touching old
+  ones.
+
+- "Group + summarize" in Part 4 breaks the row-in/row-out model -- a
+  good candidate notices this and chooses one of:
+      a) make summary steps return a different shape and special-case
+         the renderer, or
+      b) keep rows but include a synthetic row-per-group at the end.
+  Either is fine; what matters is they NOTICE the shape mismatch.
+
+- Watch for over-engineering. We don't need a full DAG with named
+  edges. A list of functions is plenty. If they reach for a class
+  hierarchy in the first 5 minutes, push back.
+"""
+
+
+import csv
+import io
+import sys
+from datetime import datetime, timedelta
+from typing import Callable
+
+Row = dict[str, object]
+Step = Callable[[list[Row]], list[Row]]
+
+
+def parse_value(column: str, raw: str) -> object:
+    if column == "monthly_charge_cents":
+        return int(raw)
+    if column == "is_active":
+        return raw.lower() == "true"
+    if column == "signup_ts":
+        return datetime.strptime(raw, "%Y-%m-%dT%H:%M:%SZ")
+    return raw
+
+
+def parse_csv(text: str) -> tuple[list[str], list[Row]]:
+    reader = csv.reader(io.StringIO(text))
+    header = next(reader)
+    rows = [
+        {col: parse_value(col, val) for col, val in zip(header, raw)}
+        for raw in reader
+    ]
+    return header, rows
+
+
+def filter_us_active(rows: list[Row]) -> list[Row]:
+    return [r for r in rows if r.get("country") == "US" and r.get("is_active") is True]
+
+
+def filter_charge(rows: list[Row]) -> list[Row]:
+    return [r for r in rows if int(r.get("monthly_charge_cents", 0)) >= 1000]
+
+
+def transform_to_usd(rows: list[Row]) -> list[Row]:
+    out = []
+    for r in rows:
+        new = dict(r)
+        cents = int(new.pop("monthly_charge_cents", 0))
+        new["monthly_charge_usd"] = cents // 100
+        out.append(new)
+    return out
+
+
+def window_last_90_days(rows: list[Row]) -> list[Row]:
+    if not rows:
+        return rows
+    latest = max(r["signup_ts"] for r in rows)
+    cutoff = latest - timedelta(days=90)
+    return [r for r in rows if r["signup_ts"] >= cutoff]
+
+
+def render_rows(header: list[str], rows: list[Row]) -> str:
+    if rows:
+        header = list(rows[0].keys())
+    buf = io.StringIO()
+    w = csv.writer(buf)
+    w.writerow(header)
+    for r in rows:
+        w.writerow([_fmt(r[c]) for c in header])
+    return buf.getvalue()
+
+
+def _fmt(value: object) -> str:
+    if isinstance(value, bool):
+        return "true" if value else "false"
+    if isinstance(value, datetime):
+        return value.strftime("%Y-%m-%dT%H:%M:%SZ")
+    return str(value)
+
+
+def render_grouped(rows: list[Row]) -> str:
+    totals: dict[str, list[int]] = {}
+    for r in rows:
+        plan = str(r.get("plan", ""))
+        bucket = totals.setdefault(plan, [0, 0])
+        bucket[0] += 1
+        bucket[1] += int(r.get("monthly_charge_cents", 0))
+    buf = io.StringIO()
+    w = csv.writer(buf)
+    w.writerow(["plan", "row_count", "total_monthly_charge_cents"])
+    for plan in sorted(totals):
+        count, total = totals[plan]
+        w.writerow([plan, count, total])
+    return buf.getvalue()
+
+
+def run_pipeline(text: str, steps: list[Step], output: str = "rows") -> str:
+    header, rows = parse_csv(text)
+    for step in steps:
+        rows = step(rows)
+    if output == "grouped":
+        return render_grouped(rows)
+    return render_rows(header, rows)
+
+
+def main() -> None:
+    text = sys.stdin.read()
+    pipeline: list[Step] = [
+        filter_us_active,
+        filter_charge,
+        window_last_90_days,
+        transform_to_usd,
+    ]
+    sys.stdout.write(run_pipeline(text, pipeline))
+
+
+if __name__ == "__main__":
+    main()

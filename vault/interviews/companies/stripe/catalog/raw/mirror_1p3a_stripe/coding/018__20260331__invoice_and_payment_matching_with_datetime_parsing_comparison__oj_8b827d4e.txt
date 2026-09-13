@@ -1,0 +1,36 @@
+"""
+Invoice and Payment Matching (with datetime parsing/comparison)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/8b827d4e-878f-437e-b505-237911d38351
+Source Type: OJ / More Problems
+
+Question Summary:
+## Invoice & Payment Matching (with datetime parsing/comparison)
+
+You are given two sets of records:
+
+- **Invoices**: each record has `invoice_id`, `customer_id`, `amount`, `currency`, `created_at` (a datetime string).
+- **Payments**: each record has `payment_id`, `customer_id`, `amount`, `currency`, `paid_at` (a datetime string).
+
+Implement a matcher that maps invoices to payments.
+
+### Matching rules
+1. Match only within the same `customer_id` and the same `currency`.
+2. A payment can match at most one invoice (1:1).
+3. Match only if `payment.amount == invoice.amount`.
+4. Time constraint: `paid_at >= created_at`.
+5. If multiple payments can match the same invoice, choose the one with the earliest `paid_at`; if still tied, choose the lexicographically smallest `payment_id`.
+6. Output `invoice_id -> null` if no match exists.
+
+### Input / Output
+- **Input**: two lines of JSON.
+  - Line 1: invoices array
+  - Line 2: payments array
+- **Output**: a single JSON object mapping each `invoice_id` to a `payment_id` or `null`.
+
+### Constraints
+- `1 <= len(invoices), len(payments) <= 2e5`
+- `amount` is a non-negative integer (in the smallest currency unit, e.g. cents)
+- `created_at` and `paid_at` share the same datetime-string format and must be compared correctly
+"""

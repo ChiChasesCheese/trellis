@@ -1,0 +1,39 @@
+"""
+Calculate Shipping Cost
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/a2978038-54ee-453e-8c02-424271b4073e
+Source Type: OJ / More Problems
+
+Question Summary:
+Given orders for each country and corresponding product shipping costs, write a function to compute the total shipping cost.
+
+The input includes an order dictionary `order` and a shipping cost dictionary `shipping_cost`. The order dictionary contains a country (`country`) and a list of items (`items`), where each item has a product name (`product`) and quantity (`quantity`). The shipping cost dictionary provides shipping costs for each product by country.
+
+Calculate and return the total shipping cost for the order.
+
+### Example
+
+```python
+order_us = {
+    "country": "US",
+    "items": [
+        {"product": "mouse", "quantity": 20},
+        {"product": "laptop", "quantity": 5},
+    ],
+}
+
+shipping_cost = {
+    "US": [
+        {"product": "mouse", "cost": 550},
+        {"product": "laptop", "cost": 1000},
+    ],
+    "CA": [
+        {"product": "mouse", "cost": 750},
+        {"product": "laptop", "cost": 1100},
+    ],
+}
+
+assert calculate_shipping_cost(order_us, shipping_cost) == 15500
+```
+"""

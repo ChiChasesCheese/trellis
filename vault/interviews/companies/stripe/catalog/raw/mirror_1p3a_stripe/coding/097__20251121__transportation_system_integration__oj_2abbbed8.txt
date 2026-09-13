@@ -1,0 +1,10 @@
+"""
+Transportation System Integration
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/2abbbed8-dcc9-4c86-a763-0e1794bdd451
+Source Type: OJ / More Problems
+
+Question Summary:
+Implement a transportation system integration based on JSON. You need to create a system that can draw a transportation network map based on JSON input and output a visualization of the result. Assume the input contains locations and path information within a city's map. Provide at least two test cases with coordinates of locations and information on connecting paths.
+"""

@@ -1,0 +1,40 @@
+"""
+Update and Expire Timestamps in Order
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/c9adc5e4-84ff-4f43-9d12-8a80471097f1
+Source Type: OJ / More Problems
+
+Question Summary:
+You are given a series of timestamps to update information. You need to output this information in order. The third part of the requirement is to determine if each timestamp has expired. A timestamp is considered expired if it does not appear in the list of updates within a specific time range counted backward from a given current time. Write code to handle these inputs and output the non-expired timestamps in order.
+
+**Input:**
+- The first line contains an integer n, the number of timestamps.
+- The next n lines each contain a timestamp, an integer in seconds.
+- The last line is an integer k, the expiry time in seconds.
+
+**Output:**
+- Output the non-expired timestamps in order, one per line.
+
+**Example:**
+```
+Input:
+5
+1609459200
+1609459260
+1609459320
+1609459380
+1609459440
+180
+
+Output:
+1609459200
+1609459260
+1609459320
+1609459380
+```
+
+**Constraints:**
+- 1 <= n <= 10^5
+- 1 <= k <= 86400
+"""

@@ -1,0 +1,21 @@
+diff --git a/src/miniyaml/parser.py b/src/miniyaml/parser.py
+index 083b62b..5e5783b 100644
+--- a/src/miniyaml/parser.py
++++ b/src/miniyaml/parser.py
+@@ -25,6 +25,7 @@ class Parser:
+     def parse(self, text: str) -> dict | list:
+         """Parse a full YAML-subset document `text` into a dict or list."""
+         self.lines = tokenize(text)
++        self.pos = 0
+         if not self.lines:
+             return {}
+         return self._parse_block(self.lines[0].indent)
+@@ -68,7 +69,7 @@ class Parser:
+                 entry = {line.key: coerce_scalar(line.value)}
+                 # The rest of this item's mapping (if any) is written on the lines below it,
+                 # aligned to where its first key started rather than to the dash.
+-                content_indent = indent + 1
++                content_indent = indent + 2
+                 entry.update(self._parse_map_block(content_indent))
+                 result.append(entry)
+         return result

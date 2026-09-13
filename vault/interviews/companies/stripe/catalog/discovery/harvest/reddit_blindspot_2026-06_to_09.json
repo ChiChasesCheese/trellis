@@ -1,0 +1,170 @@
+[
+ {
+  "id": "1vyzxek",
+  "sub": "leetcode",
+  "title": "Stripe API integration Round",
+  "body": "Asking on behalf of my friend. For API integration Round - He completed 2/3 parts, explained the approach for the 3rd but ran out of time. Is this a dealbreaker, or is partial completion normal for this round? Exp:4YOE    submitted by    /u/NaturalIdeal9161   [link]   [comments]",
+  "comments": [
+   "Localtion? Yoe?",
+   "Dublin, 4YOE"
+  ],
+  "url": "https://www.reddit.com/r/leetcode/comments/1vyzxek/",
+  "published": "2026-08-26T15:15:14+00:00"
+ },
+ {
+  "id": "1vgcfhw",
+  "sub": "leetcode",
+  "title": "Stripe MLE Interview",
+  "body": "Hi I have an upcoming technical screen for stripe MLE position. What can I expect in terms of coding & ML coding?  What’s the best way to prep?  TIA    submitted by    /u/Intrepid-Elephant732   [link]   [comments]",
+  "comments": [],
+  "url": "https://www.reddit.com/r/leetcode/comments/1vgcfhw/",
+  "published": "2026-08-05T16:34:16+00:00"
+ },
+ {
+  "id": "1uz688l",
+  "sub": "leetcode",
+  "title": "Stripe intern interview experience",
+  "body": "I interviewed for an off-campus SDE Intern role, so I thought I'd share my experience in case it helps others. I applied around Aug–Sep 2025, and in October I received the Online Assessment. Online Assessment  Duration: 45 minutes Format: 1 question with 4 parts The question was very lengthy, but definitely doable if you managed your time well. It was mostly string manipulation mixed with a transaction-flow/LRU cache style design, where you had to implement 3–4 functions. Out of 19 test cases, I passed 15.  About a week later, I got an email to schedule my interviews. Round 1 (Coding – 45 mins) A Senior SDE took the interview. The problem involved parsing a CSV file provided as a string. After parsing it correctly, you had to answer multiple queries based on the data. Again, it had 4 parts.  I completed the first 2 parts successfully. I explained my approach for the 3rd part, but time ran out before I could code it.  Round 2 (Coding – 45 mins) This question felt like a combination of graphs + strings, somewhat similar to the logic behind a Splitwise application. It also had multiple parts.  I solved the first part but made a few debugging mistakes. I ended up spending too much time fixing them, so I couldn't move to the later parts before the interview ended.  A couple of days later, I followed up with HR and received a rejection. From what I was told, there were likely two more rounds after these:  Debugging round HR/Behavioral round  Before the interviews, HR had shared a preparation document that outlined the interview process and expectations. If your recruiter shares something similar, it's definitely worth reading carefully. My Preparation I mainly prepared by:  Solving hard string problems on LeetCode Practicing company-specific DSA questions Focusing on design-oriented DSA problems  Biggest Lesson My biggest issue wasn't the logic—it was time management and coding under pressure. The questions themselves weren't impossible, but they were intentionally long and had multiple parts, so speed mattered a lot. Hope this helps someone preparing for a similar process. All the best to everyone interviewing!    submitted by    /u/Affectionate-Gas902   [link]   [comments]",
+  "comments": [
+   "4 rounds for an internship, damn",
+   "Not just 4. It sounded like there were 4 rounds of just technical interviews. I count the online assessment as a round. OP only made it to round 3. Sounds like they want SWE I or II quality work at a intern rate.  Here was the intern interview we gave out just a few months ago. Solve a easy level leetcode question. Go through basic system design. See if you're eager to learn and if can fit with the team. That's it. No debugging session, no multiple rounds of technical assessments.",
+   "it feels like I just can't find internships that take interviews like these anymore, Instead it's all 4+ rounds of technical interviews after such a rigorous filtering of resumes.",
+   "At mongoDB there are 6 rounds :)",
+   "last year i gave 1 OA +3 Tech Rounds + 1 HR and got rejected in HR. After that I am only focusing on my talking skills, (also how to rizz)",
+   "[deleted]",
+   "Your comment has been removed. We do not allow DM farming. All of the conversation must happen within the post itself. Subsequent violations of this rule will result in a permanent ban. I am a bot, and this action was performed automatically. Please contact the moderators of this subreddit if you have any questions or concerns.",
+   "can i P M you ?",
+   "[deleted]",
+   "Your comment has been removed. We do not allow DM farming. All of the conversation must happen within the post itself. Subsequent violations of this rule will result in a permanent ban. I am a bot, and this action was performed automatically. Please contact the moderators of this subreddit if you have any questions or concerns.",
+   "What is this ? Message right okay",
+   "Literally a fucking AI slop post for this lol. $100 says OP is going to post with an alt, \"how did you prepare\" and then they'll plug their vibe-coded AI slop project",
+   "1 month old private account  -1 comment karma",
+   "AI Slop post",
+   "The fact you're getting downvoted is astounding. hordes of people in here larping as software engineers and they can't spot a fake AI post. Sad",
+   "Literally 💀",
+   "Multi-part interview questions are brutal. One small bug and you've burned 10-15 minutes before you even notice. Timed mock interviews fixed that for me — forced pace, forced focus, no room to spiral on one broken piece.",
+   "Were this based in sydney?",
+   "Bengaluru",
+   "[deleted]",
+   "Your comment has been removed. We do not allow DM farming. All of the conversation must happen within the post itself. Subsequent violations of this rule will result in a permanent ban. I am a bot, and this action was performed automatically. Please contact the moderators of this subreddit if you have any questions or concerns.",
+   "Can I P M you ?",
+   "Can you tell the location please?",
+   "How hard is OA???",
+   "Does Stripe OA require video monitoring?",
+   "not for oa,they once take your photo and can take in between",
+   "the time was 60 minutes for each round including oa,sorry I was actually confused, didn't remember at time of posting",
+   "Is this for 6 months or 2 months Internship?",
+   "2",
+   "What language do you say we have to use in interviews of stripe, can we use c++ for first round and MERN stack for remaining",
+   "What language did you use for several rounds, please say, it will be very helpful for others.",
+   "[deleted]",
+   "Your comment has been removed. We do not allow DM farming. All of the conversation must happen within the post itself. Subsequent violations of this rule will result in a permanent ban. I am a bot, and this action was performed automatically. Please contact the moderators of this subreddit if you have any questions or concerns.",
+   "If have any way like those problem set can u share ?",
+   "Time is limited. Surpise.",
+   "Thanks for sharing this, really helpful! Had a couple of questions: 1. Which tier college are you from? 2. Did you apply with a referral?",
+   "and can you share your resume?",
+   "Damn its tough these days. I also took the OA which was relatively straightforward but too much to code under a lot of pressure. Ended up passing 12/20 test case and almost finished the third part but time ran out. Gave OA 3 days back, lets see how it goes. Tough odds I guess"
+  ],
+  "url": "https://www.reddit.com/r/leetcode/comments/1uz688l/",
+  "published": "2026-07-17T17:26:28+00:00"
+ },
+ {
+  "id": "1unmlwz",
+  "sub": "leetcode",
+  "title": "Stripe mobile interview",
+  "body": "I am interviewign at stripe. Mobile Engineer. What Should I expect at the Team screen interview?kind of questions and programming language? will it be in react native or in my preferred language? Where should I prepare from?    submitted by    /u/Necessary-Art4380   [link]   [comments]",
+  "comments": [
+   "sorry read this as strip mobile interview lmo",
+   "[deleted]",
+   "offer? no offer. I am still interviewing",
+   "[deleted]",
+   "online. job portal",
+   "Hey op, how did your interviews go? I have an upcoming technical screen for a Mobile Engineer, React native role. Could you share your interview experience please!",
+   "Hi, did you do your interview yet?"
+  ],
+  "url": "https://www.reddit.com/r/leetcode/comments/1unmlwz/",
+  "published": "2026-07-04T23:04:10+00:00"
+ },
+ {
+  "id": "1uk5sy0",
+  "sub": "leetcode",
+  "title": "Stripe Recruiter Speed",
+  "body": "Is stripe generally slow? The recruiter said she would reach out today for me to submit my availability but she hasn’t.     submitted by    /u/Correct-Train-6770   [link]   [comments]",
+  "comments": [
+   "She might be busy! give her sometime"
+  ],
+  "url": "https://www.reddit.com/r/leetcode/comments/1uk5sy0/",
+  "published": "2026-06-30T23:55:59+00:00"
+ },
+ {
+  "id": "1u51q4w",
+  "sub": "leetcode",
+  "title": "Stripe's New AI Programming Exercise Interview - What It’s Actually Like",
+  "body": "So it seems like Stripe recently added a new AI Programming Exercise round to their onsite loop. Sharing what I've gathered from a few candidates who went through it recently: The interview runs in HackerRank, but it’s not the standard coding setup. There’s a built-in AI chat window (kind of like a lightweight Cursor) that you can talk to. You can ask it to read the README, come up with a plan, write code, add tests, debug, etc. The task itself looks roughly like this: You’re given a list of transactions and a list of rules. Each rule says whether to accept or block a transaction, followed by an if condition. You need to parse the rules and decide whether a transaction matches the condition. The problem consists of multiple parts. It starts pretty straightforward (mostly keyword/string matching), but later parts get trickier with boolean logic (AND/OR) and build on previous sections. There’s a detailed README, so reading and understanding the spec quickly is a big part of it. The actual coding portion is apparently only around 30 minutes, so trying to hand-code everything yourself may not be realistic. The expectation seems to be that you lean heavily on the AI. You can technically write it all yourself, but there’s a good chance you won’t finish. A strategy that worked for people:  Have the AI read the full README Ask it to summarize the requirements Get a proposed implementation plan and actually review it Let it write the code Add your own tests / edge cases Run it, debug, and understand everything  My impression is that this round is testing whether you can use AI effectively without turning your brain off. The AI can handle a lot but it may over-engineer, miss edge cases, or make assumptions that aren’t actually in the README. So the key seems to be: understand the spec, guide the AI, review the generated code, write meaningful tests, catch issues, and explain your reasoning under time pressure.    submitted by    /u/interviewdb   [link]   [comments]",
+  "comments": [
+   "Hey, let me guess, you sell something on your website like a question-bank of sorts, for this?",
+   "Huh I don't think InterviewDB: Crowdsourced Interview Question Bank for Tech/Quant Interviews has anything to offer here",
+   "And certainly not AInterviews'R'Us, the Enterprise Solution for AI Application Interviews, whose FREE plan is GENEROUS and not SLOP!!",
+   "this is actually pretty smart interview design tbh. it's testing something real that devs actually do now instead of pretending ai doesnt exist. the candidates who'll do well are the ones who treat the ai like a junior dev they need to manage, not like a magic wand. the part about understanding the spec and catching edge cases is key. ive seen people get burned by just running whatever an ai spits out without thinking. you gotta actually read the requirements, spot where the generated code might be making assumptions, and know when to push back. sounds like stripe wants people who can think critically while using the tool, which is way more useful than just pure coding speed. the 30 minute window makes sense too. forces you to be efficient and lean on the ai appropriately instead of trying to hand code a whole state machine or whatever. my one question is whether they're actually testing coding ability or just testing who can prompt effectively, but based on what you described with the debugging and test writing, seems like theres enough in there to see if someone actually understands whats happening.",
+   "Except that for the same input AI gives different output all the time, so it's basically down to pure luck if the AI will be reasonable enough right at this moment (some people might oneshot it, others might need to restart the thread a couple of times, again based on pure luck)",
+   "Luck is an important property of candidstes, nowadays one shouldn‘t hire people that are unlucky with prompt spins.",
+   "It's not about prompt, the same exact prompt can either oneshot a problem or create complete mess, depending on AI servers load at that particular time, and most importantly the non-deterministic nature of AI itself",
+   "[deleted]",
+   "[deleted]",
+   "What are the other rounds which stripe has?",
+   "Is this a swe interview or ds/da?",
+   "yes checkout vibelevel ai they have claude code cli and DS and some leet code algorithms to be coded using the claude code or vs code directly",
+   "Hi how to prepare? Is Their any platform for this Like leetcode?",
+   "yes check out vibelevel ai",
+   "this is new way of hiring and vibelevel has integrated claude code cli and vs copilot style IDE and only 5-10% are able to score above 50%. Most just ride along what AI agent does and many still try to hand code",
+   "I just did a hacker rank AI assisted interview for a random no name company. - it only had GPT 5.5 no Claude - the plan mode was really slow. My interviewer said his experience with it was its kinda slow and shitty and advised me to just use the agent mode. - it read the README.md for context automatically - opus 4.8 on Claude Code TUI or Cursor are my daily drivers and this setup felt somewhat inferior. - I tried to get it to focus on one specific thing but because the README had the full functional requirements it got confused and was doing stuff I didn’t want it to. I felt like Claude would have done a better job with my instructions - it was the easiest interview of my life, but I have no idea what Stripe’s is like",
+   "Has anyone actually gone through this and want to share what that looks like?",
+   "So I have upcoming technical screen for stripe. What should I prepare for it?",
+   "Seems much more relevant than the leetcode style exercises",
+   "Link please",
+   "check vibelevel ai it has more advanced IDE than hackerrank including claude code cli",
+   "very refreshing to see that interviews are headed this way",
+   "check out vibelevel ai they have full claude code cli integrated already and is used by few enterprises for hiring"
+  ],
+  "url": "https://www.reddit.com/r/leetcode/comments/1u51q4w/",
+  "published": "2026-06-13T20:46:31+00:00"
+ },
+ {
+  "id": "1u0hnbq",
+  "sub": "leetcode",
+  "title": "Stripe interview feedback",
+  "body": "I just completed my stripe phone screen round. The round was really exhausting. I took around 30-35 minutes to solve Part A. Then I consumed the remaining 10 minutes to solve Part B.  Unfortunately, I only able to solve 2/4 parts in the interview. I prepared for the interview very religiously and even I had my workspace set up before but I don’t know what happened (maybe I panicked or maybe I read the interviewer that he wanted me to use HackerRank) and this was my biggest BLUNDER.  Anyways, just want to know from people who have cleared the process that whether I should keep my optimism and expect a callback or whether I should just move on 🥲  The recruiter explicitly mentioned before the interview that you need to solve 4/4 parts to proceed forward to the interview loop.     submitted by    /u/salman_khhan   [link]   [comments]",
+  "comments": [
+   "I think it’s best to move on after the interview despite how you think you performed. It’s a crapshoot.",
+   "I also took it and the question was so hard to read. The sliding window constraints where no where mentioned in the actual task (part 1) but rather was buried in the intro which i skimmed cause i knew i was gonna be tight on time. This led me to make wrong assumptions and i wasted so much time. Now I’m blocked for 12 months wtf",
+   "Move on. Obviously.",
+   "What was the question?",
+   "[deleted]",
+   "Your comment has been removed. We do not allow DM farming. All of the conversation must happen within the post itself. Subsequent violations of this rule will result in a permanent ban. I am a bot, and this action was performed automatically. Please contact the moderators of this subreddit if you have any questions or concerns.",
+   "Can you give us the question ? I have had ridiculous interview algorithm questions too, you're not alone.",
+   "[deleted]",
+   "Java",
+   "[deleted]",
+   "I would suggest don’t go for classes as I went gor the use of classes but in these fast-paced interviews classes and oops concept will eat up your time completely. Go for some brute force way as judgement will be made on the number of parts solved surely. Use your time wisely.",
+   "It really depends on how you performed during the interview. The recruiter told me that it doesn't depend on how many parts you solve. They are just assessing your technical and communication skills. I solved 2/3 parts in the given time and passed the round, and later during the next call, the recruiter shared the exact feedback the interviewer had written. PS: I got a callback from the recruiter more than 1 month later"
+  ],
+  "url": "https://www.reddit.com/r/leetcode/comments/1u0hnbq/",
+  "published": "2026-06-08T19:12:16+00:00"
+ },
+ {
+  "id": "1ttnaxe",
+  "sub": "cscareerquestions",
+  "title": "BCG VS STRIPE",
+  "body": "Posting this for a friend who's kinda stuck and needs serious suggestions! She's a BBA undergrad(major finance and international business) previously worked at slice(fintech), and was pretty set on staying in the fintech/ops space for a while.  Now she's got two offers and is genuinely torn: 1.BCG — Communication & Change Associate (Apprentice-Gurgaon) 2.Stripe — Operations Associate (Apprentice- Bangalore) the pay is exactly the same for both - Any inputs are appreciated 🙏    submitted by    /u/struggling_aloo   [link]   [comments]",
+  "comments": [
+   "Stripe all the way. BCG is are just BS consultants. They don’t actually know how to do anything. We had them as consultants, and we spent a year cleaning up their mess.",
+   "If the rumours are true they do a bad job on purpose. CEOs that hire them want a bankruptcy so they can exit with a big package. BCG’s financials also report they make most of their money from the stock market, not actual consulting activities.",
+   "I see",
+   "If it’s tech then ofc stripe. Go ask a finance sub. People underestimate bcg/ mckinsey here",
+   "Wrong sub",
+   "Wrong sub. These roles are nowhere near CS"
+  ],
+  "url": "https://www.reddit.com/r/cscareerquestions/comments/1ttnaxe/",
+  "published": "2026-06-01T09:47:54+00:00"
+ }
+]

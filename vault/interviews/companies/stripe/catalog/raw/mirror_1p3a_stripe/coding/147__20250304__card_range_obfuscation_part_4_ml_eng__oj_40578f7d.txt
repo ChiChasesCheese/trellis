@@ -1,0 +1,14 @@
+"""
+Card Range Obfuscation Part 4 (ML Eng :)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/40578f7d-6b9e-4535-b454-1a63a46fcd15
+Source Type: OJ / More Problems
+
+Question Summary:
+### Problem Overview
+- This Part 4 interview question asks you to extend card range obfuscation, transforming raw card number ranges into obfuscated representations under specified rules.
+- Input: a collection of card ranges (and possibly labels); Output: obfuscated, non-revealing ranges matching required format and constraints.
+- Domain: payments and PCI privacy; conceal sensitive card data while preserving useful range information.
+- From Stripe interviews; a coding interview problem building on earlier parts.
+"""

@@ -1,0 +1,10 @@
+"""
+Programming Exercise
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/94c19c27-592b-4422-9008-5f987ad9ed4b
+Source Type: OJ / More Problems
+
+Question Summary:
+In the Programming round, it's recommended to write down your clarifying questions before starting to code. Minimize asking hints from the interviewer, only communicate your thought process and ask clarifying questions.
+"""

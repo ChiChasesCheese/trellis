@@ -1,0 +1,24 @@
+"""
+Match Invoices with Payment Notes
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/8c0fcf20-ca20-4977-b5e1-15cca9c29ec5
+Source Type: OJ / More Problems
+
+Question Summary:
+Given a list of payment records and a list of invoice records, find the invoice that matches each payment. Payment records contain an invoice ID, amount, and memo. If an invoice ID is found in the memo, return the corresponding invoice. For payments without an invoice ID, find the invoice with the same amount and the earliest due date. Return "cannot find matching invoice" if no match is found. The time complexity should be O(n).
+
+Example:
+
+Payment Records:
+1. {"id": "p1", "amount": 100, "memo": "Paying off: i1001"}
+2. {"id": "p2", "amount": 200, "memo": "No invoice ID"}
+
+Invoice Records:
+1. {"id": "i1001", "amount": 100, "dueDate": "2023-01-01"}
+2. {"id": "i1002", "amount": 200, "dueDate": "2023-02-01"}
+
+Output:
+1. Payment p1 matches invoice i1001
+2. Payment p2 matches invoice i1002
+"""

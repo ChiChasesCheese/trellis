@@ -1,0 +1,24 @@
+"""
+Debug: Moshi JSON Library
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/post/7100086
+Source Type: Popular Questions / External Thread
+Repository: https://github.com/square/moshi
+
+Question Summary:
+This is a debugging assessment where you'll identify and fix bugs in a Java
+JSON parsing library codebase.
+
+Public Section Headings:
+- Debugging Task: Moshi JSON Library
+- The Task
+- About Moshi
+- How to Start
+- Tips for Debugging
+
+The interviewer drops you into a fork of the Moshi JSON library with injected
+bugs (likely in adapter resolution, JSON token reading, or type conversion).
+Clone the repo above, build with Gradle, and familiarize yourself with the
+adapter pattern before the interview.
+"""

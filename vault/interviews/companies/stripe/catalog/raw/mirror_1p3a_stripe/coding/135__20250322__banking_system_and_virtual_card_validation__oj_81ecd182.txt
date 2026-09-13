@@ -1,0 +1,34 @@
+"""
+Banking System and Virtual Card Validation
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/81ecd182-1b36-4887-8ba0-ca520449d4b7
+Source Type: OJ / More Problems
+
+Question Summary:
+Design a simple banking system that includes user account management and transaction processing. Additionally, implement a virtual card number validation feature. Implement the following functionalities:
+
+1. **Account Management**:
+   - Create user accounts with username and password.
+   - User login/logout.
+   - Account balance inquiry.
+
+2. **Transaction Processing**:
+   - Users can deposit and withdraw funds.
+   - Transfer funds to specific accounts.
+
+3. **Virtual Card Number Validation**:
+   - Input a virtual card number and validate if it meets the bank's format.
+   - Return the validation result.
+
+Test Cases:
+
+- Input: Create user A, deposit 100, create and deposit 50 to user B, user A transfers 50 to B
+- Input: Valid virtual card number “1234-5678-9012-3456”
+- Input: Invalid virtual card number “abcd-efgh-ijkl-mnop”
+
+Data scale:
+
+- Maximum number of users: 10,000
+- Maximum number of transactions per user: 1,000
+"""

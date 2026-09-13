@@ -1,0 +1,22 @@
+"""
+Connection Management for Load Balancer
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/c1a03684-b3c9-463f-92ee-555a04861d9a
+Source Type: OJ / More Problems
+
+Question Summary:
+Implement a simplified connection management system responsible for managing the state of multiple backend target server connections. The system should handle the following operations:
+
+1. **CONNECT(connId)**: Assign a target server to a new connection, selecting in a round-robin fashion amongst available servers.
+
+2. **CONNECT(connId)** (duplicate): If connId already exists, do not reassign, output the original target.
+
+3. **DISCONNECT(connId)**: Close the connection, release the slot on the server, and invalidate the connId.
+
+4. Set a limit on the number of connections per target, maxConnectionsPerTarget; if full, continue to the next target. If all targets are full, ignore the connection.
+
+5. **SHUTDOWN(targetIndex)**: Shut down the target server, evict all connections, and make the target unavailable.
+
+The input consists of different types of requests, and the output should reflect the result of management operations and status changes. Provide a code implementation and matching test cases.
+"""

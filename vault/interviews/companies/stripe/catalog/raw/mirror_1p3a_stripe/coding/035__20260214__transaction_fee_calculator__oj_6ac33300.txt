@@ -1,0 +1,53 @@
+"""
+Transaction Fee Calculator
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/6ac33300-e88f-4821-b631-298b1996bace
+Source Type: OJ / More Problems
+
+Question Summary:
+## Transaction Fee Calculator
+
+Given a list of transactions and a set of fee rules, compute the fee for each transaction and the total fee collected.
+
+### Input
+- The first line is an integer `n`, the number of transactions.
+- The next `n` lines describe one transaction each (space-separated):
+  - `transaction_id`: string
+  - `amount`: integer, transaction amount in cents
+  - `payment_method`: string (e.g., `card`, `bank`)
+  - `is_international`: `0` or `1`
+
+### Fee rules
+- Base fee is `p%` of the amount (rounded up to the nearest cent).
+- If `is_international = 1`, charge an additional `q%` (also rounded up to the nearest cent).
+- Each transaction fee is clamped to `[min_fee, max_fee]` in cents.
+
+> Note: exact parameters `p, q, min_fee, max_fee` are provided by the interviewer/problem statement.
+
+### Output
+- Print `n` lines: `transaction_id fee`.
+- Print a final line: `total total_fee`.
+
+### Constraints
+- `1 <= n <= 2 * 10^5`
+- `0 <= amount <= 10^9`
+
+### Example
+(Exact parameters depend on the prompt.)
+
+#### Example input
+```text
+3
+T1 10000 card 0
+T2 25000 card 1
+T3 500 bank 0
+```
+
+#### Example output
+```text
+T1 300
+T2 950
+total 1550
+```
+"""

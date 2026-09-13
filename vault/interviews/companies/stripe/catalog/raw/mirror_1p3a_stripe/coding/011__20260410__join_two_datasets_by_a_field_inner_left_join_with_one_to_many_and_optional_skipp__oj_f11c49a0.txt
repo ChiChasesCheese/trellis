@@ -1,0 +1,72 @@
+"""
+Join Two Datasets by a Field (Inner/Left Join with One-to-Many and Optional Skipping)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/f11c49a0-f662-49c7-84b7-a14e738e382b
+Source Type: OJ / More Problems
+
+Question Summary:
+## Problem: Join Two Datasets by a Field (Inner/Left Join with One-to-Many and Optional Skipping)
+
+Implement `joinDataSet(fieldName, customerFile, processorFile, skipUnmatched)` to join two “files”.
+
+- `customerFile`, `processorFile` are arrays of strings (`string[]`).
+  - Line 1 is the header (column names).
+  - Line 2+ are data rows.
+- `fieldName` is the join key column name (present in both headers).
+- `skipUnmatched` controls how to handle customers with no match.
+
+### Parsing
+1. Use each header to locate the column index of `fieldName` in both files.
+2. Process data rows in their original order.
+
+### Output
+Return a new `string[]` representing the joined file:
+1. First line is the output header:
+
+   `Customer Header + Processor Header`
+
+   i.e., all customer columns first, then all processor columns.
+
+2. Subsequent lines are joined rows.
+
+### Join semantics
+Treat `customerFile` as the left table and `processorFile` as the right table; join on equality of `fieldName`.
+
+- **Matches (one-to-many):**
+  - If a customer row matches one or more processor rows, output one row per match:
+
+    `customerRow + processorRow`
+
+- **No match (left join behavior):**
+  - If a customer row has no matching processor row:
+    - If `skipUnmatched == false`, output exactly one row:
+
+      `customerRow + (all processor columns empty)`
+
+    - If `skipUnmatched == true`, output nothing for that customer.
+
+### Ordering requirements (stability)
+1. Output is primarily ordered by the customer rows’ original order in `customerFile`.
+2. For a given customer with multiple processor matches, output those rows in the processor rows’ original order in `processorFile`.
+
+### Example
+**Input**
+- `fieldName = "customer_id"`
+- `skipUnmatched = false`
+- `customerFile`:
+  - `"customer_id,name"`
+  - `"1,Alice"`
+  - `"2,Bob"`
+- `processorFile`:
+  - `"customer_id,amount"`
+  - `"1,10"`
+  - `"1,20"`
+
+**Expected output (conceptually)**
+- Header: `"customer_id,name,customer_id,amount"`
+- Rows:
+  - `"1,Alice,1,10"`
+  - `"1,Alice,1,20"`
+  - `"2,Bob,,"`
+"""

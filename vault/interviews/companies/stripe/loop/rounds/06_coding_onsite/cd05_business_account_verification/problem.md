@@ -1,16 +1,16 @@
 # cd05 · Business Account Data Verification — when/requires/one_of 规则引擎
 
-**类型：** 现场编程测试 · **阶段：** 虚拟现场"通用编程"环节（60 分钟，2 个 Part + 追问）· **最近一次出现：** 日期未知（1point3acres 题库）
-**频次：** 2 处独立提及（1point3acres oj 题库 `interview/problems/ad817329-...` 给出完整规则语义+约束+示例的转述；1point3acres `interview/thread/1155516` VO 挂经提及同名 "Business Account Data Verification" 任务，反馈延迟+完成问卷后被拒）· **可信度：** 规则 schema/语义部分为 high（源材料给出接近逐字的 JSON schema 级别描述：`when`/`requires`/`one_of`、路径语法、"非空"定义、输出格式、约束数字全部齐全）；worked examples 与部分行为细节（数组整体缺失时的回退格式、`one_of` 是否允许通配、`present` 条件的精确含义）本仓库重构补全——`cn_forums.md` 只转述了"附完整示例输入输出"这句话，没有把示例原文抄进来，因此 worked examples 全部改写自源描述，而非逐字复制。
+**Type:** onsite Programming Exercise · **Stage:** virtual onsite "general coding" (60 min, 2 part + follow-ups) · **Last asked:** 日期未知 (1point3acres 题库)
+**Frequency:** 2 independent mentions (1point3acres oj 题库 `interview/problems/ad817329-...` 给出完整规则语义+约束+示例的转述；1point3acres `interview/thread/1155516` VO 挂经提及同名 "Business Account Data Verification" 任务，反馈延迟+完成问卷后被拒） · **Confidence:** high for the rule schema/semantics（源材料给出接近逐字的 JSON schema 级别描述：`when`/`requires`/`one_of`、路径语法、"非空"定义、输出格式、约束数字全部齐全）；worked examples 与部分行为细节（数组整体缺失时的回退格式、`one_of` 是否允许通配、`present` 条件的精确含义）本仓库重构补全——`cn_forums.md` 只转述了"附完整示例输入输出"这句话，没有把示例原文抄进来，因此 worked examples 全部改写自源描述，而非逐字复制。
 
-## 背景
+## Context
 Stripe 需要在放行一个企业账户之前校验它的资料是否齐全：法定名称、经营类型、受益所有人（owner）
 列表、代表人联系方式等。校验规则不是写死在代码里的，而是一份可配置的规则列表——每条规则说"在什么
 条件下（`when`）、哪些字段必须非空（`requires`），或者哪一组字段里至少要有一个非空（`one_of`）"。
 这道题考的不是复杂算法，而是**干净的路径解析 + 规则引擎设计**：处理 `.` 嵌套、数组通配
 `owners[].first_name`、条件短路、结果去重与稳定排序。
 
-## 输入（stdin）
+## Input (stdin)
 第一行 `PART n`（n ∈ {1,2}）。其余整个输入是**一个 JSON 文档**（可能跨多行/带缩进）：
 ```json
 {
@@ -24,7 +24,7 @@ Stripe 需要在放行一个企业账户之前校验它的资料是否齐全：�
 JSON：`{"account": ..., "rules": [...]}`）。`main()` 读取首行 `PART n`，对剩余文本 `json.loads`
 得到 `doc`，按 `n` 分发，逐行打印返回值。
 
-## 输出
+## Output
 全部规则满足 → 打印单行 `VERIFIED`。否则按**字典序（Python 默认字符串比较）**逐行打印缺失项，
 去重后每个缺失 token 只打印一次：
 - 普通字段路径直接打印，如 `business_profile.url`
@@ -32,7 +32,7 @@ JSON：`{"account": ..., "rules": [...]}`）。`main()` 读取首行 `PART n`，
 - `one_of` 组失败打印整段 `one_of(field1|field2|...)`（字段顺序 = 规则里声明的顺序，不重排），
   这一整段字符串参与最终排序
 
-## 规则
+## Rules
 
 ### 字段路径语法（两个 Part 通用）
 `.` 分隔的段序列，如 `business_profile.url`；`owners[].first_name` 中 `owners[]` 表示"对
@@ -74,7 +74,7 @@ Clarifications）。路径解析不到（中间某段不存在，或类型不对
   满足；全部为空/缺失才失败，失败时输出整段 `one_of(field1|field2|...)`（原始声明顺序）。
   一条规则可以同时有 `requires` 和 `one_of`（`when` 匹配时两者都要检查）。
 
-## 示例
+## Worked examples
 
 **Part 1**（无 `when`）：
 ```json
@@ -136,7 +136,7 @@ owners[2].first_name
 `owners[0].first_name` = `"Alice"` 非空，不出现；排序上 `"one_of("` 的 `n` < `"owners["` 的
 `w`，所以 `one_of(...)` 排在最前。）
 
-## 隐藏测试已知会针对的边界情况
+## Edge cases hidden tests are known to target
 - `rules` 为空列表 → 直接 `VERIFIED`
 - 缺失路径的中间段整个不存在（不是叶子字段为空，而是父对象本身没有这个 key）→ 照样输出这段
   完整路径字符串
@@ -153,26 +153,26 @@ owners[2].first_name
 - `rules` ≤ 200 条，单条 `requires` ≤ 50 项、`one_of` ≤ 20 项，字段路径长度 ≤ 100 字符，
   `account` 总 JSON 节点数 ≤ 10^4 —— 必须能在预算内跑完（无嵌套指数级展开）
 
-## 实际出现过的变体
+## Variants seen in the wild
 - 源材料标注该题在两条独立渠道出现：一次是完整规格题库条目（`interview/problems/ad817329`），
   一次是 VO 挂经帖只提到任务名和"反馈延迟+问卷后被拒"的负面流程体验，没有技术细节——后者只作为
   "这题真实出现在 VO 阶段"的旁证，不贡献规则细节。
 - 源材料原题不分 Part（一次性给出完整规则语义）；本仓库按仓库惯例拆成 Part 1（仅 `requires`）→
   Part 2（加 `when`/`one_of`/通配）两级递进，便于 45–60 分钟内分阶段验收。
 
-## 本题考察的技能
-skills: S02 解析（JSON 而非 CSV）· S03 树形数据的路径解析 · S04 分组去重 · S08 确定性排序
+## What this tests
+skills: S02 parsing（JSON 而非 CSV）· S03 树形数据的路径解析 · S04 分组去重 · S08 确定性排序
 （含拼接字符串排序）· S09 精确格式化（`one_of(...)`/带下标路径）· S18 校验规则引擎设计 ·
-S19 渐进式设计（Part 1 → 2 逐步加规则语义）
+S19 incremental design（Part 1 → 2 逐步加规则语义）
 
-## 来源
+## Sources
 - https://www.1point3acres.com/interview/problems/ad817329-a95b-50ec-9860-f453c5fa0a1b
   （"Business Account Data Verification"，完整规则语义+约束+示例的转述，见 `loop/raw/cn_forums.md`
   第 266 行）
 - https://www.1point3acres.com/interview/thread/1155516（VO 挂经，任务同名，无技术细节，见
   `loop/raw/cn_forums.md` 第 61/157 行）
 
-## 澄清说明（本仓库的显式补全，源材料未覆盖）
+## Clarifications（本仓库的显式补全，源材料未覆盖）
 - "非空"定义只提到 `null`/空串/空列表三种否定情形；数字 `0`、布尔 `false`、空字典 `{}` 一律按
   "非空"处理（因为它们都不是这三种情形之一），本题不做"falsy 即空"的隐式推广。
 - 通配基础数组整体缺失或类型不对时的行为，源材料未指定；本仓库定义为回退输出未展开的字面路径

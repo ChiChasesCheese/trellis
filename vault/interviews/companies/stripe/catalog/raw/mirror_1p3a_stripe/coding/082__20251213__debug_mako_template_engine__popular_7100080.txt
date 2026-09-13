@@ -1,0 +1,23 @@
+"""
+Debug: Mako Template Engine
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/post/7100080
+Source Type: Popular Questions / External Thread
+Repository: https://github.com/sqlalchemy/mako
+
+Question Summary:
+This is a debugging assessment where you'll identify and fix bugs in a Python
+template library codebase.
+
+Public Section Headings:
+- Debug: Mako Template Engine
+- Challenge Description
+- About Mako
+- How to Begin
+- How to Find Bugs
+
+The interviewer drops you into a fork of the Mako template engine with injected
+bugs. Clone the repo above, run tests with pytest, and familiarize yourself
+with template compilation (lexer → parser → codegen) before the interview.
+"""

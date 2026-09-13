@@ -1,57 +1,69 @@
-# cd01 Subscription email scheduler — 报告
+# cd01 Subscription email scheduler — report
 
-## 概述
-这是订阅生命周期邮件系列的一次现场"Programming Exercise"实现，该系列在 Stripe 的 coding round 中反复
-出现（另见 `problems/q07_subscription_notifications`）。本题版本使用日历日期和单一的可变的按用户状态机，
-而不是 q07 的天数偏移量和显式的 `[Changed]`/`[Renewed]` 公告行——两者是同一主题下的姐妹题而非重复题，
-两份 problem.md 文件中都互相交叉引用，避免读者混淆。核心难点在于吃透一条规则（"严格晚于事件日期的待发
-邮件要丢弃，然后重新排程"），并将其统一应用到四种不同的事件类型上。
+## Summary
+An onsite "Programming Exercise" build of the subscription-lifecycle-email family that recurs
+across Stripe's coding round (see also `problems/q07_subscription_notifications`). This version
+uses calendar dates and a single mutable per-user state machine instead of q07's day-offsets and
+explicit `[Changed]`/`[Renewed]` announcement lines — the two are siblings drawn from the same
+theme, not duplicates, and are cross-referenced in both problem.md files so a reader doesn't
+confuse them. The core difficulty is nailing one rule ("discard pending emails strictly after the
+event date, then reschedule") and applying it uniformly to four different event types.
 
-## 来源与置信度
-中等。有四份独立记录相互印证（`loop/raw/en_forums.md` §6.2 C1：linkjob intern 2025、linkjob「2026
-Java NG VO」2025-12-08、Simplify 2026）以及三部分结构（基础 -> 计划变更 -> 续费）与领域背景
-（`loop/raw/cn_forums.md` 第 99 行：1point3acres「Subscription Email Scheduler」目录）。但没有任何来源
-公布精确的字段名、输出格式或比例计算公式——这些都是本 problem.md 自己给出的具体、内部自洽的重建方案，
-并在"变体"一节中明确标注。`cn_forums.md` 第 264 行的追问清单（「Email Notification Scheduler」，
-去重/限流/排序/乱序/取消）确有其事，被直接折入"面试官会怎么追问"而非作为基础需求实现——原始来源本身
-就将它们定位为讨论型追问，而非已实现的规则。
+## Sources & confidence
+medium. Corroborated by four independent write-ups (`loop/raw/en_forums.md` §6.2 C1: linkjob
+intern 2025, linkjob "2026 Java NG VO" 2025-12-08, Simplify 2026; `loop/raw/cn_forums.md` line 99:
+1point3acres 「Subscription Email Scheduler」TOC) on the 3-part shape (basics -> plan changes ->
+renewals) and the domain. None publishes exact field names, output format, or the proration
+formula -- those are this problem.md's own concrete, internally-consistent reconstruction, explicitly
+flagged in the "Variants" section. The follow-up list at `cn_forums.md` line 264 (「Email
+Notification Scheduler」, dedup/rate-limit/ordering/out-of-order/cancel) is real and is folded
+directly into "面试官会怎么追问" rather than treated as base requirements -- the source itself frames
+them as discussion follow-ups, not implemented rules.
 
-## 各部分思路
-1. **Part 1**：纯粹的排程生成。`expire = date + period_days(plan)`
-   (`monthly=30, annual=365`)；生成 `welcome@date`、`expiring@(expire-7)`、`expiring@(expire-1)`、
-   `expired@expire`。
-2. **Part 2**：一条规则，应用一次，Part 3 中处处复用——在事件日期 `d`，丢弃所有日期*严格晚于* `d` 的
-   待发邮件（不是 `>=`；当天的邮件已经算"已确定"），然后基于新状态重新排程。`change` 的比例计算是整数
-   向下取整：`remaining_new = remaining_old * period_days(new) // period_days(old)`。
-3. **Part 3**：`renew` 要么从*旧*到期日延长期限（仍在有效期内），要么——如果期限已经过——变成一次全新
-   的 `subscribe`（welcome，而非 renewed）。`cancel` 应用丢弃规则且无需重新排程任何新内容，并且是幂等的。
+## Approach by part
+1. **Part 1**: pure schedule generation. `expire = date + period_days(plan)`
+   (`monthly=30, annual=365`); emit `welcome@date`, `expiring@(expire-7)`, `expiring@(expire-1)`,
+   `expired@expire`.
+2. **Part 2**: one rule, applied once, reused everywhere in Part 3 too -- at event date `d`, drop
+   every pending email dated *strictly after* `d` (not `>=`; same-day emails are already
+   "committed"), then reschedule from the new state. `change`'s proration is integer floor:
+   `remaining_new = remaining_old * period_days(new) // period_days(old)`.
+3. **Part 3**: `renew` either extends the term from the *old* expiry (still active) or -- if the
+   term already lapsed -- becomes a fresh `subscribe` (welcome, not renewed). `cancel` applies the
+   discard rule with nothing new to reschedule, and is idempotent.
 
-## 隐藏测试针对的坑
-- **同一天、不撤销的邮件**：`change`/`renew`/`cancel` 恰好落在已排程的 `expiring` 邮件所在日期，不会撤销
-  它（用 `> d`，而非 `>= d`）——会产生两行日期相同的输出，一条来自旧排程，一条来自新排程。这是本题最
-  微妙的一条规则，由 `test_change_causing_immediate_expiry_keeps_same_day_old_emails` 直接验证。
-- 输出顺序是**固定的类型优先级**（`welcome<expiring<expired<renewed<canceled`），而不是事件处理顺序——
-  `test_same_day_cancel_then_resubscribe_orders_by_type_not_event_order` 展示了一个 `canceled` 打印在
-  同一天的 `welcome` 之后，即便 cancel 先被处理。
-- `change` 恰好在用户自身到期日当天，或针对未知/已取消用户，会被静默忽略（不报错、不崩溃）。
-- 比例计算使用整数向下取整，绝不四舍五入——用一个 `remaining_old == period_days(old)`（正好整除，无损失）
-  的用例，和一个取整到 0 的立即到期用例做对照验证。
-- 重复的 `subscribe` 行故意**不去重**（这是一个已命名的追问方向，不是 bug）——
-  `test_duplicate_subscribe_lines_are_not_deduplicated` 明确锁定这一点，防止候选人把它当成 bug"修掉"，
-  违背既定契约。
-- 输入文件中乱序的事件，仍必须按日期顺序解析处理。
+## Pitfalls hidden tests target
+- **same-day, not-revoked emails**: a `change`/`renew`/`cancel` landing on the exact date of an
+  already-scheduled `expiring` does not revoke it (`> d`, not `>= d`) -- produces two lines dated
+  the same day, one from the old schedule and one from the new. This is the single most subtle
+  rule in the problem and is exercised directly by
+  `test_change_causing_immediate_expiry_keeps_same_day_old_emails`.
+- output order is a **fixed type priority** (`welcome<expiring<expired<renewed<canceled`), not
+  event-processing order -- `test_same_day_cancel_then_resubscribe_orders_by_type_not_event_order`
+  shows a `canceled` printing *after* a same-day `welcome` even though cancel was processed first.
+- `change` exactly on the expiry day, or for an unknown/canceled user, is silently ignored (not an
+  error, not a crash).
+- integer floor division in proration, never rounding -- verified against a `remaining_old ==
+  period_days(old)` case where the floor loses nothing (exact), contrasted with the immediate-expiry
+  case where it floors all the way to 0.
+- duplicate `subscribe` lines are deliberately **not** deduplicated by the base solution (that's a
+  named follow-up, not a bug) -- `test_duplicate_subscribe_lines_are_not_deduplicated` pins this
+  down so a candidate doesn't "fix" it away from the documented contract.
+- events out of chronological order in the input file must still resolve in date order.
 
-## 复杂度与实测开销
-事件排序为 O(n log n)；丢弃/重排步骤每个事件均摊 O(1)，因为单个用户的待发列表从不超过约 3 条。
-100k 个事件、20k 个用户，输入乱序：远低于 2 秒 / 256 MB 的性能预算（见 `test_perf_100k_events`）。
+## Complexity & measured cost
+O(n log n) for the event sort; O(1) amortized per event for the discard/reschedule step since a
+user's pending list never holds more than ~3 entries. 100k events across 20k users, shuffled input
+order: well under the 2 s / 256 MB perf budget (see `test_perf_100k_events`).
 
-## 测试清单
-23 个测试 —— part1：7 个，part2：6 个，part3：10 个（含 1 个 io，1 个 perf）；edge 11 个，fmt 2 个，
-io 2 个，perf 1 个。
+## Test inventory
+23 tests -- part1: 7 . part2: 6 . part3: 10 (incl. 1 io, 1 perf); edge 11 . fmt 2 . io 2 . perf 1.
 
-## 考察的技能
-S01 阅读多部分题面 . S02 带可选尾字段的行解析 . S03 按用户维护可变状态 . S08 带固定 tie-break 的确定性
-多键排序 . S09 精确格式化 . S10 会回溯改变早期决策的事件流 . S12 日历日期运算 . S19 增量式设计
+## Skills exercised
+S01 reading a multi-part spec . S02 line parsing with an optional trailing field . S03 per-user
+mutable state . S08 deterministic multi-key sort with a fixed tie-break . S09 exact formatting .
+S10 event streams that retroactively change earlier decisions . S12 calendar-date arithmetic .
+S19 incremental design
 
 ## 边写边说什么
 1. **拿到题面先问**：`renew`/`cancel` 事件里没有 `plan` 字段，说明 renew 永远续同一个 plan——这个假
@@ -70,14 +82,16 @@ S01 阅读多部分题面 . S02 带可选尾字段的行解析 . S03 按用户�
 6. **收尾追问**：参考 problem.md 末尾"面试官会怎么追问"，挑 2-3 条主动展开（去重/幂等设计、流式处
    理下"决定不可撤销"假设失效、时区/DST），展示系统设计视角。
 
-## 待解决的问题
-- 比例计算公式（`remaining_old * period_new // period_old`）和"同一天邮件不撤销"规则是本套题自己的设计
-  选择，追求简单、确定、可手工验证——并未对照 Stripe 真实评分标准核实（没有任何来源公布这道题的确切评分
-  标准）。如果之后有更精确的题面记录出现，应优先复核这两条规则。
-- `renew`/`cancel` 行按设计不携带 `plan` 字段（renew 永远保持当前 plan）；这一点在"边写边说什么" #1 中
-  已标注为候选人应主动提出的开放问题。
+## Open points
+- The proration formula (`remaining_old * period_new // period_old`) and the "same-day emails are
+  never revoked" rule are this suite's own design choices, made to be simple, deterministic, and
+  hand-verifiable -- not verified against an actual Stripe rubric (no source publishes exact
+  grading criteria for this problem). If a more precise transcript of this problem surfaces later,
+  re-check these two rules first.
+- `renew`/`cancel` lines carry no `plan` field by design (renew always keeps the current plan);
+  flagged as an open question in "边写边说什么" #1 for a candidate to raise proactively.
 
-## 复盘（2026-09-02）
+## Review（2026-09-02）
 **改了什么**
 - `solution.py`：`_run` 原本是一个 ~56 行的大函数（四个事件类型的逻辑全部内联），超出 checklist 的
   "函数 ≤ 40 行" 建议，可读性也差（陌生人要通读整个函数才能看清一个事件类型的规则）。拆成

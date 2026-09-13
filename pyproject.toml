@@ -28,3 +28,8 @@ include = ["trellis*"]
 
 [tool.setuptools.package-data]
 trellis = ["workbench.html"]
+
+[tool.pytest.ini_options]
+# Only the trellis package tests. The interview kits under vault/interviews/companies/*
+# carry their own pytest.ini and are run from inside each company folder.
+testpaths = ["tests"]

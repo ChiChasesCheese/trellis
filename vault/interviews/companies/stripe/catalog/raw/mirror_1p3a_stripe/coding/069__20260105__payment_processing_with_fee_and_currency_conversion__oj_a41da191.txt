@@ -1,0 +1,35 @@
+"""
+Payment Processing with Fee and Currency Conversion
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/a41da191-3baa-4016-934c-d44bd5227761
+Source Type: OJ / More Problems
+
+Question Summary:
+Design a system to process a series of payment requests. Each payment request includes an amount and a currency type. There is a balance map storing the current balance of each currency. If the account balance has enough to cover the requested amount and the fee for the required method, the payment is successful; otherwise, it fails. Additionally, for requests involving different currencies, support currency conversion with fixed rates and conversion fees.
+
+Tasks:
+1. Write a function to handle basic payment requests.
+2. Extend your function to support cross-currency payments with consideration for exchange rates and related fees.
+
+Input:
+- A list of payment requests, each with an amount, currency type, and payment method.
+- An initial balance map.
+- Fees for each payment method.
+- Exchange rates and conversion fees between different currencies.
+
+Output:
+- For each payment request, return 'Success' or 'Fail'.
+
+Assumptions:
+- Limited number of currency and payment method types.
+- All numerical values are non-negative integers.
+
+***Test Cases:***
+- Input:
+  - Payment requests: [{'amount': 100, 'currency': 'USD', 'method': 'paypal'}, {'amount': 150, 'currency': 'EUR', 'method': 'credit_card'}]
+  - Initial balance: {'USD': 200, 'EUR': 50}
+  - Method fees: {'paypal': 5, 'credit_card': 2}
+  - Exchange rates and fees: {'USD': {'EUR': (0.85, 3)}, 'EUR': {'USD': (1.2, 4)}}
+  - Output: ['Success', 'Fail']
+"""

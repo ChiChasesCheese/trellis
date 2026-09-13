@@ -1,101 +1,116 @@
-# ps07 Redact card numbers from logs — 报告
+# ps07 Redact card numbers from logs — report
 
-## 概述
-"在日志中打码卡号"是 interviewing.io 对一个真实 Stripe 需求的一句话表述：日志汇聚端
-绝不能持久化原始 PAN。这道题本质上是 Luhn/网卡校验（q05）换了个马甲 —— 有意思的工程
-点不是校验和本身，而是 (a) 在任意自由文本中找出卡号形状的片段，且不使用容易回溯灾难的
-正则；(b) 以精确保留周围文本和数字自身标点的方式打码；(c) 把 Luhn+品牌校验当作过滤
-假阳性的手段，而不是终点本身。四个部分从朴素的"任意数字形状的一串"启发式，逐步走到
-经过校验、可流式处理的打码器 —— 这是 Stripe 电面反复重用的结构（参见 q03、q05、ps05：
-朴素做法 -> 加一条规则修正一个具体的错误答案 -> 泛化 -> 扩展规模）。
+## Summary
+"Blur card numbers in logs" is interviewing.io's one-line phrasing of a real Stripe requirement:
+log sinks must never persist a raw PAN. The problem is Luhn/network validation (q05) wearing a
+different hat -- the interesting engineering is not the checksum, it's (a) finding card-shaped
+spans inside arbitrary free text without a backtracking-prone regex, (b) masking in a way that
+preserves the surrounding text and the number's own punctuation exactly, and (c) using the
+Luhn+brand check as a false-positive filter rather than as the end goal. The four parts walk a
+naive "any digit-shaped run" heuristic to a validated, streaming-safe redactor -- a shape Stripe
+phone screens reuse constantly (see q03, q05, ps05: naive pass -> add a rule that fixes a
+specific wrong answer -> generalize -> scale).
 
-## 来源与可信度
-中等 —— interviewing.io 把"你会怎么在日志中打码信用卡号？"列为一道 coding 轮样题，没有
-公开转录（`loop/raw/en_forums.md` 第 6.2 节，C8）；staffengprep 独立列出一道"Valid
-Credit Card Number (Redaction)"题目，核心打码逻辑相同（第 3.3 节，P13）但 part 边界
-约定不同（先校验后打码，而不是先打码后过滤）。本 problem.md 中除"在自由文本日志中找到
-并打码卡号"之外的每一条规则都是本报告的重构 —— 见 problem.md 中的"未解决点"。
+## Sources & confidence
+medium -- interviewing.io lists "How would you blur credit card numbers from logs?" as a coding-
+round sample question with no published transcript (`loop/raw/en_forums.md` section 6.2, C8);
+staffengprep independently lists a "Valid Credit Card Number (Redaction)" prompt with the same
+masking core (section 3.3, P13) but a different part-boundary convention (validate-then-mask,
+not mask-then-filter). Every rule in this problem.md beyond "find and blur card numbers in
+free-text logs" is this report's reconstruction -- see Open points in problem.md.
 
-## 各部分思路
-1. **裸数字串**：一次线性扫描（`_scan_candidates`）找出极大的纯数字串；长度过滤
-   `[13, 19]`；对除最后 4 位外的数字打码。此时还没有品牌/Luhn 校验，所以会过度打码
-   （演示样例 1c，一个 13 位的 unix-ms 时间戳）。
-2. **分隔符**：同一个扫描器让候选串跨越两个数字组之间单个 `' '`/`'-'` 分隔符继续
-   延伸（不能连续两个，不能出现在开头/结尾）。打码只替换数字字符，保持每个分隔符不变，
-   并且统计的是*最后 4 位数字*，不是最后 4 个字符 —— 这对 AMEX 的 4-6-5 分组很重要
-   （`3782-822463-10005` -> `****-******-*0005`，最后一组是 5 个字符但只保留其中最后
-   4 位数字）。朴素的按空格拼接反而让过度分组变得更糟，而不是更好（一个总共 13 位数字
-   的分组电话号码会被误扫进来，见演示样例 2c）—— Part 3 才是真正的修正。
-3. **Luhn + 品牌过滤**：复用 q05 的 Luhn 遍历，但用了更宽的品牌表（新增 Discover 的
-   `6011`/`65` 和 Mastercard 的 `2221`-`2720` 区间，二者都不在 q05 的三网卡表中），
-   因为本题的任务是"捕获每一个真实 PAN 网络"，而不是"q05 已经深耕过的三个网络"。一个
-   候选串当且仅当 `brand_of(digits) is not None and luhn_ok(digits)` 时才被打码 ——
-   其余一切（前缀错误、长度错误、形状对但校验和错误）都原样透传，字节级不变。
-4. **流式处理**：检测逻辑相同，但设计成每行单遍扫描、没有二次方级的字符串重建
-   （list-append + 一次最终 `"".join"`，绝不 `str += `），也没有带嵌套量词的正则，所以
-   总开销是 O(所有行长度之和)。追加 `REDACTED n`。
+## Approach by part
+1. **Bare digit runs**: one linear scan (`_scan_candidates`) finds maximal digit-only runs;
+   length filter `[13, 19]`; mask all but the last 4 digits. No brand/Luhn check yet, so it
+   over-redacts (worked example 1c, a 13-digit unix-ms timestamp).
+2. **Separators**: the same scanner grows a candidate through a single `' '`/`'-'` between two
+   digit groups (never two in a row, never leading/trailing). Masking replaces digit characters
+   only, keeping every separator untouched, and counts the *last 4 digits*, not the last 4
+   characters -- this matters for AMEX's 4-6-5 grouping (`3782-822463-10005` ->
+   `****-******-*0005`, the last group is 5 characters but only its last 4 are digits kept).
+   The naive space-joining also makes over-grouping worse, not better (a grouped phone number
+   totalling 13 digits gets swept in, worked example 2c) -- Part 3 is the actual fix.
+3. **Luhn + brand filter**: reuses q05's Luhn walk, but a wider brand table (adds Discover
+   `6011`/`65` and Mastercard's `2221`-`2720` range, both absent from q05's three-network table)
+   because this problem's job is "catch every real PAN network", not "the three networks q05
+   already drilled". A candidate is redacted iff `brand_of(digits) is not None and luhn_ok(digits)`
+   -- everything else (wrong prefix, wrong length, right shape but bad checksum) passes through
+   byte-identical.
+4. **Streaming**: identical detection logic, engineered to be a single pass per line with no
+   quadratic string rebuilding (list-append + one final `"".join`, never `str += `) and no regex
+   with nested quantifiers, so total cost is O(sum of line lengths). Appends `REDACTED n`.
 
-## 隐藏测试针对的坑点
-- 打码保持格式：分隔符、标点和候选片段之外的一切原样保留；只有被打码片段内的数字字符
-  发生变化
-- 一旦涉及分隔符，"最后 4 位"是按*数字*计，不是按*字符*计
-- 边界长度：13/19 算，12/20 不算，且长度 >19 的数字串绝不部分打码（不能把它当成"更长
-  数字里的前 19 位"，整个都不动）
-- 空白日志行必须原样保留为空白行，不能被丢弃 —— 这是日志文本，不是本仓库其他题目那种
-  分隔记录格式
-- 重复的分隔符或开头/结尾的分隔符会在该处截断链条，而不会被静默吸收进更长的候选串
-- 已知的 Luhn 合法"形似卡号"绝不能在 Part 3/4 也被打码：订单/发票号、Unix-ms 时间戳
-  （13 位 —— 正好碰上 PAN 的*最短*长度）、分组的国际电话号码（拼接后 13 位以上）
-- q05 明确不支持的两个网络（Discover；Mastercard 的 `2221`-`2720` 区间）在这里必须被
-  识别并打码 —— `2223003122003222` 在 q05 中是 `UNKNOWN_NETWORK`，但在本题中是一张
-  真实、应被打码的 Mastercard 卡
-- `REDACTED n` 统计的是过滤后实际被打码的片段数，不是 Part 1/2 那种原始候选串数
+## Pitfalls hidden tests target
+- masking is format-preserving: separators, punctuation and everything outside a candidate span
+  survive untouched; only digit characters inside a redacted span change
+- last-4 is measured in *digits*, not characters, once separators are in play
+- boundary lengths: 13/19 in, 12/20 out, and a >19-digit run is never partially masked (it isn't
+  "the first 19 digits of a longer number", the whole thing is left alone)
+- blank log lines must round-trip as blank lines, not be dropped -- this is log text, not a
+  delimited record format like the other problems in this repo
+- a doubled separator or a leading/trailing separator breaks the chain at that point, it does not
+  get silently absorbed into a longer candidate
+- known Luhn-valid look-alikes that must NOT be redacted even at Part 3/4: order/invoice numbers,
+  Unix-ms timestamps (13 digits -- collides with the *minimum* PAN length), grouped international
+  phone numbers (13+ digits when concatenated)
+- the two networks q05 explicitly does not support (Discover; Mastercard's `2221`-`2720` range)
+  must be recognized and redacted here -- `2223003122003222` is `UNKNOWN_NETWORK` in q05 but a
+  real, redactable Mastercard in this problem
+- `REDACTED n` counts spans actually masked post-filter, not raw Part 1/2-style candidates
 
-## 复杂度与实测开销
-O(总输入长度)：每行一次遍历找片段（`_scan_candidates`），一次遍历构建打码后的输出
-（`_mask_span` + list join），均以该行长度为界；没有重复扫描，循环里没有 `str +=`。
-实测：10 万行日志（每 500 行混入一条真实 PAN，每 137 行混入一条形似时间戳的行，其余为
-普通文本），Part 4 端到端（stdin -> stdout）远低于 2 秒，远低于 256 MB 预算 —— 见
-`test_perf_100k_lines`。
+## Complexity & measured cost
+O(total input length): one pass per line to find spans (`_scan_candidates`), one pass to build
+the masked output (`_mask_span` + list join), both bounded by the line's length; no re-scanning,
+no `str +=` in a loop. Measured: 100,000 log lines (mix of real-PAN lines every 500th line,
+timestamp look-alikes every 137th line, plain text otherwise), Part 4 end-to-end (stdin -> stdout)
+in well under 2 s, comfortably under the 256 MB budget -- see `test_perf_100k_lines`.
 
-## 测试清单
-27 个测试 —— part1: 9 · part2: 6 · part3: 6 · part4: 6（含 4 个 io、1 个 perf）；edge 12
-· fmt 1 · io 4 · perf 1。
+## Test inventory
+27 tests -- part1: 9 . part2: 6 . part3: 6 . part4: 6 (incl. 4 io, 1 perf); edge 12 . fmt 1 . io 4
+. perf 1.
 
-## 涉及技能
-S02 解析自由文本（非分隔记录）· S09 精确、保格式的输出 · S14 复用 Luhn 数字遍历用于新
-用途 · S18 假阳性/校验纪律 · S19 增量式设计（Part 1 是 Part 2 的子集，是 Part 3/4 的
-子集）· S21 标准库熟练度，不用回溯型正则
+## Skills exercised
+S02 parsing free text (not delimited records) . S09 exact, format-preserving output . S14 Luhn
+digit walking reused for a new purpose . S18 false-positive/validation discipline . S19
+incremental design (Part 1 subset of Part 2 subset of Part 3/4) . S21 stdlib fluency, no
+backtracking regex
 
-## 电面话术：边写边说什么
-1. **读题时**：明确说出这不是 q05 —— q05 问"这个字符串是不是合法卡号"，本题问"这行日志
-   里是否藏着一个卡号，如果有该怎么打码"。写代码前先敲定两个契约问题：打码是否保留原始
-   分隔符，形似卡号但不是的东西（订单号、时间戳、电话号码）该怎么处理？这两点想错会拖累
-   Part 2/3。
-2. **写 Part 1 时**：先搭好"找 13-19 位数字串"的扫描器，明确说"我故意先不检查 Luhn ——
-   这会导致过度打码，没关系，Part 3 会修正；把检测和校验拆开能让每一层职责单一"。主动
-   暴露已知缺陷比表现得完美更加分。
-3. **写 Part 2 时**：指出"最后 4 位"指的是数字，不是字符 —— 坑点是 AMEX 的 4-6-5
-   分组，最后一组是 5 个字符。同时明确点出权衡："我没有要求 4-4-4-4 这种标准分组形状，
-   所以会过度分组像电话号码这样的东西；Part 3 的 Luhn+品牌过滤会把范围收窄回来。"
-4. **写 Part 3 时**：复用 Part 1 的 Luhn 遍历（提一句"这和卡号校验题是同一个算法，只是
-   应用到了打码流水线里"），先讲"前缀 + 长度必须先匹配一个真实网络，Luhn 才会运行"——
-   然后用时间戳和电话号码这两个反例现场证明。
-5. **写 Part 4 时**：讲清楚复杂度选择 —— 单遍扫描配合 list-append + 一次最终 join，
-   而不是逐行正则替换或字符串 `+=`，所以总开销是 O(输入长度)。如果被问到分块/流式传输
-   可能把一个卡号切成两次 read()，坦承当前 API 假设行已经被重组好了，并勾勒（不必完整
-   实现）一个在 `process(chunk)` 调用之间携带未解析数字后缀的有状态扫描器。
-6. **收尾**：再手动过一遍演示样例（尤其是 2c/3a 这对 —— 先过度打码再修正），然后主动
-   提出对一批真实日志做只读运行，对比打码前后的行长度作为上线前的健全性检查 —— 把方案
-   和题面中 PCI-DSS 的动机联系起来。
+## Interview talk track: what to say while writing
+1. **Reading the prompt**: say out loud that this is not q05 -- q05 asks "is this string a valid
+   card number", this problem asks "does this log line contain one hidden inside free text, and
+   if so how do I blur it". Nail down two contract questions before coding: does the mask keep
+   the original separators, and how are non-card look-alikes (order numbers, timestamps, phone
+   numbers) supposed to be handled? Getting these wrong derails Part 2/3.
+2. **Writing Part 1**: build the "find 13-19 digit runs" scanner first and say explicitly "I'm
+   deliberately not checking Luhn yet -- this will over-redact, and that's fine because Part 3 is
+   where I fix it; splitting detection from validation keeps each layer single-responsibility."
+   Surfacing the known flaw before being asked is worth more than looking flawless.
+3. **Writing Part 2**: call out that "last 4" means digits, not characters -- the trap is AMEX's
+   4-6-5 grouping where the final group is 5 characters. Also flag the tradeoff explicitly: "I'm
+   not requiring a canonical group shape like 4-4-4-4, so this over-groups things like phone
+   numbers; Part 3's Luhn+brand filter is what narrows it back down."
+4. **Writing Part 3**: reuse the Luhn walk from Part 1 (mention "this is the same algorithm as a
+   card-validation problem, just applied to a redaction pipeline instead") and lead with "prefix
+   + length must match a real network before Luhn even runs" -- then prove it live with the
+   timestamp and phone-number counterexamples.
+5. **Writing Part 4**: narrate the complexity choice -- single pass with list-append + one final
+   join, not per-line regex substitution or string `+=`, so total cost is O(input length). If
+   asked about a chunked/streaming transport that could split a card number across two reads,
+   admit the current API assumes reassembled lines and sketch (don't fully implement) a
+   stateful scanner carrying an unresolved digit suffix between `process(chunk)` calls.
+6. **Wrapping up**: walk through the worked examples by hand once more (especially the 2c/3a
+   pair -- over-redact then fix), then offer to run the redactor read-only against a sample of
+   real logs and diff before/after line lengths as a pre-deploy sanity check -- ties the solution
+   back to the PCI-DSS motivation from the prompt.
 
-## 未解决点
-- interviewing.io 的来源只是一句话，没有公开 I/O 契约、part 数量或演示样例。本
-  problem.md 的规则/演示样例是基于 q05 已验证的 Luhn/网络代码、本仓库反复出现的"朴素 ->
-  过滤 -> 扩展"电面模板，以及真实 PCI-DSS 部分 PAN 展示惯例所做的合理重构。如果出现
-  逐字转录，应据此核对 part 边界。
+## Open points
+- The interviewing.io source is a single sentence with no published I/O contract, part count, or
+  worked examples. This problem.md's Rules/Worked examples are a defensible reconstruction built
+  from q05's already-verified Luhn/network code, the repo's recurring "naive -> filtered ->
+  scaled" phone-screen template, and real PCI-DSS partial-PAN display conventions. If a verbatim
+  transcript surfaces, reconcile part boundaries and the exact masking format against it.
 
-## 复盘（2026-09-02）
+## Review（2026-09-02）
 复核通过，本轮未改动 `solution.py`/`starter.py`/`starter_template.py`/`test_ps07.py`（代码已在此前
 review 中定型）。
 - 快速核对：problem.md 的关键 worked examples（1a/4a 单卡+多卡打码、2c 电话号码过度分组、3a 时间戳/
@@ -107,20 +122,6 @@ review 中定型）。
 - Lint：`loop/lint.sh loop/rounds/03_phone_screen/ps07_redact_card_numbers` 直接通过，无需 `--fix`
   （black 110 列 + flake8 F 类 0）。
 - `starter.py`/`starter_template.py` 内容仍完全一致，公共 API 与 `solution.py` 一致。
-- 遗留：无。problem.md 的"未解决点"（interviewing.io 源为单句无逐字 transcript）已如实标注，不影响
-  代码正确性。
-- 文章：`loop/study/30-articles/ps07_redact_card_numbers.md`（157 行）。
-复核通过，本轮未改动 `solution.py`/`starter.py`/`starter_template.py`/`test_ps07.py`（代码已在此前
-review 中定型）。
-- 快速核对：problem.md 的关键 worked examples（1a/4a 单卡+多卡打码、2c 电话号码过度分组、3a 时间戳/
-  电话/订单号被 Part 3 放过、3b 五个品牌样例含 Mastercard `2221-2720`/Discover 新前缀及 Luhn 失败样例）
-  已用 `solution.py` 逐字重跑核对 stdin → stdout，全部与文档一致。
-- 回归：`rtk proxy python3 -m pytest loop/rounds/03_phone_screen/ps07_redact_card_numbers --tb=short`
-  29 passed；`IMPL=starter` 同目录 20 failed / 9 passed（starter 的桩函数默认原样透传输入而非返回空，
-  故"不该被打码的行"这类用例恰好也通过，符合设计，不构成空洞测试）。
-- Lint：`loop/lint.sh loop/rounds/03_phone_screen/ps07_redact_card_numbers` 直接通过，无需 `--fix`
-  （black 110 列 + flake8 F 类 0）。
-- `starter.py`/`starter_template.py` 内容仍完全一致，公共 API 与 `solution.py` 一致。
-- 遗留：无。problem.md 的 未解决点（interviewing.io 源为单句无逐字 transcript）已如实标注，不影响
+- 遗留：无。problem.md 的 Open points（interviewing.io 源为单句无逐字 transcript）已如实标注，不影响
   代码正确性。
 - 文章：`loop/study/30-articles/ps07_redact_card_numbers.md`（157 行）。

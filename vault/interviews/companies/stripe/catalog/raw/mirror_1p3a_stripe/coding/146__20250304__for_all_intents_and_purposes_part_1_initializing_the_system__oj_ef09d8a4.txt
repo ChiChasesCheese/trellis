@@ -1,0 +1,14 @@
+"""
+For All Intents And Purposes Part 1 - Initializing the System 
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/ef09d8a4-9852-499b-98ab-1c9887bd9b33
+Source Type: OJ / More Problems
+
+Question Summary:
+### Problem Overview
+- Build Part 1 of a system to create and manage Payment Intents for merchants via a simple state machine.
+- Input: ordered commands (INIT, CREATE, ATTEMPT, SUCCEED). Output: balances like "m1 100", sorted by merchant ID.
+- Context: Stripe payment processing; states include REQUIRES_ACTION, PROCESSING, COMPLETED.
+- From Stripe interviews, a coding interview problem and interview question focused on obeying command rules and ignoring invalid actions.
+"""

@@ -1,0 +1,16 @@
+"""
+Message Processing from Input
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/43dceaba-b07c-4436-a82e-20b19f66f07f
+Source Type: OJ / More Problems
+
+Question Summary:
+Implement a program that processes messages read from either an `input.txt` file or standard input. Requirements:
+
+1. Each message consists of 5 tokens separated by spaces. Ensure this format is adhered to in each line.
+2. Be prepared to handle edge cases, such as empty fields within a message. Develop a strategy for dealing with these cases.
+3. Provide robust handling of all edge cases, and validate with unit tests.
+
+Output the processed message results.
+"""

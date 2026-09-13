@@ -1,0 +1,31 @@
+"""
+Parse a CSV and output fees by payment status in a specified format
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/e32816b0-cf9d-43e1-b378-91d6610af9bb
+Source Type: OJ / More Problems
+
+Question Summary:
+You are given a CSV file content. Parse the CSV and output fee/amount information based on the payment status, with the output formatting matching the provided example exactly.
+
+## Task
+1. Read a CSV text from stdin (header row followed by data rows).
+2. Parse each record and extract the payment status field and the fee/amount field.
+3. Process records by payment status and produce the required output (e.g., filter and print, or group and aggregate; follow the example).
+
+## Input
+- A CSV text (header + rows) from standard input.
+
+## Output
+- The output must match the example output **exactly** (field order, delimiters, casing, spaces, and newlines).
+
+## Constraints / Edge Cases
+- The CSV may contain empty lines.
+- Fields may contain extra whitespace and should be trimmed.
+- Quoted fields may appear (including commas inside quotes).
+- Numeric fields may require specific formatting (e.g., fixed decimals).
+- Invalid/malformed rows or missing fields should be handled as required by the prompt (ignore/error/default; follow the example).
+
+## Example
+(Refer to the original prompt's example; omitted here.)
+"""

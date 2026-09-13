@@ -1,79 +1,92 @@
-# cd04 RateLimiter（四部分）— 报告
+# cd04 RateLimiter (4-part) — report
 
-## 摘要
-一个单一的滑动窗口日志限流器，贯穿 Stripe 常见的现场面试模板——基础 → 内存优化 → 边界情况 →
-并发——而不是本仓库另一道限流题（`problems/q23_rate_limiter`）"每部分新增一种算法"的形态。真正
-有意思的内容几乎全在 Part 2-4：证明（而不仅仅是声称）每个 client 的内存上界为 `O(limit)`，为朴素
-规格说明留下的每一种"未定义行为"挑选并证成一个确定性答案，以及让整套实现在并发访问下做到"完全
-正确"，而不只是"大概率没事"。
+## Summary
+A single sliding-window-log rate limiter pushed through Stripe's recurring onsite template —
+basics → memory → edge cases → concurrency — rather than the "add a new algorithm each part"
+shape of this repo's other rate limiter (`problems/q23_rate_limiter`). The interesting content is
+almost entirely in Parts 2-4: proving (not just claiming) an `O(limit)`-per-client memory bound,
+picking and justifying one deterministic answer for every "undefined behaviour" case a naive
+spec leaves open, and making the whole thing exactly correct — not just "usually fine" — under
+concurrent access.
 
-## 来源与置信度
-低-中——四部分结构（Basics / Saving Memory / Tricky Situations / Multiple Threads）直接来自一份
-抓取的一亩三分地目录（`loop/raw/cn_forums.md` 第 ~108 行）；该页面正文在登录墙后面，因此所有数值
-演示样例、内存分析要求的具体措辞、"tricky situations"的具体清单，以及 problem.md 中整套线程安全
-约定，都是在与该目录、以及 `problems/q23_rate_limiter` 已有来源的窗口边界约定保持内部一致的前提下
-重构出来的。应把这道题视为"形状对、数字是编的"，而非逐字转录。
+## Sources & confidence
+low-medium — the 4-part structure (Basics / Saving Memory / Tricky Situations / Multiple Threads)
+is directly sourced from a curled 1point3acres TOC (`loop/raw/cn_forums.md` line ~108); the body
+of that page is behind a login wall, so every numeric worked example, the memory-analysis
+requirement's exact wording, the specific "tricky situations" list, and the entire threading
+contract in problem.md are reconstructed to be internally consistent with that TOC and with
+`problems/q23_rate_limiter`'s already-sourced window-boundary convention. Treat this problem as
+"the right shape, invented numbers" rather than a verbatim transcription.
 
-## 分部分思路
-1. **Basics**：每个 client 维护一个已放行时间戳的 `deque`；`allow` 统计落在
-   `(t - window_ms, t]`（左开右闭，与 q23 一致）区间内的条目数，若 `count < limit` 则追加 `t`；
-   被拒绝的调用永不追加。一份实现同时覆盖了这部分和 Part 2——problem.md 中作为 Part 1 起点描述的
-   "朴素无界 list"只是一种叙事手法（用来说明为什么需要 Part 2），不是需要维护的第二条代码路径。
-2. **Saving memory**：deque 在*每次*调用计数之前都会从左侧裁剪，因此永远不会超过 `limit` 个条目
-   （被拒绝的请求永不追加，所以是"裁剪 + 只在放行时追加"的组合共同保证了这个上界——不是单靠裁剪
-   本身）。`evict_idle(now)` 关闭了第二处内存泄漏（外层 `dict` 里永久滞留的死 client）：对每个
-   client 的 deque 按 `now` 裁剪，并把裁剪后变空的 client 直接丢弃。额外加了
-   `log_size(client_id)`，纯粹作为可测试性钩子，让"每个活跃 client 是 `O(limit)`"这个断言可以被
-   直接验证，而不是靠计时去推断。
-3. **Tricky situations**：五种行为各钉死为一个确定性答案——时钟回拨对每个 client *钳制*（而非
-   拒绝），钳制正是维持 deque 单调递增假设、使 Part 2 裁剪逻辑成立的关键；`limit == 0` 无条件拒绝且
-   不抛异常（这是一个合法、只是没用的配置）；同一时间戳的突发请求不需要特殊处理（Part 1 的规则
-   本身就能按调用顺序正确处理）；`client_id == ""` 就是另一个普通的 dict key；极大的 `t` 在
-   Python 中不是问题（任意精度整数），但值得口头指出这一点是语言相关的。
-4. **Threads**：整个 `allow`/`evict_idle` 的临界区（钳制 → 裁剪 → 计数 → 决策 →
-   追加/驱逐）都包在一把 `threading.Lock` 里，因此 8 个线程各自对同一个 client 打 1000 次调用，
-   累计恰好看到 `limit` 个 `True`——用精确相等断言证明，而不是模糊的"差不多对"检查。曾考虑过
-   per-client 锁的方案，但为这道练习题否决了：它需要*第二把*锁来保护外层 `dict`，让 client 的
-   创建本身不出现竞争（两个线程第一次为同一个全新 client 调用都命中 `setdefault` 本身就是一种
-   竞态），这是实打实的额外复杂度，只有在实测到单一全局锁的锁竞争确实成为瓶颈时才值得——值得作为
-   一个现场追问提出来，但不值得在这个规模下不请自来地实现。
+## Approach by part
+1. **Basics**: per-client `deque` of allowed timestamps; `allow` counts entries in
+   `(t - window_ms, t]` (left-open/right-closed, matching q23) and appends `t` iff
+   `count < limit`; denied calls never append. One implementation covers this and Part 2 at once —
+   the "naive unbounded list" described in problem.md as the Part-1 starting point is a narrative
+   device (motivating why Part 2 exists), not a second code path to maintain.
+2. **Saving memory**: the deque is trimmed from the left on *every* call before counting, so it
+   can never hold more than `limit` entries (denied requests are never appended, so the trim +
+   append-only-on-allow combination is what makes the bound hold — not the trim alone).
+   `evict_idle(now)` closes the second leak (dead clients sitting in the outer `dict` forever) by
+   trimming every client's deque against `now` and dropping any that come back empty. Added
+   `log_size(client_id)` purely as a testability hook so the `O(limit)`-per-active-client claim is
+   asserted directly rather than inferred from timing.
+3. **Tricky situations**: five behaviours pinned to one deterministic answer each — backward clock
+   *clamped* per-client (not rejected, and clamping is what keeps the deque's monotonic-order
+   assumption valid for the Part 2 trim logic); `limit == 0` denies unconditionally with no
+   exception (it's a valid, if useless, config); same-timestamp bursts need no special case (the
+   Part 1 rule already handles them correctly, in call order); `client_id == ""` is just another
+   dict key; very large `t` is a non-issue in Python (arbitrary-precision ints) but worth flagging
+   as language-dependent out loud.
+4. **Threads**: the entire `allow`/`evict_idle` critical section (clamp → trim → count → decide →
+   append/evict) is inside one `threading.Lock`, so 8 threads hammering the same client with 1000
+   calls each collectively see *exactly* `limit` `True`s — proven with an exact-equality
+   assertion, not a fuzzy "close enough" check. A per-client-lock design was considered and
+   rejected for this exercise: it needs a *second* lock around the outer `dict` to make
+   client-creation itself race-free (two threads' first call for a brand-new client both hitting
+   `setdefault` is itself a race), which is real added complexity that only pays off once lock
+   contention on a single global lock is actually measured to be the bottleneck — worth raising as
+   a live follow-up, not worth implementing unprompted at this scale.
 
-## 隐藏测试瞄准的坑
-- 窗口边界恰好排除 `t - window_ms`、包含 `t`，与 q23 保持一致，确保仓库内两道限流题口径统一
-- 一连串拒绝本身绝不能延长任何锁定期（没有记录任何东西，就没有东西可以过期，也不会抬高下一个
-  窗口的计数）
-- 即便对 `limit=5` 的限流器打 200 次调用，`log_size` 也不会超过 `limit`——这是 Part 2 承诺的内存
-  上界的直接、与实现无关的证明
-- `evict_idle` 的边界（`==` 窗口边缘会驱逐，早一毫秒不会）；被驱逐的 client 回来后拿到的是真正
-  全新的额度，而不是记住的耗尽额度
-- 时钟回拨钳制是按 client 隔离的——一个 client 的回拨不能泄漏到另一个 client 的时钟
-- `limit == 0` 永不抛异常，永远拒绝，包括对空字符串 client 也一样
-- 相同时间戳的突发请求恰好解析为 `min(k, 剩余容量)` 个放行，按调用顺序
-- `client_id == ""` 只在类层面测试——`main()` 按空白分割的命令格式无法把一个空 token 与"没有
-  token"区分开，这被记录为协议层面的局限，不是类本身的 bug
-- `t` 达到 `10**15` 量级时行为与小 `t` 完全一致（Python 整数不会溢出）
-- 对同一个 client 并发 8×1000 次 `allow()` 调用恰好产生 `limit` 次成功——证明这把锁真正串行化了
-  临界区，而不只是降低了竞态发生的频率
+## Pitfalls hidden tests target
+- window boundary exactly `t - window_ms` excluded, `t` included, mirrored from q23 for
+  consistency across the repo's two rate limiters
+- a burst of many denials must never itself extend a lockout (nothing recorded means nothing to
+  expire, and nothing to inflate the next window's count either)
+- `log_size` never exceeds `limit` even after 200 calls against a `limit=5` limiter — the direct,
+  implementation-independent proof of the memory bound Part 2 promises
+- `evict_idle` boundary (`==` window edge evicts, one ms earlier does not) and an evicted client
+  coming back with a genuinely fresh budget, not a remembered exhausted one
+- backward-clock clamp is per-client — one client's rollback must not leak into another's clock
+- `limit == 0` never raises, always denies, including for the empty-string client
+- identical-timestamp bursts resolve to exactly `min(k, remaining capacity)` allowed, in call order
+- `client_id == ""` tested at the class level only — `main()`'s whitespace-split command format
+  cannot represent an empty token distinctly from "no token", which is documented as a protocol
+  limitation, not a class bug
+- `t` at `10**15` scale behaves identically to small `t` (Python ints don't overflow)
+- 8×1000 concurrent `allow()` calls against one client yield exactly `limit` successes — proves
+  the lock genuinely serializes the critical section rather than merely reducing race frequency
 
-## 复杂度与实测开销
-`allow`/`evict_idle` 每次调用均摊 `O(1)`，唯一例外是 `evict_idle` 对当前所有被跟踪 client 的一次
-线性遍历（每个时间戳最多被 push 和 pop 各一次）。内存：每个活跃 client 为 `O(limit)`，总量为
-`O(limit × A)`，其中 `A` 是尾随窗口内的活跃 client 数（直接通过 `log_size` 证明，而非仅靠论证）。
-性能测试：通过 `run_script` 对 2,000 个 client 顺序执行 10 万次 `allow()` 调用——远低于 2s / 256MB
-的预算。
+## Complexity & measured cost
+`allow`/`evict_idle` are amortised `O(1)` per call outside of `evict_idle`'s one linear pass over
+currently-tracked clients (each timestamp is pushed and popped from its deque at most once).
+Memory: `O(limit)` per active client, `O(limit × A)` total where `A` is clients active in the
+trailing window (proven directly via `log_size`, not just argued). Perf test: 100k sequential
+`allow()` calls across 2,000 clients via `run_script` — comfortably under the 2s / 256MB budget.
 
-## 测试清单
-21 个测试——part1: 4 · part2: 4 · part3: 10（含 2 个 io、1 个 perf、1 个 fmt）· part4: 3（含一个
-精确计数并发断言、一个 per-client 独立性并发断言、一个 allow+evict_idle 并发压力测试）；
-edge 12 · fmt 1 · io 2 · perf 1。
+## Test inventory
+21 tests — part1: 4 · part2: 4 · part3: 10 (incl. 2 io, 1 perf, 1 fmt) · part4: 3 (incl. one
+exact-count concurrency assertion, one per-client-independence concurrency assertion, one
+concurrent allow+evict_idle stress test); edge 12 · fmt 1 · io 2 · perf 1.
 
-## 涉及的技能
-S03 建模（每个 client 的状态）· S05 严格/非严格窗口边界 · S12 时间窗口 ·
-S16 滑动窗口日志 · S17 内存上界分析（有证明，不只是声称）· S18
-校验/优雅降级策略（钳制 vs 抛异常）· S19 增量式设计 · S21 标准库熟练度
-（`collections.deque`、`threading.Lock`）· A15 并发下的线程安全（精确而非近似的正确性）
+## Skills exercised
+S03 modelling (state per client) · S05 strict/non-strict window boundaries · S12 time windows ·
+S16 sliding-window log · S17 memory-bound analysis (proved, not just claimed) · S18
+validation/graceful-degradation policy (clamp vs raise) · S19 incremental design · S21 stdlib
+fluency (`collections.deque`, `threading.Lock`) · A15 thread-safety under contention (exact, not
+approximate, correctness)
 
-## 复盘（2026-09-02）
+## Review（2026-09-02）
 按 `loop/tasks/review_checklist.md` 逐条复核，结论：solution.py 本身在上一轮已经写得很干净，本轮只是
 补齐两处遗漏，没有发现结构性问题。
 

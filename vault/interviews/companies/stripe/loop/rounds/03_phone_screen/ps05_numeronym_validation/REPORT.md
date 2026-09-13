@@ -1,54 +1,59 @@
-# ps05 Numeronym validation — 报告
+# ps05 Numeronym validation — report
 
-## 概述
-"校验 → 查找 → 带冲突生成"三段式字符串处理题。Stripe 电面喜欢这种形状，因为它奖励仔细
-读题（前导零规则、大小写敏感）而不是算法技巧，而且 Part 3 逼迫候选人自己发现（没人提醒）
-生成过程可能撞车 —— 这正是 Stripe 真正关心的那类"两个东西映射到同一个标识符会怎样"的
-问题（幂等键、短 URL slug）。
+## Summary
+A three-part "validate → look up → generate with conflicts" string-processing question. Stripe's
+phone screens like this shape because it rewards careful spec-reading (leading-zero rule, case
+sensitivity) over algorithmic cleverness, and Part 3 forces the candidate to notice — unprompted —
+that generation can collide, which is exactly the kind of "what happens when two things map to
+the same identifier" question Stripe cares about for real (idempotency keys, short URL slugs).
 
-## 来源与可信度
-中等 —— FinalRoundAI 的 Stripe 题库直接点名"numeronym validation"（页面 2026 年仍在线）；
-Exponent 的指南把它列为 Stripe coding 轮样题之一，但没有公开 I/O 契约。Part 1 的正则形式
-和 Part 2-3 的"词典 + 冲突"结构是本报告对标准 numeronym 定义的重构，不是逐字面经 —— 在
-下方 未解决点 中标出。
+## Sources & confidence
+medium — FinalRoundAI's Stripe question bank names "numeronym validation" directly (page live
+2026); Exponent's guide lists it among Stripe coding-round sample questions but without a
+published I/O contract. The regex form of Part 1 and the "dictionary + collisions" shape of
+Parts 2-3 are this report's reconstruction of the standard numeronym definition, not a verbatim
+transcript -- flagged as an open point below.
 
-## 各部分思路
-1. **校验**：`^[a-z][1-9][0-9]*[a-z]$` —— 一个正则，但两个坑（前导零、digit=0）如果写
-   `\d+` 而不加 `[1-9]` 开头锚点，很容易漏掉。
-2. **对照词典展开**：numeronym -> `(first, last, expected_len)`，结构化过滤词典单词，
-   排序。O(词典规模)。
-3. **生成 + 解决冲突**：按 `(first, last, length)`（base numeronym）给单词分组；单例组
-   直接完成；冲突组逐步扩展字面前缀（2、3、...）直到各形式分道扬镳，上限确保 digit 段
-   永不低于 1；到达上限仍冲突的组（只在倒数第二个字符不同的单词）为组内每个成员都回退到
-   字面单词 —— 这是全题唯一不显而易见的设计决策，在"面试官会怎么追问"第 3 条中明确点出。
+## Approach by part
+1. **Validate**: `^[a-z][1-9][0-9]*[a-z]$` -- one regex, but the two traps (leading zero, digit=0)
+   are easy to miss if you write `\d+` without the leading-`[1-9]` anchor.
+2. **Expand against a dictionary**: numeronym -> `(first, last, expected_len)`, filter dictionary
+   words structurally, sort. O(dictionary size).
+3. **Generate + resolve collisions**: group words by `(first, last, length)` (the base numeronym);
+   singleton groups are done; colliding groups grow a literal prefix (2, 3, ...) until forms
+   diverge, capped so the digit segment never goes below 1; groups that still collide at the cap
+   (words differing only in the character right before the last one) fall back to the literal
+   word for every member -- this is the one non-obvious design decision in the whole problem and
+   is called out explicitly as "面试官会怎么追问" item 3.
 
-## 隐藏测试针对的坑点
-- `i018n`（前导零）vs `i18n` —— 数值上的 digit 相等，字符串上非法
-- `i0n` —— digit count 为 0 不是"退化但合法"的 numeronym
-- 大小写敏感独立于 digit 规则
-- Part 2 格式错误的词典行（大写、内嵌数字）必须跳过，不能崩溃
-- Part 2 遇到结构性非法的 numeronym -> `NONE`，不是异常
-- Part 3 长度 < 3 的单词 -> 映射到自身（绝不因 `len(word) - 2 < 0` 崩溃）
-- Part 3 三方冲突要在*同一个*前缀长度上为整组解决
-- Part 3 不可消歧退化（`flap`/`flip`）—— 朴素的"只管扩展前缀"实现最容易在此出错（死循环，
-  或产生一个本身就违反 Part 1 规则的 0 digit）
-- Part 3 重复的词典行折叠为一个条目，不是每行输出一次
+## Pitfalls hidden tests target
+- `i018n` (leading zero) vs `i18n` -- numerically equal digit value, string-invalid
+- `i0n` -- digit count 0 is not a degenerate-but-valid numeronym
+- case sensitivity independent of the digit rules
+- Part 2 malformed dictionary lines (uppercase, embedded digits) must be skipped, not crash
+- Part 2 on a structurally invalid numeronym -> `NONE`, not an exception
+- Part 3 words < 3 chars -> map to themselves (never crash on `len(word) - 2 < 0`)
+- Part 3 3-way collisions resolved at the *same* prefix length for the whole group
+- Part 3 the irreducible-collision fallback (`flap`/`flip`) -- the one case a naive "just grow the
+  prefix" implementation gets wrong (infinite loop or a digit of 0, which would itself be invalid
+  per Part 1's own rule)
+- Part 3 duplicate dictionary lines collapse to one entry, not one output line per line
 
-## 复杂度与实测开销
-Part 1/2：输入规模上 O(n)。Part 3：按 base 形式分桶 O(n)，每个大小为 `g` 的冲突组在最多
-`k` 个前缀长度上尝试，开销 O(k^2 . g) —— 实践中可忽略不计，因为真实词典里每个
-(first, last, length) 桶的冲突很少。实测：10 万个随机 3-15 字符小写单词，Part 3
-端到端（stdin -> stdout）远低于 2 秒，约 24 MB RSS（性能预算 2 秒 / 256 MB）—— 见
-`test_perf_100k_words`。
+## Complexity & measured cost
+Part 1/2: O(n) in input size. Part 3: O(n) to bucket by base form, plus O(k^2 . g) for each
+colliding group of size `g` at up to `k` prefix lengths tried -- negligible in practice since real
+dictionaries have few collisions per (first, last, length) bucket. Measured: 100,000 random
+3-15 char lowercase words, Part 3 end-to-end (stdin -> stdout) in well under 2 s, ~24 MB RSS
+(perf budget is 2 s / 256 MB) -- see `test_perf_100k_words`.
 
-## 测试清单
-23 个测试 —— part1: 8（含 1 个 io）· part2: 6 · part3: 9（含 1 个 io、1 个 perf）；
-edge 7 · fmt 3 · io 3 · perf 1。
+## Test inventory
+23 tests -- part1: 8 (incl. 1 io) . part2: 6 . part3: 9 (incl. 1 io, 1 perf); edge 7 . fmt 3 .
+io 3 . perf 1.
 
-## 涉及技能
-S02 解析/正则纪律 · S08 带明确 tie-break 的确定性排序 · S09 精确字符串格式化 · S14
-字符串归一化/大小写规则 · S18 校验与错误路径 · S19 增量式设计（Part 3 直接建立在
-Part 1 的 `is_valid` 之上）
+## Skills exercised
+S02 parsing/regex discipline . S08 deterministic sort with stated tie-break . S09 exact string
+formatting . S14 string canonicalization/case rules . S18 validation and error paths .
+S19 incremental design (Part 3 builds directly on Part 1's `is_valid`)
 
 ## 电面话术：边写边说什么
 1. **读题时**：先大声确认三件事——numeronym 的形式规则（尤其"前导零"和"大小写"这两条容易被面试官
@@ -65,12 +70,12 @@ Part 1 的 `is_valid` 之上）
 5. **收尾**：跑一遍 worked examples 手算结果对一遍，再问一句"要不要我写一个 property-based test 来验证
    is_valid 和我手写的正则完全等价"，展示测试意识（S20）。
 
-## 未解决点
+## Open points
 - 官方来源没有公开 Part 2/3 的确切 I/O 契约（仅确认"numeronym validation"这个题干存在于 FinalRound 题
   库、Exponent 把它列为 Stripe coding 轮样题）；本题的 Part 2/3 设计是遵循 Stripe 电面一贯的"验证 → 对
   照真实数据 → 处理冲突"三段式模板做的合理重建，如果拿到更精确的原题转录应回来对照修订。
 
-## 复盘（Fable 5.1，2026-09-01）
+## Review（Fable 5.1，2026-09-01）
 **改了什么**
 - `solution.py` 重构为"规则常量 → 解析 helper → 三个 part → I/O 分发"四段：新增 `_parse_dictionary`
   （去重 + 过滤坏行，Part 2/3 共用）、`_expands_to`（Part 2 的匹配谓词单独一个函数）、`numeronym_for(word,
@@ -86,4 +91,4 @@ Part 1 的 `is_valid` 之上）
 **为什么**：checklist S 项"后 part 复用前 part / 规则集中一处 / 一个函数一件事"；原 `_resolve_group` 的
 cap 分支是可读性负担而非必要；"只断言有序"的测试对 starter 也可能空过。
 
-**遗留**：Part 2/3 的原题 I/O 契约仍是重建（见 未解决点）；perf 用例 100k 词约 0.3 s，未做进一步优化。
+**遗留**：Part 2/3 的原题 I/O 契约仍是重建（见 Open points）；perf 用例 100k 词约 0.3 s，未做进一步优化。

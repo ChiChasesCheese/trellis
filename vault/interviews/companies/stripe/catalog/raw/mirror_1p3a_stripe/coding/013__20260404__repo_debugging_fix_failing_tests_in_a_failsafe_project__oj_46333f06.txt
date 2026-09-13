@@ -1,0 +1,302 @@
+"""
+Repo Debugging: Fix Failing Tests in a Failsafe Project
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/46333f06-4228-4ad2-9088-75edef798537
+Source Type: OJ / More Problems
+Repository: https://github.com/failsafe-lib/failsafe
+
+================================================================================
+PYTHON ADAPTATION
+================================================================================
+
+The original interview uses the real failsafe Java repository (a library for
+retry policies, circuit breakers, and fallbacks). Below is a Python adaptation
+with three injected bugs.
+
+Your task:
+1. Run the tests to identify the 3 failures.
+2. Trace each failure to its root cause in the library code.
+3. Fix each bug with a minimal change.
+4. Verify all tests pass.
+
+## Bug summary (for self-checking after you attempt it)
+
+Bug 1 (RetryPolicy) — Off-by-one in retry count.
+      `max_retries=3` should allow 4 total attempts (1 initial + 3 retries),
+      but the buggy code only allows 3 total attempts.
+
+Bug 2 (CircuitBreaker) — Threshold comparison is off-by-one.
+      `failure_threshold=5` should open the circuit after 5 failures, but the
+      buggy code requires 6 failures (uses `>` instead of `>=`).
+
+Bug 3 (CircuitBreaker) — Failure count never resets on success in CLOSED state.
+      Only resets when transitioning HALF_OPEN → CLOSED. Sporadic failures
+      accumulate over the circuit's lifetime and eventually trip the breaker
+      even though the service has been healthy for a long time.
+"""
+
+import time
+
+
+class CircuitOpenError(Exception):
+    """Raised when a call is attempted while the circuit breaker is open."""
+    pass
+
+
+# ---------------------------------------------------------------------------
+# Buggy code (DO NOT MODIFY — use for reference)
+# ---------------------------------------------------------------------------
+
+class RetryPolicyBuggy:
+    """Executes a function with automatic retries on failure.
+
+    Parameters
+    ----------
+    max_retries : int
+        Maximum number of *retries* after the initial attempt.
+        With max_retries=3 the function should run up to 4 times total.
+    delay : float
+        Seconds to wait between retries.
+    retry_on : tuple[type[Exception], ...]
+        Exception types that trigger a retry.  Other exceptions propagate
+        immediately.
+    """
+
+    def __init__(self, max_retries=3, delay=0.0, retry_on=None):
+        self.max_retries = max_retries
+        self.delay = delay
+        self.retry_on = retry_on or (Exception,)
+
+    def execute(self, fn):
+        last_exception = None
+        # BUG 1: range(max_retries) yields max_retries iterations, giving
+        # max_retries total attempts.  But max_retries means the number of
+        # *retries*, so total attempts should be max_retries + 1.
+        for attempt in range(self.max_retries):
+            try:
+                return fn()
+            except Exception as e:
+                if not isinstance(e, self.retry_on):
+                    raise
+                last_exception = e
+                if self.delay > 0:
+                    time.sleep(self.delay)
+        raise last_exception
+
+
+class CircuitBreakerBuggy:
+    """Prevents calls to a failing service by "opening" the circuit after
+    repeated failures.
+
+    States
+    ------
+    CLOSED    — normal operation; failures are counted.
+    OPEN      — all calls are rejected immediately with CircuitOpenError.
+    HALF_OPEN — one trial call is allowed to test whether the service recovered.
+
+    Parameters
+    ----------
+    failure_threshold : int
+        Number of failures that trips the breaker (CLOSED → OPEN).
+    reset_timeout : float
+        Seconds to wait before trying OPEN → HALF_OPEN.
+    """
+
+    CLOSED = 'closed'
+    OPEN = 'open'
+    HALF_OPEN = 'half-open'
+
+    def __init__(self, failure_threshold=5, reset_timeout=60.0):
+        self.failure_threshold = failure_threshold
+        self.reset_timeout = reset_timeout
+        self.failure_count = 0
+        self.state = self.CLOSED
+        self.opened_at = None
+
+    def execute(self, fn):
+        if self.state == self.OPEN:
+            elapsed = time.time() - self.opened_at
+            if elapsed >= self.reset_timeout:
+                self.state = self.HALF_OPEN
+            else:
+                raise CircuitOpenError(
+                    f"Circuit open; retry in {self.reset_timeout - elapsed:.1f}s"
+                )
+
+        try:
+            result = fn()
+            # BUG 2: Only resets failure count when transitioning from
+            # HALF_OPEN → CLOSED.  A success in CLOSED state does NOT
+            # reset the counter, so sporadic failures accumulate and
+            # eventually trip the breaker.
+            if self.state == self.HALF_OPEN:
+                self._reset()
+            return result
+        except Exception:
+            self._record_failure()
+            raise
+
+    def _record_failure(self):
+        self.failure_count += 1
+        # BUG 3: Uses `>` instead of `>=`.  With failure_threshold=5,
+        # the circuit opens after 6 failures instead of 5.
+        if self.failure_count > self.failure_threshold:
+            self.state = self.OPEN
+            self.opened_at = time.time()
+
+    def _reset(self):
+        self.failure_count = 0
+        self.state = self.CLOSED
+        self.opened_at = None
+
+
+# ---------------------------------------------------------------------------
+# Implement your fixes here
+# ---------------------------------------------------------------------------
+
+class RetryPolicyFixed:
+    """Fix Bug 1: retry count off-by-one."""
+
+    def __init__(self, max_retries=3, delay=0.0, retry_on=None):
+        pass
+
+    def execute(self, fn):
+        pass
+
+
+class CircuitBreakerFixed:
+    """Fix Bugs 2 and 3: failure-count reset + threshold comparison."""
+
+    CLOSED = 'closed'
+    OPEN = 'open'
+    HALF_OPEN = 'half-open'
+
+    def __init__(self, failure_threshold=5, reset_timeout=60.0):
+        pass
+
+    def execute(self, fn):
+        pass
+
+
+# ---------------------------------------------------------------------------
+# Tests
+# ---------------------------------------------------------------------------
+
+def run_tests():
+    # ---- Test 1: Retry count ----
+    call_count = 0
+
+    def always_fails():
+        nonlocal call_count
+        call_count += 1
+        raise ValueError("fail")
+
+    policy = RetryPolicyFixed(max_retries=3, delay=0)
+    try:
+        policy.execute(always_fails)
+    except ValueError:
+        pass
+    assert call_count == 4, (
+        f"max_retries=3 → expected 4 total attempts (1 initial + 3 retries), "
+        f"got {call_count}"
+    )
+
+    # max_retries=0 means one attempt with no retries
+    call_count = 0
+    try:
+        RetryPolicyFixed(max_retries=0, delay=0).execute(always_fails)
+    except ValueError:
+        pass
+    assert call_count == 1, f"max_retries=0 → expected 1 attempt, got {call_count}"
+
+    # Succeeds on 3rd attempt
+    call_count = 0
+    def succeeds_on_third():
+        nonlocal call_count
+        call_count += 1
+        if call_count < 3:
+            raise ValueError("not yet")
+        return "ok"
+
+    result = RetryPolicyFixed(max_retries=3, delay=0).execute(succeeds_on_third)
+    assert result == "ok"
+    assert call_count == 3
+
+    # Only retries on specified exception types
+    call_count = 0
+    def raises_type_error():
+        nonlocal call_count
+        call_count += 1
+        raise TypeError("wrong type")
+
+    try:
+        RetryPolicyFixed(
+            max_retries=3, delay=0, retry_on=(ValueError,)
+        ).execute(raises_type_error)
+    except TypeError:
+        pass
+    assert call_count == 1, "Should not retry on unmatched exception type"
+
+    print("Test 1 (retry count): PASSED")
+
+    # ---- Test 2: Circuit breaker threshold ----
+    def fail_fn():
+        raise RuntimeError("service down")
+
+    cb = CircuitBreakerFixed(failure_threshold=3, reset_timeout=0.1)
+    for _ in range(3):
+        try:
+            cb.execute(fail_fn)
+        except RuntimeError:
+            pass
+
+    # After exactly threshold failures, circuit must be OPEN
+    try:
+        cb.execute(fail_fn)
+        assert False, "Should have raised CircuitOpenError"
+    except CircuitOpenError:
+        pass  # expected
+    except RuntimeError:
+        assert False, (
+            "Circuit should be OPEN after 3 failures (= threshold), "
+            "but call went through"
+        )
+
+    print("Test 2 (circuit threshold): PASSED")
+
+    # ---- Test 3: Failure count resets on success in CLOSED state ----
+    cb2 = CircuitBreakerFixed(failure_threshold=3, reset_timeout=0.1)
+
+    # 2 failures
+    for _ in range(2):
+        try:
+            cb2.execute(fail_fn)
+        except RuntimeError:
+            pass
+
+    # 1 success — should reset the failure counter
+    cb2.execute(lambda: "ok")
+
+    # 2 more failures (total since reset = 2, below threshold of 3)
+    for _ in range(2):
+        try:
+            cb2.execute(fail_fn)
+        except RuntimeError:
+            pass
+
+    # Circuit should still be CLOSED
+    try:
+        cb2.execute(lambda: "still ok")
+    except CircuitOpenError:
+        assert False, (
+            "Circuit opened after 4 total failures, but only 2 since last "
+            "success.  Failure count must reset on success in CLOSED state."
+        )
+
+    print("Test 3 (failure reset on success): PASSED")
+    print("\nAll tests passed")
+
+
+if __name__ == '__main__':
+    run_tests()

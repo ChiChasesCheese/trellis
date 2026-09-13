@@ -1,0 +1,62 @@
+"""
+Email (Multi-part)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/48dbfe85-e973-4205-950a-2a075b7d0307
+Source Type: OJ / More Problems
+
+Question Summary:
+## Email (Multi-part)
+
+Implement a set of email-related functions/logic (3 parts).
+
+### Part 1: Parse & validate
+Given a string `s`, determine whether it is a valid email. Minimum rules:
+- Contains exactly one `@`
+- Non-empty local-part and domain
+- Domain contains at least one `.`, and `.` is not the first or last character
+
+Output `true/false`.
+
+### Part 2: Canonicalization
+Given an email string `s`, output its canonical form:
+- Case-insensitive (convert to lowercase)
+- Remove `+tag` from the local-part (delete `+` and everything after it)
+- Remove all `.` characters from the local-part
+
+Example:
+- `"John.Smith+promo@Gmail.com" -> "johnsmith@gmail.com"`
+
+### Part 3: Unique count
+Given N emails, filter out invalid ones, canonicalize valid ones (Part 2), and output the number of distinct canonical emails.
+
+### Input
+From stdin:
+- Line 1: integer `N`
+- Next N lines: one email string per line
+
+### Output
+An integer: number of distinct canonical emails.
+
+### Constraints
+- `1 <= N <= 2e5`
+- Each string length `<= 200`
+- Aim for O(total_length) or near-linear time.
+
+### Example
+**Input**
+```
+6
+John.Smith+promo@Gmail.com
+johnsmith@gmail.com
+alice@leetcode.com
+alice+spam@leetcode.com
+bad-email
+x@a
+```
+
+**Output**
+```
+2
+```
+"""

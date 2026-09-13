@@ -1,0 +1,26 @@
+"""
+Card Parse with Length and Application ID
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/cfb8c739-4f8d-40f2-8aa6-eeb956d49a67
+Source Type: OJ / More Problems
+
+Question Summary:
+Given a string where the first two characters represent the length, and the rest is an application ID, write a function to parse this string.
+
+Requirements:
+- Input: A string s with length n, where n >= 2.
+- Output: A dictionary for card parsing containing 'length' and 'application_id'.
+
+Example:
+
+Input:
+'s07ApplicationId1'
+
+Output:
+{'length': 7, 'application_id': 'ApplicationId1'}
+
+Constraints:
+- The length of string s does not exceed 100.
+- The first digit represents the tens place, and the second represents the units place of the length.
+"""

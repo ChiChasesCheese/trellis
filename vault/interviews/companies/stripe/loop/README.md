@@ -1,7 +1,5 @@
 # loop/ — Stripe 面试 Loop 演练套件
 
-> **这里只有 markdown**（题面、参考解说明、指南、原始调研）。可运行的部分——`loop/mock.py`、mockserver、`loop/work/`、pytest 套件——在代码仓库 `~/Code/ITV/stripe-oa`，本文件里的命令都在那个仓库根目录下跑。
-
 OA 之后全部轮次（recruiter → HM → 电面 → onsite：bug squash / integration / coding / system
 design → behavioral）的离线 mock 面试环境。技术轮沿用根目录 OA 套件的约定（见
 `../CONVENTIONS.md`：`partN()` + `main()`、pytest markers、根 `../conftest.py` 的 `impl` /
@@ -16,8 +14,10 @@ loop/rounds/06_coding_onsite/cdNN_slug/              同上
 loop/rounds/05_integration/intNN_slug/               同上 + data/，测试自起 mockserver
 loop/rounds/04_bug_squash/bsNN_slug/                 src/<pkg>/ tests/ README.md solution/FIX.patch
 loop/rounds/07_system_design/sdNN_slug/              prompt.md rubric.md model_answer.md followups.md
+loop/mockserver/                                     stdlib http.server：maps / payments
+loop/work/<id>/                                      bug squash 工作区（已 gitignore，会被清空重建）
 loop/study/                                          前置课 + 每轮准备材料 + 速记卡片
-loop/CATALOG.md                                      题库总表
+loop/CATALOG.md · loop/tree/                         题库总表、知识树（校验脚本）
 ```
 
 ## `mock.py` 用法速查
@@ -31,6 +31,7 @@ python3 loop/mock.py ref <id> [-k EXPR]       # 跑参考解（bs 会先 git app
 python3 loop/mock.py time <id>                # 查看剩余时间
 python3 loop/mock.py serve <id> [--port N]    # int 题：启动题面声明的 mockserver（Ctrl-C 停止）
 python3 loop/mock.py bq [round] [-n N] [--seed S]   # 从 recruiter/hm/behavioral 题库随机抽题计时
+python3 loop/mock.py status [--all] [--all-kinds]   # 进度板：哪些题绿了、最好用时、最近 10 次趋势
 ```
 
 `id` 用短前缀即可（`ps01`/`cd03`/`int01`/`bs02`/`sd01`），只要能在

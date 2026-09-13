@@ -1,0 +1,16 @@
+"""
+Payment Webhook System
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/post/7100095
+Source Type: Popular Questions / External Thread
+
+Question Summary:
+Design a webhook delivery service for a payments platform that notifies merchants when payment events occur.
+
+Public Section Headings:
+- Payment Webhook System
+- The Challenge
+- Helpful Links
+- Real World Context
+"""

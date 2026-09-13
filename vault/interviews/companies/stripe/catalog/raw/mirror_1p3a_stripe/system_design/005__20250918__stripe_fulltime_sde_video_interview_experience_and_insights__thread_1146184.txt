@@ -1,0 +1,10 @@
+"""
+Stripe Fulltime SDE Video Interview Experience and Insights
+Category: System Design Question
+Company: Stripe
+Source: https://www.1point3acres.com/interview/thread/1146184
+Source Type: Interview Experience Summary
+
+Question Summary:
+A detailed Stripe fulltime SDE video interview experience covering manager conversation, system design of log processing, and interactions with a security engineer interviewer.
+"""

@@ -4,8 +4,6 @@
 > 去 SystemDesign 仓库的 **Code Core** 牌组里把对应叶子的卡片加进复习队列。
 >
 > **考点编号**见 `00-essentials/02-core-topics.md`。
->
-> **碎片时间只想练「读题→认类型→想方向」** → 直接读 `00-essentials/12-pattern-cards.md`（不含细节）。
 
 ## 刷题顺序
 
@@ -16,7 +14,7 @@
 **phone screen 组**：`q22 q21 q19 q25 q32`
 **算法组**：`qA01`–`qA13`
 
-## 自研题（q01–q40）
+## 自研题（q01–q41）
 
 | 题 | 一句话 | 主要考点 | 主 Code Core 叶子 | 精华章节 |
 |---|---|---|---|---|
@@ -60,6 +58,7 @@
 | q38 | 功能开关（灰度 + 依赖） | S11 S05 | `verification.determinism` `model.state-machine` | 07 §9 |
 | q39 | 服务器运行日志（k 次摘除） | A01 S10 | `algorithms.prefix` `algorithms.dp` | 08 §1,9 |
 | q40 | 邻近词查询（最小窗口） | S16 S14 | `algorithms.sliding-window` `toolbox.sorted` | 08 §2 |
+| q41 | 可观测性指标（时间窗聚合 + 迟滞告警，重建题） | S02 S05 S10 S12 S16 | `chrono.windows` `rules.thresholds` `model.state-machine` | 02 §S12,S16 |
 
 ## 算法组（qA01–qA13）
 

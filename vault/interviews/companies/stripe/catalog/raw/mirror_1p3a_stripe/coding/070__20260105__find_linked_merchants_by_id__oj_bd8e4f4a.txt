@@ -1,0 +1,10 @@
+"""
+Find linked merchants by ID
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/bd8e4f4a-1201-4022-83ab-7f907b98c0e3
+Source Type: OJ / More Problems
+
+Question Summary:
+Given a list of merchants, each represented by a dictionary with fields id, name, email, and phone, and a merchant's id, find all merchants that match at least one field with the given merchant.
+"""

@@ -1,0 +1,46 @@
+"""
+CSV Verification
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/f83f142b-0fe4-4b97-9f80-7ff2024b4cad
+Source Type: OJ / More Problems
+
+Question Summary:
+Write a function to verify if a given CSV file adheres to specified rules.
+
+The specific requirements are as follows:
+
+- Each line of the CSV file contains multiple fields, separated by commas.
+- The first field is a unique identifier for the data row and should not be duplicated.
+- The second field should be in date format (YYYY-MM-DD) and must be a valid date.
+- The third field should match the format for a standard email address.
+- The number of fields should be consistent in every line.
+
+Write a program to read CSV data from standard input and then output the verification results.
+
+### Test Cases
+
+**Input**
+```
+1,2023-01-01,test@example.com
+2,not-a-date,sample@domain.com
+3,2023-01-02,invalid-email
+```
+
+**Output**
+```
+Line 2: Invalid date format
+Line 3: Invalid email format
+```
+
+**Input**
+```
+1,2023-03-15,user@domain.com
+2,2023-03-16,user2@domain.com
+```
+
+**Output**
+```
+All lines are valid
+```
+"""

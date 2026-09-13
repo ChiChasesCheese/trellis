@@ -1,0 +1,16 @@
+"""
+Feature Flag SDK
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/post/7100093
+Source Type: Popular Questions / External Thread
+
+Question Summary:
+Design an SDK that internal company services can use to manage and evaluate feature flags.
+
+Public Section Headings:
+- Feature Flag SDK
+- The Challenge
+- Helpful Links
+- What to Expect in the Interview
+"""

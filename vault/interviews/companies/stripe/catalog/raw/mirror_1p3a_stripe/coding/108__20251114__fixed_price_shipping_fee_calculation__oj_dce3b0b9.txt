@@ -1,0 +1,25 @@
+"""
+Fixed Price Shipping Fee Calculation
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/dce3b0b9-e416-40ff-be28-0999cb8ca820
+Source Type: OJ / More Problems
+
+Question Summary:
+Given several orders, each containing information: country, item, and quantity. Each item has a fixed unit shipping fee. Calculate the total shipping fee for all orders. Requirements:
+- Input format: each line is an order in the format "country, item, quantity" where quantity is a positive integer.
+- You can assume the unit shipping fee for each item is provided in an external dictionary, e.g., {"item1": 5, "item2": 10}.
+- Output format: a single integer representing the total shipping fee.
+
+**Test Cases**
+
+- Input:
+    ```
+    USA, item1, 2
+    Canada, item2, 3
+    ```
+- Output:
+    ```
+    40
+    ```
+"""

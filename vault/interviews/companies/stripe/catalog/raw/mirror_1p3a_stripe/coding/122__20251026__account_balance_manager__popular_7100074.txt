@@ -1,0 +1,18 @@
+"""
+Account Balance Manager
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/post/7100074
+Source Type: Popular Questions / External Thread
+
+Question Summary:
+You are building an account balance management system for a payment platform.
+
+Public Section Headings:
+- Account Balance Manager
+- Challenge Summary
+- Step 1: Calculating Totals
+- Step 2: Stopping Overdrafts
+- Step 3: Covering Negative Balances
+- How to Solve It
+"""

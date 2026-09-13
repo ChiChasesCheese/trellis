@@ -1,0 +1,23 @@
+"""
+Total Price Calculation of Orders
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/d81a17f9-30a0-40e0-9088-c46ec43f1a52
+Source Type: OJ / More Problems
+
+Question Summary:
+Given a series of orders and their corresponding shipping costs, calculate the total price for each order. The total price is the sum of the order's price and the corresponding shipping cost. Implement a function to achieve this, with the following signature:
+```python
+def calculate_total_prices(orders: List[Tuple[int, float]], shipping_costs: List[float]) -> List[float]:
+```
+Where `orders` is a list of orders, each order is comprised of an integer (quantity) and a float (unit price), and `shipping_costs` is a list of shipping costs corresponding to each order. Return the total prices for each order.
+
+### Example:
+Input: `orders = [(3, 10.0), (5, 7.5)], shipping_costs = [5.0, 3.0]`
+Output: `[35.0, 40.5]`
+
+### Constraints:
+- The length of `orders` and `shipping_costs` are the same, a maximum of 1000
+- Quantity is an integer between [1, 100]
+- Unit price and shipping costs are floats between [0.0, 100.0]
+"""

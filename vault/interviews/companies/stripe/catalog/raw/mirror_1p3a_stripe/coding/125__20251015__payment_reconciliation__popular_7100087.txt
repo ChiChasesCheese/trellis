@@ -1,0 +1,14 @@
+"""
+Payment Reconciliation
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/post/7100087
+Source Type: Popular Questions / External Thread
+
+Question Summary:
+This is a hands-on integration assessment where you'll build a payment reconciliation system that processes payment data and communicates with a clearing service API.
+
+Public Section Headings:
+- Payment Reconciliation
+- Task Summary
+"""

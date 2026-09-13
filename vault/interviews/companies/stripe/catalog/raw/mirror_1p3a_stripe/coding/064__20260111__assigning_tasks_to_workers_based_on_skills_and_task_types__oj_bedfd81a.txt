@@ -1,0 +1,10 @@
+"""
+Assigning Tasks to Workers Based on Skills and Task Types
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/bedfd81a-7446-4b01-baed-70d6bedd0288
+Source Type: OJ / More Problems
+
+Question Summary:
+Given a list of workers and tasks where each task has a duration, print out which worker is assigned to each task. Each worker has their own areas of expertise, and each task has a type. Tasks should be assigned to the fastest worker that handles the task type. Additionally, each task is linked to an account, and if an account's previous task was assigned to a worker, subsequent tasks from the same account should go to the same worker unless the task type is not supported by the worker.
+"""

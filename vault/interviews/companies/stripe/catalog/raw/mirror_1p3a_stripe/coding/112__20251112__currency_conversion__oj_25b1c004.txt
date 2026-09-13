@@ -1,0 +1,10 @@
+"""
+Currency Conversion
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/25b1c004-aefc-4fc7-bdd5-d6b7dc7afcca
+Source Type: OJ / More Problems
+
+Question Summary:
+Given a set of currency conversion rates like `AUD:USD:0.7, AUD:JPY:100, USD:CAD:1.2`. Implement a function that, given `fromCurrency` and `toCurrency`, returns the direct conversion rate between them. Include reverse rate calculations; for example, given `USD` to `CAD`, it should also provide the rate for `CAD` to `USD`. Additionally, implement the functionality to calculate the best rate through one or more conversions, such as two paths: `AUD->GBP->CAD` and `AUD->USD->CAD`, and return the best rate. In the case of multiple conversions, when multiple paths are possible, find the best path to the target currency.
+"""

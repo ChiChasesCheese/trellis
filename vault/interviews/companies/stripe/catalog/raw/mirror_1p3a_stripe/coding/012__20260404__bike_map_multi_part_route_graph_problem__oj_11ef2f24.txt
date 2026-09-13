@@ -1,0 +1,440 @@
+"""
+Bike Map (Multi-part Route/Graph Problem)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/11ef2f24-0225-4662-8694-9d352de68350
+Source Type: OJ / More Problems
+
+================================================================================
+INTERVIEW PROMPT (as it would be delivered by the interviewer)
+================================================================================
+
+Hey, welcome. The problem today is loosely inspired by an internal tool
+the Couriers team built for our food-delivery partners. They run an
+electric-bike delivery network in a few cities; the dispatcher needs
+to compute routes for couriers in real time. We're going to build a
+small, single-courier version of that.
+
+We'll start with a basic grid and shortest path, then add a battery
+constraint, then add multi-stop routing. You can use any language. Read
+input from stdin, write output to stdout.
+
+--------------------------------------------------------------------------------
+The map (same for all parts)
+--------------------------------------------------------------------------------
+
+The first input line is two integers `R C` -- rows and columns. The
+next R lines are the grid, each exactly C characters. The cell
+characters are:
+
+    '.'   road -- ridable, costs 1 minute to enter
+    'H'   hill -- ridable but slow, costs 3 minutes to enter
+    '#'   blocked -- can't enter
+    'S'   start (exactly one)
+    'E'   end (exactly one)   [Parts 1 and 2 only]
+    'C'   charging station -- ridable, costs 1 minute to enter
+                              [Part 2 onward; treated as '.' in Part 1]
+    '1'-'9'  drop-off points  [Part 3 only; treated as '.' in Parts 1-2]
+
+Movement is 4-directional (up/down/left/right). The cost shown above
+is the cost to ENTER a cell -- the start cell is free. You may not
+leave the grid.
+
+If `S` and `E` are unreachable, print `UNREACHABLE`.
+
+--------------------------------------------------------------------------------
+PART 1 -- Shortest time
+--------------------------------------------------------------------------------
+
+After the grid, you'll get one more line:
+
+    PART1
+
+Print a single integer: the minimum total time (in minutes) to go from
+`S` to `E`. If unreachable, print `UNREACHABLE`.
+
+Example input:
+
+    4 5
+    S.H..
+    ##.#.
+    ..H.E
+    .....
+    PART1
+
+Walk south-south-east avoiding hills; the optimal path is something
+like S(0)-> right -> right (hill, +3) is suboptimal, so you'd go down
+through the # column gap... You get the idea.
+
+Expected output for that example:
+    9
+
+--------------------------------------------------------------------------------
+PART 2 -- Battery
+--------------------------------------------------------------------------------
+
+The bike has a battery. After the grid, you get:
+
+    PART2 <starting_charge> <max_charge>
+
+Both are positive integers. Each cell you ENTER costs charge equal to
+its move cost in minutes (so '.' costs 1, 'H' costs 3). Charge cannot
+go below 0; if entering a cell would do that, the move is illegal.
+
+Charging stations 'C' restore charge to `max_charge` upon entry (you
+arrive, and instantly your battery is full). The 1 minute it took to
+enter 'C' is still spent and still drains 1 charge before the recharge.
+
+You start at 'S' with `starting_charge` (which may equal `max_charge`
+or be less; never more).
+
+Print the minimum total time to reach 'E', or `UNREACHABLE`.
+
+--------------------------------------------------------------------------------
+PART 3 -- Multi-stop tour
+--------------------------------------------------------------------------------
+
+The grid in Part 3 has no 'E'. Instead it has K drop-off points
+labeled '1', '2', ..., 'K' (1 <= K <= 8). After the grid you get:
+
+    PART3 <starting_charge> <max_charge>
+
+Battery rules from Part 2 still apply. Find the minimum total time to
+start at 'S', visit ALL drop-off points in any order, and return to
+'S'. Drop-off points are NOT charging stations (they cost 1 like '.').
+
+If any tour is impossible due to battery or blocked cells, print
+`UNREACHABLE`.
+
+K small enough for bitmask DP. (Yes, this is TSP. Hint: Floyd-Warshall
+the dropoffs + S to get pairwise shortest paths under the battery
+constraint, then bitmask DP over which dropoffs you've visited.)
+
+--------------------------------------------------------------------------------
+Constraints
+--------------------------------------------------------------------------------
+
+- 1 <= R, C <= 200.
+- 1 <= max_charge <= 200.
+- 1 <= K <= 8 (Part 3).
+- The grid contains at least one 'S'. Parts 1-2 contain exactly one 'E'.
+- All inputs end at EOF after the part directive line.
+
+--------------------------------------------------------------------------------
+What I'm looking for
+--------------------------------------------------------------------------------
+
+[Interviewer notes]
+
+- Part 1 should be Dijkstra (or equivalent) on a weighted grid. BFS
+  would be wrong because of hills.
+- Part 2 should NOT be "two passes". The right shape is: state =
+  (row, col, current_charge), Dijkstra over the augmented state
+  space. We're watching for that intuition.
+- Part 3 wants two layers: (a) compute pairwise shortest path between
+  every (S, dropoff_i) pair using Part 2's logic, (b) Held-Karp
+  bitmask DP on the resulting K+1-node complete graph. Many
+  candidates skip step (a) and try to do bitmask DP directly on the
+  grid -- that blows up.
+- Common bugs: charge dropping below 0 by 1 step (off-by-one on the
+  "entering 'C' still costs 1 charge first"), forgetting to enqueue
+  the start cell with starting_charge, reading more input than the
+  grid actually has rows (mixing R off by one).
+"""
+
+from __future__ import annotations
+
+import heapq
+import logging
+import sys
+from dataclasses import dataclass
+from typing import Iterator, Optional
+
+logger = logging.getLogger(__name__)
+
+
+# ---------------------------------------------------------------------------
+# Domain constants
+# ---------------------------------------------------------------------------
+
+ROAD: str = "."
+HILL: str = "H"
+BLOCKED: str = "#"
+START: str = "S"
+END: str = "E"
+CHARGER: str = "C"
+
+CARDINAL_DIRECTIONS: tuple[tuple[int, int], ...] = (
+    (-1, 0), (1, 0), (0, -1), (0, 1),
+)
+
+UNREACHABLE_OUTPUT: str = "UNREACHABLE"
+
+
+# ---------------------------------------------------------------------------
+# Grid types
+# ---------------------------------------------------------------------------
+
+
+@dataclass(frozen=True, order=True)
+class Position:
+    """A single (row, col) coordinate on the grid.
+
+    `order=True` so heapq can break ties when two states have equal
+    priority. The row-then-col ordering is arbitrary but consistent.
+    """
+
+    row: int
+    col: int
+
+
+@dataclass
+class Grid:
+    """An R x C grid of single-character cells."""
+
+    rows: int
+    cols: int
+    cells: list[str]
+
+    @property
+    def start(self) -> Position:
+        return self._find_unique(START)
+
+    @property
+    def end(self) -> Position:
+        return self._find_unique(END)
+
+    def _find_unique(self, character: str) -> Position:
+        matches = [pos for pos in self if self[pos] == character]
+        if len(matches) != 1:
+            raise ValueError(
+                f"expected exactly one {character!r} cell, found {len(matches)}"
+            )
+        return matches[0]
+
+    def find_all(self, character_class: str) -> list[Position]:
+        return [pos for pos in self if self[pos] in character_class]
+
+    def __iter__(self) -> Iterator[Position]:
+        for r in range(self.rows):
+            for c in range(self.cols):
+                yield Position(r, c)
+
+    def __getitem__(self, pos: Position) -> str:
+        return self.cells[pos.row][pos.col]
+
+    def in_bounds(self, pos: Position) -> bool:
+        return 0 <= pos.row < self.rows and 0 <= pos.col < self.cols
+
+
+def enter_cost(cell: str) -> int:
+    """Time/charge cost to ENTER a cell. Blocked cells return -1."""
+    if cell == BLOCKED:
+        return -1
+    if cell == HILL:
+        return 3
+    return 1
+
+
+# ---------------------------------------------------------------------------
+# Part 1 -- shortest time, no battery
+# ---------------------------------------------------------------------------
+
+
+def shortest_time(grid: Grid, source: Position, target: Position) -> Optional[int]:
+    """Dijkstra over the weighted grid. None if target is unreachable."""
+    distances: dict[Position, int] = {source: 0}
+    queue: list[tuple[int, Position]] = [(0, source)]
+    while queue:
+        time_so_far, position = heapq.heappop(queue)
+        if position == target:
+            return time_so_far
+        if time_so_far > distances.get(position, float("inf")):
+            continue
+        for neighbor in _walkable_neighbors(grid, position):
+            tentative = time_so_far + enter_cost(grid[neighbor])
+            if tentative < distances.get(neighbor, float("inf")):
+                distances[neighbor] = tentative
+                heapq.heappush(queue, (tentative, neighbor))
+    return None
+
+
+def _walkable_neighbors(grid: Grid, position: Position) -> Iterator[Position]:
+    for dr, dc in CARDINAL_DIRECTIONS:
+        neighbor = Position(position.row + dr, position.col + dc)
+        if not grid.in_bounds(neighbor):
+            continue
+        if grid[neighbor] == BLOCKED:
+            continue
+        yield neighbor
+
+
+# ---------------------------------------------------------------------------
+# Part 2 -- battery-constrained shortest path
+# ---------------------------------------------------------------------------
+
+
+@dataclass(frozen=True, order=True)
+class BatteryState:
+    """One node in the augmented (position, charge) Dijkstra state space.
+
+    `order=True` for heapq tiebreaking; ordering is by (position, charge)
+    field declaration order, which is arbitrary but deterministic.
+    """
+
+    position: Position
+    charge: int
+
+
+def shortest_time_with_battery(
+    grid: Grid,
+    source: Position,
+    target: Position,
+    starting_charge: int,
+    max_charge: int,
+) -> Optional[int]:
+    """Dijkstra over (position, charge) states. None if unreachable."""
+    initial_state = BatteryState(source, starting_charge)
+    best_time: dict[BatteryState, int] = {initial_state: 0}
+    queue: list[tuple[int, BatteryState]] = [(0, initial_state)]
+
+    while queue:
+        time_so_far, state = heapq.heappop(queue)
+        if state.position == target:
+            logger.debug("reached target with charge=%d in %d min",
+                         state.charge, time_so_far)
+            return time_so_far
+        if time_so_far > best_time.get(state, float("inf")):
+            continue
+        for neighbor in _walkable_neighbors(grid, state.position):
+            cell = grid[neighbor]
+            cost = enter_cost(cell)
+            charge_after_move = state.charge - cost
+            if charge_after_move < 0:
+                continue
+            charge_after_move = (
+                max_charge if cell == CHARGER else charge_after_move
+            )
+            next_state = BatteryState(neighbor, charge_after_move)
+            tentative = time_so_far + cost
+            if tentative < best_time.get(next_state, float("inf")):
+                best_time[next_state] = tentative
+                heapq.heappush(queue, (tentative, next_state))
+    return None
+
+
+# ---------------------------------------------------------------------------
+# Part 3 -- multi-stop tour with battery
+# ---------------------------------------------------------------------------
+
+
+def shortest_tour(
+    grid: Grid,
+    starting_charge: int,
+    max_charge: int,
+) -> Optional[int]:
+    """Visit every drop-off and return to S. None if any leg is impossible."""
+    drop_off_positions = grid.find_all("123456789")
+    drop_off_positions.sort(key=lambda position: grid[position])
+    nodes: list[Position] = [grid.start, *drop_off_positions]
+    n = len(nodes)
+    logger.debug("tour over %d nodes (S + %d drop-offs)", n, n - 1)
+
+    pairwise_time: list[list[Optional[int]]] = [
+        [None] * n for _ in range(n)
+    ]
+    for i in range(n):
+        for j in range(n):
+            if i == j:
+                pairwise_time[i][j] = 0
+                continue
+            pairwise_time[i][j] = shortest_time_with_battery(
+                grid, nodes[i], nodes[j], max_charge, max_charge,
+            )
+
+    INF = float("inf")
+    drop_off_count = n - 1
+    full_visit_mask = (1 << drop_off_count) - 1
+
+    dp: list[list[float]] = [
+        [INF] * n for _ in range(1 << drop_off_count)
+    ]
+    dp[0][0] = 0
+
+    for visited_mask in range(1 << drop_off_count):
+        for last in range(n):
+            if dp[visited_mask][last] == INF:
+                continue
+            for next_drop_off_index in range(drop_off_count):
+                bit = 1 << next_drop_off_index
+                if visited_mask & bit:
+                    continue
+                next_node = next_drop_off_index + 1
+                leg = pairwise_time[last][next_node]
+                if leg is None:
+                    continue
+                new_mask = visited_mask | bit
+                candidate = dp[visited_mask][last] + leg
+                if candidate < dp[new_mask][next_node]:
+                    dp[new_mask][next_node] = candidate
+
+    best_round_trip: float = INF
+    for last in range(1, n):
+        leg_back = pairwise_time[last][0]
+        if leg_back is None:
+            continue
+        total = dp[full_visit_mask][last] + leg_back
+        if total < best_round_trip:
+            best_round_trip = total
+
+    return None if best_round_trip == INF else int(best_round_trip)
+
+
+# ---------------------------------------------------------------------------
+# I/O
+# ---------------------------------------------------------------------------
+
+
+def parse_input(text: str) -> tuple[Grid, list[str]]:
+    """Read the R/C header, the grid lines, and the trailing directive."""
+    lines = text.splitlines()
+    rows, cols = (int(x) for x in lines[0].split())
+    grid_lines = lines[1:1 + rows]
+    directive_tokens = lines[1 + rows].split()
+    return Grid(rows, cols, grid_lines), directive_tokens
+
+
+def dispatch(grid: Grid, directive_tokens: list[str]) -> str:
+    """Run the part identified by `directive_tokens` and format the result."""
+    part = directive_tokens[0]
+    if part == "PART1":
+        result = shortest_time(grid, grid.start, grid.end)
+    elif part == "PART2":
+        starting_charge, max_charge = (int(x) for x in directive_tokens[1:3])
+        result = shortest_time_with_battery(
+            grid, grid.start, grid.end, starting_charge, max_charge,
+        )
+    elif part == "PART3":
+        starting_charge, max_charge = (int(x) for x in directive_tokens[1:3])
+        result = shortest_tour(grid, starting_charge, max_charge)
+    else:
+        raise ValueError(f"unknown directive: {part!r}")
+    return UNREACHABLE_OUTPUT if result is None else str(result)
+
+
+def _configure_logging() -> None:
+    logging.basicConfig(
+        level=logging.WARNING,
+        format="[%(levelname)s] %(name)s: %(message)s",
+        stream=sys.stderr,
+    )
+
+
+def main() -> None:
+    _configure_logging()
+    grid, directive_tokens = parse_input(sys.stdin.read())
+    print(dispatch(grid, directive_tokens))
+
+
+if __name__ == "__main__":
+    main()

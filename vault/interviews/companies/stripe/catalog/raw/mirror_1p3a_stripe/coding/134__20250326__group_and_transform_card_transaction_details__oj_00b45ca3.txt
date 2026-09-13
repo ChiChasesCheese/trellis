@@ -1,0 +1,36 @@
+"""
+Group and Transform Card Transaction Details
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/00b45ca3-7862-4241-8213-cd763996339f
+Source Type: OJ / More Problems
+
+Question Summary:
+Given a set of card transaction information including `id`, `date`, `card type`, and `amount`, output the `id`, `date`, `card type`, and the cumulative amount grouped by date and card type.
+
+Next, replace the customer id in `id` with a merchant id, if other fields match.
+
+Implement these features and handle possible edge cases, leaving the specific handling up to you.
+
+**Input Format:**
+- The first line contains an integer `n`, the number of transaction records.
+- The next `n` lines each contain `id`, `date`, `card type`, and `amount`, separated by spaces.
+
+**Output Format:**
+- For each record, output the `id`, `date`, `card type`, and cumulative amount, separated by spaces.
+
+**Sample Input:**
+```
+4
+1 2023-10-01 credit 100
+2 2023-10-01 credit 200
+3 2023-10-02 debit 150
+4 2023-10-01 credit 50
+```
+
+**Sample Output:**
+```
+1 2023-10-01 credit 350
+3 2023-10-02 debit 150
+```
+"""

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(uv run *)",
+      "Bash(python3 *)",
+      "Bash(pytest *)",
+      "Bash(latexmk *)",
+      "Bash(/usr/bin/git status*)",
+      "Bash(/usr/bin/git diff*)",
+      "Bash(/usr/bin/git log*)",
+      "Bash(/usr/bin/git ls-files*)",
+      "Bash(gh pr *)",
+      "Bash(gh api *)",
+      "WebSearch",
+      "WebFetch"
+    ]
+  },
+  "worktree": {
+    "baseRef": "fresh"
+  },
+  "attribution": {
+    "sessionUrl": true
+  }
+}

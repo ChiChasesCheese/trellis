@@ -1,0 +1,91 @@
+"""
+Chat Billing Calculation (Monthly Billing by Token Usage and Plan Switching)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/59a39c1c-3696-400e-81b6-c3fdd3b56895
+Source Type: OJ / More Problems
+
+Question Summary:
+## Problem: Chat Billing Calculation (Token Usage + Plan Switching)
+
+Implement a billing function to compute each user's total charges for a given month based on chat session token usage.
+
+### Input
+You are given an array of strings `sessions`, where each string represents one chat session during the month in the format:
+
+```
+"user_id,input_tokens,output_tokens,plan"
+```
+- `user_id`: user identifier (string)
+- `input_tokens`: number of input tokens for the session (non-negative integer)
+- `output_tokens`: number of output tokens for the session (non-negative integer)
+- `plan`: plan used for this session, either:
+  - `payg` (pay-as-you-go)
+  - `fixed`
+
+A user may appear multiple times (multiple sessions in the month).
+
+### Output
+Return an array of strings `result`, each formatted as:
+
+```
+"user_id: $x.xx"
+```
+representing the user's total spend for the month (rounded/formatted to 2 decimals).
+
+Requirements:
+1. Sort the output array alphabetically by `user_id`.
+2. Users with total spend < $1.00 must still appear (e.g., `$0.00`, `$0.87`).
+
+---
+
+## Billing rules
+
+### Common rule: bill in 100-token blocks
+- Tokens are billed in **blocks of 100**.
+- Only **full 100-token blocks** are counted; any partial block is not billed/charged.
+  - Example: 0–99 => 0 blocks; 100–199 => 1 block; 200–299 => 2 blocks.
+
+---
+
+## Requirement 1: `payg` pricing (test cases 0–4)
+If `plan = payg`:
+- Input tokens cost $0.03 per 100 tokens
+- Output tokens cost $0.04 per 100 tokens
+
+For each session:
+- input charge = `floor(input_tokens / 100) * 0.03`
+- output charge = `floor(output_tokens / 100) * 0.04`
+
+Monthly total is the sum over all sessions.
+
+---
+
+## Requirement 2: `fixed` plan (test cases 5–9)
+If the user uses `fixed` for the month:
+- Monthly fee: $15.00
+- Included allowance: 40000 tokens per month (counted in 100-token blocks)
+- Any usage above the included allowance (overage) is charged at payg rates ($0.03/100 for input, $0.04/100 for output).
+
+Allowance and overage calculations must also follow the **full 100-token block** rule.
+
+---
+
+## Requirement 3: Plan switching and proration by sessions (test cases 10–13)
+Users may switch plans within a billing cycle (some sessions `payg`, some `fixed`).
+
+If the user has `N` total sessions in the month, and `F` of them are `fixed`:
+- Prorate the fixed monthly fee by session count:
+  - `fixed_fee = 15.00 * (F / N)`
+- Prorate the fixed allowance similarly:
+  - `fixed_allowance = 40000 * (F / N)` tokens (still subject to 100-token block counting)
+
+Billing constraints:
+1. Token blocks must be computed **separately per plan**.
+2. `payg` sessions are charged directly using Requirement 1.
+3. `fixed` sessions first consume the prorated `fixed_allowance`; any excess is charged at payg rates.
+
+The final monthly spend is:
+
+`payg_charges + fixed_fee + fixed_overage_charges`.
+"""

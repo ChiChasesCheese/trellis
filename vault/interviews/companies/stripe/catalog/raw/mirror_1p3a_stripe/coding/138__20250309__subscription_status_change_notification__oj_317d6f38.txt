@@ -1,0 +1,10 @@
+"""
+Subscription Status Change Notification
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/317d6f38-d69f-4805-a49b-a672a8fa8998
+Source Type: OJ / More Problems
+
+Question Summary:
+Design a class for subscription status change notifications. The class should provide a `configure` method to set up notification messages (including messages for subscription start and expiration) and the number of days in advance to notify users of subscription expiration. The class should also have a method to accept a list of user information, where each user includes a name, subscription start time, expiration time, and account level. Finally, the class should generate a subscription message list sorted by time. Provide the complete code structure with test cases.
+"""

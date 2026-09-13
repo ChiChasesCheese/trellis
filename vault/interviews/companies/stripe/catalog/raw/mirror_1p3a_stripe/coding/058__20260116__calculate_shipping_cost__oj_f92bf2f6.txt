@@ -1,0 +1,10 @@
+"""
+Calculate Shipping Cost
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/f92bf2f6-346b-4d57-8cdc-5585932d8125
+Source Type: OJ / More Problems
+
+Question Summary:
+Calculate the shipping cost based on the given parameters: number of products, weight, and destination. Implement a function to solve this problem using provided rules.
+"""

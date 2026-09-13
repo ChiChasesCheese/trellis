@@ -1,0 +1,24 @@
+"""
+Tiered Pricing Calculation
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/22f57b38-97b4-45ce-9852-91e762d43a59
+Source Type: OJ / More Problems
+
+Question Summary:
+Given pricing tier rules and order information, calculate the total price for the order. Each order contains an item and its quantity. Example rules: 1–10 units at $1 each, 11–20 units at $0.8 each. Requirements:
+- Input format: Rules and order information are constructed in a dictionary, e.g., {"item1": [(1, 10, 1), (11, 20, 0.8)]} for rules, "item1, 15" for order information.
+- Output format: an integer representing the total price of the order.
+
+**Test Cases**
+
+- Input:
+    ```
+    item1, 15
+    pricing_rules = {"item1": [(1, 10, 1), (11, 20, 0.8)]}
+    ```
+- Output:
+    ```
+    13
+    ```
+"""

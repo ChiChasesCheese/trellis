@@ -1,0 +1,41 @@
+"""
+KYC Conundrum
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/c2c4e3e9-38fa-41be-a711-e5f308475946
+Source Type: OJ / More Problems
+
+Question Summary:
+Simulate Stripe's KYC (Know Your Customer) verification process. The goal is to determine whether onboarding business accounts are VERIFIED or NOT VERIFIED based on progressively stricter criteria.
+
+### Requirements
+
+1. Each business must provide the following five KYC fields: `business_name`, `business_profile_name`, `full_statement_descriptor`, `short_statement_descriptor`, `url`, and `product_description`.
+2. An account is marked as `VERIFIED` only if all fields are present and non-empty.
+
+**Example Output**: `VERIFIED: Pawsome Pets Inc.`
+
+### Additional Criteria
+
+**Part 2 — Descriptor Length Validation**
+
+1. A new validation rule is added: `full_statement_descriptor` must be between 5 and 31 characters (inclusive).
+2. Accounts violating this rule are marked as `NOT VERIFIED` even if all other fields are valid.
+
+**Example Issues**:
+- `ITCS` → too short
+- `OAKRIDGE CUSTOM WOODWORKING AND FURNITURE EMPORIUM` → too long
+
+**Expected Updated Output**: `NOT VERIFIED: Oakridge Furniture Crafters LLC`
+
+**Part 3 — Generic Descriptor Blocklist**
+
+1. Add another layer of validation: accounts using any generic full statement descriptors are not verified.
+2. Blocklisted descriptors include: `ONLINE STORE`, `ECOMMERCE`, `RETAIL`, `SHOP`, `GENERAL MERCHANDISE`
+3. Even if all previous conditions pass, these are automatically marked as `NOT VERIFIED`.
+
+**Final Expected Output**
+
+`VERIFIED: Pawsome Pets Inc.`
+`NOT VERIFIED: Bean Bliss Coffee Company`, etc.
+"""

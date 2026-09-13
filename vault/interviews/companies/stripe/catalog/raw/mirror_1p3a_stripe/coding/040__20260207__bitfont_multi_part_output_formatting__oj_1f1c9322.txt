@@ -1,0 +1,16 @@
+"""
+Bitfont (multi-part output formatting)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/1f1c9322-28dd-4d35-9017-47c7d4f3808a
+Source Type: OJ / More Problems
+
+Question Summary:
+## Problem: Bitfont (multi-part, formatting-sensitive output)
+
+Implement a bitfont-related function/program with multiple parts:
+- Part 1 is straightforward.
+- Part 2 requires printing/rendering output in an exact required format; small formatting mismatches can cause failure.
+
+> Note: The post does not provide the bitfont specification (glyph grid, input/output format, constraints), so the fully answerable version cannot be reconstructed and is omitted.
+"""

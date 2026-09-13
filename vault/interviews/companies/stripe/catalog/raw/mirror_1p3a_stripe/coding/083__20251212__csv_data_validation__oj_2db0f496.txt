@@ -1,0 +1,25 @@
+"""
+CSV Data Validation
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/2db0f496-0e23-4084-ae23-3a95febafe20
+Source Type: OJ / More Problems
+
+Question Summary:
+The task involves processing CSV formatted data with the following requirements:
+
+### Input
+The input is a string representing CSV data. Rows are delimited by "," and include a header with approximately six fields such as ID, description, URL, timestamp, etc.
+
+### Task 1
+Print out whether a row is 'Verified' or 'Not Verified' based on some simple condition. A row is 'Not Verified' if a specific field is empty; skip printing the row if a specific field is missing.
+
+### Task 2
+Implement additional rules, such as checking if fields meet certain string length constraints or if fields belong to a blacklist.
+
+### Output
+Based on the input data, output 'Verified' or 'Not Verified', or ignore the row.
+
+### Note
+Focus on correctness and cleanliness, with speed being less of a priority. Be familiar with common string functions such as `splitlines()`, `startswith()`, and `strip()`. Write your own test cases.
+"""

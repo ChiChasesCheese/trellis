@@ -1,0 +1,31 @@
+diff --git a/src/minimako/compiler.py b/src/minimako/compiler.py
+index 1f21ea1..3a78741 100644
+--- a/src/minimako/compiler.py
++++ b/src/minimako/compiler.py
+@@ -54,3 +54,8 @@ class Compiler:
+             child = Compiler(loop_context, self.current_template)
+             out.append("".join(child.visit(n) for n in node.body))
+         return "".join(out)
++
++    def visit_IncludeNode(self, node: astmod.IncludeNode) -> str:
++        included = self.current_template.resolve_include(node.file)
++        child = Compiler(dict(self.context), current_template=included)
++        return child.render(included.ast)
+diff --git a/src/minimako/template.py b/src/minimako/template.py
+index f4db5cf..5d989e0 100644
+--- a/src/minimako/template.py
++++ b/src/minimako/template.py
+@@ -41,9 +41,10 @@ class Template:
+         """Load a <%include file="..."/> target relative to this template's own source_dir."""
+         if self.source_dir is None:
+             raise LookupError(f"cannot resolve include {file!r}: template has no source_dir")
+-        # Strip a leading slash so "/partial.html" resolves relative to source_dir instead of
+-        # being treated as filesystem-absolute.
+-        normalized = file[1:] if file.startswith("/") else file
++        # Strip every leading slash (not just one) so "/partial.html" resolves relative to
++        # source_dir instead of being treated as filesystem-absolute -- matches
++        # TemplateLookup.get_template()'s normalization, see lookup.py.
++        normalized = file.lstrip("/")
+         path = os.path.join(self.source_dir, normalized)
+         if not os.path.isfile(path):
+             raise LookupError(f"Cannot locate template for uri {file!r}")

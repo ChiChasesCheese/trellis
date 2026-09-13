@@ -1,0 +1,51 @@
+"""
+Hierarchical String Compression with Major/Minor Parts and Max Minor Segments
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/75b5f5a7-1562-4059-9d50-5b358ce57095
+Source Type: OJ / More Problems
+
+Question Summary:
+## Problem: Hierarchical String Compression (major/minor)
+
+You are given a string `s` with the following structure:
+- **Major parts** are separated by `/`.
+- Within each major part, **minor parts** are separated by `.`.
+
+Example: `abcd/erfgsh/google.com.abc`
+
+Define a segment compression function `compress(seg)`:
+- Let segment length be `n`.
+- Return `seg[0] + (n-2) + seg[n-1]`.
+- Examples: `abcd -> a2d`, `google -> g4e`.
+
+### Part 1
+Perform hierarchical compression on `s`:
+- Keep `/` separators between major parts.
+- Keep `.` separators between minor parts.
+- Apply `compress` to every minor segment.
+
+Example:
+- Input: `abcd/erfgsh/google.com.abc`
+- Output: `a2d/e4h/g4e.c1m.a1c`
+
+### Part 2
+In addition to Part 1, you are given an integer `m`. For each major part:
+- The number of minor segments must be at most `m`.
+- If it exceeds `m`, further merge/compress minor segments according to a rule (not fully specified in the original description).
+
+Example (from the interview notes, rule details incomplete):
+- `m = 2`
+- `g4e.c1m.a1c` (3 minor segments)
+- becomes `g4e.c4c` (2 minor segments)
+
+> The exact merge/compression rule for Part 2 is not fully defined in the source; it must be clarified before implementation.
+
+### Constraints
+- `1 <= |s| <= 2e5`
+- Contains lowercase letters, digits, `/`, `.`
+- `1 <= m <= 1e5`
+
+### Task
+Implement Part 1. For Part 2, implement the reduction to at most `m` minor segments per major part after clarifying the merge policy.
+"""

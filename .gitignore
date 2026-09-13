@@ -21,3 +21,12 @@ sources/local/
 # on this machine so both git and Obsidian keep their path (see ADR 0001 on why
 # the real folder stays `vault`).
 /Trellis_
+
+# Claude Code worktrees and per-machine local settings live under .claude/; only settings.json is shared
+.claude/worktrees/
+.claude/settings.local.json
+
+# Interview kits (vault/interviews/companies/*): per-machine drill state, never source
+progress.jsonl
+.drill.json
+loop/work/

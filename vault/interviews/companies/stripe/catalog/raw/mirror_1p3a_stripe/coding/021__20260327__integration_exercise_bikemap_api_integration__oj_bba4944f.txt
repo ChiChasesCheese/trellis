@@ -1,0 +1,20 @@
+"""
+Integration Exercise: BikeMap API Integration
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/bba4944f-e065-4b5f-91be-f3564b9fd691
+Source Type: OJ / More Problems
+
+Question Summary:
+## Integration Exercise: BikeMap
+
+This is a repository-based integration task. You are given an existing project skeleton and must implement missing pieces so that tests pass or requirements are met.
+
+The theme is **BikeMap**, typically involving:
+
+- Loading/storing bike stations, routes, or location points
+- Implementing query/computation endpoints (filtering/sorting/aggregation)
+- Handling edge cases and invalid inputs
+
+The post only provides a reference link and no concrete requirements/I/O, so the full prompt cannot be reconstructed here.
+"""

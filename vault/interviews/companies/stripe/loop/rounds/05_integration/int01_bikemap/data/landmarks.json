@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Rathaus",
+    "lat": 52.514945,
+    "lng": 13.392731
+  },
+  {
+    "name": "Stadtpark",
+    "lat": 52.511154,
+    "lng": 13.403522
+  },
+  {
+    "name": "Bahnhof Nord",
+    "lat": 52.503336,
+    "lng": 13.397256
+  },
+  {
+    "name": "Museumsufer",
+    "lat": 52.49258,
+    "lng": 13.395936
+  },
+  {
+    "name": "Alte Br\u00fccke",
+    "lat": 52.485056,
+    "lng": 13.406636
+  },
+  {
+    "name": "Marktplatz",
+    "lat": 52.478561,
+    "lng": 13.41559
+  },
+  {
+    "name": "Uferpromenade",
+    "lat": 52.469309,
+    "lng": 13.422933
+  },
+  {
+    "name": "Sportzentrum",
+    "lat": 52.460355,
+    "lng": 13.426167
+  },
+  {
+    "name": "Kanalschleuse",
+    "lat": 52.454928,
+    "lng": 13.43045
+  }
+]

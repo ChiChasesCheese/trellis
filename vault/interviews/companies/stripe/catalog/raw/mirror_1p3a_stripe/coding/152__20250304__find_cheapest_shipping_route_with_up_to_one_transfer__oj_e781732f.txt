@@ -1,0 +1,30 @@
+"""
+Find Cheapest Shipping Route with Up to One Transfer
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/e781732f-c115-4ea1-96cb-9f7d0ab42b01
+Source Type: OJ / More Problems
+
+Question Summary:
+### Shipping Route Problem
+
+Given an input string representing shipping routes like '{source}:{target}:{method}:{cost}'. Write functions to return the desired information such as the cost, route, or cheapest route.
+
+1. Given a source country and a target country, return the path, method, and cost of traveling.
+    
+    Example Input: "{OS}:{L}:{FA}:{5},{S}:{C}:{AH}:{3},{C}:{X}:{MR}:{4}"
+    
+    Example Output: Path=['{OS}', '{L}'], Method=['{FA}'], Cost=5
+
+2. Given a source country and a target country, return the path, method, and cost of traveling if one transfer can be made.
+
+    Example Input: "{S}:{F}:{PL}:{2}"
+    
+    Example Output: Path=['{S}', '{F}'], Method=['{PL}'], Cost=2
+
+3. Given a source country and a target country, return the path, method, and cheapest route of traveling if one transfer can be made.
+
+    Example Input: "{N}:{O}:{RC}:{3},{A}:{B}:{HC}:{1},{Y}:{Z}:{HT}:{5}"
+    
+    Example Output: Path=['{A}', '{B}'], Method=['{HC}'], Cost=1
+"""

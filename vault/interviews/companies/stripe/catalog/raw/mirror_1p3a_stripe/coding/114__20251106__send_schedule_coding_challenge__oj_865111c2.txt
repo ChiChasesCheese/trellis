@@ -1,0 +1,10 @@
+"""
+Send Schedule Coding Challenge
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/865111c2-94f4-421a-8f0e-3579514ec9a8
+Source Type: OJ / More Problems
+
+Question Summary:
+Design a function that takes a map of strings to strings called `send_schedule`, where the keys could be 'start', 'end', or numbers. Each user has a corresponding time for these keys. When iterating over users, if a key is 'start' or 'end', handle it separately; otherwise, calculate the corresponding time.
+"""

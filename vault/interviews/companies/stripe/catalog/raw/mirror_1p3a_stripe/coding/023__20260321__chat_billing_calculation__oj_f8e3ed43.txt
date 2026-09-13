@@ -1,0 +1,186 @@
+"""
+Chat Billing Calculation
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/f8e3ed43-0b33-4b13-a879-a559ccd803f2
+Source Type: OJ / More Problems
+
+Question Summary:
+# Chat Billing Calculation (block-based per session, per plan)
+
+You are implementing a monthly billing component for a chat-based AI platform. Each chat session record contains:
+
+- `user_id` (string)
+- `input_tokens` (non-negative integer)
+- `output_tokens` (non-negative integer)
+- `plan` in `{ "payg", "fixed" }`
+
+Given all session records for a single month (a user may appear multiple times), implement `calculate_monthly_billing(sessions)` and return a list of strings representing each user’s total spend in the format:
+
+- `"user_id: $xx.xx"`
+
+Requirements:
+
+- Output must be sorted alphabetically by `user_id`.
+- Amounts are formatted to 2 decimal places (rounded to cents).
+- Users with `$0.00` spend must still appear in the output.
+
+---
+
+## Pricing rules
+
+### Shared rule: block billing **per session** (important)
+
+- Tokens are billed in **blocks of 100 tokens**.
+- Any partial block is free.
+- `blocks = floor(tokens / 100)`.
+
+> Block rounding is done **per session**; remainders from different sessions cannot be combined.
+
+### Rates (used for payg and fixed overage)
+
+- Input tokens: `$0.03 per 100 tokens`
+- Output tokens: `$0.04 per 100 tokens`
+
+For one session:
+
+- `cost_in = floor(input_tokens/100) * 0.03`
+- `cost_out = floor(output_tokens/100) * 0.04`
+
+---
+
+## Requirement 1: Pay-as-you-go (`plan = payg`)
+
+For all `payg` sessions of a user, compute block-based costs per session and sum them.
+
+---
+
+## Requirement 2: Fixed plan without switching (`plan = fixed` only)
+
+If a user is on the fixed plan for the month:
+
+- Flat monthly fee: `$15.00`
+- Included allowance:
+  - `40,000 input tokens`
+  - `20,000 output tokens`
+
+Usage above the included allowance (“overage”) is charged at the payg rates, still respecting **per-session block rounding**.
+
+A convenient interpretation:
+
+1. Add `$15.00`.
+2. For the user’s `fixed` sessions, compute billable token usage after per-session block rounding:
+   - `billable_input_tokens = sum(floor(input_tokens/100)*100)`
+   - `billable_output_tokens = sum(floor(output_tokens/100)*100)`
+3. Overage:
+   - `over_input = max(0, billable_input_tokens - 40000)`
+   - `over_output = max(0, billable_output_tokens - 20000)`
+   - `over_cost = (over_input/100)*0.03 + (over_output/100)*0.04`
+
+---
+
+## Requirement 3: Plan switching (both `payg` and `fixed` sessions exist)
+
+Users may switch plans within the billing cycle. Let:
+
+- `N` = total number of sessions in the month (payg + fixed)
+- `F` = number of `fixed` sessions
+- `r = F / N`
+
+Then prorate the fixed plan fee and allowance by `r`:
+
+- Fixed fee: `15.00 * r`
+- Included allowance:
+  - input: `40000 * r`
+  - output: `20000 * r`
+
+Compute:
+
+- `payg_cost`: sum payg session costs (per-session blocks)
+- `fixed_usage`: only from fixed sessions, after per-session block rounding, converted back to billable tokens (`floor/100*100`)
+- `fixed_overage_cost`: charge only the portion exceeding the prorated allowance at payg rates
+
+Total per user:
+
+- `payg_cost + prorated_fixed_fee + fixed_overage_cost`
+
+---
+
+## Input / Output (OA-friendly)
+
+### Input
+
+- `sessions`: array of strings formatted as:
+  - `"user_id,input_tokens,output_tokens,plan"`
+
+### Output
+
+- Array of strings: `["user_id: $xx.xx", ...]` sorted by `user_id`.
+
+---
+
+## Example 1 (Req 1)
+
+Input:
+
+```text
+[
+  "userA,100,120,payg",
+  "userB,150,100,payg",
+  "userB,100,130,payg"
+]
+```
+
+Output:
+
+```text
+[
+  "userA: $0.07",
+  "userB: $0.14"
+]
+```
+
+## Example 2 (Req 2)
+
+Input:
+
+```text
+[
+  "userA,100,100,payg",
+  "userB,20000,10000,fixed",
+  "userB,25000,12000,fixed"
+]
+```
+
+Output:
+
+```text
+[
+  "userA: $0.07",
+  "userB: $17.30"
+]
+```
+
+## Example 3 (Req 3)
+
+Input:
+
+```text
+[
+  "userA,100,100,payg",
+  "userA,100,100,payg",
+  "userA,20000,10000,fixed",
+  "userA,100,100,fixed",
+  "userB,100,100,payg"
+]
+```
+
+Output:
+
+```text
+[
+  "userA: $7.71",
+  "userB: $0.07"
+]
+```
+"""

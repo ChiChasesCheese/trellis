@@ -1,0 +1,182 @@
+[
+  {
+    "round": "hm",
+    "q": "What is something you would have done differently in a project?",
+    "principle": "Seek feedback",
+    "source": "Prepfully (2026-08-13)"
+  },
+  {
+    "round": "hm",
+    "q": "Talk about a recent project you led. How did you uphold a high quality bar?",
+    "principle": "Be meticulous in your craft",
+    "source": "Exponent 博客 (2026)"
+  },
+  {
+    "round": "hm",
+    "q": "Tell me about a time you solved your most complex problem.",
+    "principle": "Rigorous thinking",
+    "source": "Exponent 博客 (2026)"
+  },
+  {
+    "round": "hm",
+    "q": "Walk me through a complex technical decision you made",
+    "principle": "Rigorous thinking",
+    "source": "codinginterview.com (访问 2026-09-01)"
+  },
+  {
+    "round": "hm",
+    "q": "Tell me about a time you had to make a technical trade-off to meet a deadline. How did you handle the technical debt later?",
+    "principle": "Move with urgency and focus",
+    "source": "Dataford [搜索摘要，页面 429]"
+  },
+  {
+    "round": "hm",
+    "q": "Walk me through a complex decision you made and how you evaluated alternatives",
+    "principle": "Rigorous thinking",
+    "source": "Dataford [搜索摘要，页面 429]"
+  },
+  {
+    "round": "hm",
+    "q": "Tell me about any significant project you worked on and the technical challenges you faced while working on it.",
+    "principle": "Deliver outstanding results",
+    "source": "Blind giqtwim6 (2024-10-21，据其\"any significant project you worked on, technical challenges faced\"转述为问句)"
+  },
+  {
+    "round": "hm",
+    "q": "Tell me about a project: how did you ideate it, pitch it, break it down, minimize risk, and manage stakeholder relationships and deadlines?",
+    "principle": "Deliver outstanding results",
+    "source": "Glassdoor Stripe SWE [搜索摘要]，访问 2026-09-01"
+  },
+  {
+    "round": "hm",
+    "q": "Discuss a time when you disagreed with a team decision. What did you do about it?",
+    "principle": "Collaborate egolessly",
+    "source": "Prepfully (2026-08-13)"
+  },
+  {
+    "round": "hm",
+    "q": "Talk about a time when you had to resolve a difficult situation within the team.",
+    "principle": "Collaborate egolessly",
+    "source": "Prepfully (2026-08-13)"
+  },
+  {
+    "round": "hm",
+    "q": "Tell me about a time you had conflict with your manager.",
+    "principle": "Collaborate egolessly",
+    "source": "Blind kt6bwgwv，访问 2026-09-01"
+  },
+  {
+    "round": "hm",
+    "q": "Describe a time when you had conflict and how you worked to resolve it.",
+    "principle": "Collaborate egolessly",
+    "source": "Exponent 博客 (2026)"
+  },
+  {
+    "round": "hm",
+    "q": "Tell me about a disagreement with another engineer–how did you handle it?",
+    "principle": "Collaborate egolessly",
+    "source": "codinginterview.com (访问 2026-09-01)"
+  },
+  {
+    "round": "hm",
+    "q": "Tell me about a time you disagreed with a technical decision.",
+    "principle": "Collaborate egolessly",
+    "source": "The Interview Guys (2026-05-31)"
+  },
+  {
+    "round": "hm",
+    "q": "Tell us about a time you had a difference of opinion with a team member. How did you resolve it?",
+    "principle": "Collaborate egolessly",
+    "source": "InterviewKickstart (2024-12-22)"
+  },
+  {
+    "round": "hm",
+    "q": "Tell me about a time you made a mistake. What did you learn from it?",
+    "principle": "Seek feedback",
+    "source": "Prepfully (2026-08-13)"
+  },
+  {
+    "round": "hm",
+    "q": "Tell me about a failure–what happened, and what did you learn?",
+    "principle": "Resilient",
+    "source": "codinginterview.com (访问 2026-09-01)"
+  },
+  {
+    "round": "hm",
+    "q": "How do you handle negative feedback?",
+    "principle": "Seek feedback",
+    "source": "InterviewKickstart (2024-12-22)"
+  },
+  {
+    "round": "hm",
+    "q": "Tell me about a time you changed your mind after gathering new information",
+    "principle": "Rigorous thinking",
+    "source": "codinginterview.com (访问 2026-09-01)"
+  },
+  {
+    "round": "hm",
+    "q": "Tell me about a time you changed your mind after digging into the data.",
+    "principle": "Rigorous thinking",
+    "source": "Dataford [搜索摘要，页面 429]"
+  },
+  {
+    "round": "hm",
+    "q": "Tell me about a time you owned a project from start to finish",
+    "principle": "Deliver outstanding results",
+    "source": "codinginterview.com (访问 2026-09-01)"
+  },
+  {
+    "round": "hm",
+    "q": "Describe a moment where something broke, and you stepped in, even though it wasn't your responsibility",
+    "principle": "Users first",
+    "source": "codinginterview.com (访问 2026-09-01)"
+  },
+  {
+    "round": "hm",
+    "q": "Tell me about a time you made a decision with incomplete information",
+    "principle": "Move with urgency and focus",
+    "source": "codinginterview.com (访问 2026-09-01)"
+  },
+  {
+    "round": "hm",
+    "q": "Describe a situation where everything felt urgent—how did you prioritize?",
+    "principle": "Move with urgency and focus",
+    "source": "codinginterview.com (访问 2026-09-01)"
+  },
+  {
+    "round": "hm",
+    "q": "Tell me about a time you took full ownership of a project from start to finish.",
+    "principle": "Deliver outstanding results",
+    "source": "The Interview Guys (2026)"
+  },
+  {
+    "round": "hm",
+    "q": "Describe a time when you had to make a high-stakes decision with incomplete information.",
+    "principle": "Move with urgency and focus",
+    "source": "The Interview Guys (2026)"
+  },
+  {
+    "round": "hm",
+    "q": "Tell me about a time you managed competing priorities under a tight deadline.",
+    "principle": "Move with urgency and focus",
+    "source": "The Interview Guys (2026)"
+  },
+  {
+    "round": "hm",
+    "q": "Why Stripe? And do you have any questions for me?",
+    "principle": "Macro-optimistic",
+    "source": "Blind giqtwim6 (2024-10-21，原文 \"Why stripe? And any question to HM.\")"
+  },
+  {
+    "round": "hm",
+    "q": "Describe your last strategic hire. What made them the strategic hire?",
+    "principle": "Obsess over talent",
+    "source": "Exponent 博客 (2026，EM 岗题目，供 senior IC 参考)"
+  },
+  {
+    "round": "hm",
+    "q": "How would you handle shifting a top performer off a project they love, or resolving a conflict between two engineers?",
+    "principle": "Collaborate egolessly",
+    "source": "Taro EM SF (2025-07-01，据其角色扮演题描述转述为问句，EM 岗，供 senior IC 参考)"
+  }
+]

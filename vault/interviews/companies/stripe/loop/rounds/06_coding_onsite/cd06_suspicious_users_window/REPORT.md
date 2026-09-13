@@ -1,53 +1,68 @@
-# cd06 可疑用户滑动窗口 — 报告
+# cd06 Suspicious Users Sliding Window — report
 
-## 概述
-经典的反欺诈分诊滑动窗口题：如果以某用户自己的某笔交易为锚点、向后 60 秒的窗口内该用户的交易数超过 3
-笔，则标记该用户为可疑。面试明确要求做 O(n^2) -> O(n log n) 的升级（朴素的逐交易计数 -> 排序 + 双指针），
-这才是本题真正考察的技能——领域包装（类似 Radar 的突发检测）是次要的，重点是演示这次升级并精确推理窗口边界。
+## Summary
+Classic fraud-triage sliding window: flag a user if any 60-second window anchored at one of their
+own transactions contains more than 3 transactions. The interview explicitly asks for the
+O(n^2) -> O(n log n) upgrade (naive per-transaction count -> sort + two-pointer), which is the
+actual skill being tested — the domain framing (Radar-style burst detection) is secondary to
+demonstrating that upgrade and reasoning about window boundaries precisely.
 
-## 来源与置信度
-核心规则（"1 分钟窗口内超过 3 笔交易"、朴素做法再升级为 hashmap/window）置信度高——只有一个来源，但几乎
-是逐字复述的面经（这在本仓库中很罕见）。精确的 I/O 协议（`PART n` 头部、CSV 行结构、Part 2 的
-`user_id: count in [start, end]` 格式、闭区间 `[t-60, t]` 窗口定义、"first trigger" 语义）是本仓库自行
-重建的，因为来源只有一句面经描述、完全没有 I/O 示例——这一点在 problem.md 的 Clarifications 中已明确标注。
+## Sources & confidence
+high for the core rule ("> 3 transactions in a 1-minute window", naive-then-hashmap/window
+upgrade) — one source, but an almost-verbatim interview-experience recap (rare for this repo).
+The exact I/O protocol (`PART n` header, CSV row shape, `user_id: count in [start, end]` format
+for Part 2, closed-interval `[t-60, t]` window definition, "first trigger" semantics) is this
+repo's own reconstruction, since the source is one recap sentence with no I/O sample at all —
+flagged explicitly in problem.md's Clarifications.
 
-## 分 Part 的思路
-1. Part 1：面试允许的朴素做法是每用户 O(n^2)（对每笔交易，数该用户自己有多少笔交易落在其向前 60 秒的
-   窗口内）。参考解法直接复用 Part 2 的引擎（见下文），因为它严格更省且结果完全相同——这一点在
-   solution.py 的模块 docstring 中有说明，避免让人误以为"朴素解法被偷偷跳过了"。
-2. Part 2：按 `user_id` 分组，对每个用户的时间戳排序，然后做一次只前进不回退的双指针扫描
-   （`_first_trigger`）：左指针只会在右指针 `t` 前进时，跳过那些落在 `[t-60, t]` 之外的时间戳。第一个使
-   `count = j - i + 1` 达到 4 的 `t` 会立即返回——这可证明是时间序上最早触发的窗口，因为左指针从不后退，
-   且更早的每个 `t` 都已被检查过并确认 `< 4`。
+## Approach by part
+1. Part 1: interview-legal naive approach is O(n^2) per user (for every transaction, count how
+   many of the user's own transactions fall in its trailing 60s window). The reference solution
+   instead reuses the Part 2 engine (see below) since it's strictly cheaper and gives identical
+   results — noted in solution.py's module docstring so it doesn't read as "the naive answer was
+   secretly skipped".
+2. Part 2: group by `user_id`, sort each user's timestamps, then a single forward-only two-pointer
+   scan (`_first_trigger`): the left pointer only ever advances past timestamps that fall outside
+   `[t-60, t]` as the right pointer `t` walks forward. The first `t` where `count = j - i + 1`
+   reaches 4 is returned immediately — this is provably the earliest-triggering window in time
+   order because the left pointer never moves backward and every earlier `t` was already checked
+   and found `< 4`.
 
-## 隐藏测试针对的坑
-- `> 3` 意味着 `>= 4`，不是 `>= 3`——一个差一错误就会翻转每个边界情况。
-- 窗口是闭区间（`<= 60` 含端点），所以恰好相隔 60 秒的两笔交易都算，但相隔 61 秒则不算——用一组除了
-  最后一个间隔是 60 秒还是 61 秒之外完全相同的 4 笔交易簇来测试。
-- 重复时间戳：多笔交易共享同一时刻时都各自计数，报告的窗口可以收缩为 `start_ts == end_ts`；首次触发时
-  报告的 *count* 恰好是阈值（4），而不是最终的突发规模（5），因为 Part 2 必须报告第一次触发，而不是最终
-  可能观察到的最大值。
-- 一个用户有两段独立的达标突发（早期一段较温和的，后期一段密集得多的）时必须报告早期那段——朴素的
-  "找出计数最大的窗口"实现会悄悄报告错误的（更密集、更晚的）突发而不是最早的那个。
-- 输入是乱序到达的，无论是跨用户还是同一用户内部——分组和按用户排序是必须步骤，不是可选优化；按原始输入
-  顺序做窗口的方案会计数错误。
-- Part 1 和 Part 2 的输出格式有意不同（裸 `user_id` vs. `user_id: count in [start, end]`）——不是彼此的
-  子集/超集关系。
+## Pitfalls hidden tests target
+- `> 3` means `>= 4`, not `>= 3` — a single off-by-one flips every boundary case.
+- The window is closed (`<= 60` inclusive), so two transactions exactly 60s apart both count, but
+  61s apart does not — tested with an otherwise-identical 4-transaction cluster that differs only
+  in whether the last gap is 60s or 61s.
+- Duplicate timestamps: several transactions sharing one instant all count individually, and the
+  reported window can collapse to `start_ts == end_ts`; the *count* reported at first trigger is
+  exactly the threshold (4), not the eventual burst size (5), because Part 2 must report the
+  FIRST trigger, not the largest one it could eventually observe.
+- A user with two separate qualifying bursts (an early modest one, a later much denser one) must
+  report the early one — a naive "find the window with the maximum count" implementation would
+  silently report the wrong (denser, later) burst instead of the first one.
+- Input arrives out of order, both across users and within one user's own records — grouping and
+  per-user sorting is mandatory, not an optimization; a solution that windows over raw input order
+  will miscount.
+- Part 1 and Part 2 have deliberately different output shapes (bare `user_id` vs.
+  `user_id: count in [start, end]`) — not a subset/superset of one another.
 
-## 复杂度与实测开销
-O(n log n)：一次全局解析 O(n)，每个用户一次排序（最坏情况下若某个用户占据大部分行，各用户排序之和仍是
-O(n log n)，整体仍受限于整体的 n log n），再对所有用户做一次总计 O(n) 的双指针扫描。性能测试：
-100 万行、20 万用户，时间戳在 1000 万秒范围内随机分布——在 CPython 3.12 上实测远低于 2 秒 / 256 MB 的
-预算（通常约 0.6-0.9 秒，远低于 100 MB），瓶颈在字符串解析而非窗口计算本身。
+## Complexity & measured cost
+O(n log n): one global parse O(n), a sort per user (sum of per-user sorts is O(n log n) in the
+worst case when one user holds most of the rows, still bounded by the overall n log n), then one
+O(n) two-pointer pass total across all users. Perf test: 1,000,000 rows across 200,000 users,
+random timestamps over a 10,000,000s range — measured well under the 2 s / 256 MB budget on
+CPython 3.12 (typically ~0.6-0.9 s, well under 100 MB), dominated by string parsing, not the
+windowing itself.
 
-## 测试清单
-共 18 个测试——part1: 8 个（含 1 个 io）· part2: 10 个（含 1 个 io、1 个 perf）；edge: 6 · fmt: 2 ·
-io: 2 · perf: 1。
+## Test inventory
+18 tests — part1: 8 (incl. 1 io) · part2: 10 (incl. 1 io, 1 perf); edge: 6 · fmt: 2 · io: 2 ·
+perf: 1.
 
-## 考察技能
-S02 解析（CSV，乱序）· S04 按键分组 · S05 滑动窗口/双指针 · S08 排序下的确定性打破平局 · S09 精确输出
-格式 · S17 复杂度升级（O(n^2) -> O(n log n)，有论证而非只是写代码）· S19 增量式设计（朴素 -> 最优，检测
-规则不变）
+## Skills exercised
+S02 parsing (CSV, out-of-order) · S04 grouping by key · S05 sliding-window / two-pointer ·
+S08 deterministic tie-break under sort · S09 exact output formatting · S17 complexity upgrade
+(O(n^2) -> O(n log n), justified not just coded) · S19 incremental design (naive -> optimal, same
+detection rule)
 
 ## 边写边说什么
 1. **拿到题面先问三件事**：窗口是"以每笔交易为锚点向后看 60 秒"还是"任意 60 秒滑动窗口"（本题定死
@@ -69,7 +84,7 @@ S02 解析（CSV，乱序）· S04 按键分组 · S05 滑动窗口/双指针 ·
 6. **被追问参数化/流式/内存上限时**（对应 problem.md「面试官会怎么追问」1/3/4 条）：直接说双指针
    算法本身不用换，只是把硬编码的 `60`/`4` 换成参数，在线场景把"整体排序"换成"每用户一个 deque，
    进出各一次"，均摊 O(1) 每事件；大量低活跃用户则提一句可以按最后活跃时间做 LRU 淘汰，不必展开实现。
-## 复盘（2026-09-02）
+## Review（2026-09-02）
 - **发现（F）**：`test_perf_1m_rows` 只断言 `returncode`/耗时/内存，不断言任何输出内容——一个
   `return []` 的空桩实现瞬间跑完、内存几乎为零，能直接"通过"这个 perf 测试，属于 checklist 明确点名
   的"空洞测试"。修复：在 100 万行随机噪声里混入一个确定性的 4 笔一组、60 秒内的 `perf_marker` 突发，

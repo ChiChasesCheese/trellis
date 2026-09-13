@@ -1,0 +1,12 @@
+path,owner
+README.md,alice
+LICENSE,alice
+src/payments/*,alice
+src/payments/*,bob
+Src/Payments/*,carol
+src/payments/checkout.py,dave
+src/frontend/*,erin
+src/frontend/*,frank
+docs/*,grace
+src/utils/helpers.py,henry
+src/utils/helpers.py,irene

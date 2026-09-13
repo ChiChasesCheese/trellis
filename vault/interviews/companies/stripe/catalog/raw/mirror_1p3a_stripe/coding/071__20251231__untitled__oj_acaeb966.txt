@@ -1,0 +1,38 @@
+"""
+固定单价运费计算
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/acaeb966-3b42-48fa-af95-3f4028d7f127
+Source Type: OJ / More Problems
+
+Question Summary:
+Given order information and fixed per unit shipping costs, combine them to calculate the total shipping cost. An order includes country, item, and quantity, while the shipping cost has a fixed unit price for each item. Write a program to calculate the total shipping cost for the orders.
+
+**Input Format:**
+- The first line contains an integer `n`, the number of orders.
+- The next `n` lines each contain a `item_name`, `country`, and `quantity` representing an order.
+- The next line contains an integer `m`, the number of item unit prices.
+- The next `m` lines each contain an `item_name` and its `per_unit_cost`.
+
+**Output Format:**
+Print a decimal number rounded to two decimal places, representing the total shipping cost of all orders.
+
+**Sample Input:**
+```
+2
+item1 USA 3
+item2 UK 2
+2
+item1 10.00
+item2 5.00
+```
+**Sample Output:**
+```
+40.00
+```
+
+**Constraints:**
+- 1 <= n, m <= 1000
+- `quantity` is an integer between 1 and 100
+- `per_unit_cost` is a floating point number with up to two decimal places.
+"""

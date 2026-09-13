@@ -1,0 +1,18 @@
+"""
+Transaction Fee Calculator
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/post/7100075
+Source Type: Popular Questions / External Thread
+
+Question Summary:
+You are building a fee calculation system for a payment processing platform.
+
+Public Section Headings:
+- Transaction Fee Calculator
+- The Challenge
+- Part 1: Basic Fee Calculation
+- Part 2: Conditional Fee Rules
+- Part 3: Volume-Based Discounts
+- How to Solve It
+"""

@@ -1,0 +1,17 @@
+"""
+Account Takeover Prediction System
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/post/7100076
+Source Type: Popular Questions / External Thread
+
+Question Summary:
+Design a machine learning system to predict account takeover (ATO) risk for a payments API platform.
+
+Public Section Headings:
+- Account Takeover Prediction System
+- The Task
+- What to Expect in the Interview
+- Helpful Links
+- Real Interview Notes
+"""

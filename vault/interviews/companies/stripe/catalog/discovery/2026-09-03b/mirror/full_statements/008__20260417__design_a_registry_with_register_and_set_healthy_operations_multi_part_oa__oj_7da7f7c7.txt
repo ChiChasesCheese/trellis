@@ -1,0 +1,304 @@
+"""
+Design a Registry with REGISTER and SET_HEALTHY Operations (Multi-part OA)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/7da7f7c7-4260-4b8d-8efb-b056f31370e3
+Source Type: OJ / More Problems
+
+================================================================================
+INTERVIEW PROMPT (as it would be delivered by the interviewer)
+================================================================================
+
+Hi -- this is a multi-part problem. Read all three parts before you
+start coding so you can make decisions that don't bite you later.
+
+Internally at Stripe we run thousands of services, and each one publishes
+itself into a "service registry" so that load balancers and clients can
+find healthy instances. Today you're going to build a tiny version of
+that registry.
+
+Input is a sequence of commands, one per line, read from stdin. For
+each command, follow the rules below; some commands produce output and
+some don't. Print only the lines a command says to print, in order, no
+extra blank lines.
+
+--------------------------------------------------------------------------------
+PART 1 -- REGISTER and SET_HEALTHY
+--------------------------------------------------------------------------------
+
+Commands in Part 1:
+
+    REGISTER <service> <instance_id> <host> <port>
+        Add a new instance to the registry under <service>. The instance
+        starts in state "unhealthy". If <instance_id> already exists for
+        this service, replace its host/port and reset state to "unhealthy".
+        Output: nothing.
+
+    SET_HEALTHY <service> <instance_id>
+        Mark the instance as "healthy". If the instance does not exist,
+        output exactly:
+            ERROR: unknown instance <instance_id>
+        Otherwise output: nothing.
+
+    LIST <service>
+        Print all instances for <service>, sorted by instance_id, one per
+        line, in this exact format:
+            <instance_id> <host>:<port> <state>
+        where <state> is "healthy" or "unhealthy". If the service has no
+        instances (or doesn't exist), output one line:
+            (empty)
+
+Example:
+
+    Input:
+        REGISTER api-svc api-1 10.0.0.1 8080
+        REGISTER api-svc api-2 10.0.0.2 8080
+        SET_HEALTHY api-svc api-1
+        LIST api-svc
+
+    Output:
+        api-1 10.0.0.1:8080 healthy
+        api-2 10.0.0.2:8080 unhealthy
+
+--------------------------------------------------------------------------------
+PART 2 -- DEREGISTER and routing
+--------------------------------------------------------------------------------
+
+Add two more commands.
+
+    DEREGISTER <service> <instance_id>
+        Remove the instance. If it doesn't exist, output:
+            ERROR: unknown instance <instance_id>
+        Otherwise output: nothing.
+
+    ROUTE <service>
+        Pick one healthy instance from <service> using round-robin
+        across the healthy instances ordered by instance_id (lex). Each
+        ROUTE call advances the round-robin pointer for that service.
+        If there are no healthy instances, output:
+            NO_HEALTHY <service>
+        Otherwise output:
+            <instance_id> <host>:<port>
+
+Round-robin specifics:
+  - Maintain one pointer per service.
+  - When an instance is added, removed, or its health state changes,
+    do NOT reset the pointer. It just walks forward over whatever the
+    current healthy set is.
+  - Concretely: after each ROUTE, the pointer logically points to the
+    NEXT instance after the one just returned. On the next ROUTE,
+    return the smallest instance_id (in lex order) >= that next one
+    among currently healthy instances; wrap around to the smallest
+    healthy instance_id if needed.
+
+Example:
+
+    Input:
+        REGISTER s a 1.1.1.1 80
+        REGISTER s b 2.2.2.2 80
+        REGISTER s c 3.3.3.3 80
+        SET_HEALTHY s a
+        SET_HEALTHY s b
+        SET_HEALTHY s c
+        ROUTE s
+        ROUTE s
+        ROUTE s
+        ROUTE s
+
+    Output:
+        a 1.1.1.1:80
+        b 2.2.2.2:80
+        c 3.3.3.3:80
+        a 1.1.1.1:80
+
+--------------------------------------------------------------------------------
+PART 3 -- Heartbeat / TTL
+--------------------------------------------------------------------------------
+
+Each command line is now prefixed with a timestamp (integer seconds,
+non-decreasing):
+
+    <ts> REGISTER ...
+    <ts> SET_HEALTHY ...
+    <ts> HEARTBEAT <service> <instance_id>
+    <ts> ROUTE <service>
+    ...
+
+Rules:
+  - REGISTER and SET_HEALTHY also count as a heartbeat (they update
+    "last_heartbeat" for that instance to <ts>).
+  - HEARTBEAT updates last_heartbeat. If the instance does not exist,
+    output:
+        ERROR: unknown instance <instance_id>
+  - At any point we evaluate routing: an instance is treated as
+    UNREACHABLE (and skipped by ROUTE, listed as "unreachable" by LIST)
+    if its last_heartbeat is more than 30 seconds before the CURRENT
+    timestamp. The instance's stored health state doesn't change --
+    UNREACHABLE is layered on top of "healthy"/"unhealthy".
+
+LIST output in Part 3 prints state as one of:
+    healthy, unhealthy, unreachable
+
+Where "unreachable" wins over the stored state if last_heartbeat is
+stale.
+
+ROUTE in Part 3 picks among instances that are both healthy AND not
+unreachable.
+
+--------------------------------------------------------------------------------
+Constraints
+--------------------------------------------------------------------------------
+
+- 1 <= number of commands <= 200_000.
+- service and instance_id are alphanumeric/underscore/dash, <= 64 chars.
+- host is an IPv4 dotted-quad. port is 1..65535.
+- Timestamps in Part 3 are non-decreasing seconds.
+
+--------------------------------------------------------------------------------
+What I'm looking for
+--------------------------------------------------------------------------------
+
+[Interviewer notes]
+
+- Part 1: dictionary of dictionaries; nothing fancy. The key thing is
+  that "REGISTER an existing instance" resets state -- that catches
+  people.
+- Part 2: round-robin pointer. The bug-magnet is what happens when the
+  current "next" instance is removed or goes unhealthy between ROUTEs.
+  Storing the pointer as "instance_id we last returned" and then doing
+  "find smallest healthy id strictly greater than that, else wrap" is
+  the cleanest formulation.
+- Part 3: the candidate must NOT walk every instance on every command.
+  But for these constraints, it's fine to walk on each ROUTE/LIST. We
+  only push on this if they finish with time to spare; in that case,
+  ask how they'd handle 1M instances and 1M commands.
+- A class with one method per command is the structure we want to see.
+  Free-floating dicts with branching at the top of main() works but is
+  graded lower on "design".
+"""
+
+
+import sys
+from typing import Optional
+
+HEARTBEAT_TTL = 30
+
+
+class Instance:
+    __slots__ = ("host", "port", "healthy", "last_heartbeat")
+
+    def __init__(self, host: str, port: int, ts: int = 0):
+        self.host = host
+        self.port = port
+        self.healthy = False
+        self.last_heartbeat = ts
+
+
+class Registry:
+    def __init__(self) -> None:
+        self.services: dict[str, dict[str, Instance]] = {}
+        self.last_routed: dict[str, str] = {}
+
+    def register(self, service: str, instance_id: str, host: str, port: int, ts: int = 0):
+        self.services.setdefault(service, {})[instance_id] = Instance(host, port, ts)
+
+    def set_healthy(self, service: str, instance_id: str, ts: int = 0) -> Optional[str]:
+        inst = self.services.get(service, {}).get(instance_id)
+        if inst is None:
+            return f"ERROR: unknown instance {instance_id}"
+        inst.healthy = True
+        inst.last_heartbeat = ts
+        return None
+
+    def deregister(self, service: str, instance_id: str) -> Optional[str]:
+        bucket = self.services.get(service, {})
+        if instance_id not in bucket:
+            return f"ERROR: unknown instance {instance_id}"
+        del bucket[instance_id]
+        return None
+
+    def heartbeat(self, service: str, instance_id: str, ts: int) -> Optional[str]:
+        inst = self.services.get(service, {}).get(instance_id)
+        if inst is None:
+            return f"ERROR: unknown instance {instance_id}"
+        inst.last_heartbeat = ts
+        return None
+
+    def _state(self, inst: Instance, now: int) -> str:
+        if now - inst.last_heartbeat > HEARTBEAT_TTL:
+            return "unreachable"
+        return "healthy" if inst.healthy else "unhealthy"
+
+    def list_service(self, service: str, now: int) -> list[str]:
+        bucket = self.services.get(service, {})
+        if not bucket:
+            return ["(empty)"]
+        return [
+            f"{iid} {inst.host}:{inst.port} {self._state(inst, now)}"
+            for iid, inst in sorted(bucket.items())
+        ]
+
+    def route(self, service: str, now: int) -> str:
+        bucket = self.services.get(service, {})
+        ids_sorted = sorted(
+            iid for iid, inst in bucket.items()
+            if inst.healthy and self._state(inst, now) == "healthy"
+        )
+        if not ids_sorted:
+            return f"NO_HEALTHY {service}"
+        last = self.last_routed.get(service)
+        if last is None:
+            picked = ids_sorted[0]
+        else:
+            after = [iid for iid in ids_sorted if iid > last]
+            picked = after[0] if after else ids_sorted[0]
+        self.last_routed[service] = picked
+        inst = bucket[picked]
+        return f"{picked} {inst.host}:{inst.port}"
+
+
+def run(lines, with_timestamps: bool = True) -> list[str]:
+    reg = Registry()
+    out: list[str] = []
+    for raw in lines:
+        if not raw.strip():
+            continue
+        toks = raw.split()
+        if with_timestamps:
+            ts = int(toks[0])
+            cmd = toks[1]
+            args = toks[2:]
+        else:
+            ts = 0
+            cmd = toks[0]
+            args = toks[1:]
+        if cmd == "REGISTER":
+            reg.register(args[0], args[1], args[2], int(args[3]), ts)
+        elif cmd == "SET_HEALTHY":
+            err = reg.set_healthy(args[0], args[1], ts)
+            if err:
+                out.append(err)
+        elif cmd == "DEREGISTER":
+            err = reg.deregister(args[0], args[1])
+            if err:
+                out.append(err)
+        elif cmd == "HEARTBEAT":
+            err = reg.heartbeat(args[0], args[1], ts)
+            if err:
+                out.append(err)
+        elif cmd == "LIST":
+            out.extend(reg.list_service(args[0], ts))
+        elif cmd == "ROUTE":
+            out.append(reg.route(args[0], ts))
+        else:
+            out.append(f"ERROR: unknown command {cmd}")
+    return out
+
+
+def main() -> None:
+    for line in run(sys.stdin):
+        print(line)
+
+
+if __name__ == "__main__":
+    main()

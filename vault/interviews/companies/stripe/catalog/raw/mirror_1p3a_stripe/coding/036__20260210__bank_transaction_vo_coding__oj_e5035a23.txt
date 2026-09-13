@@ -1,0 +1,12 @@
+"""
+Bank Transaction (VO coding)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/e5035a23-9304-41b6-b501-5c7882c41271
+Source Type: OJ / More Problems
+
+Question Summary:
+## Bank Transaction (VO coding; missing prompt)
+
+The post only mentions "coding: bank transaction (3/3)" but provides no details (transaction model, required functions/APIs, I/O format, edge cases, constraints, examples), so it can't be reconstructed into an answerable coding question.
+"""

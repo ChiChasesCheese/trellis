@@ -1,79 +1,88 @@
-# ps01 · Transaction Stream Levels — 用户总额 → 60s 滑动窗口 → top-K → 模式检测
+# ps01 · Transaction Stream Levels — per-user totals → 60s sliding window → top-K → pattern detection
 
-**类型：** 电面（解锁式，unlock-next-part） · **阶段：** 技术电面 / 团队电面（45–50 分钟） · **最近一次出现：** 2025-10-25（learncswithus.com） · **出现频率：** 1 篇详细记录（四级拆解，四个级别各自独立描述） · **可信度：** 中等（单一主要来源，Level 1/Level 3 有具体数字示例；Level 2/4 描述为纯文字，无数字示例 —— 本 problem.md 中这两个 Level 的演示样例是重构出来的，已明确标注）
+**Type:** phone screen (unlock-next-part) · **Stage:** Technical Phone Screen / Team Screen (45–50 min) · **Last asked:** 2025-10-25 (learncswithus.com) · **Frequency:** 1 detailed write-up (four-level breakdown, all four levels described independently) · **Confidence:** medium (single primary source with concrete Level-1/Level-3 examples; Level 2/4 descriptions are prose-only, no numeric example — this problem.md's worked examples for those two levels are reconstructed and clearly marked)
 
-## 背景
-一条 Stripe 交易流（`user_id, amount, timestamp`）到达，可能是乱序的。
-本题面试是同一数据结构上的四个独立"级别"，每一级通过后才解锁下一级：(1) 聚合总额，
-(2) 标记在任意滚动一分钟内消费速度快到突破阈值的用户，(3) 找出当前"最热"的用户，
-(4) 识别 small→large→small 的消费模式。这是 Stripe 实时风控/交易速率监控场景压缩到
-面试规模的版本 —— 不涉及持久化，也不涉及货币格式化（金额是普通整数；货币格式化在 ps02 中覆盖）。
+## Context
+A stream of Stripe transactions (`user_id, amount, timestamp`) arrives, possibly out of order.
+The interview is four independent "levels" on the same data shape, each unlocking after the
+previous one passes: (1) aggregate totals, (2) flag users who transact fast enough to blow past
+a threshold in any rolling minute, (3) find who's "hottest" right now, (4) spot a
+small→large→small spending pattern. This is the shape of Stripe's real-time fraud/velocity
+monitoring reduced to an interview-sized exercise — no persistence, no currency formatting
+(amounts are plain integers; ps02 covers money formatting).
 
-## 输入（stdin）
+## Input (stdin)
 ```
 PART n
-<参数行 — 仅 Part 2/3/4 存在，见下文>
+<params line — present only for Part 2/3/4, see below>
 user_id,amount,timestamp
 user_id,amount,timestamp
 ...
 ```
-* `PART n` — `n` ∈ {1,2,3,4}。
-* **参数行**：参数行**没有逗号**，且至少有一个 `key=value`（空格分隔，例如 `T=100 W=60`）；
-  数据行永远**恰好有两个逗号**。解析器据此区分二者 —— 如果 `PART n` 后紧跟的一行没有逗号且
-  含有 `=`，就把它当作参数行消费掉；否则它就已经是第一条数据行了（这就是为什么不需要参数的
-  Part 1 在没有任何参数行的情况下也能"直接工作"）。
-  - Part 2：`T=<int> W=<int>` —— 省略时 `W` 默认为 `60`。
-  - Part 3：`t=<int> K=<int>` —— 窗口**固定为 60s**，不是参数。
-  - Part 4：`S=<int>` —— small/large 的分界点。
-* `amount` 是非负整数（纯计数/不区分最小货币单位 —— 本题不涉及 `$` 格式化）。`timestamp`
-  是整数秒数，**可能乱序到达**；所有部分都按 timestamp 顺序处理交易，平局时按**输入顺序**
-  打破（Python 的稳定排序 —— 先出现先处理，标准做法：没有给出第二排序键时不要自行发明一个）。
-  最多 10^5 行。
-* 空行忽略；字段两端的空白容忍。
+* `PART n` — `n` ∈ {1,2,3,4}.
+* **Params line**: a params line has **no comma** and at least one `key=value` token
+  (space-separated, e.g. `T=100 W=60`); a data line always has **exactly two commas**. The
+  parser uses this to distinguish them — if the line right after `PART n` has no comma and
+  contains `=`, it is consumed as params; otherwise it's already the first data line (this is
+  how Part 1, which needs no params, "just works" with no params line at all).
+  - Part 2: `T=<int> W=<int>` — `W` defaults to `60` if omitted.
+  - Part 3: `t=<int> K=<int>` — window is **fixed at 60s**, not a parameter.
+  - Part 4: `S=<int>` — the small/large split point.
+* `amount` is a non-negative integer (plain count/minor-unit-agnostic — no `$` formatting in
+  this problem). `timestamp` is an integer number of seconds, **may arrive out of order**; all
+  parts process transactions in timestamp order, tie-broken by **input order** (Python's stable
+  sort — first-seen-first, standard practice: don't invent a second sort key when one isn't
+  given). Up to 10^5 lines.
+* Blank lines are ignored; fields tolerate surrounding whitespace.
 
-## 输出
-取决于具体 part —— 见下方规则。所有列表都按 `user_id` 的**纯字符串顺序**排序
-（`B` < `a`，`user10` < `user2`），与 OA 惯例一致。
+## Output
+Depends on part — see Rules below. All listings are sorted by `user_id` in **plain string
+order** (`B` < `a`, `user10` < `user2`), matching the OA convention.
 
-## 规则
+## Rules
 
-### Part 1 — 按用户求总额
-`{user_id: sum of amount}`，对输入中**任何位置出现过**的每个用户输出一行 `user_id: total`，
-按 `user_id` 排序。与顺序无关（求和满足交换律）—— 这是唯一不关心 timestamp 顺序的 part。
+### Part 1 — per-user totals
+`{user_id: sum of amount}`, one line `user_id: total` per user that appears **anywhere** in the
+input, sorted by `user_id`. Order-independent (sum is commutative) — this is the only part that
+does not care about timestamp order.
 
-### Part 2 — 60s 滑动窗口阈值
-对每个用户独立地**按 timestamp 顺序**遍历其交易，维护一个"仍在窗口内"的 `(timestamp, amount)`
-deque。对于 timestamp 为 `ts` 的交易，此刻的窗口是**闭区间 `[ts - W, ts]`**（两端都包含 ——
-恰好 `W` 秒之前的交易仍然计入；这一点由下方 Part 3 的演示样例证实，该样例只有在闭区间下才能
-匹配）。如果窗口累计和在任意时刻达到 `>= T`，该用户即被标记。对每个被标记的用户输出
-`user_id: sum`，其中 `sum` 是**首次**（按 timestamp 顺序）越过阈值那一刻的窗口总额。从未被
-标记的用户不输出（这里不做类似 `$0.00` 的全量列表 —— Part 2 是"哪些用户触发了警报"的报告，
-不是完整台账）。
+### Part 2 — 60s sliding-window threshold
+For each user independently, walk their transactions **in timestamp order**, maintaining a
+deque of "still in window" `(timestamp, amount)` pairs. The window at the moment of transaction
+with timestamp `ts` is the **closed interval `[ts - W, ts]`** (both ends inclusive — a
+transaction exactly `W` seconds earlier is still counted; this is pinned by the Part 3 worked
+example below, which only matches under a closed interval). If the running window sum reaches
+`>= T` at any point, the user is flagged. Output `user_id: sum` for every flagged user, where
+`sum` is the window total **at the first moment** (in timestamp order) the threshold was
+crossed. Users never flagged are omitted (no `$0.00`-style universal listing here — Part 2 is a
+"which users tripped the alarm" report, not a full ledger).
 
-### Part 3 — 时刻 t 处按近 60s 总额取 top K
-对每个用户，把 `timestamp` 落在闭区间 `[t - 60, t]`（固定 60s 窗口，不可配置）内的 `amount`
-求和。只有在该窗口内**至少有一笔**交易的用户才是候选人 —— 对纯粹不活跃的用户不做零值填充。
-候选人按 `sum` **降序**排名；平局按 `user_id` **升序**打破（金额平局是可能发生的，必须
-确定性处理）。按排名顺序输出前 `K` 名，格式为 `user_id: sum`，一行一个（**不**按 `user_id`
-重新排序 —— 排名顺序正是本 part 的核心）。如果符合条件的用户少于 `K` 个，全部输出（不报错，
-不填充）。
-*实现提示（面试中应该提出，这是真实的权衡）：单次遍历 + dict + `sorted()` 是
-`O(n + m log m)`（`m` 为窗口内不同用户数），也是参考实现的做法；size-`K` 的最小堆能做到
-`O(n log K)`，在实际场景中 `K << m` 时更优 —— 两种都提一下，并说明为何在当前规模的
-`n, m` 下选择更简单的方案。*
+### Part 3 — top K by trailing-60s sum at time t
+Sum each user's `amount` over transactions with `timestamp` in the closed interval
+`[t - 60, t]` (fixed 60s window, not configurable). Only users with **at least one** transaction
+in that window are candidates — there is no zero-padding for users who simply weren't active.
+Rank candidates by `sum` **descending**; tie-break by `user_id` **ascending** (ties by amount are
+possible and must be deterministic). Output the top `K` as `user_id: sum`, one per line, in
+ranked order (**not** re-sorted by `user_id` — rank order is the whole point of this part). If
+fewer than `K` users qualify, output all of them (no error, no padding).
+*Implementation note (put this in the interview, it's a real trade-off): a single pass with a
+dict + `sorted()` is `O(n + m log m)` (`m` = distinct users in window) and is what the reference
+solution does; a size-`K` min-heap gets you `O(n log K)` and matters once `K << m` at real
+scale — mention both, justify picking the simpler one for `n, m` this small.*
 
-### Part 4 — `[small, large, small]` 模式检测
-按单一阈值 `S` 对每笔交易分类：`amount < S` 为 `small`，`amount >= S` 为 `large`。对每个
-用户，按 timestamp 顺序遍历其交易，检查**每一个连续 3 笔交易组成的窗口**（对每个合法的 `i`
-取下标 `i, i+1, i+2`）—— 重叠匹配都独立计数（形如 `small, large, small, large, small` 的
-序列产生两次匹配，分别在下标 0 和 2，而不是一次）。对每次匹配，记录三元组中**第一笔**交易的
-timestamp。对**至少有一次**匹配的每个用户输出 `user_id: t1,t2,...`（起始 timestamp，升序）；
-零匹配的用户完全不输出。
+### Part 4 — `[small, large, small]` pattern detection
+Classify each transaction by the single threshold `S`: `small` if `amount < S`, `large` if
+`amount >= S`. For each user, walk their timestamp-ordered transactions and check **every
+window of 3 consecutive transactions** (indices `i, i+1, i+2` for every valid `i`) — overlapping
+matches all count independently (a run like `small, large, small, large, small` yields two
+matches, at indices 0 and 2, not one). For each match, record the timestamp of the **first**
+transaction in the triple. Output `user_id: t1,t2,...` (start timestamps, ascending) for every
+user with **at least one** match; users with zero matches are omitted entirely.
 
-## 演示样例
+## Worked examples
 ```
-# Part 1（learncswithus.com Level 1，逐字：user,amount 数对，timestamp 是本文补充的，
-# 因为原始样例出现在引入 timestamp 之前 —— 反正 Part 1 也不关心顺序）
+# Part 1 (learncswithus.com Level 1, verbatim: user,amount pairs, timestamps added since the
+# source example predates timestamps — order doesn't matter for Part 1 anyway)
 1,10,100
 2,5,101
 1,7,102
@@ -81,7 +90,7 @@ timestamp。对**至少有一次**匹配的每个用户输出 `user_id: t1,t2,..
 1: 17
 2: 5
 
-# Part 3（learncswithus.com Level 3，逐字：(user,amount,ts) 三元组；t=90, K=2）
+# Part 3 (learncswithus.com Level 3, verbatim tuples (user,amount,ts); t=90, K=2)
 1,50,10
 1,60,40
 2,80,30
@@ -90,12 +99,12 @@ timestamp。对**至少有一次**匹配的每个用户输出 `user_id: t1,t2,..
 --PART 3 (t=90 K=2)-->
 2: 130
 1: 60
-# 窗口 = [30,90]：user1 只有 ts=40（60）-> 60；user2 有 ts=30（80）+ ts=90（50）-> 130；
-# user3 只有 ts=40（30）-> 30（不在前 2 名）。这个数字结果正是证明窗口是
-# 闭区间 [t-60,t] 的依据：半开区间 (t-60,t] 会排除 ts=30，改变排名。
+# window = [30,90]: user1 gets ts=40 (60) -> 60; user2 gets ts=30 (80) + ts=90 (50) -> 130;
+# user3 gets ts=40 (30) -> 30 (not in top 2). This numeric result is what pins the window to
+# CLOSED [t-60,t]: a half-open (t-60,t] window would exclude ts=30 and change the ranking.
 
-# Part 2（重构 —— 原始来源没有数字，只有"标记在任意 60s 窗口内越过 T 的用户"）：
-# T=100, W=60
+# Part 2 (reconstructed — source gives no numbers, only "flag users who cross T within any
+# 60s window"): T=100, W=60
 u1,40,0
 u1,40,30
 u1,40,60
@@ -103,10 +112,11 @@ u2,200,5
 --PART 2-->
 u1: 120
 u2: 200
-# u1：在 ts=60 时窗口 [0,60] 包含全部三笔 40 -> 总和 120 >= 100（首次越界）。
-# u2：单笔交易 200 立即 >= 100。
+# u1: at ts=60 the window [0,60] holds all three 40s -> sum 120 >= 100 (first crossing).
+# u2: single transaction of 200 >= 100 immediately.
 
-# Part 4（重构 —— 原始来源没有数字，只有"检测 [small,large,small]，状态机"）：S=50
+# Part 4 (reconstructed — source gives no numbers, only "detect [small,large,small], state
+# machine"): S=50
 u1,10,1
 u1,60,2
 u1,20,3
@@ -114,43 +124,46 @@ u1,70,4
 u1,5,5
 --PART 4-->
 u1: 1,3
-# 标签：small,large,small,large,small -> 三元组 (1,2,3)=s,l,s 匹配（起始 ts=1）；
-# 三元组 (2,3,4)=l,s,l 不匹配；三元组 (3,4,5)=s,l,s 匹配（起始 ts=3）。
+# labels: small,large,small,large,small -> triple (1,2,3)=s,l,s matches (start ts=1);
+# triple (2,3,4)=l,s,l does not; triple (3,4,5)=s,l,s matches (start ts=3).
 ```
 
-## 隐藏测试已知会针对的边界情况
-- Part 1：只有一笔交易的用户；重复的 `user_id` 行；金额为零的交易。
-- Part 2：窗口边界恰好 `= W` 秒之前（算在内）vs `W + 1`（排除在外，上面第一条边界测试
-  两个方向都证明了这点）；从未越过 `T` 的用户（不输出，不标记为 `0`）；参数行省略 `W`
-  （默认 60）。
-- Part 3：边界交易恰好在 `t - 60`（算在内）vs `t - 61`（排除在外）；两个用户 `sum` 平局
-  （按 `user_id` 升序打破）；符合条件的用户少于 `K`（输出截断，不填充）；`K = 0`（空输出）。
-- Part 4：重叠匹配（`s,l,s,l,s` -> 两次匹配，不是一次也不是零次）；用户交易数少于 3
-  （不可能匹配）；连续全是 `large` 的交易（无匹配）；金额恰好 `== S` 算 `large`
-  （`small < S <= large`，small 只用严格 `<`）。
-- 所有 part：乱序输入行（timestamp 不按文件顺序）仍必须正确处理；`timestamp` 平局时回退到
-  输入顺序（稳定排序），而非 `user_id` 或 `amount`；`user_id` 排序按纯字符串顺序
-  （`B` < `a`，`user10` < `user2`）；很大的金额总和（10^9 量级）必须保持精确整数。
-- 性能：跨几千个不同用户的 10^5 行数据，每个 part 都必须在性能预算内舒适运行
-  （dict + deque + sort 在此处都接近线性）。
+## Edge cases hidden tests are known to target
+- Part 1: user with a single transaction; duplicate `user_id` rows; zero-amount transactions.
+- Part 2: window boundary exactly `= W` seconds old (included) vs `W + 1` (excluded, first
+  boundary test above proves this both ways); a user who never crosses `T` (omitted, not
+  `0`-flagged); `W` omitted from the params line (defaults to 60).
+- Part 3: boundary transaction exactly at `t - 60` (included) vs `t - 61` (excluded); a tie in
+  `sum` between two users (broken by `user_id` ascending); fewer qualifying users than `K`
+  (output truncates, no padding); `K = 0` (empty output).
+- Part 4: overlapping matches (`s,l,s,l,s` -> two matches, not one, not zero); fewer than 3
+  transactions for a user (no matches possible); a run of `large` amounts only (no matches);
+  amount exactly `== S` counts as `large` (`small < S <= large`, strict `<` for small).
+- All parts: out-of-order input lines (timestamps not in file order) must still process
+  correctly; ties in `timestamp` fall back to input order (stable sort), not `user_id` or
+  `amount`; `user_id` sort is plain string order (`B` < `a`, `user10` < `user2`); very large
+  amount sums (10^9-scale) must stay exact integers.
+- Performance: 10^5 lines across a few thousand distinct users must run comfortably under the
+  perf budget for every part (dict + deque + sort are all near-linear here).
 
-## 见过的变体
-- 原始来源明确将 Level 3 称为"MinHeap"—— 基于堆的 top-K 是这里 dict+sort 方案的一种
-  被接受的替代实现；复杂度权衡是 `O(n log K)` vs `O(n + m log m)`。这里应作为现场追问
-  提及，而非必须实现的部分。
-- Level 4 被描述为"状态机，三阶段转换"—— 这里的三元窗口扫描*就是*一个展开的三状态机；
-  面试官可能会要求你显式实现为每用户一个 `state ∈ {NEED_SMALL, NEED_LARGE, NEED_SMALL2}`
-  的状态机，而不是基于下标的三元组。
+## Variants seen in the wild
+- The source explicitly frames Level 3 as "MinHeap" — a heap-based top-K is an accepted
+  alternative implementation to the dict+sort approach here; complexity trade-off is `O(n log K)`
+  vs `O(n + m log m)`. Mention this as a live follow-up rather than a required implementation.
+- Level 4 is described as "state machine, three-phase transition" — the triple-window scan here
+  *is* a 3-state machine unrolled; an interviewer may ask you to implement it explicitly as
+  `state ∈ {NEED_SMALL, NEED_LARGE, NEED_SMALL2}` per user instead of index-based triples.
 
-## 来源
-- https://learncswithus.com/2025/10/25/stripe-tech-screen/ (Stripe Technical Screen｜四个Level全解析, 2025-10-25) — 四个级别的主要来源；Level 1 和 Level 3 包含具体数字示例（原样复制在上方），Level 2 和 Level 4 是纯文字描述（本 problem.md 中 Level 2/4 的演示样例及闭区间窗口边界规则均为重构，非原始来源数字）。
-- `loop/raw/cn_forums.md` 第 43–56 行（上述内容的汇总摘要，与 `en_forums.md` P3.4"各部分相互关联"的电面形式描述交叉印证）。
+## Sources
+- https://learncswithus.com/2025/10/25/stripe-tech-screen/ (Stripe Technical Screen｜四个Level全解析, 2025-10-25) — primary source for all four levels; Level 1 and Level 3 include concrete numeric examples (reproduced above verbatim), Level 2 and Level 4 are prose-only descriptions (this problem.md's Level 2/4 worked examples and the closed-interval window boundary rule are reconstructions, not sourced numbers).
+- `loop/raw/cn_forums.md` lines 43–56 (aggregated summary of the above, cross-referenced against `en_forums.md` P3.4 "parts are connected" phone-screen format description).
 
-## 本题考察点
-skills: S02 解析（区分参数行与数据行）· S03 乱序流处理（按 timestamp 排序，稳定 tie-break）·
-S04 按用户分组 · S05 滑动窗口（deque，闭区间边界）· S08 确定性排序/平局处理（top-K 排名）·
-S09 精确格式化 · S19 增量式设计（状态在 Level 2→3→4 之间通过共享的 `_by_user_sorted`
-辅助函数携带/复用）
+## What this tests
+skills: S02 parsing (params-line vs data-line disambiguation) · S03 out-of-order stream
+processing (sort-by-timestamp with stable tie-break) · S04 per-user grouping · S05 sliding
+window (deque, closed-interval boundary) · S08 deterministic sort/tie-break (top-K ranking) ·
+S09 exact formatting · S19 incremental design (state carried/reused across levels 2→3→4 via
+the shared `_by_user_sorted` helper)
 
 ## 面试官会怎么追问
 1. "如果同一用户在同一秒有 10 笔交易,Part 2/Part 4 的 tie-break 规则是什么?" — 追问是否真的理解

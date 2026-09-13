@@ -1,0 +1,34 @@
+"""
+Fee Calculation for Transactions
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/012ccdf5-7691-4ff9-9a61-9b5cf3c60ead
+Source Type: OJ / More Problems
+
+Question Summary:
+# Calculate Fees for Different Transaction Types
+
+Given a CSV file containing multiple transactions, each with a fixed fee and a variable fee percentage, write a function to calculate the total fee for each transaction. The fixed and variable fees are provided in the CSV file. You need to process the input and return the fee for each transaction.
+
+### Input:
+- A string in CSV format, each line representing a transaction and including transaction ID, fixed fee, variable fee percentage, and transaction amount.
+
+### Output:
+A list containing the total fee for each transaction rounded to two decimal places.
+
+### Example:
+
+Input:
+```
+"1,0.50,0.03,100\n2,0.30,0.02,150"
+```
+
+Output:
+```
+[3.50, 3.30]
+```
+
+### Constraints:
+- Transaction amounts are between 0 and 10000.
+- At most 1000 transactions.
+"""

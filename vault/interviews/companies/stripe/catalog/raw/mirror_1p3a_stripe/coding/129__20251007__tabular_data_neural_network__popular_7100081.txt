@@ -1,0 +1,15 @@
+"""
+Tabular Data Neural Network
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/post/7100081
+Source Type: Popular Questions / External Thread
+
+Question Summary:
+This is a hands-on ML integration assessment where you'll build a neural network to predict two target labels from tabular data.
+
+Public Section Headings:
+- Building a Neural Network for Tabular Data
+- What to Expect
+- How to Practice
+"""

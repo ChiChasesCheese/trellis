@@ -1,0 +1,30 @@
+"""
+Create a UI Component for Passport Validation
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/6906bc8c-d026-4897-935f-ad4842034fa0
+Source Type: OJ / More Problems
+
+Question Summary:
+### Problem Description
+Design and implement a UI component to validate passport number formats for different countries. The component includes a country selection dropdown and a passport input field.
+
+### Requirements
+1. Display a country dropdown, allowing users to select a country.
+2. An input field for entering the passport number.
+3. Use the provided `phoneNumberFormat` object to validate the passport number format for different countries.
+4. Implement error handling logic to inform users of incorrect input formats.
+5. Ensure good accessibility and consider how to refactor and optimize the code.
+
+### Input
+- From standard input, containing a JSON formatted `phoneNumberFormat` object and user's input data.
+
+### Output
+- Print the formatted passport number or an error message.
+
+### Test Cases
+- If `phoneNumberFormat` specifies that a country's passport number is 8 digits, print an error if the user inputs a different format.
+
+### Data Scale
+- `phoneNumberFormat` object will contain format information for up to 100 different countries.
+"""

@@ -1,0 +1,65 @@
+"""
+Transaction Fees With Per-(Merchant, Provider) Fee Waiver After Threshold
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/801e26b1-7707-418b-afe7-56cd8001ac55
+Source Type: OJ / More Problems
+
+Question Summary:
+## Problem: Transaction Fees (Per-(Merchant, Provider) Fee Waiver After Threshold)
+
+You are given a sequence of transactions. Each transaction has:
+
+- `merchant_id`
+- `provider_id` (payment provider)
+- `amount` (integer)
+
+A fee is charged on each transaction. You need to add a new rule:
+
+> **If a merchant’s cumulative transaction amount on a given provider becomes strictly greater than 10000, then all subsequent transactions for that (merchant, provider) pair incur zero fee.**
+
+Implement a program that processes transactions in input order and outputs the fee for each transaction.
+
+### Base fee rule
+- `fee = floor(amount * 0.02)` (2% rounded down)
+- If the transaction is fee-waived, `fee = 0`.
+
+### Waiver condition (important)
+- The threshold is tracked separately per **(merchant_id, provider_id)**.
+- When the cumulative amount first becomes `> 10000`:
+  - The transaction that crosses the threshold is still charged normally.
+  - Waiver starts from the **next** transaction for the same (merchant, provider).
+
+### Input (stdin)
+- First line: integer `n`.
+- Next `n` lines: `merchant_id provider_id amount`.
+
+### Output (stdout)
+- Print `n` lines, each the fee (integer) for that transaction.
+
+### Constraints
+- `1 <= n <= 2e5`
+- `1 <= amount <= 1e9`
+- `merchant_id` and `provider_id` are strings without spaces.
+
+### Example
+Input:
+```
+6
+m1 p1 6000
+m1 p1 5000
+m1 p1 100
+m1 p2 20000
+m1 p2 1
+m2 p1 20000
+```
+Output:
+```
+120
+100
+0
+400
+0
+400
+```
+"""
