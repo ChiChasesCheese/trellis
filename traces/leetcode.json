@@ -1,0 +1,4719 @@
+{
+ "domain": "leetcode",
+ "pulled_at": "2026-09-13T06:26:20+00:00",
+ "unmapped": 0,
+ "traces": {
+  "leetcode-c-anki-fsrs-scheduler-application": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787614297
+  },
+  "leetcode-c-array-index-as-hash": {
+   "due": 1201675,
+   "last_review": 1787785937
+  },
+  "leetcode-c-binary-image-max-rectangle-application": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787817150
+  },
+  "leetcode-c-binary-search-red-blue": {
+   "due": 1201667,
+   "last_review": 1787785937
+  },
+  "leetcode-c-bpe-tokenizer-application": {
+   "due": 1201642,
+   "last_review": 1787785937
+  },
+  "leetcode-c-cassandra-consistent-hashing-application": {
+   "reps": 3,
+   "interval": 6,
+   "ease": 2.5,
+   "type": 2,
+   "due": 757,
+   "last_review": 1787658710
+  },
+  "leetcode-c-cpython-asyncio-ready-timer-application": {
+   "due": 1201626,
+   "last_review": 1787785937
+  },
+  "leetcode-c-cpython-compact-dict-application": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 749,
+   "last_review": 1787444201
+  },
+  "leetcode-c-cpython-gc-cycles-application": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787817068
+  },
+  "leetcode-c-cpython-timsort-application": {
+   "due": 1201645,
+   "last_review": 1787785937
+  },
+  "leetcode-c-dfs-path-collection": {
+   "due": 1201661,
+   "last_review": 1787785937
+  },
+  "leetcode-c-dp-stock-trading-states": {
+   "due": 1201688,
+   "last_review": 1787785937
+  },
+  "leetcode-c-duolingo-half-life-regression-application": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787614317
+  },
+  "leetcode-c-edit-distance-dp": {
+   "due": 1201683,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-bfs-shortest-path-unweighted-invariant": {
+   "due": 1201824,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-bfs-shortest-path-unweighted-recognition": {
+   "due": 1201823,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-bfs-shortest-path-unweighted-template": {
+   "due": 1201825,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-bfs-state-space-modeling-invariant": {
+   "due": 1201827,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-bfs-state-space-modeling-recognition": {
+   "due": 1201826,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-bfs-state-space-modeling-template": {
+   "due": 1201828,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-bipartite-coloring-invariant": {
+   "due": 1201853,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-bipartite-coloring-recognition": {
+   "due": 1201852,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-bipartite-coloring-template": {
+   "due": 1201854,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-dfs-connected-components-invariant": {
+   "due": 1201821,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-dfs-connected-components-recognition": {
+   "due": 1201820,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-dfs-connected-components-template": {
+   "due": 1201822,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-dijkstra-shortest-path-invariant": {
+   "due": 1201839,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-dijkstra-shortest-path-recognition": {
+   "due": 1201838,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-dijkstra-shortest-path-template": {
+   "due": 1201840,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-euler-path-hierholzer-invariant": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787784534
+  },
+  "leetcode-c-endlesscheng-01luak-graph-euler-path-hierholzer-recognition": {
+   "due": 1201847,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-euler-path-hierholzer-template": {
+   "due": 1201848,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-floyd-warshall-invariant": {
+   "due": 1201842,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-floyd-warshall-recognition": {
+   "due": 1201841,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-floyd-warshall-template": {
+   "due": 1201843,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-functional-graph-cycle-invariant": {
+   "due": 1201836,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-functional-graph-cycle-recognition": {
+   "due": 1201835,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-functional-graph-cycle-template": {
+   "due": 1201837,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-mst-kruskal-invariant": {
+   "due": 1201845,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-mst-kruskal-recognition": {
+   "due": 1201844,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-mst-kruskal-template": {
+   "due": 1201846,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-network-flow-max-flow-invariant": {
+   "due": 1201856,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-network-flow-max-flow-recognition": {
+   "due": 1201855,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-network-flow-max-flow-template": {
+   "due": 1201857,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-scc-tarjan-invariant": {
+   "due": 1201850,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-scc-tarjan-recognition": {
+   "due": 1201849,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-scc-tarjan-template": {
+   "due": 1201851,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-topological-order-dp-invariant": {
+   "due": 1201833,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-topological-order-dp-recognition": {
+   "due": 1201832,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-topological-order-dp-template": {
+   "due": 1201834,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-topological-sort-kahn-invariant": {
+   "due": 1201830,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-topological-sort-kahn-recognition": {
+   "due": 1201829,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-01luak-graph-topological-sort-kahn-template": {
+   "due": 1201831,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-count-subarrays-expand-valid-invariant": {
+   "due": 1201722,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-count-subarrays-expand-valid-recognition": {
+   "due": 1201721,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-count-subarrays-expand-valid-template": {
+   "due": 1201723,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-count-subarrays-shrink-valid-invariant": {
+   "due": 1201719,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-count-subarrays-shrink-valid-recognition": {
+   "due": 1201718,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-count-subarrays-shrink-valid-template": {
+   "due": 1201720,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-divergent-two-pointers-invariant": {
+   "due": 1201734,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-divergent-two-pointers-recognition": {
+   "due": 1201733,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-divergent-two-pointers-template": {
+   "due": 1201735,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-exactly-k-via-two-at-least-invariant": {
+   "due": 1201725,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-exactly-k-via-two-at-least-recognition": {
+   "due": 1201724,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-exactly-k-via-two-at-least-template": {
+   "due": 1201726,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-expand-window-for-shortest-invariant": {
+   "due": 1201716,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-expand-window-for-shortest-recognition": {
+   "due": 1201715,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-expand-window-for-shortest-template": {
+   "due": 1201717,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-fixed-length-sliding-window-invariant": {
+   "due": 1201710,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-fixed-length-sliding-window-recognition": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787616025
+  },
+  "leetcode-c-endlesscheng-0vinmk-fixed-length-sliding-window-template": {
+   "due": 1201711,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-grouping-loop-invariant": {
+   "due": 1201740,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-grouping-loop-recognition": {
+   "due": 1201739,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-grouping-loop-template": {
+   "due": 1201741,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-opposite-direction-two-pointers-invariant": {
+   "due": 1201728,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-opposite-direction-two-pointers-recognition": {
+   "due": 1201727,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-opposite-direction-two-pointers-template": {
+   "due": 1201729,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-same-direction-two-pointers-invariant": {
+   "due": 1201731,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-same-direction-two-pointers-recognition": {
+   "due": 1201730,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-same-direction-two-pointers-template": {
+   "due": 1201732,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-shrink-window-for-longest-invariant": {
+   "due": 1201713,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-shrink-window-for-longest-recognition": {
+   "due": 1201712,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-shrink-window-for-longest-template": {
+   "due": 1201714,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-three-pointer-sliding-window-invariant": {
+   "due": 1201737,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-three-pointer-sliding-window-recognition": {
+   "due": 1201736,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-0vinmk-three-pointer-sliding-window-template": {
+   "due": 1201738,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-7c1ifr-dual-heap-shared-mutable-object-sync-invariant": {
+   "due": 1201993,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-7c1ifr-dual-heap-shared-mutable-object-sync-recognition": {
+   "due": 1201991,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-7c1ifr-dual-heap-shared-mutable-object-sync-template": {
+   "due": 1201995,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-9ozfk9-largest-rectangle-histogram-invariant": {
+   "due": 1202643,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-9ozfk9-largest-rectangle-histogram-recognition": {
+   "due": 1202642,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-9ozfk9-largest-rectangle-histogram-template": {
+   "due": 1202644,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-9ozfk9-monotonic-stack-contribution-invariant": {
+   "due": 1202646,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-9ozfk9-monotonic-stack-contribution-recognition": {
+   "due": 1202645,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-9ozfk9-monotonic-stack-contribution-template": {
+   "due": 1202647,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-9ozfk9-monotonic-stack-lexicographically-smallest-subsequence-invariant": {
+   "due": 1202649,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-9ozfk9-monotonic-stack-lexicographically-smallest-subsequence-recognition": {
+   "due": 1202648,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-9ozfk9-monotonic-stack-lexicographically-smallest-subsequence-template": {
+   "due": 1202650,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-9ozfk9-monotonic-stack-nearest-boundary-invariant": {
+   "due": 1202639,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-9ozfk9-monotonic-stack-nearest-boundary-recognition": {
+   "due": 1202638,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-9ozfk9-monotonic-stack-nearest-boundary-template": {
+   "due": 1202640,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-caoj45-enumerate-all-subsets-bitmask-invariant": {
+   "due": 1201979,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-caoj45-enumerate-all-subsets-bitmask-recognition": {
+   "due": 1201978,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-caoj45-enumerate-all-subsets-bitmask-template": {
+   "due": 1201980,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-caoj45-enumerate-nonempty-subsets-of-mask-invariant": {
+   "due": 1201983,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-caoj45-enumerate-nonempty-subsets-of-mask-recognition": {
+   "due": 1201982,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-caoj45-enumerate-nonempty-subsets-of-mask-template": {
+   "due": 1201984,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-caoj45-enumerate-subsets-including-empty-invariant": {
+   "due": 1201986,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-caoj45-enumerate-subsets-including-empty-recognition": {
+   "due": 1201985,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-caoj45-enumerate-subsets-including-empty-template": {
+   "due": 1201987,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-caoj45-enumerate-supersets-of-mask-invariant": {
+   "due": 1201989,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-caoj45-enumerate-supersets-of-mask-recognition": {
+   "due": 1201988,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-caoj45-enumerate-supersets-of-mask-template": {
+   "reps": 1,
+   "ease": 2.5,
+   "due": 755,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-caoj45-iterate-set-bits-invariant": {
+   "due": 1201974,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-caoj45-iterate-set-bits-recognition": {
+   "due": 1201973,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-caoj45-iterate-set-bits-template": {
+   "due": 1201976,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-caoj45-lowbit-and-bit-library-functions-invariant": {
+   "due": 1201970,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-caoj45-lowbit-and-bit-library-functions-recognition": {
+   "due": 1201969,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-caoj45-lowbit-and-bit-library-functions-template": {
+   "due": 1201971,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-caoj45-set-bitwise-set-operations-invariant": {
+   "due": 1201961,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-caoj45-set-bitwise-set-operations-recognition": {
+   "due": 1201960,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-caoj45-set-bitwise-set-operations-template": {
+   "due": 1201963,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-caoj45-set-element-bitwise-ops-invariant": {
+   "due": 1201966,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-caoj45-set-element-bitwise-ops-recognition": {
+   "due": 1201965,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-caoj45-set-element-bitwise-ops-template": {
+   "due": 1201967,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-dhn9vk-and-or-logtrick-invariant": {
+   "due": 1202008,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-dhn9vk-and-or-logtrick-recognition": {
+   "due": 1202007,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-dhn9vk-and-or-logtrick-template": {
+   "due": 1202009,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-dhn9vk-bit-contribution-counting-invariant": {
+   "due": 1202014,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-dhn9vk-bit-contribution-counting-recognition": {
+   "due": 1202013,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-dhn9vk-bit-contribution-counting-template": {
+   "due": 1202015,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-dhn9vk-bit-mask-operations-invariant": {
+   "due": 1201998,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-dhn9vk-bit-mask-operations-recognition": {
+   "due": 1201997,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-dhn9vk-bit-mask-operations-template": {
+   "due": 1201999,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-dhn9vk-bitwise-and-or-monotonicity-invariant": {
+   "due": 1202005,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-dhn9vk-bitwise-and-or-monotonicity-recognition": {
+   "due": 1202003,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-dhn9vk-bitwise-and-or-monotonicity-template": {
+   "due": 1202006,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-dhn9vk-bitwise-greedy-construction-invariant": {
+   "due": 1202017,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-dhn9vk-bitwise-greedy-construction-recognition": {
+   "due": 1202016,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-dhn9vk-bitwise-greedy-construction-template": {
+   "due": 1202018,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-dhn9vk-gcd-logtrick-invariant": {
+   "due": 1202011,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-dhn9vk-gcd-logtrick-recognition": {
+   "due": 1202010,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-dhn9vk-gcd-logtrick-template": {
+   "due": 1202012,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-dhn9vk-xor-linear-basis-invariant": {
+   "due": 1202020,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-dhn9vk-xor-linear-basis-recognition": {
+   "due": 1202019,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-dhn9vk-xor-linear-basis-template": {
+   "due": 1202021,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-dhn9vk-xor-parity-cancellation-invariant": {
+   "due": 1202001,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-dhn9vk-xor-parity-cancellation-recognition": {
+   "due": 1202000,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-dhn9vk-xor-parity-cancellation-template": {
+   "due": 1202002,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-ffmcgb-difference-array-invariant": {
+   "due": 1201951,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-ffmcgb-difference-array-recognition": {
+   "due": 1201949,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-ffmcgb-difference-array-template": {
+   "reps": 2,
+   "ease": 2.5,
+   "due": 755,
+   "last_review": 1787815473
+  },
+  "leetcode-c-endlesscheng-g0n5iy-bfs-layered-and-multi-source-invariant": {
+   "due": 1202619,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-bfs-layered-and-multi-source-recognition": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787658966
+  },
+  "leetcode-c-endlesscheng-g0n5iy-bfs-layered-and-multi-source-template": {
+   "due": 1202620,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-binary-search-on-answer-invariant": {
+   "due": 1202571,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-binary-search-on-answer-recognition": {
+   "due": 1202570,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-binary-search-on-answer-template": {
+   "due": 1202572,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-bitmask-state-dp-invariant": {
+   "due": 1202588,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-bitmask-state-dp-recognition": {
+   "due": 1202587,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-bitmask-state-dp-template": {
+   "due": 1202589,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-dijkstra-multi-distance-meeting-invariant": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787816663
+  },
+  "leetcode-c-endlesscheng-g0n5iy-dijkstra-multi-distance-meeting-recognition": {
+   "due": 1202624,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-dijkstra-multi-distance-meeting-template": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787815527
+  },
+  "leetcode-c-endlesscheng-g0n5iy-event-endpoint-counting-invariant": {
+   "due": 1202574,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-event-endpoint-counting-recognition": {
+   "due": 1202573,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-event-endpoint-counting-template": {
+   "due": 1202575,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-exchange-argument-greedy-invariant": {
+   "due": 1202566,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-exchange-argument-greedy-recognition": {
+   "due": 1202565,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-exchange-argument-greedy-template": {
+   "reps": 4,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787785347
+  },
+  "leetcode-c-endlesscheng-g0n5iy-fenwick-tree-prefix-counts-invariant": {
+   "due": 1202603,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-fenwick-tree-prefix-counts-recognition": {
+   "due": 1202602,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-fenwick-tree-prefix-counts-template": {
+   "due": 1202604,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-functional-graph-topological-pruning-invariant": {
+   "due": 1202617,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-functional-graph-topological-pruning-recognition": {
+   "due": 1202616,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-functional-graph-topological-pruning-template": {
+   "due": 1202618,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-gcd-divisor-counting-invariant": {
+   "due": 1202577,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-gcd-divisor-counting-recognition": {
+   "due": 1202576,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-gcd-divisor-counting-template": {
+   "due": 1202578,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-graph-dfs-state-and-timestamps-invariant": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787815650
+  },
+  "leetcode-c-endlesscheng-g0n5iy-graph-dfs-state-and-timestamps-recognition": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787815681
+  },
+  "leetcode-c-endlesscheng-g0n5iy-graph-dfs-state-and-timestamps-template": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787815519
+  },
+  "leetcode-c-endlesscheng-g0n5iy-grouped-knapsack-dp-invariant": {
+   "due": 1202591,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-grouped-knapsack-dp-recognition": {
+   "due": 1202590,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-grouped-knapsack-dp-template": {
+   "due": 1202592,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-hash-union-find-invariant": {
+   "due": 1202597,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-hash-union-find-recognition": {
+   "due": 1202596,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-hash-union-find-template": {
+   "due": 1202598,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-linear-dp-state-transition-invariant": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787658910
+  },
+  "leetcode-c-endlesscheng-g0n5iy-linear-dp-state-transition-recognition": {
+   "due": 1202585,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-linear-dp-state-transition-template": {
+   "due": 1202586,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-min-cost-max-flow-invariant": {
+   "due": 1202622,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-min-cost-max-flow-recognition": {
+   "due": 1202621,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-min-cost-max-flow-template": {
+   "due": 1202623,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-modular-residue-enumeration-invariant": {
+   "due": 1202583,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-modular-residue-enumeration-recognition": {
+   "due": 1202582,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-modular-residue-enumeration-template": {
+   "due": 1202584,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-monotonic-stack-boundaries-invariant": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787658746
+  },
+  "leetcode-c-endlesscheng-g0n5iy-monotonic-stack-boundaries-recognition": {
+   "due": 1202611,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-monotonic-stack-boundaries-template": {
+   "due": 1202612,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-prefix-suffix-heaps-invariant": {
+   "due": 1202600,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-prefix-suffix-heaps-recognition": {
+   "due": 1202599,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-prefix-suffix-heaps-template": {
+   "due": 1202601,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-prime-exponent-prefix-sums-invariant": {
+   "due": 1202580,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-prime-exponent-prefix-sums-recognition": {
+   "due": 1202579,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-prime-exponent-prefix-sums-template": {
+   "due": 1202581,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-segment-tree-range-aggregate-invariant": {
+   "due": 1202609,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-segment-tree-range-aggregate-recognition": {
+   "due": 1202608,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-segment-tree-range-aggregate-template": {
+   "due": 1202610,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-sliding-window-two-pointers-invariant": {
+   "due": 1202568,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-sliding-window-two-pointers-recognition": {
+   "due": 1202567,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-sliding-window-two-pointers-template": {
+   "due": 1202569,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-stack-reduction-merge-invariant": {
+   "due": 1202606,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-stack-reduction-merge-recognition": {
+   "due": 1202605,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-stack-reduction-merge-template": {
+   "due": 1202607,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-tree-dp-combine-children-invariant": {
+   "due": 1202594,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-tree-dp-combine-children-recognition": {
+   "due": 1202593,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-tree-dp-combine-children-template": {
+   "due": 1202595,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-two-stack-editor-invariant": {
+   "due": 1202614,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-two-stack-editor-recognition": {
+   "due": 1202613,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-two-stack-editor-template": {
+   "due": 1202615,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g0n5iy-zero-one-bfs-invariant": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787815478
+  },
+  "leetcode-c-endlesscheng-g0n5iy-zero-one-bfs-recognition": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787815505
+  },
+  "leetcode-c-endlesscheng-g0n5iy-zero-one-bfs-template": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787815486
+  },
+  "leetcode-c-endlesscheng-g6ktkl-component-swapping-invariant": {
+   "due": 1202293,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-component-swapping-recognition": {
+   "due": 1202292,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-component-swapping-template": {
+   "due": 1202294,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-constraint-driven-construction-invariant": {
+   "due": 1202296,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-constraint-driven-construction-recognition": {
+   "due": 1202295,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-constraint-driven-construction-template": {
+   "due": 1202297,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-contribution-counting-invariant": {
+   "due": 1202287,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-contribution-counting-recognition": {
+   "due": 1202286,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-contribution-counting-template": {
+   "due": 1202288,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-directional-partition-greedy-invariant": {
+   "due": 1202232,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-directional-partition-greedy-recognition": {
+   "due": 1202231,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-directional-partition-greedy-template": {
+   "due": 1202233,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-enumerate-then-greedy-invariant": {
+   "due": 1202235,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-enumerate-then-greedy-recognition": {
+   "due": 1202234,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-enumerate-then-greedy-template": {
+   "due": 1202236,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-equivalence-transformation-invariant": {
+   "due": 1202281,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-equivalence-transformation-recognition": {
+   "due": 1202280,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-equivalence-transformation-template": {
+   "due": 1202282,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-exchange-argument-invariant": {
+   "due": 1202238,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-exchange-argument-recognition": {
+   "due": 1202237,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-exchange-argument-template": {
+   "due": 1202239,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-induction-greedy-proof-invariant": {
+   "due": 1202276,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-induction-greedy-proof-recognition": {
+   "due": 1202275,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-induction-greedy-proof-template": {
+   "due": 1202277,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-interval-grouping-heap-invariant": {
+   "due": 1202249,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-interval-grouping-heap-recognition": {
+   "due": 1202248,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-interval-grouping-heap-template": {
+   "due": 1202250,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-interval-selection-stabbing-invariant": {
+   "due": 1202246,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-interval-selection-stabbing-recognition": {
+   "due": 1202245,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-interval-selection-stabbing-template": {
+   "due": 1202247,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-lexicographic-greedy-invariant": {
+   "due": 1202258,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-lexicographic-greedy-recognition": {
+   "due": 1202257,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-lexicographic-greedy-template": {
+   "due": 1202259,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-median-minimize-l1-invariant": {
+   "due": 1202273,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-median-minimize-l1-recognition": {
+   "due": 1202272,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-median-minimize-l1-template": {
+   "due": 1202274,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-merge-intervals-invariant": {
+   "due": 1202255,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-merge-intervals-recognition": {
+   "due": 1202254,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-merge-intervals-template": {
+   "due": 1202256,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-minimum-interval-cover-invariant": {
+   "due": 1202252,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-minimum-interval-cover-recognition": {
+   "due": 1202251,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-minimum-interval-cover-template": {
+   "due": 1202253,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-palindrome-frequency-greedy-invariant": {
+   "due": 1202261,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-palindrome-frequency-greedy-recognition": {
+   "due": 1202260,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-palindrome-frequency-greedy-template": {
+   "due": 1202262,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-product-and-inequality-greedy-invariant": {
+   "due": 1202267,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-product-and-inequality-greedy-recognition": {
+   "due": 1202266,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-product-and-inequality-greedy-template": {
+   "due": 1202268,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-rearrangement-inequality-invariant": {
+   "due": 1202270,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-rearrangement-inequality-recognition": {
+   "due": 1202269,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-rearrangement-inequality-template": {
+   "due": 1202271,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-regret-greedy-heap-invariant": {
+   "due": 1202243,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-regret-greedy-heap-recognition": {
+   "due": 1202242,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-regret-greedy-heap-template": {
+   "due": 1202244,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-reverse-thinking-invariant": {
+   "due": 1202284,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-reverse-thinking-recognition": {
+   "due": 1202283,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-reverse-thinking-template": {
+   "due": 1202285,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-separate-identical-items-invariant": {
+   "due": 1202240,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-separate-identical-items-recognition": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787658784
+  },
+  "leetcode-c-endlesscheng-g6ktkl-separate-identical-items-template": {
+   "due": 1202241,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-sorted-extremal-pairing-invariant": {
+   "due": 1202229,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-sorted-extremal-pairing-recognition": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787784576
+  },
+  "leetcode-c-endlesscheng-g6ktkl-sorted-extremal-pairing-template": {
+   "due": 1202230,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-special-case-to-general-invariant": {
+   "due": 1202278,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-special-case-to-general-recognition": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787658767
+  },
+  "leetcode-c-endlesscheng-g6ktkl-special-case-to-general-template": {
+   "due": 1202279,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-two-directional-scans-invariant": {
+   "due": 1202290,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-two-directional-scans-recognition": {
+   "due": 1202289,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-two-directional-scans-template": {
+   "due": 1202291,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-wildcard-parentheses-range-invariant": {
+   "due": 1202264,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-wildcard-parentheses-range-recognition": {
+   "due": 1202263,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-g6ktkl-wildcard-parentheses-range-template": {
+   "due": 1202265,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-computational-geometry-primitives-invariant": {
+   "due": 1202200,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-computational-geometry-primitives-recognition": {
+   "due": 1202199,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-computational-geometry-primitives-template": {
+   "due": 1202201,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-divisor-enumeration-invariant": {
+   "due": 1202173,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-divisor-enumeration-recognition": {
+   "due": 1202172,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-divisor-enumeration-template": {
+   "due": 1202174,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-eratosthenes-sieve-invariant": {
+   "due": 1202167,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-eratosthenes-sieve-recognition": {
+   "due": 1202166,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-eratosthenes-sieve-template": {
+   "due": 1202168,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-fast-walsh-hadamard-transform-invariant": {
+   "due": 1202218,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-fast-walsh-hadamard-transform-recognition": {
+   "due": 1202217,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-fast-walsh-hadamard-transform-template": {
+   "due": 1202219,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-floor-division-grouping-invariant": {
+   "due": 1202179,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-floor-division-grouping-recognition": {
+   "due": 1202178,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-floor-division-grouping-template": {
+   "due": 1202180,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-gcd-lcm-modular-arithmetic-invariant": {
+   "due": 1202176,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-gcd-lcm-modular-arithmetic-recognition": {
+   "due": 1202175,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-gcd-lcm-modular-arithmetic-template": {
+   "due": 1202177,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-generating-functions-invariant": {
+   "due": 1202191,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-generating-functions-recognition": {
+   "due": 1202190,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-generating-functions-template": {
+   "due": 1202192,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-impartial-game-dp-invariant": {
+   "due": 1202197,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-impartial-game-dp-recognition": {
+   "due": 1202196,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-impartial-game-dp-template": {
+   "due": 1202198,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-inclusion-exclusion-invariant": {
+   "due": 1202188,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-inclusion-exclusion-recognition": {
+   "due": 1202187,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-inclusion-exclusion-template": {
+   "due": 1202189,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-integer-partition-dp-invariant": {
+   "due": 1202212,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-integer-partition-dp-recognition": {
+   "due": 1202211,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-integer-partition-dp-template": {
+   "due": 1202213,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-lagrange-interpolation-invariant": {
+   "due": 1202221,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-lagrange-interpolation-recognition": {
+   "due": 1202220,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-lagrange-interpolation-template": {
+   "due": 1202222,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-manhattan-chebyshev-transform-invariant": {
+   "due": 1202215,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-manhattan-chebyshev-transform-recognition": {
+   "due": 1202214,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-manhattan-chebyshev-transform-template": {
+   "due": 1202216,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-mobius-inversion-invariant": {
+   "due": 1202182,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-mobius-inversion-recognition": {
+   "due": 1202181,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-mobius-inversion-template": {
+   "due": 1202183,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-modular-combinatorics-invariant": {
+   "due": 1202185,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-modular-combinatorics-recognition": {
+   "due": 1202184,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-modular-combinatorics-template": {
+   "due": 1202186,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-monotone-chain-convex-hull-invariant": {
+   "due": 1202203,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-monotone-chain-convex-hull-recognition": {
+   "due": 1202202,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-monotone-chain-convex-hull-template": {
+   "due": 1202204,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-moore-voting-invariant": {
+   "due": 1202227,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-moore-voting-recognition": {
+   "due": 1202226,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-moore-voting-template": {
+   "due": 1202228,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-palindrome-enumeration-invariant": {
+   "due": 1202209,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-palindrome-enumeration-recognition": {
+   "due": 1202208,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-palindrome-enumeration-template": {
+   "due": 1202210,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-prime-factorization-invariant": {
+   "due": 1202170,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-prime-factorization-recognition": {
+   "due": 1202169,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-prime-factorization-template": {
+   "due": 1202171,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-prime-test-invariant": {
+   "due": 1202164,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-prime-test-recognition": {
+   "due": 1202163,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-prime-test-template": {
+   "due": 1202165,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-probability-expectation-dp-invariant": {
+   "due": 1202194,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-probability-expectation-dp-recognition": {
+   "due": 1202193,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-probability-expectation-dp-template": {
+   "due": 1202195,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-randomized-algorithms-invariant": {
+   "due": 1202206,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-randomized-algorithms-recognition": {
+   "due": 1202205,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-randomized-algorithms-template": {
+   "due": 1202207,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-xor-linear-basis-invariant": {
+   "due": 1202224,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-xor-linear-basis-recognition": {
+   "due": 1202223,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-iyt3ss-xor-linear-basis-template": {
+   "due": 1202225,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-binary-tree-lca-postorder-invariant": {
+   "due": 1202322,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-binary-tree-lca-postorder-recognition": {
+   "due": 1202321,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-binary-tree-lca-postorder-template": {
+   "due": 1202323,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-bst-order-invariant-invariant": {
+   "due": 1202325,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-bst-order-invariant-recognition": {
+   "due": 1202324,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-bst-order-invariant-template": {
+   "due": 1202326,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-centroid-decomposition-invariant": {
+   "due": 1202352,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-centroid-decomposition-recognition": {
+   "due": 1202351,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-centroid-decomposition-template": {
+   "due": 1202353,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-constraint-search-backtracking-invariant": {
+   "due": 1202364,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-constraint-search-backtracking-recognition": {
+   "due": 1202363,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-constraint-search-backtracking-template": {
+   "due": 1202365,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-lca-binary-lifting-invariant": {
+   "due": 1202343,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-lca-binary-lifting-recognition": {
+   "due": 1202342,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-lca-binary-lifting-template": {
+   "due": 1202344,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-linked-list-fast-slow-cycle-invariant": {
+   "due": 1202307,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-linked-list-fast-slow-cycle-recognition": {
+   "due": 1202306,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-linked-list-fast-slow-cycle-template": {
+   "due": 1202308,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-linked-list-gap-pointers-invariant": {
+   "due": 1202305,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-linked-list-gap-pointers-recognition": {
+   "due": 1202304,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-linked-list-gap-pointers-template": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 757,
+   "last_review": 1787784702
+  },
+  "leetcode-c-endlesscheng-k0n2go-linked-list-reversal-invariant": {
+   "due": 1202302,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-linked-list-reversal-recognition": {
+   "due": 1202301,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-linked-list-reversal-template": {
+   "due": 1202303,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-linked-list-sentinel-splice-invariant": {
+   "due": 1202299,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-linked-list-sentinel-splice-recognition": {
+   "due": 1202298,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-linked-list-sentinel-splice-template": {
+   "due": 1202300,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-meet-in-the-middle-invariant": {
+   "due": 1202367,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-meet-in-the-middle-recognition": {
+   "due": 1202366,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-meet-in-the-middle-template": {
+   "due": 1202368,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-merge-sort-linked-lists-invariant": {
+   "due": 1202310,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-merge-sort-linked-lists-recognition": {
+   "due": 1202309,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-merge-sort-linked-lists-template": {
+   "due": 1202311,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-permutation-backtracking-with-duplicates-invariant": {
+   "due": 1202361,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-permutation-backtracking-with-duplicates-recognition": {
+   "due": 1202360,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-permutation-backtracking-with-duplicates-template": {
+   "due": 1202362,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-rooted-tree-topological-order-invariant": {
+   "due": 1202337,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-rooted-tree-topological-order-recognition": {
+   "due": 1202336,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-rooted-tree-topological-order-template": {
+   "due": 1202338,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-small-to-large-tree-merging-invariant": {
+   "due": 1202349,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-small-to-large-tree-merging-recognition": {
+   "due": 1202348,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-small-to-large-tree-merging-template": {
+   "due": 1202350,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-subset-partition-combination-backtracking-invariant": {
+   "due": 1202358,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-subset-partition-combination-backtracking-recognition": {
+   "due": 1202357,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-subset-partition-combination-backtracking-template": {
+   "due": 1202359,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-tree-build-from-traversals-invariant": {
+   "due": 1202328,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-tree-build-from-traversals-recognition": {
+   "due": 1202327,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-tree-build-from-traversals-template": {
+   "due": 1202329,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-tree-dfs-direction-and-return-invariant": {
+   "due": 1202313,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-tree-dfs-direction-and-return-recognition": {
+   "due": 1202312,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-tree-dfs-direction-and-return-template": {
+   "due": 1202314,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-tree-diameter-height-dp-invariant": {
+   "due": 1202319,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-tree-diameter-height-dp-recognition": {
+   "due": 1202318,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-tree-diameter-height-dp-template": {
+   "due": 1202320,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-tree-dp-state-merge-invariant": {
+   "due": 1202331,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-tree-dp-state-merge-recognition": {
+   "due": 1202330,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-tree-dp-state-merge-template": {
+   "due": 1202332,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-tree-euler-tour-flattening-invariant": {
+   "due": 1202340,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-tree-euler-tour-flattening-recognition": {
+   "due": 1202339,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-tree-euler-tour-flattening-template": {
+   "due": 1202341,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-tree-level-order-bfs-invariant": {
+   "due": 1202334,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-tree-level-order-bfs-recognition": {
+   "due": 1202333,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-tree-level-order-bfs-template": {
+   "due": 1202335,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-tree-path-sliding-window-invariant": {
+   "due": 1202355,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-tree-path-sliding-window-recognition": {
+   "due": 1202354,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-tree-path-sliding-window-template": {
+   "due": 1202356,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-tree-prune-by-returning-root-invariant": {
+   "due": 1202316,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-tree-prune-by-returning-root-recognition": {
+   "due": 1202315,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-tree-prune-by-returning-root-template": {
+   "due": 1202317,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-virtual-tree-invariant": {
+   "due": 1202346,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-virtual-tree-recognition": {
+   "due": 1202345,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-k0n2go-virtual-tree-template": {
+   "due": 1202347,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-binary-search-on-answer-invariant": {
+   "due": 1202372,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-binary-search-on-answer-recognition": {
+   "due": 1202371,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-binary-search-on-answer-template": {
+   "due": 1202373,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-binary-trie-xor-invariant": {
+   "due": 1202419,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-binary-trie-xor-recognition": {
+   "due": 1202418,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-binary-trie-xor-template": {
+   "due": 1202420,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-bitwise-greedy-and-bitmask-parity-invariant": {
+   "due": 1202434,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-bitwise-greedy-and-bitmask-parity-recognition": {
+   "due": 1202433,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-bitwise-greedy-and-bitmask-parity-template": {
+   "due": 1202435,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-combinatorics-and-inclusion-exclusion-invariant": {
+   "due": 1202425,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-combinatorics-and-inclusion-exclusion-recognition": {
+   "due": 1202424,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-combinatorics-and-inclusion-exclusion-template": {
+   "due": 1202426,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-digit-dp-invariant": {
+   "due": 1202395,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-digit-dp-recognition": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787616258
+  },
+  "leetcode-c-endlesscheng-luu0kb-digit-dp-template": {
+   "due": 1202396,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-dp-optimizations-monotonic-queue-fenwick-invariant": {
+   "due": 1202398,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-dp-optimizations-monotonic-queue-fenwick-recognition": {
+   "due": 1202397,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-dp-optimizations-monotonic-queue-fenwick-template": {
+   "due": 1202399,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-floyd-warshall-invariant": {
+   "due": 1202401,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-floyd-warshall-recognition": {
+   "due": 1202400,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-floyd-warshall-template": {
+   "due": 1202402,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-functional-graph-and-binary-lifting-invariant": {
+   "due": 1202407,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-functional-graph-and-binary-lifting-recognition": {
+   "due": 1202406,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-functional-graph-and-binary-lifting-template": {
+   "due": 1202408,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-greedy-interval-coverage-invariant": {
+   "due": 1202428,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-greedy-interval-coverage-recognition": {
+   "due": 1202427,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-greedy-interval-coverage-template": {
+   "due": 1202429,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-knapsack-dp-invariant": {
+   "due": 1202387,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-knapsack-dp-recognition": {
+   "due": 1202386,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-knapsack-dp-template": {
+   "due": 1202388,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-lca-binary-lifting-invariant": {
+   "due": 1202410,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-lca-binary-lifting-recognition": {
+   "due": 1202409,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-lca-binary-lifting-template": {
+   "due": 1202411,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-linear-and-state-machine-dp-invariant": {
+   "due": 1202384,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-linear-and-state-machine-dp-recognition": {
+   "due": 1202383,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-linear-and-state-machine-dp-template": {
+   "due": 1202385,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-monotonic-stack-and-contribution-invariant": {
+   "due": 1202413,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-monotonic-stack-and-contribution-recognition": {
+   "due": 1202412,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-monotonic-stack-and-contribution-template": {
+   "due": 1202414,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-multi-source-bfs-invariant": {
+   "due": 1202404,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-multi-source-bfs-recognition": {
+   "due": 1202403,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-multi-source-bfs-template": {
+   "due": 1202405,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-partition-and-subsequence-dp-invariant": {
+   "due": 1202390,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-partition-and-subsequence-dp-recognition": {
+   "due": 1202389,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-partition-and-subsequence-dp-template": {
+   "due": 1202391,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-prefix-suffix-and-difference-array-invariant": {
+   "due": 1202378,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-prefix-suffix-and-difference-array-recognition": {
+   "due": 1202377,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-prefix-suffix-and-difference-array-template": {
+   "due": 1202379,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-prefix-sum-hash-counting-invariant": {
+   "due": 1202381,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-prefix-sum-hash-counting-recognition": {
+   "due": 1202380,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-prefix-sum-hash-counting-template": {
+   "due": 1202382,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-prime-sieve-and-divisor-enumeration-invariant": {
+   "due": 1202422,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-prime-sieve-and-divisor-enumeration-recognition": {
+   "due": 1202421,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-prime-sieve-and-divisor-enumeration-template": {
+   "due": 1202423,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-range-query-structures-invariant": {
+   "due": 1202416,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-range-query-structures-recognition": {
+   "due": 1202415,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-range-query-structures-template": {
+   "due": 1202417,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-regret-greedy-with-heap-invariant": {
+   "due": 1202431,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-regret-greedy-with-heap-recognition": {
+   "due": 1202430,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-regret-greedy-with-heap-template": {
+   "due": 1202432,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-sliding-window-invariant": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 757,
+   "last_review": 1787784649
+  },
+  "leetcode-c-endlesscheng-luu0kb-sliding-window-recognition": {
+   "due": 1202369,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-sliding-window-template": {
+   "due": 1202370,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-tree-dp-and-rerooting-invariant": {
+   "due": 1202393,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-tree-dp-and-rerooting-recognition": {
+   "due": 1202392,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-tree-dp-and-rerooting-template": {
+   "due": 1202394,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-two-pointers-and-group-scan-invariant": {
+   "due": 1202375,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-two-pointers-and-group-scan-recognition": {
+   "due": 1202374,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-luu0kb-two-pointers-and-group-scan-template": {
+   "due": 1202376,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-mdfnkw-combination-precompute-invariant": {
+   "due": 1201946,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-mdfnkw-combination-precompute-recognition": {
+   "due": 1201945,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-mdfnkw-combination-precompute-template": {
+   "due": 1201948,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-mdfnkw-congruence-definition-invariant": {
+   "reps": 1,
+   "ease": 2.5,
+   "due": 754,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-mdfnkw-congruence-definition-recognition": {
+   "due": 1201924,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-mdfnkw-congruence-definition-template": {
+   "due": 1201927,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-mdfnkw-congruence-transposition-invariant": {
+   "due": 1201930,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-mdfnkw-congruence-transposition-recognition": {
+   "due": 1201928,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-mdfnkw-congruence-transposition-template": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 757,
+   "last_review": 1787784542
+  },
+  "leetcode-c-endlesscheng-mdfnkw-fast-exponentiation-invariant": {
+   "due": 1201936,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-mdfnkw-fast-exponentiation-recognition": {
+   "due": 1201935,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-mdfnkw-fast-exponentiation-template": {
+   "due": 1201938,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-mdfnkw-mod-add-mul-identity-invariant": {
+   "due": 1201920,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-mdfnkw-mod-add-mul-identity-recognition": {
+   "due": 1201918,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-mdfnkw-mod-add-mul-identity-template": {
+   "due": 1201922,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-mdfnkw-modular-inverse-fermat-invariant": {
+   "due": 1201941,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-mdfnkw-modular-inverse-fermat-recognition": {
+   "due": 1201940,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-mdfnkw-modular-inverse-fermat-template": {
+   "due": 1201943,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-mdfnkw-negative-mod-normalization-invariant": {
+   "due": 1201932,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-mdfnkw-negative-mod-normalization-recognition": {
+   "due": 1201931,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-mdfnkw-negative-mod-normalization-template": {
+   "due": 1201934,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-mor1u6-enumerate-middle-and-diagonals-invariant": {
+   "due": 1202706,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-enumerate-middle-and-diagonals-recognition": {
+   "due": 1202705,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-enumerate-middle-and-diagonals-template": {
+   "due": 1202707,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-enumerate-right-maintain-left-invariant": {
+   "due": 1202702,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-enumerate-right-maintain-left-recognition": {
+   "due": 1202701,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-enumerate-right-maintain-left-template": {
+   "due": 1202703,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-fenwick-tree-and-inversion-count-invariant": {
+   "due": 1202740,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-fenwick-tree-and-inversion-count-recognition": {
+   "due": 1202739,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-fenwick-tree-and-inversion-count-template": {
+   "due": 1202741,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-heap-regret-lazy-and-dual-invariant": {
+   "due": 1202728,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-heap-regret-lazy-and-dual-recognition": {
+   "due": 1202727,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-heap-regret-lazy-and-dual-template": {
+   "due": 1202729,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-heap-selection-and-rearrangement-invariant": {
+   "due": 1202731,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-heap-selection-and-rearrangement-recognition": {
+   "due": 1202730,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-heap-selection-and-rearrangement-template": {
+   "due": 1202732,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-lazy-dynamic-persistent-segment-tree-invariant": {
+   "due": 1202746,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-lazy-dynamic-persistent-segment-tree-recognition": {
+   "due": 1202745,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-lazy-dynamic-persistent-segment-tree-template": {
+   "due": 1202747,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-monotonic-queue-invariant": {
+   "due": 1202719,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-monotonic-queue-recognition": {
+   "due": 1202718,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-monotonic-queue-template": {
+   "due": 1202720,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-monotonic-stack-invariant": {
+   "due": 1202725,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-monotonic-stack-recognition": {
+   "due": 1202724,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-monotonic-stack-template": {
+   "due": 1202726,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-offline-query-ordering-invariant": {
+   "due": 1202758,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-offline-query-ordering-recognition": {
+   "due": 1202757,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-offline-query-ordering-template": {
+   "due": 1202759,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-prefix-sum-and-prefix-hash-invariant": {
+   "due": 1202710,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-prefix-sum-and-prefix-hash-recognition": {
+   "due": 1202709,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-prefix-sum-and-prefix-hash-template": {
+   "due": 1202711,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-queue-bfs-and-deque-invariant": {
+   "due": 1202716,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-queue-bfs-and-deque-recognition": {
+   "due": 1202715,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-queue-bfs-and-deque-template": {
+   "due": 1202717,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-segment-tree-point-update-invariant": {
+   "due": 1202743,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-segment-tree-point-update-recognition": {
+   "due": 1202742,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-segment-tree-point-update-template": {
+   "due": 1202744,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-sparse-table-invariant": {
+   "due": 1202755,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-sparse-table-recognition": {
+   "due": 1202754,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-sparse-table-template": {
+   "due": 1202756,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-splay-tree-invariant": {
+   "due": 1202761,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-splay-tree-recognition": {
+   "due": 1202760,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-splay-tree-template": {
+   "due": 1202762,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-sqrt-decomposition-and-mo-invariant": {
+   "due": 1202752,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-sqrt-decomposition-and-mo-recognition": {
+   "due": 1202751,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-sqrt-decomposition-and-mo-template": {
+   "due": 1202753,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-stack-parsing-and-cancellation-invariant": {
+   "due": 1202722,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-stack-parsing-and-cancellation-recognition": {
+   "due": 1202721,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-stack-parsing-and-cancellation-template": {
+   "due": 1202723,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-trie-and-xor-trie-invariant": {
+   "due": 1202734,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-trie-and-xor-trie-recognition": {
+   "due": 1202733,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-trie-and-xor-trie-template": {
+   "due": 1202735,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-two-dimensional-prefix-and-difference-invariant": {
+   "due": 1202713,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-two-dimensional-prefix-and-difference-recognition": {
+   "due": 1202712,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-two-dimensional-prefix-and-difference-template": {
+   "due": 1202714,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-union-find-connectivity-variants-invariant": {
+   "due": 1202737,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-union-find-connectivity-variants-recognition": {
+   "due": 1202736,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-union-find-connectivity-variants-template": {
+   "due": 1202738,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-weighted-union-find-invariant": {
+   "due": 1202749,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-weighted-union-find-recognition": {
+   "due": 1202748,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-mor1u6-weighted-union-find-template": {
+   "due": 1202750,
+   "last_review": 1789002118
+  },
+  "leetcode-c-endlesscheng-rvfutj-complexity-budget-from-constraints-invariant": {
+   "due": 1201754,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-rvfutj-complexity-budget-from-constraints-recognition": {
+   "due": 1201753,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-rvfutj-complexity-budget-from-constraints-template": {
+   "due": 1201756,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-rvfutj-incubation-effect-when-stuck-invariant": {
+   "due": 1201750,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-rvfutj-incubation-effect-when-stuck-recognition": {
+   "due": 1201749,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-rvfutj-incubation-effect-when-stuck-template": {
+   "due": 1201752,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-rvfutj-topic-based-spiral-practice-invariant": {
+   "reps": 1,
+   "ease": 2.5,
+   "due": 756,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-rvfutj-topic-based-spiral-practice-recognition": {
+   "due": 1201742,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-rvfutj-topic-based-spiral-practice-template": {
+   "due": 1201744,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-rvfutj-topic-to-random-transfer-training-invariant": {
+   "due": 1201746,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-rvfutj-topic-to-random-transfer-training-recognition": {
+   "due": 1201745,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-rvfutj-topic-to-random-transfer-training-template": {
+   "due": 1201748,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sjfwqi-aho-corasick-invariant": {
+   "due": 1202678,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-aho-corasick-recognition": {
+   "due": 1202676,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-aho-corasick-template": {
+   "due": 1202680,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-center-expansion-palindrome-invariant": {
+   "due": 1202668,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-center-expansion-palindrome-recognition": {
+   "due": 1202667,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-center-expansion-palindrome-template": {
+   "due": 1202669,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-kmp-prefix-function-invariant": {
+   "due": 1202654,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-kmp-prefix-function-recognition": {
+   "due": 1202652,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-kmp-prefix-function-template": {
+   "due": 1202656,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-manacher-palindrome-radii-invariant": {
+   "due": 1202665,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-manacher-palindrome-radii-recognition": {
+   "due": 1202664,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-manacher-palindrome-radii-template": {
+   "due": 1202666,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-minimum-rotation-invariant": {
+   "due": 1202674,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-minimum-rotation-recognition": {
+   "due": 1202673,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-minimum-rotation-template": {
+   "due": 1202675,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-polynomial-string-hash-invariant": {
+   "due": 1202671,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-polynomial-string-hash-recognition": {
+   "due": 1202670,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-polynomial-string-hash-template": {
+   "due": 1202672,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-subsequence-automaton-invariant": {
+   "due": 1202695,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-subsequence-automaton-recognition": {
+   "due": 1202694,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-subsequence-automaton-template": {
+   "due": 1202697,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-suffix-array-invariant": {
+   "due": 1202686,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-suffix-array-recognition": {
+   "due": 1202685,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-suffix-array-template": {
+   "due": 1202688,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-suffix-automaton-invariant": {
+   "due": 1202690,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-suffix-automaton-recognition": {
+   "due": 1202689,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-suffix-automaton-template": {
+   "due": 1202692,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-trie-prefix-tree-invariant": {
+   "due": 1202683,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-trie-prefix-tree-recognition": {
+   "due": 1202682,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-trie-prefix-tree-template": {
+   "due": 1202684,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-z-function-invariant": {
+   "due": 1202660,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-z-function-recognition": {
+   "due": 1202658,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sjfwqi-z-function-template": {
+   "due": 1202662,
+   "last_review": 1788743831
+  },
+  "leetcode-c-endlesscheng-sqopeo-binary-search-answer-maximize-invariant": {
+   "due": 1201786,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-binary-search-answer-maximize-recognition": {
+   "due": 1201784,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-binary-search-answer-maximize-template": {
+   "due": 1201788,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-binary-search-answer-minimize-invariant": {
+   "due": 1201780,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-binary-search-answer-minimize-recognition": {
+   "due": 1201778,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-binary-search-answer-minimize-template": {
+   "due": 1201782,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-binary-search-indirect-target-invariant": {
+   "due": 1201792,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-binary-search-indirect-target-recognition": {
+   "due": 1201790,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-binary-search-indirect-target-template": {
+   "due": 1201794,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-binary-search-kth-smallest-largest-invariant": {
+   "due": 1201810,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-binary-search-kth-smallest-largest-recognition": {
+   "due": 1201808,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-binary-search-kth-smallest-largest-template": {
+   "due": 1201812,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-binary-search-lower-bound-invariant": {
+   "due": 1201768,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-binary-search-lower-bound-recognition": {
+   "due": 1201766,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-binary-search-lower-bound-template": {
+   "due": 1201770,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-binary-search-maximize-minimum-invariant": {
+   "due": 1201804,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-binary-search-maximize-minimum-recognition": {
+   "due": 1201802,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-binary-search-maximize-minimum-template": {
+   "due": 1201806,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-binary-search-minimize-maximum-invariant": {
+   "due": 1201798,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-binary-search-minimize-maximum-recognition": {
+   "due": 1201796,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-binary-search-minimize-maximum-template": {
+   "due": 1201800,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-binary-search-sort-then-search-invariant": {
+   "due": 1201774,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-binary-search-sort-then-search-recognition": {
+   "due": 1201772,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-binary-search-sort-then-search-template": {
+   "due": 1201776,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-ternary-search-unimodal-invariant": {
+   "due": 1201816,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-ternary-search-unimodal-recognition": {
+   "due": 1201814,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-sqopeo-ternary-search-unimodal-template": {
+   "due": 1201818,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-convex-hull-and-wqs-dp-invariant": {
+   "due": 1202084,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-convex-hull-and-wqs-dp-recognition": {
+   "due": 1202083,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-convex-hull-and-wqs-dp-template": {
+   "due": 1202085,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-dag-game-probability-expectation-dp-invariant": {
+   "due": 1202092,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-dag-game-probability-expectation-dp-recognition": {
+   "due": 1202091,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-dag-game-probability-expectation-dp-template": {
+   "due": 1202093,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-digit-dp-invariant": {
+   "due": 1202075,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-digit-dp-recognition": {
+   "due": 1202074,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-digit-dp-template": {
+   "due": 1202076,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-finite-state-machine-dp-invariant": {
+   "due": 1202060,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-finite-state-machine-dp-recognition": {
+   "due": 1202059,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-finite-state-machine-dp-template": {
+   "due": 1202061,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-grid-path-dp-invariant": {
+   "due": 1202046,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-grid-path-dp-recognition": {
+   "due": 1202045,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-grid-path-dp-template": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787658734
+  },
+  "leetcode-c-endlesscheng-txls3i-interval-dp-invariant": {
+   "due": 1202066,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-interval-dp-recognition": {
+   "due": 1202065,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-interval-dp-template": {
+   "due": 1202067,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-kadane-maximum-subarray-invariant": {
+   "due": 1202043,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-kadane-maximum-subarray-recognition": {
+   "due": 1202042,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-kadane-maximum-subarray-template": {
+   "due": 1202044,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-knapsack-family-invariant": {
+   "due": 1202048,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-knapsack-family-recognition": {
+   "due": 1202047,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-knapsack-family-template": {
+   "due": 1202049,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-lcs-alignment-dp-invariant": {
+   "due": 1202051,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-lcs-alignment-dp-recognition": {
+   "due": 1202050,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-lcs-alignment-dp-template": {
+   "due": 1202052,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-lis-patience-sorting-invariant": {
+   "due": 1202054,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-lis-patience-sorting-recognition": {
+   "due": 1202053,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-lis-patience-sorting-template": {
+   "due": 1202055,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-matrix-exponentiation-dp-invariant": {
+   "due": 1202081,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-matrix-exponentiation-dp-recognition": {
+   "due": 1202080,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-matrix-exponentiation-dp-template": {
+   "due": 1202082,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-memoized-search-to-bottom-up-dp-invariant": {
+   "due": 1202037,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-memoized-search-to-bottom-up-dp-recognition": {
+   "due": 1202036,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-memoized-search-to-bottom-up-dp-template": {
+   "due": 1202038,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-optimized-dp-data-structures-invariant": {
+   "due": 1202078,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-optimized-dp-data-structures-recognition": {
+   "due": 1202077,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-optimized-dp-data-structures-template": {
+   "due": 1202079,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-partition-dp-invariant": {
+   "due": 1202057,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-partition-dp-recognition": {
+   "due": 1202056,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-partition-dp-template": {
+   "due": 1202058,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-permutation-bitmask-dp-invariant": {
+   "due": 1202069,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-permutation-bitmask-dp-recognition": {
+   "due": 1202068,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-permutation-bitmask-dp-template": {
+   "due": 1202070,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-reconstruct-dp-solution-invariant": {
+   "due": 1202095,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-reconstruct-dp-solution-recognition": {
+   "due": 1202094,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-reconstruct-dp-solution-template": {
+   "due": 1202096,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-rerooting-dp-invariant": {
+   "due": 1202090,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-rerooting-dp-recognition": {
+   "due": 1202089,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-rerooting-dp-template": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787658874
+  },
+  "leetcode-c-endlesscheng-txls3i-subset-enumeration-dp-invariant": {
+   "due": 1202072,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-subset-enumeration-dp-recognition": {
+   "due": 1202071,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-subset-enumeration-dp-template": {
+   "due": 1202073,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-take-or-skip-linear-dp-invariant": {
+   "due": 1202040,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-take-or-skip-linear-dp-recognition": {
+   "due": 1202039,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-take-or-skip-linear-dp-template": {
+   "due": 1202041,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-tree-dp-independent-set-diameter-domination-invariant": {
+   "due": 1202087,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-tree-dp-independent-set-diameter-domination-recognition": {
+   "due": 1202086,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-tree-dp-independent-set-diameter-domination-template": {
+   "due": 1202088,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-value-keyed-subsequence-dp-invariant": {
+   "due": 1202063,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-value-keyed-subsequence-dp-recognition": {
+   "due": 1202062,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-txls3i-value-keyed-subsequence-dp-template": {
+   "due": 1202064,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-uuurex-two-dimensional-prefix-sum-invariant": {
+   "due": 1201956,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-uuurex-two-dimensional-prefix-sum-recognition": {
+   "due": 1201954,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-uuurex-two-dimensional-prefix-sum-template": {
+   "due": 1201958,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-backtracking-enumeration-invariant": {
+   "due": 1202446,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-backtracking-enumeration-recognition": {
+   "due": 1202445,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-backtracking-enumeration-template": {
+   "due": 1202447,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-binary-search-invariant": {
+   "due": 1202440,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-binary-search-recognition": {
+   "due": 1202439,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-binary-search-template": {
+   "due": 1202441,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-bitwise-prefix-xor-invariant": {
+   "due": 1202502,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-bitwise-prefix-xor-recognition": {
+   "due": 1202501,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-bitwise-prefix-xor-template": {
+   "due": 1202503,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-contribution-counting-invariant": {
+   "due": 1202452,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-contribution-counting-recognition": {
+   "due": 1202451,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-contribution-counting-template": {
+   "due": 1202453,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-digit-dp-invariant": {
+   "due": 1202466,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-digit-dp-recognition": {
+   "due": 1202465,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-digit-dp-template": {
+   "due": 1202467,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-disjoint-set-union-invariant": {
+   "due": 1202484,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-disjoint-set-union-recognition": {
+   "due": 1202483,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-disjoint-set-union-template": {
+   "due": 1202485,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-dynamic-programming-memo-tabulation-invariant": {
+   "due": 1202455,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-dynamic-programming-memo-tabulation-recognition": {
+   "due": 1202454,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-dynamic-programming-memo-tabulation-template": {
+   "due": 1202456,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-fenwick-tree-invariant": {
+   "due": 1202487,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-fenwick-tree-recognition": {
+   "due": 1202486,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-fenwick-tree-template": {
+   "due": 1202488,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-gcd-modular-arithmetic-invariant": {
+   "due": 1202496,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-gcd-modular-arithmetic-recognition": {
+   "due": 1202495,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-gcd-modular-arithmetic-template": {
+   "due": 1202497,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-graph-dfs-bfs-invariant": {
+   "due": 1202469,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-graph-dfs-bfs-recognition": {
+   "due": 1202468,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-graph-dfs-bfs-template": {
+   "due": 1202470,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-greedy-and-constructive-invariant": {
+   "due": 1202499,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-greedy-and-constructive-recognition": {
+   "due": 1202498,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-greedy-and-constructive-template": {
+   "due": 1202500,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-heap-priority-queue-invariant": {
+   "due": 1202478,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-heap-priority-queue-recognition": {
+   "due": 1202477,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-heap-priority-queue-template": {
+   "due": 1202479,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-kadane-maximum-subarray-invariant": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787658937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-kadane-maximum-subarray-recognition": {
+   "due": 1202457,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-kadane-maximum-subarray-template": {
+   "due": 1202458,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-knapsack-dp-invariant": {
+   "due": 1202460,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-knapsack-dp-recognition": {
+   "due": 1202459,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-knapsack-dp-template": {
+   "due": 1202461,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-lazy-segment-tree-invariant": {
+   "due": 1202490,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-lazy-segment-tree-recognition": {
+   "due": 1202489,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-lazy-segment-tree-template": {
+   "due": 1202491,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-monotonic-stack-invariant": {
+   "due": 1202481,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-monotonic-stack-recognition": {
+   "due": 1202480,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-monotonic-stack-template": {
+   "due": 1202482,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-prefix-suffix-decomposition-invariant": {
+   "due": 1202449,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-prefix-suffix-decomposition-recognition": {
+   "due": 1202448,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-prefix-suffix-decomposition-template": {
+   "due": 1202450,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-prefix-sum-difference-array-invariant": {
+   "due": 1202443,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-prefix-sum-difference-array-recognition": {
+   "due": 1202442,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-prefix-sum-difference-array-template": {
+   "due": 1202444,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-prime-factorization-sieve-invariant": {
+   "due": 1202493,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-prime-factorization-sieve-recognition": {
+   "due": 1202492,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-prime-factorization-sieve-template": {
+   "due": 1202494,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-shortest-path-dijkstra-floyd-invariant": {
+   "due": 1202475,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-shortest-path-dijkstra-floyd-recognition": {
+   "due": 1202474,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-shortest-path-dijkstra-floyd-template": {
+   "due": 1202476,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-topological-sort-invariant": {
+   "due": 1202472,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-topological-sort-recognition": {
+   "due": 1202471,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-topological-sort-template": {
+   "due": 1202473,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-tree-dp-rerooting-invariant": {
+   "due": 1202463,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-tree-dp-rerooting-recognition": {
+   "due": 1202462,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-tree-dp-rerooting-template": {
+   "due": 1202464,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-two-pointers-sliding-window-invariant": {
+   "due": 1202437,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-two-pointers-sliding-window-recognition": {
+   "due": 1202436,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-v2rxsn-two-pointers-sliding-window-template": {
+   "due": 1202438,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-binary-search-on-answer-invariant": {
+   "due": 1202510,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-binary-search-on-answer-recognition": {
+   "due": 1202509,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-binary-search-on-answer-template": {
+   "due": 1202511,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-bitmask-enumeration-and-bitwise-window-invariant": {
+   "due": 1202516,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-bitmask-enumeration-and-bitwise-window-recognition": {
+   "due": 1202515,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-bitmask-enumeration-and-bitwise-window-template": {
+   "due": 1202517,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-contribution-counting-invariant": {
+   "due": 1202519,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-contribution-counting-recognition": {
+   "due": 1202518,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-contribution-counting-template": {
+   "due": 1202520,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-digit-dp-invariant": {
+   "due": 1202525,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-digit-dp-recognition": {
+   "due": 1202524,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-digit-dp-template": {
+   "due": 1202526,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-direct-simulation-invariant": {
+   "due": 1202504,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-direct-simulation-recognition": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787616223
+  },
+  "leetcode-c-endlesscheng-wr1mjp-direct-simulation-template": {
+   "due": 1202505,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-disjoint-set-union-and-offline-invariant": {
+   "due": 1202543,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-disjoint-set-union-and-offline-recognition": {
+   "due": 1202542,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-disjoint-set-union-and-offline-template": {
+   "due": 1202544,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-dynamic-programming-memo-to-tabulation-invariant": {
+   "due": 1202522,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-dynamic-programming-memo-to-tabulation-recognition": {
+   "due": 1202521,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-dynamic-programming-memo-to-tabulation-template": {
+   "due": 1202523,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-fenwick-and-segment-tree-invariant": {
+   "due": 1202546,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-fenwick-and-segment-tree-recognition": {
+   "due": 1202545,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-fenwick-and-segment-tree-template": {
+   "due": 1202547,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-functional-graph-cycle-and-lca-invariant": {
+   "due": 1202555,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-functional-graph-cycle-and-lca-recognition": {
+   "due": 1202554,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-functional-graph-cycle-and-lca-template": {
+   "due": 1202556,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-gcd-lcm-factorization-and-congruence-invariant": {
+   "due": 1202558,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-gcd-lcm-factorization-and-congruence-recognition": {
+   "due": 1202557,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-gcd-lcm-factorization-and-congruence-template": {
+   "due": 1202559,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-graph-traversal-and-shortest-path-invariant": {
+   "due": 1202549,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-graph-traversal-and-shortest-path-recognition": {
+   "due": 1202548,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-graph-traversal-and-shortest-path-template": {
+   "due": 1202550,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-greedy-exchange-and-median-transform-invariant": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 757,
+   "last_review": 1787784678
+  },
+  "leetcode-c-endlesscheng-wr1mjp-greedy-exchange-and-median-transform-recognition": {
+   "due": 1202563,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-greedy-exchange-and-median-transform-template": {
+   "due": 1202564,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-modular-combinatorics-invariant": {
+   "due": 1202561,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-modular-combinatorics-recognition": {
+   "due": 1202560,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-modular-combinatorics-template": {
+   "due": 1202562,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-monotonic-stack-and-queue-invariant": {
+   "due": 1202537,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-monotonic-stack-and-queue-recognition": {
+   "due": 1202536,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-monotonic-stack-and-queue-template": {
+   "due": 1202538,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-prefix-suffix-and-difference-invariant": {
+   "due": 1202513,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-prefix-suffix-and-difference-recognition": {
+   "due": 1202512,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-prefix-suffix-and-difference-template": {
+   "due": 1202514,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-priority-queue-greedy-invariant": {
+   "due": 1202534,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-priority-queue-greedy-recognition": {
+   "due": 1202533,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-priority-queue-greedy-template": {
+   "due": 1202535,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-topological-sort-and-bipartite-check-invariant": {
+   "due": 1202552,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-topological-sort-and-bipartite-check-recognition": {
+   "due": 1202551,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-topological-sort-and-bipartite-check-template": {
+   "due": 1202553,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-tree-dp-and-center-expansion-invariant": {
+   "due": 1202528,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-tree-dp-and-center-expansion-recognition": {
+   "due": 1202527,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-tree-dp-and-center-expansion-template": {
+   "due": 1202529,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-trie-prefix-tree-invariant": {
+   "due": 1202540,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-trie-prefix-tree-recognition": {
+   "due": 1202539,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-trie-prefix-tree-template": {
+   "due": 1202541,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-two-pointers-and-sliding-window-invariant": {
+   "due": 1202507,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-two-pointers-and-sliding-window-recognition": {
+   "due": 1202506,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-two-pointers-and-sliding-window-template": {
+   "due": 1202508,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-zero-one-knapsack-invariant": {
+   "due": 1202531,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-zero-one-knapsack-recognition": {
+   "due": 1202530,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-wr1mjp-zero-one-knapsack-template": {
+   "due": 1202532,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-yfxfdf-q1-two-pointer-near-palindromic-deletion-invariant": {
+   "due": 1201859,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-yfxfdf-q1-two-pointer-near-palindromic-deletion-recognition": {
+   "due": 1201858,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-yfxfdf-q1-two-pointer-near-palindromic-deletion-template": {
+   "due": 1201860,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-yfxfdf-q2-small-constant-brute-force-invariant": {
+   "due": 1201862,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-yfxfdf-q2-small-constant-brute-force-recognition": {
+   "due": 1201861,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-yfxfdf-q2-small-constant-brute-force-template": {
+   "due": 1201863,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-yfxfdf-q3-binary-search-on-answer-arithmetic-sum-invariant": {
+   "due": 1201865,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-yfxfdf-q3-binary-search-on-answer-arithmetic-sum-recognition": {
+   "due": 1201864,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-yfxfdf-q3-binary-search-on-answer-arithmetic-sum-template": {
+   "due": 1201866,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-yfxfdf-q4-complement-counting-invariant": {
+   "due": 1201868,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-yfxfdf-q4-complement-counting-recognition": {
+   "due": 1201867,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-yfxfdf-q4-complement-counting-template": {
+   "due": 1201869,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-yfxfdf-q4-subset-enumeration-bitmask-hashmap-invariant": {
+   "due": 1201871,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-yfxfdf-q4-subset-enumeration-bitmask-hashmap-recognition": {
+   "due": 1201870,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-yfxfdf-q4-subset-enumeration-bitmask-hashmap-template": {
+   "due": 1201872,
+   "last_review": 1787785937
+  },
+  "leetcode-c-endlesscheng-yixpxw-grid-connected-components-dfs-invariant": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787816418
+  },
+  "leetcode-c-endlesscheng-yixpxw-grid-connected-components-dfs-recognition": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787816577
+  },
+  "leetcode-c-endlesscheng-yixpxw-grid-connected-components-dfs-template": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787816278
+  },
+  "leetcode-c-endlesscheng-yixpxw-grid-dijkstra-invariant": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787816004
+  },
+  "leetcode-c-endlesscheng-yixpxw-grid-dijkstra-recognition": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 757,
+   "last_review": 1787816011
+  },
+  "leetcode-c-endlesscheng-yixpxw-grid-dijkstra-template": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787815760
+  },
+  "leetcode-c-endlesscheng-yixpxw-grid-unweighted-bfs-invariant": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 757,
+   "last_review": 1787816150
+  },
+  "leetcode-c-endlesscheng-yixpxw-grid-unweighted-bfs-recognition": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787816250
+  },
+  "leetcode-c-endlesscheng-yixpxw-grid-unweighted-bfs-template": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787816114
+  },
+  "leetcode-c-endlesscheng-yixpxw-grid-zero-one-bfs-invariant": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 757,
+   "last_review": 1787816028
+  },
+  "leetcode-c-endlesscheng-yixpxw-grid-zero-one-bfs-recognition": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787816049
+  },
+  "leetcode-c-endlesscheng-yixpxw-grid-zero-one-bfs-template": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 757,
+   "last_review": 1787816022
+  },
+  "leetcode-c-fast-slow-pointers-linked-list": {
+   "due": 1201685,
+   "last_review": 1787785937
+  },
+  "leetcode-c-flink-monotonic-queue-application": {
+   "due": 1201620,
+   "last_review": 1787785937
+  },
+  "leetcode-c-flink-sliding-windows-application": {
+   "due": 1201619,
+   "last_review": 1787785937
+  },
+  "leetcode-c-frr-ospf-spf-application": {
+   "due": 1201618,
+   "last_review": 1787785937
+  },
+  "leetcode-c-gdal-sieve-grid-components-application": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787614701
+  },
+  "leetcode-c-gis-raster-prefix-sum-application": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787614722
+  },
+  "leetcode-c-git-commit-graph-application": {
+   "reps": 3,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 749,
+   "last_review": 1787443363
+  },
+  "leetcode-c-git-tree-merkle-dag-application": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787615428
+  },
+  "leetcode-c-google-re2-linear-time-application": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787816970
+  },
+  "leetcode-c-google-s2-geometry-application": {
+   "due": 1201549,
+   "last_review": 1787615469
+  },
+  "leetcode-c-hnsw-vector-search-application": {
+   "due": 1201643,
+   "last_review": 1787785937
+  },
+  "leetcode-c-hyperscan-multipattern-application": {
+   "due": 1201551,
+   "last_review": 1787615515
+  },
+  "leetcode-c-isal-reed-solomon-application": {
+   "due": 1201621,
+   "last_review": 1787785937
+  },
+  "leetcode-c-java-enumset-bit-vector-application": {
+   "due": 1201627,
+   "last_review": 1787785937
+  },
+  "leetcode-c-java-scheduled-executor-heap-application": {
+   "due": 1201628,
+   "last_review": 1787785937
+  },
+  "leetcode-c-kadane-variant": {
+   "reps": 2,
+   "ease": 2.5,
+   "due": 753,
+   "last_review": 1787786218
+  },
+  "leetcode-c-kafka-streams-sliding-window-application": {
+   "due": 1201622,
+   "last_review": 1787785937
+  },
+  "leetcode-c-kafka-weighted-partition-selection-application": {
+   "reps": 3,
+   "interval": 22,
+   "ease": 2.65,
+   "type": 2,
+   "due": 777,
+   "last_review": 1788074628
+  },
+  "leetcode-c-knapsack-subset-sum": {
+   "reps": 2,
+   "ease": 2.5,
+   "due": 752,
+   "last_review": 1787785937
+  },
+  "leetcode-c-kotlin-channel-backpressure-application": {
+   "due": 1201646,
+   "last_review": 1787785937
+  },
+  "leetcode-c-kotlin-coroutine-scheduler-application": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1788074629
+  },
+  "leetcode-c-kotlin-persistent-collections-application": {
+   "reps": 1,
+   "type": 1,
+   "due": 1788075268,
+   "last_review": 1788074626
+  },
+  "leetcode-c-kubernetes-rollout-difference-timeline-application": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787658425
+  },
+  "leetcode-c-kubernetes-scheduler-queues-application": {
+   "reps": 3,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 749,
+   "last_review": 1787443993
+  },
+  "leetcode-c-linux-cpumask-application": {
+   "due": 1201630,
+   "last_review": 1787785937
+  },
+  "leetcode-c-linux-epoll-interest-ready-application": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 751,
+   "last_review": 1787444244
+  },
+  "leetcode-c-linux-maple-tree-vma-application": {
+   "due": 1201631,
+   "last_review": 1787785937
+  },
+  "leetcode-c-llvm-greedy-register-allocation-application": {
+   "due": 1201629,
+   "last_review": 1787785937
+  },
+  "leetcode-c-matrix-bfs-state": {
+   "due": 1201681,
+   "last_review": 1787785937
+  },
+  "leetcode-c-monotonic-stack-greedy": {
+   "due": 1201671,
+   "last_review": 1787785937
+  },
+  "leetcode-c-nav2-costmap-astar-application": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 757,
+   "last_review": 1787817091
+  },
+  "leetcode-c-opencv-connected-components-application": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787615639
+  },
+  "leetcode-c-opencv-integral-image-application": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787615596
+  },
+  "leetcode-c-openjdk-hashmap-treeification-application": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787471978
+  },
+  "leetcode-c-openjdk-regex-backtracking-application": {
+   "due": 1201632,
+   "last_review": 1787785937
+  },
+  "leetcode-c-openssl-rsa-modexp-application": {
+   "due": 1201633,
+   "last_review": 1787785937
+  },
+  "leetcode-c-otel-concurrency-delta-stream-application": {
+   "due": 1201623,
+   "last_review": 1787785937
+  },
+  "leetcode-c-postgresql-bitmap-heap-scan-application": {
+   "due": 1201636,
+   "last_review": 1787785937
+  },
+  "leetcode-c-postgresql-booking-difference-events-application": {
+   "due": 1201639,
+   "last_review": 1787785937
+  },
+  "leetcode-c-postgresql-join-dp-application": {
+   "due": 1201637,
+   "last_review": 1787785937
+  },
+  "leetcode-c-postgresql-pg-trgm-application": {
+   "due": 1201638,
+   "last_review": 1787785937
+  },
+  "leetcode-c-postgresql-reservoir-sampling-application": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787817079
+  },
+  "leetcode-c-postgresql-wal-application": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787613822
+  },
+  "leetcode-c-prefix-sum-parity": {
+   "due": 1201665,
+   "last_review": 1787785937
+  },
+  "leetcode-c-python-lru-cache-application": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787817736
+  },
+  "leetcode-c-raft-replicated-log-application": {
+   "reps": 3,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787444213
+  },
+  "leetcode-c-range-query": {
+   "due": 1201669,
+   "last_review": 1787785937
+  },
+  "leetcode-c-redis-hyperloglog-application": {
+   "due": 1201640,
+   "last_review": 1787785937
+  },
+  "leetcode-c-redis-streams-radix-tree-application": {
+   "due": 1201641,
+   "last_review": 1787785937
+  },
+  "leetcode-c-redis-zset-hash-skiplist-application": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787615000
+  },
+  "leetcode-c-roaring-bitmap-containers-application": {
+   "due": 1201634,
+   "last_review": 1787785937
+  },
+  "leetcode-c-rocksdb-point-lookup-application": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787615022
+  },
+  "leetcode-c-sliding-window-frequency-map": {
+   "due": 1201679,
+   "last_review": 1787785937
+  },
+  "leetcode-c-snowflake-hyperloglog-application": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1787853357
+  },
+  "leetcode-c-snowflake-micro-partition-pruning-application": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1787853322
+  },
+  "leetcode-c-snowflake-top-k-pruning-application": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787853279
+  },
+  "leetcode-c-sqlite-btree-pages-application": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787615403
+  },
+  "leetcode-c-streaming-stock-span-application": {
+   "due": 1201625,
+   "last_review": 1787785937
+  },
+  "leetcode-c-supermemo-sm2-application": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787658447
+  },
+  "leetcode-c-tcp-sliding-window-application": {
+   "due": 1201624,
+   "last_review": 1787785937
+  },
+  "leetcode-c-tex-knuth-plass-line-breaking-application": {
+   "due": 1201616,
+   "last_review": 1787785937
+  },
+  "leetcode-c-transformer-attention-kv-cache-application": {
+   "due": 1201644,
+   "last_review": 1787785937
+  },
+  "leetcode-c-two-pointers-sorted-array": {
+   "due": 1201677,
+   "last_review": 1787785937
+  },
+  "leetcode-c-union-find-connectivity": {
+   "due": 1201673,
+   "last_review": 1787785937
+  },
+  "leetcode-c-viola-jones-integral-features-application": {
+   "due": 1201617,
+   "last_review": 1787785937
+  },
+  "leetcode-c-xor-range-construction": {
+   "due": 1201663,
+   "last_review": 1787785937
+  },
+  "leetcode-c-zlib-lazy-matching-application": {
+   "due": 1201635,
+   "last_review": 1787785937
+  },
+  "leetcode-c-zopfli-optimal-parsing-application": {
+   "due": 1201550,
+   "last_review": 1787615478
+  },
+  "leetcode-q-alien-dictionary-pattern": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787472903
+  },
+  "leetcode-q-apple-redistribution-into-boxes-pattern": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787613879
+  },
+  "leetcode-q-basic-calculator-ii-pattern": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787459230
+  },
+  "leetcode-q-best-time-to-buy-and-sell-stock-ii-pattern": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787789945
+  },
+  "leetcode-q-best-time-to-buy-and-sell-stock-iii-pattern": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 757,
+   "last_review": 1787789928
+  },
+  "leetcode-q-best-time-to-buy-and-sell-stock-mistake": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787789958
+  },
+  "leetcode-q-best-time-to-buy-and-sell-stock-pattern": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787791928
+  },
+  "leetcode-q-best-time-to-buy-and-sell-stock-with-transaction-fee-pattern": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 757,
+   "last_review": 1787789795
+  },
+  "leetcode-q-brace-expansion-ii-pattern": {
+   "due": 1202763,
+   "last_review": 1789002118
+  },
+  "leetcode-q-buddy-strings-pattern": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787815169
+  },
+  "leetcode-q-build-array-from-permutation-pattern": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787471982
+  },
+  "leetcode-q-car-pooling-pattern": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1787902977
+  },
+  "leetcode-q-cinema-seat-allocation-pattern": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1787863510
+  },
+  "leetcode-q-climbing-stairs-pattern": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 757,
+   "last_review": 1787791996
+  },
+  "leetcode-q-closest-equal-element-queries-pattern": {
+   "due": 1201655,
+   "last_review": 1787785937
+  },
+  "leetcode-q-complement-of-base-10-integer-mistake": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1787902822
+  },
+  "leetcode-q-confusing-number-pattern": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787903021
+  },
+  "leetcode-q-construct-binary-tree-from-preorder-and-inorder-traversal-mistake": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787815095
+  },
+  "leetcode-q-construct-binary-tree-from-preorder-and-inorder-traversal-pattern": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787815107
+  },
+  "leetcode-q-construct-uniform-parity-array-i-pattern": {
+   "due": 1202634,
+   "last_review": 1788391213
+  },
+  "leetcode-q-construct-uniform-parity-array-ii-mistake": {
+   "due": 1202636,
+   "last_review": 1788477634
+  },
+  "leetcode-q-construct-uniform-parity-array-ii-pattern": {
+   "due": 1202635,
+   "last_review": 1788477634
+  },
+  "leetcode-q-contains-duplicate-pattern": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 751,
+   "last_review": 1787459709
+  },
+  "leetcode-q-convert-binary-search-tree-to-sorted-doubly-linked-list-pattern": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1787902887
+  },
+  "leetcode-q-count-commas-in-range-ii-pattern": {
+   "due": 1202765,
+   "last_review": 1789002118
+  },
+  "leetcode-q-count-commas-in-range-pattern": {
+   "due": 1202764,
+   "last_review": 1789002118
+  },
+  "leetcode-q-count-integers-appearing-in-a-single-block-pattern": {
+   "due": 1202630,
+   "last_review": 1788391213
+  },
+  "leetcode-q-count-number-of-trapezoids-i-pattern": {
+   "due": 1201529,
+   "last_review": 1787354597
+  },
+  "leetcode-q-detonate-the-maximum-bombs-pattern": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 751,
+   "last_review": 1787472004
+  },
+  "leetcode-q-distribute-elements-into-two-arrays-i-pattern": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787786226
+  },
+  "leetcode-q-dungeon-game-pattern": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 751,
+   "last_review": 1787444599
+  },
+  "leetcode-q-duplicate-zeros-pattern": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1787903001
+  },
+  "leetcode-q-elevator-requests-i-pattern": {
+   "due": 1201657,
+   "last_review": 1787785937
+  },
+  "leetcode-q-find-if-path-exists-in-graph-pattern": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 751,
+   "last_review": 1787459671
+  },
+  "leetcode-q-find-k-closest-elements-pattern": {
+   "due": 1201697,
+   "last_review": 1787785937
+  },
+  "leetcode-q-find-largest-value-in-each-tree-row-pattern": {
+   "due": 1200632,
+   "last_review": 1787268625
+  },
+  "leetcode-q-find-the-duplicate-number-mistake": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787613867
+  },
+  "leetcode-q-find-the-largest-almost-missing-integer-pattern": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787616987
+  },
+  "leetcode-q-find-the-minimum-and-maximum-number-of-nodes-between-critical-points-pattern": {
+   "due": 1202632,
+   "last_review": 1788391213
+  },
+  "leetcode-q-first-missing-positive-pattern": {
+   "due": 1201695,
+   "last_review": 1787785937
+  },
+  "leetcode-q-graph-valid-tree-pattern": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 751,
+   "last_review": 1787472183
+  },
+  "leetcode-q-hamming-distance-pattern": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1787902810
+  },
+  "leetcode-q-height-checker-pattern": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787903450
+  },
+  "leetcode-q-identify-the-largest-outlier-in-an-array-pattern": {
+   "due": 1201528,
+   "last_review": 1787354596
+  },
+  "leetcode-q-isomorphic-strings-pattern": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 757,
+   "last_review": 1787815039
+  },
+  "leetcode-q-k-th-digit-in-infinite-string-pattern": {
+   "due": 1201694,
+   "last_review": 1787785937
+  },
+  "leetcode-q-kth-smallest-amount-with-single-denomination-combination-pattern": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1787853646
+  },
+  "leetcode-q-lexicographically-smallest-palindromic-permutation-greater-than-target-pattern": {
+   "due": 1202627,
+   "last_review": 1788391213
+  },
+  "leetcode-q-lexicographically-smallest-permutation-greater-than-target-pattern": {
+   "due": 1202626,
+   "last_review": 1788391213
+  },
+  "leetcode-q-longest-increasing-path-in-a-matrix-pattern": {
+   "due": 1201690,
+   "last_review": 1787785937
+  },
+  "leetcode-q-majority-element-pattern": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787789921
+  },
+  "leetcode-q-make-lexicographically-smallest-array-by-swapping-elements-pattern": {
+   "due": 1202628,
+   "last_review": 1788391213
+  },
+  "leetcode-q-max-sum-of-a-pair-with-equal-sum-of-digits-pattern": {
+   "due": 1201526,
+   "last_review": 1787354596
+  },
+  "leetcode-q-maximum-amount-of-money-robot-can-earn-mistake": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787617017
+  },
+  "leetcode-q-maximum-amount-of-money-robot-can-earn-pattern": {
+   "due": 1200579,
+   "last_review": 1787102262
+  },
+  "leetcode-q-maximum-depth-of-binary-tree-pattern": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787444346
+  },
+  "leetcode-q-maximum-path-score-in-a-grid-mistake": {
+   "due": 1200626,
+   "last_review": 1787181734
+  },
+  "leetcode-q-maximum-path-score-in-a-grid-pattern": {
+   "due": 1200625,
+   "last_review": 1787181734
+  },
+  "leetcode-q-merge-sorted-array-pattern": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 757,
+   "last_review": 1787815132
+  },
+  "leetcode-q-minesweeper-pattern": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1787902766
+  },
+  "leetcode-q-minimum-bit-flips-to-convert-number-pattern": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787616735
+  },
+  "leetcode-q-minimum-deletions-for-at-most-k-distinct-characters-pattern": {
+   "due": 1201691,
+   "last_review": 1787785937
+  },
+  "leetcode-q-minimum-height-trees-pattern": {
+   "due": 1201654,
+   "last_review": 1787785937
+  },
+  "leetcode-q-minimum-jumps-to-reach-end-via-prime-teleportation-pattern": {
+   "due": 1201656,
+   "last_review": 1787785937
+  },
+  "leetcode-q-minimum-moves-to-clean-the-classroom-pattern": {
+   "due": 1202633,
+   "last_review": 1788391213
+  },
+  "leetcode-q-minimum-operations-to-form-subset-sum-i-pattern": {
+   "due": 1202631,
+   "last_review": 1788391213
+  },
+  "leetcode-q-minimum-operations-to-make-a-rotated-palindrome-i-pattern": {
+   "due": 1201693,
+   "last_review": 1787785937
+  },
+  "leetcode-q-minimum-path-cost-in-a-grid-pattern": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1787853686
+  },
+  "leetcode-q-minimum-path-sum-pattern": {
+   "due": 1201696,
+   "last_review": 1787785937
+  },
+  "leetcode-q-minimum-penalty-for-a-shop-pattern": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 757,
+   "last_review": 1787789842
+  },
+  "leetcode-q-nth-digit-pattern": {
+   "due": 1201692,
+   "last_review": 1787785937
+  },
+  "leetcode-q-number-complement-pattern": {
+   "due": 1200631,
+   "last_review": 1787268625
+  },
+  "leetcode-q-open-the-lock-pattern": {
+   "due": 1201698,
+   "last_review": 1787785937
+  },
+  "leetcode-q-pairs-of-songs-with-total-durations-divisible-by-60-pattern": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 757,
+   "last_review": 1787903532
+  },
+  "leetcode-q-parallel-courses-iii-pattern": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787789893
+  },
+  "leetcode-q-partition-equal-subset-sum-pattern": {
+   "due": 1201530,
+   "last_review": 1787354597
+  },
+  "leetcode-q-partition-to-k-equal-sum-subsets-pattern": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 754,
+   "last_review": 1787853440
+  },
+  "leetcode-q-ransom-note-pattern": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 755,
+   "last_review": 1787792010
+  },
+  "leetcode-q-remove-duplicates-from-sorted-array-pattern": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 757,
+   "last_review": 1787792520
+  },
+  "leetcode-q-removing-minimum-and-maximum-from-array-mistake": {
+   "due": 1202629,
+   "last_review": 1788391213
+  },
+  "leetcode-q-reverse-vowels-of-a-string-pattern": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1787853459
+  },
+  "leetcode-q-rotating-the-box-pattern": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 751,
+   "last_review": 1787444695
+  },
+  "leetcode-q-shortest-and-lexicographically-smallest-beautiful-string-pattern": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 757,
+   "last_review": 1787789827
+  },
+  "leetcode-q-shortest-way-to-form-string-pattern": {
+   "reps": 1,
+   "type": 1,
+   "due": 1787903966,
+   "last_review": 1787903309
+  },
+  "leetcode-q-single-number-iii-pattern": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787472070
+  },
+  "leetcode-q-single-number-pattern": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 751,
+   "last_review": 1787444478
+  },
+  "leetcode-q-smallest-stable-index-i-pattern": {
+   "due": 1202699,
+   "last_review": 1788743831
+  },
+  "leetcode-q-smallest-stable-index-ii-pattern": {
+   "due": 1202700,
+   "last_review": 1788743831
+  },
+  "leetcode-q-snapshot-array-mistake": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1787863558
+  },
+  "leetcode-q-snapshot-array-pattern": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787444457
+  },
+  "leetcode-q-sparse-matrix-multiplication-pattern": {
+   "due": 1200624,
+   "last_review": 1787175626
+  },
+  "leetcode-q-stone-game-ii-pattern": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 756,
+   "last_review": 1787902904
+  },
+  "leetcode-q-stone-game-ix-pattern": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 752,
+   "last_review": 1787471989
+  },
+  "leetcode-q-stone-game-v-mistake": {
+   "due": 1201653,
+   "last_review": 1787785937
+  },
+  "leetcode-q-stone-game-v-pattern": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 753,
+   "last_review": 1787458814
+  },
+  "leetcode-q-strobogrammatic-number-pattern": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 758,
+   "last_review": 1787863545
+  },
+  "leetcode-q-sum-game-pattern": {
+   "due": 1201600,
+   "last_review": 1787613691
+  },
+  "leetcode-q-time-based-key-value-store-pattern": {
+   "due": 1201660,
+   "last_review": 1787785937
+  },
+  "leetcode-q-unique-paths-mistake": {
+   "due": 1201659,
+   "last_review": 1787785937
+  },
+  "leetcode-q-unique-paths-pattern": {
+   "due": 1201658,
+   "last_review": 1787785937
+  },
+  "leetcode-q-valid-sudoku-pattern": {
+   "due": 1202625,
+   "last_review": 1788391213
+  }
+ }
+}

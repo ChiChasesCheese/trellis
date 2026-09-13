@@ -1,0 +1,103 @@
+aho-corasick: [AC 自动机（aho-corasick）, 同一文本需要同时匹配很多模式串时，Trie 加 failure 指针得到 AC 自动机。]
+and-or-logtrick: [按右端点维护去重后缀聚合值（and-or-logtrick）, 需要处理所有子数组的不同 AND/OR 值，且 n² 枚举过慢时，用
+    按右端点维护去重后缀聚合值。]
+array-index-as-hash: [用数组下标充当哈希表（array-index-as-hash）, 在 442 题的负号标记解法中，遍历到当前槽位的值时必须取
+    abs(value) 而不能直接用 value，因为该槽位可能早已被之前遇到的某个值。]
+backtracking-enumeration: [回溯（backtracking-enumeration）, 解由逐步选择组成、规模允许指数搜索时，考虑 回溯。]
+bfs-layered-and-multi-source: [最短距离（bfs-layered-and-multi-source）, BFS 中节点第一次设置 dist
+    时，该值就是 最短距离。]
+binary-search: [二分答案（binary-search）, 当“答案不超过 x 是否可行”随 x 单调变化时，应使用 二分答案。]
+binary-search-answer-maximize: [x 越小越容易满足（binary-search-answer-maximize）, 题目形如“求最大的
+    x 使得某条件成立”，且该条件是x 越小越容易满足时，用二分答案求最大值，check 为真时更新的变量就是最终答。]
+binary-search-answer-minimize: [单调性（binary-search-answer-minimize）, 题目形如“求最小的 x 使得某条件成立”，且条件关于
+    x 具有单调性（越大越容易满足）时，应使用二分答案而非直接搜索。]
+binary-search-indirect-target: [单调对应（binary-search-indirect-target）, 当直接对答案设计单调 check
+    很困难，但存在一个与答案单调对应的中间变量时，应改为二分这个代理值。]
+binary-search-kth-smallest-largest: [二分答案（binary-search-kth-smallest-largest）, 题目要求“第
+    k 小/第 k 大的值”，且能设计出关于 x 单调的计数函数时，可将其转化为二分答案问题，其中第 k 小等价于求满足 count(。]
+binary-search-lower-bound: [非递减（排序）（binary-search-lower-bound）, 当数组已经非递减（排序），且题目问某值的第一个/最后一个位置或某比较关系的元素个数时，考虑用
+    lowerBound 转化。]
+binary-search-maximize-minimum: [最大化最小值（binary-search-maximize-minimum）, 题目要求“选取/分配后使最小值尽可能大”时，属于最大化最小值模式，本质是二分答案求最大。]
+binary-search-minimize-maximum: [最小化最大值（binary-search-minimize-maximum）, 题目要求“分组/分配后使每组的最大值尽可能小”时，属于最小化最大值模式，本质是二分答案求最小。]
+binary-search-on-answer: [二分答案（binary-search-on-answer）, 优化题能在给定阈值时判断可行，并且结果单调时，用
+    二分答案。]
+binary-search-red-blue: [红蓝分区二分模板（binary-search-red-blue）, 在红蓝分区二分模板（while l < r）中，若mid被判断为红色（不满足条件），执行
+    l = mid + 1；若mid被判断为蓝色（满足条件。]
+binary-search-sort-then-search: [无序（binary-search-sort-then-search）, 当数据本身无序，但排序后能建立单调关系以便二分时，应先对数组做
+    排序 再复用二分查找模板。]
+binary-tree-lca-postorder: [后序 DFS（binary-tree-lca-postorder）, 普通二叉树求两个节点 LCA 时，优先用
+    后序 DFS。]
+binary-trie-xor: [异或最大（binary-trie-xor）, 需要在数集合中寻找与 x 异或最大 的元素时，用 0-1 字典树。]
+bit-contribution-counting: [按位贡献法（bit-contribution-counting）, 当答案是大量 AND/OR/XOR 结果的总和，并且每一位可独立判断时，用
+    按位贡献法 把问题拆成计数。]
+bit-mask-operations: [位掩码（bit-mask-operations）, 当状态只是多个“是否选择”的布尔量，且需要快速合并或修改时，优先考虑用
+    位掩码 表示状态。]
+bitmask-enumeration-and-bitwise-window: [二进制掩码枚举（bitmask-enumeration-and-bitwise-window）,
+  当选取对象数量很小且每个对象只有选/不选两种状态时，可用 二进制掩码枚举。]
+bitmask-state-dp: [状态压缩 DP（bitmask-state-dp）, 对象数很小且“已选集合”足以描述历史时，用 状态压缩 DP。]
+bitwise-and-or-monotonicity: [减少（bitwise-and-or-monotonicity）, 不断向区间加入数并聚合时，累计 AND
+    的 1 位只会 减少，累计 OR 的 1 位只会 增加。]
+bitwise-greedy-and-bitmask-parity: [XOR 位掩码（bitwise-greedy-and-bitmask-parity）, 属性出现次数只影响奇偶性时，可用
+    XOR 位掩码 压缩状态。]
+bitwise-greedy-construction: [从高位到低位的试填贪心（bitwise-greedy-construction）, 要最大化一个按位定义的整数，且能验证候选掩码是否可行时，用
+    从高位到低位的试填贪心。]
+bitwise-prefix-xor: [前缀异或频次（bitwise-prefix-xor）, 统计子数组 XOR 为零的数量时，用 前缀异或频次。]
+bst-order-invariant: [BST 有序性（bst-order-invariant）, 节点值决定每步只需进入一侧子树时，利用 BST 有序性。]
+center-expansion-palindrome: [中心扩展（center-expansion-palindrome）, 只求一个最长回文、且 O(n²)
+    能接受时，最直接模板是 中心扩展。]
+centroid-decomposition: [点分治（centroid-decomposition）, 树上路径问题可按是否经过一个中心点拆分时，考虑 点分治。]
+combination-precompute: [阶乘及其逆元数组（combination-precompute）, '题目需要多次查询组合数 C(n,m) mod
+    p 且给出数据范围上限时，应预处理阶乘及其逆元数组，而不是每次现算。']
+combinatorics-and-inclusion-exclusion: [容斥原理（combinatorics-and-inclusion-exclusion）,
+  多个“违反上界/禁用条件”的并集难直接计数、交集容易计数时，用 容斥原理。]
+complexity-budget-from-constraints: [数据范围反推允许的时间复杂度（complexity-budget-from-constraints）,
+  题目给出数据范围但不确定用什么复杂度算法时，应先用数据范围反推允许的时间复杂度来缩小候选算法范围。]
+component-swapping: [连通块（component-swapping）, 允许沿若干位置对反复交换时，应把位置看作图，并在 连通块 内重排。]
+computational-geometry-primitives: [叉积（computational-geometry-primitives）, 判断三点的左转、右转或共线，应计算
+    叉积。]
+congruence-definition: [同余的定义（congruence-definition）, 若整数 a、b 满足 (a-b) mod m == 0，则称
+    a 与 b 关于模 m 同余，记作 a≡b (mod m)。]
+congruence-transposition: [移项（congruence-transposition）, 当同余式形如 a+b≡c+d (mod m) 时，可以像普通等式一样移项，得到
+    a-c≡d-b (mod m)。]
+constraint-driven-construction: [构造题（constraint-driven-construction）, 题目要求输出任意满足约束的对象而非最优值时，这是
+    构造题 信号。]
+constraint-search-backtracking: [回溯剪枝（constraint-search-backtracking）, 部分选择已能证明不可能完成合法解时，应使用
+    回溯剪枝。]
+contribution-counting: [贡献法（contribution-counting）, 需要统计所有子数组或子串的总值，且单个元素可独立计值时，用
+    贡献法。]
+convex-hull-and-wqs-dp: [Convex Hull Trick（convex-hull-and-wqs-dp）, DP 转移能写成 min(m*x+b)
+    时，考虑 Convex Hull Trick。]
+count-subarrays-expand-valid: [越长越合法的计数滑窗（count-subarrays-expand-valid）, '统计满足条件的子数组个数,且条件满足''子数组越长越合法''时,应使用越长越合法的计数滑窗,每轮累加left。']
+count-subarrays-shrink-valid: [越短越合法的计数滑窗（count-subarrays-shrink-valid）, '统计满足条件的子数组个数,且条件满足''子数组越短越合法''时,应使用越短越合法的计数滑窗,每轮累加right
+    - left + 1。']
+dag-game-probability-expectation-dp: [拓扑序（dag-game-probability-expectation-dp）, 状态依赖图无环时，可按
+    拓扑序 做图 DP。]
+dfs-path-collection: [pop（dfs-path-collection）, 在DFS收集路径时，若用可变的list（path_stack）传递路径状态，必须在递归返回后显式pop该元素以撤销修改；而用字符串拼接（如
+    pa。]
+difference-array: [差分数组（difference-array）, 当题目要求对数组的若干个连续子区间分别整体加上某个值，且所有更新可以离线处理、最后统一输出结果时，应使用
+    差分数组 技巧；若更新和查询交替进行则。]
+digit-dp: [数位 DP（digit-dp）, 统计区间内满足数位限制的整数时，使用 数位 DP。]
+dijkstra-multi-distance-meeting: [多次 Dijkstra 求汇合最短路（dijkstra-multi-distance-meeting）,
+  非负权多路径题允许在某节点汇合并共享后缀时，可用 多次 Dijkstra 加枚举汇合点。]
+direct-simulation: [题意执行到同一步的真实状态（direct-simulation）, 模拟的核心不变量是：每一步后的 state 必须与 题意执行到同一步的真实状态一致。]
+directional-partition-greedy: [单向扫描切分贪心（directional-partition-greedy）, 原顺序不能改变且答案由若干连续合法段组成时，尝试
+    单向扫描、在最早合法或最早必要处切分。]
+disjoint-set-union: [并查集（disjoint-set-union）, 图只会加边，并反复查询两点是否连通时，用 并查集。]
+disjoint-set-union-and-offline: [并查集 DSU（disjoint-set-union-and-offline）, 图不断加边，核心问题是连通性或连通块大小时，用
+    并查集 DSU。]
+divergent-two-pointers: [背向双指针（divergent-two-pointers）, '需要以某个中心位置向左右两侧扩展探测(如回文中心扩展法)时,应使用背向双指针。']
+divisor-enumeration: [枚举因子并遍历其倍数（divisor-enumeration）, 若每个整数都要聚合其所有约数，可用 枚举因子并遍历其倍数。]
+dp-optimizations-monotonic-queue-fenwick: [单调队列优化 DP（dp-optimizations-monotonic-queue-fenwick）,
+  'dp[i] 只依赖一个滑动区间内 dp 的最值时，用 单调队列优化 DP。']
+dp-stock-trading-states: [负无穷（-inf）（dp-stock-trading-states）, 在股票交易的多状态DP中，hold（持有股票）状态应初始化为
+    负无穷（-inf），以避免出现「没有买入就卖出」的非法转移路径；而未持有状态初始化。]
+dual-heap-shared-mutable-object-sync: [不同键（dual-heap-shared-mutable-object-sync）,
+  当需要用两把按 不同键 排序的堆维护同一批会被部分消耗或过期的元素时，应考虑让两把堆共享同一个 可变对象 的引用，而不是各自存值。]
+dynamic-programming-memo-tabulation: [动态规划（dynamic-programming-memo-tabulation）, 最优解或计数可由重叠子问题组合时，用
+    动态规划。]
+dynamic-programming-memo-to-tabulation: [记忆化搜索改递推（dynamic-programming-memo-to-tabulation）,
+  暴力递归反复求解相同参数的子问题时，应改为 记忆化搜索/动态规划。]
+edit-distance-dp: ['dp[i-1][j-1]（edit-distance-dp）', '在编辑距离DP中，当 s[i-1] == t[j-1]
+    时，dp[i][j] = dp[i-1][j-1]（不需要任何操作）；当字符不匹配时，d。']
+enumerate-all-subsets-bitmask: [状态压缩枚举全部子集（enumerate-all-subsets-bitmask）, '当元素个数
+    n 很小（一般不超过 20）且需要考虑所有可能的选择组合时，应联想到用 状态压缩 (bitmask) 枚举 [0, 2^n) 区间中。']

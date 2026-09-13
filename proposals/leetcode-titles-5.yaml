@@ -1,0 +1,91 @@
+splay-tree: [Splay 树（splay-tree）, 需要自适应有序集合并可接受均摊界时，可用 Splay 树。]
+sqrt-decomposition-and-mo: [莫队算法（sqrt-decomposition-and-mo）, 可离线的区间查询能通过单元素增删维护时，考虑
+    莫队算法。]
+stack-parsing-and-cancellation: [栈（stack-parsing-and-cancellation）, 新输入只会处理最近一个未完成状态时，使用
+    栈。]
+stack-reduction-merge: [栈式归约（stack-reduction-merge）, 新元素与最近保留元素合并后可能继续触发冲突时，用 栈式归约。]
+subsequence-automaton: [子序列自动机（subsequence-automaton）, 固定文本面对大量“某串是否为其子序列”的查询时，建立
+    子序列自动机。]
+subset-enumeration-dp: [子集枚举的复杂度（subset-enumeration-dp）, 对每个集合都要枚举其子集，整体复杂度通常是 O(3^n)。]
+subset-partition-combination-backtracking: [start 下标单调递增（subset-partition-combination-backtracking）,
+  每个元素最多使用一次且选择顺序无关时，用 start 下标单调递增 的组合回溯。]
+suffix-array: [后缀数组（suffix-array）, 题目核心是“所有后缀的字典序”或最长重复子串时，考虑 后缀数组。]
+suffix-automaton: [后缀自动机（suffix-automaton）, 要在线处理一个字符串的全部子串、不同子串数或出现次数时，考虑 后缀自动机。]
+take-or-skip-linear-dp: [选或不选线性 DP（take-or-skip-linear-dp）, 顺序选择且选当前位置会排斥邻近元素时，识别为
+    选或不选线性 DP。]
+ternary-search-unimodal: [单峰（ternary-search-unimodal）, 当目标函数关于自变量是单峰（先增后减）而非单调时，二分答案的
+    check 无法直接使用，应改用三分法。]
+three-pointer-sliding-window: [三指针滑动窗口（three-pointer-sliding-window）, '当恰好型滑窗需要调用两次结构相同、仅阈值不同的滑窗函数时,可以合并为一次遍历的三指针滑动窗口。']
+topic-based-spiral-practice: [不知道从哪道题入手（topic-based-spiral-practice）, 当发现自己面对新专题不知道从哪道题入手，且题目难度分布悬殊时，应采用专题螺旋式刷题法而非随机刷题。]
+topic-to-random-transfer-training: [无法判断题目属于哪种算法类型（topic-to-random-transfer-training）,
+  当刷题者已完成专题训练，却在比赛中无法判断题目属于哪种算法类型（例如把动态规划误判为贪心）时，说明需要补充随机训练。]
+topological-sort: [拓扑排序（topological-sort）, 存在有向前置依赖并需要合法处理顺序时，用 拓扑排序。]
+topological-sort-and-bipartite-check: [拓扑排序（topological-sort-and-bipartite-check）,
+  有向约束要求“a 必须在 b 之前”时，使用 拓扑排序。]
+tree-build-from-traversals: [分治重建（tree-build-from-traversals）, 唯一值二叉树给定先序和中序时，可用 分治重建。]
+tree-dfs-direction-and-return: [递（tree-dfs-direction-and-return）, 状态表示根到当前节点的路径时，在
+    DFS 的 递 阶段更新。]
+tree-diameter-height-dp: [直径（tree-diameter-height-dp）, 树的最长简单路径问题通常识别为 直径，用两条向下链合并。]
+tree-dp-and-center-expansion: [树形 DP（tree-dp-and-center-expansion）, 当树上答案可由各子树答案合并，且选定根不会改变问题时，用
+    树形 DP。]
+tree-dp-and-rerooting: [树形 DP（tree-dp-and-rerooting）, 子问题天然是子树，且父节点只需汇总孩子信息时，用 树形
+    DP。]
+tree-dp-combine-children: [树形 DP（tree-dp-combine-children）, 节点答案由多个独立子树贡献合并而成时，用 树形
+    DP。]
+tree-dp-independent-set-diameter-domination: [树上最大独立集 DP（tree-dp-independent-set-diameter-domination）,
+  树上选择相邻节点互斥时，使用 树上最大独立集 DP。]
+tree-dp-rerooting: [树形 DP（tree-dp-rerooting）, 状态由各个子树合并得到时，用 树形 DP。]
+tree-dp-state-merge: [树形 DP（tree-dp-state-merge）, 父节点决策只依赖子节点少量结果时，建模为 树形 DP。]
+tree-euler-tour-flattening: [DFS Euler 序拍平（tree-euler-tour-flattening）, 频繁对子树做数组型区间操作时，用
+    DFS Euler 序拍平。]
+tree-level-order-bfs: [BFS 队列（tree-level-order-bfs）, 题目要求按深度分组或最少边数时，优先考虑 BFS 队列。]
+tree-path-sliding-window: [可回滚滑动窗口（tree-path-sliding-window）, 约束只作用于根到当前节点路径时，可把 DFS
+    路径视作 可回滚滑动窗口。]
+tree-prune-by-returning-root: [处理后子树的新根（tree-prune-by-returning-root）, 树上删除节点会改变父子连接时，让
+    dfs 返回 处理后子树的新根。]
+trie-and-xor-trie: [Trie（trie-and-xor-trie）, 大量字符串共享前缀并需查询前缀或完整词时，用 Trie。]
+trie-prefix-tree: [Trie 字典树（trie-prefix-tree）, 大量字符串需要反复按公共前缀查询或计数时，使用 Trie 字典树。]
+two-dimensional-prefix-and-difference: [二维前缀和（two-dimensional-prefix-and-difference）,
+  静态矩阵的重复矩形求和，用 二维前缀和。]
+two-dimensional-prefix-sum: [不再被修改（two-dimensional-prefix-sum）, 当需要对不再被修改的矩阵进行多次子矩阵元素和查询时，应预处理二维前缀和以将每次查询降到O(1)。]
+two-directional-scans: [从左到右与从右到左各扫描一次（two-directional-scans）, 每个位置同时依赖左边和右边信息时，使用
+    从左到右与从右到左各扫描一次。]
+two-pointers-and-group-scan: [分组循环（two-pointers-and-group-scan）, 相邻关系决定状态、且每段可独立结算时，用
+    分组循环 一次扫描极大段。]
+two-pointers-and-sliding-window: [双指针与可变滑动窗口（two-pointers-and-sliding-window）, 连续区间问题中，若右端扩张后能靠不断移动左端恢复条件，应考虑
+    双指针/可变滑动窗口。]
+two-pointers-sliding-window: [滑动窗口（two-pointers-sliding-window）, 连续区间约束能通过加入或删除一个元素维护，并且左右端点只前进时，用
+    滑动窗口。]
+two-pointers-sorted-array: [有序数组上的双指针（two-pointers-sorted-array）, 在排序数组上做 Two Pointers
+    时，循环条件应为 l < r（严格小于），且每次跳过重复元素的检查应该在 移动指针之后。]
+two-stack-editor: [对顶栈（two-stack-editor）, 文本操作围绕可移动光标，且需频繁左右移动时，用 对顶栈。]
+union-find-connectivity: [相等（union-find-connectivity）, 在按秩合并（union by rank）的并查集实现中，union
+    时应把秩较小的树根挂到秩较大的树根下；当两棵树的秩相等时，合并后新根的秩需要。]
+union-find-connectivity-variants: [并查集（union-find-connectivity-variants）, 关系只会合并、频繁查询是否同组时，用
+    并查集。]
+value-keyed-subsequence-dp: [元素值（value-keyed-subsequence-dp）, 若转移由前一个元素值决定而不是下标决定，可按值建
+    DP。]
+virtual-tree: [虚树（virtual-tree）, 单次树查询只涉及少量特殊点及连接路径时，用 虚树 压缩。]
+weighted-union-find: [带权并查集（weighted-union-find）, 连通性之外还给出 x、y 的相对差值约束时，用 带权并查集。]
+wildcard-parentheses-range: [通配符括号的可行区间（wildcard-parentheses-range）, 括号串含可作左、右或空的通配符时，维护未匹配左括号数的
+    最小值 low 与最大值 high。]
+xor-linear-basis: [XOR 线性基（xor-linear-basis）, 从很多数中任选子集并最大化 XOR，且位数远小于元素数时，使用 XOR
+    线性基。]
+xor-parity-cancellation: [全部元素的 XOR（xor-parity-cancellation）, 数组中其余数都出现偶数次、只有一个数未配对时，用
+    全部元素的 XOR 可直接得到该数。]
+xor-range-construction: [严格大于 n 的最小 2 的幂（xor-range-construction）, 在 XOR 值域构造问题中，若
+    n >= 3，可能的 XOR 结果集合恰好覆盖 严格大于 n 的最小 2 的幂 减一为止的完整区间；这是因为所有。]
+z-function-lcp: [Z 函数（z-function-lcp）, 若要批量得到“每个后缀和整串前缀相同多长”，应计算 Z 函数。]
+zero-one-bfs: [0-1 BFS（zero-one-bfs）, 最短路图的边权只为 0 或 1 时，用 0-1 BFS。]
+zero-one-knapsack: [0/1 背包（zero-one-knapsack）, 每个物品只能选一次，并受总容量/总和限制时，识别为 0/1 背包。]
+0-1-knapsack: [0/1 背包（0-1 Knapsack）, 如何用动态规划判断数组能否划分为两个和相等的子集（0/1背包子集和问题）？]
+bidirectional-search: [双向搜索（Bidirectional Search）, 如何用 BFS 求解「转动密码锁」类问题（如 LeetCode
+    752 Open the Lock）？核心思路是什么？]
+binary-tree: [二叉树（Binary Tree）, 如何用 BFS 求二叉树每一层的最大值？]
+bit-manipulation: [位运算（Bit Manipulation）, 如何求一个整数 num 的按位补数（Number Complement）？核心技巧是什么？]
+bitmask: [状态压缩（Bitmask）, 回溯解决「划分为k个相等的子集」(LC 698) 时，如何用状态压缩剪枝减少无效搜索？]
+boyer-moore-majority-vote-algorithm: [摩尔投票算法（Boyer–Moore Majority Vote Algorithm）,
+  求数组中出现次数超过 n/2 的多数元素，如何在 O(n) 时间、O(1) 空间内解决？]
+bubble-sort: [冒泡排序（Bubble Sort）, 如何判断数组中每个位置的元素是否处于「排序后应处的位置」？(如 LC 1051 Height Checker)。]
+combinatorics: [组合数学（Combinatorics）, 网格DP：机器人从左上到右下只能右/下移动，求路径数——如何设计状态转移？]
+counting: [计数（Counting）, 给定字符串 s 和整数 k，要求删除最少字符使得剩余字符串中不同字符种类数 ≤ k，如何贪心求解？]

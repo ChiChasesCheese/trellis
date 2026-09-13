@@ -118,7 +118,7 @@ def accept_seed(proposal_path: str | Path, root: Path, corpus: Corpus,
     skeleton.setdefault("lang", corpus.lang)
     header = (f"# {skeleton.get('title', domain)}: seeded from the outline of "
               f"`{corpus.id}` ({corpus.title}), then reviewed as a map of the\n"
-              f"# subject — see ADR 0006. Leaves the book does not cover are the\n"
+              f"# subject — see ADR 0006. Leaves the source does not cover are the\n"
               f"# reading list, not a defect.\n")
     body = header + yaml.safe_dump(skeleton, allow_unicode=True, sort_keys=False, width=100)
     # Validate exactly what will be written, with the loader that will read it.

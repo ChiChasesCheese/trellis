@@ -184,7 +184,7 @@ class Workbench:
                 "branches": branches,
                 "targets": [{"key": t.key, "kind": t.kind, "grounding": t.grounding,
                              "title": t.standing.node.title}
-                            for t in shortlist(targets)],
+                            for t in shortlist(targets, cap=12, limit=12)],
             }
         return out
 

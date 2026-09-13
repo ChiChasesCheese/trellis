@@ -133,12 +133,14 @@ def plan(root: Path, projects: dict[str, Project], assessments: dict[str, Assess
     return weak + uncovered
 
 
-def shortlist(targets: list[Target]) -> list[Target]:
+def shortlist(targets: list[Target], cap: int = 3, limit: int = 8) -> list[Target]:
     """What `grow` lists: the Brief's own breadth rule, so one domain with
-    sixty empty leaves cannot crowd out a weakness elsewhere."""
+    sixty empty leaves cannot crowd out a weakness elsewhere. When the
+    learner has already chosen a domain there is nothing to crowd out,
+    so the caller lifts the cap."""
     rows = lambda kind: [(t.domain, t) for t in targets if t.kind == kind]
-    return [t for _, t in interleave_by_domain(rows("weakness"))] + \
-           [t for _, t in interleave_by_domain(rows("uncovered"))]
+    return [t for _, t in interleave_by_domain(rows("weakness"), cap=cap, limit=limit)] + \
+           [t for _, t in interleave_by_domain(rows("uncovered"), cap=cap, limit=limit)]
 
 
 def status_lines(targets: list[Target]) -> list[str]:

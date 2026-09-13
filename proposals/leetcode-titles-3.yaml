@@ -1,0 +1,96 @@
+heap-priority-queue: [堆（heap-priority-queue）, 反复获取动态集合当前最小或最大元素时，用 堆。]
+heap-regret-lazy-and-dual: [反悔堆（heap-regret-lazy-and-dual）, 贪心过程中允许用更好选择替换旧选择时，用 反悔堆。]
+heap-selection-and-rearrangement: [堆（heap-selection-and-rearrangement）, 持续加入数据、持续取当前最优候选时，用
+    堆。]
+impartial-game-dp: [胜负态 DP（impartial-game-dp）, 轮流行动、无随机且不能走者失败的题，优先尝试 胜负态 DP。]
+inclusion-exclusion: [容斥原理（inclusion-exclusion）, 多个条件集合有重叠，要求“至少满足一个”时，使用 容斥原理。]
+incubation-effect-when-stuck: [十分钟到数小时（incubation-effect-when-stuck）, 当一道题思考十分钟到数小时仍没有思路时，应该考虑暂离问题而不是持续死磕。]
+induction-greedy-proof: [数学归纳法（induction-greedy-proof）, 贪心每步移除一个对象且剩余问题同构时，可用 数学归纳法
+    证明正确性。]
+integer-partition-dp: [完全背包计数（integer-partition-dp）, 将 n 拆成正整数之和且忽略加数顺序时，使用 完全背包计数。]
+interval-dp: [区间 DP（interval-dp）, '问题的答案属于子数组 [l,r] 且依赖更短区间时，是 区间 DP。']
+interval-grouping-heap: [左端点排序加最小堆（interval-grouping-heap）, 所有区间都要分配，且同组不能重叠、要求组数最少时，用
+    左端点排序加最小堆。]
+interval-selection-stabbing: [右端点升序（interval-selection-stabbing）, 最大化不相交区间数或最少点刺穿区间时，标准排序键是
+    右端点升序。]
+iterate-set-bits: [lowbit 剥离法（t & -t）（iterate-set-bits）, 当集合是稀疏的（全集范围很大但集合内元素很少）时，遍历集合元素应优先选择
+    lowbit 剥离法（t & -t），而不是对 0..n-1 逐位扫描。]
+kadane-maximum-subarray: [连续（kadane-maximum-subarray）, 求最大 连续 子数组和时，使用 Kadane。]
+kadane-variant: [kadane variant, '在股票买卖一次求最大利润问题中，将 prices 转化为相邻差分数组后，用 Kadane 思想求最大子数组和；核心递推是
+    cur = max(0,。']
+kmp-prefix-function: [KMP（kmp-prefix-function）, 当题目要求在线性时间内找模式串全部出现位置，且可能有重叠匹配时，优先考虑
+    KMP。]
+knapsack-dp: [背包 DP（knapsack-dp）, 选择物品并受总和、容量或预算限制时，优先识别 背包 DP。]
+knapsack-family: [0-1 背包（knapsack-family）, 每件物品只能取一次的容量选择问题是 0-1 背包。]
+knapsack-subset-sum: [逆序遍历（从target到num）（knapsack-subset-sum）, 在0/1背包子集和DP中，内层容量循环必须逆序遍历（从target到num），这样才能保证每个元素在更新dp数组时最多被选一次。]
+lagrange-interpolation: [拉格朗日插值（lagrange-interpolation）, 已知函数是低次数多项式且给出足够样本点时，可用 拉格朗日插值
+    外推。]
+largest-rectangle-histogram: [直方图最大矩形（largest-rectangle-histogram）, 答案形如“区间最小高度 ×
+    区间宽度”的最大化问题，常转成 直方图最大矩形。]
+lazy-dynamic-persistent-segment-tree: [Lazy 线段树（lazy-dynamic-persistent-segment-tree）,
+  区间更新和区间查询交错时，用 Lazy 线段树。]
+lazy-segment-tree: [Lazy 线段树（lazy-segment-tree）, 需要频繁区间更新和区间查询，且两者都不能降为简单前缀操作时，用 Lazy
+    线段树。]
+lca-binary-lifting: [倍增祖先表（lca-binary-lifting）, 静态树有大量 LCA 或第 k 个祖先查询时，预处理 倍增祖先表。]
+lcs-alignment-dp: [LCS（lcs-alignment-dp）, 两个序列保持相对顺序的共同部分问题，优先考虑 LCS。]
+lexicographic-greedy: [最早能不同的位置（lexicographic-greedy）, 目标优化字典序时，优先优化 最早能不同的位置。]
+linear-and-state-machine-dp: [线性或状态机 DP（linear-and-state-machine-dp）, 处理顺序固定，未来只依赖有限历史摘要时，用
+    线性或状态机 DP。]
+linear-dp-state-transition: [线性 DP（linear-dp-state-transition）, 按位置处理且当前选择只依赖有限历史摘要时，用
+    线性 DP。]
+linked-list-fast-slow-cycle: [快慢指针（linked-list-fast-slow-cycle）, 单链表不能标记访问节点却要判环时，用
+    快慢指针。]
+linked-list-gap-pointers: [k 步（linked-list-gap-pointers）, 寻找链表倒数第 k 个位置，可让 fast 先走
+    k 步。]
+linked-list-reversal: [prev-cur-nxt 三指针（linked-list-reversal）, 单链表要求原地反转且空间受限时，用 prev-cur-nxt
+    三指针。]
+linked-list-sentinel-splice: [dummy 哨兵节点（linked-list-sentinel-splice）, 链表操作可能改写原头节点时，先创建
+    dummy 哨兵节点。]
+lis-patience-sorting: [耐心排序加二分（lis-patience-sorting）, 求 LIS 长度且 n 较大时，使用 耐心排序加二分。]
+lowbit-and-bit-library-functions: [lowbit 与位运算库函数（lowbit-and-bit-library-functions）,
+  看到需要反复剥离整数二进制表示的最低位 1（例如逐一取出集合最小元素）时，应联想到 lowbit = s & -s 这一固定写法。]
+manacher-palindrome-radii: [Manacher（manacher-palindrome-radii）, 需要一次预处理后获得所有中心的最长回文信息时，用
+    Manacher，而不是对每个中心重复扩展。]
+manhattan-chebyshev-transform: [曼哈顿距离转切比雪夫距离（manhattan-chebyshev-transform）, 二维点集的最大曼哈顿距离，可转化为维护
+    x+y 与 x-y 的极差。]
+matrix-bfs-state: [最优约束值（如最大health）（matrix-bfs-state）, '在矩阵BFS处理带约束（如健康值）的最短路径时，visited
+    集合必须记录每个坐标 (x, y) 对应的最优约束值（如最大health），而不。']
+matrix-exponentiation-dp: [矩阵快速幂（matrix-exponentiation-dp）, n 很大且 DP 是固定系数线性递推时，用
+    矩阵快速幂。]
+median-minimize-l1: [中位数（median-minimize-l1）, 目标为最小化 sum(abs(x-target)) 时，target 取
+    中位数。]
+meet-in-the-middle: [meet in the middle（meet-in-the-middle）, 子集枚举 n 约 40、2^n 不可行而
+    2^(n/2) 可行时，用 meet in the middle。]
+memoized-search-to-bottom-up-dp: [记忆化搜索（memoized-search-to-bottom-up-dp）, 当递归反复调用同一组参数时，应先尝试
+    记忆化搜索。]
+merge-intervals: [左端点升序（merge-intervals）, 要求合并重叠区间或求区间并集时，先按 左端点升序 排序。]
+merge-sort-linked-lists: [两两分治归并（merge-sort-linked-lists）, 多个已排序链表要高效合并时，用 两两分治归并。]
+min-cost-max-flow: [最小费用最大流（min-cost-max-flow）, 带容量的全局分配既要满足供需又要优化总成本时，用 最小费用最大流。]
+minimum-interval-cover: [右端点最远（minimum-interval-cover）, 最少区间连续覆盖目标线段时，在所有左端点不超过当前前沿的区间中选
+    右端点最远 的。]
+minimum-rotation: [最小表示法（minimum-rotation）, “任意次循环左移后字典序最小”是 最小表示法 的直接信号。]
+mobius-inversion: [莫比乌斯反演（mobius-inversion）, 已知“被 d 整除”的统计，想得到 gcd 恰为 1 的统计时，可使用 莫比乌斯反演。]
+mod-add-mul-identity: [取模的加乘同余律（mod-add-mul-identity）, 当题目要求结果对 1e9+7 取模，且计算过程含有连续的加法或乘法时，应该在循环内部的每一步取模，而不是等到最后再取模。]
+modular-combinatorics: [模意义下的组合计数（modular-combinatorics）, '相同球分到 k 个可为空的盒子且总数为 n，方案数是
+    C(n+k-1,k-1)。']
+modular-inverse-fermat: [费马小定理（modular-inverse-fermat）, 推导出的公式包含除法且模数是质数（如 1e9+7）时，应联想到用费马小定理求模逆元，把除法转换成乘法。]
+modular-residue-enumeration: [同余类（modular-residue-enumeration）, 条件只依赖个位或余数、而模数很小时，应枚举
+    同余类 而不是枚举目标值。]
+monotone-chain-convex-hull: [Andrew 单调链（monotone-chain-convex-hull）, 需要二维点集的最小凸包边界时，可用
+    Andrew 单调链。]
+monotonic-queue: [单调双端队列（monotonic-queue）, 滑动窗口不断右移且每次要最大值或最小值时，用 单调双端队列。]
+monotonic-stack: [单调栈（monotonic-stack）, 寻找每个元素左侧或右侧第一个更大/更小元素时，用 单调栈。]
+monotonic-stack-and-contribution: [单调栈（monotonic-stack-and-contribution）, 需要每个位置左、右第一个更大或更小边界时，用
+    单调栈。]
+monotonic-stack-and-queue: [单调栈（monotonic-stack-and-queue）, 要求每个位置的“下一个更大/更小元素”时，优先想到
+    单调栈。]
+monotonic-stack-boundaries: [单调栈（monotonic-stack-boundaries）, 要求每个元素的第一个更小或更大邻居、或其贡献边界时，用
+    单调栈。]
+monotonic-stack-contribution: [枚举元素贡献（monotonic-stack-contribution）, 求所有子数组最小值或最大值之和时，应把“枚举子数组”改成
+    枚举元素贡献。]
+monotonic-stack-greedy: [单调栈贪心构造（monotonic-stack-greedy）, '在单调栈贪心构造字典序最小子序列时，只有当栈顶元素
+    大于当前字符 ch 且 remainings[栈顶元素] > 0 时才能弹出。']
+monotonic-stack-lexicographic-subsequence: [贪心单调栈（monotonic-stack-lexicographic-subsequence）,
+  保持原相对顺序并要求字典序最小、且选择可撤销时，使用 贪心单调栈。]
+monotonic-stack-nearest-boundary: [单调栈（monotonic-stack-nearest-boundary）, 当题目要批量求每个元素一侧最近的更大或更小元素时，优先考虑
+    单调栈。]

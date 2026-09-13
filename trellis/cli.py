@@ -732,7 +732,7 @@ def cmd_grow(args) -> int:
     elif args.next or args.import_file:
         if args.import_file:
             _fail("--import needs --leaf <domain>:<leaf id>")
-        target = next(iter(shortlist(targets)), None)
+        target = next(iter(shortlist(targets, cap=8 if args.domain else 3)), None)
         if target is None:
             print("nothing to grow: every reviewed leaf is holding and every leaf has cards")
             return 0
@@ -765,7 +765,7 @@ def cmd_grow(args) -> int:
             print(prompt)
         return 0
 
-    listed = shortlist(targets)
+    listed = shortlist(targets, cap=8 if args.domain else 3)
     weak = sum(1 for t in targets if t.kind == "weakness")
     print(f"{weak} weak leaf/leaves and {len(targets) - weak} uncovered across "
           f"{len(names)} domain(s); showing {len(listed)}:")
