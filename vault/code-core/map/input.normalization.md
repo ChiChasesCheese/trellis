@@ -10,6 +10,9 @@ Case folding, whitespace stripping, punctuation and suffix removal, Unicode nois
 
 ## Drills
 - [[csv-parse-validate-report|Drill: parse, validate and report over a hostile CSV]]
+- [[oa-q06-atlas-company-name|Drill: check, register, and reclaim company names by canonical form]]
+- [[oa-q15-kyc-verification|Drill: verify merchant onboarding data against five accumulating KYC rules]]
+- [[oa-q19-accept-language|Drill: resolve an Accept-Language header against a supported-tag list]]
 
 ## Cards (5)
 - [[cc-input-norm-casefold-vs-lower]]

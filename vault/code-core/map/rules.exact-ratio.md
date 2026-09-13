@@ -7,6 +7,9 @@ Cross-multiplying integers instead of dividing, storing a decimal literal as num
 ## Readings
 - [[python-fractions|fractions — rational numbers]]
 
+## Drills
+- [[oa-q01-fraud-mcc-disputes|Drill: flag fraudulent merchants across a CHARGE/DISPUTE stream]]
+
 ## Cards (5)
 - [[cc-rules-ratio-cross-multiply]]
 - [[cc-rules-ratio-decimal-literal-as-fraction]]

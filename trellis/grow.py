@@ -7,8 +7,8 @@ the answer where the loop will see it on the next pull.
 
 Two kinds of target, two different prompts:
 
-- A **Weakness** already has cards, and they slipped. The prompt carries
-  the ones that lapsed most — front and back — and asks for cards that
+- A **Weakness** already has cards, and they are not holding. The prompt
+  carries the ones held least — front and back — and asks for cards that
   reach the same mechanism from another angle: a scenario, a contrast, a
   failure story, a number. Restating a card that already failed teaches
   the same failure twice.
@@ -44,9 +44,10 @@ SLIPPED_SHOWN = 5
 
 SLIPPED = """
 ## What is not holding
-This topic has cards already, and they slipped. Here are the ones that
-lapsed most, with their answers — they are evidence of *where* the idea is
-not landing, not a template:
+This topic has cards already, and they are not holding — the scheduler keeps
+pulling them back to short intervals, whether or not they have formally
+lapsed. Here are the ones held least, with their answers; they are evidence
+of *where* the idea is not landing, not a template:
 {cards}
 
 Do not restate them. Write cards that reach the same mechanism from a
@@ -146,7 +147,7 @@ def status_lines(targets: list[Target]) -> list[str]:
         s = t.standing
         if t.kind == "weakness":
             names = ", ".join(c.id for c, _ in t.slipped[:3])
-            why = f"holds {s.hold:.0%}, {s.seen}/{s.cards} cards seen, slipped: {names}"
+            why = f"holds {s.hold:.0%}, {s.seen}/{s.cards} cards seen, weakest: {names}"
         else:
             why = (f"{s.bearing} topic(s) stand on it" if s.bearing else "no cards yet")
             if s.sealed:
@@ -164,7 +165,7 @@ def grow_prompt(project: Project, t: Target, root: Path, count: int = 5,
         for card, trace in t.slipped:
             front = card.question or card.text
             back = card.answer
-            shown.append(f"- **{card.id}** — lapsed {trace.lapses} of {trace.reps} reviews, "
+            shown.append(f"- **{card.id}** — {trace.reps} reviews, {trace.lapses} lapses, "
                          f"interval {trace.interval} d\n  Q: {front.strip()}\n"
                          + (f"  A: {back.strip()}\n" if back else ""))
         parts.append(SLIPPED.format(cards="\n".join(shown)))

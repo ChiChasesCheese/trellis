@@ -8,6 +8,9 @@ Aggregating per key, applying a bonus or penalty once per group rather than per 
 - [[python-collections|collections — container datatypes]]
 
 ## Drills
+- [[oa-q02-merchant-fraud-score|Drill: score merchants over three independent rule passes]]
+- [[oa-q20-transaction-fees-reconciliation|Drill: fee schedule, rate-table override, payout rollup and ledger reconciliation]]
+- [[oa-qa04-lc1169-invalid-transactions|Drill: flag invalid transactions by amount and same-name city conflicts]]
 - [[tiered-billing-exact-output|Drill: tiered billing with an exact-output contract]]
 
 ## Cards (6)

@@ -11,6 +11,7 @@ Disputes, refunds, cancellations and plan changes that undo an earlier event —
 
 ## Drills
 - [[event-stream-with-reversals|Drill: an event stream with reversals, in four unlocking parts]]
+- [[oa-q01-fraud-mcc-disputes|Drill: flag fraudulent merchants across a CHARGE/DISPUTE stream]]
 
 ## Cards (6)
 - [[cc-model-rev-can-raise-a-ratio]]

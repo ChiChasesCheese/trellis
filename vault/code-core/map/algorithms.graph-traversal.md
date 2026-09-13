@@ -8,6 +8,9 @@ Iterative traversal without recursion limits, visited discipline, connected comp
 
 **Unlocks:** [[algorithms.shortest-path|Shortest Paths & Bounded Hops]], [[algorithms.topological|Topological Order & Weighted DAGs]]
 
+## Drills
+- [[oa-qa12-lc399-evaluate-division|Drill: evaluate division queries two ways, then find the best rate and the bad quote]]
+
 ## Cards (5)
 - [[cc-algorithms-graph-traversal-bfs-layers]]
 - [[cc-algorithms-graph-traversal-components]]

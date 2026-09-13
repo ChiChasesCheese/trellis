@@ -11,6 +11,7 @@ Epoch seconds, ISO-8601, `HH:MM`, day-of-week tokens and naive vs aware datetime
 
 ## Drills
 - [[interval-merge-across-offsets|Drill: merging maintenance windows across timezone offsets]]
+- [[oa-qa05-lc1604-keycard-alerts|Drill: alert on repeated key-card use inside an hour, then generalize and go online]]
 
 ## Cards (5)
 - [[cc-chrono-parsing-canonical-form]]

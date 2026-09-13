@@ -13,6 +13,7 @@ Adding days and months, month-end clamping, UTC offsets and day wrap, and why ca
 
 ## Drills
 - [[interval-merge-across-offsets|Drill: merging maintenance windows across timezone offsets]]
+- [[oa-q29-deployment-windows|Drill: fold regional business hours into UTC free deployment windows]]
 
 ## Cards (5)
 - [[cc-chrono-arithmetic-calendar-vs-duration]]

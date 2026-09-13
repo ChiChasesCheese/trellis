@@ -9,6 +9,9 @@ Percent-plus-fixed fees, applying a rate to minor units without drift, splitting
 ## Readings
 - [[fowler-money-pattern|Money (Patterns of Enterprise Application Architecture)]]
 
+## Drills
+- [[oa-q20-transaction-fees-reconciliation|Drill: fee schedule, rate-table override, payout rollup and ledger reconciliation]]
+
 ## Cards (5)
 - [[cc-rules-fee-basis-points]]
 - [[cc-rules-fee-conditional-and-zero]]

@@ -9,6 +9,11 @@ Dijkstra with a heap, Bellman-Ford by rounds for a hop limit, product-weight pat
 ## Readings
 - [[cp-algorithms-dijkstra|Dijkstra's algorithm (cp-algorithms)]]
 
+## Drills
+- [[oa-q21-currency-conversion|Drill: convert between currencies through direct, inverse and best multi-hop rates]]
+- [[oa-q22-shipping-cost|Drill: price shipping over a carrier network, then over a tiered price list]]
+- [[oa-qa02-lc787-cheapest-flights-k-stops|Drill: cheapest flight within k stops, two ways, then the itinerary and carrier filters]]
+
 ## Cards (5)
 - [[cc-algorithms-shortest-path-bounded-hops]]
 - [[cc-algorithms-shortest-path-dijkstra-heap]]

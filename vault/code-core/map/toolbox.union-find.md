@@ -7,6 +7,10 @@ Disjoint-set union with path compression and union by size, connected components
 ## Readings
 - [[cp-algorithms-dsu|Disjoint Set Union (cp-algorithms)]]
 
+## Drills
+- [[oa-q18-collusion-ring|Drill: find fraud rings from shared identifiers]]
+- [[oa-qa12-lc399-evaluate-division|Drill: evaluate division queries two ways, then find the best rate and the bad quote]]
+
 ## Cards (5)
 - [[cc-toolbox-union-find-by-size]]
 - [[cc-toolbox-union-find-find]]

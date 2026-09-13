@@ -11,6 +11,8 @@ Fixed buckets vs rolling windows, "within the last hour" as a comparison you mus
 
 ## Drills
 - [[interval-merge-across-offsets|Drill: merging maintenance windows across timezone offsets]]
+- [[oa-q23-rate-limiter|Drill: rate-limit a request stream, then swap the algorithm for a token bucket]]
+- [[oa-qa05-lc1604-keycard-alerts|Drill: alert on repeated key-card use inside an hour, then generalize and go online]]
 
 ## Cards (6)
 - [[cc-chrono-windows-boundary]]

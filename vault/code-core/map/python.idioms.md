@@ -12,6 +12,7 @@ Comprehensions, unpacking, `sorted(key=...)`, `cmp_to_key`, `enumerate`/`zip`, f
 
 ## Drills
 - [[exact-output-port-sprint|Drill: twenty minutes to an exact-output contract]]
+- [[oa-q33-analytical-db-min-by-key|Drill: build a toy analytical database, one abstraction layer at a time]]
 
 ## Cards (5)
 - [[cc-python-idioms-comprehensions]]

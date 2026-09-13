@@ -7,6 +7,9 @@ Seeded randomness, stable hashing for percentage rollouts, iteration order you c
 ## Readings
 - [[python-random|random — generate pseudo-random numbers]]
 
+## Drills
+- [[oa-q38-feature-flags|Drill: evaluate a feature flag for a user through kill switch, lists, attributes, rollout and dependencies]]
+
 ## Cards (5)
 - [[cc-verification-determinism-repeatable-runs]]
 - [[cc-verification-determinism-rollout-boundary]]

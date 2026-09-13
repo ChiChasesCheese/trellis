@@ -9,6 +9,8 @@ Strict vs non-strict comparison, count vs ratio thresholds, minimum-volume gates
 
 ## Drills
 - [[event-stream-with-reversals|Drill: an event stream with reversals, in four unlocking parts]]
+- [[oa-q01-fraud-mcc-disputes|Drill: flag fraudulent merchants across a CHARGE/DISPUTE stream]]
+- [[oa-q02-merchant-fraud-score|Drill: score merchants over three independent rule passes]]
 
 ## Cards (5)
 - [[cc-rules-thr-band-edges]]

@@ -13,6 +13,10 @@ Cents as `int`, `Decimal` with an explicit context, zero-decimal currencies, and
 - [[stripe-zero-decimal-currencies|Zero-decimal currencies (Stripe docs)]]
 
 ## Drills
+- [[oa-q03-chat-billing|Drill: monthly billing with metered usage, a fixed plan, and mid-month proration]]
+- [[oa-q13-account-balance-ledger|Drill: a cents-exact ledger with overdraft rejection and a platform lender]]
+- [[oa-q16-chargeback-parsing|Drill: parse card-network chargebacks, drop corrupted rows, cancel withdrawn disputes]]
+- [[oa-qa06-lc2043-simple-bank-system|Drill: a validated bank class, then a reversible log, then platform lending]]
 - [[settlement-minimum-transfers|Drill: settling a group of debts in the fewest transfers]]
 - [[tiered-billing-exact-output|Drill: tiered billing with an exact-output contract]]
 
