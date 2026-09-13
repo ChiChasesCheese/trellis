@@ -1,0 +1,47 @@
+{
+ "domain": "narrative",
+ "pulled_at": "2026-09-13T03:36:41+00:00",
+ "unmapped": 0,
+ "traces": {
+  "nr-conflict-ending": {
+   "due": 1,
+   "last_review": 1789270597
+  },
+  "nr-coverage-matrix-sizing": {
+   "due": 1,
+   "last_review": 1789270597
+  },
+  "nr-decision-spine": {
+   "due": 1,
+   "last_review": 1789270597
+  },
+  "nr-deep-dive-were-you-there": {
+   "due": 1,
+   "last_review": 1789270597
+  },
+  "nr-failure-or-excuse": {
+   "due": 1,
+   "last_review": 1789270597
+  },
+  "nr-number-survives-followup": {
+   "due": 1,
+   "last_review": 1789270597
+  },
+  "nr-package-elasticity": {
+   "due": 1,
+   "last_review": 1789270597
+  },
+  "nr-recover-wrong-story": {
+   "due": 1,
+   "last_review": 1789270597
+  },
+  "nr-same-story-two-levels": {
+   "due": 1,
+   "last_review": 1789270597
+  },
+  "nr-signals-behind-the-questions": {
+   "due": 1,
+   "last_review": 1789270597
+  }
+ }
+}

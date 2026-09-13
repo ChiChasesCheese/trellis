@@ -122,6 +122,14 @@ def test_grown_cards_land_on_the_leaf_tagged_and_the_leaf_leaves_the_uncovered_l
     assert not (root / "vault" / "demo" / "cards" / "mid" / "b-leans.md").exists()
 
 
+def test_brief_and_feed_run_on_the_same_traces_and_point_at_grow(root, capsys):
+    assert run(root, "brief", "--print") == 0
+    out = capsys.readouterr().out
+    assert "[[base.one|One]]" in out and "trellis grow" in out
+    assert run(root, "feed") == 0
+    assert "search:" in capsys.readouterr().out
+
+
 def test_a_leaf_that_is_neither_weak_nor_uncovered_is_refused(root):
     with pytest.raises(SystemExit):
         run(root, "grow", "--leaf", "demo:base.two")

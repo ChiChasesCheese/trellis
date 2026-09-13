@@ -1,0 +1,493 @@
+{
+ "domain": "basketball",
+ "pulled_at": "2026-09-13T03:36:40+00:00",
+ "unmapped": 0,
+ "traces": {
+  "bb-acl-noncontact-mechanism": {
+   "last_review": 1788068026
+  },
+  "bb-actual-travels-vs-myths": {
+   "last_review": 1788068026
+  },
+  "bb-advantage-create-vs-transport": {
+   "last_review": 1788068026
+  },
+  "bb-advantage-decay": {
+   "last_review": 1788068026
+  },
+  "bb-advantage-live-vs-dead": {
+   "last_review": 1788068026
+  },
+  "bb-ankle-sprain-prevention": {
+   "last_review": 1788068026
+  },
+  "bb-arc-clock-and-timeout-variants": {
+   "last_review": 1788068026
+  },
+  "bb-attack-angles-half-step": {
+   "last_review": 1788068026
+  },
+  "bb-attack-angles-shoulder-past-hip": {
+   "last_review": 1788068026
+  },
+  "bb-attack-angles-top-foot": {
+   "last_review": 1788068026
+  },
+  "bb-ball-on-rim-live": {
+   "last_review": 1788068026
+  },
+  "bb-blocked-vs-random-transfer": {
+   "last_review": 1788068026
+  },
+  "bb-constraint-forces-the-read": {
+   "last_review": 1788068026
+  },
+  "bb-core-real-job": {
+   "last_review": 1788068026
+  },
+  "bb-counters-by-recovery-angle": {
+   "last_review": 1788068026
+  },
+  "bb-counters-timing-window": {
+   "last_review": 1788068026
+  },
+  "bb-court-map-corner-three-value": {
+   "last_review": 1788068026
+  },
+  "bb-court-map-interior-landmarks": {
+   "last_review": 1788068026
+  },
+  "bb-cutting-a-cut-must-end": {
+   "last_review": 1788068026
+  },
+  "bb-cutting-backdoor-punishes-overplay": {
+   "last_review": 1788068026
+  },
+  "bb-cutting-timing-give-and-go": {
+   "last_review": 1788068026
+  },
+  "bb-deceleration-over-vertical": {
+   "last_review": 1788068026
+  },
+  "bb-decisions-not-outcomes": {
+   "last_review": 1788068026
+  },
+  "bb-defense-131-tradeoffs": {
+   "last_review": 1788068026
+  },
+  "bb-defense-23-zone-seams": {
+   "last_review": 1788068026
+  },
+  "bb-defense-ball-you-man-iline": {
+   "last_review": 1788068026
+  },
+  "bb-defense-boxout-contact-then-pursuit": {
+   "last_review": 1788068026
+  },
+  "bb-defense-closeout-mechanics-cloze": {
+   "last_review": 1788068026
+  },
+  "bb-defense-closeout-shooter-vs-driver": {
+   "last_review": 1788068026
+  },
+  "bb-defense-contain-over-steal": {
+   "last_review": 1788068026
+  },
+  "bb-defense-coverage-by-personnel": {
+   "last_review": 1788068026
+  },
+  "bb-defense-dig-without-losing-shooter": {
+   "last_review": 1788068026
+  },
+  "bb-defense-drop-pullup-blame": {
+   "last_review": 1788068026
+  },
+  "bb-defense-force-side-and-hand": {
+   "last_review": 1788068026
+  },
+  "bb-defense-front-vs-three-quarter": {
+   "last_review": 1788068026
+  },
+  "bb-defense-guard-rebounding-angles": {
+   "last_review": 1788068026
+  },
+  "bb-defense-ice-sideline-pnr": {
+   "last_review": 1788068026
+  },
+  "bb-defense-low-man-rules": {
+   "last_review": 1788068026
+  },
+  "bb-defense-matchups-and-the-nonshooter": {
+   "last_review": 1788068026
+  },
+  "bb-defense-passes-away-ladder": {
+   "last_review": 1788068026
+  },
+  "bb-defense-pnr-coverage-tradeoffs": {
+   "last_review": 1788068026
+  },
+  "bb-defense-second-rotation-breaks": {
+   "last_review": 1788068026
+  },
+  "bb-defense-three-away-from-trap": {
+   "last_review": 1788068026
+  },
+  "bb-defense-transition-matchup-not-my-man": {
+   "last_review": 1788068026
+  },
+  "bb-defense-transition-rim-before-ball": {
+   "last_review": 1788068026
+  },
+  "bb-defense-trap-as-timing-device": {
+   "last_review": 1788068026
+  },
+  "bb-defense-vision-jump-to-ball": {
+   "last_review": 1788068026
+  },
+  "bb-defense-x-out-sequence": {
+   "last_review": 1788068026
+  },
+  "bb-defensive-three-seconds-variants": {
+   "last_review": 1788068026
+  },
+  "bb-efficiency-efg-vs-ts": {
+   "last_review": 1788068026
+  },
+  "bb-efficiency-ppp-as-unit": {
+   "last_review": 1788068026
+  },
+  "bb-elastic-vs-strength-qualities": {
+   "last_review": 1788068026
+  },
+  "bb-empty-side-purpose": {
+   "last_review": 1788068026
+  },
+  "bb-film-study-one-question": {
+   "last_review": 1788068026
+  },
+  "bb-finishing-inside-hand-and-floater": {
+   "last_review": 1788068026
+  },
+  "bb-finishing-two-foot-vs-one-foot": {
+   "last_review": 1788068026
+  },
+  "bb-five-out-gravity": {
+   "last_review": 1788068026
+  },
+  "bb-flow-delay-entry": {
+   "last_review": 1788068026
+  },
+  "bb-flow-push-or-pull": {
+   "last_review": 1788068026
+  },
+  "bb-footwork-gather-and-stop": {
+   "last_review": 1788068026
+  },
+  "bb-footwork-inside-vs-outside-foot-catch": {
+   "last_review": 1788068026
+  },
+  "bb-four-factors-fix-first": {
+   "last_review": 1788068026
+  },
+  "bb-four-factors-weights": {
+   "last_review": 1788068026
+  },
+  "bb-gather-step-definition": {
+   "last_review": 1788068026
+  },
+  "bb-goaltending-vs-basket-interference": {
+   "last_review": 1788068026
+  },
+  "bb-handle-functional-test": {
+   "last_review": 1788068026
+  },
+  "bb-handle-protecting-the-ball": {
+   "last_review": 1788068026
+  },
+  "bb-handoff-keep-vs-give": {
+   "last_review": 1788068026
+  },
+  "bb-handoff-screen-with-the-ball": {
+   "last_review": 1788068026
+  },
+  "bb-hockey-assist-value": {
+   "last_review": 1788068026
+  },
+  "bb-iso-empty-side": {
+   "last_review": 1788068026
+  },
+  "bb-iso-help-decides-score-or-pass": {
+   "last_review": 1788068026
+  },
+  "bb-legal-step-through": {
+   "last_review": 1788068026
+  },
+  "bb-lineup-small-sample": {
+   "last_review": 1788068026
+  },
+  "bb-long-two-death": {
+   "last_review": 1788068026
+  },
+  "bb-motion-cut-must-end": {
+   "last_review": 1788068026
+  },
+  "bb-motion-rules-not-plays": {
+   "last_review": 1788068026
+  },
+  "bb-offball-cutter-reads": {
+   "last_review": 1788068026
+  },
+  "bb-offball-screen-menu": {
+   "last_review": 1788068026
+  },
+  "bb-offense-beat-the-rotation-one-more": {
+   "last_review": 1788068026
+  },
+  "bb-offense-corner-release-valve": {
+   "last_review": 1788068026
+  },
+  "bb-offense-crash-or-retreat": {
+   "last_review": 1788068026
+  },
+  "bb-offense-half-second-rule": {
+   "last_review": 1788068026
+  },
+  "bb-offense-manufacturing-a-paint-touch": {
+   "last_review": 1788068026
+  },
+  "bb-offense-oreb-angles": {
+   "last_review": 1788068026
+  },
+  "bb-offense-press-break-spacing": {
+   "last_review": 1788068026
+  },
+  "bb-offense-push-or-pull-out": {
+   "last_review": 1788068026
+  },
+  "bb-offense-read-not-memorize": {
+   "last_review": 1788068026
+  },
+  "bb-offense-sideline-trap-trap": {
+   "last_review": 1788068026
+  },
+  "bb-offense-trailer-and-drag": {
+   "last_review": 1788068026
+  },
+  "bb-offense-transition-lanes": {
+   "last_review": 1788068026
+  },
+  "bb-offense-why-paint-touch-matters": {
+   "last_review": 1788068026
+  },
+  "bb-offense-zone-gaps-not-around": {
+   "last_review": 1788068026
+  },
+  "bb-offense-zone-overload": {
+   "last_review": 1788068026
+  },
+  "bb-onoff-fit-over-talent": {
+   "last_review": 1788068026
+  },
+  "bb-pace-decelerate-to-accelerate": {
+   "last_review": 1788068026
+  },
+  "bb-pace-speed-differential": {
+   "last_review": 1788068026
+  },
+  "bb-passing-a-teammate-open": {
+   "last_review": 1788068026
+  },
+  "bb-passing-menu-by-reaction": {
+   "last_review": 1788068026
+  },
+  "bb-pnr-handler-blitz-hedge-switch": {
+   "last_review": 1788068026
+  },
+  "bb-pnr-handler-drop-read": {
+   "last_review": 1788068026
+  },
+  "bb-pnr-handler-ice-read": {
+   "last_review": 1788068026
+  },
+  "bb-pnr-screener-roll-vs-pop": {
+   "last_review": 1788068026
+  },
+  "bb-pnr-screener-short-roll": {
+   "last_review": 1788068026
+  },
+  "bb-pnr-screener-slip-ghost-spot": {
+   "last_review": 1788068026
+  },
+  "bb-possession-estimate-formula": {
+   "last_review": 1788068026
+  },
+  "bb-possession-turnover-vs-miss": {
+   "last_review": 1788068026
+  },
+  "bb-post-front-vs-three-quarter": {
+   "reps": 1,
+   "type": 1,
+   "due": 1788072024,
+   "last_review": 1788071297
+  },
+  "bb-post-seal-before-catch": {
+   "last_review": 1788068026
+  },
+  "bb-princeton-backdoor-trigger": {
+   "last_review": 1788068026
+  },
+  "bb-princeton-beats-athleticism": {
+   "last_review": 1788068026
+  },
+  "bb-princeton-high-post-hub": {
+   "last_review": 1788068026
+  },
+  "bb-random-practice-cue-design": {
+   "last_review": 1788068026
+  },
+  "bb-reads-early-on-time-late": {
+   "last_review": 1788068026
+  },
+  "bb-reads-extra-pass-gives-it-back": {
+   "last_review": 1788068026
+  },
+  "bb-reads-good-shot-is-relative": {
+   "last_review": 1788068026
+  },
+  "bb-reads-help-position-picks-finish": {
+   "last_review": 1788068026
+  },
+  "bb-reads-pass-to-the-spot": {
+   "last_review": 1788068026
+  },
+  "bb-reads-process-not-outcome": {
+   "last_review": 1788068026
+  },
+  "bb-reads-scan-before-you-drive": {
+   "last_review": 1788068026
+  },
+  "bb-reads-shot-clock-zones": {
+   "last_review": 1788068026
+  },
+  "bb-reads-shot-quality-checklist": {
+   "last_review": 1788068026
+  },
+  "bb-reads-three-on-two-lanes": {
+   "last_review": 1788068026
+  },
+  "bb-reads-two-for-one": {
+   "last_review": 1788068026
+  },
+  "bb-reads-two-on-one-commit": {
+   "last_review": 1788068026
+  },
+  "bb-relocation-being-findable": {
+   "last_review": 1788068026
+  },
+  "bb-relocation-drift-vs-lift": {
+   "last_review": 1788068026
+  },
+  "bb-restricted-area-charge-block": {
+   "last_review": 1788068026
+  },
+  "bb-screening-angle-timing-contact": {
+   "last_review": 1788068026
+  },
+  "bb-screening-slip-and-rescreen-triggers": {
+   "last_review": 1788068026
+  },
+  "bb-set-vs-offense-distinction": {
+   "last_review": 1788068026
+  },
+  "bb-shooting-one-vs-two-motion": {
+   "last_review": 1788068026
+  },
+  "bb-shooting-rhythm-vs-rushed": {
+   "last_review": 1788068026
+  },
+  "bb-shot-chart-reading": {
+   "last_review": 1788068026
+  },
+  "bb-shot-quality-vs-shot-making": {
+   "last_review": 1788068026
+  },
+  "bb-shot-value-ladder": {
+   "last_review": 1788068026
+  },
+  "bb-shot-value-long-two": {
+   "last_review": 1788068026
+  },
+  "bb-situations-ato-counter-and-switch": {
+   "last_review": 1788068026
+  },
+  "bb-situations-blob-principles": {
+   "last_review": 1788068026
+  },
+  "bb-situations-down-two-vs-down-three": {
+   "last_review": 1788068026
+  },
+  "bb-situations-foul-management": {
+   "last_review": 1788068026
+  },
+  "bb-situations-fouling-up-three": {
+   "last_review": 1788068026
+  },
+  "bb-situations-playing-for-last-shot": {
+   "last_review": 1788068026
+  },
+  "bb-situations-slob-late-clock": {
+   "last_review": 1788068026
+  },
+  "bb-situations-why-atos-score": {
+   "last_review": 1788068026
+  },
+  "bb-sleep-primary-recovery": {
+   "last_review": 1788068026
+  },
+  "bb-small-sided-games-value": {
+   "last_review": 1788068026
+  },
+  "bb-spacing-distance-rule": {
+   "last_review": 1788068026
+  },
+  "bb-spacing-one-bad-spot": {
+   "last_review": 1788068026
+  },
+  "bb-spacing-one-defender-two-players": {
+   "last_review": 1788068026
+  },
+  "bb-spain-pnr-mechanism": {
+   "last_review": 1788068026
+  },
+  "bb-strength-for-contact": {
+   "last_review": 1788068026
+  },
+  "bb-tracking-gravity-deterrence": {
+   "last_review": 1788068026
+  },
+  "bb-triangle-sideline-geometry": {
+   "last_review": 1788068026
+  },
+  "bb-triangle-strongside-read": {
+   "last_review": 1788068026
+  },
+  "bb-triple-threat-jab-reads": {
+   "last_review": 1788068026
+  },
+  "bb-triple-threat-precatch-decision": {
+   "last_review": 1788068026
+  },
+  "bb-verticality-and-cylinder": {
+   "last_review": 1788068026
+  },
+  "bb-weekly-load-management": {
+   "last_review": 1788068026
+  },
+  "bb-workout-ends-in-decisions": {
+   "last_review": 1788068026
+  },
+  "bb-workout-tracking-that-survives": {
+   "last_review": 1788068026
+  }
+ }
+}

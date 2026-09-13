@@ -607,10 +607,10 @@ def _assess_all(root: Path, domains: list[str]):
 def cmd_brief(args) -> int:
     """Write the one note that says what to do next, across every domain."""
     from .brief import brief_body
-    domains = domains(args.root)
-    if not domains:
+    names = domains(args.root)
+    if not names:
         _fail(f"no skeleton files in {args.root / 'skeleton'}")
-    assessments, skeletons, drills, readings, ages = _assess_all(args.root, domains)
+    assessments, skeletons, drills, readings, ages = _assess_all(args.root, names)
     if not assessments:
         _fail("no domain has any cards yet — nothing to brief on")
     body = brief_body(assessments, skeletons, drills, readings, ages)
