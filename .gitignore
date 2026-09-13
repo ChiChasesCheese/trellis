@@ -16,3 +16,8 @@ dist/
 # A book you paid for is ingested here for triage and digest, and stays on
 # this machine: the outline (titles only) is committed under sources/outlines/.
 sources/local/
+
+# Obsidian was told the vault is called Trellis_; that name is a symlink to vault/
+# on this machine so both git and Obsidian keep their path (see ADR 0001 on why
+# the real folder stays `vault`).
+/Trellis_
