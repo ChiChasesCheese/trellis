@@ -117,7 +117,3 @@ def rewrite_subtree_sums_tree(root1):
 - 与 `pc10`（Distributed Tree Count，节点只能异步通信）同样考"自底向上聚合"，但 pc10 是分布式
   消息模拟，pc19 是单机迭代遍历。
 - 练习命令：`python3 loop/mock.py start pc19`
-
-## 索引行
-
-| [pc19_rewrite_tree_subtree_sums](pc19_rewrite_tree_subtree_sums.md) | `../../loop/rounds/03_phone_coding/pc19_rewrite_tree_subtree_sums/` | 电面 coding | 满二叉树数组的下标单调性能把后序处理压成一次反向扫描；当规模逼得表示法本身撑不住时，才换成节点对象 + 显式栈的迭代后序 |

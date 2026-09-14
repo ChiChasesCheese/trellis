@@ -115,7 +115,3 @@ def grep_stream(lines, search_target, lines_around):
   事件窗口，pc25 是按行号的上下文窗口。
 - 与 `pc05`（Max Events II）同样用区间标记思维，但 pc05 是区间调度计数，pc25 是区间合并去重。
 - 练习命令：`python3 loop/mock.py start pc25`
-
-## 索引行
-
-| [pc25_grep_with_context](pc25_grep_with_context.md) | `../../loop/rounds/03_phone_coding/pc25_grep_with_context/` | 电面 coding | 区间标记 + 并集是滑窗合并的通用技巧；流式版本用"延迟定案"模式（固定大小环形缓冲）替代无界累积状态 |

@@ -119,7 +119,3 @@ def shortest_transform(a, b):
 - 与 `pc04`（Wiki 最短点击路径）同样是"任意路径 → 最短路径"的递进结构，但 pc18 的图是隐式且
   可能无界的，需要先证明有限的搜索边界。
 - 练习命令：`python3 loop/mock.py start pc18`
-
-## 索引行
-
-| [pc18_number_transformation_path](pc18_number_transformation_path.md) | `../../loop/rounds/03_phone_coding/pc18_number_transformation_path/` | 电面 coding | 遇到数值可能无界的隐式图，先找一个不变量证明可达性边界，再给一个可论证的有限上界做有界 BFS，而不是无脑套无界搜索 |

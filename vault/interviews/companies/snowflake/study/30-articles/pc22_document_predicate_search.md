@@ -116,7 +116,3 @@ def _eval_sets(node, index, universe):
 - 与 `pc01`（RBAC DAG 权限）同样涉及"图/索引上的集合运算"，但 pc01 是拓扑序 DP 求权限并集，
   pc22 是倒排索引上的布尔表达式求值。
 - 练习命令：`python3 loop/mock.py start pc22`
-
-## 索引行
-
-| [pc22_document_predicate_search](pc22_document_predicate_search.md) | `../../loop/rounds/03_phone_coding/pc22_document_predicate_search/` | 电面 coding | 倒排索引把查询开销从"文档总数"降到"命中词的倒排表大小"，AND/OR/NOT 天然对应集合的交/并/补运算，不需要逐文档扫描 |

@@ -1,11 +1,12 @@
 # Snowflake kit — 进度断点
 
-> **唯一目的：让下一个会话在零上下文的情况下接着干。** 权威顺序：git 历史 > 本文件 > `LEDGER.md` > `tasks/plan.md`。
-> 分支 `worktree-snowflake-loop`（trellis 仓库，worktree `.claude/worktrees/snowflake-loop`）。编排：主会话（Fable 5.1 → 用量上限后 Opus 5），子代理一律 `sonnet`、并行 ≤ 3、每代理只写自己名下目录、一任务一验收一 commit。
+> **唯一目的：让下一个会话在零上下文的情况下接着干。** 权威顺序：git 历史 > 本文件 > `LEDGER.md`。
+> 分支 `worktree-snowflake-loop`。编排：主会话，子代理 `sonnet` 并行 ≤ 3，一任务一验收一 commit。方法论见 `.claude/skills/building-company-interview-kits/`。
 
-## 一句话现状（2026-09-13）
+## 一句话现状（2026-09-14）
 
-全轮次 kit 已建成并逐批验收入库：OA 11 · 电面 coding 7 · OOD 9 · 系统设计 13 · 非编码题库 74 题 · 学习面（前置 4 · 精华 5 · 每轮 9 · 卡片 3 · 题解 27）· 557 测试全绿 · `check_tree --strict` 0/0。**覆盖率（`tools/coverage.py`）= 流出次数 98/124 = 79%，题族 40/66。** 正在做：**P6 补齐单来源题到 ≥ 90%**，然后评审、合并、同步。
+题集建设完成：OA 23 · 电面 coding 28 · OOD 15（均 `verify_suites` 独立验收，66 题 1421 测试全绿）· 系统设计 21 · 非编码题库 74 题 · 题解文章 55 篇 · 知识树 59 技能 91 题 strict 0/0。
+**覆盖率（`tools/coverage.py`，全集含 GitHub 蒸馏）= 175/178 = 98%**；未建 3 题各有原因（q11 无题面、q18 LOW、pc08 为 2019 三题组合且两题已由 q06/q07 覆盖）。LeetCode 公司标签 104 题见 `core/leetcode/companies/snowflake.md`。
 
 ## 阶段与状态
 
@@ -17,8 +18,8 @@
 | P3 | cut line 内全部建题（q11 仅标题不建）；非编码题库 | ✅ | `verify_suites` 27/27；检查点 3–13 |
 | P4 | study 全部 + 题解 27 篇 | ✅ | 检查点 9、14 |
 | P5 | TEST_SUMMARY · 00-README 重写 · coverage 工具 | ✅ | 本次提交 |
-| **P6** | 单来源题补齐：LC 原题组（56 · 1851 · 2002 · 261 · 1639 · 1962 · 253 · 2050 · 212 · 1600）+ 括号 · 服务启动 · 字符频次 · Top Two Users | ⏳ | `coverage.py` 合计 ≥ 90%；`verify_suites` 全绿 |
-| **P6.5** | GitHub 优先蒸馏 → `catalog/raw/github_repos.md`；LC 通用题单；**P6.7 补建 26 个缺口 id**：pc16–pc29 · od11–od15 · q20–q25 · sd23（题面要点见 github_repos §3） | ⏳ | 每批 `verify_suites` 全绿；`coverage.py` 分母加入 TrueInterview 清单后重算 |
+| P6 | 单来源题补齐：LC 原题组（56 · 1851 · 2002 · 261 · 1639 · 1962 · 253 · 2050 · 212 · 1600）+ 括号 · 服务启动 · 字符频次 · Top Two Users | ✅ | `coverage.py` 合计 ≥ 90%；`verify_suites` 全绿 |
+| P6.5 | GitHub 优先蒸馏 → `catalog/raw/github_repos.md`；LC 通用题单；**P6.7 补建 26 个缺口 id**：pc16–pc29 · od11–od15 · q20–q25 · sd23（题面要点见 github_repos §3） | ✅ | 每批 `verify_suites` 全绿；`coverage.py` 分母加入 TrueInterview 清单后重算 |
 | P7 | `/agent-skills:review` 评审（自包含 / 覆盖 / 教科书体例）→ 修正 → PR → merge main → `git pull` → `trellis` 同步 Obsidian 与 Anki | ⬜ | trellis validate 0 错；pytest 绿 |
 
 ## 已知的有意缺口
@@ -29,12 +30,6 @@
 
 ## 下一步（接手就做这个）
 
-1. 收 P6 三个 sonnet（q12–q17 / pc07–pc15 / od07+sd13–16）→ 独立 `verify_suites` → LEDGER → commit。
-2. 自写 sd18–sd20。
-3. 派 P6.7 三批 sonnet 建 26 个缺口 id（按 `catalog/raw/github_repos.md` §3），同法验收。
-4. `coverage.py` 把 TrueInterview 清单并入分母，重算后再写评审结论。
-5. skill 已入库 `.claude/skills/building-company-interview-kits/`（未测试），跑基线 + 对照后修订。
-
-旧说明：
-
-跑 `python3 tools/coverage.py` 看"未建"列表，从出现次数最高、有题面的开始建；每建完一批跑 `python3 tools/verify_suites.py . "<glob>"`，记 LEDGER，commit + push。
+1. P7 评审：自包含（每个题集只靠本目录 + 链接能做）、覆盖率口径诚实、全书是否像教科书（00-README 目录 → 轮次 → 题 → 题解）；修正后开 PR 合并。
+2. 同步：`uv run trellis --all sync` → `build` → `anki-push`（需桌面 Anki）。公司 kit 不是 trellis domain，不产生卡片。
+3. Snowflake 原理知识另起 trellis domain `snowflake`（skill `building-study-domains`，`vault/snowflake/BUILD.md` 记进度），与本 kit 双向链接。

@@ -120,7 +120,3 @@ def delete_nodes_batch(parent, delete_indices):
 - 与 `pc24`（依赖图上的环检测、DAG 语义）同样强调"某个操作在某种输入形状下没有良定义，要显式报
   错"的诚实表达。
 - 练习命令：`python3 loop/mock.py start pc17`
-
-## 索引行
-
-| [pc17_forest_parent_array_delete](pc17_forest_parent_array_delete.md) | `../../loop/rounds/03_phone_coding/pc17_forest_parent_array_delete/` | 电面 coding | 批量"同时"删除要看原始结构里最近的存活祖先，不能靠重放单次删除的连续效果——"依次"和"同时"在有传递性的操作下经常给出不同答案 |

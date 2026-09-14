@@ -117,7 +117,3 @@ def _affine_of_instructions(instructions, funcs, memo, chain):
 - 与 `pc24`（依赖图环检测）同样考"隐式有向图上的环检测"，但 pc24 是拓扑排序判环，pc21 是调用链
   集合判环。
 - 练习命令：`python3 loop/mock.py start pc21`
-
-## 索引行
-
-| [pc21_accumulator_interpreter](pc21_accumulator_interpreter.md) | `../../loop/rounds/03_phone_coding/pc21_accumulator_interpreter/` | 电面 coding | 可结合的运算（仿射变换）复合后仍是同类运算，可以只算一次整体效果并记忆化，把 O(count) 的暴力循环压成 O(log count) 的快速幂 |

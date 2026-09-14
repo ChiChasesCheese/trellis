@@ -104,7 +104,3 @@ def process_stream(events):
 
 - 同一类"分组求和 + 确定性排序 tie-break"：`pc11`（字符计数排序）、`pc03`（滑窗事件流）。
 - 练习命令：`python3 loop/mock.py start pc12`
-
-## 索引行
-
-| [pc12_top_two_users_by_purchase](pc12_top_two_users_by_purchase.md) | `../../loop/rounds/03_phone_coding/pc12_top_two_users_by_purchase/` | 电面 coding | 涉及金额的题永远先把字符串转成整数最小单位（分），全程不经过 `float`——浮点数不能精确表示大多数十进制小数，累加误差会在数据量大时真的改变排名 |

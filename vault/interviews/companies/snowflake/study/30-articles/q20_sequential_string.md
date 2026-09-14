@@ -111,7 +111,3 @@ def sequential_prefix_lengths_fast(s, queries):
 
 - 同样是"多重集合覆盖/计数正确性"的贪心陷阱：`q19`（翻倍哪个元素才是最优贪心）、`q21`（只挑收益率最高的类型不是正确贪心）——都是"看起来直觉对、实际要论证"的套路。
 - 练习命令：`python3 drill.py start q20`
-
-## 索引行
-
-| [q20_sequential_string](q20_sequential_string.md) | `../../problems/q20_sequential_string/` | OA | "能不能拼出某个排列"永远是计数问题、跟顺序无关——把它当子序列匹配去找，会系统性地把答案判得更小甚至判成不可能 |
