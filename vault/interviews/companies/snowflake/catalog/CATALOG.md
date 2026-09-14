@@ -1,7 +1,7 @@
 # Snowflake 面试题目总表（GenSWE / Software Engineer - Backend，IC1–IC2）
 
 **日期：** 2026-09-13 · **输入：** `catalog/raw/{coding_oa,coding_phone_onsite,ood,TALLY,system_design,bq_hm_recruiter,process_and_jd,sources_index}.md` + `catalog/discovery/`（Reddit 35 帖全文 · HN 6 · 1p3a 镜像 21 帖；`TRIAGE.md` 46 行）+ `../raw/{process_research,company_research,chakra}.md`（AI 轮 dossier）
-**排序：** `RANK.md`（打分输入）→ `tools/pareto.py` → `PARETO.md`（输出）。**cut line = 前 35 行（66 行的 53%，2026-09-13 收割回写后重跑）**，refs 分布平（大量单来源），所以宽于 Stripe 的 20/42。
+**排序：** `RANK.md`（打分输入）→ `tools/pareto.py` → `PARETO.md`（输出）。**cut line = 前 49 行（90 行的 54%，2026-09-14 并入 GitHub 蒸馏后重跑）**，refs 分布平（大量单来源），所以宽于 Stripe 的 20/42。
 
 ## 格式事实（多源交叉，细节与 URL 在 raw/）
 
