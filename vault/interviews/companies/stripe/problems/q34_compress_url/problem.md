@@ -94,3 +94,11 @@ skills: S02 parsing · S09 exact formatting · S14 string canonicalization · S1
 
 ## Sources
 - https://github.com/joeytor/StripeInterview `src/main/java/Compress.java` (README → Phone Interview; verbatim prompt + driver calls)
+
+## 关联知识点
+
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s09-byte-exact-output-format|S09 字节级精确的输出格式]]
+- [[s14-string-normalization|S14 字符串归一化 / 规范化]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]
+- [[s20-self-test-discipline|S20 自测纪律]]

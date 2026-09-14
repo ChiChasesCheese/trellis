@@ -122,3 +122,14 @@ deterministic order · S18 validation · S19 incremental design · A16 union-fin
 
 ## Clarifications (from adversarial review, 2026-08-26)
 - Risk means are printed with Python `.2f` (round-half-even: 1.125 → `1.12`). If a hidden test expects half-up, switch to `Decimal.quantize(ROUND_HALF_UP)`; the source examples do not hit a .xx5 case.
+
+## 关联知识点
+
+- [[a16-union-find-components|A16 并查集 / 连通分量]]
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s04-group-then-aggregate|S04 分组聚合，规则每组一次而不是每行一次]]
+- [[s05-threshold-semantics|S05 阈值语义：严格 vs 非严格、计数 vs 比例、最小量门槛]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]

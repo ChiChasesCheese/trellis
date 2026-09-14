@@ -123,3 +123,11 @@ skills: A13 grid/hash counting · S04 group-by aggregation · S13 boundary disci
 - https://raw.githubusercontent.com/liquidslr/leetcode-company-wise-problems/main/Stripe/4.%20More%20Than%20Six%20Months.csv (freq 67.1)
 - https://raw.githubusercontent.com/snehasishroy/leetcode-companywise-interview-questions/master/stripe/all.csv (freq 62.5 all / 62.5 >6mo)
 - catalog/raw/github_repos.md §30 (tag table, freq 61.2)
+
+## 关联知识点
+
+- [[a13-grid-hash-counting|A13 网格 / 哈希计数]]
+- [[s04-group-then-aggregate|S04 分组聚合，规则每组一次而不是每行一次]]
+- [[s13-closed-intervals-offbyone|S13 闭区间、补齐空隙、off-by-one 纪律]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]
+- [[s21-python-stdlib-fluency|S21 语言熟练度与标准库]]

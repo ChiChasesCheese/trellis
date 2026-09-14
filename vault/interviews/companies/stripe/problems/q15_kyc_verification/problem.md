@@ -118,3 +118,14 @@ S21 stdlib `csv` · S24 domain (statement descriptors, KYC)
 - 1point3acres 1154573 / 1155516 team-screen summaries ("Data Verification", "KYC CSV 30+ 行 6 列")
 - Glassdoor QTN_8763050 "6 step KYC Verification coding Q"
 - Exponent "CSV parsing & validation… circular dependencies"; InterviewDB "Data Validation — Phone"; darkinterview "Data Verification"
+
+## 关联知识点
+
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s05-threshold-semantics|S05 阈值语义：严格 vs 非严格、计数 vs 比例、最小量门槛]]
+- [[s09-byte-exact-output-format|S09 字节级精确的输出格式]]
+- [[s14-string-normalization|S14 字符串归一化 / 规范化]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]
+- [[s21-python-stdlib-fluency|S21 语言熟练度与标准库]]
+- [[s24-payments-domain-vocab|S24 领域词汇（支付）]]

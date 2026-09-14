@@ -140,3 +140,11 @@ skills: A02 weighted graph path product · A16 union-find · S08 deterministic t
 - https://github.com/Hazeera65/stripe-interview/tree/main/round1 ; https://github.com/premjm-67/stripe-interview-questions (`ED.java`) ; https://github.com/TWINSRIRAM/Stripe_OA_Prep (evaluatedivision)
 - catalog/raw/github_repos.md §30 (tag table, freq 76.9)
 - problems/q21_currency_conversion (the bespoke twin — direct/inverse/multi-hop/payouts live there)
+
+## 关联知识点
+
+- [[a02-graph-division-values|A02 图上的路径乘积 / 除法求值]]
+- [[a16-union-find-components|A16 并查集 / 连通分量]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]
+- [[s21-python-stdlib-fluency|S21 语言熟练度与标准库]]

@@ -133,3 +133,13 @@ recursive-descent parser added without touching the ledger) · S24 Radar / Conne
 - https://github.com/kylelong/stripe-interview/blob/master/RadarRules.java (ALLOW/BLOCK charge variant, verbatim task)
 - https://github.com/sahaia1/Stripe_Pyhton_libraries/blob/main/radarrules.py (Python port + expanded statement)
 - https://docs.stripe.com/radar/rules/reference (real Radar grammar: first match wins, missing attribute ⇒ false)
+
+## 关联知识点
+
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s06-money-integer-cents|S06 金额用整数最小单位；显式舍入；两位小数格式]]
+- [[s10-event-stream-reversal|S10 事件流 + 反向事件]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]
+- [[s24-payments-domain-vocab|S24 领域词汇（支付）]]

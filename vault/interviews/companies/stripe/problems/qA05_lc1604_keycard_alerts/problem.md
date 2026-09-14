@@ -91,3 +91,12 @@ skills: A07 window over sorted timestamps · S02 parsing · S04 grouping · S05 
 - https://raw.githubusercontent.com/liquidslr/leetcode-company-wise-problems/main/Stripe/5.%20All.csv (61.2)
 - https://raw.githubusercontent.com/snehasishroy/leetcode-companywise-interview-questions/master/stripe/all.csv (62.5)
 - catalog/raw/github_repos.md §30
+
+## 关联知识点
+
+- [[a07-per-key-sliding-window|A07 每 key 上按时间排序的滑动窗口]]
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s04-group-then-aggregate|S04 分组聚合，规则每组一次而不是每行一次]]
+- [[s05-threshold-semantics|S05 阈值语义：严格 vs 非严格、计数 vs 比例、最小量门槛]]
+- [[s12-time-and-dates|S12 时间与日期]]
+- [[s16-sliding-window-token-bucket|S16 滑动窗口计数器 / 令牌桶]]

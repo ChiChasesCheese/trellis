@@ -134,3 +134,14 @@ S18 validation/error paths · S19 incremental design · S20 self-testing
 - 1point3acres 题库 "AccountScheduler LRU" (onsite, last asked 2026-03-27) — catalog/raw/algo_questions.md P6, cn_sources.md §3
 - https://www.linkjob.ai/interview-questions/stripe-technical-interview/ (H9: VO AccountScheduler — is_available / acquire(duration) / LRU auto-select; also en_forums.md §27 "Account scheduler / locked_until")
 - catalog/raw/process_and_jd.md §B onsite table ("AccountScheduler: is_available -> acquire(lock) -> LRU auto-select")
+
+## 关联知识点
+
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s05-threshold-semantics|S05 阈值语义：严格 vs 非严格、计数 vs 比例、最小量门槛]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s10-event-stream-reversal|S10 事件流 + 反向事件]]
+- [[s11-idempotency-dedup|S11 幂等 / 去重]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]
+- [[s20-self-test-discipline|S20 自测纪律]]

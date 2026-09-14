@@ -155,3 +155,15 @@ reversals · S11 idempotency (double dispute) · S18 validation (unknown ids / M
 
 ## Clarifications (from adversarial review, 2026-08-26)
 - A `CHARGE` that re-uses a charge id after that id was disputed is treated as a NEW charge (it counts again); a repeat of a live charge id is ignored.
+
+## 关联知识点
+
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s05-threshold-semantics|S05 阈值语义：严格 vs 非严格、计数 vs 比例、最小量门槛]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s09-byte-exact-output-format|S09 字节级精确的输出格式]]
+- [[s10-event-stream-reversal|S10 事件流 + 反向事件]]
+- [[s11-idempotency-dedup|S11 幂等 / 去重]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]

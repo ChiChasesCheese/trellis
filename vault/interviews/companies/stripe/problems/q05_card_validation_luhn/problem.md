@@ -164,3 +164,13 @@ masked input / single-edit enumeration · S19 incremental design (P1 ⊂ P2 ⊂ 
 
 ## Clarifications (from adversarial review, 2026-08-26)
 - Lines without a `PART n` header or `Pk` tag are interpreted by shape: contains `?` → Part 4, contains `*` → Part 3, 15/16 digits → Part 2.
+
+## 关联知识点
+
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s05-threshold-semantics|S05 阈值语义：严格 vs 非严格、计数 vs 比例、最小量门槛]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s09-byte-exact-output-format|S09 字节级精确的输出格式]]
+- [[s14-string-normalization|S14 字符串归一化 / 规范化]]
+- [[s15-masked-input-combinatorics|S15 掩码输入上的小规模组合]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]

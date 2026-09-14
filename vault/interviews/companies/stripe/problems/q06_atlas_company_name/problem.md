@@ -171,3 +171,13 @@ punctuation, suffix/article stripping) · S18 validation/ignored requests · S19
 
 ## Clarifications (from adversarial review, 2026-08-26)
 - The word `and` is dropped only as a standalone token (`Salt and-Pepper` keeps the hyphenated `and-pepper` token as is); step 7 (`and` removal) is reconstructed from aggregator descriptions.
+
+## 关联知识点
+
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s09-byte-exact-output-format|S09 字节级精确的输出格式]]
+- [[s11-idempotency-dedup|S11 幂等 / 去重]]
+- [[s14-string-normalization|S14 字符串归一化 / 规范化]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]

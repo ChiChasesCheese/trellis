@@ -139,3 +139,14 @@ S19 incremental design · S21 stdlib fluency (heapq, dict order)
 
 ## Clarifications (from adversarial review, 2026-08-26)
 - A second `SHUTDOWN` re-routes evicted connections in their ORIGINAL `CONNECT` arrival order (global sequence), not in the order they landed on the shut-down target.
+
+## 关联知识点
+
+- [[s01-read-full-spec-first|S01 先读完整份规格，为 Part N+1 而设计]]
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s10-event-stream-reversal|S10 事件流 + 反向事件]]
+- [[s11-idempotency-dedup|S11 幂等 / 去重]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]
+- [[s21-python-stdlib-fluency|S21 语言熟练度与标准库]]

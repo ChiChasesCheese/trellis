@@ -110,3 +110,11 @@ skills: A04 stack/backtracking expansion · S02 parsing · S08 deterministic ord
 - https://raw.githubusercontent.com/snehasishroy/leetcode-companywise-interview-questions/master/stripe/all.csv (87.5)
 - https://www.interviewdb.io/question/stripe ("Expansion — Phone", Aug 2026) ; hackerprep.io/company/stripe ("Bracket Expansion (Stack)")
 - https://github.com/Hazeera65/stripe-interview/tree/main/round1 ; https://github.com/premjm-67/stripe-interview-questions ; https://github.com/TWINSRIRAM/Stripe_OA_Prep
+
+## 关联知识点
+
+- [[a04-string-expansion-backtracking|A04 栈 / 回溯做字符串展开]]
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s14-string-normalization|S14 字符串归一化 / 规范化]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]

@@ -124,3 +124,13 @@ S18 validation and error paths · S24 dispute/chargeback vocabulary
 - programhelp 2025-08-08 「Parsing and Filtering Refund/Dispute Data」 (repost of the same three parts)
 - https://docs.stripe.com/disputes/how-disputes-work (dispute lifecycle: chargeback is the first stage)
 - https://docs.stripe.com/currencies (minor units, zero-decimal currencies)
+
+## 关联知识点
+
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s06-money-integer-cents|S06 金额用整数最小单位；显式舍入；两位小数格式]]
+- [[s09-byte-exact-output-format|S09 字节级精确的输出格式]]
+- [[s11-idempotency-dedup|S11 幂等 / 去重]]
+- [[s12-time-and-dates|S12 时间与日期]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s24-payments-domain-vocab|S24 领域词汇（支付）]]

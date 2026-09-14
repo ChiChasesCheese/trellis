@@ -125,3 +125,11 @@ skills: A12 one-edit distance · S13 off-by-one discipline · S14 string canonic
 - https://raw.githubusercontent.com/snehasishroy/leetcode-companywise-interview-questions/master/stripe/all.csv (freq 62.5 all / 62.5 >6mo)
 - catalog/raw/github_repos.md §30 (tag table, freq 61.2)
 - problems/q05_card_validation_luhn (Part 4 — the same one-edit-or-swap rule on card numbers)
+
+## 关联知识点
+
+- [[a12-one-edit-distance|A12 一次编辑距离]]
+- [[s13-closed-intervals-offbyone|S13 闭区间、补齐空隙、off-by-one 纪律]]
+- [[s14-string-normalization|S14 字符串归一化 / 规范化]]
+- [[s15-masked-input-combinatorics|S15 掩码输入上的小规模组合]]
+- [[s21-python-stdlib-fluency|S21 语言熟练度与标准库]]

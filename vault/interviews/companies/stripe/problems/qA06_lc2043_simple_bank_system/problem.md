@@ -129,3 +129,12 @@ skills: A08 design/simulation with validation · S03 state per account · S10 re
 - https://raw.githubusercontent.com/snehasishroy/leetcode-companywise-interview-questions/master/stripe/all.csv (62.5)
 - https://programhelp.net/en/vo/stripe-vo-interview-questions-and-solutions/ (PaymentLedger family, 2026-01..04) — follow-up framing
 - catalog/raw/github_repos.md §30
+
+## 关联知识点
+
+- [[a08-stateful-simulation-with-validation|A08 带校验的模拟 / 设计题]]
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s10-event-stream-reversal|S10 事件流 + 反向事件]]
+- [[s17-ledger-balance-tracking|S17 台账式余额跟踪]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]

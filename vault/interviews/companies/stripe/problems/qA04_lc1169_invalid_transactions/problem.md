@@ -105,3 +105,12 @@ skills: A05 hash + sort validation · S02 parsing · S04 grouping · S05 thresho
 - https://raw.githubusercontent.com/liquidslr/leetcode-company-wise-problems/main/Stripe/4.%20More%20Than%20Six%20Months.csv (93.2)
 - https://raw.githubusercontent.com/snehasishroy/leetcode-companywise-interview-questions/master/stripe/six-months.csv (100.0 — only entry) ; .../all.csv (87.5)
 - catalog/raw/github_repos.md §30
+
+## 关联知识点
+
+- [[a05-hash-sort-record-validation|A05 哈希 + 排序做记录校验]]
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s04-group-then-aggregate|S04 分组聚合，规则每组一次而不是每行一次]]
+- [[s05-threshold-semantics|S05 阈值语义：严格 vs 非严格、计数 vs 比例、最小量门槛]]
+- [[s12-time-and-dates|S12 时间与日期]]
+- [[s16-sliding-window-token-bucket|S16 滑动窗口计数器 / 令牌桶]]

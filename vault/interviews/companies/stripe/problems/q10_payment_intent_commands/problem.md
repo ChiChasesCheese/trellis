@@ -194,3 +194,13 @@ reversals · S11 idempotency (duplicate INIT/CREATE/REFUND) · S12 time windows 
 
 ## Clarifications (from adversarial review, 2026-08-26)
 - Command arity is checked per part: in Parts 1–3 `INIT` takes exactly `merchant balance`; a third argument makes the line invalid (ignored). Only Part 4 accepts the optional `refund_limit`. (Bug found and fixed by adversarial review 2026-08-26.)
+
+## 关联知识点
+
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s10-event-stream-reversal|S10 事件流 + 反向事件]]
+- [[s11-idempotency-dedup|S11 幂等 / 去重]]
+- [[s12-time-and-dates|S12 时间与日期]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]

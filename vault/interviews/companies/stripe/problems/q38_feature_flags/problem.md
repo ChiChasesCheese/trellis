@@ -110,3 +110,12 @@ skills: S02 parsing · S03 domain modeling · S05 threshold semantics · S11 det
 - https://adonais0.github.io/20210603/interview-stripe/ (phone screen write-up, 2021-06-03: location restrictions + A/B even-ID rule)
 - https://www.1point3acres.com/bbs/thread-1025478-1-1.html (电面 prep list: "User Feature")
 - InterviewDB phone-screen title "User Feature System" (title only; see catalog/raw/en_forums.md §B)
+
+## 关联知识点
+
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s05-threshold-semantics|S05 阈值语义：严格 vs 非严格、计数 vs 比例、最小量门槛]]
+- [[s11-idempotency-dedup|S11 幂等 / 去重]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]

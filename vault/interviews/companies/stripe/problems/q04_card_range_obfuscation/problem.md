@@ -174,3 +174,13 @@ S13 interval / inclusive-endpoint logic · S19 incremental design · S20 self-te
 ## Clarifications (from adversarial review, 2026-08-26)
 - Part 4 merges only *consecutive* same-brand intervals in start order; `VISA / AMEX (nested) / VISA` stays split.
 - Part 1: when two intervals share the smallest start, the one with the smaller end is the "first" interval that gets extended down.
+
+## 关联知识点
+
+- [[s01-read-full-spec-first|S01 先读完整份规格，为 Part N+1 而设计]]
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s09-byte-exact-output-format|S09 字节级精确的输出格式]]
+- [[s13-closed-intervals-offbyone|S13 闭区间、补齐空隙、off-by-one 纪律]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]
+- [[s20-self-test-discipline|S20 自测纪律]]

@@ -115,3 +115,10 @@ skills: A09 interval merge/covered · S08 deterministic sort with tie-breaks · 
 - https://github.com/TWINSRIRAM/Stripe_OA_Prep (`merge_intervals`)
 - tryexponent Stripe guide ("interval overlaps"); codinginterview.com (merge intervals) — list mentions
 - catalog/raw/github_repos.md §30 ; catalog/raw/en_forums.md §4 (q04 rules)
+
+## 关联知识点
+
+- [[a09-interval-merge-coverage|A09 区间合并 / 被覆盖区间]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s13-closed-intervals-offbyone|S13 闭区间、补齐空隙、off-by-one 纪律]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]

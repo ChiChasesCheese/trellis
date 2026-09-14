@@ -162,3 +162,14 @@ S08 deterministic order · S09 exact formatting · S11 idempotent application ·
 - 1point3acres interview/post/7379560 (Invoice / Payment Reconciliation — `payment="paymentABC,500,Paying off: invoiceC"`, invoices `["invoiceA,2024-01-01,100",…]`, progressively relaxed matching rules, integration variant adds an API)
 - 1point3acres 题库 entry "Invoice / Payment Reconciliation" (High frequency, last asked 2026-08-13)
 - catalog/raw/cn_sources.md §3 row "Invoice / Payment Reconciliation" (confidence: medium)
+
+## 关联知识点
+
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s05-threshold-semantics|S05 阈值语义：严格 vs 非严格、计数 vs 比例、最小量门槛]]
+- [[s06-money-integer-cents|S06 金额用整数最小单位；显式舍入；两位小数格式]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s09-byte-exact-output-format|S09 字节级精确的输出格式]]
+- [[s11-idempotency-dedup|S11 幂等 / 去重]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]

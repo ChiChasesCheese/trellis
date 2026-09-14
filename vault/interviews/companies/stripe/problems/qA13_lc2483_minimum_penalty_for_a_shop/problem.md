@@ -126,3 +126,11 @@ skills: A01 prefix sums + argmin with tie-break · S05 threshold/tie semantics �
 - https://github.com/premjm-67/stripe-interview-questions (`MP.java`) ; https://github.com/Hazeera65/stripe-interview/tree/main/round1 ; https://github.com/TWINSRIRAM/Stripe_OA_Prep (part1-3)
 - catalog/raw/github_repos.md §1 and §30 (tag table, freq 100.0) ; catalog/raw/en_forums.md §8 / §A4
 - problems/q08_store_closing_penalty (the bespoke twin — its BEGIN/END aggregate part is not repeated here)
+
+## 关联知识点
+
+- [[a01-prefix-sum-argmin|A01 前缀和 + 带 tie-break 的 argmin]]
+- [[s05-threshold-semantics|S05 阈值语义：严格 vs 非严格、计数 vs 比例、最小量门槛]]
+- [[s13-closed-intervals-offbyone|S13 闭区间、补齐空隙、off-by-one 纪律]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]
+- [[s22-timeboxing|S22 时间盒]]

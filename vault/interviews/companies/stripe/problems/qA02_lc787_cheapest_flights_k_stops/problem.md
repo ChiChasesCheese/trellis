@@ -120,3 +120,11 @@ skills: A03 bounded-hop shortest path · S03 modelling · S08 deterministic tie-
 - https://programhelp.net/en/vo/stripe-vo-interview-questions-and-solutions/ (2026-04-02 VO: "cheapest flight within k stops")
 - https://github.com/Hazeera65/stripe-interview/tree/main/round1 ; https://github.com/premjm-67/stripe-interview-questions (`CF.java`) ; https://github.com/TWINSRIRAM/Stripe_OA_Prep (`cheapest_flight`)
 - techprep.app/companies/stripe ; codinginterview.com (list mentions)
+
+## 关联知识点
+
+- [[a03-bounded-hops-shortest-path|A03 ≤K 跳的最短路]]
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]

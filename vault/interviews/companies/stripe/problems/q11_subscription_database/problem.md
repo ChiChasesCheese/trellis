@@ -111,3 +111,13 @@ cancellations · S12 duration arithmetic · S19 incremental design (one simulate
 - csoahelp.com 2024-11-27 「Stripe -Stack Position OA」 (3 parts, samples `["1,start,Michael","5,check,Michael"]`,
   `["1,start,Michael,9"]` → active at 10 / expired at 11, `["1,start,Michael,10","2,start,Michael,4"]` → active to 15)
 - https://extrabrain.app/interview-questions/stripe-hackerrank-online-assessment-extrabrain/ (renewal-extends-duration vocabulary, q07 family)
+
+## 关联知识点
+
+- [[s01-read-full-spec-first|S01 先读完整份规格，为 Part N+1 而设计]]
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s05-threshold-semantics|S05 阈值语义：严格 vs 非严格、计数 vs 比例、最小量门槛]]
+- [[s10-event-stream-reversal|S10 事件流 + 反向事件]]
+- [[s12-time-and-dates|S12 时间与日期]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]
