@@ -18,6 +18,7 @@
 | P4 | study 全部 + 题解 27 篇 | ✅ | 检查点 9、14 |
 | P5 | TEST_SUMMARY · 00-README 重写 · coverage 工具 | ✅ | 本次提交 |
 | **P6** | 单来源题补齐：LC 原题组（56 · 1851 · 2002 · 261 · 1639 · 1962 · 253 · 2050 · 212 · 1600）+ 括号 · 服务启动 · 字符频次 · Top Two Users | ⏳ | `coverage.py` 合计 ≥ 90%；`verify_suites` 全绿 |
+| **P6.5** | GitHub 优先蒸馏 → `catalog/raw/github_repos.md`；LC 通用题单；**P6.7 补建 26 个缺口 id**：pc16–pc29 · od11–od15 · q20–q25 · sd23（题面要点见 github_repos §3） | ⏳ | 每批 `verify_suites` 全绿；`coverage.py` 分母加入 TrueInterview 清单后重算 |
 | P7 | `/agent-skills:review` 评审（自包含 / 覆盖 / 教科书体例）→ 修正 → PR → merge main → `git pull` → `trellis` 同步 Obsidian 与 Anki | ⬜ | trellis validate 0 错；pytest 绿 |
 
 ## 已知的有意缺口
@@ -27,5 +28,13 @@
 - 子代理在 2026-09-13 撞过一次 sonnet 会话用量上限；中断点与抢救记录在 LEDGER。
 
 ## 下一步（接手就做这个）
+
+1. 收 P6 三个 sonnet（q12–q17 / pc07–pc15 / od07+sd13–16）→ 独立 `verify_suites` → LEDGER → commit。
+2. 自写 sd18–sd20。
+3. 派 P6.7 三批 sonnet 建 26 个缺口 id（按 `catalog/raw/github_repos.md` §3），同法验收。
+4. `coverage.py` 把 TrueInterview 清单并入分母，重算后再写评审结论。
+5. skill 已入库 `.claude/skills/building-company-interview-kits/`（未测试），跑基线 + 对照后修订。
+
+旧说明：
 
 跑 `python3 tools/coverage.py` 看"未建"列表，从出现次数最高、有题面的开始建；每建完一批跑 `python3 tools/verify_suites.py . "<glob>"`，记 LEDGER，commit + push。
