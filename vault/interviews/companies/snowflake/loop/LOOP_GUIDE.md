@@ -1,5 +1,7 @@
 # Snowflake 面试 Loop 指南（每一轮：形式 · 评什么 · 通过线 · 挂点 · 备考动作）
 
+> 每轮的**全部题目**（按 28 法则排序、★ = cut line）见 [`../CONTENTS.md`](../CONTENTS.md)；本文件讲每轮怎么考、怎么备，题号只举例。
+
 > 证据全部来自 `catalog/raw/`（每条可回溯）与 `../raw/`（AI 轮 dossier）；题目主键见 `catalog/CATALOG.md`；练习目录 `loop/rounds/`；演练器 `loop/mock.py`（OA 用根目录 `drill.py`）。
 > 面向读者：1.5 YOE 后端（PayPal Braintree Snowflake-native 结算平台 owner），目标 IC1 争 IC2。**结论先行，细节靠证据。**
 

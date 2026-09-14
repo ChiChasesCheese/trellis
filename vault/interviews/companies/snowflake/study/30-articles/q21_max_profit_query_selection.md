@@ -97,7 +97,3 @@ def max_profit_two_types(durations, revenues, k):
 
 - 同一类"局部最优单选 ≠ 全局最优"的教学点：`q19`（翻倍哪个元素）、`q20`（多重集合覆盖 vs 子序列匹配的正确性论证）。
 - 练习命令：`python3 drill.py start q21`
-
-## 索引行
-
-| [q21_max_profit_query_selection](q21_max_profit_query_selection.md) | `../../problems/q21_max_profit_query_selection/` | OA | "只挑收益率最高的选项"不是正确贪心——收益率高但用不满预算会浪费余量，往往不如换一种搭配把预算用满 |

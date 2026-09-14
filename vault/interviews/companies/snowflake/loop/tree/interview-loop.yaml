@@ -52,6 +52,15 @@ rounds:
       - id: greedy_bits
         name: 贪心正确性 + 位运算（翻倍全给一个元素）
         problems: [q19]
+      - id: lc_reuse_oa
+        name: LC 原题复用（区间、并查集、回文位掩码、词典 DP、堆）
+        problems: [q12, q13, q14, q15, q16, q17]
+      - id: oa_counting_scan
+        name: 计数与扫描（前缀计数凑排列、双向扫描最近距离、枚举预算）
+        problems: [q20, q21, q25]
+      - id: oa_windows_search
+        name: 多窗口限流、`?` 填充枚举 / 计数 DP、二分答案
+        problems: [q22, q23, q24]
 
   - id: 03_phone_coding
     name: 技术电面 coding（60 min：10 介绍 / 40 题 / 10 反问）
@@ -73,6 +82,39 @@ rounds:
       - id: lc_with_followup
         name: LC 原题 + 更难 follow-up（1751 变体、Happy Number O(1)）
         problems: [pc05, pc06]
+      - id: trie_backtracking
+        name: Trie + 回溯剪枝（Word Search II）
+        problems: [pc07]
+      - id: topo_dag_dp
+        name: 拓扑序 + DAG 最长路 / 启动顺序 / 环检测
+        problems: [pc09, pc13]
+      - id: string_parsing_stack
+        name: 字符串解析、栈与括号、分段反转
+        problems: [pc11, pc15, pc16]
+      - id: aggregation_ranking
+        name: 聚合排序 Top-K（金额精度、去重用户、流式）
+        problems: [pc12, pc26]
+      - id: intervals_heap
+        name: 区间 + 堆（会议室）
+        problems: [pc14]
+      - id: tree_array_encodings
+        name: 树的数组表示：parent 数组删点、子树和、带过滤前序
+        problems: [pc17, pc19, pc28]
+      - id: state_search
+        name: 状态搜索（数字变换路径、找零 DP、井字棋可达性）
+        problems: [pc18, pc23, pc29]
+      - id: board_game_check
+        name: 棋盘连子判定 + 小型 OOD（Connect Four）
+        problems: [pc20]
+      - id: mini_interpreters
+        name: 小语言解释器 / 布尔查询引擎（仿射合成、递归下降、倒排索引）
+        problems: [pc21, pc22]
+      - id: logs_and_dependencies
+        name: 日志与依赖图（二分最早错误、级联失败、grep 上下文）
+        problems: [pc24, pc25]
+      - id: sequence_matching
+        name: 连续子序列匹配（KMP / 滚动哈希 / O(1) 空间）
+        problems: [pc27]
 
   - id: 04_ood
     name: OOD / 类设计（电面或 onsite，默认并发追问）
@@ -106,6 +148,18 @@ rounds:
       - id: inheritance_encapsulation
         name: 继承、校验、封装、Decimal（OA 内嵌 OOP）
         problems: [od10]
+      - id: tree_ordering_class
+        name: 继承顺序类（多叉树前序、死亡标记、迭代遍历）
+        problems: [od07]
+      - id: stream_filter_concurrency
+        name: 双流黑名单过滤（引用计数、通配、读写锁）
+        problems: [od11]
+      - id: leaderboard_class
+        name: 累计销量榜（堆 + 惰性失效、rank 查询）
+        problems: [od12]
+      - id: serialization_codecs
+        name: 序列化：trie 编解码、持久化 KV 分块与原子性、JSON 解析
+        problems: [od13, od14, od15]
 
   - id: 05_system_design
     name: 系统设计（45–60 min，infra/data 题）
@@ -142,6 +196,15 @@ rounds:
       - id: crawler
         name: 并发爬虫（去重、分片、礼貌性）
         problems: [sd10]
+      - id: authz_identity
+        name: 鉴权与授权（ACL / deny 优先、第三方 token 不稳定）
+        problems: [sd13, sd16]
+      - id: metadata_multitenant
+        name: 元数据目录 / 多租户分析平台（快照、隔离、结果缓存）
+        problems: [sd14, sd15]
+      - id: geo_events_sdk
+        name: 地理搜索、事件订阅投递、REST SDK 抽象、日志库
+        problems: [sd17, sd18, sd19, sd23]
 
   - id: 06_project_deep_dive
     name: Expertise / 项目深挖（早期职业：coding 前 15–20 min + resume 轮）

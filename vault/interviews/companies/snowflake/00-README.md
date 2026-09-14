@@ -5,6 +5,8 @@
 
 这是一本**按轮次组织、可以从头读到尾的备考书**，也是一个**可以跑的题库**。和 `../stripe/` 同一套方法与骨架。
 
+**全书目录 → [`CONTENTS.md`](CONTENTS.md)**：9 轮 → 技能 → 每道题（题集 + 题解 + 来源数 + 最近报告），轮内按 28 法则排序、★ 标出 cut line。
+
 ## 一图看懂
 
 ```
@@ -25,8 +27,8 @@
 |---|---|---|---|
 | **Chakra AI 筛**（当前） | `03-chakra-playbook.md` · `CARD.md` · `../../core/playbooks/ai-voice-screen.md` | `07-mock.md` · `05-applied-scenarios.md` | `python3 loop/mock.py bq recruiter -n 5` |
 | Recruiter call | `study/10-rounds/01-recruiter.md` · `fit.md` · `06-questions-to-ask.md` | recruiter 题库 | `python3 loop/mock.py bq recruiter -n 5 -m 2` |
-| OA（若有） | `study/10-rounds/02-oa.md` · `study/00-essentials/02-dp-patterns.md` | `problems/q01–q10, q19` | `python3 drill.py start q02 -m 40` |
-| 技术电面 | `study/10-rounds/03-phone-coding.md` · `04-ood.md` · `05-system-design.md` | `pc01–pc06, pc10` · `od01–od10` · `sd01–sd12, sd22` | `python3 loop/mock.py start pc01 -m 40` |
+| OA（若有） | `study/10-rounds/02-oa.md` · `study/00-essentials/02-dp-patterns.md` | `CONTENTS.md` §02_oa（★ 优先） | `python3 drill.py start q02 -m 40` |
+| 技术电面 | `study/10-rounds/03-phone-coding.md` · `04-ood.md` · `05-system-design.md` | `CONTENTS.md` §03–§05（★ 优先） | `python3 loop/mock.py start pc01 -m 40` |
 | Onsite | `loop/LOOP_GUIDE.md` §5–§8 · `study/10-rounds/06-project-deep-dive.md` · `07-hm-behavioral.md` | expertise / HM 题库 | `python3 loop/mock.py bq hm -n 5 -m 3` |
 | Team matching | `study/10-rounds/08-team-matching.md` | team 题库 | `python3 loop/mock.py bq team -n 3` |
 
@@ -36,17 +38,18 @@
 
 | 路径 | 是什么 | 规模 |
 |---|---|---|
-| `catalog/CATALOG.md` | 全部题目总表（Table A 编码 · B OOD · C 系统设计 · D 非编码轮 · E 仅题名）；每行 #refs / 置信度 / 最近日期 / 来源 | 66 行 |
-| `catalog/RANK.md` → `PARETO.md` | 28 法则打分输入与输出；**cut line = 第 35 行（累计 80%）** | — |
-| `catalog/raw/` · `catalog/discovery/` | 原始证据（每条 URL + 日期）· Reddit / HN / 1p3a 镜像收割与 46 行 triage | 8 + 收割 |
+| `catalog/CATALOG.md` | 全部题目总表（Table A 编码 · B OOD · C 系统设计 · D 非编码轮 · E 仅题名 · F GitHub 蒸馏补充）；每行 #refs / 置信度 / 最近日期 / 来源 | 90 行 |
+| `catalog/RANK.md` → `PARETO.md` | 28 法则打分输入与输出；**cut line = 第 49 行（累计 80%）** | 90 行 |
+| `catalog/raw/` · `catalog/discovery/` | 原始证据（每条 URL + 日期，含 `github_repos.md` GitHub 优先蒸馏）· Reddit / HN / 1p3a 镜像收割与 46 行 triage | 9 + 收割 |
 | `loop/LOOP_GUIDE.md` | 每一轮：形式 · 评什么 · 通过线 · 挂点 · 备考动作 | 9 轮 |
-| `problems/` | OA 题（`drill.py`） | 11 题 |
-| `loop/rounds/03_phone_coding/` · `04_ood/` | 电面 coding · 类设计（`mock.py`） | 7 + 9 题 |
-| `loop/rounds/05_system_design/` | prompt · rubric 五维 · model_answer · followups | 13 题 |
+| `problems/` | OA 题（`drill.py`） | 23 题 |
+| `loop/rounds/03_phone_coding/` · `04_ood/` | 电面 coding · 类设计（`mock.py`） | 28 + 15 题 |
+| `loop/rounds/05_system_design/` | prompt · rubric 五维 · model_answer · followups | 21 题 |
 | `loop/rounds/01_recruiter/` `06_project_deep_dive/` `07_hm_behavioral/` `08_team_matching/` | bank.json · questions · rubric（· stories） | 18 · 16 · 30 · 10 题 |
-| `study/00-prereq/` · `00-essentials/` · `10-rounds/` · `20-cards/` · `30-articles/` | 前置课 · 通用精华 · 每轮练法 · 速记卡 · 每题题解 | 4 · 5 · 9 · 3 · 27 |
-| `skills_matrix.md` · `loop/tree/interview-loop.yaml` | 技能 ↔ 题 ↔ JD；知识树（`check_tree.py --strict` 0/0） | 38 skill · 44 题 |
-| `reports/TEST_SUMMARY.md` | 27 个编码题集、557 个测试全绿；空 starter 全红 | — |
+| `study/00-prereq/` · `00-essentials/` · `10-rounds/` · `20-cards/` · `30-articles/` | 前置课 · 通用精华 · 每轮练法 · 速记卡 · 每题题解（LeetCode 原题指向 LC） | 4 · 5 · 9 · 3 · 55 |
+| `skills_matrix.md` · `loop/tree/interview-loop.yaml` | 技能 ↔ 题 ↔ JD；知识树（`check_tree.py --strict` 0/0）；`CONTENTS.md` 由它生成 | 59 skill · 91 题 |
+| `reports/COVERAGE.md` | 已建题对公开流出题的覆盖（`tools/coverage.py`；全集含 GitHub 蒸馏）| 175/178 = 98% |
+| `reports/TEST_SUMMARY.md` | 66 个编码题集、1421 个测试全绿；空 starter 全红 | — |
 | `01-company-brief.md` · `02-process.md` · `fit.md` · `raw/` | 公司尽调 · 流程 · Why Snowflake · AI 轮原始调研 | — |
 | `CHECKPOINT.md` · `LEDGER.md` · `tasks/plan.md` | 构建进度与账本（换会话从这里接手） | — |
 
@@ -58,4 +61,4 @@
 
 ## 面完回写
 
-实际被问的题 + 追问 → `02-process.md` 末尾「亲历」；新题进 `catalog/raw/` 并重跑 `tools/pareto.py`；被追到答不上的 → `core/stories/evidence-base.md`；通用教训 → `core/playbooks/`。
+实际被问的题 + 追问 → `02-process.md` 末尾「亲历」；新题进 `catalog/raw/` 与 `RANK.md`，挂进 `loop/tree/`，重跑 `tools/pareto.py` · `tools/coverage.py` · `tools/contents.py`；被追到答不上的 → `core/stories/evidence-base.md`；通用教训 → `core/playbooks/`。

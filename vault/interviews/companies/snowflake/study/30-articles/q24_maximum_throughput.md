@@ -102,7 +102,3 @@ def max_min_throughput_with_plan(throughput, scaling_cost, budget):
 
 - "最大化最小值/最小化最大值"系列的标准套路，同族题：LC 1552 Magnetic Force；一维两遍扫描/多源 BFS 系列（`q25`）虽然是不同问题，但同样属于"先想清楚单调性再选算法"的方法论。
 - 练习命令：`python3 drill.py start q24`
-
-## 索引行
-
-| [q24_maximum_throughput](q24_maximum_throughput.md) | `../../problems/q24_maximum_throughput/` | OA | "最大化最小值/最小化最大值"系列问题，只要能写出关于候选答案单调的可行性判断，就应该二分答案而不是直接构造 |

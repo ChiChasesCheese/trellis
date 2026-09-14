@@ -109,7 +109,3 @@ def top_k_chars(data, k):
 
 - 同一类"计数哈希 + 确定性排序 tie-break"：`pc12`（分组求和排名）、`pc03`（滑窗事件流的计数）。
 - 练习命令：`python3 loop/mock.py start pc11`
-
-## 索引行
-
-| [pc11_character_frequencies](pc11_character_frequencies.md) | `../../loop/rounds/03_phone_coding/pc11_character_frequencies/` | 电面 coding | 任意深度嵌套结构（来自不受信任的输入）绝不能用递归展开——用一个显式栈 + `iter()` 存"当前遍历到哪一层的哪个位置"，栈深度不受 Python 调用栈限制 |

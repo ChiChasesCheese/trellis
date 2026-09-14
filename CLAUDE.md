@@ -24,6 +24,14 @@ Rules that are not derivable from the code:
   `pyproject.toml`; run a kit's suite from inside its folder (`cd vault/interviews/companies/stripe && python3 -m pytest problems -q`).
 - `core/resume/resume.tex` is the only resume source. Company folders link to `core/`, never copy it.
 
+## Project skills (`.claude/skills/`)
+
+| Skill | Reach for it when |
+|---|---|
+| `building-study-domains` | learning a subject systematically as a trellis domain (Kafka, Snowflake internals): field survey → skeleton → corpus → cards → drills → Anki loop |
+| `distilling-work-into-domains` | connecting real work or an employer codebase to domain leaves as cases and stories; private tier stays on the work machine |
+| `building-company-interview-kits` | preparing a company's interview loop in `vault/interviews/companies/<co>/` |
+
 ## Interview kit methodology (the Stripe way — reuse for every company)
 
 Full procedure, lessons and red flags: `.claude/skills/building-company-interview-kits/SKILL.md`.

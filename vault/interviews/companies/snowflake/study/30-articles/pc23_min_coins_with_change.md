@@ -109,7 +109,3 @@ def min_total_coins_custom(n, denominations):
 - 与 `pc18`（Number Transformation Path）同样需要"论证一个有限的搜索上界"，但 pc18 靠奇偶性
   给出严格证明，pc23 只能靠经验验证 + 测试兜底，诚实说明证明的边界是这题的重点。
 - 练习命令：`python3 loop/mock.py start pc23`
-
-## 索引行
-
-| [pc23_min_coins_with_change](pc23_min_coins_with_change.md) | `../../loop/rounds/03_phone_coding/pc23_min_coins_with_change/` | 电面 coding | 面额集合不保证 canonical 时贪心可能不是最优解，一律换成 DP；证不出严格上界就用经验验证 + 更宽窗口的回归测试兜底，诚实说明证明的边界 |

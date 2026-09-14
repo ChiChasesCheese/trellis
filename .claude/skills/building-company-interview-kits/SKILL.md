@@ -41,6 +41,7 @@ Paths: the LeetCode tool runs from the repo root; every `tools/` and `loop/` com
 | Acceptance gate | `uv run --project <repo> --with pytest python tools/verify_suites.py . "<glob>"` (kit) |
 | Coverage | `python3 tools/coverage.py` (kit) |
 | Test summary | `python3 tools/summary.py --run` (kit) |
+| Book contents (rounds → skills → problems, ranked) | `python3 tools/contents.py` after every tree or RANK change (kit) |
 
 A LeetCode problem that the company changed (new constraints, extra Parts, a design twist) is not an original: it gets a kit.
 

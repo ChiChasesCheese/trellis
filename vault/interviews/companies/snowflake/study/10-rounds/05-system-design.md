@@ -1,5 +1,7 @@
 # 05 · 系统设计（45–60 min，infra / data 题）
 
+> 本轮全部题目（含 GitHub 蒸馏补充的新题，按 28 法则排序）：[`../../CONTENTS.md`](../../CONTENTS.md) §05_system_design。本文件里点名的题是示例，不是全集。
+
 > 事实层在 `../../loop/LOOP_GUIDE.md` §6；题目证据 `../../catalog/raw/system_design.md`；口述卡 `../20-cards/sd_checklist.md`。本章：**怎么练**。
 
 ## 这轮到底考什么（一句话）

@@ -117,7 +117,3 @@ def top_k_hashtags_windowed(events, k, window_seconds):
 - 与 `pc22`（Document Predicate Search）同样维护一个随增量更新的哈希结构，但 pc22 考集合代数
   与解析器，pc26 考去重计数与排序。
 - 练习命令：`python3 loop/mock.py start pc26`
-
-## 索引行
-
-| [pc26_top_k_hashtags](pc26_top_k_hashtags.md) | `../../loop/rounds/03_phone_coding/pc26_top_k_hashtags/` | 电面 coding | 去重计数必须维护成员关系（集合），不能只用计数器增量维护；滑动窗口的边界要用闭区间处理"窗口为 0"这类退化情况 |

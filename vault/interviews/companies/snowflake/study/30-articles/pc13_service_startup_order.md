@@ -113,7 +113,3 @@ def startup_times(services, deps, duration):
 
 - Part 3 的关键路径递推与 `pc09` Parallel Courses III 同构（把"课程"换成"服务"）。
 - 练习命令：`python3 loop/mock.py start pc13`
-
-## 索引行
-
-| [pc13_service_startup_order](pc13_service_startup_order.md) | `../../loop/rounds/03_phone_coding/pc13_service_startup_order/` | 电面 coding | 拓扑排序卡住时，"还没启动的服务"里有些只是在等一个环、自己并不在环上——报错要指名道姓找出真正互相依赖的那一圈，而不是把所有卡住的都算成"有问题" |

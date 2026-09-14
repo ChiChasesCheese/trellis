@@ -109,7 +109,3 @@ def nearest_two_distances_grid(grid):
 
 - 与 LC 542 "01 Matrix"、`pc02`（多源 BFS 到最近设施）是同一族技巧在不同问题上的应用。
 - 练习命令：`python3 drill.py start q25`
-
-## 索引行
-
-| [q25_distance_to_nearest_two](q25_distance_to_nearest_two.md) | `../../problems/q25_distance_to_nearest_two/` | OA | "每个点到最近的一批源点的距离"永远可以用多源 BFS 解决；维度低（比如一维）时可以把 BFS 特化成更省常数的两遍扫描，但本质是同一个算法 |

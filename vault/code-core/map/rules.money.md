@@ -20,11 +20,15 @@ Cents as `int`, `Decimal` with an explicit context, zero-decimal currencies, and
 - [[settlement-minimum-transfers|Drill: settling a group of debts in the fewest transfers]]
 - [[tiered-billing-exact-output|Drill: tiered billing with an exact-output contract]]
 
-## Cards (6)
+## Cards (10)
 - [[cc-rules-money-decimal-from-string]]
 - [[cc-rules-money-float-symptom]]
+- [[cc-rules-money-int-float-coercion]]
 - [[cc-rules-money-integer-minor-units]]
+- [[cc-rules-money-json-int-precision]]
+- [[cc-rules-money-max-digits-overflow]]
 - [[cc-rules-money-negative-formatting]]
+- [[cc-rules-money-same-currency-different-minor-unit]]
 - [[cc-rules-money-unit-in-the-name]]
 - [[cc-rules-money-zero-decimal-currencies]]
 %% trellis:end %%

@@ -100,7 +100,3 @@ def count_schedules_mod(pattern, work_hours, day_hours, MOD=1_000_000_007):
 
 - 前缀和加速滑动窗口和的技巧同样适用于任何"转移是对前一状态某个定长区间求和"的 DP（求最值则要换单调队列）。
 - 练习命令：`python3 drill.py start q23`
-
-## 索引行
-
-| [q23_work_schedule](q23_work_schedule.md) | `../../problems/q23_work_schedule/` | OA | "按数值/位置升序生成"本身就是排序，不需要事后再 `sorted()`——只要生成顺序和目标顺序对应，就不要多此一举 |

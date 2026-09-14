@@ -106,7 +106,3 @@ def dropped_requests_count_accepted_only(request_times):
 
 - 同一类"滑动窗口 + 计数"套路：`pc03` Recent Event Stream（deque 管窗口、Counter 管查询）。
 - 练习命令：`python3 drill.py start q22`
-
-## 索引行
-
-| [q22_dropped_requests](q22_dropped_requests.md) | `../../problems/q22_dropped_requests/` | OA | 滑动窗口限流题里，"窗口计数是否包含被自己拒绝的请求"是一个题面经常不说、但答案会分叉的隐藏假设——写代码前先问出来 |

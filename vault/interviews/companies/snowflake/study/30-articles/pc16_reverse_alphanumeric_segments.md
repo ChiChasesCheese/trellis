@@ -95,7 +95,3 @@ def reverse_alnum_segments_inplace(chars):
 
 - "新建容器压到原地 O(1)"是通用追问方向，同一压缩方向的另一例：`pc06` Part 2（判环从 O(n) 空间压到 O(1)）。
 - 练习命令：`python3 loop/mock.py start pc16`
-
-## 索引行
-
-| [pc16_reverse_alphanumeric_segments](pc16_reverse_alphanumeric_segments.md) | `../../loop/rounds/03_phone_coding/pc16_reverse_alphanumeric_segments/` | 电面 coding | Python 的 `str` 不可变，"原地 O(1) 空间"这个追问永远意味着 API 要从 `str -> str` 换成 `list[str] -> None`——空间复杂度的降低往往先要求接口签名跟着变 |

@@ -121,7 +121,3 @@ class ConnectFour:
 - 与 `pc02`（Closest Facility Grid）同样是网格上的方向扫描，但 pc02 考的是并列 tie-break，
   pc20 考的是判定 → 动作 → 状态机的分层。
 - 练习命令：`python3 loop/mock.py start pc20`
-
-## 索引行
-
-| [pc20_connect_four](pc20_connect_four.md) | `../../loop/rounds/03_phone_coding/pc20_connect_four/` | 电面 coding | 小型 OOD 设计把"判定"、"执行动作"、"整局状态机"拆成三层递进，每一层只服务自己的职责，非法操作必须在状态改变前被拒绝 |

@@ -127,7 +127,3 @@ def longest_failure_chain(edges):
 - 与 `q08`（Course Schedule II）同属拓扑排序考法，但 q08 只要一个合法顺序，pc24 还要在拓扑序上
   做最长路径 DP。
 - 练习命令：`python3 loop/mock.py start pc24`
-
-## 索引行
-
-| [pc24_service_failure_forensics](pc24_service_failure_forensics.md) | `../../loop/rounds/03_phone_coding/pc24_service_failure_forensics/` | 电面 coding | 在有环图上，"最长路径"这种概念本身没有良定义，显式判环并报错，比强行给出一个误导性的数字更诚实 |
