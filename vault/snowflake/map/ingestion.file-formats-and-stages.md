@@ -1,12 +1,22 @@
 %% trellis:begin %%
-# File Formats & Stages
-*Data Loading & Ingestion*
+# 文件格式与暂存区（stage）
+*数据加载与摄取*
 
-Internal vs external stages, named file formats, and how COPY INTO uses both to parse incoming files.
+内部暂存区与外部暂存区的区别、具名文件格式，以及 COPY INTO 如何同时利用二者来解析导入的文件。
 
-**Requires:** [[ingestion.bulk-copy-into|Bulk Loading (COPY INTO)]]
+**Requires:** [[ingestion.bulk-copy-into|批量加载（COPY INTO）]]
 
-**Unlocks:** [[ingestion.snowpipe-auto-ingest|Snowpipe Auto-ingest]]
+**Unlocks:** [[ingestion.snowpipe-auto-ingest|Snowpipe 自动摄取]]
+
+## Readings
+- [[snowflak-data-loading-overview|数据加载总览:内部/外部 stage 与批量 COPY INTO]]
+
+## Cards (5)
+- [[stages-archival-storage-unreadable]]
+- [[stages-external-named-stage-contents]]
+- [[stages-put-vs-cloud-upload]]
+- [[stages-table-stage-no-grants]]
+- [[stages-three-internal-types]]
 %% trellis:end %%
 
 ## Notes

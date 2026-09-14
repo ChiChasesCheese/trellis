@@ -1,10 +1,17 @@
 %% trellis:begin %%
-# Attributing Cost to Query Patterns
-*Cost, Metering & Observability*
+# 将成本归因到查询模式
+*成本、计量与可观测性*
 
-Joining ACCESS_HISTORY/QUERY_HISTORY to find which tables, warehouses, or users drive spend, as the diagnostic step before optimizing anything.
+连接 ACCESS_HISTORY 与 QUERY_HISTORY，找出究竟是哪些表、仓库或用户在驱动支出——这是在优化任何东西之前的诊断步骤。
 
-**Requires:** [[cost.query-history-and-account-usage|QUERY_HISTORY & ACCOUNT_USAGE]]
+**Requires:** [[cost.query-history-and-account-usage|QUERY_HISTORY 与 ACCOUNT_USAGE]]
+
+## Cards (5)
+- [[attrib-account-usage-latency-limit]]
+- [[attrib-diagnose-before-optimize]]
+- [[attrib-join-access-history-tables]]
+- [[attrib-tags-for-chargeback]]
+- [[attrib-warehouse-to-query]]
 %% trellis:end %%
 
 ## Notes

@@ -1,15 +1,15 @@
 %% trellis:begin %%
-# Core Architecture
+# 核心架构
 
-The three-layer, multi-cluster shared-data model everything else in the platform is a consequence of.
+三层、多集群共享数据（shared-data）模型——平台上其他一切都是这个模型的结果。
 
 ## Topics
-- [[architecture.three-layer-model|Three-Layer Architecture]]
-- [[architecture.storage-compute-separation|Storage/Compute Separation]]
-- [[architecture.multi-cluster-shared-data|Multi-cluster, Shared-Data Model]]
-- [[architecture.cloud-services-layer|Cloud Services (GS) Layer]]
-- [[architecture.cloud-agnostic-multi-region|Cross-Cloud & Multi-Region Deployment]]
-- [[architecture.elasticity-multitenancy|Elasticity & Multi-tenancy]]
+- [[architecture.three-layer-model|三层架构]]
+- [[architecture.storage-compute-separation|存储与计算分离（storage/compute separation）]]
+- [[architecture.multi-cluster-shared-data|多集群共享数据模型]]
+- [[architecture.cloud-services-layer|云服务（Cloud Services，GS）层]]
+- [[architecture.cloud-agnostic-multi-region|跨云与多区域部署]]
+- [[architecture.elasticity-multitenancy|弹性与多租户]]
 %% trellis:end %%
 
 ## Notes

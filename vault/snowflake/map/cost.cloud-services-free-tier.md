@@ -1,10 +1,20 @@
 %% trellis:begin %%
-# Cloud Services Free Tier
-*Cost, Metering & Observability*
+# 云服务免费额度
+*成本、计量与可观测性*
 
-The daily allowance (10% of warehouse compute) of free Cloud Services usage before it starts appearing as its own billable line.
+云服务（Cloud Services）每日的免费用量额度（相当于仓库计算量的 10%），超出后才会作为单独的计费项出现。
 
-**Requires:** [[cost.credit-model-per-second-billing|Credit Model & Per-second Billing]]
+**Requires:** [[cost.credit-model-per-second-billing|信用点模型与按秒计费]]
+
+## Readings
+- [[snowflak-compute-cost-detail|计算成本细则:60 秒起收、serverless 计费与云服务 10% 免费额度]]
+
+## Cards (5)
+- [[cs-10pct-daily-adjustment]]
+- [[cs-adjustment-capped-by-usage]]
+- [[cs-low-warehouse-high-services]]
+- [[cs-resource-monitor-counts-unbilled]]
+- [[cs-serverless-not-in-base]]
 %% trellis:end %%
 
 ## Notes

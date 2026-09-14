@@ -1,12 +1,23 @@
 %% trellis:begin %%
-# Task Scheduling & DAGs
-*Streams, Tasks & Dynamic Tables*
+# 任务调度与 DAG
+*流（Stream）、任务（Task）与动态表（Dynamic Table）*
 
-CRON- or interval-scheduled Tasks composed into a dependency graph (task graph) of up to 100 tasks.
+由 CRON 表达式或固定间隔调度的 Task，可组合成最多包含 100 个任务的依赖图（task graph）。
 
-**Requires:** [[pipelines.stream-offset-bookmark|Streams as Offset Bookmarks]]
+**Requires:** [[pipelines.stream-offset-bookmark|作为偏移量书签的流（Stream）]]
 
-**Unlocks:** [[pipelines.task-conditional-execution|Conditional Task Execution]], [[pipelines.task-serverless-vs-warehouse|Serverless vs Warehouse-backed Tasks]], [[pipelines.task-failure-handling|Task Failure Handling]], [[pipelines.dynamictable-target-lag|Dynamic Tables & TARGET_LAG]]
+**Unlocks:** [[pipelines.task-conditional-execution|条件式任务执行]], [[pipelines.task-serverless-vs-warehouse|无服务器任务与仓库支持型任务]], [[pipelines.task-failure-handling|任务失败处理]], [[pipelines.dynamictable-target-lag|动态表（Dynamic Table）与 TARGET_LAG]]
+
+## Readings
+- [[snowflak-tasks|任务(Task):调度、算力模型与失败处理]]
+
+## Cards (6)
+- [[task-created-suspended]]
+- [[task-graph-root-and-children]]
+- [[task-overlap-skip-scheduled-run]]
+- [[task-runs-as-system-service]]
+- [[task-schedule-interval-vs-cron]]
+- [[task-version-pinned-at-run-start]]
 %% trellis:end %%
 
 ## Notes

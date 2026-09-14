@@ -1,13 +1,13 @@
 %% trellis:begin %%
-# Semi-structured Data
+# 半结构化数据
 
-Treating JSON/Avro/Parquet as first-class columnar data instead of an opaque blob.
+将 JSON/Avro/Parquet 当作一等公民的列式数据来处理，而不是一个不透明的二进制大对象（blob）。
 
 ## Topics
-- [[semistructured.variant-type-storage|VARIANT Type & Storage]]
-- [[semistructured.schema-on-read-parsing|Schema-on-read Parsing]]
-- [[semistructured.flatten-lateral-joins|FLATTEN & Lateral Joins]]
-- [[semistructured.schema-evolution-tables|Schema Evolution on Semi-structured Sources]]
+- [[semistructured.variant-type-storage|VARIANT 类型与存储]]
+- [[semistructured.schema-on-read-parsing|读时模式解析（schema-on-read）]]
+- [[semistructured.flatten-lateral-joins|FLATTEN 与 LATERAL 连接]]
+- [[semistructured.schema-evolution-tables|半结构化数据源上的模式演进]]
 %% trellis:end %%
 
 ## Notes

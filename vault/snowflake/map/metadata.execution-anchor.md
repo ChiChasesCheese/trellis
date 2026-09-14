@@ -1,10 +1,16 @@
 %% trellis:begin %%
-# Execution Anchor
-*Metadata & Cloud Services*
+# 执行锚点（Execution Anchor）
+*元数据与云服务*
 
-How a query is bound to exactly one Cloud Services instance for its lifetime, and the voluntary vs involuntary transfer paths when that instance is busy or crashes.
+一个查询在其整个生命周期内如何被绑定到唯一一个云服务（Cloud Services）实例，以及当该实例繁忙或崩溃时，主动转移与被动转移这两条路径。
 
-**Requires:** [[metadata.foundationdb-role|FoundationDB as the Metadata Store]]
+**Requires:** [[metadata.foundationdb-role|FoundationDB 作为元数据存储]]
+
+## Cards (4)
+- [[anchor-enables-rolling-upgrade]]
+- [[anchor-state-in-shared-metadata]]
+- [[anchor-voluntary-vs-involuntary-transfer]]
+- [[anchor-why-single-owner]]
 %% trellis:end %%
 
 ## Notes

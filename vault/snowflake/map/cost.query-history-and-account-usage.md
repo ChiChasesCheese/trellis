@@ -1,12 +1,22 @@
 %% trellis:begin %%
-# QUERY_HISTORY & ACCOUNT_USAGE
-*Cost, Metering & Observability*
+# QUERY_HISTORY 与 ACCOUNT_USAGE
+*成本、计量与可观测性*
 
-Where to look — INFORMATION_SCHEMA vs ACCOUNT_USAGE vs Snowsight — for a query's cost and performance, and the latency/retention trade-off between them.
+该去哪里查看一条查询的成本与性能——INFORMATION_SCHEMA、ACCOUNT_USAGE 还是 Snowsight——以及三者之间在延迟与保留期上的权衡。
 
-**Requires:** [[metadata.foundationdb-role|FoundationDB as the Metadata Store]]
+**Requires:** [[metadata.foundationdb-role|FoundationDB 作为元数据存储]]
 
-**Unlocks:** [[cost.access-history-lineage-for-cost|Attributing Cost to Query Patterns]]
+**Unlocks:** [[cost.access-history-lineage-for-cost|将成本归因到查询模式]]
+
+## Readings
+- [[snowflak-query-profile-history|查询画像(Query Profile)与查询历史的定位方法]]
+
+## Cards (5)
+- [[qh-details-unavailable]]
+- [[qh-grouped-parameterized-hash]]
+- [[qh-query-tag-attribution]]
+- [[qh-three-sources-tradeoff]]
+- [[qh-visibility-privileges]]
 %% trellis:end %%
 
 ## Notes

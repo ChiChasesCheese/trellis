@@ -1,8 +1,18 @@
 %% trellis:begin %%
-# Cross-Cloud & Multi-Region Deployment
-*Core Architecture*
+# 跨云与多区域部署
+*核心架构*
 
-Running the same codebase and account model across AWS, Azure, and GCP, and what region/account boundaries mean for data movement.
+在 AWS、Azure、GCP 上运行同一套代码与账户模型，以及区域/账户边界对数据迁移意味着什么。
+
+## Readings
+- [[snowflak-key-concepts-architecture|Snowflake 关键概念与整体架构]]
+
+## Cards (5)
+- [[multi-region-iceberg-external-storage]]
+- [[multi-region-no-on-prem-deployment]]
+- [[multi-region-replication-for-dr]]
+- [[multi-region-sharing-without-copies]]
+- [[multi-region-snowgrid-purpose]]
 %% trellis:end %%
 
 ## Notes

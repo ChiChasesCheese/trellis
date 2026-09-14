@@ -1,10 +1,17 @@
 %% trellis:begin %%
-# Schema Evolution on Semi-structured Sources
-*Semi-structured Data*
+# 半结构化数据源上的模式演进
+*半结构化数据*
 
-Letting a table's columns grow as new fields appear in ingested JSON/Parquet, and the compatibility rules that govern it.
+随着导入的 JSON/Parquet 中出现新字段而让表的列自动增长，以及约束这一过程的兼容性规则。
 
-**Requires:** [[semistructured.variant-type-storage|VARIANT Type & Storage]]
+**Requires:** [[semistructured.variant-type-storage|VARIANT 类型与存储]]
+
+## Cards (5)
+- [[schema-evolution-enable-and-match-by-name]]
+- [[schema-evolution-infer-schema-template]]
+- [[schema-evolution-streaming-ingest]]
+- [[schema-evolution-vs-variant-column]]
+- [[schema-evolution-what-changes-allowed]]
 %% trellis:end %%
 
 ## Notes

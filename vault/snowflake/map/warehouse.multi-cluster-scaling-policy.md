@@ -1,12 +1,23 @@
 %% trellis:begin %%
-# Multi-cluster Scaling Policy
-*Virtual Warehouses*
+# 多集群伸缩策略
+*虚拟仓库（virtual warehouse）*
 
-Standard vs economy scaling policies for adding/removing clusters under concurrent load, and the queueing behavior each produces.
+标准（standard）与经济（economy）两种伸缩策略在并发负载下如何增减集群，以及各自产生的排队行为。
 
-**Requires:** [[warehouse.sizing-t-shirt|Warehouse Sizing (T-shirt Sizes)]]
+**Requires:** [[warehouse.sizing-t-shirt|仓库规格（T 恤尺码式）]]
 
-**Unlocks:** [[warehouse.query-queuing|Query Queuing]], [[warehouse.scaling-up-vs-out|Scaling Up vs Scaling Out]]
+**Unlocks:** [[warehouse.query-queuing|查询排队]], [[warehouse.scaling-up-vs-out|纵向扩展与横向扩展]]
+
+## Readings
+- [[snowflak-multicluster-warehouses|多集群仓库与扩缩容策略]]
+
+## Cards (6)
+- [[mcw-concurrency-not-slow-queries]]
+- [[mcw-credit-math]]
+- [[mcw-max-cluster-limits-by-size]]
+- [[mcw-maximized-vs-autoscale]]
+- [[mcw-standard-vs-economy-shutdown]]
+- [[mcw-standard-vs-economy-start]]
 %% trellis:end %%
 
 ## Notes

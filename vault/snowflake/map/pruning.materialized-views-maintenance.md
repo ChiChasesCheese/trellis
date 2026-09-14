@@ -1,10 +1,20 @@
 %% trellis:begin %%
-# Materialized Views
-*Pruning & Query Optimization*
+# 物化视图（materialized view）
+*剪枝与查询优化*
 
-Precomputed, automatically-maintained result sets and the background refresh cost that offsets their read speedup.
+预先计算并自动维护的结果集，以及抵消其读取加速收益的后台刷新成本。
 
-**Requires:** [[pruning.partition-elimination|Partition Elimination]]
+**Requires:** [[pruning.partition-elimination|分区消除（partition elimination）]]
+
+## Readings
+- [[snowflak-materialized-views|物化视图(Materialized View)的预计算与维护成本]]
+
+## Cards (5)
+- [[mv-always-current-mechanism]]
+- [[mv-automatic-query-rewrite]]
+- [[mv-definition-limits]]
+- [[mv-vs-result-cache]]
+- [[mv-when-vs-regular-view]]
 %% trellis:end %%
 
 ## Notes

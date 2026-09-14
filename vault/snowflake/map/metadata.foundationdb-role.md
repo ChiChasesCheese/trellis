@@ -1,12 +1,19 @@
 %% trellis:begin %%
-# FoundationDB as the Metadata Store
-*Metadata & Cloud Services*
+# FoundationDB 作为元数据存储
+*元数据与云服务*
 
-Why all table/schema/transaction metadata lives in one strongly-consistent distributed KV store instead of a bespoke catalog service.
+为何所有表/模式（schema）/事务元数据都存放在一个强一致的分布式键值（KV）存储中，而不是一个定制的目录服务（catalog service）。
 
-**Requires:** [[architecture.cloud-services-layer|Cloud Services (GS) Layer]]
+**Requires:** [[architecture.cloud-services-layer|云服务（Cloud Services，GS）层]]
 
-**Unlocks:** [[metadata.execution-anchor|Execution Anchor]], [[metadata.ddl-metadata-versioning|DDL as Metadata Versioning]], [[metadata.metadata-scaling-consistency|Metadata Layer Scaling & Consistency]], [[cache.result-cache|Persisted Result Cache]], [[continuity.replication-and-failover|Database Replication & Failover]], [[security.rbac-role-hierarchy|RBAC Role Hierarchy]], [[sharing.secure-data-sharing-mechanics|Secure Data Sharing Mechanics]], [[openplatform.hybrid-tables-oltp|Hybrid Tables (Unistore)]], [[cost.query-history-and-account-usage|QUERY_HISTORY & ACCOUNT_USAGE]]
+**Unlocks:** [[metadata.execution-anchor|执行锚点（Execution Anchor）]], [[metadata.ddl-metadata-versioning|DDL 即元数据版本化]], [[metadata.metadata-scaling-consistency|元数据层的伸缩与一致性]], [[cache.result-cache|持久化结果缓存]], [[continuity.replication-and-failover|数据库复制与故障切换]], [[security.rbac-role-hierarchy|RBAC 角色层级]], [[sharing.secure-data-sharing-mechanics|安全数据共享（Secure Data Sharing）机制]], [[openplatform.hybrid-tables-oltp|混合表（Hybrid Table，Unistore）]], [[cost.query-history-and-account-usage|QUERY_HISTORY 与 ACCOUNT_USAGE]]
+
+## Cards (5)
+- [[fdb-commit-point]]
+- [[fdb-enables-stateless-services]]
+- [[fdb-transaction-limits]]
+- [[fdb-what-is-stored]]
+- [[fdb-why-kv-not-custom-catalog]]
 %% trellis:end %%
 
 ## Notes

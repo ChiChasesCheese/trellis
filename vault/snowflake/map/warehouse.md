@@ -1,16 +1,16 @@
 %% trellis:begin %%
-# Virtual Warehouses
+# 虚拟仓库（virtual warehouse）
 
-The compute layer — sizing, scaling, and billing for the clusters that actually run queries.
+计算层——真正运行查询的集群的规格选择、伸缩与计费方式。
 
 ## Topics
-- [[warehouse.sizing-t-shirt|Warehouse Sizing (T-shirt Sizes)]]
-- [[warehouse.multi-cluster-scaling-policy|Multi-cluster Scaling Policy]]
-- [[warehouse.auto-suspend-resume|Auto-suspend & Auto-resume]]
-- [[warehouse.isolation-workload-separation|Workload Isolation]]
-- [[warehouse.query-queuing|Query Queuing]]
-- [[warehouse.scaling-up-vs-out|Scaling Up vs Scaling Out]]
-- [[warehouse.resource-monitors|Resource Monitors]]
+- [[warehouse.sizing-t-shirt|仓库规格（T 恤尺码式）]]
+- [[warehouse.multi-cluster-scaling-policy|多集群伸缩策略]]
+- [[warehouse.auto-suspend-resume|自动挂起与自动恢复]]
+- [[warehouse.isolation-workload-separation|工作负载隔离]]
+- [[warehouse.query-queuing|查询排队]]
+- [[warehouse.scaling-up-vs-out|纵向扩展与横向扩展]]
+- [[warehouse.resource-monitors|资源监控器（resource monitor）]]
 %% trellis:end %%
 
 ## Notes

@@ -1,12 +1,22 @@
 %% trellis:begin %%
-# Hybrid Tables (Unistore)
-*Open Formats & Workload Expansion*
+# 混合表（Hybrid Table，Unistore）
+*开放格式与工作负载扩展*
 
-A row-store table type with enforced primary keys and row locks for millisecond point lookups, asynchronously mirrored into the columnar store for analytics.
+一种行存储表类型，具有强制主键与行锁，支持毫秒级点查，并异步镜像到列式存储中以支持分析查询。
 
-**Requires:** [[metadata.foundationdb-role|FoundationDB as the Metadata Store]], [[storage.table-types|Table Types]]
+**Requires:** [[metadata.foundationdb-role|FoundationDB 作为元数据存储]], [[storage.table-types|表类型]]
 
 **Unlocks:** [[openplatform.snowflake-postgres|Snowflake Postgres]]
+
+## Readings
+- [[snowflak-hybrid-tables|混合表(Hybrid Table):行存与点查/高并发写]]
+
+## Cards (5)
+- [[hybrid-constraints-enforced]]
+- [[hybrid-row-store-async-copy]]
+- [[hybrid-same-engine-atomic-txn]]
+- [[hybrid-storage-and-index-cost]]
+- [[hybrid-vs-standard-table-choice]]
 %% trellis:end %%
 
 ## Notes

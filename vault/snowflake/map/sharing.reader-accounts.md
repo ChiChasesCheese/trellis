@@ -1,10 +1,19 @@
 %% trellis:begin %%
-# Reader Accounts
-*Data Sharing & Collaboration*
+# 只读账户（reader account）
+*数据共享与协作*
 
-Letting an organization without its own Snowflake account consume a share through a provider-managed, billed-to-provider account.
+让没有自己 Snowflake 账户的组织，通过一个由提供方管理、费用计入提供方的账户来消费某个共享。
 
-**Requires:** [[sharing.secure-data-sharing-mechanics|Secure Data Sharing Mechanics]]
+**Requires:** [[sharing.secure-data-sharing-mechanics|安全数据共享（Secure Data Sharing）机制]]
+
+## Readings
+- [[snowflak-secure-data-sharing|安全数据共享(Secure Data Sharing)、Reader 账户与 Listing]]
+
+## Cards (4)
+- [[reader-compute-billed-to-provider]]
+- [[reader-no-dml]]
+- [[reader-owned-by-provider]]
+- [[reader-why-exists]]
 %% trellis:end %%
 
 ## Notes

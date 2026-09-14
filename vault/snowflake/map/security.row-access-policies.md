@@ -1,10 +1,21 @@
 %% trellis:begin %%
-# Row Access Policies
-*Security & Governance*
+# 行级访问策略（row access policy）
+*安全与治理*
 
-Attaching a row-filtering predicate to a table so different roles see different subsets of the same rows, evaluated at query time.
+给表附加一个行过滤谓词，使不同角色看到同一批行的不同子集，该谓词在查询时被求值。
 
-**Requires:** [[security.rbac-role-hierarchy|RBAC Role Hierarchy]]
+**Requires:** [[security.rbac-role-hierarchy|RBAC 角色层级]]
+
+## Readings
+- [[snowflak-row-access-policies|行访问策略(Row Access Policy):按角色过滤行]]
+
+## Cards (6)
+- [[rap-count-star-slow]]
+- [[rap-mv-mutual-exclusion]]
+- [[rap-not-write-protection]]
+- [[rap-performance-guidelines]]
+- [[rap-policy-owner-evaluation]]
+- [[rap-runtime-secure-view]]
 %% trellis:end %%
 
 ## Notes

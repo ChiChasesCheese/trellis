@@ -1,10 +1,20 @@
 %% trellis:begin %%
-# DDL as a Transaction
-*Transactions & Concurrency Control*
+# DDL 即事务
+*事务与并发控制*
 
-Why schema changes are atomic and instantaneous from a reader's perspective, layered on the same metadata versioning as DML.
+为何模式（schema）变更从读者的视角看是原子且瞬时的——它构建在与 DML 相同的元数据版本化机制之上。
 
-**Requires:** [[metadata.ddl-metadata-versioning|DDL as Metadata Versioning]]
+**Requires:** [[metadata.ddl-metadata-versioning|DDL 即元数据版本化]]
+
+## Readings
+- [[snowflak-transactions-isolation|事务、隐式提交与 READ COMMITTED 隔离级别]]
+
+## Cards (5)
+- [[ddl-change-tracking-brief-lock]]
+- [[ddl-concurrent-with-insert-inconsistency]]
+- [[ddl-ctas-counts-as-ddl]]
+- [[ddl-inside-nested-procedure-error]]
+- [[ddl-own-transaction-implicit-commit]]
 %% trellis:end %%
 
 ## Notes

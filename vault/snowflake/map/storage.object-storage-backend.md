@@ -1,12 +1,21 @@
 %% trellis:begin %%
-# Object Storage Backend
-*Storage Engine & Micro-partitions*
+# 对象存储后端
+*存储引擎与微分区（micro-partition）*
 
-Why every micro-partition is a blob in cloud object storage (S3/Blob/GCS) instead of local disk, and what that buys and costs.
+为何每个微分区都是云对象存储（S3/Blob/GCS）中的一个 blob 而不是本地磁盘文件，以及这样做的收益与代价。
 
-**Requires:** [[architecture.storage-compute-separation|Storage/Compute Separation]]
+**Requires:** [[architecture.storage-compute-separation|存储与计算分离（storage/compute separation）]]
 
-**Unlocks:** [[ingestion.external-tables-over-lake|External Tables over a Data Lake]], [[openplatform.iceberg-tables|Iceberg Tables]]
+**Unlocks:** [[ingestion.external-tables-over-lake|数据湖之上的外部表]], [[openplatform.iceberg-tables|Iceberg 表]]
+
+## Readings
+- [[snowflak-key-concepts-architecture|Snowflake 关键概念与整体架构]]
+
+## Cards (4)
+- [[object-storage-central-repo-plus-local-cache]]
+- [[object-storage-hybrid-table-contrast]]
+- [[object-storage-snowflake-managed-layout]]
+- [[object-storage-snowflake-vs-iceberg-ownership]]
 %% trellis:end %%
 
 ## Notes

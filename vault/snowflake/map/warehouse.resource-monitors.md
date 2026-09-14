@@ -1,12 +1,22 @@
 %% trellis:begin %%
-# Resource Monitors
-*Virtual Warehouses*
+# 资源监控器（resource monitor）
+*虚拟仓库（virtual warehouse）*
 
-Credit quotas attached to warehouses or accounts that can notify, suspend, or suspend-immediately at a threshold.
+附加在仓库或账户上的信用点配额，可在达到阈值时通知、挂起或立即挂起。
 
-**Requires:** [[warehouse.sizing-t-shirt|Warehouse Sizing (T-shirt Sizes)]]
+**Requires:** [[warehouse.sizing-t-shirt|仓库规格（T 恤尺码式）]]
 
-**Unlocks:** [[cost.resource-monitors-and-budgets|Resource Monitors as Budget Enforcement]]
+**Unlocks:** [[cost.resource-monitors-and-budgets|用资源监控器强制执行预算]]
+
+## Readings
+- [[snowflak-resource-monitors|资源监控器(Resource Monitor):信用点配额与自动挂起]]
+
+## Cards (5)
+- [[rm-account-vs-warehouse-monitor]]
+- [[rm-cloud-services-counted]]
+- [[rm-not-precise-use-buffers]]
+- [[rm-resume-conditions-and-limits]]
+- [[rm-suspend-vs-suspend-immediate]]
 %% trellis:end %%
 
 ## Notes
