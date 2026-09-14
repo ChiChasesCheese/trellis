@@ -32,3 +32,9 @@
 | 2026-09-13 | sd17 Geolocation Search（S2 cell + 环扩展停止条件、移动点实时层、热点细分） | opus（主会话） | `loop/rounds/05_system_design/sd17_*` | 4 文件齐 | 检查点 16 | 来源 LOW |
 | 2026-09-13 | **P6.5 GitHub 优先蒸馏**（Chi 指示：永远先查 GitHub 已整理好的）：仓库 11 词 + 代码 3 词扫描；LeetCode 公司标签通用工具 `core/leetcode/lc_company.py`（Snowflake 104 题 A39/B34/C31、Stripe 13 题）；TrueInterview 87 题映射 `catalog/raw/github_repos.md` | opus（主会话） | `core/leetcode/`、`catalog/raw/github_repos.md` | 映射分类由脚本核对：kit 34 · LC 19 · 通用 SD 3 · SQL/前端 4 · 缺口 27 行 + Sequential String | 检查点 16 | **旧覆盖率分母不含 GitHub 来源 → 79% 不代表市面**；Chi 追加：LC 原题只列链接 + 标签，按公司通用化 |
 | 2026-09-13 | CLAUDE.md 修订：第 0 步 GitHub 优先、子代理验收规则、Gotchas；skill 草稿 building-company-interview-kits 待基线测试后入库 | opus（主会话） | `CLAUDE.md` | — | 检查点 16 | |
+| 2026-09-13 | P6.A q12–q17 LC 原题复用 OA（Part 2 均为重建扩展） | sonnet | `problems/q1[2-7]_*` | 主会话独立 `verify_suites` 6/6 ALL ACCEPTED | 检查点 17 | 派出于 Chi「LC 原题只列链接」指示之前；已建好保留，之后 LC 原题只进 core/leetcode |
+| 2026-09-13 | P6.C od07 Throne Inheritance（迭代遍历、10 万深链）+ sd13 ACL · sd14 Metadata Catalog · sd15 多租户分析 · sd16 Flaky Auth | sonnet | `04_ood/od07_*`、`05_system_design/sd1[3-6]_*` | od07 `verify_suites` OK；SD 各 4 文件（25–132 行） | 检查点 17 | |
+| 2026-09-13 | sd18 Event Subscription · sd19 REST API Abstraction Layer（TrueInterview 印证升 MED）· sd23 Cross-Platform Logging Library | opus（主会话） | `05_system_design/sd1[89]_*`、`sd23_*` | 各 4 文件 | 检查点 17 | sd20 并入 od11（LLD） |
+| 2026-09-13 | RANK 并入 GitHub 来源（29 行 #refs +1、新增 24 行、sd20→od11）；CATALOG Table F | opus（主会话） | `catalog/RANK.md`、`catalog/CATALOG.md` | `coverage.py`：147/178 = 83%（分母从 124 扩到 178） | 检查点 17 | |
+| 2026-09-13 | P6.B pc07 · pc09 · pc11–pc15 | sonnet | `03_phone_coding/pc0[79]_*`、`pc1[1-5]_*` | 主会话独立 `verify_suites` 7/7 ALL ACCEPTED | 检查点 17 | pc14 零长度会议 bug 由子代理自查修复 |
+| 2026-09-13 | P6.7 派出：W1 pc16–pc22 · W2 pc23–pc29 · W3 q20–q25（sonnet × 3 并行）；W4 od11–od15 待名额 | opus（主会话） | — | — | — | |
