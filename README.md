@@ -130,7 +130,7 @@ repo. That requires unique names, which is why clippings are stored as
 `<reading>-clip`.
 
 ```bash
-trellis --all clip          # fetch every unclipped reading into vault/<domain>/clippings/
+trellis --all clip          # fetch every unclipped reading into vault/<folder>/clippings/
 trellis --all build         # footers now point at the local copies
 ```
 
@@ -244,7 +244,7 @@ reports translation coverage per language.
 
 ## Card format
 
-One file per card under `vault/<domain>/cards/<branch>/`, filename = card id:
+One file per card under `vault/<folder>/cards/<branch>/`, filename = card id:
 
 ```markdown
 ---
@@ -267,7 +267,7 @@ Anki.
 
 ## Reading format
 
-One file per reading under `vault/<domain>/readings/`; `nodes` may list several
+One file per reading under `vault/<folder>/readings/`; `nodes` may list several
 topics:
 
 ```markdown
@@ -355,7 +355,7 @@ from the card alone.
 
 ## Drill format
 
-One file per drill under `vault/<domain>/drills/`; same frontmatter as
+One file per drill under `vault/<folder>/drills/`; same frontmatter as
 readings (`nodes` lists every topic the exercise exercises). Body: prompt,
 constraints, grading points, attempt log. Node map notes list their drills.
 
@@ -559,8 +559,11 @@ passed through the scaffold prompt that asks for atomicity.
 
 ## Adding a domain
 
-Drop `skeleton/<domain>.yaml` (same shape as `system-design.yaml`), put content
-under `vault/<domain>/`, and pass `--domain <domain>` — or `--all` to run any
+Drop `skeleton/<domain>.yaml` (same shape as `system-design.yaml`), set `vault:` to
+the folder its content lives in — `domains/<subject>` for a subject,
+`interviews/rounds/<round>` for an interview round, `interviews/companies/<co>/deck`
+for a company deck (ADR 0008; the slug itself when omitted) — put content under
+`vault/<folder>/`, and pass `--domain <domain>` — or `--all` to run any
 command across every domain (CI builds all decks). Nothing else changes.
 Keep low-level design, domain knowledge, etc. as separate domains; bridge them
 with cross-domain wikilinks, which work because `vault/` is one Obsidian vault.

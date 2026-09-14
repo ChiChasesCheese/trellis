@@ -8,7 +8,10 @@ description: Use when preparing for a specific company's interview loop (OA, pho
 ## Overview
 
 A kit is a self-contained, testable, 80/20-ranked book for one company under
-`vault/interviews/companies/<co>/`, same shape as `companies/stripe/`.
+`vault/interviews/companies/<co>/`, same shape as `companies/stripe/`. General coding-round skills
+live in the `code-core` domain (`vault/interviews/rounds/code-core/`): give the company a
+`transfer.<co>` leaf and a `core: [leaf, …]` list per coding round in the kit's loop tree, so the
+kit links to the general leaves instead of rewriting them.
 **Core principle: distill what others already curated before researching yourself, and never
 state a number you did not compute.**
 

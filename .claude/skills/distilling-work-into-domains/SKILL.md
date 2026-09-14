@@ -14,7 +14,7 @@ It runs on the work laptop, next to the employer's code, and keeps two tiers apa
 | Tier | Where | Holds | Leaves the machine |
 |---|---|---|---|
 | **Private** | `sources/local/work/<alias>/` (gitignored with `sources/local/`) | real names, file paths, short SHAs, numbers, the learner's PRs | never |
-| **Interview-safe** | `vault/<domain>/cases/`, `vault/interviews/core/stories/` | the decision and its reasoning in the domain's vocabulary, dated by month | only after the learner approves the diff |
+| **Interview-safe** | `vault/<folder>/cases/`, `vault/interviews/core/stories/` | the decision and its reasoning in the domain's vocabulary, dated by month | only after the learner approves the diff |
 
 **Interview-safe** means: every sentence is one the learner would say to an interviewer at another
 company. The employer's code, identifiers and data stay in the private tier.
@@ -50,7 +50,7 @@ company. The employer's code, identifiers and data stay in the private tier.
 4. **Report the gaps.** Leaves with no evidence are the learner's syllabus: fundamentals they have
    not had to use. List them for the learner in the chat and in `leaves.md`.
 
-5. **Write interview-safe cases.** One case per evidence note, in `vault/<domain>/cases/<slug>.md`,
+5. **Write interview-safe cases.** One case per evidence note, in `vault/<folder>/cases/<slug>.md`,
    shaped like the existing ones in `vault/domains/system-design/cases/`: frontmatter `nodes`, `title`,
    `codebase: work-<neutral-alias>`, `ref: <YYYY-MM the decision was read>`,
    `artefact: work:<generic decision kind>`; the employer repo's paths and SHAs stay in `leaves.md`;

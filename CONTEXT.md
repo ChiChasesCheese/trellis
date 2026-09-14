@@ -63,8 +63,10 @@ _Avoid_: exercise, problem, practice question
 ### The surfaces
 
 **Vault**:
-The one Obsidian vault at `vault/`, holding every domain. A domain's folder
-inside it is its *content directory*, never "its vault".
+The one Obsidian vault at `vault/`, holding every domain, organised by purpose:
+subjects under `domains/`, interview material under `interviews/` (ADR 0008). A
+domain's folder inside it is its *content directory*, declared by the skeleton's
+`vault:` key, never "its vault".
 _Avoid_: notes folder, library
 
 **Map note**:

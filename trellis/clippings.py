@@ -7,7 +7,7 @@ Obsidian's Web Clipper writes into its `source:` property — so a clipping
 can be produced either by `trellis clip` or by clicking the Web Clipper
 extension, and both are picked up identically.
 
-Clippings live in `vault/<domain>/clippings/` (the Web Clipper's default
+Clippings live in `vault/<folder>/clippings/` (the Web Clipper's default
 folder name). Cards whose reading has a clipping get an `obsidian://` link
 that opens the local copy instead of the browser.
 """

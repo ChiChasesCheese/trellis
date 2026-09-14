@@ -12,9 +12,13 @@ interviews/
     stories/                evidence-base.md（S1–S9 旗舰故事）+ resume-evidence-map/（学习画像）
     answers/                逐题行为面答案手册 dim1–dim6（技术深度 / 影响 / 领导力 / 带教 / HR）
     playbooks/              按轮次的通用打法：AI 语音筛选 / recruiter / HM / 电面 / onsite …
+  rounds/                   与公司无关的轮次能力，都是 trellis 领域（有 skeleton、进 Anki）
+    code-core/              编码轮通用能力：读题、解析、建模、金额、时间、输出、算法、验证；transfer.<公司> 叶子接各家 kit
+    leetcode/               LeetCode 题型卡组（adopted）
+    narrative/              讲自己的那一轮（narrative round）
   companies/                每家公司一个自包含 kit（题库 + 测试 + 演练器 + 研究 + 学习面）
-    stripe/                 = github.com/ChiChasesCheese/stripeoa 全量镜像：problems/（54 题带测试）· loop/rounds/（recruiter→onsite 全轮次 39 题）· catalog/ · study/ · tools/ · drill.py · loop/mock.py
-    snowflake/              同一骨架：AI 轮 dossier（00–07, CARD, fit）+ 正在建的全轮次 kit；进度见 CHECKPOINT.md / LEDGER.md / tasks/plan.md
+    stripe/                 = github.com/ChiChasesCheese/stripeoa 全量镜像：problems/（每题唯一题面）· loop/rounds/ · catalog/ · study/ · tools/；deck/ = trellis 领域 stripe 的卡片与地图
+    snowflake/              同一骨架：dossier（00–07）+ 全轮次 kit，入口 CONTENTS.md
   _template/company/        新公司 dossier 骨架，cp -r 即可开工
 ```
 
