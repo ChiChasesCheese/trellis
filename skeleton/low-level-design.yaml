@@ -3,6 +3,7 @@
 # drills, not nodes — they exercise many leaves at once.
 domain: low-level-design
 title: Low-Level Design
+lang: en
 nodes:
   - id: method
     order: 1

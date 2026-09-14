@@ -1,10 +1,17 @@
 %% trellis:begin %%
-# EXPLAIN Plan Interpretation
-*Query Compilation & Execution*
+# EXPLAIN 执行计划解读
+*查询编译与执行*
 
-Reading a logical/physical plan before running a query to predict pruning and join strategy.
+在运行查询之前读取逻辑/物理执行计划，以预测剪枝效果与连接策略。
 
-**Requires:** [[query.compilation-pipeline|Compilation Pipeline]]
+**Requires:** [[query.compilation-pipeline|编译流水线]]
+
+## Cards (5)
+- [[explain-compiles-not-executes]]
+- [[explain-output-formats]]
+- [[explain-partitions-assigned-predict-pruning]]
+- [[explain-spot-cartesian-join]]
+- [[explain-vs-query-profile]]
 %% trellis:end %%
 
 ## Notes

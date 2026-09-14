@@ -1,10 +1,20 @@
 %% trellis:begin %%
-# Three-Layer Architecture
-*Core Architecture*
+# 三层架构
+*核心架构*
 
-Storage, virtual warehouses (compute), and Cloud Services as physically and logically separate layers that talk only through metadata.
+存储、虚拟仓库（virtual warehouse，计算层）与云服务（Cloud Services）在物理和逻辑上彼此分离，仅通过元数据相互通信。
 
-**Unlocks:** [[txn.acid-guarantees|ACID Guarantees]]
+**Unlocks:** [[txn.acid-guarantees|ACID 保证]]
+
+## Readings
+- [[snowflak-key-concepts-architecture|Snowflake 关键概念与整体架构]]
+
+## Cards (5)
+- [[three-layer-cloud-services-scope]]
+- [[three-layer-hybrid-architecture]]
+- [[three-layer-storage-micro-partition]]
+- [[three-layer-warehouse-independence]]
+- [[three-layer-what-are-they]]
 %% trellis:end %%
 
 ## Notes

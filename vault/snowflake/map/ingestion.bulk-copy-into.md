@@ -1,12 +1,22 @@
 %% trellis:begin %%
-# Bulk Loading (COPY INTO)
-*Data Loading & Ingestion*
+# 批量加载（COPY INTO）
+*数据加载与摄取*
 
-Batch file loading from a stage, load metadata that prevents reloading the same file twice, and parallelism across files.
+从暂存区（stage）批量加载文件、防止同一文件被重复加载的加载元数据，以及跨文件的并行加载。
 
-**Requires:** [[storage.table-types|Table Types]]
+**Requires:** [[storage.table-types|表类型]]
 
-**Unlocks:** [[ingestion.file-formats-and-stages|File Formats & Stages]], [[ingestion.unload-export|Unloading Data (COPY INTO location)]]
+**Unlocks:** [[ingestion.file-formats-and-stages|文件格式与暂存区（stage）]], [[ingestion.unload-export|数据卸载（COPY INTO location）]]
+
+## Readings
+- [[snowflak-data-loading-overview|数据加载总览:内部/外部 stage 与批量 COPY INTO]]
+
+## Cards (5)
+- [[copy-into-load-metadata-dedupe]]
+- [[copy-into-no-dml-error-logging]]
+- [[copy-into-parallel-across-files]]
+- [[copy-into-simple-transformations]]
+- [[copy-into-user-warehouse-single-txn]]
 %% trellis:end %%
 
 ## Notes

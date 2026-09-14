@@ -1,10 +1,17 @@
 %% trellis:begin %%
-# Data Classification & Object Tagging
-*Security & Governance*
+# 数据分类与对象标签
+*安全与治理*
 
-Automatic sensitive-data classification and tag-based policy attachment, so masking/row policies can be applied at scale instead of per-column.
+自动化的敏感数据分类，以及基于标签（tag）的策略挂载，使脱敏/行级策略能够规模化应用，而不必逐列配置。
 
-**Requires:** [[security.column-masking-policies|Dynamic Data Masking]]
+**Requires:** [[security.column-masking-policies|动态数据脱敏（dynamic data masking）]]
+
+## Cards (5)
+- [[classify-quasi-identifier-risk]]
+- [[classify-semantic-privacy-category]]
+- [[tag-based-masking-scale]]
+- [[tag-classification-false-negative]]
+- [[tag-lineage-propagation]]
 %% trellis:end %%
 
 ## Notes

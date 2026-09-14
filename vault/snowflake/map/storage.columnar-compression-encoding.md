@@ -1,12 +1,21 @@
 %% trellis:begin %%
-# Columnar Compression & Encoding
-*Storage Engine & Micro-partitions*
+# 列式压缩与编码
+*存储引擎与微分区（micro-partition）*
 
-Per-column encoding choice and compression, and why columnar layout is what makes both compression and pruning cheap.
+按列选择编码方式并压缩，以及为何列式布局是让压缩和剪枝都变得廉价的根本原因。
 
-**Requires:** [[storage.micro-partition-format|Micro-partition Format]]
+**Requires:** [[storage.micro-partition-format|微分区（micro-partition）格式]]
 
-**Unlocks:** [[query.vectorized-columnar-execution|Vectorized Columnar Execution]]
+**Unlocks:** [[query.vectorized-columnar-execution|向量化列式执行]]
+
+## Readings
+- [[snowflak-micropartitions-clustering|微分区与数据聚簇的物理基础]]
+
+## Cards (4)
+- [[compression-algorithm-per-column-per-partition]]
+- [[compression-columns-stored-independently]]
+- [[compression-no-user-encoding-ddl]]
+- [[compression-stored-size-smaller-than-50-500]]
 %% trellis:end %%
 
 ## Notes

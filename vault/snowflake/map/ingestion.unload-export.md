@@ -1,10 +1,17 @@
 %% trellis:begin %%
-# Unloading Data (COPY INTO location)
-*Data Loading & Ingestion*
+# 数据卸载（COPY INTO location）
+*数据加载与摄取*
 
-Exporting query results or table data back to a stage as files, and the format/compression choices that affect downstream consumers.
+将查询结果或表数据以文件形式导出回暂存区，以及影响下游消费者的格式/压缩选择。
 
-**Requires:** [[ingestion.bulk-copy-into|Bulk Loading (COPY INTO)]]
+**Requires:** [[ingestion.bulk-copy-into|批量加载（COPY INTO）]]
+
+## Cards (5)
+- [[unload-compute-and-cost]]
+- [[unload-copy-into-location-basics]]
+- [[unload-format-choice-downstream]]
+- [[unload-overwrite-and-partition-by]]
+- [[unload-parallel-multiple-files]]
 %% trellis:end %%
 
 ## Notes

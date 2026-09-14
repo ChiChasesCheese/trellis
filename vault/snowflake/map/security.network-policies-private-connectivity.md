@@ -1,12 +1,22 @@
 %% trellis:begin %%
-# Network Policies & Private Connectivity
-*Security & Governance*
+# 网络策略与私有连接
+*安全与治理*
 
-IP allow/block lists at account or user scope, and cloud-native private connectivity (PrivateLink/Private Service Connect) that avoids the public internet entirely.
+账户或用户级别的 IP 白名单/黑名单，以及完全绕开公网的云原生私有连接（PrivateLink/Private Service Connect）。
 
-**Requires:** [[security.authn-mfa-sso|Authentication (MFA, SSO, Key-pair)]]
+**Requires:** [[security.authn-mfa-sso|身份认证（MFA、SSO、密钥对）]]
 
-**Unlocks:** [[security.trust-center-posture|Trust Center Security Posture]]
+**Unlocks:** [[security.trust-center-posture|信任中心（Trust Center）安全态势]]
+
+## Readings
+- [[snowflak-network-policies|网络策略:IP 允许/阻止名单与私有连接]]
+
+## Cards (5)
+- [[netpol-allowlist-implicit-block]]
+- [[netpol-internal-stage-parameter]]
+- [[netpol-network-rules-vs-ip-list]]
+- [[netpol-precedence-specific-wins]]
+- [[netpol-private-link-precedence]]
 %% trellis:end %%
 
 ## Notes

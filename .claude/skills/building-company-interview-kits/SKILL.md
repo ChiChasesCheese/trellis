@@ -66,4 +66,4 @@ A LeetCode problem that the company changed (new constraints, extra Parts, a des
 - Denominator drift: adding sources after computing coverage. Recompute after every source.
 - Relative links from `loop/rounds/<round>/<id>/` to the kit root need `../../../`.
 - Subagents spawning subagents, or more than 3 in parallel: the limit is the orchestrator's job.
-- Losing progress on usage limits: append `LEDGER.md`, update `CHECKPOINT.md`, commit + push per task.
+- Losing progress on usage limits: append `LEDGER.md`, update `CHECKPOINT.md`, commit + push per task; relaunch the rest on `opus` with a resume rule when sonnet is limited.

@@ -115,6 +115,21 @@ def test_triage_prompt_lists_sections_beside_leaves(root, capsys):
     assert "acks 指定了" in prompt, "the excerpt shows the section's opening"
 
 
+def test_readings_from_an_english_text_are_written_in_the_domains_language(root, capsys):
+    """Docs are English but the learner reviews in Chinese: the reading a section
+    becomes lives in the domain, so its body follows the skeleton's language."""
+    decl = root / "corpora" / "kafka-test.yaml"
+    decl.write_text(decl.read_text(encoding="utf-8").replace("lang: zh", "lang: en"), encoding="utf-8")
+    run(root, "ingest", "kafka-test")
+    seed = json.loads(json.dumps(SEED))
+    seed["skeleton"]["lang"] = "zh"
+    (root / "seed.json").write_text(json.dumps(seed, ensure_ascii=False), encoding="utf-8")
+    assert run(root, "accept", str(root / "seed.json")) == 0
+    assert run(root, "triage", "kafka-test", "-o", str(root / "t.md")) == 0
+    prompt = (root / "t.md").read_text(encoding="utf-8")
+    assert "words, in Chinese" in prompt and "words, in English" not in prompt
+
+
 def test_digest_status_prompt_and_import(root, capsys):
     _seed_and_triage(root, capsys)
     assert run(root, "digest", "kafka-test") == 0

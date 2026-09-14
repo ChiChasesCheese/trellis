@@ -1,10 +1,21 @@
 %% trellis:begin %%
-# Serverless Feature Billing
-*Cost, Metering & Observability*
+# 无服务器功能计费
+*成本、计量与可观测性*
 
-Why Snowpipe, serverless Tasks, and Search Optimization each bill on their own credit rate instead of against a warehouse.
+为何 Snowpipe、无服务器 Task 与搜索优化服务（Search Optimization）各自按自己的信用点费率计费，而不计入某个仓库。
 
-**Requires:** [[cost.credit-model-per-second-billing|Credit Model & Per-second Billing]]
+**Requires:** [[cost.credit-model-per-second-billing|信用点模型与按秒计费]]
+
+## Readings
+- [[snowflak-compute-cost-detail|计算成本细则:60 秒起收、serverless 计费与云服务 10% 免费额度]]
+- [[snowflak-query-acceleration|查询加速服务(QAS)加速离群查询]]
+
+## Cards (5)
+- [[serverless-attribution-risk]]
+- [[serverless-compute-hours]]
+- [[serverless-qas-billing]]
+- [[serverless-separate-line-item]]
+- [[serverless-why-model]]
 %% trellis:end %%
 
 ## Notes

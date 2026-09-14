@@ -1,13 +1,13 @@
 %% trellis:begin %%
-# Data Sharing & Collaboration
+# 数据共享与协作
 
-Giving another account (or the public) access to live data without copying it.
+在不复制数据的前提下，让另一个账户（或公众）访问实时数据。
 
 ## Topics
-- [[sharing.secure-data-sharing-mechanics|Secure Data Sharing Mechanics]]
-- [[sharing.data-marketplace-listings|Data Marketplace Listings]]
-- [[sharing.reader-accounts|Reader Accounts]]
-- [[sharing.clean-rooms-privacy|Data Clean Rooms]]
+- [[sharing.secure-data-sharing-mechanics|安全数据共享（Secure Data Sharing）机制]]
+- [[sharing.data-marketplace-listings|数据市场（Data Marketplace）挂牌]]
+- [[sharing.reader-accounts|只读账户（reader account）]]
+- [[sharing.clean-rooms-privacy|数据洁净室（Data Clean Room）]]
 %% trellis:end %%
 
 ## Notes

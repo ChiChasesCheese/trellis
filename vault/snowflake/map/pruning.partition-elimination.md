@@ -1,12 +1,23 @@
 %% trellis:begin %%
-# Partition Elimination
-*Pruning & Query Optimization*
+# 分区消除（partition elimination）
+*剪枝与查询优化*
 
-How the pruning decision is made at compile time from metadata alone, turning a full scan into a scan of the surviving micro-partition set.
+剪枝决策如何仅凭元数据在编译期做出，从而把一次全表扫描变成对存活微分区集合的扫描。
 
-**Requires:** [[pruning.min-max-zone-maps|Min/Max Pruning (Zone Maps)]]
+**Requires:** [[pruning.min-max-zone-maps|最小/最大值剪枝（zone map）]]
 
-**Unlocks:** [[pruning.search-optimization-service|Search Optimization Service]], [[pruning.materialized-views-maintenance|Materialized Views]]
+**Unlocks:** [[pruning.search-optimization-service|搜索优化服务（Search Optimization Service）]], [[pruning.materialized-views-maintenance|物化视图（materialized view）]]
+
+## Readings
+- [[snowflak-micropartitions-clustering|微分区与数据聚簇的物理基础]]
+- [[snowflak-query-profile-history|查询画像(Query Profile)与查询历史的定位方法]]
+
+## Cards (5)
+- [[pruning-elimination-hour-example]]
+- [[pruning-elimination-metadata-only-dml]]
+- [[pruning-elimination-not-index-probe]]
+- [[pruning-elimination-two-stage]]
+- [[pruning-elimination-vs-full-scan]]
 %% trellis:end %%
 
 ## Notes

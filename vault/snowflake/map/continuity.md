@@ -1,16 +1,16 @@
 %% trellis:begin %%
-# Time Travel, Fail-safe & Cloning
+# 时间旅行、故障保护与克隆
 
-Recovering from mistakes and forking environments cheaply, because the storage layer never overwrites anything in place.
+从错误中恢复、并以低成本派生出新环境——这一切之所以可能，是因为存储层从不就地覆写任何内容。
 
 ## Topics
-- [[continuity.retention-vs-failsafe|Time Travel vs Fail-safe]]
-- [[continuity.at-before-statement-syntax|AT / BEFORE Query Syntax]]
-- [[continuity.undrop-recovery|UNDROP Recovery]]
-- [[continuity.zero-copy-clone|Zero-copy Clone]]
-- [[continuity.clone-storage-billing|Clone Storage Billing]]
-- [[continuity.replication-and-failover|Database Replication & Failover]]
-- [[continuity.client-redirect|Client Redirect]]
+- [[continuity.retention-vs-failsafe|时间旅行与故障保护对比]]
+- [[continuity.at-before-statement-syntax|AT / BEFORE 查询语法]]
+- [[continuity.undrop-recovery|UNDROP 恢复]]
+- [[continuity.zero-copy-clone|零拷贝克隆（zero-copy clone）]]
+- [[continuity.clone-storage-billing|克隆的存储计费]]
+- [[continuity.replication-and-failover|数据库复制与故障切换]]
+- [[continuity.client-redirect|客户端重定向]]
 %% trellis:end %%
 
 ## Notes

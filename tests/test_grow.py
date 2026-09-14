@@ -14,7 +14,7 @@ from trellis.cli import main
 from trellis.traces import Trace, TraceFile, save_traces, traces_path
 
 SKELETON = {
-    "domain": "demo", "title": "Demo",
+    "domain": "demo", "title": "Demo", "lang": "en",
     "nodes": [
         {"id": "base", "title": "Base", "order": 1, "children": [
             {"id": "base.one", "title": "One", "summary": "The first thing."},

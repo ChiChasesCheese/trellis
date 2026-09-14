@@ -1,0 +1,402 @@
+{
+  "corpus": "snowflake-docs",
+  "items": [
+    {
+      "section": "01-intro-key-concepts",
+      "verdict": "reading",
+      "nodes": [
+        "architecture.three-layer-model",
+        "architecture.storage-compute-separation",
+        "architecture.multi-cluster-shared-data",
+        "architecture.cloud-services-layer",
+        "architecture.cloud-agnostic-multi-region",
+        "storage.object-storage-backend"
+      ],
+      "slug": "snowflak-key-concepts-architecture",
+      "title": "Snowflake 关键概念与整体架构",
+      "body": "理解 Snowflake 的起点:存储、计算(虚拟仓库,virtual warehouse)与云服务(cloud services)三层物理、逻辑分离,只通过元数据通信。其架构是共享磁盘(shared-disk)与无共享(shared-nothing)的混合体——所有计算节点访问同一份持久化存储,但每个虚拟仓库拥有独立的、大规模并行处理(MPP)计算集群,互不干扰。云服务层负责鉴权、查询解析优化、元数据管理等,从不直接触碰表数据字节。文中还提到 Snowgrid 跨云跨区域(cross-cloud/cross-region)技术层,把安全策略和容灾复制扩展到不同云和地域;表数据最终以压缩列式格式存放在云对象存储中而非本地磁盘。读完应能画出三层架构草图,理解为什么存储计算分离是后续弹性、多集群共享数据等一切特性的前提。"
+    },
+    {
+      "section": "02-tables-clustering-micropartitions",
+      "verdict": "reading",
+      "nodes": [
+        "storage.micro-partition-format",
+        "storage.micro-partition-metadata",
+        "storage.columnar-compression-encoding",
+        "storage.clustering-keys",
+        "pruning.min-max-zone-maps",
+        "pruning.partition-elimination",
+        "pruning.clustering-depth-metric",
+        "metadata.optimizer-statistics"
+      ],
+      "slug": "snowflak-micropartitions-clustering",
+      "title": "微分区与数据聚簇的物理基础",
+      "body": "全书讲存储引擎绕不开的一篇:表数据被自动切成 50–500MB(压缩前)的微分区(micro-partition),按列存储、按列压缩,每个微分区的表头记录每列的最小/最大值、去重计数等统计信息——这些统计正是优化器做基数估计、选择执行计划所依据的元数据,全程无需扫描数据本身。查询裁剪(pruning)就是靠比较谓词与这些最小/最大值(min/max zone map),在编译期排除不可能命中的微分区,把全表扫描降级为部分扫描。文中还定义了聚簇深度(clustering depth)——衡量微分区在某些列上重叠程度的指标,深度越大说明裁剪效果越差,是判断是否需要显式聚簇键的信号。读完能解释裁剪、压缩、聚簇三者如何共享同一份微分区元数据。"
+    },
+    {
+      "section": "03-tables-clustering-keys",
+      "verdict": "reading",
+      "nodes": [
+        "storage.clustering-keys",
+        "storage.natural-vs-explicit-clustering"
+      ],
+      "slug": "snowflak-clustering-keys-strategy",
+      "title": "聚簇键的选择与何时需要它",
+      "body": "多数表靠插入顺序自然形成的聚簇(natural clustering)就已经够用;只有当表体积达到 TB 级、查询高选择性且集中在同几列上时,显式定义聚簇键(clustering key)才值得付出维护成本。文中给出选键策略:优先选高频出现在过滤谓词里的列,列数控制在 3–4 个以内,并按基数从低到高排序;基数过低裁剪不到位,基数过高又会推高重新聚簇(reclustering)的信用点消耗。判断要不要升级为显式聚簇,看的是聚簇深度(clustering depth)是否随时间劣化,而非拍脑袋决定。这是从只依赖自然顺序,到主动管理数据物理布局的分水岭。"
+    },
+    {
+      "section": "04-tables-auto-reclustering",
+      "verdict": "reading",
+      "nodes": [
+        "storage.automatic-reclustering"
+      ],
+      "slug": "snowflak-automatic-clustering",
+      "title": "自动重新聚簇服务(Automatic Clustering)",
+      "body": "一旦表定义了聚簇键,后续的 DML 会让数据逐渐偏离理想的聚簇状态;Automatic Clustering 是 Snowflake 在后台无感运行的托管服务,持续监控并按需重写微分区,使其重新贴合聚簇键,期间不阻塞用户的 DML。新一代 Optima Clustering 按摄入的数据量而非计算时长计费,旧版 Clustering Classic 按 serverless 计算小时计费,二者都归入同一账单科目。可以随时挂起/恢复该服务,但挂起不等于省钱——恢复时往往要补上挂起期间积压的重新聚簇工作。读完应理解:聚簇键定义之后,维护成本是持续、自动、且与信用点(credit)直接挂钩的。"
+    },
+    {
+      "section": "05-warehouses-overview",
+      "verdict": "reading",
+      "nodes": [
+        "warehouse.sizing-t-shirt",
+        "warehouse.auto-suspend-resume",
+        "warehouse.query-queuing",
+        "cost.warehouse-billing-60s-minimum"
+      ],
+      "slug": "snowflak-warehouses-overview",
+      "title": "虚拟仓库总览:尺寸、自动挂起与排队",
+      "body": "虚拟仓库(virtual warehouse)按 T 恤码从 X-Small 到 6X-Large 分级,每上一级计算资源和每小时信用点消耗大致翻倍,但每次启动都有 60 秒最低计费,之后按秒计费。自动挂起(auto-suspend)在空闲一段时间后自动停止计费,自动恢复(auto-resume)在新查询到来时自动拉起仓库,二者都作用于整个仓库而非单个集群。当仓库现有资源不足以同时处理所有查询时,后续查询会排队等待,此时可以选择扩容仓库尺寸,或改用多集群仓库来自动增加集群数。读完能解释:仓库尺寸决定单个查询的处理速度,而不是解决并发排队的正确手段。"
+    },
+    {
+      "section": "06-warehouses-multicluster",
+      "verdict": "reading",
+      "nodes": [
+        "warehouse.multi-cluster-scaling-policy",
+        "warehouse.query-queuing"
+      ],
+      "slug": "snowflak-multicluster-warehouses",
+      "title": "多集群仓库与扩缩容策略",
+      "body": "多集群仓库(multi-cluster warehouse)让同一尺寸的仓库拥有多个并行集群,专门用来应对并发用户/查询数的波动,而不是加速单个慢查询——那是扩大尺寸(scale up)该做的事。可选最大化模式(Maximized,集群数固定不变)或自动伸缩模式(Auto-scale,按负载动态启停集群)。伸缩策略(scaling policy)决定自动伸缩的节奏:Standard 优先减少排队、更快加开集群;Economy 优先节省信用点、宁可让查询排队也要等集群装满负载再加开。读完应能根据业务对延迟与成本的取舍,判断该选哪种伸缩策略,以及集群数如何影响每小时信用点账单。"
+    },
+    {
+      "section": "07-warehouses-considerations",
+      "verdict": "reading",
+      "nodes": [
+        "warehouse.sizing-t-shirt",
+        "warehouse.auto-suspend-resume",
+        "warehouse.scaling-up-vs-out",
+        "cache.warehouse-local-disk-cache"
+      ],
+      "slug": "snowflak-warehouse-best-practices",
+      "title": "仓库调优:扩容(up)还是扩出(out)、本地磁盘缓存",
+      "body": "本节把选尺寸、配自动挂起/恢复的实践经验系统化:按秒计费意味着完全可以先选大尺寸再逐步收缩,而不必过早优化。扩容(scale up,调大仓库尺寸)适合让单个慢查询变快;扩出(scale out,增加多集群仓库的集群数)适合缓解并发排队,二者解决的是不同症状,选错了收益有限。运行中的仓库会维护一份最近扫描过的微分区本地磁盘缓存(warehouse-local disk cache),挂起时整份缓存被丢弃,恢复后要重新预热,这是权衡是否挂起仓库时必须考虑的隐性成本。读完能在“查询慢”与“查询排队”两种症状间对症选择对策。"
+    },
+    {
+      "section": "08-querying-persisted-results",
+      "verdict": "reading",
+      "nodes": [
+        "cache.result-cache",
+        "cache.result-cache-invalidation"
+      ],
+      "slug": "snowflak-result-cache",
+      "title": "结果缓存(Result Cache)命中与失效条件",
+      "body": "查询结果会被持久化缓存最长 24 小时(每次命中都会重置计时,最长可达 31 天),命中时 Snowflake 直接跳过重新计算,零计算成本返回上次的结果。命中条件相当苛刻:SQL 文本必须逐字一致(大小写、别名都算数)、不含 UUID_STRING/RANDOM 等不确定函数、所涉及表的微分区自上次执行后未发生任何变化、且执行角色对所有表仍具备权限。正因为判断依据是“表数据是否变了”而非“查询是谁发起的”,不同会话、不同用户执行完全相同的语句也能命中同一份缓存。读完应能诊断为什么两条看起来一样的查询,其中一条没有走缓存。"
+    },
+    {
+      "section": "09-ui-query-profile",
+      "verdict": "reading",
+      "nodes": [
+        "query.reading-query-profile",
+        "query.spilling-to-remote-disk",
+        "pruning.partition-elimination",
+        "cost.query-history-and-account-usage"
+      ],
+      "slug": "snowflak-query-profile-history",
+      "title": "查询画像(Query Profile)与查询历史的定位方法",
+      "body": "查询画像把编译后的执行计划画成算子(operator)节点图,每个节点标注耗时、扫描字节数、裁剪掉的分区占比;“最耗时节点”面板按耗时降序列出所有算子,是定位性能瓶颈的第一站。中间结果放不下内存时会溢出(spill)到本地磁盘,本地磁盘也不够时进一步溢出到远程存储——后者的延迟代价远高于前者,是查询突然变慢的常见元凶。裁剪效率则通过对比“已扫描分区数”与“总分区数”判断,占比越低说明裁剪越有效。查询历史可以在 Snowsight、ACCOUNT_USAGE 视图或 INFORMATION_SCHEMA 三处查看,三者在保留时长和查询延迟上各有取舍。"
+    },
+    {
+      "section": "10-search-optimization-service",
+      "verdict": "reading",
+      "nodes": [
+        "pruning.search-optimization-service"
+      ],
+      "slug": "snowflak-search-optimization",
+      "title": "搜索优化服务(Search Optimization Service)",
+      "body": "搜索优化服务专门加速非聚簇列上的高选择性点查,原理是维护一份持久化的搜索访问路径(search access path),记录每个微分区里可能出现哪些列值,从而在扫描前就跳过不可能命中的微分区——它不是 B 树索引,而是一种元数据加速结构。开启后由后台维护服务负责构建和增量更新访问路径,构建完成前查询不会被加速,数据更新时访问路径也会自动追平,期间查询仍返回正确结果但可能变慢。该服务对用户完全透明、无需额外仓库,但会产生存储和维护计算的双重成本。适用场景包括精确点查、文本/IP 搜索、子串与正则匹配、以及半结构化列上的等值与包含谓词查询。"
+    },
+    {
+      "section": "11-query-acceleration-service",
+      "verdict": "reading",
+      "nodes": [
+        "pruning.query-acceleration-service",
+        "cost.serverless-feature-billing"
+      ],
+      "slug": "snowflak-query-acceleration",
+      "title": "查询加速服务(QAS)加速离群查询",
+      "body": "查询加速服务(Query Acceleration Service,QAS)把一个仓库里跑得特别慢的“离群查询”——通常是大扫描配合选择性过滤,或大批量插入/复制——的扫描过滤部分,借用 Snowflake 提供的共享 serverless 计算资源并行处理,从而不必为偶发的重查询把整个仓库开得很大。是否加速、加速到什么程度由系统自动判断,用户只能通过扩展因子(scale factor)设置资源上限来控制成本;该服务与其他 serverless 特性一样,按使用秒数单独计费,与仓库信用点分开出现在账单里。读完应理解:QAS 解决的是单条查询的尾延迟问题,而非整体并发问题。"
+    },
+    {
+      "section": "12-views-materialized",
+      "verdict": "reading",
+      "nodes": [
+        "pruning.materialized-views-maintenance"
+      ],
+      "slug": "snowflak-materialized-views",
+      "title": "物化视图(Materialized View)的预计算与维护成本",
+      "body": "物化视图把查询结果预先算好并存储,之后查询直接读取物化视图,常用于加速频繁运行且开销大的聚合、投影类查询。与结果缓存不同,物化视图由后台服务在基表变更后自动增量刷新(insert 触发追加、delete 触发压缩),始终对用户呈现最新数据;优化器甚至能在用户没有显式引用物化视图的情况下,自动改写查询去命中它。收益的另一面是持续的存储成本和维护计算成本——基表每次 DML 都可能触发物化视图的重写,尤其当物化视图的聚簇键与基表不同时,一次小改动可能波及大量微分区。读完应能判断什么场景该用物化视图而非普通视图或结果缓存。"
+    },
+    {
+      "section": "13-data-time-travel",
+      "verdict": "reading",
+      "nodes": [
+        "continuity.retention-vs-failsafe",
+        "continuity.at-before-statement-syntax",
+        "continuity.undrop-recovery",
+        "txn.mvcc-immutable-partitions",
+        "storage.table-types"
+      ],
+      "slug": "snowflak-time-travel",
+      "title": "时间旅行(Time Travel):可查询窗口、AT/BEFORE 与 UNDROP",
+      "body": "任何 DML 修改或对象删除发生前,Snowflake 都会先保留旧版本数据——这正是多版本并发控制(MVCC)在不可变微分区上的体现:写入永远不原地修改,而是生成新版本、旧数据继续保留一段时间。默认保留窗口 1 天,企业版及以上可配置到最长 90 天,永久表、瞬态表(transient)、临时表在这份保留期和后续 Fail-safe 窗口上的待遇并不相同。窗口内可以用 AT/BEFORE 子句按时间戳、相对偏移或语句 ID 查询历史数据、克隆对象,或用 UNDROP 把被删除的表/schema/数据库原地恢复——这是纯元数据操作,不是从备份还原。一旦超出保留期,数据进入 Fail-safe,这些操作全部失效。"
+    },
+    {
+      "section": "15-object-clone",
+      "verdict": "reading",
+      "nodes": [
+        "continuity.zero-copy-clone"
+      ],
+      "slug": "snowflak-zero-copy-clone",
+      "title": "克隆(CLONE)的元数据本质与常见陷阱",
+      "body": "CREATE ... CLONE 只复制指向已有微分区的元数据指针,不搬动任何字节,因此对超大表也能瞬间完成——这就是零拷贝克隆(zero-copy clone)。但克隆并非事务性快照:若克隆过程中源对象上发生了改名、重建等 DDL,或数据保留期(retention)恰好为 0 导致所需历史版本已被清除,克隆会因命名冲突或数据不可用而失败。聚簇键、搜索优化访问路径等会被克隆但状态各异——聚簇键默认在克隆表上被挂起,需要手动恢复;外部表、内部临时 stage 等则完全不参与克隆。读完应记住:克隆快是因为不搬数据,但“不搬数据”本身也带来了一整套需要注意的边界情况。"
+    },
+    {
+      "section": "16-transactions",
+      "verdict": "reading",
+      "nodes": [
+        "txn.acid-guarantees",
+        "txn.multi-statement-transactions",
+        "txn.ddl-as-transaction",
+        "txn.snapshot-isolation"
+      ],
+      "slug": "snowflak-transactions-isolation",
+      "title": "事务、隐式提交与 READ COMMITTED 隔离级别",
+      "body": "Snowflake 保证 ACID:一组语句要么全部提交、要么全部回滚,且从不支持嵌套事务。显式事务用 BEGIN/COMMIT/ROLLBACK 界定,AUTOCOMMIT 默认开启时每条语句自成一个隐式单语句事务。DDL 语句永远自成一个独立事务:执行 DDL 会先隐式提交当前活跃事务,再单独执行并立即提交自己,因此 DDL 语句本身无法被回滚——这也是模式变更能对读者呈现为原子、瞬时切换的原因。隔离级别为 READ COMMITTED:一条语句只能看到该语句开始前已提交的数据,同一事务内前一条语句的未提交修改则对后续语句可见。读完能解释为什么在一个事务里连续查询同一张表,两次结果可能不同。"
+    },
+    {
+      "section": "17-semistructured-intro",
+      "verdict": "reading",
+      "nodes": [
+        "semistructured.variant-type-storage",
+        "semistructured.schema-on-read-parsing"
+      ],
+      "slug": "snowflak-semistructured-loading",
+      "title": "半结构化数据的加载与内部表示(VARIANT/ARRAY/OBJECT)",
+      "body": "JSON、Avro、ORC、Parquet 等半结构化数据没有固定 schema、可以任意嵌套,Snowflake 用 VARIANT(可容纳任意类型的容器)、ARRAY、OBJECT 三种类型搭建层级结构:VARIANT 可以装 ARRAY 或 OBJECT,ARRAY/OBJECT 内部的值又都是 VARIANT。加载时,只要指定了 Snowflake 能识别的格式,数据会在加载这一刻就被解析成这套内部优化的列式表示,而不是原样存成大文本字段;这就是 schema-on-read 的含义——不必提前知道字段结构就能加载,查询时再按路径表达式取出所需字段。读完应理解:半结构化数据在存储层面已经和结构化数据共享同一套微分区格式,只是多了一层路径寻址。"
+    },
+    {
+      "section": "18-data-load-overview",
+      "verdict": "reading",
+      "nodes": [
+        "ingestion.bulk-copy-into",
+        "ingestion.file-formats-and-stages"
+      ],
+      "slug": "snowflak-data-loading-overview",
+      "title": "数据加载总览:内部/外部 stage 与批量 COPY INTO",
+      "body": "Snowflake 用 stage 统一指代云存储中文件的落脚点:外部 stage 是客户自己名下的 S3/GCS/Azure 容器,内部 stage(用户级、表级或具名)则由 Snowflake 托管。批量加载用 COPY INTO 命令,依赖用户自建的虚拟仓库,可以在加载过程中做列重排、列裁剪、类型转换等简单变换,且源文件的列数和顺序不必与目标表完全一致,天然支持跨多个文件的并行加载。与之相对的 Snowpipe 走 serverless 计算、面向小批量持续到达的文件。读完应能判断:面对稳定的大批量文件,选批量 COPY 更省心;面对持续、零散到达的文件,该考虑另一条路径。"
+    },
+    {
+      "section": "19-data-load-snowpipe-intro",
+      "verdict": "reading",
+      "nodes": [
+        "ingestion.snowpipe-auto-ingest"
+      ],
+      "slug": "snowflak-snowpipe",
+      "title": "Snowpipe:事件驱动的自动微批加载",
+      "body": "Snowpipe 让文件一到达 stage 就能被加载,不必手动排期跑 COPY:云存储的事件通知(event notification)触发 Snowpipe 轮询队列,按 pipe 对象里定义的 COPY 语句把新文件持续、以 serverless 方式加载进目标表,延迟通常在分钟级。它与批量加载的关键差异在于:使用 Snowflake 托管的计算资源而非用户仓库,按实际使用量计费;每个文件的加载元数据被记录以防止重复加载同一文件;多个内部处理进程并行拉取队列,因此文件到达顺序和加载顺序并不严格一致。读完应理解:Snowpipe 解决的是“文件持续到达、按小批量尽快可见”这一场景,而不是替代批量加载。"
+    },
+    {
+      "section": "20-data-load-snowpipe-streaming-overview",
+      "verdict": "reading",
+      "nodes": [
+        "ingestion.snowpipe-streaming-offset-tokens"
+      ],
+      "slug": "snowflak-snowpipe-streaming",
+      "title": "Snowpipe Streaming:行级流式写入与精确一次投递",
+      "body": "与依赖落地文件的 Snowpipe 不同,Snowpipe Streaming 直接把一行行数据写进表,不经过任何暂存文件,延迟可以低至 5 秒、单表吞吐最高 10GB/s。它靠客户端在每个通道(channel)内自行维护并提交偏移量令牌(offset token)来实现精确一次(exactly-once)语义:应用记录已提交的偏移量,故障恢复后从该位置重放即可,既不丢数据也不重复。同一通道内的行按顺序写入,通道天然对应上游分区(例如 Kafka 分区),因此可确定性地重放。读完应能判断:当数据源是持续产生的单行事件(而非成批文件)时,该考虑走这条路径而不是 Snowpipe。"
+    },
+    {
+      "section": "21-streams-intro",
+      "verdict": "reading",
+      "nodes": [
+        "pipelines.stream-offset-bookmark",
+        "pipelines.stream-types",
+        "pipelines.stream-consumption-and-offset-advance",
+        "pipelines.stream-staleness-and-retention-extension"
+      ],
+      "slug": "snowflak-streams",
+      "title": "流对象(Stream)的偏移量、类型与消费语义",
+      "body": "Stream 本身不存数据,只是记录一个偏移量(offset)——表版本历史中的一个书签,查询它返回的是自该偏移量以来发生的变更增量。标准流(standard)追踪全部增删改并做净变化合并;仅追加流(append-only)只关心插入,性能更好;仅插入流(insert-only)用于外部表等无法追踪删除的场景。偏移量只有在一次成功提交的 DML 事务里“消费”了流的内容才会前移——单纯 SELECT 查询流不会推进偏移量,这保证了消费端崩溃重启后拿到的仍是同一批变更,不会漏掉。若流长期不被消费,其偏移量可能落到源表数据保留期之外而变得过期(stale);为避免这种情况,Snowflake 会临时延长源表的保留期,最长可达 14 天默认上限。"
+    },
+    {
+      "section": "22-tasks-intro",
+      "verdict": "reading",
+      "nodes": [
+        "pipelines.task-scheduling-cron-and-dag",
+        "pipelines.task-serverless-vs-warehouse",
+        "pipelines.task-failure-handling",
+        "pipelines.task-conditional-execution"
+      ],
+      "slug": "snowflak-tasks",
+      "title": "任务(Task):调度、算力模型与失败处理",
+      "body": "Task 可以按固定时间间隔或 CRON 表达式调度,也可以组成任务图(task graph)串联成流水线,最多支持 100 个任务节点。算力上二选一:serverless 模式由 Snowflake 自动预测并分配资源(依据近期运行历史动态调节仓库尺寸上下限);用户托管模式则绑定固定仓库,适合已经有稳定并发负载的场景。可以配合 SYSTEM$STREAM_HAS_DATA() 让任务在上游流为空时直接跳过本次运行,避免空转浪费信用点。失败处理上,SUSPEND_TASK_AFTER_NUM_FAILURES 可在连续失败若干次后自动挂起任务,TASK_AUTO_RETRY_ATTEMPTS 则可以让失败的任务自动重试。读完应能设计一条“调度—条件判断—失败重试”齐全的数据管道。"
+    },
+    {
+      "section": "23-dynamic-tables-about",
+      "verdict": "reading",
+      "nodes": [
+        "pipelines.dynamictable-target-lag",
+        "pipelines.dynamictable-incremental-vs-full-refresh",
+        "pipelines.dynamictable-adaptive-refresh"
+      ],
+      "slug": "snowflak-dynamic-tables",
+      "title": "动态表(Dynamic Table):用目标延迟声明代替手写 Stream+Task",
+      "body": "动态表只需声明一条 SELECT 查询和一个目标延迟(target lag,例如 10 分钟),Snowflake 自动追踪依赖的基表、推导刷新节奏,并按依赖图顺序刷新一整条动态表流水线——不必再手写 Stream 捕获变更、Task 调度、MERGE 合并这一整套逻辑。刷新模式上,INCREMENTAL 只重算发生变化的那部分行,FULL 则整体重算,AUTO 让 Snowflake 在创建时自行判断;ADAPTIVE 默认走增量刷新,但一旦检测到上游变更量大到增量反而比全量重算更慢,会自动切换成全量重新初始化。每次刷新都是原子生效,读者永远看不到刷新过程中的中间状态。读完应能判断什么场景该用动态表替代手写的 Stream+Task 组合。"
+    },
+    {
+      "section": "24-security-access-control-overview",
+      "verdict": "reading",
+      "nodes": [
+        "security.rbac-role-hierarchy",
+        "security.rbac-ownership-and-grants"
+      ],
+      "slug": "snowflak-access-control-rbac",
+      "title": "访问控制总览:角色层级与 OWNERSHIP",
+      "body": "Snowflake 的访问控制融合了自主访问控制(DAC,对象归属于某个角色)、基于角色的访问控制(RBAC,权限授予角色再授予用户)和基于用户的访问控制(UBAC,权限直接授予用户)。角色可以被授予给其他角色,形成层级(role hierarchy)——权限沿层级向上传递,一个角色可以有多个“父角色”,因此层级本质上是一张有向图而非单纯的树。OWNERSHIP 是最特殊的权限:默认拥有该对象上的全部权限,并能决定把其他权限授予(GRANT)或收回(REVOKE)给谁;未来授权(future grant)可以预先为某个 schema 里“将来创建的对象”定义好默认权限。读完应能区分主角色与副角色在会话中各自的授权范围。"
+    },
+    {
+      "section": "25-security-row-intro",
+      "verdict": "reading",
+      "nodes": [
+        "security.row-access-policies"
+      ],
+      "slug": "snowflak-row-access-policies",
+      "title": "行访问策略(Row Access Policy):按角色过滤行",
+      "body": "行访问策略是挂在表或视图上的一段谓词表达式,在查询运行时把结果集过滤成只剩策略允许当前角色看到的那些行,对象所有者(OWNERSHIP 持有者)本该拥有全部数据的默认权限,也同样受该策略约束——这正是它能实现职责分离(segregation of duties)的关键。策略求值使用的是策略所有者的角色而非发起查询的用户角色,因此调用者不需要对策略里引用的映射表(mapping table)有权限。策略可以嵌套在表和其上的视图之间,按“表策略先于视图策略”的顺序依次生效。简单的基于 CURRENT_ROLE 判断的策略性能开销很小,涉及映射表查找的策略则会显著拖慢诸如 COUNT(*) 这类原本可以纯元数据回答的查询。"
+    },
+    {
+      "section": "26-security-column-intro",
+      "verdict": "reading",
+      "nodes": [
+        "security.column-masking-policies"
+      ],
+      "slug": "snowflak-column-masking",
+      "title": "列级安全:动态数据脱敏(Masking Policy)",
+      "body": "脱敏策略(masking policy)是挂在列上的一段函数,在查询时根据当前角色决定该列返回真实值还是脱敏后的值,底层数据本身从未被改写(不是静态脱敏)。策略在查询计划里凡是引用到该列的地方——投影、JOIN 条件、WHERE 谓词、ORDER/GROUP BY——都会被强制应用,这是为了防止用户借助巧妙的查询结构“绕过”脱敏、间接反推出真实值。条件脱敏(conditional masking)允许用另一列的值决定第一列是否需要脱敏,例如按“可见性”标记决定邮箱是否公开。对象所有者默认无法查看被脱敏的数据、也无权解除策略,这种角色分离正是列级安全区别于普通安全视图的核心优势。"
+    },
+    {
+      "section": "27-security-encryption-end-to-end",
+      "verdict": "gap",
+      "proposed_leaf": "security.end-to-end-client-side-encryption",
+      "why": "本节讲的是端到端加密(E2EE)流程与可选的客户端加密(client-side encryption,客户持有主密钥、在写入外部 stage 前后自行加解密),这与既有叶子 security.encryption-key-hierarchy 描述的\"root→account→table→file 分级密钥、自动轮换、对用户完全不可见\" 是两种不同机制——前者强调数据在离开客户网络前后的加密边界与谁掌握密钥,后者强调 Snowflake 内部自动管理的密钥分层与轮换。当前骨架没有覆盖前者,建议新增一枚叶子容纳它。"
+    },
+    {
+      "section": "28-network-policies",
+      "verdict": "reading",
+      "nodes": [
+        "security.network-policies-private-connectivity"
+      ],
+      "slug": "snowflak-network-policies",
+      "title": "网络策略:IP 允许/阻止名单与私有连接",
+      "body": "网络策略(network policy)控制谁能连接到 Snowflake 服务和内部 stage:允许名单里的来源可以访问,其余一律拒绝,阻止名单则用于在允许名单之外再显式排除特定来源。策略不直接罗列 IP,而是引用网络规则(network rule)——把相关标识符(IPv4/IPv6 段、私有连接的 VPC 终端 ID 等)打包成逻辑单元,便于按用途、按地区、按人群分别管理和加注释。私有连接(如 AWS PrivateLink、Azure Private Link)类型的规则优先级高于普通 IP 规则,能让流量完全绕开公网。网络策略可以分别作用于账户、用户或安全集成三个层级,越具体的层级优先级越高。"
+    },
+    {
+      "section": "29-data-sharing-intro",
+      "verdict": "reading",
+      "nodes": [
+        "sharing.secure-data-sharing-mechanics",
+        "sharing.reader-accounts",
+        "sharing.data-marketplace-listings"
+      ],
+      "slug": "snowflak-secure-data-sharing",
+      "title": "安全数据共享(Secure Data Sharing)、Reader 账户与 Listing",
+      "body": "安全数据共享不复制、不搬运任何数据:提供方(provider)创建一个共享(share)对象,把数据库中选定对象的访问权限授予消费方账户,消费方随即能创建一个只读数据库,近乎实时地看到与源端一致的数据,消费方只为查询所用的计算资源付费,不产生额外存储费用。共享方式包括:直接共享给指定账户、发布为可发现的 Listing(私有或上架 Snowflake Marketplace)、或组织成 Data Exchange 群组。对于还没有自己 Snowflake 账户的第三方消费者,提供方可以创建由自己账户承担费用的 Reader 账户,让对方只能查询导入的数据、不能做任何数据写入操作。"
+    },
+    {
+      "section": "30-tables-iceberg",
+      "verdict": "reading",
+      "nodes": [
+        "openplatform.iceberg-tables",
+        "openplatform.polaris-catalog",
+        "openplatform.external-engine-commit-protocol"
+      ],
+      "slug": "snowflak-iceberg-tables",
+      "title": "Apache Iceberg 表:开放格式与目录(Catalog)选型",
+      "body": "Iceberg 表把 Snowflake 表的查询语义带到客户自己管理的云对象存储上,数据和元数据文件都以开放的 Parquet + Iceberg 规范存放,天然支持外部引擎读写。目录(catalog)是 Iceberg 规范的第一层架构组件,负责保存“表名指向哪个元数据文件”的当前指针并保证该指针更新的原子性;既可以用 Snowflake 自身作目录(全平台功能完整),也可以通过目录集成(catalog integration)对接外部 REST 目录,例如 AWS Glue 或引擎无关的开源目录 Snowflake Open Catalog(即 Apache Polaris 的落地形态)。当外部引擎向 Snowflake 管理的表写入时,Snowflake 会保证先把变更提交到远端目录、再更新本地表状态,以此保证跨引擎写入的原子性。"
+    },
+    {
+      "section": "31-tables-hybrid",
+      "verdict": "reading",
+      "nodes": [
+        "openplatform.hybrid-tables-oltp"
+      ],
+      "slug": "snowflak-hybrid-tables",
+      "title": "混合表(Hybrid Table):行存与点查/高并发写",
+      "body": "混合表是专为低延迟、高吞吐的点查和高并发写设计的表类型,底层用行存(row store)作为主存储、支持行级锁,并强制主键、外键、唯一约束等在标准表上通常是可选甚至不生效的完整性约束。它与标准表共用同一套云服务层做查询编译优化、同一套查询引擎和虚拟仓库执行——可以直接和标准表 JOIN,也可以对混合表与标准表做同一个原子事务,无需自己实现两阶段提交。数据写入行存后会异步复制到列式对象存储,供大范围分析扫描使用而不影响在线读写。因为主存储是行存,混合表的压缩率和存储体积通常比标准表大,选型时要按点查/写为主还是分析扫描为主来决定用哪种表。"
+    },
+    {
+      "section": "32-cost-understanding-overall",
+      "verdict": "reading",
+      "nodes": [
+        "cost.credit-model-per-second-billing"
+      ],
+      "slug": "snowflak-cost-overview",
+      "title": "整体成本构成:计算、存储与数据传输",
+      "body": "Snowflake 的总成本拆分成三类,彼此独立计量:计算资源消耗信用点(credit),按信用点单价折算成账单金额;存储按月度平均字节数、按 TB 计费;数据传输只在跨区域/跨云传出(egress)时收费,导入不收费。计算资源本身又分三种:用户管理的虚拟仓库(按秒计费、每次启动 60 秒最低消费)、Snowflake 托管的 serverless 特性(如 Search Optimization、Snowpipe)自动伸缩、以及云服务层(cloud services)——后者只有当日消耗超过当日仓库计算量的 10% 时才单独计费。读完这份总账,能理解为什么后续每个具体计费细则(仓库、serverless、云服务)都要单独展开讲。"
+    },
+    {
+      "section": "33-cost-understanding-compute",
+      "verdict": "reading",
+      "nodes": [
+        "cost.warehouse-billing-60s-minimum",
+        "cost.serverless-feature-billing",
+        "cost.cloud-services-free-tier",
+        "cost.credit-model-per-second-billing"
+      ],
+      "slug": "snowflak-compute-cost-detail",
+      "title": "计算成本细则:60 秒起收、serverless 计费与云服务 10% 免费额度",
+      "body": "信用点(credit)是为消耗计算资源付费的计量单位,虚拟仓库每次启动或恢复都按 1 分钟起收,之后转为按秒计费;把仓库从 5X-Large/6X-Large 降到 4X-Large 及以下时,新旧资源会有短暂重叠计费的窗口。Serverless 特性(Search Optimization、Snowpipe 等)不依赖用户仓库,而是按“计算小时”(compute-hour,精确到秒后向上取整)单独计费,费率因特性而异。云服务层(cloud services)每天的消耗只有超过当日仓库计算总量 10% 的部分才会被计入账单,这个 10% 调整按 UTC 每天单独计算,因此月度账单里的实际调整幅度往往显著小于名义上的 10%。"
+    },
+    {
+      "section": "34-resource-monitors",
+      "verdict": "reading",
+      "nodes": [
+        "cost.resource-monitors-and-budgets",
+        "warehouse.resource-monitors"
+      ],
+      "slug": "snowflak-resource-monitors",
+      "title": "资源监控器(Resource Monitor):信用点配额与自动挂起",
+      "body": "资源监控器给账户级或若干指定仓库设定一个周期性的信用点配额(credit quota),当用量达到某个百分比阈值时可以触发三类动作:仅通知、通知并等当前语句跑完再挂起(Suspend)、或通知并立即取消正在运行的语句强制挂起(Suspend Immediately)。它只能控制用户管理的虚拟仓库,管不了 serverless 特性(如 Snowpipe、自动聚簇、物化视图维护)消耗的信用点——那些要用budget(预算)对象来监控。账户级监控器和仓库级监控器可以同时存在,任意一个先触发阈值都会生效;由于挂起动作本身需要时间生效,严格控成本时建议把阈值设在略低于 100% 的位置留出缓冲。"
+    },
+    {
+      "section": "35-account-replication-intro",
+      "verdict": "reading",
+      "nodes": [
+        "continuity.replication-and-failover"
+      ],
+      "slug": "snowflak-replication-failover",
+      "title": "跨账户复制与故障切换(Replication & Failover)",
+      "body": "复制组(replication group)把源账户里选定的一批对象持续复制到一个或多个目标账户,目标端得到的是只读副本;故障切换组(failover group)是能够被提升(promote)为可读写主副本的复制组,一旦提升,原来的只读副本立刻获得读写权限,这就是跨区域、跨云容灾的核心机制。复制支持数据库、共享、角色、仓库、网络策略等一长串对象类型,但角色对象必须一并复制,权限授予关系才能在目标账户里正确落地;某些高级对象类型(账户级参数、用户、故障切换组本身)仅限 Business Critical 版本及以上。复制按预设周期自动刷新,任一时刻只允许一次刷新在执行,故障切换前需要先暂停调度中的复制以避免切换过程中数据不一致。"
+    },
+    {
+      "section": "36-tables-external-intro",
+      "verdict": "reading",
+      "nodes": [
+        "ingestion.external-tables-over-lake"
+      ],
+      "slug": "snowflak-external-tables",
+      "title": "外部表(External Table):原地查询数据湖",
+      "body": "外部表让 Snowflake 像查询自己的表一样查询存放在外部 stage(客户云存储桶)里的文件,数据的唯一真源仍留在外部存储,Snowflake 不复制、不管理这些字节。默认只有一个 VARIANT 类型的 VALUE 列承载整行原始内容,若熟悉源文件结构,可以在此基础上定义虚拟列做强类型校验。为提升查询性能,推荐按日期、地区等维度对底层文件做路径分区(partition),外部表可以据此按路径表达式自动发现分区,也可以手工维护分区元数据。因为查询外部表通常比原生表慢,常见做法是在其上建物化视图,或干脆迁移到 Apache Iceberg 表以获得更好的查询语义和性能。"
+    }
+  ]
+}

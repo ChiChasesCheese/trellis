@@ -1,16 +1,16 @@
 %% trellis:begin %%
-# Data Loading & Ingestion
+# 数据加载与摄取
 
-Getting bytes from outside the platform into a table, at batch, micro-batch, and row-level latency.
+把平台外部的数据以批量、微批量和行级延迟等不同粒度导入表中。
 
 ## Topics
-- [[ingestion.bulk-copy-into|Bulk Loading (COPY INTO)]]
-- [[ingestion.file-formats-and-stages|File Formats & Stages]]
-- [[ingestion.snowpipe-auto-ingest|Snowpipe Auto-ingest]]
-- [[ingestion.snowpipe-streaming-offset-tokens|Snowpipe Streaming & Offset Tokens]]
-- [[ingestion.datastream-kafka-compatible|Datastream (Kafka Wire-compatible Ingestion)]]
-- [[ingestion.external-tables-over-lake|External Tables over a Data Lake]]
-- [[ingestion.unload-export|Unloading Data (COPY INTO location)]]
+- [[ingestion.bulk-copy-into|批量加载（COPY INTO）]]
+- [[ingestion.file-formats-and-stages|文件格式与暂存区（stage）]]
+- [[ingestion.snowpipe-auto-ingest|Snowpipe 自动摄取]]
+- [[ingestion.snowpipe-streaming-offset-tokens|Snowpipe Streaming 与偏移量令牌（offset token）]]
+- [[ingestion.datastream-kafka-compatible|Datastream（兼容 Kafka 协议的摄取）]]
+- [[ingestion.external-tables-over-lake|数据湖之上的外部表]]
+- [[ingestion.unload-export|数据卸载（COPY INTO location）]]
 %% trellis:end %%
 
 ## Notes

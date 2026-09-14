@@ -4,6 +4,7 @@
 # committed) after the skeleton file itself was not.
 domain: cdn-content
 title: CDN Content
+lang: en
 nodes:
 - id: foundations
   title: Performance Foundations

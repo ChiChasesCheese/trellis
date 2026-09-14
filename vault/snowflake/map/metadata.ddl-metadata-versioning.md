@@ -1,12 +1,19 @@
 %% trellis:begin %%
-# DDL as Metadata Versioning
-*Metadata & Cloud Services*
+# DDL 即元数据版本化
+*元数据与云服务*
 
-Why ALTER/CREATE/DROP are metadata-only operations that create a new table version rather than mutating data in place.
+为何 ALTER/CREATE/DROP 都是仅涉及元数据的操作，它们创建一个新的表版本，而不是就地修改数据。
 
-**Requires:** [[metadata.foundationdb-role|FoundationDB as the Metadata Store]]
+**Requires:** [[metadata.foundationdb-role|FoundationDB 作为元数据存储]]
 
-**Unlocks:** [[txn.ddl-as-transaction|DDL as a Transaction]]
+**Unlocks:** [[txn.ddl-as-transaction|DDL 即事务]]
+
+## Cards (5)
+- [[ddl-add-column-instant]]
+- [[ddl-drop-column-new-version]]
+- [[ddl-running-query-keeps-its-version]]
+- [[ddl-swap-with-atomic-cutover]]
+- [[ddl-type-widening-vs-rebuild]]
 %% trellis:end %%
 
 ## Notes
