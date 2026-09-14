@@ -149,3 +149,10 @@ skills: A11 topological order with weights · S08 deterministic tie-breaks · S1
 - https://raw.githubusercontent.com/snehasishroy/leetcode-companywise-interview-questions/master/stripe/all.csv (freq 62.5 all / 62.5 >6mo)
 - https://github.com/premjm-67/stripe-interview-questions (`PL.java` Parallel Courses III)
 - catalog/raw/github_repos.md §30 (tag table, freq 61.2)
+
+## 关联知识点
+
+- [[a11-weighted-topological-order|A11 带权拓扑序]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]
+- [[s21-python-stdlib-fluency|S21 语言熟练度与标准库]]

@@ -116,3 +116,14 @@ S03 modelling (state per client) · S05 strict vs non-strict boundaries · S12 t
 - dev.to programhelp ("3 requests per 10 seconds sliding window")
 - https://gist.github.com/ptarjan/e38f45f2dfe601419ca3af937fff574d (Stripe engineering: the four rate limiters, token bucket reference)
 - joeytor/StripeInterview README (Virtual Onsite / Coding → Rate Limiter)
+
+## 关联知识点
+
+- [[a07-per-key-sliding-window|A07 每 key 上按时间排序的滑动窗口]]
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s05-threshold-semantics|S05 阈值语义：严格 vs 非严格、计数 vs 比例、最小量门槛]]
+- [[s12-time-and-dates|S12 时间与日期]]
+- [[s16-sliding-window-token-bucket|S16 滑动窗口计数器 / 令牌桶]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]
+- [[s21-python-stdlib-fluency|S21 语言熟练度与标准库]]

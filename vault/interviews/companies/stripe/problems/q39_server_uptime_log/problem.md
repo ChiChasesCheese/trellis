@@ -92,3 +92,13 @@ skills: S02 parsing · S05 off-by-one / boundary discipline · S08 deterministic
 - https://github.com/joeytor/StripeInterview `src/main/java/ServerPenalty.java` (README → Phone Interview; verbatim prompt)
 - https://github.com/prashantrai/Algo_DS_InterviewPrep `src/Stripe/AnalyzeServerProcessUptimeLog.java` (mirror)
 - https://www.glassdoor.com/Interview/Write-a-function-compute-penalty-that-computes-the-total-penalty-given-a-server-log-as-a-string-AND-a-time-at-which-we-re-QTN_4434801.htm
+
+## 关联知识点
+
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s05-threshold-semantics|S05 阈值语义：严格 vs 非严格、计数 vs 比例、最小量门槛]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s10-event-stream-reversal|S10 事件流 + 反向事件]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]
+- [[s20-self-test-discipline|S20 自测纪律]]

@@ -11,6 +11,7 @@
 domain: code-core
 title: Code Core
 lang: en
+vault: interviews/rounds/code-core
 nodes:
   - id: round
     order: 1
@@ -308,6 +309,9 @@ nodes:
       - id: transfer.stripe-oa
         title: The Stripe-Shaped Assessment
         summary: One bespoke problem in three to five unlocking parts, parsing to state to rules to exact stdout, payments vocabulary, sixty minutes.
+      - id: transfer.snowflake
+        title: The Snowflake-Shaped Rounds
+        summary: A HackerRank OA of two to three LeetCode-grade problems, then phone coding with stacked follow-ups and class design that always ends in a concurrency question.
       - id: transfer.amazon
         title: The Amazon-Shaped Assessment
         summary: Two LeetCode-style problems plus work simulation and leadership-principle questions, and what the debrief actually scores.

@@ -1,5 +1,7 @@
 # 02 · DP 模式识别 + 状态设计
 
+> 通用课（[[Code Core MOC|code-core]]）：[[algorithms.dp]] · [[algorithms.recognition]] <!-- code-core-links -->
+
 > 面向 OA（q02 q04 q05 q09）与电面（q01 的 DP 部分）。每种模式：**一眼信号 → 状态定义 → 转移 → 复杂度 → 本 kit 哪题**。
 > 代码引用自 `../../problems/q*/solution.py`（可直接打开对照）。先看 `01-solving-framework.md` §3 的 120 min OA 框架，再看这份文件的算法细节。
 

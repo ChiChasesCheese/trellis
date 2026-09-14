@@ -75,3 +75,13 @@ S08 deterministic sort · S09 exact formatting · S19 incremental design
 
 ## Clarifications (from adversarial review, 2026-08-26)
 - When the prorated allowance is not a multiple of 100 (e.g. r = 1/3 → 13,333 tokens), the leftover over-allowance tokens are floored to 100-blocks again, so 67 excess tokens bill 0 blocks. This double floor is intentional and matches the per-session block rule.
+
+## 关联知识点
+
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s04-group-then-aggregate|S04 分组聚合，规则每组一次而不是每行一次]]
+- [[s06-money-integer-cents|S06 金额用整数最小单位；显式舍入；两位小数格式]]
+- [[s07-tiered-metered-proration|S07 阶梯 / 计量 / 按比例分摊]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s09-byte-exact-output-format|S09 字节级精确的输出格式]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]

@@ -162,3 +162,11 @@ skills: A10 min transactions to settle debts · S03 domain records · S17 ledger
 - https://github.com/Hazeera65/stripe-interview/tree/main/round1 (465optimalaccountBalancing folder)
 - catalog/raw/github_repos.md §30 (corroborating repos), catalog/raw/en_forums.md §A3 / §A12
 - problems/q32_money_transfer_rebalancing (the bespoke twin; Part 2 = this search with a target balance)
+
+## 关联知识点
+
+- [[a10-min-transfers-settle-debts|A10 最少转账次数结清债务]]
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s17-ledger-balance-tracking|S17 台账式余额跟踪]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]
+- [[s21-python-stdlib-fluency|S21 语言熟练度与标准库]]

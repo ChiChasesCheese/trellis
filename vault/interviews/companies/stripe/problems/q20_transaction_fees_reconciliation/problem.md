@@ -150,3 +150,17 @@ S02 CSV parsing by header · S04 group-by once per group · S06 integer money + 
 - csoahelp 2024-10-04 / 2024-11-12 (Receivables Brazil: `customer_id,merchant_id,payout_date,card_type,amount` grouped by merchant, card type, payout date); 1point3acres 1093626
 - 1point3acres curated problem 41eadf8b; 1point3acres OJ "Payment Reconciliation (Transactions Matching & Discrepancy Report)"
 - InterviewDB "Transaction Fee — Phone"
+
+## 关联知识点
+
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s04-group-then-aggregate|S04 分组聚合，规则每组一次而不是每行一次]]
+- [[s06-money-integer-cents|S06 金额用整数最小单位；显式舍入；两位小数格式]]
+- [[s07-tiered-metered-proration|S07 阶梯 / 计量 / 按比例分摊]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s09-byte-exact-output-format|S09 字节级精确的输出格式]]
+- [[s11-idempotency-dedup|S11 幂等 / 去重]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]
+- [[s21-python-stdlib-fluency|S21 语言熟练度与标准库]]
+- [[s24-payments-domain-vocab|S24 领域词汇（支付）]]

@@ -1,5 +1,7 @@
 # 10 · 与面试官沟通（phone screen / onsite）
 
+> 通用课（[[Code Core MOC|code-core]]）：[[round.communication]] · [[round.ambiguity]] <!-- code-core-links -->
+
 > OA 是没人看的；phone screen 和 onsite 是有人看的，而**看的人打的分里，
 > 沟通占的权重不比代码低**。这一章是给"有人在场"的那一半准备的。
 

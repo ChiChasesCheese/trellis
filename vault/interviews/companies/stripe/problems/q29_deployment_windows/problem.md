@@ -165,3 +165,13 @@ S08 deterministic ordering · S09 exact formatting (`24:00`) · S19 incremental 
 - 1point3acres 2026-08-24 "OA UTC Timezone Mapping and Sliding Window" (en_forums.md §18); 1point3acres OJ reference titles "Find the First K Valid UTC Deployment Windows", "Weekly Deployment Window Scheduler" (cn_sources.md §2.24)
 - interviewdb.io/question/stripe — "Deployment — OA" (title only; algo_questions.md P7, process_and_jd.md A.8)
 - prachub.com/companies/stripe — "Schedule Weekly Deployment Windows" (2026-05-09, Jul 2026 tech screen spec in en_forums.md §18)
+
+## 关联知识点
+
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s05-threshold-semantics|S05 阈值语义：严格 vs 非严格、计数 vs 比例、最小量门槛]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s09-byte-exact-output-format|S09 字节级精确的输出格式]]
+- [[s12-time-and-dates|S12 时间与日期]]
+- [[s13-closed-intervals-offbyone|S13 闭区间、补齐空隙、off-by-one 纪律]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]

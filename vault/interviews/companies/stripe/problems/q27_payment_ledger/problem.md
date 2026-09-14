@@ -145,3 +145,14 @@ tracking · S18 validation/error paths · S19 incremental design
 - https://programhelp.net/en/vo/stripe-summer-intern-vo-coding-integration/ (H4, 2026-01-26 intern VO)
 - https://programhelp.net/en/vo/stripe-intern-vo-coding-integration/ (H6, 2026-04-13 intern VO: PaymentLedger 4 methods)
 - catalog/raw/en_forums.md §20 (follow-ups: partial refunds, time-range queries, bad timestamps); cn_sources.md §3 "PaymentLedger 类"
+
+## 关联知识点
+
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s06-money-integer-cents|S06 金额用整数最小单位；显式舍入；两位小数格式]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s11-idempotency-dedup|S11 幂等 / 去重]]
+- [[s12-time-and-dates|S12 时间与日期]]
+- [[s17-ledger-balance-tracking|S17 台账式余额跟踪]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]

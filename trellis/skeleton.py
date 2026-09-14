@@ -70,6 +70,14 @@ class Skeleton:
     # original to keep. Terms of art stay English in any language. The
     # learner reviews in Chinese, so a domain is Chinese unless it says `en`.
     lang: str = "zh"
+    # Where this domain's content lives, relative to vault/. A subject sits
+    # under domains/, an interview round under interviews/rounds/; the
+    # default is the domain slug itself.
+    folder: str = ""
+
+    def __post_init__(self) -> None:
+        if not self.folder:
+            self.folder = self.domain
 
     def leaves(self) -> list[Node]:
         return [n for n in self.walk() if n.is_leaf]
@@ -182,8 +190,14 @@ def load_skeleton(path: str | Path) -> Skeleton:
         errors.append(f"invalid lang: {lang!r} (want a language code such as en or zh)")
         lang = "zh"
 
+    folder = data.get("vault", domain)
+    if not isinstance(folder, str) or not re.match(r"^[a-z0-9_-]+(/[a-z0-9_-]+)*$", folder):
+        errors.append(f"invalid vault folder: {folder!r} (want a relative path inside "
+                      "vault/, e.g. domains/kafka)")
+        folder = domain
+
     skeleton = Skeleton(domain=domain, title=title.strip(), roots=roots, by_id={},
-                        lang=lang)
+                        lang=lang, folder=folder)
     for node in skeleton.walk():
         if node.id in skeleton.by_id:
             errors.append(f"duplicate node id: {node.id!r}")

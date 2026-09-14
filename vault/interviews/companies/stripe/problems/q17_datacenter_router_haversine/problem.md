@@ -143,3 +143,14 @@ design · S21 stdlib (`math`)
 
 ## Clarifications (from adversarial review, 2026-08-26)
 - `ROUTE` accepts any numeric lat/lon without range validation (e.g. `ROUTE 100 200` is computed, not rejected) — the sources are silent; hidden tests are unlikely to probe it.
+
+## 关联知识点
+
+- [[s01-read-full-spec-first|S01 先读完整份规格，为 Part N+1 而设计]]
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s09-byte-exact-output-format|S09 字节级精确的输出格式]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]
+- [[s21-python-stdlib-fluency|S21 语言熟练度与标准库]]

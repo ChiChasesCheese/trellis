@@ -85,6 +85,10 @@ def main() -> None:
         if study:
             lines.append("先读：" + " · ".join(f"[{Path(s).stem}]({s})" for s in study))
             lines.append("")
+        core = rnd.get("core") or []
+        if core:
+            lines.append("通用能力（[[Code Core MOC|code-core]] 卡组与练习）：" + " · ".join(f"[[{c}]]" for c in core))
+            lines.append("")
         for sk in rnd.get("skills", []):
             probs = sk.get("problems") or []
             coded = [p for p in probs if p not in tree.NONCODE]

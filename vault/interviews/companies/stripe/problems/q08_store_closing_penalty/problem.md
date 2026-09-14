@@ -135,3 +135,12 @@ S19 incremental design (Part 3 reuses Part 2)
 - https://leetcode.com/discuss/interview-question/2585038/ ("Stripe | Phone Screen | Senior SE | Reject", 2022-09-16)
 - https://leetcode.com/discuss/post/3950781/ (Dublin L2 variant)
 - extrabrain.app 2026-02-10 / linkjob.ai 2025-09-16 (OA 3-part listing); 1point3acres thread-844359; jointaro "Minimum Penalty for a Shop"
+
+## 关联知识点
+
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s05-threshold-semantics|S05 阈值语义：严格 vs 非严格、计数 vs 比例、最小量门槛]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s10-event-stream-reversal|S10 事件流 + 反向事件]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]

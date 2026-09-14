@@ -13,7 +13,7 @@
 | 1 | 通读 `00-essentials/01` → `11`，不背，只求"知道有这回事" | 3–4 小时 |
 | 2 | 打开 `10-solutions/q01_fraud_mcc_disputes.md`，只读「题意」「考点」两节，合上，自己写 | 60 分钟 |
 | 3 | 写完再读该篇的「思路」「骨架」「坑」，对照 `problems/q01_*/solution.py` | 20 分钟 |
-| 4 | 把没答上来的点，去 SystemDesign 仓库的 **Code Core** 牌组里找对应卡片，加进复习队列 | — |
+| 4 | 把没答上来的点，去本仓库 [[Code Core MOC|Code Core]] 牌组（`vault/interviews/rounds/code-core/`）里找对应卡片，加进复习队列 | — |
 | 5 | 按 `INDEX.md` 的顺序刷完 Top 10，再刷算法组 qA01–qA13 | — |
 
 **第 2 步是重点。** 题解是用来验收的，不是用来读着爽的。先写，再看。
@@ -44,7 +44,7 @@ study/
 
 ## 与 Code Core 牌组的关系
 
-姊妹仓库 `SystemDesign` 里有一个新领域 **`code-core`**（Anki 牌组 *Code Core*，86 个节点）。
+本仓库的领域 **`code-core`**（`vault/interviews/rounds/code-core/`，入口 [[Code Core MOC]]）（Anki 牌组 *Code Core*，86 个节点）。
 分工是清楚的：
 
 - **这里（stripeoa/study）** = 中文、具体、面向这 53 道题。读一遍，做一遍。

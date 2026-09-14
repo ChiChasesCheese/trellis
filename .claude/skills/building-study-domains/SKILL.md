@@ -15,7 +15,8 @@ drills. Technical terms stay English in full-width parentheses on first use, e.g
 微分区（micro-partition）. Sources may be English. `lang: zh` is the default; only an older English
 domain says `lang: en`.
 
-Keep `vault/<domain>/BUILD.md` as the durable record: the source survey, one ledger row per
+Put a new subject's content in `vault/domains/<domain>/` (skeleton `vault: domains/<domain>`) and keep
+`vault/<folder>/BUILD.md` as the durable record: the source survey, one ledger row per
 finished step, and the next action. A new session resumes from it.
 
 ## Steps
@@ -82,7 +83,7 @@ An older English domain being deepened adds translations instead of rewriting: f
 ## Card agents
 
 - Split the leaves by top-level node into up to 3 disjoint groups; one agent per group owns
-  `vault/<domain>/cards/<node>/` for its nodes and nothing else.
+  `vault/<folder>/cards/<node>/` for its nodes and nothing else.
 - Write one prompt template to a file (paths, both import paths, card mix, language, gate) and
   render it per group; each agent reads its file. Shell steps inside agents are plain single commands.
 - Every prompt starts with a resume rule: check `stats` and the cards folder, skip leaves that

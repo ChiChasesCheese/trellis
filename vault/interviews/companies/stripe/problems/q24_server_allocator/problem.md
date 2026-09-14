@@ -109,3 +109,13 @@ S03 modelling (state per type) · S08 deterministic smallest-free ordering · S1
 - https://github.com/sahaia1/Stripe_Pyhton_libraries/blob/main/code1.py (usage transcript)
 - Glassdoor QTN_1221351 ("Create a ServerManager class with allocate(string) and deallocate(string)…")
 - 1point3acres 1093485 (摘要: allocate/deallocate 电面)
+
+## 关联知识点
+
+- [[a15-heap-topk-least-loaded|A15 堆做 top-k / 选最闲的]]
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s11-idempotency-dedup|S11 幂等 / 去重]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]
+- [[s21-python-stdlib-fluency|S21 语言熟练度与标准库]]

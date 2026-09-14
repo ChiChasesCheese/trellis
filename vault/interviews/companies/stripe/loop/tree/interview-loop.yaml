@@ -35,6 +35,7 @@ rounds:
     name: Technical Phone Screen（1 题 3–4 part 递进）
     duration_min: 45
     study: [study/10-rounds/03-phone-screen.md, study/00-prereq/04-字符串与解析-split-strip-format.md, study/00-prereq/05-csv与json.md]
+    core: [round.reading, round.time, input.line-protocols, input.delimited, model.records, rules.money, rules.rounding, output.formatting, verification.edge-catalog, transfer.stripe-oa]
     skills:
       - id: parse_aggregate
         name: 读入 → 解析 → 分组聚合 → 定序输出（SQL 主线手写）
@@ -68,6 +69,7 @@ rounds:
     name: Onsite · Bug Squash（真实开源 bug）
     duration_min: 60
     study: [study/10-rounds/04-bug-squash.md, study/20-cards/python_debug.md]
+    core: [round.debugging, round.hidden-tests, python.pitfalls, verification.tests, verification.invariants]
     skills:
       - id: reproduce_first
         name: 先跑失败测试复现，再读 README
@@ -92,6 +94,7 @@ rounds:
     name: Onsite · Integration（repo + API 文档 + 联网）
     duration_min: 60
     study: [study/10-rounds/05-integration.md, study/00-prereq/06-HTTP与API-urllib-requests-http.server.md, study/20-cards/stripe_api.md, study/20-cards/http_json.md]
+    core: [input.structured, model.idempotency, model.state-machine, python.io]
     skills:
       - id: read_repo_fast
         name: 快速读陌生 repo、按 README 跑起来
@@ -116,6 +119,7 @@ rounds:
     name: Onsite · Programming Exercise（更长的多 part）
     duration_min: 60
     study: [study/10-rounds/06-coding.md, study/00-prereq/02-Python结构-变量函数类模块.md, study/20-cards/patterns.md]
+    core: [round.communication, model.event-stream, model.reversal, chrono.windows, toolbox.heap, algorithms.recognition, performance.budget, transfer.stripe-oa]
     skills:
       - id: scheduler_state_machine
         name: 日期调度、plan 变更、续费状态机

@@ -1,7 +1,7 @@
 # INDEX — 53 题 × 考点 × Code Core 节点
 
 > 用法：做错一道题 → 在这张表里找到它那一行 → 去 `00-essentials/` 读对应的章节 →
-> 去 SystemDesign 仓库的 **Code Core** 牌组里把对应叶子的卡片加进复习队列。
+> 去 [[Code Core MOC|Code Core]] 牌组里把对应叶子的卡片加进复习队列。
 >
 > **考点编号**见 `00-essentials/02-core-topics.md`。
 

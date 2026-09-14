@@ -5,6 +5,7 @@
 domain: markets
 title: Markets & Factors
 lang: en
+vault: domains/markets
 nodes:
   - id: foundations
     order: 1

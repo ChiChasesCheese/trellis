@@ -1,5 +1,7 @@
 # 09 · 无调试器调试 + 自测纪律
 
+> 通用课（[[Code Core MOC|code-core]]）：[[round.debugging]] · [[round.hidden-tests]] · [[verification.tests]] · [[verification.invariants]] <!-- code-core-links -->
+
 > 浏览器 IDE 里没有断点，没有 IDE 跳转，切换标签页还会被记录。
 > 你只有 `print(..., file=sys.stderr)` 和脑子。
 

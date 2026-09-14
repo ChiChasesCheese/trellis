@@ -1,5 +1,7 @@
 # 03 · Python 语法 · 标准库 · 惯用法速查
 
+> 通用课（[[Code Core MOC|code-core]]）：[[python.stdlib]] · [[python.idioms]] · [[python.io]] <!-- code-core-links -->
+
 > 只收**在 60 分钟里真的会用到**的东西。每一条都要能不查文档写出来。
 > 想在别的语言里做这类题，看最后一节的对照表。
 

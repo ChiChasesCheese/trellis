@@ -123,3 +123,15 @@ validation / invalid actions · S19 incremental design · S24 domain literacy (C
 - https://github.com/sahaia1/Stripe_Pyhton_libraries/blob/main/capital.py (Python variant)
 - https://github.com/Shivam5022/Interview-Experiences (2025 OA: "parse a command string and execute commands simulating transactions")
 - 1point3acres thread-662909「热乎 Stripe OA(Capital)」(2020-08, content not visible)
+
+## 关联知识点
+
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s06-money-integer-cents|S06 金额用整数最小单位；显式舍入；两位小数格式]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s09-byte-exact-output-format|S09 字节级精确的输出格式]]
+- [[s17-ledger-balance-tracking|S17 台账式余额跟踪]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]
+- [[s24-payments-domain-vocab|S24 领域词汇（支付）]]

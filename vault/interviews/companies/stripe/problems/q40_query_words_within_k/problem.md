@@ -95,3 +95,12 @@ skills: S02 parsing · S08 deterministic tie-break · S13 inclusive/exclusive bo
 
 ## Sources
 - https://leetcode.com/discuss/post/4595354/ ("Stripe Intern Interview Question", 2024-01-20; see catalog/raw/en_forums.md §B3)
+
+## 关联知识点
+
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s13-closed-intervals-offbyone|S13 闭区间、补齐空隙、off-by-one 纪律]]
+- [[s14-string-normalization|S14 字符串归一化 / 规范化]]
+- [[s16-sliding-window-token-bucket|S16 滑动窗口计数器 / 令牌桶]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]

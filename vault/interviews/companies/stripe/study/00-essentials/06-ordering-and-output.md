@@ -1,5 +1,7 @@
 # 06 · 排序、tie-break、字节级输出
 
+> 通用课（[[Code Core MOC|code-core]]）：[[output.ordering]] · [[output.formatting]] · [[output.sentinels]] <!-- code-core-links -->
+
 > 这一章的所有内容都属于"算对了还是会挂"的范畴。53 道题里 `fmt` 标记的测试有 60 个，
 > 全部集中在这一章。
 

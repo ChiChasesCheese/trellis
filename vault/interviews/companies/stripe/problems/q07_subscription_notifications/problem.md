@@ -218,3 +218,14 @@ state → schedule → render)
 - 1point3acres 题库 `problems/4d6938ea-…` 「Email Subscription」; 1point3acres 1100699 「2025 intern team screen+VO」 (VO: Email Subscription)
 - prachub 「Generate Account Email Notifications」 (rule-driven variant, full spec; ≤ 2·10^5 lines)
 - collegesidekick repost of 1point3acres 793600 (onsite: "email notification for invoice events")
+
+## 关联知识点
+
+- [[s01-read-full-spec-first|S01 先读完整份规格，为 Part N+1 而设计]]
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s09-byte-exact-output-format|S09 字节级精确的输出格式]]
+- [[s10-event-stream-reversal|S10 事件流 + 反向事件]]
+- [[s12-time-and-dates|S12 时间与日期]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]

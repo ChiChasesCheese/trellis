@@ -21,6 +21,7 @@
 domain: narrative
 title: Narrative Round
 lang: en
+vault: interviews/rounds/narrative
 nodes:
   - id: round
     order: 1

@@ -120,3 +120,13 @@ discipline · S18 validation of missing keys and ranks · S19 incremental design
 - https://www.1point3acres.com/bbs/thread-804154-1-1.html (2021-10 条纹店面: "Wishlist" with mutual-rank variants)
 - https://www.1point3acres.com/bbs/thread-873287-1-1.html (2022-03 电面 prep list "mutual rank … wishlist")
 - https://www.1point3acres.com/bbs/thread-1028744-1-1.html (2023-11 店面高频题整理: mutual rank)
+
+## 关联知识点
+
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s13-closed-intervals-offbyone|S13 闭区间、补齐空隙、off-by-one 纪律]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]
+- [[s20-self-test-discipline|S20 自测纪律]]

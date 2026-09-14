@@ -1,5 +1,7 @@
 # 04 · 类设计 + 并发：契约先行 · 四个数据结构 · 锁的五步答法
 
+> 通用课（[[Code Core MOC|code-core]]）：[[model.records]] · [[model.entity-state]] · [[model.state-machine]] · [[python.classes]] <!-- code-core-links -->
+
 > 覆盖 `od01`–`od09`（od07 未建题，跳过）。依据 `../../catalog/skills_matrix.md` S09（契约先行）/ S10（并发正确性）/ S11（持久化）/ S12（缓存淘汰）/ S13（队列语义）。先读 `01-solving-framework.md` §2 的 45 min OOD 框架，这里是里面每一步具体怎么落地。
 
 ---

@@ -1,6 +1,6 @@
 # interviews/ — 面试的完整文件夹
 
-> 原 `Quick_Check/`（Stripe OA 起家）于 2026-09-13 重构为此目录。Trellis 的 `stripe` domain（`skeleton/stripe.yaml` + `vault/stripe/`）仍是 Stripe OA 的卡片面；这里是它背后的**原始研究、题库、演练、故事库与简历**——不进 Anki，按公司整体消费。
+> 原 `Quick_Check/`（Stripe OA 起家）于 2026-09-13 重构为此目录。Trellis 的 `stripe` domain（`skeleton/stripe.yaml` + `vault/interviews/companies/stripe/deck/`）仍是 Stripe OA 的卡片面；这里是它背后的**原始研究、题库、演练、故事库与简历**——不进 Anki，按公司整体消费。
 
 ## 目录约定：company → phase，外加一个 core
 
@@ -12,9 +12,13 @@ interviews/
     stories/                evidence-base.md（S1–S9 旗舰故事）+ resume-evidence-map/（学习画像）
     answers/                逐题行为面答案手册 dim1–dim6（技术深度 / 影响 / 领导力 / 带教 / HR）
     playbooks/              按轮次的通用打法：AI 语音筛选 / recruiter / HM / 电面 / onsite …
+  rounds/                   与公司无关的轮次能力，都是 trellis 领域（有 skeleton、进 Anki）
+    code-core/              编码轮通用能力：读题、解析、建模、金额、时间、输出、算法、验证；transfer.<公司> 叶子接各家 kit
+    leetcode/               LeetCode 题型卡组（adopted）
+    narrative/              讲自己的那一轮（narrative round）
   companies/                每家公司一个自包含 kit（题库 + 测试 + 演练器 + 研究 + 学习面）
-    stripe/                 = github.com/ChiChasesCheese/stripeoa 全量镜像：problems/（54 题带测试）· loop/rounds/（recruiter→onsite 全轮次 39 题）· catalog/ · study/ · tools/ · drill.py · loop/mock.py
-    snowflake/              同一骨架：AI 轮 dossier（00–07, CARD, fit）+ 正在建的全轮次 kit；进度见 CHECKPOINT.md / LEDGER.md / tasks/plan.md
+    stripe/                 = github.com/ChiChasesCheese/stripeoa 全量镜像：problems/（每题唯一题面）· loop/rounds/ · catalog/ · study/ · tools/；deck/ = trellis 领域 stripe 的卡片与地图
+    snowflake/              同一骨架：dossier（00–07）+ 全轮次 kit，入口 CONTENTS.md
   _template/company/        新公司 dossier 骨架，cp -r 即可开工
 ```
 
@@ -52,6 +56,6 @@ cp -r vault/interviews/_template/company vault/interviews/companies/<company>
 
 ## 与 Trellis 其它部分的关系
 
-- `vault/stripe/`（domain）里的 40 张卡片是从 `companies/stripe/study/` 提炼出来的**可复习面**；这里的东西不建卡。
+- `vault/interviews/companies/stripe/deck/`（domain）里的 40 张卡片是从 `companies/stripe/study/` 提炼出来的**可复习面**；这里的东西不建卡。
 - `code-core` domain 的 `transfer.*` 分支是「新公司的一轮面试 = 一个叶子」的接口；公司目录里的具体题目留在这里，通用规律升到那里。
 - `skeleton/stripe.yaml` 头部注释指向 `companies/stripe/`。

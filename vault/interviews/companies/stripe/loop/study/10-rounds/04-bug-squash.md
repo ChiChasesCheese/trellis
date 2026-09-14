@@ -1,5 +1,7 @@
 # 04 · Onsite · Bug Squash（45–60 min）
 
+> 本轮用到的通用能力（[[Code Core MOC|code-core]]）：[[round.debugging]] · [[round.hidden-tests]] · [[python.pitfalls]] · [[verification.tests]] · [[verification.invariants]] <!-- code-core-links -->
+
 > 事实层在 `loop/LOOP_GUIDE.md` §4。**从零学调试在 `loop/rounds/04_bug_squash/DEBUG_101.md`**——
 > 如果你没用过 pdb，先读那份，本章假设你读过了。
 

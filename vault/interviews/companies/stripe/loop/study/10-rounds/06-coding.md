@@ -1,5 +1,7 @@
 # 06 · Onsite · Programming Exercise（45–60 min）
 
+> 本轮用到的通用能力（[[Code Core MOC|code-core]]）：[[round.communication]] · [[model.event-stream]] · [[model.reversal]] · [[chrono.windows]] · [[toolbox.heap]] · [[algorithms.recognition]] · [[performance.budget]] · [[transfer.stripe-oa]] <!-- code-core-links -->
+
 > 事实层在 `loop/LOOP_GUIDE.md` §6。本章讲练法。
 
 ## 这轮和电面的真正区别

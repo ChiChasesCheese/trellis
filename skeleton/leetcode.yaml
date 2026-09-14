@@ -4,6 +4,7 @@
 domain: leetcode
 title: LeetCode
 lang: zh
+vault: interviews/rounds/leetcode
 nodes:
 - id: fundamentals
   title: 刷题方法论与复杂度预估（problem-solving meta）

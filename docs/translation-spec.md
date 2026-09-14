@@ -70,7 +70,7 @@ Leaderless replication needs {{c1::W + R > N}} to guarantee read-your-writes.
 ## Verify
 
 ```bash
-cd /Users/chizhang/Code/SystemDesign && trellis --all validate
+cd ~/Code/trellis && uv run trellis --all validate
 ```
 
 Zero errors. The parser rejects a translation that is missing half a qa pair or

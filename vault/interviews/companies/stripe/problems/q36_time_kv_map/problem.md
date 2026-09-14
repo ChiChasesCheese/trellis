@@ -103,3 +103,11 @@ skills: S03 domain modeling · S12 time handling · S13 inclusive/exclusive boun
 - https://github.com/SogAniMic/Stripe_coding_challenge/blob/main/MultiTimeMap.ipynb (verbatim statement + examples; repo "Stripe_coding_challenge", 2023-01-27)
 - https://github.com/SogAniMic/Stripe_coding_challenge (`first_missing_positive.ipynb`, Part 4 statement)
 - https://github.com/Murillo2380/interview-coding-solutions `medium-stripe-timestamp-cache`
+
+## 关联知识点
+
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s12-time-and-dates|S12 时间与日期]]
+- [[s13-closed-intervals-offbyone|S13 闭区间、补齐空隙、off-by-one 纪律]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]

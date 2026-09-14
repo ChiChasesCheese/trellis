@@ -115,3 +115,11 @@ skills: A06 tiered brackets · S06 integer money + rounding · S07 tiered math �
 - https://raw.githubusercontent.com/liquidslr/leetcode-company-wise-problems/main/Stripe/4.%20More%20Than%20Six%20Months.csv (freq 100.0)
 - https://raw.githubusercontent.com/snehasishroy/leetcode-companywise-interview-questions/master/stripe/all.csv (freq 87.5 all / 100.0 >6mo)
 - catalog/raw/github_repos.md §30 (tag table, freq 92.7)
+
+## 关联知识点
+
+- [[a06-graduated-tax-brackets|A06 累进税 / 阶梯]]
+- [[s06-money-integer-cents|S06 金额用整数最小单位；显式舍入；两位小数格式]]
+- [[s07-tiered-metered-proration|S07 阶梯 / 计量 / 按比例分摊]]
+- [[s13-closed-intervals-offbyone|S13 闭区间、补齐空隙、off-by-one 纪律]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]

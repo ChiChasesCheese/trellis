@@ -133,3 +133,15 @@ S19 incremental design · A10 LC 465 DFS with pruning
 - https://www.1point3acres.com/bbs/thread-1029620-1-1.html (Phone + Onsite: "Money Transfer" with optimization follow-ups)
 - https://programhelp.net/en/vo/stripe-sde-interview-vo-5-round-interview-experience/ (2026-02-27 VO: settlement, min transactions DFS, audit)
 - https://github.com/Hazeera65/stripe-interview (`round1/465optimalaccountBalancing/`)
+
+## 关联知识点
+
+- [[a10-min-transfers-settle-debts|A10 最少转账次数结清债务]]
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s05-threshold-semantics|S05 阈值语义：严格 vs 非严格、计数 vs 比例、最小量门槛]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s09-byte-exact-output-format|S09 字节级精确的输出格式]]
+- [[s17-ledger-balance-tracking|S17 台账式余额跟踪]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]

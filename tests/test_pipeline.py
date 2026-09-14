@@ -215,8 +215,9 @@ def test_all_flag_iterates_domains(project):
 
 def test_real_repo_content_validates_and_builds(tmp_path):
     skeleton = load_skeleton(REPO / "skeleton" / "system-design.yaml")
-    cards, errors = load_cards(REPO / "vault" / "system-design" / "cards")
-    readings, reading_errors = load_readings(REPO / "vault" / "system-design" / "readings")
+    content = REPO / "vault" / skeleton.folder
+    cards, errors = load_cards(content / "cards")
+    readings, reading_errors = load_readings(content / "readings")
     report = validate(skeleton, cards, errors, readings, reading_errors)
     assert report.errors == []
     assert len(cards) >= 50

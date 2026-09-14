@@ -165,3 +165,15 @@ S02 parsing · S03 modelling (records + dict keyed by (src,dst)) · S06 integer 
 - 1point3acres 题库 shipping-cost-calculator (phone screen, last asked 2025-12-19); 1point3acres threads 1131552, 7331443
 - programhelp 2025-11-21; oavoservice 2025-12-29; linkjob 2025-12-07; medium @azn7u1 (matrix + tiers)
 - Glassdoor QTN_8206177 (tier-based shipping), QTN_7989241 (`USD:CAD:DHL:5` parser); Blind d4f50dzn (Jul 2026); PracHub; InterviewDB "Shipping Cost — Phone"
+
+## 关联知识点
+
+- [[a03-bounded-hops-shortest-path|A03 ≤K 跳的最短路]]
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s06-money-integer-cents|S06 金额用整数最小单位；显式舍入；两位小数格式]]
+- [[s07-tiered-metered-proration|S07 阶梯 / 计量 / 按比例分摊]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s13-closed-intervals-offbyone|S13 闭区间、补齐空隙、off-by-one 纪律]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]

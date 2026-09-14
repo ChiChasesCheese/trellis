@@ -412,7 +412,7 @@ def adopt_deck(root: str | Path, domain: str, deck: str, call, url: str | None =
     for leaf in skeleton.leaves():
         by_suffix.setdefault(leaf.id.rsplit(".", 1)[-1], []).append(leaf.id)
     result = AdoptResult()
-    cards_dir = root / "vault" / domain / "cards"
+    cards_dir = root / "vault" / skeleton.folder / "cards"
     prefix = prefix or domain
     to_tag: list[tuple[int, str]] = []
     for note in notes:

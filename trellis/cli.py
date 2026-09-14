@@ -1,10 +1,10 @@
 """CLI. Layout convention (one repo, many domains):
 
     skeleton/<domain>.yaml      the mind map
-    vault/<domain>/             Obsidian content for that domain
-    vault/<domain>/cards/       cards (leaves)
-    vault/<domain>/readings/    long-form notes, multi-node
-    vault/<domain>/drills/      design/coding exercises, multi-node
+    vault/<folder>/             Obsidian content for that domain
+    vault/<folder>/cards/       cards (leaves)
+    vault/<folder>/readings/    long-form notes, multi-node
+    vault/<folder>/drills/      design/coding exercises, multi-node
     corpora/<id>.yaml           a book or series registered for digestion
     codebases/<name>.yaml       a repository studied as a learning target
     dist/<domain>.apkg          build output

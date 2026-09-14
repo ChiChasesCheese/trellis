@@ -6,6 +6,7 @@
 domain: quant-infra
 title: Quant Infrastructure
 lang: en
+vault: domains/quant-infra
 nodes:
   - id: foundations
     order: 1

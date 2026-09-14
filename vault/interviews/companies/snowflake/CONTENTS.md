@@ -22,6 +22,8 @@
 
 先读：[02-oa](study/10-rounds/02-oa.md) · [02-dp-patterns](study/00-essentials/02-dp-patterns.md) · [03-graph-tree-patterns](study/00-essentials/03-graph-tree-patterns.md)
 
+通用能力（[[Code Core MOC|code-core]] 卡组与练习）：[[round.time]] · [[round.hidden-tests]] · [[algorithms.recognition]] · [[algorithms.dp]] · [[algorithms.graph-traversal]] · [[algorithms.topological]] · [[performance.budget]] · [[verification.edge-catalog]] · [[transfer.snowflake]]
+
 ### 计数/最优化 DP（元音游程、paid/free server、加权区间调度、2D DP）
 
 | | 题 | 题集 | 题解 | #refs | 最近 | 置信度 |
@@ -89,6 +91,8 @@
 ## 03_phone_coding · 技术电面 coding（60 min：10 介绍 / 40 题 / 10 反问）
 
 先读：[03-phone-coding](study/10-rounds/03-phone-coding.md) · [01-solving-framework](study/00-essentials/01-solving-framework.md) · [03-graph-tree-patterns](study/00-essentials/03-graph-tree-patterns.md)
+
+通用能力（[[Code Core MOC|code-core]] 卡组与练习）：[[round.reading]] · [[round.communication]] · [[round.ambiguity]] · [[model.event-stream]] · [[toolbox.heap]] · [[toolbox.prefix-trees]] · [[algorithms.sliding-window]] · [[algorithms.shortest-path]] · [[verification.tests]] · [[transfer.snowflake]]
 
 ### RBAC / DAG 权限继承（继承 → deny 覆盖 → 反向查询）
 
@@ -202,6 +206,8 @@
 ## 04_ood · OOD / 类设计（电面或 onsite，默认并发追问）
 
 先读：[04-ood](study/10-rounds/04-ood.md) · [04-class-design-and-concurrency](study/00-essentials/04-class-design-and-concurrency.md)
+
+通用能力（[[Code Core MOC|code-core]] 卡组与练习）：[[model.records]] · [[model.entity-state]] · [[model.state-machine]] · [[model.idempotency]] · [[toolbox.cache]] · [[python.classes]]
 
 ### 优先级任务调度器（tie-break、重复 ID 抑制、并发、持久化）
 

@@ -139,3 +139,15 @@ S17 ledger-style balance tracking · S19 incremental design
 - dev.to / programhelp 「transaction logs `user event amount` → final balance」
 - GitHub Shivam5022 interview experience (OA: "parse a command string and execute commands simulating transactions between users' bank accounts")
 - https://docs.stripe.com/payments/balances ; https://docs.stripe.com/reports/balance-transaction-types (ledger vocabulary)
+
+## 关联知识点
+
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s03-small-record-modeling|S03 用小记录 + 按 id 索引的字典建模]]
+- [[s05-threshold-semantics|S05 阈值语义：严格 vs 非严格、计数 vs 比例、最小量门槛]]
+- [[s06-money-integer-cents|S06 金额用整数最小单位；显式舍入；两位小数格式]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s09-byte-exact-output-format|S09 字节级精确的输出格式]]
+- [[s10-event-stream-reversal|S10 事件流 + 反向事件]]
+- [[s17-ledger-balance-tracking|S17 台账式余额跟踪]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]

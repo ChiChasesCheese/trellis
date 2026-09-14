@@ -9,6 +9,7 @@
 domain: basketball
 title: Basketball
 lang: en
+vault: domains/basketball
 nodes:
   - id: foundations
     order: 1

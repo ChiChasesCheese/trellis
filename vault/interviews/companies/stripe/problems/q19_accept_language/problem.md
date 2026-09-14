@@ -105,3 +105,12 @@ skills: S02 parsing · S08 deterministic order (q desc, header position) · S14 
 - Glassdoor QTN_4469893 "Parsing the HTTP Accept-Language header" (Infra Eng)
 - 1point3acres 题库 `http-language-preference` (phone screen, last asked 2025-10-22, 4 Part)
 - Blind Apr 2022 "parsing some list of http headers"; InterviewDB "Header Parsing — Phone"
+
+## 关联知识点
+
+- [[s02-line-oriented-parsing|S02 面向行的解析（分隔符、类型化字段、坏行）]]
+- [[s08-deterministic-sort-tiebreak|S08 确定性排序与完整 tie-break]]
+- [[s14-string-normalization|S14 字符串归一化 / 规范化]]
+- [[s18-validation-error-paths|S18 校验与错误路径]]
+- [[s19-incremental-design-parse-model-compute-render|S19 增量式设计：parse → model → compute → render]]
+- [[s20-self-test-discipline|S20 自测纪律]]

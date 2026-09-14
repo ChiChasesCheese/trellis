@@ -20,7 +20,7 @@ from pathlib import Path
 
 from .cases import CASES_DIRNAME, write_case
 from .codebases import Artefact, Codebase
-from .skeleton import Skeleton
+from .skeleton import Skeleton, load_skeleton
 
 VERDICTS = ("case", "reading", "skip", "gap")
 _SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
@@ -179,7 +179,7 @@ def accept(
 
     written: list[Path] = []
     for lens, item in staged:
-        content = root / "vault" / lens
+        content = root / "vault" / skeletons[lens].folder
         if item["verdict"] == "case":
             written.append(write_case(
                 content / CASES_DIRNAME, item["slug"],
@@ -378,7 +378,7 @@ def accept_corpus(
     if errors:
         return [], errors, gaps
 
-    content = root / "vault" / skeleton.domain
+    content = root / "vault" / skeleton.folder
     text_dir = corpus.text_dir(root)
     written: list[Path] = []
     for item in staged:
@@ -426,7 +426,7 @@ def codebase_index(root: Path, name: str, domains: list[str]) -> str:
     lines = [f"# {name}", "", "What this codebase contributed, by lens.", ""]
     total = 0
     for domain in domains:
-        cases_dir = root / "vault" / domain / CASES_DIRNAME
+        cases_dir = root / "vault" / load_skeleton(root / "skeleton" / f"{domain}.yaml").folder / CASES_DIRNAME
         if not cases_dir.exists():
             continue
         cases = [c for c in load_cases(cases_dir)[0]

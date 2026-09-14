@@ -2,7 +2,7 @@
 
 Cards are for fragments of spare time; readings are for systematic,
 authoritative material — saved articles, paper notes, guided links to
-engineering blogs. A reading lives under vault/<domain>/readings/ and
+engineering blogs. A reading lives under vault/<folder>/readings/ and
 attaches to one or more skeleton nodes:
 
     ---
