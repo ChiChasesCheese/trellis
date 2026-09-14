@@ -89,7 +89,8 @@
 | **sd09** | **User Password Storage**（一手，配 Happy Number 同场） | PS/VO | 哈希算法与参数、盐、密钥轮换、泄露响应 | 2026-07 | 1 | HIGH |
 | **sd22** | **在两个 PB 级数据库之间同步数据**（IC2 Backend 一手；**不允许需求澄清**，候选人称"worst 30 minutes"） | PS/VO | CDC vs 快照 + 增量、一致性校验、回填、限速、schema 演进、断点续传 | 2026-03 | 1 | HIGH |
 | **sd12** | Object Store with Deduplication | VO | 内容寻址、引用计数、GC | 2025-12 | 2 | LOW |
-| sd13–sd20 | ACL Authorization Service · Metadata Catalog/Schema Registry · Multi-Tenant Analytics Platform · Resilient Auth with Flaky Tokens · Geolocation Search · Event Subscription（1M/s）· REST API Abstraction Layer · Dynamic Blacklist Filter（1p3a 标题） | VO | — | 2025–2026 | 1 each | LOW |
+| sd13–sd19 | ACL Authorization Service（TrueInterview 另报 Access Management，+1）· Metadata Catalog/Schema Registry · Multi-Tenant Analytics Platform · Resilient Auth with Flaky Tokens · Geolocation Search · Event Subscription（1M/s）· REST API Abstraction Layer（TrueInterview 2026-05 独立收录，升 MED） | VO | — | 2025–2026 | 1–2 | LOW–MED |
+| sd23 | Cross-Platform Logging Library（TrueInterview 2026-03） | VO | 库设计：有界缓冲、丢弃策略、脱敏、动态调级 | 2026-03 | 1 | MED-LOW |
 | sd21 | Metering & Billing —— **未见面试报道**，仅 Billing Platform JD；作为 expertise 轮/team 面试话题准备，不当必考 | — | credits/秒、10% Cloud Services 免费额、AI token 计量 | — | 0 | JD |
 
 ## Table D — 非编码轮（题库在 `loop/rounds/0{1,6,7,8}_*`，答案在 `../../core/answers/`）
@@ -109,6 +110,41 @@ OA：Drawing Edge · Horizontal Pod Autoscaler（pod count）· Efficient Deploy
 **剔除**：Grid Land / Kth Smallest Instructions（Lucid 2020 OA 误标）。
 
 ---
+
+## Table F — GitHub 优先蒸馏补充（2026-09-13，来源与题面要点见 `raw/github_repos.md` §2–§3）
+
+来源：TrueInterview 同步清单（经 GitHub `kevin-2023-code/Tech-Interview-Questions` 镜像，MED，题面付费、预览可见开头与分段提纲）+ JoeBao22/SDE-OA-2024（q20）。凡超出预览的部分在 `problem.md` 标 **(reconstructed)**。原 Table C 的 sd20 Dynamic Blacklist Filter 改归 od11（TrueInterview 归 LLD；1p3a 标题 + TrueInterview = 2 refs）。
+LeetCode 原题（Calculate Amount Paid in Taxes、Merge k Sorted Lists、N-Queens 等 19 道）**不建 kit**，统一见 [`core/leetcode/companies/snowflake.md`](../../../core/leetcode/companies/snowflake.md)（链接 + 标签 + 频率分档）。
+
+| ID | 题 | 轮次 | 最近 | #refs | 置信度 |
+|---|---|---|---|---:|---|
+| pc16 | Reverse Alphanumeric Segments（1p3a 标题 + TrueInterview） | PS | 2026-06 | 2 | MED |
+| pc17 | Forest Parent Array Delete Node | PS | 2026-06 | 1 | MED |
+| pc18 | Number Transformation Path（+2 / −2 / ⌊÷2⌋） | PS | 2026-06 | 1 | MED |
+| pc19 | Rewrite Tree With Subtree Sums | PS | 2026-06 | 1 | MED |
+| pc20 | Four-in-a-row `canPlayWin` + Design Connect Four | PS | 2026-06 | 1 | MED |
+| pc21 | SnowCal / String-Command Calculator | PS | 2026-05 | 1 | MED |
+| pc22 | Document Predicate Search Engine（3 Part） | PS | 2026-04 | 1 | MED |
+| pc23 | Min Coins to Pay with Change Allowed | PS | 2026-02 | 1 | MED |
+| pc24 | Service Failure Forensics（二分 → 级联 → 最长链） | PS | 2026-02 | 1 | MED |
+| pc25 | Grep With Context Lines | PS | 2026-02 | 1 | MED |
+| pc26 | Top K Hash Tags（去重用户数） | PS | 2026-02 | 1 | MED |
+| pc27 | Recipe Sequence Matcher（+ O(1) 空间追问） | PS | 2026-01 | 1 | MED |
+| pc28 | Preorder Traversal Without Invalid Nodes | PS | 2025-12 | 1 | MED |
+| pc29 | Valid Tic-Tac-Toe State（N×N、K 连） | PS | 2025-11 | 1 | MED |
+| od11 | Dynamic Blacklist Filter System（两条并发流） | PS/LLD | 2026-06 | 2 | MED |
+| od12 | Top K Book Sales `bestSellers` | LLD | 2026-02 | 1 | MED |
+| od13 | Serialize / Deserialize Dictionary Trie | PS | 2025-12 | 1 | MED |
+| od14 | Durable KV Store Serialization（自定义编码 + 1 KB 分块） | LLD | 2025-11 | 1 | MED |
+| od15 | JSON Parser（最小化 / INVALID） | LLD | — | 1 | MED |
+| q20 | Sequential String（前缀凑排列） | OA | 2024 | 1 | MED |
+| q21 | Maximum Profit Query Selection | OA | 2026-01 | 1 | MED |
+| q22 | Dropped Requests（多窗口限流） | OA | 2025-11 | 1 | MED |
+| q23 | Work Schedule（`?` 填充枚举） | OA | 2025-07 | 1 | MED |
+| q24 | Maximum Throughput（二分答案） | OA | — | 1 | MED |
+| q25 | Distance from Each 1 to the Nearest 2 | OA | — | 1 | MED |
+
+**SQL 三题**（Webinar Popularity、Marketing Touch Streak、Project Duration & Budget per Employee）与**前端**一题（Robot Eats Candies）属数据 / 前端岗，SDE 不建，留档于此。
 
 ## 28 法则与建题顺序（`PARETO.md` 完整输出）
 
