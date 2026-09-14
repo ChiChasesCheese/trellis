@@ -1,5 +1,7 @@
 # 03 · 图 / 树模式识别 + ≤15 行模板
 
+> 通用课（[[Code Core MOC|code-core]]）：[[algorithms.graph-traversal]] · [[algorithms.shortest-path]] · [[algorithms.topological]] · [[toolbox.graph-repr]] · [[toolbox.union-find]] <!-- code-core-links -->
+
 > 面向电面 coding（pc02 pc04 pc06 pc10）与 OA（q03 q07 q08 q10）。每种模式给**一眼信号 → ≤15 行模板 → 本 kit 哪题 → 最易错**。
 > 代码引用自 `../../problems/q*/solution.py` 与 `../../loop/rounds/03_phone_coding/pc*/solution.py`。
 

@@ -1,5 +1,7 @@
 # 12 · 题型识别卡（碎片时间读物）
 
+> 通用课（[[Code Core MOC|code-core]]）：[[algorithms.recognition]] · [[toolbox.hash]] · [[toolbox.heap]] · [[toolbox.sorted]] <!-- code-core-links -->
+
 > **这份文件不教细节**（舍入、错误处理、边界都不管）。它只练一件事：
 > **读完题面前 3 句 → 认出这是哪一类 → 脑子里立刻冒出解题方向。**
 >

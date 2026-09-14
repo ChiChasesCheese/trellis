@@ -1,5 +1,7 @@
 # 11 · 验收清单："读完之后能独立做出来"
 
+> 通用课（[[Code Core MOC|code-core]]）：[[round.formats]] · [[round.submission]] · [[transfer.playbook]] <!-- code-core-links -->
+
 > 这份清单是给你自己打分用的。**每一条都要能在不看题解的情况下做到**。
 > 做不到的，回到对应的章节；还做不到的，去 `code-core` 牌组里找那个叶子的卡片。
 

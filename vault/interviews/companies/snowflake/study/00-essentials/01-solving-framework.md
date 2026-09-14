@@ -1,5 +1,7 @@
 # 01 · 三套时间框架 + 出声模板 + follow-up 应对
 
+> 通用课（[[Code Core MOC|code-core]]）：[[round.reading]] · [[round.time]] · [[round.communication]] <!-- code-core-links -->
+
 > 适用于：Snowflake 技术电面（60 min slot = 10 介绍 + **40 min 编码** + 10 反问）、onsite 的 **45 min OOD/类设计**、以及 HackerRank OA（历史 90–135 min，2026 新毕业一手 **120 min**）。
 > 依据：`../../loop/LOOP_GUIDE.md` §3/4/5、`../../catalog/CATALOG.md` 漏斗描述。三套框架**形状相同**（读题定型 → 分段实现锁死 → 边界扫描 → 交卷复核），只是分钟数和"锁死"的对象不同：OA 锁 part，电面锁 base case，OOD 锁 API 契约。
 

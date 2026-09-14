@@ -1,5 +1,7 @@
 # 05 · 时间、日期、窗口、区间
 
+> 通用课（[[Code Core MOC|code-core]]）：[[chrono.parsing]] · [[chrono.arithmetic]] · [[chrono.windows]] · [[chrono.intervals]] <!-- code-core-links -->
+
 ---
 
 ## 1. 先统一表示

@@ -58,3 +58,9 @@ One bespoke problem in three to five unlocking parts, parsing to state to rules 
 %% trellis:end %%
 
 ## Notes
+
+## 公司题库（Stripe kit）
+
+<!-- company-kit-links -->
+- [[interviews/companies/stripe/README|Stripe kit 总览]]：OA 53 题（带测试）、全轮次题库、题解
+- 各轮用到的通用能力见知识树 `loop/tree/interview-loop.yaml` 的 `core:`，渲染在 [[interviews/companies/stripe/loop/study/10-rounds/03-phone-screen|电面]] · [[interviews/companies/stripe/loop/study/10-rounds/06-coding|onsite coding]] 指南开头

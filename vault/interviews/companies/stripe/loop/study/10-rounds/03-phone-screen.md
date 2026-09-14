@@ -1,5 +1,7 @@
 # 03 · Technical Phone Screen（60 min = 45 编码 + 15 Q&A）
 
+> 本轮用到的通用能力（[[Code Core MOC|code-core]]）：[[round.reading]] · [[round.time]] · [[input.line-protocols]] · [[input.delimited]] · [[model.records]] · [[rules.money]] · [[rules.rounding]] · [[output.formatting]] · [[verification.edge-catalog]] · [[transfer.stripe-oa]] <!-- code-core-links -->
+
 > 事实层（形式 / 通过线 / 挂点）在 `loop/LOOP_GUIDE.md` §3，本章不重复。
 > 本章回答的是：**明天坐下来练这一轮，具体做什么。**
 

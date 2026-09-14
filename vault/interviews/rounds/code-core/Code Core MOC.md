@@ -84,6 +84,7 @@
     - [[verification.determinism|Determinism & Reproducibility]]
 - [[transfer|Transfer to Other Rounds]]
     - [[transfer.stripe-oa|The Stripe-Shaped Assessment]]
+    - [[transfer.snowflake|The Snowflake-Shaped Rounds]]
     - [[transfer.amazon|The Amazon-Shaped Assessment]]
     - [[transfer.quant|The Quant-Shaped Assessment]]
     - [[transfer.playbook|Building a Playbook From One Round]]

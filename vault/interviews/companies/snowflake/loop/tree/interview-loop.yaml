@@ -36,6 +36,7 @@ rounds:
     name: HackerRank OA（2–3 题 / 90–135 min）
     duration_min: 120
     study: [study/10-rounds/02-oa.md, study/00-essentials/02-dp-patterns.md, study/00-essentials/03-graph-tree-patterns.md]
+    core: [round.time, round.hidden-tests, algorithms.recognition, algorithms.dp, algorithms.graph-traversal, algorithms.topological, performance.budget, verification.edge-catalog, transfer.snowflake]
     skills:
       - id: dp_counting
         name: 计数/最优化 DP（元音游程、paid/free server、加权区间调度、2D DP）
@@ -66,6 +67,7 @@ rounds:
     name: 技术电面 coding（60 min：10 介绍 / 40 题 / 10 反问）
     duration_min: 40
     study: [study/10-rounds/03-phone-coding.md, study/00-essentials/01-solving-framework.md, study/00-essentials/03-graph-tree-patterns.md]
+    core: [round.reading, round.communication, round.ambiguity, model.event-stream, toolbox.heap, toolbox.prefix-trees, algorithms.sliding-window, algorithms.shortest-path, verification.tests, transfer.snowflake]
     skills:
       - id: rbac_dag_inheritance
         name: RBAC / DAG 权限继承（继承 → deny 覆盖 → 反向查询）
@@ -120,6 +122,7 @@ rounds:
     name: OOD / 类设计（电面或 onsite，默认并发追问）
     duration_min: 45
     study: [study/10-rounds/04-ood.md, study/00-essentials/04-class-design-and-concurrency.md]
+    core: [model.records, model.entity-state, model.state-machine, model.idempotency, toolbox.cache, python.classes]
     skills:
       - id: priority_scheduler
         name: 优先级任务调度器（tie-break、重复 ID 抑制、并发、持久化）

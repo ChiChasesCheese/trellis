@@ -1,5 +1,7 @@
 # 05 · Onsite · Integration（60 min）
 
+> 本轮用到的通用能力（[[Code Core MOC|code-core]]）：[[input.structured]] · [[model.idempotency]] · [[model.state-machine]] · [[python.io]] <!-- code-core-links -->
+
 > 事实层在 `loop/LOOP_GUIDE.md` §5。本章讲练法。
 
 ## 这轮到底考什么

@@ -1,5 +1,7 @@
 # 04 · 金额、精度、舍入、费率、分摊
 
+> 通用课（[[Code Core MOC|code-core]]）：[[rules.money]] · [[rules.rounding]] · [[rules.exact-ratio]] · [[rules.fees]] <!-- code-core-links -->
+
 > 这是隐藏测试最密集的一章。53 道题里有 14 道直接考钱，全部 965 个测试里
 > `fmt` 类占 60 个 —— 而 `fmt` 挂掉的第一大原因就是舍入。
 

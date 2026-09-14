@@ -3,7 +3,7 @@
 # 考试大纲、Snowflake-Labs 的 awesome-snowflake 精选列表、近期工程博客文章
 # （Execution Anchor、FoundationDB、Optima/自适应连接），以及现有的
 # vault/interviews/companies/snowflake 面试资料——从不只依赖其中任何单一来源。
-# 完整调研过程与大纲标题到叶子节点的映射见 vault/snowflake/BUILD.md。
+# 完整调研过程与大纲标题到叶子节点的映射见 vault/domains/snowflake/BUILD.md。
 domain: snowflake
 title: Snowflake 原理
 lang: zh

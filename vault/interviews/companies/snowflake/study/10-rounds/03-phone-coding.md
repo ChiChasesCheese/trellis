@@ -1,5 +1,7 @@
 # 03 · 技术电面 coding（60 min = 10 介绍 + 40 编码 + 10 反问）
 
+> 本轮用到的通用能力（[[Code Core MOC|code-core]]）：[[round.reading]] · [[round.communication]] · [[round.ambiguity]] · [[model.event-stream]] · [[toolbox.heap]] · [[toolbox.prefix-trees]] · [[algorithms.sliding-window]] · [[algorithms.shortest-path]] · [[verification.tests]] · [[transfer.snowflake]] <!-- code-core-links -->
+
 > 本轮全部题目（含 GitHub 蒸馏补充的新题，按 28 法则排序）：[`../../CONTENTS.md`](../../CONTENTS.md) §03_phone_coding。本文件里点名的题是示例，不是全集。
 
 > 事实层（形式 / 通过线 / 挂点来源）在 `../../loop/LOOP_GUIDE.md` §4，本章不重复。

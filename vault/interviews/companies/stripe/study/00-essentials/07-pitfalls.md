@@ -1,5 +1,7 @@
 # 07 · 陷阱总清单
 
+> 通用课（[[Code Core MOC|code-core]]）：[[python.pitfalls]] · [[verification.edge-catalog]] <!-- code-core-links -->
+
 > 从 53 道题的 "Edge cases hidden tests are known to target"、"Clarifications"、
 > "Variants" 三个小节里抽出来，按类别归并、去重、一般化。
 >

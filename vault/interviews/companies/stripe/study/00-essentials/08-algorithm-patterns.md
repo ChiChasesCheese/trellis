@@ -1,5 +1,7 @@
 # 08 · 算法模式识别 + 模板代码
 
+> 通用课（[[Code Core MOC|code-core]]）：[[algorithms.recognition]] · [[algorithms.prefix]] · [[algorithms.sliding-window]] · [[algorithms.graph-traversal]] <!-- code-core-links -->
+
 > 面向 phone screen 和 onsite（qA01–qA13 那一组），以及 bespoke 题里嵌的算法部分。
 > 每个模式：**什么信号触发它 → 模板 → 最易错处**。
 

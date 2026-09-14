@@ -1,5 +1,7 @@
 # 02 · 核心考点总纲（S01–S24 / A01–A16 中文详解）
 
+> 通用课（[[Code Core MOC|code-core]]）：[[input.line-protocols]] · [[model.records]] · [[rules.money]] · [[chrono.windows]] · [[output.formatting]] <!-- code-core-links -->
+
 > 这是本目录的**主文件**。`skills_matrix.md` 用英文列出了 24 个业务型考点和 16 个算法考点，
 > 以及每个考点由哪些题驱动。这里把每一个考点讲透：**为什么考、怎么判断题目在考它、
 > 标准做法是什么、最容易错在哪**。

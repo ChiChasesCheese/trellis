@@ -1,5 +1,7 @@
 # 01 · 60 分钟通用解题框架
 
+> 通用课（[[Code Core MOC|code-core]]）：[[round.reading]] · [[round.time]] · [[round.submission]] <!-- code-core-links -->
+
 > 适用于：Stripe HackerRank OA、任何"一道大题分 3–5 个 part"的机考、45–60 分钟 phone screen。
 > 不适用于：纯 LeetCode 竞速（那种题跳过第 1、2 步直接进第 3 步）。
 

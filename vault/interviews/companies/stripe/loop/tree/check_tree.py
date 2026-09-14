@@ -25,7 +25,9 @@ ROUNDS = LOOP / "rounds"
 YAML = LOOP / "tree" / "interview-loop.yaml"
 NONCODE = {"rc": "01_recruiter", "hm": "02_hm", "bq": "08_behavioral"}
 
-_LIST = re.compile(r"^\s*(problems|study|cards):\s*\[(.*)\]\s*$")
+_LIST = re.compile(r"^\s*(problems|study|cards|core):\s*\[(.*)\]\s*$")
+# round-level `core: [leaf, ...]` names the code-core leaves a round exercises
+CORE_SKELETON = Path(__file__).resolve().parents[6] / "skeleton" / "code-core.yaml"
 _ID = re.compile(r"^(\s*)-\s*id:\s*(\S+)\s*$")
 
 
@@ -51,6 +53,8 @@ def parse(text: str):
             key, items = m.group(1), [s.strip() for s in m.group(2).split(",") if s.strip()]
             if key == "problems" and cur_skill is not None:
                 cur_skill["problems"].extend(items)
+            elif key == "core" and cur_round is not None:
+                cur_round.setdefault("core", []).extend(items)
             elif key in ("study", "cards"):
                 (cur_round["study"] if cur_round is not None else prereq).extend(items)
     return rounds, prereq
@@ -90,6 +94,11 @@ def main() -> int:
         for path in r["study"]:
             if not (LOOP / path).exists():
                 warnings.append(f"study path missing: {path} (round {r['id']})")
+    core_ids = set(re.findall(r"-\s*id:\s*(\S+)", CORE_SKELETON.read_text(encoding="utf-8"))) if CORE_SKELETON.exists() else set()
+    for r in rounds:
+        for leaf in r.get("core", []):
+            if leaf not in core_ids:
+                errors.append(f"core leaf not in skeleton/code-core.yaml: {leaf} (round {r['id']})")
     for path in prereq:
         if not (LOOP / path).exists():
             warnings.append(f"prereq path missing: {path}")
