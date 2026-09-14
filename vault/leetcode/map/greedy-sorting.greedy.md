@@ -4,9 +4,13 @@
 
 为什么最初写的 4 分支公式（被注释掉的代码）比最终解法多了一项？
 
-## Cards (4)
+## Cards (8)
 - [[leetcode-q-best-time-to-buy-and-sell-stock-ii-pattern]]
 - [[leetcode-q-best-time-to-buy-and-sell-stock-with-transaction-fee-pattern]]
+- [[leetcode-q-removing-min-max-branch-dominance-proof]]
+- [[leetcode-q-removing-min-max-branch-symmetry-invariance]]
+- [[leetcode-q-removing-min-max-greedy-vs-dp]]
+- [[leetcode-q-removing-min-max-redundant-vs-missing-branch]]
 - [[leetcode-q-removing-minimum-and-maximum-from-array-mistake]]
 - [[leetcode-q-shortest-way-to-form-string-pattern]]
 %% trellis:end %%
