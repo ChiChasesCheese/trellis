@@ -41,6 +41,31 @@ def test_a_domain_is_written_in_chinese_unless_it_says_otherwise(tmp_path):
     assert load_skeleton(write(tmp_path, english)).lang == "en"
 
 
+def test_a_domain_lives_where_its_skeleton_says(tmp_path):
+    """A domain's content folder is `vault/<domain>` unless the skeleton places
+    it deeper, e.g. an interview round under `interviews/rounds/`."""
+    from trellis.project import load_project
+
+    assert load_skeleton(write(tmp_path, GOOD)).folder == "demo"
+    nested = GOOD.replace("title: Demo\n", "title: Demo\nvault: interviews/rounds/demo\n", 1)
+    (tmp_path / "skeleton").mkdir()
+    (tmp_path / "skeleton" / "demo.yaml").write_text(nested, encoding="utf-8")
+    cards = tmp_path / "vault" / "interviews" / "rounds" / "demo" / "cards"
+    cards.mkdir(parents=True)
+    (cards / "demo-one.md").write_text(
+        "---\nid: demo-one\nnode: alpha.one\ntype: qa\n---\n## Q\nOne?\n\n## A\nOne.\n", encoding="utf-8")
+    project = load_project(tmp_path, "demo")
+    assert project.content_dir(tmp_path) == tmp_path / "vault" / "interviews" / "rounds" / "demo"
+    assert [c.id for c in project.cards] == ["demo-one"]
+
+
+@pytest.mark.parametrize("folder", ["../outside", "/abs/path", "a/../../b", ""])
+def test_rejects_a_vault_folder_outside_the_vault(tmp_path, folder):
+    text = GOOD.replace("title: Demo\n", f"title: Demo\nvault: '{folder}'\n", 1)
+    with pytest.raises(SkeletonError, match="vault"):
+        load_skeleton(write(tmp_path, text))
+
+
 def test_deck_name_carries_study_order(tmp_path):
     s = load_skeleton(write(tmp_path, GOOD))
     assert s.deck_name(s.by_id["alpha.one"]) == "Demo::02 Alpha::One"

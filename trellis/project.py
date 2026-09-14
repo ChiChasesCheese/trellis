@@ -43,7 +43,13 @@ class Project:
     def content_dir(self, root: Path) -> Path:
         """This domain's folder inside the Obsidian vault. Not the vault
         itself — `vault/` is one Obsidian vault holding every domain."""
-        return Path(root) / "vault" / self.skeleton.domain
+        return content_dir(root, self.skeleton)
+
+
+def content_dir(root: Path, skeleton: Skeleton) -> Path:
+    """Where a domain's cards, readings, drills, cases and map notes live:
+    `vault/<folder>`, the folder its skeleton declares (the slug by default)."""
+    return Path(root) / "vault" / skeleton.folder
 
 
 def domains(root: Path) -> list[str]:

@@ -130,6 +130,18 @@ def test_readings_from_an_english_text_are_written_in_the_domains_language(root,
     assert "words, in Chinese" in prompt and "words, in English" not in prompt
 
 
+def test_readings_land_in_a_domain_placed_deeper_in_the_vault(root, capsys):
+    run(root, "ingest", "kafka-test")
+    seed = json.loads(json.dumps(SEED))
+    seed["skeleton"]["vault"] = "domains/kafka"
+    (root / "seed.json").write_text(json.dumps(seed, ensure_ascii=False), encoding="utf-8")
+    assert run(root, "accept", str(root / "seed.json")) == 0
+    (root / "triage.json").write_text(json.dumps(TRIAGE, ensure_ascii=False), encoding="utf-8")
+    assert run(root, "accept", str(root / "triage.json")) == 0
+    assert (root / "vault" / "domains" / "kafka" / "readings" / "kt-acks.md").exists()
+    assert not (root / "vault" / "kafka").exists()
+
+
 def test_digest_status_prompt_and_import(root, capsys):
     _seed_and_triage(root, capsys)
     assert run(root, "digest", "kafka-test") == 0
