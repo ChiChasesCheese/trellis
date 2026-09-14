@@ -38,3 +38,6 @@
 | 2026-09-13 | RANK 并入 GitHub 来源（29 行 #refs +1、新增 24 行、sd20→od11）；CATALOG Table F | opus（主会话） | `catalog/RANK.md`、`catalog/CATALOG.md` | `coverage.py`：147/178 = 83%（分母从 124 扩到 178） | 检查点 17 | |
 | 2026-09-13 | P6.B pc07 · pc09 · pc11–pc15 | sonnet | `03_phone_coding/pc0[79]_*`、`pc1[1-5]_*` | 主会话独立 `verify_suites` 7/7 ALL ACCEPTED | 检查点 17 | pc14 零长度会议 bug 由子代理自查修复 |
 | 2026-09-13 | P6.7 派出：W1 pc16–pc22 · W2 pc23–pc29 · W3 q20–q25（sonnet × 3 并行）；W4 od11–od15 待名额 | opus（主会话） | — | — | — | |
+| 2026-09-13 | P6.7 W1 pc16–pc22 · W2 pc23–pc29 · W3 q20–q25 | sonnet × 3 | `03_phone_coding/pc1[6-9]_*`、`pc2*_*`、`problems/q2[0-5]_*` | 主会话独立 `verify_suites` 20/20 ALL ACCEPTED | 检查点 18 | pc29 子代理用 3×3 全局面穷举（5478 可达）抓出"多条胜线两两相交但无公共格"漏洞并修复 |
+| 2026-09-13 | 题解文章批 1：q20–q25 · pc11–pc13 · pc16 | sonnet | `study/30-articles/` | `check_articles.py` 10/10（8 节、索引行、骨架 ≤ 40 行；q23 由主会话精简并与 solution 500 组随机对比 0 差异） | 检查点 18 | |
+| 2026-09-13 | skill `building-company-interview-kits` TDD：RED（无 skill，Datadog 场景）前 6 步全是 WebSearch、LC 原题照建 kit、验收不查空 starter 红；GREEN（带 skill）前 3 步 GitHub + lc_company、LC 只列行、coverage 脚本并注明全集、独立 verify_suites；REFACTOR：补命令运行目录与新 kit 起步文件、"公司改过的 LC 题要建 kit" | sonnet × 2 + opus | `.claude/skills/building-company-interview-kits/SKILL.md` | GREEN 4/4 项合规 | 检查点 18 | |

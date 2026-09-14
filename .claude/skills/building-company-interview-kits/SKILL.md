@@ -17,7 +17,7 @@ state a number you did not compute.**
 0. **GitHub first.** Search repositories and code (`gh api -X GET search/repositories -f q="<co> interview"`,
    `"<co> oa"`, `company wise leetcode`; `search/code` for `"<co>" "phone screen"`). Fetch every
    company-specific file. Write `catalog/raw/github_repos.md`: source, stars, last push,
-   confidence, how used. Run `core/leetcode/lc_company.py <Co>` for LeetCode originals.
+   confidence, how used. Run `vault/interviews/core/leetcode/lc_company.py <Co>` (from the repo root) for LeetCode originals.
 1. **Web sources** (forums, 1p3a, Blind, aggregators) → `catalog/raw/<topic>.md`, URL + date per fact.
 2. **CATALOG.md**: one row per problem family; `#refs` = independent sources; confidence
    high (first-hand) / medium (consistent aggregator) / low (SEO). `tools/pareto.py` ranks and
@@ -32,13 +32,17 @@ state a number you did not compute.**
 
 ## Quick Reference
 
-| Artifact | Tool |
+Paths: the LeetCode tool runs from the repo root; every `tools/` and `loop/` command runs from inside the kit (`cd vault/interviews/companies/<co>`). A new kit starts by copying `tools/`, `conftest.py`, `pytest.ini` and `loop/tree/check_tree.py` from `companies/snowflake/`.
+
+| Artifact | Command |
 |---|---|
-| LeetCode company-tag list | `python3 core/leetcode/lc_company.py <Co>` |
-| Rank + cut line | `tools/pareto.py` |
-| Acceptance gate | `tools/verify_suites.py . "<glob>"` |
-| Coverage | `tools/coverage.py` |
-| Test summary | `tools/summary.py --run` |
+| LeetCode company-tag list | `python3 vault/interviews/core/leetcode/lc_company.py <Co>` (repo root) |
+| Rank + cut line | `python3 tools/pareto.py catalog/RANK.md --table 总表` (kit) |
+| Acceptance gate | `uv run --project <repo> --with pytest python tools/verify_suites.py . "<glob>"` (kit) |
+| Coverage | `python3 tools/coverage.py` (kit) |
+| Test summary | `python3 tools/summary.py --run` (kit) |
+
+A LeetCode problem that the company changed (new constraints, extra Parts, a design twist) is not an original: it gets a kit.
 
 ## Red Flags — stop
 
