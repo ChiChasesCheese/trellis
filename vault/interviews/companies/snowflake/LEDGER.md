@@ -24,3 +24,5 @@
 | 2026-09-13 | T4.1/4.2 部分：study/30-articles 17 篇（缺 od09）· 00-essentials 01–05 + README · 00-prereq 01–03 | sonnet（中断前） | `study/` | 行数 98–283；essentials 05 结尾完整（54 行，偏短但闭合） | 检查点 9 | |
 | 2026-09-13 | T3.D pc06 Happy Number（集合 → Floyd O(1) → 任意进制/幂次的环信息） | opus（主会话） | `loop/rounds/03_phone_coding/pc06_*` | `verify_suites` OK；1–200000 两法一致；Part 3 与暴力找环 3000 组一致；25 测试 | 检查点 10 | P3 重建 |
 | 2026-09-13 | T3.D pc10 Distributed Tree Count（FIFO 消息协议逐行轨迹 + 丢失/重试/放弃的部分计数） | opus（主会话） | `loop/rounds/03_phone_coding/pc10_*` | `verify_suites` OK；来源 9 行轨迹逐字复现；3000 棵随机树不变量 0 失败；22 测试 | 检查点 11 | P2 重建；REPORT 格式自定 |
+| 2026-09-13 | T3.E cut line 补齐：q19 Maximize OR-Sum（一手逐字题面 + 大 k 取模重建）· od10 Student/Result OOP（一手骨架 + 规则重建） | opus（主会话） | `problems/q19_*`、`loop/rounds/04_ood/od10_*` | `verify_suites` 2/2 OK；q19 与"任意拆分 k 次"穷举 3000 组一致、取模与精确值 3000 组一致 | 检查点 12 | q11 Generating Login Codes 只有标题+标签，不建（CATALOG 注明） |
+| 2026-09-13 | 知识树修正：check_tree 的 study/prereq 路径改按 kit 根解析；移除未建的 pc07；新增 loop/rounds/02_oa 指针；study/20-cards/patterns.md | opus（主会话） | `loop/tree/`、`study/20-cards/` | `check_tree --strict`：errors=0 warnings=0 | 检查点 12 | 此前 24 条警告都是解析基准错误，不是缺文件 |

@@ -68,8 +68,8 @@ rounds:
         name: 消息传递状态机 / 分布式聚合模拟
         problems: [pc10]
       - id: lc_with_followup
-        name: LC 原题 + 更难 follow-up（1751 变体、Happy Number O(1)、Word Search II）
-        problems: [pc05, pc06, pc07]
+        name: LC 原题 + 更难 follow-up（1751 变体、Happy Number O(1)）
+        problems: [pc05, pc06]
 
   - id: 04_ood
     name: OOD / 类设计（电面或 onsite，默认并发追问）

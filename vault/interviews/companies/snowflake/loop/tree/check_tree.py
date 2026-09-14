@@ -24,7 +24,9 @@ LOOP = Path(__file__).resolve().parents[1]
 ROUNDS = LOOP / "rounds"
 YAML = LOOP / "tree" / "interview-loop.yaml"
 NONCODE = {"rc": "01_recruiter", "exp": "06_project_deep_dive", "hm": "07_hm_behavioral", "tm": "08_team_matching"}
-PROBLEMS = LOOP.parent / "problems"  # OA 题（qNN）在公司根目录 problems/ 下，不在 loop/rounds/
+KIT = LOOP.parent
+PROBLEMS = KIT / "problems"  # OA 题（qNN）在公司根目录 problems/ 下，不在 loop/rounds/
+STUDY_BASE = KIT  # study/ 在公司根目录，不在 loop/ 下（与 Stripe 布局不同）
 
 _LIST = re.compile(r"^\s*(problems|study|cards):\s*\[(.*)\]\s*$")
 _ID = re.compile(r"^(\s*)-\s*id:\s*(\S+)\s*$")
@@ -92,10 +94,10 @@ def main() -> int:
                 if resolve(pid) is None:
                     warnings.append(f"problem not resolvable: {pid} (skill {r['id']}/{s['id']})")
         for path in r["study"]:
-            if not (LOOP / path).exists():
+            if not (STUDY_BASE / path).exists():
                 warnings.append(f"study path missing: {path} (round {r['id']})")
     for path in prereq:
-        if not (LOOP / path).exists():
+        if not (STUDY_BASE / path).exists():
             warnings.append(f"prereq path missing: {path}")
 
     if a.catalog:
