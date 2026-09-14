@@ -14,20 +14,20 @@
 
 ## 1. 必会架构词（大白话，能 30 秒讲清）
 
-| 词 | 一句话 | 为什么面试会碰到 |
-|---|---|---|
-| **三层架构** | 数据以不可变列式 **micro-partition** 存对象存储；**virtual warehouse** 是独立计算集群，按秒计费；**Cloud Services（内部 GS）** 无状态服务做认证 / 元数据 / 优化 / 事务，元数据全在 **FoundationDB** | 所有特性的根：clone、time travel、多仓库并发都靠「数据不可变 + 元数据集中」 |
-| **Zero-copy clone / Time Travel** | clone 只复制元数据指针；表版本历史在 FDB，所以能 `AT(TIMESTAMP)` / `UNDROP`（默认 1 天，最长 90 天） | 我用 clone 做过隔离 schema pool（S7） |
-| **Result cache** | 同 SQL + 数据没变 → 24 h 内直接返回，不起仓库 | 成本题 |
-| **Streams** | 一个 offset 书签指向表版本；查 stream 得净变化 + `METADATA$ACTION/ISUPDATE/ROW_ID`；**只有在 DML 事务里消费才推进 offset**；类型 standard / append-only / insert-only | 我的 AMEX 管线用了 6 条 append-only stream |
-| **Tasks** | CRON / 间隔 / DAG；`WHEN SYSTEM$STREAM_HAS_DATA()` 避免空跑；serverless 或自管仓库；`SUSPEND_TASK_AFTER_NUM_FAILURES`、`TASK_HISTORY()` | 我的整条编排 |
-| **Dynamic Tables** | 把「stream + task + MERGE」声明化：`TARGET_LAG`，自动推依赖图、增量/全量；2026-07 加 Adaptive Refresh | 「如果重来我会用它」的候选答案 |
-| **Snowpipe / Snowpipe Streaming** | 文件事件触发微批 vs 行级 channel + offset token exactly-once，单表 10 GB/s、5 s 延迟 | ingestion 话题 |
-| **Datastream**（Summit 2026 预览） | Snowflake 原生、**Kafka wire-compatible** 流服务，topic 直接落表并继承 RBAC / lineage / Time Travel | 我 intern 做过 Kafka→Snowflake connector |
-| **Unistore / Hybrid Tables** | 行存主表 + 强制 PK + 行锁，毫秒点查；后台异步同步到列存；事务引擎是 FDB | 「结算类 OLTP 该放哪」 |
-| **Iceberg / Polaris / Horizon** | 开放表格式 + 开源 REST catalog（Apache TLP）+ 治理统一层（AI Agent Identity GA） | 开放战略 |
-| **Snowflake Postgres** | 真 Postgres 实例（Crunchy Data，~$250M，2025-06 收购），零改代码，2026-02-24 GA | 我在 PayPal 用 PostgreSQL 做 pricing OLTP |
-| **Execution Anchor**（工程博客 2026-05-05） | 每个查询绑定恰好一个 GS 实例，绑定存 FDB；~99% 查询不转移；崩溃时两阶段非自愿转移 | **分布式协调 / exactly-one-writer 的最佳谈资** |
+| 词                                     | 一句话                                                                                                                                             | 为什么面试会碰到                                        |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| **三层架构**                              | 数据以不可变列式 **micro-partition** 存对象存储；**virtual warehouse** 是独立计算集群，按秒计费；**Cloud Services（内部 GS）** 无状态服务做认证 / 元数据 / 优化 / 事务，元数据全在 **FoundationDB** | 所有特性的根：clone、time travel、多仓库并发都靠「数据不可变 + 元数据集中」 |
+| **Zero-copy clone / Time Travel**     | clone 只复制元数据指针；表版本历史在 FDB，所以能 `AT(TIMESTAMP)` / `UNDROP`（默认 1 天，最长 90 天）                                                                        | 我用 clone 做过隔离 schema pool（S7）                   |
+| **Result cache**                      | 同 SQL + 数据没变 → 24 h 内直接返回，不起仓库                                                                                                                  | 成本题                                             |
+| **Streams**                           | 一个 offset 书签指向表版本；查 stream 得净变化 + `METADATA$ACTION/ISUPDATE/ROW_ID`；**只有在 DML 事务里消费才推进 offset**；类型 standard / append-only / insert-only         | 我的 AMEX 管线用了 6 条 append-only stream             |
+| **Tasks**                             | CRON / 间隔 / DAG；`WHEN SYSTEM$STREAM_HAS_DATA()` 避免空跑；serverless 或自管仓库；`SUSPEND_TASK_AFTER_NUM_FAILURES`、`TASK_HISTORY()`                        | 我的整条编排                                          |
+| **Dynamic Tables**                    | 把「stream + task + MERGE」声明化：`TARGET_LAG`，自动推依赖图、增量/全量；2026-07 加 Adaptive Refresh                                                                | 「如果重来我会用它」的候选答案                                 |
+| **Snowpipe / Snowpipe Streaming**     | 文件事件触发微批 vs 行级 channel + offset token exactly-once，单表 10 GB/s、5 s 延迟                                                                            | ingestion 话题                                    |
+| **Datastream**（Summit 2026 预览）        | Snowflake 原生、**Kafka wire-compatible** 流服务，topic 直接落表并继承 RBAC / lineage / Time Travel                                                           | 我 intern 做过 Kafka→Snowflake connector           |
+| **Unistore / Hybrid Tables**          | 行存主表 + 强制 PK + 行锁，毫秒点查；后台异步同步到列存；事务引擎是 FDB                                                                                                      | 「结算类 OLTP 该放哪」                                  |
+| **Iceberg / Polaris / Horizon**       | 开放表格式 + 开源 REST catalog（Apache TLP）+ 治理统一层（AI Agent Identity GA）                                                                                | 开放战略                                            |
+| **Snowflake Postgres**                | 真 Postgres 实例（Crunchy Data，~$250M，2025-06 收购），零改代码，2026-02-24 GA                                                                                | 我在 PayPal 用 PostgreSQL 做 pricing OLTP           |
+| **Execution Anchor**（工程博客 2026-05-05） | 每个查询绑定恰好一个 GS 实例，绑定存 FDB；~99% 查询不转移；崩溃时两阶段非自愿转移                                                                                                 | **分布式协调 / exactly-one-writer 的最佳谈资**            |
 
 ## 2. 工程文化（公开可说）
 

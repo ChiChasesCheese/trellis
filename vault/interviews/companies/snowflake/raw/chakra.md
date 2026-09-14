@@ -1,3 +1,4 @@
+
 # HackerRank Chakra（AI Interviewer）候选人视角调研
 
 调研日期：2026-09-12。目标：Snowflake backend SWE 的 20 分钟 voice-to-voice take-home screen。
