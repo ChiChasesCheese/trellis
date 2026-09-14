@@ -309,7 +309,9 @@ def corpus_triage_prompt(corpus, outline, artefacts: list[Artefact],
         corpus=corpus.id, title=corpus.title,
         text_dir=corpus.text_dir(root).relative_to(root),
         inventory=leaf_inventory({skeleton.domain: skeleton}),
-        sections=listed, lang=LANG_NAMES.get(corpus.lang, corpus.lang),
+        # A reading lives in the domain and is read by its learner, so it is
+        # written in the domain's language even when the source text is not.
+        sections=listed, lang=LANG_NAMES.get(skeleton.lang, skeleton.lang),
         prefix=prefix or corpus.id.split("-")[0][:8],
     )
 
