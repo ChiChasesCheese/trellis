@@ -1,541 +1,539 @@
-# Snowflake Internals: authored from the field (ADR 0002) — the union of the
-# official docs guide TOC, the SIGMOD 2016 "Snowflake Elastic Data Warehouse"
-# paper, the SnowPro Core (COF-C03) exam domain blueprint, the Snowflake-Labs
-# awesome-snowflake curated list, recent engineering-blog posts (Execution
-# Anchor, FoundationDB, Optima/adaptive joins), and the existing
-# vault/interviews/companies/snowflake kit material — never derived from any
-# one of them alone. See vault/snowflake/BUILD.md for the full survey and the
-# outline-heading -> leaf mapping.
+# Snowflake 原理：源自实地调研（ADR 0002）——综合官方文档指南目录、
+# SIGMOD 2016 论文《Snowflake Elastic Data Warehouse》、SnowPro Core（COF-C03）
+# 考试大纲、Snowflake-Labs 的 awesome-snowflake 精选列表、近期工程博客文章
+# （Execution Anchor、FoundationDB、Optima/自适应连接），以及现有的
+# vault/interviews/companies/snowflake 面试资料——从不只依赖其中任何单一来源。
+# 完整调研过程与大纲标题到叶子节点的映射见 vault/snowflake/BUILD.md。
 domain: snowflake
-title: Snowflake Internals
+title: Snowflake 原理
 lang: zh
 nodes:
   - id: architecture
     order: 1
-    title: Core Architecture
-    summary: The three-layer, multi-cluster shared-data model everything else in the platform is a consequence of.
+    title: 核心架构
+    summary: 三层、多集群共享数据（shared-data）模型——平台上其他一切都是这个模型的结果。
     children:
       - id: architecture.three-layer-model
-        title: Three-Layer Architecture
-        summary: Storage, virtual warehouses (compute), and Cloud Services as physically and logically separate layers that talk only through metadata.
+        title: 三层架构
+        summary: 存储、虚拟仓库（virtual warehouse，计算层）与云服务（Cloud Services）在物理和逻辑上彼此分离，仅通过元数据相互通信。
       - id: architecture.storage-compute-separation
-        title: Storage/Compute Separation
-        summary: Why decoupling durable storage from ephemeral compute lets each scale and fail independently, and what it costs in network round trips.
+        title: 存储与计算分离（storage/compute separation）
+        summary: 为何将持久化存储与瞬时计算解耦，能让二者独立伸缩、独立失败，以及这种解耦在网络往返上的代价。
       - id: architecture.multi-cluster-shared-data
-        title: Multi-cluster, Shared-Data Model
-        summary: How this differs from shared-nothing (each node owns its data) and shared-disk (all nodes share one disk) — every warehouse gets its own compute over one shared, versioned data store.
+        title: 多集群共享数据模型
+        summary: 该模型与无共享架构（shared-nothing，每个节点拥有自己的数据）以及共享磁盘架构（shared-disk，所有节点共享一块磁盘）的区别——每个仓库都在同一份共享的、带版本的数据存储之上拥有自己独立的计算资源。
       - id: architecture.cloud-services-layer
-        title: Cloud Services (GS) Layer
-        summary: What the stateless services layer does — authentication, query parsing/optimization, transaction management, metadata — never touching table bytes itself.
+        title: 云服务（Cloud Services，GS）层
+        summary: 这个无状态服务层做什么——身份认证、查询解析/优化、事务管理、元数据管理——但从不直接接触表的字节数据。
       - id: architecture.cloud-agnostic-multi-region
-        title: Cross-Cloud & Multi-Region Deployment
-        summary: Running the same codebase and account model across AWS, Azure, and GCP, and what region/account boundaries mean for data movement.
+        title: 跨云与多区域部署
+        summary: 在 AWS、Azure、GCP 上运行同一套代码与账户模型，以及区域/账户边界对数据迁移意味着什么。
       - id: architecture.elasticity-multitenancy
-        title: Elasticity & Multi-tenancy
-        summary: Adding or removing compute in seconds without repartitioning data, and how many independent tenants share one metadata/control plane safely.
+        title: 弹性与多租户
+        summary: 秒级增减计算资源而无需重新分区数据，以及众多独立租户如何安全地共享同一个元数据/控制平面。
 
   - id: storage
     order: 2
-    title: Storage Engine & Micro-partitions
-    summary: The immutable columnar file format everything — pruning, cloning, Time Travel, Streams — is built on top of.
+    title: 存储引擎与微分区（micro-partition）
+    summary: 不可变的列式文件格式——剪枝（pruning）、克隆（cloning）、时间旅行（Time Travel）、流（Streams）等一切功能都构建于其上。
     children:
       - id: storage.micro-partition-format
-        title: Micro-partition Format
-        summary: The 50-500MB immutable, columnar file unit every table is physically stored as, and why immutability is the precondition for everything downstream.
+        title: 微分区（micro-partition）格式
+        summary: 每张表在物理上都以 50-500MB 的不可变列式文件单元存储，以及为何不可变性是下游一切功能的前提条件。
         requires: [architecture.storage-compute-separation]
       - id: storage.micro-partition-metadata
-        title: Micro-partition Metadata
-        summary: What the header of every micro-partition tracks (min/max per column, distinct counts, null counts) and where that metadata actually lives.
+        title: 微分区元数据
+        summary: 每个微分区的头部记录了什么（每列的最小值/最大值、去重计数、空值计数），以及这些元数据实际存放在哪里。
         requires: [storage.micro-partition-format]
       - id: storage.columnar-compression-encoding
-        title: Columnar Compression & Encoding
-        summary: Per-column encoding choice and compression, and why columnar layout is what makes both compression and pruning cheap.
+        title: 列式压缩与编码
+        summary: 按列选择编码方式并压缩，以及为何列式布局是让压缩和剪枝都变得廉价的根本原因。
         requires: [storage.micro-partition-format]
       - id: storage.clustering-keys
-        title: Clustering Keys
-        summary: Choosing a clustering key to keep correlated micro-partitions together, and the access patterns that actually benefit.
+        title: 聚簇键（clustering key）
+        summary: 选择聚簇键以让相关的微分区聚集在一起，以及真正能从中受益的访问模式。
         requires: [storage.micro-partition-metadata]
       - id: storage.automatic-reclustering
-        title: Automatic Reclustering
-        summary: The background service that rewrites micro-partitions to restore clustering after DML drifts it, and its credit cost.
+        title: 自动重新聚簇（automatic reclustering）
+        summary: 在 DML 操作使聚簇状态漂移后，负责重写微分区以恢复聚簇的后台服务，以及它消耗的信用点（credit）成本。
         requires: [storage.clustering-keys]
       - id: storage.natural-vs-explicit-clustering
-        title: Natural vs Explicit Clustering
-        summary: Why insertion-order (natural) clustering is often good enough, and the overlap/depth signal that says when it isn't.
+        title: 自然聚簇与显式聚簇
+        summary: 为何按插入顺序形成的自然聚簇往往已经足够好，以及重叠度/深度（overlap/depth）指标何时提示它不再够用。
         requires: [storage.clustering-keys]
       - id: storage.table-types
-        title: Table Types
-        summary: Permanent, transient, temporary, and external tables — what Time Travel and Fail-safe each one gets and why.
+        title: 表类型
+        summary: 永久表、瞬态表（transient）、临时表（temporary）与外部表——各自享有怎样的时间旅行（Time Travel）与故障保护（Fail-safe）能力，以及原因。
         requires: [storage.micro-partition-format]
       - id: storage.object-storage-backend
-        title: Object Storage Backend
-        summary: Why every micro-partition is a blob in cloud object storage (S3/Blob/GCS) instead of local disk, and what that buys and costs.
+        title: 对象存储后端
+        summary: 为何每个微分区都是云对象存储（S3/Blob/GCS）中的一个 blob 而不是本地磁盘文件，以及这样做的收益与代价。
         requires: [architecture.storage-compute-separation]
 
   - id: metadata
     order: 3
-    title: Metadata & Cloud Services
-    summary: The stateless services layer and the single metadata store it runs every control-plane decision against.
+    title: 元数据与云服务
+    summary: 无状态服务层，以及它据以做出每一个控制面决策的单一元数据存储。
     children:
       - id: metadata.foundationdb-role
-        title: FoundationDB as the Metadata Store
-        summary: Why all table/schema/transaction metadata lives in one strongly-consistent distributed KV store instead of a bespoke catalog service.
+        title: FoundationDB 作为元数据存储
+        summary: 为何所有表/模式（schema）/事务元数据都存放在一个强一致的分布式键值（KV）存储中，而不是一个定制的目录服务（catalog service）。
         requires: [architecture.cloud-services-layer]
       - id: metadata.execution-anchor
-        title: Execution Anchor
-        summary: How a query is bound to exactly one Cloud Services instance for its lifetime, and the voluntary vs involuntary transfer paths when that instance is busy or crashes.
+        title: 执行锚点（Execution Anchor）
+        summary: 一个查询在其整个生命周期内如何被绑定到唯一一个云服务（Cloud Services）实例，以及当该实例繁忙或崩溃时，主动转移与被动转移这两条路径。
         requires: [metadata.foundationdb-role]
       - id: metadata.query-compiler-pipeline
-        title: Query Compiler Pipeline
-        summary: Parse, bind, and optimize stages that run in Cloud Services before a single byte of compute is provisioned.
+        title: 查询编译流水线
+        summary: 在分配任何计算资源之前，于云服务（Cloud Services）中运行的解析（parse）、绑定（bind）、优化（optimize）阶段。
         requires: [architecture.cloud-services-layer]
       - id: metadata.optimizer-statistics
-        title: Optimizer Statistics
-        summary: What statistics the optimizer pulls from micro-partition metadata (cardinality, distinct values) to choose a plan, without scanning data.
+        title: 优化器统计信息
+        summary: 优化器从微分区元数据中提取哪些统计信息（基数、去重值）来选择执行计划，且无需扫描数据本身。
         requires: [storage.micro-partition-metadata]
       - id: metadata.ddl-metadata-versioning
-        title: DDL as Metadata Versioning
-        summary: Why ALTER/CREATE/DROP are metadata-only operations that create a new table version rather than mutating data in place.
+        title: DDL 即元数据版本化
+        summary: 为何 ALTER/CREATE/DROP 都是仅涉及元数据的操作，它们创建一个新的表版本，而不是就地修改数据。
         requires: [metadata.foundationdb-role]
       - id: metadata.metadata-scaling-consistency
-        title: Metadata Layer Scaling & Consistency
-        summary: How the metadata layer stays strongly consistent while serving every warehouse in an account concurrently, and where it becomes the bottleneck.
+        title: 元数据层的伸缩与一致性
+        summary: 元数据层如何在同时服务一个账户内所有仓库的情况下保持强一致性，以及它在何处会成为瓶颈。
         requires: [metadata.foundationdb-role]
 
   - id: warehouse
     order: 4
-    title: Virtual Warehouses
-    summary: The compute layer — sizing, scaling, and billing for the clusters that actually run queries.
+    title: 虚拟仓库（virtual warehouse）
+    summary: 计算层——真正运行查询的集群的规格选择、伸缩与计费方式。
     children:
       - id: warehouse.sizing-t-shirt
-        title: Warehouse Sizing (T-shirt Sizes)
-        summary: What XS through 6XL actually changes (node count, not per-node power) and how size choice trades latency for cost.
+        title: 仓库规格（T 恤尺码式）
+        summary: 从 XS 到 6XL 实际改变的是什么（节点数量，而非单节点算力），以及规格选择如何在延迟与成本之间权衡。
         requires: [architecture.storage-compute-separation]
       - id: warehouse.multi-cluster-scaling-policy
-        title: Multi-cluster Scaling Policy
-        summary: Standard vs economy scaling policies for adding/removing clusters under concurrent load, and the queueing behavior each produces.
+        title: 多集群伸缩策略
+        summary: 标准（standard）与经济（economy）两种伸缩策略在并发负载下如何增减集群，以及各自产生的排队行为。
         requires: [warehouse.sizing-t-shirt]
       - id: warehouse.auto-suspend-resume
-        title: Auto-suspend & Auto-resume
-        summary: The idle-timeout mechanism that stops billing within seconds of the last query, and the cold-start cost of resuming.
+        title: 自动挂起与自动恢复
+        summary: 在最后一条查询结束后的数秒内停止计费的空闲超时机制，以及恢复时的冷启动代价。
         requires: [warehouse.sizing-t-shirt]
       - id: warehouse.isolation-workload-separation
-        title: Workload Isolation
-        summary: Running ETL, BI, and ad hoc workloads on separate warehouses so one workload's spike can't starve another's compute.
+        title: 工作负载隔离
+        summary: 将 ETL、BI 与临时查询（ad hoc）工作负载分别运行在独立的仓库上，使某个负载的突增不会抢占另一个负载的计算资源。
         requires: [warehouse.sizing-t-shirt]
       - id: warehouse.query-queuing
-        title: Query Queuing
-        summary: When a query queues instead of running, how queue depth is surfaced, and the knobs that relieve it.
+        title: 查询排队
+        summary: 查询何时会排队而不是立即执行、队列深度如何被暴露出来，以及可以缓解排队的调节手段。
         requires: [warehouse.multi-cluster-scaling-policy]
       - id: warehouse.scaling-up-vs-out
-        title: Scaling Up vs Scaling Out
-        summary: Bigger warehouse (up) for one expensive query vs more clusters (out) for concurrency — recognizing which symptom calls for which lever.
+        title: 纵向扩展与横向扩展
+        summary: 针对单条高开销查询选择更大的仓库（纵向扩展/scale up），还是针对并发选择更多集群（横向扩展/scale out）——识别哪种症状需要哪种手段。
         requires: [warehouse.multi-cluster-scaling-policy]
       - id: warehouse.resource-monitors
-        title: Resource Monitors
-        summary: Credit quotas attached to warehouses or accounts that can notify, suspend, or suspend-immediately at a threshold.
+        title: 资源监控器（resource monitor）
+        summary: 附加在仓库或账户上的信用点配额，可在达到阈值时通知、挂起或立即挂起。
         requires: [warehouse.sizing-t-shirt]
 
   - id: query
     order: 5
-    title: Query Compilation & Execution
-    summary: What happens to a SQL statement between submission and its first row of output.
+    title: 查询编译与执行
+    summary: 一条 SQL 语句从提交到输出第一行结果之间发生了什么。
     children:
       - id: query.compilation-pipeline
-        title: Compilation Pipeline
-        summary: The parse -> bind -> optimize -> codegen sequence and where each pass runs.
+        title: 编译流水线
+        summary: 解析（parse）→ 绑定（bind）→ 优化（optimize）→ 代码生成（codegen）的顺序，以及每个阶段运行在哪里。
         requires: [metadata.query-compiler-pipeline]
       - id: query.dag-execution-model
-        title: DAG Execution Model
-        summary: A compiled query becomes a DAG of operators handed to worker processes across the warehouse's nodes.
+        title: DAG 执行模型
+        summary: 编译后的查询会变成一个由算子（operator）组成的有向无环图（DAG），并被分发给仓库各节点上的工作进程执行。
         requires: [query.compilation-pipeline]
       - id: query.vectorized-columnar-execution
-        title: Vectorized Columnar Execution
-        summary: Batch-at-a-time, column-oriented operator execution and why it beats row-at-a-time interpretation on analytical workloads.
+        title: 向量化列式执行
+        summary: 按批次、面向列的算子执行方式，以及为何它在分析型负载上优于逐行解释执行。
         requires: [storage.columnar-compression-encoding]
       - id: query.join-strategies-broadcast-shuffle
-        title: Join Strategies
-        summary: Broadcast join vs shuffle (hash-repartition) join, and the size heuristic the optimizer uses to pick one.
+        title: 连接（join）策略
+        summary: 广播连接（broadcast join）与洗牌连接（shuffle/hash-repartition join）的对比，以及优化器据以选择其一的数据量启发式规则。
         requires: [query.dag-execution-model]
       - id: query.spilling-to-remote-disk
-        title: Spilling to Local & Remote Disk
-        summary: What happens when an operator's working set exceeds warehouse memory, then local SSD, and finally spills to remote storage — and the latency cliff at each step.
+        title: 溢出（spilling）到本地与远程磁盘
+        summary: 当一个算子的工作集超出仓库内存、进而超出本地 SSD、最终溢出到远程存储时会发生什么，以及每一步所对应的延迟悬崖。
         requires: [query.dag-execution-model, warehouse.sizing-t-shirt]
       - id: query.reading-query-profile
-        title: Reading a Query Profile
-        summary: Locating the most-expensive operator node, bytes scanned vs pruned, and spilling indicators in the query profile graph.
+        title: 解读查询画像（query profile）
+        summary: 在查询画像图中定位开销最大的算子节点、已扫描字节数与被剪枝字节数的对比，以及溢出（spilling）指标。
         requires: [query.dag-execution-model]
       - id: query.explain-plan-interpretation
-        title: EXPLAIN Plan Interpretation
-        summary: Reading a logical/physical plan before running a query to predict pruning and join strategy.
+        title: EXPLAIN 执行计划解读
+        summary: 在运行查询之前读取逻辑/物理执行计划，以预测剪枝效果与连接策略。
         requires: [query.compilation-pipeline]
       - id: query.adaptive-runtime-optimizations
-        title: Adaptive Runtime Optimizations
-        summary: Runtime-informed decisions (e.g. adaptive join selection) that revise a plan mid-execution using observed cardinalities instead of only compile-time estimates.
+        title: 自适应运行时优化
+        summary: 基于运行时信息做出的决策（例如自适应连接策略选择），利用实际观测到的基数在执行过程中修订计划，而不仅依赖编译期估算。
         requires: [query.join-strategies-broadcast-shuffle]
 
   - id: pruning
     order: 6
-    title: Pruning & Query Optimization
-    summary: Reading less data than the query would naively imply, and the maintained access paths that go further than pruning alone.
+    title: 剪枝与查询优化
+    summary: 读取比查询字面含义所暗示的更少的数据，以及比单纯剪枝走得更远的、持续维护的访问路径。
     children:
       - id: pruning.min-max-zone-maps
-        title: Min/Max Pruning (Zone Maps)
-        summary: Skipping whole micro-partitions whose min/max range can't satisfy a predicate, without opening the file.
+        title: 最小/最大值剪枝（zone map）
+        summary: 在不打开文件的情况下，跳过那些最小/最大值范围无法满足谓词条件的整个微分区。
         requires: [storage.micro-partition-metadata]
       - id: pruning.partition-elimination
-        title: Partition Elimination
-        summary: How the pruning decision is made at compile time from metadata alone, turning a full scan into a scan of the surviving micro-partition set.
+        title: 分区消除（partition elimination）
+        summary: 剪枝决策如何仅凭元数据在编译期做出，从而把一次全表扫描变成对存活微分区集合的扫描。
         requires: [pruning.min-max-zone-maps]
       - id: pruning.clustering-depth-metric
-        title: Clustering Depth
-        summary: The metric that quantifies how much a table's micro-partitions overlap on its clustering key, and what a high value predicts about pruning.
+        title: 聚簇深度（clustering depth）
+        summary: 量化一张表的微分区在聚簇键上重叠程度的指标，以及该值偏高时对剪枝效果的预示。
         requires: [storage.clustering-keys]
       - id: pruning.search-optimization-service
-        title: Search Optimization Service
-        summary: A maintained access path (not a B-tree index) that accelerates highly selective point lookups on non-clustered columns.
+        title: 搜索优化服务（Search Optimization Service）
+        summary: 一种持续维护的访问路径（并非 B 树索引），用于加速非聚簇列上高选择性的点查（point lookup）。
         requires: [pruning.partition-elimination]
       - id: pruning.materialized-views-maintenance
-        title: Materialized Views
-        summary: Precomputed, automatically-maintained result sets and the background refresh cost that offsets their read speedup.
+        title: 物化视图（materialized view）
+        summary: 预先计算并自动维护的结果集，以及抵消其读取加速收益的后台刷新成本。
         requires: [pruning.partition-elimination]
       - id: pruning.query-acceleration-service
-        title: Query Acceleration Service
-        summary: Serverless compute borrowed to parallelize the scan/filter portion of an outlier query beyond its warehouse's own node count.
+        title: 查询加速服务（Query Acceleration Service）
+        summary: 借用无服务器（serverless）计算资源，将异常耗时查询中的扫描/过滤部分并行化到超出其所属仓库自身节点数的规模。
         requires: [query.dag-execution-model]
 
   - id: cache
     order: 7
-    title: Caching Layers
-    summary: The layers between "already computed" and "recompute from micro-partitions" — and which symptom points at which one.
+    title: 缓存层
+    summary: 介于"已经算好"与"从微分区重新计算"之间的各层缓存——以及哪种症状指向哪一层。
     children:
       - id: cache.result-cache
-        title: Persisted Result Cache
-        summary: Returning a prior result with zero compute when the SQL text and underlying data are unchanged, for up to 24 hours.
+        title: 持久化结果缓存
+        summary: 当 SQL 文本与底层数据均未改变时，零计算成本地返回此前的结果，有效期最长 24 小时。
         requires: [metadata.foundationdb-role]
       - id: cache.result-cache-invalidation
-        title: Result Cache Invalidation
-        summary: What change (to data, not just wall-clock time) invalidates a cached result, and why an unrelated session can still hit it.
+        title: 结果缓存失效
+        summary: 什么样的变化（针对数据本身，而非单纯的时间流逝）会使缓存结果失效，以及为何一个毫不相关的会话也能命中该缓存。
         requires: [cache.result-cache]
       - id: cache.warehouse-local-disk-cache
-        title: Warehouse-local SSD Cache
-        summary: The per-node local disk cache of recently-scanned micro-partitions that a warehouse loses on suspend.
+        title: 仓库本地 SSD 缓存
+        summary: 每个节点上缓存近期扫描过的微分区的本地磁盘缓存，仓库一旦挂起就会丢失该缓存。
         requires: [warehouse.sizing-t-shirt]
       - id: cache.metadata-cache-pruning-stats
-        title: Metadata Cache for Pruning
-        summary: Caching the min/max/count statistics themselves so pruning and simple aggregates never touch data files.
+        title: 用于剪枝的元数据缓存
+        summary: 直接缓存最小值/最大值/计数等统计信息本身，使剪枝和简单聚合运算完全无需接触数据文件。
         requires: [storage.micro-partition-metadata]
       - id: cache.cache-layer-tradeoffs
-        title: Cache Layer Trade-offs
-        summary: Comparing what each cache layer buys (latency vs staleness risk vs warm-up cost) and which one a given symptom points at.
+        title: 各缓存层的权衡
+        summary: 比较每一层缓存的收益（延迟 vs 陈旧风险 vs 预热成本），以及给定症状究竟指向哪一层。
         requires: [cache.result-cache, cache.warehouse-local-disk-cache]
 
   - id: txn
     order: 8
-    title: Transactions & Concurrency Control
-    summary: What the platform promises around concurrent readers and writers, built entirely on immutable files.
+    title: 事务与并发控制
+    summary: 平台围绕并发读写者所做出的承诺，这一切完全建立在不可变文件之上。
     children:
       - id: txn.acid-guarantees
-        title: ACID Guarantees
-        summary: What atomicity, consistency, isolation, and durability specifically mean on an immutable, versioned storage layer.
+        title: ACID 保证
+        summary: 在一个不可变、带版本的存储层上，原子性、一致性、隔离性与持久性具体意味着什么。
         requires: [architecture.three-layer-model]
       - id: txn.snapshot-isolation
-        title: Snapshot Isolation
-        summary: Every statement or transaction sees a consistent point-in-time view of the table without blocking readers or writers.
+        title: 快照隔离（snapshot isolation）
+        summary: 每条语句或每个事务都能看到表在某个时间点上的一致视图，且不会阻塞其他读写者。
         requires: [txn.acid-guarantees]
       - id: txn.mvcc-immutable-partitions
-        title: MVCC via Immutable Micro-partitions
-        summary: A write never mutates a micro-partition in place; it produces a new table version referencing new and unchanged partitions.
+        title: 基于不可变微分区的 MVCC
+        summary: 一次写入从不就地修改微分区，而是生成一个新的表版本，引用新写入的分区与未变化的分区。
         requires: [storage.micro-partition-format, txn.snapshot-isolation]
       - id: txn.optimistic-concurrency-conflicts
-        title: Optimistic Concurrency & Write Conflicts
-        summary: Two concurrent writers to overlapping data detect conflict at commit time rather than locking rows up front.
+        title: 乐观并发与写冲突
+        summary: 两个并发写入者操作重叠数据时，是在提交时才检测冲突，而不是预先对行加锁。
         requires: [txn.mvcc-immutable-partitions]
       - id: txn.ddl-as-transaction
-        title: DDL as a Transaction
-        summary: Why schema changes are atomic and instantaneous from a reader's perspective, layered on the same metadata versioning as DML.
+        title: DDL 即事务
+        summary: 为何模式（schema）变更从读者的视角看是原子且瞬时的——它构建在与 DML 相同的元数据版本化机制之上。
         requires: [metadata.ddl-metadata-versioning]
       - id: txn.multi-statement-transactions
-        title: Multi-statement Transactions
-        summary: Explicit BEGIN/COMMIT scoping across multiple statements, autocommit default, and where implicit transactions bite.
+        title: 多语句事务
+        summary: 用显式的 BEGIN/COMMIT 将多条语句纳入同一事务范围、默认的自动提交（autocommit）行为，以及隐式事务容易带来麻烦的地方。
         requires: [txn.snapshot-isolation]
 
   - id: continuity
     order: 9
-    title: Time Travel, Fail-safe & Cloning
-    summary: Recovering from mistakes and forking environments cheaply, because the storage layer never overwrites anything in place.
+    title: 时间旅行、故障保护与克隆
+    summary: 从错误中恢复、并以低成本派生出新环境——这一切之所以可能，是因为存储层从不就地覆写任何内容。
     children:
       - id: continuity.retention-vs-failsafe
-        title: Time Travel vs Fail-safe
-        summary: The default 1-day (up to 90-day, Enterprise+) queryable retention window versus the following non-queryable 7-day Fail-safe recovery window, and who can invoke each.
+        title: 时间旅行与故障保护对比
+        summary: 默认 1 天（Enterprise 及以上版本最长 90 天）的可查询保留窗口，与随后紧接着的、不可查询的 7 天故障保护（Fail-safe）恢复窗口的对比，以及各自能由谁来发起恢复。
         requires: [txn.mvcc-immutable-partitions]
       - id: continuity.at-before-statement-syntax
-        title: AT / BEFORE Query Syntax
-        summary: Querying a table as of a timestamp, offset, or statement id, and what determines whether the referenced version still exists.
+        title: AT / BEFORE 查询语法
+        summary: 按时间戳、偏移量或语句 ID 查询某个历史版本的表，以及决定被引用的版本是否仍然存在的因素。
         requires: [continuity.retention-vs-failsafe]
       - id: continuity.undrop-recovery
-        title: UNDROP Recovery
-        summary: Restoring a dropped table, schema, or database within its retention window as a metadata operation, not a restore-from-backup.
+        title: UNDROP 恢复
+        summary: 在保留窗口内将已删除的表、模式（schema）或数据库恢复回来，这是一次元数据操作，而不是从备份中还原。
         requires: [continuity.retention-vs-failsafe]
       - id: continuity.zero-copy-clone
-        title: Zero-copy Clone
-        summary: Cloning a table, schema, or database by copying only the metadata pointer to existing micro-partitions, not the bytes.
+        title: 零拷贝克隆（zero-copy clone）
+        summary: 克隆一张表、一个模式（schema）或一个数据库时，只复制指向已有微分区的元数据指针，而不复制实际字节数据。
         requires: [continuity.retention-vs-failsafe]
       - id: continuity.clone-storage-billing
-        title: Clone Storage Billing
-        summary: Why a clone costs nothing until it diverges, and how divergence (new writes on either side) starts accruing storage.
+        title: 克隆的存储计费
+        summary: 为何一个克隆在发生分叉之前不产生任何存储成本，以及分叉（任一侧发生新写入）之后如何开始累积存储费用。
         requires: [continuity.zero-copy-clone]
       - id: continuity.replication-and-failover
-        title: Database Replication & Failover
-        summary: Continuously replicating a database's data and metadata to another region or cloud, and promoting a secondary on failover.
+        title: 数据库复制与故障切换
+        summary: 将一个数据库的数据与元数据持续复制到另一个区域或云，并在故障切换时把从库提升为主库。
         requires: [metadata.foundationdb-role]
       - id: continuity.client-redirect
-        title: Client Redirect
-        summary: A connection-level DNS/URL indirection that lets client drivers follow an account failover without reconfiguration.
+        title: 客户端重定向
+        summary: 一种连接层面的 DNS/URL 间接寻址机制，使客户端驱动能够跟随账户的故障切换而无需重新配置。
         requires: [continuity.replication-and-failover]
 
   - id: semistructured
     order: 10
-    title: Semi-structured Data
-    summary: Treating JSON/Avro/Parquet as first-class columnar data instead of an opaque blob.
+    title: 半结构化数据
+    summary: 将 JSON/Avro/Parquet 当作一等公民的列式数据来处理，而不是一个不透明的二进制大对象（blob）。
     children:
       - id: semistructured.variant-type-storage
-        title: VARIANT Type & Storage
-        summary: How JSON/Avro/Parquet/XML is parsed once at load time into a self-describing columnar representation inside the same micro-partition format.
+        title: VARIANT 类型与存储
+        summary: JSON/Avro/Parquet/XML 如何在加载时被一次性解析，转换为同一种微分区格式内部的自描述列式表示。
         requires: [storage.micro-partition-format]
       - id: semistructured.schema-on-read-parsing
-        title: Schema-on-read Parsing
-        summary: Extracting typed columns from VARIANT at query time via path expressions, and the type-inference cost that implies.
+        title: 读时模式解析（schema-on-read）
+        summary: 在查询时通过路径表达式从 VARIANT 中提取带类型的列，以及由此带来的类型推断开销。
         requires: [semistructured.variant-type-storage]
       - id: semistructured.flatten-lateral-joins
-        title: FLATTEN & Lateral Joins
-        summary: Exploding nested arrays or objects into rows with FLATTEN, and why it requires a LATERAL join.
+        title: FLATTEN 与 LATERAL 连接
+        summary: 用 FLATTEN 将嵌套的数组或对象展开成多行，以及为何这需要一次 LATERAL 连接。
         requires: [semistructured.variant-type-storage]
       - id: semistructured.schema-evolution-tables
-        title: Schema Evolution on Semi-structured Sources
-        summary: Letting a table's columns grow as new fields appear in ingested JSON/Parquet, and the compatibility rules that govern it.
+        title: 半结构化数据源上的模式演进
+        summary: 随着导入的 JSON/Parquet 中出现新字段而让表的列自动增长，以及约束这一过程的兼容性规则。
         requires: [semistructured.variant-type-storage]
 
   - id: ingestion
     order: 11
-    title: Data Loading & Ingestion
-    summary: Getting bytes from outside the platform into a table, at batch, micro-batch, and row-level latency.
+    title: 数据加载与摄取
+    summary: 把平台外部的数据以批量、微批量和行级延迟等不同粒度导入表中。
     children:
       - id: ingestion.bulk-copy-into
-        title: Bulk Loading (COPY INTO)
-        summary: Batch file loading from a stage, load metadata that prevents reloading the same file twice, and parallelism across files.
+        title: 批量加载（COPY INTO）
+        summary: 从暂存区（stage）批量加载文件、防止同一文件被重复加载的加载元数据，以及跨文件的并行加载。
         requires: [storage.table-types]
       - id: ingestion.file-formats-and-stages
-        title: File Formats & Stages
-        summary: Internal vs external stages, named file formats, and how COPY INTO uses both to parse incoming files.
+        title: 文件格式与暂存区（stage）
+        summary: 内部暂存区与外部暂存区的区别、具名文件格式，以及 COPY INTO 如何同时利用二者来解析导入的文件。
         requires: [ingestion.bulk-copy-into]
       - id: ingestion.snowpipe-auto-ingest
-        title: Snowpipe Auto-ingest
-        summary: Event-notification-triggered, serverless micro-batch loading of files as they land in a stage, at minute-level latency.
+        title: Snowpipe 自动摄取
+        summary: 由事件通知触发、无服务器（serverless）的微批量加载——文件一到达暂存区就被加载，延迟为分钟级。
         requires: [ingestion.file-formats-and-stages]
       - id: ingestion.snowpipe-streaming-offset-tokens
-        title: Snowpipe Streaming & Offset Tokens
-        summary: Row-level, channel-based ingestion with client-supplied offset tokens providing exactly-once semantics without a staged file.
+        title: Snowpipe Streaming 与偏移量令牌（offset token）
+        summary: 基于通道（channel）的行级摄取，由客户端提供偏移量令牌（offset token），在无需暂存文件的情况下提供恰好一次（exactly-once）语义。
         requires: [ingestion.snowpipe-auto-ingest]
       - id: ingestion.datastream-kafka-compatible
-        title: Datastream (Kafka Wire-compatible Ingestion)
-        summary: A native streaming service that speaks the Kafka wire protocol directly into a table, inheriting RBAC, lineage, and Time Travel.
+        title: Datastream（兼容 Kafka 协议的摄取）
+        summary: 一个原生流式服务，直接用 Kafka 线上协议（wire protocol）向表中写入数据，并继承 RBAC、血缘（lineage）与时间旅行（Time Travel）能力。
         requires: [ingestion.snowpipe-streaming-offset-tokens]
       - id: ingestion.external-tables-over-lake
-        title: External Tables over a Data Lake
-        summary: Querying files in place in object storage without loading them, and the metadata refresh that keeps the external table current.
+        title: 数据湖之上的外部表
+        summary: 直接原地查询对象存储中的文件而无需加载，以及让外部表保持最新的元数据刷新机制。
         requires: [storage.object-storage-backend]
       - id: ingestion.unload-export
-        title: Unloading Data (COPY INTO location)
-        summary: Exporting query results or table data back to a stage as files, and the format/compression choices that affect downstream consumers.
+        title: 数据卸载（COPY INTO location）
+        summary: 将查询结果或表数据以文件形式导出回暂存区，以及影响下游消费者的格式/压缩选择。
         requires: [ingestion.bulk-copy-into]
 
   - id: pipelines
     order: 12
-    title: Streams, Tasks & Dynamic Tables
-    summary: Snowflake-native change capture and orchestration, from a raw offset bookmark to a declarative freshness SLA.
+    title: 流（Stream）、任务（Task）与动态表（Dynamic Table）
+    summary: Snowflake 原生的变更捕获与编排能力，从最底层的偏移量书签到声明式的新鲜度（freshness）SLA。
     children:
       - id: pipelines.stream-offset-bookmark
-        title: Streams as Offset Bookmarks
-        summary: A Stream is a pointer into a table's version history, not a copy of data; querying it returns the net change since the last consumption.
+        title: 作为偏移量书签的流（Stream）
+        summary: 一个 Stream 是指向表版本历史中某一点的指针，而不是数据的副本；查询它返回的是自上次消费以来的净变化。
         requires: [txn.mvcc-immutable-partitions]
       - id: pipelines.stream-types
-        title: Stream Types (Standard / Append-only / Insert-only)
-        summary: What each stream type tracks — all DML vs inserts-only vs inserts on immutable sources — and when to pick which.
+        title: 流类型（标准 / 仅追加 / 仅插入）
+        summary: 每种流类型分别追踪什么——所有 DML、仅插入，还是不可变数据源上的插入——以及何时该选哪一种。
         requires: [pipelines.stream-offset-bookmark]
       - id: pipelines.stream-consumption-and-offset-advance
-        title: Offset Advance Only Inside the Consuming DML
-        summary: Why the offset moves only when a transaction that reads the Stream also commits, making a crashed consumer retry the exact same change set.
+        title: 偏移量仅在消费 DML 内前移
+        summary: 为何偏移量只有在读取该 Stream 的事务同时提交时才会前移，这使得一个崩溃的消费者会重新尝试完全相同的一组变更。
         requires: [pipelines.stream-offset-bookmark]
       - id: pipelines.stream-staleness-and-retention-extension
-        title: Stream Staleness & Retention Extension
-        summary: What makes a Stream stale (unconsumed past the source table's retention) and the automatic retention extension that delays it.
+        title: 流的陈旧化与保留期延长
+        summary: 是什么让一个 Stream 变得陈旧（超过源表保留期仍未被消费），以及延迟这一情况发生的自动保留期延长机制。
         requires: [pipelines.stream-offset-bookmark]
       - id: pipelines.task-scheduling-cron-and-dag
-        title: Task Scheduling & DAGs
-        summary: CRON- or interval-scheduled Tasks composed into a dependency graph (task graph) of up to 100 tasks.
+        title: 任务调度与 DAG
+        summary: 由 CRON 表达式或固定间隔调度的 Task，可组合成最多包含 100 个任务的依赖图（task graph）。
         requires: [pipelines.stream-offset-bookmark]
       - id: pipelines.task-conditional-execution
-        title: Conditional Task Execution
-        summary: Using SYSTEM$STREAM_HAS_DATA() to skip a Task run entirely when its upstream Stream is empty.
+        title: 条件式任务执行
+        summary: 使用 SYSTEM$STREAM_HAS_DATA() 在上游 Stream 为空时完全跳过一次 Task 运行。
         requires: [pipelines.task-scheduling-cron-and-dag]
       - id: pipelines.task-serverless-vs-warehouse
-        title: Serverless vs Warehouse-backed Tasks
-        summary: Letting Snowflake auto-size compute per run (serverless) versus binding a Task to a fixed warehouse, and the cost/latency trade it implies.
+        title: 无服务器任务与仓库支持型任务
+        summary: 让 Snowflake 按每次运行自动调整计算规模（无服务器/serverless），还是将 Task 绑定到固定的仓库，以及这一选择隐含的成本/延迟权衡。
         requires: [pipelines.task-scheduling-cron-and-dag, warehouse.sizing-t-shirt]
       - id: pipelines.task-failure-handling
-        title: Task Failure Handling
-        summary: SUSPEND_TASK_AFTER_NUM_FAILURES, retry attempts, and how a DAG behaves when one node fails — does the branch stop or does the whole graph?
+        title: 任务失败处理
+        summary: SUSPEND_TASK_AFTER_NUM_FAILURES 参数、重试次数，以及当某个节点失败时 DAG 的行为——是仅该分支停止，还是整个图都停止？
         requires: [pipelines.task-scheduling-cron-and-dag]
       - id: pipelines.dynamictable-target-lag
-        title: Dynamic Tables & TARGET_LAG
-        summary: Declaring a freshness SLA instead of hand-writing the Stream+Task+MERGE that used to implement it, and how the scheduler derives a refresh cadence from it.
+        title: 动态表（Dynamic Table）与 TARGET_LAG
+        summary: 声明一个新鲜度 SLA，而不必手写过去用来实现它的 Stream+Task+MERGE 组合，以及调度器如何据此推导出刷新节奏。
         requires: [pipelines.stream-offset-bookmark, pipelines.task-scheduling-cron-and-dag]
       - id: pipelines.dynamictable-incremental-vs-full-refresh
-        title: Incremental vs Full Refresh
-        summary: When a Dynamic Table can compute its next state from just the delta versus needing to recompute from scratch.
+        title: 增量刷新与全量刷新
+        summary: 动态表何时能仅凭增量数据计算出下一个状态，何时又必须从头重新计算。
         requires: [pipelines.dynamictable-target-lag]
       - id: pipelines.dynamictable-adaptive-refresh
-        title: Adaptive Refresh
-        summary: Detecting an upstream change large enough that incremental refresh would be slower than reinitializing, and switching strategy automatically.
+        title: 自适应刷新
+        summary: 检测到上游变化大到增量刷新反而比重新初始化更慢时，自动切换刷新策略。
         requires: [pipelines.dynamictable-incremental-vs-full-refresh]
 
   - id: security
     order: 13
-    title: Security & Governance
-    summary: Who can authenticate, what they can then see, and how both facts are proven after the fact.
+    title: 安全与治理
+    summary: 谁能通过身份认证、认证后又能看到什么，以及事后如何证明这两件事。
     children:
       - id: security.authn-mfa-sso
-        title: Authentication (MFA, SSO, Key-pair)
-        summary: Password/MFA, federated SSO (SAML/OAuth), and key-pair authentication as alternatives with different bot/automation fit.
+        title: 身份认证（MFA、SSO、密钥对）
+        summary: 密码/多因素认证（MFA）、联合单点登录（SSO，基于 SAML/OAuth），以及密钥对认证——这几种方式在机器人/自动化场景下的适配程度各不相同。
         requires: [architecture.cloud-services-layer]
       - id: security.rbac-role-hierarchy
-        title: RBAC Role Hierarchy
-        summary: Roles as a DAG (not a tree) that privileges flow up through via inheritance, and why a role can have multiple parents.
+        title: RBAC 角色层级
+        summary: 角色构成一个有向无环图（DAG，而非树），权限沿着继承关系向上流动，以及为何一个角色可以有多个父角色。
         requires: [metadata.foundationdb-role]
       - id: security.rbac-ownership-and-grants
-        title: Ownership & Grant Propagation
-        summary: OWNERSHIP as the privilege that includes all others, GRANT/REVOKE propagation, and future grants on a schema.
+        title: 所有权与授权传播
+        summary: OWNERSHIP 作为包含其他一切权限的权限、GRANT/REVOKE 的传播方式，以及模式（schema）上的未来授权（future grant）。
         requires: [security.rbac-role-hierarchy]
       - id: security.network-policies-private-connectivity
-        title: Network Policies & Private Connectivity
-        summary: IP allow/block lists at account or user scope, and cloud-native private connectivity (PrivateLink/Private Service Connect) that avoids the public internet entirely.
+        title: 网络策略与私有连接
+        summary: 账户或用户级别的 IP 白名单/黑名单，以及完全绕开公网的云原生私有连接（PrivateLink/Private Service Connect）。
         requires: [security.authn-mfa-sso]
       - id: security.encryption-key-hierarchy
-        title: Encryption Key Hierarchy
-        summary: The tiered key structure (root -> account -> table -> file) and automatic key rotation/rekeying, all invisible to the user.
+        title: 加密密钥层级
+        summary: 分层的密钥结构（根密钥 → 账户密钥 → 表密钥 → 文件密钥），以及对用户完全透明的自动密钥轮换/重新加密。
         requires: [architecture.cloud-services-layer]
       - id: security.row-access-policies
-        title: Row Access Policies
-        summary: Attaching a row-filtering predicate to a table so different roles see different subsets of the same rows, evaluated at query time.
+        title: 行级访问策略（row access policy）
+        summary: 给表附加一个行过滤谓词，使不同角色看到同一批行的不同子集，该谓词在查询时被求值。
         requires: [security.rbac-role-hierarchy]
       - id: security.column-masking-policies
-        title: Dynamic Data Masking
-        summary: Attaching a masking function to a column so its unmasked value is visible only to roles the policy allows.
+        title: 动态数据脱敏（dynamic data masking）
+        summary: 给列附加一个脱敏函数，使其未脱敏的原始值只对策略允许的角色可见。
         requires: [security.rbac-role-hierarchy]
       - id: security.data-classification-and-tagging
-        title: Data Classification & Object Tagging
-        summary: Automatic sensitive-data classification and tag-based policy attachment, so masking/row policies can be applied at scale instead of per-column.
+        title: 数据分类与对象标签
+        summary: 自动化的敏感数据分类，以及基于标签（tag）的策略挂载，使脱敏/行级策略能够规模化应用，而不必逐列配置。
         requires: [security.column-masking-policies]
       - id: security.data-lineage-and-access-history
-        title: Data Lineage & Access History
-        summary: Tracing a column's provenance through views and CTAS, and ACCESS_HISTORY as the audit trail of who actually read or wrote which columns.
+        title: 数据血缘与访问历史
+        summary: 通过视图和 CTAS 追踪一列数据的来源，以及 ACCESS_HISTORY 作为记录谁实际读取或写入了哪些列的审计轨迹。
         requires: [security.rbac-role-hierarchy]
       - id: security.trust-center-posture
-        title: Trust Center Security Posture
-        summary: A built-in scanner surfacing misconfigurations (public network policy, excess grants) as a prioritized risk list rather than needing an external tool.
+        title: 信任中心（Trust Center）安全态势
+        summary: 一个内置扫描器，将错误配置（公开的网络策略、过度授权等）汇总为一份按优先级排序的风险清单，无需借助外部工具。
         requires: [security.network-policies-private-connectivity]
 
   - id: sharing
     order: 14
-    title: Data Sharing & Collaboration
-    summary: Giving another account (or the public) access to live data without copying it.
+    title: 数据共享与协作
+    summary: 在不复制数据的前提下，让另一个账户（或公众）访问实时数据。
     children:
       - id: sharing.secure-data-sharing-mechanics
-        title: Secure Data Sharing Mechanics
-        summary: Granting another account read access to live micro-partitions via metadata pointers — no data copy, no ETL, and the consumer always sees current data.
+        title: 安全数据共享（Secure Data Sharing）机制
+        summary: 通过元数据指针授予另一个账户对实时微分区的读取权限——无需复制数据、无需 ETL，消费方看到的始终是当前数据。
         requires: [metadata.foundationdb-role, security.rbac-role-hierarchy]
       - id: sharing.data-marketplace-listings
-        title: Data Marketplace Listings
-        summary: Publishing a share as a discoverable listing (free or monetized) versus a private direct share to a named account.
+        title: 数据市场（Data Marketplace）挂牌
+        summary: 将一个共享发布为可被发现的挂牌（免费或付费），与将其作为私有直接共享指定给某个具名账户，这两种方式的对比。
         requires: [sharing.secure-data-sharing-mechanics]
       - id: sharing.reader-accounts
-        title: Reader Accounts
-        summary: Letting an organization without its own Snowflake account consume a share through a provider-managed, billed-to-provider account.
+        title: 只读账户（reader account）
+        summary: 让没有自己 Snowflake 账户的组织，通过一个由提供方管理、费用计入提供方的账户来消费某个共享。
         requires: [sharing.secure-data-sharing-mechanics]
       - id: sharing.clean-rooms-privacy
-        title: Data Clean Rooms
-        summary: Letting two parties compute joins or aggregates over each other's data under a governed policy without either seeing the other's raw rows.
+        title: 数据洁净室（Data Clean Room）
+        summary: 让双方在受治理策略约束下，对彼此的数据进行连接或聚合计算，而任何一方都看不到对方的原始行数据。
         requires: [sharing.secure-data-sharing-mechanics]
 
   - id: openplatform
     order: 15
-    title: Open Formats & Workload Expansion
-    summary: Where the platform stops being a closed warehouse — open table formats, external engines, and OLTP workloads.
+    title: 开放格式与工作负载扩展
+    summary: 平台不再是一个封闭仓库的边界所在——开放表格式、外部引擎与 OLTP 工作负载。
     children:
       - id: openplatform.iceberg-tables
-        title: Iceberg Tables
-        summary: Storing Snowflake-managed data in the open Iceberg format in customer-owned object storage, queryable by external engines.
+        title: Iceberg 表
+        summary: 将由 Snowflake 管理的数据以开放的 Iceberg 格式存储在客户自有的对象存储中，并可被外部引擎查询。
         requires: [storage.object-storage-backend]
       - id: openplatform.polaris-catalog
-        title: Polaris (Open Catalog)
-        summary: An open-source, engine-agnostic REST catalog for Iceberg tables, decoupling who wrote the table from who can query it.
+        title: Polaris（开放目录）
+        summary: 一个开源的、与引擎无关的 Iceberg 表 REST 目录服务，将"谁写入了表"与"谁可以查询表"这两件事解耦。
         requires: [openplatform.iceberg-tables]
       - id: openplatform.external-engine-commit-protocol
-        title: External Engine Writes & Commit Protocol
-        summary: The write-data, then atomically-update-catalog-pointer, then commit-governance-metadata sequence that lets a non-Snowflake engine write an Iceberg table safely.
+        title: 外部引擎写入与提交协议
+        summary: 先写入数据、再原子更新目录指针、最后提交治理元数据的顺序，使非 Snowflake 引擎也能安全地写入一张 Iceberg 表。
         requires: [openplatform.polaris-catalog, txn.snapshot-isolation]
       - id: openplatform.hybrid-tables-oltp
-        title: Hybrid Tables (Unistore)
-        summary: A row-store table type with enforced primary keys and row locks for millisecond point lookups, asynchronously mirrored into the columnar store for analytics.
+        title: 混合表（Hybrid Table，Unistore）
+        summary: 一种行存储表类型，具有强制主键与行锁，支持毫秒级点查，并异步镜像到列式存储中以支持分析查询。
         requires: [metadata.foundationdb-role, storage.table-types]
       - id: openplatform.snowflake-postgres
         title: Snowflake Postgres
-        summary: A managed, wire-compatible Postgres instance inside the platform for OLTP workloads that need transaction semantics Hybrid Tables don't provide.
+        summary: 平台内置的、协议兼容的托管 Postgres 实例，面向需要混合表（Hybrid Table）尚不提供的事务语义的 OLTP 工作负载。
         requires: [openplatform.hybrid-tables-oltp]
       - id: openplatform.snowpark-udf-udtf
-        title: Snowpark UDFs & UDTFs
-        summary: Running user code (Python/Java/Scala) inside the warehouse's sandbox as scalar or table functions, and the per-row invocation overhead that implies.
+        title: Snowpark 用户自定义函数（UDF）与表函数（UDTF）
+        summary: 在仓库的沙箱环境中以标量函数或表函数的形式运行用户代码（Python/Java/Scala），以及由此带来的逐行调用开销。
         requires: [architecture.cloud-services-layer]
       - id: openplatform.stored-procedure-sandboxing
-        title: Stored Procedure Sandboxing
-        summary: Isolation boundaries around user-supplied procedure code, and why it can't reach the network or filesystem by default.
+        title: 存储过程沙箱化
+        summary: 围绕用户提供的存储过程代码建立的隔离边界，以及为何它默认无法访问网络或文件系统。
         requires: [openplatform.snowpark-udf-udtf]
 
   - id: cost
     order: 16
-    title: Cost, Metering & Observability
-    summary: How usage turns into a bill, and where to look to explain or challenge one.
+    title: 成本、计量与可观测性
+    summary: 使用量如何转化为账单，以及去哪里查看以解释或质疑一份账单。
     children:
       - id: cost.credit-model-per-second-billing
-        title: Credit Model & Per-second Billing
-        summary: Warehouses billed in credits per second (60-second minimum), decoupled from any fixed instance price.
+        title: 信用点模型与按秒计费
+        summary: 仓库按秒以信用点（credit）计费（最低 60 秒起计），与任何固定的实例价格脱钩。
         requires: [architecture.storage-compute-separation]
       - id: cost.warehouse-billing-60s-minimum
-        title: Warehouse Billing Minimums
-        summary: The 60-second minimum charge per resume and its implication for auto-suspend timeout tuning.
+        title: 仓库最低计费时长
+        summary: 每次恢复运行至少收取 60 秒费用，以及这对调优自动挂起超时时间的影响。
         requires: [cost.credit-model-per-second-billing, warehouse.sizing-t-shirt]
       - id: cost.serverless-feature-billing
-        title: Serverless Feature Billing
-        summary: Why Snowpipe, serverless Tasks, and Search Optimization each bill on their own credit rate instead of against a warehouse.
+        title: 无服务器功能计费
+        summary: 为何 Snowpipe、无服务器 Task 与搜索优化服务（Search Optimization）各自按自己的信用点费率计费，而不计入某个仓库。
         requires: [cost.credit-model-per-second-billing]
       - id: cost.cloud-services-free-tier
-        title: Cloud Services Free Tier
-        summary: The daily allowance (10% of warehouse compute) of free Cloud Services usage before it starts appearing as its own billable line.
+        title: 云服务免费额度
+        summary: 云服务（Cloud Services）每日的免费用量额度（相当于仓库计算量的 10%），超出后才会作为单独的计费项出现。
         requires: [cost.credit-model-per-second-billing]
       - id: cost.ai-token-metering
-        title: AI/Cortex Token Metering
-        summary: Per-token billing for Cortex AI functions, tracked separately from compute credits, with account-level spend caps.
+        title: AI/Cortex 令牌计量
+        summary: Cortex AI 函数按令牌（token）计费，与计算信用点分开单独追踪，并可设置账户级别的支出上限。
         requires: [cost.credit-model-per-second-billing]
       - id: cost.resource-monitors-and-budgets
-        title: Resource Monitors as Budget Enforcement
-        summary: Using a Resource Monitor's notify/suspend/suspend-immediately actions as an actual spend ceiling rather than just an alert.
+        title: 用资源监控器强制执行预算
+        summary: 利用资源监控器（Resource Monitor）的通知/挂起/立即挂起动作，将其作为真正的支出上限，而不仅仅是一个提醒。
         requires: [warehouse.resource-monitors]
       - id: cost.query-history-and-account-usage
-        title: QUERY_HISTORY & ACCOUNT_USAGE
-        summary: Where to look — INFORMATION_SCHEMA vs ACCOUNT_USAGE vs Snowsight — for a query's cost and performance, and the latency/retention trade-off between them.
+        title: QUERY_HISTORY 与 ACCOUNT_USAGE
+        summary: 该去哪里查看一条查询的成本与性能——INFORMATION_SCHEMA、ACCOUNT_USAGE 还是 Snowsight——以及三者之间在延迟与保留期上的权衡。
         requires: [metadata.foundationdb-role]
       - id: cost.access-history-lineage-for-cost
-        title: Attributing Cost to Query Patterns
-        summary: Joining ACCESS_HISTORY/QUERY_HISTORY to find which tables, warehouses, or users drive spend, as the diagnostic step before optimizing anything.
+        title: 将成本归因到查询模式
+        summary: 连接 ACCESS_HISTORY 与 QUERY_HISTORY，找出究竟是哪些表、仓库或用户在驱动支出——这是在优化任何东西之前的诊断步骤。
         requires: [cost.query-history-and-account-usage]
