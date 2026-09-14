@@ -4,6 +4,7 @@
 # Platform engineering and research methodology live in a sibling skeleton.
 domain: markets
 title: Markets & Factors
+lang: en
 nodes:
   - id: foundations
     order: 1

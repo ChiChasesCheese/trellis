@@ -2,6 +2,7 @@
 # mark real cross-topic prerequisites. Cards attach to leaf ids.
 domain: system-design
 title: System Design
+lang: en
 nodes:
   - id: foundations
     order: 1

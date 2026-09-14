@@ -10,6 +10,7 @@
 # real cross-branch prerequisites.
 domain: code-core
 title: Code Core
+lang: en
 nodes:
   - id: round
     order: 1

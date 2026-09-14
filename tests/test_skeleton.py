@@ -33,6 +33,14 @@ def test_load_good(tmp_path):
     assert s.by_id["alpha.one"].parent is s.by_id["alpha"]
 
 
+def test_a_domain_is_written_in_chinese_unless_it_says_otherwise(tmp_path):
+    """The learner reviews in Chinese, so a skeleton with no `lang` is a Chinese
+    domain; an English domain must say `lang: en`."""
+    assert load_skeleton(write(tmp_path, GOOD)).lang == "zh"
+    english = GOOD.replace("title: Demo\n", "title: Demo\nlang: en\n", 1)
+    assert load_skeleton(write(tmp_path, english)).lang == "en"
+
+
 def test_deck_name_carries_study_order(tmp_path):
     s = load_skeleton(write(tmp_path, GOOD))
     assert s.deck_name(s.by_id["alpha.one"]) == "Demo::02 Alpha::One"

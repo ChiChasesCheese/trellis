@@ -8,6 +8,7 @@
 # they carry tactical meaning.
 domain: basketball
 title: Basketball
+lang: en
 nodes:
   - id: foundations
     order: 1

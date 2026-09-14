@@ -8,6 +8,7 @@
 # outline-heading -> leaf mapping.
 domain: snowflake
 title: Snowflake Internals
+lang: zh
 nodes:
   - id: architecture
     order: 1

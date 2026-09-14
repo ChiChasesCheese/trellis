@@ -20,6 +20,7 @@
 # prerequisites.
 domain: narrative
 title: Narrative Round
+lang: en
 nodes:
   - id: round
     order: 1

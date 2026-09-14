@@ -4,7 +4,7 @@ Format (skeleton/<domain>.yaml):
 
     domain: system-design          # slug, used for deck/vault naming
     title: System Design           # display name, Anki root deck
-    lang: en                       # language the cards are written in (default en)
+    lang: en                       # language the cards are written in (default zh)
     nodes:
       - id: storage                # dotted ids; children repeat the parent prefix
         title: Storage
@@ -67,8 +67,9 @@ class Skeleton:
     by_id: dict[str, Node]
     # The language cards in this domain are written in. A domain studied
     # from a Chinese book is written in Chinese; there is no English
-    # original to keep. Terms of art stay English in any language.
-    lang: str = "en"
+    # original to keep. Terms of art stay English in any language. The
+    # learner reviews in Chinese, so a domain is Chinese unless it says `en`.
+    lang: str = "zh"
 
     def leaves(self) -> list[Node]:
         return [n for n in self.walk() if n.is_leaf]
@@ -176,10 +177,10 @@ def load_skeleton(path: str | Path) -> Skeleton:
     if len(set(orders)) != len(orders):
         errors.append("duplicate top-level order values")
 
-    lang = data.get("lang", "en") or "en"
+    lang = data.get("lang", "zh") or "zh"
     if not isinstance(lang, str) or not re.match(r"^[a-z]{2}(-[a-z]{2})?$", lang):
         errors.append(f"invalid lang: {lang!r} (want a language code such as en or zh)")
-        lang = "en"
+        lang = "zh"
 
     skeleton = Skeleton(domain=domain, title=title.strip(), roots=roots, by_id={},
                         lang=lang)
