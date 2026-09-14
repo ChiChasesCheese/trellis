@@ -1,45 +1,61 @@
-# Snowflake · GenSWE (Software Engineer - Backend) — dossier 索引
+# Snowflake · GenSWE (Software Engineer - Backend) — 面试 kit 总索引
 
-> **GenSWE - Menlo Park, CA / Bellevue, WA** · Ashby 邮件标题 "Software Engineer - Backend" · 邀请 2026-09-11 · 当前阶段：**Chakra AI 语音筛选（20 min）** · 截止 **2026-09-24 21:36 PDT**（Ashby 口径 7 天内 = 9/18 前更稳）
-> GenSWE = Snowflake 官方 **General Software Engineering Program**：早期职业统一 loop → team matching。1.5 年经验大概率定 IC1（Bay Area 中位 TC ≈ $236K）；争取 IC2（≈ $341K）要电面 + onsite 全 Hire。
+> **GenSWE - Menlo Park, CA / Bellevue, WA** · Ashby 邮件 "Software Engineer - Backend" · 邀请 2026-09-11 · 当前阶段：**Chakra AI 语音筛（20 min）** · 截止 **2026-09-24 21:36 PDT**
+> GenSWE = Snowflake 官方 **General Software Engineering Program**：早期职业统一 loop → team matching。1.5 年经验大概率 IC1（Bay Area 中位 TC ≈ $236K）；IC2（≈ $341K）要电面 + onsite 全 Hire。
 
-## 状态
+这是一本**按轮次组织、可以从头读到尾的备考书**，也是一个**可以跑的题库**。和 `../stripe/` 同一套方法与骨架。
 
-| 日期 | 事件 | 下一步 |
+## 一图看懂
+
+```
+00 AI 语音筛 ─┐
+01 Recruiter ─┤
+02 OA ────────┼─ catalog/（证据）→ loop/LOOP_GUIDE.md（每轮打法）→ study/10-rounds/（怎么练）
+03 电面 coding┤                                                      ↓
+04 OOD ───────┤                          problems/ + loop/rounds/（题 + 测试 + 参考解）
+05 系统设计 ──┤                                                      ↓
+06 项目深挖 ──┤                          study/30-articles/（每题一篇题解，先做后读）
+07 HM / BQ ───┤
+08 Team match ┘                          core/（简历、故事、通用答案，跨公司共用）
+```
+
+## 按阶段读（从现在到 offer）
+
+| 你现在在 | 先读 | 再练 | 命令 |
+|---|---|---|---|
+| **Chakra AI 筛**（当前） | `03-chakra-playbook.md` · `CARD.md` · `../../core/playbooks/ai-voice-screen.md` | `07-mock.md` · `05-applied-scenarios.md` | `python3 loop/mock.py bq recruiter -n 5` |
+| Recruiter call | `study/10-rounds/01-recruiter.md` · `fit.md` · `06-questions-to-ask.md` | recruiter 题库 | `python3 loop/mock.py bq recruiter -n 5 -m 2` |
+| OA（若有） | `study/10-rounds/02-oa.md` · `study/00-essentials/02-dp-patterns.md` | `problems/q01–q10, q19` | `python3 drill.py start q02 -m 40` |
+| 技术电面 | `study/10-rounds/03-phone-coding.md` · `04-ood.md` · `05-system-design.md` | `pc01–pc06, pc10` · `od01–od10` · `sd01–sd12, sd22` | `python3 loop/mock.py start pc01 -m 40` |
+| Onsite | `loop/LOOP_GUIDE.md` §5–§8 · `study/10-rounds/06-project-deep-dive.md` · `07-hm-behavioral.md` | expertise / HM 题库 | `python3 loop/mock.py bq hm -n 5 -m 3` |
+| Team matching | `study/10-rounds/08-team-matching.md` | team 题库 | `python3 loop/mock.py bq team -n 3` |
+
+**五天冲刺日程**：`loop/LOOP_GUIDE.md` §10。**进度板**：`python3 drill.py status` · `python3 loop/mock.py status`。
+
+## 目录
+
+| 路径 | 是什么 | 规模 |
 |---|---|---|
-| 2026-09-11 | Ashby "Initial Intake" + HackerRank "Technical Screening Round" 两封邮件（可能是同一 Chakra 会话的两种通知，见 `02-process.md` §矛盾） | 做 Chakra；做完回邮件 recruiter 确认是否还有第二环节 |
-| 2026-09-13 | 本 dossier 建立 | 今晚跑 `07-mock.md`；明天 Chakra |
-
-## 今晚 → 明天的顺序（总计约 2.5 小时）
-
-1. `../../core/playbooks/ai-voice-screen.md`（10 min）— 机制与操作清单
-2. `03-chakra-playbook.md`（30 min）— 逐分钟剧本 + 英文稿；**出声读两遍**
-3. `05-applied-scenarios.md`（30 min）— 6 个后端场景的口述框架
-4. `01-company-brief.md` §0 一页速览 + `06-questions-to-ask.md`（15 min）
-5. `07-mock.md`（40 min）— 计时自测，录音回听
-6. 明天开考前 30 min：playbook §4 设备清单
-
-## 文件
-
-| 文件 | 内容 |
-|---|---|
-| `01-company-brief.md` | 尽调：FY27 Q2 数字 · 战略主题 · 必会产品/架构词 · 工程文化 · 8 条价值观 · 近 90 天新闻 · 我与它的五座桥 |
-| `02-process.md` | 流程：官方 4 阶段 + 候选人实际 loop（AI 筛 → HR → 两轮电面 → onsite 4–5 轮 → team match）· Chakra 一手报告 · 题型 · 薪酬 · 矛盾与未知 |
-| `03-chakra-playbook.md` | **明天用的**：20 分钟逐段剧本，自我介绍 / S1 深挖 / 决策与协作三故事 / 危险追问 / 收尾，全英文稿 |
-| `04-answer-bank.md` | 题 → `core/answers/` 既有答案映射；Snowflake 特定题英文答案；8 条价值观 × 故事矩阵 |
-| `05-applied-scenarios.md` | 后端应用场景 6 题：pipeline 算错 / 计量不重复计费 / 无停机 schema 变更 / 慢查询 / 事故 / 幂等重试 |
-| `06-questions-to-ask.md` | 反问：对 AI 的 3 个 + 后续轮次按对象分的清单 |
-| `07-mock.md` | 20 分钟计时自测 + 追问池 + 价值观直击 + 录音回听清单 |
-| `CARD.md` | 03 的浓缩卡：时间表 + 英文稿 + 危险追问 + 考前清单，手机 / 贴摄像头旁用 |
-| `fit.md` | Why Snowflake / What do you know about Snowflake / Why leave PayPal（英文） |
-| `raw/` | `emails.md`（邀请原文）· `chakra.md`（Chakra 机制调研）· `process_research.md`（流程调研）· `company_research.md`（公司调研，44 KB，全部带 URL） |
+| `catalog/CATALOG.md` | 全部题目总表（Table A 编码 · B OOD · C 系统设计 · D 非编码轮 · E 仅题名）；每行 #refs / 置信度 / 最近日期 / 来源 | 66 行 |
+| `catalog/RANK.md` → `PARETO.md` | 28 法则打分输入与输出；**cut line = 第 35 行（累计 80%）** | — |
+| `catalog/raw/` · `catalog/discovery/` | 原始证据（每条 URL + 日期）· Reddit / HN / 1p3a 镜像收割与 46 行 triage | 8 + 收割 |
+| `loop/LOOP_GUIDE.md` | 每一轮：形式 · 评什么 · 通过线 · 挂点 · 备考动作 | 9 轮 |
+| `problems/` | OA 题（`drill.py`） | 11 题 |
+| `loop/rounds/03_phone_coding/` · `04_ood/` | 电面 coding · 类设计（`mock.py`） | 7 + 9 题 |
+| `loop/rounds/05_system_design/` | prompt · rubric 五维 · model_answer · followups | 13 题 |
+| `loop/rounds/01_recruiter/` `06_project_deep_dive/` `07_hm_behavioral/` `08_team_matching/` | bank.json · questions · rubric（· stories） | 18 · 16 · 30 · 10 题 |
+| `study/00-prereq/` · `00-essentials/` · `10-rounds/` · `20-cards/` · `30-articles/` | 前置课 · 通用精华 · 每轮练法 · 速记卡 · 每题题解 | 4 · 5 · 9 · 3 · 27 |
+| `skills_matrix.md` · `loop/tree/interview-loop.yaml` | 技能 ↔ 题 ↔ JD；知识树（`check_tree.py --strict` 0/0） | 38 skill · 44 题 |
+| `reports/TEST_SUMMARY.md` | 27 个编码题集、557 个测试全绿；空 starter 全红 | — |
+| `01-company-brief.md` · `02-process.md` · `fit.md` · `raw/` | 公司尽调 · 流程 · Why Snowflake · AI 轮原始调研 | — |
+| `CHECKPOINT.md` · `LEDGER.md` · `tasks/plan.md` | 构建进度与账本（换会话从这里接手） | — |
 
 ## 与 core 的关系
 
-- 故事与数字：`../../core/stories/evidence-base.md`（S1–S9，诚实红线）
+- 故事与数字：`../../core/stories/evidence-base.md`（S1–S9，诚实红线：不说 $600B，说 $138.6B / 21.96M）
 - 通用题答案：`../../core/answers/`（Q1–Q24）
-- 简历：`../../core/resume/`（Chakra 读到的是投递版 `Chi_Zhang_SDE.pdf`；面试里对 `$600B+` 的口径见 `03` §5）
+- 简历：`../../core/resume/`
 
 ## 面完回写
 
-实际被问的题 + 追问 → `02-process.md` 末尾「亲历」；被追到答不上的 → `core/stories/evidence-base.md`；playbook 里「未验证」项 → `core/playbooks/ai-voice-screen.md`。
+实际被问的题 + 追问 → `02-process.md` 末尾「亲历」；新题进 `catalog/raw/` 并重跑 `tools/pareto.py`；被追到答不上的 → `core/stories/evidence-base.md`；通用教训 → `core/playbooks/`。

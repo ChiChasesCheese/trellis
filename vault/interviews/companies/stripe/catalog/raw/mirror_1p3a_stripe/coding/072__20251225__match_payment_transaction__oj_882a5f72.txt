@@ -1,0 +1,10 @@
+"""
+Match Payment Transaction
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/882a5f72-4e46-4135-b43f-8cc59d4dd967
+Source Type: OJ / More Problems
+
+Question Summary:
+Given a payment and its information, and an array containing other transaction information, the task is to match the payment to a transaction. The problem has three parts, each requiring a different method to match a transaction. There may be multiple transactions that match in each part, so choose the optimal matching approach and record the current best choice. Update the best choice during traversal if a better matching transaction is found. Implement the solution based on the given information.
+"""

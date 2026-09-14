@@ -1,0 +1,22 @@
+"""
+Payment Invoice Matching
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/f25e01c8-7cec-4045-9144-cde648d5b781
+Source Type: OJ / More Problems
+
+Question Summary:
+Given two datasets `payments` and `invoices`, each object has at least two attributes: id and amount.
+
+Problem 1: Find an invoice for each payment that matches its invoice id. If no match is found, return empty or an appropriate message.
+
+Problem 2: For payments without a matching invoice id, match them to the invoice with the same amount and the earliest date if no id match exists.
+
+Problem 3: Add a forgiveness value that allows matching an invoice to a payment if the payment's amount is within the forgiveness range of the invoice's amount. Always return the earliest invoice if possible. Handle all unmatched cases for the above scenarios.
+
+Input:
+- `payments` and `invoices` are lists of payment/invoice objects.
+
+Output:
+- A list of matching results indicating the status of each payment.
+"""

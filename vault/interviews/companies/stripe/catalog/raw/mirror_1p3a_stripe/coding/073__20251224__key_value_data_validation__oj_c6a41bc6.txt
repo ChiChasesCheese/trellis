@@ -1,0 +1,34 @@
+"""
+Key-Value Data Validation
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/c6a41bc6-4166-4b5f-8533-ec78be37124a
+Source Type: OJ / More Problems
+
+Question Summary:
+Write a function to validate a given key-value dataset. The data is provided as a dictionary with multiple key-value pairs. The function should check if all values meet specific format requirements, such as integer types, string length limits, etc. Ensure the function can handle empty and invalid data, returning an error message if the data is not valid.
+
+### Input
+- A data dictionary `data` containing multiple key-value pairs, both keys and values are strings.
+
+### Output
+- Boolean indicating whether all data is valid; if not, return an error message.
+
+### Example
+
+```python
+Input: {
+  "age": "25",
+  "name": "Alice",
+  "email": "alice@example.com"
+}
+Output: True
+
+Input: {
+  "age": "25",
+  "name": "",
+  "email": "alice.com"
+}
+Output: "Invalid email format"
+```
+"""

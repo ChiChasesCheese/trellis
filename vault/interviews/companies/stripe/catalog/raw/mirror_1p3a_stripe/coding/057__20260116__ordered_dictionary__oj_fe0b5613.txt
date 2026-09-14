@@ -1,0 +1,10 @@
+"""
+Ordered Dictionary
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/fe0b5613-f62d-40dd-87cf-11bb48a300c0
+Source Type: OJ / More Problems
+
+Question Summary:
+Implement a function to demonstrate the ordered nature of dictionaries in Python 3.7 and later, and solve a related problem using this feature.
+"""

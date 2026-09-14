@@ -1,0 +1,36 @@
+"""
+Subscription-Based Scheduled Email Notifications
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/665a9245-7027-49ec-8552-eb9b9ae4c376
+Source Type: OJ / More Problems
+
+Question Summary:
+## Generate Scheduled Email Notifications from a Subscription Window
+
+You need to generate email notification times for a user's subscription.
+
+Given:
+- subscription start time `start_time` (epoch seconds, integer)
+- subscription end time `end_time` (epoch seconds, integer, `end_time >= start_time`)
+- send interval `interval` (seconds, positive integer)
+- per-interval send offset `offset` (seconds, non-negative integer, `offset < interval`)
+
+Rule:
+- In each interval window `[t, t + interval)`, send exactly once at `t + offset`.
+- Only include send times within the closed interval `[start_time, end_time]`.
+
+Output all send times (epoch seconds) in ascending order.
+
+### Input
+One line with four integers: `start_time end_time interval offset`
+
+### Output
+One line with all send timestamps in ascending order separated by spaces; print an empty line if none.
+
+### Constraints
+- `0 <= start_time, end_time <= 10^12`
+- `1 <= interval <= 10^9`
+- `0 <= offset < interval`
+- The number of outputs can be large, but is guaranteed to be at most `2e5`.
+"""

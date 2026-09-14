@@ -1,0 +1,12 @@
+"""
+Replay request handling
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/c518bfcb-f16d-4898-8fb9-0f9b492fa7d9
+Source Type: OJ / More Problems
+
+Question Summary:
+Implement a function to handle replayed requests. Design an integration test framework or middleware to track and deduplicate requests, ensuring that the same request is not processed multiple times.
+
+It should detect similar requests sent within a short timeframe and consolidate them into one for handling, optimizing the way request statuses are fetched without compromising on functionality or performance.
+"""

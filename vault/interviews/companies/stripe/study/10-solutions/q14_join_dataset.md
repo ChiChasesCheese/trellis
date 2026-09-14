@@ -33,13 +33,6 @@ JOIN <field_name> <true|false>        第三个 token 是 skip_unmatched
 `S02` CSV 解析（引号内的逗号） · `S03` 按 id 建索引 · `S04` 分组 · **`S08` 完整 tie-break** ·
 `S09` 精确格式（CSV 引用规则） · `S18` 错误路径 · `S19` 增量
 
-## 直觉 / Intuition
-
-把它当成手写一条 SQL：`SELECT c.*, p.* FROM customer c LEFT/INNER JOIN processor p ON c.field = p.field ORDER BY c.order, p.order`。
-一旦这么想，代码结构就是唯一自然的写法——`ON` 条件要求先给 processor 按 key 建哈希索引（否则就是 O(n·m) 的嵌套扫描），`LEFT JOIN` 的空值行对应「没匹配就补 NULL/空串」，`ORDER BY` 多列则天然要求把排序键做成元组、稳定排序一次到位，而不是分两次排序（分两次排会破坏组内顺序）。
-「用输入位置兜底」本质是给 SQL 补一个隐藏的 `ROW_NUMBER()` 列，因为原生 SQL 的 `ORDER BY` 在同值时不保证顺序，但题目要求确定性输出——这是本题和真实 SQL 唯一的分歧点，也是最容易漏掉的一层 tie-break。
-想清楚这是「join + 确定性 order by」，其余全是 CSV 解析的体力活，不需要发明新算法。
-
 ## 解题思路
 
 ```python

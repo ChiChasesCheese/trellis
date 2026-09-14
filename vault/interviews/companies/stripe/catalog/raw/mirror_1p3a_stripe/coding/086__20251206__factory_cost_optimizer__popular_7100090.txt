@@ -1,0 +1,20 @@
+"""
+Factory Cost Optimizer
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/post/7100090
+Source Type: Popular Questions / External Thread
+
+Question Summary:
+You are designing a supply chain optimization system for a manufacturing company.
+
+Public Section Headings:
+- Factory Cost Optimizer
+- The Problem
+- Part 1: Simple Selection (No Moving Cost)
+- Part 2: Adding Moving Costs
+- Part 3: Handling Many Stages
+- Part 4: Skipping a Step
+- How to Solve It
+- Extra Discussion
+"""

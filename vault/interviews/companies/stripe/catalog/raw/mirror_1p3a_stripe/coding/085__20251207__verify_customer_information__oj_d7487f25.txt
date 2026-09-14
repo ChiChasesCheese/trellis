@@ -1,0 +1,30 @@
+"""
+Verify Customer Information
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/d7487f25-7378-4695-8244-9cf58c665738
+Source Type: OJ / More Problems
+
+Question Summary:
+You are developing a system to verify the information provided by new users. You are given a set of user information including name, ID number, and address, write a function to verify the validity of this information. Return `True` if the information is valid, otherwise return `False`.
+
+### Input
+- `name`: a string, the name of the user.
+- `id_number`: a string, the ID number of the user.
+- `address`: a string, the address of the user.
+
+### Output
+- A boolean indicating the validity of the information.
+
+### Example
+
+```plaintext
+Input: name = "John Doe", id_number = "123456789", address = "123 Main St"
+Output: True
+```
+
+### Constraints
+- The name is not empty, and it includes two to three words, each word should start with a capital letter.
+- The ID number is exactly 9 digits.
+- The address is not empty.
+"""

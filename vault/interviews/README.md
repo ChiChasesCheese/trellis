@@ -12,13 +12,26 @@ interviews/
     stories/                evidence-base.md（S1–S9 旗舰故事）+ resume-evidence-map/（学习画像）
     answers/                逐题行为面答案手册 dim1–dim6（技术深度 / 影响 / 领导力 / 带教 / HR）
     playbooks/              按轮次的通用打法：AI 语音筛选 / recruiter / HM / 电面 / onsite …
-  companies/                每家公司一个 dossier，内部按阶段编号
-    stripe/                 catalog · problems（53 题）· study · loop（电面→onsite 全轮次）· reports
-    snowflake/              00-README · 01 尽调 · 02 流程 · 03 Chakra 剧本 · 04 答案库 · 05 场景 · 06 反问 · 07 mock · raw/
+  companies/                每家公司一个自包含 kit（题库 + 测试 + 演练器 + 研究 + 学习面）
+    stripe/                 = github.com/ChiChasesCheese/stripeoa 全量镜像：problems/（54 题带测试）· loop/rounds/（recruiter→onsite 全轮次 39 题）· catalog/ · study/ · tools/ · drill.py · loop/mock.py
+    snowflake/              同一骨架：AI 轮 dossier（00–07, CARD, fit）+ 正在建的全轮次 kit；进度见 CHECKPOINT.md / LEDGER.md / tasks/plan.md
   _template/company/        新公司 dossier 骨架，cp -r 即可开工
 ```
 
 **为什么是 company → phase 而不是 phase → company**：临考前一家公司的材料是被整体消费的（今晚只看 snowflake/），而不是横向比较各家的电面；跨公司复用的东西（故事、答案、简历、轮次打法）全部下沉到 `core/`，公司目录里只留「这家公司特有的」——流程证据、题库、fit 话术、反问。两者用相对链接互指，不复制。
+
+## 跑一个 kit
+
+```bash
+cd vault/interviews/companies/stripe
+python3 drill.py list / start q01 / test q01 / ref q01 / status      # OA 60 分钟演练
+python3 loop/mock.py list / start ps01 / test ps01 / bq hm -n 3        # OA 之后各轮
+uv run --project ../../../.. --with pytest python -m pytest problems -q -m "not perf"
+python3 loop/tree/check_tree.py --strict                                 # 知识树 ↔ 目录一致
+python3 tools/summary.py --run                                           # 重建 TEST_SUMMARY
+```
+
+`.py` 文件对 Obsidian 不可见、对 trellis 无影响（它只读 `*.md`）；仓库根的 `pytest` 只跑 `tests/`。每个公司 kit 自带 `CONVENTIONS.md`（题目目录结构与测试要求）。
 
 ## 方法论（Stripe 尽调沉淀下来的六步，Snowflake 沿用）
 

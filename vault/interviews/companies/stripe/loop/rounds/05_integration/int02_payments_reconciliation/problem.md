@@ -4,7 +4,7 @@
 **Type:** onsite Integration（真实 HTTP 调用，非算法题） · **Stage:** 60 min，4 part · **Last asked:** 2026 校招 VO（Simplify 转述）
 **Frequency:** Simplify 转述校招 VO 原话"transaction reconciliation script handling pagination, rate limits, and idempotency"；Leon 面试指南把 pagination / idempotency key / 429+Retry-After 退避 / 响应防御性解析列为 Integration 轮"四大边界情况"；programhelp 描述的实习 Integration 流程包含"调用外部 Payment API 获取交易数据 → 处理 webhook 回调 → 实现交易状态同步" · **Confidence:** medium-high for 主题范围（对账 + 分页 + 限流退避 + 幂等 + webhook，多份来源独立提到其中若干项，无一处给出完整逐 part 拆解或原题数据）；具体 part 切分、API 形状、`ledger.csv` 内容均为本仓库设计，不是逐字题面还原（英文侧综述明确指出"没有找到这道题的原始素材"，见 Sources）。
 
-## 背景
+## Context
 Stripe 内部有大量"我方系统记录 vs Stripe 侧记录"的对账场景（商户后台余额 vs charges API、本地发货记录 vs
 payout API 等）。这道题模拟一个最小可行的对账客户端：连接一个 Stripe 风格的 payments API（本仓库
 `loop/mockserver/payments.py` 复刻），把远端全部 charge 拉下来、和本地 CSV 账本比较，找出"本地缺记录 /
@@ -41,7 +41,7 @@ POST /v1/webhook_endpoints/test   body: {"url": "..."}
 ```
 （完整细节见 `loop/mockserver/README.md`。）
 
-## 规则
+## Rules
 ### Part 1 — 游标分页拉取全部 charge
 `fetch_all_charges(base_url, api_key, limit=100, sleep=time.sleep) -> list[dict]`：循环 `GET
 /v1/charges?limit={limit}&starting_after={上一页最后一条的 id}`，直到某一页 `has_more` 为 `false`，
@@ -122,7 +122,7 @@ PART 4
                                输出: "True" 或 "False"
 ```
 
-## 演示样例
+## Worked examples
 `data/ledger.csv` 是针对 `loop.mockserver.payments.serve(seed=7, n=20)` 生成的确定性 charge 数据集手工
 构造的对账场景（生成方式见文末"数据生成方式"）：18 条与远端一致（其中 2 条金额故意改错），本地额外多出
 2 条远端不存在的记录，远端有 2 条本地账本没有收录。`reconcile(load_ledger("data/ledger.csv"),
@@ -153,7 +153,7 @@ verify_webhook(payload, header, "whsec_test_secret", now=1735689901)        # Fa
 verify_webhook(payload, header, "whsec_wrong_secret", now=1735689600)       # False（密钥不对）
 ```
 
-## 隐藏测试已知会针对的边界情况
+## Edge cases hidden tests are known to target
 - `fetch_all_charges` 必须真正翻页到 `has_more=false` 为止，只取第一页是最常见的偷懒实现
 - 429 重试要读 `Retry-After` header 的秒数，不是自己瞎猜一个固定值或者不重试直接失败
 - 5xx 重试是指数退避，不是每次固定睡眠相同时长
@@ -172,7 +172,7 @@ verify_webhook(payload, header, "whsec_wrong_secret", now=1735689600)       # Fa
 - `handle_event` 同一个 `event.id` 第二次调用必须返回 `False` 且不能把 `store` 清空或覆盖已有条目
 - `handle_event` 不同 `event.id` 都应该各自被处理一次（`store` 是按 id 去重，不是"只处理第一个事件"）
 
-## 见过的变体
+## Variants seen in the wild
 - Simplify 转述的原话只说"handling pagination, rate limits, and idempotency"，没有提到 webhook；本仓库
   把 webhook 签名验证并入 Part 4，因为这是 Leon 指南和官方文档反复强调的"Bug squash 与 Integration 共同
   重灾区"，且和幂等去重（Part 3 的 `Idempotency-Key`、Part 4 的 `event.id` 去重）是同一类工程能力，放在
@@ -182,7 +182,7 @@ verify_webhook(payload, header, "whsec_wrong_secret", now=1735689600)       # Fa
 - Leon 指南提到的"malformed response 防御解析"在本题体现为 `verify_webhook` 对畸形 header 一律返回
   `False` 而不是抛异常（防御性解析的通用模式，与 int01 Part 3 的 PNG 魔数校验同源）。
 
-## 本题考察点
+## What this tests
 skills: S02 CSV 解析 · S11 幂等/去重（`Idempotency-Key` 重放 + webhook `event.id` 去重）· S16
 限流/退避计数器（429 Retry-After + 5xx 指数退避+抖动）· S18 错误路径分类（哪些状态码可重试、哪些不可）·
 S19 增量设计（`with_retry` 被 Part 1、Part 3 复用）· S24 领域知识（Stripe 分页/幂等/webhook 签名的标准
@@ -210,7 +210,7 @@ S19 增量设计（`with_retry` 被 Part 1、Part 3 复用）· S24 领域知识
 8. "限流 429 的重试如果永远不成功（服务端限流永远没恢复）呢？" —— 期待：`max_attempts` 兜底会最终抛出异
    常，讨论调用方应该怎么处理彻底失败（告警、降级、人工介入），而不是无限重试。
 
-## 来源
+## Sources
 - Simplify（校招 VO 转述，2026）："transaction reconciliation script handling pagination, rate limits,
   and idempotency"（`loop/raw/en_forums.md` §5.3）
 - Leon 面试指南（`https://leonstaff.com/blogs/stripe-technical-interview-bug-squash-integration-guide/`）：
@@ -224,7 +224,7 @@ S19 增量设计（`with_retry` 被 Part 1、Part 3 复用）· S24 领域知识
   复刻 repo"——确认本题没有可参照的原始题面，本仓库是按上述来源的主题描述原创设计
 - `loop/mockserver/README.md` §payments.py（本仓库对 payments API 的复刻实现，作为本题的 mockserver）
 
-## 澄清说明（本仓库自定，非题面原文）
+## Clarifications（本仓库自定，非题面原文）
 - 没有任何来源给出这道题的逐 part 拆分或原始 API 形状；本仓库把"分页/限流/幂等"三个来源反复提到的能力点
   拆成 Part 1/2/3，webhook 验签作为 Part 4（理由见 Variants）——这是本仓库的结构化设计，不是还原。
 - `data/ledger.csv` 不是任何真实数据，是针对固定 `(seed=7, n=20)` 的 mockserver 输出手工构造的对账场景

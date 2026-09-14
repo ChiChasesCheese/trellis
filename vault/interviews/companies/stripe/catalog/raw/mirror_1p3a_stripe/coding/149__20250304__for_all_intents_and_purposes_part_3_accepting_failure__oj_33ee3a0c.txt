@@ -1,0 +1,15 @@
+"""
+For All Intents And Purposes Part 3 - Accepting Failure 
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/33ee3a0c-500b-4bf0-8163-53dd208e7dfe
+Source Type: OJ / More Problems
+
+Question Summary:
+### Problem Overview
+- Implement two commands for a Payment Intent processor: FAIL and REFUND.
+- Input: command lines with payment_intent_id; Output: updated state and merchant balance per rules.
+- FAIL: only when intent is PROCESSING, set to REQUIRES_ACTION; otherwise do nothing.
+- REFUND: only when COMPLETED and not already refunded, decrement merchant balance by amount; otherwise do nothing.
+- Real-world payments domain; from Stripe interviews; a coding interview problem and interview question.
+"""

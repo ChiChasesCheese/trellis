@@ -1,0 +1,228 @@
+"""
+Transaction Fee with Status- and Type-specific Rates
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/7dcd1bd7-3df3-4140-8a67-07248bc20d10
+Source Type: OJ / More Problems
+
+================================================================================
+INTERVIEW PROMPT (as it would be delivered by the interviewer)
+================================================================================
+
+Hey, welcome. The problem today is taken from the Billing platform.
+
+When Stripe processes a charge, we take a fee. The fee depends on a few
+things: the payment method (was it a credit card? ACH? wire?), and what
+ultimately happened to the charge (succeeded? refunded? disputed?). The
+"fee schedule" -- the actual rate for each combination -- is configurable
+and changes from one merchant to another.
+
+You're going to write a program that, given a fee schedule and a list
+of transactions, computes the total fee.
+
+Read input from stdin, write output to stdout.
+
+--------------------------------------------------------------------------------
+PART 1 -- Single fee schedule
+--------------------------------------------------------------------------------
+
+Input format:
+
+    First line: integer M, the number of fee schedule rows.
+    Next M lines: each is "payment_status payment_type rate_percent rate_fixed"
+        - payment_status, payment_type : strings, no whitespace
+        - rate_percent : a decimal like 0.029 (meaning 2.9%)
+        - rate_fixed   : an integer, in cents
+
+    Next line: integer N, the number of transactions.
+    Next N lines: each is "amount payment_status payment_type"
+        - amount       : integer, in cents, >= 0
+        - payment_status, payment_type : strings
+
+The fee for one transaction is:
+
+    fee = floor(amount * rate_percent) + rate_fixed
+
+(Yes, floor. Stripe internally always floors to the nearest integer
+cent. We never deal in fractional cents.)
+
+If a transaction's (status, type) is not in the schedule, skip the
+transaction (do not include it in the total, do not error).
+
+Print one line: the integer total fee in cents.
+
+Example:
+
+    Input:
+        2
+        succeeded card 0.029 30
+        succeeded ach 0.008 0
+        3
+        10000 succeeded card
+        50000 succeeded ach
+        2000 failed card
+
+    Calculation:
+        floor(10000 * 0.029) + 30 = 290 + 30 = 320
+        floor(50000 * 0.008) + 0  = 400 + 0   = 400
+        2000 / failed/card -> not in schedule, skip
+        total = 720
+
+    Output:
+        720
+
+--------------------------------------------------------------------------------
+PART 2 -- Group totals
+--------------------------------------------------------------------------------
+
+Same input as Part 1, but instead of (or in addition to -- I'll tell you)
+the grand total, also print the per-(status, type) total fee.
+
+Print the grand total first, then one line per (status, type) that had
+at least one transaction, in lexicographic order of "status type":
+
+    720
+    succeeded ach 400
+    succeeded card 320
+
+(`failed card` is omitted because we skipped its transaction.)
+
+--------------------------------------------------------------------------------
+PART 3 -- Tiered rates
+--------------------------------------------------------------------------------
+
+[Once you have Parts 1-2 working.]
+
+Real fee schedules aren't flat. Above a certain volume, merchants get a
+discount. We're going to extend the schedule format.
+
+Each schedule row now has the shape:
+
+    payment_status payment_type rate_percent rate_fixed [tier_threshold tier_rate_percent tier_rate_fixed]
+
+The bracketed part is OPTIONAL. If present, it means: once the
+*cumulative amount* (in cents, summed across all transactions of this
+(status, type) processed so far in input order) crosses `tier_threshold`,
+all subsequent transactions in that (status, type) use the tier rates
+instead.
+
+A single transaction is never split across tiers. It either uses the
+base rates or the tier rates, based on the cumulative amount BEFORE
+that transaction was processed.
+
+Example:
+
+    Input:
+        1
+        succeeded card 0.029 30 100000 0.022 25
+        4
+        40000 succeeded card
+        50000 succeeded card
+        20000 succeeded card
+        10000 succeeded card
+
+    Cumulative-before-tx: 0, 40000, 90000, 110000.
+    First three use the base (0.029, 30); fourth uses (0.022, 25)
+    because cumulative-before crossed 100000.
+        floor(40000*0.029)+30 = 1190
+        floor(50000*0.029)+30 = 1480
+        floor(20000*0.029)+30 = 610
+        floor(10000*0.022)+25 = 245
+        total = 3525
+
+    Output:
+        3525
+
+(Part 2's per-group reporting still applies if I ask for it; the
+"group" key remains (status, type), tier-or-not.)
+
+--------------------------------------------------------------------------------
+Constraints
+--------------------------------------------------------------------------------
+
+- 1 <= M <= 1000.
+- 0 <= N <= 200_000.
+- 0 <= amount <= 1e12 (fits in 64-bit signed int).
+- 0 <= rate_percent < 1 with up to 6 decimals.
+- 0 <= rate_fixed < 1e9.
+- All amounts and totals are integer cents. No floats in the output.
+
+--------------------------------------------------------------------------------
+What I'm looking for
+--------------------------------------------------------------------------------
+
+[Interviewer notes]
+
+- Floats: the candidate notices that `amount * rate_percent` can produce
+  binary float surprises. Either uses Decimal, or multiplies as int(rate
+  * 1_000_000) and divides at the end -- both fine. Doesn't ignore.
+- Schedule lookup: a dict keyed on (status, type) tuple, not nested ifs.
+- Part 2 should require basically zero changes to Part 1 if the totals
+  were already aggregated by group.
+- Part 3 wants a stateful pass through transactions in input order. The
+  cumulative-amount bookkeeping should be per (status, type), and the
+  decision is made BEFORE the transaction is processed -- subtle but
+  important.
+"""
+
+
+import sys
+from decimal import Decimal, ROUND_FLOOR
+
+
+def _floor_cents(amount_cents: int, rate_percent: Decimal) -> int:
+    return int((Decimal(amount_cents) * rate_percent).to_integral_value(rounding=ROUND_FLOOR))
+
+
+def parse_input(text: str):
+    lines = text.splitlines()
+    it = iter(lines)
+    m = int(next(it))
+    schedule = {}
+    for _ in range(m):
+        parts = next(it).split()
+        key = (parts[0], parts[1])
+        base = (Decimal(parts[2]), int(parts[3]))
+        tier = None
+        if len(parts) == 7:
+            tier = (int(parts[4]), Decimal(parts[5]), int(parts[6]))
+        schedule[key] = (base, tier)
+    n = int(next(it))
+    txns = []
+    for _ in range(n):
+        amt, status, typ = next(it).split()
+        txns.append((int(amt), status, typ))
+    return schedule, txns
+
+
+def compute(schedule: dict, txns: list) -> tuple[int, dict]:
+    grand = 0
+    by_group: dict[tuple[str, str], int] = {}
+    cumulative: dict[tuple[str, str], int] = {}
+    for amount, status, typ in txns:
+        key = (status, typ)
+        if key not in schedule:
+            continue
+        (base_pct, base_fix), tier = schedule[key]
+        before = cumulative.get(key, 0)
+        if tier is not None and before >= tier[0]:
+            pct, fix = tier[1], tier[2]
+        else:
+            pct, fix = base_pct, base_fix
+        fee = _floor_cents(amount, pct) + fix
+        grand += fee
+        by_group[key] = by_group.get(key, 0) + fee
+        cumulative[key] = before + amount
+    return grand, by_group
+
+
+def main() -> None:
+    schedule, txns = parse_input(sys.stdin.read())
+    grand, by_group = compute(schedule, txns)
+    print(grand)
+    for (status, typ), fee in sorted(by_group.items()):
+        print(f"{status} {typ} {fee}")
+
+
+if __name__ == "__main__":
+    main()

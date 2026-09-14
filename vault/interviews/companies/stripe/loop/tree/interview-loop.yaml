@@ -1,0 +1,170 @@
+# Stripe 面试 Loop 知识树（受限 YAML：2 空格缩进、`key: value`、`- item`、行内列表 `[a, b]`）
+# 校验：python3 loop/tree/check_tree.py [--strict]
+# 节点：round → skill → problems（rounds ID）→ study（loop/ 下相对路径）
+version: 1
+prereq:
+  study: [study/00-prereq/01-从SQL到Python的思维迁移.md, study/00-prereq/02-Python结构-变量函数类模块.md, study/00-prereq/03-数据结构-list-dict-set-tuple.md, study/00-prereq/04-字符串与解析-split-strip-format.md, study/00-prereq/05-csv与json.md, study/00-prereq/06-HTTP与API-urllib-requests-http.server.md]
+  cards: [study/20-cards/python_debug.md, study/20-cards/http_json.md, study/20-cards/patterns.md, study/20-cards/stripe_api.md]
+
+rounds:
+  - id: 01_recruiter
+    name: Recruiter 电话
+    duration_min: 30
+    study: [study/10-rounds/01-recruiter.md]
+    skills:
+      - id: self_intro_why_stripe
+        name: 自我介绍 / why Stripe / why payments（具体化）
+        problems: [rc]
+      - id: logistics
+        name: 时间线、薪酬预期、地点/签证、cooldown
+        problems: [rc]
+
+  - id: 02_hm
+    name: Hiring Manager chat
+    duration_min: 30
+    study: [study/10-rounds/02-hm.md]
+    skills:
+      - id: operating_principles_mapping
+        name: 故事 ↔ Operating Principles 映射
+        problems: [hm]
+      - id: project_deep_dive
+        name: 端到端项目深挖：决策、trade-off、量化结果
+        problems: [hm]
+
+  - id: 03_phone_screen
+    name: Technical Phone Screen（1 题 3–4 part 递进）
+    duration_min: 45
+    study: [study/10-rounds/03-phone-screen.md, study/00-prereq/04-字符串与解析-split-strip-format.md, study/00-prereq/05-csv与json.md]
+    skills:
+      - id: parse_aggregate
+        name: 读入 → 解析 → 分组聚合 → 定序输出（SQL 主线手写）
+        problems: [ps01, ps06]
+      - id: sliding_window_topk
+        name: 时间滑窗、TopK、模式检测
+        problems: [ps01]
+      - id: tiered_rules
+        name: 阶梯/混合计价与区间匹配
+        problems: [ps02]
+      - id: string_expansion
+        name: 括号展开、递归/栈、笛卡尔积
+        problems: [ps03]
+      - id: validation_error_codes
+        name: 多规则校验、错误优先级、对齐输出
+        problems: [ps04]
+      - id: format_validation
+        name: 形式校验与词典映射、冲突消歧
+        problems: [ps05]
+      - id: self_tests_while_coding
+        name: 无自动测例：自己构造输入、边写边验证
+        problems: [ps01, ps02, ps03, ps04, ps05, ps06, ps07, ps08]
+      - id: log_redaction
+        name: 日志脱敏、Luhn 去误报、流式处理
+        problems: [ps07]
+      - id: comparator_api
+        name: 参数化 min/max、comparator、ties
+        problems: [ps08]
+
+  - id: 04_bug_squash
+    name: Onsite · Bug Squash（真实开源 bug）
+    duration_min: 60
+    study: [study/10-rounds/04-bug-squash.md, study/20-cards/python_debug.md]
+    skills:
+      - id: reproduce_first
+        name: 先跑失败测试复现，再读 README
+        problems: [bs01, bs02, bs03, bs04, bs05]
+      - id: debugger_breakpoints
+        name: breakpoint()/pdb、条件断点、栈回溯
+        problems: [bs01, bs02, bs03]
+      - id: ast_visitor_paths
+        name: AST visitor 缺节点、路径校验
+        problems: [bs01]
+      - id: io_streams
+        name: 文件流位置、BytesIO rewind、content-length
+        problems: [bs02]
+      - id: parser_edge_cases
+        name: YAML 布尔解析、RFC4180 引号
+        problems: [bs03]
+      - id: concurrency_races
+        name: 懒加载竞态、锁粒度、teardown 残留、asyncio 过期结果
+        problems: [bs04, bs05]
+
+  - id: 05_integration
+    name: Onsite · Integration（repo + API 文档 + 联网）
+    duration_min: 60
+    study: [study/10-rounds/05-integration.md, study/00-prereq/06-HTTP与API-urllib-requests-http.server.md, study/20-cards/stripe_api.md, study/20-cards/http_json.md]
+    skills:
+      - id: read_repo_fast
+        name: 快速读陌生 repo、按 README 跑起来
+        problems: [int01, int02, int03, int04]
+      - id: http_client
+        name: POST JSON、二进制响应落盘、headers、错误处理
+        problems: [int01, int02]
+      - id: pagination_retry_idempotency
+        name: cursor 分页、429 退避、Idempotency-Key、webhook 验签
+        problems: [int02]
+      - id: geo_nearest
+        name: GeoJSON、最近点、O(n·m) vs 索引
+        problems: [int01]
+      - id: json_etl_join
+        name: 多 JSON 互转、join、缺失/重复
+        problems: [int03]
+      - id: git_diff_tooling
+        name: subprocess git diff、CSV owners、平局规则
+        problems: [int04]
+
+  - id: 06_coding_onsite
+    name: Onsite · Programming Exercise（更长的多 part）
+    duration_min: 60
+    study: [study/10-rounds/06-coding.md, study/00-prereq/02-Python结构-变量函数类模块.md, study/20-cards/patterns.md]
+    skills:
+      - id: scheduler_state_machine
+        name: 日期调度、plan 变更、续费状态机
+        problems: [cd01]
+      - id: oo_design_followups
+        name: 类设计 + 追问（部分退款、去重、时间范围、持久化）
+        problems: [cd02, cd03]
+      - id: lru_locking
+        name: locked_until、LRU 自动选择
+        problems: [cd03]
+      - id: rate_limiter_4part
+        name: 限流：basics → 省内存 → 边界 → 多线程
+        problems: [cd04]
+      - id: rule_engine
+        name: when/requires/one_of 规则引擎、路径通配
+        problems: [cd05]
+      - id: sliding_window
+        name: 1 分钟 >3 笔：O(n²) → 哈希+滑窗
+        problems: [cd06]
+      - id: ai_pair_programming
+        name: AI Programming Exercise：指挥/验证/写测试
+        problems: [cd07]
+
+  - id: 07_system_design
+    name: Onsite · System Design（L2+；校招通常无）
+    duration_min: 45
+    study: [study/10-rounds/07-system-design.md, study/20-cards/stripe_api.md]
+    skills:
+      - id: problem_framing
+        name: 两句话复述 + 不变量（钱不丢/不双扣/账要平）
+        problems: [sd01, sd02, sd03, sd04, sd05, sd06]
+      - id: api_contract
+        name: 幂等键、错误码、版本、分页、expand
+        problems: [sd02, sd05]
+      - id: failure_modes
+        name: 500/超时/noisy neighbor/SSRF/exactly-once
+        problems: [sd01, sd04]
+      - id: ledger_invariants
+        name: 双记账、不可变、point-in-time、对账
+        problems: [sd03, sd06]
+
+  - id: 08_behavioral
+    name: Behavioral / 最终 HM
+    duration_min: 45
+    study: [study/10-rounds/08-behavioral.md]
+    skills:
+      - id: star_l
+        name: STAR-L 90s/3min 双版本
+        problems: [bq]
+      - id: principles_coverage
+        name: 6 故事覆盖 ownership/冲突/失败/模糊/质量/学习
+        problems: [bq, hm]

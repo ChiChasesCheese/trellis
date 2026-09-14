@@ -1,0 +1,10 @@
+"""
+Multiple People Debt Minimization
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/2d5a6bf1-e836-47e6-9f75-28edca91e0b3
+Source Type: OJ / More Problems
+
+Question Summary:
+Given a record of multiple people’s loans, find the minimum number of transactions required to settle all balances to zero.
+"""

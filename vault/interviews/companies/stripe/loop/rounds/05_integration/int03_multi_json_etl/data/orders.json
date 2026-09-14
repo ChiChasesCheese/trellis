@@ -1,0 +1,8362 @@
+[
+  {
+    "order_id": "ORD00236",
+    "customer_email": "erin.hill641@corp.io",
+    "items": [
+      {
+        "sku": "SKU-4369",
+        "qty": 4,
+        "unit_cents": 82422
+      },
+      {
+        "sku": "SKU-4146",
+        "qty": 3,
+        "unit_cents": 9498
+      },
+      {
+        "sku": "SKU-3242",
+        "qty": 4,
+        "unit_cents": 42285
+      },
+      {
+        "sku": "SKU-6945",
+        "qty": 3,
+        "unit_cents": 59065
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-03-15T04:45:00"
+  },
+  {
+    "order_id": "ORD00033",
+    "customer_email": "carol.garcia920@test.org",
+    "items": [
+      {
+        "sku": "SKU-7286",
+        "qty": 1,
+        "unit_cents": 21568
+      },
+      {
+        "sku": "SKU-3086",
+        "qty": 2,
+        "unit_cents": 37729
+      },
+      {
+        "sku": "SKU-6472",
+        "qty": 1,
+        "unit_cents": 4809
+      },
+      {
+        "sku": "SKU-8886",
+        "qty": 4,
+        "unit_cents": 18568
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-12-03T21:44:00"
+  },
+  {
+    "order_id": "ORD00072",
+    "customer_email": "ruth.miller736@example.com",
+    "items": [
+      {
+        "sku": "SKU-6407",
+        "qty": 2,
+        "unit_cents": 23204
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-03-24T21:35:00"
+  },
+  {
+    "order_id": "ORD00047",
+    "customer_email": "niaj.garcia914@mail.co",
+    "items": [
+      {
+        "sku": "SKU-4807",
+        "qty": 5,
+        "unit_cents": 99976
+      },
+      {
+        "sku": "SKU-7640",
+        "qty": 3,
+        "unit_cents": 82946
+      },
+      {
+        "sku": "SKU-1354",
+        "qty": 1,
+        "unit_cents": 35499
+      },
+      {
+        "sku": "SKU-1664",
+        "qty": 1,
+        "unit_cents": 33729
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-10-23T12:28:00"
+  },
+  {
+    "order_id": "ORD00313",
+    "customer_email": "trent.adams846@mail.co",
+    "items": [
+      {
+        "sku": "SKU-4310",
+        "qty": 2,
+        "unit_cents": 65188
+      },
+      {
+        "sku": "SKU-8471",
+        "qty": 1,
+        "unit_cents": 96678
+      },
+      {
+        "sku": "SKU-7718",
+        "qty": 2,
+        "unit_cents": 69128
+      },
+      {
+        "sku": "SKU-5791",
+        "qty": 4,
+        "unit_cents": 13698
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-03-05T06:19:00"
+  },
+  {
+    "order_id": "ORD00324",
+    "customer_email": "frank.taylor.orphan1672@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-8384",
+        "qty": 2,
+        "unit_cents": 85209
+      },
+      {
+        "sku": "SKU-8798",
+        "qty": 3,
+        "unit_cents": 62882
+      },
+      {
+        "sku": "SKU-4123",
+        "qty": 4,
+        "unit_cents": 87797
+      },
+      {
+        "sku": "SKU-3617",
+        "qty": 5,
+        "unit_cents": 28148
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-07-09T12:10:00"
+  },
+  {
+    "order_id": "ORD00378",
+    "customer_email": "grace.johnson6163@mail.co",
+    "items": [
+      {
+        "sku": "SKU-3445",
+        "qty": 4,
+        "unit_cents": 70250
+      },
+      {
+        "sku": "SKU-9025",
+        "qty": 1,
+        "unit_cents": 34727
+      },
+      {
+        "sku": "SKU-7916",
+        "qty": 3,
+        "unit_cents": 48210
+      },
+      {
+        "sku": "SKU-7539",
+        "qty": 3,
+        "unit_cents": 99598
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-05-01T06:59:00"
+  },
+  {
+    "order_id": "ORD00041",
+    "customer_email": "erin.brown7686@test.org",
+    "items": [
+      {
+        "sku": "SKU-5230",
+        "qty": 2,
+        "unit_cents": 3761
+      },
+      {
+        "sku": "SKU-4409",
+        "qty": 3,
+        "unit_cents": 44010
+      },
+      {
+        "sku": "SKU-8755",
+        "qty": 3,
+        "unit_cents": 38942
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-10-03T03:34:00"
+  },
+  {
+    "order_id": "ORD00239",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-7407",
+        "qty": 4,
+        "unit_cents": 63622
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-03-02T03:09:00"
+  },
+  {
+    "order_id": "ORD00267",
+    "customer_email": "niaj.clark452@mail.co",
+    "items": [
+      {
+        "sku": "SKU-5031",
+        "qty": 1,
+        "unit_cents": 54520
+      },
+      {
+        "sku": "SKU-9068",
+        "qty": 5,
+        "unit_cents": 82709
+      },
+      {
+        "sku": "SKU-1781",
+        "qty": 2,
+        "unit_cents": 44440
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-03-19T06:13:00"
+  },
+  {
+    "order_id": "ORD00134",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-6898",
+        "qty": 3,
+        "unit_cents": 11072
+      },
+      {
+        "sku": "SKU-1380",
+        "qty": 2,
+        "unit_cents": 80560
+      },
+      {
+        "sku": "SKU-1456",
+        "qty": 5,
+        "unit_cents": 67293
+      },
+      {
+        "sku": "SKU-7021",
+        "qty": 2,
+        "unit_cents": 61147
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-10-15T08:56:00"
+  },
+  {
+    "order_id": "ORD00268",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-5811",
+        "qty": 3,
+        "unit_cents": 43347
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-03-19T23:26:00"
+  },
+  {
+    "order_id": "ORD00213",
+    "customer_email": "sybil.lee2680@shop.net",
+    "items": [
+      {
+        "sku": "SKU-3999",
+        "qty": 4,
+        "unit_cents": 9160
+      },
+      {
+        "sku": "SKU-2631",
+        "qty": 2,
+        "unit_cents": 79260
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-11-06T00:41:00"
+  },
+  {
+    "order_id": "ORD00244",
+    "customer_email": "bob.smith248@example.com",
+    "items": [
+      {
+        "sku": "SKU-6201",
+        "qty": 5,
+        "unit_cents": 44387
+      },
+      {
+        "sku": "SKU-4714",
+        "qty": 3,
+        "unit_cents": 64899
+      },
+      {
+        "sku": "SKU-3372",
+        "qty": 5,
+        "unit_cents": 94724
+      },
+      {
+        "sku": "SKU-1426",
+        "qty": 4,
+        "unit_cents": 18424
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-09-28T00:54:00"
+  },
+  {
+    "order_id": "ORD00310",
+    "customer_email": "peggy.walker1501@mail.co",
+    "items": [
+      {
+        "sku": "SKU-8862",
+        "qty": 3,
+        "unit_cents": 66687
+      },
+      {
+        "sku": "SKU-4588",
+        "qty": 3,
+        "unit_cents": 74494
+      },
+      {
+        "sku": "SKU-1468",
+        "qty": 4,
+        "unit_cents": 91286
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-04-12T00:55:00"
+  },
+  {
+    "order_id": "ORD00088",
+    "customer_email": "alice.smith3981@corp.io",
+    "items": [
+      {
+        "sku": "SKU-5247",
+        "qty": 5,
+        "unit_cents": 59931
+      },
+      {
+        "sku": "SKU-3542",
+        "qty": 4,
+        "unit_cents": 72546
+      },
+      {
+        "sku": "SKU-3503",
+        "qty": 1,
+        "unit_cents": 83008
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-09-02T10:52:00"
+  },
+  {
+    "order_id": "ORD00185",
+    "customer_email": "grace.walker803@test.org",
+    "items": [
+      {
+        "sku": "SKU-1569",
+        "qty": 3,
+        "unit_cents": 80932
+      },
+      {
+        "sku": "SKU-8269",
+        "qty": 5,
+        "unit_cents": 99899
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-08-07T12:05:00"
+  },
+  {
+    "order_id": "ORD00121",
+    "customer_email": "kevin.clark809@corp.io",
+    "items": [
+      {
+        "sku": "SKU-1006",
+        "qty": 4,
+        "unit_cents": 27638
+      },
+      {
+        "sku": "SKU-7246",
+        "qty": 1,
+        "unit_cents": 80809
+      },
+      {
+        "sku": "SKU-5412",
+        "qty": 1,
+        "unit_cents": 76490
+      },
+      {
+        "sku": "SKU-6686",
+        "qty": 3,
+        "unit_cents": 44313
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-03-20T16:05:00"
+  },
+  {
+    "order_id": "ORD00364",
+    "customer_email": "ivan.king.orphan945@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-7935",
+        "qty": 2,
+        "unit_cents": 34812
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-10-24T21:47:00"
+  },
+  {
+    "order_id": "ORD00063",
+    "customer_email": "niaj.davis489@test.org",
+    "items": [
+      {
+        "sku": "SKU-7793",
+        "qty": 2,
+        "unit_cents": 28682
+      },
+      {
+        "sku": "SKU-5662",
+        "qty": 1,
+        "unit_cents": 97345
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-02-13T20:17:00"
+  },
+  {
+    "order_id": "ORD00035",
+    "customer_email": "niaj.moore385@mail.co",
+    "items": [
+      {
+        "sku": "SKU-9033",
+        "qty": 1,
+        "unit_cents": 7985
+      },
+      {
+        "sku": "SKU-8654",
+        "qty": 5,
+        "unit_cents": 82978
+      },
+      {
+        "sku": "SKU-6535",
+        "qty": 1,
+        "unit_cents": 89560
+      },
+      {
+        "sku": "SKU-5855",
+        "qty": 2,
+        "unit_cents": 50909
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-11-26T03:33:00"
+  },
+  {
+    "order_id": "ORD00394",
+    "customer_email": "laura.baker932@example.com",
+    "items": [
+      {
+        "sku": "SKU-8954",
+        "qty": 5,
+        "unit_cents": 75909
+      },
+      {
+        "sku": "SKU-9410",
+        "qty": 1,
+        "unit_cents": 75211
+      },
+      {
+        "sku": "SKU-8662",
+        "qty": 3,
+        "unit_cents": 4068
+      },
+      {
+        "sku": "SKU-6589",
+        "qty": 5,
+        "unit_cents": 62917
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-11-26T17:46:00"
+  },
+  {
+    "order_id": "ORD00333",
+    "customer_email": "quentin.lee704@example.com",
+    "items": [
+      {
+        "sku": "SKU-7235",
+        "qty": 3,
+        "unit_cents": 97521
+      },
+      {
+        "sku": "SKU-6242",
+        "qty": 2,
+        "unit_cents": 12612
+      },
+      {
+        "sku": "SKU-5968",
+        "qty": 3,
+        "unit_cents": 25671
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-07-18T05:20:00"
+  },
+  {
+    "order_id": "ORD00350",
+    "customer_email": "bob.hill829@example.com",
+    "items": [
+      {
+        "sku": "SKU-5045",
+        "qty": 2,
+        "unit_cents": 36927
+      },
+      {
+        "sku": "SKU-3632",
+        "qty": 2,
+        "unit_cents": 59236
+      },
+      {
+        "sku": "SKU-4793",
+        "qty": 1,
+        "unit_cents": 10373
+      },
+      {
+        "sku": "SKU-4796",
+        "qty": 4,
+        "unit_cents": 52181
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-01-05T19:18:00"
+  },
+  {
+    "order_id": "ORD00178",
+    "customer_email": "quentin.johnson918@corp.io",
+    "items": [
+      {
+        "sku": "SKU-9406",
+        "qty": 3,
+        "unit_cents": 96166
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-04-01T01:50:00"
+  },
+  {
+    "order_id": "ORD00280",
+    "customer_email": "olivia.clark394@mail.co",
+    "items": [
+      {
+        "sku": "SKU-8079",
+        "qty": 2,
+        "unit_cents": 78504
+      },
+      {
+        "sku": "SKU-4062",
+        "qty": 3,
+        "unit_cents": 23874
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-03-04T16:20:00"
+  },
+  {
+    "order_id": "ORD00199",
+    "customer_email": "mallory.clark277@test.org",
+    "items": [
+      {
+        "sku": "SKU-1254",
+        "qty": 2,
+        "unit_cents": 44518
+      },
+      {
+        "sku": "SKU-5287",
+        "qty": 1,
+        "unit_cents": 86286
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-05-11T19:46:00"
+  },
+  {
+    "order_id": "ORD00111",
+    "customer_email": "quentin.lee193@corp.io",
+    "items": [
+      {
+        "sku": "SKU-2122",
+        "qty": 4,
+        "unit_cents": 51643
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-02-09T15:14:00"
+  },
+  {
+    "order_id": "ORD00169",
+    "customer_email": "sybil.adams3419@mail.co",
+    "items": [
+      {
+        "sku": "SKU-8647",
+        "qty": 5,
+        "unit_cents": 45348
+      },
+      {
+        "sku": "SKU-4805",
+        "qty": 5,
+        "unit_cents": 5027
+      },
+      {
+        "sku": "SKU-7289",
+        "qty": 3,
+        "unit_cents": 44961
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-10-03T15:07:00"
+  },
+  {
+    "order_id": "ORD00036",
+    "customer_email": "sybil.walker475@example.com",
+    "items": [
+      {
+        "sku": "SKU-7422",
+        "qty": 4,
+        "unit_cents": 48803
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-06-26T20:04:00"
+  },
+  {
+    "order_id": "ORD00112",
+    "customer_email": "kevin.wilson6328@example.com",
+    "items": [
+      {
+        "sku": "SKU-6889",
+        "qty": 1,
+        "unit_cents": 18270
+      },
+      {
+        "sku": "SKU-1929",
+        "qty": 2,
+        "unit_cents": 76973
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-01-28T12:35:00"
+  },
+  {
+    "order_id": "ORD00215",
+    "customer_email": "quentin.king3542@test.org",
+    "items": [
+      {
+        "sku": "SKU-5377",
+        "qty": 3,
+        "unit_cents": 99728
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-01-25T20:45:00"
+  },
+  {
+    "order_id": "ORD00127",
+    "customer_email": "bob.garcia.orphan5617@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-6479",
+        "qty": 5,
+        "unit_cents": 21118
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-11-07T13:31:00"
+  },
+  {
+    "order_id": "ORD00271",
+    "customer_email": "sybil.king243@test.org",
+    "items": [
+      {
+        "sku": "SKU-5969",
+        "qty": 1,
+        "unit_cents": 41930
+      },
+      {
+        "sku": "SKU-2864",
+        "qty": 2,
+        "unit_cents": 81255
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-07-09T00:48:00"
+  },
+  {
+    "order_id": "ORD00146",
+    "customer_email": "sybil.moore8971@mail.co",
+    "items": [
+      {
+        "sku": "SKU-9639",
+        "qty": 2,
+        "unit_cents": 65614
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-07-14T15:44:00"
+  },
+  {
+    "order_id": "ORD00006",
+    "customer_email": "mallory.davis267@corp.io",
+    "items": [
+      {
+        "sku": "SKU-5260",
+        "qty": 4,
+        "unit_cents": 9155
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-03-05T01:53:00"
+  },
+  {
+    "order_id": "ORD00016",
+    "customer_email": "bob.johnson796@example.com",
+    "items": [
+      {
+        "sku": "SKU-1516",
+        "qty": 4,
+        "unit_cents": 92090
+      },
+      {
+        "sku": "SKU-7852",
+        "qty": 1,
+        "unit_cents": 21815
+      },
+      {
+        "sku": "SKU-8296",
+        "qty": 1,
+        "unit_cents": 34077
+      },
+      {
+        "sku": "SKU-3583",
+        "qty": 4,
+        "unit_cents": 69250
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-10-25T00:56:00"
+  },
+  {
+    "order_id": "ORD00166",
+    "customer_email": "kevin.clark1581@shop.net",
+    "items": [
+      {
+        "sku": "SKU-6411",
+        "qty": 5,
+        "unit_cents": 98543
+      },
+      {
+        "sku": "SKU-2025",
+        "qty": 1,
+        "unit_cents": 48992
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-08-11T21:31:00"
+  },
+  {
+    "order_id": "ORD00283",
+    "customer_email": "quentin.young9308@corp.io",
+    "items": [
+      {
+        "sku": "SKU-8269",
+        "qty": 1,
+        "unit_cents": 45092
+      },
+      {
+        "sku": "SKU-6264",
+        "qty": 2,
+        "unit_cents": 46351
+      },
+      {
+        "sku": "SKU-6931",
+        "qty": 3,
+        "unit_cents": 94222
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-01-13T20:37:00"
+  },
+  {
+    "order_id": "ORD00034",
+    "customer_email": "kevin.young8131@mail.co",
+    "items": [
+      {
+        "sku": "SKU-1576",
+        "qty": 5,
+        "unit_cents": 61216
+      },
+      {
+        "sku": "SKU-7335",
+        "qty": 4,
+        "unit_cents": 6264
+      },
+      {
+        "sku": "SKU-2662",
+        "qty": 4,
+        "unit_cents": 19940
+      },
+      {
+        "sku": "SKU-1331",
+        "qty": 1,
+        "unit_cents": 78520
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-06-04T22:35:00"
+  },
+  {
+    "order_id": "ORD00093",
+    "customer_email": "niaj.hill9116@corp.io",
+    "items": [
+      {
+        "sku": "SKU-9126",
+        "qty": 4,
+        "unit_cents": 10644
+      },
+      {
+        "sku": "SKU-1847",
+        "qty": 5,
+        "unit_cents": 52782
+      },
+      {
+        "sku": "SKU-5296",
+        "qty": 1,
+        "unit_cents": 85034
+      },
+      {
+        "sku": "SKU-9451",
+        "qty": 1,
+        "unit_cents": 10597
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-02-16T01:09:00"
+  },
+  {
+    "order_id": "ORD00089",
+    "customer_email": "kevin.smith219@example.com",
+    "items": [
+      {
+        "sku": "SKU-4911",
+        "qty": 4,
+        "unit_cents": 68554
+      },
+      {
+        "sku": "SKU-3611",
+        "qty": 3,
+        "unit_cents": 85979
+      },
+      {
+        "sku": "SKU-3209",
+        "qty": 4,
+        "unit_cents": 72965
+      },
+      {
+        "sku": "SKU-1936",
+        "qty": 5,
+        "unit_cents": 10902
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-02-04T13:38:00"
+  },
+  {
+    "order_id": "ORD00379",
+    "customer_email": "sybil.clark825@mail.co",
+    "items": [
+      {
+        "sku": "SKU-6189",
+        "qty": 1,
+        "unit_cents": 49279
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-10-14T07:59:00"
+  },
+  {
+    "order_id": "ORD00074",
+    "customer_email": "frank.walker713@corp.io",
+    "items": [
+      {
+        "sku": "SKU-3658",
+        "qty": 4,
+        "unit_cents": 44355
+      },
+      {
+        "sku": "SKU-5421",
+        "qty": 4,
+        "unit_cents": 51557
+      },
+      {
+        "sku": "SKU-1242",
+        "qty": 3,
+        "unit_cents": 69612
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-08-02T17:36:00"
+  },
+  {
+    "order_id": "ORD00163",
+    "customer_email": "laura.lewis443@corp.io",
+    "items": [
+      {
+        "sku": "SKU-3300",
+        "qty": 1,
+        "unit_cents": 92230
+      },
+      {
+        "sku": "SKU-7423",
+        "qty": 5,
+        "unit_cents": 98339
+      },
+      {
+        "sku": "SKU-4688",
+        "qty": 1,
+        "unit_cents": 27525
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-01-20T12:08:00"
+  },
+  {
+    "order_id": "ORD00266",
+    "customer_email": "frank.davis842@mail.co",
+    "items": [
+      {
+        "sku": "SKU-9978",
+        "qty": 1,
+        "unit_cents": 4007
+      },
+      {
+        "sku": "SKU-1669",
+        "qty": 4,
+        "unit_cents": 53233
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-07-01T21:20:00"
+  },
+  {
+    "order_id": "ORD00223",
+    "customer_email": "peggy.lewis4610@example.com",
+    "items": [
+      {
+        "sku": "SKU-5117",
+        "qty": 3,
+        "unit_cents": 24940
+      },
+      {
+        "sku": "SKU-2896",
+        "qty": 5,
+        "unit_cents": 88035
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-07-25T03:17:00"
+  },
+  {
+    "order_id": "ORD00149",
+    "customer_email": "grace.johnson808@mail.co",
+    "items": [
+      {
+        "sku": "SKU-4273",
+        "qty": 1,
+        "unit_cents": 54107
+      },
+      {
+        "sku": "SKU-3749",
+        "qty": 4,
+        "unit_cents": 66360
+      },
+      {
+        "sku": "SKU-7355",
+        "qty": 2,
+        "unit_cents": 50537
+      },
+      {
+        "sku": "SKU-9736",
+        "qty": 5,
+        "unit_cents": 64742
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-02-18T00:57:00"
+  },
+  {
+    "order_id": "ORD00381",
+    "customer_email": "quentin.lee193@corp.io",
+    "items": [
+      {
+        "sku": "SKU-9532",
+        "qty": 4,
+        "unit_cents": 1014
+      },
+      {
+        "sku": "SKU-3152",
+        "qty": 4,
+        "unit_cents": 84140
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-05-27T14:46:00"
+  },
+  {
+    "order_id": "ORD00052",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-1418",
+        "qty": 3,
+        "unit_cents": 61904
+      },
+      {
+        "sku": "SKU-7405",
+        "qty": 1,
+        "unit_cents": 69152
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-02-22T23:59:00"
+  },
+  {
+    "order_id": "ORD00386",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-9329",
+        "qty": 5,
+        "unit_cents": 2479
+      },
+      {
+        "sku": "SKU-7660",
+        "qty": 3,
+        "unit_cents": 63299
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-12-18T21:14:00"
+  },
+  {
+    "order_id": "ORD00375",
+    "customer_email": "grace.smith3348@mail.co",
+    "items": [
+      {
+        "sku": "SKU-8941",
+        "qty": 4,
+        "unit_cents": 35228
+      },
+      {
+        "sku": "SKU-8438",
+        "qty": 3,
+        "unit_cents": 80717
+      },
+      {
+        "sku": "SKU-9912",
+        "qty": 1,
+        "unit_cents": 99744
+      },
+      {
+        "sku": "SKU-3787",
+        "qty": 5,
+        "unit_cents": 88164
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-08-16T08:27:00"
+  },
+  {
+    "order_id": "ORD00359",
+    "customer_email": "bob.smith248@example.com",
+    "items": [
+      {
+        "sku": "SKU-8357",
+        "qty": 4,
+        "unit_cents": 43603
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-02-02T21:38:00"
+  },
+  {
+    "order_id": "ORD00274",
+    "customer_email": "niaj.moore385@mail.co",
+    "items": [
+      {
+        "sku": "SKU-4810",
+        "qty": 2,
+        "unit_cents": 26217
+      },
+      {
+        "sku": "SKU-4080",
+        "qty": 4,
+        "unit_cents": 16048
+      },
+      {
+        "sku": "SKU-9764",
+        "qty": 3,
+        "unit_cents": 87236
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-07-01T17:42:00"
+  },
+  {
+    "order_id": "ORD00067",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-9015",
+        "qty": 4,
+        "unit_cents": 40561
+      },
+      {
+        "sku": "SKU-1207",
+        "qty": 2,
+        "unit_cents": 72913
+      },
+      {
+        "sku": "SKU-3671",
+        "qty": 4,
+        "unit_cents": 96748
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-06-23T02:16:00"
+  },
+  {
+    "order_id": "ORD00168",
+    "customer_email": "heidi.garcia.orphan6548@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-3427",
+        "qty": 1,
+        "unit_cents": 18866
+      },
+      {
+        "sku": "SKU-3554",
+        "qty": 1,
+        "unit_cents": 50437
+      },
+      {
+        "sku": "SKU-2898",
+        "qty": 1,
+        "unit_cents": 68828
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-05-12T21:55:00"
+  },
+  {
+    "order_id": "ORD00362",
+    "customer_email": "laura.young5545@corp.io",
+    "items": [
+      {
+        "sku": "SKU-9681",
+        "qty": 2,
+        "unit_cents": 14632
+      },
+      {
+        "sku": "SKU-7092",
+        "qty": 4,
+        "unit_cents": 15894
+      },
+      {
+        "sku": "SKU-4053",
+        "qty": 1,
+        "unit_cents": 53640
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-05-22T23:36:00"
+  },
+  {
+    "order_id": "ORD00150",
+    "customer_email": "carol.hill18@shop.net",
+    "items": [
+      {
+        "sku": "SKU-4981",
+        "qty": 4,
+        "unit_cents": 59132
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-06-22T12:16:00"
+  },
+  {
+    "order_id": "ORD00358",
+    "customer_email": "grace.adams88@example.com",
+    "items": [
+      {
+        "sku": "SKU-1299",
+        "qty": 2,
+        "unit_cents": 62246
+      },
+      {
+        "sku": "SKU-1772",
+        "qty": 1,
+        "unit_cents": 2584
+      },
+      {
+        "sku": "SKU-5120",
+        "qty": 2,
+        "unit_cents": 57472
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-04-21T07:58:00"
+  },
+  {
+    "order_id": "ORD00303",
+    "customer_email": "erin.green.orphan3059@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-7372",
+        "qty": 1,
+        "unit_cents": 48497
+      },
+      {
+        "sku": "SKU-5722",
+        "qty": 3,
+        "unit_cents": 73959
+      },
+      {
+        "sku": "SKU-1261",
+        "qty": 2,
+        "unit_cents": 77195
+      },
+      {
+        "sku": "SKU-1163",
+        "qty": 3,
+        "unit_cents": 48248
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-10-22T21:23:00"
+  },
+  {
+    "order_id": "ORD00103",
+    "customer_email": "trent.lee1580@example.com",
+    "items": [
+      {
+        "sku": "SKU-3165",
+        "qty": 1,
+        "unit_cents": 80464
+      },
+      {
+        "sku": "SKU-6848",
+        "qty": 2,
+        "unit_cents": 4192
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-07-15T02:41:00"
+  },
+  {
+    "order_id": "ORD00172",
+    "customer_email": "judy.smith144@example.com",
+    "items": [
+      {
+        "sku": "SKU-8442",
+        "qty": 5,
+        "unit_cents": 78714
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-08-11T18:20:00"
+  },
+  {
+    "order_id": "ORD00023",
+    "customer_email": "heidi.green781@test.org",
+    "items": [
+      {
+        "sku": "SKU-7468",
+        "qty": 5,
+        "unit_cents": 17092
+      },
+      {
+        "sku": "SKU-5807",
+        "qty": 1,
+        "unit_cents": 62760
+      },
+      {
+        "sku": "SKU-4927",
+        "qty": 1,
+        "unit_cents": 40454
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-12-03T09:25:00"
+  },
+  {
+    "order_id": "ORD00131",
+    "customer_email": "ruth.green62@corp.io",
+    "items": [
+      {
+        "sku": "SKU-9084",
+        "qty": 2,
+        "unit_cents": 21492
+      },
+      {
+        "sku": "SKU-7105",
+        "qty": 5,
+        "unit_cents": 46831
+      },
+      {
+        "sku": "SKU-8178",
+        "qty": 4,
+        "unit_cents": 57627
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-02-05T07:48:00"
+  },
+  {
+    "order_id": "ORD00363",
+    "customer_email": "bob.adams9101@test.org",
+    "items": [
+      {
+        "sku": "SKU-1277",
+        "qty": 1,
+        "unit_cents": 4443
+      },
+      {
+        "sku": "SKU-1356",
+        "qty": 2,
+        "unit_cents": 43031
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-12-27T20:44:00"
+  },
+  {
+    "order_id": "ORD00050",
+    "customer_email": "ruth.walker.orphan4565@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-8247",
+        "qty": 3,
+        "unit_cents": 74579
+      },
+      {
+        "sku": "SKU-3257",
+        "qty": 2,
+        "unit_cents": 16260
+      },
+      {
+        "sku": "SKU-2974",
+        "qty": 4,
+        "unit_cents": 52688
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-09-22T09:22:00"
+  },
+  {
+    "order_id": "ORD00400",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-5168",
+        "qty": 4,
+        "unit_cents": 76201
+      },
+      {
+        "sku": "SKU-9596",
+        "qty": 2,
+        "unit_cents": 40625
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-10-20T07:20:00"
+  },
+  {
+    "order_id": "ORD00037",
+    "customer_email": "olivia.lewis162@corp.io",
+    "items": [
+      {
+        "sku": "SKU-5184",
+        "qty": 1,
+        "unit_cents": 68265
+      },
+      {
+        "sku": "SKU-4538",
+        "qty": 2,
+        "unit_cents": 12352
+      },
+      {
+        "sku": "SKU-9231",
+        "qty": 5,
+        "unit_cents": 55164
+      },
+      {
+        "sku": "SKU-9308",
+        "qty": 3,
+        "unit_cents": 14969
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-10-14T02:59:00"
+  },
+  {
+    "order_id": "ORD00384",
+    "customer_email": "bob.miller727@shop.net",
+    "items": [
+      {
+        "sku": "SKU-8456",
+        "qty": 1,
+        "unit_cents": 45523
+      },
+      {
+        "sku": "SKU-8322",
+        "qty": 4,
+        "unit_cents": 71717
+      },
+      {
+        "sku": "SKU-1539",
+        "qty": 4,
+        "unit_cents": 71098
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-01-12T00:37:00"
+  },
+  {
+    "order_id": "ORD00388",
+    "customer_email": "dave.adams304@mail.co",
+    "items": [
+      {
+        "sku": "SKU-3674",
+        "qty": 4,
+        "unit_cents": 90475
+      },
+      {
+        "sku": "SKU-5938",
+        "qty": 5,
+        "unit_cents": 10526
+      },
+      {
+        "sku": "SKU-2564",
+        "qty": 3,
+        "unit_cents": 28731
+      },
+      {
+        "sku": "SKU-1475",
+        "qty": 1,
+        "unit_cents": 45877
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-05-10T15:24:00"
+  },
+  {
+    "order_id": "ORD00032",
+    "customer_email": "ruth.king317@shop.net",
+    "items": [
+      {
+        "sku": "SKU-7366",
+        "qty": 5,
+        "unit_cents": 76959
+      },
+      {
+        "sku": "SKU-4826",
+        "qty": 1,
+        "unit_cents": 86212
+      },
+      {
+        "sku": "SKU-1003",
+        "qty": 2,
+        "unit_cents": 39741
+      },
+      {
+        "sku": "SKU-9304",
+        "qty": 5,
+        "unit_cents": 33452
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-08-28T08:52:00"
+  },
+  {
+    "order_id": "ORD00067",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-9015",
+        "qty": 4,
+        "unit_cents": 40561
+      },
+      {
+        "sku": "SKU-1207",
+        "qty": 2,
+        "unit_cents": 72913
+      },
+      {
+        "sku": "SKU-3671",
+        "qty": 4,
+        "unit_cents": 96748
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-06-23T02:16:00"
+  },
+  {
+    "order_id": "ORD00073",
+    "customer_email": "ruth.baker316@mail.co",
+    "items": [
+      {
+        "sku": "SKU-2698",
+        "qty": 5,
+        "unit_cents": 82482
+      },
+      {
+        "sku": "SKU-8495",
+        "qty": 2,
+        "unit_cents": 80701
+      },
+      {
+        "sku": "SKU-1656",
+        "qty": 3,
+        "unit_cents": 44697
+      },
+      {
+        "sku": "SKU-7168",
+        "qty": 1,
+        "unit_cents": 82120
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-02-12T09:42:00"
+  },
+  {
+    "order_id": "ORD00262",
+    "customer_email": "dave.wright437@example.com",
+    "items": [
+      {
+        "sku": "SKU-1792",
+        "qty": 4,
+        "unit_cents": 34201
+      },
+      {
+        "sku": "SKU-4502",
+        "qty": 5,
+        "unit_cents": 8079
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-01-21T01:38:00"
+  },
+  {
+    "order_id": "ORD00191",
+    "customer_email": "bob.johnson796@example.com",
+    "items": [
+      {
+        "sku": "SKU-1581",
+        "qty": 2,
+        "unit_cents": 57886
+      },
+      {
+        "sku": "SKU-2263",
+        "qty": 3,
+        "unit_cents": 82603
+      },
+      {
+        "sku": "SKU-3540",
+        "qty": 5,
+        "unit_cents": 24745
+      },
+      {
+        "sku": "SKU-9016",
+        "qty": 3,
+        "unit_cents": 20461
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-07-09T23:13:00"
+  },
+  {
+    "order_id": "ORD00136",
+    "customer_email": "niaj.davis562@example.com",
+    "items": [
+      {
+        "sku": "SKU-8114",
+        "qty": 5,
+        "unit_cents": 87186
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-01-04T22:27:00"
+  },
+  {
+    "order_id": "ORD00160",
+    "customer_email": "ivan.lewis757@mail.co",
+    "items": [
+      {
+        "sku": "SKU-8884",
+        "qty": 5,
+        "unit_cents": 43430
+      },
+      {
+        "sku": "SKU-5416",
+        "qty": 1,
+        "unit_cents": 60217
+      },
+      {
+        "sku": "SKU-3614",
+        "qty": 1,
+        "unit_cents": 67265
+      },
+      {
+        "sku": "SKU-5242",
+        "qty": 5,
+        "unit_cents": 93793
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-08-14T21:10:00"
+  },
+  {
+    "order_id": "ORD00217",
+    "customer_email": "dave.wright437@example.com",
+    "items": [
+      {
+        "sku": "SKU-2331",
+        "qty": 5,
+        "unit_cents": 18352
+      },
+      {
+        "sku": "SKU-1331",
+        "qty": 5,
+        "unit_cents": 17788
+      },
+      {
+        "sku": "SKU-2665",
+        "qty": 1,
+        "unit_cents": 93029
+      },
+      {
+        "sku": "SKU-2070",
+        "qty": 5,
+        "unit_cents": 86743
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-02-16T13:05:00"
+  },
+  {
+    "order_id": "ORD00082",
+    "customer_email": "alice.baker356@corp.io",
+    "items": [
+      {
+        "sku": "SKU-1313",
+        "qty": 2,
+        "unit_cents": 75015
+      },
+      {
+        "sku": "SKU-4966",
+        "qty": 3,
+        "unit_cents": 24366
+      },
+      {
+        "sku": "SKU-7880",
+        "qty": 1,
+        "unit_cents": 75222
+      },
+      {
+        "sku": "SKU-8342",
+        "qty": 2,
+        "unit_cents": 97622
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-12-04T06:10:00"
+  },
+  {
+    "order_id": "ORD00124",
+    "customer_email": "niaj.garcia914@mail.co",
+    "items": [
+      {
+        "sku": "SKU-7819",
+        "qty": 3,
+        "unit_cents": 49544
+      },
+      {
+        "sku": "SKU-2286",
+        "qty": 5,
+        "unit_cents": 66349
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-08-08T11:30:00"
+  },
+  {
+    "order_id": "ORD00330",
+    "customer_email": "dave.hill5039@test.org",
+    "items": [
+      {
+        "sku": "SKU-5034",
+        "qty": 2,
+        "unit_cents": 15623
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-11-16T13:16:00"
+  },
+  {
+    "order_id": "ORD00061",
+    "customer_email": "carol.wilson.orphan1618@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-7783",
+        "qty": 2,
+        "unit_cents": 57855
+      },
+      {
+        "sku": "SKU-2263",
+        "qty": 4,
+        "unit_cents": 73370
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-03-08T15:14:00"
+  },
+  {
+    "order_id": "ORD00098",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-6454",
+        "qty": 2,
+        "unit_cents": 18165
+      },
+      {
+        "sku": "SKU-6964",
+        "qty": 5,
+        "unit_cents": 28498
+      },
+      {
+        "sku": "SKU-9738",
+        "qty": 4,
+        "unit_cents": 9674
+      },
+      {
+        "sku": "SKU-3126",
+        "qty": 4,
+        "unit_cents": 74301
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-07-14T07:30:00"
+  },
+  {
+    "order_id": "ORD00208",
+    "customer_email": "ivan.moore551@shop.net",
+    "items": [
+      {
+        "sku": "SKU-7368",
+        "qty": 5,
+        "unit_cents": 43585
+      },
+      {
+        "sku": "SKU-3177",
+        "qty": 1,
+        "unit_cents": 64527
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-08-12T00:12:00"
+  },
+  {
+    "order_id": "ORD00118",
+    "customer_email": "erin.miller465@example.com",
+    "items": [
+      {
+        "sku": "SKU-1662",
+        "qty": 4,
+        "unit_cents": 12352
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-12-11T05:07:00"
+  },
+  {
+    "order_id": "ORD00264",
+    "customer_email": "ivan.smith602@mail.co",
+    "items": [
+      {
+        "sku": "SKU-1199",
+        "qty": 5,
+        "unit_cents": 54181
+      },
+      {
+        "sku": "SKU-6800",
+        "qty": 1,
+        "unit_cents": 43186
+      },
+      {
+        "sku": "SKU-5586",
+        "qty": 3,
+        "unit_cents": 13265
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-03-12T01:46:00"
+  },
+  {
+    "order_id": "ORD00325",
+    "customer_email": "trent.green.orphan8032@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-4840",
+        "qty": 5,
+        "unit_cents": 45355
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-05-15T06:25:00"
+  },
+  {
+    "order_id": "ORD00144",
+    "customer_email": "bob.miller727@shop.net",
+    "items": [
+      {
+        "sku": "SKU-5252",
+        "qty": 5,
+        "unit_cents": 7451
+      },
+      {
+        "sku": "SKU-7367",
+        "qty": 4,
+        "unit_cents": 36914
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-06-26T17:31:00"
+  },
+  {
+    "order_id": "ORD00371",
+    "customer_email": "frank.wilson983@test.org",
+    "items": [
+      {
+        "sku": "SKU-8454",
+        "qty": 4,
+        "unit_cents": 8696
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-04-07T20:50:00"
+  },
+  {
+    "order_id": "ORD00321",
+    "customer_email": "trent.lewis.orphan5456@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-9344",
+        "qty": 2,
+        "unit_cents": 65476
+      },
+      {
+        "sku": "SKU-4474",
+        "qty": 5,
+        "unit_cents": 6805
+      },
+      {
+        "sku": "SKU-2772",
+        "qty": 3,
+        "unit_cents": 56749
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-02-11T10:07:00"
+  },
+  {
+    "order_id": "ORD00110",
+    "customer_email": "trent.baker240@example.com",
+    "items": [
+      {
+        "sku": "SKU-9314",
+        "qty": 4,
+        "unit_cents": 72293
+      },
+      {
+        "sku": "SKU-7456",
+        "qty": 4,
+        "unit_cents": 34874
+      },
+      {
+        "sku": "SKU-3965",
+        "qty": 2,
+        "unit_cents": 71010
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-05-28T19:53:00"
+  },
+  {
+    "order_id": "ORD00012",
+    "customer_email": "olivia.johnson.orphan9773@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-7410",
+        "qty": 2,
+        "unit_cents": 34196
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-08-27T18:10:00"
+  },
+  {
+    "order_id": "ORD00292",
+    "customer_email": "erin.brown7686@test.org",
+    "items": [
+      {
+        "sku": "SKU-6422",
+        "qty": 1,
+        "unit_cents": 99528
+      },
+      {
+        "sku": "SKU-5823",
+        "qty": 1,
+        "unit_cents": 44890
+      },
+      {
+        "sku": "SKU-2493",
+        "qty": 2,
+        "unit_cents": 50562
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-06-09T19:58:00"
+  },
+  {
+    "order_id": "ORD00342",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-7054",
+        "qty": 3,
+        "unit_cents": 59713
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-09-11T11:08:00"
+  },
+  {
+    "order_id": "ORD00042",
+    "customer_email": "quentin.lee193@corp.io",
+    "items": [
+      {
+        "sku": "SKU-3407",
+        "qty": 2,
+        "unit_cents": 29305
+      },
+      {
+        "sku": "SKU-6175",
+        "qty": 5,
+        "unit_cents": 31929
+      },
+      {
+        "sku": "SKU-4877",
+        "qty": 2,
+        "unit_cents": 38249
+      },
+      {
+        "sku": "SKU-7102",
+        "qty": 4,
+        "unit_cents": 87026
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-10-01T12:04:00"
+  },
+  {
+    "order_id": "ORD00261",
+    "customer_email": "judy.walker280@shop.net",
+    "items": [
+      {
+        "sku": "SKU-1453",
+        "qty": 1,
+        "unit_cents": 24454
+      },
+      {
+        "sku": "SKU-7395",
+        "qty": 4,
+        "unit_cents": 10366
+      },
+      {
+        "sku": "SKU-2259",
+        "qty": 5,
+        "unit_cents": 32863
+      },
+      {
+        "sku": "SKU-9776",
+        "qty": 1,
+        "unit_cents": 28402
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-08-18T22:38:00"
+  },
+  {
+    "order_id": "ORD00177",
+    "customer_email": "frank.walker5715@shop.net",
+    "items": [
+      {
+        "sku": "SKU-6147",
+        "qty": 4,
+        "unit_cents": 7237
+      },
+      {
+        "sku": "SKU-2884",
+        "qty": 1,
+        "unit_cents": 43962
+      },
+      {
+        "sku": "SKU-3616",
+        "qty": 3,
+        "unit_cents": 80707
+      },
+      {
+        "sku": "SKU-8178",
+        "qty": 3,
+        "unit_cents": 71921
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-06-08T21:05:00"
+  },
+  {
+    "order_id": "ORD00365",
+    "customer_email": "erin.green.orphan1933@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-6927",
+        "qty": 3,
+        "unit_cents": 48021
+      },
+      {
+        "sku": "SKU-1884",
+        "qty": 1,
+        "unit_cents": 53666
+      },
+      {
+        "sku": "SKU-5773",
+        "qty": 3,
+        "unit_cents": 36775
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-08-11T07:13:00"
+  },
+  {
+    "order_id": "ORD00245",
+    "customer_email": "dave.johnson.orphan5262@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-4175",
+        "qty": 1,
+        "unit_cents": 88603
+      },
+      {
+        "sku": "SKU-1785",
+        "qty": 2,
+        "unit_cents": 96039
+      },
+      {
+        "sku": "SKU-3905",
+        "qty": 3,
+        "unit_cents": 50276
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-04-13T23:02:00"
+  },
+  {
+    "order_id": "ORD00158",
+    "customer_email": "dave.adams304@mail.co",
+    "items": [
+      {
+        "sku": "SKU-4224",
+        "qty": 3,
+        "unit_cents": 24279
+      },
+      {
+        "sku": "SKU-3929",
+        "qty": 4,
+        "unit_cents": 86357
+      },
+      {
+        "sku": "SKU-3476",
+        "qty": 5,
+        "unit_cents": 77617
+      },
+      {
+        "sku": "SKU-9284",
+        "qty": 4,
+        "unit_cents": 77013
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-01-14T19:02:00"
+  },
+  {
+    "order_id": "ORD00276",
+    "customer_email": "carol.clark8735@shop.net",
+    "items": [
+      {
+        "sku": "SKU-8963",
+        "qty": 3,
+        "unit_cents": 32487
+      },
+      {
+        "sku": "SKU-9830",
+        "qty": 5,
+        "unit_cents": 90505
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-08-26T06:22:00"
+  },
+  {
+    "order_id": "ORD00087",
+    "customer_email": "dave.green931@test.org",
+    "items": [
+      {
+        "sku": "SKU-7344",
+        "qty": 2,
+        "unit_cents": 45280
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-09-06T08:12:00"
+  },
+  {
+    "order_id": "ORD00342",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-7054",
+        "qty": 3,
+        "unit_cents": 59713
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-09-11T11:08:00"
+  },
+  {
+    "order_id": "ORD00169",
+    "customer_email": "sybil.adams3419@mail.co",
+    "items": [
+      {
+        "sku": "SKU-8647",
+        "qty": 5,
+        "unit_cents": 45348
+      },
+      {
+        "sku": "SKU-4805",
+        "qty": 5,
+        "unit_cents": 5027
+      },
+      {
+        "sku": "SKU-7289",
+        "qty": 3,
+        "unit_cents": 44961
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-10-03T15:07:00"
+  },
+  {
+    "order_id": "ORD00003",
+    "customer_email": "alice.johnson3174@corp.io",
+    "items": [
+      {
+        "sku": "SKU-2649",
+        "qty": 3,
+        "unit_cents": 57007
+      },
+      {
+        "sku": "SKU-6180",
+        "qty": 5,
+        "unit_cents": 84041
+      },
+      {
+        "sku": "SKU-4350",
+        "qty": 5,
+        "unit_cents": 62622
+      },
+      {
+        "sku": "SKU-8253",
+        "qty": 5,
+        "unit_cents": 34243
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-01-03T23:53:00"
+  },
+  {
+    "order_id": "ORD00336",
+    "customer_email": "carol.garcia431@corp.io",
+    "items": [
+      {
+        "sku": "SKU-1665",
+        "qty": 3,
+        "unit_cents": 62156
+      },
+      {
+        "sku": "SKU-1232",
+        "qty": 1,
+        "unit_cents": 4744
+      },
+      {
+        "sku": "SKU-3473",
+        "qty": 5,
+        "unit_cents": 73397
+      },
+      {
+        "sku": "SKU-4876",
+        "qty": 2,
+        "unit_cents": 95133
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-03-17T09:59:00"
+  },
+  {
+    "order_id": "ORD00251",
+    "customer_email": "grace.walker803@test.org",
+    "items": [
+      {
+        "sku": "SKU-9556",
+        "qty": 2,
+        "unit_cents": 79691
+      },
+      {
+        "sku": "SKU-4666",
+        "qty": 5,
+        "unit_cents": 74823
+      },
+      {
+        "sku": "SKU-8274",
+        "qty": 5,
+        "unit_cents": 37714
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-07-27T03:47:00"
+  },
+  {
+    "order_id": "ORD00301",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-3452",
+        "qty": 2,
+        "unit_cents": 75079
+      },
+      {
+        "sku": "SKU-9068",
+        "qty": 5,
+        "unit_cents": 64835
+      },
+      {
+        "sku": "SKU-8102",
+        "qty": 2,
+        "unit_cents": 58650
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-01-12T21:18:00"
+  },
+  {
+    "order_id": "ORD00390",
+    "customer_email": "dave.davis3694@test.org",
+    "items": [
+      {
+        "sku": "SKU-5369",
+        "qty": 5,
+        "unit_cents": 19678
+      },
+      {
+        "sku": "SKU-3239",
+        "qty": 1,
+        "unit_cents": 20203
+      },
+      {
+        "sku": "SKU-2531",
+        "qty": 3,
+        "unit_cents": 5962
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-09-12T23:24:00"
+  },
+  {
+    "order_id": "ORD00190",
+    "customer_email": "kevin.lee2022@corp.io",
+    "items": [
+      {
+        "sku": "SKU-2896",
+        "qty": 5,
+        "unit_cents": 42235
+      },
+      {
+        "sku": "SKU-6246",
+        "qty": 1,
+        "unit_cents": 47219
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-05-17T22:27:00"
+  },
+  {
+    "order_id": "ORD00143",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-5412",
+        "qty": 1,
+        "unit_cents": 86766
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-09-21T09:03:00"
+  },
+  {
+    "order_id": "ORD00028",
+    "customer_email": "judy.green624@mail.co",
+    "items": [
+      {
+        "sku": "SKU-7650",
+        "qty": 4,
+        "unit_cents": 68418
+      },
+      {
+        "sku": "SKU-9116",
+        "qty": 3,
+        "unit_cents": 65431
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-11-28T06:34:00"
+  },
+  {
+    "order_id": "ORD00370",
+    "customer_email": "ivan.clark141@corp.io",
+    "items": [
+      {
+        "sku": "SKU-9855",
+        "qty": 3,
+        "unit_cents": 41673
+      },
+      {
+        "sku": "SKU-2997",
+        "qty": 1,
+        "unit_cents": 92323
+      },
+      {
+        "sku": "SKU-3373",
+        "qty": 3,
+        "unit_cents": 42759
+      },
+      {
+        "sku": "SKU-4333",
+        "qty": 1,
+        "unit_cents": 93476
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-10-02T03:44:00"
+  },
+  {
+    "order_id": "ORD00327",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-5927",
+        "qty": 4,
+        "unit_cents": 43565
+      },
+      {
+        "sku": "SKU-1430",
+        "qty": 5,
+        "unit_cents": 50166
+      },
+      {
+        "sku": "SKU-2739",
+        "qty": 4,
+        "unit_cents": 35941
+      },
+      {
+        "sku": "SKU-1715",
+        "qty": 3,
+        "unit_cents": 5926
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-11-26T21:48:00"
+  },
+  {
+    "order_id": "ORD00284",
+    "customer_email": "alice.miller1092@test.org",
+    "items": [
+      {
+        "sku": "SKU-9930",
+        "qty": 1,
+        "unit_cents": 41290
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-03-03T04:03:00"
+  },
+  {
+    "order_id": "ORD00392",
+    "customer_email": "ivan.brown732@example.com",
+    "items": [
+      {
+        "sku": "SKU-9535",
+        "qty": 5,
+        "unit_cents": 61565
+      },
+      {
+        "sku": "SKU-6967",
+        "qty": 1,
+        "unit_cents": 94851
+      },
+      {
+        "sku": "SKU-1030",
+        "qty": 3,
+        "unit_cents": 99535
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-03-18T08:03:00"
+  },
+  {
+    "order_id": "ORD00360",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-4741",
+        "qty": 4,
+        "unit_cents": 34720
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-05-26T03:35:00"
+  },
+  {
+    "order_id": "ORD00289",
+    "customer_email": "dave.garcia152@example.com",
+    "items": [
+      {
+        "sku": "SKU-5323",
+        "qty": 5,
+        "unit_cents": 86933
+      },
+      {
+        "sku": "SKU-6038",
+        "qty": 1,
+        "unit_cents": 41256
+      },
+      {
+        "sku": "SKU-5189",
+        "qty": 5,
+        "unit_cents": 35123
+      },
+      {
+        "sku": "SKU-8409",
+        "qty": 4,
+        "unit_cents": 13633
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-12-03T22:27:00"
+  },
+  {
+    "order_id": "ORD00154",
+    "customer_email": "heidi.wright361@shop.net",
+    "items": [
+      {
+        "sku": "SKU-8066",
+        "qty": 2,
+        "unit_cents": 34854
+      },
+      {
+        "sku": "SKU-9427",
+        "qty": 2,
+        "unit_cents": 66901
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-09-25T17:49:00"
+  },
+  {
+    "order_id": "ORD00027",
+    "customer_email": "carol.garcia830@corp.io",
+    "items": [
+      {
+        "sku": "SKU-4304",
+        "qty": 1,
+        "unit_cents": 65254
+      },
+      {
+        "sku": "SKU-7520",
+        "qty": 3,
+        "unit_cents": 27262
+      },
+      {
+        "sku": "SKU-1689",
+        "qty": 2,
+        "unit_cents": 81812
+      },
+      {
+        "sku": "SKU-3397",
+        "qty": 1,
+        "unit_cents": 26048
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-06-18T04:06:00"
+  },
+  {
+    "order_id": "ORD00287",
+    "customer_email": "carol.young2698@shop.net",
+    "items": [
+      {
+        "sku": "SKU-9145",
+        "qty": 5,
+        "unit_cents": 66398
+      },
+      {
+        "sku": "SKU-1818",
+        "qty": 2,
+        "unit_cents": 17127
+      },
+      {
+        "sku": "SKU-4488",
+        "qty": 2,
+        "unit_cents": 12973
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-01-20T17:05:00"
+  },
+  {
+    "order_id": "ORD00100",
+    "customer_email": "erin.moore575@example.com",
+    "items": [
+      {
+        "sku": "SKU-1660",
+        "qty": 5,
+        "unit_cents": 42248
+      },
+      {
+        "sku": "SKU-7402",
+        "qty": 1,
+        "unit_cents": 70154
+      },
+      {
+        "sku": "SKU-1798",
+        "qty": 2,
+        "unit_cents": 93616
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-07-24T12:27:00"
+  },
+  {
+    "order_id": "ORD00209",
+    "customer_email": "kevin.clark37@shop.net",
+    "items": [
+      {
+        "sku": "SKU-3154",
+        "qty": 1,
+        "unit_cents": 94352
+      },
+      {
+        "sku": "SKU-9503",
+        "qty": 5,
+        "unit_cents": 53177
+      },
+      {
+        "sku": "SKU-5570",
+        "qty": 2,
+        "unit_cents": 10417
+      },
+      {
+        "sku": "SKU-8013",
+        "qty": 1,
+        "unit_cents": 71475
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-12-11T23:58:00"
+  },
+  {
+    "order_id": "ORD00395",
+    "customer_email": "carol.baker518@corp.io",
+    "items": [
+      {
+        "sku": "SKU-1681",
+        "qty": 5,
+        "unit_cents": 23898
+      },
+      {
+        "sku": "SKU-6089",
+        "qty": 2,
+        "unit_cents": 44677
+      },
+      {
+        "sku": "SKU-8824",
+        "qty": 2,
+        "unit_cents": 49768
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-12-18T00:23:00"
+  },
+  {
+    "order_id": "ORD00197",
+    "customer_email": "erin.moore575@example.com",
+    "items": [
+      {
+        "sku": "SKU-6018",
+        "qty": 1,
+        "unit_cents": 48324
+      },
+      {
+        "sku": "SKU-3374",
+        "qty": 4,
+        "unit_cents": 3542
+      },
+      {
+        "sku": "SKU-7329",
+        "qty": 4,
+        "unit_cents": 6911
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-10-25T13:29:00"
+  },
+  {
+    "order_id": "ORD00164",
+    "customer_email": "grace.wilson751@mail.co",
+    "items": [
+      {
+        "sku": "SKU-7630",
+        "qty": 5,
+        "unit_cents": 7279
+      },
+      {
+        "sku": "SKU-8302",
+        "qty": 5,
+        "unit_cents": 19158
+      },
+      {
+        "sku": "SKU-3082",
+        "qty": 2,
+        "unit_cents": 77242
+      },
+      {
+        "sku": "SKU-3758",
+        "qty": 1,
+        "unit_cents": 75669
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-05-09T06:25:00"
+  },
+  {
+    "order_id": "ORD00375",
+    "customer_email": "grace.smith3348@mail.co",
+    "items": [
+      {
+        "sku": "SKU-8941",
+        "qty": 4,
+        "unit_cents": 35228
+      },
+      {
+        "sku": "SKU-8438",
+        "qty": 3,
+        "unit_cents": 80717
+      },
+      {
+        "sku": "SKU-9912",
+        "qty": 1,
+        "unit_cents": 99744
+      },
+      {
+        "sku": "SKU-3787",
+        "qty": 5,
+        "unit_cents": 88164
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-08-16T08:27:00"
+  },
+  {
+    "order_id": "ORD00291",
+    "customer_email": "bob.smith248@example.com",
+    "items": [
+      {
+        "sku": "SKU-8579",
+        "qty": 1,
+        "unit_cents": 67841
+      },
+      {
+        "sku": "SKU-1327",
+        "qty": 4,
+        "unit_cents": 97193
+      },
+      {
+        "sku": "SKU-4875",
+        "qty": 3,
+        "unit_cents": 67563
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-04-24T12:38:00"
+  },
+  {
+    "order_id": "ORD00328",
+    "customer_email": "quentin.hill35@shop.net",
+    "items": [
+      {
+        "sku": "SKU-9858",
+        "qty": 1,
+        "unit_cents": 27920
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-02-04T05:07:00"
+  },
+  {
+    "order_id": "ORD00139",
+    "customer_email": "sybil.brown534@example.com",
+    "items": [
+      {
+        "sku": "SKU-2586",
+        "qty": 5,
+        "unit_cents": 92819
+      },
+      {
+        "sku": "SKU-4554",
+        "qty": 2,
+        "unit_cents": 91022
+      },
+      {
+        "sku": "SKU-4770",
+        "qty": 4,
+        "unit_cents": 26498
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-03-09T23:57:00"
+  },
+  {
+    "order_id": "ORD00340",
+    "customer_email": "grace.green.orphan6552@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-5542",
+        "qty": 2,
+        "unit_cents": 96765
+      },
+      {
+        "sku": "SKU-1972",
+        "qty": 3,
+        "unit_cents": 88469
+      },
+      {
+        "sku": "SKU-5571",
+        "qty": 1,
+        "unit_cents": 92694
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-08-25T00:30:00"
+  },
+  {
+    "order_id": "ORD00045",
+    "customer_email": "frank.miller3604@mail.co",
+    "items": [
+      {
+        "sku": "SKU-7909",
+        "qty": 4,
+        "unit_cents": 23003
+      },
+      {
+        "sku": "SKU-5062",
+        "qty": 4,
+        "unit_cents": 44715
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-08-21T20:05:00"
+  },
+  {
+    "order_id": "ORD00397",
+    "customer_email": "dave.baker4849@example.com",
+    "items": [
+      {
+        "sku": "SKU-3613",
+        "qty": 1,
+        "unit_cents": 21518
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-12-04T21:07:00"
+  },
+  {
+    "order_id": "ORD00346",
+    "customer_email": "peggy.brown309@shop.net",
+    "items": [
+      {
+        "sku": "SKU-8266",
+        "qty": 5,
+        "unit_cents": 41200
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-11-26T21:42:00"
+  },
+  {
+    "order_id": "ORD00198",
+    "customer_email": "niaj.moore385@mail.co",
+    "items": [
+      {
+        "sku": "SKU-1123",
+        "qty": 3,
+        "unit_cents": 14121
+      },
+      {
+        "sku": "SKU-7306",
+        "qty": 3,
+        "unit_cents": 26031
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-05-17T12:08:00"
+  },
+  {
+    "order_id": "ORD00029",
+    "customer_email": "dave.lewis354@mail.co",
+    "items": [
+      {
+        "sku": "SKU-6574",
+        "qty": 3,
+        "unit_cents": 42282
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-03-28T08:38:00"
+  },
+  {
+    "order_id": "ORD00196",
+    "customer_email": "alice.moore895@corp.io",
+    "items": [
+      {
+        "sku": "SKU-7894",
+        "qty": 5,
+        "unit_cents": 68161
+      },
+      {
+        "sku": "SKU-9973",
+        "qty": 2,
+        "unit_cents": 93266
+      },
+      {
+        "sku": "SKU-6437",
+        "qty": 5,
+        "unit_cents": 86054
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-05-04T14:41:00"
+  },
+  {
+    "order_id": "ORD00344",
+    "customer_email": "erin.miller465@example.com",
+    "items": [
+      {
+        "sku": "SKU-9515",
+        "qty": 1,
+        "unit_cents": 86121
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-02-19T22:26:00"
+  },
+  {
+    "order_id": "ORD00071",
+    "customer_email": "carol.young9927@shop.net",
+    "items": [
+      {
+        "sku": "SKU-1157",
+        "qty": 4,
+        "unit_cents": 34669
+      },
+      {
+        "sku": "SKU-9744",
+        "qty": 5,
+        "unit_cents": 96521
+      },
+      {
+        "sku": "SKU-8580",
+        "qty": 1,
+        "unit_cents": 74120
+      },
+      {
+        "sku": "SKU-3008",
+        "qty": 4,
+        "unit_cents": 51257
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-09-05T19:55:00"
+  },
+  {
+    "order_id": "ORD00193",
+    "customer_email": "frank.wilson502@mail.co",
+    "items": [
+      {
+        "sku": "SKU-7166",
+        "qty": 2,
+        "unit_cents": 31241
+      },
+      {
+        "sku": "SKU-2998",
+        "qty": 5,
+        "unit_cents": 95488
+      },
+      {
+        "sku": "SKU-9483",
+        "qty": 2,
+        "unit_cents": 65199
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-04-05T22:38:00"
+  },
+  {
+    "order_id": "ORD00298",
+    "customer_email": "bob.johnson138@mail.co",
+    "items": [
+      {
+        "sku": "SKU-5330",
+        "qty": 1,
+        "unit_cents": 18080
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-05-14T16:42:00"
+  },
+  {
+    "order_id": "ORD00206",
+    "customer_email": "dave.davis3694@test.org",
+    "items": [
+      {
+        "sku": "SKU-8587",
+        "qty": 5,
+        "unit_cents": 66249
+      },
+      {
+        "sku": "SKU-7029",
+        "qty": 2,
+        "unit_cents": 55866
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-07-20T07:18:00"
+  },
+  {
+    "order_id": "ORD00253",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-6627",
+        "qty": 4,
+        "unit_cents": 32635
+      },
+      {
+        "sku": "SKU-6421",
+        "qty": 4,
+        "unit_cents": 77326
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-02-16T19:31:00"
+  },
+  {
+    "order_id": "ORD00060",
+    "customer_email": "heidi.garcia660@test.org",
+    "items": [
+      {
+        "sku": "SKU-8551",
+        "qty": 4,
+        "unit_cents": 95075
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-07-16T14:28:00"
+  },
+  {
+    "order_id": "ORD00385",
+    "customer_email": "mallory.green3062@shop.net",
+    "items": [
+      {
+        "sku": "SKU-4611",
+        "qty": 1,
+        "unit_cents": 40099
+      },
+      {
+        "sku": "SKU-9435",
+        "qty": 5,
+        "unit_cents": 25621
+      },
+      {
+        "sku": "SKU-9819",
+        "qty": 2,
+        "unit_cents": 89900
+      },
+      {
+        "sku": "SKU-2880",
+        "qty": 5,
+        "unit_cents": 53170
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-01-09T10:21:00"
+  },
+  {
+    "order_id": "ORD00398",
+    "customer_email": "sybil.walker475@example.com",
+    "items": [
+      {
+        "sku": "SKU-3641",
+        "qty": 4,
+        "unit_cents": 21147
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-06-17T07:43:00"
+  },
+  {
+    "order_id": "ORD00305",
+    "customer_email": "bob.johnson796@example.com",
+    "items": [
+      {
+        "sku": "SKU-3711",
+        "qty": 3,
+        "unit_cents": 33577
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-08-06T12:26:00"
+  },
+  {
+    "order_id": "ORD00148",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-7838",
+        "qty": 2,
+        "unit_cents": 31996
+      },
+      {
+        "sku": "SKU-3110",
+        "qty": 5,
+        "unit_cents": 89387
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-04-17T09:51:00"
+  },
+  {
+    "order_id": "ORD00319",
+    "customer_email": "heidi.king198@corp.io",
+    "items": [
+      {
+        "sku": "SKU-6807",
+        "qty": 2,
+        "unit_cents": 54063
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-04-11T02:06:00"
+  },
+  {
+    "order_id": "ORD00282",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-5242",
+        "qty": 5,
+        "unit_cents": 93246
+      },
+      {
+        "sku": "SKU-6571",
+        "qty": 2,
+        "unit_cents": 77208
+      },
+      {
+        "sku": "SKU-6575",
+        "qty": 3,
+        "unit_cents": 94864
+      },
+      {
+        "sku": "SKU-2087",
+        "qty": 4,
+        "unit_cents": 16787
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-02-15T22:17:00"
+  },
+  {
+    "order_id": "ORD00277",
+    "customer_email": "alice.smith3981@corp.io",
+    "items": [
+      {
+        "sku": "SKU-3301",
+        "qty": 4,
+        "unit_cents": 82333
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-03-03T14:25:00"
+  },
+  {
+    "order_id": "ORD00180",
+    "customer_email": "carol.lewis854@example.com",
+    "items": [
+      {
+        "sku": "SKU-2285",
+        "qty": 2,
+        "unit_cents": 87110
+      },
+      {
+        "sku": "SKU-7667",
+        "qty": 2,
+        "unit_cents": 26166
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-09-22T15:43:00"
+  },
+  {
+    "order_id": "ORD00057",
+    "customer_email": "peggy.walker606@corp.io",
+    "items": [
+      {
+        "sku": "SKU-9031",
+        "qty": 3,
+        "unit_cents": 92389
+      },
+      {
+        "sku": "SKU-8793",
+        "qty": 2,
+        "unit_cents": 44296
+      },
+      {
+        "sku": "SKU-5356",
+        "qty": 1,
+        "unit_cents": 5841
+      },
+      {
+        "sku": "SKU-1861",
+        "qty": 2,
+        "unit_cents": 45949
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-11-01T04:04:00"
+  },
+  {
+    "order_id": "ORD00246",
+    "customer_email": "sybil.brown534@example.com",
+    "items": [
+      {
+        "sku": "SKU-8306",
+        "qty": 1,
+        "unit_cents": 54482
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-02-19T20:08:00"
+  },
+  {
+    "order_id": "ORD00132",
+    "customer_email": "erin.walker.orphan7601@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-7027",
+        "qty": 1,
+        "unit_cents": 2888
+      },
+      {
+        "sku": "SKU-7654",
+        "qty": 2,
+        "unit_cents": 11577
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-10-28T13:34:00"
+  },
+  {
+    "order_id": "ORD00020",
+    "customer_email": "trent.lee1580@example.com",
+    "items": [
+      {
+        "sku": "SKU-3530",
+        "qty": 3,
+        "unit_cents": 2534
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-04-22T08:35:00"
+  },
+  {
+    "order_id": "ORD00129",
+    "customer_email": "erin.wilson8223@corp.io",
+    "items": [
+      {
+        "sku": "SKU-9084",
+        "qty": 5,
+        "unit_cents": 28067
+      },
+      {
+        "sku": "SKU-8231",
+        "qty": 1,
+        "unit_cents": 31946
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-06-18T23:12:00"
+  },
+  {
+    "order_id": "ORD00361",
+    "customer_email": "kevin.lee2022@corp.io",
+    "items": [
+      {
+        "sku": "SKU-9559",
+        "qty": 2,
+        "unit_cents": 70114
+      },
+      {
+        "sku": "SKU-4463",
+        "qty": 5,
+        "unit_cents": 67573
+      },
+      {
+        "sku": "SKU-5897",
+        "qty": 5,
+        "unit_cents": 32598
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-06-03T03:18:00"
+  },
+  {
+    "order_id": "ORD00176",
+    "customer_email": "bob.adams9101@test.org",
+    "items": [
+      {
+        "sku": "SKU-1709",
+        "qty": 2,
+        "unit_cents": 25921
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-08-03T08:32:00"
+  },
+  {
+    "order_id": "ORD00085",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-9547",
+        "qty": 2,
+        "unit_cents": 5550
+      },
+      {
+        "sku": "SKU-2335",
+        "qty": 5,
+        "unit_cents": 45638
+      },
+      {
+        "sku": "SKU-6914",
+        "qty": 1,
+        "unit_cents": 9192
+      },
+      {
+        "sku": "SKU-4125",
+        "qty": 1,
+        "unit_cents": 88101
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-06-27T00:20:00"
+  },
+  {
+    "order_id": "ORD00293",
+    "customer_email": "judy.green624@mail.co",
+    "items": [
+      {
+        "sku": "SKU-8443",
+        "qty": 4,
+        "unit_cents": 34055
+      },
+      {
+        "sku": "SKU-8794",
+        "qty": 1,
+        "unit_cents": 10983
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-01-25T08:23:00"
+  },
+  {
+    "order_id": "ORD00214",
+    "customer_email": "quentin.davis6374@mail.co",
+    "items": [
+      {
+        "sku": "SKU-3941",
+        "qty": 3,
+        "unit_cents": 52116
+      },
+      {
+        "sku": "SKU-8215",
+        "qty": 3,
+        "unit_cents": 69742
+      },
+      {
+        "sku": "SKU-1620",
+        "qty": 2,
+        "unit_cents": 62861
+      },
+      {
+        "sku": "SKU-3586",
+        "qty": 1,
+        "unit_cents": 86733
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-12-10T23:51:00"
+  },
+  {
+    "order_id": "ORD00317",
+    "customer_email": "judy.moore231@example.com",
+    "items": [
+      {
+        "sku": "SKU-1151",
+        "qty": 2,
+        "unit_cents": 50755
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-06-26T10:33:00"
+  },
+  {
+    "order_id": "ORD00174",
+    "customer_email": "heidi.wright761@corp.io",
+    "items": [
+      {
+        "sku": "SKU-5205",
+        "qty": 5,
+        "unit_cents": 22772
+      },
+      {
+        "sku": "SKU-9790",
+        "qty": 5,
+        "unit_cents": 15139
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-04-23T05:38:00"
+  },
+  {
+    "order_id": "ORD00270",
+    "customer_email": "alice.green9442@test.org",
+    "items": [
+      {
+        "sku": "SKU-9598",
+        "qty": 2,
+        "unit_cents": 28388
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-04-19T23:05:00"
+  },
+  {
+    "order_id": "ORD00250",
+    "customer_email": "judy.adams555@mail.co",
+    "items": [
+      {
+        "sku": "SKU-3250",
+        "qty": 2,
+        "unit_cents": 73886
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-06-12T03:06:00"
+  },
+  {
+    "order_id": "ORD00192",
+    "customer_email": "frank.garcia.orphan7233@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-3940",
+        "qty": 1,
+        "unit_cents": 39274
+      },
+      {
+        "sku": "SKU-8703",
+        "qty": 5,
+        "unit_cents": 11278
+      },
+      {
+        "sku": "SKU-7007",
+        "qty": 1,
+        "unit_cents": 13338
+      },
+      {
+        "sku": "SKU-9098",
+        "qty": 2,
+        "unit_cents": 68313
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-12-22T18:05:00"
+  },
+  {
+    "order_id": "ORD00387",
+    "customer_email": "trent.taylor734@corp.io",
+    "items": [
+      {
+        "sku": "SKU-9039",
+        "qty": 2,
+        "unit_cents": 32057
+      },
+      {
+        "sku": "SKU-5436",
+        "qty": 3,
+        "unit_cents": 24794
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-02-26T12:12:00"
+  },
+  {
+    "order_id": "ORD00247",
+    "customer_email": "mallory.baker119@example.com",
+    "items": [
+      {
+        "sku": "SKU-5830",
+        "qty": 4,
+        "unit_cents": 44959
+      },
+      {
+        "sku": "SKU-9579",
+        "qty": 4,
+        "unit_cents": 64477
+      },
+      {
+        "sku": "SKU-6401",
+        "qty": 3,
+        "unit_cents": 67783
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-09-11T12:42:00"
+  },
+  {
+    "order_id": "ORD00086",
+    "customer_email": "grace.walker803@test.org",
+    "items": [
+      {
+        "sku": "SKU-7658",
+        "qty": 2,
+        "unit_cents": 78174
+      },
+      {
+        "sku": "SKU-3416",
+        "qty": 4,
+        "unit_cents": 40220
+      },
+      {
+        "sku": "SKU-9380",
+        "qty": 1,
+        "unit_cents": 21453
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-08-23T20:45:00"
+  },
+  {
+    "order_id": "ORD00221",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-3344",
+        "qty": 3,
+        "unit_cents": 97168
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-03-06T03:53:00"
+  },
+  {
+    "order_id": "ORD00294",
+    "customer_email": "dave.hill4098@example.com",
+    "items": [
+      {
+        "sku": "SKU-1934",
+        "qty": 4,
+        "unit_cents": 87956
+      },
+      {
+        "sku": "SKU-6590",
+        "qty": 2,
+        "unit_cents": 37420
+      },
+      {
+        "sku": "SKU-8800",
+        "qty": 1,
+        "unit_cents": 70956
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-05-25T19:40:00"
+  },
+  {
+    "order_id": "ORD00229",
+    "customer_email": "niaj.davis297@shop.net",
+    "items": [
+      {
+        "sku": "SKU-6249",
+        "qty": 5,
+        "unit_cents": 95559
+      },
+      {
+        "sku": "SKU-7952",
+        "qty": 4,
+        "unit_cents": 60930
+      },
+      {
+        "sku": "SKU-2965",
+        "qty": 3,
+        "unit_cents": 79431
+      },
+      {
+        "sku": "SKU-6162",
+        "qty": 3,
+        "unit_cents": 33189
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-10-17T00:31:00"
+  },
+  {
+    "order_id": "ORD00228",
+    "customer_email": "sybil.moore8971@mail.co",
+    "items": [
+      {
+        "sku": "SKU-3650",
+        "qty": 2,
+        "unit_cents": 89062
+      },
+      {
+        "sku": "SKU-8026",
+        "qty": 4,
+        "unit_cents": 58392
+      },
+      {
+        "sku": "SKU-4517",
+        "qty": 3,
+        "unit_cents": 8379
+      },
+      {
+        "sku": "SKU-3593",
+        "qty": 5,
+        "unit_cents": 390
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-03-04T04:16:00"
+  },
+  {
+    "order_id": "ORD00383",
+    "customer_email": "quentin.moore64@shop.net",
+    "items": [
+      {
+        "sku": "SKU-9036",
+        "qty": 1,
+        "unit_cents": 45023
+      },
+      {
+        "sku": "SKU-9051",
+        "qty": 3,
+        "unit_cents": 82132
+      },
+      {
+        "sku": "SKU-1802",
+        "qty": 3,
+        "unit_cents": 64904
+      },
+      {
+        "sku": "SKU-6978",
+        "qty": 4,
+        "unit_cents": 8928
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-09-10T20:56:00"
+  },
+  {
+    "order_id": "ORD00393",
+    "customer_email": "olivia.miller.orphan8091@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-9358",
+        "qty": 2,
+        "unit_cents": 21080
+      },
+      {
+        "sku": "SKU-2153",
+        "qty": 2,
+        "unit_cents": 65765
+      },
+      {
+        "sku": "SKU-3649",
+        "qty": 4,
+        "unit_cents": 5080
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-06-25T10:27:00"
+  },
+  {
+    "order_id": "ORD00323",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-8662",
+        "qty": 4,
+        "unit_cents": 71810
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-04-07T19:52:00"
+  },
+  {
+    "order_id": "ORD00331",
+    "customer_email": "erin.clark952@example.com",
+    "items": [
+      {
+        "sku": "SKU-7397",
+        "qty": 2,
+        "unit_cents": 91920
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-10-26T04:03:00"
+  },
+  {
+    "order_id": "ORD00205",
+    "customer_email": "judy.hill5153@mail.co",
+    "items": [
+      {
+        "sku": "SKU-3749",
+        "qty": 4,
+        "unit_cents": 92457
+      },
+      {
+        "sku": "SKU-1446",
+        "qty": 5,
+        "unit_cents": 49712
+      },
+      {
+        "sku": "SKU-1267",
+        "qty": 1,
+        "unit_cents": 13265
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-11-25T12:13:00"
+  },
+  {
+    "order_id": "ORD00297",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-1207",
+        "qty": 4,
+        "unit_cents": 32873
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-03-15T03:44:00"
+  },
+  {
+    "order_id": "ORD00008",
+    "customer_email": "ruth.king317@shop.net",
+    "items": [
+      {
+        "sku": "SKU-4981",
+        "qty": 1,
+        "unit_cents": 95977
+      },
+      {
+        "sku": "SKU-5440",
+        "qty": 1,
+        "unit_cents": 92549
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-03-11T13:52:00"
+  },
+  {
+    "order_id": "ORD00014",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-9332",
+        "qty": 3,
+        "unit_cents": 85157
+      },
+      {
+        "sku": "SKU-6851",
+        "qty": 4,
+        "unit_cents": 86295
+      },
+      {
+        "sku": "SKU-5111",
+        "qty": 2,
+        "unit_cents": 73578
+      },
+      {
+        "sku": "SKU-1203",
+        "qty": 4,
+        "unit_cents": 97299
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-12-02T17:17:00"
+  },
+  {
+    "order_id": "ORD00273",
+    "customer_email": "ivan.miller741@shop.net",
+    "items": [
+      {
+        "sku": "SKU-5362",
+        "qty": 2,
+        "unit_cents": 44300
+      },
+      {
+        "sku": "SKU-2720",
+        "qty": 3,
+        "unit_cents": 64597
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-01-09T22:06:00"
+  },
+  {
+    "order_id": "ORD00049",
+    "customer_email": "mallory.green539@test.org",
+    "items": [
+      {
+        "sku": "SKU-7796",
+        "qty": 3,
+        "unit_cents": 37160
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-09-21T06:34:00"
+  },
+  {
+    "order_id": "ORD00306",
+    "customer_email": "mallory.baker119@example.com",
+    "items": [
+      {
+        "sku": "SKU-5250",
+        "qty": 2,
+        "unit_cents": 44160
+      },
+      {
+        "sku": "SKU-8333",
+        "qty": 1,
+        "unit_cents": 49142
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-11-12T04:26:00"
+  },
+  {
+    "order_id": "ORD00044",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-8230",
+        "qty": 2,
+        "unit_cents": 48805
+      },
+      {
+        "sku": "SKU-5805",
+        "qty": 4,
+        "unit_cents": 12034
+      },
+      {
+        "sku": "SKU-4038",
+        "qty": 1,
+        "unit_cents": 36403
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-10-23T04:50:00"
+  },
+  {
+    "order_id": "ORD00083",
+    "customer_email": "frank.green257@shop.net",
+    "items": [
+      {
+        "sku": "SKU-7467",
+        "qty": 3,
+        "unit_cents": 33220
+      },
+      {
+        "sku": "SKU-8163",
+        "qty": 3,
+        "unit_cents": 80013
+      },
+      {
+        "sku": "SKU-6370",
+        "qty": 1,
+        "unit_cents": 40341
+      },
+      {
+        "sku": "SKU-1493",
+        "qty": 4,
+        "unit_cents": 1537
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-07-13T13:49:00"
+  },
+  {
+    "order_id": "ORD00233",
+    "customer_email": "grace.adams852@mail.co",
+    "items": [
+      {
+        "sku": "SKU-3125",
+        "qty": 5,
+        "unit_cents": 18405
+      },
+      {
+        "sku": "SKU-3382",
+        "qty": 1,
+        "unit_cents": 44659
+      },
+      {
+        "sku": "SKU-4187",
+        "qty": 1,
+        "unit_cents": 3636
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-02-19T16:03:00"
+  },
+  {
+    "order_id": "ORD00092",
+    "customer_email": "olivia.lee7793@shop.net",
+    "items": [
+      {
+        "sku": "SKU-3960",
+        "qty": 1,
+        "unit_cents": 59571
+      },
+      {
+        "sku": "SKU-5327",
+        "qty": 2,
+        "unit_cents": 50911
+      },
+      {
+        "sku": "SKU-2050",
+        "qty": 3,
+        "unit_cents": 12722
+      },
+      {
+        "sku": "SKU-3021",
+        "qty": 1,
+        "unit_cents": 46078
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-07-20T22:41:00"
+  },
+  {
+    "order_id": "ORD00062",
+    "customer_email": "ivan.lewis.orphan5237@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-2757",
+        "qty": 5,
+        "unit_cents": 37521
+      },
+      {
+        "sku": "SKU-9864",
+        "qty": 2,
+        "unit_cents": 93301
+      },
+      {
+        "sku": "SKU-5860",
+        "qty": 4,
+        "unit_cents": 67475
+      },
+      {
+        "sku": "SKU-8570",
+        "qty": 5,
+        "unit_cents": 83246
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-04-01T03:39:00"
+  },
+  {
+    "order_id": "ORD00332",
+    "customer_email": "bob.baker8623@corp.io",
+    "items": [
+      {
+        "sku": "SKU-8473",
+        "qty": 5,
+        "unit_cents": 97388
+      },
+      {
+        "sku": "SKU-7895",
+        "qty": 3,
+        "unit_cents": 83982
+      },
+      {
+        "sku": "SKU-9732",
+        "qty": 2,
+        "unit_cents": 8509
+      },
+      {
+        "sku": "SKU-5896",
+        "qty": 5,
+        "unit_cents": 65843
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-12-10T07:55:00"
+  },
+  {
+    "order_id": "ORD00216",
+    "customer_email": "kevin.baker578@test.org",
+    "items": [
+      {
+        "sku": "SKU-6068",
+        "qty": 5,
+        "unit_cents": 27081
+      },
+      {
+        "sku": "SKU-7186",
+        "qty": 1,
+        "unit_cents": 55667
+      },
+      {
+        "sku": "SKU-1662",
+        "qty": 1,
+        "unit_cents": 12084
+      },
+      {
+        "sku": "SKU-7043",
+        "qty": 1,
+        "unit_cents": 38712
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-01-02T19:02:00"
+  },
+  {
+    "order_id": "ORD00237",
+    "customer_email": "dave.lewis354@mail.co",
+    "items": [
+      {
+        "sku": "SKU-3528",
+        "qty": 1,
+        "unit_cents": 70444
+      },
+      {
+        "sku": "SKU-8286",
+        "qty": 3,
+        "unit_cents": 22931
+      },
+      {
+        "sku": "SKU-2433",
+        "qty": 3,
+        "unit_cents": 21487
+      },
+      {
+        "sku": "SKU-5461",
+        "qty": 3,
+        "unit_cents": 86926
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-07-11T10:19:00"
+  },
+  {
+    "order_id": "ORD00263",
+    "customer_email": "frank.green8509@example.com",
+    "items": [
+      {
+        "sku": "SKU-9535",
+        "qty": 3,
+        "unit_cents": 75451
+      },
+      {
+        "sku": "SKU-2435",
+        "qty": 2,
+        "unit_cents": 48950
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-06-21T09:57:00"
+  },
+  {
+    "order_id": "ORD00372",
+    "customer_email": "quentin.young947@corp.io",
+    "items": [
+      {
+        "sku": "SKU-7086",
+        "qty": 1,
+        "unit_cents": 39031
+      },
+      {
+        "sku": "SKU-5584",
+        "qty": 1,
+        "unit_cents": 44540
+      },
+      {
+        "sku": "SKU-1972",
+        "qty": 3,
+        "unit_cents": 21696
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-12-22T13:58:00"
+  },
+  {
+    "order_id": "ORD00335",
+    "customer_email": "quentin.moore.orphan4341@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-7393",
+        "qty": 4,
+        "unit_cents": 26167
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-03-26T01:26:00"
+  },
+  {
+    "order_id": "ORD00347",
+    "customer_email": "kevin.baker578@test.org",
+    "items": [
+      {
+        "sku": "SKU-9307",
+        "qty": 4,
+        "unit_cents": 17984
+      },
+      {
+        "sku": "SKU-9845",
+        "qty": 1,
+        "unit_cents": 94389
+      },
+      {
+        "sku": "SKU-4224",
+        "qty": 3,
+        "unit_cents": 72952
+      },
+      {
+        "sku": "SKU-4375",
+        "qty": 3,
+        "unit_cents": 7329
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-12-10T12:08:00"
+  },
+  {
+    "order_id": "ORD00204",
+    "customer_email": "niaj.garcia914@mail.co",
+    "items": [
+      {
+        "sku": "SKU-9925",
+        "qty": 5,
+        "unit_cents": 37939
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-02-22T05:28:00"
+  },
+  {
+    "order_id": "ORD00173",
+    "customer_email": "judy.davis781@shop.net",
+    "items": [
+      {
+        "sku": "SKU-7413",
+        "qty": 2,
+        "unit_cents": 48417
+      },
+      {
+        "sku": "SKU-7242",
+        "qty": 3,
+        "unit_cents": 31638
+      },
+      {
+        "sku": "SKU-4463",
+        "qty": 3,
+        "unit_cents": 31792
+      },
+      {
+        "sku": "SKU-9789",
+        "qty": 5,
+        "unit_cents": 48867
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-10-11T19:40:00"
+  },
+  {
+    "order_id": "ORD00137",
+    "customer_email": "quentin.lee704@example.com",
+    "items": [
+      {
+        "sku": "SKU-7296",
+        "qty": 1,
+        "unit_cents": 45165
+      },
+      {
+        "sku": "SKU-5778",
+        "qty": 3,
+        "unit_cents": 80863
+      },
+      {
+        "sku": "SKU-4105",
+        "qty": 5,
+        "unit_cents": 71130
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-09-18T00:10:00"
+  },
+  {
+    "order_id": "ORD00227",
+    "customer_email": "heidi.brown698@test.org",
+    "items": [
+      {
+        "sku": "SKU-6679",
+        "qty": 3,
+        "unit_cents": 15439
+      },
+      {
+        "sku": "SKU-1273",
+        "qty": 4,
+        "unit_cents": 47768
+      },
+      {
+        "sku": "SKU-4048",
+        "qty": 4,
+        "unit_cents": 29990
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-01-22T06:39:00"
+  },
+  {
+    "order_id": "ORD00119",
+    "customer_email": "ruth.taylor4630@mail.co",
+    "items": [
+      {
+        "sku": "SKU-4829",
+        "qty": 1,
+        "unit_cents": 1160
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-01-05T03:52:00"
+  },
+  {
+    "order_id": "ORD00311",
+    "customer_email": "erin.miller465@example.com",
+    "items": [
+      {
+        "sku": "SKU-1109",
+        "qty": 2,
+        "unit_cents": 79938
+      },
+      {
+        "sku": "SKU-7339",
+        "qty": 2,
+        "unit_cents": 33326
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-07-19T21:55:00"
+  },
+  {
+    "order_id": "ORD00203",
+    "customer_email": "judy.moore231@example.com",
+    "items": [
+      {
+        "sku": "SKU-9943",
+        "qty": 2,
+        "unit_cents": 59046
+      },
+      {
+        "sku": "SKU-7558",
+        "qty": 1,
+        "unit_cents": 13633
+      },
+      {
+        "sku": "SKU-1077",
+        "qty": 1,
+        "unit_cents": 43305
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-09-04T16:49:00"
+  },
+  {
+    "order_id": "ORD00155",
+    "customer_email": "niaj.moore5524@example.com",
+    "items": [
+      {
+        "sku": "SKU-5243",
+        "qty": 4,
+        "unit_cents": 39638
+      },
+      {
+        "sku": "SKU-8474",
+        "qty": 5,
+        "unit_cents": 6936
+      },
+      {
+        "sku": "SKU-4183",
+        "qty": 3,
+        "unit_cents": 60238
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-04-20T03:54:00"
+  },
+  {
+    "order_id": "ORD00086",
+    "customer_email": "grace.walker803@test.org",
+    "items": [
+      {
+        "sku": "SKU-7658",
+        "qty": 2,
+        "unit_cents": 78174
+      },
+      {
+        "sku": "SKU-3416",
+        "qty": 4,
+        "unit_cents": 40220
+      },
+      {
+        "sku": "SKU-9380",
+        "qty": 1,
+        "unit_cents": 21453
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-08-23T20:45:00"
+  },
+  {
+    "order_id": "ORD00081",
+    "customer_email": "grace.adams660@shop.net",
+    "items": [
+      {
+        "sku": "SKU-7293",
+        "qty": 3,
+        "unit_cents": 60934
+      },
+      {
+        "sku": "SKU-1595",
+        "qty": 5,
+        "unit_cents": 54054
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-06-17T05:43:00"
+  },
+  {
+    "order_id": "ORD00161",
+    "customer_email": "quentin.moore64@shop.net",
+    "items": [
+      {
+        "sku": "SKU-2841",
+        "qty": 5,
+        "unit_cents": 14706
+      },
+      {
+        "sku": "SKU-4047",
+        "qty": 4,
+        "unit_cents": 38662
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-07-09T08:50:00"
+  },
+  {
+    "order_id": "ORD00254",
+    "customer_email": "heidi.moore4033@test.org",
+    "items": [
+      {
+        "sku": "SKU-6650",
+        "qty": 3,
+        "unit_cents": 22253
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-05-15T00:50:00"
+  },
+  {
+    "order_id": "ORD00369",
+    "customer_email": "dave.green931@test.org",
+    "items": [
+      {
+        "sku": "SKU-3503",
+        "qty": 2,
+        "unit_cents": 46980
+      },
+      {
+        "sku": "SKU-8563",
+        "qty": 4,
+        "unit_cents": 44613
+      },
+      {
+        "sku": "SKU-5916",
+        "qty": 3,
+        "unit_cents": 42338
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-03-15T21:08:00"
+  },
+  {
+    "order_id": "ORD00234",
+    "customer_email": "olivia.baker.orphan2219@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-2326",
+        "qty": 3,
+        "unit_cents": 46859
+      },
+      {
+        "sku": "SKU-3139",
+        "qty": 4,
+        "unit_cents": 48678
+      },
+      {
+        "sku": "SKU-1700",
+        "qty": 3,
+        "unit_cents": 13633
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-11-04T09:42:00"
+  },
+  {
+    "order_id": "ORD00151",
+    "customer_email": "erin.wilson294@corp.io",
+    "items": [
+      {
+        "sku": "SKU-4438",
+        "qty": 1,
+        "unit_cents": 99925
+      },
+      {
+        "sku": "SKU-1879",
+        "qty": 5,
+        "unit_cents": 8886
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-08-23T21:08:00"
+  },
+  {
+    "order_id": "ORD00269",
+    "customer_email": "kevin.clark809@corp.io",
+    "items": [
+      {
+        "sku": "SKU-9154",
+        "qty": 2,
+        "unit_cents": 49906
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-07-05T17:40:00"
+  },
+  {
+    "order_id": "ORD00249",
+    "customer_email": "carol.lewis854@example.com",
+    "items": [
+      {
+        "sku": "SKU-4030",
+        "qty": 4,
+        "unit_cents": 16011
+      },
+      {
+        "sku": "SKU-8885",
+        "qty": 2,
+        "unit_cents": 56988
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-01-17T01:44:00"
+  },
+  {
+    "order_id": "ORD00021",
+    "customer_email": "heidi.garcia4828@test.org",
+    "items": [
+      {
+        "sku": "SKU-9101",
+        "qty": 4,
+        "unit_cents": 84004
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-09-06T06:24:00"
+  },
+  {
+    "order_id": "ORD00286",
+    "customer_email": "frank.green257@shop.net",
+    "items": [
+      {
+        "sku": "SKU-5506",
+        "qty": 4,
+        "unit_cents": 28124
+      },
+      {
+        "sku": "SKU-3628",
+        "qty": 4,
+        "unit_cents": 1524
+      },
+      {
+        "sku": "SKU-3586",
+        "qty": 1,
+        "unit_cents": 21950
+      },
+      {
+        "sku": "SKU-1813",
+        "qty": 1,
+        "unit_cents": 48571
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-04-28T07:31:00"
+  },
+  {
+    "order_id": "ORD00349",
+    "customer_email": "quentin.garcia82@corp.io",
+    "items": [
+      {
+        "sku": "SKU-9198",
+        "qty": 3,
+        "unit_cents": 74208
+      },
+      {
+        "sku": "SKU-3542",
+        "qty": 1,
+        "unit_cents": 43035
+      },
+      {
+        "sku": "SKU-4522",
+        "qty": 1,
+        "unit_cents": 51658
+      },
+      {
+        "sku": "SKU-7155",
+        "qty": 3,
+        "unit_cents": 43275
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-12-25T07:36:00"
+  },
+  {
+    "order_id": "ORD00019",
+    "customer_email": "ivan.moore551@shop.net",
+    "items": [
+      {
+        "sku": "SKU-8792",
+        "qty": 4,
+        "unit_cents": 82365
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-05-15T03:55:00"
+  },
+  {
+    "order_id": "ORD00187",
+    "customer_email": "laura.king401@test.org",
+    "items": [
+      {
+        "sku": "SKU-9516",
+        "qty": 5,
+        "unit_cents": 56675
+      },
+      {
+        "sku": "SKU-7470",
+        "qty": 3,
+        "unit_cents": 88266
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-11-20T00:22:00"
+  },
+  {
+    "order_id": "ORD00080",
+    "customer_email": "quentin.green.orphan9914@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-8121",
+        "qty": 3,
+        "unit_cents": 40915
+      },
+      {
+        "sku": "SKU-5668",
+        "qty": 1,
+        "unit_cents": 56291
+      },
+      {
+        "sku": "SKU-5594",
+        "qty": 3,
+        "unit_cents": 70599
+      },
+      {
+        "sku": "SKU-9638",
+        "qty": 5,
+        "unit_cents": 41771
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-12-26T13:50:00"
+  },
+  {
+    "order_id": "ORD00278",
+    "customer_email": "bob.johnson796@example.com",
+    "items": [
+      {
+        "sku": "SKU-8931",
+        "qty": 2,
+        "unit_cents": 37246
+      },
+      {
+        "sku": "SKU-1747",
+        "qty": 4,
+        "unit_cents": 90535
+      },
+      {
+        "sku": "SKU-2086",
+        "qty": 4,
+        "unit_cents": 77884
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-02-28T12:14:00"
+  },
+  {
+    "order_id": "ORD00351",
+    "customer_email": "peggy.green619@example.com",
+    "items": [
+      {
+        "sku": "SKU-4342",
+        "qty": 3,
+        "unit_cents": 63826
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-10-22T22:22:00"
+  },
+  {
+    "order_id": "ORD00265",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-1138",
+        "qty": 4,
+        "unit_cents": 30699
+      },
+      {
+        "sku": "SKU-8055",
+        "qty": 5,
+        "unit_cents": 61051
+      },
+      {
+        "sku": "SKU-5815",
+        "qty": 1,
+        "unit_cents": 23103
+      },
+      {
+        "sku": "SKU-8443",
+        "qty": 5,
+        "unit_cents": 8953
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-01-26T02:08:00"
+  },
+  {
+    "order_id": "ORD00376",
+    "customer_email": "dave.green931@test.org",
+    "items": [
+      {
+        "sku": "SKU-6363",
+        "qty": 4,
+        "unit_cents": 63788
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-10-01T17:40:00"
+  },
+  {
+    "order_id": "ORD00013",
+    "customer_email": "mallory.davis90@test.org",
+    "items": [
+      {
+        "sku": "SKU-3592",
+        "qty": 2,
+        "unit_cents": 44967
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-10-15T21:11:00"
+  },
+  {
+    "order_id": "ORD00120",
+    "customer_email": "erin.baker297@corp.io",
+    "items": [
+      {
+        "sku": "SKU-8636",
+        "qty": 2,
+        "unit_cents": 295
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-09-06T07:14:00"
+  },
+  {
+    "order_id": "ORD00007",
+    "customer_email": "ruth.walker.orphan8595@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-9549",
+        "qty": 2,
+        "unit_cents": 28306
+      },
+      {
+        "sku": "SKU-7871",
+        "qty": 5,
+        "unit_cents": 36172
+      },
+      {
+        "sku": "SKU-8382",
+        "qty": 4,
+        "unit_cents": 86639
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-06-20T03:31:00"
+  },
+  {
+    "order_id": "ORD00153",
+    "customer_email": "erin.baker297@corp.io",
+    "items": [
+      {
+        "sku": "SKU-6560",
+        "qty": 4,
+        "unit_cents": 39607
+      },
+      {
+        "sku": "SKU-8215",
+        "qty": 2,
+        "unit_cents": 62417
+      },
+      {
+        "sku": "SKU-5848",
+        "qty": 3,
+        "unit_cents": 45844
+      },
+      {
+        "sku": "SKU-7237",
+        "qty": 4,
+        "unit_cents": 75958
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-09-10T21:52:00"
+  },
+  {
+    "order_id": "ORD00357",
+    "customer_email": "ruth.taylor1793@mail.co",
+    "items": [
+      {
+        "sku": "SKU-5552",
+        "qty": 2,
+        "unit_cents": 780
+      },
+      {
+        "sku": "SKU-8123",
+        "qty": 3,
+        "unit_cents": 39655
+      },
+      {
+        "sku": "SKU-8163",
+        "qty": 1,
+        "unit_cents": 92047
+      },
+      {
+        "sku": "SKU-1536",
+        "qty": 1,
+        "unit_cents": 32692
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-02-02T12:30:00"
+  },
+  {
+    "order_id": "ORD00024",
+    "customer_email": "ivan.johnson626@corp.io",
+    "items": [
+      {
+        "sku": "SKU-2780",
+        "qty": 1,
+        "unit_cents": 73609
+      },
+      {
+        "sku": "SKU-8883",
+        "qty": 4,
+        "unit_cents": 44281
+      },
+      {
+        "sku": "SKU-6630",
+        "qty": 1,
+        "unit_cents": 62894
+      },
+      {
+        "sku": "SKU-2900",
+        "qty": 4,
+        "unit_cents": 56006
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-06-24T21:57:00"
+  },
+  {
+    "order_id": "ORD00248",
+    "customer_email": "niaj.wilson8719@test.org",
+    "items": [
+      {
+        "sku": "SKU-1233",
+        "qty": 2,
+        "unit_cents": 93662
+      },
+      {
+        "sku": "SKU-8650",
+        "qty": 3,
+        "unit_cents": 52943
+      },
+      {
+        "sku": "SKU-8021",
+        "qty": 2,
+        "unit_cents": 23547
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-03-20T06:04:00"
+  },
+  {
+    "order_id": "ORD00070",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-2090",
+        "qty": 1,
+        "unit_cents": 45310
+      },
+      {
+        "sku": "SKU-7924",
+        "qty": 2,
+        "unit_cents": 28480
+      },
+      {
+        "sku": "SKU-8355",
+        "qty": 4,
+        "unit_cents": 18719
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-03-21T10:46:00"
+  },
+  {
+    "order_id": "ORD00090",
+    "customer_email": "ruth.davis4540@test.org",
+    "items": [
+      {
+        "sku": "SKU-7194",
+        "qty": 5,
+        "unit_cents": 47555
+      },
+      {
+        "sku": "SKU-2947",
+        "qty": 2,
+        "unit_cents": 41635
+      },
+      {
+        "sku": "SKU-1372",
+        "qty": 2,
+        "unit_cents": 96274
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-06-20T06:02:00"
+  },
+  {
+    "order_id": "ORD00391",
+    "customer_email": "trent.davis46@test.org",
+    "items": [
+      {
+        "sku": "SKU-1409",
+        "qty": 2,
+        "unit_cents": 71277
+      },
+      {
+        "sku": "SKU-7728",
+        "qty": 1,
+        "unit_cents": 54127
+      },
+      {
+        "sku": "SKU-7966",
+        "qty": 5,
+        "unit_cents": 72511
+      },
+      {
+        "sku": "SKU-4998",
+        "qty": 1,
+        "unit_cents": 10627
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-09-10T20:13:00"
+  },
+  {
+    "order_id": "ORD00374",
+    "customer_email": "peggy.baker.orphan9294@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-7328",
+        "qty": 1,
+        "unit_cents": 69737
+      },
+      {
+        "sku": "SKU-1517",
+        "qty": 5,
+        "unit_cents": 28546
+      },
+      {
+        "sku": "SKU-3721",
+        "qty": 5,
+        "unit_cents": 23359
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-08-07T00:32:00"
+  },
+  {
+    "order_id": "ORD00002",
+    "customer_email": "mallory.green3062@shop.net",
+    "items": [
+      {
+        "sku": "SKU-5617",
+        "qty": 2,
+        "unit_cents": 99164
+      },
+      {
+        "sku": "SKU-2553",
+        "qty": 5,
+        "unit_cents": 32934
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-02-24T02:57:00"
+  },
+  {
+    "order_id": "ORD00240",
+    "customer_email": "niaj.wilson8719@test.org",
+    "items": [
+      {
+        "sku": "SKU-5609",
+        "qty": 1,
+        "unit_cents": 75690
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-12-10T12:57:00"
+  },
+  {
+    "order_id": "ORD00078",
+    "customer_email": "erin.miller465@example.com",
+    "items": [
+      {
+        "sku": "SKU-1016",
+        "qty": 2,
+        "unit_cents": 74627
+      },
+      {
+        "sku": "SKU-1714",
+        "qty": 4,
+        "unit_cents": 16595
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-12-16T21:52:00"
+  },
+  {
+    "order_id": "ORD00152",
+    "customer_email": "grace.smith3348@mail.co",
+    "items": [
+      {
+        "sku": "SKU-1221",
+        "qty": 5,
+        "unit_cents": 19464
+      },
+      {
+        "sku": "SKU-6754",
+        "qty": 3,
+        "unit_cents": 48206
+      },
+      {
+        "sku": "SKU-5871",
+        "qty": 5,
+        "unit_cents": 84203
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-01-16T23:59:00"
+  },
+  {
+    "order_id": "ORD00075",
+    "customer_email": "bob.walker801@corp.io",
+    "items": [
+      {
+        "sku": "SKU-7472",
+        "qty": 1,
+        "unit_cents": 53024
+      },
+      {
+        "sku": "SKU-6678",
+        "qty": 4,
+        "unit_cents": 6804
+      },
+      {
+        "sku": "SKU-1338",
+        "qty": 3,
+        "unit_cents": 97087
+      },
+      {
+        "sku": "SKU-1561",
+        "qty": 3,
+        "unit_cents": 89324
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-04-25T16:33:00"
+  },
+  {
+    "order_id": "ORD00115",
+    "customer_email": "ruth.adams597@test.org",
+    "items": [
+      {
+        "sku": "SKU-4265",
+        "qty": 4,
+        "unit_cents": 86608
+      },
+      {
+        "sku": "SKU-6884",
+        "qty": 3,
+        "unit_cents": 50476
+      },
+      {
+        "sku": "SKU-3119",
+        "qty": 1,
+        "unit_cents": 52685
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-08-08T20:45:00"
+  },
+  {
+    "order_id": "ORD00285",
+    "customer_email": "mallory.baker119@example.com",
+    "items": [
+      {
+        "sku": "SKU-6922",
+        "qty": 2,
+        "unit_cents": 74186
+      },
+      {
+        "sku": "SKU-2357",
+        "qty": 2,
+        "unit_cents": 87615
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-11-21T22:40:00"
+  },
+  {
+    "order_id": "ORD00183",
+    "customer_email": "erin.davis759@shop.net",
+    "items": [
+      {
+        "sku": "SKU-9469",
+        "qty": 2,
+        "unit_cents": 93909
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-07-09T23:34:00"
+  },
+  {
+    "order_id": "ORD00179",
+    "customer_email": "judy.lee.orphan9636@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-3103",
+        "qty": 5,
+        "unit_cents": 80200
+      },
+      {
+        "sku": "SKU-9703",
+        "qty": 2,
+        "unit_cents": 36501
+      },
+      {
+        "sku": "SKU-5841",
+        "qty": 2,
+        "unit_cents": 24178
+      },
+      {
+        "sku": "SKU-4703",
+        "qty": 2,
+        "unit_cents": 17152
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-08-26T09:09:00"
+  },
+  {
+    "order_id": "ORD00030",
+    "customer_email": "quentin.miller2036@mail.co",
+    "items": [
+      {
+        "sku": "SKU-8707",
+        "qty": 1,
+        "unit_cents": 11194
+      },
+      {
+        "sku": "SKU-9462",
+        "qty": 1,
+        "unit_cents": 8797
+      },
+      {
+        "sku": "SKU-4687",
+        "qty": 2,
+        "unit_cents": 5425
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-08-11T05:51:00"
+  },
+  {
+    "order_id": "ORD00122",
+    "customer_email": "carol.baker518@corp.io",
+    "items": [
+      {
+        "sku": "SKU-5470",
+        "qty": 1,
+        "unit_cents": 90847
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-11-05T12:13:00"
+  },
+  {
+    "order_id": "ORD00005",
+    "customer_email": "dave.wright573@corp.io",
+    "items": [
+      {
+        "sku": "SKU-9852",
+        "qty": 2,
+        "unit_cents": 79160
+      },
+      {
+        "sku": "SKU-9965",
+        "qty": 5,
+        "unit_cents": 37803
+      },
+      {
+        "sku": "SKU-8290",
+        "qty": 1,
+        "unit_cents": 78256
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-10-08T09:11:00"
+  },
+  {
+    "order_id": "ORD00171",
+    "customer_email": "frank.taylor382@test.org",
+    "items": [
+      {
+        "sku": "SKU-7866",
+        "qty": 1,
+        "unit_cents": 85020
+      },
+      {
+        "sku": "SKU-4869",
+        "qty": 4,
+        "unit_cents": 97466
+      },
+      {
+        "sku": "SKU-6640",
+        "qty": 2,
+        "unit_cents": 5826
+      },
+      {
+        "sku": "SKU-8868",
+        "qty": 5,
+        "unit_cents": 86410
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-12-10T21:56:00"
+  },
+  {
+    "order_id": "ORD00295",
+    "customer_email": "ruth.walker5564@corp.io",
+    "items": [
+      {
+        "sku": "SKU-8353",
+        "qty": 5,
+        "unit_cents": 22879
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-05-23T08:31:00"
+  },
+  {
+    "order_id": "ORD00338",
+    "customer_email": "erin.moore564@mail.co",
+    "items": [
+      {
+        "sku": "SKU-8647",
+        "qty": 5,
+        "unit_cents": 85578
+      },
+      {
+        "sku": "SKU-3751",
+        "qty": 1,
+        "unit_cents": 22007
+      },
+      {
+        "sku": "SKU-1151",
+        "qty": 5,
+        "unit_cents": 52458
+      },
+      {
+        "sku": "SKU-6804",
+        "qty": 1,
+        "unit_cents": 41178
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-08-24T16:14:00"
+  },
+  {
+    "order_id": "ORD00138",
+    "customer_email": "peggy.smith209@test.org",
+    "items": [
+      {
+        "sku": "SKU-6432",
+        "qty": 2,
+        "unit_cents": 45194
+      },
+      {
+        "sku": "SKU-2627",
+        "qty": 5,
+        "unit_cents": 73662
+      },
+      {
+        "sku": "SKU-7842",
+        "qty": 1,
+        "unit_cents": 33067
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-02-28T18:08:00"
+  },
+  {
+    "order_id": "ORD00147",
+    "customer_email": "ivan.moore394@example.com",
+    "items": [
+      {
+        "sku": "SKU-9589",
+        "qty": 3,
+        "unit_cents": 26637
+      },
+      {
+        "sku": "SKU-5083",
+        "qty": 2,
+        "unit_cents": 29107
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-03-18T08:34:00"
+  },
+  {
+    "order_id": "ORD00079",
+    "customer_email": "heidi.johnson314@shop.net",
+    "items": [
+      {
+        "sku": "SKU-2150",
+        "qty": 5,
+        "unit_cents": 55658
+      },
+      {
+        "sku": "SKU-5566",
+        "qty": 2,
+        "unit_cents": 69506
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-11-21T05:37:00"
+  },
+  {
+    "order_id": "ORD00211",
+    "customer_email": "ruth.adams597@test.org",
+    "items": [
+      {
+        "sku": "SKU-8941",
+        "qty": 4,
+        "unit_cents": 72686
+      },
+      {
+        "sku": "SKU-1010",
+        "qty": 4,
+        "unit_cents": 83358
+      },
+      {
+        "sku": "SKU-5727",
+        "qty": 4,
+        "unit_cents": 20286
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-07-13T22:58:00"
+  },
+  {
+    "order_id": "ORD00242",
+    "customer_email": "quentin.young.orphan4953@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-1921",
+        "qty": 2,
+        "unit_cents": 45862
+      },
+      {
+        "sku": "SKU-3873",
+        "qty": 4,
+        "unit_cents": 29745
+      },
+      {
+        "sku": "SKU-4787",
+        "qty": 1,
+        "unit_cents": 16569
+      },
+      {
+        "sku": "SKU-8208",
+        "qty": 4,
+        "unit_cents": 13145
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-02-11T04:12:00"
+  },
+  {
+    "order_id": "ORD00207",
+    "customer_email": "dave.garcia5561@example.com",
+    "items": [
+      {
+        "sku": "SKU-8660",
+        "qty": 3,
+        "unit_cents": 45265
+      },
+      {
+        "sku": "SKU-5469",
+        "qty": 2,
+        "unit_cents": 24545
+      },
+      {
+        "sku": "SKU-4641",
+        "qty": 4,
+        "unit_cents": 42510
+      },
+      {
+        "sku": "SKU-1380",
+        "qty": 3,
+        "unit_cents": 62263
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-04-01T03:29:00"
+  },
+  {
+    "order_id": "ORD00314",
+    "customer_email": "laura.davis.orphan9453@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-1982",
+        "qty": 1,
+        "unit_cents": 16679
+      },
+      {
+        "sku": "SKU-5135",
+        "qty": 5,
+        "unit_cents": 37666
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-01-09T18:53:00"
+  },
+  {
+    "order_id": "ORD00373",
+    "customer_email": "erin.hill641@corp.io",
+    "items": [
+      {
+        "sku": "SKU-8795",
+        "qty": 5,
+        "unit_cents": 88012
+      },
+      {
+        "sku": "SKU-6147",
+        "qty": 1,
+        "unit_cents": 49215
+      },
+      {
+        "sku": "SKU-1379",
+        "qty": 1,
+        "unit_cents": 61114
+      },
+      {
+        "sku": "SKU-8965",
+        "qty": 1,
+        "unit_cents": 32539
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-02-13T03:26:00"
+  },
+  {
+    "order_id": "ORD00167",
+    "customer_email": "alice.smith623@mail.co",
+    "items": [
+      {
+        "sku": "SKU-6169",
+        "qty": 4,
+        "unit_cents": 50391
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-08-18T13:33:00"
+  },
+  {
+    "order_id": "ORD00015",
+    "customer_email": "peggy.lewis.orphan9997@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-6885",
+        "qty": 5,
+        "unit_cents": 83166
+      },
+      {
+        "sku": "SKU-3168",
+        "qty": 3,
+        "unit_cents": 50958
+      },
+      {
+        "sku": "SKU-7789",
+        "qty": 1,
+        "unit_cents": 299
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-06-06T07:14:00"
+  },
+  {
+    "order_id": "ORD00084",
+    "customer_email": "grace.davis258@corp.io",
+    "items": [
+      {
+        "sku": "SKU-8623",
+        "qty": 3,
+        "unit_cents": 74652
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-12-09T10:52:00"
+  },
+  {
+    "order_id": "ORD00343",
+    "customer_email": "olivia.green.orphan1862@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-3515",
+        "qty": 2,
+        "unit_cents": 44396
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-09-09T23:22:00"
+  },
+  {
+    "order_id": "ORD00104",
+    "customer_email": "laura.taylor394@shop.net",
+    "items": [
+      {
+        "sku": "SKU-9927",
+        "qty": 5,
+        "unit_cents": 18227
+      },
+      {
+        "sku": "SKU-3772",
+        "qty": 2,
+        "unit_cents": 27292
+      },
+      {
+        "sku": "SKU-3694",
+        "qty": 2,
+        "unit_cents": 3995
+      },
+      {
+        "sku": "SKU-9606",
+        "qty": 2,
+        "unit_cents": 64724
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-12-10T22:50:00"
+  },
+  {
+    "order_id": "ORD00165",
+    "customer_email": "mallory.young42@corp.io",
+    "items": [
+      {
+        "sku": "SKU-1168",
+        "qty": 3,
+        "unit_cents": 20351
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-03-04T10:00:00"
+  },
+  {
+    "order_id": "ORD00354",
+    "customer_email": "judy.hill658@corp.io",
+    "items": [
+      {
+        "sku": "SKU-6574",
+        "qty": 4,
+        "unit_cents": 81257
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-08-22T13:03:00"
+  },
+  {
+    "order_id": "ORD00238",
+    "customer_email": "heidi.lee531@corp.io",
+    "items": [
+      {
+        "sku": "SKU-5954",
+        "qty": 2,
+        "unit_cents": 22350
+      },
+      {
+        "sku": "SKU-3605",
+        "qty": 4,
+        "unit_cents": 31654
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-09-09T22:06:00"
+  },
+  {
+    "order_id": "ORD00212",
+    "customer_email": "heidi.garcia660@test.org",
+    "items": [
+      {
+        "sku": "SKU-9972",
+        "qty": 3,
+        "unit_cents": 39953
+      },
+      {
+        "sku": "SKU-7860",
+        "qty": 5,
+        "unit_cents": 84812
+      },
+      {
+        "sku": "SKU-3784",
+        "qty": 3,
+        "unit_cents": 4983
+      },
+      {
+        "sku": "SKU-7954",
+        "qty": 4,
+        "unit_cents": 57885
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-11-08T10:14:00"
+  },
+  {
+    "order_id": "ORD00339",
+    "customer_email": "sybil.taylor4393@shop.net",
+    "items": [
+      {
+        "sku": "SKU-8092",
+        "qty": 4,
+        "unit_cents": 64116
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-11-04T17:33:00"
+  },
+  {
+    "order_id": "ORD00299",
+    "customer_email": "heidi.smith43@example.com",
+    "items": [
+      {
+        "sku": "SKU-6464",
+        "qty": 4,
+        "unit_cents": 76695
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-06-08T01:47:00"
+  },
+  {
+    "order_id": "ORD00116",
+    "customer_email": "olivia.johnson7752@test.org",
+    "items": [
+      {
+        "sku": "SKU-5545",
+        "qty": 3,
+        "unit_cents": 52643
+      },
+      {
+        "sku": "SKU-5638",
+        "qty": 1,
+        "unit_cents": 62978
+      },
+      {
+        "sku": "SKU-5773",
+        "qty": 1,
+        "unit_cents": 58556
+      },
+      {
+        "sku": "SKU-3527",
+        "qty": 3,
+        "unit_cents": 32020
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-08-08T03:43:00"
+  },
+  {
+    "order_id": "ORD00184",
+    "customer_email": "carol.smith985@mail.co",
+    "items": [
+      {
+        "sku": "SKU-5342",
+        "qty": 4,
+        "unit_cents": 42967
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-01-12T12:47:00"
+  },
+  {
+    "order_id": "ORD00105",
+    "customer_email": "laura.lee255@test.org",
+    "items": [
+      {
+        "sku": "SKU-5288",
+        "qty": 2,
+        "unit_cents": 44988
+      },
+      {
+        "sku": "SKU-9217",
+        "qty": 3,
+        "unit_cents": 69978
+      },
+      {
+        "sku": "SKU-3368",
+        "qty": 4,
+        "unit_cents": 97066
+      },
+      {
+        "sku": "SKU-6001",
+        "qty": 2,
+        "unit_cents": 49719
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-08-17T09:26:00"
+  },
+  {
+    "order_id": "ORD00288",
+    "customer_email": "erin.wilson8223@corp.io",
+    "items": [
+      {
+        "sku": "SKU-8371",
+        "qty": 4,
+        "unit_cents": 1943
+      },
+      {
+        "sku": "SKU-9586",
+        "qty": 3,
+        "unit_cents": 92279
+      },
+      {
+        "sku": "SKU-9554",
+        "qty": 2,
+        "unit_cents": 16711
+      },
+      {
+        "sku": "SKU-5906",
+        "qty": 5,
+        "unit_cents": 38622
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-09-25T01:29:00"
+  },
+  {
+    "order_id": "ORD00272",
+    "customer_email": "ruth.adams597@test.org",
+    "items": [
+      {
+        "sku": "SKU-9439",
+        "qty": 2,
+        "unit_cents": 93855
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-10-09T13:55:00"
+  },
+  {
+    "order_id": "ORD00189",
+    "customer_email": "ivan.taylor.orphan6426@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-5873",
+        "qty": 1,
+        "unit_cents": 80615
+      },
+      {
+        "sku": "SKU-3039",
+        "qty": 4,
+        "unit_cents": 48671
+      },
+      {
+        "sku": "SKU-2447",
+        "qty": 2,
+        "unit_cents": 17938
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-01-16T09:09:00"
+  },
+  {
+    "order_id": "ORD00200",
+    "customer_email": "alice.johnson3174@corp.io",
+    "items": [
+      {
+        "sku": "SKU-3089",
+        "qty": 1,
+        "unit_cents": 32863
+      },
+      {
+        "sku": "SKU-6857",
+        "qty": 4,
+        "unit_cents": 57956
+      },
+      {
+        "sku": "SKU-3846",
+        "qty": 3,
+        "unit_cents": 56157
+      },
+      {
+        "sku": "SKU-8149",
+        "qty": 4,
+        "unit_cents": 47892
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-09-26T14:08:00"
+  },
+  {
+    "order_id": "ORD00290",
+    "customer_email": "grace.adams660@shop.net",
+    "items": [
+      {
+        "sku": "SKU-6391",
+        "qty": 5,
+        "unit_cents": 13922
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-11-22T00:59:00"
+  },
+  {
+    "order_id": "ORD00066",
+    "customer_email": "judy.smith144@example.com",
+    "items": [
+      {
+        "sku": "SKU-3164",
+        "qty": 2,
+        "unit_cents": 99710
+      },
+      {
+        "sku": "SKU-7301",
+        "qty": 3,
+        "unit_cents": 79857
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-08-04T19:53:00"
+  },
+  {
+    "order_id": "ORD00210",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-7862",
+        "qty": 4,
+        "unit_cents": 92369
+      },
+      {
+        "sku": "SKU-9418",
+        "qty": 3,
+        "unit_cents": 8515
+      },
+      {
+        "sku": "SKU-1637",
+        "qty": 1,
+        "unit_cents": 45468
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-07-13T20:44:00"
+  },
+  {
+    "order_id": "ORD00001",
+    "customer_email": "dave.smith4959@mail.co",
+    "items": [
+      {
+        "sku": "SKU-5242",
+        "qty": 5,
+        "unit_cents": 63791
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-08-12T18:57:00"
+  },
+  {
+    "order_id": "ORD00091",
+    "customer_email": "heidi.wilson823@mail.co",
+    "items": [
+      {
+        "sku": "SKU-7381",
+        "qty": 1,
+        "unit_cents": 78802
+      },
+      {
+        "sku": "SKU-3755",
+        "qty": 3,
+        "unit_cents": 10247
+      },
+      {
+        "sku": "SKU-7688",
+        "qty": 1,
+        "unit_cents": 57864
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-10-25T08:43:00"
+  },
+  {
+    "order_id": "ORD00316",
+    "customer_email": "grace.king628@example.com",
+    "items": [
+      {
+        "sku": "SKU-7967",
+        "qty": 4,
+        "unit_cents": 87606
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-05-28T17:22:00"
+  },
+  {
+    "order_id": "ORD00218",
+    "customer_email": "olivia.hill.orphan2754@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-3264",
+        "qty": 3,
+        "unit_cents": 95765
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-03-03T20:32:00"
+  },
+  {
+    "order_id": "ORD00186",
+    "customer_email": "mallory.brown.orphan8303@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-3751",
+        "qty": 1,
+        "unit_cents": 26512
+      },
+      {
+        "sku": "SKU-4817",
+        "qty": 2,
+        "unit_cents": 12569
+      },
+      {
+        "sku": "SKU-7192",
+        "qty": 4,
+        "unit_cents": 9230
+      },
+      {
+        "sku": "SKU-9977",
+        "qty": 2,
+        "unit_cents": 68996
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-08-03T06:59:00"
+  },
+  {
+    "order_id": "ORD00053",
+    "customer_email": "grace.adams660@shop.net",
+    "items": [
+      {
+        "sku": "SKU-1674",
+        "qty": 1,
+        "unit_cents": 81479
+      },
+      {
+        "sku": "SKU-1061",
+        "qty": 3,
+        "unit_cents": 84035
+      },
+      {
+        "sku": "SKU-5792",
+        "qty": 2,
+        "unit_cents": 18539
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-02-14T14:45:00"
+  },
+  {
+    "order_id": "ORD00254",
+    "customer_email": "heidi.moore4033@test.org",
+    "items": [
+      {
+        "sku": "SKU-6650",
+        "qty": 3,
+        "unit_cents": 22253
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-05-15T00:50:00"
+  },
+  {
+    "order_id": "ORD00255",
+    "customer_email": "grace.wilson751@mail.co",
+    "items": [
+      {
+        "sku": "SKU-6533",
+        "qty": 4,
+        "unit_cents": 90970
+      },
+      {
+        "sku": "SKU-2107",
+        "qty": 4,
+        "unit_cents": 35723
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-01-13T00:51:00"
+  },
+  {
+    "order_id": "ORD00102",
+    "customer_email": "heidi.johnson314@shop.net",
+    "items": [
+      {
+        "sku": "SKU-6319",
+        "qty": 3,
+        "unit_cents": 49922
+      },
+      {
+        "sku": "SKU-1679",
+        "qty": 3,
+        "unit_cents": 72377
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-11-14T08:24:00"
+  },
+  {
+    "order_id": "ORD00326",
+    "customer_email": "bob.adams9101@test.org",
+    "items": [
+      {
+        "sku": "SKU-6903",
+        "qty": 1,
+        "unit_cents": 55994
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-11-18T00:47:00"
+  },
+  {
+    "order_id": "ORD00068",
+    "customer_email": "mallory.davis.orphan5185@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-7292",
+        "qty": 1,
+        "unit_cents": 27449
+      },
+      {
+        "sku": "SKU-1627",
+        "qty": 3,
+        "unit_cents": 95318
+      },
+      {
+        "sku": "SKU-5089",
+        "qty": 3,
+        "unit_cents": 57928
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-06-22T05:19:00"
+  },
+  {
+    "order_id": "ORD00114",
+    "customer_email": "niaj.davis9987@example.com",
+    "items": [
+      {
+        "sku": "SKU-4680",
+        "qty": 1,
+        "unit_cents": 65063
+      },
+      {
+        "sku": "SKU-6814",
+        "qty": 5,
+        "unit_cents": 44778
+      },
+      {
+        "sku": "SKU-2501",
+        "qty": 1,
+        "unit_cents": 40046
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-12-12T12:55:00"
+  },
+  {
+    "order_id": "ORD00128",
+    "customer_email": "quentin.king3542@test.org",
+    "items": [
+      {
+        "sku": "SKU-6553",
+        "qty": 5,
+        "unit_cents": 24694
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-09-18T22:54:00"
+  },
+  {
+    "order_id": "ORD00259",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-6403",
+        "qty": 3,
+        "unit_cents": 46636
+      },
+      {
+        "sku": "SKU-5139",
+        "qty": 4,
+        "unit_cents": 68151
+      },
+      {
+        "sku": "SKU-1628",
+        "qty": 3,
+        "unit_cents": 58528
+      },
+      {
+        "sku": "SKU-8102",
+        "qty": 2,
+        "unit_cents": 99315
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-09-27T19:46:00"
+  },
+  {
+    "order_id": "ORD00329",
+    "customer_email": "dave.green621@mail.co",
+    "items": [
+      {
+        "sku": "SKU-8914",
+        "qty": 5,
+        "unit_cents": 34167
+      },
+      {
+        "sku": "SKU-7555",
+        "qty": 2,
+        "unit_cents": 6797
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-04-05T12:44:00"
+  },
+  {
+    "order_id": "ORD00058",
+    "customer_email": "ivan.wright832@mail.co",
+    "items": [
+      {
+        "sku": "SKU-4620",
+        "qty": 4,
+        "unit_cents": 25377
+      },
+      {
+        "sku": "SKU-6562",
+        "qty": 5,
+        "unit_cents": 13513
+      },
+      {
+        "sku": "SKU-2402",
+        "qty": 3,
+        "unit_cents": 42426
+      },
+      {
+        "sku": "SKU-9780",
+        "qty": 4,
+        "unit_cents": 42717
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-09-02T06:23:00"
+  },
+  {
+    "order_id": "ORD00043",
+    "customer_email": "bob.johnson498@corp.io",
+    "items": [
+      {
+        "sku": "SKU-5905",
+        "qty": 5,
+        "unit_cents": 54724
+      },
+      {
+        "sku": "SKU-3331",
+        "qty": 5,
+        "unit_cents": 55437
+      },
+      {
+        "sku": "SKU-5882",
+        "qty": 3,
+        "unit_cents": 11182
+      },
+      {
+        "sku": "SKU-5064",
+        "qty": 4,
+        "unit_cents": 83039
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-09-02T12:26:00"
+  },
+  {
+    "order_id": "ORD00309",
+    "customer_email": "alice.hill8399@mail.co",
+    "items": [
+      {
+        "sku": "SKU-9257",
+        "qty": 5,
+        "unit_cents": 58987
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-07-08T22:08:00"
+  },
+  {
+    "order_id": "ORD00135",
+    "customer_email": "dave.lewis354@mail.co",
+    "items": [
+      {
+        "sku": "SKU-7292",
+        "qty": 5,
+        "unit_cents": 44634
+      },
+      {
+        "sku": "SKU-4740",
+        "qty": 5,
+        "unit_cents": 34687
+      },
+      {
+        "sku": "SKU-2457",
+        "qty": 1,
+        "unit_cents": 20388
+      },
+      {
+        "sku": "SKU-6169",
+        "qty": 5,
+        "unit_cents": 73967
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-09-16T13:20:00"
+  },
+  {
+    "order_id": "ORD00256",
+    "customer_email": "carol.wright881@corp.io",
+    "items": [
+      {
+        "sku": "SKU-5924",
+        "qty": 3,
+        "unit_cents": 39136
+      },
+      {
+        "sku": "SKU-3548",
+        "qty": 4,
+        "unit_cents": 58385
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-06-05T13:51:00"
+  },
+  {
+    "order_id": "ORD00279",
+    "customer_email": "peggy.smith749@mail.co",
+    "items": [
+      {
+        "sku": "SKU-5838",
+        "qty": 5,
+        "unit_cents": 4180
+      },
+      {
+        "sku": "SKU-1803",
+        "qty": 4,
+        "unit_cents": 97332
+      },
+      {
+        "sku": "SKU-7756",
+        "qty": 5,
+        "unit_cents": 48305
+      },
+      {
+        "sku": "SKU-4724",
+        "qty": 2,
+        "unit_cents": 21471
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-09-20T04:18:00"
+  },
+  {
+    "order_id": "ORD00076",
+    "customer_email": "niaj.walker487@example.com",
+    "items": [
+      {
+        "sku": "SKU-2900",
+        "qty": 5,
+        "unit_cents": 43280
+      },
+      {
+        "sku": "SKU-4975",
+        "qty": 5,
+        "unit_cents": 88424
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-03-11T23:52:00"
+  },
+  {
+    "order_id": "ORD00334",
+    "customer_email": "quentin.lee8311@mail.co",
+    "items": [
+      {
+        "sku": "SKU-5498",
+        "qty": 5,
+        "unit_cents": 47882
+      },
+      {
+        "sku": "SKU-7430",
+        "qty": 1,
+        "unit_cents": 76814
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-11-04T05:40:00"
+  },
+  {
+    "order_id": "ORD00396",
+    "customer_email": "kevin.adams825@mail.co",
+    "items": [
+      {
+        "sku": "SKU-8490",
+        "qty": 4,
+        "unit_cents": 74291
+      },
+      {
+        "sku": "SKU-6182",
+        "qty": 4,
+        "unit_cents": 56277
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-03-16T01:49:00"
+  },
+  {
+    "order_id": "ORD00356",
+    "customer_email": "dave.taylor3311@corp.io",
+    "items": [
+      {
+        "sku": "SKU-6762",
+        "qty": 4,
+        "unit_cents": 84753
+      },
+      {
+        "sku": "SKU-3371",
+        "qty": 4,
+        "unit_cents": 47432
+      },
+      {
+        "sku": "SKU-2054",
+        "qty": 3,
+        "unit_cents": 85008
+      },
+      {
+        "sku": "SKU-4427",
+        "qty": 5,
+        "unit_cents": 17853
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-02-06T23:00:00"
+  },
+  {
+    "order_id": "ORD00159",
+    "customer_email": "alice.clark403@mail.co",
+    "items": [
+      {
+        "sku": "SKU-7870",
+        "qty": 3,
+        "unit_cents": 43582
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-01-11T04:20:00"
+  },
+  {
+    "order_id": "ORD00108",
+    "customer_email": "laura.taylor394@shop.net",
+    "items": [
+      {
+        "sku": "SKU-1422",
+        "qty": 2,
+        "unit_cents": 67882
+      },
+      {
+        "sku": "SKU-7699",
+        "qty": 5,
+        "unit_cents": 86692
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-12-22T12:16:00"
+  },
+  {
+    "order_id": "ORD00377",
+    "customer_email": "quentin.young9308@corp.io",
+    "items": [
+      {
+        "sku": "SKU-3558",
+        "qty": 3,
+        "unit_cents": 70032
+      },
+      {
+        "sku": "SKU-9799",
+        "qty": 2,
+        "unit_cents": 57369
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-05-13T06:04:00"
+  },
+  {
+    "order_id": "ORD00056",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-4818",
+        "qty": 5,
+        "unit_cents": 39097
+      },
+      {
+        "sku": "SKU-2419",
+        "qty": 5,
+        "unit_cents": 98599
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-07-15T01:40:00"
+  },
+  {
+    "order_id": "ORD00069",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-3477",
+        "qty": 3,
+        "unit_cents": 2981
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-01-01T07:02:00"
+  },
+  {
+    "order_id": "ORD00106",
+    "customer_email": "trent.davis895@corp.io",
+    "items": [
+      {
+        "sku": "SKU-3419",
+        "qty": 1,
+        "unit_cents": 76579
+      },
+      {
+        "sku": "SKU-9472",
+        "qty": 1,
+        "unit_cents": 91437
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-11-20T16:07:00"
+  },
+  {
+    "order_id": "ORD00156",
+    "customer_email": "heidi.lee531@corp.io",
+    "items": [
+      {
+        "sku": "SKU-4031",
+        "qty": 5,
+        "unit_cents": 22852
+      },
+      {
+        "sku": "SKU-6904",
+        "qty": 5,
+        "unit_cents": 35184
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-11-01T00:38:00"
+  },
+  {
+    "order_id": "ORD00222",
+    "customer_email": "alice.clark468@shop.net",
+    "items": [
+      {
+        "sku": "SKU-5514",
+        "qty": 3,
+        "unit_cents": 18299
+      },
+      {
+        "sku": "SKU-1668",
+        "qty": 2,
+        "unit_cents": 86153
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-06-07T20:06:00"
+  },
+  {
+    "order_id": "ORD00133",
+    "customer_email": "bob.johnson796@example.com",
+    "items": [
+      {
+        "sku": "SKU-9697",
+        "qty": 4,
+        "unit_cents": 40552
+      },
+      {
+        "sku": "SKU-7228",
+        "qty": 5,
+        "unit_cents": 70512
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-10-24T15:48:00"
+  },
+  {
+    "order_id": "ORD00038",
+    "customer_email": "carol.brown.orphan6803@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-1503",
+        "qty": 4,
+        "unit_cents": 56603
+      },
+      {
+        "sku": "SKU-7832",
+        "qty": 1,
+        "unit_cents": 65193
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-05-03T11:04:00"
+  },
+  {
+    "order_id": "ORD00095",
+    "customer_email": "laura.clark485@corp.io",
+    "items": [
+      {
+        "sku": "SKU-6378",
+        "qty": 1,
+        "unit_cents": 63396
+      },
+      {
+        "sku": "SKU-7522",
+        "qty": 1,
+        "unit_cents": 29778
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-05-11T05:15:00"
+  },
+  {
+    "order_id": "ORD00300",
+    "customer_email": "olivia.young382@shop.net",
+    "items": [
+      {
+        "sku": "SKU-7268",
+        "qty": 3,
+        "unit_cents": 5688
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-12-04T17:15:00"
+  },
+  {
+    "order_id": "ORD00175",
+    "customer_email": "alice.hill160@shop.net",
+    "items": [
+      {
+        "sku": "SKU-9860",
+        "qty": 4,
+        "unit_cents": 27663
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-05-17T06:22:00"
+  },
+  {
+    "order_id": "ORD00064",
+    "customer_email": "sybil.lewis.orphan3762@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-4630",
+        "qty": 2,
+        "unit_cents": 8591
+      },
+      {
+        "sku": "SKU-9489",
+        "qty": 3,
+        "unit_cents": 88527
+      },
+      {
+        "sku": "SKU-6362",
+        "qty": 2,
+        "unit_cents": 49015
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-10-06T04:51:00"
+  },
+  {
+    "order_id": "ORD00143",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-5412",
+        "qty": 1,
+        "unit_cents": 86766
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-09-21T09:03:00"
+  },
+  {
+    "order_id": "ORD00281",
+    "customer_email": "dave.garcia152@example.com",
+    "items": [
+      {
+        "sku": "SKU-2702",
+        "qty": 4,
+        "unit_cents": 68649
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-06-20T02:13:00"
+  },
+  {
+    "order_id": "ORD00257",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-3566",
+        "qty": 1,
+        "unit_cents": 55304
+      },
+      {
+        "sku": "SKU-9387",
+        "qty": 4,
+        "unit_cents": 70118
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-06-05T22:59:00"
+  },
+  {
+    "order_id": "ORD00048",
+    "customer_email": "ivan.lewis.orphan4644@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-2396",
+        "qty": 1,
+        "unit_cents": 9334
+      },
+      {
+        "sku": "SKU-5300",
+        "qty": 3,
+        "unit_cents": 70045
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-09-28T07:57:00"
+  },
+  {
+    "order_id": "ORD00391",
+    "customer_email": "trent.davis46@test.org",
+    "items": [
+      {
+        "sku": "SKU-1409",
+        "qty": 2,
+        "unit_cents": 71277
+      },
+      {
+        "sku": "SKU-7728",
+        "qty": 1,
+        "unit_cents": 54127
+      },
+      {
+        "sku": "SKU-7966",
+        "qty": 5,
+        "unit_cents": 72511
+      },
+      {
+        "sku": "SKU-4998",
+        "qty": 1,
+        "unit_cents": 10627
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-09-10T20:13:00"
+  },
+  {
+    "order_id": "ORD00368",
+    "customer_email": "laura.walker.orphan6354@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-4102",
+        "qty": 2,
+        "unit_cents": 9060
+      },
+      {
+        "sku": "SKU-7171",
+        "qty": 2,
+        "unit_cents": 24113
+      },
+      {
+        "sku": "SKU-4167",
+        "qty": 1,
+        "unit_cents": 44276
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-02-28T03:50:00"
+  },
+  {
+    "order_id": "ORD00235",
+    "customer_email": "niaj.walker714@example.com",
+    "items": [
+      {
+        "sku": "SKU-1116",
+        "qty": 4,
+        "unit_cents": 53178
+      },
+      {
+        "sku": "SKU-7628",
+        "qty": 2,
+        "unit_cents": 12070
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-08-14T21:31:00"
+  },
+  {
+    "order_id": "ORD00232",
+    "customer_email": "dave.miller.orphan9935@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-3108",
+        "qty": 4,
+        "unit_cents": 41472
+      },
+      {
+        "sku": "SKU-8212",
+        "qty": 2,
+        "unit_cents": 64160
+      },
+      {
+        "sku": "SKU-5134",
+        "qty": 4,
+        "unit_cents": 44814
+      },
+      {
+        "sku": "SKU-9600",
+        "qty": 2,
+        "unit_cents": 5987
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-05-13T17:41:00"
+  },
+  {
+    "order_id": "ORD00225",
+    "customer_email": "kevin.young.orphan128@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-4714",
+        "qty": 2,
+        "unit_cents": 33312
+      },
+      {
+        "sku": "SKU-7050",
+        "qty": 5,
+        "unit_cents": 83190
+      },
+      {
+        "sku": "SKU-2858",
+        "qty": 2,
+        "unit_cents": 65298
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-10-19T02:26:00"
+  },
+  {
+    "order_id": "ORD00096",
+    "customer_email": "mallory.green539@test.org",
+    "items": [
+      {
+        "sku": "SKU-8584",
+        "qty": 3,
+        "unit_cents": 74205
+      },
+      {
+        "sku": "SKU-3260",
+        "qty": 4,
+        "unit_cents": 74144
+      },
+      {
+        "sku": "SKU-1220",
+        "qty": 2,
+        "unit_cents": 76600
+      },
+      {
+        "sku": "SKU-1092",
+        "qty": 4,
+        "unit_cents": 94270
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-01-01T10:32:00"
+  },
+  {
+    "order_id": "ORD00103",
+    "customer_email": "trent.lee1580@example.com",
+    "items": [
+      {
+        "sku": "SKU-3165",
+        "qty": 1,
+        "unit_cents": 80464
+      },
+      {
+        "sku": "SKU-6848",
+        "qty": 2,
+        "unit_cents": 4192
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-07-15T02:41:00"
+  },
+  {
+    "order_id": "ORD00322",
+    "customer_email": "trent.davis895@corp.io",
+    "items": [
+      {
+        "sku": "SKU-5964",
+        "qty": 5,
+        "unit_cents": 8606
+      },
+      {
+        "sku": "SKU-2584",
+        "qty": 4,
+        "unit_cents": 63038
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-04-05T07:08:00"
+  },
+  {
+    "order_id": "ORD00140",
+    "customer_email": "niaj.clark452@mail.co",
+    "items": [
+      {
+        "sku": "SKU-8630",
+        "qty": 3,
+        "unit_cents": 16938
+      },
+      {
+        "sku": "SKU-5535",
+        "qty": 5,
+        "unit_cents": 87191
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-11-27T10:19:00"
+  },
+  {
+    "order_id": "ORD00348",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-4391",
+        "qty": 4,
+        "unit_cents": 38684
+      },
+      {
+        "sku": "SKU-1052",
+        "qty": 1,
+        "unit_cents": 56225
+      },
+      {
+        "sku": "SKU-8148",
+        "qty": 5,
+        "unit_cents": 90717
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-03-22T03:23:00"
+  },
+  {
+    "order_id": "ORD00275",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-2794",
+        "qty": 3,
+        "unit_cents": 93056
+      },
+      {
+        "sku": "SKU-4293",
+        "qty": 5,
+        "unit_cents": 39500
+      },
+      {
+        "sku": "SKU-2406",
+        "qty": 1,
+        "unit_cents": 65652
+      },
+      {
+        "sku": "SKU-7917",
+        "qty": 5,
+        "unit_cents": 46358
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-02-10T23:54:00"
+  },
+  {
+    "order_id": "ORD00055",
+    "customer_email": "grace.davis258@corp.io",
+    "items": [
+      {
+        "sku": "SKU-4214",
+        "qty": 4,
+        "unit_cents": 26873
+      },
+      {
+        "sku": "SKU-1815",
+        "qty": 4,
+        "unit_cents": 4461
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-02-28T05:23:00"
+  },
+  {
+    "order_id": "ORD00307",
+    "customer_email": "erin.baker297@corp.io",
+    "items": [
+      {
+        "sku": "SKU-8532",
+        "qty": 5,
+        "unit_cents": 56055
+      },
+      {
+        "sku": "SKU-5001",
+        "qty": 1,
+        "unit_cents": 48016
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-08-14T18:51:00"
+  },
+  {
+    "order_id": "ORD00182",
+    "customer_email": "dave.garcia977@test.org",
+    "items": [
+      {
+        "sku": "SKU-6187",
+        "qty": 4,
+        "unit_cents": 30435
+      },
+      {
+        "sku": "SKU-5511",
+        "qty": 2,
+        "unit_cents": 13257
+      },
+      {
+        "sku": "SKU-6731",
+        "qty": 4,
+        "unit_cents": 35772
+      },
+      {
+        "sku": "SKU-6777",
+        "qty": 5,
+        "unit_cents": 77253
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-05-18T12:04:00"
+  },
+  {
+    "order_id": "ORD00113",
+    "customer_email": "olivia.wright4355@mail.co",
+    "items": [
+      {
+        "sku": "SKU-8749",
+        "qty": 5,
+        "unit_cents": 45618
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-11-01T07:14:00"
+  },
+  {
+    "order_id": "ORD00046",
+    "customer_email": "mallory.davis90@test.org",
+    "items": [
+      {
+        "sku": "SKU-1030",
+        "qty": 4,
+        "unit_cents": 81198
+      },
+      {
+        "sku": "SKU-8569",
+        "qty": 1,
+        "unit_cents": 28769
+      },
+      {
+        "sku": "SKU-5891",
+        "qty": 1,
+        "unit_cents": 82533
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-10-05T13:45:00"
+  },
+  {
+    "order_id": "ORD00026",
+    "customer_email": "laura.young5545@corp.io",
+    "items": [
+      {
+        "sku": "SKU-7034",
+        "qty": 2,
+        "unit_cents": 34298
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-04-12T03:04:00"
+  },
+  {
+    "order_id": "ORD00054",
+    "customer_email": "niaj.walker914@shop.net",
+    "items": [
+      {
+        "sku": "SKU-7909",
+        "qty": 4,
+        "unit_cents": 19501
+      },
+      {
+        "sku": "SKU-8328",
+        "qty": 2,
+        "unit_cents": 68802
+      },
+      {
+        "sku": "SKU-6178",
+        "qty": 2,
+        "unit_cents": 27476
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-06-26T12:27:00"
+  },
+  {
+    "order_id": "ORD00320",
+    "customer_email": "carol.clark450@test.org",
+    "items": [
+      {
+        "sku": "SKU-4860",
+        "qty": 2,
+        "unit_cents": 28330
+      },
+      {
+        "sku": "SKU-7302",
+        "qty": 4,
+        "unit_cents": 26180
+      },
+      {
+        "sku": "SKU-4330",
+        "qty": 1,
+        "unit_cents": 68558
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-12-26T06:32:00"
+  },
+  {
+    "order_id": "ORD00399",
+    "customer_email": "carol.wright881@corp.io",
+    "items": [
+      {
+        "sku": "SKU-4262",
+        "qty": 5,
+        "unit_cents": 13896
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-12-03T19:05:00"
+  },
+  {
+    "order_id": "ORD00352",
+    "customer_email": "olivia.lewis.orphan3668@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-2656",
+        "qty": 3,
+        "unit_cents": 86463
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-05-10T23:06:00"
+  },
+  {
+    "order_id": "ORD00097",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-2833",
+        "qty": 5,
+        "unit_cents": 80247
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-11-26T12:50:00"
+  },
+  {
+    "order_id": "ORD00125",
+    "customer_email": "ruth.taylor4842@test.org",
+    "items": [
+      {
+        "sku": "SKU-8323",
+        "qty": 1,
+        "unit_cents": 72512
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-04-14T07:16:00"
+  },
+  {
+    "order_id": "ORD00380",
+    "customer_email": "quentin.moore64@shop.net",
+    "items": [
+      {
+        "sku": "SKU-2900",
+        "qty": 1,
+        "unit_cents": 27237
+      },
+      {
+        "sku": "SKU-5881",
+        "qty": 1,
+        "unit_cents": 28157
+      },
+      {
+        "sku": "SKU-5944",
+        "qty": 1,
+        "unit_cents": 26973
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-10-23T13:40:00"
+  },
+  {
+    "order_id": "ORD00188",
+    "customer_email": "quentin.lewis862@example.com",
+    "items": [
+      {
+        "sku": "SKU-4237",
+        "qty": 4,
+        "unit_cents": 28312
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-03-08T14:30:00"
+  },
+  {
+    "order_id": "ORD00201",
+    "customer_email": "quentin.walker.orphan7865@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-7443",
+        "qty": 1,
+        "unit_cents": 55393
+      },
+      {
+        "sku": "SKU-1938",
+        "qty": 3,
+        "unit_cents": 78845
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-05-17T03:35:00"
+  },
+  {
+    "order_id": "ORD00367",
+    "customer_email": "bob.green585@shop.net",
+    "items": [
+      {
+        "sku": "SKU-9279",
+        "qty": 1,
+        "unit_cents": 58118
+      },
+      {
+        "sku": "SKU-4221",
+        "qty": 3,
+        "unit_cents": 79767
+      },
+      {
+        "sku": "SKU-6130",
+        "qty": 3,
+        "unit_cents": 94290
+      },
+      {
+        "sku": "SKU-1403",
+        "qty": 4,
+        "unit_cents": 98688
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-07-14T11:15:00"
+  },
+  {
+    "order_id": "ORD00142",
+    "customer_email": "alice.moore7527@shop.net",
+    "items": [
+      {
+        "sku": "SKU-2456",
+        "qty": 4,
+        "unit_cents": 65993
+      },
+      {
+        "sku": "SKU-9714",
+        "qty": 4,
+        "unit_cents": 16183
+      },
+      {
+        "sku": "SKU-2316",
+        "qty": 5,
+        "unit_cents": 60780
+      },
+      {
+        "sku": "SKU-6310",
+        "qty": 2,
+        "unit_cents": 38971
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-07-22T22:18:00"
+  },
+  {
+    "order_id": "ORD00260",
+    "customer_email": "quentin.hill35@shop.net",
+    "items": [
+      {
+        "sku": "SKU-6716",
+        "qty": 3,
+        "unit_cents": 21430
+      },
+      {
+        "sku": "SKU-3900",
+        "qty": 3,
+        "unit_cents": 26275
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-12-13T04:19:00"
+  },
+  {
+    "order_id": "ORD00162",
+    "customer_email": "laura.hill.orphan8783@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-1132",
+        "qty": 1,
+        "unit_cents": 79769
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-02-14T12:50:00"
+  },
+  {
+    "order_id": "ORD00117",
+    "customer_email": "grace.davis258@corp.io",
+    "items": [
+      {
+        "sku": "SKU-9413",
+        "qty": 4,
+        "unit_cents": 74272
+      },
+      {
+        "sku": "SKU-4615",
+        "qty": 4,
+        "unit_cents": 65927
+      },
+      {
+        "sku": "SKU-6098",
+        "qty": 4,
+        "unit_cents": 30594
+      },
+      {
+        "sku": "SKU-6153",
+        "qty": 5,
+        "unit_cents": 89742
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-08-11T12:57:00"
+  },
+  {
+    "order_id": "ORD00022",
+    "customer_email": "olivia.clark394@mail.co",
+    "items": [
+      {
+        "sku": "SKU-3474",
+        "qty": 3,
+        "unit_cents": 43800
+      },
+      {
+        "sku": "SKU-6529",
+        "qty": 3,
+        "unit_cents": 94275
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-10-02T01:17:00"
+  },
+  {
+    "order_id": "ORD00126",
+    "customer_email": "peggy.brown309@shop.net",
+    "items": [
+      {
+        "sku": "SKU-8223",
+        "qty": 3,
+        "unit_cents": 47282
+      },
+      {
+        "sku": "SKU-8965",
+        "qty": 5,
+        "unit_cents": 19604
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-05-17T20:43:00"
+  },
+  {
+    "order_id": "ORD00130",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-3198",
+        "qty": 2,
+        "unit_cents": 58193
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-11-04T16:27:00"
+  },
+  {
+    "order_id": "ORD00004",
+    "customer_email": "heidi.lee531@corp.io",
+    "items": [
+      {
+        "sku": "SKU-6458",
+        "qty": 2,
+        "unit_cents": 95819
+      },
+      {
+        "sku": "SKU-6328",
+        "qty": 1,
+        "unit_cents": 25143
+      },
+      {
+        "sku": "SKU-4632",
+        "qty": 2,
+        "unit_cents": 18777
+      },
+      {
+        "sku": "SKU-9896",
+        "qty": 4,
+        "unit_cents": 12055
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-09-16T03:19:00"
+  },
+  {
+    "order_id": "ORD00258",
+    "customer_email": "niaj.walker914@shop.net",
+    "items": [
+      {
+        "sku": "SKU-2522",
+        "qty": 2,
+        "unit_cents": 14827
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-12-28T20:12:00"
+  },
+  {
+    "order_id": "ORD00230",
+    "customer_email": "carol.baker415@corp.io",
+    "items": [
+      {
+        "sku": "SKU-7912",
+        "qty": 3,
+        "unit_cents": 95914
+      },
+      {
+        "sku": "SKU-7662",
+        "qty": 1,
+        "unit_cents": 2925
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-02-26T08:45:00"
+  },
+  {
+    "order_id": "ORD00355",
+    "customer_email": "mallory.baker119@example.com",
+    "items": [
+      {
+        "sku": "SKU-8138",
+        "qty": 5,
+        "unit_cents": 353
+      },
+      {
+        "sku": "SKU-9078",
+        "qty": 1,
+        "unit_cents": 61936
+      },
+      {
+        "sku": "SKU-5770",
+        "qty": 4,
+        "unit_cents": 89765
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-10-03T20:19:00"
+  },
+  {
+    "order_id": "ORD00101",
+    "customer_email": "grace.adams88@example.com",
+    "items": [
+      {
+        "sku": "SKU-3644",
+        "qty": 2,
+        "unit_cents": 44729
+      },
+      {
+        "sku": "SKU-8771",
+        "qty": 4,
+        "unit_cents": 20941
+      },
+      {
+        "sku": "SKU-5648",
+        "qty": 5,
+        "unit_cents": 14847
+      },
+      {
+        "sku": "SKU-7033",
+        "qty": 3,
+        "unit_cents": 18803
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-11-17T01:12:00"
+  },
+  {
+    "order_id": "ORD00226",
+    "customer_email": "grace.moore470@example.com",
+    "items": [
+      {
+        "sku": "SKU-1085",
+        "qty": 1,
+        "unit_cents": 79632
+      },
+      {
+        "sku": "SKU-3599",
+        "qty": 3,
+        "unit_cents": 22642
+      },
+      {
+        "sku": "SKU-7627",
+        "qty": 2,
+        "unit_cents": 76521
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-11-18T06:29:00"
+  },
+  {
+    "order_id": "ORD00241",
+    "customer_email": "kevin.johnson2385@shop.net",
+    "items": [
+      {
+        "sku": "SKU-6533",
+        "qty": 2,
+        "unit_cents": 84876
+      },
+      {
+        "sku": "SKU-7613",
+        "qty": 3,
+        "unit_cents": 23326
+      },
+      {
+        "sku": "SKU-3651",
+        "qty": 1,
+        "unit_cents": 27811
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-12-15T21:53:00"
+  },
+  {
+    "order_id": "ORD00308",
+    "customer_email": "quentin.wright565@test.org",
+    "items": [
+      {
+        "sku": "SKU-5741",
+        "qty": 5,
+        "unit_cents": 90523
+      },
+      {
+        "sku": "SKU-4265",
+        "qty": 4,
+        "unit_cents": 503
+      },
+      {
+        "sku": "SKU-4756",
+        "qty": 4,
+        "unit_cents": 80643
+      },
+      {
+        "sku": "SKU-8946",
+        "qty": 4,
+        "unit_cents": 78731
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-07-02T09:11:00"
+  },
+  {
+    "order_id": "ORD00304",
+    "customer_email": "trent.taylor6491@example.com",
+    "items": [
+      {
+        "sku": "SKU-6912",
+        "qty": 5,
+        "unit_cents": 33171
+      },
+      {
+        "sku": "SKU-3462",
+        "qty": 2,
+        "unit_cents": 68830
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-03-27T16:50:00"
+  },
+  {
+    "order_id": "ORD00059",
+    "customer_email": "quentin.lewis.orphan3077@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-5116",
+        "qty": 3,
+        "unit_cents": 41024
+      },
+      {
+        "sku": "SKU-9468",
+        "qty": 4,
+        "unit_cents": 33476
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-12-08T01:19:00"
+  },
+  {
+    "order_id": "ORD00017",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-6112",
+        "qty": 4,
+        "unit_cents": 6634
+      },
+      {
+        "sku": "SKU-7801",
+        "qty": 2,
+        "unit_cents": 72001
+      },
+      {
+        "sku": "SKU-2367",
+        "qty": 2,
+        "unit_cents": 2030
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-07-11T00:13:00"
+  },
+  {
+    "order_id": "ORD00337",
+    "customer_email": "frank.walker5715@shop.net",
+    "items": [
+      {
+        "sku": "SKU-2223",
+        "qty": 3,
+        "unit_cents": 19376
+      },
+      {
+        "sku": "SKU-4171",
+        "qty": 2,
+        "unit_cents": 17729
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-01-15T08:19:00"
+  },
+  {
+    "order_id": "ORD00009",
+    "customer_email": "erin.wilson.orphan742@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-1437",
+        "qty": 1,
+        "unit_cents": 83330
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-10-04T12:05:00"
+  },
+  {
+    "order_id": "ORD00315",
+    "customer_email": "sybil.moore8971@mail.co",
+    "items": [
+      {
+        "sku": "SKU-6477",
+        "qty": 5,
+        "unit_cents": 73642
+      },
+      {
+        "sku": "SKU-9595",
+        "qty": 3,
+        "unit_cents": 14212
+      },
+      {
+        "sku": "SKU-1926",
+        "qty": 1,
+        "unit_cents": 44858
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-08-26T10:56:00"
+  },
+  {
+    "order_id": "ORD00170",
+    "customer_email": "heidi.wright761@corp.io",
+    "items": [
+      {
+        "sku": "SKU-9498",
+        "qty": 5,
+        "unit_cents": 14734
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-06-02T11:11:00"
+  },
+  {
+    "order_id": "ORD00219",
+    "customer_email": "bob.miller727@shop.net",
+    "items": [
+      {
+        "sku": "SKU-7195",
+        "qty": 3,
+        "unit_cents": 69388
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-12-19T17:25:00"
+  },
+  {
+    "order_id": "ORD00252",
+    "customer_email": "laura.king401@test.org",
+    "items": [
+      {
+        "sku": "SKU-5353",
+        "qty": 3,
+        "unit_cents": 88753
+      },
+      {
+        "sku": "SKU-6319",
+        "qty": 2,
+        "unit_cents": 58504
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-02-25T02:25:00"
+  },
+  {
+    "order_id": "ORD00181",
+    "customer_email": "ivan.lee.orphan4576@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-1066",
+        "qty": 2,
+        "unit_cents": 27249
+      },
+      {
+        "sku": "SKU-1055",
+        "qty": 4,
+        "unit_cents": 16766
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-09-02T16:20:00"
+  },
+  {
+    "order_id": "ORD00366",
+    "customer_email": "laura.green.orphan1196@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-3883",
+        "qty": 5,
+        "unit_cents": 30686
+      },
+      {
+        "sku": "SKU-2454",
+        "qty": 3,
+        "unit_cents": 92588
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-11-12T06:29:00"
+  },
+  {
+    "order_id": "ORD00039",
+    "customer_email": "alice.lewis.orphan5700@nowhere.test",
+    "items": [
+      {
+        "sku": "SKU-1163",
+        "qty": 2,
+        "unit_cents": 48046
+      },
+      {
+        "sku": "SKU-2155",
+        "qty": 5,
+        "unit_cents": 18881
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-04-22T21:46:00"
+  },
+  {
+    "order_id": "ORD00345",
+    "customer_email": "erin.smith34@shop.net",
+    "items": [
+      {
+        "sku": "SKU-8465",
+        "qty": 2,
+        "unit_cents": 50153
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-09-02T11:27:00"
+  },
+  {
+    "order_id": "ORD00353",
+    "customer_email": "kevin.clark37@shop.net",
+    "items": [
+      {
+        "sku": "SKU-4286",
+        "qty": 4,
+        "unit_cents": 26890
+      },
+      {
+        "sku": "SKU-9007",
+        "qty": 5,
+        "unit_cents": 88840
+      },
+      {
+        "sku": "SKU-7641",
+        "qty": 5,
+        "unit_cents": 62067
+      },
+      {
+        "sku": "SKU-3637",
+        "qty": 2,
+        "unit_cents": 672
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-07-21T22:20:00"
+  },
+  {
+    "order_id": "ORD00141",
+    "customer_email": "kevin.clark1581@shop.net",
+    "items": [
+      {
+        "sku": "SKU-2385",
+        "qty": 5,
+        "unit_cents": 1950
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-03-23T08:12:00"
+  },
+  {
+    "order_id": "ORD00107",
+    "customer_email": "niaj.walker914@shop.net",
+    "items": [
+      {
+        "sku": "SKU-2398",
+        "qty": 1,
+        "unit_cents": 1474
+      },
+      {
+        "sku": "SKU-2890",
+        "qty": 3,
+        "unit_cents": 94794
+      },
+      {
+        "sku": "SKU-8875",
+        "qty": 3,
+        "unit_cents": 14274
+      },
+      {
+        "sku": "SKU-8415",
+        "qty": 3,
+        "unit_cents": 76679
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-08-26T07:59:00"
+  },
+  {
+    "order_id": "ORD00327",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-5927",
+        "qty": 4,
+        "unit_cents": 43565
+      },
+      {
+        "sku": "SKU-1430",
+        "qty": 5,
+        "unit_cents": 50166
+      },
+      {
+        "sku": "SKU-2739",
+        "qty": 4,
+        "unit_cents": 35941
+      },
+      {
+        "sku": "SKU-1715",
+        "qty": 3,
+        "unit_cents": 5926
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-11-26T21:48:00"
+  },
+  {
+    "order_id": "ORD00389",
+    "customer_email": "niaj.walker1157@test.org",
+    "items": [
+      {
+        "sku": "SKU-6316",
+        "qty": 4,
+        "unit_cents": 48486
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-03-20T15:39:00"
+  },
+  {
+    "order_id": "ORD00224",
+    "customer_email": "alice.clark7433@mail.co",
+    "items": [
+      {
+        "sku": "SKU-1524",
+        "qty": 3,
+        "unit_cents": 30452
+      },
+      {
+        "sku": "SKU-7456",
+        "qty": 1,
+        "unit_cents": 99349
+      },
+      {
+        "sku": "SKU-7899",
+        "qty": 5,
+        "unit_cents": 35511
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-01-24T08:46:00"
+  },
+  {
+    "order_id": "ORD00194",
+    "customer_email": "judy.davis781@shop.net",
+    "items": [
+      {
+        "sku": "SKU-3905",
+        "qty": 1,
+        "unit_cents": 13941
+      },
+      {
+        "sku": "SKU-5578",
+        "qty": 1,
+        "unit_cents": 35428
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2026-05-19T13:02:00"
+  },
+  {
+    "order_id": "ORD00231",
+    "customer_email": "peggy.taylor124@test.org",
+    "items": [
+      {
+        "sku": "SKU-7390",
+        "qty": 5,
+        "unit_cents": 45933
+      },
+      {
+        "sku": "SKU-9999",
+        "qty": 4,
+        "unit_cents": 68771
+      },
+      {
+        "sku": "SKU-8289",
+        "qty": 5,
+        "unit_cents": 97629
+      },
+      {
+        "sku": "SKU-8780",
+        "qty": 5,
+        "unit_cents": 24350
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-06-07T09:27:00"
+  },
+  {
+    "order_id": "ORD00296",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-4997",
+        "qty": 3,
+        "unit_cents": 30681
+      },
+      {
+        "sku": "SKU-2859",
+        "qty": 1,
+        "unit_cents": 49911
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-11-28T19:53:00"
+  },
+  {
+    "order_id": "ORD00011",
+    "customer_email": "niaj.johnson1662@test.org",
+    "items": [
+      {
+        "sku": "SKU-5258",
+        "qty": 1,
+        "unit_cents": 29044
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-05-12T13:11:00"
+  },
+  {
+    "order_id": "ORD00099",
+    "customer_email": "mallory.johnson3755@corp.io",
+    "items": [
+      {
+        "sku": "SKU-8883",
+        "qty": 4,
+        "unit_cents": 76302
+      },
+      {
+        "sku": "SKU-2130",
+        "qty": 3,
+        "unit_cents": 36259
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-01-20T19:49:00"
+  },
+  {
+    "order_id": "ORD00341",
+    "customer_email": "dave.johnson3541@corp.io",
+    "items": [
+      {
+        "sku": "SKU-1609",
+        "qty": 5,
+        "unit_cents": 23219
+      },
+      {
+        "sku": "SKU-3628",
+        "qty": 4,
+        "unit_cents": 98332
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2025-10-18T18:03:00"
+  },
+  {
+    "order_id": "ORD00040",
+    "customer_email": "trent.wilson922@example.com",
+    "items": [
+      {
+        "sku": "SKU-5804",
+        "qty": 3,
+        "unit_cents": 90469
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-04-28T04:11:00"
+  },
+  {
+    "order_id": "ORD00157",
+    "customer_email": "judy.walker280@shop.net",
+    "items": [
+      {
+        "sku": "SKU-4868",
+        "qty": 4,
+        "unit_cents": 65610
+      },
+      {
+        "sku": "SKU-6951",
+        "qty": 3,
+        "unit_cents": 11609
+      },
+      {
+        "sku": "SKU-8076",
+        "qty": 1,
+        "unit_cents": 91783
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-01-20T17:17:00"
+  },
+  {
+    "order_id": "ORD00109",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-7360",
+        "qty": 2,
+        "unit_cents": 57897
+      },
+      {
+        "sku": "SKU-1879",
+        "qty": 4,
+        "unit_cents": 11476
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-04-17T14:02:00"
+  },
+  {
+    "order_id": "ORD00077",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-3558",
+        "qty": 3,
+        "unit_cents": 47704
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-05-11T15:50:00"
+  },
+  {
+    "order_id": "ORD00018",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-9656",
+        "qty": 5,
+        "unit_cents": 12916
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-10-21T06:55:00"
+  },
+  {
+    "order_id": "ORD00220",
+    "customer_email": "peggy.brown631@example.com",
+    "items": [
+      {
+        "sku": "SKU-3498",
+        "qty": 5,
+        "unit_cents": 53196
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2026-05-12T16:23:00"
+  },
+  {
+    "order_id": "ORD00025",
+    "customer_email": "sybil.wilson194@test.org",
+    "items": [
+      {
+        "sku": "SKU-2424",
+        "qty": 1,
+        "unit_cents": 11197
+      },
+      {
+        "sku": "SKU-4244",
+        "qty": 2,
+        "unit_cents": 8115
+      },
+      {
+        "sku": "SKU-7304",
+        "qty": 1,
+        "unit_cents": 12955
+      },
+      {
+        "sku": "SKU-7452",
+        "qty": 5,
+        "unit_cents": 68126
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-08-26T18:45:00"
+  },
+  {
+    "order_id": "ORD00051",
+    "customer_email": "kevin.baker578@test.org",
+    "items": [
+      {
+        "sku": "SKU-8810",
+        "qty": 4,
+        "unit_cents": 91155
+      },
+      {
+        "sku": "SKU-9217",
+        "qty": 3,
+        "unit_cents": 64681
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-05-05T23:31:00"
+  },
+  {
+    "order_id": "ORD00145",
+    "customer_email": "peggy.clark404@mail.co",
+    "items": [
+      {
+        "sku": "SKU-7135",
+        "qty": 2,
+        "unit_cents": 68351
+      },
+      {
+        "sku": "SKU-1840",
+        "qty": 2,
+        "unit_cents": 92664
+      },
+      {
+        "sku": "SKU-8820",
+        "qty": 4,
+        "unit_cents": 4111
+      },
+      {
+        "sku": "SKU-4907",
+        "qty": 1,
+        "unit_cents": 40509
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-03-15T00:57:00"
+  },
+  {
+    "order_id": "ORD00010",
+    "customer_email": "quentin.davis40@test.org",
+    "items": [
+      {
+        "sku": "SKU-1354",
+        "qty": 2,
+        "unit_cents": 24344
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-04-24T01:59:00"
+  },
+  {
+    "order_id": "ORD00312",
+    "customer_email": "ivan.moore4467@test.org",
+    "items": [
+      {
+        "sku": "SKU-8694",
+        "qty": 5,
+        "unit_cents": 94197
+      },
+      {
+        "sku": "SKU-3212",
+        "qty": 1,
+        "unit_cents": 97680
+      },
+      {
+        "sku": "SKU-7491",
+        "qty": 4,
+        "unit_cents": 45316
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2024-05-16T08:25:00"
+  },
+  {
+    "order_id": "ORD00094",
+    "customer_email": "ruth.green62@corp.io",
+    "items": [
+      {
+        "sku": "SKU-1011",
+        "qty": 4,
+        "unit_cents": 44361
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2026-12-05T05:11:00"
+  },
+  {
+    "order_id": "ORD00302",
+    "customer_email": "quentin.johnson7167@test.org",
+    "items": [
+      {
+        "sku": "SKU-4752",
+        "qty": 4,
+        "unit_cents": 817
+      },
+      {
+        "sku": "SKU-1971",
+        "qty": 1,
+        "unit_cents": 17893
+      },
+      {
+        "sku": "SKU-6408",
+        "qty": 5,
+        "unit_cents": 21729
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-09-06T18:09:00"
+  },
+  {
+    "order_id": "ORD00031",
+    "customer_email": "grace.adams88@example.com",
+    "items": [
+      {
+        "sku": "SKU-9273",
+        "qty": 4,
+        "unit_cents": 69542
+      },
+      {
+        "sku": "SKU-9231",
+        "qty": 1,
+        "unit_cents": 75318
+      },
+      {
+        "sku": "SKU-2485",
+        "qty": 5,
+        "unit_cents": 99432
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2026-07-25T06:18:00"
+  },
+  {
+    "order_id": "ORD00195",
+    "customer_email": "peggy.brown309@shop.net",
+    "items": [
+      {
+        "sku": "SKU-1960",
+        "qty": 3,
+        "unit_cents": 43728
+      },
+      {
+        "sku": "SKU-5160",
+        "qty": 4,
+        "unit_cents": 51281
+      },
+      {
+        "sku": "SKU-1363",
+        "qty": 3,
+        "unit_cents": 85677
+      },
+      {
+        "sku": "SKU-4962",
+        "qty": 2,
+        "unit_cents": 11784
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-09-07T14:20:00"
+  },
+  {
+    "order_id": "ORD00243",
+    "customer_email": "bob.adams9101@test.org",
+    "items": [
+      {
+        "sku": "SKU-6627",
+        "qty": 5,
+        "unit_cents": 83657
+      },
+      {
+        "sku": "SKU-8883",
+        "qty": 5,
+        "unit_cents": 86996
+      },
+      {
+        "sku": "SKU-5422",
+        "qty": 3,
+        "unit_cents": 2488
+      },
+      {
+        "sku": "SKU-3952",
+        "qty": 3,
+        "unit_cents": 25752
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2025-08-06T03:03:00"
+  },
+  {
+    "order_id": "ORD00202",
+    "customer_email": "quentin.hill35@shop.net",
+    "items": [
+      {
+        "sku": "SKU-3366",
+        "qty": 1,
+        "unit_cents": 12311
+      }
+    ],
+    "status": "pending",
+    "placed_at": "2025-08-28T06:15:00"
+  },
+  {
+    "order_id": "ORD00318",
+    "customer_email": "frank.miller3604@mail.co",
+    "items": [
+      {
+        "sku": "SKU-2720",
+        "qty": 5,
+        "unit_cents": 72690
+      }
+    ],
+    "status": "refunded",
+    "placed_at": "2024-06-21T17:25:00"
+  },
+  {
+    "order_id": "ORD00382",
+    "customer_email": "quentin.clark3@example.com",
+    "items": [
+      {
+        "sku": "SKU-5996",
+        "qty": 2,
+        "unit_cents": 24344
+      },
+      {
+        "sku": "SKU-6302",
+        "qty": 4,
+        "unit_cents": 92925
+      },
+      {
+        "sku": "SKU-5847",
+        "qty": 3,
+        "unit_cents": 59204
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2025-03-20T14:13:00"
+  },
+  {
+    "order_id": "ORD00065",
+    "customer_email": "",
+    "items": [
+      {
+        "sku": "SKU-7012",
+        "qty": 5,
+        "unit_cents": 83306
+      },
+      {
+        "sku": "SKU-1414",
+        "qty": 2,
+        "unit_cents": 51949
+      },
+      {
+        "sku": "SKU-3543",
+        "qty": 2,
+        "unit_cents": 67008
+      }
+    ],
+    "status": "paid",
+    "placed_at": "2024-04-26T15:36:00"
+  },
+  {
+    "order_id": "ORD00123",
+    "customer_email": "niaj.lee7034@mail.co",
+    "items": [
+      {
+        "sku": "SKU-7900",
+        "qty": 5,
+        "unit_cents": 65684
+      },
+      {
+        "sku": "SKU-2971",
+        "qty": 5,
+        "unit_cents": 13932
+      }
+    ],
+    "status": "cancelled",
+    "placed_at": "2024-09-15T15:11:00"
+  }
+]

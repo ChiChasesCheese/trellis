@@ -1,0 +1,12 @@
+"""
+Payments (phone screen, exact repeat)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/f1d236f2-3843-4e3e-89f2-e0c35524c64d
+Source Type: OJ / More Problems
+
+Question Summary:
+## Payments (exact repeat; missing prompt)
+
+The post only mentions "payment exact repeat (3/3)" without the actual prompt, I/O, constraints, or examples, so it can't be reconstructed into an answerable coding question.
+"""

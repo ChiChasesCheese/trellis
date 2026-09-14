@@ -1,0 +1,42 @@
+"""
+Data Verification Challenge
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/6cf4cd47-6e0e-4766-b4af-85438a5139f2
+Source Type: OJ / More Problems
+
+Question Summary:
+You are required to verify a given set of data to ensure it complies with specific rules. These rules will cover various validation checks such as format checks and data consistency. Assume the data you receive is in JSON format. Write a program to check if the data meets the following rules:
+
+1. Each record must have a field named `id` with an integer value.
+2. There must be a field named `email`, and its value must follow the standard email format.
+3. A field named `age` must exist, and its value must be an integer greater than 18.
+
+Implement a function `verify_data(data: List[Dict]) -> bool` which returns `True` if all records meet the criteria, otherwise `False`.
+
+**Input:** The provided data is in JSON format, containing multiple records, each record is a dictionary.
+
+**Output:** Return `True` if all records pass the validation checks; otherwise, return `False`.
+
+**Data scale:**
+- The data contains up to 1000 records.
+- Each record contains no more than 10 fields.
+
+**Test cases:**
+
+```json
+Input: [
+  {"id": 1, "email": "test@example.com", "age": 25},
+  {"id": 2, "email": "user@domain.com", "age": 30}
+]
+Output: True
+
+Input: [
+  {"id": "a", "email": "test@example.com", "age": 25},
+  {"id": 2, "email": "user@domain.com", "age": 17}
+]
+Output: False
+```
+
+Please note that during the implementation, the efficiency of time and space should be optimized.
+"""

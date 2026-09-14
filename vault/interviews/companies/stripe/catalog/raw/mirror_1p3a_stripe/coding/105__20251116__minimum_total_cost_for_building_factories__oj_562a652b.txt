@@ -1,0 +1,28 @@
+"""
+Minimum Total Cost for Building Factories
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/562a652b-89f5-4519-afae-e3b4ac57ad8d
+Source Type: OJ / More Problems
+
+Question Summary:
+Given a 3x3 array where each sub-array represents the building options for one factory, each option includes two values: [cost, distance] representing the building cost and distance of railway, respectively. The goal is to minimize the overall building cost and the total effect of distance. Calculate the minimum building cost when the distance is zero.
+
+**Example Input:**
+```
+array = [[[10, 0], [20, 0], [35, 0]],
+         [[35, 0], [50, 0], [25, 0]],
+         [[30, 0], [5, 0], [40, 0]]]
+```
+
+**Example Output:**
+```
+40
+```
+
+**Note:** Each factory must choose one option to build.
+
+### Constraints
+- Each factory has 3 options (cost, distance)
+- Input contains only integers and is valid.
+"""

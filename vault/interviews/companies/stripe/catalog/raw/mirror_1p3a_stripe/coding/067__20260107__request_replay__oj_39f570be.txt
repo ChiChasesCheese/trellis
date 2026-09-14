@@ -1,0 +1,36 @@
+"""
+Request Replay
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/39f570be-2146-43b0-88d4-8098a53d2700
+Source Type: OJ / More Problems
+
+Question Summary:
+Implement a request replay system to parse JSON data from files or network requests, and compare with expected results. Requirements:
+
+1. Develop a request parsing function capable of handling file reading and HTTP requests.
+2. Implement result comparison to verify parsed data against expected results.
+
+Input Data:
+- Specify file path or API endpoint.
+- Provide expected JSON object.
+
+Output Data:
+- If parsing is successful and matches the expected result, output `MATCH`.
+- If parsing is successful but the result does not match, output `MISMATCH`.
+- If parsing fails, output `PARSE ERROR`.
+
+Constraints:
+- Provided JSON data is always in valid format.
+- Supports complete key-value matching.
+
+Example Input/Output:
+```
+Input:
+File or URL: example.json
+Expected JSON: {"key":"value"}
+
+Output:
+MATCH
+```
+"""

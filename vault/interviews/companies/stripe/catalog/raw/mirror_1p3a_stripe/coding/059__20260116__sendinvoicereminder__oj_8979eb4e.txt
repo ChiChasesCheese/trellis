@@ -1,0 +1,10 @@
+"""
+sendInvoiceReminder
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/8979eb4e-6f65-4d12-b74c-a3606e37c235
+Source Type: OJ / More Problems
+
+Question Summary:
+Send invoice reminder notifications. Implement a method that sends a reminder notification when an invoice is unpaid and is 3 days away from the due date.
+"""

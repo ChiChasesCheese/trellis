@@ -1,0 +1,287 @@
+"""
+Debugging: JSON parser issue (find/fix bug)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/6c2bd1ef-56c2-4bd5-afd9-e1be020ce3e5
+Source Type: OJ / More Problems
+
+================================================================================
+PROBLEM
+================================================================================
+
+You are given a hand-rolled recursive-descent JSON parser. It handles objects,
+arrays, strings, numbers, booleans, and null. Three bugs have been injected:
+
+Bug 1 — Escaped characters in strings.
+        The parser does not handle backslash escapes (\\", \\n, \\\\, etc.).
+        A string like "say \\"hi\\"" causes the parser to stop at the first
+        escaped quote, producing a truncated result and leaving the rest of
+        the input unparsed.
+
+Bug 2 — Negative numbers.
+        The parser only handles digits starting with 0-9.  A value like -42
+        causes a parse error because '-' is not recognized as the start of
+        a number.
+
+Bug 3 — Empty containers.
+        The parser fails on empty objects ({}) and empty arrays ([]).
+        It expects at least one element/key and raises a parse error when
+        it immediately encounters the closing bracket.
+
+Your task:
+1. Run the tests and identify the 3 failures.
+2. Trace each to its root cause in the parser.
+3. Fix each with a minimal change.
+4. Verify all tests pass.
+"""
+
+
+# ---------------------------------------------------------------------------
+# Buggy code (DO NOT MODIFY — use for reference)
+# ---------------------------------------------------------------------------
+
+class JsonParseError(Exception):
+    pass
+
+
+class JsonParserBuggy:
+    """Recursive-descent JSON parser."""
+
+    def __init__(self, text: str):
+        self.text = text
+        self.pos = 0
+
+    def parse(self):
+        value = self._parse_value()
+        self._skip_whitespace()
+        if self.pos != len(self.text):
+            raise JsonParseError(
+                f"Unexpected trailing content at position {self.pos}"
+            )
+        return value
+
+    # -- dispatching --
+
+    def _parse_value(self):
+        self._skip_whitespace()
+        if self.pos >= len(self.text):
+            raise JsonParseError("Unexpected end of input")
+
+        ch = self.text[self.pos]
+        if ch == '"':
+            return self._parse_string()
+        if ch == '{':
+            return self._parse_object()
+        if ch == '[':
+            return self._parse_array()
+        if ch == 't':
+            return self._parse_literal('true', True)
+        if ch == 'f':
+            return self._parse_literal('false', False)
+        if ch == 'n':
+            return self._parse_literal('null', None)
+        if ch.isdigit():
+            # BUG 2: Only digits 0-9 start a number.  Negative numbers
+            # (starting with '-') fall through to the error below.
+            return self._parse_number()
+        raise JsonParseError(f"Unexpected character {ch!r} at position {self.pos}")
+
+    # -- primitives --
+
+    def _parse_string(self) -> str:
+        assert self.text[self.pos] == '"'
+        self.pos += 1  # opening quote
+        result = []
+        while self.pos < len(self.text):
+            ch = self.text[self.pos]
+            # BUG 1: No handling of backslash escapes.  A \" inside the
+            # string is treated as the closing quote, truncating the value.
+            if ch == '"':
+                self.pos += 1  # closing quote
+                return ''.join(result)
+            result.append(ch)
+            self.pos += 1
+        raise JsonParseError("Unterminated string")
+
+    def _parse_number(self):
+        start = self.pos
+        if self.pos < len(self.text) and self.text[self.pos] == '-':
+            self.pos += 1
+        while self.pos < len(self.text) and self.text[self.pos].isdigit():
+            self.pos += 1
+        # decimal part
+        if self.pos < len(self.text) and self.text[self.pos] == '.':
+            self.pos += 1
+            while self.pos < len(self.text) and self.text[self.pos].isdigit():
+                self.pos += 1
+        # exponent
+        if self.pos < len(self.text) and self.text[self.pos] in 'eE':
+            self.pos += 1
+            if self.pos < len(self.text) and self.text[self.pos] in '+-':
+                self.pos += 1
+            while self.pos < len(self.text) and self.text[self.pos].isdigit():
+                self.pos += 1
+
+        num_str = self.text[start:self.pos]
+        if '.' in num_str or 'e' in num_str or 'E' in num_str:
+            return float(num_str)
+        return int(num_str)
+
+    def _parse_literal(self, expected: str, value):
+        end = self.pos + len(expected)
+        if self.text[self.pos:end] == expected:
+            self.pos = end
+            return value
+        raise JsonParseError(
+            f"Expected {expected!r} at position {self.pos}"
+        )
+
+    # -- containers --
+
+    def _parse_object(self) -> dict:
+        assert self.text[self.pos] == '{'
+        self.pos += 1
+        result = {}
+
+        self._skip_whitespace()
+        # BUG 3: Immediately tries to parse a key.  If the next char is '}',
+        # it fails because '"' is expected for the key.
+        key = self._parse_string()
+        self._skip_whitespace()
+        self._expect(':')
+        value = self._parse_value()
+        result[key] = value
+
+        while True:
+            self._skip_whitespace()
+            if self.pos < len(self.text) and self.text[self.pos] == '}':
+                self.pos += 1
+                return result
+            self._expect(',')
+            self._skip_whitespace()
+            key = self._parse_string()
+            self._skip_whitespace()
+            self._expect(':')
+            value = self._parse_value()
+            result[key] = value
+
+    def _parse_array(self) -> list:
+        assert self.text[self.pos] == '['
+        self.pos += 1
+        result = []
+
+        self._skip_whitespace()
+        # BUG 3 (same pattern): Immediately parses a value.  Empty arrays
+        # hit an unexpected ']' character.
+        result.append(self._parse_value())
+
+        while True:
+            self._skip_whitespace()
+            if self.pos < len(self.text) and self.text[self.pos] == ']':
+                self.pos += 1
+                return result
+            self._expect(',')
+            result.append(self._parse_value())
+
+    # -- helpers --
+
+    def _skip_whitespace(self):
+        while self.pos < len(self.text) and self.text[self.pos] in ' \t\n\r':
+            self.pos += 1
+
+    def _expect(self, ch: str):
+        self._skip_whitespace()
+        if self.pos >= len(self.text) or self.text[self.pos] != ch:
+            actual = self.text[self.pos] if self.pos < len(self.text) else 'EOF'
+            raise JsonParseError(
+                f"Expected {ch!r} but got {actual!r} at position {self.pos}"
+            )
+        self.pos += 1
+
+
+# ---------------------------------------------------------------------------
+# Implement your fix here
+# ---------------------------------------------------------------------------
+
+class JsonParserFixed:
+    """Fix all three bugs."""
+
+    def __init__(self, text: str):
+        pass
+
+    def parse(self):
+        pass
+
+
+def parse_json(text: str):
+    """Convenience wrapper."""
+    return JsonParserFixed(text).parse()
+
+
+# ---------------------------------------------------------------------------
+# Tests
+# ---------------------------------------------------------------------------
+
+def run_tests():
+    # ---- Basic values (should pass even with buggy code) ----
+    assert parse_json('42') == 42
+    assert parse_json('3.14') == 3.14
+    assert parse_json('"hello"') == 'hello'
+    assert parse_json('true') is True
+    assert parse_json('false') is False
+    assert parse_json('null') is None
+    print("Basic values: PASSED")
+
+    # ---- Test 1: Escaped characters in strings ----
+    assert parse_json(r'"say \"hi\""') == 'say "hi"'
+    assert parse_json(r'"line1\nline2"') == 'line1\nline2'
+    assert parse_json(r'"back\\slash"') == 'back\\slash'
+    assert parse_json(r'"tab\there"') == 'tab\there'
+    assert parse_json(r'"slash\/"') == 'slash/'
+    print("Test 1 (escaped strings): PASSED")
+
+    # ---- Test 2: Negative numbers ----
+    assert parse_json('-42') == -42
+    assert parse_json('-3.14') == -3.14
+    assert parse_json('-0') == 0
+    assert parse_json('{"temp": -10}') == {"temp": -10}
+    print("Test 2 (negative numbers): PASSED")
+
+    # ---- Test 3: Empty containers ----
+    assert parse_json('{}') == {}
+    assert parse_json('[]') == []
+    assert parse_json('{"a": {}}') == {"a": {}}
+    assert parse_json('[[], {}]') == [[], {}]
+    print("Test 3 (empty containers): PASSED")
+
+    # ---- Integration: nested structures ----
+    doc = parse_json('''
+    {
+        "name": "Alice",
+        "age": 30,
+        "scores": [100, -5, 3.14],
+        "address": {
+            "city": "San Francisco",
+            "zip": "94103"
+        },
+        "active": true,
+        "notes": null,
+        "empty_list": [],
+        "quote": "She said \\"hello\\""
+    }
+    ''')
+    assert doc['name'] == 'Alice'
+    assert doc['age'] == 30
+    assert doc['scores'] == [100, -5, 3.14]
+    assert doc['address']['city'] == 'San Francisco'
+    assert doc['active'] is True
+    assert doc['notes'] is None
+    assert doc['empty_list'] == []
+    assert doc['quote'] == 'She said "hello"'
+    print("Integration test: PASSED")
+
+    print("\nAll tests passed")
+
+
+if __name__ == '__main__':
+    run_tests()

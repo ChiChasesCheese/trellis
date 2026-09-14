@@ -1,0 +1,10 @@
+"""
+Integration Code Challenge
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/d8794c84-c556-4846-ba4b-e9a09789ca34
+Source Type: OJ / More Problems
+
+Question Summary:
+In the integration round, don't act; if you have done this question, just read it once and start working, otherwise you won't finish on time.
+"""

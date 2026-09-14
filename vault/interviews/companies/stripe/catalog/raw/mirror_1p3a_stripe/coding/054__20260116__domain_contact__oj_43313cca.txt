@@ -1,0 +1,10 @@
+"""
+输出符合domain的contact信息
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/43313cca-a44b-4d64-844c-5244457bcd09
+Source Type: OJ / More Problems
+
+Question Summary:
+Write code to extract contact information that conforms to a specified domain format from input data. You must handle various edge cases and ensure the formatted contact information is correct in the output.
+"""

@@ -1,0 +1,12 @@
+[
+  {"round": "team", "q": "What kind of problems do you want to work on for the next two years?", "principle": "Think Big", "source": "GenSWE 官方 'paired based on experience, skill, and preference'"},
+  {"round": "team", "q": "Here's what my team owns — where do you see yourself contributing in the first six months?", "principle": "Own It", "source": "聚合站 team-fit 描述（30–45 min）"},
+  {"round": "team", "q": "How do you ramp up on a large unfamiliar codebase?", "principle": "Be Excellent", "source": "HM 通用"},
+  {"round": "team", "q": "What did you like least about your current team, and what would you change?", "principle": "Integrity Always", "source": "HM 通用"},
+  {"round": "team", "q": "How do you feel about on-call? Tell me about your on-call experience.", "principle": "Own It", "source": "Blind WLB 帖（on-call 看团队）"},
+  {"round": "team", "q": "We're 3 days a week in office. Does that work for you?", "principle": "", "source": "Blind RTO 帖 2025-10（badge 追踪）"},
+  {"round": "team", "q": "How do you use AI tools in your daily engineering work?", "principle": "Think Big", "source": "SVP Eng 博客 2026-08；CEO 'tech lead of agents'"},
+  {"round": "team", "q": "Tell me about a time you had to learn a new technology quickly to ship.", "principle": "Get It Done", "source": "HM 通用"},
+  {"round": "team", "q": "What questions do you have about the team?", "principle": "", "source": "06-questions-to-ask §C/§D"},
+  {"round": "team", "q": "Is there anything that would make you say no to this team?", "principle": "Integrity Always", "source": "HM 通用"}
+]

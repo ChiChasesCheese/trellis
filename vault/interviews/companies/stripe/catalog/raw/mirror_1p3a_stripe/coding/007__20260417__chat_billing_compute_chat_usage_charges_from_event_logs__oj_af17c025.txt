@@ -1,0 +1,236 @@
+"""
+Chat Billing (Compute Chat Usage Charges from Event Logs)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/af17c025-83bb-42b3-ad8a-159612777cd2
+Source Type: OJ / More Problems
+
+================================================================================
+INTERVIEW PROMPT (as it would be delivered by the interviewer)
+================================================================================
+
+Hi -- thanks for joining. The problem today comes from one of our
+internal tools teams. We pay a third-party vendor for a customer-support
+chat product, and they bill us based on event logs they ship to us at
+the end of every month. Our finance team wants to verify that bill,
+which means re-deriving the charges ourselves from the raw events.
+
+You're going to write that re-derivation. We're going to keep adding
+billing rules as we go.
+
+Read input from stdin, write output to stdout. Use any language.
+
+--------------------------------------------------------------------------------
+Input
+--------------------------------------------------------------------------------
+
+Each line of input is one event:
+
+    <unix_seconds> <chat_id> <event_type> <agent_id?>
+
+  - unix_seconds : integer, monotonically non-decreasing.
+  - chat_id      : string identifier for one chat session.
+  - event_type   : one of CHAT_OPEN, AGENT_JOIN, AGENT_LEAVE, CHAT_CLOSE.
+  - agent_id     : present only on AGENT_JOIN and AGENT_LEAVE.
+
+Sessions are well-formed:
+  - Every chat_id starts with exactly one CHAT_OPEN and ends with
+    exactly one CHAT_CLOSE.
+  - Between OPEN and CLOSE, agents may JOIN and LEAVE any number of times.
+  - Every AGENT_JOIN for (chat_id, agent_id) is matched by exactly one
+    AGENT_LEAVE before CHAT_CLOSE.
+  - Multiple agents may overlap in the same chat. (Two agents in at
+    once is normal -- think handoffs.)
+
+Input ends at EOF.
+
+--------------------------------------------------------------------------------
+PART 1 -- Bill by total agent-time
+--------------------------------------------------------------------------------
+
+The base rate is $0.05 per agent-second. "Agent-second" means: if two
+agents are both in the chat at the same time for 30 seconds, that's
+60 agent-seconds.
+
+For each chat session, compute the total agent-seconds and the charge
+in cents (round half-up to the nearest cent at the very end of the
+session's calculation -- not per-agent).
+
+Print one line per chat_id, sorted alphabetically by chat_id:
+
+    <chat_id> <total_agent_seconds> <charge_cents>
+
+Example:
+
+    Input:
+        1000 c1 CHAT_OPEN
+        1010 c1 AGENT_JOIN a1
+        1040 c1 AGENT_JOIN a2
+        1060 c1 AGENT_LEAVE a1
+        1070 c1 AGENT_LEAVE a2
+        1080 c1 CHAT_CLOSE
+
+    a1 was in for 1010..1060 -> 50 seconds
+    a2 was in for 1040..1070 -> 30 seconds
+    total agent-seconds = 80
+    charge = round(80 * 5) = 400 cents
+
+    Output:
+        c1 80 400
+
+--------------------------------------------------------------------------------
+PART 2 -- Free tier per session
+--------------------------------------------------------------------------------
+
+Marketing wants to advertise "the first 60 seconds are free". Concretely:
+the first 60 agent-seconds of each chat session are not billed. After
+that, charge at $0.05/agent-second as before.
+
+Update the per-session output to:
+
+    <chat_id> <total_agent_seconds> <billable_agent_seconds> <charge_cents>
+
+For the example above, billable = 80 - 60 = 20, charge = 100 cents.
+
+--------------------------------------------------------------------------------
+PART 3 -- Concurrency surcharge
+--------------------------------------------------------------------------------
+
+[Once Parts 1-2 are working.]
+
+For seconds during which two or more agents are in the chat at the same
+time, the rate is $0.08/agent-second instead of $0.05. (We pay more
+when the chat needs multiple support people on it.)
+
+The concurrency surcharge applies AFTER the free 60 agent-seconds have
+been used up. If the free-tier portion of the session contained
+high-concurrency time, that high-concurrency time still counted toward
+"first 60 agent-seconds" -- it just wasn't billed. (Free is free.)
+
+Output stays the same shape as Part 2.
+
+--------------------------------------------------------------------------------
+Constraints
+--------------------------------------------------------------------------------
+
+- At most 200_000 events total.
+- At most 50_000 distinct chat sessions.
+- Within a chat, at most 100 distinct agents.
+- All seconds are non-negative and fit in a 64-bit signed int.
+- Use integer arithmetic for cents. The only place rounding can happen
+  is converting agent-seconds * rate -> cents.
+
+--------------------------------------------------------------------------------
+What I'm looking for
+--------------------------------------------------------------------------------
+
+[Interviewer notes]
+
+- Part 1 is mostly bookkeeping. Watch for the off-by-one trap:
+  AGENT_JOIN at t1 and AGENT_LEAVE at t2 means the agent was present
+  for (t2 - t1) seconds, half-open interval [t1, t2). Be consistent.
+- Part 3 is where the structural call matters. The clean approach is
+  to walk a per-second timeline (or a per-event sweep) and bucket each
+  agent-second into one of {free, billed-low, billed-high}. The naive
+  "compute per-agent intervals, then somehow combine" approach is
+  painful; if I see them go that way I'll nudge.
+- For Part 3, accept either: a true sweep over event timestamps
+  computing concurrency between events, or a second-by-second iteration
+  if the time range per chat is bounded (which the constraints don't
+  quite guarantee, but it's an OK-with-caveat answer).
+"""
+
+
+import sys
+from collections import defaultdict
+from typing import Iterable
+
+RATE_LOW_CENTS_PER_SEC = 5
+RATE_HIGH_CENTS_PER_SEC = 8
+FREE_TIER_AGENT_SECONDS = 60
+
+
+def parse_events(lines: Iterable[str]):
+    events = []
+    for line in lines:
+        if not line.strip():
+            continue
+        parts = line.split()
+        ts = int(parts[0])
+        chat_id = parts[1]
+        kind = parts[2]
+        agent = parts[3] if len(parts) > 3 else None
+        events.append((ts, chat_id, kind, agent))
+    return events
+
+
+def by_session(events):
+    sessions: dict[str, list] = defaultdict(list)
+    for e in events:
+        sessions[e[1]].append(e)
+    return sessions
+
+
+def session_intervals(events: list):
+    """Return list of (t_start, t_end, agent_id) per agent presence."""
+    open_at: dict[str, int] = {}
+    intervals = []
+    for event in events:
+        ts, kind, agent = event[0], event[2], event[3]
+        if kind == "AGENT_JOIN":
+            open_at[agent] = ts
+        elif kind == "AGENT_LEAVE":
+            start = open_at.pop(agent)
+            intervals.append((start, ts, agent))
+    return intervals
+
+
+def bill_session(events: list) -> tuple[int, int, int]:
+    """Returns (total_agent_seconds, billable_agent_seconds, charge_cents)."""
+    intervals = session_intervals(events)
+    if not intervals:
+        return (0, 0, 0)
+
+    points = set()
+    for s, e, _ in intervals:
+        points.add(s)
+        points.add(e)
+    points = sorted(points)
+
+    total = 0
+    free_remaining = FREE_TIER_AGENT_SECONDS
+    charge_cents = 0
+
+    for i in range(len(points) - 1):
+        t0, t1 = points[i], points[i + 1]
+        duration = t1 - t0
+        if duration == 0:
+            continue
+        concurrency = sum(1 for s, e, _ in intervals if s <= t0 and e >= t1)
+        if concurrency == 0:
+            continue
+        agent_seconds = duration * concurrency
+        total += agent_seconds
+
+        from_free = min(free_remaining, agent_seconds)
+        free_remaining -= from_free
+        billable_here = agent_seconds - from_free
+
+        if billable_here:
+            rate = RATE_HIGH_CENTS_PER_SEC if concurrency >= 2 else RATE_LOW_CENTS_PER_SEC
+            charge_cents += billable_here * rate
+
+    billable = total - (FREE_TIER_AGENT_SECONDS - free_remaining)
+    return (total, billable, charge_cents)
+
+
+def main() -> None:
+    events = parse_events(sys.stdin)
+    sessions = by_session(events)
+    for chat_id in sorted(sessions):
+        total, billable, charge = bill_session(sessions[chat_id])
+        print(f"{chat_id} {total} {billable} {charge}")
+
+
+if __name__ == "__main__":
+    main()

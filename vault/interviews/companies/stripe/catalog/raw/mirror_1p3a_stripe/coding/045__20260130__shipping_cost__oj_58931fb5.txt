@@ -1,0 +1,14 @@
+"""
+Shipping Cost
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/58931fb5-bf0a-401d-abf9-590ac22a66dd
+Source Type: OJ / More Problems
+
+Question Summary:
+## Shipping Cost
+
+Given package/order data and a set of shipping pricing rules, compute the total shipping cost for each order.
+
+> Note: The original post does not include enough concrete input fields/rules to turn this into a fully specified coding prompt, so only the title is retained.
+"""

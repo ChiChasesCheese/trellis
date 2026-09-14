@@ -1,0 +1,10 @@
+"""
+Transaction Fee & Balance Check
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/e59b22b1-6cdc-41dd-80df-e0c6c894246a
+Source Type: OJ / More Problems
+
+Question Summary:
+Given a ledger, traverse and output all unbalanced accounts (balance not equal to zero). Handle transaction fees. Another problem records the list of rejected transactions.
+"""

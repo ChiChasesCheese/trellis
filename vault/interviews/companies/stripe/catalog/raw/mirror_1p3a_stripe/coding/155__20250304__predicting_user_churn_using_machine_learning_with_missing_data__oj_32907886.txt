@@ -1,0 +1,20 @@
+"""
+Predicting User Churn Using Machine Learning with Missing Data
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/32907886-6902-4221-8aa3-d23fd1912576
+Source Type: OJ / More Problems
+
+Question Summary:
+### Machine Learning Integration Task
+Based on the given user data table, predict whether a user will churn in the next 90 days.
+
+#### Data Description
+- The data includes numerical features, categorical features, and randomly generated features.
+- Missing values are present in the data.
+
+#### Requirements
+- Provide a complete model solution including data preprocessing, model training, and testing.
+- Select appropriate evaluation metrics and perform analysis.
+- Internet access is permitted and screen sharing is allowed.
+"""

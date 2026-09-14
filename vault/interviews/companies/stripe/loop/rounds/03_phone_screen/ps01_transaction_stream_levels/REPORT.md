@@ -1,57 +1,68 @@
-# ps01 Transaction Stream Levels — 报告
+# ps01 Transaction Stream Levels — report
 
-## 概述
-同一份 `user_id,amount,timestamp` 流上的四个解锁式（unlock-next-part）关卡：总额 -> 60s
-滑动窗口阈值标记 -> 某一时刻的 top-K -> `[small,large,small]` 模式检测。这是 Stripe 实时
-风控/交易速率监控场景（"这个用户是不是花钱太快太多了？"）压缩到面试规模的版本。全部难点在于
-敲定*唯一*一种窗口约定（闭区间）并在 Part 2-4 中一致复用，以及把 tie-break 规则（timestamp
-相同 -> 按输入顺序；排序相同 -> 按 user_id）明确写出来，而不是隐含假设。
+## Summary
+Four unlock-next-part levels over the same `user_id,amount,timestamp` stream: totals -> 60s
+sliding-window threshold flag -> top-K at a point in time -> `[small,large,small]` pattern
+detection. This is Stripe's real-time velocity/fraud-monitoring shape ("has this user spent too
+much too fast?") reduced to interview size. The whole difficulty is nailing down *one* window
+convention (closed interval) and reusing it consistently across Parts 2-4, plus getting the
+tie-break rules (timestamp ties -> input order; sort ties -> user_id) explicit instead of
+implicit.
 
-## 来源与可信度
-中等 — 单一主要来源（learncswithus.com，2025-10-25），有详细的四级拆解，但只有 Level 1 和
-Level 3 附带具体数字示例；Level 2 和 Level 4 只有文字描述（"标记在任意 60s 窗口内超过 T 的
-用户"、"用状态机检测 [small,large,small]"），没有数字。Level 3 的示例（`t=90, K=2 -> [2,1]`）
-是关键证据：它是唯一能证明窗口是**闭区间** `[t-60,t]` 而非半开区间的依据 —— 同样输入下半开
-窗口会得出 `[1,2]`，顺序错误。problem.md 中 Level 2 和 Level 4 的演示样例是我重构出来的，
-遵循同一条闭区间规则以保持内部一致，而非来自原始来源的数字。
+## Sources & confidence
+medium — single primary source (learncswithus.com, 2025-10-25) with a detailed four-level
+breakdown, but only Levels 1 and 3 include concrete numeric examples; Levels 2 and 4 are
+prose-only ("flag users who cross T within any 60s window", "detect [small,large,small] with a
+state machine") with no numbers. The Level 3 example (`t=90, K=2 -> [2,1]`) was load-bearing: it
+is the only piece of ground truth that pins the window to a **closed** interval `[t-60,t]`
+rather than a half-open one — a half-open window on the same input produces `[1,2]`, the wrong
+order. Levels 2 and 4's worked examples in problem.md are reconstructed by me to be internally
+consistent with that same closed-interval rule, not sourced numbers.
 
-## 各部分思路
-1. **Part 1**：普通 `dict` 累加，与顺序无关，`O(n)`。
-2. **Part 2**：每个用户维护一个 `(timestamp, amount)` deque；每处理一条事件（按 timestamp 再
-   按输入顺序处理），先剔除所有早于 `ts - W` 的记录，再检查累计和是否达到 `T`。首次越界即记录
-   并结束该用户的判定；整体摊还 `O(n)`（每条交易只进出各自的 deque 一次）。
-3. **Part 3**：单次遍历过滤出落在闭区间 `[t-60, t]` 内的记录，用 `dict` 按用户求和，再
-   `sorted(items, key=lambda kv: (-sum, user_id))[:K]`。`O(n + m log m)`。堆方案
-   （`O(n log K)`）作为权衡取舍写入文档但未实现 —— 在 `n<=10^5` 规模下不值得引入额外复杂度。
-4. **Part 4**：对每个用户的流排序一次（共享的 `_by_user_sorted` 辅助函数，Part 2 和 Part 4
-   都复用），按 `amount < S` 分类为 `small`/`large`，然后扫描每一个连续 3 笔（排序后）交易组成的
-   窗口 —— 有意采用基于下标的实现而非字面意义的三状态机，两者等价；文档中同时保留状态机这种
-   "标准"心智模型，因为面试官可能会明确要求这么描述。
+## Approach by part
+1. **Part 1**: plain `dict` accumulation, order-independent, `O(n)`.
+2. **Part 2**: per-user deque of `(timestamp, amount)`; on each event (processed in
+   timestamp-then-input-order), evict everything older than `ts - W`, then check the running sum
+   against `T`. First crossing wins and is recorded; amortized `O(n)` overall (each transaction
+   enters/leaves its deque once).
+3. **Part 3**: single pass filtering to the closed window `[t-60, t]`, `dict` sum per candidate
+   user, then `sorted(items, key=lambda kv: (-sum, user_id))[:K]`. `O(n + m log m)`. Documented
+   the heap alternative (`O(n log K)`) as a stated trade-off rather than implementing it — not
+   worth the complexity at `n<=10^5`.
+4. **Part 4**: sort each user's stream once (shared `_by_user_sorted` helper, reused by Parts 2
+   and 4), classify into `small`/`large` by `amount < S`, then scan every window of 3 consecutive
+   (post-sort) transactions — deliberately index-based rather than a literal 3-state machine,
+   though the two are equivalent; documented the state-machine framing as the "expected" mental
+   model from the source, since an interviewer may ask for it explicitly.
 
-## 隐藏测试针对的坑点
-- 窗口边界：恰好 `W` 秒之前**算在**窗口内（闭区间）—— Part 2 和 Part 3 都各自双向测试
-  （`W` 内、`W+1` 外），因为它们是两条独立代码路径，只是恰好共享同一约定。
-- Part 2 的"首次越界"语义 vs "曾经越界" vs "窗口出现过的最大值" —— 三种容易混淆的不同定义；
-  参考实现与测试都统一采用"首次越界，报告该窗口的和"。
-- Part 3：窗口内零活动的用户永远不参与排名（不做零值填充）；`sum` 相同的用户按 `user_id`
-  升序打破平局，而非依赖排序实现的默认行为；输出保持**排名**顺序，不按 `user_id` 重新排序
-  （容易犯的错误：沿用 Part 1 里"按 user_id 排序"的习惯）。
-- Part 4：重叠匹配都算数（`s,l,s,l,s` -> 2 次匹配，不是 1 次）；`amount == S` 算 `large`，
-  不算 `small`（只有严格 `<` 才算 small）；交易数 `< 3` 的用户产生零匹配，不是错误。
-- 乱序输入行（文件顺序 != timestamp 顺序）不能改变任何输出结果。
+## Pitfalls hidden tests target
+- Window boundary: exactly `W` seconds old is **inside** the window (closed interval) — tested
+  both directions (`W` in, `W+1` out) for Parts 2 and 3 independently, since they're separate
+  code paths that happen to share the same convention.
+- Part 2's "first crossing" semantics vs. "ever crossing" vs. "max window sum ever seen" — three
+  different, easily-conflated definitions; the reference solution + tests commit to "first
+  crossing, report that window's sum."
+- Part 3: users with zero activity in the window are never candidates (no zero-padding); ties in
+  `sum` broken by `user_id` ascending, not left as sort-implementation-defined; output stays in
+  **ranked** order, not re-sorted by `user_id` (easy bug: reusing Part 1's user_id-sort habit).
+- Part 4: overlapping matches both count (`s,l,s,l,s` -> 2 matches, not 1); `amount == S` is
+  `large`, not `small` (strict `<` for small only); users with `< 3` transactions produce zero
+  matches, not an error.
+- Out-of-order input lines (file order != timestamp order) must not change any output.
 
-## 复杂度与实测开销
-四个部分复杂度都在 `O(n)` 到 `O(n + m log m)` 之间（`m` = 不同用户数）。性能测试：10 万行 /
-约 3000 用户跑 Part 2（deque 密集路径），开发阶段临时计时约 0.09s，远低于 2s / 256MB 的预算
-（测试时通过 `run_script` fixture 实测）。
+## Complexity & measured cost
+All four parts are `O(n)` to `O(n + m log m)` (`m` = distinct users). Perf test: 100k lines /
+~3000 users through Part 2 (deque-heavy path) ran in ~0.09s during ad-hoc development timing,
+well under the 2s / 256MB budget (measured live via the `run_script` fixture at test time).
 
-## 测试清单
-27 个测试 —— part1: 8 · part2: 6 · part3: 7 · part4: 6；edge: 10 · fmt: 3 · io: 3 · perf: 1。
+## Test inventory
+27 tests — part1: 8 · part2: 6 · part3: 7 · part4: 6; edge: 10 · fmt: 3 · io: 3 · perf: 1.
 
-## 涉及技能
-S02 解析（通过逗号数量区分参数行与数据行）· S03 乱序流处理 · S04 按用户分组 · S05 滑动窗口
-（deque，闭区间边界）· S08 确定性排序/平局处理 · S09 精确格式化 · S19 增量式设计（Level 2 和
-Level 4 之间共享状态/辅助函数）
+## Skills exercised
+S02 parsing (params-line vs data-line disambiguation by comma-count) · S03 out-of-order stream
+processing · S04 per-user grouping · S05 sliding window (deque, closed-interval boundary) · S08
+deterministic sort/tie-break · S09 exact formatting · S19 incremental design (state/helpers
+shared across levels 2 and 4)
 
 ## 电面话术：边写边说什么
 1. **读题时**：先大声确认输入协议——"PART 行后面,如果紧跟的一行没有逗号但有等号,我把它当参数行
@@ -68,7 +79,7 @@ Level 4 之间共享状态/辅助函数）
 7. **收尾**：主动提一句"如果这是无限流,Part 1/Part 2 已经很接近流式处理了,只是被'先读完整个
    stdin'这个 I/O 边界挡住"——展示对生产场景的思考,呼应 Stripe 真实的实时风控场景。
 
-## 复盘（Fable 5.1，2026-09-01）
+## Review（Fable 5.1，2026-09-01）
 **改了什么**
 - `test_ps01.py`：`test_window_boundary_closed_inclusive` 在 part2 与 part3 各定义一次（flake8 F811），
   后者覆盖前者，Part 2 的窗口边界测试实际上从未运行。重命名为 `test_p2_…` / `test_p3_…`，两个都跑且通过。

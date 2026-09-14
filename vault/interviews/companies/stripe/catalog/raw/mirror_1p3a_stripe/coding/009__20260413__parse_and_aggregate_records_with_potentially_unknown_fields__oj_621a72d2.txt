@@ -1,0 +1,448 @@
+"""
+Parse and Aggregate Records with Potentially Unknown Fields
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/621a72d2-59c8-498a-b252-50be658c6aae
+Source Type: OJ / More Problems
+
+================================================================================
+INTERVIEW PROMPT (as it would be delivered by the interviewer)
+================================================================================
+
+Hi! The thing we're going to write today is a tool that parses and
+aggregates payment records from a slightly messy upstream source. The
+twist is that the upstream's record format is loosely typed: the set of
+fields can vary from row to row, and new fields show up over time
+without warning. So we need to be tolerant.
+
+Read input from stdin, write output to stdout. Use any language.
+
+--------------------------------------------------------------------------------
+Input format (same for all parts)
+--------------------------------------------------------------------------------
+
+The first line is an integer N -- the number of records.
+Each of the next N lines is one record, encoded as space-separated
+`key=value` pairs:
+
+    id=1 amount=10 currency=USD
+    id=2 amount=5 currency=USD region=NA
+    id=3 currency=EUR amount=7 source=batch
+
+Rules:
+  - Keys are alphanumeric/underscore.
+  - Values do NOT contain spaces. (If a value would have spaces in real
+    life, the upstream URL-encodes them. We don't have to deal with
+    that today.)
+  - Field order within a record is not guaranteed.
+  - Unknown keys may appear; we ignore them unless told otherwise.
+  - If the same key appears multiple times in one record, the LAST
+    occurrence wins. (This is what the upstream does and we match
+    their behavior.)
+
+--------------------------------------------------------------------------------
+PART 1 -- Total amount per currency
+--------------------------------------------------------------------------------
+
+For each record, the relevant fields are `amount` (integer, in the
+smallest currency unit) and `currency` (ISO code).
+
+A record is VALID if it has both `amount` and `currency` and `amount`
+parses as a non-negative integer. Skip invalid records (do not error).
+
+Output: one line per currency that had at least one valid record,
+sorted alphabetically by currency code:
+
+    <currency> <total_amount>
+
+Example:
+
+    Input:
+        4
+        id=1 amount=10 currency=USD
+        id=2 amount=5 currency=USD
+        id=3 amount=7 currency=EUR
+        id=4 currency=USD                # missing amount, skipped
+
+    Output:
+        EUR 7
+        USD 15
+
+--------------------------------------------------------------------------------
+PART 2 -- Group by an arbitrary key
+--------------------------------------------------------------------------------
+
+After Part 1, the first line of input is now:
+
+    <N> <group_by_key>
+
+where `group_by_key` is the name of a field to bucket by IN ADDITION
+to currency. For example, `group_by_key=region` means we sum amounts
+per (region, currency).
+
+If a record is missing `group_by_key`, classify it under the literal
+group `__none__`.
+
+Output: one line per (group, currency) pair that had at least one
+valid record, sorted by (group, currency) lexicographically:
+
+    <group> <currency> <total_amount>
+
+Example:
+
+    Input:
+        5 region
+        id=1 amount=10 currency=USD region=NA
+        id=2 amount=5 currency=USD region=NA
+        id=3 amount=7 currency=EUR region=EU
+        id=4 amount=4 currency=USD
+        id=5 amount=3 currency=USD region=EU
+
+    Output:
+        EU EUR 7
+        EU USD 3
+        NA USD 15
+        __none__ USD 4
+
+--------------------------------------------------------------------------------
+PART 3 -- Schema inference
+--------------------------------------------------------------------------------
+
+[If you finish Parts 1-2 with time to spare.]
+
+Add a final block to the output. After the per-group lines, print:
+
+    SCHEMA
+    <key1> <count1>
+    <key2> <count2>
+    ...
+
+Listing every key seen ANYWHERE in the input (including unknown ones),
+sorted alphabetically, with `count` = number of records that contained
+that key. Records skipped by validity rules in Part 1 are still
+counted in the schema -- we want to know what's in the input,
+warts and all.
+
+Use this exact section header `SCHEMA` so a downstream tool can find it.
+
+--------------------------------------------------------------------------------
+Constraints
+--------------------------------------------------------------------------------
+
+- 0 <= N <= 200_000.
+- Each record has at most 50 key=value pairs.
+- Each key is at most 64 characters; each value is at most 256.
+- Amounts that fit are non-negative ints up to 10^15.
+- A line may have leading/trailing whitespace -- trim before splitting.
+
+--------------------------------------------------------------------------------
+What I'm looking for
+--------------------------------------------------------------------------------
+
+[Interviewer notes]
+
+- Parsing should produce a `dict` per record, not custom classes.
+  Stay loose; that's the whole point of the problem.
+- The validation function should be ONE function returning a parsed
+  amount or None. The aggregation function takes a parsed record and
+  bumps a counter. This separation makes Parts 2 and 3 cheap.
+- Watch for: int parsing on an empty value, negative amounts, duplicate
+  keys (last wins), and missing group key.
+- Part 3 is a freebie if Part 1 was structured right (a single dict of
+  `key -> seen_count` populated during parse). If they refactored
+  parsing for it, that's a yellow flag on the original Part 1 design.
+"""
+
+
+from __future__ import annotations
+
+import logging
+import sys
+from collections import defaultdict
+from dataclasses import dataclass, field
+from typing import Iterable, Optional
+
+logger = logging.getLogger(__name__)
+
+
+# ---------------------------------------------------------------------------
+# Domain constants
+# ---------------------------------------------------------------------------
+
+KEY_VALUE_DELIMITER: str = "="
+MISSING_GROUP_LABEL: str = "__none__"
+SCHEMA_SECTION_HEADER: str = "SCHEMA"
+
+REQUIRED_FIELDS_FOR_AMOUNT_AGGREGATION: tuple[str, ...] = ("amount", "currency")
+
+
+# ---------------------------------------------------------------------------
+# Data types
+# ---------------------------------------------------------------------------
+
+
+@dataclass
+class Record:
+    """One parsed record from the input.
+
+    Attributes:
+        fields: Every key=value pair seen on the line. Last write wins
+            for duplicate keys, matching the upstream's behavior.
+        source_line_number: 1-indexed line number in the original input.
+            Carried through aggregation so that DEBUG logs can point at
+            the offending row when a record is rejected.
+    """
+
+    fields: dict[str, str] = field(default_factory=dict)
+    source_line_number: int = 0
+
+
+@dataclass(frozen=True)
+class GroupKey:
+    """The composite key under which a record's amount is bucketed.
+
+    `group` is `None` when no `group_by_key` was specified on the input
+    header (Part 1). Keeping it as part of the key, rather than as
+    separate code paths, means rendering is one function for both parts.
+    """
+
+    group: Optional[str]
+    currency: str
+
+    def render(self) -> str:
+        if self.group is None:
+            return self.currency
+        return f"{self.group} {self.currency}"
+
+
+@dataclass
+class AggregateOutput:
+    """Result of aggregating a batch of records."""
+
+    totals_by_key: dict[GroupKey, int] = field(default_factory=dict)
+    schema_counts: dict[str, int] = field(default_factory=dict)
+
+
+# ---------------------------------------------------------------------------
+# Parsing
+# ---------------------------------------------------------------------------
+
+
+def parse_record_line(line: str, source_line_number: int) -> Record:
+    """Parse one input line into a Record. Malformed tokens are skipped.
+
+    A token without the `=` delimiter, or a token with an empty key, is
+    logged at DEBUG and skipped. Empty values are kept (validity is
+    decided later).
+    """
+    record = Record(source_line_number=source_line_number)
+    for token in line.strip().split():
+        if KEY_VALUE_DELIMITER not in token:
+            logger.debug(
+                "line %d: skipping malformed token (no delimiter): %r",
+                source_line_number,
+                token,
+            )
+            continue
+        key, _, value = token.partition(KEY_VALUE_DELIMITER)
+        if not key:
+            logger.debug(
+                "line %d: skipping token with empty key: %r",
+                source_line_number,
+                token,
+            )
+            continue
+        record.fields[key] = value
+    return record
+
+
+# ---------------------------------------------------------------------------
+# Validation
+# ---------------------------------------------------------------------------
+
+
+def parse_non_negative_amount(raw_amount: str) -> Optional[int]:
+    """Parse `raw_amount` as a non-negative int, or None on any failure."""
+    try:
+        amount = int(raw_amount)
+    except (TypeError, ValueError):
+        return None
+    if amount < 0:
+        return None
+    return amount
+
+
+def extract_valid_amount_and_currency(
+    record: Record,
+) -> Optional[tuple[int, str]]:
+    """Return (amount, currency) if both are present and well-formed, else None.
+
+    A record is valid for amount aggregation when `currency` is non-empty
+    AND `amount` parses as a non-negative integer.
+    """
+    currency = record.fields.get("currency", "").strip()
+    if not currency:
+        logger.debug(
+            "line %d: rejected; missing or empty 'currency'",
+            record.source_line_number,
+        )
+        return None
+
+    raw_amount = record.fields.get("amount", "")
+    amount = parse_non_negative_amount(raw_amount)
+    if amount is None:
+        logger.debug(
+            "line %d: rejected; 'amount'=%r is not a non-negative integer",
+            record.source_line_number,
+            raw_amount,
+        )
+        return None
+
+    return amount, currency
+
+
+# ---------------------------------------------------------------------------
+# Aggregation
+# ---------------------------------------------------------------------------
+
+
+def aggregate_records(
+    records: Iterable[Record],
+    group_by_field: Optional[str],
+) -> AggregateOutput:
+    """Roll up amounts by GroupKey and count how often each key appears.
+
+    Schema counts include keys from records that fail validation -- the
+    schema block is meant to describe what the input looked like, warts
+    and all, so a downstream tool can decide whether to add a new rule.
+    """
+    output = AggregateOutput()
+    totals: defaultdict[GroupKey, int] = defaultdict(int)
+    schema_counts: defaultdict[str, int] = defaultdict(int)
+
+    for record in records:
+        for field_name in record.fields:
+            schema_counts[field_name] += 1
+
+        valid = extract_valid_amount_and_currency(record)
+        if valid is None:
+            continue
+        amount, currency = valid
+
+        if group_by_field is None:
+            group_value: Optional[str] = None
+        else:
+            group_value = record.fields.get(group_by_field, MISSING_GROUP_LABEL)
+
+        key = GroupKey(group=group_value, currency=currency)
+        totals[key] += amount
+
+    output.totals_by_key = dict(totals)
+    output.schema_counts = dict(schema_counts)
+    return output
+
+
+# ---------------------------------------------------------------------------
+# Rendering
+# ---------------------------------------------------------------------------
+
+
+def render_totals(output: AggregateOutput) -> list[str]:
+    """One line per (group, currency) key in lexicographic order."""
+    rendered: list[str] = []
+    for key in sorted(output.totals_by_key, key=_group_key_sort_value):
+        rendered.append(f"{key.render()} {output.totals_by_key[key]}")
+    return rendered
+
+
+def _group_key_sort_value(key: GroupKey) -> tuple[str, str]:
+    return (key.group if key.group is not None else "", key.currency)
+
+
+def render_schema(output: AggregateOutput) -> list[str]:
+    """The SCHEMA block: header, then one line per key alphabetically."""
+    rendered: list[str] = [SCHEMA_SECTION_HEADER]
+    for field_name in sorted(output.schema_counts):
+        rendered.append(f"{field_name} {output.schema_counts[field_name]}")
+    return rendered
+
+
+# ---------------------------------------------------------------------------
+# Top-level orchestration
+# ---------------------------------------------------------------------------
+
+
+@dataclass(frozen=True)
+class InputHeader:
+    """The first line of input: record count and optional group-by key."""
+
+    record_count: int
+    group_by_field: Optional[str]
+
+
+def parse_input_header(line: str) -> InputHeader:
+    tokens = line.split()
+    record_count = int(tokens[0])
+    group_by_field = tokens[1] if len(tokens) >= 2 else None
+    return InputHeader(record_count=record_count, group_by_field=group_by_field)
+
+
+def parse_records(
+    lines: list[str],
+    record_count: int,
+    first_record_line_index: int,
+) -> list[Record]:
+    """Parse exactly `record_count` records starting from the given index."""
+    records: list[Record] = []
+    for offset in range(record_count):
+        absolute_index = first_record_line_index + offset
+        if absolute_index >= len(lines):
+            logger.warning(
+                "input ended after %d records; expected %d",
+                offset, record_count,
+            )
+            break
+        records.append(
+            parse_record_line(
+                lines[absolute_index],
+                source_line_number=absolute_index + 1,
+            )
+        )
+    return records
+
+
+def run(input_text: str) -> str:
+    """Top-level: take raw input text, return the full output as one string."""
+    lines = input_text.splitlines()
+    if not lines:
+        return ""
+
+    header = parse_input_header(lines[0])
+    records = parse_records(
+        lines,
+        record_count=header.record_count,
+        first_record_line_index=1,
+    )
+    output = aggregate_records(records, header.group_by_field)
+
+    rendered_lines: list[str] = []
+    rendered_lines.extend(render_totals(output))
+    rendered_lines.extend(render_schema(output))
+    return "\n".join(rendered_lines) + ("\n" if rendered_lines else "")
+
+
+def _configure_logging() -> None:
+    logging.basicConfig(
+        level=logging.WARNING,
+        format="[%(levelname)s] %(name)s: %(message)s",
+        stream=sys.stderr,
+    )
+
+
+def main() -> None:
+    _configure_logging()
+    sys.stdout.write(run(sys.stdin.read()))
+
+
+if __name__ == "__main__":
+    main()

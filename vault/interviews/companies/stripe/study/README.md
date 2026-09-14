@@ -36,7 +36,6 @@ study/
     09-debug-and-selftest.md      无调试器调试 + 自测清单
     10-communication.md           与面试官沟通（phone screen / onsite）
     11-readiness-checklist.md     "能独立做出来"的验收清单
-    12-pattern-cards.md           题型识别卡 · 碎片时间读物（分类 + 一眼信号 + 方向）
   10-solutions/                   53 篇中文题解，文件名 = problems/ 下的目录名
     q01_fraud_mcc_disputes.md
     ...

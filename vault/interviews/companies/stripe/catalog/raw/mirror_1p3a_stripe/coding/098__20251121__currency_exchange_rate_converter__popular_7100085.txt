@@ -1,0 +1,20 @@
+"""
+Currency Exchange Rate Converter
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/post/7100085
+Source Type: Popular Questions / External Thread
+
+Question Summary:
+You are building a currency exchange system for a global payments platform.
+
+Public Section Headings:
+- Currency Exchange System
+- Problem Summary
+- Phase 1: Direct Rates
+- Phase 2: One-Step Connection
+- Phase 3: Best Possible Rate
+- Phase 4: Any Path Length
+- Solution Details
+- Bonus Interview Questions
+"""

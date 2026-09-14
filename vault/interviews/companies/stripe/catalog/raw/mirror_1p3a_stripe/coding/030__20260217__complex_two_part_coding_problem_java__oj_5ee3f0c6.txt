@@ -1,0 +1,17 @@
+"""
+Complex two-part coding problem (Java)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/5ee3f0c6-8e42-45f1-9f4d-b339036728b8
+Source Type: OJ / More Problems
+
+Question Summary:
+## Complex Two-Part Coding Problem
+
+A coding problem split into two parts:
+
+- **Part 1**: implement the core functionality (details not provided).
+- **Part 2**: extend Part 1 with additional requirements; the candidate explained the approach but didn’t finish coding.
+
+> Note: The original post lacks the concrete prompt, I/O, and constraints, so only a brief summary is preserved.
+"""

@@ -1,0 +1,10 @@
+"""
+[Stripe] 2022 March 店面Feature Flag
+Category: System Design Question
+Company: Stripe
+Source: https://www.1point3acres.com/interview/thread/860128
+Source Type: Interview Experience Summary
+
+Question Summary:
+Public summary is sparse. The thread title suggests a Stripe phone screen centered on a feature flag design question.
+"""

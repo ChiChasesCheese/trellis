@@ -1,0 +1,62 @@
+"""
+Invoice Reconciliation
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/7a6741ad-607a-4477-ab95-c119a28bcf2b
+Source Type: OJ / More Problems
+
+Question Summary:
+## Invoice Reconciliation
+
+Given a list of invoices and a list of payment ledger entries, write a program to reconcile them and output the reconciliation result for each invoice.
+
+### Input
+- `invoices`: a list of invoices. Each invoice contains:
+  - `invoice_id` (string): unique invoice ID
+  - `amount` (integer): invoice amount in the smallest currency unit (e.g., cents)
+- `payments`: a list of payment entries. Each entry contains:
+  - `invoice_id` (string): the invoice ID this payment is associated with
+  - `amount` (integer): payment amount in the same unit
+
+### Output
+For each `invoice_id`, output:
+- `PAID` if total paid == invoice amount
+- `UNDERPAID` if total paid < invoice amount
+- `OVERPAID` if total paid > invoice amount
+- `UNPAID` if there are no payment entries
+
+Also output `delta = paid_amount - invoice_amount` (for `UNPAID`, `paid_amount=0`).
+
+Sort output by `invoice_id` lexicographically. Each line:
+
+```
+invoice_id status delta
+```
+
+### Constraints
+- `1 <= len(invoices) <= 2e5`
+- `0 <= len(payments) <= 2e5`
+- Amounts are non-negative integers
+- `invoice_id` is unique in invoices
+
+### Example
+**Input**
+```
+3
+inv1 100
+inv2 200
+inv3 150
+4
+inv1 100
+inv2 50
+inv2 200
+inv4 10
+```
+
+**Output**
+```
+inv1 PAID 0
+inv2 OVERPAID 50
+inv3 UNPAID -150
+```
+"""

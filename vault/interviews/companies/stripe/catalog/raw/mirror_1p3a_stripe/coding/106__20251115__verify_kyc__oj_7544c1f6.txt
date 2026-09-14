@@ -1,0 +1,40 @@
+"""
+Verify KYC
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/7544c1f6-2f0b-4609-bf56-b8b9fc97898f
+Source Type: OJ / More Problems
+
+Question Summary:
+Given a CSV file (inputted as a string where each line is a record and there are around 30 lines, with the first line as the header), validate its content. All columns should not be empty strings. If a row's 'name' column is empty, skip that row. The 'descriptor' column must not contain a list of specific words (case insensitive) and its length should be between 5 and 31 characters.
+
+**Input Format:**
+- Input is a multi-line string, each line contains 6 columns separated by commas, with the first line being the header.
+
+**Output Format:**
+- Number of rows passing the checks.
+- Filtered CSV data according to the given conditions.
+
+**Sample Input:**
+```
+name,age,email,phone,descriptor,comments
+John,30,john@example.com,555-0170,valid user,n/a
+,30,jane@example.com,555-0171,administrator,n/a
+Jane,25,jane@example.com,555-0171,suspicious user,requires review
+Doe,40,doe@example.com,555-0180,VIP,n/a
+```
+
+**Sample Output:**
+```
+3
+John,30,john@example.com,555-0170,valid user,n/a
+Doe,40,doe@example.com,555-0180,VIP,n/a
+```
+
+**Constraints:**
+- Records ≤ 50
+- Max length of each column string ≤ 100
+
+**Note:**
+- Vocabulary filter in the descriptor column should be case insensitive, e.g., 'adMinistrator' should be filtered.
+"""

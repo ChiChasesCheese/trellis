@@ -1,0 +1,28 @@
+"""
+CSV Processing
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/79c3d2f6-5436-4d64-be35-a2a5b8797c1b
+Source Type: OJ / More Problems
+
+Question Summary:
+Process a CSV file using Python and print the maximum and minimum value of each row. Assume each row in the CSV file contains a list of integers separated by commas. Implement the following features:
+
+1. Read the CSV file content from standard input.
+2. For each row, calculate the maximum and minimum integers.
+3. Print the maximum and minimum for each row in the format 'max: {max}, min: {min}'.
+
+Example Input:
+```
+1,2,3
+4,5,6
+7,8,9
+```
+
+Example Output:
+```
+max: 3, min: 1
+max: 6, min: 4
+max: 9, min: 7
+```
+"""

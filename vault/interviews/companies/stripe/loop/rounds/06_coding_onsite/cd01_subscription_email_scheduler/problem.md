@@ -1,85 +1,100 @@
-# cd01 · Subscription email scheduler（订阅邮件调度器）
+# cd01 · Subscription email scheduler
 
-**类型：** 现场 coding / "Programming Exercise"（60 分钟，3 个部分）· **阶段：** 现场技术 coding round
-· **最近一次出现：** 2025-12-08（linkjob 实习生面经；主题持续到 2026 年）
-**频率：** 3 份独立来源交叉印证（linkjob 实习生 2025、linkjob「2026 Java NG VO — Email
-Subscription」2025-12-08、Simplify 2026 摘要），加上第四份措辞不同的 1point3acres 记录
-（「Subscription Email Scheduler」，三步目录）· **置信度：** 中等——三部分结构（排程基础 → 计划变更 →
-续费）和领域（订阅生命周期邮件）有四份独立记录相互印证，但没有一份公布精确的字段名或输出格式；本
-problem.md 是本套题自己给出的具体重建方案。**本题有意使用与 `problems/q07_subscription_notifications`
-不同的字段/动作/输出格式（天数偏移、`[Changed]`/`[Renewed]` 标签）**——这是同一主题家族下的日历日期、
-单动词单行"VO"变体；不要把两套规则混为一谈。
+**Type:** onsite coding / "Programming Exercise" (60 min, 3 parts) · **Stage:** onsite, technical
+coding round · **Last asked:** 2025-12-08 (linkjob intern transcript; recurring theme through 2026)
+**Frequency:** cross-referenced across 3 independent sources (linkjob intern 2025, linkjob "2026
+Java NG VO — Email Subscription" 2025-12-08, Simplify 2026 summary) plus a fourth, differently-worded
+1point3acres entry (「Subscription Email Scheduler」, 3-step TOC) · **Confidence:** medium — the
+3-part shape (schedule basics → plan changes → renewals) and the domain (subscription lifecycle
+emails) are corroborated by four independent write-ups, but none publishes exact field names or
+output formatting; this problem.md is this suite's own concrete reconstruction. **It intentionally
+uses different fields/actions/output format than `problems/q07_subscription_notifications`
+(day-offsets, `[Changed]`/`[Renewed]` tags)** — this is the calendar-date, single-verb-per-line
+"VO" variant of the same theme family; do not conflate the two rule sets.
 
-## 背景
-一个订阅产品会发送三种生命周期邮件：订阅开始时的 `welcome`，到期前不久的 `expiring` 提醒，以及到期时的
-`expired` 通知。客户也可以在订阅期内换计划、在到期前续费，或直接取消。给定一串订阅事件流，你需要打印出
-系统在指定日期窗口内会发送的确切邮件集合。
+## Context
+A subscription product sends three kinds of lifecycle emails: a `welcome` when a subscription
+starts, an `expiring` warning shortly before it ends, and an `expired` notice when it ends.
+Customers can also change plans mid-term, renew before their term is up, or cancel outright. You
+are given a stream of subscription events and must print the exact set of emails the system would
+send within a requested date window.
 
-## 输入（stdin）
-第一行 `PART n`（`n ∈ {1,2,3}`；缺失该头部时默认使用完整的 Part 3 规则集——它是一个严格超集）。其余行，
-顺序任意：
+## Input (stdin)
+First line `PART n` (`n ∈ {1,2,3}`; missing header defaults to the full Part 3 rule set — it is a
+strict superset). Remaining lines, in any order:
 
-* **事件行**：`date,user,action[,plan]` —— `date` 为 `YYYY-MM-DD`。`action ∈ {subscribe,
-  change, renew, cancel}`。`subscribe` 和 `change` 带第四个字段 `plan ∈ {monthly,
-  annual}`；`renew` 和 `cancel` 没有第四个字段（续费保持当前计划不变）。
-* **查询行**（永远是最后一个非空行）：`FROM..TO`，两个用 `..` 连接的 `YYYY-MM-DD` 日期，中间无空格。
-  两端都是闭区间。如果最后一个非空行不符合这个格式，则不施加窗口过滤（等价于无界范围）——下面有几个
-  测试就是只关心排程本身、不关心过滤而用到这一点。
+* **Event line**: `date,user,action[,plan]` — `date` is `YYYY-MM-DD`. `action ∈ {subscribe,
+  change, renew, cancel}`. `subscribe` and `change` carry a fourth field `plan ∈ {monthly,
+  annual}`; `renew` and `cancel` have no fourth field (renewing keeps the current plan).
+* **Query line** (always the *last* non-blank line): `FROM..TO`, two `YYYY-MM-DD` dates joined by
+  `..`, no spaces. Inclusive on both ends. If the last non-blank line does not match this shape,
+  no window is applied (equivalent to an unbounded range) — used by a few tests below that only
+  care about the schedule, not filtering.
 
-事件在文件中**不保证按日期顺序排列**；它们始终按 `(date, 输入行序)` 处理，从不按文件顺序处理。空行会被
-忽略；逗号周围的空格会被容忍。最多 10^5 条事件行。
+Events are **not guaranteed to be in date order** in the file; they are always processed in
+`(date, input line order)`, never file order. Blank lines are ignored; spaces around commas are
+tolerated. Up to 10^5 event lines.
 
-## 输出
-每一条落在 `[FROM, TO]` 区间内的邮件占一行：`date user email_type`
-（`email_type ∈ {welcome, expiring, expired, renewed, canceled}`）。排序依据是 **`date`，然后 `user`
-（按普通字符串顺序），然后一个固定的邮件类型优先级** —— `welcome`(0) < `expiring`(1) <
-`expired`(2) < `renewed`(3) < `canceled`(4) —— **绝不按事件处理顺序排序。** 排程为空时不打印任何内容。
+## Output
+One line per email that falls inside `[FROM, TO]`: `date user email_type`
+(`email_type ∈ {welcome, expiring, expired, renewed, canceled}`). Sorted by **`date`, then `user`
+(plain string order), then a fixed email-type priority — `welcome`(0) < `expiring`(1) <
+`expired`(2) < `renewed`(3) < `canceled`(4) — never by the order events were processed.** Nothing
+is printed for an empty schedule.
 
-## 规则
+## Rules
 
-### Part 1 —— 排程基础
-只处理 `subscribe` 事件；`change`/`renew`/`cancel` 行在 Part 1 中会被解析但完全忽略（无影响、无输出）。
-`period_days(monthly) = 30`，`period_days(annual) = 365`。对于 `date,user,subscribe,plan`：
-`expire = date + period_days(plan)`；排程 `welcome@date`、`expiring@(expire-7)`、
-`expiring@(expire-1)`、`expired@expire`。同一个用户可以多次 subscribe（各自独立排程；一旦引入
-cancel/renew，"多次"的含义参见 Part 3）。
+### Part 1 — scheduling basics
+Only `subscribe` events are honored; `change`/`renew`/`cancel` lines are parsed but ignored
+entirely (no effect, no output) in Part 1. `period_days(monthly) = 30`, `period_days(annual) =
+365`. For `date,user,subscribe,plan`: `expire = date + period_days(plan)`; schedule
+`welcome@date`, `expiring@(expire-7)`, `expiring@(expire-1)`, `expired@expire`. A user can
+subscribe more than once (independent schedules; see Part 3 for what "more than once" means once
+cancel/renew exist).
 
-### Part 2 —— 带比例计算的计划变更
-`change` 生效。**每一个改变状态的事件都要遵守的一条规则，永远如此：** 在事件日期 `d`，首先**丢弃该用户
-所有日期严格晚于 `d` 的已排程邮件**（尚未到期——只有这些会被撤销；日期 `<= d` 的一切，包括来自更早事件、
-恰好也是 `d` 的邮件，都视为已确定，*永不*撤销），然后附加基于新状态新计算出的排程。这一条规则就是
-change（以及 Part 3 中的 renew 或 cancel）之后"重新排程待发的 `expiring`/`expired` 邮件"的全部逻辑。
+### Part 2 — plan changes with proration
+`change` becomes active. **The one rule every state-changing event obeys, always:** at event date
+`d`, first **discard every email already scheduled for that user with a date strictly after `d`**
+(not yet due — only those get revoked; anything dated `<= d`, including something dated exactly
+`d` from an earlier event, is treated as already committed and is *never* revoked), then append
+the freshly computed schedule for the new state. This single rule is what "reschedules the pending
+`expiring`/`expired` emails" after a change (and, in Part 3, after a renew or cancel).
 
-对于用户当前周期为 `[.., expire)` 时的 `date,user,change,new_plan`：
-* 如果用户未知、已取消，或 `date >= expire`（已到/过了自己的到期日——对已过期订阅做 change 是空操作），
-  则忽略。
-* `remaining_old = expire − date`（天数）。`remaining_new = remaining_old * period_days(new_plan)
-  // period_days(old_plan)` —— **永远是整数向下取整**，不做四舍五入。`new_expire = date +
-  remaining_new`。
-* 用 `new_expire` 应用上面的丢弃-重排规则。`change` 本身从不产生任何邮件——它只是静默地重塑未来的排程
-  （这是 cd01 与 `q07` 最大的区别，后者会打印一条明确的 `[Changed]` 行）。
+For `date,user,change,new_plan` on a user whose current period is `[.., expire)`:
+* Ignored if the user is unknown, canceled, or `date >= expire` (already at/after their own expiry
+  — changing an expired subscription is a no-op).
+* `remaining_old = expire − date` (days). `remaining_new = remaining_old * period_days(new_plan)
+  // period_days(old_plan)` — **integer floor division, always**, no rounding. `new_expire = date +
+  remaining_new`.
+* Apply the discard-then-reschedule rule above with `new_expire`. A `change` never itself emits an
+  email — it only silently reshapes the future schedule (this is the detail that most
+  differentiates cd01 from `q07`, which prints an explicit `[Changed]` line).
 
-### Part 3 —— 续费与取消
-`renew` 和 `cancel` 在 Part 2 的基础上生效。
+### Part 3 — renewals and cancellation
+`renew` and `cancel` become active, on top of Part 2.
 
-* `date,user,renew`：如果用户未知或已取消，则忽略。否则：
-  * 如果 `date < expire`（在期限到期前续费）：`new_expire = expire +
-    period_days(current_plan)` —— **从旧的到期日延长**，而不是从续费当天延长。在 `date` 发出
-    `renewed`。
-  * 如果 `date >= expire`（在用户自己的到期日当天或之后续费）：视为在同一计划上、从 `date` 开始的
-    **全新订阅**（`new_expire = date + period_days(plan)`）。在 `date` 发出 `welcome`，而非 `renewed`。
-  * 无论哪种情况，都用 `new_expire` 应用丢弃-重排规则。
-* `date,user,cancel`：如果用户未知或已经取消，则忽略（幂等——再次 cancel 是静默空操作）。否则：应用
-  丢弃规则（单凭这一步就能清空所有待发的 `expiring`/`expired`），在 `date` 发出 `canceled`，并将该用户
-  标记为已取消。已取消用户之后的 `change`/`renew` 事件会被忽略；对该用户的一次全新 `subscribe` 会无条件
-  重新开始（不检查取消标记），并且*不会*被取消状态阻止。
-* 对一个当前处于活跃状态（未取消、未过期）的用户执行 `subscribe`，是一次**重新订阅**：丢弃-重排规则会
-  像对待其他任何事件一样应用——它会清空旧排程中待发的未来邮件，并开启一个全新排程。
+* `date,user,renew`: ignored if the user is unknown or canceled. Otherwise:
+  * If `date < expire` (renewing before the term is up): `new_expire = expire +
+    period_days(current_plan)` — **extended from the old expiry**, not from the renewal date.
+    Emit `renewed` at `date`.
+  * If `date >= expire` (renewing on/after the user's own expiry day): treated as a **brand new
+    subscription** on the same plan starting `date` (`new_expire = date + period_days(plan)`).
+    Emit `welcome` at `date`, not `renewed`.
+  * Either way, apply the discard-then-reschedule rule with `new_expire`.
+* `date,user,cancel`: ignored if the user is unknown or already canceled (idempotent — a second
+  cancel is a silent no-op). Otherwise: apply the discard rule (this alone wipes every pending
+  `expiring`/`expired`), emit `canceled` at `date`, and mark the user canceled. A canceled user's
+  future `change`/`renew` events are ignored; a fresh `subscribe` for that user starts over
+  unconditionally (it does not check the canceled flag) and is *not* itself blocked by
+  cancellation.
+* A `subscribe` for a user who is currently active (not canceled, not expired) is a **resubscribe**:
+  the discard-then-reschedule rule applies exactly as for any other event — it wipes pending future
+  emails from the old schedule and starts a fresh one.
 
-## 示例
-均已用 `solution.py` 实际运行验证。
+## Worked examples
+All verified by running `solution.py`.
 
-### 示例 1（Part 1）
+### Example 1 (Part 1)
 ```
 PART 1
 2026-01-01,alice,subscribe,monthly
@@ -93,10 +108,11 @@ PART 1
 2026-01-30 alice expiring
 2026-01-31 alice expired
 ```
-（alice：`expire = 2026-01-31`。bob：`expire = 2027-01-10` —— annual，2026 非闰年 —— 所以 bob 的
-`expiring`/`expired` 全部落在 2027 年，被查询窗口截断；只剩他的 `welcome`。）
+(alice: `expire = 2026-01-31`. bob: `expire = 2027-01-10` — annual, non-leap 2026 — so bob's
+`expiring`/`expired` all fall in 2027 and are cut off by the query window; only his `welcome`
+survives.)
 
-### 示例 2（Part 2 —— 比例计算）
+### Example 2 (Part 2 — proration)
 ```
 PART 2
 2026-01-01,alice,subscribe,monthly
@@ -109,11 +125,12 @@ PART 2
 2026-09-10 alice expiring
 2026-09-11 alice expired
 ```
-（`expire = 2026-01-31`；`2026-01-11` 的 `change` → `remaining_old = 20` 天；
-`remaining_new = 20 * 365 // 30 = 243`；`new_expire = 2026-01-11 + 243 天 = 2026-09-11`。原本按月度
-周期排程的 `expiring`/`expired` 全都晚于 `2026-01-11`，所以三条全部被丢弃并替换。）
+(`expire = 2026-01-31`; `change` on `2026-01-11` → `remaining_old = 20` days;
+`remaining_new = 20 * 365 // 30 = 243`; `new_expire = 2026-01-11 + 243d = 2026-09-11`. The
+originally-scheduled `expiring`/`expired` for the monthly period were all dated after `2026-01-11`
+so all three are discarded and replaced.)
 
-### 示例 3（Part 3 —— 到期前续费、到期后续费、取消）
+### Example 3 (Part 3 — renew before expiry, renew after expiry, cancel)
 ```
 PART 3
 2026-02-01,bob,subscribe,monthly
@@ -141,58 +158,68 @@ PART 3
 2026-04-01 bob expiring
 2026-04-02 bob expired
 ```
-（bob 在 `2026-02-20` 续费，仍早于他的 `2026-03-03` 到期日 → `renewed`，期限从旧的结束日延长到
-`2026-04-02`。carol 的月度订阅在 `2026-01-31` 到期；她在 `2026-02-15` "续费"，*已经过了*到期日，所以
-这是一次全新订阅——是 `welcome`，不是 `renewed`——运行到 `2026-03-17`；她一月份的原始
-`welcome`/`expiring`/`expiring`/`expired` 都不受影响，因为它们日期都早于续费事件。dave 在
-`2026-01-15` 取消，早于他任何 `expiring`/`expired` 到期，全部清空；只剩下 `welcome` + `canceled`。）
+(bob renews on `2026-02-20`, still before his `2026-03-03` expiry → `renewed`, term extended from
+the old end to `2026-04-02`. carol's monthly subscription expired `2026-01-31`; she "renews" on
+`2026-02-15`, *after* expiry, so it is a fresh subscription — a `welcome`, not `renewed` — running
+to `2026-03-17`; her original `welcome`/`expiring`/`expiring`/`expired` from January are untouched
+because they are all dated before the renew event. dave cancels on `2026-01-15`, before any of his
+`expiring`/`expired` were due, wiping all three; only `welcome` + `canceled` remain.)
 
-## 隐藏测试已知会针对的边界情况
-- **change/renew/cancel 恰好落在旧计划已排程 `expiring` 邮件的同一天，不会撤销它** —— 只有严格未来的
-  日期才会被丢弃。具体来说：`2026-01-01` 订阅 annual（`expire = 2027-01-01`，
-  `expiring@2026-12-25`，`expiring@2026-12-31`），然后在 `2026-12-31`（旧周期还剩一天）执行
-  `change,monthly` → `remaining_new = 1*30//365 = 0` → `new_expire = 2026-12-31`（当天立即到期）——
-  但两条旧的 `expiring` 邮件（`2026-12-25`、`2026-12-31`）都会保留，因为它们都不*严格晚于*事件日期；
-  输出中 `2026-12-31` 这一天会有**两条**记录（按 TYPE_ORDER 先 `expiring` 后 `expired`），再加上未受
-  影响的 `2026-12-25 expiring`。
-- `change` 恰好落在用户自己的 `expire` 那天，是空操作（忽略，不报错）。
-- 对未知用户或已取消用户的 `change`/`renew`，静默忽略。
-- 对已取消用户再次 `cancel` 是空操作（幂等）。
-- 在已经活跃时重新订阅，会清空旧的待发排程（Part 3）。
-- 同一用户在同一天出现两条完全相同的 `subscribe` 行，**不会去重**——两条 `welcome` 邮件都会打印（第二个
-  事件的 `<=d` 截断规则会保留第一条的同日 welcome）；这是故意为之——见"面试官会怎么追问" #2。
-- `remaining_old == period_days(old_plan)`（在 subscribe 当天本身执行 change）恰好化简为在新计划上的
-  一次全新订阅，向下取整不损失任何东西。
-- 输入文件中乱序给出的事件，仍必须按日期顺序应用。
-- 查询窗口边界：日期恰好等于 `FROM` 或恰好等于 `TO` 的邮件会被包含；超出任一边界一天的邮件会被排除。
-- 10^5 条事件行、跨多个用户、单个查询窗口——必须保持接近线性。
+## Edge cases hidden tests are known to target
+- **A change/renew/cancel that lands on the exact same day as an already-scheduled `expiring` for
+  the old plan does *not* revoke it** — only strictly-future dates are discarded. Concretely:
+  `subscribe` annual on `2026-01-01` (`expire = 2027-01-01`, `expiring@2026-12-25`,
+  `expiring@2026-12-31`), then `change,monthly` on `2026-12-31` (one day of the old period left) →
+  `remaining_new = 1*30//365 = 0` → `new_expire = 2026-12-31` (immediate same-day expiry) — but
+  both old `expiring` emails (`2026-12-25`, `2026-12-31`) survive because neither is *strictly
+  after* the event date; the output has **two** entries dated `2026-12-31` (`expiring` then
+  `expired`, per TYPE_ORDER) plus the untouched `2026-12-25 expiring`.
+- `change` exactly on the user's own `expire` day is a no-op (ignored, not an error).
+- `change`/`renew` for an unknown user, or for a canceled user, are silently ignored.
+- a second `cancel` for an already-canceled user is a no-op (idempotent).
+- resubscribing while already active wipes the old pending schedule (Part 3).
+- two identical `subscribe` lines for the same user on the same day are **not deduplicated** — both
+  `welcome` emails print (the second event's `<=d` cutoff keeps the first's same-day welcome);
+  this is deliberate — see "面试官会怎么追问" #2.
+- `remaining_old == period_days(old_plan)` (a `change` on the subscribe day itself) reduces exactly
+  to a fresh subscription on the new plan, with no floor-division loss.
+- events given out of chronological order in the input file must still be applied in date order.
+- query window boundaries: an email dated exactly `FROM` or exactly `TO` is included; one day
+  outside either bound is excluded.
+- 10^5 event lines across many users, single query window — must stay near-linear.
 
-## 变体
-- **天数偏移 / `[Changed]`+`[Renewed]` 变体**：见 `problems/q07_subscription_notifications` ——
-  同样是三部分结构（基础 → 变更 → 续费），但用整数天数偏移而非日历日期，用明确的
-  `[Changed]`/`[Renewed]` 公告行而非 cd01 的静默重排。把两者当作姐妹题，而非重复题。
-- linkjob 的「2026 Java NG VO — Email Subscription」提到一种"灵活的 `send_schedule` 结构，可处理多种
-  触发类型"——一种泛化方案，把 `(-7, -1, 0)` 偏移量和 `{welcome, expiring, expired}` 消息集合变成可配置
-  的，类似 q07 的 `schedule=` 参数。
-- Simplify 的一句话概述"带订阅生命周期管理的通知调度系统"，与上述内容一致，但没有额外细节。
+## Variants seen in the wild
+- **Day-offset / `[Changed]`+`[Renewed]` variant**: see `problems/q07_subscription_notifications` —
+  same three-part shape (basics → changes → renewals), but integer day offsets instead of calendar
+  dates, and explicit `[Changed]`/`[Renewed]` announcement lines instead of cd01's silent
+  reschedule. Treat the two as siblings, not duplicates.
+- linkjob's "2026 Java NG VO — Email Subscription" mentions a "flexible `send_schedule` structure
+  handling multiple trigger types" — a generalization where the `(-7, -1, 0)` offsets and the
+  `{welcome, expiring, expired}` message set become configurable, analogous to q07's
+  `schedule=` parameter.
+- Simplify's one-line gloss, "notification scheduling system with subscription lifecycle
+  management," is consistent with, but does not add detail beyond, the above.
 
-## 本题考察内容
-技能：S01 阅读多部分题面 · S02 带可选尾字段的行解析 · S03 按用户维护可变状态 · S08 带固定（非输入决定
-的）tie-break 的确定性多键排序 · S09 精确格式化 · S10 会回溯改变早期决策的事件流 · S12 日历日期运算
-（`timedelta`，非闰年的年度周期）· S19 增量式设计（仅 subscribe → +change/比例计算 → +renew/cancel）
+## What this tests
+skills: S01 reading a multi-part spec · S02 line parsing with an optional trailing field · S03
+per-user mutable state · S08 deterministic multi-key sort with a fixed (not input-derived)
+tie-break · S09 exact formatting · S10 event streams that retroactively change earlier decisions ·
+S12 calendar-date arithmetic (`timedelta`, non-leap-year annual periods) · S19 incremental design
+(subscribe-only → +change/proration → +renew/cancel)
 
-## 来源
-- `loop/raw/en_forums.md` §6.2 C1（约第 303-306 行）："Part 1: 按 plan 日期发邮件（welcome、expiration
-  notices）。Part 2: 根据用户输入处理 plan 变更。Part 3: 续费/延期。" [linkjob intern, 2025]；「2026
-  Java NG VO - Email Subscription」灵活的 `send_schedule` [linkjob technical, 2025-12-08]；
-  Simplify 一句话概述 [Simplify, 2026]。
-- `loop/raw/cn_forums.md` 第 99 行：一亩三分地「Subscription Email Scheduler」导读，目录 = Part 1
+## Sources
+- `loop/raw/en_forums.md` §6.2 C1 (line ~303-306): "Part 1: 按 plan 日期发邮件（welcome、expiration
+  notices）。Part 2: 根据用户输入处理 plan 变更。Part 3: 续费/延期。" [linkjob intern, 2025]; "2026
+  Java NG VO - Email Subscription" flexible `send_schedule` [linkjob technical, 2025-12-08];
+  Simplify one-line gloss [Simplify, 2026].
+- `loop/raw/cn_forums.md` line 99: 一亩三分地「Subscription Email Scheduler」导读，TOC = Part 1
   Scheduling Basics → Part 2 Changing Plans → Part 3 Handling Renewals → Solution Strategy →
-  Common Follow-up Questions。[1point3acres.com/interview/post/7100084]
-- `loop/raw/cn_forums.md` 第 264 行：一亩三分地「Email Notification Scheduler」（`oj` 类型，正文完整）：
+  Common Follow-up Questions. [1point3acres.com/interview/post/7100084]
+- `loop/raw/cn_forums.md` line 264: 一亩三分地「Email Notification Scheduler」(`oj` 类型, 正文完整):
   "常见追问：同一用户+类型在时间窗口内的去重/合并、按用户限流、同 `sendAt` 多任务的排序、乱序到达、
-  取消/更新逻辑"。这五个追问方向被折入下面的"面试官会怎么追问"。
-- `problems/q07_subscription_notifications/problem.md` —— 本题有意不重复的天数偏移姐妹变体。
+  取消/更新逻辑". These five follow-up directions are folded into "面试官会怎么追问" below.
+- `problems/q07_subscription_notifications/problem.md` — the sibling day-offset variant this
+  problem deliberately does not duplicate.
 
 ## 面试官会怎么追问
 1. 如果同一批事件里，同一个 user 同一天出现多条几乎相同的事件（比如客户端重试导致同一个

@@ -1,0 +1,76 @@
+"""
+Shipping Cost Lookup and Transit Route Optimization
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/77383593-7e63-4b4f-99fa-4c096450f965
+Source Type: OJ / More Problems
+
+Question Summary:
+#### Question 1
+Given a string containing shipping cost information between different countries, with each entry including the source country, destination country, carrier, and cost. Implement a function to return the shipping cost between specified countries and with a specified carrier.
+
+Input format:
+- `shipping_info` (string): A string containing shipping information, with each entry separated by a semicolon and formatted as `<source_country>,<destination_country>,<carrier>,<cost>`.
+- `source` (string): The source country.
+- `destination` (string): The destination country.
+- `carrier` (string): The carrier.
+
+Output format:
+- An integer representing the cost according to specified conditions. Return -1 if no matching information is found.
+
+Sample Input:
+```
+shipping_info = "US,UK,FedEx,100;UK,FR,FedEx,80;US,FR,UPS,120"
+source = "US"
+destination = "UK"
+carrier = "FedEx"
+```
+
+Sample Output:
+```
+100
+```
+
+#### Question 2
+With allowance for one transit, return the transit route from the source country to the destination country, including the transit path, carrier used, and cost.
+
+Input format:
+- Same as Question 1.
+
+Output format:
+- A list containing formatted string information of transit routes, with each entry as `<source_country> -> <transit_country> -> <destination_country> via <carrier> with cost <cost>`. Return an empty list if no suitable transit plan is found.
+
+Sample Input:
+```
+shipping_info = "US,UK,FedEx,100;UK,FR,FedEx,80;US,FR,UPS,120"
+source = "US"
+destination = "FR"
+carrier = "FedEx"
+```
+
+Sample Output:
+```
+["US -> UK -> FR via FedEx with cost 180"]
+```
+
+#### Question 3
+Find the minimum shipping cost from source country to destination country with allowance for one transit.
+
+Input format:
+- Same as Question 1.
+
+Output format:
+- An integer representing the minimum possible cost. Return -1 if no suitable route is found.
+
+Sample Input:
+```
+shipping_info = "US,UK,FedEx,100;UK,FR,FedEx,80;US,FR,UPS,150;FR,US,FedEx,200"
+source = "US"
+destination = "FR"
+```
+
+Sample Output:
+```
+180
+```
+"""

@@ -1,56 +1,63 @@
-# ps03 Brace Expansion — 报告
+# ps03 Brace Expansion — report
 
-## 概述
-类似 glob 的 `{a,b,c}` 模板展开 —— 与 shell 文件名展开、webhook 端点模板或 price-ID
-模式是同一种结构。Stripe 电面版本的这道题从正常输入 → 畸形输入 → 嵌套/多组，分三个约
-15 分钟的步骤递进，正好对应本仓库的 `part1/part2/part3` 惯例。写代码之前要先搞清楚一点：
-这个版本保留顺序且保留重复项 —— 它**不是** `problems/qA03_lc1087_brace_expansion` 中已经
-实现的那种排序去重的 LC 1087 契约。
+## Summary
+Glob-style `{a,b,c}` template expansion — the same shape as shell filename expansion, webhook
+endpoint templates, or price-ID patterns. Stripe's phone-screen version of this progresses
+happy-path → malformed input → nesting/multiple groups, in three roughly-15-minute steps, which
+maps directly onto this repo's `part1/part2/part3` convention. The one thing to get right before
+writing any code: this version preserves order and keeps duplicates — it is **not** the sorted,
+deduplicated LC 1087 contract already implemented in `problems/qA03_lc1087_brace_expansion`.
 
-## 来源与可信度
-Part 1 可信度高：一篇逐字的 LeetCode Discuss 面经报告（班加罗尔后端电面，2024-06）给出了
-这里使用的三个具体样例模式，以及几乎逐字相同的追问措辞（"处理不完整/不匹配的括号、
-少于 2 个逗号分隔值、或完全没有括号的情况 —— 原样返回字符串"；"嵌套括号"）。
-interviewdb.io 和 hackerprep.io 都证实这道题在 2026 年的题库轮换中仍然活跃。Part 2/3
-关于哪些情况算"畸形"（Part 2 范围 vs Part 3 范围）的精确划分以及输出序列化方式，都是本
-仓库自行重构的 —— 原始来源只描述返回的列表，没有描述输出格式。
+## Sources & confidence
+High for Part 1: a verbatim LeetCode Discuss report (Bangalore backend screen, 2024-06) gives the
+exact three example patterns used here, plus the follow-up wording almost verbatim ("handle
+incomplete/mismatched brackets, fewer than 2 comma-separated values, or no brackets at all —
+return string as-is"; "nested brackets"). interviewdb.io and hackerprep.io corroborate the
+question is still active in the 2026 rotation. Parts 2/3's exact malformed-detection scope (what
+counts as "in scope" for Part 2 vs. Part 3) and the output serialization are this repo's own
+reconstruction — the source describes returned lists, not stdout format.
 
-## 各部分思路
-1. **分段 + 笛卡尔积引擎**（`_expand`）：从左到右扫描模式；每个 `{...}` 组变成一个
-   "segment"，其选项是（递归展开后的）逗号分隔的备选项；字面量片段是单选项 segment。
-   最终结果是所有 segment 的笛卡尔积，最左边的 segment 作为最外层循环 —— 这一个函数
-   处理纯字面量、单个组、多个组、任意嵌套，不需要对任何一种情况单独特判，因为它们本质上
-   都是"若干 segment，展开后相乘"。
-2. **Part 2 畸形检测**（`_validate_single`）：单次线性扫描，跟踪花括号深度和每组的
-   token 数量；标记不匹配的花括号、第二个顶层组、嵌套的 `{`，或 token 数 `< 2` 的组。
-   有意让它比 Part 3 的语法更窄（同样拒绝嵌套和多组），这样 Part 3 才是一次真正可测试的
-   能力提升，而不是空操作。
-3. **Part 3 畸形检测**（`_validate`）：同样的思路，递归地泛化 —— 一个组的每个备选项都
-   通过对其重新调用 `_validate` 来校验，所以埋在三层深处的 `< 2` token 组仍然会让整个
-   模式失效。
+## Approach by part
+1. **Segment + cartesian-product engine** (`_expand`): scan the pattern left to right; each
+   `{...}` group becomes a "segment" whose options are the (recursively expanded) comma-separated
+   alternatives; literal runs are single-option segments. The final result is the cartesian
+   product of all segments, left segment as the outer loop — this one function handles a bare
+   literal, a single group, multiple groups, and arbitrary nesting without special-casing any of
+   them, because they are all "some segments, expand and multiply."
+2. **Part 2 malformed check** (`_validate_single`): single linear scan tracking brace depth and a
+   per-group token count; flags unmatched braces, a second top-level group, a nested `{`, or a
+   group with `< 2` tokens. Deliberately narrower than Part 3's grammar (rejects nesting and
+   multiple groups too) so that Part 3 is a real, testable capability increase rather than a
+   no-op.
+3. **Part 3 malformed check** (`_validate`): the same idea, generalized recursively — a group's
+   alternatives are validated by re-invoking `_validate` on each one, so a `< 2`-token group
+   buried three levels deep still invalidates the whole pattern.
 
-## 隐藏测试针对的坑点
-- 出于 LC-1087 的肌肉记忆写出 `sorted(set(...))` —— 破坏了顺序和重复计数
-- 把"畸形"理解得太窄（只考虑不匹配的花括号），漏掉 `< 2` token 的情况，或漏掉"第二个组
-  超出 Part 2 范围"的情况
-- 把笛卡尔积的顺序搞反（写成 `a1,b1,a2,b2` 而不是与 bash 兼容的 `a1,a2,b1,b2`）——
-  如果循环嵌套方向反了很容易犯这个错
-- 忘记空 token 也是合法的（`{,x}`、`read.txt{,.bak}`）并把它们过滤掉
-- Part 3 中只校验顶层组的 token 数量，漏掉嵌套违规
+## Pitfalls hidden tests target
+- reaching for `sorted(set(...))` out of LC-1087 muscle memory — breaks order and multiplicity
+- treating "malformed" narrowly (only unmatched braces) and missing the `< 2` tokens case or the
+  "second group is out of Part 2's scope" case
+- getting the cartesian-product order backwards (`a1,b1,a2,b2` instead of the bash-compatible
+  `a1,a2,b1,b2`) — easy to get wrong if the loops are nested in the wrong direction
+- forgetting empty tokens are valid (`{,x}`, `read.txt{,.bak}`) and filtering them out
+- validating only the top-level group's token count in Part 3 and missing a nested violation
 
-## 复杂度与实测开销
-`_expand` 是 O(输出规模) —— 每个 segment 的选项只生成一次，通过笛卡尔积组合，开销随实际
-产生的展开数量而变，不涉及冗余重复扫描。`_validate`/`_validate_single` 是 O(模式长度)，
-一次线性遍历（加上 `_validate` 中每个嵌套组一次递归调用，由于组之间不重叠，整体仍是线性）。
-10,000 条模式（每条 1-3 个 2-4 个 token 的组，重复 `/seg{...}`）：约 0.05 秒，远低于预算。
+## Complexity & measured cost
+`_expand` is O(output size) — each segment's options are produced once and combined by the
+cartesian product, so cost scales with the number of expansions actually produced, not with any
+redundant re-scanning. `_validate`/`_validate_single` are O(pattern length), one linear pass (plus
+one recursive call per nested group in `_validate`, still linear overall since groups don't
+overlap). 10,000 patterns (1-3 groups of 2-4 tokens each, `/seg{...}` repeated): ~0.05 s, well
+under the budget.
 
-## 测试清单
-20 个测试 —— part1: 5（含 1 个 io、1 个 fmt）· part2: 5 · part3: 8（含 1 个 io、1 个
-perf）· 另有一个空 stdin 的 io 测试归在 part1 下。edge: 8 · fmt: 1 · io: 2 · perf: 1。
+## Test inventory
+20 tests — part1: 5 (incl. 1 io, 1 fmt) · part2: 5 · part3: 8 (incl. 1 io, 1 perf) · plus the
+empty-stdin io test filed under part1. edge: 8 · fmt: 1 · io: 2 · perf: 1.
 
-## 涉及技能
-S02 解析（花括号/segment 扫描）· S14 保序、不去重的输出 · S18 无异常的输入校验 · S19
-增量式设计（Part 2 范围刻意比 Part 3 窄）· S21 递归 / 笛卡尔积
+## Skills exercised
+S02 parsing (brace/segment scanning) · S14 order-preserving, non-deduplicating output · S18 input
+validation without exceptions · S19 incremental design (Part 2's scope is deliberately narrower
+than Part 3's) · S21 recursion / cartesian product
 
 ## 电面话术：边写边说什么
 - 读题时先复述边界条件给面试官听："所以顺序要保留、重复要保留，对吗？不是 LeetCode 1087 那种排序去重。"——
@@ -64,7 +71,7 @@ S02 解析（花括号/segment 扫描）· S14 保序、不去重的输出 · S1
 - 如果时间只够做完 Part 2：主动提出"如果还有时间，我会怎么扩展到嵌套"，说出笛卡尔积的思路，即使没时间写代码，
   这在面试官反馈里往往被算作"沟通清晰"的加分项。
 
-## 复盘（Fable 5.1，2026-09-01）
+## Review（Fable 5.1，2026-09-01）
 **改了什么**
 - `solution.py` 重构为范本（`expand_braces*` / `partN` / `main` 签名不变）：30 行的 `_expand` 拆成 `_segments`（切段）
   + `_expand`（笛卡尔积）；去掉"defensive only"的 `j = n - 1` 分支（它其实是防死循环的隐藏契约），改为

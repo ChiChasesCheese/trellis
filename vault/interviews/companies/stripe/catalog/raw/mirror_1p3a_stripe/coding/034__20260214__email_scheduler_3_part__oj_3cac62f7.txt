@@ -1,0 +1,14 @@
+"""
+Email Scheduler (3-part)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/3cac62f7-6a30-422b-963c-b20a0d94d0a1
+Source Type: OJ / More Problems
+
+Question Summary:
+## Email Scheduler (3-part) — Incomplete prompt
+
+Implement an email scheduling system that allows scheduling emails to be sent at future times and triggers sending in chronological order.
+
+> The post only mentions the title and that it has 3 parts; exact requirements, I/O format, and constraints are missing, so a complete coding prompt cannot be reconstructed reliably.
+"""

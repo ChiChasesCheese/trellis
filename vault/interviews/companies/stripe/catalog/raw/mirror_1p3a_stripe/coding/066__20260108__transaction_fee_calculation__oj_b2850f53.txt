@@ -1,0 +1,28 @@
+"""
+Transaction Fee Calculation
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/b2850f53-4b2d-499b-8295-482942c5a825
+Source Type: OJ / More Problems
+
+Question Summary:
+Given a set of transaction records, where each record includes transaction id, transaction type, payment provider, and amount. You need to calculate the transaction fee according to specific rules and output the result in the required format. Details are as follows:
+
+- Input: CSV format, with each line representing a transaction record in the format: `id,transaction_type,payment_provider,status,amount`.
+- Output: CSV format, with each line representing a transaction and its fee in the format: `id,transaction_type,payment_provider,fee`.
+- Rules: The fee may vary for different payment providers and transaction types, calculate the fee based on the rules provided during the interview.
+
+Example Input:
+```
+py_1,payment,card,completed,100
+py_2,payment,card,pending,50
+py_3,payment,klarna,completed,200
+```
+
+Example Output:
+```
+py_1,payment,card,51
+py_2,payment,card,0
+py_3,payment,klarna,101
+```
+"""

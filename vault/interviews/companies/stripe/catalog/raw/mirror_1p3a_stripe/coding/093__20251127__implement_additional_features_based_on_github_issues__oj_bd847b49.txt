@@ -1,0 +1,21 @@
+"""
+Implement Additional Features Based on GitHub Issues
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/bd847b49-a752-4430-9fe1-a52869f5fdf0
+Source Type: OJ / More Problems
+
+Question Summary:
+Based on the requirements in GitHub issues, implement additional features or processing logic in the existing codebase. Basic code is provided, mainly consisting of configuration files. Tasks are divided into five parts with increasing complexity. Each part may involve different modules or functionalities in the codebase, such as calling external APIs, processing data formats, and adding database interactions.
+
+### Example Test Cases
+
+Assume there is a module for API calls:
+1. Input a new API endpoint and parameters, verify if the return value matches the expected format.
+2. Add a new API request method for batch data processing.
+
+#### Data Scale
+
+- Each issue should be solved within 10 to 15 minutes.
+- Pay attention to code readability and maintainability, using appropriate comments.
+"""

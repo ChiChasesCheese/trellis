@@ -1,61 +1,64 @@
-# ps06 Receivables registration — 报告
+# ps06 Receivables registration — report
 
-## 概述
-一道包装成真实 Stripe 巴西合规流程（向央行登记应收款）的 CSV 聚合题。Part 1 是纯粹的
-分组 + 整数分求和；Part 2 才是真正区分候选人水平的地方 —— 处理格式错误行时要跳过并
-*计数*（而不是静默丢弃），带符号金额（退款），以及一条日期归一化规则（周末的支付日期
-顺延到下一个工作日）必须在构建聚合 key *之前*运行，而不是之后 —— 这是常见的顺序颠倒
-bug。
+## Summary
+A CSV-aggregation question dressed as a real Stripe Brazil compliance workflow (receivables
+registered with the central bank). Part 1 is pure grouping + integer-cents summation; Part 2 is
+where the interview actually differentiates candidates — malformed-row handling that skips and
+*counts* (not silently drops) bad rows, signed amounts (refunds), and a date-normalization rule
+(weekend payout dates roll to the next business day) that must run *before* the aggregation key is
+built, not after — a common off-by-ordering bug.
 
-## 来源与可信度
-中等 —— csoahelp.com 2024-10-04 的转录给出了场景（巴西应收款）、函数名
-（`register_receivables`）、精确的 CSV 字段列表
-（`customer_id,merchant_id,payout_date,card_type,amount`）、聚合 key
-（`merchant_id + card_type + payout_date`），以及 4 段面试结构（澄清 → 方案讲解 →
-追问 → 行为面）。它**没有**公开精确的输出格式或 Part 2 的业务规则 —— 周末顺延规则、
-具体的坏行分类、以及 `SKIPPED n` 尾行都是本报告的重构，写成一个合理、常见的追问方向，
-而非逐字转录。已在 problem.md 的"见过的变体"一节明确标注。
+## Sources & confidence
+medium — csoahelp.com's 2024-10-04 transcript gives the scenario (Brazil receivables), the
+function name (`register_receivables`), the exact CSV field list
+(`customer_id,merchant_id,payout_date,card_type,amount`), and the aggregation key
+(`merchant_id + card_type + payout_date`), plus the 4-stage interview structure (clarify → solution
+walkthrough → follow-ups → behavioral). It does **not** publish exact output formatting or Part 2's
+business rules — the weekend-roll rule, the specific malformed-row categories, and the `SKIPPED n`
+trailer are this report's reconstruction, written to be a plausible, commonly-asked follow-up
+direction rather than a verbatim transcript. Flagged explicitly in problem.md's "Variants" section.
 
-## 各部分思路
-1. **Part 1**：解析 `customer_id,merchant_id,payout_date,card_type,amount`，把
-   `amount` 转换为整数分（`_amount_to_cents`），累加进以
-   `(merchant_id, card_type, payout_date)` 为 key 的 `defaultdict(int)`，按
-   `(merchant_id, payout_date, card_type)` 排序渲染 —— 注意*输出*列顺序
-   （`merchant_id,card_type,payout_date,total`）与*排序 key*顺序不同，这正是隐藏测试
-   会针对的细节。
-2. **Part 2**：同样的聚合，外加每行的校验门（字段数 == 5，金额匹配
-   `-?\d+\.\d{2}`，日期匹配 `YYYY-MM-DD`**且**通过 `datetime.strptime` 解析为真实
-   日历日期），任何一项失败就递增跳过计数；只有通过校验的行才会在用作分组 key *之前*
-   把 `payout_date` 顺延（周六 +2，周日 +1），这样同一个 merchant/card_type 的周六
-   行和周日行才能正确合并进同一个周一组。
+## Approach by part
+1. **Part 1**: parse `customer_id,merchant_id,payout_date,card_type,amount`, convert `amount` to
+   integer cents (`_amount_to_cents`), accumulate into a `defaultdict(int)` keyed by
+   `(merchant_id, card_type, payout_date)`, render sorted by `(merchant_id, payout_date,
+   card_type)` — note the *output* column order (`merchant_id,card_type,payout_date,total`)
+   differs from the *sort key* order, which is exactly the kind of detail hidden tests target.
+2. **Part 2**: same aggregation, plus a validation gate per row (field count == 5, amount matches
+   `-?\d+\.\d{2}`, date matches `YYYY-MM-DD` **and** parses as a real calendar date via
+   `datetime.strptime`) that increments a skip counter on any failure; only rows that pass get
+   their `payout_date` rolled forward (Saturday +2, Sunday +1) *before* being used as the group
+   key, so a Saturday and a Sunday row for the same merchant/card_type correctly merge into one
+   Monday group.
 
-## 隐藏测试针对的坑点
-- 输出列顺序与排序 key 顺序是两个不同的元组 —— 容易混淆
-- `2026-02-30`（不存在的日期）vs `2026/08/03`（分隔符错误）—— 两者都非法，但原因不同；
-  只做形状正则校验的方案会漏掉日历合法性这一情况
-- `150.5` / `150` / 空字符串金额 —— 一位小数、没有小数、空字符串都非法，与仅仅是负数但
-  格式正确的 `-15.50` 不同
-- 在构建 key *之前*而不是之后顺延日期 —— 分组后再顺延会产生两个独立的组（顺延前的周六
-  组和原本的周一组），而不是一个合并组（`test_saturday_and_sunday_both_roll_to_same_monday`
-  正是针对这一点）
-  净额恰好为 `0.00` 的组仍必须打印为一条真实的登记行
-- 没有任何行被跳过时 `SKIPPED 0` 仍必须是最后一行（不能走"只有 n > 0 才打印 SKIPPED"
-  的捷径）
-- 跨月/跨年边界的周末顺延（`2026-01-31` 周六 -> `2026-02-02` 周一）
+## Pitfalls hidden tests target
+- output column order vs. sort key order are different tuples — easy to conflate
+- `2026-02-30` (impossible day) vs `2026/08/03` (wrong separator) — both invalid, but for
+  different reasons; a solution that only regex-checks the shape misses the calendar-validity case
+- `150.5` / `150` / empty string amounts — one-decimal, no-decimal, and empty are all invalid,
+  distinct from a merely negative-but-correctly-formatted `-15.50`
+- rolling the date *before* keying, not after — rolling after grouping would produce two separate
+  groups (pre-roll Saturday group and the original Monday group) instead of one merged group
+  (`test_saturday_and_sunday_both_roll_to_same_monday` targets this directly)
+  a group total that nets to exactly `0.00` must still be printed as a real registration line
+- `SKIPPED 0` must still be the last line when nothing was skipped (no "print SKIPPED only when
+  n > 0" shortcut)
+- a weekend roll that crosses a month/year boundary (`2026-01-31` Saturday -> `2026-02-02` Monday)
 
-## 复杂度与实测开销
-解析+聚合 O(n)，排序 O(g log g)，其中 `g` = 不同组的数量（对任何现实批次 g << n）。
-实测：10 万行（穿插约 1/5000 比例的格式错误行）端到端经 stdin -> stdout 远低于 2 秒，
-在 256 MB 预算内绰绰有余 —— 见 `test_perf_100k_rows`。
+## Complexity & measured cost
+O(n) parse + aggregate, O(g log g) sort where `g` = number of distinct groups (g << n for any
+realistic batch). Measured: 100,000 rows (with malformed rows sprinkled in at a 1-in-5000 rate)
+end-to-end via stdin -> stdout in well under 2 s, comfortably inside the 256 MB budget — see
+`test_perf_100k_rows`.
 
-## 测试清单
-21 个测试 —— part1: 6（含 1 个 io）· part2: 12（含 1 个 io、1 个 perf）；edge 11 ·
-fmt 1 · io 3 · perf 1。
+## Test inventory
+21 tests — part1: 6 (incl. 1 io) . part2: 12 (incl. 1 io, 1 perf); edge 11 . fmt 1 . io 3 . perf 1.
 
-## 涉及技能
-S02 解析/格式错误行处理 · S04 分组/聚合 · S06 整数货币（BRL 分，绝不用浮点累加）· S08
-确定性多键排序 · S09 精确格式化（无货币符号，带符号总额）· S12 日期处理（日历合法性 +
-工作日顺延）· S18 校验与错误路径（跳过并计数，绝不因坏输入崩溃）
+## Skills exercised
+S02 parsing/malformed-row handling . S04 grouping/aggregation . S06 integer money (BRL cents,
+never float-accumulate) . S08 deterministic multi-key sort . S09 exact formatting (no currency
+symbol, signed totals) . S12 date handling (calendar validity + business-day rolling) . S18
+validation and error paths (skip + count, never crash on bad input)
 
 ## 电面话术：边写边说什么
 1. **澄清阶段** (面试第①段)：主动问三件事——`amount` 到底是分还是两位小数字符串（本题定死两位小数，
@@ -77,7 +80,7 @@ S02 解析/格式错误行处理 · S04 分组/聚合 · S06 整数货币（BRL 
    `SKIPPED` 之外再加一个 `DUPLICATE` 计数，防止重试导致重复登记"——呼应第④段行为面试常问的"你怎么考虑
    生产环境的鲁棒性"。
 
-## 未解决点
+## Open points
 - csoahelp 的转录没有公开 Part 2 的具体业务规则（本 REPORT 已在 problem.md 的 Variants 一节明确标注：
   周末顺延、坏行分类、`SKIPPED n` 尾行都是本套件按 Stripe 电面惯用"happy path -> robustness/business
   rules"模板做的合理重建，不是逐字转录）；如果后续拿到更精确的原题转录（尤其是官方 Part 2 措辞），应
@@ -85,7 +88,7 @@ S02 解析/格式错误行处理 · S04 分组/聚合 · S06 整数货币（BRL 
 - 未确认真实面试是否要求处理带引号/嵌入逗号的 CSV 字段（本题假设简单 split(",") 足够，字段本身不含
   逗号），如果拿到反例应补充 RFC4180 引号解析。
 
-## 复盘（Fable 5.1，2026-09-01）
+## Review（Fable 5.1，2026-09-01）
 **改了什么**
 - `solution.py` 重构为同一条流水线 `_data_lines → 解析成 Row → _aggregate → _render`：Part 1 用
   `_parse_row_trusted`，Part 2 用 `_parse_row_checked`（返回 `None` 即坏行）+ `_roll_weekend(row)`，两个
@@ -101,4 +104,4 @@ S02 解析/格式错误行处理 · S04 分组/聚合 · S06 整数货币（BRL 
 Part 2 里"归一化在入 key 之前"这条关键规则埋在 12 行循环中间，现在是 `rows.append(_roll_weekend(row))`
 一行加注释，面试官 60 秒能看到。
 
-**遗留**：Part 2 规则仍是重建（见 未解决点）；带引号/嵌入逗号的 CSV 未处理（题面明确假设简单 split）。
+**遗留**：Part 2 规则仍是重建（见 Open points）；带引号/嵌入逗号的 CSV 未处理（题面明确假设简单 split）。

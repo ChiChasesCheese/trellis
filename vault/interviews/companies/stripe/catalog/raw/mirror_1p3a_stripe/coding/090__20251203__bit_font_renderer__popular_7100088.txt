@@ -1,0 +1,19 @@
+"""
+Bit Font Renderer
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/post/7100088
+Source Type: Popular Questions / External Thread
+
+Question Summary:
+You are building a text rendering system that displays characters using bitmap fonts.
+
+Public Section Headings:
+- Bit Font Renderer Problem
+- Problem Summary
+- Part 1: Draw One Character
+- Part 2: Draw a Word
+- Part 3: Compressed Fonts (RLE)
+- Solution Details
+- Bonus Question: Multiple Font Types
+"""

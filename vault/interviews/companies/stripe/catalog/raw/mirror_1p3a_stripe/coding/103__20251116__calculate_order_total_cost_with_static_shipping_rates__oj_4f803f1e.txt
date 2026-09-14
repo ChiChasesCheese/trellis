@@ -1,0 +1,20 @@
+"""
+Calculate Order Total Cost with Static Shipping Rates
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/4f803f1e-874e-483b-94a7-a109e3b57606
+Source Type: OJ / More Problems
+
+Question Summary:
+Given an order object and a static shipping rate table for each country, calculate the total cost by summing up the price multiplied by the quantity of each product, and adding the shipping cost.
+
+Input:
+- An order object that includes the name, price, and quantity of products.
+- A static shipping rate table, which gives a shipping cost for each country.
+
+Output: The total cost combining products and shipping cost.
+
+Example:
+- Input: Order = [{"name": "mouse", "price": 550, "quantity": 10}, {"name": "laptop", "price": 1000, "quantity": 15}], Shipping Rates = {"US": 200}
+- Output: 16100
+"""

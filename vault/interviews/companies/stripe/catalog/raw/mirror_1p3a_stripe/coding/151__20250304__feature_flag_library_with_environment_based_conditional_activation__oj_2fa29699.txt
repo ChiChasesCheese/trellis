@@ -1,0 +1,12 @@
+"""
+Feature Flag Library with Environment-Based Conditional Activation
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/2fa29699-8006-4717-994b-c5f69f08878f
+Source Type: OJ / More Problems
+
+Question Summary:
+Design and implement a feature flag library that provides a function to determine whether a feature flag is on. The function takes the flag's name and an optional map of key-value pairs, such as `flag.is_on("give_discount", {"user": "user_name", "product": "product_id"})`.
+
+Design everything necessary for engineers to create and modify feature flags. The feature flag library should support services in multiple environments, allowing for flexible feature activation under different conditions. Provide complete design details and implementation suggestions.
+"""

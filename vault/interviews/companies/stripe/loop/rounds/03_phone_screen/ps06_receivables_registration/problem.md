@@ -1,57 +1,57 @@
 # ps06 · Receivables registration
 
-**类型：** 电面（技术，4-段面试流程） · **阶段：** 技术电面，45 分钟 · **最近一次出现：**
-2024-10-04（csoahelp.com，代面服务站点转录）
-**出现频率：** 1 份直接转录（csoahelp）+ 被一亩三分地/programhelp 交叉引用，同时出现在
-Technical Screen 和 Integration 两种情境中（轮次归属存在混淆，见
-`loop/raw/cn_forums.md` 第 64/103 行） · **可信度：** 中等 —— I/O 字段名
-（`customer_id,merchant_id,payout_date,card_type,amount`）和聚合 key
-（`merchant_id + card_type + payout_date`）直接来自来源；下方精确的格式/边界规则是本
-报告为贴合 Stripe 一贯的"happy path → 健壮性/业务规则"电面结构所做的重构
+**Type:** phone screen (technical, 4-段面试流程) · **Stage:** technical screen, 45 min · **Last asked:** 2024-10-04 (csoahelp.com, 代面服务站点转录)
+**Frequency:** 1 direct transcript (csoahelp) + cross-referenced by 一亩三分地/programhelp as appearing in both Technical Screen and Integration contexts (轮次归属存在混淆，见 `loop/raw/cn_forums.md` 第 64/103 行) · **Confidence:** medium — I/O field names (`customer_id,merchant_id,payout_date,card_type,amount`) and the aggregation key (`merchant_id + card_type + payout_date`) are directly from the source; exact formatting/edge rules below are this report's reconstruction to match Stripe's usual "happy path → robustness/business rules" phone-screen shape
 
-## 背景
-Stripe 为巴西的商户处理银行卡交易。巴西的监管要求支付处理机构在实际支付日期之前，将
-即将发生的商户应收款（"recebíveis" / receivables）向央行登记，按商户、卡组织和资金
-划转日期聚合。给你一批单笔交易记录，你需要生成央行提交所要求的聚合登记文件。
+## Context
+Stripe processes card transactions for merchants in Brazil. Brazilian regulation requires
+payment processors to register upcoming payouts to merchants ("recebíveis" / receivables) with
+the central bank ahead of the actual payout date, aggregated by merchant, card network, and the
+date money will move. You're given a batch of individual transaction records and must produce the
+aggregated registration file the central bank submission expects.
 
-## 输入（stdin，供 `main()` 使用）
-第一行是 `PART 1` 或 `PART 2`。下一行是 CSV 标题行
-`customer_id,merchant_id,payout_date,card_type,amount`。之后是数据行，每行一笔交易，
-字段顺序相同。`amount` 是巴西雷亚尔金额，以**两位小数字符串**给出（如 `150.00`，退款为
-`-15.50`）—— 不是整数分；需要内部转换。`payout_date` 是 `YYYY-MM-DD` 格式。空行忽略；
-逗号周围的空格可以容忍（字段会被 trim）。Part 1 从不顺延日期 —— 周六的 `payout_date`
-就是一个周六组。
+## Input (stdin, for `main()`)
+First line is `PART 1` or `PART 2`. The next line is the CSV header
+`customer_id,merchant_id,payout_date,card_type,amount`. Remaining lines are data rows, one
+transaction per line, same field order. `amount` is a BRL value given as a **two-decimal string**
+(e.g. `150.00`, `-15.50` for a refund) — not integer cents; you convert internally. `payout_date`
+is `YYYY-MM-DD`. Blank lines are ignored; spaces around commas are tolerated (fields are
+stripped). Part 1 never rolls dates — a Saturday `payout_date` is a Saturday group.
 
-## 输出
-每个 `(merchant_id, card_type, payout_date)` 组一行：
-`merchant_id,card_type,payout_date,total` —— `total` 是两位小数字符串（可以为负数，如
-`-30.00`），**不带 `$`/`R$` 符号**（这是内部登记文件，不是面向客户的对账单）。按
-**`merchant_id`，然后 `payout_date`，然后 `card_type`**（均为普通字符串顺序）排序。
-Part 2 额外追加一行尾行 `SKIPPED n`（`n` = 因格式错误被跳过的行数；`n` 始终打印，即使是
-`SKIPPED 0`）。
+## Output
+One line per `(merchant_id, card_type, payout_date)` group:
+`merchant_id,card_type,payout_date,total` — `total` is a two-decimal string (may be negative,
+e.g. `-30.00`), **no `$`/`R$` sign** (this is an internal registration file, not a customer-facing
+statement). Sorted by **`merchant_id`, then `payout_date`, then `card_type`** (all plain string
+order). Part 2 additionally appends one trailing line `SKIPPED n` (`n` = number of rows skipped as
+malformed; `n` is always printed, even `SKIPPED 0`).
 
-## 规则
+## Rules
 
 ### Part 1 — `register_receivables` happy path
-输入行都是良构的（假定 CSV 合法、日期合法、两位小数金额合法 —— 不需要校验）。按
-`(merchant_id, card_type, payout_date)` 分组，在内部以**整数分**求和 `amount`（绝不
-累加浮点数），按上述方式输出聚合行。同一个 key 的重复行（重复的客户，或同一个客户交易
-两次）合并进同一个组 —— 是求和，不是覆盖。
+Input rows are well-formed (assume valid CSV, valid date, valid two-decimal amount — no
+validation needed). Group by `(merchant_id, card_type, payout_date)`, sum `amount` in **integer
+cents** internally (never accumulate floats), and emit the aggregated lines as described above.
+Duplicate rows for the same key (repeat customer, or the same customer transacting twice) merge
+into the same group — summed, not overwritten.
 
-### Part 2 — 健壮性与业务规则
-同样的聚合，但输入不再是干净的：
-- **跳过并计数**任何格式错误的行：逗号分隔字段数不对（≠ 5）、`amount` 不匹配
-  `-?digits.dd`（恰好两位小数 —— `150.5`、`150`、`abc`、空字符串都非法），或
-  `payout_date` 不是 `YYYY-MM-DD` 形式的真实日历日期（`2026-13-01`、`2026-02-30`、
-  `26-08-03` 都非法）。被跳过的行不对任何组的总额产生贡献。
-- **允许负数金额**（退款/拒付）且可以使一个组的总额变为负数 —— 不要截断为零。
-- **同一个 key 的重复行合并**（与 Part 1 相同）。
-- **周末的支付日期顺延到下一个周一** —— 周六 → +2 天，周日 → +1 天 —— 在每行的
-  `payout_date` 用作聚合 key 的一部分之*前*应用，这样同一个 merchant/card_type 的
-  周六日期行和周一日期行顺延后会落入*同一个*组。
-- 在输出最后追加一行 `SKIPPED n`。
+### Part 2 — robustness and business rules
+The same aggregation, but the input is no longer clean:
+- **Skip and count** any row that is malformed: wrong number of comma-separated fields (≠ 5),
+  `amount` that doesn't match `-?digits.dd` (exactly two decimal digits — `150.5`, `150`,
+  `abc`, empty are all invalid), or `payout_date` that isn't a real calendar date in `YYYY-MM-DD`
+  form (`2026-13-01`, `2026-02-30`, `26-08-03` are all invalid). A skipped row contributes
+  nothing to any group's total.
+- **Negative amounts are allowed** (refunds/chargebacks) and can make a group's total negative —
+  do not clamp at zero.
+- **Duplicate rows for the same key merge** (same as Part 1).
+- **Weekend payout dates roll forward to the following Monday** — Saturday → +2 days, Sunday →
+  +1 day — applied to each row's `payout_date` **before** it is used as part of the aggregation
+  key, so a Saturday-dated and a Monday-dated row for the same merchant/card_type land in the
+  *same* group once rolled.
+- Append `SKIPPED n` as the last output line.
 
-## 演示样例
+## Worked examples
 ```
 PART 1
 customer_id,merchant_id,payout_date,card_type,amount
@@ -77,44 +77,49 @@ c6,m3,2026-13-01,visa,10.00
 m1,visa,2026-08-10,170.00
 SKIPPED 3
 ```
-（2026-08-08 是周六 → 顺延到 2026-08-10 周一；2026-08-09 是周日 → 也顺延到
-2026-08-10；三笔都落入同一个组：`150 + 50 - 30 = 170.00`。第 4 行金额格式错误，第 5 行
-只有 4 个字段，第 6 行月份是 `13` —— 三行都被跳过，`SKIPPED 3`。）
+(2026-08-08 is a Saturday → rolls to 2026-08-10 Monday; 2026-08-09 is a Sunday → also rolls to
+2026-08-10; all three land in one group: `150 + 50 - 30 = 170.00`. Row 4 has a malformed amount,
+row 5 has only 4 fields, row 6 has month `13` — all three skipped, `SKIPPED 3`.)
 
-## 边界情况
-- 组总额净值恰好为 `0.00`（仍要打印 —— 某个商户/卡组织/日期的退款恰好抵消消费，仍是一条
-  真实的登记行）
-- 组总额整体为负数（该 key 的退款超过消费）
-- `payout_date` 恰好是周一到周五 —— 不顺延
-- 同一个 merchant/card_type 的周六**和**周日行都顺延进同一个周一组
-- 跨月或跨年边界的顺延（如周六 1 月 31 日 → 周一 2 月 2 日）
-- 格式错误行：字段数不对（逗号太多或太少）
-- 格式错误行：金额只有一位小数、没有小数点、或非数字
-- 格式错误行：不存在的日历日期（`2026-02-30`）vs 格式错误（`2026/08/03`）
-- 没有任何行被跳过时仍打印 `SKIPPED 0`
-- 多个商户、多个卡组织，排序 key 的平局由下一个 key 打破
-- 大批量（10^5 行）但不同组数量有限 —— 聚合必须保持近似线性，不能每行重新扫描
+## Edge cases
+- group total that nets to exactly `0.00` (still printed, a merchant/card/date with all refunds
+  offsetting charges is still a real registration line)
+- group total that goes negative overall (refunds exceed charges for that key)
+- `payout_date` exactly on a Monday–Friday — no rolling
+- Saturday **and** Sunday rows for the same merchant/card_type both rolling into the same Monday
+  group
+- a roll that crosses a month or year boundary (e.g. Saturday Jan 31 → Monday Feb 2)
+- malformed row: wrong field count (too few or too many commas)
+- malformed row: amount with one decimal digit, no decimal point, or non-numeric
+- malformed row: impossible calendar date (`2026-02-30`) vs. wrong format (`2026/08/03`)
+- `SKIPPED 0` still printed when nothing was skipped
+- multiple merchants, multiple card types, ties in the sort key broken by the next key in order
+- large batch (10^5 rows) with a bounded number of distinct groups — aggregation must stay
+  near-linear, not re-scan per row
 
-## 见过的变体
-- csoahelp 的摘要没有明确公开周末顺延或坏行规则 —— 它把面试描述为**4 段**：①澄清问题
-  ②方案讲解 ③追问 ④行为面。这里的周末顺延规则被写成一个合理、常见的追问方向（见
-  追问列表），而不是转录的 Part 2 —— 把它当作本练习 Part 2 的"标准"版本，而把追问列表
-  当作面试后续阶段的真实报告形状。
-- 中文圈（`cn_forums.md` 第 103 行）部分把同一题归类在 Integration 轮而非纯
-  Technical Screen —— 说明该题目在不同候选人/不同流程阶段都出现过，轮次归属本身存在
-  混淆，练习时按 Technical Screen 的时间盒（45 min）来演练即可。
+## Variants seen in the wild
+- csoahelp's summary doesn't publish the weekend-rolling or bad-row rules explicitly — it
+  describes the interview as **4 段**: ① clarifying questions ② solution walkthrough ③ follow-ups
+  ④ behavioral. The weekend-roll rule here is written to be a plausible, commonly-asked follow-up
+  direction (see follow-ups list) rather than a transcribed Part 2 — treat it as the "canonical"
+  version of this drill's Part 2, and treat the follow-ups list as the actual reported shape of
+  the interview's later stages.
+- 中文圈 (`cn_forums.md` 第 103 行) 部分把同一题归类在 Integration 轮而非纯 Technical Screen —— 说明
+  该题目在不同候选人/不同流程阶段都出现过，轮次归属本身存在混淆，练习时按 Technical Screen 的时间盒
+  （45 min）来演练即可。
 
-## 本题考察点
-skills: S02 解析/格式错误行处理 · S04 分组/聚合 · S06 整数货币（绝不累加浮点 BRL 分）·
-S08 确定性多键排序 · S09 精确格式化（无货币符号，带符号总额）· S12 日期处理（日历合法性 +
-工作日顺延）· S18 校验与错误路径（跳过并计数，不崩溃）
+## What this tests
+skills: S02 parsing/malformed-row handling · S04 grouping/aggregation · S06 integer money
+(never float-accumulate BRL cents) · S08 deterministic multi-key sort · S09 exact formatting
+(no currency symbol, signed totals) · S12 date handling (calendar validity + business-day
+rolling) · S18 validation and error paths (skip + count, don't crash)
 
-## 来源
-- https://csoahelp.com/2024/10/04/stripe-api-receivables-registration-interview-.../
-  （csoahelp.com，"Stripe API Receivables Registration Interview"，2024-10-04 —— 巴西
-  应收款场景、`register_receivables` 函数名、CSV 字段列表、聚合 key、4 段面试结构）
-- `loop/raw/cn_forums.md` 第 64 行（原文摘录）、第 103 行（"Onsite — Coding" 交叉引用，
-  轮次归属存疑说明）
+## Sources
+- https://csoahelp.com/2024/10/04/stripe-api-receivables-registration-interview-.../ (csoahelp.com,
+  "Stripe API Receivables Registration Interview", 2024-10-04 — Brazil receivables scenario,
+  `register_receivables` function name, CSV field list, aggregation key, 4-stage interview
+  structure)
+- `loop/raw/cn_forums.md` 第 64 行（原文摘录）、第 103 行（"Onsite — Coding" 交叉引用，轮次归属存疑说明）
 
 ## 面试官会怎么追问
 1. 如果同一批数据里同一个 `(merchant_id, card_type, payout_date)` 出现极多笔小额交易（比如某商户

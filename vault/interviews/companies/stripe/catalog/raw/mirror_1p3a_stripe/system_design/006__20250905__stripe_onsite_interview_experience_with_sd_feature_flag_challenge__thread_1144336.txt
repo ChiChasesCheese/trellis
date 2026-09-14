@@ -1,0 +1,10 @@
+"""
+Stripe Onsite Interview Experience with SD Feature Flag Challenge
+Category: System Design Question
+Company: Stripe
+Source: https://www.1point3acres.com/interview/thread/1144336
+Source Type: Interview Experience Summary
+
+Question Summary:
+Detailed Stripe onsite interview insights covering SD feature flag implementation, debugging Java Jackson, and programming problem-solving. Fulltime SDE role.
+"""

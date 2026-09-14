@@ -1,68 +1,74 @@
-# minimako — 一个迷你的 Mako 风格模板引擎
+# minimako — a tiny Mako-style template engine
 
-`minimako` 是一个小型模板引擎，参照 [Mako](https://www.makotemplates.org/) 的核心
-迷你语言实现：`${expr}` 插值、`% if` / `% for` 控制行，以及用于将模板拆分为多个小文件的
-`<%include file="..."/>`。它是一个 bug-squash 用的 fixture ——
-其结构（lexer → AST → visitor-pattern renderer，外加一个把 URI 映射到磁盘文件的
-`TemplateLookup`）与真实 Mako 足够接近，使得 Mako 真实历史上的 bug 可以直接移植过来。
+`minimako` is a small template engine modelled on [Mako](https://www.makotemplates.org/)'s core
+mini-language: `${expr}` interpolation, `% if` / `% for` control lines, and `<%include
+file="..."/>` for composing templates out of smaller files. It exists as a bug-squash fixture —
+the shape (lexer → AST → visitor-pattern renderer, plus a `TemplateLookup` that maps a URI to a
+file on disk) mirrors real Mako closely enough that its actual historical bugs port over directly.
 
-## 目录结构
+## Layout
 ```
 src/minimako/
-  lexer.py      分词器：${expr}、% if/% for/% endif/% endfor、<%include file="..."/>
-  ast.py        AST 节点类型（TextNode、ExpressionNode、IfNode、ForNode、IncludeNode、
-                 TemplateNode）+ 基于 token 的递归下降解析器，用于构建这些节点
-  compiler.py   Compiler：通过分派 visit_<NodeType>（visitor 模式）渲染 AST
-  lookup.py     TemplateLookup(directories)：官方认可的 uri -> Template 加载器
-  template.py   Template(text, uri=None, lookup=None, source_dir=None)：解析+渲染；
-                 同时负责解析该模板自身的 <%include> 目标
+  lexer.py      tokenizer: ${expr}, % if/% for/% endif/% endfor, <%include file="..."/>
+  ast.py        AST node types (TextNode, ExpressionNode, IfNode, ForNode, IncludeNode,
+                 TemplateNode) + the recursive-descent-over-tokens parser that builds them
+  compiler.py   Compiler: renders an AST by dispatching visit_<NodeType> (visitor pattern)
+  lookup.py     TemplateLookup(directories): the sanctioned uri -> Template loader
+  template.py   Template(text, uri=None, lookup=None, source_dir=None): parses + renders;
+                 also resolves this template's own <%include> targets
 tests/
-  test_minimako.py   测试套件（运行它，不要改写它 —— 见下方"如果卡住了"）
+  test_minimako.py   the suite (run it, don't rewrite it — see "if you're stuck" below)
 ```
 
-## 运行测试
+## Running the tests
 ```
 python -m pytest tests -q
 ```
-按原样运行，大多数测试会通过。有两个不会 —— 见下面的 issue。
+Most tests pass as shipped. Two do not — see the issue below.
 
-## 问题（作为针对该仓库提交的 issue）
+## The issue (as filed against this repo)
 
-**Bug report 1 — `<%include>` 会导致整个渲染崩溃**
+**Bug report 1 — `<%include>` crashes the whole render**
 
-> 复现方式：
+> Repro:
 > ```python
 > from minimako.lookup import TemplateLookup
 > lookup = TemplateLookup(["templates/"])
-> tmpl = lookup.get_template("page.html")   # page.html 中包含 <%include file="footer.html"/>
+> tmpl = lookup.get_template("page.html")   # page.html contains <%include file="footer.html"/>
 > tmpl.render()
 > ```
-> 期望：渲染出的页面，其中 `<%include>` 标签的位置被替换成 `footer.html` 自身渲染后的输出。
+> Expected: the rendered page, with `footer.html`'s own rendered output spliced in where the
+> `<%include>` tag was.
 >
-> 实际：
+> Actual:
 > ```
 > AttributeError: Compiler has no visitor for node type 'IncludeNode' (expected a method named
 > 'visit_IncludeNode')
 > ```
-> 其他所有标签类型（`${...}`、`% if`、`% for`）都能正常渲染。只有使用 `<%include>` 的
-> 模板会崩溃，而且是 100% 必现，不是偶发的。
+> Every other tag type (`${...}`, `% if`, `% for`) renders fine. Only templates that use
+> `<%include>` blow up, and they blow up 100% of the time, not intermittently.
 
-**Bug report 2 — `<%include>` 中精心构造的 `file="..."` 值可以读取模板目录之外的文件**
+**Bug report 2 — a crafted `file="..."` value in `<%include>` can read files outside the
+template directory**
 
-> 我们的安全审查发现，`Template.resolve_include()`（用于将 `<%include
-> file="..."/>` 引用相对于包含它的模板自身目录进行解析）没有拒绝像
-> `"//../../etc/something"` 这样的 `file` 值 —— 一个带有**超过一个**前导斜杠的 URI。我们在
-> `TemplateLookup.get_template()`（"根据 URI 加载模板"的顶层入口，用于渲染中的第一个模板）
-> 中已经有了这个检查，它会先剥离*所有*前导斜杠再与搜索目录拼接，并确认结果仍在该目录内。
-> `resolve_include()` 是一条独立的代码路径 —— 它是模板解析*自身内部* `<%include>` 引用的
-> 方式，相对于自身文件所在目录，而不是重新搜索每个 `TemplateLookup` 目录 —— 看起来它自己
-> 长出了一套更弱、与前者不一致的归一化逻辑。
+> Our security review flagged that `Template.resolve_include()` (used to resolve a `<%include
+> file="..."/>` reference relative to the including template's own directory) does not reject a
+> `file` value like `"//../../etc/something"` — a URI with **more than one** leading slash. We
+> already have this check right in `TemplateLookup.get_template()` (the top-level "load a
+> template by URI" entrypoint, used for the very first template in a render), which normalizes by
+> stripping *every* leading slash before joining against a search directory and confirming the
+> result stays inside it. `resolve_include()` is a separate code path — it's how a template
+> resolves `<%include>` references *within itself*, relative to its own file's directory rather
+> than by re-searching every `TemplateLookup` directory — and it looks like it grew its own,
+> weaker normalization that doesn't match.
 >
-> 期望：`resolve_include()` 像 `TemplateLookup.get_template()` 一样拒绝（或安全地约束）
-> 带有多个前导斜杠的 `file` 值。
+> Expected: `resolve_include()` rejects (or safely contains) a `file` value with multiple leading
+> slashes the same way `TemplateLookup.get_template()` does.
 >
-> 实际：它接受了这样的值，最终可能读取到完全在模板自身源目录之外的文件。
+> Actual: it accepts such values and can end up reading a file completely outside the template's
+> own source directory.
 
-如果你卡住了：这两个 bug 范围都很窄（一个是缺失的方法；一个是现有方法里错误的字符串操作）——
-如果你的修复动了不止几行代码，或者发现自己在重写 visitor 分派机制或 URI 归一化设计，说明你
-已经偏离了真正的 bug，走向了重新设计。回到失败的断言，跟着 traceback 走。
+If you get stuck: both bugs are narrowly scoped (one missing method; one wrong string operation
+in an existing method) — if your fix touches more than a handful of lines, or you find yourself
+rewriting the visitor dispatch mechanism or the URI-normalization design, you've drifted from the
+actual bug into a redesign. Come back to the failing assertion and follow the traceback.

@@ -1,0 +1,257 @@
+"""
+Payment Reconciliation (Transactions Matching & Discrepancy Report)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/605744dd-1964-4339-a256-b8451d286186
+Source Type: OJ / More Problems
+
+================================================================================
+INTERVIEW PROMPT (as it would be delivered by the interviewer)
+================================================================================
+
+Hi -- thanks for joining. The problem we're going to work on today is one
+that the Treasury team at Stripe deals with literally every day: payment
+reconciliation. Stripe takes a card charge, the issuing bank tells us what
+they think happened on their side, and we need to convince ourselves that
+those two records describe the same transaction. When they disagree, we
+need to flag it.
+
+I'll feed you two CSV files. Each row is a transaction. We're going to
+write a program that pairs them up and prints a report.
+
+You can use any language. Read the two file paths from argv:
+
+    python solve.py system_a.csv system_b.csv
+
+--------------------------------------------------------------------------------
+Input
+--------------------------------------------------------------------------------
+
+Both files have the same header:
+
+    transaction_id,amount,currency,timestamp,status
+
+  - transaction_id : string. May be empty.
+  - amount         : integer in the smallest currency unit (cents for USD).
+                     Always positive.
+  - currency       : ISO 4217 code, uppercase, e.g., USD, EUR, JPY.
+  - timestamp      : ISO 8601 in UTC, e.g., 2026-04-23T14:32:11Z.
+  - status         : one of {succeeded, failed, refunded}.
+
+System A is the internal ledger; System B is the external processor's
+report. Either side may have rows the other doesn't.
+
+--------------------------------------------------------------------------------
+PART 1 -- Match by transaction_id
+--------------------------------------------------------------------------------
+
+For this part, both files are guaranteed to have non-empty `transaction_id`
+on every row, and IDs are unique within each file.
+
+Pair rows that share the same `transaction_id`. For each ID, classify it
+as one of:
+
+    MATCHED       : id appears in both files and amount, currency, and
+                    status all agree.
+    MISMATCHED    : id appears in both files but at least one of amount,
+                    currency, status differs.
+    ONLY_IN_A     : id appears only in system A.
+    ONLY_IN_B     : id appears only in system B.
+
+Print a report to stdout in this exact format, sorted alphabetically by
+transaction_id within each section:
+
+    MATCHED
+      txn_001
+      txn_004
+    MISMATCHED
+      txn_002 (amount: A=1000 B=999)
+      txn_005 (status: A=succeeded B=refunded)
+    ONLY_IN_A
+      txn_003
+    ONLY_IN_B
+      txn_006
+
+For MISMATCHED rows, list the differing fields in the order
+amount, currency, status, comma-separated inside the parentheses.
+
+(Timestamps differing slightly are NOT a mismatch in Part 1. Banks and
+processors disagree on timestamps all the time; that's noise.)
+
+--------------------------------------------------------------------------------
+PART 2 -- Heuristic matching when IDs are missing
+--------------------------------------------------------------------------------
+
+In real life, the external processor sometimes loses our `transaction_id`
+in their pipeline and we get rows with `transaction_id=""`. We still want
+to pair those up.
+
+After Part 1's id-based pass, take the rows in System A with empty
+`transaction_id` and the rows in System B with empty `transaction_id`,
+and pair them by:
+
+  1. same currency,
+  2. same amount,
+  3. timestamp within 5 minutes (300 seconds) of each other.
+
+When multiple candidates from B match a row from A, pick the one with
+the smallest |timestamp difference|. Each row can be matched at most once.
+
+Pairs found this way are reported under MATCHED if their statuses agree,
+or under MISMATCHED otherwise. Use the System A row's `transaction_id`
+in the report if it's non-empty, else fall back to a synthetic id of
+the form `<no-id-A:row=N>` (1-indexed row number in file A, excluding
+the header).
+
+Anything still unmatched after this pass goes to ONLY_IN_A / ONLY_IN_B
+as before.
+
+--------------------------------------------------------------------------------
+PART 3 -- Performance
+--------------------------------------------------------------------------------
+
+[If you finish Parts 1 and 2 with time to spare.]
+
+Both files can be up to 10 million rows. The naive heuristic pass in
+Part 2 is O(|A| * |B|) and won't fit in the time budget.
+
+Bring the heuristic pass to O((|A| + |B|) log (|A| + |B|)). Hint: bucket
+by (currency, amount), then within each bucket walk the two sides in
+sorted-by-timestamp order with a two-pointer / sweep approach.
+
+--------------------------------------------------------------------------------
+Constraints
+--------------------------------------------------------------------------------
+
+- Files have at most 10_000_000 rows each.
+- Amounts fit in a 64-bit signed int.
+- Timestamps are always ISO 8601 in UTC with the literal `Z` suffix.
+- A given (file, transaction_id) pair appears at most once. (No dupes
+  within a single file.)
+
+--------------------------------------------------------------------------------
+What I'm looking for
+--------------------------------------------------------------------------------
+
+[Interviewer notes]
+
+- Part 1 should be done in 15-20 minutes. It's mostly hash-join-on-id.
+- Part 2 is where the design matters. The candidate should NOT redo the
+  Part 1 work on every row -- the structure should be: id-pass first,
+  then heuristic pass on what's left over.
+- Watch out for the "each row matched at most once" constraint. The naive
+  greedy pass will double-match if you're not careful.
+- For Part 3, I want them to recognize that bucketing by (currency,
+  amount) is the right call before they start writing code.
+- Common bug: comparing amounts as floats. Amounts are integers. Money
+  should never be a float.
+"""
+
+
+import csv
+import sys
+from collections import defaultdict
+from datetime import datetime
+from typing import Iterable
+
+
+def parse_ts(s: str) -> datetime:
+    return datetime.strptime(s, "%Y-%m-%dT%H:%M:%SZ")
+
+
+def load(path: str) -> list[dict]:
+    rows = []
+    with open(path, newline="") as f:
+        for i, row in enumerate(csv.DictReader(f), start=1):
+            rows.append({
+                "row": i,
+                "transaction_id": row["transaction_id"],
+                "amount": int(row["amount"]),
+                "currency": row["currency"],
+                "timestamp": parse_ts(row["timestamp"]),
+                "status": row["status"],
+            })
+    return rows
+
+
+def diff_fields(a: dict, b: dict) -> list[str]:
+    diffs = []
+    for field in ("amount", "currency", "status"):
+        if a[field] != b[field]:
+            diffs.append(f"{field}: A={a[field]} B={b[field]}")
+    return diffs
+
+
+def reconcile(a_rows: Iterable[dict], b_rows: Iterable[dict]):
+    matched, mismatched, only_a, only_b = [], [], [], []
+
+    a_with_id = {r["transaction_id"]: r for r in a_rows if r["transaction_id"]}
+    b_with_id = {r["transaction_id"]: r for r in b_rows if r["transaction_id"]}
+
+    for tid in a_with_id.keys() & b_with_id.keys():
+        a, b = a_with_id[tid], b_with_id[tid]
+        diffs = diff_fields(a, b)
+        (matched if not diffs else mismatched).append((tid, diffs))
+
+    for tid in a_with_id.keys() - b_with_id.keys():
+        only_a.append(tid)
+    for tid in b_with_id.keys() - a_with_id.keys():
+        only_b.append(tid)
+
+    a_no_id = [r for r in a_rows if not r["transaction_id"]]
+    b_no_id = [r for r in b_rows if not r["transaction_id"]]
+
+    b_buckets: dict[tuple[str, int], list[dict]] = defaultdict(list)
+    for r in b_no_id:
+        b_buckets[(r["currency"], r["amount"])].append(r)
+    for bucket in b_buckets.values():
+        bucket.sort(key=lambda r: r["timestamp"])
+
+    for a in sorted(a_no_id, key=lambda r: r["timestamp"]):
+        bucket = b_buckets.get((a["currency"], a["amount"]), [])
+        best, best_dt = None, None
+        for b in bucket:
+            dt = abs((a["timestamp"] - b["timestamp"]).total_seconds())
+            if dt > 300:
+                continue
+            if best_dt is None or dt < best_dt:
+                best, best_dt = b, dt
+        synthetic = f"<no-id-A:row={a['row']}>"
+        if best is None:
+            only_a.append(synthetic)
+            continue
+        bucket.remove(best)
+        diffs = diff_fields(a, best)
+        (matched if not diffs else mismatched).append((synthetic, diffs))
+
+    for b in b_no_id:
+        if any(b in bucket for bucket in b_buckets.values()):
+            only_b.append(f"<no-id-B:row={b['row']}>")
+
+    return matched, mismatched, only_a, only_b
+
+
+def render(matched, mismatched, only_a, only_b) -> str:
+    lines = ["MATCHED"]
+    for tid, _ in sorted(matched):
+        lines.append(f"  {tid}")
+    lines.append("MISMATCHED")
+    for tid, diffs in sorted(mismatched):
+        lines.append(f"  {tid} ({', '.join(diffs)})")
+    lines.append("ONLY_IN_A")
+    for tid in sorted(only_a):
+        lines.append(f"  {tid}")
+    lines.append("ONLY_IN_B")
+    for tid in sorted(only_b):
+        lines.append(f"  {tid}")
+    return "\n".join(lines)
+
+
+def main() -> None:
+    a_path, b_path = sys.argv[1], sys.argv[2]
+    a, b = load(a_path), load(b_path)
+    print(render(*reconcile(a, b)))
+
+
+if __name__ == "__main__":
+    main()

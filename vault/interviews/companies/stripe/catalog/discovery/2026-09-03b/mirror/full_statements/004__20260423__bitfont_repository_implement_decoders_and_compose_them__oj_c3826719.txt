@@ -1,0 +1,225 @@
+"""
+Bitfont Repository: Implement Decoders and Compose Them
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/c3826719-e927-4380-9e5e-e54bd82496c4
+Source Type: OJ / More Problems
+
+================================================================================
+INTERVIEW PROMPT (as it would be delivered by the interviewer)
+================================================================================
+
+Hey -- in this round we're going to look at a small, made-up binary format
+called "Bitfont". Don't worry, no actual font expertise is required. The
+format is just a vehicle for the real exercise: writing two small decoders
+and then composing them so the output of one feeds the input of the other.
+
+I've cloned a starter repo onto the machine for you. The interesting files
+are:
+
+    src/decoder.py            -- you write this
+    tests/test_decoder.py     -- already there, includes the spec as tests
+
+Run the tests with `pytest -q`. They're red right now. Make them green.
+
+You can write whichever language you want; I'll show you the format below
+in Python-ish pseudocode.
+
+--------------------------------------------------------------------------------
+The format
+--------------------------------------------------------------------------------
+
+A Bitfont file is a sequence of FRAMES on the wire. Each frame represents
+one glyph. The wire format is a stream of bytes; you can assume big-endian
+throughout.
+
+  FRAME (variable length):
+    +--------+--------+--------+- - - - - - - - - - +
+    | LEN_HI | LEN_LO | FLAGS  |    PAYLOAD ...     |
+    +--------+--------+--------+- - - - - - - - - - +
+
+      LEN_HI, LEN_LO  : 16-bit unsigned big-endian length of PAYLOAD,
+                        in BYTES. (Header bytes are not included.)
+      FLAGS           : 8-bit. Bit 0 (LSB) is RLE, bit 1 is COMPACT.
+                        Other bits are reserved -- ignore.
+      PAYLOAD         : LEN bytes. The interpretation depends on FLAGS.
+
+The end of stream is just EOF -- there's no trailer or sentinel.
+
+A PAYLOAD encodes a 8 x 8 monochrome glyph: 64 pixels, each 1 bit, where
+1 = "on" and 0 = "off". The encoding depends on FLAGS:
+
+  - If FLAGS == 0 (raw):
+      PAYLOAD is exactly 8 bytes. Row 0 is byte 0, row 1 is byte 1, etc.
+      Within a byte, the most significant bit is the leftmost pixel.
+
+  - If FLAGS bit 0 is set (RLE):
+      PAYLOAD is a sequence of (count, value) pairs, each one byte.
+      `count` is 1..255 and `value` is 0 or 1. The total of all counts
+      across pairs is exactly 64. Decode left-to-right, top-to-bottom.
+
+  - If FLAGS bit 1 is set (COMPACT):
+      PAYLOAD is exactly 4 bytes. Each byte encodes two rows: the high
+      nibble is row 2k, the low nibble is row 2k+1. A nibble's leftmost
+      pixel is its most significant bit. (So COMPACT only works for
+      glyphs whose rightmost 4 columns are all zero -- you can assume
+      input respects this.)
+
+  - If both RLE and COMPACT bits are set: that's invalid; raise.
+
+--------------------------------------------------------------------------------
+PART 1 -- Glyph decoder ("Decoder A")
+--------------------------------------------------------------------------------
+
+Write:
+
+    decode_glyph(payload: bytes, flags: int) -> list[list[int]]
+
+It returns an 8x8 grid of 0s and 1s (a list of 8 lists of 8 ints).
+
+This is the inner decoder. It does NOT know about frames or lengths --
+it's handed a payload and the flags byte, and it produces the grid.
+
+--------------------------------------------------------------------------------
+PART 2 -- Stream decoder ("Decoder B")
+--------------------------------------------------------------------------------
+
+Write:
+
+    iter_frames(stream: BinaryIO) -> Iterator[tuple[int, bytes]]
+
+It reads from a binary stream and yields one `(flags, payload)` tuple per
+frame, in order, until EOF. It does NOT decode the payload -- it just
+parses the framing.
+
+If the stream ends mid-frame (e.g., we read LEN but then can't get LEN
+bytes of payload), raise an error.
+
+--------------------------------------------------------------------------------
+PART 3 -- Compose
+--------------------------------------------------------------------------------
+
+Write:
+
+    decode_bitfont(stream: BinaryIO) -> list[list[list[int]]]
+
+It returns the list of glyphs in the file, in order. Implementation should
+be the obvious composition:
+
+    [decode_glyph(payload, flags) for flags, payload in iter_frames(stream)]
+
+The point of Part 3 is that you should NOT need to change anything in
+Parts 1 or 2 to make Part 3 work. If you do, that's a sign the boundary
+was drawn in the wrong place.
+
+--------------------------------------------------------------------------------
+Constraints
+--------------------------------------------------------------------------------
+
+- Files are at most 100 MB. Don't read everything into memory at once;
+  iter_frames should be a generator.
+- Each frame's PAYLOAD is at most 65535 bytes (the LEN field is 16-bit).
+- Glyphs are always 8x8.
+
+--------------------------------------------------------------------------------
+What I'm looking for
+--------------------------------------------------------------------------------
+
+[Interviewer notes]
+
+- The two decoders are genuinely independent. iter_frames() should not
+  import or know about decode_glyph(), and vice versa.
+- decode_glyph() handles the three flag cases without a giant if-ladder
+  becoming unreadable. A small dispatch table is nice.
+- iter_frames() handles partial reads (read() returning fewer bytes
+  than requested) correctly. We will throw a slow file-like object
+  at it if we have time.
+- Bit-twiddling is correct -- MSB-first, big-endian length. Off-by-one
+  on RLE counts is the most common mistake here.
+"""
+
+
+from typing import BinaryIO, Iterator
+
+
+FLAG_RLE = 0b01
+FLAG_COMPACT = 0b10
+
+
+def _decode_raw(payload: bytes) -> list[list[int]]:
+    if len(payload) != 8:
+        raise ValueError(f"raw payload must be 8 bytes, got {len(payload)}")
+    return [
+        [(byte >> (7 - col)) & 1 for col in range(8)]
+        for byte in payload
+    ]
+
+
+def _decode_rle(payload: bytes) -> list[list[int]]:
+    if len(payload) % 2 != 0:
+        raise ValueError("RLE payload must have even length")
+    pixels = []
+    for i in range(0, len(payload), 2):
+        count, value = payload[i], payload[i + 1]
+        if value not in (0, 1):
+            raise ValueError(f"RLE value must be 0 or 1, got {value}")
+        if count == 0:
+            raise ValueError("RLE count must be >= 1")
+        pixels.extend([value] * count)
+    if len(pixels) != 64:
+        raise ValueError(f"RLE pixel total must be 64, got {len(pixels)}")
+    return [pixels[r * 8:(r + 1) * 8] for r in range(8)]
+
+
+def _decode_compact(payload: bytes) -> list[list[int]]:
+    if len(payload) != 4:
+        raise ValueError(f"COMPACT payload must be 4 bytes, got {len(payload)}")
+    rows = []
+    for byte in payload:
+        for nibble in (byte >> 4, byte & 0xF):
+            row = [(nibble >> (3 - col)) & 1 for col in range(4)] + [0, 0, 0, 0]
+            rows.append(row)
+    return rows
+
+
+def decode_glyph(payload: bytes, flags: int) -> list[list[int]]:
+    rle = bool(flags & FLAG_RLE)
+    compact = bool(flags & FLAG_COMPACT)
+    if rle and compact:
+        raise ValueError("RLE and COMPACT flags are mutually exclusive")
+    if rle:
+        return _decode_rle(payload)
+    if compact:
+        return _decode_compact(payload)
+    return _decode_raw(payload)
+
+
+def _read_exact(stream: BinaryIO, n: int) -> bytes:
+    buf = b""
+    while len(buf) < n:
+        chunk = stream.read(n - len(buf))
+        if not chunk:
+            if not buf:
+                return b""
+            raise EOFError(f"stream ended after {len(buf)} of {n} bytes")
+        buf += chunk
+    return buf
+
+
+def iter_frames(stream: BinaryIO) -> Iterator[tuple[int, bytes]]:
+    while True:
+        header = _read_exact(stream, 3)
+        if not header:
+            return
+        if len(header) < 3:
+            raise EOFError("stream ended in frame header")
+        length = (header[0] << 8) | header[1]
+        flags = header[2]
+        payload = _read_exact(stream, length) if length else b""
+        if length and len(payload) != length:
+            raise EOFError("stream ended mid-payload")
+        yield flags, payload
+
+
+def decode_bitfont(stream: BinaryIO) -> list[list[list[int]]]:
+    return [decode_glyph(payload, flags) for flags, payload in iter_frames(stream)]

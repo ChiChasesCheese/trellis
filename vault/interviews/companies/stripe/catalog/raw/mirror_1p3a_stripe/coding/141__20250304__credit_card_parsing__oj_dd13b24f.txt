@@ -1,0 +1,44 @@
+"""
+Credit Card Parsing
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/dd13b24f-9cd8-452f-aeb7-aad1ae333046
+Source Type: OJ / More Problems
+
+Question Summary:
+# Credit Card Parsing
+
+Implement a function that takes a string input of a credit card number and returns the parsing result, including the card type (such as Visa, MasterCard, etc.) and whether it is valid. Card number validity can be checked using the Luhn algorithm. Card type can be determined by the first few digits, according to the following rules:
+
+- Visa: Starts with 4, and the card number length is 13, 16, or 19.
+- MasterCard: Starts with numbers from 51 to 55, and the card number length is 16.
+
+### Input
+- A string representing the credit card number.
+
+### Output
+- A dictionary containing the card type and validity.
+
+### Example
+
+#### Example 1:
+```plaintext
+Input: "4242424242424242"
+Output: {"type": "Visa", "valid": true}
+```
+
+#### Example 2:
+```plaintext
+Input: "5105105105105100"
+Output: {"type": "MasterCard", "valid": true}
+```
+
+#### Example 3:
+```plaintext
+Input: "1234567890123456"
+Output: {"type": "Unknown", "valid": false}
+```
+
+### Constraints
+- The input card number contains only digit characters, with a length between 13 and 19.
+"""

@@ -1,0 +1,300 @@
+"""
+KYC Data Validation
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/330aace4-0545-4f6a-8d3e-dc1f25e5709f
+Source Type: OJ / More Problems
+
+================================================================================
+INTERVIEW PROMPT (as it would be delivered by the interviewer)
+================================================================================
+
+Hi! Thanks for joining us today. We're going to work on a problem that's a
+simplified version of something the Onboarding team at Stripe actually deals
+with. As you probably know, before any business can start accepting payments
+through Stripe, they have to go through a process called KYC -- Know Your
+Customer. We collect a bunch of information about the business and run it
+through a set of validation rules to decide whether the account can be
+"verified" or whether we need to push it back for review.
+
+Today you're going to write the validator. We'll start small and add rules as
+we go. You can use any language you're comfortable with. The expectation is
+that you read input from stdin and write output to stdout -- when you're ready
+to test, paste a block of test cases into the input pane and run.
+
+Take your time, think out loud, and ask me anything.
+
+--------------------------------------------------------------------------------
+PART 1 -- Required fields
+--------------------------------------------------------------------------------
+
+You'll receive a stream of KYC submissions, one per business. Each submission
+is a block of `key=value` lines. Submissions are separated by a single blank
+line. Input ends at EOF.
+
+The fields we care about are:
+
+    business_name
+    business_profile_name
+    full_statement_descriptor
+    short_statement_descriptor
+    url
+    product_description
+
+A submission is VERIFIED only if every one of those fields is present in the
+block AND its value is non-empty (whitespace-only counts as empty). Otherwise
+it is NOT VERIFIED.
+
+For each submission, in the order it appears in the input, print one line:
+
+    VERIFIED: <business_name>
+    NOT VERIFIED: <business_name>
+
+If `business_name` itself is missing or empty, still emit the line --
+just print an empty string after the colon, like `NOT VERIFIED: `.
+
+Example input:
+
+    business_name=Blue Bottle Coffee
+    business_profile_name=Blue Bottle
+    full_statement_descriptor=BLUE BOTTLE COFFEE OAKLAND
+    short_statement_descriptor=BLUEBOTTLE
+    url=https://bluebottlecoffee.com
+    product_description=Specialty coffee beans and brewed drinks
+
+    business_name=Acme
+    business_profile_name=Acme
+    full_statement_descriptor=ACME
+    short_statement_descriptor=ACME
+    url=
+    product_description=Stuff
+
+Example output:
+
+    VERIFIED: Blue Bottle Coffee
+    NOT VERIFIED: Acme
+
+"""
+lines = [
+    "business_name=Blue Bottle Coffee",
+    "business_profile_name=Blue Bottle",
+    "full_statement_descriptor=BLUE BOTTLE COFFEE OAKLAND",
+    "short_statement_descriptor=BLUEBOTTLE",
+    "url=https://bluebottlecoffee.com",
+    "product_description=Specialty coffee beans and brewed drinks",
+    "",
+    "business_name=Acme",
+    "business_profile_name=Acme",
+    "full_statement_descriptor=ACME",
+    "short_statement_descriptor=ACME",
+    "url=",
+    "product_description=Stuff",
+    "",
+    "business_profile_name=Acme",
+    "",
+    "business_name=Acme",
+    "business_profile_name=Acme",
+    "full_statement_descriptor=ACME",
+    "short_statement_descriptor=ACME",
+    "url=",
+    "product_description=shop ",
+    "",
+    "business_name=Acme",
+    "business_profile_name=Acme",
+    "full_statement_descriptor=ACME",
+    "short_statement_descriptor=ACME",
+    "url=",
+    "product_description=Stuff",
+    "EOF"
+]
+
+DESCRIPTOR_BLOCKLIST = {
+    "ONLINE STORE",
+    "ECOMMERCE",
+    "RETAIL",
+    "SHOP",
+    "GENERAL MERCHANDISE",
+}
+
+def verify_KYC_submissions(stream):
+  required_fields = ["business_name", "business_profile_name", "full_statement_descriptor", "short_statement_descriptor", "url", "product_description"]
+  current_submission = {}
+  it = iter(stream)
+  not_yet_seen_fields = set(required_fields)
+  # while stream is ongoing
+  while ((line := next(it)) != "EOF"):
+    if line == "":
+      output = ""
+      # check if description field, if exists, has len above 5
+      def is_verified():
+        description = current_submission.get("full_statement_descriptor", "")
+        description_length = len(description)
+        # check if clean uppercase version is in blocklist
+        if description.strip().upper() in DESCRIPTOR_BLOCKLIST:
+          return False 
+        # check if length is corrrect
+        if description_length < 5 or description_length > 31:
+          return False
+        # check if not_yet_seen fields is empty, if so we have seen all needed fields
+        if not not_yet_seen_fields:
+          return False
+        return True
+      if is_verified():
+        output = "VERIFIED:"
+      else:
+        output = "NOT VERIFIED:"
+      # append either current_submission or empty string using safe get
+      output = output + " " + current_submission.get("business_name", "")
+      print(output)
+      # if we reach blank line, resent current submission and not_yet_seen_fields.
+      not_yet_seen_fields = set(required_fields)
+      current_submission = {}
+    else:
+      key, sep, value = line.partition("=")
+      if value:
+        current_submission[key] = value
+        # remove value from not_yet_seem fields if it exists
+        not_yet_seen_fields.discard(key)
+  
+            
+verify_KYC_submissions(lines)
+    
+
+"""
+--------------------------------------------------------------------------------
+PART 2 -- Statement descriptor length
+--------------------------------------------------------------------------------
+
+[Interviewer reveals this once Part 1 is working.]
+
+Good. Now, the `full_statement_descriptor` is the string that shows up on the
+cardholder's bank statement, so the card networks have rules about it. We need
+to enforce one of them:
+
+    `full_statement_descriptor` must be between 5 and 31 characters, inclusive.
+
+If the descriptor's length falls outside that range, the submission is
+NOT VERIFIED, even if everything else is fine. Length is measured in
+characters of the value as given (you can assume ASCII for this problem).
+
+The output format is unchanged.
+
+--------------------------------------------------------------------------------
+PART 3 -- Descriptor blocklist
+--------------------------------------------------------------------------------
+
+[Revealed after Part 2 passes.]
+
+One more rule. We've noticed a lot of businesses try to set their descriptor
+to something generic like "ONLINE STORE". That's useless for the cardholder
+when they're trying to recognize a charge, so we reject those.
+
+Reject any submission whose `full_statement_descriptor`, after trimming
+surrounding whitespace and uppercasing, exactly matches one of these:
+
+    ONLINE STORE
+    ECOMMERCE
+    RETAIL
+    SHOP
+    GENERAL MERCHANDISE
+
+These are case-insensitive matches against the whole descriptor -- not
+substring matches. "RETAIL THERAPY CO" is fine; "retail" alone is not.
+
+The output format is still unchanged.
+
+--------------------------------------------------------------------------------
+Constraints
+--------------------------------------------------------------------------------
+
+- At most 10,000 submissions per run.
+- Each value is at most 256 characters.
+- You can assume keys are well-formed (`key=value`, no stray `=` in keys),
+  but values may contain `=` characters -- split on the first `=` only.
+- Field order within a submission is not guaranteed.
+- Unknown keys may appear; ignore them.
+
+--------------------------------------------------------------------------------
+What I'm looking for
+--------------------------------------------------------------------------------
+
+[Interviewer notes, not shown to candidate]
+
+- Clean separation between parsing and validation -- when Parts 2 and 3 land,
+  the candidate shouldn't be rewriting the parser.
+- Each validation rule should be addable without touching the others.
+  A list of rule functions, or similar, is the shape we want to see emerge.
+- Reasonable handling of malformed input (missing keys, blank values, weird
+  whitespace) without crashing.
+- If there's time at the end, we'll talk about how this would scale to
+  millions of submissions and what the rule set looks like in production.
+
+
+
+import sys
+
+
+REQUIRED_FIELDS = [
+    "business_name",
+    "business_profile_name",
+    "full_statement_descriptor",
+    "short_statement_descriptor",
+    "url",
+    "product_description",
+]
+
+DESCRIPTOR_BLOCKLIST = {
+    "ONLINE STORE",
+    "ECOMMERCE",
+    "RETAIL",
+    "SHOP",
+    "GENERAL MERCHANDISE",
+}
+
+
+def parse_submissions(text):
+    submissions = []
+    for block in text.strip().split("\n\n"):
+        record = {}
+        for line in block.splitlines():
+            if "=" not in line:
+                continue
+            key, value = line.split("=", 1)
+            record[key.strip()] = value
+        submissions.append(record)
+    return submissions
+
+
+def has_required_fields(record):
+    return all(record.get(f, "").strip() for f in REQUIRED_FIELDS)
+
+
+def descriptor_length_ok(record):
+    desc = record.get("full_statement_descriptor", "")
+    return 5 <= len(desc) <= 31
+
+
+def descriptor_not_blocklisted(record):
+    desc = record.get("full_statement_descriptor", "").strip().upper()
+    return desc not in DESCRIPTOR_BLOCKLIST
+
+
+RULES = [has_required_fields, descriptor_length_ok, descriptor_not_blocklisted]
+
+
+def is_verified(record):
+    return all(rule(record) for rule in RULES)
+
+
+def main():
+    submissions = parse_submissions(sys.stdin.read())
+    for record in submissions:
+        name = record.get("business_name", "").strip()
+        status = "VERIFIED" if is_verified(record) else "NOT VERIFIED"
+        print(f"{status}: {name}")
+
+
+if __name__ == "__main__":
+    main()
+
+"""

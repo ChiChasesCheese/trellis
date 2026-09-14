@@ -1,0 +1,10 @@
+"""
+Stripe Fulltime Software Engineer System Design Interview
+Category: System Design Question
+Company: Stripe
+Source: https://www.1point3acres.com/interview/thread/1110598
+Source Type: Interview Experience Summary
+
+Question Summary:
+Explore the Stripe fulltime onsite system design interview focusing on creating a feature flag library. Understand design requirements and implementation details for engineers.
+"""

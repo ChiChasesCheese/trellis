@@ -1,0 +1,33 @@
+"""
+Calculate Merchant Fraud Score
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/bd1891e3-9e18-4728-a764-d6db9a0da337
+Source Type: OJ / More Problems
+
+Question Summary:
+### Problem
+
+Given a set of transaction records `transactions`, each containing the merchant name, transaction amount, customer name, and time. Also given are a set of rules `rules` and merchant information `merchants`. Based on these rules, compute the fraud score for each merchant.
+
+### Input Format
+
+- `transactions`: A list of strings where each element is a comma-separated transaction detail in the format `"merchant,amount,customer,time"`.
+- `rules`: A list of strings where each element defines rules for bonuses based on certain conditions, in the format `"amount_threshold,rule1,rule2,..."`.
+- `merchants`: A list of strings where each element is a comma-separated merchant name and initial score, in the format `"merchant,initial_score"`.
+
+### Output Format
+
+Return a list of strings with each element as a comma-separated merchant name and final score in the format `"merchant,final_score"`.
+
+### Example
+
+```plaintext
+transactions = ["merchant1,980,customer1,15"]
+rules = ["1500,2,8,12"]
+merchants = ['merchant1, 20']
+Output: ["merchant1,50"]
+```
+
+The problem involves a large volume of data, with many rules, and can be implemented in approximately 50 lines of code.
+"""

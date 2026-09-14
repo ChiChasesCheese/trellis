@@ -1,0 +1,22 @@
+"""
+Max Reserve Balance Adjustment
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/e4c78f1f-4902-46b4-bcaa-b00ad35b7fc4
+Source Type: OJ / More Problems
+
+Question Summary:
+Given a platform identifier and a list of transactions, for accounts other than the platform identifier, if the current balance is less than zero, you can borrow funds from the platform identifier to cover the shortfall. Output three results: max reserve, rejected transaction list, and users with non-zero balances and their balances. Example input with platform_id as acct_123:
+
+```
+account_name, timestamp, currency, amount
+acct_123,1,usd,1000
+acct_321,3,usd,400
+acct_321,4,usd,-500
+```
+
+Output:
+```
+max_reserve = 100, rejected_transaction = [], acct_123 and 900
+```
+"""

@@ -1,0 +1,10 @@
+"""
+stripe Fulltime SDE Onsite Interview Experience
+Category: System Design Question
+Company: Stripe
+Source: https://www.1point3acres.com/interview/thread/1147789
+Source Type: Interview Experience Summary
+
+Question Summary:
+Candidate shares fulltime SDE onsite interview experience at stripe including rounds on bitfont, bikemap, and feature flag, with outcome disclosed.
+"""

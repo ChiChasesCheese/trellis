@@ -1,0 +1,59 @@
+[06:18:25] already have 4 posts; 60 total candidates
+[06:18:25] fetching 56 more (cap=56, delay=6.0s)
+[06:18:46]   [1/56] FAIL leetcode/1vypi4k: HTTP Error 429: Too Many Requests
+[06:19:03]   [2/56] OK snowflake/1vxymwa body=59 comments=0
+[06:19:23]   [3/56] FAIL snowflake/1uhoymq: HTTP Error 429: Too Many Requests
+[06:19:42]   [4/56] FAIL leetcode/1uba5vg: HTTP Error 429: Too Many Requests
+[06:20:02]   [5/56] OK leetcode/1u7l2k2 body=160 comments=0
+[06:20:21]   [6/56] FAIL leetcode/1tw76w5: HTTP Error 429: Too Many Requests
+[06:20:37]   [7/56] FAIL snowflake/1tjwx5b: HTTP Error 429: Too Many Requests
+[06:20:56]   [8/56] FAIL snowflake/1td9ais: HTTP Error 429: Too Many Requests
+[06:21:02]   [9/56] OK csMajors/1t7t1nv body=105 comments=10
+[06:21:23]   [10/56] FAIL leetcode/1t7oiqm: HTTP Error 429: Too Many Requests
+[06:21:42]   [11/56] FAIL snowflake/1t7jdms: HTTP Error 429: Too Many Requests
+[06:22:02]   [12/56] OK cscareerquestions/1t0ogu7 body=959 comments=7
+[06:22:20]   [13/56] FAIL csMajors/1t0khoz: HTTP Error 429: Too Many Requests
+[06:22:39]   [14/56] FAIL leetcode/1t0ex9v: HTTP Error 429: Too Many Requests
+[06:22:58]   [15/56] FAIL csMajors/1t0ex3a: HTTP Error 429: Too Many Requests
+[06:23:04]   [16/56] OK leetcode/1syrrfy body=626 comments=10
+[06:23:25]   [17/56] FAIL cscareerquestions/1sya5g8: HTTP Error 429: Too Many Requests
+[06:23:50]   [18/56] FAIL leetcode/1ssbx68: HTTP Error 429: Too Many Requests
+[06:24:02]   [19/56] OK leetcode/1sn71yv body=297 comments=3
+[06:24:21]   [20/56] FAIL csMajors/1sloaqb: HTTP Error 429: Too Many Requests
+[06:24:44]   [21/56] FAIL csMajors/1sks9ov: HTTP Error 429: Too Many Requests
+[06:25:08]   [22/56] OK cscareerquestions/1sh1cjc body=295 comments=4
+[06:25:34]   [23/56] FAIL csMajors/1sfaybm: HTTP Error 429: Too Many Requests
+[06:25:56]   [24/56] FAIL snowflake/1s8z9a5: HTTP Error 429: Too Many Requests
+[06:26:02]   [25/56] OK leetcode/1s6fjyj body=262 comments=0
+[06:26:24]   [26/56] FAIL snowflake/1s40ics: HTTP Error 429: Too Many Requests
+[06:26:42]   [27/56] FAIL leetcode/1s2xtox: HTTP Error 429: Too Many Requests
+[06:27:07]   [28/56] OK snowflake/1rzkiyg body=61 comments=0
+[06:27:29]   [29/56] FAIL leetcode/1rq07e1: HTTP Error 429: Too Many Requests
+[06:27:47]   [30/56] FAIL leetcode/1rmabxv: HTTP Error 429: Too Many Requests
+[06:28:00]   [31/56] OK snowflake/1r3pi01 body=559 comments=8
+[06:28:18]   [32/56] FAIL leetcode/1r0f7an: HTTP Error 429: Too Many Requests
+[06:28:41]   [33/56] FAIL leetcode/1qxztem: HTTP Error 429: Too Many Requests
+[06:29:00]   [34/56] OK leetcode/1qhs24l body=61 comments=2
+[06:29:25]   [35/56] FAIL csMajors/1qhs1f7: HTTP Error 429: Too Many Requests
+[06:29:48]   [36/56] FAIL leetcode/1qf7zza: HTTP Error 429: Too Many Requests
+[06:30:06]   [37/56] OK snowflake/1q2goye body=57 comments=1
+[06:30:27]   [38/56] FAIL leetcode/1q2gop8: HTTP Error 429: Too Many Requests
+[06:30:49]   [39/56] FAIL snowflake/1pzon7l: HTTP Error 429: Too Many Requests
+[06:31:00]   [40/56] OK snowflake/1pphtfb body=178 comments=1
+[06:31:17]   [41/56] FAIL csMajors/1p2lbzt: HTTP Error 429: Too Many Requests
+[06:31:34]   [42/56] FAIL leetcode/1ozxidc: HTTP Error 429: Too Many Requests
+[06:31:52]   [43/56] FAIL csMajors/1ou3uir: HTTP Error 429: Too Many Requests
+[06:32:01]   [44/56] OK csMajors/1ookr88 body=348 comments=6
+[06:32:20]   [45/56] FAIL csMajors/1o39zl9: HTTP Error 429: Too Many Requests
+[06:32:42]   [46/56] FAIL leetcode/1nkj70o: HTTP Error 429: Too Many Requests
+[06:33:04]   [47/56] OK csMajors/1ndigpa body=148 comments=31
+[06:33:26]   [48/56] FAIL leetcode/1lxqn3q: HTTP Error 429: Too Many Requests
+[06:33:45]   [49/56] FAIL csMajors/1kl5aph: HTTP Error 429: Too Many Requests
+[06:34:02]   [50/56] OK leetcode/1jmuqm5 body=258 comments=6
+[06:34:22]   [51/56] FAIL snowflake/1j6h3nr: HTTP Error 429: Too Many Requests
+[06:34:36]   [52/56] OK leetcode/1itbpe6 body=231 comments=0
+[06:34:52]   [53/56] FAIL snowflake/1ih43bn: HTTP Error 429: Too Many Requests
+[06:35:00]   [54/56] OK csMajors/1gqwfcq body=190 comments=4
+[06:35:23]   [55/56] FAIL csMajors/1gc827h: HTTP Error 429: Too Many Requests
+[06:35:44]   [56/56] FAIL csMajors/1g2ir0i: HTTP Error 429: Too Many Requests
+[06:35:50] DONE: total saved posts now 22 (this run: 18/56 ok)

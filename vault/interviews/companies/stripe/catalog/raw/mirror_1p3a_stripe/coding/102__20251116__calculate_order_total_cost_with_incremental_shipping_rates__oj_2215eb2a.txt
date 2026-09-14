@@ -1,0 +1,19 @@
+"""
+Calculate Order Total Cost with Incremental Shipping Rates
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/2215eb2a-88e7-43ad-88ef-2187444ef10e
+Source Type: OJ / More Problems
+
+Question Summary:
+An order has multiple products, each with different quantities and price brackets. Calculate the total price by determining which quantity range each product falls into, where maxQuantity = null indicates no upper limit.
+
+Input:
+- An order object including product name, a list of price brackets (with maxQuantity), and quantity.
+
+Output: The total price calculated based on the quantities and price brackets.
+
+Example:
+- Input: Order = [{"name": "mouse", "price": [{"maxQuantity": 10, "unitPrice": 500}, {"maxQuantity": null, "unitPrice": 400}], "quantity": 15}]
+- Output: 6800
+"""

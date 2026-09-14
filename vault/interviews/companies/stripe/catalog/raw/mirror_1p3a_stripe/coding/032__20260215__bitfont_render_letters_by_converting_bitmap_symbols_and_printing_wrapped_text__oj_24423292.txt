@@ -1,0 +1,108 @@
+"""
+BitFont: render letters by converting bitmap symbols and printing wrapped text
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/24423292-0689-437d-b267-8c6cba7436d6
+Source Type: OJ / More Problems
+
+Question Summary:
+## BitFont (Bitmap font rendering and fixed-width wrapping)
+
+You are given a piece of “bitmap font” content represented as ASCII art, plus a long text string to print. The bitmap uses `*` and `&` to represent pixel states.
+
+### Task 1: Replace pixel symbols
+Transform the bitmap by replacing:
+- `*` with `0`
+- `&` with `1`
+
+Keep all other characters (e.g., spaces and newlines) unchanged, and print the transformed bitmap.
+
+### Task 2: Wrap long text at a fixed width
+Given a long text string and a maximum line width `W` (e.g., `W = 72`), print the text across multiple lines:
+- Each line contains at most `W` characters
+- Once the next character would exceed `W`, cut at position `W` and continue on the next line
+
+### Input (illustrative)
+- Part 1: several lines of bitmap content (containing `*`, `&`, spaces, etc.), terminated by a clear marker or a provided line count (as specified by the interviewer)
+- Part 2: a text string to wrap
+- Part 3: the width `W`
+
+### Output
+- First output the bitmap after Task 1 replacements
+- Then output the wrapped text from Task 2
+
+### Sample tests
+> The original post did not provide exact I/O format; tests below are runnable examples under the assumption that bitmap/text/width are provided as single-line inputs.
+
+1)
+- input:
+```
+*&*&
+HelloWorld
+5
+```
+- output:
+```
+0101
+Hello
+World
+```
+
+2)
+- input:
+```
+****&&&&
+abcdefghijklmnopqrstuvwxyz
+10
+```
+- output:
+```
+00001111
+abcdefghij
+klmnopqrst
+uvwxyz
+```
+
+3)
+- input:
+```
+& * &
+1234567890
+3
+```
+- output:
+```
+1 0 1
+123
+456
+789
+0
+```
+
+4)
+- input:
+```
+
+A
+1
+```
+- output:
+```
+
+A
+```
+
+5)
+- input:
+```
+*&
+xxxxxxxxxxxxxxxx
+8
+```
+- output:
+```
+01
+xxxxxxxx
+xxxxxxxx
+```
+"""

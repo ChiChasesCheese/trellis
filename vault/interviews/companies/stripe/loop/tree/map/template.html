@@ -1,0 +1,267 @@
+<title>Stripe Loop 题图</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#f4f6f8; --surface:#ffffff; --surface-2:#eaeef2; --ink:#14181d; --ink-2:#5b6470; --ink-3:#8a94a0; --line:#d9dee5; --line-2:#c4ccd5;
+  --accent:#2a78d6;
+  --cA:#2a78d6; --cB:#eb6834; --cC:#1baf7a; --cD:#eda100; --cE:#e87ba4; --cF:#008300; --cG:#4a3aa7;
+  --heat0:#eaeef2; --heat1:#cde2fb; --heat2:#9ec5f4; --heat3:#5598e7; --heat4:#256abf;
+  --ok:#008300; --shadow:0 8px 28px rgba(20,24,29,.12);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#14181d; --surface:#1c2229; --surface-2:#242c35; --ink:#f2f4f6; --ink-2:#a3adb8; --ink-3:#6f7a86; --line:#2c343d; --line-2:#3a444f;
+  --accent:#3987e5;
+  --cA:#3987e5; --cB:#d95926; --cC:#199e70; --cD:#c98500; --cE:#d55181; --cF:#008300; --cG:#9085e9;
+  --heat0:#242c35; --heat1:#184f95; --heat2:#1c5cab; --heat3:#256abf; --heat4:#3987e5;
+  --ok:#3fbf3f; --shadow:0 8px 28px rgba(0,0,0,.5);
+}}
+:root[data-theme="dark"]{
+  --bg:#14181d; --surface:#1c2229; --surface-2:#242c35; --ink:#f2f4f6; --ink-2:#a3adb8; --ink-3:#6f7a86; --line:#2c343d; --line-2:#3a444f;
+  --accent:#3987e5;
+  --cA:#3987e5; --cB:#d95926; --cC:#199e70; --cD:#c98500; --cE:#d55181; --cF:#008300; --cG:#9085e9;
+  --heat0:#242c35; --heat1:#184f95; --heat2:#1c5cab; --heat3:#256abf; --heat4:#3987e5;
+  --ok:#3fbf3f; --shadow:0 8px 28px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-variant-numeric:tabular-nums}
+h1,h2,h3{font-family:"IBM Plex Sans Condensed","IBM Plex Sans",system-ui,sans-serif;font-weight:600;text-wrap:balance;margin:0}
+code,.mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+.wrap{max-width:1440px;margin:0 auto;padding:28px 24px 80px}
+header{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end;border-bottom:1px solid var(--line-2);padding-bottom:18px}
+h1{font-size:30px;line-height:1.1;letter-spacing:-.01em}
+.sub{color:var(--ink-2);margin-top:6px;max-width:64ch}
+.kpis{display:flex;gap:22px}
+.kpi{display:flex;flex-direction:column}
+.kpi b{font-family:"IBM Plex Sans Condensed",sans-serif;font-size:28px;font-weight:600;line-height:1}
+.kpi span{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-top:4px}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;padding:16px 0 6px;position:sticky;top:0;background:var(--bg);z-index:5;border-bottom:1px solid var(--line)}
+.legend{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:7px;padding:4px 10px 4px 7px;border:1px solid var(--line-2);border-radius:999px;background:var(--surface);color:var(--ink);cursor:pointer;font-size:12.5px;line-height:1.2}
+.chip .dot{width:10px;height:10px;border-radius:50%;flex:none}
+.chip[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.chip.dim{opacity:.38}
+.chip:focus-visible,.pill:focus-visible,.cell:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+input[type=search]{font:inherit;padding:6px 10px;border:1px solid var(--line-2);border-radius:6px;background:var(--surface);color:var(--ink);min-width:220px}
+.tabs{margin-left:auto;display:flex;border:1px solid var(--line-2);border-radius:6px;overflow:hidden}
+.tabs button{font:inherit;font-size:12.5px;padding:6px 12px;border:0;background:var(--surface);color:var(--ink-2);cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+section{margin-top:28px}
+.sec-h{display:flex;align-items:baseline;gap:12px;margin-bottom:10px}
+.sec-h h2{font-size:18px}
+.sec-h p{margin:0;color:var(--ink-2);font-size:13px}
+/* matrix */
+.matrix{overflow-x:auto}
+.matrix table{border-collapse:separate;border-spacing:2px;min-width:760px}
+.matrix th{font-weight:500;font-size:12px;color:var(--ink-2);text-align:left;padding:4px 8px;white-space:nowrap}
+.matrix th.col{vertical-align:bottom;max-width:120px;white-space:normal;line-height:1.25}
+.matrix th.row{display:flex;align-items:center;gap:8px;padding-right:14px}
+.cell{width:100%;height:36px;min-width:88px;border:0;border-radius:4px;background:var(--heat0);color:var(--ink);font:inherit;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.cell[data-n="0"]{color:var(--ink-3);cursor:default}
+.cell[data-n="1"]{background:var(--heat1)}.cell[data-n="2"]{background:var(--heat2)}.cell[data-n="3"]{background:var(--heat3);color:#fff}.cell[data-n="4"],.cell[data-n="5"],.cell[data-n="6"],.cell[data-n="7"],.cell[data-n="8"]{background:var(--heat4);color:#fff}
+.cell.on{box-shadow:0 0 0 2px var(--ink)}
+.cell small{font-weight:400;opacity:.8}
+/* map */
+.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media (max-width:1100px){.flow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.flow{grid-template-columns:1fr}.kpis{flex-wrap:wrap}header{grid-template-columns:1fr}}
+.round{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 12px 10px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.round.hidden{display:none}
+.round header{display:block;border:0;padding:0}
+.round .num{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3)}
+.round h3{font-size:15px;line-height:1.2;margin-top:2px}
+.round .meta{font-size:12px;color:var(--ink-2);margin-top:2px}
+.skill{border-top:1px dashed var(--line);padding-top:8px}
+.skill.hidden{display:none}
+.skill .sn{display:flex;align-items:flex-start;gap:6px;font-size:12px;color:var(--ink-2);line-height:1.3}
+.skill .sn .dot{width:8px;height:8px;border-radius:50%;flex:none;margin-top:4px}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 8px 3px 0;border:1px solid var(--line-2);border-radius:5px;background:var(--surface);color:var(--ink);font-size:12px;cursor:pointer;max-width:100%;overflow:hidden}
+.pill .bar{width:4px;align-self:stretch;border-radius:5px 0 0 5px;flex:none}
+.pill .id{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-2)}
+.pill .t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px}
+.pill .ok{color:var(--ok);font-size:11px}
+.pill.dim{opacity:.3}
+.pill.on{box-shadow:0 0 0 2px var(--ink)}
+/* table */
+.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:8px}
+table.list{border-collapse:collapse;width:100%;min-width:980px;font-size:13px}
+table.list th{position:sticky;top:0;background:var(--surface-2);text-align:left;font-weight:500;font-size:12px;color:var(--ink-2);padding:8px 10px;border-bottom:1px solid var(--line-2)}
+table.list td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+table.list tr.hidden{display:none}
+table.list td.c{white-space:nowrap}
+.tag{display:inline-block;padding:1px 7px;border-radius:999px;font-size:11px;border:1px solid var(--line-2);color:var(--ink-2)}
+/* drawer */
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(460px,100%);background:var(--surface);border-left:1px solid var(--line-2);box-shadow:var(--shadow);transform:translateX(102%);transition:transform .22s ease;z-index:20;overflow:auto;padding:22px 22px 40px}
+.drawer.open{transform:none}
+@media (prefers-reduced-motion:reduce){.drawer{transition:none}}
+.drawer .close{position:absolute;top:12px;right:12px;font:inherit;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);border-radius:6px;padding:4px 9px;cursor:pointer}
+.drawer h3{font-size:20px;margin:8px 0 4px}
+.drawer .id{font-size:12px;color:var(--ink-2)}
+.drawer dl{display:grid;grid-template-columns:88px 1fr;gap:8px 12px;margin:16px 0 0;font-size:13px}
+.drawer dt{color:var(--ink-3);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding-top:2px}
+.drawer dd{margin:0;overflow-wrap:anywhere}
+.drawer code{font-size:12px;background:var(--surface-2);padding:1px 5px;border-radius:4px}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);padding:8px 10px;border-radius:6px;font-size:12px;max-width:320px;line-height:1.4;z-index:30;display:none}
+.foot{margin-top:36px;color:var(--ink-3);font-size:12px;max-width:80ch}
+[hidden]{display:none!important}
+</style>
+<div class="wrap">
+<header>
+  <div>
+    <h1>Stripe Loop 题图</h1>
+    <p class="sub">OA 之后 8 轮 · 每题一枚色条 = 它主要考的核心能力。点核心色筛选，点热力格定位，点题看细节；表格视图给出全部字段。数据来自 <code>loop/tree/interview-loop.yaml</code> 与 <code>loop/CATALOG.md</code>。</p>
+  </div>
+  <div class="kpis" id="kpis"></div>
+</header>
+<div class="toolbar">
+  <div class="legend" id="legend" role="group" aria-label="核心能力筛选"></div>
+  <input type="search" id="q" placeholder="搜题名 / ID / 考核点…" aria-label="搜索">
+  <div class="tabs" role="tablist"><button role="tab" aria-selected="true" data-view="map">题图</button><button role="tab" aria-selected="false" data-view="table">表格</button></div>
+</div>
+
+<section id="v-matrix">
+  <div class="sec-h"><h2>核心能力 × 轮次</h2><p>格内数字 = 该轮里以此核心为主的题数；颜色越深越多。点击定位。</p></div>
+  <div class="matrix"><table id="matrix"></table></div>
+</section>
+
+<section id="v-map">
+  <div class="sec-h"><h2>按轮次的题图</h2><p>面试顺序从左到右；每轮内按考核点分组；<span style="color:var(--ok)">✓</span> = 练习目录已建成（含测试）。</p></div>
+  <div class="flow" id="flow"></div>
+</section>
+
+<section id="v-table" hidden>
+  <div class="sec-h"><h2>全部题目</h2><p>33 题；列出主核心、考核点、Part 递进、置信度与来源。</p></div>
+  <div class="tbl"><table class="list" id="list"></table></div>
+</section>
+
+<p class="foot">置信度：high = ≥2 独立一手来源或原题全文；medium = 单一手 + 二手印证；low = 仅题名。与 OA 题库重叠的电面题（q19 q21 q08 q25 …）不在此图，见 <code>loop/CATALOG.md</code> §A。</p>
+</div>
+<aside class="drawer" id="drawer" aria-label="题目详情"><button class="close" id="close">关闭</button><div id="dbody"></div></aside>
+<div class="tip" id="tip" role="tooltip"></div>
+<script>
+const DATA = __DATA__;
+const CORES = Object.keys(DATA.cores);
+const cvar = k => `var(--c${k})`;
+const P = DATA.problems, R = DATA.rounds;
+const NAMEFIX = {rc:"Recruiter 题库 + 反问 + 薪酬速查", hm:"HM 题库 + 原则映射 + 故事表", bq:"Behavioral 题库 + STAR-L 自评"};
+for (const k in NAMEFIX) if (P[k]) { P[k].alias = P[k].title; P[k].title = NAMEFIX[k]; }
+const skillName = {}; R.forEach(r => r.skills.forEach(s => skillName[s.id] = s.name));
+const roundName = {}; R.forEach(r => roundName[r.id] = r.name);
+let coreFilter = null, cellFilter = null, q = "";
+
+// KPIs
+const built = Object.values(P).filter(p => p.built).length;
+document.getElementById("kpis").innerHTML = [[Object.keys(P).length,"题"],[R.reduce((a,r)=>a+r.skills.length,0),"考核点"],[R.length,"轮次"],[built,"已建成"]]
+  .map(([n,l]) => `<div class="kpi"><b>${n}</b><span>${l}</span></div>`).join("");
+
+// legend
+const legend = document.getElementById("legend");
+CORES.forEach(k => {
+  const n = Object.values(P).filter(p => p.core === k).length;
+  const b = document.createElement("button"); b.className = "chip"; b.setAttribute("aria-pressed","false"); b.dataset.core = k;
+  b.innerHTML = `<span class="dot" style="background:${cvar(k)}"></span>${DATA.cores[k]} <span class="mono" style="color:var(--ink-3)">${n}</span>`;
+  b.onclick = () => { coreFilter = coreFilter === k ? null : k; cellFilter = null; render(); };
+  legend.appendChild(b);
+});
+
+// matrix
+function buildMatrix(){
+  const t = document.getElementById("matrix");
+  let h = `<tr><th></th>${R.map(r => `<th class="col">${r.name.split("（")[0]}</th>`).join("")}</tr>`;
+  CORES.forEach(k => {
+    h += `<tr><th class="row"><span class="dot" style="width:10px;height:10px;border-radius:50%;background:${cvar(k)};display:inline-block"></span>${DATA.cores[k]}</th>`;
+    R.forEach(r => {
+      const ids = Object.values(P).filter(p => p.round === r.id && p.core === k).map(p => p.id);
+      const sec = Object.values(P).filter(p => p.round === r.id && p.core !== k && p.cores.includes(k)).length;
+      h += `<td><button class="cell" data-n="${ids.length}" data-core="${k}" data-round="${r.id}" ${ids.length?"":"disabled"} title="${ids.join(", ")}">${ids.length||"·"}${sec?`<small>+${sec}</small>`:""}</button></td>`;
+    });
+    h += "</tr>";
+  });
+  t.innerHTML = h;
+  t.querySelectorAll(".cell:not([disabled])").forEach(c => c.onclick = () => {
+    const key = c.dataset.core + "|" + c.dataset.round;
+    cellFilter = cellFilter === key ? null : key; coreFilter = null; render();
+    if (cellFilter) document.getElementById("v-map").scrollIntoView({behavior:"smooth",block:"start"});
+  });
+}
+
+// map
+function buildFlow(){
+  const f = document.getElementById("flow");
+  f.innerHTML = R.map((r,i) => `<article class="round" data-round="${r.id}">
+    <header><div class="num">${String(i+1).padStart(2,"0")} · ${r.id}</div><h3>${r.name}</h3><div class="meta">${r.dur} min · ${r.skills.length} 个考核点 · ${new Set(r.skills.flatMap(s=>s.problems)).size} 题</div></header>
+    ${r.skills.map(s => `<div class="skill" data-skill="${s.id}" data-core="${s.core}"><div class="sn"><span class="dot" style="background:${cvar(s.core)}"></span><span>${s.name}</span></div>
+      <div class="pills">${s.problems.map(pid => pill(P[pid], s.id)).join("")}</div></div>`).join("")}
+  </article>`).join("");
+  f.querySelectorAll(".pill").forEach(el => {
+    el.onclick = () => openDrawer(el.dataset.id);
+    el.onmouseenter = e => showTip(e, el.dataset.id); el.onmousemove = moveTip; el.onmouseleave = hideTip;
+    el.onfocus = e => showTip(e, el.dataset.id); el.onblur = hideTip;
+  });
+}
+function pill(p, sid){
+  return `<button class="pill" data-id="${p.id}" data-core="${p.core}" data-skill="${sid}"><span class="bar" style="background:${cvar(p.core)}"></span><span class="id">${p.id}</span><span class="t">${p.title}</span>${p.built?'<span class="ok">✓</span>':""}</button>`;
+}
+
+// table
+function buildTable(){
+  const rows = Object.values(P).sort((a,b) => a.round.localeCompare(b.round) || a.id.localeCompare(b.id));
+  document.getElementById("list").innerHTML = `<tr><th>ID</th><th>题</th><th>轮次</th><th>主核心</th><th>考核点</th><th>Part 递进 / 内容</th><th>置信度</th><th>已建</th></tr>` +
+    rows.map(p => `<tr data-id="${p.id}" data-core="${p.core}" data-round="${p.round}"><td class="c mono">${p.id}</td><td><b>${p.title}</b>${p.alias?`<div style="color:var(--ink-2);font-size:12px">${esc(p.alias)}</div>`:""}</td><td class="c">${roundName[p.round].split("（")[0]}</td><td class="c"><span class="dot" style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${cvar(p.core)};margin-right:6px"></span>${DATA.cores[p.core]}</td><td>${p.skills.map(s=>skillName[s]).join("；")}</td><td>${esc(p.detail)}</td><td class="c"><span class="tag">${p.conf||"—"}</span></td><td class="c">${p.built?'<span style="color:var(--ok)">✓</span>':"—"}</td></tr>`).join("");
+  document.querySelectorAll("#list tr[data-id]").forEach(tr => tr.onclick = () => openDrawer(tr.dataset.id));
+}
+const esc = s => (s||"").replace(/</g,"&lt;").replace(/`([^`]+)`/g,"<code>$1</code>");
+
+function match(p){
+  if (coreFilter && !p.cores.includes(coreFilter)) return false;
+  if (cellFilter){ const [k,r] = cellFilter.split("|"); if (p.core !== k || p.round !== r) return false; }
+  if (q){ const hay = (p.id+" "+p.title+" "+p.alias+" "+p.detail+" "+p.skills.map(s=>skillName[s]).join(" ")).toLowerCase(); if (!hay.includes(q)) return false; }
+  return true;
+}
+function render(){
+  legend.querySelectorAll(".chip").forEach(c => { c.setAttribute("aria-pressed", String(c.dataset.core === coreFilter)); c.classList.toggle("dim", !!coreFilter && c.dataset.core !== coreFilter); });
+  document.querySelectorAll(".cell").forEach(c => c.classList.toggle("on", cellFilter === c.dataset.core+"|"+c.dataset.round));
+  const active = !!(coreFilter || cellFilter || q);
+  document.querySelectorAll(".pill").forEach(el => el.classList.toggle("dim", active && !match(P[el.dataset.id])));
+  document.querySelectorAll(".skill").forEach(s => { const any = [...s.querySelectorAll(".pill")].some(el => !el.classList.contains("dim")); s.classList.toggle("hidden", active && !any); });
+  document.querySelectorAll(".round").forEach(r => { const any = [...r.querySelectorAll(".skill")].some(s => !s.classList.contains("hidden")); r.classList.toggle("hidden", active && !any); });
+  document.querySelectorAll("#list tr[data-id]").forEach(tr => tr.classList.toggle("hidden", active && !match(P[tr.dataset.id])));
+}
+
+// drawer
+function openDrawer(id){
+  const p = P[id]; const d = document.getElementById("drawer");
+  const rs = R.find(r => r.id === p.round);
+  document.getElementById("dbody").innerHTML = `<div class="id mono">${p.id} · ${roundName[p.round]}</div><h3>${p.title}</h3>${p.alias?`<div style="color:var(--ink-2)">${esc(p.alias)}</div>`:""}
+    <dl>
+    <dt>核心</dt><dd>${p.cores.map(k=>`<span class="chip" style="cursor:default"><span class="dot" style="background:${cvar(k)}"></span>${DATA.cores[k]}</span>`).join(" ")}</dd>
+    <dt>考核点</dt><dd>${p.skills.map(s=>skillName[s]).join("<br>")}</dd>
+    <dt>${p.id.startsWith("bs")?"注入 bug":p.id.startsWith("sd")?"追问主线":p.id.match(/^(rc|hm|bq)$/)?"来源":"Part 递进"}</dt><dd>${esc(p.detail)}</dd>
+    ${p.recent?`<dt>${p.id.startsWith("bs")?"真实库":"最近报道"}</dt><dd>${esc(p.recent)}</dd>`:""}
+    ${p.refs?`<dt>#refs</dt><dd>${p.refs}</dd>`:""}
+    ${p.conf?`<dt>置信度</dt><dd>${p.conf}</dd>`:""}
+    ${p.extra && !p.id.startsWith("bs")?`<dt>${p.id.startsWith("int")?"mockserver":"OA 交叉"}</dt><dd>${esc(p.extra)}</dd>`:""}
+    <dt>练习</dt><dd>${p.built?`<code>python3 loop/mock.py start ${p.id}</code>`:"目录尚未建成（见 loop/tasks/todo.md）"}</dd>
+    <dt>材料</dt><dd>${rs.study.map(s=>`<code>${s}</code>`).join("<br>")}</dd>
+    </dl>`;
+  d.classList.add("open"); document.getElementById("close").focus();
+}
+document.getElementById("close").onclick = () => document.getElementById("drawer").classList.remove("open");
+document.addEventListener("keydown", e => { if (e.key === "Escape") document.getElementById("drawer").classList.remove("open"); });
+
+// tooltip
+const tip = document.getElementById("tip");
+function showTip(e, id){ const p = P[id]; tip.innerHTML = `<b>${p.id}</b> ${p.title}<br>${esc(p.detail).slice(0,140)}${p.detail.length>140?"…":""}${p.conf?`<br><span style="opacity:.75">置信度 ${p.conf}</span>`:""}`; tip.style.display = "block"; moveTip(e); }
+function moveTip(e){ const x = (e.clientX ?? 200) + 14, y = (e.clientY ?? 200) + 14; tip.style.left = Math.min(x, innerWidth - tip.offsetWidth - 8) + "px"; tip.style.top = Math.min(y, innerHeight - tip.offsetHeight - 8) + "px"; }
+function hideTip(){ tip.style.display = "none"; }
+
+// tabs & search
+document.querySelectorAll(".tabs button").forEach(b => b.onclick = () => {
+  document.querySelectorAll(".tabs button").forEach(x => x.setAttribute("aria-selected", String(x === b)));
+  const map = b.dataset.view === "map";
+  document.getElementById("v-map").hidden = !map; document.getElementById("v-matrix").hidden = !map; document.getElementById("v-table").hidden = map;
+});
+document.getElementById("q").oninput = e => { q = e.target.value.trim().toLowerCase(); render(); };
+
+buildMatrix(); buildFlow(); buildTable(); render();
+</script>

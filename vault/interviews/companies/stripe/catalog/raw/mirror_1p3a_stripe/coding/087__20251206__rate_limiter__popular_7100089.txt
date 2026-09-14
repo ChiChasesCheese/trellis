@@ -1,0 +1,20 @@
+"""
+Rate Limiter
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/post/7100089
+Source Type: Popular Questions / External Thread
+
+Question Summary:
+Design and implement a rate limiter that tracks API access patterns and enforces request limits.
+
+Public Section Headings:
+- Rate Limiter
+- Problem Description
+- Part 1: The Basics
+- Part 2: Saving Memory
+- Part 3: Tricky Situations
+- Part 4: Handling Multiple Threads
+- How to Solve It
+- Extra Discussion Points
+"""

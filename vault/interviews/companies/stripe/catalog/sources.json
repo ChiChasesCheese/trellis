@@ -1,0 +1,6457 @@
+{
+ "generated": "2026-09-03",
+ "sites": {
+  "leetcode.com": {
+   "tier": 1,
+   "kind": "一手面经（Discuss 帖）",
+   "access": "api",
+   "cadence_days": 30,
+   "last_verified": "2026-09-03",
+   "note": "",
+   "url_count": 59,
+   "recheck": "discuss 的 HTML 页 403，但 **GraphQL 端点 https://leetcode.com/graphql 可用**（已实测 200），正文走 API 取"
+  },
+  "linkjob.ai": {
+   "tier": 2,
+   "kind": "聚合站（面经汇编）",
+   "access": "auto",
+   "cadence_days": 60,
+   "last_verified": null,
+   "note": "",
+   "url_count": 7,
+   "recheck": "与 extrabrain 内容高度重合，计 refs 时算一份"
+  },
+  "interviewdb.io": {
+   "tier": 2,
+   "kind": "题库聚合站（只给标题）",
+   "access": "auto",
+   "cadence_days": 30,
+   "last_verified": "2026-09-03",
+   "note": "",
+   "url_count": 10,
+   "recheck": "question/stripe；正文多为前端占位符，只能取标题与阶段"
+  },
+  "oavoservice.com": {
+   "tier": 2,
+   "kind": "代面/聚合站（逐 part 拆解）",
+   "access": "auto",
+   "cadence_days": 30,
+   "last_verified": null,
+   "note": "",
+   "url_count": 4,
+   "recheck": ""
+  },
+  "programhelp.net": {
+   "tier": 2,
+   "kind": "代面/聚合站（逐题拆解、有日期）",
+   "access": "auto",
+   "cadence_days": 30,
+   "last_verified": null,
+   "note": "",
+   "url_count": 14,
+   "recheck": ""
+  },
+  "medium.com": {
+   "tier": 2,
+   "kind": "个人面经文章",
+   "access": "manual",
+   "cadence_days": 90,
+   "last_verified": "2026-09-03",
+   "note": "",
+   "url_count": 11,
+   "recheck": "对脚本 403（浏览器 UA 也 403），需人工打开"
+  },
+  "github.com": {
+   "tier": 1,
+   "kind": "候选人解法仓库 / 真实库 issue",
+   "access": "manual",
+   "cadence_days": 90,
+   "last_verified": "2026-09-03",
+   "note": "",
+   "url_count": 76,
+   "recheck": "HTML 仓库页在受限出口下 403；raw.githubusercontent.com 可用，取文件走 raw 域名"
+  },
+  "teamblind.com": {
+   "tier": 1,
+   "kind": "一手面经（匿名发帖）",
+   "access": "auto",
+   "cadence_days": 30,
+   "last_verified": "2026-09-03",
+   "note": "",
+   "url_count": 115,
+   "recheck": "浏览器 UA 可直接 curl 到 200（机器人 UA 会 403）；搜 site:teamblind.com stripe interview 按最新排序"
+  },
+  "codinginterview.com": {
+   "tier": 2,
+   "kind": "面试培训站",
+   "access": "auto",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 4,
+   "recheck": ""
+  },
+  "1point3acres.com": {
+   "tier": 1,
+   "kind": "一手面经 + 题库",
+   "access": "manual",
+   "cadence_days": 30,
+   "last_verified": "2026-09-03",
+   "note": "",
+   "url_count": 27,
+   "recheck": "全站结构性不可达：WebFetch / curl / r.jina.ai 三种方式均被 Cloudflare 拦截，只能人工登录翻"
+  },
+  "interviewfox.ai": {
+   "tier": 2,
+   "kind": "聚合站",
+   "access": "auto",
+   "cadence_days": 60,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1,
+   "recheck": ""
+  },
+  "extrabrain.app": {
+   "tier": 2,
+   "kind": "聚合站（面经汇编）",
+   "access": "auto",
+   "cadence_days": 60,
+   "last_verified": null,
+   "note": "",
+   "url_count": 2,
+   "recheck": "与 linkjob 内容高度重合，计 refs 时算一份"
+  },
+  "gist.github.com": {
+   "tier": 1,
+   "kind": "候选人解法",
+   "access": "auto",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 4,
+   "recheck": ""
+  },
+  "glassdoor.ca": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "adonais0.github.io": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "raw.githubusercontent.com": {
+   "tier": 1,
+   "kind": "候选人解法原文",
+   "access": "auto",
+   "cadence_days": 90,
+   "last_verified": "2026-09-03",
+   "note": "",
+   "url_count": 5,
+   "recheck": "可用，是绕开 github.com HTML 403 的正路"
+  },
+  "reddit.com": {
+   "tier": 1,
+   "kind": "一手面经",
+   "access": "auto",
+   "cadence_days": 60,
+   "last_verified": "2026-09-03",
+   "note": "",
+   "url_count": 2,
+   "recheck": "**走 RSS**：r/<sub>/search.rss?q=&restrict_sr=1&sort=new（25 条/次）+ 单帖 /comments/<id>/.rss（正文+评论）。HTML 页是 JS 壳、.json 403。工具 tools/harvest.py"
+  },
+  "glassdoor.com": {
+   "tier": 1,
+   "kind": "一手面经（问题页）",
+   "access": "manual",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 6,
+   "recheck": "Interview Questions 页，需登录"
+  },
+  "offerretriever.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "scribd.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "csoahelp.com": {
+   "tier": 2,
+   "kind": "代面/聚合站（逐题拆解、有日期）",
+   "access": "auto",
+   "cadence_days": 30,
+   "last_verified": null,
+   "note": "",
+   "url_count": 4,
+   "recheck": ""
+  },
+  "jointaro.com": {
+   "tier": 2,
+   "kind": "面试培训站",
+   "access": "auto",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 6,
+   "recheck": ""
+  },
+  "prachub.com": {
+   "tier": 2,
+   "kind": "题库聚合站（有日期、有结构化题面）",
+   "access": "auto",
+   "cadence_days": 30,
+   "last_verified": "2026-09-03",
+   "note": "",
+   "url_count": 13,
+   "recheck": "companies/stripe 列表页；本轮复原 C7/C27 的主力来源，但游戏化计数无法验证"
+  },
+  "leonstaff.com": {
+   "tier": 2,
+   "kind": "培训站（方法论，有发布日期）",
+   "access": "auto",
+   "cadence_days": 60,
+   "last_verified": "2026-09-03",
+   "note": "",
+   "url_count": 2,
+   "recheck": "2026-08-13 的 bug squash 5 步流程是本轮新增材料"
+  },
+  "stripe.com": {
+   "tier": 3,
+   "kind": "Stripe 官方（JD / 文化 / Operating Principles）",
+   "access": "auto",
+   "cadence_days": 90,
+   "last_verified": "2026-09-03",
+   "note": "",
+   "url_count": 23,
+   "recheck": "jobs/culture 与 compatibility 两页是 behavioral 轮的评分依据，2026-09-01 复核无变化"
+  },
+  "tianpan.co": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "docs.stripe.com": {
+   "tier": 3,
+   "kind": "Stripe 官方 API 文档",
+   "access": "auto",
+   "cadence_days": 180,
+   "last_verified": null,
+   "note": "",
+   "url_count": 30,
+   "recheck": "幂等/分页/429/webhook 语义的权威来源；变更慢但会变"
+  },
+  "support.stripe.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "jobs.glynncapital.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "jobs.generalcatalyst.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "careers.base10.vc": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "builtin.com": {
+   "tier": 3,
+   "kind": "公司背景",
+   "access": "auto",
+   "cadence_days": 180,
+   "last_verified": null,
+   "note": "",
+   "url_count": 3,
+   "recheck": ""
+  },
+  "hackerrank.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "support.hackerrank.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "interviewing.io": {
+   "tier": 2,
+   "kind": "面试培训站",
+   "access": "auto",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 3,
+   "recheck": ""
+  },
+  "tryexponent.com": {
+   "tier": 2,
+   "kind": "面试培训站（流程/评分维度）",
+   "access": "auto",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 8,
+   "recheck": ""
+  },
+  "techinterview.org": {
+   "tier": 2,
+   "kind": "面试培训站",
+   "access": "auto",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 3,
+   "recheck": ""
+  },
+  "igotanoffer.com": {
+   "tier": 2,
+   "kind": "面试培训站",
+   "access": "auto",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1,
+   "recheck": ""
+  },
+  "finalroundai.com": {
+   "tier": 2,
+   "kind": "聚合站",
+   "access": "auto",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 2,
+   "recheck": ""
+  },
+  "r.jina.ai": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "interviewcoder.co": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "prepfully.com": {
+   "tier": 2,
+   "kind": "面试培训站",
+   "access": "auto",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1,
+   "recheck": ""
+  },
+  "greatfrontend.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "blog.rampatra.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "vervecopilot.com": {
+   "tier": 9,
+   "kind": "AI 生成题目农场（已判定不可信）",
+   "access": "auto",
+   "cadence_days": 365,
+   "last_verified": null,
+   "note": "",
+   "url_count": 2,
+   "recheck": "同上"
+  },
+  "simplify.jobs": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "staffengprep.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "hackerprep.io": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "coditioning.com": {
+   "tier": 2,
+   "kind": "面试培训站",
+   "access": "auto",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1,
+   "recheck": ""
+  },
+  "ophyai.com": {
+   "tier": 2,
+   "kind": "聚合站",
+   "access": "auto",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 2,
+   "recheck": ""
+  },
+  "4dayweek.io": {
+   "tier": 3,
+   "kind": "JD 镜像",
+   "access": "auto",
+   "cadence_days": 180,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1,
+   "recheck": ""
+  },
+  "levels.fyi": {
+   "tier": 3,
+   "kind": "薪酬数据",
+   "access": "auto",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 4,
+   "recheck": ""
+  },
+  "api.github.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "techprep.app": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "getbridged.co": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "interviewquery.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "interviewkickstart.com": {
+   "tier": 2,
+   "kind": "面试培训站",
+   "access": "auto",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 3,
+   "recheck": ""
+  },
+  "blog.theinterviewguys.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "jobsbyculture.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "dev.to": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "dataford.io": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "yourcareersupport.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "algo.monster": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "twinpwa.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "teamrora.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "slab.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "greylock.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "centreforoptimism.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "hirehive.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "inc.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "fs.blog": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "aboutamazon.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "designgurus.io": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "apexinterviewer.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "careerflow.ai": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "newsletter.bigtechcareers.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "interviewhelp.io": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "tntech.edu": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "tim.blog": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "stripe.dev": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "nodeflair.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "systemdesignhandbook.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "newsletter.pragmaticengineer.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "educative.io": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "systemdr.systemdrd.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "youtube.com": {
+   "tier": 3,
+   "kind": "视频面经",
+   "access": "auto",
+   "cadence_days": 180,
+   "last_verified": null,
+   "note": "",
+   "url_count": 2,
+   "recheck": ""
+  },
+  "engineeringenablement.substack.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "betterengineers.substack.com": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "brandur.org": {
+   "tier": 3,
+   "kind": "未分类",
+   "access": "unknown",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 1
+  },
+  "hellointerview.com": {
+   "tier": 2,
+   "kind": "系统设计培训站",
+   "access": "auto",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 2,
+   "recheck": ""
+  },
+  "designgurus.substack.com": {
+   "tier": 2,
+   "kind": "系统设计培训站",
+   "access": "auto",
+   "cadence_days": 90,
+   "last_verified": null,
+   "note": "",
+   "url_count": 2,
+   "recheck": ""
+  },
+  "xiaohongshu.com": {
+   "tier": 1,
+   "kind": "一手面经（中文，图文为主）",
+   "cadence_days": 30,
+   "url_count": 0,
+   "access": "manual",
+   "recheck": "正文能取（移动端 UA + 分享链接，SSR 在 window.__INITIAL_STATE__，保留 xsec_token）；但按关键词搜索需登录，搜索引擎也不索引——note URL 须人工提供。工具 tools/harvest.py xhs",
+   "last_verified": "2026-09-03"
+  },
+  "nowcoder.com": {
+   "tier": 1,
+   "kind": "一手面经（中文）",
+   "cadence_days": 30,
+   "url_count": 0,
+   "access": "auto",
+   "recheck": "牛客，中文面经，catalog 此前未覆盖",
+   "last_verified": "2026-09-03"
+  },
+  "1o24bbs.com": {
+   "tier": 1,
+   "kind": "一手面经",
+   "cadence_days": 30,
+   "url_count": 0,
+   "access": "manual",
+   "recheck": "本容器内 000 不可达（网络层，非反爬）",
+   "last_verified": "2026-09-03"
+  }
+ },
+ "urls": {
+  "https://leetcode.com/discuss/post/8385570/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://www.linkjob.ai/interview-questions/stripe-technical-interview/": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "linkjob.ai",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md",
+    "catalog/raw/process_and_jd.md",
+    "loop/raw/en_forums.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.interviewdb.io/question/stripe": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "interviewdb.io",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/discovery/2026-09/C_batchA.md",
+    "catalog/raw/algo_questions.md",
+    "catalog/raw/en_forums.md",
+    "catalog/raw/process_and_jd.md",
+    "loop/raw/en_forums.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://oavoservice.com/en/articles/stripe-2025-hackerrank-oa-merchant-fraud-scoring-system-oavoservice": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "oavoservice.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md",
+    "catalog/raw/process_and_jd.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://programhelp.net/en/oa/stripe-2026-new-grad-oa-overview/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 202,
+   "checked": "2026-09-03",
+   "domain": "programhelp.net",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md",
+    "catalog/raw/process_and_jd.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://programhelp.net/en/oa/stripe-oa-questions-software-engineer/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 202,
+   "checked": "2026-09-03",
+   "domain": "programhelp.net",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://medium.com/@program.net/in-depth-breakdown-of-stripe-software-engineer-oa-333c7db9e033": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "medium.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://leetcode.com/discuss/post/7323123/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://www.linkjob.ai/interview-questions/stripe-interview-questions/": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "linkjob.ai",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md",
+    "catalog/raw/process_and_jd.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/Shivam5022/Interview-Experiences": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md",
+    "loop/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/femisowems/stripe-interview-questions/tree/main/question6": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.linkjob.ai/interview-questions/stripe-hackerrank-online-assessment/": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "linkjob.ai",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md",
+    "catalog/raw/process_and_jd.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.teamblind.com/post/my-stripe-interview-gdmiywlu": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md",
+    "catalog/raw/en_forums.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.codinginterview.com/guide/stripe-interview-questions/": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "codinginterview.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md",
+    "catalog/raw/process_and_jd.md",
+    "loop/raw/en_forums.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://leetcode.com/discuss/post/8470971/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://www.1point3acres.com/interview/problems/59a39c1c-3696-400e-81b6-c3fdd3b56895": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md",
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://www.1point3acres.com/interview/problems/f8e3ed43-0b33-4b13-a879-a559ccd803f2": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://www.1point3acres.com/interview/problems/company/stripe/chat-billing-oa": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://interviewfox.ai/interview-questions/stripe-oa-hackerrank-guide/": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "interviewfox.ai",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md",
+    "catalog/raw/process_and_jd.md",
+    "loop/raw/en_forums.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/femisowems/stripe-interview-questions/tree/main/question1": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://extrabrain.app/interview-questions/stripe-hackerrank-online-assessment-extrabrain/": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "extrabrain.app",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md",
+    "catalog/raw/process_and_jd.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.teamblind.com/post/what-does-stripe-hackerrank-test-have-ijfwtgl0": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md",
+    "catalog/raw/process_and_jd.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://programhelp.net/en/stripe-oa-question-stripe-sde/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 202,
+   "checked": "2026-09-03",
+   "domain": "programhelp.net",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/joeytor/StripeInterview": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md",
+    "loop/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/sahaia1/Stripe_Pyhton_libraries/blob/main/capital.py": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://leetcode.com/discuss/interview-question/5832245/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/7379560/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/7691354/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/6696304/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md",
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://gist.github.com/aranibatta/ffa87e94d117a86fc05b6940e626ee56": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "gist.github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md",
+    "loop/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://gist.github.com/stealthbomber10/d85d44776ad58ba66d84ff76fd5be736": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "gist.github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md",
+    "catalog/raw/github_repos.md",
+    "loop/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.glassdoor.ca/Interview/server-id-allocation-QTN_2174722.htm": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "glassdoor.ca",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/sahaia1/Stripe_Pyhton_libraries/blob/main/code1.py": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://programhelp.net/en/vo/stripe-summer-intern-vo-coding-integration/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 202,
+   "checked": "2026-09-03",
+   "domain": "programhelp.net",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://programhelp.net/en/vo/stripe-intern-vo-coding-debug-integration-guide/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 202,
+   "checked": "2026-09-03",
+   "domain": "programhelp.net",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://programhelp.net/en/vo/stripe-vo-interview-questions-and-solutions/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 202,
+   "checked": "2026-09-03",
+   "domain": "programhelp.net",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://programhelp.net/en/vo/stripe-intern-vo-coding-integration/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 202,
+   "checked": "2026-09-03",
+   "domain": "programhelp.net",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://leetcode.com/discuss/post/7497123/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://oavoservice.com/articles/stripe-0109.en": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "oavoservice.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/SogAniMic/Stripe_coding_challenge/blob/main/MultiTimeMap.ipynb": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/Murillo2380/interview-coding-solutions": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/ombharatiya/FAANG-Coding-Interview-Questions": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://adonais0.github.io/20210603/interview-stripe/": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "adonais0.github.io",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.1point3acres.com/bbs/thread-1025478-1-1.html": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://github.com/freecodemessiah/stripe-interview": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.1point3acres.com/bbs/thread-814077-1-1.html": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/4595354/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://raw.githubusercontent.com/snehasishroy/leetcode-companywise-interview-questions/master/stripe/all.csv": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "raw.githubusercontent.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://raw.githubusercontent.com/liquidslr/leetcode-company-wise-problems/main/Stripe/5.%20All.csv": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "raw.githubusercontent.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://raw.githubusercontent.com/shreeratn/leetcode-company-wise-problems/main/Stripe/5.%20All.csv": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "raw.githubusercontent.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://leetcode.com/problems/minimum-penalty-for-a-shop": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://leetcode.com/problems/calculate-amount-paid-in-taxes": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://github.com/Hazeera65/stripe-interview/tree/main/round1": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/premjm-67/stripe-interview-questions": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md",
+    "loop/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/TWINSRIRAM/Stripe_OA_Prep": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://leetcode.com/problems/evaluate-division": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://leetcode.com/discuss/interview-experience/5341224/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://leetcode.com/problems/invalid-transactions": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://leetcode.com/problems/one-edit-distance": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/7521596/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://programhelp.net/en/vo/stripe-sde-interview-vo-5-round-interview-experience/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 202,
+   "checked": "2026-09-03",
+   "domain": "programhelp.net",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/SogAniMic/Stripe_coding_challenge": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.teamblind.com/post/stripe-onsite-interview-vwunpzkn": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md",
+    "loop/raw/en_forums.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.teamblind.com/post/stripe-interview-experience-sa3i71d8": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://leetcode.com/discuss/post/7307271/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://leetcode.com/discuss/interview-question/5740845/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/5984403/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/5883632/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-phone-screen-interview-jcnxxpsh": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md",
+    "loop/raw/en_forums.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.teamblind.com/post/stripe-phone-screen-8r8jb1c6": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://leetcode.com/discuss/post/5740522/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://www.reddit.com/r/leetcode/comments/1k1d2rl/just_had_stripe_first_coding_round/": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "reddit.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/bradgarropy/stripe-telephone": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.glassdoor.com/Interview/One-of-the-question-asked-me-to-implement-a-replay-test-with-a-pre-recorded-JSON-file-...-QTN_1885228.htm": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "glassdoor.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/7595344/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/discovery/2026-09/rounds_material.md",
+    "catalog/raw/algo_questions.md",
+    "catalog/raw/en_forums.md",
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.teamblind.com/post/how-to-approach-the-stripe-on-site-coding-challenges-qb0yu0tx": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md",
+    "catalog/raw/process_and_jd.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://leetcode.com/discuss/post/3102019/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/2172363/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/8315891/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-swe-l3-interview-feedback-timeline-outcome-rbkumngu": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/sumansaurav91/stripe-interview-prep": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://leetcode.com/discuss/interview-question/2585038/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/3950781/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://gist.github.com/pkafel/86470ca581350014bb89033fbffb9bb1": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "gist.github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md",
+    "catalog/raw/en_forums.md",
+    "catalog/raw/github_repos.md",
+    "catalog/raw/process_and_jd.md",
+    "loop/raw/en_forums.md",
+    "loop/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/yingw787/stripe-interview": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/Hazeera65/stripe-interview/tree/main/round1/PhoneScreen": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/TWINSRIRAM/Stripe_OA_Prep/tree/main/part1-3": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/femisowems/stripe-interview-questions/tree/main/question4": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/femisowems/stripe-interview-questions/tree/main/question5": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://leetcode.com/discuss/post/5918387/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://offerretriever.com/questions/58": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "offerretriever.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/kushal107/stripe_interview_practice": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://leetcode.com/discuss/post/7344444/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://programhelp.net/en/oa/stripe-hackerrank-online-assessment-questions-guide/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 202,
+   "checked": "2026-09-03",
+   "domain": "programhelp.net",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/process_and_jd.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/femisowems/stripe-interview-questions/tree/main/question3": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/kylelong/stripe-interview/blob/master/RadarRules.java": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/sahaia1/Stripe_Pyhton_libraries/blob/main/radarrules.py": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/Molakim/stripeCoding": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/github/dmca/blob/master/2022/05/2022-05-17-stripe.md": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.scribd.com/document/945047774/Stripe-2": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "scribd.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/femisowems/stripe-interview-questions/tree/main/question2": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://csoahelp.com/2024/12/27/ace-your-stripe-interview-with-csoahelp-a-detailed-case-study/": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "csoahelp.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://leetcode.com/discuss/post/6006563/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/5883672/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/5647506/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://www.jointaro.com/interviews/companies/stripe/experiences/software-developer-intern-memphis-tn-december-1-2024-no-offer-positive-5813ba11/": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "jointaro.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/TWINSRIRAM/Stripe_OA_Prep/blob/main/shipping_cost.cpp": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/SabihaNazKhan/StripePhoneScreen24Nov25/blob/master/src/Solution.java": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.teamblind.com/post/can-someone-whos-ever-interviewed-at-stripe-for-mid-level-tell-me-what-to-expect-for-phone-screen-d4f50dzn": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.teamblind.com/post/stripe-phone-screen-march-2025-oqru2jvw": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md",
+    "catalog/raw/process_and_jd.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.1point3acres.com/interview/problems/25b1c004-aefc-4fc7-bdd5-d6b7dc7afcca": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://www.1point3acres.com/interview/thread/1066090": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://www.1point3acres.com/bbs/thread-934403-1-1.html": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://leetcode.com/discuss/interview-question/5150083/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-phone-screen-5titeaec": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/sahaia1/Stripe_Pyhton_libraries/blob/main/graph_currency.py": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://leetcode.com/discuss/interview-experience/4742657/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://programhelp.net/en/vo/stripe-interview-process-explained-2025-edition/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 202,
+   "checked": "2026-09-03",
+   "domain": "programhelp.net",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/en_forums.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.teamblind.com/post/stripe-phone-screen-ohnoejc2": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.teamblind.com/post/stripe-phone-screen-interview-b34ftqso": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md",
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.1point3acres.com/bbs/thread-873287-1-1.html": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://www.1point3acres.com/bbs/thread-851458-1-1.html": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://github.com/sahaia1/Stripe_Pyhton_libraries/blob/main/money_transfer.py": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.1point3acres.com/bbs/thread-1029620-1-1.html": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://www.1point3acres.com/bbs/tag/stripe-2126-44.html": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://www.1point3acres.com/bbs/thread-1150184-1-1.html": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://programhelp.net/en/vo/stripe-vo-real-coding/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 202,
+   "checked": "2026-09-03",
+   "domain": "programhelp.net",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.1point3acres.com/bbs/thread-817977-1-1.html": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://www.reddit.com/r/Hack2Hire/comments/1rrsy56/stripe_screening_interview_design_rate_limiter/": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "reddit.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://gist.github.com/ptarjan/e38f45f2dfe601419ca3af937fff574d": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "gist.github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.1point3acres.com/bbs/thread-1028744-1-1.html": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://www.1point3acres.com/bbs/thread-804154-1-1.html": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://github.com/prashantrai/Algo_DS_InterviewPrep": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.glassdoor.com/Interview/Write-a-function-compute-penalty-that-computes-the-total-penalty-given-a-server-log-as-a-string-AND-a-time-at-which-we-re-QTN_4434801.htm": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "glassdoor.com",
+   "cited_by": [
+    "catalog/CATALOG.md",
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://www.interviewdb.io/question/stripe/observability": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "interviewdb.io",
+   "cited_by": [
+    "catalog/discovery/2026-09/C_batchA.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.interviewdb.io/question/stripe（列表页": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": "UnicodeEncodeError",
+   "checked": "2026-09-03",
+   "domain": "interviewdb.io",
+   "cited_by": [
+    "catalog/discovery/2026-09/C_batchA.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.interviewdb.io/question/stripe/factory-cost": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "interviewdb.io",
+   "cited_by": [
+    "catalog/discovery/2026-09/C_batchA.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://prachub.com/interview-questions/minimize-total-factory-cost-with-distance-penalties": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "prachub.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/C_batchA.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.1point3acres.com/interview/problems/post/7100090（": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/C_batchA.md"
+   ]
+  },
+  "https://www.interviewdb.io/question/stripe/user-roles": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "interviewdb.io",
+   "cited_by": [
+    "catalog/discovery/2026-09/C_batchA.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.interviewdb.io/question/stripe/rbac-role-resolver": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "interviewdb.io",
+   "cited_by": [
+    "catalog/discovery/2026-09/C_batchA.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.1point3acres.com/interview/problems/post/7100148（标题": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/C_batchA.md"
+   ]
+  },
+  "https://prachub.com/coding-questions/resolve-user-roles-across-account-hierarchy": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "prachub.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/C_batchA.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://prachub.com/coding-questions/find-linked-user-records-by-similarity": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "prachub.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/C_batchA.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://prachub.com/coding-questions/find-linked-user-records-by-weighted-similarity": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "prachub.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/C_batchA.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.interviewdb.io/question/stripe/matching-contacts": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "interviewdb.io",
+   "cited_by": [
+    "catalog/discovery/2026-09/C_batchA.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://prachub.com/coding-questions/convert-bitmap-into-ascii-characters": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "prachub.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/C_batchA.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://prachub.com/interview-questions/design-a-superhero-dispatch-system": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "prachub.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/C_batchA.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://prachub.com/interview-questions/design-a-superhero-incident-dispatch-system": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "prachub.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/C_batchA.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://prachub.com/interview-questions/design-a-count-metrics-monitoring-platform": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "prachub.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/C_batchA.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://prachub.com/interview-questions/evaluate-ordered-access-control-rules": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "prachub.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/C_batchA.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.1point3acres.com/interview/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/C_batchA.md"
+   ]
+  },
+  "https://prachub.com/companies/stripe": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "prachub.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/C_batchA.md",
+    "catalog/discovery/2026-09/rounds_material.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/psf/requests/issues/2589": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md",
+    "loop/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/psf/requests/issues/3532": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md",
+    "loop/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/psf/requests/issues/3369": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md",
+    "loop/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/sqlalchemy/mako/issues/434": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md",
+    "loop/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/sqlalchemy/mako/commit/e05ac61989a7fb9dd7dcde6cfd72dc48328719a3": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md",
+    "loop/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/sqlalchemy/mako/issues/435": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md",
+    "loop/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/sqlalchemy/mako/commit/72e10c573ca0fbcbddd4455abca8ce92a61780d7": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md",
+    "loop/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/FasterXML/jackson-core/issues/649": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md",
+    "loop/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/FasterXML/jackson-core/pull/650": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md",
+    "loop/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/square/moshi/issues/470": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md",
+    "loop/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/sass/ruby-sass/pull/97": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md",
+    "loop/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/iamkun/dayjs/issues/3068": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md",
+    "loop/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/iamkun/dayjs/issues/3015": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md",
+    "loop/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://leonstaff.com/blogs/stripe-technical-interview-bug-squash-integration-guide/": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "leonstaff.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md",
+    "loop/raw/en_forums.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.1point3acres.com/interview/thread/1161334": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md"
+   ]
+  },
+  "https://medium.com/@emilyhustlenyc/every-question-i-was-asked-in-stripes-system-design-interview-f6f19c2e62d6": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "medium.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md",
+    "loop/raw/en_forums.md",
+    "loop/raw/system_design.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.teamblind.com/post/stripe-onsite-design-1-interview-ps7pgzwy": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md",
+    "loop/raw/en_forums.md",
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://medium.com/h7w/the-stripe-system-design-question-that-separates-senior-from-staff-engineers-ecb9a98af1fd": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "medium.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md",
+    "loop/raw/system_design.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://stripe.com/jobs/culture": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "stripe.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md",
+    "loop/raw/hr_hm_behavioral.md",
+    "loop/raw/stripe_official_and_api.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://stripe.com/jobs/compatibility": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "stripe.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md",
+    "loop/raw/stripe_official_and_api.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.teamblind.com/post/stripe-interview-loop-rejection-vpdsosjj": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md",
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-ai-programming-exercise-round-l2se2-0ipx6xp7": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md"
+   ]
+  },
+  "https://prachub.com/resources/stripe-swe-intern-oa-2027-one-long-coding-problem-input-parsing-and-clean-code": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "prachub.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://prachub.com/interview-guide/stripe-software-engineer-interview-guide": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "prachub.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.interviewdb.io/guides/stripe-ai-programming-exercise": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "interviewdb.io",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md",
+    "loop/raw/en_forums.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.interviewdb.io/question/stripe/bug-squash-round-questions": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "interviewdb.io",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.1point3acres.com/interview/company/stripe": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md"
+   ]
+  },
+  "https://medium.com/@emilyhustlenyc/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "medium.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://medium.com/h7w/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "medium.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://oavoservice.com/en/articles/stripe-0109": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "oavoservice.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://csoahelp.com/2024/11/20/": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "csoahelp.com",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://programhelp.net/en/vo/stripe-software-engineer-vo-experience/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 202,
+   "checked": "2026-09-03",
+   "domain": "programhelp.net",
+   "cited_by": [
+    "catalog/discovery/2026-09/rounds_material.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://raw.githubusercontent.com/liquidslr/leetcode-company-wise-problems/main/Stripe/4.%20More%20Than%20Six%20Months.csv": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "raw.githubusercontent.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://www.teamblind.com/post/stripe-phone-interview-experience-ha4pxp3h": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-onsite-2nvvaesr": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-onsite-fstu61mn": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-onsite-interview-experience-n4mqgn4g": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md",
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-interview-review-lj0bq5t3": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-onsite-lfhrvh8n": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://www.teamblind.com/post/bombed-stripe-interview-rdzlegue": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-interview-review-ine4wxoa": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://www.teamblind.com/post/chances-in-stripe-interview-s55thedi": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://leetcode.com/discuss/interview-question/2585038/Stripe-or-Phone-Screen-or-Senior-SE-or-Reject": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/7384225/stripe-phone-screen-4-part-interview-exp-dhoy/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md",
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/1340172/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md",
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/5883672/stripe-phone-screen-by-anonymous_user-0kk5/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/7566910/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md",
+    "catalog/raw/en_forums.md",
+    "loop/raw/en_forums.md",
+    "loop/raw/hr_hm_behavioral.md",
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-technical-phone-screen-v37vsgvg": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://www.teamblind.com/post/how-hard-at-technical-phone-screen-for-stripe-dlhvzujm": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-what-even-is-your-interview-bar-0hj2ltna": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-onsite-interview-rajkrsgv": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-swe-phone-screen-dub4tnbn": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-onsite-interview-experience-jwdugpal": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-onsite-x7beaq87": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md",
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/onsite-experience-at-stripe-umo0fobx": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md",
+    "loop/raw/en_forums.md",
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.teamblind.com/post/phone-screen-at-stripe-ewqrtbt5": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-phone-screen-reject-rvwcuzdf": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://www.glassdoor.com/Interview/Parse-a-string-in-the-format-USD-CAD-DHL-5-USD-GBP-FEDX-10-...-QTN_7989241.htm": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "glassdoor.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md"
+   ]
+  },
+  "https://medium.com/nybles/stripe-software-engineering-intern-interview-experience-off-campus-a83b30aabed4": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "medium.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://csoahelp.com/2026/07/22/": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "csoahelp.com",
+   "cited_by": [
+    "catalog/raw/algo_questions.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://csoahelp.com/2024/11/04/": {
+   "first_seen": "2026-09-03",
+   "last_verified": "2026-09-03",
+   "http": 200,
+   "checked": "2026-09-03",
+   "domain": "csoahelp.com",
+   "cited_by": [
+    "catalog/raw/en_forums.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://leetcode.com/discuss/post/5150083/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/5740845/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/5341224/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://medium.com/@diyaag2020/my-stripe-interview-experience-2025-2026-a-journey-to-the-final-round-19990fa6876a": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "medium.com",
+   "cited_by": [
+    "catalog/raw/en_forums.md",
+    "loop/raw/en_forums.md",
+    "loop/raw/hr_hm_behavioral.md",
+    "loop/raw/system_design.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://leetcode.com/discuss/post/6483328/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/7391608/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/raw/en_forums.md"
+   ]
+  },
+  "https://github.com/arpit006/interview-stripe": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/femisowems/stripe-interview-questions": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/raw/github_repos.md",
+    "loop/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/sahaia1/Stripe_Pyhton_libraries": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": 403,
+   "checked": "2026-09-03",
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/raw/github_repos.md",
+    "loop/raw/github_repos.md"
+   ],
+   "checked_from": "claude-code-sandbox"
+  },
+  "https://github.com/Hazeera65/stripe-interview": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://github.com/kylelong/stripe-interview": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://github.com/SabihaNazKhan/StripePhoneScreen24Nov25": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/raw/github_repos.md",
+    "loop/raw/github_repos.md"
+   ]
+  },
+  "https://github.com/stripe-interview/*": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/2585038/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://github.com/sahaia1/Stripe_Pyhton_libraries/blob/main/invoicer.py": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://github.com/sahaia1/Stripe_Pyhton_libraries/blob/main/stripe_example_api.py": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://github.com/FasterXML/jackson-core": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://github.com/square/moshi": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://stripe.com/docs/webhooks": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "stripe.com",
+   "cited_by": [
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://tianpan.co/notes/166-designing-payment-webhook": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "tianpan.co",
+   "cited_by": [
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://github.com/liquidslr/leetcode-company-wise-problems": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://leetcode.com/problems/cheapest-flights-within-k-stops": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://leetcode.com/problems/brace-expansion": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://leetcode.com/problems/parallel-courses-iii": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://leetcode.com/problems/number-of-black-blocks": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://leetcode.com/problems/alert-using-same-key-card-three-or-more-times-in-a-one-hour-period": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://leetcode.com/problems/simple-bank-system": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://leetcode.com/problems/merge-intervals": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://leetcode.com/problems/remove-covered-intervals": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://github.com/KuriyamaMiraiQcy/Leetcode": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "catalog/raw/github_repos.md"
+   ]
+  },
+  "https://docs.stripe.com/currencies": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md",
+    "loop/raw/stripe_official_and_api.md"
+   ]
+  },
+  "https://docs.stripe.com/subscriptions/pricing-models/tiered-pricing": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://docs.stripe.com/products-prices/pricing-models": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://docs.stripe.com/api/billing/meter-event/create": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://docs.stripe.com/billing/subscriptions/usage-based": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://docs.stripe.com/billing/subscriptions/prorations": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://docs.stripe.com/billing/subscriptions/billing-cycle": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://docs.stripe.com/billing/subscriptions/overview": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md",
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://docs.stripe.com/api/idempotent_requests": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md",
+    "loop/raw/stripe_official_and_api.md",
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://docs.stripe.com/rate-limits": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md",
+    "loop/raw/stripe_official_and_api.md",
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://docs.stripe.com/webhooks": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md",
+    "loop/raw/stripe_official_and_api.md",
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://docs.stripe.com/disputes/how-disputes-work": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://docs.stripe.com/refunds": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://docs.stripe.com/payouts": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md",
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://docs.stripe.com/payments/balances": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://docs.stripe.com/reports/balance-transaction-types": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://docs.stripe.com/radar/rules/reference": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://docs.stripe.com/testing": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://docs.stripe.com/issuing/customize-your-program": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://support.stripe.com/questions/choosing-a-name-for-your-stripe-atlas-company": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "support.stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://stripe.com/resources/more/is-your-company-name-available-in-delaware-here-is-how-to-find-out": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://docs.stripe.com/connect": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://stripe.com/jobs/listing/software-engineer-payments/7529787": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://stripe.com/careers/listing/backend-engineer-api-payments-and-risk/4921361": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://stripe.com/careers/listing/staff-software-engineer-issuing/7369269": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://stripe.com/careers/listing/software-engineer-internal-systems/7543868": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "stripe.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://jobs.glynncapital.com/companies/stripe/jobs/57800855-software-engineer-new-grad": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "jobs.glynncapital.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://jobs.generalcatalyst.com/companies/stripe/jobs/73804609-software-engineer": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "jobs.generalcatalyst.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://careers.base10.vc/companies/stripe/jobs/38300794-full-stack-engineer-optimized-checkout-link": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "careers.base10.vc",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://builtin.com/job/backend-engineer-billing/7224418": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "builtin.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://builtin.com/job/software-engineer-payments/4205822": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "builtin.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://www.hackerrank.com/blog/how-plagiarism-detection-works-at-hackerrank/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "hackerrank.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://support.hackerrank.com/articles/8000786908-ai-plagiarism-detection": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "support.hackerrank.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://interviewing.io/stripe-interview-questions": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "interviewing.io",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md",
+    "loop/raw/en_forums.md",
+    "loop/raw/hr_hm_behavioral.md",
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.tryexponent.com/guides/stripe-software-engineer-interview": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "tryexponent.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md",
+    "loop/raw/en_forums.md",
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.techinterview.org/post/3233476020/stripe-bug-bash-api-design-interview/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "techinterview.org",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md",
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.techinterview.org/post/3233460268/stripe-interview-guide-2026-process-bug-bash-round-and-payment-systems/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "techinterview.org",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md",
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://igotanoffer.com/en/advice/stripe-interview-process": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "igotanoffer.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md",
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.finalroundai.com/blog/stripe-interview-process": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "finalroundai.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md",
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://programhelp.net/en/how-to-pass-stripe-swe-oa-real-coding-challenges/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "programhelp.net",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://www.teamblind.com/post/how-are-you-guys-cracking-stripe-oa-wjh6exbn": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-hackerrank-rrt4pa6q": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-new-grad-oa-what-to-expect-jhav82mt": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "catalog/raw/process_and_jd.md"
+   ]
+  },
+  "https://r.jina.ai/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "r.jina.ai",
+   "cited_by": [
+    "loop/raw/cn_forums.md",
+    "loop/raw/stripe_official_and_api.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-on-site-interviews-prep-08mn2g87": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.tryexponent.com/blog/stripe-system-design-interview": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "tryexponent.com",
+   "cited_by": [
+    "loop/raw/en_forums.md",
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.teamblind.com/post/share-my-stripe-interview-experience-cnhknchr": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/need-help-regarding-stripe-interview-1j2ckbta": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.interviewdb.io/guides/insights-on-stripe-interviews-from-an-insider": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "interviewdb.io",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.interviewcoder.co/blog/stripe-software-engineer-interview": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "interviewcoder.co",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.jointaro.com/interviews/companies/stripe/experiences/software-engineer-new-grad-united-states-november-5-2025-no-offer-neutral-d8d78bbd/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "jointaro.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://prepfully.com/interview-guides/stripe-software-engineer": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "prepfully.com",
+   "cited_by": [
+    "loop/raw/en_forums.md",
+    "loop/raw/hr_hm_behavioral.md",
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.teamblind.com/post/any-example-for-stripe-onsite-bug-squash-and-integration-mrsi2qqr": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://github.com/stripe-interview": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/new-grad-offer-likelihood-rmvygjeb": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://medium.com/@azn7u1/stripe-intern-oa-vo-experience-960450b750d4": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "medium.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://leetcode.com/discuss/interview-experience/5341224/Stripe-or-Backend-Engineer-or-Bangalore-or-Jun-2024-or-Reject/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.greatfrontend.com/interviews/company/stripe/questions-guides": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "greatfrontend.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-frontend-onsite-sfaggc1a": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://blog.rampatra.com/stripe-interview-for-software-engineer": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "blog.rampatra.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.linkjob.ai/interview-questions/stripe-software-engineer-interview/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "linkjob.ai",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://programhelp.net/en/vo/stripe-vo-interview-5rounds-experience-guide/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "programhelp.net",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.vervecopilot.com/blog/how-does-stripe-leetcode-really-work-and-how-to-prepare": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "vervecopilot.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://simplify.jobs/blog/stripe-new-grad-swe-job": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "simplify.jobs",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/Stripe-interview-loop-rejection-VPdSosJJ": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-new-grad-interview-with-manager-k4acvawb": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md",
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/chances-with-stripe-screen-nqzaykah": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-swe-phone-screen-how-to-prepare-a18jdcfu": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-interview-language-1gfdplee": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-phone-screen-interview-mdtk4bmj": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-interview-prep-5d7673dy": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-phone-screen-interview-rptglpyd": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.jointaro.com/interviews/companies/stripe/experiences/software-engineering-intern-san-francisco-ca-september-1-2024-no-offer-positive-dd9f3cf6/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "jointaro.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.jointaro.com/interviews/companies/stripe/experiences/software-engineer-october-20-2025-declined-offer-negative-88c270a4/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "jointaro.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-phone-screen-rejected-1ofokxcp": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/4742657/stripe-phone-screen-by-anonymous_user-ehvf/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.glassdoor.com/Interview/Phone-interview-How-do-you-build-an-accept-language-parser-with-region-language-wildcard-filtering-QTN_4729735.htm，日期未知": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "glassdoor.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://staffengprep.com/companies/stripe/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "staffengprep.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://interviewing.io/questions/currency-conversion": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "interviewing.io",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/2585038/stripe-phone-screen-senior-se-reject-by-rypom/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-phone-screen-post-mortem-bj5ehdwf": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://hackerprep.io/company/stripe/bracket-expansion（付费": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "hackerprep.io",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://leetcode.com/discuss/interview-question/5883672/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.linkjob.ai/interview-questions/stripe-intern-interview/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "linkjob.ai",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.glassdoor.com/Interview/Stripe-Software-Engineer-Interview-Questions-EI_IE671932.0,6_KO7,24.htm": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "glassdoor.com",
+   "cited_by": [
+    "loop/raw/en_forums.md",
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.finalroundai.com/interview-questions/stripe-tech-numeronyms-validation": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "finalroundai.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.coditioning.com/blog/804/stripe-swe-bug-squash-interview": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "coditioning.com",
+   "cited_by": [
+    "loop/raw/en_forums.md",
+    "loop/raw/github_repos.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-onsite-interview-bekekkqf": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/why-isnt-stripes-bug-squash-debugging-interview-style-more-widely-used-hkzsddkz，日期未知": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-bug-squash-interview-gyamarmf": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-javascript-bug-squash-t3w1kp3c": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-on-site-interviews-prep-8lewehei": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-on-site-bug-squash-and-integration-in-javascript-bxonqpkp": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-bug-squash-tips-nyhsknza": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-onsite-interview-bug-squash-bqug02mq": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-bug-squash-integration-interviews-zlayqkxr": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-interview-experience-software-engineer-0n7yfwy5": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/Stripe-interview-review-iNE4wxOA": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/bombed-stripe-bug-squash-interview-0vofunvv": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/tips-for-stripe-bug-squash-round-dqk1zngt": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-onsite-experience-offer-chances-fs65z4cm": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/bug-squash-for-stripe-infrastructure-interview-jfsq2wjb": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-onsite-interview-wyagomik": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/is-stripe-integration-always-bikemap-for-java-h8lemeaq": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://oavoservice.com/en/articles/stripe-integration-bikemap-geojson-http-staticmap-nearest-landmark": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "oavoservice.com",
+   "cited_by": [
+    "loop/raw/en_forums.md",
+    "loop/raw/github_repos.md"
+   ]
+  },
+  "https://www.1point3acres.com/interview/problems/bba4944f-e065-4b5f-91be-f3564b9fd691": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.linkjob.ai/interview-questions/stripe-integration-round/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "linkjob.ai",
+   "cited_by": [
+    "loop/raw/en_forums.md",
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://prachub.com/interview-questions/design-ledger-and-bikemap-integration": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "prachub.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://medium.com/@mitali.dixit04/software-engineer-intern-stripe-interview-experience-5eaf5a0e395c": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "medium.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-interview-8grkgwt1": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.linkjob.ai/interview-questions/stripe-coding-interview": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "linkjob.ai",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-offer-chances-ncjsazmm": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-interview-experience-vvjmavis": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-onsite-interview-tips-ezcaontf": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://extrabrain.app/interview-questions/stripe-integration-round-extrabrain/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "extrabrain.app",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://medium.com/@neat_lava_bear_388/stripe-vo-interview-experience-interview-experience-coding-system-design-behavioral-a7bf34b1abcb": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "medium.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.techinterview.org/post/3233460268/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "techinterview.org",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://ophyai.com/blog/company-guides/stripe-interview-guide": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "ophyai.com",
+   "cited_by": [
+    "loop/raw/en_forums.md",
+    "loop/raw/hr_hm_behavioral.md",
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.teamblind.com/post/does-stripe-call-to-reject-gwmegqab": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/finished-phone-screen-at-stripe-1hirauis": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://leonstaff.com/blogs/stripe-interview-response-time-2025/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leonstaff.com",
+   "cited_by": [
+    "loop/raw/en_forums.md",
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-swe-new-grad-headcount-t6bahgt3": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md",
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-decision-delays-cnclye1l，日期未知（L3，12": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-team-matching-issue-h0j2kuo1": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/cool-off-period-to-reapply-at-stripe-c7vzbrvh": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://www.teamblind.com/post/Stripe-interview-cool-off-period-yiPKLXYS": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://4dayweek.io/interview-process/stripe-software-engineer": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "4dayweek.io",
+   "cited_by": [
+    "loop/raw/en_forums.md",
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.levels.fyi/companies/stripe/salaries/software-engineer/levels/l1": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "levels.fyi",
+   "cited_by": [
+    "loop/raw/en_forums.md",
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/7352963/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "loop/raw/en_forums.md",
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-new-grad-interview-6ab5ozmg": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/en_forums.md"
+   ]
+  },
+  "https://github.com/stripe-interview/python-interview-prep": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "loop/raw/github_repos.md"
+   ]
+  },
+  "https://github.com/stripe-interview/javascript-interview-prep": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "loop/raw/github_repos.md"
+   ]
+  },
+  "https://github.com/stripe-interview/java-interview-prep": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "loop/raw/github_repos.md"
+   ]
+  },
+  "https://github.com/stripe-interview/cpp-interview-prep": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "loop/raw/github_repos.md"
+   ]
+  },
+  "https://api.github.com/orgs/stripe-interview/repos": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "api.github.com",
+   "cited_by": [
+    "loop/raw/github_repos.md"
+   ]
+  },
+  "https://github.com/kwang101/PracticeForStripe": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "loop/raw/github_repos.md"
+   ]
+  },
+  "https://github.com/FasterXML/jackson-core/issues/582": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "loop/raw/github_repos.md"
+   ]
+  },
+  "https://github.com/FasterXML/jackson-databind/issues/3228": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "loop/raw/github_repos.md"
+   ]
+  },
+  "https://github.com/square/moshi/issues/1171": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "loop/raw/github_repos.md"
+   ]
+  },
+  "https://github.com/square/moshi/issues/624": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "loop/raw/github_repos.md"
+   ]
+  },
+  "https://github.com/sass/ruby-sass/issues/48": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "loop/raw/github_repos.md"
+   ]
+  },
+  "https://github.com/komoot/staticmap（README": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "loop/raw/github_repos.md"
+   ]
+  },
+  "https://github.com/femisowems/stripe-interview-questions/blob/master/question4/Problem4.md": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "loop/raw/github_repos.md"
+   ]
+  },
+  "https://github.com/femisowems/stripe-interview-questions/blob/master/question6/Problem6.md": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "loop/raw/github_repos.md"
+   ]
+  },
+  "https://github.com/femisowems/stripe-interview-questions/tree/master": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "loop/raw/github_repos.md"
+   ]
+  },
+  "https://www.tryexponent.com/blog/stripe-interview-process": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "tryexponent.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md",
+    "loop/raw/stripe_official_and_api.md"
+   ]
+  },
+  "https://www.techprep.app/blog/stripe-interview-process": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "techprep.app",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md",
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.codinginterview.com/guide/stripe-interview-process/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "codinginterview.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.getbridged.co/company-reviews/stripe": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "getbridged.co",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.interviewquery.com/interview-guides/stripe-software-engineer": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "interviewquery.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://interviewkickstart.com/blogs/companies/stripe-interview-process": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "interviewkickstart.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://blog.theinterviewguys.com/stripe-interview-questions/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "blog.theinterviewguys.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://stripe.com/in/careers/compatibility": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "stripe.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://jobsbyculture.com/blog/stripe-compensation-2026": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "jobsbyculture.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.jointaro.com/interviews/companies/stripe/experiences/senior-software-engineer-india-july-1-2025-no-offer-negative-e7c2d236/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "jointaro.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/will-stripe-recruiter-call-you-if-they-wont-move-forward-wtplzrfs": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/ghosted-by-stripe-recruiter-after-passing-screening-gq0xjlif": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-recruiters-are-crazy-gyo3mdtk": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/any-advice-for-stripe-hiring-manager-interview-full-stack-role-giqtwim6": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/felt-good-at-interview-but-got-rejected-by-stripe-wexjj3xy": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/does-getting-a-stripe-hm-interview-mean-i-passed-onsite-hjbwh31d": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://dev.to/net_programhelp_e160eef28/stripe-sde-five-round-vo-interview-experience-real-questions-tips-4ibo": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "dev.to",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-hm-30-min-chat-after-onsite-0vo5qe8a": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-team-matching-gxzp4v7y": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.1point3acres.com/bbs/thread-1104125-1-1.html": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.1point3acres.com/bbs/thread-1098286-1-1.html": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.codinginterview.com/guide/stripe-behavioral-interview-questions/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "codinginterview.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://dataford.io/interview-guides/stripe/software-engineer": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "dataford.io",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.jointaro.com/interviews/companies/stripe/experiences/engineering-manager-san-francisco-ca-july-1-2025-accepted-offer-positive-2ee00888/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "jointaro.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-candidate-review-kt6bwgwv": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-em-interview-first-round-wtzao0ck": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/Wtf-at-Stripe-pGMZbjds": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.1point3acres.com/bbs/thread-1075292-1-1.html": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://yourcareersupport.com/stripe-interview-questions/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "yourcareersupport.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-team-match-timeline-tkmyeeqy": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-team-matching-timeline-wubdmvy6": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://algo.monster/interview-guides/stripe": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "algo.monster",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/how-bad-is-stripe-advice-for-team-matching-ji0z4su7": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-reference-checks-f55stqfy": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/does-stripe-ask-references-for-l2-lxqar1pw": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.levels.fyi/companies/stripe/salaries/software-engineer/levels/l2": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "levels.fyi",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.levels.fyi/companies/stripe/salaries/software-engineer": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "levels.fyi",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.levels.fyi/2025/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "levels.fyi",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://twinpwa.com/stripe-compensation-breakdown/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "twinpwa.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-vs-plaid-vs-scale-ai-vs-google-new-grad-1jorhpe7": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/new-grad-stripe-vs-google-wuwxtx7m": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-vs-netflix-new-grad-8gaj6r3p": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/what-is-stripe-tc-as-new-grad-qqexeg8s": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-l2-offer-qwzerve6": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-offer-l2-evaluation-2cdqtwea": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamrora.com/companies/stripe-salary-negotiation": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamrora.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.teamblind.com/post/offer-negotiation-stripe-mzwjjx1h": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://stripe.com/en-se/jobs/culture": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "stripe.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://slab.com/library/templates/stripe-operating-principles/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "slab.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.tryexponent.com/blog/stripe-operating-principles": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "tryexponent.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://builtin.com/company/stripe/faq/culture-values": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "builtin.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://stripe.com/it-gb/jobs/life-at-stripe": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "stripe.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://greylock.com/reid-hoffman/micro-pessimism-macro-optimism/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "greylock.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.centreforoptimism.com/blog/we-want-to-be-micro-pessimists-and-macro-optimists-patrick-collison": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "centreforoptimism.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.hirehive.com/building-a-great-team-patrick-collison-of-stripe/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "hirehive.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.inc.com/jessica-stillman/questions-to-ask-leadership-hires-from-stripes-patrick-collison.html": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "inc.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://medium.com/notes-essays-cs183c-technology-enabled-blitzscalin/class-11-notes-essay-reid-hoffman-john-lilly-chris-yeh-and-allen-blue-s-cs183c-technology-ebf34cebae26": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "medium.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://fs.blog/knowledge-project-podcast/patrick-collison/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "fs.blog",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.aboutamazon.com/news/workplace/amazon-leadership-principles-interview": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "aboutamazon.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.tryexponent.com/blog/amazon-leadership-principles-interview": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "tryexponent.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.designgurus.io/blog/amazon-leadership-principles-behavioral-interview": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "designgurus.io",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.apexinterviewer.com/resources/amazon-leadership-principles": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "apexinterviewer.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://ophyai.com/blog/company-guides/google-behavioral-interview-guide": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "ophyai.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://interviewkickstart.com/blogs/interview-questions/google-leadership-principles-interview-questions": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "interviewkickstart.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.careerflow.ai/blog/google-behavioural-interview-guide": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "careerflow.ai",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.tryexponent.com/blog/google-gca-interview": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "tryexponent.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://newsletter.bigtechcareers.com/p/part-1-mastering-the-meta-behavioral-interview": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "newsletter.bigtechcareers.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.interviewhelp.io/blog/posts/what_are_the_actual_behavioral_signals_for_meta/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "interviewhelp.io",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://interviewing.io/blog/how-software-engineering-behavioral-interviews-are-evaluated-meta": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "interviewing.io",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.tntech.edu/career/pdf/cr-handout.pdf": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "tntech.edu",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://raw.githubusercontent.com/yangshun/tech-interview-handbook/main/apps/website/contents/behavioral-interview-questions.md": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "raw.githubusercontent.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://www.1point3acres.com/bbs/thread-1093485-1-1.html": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://tim.blog/2018/12/24/the-tim-ferriss-show-patrick-collison/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "tim.blog",
+   "cited_by": [
+    "loop/raw/hr_hm_behavioral.md"
+   ]
+  },
+  "https://stripe.com/jobs": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "stripe.com",
+   "cited_by": [
+    "loop/raw/stripe_official_and_api.md"
+   ]
+  },
+  "https://stripe.com/careers/listing/software-engineer-new-grad/8130930": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "stripe.com",
+   "cited_by": [
+    "loop/raw/stripe_official_and_api.md"
+   ]
+  },
+  "https://stripe.com/en-ch/careers/emerging-talent（区域变体）/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "stripe.com",
+   "cited_by": [
+    "loop/raw/stripe_official_and_api.md"
+   ]
+  },
+  "https://stripe.com/guides/atlas/scaling-eng": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "stripe.com",
+   "cited_by": [
+    "loop/raw/stripe_official_and_api.md"
+   ]
+  },
+  "https://docs.stripe.com/api/errors": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "loop/raw/stripe_official_and_api.md"
+   ]
+  },
+  "https://docs.stripe.com/api/pagination": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "loop/raw/stripe_official_and_api.md"
+   ]
+  },
+  "https://docs.stripe.com/expand": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "loop/raw/stripe_official_and_api.md"
+   ]
+  },
+  "https://docs.stripe.com/api/versioning": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "loop/raw/stripe_official_and_api.md"
+   ]
+  },
+  "https://docs.stripe.com/upgrades": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "loop/raw/stripe_official_and_api.md"
+   ]
+  },
+  "https://docs.stripe.com/api/request_ids": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "loop/raw/stripe_official_and_api.md"
+   ]
+  },
+  "https://docs.stripe.com/api/metadata": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "loop/raw/stripe_official_and_api.md"
+   ]
+  },
+  "https://docs.stripe.com/payments/paymentintents/lifecycle": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "loop/raw/stripe_official_and_api.md"
+   ]
+  },
+  "https://docs.stripe.com/connect/charges": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "loop/raw/stripe_official_and_api.md"
+   ]
+  },
+  "https://docs.stripe.com/connect/account-balances": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "docs.stripe.com",
+   "cited_by": [
+    "loop/raw/stripe_official_and_api.md"
+   ]
+  },
+  "https://stripe.dev/blog/ledger-stripe-system-for-tracking-and-validating-money-movement": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "stripe.dev",
+   "cited_by": [
+    "loop/raw/stripe_official_and_api.md",
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://stripe.com/blog/idempotency": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "stripe.com",
+   "cited_by": [
+    "loop/raw/stripe_official_and_api.md",
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://stripe.com/blog/online-migrations": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "stripe.com",
+   "cited_by": [
+    "loop/raw/stripe_official_and_api.md"
+   ]
+  },
+  "https://stripe.com/blog/rate-limiters": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "stripe.com",
+   "cited_by": [
+    "loop/raw/stripe_official_and_api.md",
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://stripe.com/blog/api-versioning": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "stripe.com",
+   "cited_by": [
+    "loop/raw/stripe_official_and_api.md",
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://stripe.com/blog/canonical-log-lines": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "stripe.com",
+   "cited_by": [
+    "loop/raw/stripe_official_and_api.md"
+   ]
+  },
+  "https://stripe.com/blog/how-we-built-it-stripe-radar": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "stripe.com",
+   "cited_by": [
+    "loop/raw/stripe_official_and_api.md"
+   ]
+  },
+  "https://stripe.com/blog/sorbet": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "stripe.com",
+   "cited_by": [
+    "loop/raw/stripe_official_and_api.md"
+   ]
+  },
+  "https://stripe.com/blog/stripes-payments-apis-the-first-ten-years": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "stripe.com",
+   "cited_by": [
+    "loop/raw/stripe_official_and_api.md"
+   ]
+  },
+  "https://github.com/stripe": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "loop/raw/stripe_official_and_api.md"
+   ]
+  },
+  "https://www.tryexponent.com/guides/stripe-swe-interview": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "tryexponent.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.teamblind.com/company/Stripe/posts/stripe-interview?page=13": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.1point3acres.com/bbs/thread-1095724-1-1.html": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "1point3acres.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://leetcode.com/discuss/post/6896919/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "leetcode.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-system-design-interview-tshyvotg": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-interview-4ayknryk": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-system-design-interview-hq5h6ewo": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-system-design-interview-expectation-kak4gqwj": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-on-site-system-design-interview-fhqnsnny": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-system-design-and-hm-interview-i8a2p1m5": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://nodeflair.com/blog/stripe-software-engineer-interview-questions-and-process": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "nodeflair.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.glassdoor.com/Interview/Stripe-Interview-Questions-E671932.htm": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "glassdoor.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.systemdesignhandbook.com/guides/stripe-system-design-interview/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "systemdesignhandbook.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://newsletter.pragmaticengineer.com/p/designing-a-payment-system": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "newsletter.pragmaticengineer.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.teamblind.com/post/stripe-staff-design-interview-iw4qxp2i": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.interviewkickstart.com/interview-questions/stripe-interview-questions": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "interviewkickstart.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.tryexponent.com/questions?company=stripe&type=system-design": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "tryexponent.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.educative.io/blog/stripe-system-design-interview-questions": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "educative.io",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://systemdr.systemdrd.com/p/design-stripe-payments-the-senior": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "systemdr.systemdrd.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.youtube.com/watch?v=dpEOhfEEoyw": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "youtube.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.vervecopilot.com/hot-blogs/top-30-stripe-interview-questions": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "vervecopilot.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.codinginterview.com/guide/stripe-interview/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "codinginterview.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://engineeringenablement.substack.com/p/how-i-would-approach-the-stripe-system": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "engineeringenablement.substack.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://betterengineers.substack.com/p/how-to-design-a-payment-service": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "betterengineers.substack.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://brandur.org/idempotency-keys": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "brandur.org",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.hellointerview.com/learn/system-design/in-a-hurry/delivery": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "hellointerview.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.hellointerview.com/learn/system-design/problem-breakdowns/payment-system": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "hellointerview.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://designgurus.substack.com/p/system-design-for-new-grad-vs-l5": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "designgurus.substack.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://designgurus.substack.com/p/googles-system-design-interview-in": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "designgurus.substack.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.teamblind.com/post/": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "teamblind.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://www.youtube.com/watch?v=djc2vfpCvso": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "youtube.com",
+   "cited_by": [
+    "loop/raw/system_design.md"
+   ]
+  },
+  "https://github.com/ChiChasesCheese/stripeoa": {
+   "first_seen": "2026-09-03",
+   "last_verified": null,
+   "http": null,
+   "checked": null,
+   "domain": "github.com",
+   "cited_by": [
+    "reports/OVERALL_REPORT.md"
+   ]
+  }
+ }
+}

@@ -1,0 +1,14 @@
+"""
+For All Intents And Purposes Part 4 - Timing Matters ⏰
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/0644b8b3-d726-43a7-ad22-cd87ca1c7f62
+Source Type: OJ / More Problems
+
+Question Summary:
+### Problem Overview
+- Extend the payment intent system to handle merchant-specific refund timeout policies using timestamps.
+- Process strictly increasing integer-timestamped commands (INIT, SUCCEED, REFUND) and decide if each refund is within the allowed window.
+- INIT may include refund_timeout_limit; missing means no limit, 0 forbids refunds, negatives are ignored so all refunds are allowed.
+- A Stripe interviews coding interview problem and interview question in the payments domain about time-based refund policies.
+"""

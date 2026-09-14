@@ -1,0 +1,40 @@
+"""
+Parse Transaction CSV and Calculate Fees
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/54c37b4c-ee14-4c50-87d9-e6395c573b88
+Source Type: OJ / More Problems
+
+Question Summary:
+### Problem Statement
+
+You are given a CSV string containing multiple transactions, each with fields like transaction status, amount, payment provider, buyer country, etc. You need to parse the string and calculate fees based on the transaction status and details.
+
+### Requirements
+
+1. Parse the CSV string to extract information for each transaction.
+2. Calculate fees based on payment provider, buyer country, and other details for each transaction.
+3. Only for transactions with status "completed", use exchange rates for fee calculation among different countries.
+4. Refund fees are not considered; all other transaction statuses use the logic from part one.
+
+### Input
+- A CSV string representing multiple transactions, formatted as follows:
+  `timestamp,transaction_status,amount,payment_provider,buyer_country`
+
+### Output
+- Calculated fees for each transaction, returned or output in a specific format.
+
+### Example
+
+Input:
+```plaintext
+"2023-10-20,payment_completed,100,visa,US\n2023-10-21,payment_pending,50,mastercard,DE"
+```
+
+Output:
+```
+"2023-10-20: $fee1\n2023-10-21: $fee2"
+```
+
+Where `fee1` and `fee2` are the fees calculated based on the given rules.
+"""

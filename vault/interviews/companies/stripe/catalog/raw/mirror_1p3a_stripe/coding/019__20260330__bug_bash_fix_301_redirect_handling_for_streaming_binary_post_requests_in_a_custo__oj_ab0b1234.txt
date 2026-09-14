@@ -1,0 +1,254 @@
+"""
+Bug Bash: Fix 301 Redirect Handling for Streaming/Binary POST Requests
+in a Custom HTTP Client
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/ab0b1234-6745-4ed2-be31-8b389ed2476a
+Source Type: OJ / More Problems
+
+================================================================================
+PROBLEM
+================================================================================
+
+You are given a custom HTTP client library that handles automatic 301 redirect
+following. Two test cases are failing:
+
+  - POST with a binary (bytes) body through a 301 redirect → times out
+  - POST with a file-stream body through a 301 redirect → times out
+
+Root cause: when the client follows a 301 redirect it re-sends the request,
+but it does NOT rewind the body reader. After the first send(), the stream
+position is at the end, so the retry reads 0 bytes while the server expects
+Content-Length bytes — causing a hang/timeout.
+
+Your task:
+1. Read the buggy HttpClient code.
+2. Identify where the body reader should be rewound.
+3. Apply a minimal fix.
+4. Verify all tests pass.
+"""
+
+import io
+from typing import Optional
+
+
+# ---------------------------------------------------------------------------
+# Supporting types
+# ---------------------------------------------------------------------------
+
+class HttpResponse:
+    def __init__(self, status_code: int, headers: dict = None, body: bytes = b''):
+        self.status_code = status_code
+        self.headers = headers or {}
+        self.body = body
+
+
+class TooManyRedirectsError(Exception):
+    pass
+
+
+# ---------------------------------------------------------------------------
+# Mock transport (simulates network I/O for testing)
+# ---------------------------------------------------------------------------
+
+class MockTransport:
+    """Records requests and returns pre-configured responses."""
+
+    def __init__(self):
+        self.routes: dict = {}
+        self.request_log: list[dict] = []
+
+    def add_redirect(self, from_url: str, to_url: str):
+        self.routes[from_url] = ('redirect', to_url)
+
+    def add_endpoint(self, url: str, handler):
+        """handler(method, body_bytes, headers) -> HttpResponse"""
+        self.routes[url] = ('handler', handler)
+
+    def send(self, method: str, url: str, body_reader, headers: dict) -> HttpResponse:
+        body_bytes = body_reader.read() if body_reader else b''
+        self.request_log.append({
+            'method': method, 'url': url,
+            'body': body_bytes, 'headers': headers,
+        })
+
+        if url not in self.routes:
+            return HttpResponse(404)
+
+        action, value = self.routes[url]
+        if action == 'redirect':
+            return HttpResponse(301, headers={'Location': value})
+        return value(method, body_bytes, headers)
+
+
+# ---------------------------------------------------------------------------
+# Buggy code (DO NOT MODIFY — use for reference)
+# ---------------------------------------------------------------------------
+
+class HttpClientBuggy:
+    """HTTP client with automatic redirect following.
+
+    When a 301 response is received the client follows the Location header
+    and retries the request.  For POST requests the original body must be
+    resent on the redirected request.
+    """
+
+    def __init__(self, transport, max_redirects: int = 5):
+        self.transport = transport
+        self.max_redirects = max_redirects
+
+    def get(self, url: str, headers: dict = None) -> HttpResponse:
+        return self._request('GET', url, None, headers)
+
+    def post(self, url: str, body=None, headers: dict = None) -> HttpResponse:
+        return self._request('POST', url, body, headers)
+
+    def _request(self, method, url, body, headers):
+        headers = dict(headers or {})
+        body_reader = self._wrap_body(body)
+        if body_reader is not None:
+            headers['Content-Length'] = str(self._measure(body, body_reader))
+
+        for _ in range(self.max_redirects + 1):
+            response = self.transport.send(method, url, body_reader, headers)
+
+            if response.status_code == 301 and 'Location' in response.headers:
+                url = response.headers['Location']
+                # BUG: body_reader is NOT rewound here.
+                #
+                # After transport.send() reads the stream to the end, the
+                # file position stays at EOF. The next iteration sends an
+                # empty body while Content-Length still promises the original
+                # size — the server blocks waiting for the remaining bytes
+                # and the request times out.
+                continue
+
+            return response
+
+        raise TooManyRedirectsError(f"Exceeded {self.max_redirects} redirects")
+
+    # -- helpers --
+
+    @staticmethod
+    def _wrap_body(body) -> Optional[io.IOBase]:
+        if body is None:
+            return None
+        if isinstance(body, bytes):
+            return io.BytesIO(body)
+        if isinstance(body, str):
+            return io.BytesIO(body.encode())
+        if hasattr(body, 'read'):
+            return body
+        raise TypeError(f"Unsupported body type: {type(body)}")
+
+    @staticmethod
+    def _measure(original, reader) -> int:
+        if isinstance(original, (bytes, str)):
+            return len(original if isinstance(original, bytes)
+                       else original.encode())
+        pos = reader.tell()
+        reader.seek(0, 2)
+        length = reader.tell()
+        reader.seek(pos)
+        return length
+
+
+# ---------------------------------------------------------------------------
+# Implement your fix here
+# ---------------------------------------------------------------------------
+
+class HttpClientFixed:
+    """Fix the redirect body-rewind bug so POST bodies survive 301 redirects."""
+
+    def __init__(self, transport, max_redirects: int = 5):
+        pass
+
+    def get(self, url: str, headers: dict = None) -> HttpResponse:
+        pass
+
+    def post(self, url: str, body=None, headers: dict = None) -> HttpResponse:
+        pass
+
+
+# ---------------------------------------------------------------------------
+# Tests
+# ---------------------------------------------------------------------------
+
+def _echo_handler(method, body, headers):
+    return HttpResponse(200, body=body)
+
+
+def run_tests():
+    # Test 1: POST with bytes body through 301 redirect
+    t1 = MockTransport()
+    t1.add_redirect('http://api.example.com/v1/upload',
+                    'http://api.example.com/v2/upload')
+    t1.add_endpoint('http://api.example.com/v2/upload', _echo_handler)
+
+    payload = b'{"key": "value", "data": [1, 2, 3]}'
+    resp = HttpClientFixed(t1).post('http://api.example.com/v1/upload', body=payload)
+
+    assert resp.status_code == 200
+    assert resp.body == payload, (
+        f"Bytes body lost after redirect: expected {len(payload)} bytes, "
+        f"got {len(resp.body)} bytes"
+    )
+    print("Test 1 (bytes body + redirect): PASSED")
+
+    # Test 2: POST with file-stream body through 301 redirect
+    t2 = MockTransport()
+    t2.add_redirect('http://files.example.com/upload',
+                    'http://cdn.example.com/upload')
+    t2.add_endpoint('http://cdn.example.com/upload', _echo_handler)
+
+    file_content = b'X' * 1024
+    resp2 = HttpClientFixed(t2).post(
+        'http://files.example.com/upload', body=io.BytesIO(file_content)
+    )
+
+    assert resp2.status_code == 200
+    assert resp2.body == file_content, (
+        f"Stream body lost after redirect: expected {len(file_content)} bytes, "
+        f"got {len(resp2.body)} bytes"
+    )
+    print("Test 2 (stream body + redirect): PASSED")
+
+    # Test 3: GET with redirect (no body) still works
+    t3 = MockTransport()
+    t3.add_redirect('http://example.com/old', 'http://example.com/new')
+    t3.add_endpoint('http://example.com/new',
+                    lambda m, b, h: HttpResponse(200, body=b'ok'))
+
+    resp3 = HttpClientFixed(t3).get('http://example.com/old')
+    assert resp3.status_code == 200
+    assert resp3.body == b'ok'
+    print("Test 3 (GET + redirect): PASSED")
+
+    # Test 4: POST without redirect — body arrives correctly
+    t4 = MockTransport()
+    t4.add_endpoint('http://api.example.com/direct', _echo_handler)
+
+    resp4 = HttpClientFixed(t4).post('http://api.example.com/direct', body=b'direct')
+    assert resp4.status_code == 200
+    assert resp4.body == b'direct'
+    print("Test 4 (POST, no redirect): PASSED")
+
+    # Test 5: Multiple chained redirects
+    t5 = MockTransport()
+    t5.add_redirect('http://a.com/1', 'http://b.com/2')
+    t5.add_redirect('http://b.com/2', 'http://c.com/3')
+    t5.add_endpoint('http://c.com/3', _echo_handler)
+
+    body5 = b'multi-hop'
+    resp5 = HttpClientFixed(t5).post('http://a.com/1', body=body5)
+    assert resp5.status_code == 200
+    assert resp5.body == body5, (
+        f"Body lost after chained redirects: {resp5.body!r}"
+    )
+    print("Test 5 (chained redirects): PASSED")
+
+    print("\nAll tests passed")
+
+
+if __name__ == '__main__':
+    run_tests()

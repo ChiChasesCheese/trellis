@@ -1,0 +1,24 @@
+"""
+Bitfront
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/db557074-a502-462d-bc26-8b981a4d3e7c
+Source Type: OJ / More Problems
+
+Question Summary:
+Given an array of non-negative integers where each element represents your maximum jump length at that position. Your goal is to reach the last index in the minimum number of jumps. Return the minimum number of jumps needed.
+
+Example:
+
+Input: [2,3,1,1,4]
+
+Output: 2
+
+Explanation: Jump from index 0 to index 2, then jump from index 2 to the last index.
+
+Input: [2,3,0,1,4]
+
+Output: 2
+
+Note that you can always reach the last index.
+"""

@@ -1,75 +1,88 @@
-# cd02 PaymentLedger — 报告
+# cd02 PaymentLedger — report
 
-## 概述
-2026 夏季实习 VO coding 轮的一道小型类设计记账题：实现一个 `PaymentLedger`，支持支付、部分退款、
-营收统计、按日期范围查询，分三个面试阶段逐步揭示。真正的难点不在算法，而在于选定并贯彻始终一套一致
-的错误契约：幂等无操作（`False`）vs. `KeyError` vs. `ValueError`，分别对应三种本质不同的失败情形；
-再加上持久化的往返读写必须保留足够的状态（包括*哪些*退款 id 已经处理过），才能在重新加载后继续执行
-同样的规则。
+## Summary
+A small class-based bookkeeping exercise from the 2026 Summer Intern VO coding round: build a
+`PaymentLedger` with payments, partial refunds, revenue, and a date-range query, revealed in three
+interview stages. The real difficulty is not algorithmic — it is picking, and then holding to,
+one consistent error-contract: idempotent no-op (`False`) vs. `KeyError` vs. `ValueError` for
+three genuinely different failure situations, plus a persistence round-trip that must preserve
+enough state (including *which* refund ids were already applied) to keep enforcing the same rules
+after a reload.
 
 ## CONVENTIONS 对照
-本题的源材料要求的是一个**类**，而不是 `partN(lines) -> list[str]` 流水线——方法集合
-（`add_payment`、`add_refund`、`get_total_revenue`、`get_payments_by_date`）是在*同一个*对象上，
-跨三个面试阶段累积起来的，就像真实面试官揭示题目的方式一样（不存在"Part 1 的类"和"Part 2 的类"之
-分）。为了让类始终是主要、自然的接口，同时仍满足本仓库测试框架的约定：
-- 大多数测试直接实例化 `impl.PaymentLedger()` 并调用方法——这是 OOP 题目的自然形态，并且由于整个
-  模块（类 + 函数）作为一个整体加载，依然可以通过 `IMPL=starter` 完全替换。
-- `part1(lines)` / `part2(lines)` / `part3(lines)` 是围绕同一个 `run_commands(lines)` 命令流引擎
-  （`PAY`/`REFUND`/`REVENUE`/`RANGE`）的薄、**完全相同**的包装，其存在纯粹是为了让本仓库其他题目
-  依赖的 `impl.partN(...)` 与 `main(stdin, stdout)` 接口在这里也存在。它们之间的区别只在于哪些测试
-  会用到它们（按功能划分），而不是实现能力上的差异——这一点在 solution.py 的 docstring 和本文档里都
-  明确写出，以免被误读为疏漏。
+This problem's source asks for a **class**, not a `partN(lines) -> list[str]` pipeline — the
+method set (`add_payment`, `add_refund`, `get_total_revenue`, `get_payments_by_date`) is
+cumulative across the three interview stages on *one* object, the way a real interviewer reveals
+it (there is no "Part 1 class" vs. "Part 2 class"). To keep the class the primary, natural
+interface while still satisfying this repo's harness contract:
+- Most tests instantiate `impl.PaymentLedger()` directly and call methods — the natural shape for
+  an OOP question, and still fully swappable via `IMPL=starter` since the whole module (class +
+  functions) is loaded as one unit.
+- `part1(lines)` / `part2(lines)` / `part3(lines)` are thin, **identical** wrappers around one
+  `run_commands(lines)` command-stream engine (`PAY`/`REFUND`/`REVENUE`/`RANGE`), present solely
+  so the `impl.partN(...)` and `main(stdin, stdout)` surfaces this repo's other problems rely on
+  still exist here. They differ in which tests exercise them (by feature), not in implementation
+  capability — documented explicitly in solution.py's docstring and here so it doesn't read as an
+  oversight.
 
-## 来源与置信度
-中高——`loop/raw/cn_forums.md` 第 104 行（programhelp.net 对 2026 夏季实习 VO 的记录）逐字给出了方法
-名（`Add_payment`、`Add_refund`、`Get_total_revenue`、`Get_payments_by_date`）、payment_id 去重规
-则、部分退款支持，以及全部五条追问方向。它**没有**给出确切的参数名/类型、时间戳格式、哪些失败是异
-常还是返回 `False`，也没有给出持久化方法的签名（`export_json`/`load_json`）——这些都是本
-problem.md 自己做出的、具体且可测试的还原，在"Variants"一节中已明确标注。
+## Sources & confidence
+medium-high — `loop/raw/cn_forums.md` line 104 (programhelp.net's write-up of the 2026 Summer
+Intern VO) gives the method names (`Add_payment`, `Add_refund`, `Get_total_revenue`,
+`Get_payments_by_date`), the payment_id-dedup rule, partial-refund support, and all five follow-up
+directions verbatim. It does **not** give exact parameter names/types, the timestamp format, which
+failures are exceptions vs. `False`, or persistence method signatures (`export_json`/`load_json`)
+— all of that is this problem.md's own concrete, testable reconstruction, flagged explicitly in
+"Variants."
 
-## 分部分思路
-1. **Part 1**：用一个以 `payment_id` 为 key 的字典；`add_payment` 遇到重复 id 时返回 `False`，且不
-   修改任何状态。`get_total_revenue` 是对 `amount - refunded` 的生成器求和（在 Part 2 出现之前
-   refunded 始终为 `0`，所以此阶段就是普通求和）。
-2. **Part 2**：`add_refund` 按照如下确切顺序检查：时间戳有效性 -> 重复 `refund_id`（幂等
-   `False`）-> 未知 `payment_id`（`KeyError`）-> 超额退款（`ValueError`）-> 成功（累加
-   `refunded`，记录 `refund_id`）。顺序很关键：`test_refund_invalid_timestamp_raises_before_other_checks`
-   和 `test_duplicate_refund_id_is_idempotent_before_amount_check` 分别锁定了两处候选人容易搞反
-   的顺序。
-3. **Part 3**：`get_payments_by_date` 先校验两个边界，然后直接对存储的*字符串*做过滤——固定宽度
-   的 `YYYY-MM-DDTHH:MM:SS` profile 使得字符串顺序等价于时间顺序，因此每次查询都不需要重新解析。
-   线性扫描，不建索引：性能预算（10^5 笔支付，单次查询）根本用不到索引；追问列表把 bisect/索引化的
-   扩展方式作为讨论点提出，而不是硬性要求。`export_json`/`load_json` 需要同时往返序列化支付记录*和*
-   `refund_ids` 集合——丢掉后者会让重新加载后的 ledger 接受一次重放的重复退款，
-   `test_loaded_ledger_still_enforces_refund_rules` 直接捕获这一点。
+## Approach by part
+1. **Part 1**: a dict keyed by `payment_id`; `add_payment` returns `False` without mutating state
+   on a duplicate id. `get_total_revenue` is a generator-sum over `amount - refunded` (refunded is
+   always `0` until Part 2 exists, so this is a plain sum at this stage).
+2. **Part 2**: `add_refund` checks, in this exact order: timestamp validity -> duplicate
+   `refund_id` (idempotent `False`) -> unknown `payment_id` (`KeyError`) -> over-refund
+   (`ValueError`) -> success (accumulate `refunded`, record the `refund_id`). The order matters:
+   `test_refund_invalid_timestamp_raises_before_other_checks` and
+   `test_duplicate_refund_id_is_idempotent_before_amount_check` pin down two orderings a candidate
+   is likely to get backwards.
+3. **Part 3**: `get_payments_by_date` validates both bounds, then filters on the stored *strings*
+   — the fixed-width `YYYY-MM-DDTHH:MM:SS` profile makes string order == chronological order, so
+   nothing is re-parsed per query. Linear scan, no index: the perf budget (10^5 payments, single
+   query) never needs one; the follow-up list names bisect/index-based scaling as a discussion
+   point instead. `export_json`/`load_json` round-trip both the payment records *and* the
+   `refund_ids` set — losing the latter would let a reloaded ledger accept a replayed duplicate
+   refund, which `test_loaded_ledger_still_enforces_refund_rules` catches directly.
 
-## 隐藏测试针对的坑
-- 三种截然不同的失败形态对应三种不同情形（幂等 `False` / `KeyError` / `ValueError`）——把任意两种
-  混为一谈是最容易犯的错误。
-- 退款校验顺序：错误时间戳的优先级高于"未知支付"；重复 `refund_id` 的优先级高于超额检查（因此重
-  放一个已经成功的退款永远不会抛异常，即便该支付此后已被其他退款全额退完）。
-- 恰好在边界上的退款（正好退掉剩余余额）必须成功；多一分钱必须抛异常——`>` 与 `>=` 的 off-by-one
-  是这里的经典 bug。
-- `get_payments_by_date` 的边界两端都是闭区间；排序的 tie-break 是 `payment_id`，而不是插入顺序。
-- `export_json`/`load_json` 必须保留退款 id 集合，而不只是运行中的累计值——一个常见的偷懒做法（每
-  笔支付只持久化 `refunded_cents`）会在重新加载后悄悄破坏幂等性。
-- 重复的 `payment_id` 不能覆盖原始的 amount/ts/customer——只能通过布尔返回值来告知调用方这是一次
-  无操作。
+## Pitfalls hidden tests target
+- three distinct failure shapes for three distinct situations (idempotent `False` / `KeyError` /
+  `ValueError`) — conflating any two of them is the most likely mistake.
+- refund validation order: bad timestamp beats "unknown payment"; duplicate `refund_id` beats the
+  over-refund check (so replaying an already-successful refund never raises, even if the payment
+  has since been fully refunded by other refunds).
+- exact-boundary refund (refunding precisely the remaining balance) must succeed; one cent over
+  must raise — an off-by-one in `>` vs `>=` is the classic bug here.
+- `get_payments_by_date` bounds are inclusive on both sides; sort tie-break is `payment_id`, not
+  insertion order.
+- `export_json`/`load_json` must preserve the refund-id set, not just the running totals — a
+  common shortcut (persisting only `refunded_cents` per payment) silently breaks idempotency after
+  a reload.
+- duplicate `payment_id` must not overwrite the original amount/ts/customer — only the boolean
+  return communicates the no-op.
 
-## 复杂度与实测开销
-`add_payment`/`add_refund`（字典操作）均摊 O(1)；`get_total_revenue` 和 `get_payments_by_date` 为
-O(n)（n 为支付笔数）——在题目给定的 10^5 规模下可以接受，且按追问列表自身的定位，特意没有过度设计成
-索引结构（那是讨论型的扩展）。10 万笔支付 + 一次区间查询，远低于 2 秒 / 256 MB 的预算（见
-`test_perf_100k_payments_and_range_query`）。
+## Complexity & measured cost
+O(1) amortized for `add_payment`/`add_refund` (dict operations); O(n) for `get_total_revenue` and
+`get_payments_by_date` (n = number of payments) — acceptable at the stated 10^5 scale and
+explicitly not over-engineered into an index, per the follow-up list's own framing of that as a
+discussion extension. 100k payments + one range query, well under the 2 s / 256 MB budget (see
+`test_perf_100k_payments_and_range_query`).
 
-## 测试清单
-24 个测试——part1: 6 · part2: 6 · part3: 12（含 1 个格式、3 个 io、1 个性能）；edge 9 · fmt 1 ·
-io 3 · perf 1。
+## Test inventory
+24 tests — part1: 6 · part2: 6 · part3: 12 (incl. 1 fmt, 3 io, 1 perf); edge 9 · fmt 1 · io 3 · perf 1.
 
-## 涉及技能点
-S02 固定时间戳 profile 下的解析/校验 . S03 分阶段揭示的类 API . S06 整数分金额 . S08 确定性多键排
-序 . S09 精确的输出格式 . S17 错误契约设计（三种不同的失败形态） . S18 校验与防御性输入处理 . S20
-序列化往返正确性
+## Skills exercised
+S02 parsing/validation with a fixed timestamp profile . S03 an incrementally-revealed class API .
+S06 integer-cents money . S08 deterministic multi-key sort . S09 exact output formatting . S17
+error-contract design (three distinct failure shapes) . S18 validation and defensive input
+handling . S20 serialization round-trip correctness
 
 ## 边写边说什么
 1. **拿到题面先问三件事**：金额是分还是浮点美元（本题定死整数分，但真实面试要主动问）；时间戳格式
@@ -92,14 +105,16 @@ S02 固定时间戳 profile 下的解析/校验 . S03 分阶段揭示的类 API 
 7. **收尾**：跑一遍 worked examples 手算核对，再挑 1-2 条"面试官会怎么追问"（时区、并发写入竞态、
    审计日志）主动展开，呼应源材料里明确列出的 5 条追问方向。
 
-## 遗留问题
-- 时间戳 profile（`YYYY-MM-DDTHH:MM:SS`，naive，无 offset）是本题自己做出的范围界定，目的是让字
-  符串排序 == 时间顺序这一点天然成立，避免 aware/naive `datetime` 比较的坑。时区感知的变体作为
-  "Variants"/追问项（#4）列出，未实现。
-- 确切的命令流协议（`PAY`/`REFUND`/`REVENUE`/`RANGE` 动词，`OK`/`DUP`/`ERROR` token）是为本题的
-  io 测试框架发明的；programhelp.net 的源材料只描述了类 API，没有 CLI 协议。
+## Open points
+- The timestamp profile (`YYYY-MM-DDTHH:MM:SS`, naive, no offset) is this suite's own scoping
+  decision to keep string-sort == chronological-sort trivially true and avoid aware/naive
+  `datetime` comparison pitfalls. The timezone-aware variant is listed as a "Variants"/follow-up
+  item (#4), not implemented.
+- The exact command-stream protocol (`PAY`/`REFUND`/`REVENUE`/`RANGE` verbs, `OK`/`DUP`/`ERROR`
+  tokens) is invented for this suite's io-test harness; programhelp.net's source describes only
+  the class API, not a CLI protocol.
 
-## 复盘（2026-09-02）
+## Review（2026-09-02）
 **改了什么**
 - `test_cd02.py`：problem.md 的 worked examples 1–3 原来只被"拆散"覆盖（各测试用不同金额），没有逐字
   进测试（checklist F 项）。新增 `_example_ledger` / `_example2_ledger` 两个 helper 复现例子状态，加
@@ -112,7 +127,7 @@ S02 固定时间戳 profile 下的解析/校验 . S03 分阶段揭示的类 API 
   出结果）；`net_cents` property 把"剩余可退额度"和"贡献的 revenue"收成一个定义，`add_refund` 的超额
   判断变成 `amount_cents > payment.net_cents`；`_parse_ts` 改为 `_validate_ts`（返回原串），
   `get_payments_by_date` 不再对每条记录 `strptime` 两次——固定宽度 profile 下已校验字符串的序 == 时间
-  序，直接比字符串（这条本来就写在 REPORT 的遗留问题里，代码现在和说法一致；perf 测试 0.58 s）；
+  序，直接比字符串（这条本来就写在 REPORT 的 Open points 里，代码现在和说法一致；perf 测试 0.58 s）；
   命令流 harness 从一个 40 行 if/elif 改为 `COMMANDS` 分发表 + 每个动词一个 `_cmd_*` 函数，错误到文本
   的映射只在 harness 层，类本身不知道 CLI 协议；`PaymentLedger` / `__init__` / `get_total_revenue` /
   `export_json` / `load_json` 补一句话 docstring，类 docstring 列出两个状态字段及"为什么要持久化

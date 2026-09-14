@@ -1,0 +1,10 @@
+"""
+Integration: Bike Map Routes
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/de7b1522-e24e-4631-935c-63edf611b4f8
+Source Type: OJ / More Problems
+
+Question Summary:
+Given a city map with several bike routes, each represented by a start and end point, write a function to calculate the shortest distance from a given point to any path in the network.
+"""

@@ -1,0 +1,15 @@
+"""
+Bike Map
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/post/7100082
+Source Type: Popular Questions / External Thread
+
+Question Summary:
+This is a hands-on integration assessment where you'll work with a provided codebase to interact with a map visualization API.
+
+Public Section Headings:
+- Bike Map Challenge
+- Challenge Summary
+- How to Prepare
+"""

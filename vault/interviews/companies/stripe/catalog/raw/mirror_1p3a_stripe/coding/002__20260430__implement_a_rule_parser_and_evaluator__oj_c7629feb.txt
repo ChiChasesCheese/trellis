@@ -1,0 +1,214 @@
+"""
+Implement a Rule Parser and Evaluator
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/c7629feb-54d2-4cfc-843b-ef1dfb7a0b03
+Source Type: OJ / More Problems
+
+================================================================================
+INTERVIEW PROMPT (as it would be delivered by the interviewer)
+================================================================================
+
+Hey, good to meet you. The problem we're going to work through today comes from
+the Risk team. Risk engineers write a lot of small boolean rules to decide
+things like "should this charge be blocked", "is this account high-risk", and
+so on. Today we'll let them write those rules in a tiny expression language,
+and you'll write the engine that runs them.
+
+You can use whatever language you want. The shape we want is one function:
+
+    evaluate(rule: str, context: dict) -> bool
+
+`rule` is a string like `age >= 18 AND country == "US"`. `context` is a
+mapping from variable name to value. The function returns the boolean result
+of evaluating `rule` against `context`.
+
+We'll start with a small grammar and grow it.
+
+--------------------------------------------------------------------------------
+PART 1 -- Comparisons and AND/OR
+--------------------------------------------------------------------------------
+
+Support these:
+
+  Operands:
+    - integer literals: 0, 18, 9999
+    - string literals: "US", "CA"  (always double-quoted, no escapes)
+    - boolean literals: true, false
+    - identifiers: age, country, is_active, snake_case_only
+
+  Comparisons (return bool):
+    ==  !=  <  <=  >  >=
+
+  Logical (binary, left-associative):
+    AND   OR
+
+  AND binds tighter than OR. So
+      a == 1 OR b == 2 AND c == 3
+  parses as
+      a == 1 OR (b == 2 AND c == 3).
+
+  Whitespace between tokens is ignored.
+
+Comparison semantics:
+- `==` and `!=` work between any two same-typed values; comparing different
+  types is always `false` for `==` (and `true` for `!=`).
+- `<`, `<=`, `>`, `>=` only make sense for two integers; if either side
+  isn't an integer, treat the comparison as `false`.
+
+Examples:
+    rule:    age >= 18 AND country == "US"
+    context: {"age": 20, "country": "US"}
+    -> true
+
+    rule:    is_active == true OR age < 13
+    context: {"is_active": false, "age": 25}
+    -> false
+"""
+
+def evaluate(rule: str, context: dict):
+  # string if wrapped in quotes
+  # identifier if key in context
+  # integers
+  def parse_operand(op):
+    op = op.lstrip().rstrip()
+    #print(op)
+    if op == "true":
+        return True
+    if op == "false":
+        return False
+    if (op in context):
+        print(f"{op} {context[op]}")
+        return context[op]
+    if op.startswith('"') and op.endswith('"') and len(op) >= 2:
+        return op.lstrip('"').rstrip('"')
+    try:
+      return int(op)
+    except ValueError:
+      raise Exception("invalid operand")
+    
+  def compare(a, str, b):
+    str = str.strip()
+    match str:
+      case "==":
+        if (type(a) is not type(b)):
+          return False
+        return a == b
+      case "!=":
+        if (type(a) is type(b)):
+          return False
+        return a != b
+    # now check for integer comparisons
+    if (type(a) is not int or type(b) is not int):
+          return False
+    match str:
+      case "<":
+        return a < b
+      case "<=":
+        return a <= b
+      case ">":
+        return a > b
+      case ">=":
+        return a >= b
+    raise Exception(f" {str} is invalid operator")
+      
+  def parse_expression(expression):
+    # check for parentheses first, leftmost ( and righmost ), if exist evaluate what is inside
+    #check for not, if exists evaluate what comes immediately after and negate that
+    left, or_exists, right = expression.partition(" OR ")
+    #print(f"{left}    {or_exists}    {right}")
+    if or_exists:
+      return parse_expression(left) or parse_expression(right)
+    left, and_exists , right = expression.partition(" AND ")
+    if and_exists:
+      return parse_expression(left) and parse_expression(right)
+    if expression.lstrip().startswith("NOT "):
+      return not parse_expression(expression.lstrip("NOT "))
+    for x in [" == ", " != ", " < ", " <= ", " > ", " >= "]:
+      left, comparator_exists, right = expression.partition(x)
+      if comparator_exists:
+        return compare(parse_operand(left), x, parse_operand(right))
+    return parse_operand(expression)
+
+  return parse_expression(rule)
+    
+#assert(evaluate("true OR false OR true", {}))
+#assert not evaluate("false OR false OR false", {})
+#assert evaluate("false OR true AND true", {})
+#assert evaluate("3 > 2", {})
+assert evaluate('age >= 18 AND country == "US"', {"age": 20, "country": "US"})
+assert evaluate('NOT (country == "US" OR country == "CA")', {"country": "FR"})
+assert not evaluate("is_active == true AND age < 30", {"is_active": False, "age": 25})
+assert not evaluate('age >= 18 AND country == "US"', {"country": "US"})
+
+"""
+--------------------------------------------------------------------------------
+PART 2 -- NOT and parentheses
+--------------------------------------------------------------------------------
+
+Add `NOT` (unary, highest precedence among logical ops) and `(`/`)` for
+grouping.
+
+    NOT (country == "US" OR country == "CA")
+
+Precedence, lowest to highest:
+    OR  <  AND  <  NOT  <  comparison
+
+Examples:
+    rule:    NOT (country == "US" OR country == "CA")
+    context: {"country": "FR"}
+    -> true
+
+    rule:    NOT is_active AND age >= 18
+    context: {"is_active": false, "age": 30}
+    -> true
+
+(`NOT is_active` is sugar for `NOT (is_active == true)` -- i.e., a bare
+identifier in a boolean position is interpreted as `identifier == true`.)
+
+--------------------------------------------------------------------------------
+PART 3 -- Missing variables
+--------------------------------------------------------------------------------
+
+In production we don't always have every field. If an identifier referenced
+in the rule is not present in the context:
+
+  - In a comparison, the comparison evaluates to `false`.
+  - In a boolean position (like `is_active` standing alone), it's `false`.
+
+The rule never throws because of a missing field. (It can still throw on a
+syntax error in the rule itself -- raise any exception you like for that.)
+
+Example:
+    rule:    age >= 18 AND country == "US"
+    context: {"country": "US"}            # age missing
+    -> false
+
+--------------------------------------------------------------------------------
+Constraints
+--------------------------------------------------------------------------------
+
+- 1 <= len(rule) <= 100_000
+- 1 <= len(context) <= 100_000
+- Identifiers match [A-Za-z_][A-Za-z0-9_]*
+- Integer literals fit in a 64-bit signed int.
+- String literals contain only printable ASCII, no escapes.
+
+--------------------------------------------------------------------------------
+What I'm looking for
+--------------------------------------------------------------------------------
+
+[Interviewer notes]
+
+- A clean tokenizer / parser / evaluator split. Recursive descent is fine
+  and probably the fastest to write in 45 minutes; Pratt is also fine.
+- Operator precedence handled correctly without a fragile pile of
+  string.replace calls.
+- A data structure for the parsed expression -- nodes, tuples, whatever --
+  so adding NOT in Part 2 doesn't require rewriting the evaluator.
+- Reasonable error messages on bad rules.
+- If we have time, we'll talk about how to compile a rule once and evaluate
+  it against many contexts, and what it would take to add a new operator.
+"""
+
+

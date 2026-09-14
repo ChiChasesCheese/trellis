@@ -1,0 +1,19 @@
+"""
+Email Time Update Problem
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/2ada198e-0cfe-4fea-9e44-c5737c04b3f8
+Source Type: OJ / More Problems
+
+Question Summary:
+Write a function to update the received time of an email. The function takes an email identifier and a timestamp, then updates the received time of that email in the system. If the update fails, the function should return an error message.
+
+### Input
+- `email_id` (string): The identifier of the email.
+- `timestamp` (string): The new received time, format `YYYY-MM-DD HH:MM:SS`.
+
+### Output
+- If the update is successful, return `SUCCESS`.
+- If the email does not exist, return `ERROR: Email ID not found`.
+- If the timestamp format is invalid, return `ERROR: Invalid timestamp format`.
+"""

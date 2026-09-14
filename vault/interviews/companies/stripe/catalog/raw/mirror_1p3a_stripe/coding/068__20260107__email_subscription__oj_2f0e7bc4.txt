@@ -1,0 +1,45 @@
+"""
+Email Subscription
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/2f0e7bc4-0ddf-405a-a3bf-9325102b4e41
+Source Type: OJ / More Problems
+
+Question Summary:
+Implement a system to manage users' email subscriptions. Requirements:
+
+1. Implement functionality to add users to a subscription list.
+2. Implement functionality to remove users from the subscription list.
+3. Implement functionality to send emails to all users in the subscription list.
+
+Input Data:
+- Add User: `ADD <email>`
+- Remove User: `REMOVE <email>`
+- Send Email: `SEND <message>`
+
+Output Data:
+- On success adding or removing a user, output `SUCCESS`.
+- When attempting to remove a non-existing user, output `USER NOT FOUND`.
+- After all users have received the email, output `EMAIL SENT TO <number_of_recipients> USERS`.
+
+Constraints:
+- User email is a unique identifier.
+- Provided emails are valid addresses.
+
+Example Input/Output:
+```
+Input:
+ADD user1@example.com
+ADD user2@example.com
+SEND Hello, World!
+REMOVE user1@example.com
+SEND Goodbye!
+
+Output:
+SUCCESS
+SUCCESS
+EMAIL SENT TO 2 USERS
+SUCCESS
+EMAIL SENT TO 1 USERS
+```
+"""

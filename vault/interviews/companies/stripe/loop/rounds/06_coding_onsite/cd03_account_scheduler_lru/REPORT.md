@@ -1,68 +1,68 @@
-# cd03 AccountScheduler — 报告
+# cd03 AccountScheduler — report
 
-## 概要
-一个带定时锁的固定沙盒账户池(`is_available` → `acquire` → LRU
-`acquire_any`),是 `problems/q26_account_scheduler_lru` 的现场面试版姐妹题。整道题
-本质上是一次 60 分钟时限下的类设计:一个 `locked_until` 字典、明确的
-异常策略(未知 id 用 `KeyError`,`duration <= 0` 用 `ValueError`)而不是
-布尔哨兵值,以及一个刻意使用**构造顺序**而非 id 字符串顺序的 LRU 平局裁决——
-这是最容易让照搬 q26 模式的人栽跟头的细节。
+## Summary
+A fixed pool of sandbox accounts with timed locks (`is_available` → `acquire` → LRU
+`acquire_any`), the onsite-flavoured sibling of `problems/q26_account_scheduler_lru`. The whole
+exercise is class design under a 60-minute clock: one dict of `locked_until`, an explicit
+exception policy (`KeyError` for unknown ids, `ValueError` for `duration <= 0`) instead of
+boolean sentinels, and an LRU tie-break that intentionally uses **construction order** rather than
+id string order — the detail most likely to trip up someone pattern-matching against q26.
 
-## 来源与置信度
-中等 —— 1point3acres 题库 "AccountScheduler LRU"(现场面试,最近一次 2026-03-27),
-`loop/raw/en_forums.md` §6.2 (C4),linkjob 2025-12-07/2026 现场面试报告。三方法递进
-结构证据充分;确切的构造函数形态、异常 vs 哨兵值的选择,以及构造顺序平局裁决
-是本轮重建的内容,并在 problem.md 中做了标注——刻意与 q26 的动态池 / id 顺序
-约定不同,以免两道题收敛成同一个解法。
+## Sources & confidence
+medium — 1point3acres 题库 "AccountScheduler LRU" (onsite, last asked 2026-03-27),
+`loop/raw/en_forums.md` §6.2 (C4), linkjob 2025-12-07/2026 onsite report. The three-method
+progression is well attested; the exact constructor shape, the exception-vs-sentinel choice, and
+the construction-order tie-break are reconstructed for this round and marked as such in
+problem.md — deliberately different from q26's dynamic-pool / id-order contract so the two
+problems don't collapse into the same solution.
 
-## 分 Part 思路
-1. `AccountScheduler(accounts)` 去重后存为列表(保留首次出现的顺序),并建立
-   `id -> index` 映射以支持 O(1) 的平局裁决查找。`is_available` 先检查成员关系
-   (不存在则 `KeyError`),再判断 `locked_until.get(id) is None or t >= locked_until[id]`
-   (锁定结束是排它的)。
-2. `acquire` 在委托给 `is_available`(它负责为未知 id 抛出 `KeyError`)**之前**
-   先校验 `duration > 0`——这是文档规定的检查顺序,之所以选它是因为 `duration`
-   是纯参数检查,不需要查状态,运行成本最低,所以放在最前面。
-3. `acquire_any` 先把固定池过滤成 `t` 时刻可用的账户,再按
-   `(has_been_used, last_used_or_0, construction_index)` 取 `min()`——从未使用的
-   账户(标记为 0)永远排在已使用的账户(标记为 1)之前;同组内由第二、第三个
-   分量决定顺序。加锁时复用了和 `acquire` 完全相同的 `locked_until`/`last_used` 写入。
-4. `run_commands` 解析必需的 `ACCOUNTS ...` 头部行,然后分发
-   `AVAIL`/`ACQ`/`ANY`;任何 `KeyError`/`ValueError`(包括 `t`/`duration` 的
-   `int()` 转换失败)或未知动词/参数个数错误只在这一层被捕获并打印为 `ERROR`——
-   类本身从不吞掉异常。
+## Approach by part
+1. `AccountScheduler(accounts)` dedupes into a list (preserves first-seen order) and builds an
+   `id -> index` map for O(1) tie-break lookups. `is_available` checks membership (`KeyError` if
+   absent) then `locked_until.get(id) is None or t >= locked_until[id]` (exclusive lock end).
+2. `acquire` validates `duration > 0` **before** delegating to `is_available` (which is what
+   raises `KeyError` for unknown ids) — the documented check order, chosen because `duration` is a
+   pure argument check that needs no state lookup, so it's cheapest to run first.
+3. `acquire_any` filters the fixed pool to accounts available at `t`, then `min()`s by
+   `(has_been_used, last_used_or_0, construction_index)` — never-used accounts (flag 0) always
+   sort before used ones (flag 1); within a group the second/third components do the ordering.
+   Locking reuses the exact same `locked_until`/`last_used` writes as `acquire`.
+4. `run_commands` parses the mandatory `ACCOUNTS ...` header line, then dispatches
+   `AVAIL`/`ACQ`/`ANY`; any `KeyError`/`ValueError` (including `int()` failures on `t`/`duration`)
+   or unknown verb/arity is caught at this layer only and printed as `ERROR` — the class itself
+   never swallows an exception.
 
-## 隐藏测试针对的坑
-- 排它的锁定结束时刻(`t0+d` 时空闲,`t0+d-1` 时不空闲);恰好在到期时刻重新加锁
-- 三个公开方法都会为未知 id 抛出 `KeyError`,不只是 `is_available`
-- `duration <= 0` → `ValueError`,即使是"双重错误"调用也要在未知 id 检查之前检查
-- 从未使用的账户排在已使用的之前,无论"多久没用"对从未使用的账户毫无意义
-- 从未使用账户的平局裁决是**构造顺序**(`ACCOUNTS c b a` → `c, b, a`),不是字母顺序——
-  这是与 q26 分歧最大的一处,用刻意非字母顺序的池来测试
-- 已使用账户之间 `last_used` 相等时同样回退到构造顺序
-- 失败的 `acquire` / 单纯的 `is_available` 调用绝不会改动 `last_used`
-- 全部锁定 → `None`;恰好有一个到期的那一刻 → 就是它,按排它性结束时刻比较
-- 跨调用非单调的 `t` 纯粹靠比较来回答,没有隐含的"经过时间"状态
+## Pitfalls hidden tests target
+- exclusive lock end (`t0+d` free, `t0+d-1` not); re-lock exactly at expiry
+- unknown-id `KeyError` from all three public methods, not just `is_available`
+- `duration <= 0` → `ValueError`, checked before the unknown-id path even for a doubly-bad call
+- never-used ranked before used regardless of "how stale" is meaningless for never-used
+- never-used tie-break is **construction order** (`ACCOUNTS c b a` → `c, b, a`), not alphabetical —
+  the one place this diverges hardest from q26, tested with a deliberately non-alphabetical pool
+- equal `last_used` among used accounts also falls back to construction order
+- failed `acquire` / plain `is_available` calls never touch `last_used`
+- all-locked → `None`; the moment exactly one expires → that one, by exclusive-end comparison
+- non-monotonic `t` across calls answered purely by comparison, no implicit "elapsed time" state
 
-## 复杂度与实测成本
-`is_available`/`acquire` 为 O(1)。`acquire_any` 每次调用是 O(n)(线性扫描 + `min`),
-遍历整个固定池——对于本题设定的规模是可接受的,problem.md 的追问部分已明确指出
-如果被问到 10^4+ 账户且持续高负载,应当升级为双堆 + 延迟失效设计(类似 q26)。
-性能测试:50 万条混合命令(50% `AVAIL`,40% `ACQ`,10% `ANY`)在 500 账户的池上
-通过 `run_script` 运行约 1.1 秒 / 约 30MB——远低于 2 秒 / 256MB 的预算。更密集的
-`ANY` 混合比例(例如 2,000 账户池上占 20%)在临时测试中测得约 7.6 秒,证实
-`acquire_any` 的 O(n) 追问是真实存在的,而非纯理论上的谈资。
+## Complexity & measured cost
+`is_available`/`acquire` O(1). `acquire_any` is O(n) per call (linear scan + `min`) over the fixed
+pool — acceptable for the onsite's stated scale and explicitly flagged in problem.md's follow-ups
+as the thing to upgrade to a two-heap + lazy-invalidation design (à la q26) if asked about 10^4+
+accounts under sustained load. Perf test: 100k mixed commands (50% `AVAIL`, 40% `ACQ`, 10% `ANY`)
+over a 500-account pool ran in ~1.1s / ~30MB via `run_script` — comfortably under the 2s / 256MB
+budget. A denser `ANY` mix (e.g. 20% over a 2,000-account pool) measured ~7.6s in ad-hoc testing,
+confirming the O(n)-per-`acquire_any` follow-up is real and not just a theoretical talking point.
 
-## 测试清单
-18 个测试——part1:3 个 · part2:4 个 · part3:11 个(含 2 个 io、1 个 perf、1 个 fmt);
-edge 8 个 · fmt 1 个 · io 2 个 · perf 1 个。
+## Test inventory
+18 tests — part1: 3 · part2: 4 · part3: 11 (incl. 2 io, 1 perf, 1 fmt); edge 8 · fmt 1 · io 2 ·
+perf 1.
 
-## 涉及技能点
-S03 类 + 字典建模 · S05 严格/非严格时间比较 · S08 确定性平局裁决
-(构造顺序,而非"显而易见"的 id 顺序) · S10 事件流上的状态 · S18
-校验/异常策略 · S19 增量式设计 · S20 自测
+## Skills exercised
+S03 class + dict modeling · S05 strict/non-strict time comparison · S08 deterministic tie-breaks
+(construction order, not the "obvious" id order) · S10 state over an event stream · S18
+validation/exception policy · S19 incremental design · S20 self-testing
 
-## 复盘（2026-09-02）
+## Review（2026-09-02）
 **改了什么**
 - `loop/lint.sh` 在改动前对本题 4 个文件全部报 "would reformat"（未跑过 black -l 110）：`--fix` 后
   `solution.py`/`starter.py`/`starter_template.py`/`test_cd03.py` 全部格式化通过，纯格式改动（多余空行、

@@ -1,0 +1,19 @@
+"""
+Payment Invoice Reconciliation
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/post/7100077
+Source Type: Popular Questions / External Thread
+
+Question Summary:
+You are building a payment reconciliation system that matches incoming payments to outstanding invoices.
+
+Public Section Headings:
+- Payment Invoice Reconciliation
+- The Challenge
+- Step 1: Match by ID
+- Step 2: Match by Amount
+- Step 3: Match with "Forgiveness" (Fuzzy Match)
+- How to Solve It
+- Testing and Discussion
+"""

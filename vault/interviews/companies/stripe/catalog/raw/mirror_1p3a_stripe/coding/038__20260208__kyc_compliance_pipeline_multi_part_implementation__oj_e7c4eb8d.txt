@@ -1,0 +1,19 @@
+"""
+KYC / Compliance Pipeline (Multi-part Implementation)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/e7c4eb8d-16a1-4f21-9cfb-9effaed666eb
+Source Type: OJ / More Problems
+
+Question Summary:
+## Problem: KYC Compliance Validation Pipeline (Multi-part Implementation)
+
+Using the interview question page provided (hack2hire Stripe coding question link), implement a multi-stage processing task related to **KYC (Know Your Customer) compliance checks**. The problem is typically split into multiple parts (e.g., Part 1–4). Each part is relatively independent and adds incremental requirements. The interview mainly evaluates implementation speed and attention to details.
+
+> Note: The original post does not include the full prompt nor I/O specs. Please refer to the linked problem statement for exact requirements.
+
+### Requirements
+- Read input according to the format specified on the problem page.
+- Output results exactly as required by the prompt.
+- For Part 4, the interviewer mentioned you may not need to finish everything; prioritize completing the core subtask(s) as specified.
+"""

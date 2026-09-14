@@ -1,0 +1,19 @@
+"""
+Shipping Cost Calculator
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/post/7100079
+Source Type: Popular Questions / External Thread
+
+Question Summary:
+You are building a shipping cost calculation system for an e-commerce platform.
+
+Public Section Headings:
+- Interview Problem: Shipping Cost Calculator
+- Problem Summary
+- Step 1: Simple Fixed Price
+- Step 2: Volume Discounts
+- Step 3: Mixed Pricing Types
+- How to Solve It
+- Bonus Discussion Topics
+"""

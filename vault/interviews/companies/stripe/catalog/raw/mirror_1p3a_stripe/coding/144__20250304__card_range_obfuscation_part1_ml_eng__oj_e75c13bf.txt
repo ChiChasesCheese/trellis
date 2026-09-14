@@ -1,0 +1,15 @@
+"""
+Card Range Obfuscation Part1 (ML Eng :)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/e75c13bf-0ff5-4d8c-8a36-97002371398a
+Source Type: OJ / More Problems
+
+Question Summary:
+### Problem Overview
+- Given a 6-digit BIN and brand-labeled intervals within its 16-digit card range, output intervals that cover the entire BIN range with no gaps.
+- Input: BIN, N, then N non-overlapping intervals as 10-digit start/end suffixes plus brand; Output: sorted intervals with brands.
+- Domain: payment card metadata and BIN ranges, obfuscating gaps to reduce fraud risk.
+- From Stripe interviews (Part 1); gaps occur only at the lower and/or upper ends.
+- A coding interview problem and interview question.
+"""

@@ -1,0 +1,77 @@
+"""
+Stateful Load Balancer for Long-Lived Connections (CONNECT/DISCONNECT/SHUTDOWN with Stickiness and Capacity)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/0f42136a-534c-4ad0-812e-d7d7d465fe86
+Source Type: OJ / More Problems
+
+Question Summary:
+## Problem: Simulate a Stateful Load Balancer (Long-Lived Connections + Stickiness + Capacity + Shutdown Reroute)
+
+Implement a load balancer that routes long-lived “WebSocket/Jupyter” connections to multiple servers. You will process a time-ordered sequence of textual requests, maintain internal state, and output a log of all **successful routings**.
+
+### Servers
+- There are `N` servers indexed `0..N-1`.
+- Each server `i` has a capacity limit `cap[i]` (maximum active connections).
+
+### Requests
+Each request is one of:
+
+1) `CONNECT connId objectId`
+- `connId`: unique connection id (not duplicated among active connections).
+- `objectId`: object id used for sticky routing.
+
+2) `DISCONNECT connId`
+- Disconnect this connection if it is currently active.
+
+3) `SHUTDOWN serverId`
+- Evict all active connections on that server, then reroute them **one by one** using the same rules as new connections.
+
+### Routing rules (apply to CONNECT and SHUTDOWN-triggered reroutes)
+For a connection `(connId, objectId)` to be routed:
+
+1. **Object stickiness**
+   - If there is at least one **active** connection with the same `objectId`, the connection must be routed to the **same server** as those connections.
+   - If that server is full (`active == cap`), the request is **rejected**.
+
+2. **Least-connections load balancing**
+   - If there is no active connection for that `objectId`, route to the server with the **fewest active connections**.
+   - Break ties by smaller `serverId`.
+   - Full servers are not eligible.
+   - If no eligible server exists, the request is **rejected**.
+
+### Event semantics
+- **Successful CONNECT**: establish the connection, update state, and output one log line.
+- **Rejected CONNECT**: no log line and no state change.
+- **DISCONNECT**: if `connId` is active, remove it and update state; no log line.
+- **SHUTDOWN serverId**:
+  1) immediately evict all active connections on `serverId` (remove them from that server);
+  2) reroute the evicted connections one by one using the routing rules above;
+  3) log each successful reroute; rejected ones are dropped;
+  4) the shutdown server becomes available again right after eviction.
+
+> To make the output deterministic: reroute evicted connections in ascending lexicographic order of `connId`.
+
+### Output format
+For each **successful routing** (successful CONNECT or successful reroute during SHUTDOWN), output:
+
+`connId serverId`
+
+in chronological order.
+
+### Input format (suggested)
+- Line 1: `N`
+- Line 2: `cap[0] cap[1] ... cap[N-1]`
+- Line 3: `Q`
+- Next `Q` lines: one request per line.
+
+### Constraints
+- `1 <= N <= 2e5`
+- `1 <= Q <= 2e5`
+- `0 <= cap[i] <= 2e5`
+- `connId`, `objectId` are strings without spaces, length `<= 64`
+- Target time complexity: about `O((N+Q) log N)`
+
+### Task
+Read input, simulate the system, and print the routing log.
+"""

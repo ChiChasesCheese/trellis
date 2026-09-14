@@ -1,0 +1,21 @@
+"""
+Store Opening Time Penalty Problem
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/90430231-75ff-47ab-b205-387754a26bcc
+Source Type: OJ / More Problems
+
+Question Summary:
+Given a set of integers representing the digits of store opening times, determine the time that will incur the minimum penalty by forming a valid time (hours and minutes) from these integers. You may rearrange the digits but must form a valid time. Provide an algorithm and include test cases: - The input is an array of four integers a, b, c, d - The output should be a 24-hour format string (NN:NN) 
+
+### Test Cases
+- Input: [1, 2, 3, 4]
+  Output: "23:41"
+- Input: [1, 9, 5, 0]
+  Output: "19:50"
+- Input: [0, 0, 0, 1]
+  Output: "10:00"
+
+
+Note that there are situations where forming a valid time is not possible; return the string "Not Possible" for such cases.
+"""

@@ -1,0 +1,84 @@
+"""
+Shipping Cost Queries with Direct and One-Transit Routes
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/603364a8-b3b9-4a0e-a6a1-1c555958f456
+Source Type: OJ / More Problems
+
+Question Summary:
+**Question 1: Shipping Cost Query**
+
+Given a string containing shipping cost information between different countries, parse the string and complete the following task:
+
+1. Query the shipping cost provided by a specified courier between two specific countries. If no direct shipping route exists, return -1.
+
+**Input Description:**
+
+- The first line contains an integer `n`, the number of shipping cost entries.
+- The following `n` lines, each contains four comma-separated strings, representing the start country, destination country, shipping cost, and courier company.
+- The last line contains three space-separated strings indicating the start country, destination country, and courier company for the query.
+
+**Output Description:**
+
+- Output the shipping cost provided by the specified courier between the queried countries. If no direct route exists, output -1.
+
+**Example Input 1:**
+```
+3
+US,CA,10,DHL
+CA,MX,15,UPS
+US,MX,40,FedEx
+US CA DHL
+```
+
+**Example Output 1:**
+```
+10
+```
+
+**Question 2: Transit Route Query**
+
+Allowing for one transit, return the routing path required, the courier, and total shipping cost.
+
+**Input/Output Description:**
+
+Same as Question 1.
+
+**Example Input 2:**
+```
+3
+US,CA,10,DHL
+CA,MX,15,UPS
+US,MX,40,FedEx
+US MX DHL
+```
+
+**Example Output 2:**
+```
+US->CA->MX, DHL, 25
+```
+
+**Question 3: Minimum Transit Cost Query**
+
+With one allowed transit, query the minimum shipping cost between two specific countries.
+
+**Input Description:**
+- Same structure as Question 1.
+
+**Output Description:**
+- Output the minimum shipping cost between the two countries. If no route is feasible, return -1.
+
+**Example Input 3:**
+```
+3
+US,CA,10,DHL
+CA,MX,15,UPS
+US,MX,40,FedEx
+US MX FedEx
+```
+
+**Example Output 3:**
+```
+25
+```
+"""

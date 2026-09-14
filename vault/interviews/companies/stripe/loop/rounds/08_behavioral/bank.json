@@ -1,0 +1,302 @@
+[
+  {
+    "round": "behavioral",
+    "q": "Tell me about a time you owned a project from start to finish",
+    "principle": "Deliver outstanding results",
+    "source": "codinginterview.com (访问 2026-09-01)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Describe a moment where something broke, and you stepped in, even though it wasn't your responsibility",
+    "principle": "Users first",
+    "source": "codinginterview.com (访问 2026-09-01)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Tell me about a time you made a decision with incomplete information",
+    "principle": "Move with urgency and focus",
+    "source": "codinginterview.com (访问 2026-09-01)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Describe a situation where everything felt urgent—how did you prioritize?",
+    "principle": "Move with urgency and focus",
+    "source": "codinginterview.com (访问 2026-09-01)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Walk me through a complex technical decision you made",
+    "principle": "Rigorous thinking",
+    "source": "codinginterview.com (访问 2026-09-01)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Tell me about a time you changed your mind after gathering new information",
+    "principle": "Rigorous thinking",
+    "source": "codinginterview.com (访问 2026-09-01)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Tell me about a disagreement with another engineer–how did you handle it?",
+    "principle": "Collaborate egolessly",
+    "source": "codinginterview.com (访问 2026-09-01)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Tell me about a failure–what happened, and what did you learn?",
+    "principle": "Resilient",
+    "source": "codinginterview.com (访问 2026-09-01)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Describe a time when you had conflict and how you worked to resolve it.",
+    "principle": "Collaborate egolessly",
+    "source": "Exponent 博客 (2026)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Tell me about a time you solved your most complex problem.",
+    "principle": "Rigorous thinking",
+    "source": "Exponent 博客 (2026)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Talk about a recent project you led. How did you uphold a high quality bar?",
+    "principle": "Be meticulous in your craft",
+    "source": "Exponent 博客 (2026)"
+  },
+  {
+    "round": "behavioral",
+    "q": "What is something you would have done differently in a project?",
+    "principle": "Seek feedback",
+    "source": "Prepfully (2026-08-13)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Discuss a time when you disagreed with a team decision. What did you do about it?",
+    "principle": "Collaborate egolessly",
+    "source": "Prepfully (2026-08-13)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Talk about a time when you had to resolve a difficult situation within the team.",
+    "principle": "Collaborate egolessly",
+    "source": "Prepfully (2026-08-13)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Tell me about a time you made a mistake. What did you learn from it?",
+    "principle": "Seek feedback",
+    "source": "Prepfully (2026-08-13)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Tell us about a time you had a difference of opinion with a team member. How did you resolve it?",
+    "principle": "Collaborate egolessly",
+    "source": "InterviewKickstart (2024-12-22)"
+  },
+  {
+    "round": "behavioral",
+    "q": "How do you handle negative feedback?",
+    "principle": "Seek feedback",
+    "source": "InterviewKickstart (2024-12-22)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Tell me about a time you had to make a technical trade-off to meet a deadline. How did you handle the technical debt later?",
+    "principle": "Move with urgency and focus",
+    "source": "Dataford [搜索摘要，页面 429]"
+  },
+  {
+    "round": "behavioral",
+    "q": "Walk me through a complex decision you made and how you evaluated alternatives",
+    "principle": "Rigorous thinking",
+    "source": "Dataford [搜索摘要，页面 429]"
+  },
+  {
+    "round": "behavioral",
+    "q": "Tell me about a time you changed your mind after digging into the data.",
+    "principle": "Rigorous thinking",
+    "source": "Dataford [搜索摘要，页面 429]"
+  },
+  {
+    "round": "behavioral",
+    "q": "Tell me about a time you took full ownership of a project from start to finish.",
+    "principle": "Deliver outstanding results",
+    "source": "The Interview Guys (2026)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Describe a time when you had to make a high-stakes decision with incomplete information.",
+    "principle": "Move with urgency and focus",
+    "source": "The Interview Guys (2026)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Tell me about a time you disagreed with a technical decision.",
+    "principle": "Collaborate egolessly",
+    "source": "The Interview Guys (2026)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Tell me about a time you managed competing priorities under a tight deadline.",
+    "principle": "Move with urgency and focus",
+    "source": "The Interview Guys (2026)"
+  },
+  {
+    "round": "behavioral",
+    "q": "What does Stripe's mission mean to you personally?",
+    "principle": "Macro-optimistic",
+    "source": "The Interview Guys (2026-05-31)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Tell me about a time you had conflict with your manager.",
+    "principle": "Collaborate egolessly",
+    "source": "Blind kt6bwgwv，访问 2026-09-01"
+  },
+  {
+    "round": "behavioral",
+    "q": "Tell me about a project: how did you ideate it, pitch it, break it down, minimize risk, and manage stakeholder relationships and deadlines?",
+    "principle": "Deliver outstanding results",
+    "source": "Glassdoor Stripe SWE [搜索摘要]，访问 2026-09-01"
+  },
+  {
+    "round": "behavioral",
+    "q": "Describe your last strategic hire. What made them the strategic hire?",
+    "principle": "Obsess over talent",
+    "source": "Exponent 博客 (2026，EM 岗，供 senior IC 参考)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Describe a time when you went above and beyond for a customer.",
+    "principle": "Users first",
+    "source": "跨公司迁移练习（Amazon Customer Obsession）· DesignGurus (2026-04-08)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Tell us about a time when you took ownership of a project and its outcome.",
+    "principle": "Deliver outstanding results",
+    "source": "跨公司迁移练习（Amazon Ownership）· DesignGurus (2026-04-08)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Tell us about a time when you simplified a complex process.",
+    "principle": "Be meticulous in your craft",
+    "source": "跨公司迁移练习（Amazon Invent and Simplify）· DesignGurus (2026-04-08)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Give an example of when you admitted to being wrong and learned from it.",
+    "principle": "Humble",
+    "source": "跨公司迁移练习（Amazon Are Right, A Lot）· DesignGurus (2026-04-08)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Describe a time you learned a new skill or technology to solve a problem.",
+    "principle": "Stay curious",
+    "source": "跨公司迁移练习（Amazon Learn and Be Curious）· DesignGurus (2026-04-08)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Describe a situation where you mentored or coached a team member.",
+    "principle": "Obsess over talent",
+    "source": "跨公司迁移练习（Amazon Hire and Develop the Best）· DesignGurus (2026-04-08)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Describe a time when you raised the bar for your team.",
+    "principle": "Obsess over talent",
+    "source": "跨公司迁移练习（Amazon Insist on the Highest Standards）· DesignGurus (2026-04-08)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Give an example of a calculated risk that paid off.",
+    "principle": "Move with urgency and focus",
+    "source": "跨公司迁移练习（Amazon Think Big）· DesignGurus (2026-04-08)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Describe a time when you had to make a quick decision with limited information.",
+    "principle": "Move with urgency and focus",
+    "source": "跨公司迁移练习（Amazon Bias for Action）· DesignGurus (2026-04-08); Exponent Amazon Guide (2026)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Describe a project where you had to accomplish more with less.",
+    "principle": "Be meticulous in your craft",
+    "source": "跨公司迁移练习（Amazon Frugality）· DesignGurus (2026-04-08)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Tell us about a situation where you had to repair a damaged professional relationship.",
+    "principle": "Collaborate egolessly",
+    "source": "跨公司迁移练习（Amazon Earn Trust）· DesignGurus (2026-04-08)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Give an example of when you identified the root cause of a complex issue.",
+    "principle": "Rigorous thinking",
+    "source": "跨公司迁移练习（Amazon Dive Deep）· DesignGurus (2026-04-08)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Describe a time when you disagreed with a decision and voiced your concerns.",
+    "principle": "Collaborate egolessly",
+    "source": "跨公司迁移练习（Amazon Have Backbone; Disagree and Commit）· DesignGurus (2026-04-08)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Describe a time when you delivered a significant result under challenging circumstances.",
+    "principle": "Deliver outstanding results",
+    "source": "跨公司迁移练习（Amazon Deliver Results）· DesignGurus (2026-04-08)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Tell us about a situation where you prioritized employee well-being.",
+    "principle": "Exothermic",
+    "source": "跨公司迁移练习（Amazon Strive to be Earth's Best Employer）· DesignGurus (2026-04-08)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Describe a time when you made a decision that took into account the broader implications.",
+    "principle": "Users first",
+    "source": "跨公司迁移练习（Amazon Success and Scale Bring Broad Responsibility）· DesignGurus (2026-04-08)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Tell me about a time you had to make progress on something with no clear direction.",
+    "principle": "Stay curious",
+    "source": "跨公司迁移练习（Google Googleyness）· ophyai (2026-07-24)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Walk me through how you approached a problem you had never seen before.",
+    "principle": "Stay curious",
+    "source": "跨公司迁移练习（Google GCA）· ophyai (2026-07-24)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Tell me about a time you influenced a decision without authority.",
+    "principle": "Deliver outstanding results",
+    "source": "跨公司迁移练习（Google Leadership）· ophyai (2026-07-24)"
+  },
+  {
+    "round": "behavioral",
+    "q": "Tell me about a time you needed to overcome external obstacles to complete a task or project.",
+    "principle": "Resilient",
+    "source": "跨公司迁移练习（Meta Perseverance）· interviewing.io Meta，访问 2026-09-01"
+  },
+  {
+    "round": "behavioral",
+    "q": "Tell me about a person or team who you found most challenging to work with.",
+    "principle": "Collaborate egolessly",
+    "source": "跨公司迁移练习（Meta Resolving Conflicts）· interviewing.io Meta，访问 2026-09-01"
+  },
+  {
+    "round": "behavioral",
+    "q": "Why do you want to leave your current/last company?",
+    "principle": "",
+    "source": "跨公司通用题 · Tech Interview Handbook，访问 2026-09-01"
+  }
+]

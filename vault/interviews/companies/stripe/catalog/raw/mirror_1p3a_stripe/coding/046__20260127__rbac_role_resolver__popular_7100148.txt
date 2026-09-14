@@ -1,0 +1,21 @@
+"""
+RBAC Role Resolver
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/post/7100148
+Source Type: Popular Questions / External Thread
+
+Question Summary:
+Design and implement a Role-Based Access Control (RBAC) system that manages user roles across a hierarchical account structure.
+
+Public Section Headings:
+- RBAC Role Resolver
+- Problem Definition
+- Phase 1: Direct Role Lookup
+- Phase 2: Adding Inheritance
+- Phase 3: Finding Users with Access
+- Phase 4: Filtering Users by Role
+- Solution Details
+- Full Code Solution
+- Optimization and Scaling
+"""

@@ -1,0 +1,215 @@
+"""
+Exception handling in debugging
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/2db842ae-625f-4098-8075-aab97db253a8
+Source Type: OJ / More Problems
+
+================================================================================
+PROBLEM
+================================================================================
+
+You are given a `Warehouse` class that manages box placement. The warehouse
+has a fixed capacity (total units of space) and supports adding, removing,
+and querying boxes.
+
+The implementation has 3 bugs, all related to exception handling:
+
+Bug 1 — Duplicates silently overwritten.
+        Adding a box whose ID already exists should raise DuplicateBoxError,
+        but the buggy code silently overwrites the old entry.
+
+Bug 2 — Space check is off-by-one.
+        The capacity check uses `>=` instead of `>`, so a box that exactly
+        fills the remaining space is incorrectly rejected.
+
+Bug 3 — Bare `except` in remove_box swallows real errors.
+        remove_box catches *all* exceptions (including TypeError, AttributeError,
+        etc.) and converts them into a generic "not found" message, hiding bugs
+        that should propagate.
+
+Your task:
+1. Run the tests and identify the 3 failures.
+2. Trace each to its root cause.
+3. Fix each with a minimal change.
+4. Verify all tests pass.
+"""
+
+
+# ---------------------------------------------------------------------------
+# Exception types
+# ---------------------------------------------------------------------------
+
+class WarehouseError(Exception):
+    pass
+
+class DuplicateBoxError(WarehouseError):
+    pass
+
+class InsufficientSpaceError(WarehouseError):
+    pass
+
+class BoxNotFoundError(WarehouseError):
+    pass
+
+
+# ---------------------------------------------------------------------------
+# Buggy code (DO NOT MODIFY — use for reference)
+# ---------------------------------------------------------------------------
+
+class WarehouseBuggy:
+    """Manages placement of boxes with known sizes into a fixed-capacity store."""
+
+    def __init__(self, capacity: int):
+        if capacity <= 0:
+            raise ValueError("Capacity must be positive")
+        self.capacity = capacity
+        self.boxes: dict[str, int] = {}   # box_id → size
+
+    def current_usage(self) -> int:
+        return sum(self.boxes.values())
+
+    def remaining_space(self) -> int:
+        return self.capacity - self.current_usage()
+
+    def add_box(self, box_id: str, size: int) -> None:
+        """Add a box. Raises on duplicate or insufficient space."""
+        if size <= 0:
+            raise ValueError("Box size must be positive")
+
+        # BUG 1: No duplicate check — silently overwrites an existing box
+        # (and its size), which can also corrupt the space accounting.
+
+        # BUG 2: Uses >= instead of >.  A box that exactly fills the
+        # remaining space is rejected even though it should fit.
+        if self.current_usage() + size >= self.capacity:
+            raise InsufficientSpaceError(
+                f"Need {size} units but only {self.remaining_space()} available"
+            )
+
+        self.boxes[box_id] = size
+
+    def remove_box(self, box_id: str) -> int:
+        """Remove a box and return its size.  Raises BoxNotFoundError."""
+        try:
+            return self.boxes.pop(box_id)
+        except:   # noqa: E722
+            # BUG 3: Bare `except` catches EVERYTHING (TypeError if box_id
+            # is an unhashable type, AttributeError if self.boxes is None,
+            # KeyboardInterrupt, etc.) and converts it to BoxNotFoundError,
+            # hiding real bugs.
+            raise BoxNotFoundError(f"No box with id {box_id!r}")
+
+    def list_boxes(self) -> list[tuple[str, int]]:
+        return sorted(self.boxes.items())
+
+
+# ---------------------------------------------------------------------------
+# Implement your fix here
+# ---------------------------------------------------------------------------
+
+class WarehouseFixed:
+    """Fix all three bugs."""
+
+    def __init__(self, capacity: int):
+        pass
+
+    def current_usage(self) -> int:
+        pass
+
+    def remaining_space(self) -> int:
+        pass
+
+    def add_box(self, box_id: str, size: int) -> None:
+        pass
+
+    def remove_box(self, box_id: str) -> int:
+        pass
+
+    def list_boxes(self) -> list[tuple[str, int]]:
+        pass
+
+
+# ---------------------------------------------------------------------------
+# Tests
+# ---------------------------------------------------------------------------
+
+def run_tests():
+    # ---- Test 1: Duplicate detection ----
+    w = WarehouseFixed(100)
+    w.add_box("A", 10)
+    try:
+        w.add_box("A", 20)
+        assert False, "Should raise DuplicateBoxError for duplicate box id"
+    except DuplicateBoxError:
+        pass  # expected
+    # Original box should be unchanged
+    assert w.remaining_space() == 90
+    print("Test 1 (duplicate detection): PASSED")
+
+    # ---- Test 2: Exact-fit allowed ----
+    w2 = WarehouseFixed(50)
+    w2.add_box("X", 30)
+    # 20 units remaining — a box of size 20 should fit exactly
+    try:
+        w2.add_box("Y", 20)
+    except InsufficientSpaceError:
+        assert False, (
+            "Box of size 20 should fit in 20 remaining units, "
+            "but InsufficientSpaceError was raised"
+        )
+    assert w2.remaining_space() == 0
+    print("Test 2 (exact-fit): PASSED")
+
+    # Over-capacity is still rejected
+    w3 = WarehouseFixed(10)
+    w3.add_box("A", 7)
+    try:
+        w3.add_box("B", 4)
+        assert False, "Should raise InsufficientSpaceError"
+    except InsufficientSpaceError:
+        pass
+    print("Test 2b (over-capacity rejected): PASSED")
+
+    # ---- Test 3: remove_box only catches KeyError ----
+    w4 = WarehouseFixed(100)
+    w4.add_box("A", 10)
+
+    # Removing a non-existent box → BoxNotFoundError (correct)
+    try:
+        w4.remove_box("Z")
+        assert False, "Should raise BoxNotFoundError"
+    except BoxNotFoundError:
+        pass
+
+    # Passing an unhashable type → TypeError should propagate, NOT
+    # be swallowed and turned into BoxNotFoundError
+    try:
+        w4.remove_box(["not", "a", "string"])  # type: ignore
+        assert False, "Should raise TypeError for unhashable key"
+    except TypeError:
+        pass  # expected — real bug, should propagate
+    except BoxNotFoundError:
+        assert False, (
+            "TypeError was swallowed by bare `except` and converted to "
+            "BoxNotFoundError — real bugs are being hidden"
+        )
+    print("Test 3 (precise exception handling): PASSED")
+
+    # ---- Test 4: Normal add/remove flow ----
+    w5 = WarehouseFixed(100)
+    w5.add_box("A", 10)
+    w5.add_box("B", 20)
+    w5.add_box("C", 30)
+    assert w5.current_usage() == 60
+    assert w5.remaining_space() == 40
+    assert w5.remove_box("B") == 20
+    assert w5.current_usage() == 40
+    assert w5.list_boxes() == [("A", 10), ("C", 30)]
+    print("Test 4 (normal flow): PASSED")
+
+    print("\nAll tests passed")
+
+
+if __name__ == '__main__':
+    run_tests()

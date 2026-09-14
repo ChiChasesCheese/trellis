@@ -1,0 +1,56 @@
+"""
+CSV Dataset Validation (Multi-part)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/cb0f36c3-23e8-4c90-843f-8ed23634a18f
+Source Type: OJ / More Problems
+
+Question Summary:
+## Problem: Multi-part CSV Dataset Validation
+
+You are given a **multi-line CSV string** `csvText` as input. You must parse it line by line and implement the following three parts in order.
+
+To simplify the CSV format:
+- Rows are separated by `\n`.
+- Columns are separated by commas `,`.
+- You do **not** need to handle quoted fields or escaped commas; a plain split is sufficient.
+
+### Part 1: Empty-field validation
+Parse each row and each field (cell) and validate:
+- No field is an empty string (length 0).
+
+Return `false` if any empty field exists; otherwise return `true`.
+
+### Part 2: Banned-word validation
+Given a set `bannedWords` (assume **case-sensitive** matching unless specified otherwise).
+
+Assuming Part 1 passes, further validate:
+- No field is **exactly equal** to any word in `bannedWords`.
+
+Return `false` if a banned word is found.
+
+### Part 3: Stop-word counting on selected columns
+Given:
+- `stopWords`: a set of stop words
+- `targetCols`: a list of 0-based column indices to include
+
+Assuming Part 2 passes, for each row and each `targetCols` field:
+1. Tokenize the field by splitting on non-alphanumeric characters (e.g., delimiter regex `[^A-Za-z0-9]+`).
+2. Count how many tokens are contained in `stopWords` (count every occurrence).
+
+Return the total count as an integer.
+
+### Constraints
+- `1 <= rows <= 1e5`
+- `1 <= cols <= 100`
+- total `csvText` length `<= 1e7`
+- You should process the input in a streaming / line-by-line manner to avoid building a huge 2D structure.
+
+### Example
+`csvText`:
+```
+hello,world
+foo,
+```
+Part 1 returns `false` (the second row second field is empty).
+"""

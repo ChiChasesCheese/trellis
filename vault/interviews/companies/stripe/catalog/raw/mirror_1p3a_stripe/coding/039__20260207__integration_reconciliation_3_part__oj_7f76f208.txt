@@ -1,0 +1,17 @@
+"""
+Integration: Reconciliation (3-part)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/7f76f208-471b-4798-a26a-4a7fc4fb8723
+Source Type: OJ / More Problems
+
+Question Summary:
+## Problem: Integration - Reconciliation (3 parts)
+
+Implement a reconciliation/integration task with three parts:
+- Part 1 is quick.
+- Part 2 is large and verbose; you must implement step-by-step per part.
+- Part 3 may be only partially completed under time.
+
+> Note: The post does not include the data model, IO format, reconciliation rules, or constraints, so it cannot be reconstructed into an answerable coding prompt and is omitted.
+"""

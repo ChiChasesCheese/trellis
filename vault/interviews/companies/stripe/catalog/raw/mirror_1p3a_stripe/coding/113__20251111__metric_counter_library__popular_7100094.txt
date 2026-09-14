@@ -1,0 +1,16 @@
+"""
+Metric Counter Library
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/post/7100094
+Source Type: Popular Questions / External Thread
+
+Question Summary:
+Design a library that enables services to collect and aggregate metrics.
+
+Public Section Headings:
+- Metric Counter Library
+- What We Need to Build
+- Study Materials
+- Final Thoughts
+"""

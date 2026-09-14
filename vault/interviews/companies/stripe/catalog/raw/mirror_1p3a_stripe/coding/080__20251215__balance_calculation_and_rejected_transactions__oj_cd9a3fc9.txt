@@ -1,0 +1,23 @@
+"""
+Balance Calculation and Rejected Transactions
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/cd9a3fc9-bbe7-4b60-9dfa-d0bc3c994dc6
+Source Type: OJ / More Problems
+
+Question Summary:
+Given a list of transactions, output all users with a non-zero balance and their balances. Then output transactions that would cause a balance to be negative in a rejected transaction list and again output users with a non-zero balance and their balances. Example input:
+
+```
+account_name, timestamp, currency, amount
+acct_123,1,usd,1000
+acct_123,2,usd,500
+acct_321,3,usd,400
+acct_321,4,usd,-500
+```
+
+Example output:
+```
+acct_321 and 1500, acct_312 and 400, rejected_transaction = ["acct_321,4,usd,-500"]
+```
+"""

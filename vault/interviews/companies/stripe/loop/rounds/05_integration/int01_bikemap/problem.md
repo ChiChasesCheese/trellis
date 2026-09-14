@@ -4,7 +4,7 @@
 **Type:** onsite Integration（真实 HTTP 调用，非算法题） · **Stage:** 60 min，5 part · **Last asked:** 2026-06-07（oavoservice 逐 part 拆解文章）；learncswithus 2025-11-11 VO 面经给出同款 5-part 拆解
 **Frequency:** 目前中英文报告中**最常被点名的 Integration 例题**——`teamblind h8lemeaq`（Stripe 员工亲述题库随机抽题，"If you can do bikemap then you should be able to do the other ones too"）、`1point3acres bba4944f`、`learncswithus.com`、`oavoservice.com`、`prachub.com` 均独立提到 · **Confidence:** high for 5-part 结构与每个 part 的一句话主题（4 篇独立来源交叉一致）；`ride-simple.json` 具体点数/城市、mockserver API 形状是本仓库复刻，不是题面原文（Stripe 出题仓库不允许候选人下载/复制，见 Sources）。
 
-## 背景
+## Context
 Stripe 的这道 Integration 题模拟一个骑行路线可视化服务：候选人拿到一份 GeoJSON 格式的骑行轨迹数据，需要解析坐标、调用一个（面试环境提供的）地图渲染后端把路线画成图片、叠加地标标注、计算路线上离每个地标最近的点，最后把整个流程封装成一个可重复使用、有缓存的命令行工具。**不考算法**——考察的是读文档的速度、HTTP 客户端的错误处理、对陌生数据结构（GeoJSON 的坐标顺序）的警惕性，以及代码在"需求还会继续加码"时的模块化程度。据多份面经，多数候选人在 60 分钟内做不完全部 5 个 part；Part 1-2 的实现质量、代码整洁度比"做完几个 part"更被看重。
 
 本仓库用 `loop/mockserver/maps.py`（stdlib `http.server`，零依赖）复刻题面描述的地图渲染后端：`POST /render` 接受 `{"points": [[lat,lng],...], "markers"?: [...]}\`，返回一张真正的 PNG（`loop/mockserver/_png.py` 手写编码器，无 PIL）。
@@ -32,7 +32,7 @@ GET /health
 - `data/ride-simple.json`：一个 GeoJSON `FeatureCollection`，恰好 1 个 `Feature`，`geometry.type == "LineString"`，`geometry.coordinates` 是 500 个 `[lng, lat]` 点，围绕柏林市中心（约 52.51°N, 13.39°E）用 `random.Random(0)` 生成的一条平滑骑行路线（每步前进 18 米，朝向做小幅随机游走 + 缓慢周期性漂移，模拟真实骑行轨迹而非直线或纯随机噪声）。
 - `data/landmarks.json`：9 个地标 `[{"name": str, "lat": float, "lng": float}, ...]`，每个都以路线上某个点为基准加 10–150 米随机偏移生成，因此"最近点"距离都在几米到一百多米这个量级（不是几公里外的无关地标）。
 
-## 规则
+## Rules
 ### Part 1 — 解析 GeoJSON，取前 N 个坐标
 `load_coordinates(path: str) -> list[tuple[float, float]]`：读取 GeoJSON 文件，从 `features[0].geometry.coordinates` 取出坐标，**把 `[lng, lat]` 换成 `(lat, lng)`** 返回（后续所有 part 统一用 `(lat, lng)` 元组）。文件不含 `features`、geometry 不是 `LineString`、坐标少于 2 个点，都应该报错（抛异常，不静默返回空列表）。
 
@@ -87,7 +87,7 @@ PART 5
                              cli() 直接 print 到真实 stdout（不经过 main() 的 stdout 参数）
 ```
 
-## 演示样例
+## Worked examples
 `data/ride-simple.json` 的前 10 个坐标（`PART 1` / `first_n(coords, 10)`）：
 ```
 52.514000,13.390000
@@ -119,7 +119,7 @@ Kanalschleuse: index=465 distance_m=45.2
 输出 coords:                [(52.5, 13.4), (52.51, 13.41)]     ((lat, lng)，已交换)
 ```
 
-## 隐藏测试已知会针对的边界情况
+## Edge cases hidden tests are known to target
 - GeoJSON 坐标顺序陷阱：`[lng, lat]` 原样返回（不交换）是最常见的错误实现
 - `features` 为空 / `geometry.type` 不是 `LineString` / 坐标少于 2 个点 → 应该报错，不是返回空列表或崩溃成未捕获异常类型
 - `render_map`/`render_route` 连接被拒绝（端口不存在）→ `MapError`，不是让 `urllib.error.URLError` 原样冒泡
@@ -133,12 +133,12 @@ Kanalschleuse: index=465 distance_m=45.2
 - `first_n` 在坐标总数小于 `n` 时返回全部，不补空行、不报错
 - `main()` 空 stdin（无 `PART` 行）应该什么都不打印、正常退出（returncode 0）
 
-## 见过的变体
+## Variants seen in the wild
 - oavoservice 版本用 `staticmap`（PyPI 第三方库，`github.com/komoot/staticmap`，`(lon, lat)` 顺序、Pillow 渲染）而不是自建 HTTP 服务；这里为了 60 分钟内可离线复现，换成本仓库 `loop/mockserver/maps.py` 这个"面试官提供的地图渲染 API"，`points`/`markers` 顺序统一改成人类习惯的 `[lat, lng]`（`staticmap` 本身是 `(lon, lat)`，这是另一处容易混淆的地方，本版本刻意避开）。
 - learncswithus 版本 Part 4 是"标注地标 + 计算最近点"合并成一步；本版本拆成 Part 4（纯计算）和已经在 Part 3 完成的"标注"（渲染时传 markers），顺序略有调整但覆盖同样的两个能力点。
 - 实习生版本（`1point3acres interview/thread/1096856`）据报道只要求做到 Part 3（渲染），Part 4-5（最近点、批处理 CLI）是正式工程师版本才要求的加码。
 
-## 本题考察点
+## What this tests
 skills: S02 解析嵌套 JSON/GeoJSON · S18 网络错误的分类与归一化（MapError 包装） · S19 增量设计（Part n 复用 Part n-1 的函数） · S20 自测（用面试官给的坐标顺序陷阱自己先验证一遍） · S24 领域知识（HTTP 客户端 ergonomics：防御性响应校验、内容哈希缓存）
 
 ## 面试官追问（不少于 6 个）
@@ -151,7 +151,7 @@ skills: S02 解析嵌套 JSON/GeoJSON · S18 网络错误的分类与归一化�
 7. "CLI 的 `--cache-dir` 如果被多个进程并发写，会不会出问题？" —— 期待：`index.json` 的读-改-写不是原子的，讨论文件锁或者每个 `<hash>.png` 用先写临时文件再 rename 的方式规避半写文件。
 8. "GeoJSON 坐标顺序这个坑，你在代码里怎么防止未来自己或者同事再犯？" —— 期待：在 `load_coordinates` 里写清楚注释/类型别名，甚至用 `NamedTuple(lat, lng)` 而不是裸 `tuple`，让顺序在类型层面显式。
 
-## 来源
+## Sources
 - https://oavoservice.com/en/articles/stripe-integration-bikemap-geojson-http-staticmap-nearest-landmark（逐 part 拆解，访问 2026-06-07；`loop/raw/github_repos.md` §3.1 复述）
 - learncswithus.com《Stripe SDE VO 面经｜Integration怎么考｜VO 全套真题分享》2025-11-11（`loop/raw/cn_forums.md` 第 87–99 行，5-part 拆解与 oavoservice 独立交叉一致）
 - https://www.teamblind.com/post/is-stripe-integration-always-bikemap-for-java-h8lemeaq（Stripe 员工确认题库随机抽题，BikeMap 是其中一个）
@@ -160,7 +160,7 @@ skills: S02 解析嵌套 JSON/GeoJSON · S18 网络错误的分类与归一化�
 - `github.com/komoot/staticmap` README（`(lon, lat)` API 用法参考，本题未直接使用该库，见 Variants）
 - `loop/mockserver/README.md` §maps.py（本仓库对地图渲染后端的复刻实现，作为本题的 mockserver）
 
-## 澄清说明（本仓库自定，非题面原文）
+## Clarifications（本仓库自定，非题面原文）
 - Stripe 出题仓库不允许候选人下载/复制题面（`cn_forums.md` 已确认"故意设置为不可复制/不可直接粘贴"），因此没有任何来源给出 `ride-simple.json` 的原始字节内容；本仓库的 `data/ride-simple.json` 是按 oavoservice 描述的结构（GeoJSON、约 500 点）用 `random.Random(0)` **重新生成**的等价数据，不是原题数据。
 - `/render` 接口的具体 JSON 形状（`points`/`markers`/`width`/`height`）、错误码、限流是本仓库设计（`loop/mockserver/maps.py`），源材料只说"POST 请求、JSON body、PNG 响应"，没有给出字段名。
 - Part 5 "批处理 + 缓存 + 模块化成 CLI" 的具体验收标准（内容哈希缓存、`index.json` 结构）是本仓库补全；oavoservice 原文只说这是"几乎没人做完"的加分项，没有给出验收细节。

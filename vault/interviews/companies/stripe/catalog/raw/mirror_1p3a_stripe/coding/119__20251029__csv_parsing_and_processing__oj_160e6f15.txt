@@ -1,0 +1,44 @@
+"""
+CSV Parsing and Processing
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/160e6f15-2019-432d-a5a9-ad49fecf7401
+Source Type: OJ / More Problems
+
+Question Summary:
+Given a CSV-formatted string where each line represents a record and fields are separated by commas, implement a function to perform the following operations:
+
+- Calculate the maximum, minimum, and average of a specified numerical field.
+- Output the CSV data sorted by a specified field.
+
+**Input**:
+The string `csv_content`, field name `field_name`, and operation type `operation`.
+
+**Output**:
+Return the result based on the `operation`. If `operation` is 'max' or 'min', return the maximum or minimum value of the specified field. If `operation` is 'avg', return the average value of the field (rounded to two decimal places). If `operation` is 'sort', return the entire CSV content sorted by the specified field.
+
+**Notes**:
+1. The first line is the CSV header.
+2. Assume the given field name exists.
+3. Numerical fields may contain empty values; these should be ignored.
+4. The strings may contain extra spaces; these should be trimmed.
+
+**Example**:
+
+```csv
+name,age,score
+Alice,30,85
+Bob,25,90
+Charlie,35,78
+```
+
+For `operation='max'` and `field_name='age'`, the output should be `35`.
+
+For `operation='sort'` and `field_name='score'`, the output should be:
+```
+name,age,score
+Bob,25,90
+Alice,30,85
+Charlie,35,78
+```
+"""

@@ -1,52 +1,63 @@
-# cd06 · 可疑用户滑动窗口 — O(n²) 朴素扫描 → O(n log n) 排序+双指针
+# cd06 · Suspicious Users Sliding Window — O(n²) 朴素扫描 → O(n log n) 排序+双指针
 
-**Type:** 现场面试编程题 · **Stage:** virtual onsite "general coding"（60 分钟，2 个 part + 追问）· **Last asked:** 2025-09-10（Medium programhelp VO 写作）
-**Frequency:** 1 次提及，但问题描述几乎逐字复述（对本仓库的来源而言很罕见）· **Confidence:** 核心规则
-（"1 分钟窗口内超过 3 笔交易"、朴素到优化的演进）置信度高；精确的 I/O 协议、闭区间窗口定义、Part 2 的
-"first trigger" 返回格式，以及所有算例数字都是本仓库自行重建的——来源是一段面经描述，而非题目规格
-（见 Sources）。
+**Type:** onsite Programming Exercise · **Stage:** virtual onsite "general coding" (60 min, 2 part + follow-ups) · **Last asked:** 2025-09-10 (Medium programhelp VO 写作)
+**Frequency:** 1 mention, but with an almost-verbatim problem statement (rare for this repo's sources) · **Confidence:** high for the core rule ("more than 3 transactions in a 1-minute window", naive-then-optimized progression); the exact I/O protocol, the closed-interval window definition, the "first trigger" return shape for Part 2, and all worked numbers are this repo's reconstruction — the source is a one-paragraph interview-experience recap, not a problem spec (see Sources).
 
-## 背景
-当同一用户发起异常密集的交易突发时——比如任意滚动 60 秒窗口内超过 3 笔——Stripe Radar 会标记该卡片
-可能被盗用或该商户可能在从事欺诈。朴素检查（对每笔交易，数该用户其他交易有多少落在前一分钟内）每用户
-是 O(n²)；面试明确要求升级为排序时间戳 + 双指针扫描，整体 O(n log n)。输入中的金额和交易顺序都是噪声——
-本题实际考察的只有两个 Stripe 支付相关的惯用思路："窗口由其自身的触发点定义，而不是按时钟对齐的桶"，
-以及"先排序，因为生产环境的事件从不会按序到达"。
+## Context
+Stripe Radar flags a card as compromised or a merchant as running fraud when the same user fires
+an unusually dense burst of transactions — say, more than 3 charges inside any rolling 60-second
+window. The naive check (for every transaction, count how many of that user's other transactions
+fall in the preceding minute) is O(n²) per user; the interview explicitly asks for the upgrade to
+a sorted-timestamps + two-pointer scan, O(n log n) overall. Amounts and transaction order in the
+input are noise — the only two Stripe payments idioms actually tested are "a window is defined by
+its own trigger point, not by clock-aligned buckets" and "sort first, because production events
+never arrive in order".
 
-## 输入（stdin）
-第一行 `PART n`（n ∈ {1,2}）。之后每行一笔交易，`user_id,amount,timestamp`。`amount` 是十进制美元字符串
-（会被解析，但两个 part 的规则都不使用它——见 Variants 中一个会用到它的追问）；`timestamp` 是**非负整数**
-秒数（无单位转换，无时区）。空行会被忽略。行可能**乱序**到达，无论是跨用户还是同一用户自己的交易内部——
-输入没有任何预排序保证。最多 10^6 行。
+## Input (stdin)
+First line `PART n` (n ∈ {1,2}). Then one transaction per line, `user_id,amount,timestamp`.
+`amount` is a decimal-dollar string (parsed, but not used by either part's rule — see Variants for
+a follow-up that does use it); `timestamp` is a **non-negative integer** number of seconds
+(no unit conversion, no timezone). Blank lines are ignored. Rows may arrive **out of order**, both
+across users and within a single user's own transactions — nothing about the input is presorted.
+Up to 10^6 rows.
 
-## 输出
-API：`part1(lines: list[str]) -> list[str]`，`part2(lines: list[str]) -> list[str]`。只打印可疑用户——
-没有达标窗口的用户不产生任何输出行（这是一个检测器，不是逐用户的报表）。按 `user_id` **纯字符串顺序**排序。
-- **Part 1**：每个可疑用户一行，只有 `user_id`。
-- **Part 2**：每个可疑用户一行，
-  `user_id: <count> in [<start_ts>, <end_ts>]`——`count` 是该用户**首次触发**窗口（时间序上最早的、
-  计数首次达到阈值的窗口）内的交易数，`start_ts`/`end_ts` 是该窗口的闭区间边界。
+## Output
+API: `part1(lines: list[str]) -> list[str]`, `part2(lines: list[str]) -> list[str]`. Only
+suspicious users are printed — a user with no qualifying window contributes no output line at all
+(this is a detector, not a per-user report card). Sorted by `user_id`, **plain string order**.
+- **Part 1**: one line per suspicious user, just `user_id`.
+- **Part 2**: one line per suspicious user,
+  `user_id: <count> in [<start_ts>, <end_ts>]` — `count` is the transaction count in that user's
+  **first-triggering** window (the earliest window, in time order, whose count first reaches the
+  threshold), `start_ts`/`end_ts` are that window's closed bounds.
 
-## 规则
-### 窗口定义（两个 part 共用，固定）
-对用户在时间 `t` 的某笔交易而言，其窗口是**闭区间 `[t-60, t]`**——从 `t` 本身向后看（含 `t`）60 秒，
-从不居中、也从不向前看。若该用户的某笔交易 `t` 在 `[t-60, t]` 内该用户自己的交易（含 `t` 本身）时间戳数量
-**超过 3 笔**（即 **≥ 4**），则该交易被判定为"可疑"。同一时间戳的两笔交易都各自计数，当 4 笔及以上交易
-共享同一时间戳时窗口可以收缩为单一时刻（`start_ts == end_ts`）。
+## Rules
+### Window definition (both parts, fixed)
+For a user's transaction at time `t`, its window is the **closed interval `[t-60, t]`** — 60
+seconds looking backward from (and including) `t` itself, never centered and never forward-looking.
+A transaction is "suspicious" if **any** of that user's own transactions `t` has **more than 3**
+(i.e. **≥ 4**) of that same user's transactions — counting `t` itself — with timestamps inside
+`[t-60, t]`. Two transactions at the exact same timestamp both count, and a window can collapse to
+a single instant (`start_ts == end_ts`) when 4+ transactions share one timestamp.
 
-### Part 1 — 朴素解法，每用户 O(n²)（或更好）即可
-对每个用户：对属于该用户的每笔交易 `t`，数该用户有多少笔交易（含 `t`）落在 `[t-60, t]` 内；只要有任意
-一个计数达到 4，该用户即为可疑。只输出被标记的 `user_id`。
+### Part 1 — naive, per-user O(n²) (or better) is fine
+For each user: for every transaction `t` belonging to that user, count how many of that user's
+transactions (including `t`) fall in `[t-60, t]`; if any count reaches 4, the user is suspicious.
+Output just the flagged `user_id`s.
 
-### Part 2 — 排序 + 双指针，整体 O(n log n)，排序之外每用户额外 O(1)
-将**所有**行按 `(user_id, timestamp)` 排序（并列按原始输入顺序打破——这从不会改变存在哪些窗口，因为
-重复时间戳无论如何都意味着相同的边界，但它能让"first trigger"可复现）。对每个用户，在其按时间戳排好序
-的交易上做双指针扫描：当右指针（t）前进时，将左指针推进越过所有早于 `t-60` 的时间戳；窗口计数**首次**
-（按时间升序）达到 4 的那个 `t` 就是该用户被报告的触发点——`start_ts` 是左指针所在的时间戳，`end_ts`
-是 `t`，`count` 是那一刻的窗口大小。只报告这个首次触发，绝不报告更晚或更大的那个。
+### Part 2 — sorted two-pointer, O(n log n) overall, O(1) extra per user beyond the sort
+Sort **all** rows by `(user_id, timestamp)` (ties broken by original input order — this never
+changes which windows exist, since duplicate timestamps mean identical bounds either way, but it
+keeps "first trigger" reproducible). For each user, walk a two-pointer scan over their
+timestamp-sorted transactions: advance the left pointer past anything older than `t-60` as the
+right pointer (t) advances; the **first** `t` (in ascending time order) at which the window count
+first reaches 4 is the user's reported trigger — `start_ts` is the left pointer's timestamp,
+`end_ts` is `t`, `count` is the window size at that moment. Report only that first trigger, never
+a later or larger one.
 
-## 算例
-共用输入（故意打乱顺序——用户分组和每用户内部的时间顺序不应依赖行序）：
+## Worked examples
+Shared input (deliberately scrambled — user grouping and per-user time order must not depend on
+line order):
 ```
 alice,10.00,1030
 bob,5.00,2000
@@ -58,82 +69,91 @@ carol,1.00,3000
 bob,5.00,2000
 bob,5.00,2000
 ```
-按用户分组并按时间排序：alice = `1000, 1015, 1030, 1050`（下面第二个例子中还有一个不相关的更晚的
-`1200`）；bob = `2000, 2000, 2000, 2000`；carol = `3000`（单独一笔）。
+Grouped and time-sorted per user: alice = `1000, 1015, 1030, 1050` (then a later, unrelated
+`1200` in a second example below); bob = `2000, 2000, 2000, 2000`; carol = `3000` (alone).
 
 `PART 1` →
 ```
 alice
 bob
 ```
-（alice：以 1050 结尾的窗口覆盖 `[990, 1050]`，即 `1000,1015,1030,1050` 全部，因为
-`1050-1000=50 <= 60`——4 笔交易，可疑。bob：四笔交易全部共享 `timestamp=2000`
-→ 窗口 `[2000,2000]` 显然包含全部 4 笔。carol 只有 1 笔交易，永不可疑。）
+(alice: window ending at 1050 covers `[990, 1050]`, i.e. all of `1000,1015,1030,1050` since
+`1050-1000=50 <= 60` — 4 transactions, suspicious. bob: all four transactions share `timestamp=2000`
+→ window `[2000,2000]` trivially contains all 4. carol has only 1 transaction, never suspicious.)
 
 `PART 2` →
 ```
 alice: 4 in [1000, 1050]
 bob: 4 in [2000, 2000]
 ```
-（alice 首次触发的 `t` 是 `1050`——在 `t=1030` 时窗口 `[970,1030]` 只有 3 笔交易
-（`1000,1015,1030`），尚未可疑；到 `t=1050` 时变为 4 笔。bob 的首次触发在第 4 条记录就已发生，
-`t=2000`——四笔全部共享同一时刻。）
+(alice's first-triggering `t` is `1050` — at `t=1030` the window `[970,1030]` only has 3
+transactions (`1000,1015,1030`), not yet suspicious; at `t=1050` it becomes 4. bob's first
+trigger is already at the 4th record, `t=2000` — all 4 share one instant.)
 
-第二个例子展示*不*触发的边界情况和 ">3" 阈值：
+A second example showing the *non*-triggering boundary and the ">3" threshold:
 ```
 dave,1.00,0
 dave,1.00,20
 dave,1.00,40
 dave,1.00,101
 ```
-`dave` 的前三笔（`0,20,40`）跨度恰好 40 秒，只有 3 笔交易——不可疑（需要 > 3，不是 >= 3）。第四笔在
-`101`，距第一笔 `101-0=101 > 60`——没有任何窗口能同时包含全部四笔（最宽的连续 3 笔窗口仍上限为 3）。
-`dave` 不会出现在任一 part 的输出中。
+`dave`'s first three (`0,20,40`) span exactly 40s, only 3 transactions — not suspicious (need > 3,
+not >= 3). The fourth, at `101`, is `101-0=101 > 60` from the first — no window ever contains all
+four (widest 3-in-a-row window is still capped at 3). `dave` never appears in either part's output.
 
-## 隐藏测试已知会针对的边界情况
-- 任意窗口内恰好 3 笔交易 → **不**可疑（`> 3`，不是 `>= 3`）
-- 恰好 4 笔交易，两端恰好相隔 **60 秒** → 可疑（闭区间，含端点——相隔 `61` 秒会排除一笔，可能跌破阈值）
-- 重复时间戳：多笔交易共享同一 `timestamp` 时都各自计入同一窗口，若它们是窗口内仅有的交易则
-  `start_ts == end_ts`
-- 总交易数少于 4 的用户永不可疑——无需窗口计算
-- 输入行乱序，无论是跨用户还是同一用户自己交易内部——分组/排序步骤是必须的，不是可选优化
-- 空输入 → 两个 part 都输出空（没有可疑用户）
-- 一个用户有两段独立的达标突发（例如早期紧凑的 4 笔，后期又一组紧凑的 4 笔）——Part 2 只报告**第一个**
-  （最早触发的）窗口，绝不报告更晚的，也绝不报告最大的那个
-- `PART 1` 输出是裸 `user_id`；`PART 2` 输出还额外报告窗口和计数——两个 part 的格式有意不同，不是彼此
-  字段的超集/子集
-- 大规模场景：最多 10^6 行，Part 2 必须在规定的性能预算内舒适运行（朴素 O(n²) 的 Part 1 不在该规模下做
-  性能测试——见 `perf` 测试的较小上限）
+## Edge cases hidden tests are known to target
+- exactly 3 transactions in any window → **not** suspicious (`> 3`, not `>= 3`)
+- exactly 4 transactions with the two extremes exactly **60s apart** → suspicious (closed
+  interval, inclusive boundary — `61s` apart excludes one and may drop below threshold)
+- duplicate timestamps: several transactions sharing one `timestamp` all count individually
+  toward the same window, and the window's `start_ts == end_ts` when they're the only ones in it
+- a user with fewer than 4 total transactions is never suspicious — no windowing needed
+- input rows out of order both **across** users and **within** one user's own transactions — the
+  grouping/sorting step is mandatory, not an optimization
+- empty input → empty output (no suspicious users) for both parts
+- a user with two separate qualifying bursts (e.g. 4 close together early, another 4 close
+  together much later) — Part 2 reports only the **first** (earliest-triggering) window, never the
+  later one and never the largest one
+- `PART 1` output is a bare `user_id`; `PART 2` output additionally reports the window and count —
+  the two parts' formats are deliberately different, not a superset/subset of each other's fields
+- large-scale: up to 10^6 rows, must run comfortably under the stated perf budget for Part 2
+  (naive O(n²) Part 1 is not perf-tested at that scale — see the `perf` test's smaller bound)
 
-## 现实中见到的变体
-- 来源的一句话面经（"1 分钟窗口内超过 3 笔交易"）没有说明窗口是拖尾式的（以每笔交易为锚点向后看）、
-  固定大小的滑动桶方案，还是一个独立于任何锚点的"是否存在*某个*满足条件的 60 秒窗口"问题——对于纯粹的
-  计数阈值而言，这三者在数学上是等价的（所有拖尾锚定窗口的最大计数等于所有可能的 60 秒窗口的最大计数），
-  因此本仓库选择拖尾/锚定的表述，因为只有这种表述能让"首次触发"及其报告的 `[start_ts, end_ts]` 有明确
-  定义，并能直接追溯到某一笔真实交易。
-- 一个自然的现实追问（不在来源中，列在"面试官会怎么追问"下）加入了金额条件："同一窗口内超过 3 笔交易
-  **且**累计金额超过 $X"——本仓库的 `amount` 字段有意存在但在核心规则中不使用，正是为了让这个追问可以
-  在不改变输入格式的情况下被提出。
+## Variants seen in the wild
+- The source's one-line recap ("more than 3 transactions in a 1-minute window") does not specify
+  whether the window is trailing (anchored at each transaction, looking back), a fixed-size sliding
+  buckets scheme, or a "does *some* 60s window exist" question independent of any anchor point —
+  those three are mathematically equivalent for a *pure count* threshold (the maximum count over
+  all trailing-anchored windows equals the maximum count over all possible 60s windows), so this
+  repo picks the trailing/anchored formulation because it is the one that makes "first trigger" and
+  its reported `[start_ts, end_ts]` well-defined and directly traceable to one real transaction.
+- A natural real-world follow-up (not in the source, listed under 面试官会怎么追问) adds an amount
+  condition: "more than 3 transactions **and** combined amount over $X" in the same window — this
+  repo's `amount` field is deliberately present but unused in the core rule so that follow-up can
+  be posed without changing the input format.
 
-## 本题考察内容
-技能：S02 解析（CSV，可能乱序）· S04 按键分组 · S05 滑动窗口/双指针技巧 · S08 排序下的确定性打破平局 ·
-S09 精确输出格式 · S17 算法复杂度升级（O(n²) → O(n log n)，有论述并证明，而不只是写代码）·
-S19 增量式设计（Part 1 朴素 → Part 2 最优，检测规则不变）
+## What this tests
+skills: S02 parsing (CSV, possibly out-of-order) · S04 grouping by key · S05 sliding-window / two-
+pointer technique · S08 deterministic tie-break under sorting · S09 exact output formatting ·
+S17 algorithmic complexity upgrade (O(n²) → O(n log n), stated and justified, not just coded) ·
+S19 incremental design (Part 1 naive → Part 2 optimal, same detection rule)
 
-## 来源
+## Sources
 - https://medium.com/@neat_lava_bear_388/stripe-vo-interview-experience-interview-experience-coding-system-design-behavioral-a7bf34b1abcb
-  （programhelp VO 写作，2025-09-10："Given a list of credit card transactions (user_id,
+  (programhelp VO write-up, 2025-09-10: "Given a list of credit card transactions (user_id,
   amount, timestamp), detect suspicious users who have more than 3 transactions in a 1-minute
-  window"——候选人报告先用 O(n²) 解出，再用 hashmap+滑动窗口做到 O(n)）。
-  见 `loop/raw/en_forums.md` §6.2 C5（约第 318 行）。
+  window" — candidate reports solving it first O(n²), then with a hashmap+sliding window O(n)).
+  See `loop/raw/en_forums.md` §6.2 C5 (line ~318).
 
-## 澄清说明（作者自行补充，非来源内容）
-- 来源只用一句话给出规则，完全没有 I/O 示例；精确的 stdin/stdout 协议（`PART n` 头部、CSV 行结构、
-  Part 2 的 `user_id: count in [start, end]` 格式、纯字符串 `user_id` 排序）是本仓库自行设计的，
-  参照了本题集其他 `06_coding_onsite` 题目的双 part 派发惯例。
-- "1 分钟窗口"在此固定为**闭**区间 `[t-60, t]`，即从 0 到 60（含）共 61 种可能的整数偏移量都算"在这
-  一分钟内"——来源没有说明开区间还是闭区间，本仓库选择闭区间，因为这样能让边界情况（"恰好相隔 60 秒"）
-  无需猜测即可判定，并在文档中明确声明，而不是隐含在代码里。
+## Clarifications (author's own, not sourced)
+- The source gives the rule in one sentence and no I/O sample at all; the exact stdin/stdout
+  protocol (`PART n` header, CSV row shape, the `user_id: count in [start, end]` format for
+  Part 2, plain-string `user_id` sort) is this repo's own design, modelled on this suite's other
+  `06_coding_onsite` problems' two-part dispatch convention.
+- "1-minute window" is fixed here as the **closed** interval `[t-60, t]`, i.e. 61 possible integer
+  offsets from 0 to 60 inclusive count as "within the minute" — the source does not specify open vs
+  closed, and this repo picks closed because it makes the boundary case ("exactly 60s apart")
+  decidable without guessing, and states it explicitly rather than leaving it implicit in the code.
 
 ## 面试官会怎么追问
 1. "阈值 `> 3` 和窗口 `60s` 都改成参数会怎么样？" —— 期望候选人把 `part1`/`part2` 签名改成接受

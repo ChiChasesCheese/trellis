@@ -1,6 +1,6 @@
-# int03 Multi-JSON ETL — 报告
+# int03 Multi-JSON ETL — report
 
-## 概述
+## Summary
 linkjob 2025-12 面经原话是"reading three JSON files, converting them into dictionaries, and
 performing bidirectional ETL operations"——一句话，没有给字段名、没有给异常规则、没有给 CLI 形状。这道题
 把这句话展开成一个可测试的契约：三份字段名不一致的 JSON（当前系统 `customers.json` / 旧系统
@@ -9,7 +9,7 @@ performing bidirectional ETL operations"——一句话，没有给字段名、�
 数据（分类记录到 `anomalies`）、去重规则要经得起边界推敲（缺失日期不能靠字符串比较的偶然性"赢"）、格式转换
 要真正可逆（不是"看起来差不多"）。
 
-## 来源与可信度
+## Sources & confidence
 Medium-high for题目形状：linkjob 2025-12 面经原话与 Exponent 收录的 Integration 题型清单（"读多个 JSON 文件
 互转格式"作为独立一类，见 `loop/raw/en_forums.md` 第 269 行）相互印证，说明"多 JSON 互转"确实是 Stripe
 Integration 题库的一个真实类别。**具体契约是本仓库复刻**：面经原文没有给出文件名、字段名、异常分类、CLI
@@ -17,7 +17,7 @@ Integration 题库的一个真实类别。**具体契约是本仓库复刻**：�
 含约 130 条制造的异常记录）、`EtlError` 的消息格式、`anomalies.csv` 的四类异常、`created` 最早胜出的去重规则
 都是本仓库为了让"双向 ETL"可测试而设计，problem.md 的 Clarifications 节已注明。
 
-## 各部分思路
+## Part-by-part approach
 1. **Part 1 读取与统一**：`load_json_file` 把 `OSError`/`json.JSONDecodeError` 统一包成 `EtlError`（含文件
    路径 + 行列号），调用方不需要关心底层是文件不存在还是语法错误。`parse_customers`/`parse_legacy` 各自把
    本文件格式的记录转换成统一的 `Customer` 四键字典，`email`/`mail` 规范化后为空的记录被**丢弃并记异常**
@@ -32,7 +32,7 @@ Integration 题库的一个真实类别。**具体契约是本仓库复刻**：�
    `write_outputs` 用标准库 `csv.writer` 写异常表，避免手写字符串拼接导致的转义问题；`run_etl` 编排整个
    pipeline 并返回摘要，`main_cli` 只是给它包一层 `argparse`。
 
-## 隐藏测试针对的坑点
+## Pitfalls hidden tests target
 - 缺失 `created` 的记录在字符串比较里意外赢过有日期的记录（`test_unify_missing_created_never_beats_a_dated_record`
   双向验证，不管传参顺序）
 - `email`/`mail` 缺失键、空字符串、纯空白三种"无邮箱"没有被同等对待（`test_parse_customers_missing_and_blank_email`）
@@ -49,20 +49,20 @@ Integration 题库的一个真实类别。**具体契约是本仓库复刻**：�
 - `join_orders`/`build_report` 对大规模数据用了 O(n×m) 扫描而不是 dict 查找（perf 测试用 2000 客户 × 10 万
   订单验证 < 2s）
 
-## 复杂度与实测开销
+## Complexity + measured time/memory
 `parse_customers`/`parse_legacy`：O(n)。`unify_customers`：O(Σn)（多份列表各遍历一次，dict 查找摊还 O(1)）。
 `join_orders`：O(m)（m=订单数，dict 查找关联客户）。`build_report`：O(m log k)（每个客户的订单按
 `placed_at` 取 max，k=平均每客户订单数，可忽略）。测得：2000 客户 × 10 万订单的 `join_orders + build_report`
 < 1s（本机测量，预算 2s，见 `test_perf_join_and_report_100k_orders`）。
 
-## 测试清单
+## Test inventory
 26 tests — part1: 12（含 8 edge）· part2: 7（含 2 edge，2 fmt）· part3: 7（含 1 edge，1 fmt）· edge: 13 ·
 fmt: 2 · io: 5 · perf: 1（marker 有重叠，按 `@pytest.mark` 出现次数统计，非互斥求和）。
 `rtk proxy python3 -m pytest loop/rounds/05_integration/int03_multi_json_etl -q` → 26 passed；
 `IMPL=starter` 同一命令 → 15 failed（其余 11 个对空 starter 的默认返回值 `{}`/`[]`/`""` 恰好也满足断言，如
 `test_normalize_email` 的部分子句、`test_io_empty_stdin`，其余全部按预期失败）。
 
-## 涉及技能
+## Skills exercised
 S02 防御性 JSON 解析 · S04 多源数据按 key 合并去重 · S06 整数分金额 · S08 确定性排序 · S18 自定义异常归一化
 （`EtlError` 含文件名+位置）· S19 增量设计（Part 2 复用 Part 1 的 `Customer` 形状，`parse_legacy` 复用
 `from_legacy`）· S24 领域知识（ETL 幂等性、双向格式转换的往返测试），对照 `skills_matrix.md`。
@@ -90,7 +90,7 @@ S02 防御性 JSON 解析 · S04 多源数据按 key 合并去重 · S06 整数�
   不存在时的报错文案）可以口头说明设计但先不做防御性增强——多份 Stripe Integration 面经强调"前几步的质量
   比做完所有 part 更重要"。
 
-## 复盘（2026-09-02）
+## Review（2026-09-02）
 
 跑通验证：worked examples（`load_all`/`unify_customers` 异常列表、`join_orders` 异常、`build_report`、
 `to_legacy`/`from_legacy` 往返）逐条用 problem.md 原文数据手动核对，与 solution.py 实际输出逐字一致。

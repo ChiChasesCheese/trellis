@@ -1,0 +1,18 @@
+[
+  {"round": "expertise", "q": "Pick a project from your recent job and walk me through it end to end.", "principle": "Own It", "source": "Blind xcavd10l（2024-06, IC3, 40 min）"},
+  {"round": "expertise", "q": "Why did you choose that architecture? What were the alternatives and why did you reject them?", "principle": "Integrity Always", "source": "Blind xcavd10l；Blind 3tbrdamq（'the why behind every design decision'）"},
+  {"round": "expertise", "q": "Which external libraries or services did you rely on, and why those?", "principle": "Be Excellent", "source": "Blind xcavd10l"},
+  {"round": "expertise", "q": "How does it behave when a dependency is down? What's the availability story?", "principle": "Be Excellent", "source": "Blind xcavd10l（availability / fault tolerance）"},
+  {"round": "expertise", "q": "What happens on a partial failure in the middle of the pipeline — how do you recover, and how do you know?", "principle": "Own It", "source": "同上；S1 幂等 MERGE + feature flag"},
+  {"round": "expertise", "q": "If the data volume were 100× larger, what breaks first?", "principle": "Think Big", "source": "expertise 追问模式（推断）"},
+  {"round": "expertise", "q": "What was your specific contribution versus the team's?", "principle": "Own It", "source": "Chakra / expertise 通用追问"},
+  {"round": "expertise", "q": "How did you verify correctness before shipping?", "principle": "Be Excellent", "source": "S5 shadow-run 13.7M rows"},
+  {"round": "expertise", "q": "What's the hardest bug you hit in this system and how did you find it?", "principle": "Get It Done", "source": "S3 ACH NULL-concat RCA"},
+  {"round": "expertise", "q": "Looking at it now, what would you redo?", "principle": "Integrity Always", "source": "Blind 3tbrdamq"},
+  {"round": "expertise", "q": "How is it monitored? What pages you, and what doesn't but should?", "principle": "Own It", "source": "S1 Streamlit monitor + Datadog"},
+  {"round": "expertise", "q": "Where did you make a trade-off under a deadline, and how did you pay it back?", "principle": "Get It Done", "source": "通用 HM 追问"},
+  {"round": "expertise", "q": "Who disagreed with the design, and what happened?", "principle": "Make Each Other the Best", "source": "S2 ADR 三个被否方案"},
+  {"round": "expertise", "q": "How would you run this on Snowflake's own primitives — Tasks, Streams, Dynamic Tables — differently than you did?", "principle": "Think Big", "source": "01-company-brief §5 桥"},
+  {"round": "expertise", "q": "Tell me about the net-settlement migration: what was the source-of-truth switch and how did you de-risk it?", "principle": "Be Excellent", "source": "S5；简历 bullet 2/4"},
+  {"round": "expertise", "q": "Explain the quality-check framework — why config-driven, and why did you later change its granularity?", "principle": "Integrity Always", "source": "S2；ADR"}
+]

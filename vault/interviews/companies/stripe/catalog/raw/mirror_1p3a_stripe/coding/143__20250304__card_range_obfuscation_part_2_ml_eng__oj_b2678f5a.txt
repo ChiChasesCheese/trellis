@@ -1,0 +1,14 @@
+"""
+Card Range Obfuscation Part 2 (ML Eng :)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/b2678f5a-f6d4-4b30-a280-a097526fe677
+Source Type: OJ / More Problems
+
+Question Summary:
+### Problem Overview
+- Update non-overlapping card number ranges so any gap between adjacent intervals is filled by extending the lower-end interval.
+- Input: ordered, non-overlapping intervals that may have gaps; Output: adjusted intervals with gaps removed per this rule; covers the next four test cases.
+- Context: card range obfuscation in payment processing.
+- A Stripe coding interview problem asked in Stripe interviews; Part 2 of a multi-part interview question.
+"""

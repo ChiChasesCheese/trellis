@@ -1,0 +1,10 @@
+"""
+Account Balance Calculation and Transaction Management
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/2e3851b7-42b4-4b4b-8a77-7c1bc18b4cba
+Source Type: OJ / More Problems
+
+Question Summary:
+Given a triple string in the format account_id, timestamp, currency, money, the first task is to return the final balance of each account, excluding those with a balance of 0. The task is to sum the money for each account. The second task ensures that currency never goes below 0, thus a transaction that causes a negative balance should be rejected. Additionally, enable a debiting platform for when an account has an insufficient balance. If an account is short on money, it should take money from the connected account (platform account), and if that account is empty, the transaction should be rejected. The platform account id should be passed as a parameter.
+"""

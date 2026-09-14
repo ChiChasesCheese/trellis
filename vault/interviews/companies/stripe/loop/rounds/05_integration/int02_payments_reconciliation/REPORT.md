@@ -1,13 +1,13 @@
-# int02 Payments reconciliation client — 报告
+# int02 Payments reconciliation client — report
 
-## 概述
+## Summary
 一个最小可行的"我方账本 vs Stripe 侧记录"对账客户端：分页拉取全部 charge、用注入式 `sleep`/`rng` 让
 429/5xx 重试逻辑可以在测试里瞬间跑完、发幂等退款、生成三类差异报告，外加从零手写一遍 webhook 签名验证
 和事件去重。四个 part 里没有一行算法，全部是"生产可用的 HTTP 客户端该有的边界处理"——这正是 Simplify 转
 述的校招 VO 原话（"handling pagination, rate limits, and idempotency"）和 Leon 指南列出的失败模式
 （"只取分页第一页、无限重试无退避、支付流程静默失败"）指向的能力。
 
-## 来源与可信度
+## Sources & confidence
 Medium-high：三份独立来源（Simplify 校招 VO 转述、Leon 面试指南、programhelp 实习 VO 流程描述）各自提到
 "分页/限流/幂等/webhook"里的若干项，互相印证这是 Integration 轮的常见主题范围，但**没有一份来源给出逐
 part 拆分或原始 API 形状**——`loop/raw/github_repos.md` §3.2 明确写"Payment Reconciliation...均未找到公
@@ -15,7 +15,7 @@ part 拆分或原始 API 形状**——`loop/raw/github_repos.md` §3.2 明确�
 计（基于 `docs.stripe.com` 官方文档的真实语义，不是编造），不是逐字题面还原，这点在 problem.md
 Clarifications 里写明。
 
-## 各部分思路
+## Part-by-part approach
 1. `fetch_all_charges`：`while True` 循环 + `starting_after` 游标，每页请求都走 `with_retry`；用
    `page["data"][-1]["id"]` 作为下一页游标，不用额外排序（服务端保证倒序时间）。
 2. `with_retry`：唯一区分 429 与 5xx 的逻辑分支——429 读 `Retry-After` 直接睡那么久（服务端已经算好了），
@@ -32,7 +32,7 @@ Clarifications 里写明。
    一个可变 `set` 做去重，按 `event.id` 而不是 `created`（`docs.stripe.com/webhooks` 原文明确警告不要用
    `created` 判断顺序或去重）。
 
-## 隐藏测试针对的坑点
+## Pitfalls hidden tests target
 - `fetch_all_charges` 只取第一页就返回（`has_more` 没检查）—— `test_fetch_all_charges_paginates_across_multiple_pages`
 - 429 重试不看 `Retry-After`、固定睡一个写死的秒数 —— `test_with_retry_retries_429_using_retry_after_header`
   断言 `sleeps == [3.0]`（header 里写的是 3）
@@ -52,12 +52,12 @@ Clarifications 里写明。
   仍有效，301s 失效）
 - `handle_event` 第二次调用清空或覆盖 `store` 而不是追加 —— `test_handle_event_idempotent`
 
-## 复杂度与实测开销
+## Complexity + measured time/memory
 `with_retry`/`fetch_all_charges`/`refund`：单次操作 O(1) 加常数次网络往返；分页整体 O(charge 总数 /
 limit) 次请求。`reconcile`：两个 dict 构建 O(n+m)，三次集合运算 O(n+m)，无嵌套扫描。测得：10 万条本地 +
 10 万条远端记录对账 < 0.2s（本机测量，预算 2s，见 `test_perf_reconcile_100k_rows`）。
 
-## 测试清单
+## Test inventory
 29 tests — part1: 6（2 happy + 2 edge + 2 io）· part2: 5（2 happy + 3 edge）· part3: 10（4 happy + 4 edge
 + 1 fmt + 1 io）· part4: 8（2 happy + 5 edge + 1 io）。
 按 marker 统计：part1 6 · part2 5 · part3 10（含 1 fmt、1 io）· part4 8（含 1 io）· edge 13 · fmt 1 ·
@@ -66,7 +66,7 @@ io 4 · perf 1。
 `IMPL=starter` 同一命令 → 20 failed / 9 passed（`with_retry` 默认实现 `return fn()` 在 happy-path 无异
 常时能通过、`reconcile` 空输入/无差异输入等边界默认返回值凑巧正确，其余全部按预期失败）。
 
-## 涉及技能
+## Skills exercised
 S02 CSV 解析 · S11 幂等/去重（`Idempotency-Key` 重放 + webhook `event.id` 去重）· S16 限流/退避（429
 Retry-After + 5xx 指数退避+抖动）· S18 错误路径分类（可重试 vs 不可重试状态码）· S19 增量设计
 （`with_retry` 被两个 part 复用）· S24 领域知识（Stripe 分页/幂等/webhook 签名标准写法），对照
@@ -87,7 +87,7 @@ Retry-After + 5xx 指数退避+抖动）· S18 错误路径分类（可重试 vs
   先把 `verify_webhook` 的四个步骤讲清楚（哪一步防篡改、哪一步防重放、哪一步防时序攻击），比匆忙写一个
   有漏洞的实现更能拿到部分分。
 
-## 复盘（2026-09-02）
+## Review（2026-09-02）
 
 **方法**：按 `loop/tasks/review_checklist.md` 逐条过一遍，实际跑 `rtk proxy python3 -m pytest`（solution
 全绿 × 2 次、`IMPL=starter` 一次）、`python3 loop/mock.py serve int02 --port 0`（子进程方式验证能起停干
@@ -143,7 +143,7 @@ io 4 · perf 1）。
 ### 遗留问题
 无。四个 part 的行为、排序、错误路径、幂等语义与 problem.md 逐条核对一致；未发现需要进一步修的 F/S 项。
 
-### mockserver 是否有 bug
+### mockserver bug
 未发现。核对了 `loop/mockserver/payments.py` 的分页游标语义、`Idempotency-Key` 缓存/冲突逻辑、
 `_read_json_or_form` 的 `Content-Type` 判定、`sign`/`verify` 的签名格式，均与 `problem.md`/
 `loop/mockserver/README.md` 描述一致，与 `solution.py` 的假设吻合（未改动 `loop/mockserver/`）。

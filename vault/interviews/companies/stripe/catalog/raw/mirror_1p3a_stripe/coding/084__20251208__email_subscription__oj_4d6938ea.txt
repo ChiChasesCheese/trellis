@@ -1,0 +1,31 @@
+"""
+Email Subscription
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/4d6938ea-67a2-4e94-af7b-02141d82e48b
+Source Type: OJ / More Problems
+
+Question Summary:
+Implement an email subscription management system. Users can subscribe to different topics and set notification schedules. When a subscription is about to expire, the system should send reminders based on the user's notification schedule.
+
+Specifications:
+
+- Design the function `subscribe(user_id, topic_id, expiry_date, schedule)`, where `schedule` is a string representing the reminder time, such as "1 day before".
+- Design the function `send_schedule()` to check all users' subscriptions and send reminders.
+- Consider the scenario where a user might have multiple subscriptions close to expiry, and handle this in `send_schedule()`.
+
+### Input Format:
+
+- `subscribe`: user ID, topic ID, expiration date, notification schedule.
+- `send_schedule`: no input.
+
+### Output Format:
+
+- `subscribe`: no return.
+- `send_schedule`: outputs all sent notification details.
+
+### Constraints:
+
+- Each user can subscribe to a maximum of 100 topics.
+- Time complexity should be based on O(n) for scalability.
+"""

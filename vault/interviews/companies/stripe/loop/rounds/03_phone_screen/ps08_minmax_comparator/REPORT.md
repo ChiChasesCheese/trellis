@@ -1,99 +1,111 @@
-# ps08 Min/Max with comparator — 报告
+# ps08 Min/Max with comparator — report
 
-## 概述
-一道四段式递进题：从"取最小值"到"按任意字段取最小或最大值"到"在调用方任意指定的顺序
-下取极值"到"如果有多条记录并列该怎么办"。它精炼地展示了 Stripe 工程师经常要做的一个真实
-API 设计决策：什么时候单独一个 `key`/`mode` 参数不够用了，需要一个完整的比较器？Part 3
-的演示样例专门设计成能把这一点具体化 —— 在同一个平局上，规范比较器选出的赢家与 Part 1
-更简单规则选出的赢家*不同*，因为它能表达一个（先 amount 后 created_at 的）复合排序，而
-单个字段做不到。
+## Summary
+A four-part progression from "get the min" to "get the min or max by any field" to "get the
+extreme under an arbitrary caller-supplied ordering" to "what if more than one record is tied".
+It is a compact tour of a real API-design decision Stripe engineers make constantly: when does a
+single `key`/`mode` parameter stop being enough, and you need a full comparator instead? Part 3's
+worked example is built specifically to make that concrete — the canonical comparator picks a
+*different* winner than Part 1's simpler rule on the exact same tie, because it can express a
+composite (amount, then created_at) ordering that a single field cannot.
 
-## 来源与可信度
-中等 —— rampatra 2020-01 都柏林电面记录（`loop/raw/en_forums.md` 第 3.3 节，P14）逐字
-验证了这四段结构（"Part 1：取最小值的记录；Part 2：按参数返回最小或最大；Part 3：使用
-比较器；Part 4：处理并列"），但没有包含记录 schema 或样例 I/O。本报告的记录结构
-（`id, amount, created_at, country`）、所有演示样例数字，以及精确的 tie-break 规则都是
-重构 —— 选择贴合 Stripe 风格，并让 Part 3 在一个可手算的例子上真正偏离 Part 1 的结果 ——
-见"未解决点"。
+## Sources & confidence
+medium — rampatra's 2020-01 Dublin phone-screen writeup (`loop/raw/en_forums.md` section 3.3, P14)
+verifies the four-part shape verbatim ("Part 1: take the min value record; Part 2: return min or
+max based on a parameter; Part 3: use a comparator; Part 4: handle ties") but does not include a
+record schema or sample I/O. This report's record shape (`id, amount, created_at, country`), all
+worked numbers, and the exact tie-break rules are a reconstruction chosen to be Stripe-flavored
+and to make Part 3 genuinely diverge from Part 1 on a hand-checkable example -- see Open points.
 
-## 各部分思路
-1. `min_by_amount`：一次线性扫描，只在严格更优时替换 `best` —— 这既能找到最小值，也顺带
-   免费得到"平局取先出现者"的规则，不需要单独的 tie-break 步骤。
-2. `extreme(records, key, mode)`：同样的扫描结构，通过一个小的 `_key_extractor(key)`
-   分发泛化（amount -> Decimal 比较，created_at -> datetime 比较，country -> 字符串
-   比较）加上一个 `mode` 开关；未知的 key/mode 抛 `ValueError`，而不是静默返回错误答案。
-3. `extreme_with(records, comparator)`：同样是线性扫描结构，但比较本身委托给调用方的
-   `comparator(a, b) -> int`。有意用扫描而不是
-   `min(records, key=functools.cmp_to_key(comparator))` —— 在下面的电面话术中讨论。
-   `main()` 的 `PART 3` 使用一个规范的 `by_amount_then_created_at` 比较器，正是因为它
-   需要两个字段各自独立的 tie-break 顺序，这是 Part 2 的接口无法表达的。
-4. `extreme_all(records, key, mode)`：在与 Part 2 相同的 `(key, mode)` 接口上做两次
-   扫描 —— 先找到极值，再收集所有提取值等于该极值的记录，按 `id` 排序。这是唯一一处
-   tie-break*契约*被有意改变的地方（返回所有并列的记录而不是第一个），这个改动被明确
-   点出，而不是隐含不说。
+## Approach by part
+1. `min_by_amount`: one linear scan, replace `best` only on strict improvement -- this both finds
+   the minimum and gives "first on tie" for free without a separate tie-break pass.
+2. `extreme(records, key, mode)`: same scan shape, generalized via a small `_key_extractor(key)`
+   dispatch (amount -> Decimal compare, created_at -> datetime compare, country -> string
+   compare) and a `mode` switch; unknown key/mode raise `ValueError` rather than silently
+   returning a wrong answer.
+3. `extreme_with(records, comparator)`: the same linear-scan shape again, but the comparison
+   itself is delegated to the caller's `comparator(a, b) -> int`. Deliberately a scan, not
+   `min(records, key=functools.cmp_to_key(comparator))` -- discussed in the interview talk track
+   below. `main()`'s `PART 3` uses a canonical `by_amount_then_created_at` comparator specifically
+   because it needs two fields with independent tie-break order, which Part 2's interface cannot
+   express.
+4. `extreme_all(records, key, mode)`: two passes over the same `(key, mode)` interface as Part 2
+   -- first find the extreme value, then collect every record whose extracted value equals it,
+   sorted by `id`. This is the one place the tie-break *contract* changes on purpose (return
+   every tied record instead of the first) and that change is called out explicitly rather than
+   left implicit.
 
-## 隐藏测试针对的坑点
-- 空输入 -> 每个 part 都是 `NONE`，绝不是异常或空打印
-- `Decimal` 金额比较，绝不用 `float`（包括负数金额/退款）
-- `created_at` 同时解析 `Z` 和显式数字偏移量，并把它们当作同一时刻比较
-- Part 4 的 `id` 排序是普通字符串顺序（`"B" < "a"`、`"user10" < "user2"`），不区分大小写
-  不敏感或数值感知 —— 与 q03 的 user-id 排序规则相同，有意复用
-- 重复的 `id` 不会被去重 —— 如果一对重复 id 的两个成员都并列极值，两者都出现在 Part 4
-  的输出中
-- Part 3 比较器参数顺序和符号约定与 C/`qsort`/`cmp_to_key` 一致（`negative` = a 排在 b
-  前面）；一个只检查非 `amount` 字段的比较器也必须正常工作，因为 `extreme_with` 不对
-  比较器使用哪些字段做任何假设
-- Part 1/2/3 与 Part 4 的 tie-break 差异：Part 1-3 始终归结为恰好一个 id（输入顺序中第
-  一个）；Part 4 是唯一返回多行的 part，且仅在并列时才会
-- Part 3 的规范比较器 `by_amount_then_created_at` 在同一对并列记录上选出与 Part 1 的
-  `min_by_amount` 不同的赢家 —— 两者在各自规则下都是正确的，测试专门锁定这一差异，而不
-  把它当作 bug
-- 未知的 `key`/`mode` 字符串抛 `ValueError`
+## Pitfalls hidden tests target
+- empty input -> `NONE` on every part, never an exception or an empty print
+- `Decimal` amount comparison, never `float` (negative amounts/refunds included)
+- `created_at` parses both `Z` and an explicit numeric offset and compares them as the same
+  instant
+- Part 4's `id` sort is plain string order (`"B" < "a"`, `"user10" < "user2"`), not
+  case-insensitive or numeric-aware -- same rule as q03's user-id sort, deliberately reused
+- duplicate `id`s are not deduplicated -- if both members of a duplicate pair are tied for the
+  extreme, both appear in Part 4's output
+- Part 3's comparator argument order and sign convention matches C/`qsort`/`cmp_to_key`
+  (`negative` = a before b); a comparator that only inspects one non-`amount` field must still
+  work, since `extreme_with` makes no assumption about which fields the comparator uses
+- Part 1/2/3 vs Part 4 tie-break divergence: Parts 1-3 always resolve to exactly one id (first in
+  input order); Part 4 is the only part that returns more than one line, and only when tied
+- Part 3's canonical `by_amount_then_created_at` picks a different winner than Part 1's
+  `min_by_amount` on the same tied pair -- both are individually correct under their own stated
+  rule, and a test locks in that divergence rather than treating it as a bug
+- unknown `key`/`mode` strings raise `ValueError`
 
-## 复杂度与实测开销
-Part 1-3：`O(n)` —— 一次线性扫描，不排序。Part 4：`O(n)` 找到极值，加上 `O(k log k)`
-排序 `k` 个并列 id（`k <= n`），只要只需要极值（或并列集合），绝不对全部记录做完整的
-`O(n log n)` 排序。实测：10 万条记录，金额区间较窄（构造上有大量并列），Part 4 端到端
-（stdin -> stdout）远低于 2 秒，远在 256 MB 预算之内 —— 见 `test_perf_100k_records`。
+## Complexity & measured cost
+Parts 1-3: `O(n)` -- a single linear scan, no sort. Part 4: `O(n)` to find the extreme value plus
+`O(k log k)` to sort the `k` tied ids (`k <= n`), never a full `O(n log n)` sort of all records
+when only the extreme (or the tied set) is needed. Measured: 100,000 records with a narrow
+amount range (many ties by construction), Part 4 end-to-end (stdin -> stdout) well under 2 s,
+comfortably under the 256 MB budget -- see `test_perf_100k_records`.
 
-## 测试清单
-33 个测试 —— part1: 9 · part2: 8 · part3: 7 · part4: 9（含 6 个 io、1 个 perf）；edge 11
-· fmt 1 · io 6 · perf 1。
+## Test inventory
+33 tests -- part1: 9 . part2: 8 . part3: 7 . part4: 9 (incl. 6 io, 1 perf); edge 11 . fmt 1 .
+io 6 . perf 1.
 
-## 涉及技能
-S03 把记录建模为小型有类型结构（NamedTuple），而不是原始 CSV 行 · S08 带明确 tie-break
-的确定性排序，在 Part 4 中有意改变 · S12 时间戳解析/比较（Z 与显式偏移量）· S19 增量式
-设计（Part 4 包装 Part 2 的接口；Part 3 独立作为更通用的机制）· S21 标准库熟练度
-（Decimal、datetime.fromisoformat、讨论但未使用 functools.cmp_to_key，转而用线性扫描）
+## Skills exercised
+S03 modeling records as a small typed structure (NamedTuple), not raw CSV lines . S08
+deterministic ordering with an explicit tie-break that changes on purpose in Part 4 . S12
+timestamp parsing/comparison (Z vs explicit offset) . S19 incremental design (Part 4 wraps Part
+2's interface; Part 3 stands apart as the more general mechanism) . S21 stdlib fluency (Decimal,
+datetime.fromisoformat, functools.cmp_to_key discussed but not used, in favor of a linear scan)
 
-## 电面话术：边写边说什么
-1. **读题时**：在写代码前确认每个 part 的 tie-break 规则 —— Part 1-3 是"输入顺序中第一个"，
-   Part 4 是"返回所有" —— 并明确说这是两个不同的契约，不是需要掩盖的不一致。
-2. **写 Part 1 时**：大声指出一次 `if val < best_val: best = val` 扫描能同时给你最小值
-   和"平局取先出现者"规则，不需要单独的 tie-break 步骤 —— 说起来很便宜，而且能提前堵住
-   "你怎么处理并列"这个追问。
-3. **写 Part 2 时**：提到对未知 key/mode 抛 `ValueError` 是有意选择 —— "我宁愿在打错 key
-   时大声失败，也不要静默地什么都不比较然后返回错误答案。"
-4. **写 Part 3 时**：这是应该放慢速度的地方。说明为什么用手写线性扫描而不是
-   `min(records, key=functools.cmp_to_key(comparator))`：两者在这里实际上都是 `O(n)`，
-   但扫描把 tie-break 规则保留在一个可见的 `if` 条件里，不需要把每条记录都包进一个
-   `cmp_to_key` 对象；如果你还需要完整的排序结果用于别的地方，`cmp_to_key` 才是正确
-   选择，但对于单个极值来说它做了题目不需要的额外工作。然后手动过一遍 r2/r3 的平局，
-   证明比较器确实选出了与 Part 1 不同（且正确）的答案。
-5. **写 Part 4 时**：指出这是唯一一个契约本身发生改变的 part —— "我不是在 Part 1-3 的
-   单赢家函数上硬塞并列处理；Part 4 是一个新函数，有新的返回类型，我直接建立在 Part 2
-   的 key/mode 提取逻辑之上，让两者保持同步。"
-6. **收尾**：手动跑一遍演示样例，然后主动提出自然的追问 —— "如果你想要基于比较器而不是
-   key/mode 的并列，我会把 extreme_all 里的相等性检查换成
-   `comparator(record, best) == 0`，勾勒一下而不必真的写出来" —— 这正是面试官会加分的
-   那种主动暴露边界的做法。
+## Interview talk track: what to say while writing
+1. **Reading the prompt**: confirm the tie-break rule for each part before coding -- "first in
+   input order" for Parts 1-3, versus "return everyone" for Part 4 -- and say explicitly that
+   these are two different contracts, not an inconsistency to paper over.
+2. **Writing Part 1**: note out loud that a single `if val < best_val: best = val` scan gives you
+   both the minimum and the "first on tie" rule simultaneously, with no separate tie-break pass
+   needed -- cheap to say, and it preempts "how do you handle ties" before it's asked.
+3. **Writing Part 2**: mention the `ValueError` on an unknown key/mode as a deliberate choice --
+   "I'd rather fail loudly on a typo'd key than silently compare nothing and return a wrong
+   answer."
+4. **Writing Part 3**: this is the part to slow down on. Say why a hand-rolled linear scan is
+   used instead of `min(records, key=functools.cmp_to_key(comparator))`: both are effectively
+   `O(n)` here, but the scan keeps the tie-break rule in one visible `if` condition and avoids
+   wrapping every record in a `cmp_to_key` object; if you needed the full sorted order for
+   something else, `cmp_to_key` would be the right call, but for a single extreme it's doing more
+   work than the problem needs. Then walk through the r2/r3 tie by hand to prove the comparator
+   picks a genuinely different (and correct) answer than Part 1.
+5. **Writing Part 4**: point out this is the only part where the contract itself changes -- "I'm
+   not retrofitting ties into Parts 1-3's single-winner functions; Part 4 is a new function with
+   a new return type, and I built it directly on Part 2's key/mode extraction so the two stay in
+   sync."
+6. **Wrapping up**: run the worked examples by hand, then proactively raise the natural follow-up
+   -- "if you wanted ties under a comparator instead of just key/mode, I'd swap the equality check
+   in extreme_all for `comparator(record, best) == 0`, sketch that instead of writing it" -- this
+   is exactly the kind of unprompted edge-surfacing interviewers reward.
 
-## 未解决点
-- 只有四段结构本身和其一句话描述来自来源验证；记录 schema、字段名，以及本 problem.md
-  中的每一个演示样例数字都是重构，选择保持内部一致且可手算验证。如果出现带真实样例 I/O
-  的转录，应据此核对 schema 和数字。
+## Open points
+- Only the four-part shape and its one-line-per-part description are verified from the source;
+  the record schema, field names, and every worked number in this problem.md are a reconstruction
+  chosen to be internally consistent and hand-checkable. If a transcript with real sample I/O
+  surfaces, reconcile the schema and numbers against it.
 
-## 复盘（2026-09-02）
+## Review（2026-09-02）
 - 逐条对照 `loop/tasks/review_checklist.md` 复核：problem.md 四个 Part 的全部 worked examples（Part 1
   单值、Part 2 四组 key/mode、Part 3 比较器、Part 4 两组并列、空输入 `NONE`）已用 `solution.py` 逐字
   重跑核对（stdin → stdout），全部与文档一致，未发现规则歧义。
@@ -110,5 +122,5 @@ S03 把记录建模为小型有类型结构（NamedTuple），而不是原始 CS
   33 passed；`IMPL=starter` 同目录 26 failed / 7 passed（余下 7 处全部是"空输入 → None/NONE"的平凡
   用例，starter 桩代码的默认返回值恰好满足，不构成空洞测试）。
 - 遗留：无功能性遗留项。问题面来源置信度为 medium（仅四段的一句话描述可验证，具体字段名/schema/worked
-  numbers 为本仓库重构），problem.md 的 未解决点 已如实标注，不需要在代码侧处理。
+  numbers 为本仓库重构），problem.md 的 Open points 已如实标注，不需要在代码侧处理。
 - 文章：`loop/study/30-articles/ps08_minmax_comparator.md`（152 行）。

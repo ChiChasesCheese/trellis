@@ -1,0 +1,14 @@
+"""
+Calculate order shipping cost (multi-part implementation with tests)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/32f21591-a9f2-419c-af09-752bd70dcbb8
+Source Type: OJ / More Problems
+
+Question Summary:
+## Calculate Order Shipping Cost (multi-part implementation + write your own tests)
+
+Given an order and its shipping/delivery information, implement a function that **calculates the shipping cost**. The task is split into 3 parts, progressively adding rules/features. For parts 2 and 3, you are expected to write your own test cases to validate the implementation.
+
+> Note: The shared experience does not include the full business rules, exact I/O format, or the detailed requirements of each part, so this is kept as a high-level summary only.
+"""

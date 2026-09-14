@@ -1,0 +1,35 @@
+diff --git a/src/confmgr/cache.py b/src/confmgr/cache.py
+index 6b2f766..3b36292 100644
+--- a/src/confmgr/cache.py
++++ b/src/confmgr/cache.py
+@@ -53,9 +53,12 @@ class TTLCache:
+         miss -- callers rely on it not being re-run just because two threads both saw a miss at
+         the same time.
+         """
+-        cached = self.get(key)
+-        if cached is not None:
+-            return cached
+-        value = factory()
+-        self.set(key, value)
+-        return value
++        with self._lock:
++            entry = self._store.get(key)
++            if entry is not None:
++                value, expires_at = entry
++                if expires_at > time.monotonic():
++                    return value
++            value = factory()
++            self._store[key] = (value, time.monotonic() + self._ttl)
++            return value
+diff --git a/src/confmgr/manager.py b/src/confmgr/manager.py
+index 0aa9a46..28b950a 100644
+--- a/src/confmgr/manager.py
++++ b/src/confmgr/manager.py
+@@ -67,6 +67,7 @@ class ConfigManager:
+             self._file_layer = load_file_layer(self._file_path)
+         if self._env_prefix:
+             self._env_layer = load_env_layer(self._env_prefix)
++        self._cache.clear()
+ 
+     def _resolve(self, key: str):
+         """Look `key` up across all four layers in precedence order, returning `_MISSING` if none

@@ -1,0 +1,33 @@
+"""
+Processing Invoices and Payments
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/460a0bac-661e-4c15-a41c-8a6dcd69efd6
+Source Type: OJ / More Problems
+
+Question Summary:
+Given input containing payment and invoice details, write a program to process the following tasks:
+
+- Receive an input string formatted with several comma-separated items, including one payment item and multiple invoice items.
+- The first task is to find the invoice matching the payment and output the matched invoice details.
+- The second task is to find an invoice with an exact matching payment amount and the nearest due date, and output its details.
+- The third task is to allow input of a range of amounts and output the most precisely matched invoice within this range.
+- All tasks should be accomplished using loops.
+
+**Test Cases:**
+
+1. Input: "paymentx,600,Paying off: invoiceX, invoicea,2024-03-22,100, invoiceb,2024-02-05,400, invoicex,2025-05-20,1000"
+   Output: "Matched Invoice: None"
+
+2. Input: "paymentx,400,Paying off: invoiceX, invoicea,2024-03-22,100, invoiceb,2024-02-05,400, invoicex,2025-05-20,1000"
+   Output: "Matched Invoice: invoiceb"
+
+3. Input: "paymentx,800,Paying off: invoiceX, invoicea,2024-03-22,100, invoiceb,2024-02-05,400, invoicex,2025-05-20,1000"
+   Output: "Matched Invoice in Range: None"
+
+4. Input: "paymentx,550-750,Paying off: invoiceX, invoicea,2024-03-22,100, invoiceb,2024-02-05,400, invoicex,2025-05-20,1000"
+   Output: "Matched Invoice: None"
+
+5. Input: "paymentx,900-1100,Paying off: invoiceX, invoicea,2024-03-22,100, invoiceb,2024-02-05,400, invoicex,2025-05-20,1000"
+   Output: "Matched Invoice in Range: invoicex"
+"""

@@ -1,0 +1,33 @@
+"""
+Transaction Reconciliation
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/41eadf8b-ee47-46e1-8716-c481e08ee0b9
+Source Type: OJ / More Problems
+
+Question Summary:
+Assume you have two lists of transaction records. The first list is transactions logged by your system, and the second list is from your payment gateway. Write a program to compare these two lists and find matching transactions, mismatched transactions, and missing transactions in the lists.
+
+#### Input:
+- A list of system transaction records, each transaction record includes a transaction ID and amount.
+- A list of payment gateway transaction records, each transaction record includes a transaction ID and amount.
+
+#### Output:
+Three lists: the first list contains matching transaction IDs, the second list contains mismatched transaction IDs (those that exist in the system but do not match), and the third list contains transaction IDs that only exist in the payment gateway.
+
+#### Sample Input:
+```
+System Records: [ {"id": "t1", "amount": 100}, {"id": "t2", "amount": 200}, {"id": "t3", "amount": 300} ]
+Payment Gateway Records: [ {"id": "t1", "amount": 100}, {"id": "t4", "amount": 400}, {"id": "t3", "amount": 300} ]
+```
+
+#### Sample Output:
+```
+Matching: ["t1", "t3"]
+Mismatched: ["t2"]
+Missing: ["t4"]
+```
+
+#### Data Scale:
+- List lengths range from 1 to 10,000, and amounts are integers.
+"""

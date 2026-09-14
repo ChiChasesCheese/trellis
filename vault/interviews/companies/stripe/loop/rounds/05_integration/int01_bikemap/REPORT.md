@@ -1,13 +1,13 @@
-# int01 BikeMap — 报告
+# int01 BikeMap — report
 
-## 概述
+## Summary
 Stripe 目前被报道最频繁的 Integration 例题（Stripe 员工亲述题库随机抽题时点名它作为参照）。核心不是算法，
 是三件事：① 陌生数据格式的坑（GeoJSON 坐标顺序 `[lng, lat]`）；② HTTP 客户端的错误归一化（网络错误 / 非
 200 / 响应体不可信，全部收敛成一个 `MapError`）；③ 需求逐步加码时函数之间的复用关系（Part n 直接调用
 Part n-1 的产出，不重写）。Part 5 的批处理 + 缓存 CLI 是"几乎没人做完"的部分，用来考察时间管理和工程判断
 （先把前几个 part 做扎实，而不是平均分配时间导致每个 part 都是半成品）。
 
-## 来源与可信度
+## Sources & confidence
 High for 5-part 结构：oavoservice.com 的逐 part 拆解文章与 learncswithus.com 的 VO 面经独立给出几乎相同的
 5 part 顺序（解析 → POST 拿 PNG → 渲染路线 → 标最近地标 → 批处理/缓存），且 Stripe 员工在 Blind
 （`h8lemeaq`）亲口确认 BikeMap 是题库里被抽到的真实题目之一。**具体数据不是原题数据**——Stripe 出题仓库不
@@ -15,7 +15,7 @@ High for 5-part 结构：oavoservice.com 的逐 part 拆解文章与 learncswith
 描述的结构（GeoJSON、约 500 点）用 `random.Random(0)` 重新生成的等价数据；`/render` 接口的具体字段名、错
 误码、限流是本仓库设计（源材料只说"POST + JSON body + PNG 响应"）。
 
-## 各部分思路
+## Part-by-part approach
 1. `load_coordinates`：读 `features[0].geometry.coordinates`（`[lng,lat]`），swap 成 `(lat,lng)`；对空
    `features`/非 `LineString`/少于 2 点显式抛 `ValueError`，不返回空列表掩盖问题。`first_n` 只是格式化，
    6 位小数、`lat,lng` 无空格。
@@ -29,7 +29,7 @@ High for 5-part 结构：oavoservice.com 的逐 part 拆解文章与 learncswith
 5. `cli`：`argparse` 定义 5 个 flag；缓存 key 是坐标内容的 sha256 前 16 位（不是文件路径），这样同一条路线
    换个文件名也能命中缓存；`index.json` 记录 hash → 来源路径，命中时直接从 `<hash>.png` 复制。
 
-## 隐藏测试针对的坑点
+## Pitfalls hidden tests target
 - GeoJSON 坐标顺序原样返回（不 swap）—— `test_lng_lat_order_is_swapped_not_identity`
 - `load_coordinates` 对畸形输入返回空列表而不是报错，掩盖上游数据问题 —— `test_fewer_than_two_points_raises`
 - 把 `urllib.error.URLError`/`HTTPError` 原样冒泡给调用方，而不是统一成 `MapError` —— 两个
@@ -42,13 +42,13 @@ High for 5-part 结构：oavoservice.com 的逐 part 拆解文章与 learncswith
   的姊妹调用路径（`test_cli_batch_multiple_inputs` 不传 `--landmarks`）间接覆盖
 - 批处理时多个 `--input` 只处理了第一个，或者输出文件名冲突 —— `test_cli_batch_multiple_inputs`
 
-## 复杂度与实测开销
+## Complexity + measured time/memory
 `nearest_point` / `nearest_for_all`：O(n) 每个地标，O(n×m) 总体（n=路线点数，m=地标数），纯 Python 循环 +
 `math.asin/sqrt`，无第三方依赖。测得：10 万点 × 10 地标 < 1s（本机测量，预算 2s，见 `test_perf_nearest_for_all_100k_points`）。
 `render_map`/`render_route` 的耗时由 mockserver 决定（本地环回，单次请求通常 < 50ms）；`cli` 的整体开销
 随 `--input` 数量线性增长，每个输入独立走一次渲染或缓存命中。
 
-## 测试清单
+## Test inventory
 20 tests — part1: 7（1 worked example + 3 edge + 1 fmt + 2 io）· part2: 3（1 happy + 2 edge）·
 part3: 2（1 happy + 1 edge）· part4: 5（3 happy/worked + 1 io + 1 perf）· part5: 3（1 happy + 1 edge +
 1 batch）。
@@ -57,7 +57,7 @@ part3: 2（1 happy + 1 edge）· part4: 5（3 happy/worked + 1 io + 1 perf）· 
 `IMPL=starter` 同一命令 → 17 failed / 3 passed（`test_io_empty_stdin` 与
 `test_nearest_point_ties_pick_first_index` 对空 starter 的默认返回值恰好也成立，其余全部按预期失败）。
 
-## 涉及技能
+## Skills exercised
 S02 嵌套 JSON/GeoJSON 解析 · S18 网络错误分类与归一化（MapError） · S19 增量设计（Part n 复用 Part n-1）·
 S20 自测（坐标顺序陷阱要自己先验证一遍再往下写）· S24 领域知识（HTTP 客户端 ergonomics：防御性响应校验、
 内容哈希缓存），对照 `skills_matrix.md`。
@@ -76,7 +76,7 @@ S20 自测（坐标顺序陷阱要自己先验证一遍再往下写）· S24 领
   要"。
 
 
-## 复盘（2026-09-02）
+## Review（2026-09-02）
 
 ### F（必须修，已修）
 1. **`main()` 的 `PART 3` 分支是死代码，响应非 PNG 时会直接崩溃而不是按 problem.md 输出 `NOT_PNG`。**
@@ -122,7 +122,7 @@ S20 自测（坐标顺序陷阱要自己先验证一遍再往下写）· S24 领
 - 无阻塞性遗留问题。`nearest_point` 仍是线性扫描（O(n×m)），`cli` 的 `index.json` 读-改-写不是原子/无锁
   的——这两点题面「面试官追问」第 3、7 条已经明确列为"讨论优化方向即可，不要求当场实现"，保持现状。
 
-### mockserver 是否有 bug
+### mockserver bug
 - 未发现 `loop/mockserver/maps.py` 本身的 bug。`README.md` 已知的"markers 的 label 文本不渲染"是文档里
   明确写出的已知限制（`_png.py` 手写编码器没有字体渲染），不影响 int01 的任何 part（Part 3 只要求"发送
   marker"，不要求验证 PNG 上真的画出了文字）。

@@ -1,0 +1,10 @@
+"""
+Stripe Onsite Interview Guide for Software Development Engineer Roles
+Category: System Design Question
+Company: Stripe
+Source: https://www.1point3acres.com/interview/thread/1123389
+Source Type: Interview Experience Summary
+
+Question Summary:
+Prepare for Stripe onsite interviews with tips on email subscription, request replay implementation, and designing a metrics system. Optimize coding efficiency and tool usage.
+"""

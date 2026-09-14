@@ -1,0 +1,14 @@
+"""
+Add Moving Points to a Map (Request-driven updates)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/ac4a1525-be00-444c-baa6-cd25f01fb4b5
+Source Type: OJ / More Problems
+
+Question Summary:
+## Add Moving Points to a Map (Request-driven updates)
+
+Implement a request processor for a map that maintains a set of moving points. Each request may add a point, update its state (e.g., position/velocity), or query positions at a given time.
+
+> Note: The original post lacks the concrete request types, fields, and time/physics rules needed for a fully specified coding prompt, so only the title is retained.
+"""

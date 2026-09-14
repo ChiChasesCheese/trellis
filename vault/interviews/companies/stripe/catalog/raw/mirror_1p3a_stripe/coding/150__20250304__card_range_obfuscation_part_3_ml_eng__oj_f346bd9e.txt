@@ -1,0 +1,14 @@
+"""
+Card Range Obfuscation Part 3 (ML Eng :)
+Category: Coding Problem
+Company: Stripe
+Source: https://www.1point3acres.com/interview/problems/f346bd9e-f717-4b94-b294-8f9ad98bc964
+Source Type: OJ / More Problems
+
+Question Summary:
+### Problem Overview
+- Process card number intervals to obfuscate ranges while correctly handling nested intervals.
+- Input may include intervals that are proper subsets of others; output must cover gaps by extending only the covering interval.
+- Real-world context: payments/card BIN range obfuscation for privacy and data consistency.
+- This coding interview problem is Part 3 of a multi-part interview question from Stripe interviews, building on earlier parts.
+"""
