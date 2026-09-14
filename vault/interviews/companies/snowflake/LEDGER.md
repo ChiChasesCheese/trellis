@@ -19,3 +19,6 @@
 | 2026-09-13 | 收割回写：q19 Maximize OR-Sum、od10 Student/Result OOP 升级一手；新增 sd22 PB 级数据库同步（IC2，不许澄清需求）；Table D 加 offer 后换组失联；格式事实加 onsite NDA；PARETO 重跑 66 行 80% @ 35 | fable | `catalog/`、`loop/LOOP_GUIDE.md` | pareto 输出与 CATALOG 一致 | 检查点 7 | sd22、q19、od10 尚未建题（第二批） |
 | 2026-09-13 | P4 每轮准备章节 study/10-rounds 00–08（事实层引用 LOOP_GUIDE，本层写练法、时间分配、挂点对策、命令） | fable | `study/10-rounds/` | 9 章齐 | 检查点 7 | |
 | 2026-09-13 | T3.C2 sd22 PB 级数据库同步（prompt · rubric · model_answer · followups 8，追问标注推断）| fable | `loop/rounds/05_system_design/sd22_*` | 4 文件齐；`mock.py list` 可见 | 检查点 8 | 一手仅题面 + "不许澄清需求" |
+| 2026-09-13 | **中断**：3 个 sonnet 子代理（题解、电面 coding、essentials）同时撞会话用量上限（429，10:30am 重置） | — | — | — | — | 已落盘保留：题解 17/18；essentials 01–05 + README；prereq 01–03；pc01–pc04（pc04 缺 REPORT）；pc05/pc06/pc10 未开始。剩余由主会话（Opus 5）顺序补，不并行 |
+| 2026-09-13 | T3.D 电面 coding pc01–pc04 验收 | sonnet（中断前）+ opus 补 | `loop/rounds/03_phone_coding/pc0[1-4]*` | `verify_suites.py` 4/4 OK；pc04 测试侧边数笔误已修；pc04 REPORT 由编排者补写 | 检查点 9 | pc01 P4 反向查询重建 |
+| 2026-09-13 | T4.1/4.2 部分：study/30-articles 17 篇（缺 od09）· 00-essentials 01–05 + README · 00-prereq 01–03 | sonnet（中断前） | `study/` | 行数 98–283；essentials 05 结尾完整（54 行，偏短但闭合） | 检查点 9 | |
