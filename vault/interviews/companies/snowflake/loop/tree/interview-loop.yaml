@@ -49,6 +49,9 @@ rounds:
       - id: intervals_counting
         name: 区间与计数（Paint the Ceiling、Patching Array、Inorder/Morris）
         problems: [q05, q06, q07]
+      - id: greedy_bits
+        name: 贪心正确性 + 位运算（翻倍全给一个元素）
+        problems: [q19]
 
   - id: 03_phone_coding
     name: 技术电面 coding（60 min：10 介绍 / 40 题 / 10 反问）
@@ -100,6 +103,9 @@ rounds:
       - id: cache_eviction
         name: LRU / TTL 缓存（warehouse SSD cache 框架）
         problems: [od08]
+      - id: inheritance_encapsulation
+        name: 继承、校验、封装、Decimal（OA 内嵌 OOP）
+        problems: [od10]
 
   - id: 05_system_design
     name: 系统设计（45–60 min，infra/data 题）
@@ -129,7 +135,10 @@ rounds:
         problems: [sd11]
       - id: security_storage
         name: 密码存储 / 对象存储去重
-        problems: [sd09]
+        problems: [sd09, sd12]
+      - id: bulk_sync_cdc
+        name: PB 级数据库同步（快照 + CDC 拼接、不许澄清需求）
+        problems: [sd22]
       - id: crawler
         name: 并发爬虫（去重、分片、礼貌性）
         problems: [sd10]
