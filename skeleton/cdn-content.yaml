@@ -5,6 +5,7 @@
 domain: cdn-content
 title: CDN Content
 lang: en
+vault: domains/cdn-content
 nodes:
 - id: foundations
   title: Performance Foundations

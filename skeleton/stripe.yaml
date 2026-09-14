@@ -5,6 +5,7 @@
 domain: stripe
 title: Stripe
 lang: zh
+vault: interviews/companies/stripe/deck
 nodes:
 - id: stripe
   order: 1

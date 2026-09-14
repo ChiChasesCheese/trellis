@@ -3,6 +3,7 @@
 domain: system-design
 title: System Design
 lang: en
+vault: domains/system-design
 nodes:
   - id: foundations
     order: 1

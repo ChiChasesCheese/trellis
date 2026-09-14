@@ -4,6 +4,7 @@
 domain: kafka
 title: Kafka
 lang: zh
+vault: domains/kafka
 nodes:
 - id: core
   title: 核心架构：主题、分区与副本模型

@@ -11,6 +11,7 @@
 domain: code-core
 title: Code Core
 lang: en
+vault: interviews/rounds/code-core
 nodes:
   - id: round
     order: 1

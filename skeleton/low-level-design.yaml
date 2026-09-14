@@ -4,6 +4,7 @@
 domain: low-level-design
 title: Low-Level Design
 lang: en
+vault: domains/low-level-design
 nodes:
   - id: method
     order: 1
