@@ -43,9 +43,15 @@ def run_suite(d: Path) -> str:
 def main() -> None:
     run = "--run" in sys.argv
     rows, totals = [], {m: 0 for m in MARKERS}
-    for d in sorted((ROOT / "problems").iterdir()):
+    dirs = []
+    for base in ("problems", "loop/rounds/03_phone_coding", "loop/rounds/04_ood"):  # Snowflake kit layout
+        if (ROOT / base).is_dir():
+            dirs += sorted((ROOT / base).iterdir())
+    for d in dirs:
+        if not d.is_dir():
+            continue
         tests = list(d.glob("test_*.py"))
-        if not d.is_dir() or not tests:
+        if not tests:
             continue
         c = count_markers(tests[0])
         for m in MARKERS:
