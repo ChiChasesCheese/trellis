@@ -1,0 +1,45 @@
+# Snowflake official documentation: the mechanism-level user-guide pages behind the
+# `snowflake` skeleton. Published free online by Snowflake; archived copies stay in this
+# private, personal repo for offline reading (same treatment as mixu-distsys).
+title: "Snowflake Documentation — core mechanisms"
+author: "Snowflake Inc."
+license: free-online
+domain: snowflake
+home: https://docs.snowflake.com/en/guides
+chapters:
+  - https://docs.snowflake.com/en/user-guide/intro-key-concepts
+  - https://docs.snowflake.com/en/user-guide/tables-clustering-micropartitions
+  - https://docs.snowflake.com/en/user-guide/tables-clustering-keys
+  - https://docs.snowflake.com/en/user-guide/tables-auto-reclustering
+  - https://docs.snowflake.com/en/user-guide/warehouses-overview
+  - https://docs.snowflake.com/en/user-guide/warehouses-multicluster
+  - https://docs.snowflake.com/en/user-guide/warehouses-considerations
+  - https://docs.snowflake.com/en/user-guide/querying-persisted-results
+  - https://docs.snowflake.com/en/user-guide/ui-query-profile
+  - https://docs.snowflake.com/en/user-guide/search-optimization-service
+  - https://docs.snowflake.com/en/user-guide/query-acceleration-service
+  - https://docs.snowflake.com/en/user-guide/views-materialized
+  - https://docs.snowflake.com/en/user-guide/data-time-travel
+  - https://docs.snowflake.com/en/user-guide/data-failsafe
+  - https://docs.snowflake.com/en/user-guide/object-clone
+  - https://docs.snowflake.com/en/sql-reference/transactions
+  - https://docs.snowflake.com/en/user-guide/semistructured-intro
+  - https://docs.snowflake.com/en/user-guide/data-load-overview
+  - https://docs.snowflake.com/en/user-guide/data-load-snowpipe-intro
+  - https://docs.snowflake.com/en/user-guide/snowpipe-streaming/data-load-snowpipe-streaming-overview
+  - https://docs.snowflake.com/en/user-guide/streams-intro
+  - https://docs.snowflake.com/en/user-guide/tasks-intro
+  - https://docs.snowflake.com/en/user-guide/dynamic-tables-about
+  - https://docs.snowflake.com/en/user-guide/security-access-control-overview
+  - https://docs.snowflake.com/en/user-guide/security-row-intro
+  - https://docs.snowflake.com/en/user-guide/security-column-intro
+  - https://docs.snowflake.com/en/user-guide/security-encryption-end-to-end
+  - https://docs.snowflake.com/en/user-guide/network-policies
+  - https://docs.snowflake.com/en/user-guide/data-sharing-intro
+  - https://docs.snowflake.com/en/user-guide/tables-iceberg
+  - https://docs.snowflake.com/en/user-guide/tables-hybrid
+  - https://docs.snowflake.com/en/user-guide/cost-understanding-overall
+  - https://docs.snowflake.com/en/user-guide/cost-understanding-compute
+  - https://docs.snowflake.com/en/user-guide/resource-monitors
+  - https://docs.snowflake.com/en/user-guide/account-replication-intro
+  - https://docs.snowflake.com/en/user-guide/tables-external-intro

@@ -1,0 +1,150 @@
+{
+  "chapters": {
+    "https://docs.snowflake.com/en/sql-reference/transactions": {
+      "file": "sources/archive/snowflake-docs/16-transactions.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/account-replication-intro": {
+      "file": "sources/archive/snowflake-docs/35-account-replication-intro.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/cost-understanding-compute": {
+      "file": "sources/archive/snowflake-docs/33-cost-understanding-compute.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/cost-understanding-overall": {
+      "file": "sources/archive/snowflake-docs/32-cost-understanding-overall.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/data-failsafe": {
+      "error": "only 2402 characters of prose — a landing page, index, or paywall, not an article worth archiving",
+      "status": "failed"
+    },
+    "https://docs.snowflake.com/en/user-guide/data-load-overview": {
+      "file": "sources/archive/snowflake-docs/18-data-load-overview.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/data-load-snowpipe-intro": {
+      "file": "sources/archive/snowflake-docs/19-data-load-snowpipe-intro.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/data-sharing-intro": {
+      "file": "sources/archive/snowflake-docs/29-data-sharing-intro.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/data-time-travel": {
+      "file": "sources/archive/snowflake-docs/13-data-time-travel.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/dynamic-tables-about": {
+      "file": "sources/archive/snowflake-docs/23-dynamic-tables-about.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/intro-key-concepts": {
+      "file": "sources/archive/snowflake-docs/01-intro-key-concepts.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/network-policies": {
+      "file": "sources/archive/snowflake-docs/28-network-policies.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/object-clone": {
+      "file": "sources/archive/snowflake-docs/15-object-clone.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/query-acceleration-service": {
+      "file": "sources/archive/snowflake-docs/11-query-acceleration-service.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/querying-persisted-results": {
+      "file": "sources/archive/snowflake-docs/08-querying-persisted-results.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/resource-monitors": {
+      "file": "sources/archive/snowflake-docs/34-resource-monitors.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/search-optimization-service": {
+      "file": "sources/archive/snowflake-docs/10-search-optimization-service.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/security-access-control-overview": {
+      "file": "sources/archive/snowflake-docs/24-security-access-control-overview.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/security-column-intro": {
+      "file": "sources/archive/snowflake-docs/26-security-column-intro.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/security-encryption-end-to-end": {
+      "file": "sources/archive/snowflake-docs/27-security-encryption-end-to-end.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/security-row-intro": {
+      "file": "sources/archive/snowflake-docs/25-security-row-intro.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/semistructured-intro": {
+      "file": "sources/archive/snowflake-docs/17-semistructured-intro.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/snowpipe-streaming/data-load-snowpipe-streaming-overview": {
+      "file": "sources/archive/snowflake-docs/20-data-load-snowpipe-streaming-overview.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/streams-intro": {
+      "file": "sources/archive/snowflake-docs/21-streams-intro.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/tables-auto-reclustering": {
+      "file": "sources/archive/snowflake-docs/04-tables-auto-reclustering.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/tables-clustering-keys": {
+      "file": "sources/archive/snowflake-docs/03-tables-clustering-keys.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/tables-clustering-micropartitions": {
+      "file": "sources/archive/snowflake-docs/02-tables-clustering-micropartitions.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/tables-external-intro": {
+      "file": "sources/archive/snowflake-docs/36-tables-external-intro.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/tables-hybrid": {
+      "file": "sources/archive/snowflake-docs/31-tables-hybrid.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/tables-iceberg": {
+      "file": "sources/archive/snowflake-docs/30-tables-iceberg.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/tasks-intro": {
+      "file": "sources/archive/snowflake-docs/22-tasks-intro.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/ui-query-profile": {
+      "file": "sources/archive/snowflake-docs/09-ui-query-profile.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/views-materialized": {
+      "file": "sources/archive/snowflake-docs/12-views-materialized.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/warehouses-considerations": {
+      "file": "sources/archive/snowflake-docs/07-warehouses-considerations.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/warehouses-multicluster": {
+      "file": "sources/archive/snowflake-docs/06-warehouses-multicluster.md",
+      "status": "done"
+    },
+    "https://docs.snowflake.com/en/user-guide/warehouses-overview": {
+      "file": "sources/archive/snowflake-docs/05-warehouses-overview.md",
+      "status": "done"
+    }
+  },
+  "corpus": "snowflake-docs",
+  "updated": "2026-09-14T05:20:19+00:00"
+}

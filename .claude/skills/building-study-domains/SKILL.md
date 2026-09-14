@@ -24,8 +24,9 @@ finished step, and the next action. A new session resumes from it.
 
 2. **Author the skeleton from the field** (ADR 0002) in `skeleton/<domain>.yaml`: the union of
    the surveyed outlines, never the learner's own topic list and never a codebase. A leaf is one
-   interview probe. The learner reviews in Chinese: set `lang: zh` when the main corpus is Chinese,
-   otherwise write English and plan step 7. Add a `requires` edge wherever understanding truly depends on another leaf
+   interview probe. The learner reviews in Chinese: every new domain is `lang: zh`, with titles and
+   summaries in Chinese and technical terms in English in parentheses, even when every source is
+   English. Add a `requires` edge wherever understanding truly depends on another leaf
    (ADR 0005: a thin graph seals nothing). A free book may draft it: `trellis seed <corpus>` →
    `trellis accept`.
    *Done when* `validate` has 0 errors and every heading of every surveyed outline maps to a leaf
@@ -42,7 +43,8 @@ finished step, and the next action. A new session resumes from it.
    `trellis digest <id> --import answer.json --leaf <leaf>`. With helper agents, give each a
    disjoint leaf range and have it dedupe against existing card fronts. Card mix per leaf: the
    mechanism (why it works), the number or limit, the contrast with the nearest alternative, the
-   failure scenario. Leaves no corpus covers go through `trellis scaffold <leaf>` → `trellis import`.
+   failure scenario. Cards and reading bodies are written in Chinese. Leaves no corpus covers go
+   through `trellis scaffold <leaf>` → `trellis import`.
    *Done when* `digest --status` shows every leaf done, `stats` shows no leaf without cards, and
    `validate` reports no `not_self_contained` or `leans_on_source` warnings.
 
@@ -55,7 +57,7 @@ finished step, and the next action. A new session resumes from it.
    `vault/interviews/` and to work Cases (skill `distilling-work-into-domains`).
    *Done when* every top-level node has at least one drill with grading points wikilinked to cards.
 
-7. **Translate** every card of a domain that is not `lang: zh` (this learner always needs it), following `docs/translation-spec.md`; audit
+7. **Translate** only an older English domain being deepened (new domains are written in Chinese from step 2), following `docs/translation-spec.md`; audit
    a 10% sample by hand. *Done when* `validate` passes the bilingual cloze checks.
 
 8. **Ship and start the loop.** `trellis sync` → `validate` → `build` → `anki-push` (desktop Anki

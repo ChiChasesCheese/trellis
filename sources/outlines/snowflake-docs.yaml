@@ -1,0 +1,143 @@
+corpus: snowflake-docs
+title: Snowflake Documentation — core mechanisms
+sections:
+- id: 01-intro-key-concepts
+  title: Snowflake key concepts and architecture¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/intro-key-concepts
+- id: 02-tables-clustering-micropartitions
+  title: Micro-partitions & Data Clustering¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/tables-clustering-micropartitions
+- id: 03-tables-clustering-keys
+  title: Clustering Keys & Clustered Tables¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/tables-clustering-keys
+- id: 04-tables-auto-reclustering
+  title: Automatic Clustering¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/tables-auto-reclustering
+- id: 05-warehouses-overview
+  title: Overview of warehouses¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/warehouses-overview
+- id: 06-warehouses-multicluster
+  title: Multi-cluster warehouses¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/warehouses-multicluster
+- id: 07-warehouses-considerations
+  title: Warehouse considerations¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/warehouses-considerations
+- id: 08-querying-persisted-results
+  title: Using Persisted Query Results¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/querying-persisted-results
+- id: 09-ui-query-profile
+  title: Monitor query activity with Query History¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/ui-query-profile
+- id: 10-search-optimization-service
+  title: Search optimization service¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/search-optimization-service
+- id: 11-query-acceleration-service
+  title: Using the Query Acceleration Service (QAS)¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/query-acceleration-service
+- id: 12-views-materialized
+  title: Working with Materialized Views¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/views-materialized
+- id: 13-data-time-travel
+  title: Understanding & using Time Travel¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/data-time-travel
+- id: 15-object-clone
+  title: Cloning considerations¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/object-clone
+- id: 16-transactions
+  title: Transactions¶
+  level: 1
+  locator: https://docs.snowflake.com/en/sql-reference/transactions
+- id: 17-semistructured-intro
+  title: Introduction to loading semi-structured data¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/semistructured-intro
+- id: 18-data-load-overview
+  title: Overview of data loading¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/data-load-overview
+- id: 19-data-load-snowpipe-intro
+  title: Snowpipe¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/data-load-snowpipe-intro
+- id: 20-data-load-snowpipe-streaming-overview
+  title: Snowpipe Streaming¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/snowpipe-streaming/data-load-snowpipe-streaming-overview
+- id: 21-streams-intro
+  title: Introduction to streams¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/streams-intro
+- id: 22-tasks-intro
+  title: Introduction to tasks¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/tasks-intro
+- id: 23-dynamic-tables-about
+  title: Dynamic tables¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/dynamic-tables-about
+- id: 24-security-access-control-overview
+  title: Overview of Access Control¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/security-access-control-overview
+- id: 25-security-row-intro
+  title: Understanding row access policies
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/security-row-intro
+- id: 26-security-column-intro
+  title: Understanding Column-level Security
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/security-column-intro
+- id: 27-security-encryption-end-to-end
+  title: Understanding end-to-end encryption in Snowflake¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/security-encryption-end-to-end
+- id: 28-network-policies
+  title: Controlling network traffic with network policies¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/network-policies
+- id: 29-data-sharing-intro
+  title: About Secure Data Sharing¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/data-sharing-intro
+- id: 30-tables-iceberg
+  title: Apache Iceberg™ tables¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/tables-iceberg
+- id: 31-tables-hybrid
+  title: Hybrid tables¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/tables-hybrid
+- id: 32-cost-understanding-overall
+  title: Understanding overall cost¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/cost-understanding-overall
+- id: 33-cost-understanding-compute
+  title: Understanding compute cost¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/cost-understanding-compute
+- id: 34-resource-monitors
+  title: Working with resource monitors¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/resource-monitors
+- id: 35-account-replication-intro
+  title: Introduction to replication and failover across multiple accounts¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/account-replication-intro
+- id: 36-tables-external-intro
+  title: Introduction to external tables¶
+  level: 1
+  locator: https://docs.snowflake.com/en/user-guide/tables-external-intro
