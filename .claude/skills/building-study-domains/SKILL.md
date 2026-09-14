@@ -90,6 +90,8 @@ An older English domain being deepened adds translations instead of rewriting: f
 - Subagents default to `sonnet`; when sonnet hits its session limit, relaunch on `opus`.
 - Accept a group only after running `validate` and `stats` yourself and reading at least one card;
   commit per group, staging only that group's card folders.
+- Leaves in different groups that share one source page produce duplicate cards: after the last
+  group, list the questions of every such leaf pair and delete the duplicates from one side.
 
 ## Common mistakes
 

@@ -48,6 +48,8 @@
 | 2026-09-14 | 3 corpus | `corpora/snowflake-docs.yaml`: 36 docs URLs, 35 ingested (fail-safe page skipped as too short); triage 34 readings (Chinese) + 1 gap; 77/110 leaves have a reading | `proposals/snowflake-docs.json`; `stats` readable sources 77/110 |
 | 2026-09-14 | 4 cards (in progress) | group C done: pruning, security, sharing, openplatform, cost — 35 leaves, 174 cards (24 digest, 11 grow); groups A and B relaunched on opus after the sonnet session limit | `validate` 0 errors, no self-containment warnings |
 | 2026-09-14 | 4 cards | group B done: cache, txn, continuity, semistructured, ingestion, pipelines — 40 leaves (38 this run: 29 digest, 9 grow), 196 cards this run | `validate` 0 errors; stats full leaf coverage per B node |
+| 2026-09-14 | 4 cards | group A done: architecture, storage, metadata, warehouse, query — 32 leaves this run (19 digest, 13 grow), 158 cards; step 4 complete: 110/110 leaves, 553 cards | `stats` every node full; `validate` 0 errors |
+| 2026-09-14 | 4 dedupe | `warehouse.resource-monitors` and `cost.resource-monitors-and-budgets` came from the same doc page: 5 duplicate cards removed → 548 cards; the cost leaf keeps 2 cards and needs Budgets cards | question-by-question comparison |
 | 2026-09-14 | 2 skeleton fix | cards contradicted the skeleton: `txn.snapshot-isolation` retitled to READ COMMITTED; `txn.optimistic-concurrency-conflicts` summary now says UPDATE/DELETE/MERGE take table locks | docs: transactions page; ids unchanged |
 
 ## Gaps from triage
@@ -65,11 +67,11 @@ Written by `grow` without a source; check these claims first:
 - Group B (grow, no source): `continuity.clone-storage-billing` (`RETAINED_FOR_CLONE_BYTES`), `semistructured.schema-evolution-tables` (allowed column changes: add column, drop NOT NULL), 7-day Fail-safe on the continuity cards.
 - `ingestion.datastream-kafka-compatible`: product announced at Summit 2026, private preview; cards carry no numbers.
 - Task graph size limit left out of the pipelines cards (skeleton says 100, source silent).
-- Group A will add its own list here.
+- Group A (grow, no source): `metadata.execution-anchor` (weakest: 4 general cards), FoundationDB limits (~5 s and 10 MB per transaction, 100 KB per value), EXPLAIN output formats, JoinFilter and CartesianJoin operator names.
+- Link coverage is low for metadata (15%) and query (26%): step 6 should add the SIGMOD 2016 paper and engineering-blog readings there first.
 
 ## Next action
 
-1. Finish step 4: accept group A (architecture, storage, metadata, warehouse, query); `stats` must show 110/110 leaves with cards.
-2. Ship a first deck: `trellis --all sync` → `validate` → `build` → `anki-push`.
-3. Step 5 review of the grown-card list above, then step 6 readings for the 33 leaves without one (SIGMOD 2016 paper, engineering blog), then step 7 drills per top-level node linked to `../interviews/companies/snowflake/` (sd03, sd08, sd12).
-4. Still owed from step 2: the outline heading → leaf mapping table for outlines 1–3.
+1. Add Budgets cards to `cost.resource-monitors-and-budgets` (grow).
+2. Step 5 review of the grown-card list above, then step 6 readings for the 33 leaves without one (SIGMOD 2016 paper, engineering blog), then step 7 drills per top-level node linked to `../interviews/companies/snowflake/` (sd03, sd08, sd12).
+3. Still owed from step 2: the outline heading → leaf mapping table for outlines 1–3.
