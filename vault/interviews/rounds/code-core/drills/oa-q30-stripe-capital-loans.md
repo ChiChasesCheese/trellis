@@ -43,7 +43,7 @@ unrecognized method is a silent no-op.
   not as a per-method special case.
 
 **Source**
-- `vault/Quick_Check/problems/q30_stripe_capital_loans/problem.md`, `vault/Quick_Check/problems/q30_stripe_capital_loans/REPORT.md`, `vault/stripe/q30_stripe_capital_loans/question.md`, `vault/stripe/q30_stripe_capital_loans/solution.md`, `vault/Quick_Check/study/10-solutions/q30_stripe_capital_loans.md`
+- `vault/interviews/companies/stripe/problems/q30_stripe_capital_loans/problem.md`, `vault/interviews/companies/stripe/problems/q30_stripe_capital_loans/REPORT.md`, `vault/interviews/companies/stripe/problems/q30_stripe_capital_loans/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/q30_stripe_capital_loans.md`, `vault/interviews/companies/stripe/study/10-solutions/q30_stripe_capital_loans.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

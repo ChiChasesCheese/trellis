@@ -39,9 +39,9 @@ have gone idle.
   different implementations.
 
 **Source**
-- The full statement, solution notes and report: `vault/stripe/q23_rate_limiter/question.md`,
-  `vault/stripe/q23_rate_limiter/solution.md`,
-  `vault/Quick_Check/problems/q23_rate_limiter/problem.md`.
+- The full statement, solution notes and report: `vault/interviews/companies/stripe/problems/q23_rate_limiter/problem.md`,
+  `vault/interviews/companies/stripe/study/10-solutions/q23_rate_limiter.md`,
+  `vault/interviews/companies/stripe/problems/q23_rate_limiter/problem.md`.
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

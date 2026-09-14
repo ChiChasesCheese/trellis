@@ -55,9 +55,9 @@ leaves behind, before running Part 2's search on what remains.
   answer.
 
 **Source**
-- `vault/stripe/qA08_lc465_optimal_account_balancing/question.md`, `vault/stripe/qA08_lc465_optimal_account_balancing/solution.md`
-- `vault/Quick_Check/problems/qA08_lc465_optimal_account_balancing/problem.md`, `vault/Quick_Check/problems/qA08_lc465_optimal_account_balancing/REPORT.md`
-- `vault/Quick_Check/study/10-solutions/qA08_lc465_optimal_account_balancing.md`
+- `vault/interviews/companies/stripe/problems/qA08_lc465_optimal_account_balancing/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/qA08_lc465_optimal_account_balancing.md`
+- `vault/interviews/companies/stripe/problems/qA08_lc465_optimal_account_balancing/problem.md`, `vault/interviews/companies/stripe/problems/qA08_lc465_optimal_account_balancing/REPORT.md`
+- `vault/interviews/companies/stripe/study/10-solutions/qA08_lc465_optimal_account_balancing.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 45 min, self-graded notes):

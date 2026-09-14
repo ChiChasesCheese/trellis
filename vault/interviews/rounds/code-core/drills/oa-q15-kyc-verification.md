@@ -42,7 +42,7 @@ business's own name; and a well-formed http(s) URL. Print `VERIFIED: <name>` or 
   must round-trip into the output line unchanged.
 
 **Source**
-- `vault/Quick_Check/problems/q15_kyc_verification/problem.md`, `vault/Quick_Check/problems/q15_kyc_verification/REPORT.md`, `vault/stripe/q15_kyc_verification/question.md`, `vault/stripe/q15_kyc_verification/solution.md`, `vault/Quick_Check/study/10-solutions/q15_kyc_verification.md`
+- `vault/interviews/companies/stripe/problems/q15_kyc_verification/problem.md`, `vault/interviews/companies/stripe/problems/q15_kyc_verification/REPORT.md`, `vault/interviews/companies/stripe/problems/q15_kyc_verification/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/q15_kyc_verification.md`, `vault/interviews/companies/stripe/study/10-solutions/q15_kyc_verification.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

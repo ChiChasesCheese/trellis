@@ -47,7 +47,7 @@ Stripe's own shipping-route problem.
   layered search gets it for free.
 
 **Source**
-- `vault/stripe/qA02_lc787_cheapest_flights_k_stops/question.md`, `vault/stripe/qA02_lc787_cheapest_flights_k_stops/solution.md`, `vault/Quick_Check/problems/qA02_lc787_cheapest_flights_k_stops/problem.md`
+- `vault/interviews/companies/stripe/problems/qA02_lc787_cheapest_flights_k_stops/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/qA02_lc787_cheapest_flights_k_stops.md`, `vault/interviews/companies/stripe/problems/qA02_lc787_cheapest_flights_k_stops/problem.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 45 min, self-graded notes):

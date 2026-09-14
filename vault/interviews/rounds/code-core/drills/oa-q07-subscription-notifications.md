@@ -58,10 +58,10 @@ Print the full chronological sequence of emails and events.
   duration 0 (welcome and expired the same day).
 
 **Source**
-- `vault/stripe/q07_subscription_notifications/question.md`
-- `vault/stripe/q07_subscription_notifications/solution.md`
-- `vault/Quick_Check/problems/q07_subscription_notifications/problem.md`
-- `vault/Quick_Check/problems/q07_subscription_notifications/REPORT.md`
+- `vault/interviews/companies/stripe/problems/q07_subscription_notifications/problem.md`
+- `vault/interviews/companies/stripe/study/10-solutions/q07_subscription_notifications.md`
+- `vault/interviews/companies/stripe/problems/q07_subscription_notifications/problem.md`
+- `vault/interviews/companies/stripe/problems/q07_subscription_notifications/REPORT.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

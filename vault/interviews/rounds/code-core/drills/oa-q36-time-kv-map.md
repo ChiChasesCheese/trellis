@@ -42,7 +42,7 @@ unrelated warm-up bonus, first-missing-positive over a list of integers.
   design.
 
 **Source**
-- `vault/stripe/q36_time_kv_map/question.md`, `vault/stripe/q36_time_kv_map/solution.md`, `vault/Quick_Check/problems/q36_time_kv_map/problem.md`, `vault/Quick_Check/study/10-solutions/q36_time_kv_map.md`
+- `vault/interviews/companies/stripe/problems/q36_time_kv_map/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/q36_time_kv_map.md`, `vault/interviews/companies/stripe/problems/q36_time_kv_map/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/q36_time_kv_map.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

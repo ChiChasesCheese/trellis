@@ -1,6 +1,6 @@
 # interviews/ — 面试的完整文件夹
 
-> 原 `Quick_Check/`（Stripe OA 起家）于 2026-09-13 重构为此目录。Trellis 的 `stripe` domain（`skeleton/stripe.yaml` + `vault/stripe/`）仍是 Stripe OA 的卡片面；这里是它背后的**原始研究、题库、演练、故事库与简历**——不进 Anki，按公司整体消费。
+> 原 `Quick_Check/`（Stripe OA 起家）于 2026-09-13 重构为此目录。Trellis 的 `stripe` domain（`skeleton/stripe.yaml` + `vault/interviews/companies/stripe/deck/`）仍是 Stripe OA 的卡片面；这里是它背后的**原始研究、题库、演练、故事库与简历**——不进 Anki，按公司整体消费。
 
 ## 目录约定：company → phase，外加一个 core
 
@@ -52,6 +52,6 @@ cp -r vault/interviews/_template/company vault/interviews/companies/<company>
 
 ## 与 Trellis 其它部分的关系
 
-- `vault/stripe/`（domain）里的 40 张卡片是从 `companies/stripe/study/` 提炼出来的**可复习面**；这里的东西不建卡。
+- `vault/interviews/companies/stripe/deck/`（domain）里的 40 张卡片是从 `companies/stripe/study/` 提炼出来的**可复习面**；这里的东西不建卡。
 - `code-core` domain 的 `transfer.*` 分支是「新公司的一轮面试 = 一个叶子」的接口；公司目录里的具体题目留在这里，通用规律升到那里。
 - `skeleton/stripe.yaml` 头部注释指向 `companies/stripe/`。

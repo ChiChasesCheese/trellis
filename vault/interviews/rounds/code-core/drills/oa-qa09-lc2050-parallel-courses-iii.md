@@ -52,9 +52,9 @@ you to name it as a heuristic rather than claim it's always optimal.
   prerequisites.
 
 **Source**
-- `vault/stripe/qA09_lc2050_parallel_courses_iii/question.md`, `vault/stripe/qA09_lc2050_parallel_courses_iii/solution.md`
-- `vault/Quick_Check/problems/qA09_lc2050_parallel_courses_iii/problem.md`, `vault/Quick_Check/problems/qA09_lc2050_parallel_courses_iii/REPORT.md`
-- `vault/Quick_Check/study/10-solutions/qA09_lc2050_parallel_courses_iii.md`
+- `vault/interviews/companies/stripe/problems/qA09_lc2050_parallel_courses_iii/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/qA09_lc2050_parallel_courses_iii.md`
+- `vault/interviews/companies/stripe/problems/qA09_lc2050_parallel_courses_iii/problem.md`, `vault/interviews/companies/stripe/problems/qA09_lc2050_parallel_courses_iii/REPORT.md`
+- `vault/interviews/companies/stripe/study/10-solutions/qA09_lc2050_parallel_courses_iii.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 45 min, self-graded notes):

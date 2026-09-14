@@ -54,9 +54,9 @@ hour's cost.
   reproduce Part 1 exactly.
 
 **Source**
-- `vault/stripe/qA13_lc2483_minimum_penalty_for_a_shop/question.md`, `vault/stripe/qA13_lc2483_minimum_penalty_for_a_shop/solution.md`
-- `vault/Quick_Check/problems/qA13_lc2483_minimum_penalty_for_a_shop/problem.md`, `vault/Quick_Check/problems/qA13_lc2483_minimum_penalty_for_a_shop/REPORT.md`
-- `vault/Quick_Check/study/10-solutions/qA13_lc2483_minimum_penalty_for_a_shop.md`
+- `vault/interviews/companies/stripe/problems/qA13_lc2483_minimum_penalty_for_a_shop/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/qA13_lc2483_minimum_penalty_for_a_shop.md`
+- `vault/interviews/companies/stripe/problems/qA13_lc2483_minimum_penalty_for_a_shop/problem.md`, `vault/interviews/companies/stripe/problems/qA13_lc2483_minimum_penalty_for_a_shop/REPORT.md`
+- `vault/interviews/companies/stripe/study/10-solutions/qA13_lc2483_minimum_penalty_for_a_shop.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 45 min, self-graded notes):

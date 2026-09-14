@@ -53,9 +53,9 @@ balance.
   summed without precision loss.
 
 **Source**
-- `vault/stripe/qA06_lc2043_simple_bank_system/question.md`, `vault/stripe/qA06_lc2043_simple_bank_system/solution.md`
-- `vault/Quick_Check/problems/qA06_lc2043_simple_bank_system/problem.md`, `vault/Quick_Check/problems/qA06_lc2043_simple_bank_system/REPORT.md`
-- `vault/Quick_Check/study/10-solutions/qA06_lc2043_simple_bank_system.md`
+- `vault/interviews/companies/stripe/problems/qA06_lc2043_simple_bank_system/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/qA06_lc2043_simple_bank_system.md`
+- `vault/interviews/companies/stripe/problems/qA06_lc2043_simple_bank_system/problem.md`, `vault/interviews/companies/stripe/problems/qA06_lc2043_simple_bank_system/REPORT.md`
+- `vault/interviews/companies/stripe/study/10-solutions/qA06_lc2043_simple_bank_system.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 45 min, self-graded notes):

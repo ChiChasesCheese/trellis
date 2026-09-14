@@ -45,7 +45,7 @@ evicts old history, and reports each transaction as invalid at most once.
   window.
 
 **Source**
-- `vault/stripe/qA04_lc1169_invalid_transactions/question.md`, `vault/stripe/qA04_lc1169_invalid_transactions/solution.md`, `vault/Quick_Check/problems/qA04_lc1169_invalid_transactions/problem.md`
+- `vault/interviews/companies/stripe/problems/qA04_lc1169_invalid_transactions/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/qA04_lc1169_invalid_transactions.md`, `vault/interviews/companies/stripe/problems/qA04_lc1169_invalid_transactions/problem.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 45 min, self-graded notes):

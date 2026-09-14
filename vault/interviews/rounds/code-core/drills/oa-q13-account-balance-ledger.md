@@ -41,7 +41,7 @@ incoming money, and must report the peak amount it ever had outstanding at once.
   debits/transfers can never borrow.
 
 **Source**
-- `vault/Quick_Check/problems/q13_account_balance_ledger/problem.md`, `vault/Quick_Check/problems/q13_account_balance_ledger/REPORT.md`, `vault/stripe/q13_account_balance_ledger/question.md`, `vault/stripe/q13_account_balance_ledger/solution.md`, `vault/Quick_Check/study/10-solutions/q13_account_balance_ledger.md`
+- `vault/interviews/companies/stripe/problems/q13_account_balance_ledger/problem.md`, `vault/interviews/companies/stripe/problems/q13_account_balance_ledger/REPORT.md`, `vault/interviews/companies/stripe/problems/q13_account_balance_ledger/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/q13_account_balance_ledger.md`, `vault/interviews/companies/stripe/study/10-solutions/q13_account_balance_ledger.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

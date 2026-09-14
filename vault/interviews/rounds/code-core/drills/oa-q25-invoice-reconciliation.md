@@ -40,7 +40,7 @@ Part 4: prepend an audit trail listing every individual application in the order
   the final status lines' invoice-input order
 
 **Source**
-- `vault/Quick_Check/problems/q25_invoice_reconciliation/problem.md`, `vault/Quick_Check/problems/q25_invoice_reconciliation/REPORT.md`, `vault/stripe/q25_invoice_reconciliation/question.md`, `vault/stripe/q25_invoice_reconciliation/solution.md`, `vault/Quick_Check/study/10-solutions/q25_invoice_reconciliation.md`
+- `vault/interviews/companies/stripe/problems/q25_invoice_reconciliation/problem.md`, `vault/interviews/companies/stripe/problems/q25_invoice_reconciliation/REPORT.md`, `vault/interviews/companies/stripe/problems/q25_invoice_reconciliation/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/q25_invoice_reconciliation.md`, `vault/interviews/companies/stripe/study/10-solutions/q25_invoice_reconciliation.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

@@ -39,9 +39,9 @@ request, most preferred first, spelled exactly as the supported list spells them
   otherwise "looks right."
 
 **Source**
-- The full statement, solution notes and report: `vault/stripe/q19_accept_language/question.md`,
-  `vault/stripe/q19_accept_language/solution.md`,
-  `vault/Quick_Check/problems/q19_accept_language/problem.md`.
+- The full statement, solution notes and report: `vault/interviews/companies/stripe/problems/q19_accept_language/problem.md`,
+  `vault/interviews/companies/stripe/study/10-solutions/q19_accept_language.md`,
+  `vault/interviews/companies/stripe/problems/q19_accept_language/problem.md`.
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

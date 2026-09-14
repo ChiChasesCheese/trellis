@@ -52,9 +52,9 @@ to 10^4.
   character; an inserted or deleted character at the very front.
 
 **Source**
-- `vault/stripe/qA10_lc161_one_edit_distance/question.md`, `vault/stripe/qA10_lc161_one_edit_distance/solution.md`
-- `vault/Quick_Check/problems/qA10_lc161_one_edit_distance/problem.md`, `vault/Quick_Check/problems/qA10_lc161_one_edit_distance/REPORT.md`
-- `vault/Quick_Check/study/10-solutions/qA10_lc161_one_edit_distance.md`
+- `vault/interviews/companies/stripe/problems/qA10_lc161_one_edit_distance/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/qA10_lc161_one_edit_distance.md`
+- `vault/interviews/companies/stripe/problems/qA10_lc161_one_edit_distance/problem.md`, `vault/interviews/companies/stripe/problems/qA10_lc161_one_edit_distance/REPORT.md`
+- `vault/interviews/companies/stripe/study/10-solutions/qA10_lc161_one_edit_distance.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 45 min, self-graded notes):

@@ -48,9 +48,9 @@ distinct pricing modes.
   of the same item is not double-priced against a per-call tier boundary.
 
 **Source**
-- The full statement, solution notes and report: `vault/stripe/q22_shipping_cost/question.md`,
-  `vault/stripe/q22_shipping_cost/solution.md`,
-  `vault/Quick_Check/problems/q22_shipping_cost/problem.md`.
+- The full statement, solution notes and report: `vault/interviews/companies/stripe/problems/q22_shipping_cost/problem.md`,
+  `vault/interviews/companies/stripe/study/10-solutions/q22_shipping_cost.md`,
+  `vault/interviews/companies/stripe/problems/q22_shipping_cost/problem.md`.
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

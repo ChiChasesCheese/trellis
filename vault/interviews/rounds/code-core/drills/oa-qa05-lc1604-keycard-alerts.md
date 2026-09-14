@@ -50,9 +50,9 @@ swipes do not count toward later windows.
   step raising rather than silently reordering.
 
 **Source**
-- `vault/stripe/qA05_lc1604_keycard_alerts/question.md`, `vault/stripe/qA05_lc1604_keycard_alerts/solution.md`
-- `vault/Quick_Check/problems/qA05_lc1604_keycard_alerts/problem.md`, `vault/Quick_Check/problems/qA05_lc1604_keycard_alerts/REPORT.md`
-- `vault/Quick_Check/study/10-solutions/qA05_lc1604_keycard_alerts.md`
+- `vault/interviews/companies/stripe/problems/qA05_lc1604_keycard_alerts/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/qA05_lc1604_keycard_alerts.md`
+- `vault/interviews/companies/stripe/problems/qA05_lc1604_keycard_alerts/problem.md`, `vault/interviews/companies/stripe/problems/qA05_lc1604_keycard_alerts/REPORT.md`
+- `vault/interviews/companies/stripe/study/10-solutions/qA05_lc1604_keycard_alerts.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 45 min, self-graded notes):

@@ -38,9 +38,9 @@ Part 4 drives the tracker from a command stream.
   version is O(log n) per operation before writing it.
 
 **Source**
-- The full statement, solution notes and report: `vault/stripe/q24_server_allocator/question.md`,
-  `vault/stripe/q24_server_allocator/solution.md`,
-  `vault/Quick_Check/problems/q24_server_allocator/problem.md`.
+- The full statement, solution notes and report: `vault/interviews/companies/stripe/problems/q24_server_allocator/problem.md`,
+  `vault/interviews/companies/stripe/study/10-solutions/q24_server_allocator.md`,
+  `vault/interviews/companies/stripe/problems/q24_server_allocator/problem.md`.
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

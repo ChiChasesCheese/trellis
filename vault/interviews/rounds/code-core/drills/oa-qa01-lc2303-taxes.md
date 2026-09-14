@@ -44,7 +44,7 @@ single bracket contains it, instead of band by band.
   still produces a breakdown line, but zero income produces none.
 
 **Source**
-- `vault/stripe/qA01_lc2303_taxes/question.md`, `vault/stripe/qA01_lc2303_taxes/solution.md`, `vault/Quick_Check/problems/qA01_lc2303_taxes/problem.md`
+- `vault/interviews/companies/stripe/problems/qA01_lc2303_taxes/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/qA01_lc2303_taxes.md`, `vault/interviews/companies/stripe/problems/qA01_lc2303_taxes/problem.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 45 min, self-graded notes):

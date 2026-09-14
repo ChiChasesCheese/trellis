@@ -40,9 +40,9 @@ ledger and reports what's missing or mismatched.
   columns are a non-issue rather than a parsing special case.
 
 **Source**
-- The full statement, solution notes and report: `vault/stripe/q20_transaction_fees_reconciliation/question.md`,
-  `vault/stripe/q20_transaction_fees_reconciliation/solution.md`,
-  `vault/Quick_Check/problems/q20_transaction_fees_reconciliation/problem.md`.
+- The full statement, solution notes and report: `vault/interviews/companies/stripe/problems/q20_transaction_fees_reconciliation/problem.md`,
+  `vault/interviews/companies/stripe/study/10-solutions/q20_transaction_fees_reconciliation.md`,
+  `vault/interviews/companies/stripe/problems/q20_transaction_fees_reconciliation/problem.md`.
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

@@ -37,7 +37,7 @@ lines that must print `ACCEPT` or `BLOCK`.
 - Balances can go negative; an unknown merchant's `BAL:` is `0`.
 
 **Source**
-- `vault/Quick_Check/problems/q12_platform_balance_radar_rules/problem.md`, `vault/Quick_Check/problems/q12_platform_balance_radar_rules/REPORT.md`, `vault/stripe/q12_platform_balance_radar_rules/question.md`, `vault/stripe/q12_platform_balance_radar_rules/solution.md`, `vault/Quick_Check/study/10-solutions/q12_platform_balance_radar_rules.md`
+- `vault/interviews/companies/stripe/problems/q12_platform_balance_radar_rules/problem.md`, `vault/interviews/companies/stripe/problems/q12_platform_balance_radar_rules/REPORT.md`, `vault/interviews/companies/stripe/problems/q12_platform_balance_radar_rules/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/q12_platform_balance_radar_rules.md`, `vault/interviews/companies/stripe/study/10-solutions/q12_platform_balance_radar_rules.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

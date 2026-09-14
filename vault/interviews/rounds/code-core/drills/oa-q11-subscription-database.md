@@ -35,7 +35,7 @@ active extends the current expiry instead of overwriting it.
 - `end` on an unknown or already-ended user is a no-op, never an error.
 
 **Source**
-- `vault/Quick_Check/problems/q11_subscription_database/problem.md`, `vault/Quick_Check/problems/q11_subscription_database/REPORT.md`, `vault/stripe/q11_subscription_database/question.md`, `vault/stripe/q11_subscription_database/solution.md`, `vault/Quick_Check/study/10-solutions/q11_subscription_database.md`
+- `vault/interviews/companies/stripe/problems/q11_subscription_database/problem.md`, `vault/interviews/companies/stripe/problems/q11_subscription_database/REPORT.md`, `vault/interviews/companies/stripe/problems/q11_subscription_database/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/q11_subscription_database.md`, `vault/interviews/companies/stripe/study/10-solutions/q11_subscription_database.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

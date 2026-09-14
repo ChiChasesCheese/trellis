@@ -51,7 +51,7 @@ company. The employer's code, identifiers and data stay in the private tier.
    not had to use. List them for the learner in the chat and in `leaves.md`.
 
 5. **Write interview-safe cases.** One case per evidence note, in `vault/<domain>/cases/<slug>.md`,
-   shaped like the existing ones in `vault/system-design/cases/`: frontmatter `nodes`, `title`,
+   shaped like the existing ones in `vault/domains/system-design/cases/`: frontmatter `nodes`, `title`,
    `codebase: work-<neutral-alias>`, `ref: <YYYY-MM the decision was read>`,
    `artefact: work:<generic decision kind>`; the employer repo's paths and SHAs stay in `leaves.md`;
    body (in Chinese, terms in English in parentheses) = the problem in general terms, the options, the choice and its reasoning in the leaf's

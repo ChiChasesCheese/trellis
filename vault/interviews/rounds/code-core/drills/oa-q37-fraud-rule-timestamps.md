@@ -44,7 +44,7 @@ arrive in file order.
   pressure; check it first against the worked examples.
 
 **Source**
-- `vault/stripe/q37_fraud_rule_timestamps/question.md`, `vault/stripe/q37_fraud_rule_timestamps/solution.md`, `vault/Quick_Check/problems/q37_fraud_rule_timestamps/problem.md`
+- `vault/interviews/companies/stripe/problems/q37_fraud_rule_timestamps/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/q37_fraud_rule_timestamps.md`, `vault/interviews/companies/stripe/problems/q37_fraud_rule_timestamps/problem.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

@@ -43,9 +43,9 @@ has room. `RELEASE` frees one unit of capacity.
   regions — it is a pure function, unlike every other command here.
 
 **Source**
-- `vault/stripe/q17_datacenter_router_haversine/question.md`, `vault/stripe/q17_datacenter_router_haversine/solution.md`
-- `vault/Quick_Check/problems/q17_datacenter_router_haversine/problem.md`, `vault/Quick_Check/problems/q17_datacenter_router_haversine/REPORT.md`
-- `vault/Quick_Check/study/10-solutions/q17_datacenter_router_haversine.md`
+- `vault/interviews/companies/stripe/problems/q17_datacenter_router_haversine/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/q17_datacenter_router_haversine.md`
+- `vault/interviews/companies/stripe/problems/q17_datacenter_router_haversine/problem.md`, `vault/interviews/companies/stripe/problems/q17_datacenter_router_haversine/REPORT.md`
+- `vault/interviews/companies/stripe/study/10-solutions/q17_datacenter_router_haversine.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

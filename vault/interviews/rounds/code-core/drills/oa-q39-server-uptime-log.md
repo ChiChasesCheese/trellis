@@ -46,7 +46,7 @@ intervals, solved with a small DP.
   (`1 0`, `0 1 0 1`) into the suite rather than skipping straight to the DP.
 
 **Source**
-- `vault/stripe/q39_server_uptime_log/question.md`, `vault/stripe/q39_server_uptime_log/solution.md`, `vault/Quick_Check/problems/q39_server_uptime_log/problem.md`
+- `vault/interviews/companies/stripe/problems/q39_server_uptime_log/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/q39_server_uptime_log.md`, `vault/interviews/companies/stripe/problems/q39_server_uptime_log/problem.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

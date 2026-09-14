@@ -32,4 +32,4 @@
 
 1. P7 评审：自包含（每个题集只靠本目录 + 链接能做）、覆盖率口径诚实、全书是否像教科书（00-README 目录 → 轮次 → 题 → 题解）；修正后开 PR 合并。
 2. 同步：`uv run trellis --all sync` → `build` → `anki-push`（需桌面 Anki）。公司 kit 不是 trellis domain，不产生卡片。
-3. Snowflake 原理知识另起 trellis domain `snowflake`（skill `building-study-domains`，`vault/snowflake/BUILD.md` 记进度），与本 kit 双向链接。
+3. Snowflake 原理知识另起 trellis domain `snowflake`（skill `building-study-domains`，`vault/domains/snowflake/BUILD.md` 记进度），与本 kit 双向链接。

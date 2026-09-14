@@ -55,10 +55,10 @@ real-world twists on damaged input.
   network than the observed (masked or corrupted) prefix suggested.
 
 **Source**
-- `vault/stripe/q05_card_validation_luhn/question.md`
-- `vault/stripe/q05_card_validation_luhn/solution.md`
-- `vault/Quick_Check/problems/q05_card_validation_luhn/problem.md`
-- `vault/Quick_Check/problems/q05_card_validation_luhn/REPORT.md`
+- `vault/interviews/companies/stripe/problems/q05_card_validation_luhn/problem.md`
+- `vault/interviews/companies/stripe/study/10-solutions/q05_card_validation_luhn.md`
+- `vault/interviews/companies/stripe/problems/q05_card_validation_luhn/problem.md`
+- `vault/interviews/companies/stripe/problems/q05_card_validation_luhn/REPORT.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

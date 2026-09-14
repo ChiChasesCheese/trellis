@@ -42,7 +42,7 @@ Part 3 key among those that fit.
 - Empty WORKERS or empty TASKS sections fall out of the same loop without a special case.
 
 **Source**
-- `vault/Quick_Check/problems/q28_worker_task_assignment/problem.md`, `vault/Quick_Check/problems/q28_worker_task_assignment/REPORT.md`, `vault/stripe/q28_worker_task_assignment/question.md`, `vault/stripe/q28_worker_task_assignment/solution.md`, `vault/Quick_Check/study/10-solutions/q28_worker_task_assignment.md`
+- `vault/interviews/companies/stripe/problems/q28_worker_task_assignment/problem.md`, `vault/interviews/companies/stripe/problems/q28_worker_task_assignment/REPORT.md`, `vault/interviews/companies/stripe/problems/q28_worker_task_assignment/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/q28_worker_task_assignment.md`, `vault/interviews/companies/stripe/study/10-solutions/q28_worker_task_assignment.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

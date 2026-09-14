@@ -52,10 +52,10 @@ program accumulates rules; a `PART n` line selects how far to apply them.
   separate rows through Part 3 and only collapse in Part 4.
 
 **Source**
-- `vault/stripe/q04_card_range_obfuscation/question.md`
-- `vault/stripe/q04_card_range_obfuscation/solution.md`
-- `vault/Quick_Check/problems/q04_card_range_obfuscation/problem.md`
-- `vault/Quick_Check/problems/q04_card_range_obfuscation/REPORT.md`
+- `vault/interviews/companies/stripe/problems/q04_card_range_obfuscation/problem.md`
+- `vault/interviews/companies/stripe/study/10-solutions/q04_card_range_obfuscation.md`
+- `vault/interviews/companies/stripe/problems/q04_card_range_obfuscation/problem.md`
+- `vault/interviews/companies/stripe/problems/q04_card_range_obfuscation/REPORT.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

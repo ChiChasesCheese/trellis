@@ -37,9 +37,9 @@ a batch of payout amounts, rounded to cents.
   exception, once past the initial rate-string validation.
 
 **Source**
-- The full statement, solution notes and report: `vault/stripe/q21_currency_conversion/question.md`,
-  `vault/stripe/q21_currency_conversion/solution.md`,
-  `vault/Quick_Check/problems/q21_currency_conversion/problem.md`.
+- The full statement, solution notes and report: `vault/interviews/companies/stripe/problems/q21_currency_conversion/problem.md`,
+  `vault/interviews/companies/stripe/study/10-solutions/q21_currency_conversion.md`,
+  `vault/interviews/companies/stripe/problems/q21_currency_conversion/problem.md`.
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

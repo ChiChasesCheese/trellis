@@ -48,9 +48,9 @@ the histogram incrementally rather than recomputing it on every query.
   k*k+1) buckets sum to the total block count.
 
 **Source**
-- `vault/stripe/qA11_lc2768_number_of_black_blocks/question.md`, `vault/stripe/qA11_lc2768_number_of_black_blocks/solution.md`
-- `vault/Quick_Check/problems/qA11_lc2768_number_of_black_blocks/problem.md`, `vault/Quick_Check/problems/qA11_lc2768_number_of_black_blocks/REPORT.md`
-- `vault/Quick_Check/study/10-solutions/qA11_lc2768_number_of_black_blocks.md`
+- `vault/interviews/companies/stripe/problems/qA11_lc2768_number_of_black_blocks/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/qA11_lc2768_number_of_black_blocks.md`
+- `vault/interviews/companies/stripe/problems/qA11_lc2768_number_of_black_blocks/problem.md`, `vault/interviews/companies/stripe/problems/qA11_lc2768_number_of_black_blocks/REPORT.md`
+- `vault/interviews/companies/stripe/study/10-solutions/qA11_lc2768_number_of_black_blocks.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 45 min, self-graded notes):

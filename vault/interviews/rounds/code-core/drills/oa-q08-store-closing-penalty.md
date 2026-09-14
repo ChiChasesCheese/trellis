@@ -55,10 +55,10 @@ buried in a noisy text dump.
   garbage inside a block, garbage outside a block, and the empty-log case.
 
 **Source**
-- `vault/stripe/q08_store_closing_penalty/question.md`
-- `vault/stripe/q08_store_closing_penalty/solution.md`
-- `vault/Quick_Check/problems/q08_store_closing_penalty/problem.md`
-- `vault/Quick_Check/problems/q08_store_closing_penalty/REPORT.md`
+- `vault/interviews/companies/stripe/problems/q08_store_closing_penalty/problem.md`
+- `vault/interviews/companies/stripe/study/10-solutions/q08_store_closing_penalty.md`
+- `vault/interviews/companies/stripe/problems/q08_store_closing_penalty/problem.md`
+- `vault/interviews/companies/stripe/problems/q08_store_closing_penalty/REPORT.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

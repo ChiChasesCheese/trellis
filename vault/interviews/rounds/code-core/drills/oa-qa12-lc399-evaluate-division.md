@@ -51,9 +51,9 @@ tolerance — a rejected equation is not applied, so earlier quotes win.
   the only known equation.
 
 **Source**
-- `vault/stripe/qA12_lc399_evaluate_division/question.md`, `vault/stripe/qA12_lc399_evaluate_division/solution.md`
-- `vault/Quick_Check/problems/qA12_lc399_evaluate_division/problem.md`, `vault/Quick_Check/problems/qA12_lc399_evaluate_division/REPORT.md`
-- `vault/Quick_Check/study/10-solutions/qA12_lc399_evaluate_division.md`
+- `vault/interviews/companies/stripe/problems/qA12_lc399_evaluate_division/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/qA12_lc399_evaluate_division.md`
+- `vault/interviews/companies/stripe/problems/qA12_lc399_evaluate_division/problem.md`, `vault/interviews/companies/stripe/problems/qA12_lc399_evaluate_division/REPORT.md`
+- `vault/interviews/companies/stripe/study/10-solutions/qA12_lc399_evaluate_division.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 45 min, self-graded notes):

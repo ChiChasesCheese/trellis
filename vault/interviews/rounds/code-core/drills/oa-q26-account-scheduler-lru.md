@@ -48,7 +48,7 @@ early release does not reset the account's LRU position. Malformed lines
 - String tie-break on id (`a10` before `a2`) when `last_used` ties.
 
 **Source**
-- `vault/Quick_Check/problems/q26_account_scheduler_lru/problem.md`, `vault/Quick_Check/problems/q26_account_scheduler_lru/REPORT.md`, `vault/Quick_Check/study/10-solutions/q26_account_scheduler_lru.md`.
+- `vault/interviews/companies/stripe/problems/q26_account_scheduler_lru/problem.md`, `vault/interviews/companies/stripe/problems/q26_account_scheduler_lru/REPORT.md`, `vault/interviews/companies/stripe/study/10-solutions/q26_account_scheduler_lru.md`.
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

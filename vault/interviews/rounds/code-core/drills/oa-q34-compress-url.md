@@ -44,7 +44,7 @@ produced by two or more distinct original URLs, since the compression is lossy.
   quadratic re-scanning of a long path.
 
 **Source**
-- `vault/Quick_Check/problems/q34_compress_url/problem.md`, `vault/Quick_Check/problems/q34_compress_url/REPORT.md`, `vault/stripe/q34_compress_url/question.md`, `vault/stripe/q34_compress_url/solution.md`, `vault/Quick_Check/study/10-solutions/q34_compress_url.md`
+- `vault/interviews/companies/stripe/problems/q34_compress_url/problem.md`, `vault/interviews/companies/stripe/problems/q34_compress_url/REPORT.md`, `vault/interviews/companies/stripe/problems/q34_compress_url/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/q34_compress_url.md`, `vault/interviews/companies/stripe/study/10-solutions/q34_compress_url.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

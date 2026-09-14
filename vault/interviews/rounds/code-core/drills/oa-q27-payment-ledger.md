@@ -50,7 +50,7 @@ refund's timestamp to be at or after its payment's timestamp.
   separator, an invalid calendar date, and an out-of-range hour like `24:00`.
 
 **Source**
-- `vault/Quick_Check/problems/q27_payment_ledger/problem.md`, `vault/Quick_Check/problems/q27_payment_ledger/REPORT.md`, `vault/Quick_Check/study/10-solutions/q27_payment_ledger.md`.
+- `vault/interviews/companies/stripe/problems/q27_payment_ledger/problem.md`, `vault/interviews/companies/stripe/problems/q27_payment_ledger/REPORT.md`, `vault/interviews/companies/stripe/study/10-solutions/q27_payment_ledger.md`.
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

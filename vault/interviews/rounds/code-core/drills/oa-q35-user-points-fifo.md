@@ -41,9 +41,9 @@ payer negative is rejected outright.
   guaranteed to arrive in timestamp order.
 
 **Source**
-- `vault/stripe/q35_user_points_fifo/question.md`, `vault/stripe/q35_user_points_fifo/solution.md`
-- `vault/Quick_Check/problems/q35_user_points_fifo/problem.md`, `vault/Quick_Check/problems/q35_user_points_fifo/REPORT.md`
-- `vault/Quick_Check/study/10-solutions/q35_user_points_fifo.md`
+- `vault/interviews/companies/stripe/problems/q35_user_points_fifo/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/q35_user_points_fifo.md`
+- `vault/interviews/companies/stripe/problems/q35_user_points_fifo/problem.md`, `vault/interviews/companies/stripe/problems/q35_user_points_fifo/REPORT.md`
+- `vault/interviews/companies/stripe/study/10-solutions/q35_user_points_fifo.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

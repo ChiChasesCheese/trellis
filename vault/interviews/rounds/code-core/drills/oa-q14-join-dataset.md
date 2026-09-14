@@ -41,7 +41,7 @@ customer fields repeated, ordered by the processor side's own sort key.
   bucket instead of taking its first element.
 
 **Source**
-- `vault/Quick_Check/problems/q14_join_dataset/problem.md`, `vault/Quick_Check/problems/q14_join_dataset/REPORT.md`, `vault/stripe/q14_join_dataset/question.md`, `vault/stripe/q14_join_dataset/solution.md`, `vault/Quick_Check/study/10-solutions/q14_join_dataset.md`
+- `vault/interviews/companies/stripe/problems/q14_join_dataset/problem.md`, `vault/interviews/companies/stripe/problems/q14_join_dataset/REPORT.md`, `vault/interviews/companies/stripe/problems/q14_join_dataset/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/q14_join_dataset.md`, `vault/interviews/companies/stripe/study/10-solutions/q14_join_dataset.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

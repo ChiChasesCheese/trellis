@@ -48,10 +48,10 @@ every merchant, including merchants with zero transactions.
   sorted by plain string order (`m10` before `m2`), exact `, ` separator.
 
 **Source**
-- `vault/stripe/q02_merchant_fraud_score/question.md`
-- `vault/stripe/q02_merchant_fraud_score/solution.md`
-- `vault/Quick_Check/problems/q02_merchant_fraud_score/problem.md`
-- `vault/Quick_Check/problems/q02_merchant_fraud_score/REPORT.md`
+- `vault/interviews/companies/stripe/problems/q02_merchant_fraud_score/problem.md`
+- `vault/interviews/companies/stripe/study/10-solutions/q02_merchant_fraud_score.md`
+- `vault/interviews/companies/stripe/problems/q02_merchant_fraud_score/problem.md`
+- `vault/interviews/companies/stripe/problems/q02_merchant_fraud_score/REPORT.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

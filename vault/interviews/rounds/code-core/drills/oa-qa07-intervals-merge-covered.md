@@ -52,9 +52,9 @@ share a point.
   `[lo, hi]` range.
 
 **Source**
-- `vault/stripe/qA07_intervals_merge_covered/question.md`, `vault/stripe/qA07_intervals_merge_covered/solution.md`
-- `vault/Quick_Check/problems/qA07_intervals_merge_covered/problem.md`, `vault/Quick_Check/problems/qA07_intervals_merge_covered/REPORT.md`
-- `vault/Quick_Check/study/10-solutions/qA07_intervals_merge_covered.md`
+- `vault/interviews/companies/stripe/problems/qA07_intervals_merge_covered/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/qA07_intervals_merge_covered.md`
+- `vault/interviews/companies/stripe/problems/qA07_intervals_merge_covered/problem.md`, `vault/interviews/companies/stripe/problems/qA07_intervals_merge_covered/REPORT.md`
+- `vault/interviews/companies/stripe/study/10-solutions/qA07_intervals_merge_covered.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 45 min, self-graded notes):

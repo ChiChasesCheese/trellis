@@ -42,9 +42,9 @@ each ring's first member appeared.
   line, rings ordered by first appearance, risk printed to two decimals.
 
 **Source**
-- `vault/stripe/q18_collusion_ring/question.md`, `vault/stripe/q18_collusion_ring/solution.md`
-- `vault/Quick_Check/problems/q18_collusion_ring/problem.md`, `vault/Quick_Check/problems/q18_collusion_ring/REPORT.md`
-- `vault/Quick_Check/study/10-solutions/q18_collusion_ring.md`
+- `vault/interviews/companies/stripe/problems/q18_collusion_ring/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/q18_collusion_ring.md`
+- `vault/interviews/companies/stripe/problems/q18_collusion_ring/problem.md`, `vault/interviews/companies/stripe/problems/q18_collusion_ring/REPORT.md`
+- `vault/interviews/companies/stripe/study/10-solutions/q18_collusion_ring.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

@@ -45,9 +45,9 @@ zero.
   but never flagged.
 
 **Source**
-- `vault/stripe/q01_fraud_mcc_disputes/question.md`, `vault/stripe/q01_fraud_mcc_disputes/solution.md`
-- `vault/Quick_Check/problems/q01_fraud_mcc_disputes/problem.md`, `vault/Quick_Check/problems/q01_fraud_mcc_disputes/REPORT.md`
-- `vault/Quick_Check/study/10-solutions/q01_fraud_mcc_disputes.md`
+- `vault/interviews/companies/stripe/problems/q01_fraud_mcc_disputes/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/q01_fraud_mcc_disputes.md`
+- `vault/interviews/companies/stripe/problems/q01_fraud_mcc_disputes/problem.md`, `vault/interviews/companies/stripe/problems/q01_fraud_mcc_disputes/REPORT.md`
+- `vault/interviews/companies/stripe/study/10-solutions/q01_fraud_mcc_disputes.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

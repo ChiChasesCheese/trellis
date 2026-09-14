@@ -57,10 +57,10 @@ rules accumulate into a single program (no `PART n` line).
   named as no-ops a candidate should test for.
 
 **Source**
-- `vault/stripe/q09_jupyter_load_balancer/question.md`
-- `vault/stripe/q09_jupyter_load_balancer/solution.md`
-- `vault/Quick_Check/problems/q09_jupyter_load_balancer/problem.md`
-- `vault/Quick_Check/problems/q09_jupyter_load_balancer/REPORT.md`
+- `vault/interviews/companies/stripe/problems/q09_jupyter_load_balancer/problem.md`
+- `vault/interviews/companies/stripe/study/10-solutions/q09_jupyter_load_balancer.md`
+- `vault/interviews/companies/stripe/problems/q09_jupyter_load_balancer/problem.md`
+- `vault/interviews/companies/stripe/problems/q09_jupyter_load_balancer/REPORT.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

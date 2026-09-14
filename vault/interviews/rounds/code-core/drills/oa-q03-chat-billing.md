@@ -47,10 +47,10 @@ and print it, working in whole cents throughout — never floating point money.
   order (e.g. `user10` sorts before `user2`).
 
 **Source**
-- `vault/stripe/q03_chat_billing/question.md`
-- `vault/stripe/q03_chat_billing/solution.md`
-- `vault/Quick_Check/problems/q03_chat_billing/problem.md`
-- `vault/Quick_Check/problems/q03_chat_billing/REPORT.md`
+- `vault/interviews/companies/stripe/problems/q03_chat_billing/problem.md`
+- `vault/interviews/companies/stripe/study/10-solutions/q03_chat_billing.md`
+- `vault/interviews/companies/stripe/problems/q03_chat_billing/problem.md`
+- `vault/interviews/companies/stripe/problems/q03_chat_billing/REPORT.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

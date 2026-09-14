@@ -50,7 +50,7 @@ which for some templates is astronomically large.
   when that stops being true.
 
 **Source**
-- `vault/stripe/qA03_lc1087_brace_expansion/question.md`, `vault/stripe/qA03_lc1087_brace_expansion/solution.md`, `vault/Quick_Check/problems/qA03_lc1087_brace_expansion/problem.md`
+- `vault/interviews/companies/stripe/problems/qA03_lc1087_brace_expansion/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/qA03_lc1087_brace_expansion.md`, `vault/interviews/companies/stripe/problems/qA03_lc1087_brace_expansion/problem.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 45 min, self-graded notes):

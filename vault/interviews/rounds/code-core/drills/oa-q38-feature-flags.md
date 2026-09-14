@@ -48,7 +48,7 @@ the allow/deny lists so even an allowlisted user needs its prerequisites.
   fails the rule — three different failure shapes worth naming separately.
 
 **Source**
-- `vault/stripe/q38_feature_flags/question.md`, `vault/stripe/q38_feature_flags/solution.md`, `vault/Quick_Check/problems/q38_feature_flags/problem.md`
+- `vault/interviews/companies/stripe/problems/q38_feature_flags/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/q38_feature_flags.md`, `vault/interviews/companies/stripe/problems/q38_feature_flags/problem.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

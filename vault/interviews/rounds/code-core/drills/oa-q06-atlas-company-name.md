@@ -56,10 +56,10 @@ name whose canonical form is empty is never available and never registered.
   registrant, on the very next request.
 
 **Source**
-- `vault/stripe/q06_atlas_company_name/question.md`
-- `vault/stripe/q06_atlas_company_name/solution.md`
-- `vault/Quick_Check/problems/q06_atlas_company_name/problem.md`
-- `vault/Quick_Check/problems/q06_atlas_company_name/REPORT.md`
+- `vault/interviews/companies/stripe/problems/q06_atlas_company_name/problem.md`
+- `vault/interviews/companies/stripe/study/10-solutions/q06_atlas_company_name.md`
+- `vault/interviews/companies/stripe/problems/q06_atlas_company_name/problem.md`
+- `vault/interviews/companies/stripe/problems/q06_atlas_company_name/REPORT.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):

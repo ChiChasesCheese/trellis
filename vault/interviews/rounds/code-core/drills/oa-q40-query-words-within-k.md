@@ -49,7 +49,7 @@ word-to-sorted-positions index so repeated queries don't rescan it.
   sentinel for both.
 
 **Source**
-- `vault/stripe/q40_query_words_within_k/question.md`, `vault/stripe/q40_query_words_within_k/solution.md`, `vault/Quick_Check/problems/q40_query_words_within_k/problem.md`
+- `vault/interviews/companies/stripe/problems/q40_query_words_within_k/problem.md`, `vault/interviews/companies/stripe/study/10-solutions/q40_query_words_within_k.md`, `vault/interviews/companies/stripe/problems/q40_query_words_within_k/problem.md`
 
 **Attempt log**
 - [ ] Attempt 1 (date, 60 min, self-graded notes):
