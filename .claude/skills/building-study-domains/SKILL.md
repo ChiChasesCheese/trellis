@@ -44,7 +44,7 @@ finished step, and the next action. A new session resumes from it.
    disjoint leaf range and have it dedupe against existing card fronts. Card mix per leaf: the
    mechanism (why it works), the number or limit, the contrast with the nearest alternative, the
    failure scenario. Cards and reading bodies are written in Chinese. Leaves no corpus covers go
-   through `trellis scaffold <leaf>` → `trellis import`.
+   through `trellis grow --leaf <domain>:<leaf>` → `grow --import` (scaffold carries no language rules).
    *Done when* `digest --status` shows every leaf done, `stats` shows no leaf without cards, and
    `validate` reports no `not_self_contained` or `leans_on_source` warnings.
 
