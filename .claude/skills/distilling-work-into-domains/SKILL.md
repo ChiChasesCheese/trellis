@@ -54,7 +54,7 @@ company. The employer's code, identifiers and data stay in the private tier.
    shaped like the existing ones in `vault/system-design/cases/`: frontmatter `nodes`, `title`,
    `codebase: work-<neutral-alias>`, `ref: <YYYY-MM the decision was read>`,
    `artefact: work:<generic decision kind>`; the employer repo's paths and SHAs stay in `leaves.md`;
-   body = the problem in general terms, the options, the choice and its reasoning in the leaf's
+   body (in Chinese, terms in English in parentheses) = the problem in general terms, the options, the choice and its reasoning in the leaf's
    vocabulary, what it cost, what the learner would do differently. Round numbers to an order of
    magnitude. Then extend the matching story in `vault/interviews/core/stories/` with a link to the case.
    *Done when* `uv run trellis --all validate` has 0 errors.

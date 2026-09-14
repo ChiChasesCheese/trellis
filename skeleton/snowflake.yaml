@@ -238,16 +238,16 @@ nodes:
         summary: 在一个不可变、带版本的存储层上，原子性、一致性、隔离性与持久性具体意味着什么。
         requires: [architecture.three-layer-model]
       - id: txn.snapshot-isolation
-        title: 快照隔离（snapshot isolation）
-        summary: 每条语句或每个事务都能看到表在某个时间点上的一致视图，且不会阻塞其他读写者。
+        title: 隔离级别：READ COMMITTED 与一致性读
+        summary: 普通表只支持 READ COMMITTED——每条语句看到语句开始时已提交的数据；读不阻塞写，基于不可变微分区的多版本读取；Stream 在事务内提供可重复读（repeatable read）。
         requires: [txn.acid-guarantees]
       - id: txn.mvcc-immutable-partitions
         title: 基于不可变微分区的 MVCC
         summary: 一次写入从不就地修改微分区，而是生成一个新的表版本，引用新写入的分区与未变化的分区。
         requires: [storage.micro-partition-format, txn.snapshot-isolation]
       - id: txn.optimistic-concurrency-conflicts
-        title: 乐观并发与写冲突
-        summary: 两个并发写入者操作重叠数据时，是在提交时才检测冲突，而不是预先对行加锁。
+        title: 写并发：表级锁与写冲突
+        summary: 普通表上 UPDATE、DELETE、MERGE 会加锁，通常阻塞同表上其他 UPDATE/DELETE/MERGE，而 INSERT 与 COPY 一般可以并行；锁等待超时与死锁如何表现。
         requires: [txn.mvcc-immutable-partitions]
       - id: txn.ddl-as-transaction
         title: DDL 即事务

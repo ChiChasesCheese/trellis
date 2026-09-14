@@ -23,12 +23,15 @@ Rules that are not derivable from the code:
   harmless to `trellis` (it only reads `*.md`). Root `pytest` is scoped to `tests/` via
   `pyproject.toml`; run a kit's suite from inside its folder (`cd vault/interviews/companies/stripe && python3 -m pytest problems -q`).
 - `core/resume/resume.tex` is the only resume source. Company folders link to `core/`, never copy it.
+- **Chi reviews in Chinese.** Every learner-facing text (skeleton titles, readings, cards, drills,
+  study articles) is Chinese, technical terms in English in parentheses. A skeleton without `lang`
+  is `zh`; only an older English domain says `lang: en`.
 
 ## Project skills (`.claude/skills/`)
 
 | Skill | Reach for it when |
 |---|---|
-| `building-study-domains` | learning a subject systematically as a trellis domain (Kafka, Snowflake internals): field survey → skeleton → corpus → cards → drills → Anki loop |
+| `building-study-domains` | learning a subject systematically as a trellis domain (Kafka, Snowflake internals): field survey → Chinese skeleton → corpus → cards (digest / grow, card agents) → grown-card review → readings → drills → Anki loop; progress in `vault/<domain>/BUILD.md` |
 | `distilling-work-into-domains` | connecting real work or an employer codebase to domain leaves as cases and stories; private tier stays on the work machine |
 | `building-company-interview-kits` | preparing a company's interview loop in `vault/interviews/companies/<co>/` |
 
@@ -63,6 +66,9 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
 
 - The main session orchestrates; **subagents are `sonnet`, at most 3 in parallel, and never spawn their own agents**.
   There is no settings key for this — it is a rule, apply it by passing `model: "sonnet"`.
+  When sonnet hits its session limit, relaunch the remaining work on `model: "opus"` (Chi, 2026-09-14).
+- Give every relaunchable agent a resume rule in its prompt (check what already exists, skip it),
+  and put long shared instructions in one prompt file per group rather than in the Agent call.
 - Tasks are atomic: one agent → one directory it owns → one deliverable that is verifiable by
   a command (`pytest`, `check_tree.py`, a row count). No shared files between parallel agents.
 - Progress is durable: after every accepted task append a row to the company's `LEDGER.md`,
@@ -72,6 +78,9 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
   resume from the ledger, do not redo accepted tasks.
 - Git in a worktree: the rtk hook rewrites `git` and the worktree guard then refuses it —
   call `/usr/bin/git ...` in plain, single commands. Merge PRs only when Chi says so.
+  Chi set `worktree.bgIsolation: "none"` (2026-09-14); sessions started before that stay isolated
+  and cannot run `git -C ~/Code/trellis` — Chi pulls the main checkout from a normal terminal.
+  Agents may not edit permission or isolation settings themselves; hand Chi the exact snippet.
 - Never accept a subagent's "done": re-run `tools/verify_suites.py` (reference green **and** empty
   starter red) and `check_tree.py --strict` yourself. A 429 usage-limit death leaves partial files —
   salvage and finish them, don't respawn from scratch.
@@ -87,7 +96,13 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
 - Paywalled aggregators (trueinterview) still expose intro + part outline via WebFetch: enough to
   rebuild the problem, labelled **(reconstructed)**.
 - `uv run trellis --all anki-push` needs desktop Anki running (AnkiConnect on :8765). Company kits are
-  not trellis domains: syncing adds no cards for them.
+  not trellis domains: syncing adds no cards for them. A domain with 0 cards builds no deck, so it
+  does not appear in Anki until step 4 of `building-study-domains` is done.
+- `trellis --all build --lang zh` aborts on the first Chinese-native domain; build without `--lang`.
+- `trellis ingest` of `chapters:` URLs needs `uv run --extra clip`; a page under ~2.5k chars of prose
+  is skipped as an index.
+- `trellis scaffold` prompts carry no language rules; write cards through `digest` or `grow`, which do.
+- `python3 -c "…"` that builds a path at runtime is refused by the guard like a heredoc: use a script file.
 
 ## Commands
 
@@ -98,4 +113,13 @@ cd vault/interviews/companies/stripe && python3 -m pytest problems -q   # a kit'
 python3 tools/verify_suites.py . "problems/q1*"   # kit acceptance gate (run inside the kit)
 python3 tools/coverage.py                          # sighting-weighted coverage → reports/COVERAGE.md
 python3 vault/interviews/core/leetcode/lc_company.py Snowflake   # LeetCode company-tag list
+python3 tools/contents.py                          # regenerate a kit's CONTENTS.md (inside the kit)
+
+# study domain (skill building-study-domains)
+uv run --extra clip trellis ingest <corpus>        # fetch + archive a corpus
+uv run trellis triage <corpus> -o prompt.md        # → proposals/<corpus>.json → trellis accept
+uv run trellis --domain <d> digest <corpus> --status | --leaf L -n 5 -o p.md | --import a.json --leaf L
+uv run trellis grow --leaf <d>:<leaf> -o p.md      # cards for a leaf no corpus covers; --import a.json
+uv run trellis --domain <d> stats                  # cards per branch, leaves without cards
+uv run trellis --all sync && uv run trellis --all build && uv run trellis --all anki-push
 ```

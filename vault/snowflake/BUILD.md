@@ -18,7 +18,7 @@
 
 ## Skeleton (step 2)
 
-`skeleton/snowflake.yaml` — English (no `lang` key), 16 top-level nodes, 110 leaves, `requires` edges on most non-foundational leaves. `uv run trellis --domain snowflake validate` → 0 errors.
+`skeleton/snowflake.yaml` — Chinese (`lang: zh`, translated 2026-09-14, ids and `requires` verified unchanged), 16 top-level nodes, 110 leaves, `requires` edges on most non-foundational leaves. `uv run trellis --domain snowflake validate` → 0 errors.
 
 | Node | Leaves |
 |---|---:|
@@ -43,11 +43,33 @@
 
 | Date | Step | Result | Evidence |
 |---|---|---|---|
-| 2026-09-14 | 1 survey | 6 outlines identified (docs TOC official) | skeleton header; this table |
-| 2026-09-14 | 2 skeleton | 126 nodes / 110 leaves | `validate` 0 errors; commit 495c25c |
+| 2026-09-14 | 1 survey | 6 outlines identified (docs TOC official) | skeleton header; table above |
+| 2026-09-14 | 2 skeleton | 126 nodes / 110 leaves; translated to Chinese | `validate` 0 errors; id/requires comparison script equal |
+| 2026-09-14 | 3 corpus | `corpora/snowflake-docs.yaml`: 36 docs URLs, 35 ingested (fail-safe page skipped as too short); triage 34 readings (Chinese) + 1 gap; 77/110 leaves have a reading | `proposals/snowflake-docs.json`; `stats` readable sources 77/110 |
+| 2026-09-14 | 4 cards (in progress) | group C done: pruning, security, sharing, openplatform, cost — 35 leaves, 174 cards (24 digest, 11 grow); groups A and B relaunched on opus after the sonnet session limit | `validate` 0 errors, no self-containment warnings |
+| 2026-09-14 | 4 cards | group B done: cache, txn, continuity, semistructured, ingestion, pipelines — 40 leaves (38 this run: 29 digest, 9 grow), 196 cards this run | `validate` 0 errors; stats full leaf coverage per B node |
+| 2026-09-14 | 2 skeleton fix | cards contradicted the skeleton: `txn.snapshot-isolation` retitled to READ COMMITTED; `txn.optimistic-concurrency-conflicts` summary now says UPDATE/DELETE/MERGE take table locks | docs: transactions page; ids unchanged |
+
+## Gaps from triage
+
+- `security.end-to-end-client-side-encryption` (proposed leaf): TLS in transit plus client-side encryption with a customer-held master key, distinct from `security.encryption-key-hierarchy`.
+
+## Grown cards to review (step 5)
+
+Written by `grow` without a source; check these claims first:
+- `openplatform.snowflake-postgres`: the product is new, every card.
+- `cost.ai-token-metering`: the `CORTEX_FUNCTIONS_*` view names.
+- `security.encryption-key-hierarchy`: key rotation about every 30 days, rekeying of keys older than a year.
+- `security.trust-center-posture`: scanner details.
+- Thin-source digest leaves: the three sharing leaves shared one short intro page (marketplace listings, reader-account billing added from general knowledge); `openplatform.external-engine-commit-protocol` follows the Iceberg spec rather than its page.
+- Group B (grow, no source): `continuity.clone-storage-billing` (`RETAINED_FOR_CLONE_BYTES`), `semistructured.schema-evolution-tables` (allowed column changes: add column, drop NOT NULL), 7-day Fail-safe on the continuity cards.
+- `ingestion.datastream-kafka-compatible`: product announced at Summit 2026, private preview; cards carry no numbers.
+- Task graph size limit left out of the pipelines cards (skeleton says 100, source silent).
+- Group A will add its own list here.
 
 ## Next action
 
-1. Finish step 2's criterion: write the mapping table "outline heading → leaf id or OUT OF SCOPE (reason)" for every heading of outlines 1–3 below this section; add leaves for any unmapped heading and re-run `validate`.
-2. Step 3: declare free corpora (`corpora/snowflake-paper.yaml` with the paper; `corpora/snowflake-docs.yaml` with `chapters:` URLs for the key docs pages) → `trellis ingest` → `triage` → `accept`.
-3. Steps 4–8 as in the skill: digest cards leaf by leaf (≤ 3 sonnet agents, disjoint leaf ranges), readings + `clip`, one drill per top-level node linked to `../interviews/companies/snowflake/` problems (e.g. sd03, sd08, sd12) and to work cases from `distilling-work-into-domains`, zh translation, build and `anki-push`.
+1. Finish step 4: accept group A (architecture, storage, metadata, warehouse, query); `stats` must show 110/110 leaves with cards.
+2. Ship a first deck: `trellis --all sync` → `validate` → `build` → `anki-push`.
+3. Step 5 review of the grown-card list above, then step 6 readings for the 33 leaves without one (SIGMOD 2016 paper, engineering blog), then step 7 drills per top-level node linked to `../interviews/companies/snowflake/` (sd03, sd08, sd12).
+4. Still owed from step 2: the outline heading → leaf mapping table for outlines 1–3.
