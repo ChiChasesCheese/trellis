@@ -26,7 +26,15 @@ Rules that are not derivable from the code:
 
 ## Interview kit methodology (the Stripe way — reuse for every company)
 
-1. `catalog/raw/` first: one file per source, every fact with URL + date; nothing rewritten.
+Full procedure, lessons and red flags: `.claude/skills/building-company-interview-kits/SKILL.md`.
+
+0. **GitHub first, always.** Before any web research, search GitHub for what others already
+   curated (`gh api -X GET search/repositories -f q="<co> interview"`, `search/code`, company-wise
+   LeetCode repos), then distill into `catalog/raw/github_repos.md` with a confidence per source.
+   Only then go to forums/aggregators. The coverage denominator must include what GitHub found.
+   - LeetCode originals never get a full kit: run `python3 vault/interviews/core/leetcode/lc_company.py <Company>`
+     (link + tags + frequency, tiered A/B/C); map to kit ids in `core/leetcode/companies/<co>.kitmap.json`.
+1. `catalog/raw/`: one file per source, every fact with URL + date; nothing rewritten.
 2. `catalog/CATALOG.md`: one row per problem — aliases, stage, parts, last asked, `#refs`
    (independent sources), confidence (high/medium/low), URLs. Rank by stage × refs × recency;
    the top ~20% of rows must cover ~80% of reported sightings (write the cut line down).
@@ -45,7 +53,7 @@ Rules that are not derivable from the code:
 
 ## Orchestration rules for multi-agent work in this repo
 
-- The main session (Fable 5.1) orchestrates; **subagents are `sonnet`, at most 3 in parallel**.
+- The main session orchestrates; **subagents are `sonnet`, at most 3 in parallel, and never spawn their own agents**.
   There is no settings key for this — it is a rule, apply it by passing `model: "sonnet"`.
 - Tasks are atomic: one agent → one directory it owns → one deliverable that is verifiable by
   a command (`pytest`, `check_tree.py`, a row count). No shared files between parallel agents.
@@ -56,6 +64,22 @@ Rules that are not derivable from the code:
   resume from the ledger, do not redo accepted tasks.
 - Git in a worktree: the rtk hook rewrites `git` and the worktree guard then refuses it —
   call `/usr/bin/git ...` in plain, single commands. Merge PRs only when Chi says so.
+- Never accept a subagent's "done": re-run `tools/verify_suites.py` (reference green **and** empty
+  starter red) and `check_tree.py --strict` yourself. A 429 usage-limit death leaves partial files —
+  salvage and finish them, don't respawn from scratch.
+
+## Gotchas
+
+- The worktree guard rejects heredocs, `for` loops and `$var` in commands: write the script to
+  `$CLAUDE_JOB_DIR/tmp/*.py` with Write, then run `python3 <script>`.
+- Plain `python3` has no pytest: `uv run --project <worktree> --with pytest python -m pytest ...`; `git checkout uv.lock` if uv touches it.
+- macOS `sed -i ''`; relative links from `loop/rounds/<round>/<id>/` to the kit root are `../../../`.
+- Counts in prose (cut line, coverage, "N problems") come from a script (`tools/pareto.py`,
+  `tools/coverage.py`, `summary.py`), never from memory — hand counts were wrong twice.
+- Paywalled aggregators (trueinterview) still expose intro + part outline via WebFetch: enough to
+  rebuild the problem, labelled **(reconstructed)**.
+- `uv run trellis --all anki-push` needs desktop Anki running (AnkiConnect on :8765). Company kits are
+  not trellis domains: syncing adds no cards for them.
 
 ## Commands
 
@@ -63,4 +87,7 @@ Rules that are not derivable from the code:
 uv run trellis --all validate                  # 0 errors is the bar
 uv run --with pytest python -m pytest -q       # trellis tests (tests/ only)
 cd vault/interviews/companies/stripe && python3 -m pytest problems -q   # a kit's suite
+python3 tools/verify_suites.py . "problems/q1*"   # kit acceptance gate (run inside the kit)
+python3 tools/coverage.py                          # sighting-weighted coverage → reports/COVERAGE.md
+python3 vault/interviews/core/leetcode/lc_company.py Snowflake   # LeetCode company-tag list
 ```
