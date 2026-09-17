@@ -1,7 +1,7 @@
 # Snowflake 面试 Loop 知识树（受限 YAML：2 空格缩进、`key: value`、`- item`、行内列表 `[a, b]`）
 # 校验：python3 loop/tree/check_tree.py [--strict]   （目录未建 = warning；--strict 视为 error）
 # 节点：round → skill → problems（rounds ID；OA 题为 problems/ 下 qNN，用 `q` 前缀）→ study（loop/ 下相对路径）
-# 非编码轮 ID：rc = 01_recruiter · exp = 06_project_deep_dive · hm = 07_hm_behavioral · tm = 08_team_matching（bank.json）
+# 非编码轮 ID：ai = 00_ai_screen · rc = 01_recruiter · exp = 06_project_deep_dive · hm = 07_hm_behavioral · tm = 08_team_matching（bank.json）
 version: 1
 prereq:
   study: [study/00-prereq/01-python-for-interviews.md, study/00-prereq/02-concurrency-basics.md, study/00-prereq/03-distributed-systems-vocab.md, study/00-prereq/04-snowflake-primitives.md]
@@ -11,14 +11,14 @@ rounds:
   - id: 00_ai_screen
     name: Chakra AI 语音筛（20 min，BQ + 项目）
     duration_min: 20
-    study: [study/10-rounds/00-ai-screen.md]
+    study: [study/10-rounds/00-ai-screen.md, loop/rounds/00_ai_screen/playbook.md, loop/rounds/00_ai_screen/stories.md]
     skills:
       - id: evidence_bearing_answers
-        name: headline → mechanism → number → learning；rubric 关键词说出口
-        problems: [rc]
+        name: headline → mechanism → "I decided" → 量级 → learning；JD 关键词说出口（题库 A/C/D 段）
+        problems: [ai]
       - id: applied_scenarios_verbal
-        name: 口述场景题骨架（clarify → 3 步 → 真实例子 → trade-off）
-        problems: [rc]
+        name: 口述场景题骨架（clarify → 3 步 → 真实例子 → trade-off；题库 B 段 18 题）
+        problems: [ai]
 
   - id: 01_recruiter
     name: Recruiter / HR call

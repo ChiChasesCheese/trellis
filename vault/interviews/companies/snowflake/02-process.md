@@ -22,9 +22,9 @@
 ## 1. Chakra AI 语音筛选（当前）
 
 - **形式（一手 ×3，2026-06 ~ 08）**：约 **20 分钟**；开麦克风 + 摄像头 + **全屏共享**；**禁外接显示器**；界面左侧实时转录双方对话、右侧自己画面；内容 = **BQ + 过去的项目**，AI 会对你说的做总结复述；**无 coding**（三条一手均未提写代码）。有一条帖子标题就是 "Snowflake General SWE AI Interview" —— 与 GenSWE 同通道。
-- **HackerRank 侧**：Chakra 2026-07 起支持内嵌代码编辑器；邮件写了 "applied scenarios" → 准备**口头**讲后端场景（`05-applied-scenarios.md`），写代码可能性低。
+- **HackerRank 侧**：Chakra 2026-07 起支持内嵌代码编辑器；邮件写了 "applied scenarios" → 准备**口头**讲后端场景（`loop/rounds/00_ai_screen/scenarios.md`，12 题），写代码可能性低。
 - **打分**：Reporter 只读 transcript，每条 expectation Met/Partially/Not Met/Not Assessed，JD must-have 加权；recruiter 看分数 + 带时间戳的引用 + 视频。人做决定（Ashby 邮件明说）。
-- **Snowflake 员工也不清楚这个环节**（Blind 2026-05-12 帖，员工只贴了 chakra.sh 链接）→ 没人能给内部提示，按 `03-chakra-playbook.md` 打。
+- **Snowflake 员工也不清楚这个环节**（Blind 2026-05-12 帖，员工只贴了 chakra.sh 链接）→ 没人能给内部提示，按 `loop/rounds/00_ai_screen/playbook.md` 打。
 - **AI 筛后的拒信时间线：无一手数据。**
 
 ## 2. 电面 / onsite 题型（为下一轮预留）

@@ -1,6 +1,6 @@
 # 00-essentials · 阅读顺序
 
-> 读者画像：PayPal 后端 1.5 年（Java/Kotlin/Snowflake SQL、Kafka、Spark），SQL 管线强，限时算法/类设计弱。五篇覆盖电面 coding、OOD、OA、SD 四类技术轮；非技术轮（recruiter/HM/Chakra/team matching）见 `../../fit.md`、`../../03-chakra-playbook.md`、`../../04-answer-bank.md`。
+> 读者画像：PayPal 后端 1.5 年（Java/Kotlin/Snowflake SQL、Kafka、Spark），SQL 管线强，限时算法/类设计弱。五篇覆盖电面 coding、OOD、OA、SD 四类技术轮；非技术轮（recruiter/HM/Chakra/team matching）见 `../../fit.md`、`../../loop/rounds/00_ai_screen/`（Chakra 一站式）、`../../04-answer-bank.md`。
 
 | 顺序 | 文件 | 对应轮次 | 先修 |
 |---|---|---|---|

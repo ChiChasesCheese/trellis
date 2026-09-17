@@ -1,6 +1,6 @@
 # fit · Why Snowflake / What do you know / Why leave（English scripts）
 
-> 对应 Stripe 的 `stripe-fit.md`，只写 Snowflake 特有的话术。自我介绍在 `03-chakra-playbook.md` §2。数字来自 `01-company-brief.md`（全部带来源）。
+> 对应 Stripe 的 `stripe-fit.md`，只写 Snowflake 特有的话术。自我介绍在 `loop/rounds/00_ai_screen/playbook.md` §2。数字来自 `01-company-brief.md`（全部带来源）。
 
 ## 1. Why Snowflake?（60 s）
 

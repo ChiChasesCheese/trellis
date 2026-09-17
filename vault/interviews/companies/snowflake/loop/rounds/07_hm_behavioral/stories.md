@@ -1,6 +1,6 @@
 # 故事 × 8 条价值观 覆盖矩阵（recruiter / expertise / HM / team matching 四轮共用）
 
-> 故事本体在 `../../../../../core/stories/evidence-base.md`（S1–S9，含诚实红线）；逐题答案在 `../../../../../core/answers/`（Q1–Q24）；英文口述稿在 `../../../03-chakra-playbook.md` §3–§4 与 `../../../04-answer-bank.md`。**这里不复制故事，只做映射与检查表。**
+> 故事本体在 `../../../../../core/stories/evidence-base.md`（S1–S9，含诚实红线）；逐题答案在 `../../../../../core/answers/`（Q1–Q24）；英文口述稿在 `../00_ai_screen/stories.md`（S1–S10 + 追问版）与 `../../../04-answer-bank.md`。**这里不复制故事，只做映射与检查表。**
 > 用法：`mock.py bq hm -n 5` 抽完后，在下表勾掉命中的格子；一组 5 题至少覆盖 3 个故事、3 条价值观。
 
 ## 矩阵

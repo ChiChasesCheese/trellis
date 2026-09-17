@@ -33,7 +33,7 @@
 
 ## 三、必备答案清单
 
-- 45 s / 60 s / 90 s 三版自我介绍（`../../../03-chakra-playbook.md` §2 为 60 s 版）。
+- 45 s / 60 s / 90 s 三版自我介绍（`../00_ai_screen/playbook.md` §2 为 60 s 版）。
 - Why Snowflake 60 s（`../../../fit.md` §1）。
 - 三个方向偏好各一句理由（`../../../fit.md` §5）。
-- Level / comp 两句话（`../../../03-chakra-playbook.md` §5）。
+- Level / comp 两句话（`../00_ai_screen/playbook.md` §7）。

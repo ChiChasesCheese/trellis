@@ -10,7 +10,7 @@
 
 | 段 | 长度 | 在哪 |
 |---|---|---|
-| 自我介绍 | 45 s / 60 s | `../../../03-chakra-playbook.md` §2（60 s 版，删掉 intern 句即 45 s） |
+| 自我介绍 | 45 s / 60 s | `../../loop/rounds/00_ai_screen/playbook.md` §2（60 s 版，删掉 intern 句即 45 s） |
 | Why Snowflake | 60 s | `../../../fit.md` §1 |
 | 方向偏好 × 3 | 各一句 | `../../../fit.md` §5；`../10-rounds/08-team-matching.md` |
 | Level / comp / 签证 | 各一句 | 见下 |

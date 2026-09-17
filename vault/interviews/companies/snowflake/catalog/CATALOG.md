@@ -97,7 +97,7 @@
 
 | 轮 | 形式 | 问什么 | 评什么 / 挂点 | 来源 |
 |---|---|---|---|---|
-| **AI（Chakra）** | 20 min 语音，摄像头+全屏+单显示器 | 经历 / 场景 / 协作决策 / 反问（无 coding） | transcript 证据：clarity · ownership · structured reasoning · specific examples；theoretical = Not Met | `../03-chakra-playbook.md`、`../raw/chakra.md` |
+| **AI（Chakra）** | 20 min 语音，摄像头+全屏+单显示器 | 经历 / 场景 / 协作决策 / 反问（无 coding） | transcript 证据：clarity · ownership · structured reasoning · specific examples；theoretical = Not Met | `../loop/rounds/00_ai_screen/`（playbook · stories · scenarios · questions 71 题）、`../raw/chakra.md` |
 | **Recruiter/HR** | 15–30 min | 背景、infra 经验、方向偏好、why Snowflake、时间线；不报薪资数字 | 具体化的 why（不是"大厂"）| raw/bq_hm_recruiter §1 |
 | **Expertise / 项目深挖** | 早期职业：嵌在 coding 轮前 15–20 min + onsite 一轮 resume；IC3 独立 40 min | 选一个项目：why/how 每个决策、备选方案、外部库、可用性/容错 | 只会"做了什么"讲不出"为什么、还有什么选项、现在怎么重做" | raw/bq_hm_recruiter §3 |
 | **HM / BQ** | onsite 一轮 30–45 min，逐题记笔记 | mistake · ownership · 陌生团队协作 · teamwork · conflict · pushback（disagree-and-commit）· prioritize · customer first · raise the bar | 8 条价值观逐条对应（Own It / Get It Done / Integrity Always 最常）| raw/bq_hm_recruiter §2 |
