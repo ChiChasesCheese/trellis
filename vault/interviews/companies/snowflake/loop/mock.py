@@ -16,8 +16,8 @@ Rounds:
   pc  03_phone_coding    40 min   problem.md   (starter_template.py/starter.py/solution.py/test_*.py)
   od  04_ood             45 min   problem.md   (same shape; class-design rounds)
   sd  05_system_design   45 min   prompt.md    (no automated test; rubric.md printed as a hint)
-  01_recruiter / 06_project_deep_dive / 07_hm_behavioral / 08_team_matching: bank.json banks, drawn via `bq`
-  (aliases: recruiter · expertise/exp · hm/behavioral · team). OA problems live in ../problems (use drill.py).
+  00_ai_screen / 01_recruiter / 06_project_deep_dive / 07_hm_behavioral / 08_team_matching: bank.json banks, drawn via `bq`
+  (aliases: ai/chakra · recruiter · expertise/exp · hm/behavioral · team). OA problems live in ../problems (use drill.py).
 """
 from __future__ import annotations
 
@@ -46,6 +46,8 @@ DEFAULT_MINUTES = {"pc": 40, "od": 45, "sd": 45, "ps": 45, "cd": 60, "int": 60, 
 SHOW_FILE = {"bs": "README.md", "sd": "prompt.md"}  # everything else: problem.md
 
 NONCODING_ALIASES = {
+    "ai": "00_ai_screen",
+    "chakra": "00_ai_screen",
     "recruiter": "01_recruiter",
     "expertise": "06_project_deep_dive",
     "exp": "06_project_deep_dive",
@@ -382,6 +384,10 @@ def cmd_bq(a):
         print(f"[{i}/{n}] ({q.get('round', '?')}) {q.get('q', '')}")
         if q.get("principle"):
             print(f"    principle: {q['principle']}")
+        if q.get("story"):
+            print(f"    story: {q['story']}")
+        if q.get("keys"):
+            print(f"    keys: {q['keys']}")
         if q.get("source"):
             print(f"    source: {q['source']}")
         print(f"    限时 {a.minutes} 分钟\n")

@@ -1,20 +1,74 @@
 [
-  {"round": "ai", "q": "Tell me about yourself and your current role.", "principle": "", "source": "Chakra 一手（t.me 28661/28991/29267）；03-chakra-playbook §2"},
-  {"round": "ai", "q": "Walk me through a recent project and your specific contribution.", "principle": "Own It", "source": "tryexponent 2026-08；prachub 2026-07 报告"},
-  {"round": "ai", "q": "What's the hardest technical challenge you've faced, and how did you resolve it?", "principle": "Be Excellent", "source": "tryexponent 2026-08"},
-  {"round": "ai", "q": "Describe a technical decision you made and the trade-offs involved.", "principle": "Integrity Always", "source": "tryexponent 2026-08"},
-  {"round": "ai", "q": "Suppose a nightly pipeline that computes customer charges starts producing wrong totals for a subset of customers. How would you find and fix it?", "principle": "Get It Done", "source": "邮件 'applied scenarios'；05-applied-scenarios §1"},
-  {"round": "ai", "q": "Do you have any questions for us?", "principle": "", "source": "邮件四段之四；06-questions-to-ask §A"},
-  {"round": "recruiter", "q": "Tell me about your background and what you've been working on at PayPal.", "principle": "", "source": "t.me 29383（Infra 岗 HR call，<15 min）"},
-  {"round": "recruiter", "q": "What kind of infrastructure / platform work have you done, and what direction do you want to go next?", "principle": "", "source": "t.me 29383；1p3a thread-1186534（HR Screening, Infrastructure Role）"},
-  {"round": "recruiter", "q": "Why Snowflake?", "principle": "Put Customers First", "source": "Aced/Exponent 2026-08；raw/bq_hm_recruiter §1.2"},
-  {"round": "recruiter", "q": "What do you know about Snowflake's products and where the company is going?", "principle": "Think Big", "source": "聚合站共识；fit.md §2"},
-  {"round": "recruiter", "q": "Menlo Park or Bellevue — do you have a location preference, and are you open to relocation?", "principle": "", "source": "GenSWE 官方页（双地点同一 JD）"},
-  {"round": "recruiter", "q": "What is your timeline, and are you interviewing elsewhere?", "principle": "", "source": "聚合站；不透露他家进度"},
-  {"round": "recruiter", "q": "What are your compensation expectations?", "principle": "", "source": "聚合站：此阶段不报数字（'looking for a competitive package'）"},
-  {"round": "recruiter", "q": "What level are you targeting?", "principle": "", "source": "levels.fyi IC1/IC2；Blind down-level 帖；答'看 team 与 scope'"},
-  {"round": "recruiter", "q": "Do you require visa sponsorship now or in the future?", "principle": "", "source": "H-1B 2026-10 生效，需 transfer；core/resume/README"},
-  {"round": "recruiter", "q": "Why are you looking to leave PayPal?", "principle": "Integrity Always", "source": "通用；fit.md §3"},
-  {"round": "recruiter", "q": "Which Snowflake teams or areas interest you most?", "principle": "Think Big", "source": "GenSWE team matching 前置；fit.md §5"},
-  {"round": "recruiter", "q": "Walk me through the GenSWE process — do you have questions about the loop?", "principle": "", "source": "06-questions-to-ask §B（问 Chakra 与 Talent Intake 是否同一环节、OA 有无、team matching 时点）"}
+  {
+    "round": "recruiter",
+    "q": "Tell me about your background and what you've been working on at PayPal.",
+    "principle": "",
+    "source": "t.me 29383（Infra 岗 HR call，<15 min）"
+  },
+  {
+    "round": "recruiter",
+    "q": "What kind of infrastructure / platform work have you done, and what direction do you want to go next?",
+    "principle": "",
+    "source": "t.me 29383；1p3a thread-1186534（HR Screening, Infrastructure Role）"
+  },
+  {
+    "round": "recruiter",
+    "q": "Why Snowflake?",
+    "principle": "Put Customers First",
+    "source": "Aced/Exponent 2026-08；raw/bq_hm_recruiter §1.2"
+  },
+  {
+    "round": "recruiter",
+    "q": "What do you know about Snowflake's products and where the company is going?",
+    "principle": "Think Big",
+    "source": "聚合站共识；fit.md §2"
+  },
+  {
+    "round": "recruiter",
+    "q": "Menlo Park or Bellevue — do you have a location preference, and are you open to relocation?",
+    "principle": "",
+    "source": "GenSWE 官方页（双地点同一 JD）"
+  },
+  {
+    "round": "recruiter",
+    "q": "What is your timeline, and are you interviewing elsewhere?",
+    "principle": "",
+    "source": "聚合站；不透露他家进度"
+  },
+  {
+    "round": "recruiter",
+    "q": "What are your compensation expectations?",
+    "principle": "",
+    "source": "聚合站：此阶段不报数字（'looking for a competitive package'）"
+  },
+  {
+    "round": "recruiter",
+    "q": "What level are you targeting?",
+    "principle": "",
+    "source": "levels.fyi IC1/IC2；Blind down-level 帖；答'看 team 与 scope'"
+  },
+  {
+    "round": "recruiter",
+    "q": "Do you require visa sponsorship now or in the future?",
+    "principle": "",
+    "source": "H-1B 2026-10 生效，需 transfer；core/resume/README"
+  },
+  {
+    "round": "recruiter",
+    "q": "Why are you looking to leave PayPal?",
+    "principle": "Integrity Always",
+    "source": "通用；fit.md §3"
+  },
+  {
+    "round": "recruiter",
+    "q": "Which Snowflake teams or areas interest you most?",
+    "principle": "Think Big",
+    "source": "GenSWE team matching 前置；fit.md §5"
+  },
+  {
+    "round": "recruiter",
+    "q": "Walk me through the GenSWE process — do you have questions about the loop?",
+    "principle": "",
+    "source": "06-questions-to-ask §B（问 Chakra 与 Talent Intake 是否同一环节、OA 有无、team matching 时点）"
+  }
 ]

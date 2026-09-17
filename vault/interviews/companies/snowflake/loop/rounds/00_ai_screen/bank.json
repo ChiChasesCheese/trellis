@@ -1,0 +1,712 @@
+[
+ {
+  "round": "ai",
+  "id": "A01",
+  "segment": "experience",
+  "q": "Tell me about yourself and your current role.",
+  "principle": "",
+  "story": "playbook §2",
+  "keys": "Snowflake-native fee platform · Streams/Tasks/procedures · Java 17 + Gradle + Flyway · Amex pipeline · quality-check framework · interchange migration · schema pool · \"build the primitives I've been consuming\"",
+  "source": "Chakra 一手（t.me 28661/28991/29267）"
+ },
+ {
+  "round": "ai",
+  "id": "A02",
+  "segment": "experience",
+  "q": "Walk me through a recent project and your specific contribution.",
+  "principle": "Own It",
+  "story": "S1",
+  "keys": "good-funds model · COPY INTO + append-only Streams · MERGE on composite key · UDTF FULL OUTER JOIN · Task AFTER A,B · \"inherited a stub, everything from the topology onward is mine\" · ~1,800-line PR",
+  "source": "tryexponent 2026-08；prachub 2026-07"
+ },
+ {
+  "round": "ai",
+  "id": "A03",
+  "segment": "experience",
+  "q": "What's the hardest technical challenge you've faced, and how did you resolve it?",
+  "principle": "Be Excellent",
+  "story": "S3",
+  "keys": "health check paged · 'BT_' || NULL = NULL · wrong UDF overload in shared MERGE · control group + time series · postmortem: 4 reasons e2e missed it · removed two-overload design + versioned DROP · \"fail loudly\"",
+  "source": "tryexponent 2026-08"
+ },
+ {
+  "round": "ai",
+  "id": "A04",
+  "segment": "experience",
+  "q": "What's the project you're most proud of, and why?",
+  "principle": "Think Big",
+  "story": "S5 / S2",
+  "keys": "static split by fee type vs smarter fallback · FULL OUTER JOIN + EQUAL_NULL parity · production query as count(*) shadow · time-windowed MERGE · trigger-status JOIN · toggle off → pre-prod → prod",
+  "source": "聚合站通用"
+ },
+ {
+  "round": "ai",
+  "id": "A05",
+  "segment": "experience",
+  "q": "Tell me about something you built that other engineers now reuse.",
+  "principle": "Make Each Other the Best",
+  "story": "S2",
+  "keys": "contract-config table · EXECUTE IMMEDIATE + RESULT_SCAN executor · PASS/FAIL/WARNING normalization · trigger-status → replicated share row → consumers JOIN · eight rollouts · \"config over code\"",
+  "source": "聚合站通用"
+ },
+ {
+  "round": "ai",
+  "id": "A06",
+  "segment": "experience",
+  "q": "Describe the architecture of the system you work on.",
+  "principle": "",
+  "story": "S1 · `core/tech_stacks/01`",
+  "keys": "pricing (Kotlin/gRPC, rules) → snowglobe (Snowflake, fees & journal) → funding (Rails, payouts) · Kafka → Snowpipe Streaming → Stream/Task · S3 file seam by day · three databases APP / REPLICATION / SHARE (Iceberg) · ~25M transactions a day",
+  "source": "JD \"large-scale production\""
+ },
+ {
+  "round": "ai",
+  "id": "A07",
+  "segment": "experience",
+  "q": "What's the scale of the system, and what breaks at that scale?",
+  "principle": "",
+  "story": "S6 · S5",
+  "keys": "tens of billions of fee rows · hundreds of millions of rows on a peak day · per-row UDF vs set-based · pruning and clustering · time-windowed MERGE · warehouse isolation",
+  "source": "JD \"large-scale\""
+ },
+ {
+  "round": "ai",
+  "id": "A08",
+  "segment": "experience",
+  "q": "How have you used Snowflake beyond running queries?",
+  "principle": "",
+  "story": "S1 · S7",
+  "keys": "Streams offsets · Tasks DAG + SYSTEM$STREAM_HAS_DATA · MERGE semantics · UDTF RETURNS TABLE · zero-copy CLONE in ~2 s · micro-partition metadata · SUSPEND_TASK_AFTER_NUM_FAILURES · Streamlit in Snowflake",
+  "source": "JD \"database internals\""
+ },
+ {
+  "round": "ai",
+  "id": "A09",
+  "segment": "experience",
+  "q": "Tell me about your Java experience.",
+  "principle": "",
+  "story": "`core/tech_stacks/01` · intern",
+  "keys": "Java 17 + Gradle Kotlin DSL orchestration, tests (unit / integration / e2e / health-check / static-analysis), Flyway migrations · Kotlin + Spring Boot + gRPC pricing service as intern · \"database-first, Java for orchestration\"",
+  "source": "JD Java 4/6"
+ },
+ {
+  "round": "ai",
+  "id": "A10",
+  "segment": "experience",
+  "q": "How deep is your SQL? Give me an example of non-trivial SQL you've written.",
+  "principle": "",
+  "story": "S5 · S10",
+  "keys": "four-layer MERGE (synthetic key, windowed ON, trigger-status JOIN, merchant gate) · FULL OUTER JOIN + EQUAL_NULL reconciliation · corrected blast-radius predicate with correlated subquery · TRY_TO_DECIMAL implied decimals",
+  "source": "JD SQL 5/6"
+ },
+ {
+  "round": "ai",
+  "id": "A11",
+  "segment": "experience",
+  "q": "What did you do as an intern?",
+  "principle": "",
+  "story": "`core/stories/resume-evidence-map/04`",
+  "keys": "Kotlin/Spring fee service · Kafka→Snowflake connector with protobuf converter + poison-message isolation · Airflow DAGs scheduling Spark validators · REST log module",
+  "source": "简历 bullet"
+ },
+ {
+  "round": "ai",
+  "id": "A12",
+  "segment": "experience",
+  "q": "Tell me about a side project.",
+  "principle": "",
+  "story": "Quant-Stroller",
+  "keys": "~66K lines / ~470 test files · dual-gate anti-overfitting · DuckDB point-in-time data plane · self-hosted GPU CI — ≤ 45 s, only if asked",
+  "source": "简历"
+ },
+ {
+  "round": "ai",
+  "id": "A13",
+  "segment": "experience",
+  "q": "How do you use AI tools in your work?",
+  "principle": "",
+  "story": "S7",
+  "keys": "Claude Code for review / test-gen / refactor · schema pool so agent sessions run in parallel without DDL collisions · \"tech lead of a team of agents\" · still own every diff",
+  "source": "简历 bullet；CEO 原话"
+ },
+ {
+  "round": "ai",
+  "id": "A14",
+  "segment": "experience",
+  "q": "What's a design document or ADR you wrote, and what happened to it?",
+  "principle": "",
+  "story": "S2",
+  "keys": "MADR format · four options · strictest-wins correctness argument · volume analysis (failures rare → sparse rows) · secure view + per-row UDF disables pushdown · VARIANT cell limit · reviewed, proven for one subject area, sequenced behind ramp",
+  "source": "聚合站 \"design doc\""
+ },
+ {
+  "round": "ai",
+  "id": "A15",
+  "segment": "experience",
+  "q": "Tell me about the on-call and observability you own.",
+  "principle": "",
+  "story": "S3 · S8 · `core/tech_stacks/08`",
+  "keys": "health-check procedures with on-call attributes → Datadog / PagerDuty · Streamlit task monitor · \"data wrong but all tasks green\" → business-invariant assertions · trigger-status as a gate not a report",
+  "source": "JD \"production\""
+ },
+ {
+  "round": "ai",
+  "id": "A16",
+  "segment": "experience",
+  "q": "What would you change about Snowflake, as a heavy user?",
+  "principle": "Put Customers First",
+  "story": "`../../../04-answer-bank.md` §4",
+  "keys": "task-level observability thin · stream staleness silent · want \"stream about to go stale\" signal · Dynamic Tables solve part declaratively · why the scheduling team interests me",
+  "source": "04 §4"
+ },
+ {
+  "round": "ai",
+  "id": "A17",
+  "segment": "experience",
+  "q": "Why do you want to work at Snowflake, and why this role?",
+  "principle": "Put Customers First",
+  "story": "`../../../fit.md`",
+  "keys": "consumer → builder of the primitives · Streams/Tasks/Dynamic Tables/metering · database-first background · GenSWE breadth then team match",
+  "source": "聚合站"
+ },
+ {
+  "round": "ai",
+  "id": "B01",
+  "segment": "scenario",
+  "q": "A nightly pipeline that computes customer charges starts producing wrong totals for a subset of customers. How do you find and fix it?",
+  "principle": "Get It Done",
+  "story": "scenarios §1 · S3",
+  "keys": "scope by data → walk back stages → one hypothesis → fix forward + backfill + invariant check · NULL concat · \"fail loudly\"",
+  "source": "邮件 \"applied scenarios\"；SQL · Prod"
+ },
+ {
+  "round": "ai",
+  "id": "B02",
+  "segment": "scenario",
+  "q": "Design a service that meters usage events and produces a daily bill so that retries never double-charge.",
+  "principle": "Be Excellent",
+  "story": "scenarios §2 · S1",
+  "keys": "idempotency key upsert · deterministic MERGE aggregation on (customer, day, meter) · separate reconciliation job · late events = next-cycle adjustment · raw layer is the audit trail",
+  "source": "DS · SQL"
+ },
+ {
+  "round": "ai",
+  "id": "B03",
+  "segment": "scenario",
+  "q": "You need to change the schema of a large production table — or switch its source of truth — without downtime. How?",
+  "principle": "Be Excellent",
+  "story": "scenarios §3 · S5",
+  "keys": "expand-migrate-contract · nullable columns · shadow-read at scale · flag by cohort · same SQL for validation and production · deploy ≠ release",
+  "source": "DS · DBI"
+ },
+ {
+  "round": "ai",
+  "id": "B04",
+  "segment": "scenario",
+  "q": "A query or a service got slow after a deploy. Walk me through it.",
+  "principle": "Own It",
+  "story": "scenarios §4",
+  "keys": "metrics before reports · bisect the deploy · query profile: partitions scanned / total · per-row → set-based · windowed ON keeps zone-map pruning · revert first if customers affected",
+  "source": "DBI · Prod"
+ },
+ {
+  "round": "ai",
+  "id": "B05",
+  "segment": "scenario",
+  "q": "You're on call and a partner reports their payouts are delayed. What do you do in the first 30 minutes?",
+  "principle": "Own It",
+  "story": "scenarios §5 · S9",
+  "keys": "blast radius + clock · stuck vs late · SLA T+7, disburse after network settles · 15-minute interim update · one owner per hypothesis · region conditional not revert",
+  "source": "Prod"
+ },
+ {
+  "round": "ai",
+  "id": "B06",
+  "segment": "scenario",
+  "q": "How would you build a rate limiter or quota system shared by multiple upstream services?",
+  "principle": "",
+  "story": "scenarios §6",
+  "keys": "token bucket per (tenant, resource) · atomic decrement in shared store · shard + local allowance vs hot key · expose remaining quota · exact for billing, approximate for smoothing",
+  "source": "DS；Stripe q23/cd04"
+ },
+ {
+  "round": "ai",
+  "id": "B07",
+  "segment": "scenario",
+  "q": "Events arrive from Kafka into a warehouse. How do you get exactly-once results?",
+  "principle": "",
+  "story": "scenarios §7",
+  "keys": "exactly-once effect not delivery · commit after write · MERGE WHEN NOT MATCHED inside the DB (no TOCTOU) · replay is a feature · stream offset ≠ business transaction",
+  "source": "DS · SQL；JD Kafka"
+ },
+ {
+  "round": "ai",
+  "id": "B08",
+  "segment": "scenario",
+  "q": "Downstream teams keep reading a table before it's complete. Design a mechanism so they never read partial data.",
+  "principle": "",
+  "story": "scenarios §8 · S2",
+  "keys": "separate written from ready · status row per (subject area, date) · readiness as a JOIN condition · checks as config · SLA monitor pages · handshake solves timing, checks solve content",
+  "source": "DS · SQL"
+ },
+ {
+  "round": "ai",
+  "id": "B09",
+  "segment": "scenario",
+  "q": "Two systems disagree on a number. How do you find out who's right and fix it?",
+  "principle": "Integrity Always",
+  "story": "scenarios §9 · S10",
+  "keys": "normalize both sides · FULL OUTER JOIN + EQUAL_NULL · bucket differences: one-sided / mismatch / timing · explain every bucket first · turn the join into a daily check · retracted my own number",
+  "source": "SQL · Prod"
+ },
+ {
+  "round": "ai",
+  "id": "B10",
+  "segment": "scenario",
+  "q": "Design a scheduler for dependent batch jobs with retries and backfills.",
+  "principle": "",
+  "story": "scenarios §10 · S1",
+  "keys": "DAG with AFTER A,B · data-triggered not clock-triggered · failure budget → suspend + page · backfill = re-enqueue rows, needs idempotent nodes · AFTER guarantees both ran, not same batch → FULL OUTER JOIN self-heals",
+  "source": "DS · DBI"
+ },
+ {
+  "round": "ai",
+  "id": "B11",
+  "segment": "scenario",
+  "q": "A table has billions of rows and queries keep getting slower. What do you do?",
+  "principle": "",
+  "story": "scenarios §11",
+  "keys": "partitions scanned / total · clustering key = dominant predicate, moderate cardinality · one layout per access pattern · skew: NULLs / giant tenant / defaults, compute won't help · window the predicate · clustering cost forever",
+  "source": "DBI · SQL"
+ },
+ {
+  "round": "ai",
+  "id": "B12",
+  "segment": "scenario",
+  "q": "Data arrives late or out of order in a daily batch. How do you keep the day correct?",
+  "principle": "",
+  "story": "scenarios §12 · S1 · S9",
+  "keys": "arrival time vs effective time · scan all partitions + content dedup · closed day → adjustment with pointer · \"expected but not arrived\" check · consumers see a version, not \"the\" number",
+  "source": "DS · SQL"
+ },
+ {
+  "round": "ai",
+  "id": "B13",
+  "segment": "scenario",
+  "q": "Streams versus Dynamic Tables — when would you use which?",
+  "principle": "",
+  "story": "`../../../04-answer-bank.md` §4",
+  "keys": "Streams+Tasks for imperative control: custom MERGE conflict logic, flag mid-DAG, procedure call-outs · Dynamic Tables for pure SELECT with a target lag, engine picks incremental vs full · my parsing/MERGE stages stay tasks, aggregates could be dynamic today",
+  "source": "Snowflake 特定"
+ },
+ {
+  "round": "ai",
+  "id": "B14",
+  "segment": "scenario",
+  "q": "How does Snowflake's architecture make zero-copy cloning and Time Travel possible?",
+  "principle": "",
+  "story": "`core/tech_stacks/03` §1.2",
+  "keys": "immutable micro-partitions · table = versioned list of partition pointers in metadata · clone copies the list not the data · writes diverge · Time Travel = old list kept until retention · my schema pool clones in ~2 s",
+  "source": "Snowflake 特定"
+ },
+ {
+  "round": "ai",
+  "id": "B15",
+  "segment": "scenario",
+  "q": "How do you keep warehouse cost under control in a task-heavy pipeline?",
+  "principle": "",
+  "story": "`core/tech_stacks/03` §2.2(6)",
+  "keys": "per-second billing, 60-s minimum · SYSTEM$STREAM_HAS_DATA gate so tasks don't spin up on empty input · cron windows reverse-engineered from upstream readiness · processing vs dev warehouses isolated · size up temporarily for backlog",
+  "source": "Snowflake 特定"
+ },
+ {
+  "round": "ai",
+  "id": "B16",
+  "segment": "scenario",
+  "q": "How do you design an idempotency key, and what happens when the key store itself fails?",
+  "principle": "",
+  "story": "`core/tech_stacks/10` §4",
+  "keys": "natural key when one exists (invoice number + prefix) else client UUID · push the decision into MERGE WHEN NOT MATCHED atomic semantics · \"check then insert\" has a TOCTOU race · windowed ON trades bounded scan for a documented tiny duplicate risk",
+  "source": "DS"
+ },
+ {
+  "round": "ai",
+  "id": "B17",
+  "segment": "scenario",
+  "q": "How would you roll out a change to a financial calculation safely?",
+  "principle": "Integrity Always",
+  "story": "S5 · `core/tech_stacks/06`",
+  "keys": "flag defaults off · merge ≠ release · shadow run with the production query · cohort by merchant not by traffic · explicit mutual exclusion between old and new writers · rollback is the flag",
+  "source": "DS · Prod"
+ },
+ {
+  "round": "ai",
+  "id": "B18",
+  "segment": "scenario",
+  "q": "One bad tenant is blocking a shared pipeline for everyone. How do you fix the blast radius?",
+  "principle": "Put Customers First",
+  "story": "S2 ADR",
+  "keys": "readiness per merchant not per table · sparse \"one row per failing merchant\" · strictest wins: table-level block evaluated first · mixed deployments safe · reject VARIANT+UDF (pushdown, cell limit)",
+  "source": "DBI · DS"
+ },
+ {
+  "round": "ai",
+  "id": "C01",
+  "segment": "collaboration",
+  "q": "Describe a technical decision you made and the trade-offs involved.",
+  "principle": "Integrity Always",
+  "story": "S5",
+  "keys": "option A smarter fallback vs option B static split by fee type behind a toggle · \"source of truth is a fact, not a runtime decision\" · discovery parity → shadow count(*) · complementary tasks can't double-count · cost: weeks of dual-running",
+  "source": "tryexponent 2026-08"
+ },
+ {
+  "round": "ai",
+  "id": "C02",
+  "segment": "collaboration",
+  "q": "Tell me about a time you disagreed with a teammate or another team. What happened?",
+  "principle": "Embrace Each Other's Differences",
+  "story": "S4",
+  "keys": "50-reply thread across three teams · pulled the data not the org chart · a million US rows vs zero AU · fee_refund_policy = partial · predates the migration · query so they could verify themselves",
+  "source": "聚合站"
+ },
+ {
+  "round": "ai",
+  "id": "C03",
+  "segment": "collaboration",
+  "q": "Tell me about a time you pushed back on a plan or said no.",
+  "principle": "Integrity Always",
+  "story": "S6",
+  "keys": "inherited ML detector · QA six merchants vs prod eighteen thousand · per-row numpy vs 760M rows/day · dies-vs-survives · Phase 1 SQL pushdown, Phase 2 gated · froze Slack + CI/CD until go",
+  "source": "聚合站"
+ },
+ {
+  "round": "ai",
+  "id": "C04",
+  "segment": "collaboration",
+  "q": "Tell me about a time you convinced the team to change an approach.",
+  "principle": "Think Big",
+  "story": "S2 ADR",
+  "keys": "saw the flaw in my own framework · four alternatives with rejected reasons · strictest-wins argument · volume analysis · \"writing down the rejected options is what got it accepted\"",
+  "source": "聚合站"
+ },
+ {
+  "round": "ai",
+  "id": "C05",
+  "segment": "collaboration",
+  "q": "Describe a cross-team project you drove.",
+  "principle": "Own It",
+  "story": "S5 · S9",
+  "keys": "net-settlement program spanning pricing, settlement, payouts and the acquirer · owned the fee side · trigger-status as the cross-team contract · one of three fix owners in the incident",
+  "source": "聚合站"
+ },
+ {
+  "round": "ai",
+  "id": "C06",
+  "segment": "collaboration",
+  "q": "Tell me about a mistake you made and what you changed afterwards.",
+  "principle": "Integrity Always",
+  "story": "S10 · S2",
+  "keys": "first blast-radius predicate wrong by 10× · retracted publicly before remediation · added \"schedule existed at fee time\" · found the upstream creation-lag fragility · now: every check has a granularity decision up front",
+  "source": "聚合站"
+ },
+ {
+  "round": "ai",
+  "id": "C07",
+  "segment": "collaboration",
+  "q": "How do you decide what to prioritize when several things are urgent?",
+  "principle": "Get It Done",
+  "story": "`core/answers` Q20",
+  "keys": "revenue-impacting correctness first · then unblocking others (7-minute RCA) · then roadmap · say what slips before it slips · write the go/no-go down",
+  "source": "聚合站"
+ },
+ {
+  "round": "ai",
+  "id": "C08",
+  "segment": "collaboration",
+  "q": "Have you mentored anyone? How did you help them grow?",
+  "principle": "Make Each Other the Best",
+  "story": "playbook §7",
+  "keys": "newer engineer's exclusion service + journaling-schedule sync plug into my domain · I set the contracts on my side, reviewed his designs against how downstream consumes the events · fee-calc authority in incidents · re-scoped an intern's ML project · onboarding doc maintained since 2024",
+  "source": "Q13 · Q15"
+ },
+ {
+  "round": "ai",
+  "id": "C09",
+  "segment": "collaboration",
+  "q": "Tell me about working with someone whose approach was very different from yours.",
+  "principle": "Embrace Each Other's Differences",
+  "story": "S5 三方 · intern",
+  "keys": "Kotlin service team, Rails payouts team, external acquirer · different release cadences · one shared reconciliation query as the common language · Chicago intern → San Jose",
+  "source": "Q14"
+ },
+ {
+  "round": "ai",
+  "id": "C10",
+  "segment": "collaboration",
+  "q": "Tell me about a time you delivered news people didn't want to hear.",
+  "principle": "Integrity Always",
+  "story": "S6 · S10",
+  "keys": "\"the detector isn't production-ready\" with the numbers · \"my first scope estimate was wrong\" · wrote it down, didn't soften it",
+  "source": "价值观"
+ },
+ {
+  "round": "ai",
+  "id": "C11",
+  "segment": "collaboration",
+  "q": "Tell me about a time you had to deal with ambiguity or an unclear requirement.",
+  "principle": "Think Big",
+  "story": "S6 · S1",
+  "keys": "no business driver on file → wrote the go/no-go instead of guessing · Amex file spec vs implementation drift → code is the truth, doc updated",
+  "source": "Q17"
+ },
+ {
+  "round": "ai",
+  "id": "C12",
+  "segment": "collaboration",
+  "q": "Tell me about shipping something under a hard deadline.",
+  "principle": "Get It Done",
+  "story": "S8 · S6",
+  "keys": "7 minutes from page to RCA, PR same hour, three environments deployed that afternoon · intern's last day: persist the irreplaceable labels first",
+  "source": "价值观"
+ },
+ {
+  "round": "ai",
+  "id": "C13",
+  "segment": "collaboration",
+  "q": "Tell me about a production issue you owned end to end.",
+  "principle": "Own It",
+  "story": "S3",
+  "keys": "forwarded the page to myself · root cause in the thread · postmortem · stopgap then structural fix · monitoring after deploy",
+  "source": "价值观"
+ },
+ {
+  "round": "ai",
+  "id": "C14",
+  "segment": "collaboration",
+  "q": "Tell me about a time you changed a technical plan because of what a customer actually needed.",
+  "principle": "Put Customers First",
+  "story": "S4 · S2",
+  "keys": "AU merchants silently under-charged → tracked feature · fifty bad merchants blocking thirty-five thousand → merchant-level readiness",
+  "source": "价值观"
+ },
+ {
+  "round": "ai",
+  "id": "C15",
+  "segment": "collaboration",
+  "q": "What's the most ambitious thing you've built or proposed?",
+  "principle": "Think Big",
+  "story": "S2 · S1",
+  "keys": "a framework the team onboards onto instead of another feature · merchant-level readiness across every subject area · replacing a legacy payout-side path with a Snowflake-native pipeline",
+  "source": "价值观"
+ },
+ {
+  "round": "ai",
+  "id": "C16",
+  "segment": "collaboration",
+  "q": "How do you hold yourself to a high bar when nobody is checking?",
+  "principle": "Be Excellent",
+  "story": "S7 · S8",
+  "keys": "built the schema pool with three ADRs unasked · scanned the whole repo after fixing one grant and flagged the next two · postmortems that name why tests missed it",
+  "source": "价值观"
+ },
+ {
+  "round": "ai",
+  "id": "C17",
+  "segment": "collaboration",
+  "q": "Tell me about a time you unblocked someone else under pressure.",
+  "principle": "Get It Done",
+  "story": "S8",
+  "keys": "cc'd not assigned · RCA + fix + neighboring-module check in seven minutes · asked permission, pushed, retriggered QA · the assigned engineer thanked me",
+  "source": "Slack"
+ },
+ {
+  "round": "ai",
+  "id": "C18",
+  "segment": "collaboration",
+  "q": "How do you handle an incident where you're one of several owners?",
+  "principle": "Own It",
+  "story": "S9",
+  "keys": "take the piece where you're the authority (SLA) · state it, let others defer · argue for the robust fix over the fast one · don't crowd the deploy",
+  "source": "Slack"
+ },
+ {
+  "round": "ai",
+  "id": "C19",
+  "segment": "collaboration",
+  "q": "How do you keep documentation and code from drifting?",
+  "principle": "Be Excellent",
+  "story": "S1 §\"what broke\"",
+  "keys": "design doc said UDTF, code did SUBSTRING in procedures · code is the truth · updated the doc, and turned the drift into \"what I'd change\" (config-driven parser)",
+  "source": "深挖"
+ },
+ {
+  "round": "ai",
+  "id": "C20",
+  "segment": "collaboration",
+  "q": "How do you approach reviewing other people's designs?",
+  "principle": "Make Each Other the Best",
+  "story": "S2 · C08",
+  "keys": "ask for the rejected alternatives · check the seam with my domain: what events, what keys, what happens on retry · \"strictest wins\" style safety arguments",
+  "source": "通用"
+ },
+ {
+  "round": "ai",
+  "id": "D01",
+  "segment": "followup",
+  "q": "What part of that did you do yourself, versus the team?",
+  "principle": "Own It",
+  "story": "any",
+  "keys": "\"I designed / I wrote / I decided\" · name what others did first · \"one of three owners; my piece was…\"",
+  "source": "07-mock Round B"
+ },
+ {
+  "round": "ai",
+  "id": "D02",
+  "segment": "followup",
+  "q": "Why did you choose that approach over the alternatives?",
+  "principle": "",
+  "story": "any",
+  "keys": "name option A and B · the constraint that decided it · what it cost",
+  "source": "07-mock Round B"
+ },
+ {
+  "round": "ai",
+  "id": "D03",
+  "segment": "followup",
+  "q": "What were the numbers — how did you measure the result?",
+  "principle": "",
+  "story": "any",
+  "keys": "one quantity per story, \"roughly\" · what query produced it",
+  "source": "07-mock Round B"
+ },
+ {
+  "round": "ai",
+  "id": "D04",
+  "segment": "followup",
+  "q": "How did you verify it was correct before shipping?",
+  "principle": "Be Excellent",
+  "story": "S5 · S1",
+  "keys": "shadow run with the production query · reconciliation against the source's own summary · toggle off first",
+  "source": "07-mock Round B"
+ },
+ {
+  "round": "ai",
+  "id": "D05",
+  "segment": "followup",
+  "q": "What would you do differently if you did it again?",
+  "principle": "",
+  "story": "any",
+  "keys": "S1: config-driven parser · S2: merchant granularity from day one · S3: fail loudly at the seam",
+  "source": "07-mock Round B"
+ },
+ {
+  "round": "ai",
+  "id": "D06",
+  "segment": "followup",
+  "q": "What broke afterwards, and what did you learn?",
+  "principle": "Integrity Always",
+  "story": "S1 · S9",
+  "keys": "late files · reject flag · effective-date change shifting another region · learning as a principle",
+  "source": "07-mock Round B"
+ },
+ {
+  "round": "ai",
+  "id": "D07",
+  "segment": "followup",
+  "q": "Who else was involved, and how did you keep them aligned?",
+  "principle": "Make Each Other the Best",
+  "story": "S4 · S9",
+  "keys": "shared query as the common evidence · written RCA · incident channel roles",
+  "source": "07-mock Round B"
+ },
+ {
+  "round": "ai",
+  "id": "D08",
+  "segment": "followup",
+  "q": "What was the biggest risk, and how did you mitigate it?",
+  "principle": "",
+  "story": "S5 · S6",
+  "keys": "silent fee regression → shadow run · serving-scale unknown → SQL pushdown first",
+  "source": "07-mock Round B"
+ },
+ {
+  "round": "ai",
+  "id": "D09",
+  "segment": "followup",
+  "q": "How does that experience apply to the kind of systems Snowflake builds?",
+  "principle": "Think Big",
+  "story": "any",
+  "keys": "heavy consumer of Streams / Tasks / MERGE / clone / task DAGs · know where they hurt (staleness, observability) · want to build them",
+  "source": "07-mock Round B"
+ },
+ {
+  "round": "ai",
+  "id": "D10",
+  "segment": "followup",
+  "q": "If the data volume were 100× larger, what would change?",
+  "principle": "",
+  "story": "S6 · B11",
+  "keys": "pruning + clustering first · warehouse isolation · per-row → set-based · sparse rows over full matrices",
+  "source": "07-mock Round B"
+ },
+ {
+  "round": "ai",
+  "id": "D11",
+  "segment": "followup",
+  "q": "How did you know when you were done?",
+  "principle": "",
+  "story": "S3 · S10",
+  "keys": "health check green for N days · monitoring plan written into the postmortem · residual explicitly listed",
+  "source": "通用"
+ },
+ {
+  "round": "ai",
+  "id": "D12",
+  "segment": "followup",
+  "q": "Can you go one level deeper on the mechanism?",
+  "principle": "",
+  "story": "S1 · S5",
+  "keys": "offset-based SUBSTRING with implied decimals · EQUAL_NULL on a nullable key · windowed ON · RESULT_SCAN(LAST_QUERY_ID())",
+  "source": "深挖"
+ },
+ {
+  "round": "ai",
+  "id": "E01",
+  "segment": "wrapup",
+  "q": "Do you have any questions for us?",
+  "principle": "",
+  "story": "playbook §6",
+  "keys": "next steps + timeline · what this screen weights · statement: Streams/Tasks/Dynamic Tables scheduling, metering & billing, end-to-end ownership",
+  "source": "邮件四段之四"
+ },
+ {
+  "round": "ai",
+  "id": "E02",
+  "segment": "wrapup",
+  "q": "Why are you looking to leave PayPal?",
+  "principle": "Integrity Always",
+  "story": "playbook §7",
+  "keys": "owned one platform end to end for two years · next step in depth is building the primitives · no complaints",
+  "source": "通用"
+ },
+ {
+  "round": "ai",
+  "id": "E03",
+  "segment": "wrapup",
+  "q": "What level or compensation are you targeting?",
+  "principle": "",
+  "story": "playbook §7",
+  "keys": "focused on fit · discuss with the recruiter once team and level are known",
+  "source": "聚合站"
+ },
+ {
+  "round": "ai",
+  "id": "E04",
+  "segment": "wrapup",
+  "q": "Is there anything else you'd like us to know?",
+  "principle": "",
+  "story": "playbook §8",
+  "keys": "three keywords: ownership · correctness at scale · Snowflake-native · thank you",
+  "source": "收尾"
+ }
+]

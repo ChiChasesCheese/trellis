@@ -28,6 +28,6 @@
 | B01 | 项目深挖三层：why → 备选 → 可用性/容错/重做 | expertise 轮一手追问模式 | exp（S1、S5） | 大规模生产系统 4/6 |
 | B02 | 8 条价值观逐条有故事（Own It / Get It Done / Integrity Always 优先） | HM 轮逐题记笔记 | hm（S1–S9） | — |
 | B03 | 具体化 why Snowflake + level 不报数字 + 问 headcount | recruiter / team matching 一手风险 | rc tm | — |
-| B04 | transcript 证据型回答（Chakra） | AI 轮打分只读 transcript | `../03-chakra-playbook.md` | — |
+| B04 | transcript 证据型回答（Chakra） | AI 轮打分只读 transcript | `../loop/rounds/00_ai_screen/questions.md`（71 题）· `stories.md` | — |
 
 **决定过/挂的点（一手）**：S09（task scheduler 契约）· S13（queue 故障语义）· D01（沉默面试官）· B01（expertise 讲不出 why）· B03（headcount 搁置）。

@@ -33,9 +33,9 @@
 
 ## 1. Chakra AI 语音筛（20 min）
 
-- **形式 / 评分 / 剧本**：见 `../03-chakra-playbook.md`（逐分钟英文稿）、`../../core/playbooks/ai-voice-screen.md`（机制）、`../raw/chakra.md`（证据）。
+- **形式 / 评分 / 剧本**：本轮全部材料在 `rounds/00_ai_screen/`（`README.md` 入口）：`playbook.md`（逐分钟英文稿）、`stories.md`（S1–S10）、`scenarios.md`（12 题）、`questions.md` + `bank.json`（71 题）、`rubric.md`；机制 `../../core/playbooks/ai-voice-screen.md`；证据 `../raw/chakra.md`。
 - **一句话**：Reporter 只读 transcript；每个 expectation 要有 clarity / ownership / structured reasoning / specific examples 的**具体证据**；theoretical = Not Met；没说到 = 0。
-- **练习**：`../07-mock.md`（20 min 计时）；关键词卡 `../CARD.md`。
+- **练习**：`python3 loop/mock.py bq ai -n 5`；`../07-mock.md`（20 min 计时）；关键词卡 `rounds/00_ai_screen/CARD.md`。
 
 ## 2. Recruiter / HR call（15–30 min）
 
@@ -76,7 +76,7 @@
 - **题型**（Table C）：**PB 级数据库间同步（IC2 一手：不允许需求澄清，直接设计）** · KV store（含 time travel / Raft）· cron/job scheduler / "SQL engine as cron"· SQL notebook 结果分发 · quota · audit log · rate limiter · distributed queue · Jira→PR 自动化 · DAG cache（≈ Dynamic Tables）· password storage · web crawler。
 - **评什么**：需求与不变量抽取 → API/数据模型 → 失败模式与规模 → 分层 → rollout/监控（沿用 Stripe 五维 rubric）；**能把 Snowflake 自己的原语当参照**（Execution Anchor 单写者、FDB 元数据、serverless Tasks、Streams offset、Dynamic Tables 增量刷新）是差异化加分。
 - **挂点**：面试官不给澄清时停住——要自己口头声明假设再推进（sd22 一手）；直接画框图不说不变量；exactly-once 说成能做到；沉默面试官下不自问自答；quota/rate limiter 说不清强一致 vs 本地缓存。
-- **备考动作**：`05_system_design/sd01–sd11` 每题 45 min 口述 + 对照 rubric 自评 + followups 逐条能脱口而出；`../05-applied-scenarios.md` 的六个骨架先背熟。
+- **备考动作**：`05_system_design/sd01–sd11` 每题 45 min 口述 + 对照 rubric 自评 + followups 逐条能脱口而出；`rounds/00_ai_screen/scenarios.md` 的 12 个骨架先背熟。
 - **练习**：`python3 loop/mock.py start sd01 -m 45`（打印 prompt，rubric 作提示）。
 
 ## 7. Onsite · Expertise / 项目深挖（早期职业：嵌在 coding 前 15–20 min + 一轮 resume；IC3 独立 40 min）

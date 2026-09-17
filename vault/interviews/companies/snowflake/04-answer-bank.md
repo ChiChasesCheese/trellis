@@ -1,13 +1,13 @@
 # 04 · 答案库（题 → 既有答案映射 + Snowflake 特定题）
 
-> 通用题不重写：指向 `../../core/answers/` 的 Q 号（中文详版，A 影响导向 / B 技术展开）。本文件补三样：① Chakra 四段最可能的题及英文首答要点；② Snowflake 特定题；③ 8 条价值观 × 故事矩阵。英文口述稿以 `03-chakra-playbook.md` 为准，这里是「更多题的骨架」。
+> 通用题不重写：指向 `../../core/answers/` 的 Q 号（中文详版，A 影响导向 / B 技术展开）。本文件补三样：① Chakra 四段最可能的题及英文首答要点；② Snowflake 特定题；③ 8 条价值观 × 故事矩阵。英文口述稿以 `loop/rounds/00_ai_screen/stories.md` · `playbook.md` 为准；完整题库（71 题）在 `loop/rounds/00_ai_screen/questions.md`。这里保留 Snowflake 特定题、价值观矩阵和数字卡。
 
 ## 1. 段一 · Experience & role-related background
 
 | 题（英文） | 映射 | 英文首答要点（headline → mechanism → number → learning） |
 |---|---|---|
-| Tell me about yourself / your current role | `fit.md` · 03 §2 | 见 03 §2，60 s |
-| Walk me through a recent project and your specific contribution | Q1 · Q18 → **S1** | 03 §3 |
+| Tell me about yourself / your current role | `fit.md` · `loop/rounds/00_ai_screen/playbook.md` §2 | 见 playbook §2，60 s |
+| Walk me through a recent project and your specific contribution | Q1 · Q18 → **S1** | stories §S1 |
 | What's the hardest technical challenge you've faced? | Q3 → **S3** | ACH NULL-concat RCA：196 merchants / $11.3M/day；UDF overload；non-null assertion added |
 | What's a project you're most proud of? | Q5 → **S5** | Net settlement：$450M/mo float → T+1；shadow-run 13.7M rows / 0.224%；$55B TPV prerequisite |
 | Tell me about something you built that others reuse | Q4 · Q11 → **S2** | Quality-check framework：config-table driven + handshake；reused ~8×；ADR fixed my own flaw |
@@ -15,7 +15,7 @@
 | Tell me about a side project | Quant-Stroller | 66K lines / 470 test files；dual-gate anti-overfitting；DuckDB point-in-time data plane；8-GPU self-hosted CI — 只在被问时讲，≤ 45 s |
 | How do you use AI tools in your work? | 简历 bullet 4 · S7 | Claude Code for review/test-gen/refactor in the Ruby→Snowflake migration；built snowglobe-tools schema pool so multiple agent sessions run in parallel without DDL collisions；**"tech lead of agents"** 呼应 CEO 原话 |
 
-## 2. 段二 · Applied scenarios → `05-applied-scenarios.md`（6 题）
+## 2. 段二 · Applied scenarios → `loop/rounds/00_ai_screen/scenarios.md`（12 题）
 
 ## 3. 段三 · Collaboration & decision-making
 
@@ -66,15 +66,15 @@
 
 ## 6. 数字卡（只说这些）
 
-| 数字 | 属于 | 说法 |
-|---|---|---|
-| 21.96M txns / $138.6B | S1（2025 Amex） | "about 22 million transactions, 138 billion dollars, in 2025" |
-| 18 months in prod | S1 | |
-| ~8 reuses | S2 | |
-| 196 merchants / $11.3M/day / 1.05M rows | S3 | |
-| 1,079,627 vs 0 / 157 merchants | S4 | |
-| $55B+ TPV / $450M/mo float / 13.7M rows / 0.224% | S5 | |
-| 834M vs 39B rows / 6 vs 18,140 merchants / 760M rows/day | S6 | |
-| 7 minutes | S8 | |
-| 615 commits / #1 committer | 画像 | "top committer on the repo" |
-| **不说**：$600B | 简历口径未闭合 | 被问时按 03 §5 |
+| 数字                                                       | 属于            | 说法                                                            |
+| -------------------------------------------------------- | ------------- | ------------------------------------------------------------- |
+| 21.96M txns / $138.6B                                    | S1（2025 Amex） | "about 22 million transactions, 138 billion dollars, in 2025" |
+| 18 months in prod                                        | S1            |                                                               |
+| ~8 reuses                                                | S2            |                                                               |
+| 196 merchants / $11.3M/day / 1.05M rows                  | S3            |                                                               |
+| 1,079,627 vs 0 / 157 merchants                           | S4            |                                                               |
+| $55B+ TPV / $450M/mo float / 13.7M rows / 0.224%         | S5            |                                                               |
+| 834M vs 39B rows / 6 vs 18,140 merchants / 760M rows/day | S6            |                                                               |
+| 7 minutes                                                | S8            |                                                               |
+| ~90 PRs / two largest changes in the repo are mine       | 画像            | "measured by what the pipelines process, not commit count"   |
+| **不说**：$600B                                             | 简历口径未闭合       | 被问时按 playbook §7                                              |
