@@ -1,6 +1,6 @@
 # 04 · 答案库（题 → 既有答案映射 + Snowflake 特定题）
 
-> 通用题不重写：指向 `../../core/answers/` 的 Q 号（中文详版，A 影响导向 / B 技术展开）。本文件补三样：① Chakra 四段最可能的题及英文首答要点；② Snowflake 特定题；③ 8 条价值观 × 故事矩阵。英文口述稿以 `loop/rounds/00_ai_screen/stories.md` · `playbook.md` 为准；完整题库（71 题）在 `loop/rounds/00_ai_screen/questions.md`。这里保留 Snowflake 特定题、价值观矩阵和数字卡。
+> 通用题不重写：指向 `../../core/answers/` 的 Q 号（中文详版，A 影响导向 / B 技术展开）。本文件补三样：① Chakra 四段最可能的题及英文首答要点；② Snowflake 特定题；③ 8 条价值观 × 故事矩阵。英文口述稿以 `loop/rounds/00_ai_screen/stories.md` · `playbook.md` 为准；完整题库（79 题）在 `loop/rounds/00_ai_screen/questions.md`。这里保留 Snowflake 特定题、价值观矩阵和数字卡。
 
 ## 1. 段一 · Experience & role-related background
 

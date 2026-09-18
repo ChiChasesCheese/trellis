@@ -53,4 +53,4 @@
 
 | 日期 | 环节 | 实际被问 | 追问 | 自评 / 结果 |
 |---|---|---|---|---|
-| | Chakra | | | |
+| 2026-09-17 | Chakra（Talent Intake） | **14 问 intake，不是四段式**：寒暄 · 地点/relocation · 年限 · 起始日期 · 是否在面别家 · 主力语言 · 现在的角色 · coding 占比 · AI 工具怎么用 · 怎么信任 AI 代码 · 里程碑项目 · ownership 例子 · 背景/为什么 Snowflake · 反问。**无 applied scenarios，无明确 collaboration 题**。对话窗口 22:25，我说 17:20（77%），114 WPM。 | 无追问；请它重复一次；它拒绝给反馈 | 自评 2/3：语法与填充词干净，但每答无 headline、5 答 > 90 s、JD 关键词几乎没说、几处失言。全量评审：`debrief/2026-09-17-chakra/REVIEW.md` |

@@ -15,6 +15,14 @@ dev = ["pytest>=7.0"]
 clip = ["trafilatura>=2.0"]
 # `trellis ingest` of a pdf only; epub and markdown need nothing extra
 ingest = ["pymupdf>=1.24"]
+# vault/interviews/core/debrief/: transcribe an interview recording locally and grade it.
+# mlx-whisper is Apple-Silicon native; faster-whisper (CTranslate2) is the fallback elsewhere.
+# language-tool-python downloads LanguageTool (needs Java) on first use.
+debrief = [
+    "mlx-whisper>=0.4; sys_platform == 'darwin' and platform_machine == 'arm64'",
+    "faster-whisper>=1.0; sys_platform != 'darwin' or platform_machine != 'arm64'",
+    "language-tool-python>=2.8",
+]
 
 [project.scripts]
 trellis = "trellis.cli:main"

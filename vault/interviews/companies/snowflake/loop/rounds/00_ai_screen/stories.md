@@ -175,4 +175,6 @@
 | "Why Snowflake-native SQL and not Java services?" | 数据在哪，计算就在哪；每步都是事务性 `MERGE`；Java 17 + Gradle + Flyway 做编排、测试与部署——"database-first, Java for orchestration"。 |
 | "Biggest risk you took?" | S5 静态拆分数据源：赌的是"事实比运行时判断可靠"，用同源验证把风险买断。 |
 | "Who else was involved?" | 永远先说别人做了什么，再说我的决定："I was one of three owners; my piece was…" |
+| "What does your team own?" | 亲历 2026-09-17 的好句子："We are the downstream of the downstream — fee calculation and disbursement — so a mistake here is money, not a retry." |
+| "How do you work without a PM?" | 亲历 2026-09-17 的好句子："We're engineer-driven: I identify the problem, write the discovery and the ADR, then implement — and I own the on-call for it afterwards." |
 | "What did you learn?" | 每个故事的最后一句已经是 learning；追问时换成原则：**fail loudly · same SQL for validation and production · deploy ≠ release · config over code**。 |

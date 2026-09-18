@@ -2,6 +2,7 @@
 
 > 一行一题：**英文题面 → 目标故事/文件 → 关键词提示（说出口的证据词）**。口述全文在 `stories.md`（故事）、`scenarios.md`（场景）、`playbook.md`（自我介绍 / 危险追问 / 反问）；通用中文详版在 `../../../../../core/answers/`（Q1–Q24）。
 > `bank.json` 由本文件生成：`python3 loop/rounds/00_ai_screen/build_bank.py`（在 kit 根目录跑），抽题：`python3 loop/mock.py bq ai -n 5`。
+> 段 F = 2026-09-17 亲历（Talent Intake 实际问法，评审见 `../../../debrief/2026-09-17-chakra/REVIEW.md`）。
 > 列说明：**principle** = Snowflake 八条价值观之一（用于价值观直击）；**story** = `stories.md` 的 S 号或文件 §；**keys** = 必须出现在 transcript 里的词（原语名 / 决定 / 量级 / learning）；**source** = 这题从哪来（一手报告 / 邮件四段 / JD 线）。
 > JD 线：SQL · DS（distributed systems）· DBI（database internals）· Prod（large-scale production）· Java。
 
@@ -100,3 +101,17 @@
 | E02 | Why are you looking to leave PayPal? | Integrity Always | playbook §7 | owned one platform end to end for two years · next step in depth is building the primitives · no complaints | 通用 |
 | E03 | What level or compensation are you targeting? | | playbook §7 | focused on fit · discuss with the recruiter once team and level are known | 聚合站 |
 | E04 | Is there anything else you'd like us to know? | | playbook §8 | three keywords: ownership · correctness at scale · Snowflake-native · thank you | 收尾 |
+
+## F · 亲历 2026-09-17（Talent Intake 实际问的，14 问 intake 式，无场景题）
+
+| id | question | principle | story | keys | source |
+|---|---|---|---|---|---|
+| F01 | Hi, how are you today? | | — | one line, no jokes about the AI · "Good, thanks — ready when you are" | 亲历 06:35 |
+| F02 | Where are you located, and are you open to Menlo Park or Bellevue? | | — | San Jose, ~20 miles from Menlo Park · Menlo Park preferred · open to Bellevue · (no SF office) | 亲历 07:08 |
+| F03 | How many years of experience do you have? | | — | "about two years on the same team — interned 2024, full-time since January 2025" · one number, not two | 亲历 07:54 |
+| F04 | When could you start? | | — | early November after standard notice · no "that'll be enough for me" | 亲历 08:37 |
+| F05 | Are you interviewing elsewhere? | Integrity Always | — | "a small number of platform teams; Snowflake is the one I'm most interested in" · never "casually looking" | 亲历 08:37 |
+| F06 | What are your primary programming languages? | | A09 | Java and SQL · database-first: logic in Snowflake SQL / procedures / tasks, **Java 17 + Gradle + Flyway** for orchestration & tests · Kotlin gRPC · Rails payouts | 亲历 09:08 |
+| F07 | What share of your time is coding versus other work? | | C05 | ~60% coding incl. design, ~40% data contracts and cross-team sync · "downstream of the downstream" · example: trigger-status handshake is a data contract | 亲历 12:42 |
+| F08 | How do you decide whether to trust AI-generated code? | Be Excellent | S7 | plan with the agent → TDD every phase → CI + monitoring gates · "focus on gates and thresholds, not lines of code" · in money code I read every diff myself | 亲历 17:02 |
+

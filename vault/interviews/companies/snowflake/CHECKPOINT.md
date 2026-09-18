@@ -5,6 +5,7 @@
 
 ## 一句话现状（2026-09-17）
 
+Chakra 已面（16:34，Talent Intake 形式 14 问）；复盘在 `debrief/2026-09-17-chakra/REVIEW.md`：语法/填充词干净，掉分在无 headline、5 答 > 90 s、JD 关键词缺失、几处失言；下一场（recruiter call）前只练 headline-first 与证据词。工具链 `core/debrief/` 可复用于每一轮。
 Chakra AI 轮一站式目录建成：`loop/rounds/00_ai_screen/`（playbook · stories S1–S10 · scenarios 12 · questions 71 题 + bank.json · rubric · CARD），`python3 loop/mock.py bq ai -n 5` 抽题；知识树 59 技能 92 题 strict 0/0。截止 2026-09-24。
 
 ## 上一版现状（2026-09-14）
