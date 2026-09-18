@@ -1,0 +1,874 @@
+{
+ "meta": {
+  "audio": "/Users/chizhang/Library/Mobile Documents/com~apple~CloudDocs/2026-09-17_16_34_48.mp3",
+  "backend": "mlx-whisper",
+  "model": "mlx-community/whisper-large-v3-turbo",
+  "language": "en",
+  "seconds": 71.1
+ },
+ "speech": {
+  "talk_time_me_s": 1040,
+  "talk_time_ai_s": 305,
+  "conversation_span_s": 1345,
+  "share_me": 0.77,
+  "words_me": 1968,
+  "wpm_me": 114,
+  "answers": 16,
+  "answers_over_90s": 5,
+  "longest_answer_s": 154.5,
+  "fillers": {
+   "like": 3,
+   "you know": 1,
+   "actually": 7,
+   "i mean": 1,
+   "right?": 1
+  },
+  "fillers_total": 13,
+  "fillers_per_100_words": 0.7,
+  "stutters": 0,
+  "pauses_over_1s": 17,
+  "long_pauses": [
+   [
+    "27:26",
+    7.9
+   ]
+  ],
+  "per_answer": [
+   {
+    "i": 4,
+    "start": "06:35",
+    "dur": 6.0,
+    "words": 14,
+    "wpm": 140
+   },
+   {
+    "i": 6,
+    "start": "07:08",
+    "dur": 7.8,
+    "words": 18,
+    "wpm": 138
+   },
+   {
+    "i": 7,
+    "start": "07:29",
+    "dur": 14.0,
+    "words": 29,
+    "wpm": 124
+   },
+   {
+    "i": 8,
+    "start": "07:54",
+    "dur": 15.3,
+    "words": 22,
+    "wpm": 86
+   },
+   {
+    "i": 9,
+    "start": "08:39",
+    "dur": 14.0,
+    "words": 31,
+    "wpm": 133
+   },
+   {
+    "i": 10,
+    "start": "09:08",
+    "dur": 47.5,
+    "words": 95,
+    "wpm": 120
+   },
+   {
+    "i": 11,
+    "start": "10:06",
+    "dur": 141.8,
+    "words": 245,
+    "wpm": 104
+   },
+   {
+    "i": 12,
+    "start": "12:42",
+    "dur": 67.9,
+    "words": 159,
+    "wpm": 141
+   },
+   {
+    "i": 14,
+    "start": "14:16",
+    "dur": 152.8,
+    "words": 306,
+    "wpm": 120
+   },
+   {
+    "i": 15,
+    "start": "17:02",
+    "dur": 85.0,
+    "words": 160,
+    "wpm": 113
+   },
+   {
+    "i": 16,
+    "start": "18:41",
+    "dur": 140.2,
+    "words": 249,
+    "wpm": 107
+   },
+   {
+    "i": 17,
+    "start": "21:20",
+    "dur": 154.5,
+    "words": 278,
+    "wpm": 108
+   },
+   {
+    "i": 18,
+    "start": "24:05",
+    "dur": 112.0,
+    "words": 228,
+    "wpm": 122
+   },
+   {
+    "i": 19,
+    "start": "26:09",
+    "dur": 16.8,
+    "words": 32,
+    "wpm": 114
+   },
+   {
+    "i": 20,
+    "start": "27:14",
+    "dur": 59.5,
+    "words": 88,
+    "wpm": 89
+   },
+   {
+    "i": 21,
+    "start": "28:56",
+    "dur": 4.9,
+    "words": 14,
+    "wpm": 171
+   }
+  ]
+ },
+ "grammar": {
+  "issues": 6,
+  "per_100_words": 0.3,
+  "by_category": {
+   "STYLE": 2,
+   "GRAMMAR": 2,
+   "TYPOS": 1,
+   "MISC": 1
+  },
+  "by_rule": {
+   "ANYWAYS": 2,
+   "HAVE_PART_AGREEMENT": 1,
+   "POSSESSIVE_APOSTROPHE": 1,
+   "CD_NN": 1,
+   "EN_COMPOUNDS_OFF_TOPIC": 1
+  },
+  "examples": {
+   "ANYWAYS": [
+    {
+     "turn": 7,
+     "at": "07:29",
+     "context": "...in San Francisco if you have. Yeah, but anyways, open to all.",
+     "message": "The word ‘anyways’ is informal American English. Did you mean “anyway”?",
+     "fix": "anyway"
+    },
+    {
+     "turn": 14,
+     "at": "14:16",
+     "context": "...is a long story as well, because, well, anyways, I use Cloud Code and Codex and cursor ...",
+     "message": "The word ‘anyways’ is informal American English. Did you mean “anyway”?",
+     "fix": "anyway"
+    }
+   ],
+   "HAVE_PART_AGREEMENT": [
+    {
+     "turn": 8,
+     "at": "07:54",
+     "context": "So now I've already have roughly two years, more specifically 18...",
+     "message": "Possible agreement error -- use the past participle here.",
+     "fix": "had"
+    }
+   ],
+   "POSSESSIVE_APOSTROPHE": [
+    {
+     "turn": 14,
+     "at": "14:16",
+     "context": "...coding agents. And because all of those sessions information are stored in your own lapt...",
+     "message": "An apostrophe may be missing.",
+     "fix": "sessions'"
+    }
+   ],
+   "CD_NN": [
+    {
+     "turn": 16,
+     "at": "18:41",
+     "context": "...eved over 100 billion total transaction amount with no bugs, no accidents, and I'm pre...",
+     "message": "Possible agreement error. The noun ‘amount’ seems to be countable.",
+     "fix": "amounts"
+    }
+   ],
+   "EN_COMPOUNDS_OFF_TOPIC": [
+    {
+     "turn": 18,
+     "at": "24:05",
+     "context": "...m not sure whether this is a little bit off topic. I was an undergrad in construction man...",
+     "message": "This word is normally spelled with a hyphen.",
+     "fix": "off-topic"
+    }
+   ]
+  },
+  "per_turn": {
+   "4": 0,
+   "6": 0,
+   "7": 1,
+   "8": 1,
+   "9": 0,
+   "10": 0,
+   "11": 0,
+   "12": 0,
+   "14": 2,
+   "15": 0,
+   "16": 1,
+   "17": 0,
+   "18": 1,
+   "19": 0,
+   "20": 0,
+   "21": 0
+  }
+ },
+ "qa": {
+  "questions": [
+   {
+    "i": 7,
+    "at": "07:29",
+    "q": "(inferred from answer #07) Yeah, sure, I'm open to all. Actually my preferred location would be M",
+    "match": {
+     "id": "F02",
+     "q": "Where are you located, and are you open to Menlo Park or Bellevue?",
+     "story": "—"
+    },
+    "sim": 0.47,
+    "hits": 2,
+    "misses": 2,
+    "hit_keys": [
+     "Menlo Park preferred",
+     "open to Bellevue"
+    ],
+    "miss_keys": [
+     "San Jose, ~20 miles from Menlo Park",
+     "(no SF office)"
+    ],
+    "answer_turn": 7
+   },
+   {
+    "i": 9,
+    "at": "08:39",
+    "q": "(inferred from answer #09) that'll be enough for me and my team. My expected start date will be N",
+    "match": {
+     "id": "F04",
+     "q": "When could you start?",
+     "story": "—"
+    },
+    "sim": 1.0,
+    "hits": 2,
+    "misses": 0,
+    "hit_keys": [
+     "early November after standard notice",
+     "no \"that'll be enough for me\""
+    ],
+    "miss_keys": [],
+    "answer_turn": 9
+   },
+   {
+    "i": 10,
+    "at": "09:08",
+    "q": "(inferred from answer #10) Well, that is a very interesting topic because my primary coding langu",
+    "match": {
+     "id": "F06",
+     "q": "What are your primary programming languages?",
+     "story": "A09"
+    },
+    "sim": 0.45,
+    "hits": 2,
+    "misses": 2,
+    "hit_keys": [
+     "Java and SQL",
+     "Rails payouts"
+    ],
+    "miss_keys": [
+     "database-first: logic in Snowflake SQL / procedures / tasks, **Java 17 + Gradle + Flyway** for orchestration & tests",
+     "Kotlin gRPC"
+    ],
+    "answer_turn": 10
+   },
+   {
+    "i": 11,
+    "at": "10:06",
+    "q": "(inferred from answer #11) Yeah, so now I'm the main owner and the builder of the Snowglobe platf",
+    "match": {
+     "id": "A06",
+     "q": "Describe the architecture of the system you work on.",
+     "story": "S1 · `core/tech_stacks/01`"
+    },
+    "sim": 0.43,
+    "hits": 2,
+    "misses": 3,
+    "hit_keys": [
+     "pricing (Kotlin/gRPC, rules) → snowglobe (Snowflake, fees & journal) → funding (Rails, payouts)",
+     "~25M transactions a day"
+    ],
+    "miss_keys": [
+     "Kafka → Snowpipe Streaming → Stream/Task",
+     "S3 file seam by day",
+     "three databases APP / REPLICATION / SHARE (Iceberg)"
+    ],
+    "answer_turn": 11
+   },
+   {
+    "i": 12,
+    "at": "12:42",
+    "q": "(inferred from answer #12) Well, right now, considering designing as part of the coding, I would ",
+    "match": {
+     "id": "F07",
+     "q": "What share of your time is coding versus other work?",
+     "story": "C05"
+    },
+    "sim": 0.9,
+    "hits": 3,
+    "misses": 0,
+    "hit_keys": [
+     "~60% coding incl. design, ~40% data contracts and cross-team sync",
+     "\"downstream of the downstream\"",
+     "example: trigger-status handshake is a data contract"
+    ],
+    "miss_keys": [],
+    "answer_turn": 12
+   },
+   {
+    "i": 14,
+    "at": "14:16",
+    "q": "(inferred from answer #14) Well, so this is a long story as well, because, well, anyways, I use C",
+    "match": {
+     "id": "A15",
+     "q": "Tell me about the on-call and observability you own.",
+     "story": "S3 · S8 · `core/tech_stacks/08`"
+    },
+    "sim": 0.67,
+    "hits": 3,
+    "misses": 1,
+    "hit_keys": [
+     "health-check procedures with on-call attributes → Datadog / PagerDuty",
+     "Streamlit task monitor",
+     "trigger-status as a gate not a report"
+    ],
+    "miss_keys": [
+     "\"data wrong but all tasks green\" → business-invariant assertions"
+    ],
+    "answer_turn": 14
+   },
+   {
+    "i": 15,
+    "at": "17:02",
+    "q": "(inferred from answer #15) So I trust AI-generated code based on the collaboration of me and my c",
+    "match": {
+     "id": "F08",
+     "q": "How do you decide whether to trust AI-generated code?",
+     "story": "S7"
+    },
+    "sim": 0.65,
+    "hits": 2,
+    "misses": 1,
+    "hit_keys": [
+     "plan with the agent → TDD every phase → CI + monitoring gates",
+     "\"focus on gates and thresholds, not lines of code\""
+    ],
+    "miss_keys": [
+     "in money code I read every diff myself"
+    ],
+    "answer_turn": 15
+   },
+   {
+    "i": 16,
+    "at": "18:41",
+    "q": "(inferred from answer #16) Well, so the first big milestone of our migration to the Snowflake nat",
+    "match": {
+     "id": "D04",
+     "q": "How did you verify it was correct before shipping?",
+     "story": "S5 · S1"
+    },
+    "sim": 0.47,
+    "hits": 2,
+    "misses": 1,
+    "hit_keys": [
+     "shadow run with the production query",
+     "toggle off first"
+    ],
+    "miss_keys": [
+     "reconciliation against the source's own summary"
+    ],
+    "answer_turn": 16
+   },
+   {
+    "i": 17,
+    "at": "21:20",
+    "q": "(inferred from answer #17) I am now the main on-call handler and also the closest membership with",
+    "match": {
+     "id": "A05",
+     "q": "Tell me about something you built that other engineers now reuse.",
+     "story": "S2"
+    },
+    "sim": 0.36,
+    "hits": 2,
+    "misses": 4,
+    "hit_keys": [
+     "contract-config table",
+     "\"config over code\""
+    ],
+    "miss_keys": [
+     "EXECUTE IMMEDIATE + RESULT_SCAN executor",
+     "PASS/FAIL/WARNING normalization",
+     "trigger-status → replicated share row → consumers JOIN",
+     "eight rollouts"
+    ],
+    "answer_turn": 17
+   },
+   {
+    "i": 18,
+    "at": "24:05",
+    "q": "(inferred from answer #18) Well, I'm not sure whether this is a little bit off topic. I was an un",
+    "match": {
+     "id": "A13",
+     "q": "How do you use AI tools in your work?",
+     "story": "S7"
+    },
+    "sim": 0.55,
+    "hits": 2,
+    "misses": 2,
+    "hit_keys": [
+     "\"tech lead of a team of agents\"",
+     "still own every diff"
+    ],
+    "miss_keys": [
+     "Claude Code for review / test-gen / refactor",
+     "schema pool so agent sessions run in parallel without DDL collisions"
+    ],
+    "answer_turn": 18
+   },
+   {
+    "i": 19,
+    "at": "26:09",
+    "q": "(inferred from answer #19) My first question is, this is the general software engineer position, ",
+    "match": null,
+    "sim": 0.23,
+    "hits": 0,
+    "misses": 0,
+    "hit_keys": [],
+    "miss_keys": [],
+    "answer_turn": 19
+   },
+   {
+    "i": 20,
+    "at": "27:14",
+    "q": "(inferred from answer #20) Yeah, sure. And given that you are an AI interviewer, so I'm pretty in",
+    "match": {
+     "id": "F01",
+     "q": "Hi, how are you today?",
+     "story": "—"
+    },
+    "sim": 0.35,
+    "hits": 1,
+    "misses": 1,
+    "hit_keys": [
+     "\"Good, thanks — ready when you are\""
+    ],
+    "miss_keys": [
+     "one line, no jokes about the AI"
+    ],
+    "answer_turn": 20
+   }
+  ],
+  "answers": [
+   {
+    "i": 4,
+    "start": "06:35",
+    "dur": 6.0,
+    "words": 14,
+    "wpm": 140,
+    "rubric": {
+     "score": 1,
+     "signals": {
+      "ownership": false,
+      "mechanism": false,
+      "number": false,
+      "structure": false,
+      "learning": false,
+      "length_ok": true
+     },
+     "mechanisms": []
+    }
+   },
+   {
+    "i": 6,
+    "start": "07:08",
+    "dur": 7.8,
+    "words": 18,
+    "wpm": 138,
+    "rubric": {
+     "score": 1,
+     "signals": {
+      "ownership": false,
+      "mechanism": false,
+      "number": true,
+      "structure": false,
+      "learning": false,
+      "length_ok": true
+     },
+     "mechanisms": []
+    }
+   },
+   {
+    "i": 7,
+    "start": "07:29",
+    "dur": 14.0,
+    "words": 29,
+    "wpm": 124,
+    "rubric": {
+     "score": 1,
+     "signals": {
+      "ownership": false,
+      "mechanism": false,
+      "number": true,
+      "structure": false,
+      "learning": false,
+      "length_ok": true
+     },
+     "mechanisms": []
+    }
+   },
+   {
+    "i": 8,
+    "start": "07:54",
+    "dur": 15.3,
+    "words": 22,
+    "wpm": 86,
+    "rubric": {
+     "score": 1,
+     "signals": {
+      "ownership": false,
+      "mechanism": false,
+      "number": true,
+      "structure": false,
+      "learning": false,
+      "length_ok": true
+     },
+     "mechanisms": [
+      "join"
+     ]
+    }
+   },
+   {
+    "i": 9,
+    "start": "08:39",
+    "dur": 14.0,
+    "words": 31,
+    "wpm": 133,
+    "rubric": {
+     "score": 1,
+     "signals": {
+      "ownership": false,
+      "mechanism": false,
+      "number": false,
+      "structure": false,
+      "learning": false,
+      "length_ok": true
+     },
+     "mechanisms": [
+      "cte"
+     ]
+    }
+   },
+   {
+    "i": 10,
+    "start": "09:08",
+    "dur": 47.5,
+    "words": 95,
+    "wpm": 120,
+    "rubric": {
+     "score": 2,
+     "signals": {
+      "ownership": false,
+      "mechanism": true,
+      "number": true,
+      "structure": false,
+      "learning": false,
+      "length_ok": true
+     },
+     "mechanisms": [
+      "java",
+      "rest",
+      "sql",
+      "warehouse"
+     ]
+    }
+   },
+   {
+    "i": 11,
+    "start": "10:06",
+    "dur": 141.8,
+    "words": 245,
+    "wpm": 104,
+    "rubric": {
+     "score": 2,
+     "signals": {
+      "ownership": false,
+      "mechanism": true,
+      "number": true,
+      "structure": false,
+      "learning": false,
+      "length_ok": false
+     },
+     "mechanisms": [
+      "dag",
+      "ledger",
+      "procedure",
+      "reconcil",
+      "shadow",
+      "sql",
+      "stored procedure",
+      "task",
+      "warehouse"
+     ]
+    }
+   },
+   {
+    "i": 12,
+    "start": "12:42",
+    "dur": 67.9,
+    "words": 159,
+    "wpm": 141,
+    "rubric": {
+     "score": 2,
+     "signals": {
+      "ownership": false,
+      "mechanism": true,
+      "number": true,
+      "structure": false,
+      "learning": false,
+      "length_ok": true
+     },
+     "mechanisms": [
+      "stream",
+      "warehouse"
+     ]
+    }
+   },
+   {
+    "i": 14,
+    "start": "14:16",
+    "dur": 152.8,
+    "words": 306,
+    "wpm": 120,
+    "rubric": {
+     "score": 2,
+     "signals": {
+      "ownership": false,
+      "mechanism": true,
+      "number": true,
+      "structure": true,
+      "learning": false,
+      "length_ok": false
+     },
+     "mechanisms": [
+      "datadog",
+      "pagerduty",
+      "rest",
+      "sla"
+     ]
+    }
+   },
+   {
+    "i": 15,
+    "start": "17:02",
+    "dur": 85.0,
+    "words": 160,
+    "wpm": 113,
+    "rubric": {
+     "score": 2,
+     "signals": {
+      "ownership": false,
+      "mechanism": false,
+      "number": true,
+      "structure": true,
+      "learning": true,
+      "length_ok": true
+     },
+     "mechanisms": [
+      "cte"
+     ]
+    }
+   },
+   {
+    "i": 16,
+    "start": "18:41",
+    "dur": 140.2,
+    "words": 249,
+    "wpm": 107,
+    "rubric": {
+     "score": 2,
+     "signals": {
+      "ownership": true,
+      "mechanism": true,
+      "number": true,
+      "structure": true,
+      "learning": true,
+      "length_ok": false
+     },
+     "mechanisms": [
+      "cte",
+      "migration",
+      "procedure",
+      "s3",
+      "shadow",
+      "stored procedure",
+      "task",
+      "warehouse"
+     ]
+    }
+   },
+   {
+    "i": 17,
+    "start": "21:20",
+    "dur": 154.5,
+    "words": 278,
+    "wpm": 108,
+    "rubric": {
+     "score": 2,
+     "signals": {
+      "ownership": false,
+      "mechanism": true,
+      "number": true,
+      "structure": true,
+      "learning": true,
+      "length_ok": false
+     },
+     "mechanisms": [
+      "adr",
+      "cte",
+      "reconcil",
+      "warehouse"
+     ]
+    }
+   },
+   {
+    "i": 18,
+    "start": "24:05",
+    "dur": 112.0,
+    "words": 228,
+    "wpm": 122,
+    "rubric": {
+     "score": 1,
+     "signals": {
+      "ownership": false,
+      "mechanism": false,
+      "number": true,
+      "structure": true,
+      "learning": false,
+      "length_ok": false
+     },
+     "mechanisms": [
+      "rest"
+     ]
+    }
+   },
+   {
+    "i": 19,
+    "start": "26:09",
+    "dur": 16.8,
+    "words": 32,
+    "wpm": 114,
+    "rubric": {
+     "score": 1,
+     "signals": {
+      "ownership": false,
+      "mechanism": false,
+      "number": false,
+      "structure": true,
+      "learning": false,
+      "length_ok": true
+     },
+     "mechanisms": []
+    }
+   },
+   {
+    "i": 20,
+    "start": "27:14",
+    "dur": 59.5,
+    "words": 88,
+    "wpm": 89,
+    "rubric": {
+     "score": 1,
+     "signals": {
+      "ownership": false,
+      "mechanism": false,
+      "number": false,
+      "structure": true,
+      "learning": false,
+      "length_ok": true
+     },
+     "mechanisms": [
+      "rest"
+     ]
+    }
+   },
+   {
+    "i": 21,
+    "start": "28:56",
+    "dur": 4.9,
+    "words": 14,
+    "wpm": 171,
+    "rubric": {
+     "score": 1,
+     "signals": {
+      "ownership": false,
+      "mechanism": false,
+      "number": false,
+      "structure": false,
+      "learning": false,
+      "length_ok": true
+     },
+     "mechanisms": []
+    }
+   }
+  ],
+  "jd": {
+   "SQL": 14,
+   "distributed systems": 6,
+   "Java": 1,
+   "database internals": 15,
+   "large-scale production": 14
+  },
+  "mechanisms_all": [
+   "adr",
+   "cte",
+   "dag",
+   "datadog",
+   "java",
+   "join",
+   "ledger",
+   "migration",
+   "pagerduty",
+   "procedure",
+   "reconcil",
+   "rest",
+   "s3",
+   "shadow",
+   "sla",
+   "sql",
+   "stored procedure",
+   "stream",
+   "task",
+   "warehouse"
+  ]
+ }
+}

@@ -12,7 +12,7 @@
 | 2 | `playbook.md` | 逐分钟剧本 · 60 s 自我介绍 · 段一/三怎么挑故事 · 危险追问 · 收尾 · 当天 | 第一遍 + 前一晚 |
 | 3 | `stories.md` | 十个故事的英文首答（60–90 s）+ 追问版 + 追问弹药 | 反复 |
 | 4 | `scenarios.md` | 12 道 applied scenarios 全文（Clarify → 3 步 → closest thing → trade-off） | 反复 |
-| 5 | `questions.md` | **完整题库 71 题**：题面 → 故事 → 关键词提示（A 经历 17 · B 场景 18 · C 协作 20 · D 追问 12 · E 收尾 4） | 抽练 |
+| 5 | `questions.md` | **完整题库 79 题**：题面 → 故事 → 关键词提示（A 经历 17 · B 场景 18 · C 协作 20 · D 追问 12 · E 收尾 4 · **F 亲历 8**） | 抽练 |
 | 6 | `bank.json` | 题库的机器版，`python3 loop/mock.py bq ai -n 5` 抽题 | 抽练 |
 | 7 | `rubric.md` | Chakra 四档打分 + 自评 3/2/1 + 录音回听清单 | 自评 |
 | 8 | `CARD.md` | 关键词卡：每题只留提示词，贴摄像头旁 / 手机 | 当天 |
@@ -45,6 +45,10 @@ python3 loop/tree/check_tree.py --strict        # 知识树：本轮 skill → p
 | S8 Terraform 7 分钟 RCA | outbound_privileges；主动指出未爆的同类风险 | C12 C17 |
 | S9 Amex 出款延迟事故 | SLA 权威；region conditional > revert | B05 C05 C18 |
 | S10 Billing-terms 复盘 | 推翻自己 10× 的 blast radius | C06 B09 |
+
+## 面后复盘
+
+2026-09-17 那场的转写、数字与逐题评审：`../../../debrief/2026-09-17-chakra/REVIEW.md`（结论：语法不是问题，headline 与证据词才是；实际是 14 问的 intake，不是四段式）。工具：`../../../../../core/debrief/README.md`。
 
 ## 面完回写
 

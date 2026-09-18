@@ -708,5 +708,85 @@
   "story": "playbook §8",
   "keys": "three keywords: ownership · correctness at scale · Snowflake-native · thank you",
   "source": "收尾"
+ },
+ {
+  "round": "ai",
+  "id": "F01",
+  "segment": "lived",
+  "q": "Hi, how are you today?",
+  "principle": "",
+  "story": "—",
+  "keys": "one line, no jokes about the AI · \"Good, thanks — ready when you are\"",
+  "source": "亲历 06:35"
+ },
+ {
+  "round": "ai",
+  "id": "F02",
+  "segment": "lived",
+  "q": "Where are you located, and are you open to Menlo Park or Bellevue?",
+  "principle": "",
+  "story": "—",
+  "keys": "San Jose, ~20 miles from Menlo Park · Menlo Park preferred · open to Bellevue · (no SF office)",
+  "source": "亲历 07:08"
+ },
+ {
+  "round": "ai",
+  "id": "F03",
+  "segment": "lived",
+  "q": "How many years of experience do you have?",
+  "principle": "",
+  "story": "—",
+  "keys": "\"about two years on the same team — interned 2024, full-time since January 2025\" · one number, not two",
+  "source": "亲历 07:54"
+ },
+ {
+  "round": "ai",
+  "id": "F04",
+  "segment": "lived",
+  "q": "When could you start?",
+  "principle": "",
+  "story": "—",
+  "keys": "early November after standard notice · no \"that'll be enough for me\"",
+  "source": "亲历 08:37"
+ },
+ {
+  "round": "ai",
+  "id": "F05",
+  "segment": "lived",
+  "q": "Are you interviewing elsewhere?",
+  "principle": "Integrity Always",
+  "story": "—",
+  "keys": "\"a small number of platform teams; Snowflake is the one I'm most interested in\" · never \"casually looking\"",
+  "source": "亲历 08:37"
+ },
+ {
+  "round": "ai",
+  "id": "F06",
+  "segment": "lived",
+  "q": "What are your primary programming languages?",
+  "principle": "",
+  "story": "A09",
+  "keys": "Java and SQL · database-first: logic in Snowflake SQL / procedures / tasks, **Java 17 + Gradle + Flyway** for orchestration & tests · Kotlin gRPC · Rails payouts",
+  "source": "亲历 09:08"
+ },
+ {
+  "round": "ai",
+  "id": "F07",
+  "segment": "lived",
+  "q": "What share of your time is coding versus other work?",
+  "principle": "",
+  "story": "C05",
+  "keys": "~60% coding incl. design, ~40% data contracts and cross-team sync · \"downstream of the downstream\" · example: trigger-status handshake is a data contract",
+  "source": "亲历 12:42"
+ },
+ {
+  "round": "ai",
+  "id": "F08",
+  "segment": "lived",
+  "q": "How do you decide whether to trust AI-generated code?",
+  "principle": "Be Excellent",
+  "story": "S7",
+  "keys": "plan with the agent → TDD every phase → CI + monitoring gates · \"focus on gates and thresholds, not lines of code\" · in money code I read every diff myself",
+  "source": "亲历 17:02"
  }
 ]

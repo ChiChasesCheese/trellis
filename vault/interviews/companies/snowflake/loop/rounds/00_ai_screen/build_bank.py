@@ -20,8 +20,8 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 SRC = HERE / "questions.md"
 OUT = HERE / "bank.json"
-SEGMENT = {"A": "experience", "B": "scenario", "C": "collaboration", "D": "followup", "E": "wrapup"}
-ROW = re.compile(r"^\|\s*([A-E]\d{2})\s*\|")
+SEGMENT = {"A": "experience", "B": "scenario", "C": "collaboration", "D": "followup", "E": "wrapup", "F": "lived"}
+ROW = re.compile(r"^\|\s*([A-F]\d{2})\s*\|")
 
 
 def split_row(line: str) -> list[str]:

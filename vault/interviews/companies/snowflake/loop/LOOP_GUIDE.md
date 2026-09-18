@@ -33,7 +33,7 @@
 
 ## 1. Chakra AI 语音筛（20 min）
 
-- **形式 / 评分 / 剧本**：本轮全部材料在 `rounds/00_ai_screen/`（`README.md` 入口）：`playbook.md`（逐分钟英文稿）、`stories.md`（S1–S10）、`scenarios.md`（12 题）、`questions.md` + `bank.json`（71 题）、`rubric.md`；机制 `../../core/playbooks/ai-voice-screen.md`；证据 `../raw/chakra.md`。
+- **形式 / 评分 / 剧本**：本轮全部材料在 `rounds/00_ai_screen/`（`README.md` 入口）：`playbook.md`（逐分钟英文稿）、`stories.md`（S1–S10）、`scenarios.md`（12 题）、`questions.md` + `bank.json`（79 题）、`rubric.md`；机制 `../../core/playbooks/ai-voice-screen.md`；证据 `../raw/chakra.md`。
 - **一句话**：Reporter 只读 transcript；每个 expectation 要有 clarity / ownership / structured reasoning / specific examples 的**具体证据**；theoretical = Not Met；没说到 = 0。
 - **练习**：`python3 loop/mock.py bq ai -n 5`；`../07-mock.md`（20 min 计时）；关键词卡 `rounds/00_ai_screen/CARD.md`。
 
