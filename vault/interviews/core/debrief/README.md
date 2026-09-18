@@ -1,3 +1,11 @@
+---
+title: debrief · 面后复盘工具
+aliases:
+  - debrief
+tags:
+  - interview/tool
+---
+
 # debrief/ — 把一场面试的录音变成一份 mock 式评审
 
 面完录音 → 本机转写 → 数字（语速 · 填充词 · 停顿 · 语法 · 题 ↔ 题库 · JD 线 · 每题 rubric）→ 人工评审。
@@ -16,7 +24,7 @@ uv run --extra debrief python vault/interviews/core/debrief/analyze.py \
     vault/interviews/companies/<co>/debrief/<date>-<round> \
     --bank vault/interviews/companies/<co>/loop/rounds/<round>/bank.json [--candidate-only]
 
-# 3. 人工评审：读 turns.md + report.md，对照 rubric.md / stories.md 写 REVIEW.md（模板见下）
+# 3. 人工评审：读 turns.md + report.md，对照 rubric.md 与故事笔记（[[Core]]）写 REVIEW.md（模板见下）
 ```
 
 产物（都在 `companies/<co>/debrief/<date>-<round>/`，**mp3 本身不进 repo**）：
@@ -56,7 +64,7 @@ uv run --extra debrief python vault/interviews/core/debrief/analyze.py \
 ## 2. 逐题评审（时间 · 反推的题 · 你说了什么 · Chakra 档 · 它会记下的证据 · 改写 ≤ 60 s）
 ## 3. 横向练法（一周内能改的三件事，每件一条命令）
 ## 4. 发音清单（转写听错的词 = AI 也听错的词）
-## 5. 回写到 kit（02-process 亲历 · questions.md 新段 · stories.md 好句子）
+## 5. 回写到 kit（02-process 亲历 · questions.md 新段 · 故事笔记的好句子）
 ```
 
 第一份实例：`../../companies/snowflake/debrief/2026-09-17-chakra/`。

@@ -1,8 +1,17 @@
+---
+title: Chakra playbook · 逐分钟剧本
+aliases:
+  - Chakra playbook
+tags:
+  - company/snowflake
+  - round/ai-screen
+---
+
 # playbook · Chakra 20 分钟逐分钟剧本（Snowflake · GenSWE / Software Engineer - Backend）
 
-> 通用机制与操作清单在 `../../../../../core/playbooks/ai-voice-screen.md`（先读一遍）。本文件只做一件事：**把 20 分钟按邀请邮件的四段拆成逐分钟脚本，每段配好英文口述稿**。面试是英文；稿子是英文，注释是中文。
+> 通用机制与操作清单在 [[ai-voice-screen|core/playbooks/ai-voice-screen]]（先读一遍）。本文件只做一件事：**把 20 分钟按邀请邮件的四段拆成逐分钟脚本，每段配好英文口述稿**。面试是英文；稿子是英文，注释是中文。
 > 打分铁律：Reporter 只读 transcript，每条 expectation 要有「clarity / ownership / structured reasoning / specific examples」的**具体证据**；theoretical = Not Met；没说到 = 0；JD 的 **must-have 加权**。所以每段都要**说出原语名、决定、量级、"I decided / I designed / I owned"**，并主动命中 JD 关键词：**SQL · distributed systems · Java · database internals · large-scale production**。
-> 故事全文与追问版在 `stories.md`；题库在 `questions.md` / `bank.json`；场景题在 `scenarios.md`；考前卡在 `CARD.md`。
+> 故事全文与追问版在 core 的故事笔记（[[S1]]…[[S11]]，入口 [[Core]]）；题库在 `questions.md` / `bank.json`；场景题在 `scenarios.md`；考前卡在 `CARD.md`。
 
 ## 0. 一句话定位（贴在摄像头旁的卡片第一行）
 
@@ -15,9 +24,9 @@
 | 分钟 | 段（邮件原文） | 主答 | 备用追问 |
 |---|---|---|---|
 | 0–1 | 开场 | 听议程；可问 "How many sections and roughly how long each?" | — |
-| 1–6 | Your experience and role-related background | 自我介绍 60 s → 项目深挖 **S1** 90 s | S1 追问版 ×6（`stories.md`） |
+| 1–6 | Your experience and role-related background | 自我介绍 60 s → 项目深挖 **[[S1]]** 90 s | [[S1]] 追问版 ×6 |
 | 6–11 | Applied scenarios relevant to your role | 通用开场句 → Clarify → 3 步 → 最接近的真实例子 → trade-off（`scenarios.md`） | 每题 60–90 s |
-| 11–16 | Collaboration and decision-making | **S5** 决策 90 s；**S4** 跨团队 60 s；**S6** 说不 60 s（按它问的挑） | S2 ADR / S9 事故 / S8 unblock 作备用 |
+| 11–16 | Collaboration and decision-making | **[[S5]]** 决策 90 s；**[[S4]]** 跨团队 60 s；**[[S6]]** 说不 60 s（按它问的挑） | [[S2]] ADR / [[S9]] 事故 / [[S8]] unblock 作备用 |
 | 16–19 | Questions you may have for us | 2 个它能答的 + 1 句表态（§6） | — |
 | 19–20 | 收尾 | 三个关键词 + 感谢 | — |
 
@@ -34,13 +43,13 @@
 > Before that I did my master's in CS at NYU and interned on the same team, building Kafka-based transaction-event processing. I'm interested in Snowflake because I've spent two years as a very heavy user of exactly the primitives your backend teams build, and I want to work on the platform side of that.
 
 中文注释：
-- 四个 JD 关键词已经在里面：**SQL / Java / database-first / large-scale**。distributed systems 在 S1/S5 里补（idempotency、handshake、exactly-once by design）。
+- 四个 JD 关键词已经在里面：**SQL / Java / database-first / large-scale**。distributed systems 在 [[S1]]/S5 里补（idempotency、handshake、exactly-once by design）。
 - 最后一句是 hook，引它去问「你用 Snowflake 做了什么」——这正是最强的地方。
-- 如果它开场就要 "recent project"，跳过第二段直接进 S1。
+- 如果它开场就要 "recent project"，跳过第二段直接进 [[S1]]。
 
-## 3. 段一 · 项目深挖 S1（90 秒首答 + 追问版）
+## 3. 段一 · 项目深挖 [[S1]]（90 秒首答 + 追问版）
 
-首答全文和六条追问（"what was yours / why streams not Airflow / how do you know it's correct / what broke / what would you change / how does it relate to Snowflake"）见 `stories.md` §S1。首答的**四个必说点**：
+首答全文和六条追问（"what was yours / why streams not Airflow / how do you know it's correct / what broke / what would you change / how does it relate to Snowflake"）见 [[S1]]。首答的**四个必说点**：
 
 1. 为什么 Amex 不能乐观入账 → **good-funds model** + pending 表（domain 判断力）
 2. 原语名：`COPY INTO` · append-only **Streams** · `MERGE` on composite key · UDTF with `FULL OUTER JOIN` · Task `AFTER A, B`（database internals）
@@ -53,14 +62,26 @@
 
 ## 5. 段三 · 协作与决策（三选二，按它问的挑）
 
-- **技术决策 + trade-off** → S5（静态拆分 vs 更聪明的 fallback；同源验证；deploy ≠ release）
-- **跨团队 / 分歧** → S4（用同一条查询结束 50 条回复的争论）或 S9（事故里给 SLA 定论、主张 region conditional 而非 revert）
-- **说不 / 推迟投入** → S6（go/no-go 门 + 分阶段）
-- **说服团队改方案** → S2 ADR（四方案 + strictest-wins 论证 + 容量分析）
-- **压力下 unblock** → S8（7 分钟 RCA + 主动指出未爆的同类风险）
+- **技术决策 + trade-off** → [[S5]]（静态拆分 vs 更聪明的 fallback；同源验证；deploy ≠ release）
+- **跨团队 / 分歧** → [[S4]]（用同一条查询结束 50 条回复的争论）或 [[S9]]（事故里给 SLA 定论、主张 region conditional 而非 revert）
+- **说不 / 推迟投入** → [[S6]]（go/no-go 门 + 分阶段）
+- **说服团队改方案** → [[S2]] ADR（四方案 + strictest-wins 论证 + 容量分析）
+- **压力下 unblock** → [[S8]]（7 分钟 RCA + 主动指出未爆的同类风险）
 - **带人 / 影响别人** → 见 §7 "Mentoring" 的说法
 
 每个故事的最后一句必须是 learning 或 principle：**fail loudly · same SQL for validation and production · deploy ≠ release · config over code · strictest wins**。
+
+## 5b. 追问弹药（任何故事都能接）
+
+| 追问 | 接法 |
+|---|---|
+| "If volume were 100× larger?" | 剪枝与聚簇（窗口化 `ON`、cluster key 对齐查询模式）→ 拆 warehouse 隔离负载 → 把逐行 UDF 改成 set-based / SQL pushdown（[[S6]] 的 Phase 1 就是这个思路）。 |
+| "Why Snowflake-native SQL and not Java services?" | 数据在哪，计算就在哪；每步都是事务性 `MERGE`；Java 17 + Gradle + Flyway 做编排、测试与部署——"database-first, Java for orchestration"。 |
+| "Biggest risk you took?" | [[S5]] 静态拆分数据源：赌的是"事实比运行时判断可靠"，用同源验证把风险买断。 |
+| "Who else was involved?" | 永远先说别人做了什么，再说我的决定："I was one of three owners; my piece was…" |
+| "What does your team own?" | 亲历 2026-09-17 的好句子："We are the downstream of the downstream — fee calculation and disbursement — so a mistake here is money, not a retry." |
+| "How do you work without a PM?" | 亲历 2026-09-17 的好句子："We're engineer-driven: I identify the problem, write the discovery and the ADR, then implement — and I own the on-call for it afterwards." |
+| "What did you learn?" | 每个故事的最后一句已经是 learning；追问时换成原则：**fail loudly · same SQL for validation and production · deploy ≠ release · config over code**。 |
 
 ## 6. 段四 · 反问（对 AI，它只能答流程类）
 
@@ -94,5 +115,5 @@
 ## 9. 前一晚 / 当天
 
 - 前一晚：`../../../07-mock.md` 跑两遍（一遍看稿，一遍不看稿只看 `CARD.md`）；每个故事录音 90 秒回听——检查是否有 headline / 原语名 / "I decided" / learning。
-- 当天：`../../../../../core/playbooks/ai-voice-screen.md` §4 清单逐项打勾；用 **Chrome**；关键词卡贴摄像头旁；开 real-time transcript。
+- 当天：[[ai-voice-screen|core/playbooks/ai-voice-screen]] §4 清单逐项打勾；用 **Chrome**；关键词卡贴摄像头旁；开 real-time transcript。
 - 面完：实际被问的题写进 `../../../02-process.md` 末尾「亲历」节，新题追加到 `bank.json`。

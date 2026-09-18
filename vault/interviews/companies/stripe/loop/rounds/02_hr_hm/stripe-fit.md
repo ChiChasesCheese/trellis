@@ -12,7 +12,7 @@
 1. **What do you know about Stripe? / 你对 Stripe 业务的理解**（Recruiter 高频）
 2. **Why Stripe? / 为什么想来 Stripe**（Recruiter + HM，核心筛选题）
 3. **What does Stripe's mission mean to you personally? / Stripe 的使命对你意味着什么**（Behavioral，Macro-optimism 信号）
-4. **Tell me about yourself. / 自我介绍**（Recruiter，60–90 秒黄金版，串 S1/S5/S2）
+4. **Tell me about yourself. / 自我介绍**（Recruiter，60–90 秒黄金版，串 [[S1]]/S5/S2）
 5. **Talk about a project you're most proud of. / 你最自豪的项目**（Recruiter，讲故事能力 + 动机）
 6. **What's your greatest weakness? / 你最大的弱点**（Behavioral，Humility 信号）
 7. **Why do you want to leave PayPal? / 为什么离开现在的公司**（通用动机题）
@@ -38,7 +38,7 @@ Stripe 是 payments infrastructure 公司，使命是 "grow the GDP of the inter
 
 **我为什么懂它的难**：我在 Braintree Snowglobe（基于 Snowflake 的清结算/对账平台）做的，正是 Stripe 在 Connect / Treasury 里替商户扛掉的那一层——
 
-- **费用计算的正确性**：我处理过 Amex GRRCN（定宽结算文件）从 ingestion 到 fee 计算的端到端管线，一年 **21.96M 笔交易 / $138.6B volume**〔Confluence 2025 Impact Summary〕。我知道一个 `payment_instrument_sub_kind = NULL` 就能让一批商户的 fee 静默不生成——我真修过这个生产事故（S3，~196 merchants / ~$11.3M/day GMV）。
+- **费用计算的正确性**：我处理过 Amex GRRCN（定宽结算文件）从 ingestion 到 fee 计算的端到端管线，一年 **21.96M 笔交易 / $138.6B volume**〔Confluence 2025 Impact Summary〕。我知道一个 `payment_instrument_sub_kind = NULL` 就能让一批商户的 fee 静默不生成——我真修过这个生产事故（[[S3]]，~196 merchants / ~$11.3M/day GMV）。
 - **结算模型**：我端到端拥有 Net Settlement Pricing，把商户从 gross 结算迁到 Fiserv 的每日净结算，这是 **$55B+ 增量 TPV** 和解决 **$450M/月 float** 的前提。Stripe 的 payout / balance 产品面对的是同一类问题。
 
 所以我对 Stripe 的理解不是「一个用过 API 的开发者」，而是「一个自己搭过这套底座、知道它哪里会出血的人」。
@@ -94,7 +94,7 @@ Stripe 创始人有句话我很认同——"micro pessimists, macro optimists"�
 
 ## 4. Tell me about yourself. / 自我介绍（60–90 秒黄金版）
 
-> 来源：The Interview Guys、InterviewQuery。Recruiter 必问开场。研究文档建议准备 30–60 秒经历概述。这里给 **60–90 秒黄金版**（串 S1 AMEX GRRCN + S5 Net Settlement + S2 Quality-Check 三个旗舰）+ 一个更短的 45 秒备选。定位一句话：**payments infra 领域专家，想去 developer-first 的公司做更大规模**。
+> 来源：The Interview Guys、InterviewQuery。Recruiter 必问开场。研究文档建议准备 30–60 秒经历概述。这里给 **60–90 秒黄金版**（串 [[S1]] AMEX GRRCN + [[S5]] Net Settlement + [[S2]] Quality-Check 三个旗舰）+ 一个更短的 45 秒备选。定位一句话：**payments infra 领域专家，想去 developer-first 的公司做更大规模**。
 
 ### 精修版 · 黄金 60–90 秒（面试主用）
 
@@ -114,21 +114,21 @@ Stripe 创始人有句话我很认同——"micro pessimists, macro optimists"�
 
 我是 payments infra 工程师，在 Braintree 做清结算和费用计算，是团队 Snowflake 清结算平台 Snowglobe 的核心 owner，主 repo #1 committer。我最有代表性的三件事：从零搭了 Amex 结算的端到端管线（一年 $138.6B volume）；端到端拥有 Net Settlement 迁移（$55B+ 增量 TPV 的前提）；以及搭了团队复用的费用校验框架并为它写了架构 ADR。我做的正是 Stripe 替开发者抽象掉的底层，所以想来把这份领域深度放到更大的规模和更 developer-first 的产品上。
 
-> 交付提示：黄金版讲完自然停在「Why Stripe」的钩子上，把主动权交回面试官。三个旗舰各准备一个可展开的 follow-up（S1 的定宽解析难点 / S5 的 shadow-run 方法 / S2 的 ADR 决策），HM 追哪个接哪个。
+> 交付提示：黄金版讲完自然停在「Why Stripe」的钩子上，把主动权交回面试官。三个旗舰各准备一个可展开的 follow-up（[[S1]] 的定宽解析难点 / [[S5]] 的 shadow-run 方法 / [[S2]] 的 ADR 决策），HM 追哪个接哪个。
 
 ---
 
 ## 5. Talk about a project you're most proud of. / 你最自豪的项目
 
-> 来源：Prepfully、InterviewKickstart。Recruiter/Behavioral 高频。注意：这题和技术深度轮的「最难项目」不同——**这里考的是动机和你在意什么**（"why proud"，不只是 "what hard"）。选一个能同时体现 craft + 影响 + 你个人价值观的。首选 S1（从零到端到端）或 S5（业务规模）。
+> 来源：Prepfully、InterviewKickstart。Recruiter/Behavioral 高频。注意：这题和技术深度轮的「最难项目」不同——**这里考的是动机和你在意什么**（"why proud"，不只是 "what hard"）。选一个能同时体现 craft + 影响 + 你个人价值观的。首选 [[S1]]（从零到端到端）或 [[S5]]（业务规模）。
 
-### 答案 A · 影响导向（首选 S1 · AMEX GRRCN）
+### 答案 A · 影响导向（首选 [[S1]] · AMEX GRRCN）
 
 我最自豪的是从零搭起 Amex GRRCN 结算管线。我接手时只有前一个人留下的 stub，整条链路——文件 ingestion、解析 Amex 专有的定宽记录格式、staging、Braintree 费用计算、到交给 Funding 出款——都是我独立设计并实现的，还把原来在 Funding 的 Ruby 脚本迁到了 Snowflake-native。上线后它一年稳定处理 21.96M 笔交易、$138.6B volume，我为它做了 18 个月的生产防御。
 
 我自豪的不是「它很大」，是**它没出过让商户少收钱的静默事故**——因为我在设计时就埋了 feature-flag 急停、append-only streams、和边界处理。这是我理解的 craftsmanship：底层的脏活做对了，上面所有人根本感觉不到它的存在。
 
-### 答案 B · 展开版（想突出业务规模与 ownership 时选 S5 · Net Settlement）
+### 答案 B · 展开版（想突出业务规模与 ownership 时选 [[S5]] · Net Settlement）
 
 我最自豪的是端到端拥有 Net Settlement Pricing——因为它同时考验了技术、业务判断和长期 ownership，而且我一个人扛了 2 年多。
 
@@ -138,7 +138,7 @@ Stripe 创始人有句话我很认同——"micro pessimists, macro optimists"�
 
 它的商业意义是 $55B+ 增量 TPV 的前提、解决 $450M/月的 float。但我最自豪的是**做法**：在一个错一位数就出血的地方，我用可验证的方法把风险降到接近零，还把它变成了团队资产。这就是我想在 Stripe 做的事。
 
-〔证据锚点：S1 = PR #751/#856/#886(1,849 行)/#911，epic DTBTTFOUND-2074；S5 = PR #1615，epic 链 …→3126(P1)，"CDC Table Backfilling Template"〕
+〔证据锚点：[[S1]] = PR #751/#856/#886(1,849 行)/#911，epic DTBTTFOUND-2074；[[S5]] = PR #1615，epic 链 …→3126(P1)，"CDC Table Backfilling Template"〕
 
 ---
 

@@ -1,8 +1,17 @@
+---
+title: Chakra scenarios · 12 道场景题
+aliases:
+  - Chakra scenarios
+tags:
+  - company/snowflake
+  - round/ai-screen
+---
+
 # scenarios · Applied scenarios（后端应用场景，口述框架，English）
 
 > 邀请邮件第二段 "Applied scenarios relevant to your role"。一手报告说 Chakra 轮无 coding，所以是**口头推理题**。打分要的是 "structured reasoning + specific examples"，每题用同一个骨架：
 > **Clarify（1 句）→ Approach（3 步）→ What I actually did that's closest（1 个真实例子 + 量级）→ Trade-off / what I'd watch（1 句）**。每题 60–90 s。
-> 12 题按「Snowflake backend JD 最可能问」排序，每题标出命中的 JD 线：**SQL · DS（distributed systems） · DBI（database internals） · Prod（large-scale production） · Java**。故事编号指 `stories.md`。
+> 12 题按「Snowflake backend JD 最可能问」排序，每题标出命中的 JD 线：**SQL · DS（distributed systems） · DBI（database internals） · Prod（large-scale production） · Java**。故事编号可点：[[S1]]…[[S11]]。
 
 ## 通用开场句（任何场景题都先说这句）
 
@@ -20,7 +29,7 @@
 >
 > **Trade-off**: Fix forward with a backfill rather than roll back — in billing the wrong state has already been consumed downstream; you need a correcting entry, not a reversal.
 
-→ S3
+→ [[S3]]
 
 ## 2. "Design a service that meters usage events and produces a daily bill, so that retries never double-charge." — DS · SQL
 
@@ -32,7 +41,7 @@
 >
 > **Trade-off**: Idempotent upserts cost a unique key and make ingestion slightly slower; dedup at aggregation time is faster to ingest but makes the raw layer untrustworthy — and in billing the raw layer is your audit trail.
 
-→ S1 · S5
+→ [[S1]] · [[S5]]
 
 ## 3. "You need to change the schema of a large production table — or switch its source of truth — without downtime." — DS · DBI
 
@@ -44,7 +53,7 @@
 >
 > **Trade-off**: Dual-running doubles compute for a few weeks — worth it when the table is revenue; for a low-stakes table I'd do a single backfill with a verification query.
 
-→ S5
+→ [[S5]]
 
 ## 4. "A query or a service got slow after a deploy. Walk me through it." — DBI · Prod
 
@@ -56,7 +65,7 @@
 >
 > **Trade-off**: The window trades a tiny chance of missing a very late duplicate for bounded cost — so the invariant is documented next to the clause.
 
-→ S5 · S6
+→ [[S5]] · [[S6]]
 
 ## 5. "You're on call and a partner reports their payouts are delayed. What do you do in the first 30 minutes?" — Prod
 
@@ -66,7 +75,7 @@
 >
 > **Trade-off**: The temptation is to start fixing; the first ten minutes are better spent on scoping and a clear statement of what's actually broken.
 
-→ S9 · S8
+→ [[S9]] · [[S8]]
 
 ## 6. "How would you build a rate limiter / quota system shared by multiple upstream services?" — DS
 
@@ -88,7 +97,7 @@
 >
 > **Trade-off**: Auto-commit with a short interval is simpler but leans at-most-once under crashes; I'd rather commit-after-write and pay for idempotency.
 
-→ S1 · `core/tech_stacks/02-kafka-event-streaming.md`
+→ [[S1]] · [[TS02]]
 
 ## 8. "Downstream teams keep reading a table before it's complete. Design a mechanism so they never read bad or partial data." — DS · SQL
 
@@ -100,7 +109,7 @@
 >
 > **Trade-off**: Handshake solves timing, not content — if a check doesn't cover a class of error, the flag is green and the data is wrong. That's why the checks are the real product.
 
-→ S2
+→ [[S2]]
 
 ## 9. "Two systems disagree on a number — say the fees you computed versus what the acquirer reports. How do you find out who's right and fix it?" — SQL · Prod
 
@@ -112,7 +121,7 @@
 >
 > **Trade-off**: A reconciliation that only compares totals hides offsetting errors; record-level costs more compute and is the only one I'd trust for money.
 
-→ S5 · S10
+→ [[S5]] · [[S10]]
 
 ## 10. "Design a scheduler for dependent batch jobs with retries and backfills." — DS · DBI
 
@@ -124,7 +133,7 @@
 >
 > **Trade-off**: Data-triggered DAGs are cheap and simple but have weaker orchestration than Airflow — no branching, no external callbacks — so you invest in observability instead.
 
-→ S1
+→ [[S1]]
 
 ## 11. "A table has billions of rows and queries against it keep getting slower. What do you do?" — DBI · SQL
 
@@ -136,7 +145,7 @@
 >
 > **Trade-off**: Clustering costs background compute forever; if the key isn't in the common filter, you pay maintenance for nothing.
 
-→ `core/tech_stacks/09-sql-data-modeling.md`
+→ [[TS09]]
 
 ## 12. "Data arrives late or out of order in a daily batch. How do you keep the day's results correct?" — DS · SQL
 
@@ -148,10 +157,10 @@
 >
 > **Trade-off**: Accepting late data everywhere means the day's first answer can be incomplete — so every consumer has to be built to see a version, not "the" number.
 
-→ S1 · S9
+→ [[S1]] · [[S9]]
 
 ---
 
 ## 如果它出了不在上面的题
 
-先说通用开场句，然后 Clarify → 3 步 → 最接近的真实例子 → trade-off。**没做过就说没做过**："I haven't built X, but the closest thing I've done is Y — and here's how I'd approach X." 真实例子池：S1–S10，加 Stripe 题库里做过的 q07 订阅调度、q13 ledger、q25 对账、q18 union-find 风控。技术栈讲法与边界：`../../../../../core/tech_stacks/INDEX.md`。
+先说通用开场句，然后 Clarify → 3 步 → 最接近的真实例子 → trade-off。**没做过就说没做过**："I haven't built X, but the closest thing I've done is Y — and here's how I'd approach X." 真实例子池：[[S1]]–[[S10]]，加 Stripe 题库里做过的 q07 订阅调度、q13 ledger、q25 对账、q18 union-find 风控。技术栈讲法与边界：[[Tech Stacks]]。

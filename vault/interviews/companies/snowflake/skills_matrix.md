@@ -13,8 +13,8 @@
 | S07 | 消息传递模拟 / 异步聚合协议 | Distributed Tree Counting；Snowflake 元数据服务 fan-out/fan-in | pc10 | 分布式系统 5/6 |
 | S08 | LC 原题 + 复杂度再压一档（Morris、Floyd、O(m·n)） | Inorder→Morris、Happy Number→O(1)、Server Selection O(m·n) | q07 pc06 q09 q06 | 算法 5/6 |
 | S09 | 类设计先定 API 契约，再讲状态与不变量 | 所有 OOD 题；task scheduler 挂经就是契约没定清 | od01 od02 od03 od07 | "design/build services" |
-| S10 | 并发正确性：锁粒度、原子 claim/lease、每线程事务栈 | 5/10 OOD 题有明确并发追问 | od03 od04 od05 od01 | 并发 1/6 明确 + 分布式 5/6 |
-| S11 | 持久化与恢复：WAL/快照、崩溃不丢触发 | 文件系统追问、cron scheduler (f) | od02 od05 | 数据库内部 5/6 |
+| [[S10]] | 并发正确性：锁粒度、原子 claim/lease、每线程事务栈 | 5/10 OOD 题有明确并发追问 | od03 od04 od05 od01 | 并发 1/6 明确 + 分布式 5/6 |
+| [[S11]] | 持久化与恢复：WAL/快照、崩溃不丢触发 | 文件系统追问、cron scheduler (f) | od02 od05 | 数据库内部 5/6 |
 | S12 | 缓存与淘汰（LRU/TTL/多级） | warehouse SSD cache 框架 | od08 | 大规模系统 |
 | S13 | 队列语义（at-least-once、落盘确认、背压） | Queue 类→服务（onsite 挂经） | od09 sd05 | 分布式 5/6 |
 | D01 | 先说不变量再画图；显式说"不做什么" | SD 面试官压 failure modes；沉默面试官下自己带节奏 | sd01–sd11 | — |
@@ -25,9 +25,9 @@
 | D06 | 审计/治理：不可变、时间窗、多租户、保留 | Audit log（含 senior 电面逐字） | sd06 od06 | 数据治理 1/6 |
 | D07 | 依赖图刷新：增量 vs 全量、一致快照、失效传播 | DAG cache ≈ Dynamic Tables | sd08 | 查询优化/执行 2/6 |
 | D08 | 用 Snowflake 原语作参照：Execution Anchor、FDB、Tasks、Streams offset、Dynamic Tables | 差异化加分；`../01-company-brief.md` §1 | 所有 SD | 数据库内部 5/6 |
-| B01 | 项目深挖三层：why → 备选 → 可用性/容错/重做 | expertise 轮一手追问模式 | exp（S1、S5） | 大规模生产系统 4/6 |
-| B02 | 8 条价值观逐条有故事（Own It / Get It Done / Integrity Always 优先） | HM 轮逐题记笔记 | hm（S1–S9） | — |
+| B01 | 项目深挖三层：why → 备选 → 可用性/容错/重做 | expertise 轮一手追问模式 | exp（[[S1]]、[[S5]]） | 大规模生产系统 4/6 |
+| B02 | 8 条价值观逐条有故事（Own It / Get It Done / Integrity Always 优先） | HM 轮逐题记笔记 | hm（[[S1]]–[[S9]]） | — |
 | B03 | 具体化 why Snowflake + level 不报数字 + 问 headcount | recruiter / team matching 一手风险 | rc tm | — |
-| B04 | transcript 证据型回答（Chakra） | AI 轮打分只读 transcript | `../loop/rounds/00_ai_screen/questions.md`（79 题）· `stories.md` | — |
+| B04 | transcript 证据型回答（Chakra） | AI 轮打分只读 transcript | `../loop/rounds/00_ai_screen/questions.md`（79 题）· 故事 [[Core]] | — |
 
 **决定过/挂的点（一手）**：S09（task scheduler 契约）· S13（queue 故障语义）· D01（沉默面试官）· B01（expertise 讲不出 why）· B03（headcount 搁置）。

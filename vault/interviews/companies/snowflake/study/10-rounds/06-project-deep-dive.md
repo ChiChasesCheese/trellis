@@ -1,6 +1,6 @@
 # 06 · Expertise / 项目深挖
 
-> 事实层在 `../../loop/LOOP_GUIDE.md` §7；题库 `../../loop/rounds/06_project_deep_dive/`；素材 `../../../../core/stories/evidence-base.md`、`resume-evidence-map/01、02`。
+> 事实层在 `../../loop/LOOP_GUIDE.md` §7；题库 `../../loop/rounds/06_project_deep_dive/`；素材 [[Core]]、`resume-evidence-map/01、02`。
 
 ## 这轮到底考什么（一句话）
 
@@ -8,7 +8,7 @@
 
 ## 准备两个 15 分钟版本
 
-**S1 · AMEX GRRCN 管线**（主讲，Snowflake-native，面试官最有共鸣）
+**[[S1]] · AMEX GRRCN 管线**（主讲，Snowflake-native，面试官最有共鸣）
 
 | 分钟 | 内容 |
 |---|---|
@@ -18,7 +18,7 @@
 | 11–14 | 失败模式与监控：半截文件、重复投递、stream 过期、summary 对账不一致即停；TASK_HISTORY + Streamlit + Datadog |
 | 14–15 | 重做清单：商户粒度质量门从第一天做；下游聚合改 Dynamic Tables |
 
-**S5 · Net settlement 迁移**（备用，决策与验证最强）
+**[[S5]] · Net settlement 迁移**（备用，决策与验证最强）
 
 | 分钟 | 内容 |
 |---|---|

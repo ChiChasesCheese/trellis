@@ -9,7 +9,7 @@ interviews/
   README.md                 本文件：方法论 + 约定 + 新公司接入流程
   core/                     核心能力：与公司无关，跨公司持续打磨（越用越厚）
     resume/                 resume.tex（唯一源）+ 投递 PDF + CHANGELOG
-    stories/                evidence-base.md（S1–S9 旗舰故事）+ resume-evidence-map/（学习画像）
+    stories/                S1…S11 一故事一文件（aliases 可 [[S1]] 引用）；Core.md 是 MOC；Answers.md 是 Q1–Q24
     answers/                逐题行为面答案手册 dim1–dim6（技术深度 / 影响 / 领导力 / 带教 / HR）
     playbooks/              按轮次的通用打法：AI 语音筛选 / recruiter / HM / 电面 / onsite …
   rounds/                   与公司无关的轮次能力，都是 trellis 领域（有 skeleton、进 Anki）
@@ -41,8 +41,8 @@ python3 tools/summary.py --run                                           # 重�
 
 1. **raw/ 先行**：把论坛 / 题库 / 官方页 / 邮件原文按来源分文件存进 `companies/<co>/raw/`，每条带 URL + 日期。不整理，只收集。
 2. **CATALOG / process**：从 raw 汇总成一张表——轮次、时长、形式、通过线、挂点；题目按 `#refs`（独立来源数）和置信度（high / medium / low）排序。**每个结论都能回溯到 raw 里的一条**。
-3. **fit 话术**：Why <company> / 自我介绍 / 对业务的理解——从 `core/stories/evidence-base.md` 取材，只写这家公司特有的桥接点。
-4. **答案库**：把这家公司会问的题映射到 `core/answers/` 的既有答案（不重写），只补公司特定题和价值观映射。
+3. **fit 话术**：Why <company> / 自我介绍 / 对业务的理解——从 [[Core]] 取材，只写这家公司特有的桥接点。
+4. **答案库**：把这家公司会问的题映射到 [[Answers]] 的既有答案（不重写），只补公司特定题和价值观映射。
 5. **演练**：可计时的 mock（Stripe 是 `loop/mock.py`；非编码轮是题库 + 计时口述）。
 6. **回写 core**：面完把新故事 / 新答案 / 新教训写回 `core/`，公司目录保持只读归档。
 

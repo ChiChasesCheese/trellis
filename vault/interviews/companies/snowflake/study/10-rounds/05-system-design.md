@@ -50,10 +50,10 @@ python3 loop/mock.py time sd02
 
 ## 你自己的素材怎么进 SD
 
-- sd02 调度器 ↔ S1 的 task DAG + `STREAM_HAS_DATA` 门控 + 急停 flag
+- sd02 调度器 ↔ [[S1]] 的 task DAG + `STREAM_HAS_DATA` 门控 + 急停 flag
 - sd05 队列 ↔ intern 的 Kafka→Snowflake connector（poison message 隔离）
-- sd06 审计 ↔ S2 quality-check 的不可变结果表
-- sd08 MV cache ↔ S5 shadow-run（增量对账 vs 全量重算的取舍）
+- sd06 审计 ↔ [[S2]] quality-check 的不可变结果表
+- sd08 MV cache ↔ [[S5]] shadow-run（增量对账 vs 全量重算的取舍）
 
 一句"我在 Braintree 做过这件事的一个版本"，比十句教科书更能拿 4 分。
 

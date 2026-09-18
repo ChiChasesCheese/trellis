@@ -1,3 +1,12 @@
+---
+title: Chakra rubric
+aliases:
+  - Chakra rubric
+tags:
+  - company/snowflake
+  - round/ai-screen
+---
+
 # rubric · Chakra 怎么打分，自评怎么打
 
 > 官方机制（`../../../raw/chakra.md` §2）：Creator agent 把 JD 变成 sections + expectations；Interviewer agent 按 plan 问；**Reporter agent 事后只读 transcript**，每条 expectation 独立打 **3 / 2 / 1 / 0**，再归一到 0–5 给 recruiter；**JD 里标 Must have 的要求加权**。人（Talent Acquisition）读报告后决定是否进 recruiter call。

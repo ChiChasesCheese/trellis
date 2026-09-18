@@ -19,10 +19,10 @@
 | "Where would you contribute in six months?" | 把团队的 scope 映射到自己做过的事 | 没听懂团队 scope 就答 |
 | "How do you ramp up on a big codebase?" | 方法：入口 → 测试 → 一个小改动上线 | "读文档" |
 | "What did you like least about your team?" | 诚实但不抱怨 | 吐槽 manager |
-| "On-call?" | 真实经验（S3/S9）+ 对 pager 频率的提问 | 说"不喜欢" |
+| "On-call?" | 真实经验（[[S3]]/S9）+ 对 pager 频率的提问 | 说"不喜欢" |
 | "3 days in office?" | 直接回答；问执行口径 | 含糊 |
 | "How do you use AI tools?" | 简历 bullet 4 + snowglobe-tools；"tech lead of agents" | 说"不用" |
-| "Learn a new tech quickly?" | S1 定宽解析 / Terraform grant | 无 |
+| "Learn a new tech quickly?" | [[S1]] 定宽解析 / Terraform grant | 无 |
 | "Questions about the team?" | pager 频率、RTO 执行、headcount、第一个项目 | 没问题 |
 | "Anything that would make you say no?" | 诚实边界（on-call 强度、RTO） | "没有" |
 

@@ -6,7 +6,7 @@
 
 ## 00_ai_screen · Chakra AI 语音筛（20 min，BQ + 项目）
 
-先读：[00-ai-screen](study/10-rounds/00-ai-screen.md) · [playbook](loop/rounds/00_ai_screen/playbook.md) · [stories](loop/rounds/00_ai_screen/stories.md)
+先读：[00-ai-screen](study/10-rounds/00-ai-screen.md) · [playbook](loop/rounds/00_ai_screen/playbook.md) · [scenarios](loop/rounds/00_ai_screen/scenarios.md)
 
 - **headline → mechanism → "I decided" → 量级 → learning；JD 关键词说出口（题库 A/C/D 段）** — 题库：`loop/rounds/00_ai_screen/`
 - **口述场景题骨架（clarify → 3 步 → 真实例子 → trade-off；题库 B 段 18 题）** — 题库：`loop/rounds/00_ai_screen/`

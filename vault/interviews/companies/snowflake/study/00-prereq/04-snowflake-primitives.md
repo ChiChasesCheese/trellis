@@ -1,6 +1,6 @@
 # 前置课 04 · 用你自己的 Snowglobe 经验讲 Snowflake 原语
 
-> 目标：把两年重度使用的经验变成面试里可引用的"我做过 + 它背后是什么"。读完能在任何 SD / expertise 追问里，30 秒内从自己的系统跳到 Snowflake 的对应机制。素材：`../../../../core/stories/evidence-base.md` S1/S2/S5/S7、`../20-cards/snowflake_internals.md`。
+> 目标：把两年重度使用的经验变成面试里可引用的"我做过 + 它背后是什么"。读完能在任何 SD / expertise 追问里，30 秒内从自己的系统跳到 Snowflake 的对应机制。素材：[[Core]] S1/S2/S5/S7、`../20-cards/snowflake_internals.md`。
 
 ## 1. 你用过的 → 它背后是什么 → 面试怎么说
 
