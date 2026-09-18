@@ -4,13 +4,13 @@
 Tenant isolation, cache attacks, abuse controls, signed delivery, and the unit economics of global content serving.
 
 ## Topics
-- [[security-cost.isolation|Tenant & Personalization Isolation]]
-- [[security-cost.poisoning|Cache Poisoning & Key Confusion]]
-- [[security-cost.request-integrity|Proxy Request Integrity]]
-- [[security-cost.abuse|Abuse, DDoS & Resource Limits]]
-- [[security-cost.signed-content|Signed URLs & Private Content]]
-- [[security-cost.economics|CDN Unit Economics]]
-- [[security-cost.optimization|Performance-Cost Optimization]]
+- [[domains/cdn-content/map/security-cost.isolation|Tenant & Personalization Isolation]]
+- [[domains/cdn-content/map/security-cost.poisoning|Cache Poisoning & Key Confusion]]
+- [[domains/cdn-content/map/security-cost.request-integrity|Proxy Request Integrity]]
+- [[domains/cdn-content/map/security-cost.abuse|Abuse, DDoS & Resource Limits]]
+- [[domains/cdn-content/map/security-cost.signed-content|Signed URLs & Private Content]]
+- [[domains/cdn-content/map/security-cost.economics|CDN Unit Economics]]
+- [[domains/cdn-content/map/security-cost.optimization|Performance-Cost Optimization]]
 %% trellis:end %%
 
 ## Notes

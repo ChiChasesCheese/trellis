@@ -4,7 +4,7 @@
 
 Collapsing the defense and beating the rotation with one extra pass; the corner as the release valve.
 
-**Unlocks:** [[reads|Reads & Decision Making]]
+**Unlocks:** [[domains/basketball/map/reads|Reads & Decision Making]]
 
 ## Readings
 - [[bb-half-second-offense|What is this 0.5 offense all about for the Phoenix Suns? Monty Williams explains.]]

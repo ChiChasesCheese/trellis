@@ -4,9 +4,9 @@
 
 The append-only log as system of record; partitions, consumer groups, offsets, retention.
 
-**Requires:** [[storage.internals|Storage Engine Internals]]
+**Requires:** [[domains/system-design/map/storage.internals|Storage Engine Internals]]
 
-**Unlocks:** [[analytics.derived|Derived Data & Materialized Views]]
+**Unlocks:** [[domains/system-design/map/analytics.derived|Derived Data & Materialized Views]]
 
 ## Readings
 - [[kafka-docs|Apache Kafka Documentation (Design section)]]

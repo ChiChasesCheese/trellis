@@ -4,7 +4,7 @@
 
 给表附加一个行过滤谓词，使不同角色看到同一批行的不同子集，该谓词在查询时被求值。
 
-**Requires:** [[security.rbac-role-hierarchy|RBAC 角色层级]]
+**Requires:** [[domains/snowflake/map/security.rbac-role-hierarchy|RBAC 角色层级]]
 
 ## Readings
 - [[snowflak-row-access-policies|行访问策略(Row Access Policy):按角色过滤行]]

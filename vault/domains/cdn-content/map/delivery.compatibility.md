@@ -4,9 +4,9 @@
 
 Backward and forward compatibility, expand-contract, config validation, version skew, safe defaults, and avoiding irreversible releases.
 
-**Requires:** [[content.versioning|Deployment, Versioning & Rollback]]
+**Requires:** [[domains/cdn-content/map/content.versioning|Deployment, Versioning & Rollback]]
 
-**Unlocks:** [[delivery.cicd|CI/CD & Release Evidence]]
+**Unlocks:** [[domains/cdn-content/map/delivery.cicd|CI/CD & Release Evidence]]
 
 ## Readings
 - [[delivery-next-self-hosting|Next.js: Self-hosting]]

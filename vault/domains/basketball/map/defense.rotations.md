@@ -4,7 +4,7 @@
 
 Low man, x-out, next rotation, and why the second rotation is the one that actually gets broken.
 
-**Unlocks:** [[reads|Reads & Decision Making]]
+**Unlocks:** [[domains/basketball/map/reads|Reads & Decision Making]]
 
 ## Readings
 - [[bb-shell-defense-variations|3 Shell Defense Variations For Lockdown Defense | Baskeball Team Defense Drills]]

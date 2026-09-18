@@ -4,7 +4,7 @@
 
 The thing with no spec and no owner that you scoped yourself and then had to defend.
 
-**Requires:** [[themes.ambiguity|Acting Without a Spec]]
+**Requires:** [[interviews/rounds/narrative/map/themes.ambiguity|Acting Without a Spec]]
 %% trellis:end %%
 
 ## Notes

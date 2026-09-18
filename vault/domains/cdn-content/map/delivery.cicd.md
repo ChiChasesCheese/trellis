@@ -4,9 +4,9 @@
 
 Reproducible builds, test gates, artifact provenance, environment promotion, deployment records, and evidence that a rollout is safe.
 
-**Requires:** [[reliability.testing|Unit, Integration & End-to-End Testing]], [[delivery.compatibility|Compatibility & Configuration Changes]]
+**Requires:** [[domains/cdn-content/map/reliability.testing|Unit, Integration & End-to-End Testing]], [[domains/cdn-content/map/delivery.compatibility|Compatibility & Configuration Changes]]
 
-**Unlocks:** [[delivery.terraform-kubernetes|Terraform & Kubernetes Basics]]
+**Unlocks:** [[domains/cdn-content/map/delivery.terraform-kubernetes|Terraform & Kubernetes Basics]]
 
 ## Readings
 - [[delivery-google-canarying|Google SRE Workbook: Canarying Releases]]

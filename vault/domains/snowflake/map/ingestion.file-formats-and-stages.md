@@ -4,9 +4,9 @@
 
 内部暂存区与外部暂存区的区别、具名文件格式，以及 COPY INTO 如何同时利用二者来解析导入的文件。
 
-**Requires:** [[ingestion.bulk-copy-into|批量加载（COPY INTO）]]
+**Requires:** [[domains/snowflake/map/ingestion.bulk-copy-into|批量加载（COPY INTO）]]
 
-**Unlocks:** [[ingestion.snowpipe-auto-ingest|Snowpipe 自动摄取]]
+**Unlocks:** [[domains/snowflake/map/ingestion.snowpipe-auto-ingest|Snowpipe 自动摄取]]
 
 ## Readings
 - [[snowflak-data-loading-overview|数据加载总览:内部/外部 stage 与批量 COPY INTO]]

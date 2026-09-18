@@ -27,15 +27,24 @@ END = "%% trellis:end %%"
 _BLOCK_RE = re.compile(re.escape(BEGIN) + r".*?" + re.escape(END), re.DOTALL)
 
 
-def _link(node: Node) -> str:
-    return f"[[{node.id}|{node.title}]]"
+def _link(node: Node, prefix: str = "") -> str:
+    """Path-qualified wikilink. Node ids such as `round` or `rules` repeat across domains
+    (narrative and code-core both have `round.formats`), and a bare `[[round]]` is ambiguous
+    in one Obsidian vault holding every domain — so links carry the domain's folder:
+    `[[interviews/rounds/code-core/map/round|Round]]`. Unique names resolve the same way."""
+    return f"[[{prefix}{node.id}|{node.title}]]"
+
+
+def _prefix(skeleton: Skeleton) -> str:
+    return f"{skeleton.folder}/map/" if skeleton.folder else "map/"
 
 
 def _moc_body(skeleton: Skeleton) -> str:
     lines = [f"# {skeleton.title}", ""]
+    prefix = _prefix(skeleton)
 
     def visit(node: Node, depth: int) -> None:
-        lines.append("    " * depth + f"- {_link(node)}")
+        lines.append("    " * depth + f"- {_link(node, prefix)}")
         for child in node.children:
             visit(child, depth + 1)
 
@@ -53,6 +62,7 @@ def _node_body(
     cases: list[Reading],
 ) -> str:
     crumbs = " / ".join(n.title for n in node.path()[:-1])
+    prefix = _prefix(skeleton)
     lines = [f"# {node.title}"]
     if crumbs:
         lines.append(f"*{crumbs}*")
@@ -60,14 +70,14 @@ def _node_body(
         lines += ["", node.summary]
     if node.requires:
         lines += ["", "**Requires:** " + ", ".join(
-            _link(skeleton.by_id[r]) for r in node.requires
+            _link(skeleton.by_id[r], prefix) for r in node.requires
         )]
     if node.children:
         lines += ["", "## Topics"]
-        lines += [f"- {_link(c)}" for c in node.children]
+        lines += [f"- {_link(c, prefix)}" for c in node.children]
     dependents = [n for n in skeleton.walk() if node.id in n.requires]
     if dependents:
-        lines += ["", "**Unlocks:** " + ", ".join(_link(d) for d in dependents)]
+        lines += ["", "**Unlocks:** " + ", ".join(_link(d, prefix) for d in dependents)]
     node_readings = [r for r in readings if node.id in r.nodes]
     if node_readings:
         lines += ["", "## Readings"]

@@ -4,7 +4,7 @@
 
 是什么让一个 Stream 变得陈旧（超过源表保留期仍未被消费），以及延迟这一情况发生的自动保留期延长机制。
 
-**Requires:** [[pipelines.stream-offset-bookmark|作为偏移量书签的流（Stream）]]
+**Requires:** [[domains/snowflake/map/pipelines.stream-offset-bookmark|作为偏移量书签的流（Stream）]]
 
 ## Readings
 - [[snowflak-streams|流对象(Stream)的偏移量、类型与消费语义]]

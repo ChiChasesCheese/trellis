@@ -4,7 +4,7 @@
 
 Treating a follow-up as a request for one specific layer rather than a cue to restart the story.
 
-**Requires:** [[story.length|Ninety Seconds and Three Layers]]
+**Requires:** [[interviews/rounds/narrative/map/story.length|Ninety Seconds and Three Layers]]
 %% trellis:end %%
 
 ## Notes

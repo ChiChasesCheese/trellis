@@ -4,9 +4,9 @@
 
 Feature definitions as versioned code with lineage and backfills, serving identical point-in-time semantics to research and to live.
 
-**Requires:** [[data.point-in-time|Point-in-Time Discipline]]
+**Requires:** [[domains/quant-infra/map/data.point-in-time|Point-in-Time Discipline]]
 
-**Unlocks:** [[platform.parity|Research-Production Parity]]
+**Unlocks:** [[domains/quant-infra/map/platform.parity|Research-Production Parity]]
 
 ## Readings
 - [[qs-unified-factor-catalog|The Unified Factor Catalog: Raw Material vs Vetted Research]]

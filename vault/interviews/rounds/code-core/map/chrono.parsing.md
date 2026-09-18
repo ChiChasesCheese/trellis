@@ -4,7 +4,7 @@
 
 Epoch seconds, ISO-8601, `HH:MM`, day-of-week tokens and naive vs aware datetimes — parsing into one canonical representation.
 
-**Unlocks:** [[chrono.arithmetic|Duration & Calendar Arithmetic]]
+**Unlocks:** [[interviews/rounds/code-core/map/chrono.arithmetic|Duration & Calendar Arithmetic]]
 
 ## Readings
 - [[python-datetime|datetime — basic date and time types]]

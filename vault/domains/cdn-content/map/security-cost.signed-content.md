@@ -4,7 +4,7 @@
 
 Time-bounded authorization, canonical signing input, key rotation, replay scope, origin access control, and cache-safe private delivery.
 
-**Requires:** [[security-cost.isolation|Tenant & Personalization Isolation]]
+**Requires:** [[domains/cdn-content/map/security-cost.isolation|Tenant & Personalization Isolation]]
 
 ## Readings
 - [[security-http-semantics-integrity|RFC 9110: HTTP Semantics for Request Integrity]]

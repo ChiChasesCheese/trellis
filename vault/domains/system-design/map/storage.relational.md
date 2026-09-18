@@ -5,10 +5,10 @@
 The default system of record — used well before being scaled.
 
 ## Topics
-- [[storage.relational.indexing|Indexing]]
-- [[storage.relational.operations|Operating at Scale]]
+- [[domains/system-design/map/storage.relational.indexing|Indexing]]
+- [[domains/system-design/map/storage.relational.operations|Operating at Scale]]
 
-**Unlocks:** [[distributed.transactions|Transactions]]
+**Unlocks:** [[domains/system-design/map/distributed.transactions|Transactions]]
 %% trellis:end %%
 
 ## Notes

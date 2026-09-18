@@ -4,7 +4,7 @@
 
 Kahn's algorithm, detecting a cycle by shortfall, longest path as earliest-finish time, and the critical path through a schedule.
 
-**Requires:** [[algorithms.graph-traversal|BFS, DFS & Components]]
+**Requires:** [[interviews/rounds/code-core/map/algorithms.graph-traversal|BFS, DFS & Components]]
 
 ## Drills
 - [[oa-qa09-lc2050-parallel-courses-iii|Drill: longest path through a weighted job DAG, then its critical path, then k workers]]

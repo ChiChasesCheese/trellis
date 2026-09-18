@@ -30,3 +30,7 @@ sources/local/
 progress.jsonl
 .drill.json
 loop/work/
+
+# Employer evidence behind vault/interviews/core/stories/ (repo PRs, tickets, chat excerpts):
+# local only, never committed — see core/Core.md
+vault/interviews/core/stories/raw/

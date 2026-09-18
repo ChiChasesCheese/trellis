@@ -4,7 +4,7 @@
 
 Information ratio as IC times root breadth times transfer coefficient — what each term buys and how implementation friction caps the product.
 
-**Unlocks:** [[portfolio.combination|Combining Signals]]
+**Unlocks:** [[domains/quant-infra/map/portfolio.combination|Combining Signals]]
 
 ## Readings
 - [[qs-qlib-alpha-lab-honest-results|The Factor-Mining Lab: A Full Honest Accounting]]

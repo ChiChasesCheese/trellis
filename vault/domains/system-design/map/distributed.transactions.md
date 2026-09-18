@@ -4,14 +4,14 @@
 
 What the database promises around concurrent access — and what it charges for the promise.
 
-**Requires:** [[storage.relational|Relational Databases]]
+**Requires:** [[domains/system-design/map/storage.relational|Relational Databases]]
 
 ## Topics
-- [[distributed.transactions.isolation|Isolation Levels & Anomalies]]
-- [[distributed.transactions.concurrency-control|Concurrency Control]]
-- [[distributed.transactions.distributed|Distributed Transactions]]
+- [[domains/system-design/map/distributed.transactions.isolation|Isolation Levels & Anomalies]]
+- [[domains/system-design/map/distributed.transactions.concurrency-control|Concurrency Control]]
+- [[domains/system-design/map/distributed.transactions.distributed|Distributed Transactions]]
 
-**Unlocks:** [[correctness.outbox|Dual Writes & Outbox]], [[correctness.saga|Sagas]]
+**Unlocks:** [[domains/system-design/map/correctness.outbox|Dual Writes & Outbox]], [[domains/system-design/map/correctness.saga|Sagas]]
 
 ## Readings
 - [[ddia-2e|Designing Data-Intensive Applications, 2nd ed. (Kleppmann & Riccomini, 2026)]]

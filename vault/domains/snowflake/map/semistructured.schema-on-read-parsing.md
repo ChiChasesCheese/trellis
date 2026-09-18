@@ -4,7 +4,7 @@
 
 在查询时通过路径表达式从 VARIANT 中提取带类型的列，以及由此带来的类型推断开销。
 
-**Requires:** [[semistructured.variant-type-storage|VARIANT 类型与存储]]
+**Requires:** [[domains/snowflake/map/semistructured.variant-type-storage|VARIANT 类型与存储]]
 
 ## Readings
 - [[snowflak-semistructured-loading|半结构化数据的加载与内部表示(VARIANT/ARRAY/OBJECT)]]

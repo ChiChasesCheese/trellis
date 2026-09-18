@@ -4,7 +4,7 @@
 
 Shipping something across a boundary where nobody involved reported to you.
 
-**Unlocks:** [[bank.influence|Your Cross-Team Story]]
+**Unlocks:** [[interviews/rounds/narrative/map/bank.influence|Your Cross-Team Story]]
 %% trellis:end %%
 
 ## Notes

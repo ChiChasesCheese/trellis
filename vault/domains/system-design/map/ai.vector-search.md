@@ -4,9 +4,9 @@
 
 Embeddings as vectors, ANN indexes (HNSW/IVF), hybrid retrieval, and freshness of the indexed corpus.
 
-**Requires:** [[storage.search|Search Indexes]], [[ai.foundations|LLM Foundations for Engineers]]
+**Requires:** [[domains/system-design/map/storage.search|Search Indexes]], [[domains/system-design/map/ai.foundations|LLM Foundations for Engineers]]
 
-**Unlocks:** [[ai.rag|RAG Pipelines]]
+**Unlocks:** [[domains/system-design/map/ai.rag|RAG Pipelines]]
 
 ## Readings
 - [[hnsw-paper|Efficient and Robust Approximate Nearest Neighbor Search Using Hierarchical Navigable Small World Graphs]]

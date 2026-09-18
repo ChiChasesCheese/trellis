@@ -4,7 +4,7 @@
 
 You are ninety seconds in and it does not answer the question — landing it or switching, without an apology tour.
 
-**Requires:** [[story.coverage-matrix|The Coverage Matrix]]
+**Requires:** [[interviews/rounds/narrative/map/story.coverage-matrix|The Coverage Matrix]]
 
 ## Cards (1)
 - [[nr-recover-wrong-story]]

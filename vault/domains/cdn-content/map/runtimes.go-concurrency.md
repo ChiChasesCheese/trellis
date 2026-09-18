@@ -4,9 +4,9 @@
 
 Goroutines, channels, mutexes, atomics, worker pools, bounded concurrency, ownership, and avoiding leaks and races.
 
-**Requires:** [[foundations.concurrency|Concurrency, Parallelism & Queues]], [[runtimes.go-http|Go HTTP Services]]
+**Requires:** [[domains/cdn-content/map/foundations.concurrency|Concurrency, Parallelism & Queues]], [[domains/cdn-content/map/runtimes.go-http|Go HTTP Services]]
 
-**Unlocks:** [[runtimes.go-lifecycle|Go Context, Timeouts & Shutdown]]
+**Unlocks:** [[domains/cdn-content/map/runtimes.go-lifecycle|Go Context, Timeouts & Shutdown]]
 
 ## Readings
 - [[runtime-go-concurrency|Go Concurrency Patterns: Pipelines and cancellation]]

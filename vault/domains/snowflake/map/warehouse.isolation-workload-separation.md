@@ -4,7 +4,7 @@
 
 将 ETL、BI 与临时查询（ad hoc）工作负载分别运行在独立的仓库上，使某个负载的突增不会抢占另一个负载的计算资源。
 
-**Requires:** [[warehouse.sizing-t-shirt|仓库规格（T 恤尺码式）]]
+**Requires:** [[domains/snowflake/map/warehouse.sizing-t-shirt|仓库规格（T 恤尺码式）]]
 
 ## Cards (5)
 - [[isolation-chargeback-and-access]]

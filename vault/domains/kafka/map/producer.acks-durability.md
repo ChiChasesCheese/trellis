@@ -4,9 +4,9 @@
 
 理解acks=0/1/all如何决定消息在被确认前需要写入多少副本，以及由此带来的持久性保证差异。
 
-**Requires:** [[core.replication-isr|副本、首领/追随者与同步副本集合（ISR）]]
+**Requires:** [[domains/kafka/map/core.replication-isr|副本、首领/追随者与同步副本集合（ISR）]]
 
-**Unlocks:** [[reliability.producer-reliable|在可靠系统中配置生产者]]
+**Unlocks:** [[domains/kafka/map/reliability.producer-reliable|在可靠系统中配置生产者]]
 
 ## Readings
 - [[kafka-3-4-producer-config|生产者关键配置：acks、批处理与幂等性]]

@@ -4,7 +4,7 @@
 
 Decode, resize, crop, quality, metadata, format conversion, resource limits, derived-object keys, and transformation caching.
 
-**Requires:** [[caching.keys|Cache Keys, Vary & Representation Safety]]
+**Requires:** [[domains/cdn-content/map/caching.keys|Cache Keys, Vary & Representation Safety]]
 
 ## Readings
 - [[content-next-images|Next.js image optimization]]

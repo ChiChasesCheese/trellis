@@ -4,7 +4,7 @@
 
 Immutable order and decision logs reconstructable to the millisecond, provenance linking a live model to the research run that produced it, and retention rules.
 
-**Requires:** [[platform.experiments|Experiment Tracking & Reproducibility]]
+**Requires:** [[domains/quant-infra/map/platform.experiments|Experiment Tracking & Reproducibility]]
 %% trellis:end %%
 
 ## Notes

@@ -4,9 +4,9 @@
 
 Golden signals, cache and origin dashboards, symptom-based paging, burn-rate alerts, change annotations, and actionable runbooks.
 
-**Requires:** [[reliability.metrics|Metrics & Cardinality]]
+**Requires:** [[domains/cdn-content/map/reliability.metrics|Metrics & Cardinality]]
 
-**Unlocks:** [[reliability.incidents|On-Call, Incidents & Postmortems]], [[delivery.flags|Feature Flags & Kill Switches]]
+**Unlocks:** [[domains/cdn-content/map/reliability.incidents|On-Call, Incidents & Postmortems]], [[domains/cdn-content/map/delivery.flags|Feature Flags & Kill Switches]]
 
 ## Readings
 - [[reliability-sre-monitoring|Google SRE: Monitoring Distributed Systems]]

@@ -4,7 +4,7 @@
 
 按批次、面向列的算子执行方式，以及为何它在分析型负载上优于逐行解释执行。
 
-**Requires:** [[storage.columnar-compression-encoding|列式压缩与编码]]
+**Requires:** [[domains/snowflake/map/storage.columnar-compression-encoding|列式压缩与编码]]
 
 ## Cards (5)
 - [[vectorized-batch-size-tradeoff]]

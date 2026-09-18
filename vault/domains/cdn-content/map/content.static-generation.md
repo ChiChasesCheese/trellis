@@ -4,9 +4,9 @@
 
 Pre-rendered artifacts, route metadata, immutable assets, content-addressed naming, deployment manifests, and fallback generation.
 
-**Requires:** [[content.rendering|CSR, SSR, SSG & Dynamic Rendering]]
+**Requires:** [[domains/cdn-content/map/content.rendering|CSR, SSR, SSG & Dynamic Rendering]]
 
-**Unlocks:** [[content.isr|Incremental Static Regeneration]], [[content.versioning|Deployment, Versioning & Rollback]], [[distributed.object-storage|Object Storage]]
+**Unlocks:** [[domains/cdn-content/map/content.isr|Incremental Static Regeneration]], [[domains/cdn-content/map/content.versioning|Deployment, Versioning & Rollback]], [[domains/cdn-content/map/distributed.object-storage|Object Storage]]
 
 ## Readings
 - [[content-next-static-exports|Next.js static exports]]

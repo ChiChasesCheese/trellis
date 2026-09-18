@@ -4,7 +4,7 @@
 
 为何一个克隆在发生分叉之前不产生任何存储成本，以及分叉（任一侧发生新写入）之后如何开始累积存储费用。
 
-**Requires:** [[continuity.zero-copy-clone|零拷贝克隆（zero-copy clone）]]
+**Requires:** [[domains/snowflake/map/continuity.zero-copy-clone|零拷贝克隆（zero-copy clone）]]
 
 ## Cards (5)
 - [[clone-billing-divergence-charged]]

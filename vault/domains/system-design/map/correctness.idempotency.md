@@ -4,9 +4,9 @@
 
 Idempotency keys, dedup windows, and designing every mutation to survive a retry.
 
-**Requires:** [[async.delivery|Delivery Semantics]]
+**Requires:** [[domains/system-design/map/async.delivery|Delivery Semantics]]
 
-**Unlocks:** [[correctness.ledger|Ledgers & Reconciliation]]
+**Unlocks:** [[domains/system-design/map/correctness.ledger|Ledgers & Reconciliation]]
 
 ## Readings
 - [[stripe-idempotency|Designing robust and predictable APIs with idempotency (Stripe)]]

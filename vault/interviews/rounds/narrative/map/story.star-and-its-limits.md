@@ -4,7 +4,7 @@
 
 STAR as a container that helps the listener, and its specific failure — it buries the decision under the setup.
 
-**Unlocks:** [[story.decision-spine|The Decision Spine]]
+**Unlocks:** [[interviews/rounds/narrative/map/story.decision-spine|The Decision Spine]]
 %% trellis:end %%
 
 ## Notes

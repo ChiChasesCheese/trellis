@@ -4,7 +4,7 @@
 
 Type narrowing, async failure, readable and writable streams, pipeline, highWaterMark, cancellation, and safe HTTP streaming.
 
-**Requires:** [[networking.streaming|Streaming & Backpressure]], [[runtimes.node-event-loop|Node.js Event Loop]]
+**Requires:** [[domains/cdn-content/map/networking.streaming|Streaming & Backpressure]], [[domains/cdn-content/map/runtimes.node-event-loop|Node.js Event Loop]]
 
 ## Readings
 - [[runtime-node-streams|Node.js Streams API]]

@@ -4,7 +4,7 @@
 
 Association vs aggregation vs composition vs dependency; lifetime ownership and the UML arrows for each.
 
-**Unlocks:** [[principles.composition|Composition over Inheritance]]
+**Unlocks:** [[domains/low-level-design/map/principles.composition|Composition over Inheritance]]
 
 ## Readings
 - [[uml-association|UML Association (uml-diagrams.org)]]

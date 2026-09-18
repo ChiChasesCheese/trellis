@@ -4,7 +4,7 @@
 
 使用 SYSTEM$STREAM_HAS_DATA() 在上游 Stream 为空时完全跳过一次 Task 运行。
 
-**Requires:** [[pipelines.task-scheduling-cron-and-dag|任务调度与 DAG]]
+**Requires:** [[domains/snowflake/map/pipelines.task-scheduling-cron-and-dag|任务调度与 DAG]]
 
 ## Readings
 - [[snowflak-tasks|任务(Task):调度、算力模型与失败处理]]

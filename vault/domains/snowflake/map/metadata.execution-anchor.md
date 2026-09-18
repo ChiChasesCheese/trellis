@@ -4,7 +4,7 @@
 
 一个查询在其整个生命周期内如何被绑定到唯一一个云服务（Cloud Services）实例，以及当该实例繁忙或崩溃时，主动转移与被动转移这两条路径。
 
-**Requires:** [[metadata.foundationdb-role|FoundationDB 作为元数据存储]]
+**Requires:** [[domains/snowflake/map/metadata.foundationdb-role|FoundationDB 作为元数据存储]]
 
 ## Cards (4)
 - [[anchor-enables-rolling-upgrade]]

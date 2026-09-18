@@ -4,9 +4,9 @@
 
 仓库按秒以信用点（credit）计费（最低 60 秒起计），与任何固定的实例价格脱钩。
 
-**Requires:** [[architecture.storage-compute-separation|存储与计算分离（storage/compute separation）]]
+**Requires:** [[domains/snowflake/map/architecture.storage-compute-separation|存储与计算分离（storage/compute separation）]]
 
-**Unlocks:** [[cost.warehouse-billing-60s-minimum|仓库最低计费时长]], [[cost.serverless-feature-billing|无服务器功能计费]], [[cost.cloud-services-free-tier|云服务免费额度]], [[cost.ai-token-metering|AI/Cortex 令牌计量]]
+**Unlocks:** [[domains/snowflake/map/cost.warehouse-billing-60s-minimum|仓库最低计费时长]], [[domains/snowflake/map/cost.serverless-feature-billing|无服务器功能计费]], [[domains/snowflake/map/cost.cloud-services-free-tier|云服务免费额度]], [[domains/snowflake/map/cost.ai-token-metering|AI/Cortex 令牌计量]]
 
 ## Readings
 - [[snowflak-compute-cost-detail|计算成本细则:60 秒起收、serverless 计费与云服务 10% 免费额度]]

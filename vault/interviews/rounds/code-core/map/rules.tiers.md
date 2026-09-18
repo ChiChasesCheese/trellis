@@ -4,7 +4,7 @@
 
 Graduated vs volume tiers, included allowances, per-unit vs flat bands, and prorating across a mid-period change.
 
-**Requires:** [[rules.money|Money as Integer Minor Units]]
+**Requires:** [[interviews/rounds/code-core/map/rules.money|Money as Integer Minor Units]]
 
 ## Readings
 - [[python-decimal|decimal — decimal fixed point and floating point arithmetic]]

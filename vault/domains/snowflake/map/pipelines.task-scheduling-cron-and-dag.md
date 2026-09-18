@@ -4,9 +4,9 @@
 
 由 CRON 表达式或固定间隔调度的 Task，可组合成最多包含 100 个任务的依赖图（task graph）。
 
-**Requires:** [[pipelines.stream-offset-bookmark|作为偏移量书签的流（Stream）]]
+**Requires:** [[domains/snowflake/map/pipelines.stream-offset-bookmark|作为偏移量书签的流（Stream）]]
 
-**Unlocks:** [[pipelines.task-conditional-execution|条件式任务执行]], [[pipelines.task-serverless-vs-warehouse|无服务器任务与仓库支持型任务]], [[pipelines.task-failure-handling|任务失败处理]], [[pipelines.dynamictable-target-lag|动态表（Dynamic Table）与 TARGET_LAG]]
+**Unlocks:** [[domains/snowflake/map/pipelines.task-conditional-execution|条件式任务执行]], [[domains/snowflake/map/pipelines.task-serverless-vs-warehouse|无服务器任务与仓库支持型任务]], [[domains/snowflake/map/pipelines.task-failure-handling|任务失败处理]], [[domains/snowflake/map/pipelines.dynamictable-target-lag|动态表（Dynamic Table）与 TARGET_LAG]]
 
 ## Readings
 - [[snowflak-tasks|任务(Task):调度、算力模型与失败处理]]

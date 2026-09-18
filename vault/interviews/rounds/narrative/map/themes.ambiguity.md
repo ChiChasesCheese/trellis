@@ -4,7 +4,7 @@
 
 No spec, no owner, no data — how you chose a direction and what made it defensible before the outcome was known.
 
-**Unlocks:** [[bank.ambiguity|Your Zero-to-One Story]]
+**Unlocks:** [[interviews/rounds/narrative/map/bank.ambiguity|Your Zero-to-One Story]]
 %% trellis:end %%
 
 ## Notes

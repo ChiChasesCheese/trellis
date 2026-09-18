@@ -4,9 +4,9 @@
 
 Resolution, handshakes, connection reuse, certificates, and the latency paid before HTTP content can flow.
 
-**Requires:** [[foundations.request-path|End-to-End Request Path]]
+**Requires:** [[domains/cdn-content/map/foundations.request-path|End-to-End Request Path]]
 
-**Unlocks:** [[networking.http-semantics|HTTP Semantics]]
+**Unlocks:** [[domains/cdn-content/map/networking.http-semantics|HTTP Semantics]]
 
 ## Readings
 - [[net-cloudflare-internet-request-setup|How Does the Internet Work? (Cloudflare)]]

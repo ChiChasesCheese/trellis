@@ -4,7 +4,7 @@
 
 Inverted indexes, relevance basics, and keeping a search cluster in sync with the source of truth.
 
-**Unlocks:** [[ai.vector-search|Vector Search]]
+**Unlocks:** [[domains/system-design/map/ai.vector-search|Vector Search]]
 
 ## Readings
 - [[build-a-full-text-search-engine|Let's build a full-text search engine (Artem Krylysov)]]

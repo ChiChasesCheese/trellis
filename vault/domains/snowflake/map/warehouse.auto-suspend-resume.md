@@ -4,7 +4,7 @@
 
 在最后一条查询结束后的数秒内停止计费的空闲超时机制，以及恢复时的冷启动代价。
 
-**Requires:** [[warehouse.sizing-t-shirt|仓库规格（T 恤尺码式）]]
+**Requires:** [[domains/snowflake/map/warehouse.sizing-t-shirt|仓库规格（T 恤尺码式）]]
 
 ## Readings
 - [[snowflak-warehouse-best-practices|仓库调优:扩容(up)还是扩出(out)、本地磁盘缓存]]

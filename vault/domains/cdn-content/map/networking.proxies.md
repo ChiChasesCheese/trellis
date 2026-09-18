@@ -4,9 +4,9 @@
 
 Forward versus reverse proxy, TLS termination, hop-by-hop headers, upstream selection, and request transformation boundaries.
 
-**Requires:** [[networking.http-semantics|HTTP Semantics]]
+**Requires:** [[domains/cdn-content/map/networking.http-semantics|HTTP Semantics]]
 
-**Unlocks:** [[caching.model|Browser, Shared Cache & CDN Model]], [[runtimes.go-http|Go HTTP Services]], [[runtimes.lua-openresty|Lua & OpenResty Hot Path]], [[security-cost.request-integrity|Proxy Request Integrity]]
+**Unlocks:** [[domains/cdn-content/map/caching.model|Browser, Shared Cache & CDN Model]], [[domains/cdn-content/map/runtimes.go-http|Go HTTP Services]], [[domains/cdn-content/map/runtimes.lua-openresty|Lua & OpenResty Hot Path]], [[domains/cdn-content/map/security-cost.request-integrity|Proxy Request Integrity]]
 
 ## Readings
 - [[net-mdn-proxies|Proxy Servers and Tunneling (MDN)]]

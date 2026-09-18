@@ -4,7 +4,7 @@
 
 Time-based and on-demand revalidation, durable ISR storage, request collapsing, stale serving, failure behavior, and global purge.
 
-**Requires:** [[caching.validators|Validators & Revalidation]], [[caching.stampede|Stampede & Request Collapsing]], [[content.static-generation|Static Generation & Build Output]]
+**Requires:** [[domains/cdn-content/map/caching.validators|Validators & Revalidation]], [[domains/cdn-content/map/caching.stampede|Stampede & Request Collapsing]], [[domains/cdn-content/map/content.static-generation|Static Generation & Build Output]]
 
 ## Readings
 - [[content-next-isr|Next.js Incremental Static Regeneration]]

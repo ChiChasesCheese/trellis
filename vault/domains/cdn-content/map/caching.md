@@ -4,15 +4,15 @@
 Correct shared-cache behavior, cache keys, freshness, revalidation, invalidation, and multi-tier policy.
 
 ## Topics
-- [[caching.model|Browser, Shared Cache & CDN Model]]
-- [[caching.freshness|Freshness & Cache-Control]]
-- [[caching.validators|Validators & Revalidation]]
-- [[caching.keys|Cache Keys, Vary & Representation Safety]]
-- [[caching.hierarchy|Multi-Tier Cache Hierarchy]]
-- [[caching.invalidation|Expiration, Purge & Invalidation]]
-- [[caching.stampede|Stampede & Request Collapsing]]
-- [[caching.eviction|Admission, Eviction & Hot Objects]]
-- [[caching.failure|Negative Caching & Failure Policy]]
+- [[domains/cdn-content/map/caching.model|Browser, Shared Cache & CDN Model]]
+- [[domains/cdn-content/map/caching.freshness|Freshness & Cache-Control]]
+- [[domains/cdn-content/map/caching.validators|Validators & Revalidation]]
+- [[domains/cdn-content/map/caching.keys|Cache Keys, Vary & Representation Safety]]
+- [[domains/cdn-content/map/caching.hierarchy|Multi-Tier Cache Hierarchy]]
+- [[domains/cdn-content/map/caching.invalidation|Expiration, Purge & Invalidation]]
+- [[domains/cdn-content/map/caching.stampede|Stampede & Request Collapsing]]
+- [[domains/cdn-content/map/caching.eviction|Admission, Eviction & Hot Objects]]
+- [[domains/cdn-content/map/caching.failure|Negative Caching & Failure Policy]]
 %% trellis:end %%
 
 ## Notes

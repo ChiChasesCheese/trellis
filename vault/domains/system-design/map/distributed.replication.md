@@ -4,14 +4,14 @@
 
 Keeping copies of the same data on multiple nodes — and what each topology costs.
 
-**Requires:** [[distributed.consistency|Consistency Models]]
+**Requires:** [[domains/system-design/map/distributed.consistency|Consistency Models]]
 
 ## Topics
-- [[distributed.replication.leader|Leader-Based]]
-- [[distributed.replication.multi-leader|Multi-Leader]]
-- [[distributed.replication.leaderless|Leaderless & Quorums]]
+- [[domains/system-design/map/distributed.replication.leader|Leader-Based]]
+- [[domains/system-design/map/distributed.replication.multi-leader|Multi-Leader]]
+- [[domains/system-design/map/distributed.replication.leaderless|Leaderless & Quorums]]
 
-**Unlocks:** [[distributed.consensus|Consensus]], [[distributed.crdt|CRDTs & Local-First]], [[reliability.multi-region|Multi-Region]]
+**Unlocks:** [[domains/system-design/map/distributed.consensus|Consensus]], [[domains/system-design/map/distributed.crdt|CRDTs & Local-First]], [[domains/system-design/map/reliability.multi-region|Multi-Region]]
 
 ## Readings
 - [[ddia-2e|Designing Data-Intensive Applications, 2nd ed. (Kleppmann & Riccomini, 2026)]]

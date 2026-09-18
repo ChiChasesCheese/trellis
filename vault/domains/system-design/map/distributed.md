@@ -4,14 +4,14 @@
 What happens to data when one machine is no longer enough — the deep end of the interview.
 
 ## Topics
-- [[distributed.cap|CAP & PACELC]]
-- [[distributed.consistency|Consistency Models]]
-- [[distributed.replication|Replication]]
-- [[distributed.partitioning|Partitioning]]
-- [[distributed.transactions|Transactions]]
-- [[distributed.consensus|Consensus]]
-- [[distributed.time|Clocks & Ordering]]
-- [[distributed.crdt|CRDTs & Local-First]]
+- [[domains/system-design/map/distributed.cap|CAP & PACELC]]
+- [[domains/system-design/map/distributed.consistency|Consistency Models]]
+- [[domains/system-design/map/distributed.replication|Replication]]
+- [[domains/system-design/map/distributed.partitioning|Partitioning]]
+- [[domains/system-design/map/distributed.transactions|Transactions]]
+- [[domains/system-design/map/distributed.consensus|Consensus]]
+- [[domains/system-design/map/distributed.time|Clocks & Ordering]]
+- [[domains/system-design/map/distributed.crdt|CRDTs & Local-First]]
 %% trellis:end %%
 
 ## Notes

@@ -4,9 +4,9 @@
 The obligations and paper trail a trading operation carries whether or not it has an alpha.
 
 ## Topics
-- [[governance.compliance|Trading Compliance]]
-- [[governance.audit|Audit Trail & Provenance]]
-- [[governance.model-risk|Model Risk Management]]
+- [[domains/quant-infra/map/governance.compliance|Trading Compliance]]
+- [[domains/quant-infra/map/governance.audit|Audit Trail & Provenance]]
+- [[domains/quant-infra/map/governance.model-risk|Model Risk Management]]
 %% trellis:end %%
 
 ## Notes

@@ -4,7 +4,7 @@
 
 Accept, Accept-Encoding, Content-Type, Content-Encoding, Vary, WebP and AVIF selection, and representation-safe caching.
 
-**Requires:** [[networking.http-semantics|HTTP Semantics]], [[caching.keys|Cache Keys, Vary & Representation Safety]]
+**Requires:** [[domains/cdn-content/map/networking.http-semantics|HTTP Semantics]], [[domains/cdn-content/map/caching.keys|Cache Keys, Vary & Representation Safety]]
 
 ## Readings
 - [[content-http-representations|RFC 9110: HTTP Semantics]]

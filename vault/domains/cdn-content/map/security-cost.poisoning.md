@@ -4,7 +4,7 @@
 
 Unkeyed input, host and header ambiguity, normalization disagreement, response splitting, cache deception, and defense by explicit key policy.
 
-**Requires:** [[security-cost.isolation|Tenant & Personalization Isolation]]
+**Requires:** [[domains/cdn-content/map/security-cost.isolation|Tenant & Personalization Isolation]]
 
 ## Readings
 - [[security-cloudflare-cache-poisoning|Cloudflare: Avoid Web Cache Poisoning]]

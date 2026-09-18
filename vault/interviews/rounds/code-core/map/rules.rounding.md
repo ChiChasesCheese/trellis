@@ -4,9 +4,9 @@
 
 Half-up vs banker's vs floor vs truncation, rounding once at the edge rather than per row, and the `x.xx5` cases graders love.
 
-**Requires:** [[rules.money|Money as Integer Minor Units]]
+**Requires:** [[interviews/rounds/code-core/map/rules.money|Money as Integer Minor Units]]
 
-**Unlocks:** [[rules.fees|Percentages, Fees & Splits]]
+**Unlocks:** [[interviews/rounds/code-core/map/rules.fees|Percentages, Fees & Splits]]
 
 ## Readings
 - [[python-decimal|decimal — decimal fixed point and floating point arithmetic]]

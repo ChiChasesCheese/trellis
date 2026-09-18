@@ -4,9 +4,9 @@
 
 按列选择编码方式并压缩，以及为何列式布局是让压缩和剪枝都变得廉价的根本原因。
 
-**Requires:** [[storage.micro-partition-format|微分区（micro-partition）格式]]
+**Requires:** [[domains/snowflake/map/storage.micro-partition-format|微分区（micro-partition）格式]]
 
-**Unlocks:** [[query.vectorized-columnar-execution|向量化列式执行]]
+**Unlocks:** [[domains/snowflake/map/query.vectorized-columnar-execution|向量化列式执行]]
 
 ## Readings
 - [[snowflak-micropartitions-clustering|微分区与数据聚簇的物理基础]]

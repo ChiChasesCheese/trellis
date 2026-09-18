@@ -4,9 +4,9 @@
 A young asset class with familiar premia and thoroughly unfamiliar plumbing.
 
 ## Topics
-- [[crypto.instruments|Spot, Perps & Crypto Derivatives]]
-- [[crypto.structure|Crypto Market Structure]]
-- [[crypto.premia|Crypto Return Drivers]]
+- [[domains/markets/map/crypto.instruments|Spot, Perps & Crypto Derivatives]]
+- [[domains/markets/map/crypto.structure|Crypto Market Structure]]
+- [[domains/markets/map/crypto.premia|Crypto Return Drivers]]
 %% trellis:end %%
 
 ## Notes

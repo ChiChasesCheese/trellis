@@ -4,7 +4,7 @@
 
 `sorted` with a key, `bisect` for insertion points and range counts, and keeping a list sorted versus re-sorting.
 
-**Unlocks:** [[toolbox.cache|LRU, TTL & Versioned Maps]]
+**Unlocks:** [[interviews/rounds/code-core/map/toolbox.cache|LRU, TTL & Versioned Maps]]
 
 ## Readings
 - [[python-bisect|bisect — array bisection algorithm]]

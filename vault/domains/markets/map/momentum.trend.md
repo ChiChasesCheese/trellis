@@ -4,7 +4,7 @@
 
 TSMOM and managed futures across asset classes, the lookback-straddle payoff behind the crisis-alpha claim, and the awkward fact that time-series trend is largely cross-sectional momentum plus a net long.
 
-**Requires:** [[futures.term-structure|Basis, Carry & Roll]]
+**Requires:** [[domains/markets/map/futures.term-structure|Basis, Carry & Roll]]
 
 ## Readings
 - [[qs-catalog-momentum-trend|Family 1: Momentum & Trend]]

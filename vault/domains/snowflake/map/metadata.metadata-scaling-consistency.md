@@ -4,7 +4,7 @@
 
 元数据层如何在同时服务一个账户内所有仓库的情况下保持强一致性，以及它在何处会成为瓶颈。
 
-**Requires:** [[metadata.foundationdb-role|FoundationDB 作为元数据存储]]
+**Requires:** [[domains/snowflake/map/metadata.foundationdb-role|FoundationDB 作为元数据存储]]
 
 ## Cards (4)
 - [[meta-bottleneck-row-by-row-dml]]

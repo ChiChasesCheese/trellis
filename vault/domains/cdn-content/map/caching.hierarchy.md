@@ -4,9 +4,9 @@
 
 In-process, regional, shield, and object-store tiers; inclusive versus exclusive policies; latency, capacity, and cost trade-offs.
 
-**Requires:** [[caching.keys|Cache Keys, Vary & Representation Safety]]
+**Requires:** [[domains/cdn-content/map/caching.keys|Cache Keys, Vary & Representation Safety]]
 
-**Unlocks:** [[caching.invalidation|Expiration, Purge & Invalidation]], [[caching.stampede|Stampede & Request Collapsing]], [[caching.eviction|Admission, Eviction & Hot Objects]], [[caching.failure|Negative Caching & Failure Policy]], [[distributed.regional-cache|Regional Cache Services]], [[security-cost.optimization|Performance-Cost Optimization]]
+**Unlocks:** [[domains/cdn-content/map/caching.invalidation|Expiration, Purge & Invalidation]], [[domains/cdn-content/map/caching.stampede|Stampede & Request Collapsing]], [[domains/cdn-content/map/caching.eviction|Admission, Eviction & Hot Objects]], [[domains/cdn-content/map/caching.failure|Negative Caching & Failure Policy]], [[domains/cdn-content/map/distributed.regional-cache|Regional Cache Services]], [[domains/cdn-content/map/security-cost.optimization|Performance-Cost Optimization]]
 
 ## Readings
 - [[cache-aws-caching-challenges|Caching Challenges and Strategies (AWS Builders' Library)]]

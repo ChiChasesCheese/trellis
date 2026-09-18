@@ -4,9 +4,9 @@
 
 每个节点上缓存近期扫描过的微分区的本地磁盘缓存，仓库一旦挂起就会丢失该缓存。
 
-**Requires:** [[warehouse.sizing-t-shirt|仓库规格（T 恤尺码式）]]
+**Requires:** [[domains/snowflake/map/warehouse.sizing-t-shirt|仓库规格（T 恤尺码式）]]
 
-**Unlocks:** [[cache.cache-layer-tradeoffs|各缓存层的权衡]]
+**Unlocks:** [[domains/snowflake/map/cache.cache-layer-tradeoffs|各缓存层的权衡]]
 
 ## Readings
 - [[snowflak-warehouse-best-practices|仓库调优:扩容(up)还是扩出(out)、本地磁盘缓存]]

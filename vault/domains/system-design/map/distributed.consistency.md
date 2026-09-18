@@ -4,7 +4,7 @@
 
 Linearizability, causal, read-your-writes, eventual — as contracts you promise the client.
 
-**Unlocks:** [[distributed.replication|Replication]]
+**Unlocks:** [[domains/system-design/map/distributed.replication|Replication]]
 
 ## Readings
 - [[dynamo-paper|Dynamo: Amazon's Highly Available Key-value Store (2007)]]

@@ -4,7 +4,7 @@
 
 Crediting a team truthfully while still being the grammatical subject of your own story.
 
-**Requires:** [[story.decision-spine|The Decision Spine]]
+**Requires:** [[interviews/rounds/narrative/map/story.decision-spine|The Decision Spine]]
 %% trellis:end %%
 
 ## Notes

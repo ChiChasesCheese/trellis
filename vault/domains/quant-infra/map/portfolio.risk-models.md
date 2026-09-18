@@ -5,11 +5,11 @@
 Explaining covariance with a handful of factors instead of estimating N-squared numbers from too little data.
 
 ## Topics
-- [[portfolio.risk-models.structure|Model Structure]]
-- [[portfolio.risk-models.covariance|Covariance Estimation]]
-- [[portfolio.risk-models.attribution|Risk Attribution]]
+- [[domains/quant-infra/map/portfolio.risk-models.structure|Model Structure]]
+- [[domains/quant-infra/map/portfolio.risk-models.covariance|Covariance Estimation]]
+- [[domains/quant-infra/map/portfolio.risk-models.attribution|Risk Attribution]]
 
-**Unlocks:** [[portfolio.optimization|Optimization]]
+**Unlocks:** [[domains/quant-infra/map/portfolio.optimization|Optimization]]
 %% trellis:end %%
 
 ## Notes

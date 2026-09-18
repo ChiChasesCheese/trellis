@@ -4,7 +4,7 @@
 
 Triage, mitigation, incident command, communication, rollback, evidence collection, blameless causal analysis, and durable follow-ups.
 
-**Requires:** [[reliability.alerting|Dashboards & Alerts]], [[reliability.load-testing|Load, Soak & Failure Testing]]
+**Requires:** [[domains/cdn-content/map/reliability.alerting|Dashboards & Alerts]], [[domains/cdn-content/map/reliability.load-testing|Load, Soak & Failure Testing]]
 
 ## Readings
 - [[reliability-sre-monitoring|Google SRE: Monitoring Distributed Systems]]

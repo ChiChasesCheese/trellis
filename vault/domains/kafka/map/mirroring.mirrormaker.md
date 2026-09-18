@@ -4,7 +4,7 @@
 
 掌握基于Kafka Connect构建的MirrorMaker如何配置复制拓扑、保障自身安全并针对生产环境调优。
 
-**Requires:** [[connect.connect-basics|Kafka Connect：适用场景与架构]]
+**Requires:** [[domains/kafka/map/connect.connect-basics|Kafka Connect：适用场景与架构]]
 
 ## Readings
 - [[kafka-10-3-mirrormaker|MirrorMaker：配置、拓扑与生产化调优]]

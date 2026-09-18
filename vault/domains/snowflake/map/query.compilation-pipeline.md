@@ -4,9 +4,9 @@
 
 解析（parse）→ 绑定（bind）→ 优化（optimize）→ 代码生成（codegen）的顺序，以及每个阶段运行在哪里。
 
-**Requires:** [[metadata.query-compiler-pipeline|查询编译流水线]]
+**Requires:** [[domains/snowflake/map/metadata.query-compiler-pipeline|查询编译流水线]]
 
-**Unlocks:** [[query.dag-execution-model|DAG 执行模型]], [[query.explain-plan-interpretation|EXPLAIN 执行计划解读]]
+**Unlocks:** [[domains/snowflake/map/query.dag-execution-model|DAG 执行模型]], [[domains/snowflake/map/query.explain-plan-interpretation|EXPLAIN 执行计划解读]]
 
 ## Cards (4)
 - [[compile-error-stage-diagnosis]]

@@ -4,7 +4,7 @@
 
 Region placement, replication lag, active-active and active-passive trade-offs, failover, data residency, and global invalidation.
 
-**Requires:** [[distributed.routing|Partitioning, Hashing & Request Routing]], [[distributed.consistency|Replication & Consistency]]
+**Requires:** [[domains/cdn-content/map/distributed.routing|Partitioning, Hashing & Request Routing]], [[domains/cdn-content/map/distributed.consistency|Replication & Consistency]]
 
 ## Readings
 - [[dist-aws-multi-region|AWS multi-Region architecture guidance]]

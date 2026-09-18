@@ -4,7 +4,7 @@
 
 Cents as `int`, `Decimal` with an explicit context, zero-decimal currencies, and why a float ever touching money is a bug.
 
-**Unlocks:** [[rules.rounding|Rounding Rules & Where to Apply Them]], [[rules.tiers|Tiered, Metered & Prorated Math]]
+**Unlocks:** [[interviews/rounds/code-core/map/rules.rounding|Rounding Rules & Where to Apply Them]], [[interviews/rounds/code-core/map/rules.tiers|Tiered, Metered & Prorated Math]]
 
 ## Readings
 - [[fowler-money-pattern|Money (Patterns of Enterprise Application Architecture)]]

@@ -4,7 +4,7 @@
 
 在运行查询之前读取逻辑/物理执行计划，以预测剪枝效果与连接策略。
 
-**Requires:** [[query.compilation-pipeline|编译流水线]]
+**Requires:** [[domains/snowflake/map/query.compilation-pipeline|编译流水线]]
 
 ## Cards (5)
 - [[explain-compiles-not-executes]]

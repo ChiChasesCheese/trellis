@@ -4,9 +4,9 @@
 
 标准（standard）与经济（economy）两种伸缩策略在并发负载下如何增减集群，以及各自产生的排队行为。
 
-**Requires:** [[warehouse.sizing-t-shirt|仓库规格（T 恤尺码式）]]
+**Requires:** [[domains/snowflake/map/warehouse.sizing-t-shirt|仓库规格（T 恤尺码式）]]
 
-**Unlocks:** [[warehouse.query-queuing|查询排队]], [[warehouse.scaling-up-vs-out|纵向扩展与横向扩展]]
+**Unlocks:** [[domains/snowflake/map/warehouse.query-queuing|查询排队]], [[domains/snowflake/map/warehouse.scaling-up-vs-out|纵向扩展与横向扩展]]
 
 ## Readings
 - [[snowflak-multicluster-warehouses|多集群仓库与扩缩容策略]]

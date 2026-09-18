@@ -85,6 +85,9 @@ def test_sync_is_idempotent_and_preserves_user_text(project):
     body = node_note.read_text(encoding="utf-8")
     assert BEGIN in body and END in body and "First topic." in body
     assert "[[alpha-sample]]" in body
+    # node links are path-qualified: ids repeat across domains, bare [[id]] is ambiguous in Obsidian
+    moc = (vault / "Demo MOC.md").read_text(encoding="utf-8")
+    assert f"[[{skeleton.folder}/map/alpha.one|" in moc
 
     node_note.write_text(body + "\nmy own notes\n", encoding="utf-8")
     second = sync(skeleton, cards, vault)

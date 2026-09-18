@@ -4,7 +4,7 @@
 
 Registries, health checking, API versioning, and evolving schemas without breaking consumers.
 
-**Requires:** [[storage.encoding|Encoding & Evolution]]
+**Requires:** [[domains/system-design/map/storage.encoding|Encoding & Evolution]]
 
 ## Readings
 - [[microservices-io-patterns|Microservice Architecture Pattern Index (microservices.io)]]

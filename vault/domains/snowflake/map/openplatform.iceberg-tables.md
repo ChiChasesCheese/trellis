@@ -4,9 +4,9 @@
 
 将由 Snowflake 管理的数据以开放的 Iceberg 格式存储在客户自有的对象存储中，并可被外部引擎查询。
 
-**Requires:** [[storage.object-storage-backend|对象存储后端]]
+**Requires:** [[domains/snowflake/map/storage.object-storage-backend|对象存储后端]]
 
-**Unlocks:** [[openplatform.polaris-catalog|Polaris（开放目录）]]
+**Unlocks:** [[domains/snowflake/map/openplatform.polaris-catalog|Polaris（开放目录）]]
 
 ## Readings
 - [[snowflak-iceberg-tables|Apache Iceberg 表:开放格式与目录(Catalog)选型]]

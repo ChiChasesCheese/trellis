@@ -4,7 +4,7 @@
 
 检测到上游变化大到增量刷新反而比重新初始化更慢时，自动切换刷新策略。
 
-**Requires:** [[pipelines.dynamictable-incremental-vs-full-refresh|增量刷新与全量刷新]]
+**Requires:** [[domains/snowflake/map/pipelines.dynamictable-incremental-vs-full-refresh|增量刷新与全量刷新]]
 
 ## Readings
 - [[snowflak-dynamic-tables|动态表(Dynamic Table):用目标延迟声明代替手写 Stream+Task]]

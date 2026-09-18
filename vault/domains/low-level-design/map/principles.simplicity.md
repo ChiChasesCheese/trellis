@@ -4,7 +4,7 @@
 
 The simplicity principles and their failure mode — premature abstraction and speculative generality.
 
-**Unlocks:** [[patterns.selection|Choosing (and Refusing) Patterns]]
+**Unlocks:** [[domains/low-level-design/map/patterns.selection|Choosing (and Refusing) Patterns]]
 
 ## Readings
 - [[fowler-yagni|Yagni (Martin Fowler, bliki)]]

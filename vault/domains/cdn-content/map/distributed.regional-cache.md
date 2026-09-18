@@ -4,9 +4,9 @@
 
 Redis and Memcached data models, sharding, connection behavior, expiration, eviction, replication, and cache-service failure modes.
 
-**Requires:** [[caching.hierarchy|Multi-Tier Cache Hierarchy]]
+**Requires:** [[domains/cdn-content/map/caching.hierarchy|Multi-Tier Cache Hierarchy]]
 
-**Unlocks:** [[distributed.routing|Partitioning, Hashing & Request Routing]], [[delivery.aws|AWS for Content Serving]]
+**Unlocks:** [[domains/cdn-content/map/distributed.routing|Partitioning, Hashing & Request Routing]], [[domains/cdn-content/map/delivery.aws|AWS for Content Serving]]
 
 ## Readings
 - [[dist-redis-cache|Redis key eviction]]

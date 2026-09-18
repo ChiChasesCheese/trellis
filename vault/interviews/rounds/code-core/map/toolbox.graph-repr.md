@@ -4,7 +4,7 @@
 
 Adjacency dicts vs edge lists vs matrices, weighted edges, implicit graphs built from records, and reversing an edge set.
 
-**Unlocks:** [[algorithms.graph-traversal|BFS, DFS & Components]]
+**Unlocks:** [[interviews/rounds/code-core/map/algorithms.graph-traversal|BFS, DFS & Components]]
 
 ## Cards (5)
 - [[cc-toolbox-graph-directed-and-inverse]]

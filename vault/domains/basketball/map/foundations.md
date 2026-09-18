@@ -4,12 +4,12 @@
 The court's vocabulary and the arithmetic underneath every possession — read this before any tactic.
 
 ## Topics
-- [[foundations.court-map|Court Map & Vocabulary]]
-- [[foundations.efficiency|Efficiency & Points Per Possession]]
-- [[foundations.shot-value|The Shot Value Hierarchy]]
-- [[foundations.advantage|Advantage & Disadvantage]]
-- [[foundations.spacing|Spacing as the Master Variable]]
-- [[foundations.possession-math|Possession Math]]
+- [[domains/basketball/map/foundations.court-map|Court Map & Vocabulary]]
+- [[domains/basketball/map/foundations.efficiency|Efficiency & Points Per Possession]]
+- [[domains/basketball/map/foundations.shot-value|The Shot Value Hierarchy]]
+- [[domains/basketball/map/foundations.advantage|Advantage & Disadvantage]]
+- [[domains/basketball/map/foundations.spacing|Spacing as the Master Variable]]
+- [[domains/basketball/map/foundations.possession-math|Possession Math]]
 
 ## Readings
 - [[bb-gap-theory-spacing|The Gap Theory (Spacing)]]

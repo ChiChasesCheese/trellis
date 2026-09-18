@@ -4,7 +4,7 @@
 
 Fixed buckets vs rolling windows, "within the last hour" as a comparison you must pin down, and per-key window state.
 
-**Requires:** [[chrono.arithmetic|Duration & Calendar Arithmetic]]
+**Requires:** [[interviews/rounds/code-core/map/chrono.arithmetic|Duration & Calendar Arithmetic]]
 
 ## Readings
 - [[stripe-rate-limiters-four|Scaling your API with rate limiters (Stripe)]]

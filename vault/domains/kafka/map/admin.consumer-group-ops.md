@@ -4,7 +4,7 @@
 
 掌握查看、修改消费者群组状态，以及手动管理其偏移量的运维操作。
 
-**Requires:** [[consumer.groups-rebalance|消费者群组（consumer group）与再均衡（rebalance）]]
+**Requires:** [[domains/kafka/map/consumer.groups-rebalance|消费者群组（consumer group）与再均衡（rebalance）]]
 
 ## Readings
 - [[kafka-12-2-consumer-group-cli|用kafka-consumer-groups.sh管理消费者群组]]

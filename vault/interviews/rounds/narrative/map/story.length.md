@@ -4,9 +4,9 @@
 
 The first pass short enough that the interviewer's follow-up chooses which layer you expand.
 
-**Requires:** [[story.decision-spine|The Decision Spine]]
+**Requires:** [[interviews/rounds/narrative/map/story.decision-spine|The Decision Spine]]
 
-**Unlocks:** [[delivery.opening|The First Fifteen Seconds]], [[delivery.followups|Answering the Probe You Were Asked]]
+**Unlocks:** [[interviews/rounds/narrative/map/delivery.opening|The First Fifteen Seconds]], [[interviews/rounds/narrative/map/delivery.followups|Answering the Probe You Were Asked]]
 %% trellis:end %%
 
 ## Notes

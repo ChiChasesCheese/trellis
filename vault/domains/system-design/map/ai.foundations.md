@@ -4,7 +4,7 @@
 
 What an LLM actually does at serving time — tokens, context windows, embeddings, prefill/decode — no ML math required.
 
-**Unlocks:** [[ai.vector-search|Vector Search]], [[ai.inference|Inference Serving]]
+**Unlocks:** [[domains/system-design/map/ai.vector-search|Vector Search]], [[domains/system-design/map/ai.inference|Inference Serving]]
 
 ## Readings
 - [[illustrated-transformer|The Illustrated Transformer (Jay Alammar)]]

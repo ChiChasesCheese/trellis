@@ -4,9 +4,9 @@
 
 Leader-based and leaderless replication, quorums, read-after-write, monotonic reads, eventual consistency, conflict resolution, and staleness budgets.
 
-**Requires:** [[distributed.object-storage|Object Storage]]
+**Requires:** [[domains/cdn-content/map/distributed.object-storage|Object Storage]]
 
-**Unlocks:** [[distributed.cross-region|Cross-Region Architecture]], [[distributed.retries|Timeouts, Retries & Idempotency]]
+**Unlocks:** [[domains/cdn-content/map/distributed.cross-region|Cross-Region Architecture]], [[domains/cdn-content/map/distributed.retries|Timeouts, Retries & Idempotency]]
 
 ## Readings
 - [[dist-dynamo-consistency|Dynamo: Amazon's highly available key-value store]]

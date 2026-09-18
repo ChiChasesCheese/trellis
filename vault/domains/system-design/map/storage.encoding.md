@@ -4,7 +4,7 @@
 
 Data formats as contracts between code versions — JSON, Protobuf, Avro; forward and backward compatibility rules.
 
-**Unlocks:** [[architecture.discovery|Service Discovery & Contracts]]
+**Unlocks:** [[domains/system-design/map/architecture.discovery|Service Discovery & Contracts]]
 
 ## Readings
 - [[aws-rollback-safety|Ensuring rollback safety during deployments (AWS Builders' Library)]]

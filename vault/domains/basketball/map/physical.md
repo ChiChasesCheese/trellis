@@ -4,10 +4,10 @@
 The athletic base that makes the tactics executable, and the durability that keeps you playing.
 
 ## Topics
-- [[physical.movement|Athleticism for Basketball]]
-- [[physical.strength|Strength & Robustness]]
-- [[physical.injury|Injury Prevention]]
-- [[physical.recovery|Load & Recovery]]
+- [[domains/basketball/map/physical.movement|Athleticism for Basketball]]
+- [[domains/basketball/map/physical.strength|Strength & Robustness]]
+- [[domains/basketball/map/physical.injury|Injury Prevention]]
+- [[domains/basketball/map/physical.recovery|Load & Recovery]]
 
 ## Readings
 - [[bb-deceleration-training|Get SHIFTY By Training Your Deceleration the Right Way 🔬]]

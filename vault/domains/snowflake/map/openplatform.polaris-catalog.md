@@ -4,9 +4,9 @@
 
 一个开源的、与引擎无关的 Iceberg 表 REST 目录服务，将"谁写入了表"与"谁可以查询表"这两件事解耦。
 
-**Requires:** [[openplatform.iceberg-tables|Iceberg 表]]
+**Requires:** [[domains/snowflake/map/openplatform.iceberg-tables|Iceberg 表]]
 
-**Unlocks:** [[openplatform.external-engine-commit-protocol|外部引擎写入与提交协议]]
+**Unlocks:** [[domains/snowflake/map/openplatform.external-engine-commit-protocol|外部引擎写入与提交协议]]
 
 ## Readings
 - [[snowflak-iceberg-tables|Apache Iceberg 表:开放格式与目录(Catalog)选型]]

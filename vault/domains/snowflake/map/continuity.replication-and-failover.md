@@ -4,9 +4,9 @@
 
 将一个数据库的数据与元数据持续复制到另一个区域或云，并在故障切换时把从库提升为主库。
 
-**Requires:** [[metadata.foundationdb-role|FoundationDB 作为元数据存储]]
+**Requires:** [[domains/snowflake/map/metadata.foundationdb-role|FoundationDB 作为元数据存储]]
 
-**Unlocks:** [[continuity.client-redirect|客户端重定向]]
+**Unlocks:** [[domains/snowflake/map/continuity.client-redirect|客户端重定向]]
 
 ## Readings
 - [[snowflak-replication-failover|跨账户复制与故障切换(Replication & Failover)]]

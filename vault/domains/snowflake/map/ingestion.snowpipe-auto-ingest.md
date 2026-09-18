@@ -4,9 +4,9 @@
 
 由事件通知触发、无服务器（serverless）的微批量加载——文件一到达暂存区就被加载，延迟为分钟级。
 
-**Requires:** [[ingestion.file-formats-and-stages|文件格式与暂存区（stage）]]
+**Requires:** [[domains/snowflake/map/ingestion.file-formats-and-stages|文件格式与暂存区（stage）]]
 
-**Unlocks:** [[ingestion.snowpipe-streaming-offset-tokens|Snowpipe Streaming 与偏移量令牌（offset token）]]
+**Unlocks:** [[domains/snowflake/map/ingestion.snowpipe-streaming-offset-tokens|Snowpipe Streaming 与偏移量令牌（offset token）]]
 
 ## Readings
 - [[snowflak-snowpipe|Snowpipe:事件驱动的自动微批加载]]

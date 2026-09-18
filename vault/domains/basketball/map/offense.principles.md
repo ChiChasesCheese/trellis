@@ -4,7 +4,7 @@
 
 Reading rather than memorizing, shoot-pass-drive within half a second, and why ball movement without player movement fails.
 
-**Unlocks:** [[systems|Offensive Systems]]
+**Unlocks:** [[domains/basketball/map/systems|Offensive Systems]]
 
 ## Readings
 - [[bb-half-second-offense|What is this 0.5 offense all about for the Phoenix Suns? Monty Williams explains.]]

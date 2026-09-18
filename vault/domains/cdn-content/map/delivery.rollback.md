@@ -4,7 +4,7 @@
 
 Baselines, control groups, stop conditions, automatic and manual rollback, roll-forward, cache cleanup, and proving recovery.
 
-**Requires:** [[delivery.shadow|Shadow Mode & Dark Launches]], [[delivery.canary|Canary & Progressive Deployment]]
+**Requires:** [[domains/cdn-content/map/delivery.shadow|Shadow Mode & Dark Launches]], [[domains/cdn-content/map/delivery.canary|Canary & Progressive Deployment]]
 
 ## Readings
 - [[delivery-google-canarying|Google SRE Workbook: Canarying Releases]]

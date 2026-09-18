@@ -4,7 +4,7 @@
 
 Strategy, observer, command, state, template method, iterator, chain of responsibility, mediator, memento, visitor.
 
-**Unlocks:** [[structure.state-machines|State Machines]]
+**Unlocks:** [[domains/low-level-design/map/structure.state-machines|State Machines]]
 
 ## Readings
 - [[gpp-observer|Observer (Game Programming Patterns, Bob Nystrom)]]

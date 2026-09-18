@@ -4,7 +4,7 @@
 
 围绕用户提供的存储过程代码建立的隔离边界，以及为何它默认无法访问网络或文件系统。
 
-**Requires:** [[openplatform.snowpark-udf-udtf|Snowpark 用户自定义函数（UDF）与表函数（UDTF）]]
+**Requires:** [[domains/snowflake/map/openplatform.snowpark-udf-udtf|Snowpark 用户自定义函数（UDF）与表函数（UDTF）]]
 
 ## Cards (5)
 - [[sproc-filesystem-tmp-only]]

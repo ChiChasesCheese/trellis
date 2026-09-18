@@ -4,7 +4,7 @@
 
 Chunking, retrieval, reranking, and grounding as a data pipeline — where quality is won and lost.
 
-**Requires:** [[ai.vector-search|Vector Search]]
+**Requires:** [[domains/system-design/map/ai.vector-search|Vector Search]]
 
 ## Readings
 - [[anthropic-contextual-retrieval|Introducing Contextual Retrieval (Anthropic)]]

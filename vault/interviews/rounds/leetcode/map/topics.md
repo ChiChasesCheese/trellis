@@ -4,7 +4,7 @@
 收纳没有更合适专题归属、仅带主题标签的笔记。
 
 ## Topics
-- [[topics.uncategorised|未分类（uncategorised）]]
+- [[interviews/rounds/leetcode/map/topics.uncategorised|未分类（uncategorised）]]
 %% trellis:end %%
 
 ## Notes

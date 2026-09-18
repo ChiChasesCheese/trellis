@@ -4,7 +4,7 @@
 
 Fat-finger size and notional caps, price collars, restricted and hard-to-borrow lists and duplicate-order detection, enforced in the order path rather than in the strategy.
 
-**Requires:** [[trading.order-lifecycle|Order State & Idempotency]]
+**Requires:** [[domains/quant-infra/map/trading.order-lifecycle|Order State & Idempotency]]
 
 ## Readings
 - [[qs-live-trading-engine-scorecard|What an Institutional-Grade Trading Engine Needs: A Requirements Scorecard]]

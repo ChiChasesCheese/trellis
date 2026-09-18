@@ -4,7 +4,7 @@
 
 为何模式（schema）变更从读者的视角看是原子且瞬时的——它构建在与 DML 相同的元数据版本化机制之上。
 
-**Requires:** [[metadata.ddl-metadata-versioning|DDL 即元数据版本化]]
+**Requires:** [[domains/snowflake/map/metadata.ddl-metadata-versioning|DDL 即元数据版本化]]
 
 ## Readings
 - [[snowflak-transactions-isolation|事务、隐式提交与 READ COMMITTED 隔离级别]]

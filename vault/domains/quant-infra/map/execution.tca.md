@@ -4,9 +4,9 @@
 
 Decomposing implementation shortfall into delay, impact, timing and opportunity cost against a chosen benchmark, then feeding realized costs back into the backtest cost model.
 
-**Requires:** [[backtest.mechanics.costs|Cost & Slippage Assumptions]], [[execution.impact|Market Impact]]
+**Requires:** [[domains/quant-infra/map/backtest.mechanics.costs|Cost & Slippage Assumptions]], [[domains/quant-infra/map/execution.impact|Market Impact]]
 
-**Unlocks:** [[lifecycle.divergence|Backtest vs Live Divergence]]
+**Unlocks:** [[domains/quant-infra/map/lifecycle.divergence|Backtest vs Live Divergence]]
 %% trellis:end %%
 
 ## Notes

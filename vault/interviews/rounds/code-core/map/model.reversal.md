@@ -4,7 +4,7 @@
 
 Disputes, refunds, cancellations and plan changes that undo an earlier event — subtracting cleanly, and the states that reversal can resurrect.
 
-**Requires:** [[model.entity-state|State Per Entity]]
+**Requires:** [[interviews/rounds/code-core/map/model.entity-state|State Per Entity]]
 
 ## Readings
 - [[fowler-event-sourcing|Event Sourcing (Martin Fowler)]]

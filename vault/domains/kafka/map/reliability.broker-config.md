@@ -4,7 +4,7 @@
 
 掌握复制系数、不彻底的首领选举（unclean leader election）与最少同步副本（min.insync.replicas）如何共同决定可用性与数据丢失风险之间的取舍。
 
-**Requires:** [[core.replication-isr|副本、首领/追随者与同步副本集合（ISR）]]
+**Requires:** [[domains/kafka/map/core.replication-isr|副本、首领/追随者与同步副本集合（ISR）]]
 
 ## Readings
 - [[kafka-7-3-broker-reliability-config|broker配置：复制系数、不彻底首领选举与最少同步副本]]

@@ -4,9 +4,9 @@
 
 Private and shared caches, edge and shield roles, cache hits and misses, and when an origin executes.
 
-**Requires:** [[networking.proxies|Reverse Proxies, Gateways & Routing]]
+**Requires:** [[domains/cdn-content/map/networking.proxies|Reverse Proxies, Gateways & Routing]]
 
-**Unlocks:** [[caching.freshness|Freshness & Cache-Control]], [[content.rendering|CSR, SSR, SSG & Dynamic Rendering]]
+**Unlocks:** [[domains/cdn-content/map/caching.freshness|Freshness & Cache-Control]], [[domains/cdn-content/map/content.rendering|CSR, SSR, SSG & Dynamic Rendering]]
 
 ## Readings
 - [[cache-aws-caching-challenges|Caching Challenges and Strategies (AWS Builders' Library)]]

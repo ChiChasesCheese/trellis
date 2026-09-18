@@ -4,9 +4,9 @@
 
 Authentication and authorization boundaries, private responses, cookie handling, cache partitioning, and preventing cross-tenant content leaks.
 
-**Requires:** [[caching.keys|Cache Keys, Vary & Representation Safety]]
+**Requires:** [[domains/cdn-content/map/caching.keys|Cache Keys, Vary & Representation Safety]]
 
-**Unlocks:** [[security-cost.poisoning|Cache Poisoning & Key Confusion]], [[security-cost.signed-content|Signed URLs & Private Content]]
+**Unlocks:** [[domains/cdn-content/map/security-cost.poisoning|Cache Poisoning & Key Confusion]], [[domains/cdn-content/map/security-cost.signed-content|Signed URLs & Private Content]]
 
 ## Readings
 - [[security-cloudflare-cache-poisoning|Cloudflare: Avoid Web Cache Poisoning]]

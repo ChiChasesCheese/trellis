@@ -4,7 +4,7 @@
 
 Declarative state, plans, drift, modules, pods, services, probes, resources, rolling updates, autoscaling, and rollback.
 
-**Requires:** [[delivery.cicd|CI/CD & Release Evidence]], [[delivery.aws|AWS for Content Serving]]
+**Requires:** [[domains/cdn-content/map/delivery.cicd|CI/CD & Release Evidence]], [[domains/cdn-content/map/delivery.aws|AWS for Content Serving]]
 
 ## Readings
 - [[delivery-kubernetes-deployments|Kubernetes: Deployments]]

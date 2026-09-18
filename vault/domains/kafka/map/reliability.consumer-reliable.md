@@ -4,7 +4,7 @@
 
 理解消费者的可靠性配置与手动提交偏移量的时机如何避免消息丢失或重复处理。
 
-**Requires:** [[consumer.offset-commit|提交与偏移量管理]]
+**Requires:** [[domains/kafka/map/consumer.offset-commit|提交与偏移量管理]]
 
 ## Readings
 - [[kafka-7-5-reliable-consumer|在可靠的系统中使用消费者]]

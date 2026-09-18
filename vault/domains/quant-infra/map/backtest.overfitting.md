@@ -5,9 +5,9 @@
 Treating a backtest result as a statistic contaminated by the number of trials that produced it.
 
 ## Topics
-- [[backtest.overfitting.multiple-testing|Multiple Testing & Selection Bias]]
-- [[backtest.overfitting.deflated-sharpe|Probabilistic & Deflated Sharpe]]
-- [[backtest.overfitting.pbo|Probability of Backtest Overfitting]]
+- [[domains/quant-infra/map/backtest.overfitting.multiple-testing|Multiple Testing & Selection Bias]]
+- [[domains/quant-infra/map/backtest.overfitting.deflated-sharpe|Probabilistic & Deflated Sharpe]]
+- [[domains/quant-infra/map/backtest.overfitting.pbo|Probability of Backtest Overfitting]]
 %% trellis:end %%
 
 ## Notes
