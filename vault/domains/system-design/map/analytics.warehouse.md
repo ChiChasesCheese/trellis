@@ -4,7 +4,7 @@
 
 Warehouse vs data lake vs lakehouse; open table formats (Iceberg/Delta) over object storage.
 
-**Requires:** [[storage.object|Object Storage & Separation]]
+**Requires:** [[domains/system-design/map/storage.object|Object Storage & Separation]]
 
 ## Readings
 - [[iceberg-table-format|Apache Iceberg Table Format (spec + docs)]]

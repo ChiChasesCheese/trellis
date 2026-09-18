@@ -15,7 +15,7 @@
 ## 对话中
 
 - 先听团队 scope，再把自己做过的事映射上去（"the closest thing I've built is…"）。
-- 直接回答 on-call 与 RTO；用真实 on-call 经历（S3/S9）。
+- 直接回答 on-call 与 RTO；用真实 on-call 经历（[[S3]] / [[S9]]）。
 - **最后必问**："Is the headcount for this role approved, and what's the timeline after today?"
 
 ## 会后

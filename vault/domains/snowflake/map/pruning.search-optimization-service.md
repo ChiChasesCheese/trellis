@@ -4,7 +4,7 @@
 
 一种持续维护的访问路径（并非 B 树索引），用于加速非聚簇列上高选择性的点查（point lookup）。
 
-**Requires:** [[pruning.partition-elimination|分区消除（partition elimination）]]
+**Requires:** [[domains/snowflake/map/pruning.partition-elimination|分区消除（partition elimination）]]
 
 ## Readings
 - [[snowflak-search-optimization|搜索优化服务(Search Optimization Service)]]

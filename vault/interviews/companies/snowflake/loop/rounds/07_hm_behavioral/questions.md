@@ -7,14 +7,14 @@
 
 | 价值观（原文关键词） | 典型题 | 主故事 | 备用 | 踩雷点 |
 |---|---|---|---|---|
-| **Own It**（like it's yours · own issues · own mistakes） | mistake · ownership · production issue · changed a process · without authority | S3 ACH RCA（自己转发 pager 当场根因） | S2（自己修自己的缺陷）· S7 | 归因外部；讲不出改了什么流程 |
-| **Get It Done**（results · precise yet nimble · follow through） | competing deadlines · hard deadline what did you cut · trade-off & debt · ambiguity | S8 7 分钟 RCA 出 PR | S1 18 个月生产 · S5 两年 owner | 只讲赶上了；没说 slip 前先沟通 |
-| **Integrity Always**（speak up candidly · disagree then commit fully） | conflict · pushback · bad news · committed to a decision you argued against · changed your mind · disagreed with manager | S6 go/no-go 叫停实习生项目 | S2 ADR · S4 | 把对方说成不讲理；只有 backbone 没有 commit |
-| **Put Customers First**（earn trust · listen · pain points） | customer first when inconvenient | S4 AU refund fee（给 PM 同一份证据） | S9 DoorDash SLA | 讲成"客户总是对的" |
-| **Be Excellent**（quality · simplicity · today and tomorrow） | raised the bar · high bar when nobody checks · would do differently | S5 shadow-run 0.224% | S2 框架复用 8 次 | "能跑就行" |
-| **Think Big**（ambitious · prudent risks） | most ambitious · prudent risk · why Snowflake why now | S5（$55B TPV 前提） | Quant-Stroller 66K 行 | 只有大话没有风险控制 |
-| **Make Each Other the Best**（help · ask for help · feedback · teach） | teammate grow · asked for help · critical feedback · teamwork · other team | Ziyang（domain-ownership 框定） | onboarding doc 两年 · S4 跨团队 | 编造 1:1 细节；"从不需要帮助" |
-| **Embrace Each Other's Differences** | very different approach | S5 三方（Pricing Kotlin / Funding Ruby / Fiserv 外部） | Chicago → San Jose | 说成"我忍了" |
+| **Own It**（like it's yours · own issues · own mistakes） | mistake · ownership · production issue · changed a process · without authority | [[S3]] ACH RCA（自己转发 pager 当场根因） | [[S2]]（自己修自己的缺陷）· [[S7]] | 归因外部；讲不出改了什么流程 |
+| **Get It Done**（results · precise yet nimble · follow through） | competing deadlines · hard deadline what did you cut · trade-off & debt · ambiguity | [[S8]] 7 分钟 RCA 出 PR | [[S1]] 18 个月生产 · [[S5]] 两年 owner | 只讲赶上了；没说 slip 前先沟通 |
+| **Integrity Always**（speak up candidly · disagree then commit fully） | conflict · pushback · bad news · committed to a decision you argued against · changed your mind · disagreed with manager | [[S6]] go/no-go 叫停实习生项目 | [[S2]] ADR · [[S4]] | 把对方说成不讲理；只有 backbone 没有 commit |
+| **Put Customers First**（earn trust · listen · pain points） | customer first when inconvenient | [[S4]] AU refund fee（给 PM 同一份证据） | [[S9]] DoorDash SLA | 讲成"客户总是对的" |
+| **Be Excellent**（quality · simplicity · today and tomorrow） | raised the bar · high bar when nobody checks · would do differently | [[S5]] shadow-run 0.224% | [[S2]] 框架复用 8 次 | "能跑就行" |
+| **Think Big**（ambitious · prudent risks） | most ambitious · prudent risk · why Snowflake why now | [[S5]]（$55B TPV 前提） | Quant-Stroller 66K 行 | 只有大话没有风险控制 |
+| **Make Each Other the Best**（help · ask for help · feedback · teach） | teammate grow · asked for help · critical feedback · teamwork · other team | Ziyang（domain-ownership 框定） | onboarding doc 两年 · [[S4]] 跨团队 | 编造 1:1 细节；"从不需要帮助" |
+| **Embrace Each Other's Differences** | very different approach | [[S5]] 三方（Pricing Kotlin / Funding Ruby / Fiserv 外部） | Chicago → San Jose | 说成"我忍了" |
 
 ## 题目（原文见 bank.json）
 

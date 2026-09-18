@@ -4,9 +4,9 @@
 
 Shard keys, consistent and rendezvous hashing, virtual nodes, rebalancing, affinity, scatter-gather, and routing metadata.
 
-**Requires:** [[distributed.regional-cache|Regional Cache Services]]
+**Requires:** [[domains/cdn-content/map/distributed.regional-cache|Regional Cache Services]]
 
-**Unlocks:** [[distributed.cross-region|Cross-Region Architecture]], [[distributed.skew|Hot Keys, Skew & Fleet Capacity]]
+**Unlocks:** [[domains/cdn-content/map/distributed.cross-region|Cross-Region Architecture]], [[domains/cdn-content/map/distributed.skew|Hot Keys, Skew & Fleet Capacity]]
 
 ## Readings
 - [[dist-maglev|Maglev: A Fast and Reliable Software Network Load Balancer]]

@@ -4,9 +4,9 @@
 
 Adding days and months, month-end clamping, UTC offsets and day wrap, and why calendar math is not duration math.
 
-**Requires:** [[chrono.parsing|Parsing Timestamps]]
+**Requires:** [[interviews/rounds/code-core/map/chrono.parsing|Parsing Timestamps]]
 
-**Unlocks:** [[chrono.windows|Time Windows & Buckets]]
+**Unlocks:** [[interviews/rounds/code-core/map/chrono.windows|Time Windows & Buckets]]
 
 ## Readings
 - [[python-datetime|datetime — basic date and time types]]

@@ -4,9 +4,9 @@
 
 Hot-key expiry, singleflight, request coalescing, early refresh, TTL jitter, lock scope, and avoiding origin overload.
 
-**Requires:** [[caching.hierarchy|Multi-Tier Cache Hierarchy]]
+**Requires:** [[domains/cdn-content/map/caching.hierarchy|Multi-Tier Cache Hierarchy]]
 
-**Unlocks:** [[content.isr|Incremental Static Regeneration]]
+**Unlocks:** [[domains/cdn-content/map/content.isr|Incremental Static Regeneration]]
 
 ## Readings
 - [[cache-aws-caching-challenges|Caching Challenges and Strategies (AWS Builders' Library)]]

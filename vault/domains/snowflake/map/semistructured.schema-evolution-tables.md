@@ -4,7 +4,7 @@
 
 随着导入的 JSON/Parquet 中出现新字段而让表的列自动增长，以及约束这一过程的兼容性规则。
 
-**Requires:** [[semistructured.variant-type-storage|VARIANT 类型与存储]]
+**Requires:** [[domains/snowflake/map/semistructured.variant-type-storage|VARIANT 类型与存储]]
 
 ## Cards (5)
 - [[schema-evolution-enable-and-match-by-name]]

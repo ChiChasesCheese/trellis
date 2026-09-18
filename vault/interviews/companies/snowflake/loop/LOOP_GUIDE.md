@@ -33,7 +33,7 @@
 
 ## 1. Chakra AI 语音筛（20 min）
 
-- **形式 / 评分 / 剧本**：本轮全部材料在 `rounds/00_ai_screen/`（`README.md` 入口）：`playbook.md`（逐分钟英文稿）、`stories.md`（S1–S10）、`scenarios.md`（12 题）、`questions.md` + `bank.json`（79 题）、`rubric.md`；机制 `../../core/playbooks/ai-voice-screen.md`；证据 `../raw/chakra.md`。
+- **形式 / 评分 / 剧本**：本轮全部材料在 `rounds/00_ai_screen/`（`README.md` 入口）：`playbook.md`（逐分钟英文稿）、故事 [[S1]]–[[S11]]（core）、`scenarios.md`（12 题）、`questions.md` + `bank.json`（79 题）、`rubric.md`；机制 [[ai-voice-screen|core/playbooks/ai-voice-screen]]；证据 `../raw/chakra.md`。
 - **一句话**：Reporter 只读 transcript；每个 expectation 要有 clarity / ownership / structured reasoning / specific examples 的**具体证据**；theoretical = Not Met；没说到 = 0。
 - **练习**：`python3 loop/mock.py bq ai -n 5`；`../07-mock.md`（20 min 计时）；关键词卡 `rounds/00_ai_screen/CARD.md`。
 
@@ -84,7 +84,7 @@
 - **问什么**：选一个项目讲透——为什么这个架构/这个库、备选方案、可用性/容错、现在看有什么问题、会怎么重做。
 - **评什么**："depth of knowledge in your domain"；每个设计决策的 why；senior 级 trade-off 表达。
 - **挂点**：只讲做了什么；被问"还有什么选项"卡壳；停在功能层不谈系统属性。
-- **备考动作**：S1（AMEX 管线）与 S5（net settlement shadow-run）各准备 15 min 深挖版：架构图口述 → 3 个决策各带 2 个被否方案 → 失败模式与监控 → 重做清单。素材 `../../core/stories/evidence-base.md`、`resume-evidence-map/01、02`。
+- **备考动作**：[[S1]]（AMEX 管线）与 [[S5]]（net settlement shadow-run）各准备 15 min 深挖版：架构图口述 → 3 个决策各带 2 个被否方案 → 失败模式与监控 → 重做清单。素材 [[Core]]、`resume-evidence-map/01、02`。
 - **练习**：`loop/mock.py bq expertise -n 3`（`06_project_deep_dive/`）。
 
 ## 8. Onsite · HM / Behavioral（30–45 min，逐题记笔记）
@@ -92,7 +92,7 @@
 - **问什么**：mistake · ownership · 陌生团队协作 · teamwork · conflict · pushback（disagree-and-commit）· prioritize · customer first · raise the bar；8 条价值观逐条对应。
 - **评什么**：Own It / Get It Done / Integrity Always 最常；有具体数字与"我"的动作。
 - **挂点**：把分歧对方说成不讲理；讲不出自己改了什么流程；术语堆砌。
-- **备考动作**：`../04-answer-bank.md` §3 + §5 价值观矩阵；`../../core/answers/` Q1–Q24；每故事 90 s / 3 min 两版。
+- **备考动作**：`../04-answer-bank.md` §3 + §5 价值观矩阵；[[Answers]] [[Answers#Q1]]–[[Answers#Q24]]；每故事 90 s / 3 min 两版。
 - **练习**：`loop/mock.py bq hm -n 3 -m 3`（`07_hm_behavioral/`）。
 
 ## 9. Team Matching（GenSWE 最后一步，HM 30–45 min）

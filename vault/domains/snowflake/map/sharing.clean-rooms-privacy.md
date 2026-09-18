@@ -4,7 +4,7 @@
 
 让双方在受治理策略约束下，对彼此的数据进行连接或聚合计算，而任何一方都看不到对方的原始行数据。
 
-**Requires:** [[sharing.secure-data-sharing-mechanics|安全数据共享（Secure Data Sharing）机制]]
+**Requires:** [[domains/snowflake/map/sharing.secure-data-sharing-mechanics|安全数据共享（Secure Data Sharing）机制]]
 
 ## Cards (4)
 - [[cleanroom-built-on-sharing]]

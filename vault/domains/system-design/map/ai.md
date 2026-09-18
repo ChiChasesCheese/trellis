@@ -4,11 +4,11 @@
 The data-infrastructure side of AI — from zero, in system-design terms, to serving and evaluating LLM backends.
 
 ## Topics
-- [[ai.foundations|LLM Foundations for Engineers]]
-- [[ai.vector-search|Vector Search]]
-- [[ai.rag|RAG Pipelines]]
-- [[ai.inference|Inference Serving]]
-- [[ai.evals|Evals & AI Observability]]
+- [[domains/system-design/map/ai.foundations|LLM Foundations for Engineers]]
+- [[domains/system-design/map/ai.vector-search|Vector Search]]
+- [[domains/system-design/map/ai.rag|RAG Pipelines]]
+- [[domains/system-design/map/ai.inference|Inference Serving]]
+- [[domains/system-design/map/ai.evals|Evals & AI Observability]]
 %% trellis:end %%
 
 ## Notes

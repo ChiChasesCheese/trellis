@@ -4,7 +4,7 @@
 
 OWNERSHIP 作为包含其他一切权限的权限、GRANT/REVOKE 的传播方式，以及模式（schema）上的未来授权（future grant）。
 
-**Requires:** [[security.rbac-role-hierarchy|RBAC 角色层级]]
+**Requires:** [[domains/snowflake/map/security.rbac-role-hierarchy|RBAC 角色层级]]
 
 ## Readings
 - [[snowflak-access-control-rbac|访问控制总览:角色层级与 OWNERSHIP]]

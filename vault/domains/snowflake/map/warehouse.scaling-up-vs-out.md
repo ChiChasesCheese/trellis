@@ -4,7 +4,7 @@
 
 针对单条高开销查询选择更大的仓库（纵向扩展/scale up），还是针对并发选择更多集群（横向扩展/scale out）——识别哪种症状需要哪种手段。
 
-**Requires:** [[warehouse.multi-cluster-scaling-policy|多集群伸缩策略]]
+**Requires:** [[domains/snowflake/map/warehouse.multi-cluster-scaling-policy|多集群伸缩策略]]
 
 ## Readings
 - [[snowflak-warehouse-best-practices|仓库调优:扩容(up)还是扩出(out)、本地磁盘缓存]]

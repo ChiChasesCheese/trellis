@@ -4,9 +4,9 @@
 
 在一个不可变、带版本的存储层上，原子性、一致性、隔离性与持久性具体意味着什么。
 
-**Requires:** [[architecture.three-layer-model|三层架构]]
+**Requires:** [[domains/snowflake/map/architecture.three-layer-model|三层架构]]
 
-**Unlocks:** [[txn.snapshot-isolation|隔离级别：READ COMMITTED 与一致性读]]
+**Unlocks:** [[domains/snowflake/map/txn.snapshot-isolation|隔离级别：READ COMMITTED 与一致性读]]
 
 ## Readings
 - [[snowflak-transactions-isolation|事务、隐式提交与 READ COMMITTED 隔离级别]]

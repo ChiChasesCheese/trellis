@@ -4,9 +4,9 @@
 
 Egress, regional transfer, cache storage, object requests, compute, image transformation, observability, and cost per delivered request or byte.
 
-**Requires:** [[foundations.capacity|Capacity & Bottleneck Estimation]], [[delivery.aws|AWS for Content Serving]]
+**Requires:** [[domains/cdn-content/map/foundations.capacity|Capacity & Bottleneck Estimation]], [[domains/cdn-content/map/delivery.aws|AWS for Content Serving]]
 
-**Unlocks:** [[security-cost.optimization|Performance-Cost Optimization]]
+**Unlocks:** [[domains/cdn-content/map/security-cost.optimization|Performance-Cost Optimization]]
 
 ## Readings
 - [[security-vercel-cdn-usage|Vercel: CDN Pricing and Usage]]

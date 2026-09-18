@@ -5,7 +5,7 @@
 ## 0. 一页速览（贴卡片）
 
 - **是什么**：AI Data Cloud → 管理层现在叫「agentic enterprise 的控制平面」：governed data + 模型接入 + 应用工作流 + agent 控制面。消费模型（按 credits 计费）。
-- **最新季度**（FY27 Q2，2026-09-02 发布）：product revenue **$1.49B，+37%**；连续第三个季度增速加速；NRR **126%**；$1M+ 客户 **828**；RPO **$9.0B**；FY27 指引上调到 **$6.07B（+36%）**；股价次日 **+17%**、盘中历史新高。AI 产品贡献了约一半的加速。
+- **最新季度**（FY27 [[Answers#Q2]]，2026-09-02 发布）：product revenue **$1.49B，+37%**；连续第三个季度增速加速；NRR **126%**；$1M+ 客户 **828**；RPO **$9.0B**；FY27 指引上调到 **$6.07B（+36%）**；股价次日 **+17%**、盘中历史新高。AI 产品贡献了约一半的加速。
 - **AI 产品名（2026-06-02 Summit 改名）**：**CoCo**（原 Cortex Code，AI 编码 agent，9,100+ 账户）；**CoWork**（原 Snowflake Intelligence，业务人员 agent，5,800+ 账户）；底层 Cortex AI（AISQL / Analyst / Search / Agents）；**Cortex AI Gateway**（2026-07-28，统一管 agent→模型/工具/MCP，2026-08-18 加 dynamic model routing）。
 - **人**：CEO **Sridhar Ramaswamy**（2024-02 起；Chairman Frank Slootman）；EVP Product Christian Kleinerman；SVP Eng Vivek Raghunathan；CTO S. Muralidhar。员工 ≈ 9,400。
 - **地**：SEC 总部 Bozeman；最大工程园区 **Menlo Park**；**Bellevue** Spring District（2026-06 又扩 3 层）。Database Engineering 团队分布 Menlo Park / Bellevue / Berlin。
@@ -17,7 +17,7 @@
 | 词                                     | 一句话                                                                                                                                             | 为什么面试会碰到                                        |
 | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
 | **三层架构**                              | 数据以不可变列式 **micro-partition** 存对象存储；**virtual warehouse** 是独立计算集群，按秒计费；**Cloud Services（内部 GS）** 无状态服务做认证 / 元数据 / 优化 / 事务，元数据全在 **FoundationDB** | 所有特性的根：clone、time travel、多仓库并发都靠「数据不可变 + 元数据集中」 |
-| **Zero-copy clone / Time Travel**     | clone 只复制元数据指针；表版本历史在 FDB，所以能 `AT(TIMESTAMP)` / `UNDROP`（默认 1 天，最长 90 天）                                                                        | 我用 clone 做过隔离 schema pool（S7）                   |
+| **Zero-copy clone / Time Travel**     | clone 只复制元数据指针；表版本历史在 FDB，所以能 `AT(TIMESTAMP)` / `UNDROP`（默认 1 天，最长 90 天）                                                                        | 我用 clone 做过隔离 schema pool（[[S7]]）                   |
 | **Result cache**                      | 同 SQL + 数据没变 → 24 h 内直接返回，不起仓库                                                                                                                  | 成本题                                             |
 | **Streams**                           | 一个 offset 书签指向表版本；查 stream 得净变化 + `METADATA$ACTION/ISUPDATE/ROW_ID`；**只有在 DML 事务里消费才推进 offset**；类型 standard / append-only / insert-only         | 我的 AMEX 管线用了 6 条 append-only stream             |
 | **Tasks**                             | CRON / 间隔 / DAG；`WHEN SYSTEM$STREAM_HAS_DATA()` 避免空跑；serverless 或自管仓库；`SUSPEND_TASK_AFTER_NUM_FAILURES`、`TASK_HISTORY()`                        | 我的整条编排                                          |
@@ -41,14 +41,14 @@
 
 | 值 | 关键词 | 我的故事 |
 |---|---|---|
-| Put Customers First | earn trust · listen · pain points | S4（PM escalate → 给所有人同一份证据）· S9（DoorDash SLA） |
-| Integrity Always | speak up candidly · disagree then **commit fully** | S6（写 go/no-go 叫停）· S2（自曝设计缺陷写 ADR） |
-| Think Big | ambitious · prudent risks | S5（$55B TPV 前提）· Quant-Stroller 66K 行 |
-| Be Excellent | quality · simplicity · today and tomorrow | S5 shadow-run 0.224% · S2 框架复用 8 次 |
-| Get It Done | results · precise yet nimble · follow through | S8（7 分钟 RCA 出 PR）· S1 18 个月生产 |
-| Own It | like it's yours · own issues · own mistakes | S3（自己转发 pager 当场根因）· S2（自己修自己的缺陷） |
+| Put Customers First | earn trust · listen · pain points | [[S4]]（PM escalate → 给所有人同一份证据）· [[S9]]（DoorDash SLA） |
+| Integrity Always | speak up candidly · disagree then **commit fully** | [[S6]]（写 go/no-go 叫停）· [[S2]]（自曝设计缺陷写 ADR） |
+| Think Big | ambitious · prudent risks | [[S5]]（$55B TPV 前提）· Quant-Stroller 66K 行 |
+| Be Excellent | quality · simplicity · today and tomorrow | [[S5]] shadow-run 0.224% · [[S2]] 框架复用 8 次 |
+| Get It Done | results · precise yet nimble · follow through | [[S8]]（7 分钟 RCA 出 PR）· [[S1]] 18 个月生产 |
+| Own It | like it's yours · own issues · own mistakes | [[S3]]（自己转发 pager 当场根因）· [[S2]]（自己修自己的缺陷） |
 | Make Each Other the Best | help · feedback · teach | Ziyang domain-ownership 框定 · onboarding doc 维护两年 |
-| Embrace Differences | different experience | 跨 Pricing / Funding / Fiserv 三方对齐（S5）；跨时区 Chicago→San Jose |
+| Embrace Differences | different experience | 跨 Pricing / Funding / Fiserv 三方对齐（[[S5]]）；跨时区 Chicago→San Jose |
 
 ## 4. 近 90 天可引用的事（按日期）
 

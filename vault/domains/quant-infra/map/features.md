@@ -4,11 +4,11 @@
 Turning raw series into supervised-learning inputs without smuggling the future into either side.
 
 ## Topics
-- [[features.construction|Feature Construction]]
-- [[features.labeling|Labeling]]
-- [[features.leakage|Leakage Taxonomy]]
-- [[features.selection|Feature Importance & Selection]]
-- [[features.store|Feature & Factor Store]]
+- [[domains/quant-infra/map/features.construction|Feature Construction]]
+- [[domains/quant-infra/map/features.labeling|Labeling]]
+- [[domains/quant-infra/map/features.leakage|Leakage Taxonomy]]
+- [[domains/quant-infra/map/features.selection|Feature Importance & Selection]]
+- [[domains/quant-infra/map/features.store|Feature & Factor Store]]
 %% trellis:end %%
 
 ## Notes

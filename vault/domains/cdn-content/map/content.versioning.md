@@ -4,9 +4,9 @@
 
 Immutable deployment identity, cache reuse across releases, atomic metadata updates, rollback, and preventing mixed-version responses.
 
-**Requires:** [[content.static-generation|Static Generation & Build Output]], [[caching.invalidation|Expiration, Purge & Invalidation]]
+**Requires:** [[domains/cdn-content/map/content.static-generation|Static Generation & Build Output]], [[domains/cdn-content/map/caching.invalidation|Expiration, Purge & Invalidation]]
 
-**Unlocks:** [[delivery.compatibility|Compatibility & Configuration Changes]]
+**Unlocks:** [[domains/cdn-content/map/delivery.compatibility|Compatibility & Configuration Changes]]
 
 ## Readings
 - [[content-vercel-deployments|Vercel deployment model]]

@@ -5,8 +5,8 @@
 Change data capture, materialized views, windows, and keeping derived data fresh.
 
 ## Topics
-- [[async.streaming.cdc|CDC & Event Sourcing]]
-- [[async.streaming.processing|Stream Processing]]
+- [[domains/system-design/map/async.streaming.cdc|CDC & Event Sourcing]]
+- [[domains/system-design/map/async.streaming.processing|Stream Processing]]
 
 ## Readings
 - [[ddia-2e|Designing Data-Intensive Applications, 2nd ed. (Kleppmann & Riccomini, 2026)]]

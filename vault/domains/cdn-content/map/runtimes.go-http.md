@@ -4,9 +4,9 @@
 
 Packages, interfaces, errors, net/http servers and clients, transports, connection pools, and reverse-proxy construction.
 
-**Requires:** [[networking.proxies|Reverse Proxies, Gateways & Routing]]
+**Requires:** [[domains/cdn-content/map/networking.proxies|Reverse Proxies, Gateways & Routing]]
 
-**Unlocks:** [[runtimes.go-concurrency|Go Concurrency & Synchronization]], [[runtimes.polyglot|Polyglot Boundaries]]
+**Unlocks:** [[domains/cdn-content/map/runtimes.go-concurrency|Go Concurrency & Synchronization]], [[domains/cdn-content/map/runtimes.polyglot|Polyglot Boundaries]]
 
 ## Readings
 - [[runtime-go-http|Go `net/http` package]]

@@ -4,9 +4,9 @@
 Spreading, shaping, and protecting request flow at the front door.
 
 ## Topics
-- [[traffic.load-balancing|Load Balancers]]
-- [[traffic.gateways|Reverse Proxies & API Gateways]]
-- [[traffic.rate-limiting|Rate Limiting]]
+- [[domains/system-design/map/traffic.load-balancing|Load Balancers]]
+- [[domains/system-design/map/traffic.gateways|Reverse Proxies & API Gateways]]
+- [[domains/system-design/map/traffic.rate-limiting|Rate Limiting]]
 %% trellis:end %%
 
 ## Notes

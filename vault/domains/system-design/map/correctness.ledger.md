@@ -4,7 +4,7 @@
 
 Double-entry design, immutability, balance derivation, and reconciliation as the payments-grade safety net.
 
-**Requires:** [[correctness.idempotency|Idempotency]]
+**Requires:** [[domains/system-design/map/correctness.idempotency|Idempotency]]
 
 ## Readings
 - [[modern-treasury-ledgers|Ledgers (Modern Treasury Learn series)]]

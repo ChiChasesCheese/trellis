@@ -4,7 +4,7 @@
 
 理解控制器在集群中承担的元数据管理与首领选举职责，以及控制器自身如何被选出。
 
-**Requires:** [[core.cluster-roles|broker、集群与多集群架构中的角色分工]]
+**Requires:** [[domains/kafka/map/core.cluster-roles|broker、集群与多集群架构中的角色分工]]
 
 ## Readings
 - [[kafka-6-1-cluster-membership|集群的成员关系：broker如何注册与被发现]]

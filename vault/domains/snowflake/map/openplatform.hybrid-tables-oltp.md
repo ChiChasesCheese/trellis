@@ -4,9 +4,9 @@
 
 一种行存储表类型，具有强制主键与行锁，支持毫秒级点查，并异步镜像到列式存储中以支持分析查询。
 
-**Requires:** [[metadata.foundationdb-role|FoundationDB 作为元数据存储]], [[storage.table-types|表类型]]
+**Requires:** [[domains/snowflake/map/metadata.foundationdb-role|FoundationDB 作为元数据存储]], [[domains/snowflake/map/storage.table-types|表类型]]
 
-**Unlocks:** [[openplatform.snowflake-postgres|Snowflake Postgres]]
+**Unlocks:** [[domains/snowflake/map/openplatform.snowflake-postgres|Snowflake Postgres]]
 
 ## Readings
 - [[snowflak-hybrid-tables|混合表(Hybrid Table):行存与点查/高并发写]]

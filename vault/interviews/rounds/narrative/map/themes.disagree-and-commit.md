@@ -4,7 +4,7 @@
 
 The version that is genuine commitment rather than quiet martyrdom or an I-told-you-so.
 
-**Requires:** [[themes.conflict|Disagreement]]
+**Requires:** [[interviews/rounds/narrative/map/themes.conflict|Disagreement]]
 %% trellis:end %%
 
 ## Notes

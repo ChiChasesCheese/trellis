@@ -4,7 +4,7 @@
 
 让 Snowflake 按每次运行自动调整计算规模（无服务器/serverless），还是将 Task 绑定到固定的仓库，以及这一选择隐含的成本/延迟权衡。
 
-**Requires:** [[pipelines.task-scheduling-cron-and-dag|任务调度与 DAG]], [[warehouse.sizing-t-shirt|仓库规格（T 恤尺码式）]]
+**Requires:** [[domains/snowflake/map/pipelines.task-scheduling-cron-and-dag|任务调度与 DAG]], [[domains/snowflake/map/warehouse.sizing-t-shirt|仓库规格（T 恤尺码式）]]
 
 ## Readings
 - [[snowflak-tasks|任务(Task):调度、算力模型与失败处理]]

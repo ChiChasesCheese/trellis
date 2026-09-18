@@ -4,7 +4,7 @@
 
 Conflict-free replicated data types, merge semantics, and offline-capable multi-writer apps.
 
-**Requires:** [[distributed.replication|Replication]]
+**Requires:** [[domains/system-design/map/distributed.replication|Replication]]
 
 ## Readings
 - [[crdt-tech|CRDT.tech — Conflict-free Replicated Data Types]]

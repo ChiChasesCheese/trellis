@@ -4,7 +4,7 @@
 
 TTFB, throughput, utilization, percentiles, coordinated omission, and why averages hide serving-path failures.
 
-**Unlocks:** [[foundations.capacity|Capacity & Bottleneck Estimation]], [[reliability.slos|SLIs, SLOs & Error Budgets]]
+**Unlocks:** [[domains/cdn-content/map/foundations.capacity|Capacity & Bottleneck Estimation]], [[domains/cdn-content/map/reliability.slos|SLIs, SLOs & Error Budgets]]
 
 ## Readings
 - [[fnd-google-sre-monitoring-distributions|Monitoring (Google SRE Workbook)]]

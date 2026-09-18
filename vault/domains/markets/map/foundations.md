@@ -4,10 +4,10 @@
 Where returns come from, stated before any instrument or signal is named.
 
 ## Topics
-- [[foundations.premia|Risk Premia & Expected Return]]
-- [[foundations.asset-class-premia|The Asset Class Premia]]
-- [[foundations.efficiency|Efficiency & Limits to Arbitrage]]
-- [[foundations.capm|CAPM, Beta & Risk Vocabulary]]
+- [[domains/markets/map/foundations.premia|Risk Premia & Expected Return]]
+- [[domains/markets/map/foundations.asset-class-premia|The Asset Class Premia]]
+- [[domains/markets/map/foundations.efficiency|Efficiency & Limits to Arbitrage]]
+- [[domains/markets/map/foundations.capm|CAPM, Beta & Risk Vocabulary]]
 %% trellis:end %%
 
 ## Notes

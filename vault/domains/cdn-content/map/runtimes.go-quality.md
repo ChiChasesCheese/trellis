@@ -4,9 +4,9 @@
 
 Table tests, httptest, race detection, fuzzing, benchmarks, pprof, execution traces, and production-safe diagnostics.
 
-**Requires:** [[runtimes.go-lifecycle|Go Context, Timeouts & Shutdown]]
+**Requires:** [[domains/cdn-content/map/runtimes.go-lifecycle|Go Context, Timeouts & Shutdown]]
 
-**Unlocks:** [[reliability.testing|Unit, Integration & End-to-End Testing]]
+**Unlocks:** [[domains/cdn-content/map/reliability.testing|Unit, Integration & End-to-End Testing]]
 
 ## Readings
 - [[runtime-go-diagnostics|Diagnostics for Go programs]]

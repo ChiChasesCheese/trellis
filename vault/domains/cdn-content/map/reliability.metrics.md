@@ -4,9 +4,9 @@
 
 Counters, gauges, histograms, RED and USE, labels, aggregation, percentile estimation, and the cost of high cardinality.
 
-**Requires:** [[reliability.slos|SLIs, SLOs & Error Budgets]]
+**Requires:** [[domains/cdn-content/map/reliability.slos|SLIs, SLOs & Error Budgets]]
 
-**Unlocks:** [[reliability.tracing|Distributed Tracing]], [[reliability.alerting|Dashboards & Alerts]], [[delivery.shadow|Shadow Mode & Dark Launches]], [[security-cost.optimization|Performance-Cost Optimization]]
+**Unlocks:** [[domains/cdn-content/map/reliability.tracing|Distributed Tracing]], [[domains/cdn-content/map/reliability.alerting|Dashboards & Alerts]], [[domains/cdn-content/map/delivery.shadow|Shadow Mode & Dark Launches]], [[domains/cdn-content/map/security-cost.optimization|Performance-Cost Optimization]]
 
 ## Readings
 - [[reliability-otel-signals|OpenTelemetry: Signals]]

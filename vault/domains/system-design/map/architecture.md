@@ -4,9 +4,9 @@
 Slicing a system into deployable parts, and the coordination tax of each cut.
 
 ## Topics
-- [[architecture.services|Monoliths & Microservices]]
-- [[architecture.discovery|Service Discovery & Contracts]]
-- [[architecture.serverless|Serverless]]
+- [[domains/system-design/map/architecture.services|Monoliths & Microservices]]
+- [[domains/system-design/map/architecture.discovery|Service Discovery & Contracts]]
+- [[domains/system-design/map/architecture.serverless|Serverless]]
 %% trellis:end %%
 
 ## Notes

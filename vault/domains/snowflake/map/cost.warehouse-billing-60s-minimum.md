@@ -4,7 +4,7 @@
 
 每次恢复运行至少收取 60 秒费用，以及这对调优自动挂起超时时间的影响。
 
-**Requires:** [[cost.credit-model-per-second-billing|信用点模型与按秒计费]], [[warehouse.sizing-t-shirt|仓库规格（T 恤尺码式）]]
+**Requires:** [[domains/snowflake/map/cost.credit-model-per-second-billing|信用点模型与按秒计费]], [[domains/snowflake/map/warehouse.sizing-t-shirt|仓库规格（T 恤尺码式）]]
 
 ## Readings
 - [[snowflak-compute-cost-detail|计算成本细则:60 秒起收、serverless 计费与云服务 10% 免费额度]]

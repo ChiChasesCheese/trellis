@@ -4,9 +4,9 @@
 
 选择聚簇键以让相关的微分区聚集在一起，以及真正能从中受益的访问模式。
 
-**Requires:** [[storage.micro-partition-metadata|微分区元数据]]
+**Requires:** [[domains/snowflake/map/storage.micro-partition-metadata|微分区元数据]]
 
-**Unlocks:** [[storage.automatic-reclustering|自动重新聚簇（automatic reclustering）]], [[storage.natural-vs-explicit-clustering|自然聚簇与显式聚簇]], [[pruning.clustering-depth-metric|聚簇深度（clustering depth）]]
+**Unlocks:** [[domains/snowflake/map/storage.automatic-reclustering|自动重新聚簇（automatic reclustering）]], [[domains/snowflake/map/storage.natural-vs-explicit-clustering|自然聚簇与显式聚簇]], [[domains/snowflake/map/pruning.clustering-depth-metric|聚簇深度（clustering depth）]]
 
 ## Readings
 - [[snowflak-clustering-keys-strategy|聚簇键的选择与何时需要它]]

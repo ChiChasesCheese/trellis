@@ -4,9 +4,9 @@
 
 ETag, Last-Modified, If-None-Match, 304, strong and weak validators, stale-while-revalidate, and stale-if-error.
 
-**Requires:** [[caching.freshness|Freshness & Cache-Control]]
+**Requires:** [[domains/cdn-content/map/caching.freshness|Freshness & Cache-Control]]
 
-**Unlocks:** [[caching.invalidation|Expiration, Purge & Invalidation]], [[caching.failure|Negative Caching & Failure Policy]], [[content.isr|Incremental Static Regeneration]]
+**Unlocks:** [[domains/cdn-content/map/caching.invalidation|Expiration, Purge & Invalidation]], [[domains/cdn-content/map/caching.failure|Negative Caching & Failure Policy]], [[domains/cdn-content/map/content.isr|Incremental Static Regeneration]]
 
 ## Readings
 - [[cache-rfc9111-http-caching|RFC 9111 — HTTP Caching]]

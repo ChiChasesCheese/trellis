@@ -4,11 +4,11 @@
 Recognizing rot and reversing it — the refactoring.guru layer.
 
 ## Topics
-- [[quality.smells|Code Smells]]
-- [[quality.refactoring|Core Refactorings]]
-- [[quality.testability|Designing for Tests]]
-- [[quality.fitness-functions|Fitness Functions]]
-- [[quality.errors|Error Handling Design]]
+- [[domains/low-level-design/map/quality.smells|Code Smells]]
+- [[domains/low-level-design/map/quality.refactoring|Core Refactorings]]
+- [[domains/low-level-design/map/quality.testability|Designing for Tests]]
+- [[domains/low-level-design/map/quality.fitness-functions|Fitness Functions]]
+- [[domains/low-level-design/map/quality.errors|Error Handling Design]]
 %% trellis:end %%
 
 ## Notes

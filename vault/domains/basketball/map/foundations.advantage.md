@@ -4,7 +4,7 @@
 
 The central concept — creating an advantage, keeping it alive, and the fact that most offense is transporting one, not creating five.
 
-**Unlocks:** [[oneonone|One-on-One]]
+**Unlocks:** [[domains/basketball/map/oneonone|One-on-One]]
 
 ## Readings
 - [[bb-gap-theory-spacing|The Gap Theory (Spacing)]]

@@ -4,7 +4,7 @@
 
 Active-passive vs active-active, data residency, RPO/RTO, and why failover you never test doesn't exist.
 
-**Requires:** [[distributed.replication|Replication]], [[distributed.consensus|Consensus]]
+**Requires:** [[domains/system-design/map/distributed.replication|Replication]], [[domains/system-design/map/distributed.consensus|Consensus]]
 
 ## Readings
 - [[aws-static-stability|Static stability using Availability Zones (AWS Builders' Library)]]

@@ -4,9 +4,9 @@
 
 Event design, request and deployment context, levels, sampling, redaction, retention, and turning logs into a searchable diagnostic surface.
 
-**Requires:** [[reliability.slos|SLIs, SLOs & Error Budgets]]
+**Requires:** [[domains/cdn-content/map/reliability.slos|SLIs, SLOs & Error Budgets]]
 
-**Unlocks:** [[reliability.tracing|Distributed Tracing]]
+**Unlocks:** [[domains/cdn-content/map/reliability.tracing|Distributed Tracing]]
 
 ## Readings
 - [[reliability-otel-signals|OpenTelemetry: Signals]]

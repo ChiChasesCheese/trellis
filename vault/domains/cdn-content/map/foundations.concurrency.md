@@ -4,7 +4,7 @@
 
 Work scheduling, synchronization, queue growth, Little's Law, and why concurrency is not the same as parallel execution.
 
-**Unlocks:** [[networking.streaming|Streaming & Backpressure]], [[runtimes.go-concurrency|Go Concurrency & Synchronization]], [[runtimes.node-event-loop|Node.js Event Loop]]
+**Unlocks:** [[domains/cdn-content/map/networking.streaming|Streaming & Backpressure]], [[domains/cdn-content/map/runtimes.go-concurrency|Go Concurrency & Synchronization]], [[domains/cdn-content/map/runtimes.node-event-loop|Node.js Event Loop]]
 
 ## Readings
 - [[fnd-google-sre-cascading-failures|Addressing Cascading Failures (Google SRE)]]

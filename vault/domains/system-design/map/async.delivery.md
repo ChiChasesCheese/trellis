@@ -5,10 +5,10 @@
 What "delivered" actually promises — and how to engineer the strongest practical guarantee.
 
 ## Topics
-- [[async.delivery.guarantees|Delivery Guarantees]]
-- [[async.delivery.exactly-once|Effectively Exactly-Once]]
+- [[domains/system-design/map/async.delivery.guarantees|Delivery Guarantees]]
+- [[domains/system-design/map/async.delivery.exactly-once|Effectively Exactly-Once]]
 
-**Unlocks:** [[correctness.idempotency|Idempotency]]
+**Unlocks:** [[domains/system-design/map/correctness.idempotency|Idempotency]]
 
 ## Readings
 - [[kafka-docs|Apache Kafka Documentation (Design section)]]

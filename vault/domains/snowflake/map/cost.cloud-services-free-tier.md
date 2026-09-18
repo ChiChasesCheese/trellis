@@ -4,7 +4,7 @@
 
 云服务（Cloud Services）每日的免费用量额度（相当于仓库计算量的 10%），超出后才会作为单独的计费项出现。
 
-**Requires:** [[cost.credit-model-per-second-billing|信用点模型与按秒计费]]
+**Requires:** [[domains/snowflake/map/cost.credit-model-per-second-billing|信用点模型与按秒计费]]
 
 ## Readings
 - [[snowflak-compute-cost-detail|计算成本细则:60 秒起收、serverless 计费与云服务 10% 免费额度]]

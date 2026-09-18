@@ -4,9 +4,9 @@
 
 Queue bounds, concurrency limits, admission control, circuit breakers, graceful degradation, and protecting critical work under overload.
 
-**Requires:** [[networking.streaming|Streaming & Backpressure]], [[distributed.retries|Timeouts, Retries & Idempotency]]
+**Requires:** [[domains/cdn-content/map/networking.streaming|Streaming & Backpressure]], [[domains/cdn-content/map/distributed.retries|Timeouts, Retries & Idempotency]]
 
-**Unlocks:** [[security-cost.abuse|Abuse, DDoS & Resource Limits]]
+**Unlocks:** [[domains/cdn-content/map/security-cost.abuse|Abuse, DDoS & Resource Limits]]
 
 ## Readings
 - [[dist-google-cascading-failures|Addressing cascading failures]]

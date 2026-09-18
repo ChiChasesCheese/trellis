@@ -4,7 +4,7 @@
 
 Pipelines, canary and blue-green automation, feature flags, and config/schema changes as deploys.
 
-**Requires:** [[reliability.resilience.containment|Failure Containment]]
+**Requires:** [[domains/system-design/map/reliability.resilience.containment|Failure Containment]]
 
 ## Readings
 - [[aws-rollback-safety|Ensuring rollback safety during deployments (AWS Builders' Library)]]

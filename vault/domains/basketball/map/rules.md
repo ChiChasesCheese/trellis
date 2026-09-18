@@ -4,10 +4,10 @@
 The rule details advanced amateurs get wrong — each one changes what you are allowed to do.
 
 ## Topics
-- [[rules.travel-gather|The Gather & Travelling]]
-- [[rules.contact|Legal Contact & Fouls]]
-- [[rules.goaltending|Goaltending & Basket Interference]]
-- [[rules.variants|NBA vs FIBA vs NCAA]]
+- [[domains/basketball/map/rules.travel-gather|The Gather & Travelling]]
+- [[domains/basketball/map/rules.contact|Legal Contact & Fouls]]
+- [[domains/basketball/map/rules.goaltending|Goaltending & Basket Interference]]
+- [[domains/basketball/map/rules.variants|NBA vs FIBA vs NCAA]]
 
 ## Readings
 - [[bb-nba-rulebook|RULE NO. 10: Violations and Penalties | NBA Official]]

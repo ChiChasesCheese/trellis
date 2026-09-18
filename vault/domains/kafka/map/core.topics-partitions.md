@@ -4,7 +4,7 @@
 
 掌握主题如何被划分为分区以获得并行度和顺序保证，以及消息、批次、模式（schema）在其中的角色。
 
-**Unlocks:** [[streams.concepts|流式处理核心概念]]
+**Unlocks:** [[domains/kafka/map/streams.concepts|流式处理核心概念]]
 
 ## Readings
 - [[kafka-1-2-core-concepts|Kafka核心概念全景：消息、主题、偏移量、broker与集群]]

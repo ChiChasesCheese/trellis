@@ -4,7 +4,7 @@
 
 GPU batching, KV-cache reuse, streaming responses, and cost/latency levers unique to LLM backends.
 
-**Requires:** [[ai.foundations|LLM Foundations for Engineers]]
+**Requires:** [[domains/system-design/map/ai.foundations|LLM Foundations for Engineers]]
 
 ## Readings
 - [[vllm-docs|vLLM Documentation]]

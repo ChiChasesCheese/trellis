@@ -4,9 +4,9 @@
 
 S3 keys and metadata, conditional and range requests, consistency, multipart transfer, lifecycle policy, replication, and request cost.
 
-**Requires:** [[content.static-generation|Static Generation & Build Output]]
+**Requires:** [[domains/cdn-content/map/content.static-generation|Static Generation & Build Output]]
 
-**Unlocks:** [[distributed.consistency|Replication & Consistency]], [[delivery.aws|AWS for Content Serving]]
+**Unlocks:** [[domains/cdn-content/map/distributed.consistency|Replication & Consistency]], [[domains/cdn-content/map/delivery.aws|AWS for Content Serving]]
 
 ## Readings
 - [[dist-s3-object-storage|Amazon S3 object-storage model]]

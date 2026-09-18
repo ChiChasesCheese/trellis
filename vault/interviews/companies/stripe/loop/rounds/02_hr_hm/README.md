@@ -9,29 +9,29 @@
 
 ## 怎么用
 
-1. **先读 `../../../../../core/stories/evidence-base.md`**（已升到 `vault/interviews/core/stories/`，与公司无关） —— 素材总纲:Chi 画像 + 9 个旗舰故事(S1~S9)+ Ziyang 协作框定。所有面试答案从这里取材。
-2. **`../../../../../core/answers/`（原 `interview-manual/`，已升到 core）** —— 逐题答案手册；本目录只留 Stripe 特定的 `stripe-fit.md`。每题两版:**答案 A(影响导向,60-90 秒)** + **答案 B(技术深度,追问 how/why 时展开)**。
+1. **先读 [[Core]]**（已升到 [[Core]]，与公司无关） —— 素材总纲:Chi 画像 + 9 个旗舰故事([[S1]]~[[S9]])+ Ziyang 协作框定。所有面试答案从这里取材。
+2. **[[Answers]]（原 `interview-manual/`，已升到 core）** —— 逐题答案手册；本目录只留 Stripe 特定的 `stripe-fit.md`。每题两版:**答案 A(影响导向,60-90 秒)** + **答案 B(技术深度,追问 how/why 时展开)**。
 3. **`../../../../../core/stories/resume-evidence-map/`（已升到 core）** —— 学习画像。每个技术主题:**Baseline**(Chi 已有的真实实现,起点)→ **★ 往哪里看齐**(跨 repo 挑出的最精华实现,学习标杆)→ **知识点体系** → **学习锚点** → **面试话术**。**从 baseline 到标杆之间的 gap,就是 Chi 的学习路径。**
 
 ---
 
-## Part 1 · 逐题面试手册（`core/answers/` + 本目录 `stripe-fit.md`）
+## Part 1 · 逐题面试手册（[[Answers]] + 本目录 `stripe-fit.md`）
 
 | 文件 | 覆盖 | 题数 |
 |---|---|---|
-| `dim1-2-tech-depth-impact.md` | 技术深度与复杂度 + 业务影响与规模 | Q1–Q8 |
-| `dim3-5-leadership-ambiguity.md` | 技术领导力 + 处理模糊性与 Ownership | Q9–Q12, Q17–Q20 |
-| `dim4-mentorship.md` | 带教与协作(Ziyang) | Q13–Q16 |
-| `dim6-hr-behavioral.md` | HR 行为题(ready for promotion / 优势 / 规划 / 批评反馈) | Q21–Q24 |
+| `dim1-2-tech-depth-impact.md` | 技术深度与复杂度 + 业务影响与规模 | [[Answers#Q1]]–[[Answers#Q8]] |
+| `dim3-5-leadership-ambiguity.md` | 技术领导力 + 处理模糊性与 Ownership | [[Answers#Q9]]–[[Answers#Q12]], [[Answers#Q17]]–[[Answers#Q20]] |
+| `dim4-mentorship.md` | 带教与协作(Ziyang) | [[Answers#Q13]]–[[Answers#Q16]] |
+| `dim6-hr-behavioral.md` | HR 行为题(ready for promotion / 优势 / 规划 / 批评反馈) | [[Answers#Q21]]–[[Answers#Q24]] |
 | `stripe-fit.md` | Stripe 公司特定 + 纯 HR fit(Why Stripe / 自我介绍 / 弱点 / 反问 等) | 10 题 |
 
-**旗舰故事速查**(细节见 `core/stories/evidence-base.md`):
-- **S1** AMEX GRRCN 端到端管线(Ruby→Snowflake 迁移,$138.6B/21.96M 笔)
-- **S2** Quality-Check & Handshake 框架 + 自我修正 ADR(平台化信号)
-- **S3/S4/S8/S9** ACH / AU-Amex / Terraform / DoorDash 四个 RCA(go-to person)
-- **S5** Net Settlement Pricing(旗舰,$55B TPV / $450M-月 float,含 shadow-run 对账)
-- **S6** Fee Anomaly Detector ROI gate(staff 级判断)
-- **S7** snowglobe-tools(自发基建)
+**旗舰故事速查**(细节见 [[Core]]):
+- **[[S1]]** AMEX GRRCN 端到端管线(Ruby→Snowflake 迁移,$138.6B/21.96M 笔)
+- **[[S2]]** Quality-Check & Handshake 框架 + 自我修正 ADR(平台化信号)
+- **[[S3]]/S4/S8/S9** ACH / AU-Amex / Terraform / DoorDash 四个 RCA(go-to person)
+- **[[S5]]** Net Settlement Pricing(旗舰,$55B TPV / $450M-月 float,含 shadow-run 对账)
+- **[[S6]]** Fee Anomaly Detector ROI gate(staff 级判断)
+- **[[S7]]** snowglobe-tools(自发基建)
 
 ## Part 2 · 完美 Sr Eng 学习画像（`core/stories/resume-evidence-map/`）
 
@@ -56,4 +56,4 @@
 - **Sentry**:确实在用(braintree.sentry.io runbook + PagerDuty/Sentry 告警 + connector config `SENTRY_DSN`,三处独立确认),是 DALM/ingestion 层错误追踪。Datadog + Sentry + 自建 Streamlit(`ptf_explorer.py`)是完整可观测性三件套(见 `03`)。
 - **Airflow/Spark**:Spark Validators 真实存在(DTBTPRWIZ-39/53/54);批处理校验学习重点见 `04`。
 
-`core/answers/` 里的 `【预估：xxx】` / `【待 Chi 补充：xxx】` 占位符,是需要 Chi 用真实数字/细节替换的地方(尤其带教题的日常 1:1/pairing 细节)。
+[[Answers]] 里的 `【预估：xxx】` / `【待 Chi 补充：xxx】` 占位符,是需要 Chi 用真实数字/细节替换的地方(尤其带教题的日常 1:1/pairing 细节)。

@@ -4,7 +4,7 @@
 
 Keep-alive, pipelining limits, multiplexing, head-of-line blocking, QUIC, and when protocol differences affect content delivery.
 
-**Requires:** [[networking.http-semantics|HTTP Semantics]]
+**Requires:** [[domains/cdn-content/map/networking.http-semantics|HTTP Semantics]]
 
 ## Readings
 - [[net-mdn-http-evolution|Evolution of HTTP (MDN)]]

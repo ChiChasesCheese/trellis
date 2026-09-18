@@ -5,10 +5,10 @@
 Reconstructing what was actually knowable on a past date rather than what the database says today.
 
 ## Topics
-- [[data.point-in-time.as-of|As-Of Storage & Restatements]]
-- [[data.point-in-time.universe|Historical Universe & Survivorship]]
+- [[domains/quant-infra/map/data.point-in-time.as-of|As-Of Storage & Restatements]]
+- [[domains/quant-infra/map/data.point-in-time.universe|Historical Universe & Survivorship]]
 
-**Unlocks:** [[features.leakage|Leakage Taxonomy]], [[features.store|Feature & Factor Store]]
+**Unlocks:** [[domains/quant-infra/map/features.leakage|Leakage Taxonomy]], [[domains/quant-infra/map/features.store|Feature & Factor Store]]
 %% trellis:end %%
 
 ## Notes

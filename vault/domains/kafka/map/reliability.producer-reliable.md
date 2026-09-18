@@ -4,7 +4,7 @@
 
 掌握为保证可靠传递而设置的发送确认与重试策略，以及需要额外处理的错误场景。
 
-**Requires:** [[producer.acks-durability|acks与生产端持久性保证]]
+**Requires:** [[domains/kafka/map/producer.acks-durability|acks与生产端持久性保证]]
 
 ## Readings
 - [[kafka-7-4-reliable-producer|在可靠的系统中使用生产者]]

@@ -11,7 +11,7 @@ rounds:
   - id: 00_ai_screen
     name: Chakra AI 语音筛（20 min，BQ + 项目）
     duration_min: 20
-    study: [study/10-rounds/00-ai-screen.md, loop/rounds/00_ai_screen/playbook.md, loop/rounds/00_ai_screen/stories.md]
+    study: [study/10-rounds/00-ai-screen.md, loop/rounds/00_ai_screen/playbook.md, loop/rounds/00_ai_screen/scenarios.md]
     skills:
       - id: evidence_bearing_answers
         name: headline → mechanism → "I decided" → 量级 → learning；JD 关键词说出口（题库 A/C/D 段）

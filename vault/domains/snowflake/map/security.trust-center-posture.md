@@ -4,7 +4,7 @@
 
 一个内置扫描器，将错误配置（公开的网络策略、过度授权等）汇总为一份按优先级排序的风险清单，无需借助外部工具。
 
-**Requires:** [[security.network-policies-private-connectivity|网络策略与私有连接]]
+**Requires:** [[domains/snowflake/map/security.network-policies-private-connectivity|网络策略与私有连接]]
 
 ## Cards (4)
 - [[trust-center-continuous-drift]]

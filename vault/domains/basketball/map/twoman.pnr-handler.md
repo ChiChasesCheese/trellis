@@ -4,7 +4,7 @@
 
 Reading the big's coverage in real time and the decision tree it produces — turn the corner, snake, split, reject, pull.
 
-**Unlocks:** [[offense|Team Offense]]
+**Unlocks:** [[domains/basketball/map/offense|Team Offense]]
 
 ## Readings
 - [[bb-using-ball-screens|How to use Ball Screens Pt. 1]]

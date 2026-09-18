@@ -4,7 +4,7 @@
 
 掌握分区副本的首领-追随者模型，以及ISR如何界定哪些副本被视为已同步。
 
-**Unlocks:** [[producer.acks-durability|acks与生产端持久性保证]], [[internals.replication-protocol|复制协议：首领/追随者同步与副本滞后]], [[reliability.broker-config|broker层可靠性配置]]
+**Unlocks:** [[domains/kafka/map/producer.acks-durability|acks与生产端持久性保证]], [[domains/kafka/map/internals.replication-protocol|复制协议：首领/追随者同步与副本滞后]], [[domains/kafka/map/reliability.broker-config|broker层可靠性配置]]
 
 ## Readings
 - [[kafka-6-3-replication-protocol|复制协议：首领、跟随者与ISR]]

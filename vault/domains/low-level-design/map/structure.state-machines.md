@@ -4,7 +4,7 @@
 
 Modeling lifecycles (order, elevator, game) as explicit states and transitions instead of boolean soup.
 
-**Requires:** [[patterns.behavioral|Behavioral Patterns]]
+**Requires:** [[domains/low-level-design/map/patterns.behavioral|Behavioral Patterns]]
 
 ## Readings
 - [[gpp-state|State (Game Programming Patterns, Bob Nystrom)]]

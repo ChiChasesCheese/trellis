@@ -4,7 +4,7 @@
 
 Treating caches, indexes, and views as recomputable projections of a log — and keeping them fresh.
 
-**Requires:** [[async.log|The Log & Kafka]]
+**Requires:** [[domains/system-design/map/async.log|The Log & Kafka]]
 
 ## Readings
 - [[turning-the-database-inside-out|Turning the Database Inside-Out (Kleppmann)]]

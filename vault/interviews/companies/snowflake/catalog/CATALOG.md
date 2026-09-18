@@ -93,7 +93,7 @@
 | sd23 | Cross-Platform Logging Library（TrueInterview 2026-03） | VO | 库设计：有界缓冲、丢弃策略、脱敏、动态调级 | 2026-03 | 1 | MED-LOW |
 | sd21 | Metering & Billing —— **未见面试报道**，仅 Billing Platform JD；作为 expertise 轮/team 面试话题准备，不当必考 | — | credits/秒、10% Cloud Services 免费额、AI token 计量 | — | 0 | JD |
 
-## Table D — 非编码轮（题库在 `loop/rounds/0{1,6,7,8}_*`，答案在 `../../core/answers/`）
+## Table D — 非编码轮（题库在 `loop/rounds/0{1,6,7,8}_*`，答案在 [[Answers]]）
 
 | 轮 | 形式 | 问什么 | 评什么 / 挂点 | 来源 |
 |---|---|---|---|---|

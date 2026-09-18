@@ -4,9 +4,9 @@
 Selling insurance, buying convexity, and the persistent gap between implied and realised.
 
 ## Topics
-- [[volatility.vrp|The Variance Risk Premium]]
-- [[volatility.correlation|Correlation & Dispersion]]
-- [[volatility.tail|Skew, Convexity & Tail Hedging]]
+- [[domains/markets/map/volatility.vrp|The Variance Risk Premium]]
+- [[domains/markets/map/volatility.correlation|Correlation & Dispersion]]
+- [[domains/markets/map/volatility.tail|Skew, Convexity & Tail Hedging]]
 %% trellis:end %%
 
 ## Notes

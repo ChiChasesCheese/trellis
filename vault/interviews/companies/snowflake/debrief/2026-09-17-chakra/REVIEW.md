@@ -1,3 +1,12 @@
+---
+title: REVIEW · Chakra 2026-09-17
+aliases:
+  - Chakra review 2026-09-17
+tags:
+  - company/snowflake
+  - debrief
+---
+
 # REVIEW · Snowflake Chakra 语音筛 · 2026-09-17 16:34（人工评审）
 
 > 输入：`transcript.md`（mlx-whisper large-v3-turbo，本机转写）· `report.md`（`analyze.py` 的数字）· 对照 `../../loop/rounds/00_ai_screen/{rubric,stories,questions}.md`。
@@ -38,7 +47,7 @@
 
 ## 2. 逐题评审
 
-打分列：**Chakra 档 / 我认为它会记下的证据**。改写都是 English、≤ 60 s、照 `stories.md` 的骨架。
+打分列：**Chakra 档 / 我认为它会记下的证据**。改写都是 English、≤ 60 s、照故事笔记的骨架。
 
 ### Q2 · 地点（07:08）— 2
 
@@ -83,14 +92,14 @@
 
 ### Q11 · 里程碑项目（18:41，140 s）— 2
 
-**问题**：(a) 前 30 秒讲 net settlement 背景（"T plus 30 means we charge fees next month"）——含混，且不是你要讲的项目；(b) "my tech lead and my staff engineer are all on sabbatical PTO so I had to take care of all of this" ——ownership 是真的，但这句听起来像"没人管所以我做"，改成主动承接；(c) 机制部分 "file uploading to S3 → parse → make it unique → split into tables using **the chronicle task triggers** and stored procedures → shadowing" 方向对但没有一个准确的原语名：没有 Streams、没有 MERGE、没有 idempotent、没有 good-funds model；(d) **"over 100 billion… with no bugs, no accidents"** ——"no bugs" 是任何 senior 都不会说的话（你自己的 S3 就是这个管线下游的事故），AI 若追问 "what broke" 就自相矛盾。
-**它会记下的证据**：S3、parse files、tasks、stored procedures、shadowing、100 billion、"I built from scratch"。
-> 用 `stories.md` §S1 的 90 秒首答。必说四点：good-funds model → `COPY INTO` + six append-only Streams + composite-key `MERGE` + two validation table functions with `FULL OUTER JOIN` → idempotent at every stage → "what I'd change: config-driven parser"。把 "no bugs" 换成 "and when something did break — a late file, a reject flag — the pipeline recorded it instead of dropping it, which is the design decision I'm proudest of."
+**问题**：(a) 前 30 秒讲 net settlement 背景（"T plus 30 means we charge fees next month"）——含混，且不是你要讲的项目；(b) "my tech lead and my staff engineer are all on sabbatical PTO so I had to take care of all of this" ——ownership 是真的，但这句听起来像"没人管所以我做"，改成主动承接；(c) 机制部分 "file uploading to S3 → parse → make it unique → split into tables using **the chronicle task triggers** and stored procedures → shadowing" 方向对但没有一个准确的原语名：没有 Streams、没有 MERGE、没有 idempotent、没有 good-funds model；(d) **"over 100 billion… with no bugs, no accidents"** ——"no bugs" 是任何 senior 都不会说的话（你自己的 [[S3]] 就是这个管线下游的事故），AI 若追问 "what broke" 就自相矛盾。
+**它会记下的证据**：[[S3]]、parse files、tasks、stored procedures、shadowing、100 billion、"I built from scratch"。
+> 用 [[S1]] 的 90 秒首答。必说四点：good-funds model → `COPY INTO` + six append-only Streams + composite-key `MERGE` + two validation table functions with `FULL OUTER JOIN` → idempotent at every stage → "what I'd change: config-driven parser"。把 "no bugs" 换成 "and when something did break — a late file, a reject flag — the pipeline recorded it instead of dropping it, which is the design decision I'm proudest of."
 
 ### Q12 · Ownership / 质量门（21:20，154 s）— 2
 
 **问题**：(a) "I am now the main on-call handler and also the closest membership with our engineers and managers" 语义不清（closest relationship?）；(b) "**GreenTree** which is on par with Stripe" —— Braintree 发音被听成 GreenTree，而且和 Stripe 比是给自己加压；(c) "engineer-driven instead of product-manager driven… discovery tickets, ADR, PRD all on my own" **好**；(d) 质量门框架讲了 60 秒只有 "centralized quality gate framework… hard gate to anyone who wants to contribute"，没有机制（config table、executor、trigger-status、downstream JOIN）、没有数字（8 subject areas）、没有 ADR 那段 senior 的自我纠错。
-> 用 `stories.md` §S2 的 90 秒首答，把 "hard gate" 具体化成 "readiness became a JOIN condition in the consumer's SQL, not a Slack message"。
+> 用 [[S2]] 的 90 秒首答，把 "hard gate" 具体化成 "readiness became a JOIN condition in the consumer's SQL, not a Slack message"。
 
 ### Q13 · 背景 / 为什么 Snowflake（24:05，112 s）— 1
 
@@ -128,5 +137,5 @@
 
 - `02-process.md` 末尾「亲历」：这轮是 14 问的 intake，不是四段式；无场景题；AI 拒绝给反馈；总时长 23 分钟（对话窗口）。
 - `loop/rounds/00_ai_screen/questions.md` 新增 F 段（亲历 8 题）→ `build_bank.py`。
-- `stories.md` 收进两句好话："we are the downstream of the downstream" · "engineer-driven: we identify the problem, write the discovery and the ADR, then implement"。
+- 故事弹药表收进两句好话："we are the downstream of the downstream" · "engineer-driven: we identify the problem, write the discovery and the ADR, then implement"。
 - 下一场（recruiter call）前：只练 §3 A/B，两天。

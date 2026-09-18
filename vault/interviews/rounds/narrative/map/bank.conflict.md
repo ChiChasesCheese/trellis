@@ -4,7 +4,7 @@
 
 The ending you would still defend if the person you disagreed with were in the room.
 
-**Requires:** [[themes.conflict|Disagreement]]
+**Requires:** [[interviews/rounds/narrative/map/themes.conflict|Disagreement]]
 %% trellis:end %%
 
 ## Notes

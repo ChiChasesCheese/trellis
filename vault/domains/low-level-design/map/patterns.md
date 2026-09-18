@@ -4,10 +4,10 @@
 The GoF catalog as a shared vocabulary — intent and applicability over UML memorization.
 
 ## Topics
-- [[patterns.creational|Creational Patterns]]
-- [[patterns.structural|Structural Patterns]]
-- [[patterns.behavioral|Behavioral Patterns]]
-- [[patterns.selection|Choosing (and Refusing) Patterns]]
+- [[domains/low-level-design/map/patterns.creational|Creational Patterns]]
+- [[domains/low-level-design/map/patterns.structural|Structural Patterns]]
+- [[domains/low-level-design/map/patterns.behavioral|Behavioral Patterns]]
+- [[domains/low-level-design/map/patterns.selection|Choosing (and Refusing) Patterns]]
 %% trellis:end %%
 
 ## Notes

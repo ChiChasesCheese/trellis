@@ -4,7 +4,7 @@
 
 Fat tails, serial correlation, regime dependence, and an effective sample size far smaller than the row count implies.
 
-**Unlocks:** [[portfolio.sizing|Bet Sizing & Leverage]]
+**Unlocks:** [[domains/quant-infra/map/portfolio.sizing|Bet Sizing & Leverage]]
 %% trellis:end %%
 
 ## Notes

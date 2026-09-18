@@ -5,8 +5,8 @@
 Why wall clocks lie, logical clocks, and detecting failure with timeouts you can defend.
 
 ## Topics
-- [[distributed.time.clocks|Clocks & Timestamps]]
-- [[distributed.time.failure|Failure Detection & Pauses]]
+- [[domains/system-design/map/distributed.time.clocks|Clocks & Timestamps]]
+- [[domains/system-design/map/distributed.time.failure|Failure Detection & Pauses]]
 
 ## Readings
 - [[kleppmann-distributed-locking|How to do distributed locking (Kleppmann, the Redlock critique)]]

@@ -4,7 +4,7 @@
 
 Mutex, semaphore, condition variable, reentrant and read-write locks, CAS and lock-free basics.
 
-**Unlocks:** [[concurrency.patterns|Concurrency Patterns]]
+**Unlocks:** [[domains/low-level-design/map/concurrency.patterns|Concurrency Patterns]]
 
 ## Readings
 - [[java-concurrency-in-practice|Java Concurrency in Practice (Goetz et al.)]]

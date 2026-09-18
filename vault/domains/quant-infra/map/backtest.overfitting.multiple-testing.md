@@ -4,7 +4,7 @@
 
 Counting trials honestly, family-wise error versus false discovery control, and the expected maximum Sharpe a pure-noise search will hand you.
 
-**Requires:** [[backtest.validation|Validation Protocols]]
+**Requires:** [[domains/quant-infra/map/backtest.validation|Validation Protocols]]
 
 ## Readings
 - [[qs-forex-model-audit-case-study|Case Study: Auditing an FX Deep-Learning Model's Synthetic-Pair Mirage]]

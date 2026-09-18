@@ -13,6 +13,6 @@ Snapshot Array 如何做到 set/snap O(1)、get O(log n)？
 
 **Evidence**
 
-self.history_records = [[[0, 0]] for _ in range(length)] ... self.history_records[index].append([self.id, val]) ... snap_index = bisect.bisect_left(self.history_records[index], snap_id + 1, key=lambda x: x[0]); return self.history_records[index][snap_index - 1][1]
+`self.history_records = [[[0, 0]] for _ in range(length)] ... self.history_records[index].append([self.id, val]) ... snap_index = bisect.bisect_left(self.history_records[index], snap_id + 1, key=lambda x: x[0]); return self.history_records[index][snap_index - 1][1]`
 
 [原文 ↗](obsidian://open?vault=lc&file=questions%2F1146%20-%20Snapshot%20Array)

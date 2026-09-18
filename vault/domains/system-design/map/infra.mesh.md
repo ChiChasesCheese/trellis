@@ -4,7 +4,7 @@
 
 Sidecars and ambient meshes — mTLS, retries, and traffic policy moved out of application code, at a latency cost.
 
-**Requires:** [[reliability.resilience.retries|Timeouts & Retries]]
+**Requires:** [[domains/system-design/map/reliability.resilience.retries|Timeouts & Retries]]
 
 ## Readings
 - [[istio-docs|Istio Documentation (concepts pages)]]

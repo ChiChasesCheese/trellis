@@ -4,9 +4,9 @@
 
 当 SQL 文本与底层数据均未改变时，零计算成本地返回此前的结果，有效期最长 24 小时。
 
-**Requires:** [[metadata.foundationdb-role|FoundationDB 作为元数据存储]]
+**Requires:** [[domains/snowflake/map/metadata.foundationdb-role|FoundationDB 作为元数据存储]]
 
-**Unlocks:** [[cache.result-cache-invalidation|结果缓存失效]], [[cache.cache-layer-tradeoffs|各缓存层的权衡]]
+**Unlocks:** [[domains/snowflake/map/cache.result-cache-invalidation|结果缓存失效]], [[domains/snowflake/map/cache.cache-layer-tradeoffs|各缓存层的权衡]]
 
 ## Readings
 - [[snowflak-result-cache|结果缓存(Result Cache)命中与失效条件]]

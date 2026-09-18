@@ -4,7 +4,7 @@
 
 查询何时会排队而不是立即执行、队列深度如何被暴露出来，以及可以缓解排队的调节手段。
 
-**Requires:** [[warehouse.multi-cluster-scaling-policy|多集群伸缩策略]]
+**Requires:** [[domains/snowflake/map/warehouse.multi-cluster-scaling-policy|多集群伸缩策略]]
 
 ## Readings
 - [[snowflak-multicluster-warehouses|多集群仓库与扩缩容策略]]

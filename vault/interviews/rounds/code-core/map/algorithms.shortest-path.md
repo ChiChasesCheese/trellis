@@ -4,7 +4,7 @@
 
 Dijkstra with a heap, Bellman-Ford by rounds for a hop limit, product-weight paths, and reconstructing the path with tie-breaks.
 
-**Requires:** [[algorithms.graph-traversal|BFS, DFS & Components]]
+**Requires:** [[interviews/rounds/code-core/map/algorithms.graph-traversal|BFS, DFS & Components]]
 
 ## Readings
 - [[cp-algorithms-dijkstra|Dijkstra's algorithm (cp-algorithms)]]

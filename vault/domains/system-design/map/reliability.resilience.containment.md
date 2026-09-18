@@ -4,7 +4,7 @@
 
 Circuit breakers, bulkheads, load shedding, chaos engineering, and safe deployment strategies.
 
-**Unlocks:** [[infra.delivery|CI/CD & Progressive Delivery]]
+**Unlocks:** [[domains/system-design/map/infra.delivery|CI/CD & Progressive Delivery]]
 
 ## Readings
 - [[aws-avoiding-fallback|Avoiding fallback in distributed systems (AWS Builders' Library)]]

@@ -4,14 +4,14 @@
 How the hour itself is run and graded — the meta-skill that decides more outcomes than any algorithm.
 
 ## Topics
-- [[round.formats|Round Formats & What Each Grades]]
-- [[round.reading|Reading a Multi-Part Spec]]
-- [[round.time|Time Budget & Triage]]
-- [[round.communication|Talking to the Interviewer]]
-- [[round.ambiguity|Resolving an Ambiguous Rule]]
-- [[round.debugging|Debugging Without a Debugger]]
-- [[round.hidden-tests|Inferring the Hidden Tests]]
-- [[round.submission|The Last Five Minutes]]
+- [[interviews/rounds/code-core/map/round.formats|Round Formats & What Each Grades]]
+- [[interviews/rounds/code-core/map/round.reading|Reading a Multi-Part Spec]]
+- [[interviews/rounds/code-core/map/round.time|Time Budget & Triage]]
+- [[interviews/rounds/code-core/map/round.communication|Talking to the Interviewer]]
+- [[interviews/rounds/code-core/map/round.ambiguity|Resolving an Ambiguous Rule]]
+- [[interviews/rounds/code-core/map/round.debugging|Debugging Without a Debugger]]
+- [[interviews/rounds/code-core/map/round.hidden-tests|Inferring the Hidden Tests]]
+- [[interviews/rounds/code-core/map/round.submission|The Last Five Minutes]]
 
 ## Readings
 - [[tech-interview-handbook|Tech Interview Handbook]]

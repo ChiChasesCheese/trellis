@@ -4,9 +4,9 @@
 
 Counters and status kept per id, the derived-vs-stored decision, and re-evaluating exactly the entity an event touched.
 
-**Requires:** [[model.records|Records, Dicts & When a Class Earns Its Place]]
+**Requires:** [[interviews/rounds/code-core/map/model.records|Records, Dicts & When a Class Earns Its Place]]
 
-**Unlocks:** [[model.reversal|Reversals & Un-applying an Event]]
+**Unlocks:** [[interviews/rounds/code-core/map/model.reversal|Reversals & Un-applying an Event]]
 
 ## Readings
 - [[fowler-event-sourcing|Event Sourcing (Martin Fowler)]]

@@ -4,7 +4,7 @@
 
 Blending correlated alphas across horizons — orthogonalization, IC-weighted and covariance-aware combination, and matching forecast horizon to holding period.
 
-**Requires:** [[foundations.fundamental-law|Fundamental Law of Active Management]]
+**Requires:** [[domains/quant-infra/map/foundations.fundamental-law|Fundamental Law of Active Management]]
 
 ## Readings
 - [[qs-catalog-portfolio-risk|Family 11: Portfolio Construction & Risk Management]]

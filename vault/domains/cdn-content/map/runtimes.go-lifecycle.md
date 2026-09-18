@@ -4,9 +4,9 @@
 
 Cancellation propagation, deadline budgets, server and client timeouts, resource cleanup, and graceful shutdown.
 
-**Requires:** [[runtimes.go-concurrency|Go Concurrency & Synchronization]]
+**Requires:** [[domains/cdn-content/map/runtimes.go-concurrency|Go Concurrency & Synchronization]]
 
-**Unlocks:** [[runtimes.go-quality|Go Testing, Benchmarking & Profiling]], [[distributed.retries|Timeouts, Retries & Idempotency]]
+**Unlocks:** [[domains/cdn-content/map/runtimes.go-quality|Go Testing, Benchmarking & Profiling]], [[domains/cdn-content/map/distributed.retries|Timeouts, Retries & Idempotency]]
 
 ## Readings
 - [[runtime-go-context|Go Concurrency Patterns: Context]]

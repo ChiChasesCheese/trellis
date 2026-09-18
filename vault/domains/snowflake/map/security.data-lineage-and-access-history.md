@@ -4,7 +4,7 @@
 
 通过视图和 CTAS 追踪一列数据的来源，以及 ACCESS_HISTORY 作为记录谁实际读取或写入了哪些列的审计轨迹。
 
-**Requires:** [[security.rbac-role-hierarchy|RBAC 角色层级]]
+**Requires:** [[domains/snowflake/map/security.rbac-role-hierarchy|RBAC 角色层级]]
 
 ## Cards (5)
 - [[access-history-direct-vs-base]]

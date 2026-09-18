@@ -4,9 +4,9 @@
 
 每个微分区的头部记录了什么（每列的最小值/最大值、去重计数、空值计数），以及这些元数据实际存放在哪里。
 
-**Requires:** [[storage.micro-partition-format|微分区（micro-partition）格式]]
+**Requires:** [[domains/snowflake/map/storage.micro-partition-format|微分区（micro-partition）格式]]
 
-**Unlocks:** [[storage.clustering-keys|聚簇键（clustering key）]], [[metadata.optimizer-statistics|优化器统计信息]], [[pruning.min-max-zone-maps|最小/最大值剪枝（zone map）]], [[cache.metadata-cache-pruning-stats|用于剪枝的元数据缓存]]
+**Unlocks:** [[domains/snowflake/map/storage.clustering-keys|聚簇键（clustering key）]], [[domains/snowflake/map/metadata.optimizer-statistics|优化器统计信息]], [[domains/snowflake/map/pruning.min-max-zone-maps|最小/最大值剪枝（zone map）]], [[domains/snowflake/map/cache.metadata-cache-pruning-stats|用于剪枝的元数据缓存]]
 
 ## Readings
 - [[snowflak-micropartitions-clustering|微分区与数据聚簇的物理基础]]

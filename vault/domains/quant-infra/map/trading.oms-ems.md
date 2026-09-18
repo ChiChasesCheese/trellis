@@ -4,7 +4,7 @@
 
 Who owns the parent order, allocations and compliance state versus who slices and routes children, and the FIX session that carries both.
 
-**Unlocks:** [[trading.order-lifecycle|Order State & Idempotency]]
+**Unlocks:** [[domains/quant-infra/map/trading.order-lifecycle|Order State & Idempotency]]
 %% trellis:end %%
 
 ## Notes

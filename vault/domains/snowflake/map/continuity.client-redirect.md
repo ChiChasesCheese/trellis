@@ -4,7 +4,7 @@
 
 一种连接层面的 DNS/URL 间接寻址机制，使客户端驱动能够跟随账户的故障切换而无需重新配置。
 
-**Requires:** [[continuity.replication-and-failover|数据库复制与故障切换]]
+**Requires:** [[domains/snowflake/map/continuity.replication-and-failover|数据库复制与故障切换]]
 
 ## Cards (5)
 - [[client-redirect-connection-object]]

@@ -1,6 +1,6 @@
 # Recruiter 轮 —— 自评表
 
-> 依据：`loop/LOOP_GUIDE.md` §2、`catalog/raw/bq_hm_recruiter.md` §1。这一轮没有打分表，但 recruiter 决定：① 送不送电面 ② 送去哪个 org ③ 在 team matching 时怎么介绍你。AI 轮（Chakra）按 transcript 打分，见 `../../../../../core/playbooks/ai-voice-screen.md` §1。
+> 依据：`loop/LOOP_GUIDE.md` §2、`catalog/raw/bq_hm_recruiter.md` §1。这一轮没有打分表，但 recruiter 决定：① 送不送电面 ② 送去哪个 org ③ 在 team matching 时怎么介绍你。AI 轮（Chakra）按 transcript 打分，见 [[ai-voice-screen|core/playbooks/ai-voice-screen]] §1。
 
 ## 用法
 

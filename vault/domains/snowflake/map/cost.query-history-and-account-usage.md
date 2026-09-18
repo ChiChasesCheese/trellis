@@ -4,9 +4,9 @@
 
 该去哪里查看一条查询的成本与性能——INFORMATION_SCHEMA、ACCOUNT_USAGE 还是 Snowsight——以及三者之间在延迟与保留期上的权衡。
 
-**Requires:** [[metadata.foundationdb-role|FoundationDB 作为元数据存储]]
+**Requires:** [[domains/snowflake/map/metadata.foundationdb-role|FoundationDB 作为元数据存储]]
 
-**Unlocks:** [[cost.access-history-lineage-for-cost|将成本归因到查询模式]]
+**Unlocks:** [[domains/snowflake/map/cost.access-history-lineage-for-cost|将成本归因到查询模式]]
 
 ## Readings
 - [[snowflak-query-profile-history|查询画像(Query Profile)与查询历史的定位方法]]

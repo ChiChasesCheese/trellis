@@ -4,7 +4,7 @@
 
 Rate and concurrency limits, bot and tenant quotas, amplification, decompression and image bombs, overload isolation, and safe rejection.
 
-**Requires:** [[distributed.overload|Backpressure, Load Shedding & Circuit Breaking]]
+**Requires:** [[domains/cdn-content/map/distributed.overload|Backpressure, Load Shedding & Circuit Breaking]]
 
 ## Readings
 - [[security-vercel-firewall|Vercel Firewall]]

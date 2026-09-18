@@ -4,9 +4,9 @@
 
 Why single-leader systems need election, what Raft guarantees, fencing tokens, and the cost of quorum writes.
 
-**Requires:** [[distributed.replication|Replication]]
+**Requires:** [[domains/system-design/map/distributed.replication|Replication]]
 
-**Unlocks:** [[reliability.multi-region|Multi-Region]]
+**Unlocks:** [[domains/system-design/map/reliability.multi-region|Multi-Region]]
 
 ## Readings
 - [[aws-leader-election|Leader election in distributed systems (AWS Builders' Library)]]

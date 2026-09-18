@@ -4,9 +4,9 @@
 
 Mirroring production inputs, suppressing side effects, comparing old and new decisions, sampling, privacy, and interpreting divergence.
 
-**Requires:** [[delivery.flags|Feature Flags & Kill Switches]], [[reliability.metrics|Metrics & Cardinality]]
+**Requires:** [[domains/cdn-content/map/delivery.flags|Feature Flags & Kill Switches]], [[domains/cdn-content/map/reliability.metrics|Metrics & Cardinality]]
 
-**Unlocks:** [[delivery.rollback|Post-Ship Validation & Rollback]]
+**Unlocks:** [[domains/cdn-content/map/delivery.rollback|Post-Ship Validation & Rollback]]
 
 ## Readings
 - [[delivery-google-canarying|Google SRE Workbook: Canarying Releases]]

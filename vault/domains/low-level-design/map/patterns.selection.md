@@ -4,7 +4,7 @@
 
 Mapping problem smells to patterns, pattern pairs that get confused, and over-engineering as the classic failure.
 
-**Requires:** [[principles.simplicity|DRY, KISS, YAGNI]]
+**Requires:** [[domains/low-level-design/map/principles.simplicity|DRY, KISS, YAGNI]]
 
 ## Readings
 - [[awesome-low-level-design|awesome-low-level-design (ashishps1)]]

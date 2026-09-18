@@ -4,7 +4,7 @@
 
 为何 Snowpipe、无服务器 Task 与搜索优化服务（Search Optimization）各自按自己的信用点费率计费，而不计入某个仓库。
 
-**Requires:** [[cost.credit-model-per-second-billing|信用点模型与按秒计费]]
+**Requires:** [[domains/snowflake/map/cost.credit-model-per-second-billing|信用点模型与按秒计费]]
 
 ## Readings
 - [[snowflak-compute-cost-detail|计算成本细则:60 秒起收、serverless 计费与云服务 10% 免费额度]]

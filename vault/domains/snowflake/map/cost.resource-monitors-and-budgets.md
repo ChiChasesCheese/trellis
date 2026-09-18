@@ -4,7 +4,7 @@
 
 利用资源监控器（Resource Monitor）的通知/挂起/立即挂起动作，将其作为真正的支出上限，而不仅仅是一个提醒。
 
-**Requires:** [[warehouse.resource-monitors|资源监控器（resource monitor）]]
+**Requires:** [[domains/snowflake/map/warehouse.resource-monitors|资源监控器（resource monitor）]]
 
 ## Readings
 - [[snowflak-resource-monitors|资源监控器(Resource Monitor):信用点配额与自动挂起]]

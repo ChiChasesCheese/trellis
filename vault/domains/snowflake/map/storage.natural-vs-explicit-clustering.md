@@ -4,7 +4,7 @@
 
 为何按插入顺序形成的自然聚簇往往已经足够好，以及重叠度/深度（overlap/depth）指标何时提示它不再够用。
 
-**Requires:** [[storage.clustering-keys|聚簇键（clustering key）]]
+**Requires:** [[domains/snowflake/map/storage.clustering-keys|聚簇键（clustering key）]]
 
 ## Readings
 - [[snowflak-clustering-keys-strategy|聚簇键的选择与何时需要它]]

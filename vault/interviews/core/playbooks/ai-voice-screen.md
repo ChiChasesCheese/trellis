@@ -1,3 +1,12 @@
+---
+title: Playbook · AI 语音筛
+aliases:
+  - AI voice screen
+  - ai-voice-screen playbook
+tags:
+  - interview/playbook
+---
+
 # Playbook · AI 语音筛选（HackerRank Chakra 及同类）
 
 > 通用打法，与公司无关。证据来自 `../../companies/snowflake/raw/chakra.md`（官方 KB / 打分博客 / release notes = high；聚合站 = medium）。公司特定剧本见各公司目录 `03-*-playbook.md`。

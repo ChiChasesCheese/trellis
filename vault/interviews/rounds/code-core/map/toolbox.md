@@ -4,14 +4,14 @@
 The handful of structures that solve nearly every timed problem, chosen by the operation that has to be fast.
 
 ## Topics
-- [[toolbox.hash|Dicts, Sets & Key Design]]
-- [[toolbox.heap|Heaps & Top-K]]
-- [[toolbox.deque|Deques, Stacks & Queues]]
-- [[toolbox.sorted|Sorting & Binary Search Structures]]
-- [[toolbox.union-find|Union-Find]]
-- [[toolbox.prefix-trees|Tries & Prefix Structures]]
-- [[toolbox.cache|LRU, TTL & Versioned Maps]]
-- [[toolbox.graph-repr|Representing a Graph]]
+- [[interviews/rounds/code-core/map/toolbox.hash|Dicts, Sets & Key Design]]
+- [[interviews/rounds/code-core/map/toolbox.heap|Heaps & Top-K]]
+- [[interviews/rounds/code-core/map/toolbox.deque|Deques, Stacks & Queues]]
+- [[interviews/rounds/code-core/map/toolbox.sorted|Sorting & Binary Search Structures]]
+- [[interviews/rounds/code-core/map/toolbox.union-find|Union-Find]]
+- [[interviews/rounds/code-core/map/toolbox.prefix-trees|Tries & Prefix Structures]]
+- [[interviews/rounds/code-core/map/toolbox.cache|LRU, TTL & Versioned Maps]]
+- [[interviews/rounds/code-core/map/toolbox.graph-repr|Representing a Graph]]
 
 ## Readings
 - [[python-time-complexity|TimeComplexity (Python Wiki)]]

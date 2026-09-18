@@ -4,7 +4,7 @@
 
 存储、虚拟仓库（virtual warehouse，计算层）与云服务（Cloud Services）在物理和逻辑上彼此分离，仅通过元数据相互通信。
 
-**Unlocks:** [[txn.acid-guarantees|ACID 保证]]
+**Unlocks:** [[domains/snowflake/map/txn.acid-guarantees|ACID 保证]]
 
 ## Readings
 - [[snowflak-key-concepts-architecture|Snowflake 关键概念与整体架构]]

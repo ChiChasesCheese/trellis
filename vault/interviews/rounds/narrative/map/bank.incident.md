@@ -4,7 +4,7 @@
 
 Detection, a decision made under uncertainty with the clock running, and the mechanism you changed afterwards.
 
-**Requires:** [[themes.failure|Failure With a Cost]]
+**Requires:** [[interviews/rounds/narrative/map/themes.failure|Failure With a Cost]]
 %% trellis:end %%
 
 ## Notes

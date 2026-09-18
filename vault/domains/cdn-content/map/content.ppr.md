@@ -4,7 +4,7 @@
 
 Cached static shells, dynamic holes, Suspense boundaries, streaming response order, and cacheability at component boundaries.
 
-**Requires:** [[networking.streaming|Streaming & Backpressure]], [[content.rendering|CSR, SSR, SSG & Dynamic Rendering]]
+**Requires:** [[domains/cdn-content/map/networking.streaming|Streaming & Backpressure]], [[domains/cdn-content/map/content.rendering|CSR, SSR, SSG & Dynamic Rendering]]
 
 ## Readings
 - [[content-next-ppr|Next.js Cache Components and Partial Prerendering]]

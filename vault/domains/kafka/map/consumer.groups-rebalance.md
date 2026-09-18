@@ -4,7 +4,7 @@
 
 理解消费者群组如何分摊分区、再均衡的触发时机，以及再均衡监听器与群组固定成员（static membership）如何减少不必要的再均衡。
 
-**Unlocks:** [[admin.consumer-group-ops|消费者群组管理与偏移量运维]]
+**Unlocks:** [[domains/kafka/map/admin.consumer-group-ops|消费者群组管理与偏移量运维]]
 
 ## Readings
 - [[kafka-4-1-consumer-groups|消费者与消费者群组]]

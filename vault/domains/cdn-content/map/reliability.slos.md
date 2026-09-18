@@ -4,9 +4,9 @@
 
 User-centered availability and latency indicators, objectives, windows, burn rates, and using error budgets to govern change.
 
-**Requires:** [[foundations.performance|Latency, Throughput & Tail Behavior]]
+**Requires:** [[domains/cdn-content/map/foundations.performance|Latency, Throughput & Tail Behavior]]
 
-**Unlocks:** [[reliability.metrics|Metrics & Cardinality]], [[reliability.logging|Structured Logging]], [[delivery.canary|Canary & Progressive Deployment]]
+**Unlocks:** [[domains/cdn-content/map/reliability.metrics|Metrics & Cardinality]], [[domains/cdn-content/map/reliability.logging|Structured Logging]], [[domains/cdn-content/map/delivery.canary|Canary & Progressive Deployment]]
 
 ## Readings
 - [[reliability-sre-service-level-objectives|Google SRE: Service Level Objectives]]

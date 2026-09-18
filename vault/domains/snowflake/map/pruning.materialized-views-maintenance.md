@@ -4,7 +4,7 @@
 
 预先计算并自动维护的结果集，以及抵消其读取加速收益的后台刷新成本。
 
-**Requires:** [[pruning.partition-elimination|分区消除（partition elimination）]]
+**Requires:** [[domains/snowflake/map/pruning.partition-elimination|分区消除（partition elimination）]]
 
 ## Readings
 - [[snowflak-materialized-views|物化视图(Materialized View)的预计算与维护成本]]

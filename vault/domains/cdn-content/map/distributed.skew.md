@@ -4,7 +4,7 @@
 
 Detecting data and access skew, splitting or replicating hot objects, load-aware routing, cache warming, and capacity headroom.
 
-**Requires:** [[caching.eviction|Admission, Eviction & Hot Objects]], [[distributed.routing|Partitioning, Hashing & Request Routing]]
+**Requires:** [[domains/cdn-content/map/caching.eviction|Admission, Eviction & Hot Objects]], [[domains/cdn-content/map/distributed.routing|Partitioning, Hashing & Request Routing]]
 
 ## Readings
 - [[dist-bounded-load-hashing|Consistent hashing with bounded loads]]

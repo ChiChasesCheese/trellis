@@ -4,7 +4,7 @@
 
 Queues vs pub-sub, backpressure, consumer scaling, and when async is the wrong call.
 
-**Unlocks:** [[correctness.outbox|Dual Writes & Outbox]]
+**Unlocks:** [[domains/system-design/map/correctness.outbox|Dual Writes & Outbox]]
 
 ## Readings
 - [[aws-queue-backlogs|Avoiding insurmountable queue backlogs (AWS Builders' Library)]]

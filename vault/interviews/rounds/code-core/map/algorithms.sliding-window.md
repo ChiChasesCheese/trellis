@@ -4,7 +4,7 @@
 
 Fixed vs variable windows, shrinking on a violated invariant, minimal covering window, and windows over timestamps rather than indexes.
 
-**Requires:** [[toolbox.deque|Deques, Stacks & Queues]]
+**Requires:** [[interviews/rounds/code-core/map/toolbox.deque|Deques, Stacks & Queues]]
 
 ## Readings
 - [[stripe-rate-limiters-four|Scaling your API with rate limiters (Stripe)]]

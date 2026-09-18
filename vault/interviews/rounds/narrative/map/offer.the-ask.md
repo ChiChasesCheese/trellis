@@ -4,9 +4,9 @@
 
 One justified, non-adversarial number instead of a range, and why the justification matters more than the number.
 
-**Requires:** [[offer.anatomy|Anatomy of a Senior Package]]
+**Requires:** [[interviews/rounds/narrative/map/offer.anatomy|Anatomy of a Senior Package]]
 
-**Unlocks:** [[offer.closing|Deadlines and Declining Well]]
+**Unlocks:** [[interviews/rounds/narrative/map/offer.closing|Deadlines and Declining Well]]
 %% trellis:end %%
 
 ## Notes

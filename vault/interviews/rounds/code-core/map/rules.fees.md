@@ -4,7 +4,7 @@
 
 Percent-plus-fixed fees, applying a rate to minor units without drift, splitting a total so the parts sum back to it exactly.
 
-**Requires:** [[rules.rounding|Rounding Rules & Where to Apply Them]]
+**Requires:** [[interviews/rounds/code-core/map/rules.rounding|Rounding Rules & Where to Apply Them]]
 
 ## Readings
 - [[fowler-money-pattern|Money (Patterns of Enterprise Application Architecture)]]

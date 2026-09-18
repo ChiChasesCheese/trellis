@@ -4,7 +4,7 @@
 
 S3-style object stores, storage-compute separation, and the modern default of parking cold and big data there.
 
-**Unlocks:** [[analytics.warehouse|Warehouses & Lakehouses]]
+**Unlocks:** [[domains/system-design/map/analytics.warehouse|Warehouses & Lakehouses]]
 
 ## Readings
 - [[iceberg-table-format|Apache Iceberg Table Format (spec + docs)]]

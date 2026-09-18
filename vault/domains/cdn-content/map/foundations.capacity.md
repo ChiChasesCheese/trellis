@@ -4,9 +4,9 @@
 
 Estimate QPS, bandwidth, storage, CPU, memory, connection counts, and the resource that saturates first.
 
-**Requires:** [[foundations.performance|Latency, Throughput & Tail Behavior]]
+**Requires:** [[domains/cdn-content/map/foundations.performance|Latency, Throughput & Tail Behavior]]
 
-**Unlocks:** [[reliability.load-testing|Load, Soak & Failure Testing]], [[security-cost.economics|CDN Unit Economics]]
+**Unlocks:** [[domains/cdn-content/map/reliability.load-testing|Load, Soak & Failure Testing]], [[domains/cdn-content/map/security-cost.economics|CDN Unit Economics]]
 
 ## Readings
 - [[fnd-google-sre-capacity-planning|Introduction: Demand Forecasting and Capacity Planning (Google SRE)]]

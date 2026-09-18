@@ -4,7 +4,7 @@
 
 Plain dicts vs tuples vs dataclasses vs a class with behavior, and the signal that a bag of parallel dicts has become an object.
 
-**Unlocks:** [[model.entity-state|State Per Entity]]
+**Unlocks:** [[interviews/rounds/code-core/map/model.entity-state|State Per Entity]]
 
 ## Readings
 - [[python-dataclasses|dataclasses — data classes]]

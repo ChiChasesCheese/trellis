@@ -1,6 +1,15 @@
+---
+title: Chakra CARD · 关键词卡
+aliases:
+  - Chakra CARD
+tags:
+  - company/snowflake
+  - round/ai-screen
+---
+
 # CARD · Chakra 关键词卡（贴摄像头旁 / 手机版）
 
-> 每题只留提示词。全文在 `playbook.md` / `stories.md` / `scenarios.md`；题库 `questions.md`。
+> 每题只留提示词。全文在 `playbook.md` / 故事笔记 [[S1]]…[[S11]] / `scenarios.md`；题库 `questions.md`。
 > 说话规则：**Listening 才开口 · Thinking 闭嘴** · 首答 ≤ 90 s · 每答 = headline → 原语名 → "I decided" → 量级 → learning · 数字都加 "roughly"。
 > 必说的 JD 词：**SQL · distributed systems · Java 17 · database internals · large-scale production**。
 
@@ -11,9 +20,9 @@
 ## 时间表
 
 - 0–1 开场 → 可问 "how many sections / how long each"
-- 1–6 自我介绍 60 s → **S1** 90 s
+- 1–6 自我介绍 60 s → **[[S1]]** 90 s
 - 6–11 场景："Let me structure this…" → clarify → 3 步 → closest thing → trade-off
-- 11–16 协作：**S5** 决策 · **S4** 跨团队 · **S6** 说不
+- 11–16 协作：**[[S5]]** 决策 · **[[S4]]** 跨团队 · **[[S6]]** 说不
 - 16–19 反问 ×2 + 表态
 - 19–20 三词 + thank you
 
@@ -28,7 +37,7 @@
 - NYU MS · intern same team · Kafka event processing
 - hook: "heavy consumer of exactly the primitives your teams build"
 
-## S1 · Amex pipeline
+## [[S1]] · Amex pipeline
 
 - closed-loop network · daily fixed-width file · **good-funds model** · pending table
 - `COPY INTO` (file-level dedup) → 6 **append-only Streams** by record type → 6 procedures `SUBSTRING` + `MERGE` composite key → 2 UDTFs `FULL OUTER JOIN` → error log, never drop → Task `AFTER A, B` in one transaction → payout
@@ -38,7 +47,7 @@
 - change: offsets → config table + generic parsing UDTF
 - why not Airflow: locality + transactional MERGE · `STREAM_HAS_DATA` · cost = weaker orchestration → built Streamlit monitor + Datadog
 
-## S2 · Quality-check framework
+## [[S2]] · Quality-check framework
 
 - contract-config table (subject area, validation, procedure, date col, SLA, JSON params)
 - executor: `EXECUTE IMMEDIATE` + `RESULT_SCAN` · PASS/FAIL/WARNING · exception → one bad check never kills the rest
@@ -47,7 +56,7 @@
 - ADR: 50 bad merchants blocked 35k · 4 options · **strictest wins** · sparse failure rows · rejected VARIANT+UDF (pushdown, cell limit)
 - status line: designed, reviewed, proven for one subject area, sequenced behind the ramp
 
-## S3 · ACH NULL bug
+## [[S3]] · ACH NULL bug
 
 - my health check paged · forwarded to myself · RCA in minutes
 - 100% bank-account · ~200 merchants · ~$10M/day
@@ -57,14 +66,14 @@
 - fix: stopgap → single function w/ default param → versioned `DROP` of legacy · e2e spanning promotion→fee
 - principle: **fail loudly** · fix forward + backfill · don't suppress the check
 
-## S4 · AU Amex refund
+## [[S4]] · AU Amex refund
 
 - PM escalation · 50 replies · 3 teams → routed to me
 - data not org chart: ~1M US rows vs 0 AU · ~150 merchants
 - `fee_refund_policy = partial` never `full` · config not code · predates migration
 - wrote the query so they could verify → thread ended same day → tracked feature
 
-## S5 · Interchange source switch
+## [[S5]] · Interchange source switch
 
 - transaction view populated after cutoff → miss net-settlement window
 - A: smarter fallback (sticky, 3 CTEs) vs **B: static split by fee type + toggle** → "source of truth is a fact"
@@ -74,7 +83,7 @@
 - old task excludes interchange only when toggle on → complementary, never double-count
 - toggle off → pre-prod → prod · **deploy ≠ release** · backfill SQL became CDC template
 
-## S6 · Anomaly detector go/no-go
+## [[S6]] · Anomaly detector go/no-go
 
 - inherited from departing intern · easy path = keep building
 - QA: 6 synthetic merchants vs prod: 18k merchants · 15k plan combos · up to ~760M rows/day
@@ -83,26 +92,26 @@
 - Phase 1: consistency rule as **SQL pushdown** · Phase 2: ML rework, 2–3 months, gated
 - froze Slack + CI/CD until go · "rather stop than page the team at 3 a.m."
 
-## S7 · schema pool
+## [[S7]] · schema pool
 
 - shared schema → DDL collisions between branches / agent sessions
 - `MAIN` synced to prod-deployed SHA via Deployments API (tags lie) · pool slots = **zero-copy clones** ~2 s
 - V2 rewrite + 3 ADRs · Flyway edge cases: cross-DB stream invalidation (clone order) · duplicate repeatables · prod-only stubs
 - "tech lead of a team of agents"
 
-## S8 · Terraform 7-minute RCA
+## [[S8]] · Terraform 7-minute RCA
 
 - QA release failed · `GRANT OWNERSHIP` rejected, dependent `USAGE` grant
 - cc'd not assigned · 7 min: root cause = missing `outbound_privileges` → `"REVOKE"` · checked neighbor modules · asked, pushed PR, QA/pre-prod/prod same afternoon
 - after: scanned repo · dozens missing, mostly harmless `future_*` · two real same-shape risks flagged
 
-## S9 · Amex payout incident
+## [[S9]] · Amex payout incident
 
 - large marketplace merchant · ~$4M "missing" · incident channel · one of three owners
 - SLA authority: T+7 internal · disburse only after network settles → expected vs regression
 - root: effective-date change for EU shifted US by a day · **region conditional** > revert · closed in 3 days
 
-## S10 · Billing-terms postmortem
+## [[S10]] · Billing-terms postmortem
 
 - first scope ~200k rows / 60 merchants → predicate missed "schedule existed at fee time"
 - corrected: ~22k rows / 30 merchants / < $6k · retracted publicly
@@ -111,15 +120,15 @@
 ## 场景骨架（每题）
 
 - "Let me structure this: what I'd want to know, how I'd approach it, the closest thing I've done."
-- wrong totals → scope by data · walk back · one hypothesis · fix forward + invariant (S3)
+- wrong totals → scope by data · walk back · one hypothesis · fix forward + invariant ([[S3]])
 - metering / no double-charge → idempotency key upsert · deterministic MERGE agg · separate recon · late = adjustment
-- zero-downtime switch → expand · shadow-read · flag · contract (S5)
+- zero-downtime switch → expand · shadow-read · flag · contract ([[S5]])
 - slow after deploy → metrics · bisect · profile partitions scanned · per-row→set-based · revert first
-- on-call payouts → blast radius + clock · stuck vs late · 15-min update · owner per hypothesis (S9)
+- on-call payouts → blast radius + clock · stuck vs late · 15-min update · owner per hypothesis ([[S9]])
 - rate limiter → token bucket per (tenant, resource) · atomic decrement · local allowance · exact vs approx
 - Kafka exactly-once → effect not delivery · commit after write · MERGE inside DB · replay is a feature
-- never read partial data → status row · readiness as JOIN · checks as config · SLA monitor (S2)
-- two systems disagree → normalize · FULL OUTER JOIN + EQUAL_NULL · bucket · explain all · daily check (S10)
+- never read partial data → status row · readiness as JOIN · checks as config · SLA monitor ([[S2]])
+- two systems disagree → normalize · FULL OUTER JOIN + EQUAL_NULL · bucket · explain all · daily check ([[S10]])
 - scheduler → DAG AFTER A,B · data-triggered · failure budget · backfill = re-enqueue, idempotent
 - billions of rows slow → partitions scanned/total · clustering = dominant predicate · skew · window the predicate
 - late data → arrival vs effective time · scan all partitions · closed day → adjustment · "expected but not arrived"

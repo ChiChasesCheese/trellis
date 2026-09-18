@@ -4,11 +4,11 @@
 How clients reach services and how services talk to each other.
 
 ## Topics
-- [[networking.protocols|Transport & HTTP]]
-- [[networking.dns|DNS]]
-- [[networking.api-styles|REST, gRPC & GraphQL]]
-- [[networking.realtime|Realtime Delivery]]
-- [[networking.cdn|CDN]]
+- [[domains/system-design/map/networking.protocols|Transport & HTTP]]
+- [[domains/system-design/map/networking.dns|DNS]]
+- [[domains/system-design/map/networking.api-styles|REST, gRPC & GraphQL]]
+- [[domains/system-design/map/networking.realtime|Realtime Delivery]]
+- [[domains/system-design/map/networking.cdn|CDN]]
 %% trellis:end %%
 
 ## Notes

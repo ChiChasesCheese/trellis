@@ -4,9 +4,9 @@
 
 Decoupling deploy from release, targeting, defaults, failure behavior, ownership, expiration, and operational kill switches.
 
-**Requires:** [[reliability.alerting|Dashboards & Alerts]]
+**Requires:** [[domains/cdn-content/map/reliability.alerting|Dashboards & Alerts]]
 
-**Unlocks:** [[delivery.shadow|Shadow Mode & Dark Launches]], [[delivery.canary|Canary & Progressive Deployment]]
+**Unlocks:** [[domains/cdn-content/map/delivery.shadow|Shadow Mode & Dark Launches]], [[domains/cdn-content/map/delivery.canary|Canary & Progressive Deployment]]
 
 ## Readings
 - [[delivery-google-canarying|Google SRE Workbook: Canarying Releases]]

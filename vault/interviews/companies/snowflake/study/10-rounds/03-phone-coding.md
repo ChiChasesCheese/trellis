@@ -54,7 +54,7 @@
 | Happy Number 被要求 O(1) 卡住 | Floyd：快慢指针在"下一个数"函数上跑，和链表判环同一招 |
 | 多源 BFS 写成对每个 D 单独 BFS | 所有 B 同时入队，一次 BFS |
 | 日志 / 输出格式差一个字符 | 格式化集中在一个函数；照 problem.md 的样例逐字比 |
-| 前 15–20 min 被问项目讲超时 | S1 准备 3 min 版；讲完主动说 "happy to go deeper later, shall we start coding?" |
+| 前 15–20 min 被问项目讲超时 | [[S1]] 准备 3 min 版；讲完主动说 "happy to go deeper later, shall we start coding?" |
 
 ## 语言
 

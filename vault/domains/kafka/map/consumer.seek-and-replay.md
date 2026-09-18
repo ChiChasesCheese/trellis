@@ -4,7 +4,7 @@
 
 掌握用 seekToBeginning/seekToEnd、offsetsForTimes 与 seek() 把消费者跳到任意偏移量，用于重放历史、跳过积压或按时间点恢复。
 
-**Requires:** [[consumer.offset-commit|提交与偏移量管理]]
+**Requires:** [[domains/kafka/map/consumer.offset-commit|提交与偏移量管理]]
 
 ## Readings
 - [[kafka-4-8-seek-and-replay|从特定偏移量位置读取记录：seek 与按时间戳定位]]

@@ -4,7 +4,7 @@
 
 Timeout budgets, deadline propagation, exponential backoff with jitter, retry storms and retry budgets.
 
-**Unlocks:** [[infra.mesh|Service Mesh]]
+**Unlocks:** [[domains/system-design/map/infra.mesh|Service Mesh]]
 
 ## Readings
 - [[google-sre-handling-overload|Handling Overload (Google SRE Book, ch. 21)]]

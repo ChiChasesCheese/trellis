@@ -4,9 +4,9 @@
 
 永久表、瞬态表（transient）、临时表（temporary）与外部表——各自享有怎样的时间旅行（Time Travel）与故障保护（Fail-safe）能力，以及原因。
 
-**Requires:** [[storage.micro-partition-format|微分区（micro-partition）格式]]
+**Requires:** [[domains/snowflake/map/storage.micro-partition-format|微分区（micro-partition）格式]]
 
-**Unlocks:** [[ingestion.bulk-copy-into|批量加载（COPY INTO）]], [[openplatform.hybrid-tables-oltp|混合表（Hybrid Table，Unistore）]]
+**Unlocks:** [[domains/snowflake/map/ingestion.bulk-copy-into|批量加载（COPY INTO）]], [[domains/snowflake/map/openplatform.hybrid-tables-oltp|混合表（Hybrid Table，Unistore）]]
 
 ## Readings
 - [[snowflak-time-travel|时间旅行(Time Travel):可查询窗口、AT/BEFORE 与 UNDROP]]

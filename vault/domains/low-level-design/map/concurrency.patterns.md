@@ -4,7 +4,7 @@
 
 Producer-consumer, bounded blocking queue, thread pool, reader-writer, safe lazy initialization.
 
-**Requires:** [[concurrency.primitives|Synchronization Primitives]]
+**Requires:** [[domains/low-level-design/map/concurrency.primitives|Synchronization Primitives]]
 
 ## Readings
 - [[java-concurrency-in-practice|Java Concurrency in Practice (Goetz et al.)]]
