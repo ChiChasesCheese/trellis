@@ -15,7 +15,7 @@ close it.
 
 from __future__ import annotations
 
-from .hold import Assessment, LeafStanding
+from .hold import Assessment, LeafStanding, grown_query
 from .skeleton import Skeleton
 
 # No domain may take more than this many rows in a section. Breadth is a
@@ -72,6 +72,14 @@ def _opening_move(
 ) -> str:
     """One sentence naming one thing. If there is nothing to repair, say
     so plainly rather than inventing an errand."""
+    if weak and weak[0][1].settling:
+        # The loop already answered this one. The move is to look at the
+        # answer, not to ask for another.
+        domain, s = weak[0]
+        g = s.graft
+        return (f"**先复习** {_link(domain, s)}：握持 {s.hold:.0%}，已经为它写了 "
+                f"{g.grown} 张新卡，{g.unseen + g.young} 张还没复习到能下结论。\n"
+                f"→ Anki 里搜 `{grown_query(domain, s.node.id)}`")
     if weak:
         domain, s = weak[0]
         because = (f"握持 {s.hold:.0%}" if not s.bearing else
@@ -94,6 +102,37 @@ def _opening_move(
         return (f"**先写** {_link(domain, s)}：{because}。\n"
                 f"→ `trellis grow --leaf {domain}:{s.node.id}`")
     return "**没有在滑落的。** 复习过的都握住了，每个叶子都有卡。下次复习后再拉取。"
+
+
+TOOK_NAMED = 5
+
+
+def _grafts(assessments: dict[str, Assessment]) -> list[str]:
+    """What became of the cards `grow` wrote on a topic that was slipping.
+    The ones that want something from the reader get a line each; the ones
+    that took share a single line, so good news never crowds the page.
+    First cards on a once-uncovered leaf are not a second route and are
+    not reported here — they are simply the leaf's cards."""
+    rows = [(d, s) for d, a in assessments.items() for s in a.leaves
+            if s.graft is not None and not s.graft.first_cards]
+    if not rows:
+        return []
+    by_state = lambda state: [(d, s) for d, s in rows if s.graft.state == state]
+    lines = ["## 新卡", "", "*为滑落的话题写的第二条路，复习之后长得怎样。*", ""]
+    for domain, s in interleave_by_domain(by_state("slipped")):
+        g = s.graft
+        lines.append(f"- {_link(domain, s)}：没长住，{g.grown} 张新卡里 {g.slipped} 张又滑了 · "
+                     f"先练或读，再换一条路：`trellis grow --leaf {domain}:{s.node.id}`")
+    for domain, s in interleave_by_domain(by_state("settling")):
+        g = s.graft
+        lines.append(f"- {_link(domain, s)}：还在长，{g.grown} 张新卡里 {g.unseen} 张没见过、"
+                     f"{g.young} 张还嫩 · `{grown_query(domain, s.node.id)}`")
+    took = by_state("took")
+    if took:
+        named = "、".join(_link(d, s) for d, s in took[:TOOK_NAMED])
+        more = f" 等 {len(took)} 个" if len(took) > TOOK_NAMED else ""
+        lines.append(f"- 长住了：{named}{more}")
+    return lines + [""]
 
 
 def brief_body(
@@ -128,6 +167,8 @@ def brief_body(
             lines.append(f"| {skeletons[domain].title} | {_link(domain, s)} "
                          f"| `{_bar(s.hold)}` {s.hold:.0%} | {s.bearing} |")
         lines += ["", "*滑落的话题需要第二条路进去：`trellis grow --next` 会从没握住的卡出发写新卡。*", ""]
+
+    lines += _grafts(assessments)
 
     if uncovered:
         lines += ["## 值得写", ""]

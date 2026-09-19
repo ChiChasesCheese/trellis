@@ -117,16 +117,24 @@ how often it lapsed, and how it is scheduled now. A Trace is pulled, never
 authored — it is the only thing in the vault we do not write.
 _Avoid_: stats, history, telemetry, metrics
 
+**Verdict**:
+What one card's Trace is evidence of: *unseen*, *young* (shown, never failed,
+too new for its short interval to mean anything), *taken*, or *slipped*. Only
+the last two are evidence; a young card is no score at all, not a low one
+(ADR 0009).
+_Avoid_: status, grade, result, state (of a card)
+
 **Hold**:
-How well a node is retained, computed from the Traces beneath it and rolled up
-the skeleton. A leaf holds or it does not; a branch's hold is its leaves'.
-Always measured, never declared.
+How well a node is retained, computed from the Traces of the cards beneath it
+that have reached a Verdict, and rolled up the skeleton. A leaf holds or it
+does not; a branch's hold is its leaves'. Always measured, never declared.
 _Avoid_: retention, mastery, score, strength, level
 
 **Weakness**:
-A leaf carrying enough Traces to judge, whose Hold is below target. A Weakness
-wants practice — a drill, a reading, more cards. Distinct from an uncovered
-leaf, which has nothing to fail and wants writing instead.
+A leaf with enough Verdicts to judge, a Hold below target, and at least one
+card that slipped. A Weakness wants practice — a drill, a reading, more cards.
+Distinct from an uncovered leaf, which has nothing to fail and wants writing
+instead, and from a leaf that is merely new, which wants only time.
 _Avoid_: gap, weak spot, problem area, struggle
 
 **Bearing**:
@@ -146,6 +154,14 @@ The one generated note that says what to do next: the load-bearing Weaknesses,
 the leaves worth writing for, and a single opening move. Derived from Traces on
 every regeneration, and short enough to read standing up.
 _Avoid_: dashboard, report, summary, digest, progress
+
+**Graft**:
+The grown cards on one leaf, and what reviewing them has shown: *settling*
+while too few have a Verdict, then *took* or *slipped*. A Weakness whose Graft
+is settling has been answered and not yet heard back from, so nothing more is
+grown on it; the Brief asks for the new cards to be reviewed instead. Derived
+from the `grown` tag and the Traces, recorded nowhere.
+_Avoid_: repair, fix, patch, batch, second route (as the noun for the cards)
 
 **Adopted card**:
 A card whose note lives in Anki and was authored by another tool. Trellis holds
@@ -181,8 +197,8 @@ Writing new cards where the loop says it pays: for a Weakness, cards that reach
 the mechanism from another angle than the ones that slipped; for an uncovered
 leaf, its first cards. Grounded in what the vault already holds for the leaf —
 a corpus's sections or a clipped reading — and never anywhere the loop did not
-point. A grown card is tagged so the next Brief can say whether the repair
-took.
+point, and never on a leaf whose Graft is still settling. A grown card is
+tagged so the next Brief can say whether the Graft took.
 _Avoid_: generate, populate, backfill, fill in, repair (for the act of writing)
 
 ### Ingesting a codebase

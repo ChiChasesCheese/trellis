@@ -100,6 +100,87 @@ def card_hold(trace: Trace | None) -> float | None:
     return maturity * (1.0 - 0.5 * min(1.0, lapse_rate))
 
 
+# A card reviewed this often has had the chance to reach a real interval.
+# With Anki's defaults a card answered well is past five days by its fourth
+# or fifth review, so one still below the bar after this many is being
+# pulled back — answered Hard, or failed inside the learning steps, which
+# Anki does not count as a lapse.
+SETTLED_REPS = 5
+
+UNSEEN, YOUNG, TAKEN, SLIPPED = "unseen", "young", "taken", "slipped"
+
+
+def verdict(trace: Trace | None) -> str:
+    """What one card's Trace is evidence of.
+
+    Hold reads the interval, and a new card's interval is short because
+    the card is new. So a card is `young` — shown, never failed, not yet
+    reviewed enough to have got anywhere — until it either holds (`taken`)
+    or shows it is not going to on this route (`slipped`). Young is not a
+    low score; like `unseen`, it is no score at all (ADR 0009).
+    """
+    hold = card_hold(trace)
+    if hold is None:
+        return UNSEEN
+    if hold >= WEAK_BELOW:
+        return TAKEN
+    if trace.lapses or trace.lapsed_recently or trace.reps >= SETTLED_REPS:
+        return SLIPPED
+    return YOUNG
+
+
+# What `grow` stamps on every card it lands, and what a Graft is read from.
+GROWN_TAG = "grown"
+
+
+@dataclass
+class Graft:
+    """The grown cards on one leaf, and what reviewing them has shown.
+
+    Each grown card is in exactly one place: never shown (`unseen`); shown
+    and never failed but still on a short interval (`young` — no verdict
+    yet, a new card is always young first); holding (`taken`); or failed
+    after it was learned (`slipped`). Only the last two are evidence.
+    """
+
+    grown: int = 0
+    unseen: int = 0
+    young: int = 0
+    taken: int = 0
+    slipped: int = 0
+    # Every card on the leaf was grown: these are its first cards, not a
+    # second route into a topic that failed on the first.
+    first_cards: bool = False
+
+    @property
+    def state(self) -> str:
+        """`settling` until enough grown cards have reached a verdict to
+        judge by — the same bar a leaf must clear to be called weak —
+        then `took` or `slipped` by which way most of them went."""
+        if self.taken + self.slipped < min(MIN_SEEN, self.grown):
+            return "settling"
+        return "took" if self.taken > self.slipped else "slipped"
+
+
+def graft_of(cards: list[Card], traces: dict[str, Trace]) -> Graft | None:
+    """Read one leaf's Graft off its cards' tags and Traces, or None when
+    nothing was ever grown there."""
+    grown = [c for c in cards if GROWN_TAG in c.tags]
+    if not grown:
+        return None
+    graft = Graft(grown=len(grown), first_cards=len(grown) == len(cards))
+    for c in grown:
+        state = verdict(traces.get(c.id))
+        setattr(graft, state, getattr(graft, state) + 1)
+    return graft
+
+
+def grown_query(domain: str, node_id: str) -> str:
+    """The Anki search for one leaf's grown cards — what to review when the
+    loop is waiting on them."""
+    return f"tag:{domain}::{node_id.replace('.', '::')} tag:{GROWN_TAG}"
+
+
 @dataclass
 class LeafStanding:
     """Where one leaf stands in the loop."""
@@ -107,9 +188,18 @@ class LeafStanding:
     node: Node
     cards: int = 0
     seen: int = 0                 # cards with at least one review
-    hold: float | None = None     # None until something has been seen
+    judged: int = 0               # of those, cards old enough to be evidence
+    slipped: int = 0              # of those, cards that are not holding
+    hold: float | None = None     # None until a card has reached a verdict
     bearing: int = 0
     sealed_by: list[str] = field(default_factory=list)  # unheld prerequisites
+    graft: Graft | None = None    # None when nothing was grown here
+
+    @property
+    def settling(self) -> bool:
+        """A Weakness the loop has already answered and not yet heard back
+        on. More cards now would answer the same evidence twice."""
+        return self.weak and self.graft is not None and self.graft.state == "settling"
 
     @property
     def uncovered(self) -> bool:
@@ -118,12 +208,16 @@ class LeafStanding:
 
     @property
     def unproven(self) -> bool:
-        """Cards exist but too few have been seen to judge."""
-        return not self.uncovered and self.seen < MIN_SEEN
+        """Cards exist but too few have reached a verdict to judge by —
+        never shown, or shown and still young."""
+        return not self.uncovered and self.judged < MIN_SEEN
 
     @property
     def weak(self) -> bool:
-        return (not self.uncovered and not self.unproven
+        """Enough verdicts to judge by, a Hold under the bar, and at least
+        one card that actually slipped — a leaf can be shrunk under the
+        line by its branch alone, and then there is nothing to repair."""
+        return (not self.uncovered and not self.unproven and self.slipped > 0
                 and self.hold is not None and self.hold < WEAK_BELOW)
 
     @property
@@ -155,7 +249,7 @@ class Assessment:
         held = [s.hold for s in self.leaves if s.hold is not None]
         if not held:
             return None
-        weights = [s.seen for s in self.leaves if s.hold is not None]
+        weights = [s.judged for s in self.leaves if s.hold is not None]
         return sum(h * w for h, w in zip(held, weights)) / sum(weights)
 
     def weaknesses(self) -> list[LeafStanding]:
@@ -170,6 +264,11 @@ class Assessment:
 
     def sealed(self) -> list[LeafStanding]:
         return [s for s in self.leaves if s.sealed]
+
+    def settling(self) -> list[LeafStanding]:
+        """Weaknesses already grown on, whose new cards have not yet been
+        reviewed enough to judge — waiting on the learner, not on `grow`."""
+        return [s for s in self.weaknesses() if s.settling]
 
 
 def bearing(skeleton: Skeleton) -> dict[str, int]:
@@ -243,13 +342,19 @@ def assess(
     raw: dict[str, float] = {}
     for leaf in skeleton.leaves():
         node_cards = by_node.get(leaf.id, [])
-        holds = [h for h in (card_hold(traces.get(c.id)) for c in node_cards)
-                 if h is not None]
+        # Only a card with a verdict is evidence. A young card's short
+        # interval says how old the card is, not how well it is held, and
+        # averaging it in would mark every leaf weak in its first week.
+        holds = [card_hold(traces[c.id]) for c in node_cards
+                 if verdict(traces.get(c.id)) in (TAKEN, SLIPPED)]
         standings[leaf.id] = LeafStanding(
             node=leaf,
             cards=len(node_cards),
-            seen=len(holds),
+            seen=sum(1 for c in node_cards if verdict(traces.get(c.id)) != UNSEEN),
+            judged=len(holds),
+            slipped=sum(1 for c in node_cards if verdict(traces.get(c.id)) == SLIPPED),
             bearing=bear[leaf.id],
+            graft=graft_of(node_cards, traces),
         )
         if holds:
             raw[leaf.id] = sum(holds) / len(holds)
@@ -259,7 +364,7 @@ def assess(
     # shape's — one leaf with 40 reviews outweighs six with one each.
     node_hold: dict[str, float] = {}
     for node in skeleton.walk():
-        weighted = [(raw[s.node.id], s.seen) for s in standings.values()
+        weighted = [(raw[s.node.id], s.judged) for s in standings.values()
                     if s.node.id in raw
                     and (s.node.id == node.id
                          or s.node.id.startswith(node.id + "."))]
@@ -279,7 +384,7 @@ def assess(
         if prior is None:
             s.hold = raw[leaf.id]
         else:
-            w = confidence(s.seen)
+            w = confidence(s.judged)
             s.hold = w * raw[leaf.id] + (1 - w) * prior
 
     # Seal a leaf whose prerequisites have not taken. A prerequisite with

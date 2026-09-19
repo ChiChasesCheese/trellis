@@ -17,8 +17,10 @@ Two kinds of target, two different prompts:
   corpus that reaches it (then growing is digesting, and the cards carry
   the corpus as provenance), or the clipped readings on it.
 
-Every card grown here is tagged `grown`, so the next Brief can say
-whether the repair took. Nothing is recorded that can be derived: the
+Every card grown here is tagged `grown`, and the tag is read back as the
+leaf's Graft (`trellis/hold.py`): while the new cards are unreviewed the
+leaf is settling and is not a target again; once they are, the next Brief
+says whether they took. Nothing is recorded that can be derived: the
 targets are read off the Traces and the vault each time.
 """
 
@@ -33,13 +35,13 @@ from .clippings import Clipping, canonical_url
 from .corpus import Corpus, Outline, Section, load_corpora, load_outline
 from .digest import (SOURCE_HEADER, embed, import_leaf, language_rules,
                      plan as digest_plan, section_blocks)
-from .hold import Assessment, LeafStanding, card_hold
+from .hold import GROWN_TAG, Assessment, LeafStanding, card_hold, verdict
+from .hold import SLIPPED as HAS_SLIPPED   # SLIPPED below is the prompt section
 from .project import Project
 from .readings import Reading
 from .scaffold import scaffold_prompt
 from .traces import Trace
 
-GROWN_TAG = "grown"
 SLIPPED_SHOWN = 5
 
 SLIPPED = """
@@ -114,9 +116,11 @@ def plan(root: Path, projects: dict[str, Project], assessments: dict[str, Assess
             leaf_id = standing.node.id
             t = Target(domain=domain, standing=standing, kind=kind)
             if kind == "weakness":
+                # Only a card with that verdict has slipped: one still in the
+                # new queue, or shown once yesterday, is evidence of nothing.
                 held = [(c, domain_traces[c.id]) for c in project.cards
-                        if c.node == leaf_id and c.id in domain_traces]
-                held.sort(key=lambda ct: card_hold(ct[1]) or 0.0)
+                        if c.node == leaf_id and verdict(domain_traces.get(c.id)) == HAS_SLIPPED]
+                held.sort(key=lambda ct: card_hold(ct[1]))
                 t.slipped = held[:SLIPPED_SHOWN]
             if leaf_id in reach:
                 t.corpus, t.sections = reach[leaf_id]
@@ -128,7 +132,10 @@ def plan(root: Path, projects: dict[str, Project], assessments: dict[str, Assess
                     t.clipped.append((reading, clip))
             return t
 
-        weak += [target(s, "weakness") for s in assessment.weaknesses()]
+        # A settling leaf has been answered already. Until its grown cards
+        # are reviewed the evidence is the same evidence, and writing on it
+        # again would only repeat the answer (ADR 0009).
+        weak += [target(s, "weakness") for s in assessment.weaknesses() if not s.settling]
         uncovered += [target(s, "uncovered") for s in assessment.uncovered()]
     return weak + uncovered
 

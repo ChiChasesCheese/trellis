@@ -129,10 +129,11 @@ def test_grow_runs_the_runner_with_guidance_and_lands_on_accept(site):
     assert "tags: [grown]" in card and "node: base.one" in card
 
 
-def test_a_runner_answer_that_leans_on_the_source_is_refused_at_accept(site):
+def test_a_runner_answer_that_leans_on_the_source_is_refused_at_accept(site, monkeypatch):
     root, port, anki, runner = site
-    runner.__class__.__call__ = lambda self, prompt: json.dumps(
-        [{"id": "bad", "type": "qa", "q": "如前所述，一是什么？", "a": "一。"}], ensure_ascii=False)
+    # through monkeypatch, so the class answers properly again for the next test
+    monkeypatch.setattr(FakeRunner, "__call__", lambda self, prompt: json.dumps(
+        [{"id": "bad", "type": "qa", "q": "如前所述，一是什么？", "a": "一。"}], ensure_ascii=False))
     _, job = call(port, "POST", "/api/grow", {"key": "demo:base.one", "count": 1})
     for _ in range(50):
         _, job = call(port, "GET", f"/api/jobs/{job['id']}")
@@ -161,3 +162,26 @@ def test_pull_writes_traces_and_history_reads_them_back(site):
     assert status == 200 and out["domains"][0]["traced"] == 0
     status, hist = call(port, "GET", "/api/history?domain=demo")
     assert status == 200 and isinstance(hist["points"], list)
+
+
+def test_a_leaf_just_grown_on_shows_its_graft_and_is_not_offered_again(site):
+    root, port, _, _ = site
+    _, job = call(port, "POST", "/api/grow", {"key": "demo:base.one", "count": 2, "guidance": ""})
+    for _ in range(50):
+        _, job = call(port, "GET", f"/api/jobs/{job['id']}")
+        if job["status"] == "review":
+            break
+        time.sleep(0.1)
+    status, done = call(port, "POST", f"/api/jobs/{job['id']}/accept", {"push": False})
+    assert status == 200, done
+
+    _, state = call(port, "GET", "/api/state?domain=demo")
+    one = {l["id"]: l for l in state["selected"]["leaves"]}["base.one"]
+    assert one["weak"] and one["settling"]
+    assert one["graft"] == {"state": "settling", "grown": 2, "unseen": 2, "young": 0,
+                            "taken": 0, "slipped": 0, "query": "tag:demo::base::one tag:grown"}
+    assert "demo:base.one" not in [t["key"] for t in state["selected"]["targets"]]
+    assert state["domains"][0]["settling"] == 1
+
+    status, refused = call(port, "POST", "/api/grow", {"key": "demo:base.one", "count": 2})
+    assert status == 409 and "2 张新卡" in refused["error"]
