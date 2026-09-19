@@ -12,11 +12,11 @@ When rules arrive as nested expressions — tokenizer plus recursive descent, pr
 - [[oa-qa03-lc1087-brace-expansion|Drill: brace expansion, from a stack parser to nesting, counting and indexing]]
 
 ## Cards (5)
-- [[cc-input-gram-operand-symmetry]]
-- [[cc-input-gram-parens-recursion]]
-- [[cc-input-gram-parse-error-policy]]
-- [[cc-input-gram-precedence-one-function-per-level]]
-- [[cc-input-gram-tokenizer-separate]]
+1. [[cc-input-gram-operand-symmetry]]
+2. [[cc-input-gram-parens-recursion]]
+3. [[cc-input-gram-parse-error-policy]]
+4. [[cc-input-gram-precedence-one-function-per-level]]
+5. [[cc-input-gram-tokenizer-separate]]
 %% trellis:end %%
 
 ## Notes

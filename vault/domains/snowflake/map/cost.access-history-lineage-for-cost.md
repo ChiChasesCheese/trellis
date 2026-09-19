@@ -7,11 +7,11 @@
 **Requires:** [[domains/snowflake/map/cost.query-history-and-account-usage|QUERY_HISTORY 与 ACCOUNT_USAGE]]
 
 ## Cards (5)
-- [[attrib-account-usage-latency-limit]]
-- [[attrib-diagnose-before-optimize]]
-- [[attrib-join-access-history-tables]]
-- [[attrib-tags-for-chargeback]]
-- [[attrib-warehouse-to-query]]
+1. [[attrib-account-usage-latency-limit]]
+2. [[attrib-diagnose-before-optimize]]
+3. [[attrib-join-access-history-tables]]
+4. [[attrib-tags-for-chargeback]]
+5. [[attrib-warehouse-to-query]]
 %% trellis:end %%
 
 ## Notes

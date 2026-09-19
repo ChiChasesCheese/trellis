@@ -12,10 +12,10 @@ Mapping problem smells to patterns, pattern pairs that get confused, and over-en
 - [[refactoring-guru-patterns|Design Patterns Catalog (refactoring.guru)]]
 
 ## Cards (4)
-- [[patterns-extensibility-followup]]
-- [[patterns-misuse-traps]]
-- [[patterns-selection-cues]]
-- [[patterns-when-to-refuse]]
+1. [[patterns-extensibility-followup]]
+2. [[patterns-misuse-traps]]
+3. [[patterns-selection-cues]]
+4. [[patterns-when-to-refuse]]
 %% trellis:end %%
 
 ## Notes

@@ -7,11 +7,11 @@
 **Requires:** [[domains/snowflake/map/cache.result-cache|持久化结果缓存]], [[domains/snowflake/map/cache.warehouse-local-disk-cache|仓库本地 SSD 缓存]]
 
 ## Cards (5)
-- [[cache-layers-staleness-risk]]
-- [[cache-layers-suspend-policy-decision]]
-- [[cache-layers-symptom-slow-after-resume]]
-- [[cache-layers-three-levels]]
-- [[cache-layers-warmup-cost-comparison]]
+1. [[cache-layers-staleness-risk]]
+2. [[cache-layers-suspend-policy-decision]]
+3. [[cache-layers-symptom-slow-after-resume]]
+4. [[cache-layers-three-levels]]
+5. [[cache-layers-warmup-cost-comparison]]
 %% trellis:end %%
 
 ## Notes

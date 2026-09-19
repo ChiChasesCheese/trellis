@@ -5,8 +5,8 @@
 The intentional-foul decision, fouling up three, bonus awareness, and managing your own foul trouble.
 
 ## Cards (2)
-- [[bb-situations-foul-management]]
-- [[bb-situations-fouling-up-three]]
+1. [[bb-situations-foul-management]]
+2. [[bb-situations-fouling-up-three]]
 %% trellis:end %%
 
 ## Notes

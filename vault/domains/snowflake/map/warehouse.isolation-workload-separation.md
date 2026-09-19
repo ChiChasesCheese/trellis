@@ -7,11 +7,11 @@
 **Requires:** [[domains/snowflake/map/warehouse.sizing-t-shirt|仓库规格（T 恤尺码式）]]
 
 ## Cards (5)
-- [[isolation-chargeback-and-access]]
-- [[isolation-over-fragmentation-cost]]
-- [[isolation-per-workload-tuning]]
-- [[isolation-separate-warehouses-same-data]]
-- [[isolation-what-is-not-isolated]]
+1. [[isolation-chargeback-and-access]]
+2. [[isolation-over-fragmentation-cost]]
+3. [[isolation-per-workload-tuning]]
+4. [[isolation-separate-warehouses-same-data]]
+5. [[isolation-what-is-not-isolated]]
 %% trellis:end %%
 
 ## Notes

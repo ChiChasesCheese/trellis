@@ -8,8 +8,8 @@ Reading the defender's recovery to pick the counter — crossover back, spin, st
 - [[live-catch-1v1-two-dribble|Drill: 1-on-1 from a live catch, two dribbles]]
 
 ## Cards (2)
-- [[bb-counters-by-recovery-angle]]
-- [[bb-counters-timing-window]]
+1. [[bb-counters-by-recovery-angle]]
+2. [[bb-counters-timing-window]]
 %% trellis:end %%
 
 ## Notes

@@ -7,11 +7,11 @@
 **Requires:** [[domains/snowflake/map/security.column-masking-policies|动态数据脱敏（dynamic data masking）]]
 
 ## Cards (5)
-- [[classify-quasi-identifier-risk]]
-- [[classify-semantic-privacy-category]]
-- [[tag-based-masking-scale]]
-- [[tag-classification-false-negative]]
-- [[tag-lineage-propagation]]
+1. [[classify-quasi-identifier-risk]]
+2. [[classify-semantic-privacy-category]]
+3. [[tag-based-masking-scale]]
+4. [[tag-classification-false-negative]]
+5. [[tag-lineage-propagation]]
 %% trellis:end %%
 
 ## Notes

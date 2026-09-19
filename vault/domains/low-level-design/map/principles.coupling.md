@@ -4,6 +4,8 @@
 
 Afferent/efferent coupling, law of Demeter, dependency injection as the seam-maker.
 
+**Core** — part of the first pass through this subject.
+
 **Unlocks:** [[domains/low-level-design/map/quality.testability|Designing for Tests]]
 
 ## Readings
@@ -16,11 +18,11 @@ Afferent/efferent coupling, law of Demeter, dependency injection as the seam-mak
 - [[qs-package-cycles-and-the-shrink-only-ratchet|Package cycles, and the exception list that may only shrink]] — `quant-stroller`
 
 ## Cards (5)
-- [[principles-cohesion-signal]]
-- [[principles-demeter-train-wreck]]
-- [[principles-di-seam]]
-- [[principles-stable-dependencies]]
-- [[principles-temporal-coupling]]
+1. [[principles-cohesion-signal]]
+2. [[principles-demeter-train-wreck]]
+3. [[principles-di-seam]]
+4. [[principles-stable-dependencies]]
+5. [[principles-temporal-coupling]]
 %% trellis:end %%
 
 ## Notes

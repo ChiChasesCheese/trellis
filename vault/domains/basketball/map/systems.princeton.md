@@ -8,9 +8,9 @@ The high-post hub, the backdoor as a punishment for overplaying, chin and point 
 - [[bb-princeton-today|How the Princeton Offense Fits Into Today's Basketball]]
 
 ## Cards (3)
-- [[bb-princeton-backdoor-trigger]]
-- [[bb-princeton-beats-athleticism]]
-- [[bb-princeton-high-post-hub]]
+1. [[bb-princeton-backdoor-trigger]]
+2. [[bb-princeton-beats-athleticism]]
+3. [[bb-princeton-high-post-hub]]
 %% trellis:end %%
 
 ## Notes

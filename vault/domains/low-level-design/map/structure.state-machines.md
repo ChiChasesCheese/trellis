@@ -16,11 +16,11 @@ Modeling lifecycles (order, elevator, game) as explicit states and transitions i
 - [[elevator-system|Drill: Elevator System]]
 
 ## Cards (5)
-- [[structure-state-entry-exit-actions]]
-- [[structure-state-enum-vs-boolean-soup]]
-- [[structure-state-guards-and-illegal-events]]
-- [[structure-state-table-vs-state-pattern]]
-- [[structure-state-transition-table]]
+1. [[structure-state-entry-exit-actions]]
+2. [[structure-state-enum-vs-boolean-soup]]
+3. [[structure-state-guards-and-illegal-events]]
+4. [[structure-state-table-vs-state-pattern]]
+5. [[structure-state-transition-table]]
 %% trellis:end %%
 
 ## Notes

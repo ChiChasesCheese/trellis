@@ -11,11 +11,11 @@
 - [[snowflak-query-acceleration|查询加速服务(QAS)加速离群查询]]
 
 ## Cards (5)
-- [[serverless-attribution-risk]]
-- [[serverless-compute-hours]]
-- [[serverless-qas-billing]]
-- [[serverless-separate-line-item]]
-- [[serverless-why-model]]
+1. [[serverless-attribution-risk]]
+2. [[serverless-compute-hours]]
+3. [[serverless-qas-billing]]
+4. [[serverless-separate-line-item]]
+5. [[serverless-why-model]]
 %% trellis:end %%
 
 ## Notes

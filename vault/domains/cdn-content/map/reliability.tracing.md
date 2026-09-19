@@ -10,9 +10,9 @@ Trace and span context, propagation, sampling, baggage, exemplars, and attributi
 - [[reliability-otel-signals|OpenTelemetry: Signals]]
 
 ## Cards (3)
-- [[reliability-tracing-baggage-privacy]]
-- [[reliability-tracing-cache-hit-span]]
-- [[reliability-tracing-tail-sampling]]
+1. [[reliability-tracing-baggage-privacy]]
+2. [[reliability-tracing-cache-hit-span]]
+3. [[reliability-tracing-tail-sampling]]
 %% trellis:end %%
 
 ## Notes

@@ -7,10 +7,10 @@
 **Requires:** [[domains/snowflake/map/openplatform.hybrid-tables-oltp|混合表（Hybrid Table，Unistore）]]
 
 ## Cards (4)
-- [[sfpg-compute-model-contrast]]
-- [[sfpg-operational-analytical-split]]
-- [[sfpg-why-beyond-hybrid]]
-- [[sfpg-wire-protocol-compat]]
+1. [[sfpg-compute-model-contrast]]
+2. [[sfpg-operational-analytical-split]]
+3. [[sfpg-why-beyond-hybrid]]
+4. [[sfpg-wire-protocol-compat]]
 %% trellis:end %%
 
 ## Notes

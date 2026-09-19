@@ -11,8 +11,8 @@ Reading a shot chart, expected points per shot by zone, and separating shot qual
 - [[film-study-count-decisions|Drill: Film study of your own game, counting decisions]]
 
 ## Cards (2)
-- [[bb-shot-chart-reading]]
-- [[bb-shot-quality-vs-shot-making]]
+1. [[bb-shot-chart-reading]]
+2. [[bb-shot-quality-vs-shot-making]]
 %% trellis:end %%
 
 ## Notes

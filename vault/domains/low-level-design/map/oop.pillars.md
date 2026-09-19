@@ -9,11 +9,11 @@ Encapsulation, abstraction, inheritance, polymorphism — each as a lever with a
 - [[poodr|Practical Object-Oriented Design (Sandi Metz)]]
 
 ## Cards (5)
-- [[oop-encapsulation-anemic-model]]
-- [[oop-getter-collection-leak]]
-- [[oop-inheritance-price]]
-- [[oop-polymorphism-vs-switch]]
-- [[oop-self-use-override-trap]]
+1. [[oop-encapsulation-anemic-model]]
+2. [[oop-getter-collection-leak]]
+3. [[oop-inheritance-price]]
+4. [[oop-polymorphism-vs-switch]]
+5. [[oop-self-use-override-trap]]
 %% trellis:end %%
 
 ## Notes

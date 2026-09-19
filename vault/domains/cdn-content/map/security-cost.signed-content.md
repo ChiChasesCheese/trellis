@@ -10,9 +10,9 @@ Time-bounded authorization, canonical signing input, key rotation, replay scope,
 - [[security-http-semantics-integrity|RFC 9110: HTTP Semantics for Request Integrity]]
 
 ## Cards (3)
-- [[security-signed-cache-scope]]
-- [[security-signed-canonical-input]]
-- [[security-signed-key-rotation]]
+1. [[security-signed-cache-scope]]
+2. [[security-signed-canonical-input]]
+3. [[security-signed-key-rotation]]
 %% trellis:end %%
 
 ## Notes

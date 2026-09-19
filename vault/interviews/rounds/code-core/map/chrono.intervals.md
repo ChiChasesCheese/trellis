@@ -18,11 +18,11 @@ Inclusive vs half-open endpoints, merging and subtracting ranges, filling gaps, 
 - [[oa-qa07-intervals-merge-covered|Drill: merge intervals, drop covered ones, then fill gaps with brand labels]]
 
 ## Cards (5)
-- [[cc-chrono-intervals-complement]]
-- [[cc-chrono-intervals-covered-sort]]
-- [[cc-chrono-intervals-endpoints]]
-- [[cc-chrono-intervals-merge-sweep]]
-- [[cc-chrono-intervals-subtract-sweep]]
+1. [[cc-chrono-intervals-complement]]
+2. [[cc-chrono-intervals-covered-sort]]
+3. [[cc-chrono-intervals-endpoints]]
+4. [[cc-chrono-intervals-merge-sweep]]
+5. [[cc-chrono-intervals-subtract-sweep]]
 %% trellis:end %%
 
 ## Notes

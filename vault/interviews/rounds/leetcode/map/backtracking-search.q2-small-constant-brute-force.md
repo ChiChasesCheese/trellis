@@ -3,11 +3,6 @@
 *回溯与穷举搜索（backtracking / exhaustive search）*
 
 看到题目规模上限是 很小的常数（如不超过一千），且候选之间相互独立时，应优先考虑直接枚举取最优而非设计复杂算法。
-
-## Cards (3)
-- [[leetcode-c-endlesscheng-yfxfdf-q2-small-constant-brute-force-invariant]]
-- [[leetcode-c-endlesscheng-yfxfdf-q2-small-constant-brute-force-recognition]]
-- [[leetcode-c-endlesscheng-yfxfdf-q2-small-constant-brute-force-template]]
 %% trellis:end %%
 
 ## Notes

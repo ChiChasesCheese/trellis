@@ -8,11 +8,11 @@
 - [[snowflak-key-concepts-architecture|Snowflake 关键概念与整体架构]]
 
 ## Cards (5)
-- [[multi-region-iceberg-external-storage]]
-- [[multi-region-no-on-prem-deployment]]
-- [[multi-region-replication-for-dr]]
-- [[multi-region-sharing-without-copies]]
-- [[multi-region-snowgrid-purpose]]
+1. [[multi-region-iceberg-external-storage]]
+2. [[multi-region-no-on-prem-deployment]]
+3. [[multi-region-replication-for-dr]]
+4. [[multi-region-sharing-without-copies]]
+5. [[multi-region-snowgrid-purpose]]
 %% trellis:end %%
 
 ## Notes

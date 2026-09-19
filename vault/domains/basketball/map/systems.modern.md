@@ -8,9 +8,9 @@ Gravity, empty-side actions, the death of the long two, and why spacing beat pos
 - [[bb-five-out-revolution|The 5-Out Basketball Revolution]]
 
 ## Cards (3)
-- [[bb-empty-side-purpose]]
-- [[bb-five-out-gravity]]
-- [[bb-long-two-death]]
+1. [[bb-empty-side-purpose]]
+2. [[bb-five-out-gravity]]
+3. [[bb-long-two-death]]
 %% trellis:end %%
 
 ## Notes

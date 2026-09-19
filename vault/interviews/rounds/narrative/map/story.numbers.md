@@ -7,7 +7,7 @@ Baseline, instrument, window, and what you would have accepted instead — plus 
 **Requires:** [[interviews/rounds/narrative/map/story.decision-spine|The Decision Spine]]
 
 ## Cards (1)
-- [[nr-number-survives-followup]]
+1. [[nr-number-survives-followup]]
 %% trellis:end %%
 
 ## Notes

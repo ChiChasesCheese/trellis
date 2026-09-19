@@ -10,11 +10,11 @@
 - [[snowflak-streams|流对象(Stream)的偏移量、类型与消费语义]]
 
 ## Cards (5)
-- [[stream-type-append-only-elt-performance]]
-- [[stream-type-choice-cloze]]
-- [[stream-type-insert-only-external]]
-- [[stream-type-standard-net-delta]]
-- [[stream-type-update-row-pair]]
+1. [[stream-type-append-only-elt-performance]]
+2. [[stream-type-choice-cloze]]
+3. [[stream-type-insert-only-external]]
+4. [[stream-type-standard-net-delta]]
+5. [[stream-type-update-row-pair]]
 %% trellis:end %%
 
 ## Notes

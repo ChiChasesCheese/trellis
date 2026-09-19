@@ -8,8 +8,8 @@ The two distinct violations, the cylinder above the rim, and when a ball on the 
 - [[bb-nba-rulebook|RULE NO. 10: Violations and Penalties | NBA Official]]
 
 ## Cards (2)
-- [[bb-ball-on-rim-live]]
-- [[bb-goaltending-vs-basket-interference]]
+1. [[bb-ball-on-rim-live]]
+2. [[bb-goaltending-vs-basket-interference]]
 %% trellis:end %%
 
 ## Notes

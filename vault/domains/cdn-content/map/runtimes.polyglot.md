@@ -10,9 +10,9 @@ Contracts across Go, TypeScript, and Lua, serialization, error vocabulary, owner
 - [[runtime-protobuf-contracts|Protocol Buffers proto3 language guide]]
 
 ## Cards (3)
-- [[runtime-polyglot-contract-first]]
-- [[runtime-polyglot-error-vocabulary]]
-- [[runtime-polyglot-hot-path-placement]]
+1. [[runtime-polyglot-contract-first]]
+2. [[runtime-polyglot-error-vocabulary]]
+3. [[runtime-polyglot-hot-path-placement]]
 %% trellis:end %%
 
 ## Notes

@@ -8,11 +8,11 @@
 - [[python-dataclasses|dataclasses — data classes]]
 
 ## Cards (5)
-- [[cc-python-classes-dataclass-ordering]]
-- [[cc-python-classes-default-factory]]
-- [[cc-python-classes-eq-hash-pair]]
-- [[cc-python-classes-repr-for-failures]]
-- [[cc-python-classes-slots]]
+1. [[cc-python-classes-dataclass-ordering]]
+2. [[cc-python-classes-default-factory]]
+3. [[cc-python-classes-eq-hash-pair]]
+4. [[cc-python-classes-repr-for-failures]]
+5. [[cc-python-classes-slots]]
 %% trellis:end %%
 
 ## Notes

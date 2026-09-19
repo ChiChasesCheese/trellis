@@ -14,10 +14,10 @@ Producer-consumer, bounded blocking queue, thread pool, reader-writer, safe lazy
 - [[lru-cache|Drill: LRU Cache (then make it thread-safe)]]
 
 ## Cards (4)
-- [[concurrency-bounded-queue-invariants]]
-- [[concurrency-double-checked-locking]]
-- [[concurrency-single-condvar-lost-signal]]
-- [[concurrency-thread-pool-backpressure]]
+1. [[concurrency-bounded-queue-invariants]]
+2. [[concurrency-double-checked-locking]]
+3. [[concurrency-single-condvar-lost-signal]]
+4. [[concurrency-thread-pool-backpressure]]
 %% trellis:end %%
 
 ## Notes

@@ -10,10 +10,10 @@
 - [[snowflak-dynamic-tables|动态表(Dynamic Table):用目标延迟声明代替手写 Stream+Task]]
 
 ## Cards (4)
-- [[dt-adaptive-backfill-scenario]]
-- [[dt-adaptive-definition]]
-- [[dt-adaptive-vs-auto]]
-- [[dt-custom-incremental-escape-hatch]]
+1. [[dt-adaptive-backfill-scenario]]
+2. [[dt-adaptive-definition]]
+3. [[dt-adaptive-vs-auto]]
+4. [[dt-custom-incremental-escape-hatch]]
 %% trellis:end %%
 
 ## Notes

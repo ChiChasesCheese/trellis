@@ -10,9 +10,9 @@ Hit-ratio value, object sizing, compression, tier placement, origin shielding, r
 - [[security-vercel-cdn-usage|Vercel: CDN Pricing and Usage]]
 
 ## Cards (3)
-- [[security-optimization-compression]]
-- [[security-optimization-hit-value]]
-- [[security-optimization-observability-cost]]
+1. [[security-optimization-compression]]
+2. [[security-optimization-hit-value]]
+3. [[security-optimization-observability-cost]]
 %% trellis:end %%
 
 ## Notes

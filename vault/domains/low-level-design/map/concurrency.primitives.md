@@ -4,6 +4,8 @@
 
 Mutex, semaphore, condition variable, reentrant and read-write locks, CAS and lock-free basics.
 
+**Core** — part of the first pass through this subject.
+
 **Unlocks:** [[domains/low-level-design/map/concurrency.patterns|Concurrency Patterns]]
 
 ## Readings
@@ -15,10 +17,10 @@ Mutex, semaphore, condition variable, reentrant and read-write locks, CAS and lo
 - [[lru-cache|Drill: LRU Cache (then make it thread-safe)]]
 
 ## Cards (4)
-- [[concurrency-cas-aba]]
-- [[concurrency-condvar-wait-loop]]
-- [[concurrency-mutex-vs-semaphore]]
-- [[concurrency-rwlock-when]]
+1. [[concurrency-cas-aba]]
+2. [[concurrency-condvar-wait-loop]]
+3. [[concurrency-mutex-vs-semaphore]]
+4. [[concurrency-rwlock-when]]
 %% trellis:end %%
 
 ## Notes

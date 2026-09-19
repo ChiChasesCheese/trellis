@@ -12,10 +12,10 @@ Bloaters, OO abusers, change preventers, dispensables, couplers — and the refa
 - [[qs-deleting-code-needs-positive-evidence|Dead code needs positive evidence, not silence]] — `quant-stroller`
 
 ## Cards (4)
-- [[quality-bloaters-refactorings]]
-- [[quality-couplers-refactorings]]
-- [[quality-divergent-vs-shotgun]]
-- [[quality-smell-families]]
+1. [[quality-bloaters-refactorings]]
+2. [[quality-couplers-refactorings]]
+3. [[quality-divergent-vs-shotgun]]
+4. [[quality-smell-families]]
 %% trellis:end %%
 
 ## Notes

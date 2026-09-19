@@ -8,8 +8,8 @@ Down two versus down three, playing for the last shot, and the two-possession ar
 - [[bb-late-game-special-situations|Fran Fraschilla's Late Game Plays and Special Situations]]
 
 ## Cards (2)
-- [[bb-situations-down-two-vs-down-three]]
-- [[bb-situations-playing-for-last-shot]]
+1. [[bb-situations-down-two-vs-down-three]]
+2. [[bb-situations-playing-for-last-shot]]
 %% trellis:end %%
 
 ## Notes

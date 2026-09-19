@@ -11,11 +11,11 @@ Recency ordering with an ordered dict, expiry by timestamp, and a key-to-sorted-
 - [[oa-q36-time-kv-map|Drill: a time-based key-value store with history and TTL]]
 
 ## Cards (5)
-- [[cc-toolbox-cache-expiry-index]]
-- [[cc-toolbox-cache-lru-ordereddict]]
-- [[cc-toolbox-cache-lru-tiebreak]]
-- [[cc-toolbox-cache-ttl]]
-- [[cc-toolbox-cache-versioned-map]]
+1. [[cc-toolbox-cache-expiry-index]]
+2. [[cc-toolbox-cache-lru-ordereddict]]
+3. [[cc-toolbox-cache-lru-tiebreak]]
+4. [[cc-toolbox-cache-ttl]]
+5. [[cc-toolbox-cache-versioned-map]]
 %% trellis:end %%
 
 ## Notes

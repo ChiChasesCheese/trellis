@@ -12,8 +12,8 @@ Blocked versus random practice, why comfortable reps feel productive and transfe
 - [[solo-workout-that-ends-in-decisions|Drill: A solo workout that ends in decisions]]
 
 ## Cards (2)
-- [[bb-blocked-vs-random-transfer]]
-- [[bb-random-practice-cue-design]]
+1. [[bb-blocked-vs-random-transfer]]
+2. [[bb-random-practice-cue-design]]
 %% trellis:end %%
 
 ## Notes

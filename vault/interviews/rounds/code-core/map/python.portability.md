@@ -5,11 +5,11 @@
 The Java, Go and TypeScript equivalents of the structures above, and which language costs you minutes in a timed round.
 
 ## Cards (5)
-- [[cc-python-portability-integer-division]]
-- [[cc-python-portability-language-cost]]
-- [[cc-python-portability-money-and-ints]]
-- [[cc-python-portability-sort-comparators]]
-- [[cc-python-portability-structure-map]]
+1. [[cc-python-portability-integer-division]]
+2. [[cc-python-portability-language-cost]]
+3. [[cc-python-portability-money-and-ints]]
+4. [[cc-python-portability-sort-comparators]]
+5. [[cc-python-portability-structure-map]]
 %% trellis:end %%
 
 ## Notes

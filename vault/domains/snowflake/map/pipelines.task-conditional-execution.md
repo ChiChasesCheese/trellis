@@ -10,11 +10,11 @@
 - [[snowflak-tasks|任务(Task):调度、算力模型与失败处理]]
 
 ## Cards (5)
-- [[task-conditional-cost-practices]]
-- [[task-stream-has-data-prevents-staleness]]
-- [[task-stream-on-view-trigger-caveat]]
-- [[task-triggered-vs-scheduled-polling]]
-- [[task-when-stream-has-data]]
+1. [[task-conditional-cost-practices]]
+2. [[task-stream-has-data-prevents-staleness]]
+3. [[task-stream-on-view-trigger-caveat]]
+4. [[task-triggered-vs-scheduled-polling]]
+5. [[task-when-stream-has-data]]
 %% trellis:end %%
 
 ## Notes

@@ -10,9 +10,9 @@ Decode, resize, crop, quality, metadata, format conversion, resource limits, der
 - [[content-next-images|Next.js image optimization]]
 
 ## Cards (3)
-- [[content-images-derived-key]]
-- [[content-images-publish-on-success]]
-- [[content-images-resource-limits]]
+1. [[content-images-derived-key]]
+2. [[content-images-publish-on-success]]
+3. [[content-images-resource-limits]]
 %% trellis:end %%
 
 ## Notes

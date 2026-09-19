@@ -10,11 +10,11 @@ Digit walks such as Luhn, wildcard expansion, one-edit distance, numeronyms and 
 - [[oa-qa10-lc161-one-edit-distance|Drill: one edit apart, then name the edit, then within k via a banded DP]]
 
 ## Cards (5)
-- [[cc-algorithms-strings-canonical-form]]
-- [[cc-algorithms-strings-luhn]]
-- [[cc-algorithms-strings-numeronym]]
-- [[cc-algorithms-strings-one-edit]]
-- [[cc-algorithms-strings-wildcard-count]]
+1. [[cc-algorithms-strings-canonical-form]]
+2. [[cc-algorithms-strings-luhn]]
+3. [[cc-algorithms-strings-numeronym]]
+4. [[cc-algorithms-strings-one-edit]]
+5. [[cc-algorithms-strings-wildcard-count]]
 %% trellis:end %%
 
 ## Notes

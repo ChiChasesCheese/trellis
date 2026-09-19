@@ -14,11 +14,11 @@ Fixed vs variable windows, shrinking on a violated invariant, minimal covering w
 - [[oa-qa04-lc1169-invalid-transactions|Drill: flag invalid transactions by amount and same-name city conflicts]]
 
 ## Cards (5)
-- [[cc-algorithms-sliding-window-covering]]
-- [[cc-algorithms-sliding-window-fixed-vs-variable]]
-- [[cc-algorithms-sliding-window-k-in-window]]
-- [[cc-algorithms-sliding-window-monotone-requirement]]
-- [[cc-algorithms-sliding-window-shrink]]
+1. [[cc-algorithms-sliding-window-covering]]
+2. [[cc-algorithms-sliding-window-fixed-vs-variable]]
+3. [[cc-algorithms-sliding-window-k-in-window]]
+4. [[cc-algorithms-sliding-window-monotone-requirement]]
+5. [[cc-algorithms-sliding-window-shrink]]
 %% trellis:end %%
 
 ## Notes

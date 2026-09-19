@@ -11,8 +11,8 @@ The defensive stance that lets you move, the sprint-then-chop closeout, and taki
 - [[closeout-rotation-shell|Drill: Closeout and second-rotation shell]]
 
 ## Cards (2)
-- [[bb-defense-closeout-mechanics-cloze]]
-- [[bb-defense-closeout-shooter-vs-driver]]
+1. [[bb-defense-closeout-mechanics-cloze]]
+2. [[bb-defense-closeout-shooter-vs-driver]]
 %% trellis:end %%
 
 ## Notes

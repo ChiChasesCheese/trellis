@@ -8,11 +8,11 @@
 - [[snowflak-key-concepts-architecture|Snowflake 关键概念与整体架构]]
 
 ## Cards (5)
-- [[multi-cluster-shared-consistent-view]]
-- [[multi-cluster-shared-data-hybrid-benefit]]
-- [[multi-cluster-shared-independent-compute-one-store]]
-- [[multi-cluster-shared-vs-shared-disk-bottleneck]]
-- [[multi-cluster-shared-vs-shared-nothing]]
+1. [[multi-cluster-shared-consistent-view]]
+2. [[multi-cluster-shared-data-hybrid-benefit]]
+3. [[multi-cluster-shared-independent-compute-one-store]]
+4. [[multi-cluster-shared-vs-shared-disk-bottleneck]]
+5. [[multi-cluster-shared-vs-shared-nothing]]
 %% trellis:end %%
 
 ## Notes

@@ -3,11 +3,6 @@
 *数学与数论（math / number theory）*
 
 多个“违反上界/禁用条件”的并集难直接计数、交集容易计数时，用 容斥原理。
-
-## Cards (3)
-- [[leetcode-c-endlesscheng-luu0kb-combinatorics-and-inclusion-exclusion-invariant]]
-- [[leetcode-c-endlesscheng-luu0kb-combinatorics-and-inclusion-exclusion-recognition]]
-- [[leetcode-c-endlesscheng-luu0kb-combinatorics-and-inclusion-exclusion-template]]
 %% trellis:end %%
 
 ## Notes

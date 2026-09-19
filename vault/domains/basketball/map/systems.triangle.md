@@ -8,8 +8,8 @@ The sideline triangle and two-man game away from it, spacing by geometry, and re
 - [[bb-tex-winter-triangle|K-State Basketball | Tex Winter - Triangle Offense]]
 
 ## Cards (2)
-- [[bb-triangle-sideline-geometry]]
-- [[bb-triangle-strongside-read]]
+1. [[bb-triangle-sideline-geometry]]
+2. [[bb-triangle-strongside-read]]
 %% trellis:end %%
 
 ## Notes

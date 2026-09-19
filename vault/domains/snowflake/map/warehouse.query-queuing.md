@@ -11,11 +11,11 @@
 - [[snowflak-warehouses-overview|虚拟仓库总览:尺寸、自动挂起与排队]]
 
 ## Cards (5)
-- [[queuing-economy-policy-trades-latency]]
-- [[queuing-resize-helps-queued-not-running]]
-- [[queuing-resource-reservation-mechanism]]
-- [[queuing-snowsight-ui-behind-workloads]]
-- [[queuing-three-remedies]]
+1. [[queuing-economy-policy-trades-latency]]
+2. [[queuing-resize-helps-queued-not-running]]
+3. [[queuing-resource-reservation-mechanism]]
+4. [[queuing-snowsight-ui-behind-workloads]]
+5. [[queuing-three-remedies]]
 %% trellis:end %%
 
 ## Notes

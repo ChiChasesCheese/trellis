@@ -10,9 +10,9 @@ Request smuggling, hop-by-hop headers, conflicting message lengths, trusted prox
 - [[security-http-semantics-integrity|RFC 9110: HTTP Semantics for Request Integrity]]
 
 ## Cards (3)
-- [[security-request-integrity-hop-headers]]
-- [[security-request-integrity-message-length]]
-- [[security-request-integrity-trusted-proxy]]
+1. [[security-request-integrity-hop-headers]]
+2. [[security-request-integrity-message-length]]
+3. [[security-request-integrity-trusted-proxy]]
 %% trellis:end %%
 
 ## Notes

@@ -10,11 +10,11 @@ SUSPEND_TASK_AFTER_NUM_FAILURES 参数、重试次数，以及当某个节点失
 - [[snowflak-tasks|任务(Task):调度、算力模型与失败处理]]
 
 ## Cards (5)
-- [[task-auto-retry-attempts]]
-- [[task-graph-child-failure-behavior]]
-- [[task-owner-role-dropped-paused]]
-- [[task-suspend-after-num-failures]]
-- [[task-timeout-parameters]]
+1. [[task-auto-retry-attempts]]
+2. [[task-graph-child-failure-behavior]]
+3. [[task-owner-role-dropped-paused]]
+4. [[task-suspend-after-num-failures]]
+5. [[task-timeout-parameters]]
 %% trellis:end %%
 
 ## Notes

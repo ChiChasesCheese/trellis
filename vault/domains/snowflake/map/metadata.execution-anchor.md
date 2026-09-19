@@ -7,10 +7,10 @@
 **Requires:** [[domains/snowflake/map/metadata.foundationdb-role|FoundationDB 作为元数据存储]]
 
 ## Cards (4)
-- [[anchor-enables-rolling-upgrade]]
-- [[anchor-state-in-shared-metadata]]
-- [[anchor-voluntary-vs-involuntary-transfer]]
-- [[anchor-why-single-owner]]
+1. [[anchor-enables-rolling-upgrade]]
+2. [[anchor-state-in-shared-metadata]]
+3. [[anchor-voluntary-vs-involuntary-transfer]]
+4. [[anchor-why-single-owner]]
 %% trellis:end %%
 
 ## Notes

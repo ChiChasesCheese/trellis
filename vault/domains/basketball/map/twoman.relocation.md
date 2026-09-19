@@ -8,8 +8,8 @@ What the two players not in the action must do — moving to keep the passing an
 - [[3on3-pnr-coverage-diagnosis|Drill: 3-on-3 pick-and-roll, defence calls the coverage]]
 
 ## Cards (2)
-- [[bb-relocation-being-findable]]
-- [[bb-relocation-drift-vs-lift]]
+1. [[bb-relocation-being-findable]]
+2. [[bb-relocation-drift-vs-lift]]
 %% trellis:end %%
 
 ## Notes

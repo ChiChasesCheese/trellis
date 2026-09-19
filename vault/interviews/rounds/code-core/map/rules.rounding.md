@@ -4,6 +4,8 @@
 
 Half-up vs banker's vs floor vs truncation, rounding once at the edge rather than per row, and the `x.xx5` cases graders love.
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[interviews/rounds/code-core/map/rules.money|Money as Integer Minor Units]]
 
 **Unlocks:** [[interviews/rounds/code-core/map/rules.fees|Percentages, Fees & Splits]]
@@ -20,12 +22,12 @@ Half-up vs banker's vs floor vs truncation, rounding once at the edge rather tha
 - [[tiered-billing-exact-output|Drill: tiered billing with an exact-output contract]]
 
 ## Cards (6)
-- [[cc-rules-round-floor-vs-truncate]]
-- [[cc-rules-round-half-up-vs-bankers]]
-- [[cc-rules-round-integer-half-up]]
-- [[cc-rules-round-name-the-modes]]
-- [[cc-rules-round-once-at-the-edge]]
-- [[cc-rules-round-x-xx5-table]]
+1. [[cc-rules-round-floor-vs-truncate]]
+2. [[cc-rules-round-half-up-vs-bankers]]
+3. [[cc-rules-round-integer-half-up]]
+4. [[cc-rules-round-name-the-modes]]
+5. [[cc-rules-round-once-at-the-edge]]
+6. [[cc-rules-round-x-xx5-table]]
 %% trellis:end %%
 
 ## Notes

@@ -15,11 +15,11 @@ Dijkstra with a heap, Bellman-Ford by rounds for a hop limit, product-weight pat
 - [[oa-qa02-lc787-cheapest-flights-k-stops|Drill: cheapest flight within k stops, two ways, then the itinerary and carrier filters]]
 
 ## Cards (5)
-- [[cc-algorithms-shortest-path-bounded-hops]]
-- [[cc-algorithms-shortest-path-dijkstra-heap]]
-- [[cc-algorithms-shortest-path-longer-can-win]]
-- [[cc-algorithms-shortest-path-product-weights]]
-- [[cc-algorithms-shortest-path-reconstruct]]
+1. [[cc-algorithms-shortest-path-bounded-hops]]
+2. [[cc-algorithms-shortest-path-dijkstra-heap]]
+3. [[cc-algorithms-shortest-path-longer-can-win]]
+4. [[cc-algorithms-shortest-path-product-weights]]
+5. [[cc-algorithms-shortest-path-reconstruct]]
 %% trellis:end %%
 
 ## Notes

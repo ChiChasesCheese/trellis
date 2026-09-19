@@ -7,11 +7,11 @@
 **Requires:** [[domains/snowflake/map/openplatform.snowpark-udf-udtf|Snowpark 用户自定义函数（UDF）与表函数（UDTF）]]
 
 ## Cards (5)
-- [[sproc-filesystem-tmp-only]]
-- [[sproc-no-network-default]]
-- [[sproc-owners-vs-callers-rights]]
-- [[sproc-sandbox-escape-cost]]
-- [[sproc-vs-udf-capability]]
+1. [[sproc-filesystem-tmp-only]]
+2. [[sproc-no-network-default]]
+3. [[sproc-owners-vs-callers-rights]]
+4. [[sproc-sandbox-escape-cost]]
+5. [[sproc-vs-udf-capability]]
 %% trellis:end %%
 
 ## Notes

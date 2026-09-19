@@ -4,6 +4,8 @@
 
 Epoch seconds, ISO-8601, `HH:MM`, day-of-week tokens and naive vs aware datetimes — parsing into one canonical representation.
 
+**Core** — part of the first pass through this subject.
+
 **Unlocks:** [[interviews/rounds/code-core/map/chrono.arithmetic|Duration & Calendar Arithmetic]]
 
 ## Readings
@@ -14,11 +16,11 @@ Epoch seconds, ISO-8601, `HH:MM`, day-of-week tokens and naive vs aware datetime
 - [[oa-qa05-lc1604-keycard-alerts|Drill: alert on repeated key-card use inside an hour, then generalize and go online]]
 
 ## Cards (5)
-- [[cc-chrono-parsing-canonical-form]]
-- [[cc-chrono-parsing-hhmm-minutes]]
-- [[cc-chrono-parsing-naive-vs-aware]]
-- [[cc-chrono-parsing-strict-validation]]
-- [[cc-chrono-parsing-weekday-tokens]]
+1. [[cc-chrono-parsing-canonical-form]]
+2. [[cc-chrono-parsing-hhmm-minutes]]
+3. [[cc-chrono-parsing-naive-vs-aware]]
+4. [[cc-chrono-parsing-strict-validation]]
+5. [[cc-chrono-parsing-weekday-tokens]]
 %% trellis:end %%
 
 ## Notes

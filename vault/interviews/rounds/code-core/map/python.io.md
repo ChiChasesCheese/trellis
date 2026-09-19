@@ -11,11 +11,11 @@ Reading the whole input fast, dispatching on a `PART` line, printing exactly, ke
 - [[exact-output-port-sprint|Drill: twenty minutes to an exact-output contract]]
 
 ## Cards (5)
-- [[cc-python-io-exact-stdout]]
-- [[cc-python-io-main-seam]]
-- [[cc-python-io-part-dispatch]]
-- [[cc-python-io-read-all-stdin]]
-- [[cc-python-io-stderr-debug]]
+1. [[cc-python-io-exact-stdout]]
+2. [[cc-python-io-main-seam]]
+3. [[cc-python-io-part-dispatch]]
+4. [[cc-python-io-read-all-stdin]]
+5. [[cc-python-io-stderr-debug]]
 %% trellis:end %%
 
 ## Notes

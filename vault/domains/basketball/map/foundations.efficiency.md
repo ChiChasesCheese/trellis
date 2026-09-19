@@ -8,8 +8,8 @@ PPP as the only scoreboard that compares actions; eFG% and TS% versus raw FG%; w
 - [[bb-bbref-glossary|Glossary | Basketball-Reference.com]]
 
 ## Cards (2)
-- [[bb-efficiency-efg-vs-ts]]
-- [[bb-efficiency-ppp-as-unit]]
+1. [[bb-efficiency-efg-vs-ts]]
+2. [[bb-efficiency-ppp-as-unit]]
 %% trellis:end %%
 
 ## Notes

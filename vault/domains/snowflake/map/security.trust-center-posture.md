@@ -7,10 +7,10 @@
 **Requires:** [[domains/snowflake/map/security.network-policies-private-connectivity|网络策略与私有连接]]
 
 ## Cards (4)
-- [[trust-center-continuous-drift]]
-- [[trust-center-scanner-packages]]
-- [[trust-center-typical-findings]]
-- [[trust-center-vs-prevention]]
+1. [[trust-center-continuous-drift]]
+2. [[trust-center-scanner-packages]]
+3. [[trust-center-typical-findings]]
+4. [[trust-center-vs-prevention]]
 %% trellis:end %%
 
 ## Notes

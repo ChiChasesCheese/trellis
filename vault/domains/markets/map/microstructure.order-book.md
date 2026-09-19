@@ -4,6 +4,8 @@
 
 Order types, price-time priority and matching, continuous trading vs call auctions, and quote-driven vs order-driven market designs.
 
+**Core** — part of the first pass through this subject.
+
 **Unlocks:** [[domains/markets/map/microstructure.spread|Spreads & Adverse Selection]]
 
 ## Readings

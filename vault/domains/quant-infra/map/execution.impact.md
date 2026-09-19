@@ -4,6 +4,8 @@
 
 Temporary versus permanent impact, the square-root law in participation rate, Almgren-Chriss and I-Star style models, impact decay, and the capacity ceiling they imply.
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/quant-infra/map/execution.microstructure.book|Limit Order Book & Priority]]
 
 **Unlocks:** [[domains/quant-infra/map/execution.algos|Execution Algorithms]], [[domains/quant-infra/map/execution.tca|Transaction Cost Analysis]]

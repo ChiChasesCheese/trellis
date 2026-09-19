@@ -11,10 +11,10 @@ Exceptions vs result types, validation at boundaries, designing failure paths as
 - [[splitwise|Drill: Splitwise (Expense Sharing)]]
 
 ## Cards (4)
-- [[quality-exception-design]]
-- [[quality-exceptions-vs-results]]
-- [[quality-null-returns]]
-- [[quality-validate-boundary]]
+1. [[quality-exception-design]]
+2. [[quality-exceptions-vs-results]]
+3. [[quality-null-returns]]
+4. [[quality-validate-boundary]]
 %% trellis:end %%
 
 ## Notes

@@ -10,11 +10,11 @@
 - [[snowflak-search-optimization|搜索优化服务(Search Optimization Service)]]
 
 ## Cards (5)
-- [[sos-cast-on-column-disables]]
-- [[sos-maintenance-background-cost]]
-- [[sos-not-btree]]
-- [[sos-search-access-path]]
-- [[sos-update-lag-correctness]]
+1. [[sos-cast-on-column-disables]]
+2. [[sos-maintenance-background-cost]]
+3. [[sos-not-btree]]
+4. [[sos-search-access-path]]
+5. [[sos-update-lag-correctness]]
 %% trellis:end %%
 
 ## Notes

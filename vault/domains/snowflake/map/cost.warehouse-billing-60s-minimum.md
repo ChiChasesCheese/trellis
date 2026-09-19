@@ -11,11 +11,11 @@
 - [[snowflak-warehouses-overview|虚拟仓库总览:尺寸、自动挂起与排队]]
 
 ## Cards (5)
-- [[min60-bigger-not-cheaper-loading]]
-- [[min60-multicluster-billing]]
-- [[min60-resize-up-billing]]
-- [[min60-resume-thrash]]
-- [[min60-rules]]
+1. [[min60-bigger-not-cheaper-loading]]
+2. [[min60-multicluster-billing]]
+3. [[min60-resize-up-billing]]
+4. [[min60-resume-thrash]]
+5. [[min60-rules]]
 %% trellis:end %%
 
 ## Notes

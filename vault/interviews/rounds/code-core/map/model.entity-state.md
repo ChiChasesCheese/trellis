@@ -4,6 +4,8 @@
 
 Counters and status kept per id, the derived-vs-stored decision, and re-evaluating exactly the entity an event touched.
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[interviews/rounds/code-core/map/model.records|Records, Dicts & When a Class Earns Its Place]]
 
 **Unlocks:** [[interviews/rounds/code-core/map/model.reversal|Reversals & Un-applying an Event]]
@@ -16,11 +18,11 @@ Counters and status kept per id, the derived-vs-stored decision, and re-evaluati
 - [[least-loaded-assignment-heap|Drill: least-loaded assignment under a performance budget]]
 
 ## Cards (5)
-- [[cc-model-state-derived-vs-stored]]
-- [[cc-model-state-implicit-entity-creation]]
-- [[cc-model-state-reevaluate-only-touched]]
-- [[cc-model-state-two-counters-not-a-list]]
-- [[cc-model-state-zero-vs-absent]]
+1. [[cc-model-state-derived-vs-stored]]
+2. [[cc-model-state-implicit-entity-creation]]
+3. [[cc-model-state-reevaluate-only-touched]]
+4. [[cc-model-state-two-counters-not-a-list]]
+5. [[cc-model-state-zero-vs-absent]]
 %% trellis:end %%
 
 ## Notes

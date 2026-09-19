@@ -7,11 +7,11 @@
 **Requires:** [[domains/snowflake/map/txn.mvcc-immutable-partitions|基于不可变微分区的 MVCC]]
 
 ## Cards (5)
-- [[concurrency-deadlock-victim-rule]]
-- [[concurrency-insert-vs-update-parallelism]]
-- [[concurrency-lock-timeout-failure]]
-- [[concurrency-many-small-updates-antipattern]]
-- [[concurrency-standard-vs-hybrid-lock-granularity]]
+1. [[concurrency-deadlock-victim-rule]]
+2. [[concurrency-insert-vs-update-parallelism]]
+3. [[concurrency-lock-timeout-failure]]
+4. [[concurrency-many-small-updates-antipattern]]
+5. [[concurrency-standard-vs-hybrid-lock-granularity]]
 %% trellis:end %%
 
 ## Notes
