@@ -65,7 +65,14 @@ class FakeRunner:
 
 
 @pytest.fixture
-def site(tmp_path):
+def collection():
+    """The Anki a site talks to. A test that pushes swaps in the fake that
+    can really import a package."""
+    return FakeAnki()
+
+
+@pytest.fixture
+def site(tmp_path, collection):
     (tmp_path / "skeleton").mkdir()
     (tmp_path / "skeleton" / "demo.yaml").write_text(
         yaml.safe_dump(SKELETON, allow_unicode=True), encoding="utf-8")
@@ -76,7 +83,7 @@ def site(tmp_path):
     traces |= {f"two-{i}": Trace(f"two-{i}", reps=3, lapses=0, interval=30) for i in range(3)}
     save_traces(traces_path(tmp_path, "demo"),
                 TraceFile(domain="demo", pulled_at="2026-09-01T00:00:00+00:00", traces=traces))
-    anki, runner = FakeAnki(), FakeRunner()
+    anki, runner = collection, FakeRunner()
     server = serve(tmp_path, port=0, anki=anki, runner=runner, open_browser=False)
     thread = threading.Thread(target=server.serve_forever, daemon=True)
     thread.start()
@@ -185,3 +192,27 @@ def test_a_leaf_just_grown_on_shows_its_graft_and_is_not_offered_again(site):
 
     status, refused = call(port, "POST", "/api/grow", {"key": "demo:base.one", "count": 2})
     assert status == 409 and "2 张新卡" in refused["error"]
+
+
+class TestPushing:
+    @pytest.fixture
+    def collection(self):
+        from fake_anki import FakeAnki as ImportingAnki
+        return ImportingAnki()
+
+    def test_accepting_with_push_sequences_the_collection_too(self, site):
+        _accept_with_push(site)
+
+
+def _accept_with_push(site):
+    root, port, anki, _ = site
+    _, job = call(port, "POST", "/api/grow", {"key": "demo:base.one", "count": 2})
+    for _ in range(50):
+        _, job = call(port, "GET", f"/api/jobs/{job['id']}")
+        if job["status"] == "review":
+            break
+        time.sleep(0.1)
+    status, done = call(port, "POST", f"/api/jobs/{job['id']}/accept", {"push": True})
+    assert status == 200, done
+    assert "sequenced" in done["pushed"] and "dealt by position" in done["pushed"]
+    assert anki.tagged("grown") == ["grown-one", "grown-two"]

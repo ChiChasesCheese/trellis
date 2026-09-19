@@ -22,7 +22,7 @@ import urllib.request
 from pathlib import Path
 from typing import Callable
 
-from .skeleton import Skeleton
+from .skeleton import Skeleton, Study
 from .traces import (TYPE_RELEARNING, Trace, TraceFile, card_id_from_tags,
                      now_stamp)
 
@@ -158,11 +158,100 @@ def _weakest(a: Trace, b: Trace) -> Trace:
     )
 
 
+TYPE_NEW = 0
+# Anki's own numbers for the options a Study sets (deck_config.proto, checked
+# against Anki 26.8.1): gather new cards by lowest position, and show them in
+# the order gathered.
+GATHER_LOWEST_POSITION, SORT_AS_GATHERED = 1, 1
+NEW_MIX = {"mixed": 0, "reviews-first": 1, "new-first": 2}
+PRESET_PREFIX = "Trellis · "
+BATCH = 100
+
+
+def sequence_new(skeleton: Skeleton, ordered: list[str], call: Callable = invoke,
+                 url: str = DEFAULT_URL) -> int:
+    """Give every *new* card of this domain the position its card holds in
+    `ordered` (card ids, first to last). Returns how many were moved.
+
+    An import places a note it has never seen and leaves one it has where it
+    was, so a collection drifts from the vault the first time anything is
+    reordered, inserted, or declared core. This converges it. Only cards
+    Anki still calls new are touched: once a card has been answered its
+    `due` is a date the scheduler chose, and that is not ours to write.
+    """
+    place = {card_id: i for i, card_id in enumerate(ordered, start=1)}
+    note_ids = call("findNotes", url, query=f"tag:{skeleton.domain}::*")
+    if not note_ids:
+        return 0
+    wanted: dict[int, int] = {}
+    for note in call("notesInfo", url, notes=note_ids):
+        card_id = card_id_from_tags(note.get("tags") or [])
+        if card_id in place and ADOPTED_TAG not in (note.get("tags") or []):
+            for cid in note.get("cards") or []:
+                wanted[cid] = place[card_id]
+    moves = [(row["cardId"], wanted[row["cardId"]])
+             for row in (call("cardsInfo", url, cards=list(wanted)) if wanted else [])
+             if int(row.get("type") or 0) == TYPE_NEW and row.get("due") != wanted[row["cardId"]]]
+    for start in range(0, len(moves), BATCH):
+        results = call("multi", url, actions=[
+            {"action": "setSpecificValueOfCard",
+             "params": {"card": cid, "keys": ["due"], "newValues": [position]}}
+            for cid, position in moves[start:start + BATCH]])
+        failed = [r for r in results if r != [True]]
+        if failed:
+            raise AnkiConnectError(f"could not reposition {len(failed)} card(s): {failed[0]}")
+    return len(moves)
+
+
+def apply_study(skeleton: Skeleton, study: Study, call: Callable = invoke,
+                url: str = DEFAULT_URL) -> str:
+    """Put the domain's decks on a preset of their own that deals new cards
+    by position, and carries the domain's Pace where it sets one. Returns a
+    line saying what is now in force.
+
+    The preset is cloned from whatever the domain's root deck was using, so
+    everything Trellis has no opinion on — FSRS parameters, learning steps,
+    timers — comes along unchanged; and the preset it was cloned from, which
+    the rest of the collection usually shares, is never written to.
+    """
+    root = skeleton.title
+    decks = [d for d in call("deckNames", url) if d == root or d.startswith(root + "::")]
+    if not decks:
+        return "no decks yet"
+    name = PRESET_PREFIX + skeleton.title
+    config = call("getDeckConfig", url, deck=root)
+    if config["name"] != name:
+        config = {**config, "id": call("cloneDeckConfigId", url, name=name, cloneFrom=config["id"]),
+                  "name": name}
+    wanted = {"newGatherPriority": GATHER_LOWEST_POSITION, "newSortOrder": SORT_AS_GATHERED}
+    if study.mix is not None:
+        wanted["newMix"] = NEW_MIX[study.mix]
+    if any(config.get(k) != v for k, v in wanted.items()) \
+            or (study.new_per_day is not None and config["new"]["perDay"] != study.new_per_day) \
+            or (study.reviews_per_day is not None and config["rev"]["perDay"] != study.reviews_per_day):
+        config.update(wanted)
+        if study.new_per_day is not None:
+            config["new"]["perDay"] = study.new_per_day
+        if study.reviews_per_day is not None:
+            config["rev"]["perDay"] = study.reviews_per_day
+        call("saveDeckConfig", url, config=config)
+    call("setDeckConfigId", url, decks=decks, configId=config["id"])
+
+    if not study.sets_pace:
+        return f"new cards dealt by position (preset '{name}')"
+    limits = " + ".join(part for part in (
+        f"{study.new_per_day} new" if study.new_per_day is not None else "",
+        f"{study.reviews_per_day} review(s)" if study.reviews_per_day is not None else "") if part)
+    said = ", ".join(part for part in (study.mix or "", f"{limits} a day" if limits else "") if part)
+    return f"pace: {said} (preset '{name}')"
+
+
 def push(
     skeleton: Skeleton,
     apkg: Path,
     call: Callable = invoke,
     url: str = DEFAULT_URL,
+    ordered: list[str] | None = None,
 ) -> dict:
     """Publish a freshly built deck into the running Anki and out to AnkiWeb.
 
@@ -184,6 +273,13 @@ def push(
     moved = align(skeleton, call=call, url=url)
     steps.append(f"moved {moved['moved']} card(s), removed "
                  f"{len(moved['deleted'])} stale deck(s)")
+
+    # The package numbered its cards, but only the ones this collection had
+    # never seen took the number. Converge the rest, then make sure the decks
+    # deal by that number at all (ADR 0010).
+    if ordered is not None:
+        steps.append(f"sequenced {sequence_new(skeleton, ordered, call=call, url=url)} new card(s)")
+        steps.append(apply_study(skeleton, skeleton.study, call=call, url=url))
 
     call("sync", url)
     steps.append("pushed to AnkiWeb")

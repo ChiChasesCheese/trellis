@@ -36,6 +36,7 @@ from .obsidian import vault_name
 from .path import study_path
 from .project import Project, all_skeletons, domains, load_project, vault_note_names
 from .scaffold import import_cards, scaffold_prompt
+from .sequence import sequence
 from .skeleton import SkeletonError
 from .sync import sync, write_managed
 from .triage import (
@@ -323,10 +324,13 @@ def cmd_anki_push(args, project: Project) -> int:
             project.skeleton, project.cards, apkg, project.readings,
             vault=vault_name(args.root / "vault"),
             clippings=project.clippings, cases=project.cases, lang=args.lang,
+            order=project.skeleton.study.order,
         )
         print(f"  built {result['notes']} notes in {result['decks']} decks")
+    ordered = [c.id for c in sequence(project.skeleton, project.cards, project.skeleton.study.order)]
     try:
-        result = push(project.skeleton, Path(apkg), call=_anki_client(args.anki_url))
+        result = push(project.skeleton, Path(apkg), call=_anki_client(args.anki_url),
+                      ordered=ordered)
     except AnkiConnectError as exc:
         _fail(str(exc))
     for step in result["steps"]:
@@ -338,15 +342,25 @@ def cmd_anki_push(args, project: Project) -> int:
 
 
 def cmd_anki_align(args, project: Project) -> int:
-    from .anki import AnkiConnectError, align
+    """Converge the collection on the vault without importing anything:
+    decks, then the Sequence, then the options that deal by it."""
+    from .anki import AnkiConnectError, align, apply_study, sequence_new
+    call = _anki_client(args.anki_url)
+    study = project.skeleton.study
     try:
-        result = align(project.skeleton, call=_anki_client(args.anki_url))
+        result = align(project.skeleton, call=call)
+        moved = sequence_new(project.skeleton,
+                             [c.id for c in sequence(project.skeleton, project.cards, study.order)],
+                             call=call)
+        options = apply_study(project.skeleton, study, call=call)
     except AnkiConnectError as exc:
         _fail(str(exc))
     print(f"{project.skeleton.domain}: moved {result['moved']} card(s), "
           f"deleted {len(result['deleted'])} stale deck(s)")
     for name in result["deleted"]:
         print(f"  deleted: {name}")
+    print(f"  sequenced {moved} new card(s)")
+    print(f"  {options}")
     return 0
 
 

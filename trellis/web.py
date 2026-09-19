@@ -36,6 +36,7 @@ from .hold import LeafStanding, assess, grown_query
 from .obsidian import open_uri, vault_name
 from .project import domains, load_loop
 from .runner import ClaudeRunner, RunnerError, cards_from
+from .sequence import sequence
 from .traces import load_traces, save_traces, traces_path
 
 JOBS_DIRNAME = ".trellis/jobs"
@@ -313,8 +314,10 @@ class Workbench:
         apkg = self.root / "dist" / f"{domain}{'.' + lang if lang else ''}.apkg"
         build_package(project.skeleton, project.cards, apkg, project.readings,
                       vault=vault_name(self.root / "vault"), clippings=project.clippings,
-                      cases=project.cases, lang=lang)
-        result = anki_push(project.skeleton, apkg, call=self.anki)
+                      cases=project.cases, lang=lang, order=project.skeleton.study.order)
+        ordered = [c.id for c in sequence(project.skeleton, project.cards,
+                                          project.skeleton.study.order)]
+        result = anki_push(project.skeleton, apkg, call=self.anki, ordered=ordered)
         return "; ".join(result["steps"])
 
     def focus(self, keys: list[str], action: str) -> dict:
