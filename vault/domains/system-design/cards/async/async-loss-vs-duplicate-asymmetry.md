@@ -2,6 +2,7 @@
 id: async-loss-vs-duplicate-asymmetry
 node: async.delivery.guarantees
 type: qa
+step: 4
 ---
 ## Q
 Between at-most-once and at-least-once delivery, production systems overwhelmingly build on at-least-once and engineer away the duplicates. What asymmetry between losing a message and duplicating one justifies that default?

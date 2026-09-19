@@ -2,6 +2,7 @@
 id: kafka-producer-callback-ordering-and-blocking
 node: producer.client-basics
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

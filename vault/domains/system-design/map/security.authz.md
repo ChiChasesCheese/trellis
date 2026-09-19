@@ -9,12 +9,12 @@ RBAC vs ABAC, API keys vs user tokens, TLS everywhere, secrets handling.
 - [[owasp-api-security|OWASP API Security Top 10]]
 
 ## Cards (6)
-- [[security-api-keys-vs-user-tokens]]
-- [[security-confused-deputy]]
-- [[security-mtls-vs-tokens-s2s]]
-- [[security-rbac-vs-abac]]
-- [[security-secrets-handling]]
-- [[security-secrets-rotation-live]]
+1. [[security-rbac-vs-abac]]
+2. [[security-api-keys-vs-user-tokens]]
+3. [[security-confused-deputy]]
+4. [[security-mtls-vs-tokens-s2s]]
+5. [[security-secrets-handling]]
+6. [[security-secrets-rotation-live]]
 %% trellis:end %%
 
 ## Notes

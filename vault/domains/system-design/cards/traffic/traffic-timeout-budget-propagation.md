@@ -2,6 +2,7 @@
 id: traffic-timeout-budget-propagation
 node: traffic.gateways
 type: qa
+step: 5
 ---
 ## Q
 The gateway times out at 10 s, but a service it calls uses a 15 s timeout on its own downstream call. What goes wrong, and what discipline fixes it?

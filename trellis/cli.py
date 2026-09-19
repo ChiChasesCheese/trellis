@@ -36,6 +36,7 @@ from .obsidian import vault_name
 from .path import study_path
 from .project import Project, all_skeletons, domains, load_project, vault_note_names
 from .scaffold import import_cards, scaffold_prompt
+from .sequence import sequence
 from .skeleton import SkeletonError
 from .sync import sync, write_managed
 from .triage import (
@@ -323,10 +324,13 @@ def cmd_anki_push(args, project: Project) -> int:
             project.skeleton, project.cards, apkg, project.readings,
             vault=vault_name(args.root / "vault"),
             clippings=project.clippings, cases=project.cases, lang=args.lang,
+            order=project.skeleton.study.order,
         )
         print(f"  built {result['notes']} notes in {result['decks']} decks")
+    ordered = [c.id for c in sequence(project.skeleton, project.cards, project.skeleton.study.order)]
     try:
-        result = push(project.skeleton, Path(apkg), call=_anki_client(args.anki_url))
+        result = push(project.skeleton, Path(apkg), call=_anki_client(args.anki_url),
+                      ordered=ordered)
     except AnkiConnectError as exc:
         _fail(str(exc))
     for step in result["steps"]:
@@ -338,15 +342,25 @@ def cmd_anki_push(args, project: Project) -> int:
 
 
 def cmd_anki_align(args, project: Project) -> int:
-    from .anki import AnkiConnectError, align
+    """Converge the collection on the vault without importing anything:
+    decks, then the Sequence, then the options that deal by it."""
+    from .anki import AnkiConnectError, align, apply_study, sequence_new
+    call = _anki_client(args.anki_url)
+    study = project.skeleton.study
     try:
-        result = align(project.skeleton, call=_anki_client(args.anki_url))
+        result = align(project.skeleton, call=call)
+        moved = sequence_new(project.skeleton,
+                             [c.id for c in sequence(project.skeleton, project.cards, study.order)],
+                             call=call)
+        options = apply_study(project.skeleton, study, call=call)
     except AnkiConnectError as exc:
         _fail(str(exc))
     print(f"{project.skeleton.domain}: moved {result['moved']} card(s), "
           f"deleted {len(result['deleted'])} stale deck(s)")
     for name in result["deleted"]:
         print(f"  deleted: {name}")
+    print(f"  sequenced {moved} new card(s)")
+    print(f"  {options}")
     return 0
 
 
@@ -818,7 +832,39 @@ CROSS_DOMAIN = {
     "brief": cmd_brief, "adopt": cmd_adopt, "feed": cmd_feed, "serve": cmd_serve,
 }
 
+def cmd_steps(args, project: Project) -> int:
+    """Give the cards of each leaf their order: status, a prompt, or an
+    answer to land."""
+    from .steps import import_steps, status_lines, steps_prompt
+    if args.import_file:
+        if project.card_errors:
+            for e in project.card_errors:
+                print(f"error: {e}", file=sys.stderr)
+            _fail("fix existing card errors before ordering cards")
+        changed, errors = import_steps(project, args.import_file, write=not args.check)
+        for e in errors:
+            print(f"error: {e}", file=sys.stderr)
+        if errors:
+            _fail("nothing written")
+        if args.check:
+            import json as _json
+            leaves = len(_json.loads(Path(args.import_file).read_text(encoding="utf-8")))
+            print(f"ok: {leaves} {'leaf' if leaves == 1 else 'leaves'}, {changed} card(s)")
+            return 0
+        print(f"{changed} card file(s) updated")
+        project = _load(args.root, project.skeleton.domain)
+    elif args.output:
+        prompt = steps_prompt(project, branch=args.branch, only_pending=args.pending)
+        Path(args.output).write_text(prompt, encoding="utf-8")
+        print(f"wrote {args.output}")
+        return 0
+    for line in status_lines(project):
+        print(line)
+    return 0
+
+
 HANDLERS = {
+    "steps": cmd_steps,
     "clip": cmd_clip,
     "anki-push": cmd_anki_push,
     "anki-align": cmd_anki_align,
@@ -831,7 +877,7 @@ HANDLERS = {
     "import": cmd_import,
     "pull": cmd_pull,
 }
-SINGLE_DOMAIN_ONLY = {"scaffold", "import"}
+SINGLE_DOMAIN_ONLY = {"scaffold", "import", "steps"}
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -891,6 +937,19 @@ def main(argv: list[str] | None = None) -> int:
     )
     p_clip.add_argument("--node", help="only readings under this node id")
     _subcommand("stats", help="card counts and leaf coverage per branch")
+    p_steps = _subcommand(
+        "steps", help="give the cards of each leaf their order: with no option, which "
+                      "leaves have none; -o FILE for a prompt; --import FILE to land the "
+                      "answer as `step:` lines")
+    p_steps.add_argument("-o", "--output", help="write the ordering prompt here")
+    p_steps.add_argument("--branch", help="only leaves under this node id")
+    p_steps.add_argument("--pending", action="store_true",
+                         help="only leaves that have no order yet")
+    p_steps.add_argument("--check", action="store_true",
+                         help="with --import: validate the answer and write nothing")
+    p_steps.add_argument("--import", dest="import_file", metavar="FILE",
+                         help="JSON {leaf id: [card ids in order]} to write into the cards")
+
     p_path = _subcommand("path", help="write the linear study path into the vault")
     p_path.add_argument("--weeks", type=int)
     p_scaffold = _subcommand("scaffold", help="emit an LLM prompt for a node")

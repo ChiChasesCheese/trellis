@@ -2,6 +2,7 @@
 id: kafka-mirroring-star-architecture-limitation
 node: mirroring.architectures
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

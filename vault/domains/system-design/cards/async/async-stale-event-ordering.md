@@ -2,6 +2,7 @@
 id: async-stale-event-ordering
 node: async.delivery.guarantees
 type: qa
+step: 6
 ---
 ## Q
 Your handler is idempotent and the topic is keyed by entity, yet a profile occasionally reverts to an old address. Why isn't idempotency enough, and what is the fix?

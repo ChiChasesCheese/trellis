@@ -2,6 +2,7 @@
 id: security-oauth-browser-token-storage
 node: security.authn.oauth
 type: qa
+step: 2
 ---
 ## Q
 Why was the implicit flow deprecated, and — since code+PKCE replaced it — where should an SPA keep the resulting tokens in 2026?

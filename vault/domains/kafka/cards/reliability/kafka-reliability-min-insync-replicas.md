@@ -2,6 +2,7 @@
 id: kafka-reliability-min-insync-replicas
 node: reliability.broker-config
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

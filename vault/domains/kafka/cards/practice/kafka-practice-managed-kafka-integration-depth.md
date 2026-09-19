@@ -2,6 +2,7 @@
 id: kafka-practice-managed-kafka-integration-depth
 node: practice.cloud-deployment
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

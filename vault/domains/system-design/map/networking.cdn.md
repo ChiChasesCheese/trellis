@@ -9,12 +9,12 @@ Push vs pull CDNs, cache keys, and what belongs at the edge.
 - [[netflix-open-connect|Netflix Open Connect Overview]]
 
 ## Cards (6)
-- [[networking-cdn-cache-key]]
-- [[networking-cdn-dynamic-acceleration]]
-- [[networking-cdn-purge-vs-versioning]]
-- [[networking-cdn-stale-while-revalidate]]
-- [[networking-cdn-what-belongs-at-edge]]
-- [[networking-push-vs-pull-cdn]]
+1. [[networking-push-vs-pull-cdn]]
+2. [[networking-cdn-cache-key]]
+3. [[networking-cdn-stale-while-revalidate]]
+4. [[networking-cdn-purge-vs-versioning]]
+5. [[networking-cdn-what-belongs-at-edge]]
+6. [[networking-cdn-dynamic-acceleration]]
 %% trellis:end %%
 
 ## Notes

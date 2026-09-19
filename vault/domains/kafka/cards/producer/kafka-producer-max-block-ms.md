@@ -2,6 +2,7 @@
 id: kafka-producer-max-block-ms
 node: producer.timeouts-retries
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: distributed-cap-real-claim
 node: distributed.cap
 type: qa
+step: 1
 ---
 ## Q
 What does the CAP theorem actually constrain — and why is calling a system "CA" a red flag in an interview?

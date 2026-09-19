@@ -2,6 +2,7 @@
 id: kafka-internals-controller-role
 node: internals.controller
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: kafka-admin-reassignment-throttle
 node: admin.partition-reassignment
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

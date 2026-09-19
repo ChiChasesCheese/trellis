@@ -2,6 +2,7 @@
 id: storage-s3-conditional-writes
 node: storage.object
 type: qa
+step: 3
 ---
 ## Q
 S3's consistency model changed twice in the 2020s. What do you get now, and what new class of system did conditional writes unlock?

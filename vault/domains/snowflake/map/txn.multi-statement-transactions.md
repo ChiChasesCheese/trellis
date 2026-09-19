@@ -10,11 +10,11 @@
 - [[snowflak-transactions-isolation|事务、隐式提交与 READ COMMITTED 隔离级别]]
 
 ## Cards (5)
-- [[multistmt-autocommit-default-behavior]]
-- [[multistmt-autocommit-false-implicit-boundaries]]
-- [[multistmt-best-practice-explicit-with-autocommit]]
-- [[multistmt-scoped-txn-logging-pattern]]
-- [[multistmt-txn-cannot-span-procedure-boundary]]
+1. [[multistmt-autocommit-default-behavior]]
+2. [[multistmt-autocommit-false-implicit-boundaries]]
+3. [[multistmt-best-practice-explicit-with-autocommit]]
+4. [[multistmt-scoped-txn-logging-pattern]]
+5. [[multistmt-txn-cannot-span-procedure-boundary]]
 %% trellis:end %%
 
 ## Notes

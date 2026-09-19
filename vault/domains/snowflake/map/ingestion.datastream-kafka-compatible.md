@@ -7,11 +7,11 @@
 **Requires:** [[domains/snowflake/map/ingestion.snowpipe-streaming-offset-tokens|Snowpipe Streaming 与偏移量令牌（offset token）]]
 
 ## Cards (5)
-- [[datastream-inherits-governance]]
-- [[datastream-maturity-status]]
-- [[datastream-vs-connector-plus-streaming]]
-- [[datastream-when-not-to-choose]]
-- [[datastream-wire-protocol-not-kafka]]
+1. [[datastream-inherits-governance]]
+2. [[datastream-maturity-status]]
+3. [[datastream-vs-connector-plus-streaming]]
+4. [[datastream-when-not-to-choose]]
+5. [[datastream-wire-protocol-not-kafka]]
 %% trellis:end %%
 
 ## Notes

@@ -8,11 +8,11 @@
 - [[kafka-6-2-controller-kraft|控制器的选举与职责，以及KRaft带来的变革]]
 
 ## Cards (5)
-- [[kafka-internals-kraft-active-standby-controller]]
-- [[kafka-internals-kraft-broker-fencing]]
-- [[kafka-internals-kraft-metadata-as-log]]
-- [[kafka-internals-kraft-motivation]]
-- [[kafka-internals-kraft-pull-metadata-fetch]]
+1. [[kafka-internals-kraft-motivation]]
+2. [[kafka-internals-kraft-metadata-as-log]]
+3. [[kafka-internals-kraft-active-standby-controller]]
+4. [[kafka-internals-kraft-pull-metadata-fetch]]
+5. [[kafka-internals-kraft-broker-fencing]]
 %% trellis:end %%
 
 ## Notes

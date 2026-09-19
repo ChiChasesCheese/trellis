@@ -2,6 +2,7 @@
 id: networking-dns-resolution-path
 node: networking.dns
 type: qa
+step: 1
 ---
 ## Q
 Trace an uncached lookup of `api.example.com` from the browser to an answer. Where do caches sit in that path?

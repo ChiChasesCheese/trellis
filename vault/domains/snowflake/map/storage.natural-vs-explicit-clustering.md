@@ -10,12 +10,12 @@
 - [[snowflak-clustering-keys-strategy|聚簇键的选择与何时需要它]]
 
 ## Cards (6)
-- [[natural-clustering-degrades-with-dml]]
-- [[natural-vs-explicit-batch-dml]]
-- [[natural-vs-explicit-indicators]]
-- [[natural-vs-explicit-manual-sort-alternative]]
-- [[natural-vs-explicit-recluster-example]]
-- [[natural-vs-explicit-storage-turnover]]
+1. [[natural-clustering-degrades-with-dml]]
+2. [[natural-vs-explicit-batch-dml]]
+3. [[natural-vs-explicit-indicators]]
+4. [[natural-vs-explicit-manual-sort-alternative]]
+5. [[natural-vs-explicit-recluster-example]]
+6. [[natural-vs-explicit-storage-turnover]]
 %% trellis:end %%
 
 ## Notes

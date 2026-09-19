@@ -7,11 +7,11 @@
 **Requires:** [[domains/snowflake/map/continuity.replication-and-failover|数据库复制与故障切换]]
 
 ## Cards (5)
-- [[client-redirect-connection-object]]
-- [[client-redirect-edition-requirement]]
-- [[client-redirect-failover-steps]]
-- [[client-redirect-not-instant-dns]]
-- [[client-redirect-vs-failover-group]]
+1. [[client-redirect-connection-object]]
+2. [[client-redirect-edition-requirement]]
+3. [[client-redirect-failover-steps]]
+4. [[client-redirect-not-instant-dns]]
+5. [[client-redirect-vs-failover-group]]
 %% trellis:end %%
 
 ## Notes

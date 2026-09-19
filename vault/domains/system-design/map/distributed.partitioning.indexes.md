@@ -5,11 +5,11 @@
 Local vs global secondary indexes — scatter-gather reads vs write amplification.
 
 ## Cards (5)
-- [[distributed-avoiding-scatter-gather]]
-- [[distributed-global-index-staleness]]
-- [[distributed-index-write-amplification]]
-- [[distributed-scatter-gather-fanout-math]]
-- [[distributed-secondary-index-partitioning]]
+1. [[distributed-secondary-index-partitioning]]
+2. [[distributed-scatter-gather-fanout-math]]
+3. [[distributed-avoiding-scatter-gather]]
+4. [[distributed-index-write-amplification]]
+5. [[distributed-global-index-staleness]]
 %% trellis:end %%
 
 ## Notes

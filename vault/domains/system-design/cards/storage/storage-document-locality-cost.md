@@ -2,6 +2,7 @@
 id: storage-document-locality-cost
 node: storage.nosql
 type: qa
+step: 3
 ---
 ## Q
 Document stores sell "storage locality" — the whole record in one read. What is the write-side price of that locality, and what two modeling rules does it impose?

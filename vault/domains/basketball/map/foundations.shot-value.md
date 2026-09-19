@@ -8,8 +8,8 @@ Rim, free throw, corner three, above-break three, long two — the expected-valu
 - [[solo-workout-that-ends-in-decisions|Drill: A solo workout that ends in decisions]]
 
 ## Cards (2)
-- [[bb-shot-value-ladder]]
-- [[bb-shot-value-long-two]]
+1. [[bb-shot-value-ladder]]
+2. [[bb-shot-value-long-two]]
 %% trellis:end %%
 
 ## Notes

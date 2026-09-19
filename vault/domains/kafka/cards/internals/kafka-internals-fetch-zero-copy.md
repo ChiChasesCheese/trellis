@@ -2,6 +2,7 @@
 id: kafka-internals-fetch-zero-copy
 node: internals.request-handling
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

@@ -14,9 +14,9 @@ Triage, mitigation, incident command, communication, rollback, evidence collecti
 - [[incident-regional-cache-collapse|Drill: Regional cache collapse incident]]
 
 ## Cards (3)
-- [[reliability-incidents-command-roles]]
-- [[reliability-incidents-first-mitigation]]
-- [[reliability-incidents-postmortem-action]]
+1. [[reliability-incidents-command-roles]]
+2. [[reliability-incidents-first-mitigation]]
+3. [[reliability-incidents-postmortem-action]]
 %% trellis:end %%
 
 ## Notes

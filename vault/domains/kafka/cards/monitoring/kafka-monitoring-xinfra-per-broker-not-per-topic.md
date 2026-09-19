@@ -2,6 +2,7 @@
 id: kafka-monitoring-xinfra-per-broker-not-per-topic
 node: monitoring.lag-e2e
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

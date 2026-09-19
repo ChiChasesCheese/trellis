@@ -2,6 +2,7 @@
 id: kafka-streams-repartition-splits-subtopology
 node: streams.streams-architecture
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

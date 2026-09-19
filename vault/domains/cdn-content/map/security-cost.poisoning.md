@@ -13,9 +13,9 @@ Unkeyed input, host and header ambiguity, normalization disagreement, response s
 - [[roll-out-cache-key-change|Drill: Roll out a cache-key change]]
 
 ## Cards (3)
-- [[security-poisoning-cache-deception]]
-- [[security-poisoning-normalization]]
-- [[security-poisoning-unkeyed-input]]
+1. [[security-poisoning-cache-deception]]
+2. [[security-poisoning-normalization]]
+3. [[security-poisoning-unkeyed-input]]
 %% trellis:end %%
 
 ## Notes

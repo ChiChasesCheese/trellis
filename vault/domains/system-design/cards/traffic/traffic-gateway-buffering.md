@@ -2,6 +2,7 @@
 id: traffic-gateway-buffering
 node: traffic.gateways
 type: qa
+step: 3
 ---
 ## Q
 Reverse-proxy request/response buffering — what does it protect upstream from, and when must you turn it off?

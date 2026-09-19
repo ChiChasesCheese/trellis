@@ -11,11 +11,11 @@
 - [[snowflak-warehouses-overview|虚拟仓库总览:尺寸、自动挂起与排队]]
 
 ## Cards (5)
-- [[auto-resume-trigger-and-cost-control]]
-- [[auto-suspend-60s-restart-billing]]
-- [[auto-suspend-match-query-gaps]]
-- [[auto-suspend-multi-cluster-whole-warehouse]]
-- [[auto-suspend-when-to-disable]]
+1. [[auto-resume-trigger-and-cost-control]]
+2. [[auto-suspend-60s-restart-billing]]
+3. [[auto-suspend-match-query-gaps]]
+4. [[auto-suspend-multi-cluster-whole-warehouse]]
+5. [[auto-suspend-when-to-disable]]
 %% trellis:end %%
 
 ## Notes

@@ -9,11 +9,11 @@ Program-to-interface, interface vs abstract class discrimination, default method
 - [[java-tutorial-interfaces|Oracle Java Tutorial: Interfaces and Inheritance]]
 
 ## Cards (5)
-- [[oop-abstract-partial-implementation-cost]]
-- [[oop-default-methods]]
-- [[oop-interface-vs-abstract-class]]
-- [[oop-interface-width-by-client]]
-- [[oop-program-to-interface-scope]]
+1. [[oop-abstract-partial-implementation-cost]]
+2. [[oop-default-methods]]
+3. [[oop-interface-vs-abstract-class]]
+4. [[oop-interface-width-by-client]]
+5. [[oop-program-to-interface-scope]]
 %% trellis:end %%
 
 ## Notes

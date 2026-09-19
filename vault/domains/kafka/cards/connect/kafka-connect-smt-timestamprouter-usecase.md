@@ -2,6 +2,7 @@
 id: kafka-connect-smt-timestamprouter-usecase
 node: connect.smt
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

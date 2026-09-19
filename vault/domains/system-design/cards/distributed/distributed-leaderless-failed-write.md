@@ -2,6 +2,7 @@
 id: distributed-leaderless-failed-write
 node: distributed.replication.leaderless
 type: qa
+step: 2
 ---
 ## Q
 In a Dynamo-style leaderless store (N=3, W=2), a write reaches only 1 replica and the client gets an error. Is the value gone? What must the application assume about "failed" writes?

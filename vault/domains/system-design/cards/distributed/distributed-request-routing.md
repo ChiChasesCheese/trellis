@@ -2,6 +2,7 @@
 id: distributed-request-routing
 node: distributed.partitioning.rebalancing
 type: qa
+step: 1
 ---
 ## Q
 A client holds a key — how does the request find the right partition's node? Give the three routing approaches and where the partition map lives.

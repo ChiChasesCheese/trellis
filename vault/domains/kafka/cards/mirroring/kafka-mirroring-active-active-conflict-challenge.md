@@ -2,6 +2,7 @@
 id: kafka-mirroring-active-active-conflict-challenge
 node: mirroring.architectures
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

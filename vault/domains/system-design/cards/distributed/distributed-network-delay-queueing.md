@@ -2,6 +2,7 @@
 id: distributed-network-delay-queueing
 node: distributed.time.failure
 type: qa
+step: 2
 ---
 ## Q
 Datacenter round trips are "sub-millisecond", yet your timeouts must tolerate delays thousands of times larger. Where does the variability in network delay actually come from, and what does that imply for choosing timeouts?

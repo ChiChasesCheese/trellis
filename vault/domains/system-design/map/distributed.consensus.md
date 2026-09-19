@@ -13,16 +13,16 @@ Why single-leader systems need election, what Raft guarantees, fencing tokens, a
 - [[raft-paper|In Search of an Understandable Consensus Algorithm (Raft)]]
 
 ## Cards (10)
-- [[distributed-consensus-in-practice]]
-- [[distributed-coordination-service-primitives]]
-- [[distributed-election-disruption]]
-- [[distributed-epoch-numbers]]
-- [[distributed-fencing-tokens]]
-- [[distributed-flp-and-escape]]
-- [[distributed-quorum-sizing]]
-- [[distributed-raft-guarantees]]
-- [[distributed-raft-linearizable-reads]]
-- [[distributed-total-order-broadcast]]
+1. [[distributed-consensus-in-practice]]
+2. [[distributed-flp-and-escape]]
+3. [[distributed-quorum-sizing]]
+4. [[distributed-total-order-broadcast]]
+5. [[distributed-raft-guarantees]]
+6. [[distributed-epoch-numbers]]
+7. [[distributed-election-disruption]]
+8. [[distributed-raft-linearizable-reads]]
+9. [[distributed-coordination-service-primitives]]
+10. [[distributed-fencing-tokens]]
 %% trellis:end %%
 
 ## Notes

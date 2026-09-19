@@ -15,11 +15,11 @@ Systematic enumeration with a canonical order, pruning that preserves optimality
 - [[settlement-minimum-transfers|Drill: settling a group of debts in the fewest transfers]]
 
 ## Cards (5)
-- [[cc-algorithms-backtracking-canonical-order]]
-- [[cc-algorithms-backtracking-count-not-enumerate]]
-- [[cc-algorithms-backtracking-feasibility-pruning]]
-- [[cc-algorithms-backtracking-safe-pruning]]
-- [[cc-algorithms-backtracking-undo]]
+1. [[cc-algorithms-backtracking-canonical-order]]
+2. [[cc-algorithms-backtracking-count-not-enumerate]]
+3. [[cc-algorithms-backtracking-feasibility-pruning]]
+4. [[cc-algorithms-backtracking-safe-pruning]]
+5. [[cc-algorithms-backtracking-undo]]
 %% trellis:end %%
 
 ## Notes

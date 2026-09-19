@@ -2,6 +2,7 @@
 id: kafka-consumer-graceful-shutdown-wakeup
 node: consumer.client-basics
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: kafka-connect-smt-config-not-connector-specific
 node: connect.smt
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

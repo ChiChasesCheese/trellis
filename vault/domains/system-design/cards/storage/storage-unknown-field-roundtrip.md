@@ -2,6 +2,7 @@
 id: storage-unknown-field-roundtrip
 node: storage.encoding
 type: qa
+step: 9
 ---
 ## Q
 During a rolling upgrade, new code adds a `nickname` field to user records. Users set nicknames — then some mysteriously revert to empty, with no errors logged anywhere. Reconstruct the bug.

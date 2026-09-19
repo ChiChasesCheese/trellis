@@ -2,6 +2,7 @@
 id: infra-pipeline-quality-gates
 node: infra.delivery
 type: qa
+step: 1
 ---
 ## Q
 Why order CI/CD pipeline stages as progressively more expensive quality gates, and what class of failure does each stage uniquely catch?

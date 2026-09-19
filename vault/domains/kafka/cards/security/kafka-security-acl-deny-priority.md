@@ -2,6 +2,7 @@
 id: kafka-security-acl-deny-priority
 node: security.authorization
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

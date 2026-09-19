@@ -2,6 +2,7 @@
 id: storage-search-nrt-refresh
 node: storage.search
 type: qa
+step: 2
 ---
 ## Q
 In Elasticsearch, a document is indexed successfully but a search doesn't find it for another second. Explain the mechanism — and why durability is a *separate* knob.

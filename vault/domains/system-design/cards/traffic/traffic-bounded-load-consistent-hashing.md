@@ -2,6 +2,7 @@
 id: traffic-bounded-load-consistent-hashing
 node: traffic.load-balancing
 type: qa
+step: 3
 ---
 ## Q
 Consistent hashing at the LB gives cache affinity, but plain consistent hashing has a load problem. What is it, and how does bounded-load CH fix it?

@@ -2,6 +2,7 @@
 id: kafka-core-schema-avro-vs-json
 node: core.topics-partitions
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: kafka-core-follower-reads-latency-tradeoff
 node: core.replication-isr
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

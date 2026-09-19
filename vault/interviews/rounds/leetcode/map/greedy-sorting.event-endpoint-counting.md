@@ -3,11 +3,6 @@
 *贪心与排序构造（greedy / sorting constructions）*
 
 区间对查询点的贡献仅取决于是否已经开始和是否已经结束时，可用 端点计数。
-
-## Cards (3)
-- [[leetcode-c-endlesscheng-g0n5iy-event-endpoint-counting-invariant]]
-- [[leetcode-c-endlesscheng-g0n5iy-event-endpoint-counting-recognition]]
-- [[leetcode-c-endlesscheng-g0n5iy-event-endpoint-counting-template]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: distributed-actual-serial-execution
 node: distributed.transactions.concurrency-control
 type: qa
+step: 7
 ---
 ## Q
 Besides 2PL and SSI there is a third road to serializability: actually executing transactions serially, one at a time on a single thread (VoltDB/H-Store; Redis works this way too). What makes this viable at all, and what three conditions must hold?

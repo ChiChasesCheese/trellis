@@ -10,12 +10,12 @@
 - [[kafka-appendix-b5-stream-frameworks|Kafka生态外的流式处理框架]]
 
 ## Cards (6)
-- [[kafka-streams-async-microservice-requirements]]
-- [[kafka-streams-complex-analytics-requires-local-storage]]
-- [[kafka-streams-ingestion-connect-vs-streamproc]]
-- [[kafka-streams-low-latency-event-vs-microbatch]]
-- [[kafka-streams-samza-spark-flink-beam]]
-- [[kafka-streams-selection-criteria-beyond-usecase]]
+1. [[kafka-streams-ingestion-connect-vs-streamproc]]
+2. [[kafka-streams-low-latency-event-vs-microbatch]]
+3. [[kafka-streams-async-microservice-requirements]]
+4. [[kafka-streams-complex-analytics-requires-local-storage]]
+5. [[kafka-streams-samza-spark-flink-beam]]
+6. [[kafka-streams-selection-criteria-beyond-usecase]]
 %% trellis:end %%
 
 ## Notes

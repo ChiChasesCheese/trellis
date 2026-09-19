@@ -2,6 +2,7 @@
 id: reliability-rpo-vs-rto
 node: reliability.multi-region
 type: qa
+step: 1
 ---
 ## Q
 RPO vs RTO: which one is about data, which about time-to-recover, and which replication choice controls each?

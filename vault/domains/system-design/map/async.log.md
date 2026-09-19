@@ -4,6 +4,8 @@
 
 The append-only log as system of record; partitions, consumer groups, offsets, retention.
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/system-design/map/storage.internals|Storage Engine Internals]]
 
 **Unlocks:** [[domains/system-design/map/analytics.derived|Derived Data & Materialized Views]]
@@ -20,14 +22,14 @@ The append-only log as system of record; partitions, consumer groups, offsets, r
 - [[design-payment-ledger|Drill: Design a payment ledger service]]
 
 ## Cards (8)
-- [[async-consumer-groups-offsets]]
-- [[async-consumer-lag-monitoring]]
-- [[async-log-backfill-reprocessing]]
-- [[async-log-compaction]]
-- [[async-log-ordering-partitions]]
-- [[async-log-throughput-design]]
-- [[async-log-vs-queue]]
-- [[async-rebalancing-protocols]]
+1. [[async-log-vs-queue]]
+2. [[async-log-throughput-design]]
+3. [[async-log-ordering-partitions]]
+4. [[async-consumer-groups-offsets]]
+5. [[async-consumer-lag-monitoring]]
+6. [[async-rebalancing-protocols]]
+7. [[async-log-compaction]]
+8. [[async-log-backfill-reprocessing]]
 %% trellis:end %%
 
 ## Notes

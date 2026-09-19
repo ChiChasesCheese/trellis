@@ -2,6 +2,7 @@
 id: correctness-dedup-window
 node: correctness.idempotency
 type: qa
+step: 6
 ---
 ## Q
 How long do you retain idempotency keys / dedup records, and what goes wrong at each extreme?

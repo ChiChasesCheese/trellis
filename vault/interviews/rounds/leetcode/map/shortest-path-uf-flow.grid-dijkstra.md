@@ -3,11 +3,6 @@
 *最短路、并查集与网络流（shortest path / union-find / flow）*
 
 Dijkstra 从最小堆弹出条目后，只有当其距离 等于当前 distance 状态值 时才处理；否则它是旧条目。
-
-## Cards (3)
-- [[leetcode-c-endlesscheng-yixpxw-grid-dijkstra-invariant]]
-- [[leetcode-c-endlesscheng-yixpxw-grid-dijkstra-recognition]]
-- [[leetcode-c-endlesscheng-yixpxw-grid-dijkstra-template]]
 %% trellis:end %%
 
 ## Notes

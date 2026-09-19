@@ -14,12 +14,12 @@ Disputes, refunds, cancellations and plan changes that undo an earlier event —
 - [[oa-q01-fraud-mcc-disputes|Drill: flag fraudulent merchants across a CHARGE/DISPUTE stream]]
 
 ## Cards (6)
-- [[cc-model-rev-can-raise-a-ratio]]
-- [[cc-model-rev-double-reversal-noop]]
-- [[cc-model-rev-partial-and-cap]]
-- [[cc-model-rev-subtract-both-counters]]
-- [[cc-model-rev-unknown-id-ignored]]
-- [[cc-model-rev-zero-over-zero]]
+1. [[cc-model-rev-can-raise-a-ratio]]
+2. [[cc-model-rev-double-reversal-noop]]
+3. [[cc-model-rev-partial-and-cap]]
+4. [[cc-model-rev-subtract-both-counters]]
+5. [[cc-model-rev-unknown-id-ignored]]
+6. [[cc-model-rev-zero-over-zero]]
 %% trellis:end %%
 
 ## Notes

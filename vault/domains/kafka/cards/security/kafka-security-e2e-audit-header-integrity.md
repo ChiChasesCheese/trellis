@@ -2,6 +2,7 @@
 id: kafka-security-e2e-audit-header-integrity
 node: security.audit-hardening
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

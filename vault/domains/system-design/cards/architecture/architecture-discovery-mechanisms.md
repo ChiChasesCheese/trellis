@@ -2,6 +2,7 @@
 id: architecture-discovery-mechanisms
 node: architecture.discovery
 type: qa
+step: 1
 ---
 ## Q
 Client-side vs server-side service discovery: how does each find healthy instances, and which does Kubernetes give you?

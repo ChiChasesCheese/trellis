@@ -2,6 +2,7 @@
 id: ai-quantization-tradeoffs
 node: ai.inference
 type: qa
+step: 5
 ---
 ## Q
 Weight-only INT4/INT8 vs FP8 (weights + activations) vs KV-cache quantization: which serving bottleneck does each attack, and where are the quality cliffs?

@@ -2,6 +2,7 @@
 id: distributed-pacelc
 node: distributed.cap
 type: qa
+step: 5
 ---
 ## Q
 What does PACELC add over CAP, and how do DynamoDB and Spanner classify under it?

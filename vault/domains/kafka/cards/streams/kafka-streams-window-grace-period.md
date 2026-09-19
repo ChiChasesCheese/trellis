@@ -2,6 +2,7 @@
 id: kafka-streams-window-grace-period
 node: streams.concepts
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

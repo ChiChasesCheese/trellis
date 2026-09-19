@@ -2,6 +2,7 @@
 id: async-window-types
 node: async.streaming.processing
 type: cloze
+step: 2
 ---
 The four stream window types: a **tumbling** window has {{c1::a fixed length and no overlap — every event belongs to exactly one window (e.g. 1-minute buckets)}}. A **hopping** window has {{c2::a fixed length but advances by a smaller hop, so windows overlap and each event lands in several (e.g. 5-minute windows every 1 minute, for smoothed aggregates)}}. A **sliding** window contains {{c3::all events within some interval of each other, with boundaries set by the events themselves rather than a fixed grid}}. A **session** window {{c4::has no fixed length at all — it groups an entity's burst of activity and closes after a gap of inactivity (timeout), so its span differs per key}}.
 

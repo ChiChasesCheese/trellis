@@ -2,6 +2,7 @@
 id: async-when-async-is-wrong
 node: async.queues
 type: qa
+step: 6
 ---
 ## Q
 Name three signals that making an operation asynchronous (via a queue) is the wrong call.

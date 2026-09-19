@@ -2,6 +2,7 @@
 id: kafka-internals-compaction-clean-dirty-map
 node: internals.compaction
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

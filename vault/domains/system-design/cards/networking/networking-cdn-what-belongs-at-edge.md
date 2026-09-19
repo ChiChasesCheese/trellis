@@ -2,6 +2,7 @@
 id: networking-cdn-what-belongs-at-edge
 node: networking.cdn
 type: qa
+step: 5
 ---
 ## Q
 Beyond static files, what can a modern CDN edge absorb — and what technique protects the origin even for cache misses?

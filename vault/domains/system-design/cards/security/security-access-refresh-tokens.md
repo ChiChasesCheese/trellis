@@ -2,6 +2,7 @@
 id: security-access-refresh-tokens
 node: security.authn.tokens
 type: qa
+step: 2
 ---
 ## Q
 Why pair a short-lived access token (~5–15 min) with a long-lived refresh token, instead of one long-lived token?

@@ -2,6 +2,7 @@
 id: storage-rolling-upgrade-compat
 node: storage.encoding
 type: qa
+step: 8
 ---
 ## Q
 Why does a rolling deploy force you to maintain *both* backward and forward compatibility at once — and why does data in a database raise the bar further?

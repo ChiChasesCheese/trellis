@@ -2,6 +2,7 @@
 id: architecture-sync-call-chains
 node: architecture.services
 type: qa
+step: 5
 ---
 ## Q
 A request fans through a synchronous chain of 5 services. What does the chain do to availability and latency, and what are the three escapes?

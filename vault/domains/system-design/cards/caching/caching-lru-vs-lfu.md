@@ -2,6 +2,7 @@
 id: caching-lru-vs-lfu
 node: caching.invalidation
 type: qa
+step: 5
 ---
 ## Q
 Your cache hit rate collapses whenever a nightly batch job scans the full table. Which eviction policy is failing, and what do you switch to?

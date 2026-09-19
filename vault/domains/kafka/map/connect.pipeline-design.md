@@ -8,12 +8,12 @@
 - [[kafka-9-1-pipeline-design|构建数据管道时需要考虑的问题]]
 
 ## Cards (6)
-- [[kafka-connect-pipeline-delivery-guarantee-levels]]
-- [[kafka-connect-pipeline-etl-vs-elt]]
-- [[kafka-connect-pipeline-overprocessing-coupling]]
-- [[kafka-connect-pipeline-schema-loss-coupling]]
-- [[kafka-connect-pipeline-throughput-decoupling]]
-- [[kafka-connect-pipeline-timeliness-buffer]]
+1. [[kafka-connect-pipeline-timeliness-buffer]]
+2. [[kafka-connect-pipeline-delivery-guarantee-levels]]
+3. [[kafka-connect-pipeline-throughput-decoupling]]
+4. [[kafka-connect-pipeline-etl-vs-elt]]
+5. [[kafka-connect-pipeline-overprocessing-coupling]]
+6. [[kafka-connect-pipeline-schema-loss-coupling]]
 %% trellis:end %%
 
 ## Notes

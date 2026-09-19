@@ -4,16 +4,18 @@
 
 在仓库的沙箱环境中以标量函数或表函数的形式运行用户代码（Python/Java/Scala），以及由此带来的逐行调用开销。
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/snowflake/map/architecture.cloud-services-layer|云服务（Cloud Services，GS）层]]
 
 **Unlocks:** [[domains/snowflake/map/openplatform.stored-procedure-sandboxing|存储过程沙箱化]]
 
 ## Cards (5)
-- [[udf-per-row-overhead-vectorized]]
-- [[udf-runs-on-warehouse-sandbox]]
-- [[udf-scalar-vs-udtf]]
-- [[udf-secure-udf-sharing]]
-- [[udf-snowpark-optimized-warehouse]]
+1. [[udf-per-row-overhead-vectorized]]
+2. [[udf-runs-on-warehouse-sandbox]]
+3. [[udf-scalar-vs-udtf]]
+4. [[udf-secure-udf-sharing]]
+5. [[udf-snowpark-optimized-warehouse]]
 %% trellis:end %%
 
 ## Notes

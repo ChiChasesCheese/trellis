@@ -1,0 +1,51 @@
+{
+  "consumer.groups-rebalance": [
+    "kafka-consumer-group-partition-sharing",
+    "kafka-consumer-multiple-groups-full-data",
+    "kafka-consumer-heartbeat-session-timeout-death-detection",
+    "kafka-consumer-eager-vs-cooperative-rebalance",
+    "kafka-consumer-rebalance-listener-commit-before-revoke",
+    "kafka-consumer-static-membership-avoids-rebalance"
+  ],
+  "consumer.client-basics": [
+    "kafka-consumer-required-config",
+    "kafka-consumer-one-thread-per-consumer-rule",
+    "kafka-consumer-subscribe-regex-tradeoff",
+    "kafka-consumer-poll-liveness-requirement",
+    "kafka-consumer-graceful-shutdown-wakeup"
+  ],
+  "consumer.poll-config": [
+    "kafka-consumer-fetch-min-bytes-tradeoff",
+    "kafka-consumer-fetch-max-wait-ms-with-fetch-min-bytes",
+    "kafka-consumer-fetch-max-bytes-vs-partition-fetch-bytes",
+    "kafka-consumer-auto-offset-reset-choices",
+    "kafka-consumer-session-timeout-heartbeat-interval-ratio",
+    "kafka-consumer-max-poll-interval-ms-purpose"
+  ],
+  "consumer.offset-commit": [
+    "kafka-consumer-offset-commit-meaning",
+    "kafka-consumer-commit-offset-duplicate-vs-loss",
+    "kafka-consumer-auto-commit-duplicate-window",
+    "kafka-consumer-commitsync-vs-commitasync",
+    "kafka-consumer-commit-async-then-sync-on-shutdown",
+    "kafka-consumer-commit-specific-offset-mid-batch"
+  ],
+  "consumer.seek-and-replay": [
+    "kafka-consumer-seek-changes-poll-position-not-commit",
+    "kafka-consumer-seektobeginning-seektoend-purpose",
+    "kafka-consumer-offsetsfortimes-seek-mechanism",
+    "kafka-consumer-seek-use-cases"
+  ],
+  "consumer.deserialization": [
+    "kafka-consumer-serializer-deserializer-must-match",
+    "kafka-consumer-custom-deserializer-tight-coupling",
+    "kafka-consumer-avro-deserializer-early-error-detection",
+    "kafka-consumer-avro-specific-reader-config"
+  ],
+  "consumer.standalone": [
+    "kafka-consumer-assign-vs-subscribe-exclusive",
+    "kafka-consumer-standalone-when-to-use",
+    "kafka-consumer-standalone-still-needs-group-id",
+    "kafka-consumer-standalone-new-partitions-blind-spot"
+  ]
+}

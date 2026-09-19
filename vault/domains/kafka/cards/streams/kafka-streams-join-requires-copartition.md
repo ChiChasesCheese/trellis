@@ -2,6 +2,7 @@
 id: kafka-streams-join-requires-copartition
 node: streams.streams-architecture
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

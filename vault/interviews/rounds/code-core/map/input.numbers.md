@@ -8,11 +8,11 @@ Reading ints, decimals and money strings exactly, and dispatching on the *shape*
 - [[python-floating-point|Floating Point Arithmetic: Issues and Limitations]]
 
 ## Cards (5)
-- [[cc-input-num-decimal-to-cents]]
-- [[cc-input-num-float-loses-digits]]
-- [[cc-input-num-integer-validation]]
-- [[cc-input-num-literal-shape]]
-- [[cc-input-num-zero-vs-negative]]
+1. [[cc-input-num-decimal-to-cents]]
+2. [[cc-input-num-float-loses-digits]]
+3. [[cc-input-num-integer-validation]]
+4. [[cc-input-num-literal-shape]]
+5. [[cc-input-num-zero-vs-negative]]
 %% trellis:end %%
 
 ## Notes

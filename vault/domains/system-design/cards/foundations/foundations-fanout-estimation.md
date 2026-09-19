@@ -2,6 +2,7 @@
 id: foundations-fanout-estimation
 node: foundations.estimation
 type: qa
+step: 4
 ---
 ## Q
 Twitter-style home timelines: ~5k tweets/s written, ~300k timeline reads/s, avg 75 followers. Walk the fan-out-on-write math and the estimate that breaks it.

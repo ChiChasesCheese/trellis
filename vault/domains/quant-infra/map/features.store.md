@@ -4,6 +4,8 @@
 
 Feature definitions as versioned code with lineage and backfills, serving identical point-in-time semantics to research and to live.
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/quant-infra/map/data.point-in-time|Point-in-Time Discipline]]
 
 **Unlocks:** [[domains/quant-infra/map/platform.parity|Research-Production Parity]]

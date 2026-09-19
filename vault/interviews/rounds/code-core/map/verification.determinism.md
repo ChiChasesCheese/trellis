@@ -11,11 +11,11 @@ Seeded randomness, stable hashing for percentage rollouts, iteration order you c
 - [[oa-q38-feature-flags|Drill: evaluate a feature flag for a user through kill switch, lists, attributes, rollout and dependencies]]
 
 ## Cards (5)
-- [[cc-verification-determinism-repeatable-runs]]
-- [[cc-verification-determinism-rollout-boundary]]
-- [[cc-verification-determinism-seeded-random]]
-- [[cc-verification-determinism-set-iteration]]
-- [[cc-verification-determinism-stable-hash]]
+1. [[cc-verification-determinism-repeatable-runs]]
+2. [[cc-verification-determinism-rollout-boundary]]
+3. [[cc-verification-determinism-seeded-random]]
+4. [[cc-verification-determinism-set-iteration]]
+5. [[cc-verification-determinism-stable-hash]]
 %% trellis:end %%
 
 ## Notes

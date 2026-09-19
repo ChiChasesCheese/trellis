@@ -2,6 +2,7 @@
 id: kafka-reliability-lag-timeouts-tuning
 node: reliability.broker-config
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

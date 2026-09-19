@@ -2,6 +2,7 @@
 id: kafka-admin-cancel-reassignment-risk
 node: admin.partition-reassignment
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

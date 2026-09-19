@@ -2,6 +2,7 @@
 id: kafka-producer-interceptor-hooks
 node: producer.extensibility
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

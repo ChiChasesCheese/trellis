@@ -19,12 +19,12 @@
 - [[csv-parse-validate-report|Drill: parse, validate and report over a hostile CSV]]
 
 ## Cards (6)
-- [[cc-python-stdlib-bisect-calls]]
-- [[cc-python-stdlib-collections-calls]]
-- [[cc-python-stdlib-decimal-calls]]
-- [[cc-python-stdlib-functools-calls]]
-- [[cc-python-stdlib-heapq-calls]]
-- [[cc-python-stdlib-itertools-calls]]
+1. [[cc-python-stdlib-bisect-calls]]
+2. [[cc-python-stdlib-collections-calls]]
+3. [[cc-python-stdlib-decimal-calls]]
+4. [[cc-python-stdlib-functools-calls]]
+5. [[cc-python-stdlib-heapq-calls]]
+6. [[cc-python-stdlib-itertools-calls]]
 %% trellis:end %%
 
 ## Notes

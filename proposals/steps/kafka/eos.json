@@ -1,0 +1,24 @@
+{
+  "eos.idempotent-producer": [
+    "kafka-eos-idempotent-pid-sequence-dedup",
+    "kafka-eos-idempotent-out-of-order-seq-error",
+    "kafka-eos-idempotent-broker-failover-state-transfer",
+    "kafka-eos-idempotent-limit-app-level-duplicate-send",
+    "kafka-eos-idempotent-limit-multiple-producer-instances",
+    "kafka-eos-idempotent-producer-restart-blindspot"
+  ],
+  "eos.transactions": [
+    "kafka-eos-transactions-why-needed-duplicates",
+    "kafka-eos-transactions-atomic-multipartition-write",
+    "kafka-eos-transactions-two-phase-commit-mechanism",
+    "kafka-eos-transactions-zombie-fencing-epoch",
+    "kafka-eos-transactions-isolation-level-tradeoff",
+    "kafka-eos-transactions-external-side-effects-not-covered"
+  ],
+  "eos.transactions-perf": [
+    "kafka-eos-txn-perf-producer-overhead-sources",
+    "kafka-eos-txn-perf-batch-amortizes-overhead",
+    "kafka-eos-txn-perf-consumer-latency-not-throughput",
+    "kafka-eos-txn-perf-short-vs-long-transaction-tradeoff"
+  ]
+}

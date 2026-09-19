@@ -2,6 +2,7 @@
 id: storage-multipart-ranged-io
 node: storage.object
 type: qa
+step: 2
 ---
 ## Q
 Objects are written and read "whole" — so how do you move a 500GB object through S3 efficiently in both directions?

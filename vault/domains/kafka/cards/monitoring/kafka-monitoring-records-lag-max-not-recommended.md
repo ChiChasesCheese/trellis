@@ -2,6 +2,7 @@
 id: kafka-monitoring-records-lag-max-not-recommended
 node: monitoring.client-metrics
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

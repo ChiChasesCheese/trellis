@@ -2,6 +2,7 @@
 id: correctness-saga-isolation
 node: correctness.saga
 type: qa
+step: 5
 ---
 ## Q
 Sagas have ACD but no I. What anomalies does the missing isolation cause, and name the standard countermeasures.

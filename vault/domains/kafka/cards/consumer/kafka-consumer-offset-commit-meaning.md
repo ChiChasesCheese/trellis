@@ -2,6 +2,7 @@
 id: kafka-consumer-offset-commit-meaning
 node: consumer.offset-commit
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: caching-cache-shard-blast-radius
 node: caching.placement
 type: qa
+step: 4
 ---
 ## Q
 Clients shard keys across 10 cache nodes. Why consistent hashing instead of `hash(key) % 10`, and what is the blast radius when one node dies?

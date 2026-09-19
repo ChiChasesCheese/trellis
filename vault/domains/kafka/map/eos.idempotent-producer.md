@@ -10,12 +10,12 @@
 - [[kafka-8-1-idempotent-producer|幂等生产者]]
 
 ## Cards (6)
-- [[kafka-eos-idempotent-broker-failover-state-transfer]]
-- [[kafka-eos-idempotent-limit-app-level-duplicate-send]]
-- [[kafka-eos-idempotent-limit-multiple-producer-instances]]
-- [[kafka-eos-idempotent-out-of-order-seq-error]]
-- [[kafka-eos-idempotent-pid-sequence-dedup]]
-- [[kafka-eos-idempotent-producer-restart-blindspot]]
+1. [[kafka-eos-idempotent-pid-sequence-dedup]]
+2. [[kafka-eos-idempotent-out-of-order-seq-error]]
+3. [[kafka-eos-idempotent-broker-failover-state-transfer]]
+4. [[kafka-eos-idempotent-limit-app-level-duplicate-send]]
+5. [[kafka-eos-idempotent-limit-multiple-producer-instances]]
+6. [[kafka-eos-idempotent-producer-restart-blindspot]]
 %% trellis:end %%
 
 ## Notes

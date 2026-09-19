@@ -2,6 +2,7 @@
 id: storage-lsm-write-path
 node: storage.internals.lsm
 type: cloze
+step: 1
 ---
 LSM-tree write path, in order: (1) append the write to the {{c1::WAL (sequential log, for crash recovery)}}; (2) insert it into the {{c2::memtable — an in-memory sorted structure such as a skip list or red-black tree}}; (3) when the memtable exceeds its size threshold, make it immutable, swap in a fresh one, and {{c3::flush it to disk as an SSTable (a sorted, immutable file)}}; (4) in the background, {{c4::compaction}} merge-sorts SSTables together, keeping only each key's newest version and discarding shadowed values. The user-visible write finishes after step (2) — everything that touches disk in bulk happens {{c5::sequentially}}, which is the source of LSM write throughput.
 

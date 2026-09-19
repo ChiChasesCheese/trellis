@@ -13,11 +13,11 @@ Strict vs non-strict comparison, count vs ratio thresholds, minimum-volume gates
 - [[oa-q02-merchant-fraud-score|Drill: score merchants over three independent rule passes]]
 
 ## Cards (5)
-- [[cc-rules-thr-band-edges]]
-- [[cc-rules-thr-bucket-boundary]]
-- [[cc-rules-thr-count-vs-ratio]]
-- [[cc-rules-thr-min-volume-gate]]
-- [[cc-rules-thr-strict-vs-non-strict]]
+1. [[cc-rules-thr-band-edges]]
+2. [[cc-rules-thr-bucket-boundary]]
+3. [[cc-rules-thr-count-vs-ratio]]
+4. [[cc-rules-thr-min-volume-gate]]
+5. [[cc-rules-thr-strict-vs-non-strict]]
 %% trellis:end %%
 
 ## Notes

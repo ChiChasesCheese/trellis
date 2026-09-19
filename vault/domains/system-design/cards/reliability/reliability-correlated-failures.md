@@ -2,6 +2,7 @@
 id: reliability-correlated-failures
 node: reliability.availability
 type: qa
+step: 4
 ---
 ## Q
 Two replicas at 99.9% "should" give six nines in parallel. Why do real systems get far less, and what restores some of the promised benefit?

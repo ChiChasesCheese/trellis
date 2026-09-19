@@ -2,6 +2,7 @@
 id: distributed-tenant-isolation-limits
 node: distributed.partitioning.skew
 type: qa
+step: 5
 ---
 ## Q
 One tenant's runaway job saturates a shared shard and everyone on it gets timeouts. Which mechanisms contain the blast radius, and what does each actually bound?

@@ -2,6 +2,7 @@
 id: ai-generation-loop
 node: ai.foundations
 type: qa
+step: 3
 ---
 ## Q
 In backend terms: what does an LLM server actually do with a request, and why does the response stream out token-by-token instead of arriving at once?

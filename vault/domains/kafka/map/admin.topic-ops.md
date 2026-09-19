@@ -12,12 +12,12 @@
 - [[kafka-5-3-topic-admin-ops|用AdminClient管理主题]]
 
 ## Cards (6)
-- [[kafka-admin-adminclient-eventual-consistency]]
-- [[kafka-admin-cannot-decrease-partitions]]
-- [[kafka-admin-client-dns-lookup-modes]]
-- [[kafka-admin-kafkafuture-nonblocking]]
-- [[kafka-admin-keyed-topic-partition-increase]]
-- [[kafka-admin-topic-deletion-caution]]
+1. [[kafka-admin-adminclient-eventual-consistency]]
+2. [[kafka-admin-kafkafuture-nonblocking]]
+3. [[kafka-admin-cannot-decrease-partitions]]
+4. [[kafka-admin-keyed-topic-partition-increase]]
+5. [[kafka-admin-topic-deletion-caution]]
+6. [[kafka-admin-client-dns-lookup-modes]]
 %% trellis:end %%
 
 ## Notes

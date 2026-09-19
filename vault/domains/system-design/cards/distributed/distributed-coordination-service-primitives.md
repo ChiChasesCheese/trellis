@@ -2,6 +2,7 @@
 id: distributed-coordination-service-primitives
 node: distributed.consensus
 type: qa
+step: 9
 ---
 ## Q
 ZooKeeper and etcd are "consensus in a box." Which small set of primitives do they expose, and how do those compose into the classic recipes (distributed lock, leader election, group membership)?

@@ -2,6 +2,7 @@
 id: kafka-reliability-auto-offset-reset-tradeoff
 node: reliability.consumer-reliable
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

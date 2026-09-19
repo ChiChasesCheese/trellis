@@ -2,6 +2,7 @@
 id: kafka-consumer-rebalance-listener-commit-before-revoke
 node: consumer.groups-rebalance
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

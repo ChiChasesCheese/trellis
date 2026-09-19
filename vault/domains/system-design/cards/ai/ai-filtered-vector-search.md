@@ -2,6 +2,7 @@
 id: ai-filtered-vector-search
 node: ai.vector-search
 type: qa
+step: 3
 ---
 ## Q
 "Top-10 similar docs WHERE tenant_id = 42": why does naive post-filtering break this query, and what do engines do instead?

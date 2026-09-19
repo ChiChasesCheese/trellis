@@ -8,8 +8,8 @@ Gravity, rim deterrence, passing that leads to a pass — what tracking data add
 - [[bb-rim-deterrence|Understanding Rudy Gobert's Rim Deterrence]]
 
 ## Cards (2)
-- [[bb-hockey-assist-value]]
-- [[bb-tracking-gravity-deterrence]]
+1. [[bb-hockey-assist-value]]
+2. [[bb-tracking-gravity-deterrence]]
 %% trellis:end %%
 
 ## Notes

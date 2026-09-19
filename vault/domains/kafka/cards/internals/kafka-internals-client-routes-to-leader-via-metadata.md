@@ -2,6 +2,7 @@
 id: kafka-internals-client-routes-to-leader-via-metadata
 node: internals.request-handling
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

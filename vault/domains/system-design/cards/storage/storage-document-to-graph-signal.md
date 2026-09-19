@@ -2,6 +2,7 @@
 id: storage-document-to-graph-signal
 node: storage.nosql
 type: qa
+step: 9
 ---
 ## Q
 Your data began as neat tree-shaped documents (user → orders → items). What change in the data's *shape* signals that a graph model now fits better than documents — and why can't documents absorb the change?

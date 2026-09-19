@@ -2,6 +2,7 @@
 id: kafka-internals-tiered-storage-motivation
 node: internals.tiered-storage
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

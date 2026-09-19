@@ -2,6 +2,7 @@
 id: kafka-monitoring-static-vs-dynamic-quota
 node: monitoring.client-metrics
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

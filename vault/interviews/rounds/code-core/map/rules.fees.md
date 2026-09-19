@@ -13,11 +13,11 @@ Percent-plus-fixed fees, applying a rate to minor units without drift, splitting
 - [[oa-q20-transaction-fees-reconciliation|Drill: fee schedule, rate-table override, payout rollup and ledger reconciliation]]
 
 ## Cards (5)
-- [[cc-rules-fee-basis-points]]
-- [[cc-rules-fee-conditional-and-zero]]
-- [[cc-rules-fee-net-vs-gross]]
-- [[cc-rules-fee-percent-plus-fixed]]
-- [[cc-rules-fee-split-sums-back]]
+1. [[cc-rules-fee-basis-points]]
+2. [[cc-rules-fee-conditional-and-zero]]
+3. [[cc-rules-fee-net-vs-gross]]
+4. [[cc-rules-fee-percent-plus-fixed]]
+5. [[cc-rules-fee-split-sums-back]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: kafka-internals-controller-startup-load-latency
 node: internals.controller
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

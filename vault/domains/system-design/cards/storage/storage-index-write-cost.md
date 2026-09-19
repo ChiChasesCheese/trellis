@@ -2,6 +2,7 @@
 id: storage-index-write-cost
 node: storage.relational.indexing
 type: qa
+step: 6
 ---
 ## Q
 A table has 9 indexes "just in case." Quantify what each additional index costs the write path, and how you decide which ones to drop.

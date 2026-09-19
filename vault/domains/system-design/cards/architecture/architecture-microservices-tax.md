@@ -2,6 +2,7 @@
 id: architecture-microservices-tax
 node: architecture.services
 type: qa
+step: 4
 ---
 ## Q
 Name the operational bill that arrives with microservices — the things a monolith gave you for free.

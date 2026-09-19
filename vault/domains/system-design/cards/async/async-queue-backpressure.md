@@ -2,6 +2,7 @@
 id: async-queue-backpressure
 node: async.queues
 type: qa
+step: 4
 ---
 ## Q
 A queue's depth is growing without bound. Why is "the queue absorbs it" not an answer, and what are your options?

@@ -2,6 +2,7 @@
 id: distributed-sync-vs-async-replication
 node: distributed.replication.leader
 type: qa
+step: 1
 ---
 ## Q
 Leader-follower: synchronous vs asynchronous replication — what does each risk, and what's the standard compromise?

@@ -2,6 +2,7 @@
 id: distributed-consistency-ladder
 node: distributed.consistency
 type: cloze
+step: 1
 ---
 The consistency ladder, strongest to weakest, and what each rung gives up: **linearizability** promises {{c1::every operation sees the effects of all operations completed before it in real time — one up-to-date copy}}, and is the only rung that {{c2::cannot stay available during a network partition (must stall or refuse)}}. One step down, **causal consistency** keeps {{c3::the order of operations that depend on each other (read-then-write, same session chains), while letting concurrent operations be seen in different orders on different nodes}}. Below it, **session guarantees** (read-your-writes, monotonic reads) protect {{c4::only one client's view of its own interactions, promising nothing across clients}}. The bottom rung, **eventual consistency**, promises only {{c5::convergence at some unspecified time — no recency bound, and reads may go backwards meanwhile}}.
 

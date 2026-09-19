@@ -10,11 +10,11 @@ Naming the state and the transition out loud, 1-D and 2-D tables, bitmask DP ove
 - [[oa-qa13-lc2483-minimum-penalty-for-a-shop|Drill: pick a closing hour with a running penalty, then choose the whole schedule]]
 
 ## Cards (5)
-- [[cc-algorithms-dp-banded]]
-- [[cc-algorithms-dp-bitmask]]
-- [[cc-algorithms-dp-k-segments]]
-- [[cc-algorithms-dp-rolling-rows]]
-- [[cc-algorithms-dp-state-and-transition]]
+1. [[cc-algorithms-dp-banded]]
+2. [[cc-algorithms-dp-bitmask]]
+3. [[cc-algorithms-dp-k-segments]]
+4. [[cc-algorithms-dp-rolling-rows]]
+5. [[cc-algorithms-dp-state-and-transition]]
 %% trellis:end %%
 
 ## Notes

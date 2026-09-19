@@ -4,6 +4,8 @@
 
 Adding days and months, month-end clamping, UTC offsets and day wrap, and why calendar math is not duration math.
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[interviews/rounds/code-core/map/chrono.parsing|Parsing Timestamps]]
 
 **Unlocks:** [[interviews/rounds/code-core/map/chrono.windows|Time Windows & Buckets]]
@@ -16,11 +18,11 @@ Adding days and months, month-end clamping, UTC offsets and day wrap, and why ca
 - [[oa-q29-deployment-windows|Drill: fold regional business hours into UTC free deployment windows]]
 
 ## Cards (5)
-- [[cc-chrono-arithmetic-calendar-vs-duration]]
-- [[cc-chrono-arithmetic-extend-from-expiry]]
-- [[cc-chrono-arithmetic-inclusive-end]]
-- [[cc-chrono-arithmetic-month-end-clamp]]
-- [[cc-chrono-arithmetic-offset-day-wrap]]
+1. [[cc-chrono-arithmetic-calendar-vs-duration]]
+2. [[cc-chrono-arithmetic-extend-from-expiry]]
+3. [[cc-chrono-arithmetic-inclusive-end]]
+4. [[cc-chrono-arithmetic-month-end-clamp]]
+5. [[cc-chrono-arithmetic-offset-day-wrap]]
 %% trellis:end %%
 
 ## Notes

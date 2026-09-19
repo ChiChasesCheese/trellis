@@ -2,6 +2,7 @@
 id: distributed-sequence-crdt-positions
 node: distributed.crdt
 type: qa
+step: 5
 ---
 ## Q
 Two collaborative-text replicas both apply "insert at index 5" — and the document diverges, because their index 5s were different characters. How do sequence CRDTs (text/list CRDTs) identify positions so that concurrent edits merge correctly?

@@ -2,6 +2,7 @@
 id: kafka-core-consumer-group-shared-once
 node: core.pubsub-why
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

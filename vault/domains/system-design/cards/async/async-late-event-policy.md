@@ -2,6 +2,7 @@
 id: async-late-event-policy
 node: async.streaming.processing
 type: qa
+step: 3
 ---
 ## Q
 Your streaming job's watermark says the 12:00–12:05 window is complete and its aggregate is emitted — then a mobile client that was in a tunnel uploads three events stamped 12:03. What are your options for these stragglers, and what does each one cost downstream?

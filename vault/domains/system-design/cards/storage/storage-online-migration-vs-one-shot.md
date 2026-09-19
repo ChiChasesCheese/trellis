@@ -2,6 +2,7 @@
 id: storage-online-migration-vs-one-shot
 node: storage.relational.operations
 type: qa
+step: 6
 ---
 ## Q
 You must move hundreds of millions of live rows to a new data model. Why is a one-shot migration (a single `ALTER TABLE`, or one big copy script run overnight) the wrong tool, and what does the incremental dual-write approach buy instead?

@@ -8,12 +8,12 @@
 - [[kafka-14-4-streams-examples|Streams示例：字数统计、股票统计与点击流填充]]
 
 ## Cards (6)
-- [[kafka-streams-application-id-role]]
-- [[kafka-streams-cluster-no-external-scheduler]]
-- [[kafka-streams-dsl-vs-processor-api]]
-- [[kafka-streams-groupbykey-noop-when-key-unchanged]]
-- [[kafka-streams-joinwindows-asymmetric-before]]
-- [[kafka-streams-leftjoin-stream-table-vs-stream-stream]]
+1. [[kafka-streams-application-id-role]]
+2. [[kafka-streams-cluster-no-external-scheduler]]
+3. [[kafka-streams-dsl-vs-processor-api]]
+4. [[kafka-streams-groupbykey-noop-when-key-unchanged]]
+5. [[kafka-streams-leftjoin-stream-table-vs-stream-stream]]
+6. [[kafka-streams-joinwindows-asymmetric-before]]
 %% trellis:end %%
 
 ## Notes

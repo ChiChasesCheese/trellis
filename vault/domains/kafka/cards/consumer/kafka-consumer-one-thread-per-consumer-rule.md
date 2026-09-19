@@ -2,6 +2,7 @@
 id: kafka-consumer-one-thread-per-consumer-rule
 node: consumer.client-basics
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

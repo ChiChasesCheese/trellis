@@ -4,6 +4,8 @@
 
 Lua tables and closures, Nginx request phases, cosockets, shared dictionaries, worker isolation, and avoiding blocking work.
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/cdn-content/map/networking.proxies|Reverse Proxies, Gateways & Routing]]
 
 **Unlocks:** [[domains/cdn-content/map/runtimes.polyglot|Polyglot Boundaries]]
@@ -12,9 +14,9 @@ Lua tables and closures, Nginx request phases, cosockets, shared dictionaries, w
 - [[runtime-openresty|OpenResty `lua-nginx-module` reference]]
 
 ## Cards (3)
-- [[runtime-openresty-nonblocking-io]]
-- [[runtime-openresty-request-phase]]
-- [[runtime-openresty-shared-dict]]
+1. [[runtime-openresty-nonblocking-io]]
+2. [[runtime-openresty-request-phase]]
+3. [[runtime-openresty-shared-dict]]
 %% trellis:end %%
 
 ## Notes

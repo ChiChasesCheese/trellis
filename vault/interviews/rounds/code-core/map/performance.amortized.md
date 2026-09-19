@@ -11,11 +11,11 @@ Amortized reasoning for a heap with stale entries, incremental maintenance inste
 - [[least-loaded-assignment-heap|Drill: least-loaded assignment under a performance budget]]
 
 ## Cards (5)
-- [[cc-performance-amortized-append-doubling]]
-- [[cc-performance-amortized-cache-derived]]
-- [[cc-performance-amortized-incremental-aggregate]]
-- [[cc-performance-amortized-lazy-heap]]
-- [[cc-performance-amortized-while-inside-for]]
+1. [[cc-performance-amortized-append-doubling]]
+2. [[cc-performance-amortized-cache-derived]]
+3. [[cc-performance-amortized-incremental-aggregate]]
+4. [[cc-performance-amortized-lazy-heap]]
+5. [[cc-performance-amortized-while-inside-for]]
 %% trellis:end %%
 
 ## Notes

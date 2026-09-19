@@ -2,6 +2,7 @@
 id: analytics-data-cubes
 node: analytics.olap
 type: qa
+step: 6
 ---
 ## Q
 A dashboard slices sales by any combination of date, product, store, and promotion, and every query answers in milliseconds without scanning the fact table. What structure makes that possible, and what does it fundamentally give up?

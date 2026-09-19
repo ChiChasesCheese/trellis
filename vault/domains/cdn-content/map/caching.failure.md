@@ -4,6 +4,8 @@
 
 Cacheable errors, stale serving, fail-open versus fail-closed, bypass, poisoned failures, and recovery after dependency degradation.
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/cdn-content/map/caching.validators|Validators & Revalidation]], [[domains/cdn-content/map/caching.hierarchy|Multi-Tier Cache Hierarchy]]
 
 **Unlocks:** [[domains/cdn-content/map/reliability.testing|Unit, Integration & End-to-End Testing]]
@@ -15,9 +17,9 @@ Cacheable errors, stale serving, fail-open versus fail-closed, bypass, poisoned 
 - [[incident-regional-cache-collapse|Drill: Regional cache collapse incident]]
 
 ## Cards (3)
-- [[cache-failure-bypass]]
-- [[cache-failure-negative]]
-- [[cache-failure-stale]]
+1. [[cache-failure-bypass]]
+2. [[cache-failure-negative]]
+3. [[cache-failure-stale]]
 %% trellis:end %%
 
 ## Notes

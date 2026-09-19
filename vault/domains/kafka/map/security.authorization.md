@@ -8,12 +8,12 @@
 - [[kafka-11-5-authorization|授权：基于ACL的访问控制]]
 
 ## Cards (6)
-- [[kafka-security-acl-deny-priority]]
-- [[kafka-security-acl-fields]]
-- [[kafka-security-allow-everyone-tradeoff]]
-- [[kafka-security-custom-authorizer-context]]
-- [[kafka-security-service-credentials-long-running]]
-- [[kafka-security-super-users-vs-acl]]
+1. [[kafka-security-acl-fields]]
+2. [[kafka-security-acl-deny-priority]]
+3. [[kafka-security-allow-everyone-tradeoff]]
+4. [[kafka-security-super-users-vs-acl]]
+5. [[kafka-security-custom-authorizer-context]]
+6. [[kafka-security-service-credentials-long-running]]
 %% trellis:end %%
 
 ## Notes

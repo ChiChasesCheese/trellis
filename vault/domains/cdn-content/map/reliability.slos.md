@@ -4,6 +4,8 @@
 
 User-centered availability and latency indicators, objectives, windows, burn rates, and using error budgets to govern change.
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/cdn-content/map/foundations.performance|Latency, Throughput & Tail Behavior]]
 
 **Unlocks:** [[domains/cdn-content/map/reliability.metrics|Metrics & Cardinality]], [[domains/cdn-content/map/reliability.logging|Structured Logging]], [[domains/cdn-content/map/delivery.canary|Canary & Progressive Deployment]]
@@ -12,9 +14,9 @@ User-centered availability and latency indicators, objectives, windows, burn rat
 - [[reliability-sre-service-level-objectives|Google SRE: Service Level Objectives]]
 
 ## Cards (3)
-- [[reliability-slos-error-budget-release]]
-- [[reliability-slos-latency-segmentation]]
-- [[reliability-slos-user-centered-sli]]
+1. [[reliability-slos-error-budget-release]]
+2. [[reliability-slos-latency-segmentation]]
+3. [[reliability-slos-user-centered-sli]]
 %% trellis:end %%
 
 ## Notes

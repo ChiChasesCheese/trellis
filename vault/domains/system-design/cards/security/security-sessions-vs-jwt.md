@@ -2,6 +2,7 @@
 id: security-sessions-vs-jwt
 node: security.authn.tokens
 type: qa
+step: 1
 ---
 ## Q
 Server-side sessions vs JWTs: what does each trade away, and which one makes "log out this user now" hard?

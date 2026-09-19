@@ -2,6 +2,7 @@
 id: kafka-producer-avro-writer-reader-schema-compatibility
 node: producer.serialization
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

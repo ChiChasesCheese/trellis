@@ -2,6 +2,7 @@
 id: distributed-rendezvous-hashing
 node: distributed.partitioning.schemes
 type: qa
+step: 5
 ---
 ## Q
 Rendezvous (highest-random-weight) hashing vs a consistent-hashing ring — how does it work, and when is it the better pick?

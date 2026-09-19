@@ -9,9 +9,9 @@ What the gather step actually permits, the legal step-through, and the moves ref
 - [[bb-nba-rulebook|RULE NO. 10: Violations and Penalties | NBA Official]]
 
 ## Cards (3)
-- [[bb-actual-travels-vs-myths]]
-- [[bb-gather-step-definition]]
-- [[bb-legal-step-through]]
+1. [[bb-actual-travels-vs-myths]]
+2. [[bb-gather-step-definition]]
+3. [[bb-legal-step-through]]
 %% trellis:end %%
 
 ## Notes

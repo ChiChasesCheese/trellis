@@ -7,10 +7,10 @@ Cortex AI 函数按令牌（token）计费，与计算信用点分开单独追�
 **Requires:** [[domains/snowflake/map/cost.credit-model-per-second-billing|信用点模型与按秒计费]]
 
 ## Cards (4)
-- [[ai-bigger-warehouse-no-help]]
-- [[ai-separate-tracking-views]]
-- [[ai-spend-control-budget]]
-- [[ai-token-billing-mechanism]]
+1. [[ai-bigger-warehouse-no-help]]
+2. [[ai-separate-tracking-views]]
+3. [[ai-spend-control-budget]]
+4. [[ai-token-billing-mechanism]]
 %% trellis:end %%
 
 ## Notes

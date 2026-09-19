@@ -2,6 +2,7 @@
 id: correctness-ledger-hot-accounts
 node: correctness.ledger
 type: qa
+step: 4
 ---
 ## Q
 A platform fee account appears in every transaction — millions of entries/day against one ledger account. Why does it melt down, and how do you design around it?

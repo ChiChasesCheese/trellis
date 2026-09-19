@@ -2,6 +2,7 @@
 id: kafka-reliability-consumer-lag-metric
 node: reliability.validation
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

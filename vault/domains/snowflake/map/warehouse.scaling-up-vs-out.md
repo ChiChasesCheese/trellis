@@ -10,11 +10,11 @@
 - [[snowflak-warehouse-best-practices|仓库调优:扩容(up)还是扩出(out)、本地磁盘缓存]]
 
 ## Cards (5)
-- [[scale-out-enterprise-default-config]]
-- [[scale-out-max-clusters-budget]]
-- [[scale-out-min-clusters-for-ha]]
-- [[scale-up-resize-mid-batch]]
-- [[scale-up-vs-out-symptom-mapping]]
+1. [[scale-out-enterprise-default-config]]
+2. [[scale-out-max-clusters-budget]]
+3. [[scale-out-min-clusters-for-ha]]
+4. [[scale-up-resize-mid-batch]]
+5. [[scale-up-vs-out-symptom-mapping]]
 %% trellis:end %%
 
 ## Notes

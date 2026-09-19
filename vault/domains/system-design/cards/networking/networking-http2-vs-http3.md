@@ -2,6 +2,7 @@
 id: networking-http2-vs-http3
 node: networking.protocols
 type: qa
+step: 6
 ---
 ## Q
 HTTP/2 multiplexes many streams over one TCP connection. What problem remains, and how does HTTP/3 fix it?

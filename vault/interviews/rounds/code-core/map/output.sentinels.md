@@ -12,11 +12,11 @@
 - [[exact-output-port-sprint|Drill: twenty minutes to an exact-output contract]]
 
 ## Cards (5)
-- [[cc-output-sentinels-empty-input]]
-- [[cc-output-sentinels-error-contract]]
-- [[cc-output-sentinels-none-vs-blank]]
-- [[cc-output-sentinels-null-vs-empty]]
-- [[cc-output-sentinels-zero-rows]]
+1. [[cc-output-sentinels-empty-input]]
+2. [[cc-output-sentinels-error-contract]]
+3. [[cc-output-sentinels-none-vs-blank]]
+4. [[cc-output-sentinels-null-vs-empty]]
+5. [[cc-output-sentinels-zero-rows]]
 %% trellis:end %%
 
 ## Notes

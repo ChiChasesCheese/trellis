@@ -2,6 +2,7 @@
 id: architecture-conways-law
 node: architecture.services
 type: qa
+step: 3
 ---
 ## Q
 Conway's law says architecture copies org structure. How do mature orgs use it as a *design input* rather than a curse?

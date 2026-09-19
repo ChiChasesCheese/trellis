@@ -4,6 +4,8 @@
 
 Information ratio as IC times root breadth times transfer coefficient — what each term buys and how implementation friction caps the product.
 
+**Core** — part of the first pass through this subject.
+
 **Unlocks:** [[domains/quant-infra/map/portfolio.combination|Combining Signals]]
 
 ## Readings

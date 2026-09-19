@@ -2,6 +2,7 @@
 id: analytics-derived-data-framing
 node: analytics.derived
 type: qa
+step: 1
 ---
 ## Q
 What distinguishes a "system of record" from "derived data", and why does the distinction change how you operate each?

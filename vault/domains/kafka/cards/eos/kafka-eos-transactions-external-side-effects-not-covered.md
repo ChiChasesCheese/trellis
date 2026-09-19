@@ -2,6 +2,7 @@
 id: kafka-eos-transactions-external-side-effects-not-covered
 node: eos.transactions
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

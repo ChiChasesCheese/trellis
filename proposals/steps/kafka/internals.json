@@ -1,0 +1,60 @@
+{
+  "internals.controller": [
+    "kafka-internals-controller-role",
+    "kafka-internals-controller-election",
+    "kafka-internals-controller-epoch-zombie",
+    "kafka-internals-controller-leader-election-flow",
+    "kafka-internals-controller-startup-load-latency"
+  ],
+  "internals.replication-protocol": [
+    "kafka-internals-follower-fetch-protocol",
+    "kafka-internals-isr-out-condition",
+    "kafka-internals-isr-matters-leader-election",
+    "kafka-internals-preferred-leader-rebalance",
+    "kafka-internals-follower-read-highwatermark"
+  ],
+  "internals.request-handling": [
+    "kafka-internals-client-routes-to-leader-via-metadata",
+    "kafka-internals-network-io-thread-pipeline",
+    "kafka-internals-purgatory-delayed-response",
+    "kafka-internals-fetch-only-sees-committed",
+    "kafka-internals-fetch-zero-copy",
+    "kafka-internals-fetch-min-max-bytes-tradeoff"
+  ],
+  "internals.storage-segments": [
+    "kafka-internals-partition-allocation-goals",
+    "kafka-internals-partition-allocation-roundrobin",
+    "kafka-internals-partition-disk-assignment",
+    "kafka-internals-log-segment-basics",
+    "kafka-internals-active-segment-retention",
+    "kafka-internals-open-file-handles"
+  ],
+  "internals.indexes": [
+    "kafka-internals-offset-index-purpose",
+    "kafka-internals-time-index-purpose",
+    "kafka-internals-index-segmented-with-log",
+    "kafka-internals-index-corruption-recovery"
+  ],
+  "internals.compaction": [
+    "kafka-internals-compact-vs-delete-policy",
+    "kafka-internals-compaction-trigger-and-lag-config",
+    "kafka-internals-compaction-clean-dirty-map",
+    "kafka-internals-compaction-map-memory-limit",
+    "kafka-internals-compaction-tombstone",
+    "kafka-internals-delete-and-compact-combo"
+  ],
+  "internals.kraft-mode": [
+    "kafka-internals-kraft-motivation",
+    "kafka-internals-kraft-metadata-as-log",
+    "kafka-internals-kraft-active-standby-controller",
+    "kafka-internals-kraft-pull-metadata-fetch",
+    "kafka-internals-kraft-broker-fencing"
+  ],
+  "internals.tiered-storage": [
+    "kafka-internals-tiered-storage-motivation",
+    "kafka-internals-tiered-storage-two-layers",
+    "kafka-internals-tiered-storage-decouple-storage-compute",
+    "kafka-internals-tiered-storage-read-path-choice",
+    "kafka-internals-tiered-storage-isolation-benchmark"
+  ]
+}

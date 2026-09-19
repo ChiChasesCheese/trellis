@@ -2,6 +2,7 @@
 id: analytics-lake-vs-warehouse-vs-lakehouse
 node: analytics.warehouse
 type: qa
+step: 1
 ---
 ## Q
 Warehouse vs data lake vs lakehouse — what does each own, and what gap does the lakehouse close?

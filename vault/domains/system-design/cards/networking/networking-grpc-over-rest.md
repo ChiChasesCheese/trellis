@@ -2,6 +2,7 @@
 id: networking-grpc-over-rest
 node: networking.api-styles
 type: qa
+step: 3
 ---
 ## Q
 When choose gRPC over REST for service-to-service calls — and what do you give up?

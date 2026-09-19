@@ -2,6 +2,7 @@
 id: analytics-lambda-vs-kappa
 node: analytics.derived
 type: qa
+step: 5
 ---
 ## Q
 Lambda architecture vs Kappa architecture for keeping derived views both fresh and correct — what does each run, and what pain made the industry drift from the first toward the second?

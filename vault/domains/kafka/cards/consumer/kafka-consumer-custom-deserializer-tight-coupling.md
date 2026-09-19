@@ -2,6 +2,7 @@
 id: kafka-consumer-custom-deserializer-tight-coupling
 node: consumer.deserialization
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

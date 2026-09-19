@@ -2,6 +2,7 @@
 id: kafka-practice-vm-swappiness-one-not-zero
 node: practice.sizing-tuning
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

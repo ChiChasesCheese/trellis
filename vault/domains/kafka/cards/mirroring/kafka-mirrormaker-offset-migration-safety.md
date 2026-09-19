@@ -2,6 +2,7 @@
 id: kafka-mirrormaker-offset-migration-safety
 node: mirroring.mirrormaker
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

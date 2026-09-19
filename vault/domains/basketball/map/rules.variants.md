@@ -9,8 +9,8 @@ Defensive three seconds, court and arc dimensions, timeout and reset rules — t
 - [[bb-nba-rulebook|RULE NO. 10: Violations and Penalties | NBA Official]]
 
 ## Cards (2)
-- [[bb-arc-clock-and-timeout-variants]]
-- [[bb-defensive-three-seconds-variants]]
+1. [[bb-arc-clock-and-timeout-variants]]
+2. [[bb-defensive-three-seconds-variants]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: correctness-ledger-three-way-recon
 node: correctness.ledger
 type: qa
+step: 8
 ---
 ## Q
 Payments teams reconcile three-way — internal ledger vs processor report vs bank statement. What does each pairwise match catch that two-way misses, and how are breaks classified?

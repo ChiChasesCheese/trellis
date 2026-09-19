@@ -10,8 +10,8 @@
 - [[snowflak-resource-monitors|资源监控器(Resource Monitor):信用点配额与自动挂起]]
 
 ## Cards (2)
-- [[rm-must-define-action-and-assign]]
-- [[rm-not-for-serverless-use-budget]]
+1. [[rm-must-define-action-and-assign]]
+2. [[rm-not-for-serverless-use-budget]]
 %% trellis:end %%
 
 ## Notes

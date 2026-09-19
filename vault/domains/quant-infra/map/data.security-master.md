@@ -4,6 +4,8 @@
 
 Identifier mapping across ticker reuse, mergers and CUSIP/ISIN/FIGI churn, plus split, dividend and spinoff adjustment factors and total- versus price-return series.
 
+**Core** — part of the first pass through this subject.
+
 **Unlocks:** [[domains/quant-infra/map/backtest.mechanics.events|Halts, Limits & Corporate Events]], [[domains/quant-infra/map/trading.accounting|Positions, Cash & P&L]]
 
 ## Readings

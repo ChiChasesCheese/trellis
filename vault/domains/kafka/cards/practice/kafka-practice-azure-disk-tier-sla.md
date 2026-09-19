@@ -2,6 +2,7 @@
 id: kafka-practice-azure-disk-tier-sla
 node: practice.cloud-deployment
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: reliability-retryable-errors
 node: reliability.resilience.retries
 type: qa
+step: 1
 ---
 ## Q
 Classify which failures are worth retrying and which are not — and explain why a *timeout* is the hardest case.

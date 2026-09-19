@@ -2,6 +2,7 @@
 id: reliability-percentile-aggregation
 node: reliability.observability
 type: qa
+step: 5
 ---
 ## Q
 Each of 50 hosts reports its own p99 latency. Why can't you average (or max) them to get the service p99, and what should hosts export instead?

@@ -2,6 +2,7 @@
 id: infra-mesh-when-not
 node: infra.mesh
 type: qa
+step: 4
 ---
 ## Q
 When is a service mesh not worth adopting?

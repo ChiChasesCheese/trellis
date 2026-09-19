@@ -2,6 +2,7 @@
 id: distributed-data-skew-vs-access-skew
 node: distributed.partitioning.skew
 type: qa
+step: 1
 ---
 ## Q
 Distinguish data skew from access skew. Which remedies apply to each, and which remedy is useless for one of them?

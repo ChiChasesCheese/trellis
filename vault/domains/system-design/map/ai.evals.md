@@ -8,11 +8,11 @@ Offline vs online evaluation, LLM-as-judge, regression suites for prompts, and t
 - [[hamel-evals|Your AI Product Needs Evals (Hamel Husain)]]
 
 ## Cards (5)
-- [[ai-eval-set-vs-ab]]
-- [[ai-guardrails-validation]]
-- [[ai-llm-judge-biases]]
-- [[ai-pipeline-tracing]]
-- [[ai-prompt-regression-testing]]
+1. [[ai-eval-set-vs-ab]]
+2. [[ai-llm-judge-biases]]
+3. [[ai-prompt-regression-testing]]
+4. [[ai-guardrails-validation]]
+5. [[ai-pipeline-tracing]]
 %% trellis:end %%
 
 ## Notes

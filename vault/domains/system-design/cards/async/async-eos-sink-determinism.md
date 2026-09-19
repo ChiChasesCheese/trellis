@@ -2,6 +2,7 @@
 id: async-eos-sink-determinism
 node: async.delivery.exactly-once
 type: qa
+step: 5
 ---
 ## Q
 A Flink job runs with exactly-once checkpointing and writes each result to Postgres. What are the only two sink designs that make the end-to-end result exactly-once, and what silently breaks both?

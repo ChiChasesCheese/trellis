@@ -2,6 +2,7 @@
 id: correctness-balance-derivation
 node: correctness.ledger
 type: qa
+step: 3
 ---
 ## Q
 If balance = SUM(entries), how do you make balance reads fast AND enforce "no overdraft" under concurrent spends?

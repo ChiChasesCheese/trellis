@@ -2,6 +2,7 @@
 id: kafka-eos-idempotent-limit-multiple-producer-instances
 node: eos.idempotent-producer
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

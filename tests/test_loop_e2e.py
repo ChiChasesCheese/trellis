@@ -6,22 +6,19 @@ once, so what is under test is whether the loop *closes* — whether the
 cards it wrote come back as evidence, and whether it waits for that
 evidence before writing again.
 
-Only Anki is replaced, and the fake is not a script of canned answers: it
-opens the .apkg `build` really produced and keeps the notes it finds, the
-way the importer does. Reviews are then played onto those notes by card id.
+Only Anki is replaced, by `fake_anki.FakeAnki`, which opens the .apkg `build`
+really produced and keeps the notes it finds the way the importer does.
+Reviews are then played onto those notes by card id.
 """
 
 from __future__ import annotations
 
 import json
-import sqlite3
-import tempfile
-import zipfile
-from pathlib import Path
 
 import pytest
 import yaml
 
+from fake_anki import FakeAnki
 from trellis import cli
 from trellis.cli import main
 
@@ -36,62 +33,6 @@ SKELETON = {
 }
 
 CARD = "---\nid: {id}\nnode: {node}\ntype: qa\n---\n## Q\n{q}\n\n## A\n{a}\n"
-
-
-class FakeAnki:
-    """A collection that imports real packages and remembers reviews."""
-
-    def __init__(self):
-        self.notes: dict[str, dict] = {}     # guid -> {noteId, tags}
-        self.cards: dict[int, dict] = {}     # cardId -> scheduling row
-        self.imports = 0
-
-    # -- what AnkiConnect would answer
-    def __call__(self, action, url=None, **params):
-        if action == "sync":
-            return None
-        if action == "importPackage":
-            self._import(Path(params["path"]))
-            return True
-        if action == "findNotes":
-            prefix = params["query"].removeprefix("tag:").removesuffix("*")
-            return [n["noteId"] for n in self.notes.values()
-                    if any(t.startswith(prefix) for t in n["tags"])]
-        if action == "notesInfo":
-            wanted = set(params["notes"])
-            return [{"noteId": n["noteId"], "tags": n["tags"], "cards": [n["noteId"] * 10]}
-                    for n in self.notes.values() if n["noteId"] in wanted]
-        if action == "cardsInfo":
-            return [self.cards[c] for c in params["cards"]]
-        if action == "findCards":
-            return []                        # every card is already in its deck
-        if action == "deckNames":
-            return []
-        raise AssertionError(f"the loop must not call {action}")
-
-    def _import(self, apkg: Path) -> None:
-        self.imports += 1
-        with zipfile.ZipFile(apkg) as z, tempfile.TemporaryDirectory() as tmp:
-            z.extract("collection.anki2", tmp)
-            db = sqlite3.connect(Path(tmp) / "collection.anki2")
-            rows = db.execute("select guid, tags from notes").fetchall()
-            db.close()
-        for guid, tags in rows:
-            note = self.notes.setdefault(guid, {"noteId": len(self.notes) + 1, "tags": []})
-            note["tags"] = tags.split()      # an import rewrites tags, keeps scheduling
-            self.cards.setdefault(note["noteId"] * 10, {
-                "cardId": note["noteId"] * 10, "reps": 0, "lapses": 0,
-                "interval": 0, "factor": 2500, "type": 0, "due": 0, "mod": 0})
-
-    # -- what a person with a phone would do
-    def review(self, card_id: str, *, reps: int, lapses: int = 0, interval: int, type: int = 2):
-        note = next(n for n in self.notes.values() if f"id::{card_id}" in n["tags"])
-        self.cards[note["noteId"] * 10].update(
-            reps=reps, lapses=lapses, interval=interval, type=type)
-
-    def tagged(self, tag: str) -> list[str]:
-        return sorted(t.removeprefix("id::") for n in self.notes.values() if tag in n["tags"]
-                      for t in n["tags"] if t.startswith("id::"))
 
 
 @pytest.fixture

@@ -2,6 +2,7 @@
 id: storage-dataflow-modes
 node: storage.encoding
 type: qa
+step: 7
 ---
 ## Q
 DDIA names three modes by which encoded data flows between processes. Name all three, and for each, say who the reader is and which compatibility direction that forces you to maintain.

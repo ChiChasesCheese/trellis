@@ -2,6 +2,7 @@
 id: kafka-producer-acks-all-isr-safety
 node: producer.acks-durability
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

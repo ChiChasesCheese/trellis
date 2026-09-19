@@ -2,6 +2,7 @@
 id: kafka-reliability-guarantee-vs-full-reliability
 node: reliability.guarantees
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

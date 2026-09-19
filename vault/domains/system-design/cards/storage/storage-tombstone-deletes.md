@@ -2,6 +2,7 @@
 id: storage-tombstone-deletes
 node: storage.nosql
 type: qa
+step: 6
 ---
 ## Q
 Why is a delete in Cassandra actually a *write*, and what makes "using a wide-column table as a queue" a famous anti-pattern?

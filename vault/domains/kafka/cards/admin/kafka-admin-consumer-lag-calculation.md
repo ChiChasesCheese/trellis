@@ -2,6 +2,7 @@
 id: kafka-admin-consumer-lag-calculation
 node: admin.consumer-group-ops
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

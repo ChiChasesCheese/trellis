@@ -10,9 +10,9 @@ Accept, Accept-Encoding, Content-Type, Content-Encoding, Vary, WebP and AVIF sel
 - [[content-http-representations|RFC 9110: HTTP Semantics]]
 
 ## Cards (3)
-- [[content-negotiation-encoding-layer]]
-- [[content-negotiation-server-choice]]
-- [[content-negotiation-vary]]
+1. [[content-negotiation-encoding-layer]]
+2. [[content-negotiation-server-choice]]
+3. [[content-negotiation-vary]]
 %% trellis:end %%
 
 ## Notes

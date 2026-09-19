@@ -1,0 +1,6 @@
+{
+  "analytics.olap": ["analytics-row-vs-column-layout", "analytics-columnar-compression", "analytics-column-store-writes", "analytics-vectorized-execution", "analytics-star-schema", "analytics-data-cubes", "analytics-replica-analytics-limits"],
+  "analytics.warehouse": ["analytics-lake-vs-warehouse-vs-lakehouse", "analytics-table-formats", "analytics-lakehouse-snapshot-isolation", "analytics-lakehouse-compaction", "analytics-time-travel-retention"],
+  "analytics.batch": ["analytics-batch-vs-stream", "analytics-idempotent-reruns", "analytics-data-locality-shift", "analytics-intermediate-state-pipelining", "analytics-shuffle-mechanics", "analytics-join-strategies", "analytics-skew-stragglers"],
+  "analytics.derived": ["analytics-derived-data-framing", "analytics-cache-as-derived", "analytics-materialized-view-maintenance", "analytics-backfill-cdc", "analytics-lambda-vs-kappa", "analytics-derived-view-versioning"]
+}

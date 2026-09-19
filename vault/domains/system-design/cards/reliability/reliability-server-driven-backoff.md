@@ -2,6 +2,7 @@
 id: reliability-server-driven-backoff
 node: reliability.resilience.retries
 type: qa
+step: 5
 ---
 ## Q
 Every client is individually well-behaved (exponential backoff + jitter, 3 attempts) and the service is still being retried into the ground. Why, and what two mechanisms fix it?

@@ -8,8 +8,8 @@ Ankle and ACL mechanisms and the specific work that lowers the risk; landing mec
 - [[bb-acl-landing-mechanics|ACL Injury Prevention: Jumping and Landing Technique]]
 
 ## Cards (2)
-- [[bb-acl-noncontact-mechanism]]
-- [[bb-ankle-sprain-prevention]]
+1. [[bb-acl-noncontact-mechanism]]
+2. [[bb-ankle-sprain-prevention]]
 %% trellis:end %%
 
 ## Notes

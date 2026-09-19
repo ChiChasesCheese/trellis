@@ -2,6 +2,7 @@
 id: kafka-streams-ingestion-connect-vs-streamproc
 node: streams.choosing-framework
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

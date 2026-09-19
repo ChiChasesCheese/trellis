@@ -4,6 +4,8 @@
 
 Private and shared caches, edge and shield roles, cache hits and misses, and when an origin executes.
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/cdn-content/map/networking.proxies|Reverse Proxies, Gateways & Routing]]
 
 **Unlocks:** [[domains/cdn-content/map/caching.freshness|Freshness & Cache-Control]], [[domains/cdn-content/map/content.rendering|CSR, SSR, SSG & Dynamic Rendering]]
@@ -13,9 +15,9 @@ Private and shared caches, edge and shield roles, cache hits and misses, and whe
 - [[cache-rfc9111-http-caching|RFC 9111 — HTTP Caching]]
 
 ## Cards (3)
-- [[cache-model-hit-ratio]]
-- [[cache-model-origin-execution]]
-- [[cache-model-private-shared]]
+1. [[cache-model-hit-ratio]]
+2. [[cache-model-origin-execution]]
+3. [[cache-model-private-shared]]
 %% trellis:end %%
 
 ## Notes

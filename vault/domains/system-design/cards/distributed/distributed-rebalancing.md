@@ -2,6 +2,7 @@
 id: distributed-rebalancing
 node: distributed.partitioning.rebalancing
 type: qa
+step: 2
 ---
 ## Q
 How do you resplit/rebalance a sharded store without downtime, and what is the classic mistake in choosing partition count?

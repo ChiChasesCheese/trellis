@@ -11,9 +11,9 @@ Shaping the records themselves — one table with a discriminating dimension ver
 - [[qs-one-honest-ledger-with-a-discriminator|One honest ledger with a discriminator, not two stores]] — `quant-stroller`
 
 ## Cards (3)
-- [[storage-record-discriminator-column]]
-- [[storage-sparse-attributes]]
-- [[storage-vocabulary-collision]]
+1. [[storage-record-discriminator-column]]
+2. [[storage-sparse-attributes]]
+3. [[storage-vocabulary-collision]]
 %% trellis:end %%
 
 ## Notes

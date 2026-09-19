@@ -2,6 +2,7 @@
 id: kafka-monitoring-burrow-no-static-threshold
 node: monitoring.lag-e2e
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

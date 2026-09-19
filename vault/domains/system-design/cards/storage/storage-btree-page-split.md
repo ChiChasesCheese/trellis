@@ -2,6 +2,7 @@
 id: storage-btree-page-split
 node: storage.internals.btree
 type: qa
+step: 3
 ---
 ## Q
 An insert lands on a B-tree leaf page that is already full. Walk through what the engine does, and explain how this mechanism keeps the tree balanced without any rebalancing job.

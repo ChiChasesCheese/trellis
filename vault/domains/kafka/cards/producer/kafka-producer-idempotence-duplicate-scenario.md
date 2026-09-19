@@ -2,6 +2,7 @@
 id: kafka-producer-idempotence-duplicate-scenario
 node: producer.idempotence-ordering
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

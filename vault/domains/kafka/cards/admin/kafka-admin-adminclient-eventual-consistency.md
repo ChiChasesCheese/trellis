@@ -2,6 +2,7 @@
 id: kafka-admin-adminclient-eventual-consistency
 node: admin.topic-ops
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

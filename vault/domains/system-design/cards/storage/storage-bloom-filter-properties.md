@@ -2,6 +2,7 @@
 id: storage-bloom-filter-properties
 node: storage.internals.lsm
 type: qa
+step: 4
 ---
 ## Q
 A Bloom filter's two possible answers are asymmetric: one is trustworthy, one is not. State the asymmetry, why an LSM engine is safe with the untrustworthy side, and what knob trades memory for accuracy.

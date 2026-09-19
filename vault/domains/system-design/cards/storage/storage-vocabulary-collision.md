@@ -2,6 +2,7 @@
 id: storage-vocabulary-collision
 node: storage.record-modeling
 type: qa
+step: 3
 ---
 ## Q
 Two teams share a table with a `status` column. To billing, `active` means "currently paying"; to support, it means "account not banned". Name this schema hazard, describe how it corrupts data without any bug in either codebase, and give the fix that beats "agreeing on a definition."

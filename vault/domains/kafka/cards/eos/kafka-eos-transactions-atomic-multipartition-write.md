@@ -2,6 +2,7 @@
 id: kafka-eos-transactions-atomic-multipartition-write
 node: eos.transactions
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

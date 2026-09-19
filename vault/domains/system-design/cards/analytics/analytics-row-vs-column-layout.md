@@ -2,6 +2,7 @@
 id: analytics-row-vs-column-layout
 node: analytics.olap
 type: qa
+step: 1
 ---
 ## Q
 An analytical query averages one column over 100M rows. Why does a row-store (OLTP) engine do orders of magnitude more I/O than a column store, even with the same data?

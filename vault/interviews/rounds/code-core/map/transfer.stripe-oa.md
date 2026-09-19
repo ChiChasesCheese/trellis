@@ -50,11 +50,11 @@ One bespoke problem in three to five unlocking parts, parsing to state to rules 
 - [[oa-q40-query-words-within-k|Drill: proximity search over word positions, then a minimal window and document ranking]]
 
 ## Cards (5)
-- [[cc-transfer-oa-four-stage-pipeline]]
-- [[cc-transfer-oa-not-leetcode]]
-- [[cc-transfer-oa-partial-credit]]
-- [[cc-transfer-oa-payments-vocabulary]]
-- [[cc-transfer-oa-shape]]
+1. [[cc-transfer-oa-four-stage-pipeline]]
+2. [[cc-transfer-oa-not-leetcode]]
+3. [[cc-transfer-oa-partial-credit]]
+4. [[cc-transfer-oa-payments-vocabulary]]
+5. [[cc-transfer-oa-shape]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: kafka-producer-sync-send-throughput-problem
 node: producer.client-basics
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

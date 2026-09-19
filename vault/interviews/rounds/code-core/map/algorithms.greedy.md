@@ -8,11 +8,11 @@ Exchange arguments, sorting by the right key, when a counterexample kills the gr
 - [[interval-merge-across-offsets|Drill: merging maintenance windows across timezone offsets]]
 
 ## Cards (5)
-- [[cc-algorithms-greedy-counterexample]]
-- [[cc-algorithms-greedy-exchange-argument]]
-- [[cc-algorithms-greedy-feasibility-first]]
-- [[cc-algorithms-greedy-sort-key]]
-- [[cc-algorithms-greedy-with-heap]]
+1. [[cc-algorithms-greedy-counterexample]]
+2. [[cc-algorithms-greedy-exchange-argument]]
+3. [[cc-algorithms-greedy-feasibility-first]]
+4. [[cc-algorithms-greedy-sort-key]]
+5. [[cc-algorithms-greedy-with-heap]]
 %% trellis:end %%
 
 ## Notes

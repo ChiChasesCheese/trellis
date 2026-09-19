@@ -2,6 +2,7 @@
 id: ai-temperature-sampling
 node: ai.foundations
 type: qa
+step: 4
 ---
 ## Q
 What does the `temperature` parameter actually control on an LLM request, and when do you set it low vs high?

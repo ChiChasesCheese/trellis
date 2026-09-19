@@ -10,12 +10,12 @@
 - [[snowflak-external-tables|外部表(External Table):原地查询数据湖]]
 
 ## Cards (6)
-- [[external-table-metadata-refresh-stale-results]]
-- [[external-table-partition-auto-vs-manual]]
-- [[external-table-performance-options]]
-- [[external-table-readonly-value-column]]
-- [[external-table-refresh-billing]]
-- [[external-table-silent-skip-errors]]
+1. [[external-table-metadata-refresh-stale-results]]
+2. [[external-table-partition-auto-vs-manual]]
+3. [[external-table-performance-options]]
+4. [[external-table-readonly-value-column]]
+5. [[external-table-refresh-billing]]
+6. [[external-table-silent-skip-errors]]
 %% trellis:end %%
 
 ## Notes

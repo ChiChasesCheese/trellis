@@ -2,6 +2,7 @@
 id: traffic-bff-pattern
 node: traffic.gateways
 type: qa
+step: 6
 ---
 ## Q
 Backend-for-Frontend: what failure of the single shared API gateway does it address, and at what cost?

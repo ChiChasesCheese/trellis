@@ -2,6 +2,7 @@
 id: kafka-eos-idempotent-producer-restart-blindspot
 node: eos.idempotent-producer
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

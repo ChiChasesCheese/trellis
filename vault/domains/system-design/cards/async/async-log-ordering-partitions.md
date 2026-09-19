@@ -2,6 +2,7 @@
 id: async-log-ordering-partitions
 node: async.log
 type: qa
+step: 3
 ---
 ## Q
 What ordering does Kafka actually guarantee, and how do you use that to keep per-entity ordering at scale?

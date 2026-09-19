@@ -2,6 +2,7 @@
 id: async-streaming-state-recovery
 node: async.streaming.processing
 type: qa
+step: 5
 ---
 ## Q
 A stream job has been running for a month, holding large windowed aggregates in memory, when a worker dies. Restarting from scratch would mean replaying a month of input. How do frameworks like Flink make recovery cheap, and what's special about how a consistent snapshot is taken while the stream keeps flowing?

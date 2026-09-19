@@ -9,11 +9,11 @@
 - [[kafka-appendix-b1-managed-platforms|综合性托管平台一览]]
 
 ## Cards (5)
-- [[kafka-practice-aws-i2-d2-tradeoff]]
-- [[kafka-practice-aws-m4-vs-r3-instance]]
-- [[kafka-practice-azure-disk-tier-sla]]
-- [[kafka-practice-azure-managed-vs-ephemeral-disk]]
-- [[kafka-practice-managed-kafka-integration-depth]]
+1. [[kafka-practice-aws-m4-vs-r3-instance]]
+2. [[kafka-practice-aws-i2-d2-tradeoff]]
+3. [[kafka-practice-azure-managed-vs-ephemeral-disk]]
+4. [[kafka-practice-azure-disk-tier-sla]]
+5. [[kafka-practice-managed-kafka-integration-depth]]
 %% trellis:end %%
 
 ## Notes

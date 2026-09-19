@@ -2,6 +2,7 @@
 id: kafka-monitoring-health-check-stale-metrics-tradeoff
 node: monitoring.metrics-and-slo
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

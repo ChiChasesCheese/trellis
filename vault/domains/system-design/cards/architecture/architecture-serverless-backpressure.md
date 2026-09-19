@@ -2,6 +2,7 @@
 id: architecture-serverless-backpressure
 node: architecture.serverless
 type: qa
+step: 4
 ---
 ## Q
 A traffic spike makes your FaaS platform spawn 3,000 concurrent function instances, which flatten the database behind them. What is the structural mismatch, and the two standard fixes?

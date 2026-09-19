@@ -12,8 +12,8 @@ Identifying the low man and the tagger before you drive, and letting the help's 
 - [[film-study-count-decisions|Drill: Film study of your own game, counting decisions]]
 
 ## Cards (2)
-- [[bb-reads-help-position-picks-finish]]
-- [[bb-reads-scan-before-you-drive]]
+1. [[bb-reads-help-position-picks-finish]]
+2. [[bb-reads-scan-before-you-drive]]
 %% trellis:end %%
 
 ## Notes

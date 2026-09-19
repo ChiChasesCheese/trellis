@@ -2,6 +2,7 @@
 id: reliability-shuffle-sharding-blast-radius
 node: reliability.resilience.containment
 type: cloze
+step: 4
 ---
 Blast-radius math for 8 nodes: with plain sharding into 4 fixed shards of 2, one poison-pill client fully takes out {{c1::1/4 (25%)}} of customers. With shuffle sharding (each customer a random 2-node subset) there are {{c2::C(8,2) = 28}} possible virtual shards, so the fraction of customers who share *both* nodes with the bad client — the only ones fully down — is about {{c3::1/28 (≈3.6%)}}; customers sharing one node stay up by retrying on their other node. Scaling nodes grows combinations {{c4::combinatorially (e.g. 100 choose 5 ≈ 75 million)}}, so per-customer isolation approaches single-tenant on shared hardware.
 

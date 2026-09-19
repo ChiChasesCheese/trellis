@@ -2,6 +2,7 @@
 id: kafka-producer-key-hash-partition-consistency
 node: producer.extensibility
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

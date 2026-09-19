@@ -4,6 +4,8 @@
 
 Idempotency keys, dedup windows, and designing every mutation to survive a retry.
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/system-design/map/async.delivery|Delivery Semantics]]
 
 **Unlocks:** [[domains/system-design/map/correctness.ledger|Ledgers & Reconciliation]]
@@ -19,13 +21,13 @@ Idempotency keys, dedup windows, and designing every mutation to survive a retry
 - [[design-payment-ledger|Drill: Design a payment ledger service]]
 
 ## Cards (7)
-- [[correctness-dedup-window]]
-- [[correctness-idempotency-concurrent-retries]]
-- [[correctness-idempotency-key-design]]
-- [[correctness-idempotency-partial-failure]]
-- [[correctness-idempotency-payload-hash]]
-- [[correctness-idempotency-response-replay]]
-- [[correctness-idempotent-consumer-patterns]]
+1. [[correctness-idempotency-key-design]]
+2. [[correctness-idempotency-payload-hash]]
+3. [[correctness-idempotency-response-replay]]
+4. [[correctness-idempotency-concurrent-retries]]
+5. [[correctness-idempotency-partial-failure]]
+6. [[correctness-dedup-window]]
+7. [[correctness-idempotent-consumer-patterns]]
 %% trellis:end %%
 
 ## Notes

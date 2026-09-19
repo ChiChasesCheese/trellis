@@ -2,6 +2,7 @@
 id: storage-multicolumn-vs-bitmap-and
 node: storage.relational.indexing
 type: qa
+step: 3
 ---
 ## Q
 Query: `WHERE a = ? AND b = ?`. You could build one composite index on `(a, b)` or rely on two existing single-column indexes on `a` and on `b`. How does the database actually use the two separate indexes, and when is the composite worth building anyway?

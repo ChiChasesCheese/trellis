@@ -2,6 +2,7 @@
 id: networking-cdn-stale-while-revalidate
 node: networking.cdn
 type: qa
+step: 3
 ---
 ## Q
 `Cache-Control: stale-while-revalidate` and `stale-if-error` — what does each authorize a CDN to do, and what do you buy?

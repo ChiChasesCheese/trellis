@@ -2,6 +2,7 @@
 id: kafka-connect-prefer-over-custom-app
 node: connect.connect-basics
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

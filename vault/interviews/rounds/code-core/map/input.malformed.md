@@ -16,11 +16,11 @@ Deciding per field whether a bad row is skipped, defaulted or fatal, and keeping
 - [[oa-q31-wishlist-mutual-rank|Drill: mutual-rank pairings over ordered wishlists]]
 
 ## Cards (5)
-- [[cc-input-mal-corrupt-row-participates-in-nothing]]
-- [[cc-input-mal-one-validator]]
-- [[cc-input-mal-skip-default-fatal]]
-- [[cc-input-mal-unknown-vocabulary]]
-- [[cc-input-mal-validate-before-mutate]]
+1. [[cc-input-mal-corrupt-row-participates-in-nothing]]
+2. [[cc-input-mal-one-validator]]
+3. [[cc-input-mal-skip-default-fatal]]
+4. [[cc-input-mal-unknown-vocabulary]]
+5. [[cc-input-mal-validate-before-mutate]]
 %% trellis:end %%
 
 ## Notes

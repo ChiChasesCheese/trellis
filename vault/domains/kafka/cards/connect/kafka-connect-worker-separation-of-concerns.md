@@ -2,6 +2,7 @@
 id: kafka-connect-worker-separation-of-concerns
 node: connect.connect-basics
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

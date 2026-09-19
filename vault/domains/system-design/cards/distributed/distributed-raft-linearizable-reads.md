@@ -2,6 +2,7 @@
 id: distributed-raft-linearizable-reads
 node: distributed.consensus
 type: qa
+step: 8
 ---
 ## Q
 Why can't a Raft leader serve linearizable reads from its local state without extra work, and what are the two standard fixes?

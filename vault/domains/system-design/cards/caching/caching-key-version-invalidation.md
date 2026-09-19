@@ -2,6 +2,7 @@
 id: caching-key-version-invalidation
 node: caching.invalidation
 type: qa
+step: 4
 ---
 ## Q
 You need to invalidate a whole *group* of cache entries at once (every page of a user's feed) without tracking each key. Pattern and costs?

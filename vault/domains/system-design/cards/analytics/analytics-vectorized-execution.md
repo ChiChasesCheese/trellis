@@ -2,6 +2,7 @@
 id: analytics-vectorized-execution
 node: analytics.olap
 type: qa
+step: 4
 ---
 ## Q
 What is vectorized execution, and what cost of the classic row-at-a-time (Volcano) model does it eliminate?

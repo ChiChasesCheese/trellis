@@ -2,6 +2,7 @@
 id: networking-anycast-vs-geodns
 node: networking.dns
 type: qa
+step: 6
 ---
 ## Q
 Anycast vs GeoDNS for steering users to the nearest site — mechanism and weakness of each?

@@ -2,6 +2,7 @@
 id: async-log-compaction
 node: async.log
 type: qa
+step: 7
 ---
 ## Q
 How does Kafka log compaction work, what does a compacted topic guarantee, and what is it for?

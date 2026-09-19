@@ -2,6 +2,7 @@
 id: kafka-security-super-users-vs-acl
 node: security.authorization
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

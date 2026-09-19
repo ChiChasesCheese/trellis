@@ -2,6 +2,7 @@
 id: async-rebalancing-protocols
 node: async.log
 type: qa
+step: 6
 ---
 ## Q
 A consumer group of 50 members hiccups every deploy: all consumption stops for seconds. What causes the pause, and what are the modern mitigations?

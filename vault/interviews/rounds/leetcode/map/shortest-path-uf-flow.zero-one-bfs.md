@@ -3,11 +3,6 @@
 *最短路、并查集与网络流（shortest path / union-find / flow）*
 
 最短路图的边权只为 0 或 1 时，用 0-1 BFS。
-
-## Cards (3)
-- [[leetcode-c-endlesscheng-g0n5iy-zero-one-bfs-invariant]]
-- [[leetcode-c-endlesscheng-g0n5iy-zero-one-bfs-recognition]]
-- [[leetcode-c-endlesscheng-g0n5iy-zero-one-bfs-template]]
 %% trellis:end %%
 
 ## Notes

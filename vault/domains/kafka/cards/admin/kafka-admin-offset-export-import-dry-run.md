@@ -2,6 +2,7 @@
 id: kafka-admin-offset-export-import-dry-run
 node: admin.consumer-group-ops
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

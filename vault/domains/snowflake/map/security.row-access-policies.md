@@ -10,12 +10,12 @@
 - [[snowflak-row-access-policies|行访问策略(Row Access Policy):按角色过滤行]]
 
 ## Cards (6)
-- [[rap-count-star-slow]]
-- [[rap-mv-mutual-exclusion]]
-- [[rap-not-write-protection]]
-- [[rap-performance-guidelines]]
-- [[rap-policy-owner-evaluation]]
-- [[rap-runtime-secure-view]]
+1. [[rap-count-star-slow]]
+2. [[rap-mv-mutual-exclusion]]
+3. [[rap-not-write-protection]]
+4. [[rap-performance-guidelines]]
+5. [[rap-policy-owner-evaluation]]
+6. [[rap-runtime-secure-view]]
 %% trellis:end %%
 
 ## Notes

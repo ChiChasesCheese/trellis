@@ -2,6 +2,7 @@
 id: storage-compaction-interference
 node: storage.internals.tradeoffs
 type: qa
+step: 4
 ---
 ## Q
 An LSM store benchmarks beautifully, then in production shows periodic latency spikes and, under sustained ingest, throughput collapse. Explain the compaction-interference mechanism behind both symptoms, and what engines do about it.

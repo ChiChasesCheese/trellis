@@ -4,6 +4,8 @@
 
 Spot, par and forward curves and their bootstrapping; level/slope/curvature as the three PCs; the expectations hypothesis, its rejection, and the countercyclical term premium that replaces it.
 
+**Core** — part of the first pass through this subject.
+
 **Unlocks:** [[domains/markets/map/fixed-income.risk|Duration & Convexity]], [[domains/markets/map/macro.policy|Policy & Liquidity]]
 %% trellis:end %%
 

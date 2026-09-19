@@ -4,6 +4,8 @@
 
 Forward versus reverse proxy, TLS termination, hop-by-hop headers, upstream selection, and request transformation boundaries.
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/cdn-content/map/networking.http-semantics|HTTP Semantics]]
 
 **Unlocks:** [[domains/cdn-content/map/caching.model|Browser, Shared Cache & CDN Model]], [[domains/cdn-content/map/runtimes.go-http|Go HTTP Services]], [[domains/cdn-content/map/runtimes.lua-openresty|Lua & OpenResty Hot Path]], [[domains/cdn-content/map/security-cost.request-integrity|Proxy Request Integrity]]
@@ -15,13 +17,13 @@ Forward versus reverse proxy, TLS termination, hop-by-hop headers, upstream sele
 - [[trace-a-cold-content-request|Drill: Trace a cold content request]]
 
 ## Cards (7)
-- [[net-proxy-forward-vs-reverse]]
-- [[net-proxy-forwarded-trust]]
-- [[net-proxy-hop-headers]]
-- [[net-proxy-length-mismatch-smuggling]]
-- [[net-proxy-timeout-budget]]
-- [[net-proxy-tls-termination-boundary]]
-- [[net-proxy-upstream-selection]]
+1. [[net-proxy-forwarded-trust]]
+2. [[net-proxy-hop-headers]]
+3. [[net-proxy-upstream-selection]]
+4. [[net-proxy-forward-vs-reverse]]
+5. [[net-proxy-length-mismatch-smuggling]]
+6. [[net-proxy-timeout-budget]]
+7. [[net-proxy-tls-termination-boundary]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: kafka-internals-fetch-only-sees-committed
 node: internals.request-handling
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

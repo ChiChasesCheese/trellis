@@ -12,11 +12,11 @@ Noun–verb extraction, finding entities and invariants, sequence-of-interaction
 - [[splitwise|Drill: Splitwise (Expense Sharing)]]
 
 ## Cards (5)
-- [[method-cross-object-invariant]]
-- [[method-invariant-ownership]]
-- [[method-noun-verb-extraction]]
-- [[method-sequence-before-classes]]
-- [[method-splitting-one-entity]]
+1. [[method-cross-object-invariant]]
+2. [[method-invariant-ownership]]
+3. [[method-noun-verb-extraction]]
+4. [[method-sequence-before-classes]]
+5. [[method-splitting-one-entity]]
 %% trellis:end %%
 
 ## Notes

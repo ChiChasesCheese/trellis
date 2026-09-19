@@ -2,6 +2,7 @@
 id: distributed-crdt-convergence
 node: distributed.crdt
 type: qa
+step: 1
 ---
 ## Q
 What algebraic properties must a CRDT's merge function have, and what operational freedoms do those properties buy?

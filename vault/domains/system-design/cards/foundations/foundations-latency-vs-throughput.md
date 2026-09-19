@@ -2,6 +2,7 @@
 id: foundations-latency-vs-throughput
 node: foundations.tradeoffs
 type: qa
+step: 6
 ---
 ## Q
 Batching writes raises throughput but hurts which metric, and why? Name the general trade-off.

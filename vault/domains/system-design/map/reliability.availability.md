@@ -9,12 +9,12 @@ Nines, serial vs parallel composition, redundancy patterns, failover modes and t
 - [[google-sre-embracing-risk|Embracing Risk (Google SRE Book, ch. 3)]]
 
 ## Cards (6)
-- [[reliability-correlated-failures]]
-- [[reliability-failover-modes-tradeoff]]
-- [[reliability-fault-vs-failure]]
-- [[reliability-gray-failure]]
-- [[reliability-nines-downtime-budgets]]
-- [[reliability-serial-parallel-composition]]
+1. [[reliability-fault-vs-failure]]
+2. [[reliability-serial-parallel-composition]]
+3. [[reliability-nines-downtime-budgets]]
+4. [[reliability-correlated-failures]]
+5. [[reliability-gray-failure]]
+6. [[reliability-failover-modes-tradeoff]]
 %% trellis:end %%
 
 ## Notes

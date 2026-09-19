@@ -2,6 +2,7 @@
 id: async-cdc-initial-snapshot
 node: async.streaming.cdc
 type: qa
+step: 2
 ---
 ## Q
 You turn on CDC for a table that already has 500M rows. How do you get the existing data plus ongoing changes without loss or inconsistency?

@@ -4,6 +4,8 @@
 
 Association vs aggregation vs composition vs dependency; lifetime ownership and the UML arrows for each.
 
+**Core** — part of the first pass through this subject.
+
 **Unlocks:** [[domains/low-level-design/map/principles.composition|Composition over Inheritance]]
 
 ## Readings
@@ -14,11 +16,11 @@ Association vs aggregation vs composition vs dependency; lifetime ownership and 
 - [[parking-lot|Drill: Parking Lot]]
 
 ## Cards (5)
-- [[oop-association-vs-dependency]]
-- [[oop-bidirectional-association]]
-- [[oop-cascade-delete-decision]]
-- [[oop-composition-vs-aggregation]]
-- [[oop-uml-arrows]]
+1. [[oop-association-vs-dependency]]
+2. [[oop-bidirectional-association]]
+3. [[oop-cascade-delete-decision]]
+4. [[oop-composition-vs-aggregation]]
+5. [[oop-uml-arrows]]
 %% trellis:end %%
 
 ## Notes

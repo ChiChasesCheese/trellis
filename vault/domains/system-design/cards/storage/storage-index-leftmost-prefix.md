@@ -2,6 +2,7 @@
 id: storage-index-leftmost-prefix
 node: storage.relational.indexing
 type: qa
+step: 2
 ---
 ## Q
 You have a composite B-tree index on `(tenant_id, created_at)`. Which of these can use it efficiently: (a) `WHERE tenant_id = ?`, (b) `WHERE created_at > ?`, (c) `WHERE tenant_id = ? AND created_at > ?` — and why?

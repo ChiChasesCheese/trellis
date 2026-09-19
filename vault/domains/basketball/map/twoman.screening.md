@@ -8,8 +8,8 @@ Angle, timing, contact, and screening the defender's body rather than the space 
 - [[bb-using-ball-screens|How to use Ball Screens Pt. 1]]
 
 ## Cards (2)
-- [[bb-screening-angle-timing-contact]]
-- [[bb-screening-slip-and-rescreen-triggers]]
+1. [[bb-screening-angle-timing-contact]]
+2. [[bb-screening-slip-and-rescreen-triggers]]
 %% trellis:end %%
 
 ## Notes

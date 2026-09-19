@@ -4,6 +4,8 @@
 
 A factor as a long-short portfolio, characteristics vs covariances, and the lineage CAPM to Fama-French 3, Carhart 4, FF5, the q-factor model and mispricing factors.
 
+**Core** — part of the first pass through this subject.
+
 **Unlocks:** [[domains/markets/map/factors.zoo|The Factor Zoo & Decay]]
 
 ## Readings

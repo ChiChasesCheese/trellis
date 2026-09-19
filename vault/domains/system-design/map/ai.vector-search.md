@@ -13,13 +13,13 @@ Embeddings as vectors, ANN indexes (HNSW/IVF), hybrid retrieval, and freshness o
 - [[pinecone-learn|Pinecone Learning Center]]
 
 ## Cards (7)
-- [[ai-ann-tradeoff]]
-- [[ai-corpus-freshness]]
-- [[ai-filtered-vector-search]]
-- [[ai-hnsw-vs-ivf]]
-- [[ai-hybrid-retrieval]]
-- [[ai-index-maintenance]]
-- [[ai-retrieval-eval]]
+1. [[ai-ann-tradeoff]]
+2. [[ai-hnsw-vs-ivf]]
+3. [[ai-filtered-vector-search]]
+4. [[ai-index-maintenance]]
+5. [[ai-hybrid-retrieval]]
+6. [[ai-corpus-freshness]]
+7. [[ai-retrieval-eval]]
 %% trellis:end %%
 
 ## Notes

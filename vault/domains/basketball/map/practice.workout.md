@@ -8,8 +8,8 @@ Building a session that ends in decisions, shot volume that means something, and
 - [[solo-workout-that-ends-in-decisions|Drill: A solo workout that ends in decisions]]
 
 ## Cards (2)
-- [[bb-workout-ends-in-decisions]]
-- [[bb-workout-tracking-that-survives]]
+1. [[bb-workout-ends-in-decisions]]
+2. [[bb-workout-tracking-that-survives]]
 %% trellis:end %%
 
 ## Notes

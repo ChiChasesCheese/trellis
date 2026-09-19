@@ -2,6 +2,7 @@
 id: storage-replica-lag-ops
 node: storage.relational.operations
 type: qa
+step: 5
 ---
 ## Q
 You run Postgres read replicas. How do you actually measure replication lag (two units matter), and what workload events typically make it spike even when the network is fine?

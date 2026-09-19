@@ -2,6 +2,7 @@
 id: kafka-practice-rest-proxy-language-agnostic-alt
 node: practice.other-clients
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

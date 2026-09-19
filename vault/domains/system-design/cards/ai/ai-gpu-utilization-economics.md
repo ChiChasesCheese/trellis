@@ -2,6 +2,7 @@
 id: ai-gpu-utilization-economics
 node: ai.inference
 type: qa
+step: 7
 ---
 ## Q
 `nvidia-smi` shows 100% GPU utilization but your cost per million tokens is 5x the competition. Why is that metric a lie, and what do you measure instead?

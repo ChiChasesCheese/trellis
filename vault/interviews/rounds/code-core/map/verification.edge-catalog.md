@@ -10,11 +10,11 @@ Empty, single, duplicate, out-of-order, zero, negative, exactly-at-threshold, ma
 - [[hidden-test-bug-hunt|Drill: name the bug class from the failing-test description alone]]
 
 ## Cards (5)
-- [[cc-verification-edge-catalog-eight]]
-- [[cc-verification-edge-duplicate-and-out-of-order]]
-- [[cc-verification-edge-empty-and-single]]
-- [[cc-verification-edge-exact-threshold-triple]]
-- [[cc-verification-edge-zero-negative-and-max]]
+1. [[cc-verification-edge-catalog-eight]]
+2. [[cc-verification-edge-duplicate-and-out-of-order]]
+3. [[cc-verification-edge-empty-and-single]]
+4. [[cc-verification-edge-exact-threshold-triple]]
+5. [[cc-verification-edge-zero-negative-and-max]]
 %% trellis:end %%
 
 ## Notes

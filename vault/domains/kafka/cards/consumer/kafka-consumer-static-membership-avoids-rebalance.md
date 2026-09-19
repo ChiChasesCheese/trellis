@@ -2,6 +2,7 @@
 id: kafka-consumer-static-membership-avoids-rebalance
 node: consumer.groups-rebalance
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

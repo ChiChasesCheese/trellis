@@ -10,9 +10,9 @@ Declarative state, plans, drift, modules, pods, services, probes, resources, rol
 - [[delivery-kubernetes-deployments|Kubernetes: Deployments]]
 
 ## Cards (3)
-- [[delivery-kubernetes-probe-choice]]
-- [[delivery-kubernetes-rollout-capacity]]
-- [[delivery-terraform-plan-state]]
+1. [[delivery-kubernetes-probe-choice]]
+2. [[delivery-kubernetes-rollout-capacity]]
+3. [[delivery-terraform-plan-state]]
 %% trellis:end %%
 
 ## Notes

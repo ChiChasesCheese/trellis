@@ -2,6 +2,7 @@
 id: distributed-materializing-conflicts
 node: distributed.transactions.isolation
 type: qa
+step: 7
 ---
 ## Q
 A booking system checks "is room 101 free 12–1pm?" and inserts a reservation — but there is no existing row for the time slot, so `SELECT ... FOR UPDATE` locks nothing and double-bookings slip through. What is the "materializing conflicts" technique, and why is it a last resort?

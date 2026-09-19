@@ -2,6 +2,7 @@
 id: kafka-core-controller-role
 node: core.cluster-roles
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

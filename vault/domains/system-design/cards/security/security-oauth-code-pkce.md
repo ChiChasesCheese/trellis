@@ -2,6 +2,7 @@
 id: security-oauth-code-pkce
 node: security.authn.oauth
 type: qa
+step: 1
 ---
 ## Q
 In the OAuth2 authorization code flow, why does the client exchange a code instead of receiving tokens directly in the redirect — and what does PKCE add?

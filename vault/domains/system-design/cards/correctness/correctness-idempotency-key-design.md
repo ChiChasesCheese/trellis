@@ -2,6 +2,7 @@
 id: correctness-idempotency-key-design
 node: correctness.idempotency
 type: qa
+step: 1
 ---
 ## Q
 Design the idempotency-key flow for a `POST /payments` endpoint (Stripe-style). Who generates the key, what does the server store, and what does a retry get back?

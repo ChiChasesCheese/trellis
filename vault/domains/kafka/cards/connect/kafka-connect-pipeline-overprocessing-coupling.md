@@ -2,6 +2,7 @@
 id: kafka-connect-pipeline-overprocessing-coupling
 node: connect.pipeline-design
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

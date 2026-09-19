@@ -5,11 +5,11 @@
 Authorization-code + PKCE flow, what OIDC adds on top, which flow for which client.
 
 ## Cards (5)
-- [[security-oauth-browser-token-storage]]
-- [[security-oauth-code-pkce]]
-- [[security-oauth-grant-selection]]
-- [[security-oauth-scopes-vs-audience]]
-- [[security-oauth-vs-oidc]]
+1. [[security-oauth-code-pkce]]
+2. [[security-oauth-browser-token-storage]]
+3. [[security-oauth-vs-oidc]]
+4. [[security-oauth-scopes-vs-audience]]
+5. [[security-oauth-grant-selection]]
 %% trellis:end %%
 
 ## Notes

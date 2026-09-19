@@ -2,6 +2,7 @@
 id: kafka-mirrormaker-topic-write-acl-not-migrated
 node: mirroring.mirrormaker
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

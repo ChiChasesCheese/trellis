@@ -2,6 +2,7 @@
 id: kafka-internals-tiered-storage-isolation-benchmark
 node: internals.tiered-storage
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: reliability-chaos-hypothesis
 node: reliability.resilience.containment
 type: qa
+step: 7
 ---
 ## Q
 What separates chaos engineering from "randomly breaking things in prod," and what are the steps of a proper experiment?

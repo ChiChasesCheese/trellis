@@ -2,6 +2,7 @@
 id: kafka-admin-client-dns-lookup-modes
 node: admin.topic-ops
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

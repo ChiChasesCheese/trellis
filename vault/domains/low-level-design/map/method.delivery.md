@@ -12,11 +12,11 @@ Requirement scoping, choosing core flows, time-boxing design vs code vs demo, dr
 - [[elevator-system|Drill: Elevator System]]
 
 ## Cards (5)
-- [[method-design-pitch-before-coding]]
-- [[method-final-twenty-minutes]]
-- [[method-running-out-of-time]]
-- [[method-scope-first-move]]
-- [[method-time-budget]]
+1. [[method-design-pitch-before-coding]]
+2. [[method-final-twenty-minutes]]
+3. [[method-running-out-of-time]]
+4. [[method-scope-first-move]]
+5. [[method-time-budget]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: networking-dns-negative-caching
 node: networking.dns
 type: qa
+step: 3
 ---
 ## Q
 You delete a DNS record by mistake and resolvers start returning NXDOMAIN. You fix the zone — but clients keep failing. Why?

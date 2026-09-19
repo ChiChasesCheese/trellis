@@ -3,11 +3,6 @@
 *数组、哈希与前缀和（arrays / hashing / prefix sum）*
 
 每个位置同时依赖左边和右边信息时，使用 从左到右与从右到左各扫描一次。
-
-## Cards (3)
-- [[leetcode-c-endlesscheng-g6ktkl-two-directional-scans-invariant]]
-- [[leetcode-c-endlesscheng-g6ktkl-two-directional-scans-recognition]]
-- [[leetcode-c-endlesscheng-g6ktkl-two-directional-scans-template]]
 %% trellis:end %%
 
 ## Notes

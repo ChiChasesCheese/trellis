@@ -2,6 +2,7 @@
 id: foundations-interview-opening-moves
 node: foundations.method
 type: qa
+step: 2
 ---
 ## Q
 First five minutes of a system design interview: what two categories of requirements do you pin down, and what form should each take?

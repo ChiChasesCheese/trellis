@@ -2,6 +2,7 @@
 id: ai-tokens-as-units
 node: ai.foundations
 type: qa
+step: 1
 ---
 ## Q
 LLM pricing, rate limits, and context limits are all denominated in "tokens", not characters or words. What is a token, and what should a backend engineer assume when sizing requests?

@@ -2,6 +2,7 @@
 id: async-exactly-once-myth
 node: async.delivery.guarantees
 type: qa
+step: 2
 ---
 ## Q
 An interviewer asks: "Can a message broker give you exactly-once delivery?" What is the correct senior answer?

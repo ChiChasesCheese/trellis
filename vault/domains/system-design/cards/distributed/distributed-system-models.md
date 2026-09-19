@@ -2,6 +2,7 @@
 id: distributed-system-models
 node: distributed.time.failure
 type: qa
+step: 1
 ---
 ## Q
 Crash-stop vs crash-recovery vs Byzantine fault models — what does each assume, and which (plus which timing model) do mainstream datacenter systems design for?

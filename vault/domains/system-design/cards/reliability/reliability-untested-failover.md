@@ -2,6 +2,7 @@
 id: reliability-untested-failover
 node: reliability.multi-region
 type: qa
+step: 6
 ---
 ## Q
 Why does an untested regional failover "not exist," and what two practices make failover real?

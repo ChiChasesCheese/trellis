@@ -2,6 +2,7 @@
 id: async-log-backfill-reprocessing
 node: async.log
 type: qa
+step: 8
 ---
 ## Q
 You need to rebuild a derived store by reprocessing 90 days of a Kafka topic. What makes this operationally safe, and what two limits do you hit?

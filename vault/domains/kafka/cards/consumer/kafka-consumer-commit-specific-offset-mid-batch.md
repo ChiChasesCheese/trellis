@@ -2,6 +2,7 @@
 id: kafka-consumer-commit-specific-offset-mid-batch
 node: consumer.offset-commit
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

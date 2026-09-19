@@ -5,8 +5,16 @@ domain: kafka
 title: Kafka
 lang: zh
 vault: domains/kafka
+# How this domain is studied in Anki (ADR 0010). `core: true` below marks what
+# is dealt first; a card's `step:` orders it inside its leaf.
+study:
+  order: core-first
+  mix: new-first          # today's new cards before today's reviews
+  new_per_day: 20
+  reviews_per_day: 100
 nodes:
 - id: core
+  core: true
   title: 核心架构：主题、分区与副本模型
   summary: 建立Kafka作为分布式提交日志的核心心智模型：发布订阅定位、主题分区设计、偏移量语义与副本/ISR机制。
   order: 1
@@ -35,17 +43,20 @@ nodes:
     title: 创建生产者与同步/异步发送
     summary: 掌握生产者的创建方式，以及同步发送与异步发送（含回调）在延迟和吞吐上的取舍。
   - id: producer.acks-durability
+    core: true
     title: acks与生产端持久性保证
     summary: 理解acks=0/1/all如何决定消息在被确认前需要写入多少副本，以及由此带来的持久性保证差异。
     requires:
     - core.replication-isr
   - id: producer.batching-throughput
+    core: true
     title: 批处理、linger.ms与压缩（compression）对吞吐量的影响
     summary: 掌握batch.size、linger.ms、buffer.memory与compression.type如何联合影响生产者吞吐量与延迟。
   - id: producer.timeouts-retries
     title: 消息传递超时与重试（max.in.flight.requests.per.connection）
     summary: 理解生产者的传递超时体系与重试机制，以及并发在途请求数对消息顺序的影响。
   - id: producer.idempotence-ordering
+    core: true
     title: 幂等生产者开关（enable.idempotence）与顺序保证
     summary: 理解开启幂等性如何消除重试导致的重复写入，并保障单分区内的消息顺序。
   - id: producer.serialization
@@ -63,6 +74,7 @@ nodes:
   order: 3
   children:
   - id: consumer.groups-rebalance
+    core: true
     title: 消费者群组（consumer group）与再均衡（rebalance）
     summary: 理解消费者群组如何分摊分区、再均衡的触发时机，以及再均衡监听器与群组固定成员（static membership）如何减少不必要的再均衡。
   - id: consumer.client-basics
@@ -72,6 +84,7 @@ nodes:
     title: 拉取与存活相关配置
     summary: 理解fetch.min.bytes、max.poll.records等拉取参数与session.timeout.ms、heartbeat.interval.ms等存活检测参数如何共同影响吞吐与故障检测速度。
   - id: consumer.offset-commit
+    core: true
     title: 提交与偏移量管理
     summary: 掌握自动提交与手动同步/异步提交组合的权衡，以及如何提交特定偏移量。
     requires:
@@ -115,6 +128,7 @@ nodes:
     title: 索引：偏移量索引与时间索引
     summary: 理解偏移量索引和时间索引如何让broker在不扫描整个日志的情况下快速定位消息。
   - id: internals.compaction
+    core: true
     title: 日志压实（log compaction）
     summary: 掌握日志压实保留每个键最新值的原理、执行时机，以及它与基于时间/大小保留策略的适用场景差异。
   - id: internals.kraft-mode
@@ -129,6 +143,7 @@ nodes:
   order: 5
   children:
   - id: reliability.guarantees
+    core: true
     title: Kafka的可靠性保证及其边界
     summary: 理解Kafka在顺序、至少一次/精确一次等方面提供的保证，以及这些保证成立所依赖的前提条件。
   - id: reliability.broker-config
@@ -160,6 +175,7 @@ nodes:
     requires:
     - producer.idempotence-ordering
   - id: eos.transactions
+    core: true
     title: 事务：应用场景、隔离与实现原理
     summary: 掌握事务如何跨多个分区实现原子写入、事务ID与隔离级别的作用，以及事务能解决与不能解决的问题。
   - id: eos.transactions-perf
@@ -246,6 +262,7 @@ nodes:
     title: 客户端监控：生产者、消费者指标与配额
     summary: 掌握生产者与消费者关键指标的含义，以及配额（quota）机制如何限制客户端对broker资源的占用。
   - id: monitoring.lag-e2e
+    core: true
     title: 消费滞后监控与端到端监控
     summary: 理解消费滞后（consumer lag）的监控方法，以及端到端监控如何验证消息从生产到消费的完整链路健康。
   - id: monitoring.observability-otel

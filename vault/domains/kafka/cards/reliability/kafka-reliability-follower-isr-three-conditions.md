@@ -2,6 +2,7 @@
 id: kafka-reliability-follower-isr-three-conditions
 node: reliability.guarantees
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

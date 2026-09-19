@@ -2,6 +2,7 @@
 id: kafka-admin-force-move-controller
 node: admin.partition-reassignment
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

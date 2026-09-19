@@ -2,6 +2,7 @@
 id: kafka-streams-joinwindows-asymmetric-before
 node: streams.streams-api
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

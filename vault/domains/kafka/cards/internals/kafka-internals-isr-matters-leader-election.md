@@ -2,6 +2,7 @@
 id: kafka-internals-isr-matters-leader-election
 node: internals.replication-protocol
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

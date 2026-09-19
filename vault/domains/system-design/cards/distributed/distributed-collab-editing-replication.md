@@ -2,6 +2,7 @@
 id: distributed-collab-editing-replication
 node: distributed.replication.multi-leader
 type: qa
+step: 6
 ---
 ## Q
 Why is real-time collaborative editing (Google-Docs-style) formally a multi-leader replication problem, and what dial does the size of the editing unit control?

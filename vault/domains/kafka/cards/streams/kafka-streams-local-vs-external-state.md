@@ -2,6 +2,7 @@
 id: kafka-streams-local-vs-external-state
 node: streams.concepts
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

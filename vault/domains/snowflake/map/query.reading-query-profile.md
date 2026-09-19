@@ -10,12 +10,12 @@
 - [[snowflak-query-profile-history|查询画像(Query Profile)与查询历史的定位方法]]
 
 ## Cards (6)
-- [[profile-details-unavailable]]
-- [[profile-exploding-join]]
-- [[profile-metadata-only-operators]]
-- [[profile-overview-time-categories]]
-- [[profile-plan-nodes-and-arrows]]
-- [[profile-pruning-scanned-vs-total]]
+1. [[profile-details-unavailable]]
+2. [[profile-exploding-join]]
+3. [[profile-metadata-only-operators]]
+4. [[profile-overview-time-categories]]
+5. [[profile-plan-nodes-and-arrows]]
+6. [[profile-pruning-scanned-vs-total]]
 %% trellis:end %%
 
 ## Notes

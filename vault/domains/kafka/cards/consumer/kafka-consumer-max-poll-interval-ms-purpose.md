@@ -2,6 +2,7 @@
 id: kafka-consumer-max-poll-interval-ms-purpose
 node: consumer.poll-config
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

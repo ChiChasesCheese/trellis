@@ -2,6 +2,7 @@
 id: traffic-gateway-centralizes
 node: traffic.gateways
 type: qa
+step: 2
 ---
 ## Q
 An API gateway sits in front of 30 microservices. Which cross-cutting concerns does it centralize that would otherwise be reimplemented 30 times?

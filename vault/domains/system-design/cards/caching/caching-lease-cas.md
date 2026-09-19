@@ -2,6 +2,7 @@
 id: caching-lease-cas
 node: caching.invalidation
 type: qa
+step: 3
 ---
 ## Q
 Even with delete-on-write, cache-aside has a residual stale-set race. How do memcached *leases* (Facebook) close it?

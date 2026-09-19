@@ -4,6 +4,8 @@
 
 Workload models, warm and cold cache scenarios, saturation, soak tests, fault injection, chaos scope, and production-data validation.
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/cdn-content/map/foundations.capacity|Capacity & Bottleneck Estimation]], [[domains/cdn-content/map/reliability.testing|Unit, Integration & End-to-End Testing]]
 
 **Unlocks:** [[domains/cdn-content/map/reliability.incidents|On-Call, Incidents & Postmortems]]
@@ -12,9 +14,9 @@ Workload models, warm and cold cache scenarios, saturation, soak tests, fault in
 - [[reliability-k6-scenarios|Grafana k6: Scenarios]]
 
 ## Cards (3)
-- [[reliability-load-cache-scenarios]]
-- [[reliability-load-fault-success]]
-- [[reliability-load-open-model]]
+1. [[reliability-load-cache-scenarios]]
+2. [[reliability-load-fault-success]]
+3. [[reliability-load-open-model]]
 %% trellis:end %%
 
 ## Notes

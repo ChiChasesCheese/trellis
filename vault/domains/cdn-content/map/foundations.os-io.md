@@ -8,9 +8,9 @@ Processes, threads, file descriptors, sockets, blocking and non-blocking I/O, an
 - [[fnd-linux-sockets-epoll|epoll(7) — Linux manual page]]
 
 ## Cards (3)
-- [[fnd-io-blocking]]
-- [[fnd-io-fd-exhaustion]]
-- [[fnd-io-zero-copy]]
+1. [[fnd-io-blocking]]
+2. [[fnd-io-fd-exhaustion]]
+3. [[fnd-io-zero-copy]]
 %% trellis:end %%
 
 ## Notes

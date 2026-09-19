@@ -2,6 +2,7 @@
 id: kafka-internals-follower-fetch-protocol
 node: internals.replication-protocol
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

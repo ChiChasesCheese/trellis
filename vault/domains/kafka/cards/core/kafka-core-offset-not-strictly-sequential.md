@@ -2,6 +2,7 @@
 id: kafka-core-offset-not-strictly-sequential
 node: core.offsets
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

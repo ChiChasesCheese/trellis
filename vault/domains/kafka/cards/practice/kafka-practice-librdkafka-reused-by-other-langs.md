@@ -2,6 +2,7 @@
 id: kafka-practice-librdkafka-reused-by-other-langs
 node: practice.other-clients
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

@@ -10,11 +10,11 @@
 - [[snowflak-iceberg-tables|Apache Iceberg 表:开放格式与目录(Catalog)选型]]
 
 ## Cards (5)
-- [[commit-crash-before-swap]]
-- [[commit-optimistic-concurrency]]
-- [[commit-readers-snapshot-isolation]]
-- [[commit-snowflake-refresh-external]]
-- [[commit-write-then-swap-order]]
+1. [[commit-crash-before-swap]]
+2. [[commit-optimistic-concurrency]]
+3. [[commit-readers-snapshot-isolation]]
+4. [[commit-snowflake-refresh-external]]
+5. [[commit-write-then-swap-order]]
 %% trellis:end %%
 
 ## Notes

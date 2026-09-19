@@ -2,6 +2,7 @@
 id: async-materialized-view-refresh
 node: async.streaming.processing
 type: qa
+step: 6
 ---
 ## Q
 You keep a denormalized read model (search index, cache, analytics table) fed from a change stream. How do you (a) keep it fresh and (b) fix it when it's wrong?

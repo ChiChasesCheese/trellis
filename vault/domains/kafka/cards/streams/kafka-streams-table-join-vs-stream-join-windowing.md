@@ -2,6 +2,7 @@
 id: kafka-streams-table-join-vs-stream-join-windowing
 node: streams.design-patterns
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

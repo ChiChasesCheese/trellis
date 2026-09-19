@@ -2,6 +2,7 @@
 id: kafka-mirrormaker-deploy-near-target-remote-consume
 node: mirroring.mirrormaker
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

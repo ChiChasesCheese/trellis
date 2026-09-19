@@ -2,6 +2,7 @@
 id: async-redelivery-causes
 node: async.delivery.guarantees
 type: qa
+step: 3
 ---
 ## Q
 Your consumer code is bug-free and the broker is healthy. Name the concrete events that still cause the same message to be processed twice — and the one that means two consumers run it *at the same time*.

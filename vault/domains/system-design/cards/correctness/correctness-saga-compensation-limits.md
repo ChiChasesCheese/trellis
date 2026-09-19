@@ -2,6 +2,7 @@
 id: correctness-saga-compensation-limits
 node: correctness.saga
 type: qa
+step: 3
 ---
 ## Q
 "On failure, just run the compensations." What three realities make saga compensation harder than a rollback?

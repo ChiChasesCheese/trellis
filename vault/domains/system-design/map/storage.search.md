@@ -11,12 +11,12 @@ Inverted indexes, relevance basics, and keeping a search cluster in sync with th
 - [[stanford-ir-book|Introduction to Information Retrieval (Manning, Raghavan, Schütze)]]
 
 ## Cards (6)
-- [[storage-inverted-index]]
-- [[storage-search-deep-pagination]]
-- [[storage-search-not-sot]]
-- [[storage-search-nrt-refresh]]
-- [[storage-search-segments]]
-- [[storage-search-sync]]
+1. [[storage-inverted-index]]
+2. [[storage-search-nrt-refresh]]
+3. [[storage-search-segments]]
+4. [[storage-search-deep-pagination]]
+5. [[storage-search-not-sot]]
+6. [[storage-search-sync]]
 %% trellis:end %%
 
 ## Notes

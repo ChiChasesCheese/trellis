@@ -2,6 +2,7 @@
 id: kafka-internals-fetch-min-max-bytes-tradeoff
 node: internals.request-handling
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

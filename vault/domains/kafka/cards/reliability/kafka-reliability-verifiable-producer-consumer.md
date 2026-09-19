@@ -2,6 +2,7 @@
 id: kafka-reliability-verifiable-producer-consumer
 node: reliability.validation
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

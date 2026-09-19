@@ -8,8 +8,8 @@ Box out as contact then pursuit, the 45-degree rule, and why guards deciding to 
 - [[closeout-rotation-shell|Drill: Closeout and second-rotation shell]]
 
 ## Cards (2)
-- [[bb-defense-boxout-contact-then-pursuit]]
-- [[bb-defense-guard-rebounding-angles]]
+1. [[bb-defense-boxout-contact-then-pursuit]]
+2. [[bb-defense-guard-rebounding-angles]]
 %% trellis:end %%
 
 ## Notes

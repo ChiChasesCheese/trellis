@@ -12,11 +12,11 @@ Stating what must always hold, asserting it cheaply, and cross-checking against 
 - [[hidden-test-bug-hunt|Drill: name the bug class from the failing-test description alone]]
 
 ## Cards (5)
-- [[cc-verification-invariant-assert-cost]]
-- [[cc-verification-invariant-brute-force-oracle]]
-- [[cc-verification-invariant-conservation]]
-- [[cc-verification-invariant-name-it]]
-- [[cc-verification-invariant-two-indexes]]
+1. [[cc-verification-invariant-assert-cost]]
+2. [[cc-verification-invariant-brute-force-oracle]]
+3. [[cc-verification-invariant-conservation]]
+4. [[cc-verification-invariant-name-it]]
+5. [[cc-verification-invariant-two-indexes]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: networking-push-vs-pull-cdn
 node: networking.cdn
 type: qa
+step: 1
 ---
 ## Q
 Push CDN vs pull CDN — how does each get content to the edge, and which fits (a) a video release dropping globally at midnight, (b) a long-tail image catalog?

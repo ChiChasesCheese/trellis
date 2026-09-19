@@ -2,6 +2,7 @@
 id: distributed-quorum-not-linearizable
 node: distributed.consistency
 type: qa
+step: 8
 ---
 ## Q
 Dynamo-style store, N=3, W=2, R=2 — strict quorums, no sloppiness. Why are reads still not linearizable?

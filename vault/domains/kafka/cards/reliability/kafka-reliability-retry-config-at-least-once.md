@@ -2,6 +2,7 @@
 id: kafka-reliability-retry-config-at-least-once
 node: reliability.producer-reliable
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

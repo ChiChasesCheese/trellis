@@ -2,6 +2,7 @@
 id: ai-rag-vs-finetune-vs-longcontext
 node: ai.rag
 type: qa
+step: 5
 ---
 ## Q
 To make an LLM answer from your company's data you can: RAG it, fine-tune on it, or stuff it all into the context window. When does each win?

@@ -10,9 +10,9 @@ Cached static shells, dynamic holes, Suspense boundaries, streaming response ord
 - [[content-next-ppr|Next.js Cache Components and Partial Prerendering]]
 
 ## Cards (3)
-- [[content-ppr-boundary-placement]]
-- [[content-ppr-cache-contract]]
-- [[content-ppr-stream-failure]]
+1. [[content-ppr-boundary-placement]]
+2. [[content-ppr-cache-contract]]
+3. [[content-ppr-stream-failure]]
 %% trellis:end %%
 
 ## Notes

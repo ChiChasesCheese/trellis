@@ -11,11 +11,11 @@ What an LLM actually does at serving time — tokens, context windows, embedding
 - [[karpathy-intro-llms|Intro to Large Language Models (Andrej Karpathy, 1hr talk)]]
 
 ## Cards (5)
-- [[ai-context-window-budget]]
-- [[ai-embeddings-as-coordinates]]
-- [[ai-generation-loop]]
-- [[ai-temperature-sampling]]
-- [[ai-tokens-as-units]]
+1. [[ai-tokens-as-units]]
+2. [[ai-context-window-budget]]
+3. [[ai-generation-loop]]
+4. [[ai-temperature-sampling]]
+5. [[ai-embeddings-as-coordinates]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: kafka-consumer-commitsync-vs-commitasync
 node: consumer.offset-commit
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

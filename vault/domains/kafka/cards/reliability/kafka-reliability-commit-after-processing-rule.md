@@ -2,6 +2,7 @@
 id: kafka-reliability-commit-after-processing-rule
 node: reliability.consumer-reliable
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

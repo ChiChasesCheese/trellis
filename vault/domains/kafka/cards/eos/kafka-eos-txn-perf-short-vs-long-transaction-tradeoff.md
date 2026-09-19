@@ -2,6 +2,7 @@
 id: kafka-eos-txn-perf-short-vs-long-transaction-tradeoff
 node: eos.transactions-perf
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

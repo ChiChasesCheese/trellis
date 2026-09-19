@@ -2,6 +2,7 @@
 id: distributed-conflict-detection-siblings
 node: distributed.replication.multi-leader
 type: qa
+step: 3
 ---
 ## Q
 Mechanically, how does a replica decide that two writes to the same key *conflict* rather than one superseding the other — and what does it do with the pair?

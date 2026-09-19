@@ -7,10 +7,10 @@
 **Requires:** [[domains/snowflake/map/metadata.foundationdb-role|FoundationDB 作为元数据存储]]
 
 ## Cards (4)
-- [[meta-bottleneck-row-by-row-dml]]
-- [[meta-concurrent-writes-same-table]]
-- [[meta-consistency-cross-warehouse-visibility]]
-- [[meta-stateless-services-shared-store-limit]]
+1. [[meta-bottleneck-row-by-row-dml]]
+2. [[meta-concurrent-writes-same-table]]
+3. [[meta-consistency-cross-warehouse-visibility]]
+4. [[meta-stateless-services-shared-store-limit]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: distributed-2pc-mechanics
 node: distributed.transactions.distributed
 type: qa
+step: 1
 ---
 ## Q
 Walk the two phases of 2PC and point at the exact commit point. Why can a participant that voted "yes" not simply time out and abort?

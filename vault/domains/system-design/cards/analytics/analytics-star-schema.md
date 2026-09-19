@@ -2,6 +2,7 @@
 id: analytics-star-schema
 node: analytics.olap
 type: qa
+step: 5
 ---
 ## Q
 Describe the star schema, and why warehouses tolerate wide, denormalized dimension tables that would be bad OLTP design.

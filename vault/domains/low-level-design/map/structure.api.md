@@ -13,10 +13,10 @@ Small stable interfaces, fluent builders, method contracts, and evolving an API 
 - [[splitwise|Drill: Splitwise (Expense Sharing)]]
 
 ## Cards (4)
-- [[structure-api-builder-required-fields]]
-- [[structure-api-evolving-without-breaking]]
-- [[structure-api-leaking-internals]]
-- [[structure-api-rich-return-contract]]
+1. [[structure-api-builder-required-fields]]
+2. [[structure-api-evolving-without-breaking]]
+3. [[structure-api-leaking-internals]]
+4. [[structure-api-rich-return-contract]]
 %% trellis:end %%
 
 ## Notes

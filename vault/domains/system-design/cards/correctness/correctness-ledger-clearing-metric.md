@@ -2,6 +2,7 @@
 id: correctness-ledger-clearing-metric
 node: correctness.ledger
 type: qa
+step: 9
 ---
 ## Q
 A double-entry ledger mirrors many independent payment systems (Stripe-style). Beyond running reconciliation jobs, what does it mean to make discrepancy detection a *first-class metric* — what does a "clearing" score measure, and why publish it as a number teams are held to?

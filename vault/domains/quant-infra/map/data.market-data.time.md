@@ -4,6 +4,8 @@
 
 Exchange versus capture versus ingest timestamps, session and holiday calendars, timezone and DST handling, and clock sync as a correctness requirement.
 
+**Core** — part of the first pass through this subject.
+
 **Unlocks:** [[domains/quant-infra/map/backtest.mechanics.timing|Decision & Execution Timing]]
 
 ## Readings

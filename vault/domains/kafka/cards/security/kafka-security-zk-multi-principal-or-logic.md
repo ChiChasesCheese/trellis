@@ -2,6 +2,7 @@
 id: kafka-security-zk-multi-principal-or-logic
 node: security.audit-hardening
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

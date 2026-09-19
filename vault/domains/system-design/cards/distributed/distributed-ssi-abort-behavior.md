@@ -2,6 +2,7 @@
 id: distributed-ssi-abort-behavior
 node: distributed.transactions.concurrency-control
 type: qa
+step: 5
 ---
 ## Q
 Your Postgres app moves to `SERIALIZABLE` and starts throwing 40001 errors under load. What is SSI doing, and what are the levers?

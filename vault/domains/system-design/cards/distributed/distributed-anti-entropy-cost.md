@@ -2,6 +2,7 @@
 id: distributed-anti-entropy-cost
 node: distributed.replication.leaderless
 type: qa
+step: 6
 ---
 ## Q
 Anti-entropy repair is "just a background job" — what does it actually cost, and what breaks if you skip it for too long?

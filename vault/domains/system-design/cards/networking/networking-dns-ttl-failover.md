@@ -2,6 +2,7 @@
 id: networking-dns-ttl-failover
 node: networking.dns
 type: qa
+step: 4
 ---
 ## Q
 Why is DNS a blunt instrument for failover, and what two things do teams do about it?

@@ -11,8 +11,8 @@ Base, alignment, one-motion versus two-motion, and the difference between a rhyt
 - [[solo-workout-that-ends-in-decisions|Drill: A solo workout that ends in decisions]]
 
 ## Cards (2)
-- [[bb-shooting-one-vs-two-motion]]
-- [[bb-shooting-rhythm-vs-rushed]]
+1. [[bb-shooting-one-vs-two-motion]]
+2. [[bb-shooting-rhythm-vs-rushed]]
 %% trellis:end %%
 
 ## Notes

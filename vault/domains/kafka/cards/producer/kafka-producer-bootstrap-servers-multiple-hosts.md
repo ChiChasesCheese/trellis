@@ -2,6 +2,7 @@
 id: kafka-producer-bootstrap-servers-multiple-hosts
 node: producer.client-basics
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

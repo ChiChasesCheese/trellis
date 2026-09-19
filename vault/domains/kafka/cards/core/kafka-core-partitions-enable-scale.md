@@ -2,6 +2,7 @@
 id: kafka-core-partitions-enable-scale
 node: core.topics-partitions
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: kafka-eos-idempotent-pid-sequence-dedup
 node: eos.idempotent-producer
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: distributed-rebalance-throttling
 node: distributed.partitioning.rebalancing
 type: qa
+step: 6
 ---
 ## Q
 Why is fully automatic, unthrottled rebalancing a well-known way to turn a small failure into an outage — and what are the standard guards?

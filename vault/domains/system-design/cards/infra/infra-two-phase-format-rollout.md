@@ -2,6 +2,7 @@
 id: infra-two-phase-format-rollout
 node: infra.delivery
 type: cloze
+step: 6
 ---
 To change a persisted or on-the-wire data format safely, serialize the change across **two releases** — the deploy-time twin of expand–contract schema migration. Release 1 ({{c1::"prepare": ship code that can *read* the new format but still *writes* the old one}}) rolls out everywhere first; only then does release 2 ({{c2::"activate": start *writing* the new format — ideally behind a feature flag, so activation is a runtime toggle, not a deploy}}) go out. The ordering rule to memorize: {{c3::readers before writers}} — at every instant, including mid-rollout and after a rollback of release 2, every running version can read everything any version writes.
 

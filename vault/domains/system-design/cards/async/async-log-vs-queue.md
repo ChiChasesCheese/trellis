@@ -2,6 +2,7 @@
 id: async-log-vs-queue
 node: async.log
 type: qa
+step: 1
 ---
 ## Q
 What does an append-only log (Kafka) give you that a traditional broker queue (RabbitMQ/SQS) fundamentally cannot?

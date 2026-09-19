@@ -2,6 +2,7 @@
 id: kafka-admin-preferred-vs-unclean-leader-election
 node: admin.partition-reassignment
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

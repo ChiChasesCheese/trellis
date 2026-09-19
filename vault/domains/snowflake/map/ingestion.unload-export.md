@@ -7,11 +7,11 @@
 **Requires:** [[domains/snowflake/map/ingestion.bulk-copy-into|批量加载（COPY INTO）]]
 
 ## Cards (5)
-- [[unload-compute-and-cost]]
-- [[unload-copy-into-location-basics]]
-- [[unload-format-choice-downstream]]
-- [[unload-overwrite-and-partition-by]]
-- [[unload-parallel-multiple-files]]
+1. [[unload-compute-and-cost]]
+2. [[unload-copy-into-location-basics]]
+3. [[unload-format-choice-downstream]]
+4. [[unload-overwrite-and-partition-by]]
+5. [[unload-parallel-multiple-files]]
 %% trellis:end %%
 
 ## Notes

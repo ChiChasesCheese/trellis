@@ -2,6 +2,7 @@
 id: infra-canary-automation
 node: infra.delivery
 type: qa
+step: 2
 ---
 ## Q
 What components turn a canary from "deploy 5% and stare at dashboards" into automated progressive delivery?

@@ -2,6 +2,7 @@
 id: kafka-consumer-multiple-groups-full-data
 node: consumer.groups-rebalance
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: foundations-clarifying-questions-worth-asking
 node: foundations.method
 type: qa
+step: 3
 ---
 ## Q
 Interviewer says "design X" with no details. Which clarifying questions actually change the design (vs filler)?

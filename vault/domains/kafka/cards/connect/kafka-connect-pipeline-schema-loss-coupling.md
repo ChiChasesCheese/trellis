@@ -2,6 +2,7 @@
 id: kafka-connect-pipeline-schema-loss-coupling
 node: connect.pipeline-design
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

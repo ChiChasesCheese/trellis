@@ -2,6 +2,7 @@
 id: kafka-reliability-endtoend-and-broker-error-metrics
 node: reliability.validation
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

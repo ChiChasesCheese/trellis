@@ -4,6 +4,8 @@
 
 Covered interest parity as arbitrage, uncovered parity as a failed prediction, the forward premium puzzle, and the post-2008 cross-currency basis.
 
+**Core** — part of the first pass through this subject.
+
 **Unlocks:** [[domains/markets/map/carry.rates-fx|FX & Rates Carry]]
 %% trellis:end %%
 

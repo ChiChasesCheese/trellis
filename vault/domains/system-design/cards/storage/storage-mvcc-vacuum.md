@@ -2,6 +2,7 @@
 id: storage-mvcc-vacuum
 node: storage.relational.operations
 type: qa
+step: 4
 ---
 ## Q
 Postgres MVCC: what physically happens on `UPDATE`, and what operational problem does that create at high churn?

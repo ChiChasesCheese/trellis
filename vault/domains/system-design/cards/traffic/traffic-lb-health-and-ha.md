@@ -2,6 +2,7 @@
 id: traffic-lb-health-and-ha
 node: traffic.load-balancing
 type: qa
+step: 5
 ---
 ## Q
 The load balancer is itself a single point of failure. How is the LB tier made highly available, and what health-check subtlety prevents it from making outages worse?

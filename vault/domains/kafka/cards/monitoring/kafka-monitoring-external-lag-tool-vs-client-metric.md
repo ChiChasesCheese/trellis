@@ -2,6 +2,7 @@
 id: kafka-monitoring-external-lag-tool-vs-client-metric
 node: monitoring.lag-e2e
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

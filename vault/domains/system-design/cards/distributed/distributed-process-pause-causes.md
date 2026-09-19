@@ -2,6 +2,7 @@
 id: distributed-process-pause-causes
 node: distributed.time.failure
 type: qa
+step: 3
 ---
 ## Q
 Distributed algorithms must assume any node can freeze for seconds to minutes at any line of code, then resume as if nothing happened. List the real causes of such pauses, and explain why the paused process cannot defend itself.

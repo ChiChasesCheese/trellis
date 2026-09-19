@@ -2,6 +2,7 @@
 id: kafka-consumer-eager-vs-cooperative-rebalance
 node: consumer.groups-rebalance
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

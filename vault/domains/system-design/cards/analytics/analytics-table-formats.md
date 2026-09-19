@@ -2,6 +2,7 @@
 id: analytics-table-formats
 node: analytics.warehouse
 type: qa
+step: 2
 ---
 ## Q
 Iceberg/Delta are "just metadata over Parquet files." What do they actually add that a directory of Parquet files lacks?

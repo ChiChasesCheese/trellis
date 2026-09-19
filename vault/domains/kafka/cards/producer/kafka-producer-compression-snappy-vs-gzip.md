@@ -2,6 +2,7 @@
 id: kafka-producer-compression-snappy-vs-gzip
 node: producer.batching-throughput
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

@@ -3,11 +3,6 @@
 *最短路、并查集与网络流（shortest path / union-find / flow）*
 
 带容量的全局分配既要满足供需又要优化总成本时，用 最小费用最大流。
-
-## Cards (3)
-- [[leetcode-c-endlesscheng-g0n5iy-min-cost-max-flow-invariant]]
-- [[leetcode-c-endlesscheng-g0n5iy-min-cost-max-flow-recognition]]
-- [[leetcode-c-endlesscheng-g0n5iy-min-cost-max-flow-template]]
 %% trellis:end %%
 
 ## Notes

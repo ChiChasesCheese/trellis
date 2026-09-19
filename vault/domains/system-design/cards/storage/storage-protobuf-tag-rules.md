@@ -2,6 +2,7 @@
 id: storage-protobuf-tag-rules
 node: storage.encoding
 type: qa
+step: 4
 ---
 ## Q
 In Protobuf, what identifies a field on the wire, and what are the evolution rules that follow from it?

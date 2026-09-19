@@ -10,12 +10,12 @@ Prefix and suffix arrays, best split point with a tie-break, difference arrays, 
 - [[oa-qa13-lc2483-minimum-penalty-for-a-shop|Drill: pick a closing hour with a running penalty, then choose the whole schedule]]
 
 ## Cards (6)
-- [[cc-algorithms-prefix-argmin-tiebreak]]
-- [[cc-algorithms-prefix-best-window]]
-- [[cc-algorithms-prefix-difference-array]]
-- [[cc-algorithms-prefix-incremental-update]]
-- [[cc-algorithms-prefix-range-query]]
-- [[cc-algorithms-prefix-suffix-pair]]
+1. [[cc-algorithms-prefix-argmin-tiebreak]]
+2. [[cc-algorithms-prefix-best-window]]
+3. [[cc-algorithms-prefix-difference-array]]
+4. [[cc-algorithms-prefix-incremental-update]]
+5. [[cc-algorithms-prefix-range-query]]
+6. [[cc-algorithms-prefix-suffix-pair]]
 %% trellis:end %%
 
 ## Notes

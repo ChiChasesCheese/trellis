@@ -1,0 +1,41 @@
+{
+  "reliability.guarantees": [
+    "kafka-reliability-four-core-guarantees",
+    "kafka-reliability-guarantee-vs-full-reliability",
+    "kafka-reliability-committed-not-flushed-to-disk",
+    "kafka-reliability-follower-isr-three-conditions",
+    "kafka-reliability-lagging-isr-vs-out-of-isr-tradeoff"
+  ],
+  "reliability.broker-config": [
+    "kafka-reliability-replication-factor-tradeoffs",
+    "kafka-reliability-rack-awareness",
+    "kafka-reliability-min-insync-replicas",
+    "kafka-reliability-unclean-leader-election-tradeoff",
+    "kafka-reliability-flush-to-disk-vs-replication",
+    "kafka-reliability-lag-timeouts-tuning"
+  ],
+  "reliability.producer-reliable": [
+    "kafka-reliability-retryable-vs-nonretryable-errors",
+    "kafka-reliability-retry-config-at-least-once",
+    "kafka-reliability-idempotence-dedupes-retries",
+    "kafka-reliability-acks-all-needs-exception-handling",
+    "kafka-reliability-acks1-silent-loss-scenario",
+    "kafka-reliability-manual-error-handling-categories"
+  ],
+  "reliability.consumer-reliable": [
+    "kafka-reliability-groupid-full-vs-subset-read",
+    "kafka-reliability-auto-offset-reset-tradeoff",
+    "kafka-reliability-auto-commit-risk",
+    "kafka-reliability-commit-after-processing-rule",
+    "kafka-reliability-commit-frequency-tradeoff",
+    "kafka-reliability-consumer-retry-patterns"
+  ],
+  "reliability.validation": [
+    "kafka-reliability-three-validation-levels",
+    "kafka-reliability-verifiable-producer-consumer",
+    "kafka-reliability-app-fault-injection-testing",
+    "kafka-reliability-monitor-producer-error-retry",
+    "kafka-reliability-consumer-lag-metric",
+    "kafka-reliability-endtoend-and-broker-error-metrics"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "storage.relational.indexing": ["storage-hash-index-limits", "storage-index-leftmost-prefix", "storage-multicolumn-vs-bitmap-and", "storage-covering-index", "storage-index-selectivity", "storage-index-write-cost", "storage-partial-expression-index"],
+  "storage.relational.operations": ["storage-scaling-ladder", "storage-connection-pooling", "storage-normalization-tradeoff", "storage-mvcc-vacuum", "storage-replica-lag-ops", "storage-online-migration-vs-one-shot", "storage-online-migration-four-phase"],
+  "storage.internals.btree": ["storage-btree-branching-depth", "storage-btree-clustered-vs-heap", "storage-btree-page-split", "storage-btree-latches", "storage-btree-wal-recovery"],
+  "storage.internals.lsm": ["storage-lsm-write-path", "storage-sstable-structure", "storage-lsm-read-path", "storage-bloom-filter-properties", "storage-compaction-strategies", "storage-lsm-range-scan"],
+  "storage.internals.tradeoffs": ["storage-btree-vs-lsm", "storage-amplification-triangle", "storage-btree-single-copy-locking", "storage-compaction-interference", "storage-inmemory-advantage"],
+  "storage.nosql": ["storage-keyvalue-fit", "storage-document-vs-relational", "storage-document-locality-cost", "storage-schema-on-read", "storage-wide-column-modeling", "storage-tombstone-deletes", "storage-secondary-index-partitioning", "storage-graph-db-fit", "storage-document-to-graph-signal"],
+  "storage.record-modeling": ["storage-record-discriminator-column", "storage-sparse-attributes", "storage-vocabulary-collision"],
+  "storage.object": ["storage-object-vs-filesystem", "storage-multipart-ranged-io", "storage-s3-conditional-writes", "storage-s3-numbers", "storage-small-objects-cost", "storage-compute-separation"],
+  "storage.search": ["storage-inverted-index", "storage-search-nrt-refresh", "storage-search-segments", "storage-search-deep-pagination", "storage-search-not-sot", "storage-search-sync"],
+  "storage.encoding": ["storage-encoding-compat-directions", "storage-json-contract-pitfalls", "storage-language-serialization-trap", "storage-protobuf-tag-rules", "storage-avro-schema-resolution", "storage-avro-evolution-defaults", "storage-dataflow-modes", "storage-rolling-upgrade-compat", "storage-unknown-field-roundtrip"]
+}

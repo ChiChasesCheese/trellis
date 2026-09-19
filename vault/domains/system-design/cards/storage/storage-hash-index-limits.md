@@ -2,6 +2,7 @@
 id: storage-hash-index-limits
 node: storage.relational.indexing
 type: qa
+step: 1
 ---
 ## Q
 A hash index answers `WHERE id = ?` in O(1) — seemingly better than a B-tree's O(log n). Why is the B-tree still the default index almost everywhere? Name what hashing structurally cannot do.

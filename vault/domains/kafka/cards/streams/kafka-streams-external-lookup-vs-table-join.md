@@ -2,6 +2,7 @@
 id: kafka-streams-external-lookup-vs-table-join
 node: streams.design-patterns
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

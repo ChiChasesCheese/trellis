@@ -2,6 +2,7 @@
 id: kafka-consumer-session-timeout-heartbeat-interval-ratio
 node: consumer.poll-config
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

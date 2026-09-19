@@ -10,11 +10,11 @@
 - [[snowflak-time-travel|时间旅行(Time Travel):可查询窗口、AT/BEFORE 与 UNDROP]]
 
 ## Cards (5)
-- [[undrop-multiple-dropped-versions]]
-- [[undrop-name-conflict-rename-first]]
-- [[undrop-privileges-and-scope]]
-- [[undrop-restores-in-place-latest-state]]
-- [[undrop-retention-zero-and-alter-dropped]]
+1. [[undrop-multiple-dropped-versions]]
+2. [[undrop-name-conflict-rename-first]]
+3. [[undrop-privileges-and-scope]]
+4. [[undrop-restores-in-place-latest-state]]
+5. [[undrop-retention-zero-and-alter-dropped]]
 %% trellis:end %%
 
 ## Notes

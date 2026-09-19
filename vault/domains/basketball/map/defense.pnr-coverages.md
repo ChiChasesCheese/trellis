@@ -8,9 +8,9 @@ Drop, ICE/blue, hedge, switch, blitz — what each protects, what each concedes,
 - [[3on3-pnr-coverage-diagnosis|Drill: 3-on-3 pick-and-roll, defence calls the coverage]]
 
 ## Cards (3)
-- [[bb-defense-drop-pullup-blame]]
-- [[bb-defense-ice-sideline-pnr]]
-- [[bb-defense-pnr-coverage-tradeoffs]]
+1. [[bb-defense-drop-pullup-blame]]
+2. [[bb-defense-ice-sideline-pnr]]
+3. [[bb-defense-pnr-coverage-tradeoffs]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: kafka-consumer-fetch-max-wait-ms-with-fetch-min-bytes
 node: consumer.poll-config
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

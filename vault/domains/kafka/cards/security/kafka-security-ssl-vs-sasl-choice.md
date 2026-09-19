@@ -2,6 +2,7 @@
 id: kafka-security-ssl-vs-sasl-choice
 node: security.protocols-auth-encryption
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

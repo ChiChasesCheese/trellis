@@ -10,11 +10,11 @@
 - [[snowflak-compute-cost-detail|计算成本细则:60 秒起收、serverless 计费与云服务 10% 免费额度]]
 
 ## Cards (5)
-- [[cs-10pct-daily-adjustment]]
-- [[cs-adjustment-capped-by-usage]]
-- [[cs-low-warehouse-high-services]]
-- [[cs-resource-monitor-counts-unbilled]]
-- [[cs-serverless-not-in-base]]
+1. [[cs-10pct-daily-adjustment]]
+2. [[cs-adjustment-capped-by-usage]]
+3. [[cs-low-warehouse-high-services]]
+4. [[cs-resource-monitor-counts-unbilled]]
+5. [[cs-serverless-not-in-base]]
 %% trellis:end %%
 
 ## Notes

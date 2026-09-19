@@ -2,6 +2,7 @@
 id: reliability-burn-rate-alerting
 node: reliability.slo
 type: qa
+step: 4
 ---
 ## Q
 Why alert on error-budget burn rate instead of a raw error-rate threshold, and how do multi-window burn alerts work?

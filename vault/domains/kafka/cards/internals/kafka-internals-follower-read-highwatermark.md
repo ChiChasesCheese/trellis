@@ -2,6 +2,7 @@
 id: kafka-internals-follower-read-highwatermark
 node: internals.replication-protocol
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: kafka-internals-active-segment-retention
 node: internals.storage-segments
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

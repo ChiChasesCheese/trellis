@@ -8,11 +8,11 @@ The invariant that makes a search correct, searching a monotone predicate over t
 - [[cp-algorithms-binary-search|Binary search (cp-algorithms)]]
 
 ## Cards (5)
-- [[cc-algorithms-binary-search-bounds]]
-- [[cc-algorithms-binary-search-continuous]]
-- [[cc-algorithms-binary-search-loop-shape]]
-- [[cc-algorithms-binary-search-monotone-check]]
-- [[cc-algorithms-binary-search-on-answer]]
+1. [[cc-algorithms-binary-search-bounds]]
+2. [[cc-algorithms-binary-search-continuous]]
+3. [[cc-algorithms-binary-search-loop-shape]]
+4. [[cc-algorithms-binary-search-monotone-check]]
+5. [[cc-algorithms-binary-search-on-answer]]
 %% trellis:end %%
 
 ## Notes

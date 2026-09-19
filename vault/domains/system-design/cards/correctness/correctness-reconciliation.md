@@ -2,6 +2,7 @@
 id: correctness-reconciliation
 node: correctness.ledger
 type: qa
+step: 7
 ---
 ## Q
 Your ledger has idempotency keys, an outbox, and zero-sum checks. Why do you still run reconciliation against the payment processor, and what does the job actually do?

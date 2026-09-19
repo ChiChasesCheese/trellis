@@ -8,12 +8,12 @@ When to split, service boundaries by data ownership, and the operational bill mi
 - [[fowler-microservices|Microservices (Lewis & Fowler)]]
 
 ## Cards (6)
-- [[architecture-boundaries-data-ownership]]
-- [[architecture-conways-law]]
-- [[architecture-distributed-monolith]]
-- [[architecture-microservices-tax]]
-- [[architecture-sync-call-chains]]
-- [[architecture-when-to-split]]
+1. [[architecture-when-to-split]]
+2. [[architecture-boundaries-data-ownership]]
+3. [[architecture-conways-law]]
+4. [[architecture-microservices-tax]]
+5. [[architecture-sync-call-chains]]
+6. [[architecture-distributed-monolith]]
 %% trellis:end %%
 
 ## Notes

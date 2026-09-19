@@ -2,6 +2,7 @@
 id: kafka-monitoring-record-error-vs-retry-rate
 node: monitoring.client-metrics
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

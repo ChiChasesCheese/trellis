@@ -10,12 +10,12 @@
 - [[kafka-11-8-secure-platform|保护整个平台]]
 
 ## Cards (6)
-- [[kafka-security-audit-log-level-split]]
-- [[kafka-security-config-provider-no-plaintext-password]]
-- [[kafka-security-e2e-audit-header-integrity]]
-- [[kafka-security-zk-digest-md5-not-for-prod]]
-- [[kafka-security-zk-multi-principal-or-logic]]
-- [[kafka-security-zk-node-acl-defaults]]
+1. [[kafka-security-audit-log-level-split]]
+2. [[kafka-security-e2e-audit-header-integrity]]
+3. [[kafka-security-config-provider-no-plaintext-password]]
+4. [[kafka-security-zk-digest-md5-not-for-prod]]
+5. [[kafka-security-zk-node-acl-defaults]]
+6. [[kafka-security-zk-multi-principal-or-logic]]
 %% trellis:end %%
 
 ## Notes

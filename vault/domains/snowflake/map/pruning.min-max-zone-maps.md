@@ -4,6 +4,8 @@
 
 在不打开文件的情况下，跳过那些最小/最大值范围无法满足谓词条件的整个微分区。
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/snowflake/map/storage.micro-partition-metadata|微分区元数据]]
 
 **Unlocks:** [[domains/snowflake/map/pruning.partition-elimination|分区消除（partition elimination）]]
@@ -12,11 +14,11 @@
 - [[snowflak-micropartitions-clustering|微分区与数据聚簇的物理基础]]
 
 ## Cards (5)
-- [[pruning-zonemap-ideal-ratio]]
-- [[pruning-zonemap-mechanism]]
-- [[pruning-zonemap-partition-size]]
-- [[pruning-zonemap-predicate-limits]]
-- [[pruning-zonemap-vs-btree-index]]
+1. [[pruning-zonemap-ideal-ratio]]
+2. [[pruning-zonemap-mechanism]]
+3. [[pruning-zonemap-partition-size]]
+4. [[pruning-zonemap-predicate-limits]]
+5. [[pruning-zonemap-vs-btree-index]]
 %% trellis:end %%
 
 ## Notes

@@ -5,8 +5,8 @@
 用 dict / 按 key 分组 / 有序事件表把业务状态建出来，再在上面聚合。
 
 ## Cards (2)
-- [[s03-small-record-modeling]]
-- [[s04-group-then-aggregate]]
+1. [[s03-small-record-modeling]]
+2. [[s04-group-then-aggregate]]
 %% trellis:end %%
 
 ## Notes

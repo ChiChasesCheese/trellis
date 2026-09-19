@@ -2,6 +2,7 @@
 id: correctness-idempotent-consumer-patterns
 node: correctness.idempotency
 type: qa
+step: 7
 ---
 ## Q
 Beyond an idempotency-key table, name three ways to make a mutation safe to apply twice — and the classic operation that is NOT naturally idempotent.

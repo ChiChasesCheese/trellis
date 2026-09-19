@@ -3,11 +3,6 @@
 *图的遍历、连通性与拓扑排序（graph traversal / topological sort）*
 
 无权图中求起点到各点最少边数，应使用 BFS。
-
-## Cards (3)
-- [[leetcode-c-endlesscheng-wr1mjp-graph-traversal-and-shortest-path-invariant]]
-- [[leetcode-c-endlesscheng-wr1mjp-graph-traversal-and-shortest-path-recognition]]
-- [[leetcode-c-endlesscheng-wr1mjp-graph-traversal-and-shortest-path-template]]
 %% trellis:end %%
 
 ## Notes

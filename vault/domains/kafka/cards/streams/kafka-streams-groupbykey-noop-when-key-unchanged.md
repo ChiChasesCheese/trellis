@@ -2,6 +2,7 @@
 id: kafka-streams-groupbykey-noop-when-key-unchanged
 node: streams.streams-api
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

@@ -13,9 +13,9 @@ Region placement, replication lag, active-active and active-passive trade-offs, 
 - [[design-isr-serving|Drill: Design global ISR serving]]
 
 ## Cards (3)
-- [[dist-cross-region-active-mode]]
-- [[dist-cross-region-failover-capacity]]
-- [[dist-cross-region-invalidation]]
+1. [[dist-cross-region-active-mode]]
+2. [[dist-cross-region-failover-capacity]]
+3. [[dist-cross-region-invalidation]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: distributed-raft-guarantees
 node: distributed.consensus
 type: qa
+step: 5
 ---
 ## Q
 What does Raft actually guarantee about leaders and logs, and what mechanism enforces each guarantee?

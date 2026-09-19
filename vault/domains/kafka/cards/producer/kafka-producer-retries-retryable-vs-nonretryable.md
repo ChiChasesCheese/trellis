@@ -2,6 +2,7 @@
 id: kafka-producer-retries-retryable-vs-nonretryable
 node: producer.timeouts-retries
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q
