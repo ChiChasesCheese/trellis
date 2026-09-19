@@ -9,8 +9,8 @@ in a collection that already exists (ADR 0010).
 
 Two decisions make a Sequence:
 
-* **Which leaf first.** The Core — the leaves the rest of the subject stands
-  on — then everything else. Each pass runs in the skeleton's own order,
+* **Which leaf first.** The Core — the leaves an author declared central,
+  with everything they require — then everything else. Each pass runs in the skeleton's own order,
   which validation already guarantees never puts a leaf before what it
   requires; and the Core is closed under `requires`, so neither pass can.
   This is the 80/20 made operational: one short pass through what matters
@@ -43,17 +43,25 @@ def _leaves_under(skeleton: Skeleton, node_id: str) -> list[Node]:
 
 
 def core_leaves(skeleton: Skeleton) -> set[str]:
-    """The Core: leaves declared `core` (themselves or through a branch),
-    leaves something else stands on, and whatever those in turn require.
+    """The Core: the leaves declared `core` (themselves or through a branch)
+    and everything they require, all the way down.
 
-    Bearing is computed and declaration is asserted, and both are needed:
-    a `requires` graph is only as complete as someone made it, and where it
-    is silent it must not be read as "nothing here matters".
+    Declaration comes first because only an author knows what the heart of a
+    subject is. Bearing cannot say: it counts what stands on a leaf, and a
+    leaf three side topics happen to need is not thereby central — measured on
+    system-design, bearing alone would have put LLM foundations in the Core
+    and left out replication. Where an author has declared nothing, the graph
+    is all there is, and the leaves something stands on are the Core.
+
+    Either way the Core is closed under `requires`, which is what lets it be
+    studied first without ever meeting a card before its ground.
     """
-    bear = bearing(skeleton)
+    declared = [leaf for leaf in skeleton.leaves() if any(n.core for n in leaf.path())]
+    if not declared:
+        bear = bearing(skeleton)
+        declared = [leaf for leaf in skeleton.leaves() if bear[leaf.id] > 0]
     core: set[str] = set()
-    pending = [leaf for leaf in skeleton.leaves()
-               if bear[leaf.id] > 0 or any(n.core for n in leaf.path())]
+    pending = list(declared)
     while pending:
         leaf = pending.pop()
         if leaf.id in core:

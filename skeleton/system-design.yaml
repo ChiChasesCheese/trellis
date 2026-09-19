@@ -4,6 +4,13 @@ domain: system-design
 title: System Design
 lang: en
 vault: domains/system-design
+# How this domain is studied in Anki (ADR 0010). `core: true` below marks what
+# is dealt first; a card's `step:` orders it inside its leaf.
+study:
+  order: core-first
+  mix: new-first          # today's new cards before today's reviews
+  new_per_day: 20
+  reviews_per_day: 100
 nodes:
   - id: foundations
     order: 1
@@ -11,15 +18,19 @@ nodes:
     summary: How to run a design conversation and reason in numbers before touching any component.
     children:
       - id: foundations.method
+        core: true
         title: Interview Method
         summary: Requirements clarification, scoping functional vs non-functional needs, driving the 40-minute structure yourself.
       - id: foundations.estimation
+        core: true
         title: Back-of-Envelope Estimation
         summary: QPS, storage, and bandwidth sizing from DAU and access patterns; when an estimate changes the design.
       - id: foundations.numbers
+        core: true
         title: Latency Numbers
         summary: Orders of magnitude every engineer should know — memory vs SSD vs disk vs same-DC network vs cross-region.
       - id: foundations.tradeoffs
+        core: true
         title: Core Trade-offs
         summary: Performance vs scalability, latency vs throughput, availability vs consistency — the axes every later choice moves along.
 
@@ -50,12 +61,14 @@ nodes:
     summary: Spreading, shaping, and protecting request flow at the front door.
     children:
       - id: traffic.load-balancing
+        core: true
         title: Load Balancers
         summary: L4 vs L7, balancing algorithms, health checks, and LB high availability itself.
       - id: traffic.gateways
         title: Reverse Proxies & API Gateways
         summary: What a gateway centralizes — TLS termination, auth, routing, quotas — and the single-point risks it adds.
       - id: traffic.rate-limiting
+        core: true
         title: Rate Limiting
         summary: Token bucket vs sliding window, local vs distributed enforcement, and what to return when you shed.
 
@@ -65,9 +78,11 @@ nodes:
     summary: The highest-leverage latency tool, and the consistency debt it creates.
     children:
       - id: caching.strategies
+        core: true
         title: Write & Read Strategies
         summary: Cache-aside, read-through, write-through, write-behind, refresh-ahead — who populates the cache and when.
       - id: caching.invalidation
+        core: true
         title: Invalidation & Eviction
         summary: TTLs, eviction policies, stale reads, and cache stampede protection.
       - id: caching.placement
@@ -84,6 +99,7 @@ nodes:
         summary: The default system of record — used well before being scaled.
         children:
           - id: storage.relational.indexing
+            core: true
             title: Indexing
             summary: B-tree indexes, composite and covering indexes, leftmost-prefix rule, when indexes hurt.
           - id: storage.relational.operations
@@ -103,6 +119,7 @@ nodes:
             title: Engine Trade-offs
             summary: Read, write, and space amplification; when B-trees beat LSM-trees and vice versa; in-memory engines.
       - id: storage.nosql
+        core: true
         title: NoSQL Families
         summary: Key-value, document, wide-column, graph — the access patterns each one exists to serve.
       - id: storage.record-modeling
@@ -124,9 +141,11 @@ nodes:
     summary: What happens to data when one machine is no longer enough — the deep end of the interview.
     children:
       - id: distributed.cap
+        core: true
         title: CAP & PACELC
         summary: What the theorem actually constrains during a partition, and the latency trade-off the rest of the time.
       - id: distributed.consistency
+        core: true
         title: Consistency Models
         summary: Linearizability, causal, read-your-writes, eventual — as contracts you promise the client.
       - id: distributed.replication
@@ -135,6 +154,7 @@ nodes:
         requires: [distributed.consistency]
         children:
           - id: distributed.replication.leader
+            core: true
             title: Leader-Based
             summary: Single-leader replication, log shipping formats, sync vs async, lag and its anomalies, failover mechanics.
           - id: distributed.replication.multi-leader
@@ -148,6 +168,7 @@ nodes:
         summary: Splitting data across nodes — scheme choice, movement, and the skew that breaks both.
         children:
           - id: distributed.partitioning.schemes
+            core: true
             title: Hash vs Range
             summary: Hash and range partitioning trade-offs; consistent hashing and virtual nodes.
           - id: distributed.partitioning.rebalancing
@@ -165,6 +186,7 @@ nodes:
         requires: [storage.relational]
         children:
           - id: distributed.transactions.isolation
+            core: true
             title: Isolation Levels & Anomalies
             summary: Read committed to serializable through the anomalies each level permits — dirty/non-repeatable reads, write skew, phantoms.
           - id: distributed.transactions.concurrency-control
@@ -198,9 +220,11 @@ nodes:
     summary: Decoupling producers from consumers, and the delivery semantics that come with it.
     children:
       - id: async.queues
+        core: true
         title: Message Queues
         summary: Queues vs pub-sub, backpressure, consumer scaling, and when async is the wrong call.
       - id: async.log
+        core: true
         title: The Log & Kafka
         summary: The append-only log as system of record; partitions, consumer groups, offsets, retention.
         requires: [storage.internals]
@@ -209,6 +233,7 @@ nodes:
         summary: What "delivered" actually promises — and how to engineer the strongest practical guarantee.
         children:
           - id: async.delivery.guarantees
+            core: true
             title: Delivery Guarantees
             summary: At-most-once vs at-least-once, ordering scope, dead-letter queues and poison pills.
           - id: async.delivery.exactly-once
@@ -252,6 +277,7 @@ nodes:
     summary: Patterns that keep money and state right when calls retry and services fail mid-flight.
     children:
       - id: correctness.idempotency
+        core: true
         title: Idempotency
         summary: Idempotency keys, dedup windows, and designing every mutation to survive a retry.
         requires: [async.delivery]
@@ -297,6 +323,7 @@ nodes:
         summary: Degrading gracefully instead of collapsing — client discipline and failure containment.
         children:
           - id: reliability.resilience.retries
+            core: true
             title: Timeouts & Retries
             summary: Timeout budgets, deadline propagation, exponential backoff with jitter, retry storms and retry budgets.
           - id: reliability.resilience.containment

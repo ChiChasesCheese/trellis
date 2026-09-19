@@ -1,8 +1,10 @@
 """Study path: flatten the skeleton DAG into a linear curriculum.
 
 Tree order is already a valid topological order (validation guarantees
-requires edges never point forward), so the path is the leaf walk with
-card counts; --weeks splits it into balanced chunks by card volume.
+requires edges never point forward), and the path is the Sequence's leaf
+order (`trellis/sequence.py`): the Core in tree order, then the rest in tree
+order — the same order Anki deals new cards in, so the note and the phone
+agree. --weeks splits it into balanced chunks by card volume.
 """
 
 from __future__ import annotations
@@ -11,12 +13,14 @@ import math
 from collections import Counter
 
 from .cards import Card
+from .sequence import CORE_FIRST, core_leaves
 from .skeleton import Skeleton
 
 
 def study_path(skeleton: Skeleton, cards: list[Card], weeks: int | None = None) -> str:
     per_node = Counter(c.node for c in cards)
-    leaves = skeleton.leaves()
+    core = core_leaves(skeleton) if skeleton.study.order == CORE_FIRST else set()
+    leaves = sorted(skeleton.leaves(), key=lambda n: n.id not in core)   # stable: tree order within
     total = sum(per_node.get(n.id, 0) for n in leaves)
 
     week_of: dict[str, int] = {}
@@ -39,7 +43,15 @@ def study_path(skeleton: Skeleton, cards: list[Card], weeks: int | None = None) 
 
     current_branch = None
     current_week = None
+    current_pass = None
     for leaf in leaves:
+        if core and not weeks and (leaf.id in core) != current_pass:
+            current_pass = leaf.id in core
+            lines += ["## Core" if current_pass else "## The rest", ""]
+            if current_pass:
+                lines += [f"*{len(core)} of {len(leaves)} topics: what the rest stands on, "
+                          "or was declared core. Anki deals these first.*", ""]
+            current_branch = None
         if weeks and week_of[leaf.id] != current_week:
             current_week = week_of[leaf.id]
             lines += [f"## Week {current_week}", ""]
@@ -49,7 +61,7 @@ def study_path(skeleton: Skeleton, cards: list[Card], weeks: int | None = None) 
             current_branch = branch.id
             lines.append(f"**{branch.title}**")
         count = per_node.get(leaf.id, 0)
-        extras = [f"{count} cards"]
+        extras = [f"{count} cards"] + (["core"] if weeks and leaf.id in core else [])
         if leaf.requires:
             needs = ", ".join(skeleton.by_id[r].title for r in leaf.requires)
             extras.append(f"needs: {needs}")

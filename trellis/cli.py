@@ -832,7 +832,39 @@ CROSS_DOMAIN = {
     "brief": cmd_brief, "adopt": cmd_adopt, "feed": cmd_feed, "serve": cmd_serve,
 }
 
+def cmd_steps(args, project: Project) -> int:
+    """Give the cards of each leaf their order: status, a prompt, or an
+    answer to land."""
+    from .steps import import_steps, status_lines, steps_prompt
+    if args.import_file:
+        if project.card_errors:
+            for e in project.card_errors:
+                print(f"error: {e}", file=sys.stderr)
+            _fail("fix existing card errors before ordering cards")
+        changed, errors = import_steps(project, args.import_file, write=not args.check)
+        for e in errors:
+            print(f"error: {e}", file=sys.stderr)
+        if errors:
+            _fail("nothing written")
+        if args.check:
+            import json as _json
+            leaves = len(_json.loads(Path(args.import_file).read_text(encoding="utf-8")))
+            print(f"ok: {leaves} {'leaf' if leaves == 1 else 'leaves'}, {changed} card(s)")
+            return 0
+        print(f"{changed} card file(s) updated")
+        project = _load(args.root, project.skeleton.domain)
+    elif args.output:
+        prompt = steps_prompt(project, branch=args.branch, only_pending=args.pending)
+        Path(args.output).write_text(prompt, encoding="utf-8")
+        print(f"wrote {args.output}")
+        return 0
+    for line in status_lines(project):
+        print(line)
+    return 0
+
+
 HANDLERS = {
+    "steps": cmd_steps,
     "clip": cmd_clip,
     "anki-push": cmd_anki_push,
     "anki-align": cmd_anki_align,
@@ -845,7 +877,7 @@ HANDLERS = {
     "import": cmd_import,
     "pull": cmd_pull,
 }
-SINGLE_DOMAIN_ONLY = {"scaffold", "import"}
+SINGLE_DOMAIN_ONLY = {"scaffold", "import", "steps"}
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -905,6 +937,19 @@ def main(argv: list[str] | None = None) -> int:
     )
     p_clip.add_argument("--node", help="only readings under this node id")
     _subcommand("stats", help="card counts and leaf coverage per branch")
+    p_steps = _subcommand(
+        "steps", help="give the cards of each leaf their order: with no option, which "
+                      "leaves have none; -o FILE for a prompt; --import FILE to land the "
+                      "answer as `step:` lines")
+    p_steps.add_argument("-o", "--output", help="write the ordering prompt here")
+    p_steps.add_argument("--branch", help="only leaves under this node id")
+    p_steps.add_argument("--pending", action="store_true",
+                         help="only leaves that have no order yet")
+    p_steps.add_argument("--check", action="store_true",
+                         help="with --import: validate the answer and write nothing")
+    p_steps.add_argument("--import", dest="import_file", metavar="FILE",
+                         help="JSON {leaf id: [card ids in order]} to write into the cards")
+
     p_path = _subcommand("path", help="write the linear study path into the vault")
     p_path.add_argument("--weeks", type=int)
     p_scaffold = _subcommand("scaffold", help="emit an LLM prompt for a node")

@@ -47,17 +47,34 @@ def card(card_id: str, node: str, step: int | None = None, grown: bool = False) 
                 step=step, tags=["grown"] if grown else [])
 
 
-def test_the_core_is_what_was_declared_plus_what_the_graph_shows_is_stood_on(tmp_path):
-    # storage.index is declared; intro.model and storage.log are stood on
-    # (apps.queue → storage.log → intro.model); nothing else is core.
-    assert core_leaves(load(tmp_path)) == {"intro.model", "storage.log", "storage.index"}
+def test_the_core_is_what_was_declared_and_everything_that_stands_under_it(tmp_path):
+    # storage.index is declared, and so is apps.queue here — which drags in
+    # what it requires, storage.log, and what that requires, intro.model.
+    data = yaml.safe_load(yaml.safe_dump(SKELETON))
+    data["nodes"][2]["children"][0]["core"] = True
+    assert core_leaves(load(tmp_path, data)) == {
+        "storage.index", "apps.queue", "storage.log", "intro.model"}
+
+
+def test_being_stood_on_does_not_make_a_leaf_core_once_anything_is_declared(tmp_path):
+    # intro.model and storage.log are prerequisites of apps.queue, which
+    # nobody declared: a prerequisite of a side topic is not the heart of the
+    # subject, and a declaration is the author saying what is.
+    assert core_leaves(load(tmp_path)) == {"storage.index"}
+
+
+def test_with_nothing_declared_the_core_is_read_off_the_graph(tmp_path):
+    data = yaml.safe_load(yaml.safe_dump(SKELETON))
+    del data["nodes"][1]["children"][1]["core"]
+    assert core_leaves(load(tmp_path, data)) == {"intro.model", "storage.log"}
 
 
 def test_core_leaves_come_first_and_each_pass_keeps_the_skeletons_order(tmp_path):
     cards = [card(f"c-{leaf.id}", leaf.id) for leaf in load(tmp_path).leaves()]
     order = [c.node for c in sequence(load(tmp_path), cards)]
-    assert order == ["intro.model", "storage.log", "storage.index",       # the Core
-                     "intro.history", "storage.trivia", "apps.queue"]      # then the rest
+    assert order == ["storage.index",                                        # the Core
+                     "intro.history", "intro.model", "storage.log",          # then the rest,
+                     "storage.trivia", "apps.queue"]                         # in tree order
 
 
 def test_inside_a_leaf_the_step_decides_then_unstepped_cards_then_grown_ones(tmp_path):
@@ -153,8 +170,11 @@ def positions(apkg) -> list[tuple[int, str, bool]]:
 
 def test_a_built_package_numbers_its_cards_in_sequence_and_tags_the_core(tmp_path):
     skeleton = load(tmp_path)
-    cards = [parse_card(write(tmp_path, cid, extra).rename(tmp_path / f"{cid}.md"))
-             for cid, extra in [("model-b", "step: 2\n"), ("model-a", "step: 1\n")]]
+    cards = []
+    for cid, extra in [("model-b", "step: 2\n"), ("model-a", "step: 1\n")]:
+        path = write(tmp_path, cid, extra)
+        path.write_text(path.read_text().replace("intro.model", "storage.index"), encoding="utf-8")
+        cards.append(parse_card(path))
     trivia = write(tmp_path, "aaa-trivia")
     trivia.write_text(trivia.read_text().replace("intro.model", "storage.trivia"), encoding="utf-8")
     cards.append(parse_card(trivia))
@@ -193,3 +213,29 @@ def test_a_skeleton_can_set_its_pace(tmp_path):
 def test_a_study_block_is_checked(tmp_path, study, complaint):
     with pytest.raises(SkeletonError, match=complaint):
         load(tmp_path, with_study(study))
+
+
+# --- the vault shows the same order Anki deals ------------------------------------
+
+from trellis.path import study_path  # noqa: E402
+from trellis.sync import _node_body  # noqa: E402
+
+
+def test_the_study_path_is_the_sequence_core_first(tmp_path):
+    skeleton = load(tmp_path)
+    cards = [card(f"c-{leaf.id}", leaf.id) for leaf in skeleton.leaves()]
+    text = study_path(skeleton, cards)
+    core, rest = text.split("## The rest")
+    assert "## Core" in core and "[[storage.index|" in core and "[[intro.model|" not in core
+    assert rest.index("[[intro.history|") < rest.index("[[intro.model|") < rest.index("[[apps.queue|")
+
+
+def test_a_map_note_lists_its_cards_in_the_order_they_will_be_met(tmp_path):
+    skeleton = load(tmp_path)
+    cards = [card("b-unstepped", "intro.model"), card("z-first", "intro.model", step=1),
+             card("a-second", "intro.model", step=2)]
+    cards = [Card(id=c.id, node="storage.index", type="qa", path=c.path, step=c.step) for c in cards]
+    body = _node_body(skeleton, skeleton.by_id["storage.index"], cards, [], [], [])
+    listed = [l for l in body.splitlines() if l.startswith("- [[") or l[:3] in ("1. ", "2. ", "3. ")]
+    assert listed == ["1. [[z-first]]", "2. [[a-second]]", "3. [[b-unstepped]]"]
+    assert "Core" in body
