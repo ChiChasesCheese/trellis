@@ -1,6 +1,6 @@
 {
  "domain": "cdn-content",
- "pulled_at": "2026-09-13T03:36:40+00:00",
+ "pulled_at": "2026-09-19T11:44:32+00:00",
  "unmapped": 0,
  "traces": {
   "cache-eviction-admission": {
@@ -557,6 +557,10 @@
   "net-http-safe-idempotent": {
    "last_review": 1787603849
   },
+  "net-proxy-forward-vs-reverse": {
+   "due": 4,
+   "last_review": 1789271094
+  },
   "net-proxy-forwarded-trust": {
    "reps": 2,
    "interval": 1,
@@ -572,6 +576,18 @@
    "type": 2,
    "due": 752,
    "last_review": 1787718779
+  },
+  "net-proxy-length-mismatch-smuggling": {
+   "due": 2,
+   "last_review": 1789271094
+  },
+  "net-proxy-timeout-budget": {
+   "due": 3,
+   "last_review": 1789271094
+  },
+  "net-proxy-tls-termination-boundary": {
+   "due": 6,
+   "last_review": 1789271094
   },
   "net-proxy-upstream-selection": {
    "reps": 2,

@@ -1,23 +1,26 @@
 %% trellis:begin %%
 # 简报
 
-**先做** [[networking.proxies|Reverse Proxies, Gateways & Routing]]：握持 29%，还有 44 个话题压在它上面。
-→ 练 [[trace-a-cold-content-request|Drill: Trace a cold content request]] · 读 [[net-mdn-proxies|Proxy Servers and Tunneling (MDN)]]
+**先做** [[foundations.method|Interview Method]]：握持 48%。
+→ 读 [[hello-interview-in-a-hurry|System Design in a Hurry (Hello Interview)]]
 
 ## 在滑落
 
 | 域 | 话题 | 握持 | 压着 |
 |---|---|---|---|
-| CDN Content | [[networking.proxies|Reverse Proxies, Gateways & Routing]] | `███░░░░░░░` 29% | 44 |
-| CDN Content | [[caching.model|Browser, Shared Cache & CDN Model]] | `████░░░░░░` 37% | 36 |
-| CDN Content | [[foundations.request-path|End-to-End Request Path]] | `█████░░░░░` 53% | 51 |
-| Code Core | [[rules.money|Money as Integer Minor Units]] | `████░░░░░░` 42% | 3 |
-| Code Core | [[algorithms.graph-traversal|BFS, DFS & Components]] | `███░░░░░░░` 33% | 2 |
-| Code Core | [[performance.budget|Reading the Constraints]] | `██░░░░░░░░` 17% | 0 |
-| Low-Level Design | [[method.evaluation|Evaluation Rubric]] | `██░░░░░░░░` 19% | 0 |
-| System Design | [[distributed.consensus|Consensus]] | `█████░░░░░` 49% | 1 |
+| System Design | [[foundations.method|Interview Method]] | `█████░░░░░` 48% | 0 |
+| System Design | [[foundations.numbers|Latency Numbers]] | `█████░░░░░` 54% | 0 |
 
 *滑落的话题需要第二条路进去：`trellis grow --next` 会从没握住的卡出发写新卡。*
+
+## 新卡
+
+*为滑落的话题写的第二条路，复习之后长得怎样。*
+
+- [[networking.proxies|Reverse Proxies, Gateways & Routing]]：还在长，4 张新卡里 4 张没见过、0 张还嫩 · `tag:cdn-content::networking::proxies tag:grown`
+- [[rules.money|Money as Integer Minor Units]]：还在长，4 张新卡里 4 张没见过、0 张还嫩 · `tag:code-core::rules::money tag:grown`
+- [[performance.budget|Reading the Constraints]]：还在长，3 张新卡里 3 张没见过、0 张还嫩 · `tag:code-core::performance::budget tag:grown`
+- [[greedy-sorting.greedy|贪心（Greedy）]]：还在长，4 张新卡里 4 张没见过、0 张还嫩 · `tag:leetcode::greedy-sorting::greedy tag:grown`
 
 ## 值得写
 
@@ -30,31 +33,20 @@
 - [[data.security-master|Security Master & Corporate Actions]]：3 个话题压在它上面，还没有卡 · `trellis grow --leaf quant-infra:data.security-master`
 - [[features.labeling.weights|Sample Uniqueness & Weights]]：3 个话题压在它上面，还没有卡 · `trellis grow --leaf quant-infra:features.labeling.weights`
 
-## 封着
-
-*卡已经有了，但先不放出来，等它们脚下的前置握住。*
-
-- [[networking.http-semantics|HTTP Semantics]]：等 [[networking.dns-tcp-tls|DNS, TCP, TLS & Connection Setup]]
-- [[caching.model|Browser, Shared Cache & CDN Model]]：等 [[networking.proxies|Reverse Proxies, Gateways & Routing]]
-- [[caching.freshness|Freshness & Cache-Control]]：等 [[caching.model|Browser, Shared Cache & CDN Model]]
-- [[caching.hierarchy|Multi-Tier Cache Hierarchy]]：等 [[caching.keys|Cache Keys, Vary & Representation Safety]]
-- [[caching.invalidation|Expiration, Purge & Invalidation]]：等 [[caching.hierarchy|Multi-Tier Cache Hierarchy]]
-- [[caching.stampede|Stampede & Request Collapsing]]：等 [[caching.hierarchy|Multi-Tier Cache Hierarchy]]
-- [[caching.eviction|Admission, Eviction & Hot Objects]]：等 [[caching.hierarchy|Multi-Tier Cache Hierarchy]]
-- [[caching.failure|Negative Caching & Failure Policy]]：等 [[caching.hierarchy|Multi-Tier Cache Hierarchy]]
-
 ---
 
-- **Basketball**：1/161 张卡复习过，握持 0% · 今天拉取
-- **CDN Content**：64/202 张卡复习过，握持 31% · 今天拉取
-- **Code Core**：150/383 张卡复习过，握持 47% · 今天拉取
-- **Kafka**：0/340 张卡复习过，握持 — · 今天拉取
-- **Low-Level Design**：10/125 张卡复习过，握持 19% · 今天拉取
+- **Basketball**：1/161 张卡复习过，握持 — · 今天拉取
+- **CDN Content**：64/202 张卡复习过，握持 58% · 今天拉取
+- **Code Core**：150/386 张卡复习过，握持 61% · 今天拉取
+- **Kafka**：54/340 张卡复习过，握持 58% · 今天拉取
+- **LeetCode**：136/1054 张卡复习过，握持 63% · 今天拉取
+- **Low-Level Design**：10/125 张卡复习过，握持 58% · 今天拉取
 - **Markets & Factors**：0/0 张卡复习过，握持 — · 今天拉取
 - **Narrative Round**：0/10 张卡复习过，握持 — · 今天拉取
 - **Quant Infrastructure**：0/0 张卡复习过，握持 — · 今天拉取
-- **Stripe**：0/40 张卡复习过，握持 — · 今天拉取
-- **System Design**：39/465 张卡复习过，握持 42% · 今天拉取
+- **Snowflake 原理**：52/548 张卡复习过，握持 58% · 今天拉取
+- **Stripe**：1/40 张卡复习过，握持 — · 今天拉取
+- **System Design**：41/465 张卡复习过，握持 53% · 今天拉取
 %% trellis:end %%
 
 ## Notes

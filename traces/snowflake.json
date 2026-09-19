@@ -1,0 +1,2359 @@
+{
+ "domain": "snowflake",
+ "pulled_at": "2026-09-19T11:44:36+00:00",
+ "unmapped": 0,
+ "traces": {
+  "access-history-direct-vs-base": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "access-history-latency-retention": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "access-history-write-lineage": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "adaptive-runtime-join-pruning": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "adaptive-vs-static-plan-tradeoff": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "adaptive-where-estimates-break": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "adaptive-why-defer-join-distribution": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "ai-bigger-warehouse-no-help": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "ai-separate-tracking-views": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "ai-spend-control-budget": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "ai-token-billing-mechanism": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "anchor-enables-rolling-upgrade": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "anchor-state-in-shared-metadata": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "anchor-voluntary-vs-involuntary-transfer": {
+   "reps": 1,
+   "type": 1,
+   "due": 1789495242,
+   "last_review": 1789494600
+  },
+  "anchor-why-single-owner": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "at-before-clone-default-point": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "at-before-database-clone-child-retention": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "at-before-outside-retention-error": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "at-before-statement-recover-bad-delete": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "at-before-three-parameters": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "attrib-account-usage-latency-limit": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "attrib-diagnose-before-optimize": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "attrib-join-access-history-tables": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "attrib-tags-for-chargeback": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "attrib-warehouse-to-query": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "authn-keypair-rotation": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "authn-mfa-human-only": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "authn-oauth-vs-saml": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "authn-service-user-keypair": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "authn-sso-saml-idp": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "auto-recluster-classic-vs-optima": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "auto-recluster-key-change-cost-traps": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "auto-recluster-not-under-resource-monitor": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "auto-recluster-optima-ingest-billing": {
+   "reps": 1,
+   "type": 1,
+   "due": 1789493718,
+   "last_review": 1789493093
+  },
+  "auto-recluster-optima-suspend-catch-up": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "auto-recluster-serverless-nonblocking": {
+   "reps": 1,
+   "type": 1,
+   "due": 1789494096,
+   "last_review": 1789493403
+  },
+  "auto-resume-trigger-and-cost-control": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "auto-suspend-60s-restart-billing": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "auto-suspend-match-query-gaps": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "auto-suspend-multi-cluster-whole-warehouse": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "auto-suspend-when-to-disable": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "cache-layers-staleness-risk": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "cache-layers-suspend-policy-decision": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "cache-layers-symptom-slow-after-resume": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "cache-layers-three-levels": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "cache-layers-warmup-cost-comparison": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "classify-quasi-identifier-risk": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "classify-semantic-privacy-category": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "cleanroom-built-on-sharing": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "cleanroom-min-aggregation-threshold": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "cleanroom-problem-it-solves": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "cleanroom-template-allowlist": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "client-redirect-connection-object": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "client-redirect-edition-requirement": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "client-redirect-failover-steps": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "client-redirect-not-instant-dns": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "client-redirect-vs-failover-group": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "clone-billing-divergence-charged": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "clone-billing-initially-free": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "clone-billing-retained-for-clone": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "clone-billing-storage-metrics-columns": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "clone-billing-transient-clone-dev": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "clone-clustering-suspended-sequence-reference": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "clone-ddl-rename-conflict": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "clone-dml-during-clone-retention-zero": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "clone-grants-not-copied": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "clone-streams-lose-unconsumed-records": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "clone-tasks-pipes-suspended": {
+   "due": 6,
+   "last_review": 1789369893
+  },
+  "cloud-services-coordinates-sign-in-to-dispatch": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "cloud-services-metadata-snowflake-db-info-schema": {
+   "reps": 4,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 775,
+   "last_review": 1789496099
+  },
+  "cloud-services-never-reads-table-bytes": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "cloud-services-query-optimization-before-warehouse": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "cloud-services-security-centralized": {
+   "reps": 1,
+   "type": 1,
+   "due": 1789493290,
+   "last_review": 1789492553
+  },
+  "clustering-key-cardinality-sweet-spot": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "clustering-key-column-order-low-to-high": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "clustering-key-ctas-clone-hybrid": {
+   "reps": 1,
+   "type": 1,
+   "due": 1789494121,
+   "last_review": 1789493376
+  },
+  "clustering-key-filter-join-over-groupby": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "clustering-key-text-prefix-bytes": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "clustering-key-when-worth-it": {
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 773,
+   "last_review": 1789493920
+  },
+  "commit-crash-before-swap": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "commit-optimistic-concurrency": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "commit-readers-snapshot-isolation": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "commit-snowflake-refresh-external": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "commit-write-then-swap-order": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "compile-error-stage-diagnosis": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "compile-plan-carries-file-list": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "compile-predicate-pushdown-enables-pruning": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "compile-stage-order-and-location": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "compiler-bind-name-resolution-access-control": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "compiler-cascades-no-indexes": {
+   "reps": 1,
+   "type": 1,
+   "due": 1789495361,
+   "last_review": 1789494720
+  },
+  "compiler-pruning-cost-on-huge-tables": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "compiler-runs-in-cloud-services-before-warehouse": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "compression-algorithm-per-column-per-partition": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "compression-columns-stored-independently": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "compression-no-user-encoding-ddl": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "compression-stored-size-smaller-than-50-500": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "concurrency-deadlock-victim-rule": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 777,
+   "last_review": 1789498584
+  },
+  "concurrency-insert-vs-update-parallelism": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "concurrency-lock-timeout-failure": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "concurrency-many-small-updates-antipattern": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "concurrency-standard-vs-hybrid-lock-granularity": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 776,
+   "last_review": 1789497435
+  },
+  "copy-into-load-metadata-dedupe": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "copy-into-no-dml-error-logging": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "copy-into-parallel-across-files": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "copy-into-simple-transformations": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "copy-into-user-warehouse-single-txn": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "cost-credit-decoupled-from-instance": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "cost-monthly-credit-calc": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "cost-storage-average-daily-bytes": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "cost-three-usage-types": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "cost-warehouse-idle-vs-suspended": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "cs-10pct-daily-adjustment": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "cs-adjustment-capped-by-usage": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "cs-low-warehouse-high-services": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "cs-resource-monitor-counts-unbilled": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "cs-serverless-not-in-base": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "dag-failure-whole-query-retry": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "dag-multi-step-queries": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "dag-no-buffer-pool-no-txn-during-exec": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "dag-push-vs-volcano-pull": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "dag-shared-intermediate-results": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "datastream-inherits-governance": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "datastream-maturity-status": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "datastream-vs-connector-plus-streaming": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "datastream-when-not-to-choose": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "datastream-wire-protocol-not-kafka": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "ddl-add-column-instant": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 776,
+   "last_review": 1789494908
+  },
+  "ddl-change-tracking-brief-lock": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "ddl-concurrent-with-insert-inconsistency": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "ddl-ctas-counts-as-ddl": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "ddl-drop-column-new-version": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "ddl-inside-nested-procedure-error": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 775,
+   "last_review": 1789498702
+  },
+  "ddl-own-transaction-implicit-commit": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 775,
+   "last_review": 1789497827
+  },
+  "ddl-running-query-keeps-its-version": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 775,
+   "last_review": 1789494474
+  },
+  "ddl-swap-with-atomic-cutover": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "ddl-type-widening-vs-rebuild": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "dt-adaptive-backfill-scenario": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "dt-adaptive-definition": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "dt-adaptive-vs-auto": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "dt-auto-decided-at-creation": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "dt-cost-categories": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "dt-custom-incremental-escape-hatch": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "dt-declarative-vs-stream-task": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "dt-full-refresh-when-appropriate": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "dt-incremental-why-cheaper": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "dt-pipeline-consistent-snapshot": {
+   "due": 6,
+   "last_review": 1789369893
+  },
+  "dt-refresh-modes-cloze": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "dt-scheduler-disable-external": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "dt-target-lag-downstream": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "dt-target-lag-not-guarantee": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "dt-vs-materialized-view-refresh": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "elasticity-online-upgrade-side-by-side": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "elasticity-resize-without-repartition": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "elasticity-same-cost-more-nodes": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 776,
+   "last_review": 1789496089
+  },
+  "enc-hierarchical-key-model": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "enc-rotation-vs-rekeying": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "enc-transparent-end-to-end": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "enc-tri-secret-secure": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "enc-why-hierarchy-limits-blast-radius": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "explain-compiles-not-executes": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "explain-output-formats": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "explain-partitions-assigned-predict-pruning": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "explain-spot-cartesian-join": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "explain-vs-query-profile": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "external-table-metadata-refresh-stale-results": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "external-table-partition-auto-vs-manual": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "external-table-performance-options": {
+   "due": 6,
+   "last_review": 1789369893
+  },
+  "external-table-readonly-value-column": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "external-table-refresh-billing": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "external-table-silent-skip-errors": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "fdb-commit-point": {
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 777,
+   "last_review": 1789494873
+  },
+  "fdb-enables-stateless-services": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "fdb-transaction-limits": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 777,
+   "last_review": 1789494427
+  },
+  "fdb-what-is-stored": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "fdb-why-kv-not-custom-catalog": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "flatten-explodes-array-to-rows": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 776,
+   "last_review": 1789499829
+  },
+  "flatten-nested-and-row-explosion": {
+   "reps": 1,
+   "type": 1,
+   "due": 1789500200,
+   "last_review": 1789499484
+  },
+  "flatten-outer-keeps-empty-arrays": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "flatten-output-columns": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "flatten-why-lateral": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "grants-direct-to-user-ubac": {
+   "due": 6,
+   "last_review": 1789369893
+  },
+  "grants-future-grants": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "grants-manage-grants-scope": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "grants-managed-access-schema": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "grants-ownership-dac": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "grants-public-role-ownership": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "hybrid-constraints-enforced": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "hybrid-row-store-async-copy": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "hybrid-same-engine-atomic-txn": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "hybrid-storage-and-index-cost": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "hybrid-vs-standard-table-choice": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "iceberg-cross-region-egress": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "iceberg-external-volume-object": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "iceberg-managed-vs-external-catalog": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "iceberg-storage-options-tradeoff": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "iceberg-why-use": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "isolation-chargeback-and-access": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "isolation-over-fragmentation-cost": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "isolation-per-workload-tuning": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "isolation-read-committed-only": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "isolation-read-consistency-mode-global": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "isolation-readers-never-deadlock": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 775,
+   "last_review": 1789498051
+  },
+  "isolation-sees-own-uncommitted-writes": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 777,
+   "last_review": 1789496188
+  },
+  "isolation-separate-warehouses-same-data": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "isolation-statement-level-not-txn-level": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "isolation-what-is-not-isolated": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "join-broadcast-mechanism": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "join-build-probe-and-join-filter": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "join-choice-heuristic": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "join-shuffle-mechanism": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "join-strategy-failure-modes": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "lineage-policy-audit-join": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "lineage-vs-grants-difference": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "listing-four-sharing-options": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "listing-public-vs-private": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "listing-usage-metrics": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "listing-vs-direct-share-choice": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "mask-applied-everywhere-antipattern": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "mask-ddm-vs-external-tokenization": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "mask-leak-via-insert": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "mask-policy-structure-rules": {
+   "due": 6,
+   "last_review": 1789369893
+  },
+  "mask-query-time-not-static": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "mask-sod-vs-secure-views": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "mcw-concurrency-not-slow-queries": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "mcw-credit-math": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "mcw-max-cluster-limits-by-size": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "mcw-maximized-vs-autoscale": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "mcw-standard-vs-economy-shutdown": {
+   "due": 6,
+   "last_review": 1789369893
+  },
+  "mcw-standard-vs-economy-start": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "meta-bottleneck-row-by-row-dml": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "meta-concurrent-writes-same-table": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "meta-consistency-cross-warehouse-visibility": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "meta-stateless-services-shared-store-limit": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "metadata-cache-always-consistent": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "metadata-cache-count-without-warehouse": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "metadata-cache-min-max-answerable": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "metadata-cache-pruning-before-scan": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "metadata-cache-where-clause-breaks-shortcut": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "micro-partition-columnar-inside": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "micro-partition-drop-column-no-rewrite": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "micro-partition-overlap-prevents-skew": {
+   "reps": 1,
+   "type": 1,
+   "due": 1789493953,
+   "last_review": 1789493243
+  },
+  "micro-partition-size-50-500mb-uncompressed": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "micro-partition-vs-static-partitioning": {
+   "reps": 1,
+   "type": 1,
+   "due": 1789494382,
+   "last_review": 1789493676
+  },
+  "min60-bigger-not-cheaper-loading": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "min60-multicluster-billing": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "min60-resize-up-billing": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "min60-resume-thrash": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "min60-rules": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "mp-metadata-collected-at-load": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "mp-metadata-dml-maintenance": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "mp-metadata-per-partition-contents": {
+   "reps": 3,
+   "ease": 2.5,
+   "type": 1,
+   "due": 775,
+   "last_review": 1789493622
+  },
+  "mp-metadata-semistructured-columns": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "mp-metadata-table-level-clustering-stats": {
+   "reps": 1,
+   "due": 4,
+   "last_review": 1789493871
+  },
+  "multi-cluster-shared-consistent-view": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "multi-cluster-shared-data-hybrid-benefit": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "multi-cluster-shared-independent-compute-one-store": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "multi-cluster-shared-vs-shared-disk-bottleneck": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 775,
+   "last_review": 1789492486
+  },
+  "multi-cluster-shared-vs-shared-nothing": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 775,
+   "last_review": 1789489461
+  },
+  "multi-region-iceberg-external-storage": {
+   "reps": 1,
+   "type": 1,
+   "due": 1789493223,
+   "last_review": 1789492619
+  },
+  "multi-region-no-on-prem-deployment": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "multi-region-replication-for-dr": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 777,
+   "last_review": 1789492279
+  },
+  "multi-region-sharing-without-copies": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "multi-region-snowgrid-purpose": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "multistmt-autocommit-default-behavior": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "multistmt-autocommit-false-implicit-boundaries": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "multistmt-best-practice-explicit-with-autocommit": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "multistmt-scoped-txn-logging-pattern": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "multistmt-txn-cannot-span-procedure-boundary": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 775,
+   "last_review": 1789497565
+  },
+  "multitenancy-hierarchical-key-isolation": {
+   "reps": 1,
+   "type": 1,
+   "due": 1789493437,
+   "last_review": 1789492708
+  },
+  "multitenancy-shared-control-dedicated-compute": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "mv-always-current-mechanism": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "mv-automatic-query-rewrite": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "mv-definition-limits": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "mv-vs-result-cache": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "mv-when-vs-regular-view": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "mvcc-dml-preserves-previous-version": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 776,
+   "last_review": 1789498394
+  },
+  "mvcc-high-churn-storage-cost": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "mvcc-historical-query-uses-current-schema": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 775,
+   "last_review": 1789497194
+  },
+  "mvcc-long-query-delays-failsafe-transition": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "mvcc-retention-zero-background-cleanup": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "natural-clustering-degrades-with-dml": {
+   "reps": 1,
+   "type": 1,
+   "due": 1789493845,
+   "last_review": 1789493187
+  },
+  "natural-vs-explicit-batch-dml": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "natural-vs-explicit-indicators": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "natural-vs-explicit-manual-sort-alternative": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "natural-vs-explicit-recluster-example": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "natural-vs-explicit-storage-turnover": {
+   "reps": 1,
+   "type": 1,
+   "due": 1789494126,
+   "last_review": 1789493450
+  },
+  "netpol-allowlist-implicit-block": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "netpol-internal-stage-parameter": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "netpol-network-rules-vs-ip-list": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "netpol-precedence-specific-wins": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "netpol-private-link-precedence": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "object-storage-central-repo-plus-local-cache": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "object-storage-hybrid-table-contrast": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "object-storage-snowflake-managed-layout": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "object-storage-snowflake-vs-iceberg-ownership": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "optimizer-stats-contents": {
+   "reps": 1,
+   "ease": 2.5,
+   "due": 4,
+   "last_review": 1789494880
+  },
+  "optimizer-stats-never-stale-after-dml": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "optimizer-stats-no-analyze-command": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "optimizer-stats-plan-without-reading-data": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "polaris-catalog-linked-database": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "polaris-catalog-two-duties": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "polaris-open-rest-decoupling": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "polaris-sync-and-vended-credentials": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "polaris-why-catalog-needed": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "profile-details-unavailable": {
+   "due": 6,
+   "last_review": 1789369893
+  },
+  "profile-exploding-join": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "profile-metadata-only-operators": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "profile-overview-time-categories": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "profile-plan-nodes-and-arrows": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "profile-pruning-scanned-vs-total": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "pruning-depth-constant-state": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "pruning-depth-definition": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "pruning-depth-monitoring-functions": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "pruning-depth-not-absolute-measure": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "pruning-depth-overlap-hurts-pruning": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "pruning-elimination-hour-example": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "pruning-elimination-metadata-only-dml": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "pruning-elimination-not-index-probe": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "pruning-elimination-two-stage": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "pruning-elimination-vs-full-scan": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "pruning-zonemap-ideal-ratio": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "pruning-zonemap-mechanism": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "pruning-zonemap-partition-size": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "pruning-zonemap-predicate-limits": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "pruning-zonemap-vs-btree-index": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "qas-bytes-scanned-inflation": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "qas-default-scale-factor": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "qas-find-candidates": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "qas-ineligible-reasons": {
+   "due": 6,
+   "last_review": 1789369893
+  },
+  "qas-outlier-offload-mechanism": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "qas-scale-factor-cost-bound": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "qh-details-unavailable": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "qh-grouped-parameterized-hash": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "qh-query-tag-attribution": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "qh-three-sources-tradeoff": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "qh-visibility-privileges": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "queuing-economy-policy-trades-latency": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "queuing-resize-helps-queued-not-running": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "queuing-resource-reservation-mechanism": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "queuing-snowsight-ui-behind-workloads": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "queuing-three-remedies": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "rap-count-star-slow": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "rap-mv-mutual-exclusion": {
+   "due": 6,
+   "last_review": 1789369893
+  },
+  "rap-not-write-protection": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "rap-performance-guidelines": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "rap-policy-owner-evaluation": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "rap-runtime-secure-view": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "rbac-custom-roles-under-sysadmin": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "rbac-database-roles-not-activatable": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "rbac-inheritance-flows-up": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "rbac-role-owner-no-inherit": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "rbac-secondary-roles-create-rule": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "reader-compute-billed-to-provider": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "reader-no-dml": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "reader-owned-by-provider": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "reader-why-exists": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "replication-edition-matrix": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "replication-graceful-failover-suspend-schedule": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "replication-group-vs-failover-group": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "replication-not-replicated-objects": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "replication-schedule-single-refresh": {
+   "due": 6,
+   "last_review": 1789369893
+  },
+  "replication-warehouse-suspended-users-readonly": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "result-cache-24h-31d-retention": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "result-cache-exact-text-match": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "result-cache-invalidation-config-options": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "result-cache-invalidation-cross-session": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "result-cache-invalidation-reclustering": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "result-cache-invalidation-show-query-role-match": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "result-cache-invalidation-use-cached-result-param": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "result-cache-nonreusable-functions": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "result-cache-result-scan-postprocess": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "result-cache-zero-compute": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "retention-decrease-background-move": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "retention-dropped-container-overrides-child": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "retention-expiry-moves-to-failsafe": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "retention-min-retention-effective-max": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "retention-period-edition-limits": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "rm-account-vs-warehouse-monitor": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "rm-cloud-services-counted": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "rm-must-define-action-and-assign": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "rm-not-for-serverless-use-budget": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "rm-not-precise-use-buffers": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "rm-resume-conditions-and-limits": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "rm-suspend-vs-suspend-immediate": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "scale-out-enterprise-default-config": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "scale-out-max-clusters-budget": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "scale-out-min-clusters-for-ha": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "scale-up-resize-mid-batch": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "scale-up-vs-out-symptom-mapping": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "schema-evolution-enable-and-match-by-name": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "schema-evolution-infer-schema-template": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "schema-evolution-streaming-ingest": {
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 775,
+   "last_review": 1789499939
+  },
+  "schema-evolution-vs-variant-column": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "schema-evolution-what-changes-allowed": {
+   "reps": 1,
+   "type": 1,
+   "due": 1789500271,
+   "last_review": 1789499594
+  },
+  "schema-on-read-auto-detect-alternative": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "schema-on-read-external-table-value-typing": {
+   "reps": 1,
+   "type": 1,
+   "due": 1789499989,
+   "last_review": 1789499256
+  },
+  "schema-on-read-parse-json-vs-copy-type": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "schema-on-read-query-operators": {
+   "reps": 1,
+   "ease": 2.5,
+   "due": 3,
+   "last_review": 1789500164
+  },
+  "schema-on-read-why-fixed-schema-fails": {
+   "reps": 1,
+   "type": 1,
+   "due": 1789500337,
+   "last_review": 1789499696
+  },
+  "serverless-attribution-risk": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "serverless-compute-hours": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "serverless-qas-billing": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "serverless-separate-line-item": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "serverless-why-model": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "sfpg-compute-model-contrast": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "sfpg-operational-analytical-split": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "sfpg-why-beyond-hybrid": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "sfpg-wire-protocol-compat": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "share-live-and-revocable": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "share-no-copy-metadata": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "share-object-what-is": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "share-provider-consumer-network": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "share-read-only-consumer-db": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "snowpipe-file-cadence-and-event-filtering": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "snowpipe-load-history-14-days": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "snowpipe-load-order-not-guaranteed": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "snowpipe-pipe-object-and-triggers": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "snowpipe-same-name-modified-file-skipped": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "sos-cast-on-column-disables": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "sos-maintenance-background-cost": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "sos-not-btree": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "sos-search-access-path": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "sos-update-lag-correctness": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "spill-memory-local-remote-order": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "spill-remedies": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "spill-union-vs-union-all": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "spill-where-to-see-metrics": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "sproc-filesystem-tmp-only": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "sproc-no-network-default": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "sproc-owners-vs-callers-rights": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "sproc-sandbox-escape-cost": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "sproc-vs-udf-capability": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "stages-archival-storage-unreadable": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "stages-external-named-stage-contents": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "stages-put-vs-cloud-upload": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "stages-table-stage-no-grants": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "stages-three-internal-types": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "storage-compute-sep-independent-scaling": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "storage-compute-sep-multiple-warehouses-one-copy": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 776,
+   "last_review": 1789492241
+  },
+  "storage-compute-sep-no-shared-compute": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "storage-compute-sep-self-managed": {
+   "reps": 1,
+   "type": 1,
+   "due": 1789493076,
+   "last_review": 1789492428
+  },
+  "storage-compute-sep-vs-coupled-traditional": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "stream-advance-without-consuming": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "stream-changes-clause-alternative": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "stream-crash-before-commit-retries-same": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "stream-create-or-replace-table-stale": {
+   "due": 6,
+   "last_review": 1789369893
+  },
+  "stream-explicit-txn-repeatable-read": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "stream-multiple-streams-cheap": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "stream-offset-between-versions": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "stream-read-committed-vs-repeatable-read": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "stream-retention-auto-extension-14-days": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "stream-row-change-metadata-columns": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "stream-select-does-not-advance": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "stream-shared-table-no-extension": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "stream-stale-after-calculation": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "stream-stale-definition-recreate": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "stream-stores-only-offset": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "stream-stream-has-data-prevents-stale": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "stream-type-append-only-elt-performance": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "stream-type-choice-cloze": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "stream-type-insert-only-external": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "stream-type-standard-net-delta": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "stream-type-update-row-pair": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "streaming-channel-ordering": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "streaming-offset-token-exactly-once": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "streaming-pipe-object-server-side": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "streaming-throughput-latency-numbers": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "streaming-vs-snowpipe-choice": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "table-types-choose-transient-for-staging": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "table-types-external-hybrid-clone-limits": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "table-types-min-retention-override": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "table-types-retention-ranges": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "table-types-zero-retention-permanent-vs-transient": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 776,
+   "last_review": 1789493560
+  },
+  "tag-based-masking-scale": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "tag-classification-false-negative": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "tag-lineage-propagation": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "task-auto-retry-attempts": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "task-billing-models": {
+   "due": 6,
+   "last_review": 1789369893
+  },
+  "task-conditional-cost-practices": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "task-created-suspended": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "task-graph-child-failure-behavior": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "task-graph-root-and-children": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "task-overlap-skip-scheduled-run": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "task-owner-role-dropped-paused": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "task-queuing-shared-warehouse": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "task-runs-as-system-service": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "task-schedule-interval-vs-cron": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "task-serverless-how-sized": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "task-serverless-privilege": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "task-serverless-vs-warehouse-choice": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "task-stream-has-data-prevents-staleness": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "task-stream-on-view-trigger-caveat": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "task-suspend-after-num-failures": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "task-target-completion-interval": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "task-timeout-parameters": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "task-triggered-vs-scheduled-polling": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "task-version-pinned-at-run-start": {
+   "due": 6,
+   "last_review": 1789369893
+  },
+  "task-when-stream-has-data": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "three-layer-cloud-services-scope": {
+   "reps": 1,
+   "type": 1,
+   "due": 1789493420,
+   "last_review": 1789492779
+  },
+  "three-layer-hybrid-architecture": {
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 777,
+   "last_review": 1789492401
+  },
+  "three-layer-storage-micro-partition": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 775,
+   "last_review": 1789492237
+  },
+  "three-layer-warehouse-independence": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "three-layer-what-are-they": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "trust-center-continuous-drift": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "trust-center-scanner-packages": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "trust-center-typical-findings": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "trust-center-vs-prevention": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "txn-detached-transaction-auto-abort": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "txn-failed-statement-does-not-abort-txn": {
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 775,
+   "last_review": 1789498623
+  },
+  "txn-granularity-tradeoff": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "txn-never-nested": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "txn-shared-connection-threads-share-txn": {
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 776,
+   "last_review": 1789497121
+  },
+  "udf-per-row-overhead-vectorized": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "udf-runs-on-warehouse-sandbox": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "udf-scalar-vs-udtf": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "udf-secure-udf-sharing": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "udf-snowpark-optimized-warehouse": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "undrop-multiple-dropped-versions": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "undrop-name-conflict-rename-first": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "undrop-privileges-and-scope": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "undrop-restores-in-place-latest-state": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "undrop-retention-zero-and-alter-dropped": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "unload-compute-and-cost": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "unload-copy-into-location-basics": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "unload-format-choice-downstream": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "unload-overwrite-and-partition-by": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "unload-parallel-multiple-files": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "variant-128mb-value-limit-split": {
+   "reps": 1,
+   "type": 1,
+   "due": 1789500299,
+   "last_review": 1789499641
+  },
+  "variant-array-object-nesting-rule": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "variant-internal-optimized-format": {
+   "reps": 1,
+   "type": 1,
+   "due": 1789500609,
+   "last_review": 1789499980
+  },
+  "variant-object-is-map-not-oop": {
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 776,
+   "last_review": 1789499094
+  },
+  "variant-single-column-vs-split-columns": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "vectorized-batch-size-tradeoff": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "vectorized-batches-of-columns": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "vectorized-vs-mapreduce-materialization": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "vectorized-vs-row-at-a-time": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "vectorized-when-row-based-wins": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "warehouse-cache-dropped-on-downsize": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "warehouse-cache-dropped-on-suspend": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "warehouse-cache-scales-with-size": {
+   "due": 3,
+   "last_review": 1789369893
+  },
+  "warehouse-cache-suspend-vs-keep-running-tradeoff": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "warehouse-cache-warms-automatically": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "wh-size-bigger-can-cost-same": {
+   "due": 2,
+   "last_review": 1789369893
+  },
+  "wh-size-credits-doubling": {
+   "due": 5,
+   "last_review": 1789369893
+  },
+  "wh-size-data-loading-files-matter": {
+   "due": 1,
+   "last_review": 1789369893
+  },
+  "wh-size-larger-not-faster-small-queries": {
+   "due": 6,
+   "last_review": 1789369893
+  },
+  "wh-size-resize-running-effects": {
+   "due": 4,
+   "last_review": 1789369893
+  },
+  "wh-size-table-bytes-over-rows": {
+   "due": 3,
+   "last_review": 1789369893
+  }
+ }
+}

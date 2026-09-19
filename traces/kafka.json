@@ -1,6 +1,6 @@
 {
  "domain": "kafka",
- "pulled_at": "2026-09-13T03:36:41+00:00",
+ "pulled_at": "2026-09-19T11:44:33+00:00",
  "unmapped": 0,
  "traces": {
   "kafka-admin-adminclient-eventual-consistency": {
@@ -192,28 +192,48 @@
    "last_review": 1789269660
   },
   "kafka-consumer-auto-commit-duplicate-window": {
-   "due": 6,
-   "last_review": 1789269660
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 778,
+   "last_review": 1789598085
   },
   "kafka-consumer-auto-offset-reset-choices": {
-   "due": 4,
-   "last_review": 1789269660
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 778,
+   "last_review": 1789598360
   },
   "kafka-consumer-avro-deserializer-early-error-detection": {
    "due": 2,
    "last_review": 1789269660
   },
   "kafka-consumer-avro-specific-reader-config": {
-   "due": 4,
-   "last_review": 1789269660
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 776,
+   "last_review": 1789598477
   },
   "kafka-consumer-commit-async-then-sync-on-shutdown": {
-   "due": 4,
-   "last_review": 1789269660
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 778,
+   "last_review": 1789598432
   },
   "kafka-consumer-commit-offset-duplicate-vs-loss": {
-   "due": 5,
-   "last_review": 1789269660
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 778,
+   "last_review": 1789598181
   },
   "kafka-consumer-commit-specific-offset-mid-batch": {
    "due": 3,
@@ -232,8 +252,12 @@
    "last_review": 1789269660
   },
   "kafka-consumer-fetch-max-bytes-vs-partition-fetch-bytes": {
-   "due": 6,
-   "last_review": 1789269660
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 773,
+   "last_review": 1789542438
   },
   "kafka-consumer-fetch-max-wait-ms-with-fetch-min-bytes": {
    "due": 3,
@@ -252,12 +276,20 @@
    "last_review": 1789269660
   },
   "kafka-consumer-heartbeat-session-timeout-death-detection": {
-   "due": 6,
-   "last_review": 1789269660
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 773,
+   "last_review": 1789522331
   },
   "kafka-consumer-max-poll-interval-ms-purpose": {
-   "due": 5,
-   "last_review": 1789269660
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 774,
+   "last_review": 1789598277
   },
   "kafka-consumer-multiple-groups-full-data": {
    "due": 3,
@@ -272,20 +304,32 @@
    "last_review": 1789269660
   },
   "kafka-consumer-one-thread-per-consumer-rule": {
-   "due": 5,
-   "last_review": 1789269660
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 778,
+   "last_review": 1789598164
   },
   "kafka-consumer-poll-liveness-requirement": {
    "due": 3,
    "last_review": 1789269660
   },
   "kafka-consumer-rebalance-listener-commit-before-revoke": {
-   "due": 4,
-   "last_review": 1789269660
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 774,
+   "last_review": 1789598299
   },
   "kafka-consumer-required-config": {
-   "due": 4,
-   "last_review": 1789269660
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 778,
+   "last_review": 1789598330
   },
   "kafka-consumer-seek-changes-poll-position-not-commit": {
    "due": 1,
@@ -296,8 +340,12 @@
    "last_review": 1789269660
   },
   "kafka-consumer-seektobeginning-seektoend-purpose": {
-   "due": 4,
-   "last_review": 1789269660
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 778,
+   "last_review": 1789598397
   },
   "kafka-consumer-serializer-deserializer-must-match": {
    "due": 1,
@@ -312,16 +360,22 @@
    "last_review": 1789269660
   },
   "kafka-consumer-standalone-still-needs-group-id": {
-   "due": 4,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789599209,
+   "last_review": 1789598542
   },
   "kafka-consumer-standalone-when-to-use": {
    "due": 2,
    "last_review": 1789269660
   },
   "kafka-consumer-static-membership-avoids-rebalance": {
-   "due": 5,
-   "last_review": 1789269660
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 774,
+   "last_review": 1789598119
   },
   "kafka-consumer-subscribe-regex-tradeoff": {
    "due": 2,
@@ -336,8 +390,10 @@
    "last_review": 1789269660
   },
   "kafka-core-consumer-group-shared-once": {
-   "due": 3,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789517547,
+   "last_review": 1789516850
   },
   "kafka-core-consumer-independence-vs-traditional-queue": {
    "due": 1,
@@ -348,12 +404,18 @@
    "last_review": 1789269660
   },
   "kafka-core-disk-retention-benefit": {
-   "due": 6,
-   "last_review": 1789269660
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 776,
+   "last_review": 1789495509
   },
   "kafka-core-follower-reads-latency-tradeoff": {
-   "due": 4,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789517332,
+   "last_review": 1789516700
   },
   "kafka-core-isr-definition": {
    "due": 2,
@@ -364,20 +426,28 @@
    "last_review": 1789269660
   },
   "kafka-core-leader-follower-roles": {
-   "due": 3,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789517896,
+   "last_review": 1789517207
   },
   "kafka-core-message-key-partition-routing": {
-   "due": 3,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789517585,
+   "last_review": 1789516922
   },
   "kafka-core-mirrormaker-architecture": {
-   "due": 5,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789517240,
+   "last_review": 1789516499
   },
   "kafka-core-multi-producer-unified-topic": {
-   "due": 4,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789517275,
+   "last_review": 1789516552
   },
   "kafka-core-multicluster-reasons": {
    "due": 1,
@@ -388,64 +458,96 @@
    "last_review": 1789269660
   },
   "kafka-core-offset-tracks-consumer-progress": {
-   "due": 4,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789517221,
+   "last_review": 1789516616
   },
   "kafka-core-offset-uniqueness-per-partition": {
-   "due": 3,
-   "last_review": 1789269660
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 777,
+   "last_review": 1789516996
   },
   "kafka-core-offset-vs-key": {
    "due": 2,
    "last_review": 1789269660
   },
   "kafka-core-offset-what-is": {
-   "due": 5,
-   "last_review": 1789269660
+   "reps": 2,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 777,
+   "last_review": 1789517978
   },
   "kafka-core-partition-ordering-scope": {
-   "due": 5,
-   "last_review": 1789269660
+   "reps": 2,
+   "type": 1,
+   "due": 1789518052,
+   "last_review": 1789517985
   },
   "kafka-core-partitions-enable-scale": {
    "due": 2,
    "last_review": 1789269660
   },
   "kafka-core-preferred-leader-rebalance": {
-   "due": 5,
-   "last_review": 1789269660
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 775,
+   "last_review": 1789519430
   },
   "kafka-core-pubsub-vs-pointtopoint": {
-   "due": 5,
-   "last_review": 1789269660
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 776,
+   "last_review": 1789516338
   },
   "kafka-core-replication-scoped-to-single-cluster": {
-   "due": 4,
-   "last_review": 1789269660
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 777,
+   "last_review": 1789516783
   },
   "kafka-core-scalability-no-downtime": {
    "due": 2,
    "last_review": 1789269660
   },
   "kafka-core-schema-avro-vs-json": {
-   "due": 4,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789517321,
+   "last_review": 1789516582
   },
   "kafka-eos-idempotent-broker-failover-state-transfer": {
-   "due": 5,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789544501,
+   "last_review": 1789543786
   },
   "kafka-eos-idempotent-limit-app-level-duplicate-send": {
-   "due": 6,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789544379,
+   "last_review": 1789543654
   },
   "kafka-eos-idempotent-limit-multiple-producer-instances": {
    "due": 1,
    "last_review": 1789269660
   },
   "kafka-eos-idempotent-out-of-order-seq-error": {
-   "due": 4,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789544546,
+   "last_review": 1789543875
   },
   "kafka-eos-idempotent-pid-sequence-dedup": {
    "due": 2,
@@ -460,16 +562,20 @@
    "last_review": 1789269660
   },
   "kafka-eos-transactions-external-side-effects-not-covered": {
-   "due": 5,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789544459,
+   "last_review": 1789543836
   },
   "kafka-eos-transactions-isolation-level-tradeoff": {
    "due": 4,
    "last_review": 1789269660
   },
   "kafka-eos-transactions-two-phase-commit-mechanism": {
-   "due": 6,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789544363,
+   "last_review": 1789543721
   },
   "kafka-eos-transactions-why-needed-duplicates": {
    "due": 3,
@@ -520,8 +626,10 @@
    "last_review": 1789269660
   },
   "kafka-internals-compaction-trigger-and-lag-config": {
-   "due": 6,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789599635,
+   "last_review": 1789598926
   },
   "kafka-internals-controller-election": {
    "due": 4,
@@ -532,8 +640,10 @@
    "last_review": 1789269660
   },
   "kafka-internals-controller-leader-election-flow": {
-   "due": 5,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789599748,
+   "last_review": 1789599058
   },
   "kafka-internals-controller-role": {
    "due": 1,
@@ -548,8 +658,10 @@
    "last_review": 1789269660
   },
   "kafka-internals-fetch-min-max-bytes-tradeoff": {
-   "due": 6,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789599323,
+   "last_review": 1789598677
   },
   "kafka-internals-fetch-only-sees-committed": {
    "due": 3,
@@ -576,8 +688,10 @@
    "last_review": 1789269660
   },
   "kafka-internals-isr-matters-leader-election": {
-   "due": 5,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789599756,
+   "last_review": 1789599105
   },
   "kafka-internals-isr-out-condition": {
    "due": 1,
@@ -624,8 +738,10 @@
    "last_review": 1789269660
   },
   "kafka-internals-partition-allocation-roundrobin": {
-   "due": 6,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789599445,
+   "last_review": 1789598812
   },
   "kafka-internals-partition-disk-assignment": {
    "due": 2,
@@ -912,16 +1028,20 @@
    "last_review": 1789269660
   },
   "kafka-producer-acks-0-fire-and-forget-risk": {
-   "due": 4,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789522884,
+   "last_review": 1789522230
   },
   "kafka-producer-acks-1-leader-crash-risk": {
    "due": 1,
    "last_review": 1789269660
   },
   "kafka-producer-acks-all-isr-safety": {
-   "due": 5,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789522204,
+   "last_review": 1789521604
   },
   "kafka-producer-acks-end-to-end-latency-same": {
    "due": 2,
@@ -952,8 +1072,10 @@
    "last_review": 1789269660
   },
   "kafka-producer-bootstrap-servers-multiple-hosts": {
-   "due": 4,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789522862,
+   "last_review": 1789522138
   },
   "kafka-producer-buffer-memory-backpressure": {
    "due": 1,
@@ -964,20 +1086,26 @@
    "last_review": 1789269660
   },
   "kafka-producer-compression-snappy-vs-gzip": {
-   "due": 5,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789522313,
+   "last_review": 1789521662
   },
   "kafka-producer-custom-partitioner-hotkey-isolation": {
    "due": 1,
    "last_review": 1789269660
   },
   "kafka-producer-custom-serializer-fragility": {
-   "due": 5,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789522635,
+   "last_review": 1789521923
   },
   "kafka-producer-delivery-timeout-strategy": {
-   "due": 5,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789522451,
+   "last_review": 1789521743
   },
   "kafka-producer-delivery-timeout-vs-request-timeout": {
    "due": 4,
@@ -1000,8 +1128,10 @@
    "last_review": 1789269660
   },
   "kafka-producer-idempotence-sequence-number-mechanism": {
-   "due": 5,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789522447,
+   "last_review": 1789521779
   },
   "kafka-producer-idempotence-solves-ordering": {
    "due": 3,
@@ -1016,8 +1146,10 @@
    "last_review": 1789269660
   },
   "kafka-producer-key-null-sticky-partitioning": {
-   "due": 5,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789522722,
+   "last_review": 1789522097
   },
   "kafka-producer-linger-ms-latency-throughput": {
    "due": 4,
@@ -1044,16 +1176,22 @@
    "last_review": 1789269660
   },
   "kafka-producer-sync-send-throughput-problem": {
-   "due": 5,
-   "last_review": 1789269660
+   "reps": 2,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 775,
+   "last_review": 1789522242
   },
   "kafka-producer-three-send-modes": {
    "due": 2,
    "last_review": 1789269660
   },
   "kafka-reliability-acks-all-needs-exception-handling": {
-   "due": 6,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789600166,
+   "last_review": 1789599494
   },
   "kafka-reliability-acks1-silent-loss-scenario": {
    "due": 5,
@@ -1088,8 +1226,10 @@
    "last_review": 1789269660
   },
   "kafka-reliability-consumer-retry-patterns": {
-   "due": 6,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789600343,
+   "last_review": 1789599602
   },
   "kafka-reliability-endtoend-and-broker-error-metrics": {
    "due": 5,
@@ -1124,16 +1264,20 @@
    "last_review": 1789269660
   },
   "kafka-reliability-lagging-isr-vs-out-of-isr-tradeoff": {
-   "due": 5,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789600380,
+   "last_review": 1789599716
   },
   "kafka-reliability-manual-error-handling-categories": {
    "due": 1,
    "last_review": 1789269660
   },
   "kafka-reliability-min-insync-replicas": {
-   "due": 6,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789600161,
+   "last_review": 1789599439
   },
   "kafka-reliability-monitor-producer-error-retry": {
    "due": 4,
@@ -1156,8 +1300,11 @@
    "last_review": 1789269660
   },
   "kafka-reliability-three-validation-levels": {
-   "due": 6,
-   "last_review": 1789269660
+   "reps": 3,
+   "ease": 2.5,
+   "type": 1,
+   "due": 776,
+   "last_review": 1789599671
   },
   "kafka-reliability-unclean-leader-election-tradeoff": {
    "due": 4,
@@ -1208,8 +1355,10 @@
    "last_review": 1789269660
   },
   "kafka-security-reauth-mechanism": {
-   "due": 7,
-   "last_review": 1789269660
+   "reps": 1,
+   "type": 1,
+   "due": 1789496230,
+   "last_review": 1789495600
   },
   "kafka-security-sasl-mechanism-choice": {
    "due": 6,

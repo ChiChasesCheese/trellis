@@ -1,6 +1,6 @@
 {
  "domain": "stripe",
- "pulled_at": "2026-09-13T03:36:41+00:00",
+ "pulled_at": "2026-09-19T11:44:36+00:00",
  "unmapped": 0,
  "traces": {
   "a01-prefix-sum-argmin": {
@@ -36,8 +36,10 @@
    "last_review": 1789269867
   },
   "a09-interval-merge-coverage": {
-   "due": 16,
-   "last_review": 1789269867
+   "reps": 1,
+   "type": 1,
+   "due": 1789495350,
+   "last_review": 1789495288
   },
   "a10-min-transfers-settle-debts": {
    "due": 11,

@@ -1,6 +1,6 @@
 {
  "domain": "system-design",
- "pulled_at": "2026-09-13T03:36:42+00:00",
+ "pulled_at": "2026-09-19T11:44:36+00:00",
  "unmapped": 0,
  "traces": {
   "ai-ann-tradeoff": {
@@ -708,10 +708,16 @@
    "last_review": 1786776138
   },
   "distributed-quorum-sizing": {
-   "last_review": 1786776138
+   "reps": 1,
+   "last_review": 1789177470
   },
   "distributed-raft-guarantees": {
-   "last_review": 1786776138
+   "reps": 1,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 772,
+   "last_review": 1789177710
   },
   "distributed-raft-linearizable-reads": {
    "last_review": 1786776138
@@ -825,9 +831,9 @@
    "last_review": 1787470382
   },
   "foundations-dau-to-qps": {
-   "reps": 2,
-   "ease": 2.5,
-   "last_review": 1787363302
+   "reps": 3,
+   "ease": 2.65,
+   "last_review": 1789177543
   },
   "foundations-driving-the-40-minutes": {
    "reps": 1,
@@ -880,12 +886,13 @@
    "last_review": 1787470412
   },
   "foundations-latency-requirement-precision": {
-   "reps": 2,
+   "reps": 3,
+   "lapses": 1,
    "interval": 1,
-   "ease": 2.5,
-   "type": 2,
-   "due": 749,
-   "last_review": 1787458584
+   "ease": 2.3,
+   "type": 3,
+   "due": 1789178384,
+   "last_review": 1789177722
   },
   "foundations-latency-sequential-reads": {
    "reps": 2,
