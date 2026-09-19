@@ -257,3 +257,63 @@ def test_interleaving_never_repeats_a_subject_while_another_has_cards():
     # the tail may repeat once one bucket is empty, but the head must not
     assert all(x != y for x, y in zip(order[:5], order[1:6]))
     assert sorted(order) == sorted(c.node for c in cards)
+
+
+# --- a new card is not a failing card -----------------------------------------
+#
+# Hold reads the interval, and a card shown for the first time yesterday has
+# a one-day interval however well it was answered. Measured on the real
+# collection (2026-09-19): 70 of 71 leaves called weak had no card that had
+# ever lapsed and none reviewed more than three times. That is age, not
+# forgetting, and the loop was answering it with new cards.
+
+def test_cards_that_are_merely_new_do_not_make_a_leaf_weak(skeleton):
+    cards = [card(f"c{i}", "base.one") for i in range(4)]
+    traces = {c.id: trace(c.id, reps=2, interval=1) for c in cards}
+    a = assess(skeleton, cards, traces)
+    standing = next(s for s in a.leaves if s.node.id == "base.one")
+    assert (standing.seen, standing.judged) == (4, 0)
+    assert standing.unproven and not standing.weak
+    assert standing.hold is None and a.hold is None      # no verdict yet, so no number
+
+
+def test_a_card_kept_on_short_intervals_counts_without_ever_formally_lapsing(skeleton):
+    # Six reviews and still at one day: the scheduler keeps pulling it back
+    # (answered Hard, or failed inside the learning steps, which Anki does
+    # not count as lapses). That is a verdict.
+    cards = [card(f"c{i}", "base.one") for i in range(3)]
+    traces = {c.id: trace(c.id, reps=6, interval=1) for c in cards}
+    standing = next(s for s in assess(skeleton, cards, traces).leaves if s.node.id == "base.one")
+    assert standing.judged == 3 and standing.weak
+
+
+def test_young_cards_do_not_drag_down_a_leaf_that_is_holding(skeleton):
+    cards = [card(f"old{i}", "base.one") for i in range(3)] + \
+            [card(f"new{i}", "base.one") for i in range(6)]
+    traces = {f"old{i}": trace(f"old{i}", reps=8, interval=40) for i in range(3)}
+    traces |= {f"new{i}": trace(f"new{i}", reps=1, interval=1) for i in range(6)}
+    standing = next(s for s in assess(skeleton, cards, traces).leaves if s.node.id == "base.one")
+    assert standing.hold == pytest.approx(1.0) and not standing.weak
+
+
+def test_a_young_prerequisite_seals_nothing(skeleton):
+    # Silence seals nothing (ADR 0005), and youth is a kind of silence.
+    cards = [card(f"c{i}", "base.one") for i in range(3)] + [card("a", "mid.a")]
+    traces = {f"c{i}": trace(f"c{i}", reps=1, interval=1) for i in range(3)}
+    a = assess(skeleton, cards, traces)
+    assert not next(s for s in a.leaves if s.node.id == "mid.a").sealed
+
+
+def test_a_leaf_with_no_card_that_slipped_is_not_a_weakness(skeleton):
+    # Three cards just past the bar, sitting under a branch that is doing
+    # badly: shrinkage pulls the leaf a hair under the line. But nothing on
+    # it has failed, so there is nothing for a second route to aim at.
+    cards = [card(f"ok{i}", "base.one") for i in range(3)] + \
+            [card(f"bad{i}", "base.two") for i in range(6)]
+    traces = {f"ok{i}": trace(f"ok{i}", reps=2, interval=5) for i in range(3)}
+    traces |= {f"bad{i}": trace(f"bad{i}", reps=8, interval=1, lapses=4) for i in range(6)}
+    a = assess(skeleton, cards, traces)
+    one = next(s for s in a.leaves if s.node.id == "base.one")
+    assert one.hold < 0.55 and one.slipped == 0          # the false positive, reproduced
+    assert not one.weak
+    assert [s.node.id for s in a.weaknesses()] == ["base.two"]

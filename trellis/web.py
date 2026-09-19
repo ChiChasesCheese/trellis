@@ -32,7 +32,7 @@ from .anki import AnkiConnectError, invoke
 from .brief import brief_body
 from .build import build_package
 from .grow import Target, grow_prompt, import_grown, plan as grow_plan, shortlist
-from .hold import assess
+from .hold import LeafStanding, assess, grown_query
 from .obsidian import open_uri, vault_name
 from .project import domains, load_loop
 from .runner import ClaudeRunner, RunnerError, cards_from
@@ -81,6 +81,18 @@ def _public(job: "Job") -> dict:
     row = asdict(job)
     row.pop("prompt", None)
     return row
+
+
+class StillSettling(ValueError):
+    """The leaf was grown on already and its new cards are not yet judged."""
+
+
+def _graft(domain: str, s: LeafStanding) -> dict | None:
+    g = s.graft
+    if g is None:
+        return None
+    return {"state": g.state, "grown": g.grown, "unseen": g.unseen, "young": g.young,
+            "taken": g.taken, "slipped": g.slipped, "query": grown_query(domain, s.node.id)}
 
 
 class Workbench:
@@ -134,6 +146,7 @@ class Workbench:
                 "adopted": sum(1 for c in p.cards if c.adopted),
                 "hold": a.hold, "weak": len(a.weaknesses()),
                 "uncovered": len(a.uncovered()), "sealed": len(a.sealed()),
+                "settling": len(a.settling()),
                 "age_days": ages[name], "leaves": len(p.skeleton.leaves()),
                 "readings": len(p.readings), "drills": len(p.drills),
             })
@@ -165,6 +178,7 @@ class Workbench:
                     "cards": s.cards, "seen": s.seen, "hold": s.hold, "bearing": s.bearing,
                     "weak": s.weak, "uncovered": s.uncovered, "unproven": s.unproven,
                     "sealed": s.sealed, "sealed_by": s.sealed_by,
+                    "settling": s.settling, "graft": _graft(selected, s),
                     "adopted": sum(1 for c in cards_by_node.get(node.id, []) if c.adopted),
                     "grown": sum(1 for c in cards_by_node.get(node.id, []) if "grown" in c.tags),
                     "readings": [r.title for r in readings.get(node.id, [])][:3],
@@ -234,6 +248,12 @@ class Workbench:
     def _target(self, key: str) -> tuple[Target, dict]:
         domain = key.split(":", 1)[0]
         projects, assessments, traces, _ = load_loop(self.root, [domain])
+        for s in assessments[domain].settling():
+            if f"{domain}:{s.node.id}" == key:
+                g = s.graft
+                raise StillSettling(
+                    f"这个叶子已经长出 {g.grown} 张新卡，其中 {g.unseen + g.young} 张还没复习到能下结论；"
+                    f"先复习它们：{grown_query(domain, s.node.id)}")
         for t in grow_plan(self.root, projects, assessments, traces):
             if t.key == key:
                 return t, projects
@@ -393,6 +413,8 @@ def _handler(app: Workbench):
                     self._json(200, app.focus(list(body.get("keys") or []), str(body.get("action", "today"))))
                 else:
                     self._json(404, {"error": "not found"})
+            except StillSettling as exc:
+                self._json(409, {"error": str(exc)})
             except KeyError as exc:
                 self._json(404, {"error": f"no such target or job: {exc}"})
             except AnkiConnectError as exc:

@@ -1,6 +1,6 @@
 {
  "domain": "leetcode",
- "pulled_at": "2026-09-13T06:26:20+00:00",
+ "pulled_at": "2026-09-19T11:44:35+00:00",
  "unmapped": 0,
  "traces": {
   "leetcode-c-anki-fsrs-scheduler-application": {
@@ -44,12 +44,12 @@
    "last_review": 1787785937
   },
   "leetcode-c-cpython-compact-dict-application": {
-   "reps": 2,
-   "interval": 1,
+   "reps": 3,
+   "interval": 26,
    "ease": 2.5,
    "type": 2,
-   "due": 749,
-   "last_review": 1787444201
+   "due": 794,
+   "last_review": 1789179193
   },
   "leetcode-c-cpython-gc-cycles-application": {
    "reps": 2,
@@ -2378,8 +2378,12 @@
    "last_review": 1789002118
   },
   "leetcode-c-endlesscheng-mor1u6-splay-tree-template": {
-   "due": 1202762,
-   "last_review": 1789002118
+   "reps": 1,
+   "interval": 3,
+   "ease": 2.5,
+   "type": 2,
+   "due": 775,
+   "last_review": 1789495992
   },
   "leetcode-c-endlesscheng-mor1u6-sqrt-decomposition-and-mo-invariant": {
    "due": 1202752,
@@ -3744,12 +3748,12 @@
    "last_review": 1787614722
   },
   "leetcode-c-git-commit-graph-application": {
-   "reps": 3,
-   "interval": 1,
+   "reps": 4,
+   "interval": 27,
    "ease": 2.5,
    "type": 2,
-   "due": 749,
-   "last_review": 1787443363
+   "due": 795,
+   "last_review": 1789178794
   },
   "leetcode-c-git-tree-merkle-dag-application": {
    "reps": 2,
@@ -3828,10 +3832,12 @@
    "last_review": 1788074629
   },
   "leetcode-c-kotlin-persistent-collections-application": {
-   "reps": 1,
-   "type": 1,
-   "due": 1788075268,
-   "last_review": 1788074626
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 769,
+   "last_review": 1789178690
   },
   "leetcode-c-kubernetes-rollout-difference-timeline-application": {
    "reps": 2,
@@ -3842,24 +3848,24 @@
    "last_review": 1787658425
   },
   "leetcode-c-kubernetes-scheduler-queues-application": {
-   "reps": 3,
-   "interval": 1,
+   "reps": 4,
+   "interval": 23,
    "ease": 2.5,
    "type": 2,
-   "due": 749,
-   "last_review": 1787443993
+   "due": 791,
+   "last_review": 1789179351
   },
   "leetcode-c-linux-cpumask-application": {
    "due": 1201630,
    "last_review": 1787785937
   },
   "leetcode-c-linux-epoll-interest-ready-application": {
-   "reps": 1,
-   "interval": 3,
+   "reps": 2,
+   "interval": 35,
    "ease": 2.5,
    "type": 2,
-   "due": 751,
-   "last_review": 1787444244
+   "due": 807,
+   "last_review": 1789495892
   },
   "leetcode-c-linux-maple-tree-vma-application": {
    "due": 1201631,
@@ -4154,8 +4160,10 @@
    "last_review": 1787789795
   },
   "leetcode-q-brace-expansion-ii-pattern": {
-   "due": 1202763,
-   "last_review": 1789002118
+   "reps": 1,
+   "type": 1,
+   "due": 1789496559,
+   "last_review": 1789495936
   },
   "leetcode-q-buddy-strings-pattern": {
    "reps": 1,
@@ -4262,12 +4270,20 @@
    "last_review": 1787902887
   },
   "leetcode-q-count-commas-in-range-ii-pattern": {
-   "due": 1202765,
-   "last_review": 1789002118
+   "reps": 2,
+   "interval": 4,
+   "ease": 2.5,
+   "type": 2,
+   "due": 776,
+   "last_review": 1789495809
   },
   "leetcode-q-count-commas-in-range-pattern": {
-   "due": 1202764,
-   "last_review": 1789002118
+   "reps": 1,
+   "interval": 5,
+   "ease": 2.5,
+   "type": 2,
+   "due": 773,
+   "last_review": 1789179228
   },
   "leetcode-q-count-integers-appearing-in-a-single-block-pattern": {
    "due": 1202630,
@@ -4278,12 +4294,12 @@
    "last_review": 1787354597
   },
   "leetcode-q-detonate-the-maximum-bombs-pattern": {
-   "reps": 2,
-   "interval": 3,
+   "reps": 3,
+   "interval": 37,
    "ease": 2.5,
    "type": 2,
-   "due": 751,
-   "last_review": 1787472004
+   "due": 809,
+   "last_review": 1789495973
   },
   "leetcode-q-distribute-elements-into-two-arrays-i-pattern": {
    "reps": 2,
@@ -4581,6 +4597,22 @@
    "due": 757,
    "last_review": 1787792520
   },
+  "leetcode-q-removing-min-max-branch-dominance-proof": {
+   "due": 3,
+   "last_review": 1789280991
+  },
+  "leetcode-q-removing-min-max-branch-symmetry-invariance": {
+   "due": 4,
+   "last_review": 1789280991
+  },
+  "leetcode-q-removing-min-max-greedy-vs-dp": {
+   "due": 1,
+   "last_review": 1789280991
+  },
+  "leetcode-q-removing-min-max-redundant-vs-missing-branch": {
+   "due": 2,
+   "last_review": 1789280991
+  },
   "leetcode-q-removing-minimum-and-maximum-from-array-mistake": {
    "due": 1202629,
    "last_review": 1788391213
@@ -4610,10 +4642,12 @@
    "last_review": 1787789827
   },
   "leetcode-q-shortest-way-to-form-string-pattern": {
-   "reps": 1,
-   "type": 1,
-   "due": 1787903966,
-   "last_review": 1787903309
+   "reps": 2,
+   "interval": 1,
+   "ease": 2.5,
+   "type": 2,
+   "due": 769,
+   "last_review": 1789178367
   },
   "leetcode-q-single-number-iii-pattern": {
    "reps": 2,

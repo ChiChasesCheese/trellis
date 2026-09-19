@@ -165,3 +165,46 @@ def test_grow_can_be_held_to_one_domain(root, capsys):
 def test_a_leaf_that_is_neither_weak_nor_uncovered_is_refused(root):
     with pytest.raises(SystemExit):
         run(root, "grow", "--leaf", "demo:base.two")
+
+
+def _grow_onto_one(root):
+    answer = [{"id": f"one-angle-{i}", "type": "qa", "q": f"One from side {i}, as a scenario?",
+               "a": f"The mechanism, from side {i}."} for i in range(3)]
+    (root / "one.json").write_text(json.dumps(answer), encoding="utf-8")
+    assert run(root, "grow", "--import", str(root / "one.json"), "--leaf", "demo:base.one") == 0
+
+
+def test_a_weakness_already_grown_on_is_left_alone_until_the_new_cards_are_reviewed(root, capsys):
+    _grow_onto_one(root)
+    capsys.readouterr()
+    run(root, "grow")
+    out = capsys.readouterr().out
+    assert "demo:base.one" not in out
+    assert "1 weak leaf is waiting on grown cards" in out
+    # asking for it by name says why, and what to do instead of writing more
+    with pytest.raises(SystemExit):
+        run(root, "grow", "--leaf", "demo:base.one")
+    err = capsys.readouterr().err
+    assert "3 grown card(s)" in err and "tag:demo::base::one tag:grown" in err
+
+
+def test_a_card_never_reviewed_is_not_shown_as_one_that_slipped(root, capsys):
+    # A fourth card on the weak leaf, pushed and pulled but never shown.
+    _card(root, "one-unseen", "base.one", "Question never shown?", "Answer.")
+    file = traces_path(root, "demo")
+    body = json.loads(file.read_text(encoding="utf-8"))
+    body["traces"]["one-unseen"] = {}
+    file.write_text(json.dumps(body), encoding="utf-8")
+    run(root, "grow", "--leaf", "demo:base.one")
+    assert "one-unseen" not in capsys.readouterr().out.split("## What is not holding")[1]
+
+
+def test_a_card_that_is_merely_new_is_not_shown_as_one_that_slipped(root, capsys):
+    _card(root, "one-young", "base.one", "Question shown once?", "Answer.")
+    file = traces_path(root, "demo")
+    body = json.loads(file.read_text(encoding="utf-8"))
+    body["traces"]["one-young"] = {"reps": 1, "interval": 1}
+    file.write_text(json.dumps(body), encoding="utf-8")
+    run(root, "grow", "--leaf", "demo:base.one")
+    evidence = capsys.readouterr().out.split("## What is not holding")[1]
+    assert "one-0" in evidence and "one-young" not in evidence

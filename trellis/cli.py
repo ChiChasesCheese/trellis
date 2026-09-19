@@ -326,7 +326,7 @@ def cmd_anki_push(args, project: Project) -> int:
         )
         print(f"  built {result['notes']} notes in {result['decks']} decks")
     try:
-        result = push(project.skeleton, Path(apkg), url=args.anki_url)
+        result = push(project.skeleton, Path(apkg), call=_anki_client(args.anki_url))
     except AnkiConnectError as exc:
         _fail(str(exc))
     for step in result["steps"]:
@@ -340,7 +340,7 @@ def cmd_anki_push(args, project: Project) -> int:
 def cmd_anki_align(args, project: Project) -> int:
     from .anki import AnkiConnectError, align
     try:
-        result = align(project.skeleton, url=args.anki_url)
+        result = align(project.skeleton, call=_anki_client(args.anki_url))
     except AnkiConnectError as exc:
         _fail(str(exc))
     print(f"{project.skeleton.domain}: moved {result['moved']} card(s), "
@@ -567,7 +567,7 @@ def cmd_pull(args, project: Project) -> int:
     from .anki import AnkiConnectError, pull
     from .traces import save_traces, traces_path
     try:
-        file = pull(project.skeleton, url=args.anki_url)
+        file = pull(project.skeleton, call=_anki_client(args.anki_url))
     except AnkiConnectError as exc:
         _fail(str(exc))
     path = save_traces(traces_path(args.root, project.skeleton.domain), file)
@@ -648,6 +648,13 @@ def _anki_call(url: str):
     return partial(invoke, url=url)
 
 
+def _anki_client(url: str):
+    """The same client for `pull`, `push` and `align`, which pass the url
+    along positionally; it is already bound here, so theirs is dropped."""
+    call = _anki_call(url)
+    return lambda action, _url=None, **params: call(action, **params)
+
+
 def cmd_adopt(args) -> int:
     """Turn a correctly-shaped folder of content — or a deck that lives
     only in Anki — into a real domain."""
@@ -706,6 +713,7 @@ def cmd_grow(args) -> int:
     another angle, an uncovered leaf gets its first, each grounded in what
     the vault already holds for it."""
     from .grow import grow_prompt, import_grown, plan, shortlist, status_lines
+    from .hold import grown_query
     root = args.root
     names = domains(root)
     if not names:
@@ -725,6 +733,15 @@ def cmd_grow(args) -> int:
         if ":" not in args.leaf:
             _fail("name the leaf as <domain>:<leaf id>, e.g. kafka:producer.acks")
         target = by_key.get(args.leaf)
+        waiting = next((s for d, a in assessments.items() for s in a.settling()
+                        if f"{d}:{s.node.id}" == args.leaf), None)
+        if waiting is not None:
+            domain = args.leaf.split(":", 1)[0]
+            g = waiting.graft
+            _fail(f"{args.leaf} already has {g.grown} grown card(s) and "
+                  f"{g.unseen + g.young} of them are not yet reviewed enough to judge — "
+                  "review them before writing more. In Anki: "
+                  + grown_query(domain, waiting.node.id))
         if target is None:
             _fail(f"{args.leaf} is not a leaf the loop wants written for — it is "
                   "neither weak nor uncovered (use `scaffold` or `digest` to add "
@@ -767,6 +784,10 @@ def cmd_grow(args) -> int:
 
     listed = shortlist(targets, cap=8 if args.domain else 3)
     weak = sum(1 for t in targets if t.kind == "weakness")
+    settling = sum(len(a.settling()) for a in assessments.values())
+    if settling:
+        print(f"{settling} weak {'leaf is' if settling == 1 else 'leaves are'} waiting on "
+              "grown cards to be reviewed, and not listed — see the Brief")
     print(f"{weak} weak leaf/leaves and {len(targets) - weak} uncovered across "
           f"{len(names)} domain(s); showing {len(listed)}:")
     for line in status_lines(listed):

@@ -442,6 +442,13 @@ cannot shout as loud as forty measured ones — and a leaf nobody has reviewed i
 reported as unproven rather than weak. "No data", "not enough data" and "really
 weak" are three different situations wanting three different actions.
 
+A new card is "not enough data" too. Hold reads the interval, and a card first
+shown yesterday has a one-day interval however well it was answered — so each
+card gets a **verdict** (unseen, young, taken, slipped) and only the last two
+count. Without this, 70 of the 71 leaves the loop called weak on the real
+collection were simply in their first week
+([ADR 0009](docs/adr/0009-the-loop-waits-for-a-verdict-before-it-acts-again.md)).
+
 There is exactly **one Brief and it spans every domain**, with a cap on how many
 rows any one domain may take. A per-domain report would be a better dashboard
 and a worse instrument: it would let you sink into the subject you are already
@@ -482,9 +489,19 @@ vault already holds for it: the sections of a corpus that reaches the leaf
 (then growing is digesting, and the cards carry the corpus as `source:`)
 or the clipped readings on it. Either way the answer lands through the same
 importer as every other card — forced onto the leaf, refused if it leans on
-its source — and is tagged `grown`, so the next Brief can say whether the
-repair took. `grow` only writes where the loop pointed; anywhere else is
-`scaffold` or `digest`.
+its source — and is tagged `grown`. `grow` only writes where the loop pointed;
+anywhere else is `scaffold` or `digest`.
+
+The tag is how the loop remembers having acted. The grown cards on a leaf are
+its **Graft**: *settling* until enough of them have been reviewed to judge, then
+*took* or *slipped*. While a Weakness's Graft is settling the evidence is the
+same evidence, so `grow` leaves it alone, and the Brief opens with **先复习**
+and the Anki search for exactly those cards instead of asking for more. Once
+they are reviewed the Brief reports the result under **新卡**; a Graft that
+slipped puts the leaf back, and the next prompt shows the grown cards that
+failed beside the originals so the third route differs from both. The whole
+circle — push, review, pull, brief, grow, push, review, pull — runs in
+`tests/test_loop_e2e.py` against a fake Anki that imports the real `.apkg`.
 
 ### The Workbench
 

@@ -369,12 +369,17 @@ function openLeaf(id, job) {
   const slipped = l.slipped.length ? `<h4>最没握住的卡</h4><ul class="slipped">${l.slipped.map(s => `<li>${esc(s.q)}<br><small><code>${esc(s.id)}</code> · 复习 ${s.reps} 次 · 忘 ${s.lapses} 次 · 间隔 ${s.interval} 天</small></li>`).join('')}</ul>` : '';
   const onward = (l.readings.length || l.drills.length)
     ? `<dl class="onward">${l.readings.length ? `<dt>可读</dt><dd>${l.readings.map(esc).join('<br>')}</dd>` : ''}${l.drills.length ? `<dt>可练</dt><dd>${l.drills.map(esc).join('<br>')}</dd>` : ''}</dl>` : '';
-  const can = l.weak || l.uncovered;
+  const g = l.graft;
+  const graft = !g ? '' : g.state === 'settling'
+    ? `<div>已长出 <b>${g.grown}</b> 张新卡，还在长：${g.unseen} 张没见过、${g.young} 张还嫩。先复习它们：<code>${esc(g.query)}</code></div>`
+    : g.state === 'took' ? `<div>已长出 ${g.grown} 张新卡，<b>长住了</b>（${g.taken} 张握住）。</div>`
+    : `<div>已长出 ${g.grown} 张新卡，<b>没长住</b>（${g.slipped} 张又滑了）——先练或读，再换一条路。</div>`;
+  const can = (l.weak && !l.settling) || l.uncovered;
   $('#drawer-body').innerHTML = `
     <div class="crumb">${esc(l.branch_title)} › <code>${esc(l.id)}</code></div>
     <h3>${esc(l.title)}</h3>
     <div class="muted">${esc(l.summary||'')}</div>
-    <div class="standing">${stand}${sealed}${l.adopted ? `<div>${l.adopted} 张卡由 Anki 里的其他工具持有，Trellis 只读它们的复习记录。</div>` : ''}${l.grown ? `<div>已长出 ${l.grown} 张。</div>` : ''}</div>
+    <div class="standing">${stand}${sealed}${l.adopted ? `<div>${l.adopted} 张卡由 Anki 里的其他工具持有，Trellis 只读它们的复习记录。</div>` : ''}${graft}</div>
     ${onward}
     <div class="actions">
       <a href="${esc(l.obsidian)}"><button>在 Obsidian 打开</button></a>
@@ -385,7 +390,7 @@ function openLeaf(id, job) {
     ${slipped}
     <div class="grow-form">
       <h4>生长</h4>
-      ${can ? '' : `<div class="muted">这个叶子既不弱也不空，格架不会在这里长；要加卡请用命令行的 scaffold。</div>`}
+      ${can ? '' : l.settling ? `<div class="muted">新卡还没复习，证据还是原来的证据；等它们有了结论再长。</div>` : `<div class="muted">这个叶子既不弱也不空，格架不会在这里长；要加卡请用命令行的 scaffold。</div>`}
       <textarea id="guidance" placeholder="指引（可选）：想强调什么、从哪个角度、带上什么背景。例如：多给会写错的代码片段；和上一题对比着讲。"></textarea>
       <div class="line">
         <label>张数 <input id="count" type="number" min="1" max="10" value="4"></label>
