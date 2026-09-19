@@ -2,6 +2,7 @@
 id: analytics-idempotent-reruns
 node: analytics.batch
 type: qa
+step: 2
 ---
 ## Q
 Why are batch jobs designed so the whole run can be thrown away and re-executed, and what two properties of the job make that safe?

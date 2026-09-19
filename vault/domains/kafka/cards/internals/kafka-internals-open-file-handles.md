@@ -2,6 +2,7 @@
 id: kafka-internals-open-file-handles
 node: internals.storage-segments
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

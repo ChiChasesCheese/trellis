@@ -2,6 +2,7 @@
 id: kafka-monitoring-find-culprit-broker-multi-urp
 node: monitoring.broker-metrics
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

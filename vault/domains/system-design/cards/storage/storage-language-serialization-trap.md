@@ -2,6 +2,7 @@
 id: storage-language-serialization-trap
 node: storage.encoding
 type: qa
+step: 3
 ---
 ## Q
 Java's `Serializable`, Python's `pickle`, Ruby's `Marshal` are one line of code. Why is language-native serialization considered unacceptable for anything persisted or sent between services? Give the four standing objections.

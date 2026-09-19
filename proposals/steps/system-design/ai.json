@@ -1,0 +1,7 @@
+{
+  "ai.foundations": ["ai-tokens-as-units", "ai-context-window-budget", "ai-generation-loop", "ai-temperature-sampling", "ai-embeddings-as-coordinates"],
+  "ai.vector-search": ["ai-ann-tradeoff", "ai-hnsw-vs-ivf", "ai-filtered-vector-search", "ai-index-maintenance", "ai-hybrid-retrieval", "ai-corpus-freshness", "ai-retrieval-eval"],
+  "ai.rag": ["ai-rag-two-pipelines", "ai-chunking-failure-modes", "ai-retrieve-then-rerank", "ai-grounding-citations", "ai-rag-vs-finetune-vs-longcontext"],
+  "ai.inference": ["ai-prefill-vs-decode", "ai-kv-cache", "ai-continuous-batching", "ai-speculative-decoding", "ai-quantization-tradeoffs", "ai-inference-cost-levers", "ai-gpu-utilization-economics"],
+  "ai.evals": ["ai-eval-set-vs-ab", "ai-llm-judge-biases", "ai-prompt-regression-testing", "ai-guardrails-validation", "ai-pipeline-tracing"]
+}

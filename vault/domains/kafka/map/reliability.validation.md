@@ -8,12 +8,12 @@
 - [[kafka-7-6-validate-reliability|验证系统可靠性]]
 
 ## Cards (6)
-- [[kafka-reliability-app-fault-injection-testing]]
-- [[kafka-reliability-consumer-lag-metric]]
-- [[kafka-reliability-endtoend-and-broker-error-metrics]]
-- [[kafka-reliability-monitor-producer-error-retry]]
-- [[kafka-reliability-three-validation-levels]]
-- [[kafka-reliability-verifiable-producer-consumer]]
+1. [[kafka-reliability-three-validation-levels]]
+2. [[kafka-reliability-verifiable-producer-consumer]]
+3. [[kafka-reliability-app-fault-injection-testing]]
+4. [[kafka-reliability-monitor-producer-error-retry]]
+5. [[kafka-reliability-consumer-lag-metric]]
+6. [[kafka-reliability-endtoend-and-broker-error-metrics]]
 %% trellis:end %%
 
 ## Notes

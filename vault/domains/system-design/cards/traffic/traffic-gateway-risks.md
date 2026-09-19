@@ -2,6 +2,7 @@
 id: traffic-gateway-risks
 node: traffic.gateways
 type: qa
+step: 4
 ---
 ## Q
 What risks does putting an API gateway in front of everything create, and how is each mitigated?

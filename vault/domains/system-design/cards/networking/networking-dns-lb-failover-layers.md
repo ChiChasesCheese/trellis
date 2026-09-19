@@ -2,6 +2,7 @@
 id: networking-dns-lb-failover-layers
 node: networking.dns
 type: qa
+step: 5
 ---
 ## Q
 Health-checked DNS (e.g. Route 53) can drop a dead region from its answers. Why do you still need LB-level failover underneath — how is the labor divided?

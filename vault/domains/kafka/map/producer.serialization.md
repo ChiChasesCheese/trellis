@@ -8,11 +8,11 @@
 - [[kafka-3-5-serializers|序列化器：自定义序列化与Avro]]
 
 ## Cards (5)
-- [[kafka-producer-avro-generic-vs-specific-record]]
-- [[kafka-producer-avro-schema-evolution-example]]
-- [[kafka-producer-avro-writer-reader-schema-compatibility]]
-- [[kafka-producer-custom-serializer-fragility]]
-- [[kafka-producer-schema-registry-purpose]]
+1. [[kafka-producer-custom-serializer-fragility]]
+2. [[kafka-producer-schema-registry-purpose]]
+3. [[kafka-producer-avro-generic-vs-specific-record]]
+4. [[kafka-producer-avro-writer-reader-schema-compatibility]]
+5. [[kafka-producer-avro-schema-evolution-example]]
 %% trellis:end %%
 
 ## Notes

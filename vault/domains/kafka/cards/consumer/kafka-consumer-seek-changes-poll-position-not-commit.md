@@ -2,6 +2,7 @@
 id: kafka-consumer-seek-changes-poll-position-not-commit
 node: consumer.seek-and-replay
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

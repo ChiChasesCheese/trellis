@@ -2,6 +2,7 @@
 id: security-secrets-rotation-live
 node: security.authz
 type: qa
+step: 6
 ---
 ## Q
 How do you rotate a database password or a JWT signing key without restarting services or dropping a single request?

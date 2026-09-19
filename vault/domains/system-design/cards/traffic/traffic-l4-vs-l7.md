@@ -2,6 +2,7 @@
 id: traffic-l4-vs-l7
 node: traffic.load-balancing
 type: qa
+step: 1
 ---
 ## Q
 L4 vs L7 load balancer — what does each see, and when is L4 the right choice despite L7's flexibility?

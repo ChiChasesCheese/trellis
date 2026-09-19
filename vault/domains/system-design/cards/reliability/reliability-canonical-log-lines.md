@@ -2,6 +2,7 @@
 id: reliability-canonical-log-lines
 node: reliability.observability
 type: qa
+step: 2
 ---
 ## Q
 What is a canonical log line (Stripe's pattern), and why does one wide structured line per request beat many scattered log lines when you are debugging production?

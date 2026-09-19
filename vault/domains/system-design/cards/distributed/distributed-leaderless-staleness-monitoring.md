@@ -2,6 +2,7 @@
 id: distributed-leaderless-staleness-monitoring
 node: distributed.replication.leaderless
 type: qa
+step: 7
 ---
 ## Q
 For a leader-based database you graph replication lag on a dashboard. Why can't you build the same "how stale are reads" graph for a leaderless store, and what do you do instead?

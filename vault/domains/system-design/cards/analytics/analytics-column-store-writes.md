@@ -2,6 +2,7 @@
 id: analytics-column-store-writes
 node: analytics.olap
 type: qa
+step: 3
 ---
 ## Q
 Compressed sorted columns can't be updated in place. How do column stores accept writes anyway?

@@ -1,0 +1,27 @@
+{
+  "security.protocols-auth-encryption": [
+    "kafka-security-protocol-choice",
+    "kafka-security-ssl-vs-sasl-choice",
+    "kafka-security-sasl-mechanism-choice",
+    "kafka-security-sasl-plain-must-use-ssl",
+    "kafka-security-reauth-mechanism",
+    "kafka-security-e2e-encryption-why",
+    "kafka-security-e2e-key-rotation-compaction"
+  ],
+  "security.authorization": [
+    "kafka-security-acl-fields",
+    "kafka-security-acl-deny-priority",
+    "kafka-security-allow-everyone-tradeoff",
+    "kafka-security-super-users-vs-acl",
+    "kafka-security-custom-authorizer-context",
+    "kafka-security-service-credentials-long-running"
+  ],
+  "security.audit-hardening": [
+    "kafka-security-audit-log-level-split",
+    "kafka-security-e2e-audit-header-integrity",
+    "kafka-security-config-provider-no-plaintext-password",
+    "kafka-security-zk-digest-md5-not-for-prod",
+    "kafka-security-zk-node-acl-defaults",
+    "kafka-security-zk-multi-principal-or-logic"
+  ]
+}

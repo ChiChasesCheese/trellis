@@ -2,6 +2,7 @@
 id: async-event-sourcing-vs-cdc
 node: async.streaming.cdc
 type: qa
+step: 5
 ---
 ## Q
 Event sourcing and CDC both give you "a stream of changes." What is the fundamental distinction, and when do you pick each?

@@ -2,6 +2,7 @@
 id: reliability-bulkhead-vs-shedding
 node: reliability.resilience.containment
 type: qa
+step: 2
 ---
 ## Q
 Bulkheads vs load shedding — which failure does each contain, and when do you need both?

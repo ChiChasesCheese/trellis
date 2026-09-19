@@ -10,12 +10,12 @@
 - [[kafka-2-7-production-readiness|生产环境部署前的准备：GC选择与数据中心布局]]
 
 ## Cards (6)
-- [[kafka-practice-g1gc-small-heap-tuning]]
-- [[kafka-practice-network-10gbe-fanout]]
-- [[kafka-practice-rack-awareness-new-partitions-only]]
-- [[kafka-practice-shared-zookeeper-multi-cluster-ok-other-apps-not]]
-- [[kafka-practice-ssd-vs-hdd-choice]]
-- [[kafka-practice-vm-swappiness-one-not-zero]]
+1. [[kafka-practice-ssd-vs-hdd-choice]]
+2. [[kafka-practice-network-10gbe-fanout]]
+3. [[kafka-practice-rack-awareness-new-partitions-only]]
+4. [[kafka-practice-shared-zookeeper-multi-cluster-ok-other-apps-not]]
+5. [[kafka-practice-vm-swappiness-one-not-zero]]
+6. [[kafka-practice-g1gc-small-heap-tuning]]
 %% trellis:end %%
 
 ## Notes

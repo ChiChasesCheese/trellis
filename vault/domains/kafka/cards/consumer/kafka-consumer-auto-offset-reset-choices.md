@@ -2,6 +2,7 @@
 id: kafka-consumer-auto-offset-reset-choices
 node: consumer.poll-config
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: analytics-batch-vs-stream
 node: analytics.batch
 type: qa
+step: 1
 ---
 ## Q
 What is the real boundary between batch and stream processing, and how does each recover from failure?

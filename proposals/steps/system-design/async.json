@@ -1,0 +1,8 @@
+{
+  "async.queues": ["async-queue-vs-pubsub", "async-broker-selection", "async-competing-consumers-ordering", "async-queue-backpressure", "async-retry-delay-implementation", "async-when-async-is-wrong"],
+  "async.log": ["async-log-vs-queue", "async-log-throughput-design", "async-log-ordering-partitions", "async-consumer-groups-offsets", "async-consumer-lag-monitoring", "async-rebalancing-protocols", "async-log-compaction", "async-log-backfill-reprocessing"],
+  "async.delivery.guarantees": ["async-delivery-semantics-cloze", "async-exactly-once-myth", "async-redelivery-causes", "async-loss-vs-duplicate-asymmetry", "async-dlq-poison-pill", "async-stale-event-ordering"],
+  "async.delivery.exactly-once": ["async-idempotent-producer", "async-producer-retry-reordering", "async-kafka-transactions-eos", "async-eos-boundary-choice", "async-eos-sink-determinism"],
+  "async.streaming.cdc": ["async-cdc-mechanism", "async-cdc-initial-snapshot", "async-compacted-topic-bootstrap", "async-command-vs-event", "async-event-sourcing-vs-cdc"],
+  "async.streaming.processing": ["async-event-time-watermarks", "async-window-types", "async-late-event-policy", "async-stream-joins", "async-streaming-state-recovery", "async-materialized-view-refresh"]
+}

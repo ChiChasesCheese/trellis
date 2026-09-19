@@ -2,6 +2,7 @@
 id: storage-lsm-read-path
 node: storage.internals.lsm
 type: qa
+step: 3
 ---
 ## Q
 Walk the read path for a point lookup in an LSM-tree, and name the structure that keeps misses cheap.

@@ -12,12 +12,12 @@ Pipelines, canary and blue-green automation, feature flags, and config/schema ch
 - [[stripe-online-migrations|Online migrations at scale (Stripe)]]
 
 ## Cards (6)
-- [[infra-canary-automation]]
-- [[infra-flags-deploy-release]]
-- [[infra-pipeline-quality-gates]]
-- [[infra-rollback-safety]]
-- [[infra-schema-migration-deploys]]
-- [[infra-two-phase-format-rollout]]
+1. [[infra-pipeline-quality-gates]]
+2. [[infra-canary-automation]]
+3. [[infra-flags-deploy-release]]
+4. [[infra-rollback-safety]]
+5. [[infra-schema-migration-deploys]]
+6. [[infra-two-phase-format-rollout]]
 %% trellis:end %%
 
 ## Notes

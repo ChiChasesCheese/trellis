@@ -2,6 +2,7 @@
 id: distributed-election-disruption
 node: distributed.consensus
 type: qa
+step: 7
 ---
 ## Q
 A Raft node is cut off by a flaky network link. While isolated, it repeatedly times out and increments its term; when the link heals, its inflated term forces the healthy leader to step down even though nothing was wrong. Name the two standard defenses.

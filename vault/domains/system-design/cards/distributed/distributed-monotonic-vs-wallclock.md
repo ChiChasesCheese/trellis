@@ -2,6 +2,7 @@
 id: distributed-monotonic-vs-wallclock
 node: distributed.time.clocks
 type: qa
+step: 1
 ---
 ## Q
 Time-of-day clock vs monotonic clock — which do you use for timeouts and elapsed-time measurement, and what goes wrong if you pick the other?

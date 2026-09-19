@@ -2,6 +2,7 @@
 id: kafka-consumer-standalone-new-partitions-blind-spot
 node: consumer.standalone
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

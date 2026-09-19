@@ -49,8 +49,8 @@ def study_path(skeleton: Skeleton, cards: list[Card], weeks: int | None = None) 
             current_pass = leaf.id in core
             lines += ["## Core" if current_pass else "## The rest", ""]
             if current_pass:
-                lines += [f"*{len(core)} of {len(leaves)} topics: what the rest stands on, "
-                          "or was declared core. Anki deals these first.*", ""]
+                lines += [f"*{len(core)} of {len(leaves)} topics: the declared Core and what it "
+                          "requires. Anki deals these first.*", ""]
             current_branch = None
         if weeks and week_of[leaf.id] != current_week:
             current_week = week_of[leaf.id]

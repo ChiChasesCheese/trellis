@@ -2,6 +2,7 @@
 id: kafka-streams-standby-replica-and-compaction-speedup
 node: streams.streams-architecture
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

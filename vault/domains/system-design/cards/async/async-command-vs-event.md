@@ -2,6 +2,7 @@
 id: async-command-vs-event
 node: async.streaming.cdc
 type: qa
+step: 4
 ---
 ## Q
 In an event-sourced system, why must "ReserveSeat" (a command) and "SeatReserved" (an event) be different things, and at which exact moment does one become the other?

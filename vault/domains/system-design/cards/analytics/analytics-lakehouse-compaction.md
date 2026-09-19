@@ -2,6 +2,7 @@
 id: analytics-lakehouse-compaction
 node: analytics.warehouse
 type: qa
+step: 4
 ---
 ## Q
 A streaming pipeline commits to an Iceberg/Delta table every minute. What degrades over time, and what's the maintenance answer?

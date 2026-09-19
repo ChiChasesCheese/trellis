@@ -2,6 +2,7 @@
 id: kafka-consumer-commit-offset-duplicate-vs-loss
 node: consumer.offset-commit
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

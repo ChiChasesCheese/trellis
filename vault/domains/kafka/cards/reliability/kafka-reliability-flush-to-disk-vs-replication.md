@@ -2,6 +2,7 @@
 id: kafka-reliability-flush-to-disk-vs-replication
 node: reliability.broker-config
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

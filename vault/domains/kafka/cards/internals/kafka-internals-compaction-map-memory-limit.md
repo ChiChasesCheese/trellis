@@ -2,6 +2,7 @@
 id: kafka-internals-compaction-map-memory-limit
 node: internals.compaction
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

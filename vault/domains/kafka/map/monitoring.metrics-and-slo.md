@@ -9,12 +9,12 @@
 - [[kafka-13-2-slo|服务级别目标：把指标变成SLO]]
 
 ## Cards (6)
-- [[kafka-monitoring-alert-vs-debug-metrics-retention]]
-- [[kafka-monitoring-automation-vs-human-metrics]]
-- [[kafka-monitoring-health-check-stale-metrics-tradeoff]]
-- [[kafka-monitoring-percentile-bad-sli]]
-- [[kafka-monitoring-sli-slo-sla-ola-terms]]
-- [[kafka-monitoring-slo-burn-rate-alerting]]
+1. [[kafka-monitoring-automation-vs-human-metrics]]
+2. [[kafka-monitoring-alert-vs-debug-metrics-retention]]
+3. [[kafka-monitoring-health-check-stale-metrics-tradeoff]]
+4. [[kafka-monitoring-sli-slo-sla-ola-terms]]
+5. [[kafka-monitoring-percentile-bad-sli]]
+6. [[kafka-monitoring-slo-burn-rate-alerting]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: kafka-connect-pipeline-timeliness-buffer
 node: connect.pipeline-design
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

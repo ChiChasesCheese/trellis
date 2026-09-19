@@ -2,6 +2,7 @@
 id: async-stream-joins
 node: async.streaming.processing
 type: qa
+step: 4
 ---
 ## Q
 Stream-stream join vs stream-table join: how does each maintain state, and what goes wrong with each?

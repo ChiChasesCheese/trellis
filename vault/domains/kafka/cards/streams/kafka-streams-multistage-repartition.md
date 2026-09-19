@@ -2,6 +2,7 @@
 id: kafka-streams-multistage-repartition
 node: streams.design-patterns
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

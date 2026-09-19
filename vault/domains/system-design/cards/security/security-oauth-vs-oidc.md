@@ -2,6 +2,7 @@
 id: security-oauth-vs-oidc
 node: security.authn.oauth
 type: qa
+step: 3
 ---
 ## Q
 "Log in with Google" — is that OAuth2 or OIDC, and why is using a plain OAuth2 access token as proof of identity a bug?

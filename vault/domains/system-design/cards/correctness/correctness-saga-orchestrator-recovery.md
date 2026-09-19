@@ -2,6 +2,7 @@
 id: correctness-saga-orchestrator-recovery
 node: correctness.saga
 type: qa
+step: 6
 ---
 ## Q
 The saga orchestrator crashes mid-workflow. What must have been persisted for safe resume, and how are the resulting duplicates and silences handled?

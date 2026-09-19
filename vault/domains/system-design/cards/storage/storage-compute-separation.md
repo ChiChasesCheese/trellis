@@ -2,6 +2,7 @@
 id: storage-compute-separation
 node: storage.object
 type: qa
+step: 6
 ---
 ## Q
 Storage–compute separation (Snowflake, BigQuery, modern lakehouses): what does putting the data in object storage buy, and what latency problem does it create?

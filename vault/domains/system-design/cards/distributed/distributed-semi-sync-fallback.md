@@ -2,6 +2,7 @@
 id: distributed-semi-sync-fallback
 node: distributed.replication.leader
 type: qa
+step: 5
 ---
 ## Q
 Your team runs semi-synchronous replication (the leader waits for one follower's ack before acknowledging a commit) and advertises "zero data loss on failover". Name the ways that promise silently fails in practice.

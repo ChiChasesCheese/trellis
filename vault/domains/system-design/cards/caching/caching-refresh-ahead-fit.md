@@ -2,6 +2,7 @@
 id: caching-refresh-ahead-fit
 node: caching.strategies
 type: qa
+step: 3
 ---
 ## Q
 When is refresh-ahead worth the complexity over plain TTL + cache-aside, and what does it waste when misapplied?

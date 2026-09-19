@@ -11,13 +11,13 @@ Why analytical scans want column layout, compression, and vectorized execution i
 - [[ddia-2e|Designing Data-Intensive Applications, 2nd ed. (Kleppmann & Riccomini, 2026)]]
 
 ## Cards (7)
-- [[analytics-column-store-writes]]
-- [[analytics-columnar-compression]]
-- [[analytics-data-cubes]]
-- [[analytics-replica-analytics-limits]]
-- [[analytics-row-vs-column-layout]]
-- [[analytics-star-schema]]
-- [[analytics-vectorized-execution]]
+1. [[analytics-row-vs-column-layout]]
+2. [[analytics-columnar-compression]]
+3. [[analytics-column-store-writes]]
+4. [[analytics-vectorized-execution]]
+5. [[analytics-star-schema]]
+6. [[analytics-data-cubes]]
+7. [[analytics-replica-analytics-limits]]
 %% trellis:end %%
 
 ## Notes

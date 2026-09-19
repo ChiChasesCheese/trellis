@@ -8,10 +8,10 @@
 - [[kafka-6-5-physical-storage|物理存储：分层存储、分区分配、索引与压实]]
 
 ## Cards (4)
-- [[kafka-internals-index-corruption-recovery]]
-- [[kafka-internals-index-segmented-with-log]]
-- [[kafka-internals-offset-index-purpose]]
-- [[kafka-internals-time-index-purpose]]
+1. [[kafka-internals-offset-index-purpose]]
+2. [[kafka-internals-time-index-purpose]]
+3. [[kafka-internals-index-segmented-with-log]]
+4. [[kafka-internals-index-corruption-recovery]]
 %% trellis:end %%
 
 ## Notes

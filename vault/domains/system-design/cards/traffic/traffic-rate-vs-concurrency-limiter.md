@@ -2,6 +2,7 @@
 id: traffic-rate-vs-concurrency-limiter
 node: traffic.rate-limiting
 type: qa
+step: 5
 ---
 ## Q
 An API gateway runs both a request-rate limiter and a concurrency limiter (Stripe runs both). What does each one cap, and which failure mode does each protect against?

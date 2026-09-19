@@ -2,6 +2,7 @@
 id: kafka-internals-controller-epoch-zombie
 node: internals.controller
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

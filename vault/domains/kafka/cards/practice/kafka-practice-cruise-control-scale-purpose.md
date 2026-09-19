@@ -2,6 +2,7 @@
 id: kafka-practice-cruise-control-scale-purpose
 node: practice.kubernetes-strimzi
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

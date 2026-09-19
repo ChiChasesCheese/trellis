@@ -2,6 +2,7 @@
 id: kafka-streams-application-id-role
 node: streams.streams-api
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

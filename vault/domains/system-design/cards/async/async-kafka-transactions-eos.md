@@ -2,6 +2,7 @@
 id: async-kafka-transactions-eos
 node: async.delivery.exactly-once
 type: qa
+step: 3
 ---
 ## Q
 How does Kafka achieve exactly-once for a consume-transform-produce pipeline (Kafka Streams), and where does the guarantee stop?

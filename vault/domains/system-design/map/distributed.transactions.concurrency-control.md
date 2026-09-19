@@ -8,13 +8,13 @@
 - [[hermitage-isolation-levels|Hermitage: Testing the "I" in ACID (Kleppmann)]]
 
 ## Cards (7)
-- [[distributed-2pl-vs-ssi]]
-- [[distributed-actual-serial-execution]]
-- [[distributed-deadlock-handling]]
-- [[distributed-mvcc-defaults]]
-- [[distributed-mvcc-visibility]]
-- [[distributed-ssi-abort-behavior]]
-- [[distributed-ssi-detection-points]]
+1. [[distributed-2pl-vs-ssi]]
+2. [[distributed-mvcc-defaults]]
+3. [[distributed-mvcc-visibility]]
+4. [[distributed-ssi-detection-points]]
+5. [[distributed-ssi-abort-behavior]]
+6. [[distributed-deadlock-handling]]
+7. [[distributed-actual-serial-execution]]
 %% trellis:end %%
 
 ## Notes

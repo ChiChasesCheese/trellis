@@ -1,0 +1,5 @@
+{
+  "caching.strategies": ["caching-aside-vs-read-through", "caching-write-through-vs-behind", "caching-refresh-ahead-fit", "caching-negative-caching", "caching-cache-warming", "caching-memcached-vs-redis"],
+  "caching.invalidation": ["caching-delete-not-update", "caching-cdc-invalidation", "caching-lease-cas", "caching-key-version-invalidation", "caching-lru-vs-lfu", "caching-ttl-jitter"],
+  "caching.placement": ["caching-placement-cost-of-depth", "caching-layer-absorption", "caching-local-vs-remote", "caching-cache-shard-blast-radius", "caching-hot-key-replication", "caching-hit-rate-outage-math"]
+}

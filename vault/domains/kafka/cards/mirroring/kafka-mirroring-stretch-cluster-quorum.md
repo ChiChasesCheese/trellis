@@ -2,6 +2,7 @@
 id: kafka-mirroring-stretch-cluster-quorum
 node: mirroring.architectures
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

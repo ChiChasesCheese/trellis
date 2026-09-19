@@ -2,6 +2,7 @@
 id: distributed-local-first-limits
 node: distributed.crdt
 type: qa
+step: 6
 ---
 ## Q
 A local-first app (Automerge/Yjs-style) writes to the local replica and syncs in the background. What does the server shrink to, and which requirements force real server-side logic back in?

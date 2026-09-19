@@ -2,6 +2,7 @@
 id: kafka-mirrormaker-replication-lag-two-imperfect-methods
 node: mirroring.mirrormaker
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

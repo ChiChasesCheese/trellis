@@ -2,6 +2,7 @@
 id: security-password-hashing-params
 node: security.authn.credentials
 type: qa
+step: 1
 ---
 ## Q
 You must store user passwords and also verify high-entropy API keys. Which algorithm and parameters for each, and why are they different?

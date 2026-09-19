@@ -2,6 +2,7 @@
 id: distributed-or-set
 node: distributed.crdt
 type: qa
+step: 4
 ---
 ## Q
 Replicated set: replica A removes element x while replica B concurrently re-adds x. Why do naive sets and 2P-Sets get this wrong, and how does an OR-Set resolve it?

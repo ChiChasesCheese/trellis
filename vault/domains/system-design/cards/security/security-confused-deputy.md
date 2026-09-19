@@ -2,6 +2,7 @@
 id: security-confused-deputy
 node: security.authz
 type: qa
+step: 3
 ---
 ## Q
 An internal reporting service with read access to *all* tenants' data serves any caller that asks. A low-privilege client requests another tenant's report and gets it. Name the vulnerability class and the fix.

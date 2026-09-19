@@ -2,6 +2,7 @@
 id: distributed-epoch-numbers
 node: distributed.consensus
 type: qa
+step: 6
 ---
 ## Q
 Every consensus protocol carries an epoch number (term/ballot/view) and runs two quorum checks. What problem do epochs solve, and how do the two quorums interact?

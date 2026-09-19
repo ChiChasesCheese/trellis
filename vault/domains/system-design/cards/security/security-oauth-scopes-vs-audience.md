@@ -2,6 +2,7 @@
 id: security-oauth-scopes-vs-audience
 node: security.authn.oauth
 type: qa
+step: 4
 ---
 ## Q
 Scopes vs audience: what does each one constrain, and why is "the token has scope `orders:read`, so let the request through" an authorization bug?

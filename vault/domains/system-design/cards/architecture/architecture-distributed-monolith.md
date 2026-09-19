@@ -2,6 +2,7 @@
 id: architecture-distributed-monolith
 node: architecture.services
 type: qa
+step: 6
 ---
 ## Q
 Name the symptoms that reveal a "microservices" system is actually a distributed monolith, and the one-question test.

@@ -2,6 +2,7 @@
 id: traffic-request-hedging
 node: traffic.load-balancing
 type: qa
+step: 6
 ---
 ## Q
 Request hedging: mechanism, the cost math that makes it cheap, and its prerequisites?

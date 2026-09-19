@@ -2,6 +2,7 @@
 id: async-event-time-watermarks
 node: async.streaming.processing
 type: qa
+step: 1
 ---
 ## Q
 In stream processing, why window on event time instead of processing time, and what problem do watermarks solve?

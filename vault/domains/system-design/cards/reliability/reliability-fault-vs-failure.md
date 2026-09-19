@@ -2,6 +2,7 @@
 id: reliability-fault-vs-failure
 node: reliability.availability
 type: qa
+step: 1
 ---
 ## Q
 Fault vs failure (DDIA framing): what is the difference, and what does that make "fault tolerance" mean in practice?

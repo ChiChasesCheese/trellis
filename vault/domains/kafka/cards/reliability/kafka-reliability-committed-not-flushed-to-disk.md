@@ -2,6 +2,7 @@
 id: kafka-reliability-committed-not-flushed-to-disk
 node: reliability.guarantees
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

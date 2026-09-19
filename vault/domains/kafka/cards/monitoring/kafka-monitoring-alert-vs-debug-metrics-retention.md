@@ -2,6 +2,7 @@
 id: kafka-monitoring-alert-vs-debug-metrics-retention
 node: monitoring.metrics-and-slo
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

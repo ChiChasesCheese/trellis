@@ -2,6 +2,7 @@
 id: kafka-internals-index-segmented-with-log
 node: internals.indexes
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

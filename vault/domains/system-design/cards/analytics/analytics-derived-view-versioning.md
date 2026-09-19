@@ -2,6 +2,7 @@
 id: analytics-derived-view-versioning
 node: analytics.derived
 type: qa
+step: 6
 ---
 ## Q
 A bug shipped in the transformation logic behind a derived table that consumers query in production. What's the safe repair pattern?

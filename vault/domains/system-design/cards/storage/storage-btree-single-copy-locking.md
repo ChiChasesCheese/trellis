@@ -2,6 +2,7 @@
 id: storage-btree-single-copy-locking
 node: storage.internals.tradeoffs
 type: qa
+step: 3
 ---
 ## Q
 "In a B-tree, each key exists in exactly one place; an LSM-tree may hold several versions of it in different files." Why does this single-copy property make B-trees the comfortable substrate for *transactional* databases?

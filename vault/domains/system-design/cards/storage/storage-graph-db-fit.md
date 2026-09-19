@@ -2,6 +2,7 @@
 id: storage-graph-db-fit
 node: storage.nosql
 type: qa
+step: 8
 ---
 ## Q
 What query shape justifies a graph database over a relational schema with join tables?

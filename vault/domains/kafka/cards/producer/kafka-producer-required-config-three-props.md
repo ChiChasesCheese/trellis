@@ -2,6 +2,7 @@
 id: kafka-producer-required-config-three-props
 node: producer.client-basics
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

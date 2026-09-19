@@ -2,6 +2,7 @@
 id: kafka-admin-reset-offset-stateful-app-pitfall
 node: admin.consumer-group-ops
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: foundations-driving-the-40-minutes
 node: foundations.method
 type: qa
+step: 1
 ---
 ## Q
 Rough time structure for a 40-minute design interview you are expected to drive yourself?

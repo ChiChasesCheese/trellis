@@ -2,6 +2,7 @@
 id: caching-cdc-invalidation
 node: caching.invalidation
 type: qa
+step: 2
 ---
 ## Q
 Why drive cache invalidation from the database's change stream (CDC/binlog) instead of application code — and what gap remains?

@@ -2,6 +2,7 @@
 id: distributed-consistent-hashing
 node: distributed.partitioning.schemes
 type: qa
+step: 3
 ---
 ## Q
 In consistent hashing, what fraction of keys moves when a node joins an N-node ring, why is that the whole point, and what problem do virtual nodes solve?

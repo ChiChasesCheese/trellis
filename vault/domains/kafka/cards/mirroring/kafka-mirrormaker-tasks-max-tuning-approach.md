@@ -2,6 +2,7 @@
 id: kafka-mirrormaker-tasks-max-tuning-approach
 node: mirroring.mirrormaker
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

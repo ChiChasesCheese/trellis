@@ -2,6 +2,7 @@
 id: kafka-practice-ssd-vs-hdd-choice
 node: practice.sizing-tuning
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

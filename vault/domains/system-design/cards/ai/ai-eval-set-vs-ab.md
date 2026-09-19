@@ -2,6 +2,7 @@
 id: ai-eval-set-vs-ab
 node: ai.evals
 type: qa
+step: 1
 ---
 ## Q
 For an LLM feature, what plays the role of unit tests vs canary/A-B — and why can't "I tried five prompts and it looked good" replace either?

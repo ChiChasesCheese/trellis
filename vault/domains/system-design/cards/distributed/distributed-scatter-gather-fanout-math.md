@@ -2,6 +2,7 @@
 id: distributed-scatter-gather-fanout-math
 node: distributed.partitioning.indexes
 type: qa
+step: 2
 ---
 ## Q
 A scatter-gather query fans out to 100 shards, each with a p99 of 10 ms. What is the query's latency distribution, and what do you do about it?

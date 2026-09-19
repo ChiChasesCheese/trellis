@@ -2,6 +2,7 @@
 id: architecture-serverless-constraints
 node: architecture.serverless
 type: qa
+step: 1
 ---
 ## Q
 Name the FaaS execution-model constraints that break naive designs — and the classic database mistake.

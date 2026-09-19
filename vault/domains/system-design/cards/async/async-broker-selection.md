@@ -2,6 +2,7 @@
 id: async-broker-selection
 node: async.queues
 type: qa
+step: 2
 ---
 ## Q
 Kafka vs RabbitMQ vs Pulsar: which workload picks which, and why?

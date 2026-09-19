@@ -2,6 +2,7 @@
 id: kafka-internals-partition-allocation-roundrobin
 node: internals.storage-segments
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

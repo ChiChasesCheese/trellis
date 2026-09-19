@@ -2,6 +2,7 @@
 id: async-dlq-poison-pill
 node: async.delivery.guarantees
 type: qa
+step: 5
 ---
 ## Q
 When should a message go to a dead-letter queue, and what two things must you decide about the messages that land there?

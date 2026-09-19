@@ -2,6 +2,7 @@
 id: kafka-security-sasl-plain-must-use-ssl
 node: security.protocols-auth-encryption
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

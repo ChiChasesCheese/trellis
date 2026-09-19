@@ -2,6 +2,7 @@
 id: networking-tcp-vs-udp
 node: networking.protocols
 type: qa
+step: 1
 ---
 ## Q
 When is UDP the right transport despite giving up TCP's guarantees? Name the guarantees you're dropping and two workloads that want that.

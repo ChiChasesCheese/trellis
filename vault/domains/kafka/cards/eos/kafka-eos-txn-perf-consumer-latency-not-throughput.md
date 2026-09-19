@@ -2,6 +2,7 @@
 id: kafka-eos-txn-perf-consumer-latency-not-throughput
 node: eos.transactions-perf
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

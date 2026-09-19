@@ -2,6 +2,7 @@
 id: kafka-streams-topologytestdriver-limitation
 node: streams.streams-architecture
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

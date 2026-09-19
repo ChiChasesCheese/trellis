@@ -2,6 +2,7 @@
 id: kafka-streams-async-microservice-requirements
 node: streams.choosing-framework
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

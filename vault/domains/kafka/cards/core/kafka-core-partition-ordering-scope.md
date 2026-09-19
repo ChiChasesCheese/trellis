@@ -2,6 +2,7 @@
 id: kafka-core-partition-ordering-scope
 node: core.topics-partitions
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

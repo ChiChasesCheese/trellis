@@ -2,6 +2,7 @@
 id: correctness-saga-vs-2pc
 node: correctness.saga
 type: qa
+step: 1
 ---
 ## Q
 Why do payment/order systems use sagas instead of distributed transactions (2PC) across services — and what do you give up?

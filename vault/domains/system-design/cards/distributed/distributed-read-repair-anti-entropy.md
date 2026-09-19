@@ -2,6 +2,7 @@
 id: distributed-read-repair-anti-entropy
 node: distributed.replication.leaderless
 type: qa
+step: 5
 ---
 ## Q
 In leaderless stores, read repair vs anti-entropy — how does each catch replicas up, and why do you need both?

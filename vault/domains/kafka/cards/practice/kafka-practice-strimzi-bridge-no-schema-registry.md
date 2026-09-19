@@ -2,6 +2,7 @@
 id: kafka-practice-strimzi-bridge-no-schema-registry
 node: practice.kubernetes-strimzi
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

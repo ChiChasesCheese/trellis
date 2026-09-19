@@ -2,6 +2,7 @@
 id: kafka-connect-converter-decouples-format
 node: connect.connect-basics
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

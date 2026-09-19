@@ -2,6 +2,7 @@
 id: async-retry-delay-implementation
 node: async.queues
 type: qa
+step: 5
 ---
 ## Q
 Your consumer needs retries with backoff (5s, 1m, 10m), but the broker delivers immediately. How is delayed retry actually implemented, and what does it cost you?

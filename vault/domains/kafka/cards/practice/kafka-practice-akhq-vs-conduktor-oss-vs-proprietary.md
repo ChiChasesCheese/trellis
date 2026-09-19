@@ -2,6 +2,7 @@
 id: kafka-practice-akhq-vs-conduktor-oss-vs-proprietary
 node: practice.kubernetes-strimzi
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

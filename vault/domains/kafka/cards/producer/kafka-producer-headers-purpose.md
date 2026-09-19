@@ -2,6 +2,7 @@
 id: kafka-producer-headers-purpose
 node: producer.extensibility
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

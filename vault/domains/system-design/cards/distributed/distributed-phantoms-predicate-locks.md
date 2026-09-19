@@ -2,6 +2,7 @@
 id: distributed-phantoms-predicate-locks
 node: distributed.transactions.isolation
 type: qa
+step: 6
 ---
 ## Q
 What is a phantom, why can't row locks stop it, and how do databases approximate predicate locks in practice?

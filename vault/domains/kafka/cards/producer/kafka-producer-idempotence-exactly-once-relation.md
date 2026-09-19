@@ -2,6 +2,7 @@
 id: kafka-producer-idempotence-exactly-once-relation
 node: producer.idempotence-ordering
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

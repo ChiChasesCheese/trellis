@@ -2,6 +2,7 @@
 id: distributed-global-index-staleness
 node: distributed.partitioning.indexes
 type: qa
+step: 5
 ---
 ## Q
 A global (term-partitioned) secondary index is updated asynchronously. Name the two failure modes this creates for application logic, and the operational gotcha nobody expects.

@@ -11,11 +11,11 @@
 - [[kafka-4-9-graceful-exit|如何优雅退出轮询循环]]
 
 ## Cards (5)
-- [[kafka-consumer-graceful-shutdown-wakeup]]
-- [[kafka-consumer-one-thread-per-consumer-rule]]
-- [[kafka-consumer-poll-liveness-requirement]]
-- [[kafka-consumer-required-config]]
-- [[kafka-consumer-subscribe-regex-tradeoff]]
+1. [[kafka-consumer-required-config]]
+2. [[kafka-consumer-one-thread-per-consumer-rule]]
+3. [[kafka-consumer-subscribe-regex-tradeoff]]
+4. [[kafka-consumer-poll-liveness-requirement]]
+5. [[kafka-consumer-graceful-shutdown-wakeup]]
 %% trellis:end %%
 
 ## Notes

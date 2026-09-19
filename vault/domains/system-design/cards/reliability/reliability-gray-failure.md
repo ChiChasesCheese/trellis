@@ -2,6 +2,7 @@
 id: reliability-gray-failure
 node: reliability.availability
 type: qa
+step: 5
 ---
 ## Q
 A node passes every health check but serves 100x slower due to a dying disk. What is this failure class, why is it worse than a crash, and what detects it?

@@ -2,6 +2,7 @@
 id: reliability-failover-modes-tradeoff
 node: reliability.availability
 type: qa
+step: 6
 ---
 ## Q
 Rank hot, warm, and cold standby failover by recovery speed, and name the hidden risk hot standby adds.

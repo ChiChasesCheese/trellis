@@ -8,11 +8,11 @@
 - [[kafka-appendix-b2-kubernetes-strimzi|在Kubernetes上部署与管理Kafka：Strimzi等工具]]
 
 ## Cards (5)
-- [[kafka-practice-akhq-vs-conduktor-oss-vs-proprietary]]
-- [[kafka-practice-cruise-control-scale-purpose]]
-- [[kafka-practice-julieops-gitops-vs-akhq-gui]]
-- [[kafka-practice-strimzi-bridge-no-schema-registry]]
-- [[kafka-practice-strimzi-operator-not-managed-service]]
+1. [[kafka-practice-strimzi-operator-not-managed-service]]
+2. [[kafka-practice-strimzi-bridge-no-schema-registry]]
+3. [[kafka-practice-cruise-control-scale-purpose]]
+4. [[kafka-practice-akhq-vs-conduktor-oss-vs-proprietary]]
+5. [[kafka-practice-julieops-gitops-vs-akhq-gui]]
 %% trellis:end %%
 
 ## Notes

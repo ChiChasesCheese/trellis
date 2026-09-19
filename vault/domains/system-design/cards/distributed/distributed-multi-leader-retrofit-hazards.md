@@ -2,6 +2,7 @@
 id: distributed-multi-leader-retrofit-hazards
 node: distributed.replication.multi-leader
 type: qa
+step: 5
 ---
 ## Q
 You turn on multi-leader replication between two datacenters of a database designed for a single leader. Beyond same-key write conflicts, which database features quietly break, and why?

@@ -2,6 +2,7 @@
 id: kafka-connect-pipeline-throughput-decoupling
 node: connect.pipeline-design
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

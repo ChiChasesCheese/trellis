@@ -11,11 +11,11 @@
 - [[kafka-6-2-controller-kraft|控制器的选举与职责，以及KRaft带来的变革]]
 
 ## Cards (5)
-- [[kafka-internals-controller-election]]
-- [[kafka-internals-controller-epoch-zombie]]
-- [[kafka-internals-controller-leader-election-flow]]
-- [[kafka-internals-controller-role]]
-- [[kafka-internals-controller-startup-load-latency]]
+1. [[kafka-internals-controller-role]]
+2. [[kafka-internals-controller-election]]
+3. [[kafka-internals-controller-epoch-zombie]]
+4. [[kafka-internals-controller-leader-election-flow]]
+5. [[kafka-internals-controller-startup-load-latency]]
 %% trellis:end %%
 
 ## Notes

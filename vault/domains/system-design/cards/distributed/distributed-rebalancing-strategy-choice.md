@@ -2,6 +2,7 @@
 id: distributed-rebalancing-strategy-choice
 node: distributed.partitioning.rebalancing
 type: qa
+step: 5
 ---
 ## Q
 Three rebalancing strategies — fixed total partition count, dynamic split/merge, and a fixed number of partitions *per node* — each hold a different quantity constant. Which, and how does that decide the choice?

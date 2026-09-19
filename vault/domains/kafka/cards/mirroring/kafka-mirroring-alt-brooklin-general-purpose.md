@@ -2,6 +2,7 @@
 id: kafka-mirroring-alt-brooklin-general-purpose
 node: mirroring.alternatives
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

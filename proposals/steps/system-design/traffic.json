@@ -1,0 +1,5 @@
+{
+  "traffic.load-balancing": ["traffic-l4-vs-l7", "traffic-lb-algorithm-choice", "traffic-bounded-load-consistent-hashing", "traffic-http2-connection-pinning", "traffic-lb-health-and-ha", "traffic-request-hedging"],
+  "traffic.gateways": ["traffic-reverse-proxy-vs-gateway", "traffic-gateway-centralizes", "traffic-gateway-buffering", "traffic-gateway-risks", "traffic-timeout-budget-propagation", "traffic-bff-pattern"],
+  "traffic.rate-limiting": ["traffic-rate-limiting-vs-load-shedding", "traffic-rate-limit-key-choice", "traffic-token-bucket-vs-sliding-window", "traffic-sliding-window-counter", "traffic-rate-vs-concurrency-limiter", "traffic-distributed-rate-limiting", "traffic-critical-capacity-reservation", "traffic-shedding-response"]
+}

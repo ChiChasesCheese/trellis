@@ -2,6 +2,7 @@
 id: foundations-coordinated-omission
 node: foundations.numbers
 type: qa
+step: 7
 ---
 ## Q
 Your load-test harness sends a request, waits for the response, then sends the next. Name the measurement error and the fix.

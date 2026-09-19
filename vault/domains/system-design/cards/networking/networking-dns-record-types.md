@@ -2,6 +2,7 @@
 id: networking-dns-record-types
 node: networking.dns
 type: qa
+step: 2
 ---
 ## Q
 A vs CNAME vs ALIAS/ANAME: which do you use at a zone apex pointing to a load balancer's changing IPs, and why?

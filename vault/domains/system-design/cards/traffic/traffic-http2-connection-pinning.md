@@ -2,6 +2,7 @@
 id: traffic-http2-connection-pinning
 node: traffic.load-balancing
 type: qa
+step: 4
 ---
 ## Q
 You put gRPC services behind an L4 load balancer; one backend runs hot while new instances sit idle. Why, and what are the fixes?

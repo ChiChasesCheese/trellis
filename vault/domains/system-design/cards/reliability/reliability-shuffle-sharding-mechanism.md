@@ -2,6 +2,7 @@
 id: reliability-shuffle-sharding-mechanism
 node: reliability.resilience.containment
 type: qa
+step: 3
 ---
 ## Q
 What is shuffle sharding, and why does giving each customer a random 2-node subset of an 8-node fleet contain a poison-pill client far better than splitting the fleet into fixed shards?

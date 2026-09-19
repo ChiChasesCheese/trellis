@@ -2,6 +2,7 @@
 id: storage-btree-latches
 node: storage.internals.btree
 type: qa
+step: 4
 ---
 ## Q
 B-trees need latches (lightweight page locks) on the read *and* write path, while an LSM engine's in-memory writes get away with almost none. What structural difference explains this, and how do B-trees keep latching cheap?

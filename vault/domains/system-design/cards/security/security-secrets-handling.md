@@ -2,6 +2,7 @@
 id: security-secrets-handling
 node: security.authz
 type: qa
+step: 5
 ---
 ## Q
 Where do service credentials (DB passwords, API keys) live in a well-designed 2026 system, and what beats static secrets entirely?

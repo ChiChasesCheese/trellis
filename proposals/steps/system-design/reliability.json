@@ -1,0 +1,8 @@
+{
+  "reliability.availability": ["reliability-fault-vs-failure", "reliability-serial-parallel-composition", "reliability-nines-downtime-budgets", "reliability-correlated-failures", "reliability-gray-failure", "reliability-failover-modes-tradeoff"],
+  "reliability.resilience.retries": ["reliability-retryable-errors", "reliability-deadline-propagation", "reliability-timeout-budget-arithmetic", "reliability-retry-storm", "reliability-server-driven-backoff"],
+  "reliability.resilience.containment": ["reliability-circuit-breaker-states", "reliability-bulkhead-vs-shedding", "reliability-shuffle-sharding-mechanism", "reliability-shuffle-sharding-blast-radius", "reliability-avoid-fallback", "reliability-constant-work", "reliability-chaos-hypothesis", "reliability-deploy-strategies", "reliability-config-deploy-risk"],
+  "reliability.slo": ["reliability-percentiles-over-averages", "reliability-latency-sli-form", "reliability-error-budget-throttle", "reliability-burn-rate-alerting", "reliability-symptom-vs-cause-alerts", "reliability-slo-dependency-ceiling"],
+  "reliability.observability": ["reliability-logs-metrics-traces", "reliability-canonical-log-lines", "reliability-red-vs-use", "reliability-metric-cardinality", "reliability-percentile-aggregation", "reliability-trace-sampling", "reliability-exemplars"],
+  "reliability.multi-region": ["reliability-rpo-vs-rto", "reliability-active-active-vs-passive", "reliability-async-rpo-math", "reliability-three-region-quorum", "reliability-data-residency-conflict", "reliability-untested-failover"]
+}

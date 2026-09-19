@@ -2,6 +2,7 @@
 id: reliability-config-deploy-risk
 node: reliability.resilience.containment
 type: qa
+step: 9
 ---
 ## Q
 Why are config/flag changes the riskiest deploy class — behind many of the largest real outages — and what discipline fixes it?

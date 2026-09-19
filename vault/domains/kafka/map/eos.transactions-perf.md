@@ -8,10 +8,10 @@
 - [[kafka-8-3-transaction-performance|事务的性能开销]]
 
 ## Cards (4)
-- [[kafka-eos-txn-perf-batch-amortizes-overhead]]
-- [[kafka-eos-txn-perf-consumer-latency-not-throughput]]
-- [[kafka-eos-txn-perf-producer-overhead-sources]]
-- [[kafka-eos-txn-perf-short-vs-long-transaction-tradeoff]]
+1. [[kafka-eos-txn-perf-producer-overhead-sources]]
+2. [[kafka-eos-txn-perf-batch-amortizes-overhead]]
+3. [[kafka-eos-txn-perf-consumer-latency-not-throughput]]
+4. [[kafka-eos-txn-perf-short-vs-long-transaction-tradeoff]]
 %% trellis:end %%
 
 ## Notes

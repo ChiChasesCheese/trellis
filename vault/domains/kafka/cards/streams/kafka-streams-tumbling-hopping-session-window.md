@@ -2,6 +2,7 @@
 id: kafka-streams-tumbling-hopping-session-window
 node: streams.concepts
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

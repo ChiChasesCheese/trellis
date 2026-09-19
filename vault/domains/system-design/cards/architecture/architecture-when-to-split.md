@@ -2,6 +2,7 @@
 id: architecture-when-to-split
 node: architecture.services
 type: qa
+step: 1
 ---
 ## Q
 What are legitimate triggers for splitting a monolith into services — and what is the default recommendation for a new system in 2026?

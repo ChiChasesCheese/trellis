@@ -2,6 +2,7 @@
 id: caching-write-through-vs-behind
 node: caching.strategies
 type: qa
+step: 2
 ---
 ## Q
 Write-through vs write-behind (write-back): what does each cost you, and what breaks in write-behind if the cache node dies?

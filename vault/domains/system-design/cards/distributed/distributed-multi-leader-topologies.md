@@ -2,6 +2,7 @@
 id: distributed-multi-leader-topologies
 node: distributed.replication.multi-leader
 type: qa
+step: 4
 ---
 ## Q
 Circular, star, and all-to-all multi-leader topologies — what does each risk, and what extra metadata does every one of them need?

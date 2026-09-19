@@ -2,6 +2,7 @@
 id: reliability-percentiles-over-averages
 node: reliability.slo
 type: qa
+step: 1
 ---
 ## Q
 Why is p99 latency the SLI to watch instead of the mean — and why does fan-out make tail latency worse than it looks?

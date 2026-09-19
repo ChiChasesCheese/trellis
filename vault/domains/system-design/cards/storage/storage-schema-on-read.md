@@ -2,6 +2,7 @@
 id: storage-schema-on-read
 node: storage.nosql
 type: qa
+step: 4
 ---
 ## Q
 "Schemaless" document stores still have a schema. Where does it live, and when is schema-on-read genuinely better than schema-on-write?

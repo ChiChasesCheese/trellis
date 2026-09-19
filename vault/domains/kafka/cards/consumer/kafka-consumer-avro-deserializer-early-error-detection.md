@@ -2,6 +2,7 @@
 id: kafka-consumer-avro-deserializer-early-error-detection
 node: consumer.deserialization
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: kafka-security-zk-digest-md5-not-for-prod
 node: security.audit-hardening
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

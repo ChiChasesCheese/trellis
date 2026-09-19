@@ -2,6 +2,7 @@
 id: kafka-connect-alt-gui-etl-tools-tradeoff
 node: connect.alternatives
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

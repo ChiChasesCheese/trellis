@@ -2,6 +2,7 @@
 id: kafka-admin-keyed-topic-partition-increase
 node: admin.topic-ops
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

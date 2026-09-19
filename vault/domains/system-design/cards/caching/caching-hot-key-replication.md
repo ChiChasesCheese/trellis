@@ -2,6 +2,7 @@
 id: caching-hot-key-replication
 node: caching.placement
 type: qa
+step: 5
 ---
 ## Q
 One cache key (a celebrity's profile during an event) exceeds what a single cache node can serve. Why doesn't adding nodes help, and what does?

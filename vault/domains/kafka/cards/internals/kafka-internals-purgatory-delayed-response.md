@@ -2,6 +2,7 @@
 id: kafka-internals-purgatory-delayed-response
 node: internals.request-handling
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

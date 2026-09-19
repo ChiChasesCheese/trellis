@@ -2,6 +2,7 @@
 id: ai-continuous-batching
 node: ai.inference
 type: qa
+step: 3
 ---
 ## Q
 Why does LLM serving batch requests at the token level (continuous batching) instead of batching whole requests?

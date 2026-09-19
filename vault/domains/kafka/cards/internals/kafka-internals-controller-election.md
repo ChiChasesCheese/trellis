@@ -2,6 +2,7 @@
 id: kafka-internals-controller-election
 node: internals.controller
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

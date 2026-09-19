@@ -2,6 +2,7 @@
 id: correctness-outbox-event-payload
 node: correctness.outbox
 type: qa
+step: 3
 ---
 ## Q
 Fat events vs thin events in an outbox: what does each carry, and what race does the thin style cause?

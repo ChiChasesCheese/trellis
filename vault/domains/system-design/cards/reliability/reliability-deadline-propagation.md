@@ -2,6 +2,7 @@
 id: reliability-deadline-propagation
 node: reliability.resilience.retries
 type: qa
+step: 2
 ---
 ## Q
 Service A (1s timeout) calls B, which calls C. C responds in 2s. What goes wrong with naive per-hop timeouts, and what is the fix?

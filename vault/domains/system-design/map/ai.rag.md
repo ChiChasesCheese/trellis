@@ -11,11 +11,11 @@ Chunking, retrieval, reranking, and grounding as a data pipeline — where quali
 - [[pinecone-learn|Pinecone Learning Center]]
 
 ## Cards (5)
-- [[ai-chunking-failure-modes]]
-- [[ai-grounding-citations]]
-- [[ai-rag-two-pipelines]]
-- [[ai-rag-vs-finetune-vs-longcontext]]
-- [[ai-retrieve-then-rerank]]
+1. [[ai-rag-two-pipelines]]
+2. [[ai-chunking-failure-modes]]
+3. [[ai-retrieve-then-rerank]]
+4. [[ai-grounding-citations]]
+5. [[ai-rag-vs-finetune-vs-longcontext]]
 %% trellis:end %%
 
 ## Notes

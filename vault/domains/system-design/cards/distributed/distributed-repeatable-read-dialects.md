@@ -2,6 +2,7 @@
 id: distributed-repeatable-read-dialects
 node: distributed.transactions.isolation
 type: qa
+step: 8
 ---
 ## Q
 Postgres and MySQL/InnoDB both offer `REPEATABLE READ`. Name three behavioral differences that bite in production.

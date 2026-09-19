@@ -2,6 +2,7 @@
 id: kafka-core-offset-uniqueness-per-partition
 node: core.offsets
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

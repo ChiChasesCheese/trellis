@@ -2,6 +2,7 @@
 id: architecture-expand-contract
 node: architecture.discovery
 type: qa
+step: 5
 ---
 ## Q
 You need a breaking API change (rename a field, change semantics) with consumers you don't control deploying on their own schedule. What's the migration pattern?

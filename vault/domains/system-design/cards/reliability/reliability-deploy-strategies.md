@@ -2,6 +2,7 @@
 id: reliability-deploy-strategies
 node: reliability.resilience.containment
 type: qa
+step: 8
 ---
 ## Q
 Blue-green vs canary vs rolling deployment: what does each optimize for, and which one actually validates a release?

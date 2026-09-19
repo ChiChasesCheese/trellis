@@ -2,6 +2,7 @@
 id: kafka-mirroring-alt-cluster-linking-no-sync-manual-failover
 node: mirroring.alternatives
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

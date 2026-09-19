@@ -2,6 +2,7 @@
 id: foundations-latency-requirement-precision
 node: foundations.method
 type: qa
+step: 5
 ---
 ## Q
 "It should be fast" — turn that into an engineering requirement. What elements make a response-time requirement precise enough to design against?

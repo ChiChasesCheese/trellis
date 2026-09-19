@@ -2,6 +2,7 @@
 id: kafka-connect-alt-flume-logstash-vs-connect
 node: connect.alternatives
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

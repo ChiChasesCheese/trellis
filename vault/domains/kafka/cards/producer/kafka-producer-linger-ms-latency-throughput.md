@@ -2,6 +2,7 @@
 id: kafka-producer-linger-ms-latency-throughput
 node: producer.batching-throughput
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: ai-hybrid-retrieval
 node: ai.vector-search
 type: qa
+step: 5
 ---
 ## Q
 Pure vector retrieval in a RAG system misses queries for "error `AUTH-4012`" and part numbers. Why, and what is the standard fix?

@@ -2,6 +2,7 @@
 id: kafka-monitoring-sli-slo-sla-ola-terms
 node: monitoring.metrics-and-slo
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

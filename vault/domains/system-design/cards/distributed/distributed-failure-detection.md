@@ -2,6 +2,7 @@
 id: distributed-failure-detection
 node: distributed.time.failure
 type: qa
+step: 4
 ---
 ## Q
 Why can no timeout prove a remote node is dead, and how do real systems pick and use timeouts anyway?

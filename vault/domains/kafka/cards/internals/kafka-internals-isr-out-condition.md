@@ -2,6 +2,7 @@
 id: kafka-internals-isr-out-condition
 node: internals.replication-protocol
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

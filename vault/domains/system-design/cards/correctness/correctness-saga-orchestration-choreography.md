@@ -2,6 +2,7 @@
 id: correctness-saga-orchestration-choreography
 node: correctness.saga
 type: qa
+step: 2
 ---
 ## Q
 Orchestrated vs choreographed saga: how does each work, and when do you pick which?

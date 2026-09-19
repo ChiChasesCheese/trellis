@@ -2,6 +2,7 @@
 id: distributed-2pl-vs-ssi
 node: distributed.transactions.concurrency-control
 type: qa
+step: 1
 ---
 ## Q
 Two-phase locking vs serializable snapshot isolation — how does each achieve serializability, what does each cost, and when does each win?

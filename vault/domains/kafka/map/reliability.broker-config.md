@@ -10,12 +10,12 @@
 - [[kafka-7-3-broker-reliability-config|broker配置：复制系数、不彻底首领选举与最少同步副本]]
 
 ## Cards (6)
-- [[kafka-reliability-flush-to-disk-vs-replication]]
-- [[kafka-reliability-lag-timeouts-tuning]]
-- [[kafka-reliability-min-insync-replicas]]
-- [[kafka-reliability-rack-awareness]]
-- [[kafka-reliability-replication-factor-tradeoffs]]
-- [[kafka-reliability-unclean-leader-election-tradeoff]]
+1. [[kafka-reliability-replication-factor-tradeoffs]]
+2. [[kafka-reliability-rack-awareness]]
+3. [[kafka-reliability-min-insync-replicas]]
+4. [[kafka-reliability-unclean-leader-election-tradeoff]]
+5. [[kafka-reliability-flush-to-disk-vs-replication]]
+6. [[kafka-reliability-lag-timeouts-tuning]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: storage-online-migration-four-phase
 node: storage.relational.operations
 type: cloze
+step: 7
 ---
 A zero-downtime **online migration** (moving live data to a new model or store while still serving traffic, Stripe-style) runs in four phases: **1)** {{c1::dual-write — every new write goes to both the old and the new store}}; **2)** {{c2::backfill — copy all pre-existing data into the new store, rate-limited and checkpointed}}; **3)** {{c3::dual-read / verify — serve from the old path but read both and compare, alerting on any mismatch}}; **4)** {{c4::cut over reads to the new store, then delete the old write path and old data}}. Each phase is observable and reversible on its own, so the migration only advances when the data is proven consistent.
 

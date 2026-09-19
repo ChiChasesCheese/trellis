@@ -2,6 +2,7 @@
 id: analytics-cache-as-derived
 node: analytics.derived
 type: qa
+step: 2
 ---
 ## Q
 Reframe cache invalidation as a derived-data problem. What does the reframing buy you over app-managed invalidation?

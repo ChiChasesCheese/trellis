@@ -2,6 +2,7 @@
 id: foundations-availability-vs-consistency-axis
 node: foundations.tradeoffs
 type: qa
+step: 7
 ---
 ## Q
 For each, pick availability-first or consistency-first and justify in one line: (a) shopping-cart adds, (b) inventory decrement at checkout, (c) social-feed reads.

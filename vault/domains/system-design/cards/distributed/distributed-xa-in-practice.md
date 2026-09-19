@@ -2,6 +2,7 @@
 id: distributed-xa-in-practice
 node: distributed.transactions.distributed
 type: qa
+step: 5
 ---
 ## Q
 What is XA, and what specifically goes wrong when a team adopts it to keep a database and a message broker in sync?

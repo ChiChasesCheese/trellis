@@ -10,11 +10,11 @@
 - [[kafka-3-8-interceptors|拦截器：无侵入地修改客户端行为]]
 
 ## Cards (5)
-- [[kafka-producer-custom-partitioner-hotkey-isolation]]
-- [[kafka-producer-headers-purpose]]
-- [[kafka-producer-interceptor-hooks]]
-- [[kafka-producer-key-hash-partition-consistency]]
-- [[kafka-producer-key-null-sticky-partitioning]]
+1. [[kafka-producer-key-hash-partition-consistency]]
+2. [[kafka-producer-key-null-sticky-partitioning]]
+3. [[kafka-producer-custom-partitioner-hotkey-isolation]]
+4. [[kafka-producer-headers-purpose]]
+5. [[kafka-producer-interceptor-hooks]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: ai-inference-cost-levers
 node: ai.inference
 type: qa
+step: 6
 ---
 ## Q
 Latency on an LLM endpoint feels fine but the GPU bill is too high. Name four levers that cut cost per token without swapping hardware.

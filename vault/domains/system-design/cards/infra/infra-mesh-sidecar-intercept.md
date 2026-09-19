@@ -2,6 +2,7 @@
 id: infra-mesh-sidecar-intercept
 node: infra.mesh
 type: qa
+step: 1
 ---
 ## Q
 Mechanically, what does a service-mesh sidecar do to a pod's traffic — and why does intercepting at that point enable every mesh feature?

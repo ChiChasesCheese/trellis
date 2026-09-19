@@ -2,6 +2,7 @@
 id: kafka-admin-manual-topic-delete-requires-full-shutdown
 node: admin.partition-reassignment
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

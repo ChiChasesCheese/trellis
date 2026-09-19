@@ -2,6 +2,7 @@
 id: storage-keyvalue-fit
 node: storage.nosql
 type: qa
+step: 1
 ---
 ## Q
 A pure key-value store (DynamoDB used as KV, Redis, Riak-style) is the simplest NoSQL family. What access pattern justifies choosing it as the system of record, and what capabilities do you knowingly give up?

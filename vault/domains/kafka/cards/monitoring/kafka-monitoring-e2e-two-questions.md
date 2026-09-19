@@ -2,6 +2,7 @@
 id: kafka-monitoring-e2e-two-questions
 node: monitoring.lag-e2e
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

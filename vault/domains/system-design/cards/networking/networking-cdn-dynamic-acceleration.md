@@ -2,6 +2,7 @@
 id: networking-cdn-dynamic-acceleration
 node: networking.cdn
 type: qa
+step: 6
 ---
 ## Q
 Your API responses are fully personalized and uncacheable. What does routing them through a CDN still buy?

@@ -2,6 +2,7 @@
 id: distributed-write-skew
 node: distributed.transactions.isolation
 type: qa
+step: 5
 ---
 ## Q
 On-call rule: at least one doctor must stay on shift. Two doctors, in concurrent transactions, each check "≥2 on call" and sign themselves off. Both commit under snapshot isolation. Name the anomaly and two fixes.

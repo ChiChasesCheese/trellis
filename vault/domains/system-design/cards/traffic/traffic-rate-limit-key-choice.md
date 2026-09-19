@@ -2,6 +2,7 @@
 id: traffic-rate-limit-key-choice
 node: traffic.rate-limiting
 type: qa
+step: 2
 ---
 ## Q
 What key do you rate limit on — and what goes wrong with per-IP limits?

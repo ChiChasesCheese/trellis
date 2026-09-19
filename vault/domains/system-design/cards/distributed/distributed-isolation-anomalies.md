@@ -2,6 +2,7 @@
 id: distributed-isolation-anomalies
 node: distributed.transactions.isolation
 type: qa
+step: 2
 ---
 ## Q
 Map the standard isolation levels to the anomaly each one newly prevents, and name the anomaly snapshot isolation still allows.

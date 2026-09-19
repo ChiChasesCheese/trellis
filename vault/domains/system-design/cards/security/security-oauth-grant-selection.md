@@ -2,6 +2,7 @@
 id: security-oauth-grant-selection
 node: security.authn.oauth
 type: qa
+step: 5
 ---
 ## Q
 Pick the grant: (a) a nightly batch job calling a partner API, (b) a web app acting for a signed-in user, (c) a smart TV app. What makes (a) fundamentally different from the others?

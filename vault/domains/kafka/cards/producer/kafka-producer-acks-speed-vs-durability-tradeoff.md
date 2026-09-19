@@ -2,6 +2,7 @@
 id: kafka-producer-acks-speed-vs-durability-tradeoff
 node: producer.acks-durability
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

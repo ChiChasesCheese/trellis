@@ -2,6 +2,7 @@
 id: correctness-idempotency-response-replay
 node: correctness.idempotency
 type: qa
+step: 3
 ---
 ## Q
 On an idempotency-key hit, why must the server replay the **stored response** rather than re-execute the handler "since it's idempotent anyway"?

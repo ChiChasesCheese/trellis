@@ -2,6 +2,7 @@
 id: kafka-producer-avro-generic-vs-specific-record
 node: producer.serialization
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

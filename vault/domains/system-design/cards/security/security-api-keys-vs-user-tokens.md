@@ -2,6 +2,7 @@
 id: security-api-keys-vs-user-tokens
 node: security.authz
 type: qa
+step: 2
 ---
 ## Q
 API keys vs user tokens: what does each identify, and why must a multi-tenant API never authorize on the key alone?

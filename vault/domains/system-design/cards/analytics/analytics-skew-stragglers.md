@@ -2,6 +2,7 @@
 id: analytics-skew-stragglers
 node: analytics.batch
 type: qa
+step: 7
 ---
 ## Q
 A 1000-task stage finishes in 5 minutes except one task still running after an hour. Give the two distinct causes and the fix for each.

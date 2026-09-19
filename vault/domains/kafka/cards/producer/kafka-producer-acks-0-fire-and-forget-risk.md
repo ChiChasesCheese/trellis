@@ -2,6 +2,7 @@
 id: kafka-producer-acks-0-fire-and-forget-risk
 node: producer.acks-durability
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

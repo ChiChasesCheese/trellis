@@ -2,6 +2,7 @@
 id: storage-covering-index
 node: storage.relational.indexing
 type: qa
+step: 4
 ---
 ## Q
 What makes an index "covering" for a query, why is it dramatically faster, and what's the cost of covering everything?

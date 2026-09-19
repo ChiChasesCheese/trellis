@@ -2,6 +2,7 @@
 id: async-idempotent-producer
 node: async.delivery.exactly-once
 type: qa
+step: 1
 ---
 ## Q
 Kafka's idempotent producer: what mechanism deduplicates, and which duplicates does it NOT eliminate?

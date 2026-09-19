@@ -2,6 +2,7 @@
 id: kafka-monitoring-consumer-rate-min-alert-pitfall
 node: monitoring.client-metrics
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

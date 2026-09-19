@@ -2,6 +2,7 @@
 id: kafka-consumer-required-config
 node: consumer.client-basics
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

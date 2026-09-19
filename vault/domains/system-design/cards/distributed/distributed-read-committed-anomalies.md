@@ -2,6 +2,7 @@
 id: distributed-read-committed-anomalies
 node: distributed.transactions.isolation
 type: qa
+step: 3
 ---
 ## Q
 Give a concrete anomaly that read committed permits but repeatable read/snapshot isolation prevents, and one that *both* permit.

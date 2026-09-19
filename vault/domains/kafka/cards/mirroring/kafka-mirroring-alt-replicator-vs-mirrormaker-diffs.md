@@ -2,6 +2,7 @@
 id: kafka-mirroring-alt-replicator-vs-mirrormaker-diffs
 node: mirroring.alternatives
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

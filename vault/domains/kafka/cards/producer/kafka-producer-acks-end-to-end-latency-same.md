@@ -2,6 +2,7 @@
 id: kafka-producer-acks-end-to-end-latency-same
 node: producer.acks-durability
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: kafka-eos-idempotent-out-of-order-seq-error
 node: eos.idempotent-producer
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

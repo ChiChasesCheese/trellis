@@ -2,6 +2,7 @@
 id: kafka-core-message-key-partition-routing
 node: core.topics-partitions
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

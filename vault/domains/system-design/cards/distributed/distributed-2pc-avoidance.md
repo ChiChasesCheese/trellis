@@ -2,6 +2,7 @@
 id: distributed-2pc-avoidance
 node: distributed.transactions.distributed
 type: qa
+step: 3
 ---
 ## Q
 Why is two-phase commit avoided for cross-service transactions at scale, and what do systems do instead?

@@ -2,6 +2,7 @@
 id: kafka-internals-controller-leader-election-flow
 node: internals.controller
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

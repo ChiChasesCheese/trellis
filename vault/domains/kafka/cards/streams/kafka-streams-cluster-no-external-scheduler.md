@@ -2,6 +2,7 @@
 id: kafka-streams-cluster-no-external-scheduler
 node: streams.streams-api
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

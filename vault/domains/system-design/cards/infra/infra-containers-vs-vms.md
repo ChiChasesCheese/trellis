@@ -2,6 +2,7 @@
 id: infra-containers-vs-vms
 node: infra.containers
 type: qa
+step: 1
 ---
 ## Q
 Containers and VMs both isolate workloads. What is the actual isolation mechanism of each, and what does the difference buy in density and cost in security?

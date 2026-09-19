@@ -2,6 +2,7 @@
 id: traffic-token-bucket-vs-sliding-window
 node: traffic.rate-limiting
 type: qa
+step: 3
 ---
 ## Q
 Token bucket vs sliding window for rate limiting — what does each guarantee, and which allows bursts?

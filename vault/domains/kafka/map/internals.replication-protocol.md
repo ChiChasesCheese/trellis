@@ -10,11 +10,11 @@
 - [[kafka-6-3-replication-protocol|复制协议：首领、跟随者与ISR]]
 
 ## Cards (5)
-- [[kafka-internals-follower-fetch-protocol]]
-- [[kafka-internals-follower-read-highwatermark]]
-- [[kafka-internals-isr-matters-leader-election]]
-- [[kafka-internals-isr-out-condition]]
-- [[kafka-internals-preferred-leader-rebalance]]
+1. [[kafka-internals-follower-fetch-protocol]]
+2. [[kafka-internals-isr-out-condition]]
+3. [[kafka-internals-isr-matters-leader-election]]
+4. [[kafka-internals-preferred-leader-rebalance]]
+5. [[kafka-internals-follower-read-highwatermark]]
 %% trellis:end %%
 
 ## Notes

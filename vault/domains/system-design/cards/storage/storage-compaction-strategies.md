@@ -2,6 +2,7 @@
 id: storage-compaction-strategies
 node: storage.internals.lsm
 type: qa
+step: 5
 ---
 ## Q
 Size-tiered vs leveled compaction in an LSM engine: how does each organize SSTables, and which workload picks which?

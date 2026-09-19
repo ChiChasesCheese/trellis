@@ -2,6 +2,7 @@
 id: reliability-active-active-vs-passive
 node: reliability.multi-region
 type: qa
+step: 2
 ---
 ## Q
 When is active-passive the right multi-region design over active-active, given that active-active looks strictly better on paper?

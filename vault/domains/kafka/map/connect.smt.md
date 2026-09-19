@@ -8,12 +8,12 @@
 - [[kafka-9-3-kafka-connect|Kafka Connect：worker、连接器与单一消息转换]]
 
 ## Cards (6)
-- [[kafka-connect-smt-common-types]]
-- [[kafka-connect-smt-config-not-connector-specific]]
-- [[kafka-connect-smt-error-tolerance-dlq]]
-- [[kafka-connect-smt-insertheader-lineage-example]]
-- [[kafka-connect-smt-timestamprouter-usecase]]
-- [[kafka-connect-smt-vs-streams-boundary]]
+1. [[kafka-connect-smt-common-types]]
+2. [[kafka-connect-smt-config-not-connector-specific]]
+3. [[kafka-connect-smt-vs-streams-boundary]]
+4. [[kafka-connect-smt-error-tolerance-dlq]]
+5. [[kafka-connect-smt-insertheader-lineage-example]]
+6. [[kafka-connect-smt-timestamprouter-usecase]]
 %% trellis:end %%
 
 ## Notes

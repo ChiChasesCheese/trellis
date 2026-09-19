@@ -2,6 +2,7 @@
 id: traffic-critical-capacity-reservation
 node: traffic.rate-limiting
 type: qa
+step: 7
 ---
 ## Q
 When an API fleet saturates, dropping low-priority traffic first is the obvious move. How does *reserving capacity* for critical requests (Stripe-style fleet-usage shedding) differ from reactive priority shedding, and why keep the reservation even when the fleet is healthy?

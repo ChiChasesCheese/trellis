@@ -2,6 +2,7 @@
 id: infra-requests-limits-noisy-neighbor
 node: infra.containers
 type: qa
+step: 3
 ---
 ## Q
 On a shared Kubernetes node, what do resource *requests* vs *limits* actually do — and why do CPU and memory overruns fail differently?

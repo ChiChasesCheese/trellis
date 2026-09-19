@@ -2,6 +2,7 @@
 id: storage-lsm-range-scan
 node: storage.internals.lsm
 type: qa
+step: 6
 ---
 ## Q
 Point lookups aside — why is a *range scan* (`WHERE ts BETWEEN a AND b`) structurally harder for an LSM-tree than for a B-tree, and why don't Bloom filters help here?

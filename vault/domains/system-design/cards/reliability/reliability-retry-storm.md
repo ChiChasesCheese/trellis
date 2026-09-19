@@ -2,6 +2,7 @@
 id: reliability-retry-storm
 node: reliability.resilience.retries
 type: qa
+step: 4
 ---
 ## Q
 A service slows down, clients retry, and the service dies completely. Name the failure mode and three design rules that prevent it.

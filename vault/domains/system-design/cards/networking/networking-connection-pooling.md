@@ -2,6 +2,7 @@
 id: networking-connection-pooling
 node: networking.protocols
 type: qa
+step: 5
 ---
 ## Q
 A service calls a downstream over HTTP/1.1 through a 50-connection pool. Load rises; downstream "latency" explodes while both ends sit at low CPU. Mechanism — and what changes under HTTP/2?

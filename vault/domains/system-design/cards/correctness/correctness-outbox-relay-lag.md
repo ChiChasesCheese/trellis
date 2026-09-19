@@ -2,6 +2,7 @@
 id: correctness-outbox-relay-lag
 node: correctness.outbox
 type: qa
+step: 5
 ---
 ## Q
 The outbox relay dies for 2 hours. What is the failure mode for the system, and what do you monitor to catch it?

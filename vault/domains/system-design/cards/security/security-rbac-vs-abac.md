@@ -2,6 +2,7 @@
 id: security-rbac-vs-abac
 node: security.authz
 type: qa
+step: 1
 ---
 ## Q
 When does RBAC stop being enough and force a move toward ABAC (or relationship-based) authorization?

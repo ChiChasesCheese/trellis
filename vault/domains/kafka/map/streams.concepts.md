@@ -11,12 +11,12 @@
 - [[kafka-14-2-stream-processing-concepts|流式处理核心概念：拓扑、时间、状态与流表对偶]]
 
 ## Cards (6)
-- [[kafka-streams-exactly-once-config]]
-- [[kafka-streams-local-vs-external-state]]
-- [[kafka-streams-stream-table-duality]]
-- [[kafka-streams-time-semantics-choice]]
-- [[kafka-streams-tumbling-hopping-session-window]]
-- [[kafka-streams-window-grace-period]]
+1. [[kafka-streams-time-semantics-choice]]
+2. [[kafka-streams-local-vs-external-state]]
+3. [[kafka-streams-stream-table-duality]]
+4. [[kafka-streams-tumbling-hopping-session-window]]
+5. [[kafka-streams-window-grace-period]]
+6. [[kafka-streams-exactly-once-config]]
 %% trellis:end %%
 
 ## Notes

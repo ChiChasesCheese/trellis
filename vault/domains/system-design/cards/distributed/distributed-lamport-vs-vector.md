@@ -2,6 +2,7 @@
 id: distributed-lamport-vs-vector
 node: distributed.time.clocks
 type: qa
+step: 5
 ---
 ## Q
 Lamport timestamps vs vector clocks: what question can a vector clock answer that a Lamport clock cannot, and what does that cost?

@@ -2,6 +2,7 @@
 id: networking-rest-as-default
 node: networking.api-styles
 type: qa
+step: 1
 ---
 ## Q
 Why does REST over JSON remain the default for public APIs in 2026, despite gRPC and GraphQL?

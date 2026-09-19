@@ -2,6 +2,7 @@
 id: traffic-lb-algorithm-choice
 node: traffic.load-balancing
 type: qa
+step: 2
 ---
 ## Q
 Round robin vs least-connections vs consistent hashing — match each to the workload it exists for.

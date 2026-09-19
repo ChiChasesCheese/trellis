@@ -2,6 +2,7 @@
 id: storage-object-vs-filesystem
 node: storage.object
 type: qa
+step: 1
 ---
 ## Q
 What can't you do with S3-style object storage that you can with a filesystem or block store, and why doesn't that matter for its main use cases?

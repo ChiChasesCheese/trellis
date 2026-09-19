@@ -2,6 +2,7 @@
 id: kafka-security-custom-authorizer-context
 node: security.authorization
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

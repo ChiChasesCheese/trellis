@@ -2,6 +2,7 @@
 id: foundations-when-estimates-change-design
 node: foundations.estimation
 type: qa
+step: 5
 ---
 ## Q
 Give three estimate outcomes that each flip a design decision (the whole point of doing the math).

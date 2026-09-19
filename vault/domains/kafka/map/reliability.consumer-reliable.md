@@ -10,12 +10,12 @@
 - [[kafka-7-5-reliable-consumer|在可靠的系统中使用消费者]]
 
 ## Cards (6)
-- [[kafka-reliability-auto-commit-risk]]
-- [[kafka-reliability-auto-offset-reset-tradeoff]]
-- [[kafka-reliability-commit-after-processing-rule]]
-- [[kafka-reliability-commit-frequency-tradeoff]]
-- [[kafka-reliability-consumer-retry-patterns]]
-- [[kafka-reliability-groupid-full-vs-subset-read]]
+1. [[kafka-reliability-groupid-full-vs-subset-read]]
+2. [[kafka-reliability-auto-offset-reset-tradeoff]]
+3. [[kafka-reliability-auto-commit-risk]]
+4. [[kafka-reliability-commit-after-processing-rule]]
+5. [[kafka-reliability-commit-frequency-tradeoff]]
+6. [[kafka-reliability-consumer-retry-patterns]]
 %% trellis:end %%
 
 ## Notes

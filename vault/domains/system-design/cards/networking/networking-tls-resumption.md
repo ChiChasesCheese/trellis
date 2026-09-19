@@ -2,6 +2,7 @@
 id: networking-tls-resumption
 node: networking.protocols
 type: qa
+step: 3
 ---
 ## Q
 TLS 1.3 session resumption: how do session tickets cut handshake cost, and why must 0-RTT early data be idempotent?

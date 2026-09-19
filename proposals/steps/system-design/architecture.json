@@ -1,0 +1,5 @@
+{
+  "architecture.services": ["architecture-when-to-split", "architecture-boundaries-data-ownership", "architecture-conways-law", "architecture-microservices-tax", "architecture-sync-call-chains", "architecture-distributed-monolith"],
+  "architecture.discovery": ["architecture-discovery-mechanisms", "architecture-schema-compat-rules", "architecture-api-versioning-strategies", "architecture-registry-compat-modes", "architecture-expand-contract"],
+  "architecture.serverless": ["architecture-serverless-constraints", "architecture-serverless-economics", "architecture-cold-starts", "architecture-serverless-backpressure", "architecture-serverless-orchestration"]
+}

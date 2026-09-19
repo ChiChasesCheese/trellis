@@ -2,6 +2,7 @@
 id: kafka-security-audit-log-level-split
 node: security.audit-hardening
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: kafka-admin-topic-deletion-caution
 node: admin.topic-ops
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

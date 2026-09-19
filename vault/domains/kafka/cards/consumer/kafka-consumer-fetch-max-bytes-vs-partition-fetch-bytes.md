@@ -2,6 +2,7 @@
 id: kafka-consumer-fetch-max-bytes-vs-partition-fetch-bytes
 node: consumer.poll-config
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

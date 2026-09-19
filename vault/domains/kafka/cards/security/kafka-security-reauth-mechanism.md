@@ -2,6 +2,7 @@
 id: kafka-security-reauth-mechanism
 node: security.protocols-auth-encryption
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

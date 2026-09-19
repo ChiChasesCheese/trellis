@@ -2,6 +2,7 @@
 id: kafka-security-zk-node-acl-defaults
 node: security.audit-hardening
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

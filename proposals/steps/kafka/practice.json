@@ -1,0 +1,30 @@
+{
+  "practice.sizing-tuning": [
+    "kafka-practice-ssd-vs-hdd-choice",
+    "kafka-practice-network-10gbe-fanout",
+    "kafka-practice-rack-awareness-new-partitions-only",
+    "kafka-practice-shared-zookeeper-multi-cluster-ok-other-apps-not",
+    "kafka-practice-vm-swappiness-one-not-zero",
+    "kafka-practice-g1gc-small-heap-tuning"
+  ],
+  "practice.cloud-deployment": [
+    "kafka-practice-aws-m4-vs-r3-instance",
+    "kafka-practice-aws-i2-d2-tradeoff",
+    "kafka-practice-azure-managed-vs-ephemeral-disk",
+    "kafka-practice-azure-disk-tier-sla",
+    "kafka-practice-managed-kafka-integration-depth"
+  ],
+  "practice.other-clients": [
+    "kafka-practice-librdkafka-reused-by-other-langs",
+    "kafka-practice-go-two-client-options",
+    "kafka-practice-python-two-client-options",
+    "kafka-practice-rest-proxy-language-agnostic-alt"
+  ],
+  "practice.kubernetes-strimzi": [
+    "kafka-practice-strimzi-operator-not-managed-service",
+    "kafka-practice-strimzi-bridge-no-schema-registry",
+    "kafka-practice-cruise-control-scale-purpose",
+    "kafka-practice-akhq-vs-conduktor-oss-vs-proprietary",
+    "kafka-practice-julieops-gitops-vs-akhq-gui"
+  ]
+}

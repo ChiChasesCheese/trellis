@@ -2,6 +2,7 @@
 id: foundations-load-parameters
 node: foundations.method
 type: qa
+step: 4
 ---
 ## Q
 "Scalable" is meaningless until you describe load. What are load parameters, and how do you pick the right one — e.g. for Twitter's home timeline?

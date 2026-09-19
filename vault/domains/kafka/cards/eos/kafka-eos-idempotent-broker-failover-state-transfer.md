@@ -2,6 +2,7 @@
 id: kafka-eos-idempotent-broker-failover-state-transfer
 node: eos.idempotent-producer
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

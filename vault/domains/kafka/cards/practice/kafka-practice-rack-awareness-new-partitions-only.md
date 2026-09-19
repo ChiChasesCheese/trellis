@@ -2,6 +2,7 @@
 id: kafka-practice-rack-awareness-new-partitions-only
 node: practice.sizing-tuning
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

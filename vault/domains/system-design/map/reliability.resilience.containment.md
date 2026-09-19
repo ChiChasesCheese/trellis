@@ -13,15 +13,15 @@ Circuit breakers, bulkheads, load shedding, chaos engineering, and safe deployme
 - [[google-sre-cascading-failures|Addressing Cascading Failures (Google SRE Book, ch. 22)]]
 
 ## Cards (9)
-- [[reliability-avoid-fallback]]
-- [[reliability-bulkhead-vs-shedding]]
-- [[reliability-chaos-hypothesis]]
-- [[reliability-circuit-breaker-states]]
-- [[reliability-config-deploy-risk]]
-- [[reliability-constant-work]]
-- [[reliability-deploy-strategies]]
-- [[reliability-shuffle-sharding-blast-radius]]
-- [[reliability-shuffle-sharding-mechanism]]
+1. [[reliability-circuit-breaker-states]]
+2. [[reliability-bulkhead-vs-shedding]]
+3. [[reliability-shuffle-sharding-mechanism]]
+4. [[reliability-shuffle-sharding-blast-radius]]
+5. [[reliability-avoid-fallback]]
+6. [[reliability-constant-work]]
+7. [[reliability-chaos-hypothesis]]
+8. [[reliability-deploy-strategies]]
+9. [[reliability-config-deploy-risk]]
 %% trellis:end %%
 
 ## Notes

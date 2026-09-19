@@ -2,6 +2,7 @@
 id: distributed-consensus-in-practice
 node: distributed.consensus
 type: qa
+step: 1
 ---
 ## Q
 Where does consensus actually sit in production architectures, and why don't you run your main data path through it?

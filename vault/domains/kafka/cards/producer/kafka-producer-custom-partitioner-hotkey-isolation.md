@@ -2,6 +2,7 @@
 id: kafka-producer-custom-partitioner-hotkey-isolation
 node: producer.extensibility
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

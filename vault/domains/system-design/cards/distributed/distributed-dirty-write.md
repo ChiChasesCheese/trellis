@@ -2,6 +2,7 @@
 id: distributed-dirty-write
 node: distributed.transactions.isolation
 type: qa
+step: 1
 ---
 ## Q
 A car sale updates two rows: `listings.buyer` and `invoices.recipient`. Two concurrent buyers' transactions interleave so that Alice wins the listing but Bob gets the invoice. Name the anomaly, and how even the weakest standard isolation level prevents it.

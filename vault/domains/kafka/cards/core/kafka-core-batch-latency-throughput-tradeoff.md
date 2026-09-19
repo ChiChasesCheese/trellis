@@ -2,6 +2,7 @@
 id: kafka-core-batch-latency-throughput-tradeoff
 node: core.topics-partitions
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

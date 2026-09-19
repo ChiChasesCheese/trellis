@@ -2,6 +2,7 @@
 id: security-mtls-vs-tokens-s2s
 node: security.authz
 type: qa
+step: 4
 ---
 ## Q
 For service-to-service auth, mTLS and signed tokens (JWTs) are often used *together*. What does each prove that the other cannot?

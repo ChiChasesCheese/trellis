@@ -2,6 +2,7 @@
 id: kafka-internals-kraft-active-standby-controller
 node: internals.kraft-mode
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

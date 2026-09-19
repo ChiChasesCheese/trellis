@@ -2,6 +2,7 @@
 id: ai-guardrails-validation
 node: ai.evals
 type: qa
+step: 4
 ---
 ## Q
 "Guardrails" around an LLM are best understood as which classic backend pattern, and what runs on each side of the model call?

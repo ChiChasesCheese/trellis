@@ -2,6 +2,7 @@
 id: storage-sparse-attributes
 node: storage.record-modeling
 type: qa
+step: 2
 ---
 ## Q
 Products in your catalog have wildly different attributes (screen size, shoe size, caffeine content…). Compare the three standard ways to store heterogeneous sparse attributes — wide table, EAV, JSON column — on querying, indexing, and validation.

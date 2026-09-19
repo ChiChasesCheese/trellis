@@ -2,6 +2,7 @@
 id: kafka-streams-testcontainers-vs-embedded-cluster
 node: streams.streams-architecture
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

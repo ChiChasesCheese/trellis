@@ -2,6 +2,7 @@
 id: kafka-eos-transactions-two-phase-commit-mechanism
 node: eos.transactions
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

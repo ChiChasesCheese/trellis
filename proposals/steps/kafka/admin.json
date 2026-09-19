@@ -1,0 +1,34 @@
+{
+  "admin.topic-ops": [
+    "kafka-admin-adminclient-eventual-consistency",
+    "kafka-admin-kafkafuture-nonblocking",
+    "kafka-admin-cannot-decrease-partitions",
+    "kafka-admin-keyed-topic-partition-increase",
+    "kafka-admin-topic-deletion-caution",
+    "kafka-admin-client-dns-lookup-modes"
+  ],
+  "admin.consumer-group-ops": [
+    "kafka-admin-consumer-lag-calculation",
+    "kafka-admin-alter-offsets-requires-inactive-group",
+    "kafka-admin-delete-group-requires-empty",
+    "kafka-admin-delete-offset-vs-reset-offset",
+    "kafka-admin-offset-export-import-dry-run",
+    "kafka-admin-reset-offset-stateful-app-pitfall"
+  ],
+  "admin.dynamic-config": [
+    "kafka-admin-alterconfigop-types",
+    "kafka-admin-describe-shows-overrides-only",
+    "kafka-admin-describeconfigs-isdefault",
+    "kafka-admin-client-id-vs-group-naming",
+    "kafka-admin-quota-throttle-per-broker",
+    "kafka-admin-unclean-leader-election-tradeoff"
+  ],
+  "admin.partition-reassignment": [
+    "kafka-admin-preferred-vs-unclean-leader-election",
+    "kafka-admin-reassignment-throttle",
+    "kafka-admin-restart-broker-before-decommission",
+    "kafka-admin-cancel-reassignment-risk",
+    "kafka-admin-force-move-controller",
+    "kafka-admin-manual-topic-delete-requires-full-shutdown"
+  ]
+}

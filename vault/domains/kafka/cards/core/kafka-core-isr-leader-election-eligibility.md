@@ -2,6 +2,7 @@
 id: kafka-core-isr-leader-election-eligibility
 node: core.replication-isr
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

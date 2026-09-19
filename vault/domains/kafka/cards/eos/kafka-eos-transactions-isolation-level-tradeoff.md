@@ -2,6 +2,7 @@
 id: kafka-eos-transactions-isolation-level-tradeoff
 node: eos.transactions
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

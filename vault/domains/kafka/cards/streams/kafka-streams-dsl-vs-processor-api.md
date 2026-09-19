@@ -2,6 +2,7 @@
 id: kafka-streams-dsl-vs-processor-api
 node: streams.streams-api
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: infra-mesh-tax-ambient
 node: infra.mesh
 type: qa
+step: 3
 ---
 ## Q
 What does a sidecar mesh cost in latency and operations, and how does the ambient/sidecarless model restructure that cost?

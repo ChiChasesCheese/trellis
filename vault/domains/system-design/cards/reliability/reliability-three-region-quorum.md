@@ -2,6 +2,7 @@
 id: reliability-three-region-quorum
 node: reliability.multi-region
 type: qa
+step: 4
 ---
 ## Q
 Why does surviving a full region loss with zero data loss require three regions, not two — and what is the cheap third-region trick?

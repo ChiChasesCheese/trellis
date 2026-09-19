@@ -2,6 +2,7 @@
 id: kafka-mirroring-alt-ureplicator-helix-controller
 node: mirroring.alternatives
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

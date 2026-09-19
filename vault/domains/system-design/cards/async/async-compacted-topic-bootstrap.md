@@ -2,6 +2,7 @@
 id: async-compacted-topic-bootstrap
 node: async.streaming.cdc
 type: qa
+step: 3
 ---
 ## Q
 Team A bootstraps every new CDC consumer with the snapshot-plus-log-position dance; team B just points new consumers at offset 0 of a compacted changelog topic. What lets team B skip the snapshot, and what two properties must their change events have?

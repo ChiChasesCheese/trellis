@@ -2,6 +2,7 @@
 id: distributed-read-your-writes
 node: distributed.consistency
 type: qa
+step: 4
 ---
 ## Q
 A user saves their profile, refreshes, and sees the old version (read hit a lagging replica). Name the missing guarantee and three ways to provide it without making all reads strong.

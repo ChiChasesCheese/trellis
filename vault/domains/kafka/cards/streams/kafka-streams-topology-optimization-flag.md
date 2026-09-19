@@ -2,6 +2,7 @@
 id: kafka-streams-topology-optimization-flag
 node: streams.streams-architecture
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

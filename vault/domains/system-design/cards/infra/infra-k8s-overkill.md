@@ -2,6 +2,7 @@
 id: infra-k8s-overkill
 node: infra.containers
 type: qa
+step: 4
 ---
 ## Q
 When is Kubernetes over-engineering, and what do you run instead?

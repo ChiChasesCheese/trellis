@@ -2,6 +2,7 @@
 id: storage-search-deep-pagination
 node: storage.search
 type: qa
+step: 4
 ---
 ## Q
 Why does `from=99000, size=20` melt a sharded search cluster when page 1 is instant, and what's the correct pattern for deep result access?

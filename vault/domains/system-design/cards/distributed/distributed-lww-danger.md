@@ -2,6 +2,7 @@
 id: distributed-lww-danger
 node: distributed.time.clocks
 type: qa
+step: 3
 ---
 ## Q
 Why is last-write-wins by wall-clock timestamp a data-loss mechanism, not a conflict resolution strategy?

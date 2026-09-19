@@ -2,6 +2,7 @@
 id: distributed-causal-vs-eventual
 node: distributed.consistency
 type: qa
+step: 2
 ---
 ## Q
 Under plain eventual consistency, a user sees the reply "No it isn't" before the question it answers. What guarantee prevents this, and what does it deliberately not order?

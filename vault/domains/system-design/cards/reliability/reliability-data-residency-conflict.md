@@ -2,6 +2,7 @@
 id: reliability-data-residency-conflict
 node: reliability.multi-region
 type: qa
+step: 5
 ---
 ## Q
 Data residency law says EU user data stays in the EU, but your DR plan fails everything over to us-east. How do these conflict, and what architecture resolves it?

@@ -2,6 +2,7 @@
 id: kafka-streams-out-of-order-late-result-overwrite
 node: streams.design-patterns
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

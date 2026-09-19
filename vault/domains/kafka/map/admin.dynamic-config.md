@@ -9,12 +9,12 @@
 - [[kafka-5-4-config-admin|用AdminClient管理配置]]
 
 ## Cards (6)
-- [[kafka-admin-alterconfigop-types]]
-- [[kafka-admin-client-id-vs-group-naming]]
-- [[kafka-admin-describe-shows-overrides-only]]
-- [[kafka-admin-describeconfigs-isdefault]]
-- [[kafka-admin-quota-throttle-per-broker]]
-- [[kafka-admin-unclean-leader-election-tradeoff]]
+1. [[kafka-admin-alterconfigop-types]]
+2. [[kafka-admin-describe-shows-overrides-only]]
+3. [[kafka-admin-describeconfigs-isdefault]]
+4. [[kafka-admin-client-id-vs-group-naming]]
+5. [[kafka-admin-quota-throttle-per-broker]]
+6. [[kafka-admin-unclean-leader-election-tradeoff]]
 %% trellis:end %%
 
 ## Notes

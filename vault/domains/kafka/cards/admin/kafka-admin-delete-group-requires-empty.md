@@ -2,6 +2,7 @@
 id: kafka-admin-delete-group-requires-empty
 node: admin.consumer-group-ops
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

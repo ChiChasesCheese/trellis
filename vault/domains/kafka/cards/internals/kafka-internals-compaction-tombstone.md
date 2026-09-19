@@ -2,6 +2,7 @@
 id: kafka-internals-compaction-tombstone
 node: internals.compaction
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

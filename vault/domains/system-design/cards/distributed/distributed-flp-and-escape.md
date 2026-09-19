@@ -2,6 +2,7 @@
 id: distributed-flp-and-escape
 node: distributed.consensus
 type: qa
+step: 2
 ---
 ## Q
 The FLP result proves consensus is impossible — yet Raft and Paxos clusters reach agreement in production every second. State what FLP actually claims, and the loophole every practical protocol uses.

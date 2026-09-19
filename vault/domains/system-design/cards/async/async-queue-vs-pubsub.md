@@ -2,6 +2,7 @@
 id: async-queue-vs-pubsub
 node: async.queues
 type: qa
+step: 1
 ---
 ## Q
 When do you choose a work queue (competing consumers) over pub/sub fan-out?

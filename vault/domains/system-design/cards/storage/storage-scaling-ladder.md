@@ -2,6 +2,7 @@
 id: storage-scaling-ladder
 node: storage.relational.operations
 type: qa
+step: 1
 ---
 ## Q
 Your single Postgres is saturating. Give the escalation ladder in order, and the signal that forces each step.

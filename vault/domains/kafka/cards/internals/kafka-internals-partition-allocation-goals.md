@@ -2,6 +2,7 @@
 id: kafka-internals-partition-allocation-goals
 node: internals.storage-segments
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

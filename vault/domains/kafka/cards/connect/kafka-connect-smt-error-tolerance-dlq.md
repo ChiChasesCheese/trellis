@@ -2,6 +2,7 @@
 id: kafka-connect-smt-error-tolerance-dlq
 node: connect.smt
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

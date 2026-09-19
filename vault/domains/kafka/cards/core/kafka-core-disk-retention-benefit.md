@@ -2,6 +2,7 @@
 id: kafka-core-disk-retention-benefit
 node: core.pubsub-why
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

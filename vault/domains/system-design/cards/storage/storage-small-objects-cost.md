@@ -2,6 +2,7 @@
 id: storage-small-objects-cost
 node: storage.object
 type: qa
+step: 5
 ---
 ## Q
 Storing 1 billion 4KB objects in S3 costs far more than the same 4TB as large objects. Where does the money and latency go, and what's the fix?

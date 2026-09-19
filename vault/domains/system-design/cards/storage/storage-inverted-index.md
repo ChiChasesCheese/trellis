@@ -2,6 +2,7 @@
 id: storage-inverted-index
 node: storage.search
 type: qa
+step: 1
 ---
 ## Q
 What is an inverted index, and why can't a B-tree index on a text column do the same job?

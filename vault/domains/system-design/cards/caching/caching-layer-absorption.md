@@ -2,6 +2,7 @@
 id: caching-layer-absorption
 node: caching.placement
 type: qa
+step: 2
 ---
 ## Q
 Traffic doubles on a page that is 90% identical for all users and 10% personalized. Which cache layers absorb which part, and why can't the CDN take it all?

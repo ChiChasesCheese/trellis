@@ -2,6 +2,7 @@
 id: kafka-security-config-provider-no-plaintext-password
 node: security.audit-hardening
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

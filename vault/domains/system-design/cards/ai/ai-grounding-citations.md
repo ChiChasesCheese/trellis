@@ -2,6 +2,7 @@
 id: ai-grounding-citations
 node: ai.rag
 type: qa
+step: 4
 ---
 ## Q
 What does "grounding" mean in a RAG system, and what do enforced citations buy you beyond user trust?

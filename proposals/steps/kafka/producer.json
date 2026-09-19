@@ -1,0 +1,51 @@
+{
+  "producer.client-basics": [
+    "kafka-producer-required-config-three-props",
+    "kafka-producer-bootstrap-servers-multiple-hosts",
+    "kafka-producer-three-send-modes",
+    "kafka-producer-sync-send-throughput-problem",
+    "kafka-producer-callback-ordering-and-blocking"
+  ],
+  "producer.acks-durability": [
+    "kafka-producer-acks-speed-vs-durability-tradeoff",
+    "kafka-producer-acks-0-fire-and-forget-risk",
+    "kafka-producer-acks-1-leader-crash-risk",
+    "kafka-producer-acks-all-isr-safety",
+    "kafka-producer-acks-end-to-end-latency-same"
+  ],
+  "producer.batching-throughput": [
+    "kafka-producer-batching-config-interaction",
+    "kafka-producer-batch-size-bytes-not-full-required",
+    "kafka-producer-linger-ms-latency-throughput",
+    "kafka-producer-buffer-memory-backpressure",
+    "kafka-producer-compression-snappy-vs-gzip"
+  ],
+  "producer.timeouts-retries": [
+    "kafka-producer-delivery-timeout-vs-request-timeout",
+    "kafka-producer-max-block-ms",
+    "kafka-producer-retries-retryable-vs-nonretryable",
+    "kafka-producer-delivery-timeout-strategy",
+    "kafka-producer-max-in-flight-ordering-risk"
+  ],
+  "producer.idempotence-ordering": [
+    "kafka-producer-idempotence-duplicate-scenario",
+    "kafka-producer-idempotence-sequence-number-mechanism",
+    "kafka-producer-idempotence-config-cloze",
+    "kafka-producer-idempotence-solves-ordering",
+    "kafka-producer-idempotence-exactly-once-relation"
+  ],
+  "producer.serialization": [
+    "kafka-producer-custom-serializer-fragility",
+    "kafka-producer-schema-registry-purpose",
+    "kafka-producer-avro-generic-vs-specific-record",
+    "kafka-producer-avro-writer-reader-schema-compatibility",
+    "kafka-producer-avro-schema-evolution-example"
+  ],
+  "producer.extensibility": [
+    "kafka-producer-key-hash-partition-consistency",
+    "kafka-producer-key-null-sticky-partitioning",
+    "kafka-producer-custom-partitioner-hotkey-isolation",
+    "kafka-producer-headers-purpose",
+    "kafka-producer-interceptor-hooks"
+  ]
+}

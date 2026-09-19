@@ -1,0 +1,6 @@
+{
+  "foundations.method": ["foundations-driving-the-40-minutes", "foundations-interview-opening-moves", "foundations-clarifying-questions-worth-asking", "foundations-load-parameters", "foundations-latency-requirement-precision", "foundations-maintainability-design-input"],
+  "foundations.estimation": ["foundations-dau-to-qps", "foundations-littles-law", "foundations-storage-estimate-method", "foundations-fanout-estimation", "foundations-when-estimates-change-design"],
+  "foundations.numbers": ["foundations-latency-memory-ssd-disk", "foundations-latency-sequential-reads", "foundations-latency-network-rtts", "foundations-tail-latency-amplification", "foundations-p999-cost", "foundations-latency-numbers-in-arguments", "foundations-coordinated-omission"],
+  "foundations.tradeoffs": ["foundations-three-pillars", "foundations-performance-vs-scalability", "foundations-scale-up-vs-out", "foundations-elastic-vs-manual-scaling", "foundations-utilization-latency-knee", "foundations-latency-vs-throughput", "foundations-availability-vs-consistency-axis"]
+}

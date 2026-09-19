@@ -4,15 +4,17 @@
 
 掌握batch.size、linger.ms、buffer.memory与compression.type如何联合影响生产者吞吐量与延迟。
 
+**Core** — part of the first pass through this subject.
+
 ## Readings
 - [[kafka-3-4-producer-config|生产者关键配置：acks、批处理与幂等性]]
 
 ## Cards (5)
-- [[kafka-producer-batch-size-bytes-not-full-required]]
-- [[kafka-producer-batching-config-interaction]]
-- [[kafka-producer-buffer-memory-backpressure]]
-- [[kafka-producer-compression-snappy-vs-gzip]]
-- [[kafka-producer-linger-ms-latency-throughput]]
+1. [[kafka-producer-batching-config-interaction]]
+2. [[kafka-producer-batch-size-bytes-not-full-required]]
+3. [[kafka-producer-linger-ms-latency-throughput]]
+4. [[kafka-producer-buffer-memory-backpressure]]
+5. [[kafka-producer-compression-snappy-vs-gzip]]
 %% trellis:end %%
 
 ## Notes

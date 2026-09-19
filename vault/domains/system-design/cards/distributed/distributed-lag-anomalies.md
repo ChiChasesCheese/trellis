@@ -2,6 +2,7 @@
 id: distributed-lag-anomalies
 node: distributed.replication.leader
 type: qa
+step: 4
 ---
 ## Q
 Name the two classic read anomalies replication lag causes besides missing your own writes, and the guarantee that fixes each.

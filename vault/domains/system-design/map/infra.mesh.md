@@ -11,10 +11,10 @@ Sidecars and ambient meshes — mTLS, retries, and traffic policy moved out of a
 - [[service-mesh-manifesto|The Service Mesh: What Every Software Engineer Needs to Know]]
 
 ## Cards (4)
-- [[infra-mesh-sidecar-intercept]]
-- [[infra-mesh-tax-ambient]]
-- [[infra-mesh-vs-code]]
-- [[infra-mesh-when-not]]
+1. [[infra-mesh-sidecar-intercept]]
+2. [[infra-mesh-vs-code]]
+3. [[infra-mesh-tax-ambient]]
+4. [[infra-mesh-when-not]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: kafka-streams-time-semantics-choice
 node: streams.concepts
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

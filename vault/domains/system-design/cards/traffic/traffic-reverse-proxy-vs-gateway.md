@@ -2,6 +2,7 @@
 id: traffic-reverse-proxy-vs-gateway
 node: traffic.gateways
 type: qa
+step: 1
 ---
 ## Q
 Reverse proxy vs API gateway — same box or different? Draw the line.

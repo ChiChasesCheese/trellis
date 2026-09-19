@@ -2,6 +2,7 @@
 id: kafka-monitoring-throttle-silent-must-monitor
 node: monitoring.client-metrics
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

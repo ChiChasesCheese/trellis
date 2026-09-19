@@ -2,6 +2,7 @@
 id: kafka-monitoring-percentile-bad-sli
 node: monitoring.metrics-and-slo
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: kafka-producer-acks-1-leader-crash-risk
 node: producer.acks-durability
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

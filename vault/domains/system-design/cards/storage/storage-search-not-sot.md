@@ -2,6 +2,7 @@
 id: storage-search-not-sot
 node: storage.search
 type: qa
+step: 5
 ---
 ## Q
 Why is a search cluster the wrong system of record, even though it stores full documents?

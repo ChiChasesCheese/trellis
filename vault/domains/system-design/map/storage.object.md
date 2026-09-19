@@ -10,12 +10,12 @@ S3-style object stores, storage-compute separation, and the modern default of pa
 - [[iceberg-table-format|Apache Iceberg Table Format (spec + docs)]]
 
 ## Cards (6)
-- [[storage-compute-separation]]
-- [[storage-multipart-ranged-io]]
-- [[storage-object-vs-filesystem]]
-- [[storage-s3-conditional-writes]]
-- [[storage-s3-numbers]]
-- [[storage-small-objects-cost]]
+1. [[storage-object-vs-filesystem]]
+2. [[storage-multipart-ranged-io]]
+3. [[storage-s3-conditional-writes]]
+4. [[storage-s3-numbers]]
+5. [[storage-small-objects-cost]]
+6. [[storage-compute-separation]]
 %% trellis:end %%
 
 ## Notes
