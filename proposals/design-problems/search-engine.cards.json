@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-search-engine-5yr-shard-count-drives-fanout",
+    "node": "problems.search.search-engine",
+    "type": "qa",
+    "q": "In a post-search design serving 500M DAU where 32.5M posts/day each contribute ~216 bytes to the inverted index (18 indexable terms x 12 bytes/posting), giving about 12.81TB of postings over a 5-year searchable window, why does needing roughly 32 shards (at 400GB/shard capacity) matter more than the 12.81TB figure itself?",
+    "a": "12.81TB of raw storage is not the bottleneck on modern hardware, but the shard count it forces (~32, at a 400GB-per-shard capacity assumption) directly sets the fan-out width of every query in a document-partitioned index: a query has to be sent to all ~32 shards. That fan-out width is what determines tail-latency risk (the probability at least one shard misses its latency budget grows with shard count) — so the number that actually drives the query-serving architecture is the shard count derived from storage, not the storage size on its own.",
+    "q_zh": "在一个服务 5 亿日活的站内帖子搜索设计中，每天 3,250 万条帖子各自为倒排索引贡献约 216 字节（18 个可索引词项 × 每条 12 字节），5 年可搜索窗口的倒排表总量约 12.81TB，为什么'大约需要 32 个分片（按每分片 400GB 容量估算）'比 12.81TB 这个数字本身更重要？",
+    "a_zh": "12.81TB 的原始存储量在现代硬件上算不上瓶颈，但它推导出的分片数（按每分片 400GB 容量假设约 32 个）直接决定了按文档分片的索引里每次查询的扇出宽度：一次查询必须发往全部约 32 个分片。这个扇出宽度才是决定长尾延迟风险的关键（至少一个分片超出延迟预算的概率随分片数增长）——所以真正驱动查询服务架构的数字，是从存储量推导出的分片数，而不是存储量本身。",
+    "tags": []
+  },
+  {
+    "id": "problems-search-engine-doc-vs-term-partitioning-zipf-skew",
+    "node": "problems.search.search-engine",
+    "type": "qa",
+    "q": "In a sharded inverted index, why does partitioning by term (so a query only needs to visit the few shards holding its query terms) get rejected in favor of partitioning by document, even though document partitioning forces every query to visit every shard?",
+    "a": "Term frequencies follow a Zipfian distribution: for a 200,000-term vocabulary, the single most frequent term accounts for about 1/H(200000) ≈ 7.8% of all query-term traffic, while an even split across 200,000 single-term shards would give each shard a 'fair' share of only 0.0005% — meaning the hottest term's shard would receive roughly 15,645x the load of an average shard. Adding more term-shards never fixes this, because the hot term always lands on exactly one shard. Document partitioning avoids this entirely: every shard gets a uniform slice of both storage and query load regardless of which terms are popular, at the cost of a wider, but load-balanced, query fan-out.",
+    "q_zh": "在一个分片的倒排索引里，为什么'按词项分片'（一次查询只需要访问持有查询词的少数几个分片）会被放弃，转而选择'按文档分片'（即使这意味着每次查询都要访问全部分片）？",
+    "a_zh": "词频服从幂律分布（Zipf 分布）：对一个 20 万词的词表，最高频的单个词项约占全部查询词流量的 1/H(200000) ≈ 7.8%，而如果把 20 万个单词项均匀切成 20 万个分片，每个分片'公平'应得的份额只有 0.0005%——意味着最热词项所在的分片实际承受约 15,645 倍于平均分片的负载。增加更多按词项切分的分片永远解决不了这个问题，因为热词永远只落在它自己那一个分片上。按文档分片则完全规避了这个问题：无论哪个词流行，每个分片都获得均匀的一份存储和查询负载，代价是查询扇出更宽，但负载是均衡的。",
+    "tags": []
+  },
+  {
+    "id": "problems-search-engine-hedged-requests-tail-latency",
+    "node": "problems.search.search-engine",
+    "type": "qa",
+    "q": "In a document-partitioned search index with 480 shards where each shard independently has a 1% chance of missing its latency budget, the probability that a query touching all 480 shards hits at least one slow shard is about 99.2% (1 - 0.99^480). How does issuing a hedged (duplicate) request to a slow shard after a short wait reduce this, and by how much under the assumption that the original and hedge failures are independent?",
+    "a": "A hedged request sends a second, redundant request to an independent replica of any shard that hasn't responded after a short wait (e.g. around the historical P50 latency); the query uses whichever of the two responses returns first. If a single request has a 1% chance of being slow and the hedge's slowness is independent of the original's, the probability that BOTH are slow is 0.01 x 0.01 = 0.0001 (0.01%). Recomputing the fan-out formula with this effective per-shard miss probability, 1 - 0.9999^480 ≈ 4.7% — roughly a 20x reduction in the probability that the overall query misses its latency budget, at the cost of the extra load from the (relatively rare) hedge requests.",
+    "q_zh": "在一个按文档分片、共 480 个分片的搜索索引中，假设每个分片独立地有 1% 的概率超出延迟预算，一次触达全部 480 个分片的查询命中至少一个慢分片的概率约为 99.2%（1 - 0.99^480）。在原始请求和对冲请求的'慢'相互独立这一假设下，向等待一小段时间仍未返回的慢分片发送一次对冲（重复）请求，能把这个概率降低多少？",
+    "a_zh": "对冲请求是指：对任何在短暂等待（比如历史 P50 延迟附近）后仍未返回的分片，向它的一个独立副本再发一次请求，两次请求谁先返回就用谁的结果。如果单次请求有 1% 的概率变慢，且对冲请求的变慢与原始请求相互独立，那么'两次都慢'的概率是 0.01×0.01=0.0001（0.01%）。把这个有效的单分片超预算概率重新代入扇出公式，1-0.9999^480≈4.7%——整体查询命中长尾的概率降低约 20 倍，代价是对冲请求（本身占比不高）带来的额外负载。",
+    "tags": []
+  },
+  {
+    "id": "problems-search-engine-multipass-candidate-funnel",
+    "node": "problems.search.search-engine",
+    "type": "qa",
+    "q": "In a search system over a 59.3-billion-document corpus, a two-term AND query where each term covers 2% of documents produces about 23.7 million intersection candidates (59.3B x 0.02^2). Running an expensive reranking model on every one of those candidates at 1,157 average queries/second would require about 27.4 billion reranker calls/second. What architecture avoids this, and roughly how much does it cut reranker load by?",
+    "a": "A narrowing funnel: inverted-index intersection produces the full raw candidate set (millions), a cheap term-frequency-based score (e.g. BM25-style) trims that down to about 2,000 candidates without running any model, and the expensive reranking model only runs on the roughly 100 candidates that survive after merging each shard's local top-K. At 1,157 average QPS, that's about 115,700 reranker calls/second instead of 27.4 billion — a reduction of roughly 237,250x, because the expensive computation only ever touches the small candidate set at the end of the funnel.",
+    "q_zh": "在一个 593 亿文档规模的搜索系统中，一个两词 AND 查询（每个词覆盖 2% 的文档）产生约 2,372.5 万个求交候选（593 亿 × 0.02^2）。如果在平均 1,157 QPS 的查询量下对每一个候选都跑一次昂贵的重排模型，需要约每秒 274 亿次重排调用。什么样的架构能避免这一点，大约能把重排负载降低多少？",
+    "a_zh": "一个逐层收窄的漏斗：倒排表求交先产出全部原始候选（数百万到千万级），一个廉价的基于词频的打分（类似 BM25）不跑任何模型就把候选收窄到约 2,000 条，昂贵的重排模型只对合并各分片本地 top-K 后剩下的约 100 条候选运行。按 1,157 平均 QPS 折算，重排调用量约为每秒 115,700 次，而不是 274 亿次——降低约 237,250 倍，因为昂贵的计算自始至终只触碰漏斗末端的小候选集。",
+    "tags": []
+  },
+  {
+    "id": "problems-search-engine-like-milestone-batching",
+    "node": "problems.search.search-engine",
+    "type": "qa",
+    "q": "In a search system that lets users sort results by like count, why does updating a separate like-count sort index only when a post's like count crosses a power-of-2 milestone (1, 2, 4, 8, 16, ...) instead of on every like event reduce write load so much more for a viral post than for an average one?",
+    "a": "The number of milestone updates for a post that eventually receives L likes is floor(log2(L)) + 1, versus L updates if every like triggered a write. For a viral post with 100,000 total likes, that's 17 milestone updates instead of 100,000 — a roughly 5,882x reduction. For an average post with only 8 likes, it's 4 updates instead of 8 — a modest 2x reduction. The savings scale with how concentrated the likes are, which means the mechanism pays off most exactly where the write pressure would otherwise be highest: viral posts receiving a burst of likes.",
+    "q_zh": "在一个允许用户按点赞数排序结果的搜索系统中，为什么只在帖子点赞数跨越 2 的幂次里程碑（1, 2, 4, 8, 16, …）时才更新一个独立的按点赞数排序索引，而不是每次点赞都更新，能给爆款帖子带来比普通帖子大得多的写入负载降低？",
+    "a_zh": "一条最终获得 L 个赞的帖子，用里程碑方式只需要 ⌊log2(L)⌋+1 次索引更新，而不是每次点赞都触发写入的 L 次。一条最终获得 10 万个赞的爆款帖子，只需要 17 次里程碑更新而不是 10 万次——降低约 5,882 倍。一条只有 8 个赞的普通帖子，只需要 4 次更新而不是 8 次——降低幅度很有限（约 2 倍）。这个收益随点赞的集中程度增长，意味着这个机制恰恰在写入压力本该最大的地方（点赞集中爆发的爆款帖子）收益最大。",
+    "tags": []
+  },
+  {
+    "id": "problems-search-engine-derived-index-not-writable-directly",
+    "node": "problems.search.search-engine",
+    "type": "qa",
+    "q": "In a post-search design, why does the search API deliberately not expose any endpoint for a client to write directly into the search index, and how does new content reach the index instead?",
+    "a": "If clients (or the application's own post-creation path) could write directly to the search index, there would be no single point enforcing consistency between the index and the system of record (the post-creation database), and a partial or reordered write could silently desynchronize them. Instead, the search index is only ever updated through an asynchronous change-event pipeline: the post service (the system of record) emits domain events like `PostCreated` or `LikeMilestone`, which flow through a queue to index ingestion workers that write into the owning shard. This keeps the index a rebuildable, eventually-consistent derived view rather than a second, independently writable source of truth.",
+    "q_zh": "在一个站内帖子搜索设计中，为什么搜索 API 故意不暴露任何让客户端直接写入搜索索引的接口？新内容是通过什么路径进入索引的？",
+    "a_zh": "如果客户端（或应用自身的发帖路径）可以直接写入搜索索引，就没有任何单点能强制索引和权威数据源（发帖数据库）保持一致，一次不完整或乱序的写入就可能让两者悄悄产生分歧。正确做法是索引只能通过一条异步的变更事件管道更新：帖子服务（权威数据源）发出 `PostCreated`、`LikeMilestone` 这类领域事件，事件经过队列流向索引摄取 worker，由 worker 写入对应的分片。这样索引始终是一个可重建的、最终一致的衍生视图，而不是一个可以被独立写入的第二数据源。",
+    "tags": []
+  },
+  {
+    "id": "problems-search-engine-partial-results-on-shard-failure",
+    "node": "problems.search.search-engine",
+    "type": "qa",
+    "q": "In a document-partitioned search system, what should the search aggregator do when one of the shards it fans out to doesn't respond within the query's latency budget, and why is this better than failing the whole query?",
+    "a": "The aggregator should return the results collected from the shards that did respond in time, along with an explicit `partial: true` flag in the response, rather than waiting indefinitely or failing the entire query because one shard is unavailable. Since the index is document-partitioned, every shard holds a distinct slice of the corpus, so a missing shard means some matching documents are absent from the results (reduced recall) — but the results that are present are still valid. Returning a mostly-correct, explicitly-marked-partial result set is a better trade than making the whole search feature unavailable because of one slow or down shard out of many.",
+    "q_zh": "在一个按文档分片的搜索系统中，当扇出对象里的某个分片没有在查询的延迟预算内响应时，聚合器应该怎么做？为什么这比让整个查询失败更好？",
+    "a_zh": "聚合器应该返回已经按时响应的那些分片收集到的结果，并在响应里显式标注 `partial: true`，而不是无限等待或者因为一个分片不可用就让整个查询失败。由于索引是按文档分片的，每个分片持有语料的一个独立切片，缺失一个分片意味着一部分匹配的文档不在结果里（召回率下降）——但已经返回的那些结果仍然是有效的。相比因为众多分片中的一个变慢或宕机就让整个搜索功能不可用，返回一份大部分正确、明确标注为不完整的结果集是更好的取舍。",
+    "tags": []
+  },
+  {
+    "id": "problems-search-engine-10x-shard-growth-vs-web-scale",
+    "node": "problems.search.search-engine",
+    "type": "qa",
+    "q": "In a post-search design scaling from 500M to 5 billion DAU (10x), the inverted index shard count grows from about 32 to about 320 (linear with the index size, which scales with post volume). Why is 320 still comfortably below the ~480 shards estimated for a web-scale search engine, and what does that comparison suggest about document partitioning's headroom?",
+    "a": "The web-scale estimate (~480 shards) came from a much larger assumed corpus (20 billion pages) with far more indexable terms per document (about 800 for long pages vs. 18 for short posts), not from a fundamentally different partitioning strategy. Since post search at 10x growth (320 shards) still lands below that web-scale figure, document partitioning has meaningful headroom to keep scaling by simply adding shards before the fan-out width and its associated tail-latency risk reach the range already shown to be survivable (with hedged requests) at web scale.",
+    "q_zh": "在一个从 5 亿日活扩展到 50 亿日活（10 倍）的站内帖子搜索设计中，倒排索引分片数从约 32 增长到约 320（与索引大小同比例增长，而索引大小又和发帖量成正比）。为什么 320 依然明显低于网页搜索规模估算出的约 480 个分片？这个对比说明了按文档分片这个策略还有多少扩展空间？",
+    "a_zh": "网页搜索规模估算出的约 480 个分片，来自一个假设大得多的语料（200 亿网页）和每篇文档多得多的可索引词项（长网页约 800 个，短帖子约 18 个），而不是因为用了根本不同的分片策略。既然站内帖子搜索 10 倍增长后（320 个分片）依然低于这个网页搜索的数字，说明按文档分片这个策略还有相当的扩展空间——可以继续单纯靠加分片来扩容，直到扇出宽度和随之而来的长尾延迟风险逼近网页搜索规模那个已经证明（借助对冲请求）可以承受的区间。",
+    "tags": []
+  }
+]
