@@ -1197,7 +1197,7 @@ if chained:
 
 **持久化与规模**
 
-- **存一局到一半的棋**：需要落盘的只有 `(board 配置, players, positions, finished, seat,
+- **存一局到一半的棋**：需要落盘的只有 `(board 配置，players, positions, finished, seat,
   turns, rng.getstate())`。注意最后一项——不存随机数发生器的状态，恢复出来的就是另一局棋；
   这正是"随机源是一个被注入的对象而不是一个全局函数"的回报。
 - **日志的增长**：`deque(maxlen=...)` 已经把它封了顶，`turns_played` 独立计数所以不受影响。
