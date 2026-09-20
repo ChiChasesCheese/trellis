@@ -35,6 +35,13 @@ money, `threading.Lock` where the brief asks for thread safety (and say honestly
 and does not give you). No singletons via `__new__`, no `get_x()`/`set_x()`, no class that only holds
 a `main`, no interface with exactly one implementation "for extensibility".
 
+**Three habits the first pilot had to fix — do not repeat them.** (1) Never return an internal
+mutable collection from a property or getter: hand out a snapshot (a tuple, a frozen mapping, a
+count computed under the lock). (2) An observer event carries *what happened* (a small frozen
+dataclass), so subscribers update themselves from the event instead of reaching back into the
+subject's storage without its lock. (3) A class that only forwards one call to another object is
+a Java habit: give it a responsibility or delete it, and say which in the article.
+
 ## 1. The code — `vault/domains/low-level-design/problems/<slug>/`
 
 - `solution.py` — the reference solution. 150–500 lines, standard library only, Python 3.12, fully
