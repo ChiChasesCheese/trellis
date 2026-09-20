@@ -1,0 +1,12 @@
+{
+  "problems.foundations.object-storage": [
+    "problems-object-storage-metadata-shard-count-from-prefix-throughput",
+    "problems-object-storage-put-replaces-whole-object",
+    "problems-object-storage-crush-no-central-lookup-table",
+    "problems-object-storage-wide-ec-more-durable-than-triple-replication",
+    "problems-object-storage-multipart-atomic-completion",
+    "problems-object-storage-tombstone-then-compaction-gc",
+    "problems-object-storage-sequential-key-prefix-hotspot",
+    "problems-object-storage-10x-metadata-shards-4096"
+  ]
+}

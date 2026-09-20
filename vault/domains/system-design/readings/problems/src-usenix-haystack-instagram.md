@@ -1,5 +1,5 @@
 ---
-nodes: [problems.social.instagram]
+nodes: [problems.social.instagram, problems.foundations.object-storage]
 url: https://www.usenix.org/legacy/event/osdi10/tech/full_papers/Beaver.pdf
 ---
 # Finding a Needle in Haystack: Facebook's Photo Storage
