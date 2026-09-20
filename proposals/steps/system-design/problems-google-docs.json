@@ -1,0 +1,12 @@
+{
+  "problems.media.google-docs": [
+    "problems-google-docs-oplog-vs-content-storage-ratio",
+    "problems-google-docs-single-writer-per-document",
+    "problems-google-docs-ot-vs-crdt-tradeoff",
+    "problems-google-docs-server-authoritative-ack-flow",
+    "problems-google-docs-interleaving-anomaly-stable-anchor",
+    "problems-google-docs-presence-separate-channel",
+    "problems-google-docs-hot-document-cap",
+    "problems-google-docs-cross-region-multimaster-pivot"
+  ]
+}

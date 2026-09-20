@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-google-docs-oplog-vs-content-storage-ratio",
+    "node": "problems.media.google-docs",
+    "type": "qa",
+    "q": "In a collaborative document editor, why does storing every raw edit operation forever (for full undo/version history) cost roughly an order of magnitude more storage per year than the documents' actual content, and what design change does that force?",
+    "a": "Every keystroke-level operation (type, position, content delta, author, timestamp) is a small durable record, and an actively-edited platform produces far more operation records per year than new document bytes, because most edited characters are typed, revised, and deleted many times before a document settles — one worked estimate puts raw operation-log growth at roughly 11.5x the new document content storage. This forces a two-tier retention design: keep fine-grained operations only for a rolling recent window (supporting precise undo/history browsing), and compact everything older into periodic named snapshots, discarding the intermediate operations rather than keeping them forever.",
+    "q_zh": "在协同文档编辑器中，为什么无限期保留每一次原始编辑操作（为了支持完整的撤销/版本历史）每年的存储成本会比文档实际内容本身高出一个数量级左右，这个事实迫使设计做出什么改变？",
+    "a_zh": "每一条按键级操作记录（类型、位置、内容增量、作者、时间戳）都是一条小的持久化记录，而一个被持续编辑的平台每年产生的操作记录量远超新增文档字节量，因为大多数被编辑的字符在文档定稿前会被反复输入、修改、删除——一个估算给出原始操作日志的增长量级约为新增文档内容存储量的 11.5 倍。这迫使设计采用两层保留策略：只在一个滚动的近期窗口内保留细粒度操作（支持精确的撤销/历史浏览），窗口之外的全部压缩成周期性的命名快照，丢弃中间的细粒度操作而不是永久保留。",
+    "tags": []
+  },
+  {
+    "id": "problems-google-docs-single-writer-per-document",
+    "node": "problems.media.google-docs",
+    "type": "qa",
+    "q": "In a collaborative document editor's data model, why must exactly one server instance own the authoritative ordering for a given document at any moment, rather than letting edits for the same document be handled by whichever server instance a client happens to connect to?",
+    "a": "Concurrent edits to the same document must converge to byte-identical results on every client, and operational transformation achieves that by giving every operation a single, strictly-ordered position in a per-document history (a global monotonic revision number) that later operations are transformed against. If two different server instances could independently assign revision numbers or transform operations for the same document, there would be two competing orderings with no way to reconcile them without a second coordination layer — so the document itself, not just individual requests, is the unit of ownership and sharding.",
+    "q_zh": "在协同文档编辑器的数据模型中，为什么在任意时刻，同一篇文档的权威排序必须只归属一个服务器实例，而不能让客户端连接到哪个实例就由哪个实例处理该文档的编辑？",
+    "a_zh": "同一篇文档的并发编辑必须让所有客户端最终收敛到逐字节相同的结果，而操作转换（OT）实现这一点的方式是给每个操作在该文档的历史里分配一个严格全局有序的位置（全局单调修订号），后续操作都基于这个顺序做转换。如果两个不同的服务器实例可以各自独立地为同一篇文档分配修订号或做转换，就会产生两套互相竞争、无法在不引入额外协调层的情况下调和的顺序——所以分片和归属的单位是「文档本身」，而不是单次请求。",
+    "tags": []
+  },
+  {
+    "id": "problems-google-docs-server-authoritative-ack-flow",
+    "node": "problems.media.google-docs",
+    "type": "qa",
+    "q": "In a centralized operational-transformation architecture for collaborative editing, why does the client wait for the server's acknowledgment of its last batch of operations before sending the next batch, instead of sending new local operations as soon as they're produced?",
+    "a": "If clients could send continuously without waiting, the server would need to track a separate state space per client (which operations that specific client has and hasn't seen), since any two clients could have divergent unacknowledged histories to transform against — this makes correctness far harder to reason about. By having clients buffer locally-produced operations until the prior batch is acknowledged, the server only ever needs to maintain one state space: its own accumulated operation history. Any incoming batch is transformed against exactly 'what the server has committed since the revision this batch was based on,' which is a single well-defined computation.",
+    "q_zh": "在中心化操作转换（OT）的协同编辑架构中，为什么客户端要等服务器对上一批操作确认之后才发送下一批操作，而不是本地一产生新操作就立刻发送？",
+    "a_zh": "如果客户端可以不等待就持续发送，服务器就需要为每个客户端单独维护一份状态空间（这个客户端具体看到过哪些操作），因为任意两个客户端都可能各自持有不同的、尚未确认的操作历史需要转换裁决——这会让正确性论证变得极其困难。让客户端把本地新产生的操作缓存到上一批被确认为止，服务器就只需要维护一份状态空间：它自己已提交的操作历史。任何到达的一批操作只需要与「自这批操作所基于的版本以来服务器已提交的操作」做转换，这是一个定义明确的单一计算。",
+    "tags": []
+  },
+  {
+    "id": "problems-google-docs-interleaving-anomaly-stable-anchor",
+    "node": "problems.media.google-docs",
+    "type": "qa",
+    "q": "In a rich-text collaborative editor, what is the 'interleaving anomaly,' and how does anchoring formatting spans to stable per-character identifiers (instead of numeric offsets) help avoid both it and incorrect format-inheritance at span boundaries?",
+    "a": "The interleaving anomaly happens when two users concurrently insert separate runs of text at the same position, and a naive character-by-character merge scrambles the two runs together instead of keeping each run contiguous. Anchoring a formatting span (e.g. bold) to the stable identifiers of its first and last characters, rather than to numeric positions that shift with every concurrent edit, lets insertions and deletions simply move or shrink the span's endpoints without corrupting run ordering, and lets each format declare whether typing at its boundary should extend the span (bold continuing) or not (a hyperlink or comment not silently absorbing new text).",
+    "q_zh": "在富文本协同编辑器中，什么是「交错异常」（interleaving anomaly），把格式区间锚定到稳定的逐字符标识（而不是数值偏移量）如何同时避免这个异常和区间边界处错误的格式继承？",
+    "a_zh": "交错异常指的是两个用户并发在同一位置各自插入一段连续文字时，简单的逐字符合并会把两段文字错误地拆散、交替穿插在一起，而不是让每一段保持连续。把一个格式区间（如加粗）锚定到其首尾字符的稳定标识，而不是随每次并发编辑都会变动的数值位置，就能让插入/删除只需要平移或收缩区间端点而不会打乱两段文字的顺序，并且让每种格式能声明在其边界处续写是否应该扩展该区间（加粗应续写扩展，超链接或评论不应默默吸收新输入的文字）。",
+    "tags": []
+  },
+  {
+    "id": "problems-google-docs-presence-separate-channel",
+    "node": "problems.media.google-docs",
+    "type": "qa",
+    "q": "In a collaborative document editor, why should cursor position and presence updates be broadcast through a completely separate channel from the document's edit-operation log, rather than being modeled as just another operation type in that log?",
+    "a": "A stale or dropped cursor update only costs a brief visual glitch, while a stale or lost text operation is data corruption — these two kinds of data have fundamentally different persistence, ordering, and loss-tolerance requirements. Routing presence through the same durable, strictly-ordered operation log as document edits would force cursor updates to pay for guarantees they don't need (durability, transformation, global ordering) and would pollute the version history with high-frequency, content-irrelevant records, so presence instead goes through a lightweight, best-effort, unordered publish-subscribe channel that can drop messages and scale independently.",
+    "q_zh": "在协同文档编辑器中，为什么光标位置和在线状态广播应该走一条与文档操作日志完全独立的通道，而不是把它建模成操作日志里的另一种操作类型？",
+    "a_zh": "一次丢失或延迟的光标更新只造成短暂的视觉瑕疵，而一次丢失或过期的文本操作则是数据损坏——这两类数据在持久化、顺序、丢失容忍度上的要求根本不同。如果把在线状态也塞进和文档编辑共用的那条持久化、严格有序的操作日志，就会迫使光标更新为它并不需要的保证（持久性、转换、全局顺序）付出代价，还会用大量高频、与内容无关的记录污染版本历史，所以在线状态改走一条轻量、尽力而为、无需顺序、可以丢帧的发布订阅通道，能够独立于编辑路径横向扩展。",
+    "tags": []
+  },
+  {
+    "id": "problems-google-docs-ot-vs-crdt-tradeoff",
+    "node": "problems.media.google-docs",
+    "type": "qa",
+    "q": "In a collaborative document editor with one authoritative ordering server per document, why might centralized operational transformation (OT) be preferred over a CRDT (conflict-free replicated data type) for merging concurrent edits, even though CRDTs guarantee convergence without any central coordinator?",
+    "a": "A document already needs one authoritative node to maintain strict global operation order (for version history and permission checks ahead of edits), so letting that same node resolve conflicts via transformation avoids paying CRDT's characteristic costs — per-character unique position identifiers and tombstones for deleted content — that exist specifically to guarantee convergence without a coordinator that, in this design, already exists. The trade-off is that OT's transform functions must satisfy strict correctness properties across every combination of insert/delete/format operations, which is harder to get right by hand than CRDTs' mathematical convergence guarantee, and is mitigated with large-scale randomized convergence testing rather than a central authority argument alone.",
+    "q_zh": "在协同文档编辑器中，如果每篇文档已经有一个权威排序服务器，为什么中心化的操作转换（OT）可能优于 CRDT（无冲突复制数据类型）来合并并发编辑，尽管 CRDT 能在没有任何中心协调者的情况下保证收敛？",
+    "a_zh": "一篇文档本来就需要一个权威节点来维护严格的全局操作顺序（用于版本历史和编辑前的权限校验），让同一个节点通过转换来裁决冲突，就能避免 CRDT 那些专门为了在没有协调者时也能保证收敛而存在的典型代价——逐字符唯一位置标识符和被删除内容的墓碑标记，而这里协调者本来就已经存在。代价是 OT 的转换函数必须在插入/删除/格式操作的所有交叉组合上都满足严格的正确性条件，比 CRDT 天然的数学收敛保证更容易在手工实现时出错，需要靠大规模随机化收敛性测试而不仅仅是「有权威节点」这一论点来缓解。",
+    "tags": []
+  },
+  {
+    "id": "problems-google-docs-hot-document-cap",
+    "node": "problems.media.google-docs",
+    "type": "qa",
+    "q": "In a collaborative document editor, why can't a single extremely popular document (e.g. a company-wide announcement with hundreds of simultaneous editors) be relieved of its hot-spot load by sharding, the way most key-based hot spots can, and what mitigation does that force instead?",
+    "a": "Sharding by document id only balances load across different documents; it cannot split the operation stream within one document, because that document's edits must all pass through a single ordering authority to preserve the global order operational transformation depends on. The only real mitigation is a product-level limit on simultaneous active editors per document — once a document exceeds that cap, additional joiners are switched to a read-only live-updating view instead of participating in the merge, turning an architectural bottleneck into an explicit, bounded product constraint rather than pretending the system can scale one document's write throughput indefinitely.",
+    "q_zh": "在协同文档编辑器中，为什么一篇极受欢迎的文档（例如有数百人同时编辑的全公司公告）无法像大多数按 key 分片能解决的热点那样通过分片来缓解负载，这迫使采用什么样的应对手段？",
+    "a_zh": "按文档 id 分片只能均衡不同文档之间的负载，无法拆分单篇文档内部的操作流，因为该文档的所有编辑都必须经过同一个排序权威节点，才能维持操作转换所依赖的全局顺序。真正可行的缓解手段是在产品层面限制单篇文档的同时活跃编辑人数上限——一旦超过这个上限，新加入者会被切换到只读的实时更新视图而不参与合并，这是把一个架构层面的瓶颈转化为一个明确、有界的产品约束，而不是假装系统能无限扩展单篇文档的写吞吐。",
+    "tags": []
+  },
+  {
+    "id": "problems-google-docs-cross-region-multimaster-pivot",
+    "node": "problems.media.google-docs",
+    "type": "qa",
+    "q": "In a collaborative document editor built around one authoritative ordering server per document, what architectural change would be required to support millisecond-latency multi-master editing across two continents, and why is it a reconsideration of the core design rather than an incremental scale-out?",
+    "a": "A single-authority ordering node inherently requires every editor's operations to round-trip to that one node to be sequenced, so editors far from it always pay cross-region network latency no matter how many machines are added elsewhere. Supporting true multi-master editing across regions would require reconsidering the operational-transformation choice itself and moving toward a CRDT-based model, accepting its position-identifier and tombstone metadata overhead in exchange for convergence without any single coordinating node — this is a change to which merge algorithm the whole system is built on, not something achieved by scaling the existing OT server tier.",
+    "q_zh": "在一个以「每篇文档一个权威排序服务器」为核心的协同文档编辑器里，要支持跨两个大洲、毫秒级延迟的多主编辑，需要什么样的架构改变，为什么这是对核心设计的重新权衡而不是增量扩容？",
+    "a_zh": "单一权威排序节点本质上要求每个编辑者的操作都要往返到那一个节点才能被排序，所以离它远的编辑者无论在别处加多少机器都始终要承受跨区域网络延迟。要真正支持跨区域多主编辑，需要重新评估操作转换这个算法选择本身，转向基于 CRDT 的模型，接受其位置标识符和墓碑带来的元数据开销，换取不依赖任何单一协调节点的收敛能力——这是对整个系统所依赖的合并算法的改变，不是靠扩容现有 OT 服务器层就能达成的。",
+    "tags": []
+  }
+]

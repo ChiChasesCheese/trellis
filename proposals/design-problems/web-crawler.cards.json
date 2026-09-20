@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-web-crawler-host-concurrency-sets-machine-floor",
+    "node": "problems.search.web-crawler",
+    "type": "qa",
+    "q": "In a distributed web crawler designed to hit a target fetch QPS while honoring a per-host politeness delay (e.g. at most one request per host every few seconds), why does the number of distinct hosts that must be fetched from concurrently, rather than the raw fetch QPS itself, usually set the actual floor on how many fetcher machines are needed?",
+    "a": "Politeness caps the sustainable request rate to any single host far below the crawler's overall target rate, so hitting a high aggregate QPS requires spreading requests across many thousands of distinct hosts in flight at once, not sending many requests to few hosts. If each fetcher machine can hold only a limited number of concurrent connections (one per in-flight host), the number of machines needed to cover enough distinct hosts simultaneously can exceed what raw QPS divided by per-machine throughput would suggest — a worked estimate can show host-concurrency requiring several times more machines than raw-QPS-based sizing alone would imply.",
+    "q_zh": "在一个分布式网络爬虫中，如果要在遵守单宿主礼貌延迟（例如同一宿主每隔几秒最多一次请求）的前提下达到目标抓取 QPS，为什么通常是「需要同时保持在途请求的不同宿主数量」、而不是原始抓取 QPS 本身，决定了实际需要多少台抓取机器？",
+    "a_zh": "礼貌约束把对任意单个宿主的可持续请求速率限制在远低于爬虫整体目标速率的水平，所以要达到较高的聚合 QPS，必须把请求分散到同时在途的成千上万个不同宿主上，而不是对少数宿主发大量请求。如果每台抓取机器只能维持有限数量的并发连接（每个在途宿主占一个），那么「同时覆盖足够多不同宿主」所需要的机器数，可能会超过「原始 QPS 除以单机吞吐」算出来的数字——一个具体估算可以显示宿主并发数所要求的机器数比仅按原始 QPS 估算高出好几倍。",
+    "tags": []
+  },
+  {
+    "id": "problems-web-crawler-mercator-front-back-queues",
+    "node": "problems.search.web-crawler",
+    "type": "qa",
+    "q": "In the Mercator-style URL frontier design for a web crawler, why does the number of back queues need only scale with worker concurrency (thousands) rather than with the total number of distinct hosts ever discovered (which can be hundreds of millions), while still guaranteeing at most one in-flight request per host?",
+    "a": "Front queues hold URLs bucketed by priority and feed a much smaller set of back queues; a routing table binds each back queue to exactly one host at a time, and a worker only pulls from the back queue whose bound host is next allowed to be fetched (tracked via a min-heap of per-host next-allowed-fetch times). Because at any given moment only as many hosts are actively being crawled as there are workers, the back queues only need to represent that active subset, not every host ever seen — most discovered hosts have no URL in flight at all at a given instant, so they don't need a dedicated permanent queue.",
+    "q_zh": "在 Mercator 风格的爬虫 URL frontier 设计中，为什么后端队列（back queue）的数量只需要跟 worker 并发度（几千级）同量级，而不需要跟历史上曾发现过的宿主总数（可能是几亿）同量级，却仍能保证任意时刻对一个宿主最多只有一个在途请求？",
+    "a_zh": "前端队列按优先级把 URL 分桶，喂给数量小得多的后端队列；一张路由表把每个后端队列在任意时刻绑定到恰好一个宿主，worker 只从「其绑定宿主当前允许被抓取」的后端队列取 URL（通过一个按各宿主下次允许抓取时间排序的最小堆来判断）。因为在任意时刻真正处于活跃抓取状态的宿主数量最多等于 worker 数量，后端队列只需要代表这个活跃子集，而不是历史上见过的每一个宿主——绝大多数已发现的宿主在某一时刻根本没有在途 URL，不需要为它们常驻一个专属队列。",
+    "tags": []
+  },
+  {
+    "id": "problems-web-crawler-bloom-filter-asymmetric-tolerance",
+    "node": "problems.search.web-crawler",
+    "type": "qa",
+    "q": "In a web crawler's URL-seen deduplication, why is a Bloom filter an acceptable data structure despite its false-positive risk, given that the crawler's correctness requirement is 'never re-crawl a URL already seen' rather than 'never skip a URL that's actually new'?",
+    "a": "A Bloom filter can only produce false positives (occasionally claiming a genuinely new URL has already been seen, causing it to be skipped) and never false negatives (it will never claim a seen URL is new), so it structurally cannot violate the crawler's hard requirement of avoiding repeated crawls of the same URL — the only cost of its error is a small, tunable probability of missing a small fraction of new URLs. This asymmetry lets the crawler trade a tunable false-positive rate for a large memory reduction versus an exact hash set (a worked estimate found roughly 20x less memory at a 0.1% false-positive rate for a set of hundreds of billions of URLs).",
+    "q_zh": "在网络爬虫的「URL 是否见过」去重判断中，为什么尽管 Bloom filter 存在假阳性风险，它仍然是可接受的数据结构——考虑到爬虫的正确性要求是「绝不重复抓取已见过的 URL」而不是「绝不跳过真正的新 URL」？",
+    "a_zh": "Bloom filter 只会产生假阳性（偶尔把一个确实是新的 URL 误判为已经见过，从而被跳过），绝不会产生假阴性（它绝不会把一个见过的 URL 判断为新的），所以它在结构上不可能违反爬虫「避免重复抓取同一 URL」这条硬性要求——它出错的唯一代价是以一个可调的小概率漏掉一小部分新 URL。这种不对称性让爬虫可以用一个可调的假阳性率换取相对精确哈希集合大得多的内存节省（一个具体估算在千亿级 URL 集合、0.1% 假阳性率下算出约 20 倍的内存节省）。",
+    "tags": []
+  },
+  {
+    "id": "problems-web-crawler-url-vs-content-dedup-two-problems",
+    "node": "problems.search.web-crawler",
+    "type": "qa",
+    "q": "In a web crawler, why are 'have we seen this exact URL before' and 'is this content actually a duplicate of something we already crawled, reached via a different URL' two genuinely separate deduplication problems that need different techniques?",
+    "a": "URL-level deduplication (e.g. via a Bloom filter on canonicalized URLs) only catches exact or near-exact URL matches, but the same underlying content is routinely served at multiple distinct URLs — with different tracking parameters, mirrors, or session identifiers — that no URL-level check will ever recognize as related. Catching that requires content-level similarity detection, such as a similarity signature (e.g. minhash over text shingles) compared against recently-seen signatures with a distance threshold, because an exact content hash also fails whenever two pages differ in trivial ways (timestamps, ads, footers) while being substantively the same article.",
+    "q_zh": "在网络爬虫中，为什么「是否见过这个 URL」和「这份内容是否其实是已抓取过的重复内容、只是通过不同 URL 到达」是两个真正独立、需要不同技术的去重问题？",
+    "a_zh": "URL 级去重（例如对规范化后的 URL 做 Bloom filter）只能捕获精确或近似相同的 URL，但同一份实质内容经常挂在多个不同的 URL 下——带不同追踪参数、镜像站点、会话标识——这些 URL 级检查永远不会识别为相关。要捕获这种情况需要内容级的相似度检测，例如基于文本 shingle 的相似度签名（如 minhash），与最近见过的签名比对相似度阈值，因为精确内容哈希在两个页面只有细枝末节不同（时间戳、广告、页脚）但实质是同一篇文章时同样会失效。",
+    "tags": []
+  },
+  {
+    "id": "problems-web-crawler-crawl-delay-not-standardized",
+    "node": "problems.search.web-crawler",
+    "type": "qa",
+    "q": "Why shouldn't a polite web crawler treat a site's declared `Crawl-delay` value in robots.txt as its sole or authoritative throttling signal, even though it fully honors the `Disallow`/`Allow` directives in the same file?",
+    "a": "RFC 9309, the IETF standard that formalized robots.txt in 2022, standardized `Disallow`/`Allow` but explicitly left `Crawl-delay` out of the standard because there was no consistent real-world behavior to codify — in practice, major crawlers disagree on whether to honor it at all. A crawler that treats an unstandardized, inconsistently-supported field as its primary throttle is relying on something with no guaranteed meaning; a more robust design honors the mandatory disallow rules strictly but derives its actual request rate from its own adaptive signal, such as observed response latency and error rate with exponential backoff, treating any declared crawl-delay only as a lower-bound hint.",
+    "q_zh": "为什么一个礼貌的网络爬虫不应该把站点在 robots.txt 里声明的 `Crawl-delay` 值当作唯一或权威的节流信号，即使它完全遵守同一文件里的 `Disallow`/`Allow` 指令？",
+    "a_zh": "把 robots.txt 正式标准化的 IETF 标准 RFC 9309（2022 年）标准化了 `Disallow`/`Allow`，但明确没有把 `Crawl-delay` 纳入标准，理由是这个字段在真实世界里没有一致的行为可以规范——现实中主流爬虫对是否遵守它的做法并不一致。把一个未被标准化、支持程度不一致的字段当作主要节流依据，等于依赖一个没有确定含义保证的东西；更稳健的做法是严格遵守强制性的 disallow 规则，但用自己的自适应信号（例如观测到的响应延迟和错误率，配合指数退避）来决定实际请求速率，把站点声明的 crawl-delay（如果有）只当作一个下限参考。",
+    "tags": []
+  },
+  {
+    "id": "problems-web-crawler-spider-trap-pattern-plus-similarity",
+    "node": "problems.search.web-crawler",
+    "type": "qa",
+    "q": "In a web crawler, why does detecting spider traps (like infinitely-generated calendar pages) by combining URL structural pattern similarity with fetched-content similarity work better than a single global maximum crawl depth?",
+    "a": "A fixed maximum depth alone either punishes legitimate deep content that genuinely has many distinct pages (like a forum's paginated history) or misses traps that grow slowly in depth but explosively in URL count at each level (like a calendar's 'next month' links). Requiring both a high structural similarity among a host's URLs (e.g. many URLs differing only in an incrementing or date parameter) and a high content similarity among the pages actually fetched from them (via the same similarity signature used for content deduplication) targets the actual signature of a trap — many near-identical pages disguised as many distinct URLs — without penalizing genuinely deep but substantively different paginated content.",
+    "q_zh": "在网络爬虫中，为什么用「URL 结构模式相似度 + 抓取内容相似度」组合来检测蜘蛛陷阱（如无限生成的日历页面），比单一的全局最大抓取深度效果更好？",
+    "a_zh": "单纯固定最大深度要么会误伤真正拥有大量不同页面的合法深层内容（比如论坛的历史分页），要么会放过深度增长缓慢但每层 URL 数量爆炸式增长的陷阱（比如日历的「下个月」链接）。同时要求「一个宿主下的 URL 结构高度相似」（例如大量 URL 只有某个递增数字或日期参数不同）和「实际抓回的内容也高度相似」（复用内容去重用的相似度签名），才能精准命中陷阱的真实特征——大量近似重复的页面伪装成大量不同的 URL——而不会误伤深度确实很深但内容确实各不相同的分页内容。",
+    "tags": []
+  },
+  {
+    "id": "problems-web-crawler-dns-not-the-bottleneck",
+    "node": "problems.search.web-crawler",
+    "type": "qa",
+    "q": "In a web crawler sized to fetch billions of pages per crawl cycle, why does DNS lookup volume typically come out roughly two orders of magnitude smaller than fetch QPS once per-host caching is in place, and what mistake does that number rule out?",
+    "a": "DNS lookups are needed per distinct host, not per URL, and a large crawl discovers vastly more URLs per host than one lookup would suggest — so once a resolved IP is cached with a TTL aligned to the crawl cycle, the number of fresh lookups needed is bounded by the number of distinct hosts, which is a small fraction of the total fetch volume. This rules out over-engineering DNS resolution as a heavyweight distributed system of its own scale to match fetch QPS; the real risk to watch for instead is stale cached entries after a host's IP changes, handled by refreshing on fetch failure rather than by building more DNS infrastructure.",
+    "q_zh": "在一个按每周期抓取数十亿页面规模设计的网络爬虫中，为什么一旦做好按宿主缓存，DNS 查询量通常会比抓取 QPS 低接近两个数量级，这个数字排除了什么样的设计错误？",
+    "a_zh": "DNS 查询是按不同宿主而不是按 URL 需要的，而一次大规模抓取每个宿主发现的 URL 数量远超一次查询所暗示的量级——所以只要把解析结果按与抓取周期对齐的 TTL 缓存起来，需要的新鲜查询次数就被限制在「不同宿主数量」这个远小于总抓取量的范围内。这排除了把 DNS 解析过度设计成一套与抓取 QPS 同量级的重量级独立分布式系统的错误；真正该警惕的风险是宿主 IP 变更后缓存条目过期，应该靠抓取失败时触发刷新来处理，而不是靠建更多 DNS 基础设施。",
+    "tags": []
+  },
+  {
+    "id": "problems-web-crawler-politeness-caps-scale-out-not-up",
+    "node": "problems.search.web-crawler",
+    "type": "qa",
+    "q": "In a web crawler, why can't adding more fetcher machines increase the sustainable crawl rate against a single popular host, and what does that imply about how the system should scale to serve a much larger overall crawl target?",
+    "a": "The politeness constraint caps the request rate to any one host based on that host's own tolerance (observed via adaptive throttling), not on how much fetcher capacity the crawler has available — so no amount of additional machines lets the crawler legitimately exceed that per-host ceiling. This means scaling the system's overall throughput to a much larger target has to come from increasing the breadth of distinct hosts crawled in parallel, not from increasing the rate against any single host; at very large scale, the bottleneck shifts from machine count to how many hosts the crawler can discover and hold in flight simultaneously.",
+    "q_zh": "在网络爬虫中，为什么增加更多抓取机器不能提高对单个热门宿主的可持续抓取速率，这对系统如何扩展以服务大得多的整体抓取目标意味着什么？",
+    "a_zh": "礼貌约束把对任意一个宿主的请求速率限制在该宿主自身的承受能力之内（通过自适应节流观测得到），而不是限制在爬虫拥有多少抓取能力之内——所以无论增加多少台机器，都不能让爬虫合理地超过这个单宿主速率上限。这意味着要把系统整体吞吐扩展到大得多的目标，必须靠增加并行抓取的不同宿主的广度，而不是靠提高对单一宿主的速率；在极大规模下，瓶颈会从机器数量转移到爬虫能同时发现并保持在途多少个宿主上。",
+    "tags": []
+  }
+]
