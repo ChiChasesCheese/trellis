@@ -1,0 +1,13 @@
+{
+  "problems.games.deck-of-cards": [
+    "problems-deck-of-cards-rules-not-on-card",
+    "problems-deck-of-cards-deck-hides-its-cards",
+    "problems-deck-of-cards-ace-eleven-or-one",
+    "problems-deck-of-cards-two-cards-and-settle-order",
+    "problems-deck-of-cards-injected-rng-and-scripted-decks",
+    "problems-deck-of-cards-counting-is-an-observer",
+    "problems-deck-of-cards-enum-closed-extend-the-composition",
+    "problems-deck-of-cards-unknown-card-fails-loudly",
+    "problems-deck-of-cards-shoe-lock-and-immutable-cards"
+  ]
+}

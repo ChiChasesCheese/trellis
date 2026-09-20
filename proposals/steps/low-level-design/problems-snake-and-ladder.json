@@ -1,0 +1,13 @@
+{
+  "problems.games.snake-and-ladder": [
+    "problems-snake-and-ladder-validate-at-construction",
+    "problems-snake-and-ladder-two-kinds-of-nontermination",
+    "problems-snake-and-ladder-die-is-a-callable",
+    "problems-snake-and-ladder-extra-turn-is-not-pip-sum",
+    "problems-snake-and-ladder-turn-is-a-transaction",
+    "problems-snake-and-ladder-two-refused-classes",
+    "problems-snake-and-ladder-effects-compose",
+    "problems-snake-and-ladder-testing-without-flakes",
+    "problems-snake-and-ladder-lock-per-game-and-gil"
+  ]
+}
