@@ -1,0 +1,66 @@
+[
+  {
+    "id": "problems-lru-cache-store-vs-order-split",
+    "node": "problems.components.lru-cache",
+    "type": "qa",
+    "q": "在一个可插拔淘汰策略的缓存设计里，`Cache` 类和 `EvictionPolicy` 各自的职责怎么划分？`Cache` 自己维护的不变量是什么？",
+    "a": "`Cache` 只管两件事：`key -> value` 的存储（一个 `dict`）和容量上限；`EvictionPolicy` 只管一件事：给定一批被访问/插入的 key，回答“容量不够时该淘汰谁”。`Cache` 不知道淘汰顺序是按最近使用还是按频率算的，`EvictionPolicy` 也不存储 value。`Cache` 自己拥有并且永远维护的不变量是 `len(内部存储) <= capacity`——每次 `put` 在超过容量前一定会先向策略要一个受害者 key 并删除它，再插入新 key。",
+    "tags": []
+  },
+  {
+    "id": "problems-lru-cache-policy-protocol-choice",
+    "node": "problems.components.lru-cache",
+    "type": "qa",
+    "q": "LRU 缓存里，`EvictionPolicy`（LRU/LFU 都要实现的淘汰策略接口）定义成 `typing.Protocol` 而不是 `abc.ABC`，理由是什么？",
+    "a": "`ABC` 的价值在于能提供共享的默认实现，或者需要用 `isinstance()` 在运行时强校验类型；而 `LRUPolicy` 和 `LFUPolicy` 之间没有任何值得共享的代码（一个用一条双向链表，一个用频率桶），`EvictionPolicy` 纯粹是一份“需要哪几个方法”的契约清单。用 `Protocol` 时，任何对象只要方法签名对得上（`record_insert`/`record_access`/`evict`/`remove`）就自动满足接口，不需要显式 `class LRUPolicy(EvictionPolicy)` 声明继承——测试代码想传一个临时的假策略时也不需要知道 `EvictionPolicy` 这个类存在。这是结构化子类型（鸭子类型）优于名义子类型的一个具体例子。",
+    "tags": []
+  },
+  {
+    "id": "problems-lru-cache-strategy-pattern-python-form",
+    "node": "problems.components.lru-cache",
+    "type": "qa",
+    "q": "LRU/LFU 缓存里“淘汰策略可替换”用的是什么模式？它在这里的 Python 写法和典型的 Java 版策略模式有什么不同？",
+    "a": "这是策略模式（Strategy）：把“容量满了该淘汰谁”这个会变化的算法，从 `Cache` 里抽出来，做成一个独立、可替换的对象。Java 版通常会有一个抽象策略接口加多个实现类，调用方在构造时传入策略实例——这里的 Python 写法完全一样（`Cache(capacity, policy=LFUPolicy())`），因为策略本身是有状态的（LRU 要记住顺序，LFU 要记住频率），不能像无状态的单方法策略那样简化成一个普通函数；换成函数会丢失“记住上次调用留下的状态”这个能力，所以这里没有出现“策略模式在 Python 里其实不需要”的简化。",
+    "tags": []
+  },
+  {
+    "id": "problems-lru-cache-sentinel-dll-on1",
+    "node": "problems.components.lru-cache",
+    "type": "qa",
+    "q": "LRU 缓存要求 get/put 都是 O(1)，为什么必须同时用哈希表和双向链表，而且链表要带头尾哨兵节点？",
+    "a": "单独一个哈希表能 O(1) 查找，但没有顺序信息，找不出“最久未用”的那个；单独一条链表能 O(1) 维护顺序，但按 key 查找是 O(n)。两者结合：哈希表存 `key -> 链表节点` 的映射负责查找，链表节点之间的先后顺序负责“谁最久没用”，查找和调整顺序都是 O(1)。带永久存在、不存数据的头尾哨兵节点，是为了让“插入到尾部”“从任意位置删除”“移动到尾部”这几个操作不用对“链表为空”“要操作的是头节点/尾节点”做任何特判——真实节点的前后必然各有一个节点（哪怕是哨兵），指针操作因此总是同样的几行代码。",
+    "tags": []
+  },
+  {
+    "id": "problems-lru-cache-get-is-write",
+    "node": "problems.components.lru-cache",
+    "type": "qa",
+    "q": "给 LRU 缓存做线程安全包装时，为什么说 `get` 在这里其实是一次“写”？这为什么导致读写锁（reader-writer lock）帮不上忙？",
+    "a": "因为 `get` 命中之后要把这个 key 标记为“最近使用”，这需要改写内部的双向链表指针（或者 LFU 的频率桶）——对底层数据结构而言，“读出这个值”和“调整它在淘汰顺序里的位置”是绑在同一次调用里的，分不开。读写锁的价值在于允许多个只读者并发、只让写者互斥，但这个缓存里没有“纯读者”：每一次 `get` 都要独占地改写内部结构，和 `put` 没有本质区别。硬要引入读写锁，只会多一层管理读写锁本身的开销，换不来任何并发度的提升——正确的做法是一把互斥锁（`threading.Lock`）整体包住每个复合操作，真正提升并发度要靠锁分片（按 key 哈希拆成多个独立加锁的分片），代价是淘汰顺序从“全局 LRU”退化成“分片内 LRU”。",
+    "tags": []
+  },
+  {
+    "id": "problems-lru-cache-ttl-wrapper-extension",
+    "node": "problems.components.lru-cache",
+    "type": "qa",
+    "q": "给 LRU/LFU 缓存加“每个 key 单独的存活时间（TTL）”这个第 4 关需求时，为什么可以做成一个独立的包装类，而不用改 `Cache` 或 `EvictionPolicy` 的代码？",
+    "a": "TTL 层（`ExpiringCache`）自己维护一份 `key -> 过期时间` 的账本，`get` 前先检查这个 key 是否已经过了它的过期时间，过了就主动从底层 `Cache` 里删除并当作未命中；`put` 每次都刷新这个 key 的过期时间。`Cache` 和 `EvictionPolicy`（不管是 LRU 还是 LFU）完全不知道 TTL 的存在，它们只是被 `ExpiringCache` 当作黑盒调用。这印证了前三关的设计：只要“存储 + 容量”和“淘汰顺序”这两个核心职责足够干净，新需求（TTL、线程安全、命中率统计）都可以作为外层包装加上去，而不用回头改已经写好、已经测试过的类。",
+    "tags": []
+  },
+  {
+    "id": "problems-lru-cache-overwrite-not-insert",
+    "node": "problems.components.lru-cache",
+    "type": "qa",
+    "q": "实现 LRU 缓存的 `put` 时，一个容易埋下的 bug 是什么样的？把“覆盖写入一个已存在的 key”和“插入一个新 key”用同一条代码路径处理，会出什么问题？",
+    "a": "如果 `put` 不区分“key 已存在”和“key 不存在”这两种情况，统一按“可能需要先腾地方再插入”处理，会导致更新一个已有 key 时也去检查容量、甚至触发一次不必要的淘汰。这在写密集的场景下会让缓存慢慢“自己把自己吃空”：每次更新一个已有 key 都被误判成插入，真正该保留的旧条目被冤枉地淘汰掉了。正确做法是先判断 key 是否已存在——已存在只更新值并标记为最近使用，不触碰容量判断和淘汰逻辑；只有真正的新 key 才会在容量已满时触发淘汰。",
+    "tags": []
+  },
+  {
+    "id": "problems-lru-cache-lfu-min-freq-pointer",
+    "node": "problems.components.lru-cache",
+    "type": "qa",
+    "q": "LFU（最不经常使用）缓存怎么把淘汰操作做到 O(1)？`min_freq` 这个指针是干什么用的，什么时候需要往前推进？",
+    "a": "把 key 按访问频率分组，每个频率对应一条独立的双向链表（同一频率内部按最近使用排序，频率相同时淘汰该频率桶里最久未用的那个）。额外维护一个 `min_freq`，始终指向当前非空的最小频率桶，淘汰时直接弹出这个桶的头部，不需要遍历所有 key 去找最小频率，这就是 O(1) 的关键。`min_freq` 只在两种情况下变化：任意 key 被新插入时，`min_freq` 直接重置为 1（新 key 的初始频率一定是 1，且一定是当前最小）；某个 key 的频率从 `min_freq` 升级到 `min_freq + 1`，导致原来那个桶变空时，`min_freq` 才加一。最常见的手滑是在每次访问后都无条件把 `min_freq` 加一，而不检查“旧桶是否真的变空了”。",
+    "tags": []
+  }
+]

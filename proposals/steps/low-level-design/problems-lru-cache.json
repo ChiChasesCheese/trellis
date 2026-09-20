@@ -1,0 +1,12 @@
+{
+  "problems.components.lru-cache": [
+    "problems-lru-cache-store-vs-order-split",
+    "problems-lru-cache-sentinel-dll-on1",
+    "problems-lru-cache-strategy-pattern-python-form",
+    "problems-lru-cache-policy-protocol-choice",
+    "problems-lru-cache-overwrite-not-insert",
+    "problems-lru-cache-lfu-min-freq-pointer",
+    "problems-lru-cache-get-is-write",
+    "problems-lru-cache-ttl-wrapper-extension"
+  ]
+}
