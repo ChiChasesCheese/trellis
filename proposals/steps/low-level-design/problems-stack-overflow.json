@@ -1,0 +1,12 @@
+{
+  "problems.social.stack-overflow": [
+    "problems-stack-overflow-comment-no-parent-type",
+    "problems-stack-overflow-reputation-event-fold",
+    "problems-stack-overflow-vote-change-net-delta",
+    "problems-stack-overflow-privilege-table",
+    "problems-stack-overflow-tag-reverse-index",
+    "problems-stack-overflow-single-lock-rationale",
+    "problems-stack-overflow-accept-move-atomic",
+    "problems-stack-overflow-article-proves-extension"
+  ]
+}
