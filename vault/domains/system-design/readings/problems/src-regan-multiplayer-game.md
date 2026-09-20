@@ -1,6 +1,7 @@
 ---
 nodes: [problems.realtime.multiplayer-game]
 url: https://cse.buffalo.edu/~regan/personal/JuneCLarticleKWR.pdf
+tags: [no-archive]   # an 11 MB PDF: linked, not stored
 ---
 # How to Catch a Chess Cheater — Ken Regan's statistical detection method
 
