@@ -42,6 +42,12 @@ dataclass), so subscribers update themselves from the event instead of reaching 
 subject's storage without its lock. (3) A class that only forwards one call to another object is
 a Java habit: give it a responsibility or delete it, and say which in the article.
 
+**A defect you find is a defect you fix.** The second pilot documented, in a docstring, a call
+order that crashed its LFU policy, and never noticed that emptied frequency buckets were kept
+forever. Repair the invariant and add a regression test — never ship a described landmine. For
+every container in your solution ask: what removes an entry when it empties, expires or is
+released? Unbounded growth in a component whose job is bounded memory is a failed answer.
+
 ## 1. The code — `vault/domains/low-level-design/problems/<slug>/`
 
 - `solution.py` — the reference solution. 150–500 lines, standard library only, Python 3.12, fully
