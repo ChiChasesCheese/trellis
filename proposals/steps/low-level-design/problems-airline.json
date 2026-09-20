@@ -1,0 +1,12 @@
+{
+  "problems.booking.airline": [
+    "problems-airline-flight-vs-instance",
+    "problems-airline-sold-vs-seats-two-tables",
+    "problems-airline-mct-belongs-to-airport",
+    "problems-airline-atomic-cross-segment",
+    "problems-airline-no-two-phase-commit",
+    "problems-airline-denied-boarding-rule",
+    "problems-airline-change-reserve-before-release",
+    "problems-airline-codeshare-alias-extension"
+  ]
+}
