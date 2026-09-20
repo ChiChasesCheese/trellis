@@ -47,6 +47,12 @@ so shortening a docstring buys you nothing: if the solution runs long, drop a st
 describe it in 扩展与追问 instead. Never delete a read-only accessor a test or a reader needs.
 Landing a line under the cap means the next edit breaks the gate: aim for 250–400 and stop adding.
 
+**A test asserts behaviour, never shape.** `assert not hasattr(obj, "cards")` and its relatives
+fail a correct answer that happens to name something the same way. Pin what the design promises —
+the operation is atomic, the container shrank, the invariant held — and leave "this must not be
+reachable" to the article and the card. Asserting the exact set of public names is fine, because
+that is a contract you designed.
+
 **A test never reads a private attribute.** `starter.py` is filled in by a learner who may pick a
 different internal representation, so a test that asserts on `_something` fails a correct answer.
 When an invariant is only visible inside (a container shrank, a pointer was repaired), expose it as
