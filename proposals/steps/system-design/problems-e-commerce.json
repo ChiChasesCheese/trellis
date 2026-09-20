@@ -1,0 +1,13 @@
+{
+  "problems.commerce.e-commerce": [
+    "problems-e-commerce-five-consistency-domains",
+    "problems-e-commerce-read-write-ratio-drives-caching",
+    "problems-e-commerce-inventory-decrement-below-relational-ceiling",
+    "problems-e-commerce-cart-anonymous-vs-logged-in",
+    "problems-e-commerce-reservation-timing-tradeoff",
+    "problems-e-commerce-order-saga-pivot-ordering",
+    "problems-e-commerce-outbox-for-checkout",
+    "problems-e-commerce-marketplace-buy-box-refresh",
+    "problems-e-commerce-black-friday-order-vs-read-scaling"
+  ]
+}

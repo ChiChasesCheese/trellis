@@ -1,0 +1,92 @@
+[
+  {
+    "id": "problems-auth-service-hashing-cost-cores",
+    "node": "problems.foundations.auth-service",
+    "type": "qa",
+    "q": "In an authentication service tuning Argon2id to ~150ms per password verify, with a peak login rate of ~434 QPS, roughly how many CPU cores does the password-verification tier need, and why does this number matter?",
+    "a": "One core does about 1000ms/150ms ≈ 6.7 verifies/sec, so covering a 434 QPS peak needs about 434/6.7 ≈ 65 cores, or roughly 130 with 2x headroom for bursts and failover. The number matters because password hashing is deliberately expensive (that's the point of a memory-hard KDF), so the work-factor choice is not just a security knob — it's a capacity-planning input. Any time the hash parameters are tuned upward for security, this core count must be recomputed rather than assumed to still fit the existing fleet.",
+    "tags": [],
+    "q_zh": "在一个把 Argon2id 调到约 150ms/次验证、峰值登录约 434 QPS 的认证服务中，密码验证层大致需要多少 CPU 核心，为什么这个数字重要？",
+    "a_zh": "一个核心大约能做 1000ms/150ms ≈ 6.7 次验证/秒，所以覆盖 434 QPS 峰值需要约 434/6.7 ≈ 65 核，含 2 倍冗余约 130 核。这个数字重要是因为密码哈希故意做得很慢（这正是内存硬 KDF 的意义所在），所以工作因子的选择不只是安全旋钮——它是容量规划的输入。任何时候把哈希参数调高以换取安全性，都必须重新计算这个核心数，而不是假设现有资源池还够用。"
+  },
+  {
+    "id": "problems-auth-service-token-verification-qps-forces-stateless",
+    "node": "problems.foundations.auth-service",
+    "type": "qa",
+    "q": "In an authentication service serving 150M DAU where token verification (with internal service fan-out) can peak around 1.7 million checks/sec, why does this number rule out a pure server-side session store as the default verification mechanism?",
+    "a": "A single Redis-class primary is assumed to sustain on the order of tens of thousands of operations per second (say 50,000/sec). At a 1.7M QPS peak, a pure session-lookup approach would need roughly 35 independent shards just for verification checks — on top of whatever else each shard already handles. That number is the concrete reason to make the access token a short-lived, stateless JWT verified locally against a cached public key (zero network round trip), pushing revocation to a separate, rarely-touched refresh-token flow instead of touching a central store on every request.",
+    "tags": [],
+    "q_zh": "在一个服务 1.5 亿日活、令牌验证（含内部服务扇出）峰值约 170 万次/秒的认证服务中，为什么这个数字排除了把纯服务端会话存储作为默认验证机制？",
+    "a_zh": "一个 Redis 一类的单一主节点被假设能承受量级约数万次操作/秒（比如 50,000/秒）。在 170 万 QPS 峰值下，纯会话查找方案需要约 35 个独立分片仅用于验证检查——还不算每个分片本来就要承担的其它负载。这个数字是把 access token 做成短生命周期、本地校验(零网络往返)的无状态 JWT 的具体依据，把撤销推到一个独立的、很少被触碰的 refresh token 流程里，而不是每个请求都碰一次中心化存储。"
+  },
+  {
+    "id": "problems-auth-service-two-stores-two-consistency-levels",
+    "node": "problems.foundations.auth-service",
+    "type": "qa",
+    "q": "In an authentication service, why should refresh-token storage and the core credential-of-record (password hash, account lock status) live in two physically separate stores with different consistency levels, rather than one?",
+    "a": "The write volumes differ by roughly four orders of magnitude: core credential writes (signup, password change, lockout) run at only a few QPS even at scale, while refresh-token rotation writes can peak in the tens of thousands per second. The credential-of-record can afford strong, single-leader cross-region consistency because its write volume is tiny — and it needs that strength, since a stale read of a lockout or password change is a security hole. The refresh-token store needs to be sharded for throughput and only needs consistency within one token family, not globally, so forcing it onto the same strongly-consistent store would apply a throughput ceiling it can't meet; forcing the credential store onto the refresh store's weaker, sharded model would open a window where a password change hasn't propagated everywhere yet.",
+    "tags": [],
+    "q_zh": "在认证服务中，为什么 refresh token 存储和核心凭证记录（密码哈希、账号锁定状态）应该存在两套物理独立、一致性级别不同的存储里，而不是一套？",
+    "a_zh": "两者写量相差约四个数量级：核心凭证写入（注册、改密码、锁定）即使在大规模下也只有每秒几次，而 refresh token 轮换写入峰值可达每秒数万次。核心凭证记录可以承受强一致的单主跨区域复制,因为它的写量很小——而且它需要这种强度,因为读到陈旧的锁定或改密码状态就是安全漏洞。refresh token 存储需要为吞吐分片,只需要单个 token family 内部一致,不需要全局一致,所以强行放进同一个强一致存储会带来它扛不住的吞吐上限；反过来把凭证存储放进 refresh 存储更弱的分片模型,会打开一个密码修改尚未全局生效的窗口。"
+  },
+  {
+    "id": "problems-auth-service-refresh-rotation-reuse-detection",
+    "node": "problems.foundations.auth-service",
+    "type": "qa",
+    "q": "In an authentication service, how does refresh-token rotation turn a stolen refresh token into a detectable event, and what should the server do when it detects reuse?",
+    "a": "Every call to the refresh endpoint issues a brand-new refresh token and invalidates the one just used, so each token is single-use. If a stolen token is used by an attacker before the legitimate client refreshes, the legitimate client's next refresh attempt will present an already-invalidated token — and vice versa if the legitimate client refreshes first. Either way, presenting an already-rotated token is proof that two parties hold tokens from the same lineage. The server's response is to revoke the entire token family (the whole session lineage), forcing both the attacker and the legitimate user to re-authenticate, rather than trying to distinguish which party is legitimate.",
+    "tags": [],
+    "q_zh": "在认证服务中，refresh token 轮换如何把被盗的 refresh token 变成可检测事件，检测到重用时服务器应该做什么？",
+    "a_zh": "每次调用 refresh 端点都会发放一个全新的 refresh token 并使刚用过的那个失效，所以每个 token 只能用一次。如果被盗的 token 在合法客户端刷新之前被攻击者使用，合法客户端下一次刷新时呈现的就是一个已失效的 token——反之，如果合法客户端先刷新也是同样的结果。无论哪种情况，呈现一个已轮换过的 token 就是两方持有同一血统 token 的证据。服务器的响应是撤销整个 token family（整条会话血统），强制攻击者和合法用户都重新认证，而不是试图分辨哪一方才是合法的。"
+  },
+  {
+    "id": "problems-auth-service-stuffing-fleet-signals-not-lockout",
+    "node": "problems.foundations.auth-service",
+    "type": "qa",
+    "q": "In an authentication service under a credential-stuffing attack, why does per-account lockout barely help, and what should the login endpoint rely on instead?",
+    "a": "Credential stuffing replays leaked username+password pairs across millions of distinct accounts, typically only one or two attempts per account — it never accumulates enough failures on any single account to trip a per-account lockout, and locking accounts after N failures can even be weaponized against real users (an attacker deliberately fails a victim's login to lock them out — a denial-of-service). The defense that actually works is fleet-level signals: a sudden shift in the global login failure ratio, one IP/ASN/device fingerprint touching thousands of distinct usernames, combined with rate limits applied per account, per IP, and per ASN simultaneously, plus risk-based step-up (require MFA on a new device/geo) rather than an outright block.",
+    "tags": [],
+    "q_zh": "在遭受撞库攻击的认证服务中，为什么按账号锁定帮助不大，登录端点应该依赖什么？",
+    "a_zh": "撞库攻击在数百万个不同账号上重放泄露的用户名+密码对，通常每个账号只尝试一两次——它从不会在任何单个账号上积累到触发按账号锁定所需的失败次数,而且 N 次失败后锁定账号甚至可能被武器化针对真实用户（攻击者故意让受害者的登录失败几次使其被锁定——一种拒绝服务）。真正有效的防御是舰队级信号：全局登录失败率的突然转变、一个 IP/ASN/设备指纹触及数千个不同用户名，配合同时按账号、IP、ASN 三个维度的限流，再加上基于风险的升级（新设备/地理要求 MFA）而不是直接封锁。"
+  },
+  {
+    "id": "problems-auth-service-jwks-overlap-window",
+    "node": "problems.foundations.auth-service",
+    "type": "qa",
+    "q": "In an authentication service that verifies access tokens locally against JWKS-published public keys, why is an instant key switch (revoke old, publish new, sign with new, all at once) dangerous, and what should happen instead?",
+    "a": "At a large verification QPS, gateways and internal services each cache their own copy of the JWKS document, and those caches cannot all refresh in the same instant. An instant switch means tokens signed with the old key — still unexpired and legitimately valid — get rejected by any verifier that has already refreshed to the new key, producing spurious 401s. The fix is an overlap window: publish the new public key in JWKS first (without signing with it yet) so caches can pick it up, then switch signing to the new key while still publishing the old public key until every token signed with the old key has naturally expired. Each token's header carries a `kid` so verifiers look up the correct key rather than assuming only one exists.",
+    "tags": [],
+    "q_zh": "在一个本地对照 JWKS 发布的公钥验证 access token 的认证服务中，为什么瞬时切换密钥（同时撤旧、发新、用新签名）是危险的，应该怎么做？",
+    "a_zh": "在很大的验证 QPS 下，网关和各内部服务各自缓存一份 JWKS 文档，这些缓存不可能在同一瞬间全部刷新。瞬时切换意味着用旧密钥签发、尚未过期、本应合法有效的令牌，会被已经切到新密钥的验证方拒绝，产生大量误报的 401。修复方法是重叠窗口：先只在 JWKS 里发布新公钥（尚不用它签名），让各处缓存有时间刷新；然后切到用新密钥签名，但 JWKS 里继续保留旧公钥，直到用旧密钥签发的全部令牌自然过期。每个令牌的 header 携带 `kid`，让验证方按需查找正确的密钥，而不是假设只有一把。"
+  },
+  {
+    "id": "problems-auth-service-oidc-vs-saml-by-client-type",
+    "node": "problems.foundations.auth-service",
+    "type": "qa",
+    "q": "In an identity service offering SSO to third-party applications, why is picking either OIDC-only or SAML-only for every client the wrong call, and what determines which protocol a given client gets?",
+    "a": "SAML-only excludes the consumer-facing OAuth/OIDC ecosystem almost every individual-user identity provider (Google, Apple, etc.) speaks natively, while its XML-based assertions are heavier than most consumer clients need. OIDC-only excludes enterprise customers whose identity providers (Okta, AD FS) are built around SAML's richer attribute-bearing assertions and established federation metadata exchange. The split is by client type: consumer-facing and modern applications get OIDC (OAuth2 + an ID token, verified via its `aud` and `nonce`), enterprise SSO customers get SAML (assertion signature and Audience/Recipient checks), and both are normalized internally into the same local identity record — the service doesn't force one protocol on a client population it wasn't designed for.",
+    "tags": [],
+    "q_zh": "在一个为第三方应用提供 SSO 的身份服务里，为什么对所有客户端只用 OIDC 或只用 SAML 都是错误选择，什么决定了某个客户端用哪种协议？",
+    "a_zh": "只用 SAML 会排除几乎所有面向个人用户的身份提供商（Google、Apple 等）原生使用的消费级 OAuth/OIDC 生态，而它基于 XML 的断言对大多数消费级客户端来说也过重。只用 OIDC 会排除企业客户——他们的身份提供商（Okta、AD FS）围绕 SAML 更丰富的属性携带断言和成熟的联邦元数据交换构建。正确的划分按客户端类型：消费级和现代应用用 OIDC（OAuth2 + ID token，校验其 `aud` 和 `nonce`），企业 SSO 客户用 SAML（断言签名和 Audience/Recipient 校验），两者在内部统一归一成同一份本地身份记录——服务不会把一种协议强加给它本不是为其设计的客户群体。"
+  },
+  {
+    "id": "problems-auth-service-lazy-rehash-avoids-batch-spike",
+    "node": "problems.foundations.auth-service",
+    "type": "qa",
+    "q": "In an authentication service with hundreds of millions of existing password hashes, how do you migrate everyone to stronger hashing parameters without creating a one-time spike on the hashing tier?",
+    "a": "You cannot batch-rehash offline, because a one-way hash cannot be recomputed with new parameters without the plaintext password. Instead, use lazy re-hashing: on each successful login, after verifying against the old parameters, re-hash the password with the new parameters and overwrite the stored value. Migration load is then spread across real login traffic over time — proportional to how often each account actually logs in — instead of being concentrated into a single batch job that would need to be sized for the entire account base at once.",
+    "tags": [],
+    "q_zh": "在一个已有数亿密码哈希的认证服务中，怎样把所有用户迁移到更强的哈希参数，同时不在哈希层制造一次性峰值？",
+    "a_zh": "不能离线批量重哈希，因为单向哈希在没有明文密码的情况下无法用新参数重新计算。应该用惰性重哈希（lazy re-hashing）：每次登录成功后，先用旧参数验证通过，再用新参数重新哈希密码并覆盖存储的值。迁移负载随真实登录流量分摊在时间上——和每个账号实际登录的频率成正比——而不是集中成一个需要一次性覆盖全部账号规模的批处理任务。"
+  },
+  {
+    "id": "problems-auth-service-recovery-shares-rate-limiting",
+    "node": "problems.foundations.auth-service",
+    "type": "qa",
+    "q": "In an authentication service, why should the account-recovery endpoint sit behind the same rate-limiting infrastructure as the login endpoint, rather than a separate, more lenient policy?",
+    "a": "An attacker running recovery attempts across a large number of accounts (each attempt trying to trigger a password reset or bypass a lost-device flow) has the same traffic signature as credential stuffing against login — low volume per account, spread across many accounts. If recovery isn't covered by the same per-account, per-IP, and global fleet-level rate limiting used for login, it becomes the easier side door: an attacker never needs to break the hardened login path when the recovery path checks less. Recovery is only as strong as its weakest gate, and rate limiting is one of those gates, not an afterthought specific to login.",
+    "tags": [],
+    "q_zh": "在认证服务中，为什么账号恢复端点应该和登录端点共用同一套限流基础设施，而不是一套更宽松的独立策略？",
+    "a_zh": "攻击者对大量账号发起恢复尝试（每次尝试触发密码重置或绕过丢失设备流程）和撞库攻击登录端点有同样的流量特征——每账号低频次、分散在大量账号上。如果恢复流程不受登录所用的按账号、按 IP、全局舰队级限流覆盖，它就会成为更容易的侧门：当恢复路径检查更少时，攻击者根本不需要攻破被加固过的登录路径。账号恢复的强度取决于它最弱的一道关卡，限流是其中一道，不是只属于登录、可以事后补的东西。"
+  }
+]
