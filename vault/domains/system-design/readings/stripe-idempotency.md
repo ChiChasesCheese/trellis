@@ -1,5 +1,5 @@
 ---
-nodes: [correctness.idempotency]
+nodes: [correctness.idempotency, problems.commerce.payment-system]
 url: https://stripe.com/blog/idempotency
 tags: [canonical, fintech, stripe]
 ---

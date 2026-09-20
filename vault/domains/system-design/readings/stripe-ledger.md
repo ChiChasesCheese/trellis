@@ -1,5 +1,5 @@
 ---
-nodes: [correctness.ledger]
+nodes: [correctness.ledger, problems.commerce.payment-system]
 url: https://stripe.com/blog/ledger-stripe-system-for-tracking-and-validating-money-movement
 tags: [stripe, fintech]
 ---

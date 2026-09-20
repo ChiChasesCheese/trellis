@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-payment-system-ledger-entries-per-charge",
+    "node": "problems.commerce.payment-system",
+    "type": "qa",
+    "q": "In a payment system design, one charge touches four ledger accounts (customer clearing, merchant payable, platform fee revenue, PSP fee expense). Why does this 4x entry-per-charge multiplier, not the raw charge QPS, drive the storage design?",
+    "a": "Every charge posts 4 immutable `LedgerEntry` rows instead of 1. At an assumed 1.2 billion charges/year (≈3.29M/day), that is ≈13.15M entries/day, ≈1.2 TB/year at 250 bytes/entry, ≈3.6 TB/year at 3x replication — small in absolute bytes, but every byte must be strongly durable and multi-replicated (never cache-rebuildable), which rules out any storage class that tolerates loss. The design lever isn't total throughput, it's that the entry count is a fixed multiple of the charge count and none of it is disposable.",
+    "tags": [],
+    "q_zh": "在支付系统设计中，一次收款会触及四个账本账户（客户待清算、商户应付、平台手续费收入、PSP 手续费支出）。为什么是这个每笔收款 4 倍的分录展开倍数，而不是原始的收款 QPS，驱动了存储设计？",
+    "a_zh": "每笔收款会写入 4 条不可变的 `LedgerEntry`，而不是 1 条。按假设的年 12 亿笔收款（约 329 万笔/天）估算，约为每天 1315 万条分录，每条 250 字节约 1.2 TB/年，三副本约 3.6 TB/年——绝对字节数不大，但每个字节都要求强持久化、多副本（绝不允许靠缓存重建）,这直接排除了任何“允许丢失”的存储选型。设计杠杆不是总吞吐，而是分录数是收款数的固定倍数，且没有一个字节是可丢弃的。"
+  },
+  {
+    "id": "problems-payment-system-dual-idempotency-keys",
+    "node": "problems.commerce.payment-system",
+    "type": "qa",
+    "q": "In a payment system that calls out to a PSP (payment service provider), why does a single client-generated idempotency key at the API layer fail to prevent double charges, and what second key closes the gap?",
+    "a": "A client-side idempotency key only protects the \"client to our API\" hop: it lets a retried `POST /charges` return the cached response instead of re-executing. But if our process crashes after calling the PSP and before recording the result, the recovery path sees no record and can only blindly re-call the PSP. The fix is a second, independent idempotency key passed to the PSP itself on every outbound call — even if our own state is lost, replaying the same PSP-side key returns the PSP's already-processed result instead of charging again. The two keys protect two different network hops.",
+    "tags": [],
+    "q_zh": "在一个需要调用 PSP（支付服务商）的支付系统设计中，为什么仅在 API 层用一个客户端生成的幂等键无法防止重复扣款？还需要哪个第二层的键来补上这个缺口？",
+    "a_zh": "客户端幂等键只保护\"客户端到我们 API\"这一段：它让重试的 `POST /charges` 直接回放缓存响应而不重新执行。但如果我们的进程在调用 PSP 之后、记录结果之前崩溃，恢复逻辑看不到任何记录，只能盲目重新调用 PSP。解法是在每次对外调用时额外传一个独立于我们自己的、给 PSP 侧使用的幂等键——即使我们自己的状态丢失，重放同一个 PSP 侧键也会返回 PSP 已经处理过的结果，而不是二次扣款。两个键分别保护两段不同的网络跳。"
+  },
+  {
+    "id": "problems-payment-system-append-only-reversing-entries",
+    "node": "problems.commerce.payment-system",
+    "type": "qa",
+    "q": "In a payment system's double-entry ledger, why are ledger entries never updated or deleted, and how is a mistaken charge corrected instead?",
+    "a": "Ledger entries are append-only and immutable so the ledger always carries a full audit trail: if a mutable balance column were updated in place, a bug that only applies half of a transaction (crashing between two `UPDATE`s) silently leaves the ledger unbalanced with no history to diagnose it from. A mistaken or reversed charge is instead corrected with a new **reversing entry** that moves the same amount in the opposite direction — both the original and the correction stay in the log permanently, so the ledger's history is never rewritten, only extended.",
+    "tags": [],
+    "q_zh": "在支付系统的双录账本中，为什么账本分录从不被更新或删除？一笔记错的收款是如何被更正的？",
+    "a_zh": "账本分录追加写、不可变，这样账本始终携带完整的审计轨迹：如果用可变余额列原地更新，一个只更新了半笔交易的 bug（崩溃在两次 `UPDATE` 之间）会无声地让总账失衡，且没有历史可用来诊断。一笔记错或需要撤销的收款,不是被修改,而是用一笔金额相同、方向相反的**冲正分录（reversing entry）**去抵消——原始记录和冲正记录都永久保留在日志里,账本的历史从不被改写,只会被追加。"
+  },
+  {
+    "id": "problems-payment-system-timeout-as-unknown",
+    "node": "problems.commerce.payment-system",
+    "type": "qa",
+    "q": "In a payment system, a call to authorize a charge through the PSP times out. Why is blindly retrying the mutating call the wrong default, and what should happen instead?",
+    "a": "A timeout is ambiguous: the request may never have reached the PSP (safe to retry), or the PSP may have already processed it and only the response was lost (retrying would charge twice). Blindly retrying assumes the PSP's own idempotency protection will always catch the duplicate, which silently fails if its dedup window has expired or the call didn't carry a PSP-side idempotency key. The correct default is to treat the timeout as unknown: call the PSP's status/query endpoint with the original reference to find the true outcome, and only then decide whether to retry, mark complete, or mark failed.",
+    "tags": [],
+    "q_zh": "在支付系统中，一次向 PSP 发起的授权调用超时了。为什么盲目重试这个有副作用的调用是错误的默认做法？正确的做法是什么？",
+    "a_zh": "超时是有歧义的：请求可能从未到达 PSP（安全重试），也可能 PSP 已经处理完成、只是响应丢失了（重试会造成二次扣款）。盲目重试假设 PSP 自己的幂等保护总能拦住重复请求，但如果它的去重窗口已过期，或这次调用根本没带 PSP 侧幂等键，这个假设会静默失效。正确的默认做法是把超时当作\"未知\"：用原始引用号调用 PSP 的查询接口问清楚真实结果，再据此决定重试、标记完成还是标记失败。"
+  },
+  {
+    "id": "problems-payment-system-write-intent-before-call",
+    "node": "problems.commerce.payment-system",
+    "type": "qa",
+    "q": "In a payment system's charge flow, why does the payment service write a pending ledger entry BEFORE calling the PSP, rather than after receiving the PSP's response?",
+    "a": "If the intent is only recorded after a successful PSP response, a crash between calling the PSP and recording the result leaves no trace that the attempt ever happened — recovery has nothing to reconcile against and no way to tell a genuine no-op apart from an unresolved attempt. Writing a pending entry first means a mid-call crash always leaves a durable \"we intended to do this\" record, which the timeout-recovery path (querying the PSP's true state) can resolve, instead of the attempt silently vanishing.",
+    "tags": [],
+    "q_zh": "在支付系统的收款流程中，为什么支付服务要在调用 PSP 之前就写入一条 pending 状态的账本条目，而不是等收到 PSP 响应之后再写？",
+    "a_zh": "如果只在 PSP 成功响应之后才记录意图，那么进程在调用 PSP 之后、记录结果之前崩溃时，不会留下任何“这次尝试发生过”的痕迹——恢复逻辑没有任何依据可以核对，也无法区分“真的什么都没发生”和“发生了但结果未知”。先写 pending 条目意味着调用中途崩溃总会留下一条持久的“我们曾打算做这件事”的记录，超时恢复路径（查询 PSP 真实状态）可以据此核实，而不是让这次尝试无迹可查地消失。"
+  },
+  {
+    "id": "problems-payment-system-hot-fee-account-decouple-balance",
+    "node": "problems.commerce.payment-system",
+    "type": "qa",
+    "q": "In a payment system design processing 1.2 billion charges/year (peak ≈228 charges/sec), the platform fee account receives a credit entry on every single charge. Why does this make it a write hot spot independent of how the rest of the ledger is sharded, and what is the simplest fix?",
+    "a": "Because every charge credits the same one account, that account's write rate always equals the system's total charge rate — sharding the ledger by merchant_id doesn't help, since there's still only one fee account. If its balance were a synchronously maintained column, every charge would serialize on that one row. The fix used here: since the fee account has no overdraft invariant to check at write time, entries are appended lock-free and its balance is derived asynchronously (snapshot + replay) instead of maintained as a hot, synchronously-updated row.",
+    "tags": [],
+    "q_zh": "在一个年处理 12 亿笔收款（峰值约 228 笔/秒）的支付系统设计中，平台手续费账户在每一笔收款上都会收到一笔贷方分录。为什么这会让它成为一个与账本其余部分如何分片无关的写热点？最简单的解法是什么？",
+    "a_zh": "因为每一笔收款都贷记同一个账户，这个账户的写入速率永远等于系统总收款速率——按 `merchant_id` 分片账本对它毫无帮助，因为手续费账户始终只有一个。如果它的余额是同步维护的列，每一笔收款都会在这一行上串行化。这里采用的解法是：由于手续费账户没有需要在写入时强制的禁止透支不变量，分录可以无锁追加，余额异步推导（快照 + 重放），而不是维护成一个同步更新的热行。"
+  },
+  {
+    "id": "problems-payment-system-three-way-vs-two-way-recon",
+    "node": "problems.commerce.payment-system",
+    "type": "qa",
+    "q": "In a payment system's reconciliation design, what does adding the bank statement as a third leg (ledger vs PSP settlement file vs bank statement) catch that a two-way ledger-vs-PSP-file reconciliation cannot?",
+    "a": "Two-way reconciliation (ledger vs PSP file) can only detect disagreements between our own records and the PSP's report — it fully trusts that the PSP's report is itself correct. The PSP-file-vs-bank-statement leg is the only comparison that checks whether the money the PSP promised to settle actually arrived as cash; if the PSP's report has an error or a payout is delayed, two-way reconciliation against the PSP alone never surfaces it, because both sides being compared originate from the same untrusted party.",
+    "tags": [],
+    "q_zh": "在支付系统的对账设计中，把银行对账单加为第三方（账本 vs PSP 结算文件 vs 银行对账单）能捕获到两方对账（仅账本 vs PSP 文件）捕获不到的什么问题？",
+    "a_zh": "两方对账（账本 vs PSP 文件）只能发现我们自己的记录和 PSP 报告之间的不一致——它完全信任 PSP 的报告本身是对的。PSP 文件 vs 银行对账单这一对，是唯一能核实 PSP 承诺结算的钱是否真的以现金形式到账的比对；如果 PSP 的报告本身有错，或者打款延迟了，只对着 PSP 做两方对账永远发现不了，因为被比较的两边本就来自同一个不被信任的来源。"
+  },
+  {
+    "id": "problems-payment-system-10x-batching-vs-sharding",
+    "node": "problems.commerce.payment-system",
+    "type": "qa",
+    "q": "In a payment system at 10x its baseline volume (charges/year 1.2B → 12B, peak charge rate ≈228/sec → ≈2,283/sec), why does merchant-based ledger sharding alone fail to fix the platform fee account's hot spot, and what changes?",
+    "a": "Sharding the ledger by merchant_id spreads out merchant-specific writes, but the platform fee account is still a single account touched by every charge across every shard — its write rate scales with total system throughput, not per-shard throughput, so at 10x its peak write rate (≈2,283/sec) crosses into territory a single row genuinely can't sustain even lock-free-appended. The fix is to move from simple asynchronous derivation to short-window batching (grouping same-account operations into one atomic read-modify-write per window) rather than fragmenting the fee account's identity across sub-accounts.",
+    "tags": [],
+    "q_zh": "在一个交易量达到基准 10 倍的支付系统（年收款从 12 亿到 120 亿，峰值收款速率从约 228/秒到约 2,283/秒）中，为什么单靠按商户分片账本无法解决平台手续费账户的热点问题？需要做出什么改变？",
+    "a_zh": "按 `merchant_id` 给账本分片能分散商户相关的写入，但平台手续费账户仍然是一个被所有分片上的每一笔收款都触及的单一账户——它的写入速率随系统总吞吐而不是单分片吞吐扩展，因此在 10 倍规模下其峰值写入速率（约 2,283/秒）会达到一个即使无锁追加、单行也确实扛不住的量级。解法是从简单的异步推导升级为短窗口批处理（把同一账户在窗口内的操作合并成一次原子读改写），而不是把手续费账户的身份拆分到多个子账户里。"
+  }
+]

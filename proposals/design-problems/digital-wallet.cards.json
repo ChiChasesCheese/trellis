@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-digital-wallet-cross-shard-probability",
+    "node": "problems.commerce.digital-wallet",
+    "type": "qa",
+    "q": "In a digital wallet design where accounts are hashed across 256 shards by account id, what fraction of wallet-to-wallet transfers are cross-shard, and why does adding more shards make this worse rather than better?",
+    "a": "With 256 shards and uniform hashing, the probability two independent accounts land on the same shard is 1/256 ≈ 0.39%, so about 99.61% of transfers cross a shard boundary. Adding shards to handle more load raises this fraction further — at 2,560 shards it rises to about 99.96% — because the odds of two random accounts colliding on one shard shrink as shard count grows. This means cross-shard coordination must be treated as the default transfer path from day one, not a rare case optimized later; more sharding never reduces the need for it.",
+    "tags": [],
+    "q_zh": "在一个按 account id 哈希分成 256 个分片的数字钱包设计中，钱包间转账有多大比例是跨分片的？为什么增加分片数量会让这个比例变得更高而不是更低？",
+    "a_zh": "在 256 个分片、均匀哈希分布下，两个独立账户落在同一分片的概率是 1/256 ≈ 0.39%，因此约 99.61% 的转账会跨越分片边界。为了承载更多负载而增加分片数量，会让这个比例进一步升高——分到 2,560 个分片时升至约 99.96%，因为分片数越多，两个随机账户碰撞在同一分片的概率就越小。这意味着跨分片协调必须从第一天起就是转账的默认路径，而不是后期才优化的边缘情况；分片越多，越离不开跨分片协调。"
+  },
+  {
+    "id": "problems-digital-wallet-2pc-vs-tcc-by-participant",
+    "node": "problems.commerce.digital-wallet",
+    "type": "qa",
+    "q": "In a digital wallet design, why does a wallet-to-wallet transfer use internal two-phase commit (2PC) while a top-up from an external bank or PSP uses Try-Confirm-Cancel (TCC) instead?",
+    "a": "The two wallet shards in a transfer are both part of the same internally-operated, strongly-consistent storage system — each shard is a replicated group, so a participant \"failure\" is a sub-second leader election, not an indefinitely stuck transaction, which is exactly the case where 2PC is architecturally sound rather than the failure-prone case seen with protocols spanning independently-operated systems. An external PSP or bank cannot be made to participate in that internal coordination protocol — it has no way to receive our prepare/commit messages as a protocol participant. TCC solves this because it only requires the external side to expose three ordinary, idempotent, independently-callable operations (Try/Confirm/Cancel), not participation in a shared coordination protocol.",
+    "tags": [],
+    "q_zh": "在数字钱包设计中，为什么钱包间转账使用内部两阶段提交（2PC），而从外部银行或 PSP 充值却改用 Try-Confirm-Cancel（TCC）？",
+    "a_zh": "一次转账涉及的两个钱包分片都属于同一个内部运维、强一致的存储系统——每个分片是一个复制组，参与者“故障”是一次亚秒级的 leader 选举，而不是一笔无限期悬置的事务，这正是 2PC 在架构上可行、而不是像跨独立运维系统那样容易出问题的场景。外部的 PSP 或银行无法被拉进这套内部协调协议——它没有办法作为协议参与者接收我们的 prepare/commit 消息。TCC 解决了这一点，因为它只要求外部一侧暴露三个普通的、幂等的、可独立调用的操作（Try/Confirm/Cancel），而不需要参与一个共享的协调协议。"
+  },
+  {
+    "id": "problems-digital-wallet-tcc-dangling-fence",
+    "node": "problems.commerce.digital-wallet",
+    "type": "qa",
+    "q": "In a digital wallet's TCC (Try-Confirm-Cancel) flow for external top-ups, what is the \"dangling\" (suspension) failure mode, and how does a fencing log prevent it?",
+    "a": "Dangling happens when a Cancel message arrives and executes before its corresponding Try (because of network delay), and only afterward does the delayed Try finally arrive — it reserves a resource that will now never be confirmed or cancelled again, leaving it permanently stuck. A fencing log (one row per transaction branch, tracking status such as TRIED/COMMITTED/ROLLBACKED/SUSPENDED, written in the same local transaction as the business operation) prevents this by inserting a SUSPENDED marker when a Cancel arrives with no prior Try record; the late-arriving Try is then rejected outright because that marker already occupies its key, instead of executing and reserving a resource nothing will ever release.",
+    "tags": [],
+    "q_zh": "在数字钱包给外部充值使用的 TCC（Try-Confirm-Cancel）流程中，“悬挂（dangling/suspension）”这种故障模式是什么？一张 fencing 日志表如何防止它？",
+    "a_zh": "悬挂指的是：由于网络延迟，Cancel 消息先于它对应的 Try 到达并执行完毕，之后姗姗来迟的 Try 才真正抵达——它会预留一份资源，而这份资源以后再也不会被确认或取消，永久卡在预留状态。一张 fencing 日志表（每个事务分支一行，记录 TRIED/COMMITTED/ROLLBACKED/SUSPENDED 等状态，且与业务操作在同一个本地事务里写入）通过以下方式防止这个问题：当 Cancel 到达但日志里没有 Try 记录时，插入一条 SUSPENDED 标记；之后姗姗来迟的 Try 会因为这个标记已经占据了它的主键而被直接拒绝执行，而不是执行后预留一份永远不会被释放的资源。"
+  },
+  {
+    "id": "problems-digital-wallet-deterministic-reducer",
+    "node": "problems.commerce.digital-wallet",
+    "type": "qa",
+    "q": "In a digital wallet built with event sourcing, why must the function that replays a wallet's event log into a balance be a pure, deterministic function with no external dependencies?",
+    "a": "If the replay function reads any external or mutable state (the current wall-clock time, a live exchange-rate lookup, a random number), replaying the exact same event sequence twice can produce two different balances — and this divergence is invisible during normal operation, since a wallet is usually replayed only once, surfacing only when a shard is rebuilt from its log after a crash or migrated to a new shard. Determinism (balance = pure_reduce(events), depending only on the event sequence itself) is what makes crash recovery and shard migration safe: replaying the same log anywhere must always reconstruct the identical balance, verifiable by checking the replayed result is byte-identical on the source and target shard.",
+    "tags": [],
+    "q_zh": "在一个用事件溯源构建的数字钱包中，为什么把事件日志重放成余额的函数必须是一个不依赖任何外部状态的确定性纯函数？",
+    "a_zh": "如果重放函数读取任何外部或可变状态（当前的挂钟时间、实时汇率查询、随机数），重放同一段事件序列两次可能得到两个不同的余额——而这种分歧在正常运行时是不可见的，因为一个钱包通常只被重放一次，只有在分片崩溃后从日志重建、或账户被迁移到新分片时才会暴露。确定性（余额 = pure_reduce(events)，只依赖事件序列本身）正是崩溃恢复和分片迁移得以安全进行的前提：在任何地方重放同一段日志都必须重建出完全相同的余额，可以通过校验源分片和目标分片重放结果逐字节相等来验证。"
+  },
+  {
+    "id": "problems-digital-wallet-why-not-saga-for-core-transfer",
+    "node": "problems.commerce.digital-wallet",
+    "type": "qa",
+    "q": "In a digital wallet, why is a saga (local transactions plus compensating actions) unsuitable for the core wallet-to-wallet money movement itself, even though it's fine for side effects like notifications or loyalty points?",
+    "a": "A saga commits each local step immediately and only compensates afterward on failure, which means intermediate state is visible to other transactions by design — the sender's debit can be visible to a balance read before the receiver's credit lands, or before a later compensation reverses it. A wallet transfer's requirement that a balance query after a transfer always reflects a consistent outcome (never a half-done state) rules this out for the money movement itself. Sagas remain the right tool for orchestrating non-transactional side effects that sit outside the transfer (sending a notification, awarding loyalty points), because those steps don't need to preserve the no-visible-intermediate-state guarantee that account balances do.",
+    "tags": [],
+    "q_zh": "在数字钱包设计中，为什么 saga（本地事务加补偿动作）不适合用在核心的钱包间资金移动本身，尽管它适合用在通知、积分这类副作用上？",
+    "a_zh": "saga 立即提交每个本地步骤，只在失败后才做补偿，这意味着中间状态本来就会被其他事务读到——发起方的扣款可能在接收方到账之前、或在后续补偿撤销它之前就被余额查询读到。而钱包转账要求转账后的余额查询必须始终反映一个一致的结果（绝不能是半途而废的状态），这就排除了把 saga 用在资金移动本身上。saga 仍然适合编排转账之外的非事务性副作用（发通知、加积分），因为这些步骤不需要保持账户余额那种“不允许可见中间态”的保证。"
+  },
+  {
+    "id": "problems-digital-wallet-shard-migration-freeze-drain-replay",
+    "node": "problems.commerce.digital-wallet",
+    "type": "qa",
+    "q": "In an event-sourced digital wallet, how is a single account migrated from one shard to another without risking its balance diverging between the source and target?",
+    "a": "The account is frozen first (new transfer prepares against it are rejected, other accounts are unaffected), then drained by waiting for every in-flight transfer already prepared against it to reach a terminal state (committed or cancelled) — bounded because the transfer coordinator tracks an explicit terminal status per transfer rather than waiting indefinitely. Its full event history is then copied to the target shard and replayed there with the same deterministic reducer used everywhere else; migration is only accepted once the replayed balance on the target is byte-identical to the source. Only then does routing cut over atomically and the account unfreeze — the only unavailability window is the drain step, not the whole copy.",
+    "tags": [],
+    "q_zh": "在一个事件溯源的数字钱包中，如何把单个账户从一个分片迁移到另一个分片，同时避免它的余额在源分片和目标分片之间产生分歧？",
+    "a_zh": "先冻结该账户（拒绝针对它的新转账 prepare 请求，不影响其他账户），然后排空——等待所有已经针对它 prepare 的在途转账都到达终态（committed 或 cancelled），这个等待是有界的，因为协调者对每笔转账都记录了明确的终态，而不是无限期等待。接着把它完整的事件历史复制到目标分片，用和其他所有地方相同的确定性 reducer 在目标分片上重放；只有当目标分片重放出的余额与源分片逐字节相等时，迁移才被接受。之后才原子地切换路由并解冻账户——唯一的不可用窗口是排空这一步，而不是整个复制过程。"
+  },
+  {
+    "id": "problems-digital-wallet-heavy-account-snapshot-cadence",
+    "node": "problems.commerce.digital-wallet",
+    "type": "qa",
+    "q": "In an event-sourced digital wallet, a heavy user making 20 transfers/day accumulates about 73,000 balance-affecting events over 5 years (20 × 365 × 5 × 2, two events per transfer for the sending side). Why does this number force a snapshot strategy rather than always replaying from the start?",
+    "a": "If every balance read replayed the account's full event history, read latency would grow roughly linearly with account age and activity — a 5-year-old heavy account's query would already be replaying 73,000 events, and the number only grows for as long as the account stays active. The fix is a periodic snapshot: the balance is persisted every N events (this design uses every 500), and a read becomes the latest snapshot plus replay of only the events since — the snapshot itself is disposable and always reconstructible from the full event history, so it never becomes a second source of truth.",
+    "tags": [],
+    "q_zh": "在一个事件溯源的数字钱包中，一个日均 20 笔转账的重度用户 5 年内会累积约 73,000 个影响余额的事件（20 × 365 × 5 × 2，发送方每笔转账 2 个事件）。为什么这个数字迫使系统必须采用快照策略，而不能永远从头重放？",
+    "a_zh": "如果每次读余额都要重放账户的完整事件历史，读延迟会随账户年龄和活跃度大致线性增长——一个 5 年的重度账户查询届时已经要重放 73,000 个事件，而且只要账户保持活跃，这个数字还会继续增长。解法是定期打快照：每 N 个事件持久化一次余额（本设计取 500），读取变成“最近快照 + 快照之后的事件重放”——快照本身是可丢弃的，随时可以从完整事件历史重新计算，因此它永远不会变成第二份权威数据源。"
+  },
+  {
+    "id": "problems-digital-wallet-more-shards-worsen-coordination",
+    "node": "problems.commerce.digital-wallet",
+    "type": "qa",
+    "q": "In a digital wallet scaling from 256 shards to 2,560 shards at 10x load, does adding shards reduce the number of transfers that need cross-shard coordination? What does change instead?",
+    "a": "No — the cross-shard fraction actually rises, from about 99.61% at 256 shards to about 99.96% at 2,560 shards, because the chance two random accounts collide onto the same shard shrinks as shard count grows. What changes at 10x scale is the absolute peak rate of cross-shard coordination calls (scaling with total transfer QPS, not shard count) and, if the transfer coordinator itself is single, whether it can be scaled horizontally as a stateless layer over a replicated decision log — sharding accounts more finely never substitutes for scaling the coordination path itself.",
+    "tags": [],
+    "q_zh": "数字钱包从 256 个分片扩展到 2,560 个分片以应对 10 倍负载时，增加分片数量能减少需要跨分片协调的转账数量吗？真正变化的是什么？",
+    "a_zh": "不能——跨分片比例反而会上升，从 256 个分片下约 99.61% 升到 2,560 个分片下约 99.96%，因为分片数越多，两个随机账户碰撞落在同一分片的概率就越小。10 倍规模下真正变化的是跨分片协调调用的绝对峰值速率（随转账总 QPS 而不是分片数扩展），以及——如果转账协调者本身是单一实例——它能否作为一个建立在复制决策日志之上的无状态层水平扩展；把账户分得更细，永远替代不了扩展协调路径本身。"
+  }
+]

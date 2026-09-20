@@ -1,0 +1,12 @@
+{
+  "problems.commerce.payment-system": [
+    "problems-payment-system-ledger-entries-per-charge",
+    "problems-payment-system-dual-idempotency-keys",
+    "problems-payment-system-write-intent-before-call",
+    "problems-payment-system-timeout-as-unknown",
+    "problems-payment-system-append-only-reversing-entries",
+    "problems-payment-system-three-way-vs-two-way-recon",
+    "problems-payment-system-hot-fee-account-decouple-balance",
+    "problems-payment-system-10x-batching-vs-sharding"
+  ]
+}
