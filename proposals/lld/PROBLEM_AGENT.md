@@ -47,6 +47,11 @@ so shortening a docstring buys you nothing: if the solution runs long, drop a st
 describe it in 扩展与追问 instead. Never delete a read-only accessor a test or a reader needs.
 Landing a line under the cap means the next edit breaks the gate: aim for 250–400 and stop adding.
 
+**A safety invariant is an exception, not an `assert`.** `python -O` strips asserts, so anything
+that must hold for the design to be safe — two conflicting movements never green together, money
+never created — raises a named exception. `assert x is not None` to narrow a type for the checker
+is fine and idiomatic; the distinction is whether removing the line changes what the program guarantees.
+
 **A bound in a randomised test is derived, never observed.** "I ran it and the worst wait was 40"
 is a flaky test and teaches nothing: write the bound as an expression over the design's own
 parameters, run the property over many seeds, and put the derivation in the article. If the
