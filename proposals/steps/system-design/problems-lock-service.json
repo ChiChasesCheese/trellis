@@ -1,0 +1,12 @@
+{
+  "problems.foundations.lock-service": [
+    "problems-lock-service-write-throughput-headroom",
+    "problems-lock-service-server-primitives-vs-client-recipes",
+    "problems-lock-service-fencing-token-is-free",
+    "problems-lock-service-vs-redlock",
+    "problems-lock-service-watch-herd-effect-context",
+    "problems-lock-service-read-scalability-choice",
+    "problems-lock-service-write-throughput-falls-with-nodes",
+    "problems-lock-service-multi-region-latency-tax"
+  ]
+}

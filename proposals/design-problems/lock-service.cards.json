@@ -1,0 +1,78 @@
+[
+  {
+    "id": "problems-lock-service-write-throughput-headroom",
+    "node": "problems.foundations.lock-service",
+    "type": "cloze",
+    "text": "In a distributed lock/coordination service design serving a 5,000-client fleet, the actual demand for consensus-replicated writes (lock acquire/release, leader elections, config changes) works out to about {{c1::15 ops/second average, 75 at peak}} — two to three orders of magnitude below the roughly {{c2::18,000 writes/second}} a 5-node ensemble sustains in ZooKeeper's own published saturated-throughput benchmark, and {{c3::far below}} even the lowest tested ensemble size's write ceiling. This is why capacity planning for this class of service is dominated by fault-tolerance and latency reasoning, not by throughput headroom.",
+    "text_zh": "在一个为 5,000 个客户端提供服务的分布式锁/协调服务设计中，真正需要经过共识复制的写操作（锁获取/释放、leader 选举、配置变更）的实际需求约为 {{c1::平均每秒 15 次，峰值 75 次}}——比 ZooKeeper 论文自己发表的饱和吞吐实测里，5 节点集群约 {{c2::18,000 次/秒}} 的写上限低两到三个数量级，{{c3::甚至远低于}}实测中最小集群规模的写上限。这正是这类服务的容量规划由容错性和延迟推理主导、而不是由吞吐量余量主导的原因。",
+    "tags": []
+  },
+  {
+    "id": "problems-lock-service-write-throughput-falls-with-nodes",
+    "node": "problems.foundations.lock-service",
+    "type": "qa",
+    "q": "In a distributed lock/coordination service design, why is adding more voting nodes to a single consensus ensemble never a way to increase its write throughput — and what does ZooKeeper's own published saturated-throughput data (3, 5, 7, 9, 13-node ensembles at 100% writes: roughly 21k, 18k, 14k, 12k, 8k ops/sec respectively) show about the actual effect?",
+    "a": "Every write in a consensus-replicated service must be durably copied to and acknowledged by a majority of voting nodes before it commits, so adding voters adds more replication targets and a slower quorum round-trip to every single write — write throughput falls as ensemble size grows, exactly as ZooKeeper's own data shows (it drops from about 21k ops/sec at 3 nodes to about 8k ops/sec at 13 nodes). Reads behave oppositely and rise with more nodes, since each additional replica is another node that can answer a local read. The only thing more voters buys is fault tolerance (via 2f+1), never throughput — so scaling this class of service means running more independent ensembles, not growing one ensemble larger.",
+    "q_zh": "在一个分布式锁/协调服务设计中，为什么给单个共识集群增加更多投票节点永远不能提高它的写吞吐量？ZooKeeper 自己发表的饱和吞吐实测数据（3、5、7、9、13 节点集群在 100% 写负载下分别约为 21k、18k、14k、12k、8k 次/秒）说明了实际效果是什么？",
+    "a_zh": "在一个共识复制的服务里，每一次写都必须被持久复制到多数投票节点并获得确认才能提交，所以增加投票节点等于给每一次写都增加了更多的复制目标和更慢的 quorum 往返——写吞吐量会随集群规模增大而下降，这正是 ZooKeeper 自己的数据所展示的（从 3 节点约 21k 次/秒降到 13 节点约 8k 次/秒）。读的表现恰好相反，会随节点数增加而上升，因为每多一个副本就多一个能在本地回答读请求的节点。多投票节点唯一换来的是容错能力（通过 2f+1），从来不是吞吐量——所以要扩展这类服务的规模，做法是部署更多独立的集群，而不是让一个集群越长越大。",
+    "tags": []
+  },
+  {
+    "id": "problems-lock-service-server-primitives-vs-client-recipes",
+    "node": "problems.foundations.lock-service",
+    "type": "qa",
+    "q": "In a Chubby/ZooKeeper/etcd-class coordination service design, why does the server API expose only generic primitives (create/delete/read/watch on hierarchical nodes, plus sessions) instead of dedicated lock() and electLeader() RPCs?",
+    "a": "Because locks, leader election, and group membership are recipes composed from those primitives (typically using ephemeral and sequential nodes) rather than server-level concerns, and different applications need different recipe semantics — fair queueing versus preemption, exclusive locks versus shared read/write locks. Baking one specific recipe's semantics into the server would force every application to accept that one choice. Keeping the server limited to a small set of primitives lets it stay simple enough to reason about and prove safe under consensus, while client libraries implement whichever recipe a given application actually needs on top of the same primitive API.",
+    "q_zh": "在一个 Chubby/ZooKeeper/etcd 类协调服务设计中，为什么服务端 API 只暴露一组通用原语（对分层节点的创建/删除/读取/watch，加上会话），而不是提供专门的 lock() 和 electLeader() 这类 RPC？",
+    "a_zh": "因为锁、leader 选举、组成员管理都是由这些原语（通常配合临时节点和顺序节点）组合出来的配方，而不是服务端该关心的事情，而且不同应用需要不同的配方语义——公平排队还是抢占、独占锁还是共享读写锁。把某一种具体配方的语义写死进服务端，会强迫所有应用都接受那一种选择。把服务端限制在一小组原语上，能让它保持足够简单、足以在共识之下被证明安全；具体某个应用需要哪种配方，交给客户端库在同一套原语 API 之上各自实现。",
+    "tags": []
+  },
+  {
+    "id": "problems-lock-service-fencing-token-is-free",
+    "node": "problems.foundations.lock-service",
+    "type": "qa",
+    "q": "In a distributed lock service built on a consensus-replicated log, why doesn't the design need a separate mechanism to generate fencing tokens, and what is the interface-level contract that still has to be designed deliberately?",
+    "a": "Because every successful write to the replicated log already produces a monotonically increasing position/version number as a structural side effect of consensus — reusing that value as the fencing token means a lock service built this way gets a verifiable, monotonically increasing token for free, unlike an ad hoc multi-instance voting scheme (e.g. Redlock), whose protocol has no equivalent value to hand out. What still requires deliberate design is the contract with the downstream resource: the lock service can only hand out the token, it cannot enforce anything — the protected resource itself must persist the highest token it has seen and reject writes carrying a lower one, since the lock service has no way to intercept or validate writes made directly to that resource.",
+    "q_zh": "在一个建立在共识复制日志之上的分布式锁服务中，为什么设计不需要另外发明一套机制来生成 fencing token？接口层面仍然需要刻意设计的契约是什么？",
+    "a_zh": "因为复制日志的每一次成功写入本身，作为共识机制的结构性副产品，就已经产生了一个单调递增的位置/版本号——把这个值复用为 fencing token，意味着这样建出来的锁服务天生就能拿到一个可验证的单调递增令牌，不像 Redlock 这类临时的多实例投票方案，其协议本身根本产生不出一个等价的值可以发放。仍然需要刻意设计的是和下游资源之间的契约：锁服务只能发放令牌，它无法强制任何事情——真正被保护的资源必须自己持久化它见过的最大令牌，并拒绝携带更小令牌的写入，因为锁服务没有办法拦截或校验直接写向那个资源的请求。",
+    "tags": []
+  },
+  {
+    "id": "problems-lock-service-watch-herd-effect-context",
+    "node": "problems.foundations.lock-service",
+    "type": "qa",
+    "q": "In a coordination service design, why is it correct for a mutex-lock recipe to have each waiter watch only its immediate predecessor node (waking exactly one client per release), while it is correct for a 200-instance group's shared 'current leader pointer' to wake all 200 watchers on a single change — even though both look like the same 'many watchers on one key' pattern?",
+    "a": "The two cases differ in what the watchers actually need once notified. For a mutex lock, only one waiter can ever legally acquire the lock next, so waking all waiters means every one of them but one performs wasted work re-checking and re-competing — an O(n) thundering herd that gets worse as n grows; watching only the predecessor node wakes exactly the one client whose turn it now is. For a leader pointer watched by a whole group, every member genuinely needs to learn the new value to route correctly, so waking all of them is the desired behavior, not a bug to avoid. The watch mechanism itself stays a simple one-shot, payload-free signal in both cases — which behavior you get is entirely determined by which node the recipe chooses to register the watch against, not by anything the server does differently.",
+    "q_zh": "在一个协调服务设计中，为什么一个互斥锁配方让每个等待者只 watch 自己紧邻的前驱节点（每次释放恰好唤醒一个客户端）是对的，而一个 200 实例服务组共享的「当前 leader 指针」在一次变化时唤醒全部 200 个 watcher 也是对的——尽管两者表面上都是「很多 watcher 盯着同一个键」这种模式？",
+    "a_zh": "这两种情况的区别在于被唤醒之后各个 watcher 真正需要什么。对互斥锁而言，下一个能合法拿到锁的永远只有一个，所以唤醒所有等待者意味着除了一个之外全都在做无谓的重新检查和重新竞争——这是一次会随 n 增大而恶化的 O(n) 惊群；只 watch 前驱节点则恰好唤醒轮到的那一个客户端。而对一整个组共享的 leader 指针而言，每个成员都真的需要知道新值才能正确路由，所以唤醒所有人正是期望行为，不是需要避免的 bug。watch 机制本身在两种情况下都保持简单、一次性、不携带数据——具体会得到哪种行为，完全由配方选择把 watch 注册在哪个节点上决定，而不是由服务端做了什么不同的事情。",
+    "tags": []
+  },
+  {
+    "id": "problems-lock-service-read-scalability-choice",
+    "node": "problems.foundations.lock-service",
+    "type": "qa",
+    "q": "In a distributed lock/coordination service design, why should a client's read of 'roughly who the current leader is, for routing purposes' be served as a serializable (possibly stale) local read from a follower, while a read used to verify 'do I still hold this lock right now' before performing a fencing-token-guarded write must be linearizable?",
+    "a": "The two reads differ in what happens if the answer is stale. A routing read that returns a slightly outdated leader just causes the client to be redirected once it hits the wrong node — a cheap, self-correcting failure with an existing retry path. A safety-verification read feeding into a decision that a downstream resource will trust (via its fencing-token check) has no such correction mechanism: if it returns stale data, the client may proceed to write believing it still holds the lock when it does not, defeating the whole point of the token check. Routing reads should therefore default to cheap serializable local reads to spread load off the leader, while safety-critical reads must pay for a linearizable read (e.g. read index) even though it costs a quorum round trip.",
+    "q_zh": "在一个分布式锁/协调服务设计中，为什么客户端读取「大概谁是当前 leader，用来决定路由」这种查询应该走可串行化（可能稍旧）的 follower 本地读，而在执行一次受 fencing token 保护的写之前用来确认「我现在是否仍然持有这把锁」的读，却必须是线性一致的？",
+    "a_zh": "这两种读的区别在于结果陈旧时会发生什么。一次路由读即使返回了稍旧的 leader 信息，后果也只是客户端打到了错误的节点后被重定向一次——代价很低，而且有现成的重试路径自我纠正。而一次接入安全校验决策的读（下游资源会信任它做出的 fencing-token 判断）没有这种纠正机制：如果它返回了陈旧数据，客户端可能会带着「我仍然持有这把锁」的错误信念继续写下去，这就彻底破坏了令牌校验本来要防止的事情。因此路由类的读应该默认走廉价的可串行化本地读、把负载从 leader 上分摊出去，而安全校验类的读必须付出线性一致读（例如 read index）的代价，即使这意味着一次 quorum 往返。",
+    "tags": []
+  },
+  {
+    "id": "problems-lock-service-vs-redlock",
+    "node": "problems.foundations.lock-service",
+    "type": "qa",
+    "q": "In a distributed lock service design, why is a Redlock-style scheme (acquiring a TTL'd key on a majority of independent Redis instances) not an acceptable foundation when lock correctness is a safety dependency, as opposed to a pure efficiency optimization?",
+    "a": "Redlock's safety depends on a set of timing assumptions — bounded process pauses, bounded network delay, bounded clock drift — that don't hold in real systems (a long GC pause alone can violate them). More fundamentally, its protocol structurally cannot produce a verifiable, monotonically increasing fencing token, because there is no shared, agreed-upon logical clock across the independent Redis instances the way a consensus-replicated log's commit position provides one. This makes it acceptable for uses where a failed lock only costs some duplicated work (pure efficiency), but not for uses where a downstream resource needs to reject a stale writer's request, since there is no token to check against.",
+    "q_zh": "在一个分布式锁服务设计中，当锁的正确性是一项安全性依赖、而不是纯粹的效率优化时，为什么 Redlock 式的方案（在多个独立 Redis 实例的多数上都获取一个带 TTL 的 key）不是一个可以接受的地基？",
+    "a_zh": "Redlock 的安全性依赖一组时序假设——进程暂停有界、网络延迟有界、时钟漂移有界——这些假设在真实系统里并不成立（单是一次较长的 GC 暂停就可能违反它们）。更根本的是，它的协议在结构上根本产生不出一个可验证的单调递增 fencing token，因为这些相互独立的 Redis 实例之间没有像共识复制日志的提交位置那样，一个所有人都认可的共享逻辑时钟。这使得它在锁失败只会造成一些重复劳动（纯效率优化）的场景里可以接受，但在下游资源需要拒绝一个过期写入者的请求、却没有令牌可以校验的场景里不可接受。",
+    "tags": []
+  },
+  {
+    "id": "problems-lock-service-multi-region-latency-tax",
+    "node": "problems.foundations.lock-service",
+    "type": "cloze",
+    "text": "In a distributed lock/coordination service design, stretching a single 5-node consensus ensemble across three regions (2 nodes in one region, 2 in a second, 1 in a third) means every write's quorum must wait for a third acknowledgment beyond the leader and its same-region peer; at a representative same-continent RTT of about 60ms, this pushes write commit latency to roughly {{c1::60ms}}, compared to about {{c2::1ms}} for an ensemble kept within a single region — nearly two orders of magnitude slower. The better default is {{c3::one independent consensus ensemble per region for region-local coordination, with a small separate global ensemble reserved only for the rare decisions that genuinely need one answer across all regions}}.",
+    "text_zh": "在一个分布式锁/协调服务设计中，把单个 5 节点共识集群拉伸跨越三个区域（一个区域 2 个节点，另一个区域 2 个，第三个区域 1 个），意味着每次写的 quorum 除了 leader 和同区域的那个节点之外，还要再等第三个确认；按一个具有代表性的同大洲往返延迟约 60ms 估算，这会把写提交延迟推高到约 {{c1::60ms}}，而如果集群保持在单一区域内，这个延迟约为 {{c2::1ms}}——慢了近两个数量级。更好的默认做法是{{c3::每个区域各自部署一个独立的共识集群处理区域内协调，只用一个单独的小型全局集群服务真正需要在所有区域间给出唯一答案的少数决策}}。",
+    "tags": []
+  }
+]
