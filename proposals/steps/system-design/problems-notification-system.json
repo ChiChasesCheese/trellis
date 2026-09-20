@@ -1,0 +1,12 @@
+{
+  "problems.social.notification-system": [
+    "problems-notification-system-priority-lane-drain-time",
+    "problems-notification-system-preference-matrix-model",
+    "problems-notification-system-sourceeventid-dedup",
+    "problems-notification-system-dedup-window-sizing",
+    "problems-notification-system-digest-reduction",
+    "problems-notification-system-provider-failover-circuit-breaker",
+    "problems-notification-system-preference-service-outage-degradation",
+    "problems-notification-system-sms-quota-bottleneck-10x"
+  ]
+}
