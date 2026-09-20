@@ -2,6 +2,7 @@
 id: kafka-monitoring-request-handler-idle-and-msg-format
 node: monitoring.broker-metrics
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

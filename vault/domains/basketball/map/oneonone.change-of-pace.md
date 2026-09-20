@@ -11,8 +11,8 @@ Why speed differential beats top speed, hesitation and stop-start, and the decel
 - [[live-catch-1v1-two-dribble|Drill: 1-on-1 from a live catch, two dribbles]]
 
 ## Cards (2)
-- [[bb-pace-decelerate-to-accelerate]]
-- [[bb-pace-speed-differential]]
+1. [[bb-pace-decelerate-to-accelerate]]
+2. [[bb-pace-speed-differential]]
 %% trellis:end %%
 
 ## Notes

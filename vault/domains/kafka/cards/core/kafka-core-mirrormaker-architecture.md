@@ -2,6 +2,7 @@
 id: kafka-core-mirrormaker-architecture
 node: core.cluster-roles
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

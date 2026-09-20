@@ -2,6 +2,7 @@
 id: kafka-monitoring-urp-stable-vs-fluctuating
 node: monitoring.broker-metrics
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: infra-schema-migration-deploys
 node: infra.delivery
 type: qa
+step: 5
 ---
 ## Q
 Why are database schema changes the riskiest class of deploy, and how does expand–contract make them safe?

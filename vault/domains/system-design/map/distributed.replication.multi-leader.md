@@ -8,13 +8,13 @@ Multi-datacenter writes, conflict detection and resolution, why LWW loses data.
 - [[qs-two-writers-and-the-conflict-you-cannot-see|Two writers and the conflict you cannot see]] — `quant-stroller`
 
 ## Cards (7)
-- [[distributed-collab-editing-replication]]
-- [[distributed-conflict-detection-siblings]]
-- [[distributed-multi-leader-conflict-timing]]
-- [[distributed-multi-leader-fit]]
-- [[distributed-multi-leader-retrofit-hazards]]
-- [[distributed-multi-leader-topologies]]
-- [[distributed-offline-client-writes]]
+1. [[distributed-multi-leader-fit]]
+2. [[distributed-multi-leader-conflict-timing]]
+3. [[distributed-conflict-detection-siblings]]
+4. [[distributed-multi-leader-topologies]]
+5. [[distributed-multi-leader-retrofit-hazards]]
+6. [[distributed-collab-editing-replication]]
+7. [[distributed-offline-client-writes]]
 %% trellis:end %%
 
 ## Notes

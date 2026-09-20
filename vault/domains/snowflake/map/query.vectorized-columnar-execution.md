@@ -7,11 +7,11 @@
 **Requires:** [[domains/snowflake/map/storage.columnar-compression-encoding|列式压缩与编码]]
 
 ## Cards (5)
-- [[vectorized-batch-size-tradeoff]]
-- [[vectorized-batches-of-columns]]
-- [[vectorized-vs-mapreduce-materialization]]
-- [[vectorized-vs-row-at-a-time]]
-- [[vectorized-when-row-based-wins]]
+1. [[vectorized-batch-size-tradeoff]]
+2. [[vectorized-batches-of-columns]]
+3. [[vectorized-vs-mapreduce-materialization]]
+4. [[vectorized-vs-row-at-a-time]]
+5. [[vectorized-when-row-based-wins]]
 %% trellis:end %%
 
 ## Notes

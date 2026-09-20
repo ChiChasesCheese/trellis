@@ -3,11 +3,6 @@
 *图的遍历、连通性与拓扑排序（graph traversal / topological sort）*
 
 有向先修依赖需要合法顺序或判环时，用 Kahn 拓扑排序。
-
-## Cards (3)
-- [[leetcode-c-endlesscheng-k0n2go-rooted-tree-topological-order-invariant]]
-- [[leetcode-c-endlesscheng-k0n2go-rooted-tree-topological-order-recognition]]
-- [[leetcode-c-endlesscheng-k0n2go-rooted-tree-topological-order-template]]
 %% trellis:end %%
 
 ## Notes

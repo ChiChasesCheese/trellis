@@ -7,11 +7,11 @@
 **Requires:** [[domains/snowflake/map/security.rbac-role-hierarchy|RBAC 角色层级]]
 
 ## Cards (5)
-- [[access-history-direct-vs-base]]
-- [[access-history-latency-retention]]
-- [[access-history-write-lineage]]
-- [[lineage-policy-audit-join]]
-- [[lineage-vs-grants-difference]]
+1. [[access-history-direct-vs-base]]
+2. [[access-history-latency-retention]]
+3. [[access-history-write-lineage]]
+4. [[lineage-policy-audit-join]]
+5. [[lineage-vs-grants-difference]]
 %% trellis:end %%
 
 ## Notes

@@ -190,6 +190,55 @@ current scheduling rather than a stale collection, so nothing reviewed on the
 phone is lost. Aligning between import and the final sync means decks renamed or
 split since the last push are reconciled in the same trip.
 
+### The order and the mix Anki deals
+
+Anki shows new cards by a *position* each one carries, and its importer never
+moves a card it already has — so until the vault decides that number and keeps
+deciding it, nothing you reorder is ever seen on the phone
+([ADR 0010](docs/adr/0010-the-vault-decides-the-order-and-the-mix-anki-deals.md)).
+
+```yaml
+# skeleton/kafka.yaml
+study:
+  order: core-first        # the Core, then the rest — or `skeleton` for plain tree order
+  mix: new-first           # new-first | mixed | reviews-first
+  new_per_day: 20
+  reviews_per_day: 100     # half and half is equal limits with `mix: mixed`
+nodes:
+  - id: core
+    core: true             # on a branch it covers the subtree
+```
+
+```markdown
+---
+id: kafka-core-offset-what-is
+node: core.offsets
+step: 1                    # met first among this leaf's cards
+---
+```
+
+- The **Core** is what you declare plus everything it requires, so the first pass
+  never meets a card before its ground. With nothing declared, the leaves
+  something else stands on are the Core.
+- A **step** orders cards inside a leaf; unstepped cards follow, grown cards come
+  last. `trellis --domain kafka steps -o prompt.md` asks a Runner for the order
+  of every leaf, and `steps --import answer.json` lands it as one frontmatter
+  line per card (`--check` validates without writing).
+- `anki-push` numbers the package in that **Sequence**, then converges the
+  collection: every card Anki still calls *new* gets its position; a card with a
+  review history is never touched. `anki-align` does the same without importing.
+- The domain's decks move to a preset of their own, `Trellis · <title>`, cloned
+  from what they used and set to deal new cards by position — without it sibling
+  decks are dealt alphabetically. The **Pace** lands there too. The preset the
+  rest of your collection shares is never written to.
+- Core cards carry `trellis::core`, so `tag:trellis::core is:new` is a filtered
+  deck of exactly the first pass. The Study Path and every map note list in the
+  same order.
+
+One manual step: with a review backlog at or above `reviews_per_day`, Anki's v3
+scheduler shows no new cards unless *Deck options → New cards ignore review
+limit* is on. That switch is collection-wide and AnkiConnect cannot reach it.
+
 ### Granularity policy
 
 A leaf is **one interview probe** — a topic narrow enough that "I'm weak here"

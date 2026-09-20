@@ -2,6 +2,7 @@
 id: kafka-streams-stream-table-duality
 node: streams.concepts
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: kafka-reliability-acks-all-needs-exception-handling
 node: reliability.producer-reliable
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

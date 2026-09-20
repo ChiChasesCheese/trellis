@@ -12,12 +12,12 @@ Client, CDN, gateway, application, and database layers — what each layer can a
 - [[design-rate-limiter|Drill: Design a distributed rate limiter]]
 
 ## Cards (6)
-- [[caching-cache-shard-blast-radius]]
-- [[caching-hit-rate-outage-math]]
-- [[caching-hot-key-replication]]
-- [[caching-layer-absorption]]
-- [[caching-local-vs-remote]]
-- [[caching-placement-cost-of-depth]]
+1. [[caching-placement-cost-of-depth]]
+2. [[caching-layer-absorption]]
+3. [[caching-local-vs-remote]]
+4. [[caching-cache-shard-blast-radius]]
+5. [[caching-hot-key-replication]]
+6. [[caching-hit-rate-outage-math]]
 %% trellis:end %%
 
 ## Notes

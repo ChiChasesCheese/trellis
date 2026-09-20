@@ -1,0 +1,34 @@
+{
+  "monitoring.metrics-and-slo": [
+    "kafka-monitoring-automation-vs-human-metrics",
+    "kafka-monitoring-alert-vs-debug-metrics-retention",
+    "kafka-monitoring-health-check-stale-metrics-tradeoff",
+    "kafka-monitoring-sli-slo-sla-ola-terms",
+    "kafka-monitoring-percentile-bad-sli",
+    "kafka-monitoring-slo-burn-rate-alerting"
+  ],
+  "monitoring.broker-metrics": [
+    "kafka-monitoring-urp-not-a-good-alert",
+    "kafka-monitoring-urp-stable-vs-fluctuating",
+    "kafka-monitoring-find-culprit-broker-multi-urp",
+    "kafka-monitoring-outbound-vs-inbound-bytes",
+    "kafka-monitoring-request-handler-idle-and-msg-format",
+    "kafka-monitoring-two-active-controllers"
+  ],
+  "monitoring.client-metrics": [
+    "kafka-monitoring-record-error-vs-retry-rate",
+    "kafka-monitoring-consumer-rate-min-alert-pitfall",
+    "kafka-monitoring-records-lag-max-not-recommended",
+    "kafka-monitoring-quota-three-types",
+    "kafka-monitoring-static-vs-dynamic-quota",
+    "kafka-monitoring-throttle-silent-must-monitor"
+  ],
+  "monitoring.lag-e2e": [
+    "kafka-monitoring-external-lag-tool-vs-client-metric",
+    "kafka-monitoring-lag-threshold-per-partition-problem",
+    "kafka-monitoring-burrow-no-static-threshold",
+    "kafka-monitoring-burrow-vs-xinfra-scope",
+    "kafka-monitoring-e2e-two-questions",
+    "kafka-monitoring-xinfra-per-broker-not-per-topic"
+  ]
+}

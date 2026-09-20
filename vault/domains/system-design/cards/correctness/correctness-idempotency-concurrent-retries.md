@@ -2,6 +2,7 @@
 id: correctness-idempotency-concurrent-retries
 node: correctness.idempotency
 type: qa
+step: 4
 ---
 ## Q
 Two requests with the same idempotency key arrive concurrently (client timeout fired while the original was still running). What must the server do?

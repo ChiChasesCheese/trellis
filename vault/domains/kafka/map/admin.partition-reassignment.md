@@ -10,12 +10,12 @@
 - [[kafka-5-7-advanced-admin-ops|高级管理操作：分区、消息删除与首领选举]]
 
 ## Cards (6)
-- [[kafka-admin-cancel-reassignment-risk]]
-- [[kafka-admin-force-move-controller]]
-- [[kafka-admin-manual-topic-delete-requires-full-shutdown]]
-- [[kafka-admin-preferred-vs-unclean-leader-election]]
-- [[kafka-admin-reassignment-throttle]]
-- [[kafka-admin-restart-broker-before-decommission]]
+1. [[kafka-admin-preferred-vs-unclean-leader-election]]
+2. [[kafka-admin-reassignment-throttle]]
+3. [[kafka-admin-restart-broker-before-decommission]]
+4. [[kafka-admin-cancel-reassignment-risk]]
+5. [[kafka-admin-force-move-controller]]
+6. [[kafka-admin-manual-topic-delete-requires-full-shutdown]]
 %% trellis:end %%
 
 ## Notes

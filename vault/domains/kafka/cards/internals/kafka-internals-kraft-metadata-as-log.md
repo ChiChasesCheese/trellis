@@ -2,6 +2,7 @@
 id: kafka-internals-kraft-metadata-as-log
 node: internals.kraft-mode
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

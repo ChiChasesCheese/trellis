@@ -2,6 +2,7 @@
 id: kafka-practice-network-10gbe-fanout
 node: practice.sizing-tuning
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

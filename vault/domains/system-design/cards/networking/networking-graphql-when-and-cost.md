@@ -2,6 +2,7 @@
 id: networking-graphql-when-and-cost
 node: networking.api-styles
 type: qa
+step: 5
 ---
 ## Q
 What client situation makes GraphQL earn its complexity, and what two operational problems does it import?

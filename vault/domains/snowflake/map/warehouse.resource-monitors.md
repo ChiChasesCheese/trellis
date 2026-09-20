@@ -4,6 +4,8 @@
 
 附加在仓库或账户上的信用点配额，可在达到阈值时通知、挂起或立即挂起。
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/snowflake/map/warehouse.sizing-t-shirt|仓库规格（T 恤尺码式）]]
 
 **Unlocks:** [[domains/snowflake/map/cost.resource-monitors-and-budgets|用资源监控器强制执行预算]]
@@ -12,11 +14,11 @@
 - [[snowflak-resource-monitors|资源监控器(Resource Monitor):信用点配额与自动挂起]]
 
 ## Cards (5)
-- [[rm-account-vs-warehouse-monitor]]
-- [[rm-cloud-services-counted]]
-- [[rm-not-precise-use-buffers]]
-- [[rm-resume-conditions-and-limits]]
-- [[rm-suspend-vs-suspend-immediate]]
+1. [[rm-account-vs-warehouse-monitor]]
+2. [[rm-cloud-services-counted]]
+3. [[rm-not-precise-use-buffers]]
+4. [[rm-resume-conditions-and-limits]]
+5. [[rm-suspend-vs-suspend-immediate]]
 %% trellis:end %%
 
 ## Notes

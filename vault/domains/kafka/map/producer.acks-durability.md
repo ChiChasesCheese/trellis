@@ -4,6 +4,8 @@
 
 理解acks=0/1/all如何决定消息在被确认前需要写入多少副本，以及由此带来的持久性保证差异。
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/kafka/map/core.replication-isr|副本、首领/追随者与同步副本集合（ISR）]]
 
 **Unlocks:** [[domains/kafka/map/reliability.producer-reliable|在可靠系统中配置生产者]]
@@ -12,11 +14,11 @@
 - [[kafka-3-4-producer-config|生产者关键配置：acks、批处理与幂等性]]
 
 ## Cards (5)
-- [[kafka-producer-acks-0-fire-and-forget-risk]]
-- [[kafka-producer-acks-1-leader-crash-risk]]
-- [[kafka-producer-acks-all-isr-safety]]
-- [[kafka-producer-acks-end-to-end-latency-same]]
-- [[kafka-producer-acks-speed-vs-durability-tradeoff]]
+1. [[kafka-producer-acks-speed-vs-durability-tradeoff]]
+2. [[kafka-producer-acks-0-fire-and-forget-risk]]
+3. [[kafka-producer-acks-1-leader-crash-risk]]
+4. [[kafka-producer-acks-all-isr-safety]]
+5. [[kafka-producer-acks-end-to-end-latency-same]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: kafka-monitoring-burrow-vs-xinfra-scope
 node: monitoring.lag-e2e
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: kafka-internals-tiered-storage-read-path-choice
 node: internals.tiered-storage
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

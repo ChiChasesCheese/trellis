@@ -2,6 +2,7 @@
 id: storage-normalization-tradeoff
 node: storage.relational.operations
 type: qa
+step: 3
 ---
 ## Q
 Normalized vs denormalized schema: what exactly does each optimize, and what breaks when you denormalize?

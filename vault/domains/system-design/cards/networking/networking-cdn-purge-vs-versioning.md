@@ -2,6 +2,7 @@
 id: networking-cdn-purge-vs-versioning
 node: networking.cdn
 type: qa
+step: 4
 ---
 ## Q
 Shipping a new asset build behind a CDN: purge/invalidate vs versioned URLs — compare, and what's the standard practice?

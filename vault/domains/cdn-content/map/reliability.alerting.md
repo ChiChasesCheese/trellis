@@ -4,6 +4,8 @@
 
 Golden signals, cache and origin dashboards, symptom-based paging, burn-rate alerts, change annotations, and actionable runbooks.
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/cdn-content/map/reliability.metrics|Metrics & Cardinality]]
 
 **Unlocks:** [[domains/cdn-content/map/reliability.incidents|On-Call, Incidents & Postmortems]], [[domains/cdn-content/map/delivery.flags|Feature Flags & Kill Switches]]
@@ -16,9 +18,9 @@ Golden signals, cache and origin dashboards, symptom-based paging, burn-rate ale
 - [[incident-regional-cache-collapse|Drill: Regional cache collapse incident]]
 
 ## Cards (3)
-- [[reliability-alerting-dashboard-decision]]
-- [[reliability-alerting-hit-ratio-page]]
-- [[reliability-alerting-multiwindow-burn]]
+1. [[reliability-alerting-dashboard-decision]]
+2. [[reliability-alerting-hit-ratio-page]]
+3. [[reliability-alerting-multiwindow-burn]]
 %% trellis:end %%
 
 ## Notes

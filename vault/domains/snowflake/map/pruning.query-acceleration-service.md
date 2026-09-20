@@ -10,12 +10,12 @@
 - [[snowflak-query-acceleration|查询加速服务(QAS)加速离群查询]]
 
 ## Cards (6)
-- [[qas-bytes-scanned-inflation]]
-- [[qas-default-scale-factor]]
-- [[qas-find-candidates]]
-- [[qas-ineligible-reasons]]
-- [[qas-outlier-offload-mechanism]]
-- [[qas-scale-factor-cost-bound]]
+1. [[qas-bytes-scanned-inflation]]
+2. [[qas-default-scale-factor]]
+3. [[qas-find-candidates]]
+4. [[qas-ineligible-reasons]]
+5. [[qas-outlier-offload-mechanism]]
+6. [[qas-scale-factor-cost-bound]]
 %% trellis:end %%
 
 ## Notes

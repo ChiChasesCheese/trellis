@@ -2,6 +2,7 @@
 id: kafka-security-e2e-encryption-why
 node: security.protocols-auth-encryption
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

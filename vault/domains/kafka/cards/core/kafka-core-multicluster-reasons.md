@@ -2,6 +2,7 @@
 id: kafka-core-multicluster-reasons
 node: core.cluster-roles
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

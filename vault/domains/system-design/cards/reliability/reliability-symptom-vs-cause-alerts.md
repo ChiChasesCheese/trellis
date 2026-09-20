@@ -2,6 +2,7 @@
 id: reliability-symptom-vs-cause-alerts
 node: reliability.slo
 type: qa
+step: 5
 ---
 ## Q
 "Page on symptoms, ticket on causes" — what does that mean, and why does cause-based paging (CPU > 90%, disk 80% full) rot an on-call rotation?

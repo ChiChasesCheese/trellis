@@ -2,6 +2,7 @@
 id: distributed-leaderless-monotonic-reads
 node: distributed.replication.leaderless
 type: qa
+step: 4
 ---
 ## Q
 In a Dynamo-style store with W=2, R=2, N=3, a client reads a value and then reads it again and gets an *older* value. Explain how, and why the leader-based fix doesn't apply.

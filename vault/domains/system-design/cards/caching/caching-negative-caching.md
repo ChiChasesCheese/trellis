@@ -2,6 +2,7 @@
 id: caching-negative-caching
 node: caching.strategies
 type: qa
+step: 4
 ---
 ## Q
 Lookups for keys that *don't exist* miss the cache every time and hit the DB. What's the fix, and its two risks?

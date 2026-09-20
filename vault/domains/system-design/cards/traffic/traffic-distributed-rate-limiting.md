@@ -2,6 +2,7 @@
 id: traffic-distributed-rate-limiting
 node: traffic.rate-limiting
 type: qa
+step: 6
 ---
 ## Q
 Rate limit is 1,000 req/s per API key, enforced across 20 gateway instances. Compare the two enforcement designs and their failure trade-off.

@@ -2,6 +2,7 @@
 id: kafka-practice-shared-zookeeper-multi-cluster-ok-other-apps-not
 node: practice.sizing-tuning
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

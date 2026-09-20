@@ -2,6 +2,7 @@
 id: storage-secondary-index-partitioning
 node: storage.nosql
 type: qa
+step: 7
 ---
 ## Q
 In a partitioned store, secondary indexes can be local (document-partitioned) or global (term-partitioned). What does each cost, and which does DynamoDB's GSI use?

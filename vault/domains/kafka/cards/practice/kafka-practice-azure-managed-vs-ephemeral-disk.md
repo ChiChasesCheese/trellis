@@ -2,6 +2,7 @@
 id: kafka-practice-azure-managed-vs-ephemeral-disk
 node: practice.cloud-deployment
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

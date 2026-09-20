@@ -2,6 +2,7 @@
 id: reliability-logs-metrics-traces
 node: reliability.observability
 type: qa
+step: 1
 ---
 ## Q
 Logs, metrics, traces: which one answers "is it broken?", "where is it broken?", and "why is this request broken?" — and what does each cost at scale?

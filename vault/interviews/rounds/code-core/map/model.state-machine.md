@@ -14,11 +14,11 @@ Explicit states and a transition table, rejecting illegal transitions with the r
 - [[oa-qa06-lc2043-simple-bank-system|Drill: a validated bank class, then a reversible log, then platform lending]]
 
 ## Cards (5)
-- [[cc-model-sm-boolean-soup]]
-- [[cc-model-sm-effect-on-edge]]
-- [[cc-model-sm-guard-then-effect]]
-- [[cc-model-sm-reverse-edge]]
-- [[cc-model-sm-transition-table]]
+1. [[cc-model-sm-boolean-soup]]
+2. [[cc-model-sm-effect-on-edge]]
+3. [[cc-model-sm-guard-then-effect]]
+4. [[cc-model-sm-reverse-edge]]
+5. [[cc-model-sm-transition-table]]
 %% trellis:end %%
 
 ## Notes

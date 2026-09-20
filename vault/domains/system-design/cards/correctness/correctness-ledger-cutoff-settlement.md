@@ -2,6 +2,7 @@
 id: correctness-ledger-cutoff-settlement
 node: correctness.ledger
 type: qa
+step: 6
 ---
 ## Q
 Why does a ledger need a business date and cutoff time distinct from event timestamps, and what happens to entries that arrive after cutoff?

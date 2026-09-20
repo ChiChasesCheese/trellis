@@ -2,6 +2,7 @@
 id: kafka-consumer-seek-use-cases
 node: consumer.seek-and-replay
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

@@ -13,10 +13,10 @@ Repository pattern, id generation, secondary indexes, and thread-safe in-memory 
 - [[parking-lot|Drill: Parking Lot]]
 
 ## Cards (4)
-- [[structure-storage-chm-compound-ops]]
-- [[structure-storage-id-generation]]
-- [[structure-storage-repository-boundary]]
-- [[structure-storage-secondary-index]]
+1. [[structure-storage-chm-compound-ops]]
+2. [[structure-storage-id-generation]]
+3. [[structure-storage-repository-boundary]]
+4. [[structure-storage-secondary-index]]
 %% trellis:end %%
 
 ## Notes

@@ -1,0 +1,6 @@
+{
+  "security.authn.tokens": ["security-sessions-vs-jwt", "security-access-refresh-tokens", "security-refresh-rotation-reuse", "security-sender-constrained-tokens"],
+  "security.authn.oauth": ["security-oauth-code-pkce", "security-oauth-browser-token-storage", "security-oauth-vs-oidc", "security-oauth-scopes-vs-audience", "security-oauth-grant-selection"],
+  "security.authn.credentials": ["security-password-hashing-params", "security-credential-stuffing", "security-passkeys-phishing", "security-webauthn-ceremony", "security-account-recovery"],
+  "security.authz": ["security-rbac-vs-abac", "security-api-keys-vs-user-tokens", "security-confused-deputy", "security-mtls-vs-tokens-s2s", "security-secrets-handling", "security-secrets-rotation-live"]
+}

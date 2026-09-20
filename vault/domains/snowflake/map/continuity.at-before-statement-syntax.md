@@ -10,11 +10,11 @@
 - [[snowflak-time-travel|时间旅行(Time Travel):可查询窗口、AT/BEFORE 与 UNDROP]]
 
 ## Cards (5)
-- [[at-before-clone-default-point]]
-- [[at-before-database-clone-child-retention]]
-- [[at-before-outside-retention-error]]
-- [[at-before-statement-recover-bad-delete]]
-- [[at-before-three-parameters]]
+1. [[at-before-clone-default-point]]
+2. [[at-before-database-clone-child-retention]]
+3. [[at-before-outside-retention-error]]
+4. [[at-before-statement-recover-bad-delete]]
+5. [[at-before-three-parameters]]
 %% trellis:end %%
 
 ## Notes

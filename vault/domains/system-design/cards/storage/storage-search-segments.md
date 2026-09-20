@@ -2,6 +2,7 @@
 id: storage-search-segments
 node: storage.search
 type: qa
+step: 3
 ---
 ## Q
 Lucene segments are immutable. What do update and delete actually do, and what background process pays the bill?

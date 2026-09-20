@@ -2,6 +2,7 @@
 id: kafka-reliability-acks1-silent-loss-scenario
 node: reliability.producer-reliable
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

@@ -14,12 +14,12 @@ Aggregating per key, applying a bonus or penalty once per group rather than per 
 - [[tiered-billing-exact-output|Drill: tiered billing with an exact-output contract]]
 
 ## Cards (6)
-- [[cc-rules-grp-cancel-whole-group]]
-- [[cc-rules-grp-empty-groups-printed]]
-- [[cc-rules-grp-key-defines-independence]]
-- [[cc-rules-grp-once-per-group]]
-- [[cc-rules-grp-parameter-from-current-row]]
-- [[cc-rules-grp-running-count-includes-current]]
+1. [[cc-rules-grp-cancel-whole-group]]
+2. [[cc-rules-grp-empty-groups-printed]]
+3. [[cc-rules-grp-key-defines-independence]]
+4. [[cc-rules-grp-once-per-group]]
+5. [[cc-rules-grp-parameter-from-current-row]]
+6. [[cc-rules-grp-running-count-includes-current]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: kafka-internals-time-index-purpose
 node: internals.indexes
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

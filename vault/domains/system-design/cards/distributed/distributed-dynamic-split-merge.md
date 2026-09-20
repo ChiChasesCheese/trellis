@@ -2,6 +2,7 @@
 id: distributed-dynamic-split-merge
 node: distributed.partitioning.rebalancing
 type: qa
+step: 4
 ---
 ## Q
 How does dynamic (split/merge) partitioning work, what triggers each operation, and what's the pitfall on an empty database?

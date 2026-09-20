@@ -2,6 +2,7 @@
 id: kafka-internals-log-segment-basics
 node: internals.storage-segments
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

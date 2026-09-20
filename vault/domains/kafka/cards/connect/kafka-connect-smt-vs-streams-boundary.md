@@ -2,6 +2,7 @@
 id: kafka-connect-smt-vs-streams-boundary
 node: connect.smt
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

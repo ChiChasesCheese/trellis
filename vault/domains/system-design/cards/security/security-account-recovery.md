@@ -2,6 +2,7 @@
 id: security-account-recovery
 node: security.authn.credentials
 type: qa
+step: 5
 ---
 ## Q
 You ship passkey-only login. Why is your account's real security level probably still "SMS", and how do you design recovery?

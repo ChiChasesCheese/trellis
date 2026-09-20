@@ -2,6 +2,7 @@
 id: storage-btree-branching-depth
 node: storage.internals.btree
 type: cloze
+step: 1
 ---
 A B-tree stores data in fixed-size pages (commonly 4KB), each internal page holding hundreds of child references — a branching factor of {{c1::~500}} is typical. Depth therefore grows with the *logarithm* of row count, so almost every real table fits in {{c2::3–4}} levels: with 4KB pages and 500-way branching, a 4-level tree already addresses about {{c3::256 TB}}. Practical consequence: a point lookup costs at most depth page reads, and since the root and inner levels are a tiny fraction of the tree they stay cached — usually leaving {{c4::one disk read (the leaf page)}} per lookup.
 

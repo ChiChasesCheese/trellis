@@ -3,9 +3,6 @@
 *链表操作（linked list）*
 
 在快慢指针模式中，慢指针每次走1步，快指针每次走2步；当快指针到达链表末尾（fast为None或fast.next为None）时，慢指针恰好停在。
-
-## Cards (1)
-- [[leetcode-c-fast-slow-pointers-linked-list]]
 %% trellis:end %%
 
 ## Notes

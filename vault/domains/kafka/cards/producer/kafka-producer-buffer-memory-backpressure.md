@@ -2,6 +2,7 @@
 id: kafka-producer-buffer-memory-backpressure
 node: producer.batching-throughput
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

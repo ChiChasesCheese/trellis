@@ -2,6 +2,7 @@
 id: foundations-three-pillars
 node: foundations.tradeoffs
 type: qa
+step: 1
 ---
 ## Q
 DDIA judges every data system against three nonfunctional pillars. Name them, and give the operational test you would apply to a running system for each — the question that reveals whether the pillar actually holds.

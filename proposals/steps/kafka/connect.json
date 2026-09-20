@@ -1,0 +1,32 @@
+{
+  "connect.pipeline-design": [
+    "kafka-connect-pipeline-timeliness-buffer",
+    "kafka-connect-pipeline-delivery-guarantee-levels",
+    "kafka-connect-pipeline-throughput-decoupling",
+    "kafka-connect-pipeline-etl-vs-elt",
+    "kafka-connect-pipeline-overprocessing-coupling",
+    "kafka-connect-pipeline-schema-loss-coupling"
+  ],
+  "connect.connect-basics": [
+    "kafka-connect-vs-client-api-decision",
+    "kafka-connect-prefer-over-custom-app",
+    "kafka-connect-connector-vs-task-division",
+    "kafka-connect-worker-separation-of-concerns",
+    "kafka-connect-converter-decouples-format",
+    "kafka-connect-source-offset-atleastonce-mechanism"
+  ],
+  "connect.smt": [
+    "kafka-connect-smt-common-types",
+    "kafka-connect-smt-config-not-connector-specific",
+    "kafka-connect-smt-vs-streams-boundary",
+    "kafka-connect-smt-error-tolerance-dlq",
+    "kafka-connect-smt-insertheader-lineage-example",
+    "kafka-connect-smt-timestamprouter-usecase"
+  ],
+  "connect.alternatives": [
+    "kafka-connect-alt-kafka-as-integration-platform",
+    "kafka-connect-alt-flume-logstash-vs-connect",
+    "kafka-connect-alt-gui-etl-tools-tradeoff",
+    "kafka-connect-alt-stream-framework-shortcut-risk"
+  ]
+}

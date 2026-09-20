@@ -2,6 +2,7 @@
 id: storage-btree-wal-recovery
 node: storage.internals.btree
 type: qa
+step: 5
 ---
 ## Q
 B-trees write pages in place. Why does that force a write-ahead log, and what is the torn-page problem?

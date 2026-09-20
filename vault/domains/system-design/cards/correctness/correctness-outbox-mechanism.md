@@ -2,6 +2,7 @@
 id: correctness-outbox-mechanism
 node: correctness.outbox
 type: qa
+step: 2
 ---
 ## Q
 Walk through the transactional outbox pattern: what happens in the transaction, how do events reach the broker, and what guarantee do you end up with?

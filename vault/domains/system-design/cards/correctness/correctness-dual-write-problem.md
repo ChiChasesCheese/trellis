@@ -2,6 +2,7 @@
 id: correctness-dual-write-problem
 node: correctness.outbox
 type: qa
+step: 1
 ---
 ## Q
 A service commits to Postgres, then publishes an event to Kafka. Enumerate the failure modes of this "dual write" — and why wrapping both in try/catch doesn't fix it.

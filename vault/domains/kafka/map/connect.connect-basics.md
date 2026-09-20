@@ -11,12 +11,12 @@
 - [[kafka-9-3-kafka-connect|Kafka Connect：worker、连接器与单一消息转换]]
 
 ## Cards (6)
-- [[kafka-connect-connector-vs-task-division]]
-- [[kafka-connect-converter-decouples-format]]
-- [[kafka-connect-prefer-over-custom-app]]
-- [[kafka-connect-source-offset-atleastonce-mechanism]]
-- [[kafka-connect-vs-client-api-decision]]
-- [[kafka-connect-worker-separation-of-concerns]]
+1. [[kafka-connect-vs-client-api-decision]]
+2. [[kafka-connect-prefer-over-custom-app]]
+3. [[kafka-connect-connector-vs-task-division]]
+4. [[kafka-connect-worker-separation-of-concerns]]
+5. [[kafka-connect-converter-decouples-format]]
+6. [[kafka-connect-source-offset-atleastonce-mechanism]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: storage-json-contract-pitfalls
 node: storage.encoding
 type: qa
+step: 2
 ---
 ## Q
 JSON is the default inter-service format anyway. Name its concrete weaknesses as a *data contract*, and what teams add to compensate.

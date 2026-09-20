@@ -16,11 +16,11 @@ Graduated vs volume tiers, included allowances, per-unit vs flat bands, and pror
 - [[tiered-billing-exact-output|Drill: tiered billing with an exact-output contract]]
 
 ## Cards (5)
-- [[cc-rules-tier-allowance]]
-- [[cc-rules-tier-band-boundaries]]
-- [[cc-rules-tier-flat-band]]
-- [[cc-rules-tier-graduated-vs-volume]]
-- [[cc-rules-tier-proration]]
+1. [[cc-rules-tier-allowance]]
+2. [[cc-rules-tier-band-boundaries]]
+3. [[cc-rules-tier-flat-band]]
+4. [[cc-rules-tier-graduated-vs-volume]]
+5. [[cc-rules-tier-proration]]
 %% trellis:end %%
 
 ## Notes

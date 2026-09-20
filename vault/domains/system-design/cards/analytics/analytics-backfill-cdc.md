@@ -2,6 +2,7 @@
 id: analytics-backfill-cdc
 node: analytics.derived
 type: qa
+step: 4
 ---
 ## Q
 You're standing up a new derived view (search index, feature store) from a database that already holds years of data. Why do you need two pipelines, and how do you stitch them without gaps or double-processing?

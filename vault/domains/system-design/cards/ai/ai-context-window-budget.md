@@ -2,6 +2,7 @@
 id: ai-context-window-budget
 node: ai.foundations
 type: qa
+step: 2
 ---
 ## Q
 Why should you treat an LLM's context window as a fixed resource budget rather than "room for everything", and who competes for it?

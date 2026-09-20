@@ -8,8 +8,8 @@ Flowing from transition into an action without a call, delay/drag entries, and p
 - [[bb-transition-to-flow|Basketball Transition to Flow to Set Offense from John Tauer]]
 
 ## Cards (2)
-- [[bb-flow-delay-entry]]
-- [[bb-flow-push-or-pull]]
+1. [[bb-flow-delay-entry]]
+2. [[bb-flow-push-or-pull]]
 %% trellis:end %%
 
 ## Notes

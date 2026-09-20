@@ -2,6 +2,7 @@
 id: kafka-consumer-commit-async-then-sync-on-shutdown
 node: consumer.offset-commit
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

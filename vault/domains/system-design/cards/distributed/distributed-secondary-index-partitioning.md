@@ -2,6 +2,7 @@
 id: distributed-secondary-index-partitioning
 node: distributed.partitioning.indexes
 type: qa
+step: 1
 ---
 ## Q
 Local (document-partitioned) vs global (term-partitioned) secondary indexes on a sharded store — who pays, the writer or the reader?

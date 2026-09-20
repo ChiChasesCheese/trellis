@@ -2,6 +2,7 @@
 id: reliability-red-vs-use
 node: reliability.observability
 type: qa
+step: 3
 ---
 ## Q
 RED method vs USE method: what does each one measure, and which do you apply to a payment service vs a database host?

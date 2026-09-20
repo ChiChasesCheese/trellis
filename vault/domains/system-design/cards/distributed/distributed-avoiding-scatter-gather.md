@@ -2,6 +2,7 @@
 id: distributed-avoiding-scatter-gather
 node: distributed.partitioning.indexes
 type: qa
+step: 3
 ---
 ## Q
 You need a second access pattern on a sharded table and don't want scatter-gather. What are your options besides a built-in global index, and how do you choose?

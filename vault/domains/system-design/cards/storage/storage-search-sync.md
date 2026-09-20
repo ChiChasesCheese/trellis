@@ -2,6 +2,7 @@
 id: storage-search-sync
 node: storage.search
 type: qa
+step: 6
 ---
 ## Q
 How do you keep Elasticsearch/OpenSearch in sync with the primary database, and why is "write to both from the app" the wrong answer?

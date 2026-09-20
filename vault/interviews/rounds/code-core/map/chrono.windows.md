@@ -15,12 +15,12 @@ Fixed buckets vs rolling windows, "within the last hour" as a comparison you mus
 - [[oa-qa05-lc1604-keycard-alerts|Drill: alert on repeated key-card use inside an hour, then generalize and go online]]
 
 ## Cards (6)
-- [[cc-chrono-windows-boundary]]
-- [[cc-chrono-windows-bucket-vs-rolling]]
-- [[cc-chrono-windows-denied-not-recorded]]
-- [[cc-chrono-windows-no-midnight-wrap]]
-- [[cc-chrono-windows-per-key-state]]
-- [[cc-chrono-windows-token-bucket]]
+1. [[cc-chrono-windows-boundary]]
+2. [[cc-chrono-windows-bucket-vs-rolling]]
+3. [[cc-chrono-windows-denied-not-recorded]]
+4. [[cc-chrono-windows-no-midnight-wrap]]
+5. [[cc-chrono-windows-per-key-state]]
+6. [[cc-chrono-windows-token-bucket]]
 %% trellis:end %%
 
 ## Notes

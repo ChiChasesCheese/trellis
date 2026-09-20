@@ -2,6 +2,7 @@
 id: kafka-producer-custom-serializer-fragility
 node: producer.serialization
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

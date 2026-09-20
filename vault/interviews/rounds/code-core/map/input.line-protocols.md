@@ -8,11 +8,11 @@ Dispatching on a leading keyword, mixed record types in one stream, blank lines,
 - [[python-sys|sys — system-specific parameters and functions]]
 
 ## Cards (5)
-- [[cc-input-lp-blank-lines-and-spaces]]
-- [[cc-input-lp-dispatch-on-keyword]]
-- [[cc-input-lp-optional-trailing-field]]
-- [[cc-input-lp-part-header]]
-- [[cc-input-lp-setup-before-events]]
+1. [[cc-input-lp-blank-lines-and-spaces]]
+2. [[cc-input-lp-dispatch-on-keyword]]
+3. [[cc-input-lp-optional-trailing-field]]
+4. [[cc-input-lp-part-header]]
+5. [[cc-input-lp-setup-before-events]]
 %% trellis:end %%
 
 ## Notes

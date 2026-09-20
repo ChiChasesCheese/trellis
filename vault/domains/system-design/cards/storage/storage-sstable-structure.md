@@ -2,6 +2,7 @@
 id: storage-sstable-structure
 node: storage.internals.lsm
 type: qa
+step: 2
 ---
 ## Q
 What exactly makes an SSTable's *sorted* order so valuable that LSM engines pay compaction forever to maintain it? Give the three concrete capabilities sorting buys inside one file.

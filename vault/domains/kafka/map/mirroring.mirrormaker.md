@@ -10,12 +10,12 @@
 - [[kafka-10-3-mirrormaker|MirrorMaker：配置、拓扑与生产化调优]]
 
 ## Cards (6)
-- [[kafka-mirrormaker-custom-partition-assignment]]
-- [[kafka-mirrormaker-deploy-near-target-remote-consume]]
-- [[kafka-mirrormaker-offset-migration-safety]]
-- [[kafka-mirrormaker-replication-lag-two-imperfect-methods]]
-- [[kafka-mirrormaker-tasks-max-tuning-approach]]
-- [[kafka-mirrormaker-topic-write-acl-not-migrated]]
+1. [[kafka-mirrormaker-custom-partition-assignment]]
+2. [[kafka-mirrormaker-deploy-near-target-remote-consume]]
+3. [[kafka-mirrormaker-offset-migration-safety]]
+4. [[kafka-mirrormaker-topic-write-acl-not-migrated]]
+5. [[kafka-mirrormaker-replication-lag-two-imperfect-methods]]
+6. [[kafka-mirrormaker-tasks-max-tuning-approach]]
 %% trellis:end %%
 
 ## Notes

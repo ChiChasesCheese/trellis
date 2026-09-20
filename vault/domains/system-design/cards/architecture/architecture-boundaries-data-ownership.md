@@ -2,6 +2,7 @@
 id: architecture-boundaries-data-ownership
 node: architecture.services
 type: qa
+step: 2
 ---
 ## Q
 What's the rule for drawing service boundaries, and why is a shared database between services considered the cardinal sin?

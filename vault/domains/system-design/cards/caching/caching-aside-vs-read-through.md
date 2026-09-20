@@ -2,6 +2,7 @@
 id: caching-aside-vs-read-through
 node: caching.strategies
 type: qa
+step: 1
 ---
 ## Q
 Cache-aside and read-through both populate the cache on a miss. What actually differs, and when does that difference matter?

@@ -10,12 +10,12 @@
 - [[kafka-7-4-reliable-producer|在可靠的系统中使用生产者]]
 
 ## Cards (6)
-- [[kafka-reliability-acks-all-needs-exception-handling]]
-- [[kafka-reliability-acks1-silent-loss-scenario]]
-- [[kafka-reliability-idempotence-dedupes-retries]]
-- [[kafka-reliability-manual-error-handling-categories]]
-- [[kafka-reliability-retry-config-at-least-once]]
-- [[kafka-reliability-retryable-vs-nonretryable-errors]]
+1. [[kafka-reliability-retryable-vs-nonretryable-errors]]
+2. [[kafka-reliability-retry-config-at-least-once]]
+3. [[kafka-reliability-idempotence-dedupes-retries]]
+4. [[kafka-reliability-acks-all-needs-exception-handling]]
+5. [[kafka-reliability-acks1-silent-loss-scenario]]
+6. [[kafka-reliability-manual-error-handling-categories]]
 %% trellis:end %%
 
 ## Notes

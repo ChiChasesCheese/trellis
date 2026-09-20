@@ -2,6 +2,7 @@
 id: kafka-mirroring-alt-cluster-linking-no-connect
 node: mirroring.alternatives
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: kafka-security-sasl-mechanism-choice
 node: security.protocols-auth-encryption
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: distributed-cap-per-operation
 node: distributed.cap
 type: qa
+step: 3
 ---
 ## Q
 Why is "is this system CP or AP?" the wrong granularity — and what is the right one? Give two real examples.

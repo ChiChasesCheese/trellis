@@ -2,6 +2,7 @@
 id: kafka-practice-julieops-gitops-vs-akhq-gui
 node: practice.kubernetes-strimzi
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

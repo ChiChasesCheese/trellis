@@ -2,6 +2,7 @@
 id: ai-pipeline-tracing
 node: ai.evals
 type: qa
+step: 5
 ---
 ## Q
 A user reports one bad answer from your RAG/agent pipeline (query rewrite → retrieve → rerank → generate → tool calls). What does AI-specific tracing capture, and what question must it answer?

@@ -4,6 +4,8 @@
 
 理解消费者群组如何分摊分区、再均衡的触发时机，以及再均衡监听器与群组固定成员（static membership）如何减少不必要的再均衡。
 
+**Core** — part of the first pass through this subject.
+
 **Unlocks:** [[domains/kafka/map/admin.consumer-group-ops|消费者群组管理与偏移量运维]]
 
 ## Readings
@@ -11,12 +13,12 @@
 - [[kafka-4-7-rebalance-listener|再均衡监听器]]
 
 ## Cards (6)
-- [[kafka-consumer-eager-vs-cooperative-rebalance]]
-- [[kafka-consumer-group-partition-sharing]]
-- [[kafka-consumer-heartbeat-session-timeout-death-detection]]
-- [[kafka-consumer-multiple-groups-full-data]]
-- [[kafka-consumer-rebalance-listener-commit-before-revoke]]
-- [[kafka-consumer-static-membership-avoids-rebalance]]
+1. [[kafka-consumer-group-partition-sharing]]
+2. [[kafka-consumer-multiple-groups-full-data]]
+3. [[kafka-consumer-heartbeat-session-timeout-death-detection]]
+4. [[kafka-consumer-eager-vs-cooperative-rebalance]]
+5. [[kafka-consumer-rebalance-listener-commit-before-revoke]]
+6. [[kafka-consumer-static-membership-avoids-rebalance]]
 %% trellis:end %%
 
 ## Notes

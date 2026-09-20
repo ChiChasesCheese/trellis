@@ -10,12 +10,12 @@
 - [[snowflak-tasks|任务(Task):调度、算力模型与失败处理]]
 
 ## Cards (6)
-- [[task-billing-models]]
-- [[task-queuing-shared-warehouse]]
-- [[task-serverless-how-sized]]
-- [[task-serverless-privilege]]
-- [[task-serverless-vs-warehouse-choice]]
-- [[task-target-completion-interval]]
+1. [[task-billing-models]]
+2. [[task-queuing-shared-warehouse]]
+3. [[task-serverless-how-sized]]
+4. [[task-serverless-privilege]]
+5. [[task-serverless-vs-warehouse-choice]]
+6. [[task-target-completion-interval]]
 %% trellis:end %%
 
 ## Notes

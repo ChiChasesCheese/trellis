@@ -2,6 +2,7 @@
 id: kafka-producer-key-null-sticky-partitioning
 node: producer.extensibility
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

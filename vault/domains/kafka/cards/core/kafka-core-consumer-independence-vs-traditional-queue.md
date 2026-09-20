@@ -2,6 +2,7 @@
 id: kafka-core-consumer-independence-vs-traditional-queue
 node: core.pubsub-why
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

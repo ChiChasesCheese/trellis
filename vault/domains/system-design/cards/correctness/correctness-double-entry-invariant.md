@@ -2,6 +2,7 @@
 id: correctness-double-entry-invariant
 node: correctness.ledger
 type: qa
+step: 1
 ---
 ## Q
 Why do payment systems store money as double-entry ledger entries instead of a `balance` column, and what invariant does every transaction maintain?

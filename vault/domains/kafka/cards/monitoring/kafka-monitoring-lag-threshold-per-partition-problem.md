@@ -2,6 +2,7 @@
 id: kafka-monitoring-lag-threshold-per-partition-problem
 node: monitoring.lag-e2e
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

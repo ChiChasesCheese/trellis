@@ -2,6 +2,7 @@
 id: storage-wide-column-modeling
 node: storage.nosql
 type: qa
+step: 5
 ---
 ## Q
 In Cassandra/DynamoDB-style wide-column stores, how does data modeling invert compared to relational, and what do partition key vs clustering (sort) key each decide?

@@ -2,6 +2,7 @@
 id: correctness-saga-compensation-race
 node: correctness.saga
 type: qa
+step: 4
 ---
 ## Q
 A saga cancellation can race its own forward action: the "release seat" compensation arrives at a participant **before** the delayed "reserve seat" command. What happens, and what's the fix?

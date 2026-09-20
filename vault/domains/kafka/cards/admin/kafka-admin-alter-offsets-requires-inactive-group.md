@@ -2,6 +2,7 @@
 id: kafka-admin-alter-offsets-requires-inactive-group
 node: admin.consumer-group-ops
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

@@ -10,11 +10,11 @@ Why deep hierarchies rot, delegation as the default reuse tool, when inheritance
 - [[python-patterns-composition|The Composition Over Inheritance Principle (Brandon Rhodes)]]
 
 ## Cards (5)
-- [[principles-delegation-boilerplate]]
-- [[principles-hierarchy-explosion]]
-- [[principles-mixins-vs-delegation]]
-- [[principles-stack-extends-arraylist]]
-- [[principles-when-inherit]]
+1. [[principles-delegation-boilerplate]]
+2. [[principles-hierarchy-explosion]]
+3. [[principles-mixins-vs-delegation]]
+4. [[principles-stack-extends-arraylist]]
+5. [[principles-when-inherit]]
 %% trellis:end %%
 
 ## Notes

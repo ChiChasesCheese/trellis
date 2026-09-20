@@ -4,13 +4,15 @@
 
 Memtable to SSTables, compaction strategies (size-tiered vs leveled), Bloom filters, tombstones.
 
+**Core** — part of the first pass through this subject.
+
 ## Cards (6)
-- [[storage-bloom-filter-properties]]
-- [[storage-compaction-strategies]]
-- [[storage-lsm-range-scan]]
-- [[storage-lsm-read-path]]
-- [[storage-lsm-write-path]]
-- [[storage-sstable-structure]]
+1. [[storage-lsm-write-path]]
+2. [[storage-sstable-structure]]
+3. [[storage-lsm-read-path]]
+4. [[storage-bloom-filter-properties]]
+5. [[storage-compaction-strategies]]
+6. [[storage-lsm-range-scan]]
 %% trellis:end %%
 
 ## Notes

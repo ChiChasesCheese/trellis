@@ -2,6 +2,7 @@
 id: ai-chunking-failure-modes
 node: ai.rag
 type: qa
+step: 2
 ---
 ## Q
 Documents must be split into chunks before embedding. What breaks with chunks that are too big, too small, or split naively — and what does good chunking do instead?

@@ -2,6 +2,7 @@
 id: distributed-replication-log-formats
 node: distributed.replication.leader
 type: qa
+step: 2
 ---
 ## Q
 Statement-based vs WAL shipping vs logical (row-based) replication — what breaks or binds with each, and which do modern systems default to?

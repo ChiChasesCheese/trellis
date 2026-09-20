@@ -2,6 +2,7 @@
 id: analytics-data-locality-shift
 node: analytics.batch
 type: qa
+step: 3
 ---
 ## Q
 MapReduce's scheduler fought to place each task on the machine that already held its input block ("move computation to the data"); modern cloud batch stacks happily read everything from S3 over the network. What made data locality worth so much then, and what changed?

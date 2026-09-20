@@ -2,6 +2,7 @@
 id: security-credential-stuffing
 node: security.authn.credentials
 type: qa
+step: 2
 ---
 ## Q
 Credential stuffing vs brute force: why does per-account rate limiting barely help, and what actually detects it?

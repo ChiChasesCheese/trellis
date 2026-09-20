@@ -2,6 +2,7 @@
 id: networking-realtime-transport-choice
 node: networking.realtime
 type: qa
+step: 1
 ---
 ## Q
 Long polling vs SSE vs WebSockets — give the one-line selection rule and a canonical example for each.

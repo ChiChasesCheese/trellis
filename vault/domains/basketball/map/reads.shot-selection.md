@@ -12,9 +12,9 @@ A good shot defined by shooter, situation and score, not by whether it went in; 
 - [[solo-workout-that-ends-in-decisions|Drill: A solo workout that ends in decisions]]
 
 ## Cards (3)
-- [[bb-reads-good-shot-is-relative]]
-- [[bb-reads-process-not-outcome]]
-- [[bb-reads-shot-quality-checklist]]
+1. [[bb-reads-good-shot-is-relative]]
+2. [[bb-reads-process-not-outcome]]
+3. [[bb-reads-shot-quality-checklist]]
 %% trellis:end %%
 
 ## Notes

@@ -4,6 +4,8 @@
 
 In-process, regional, shield, and object-store tiers; inclusive versus exclusive policies; latency, capacity, and cost trade-offs.
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/cdn-content/map/caching.keys|Cache Keys, Vary & Representation Safety]]
 
 **Unlocks:** [[domains/cdn-content/map/caching.invalidation|Expiration, Purge & Invalidation]], [[domains/cdn-content/map/caching.stampede|Stampede & Request Collapsing]], [[domains/cdn-content/map/caching.eviction|Admission, Eviction & Hot Objects]], [[domains/cdn-content/map/caching.failure|Negative Caching & Failure Policy]], [[domains/cdn-content/map/distributed.regional-cache|Regional Cache Services]], [[domains/cdn-content/map/security-cost.optimization|Performance-Cost Optimization]]
@@ -16,9 +18,9 @@ In-process, regional, shield, and object-store tiers; inclusive versus exclusive
 - [[trace-a-cold-content-request|Drill: Trace a cold content request]]
 
 ## Cards (3)
-- [[cache-hierarchy-local-remote]]
-- [[cache-hierarchy-placement]]
-- [[cache-hierarchy-shield]]
+1. [[cache-hierarchy-local-remote]]
+2. [[cache-hierarchy-placement]]
+3. [[cache-hierarchy-shield]]
 %% trellis:end %%
 
 ## Notes

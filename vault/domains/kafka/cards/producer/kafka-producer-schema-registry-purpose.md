@@ -2,6 +2,7 @@
 id: kafka-producer-schema-registry-purpose
 node: producer.serialization
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

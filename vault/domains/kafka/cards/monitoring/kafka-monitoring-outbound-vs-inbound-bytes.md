@@ -2,6 +2,7 @@
 id: kafka-monitoring-outbound-vs-inbound-bytes
 node: monitoring.broker-metrics
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

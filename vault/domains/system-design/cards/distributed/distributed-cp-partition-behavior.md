@@ -2,6 +2,7 @@
 id: distributed-cp-partition-behavior
 node: distributed.cap
 type: qa
+step: 4
 ---
 ## Q
 A 5-node CP system (e.g. etcd/ZooKeeper) is partitioned 2 | 3. What can each side do, and what would break if the minority side kept serving?

@@ -11,12 +11,12 @@
 - [[kafka-5-5-consumer-group-admin|用AdminClient管理消费者群组]]
 
 ## Cards (6)
-- [[kafka-admin-alter-offsets-requires-inactive-group]]
-- [[kafka-admin-consumer-lag-calculation]]
-- [[kafka-admin-delete-group-requires-empty]]
-- [[kafka-admin-delete-offset-vs-reset-offset]]
-- [[kafka-admin-offset-export-import-dry-run]]
-- [[kafka-admin-reset-offset-stateful-app-pitfall]]
+1. [[kafka-admin-consumer-lag-calculation]]
+2. [[kafka-admin-alter-offsets-requires-inactive-group]]
+3. [[kafka-admin-delete-group-requires-empty]]
+4. [[kafka-admin-delete-offset-vs-reset-offset]]
+5. [[kafka-admin-offset-export-import-dry-run]]
+6. [[kafka-admin-reset-offset-stateful-app-pitfall]]
 %% trellis:end %%
 
 ## Notes

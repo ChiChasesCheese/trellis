@@ -11,13 +11,13 @@
 - [[kafka-11-4-encryption|加密：保护传输中的数据]]
 
 ## Cards (7)
-- [[kafka-security-e2e-encryption-why]]
-- [[kafka-security-e2e-key-rotation-compaction]]
-- [[kafka-security-protocol-choice]]
-- [[kafka-security-reauth-mechanism]]
-- [[kafka-security-sasl-mechanism-choice]]
-- [[kafka-security-sasl-plain-must-use-ssl]]
-- [[kafka-security-ssl-vs-sasl-choice]]
+1. [[kafka-security-protocol-choice]]
+2. [[kafka-security-ssl-vs-sasl-choice]]
+3. [[kafka-security-sasl-mechanism-choice]]
+4. [[kafka-security-sasl-plain-must-use-ssl]]
+5. [[kafka-security-reauth-mechanism]]
+6. [[kafka-security-e2e-encryption-why]]
+7. [[kafka-security-e2e-key-rotation-compaction]]
 %% trellis:end %%
 
 ## Notes

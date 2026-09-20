@@ -10,9 +10,9 @@ Detecting data and access skew, splitting or replicating hot objects, load-aware
 - [[dist-bounded-load-hashing|Consistent hashing with bounded loads]]
 
 ## Cards (3)
-- [[dist-skew-detect-hot-key]]
-- [[dist-skew-headroom-and-warming]]
-- [[dist-skew-replicate-hot-object]]
+1. [[dist-skew-detect-hot-key]]
+2. [[dist-skew-headroom-and-warming]]
+3. [[dist-skew-replicate-hot-object]]
 %% trellis:end %%
 
 ## Notes

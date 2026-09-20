@@ -4,6 +4,8 @@
 
 Splitting portfolio variance into factor and specific components, marginal contribution to risk, and surfacing the unintended bets nobody sized.
 
+**Core** — part of the first pass through this subject.
+
 **Unlocks:** [[domains/quant-infra/map/portfolio.pod-allocation|Multi-Manager Capital Allocation]], [[domains/quant-infra/map/lifecycle.attribution|Live P&L Attribution]]
 
 ## Readings

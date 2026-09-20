@@ -44,6 +44,9 @@ class Node:
     children: list["Node"] = field(default_factory=list)
     parent: "Node | None" = None
     order: int | None = None  # stable deck ordinal, top-level only
+    # Declared part of the Core: what a learner short of time studies first.
+    # On a branch it covers the subtree. Bearing finds the rest (ADR 0010).
+    core: bool = False
 
     @property
     def is_leaf(self) -> bool:
@@ -57,6 +60,55 @@ class Node:
             chain.append(node)
             node = node.parent
         return list(reversed(chain))
+
+
+STUDY_ORDERS = ("core-first", "skeleton")
+STUDY_MIXES = ("new-first", "mixed", "reviews-first")
+
+
+@dataclass
+class Study:
+    """How this domain is to be studied in Anki (ADR 0010). `order` shapes
+    the Sequence and always applies. The other three are the Pace; each is
+    optional, and a domain that sets none leaves Anki's options alone."""
+
+    order: str = "core-first"
+    mix: str | None = None              # new cards before, among, or after reviews
+    new_per_day: int | None = None
+    reviews_per_day: int | None = None
+
+    @property
+    def sets_pace(self) -> bool:
+        return (self.mix, self.new_per_day, self.reviews_per_day) != (None, None, None)
+
+
+def _parse_study(raw, errors: list[str]) -> Study:
+    if raw is None:
+        return Study()
+    if not isinstance(raw, dict):
+        errors.append(f"study must be a mapping, got: {raw!r}")
+        return Study()
+    unknown = set(raw) - {"order", "mix", "new_per_day", "reviews_per_day"}
+    if unknown:
+        errors.append(f"study: unknown keys {sorted(unknown)}")
+    study = Study()
+    order = raw.get("order", study.order)
+    if order in STUDY_ORDERS:
+        study.order = order
+    else:
+        errors.append(f"study.order must be one of {STUDY_ORDERS}, got {order!r}")
+    mix = raw.get("mix")
+    if mix is None or mix in STUDY_MIXES:
+        study.mix = mix
+    else:
+        errors.append(f"study.mix must be one of {STUDY_MIXES}, got {mix!r}")
+    for key in ("new_per_day", "reviews_per_day"):
+        value = raw.get(key)
+        if value is None or (type(value) is int and value >= 0):
+            setattr(study, key, value)
+        else:
+            errors.append(f"study.{key} must be a whole number, 0 or more, got {value!r}")
+    return study
 
 
 @dataclass
@@ -74,6 +126,7 @@ class Skeleton:
     # under domains/, an interview round under interviews/rounds/; the
     # default is the domain slug itself.
     folder: str = ""
+    study: Study = field(default_factory=Study)
 
     def __post_init__(self) -> None:
         if not self.folder:
@@ -127,13 +180,17 @@ def _parse_node(raw: object, parent: Node | None, errors: list[str]) -> Node | N
     if not isinstance(title, str) or not title.strip():
         errors.append(f"node {node_id!r}: missing title")
         title = node_id
-    unknown = set(raw) - {"id", "title", "summary", "requires", "children", "order"}
+    unknown = set(raw) - {"id", "title", "summary", "requires", "children", "order", "core"}
     if unknown:
         errors.append(f"node {node_id!r}: unknown keys {sorted(unknown)}")
     order = raw.get("order")
     if order is not None and (parent is not None or not isinstance(order, int)):
         errors.append(f"node {node_id!r}: order must be an integer on top-level nodes only")
         order = None
+    core = raw.get("core", False)
+    if not isinstance(core, bool):
+        errors.append(f"node {node_id!r}: core must be true or false")
+        core = False
     requires = raw.get("requires", [])
     if not (isinstance(requires, list) and all(isinstance(r, str) for r in requires)):
         errors.append(f"node {node_id!r}: requires must be a list of node ids")
@@ -145,6 +202,7 @@ def _parse_node(raw: object, parent: Node | None, errors: list[str]) -> Node | N
         requires=list(requires),
         parent=parent,
         order=order,
+        core=core,
     )
     for raw_child in raw.get("children", []) or []:
         child = _parse_node(raw_child, node, errors)
@@ -197,7 +255,8 @@ def load_skeleton(path: str | Path) -> Skeleton:
         folder = domain
 
     skeleton = Skeleton(domain=domain, title=title.strip(), roots=roots, by_id={},
-                        lang=lang, folder=folder)
+                        lang=lang, folder=folder,
+                        study=_parse_study(data.get("study"), errors))
     for node in skeleton.walk():
         if node.id in skeleton.by_id:
             errors.append(f"duplicate node id: {node.id!r}")

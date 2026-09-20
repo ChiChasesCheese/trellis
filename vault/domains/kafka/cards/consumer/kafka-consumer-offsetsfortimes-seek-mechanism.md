@@ -2,6 +2,7 @@
 id: kafka-consumer-offsetsfortimes-seek-mechanism
 node: consumer.seek-and-replay
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

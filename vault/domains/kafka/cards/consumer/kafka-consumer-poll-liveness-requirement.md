@@ -2,6 +2,7 @@
 id: kafka-consumer-poll-liveness-requirement
 node: consumer.client-basics
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

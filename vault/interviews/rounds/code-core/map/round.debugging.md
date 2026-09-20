@@ -12,11 +12,11 @@ Print-to-stderr discipline, bisecting a failing input, minimizing a repro, and r
 - [[hidden-test-bug-hunt|Drill: name the bug class from the failing-test description alone]]
 
 ## Cards (5)
-- [[cc-round-debug-bisect-the-input]]
-- [[cc-round-debug-diff-the-bytes]]
-- [[cc-round-debug-failing-test-id]]
-- [[cc-round-debug-minimal-repro]]
-- [[cc-round-debug-stderr-only]]
+1. [[cc-round-debug-bisect-the-input]]
+2. [[cc-round-debug-diff-the-bytes]]
+3. [[cc-round-debug-failing-test-id]]
+4. [[cc-round-debug-minimal-repro]]
+5. [[cc-round-debug-stderr-only]]
 %% trellis:end %%
 
 ## Notes

@@ -15,12 +15,12 @@ Singleton, factory method, abstract factory, builder, prototype — who creates 
 - [[parking-lot|Drill: Parking Lot]]
 
 ## Cards (6)
-- [[patterns-builder-when]]
-- [[patterns-creational-cues]]
-- [[patterns-factory-method-vs-abstract-factory]]
-- [[patterns-prototype-when]]
-- [[patterns-simple-factory-enough]]
-- [[patterns-singleton-costs]]
+1. [[patterns-builder-when]]
+2. [[patterns-creational-cues]]
+3. [[patterns-factory-method-vs-abstract-factory]]
+4. [[patterns-prototype-when]]
+5. [[patterns-simple-factory-enough]]
+6. [[patterns-singleton-costs]]
 %% trellis:end %%
 
 ## Notes

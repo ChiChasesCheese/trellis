@@ -2,6 +2,7 @@
 id: networking-webhooks-vs-polling
 node: networking.api-styles
 type: qa
+step: 6
 ---
 ## Q
 Exposing events to third-party integrators: webhooks vs letting them poll. What must a webhook provider build that polling gives for free?

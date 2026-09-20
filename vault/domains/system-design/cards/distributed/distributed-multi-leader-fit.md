@@ -2,6 +2,7 @@
 id: distributed-multi-leader-fit
 node: distributed.replication.multi-leader
 type: qa
+step: 1
 ---
 ## Q
 When is multi-leader replication the right call despite its conflict problem, and what are the main conflict-resolution options?

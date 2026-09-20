@@ -2,6 +2,7 @@
 id: distributed-sloppy-quorum-handoff
 node: distributed.replication.leaderless
 type: qa
+step: 3
 ---
 ## Q
 Trace a write under a sloppy quorum with hinted handoff: where does it land, when does it get home, and what are the two ways it never gets there?

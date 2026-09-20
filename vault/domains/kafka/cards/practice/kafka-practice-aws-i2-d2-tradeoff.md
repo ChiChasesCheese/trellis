@@ -2,6 +2,7 @@
 id: kafka-practice-aws-i2-d2-tradeoff
 node: practice.cloud-deployment
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

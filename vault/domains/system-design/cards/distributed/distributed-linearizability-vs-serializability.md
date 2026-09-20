@@ -2,6 +2,7 @@
 id: distributed-linearizability-vs-serializability
 node: distributed.consistency
 type: qa
+step: 5
 ---
 ## Q
 Linearizability vs serializability — what does each guarantee, over what unit, and what do you call their combination?

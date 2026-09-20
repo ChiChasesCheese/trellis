@@ -8,12 +8,12 @@
 - [[kafka-14-3-stream-design-patterns|流式处理设计模式]]
 
 ## Cards (6)
-- [[kafka-streams-external-lookup-vs-table-join]]
-- [[kafka-streams-local-state-recovery-changelog]]
-- [[kafka-streams-multistage-repartition]]
-- [[kafka-streams-out-of-order-late-result-overwrite]]
-- [[kafka-streams-reprocessing-two-versions-safer]]
-- [[kafka-streams-table-join-vs-stream-join-windowing]]
+1. [[kafka-streams-local-state-recovery-changelog]]
+2. [[kafka-streams-multistage-repartition]]
+3. [[kafka-streams-external-lookup-vs-table-join]]
+4. [[kafka-streams-table-join-vs-stream-join-windowing]]
+5. [[kafka-streams-out-of-order-late-result-overwrite]]
+6. [[kafka-streams-reprocessing-two-versions-safer]]
 %% trellis:end %%
 
 ## Notes

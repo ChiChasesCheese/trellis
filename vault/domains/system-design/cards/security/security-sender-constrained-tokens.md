@@ -2,6 +2,7 @@
 id: security-sender-constrained-tokens
 node: security.authn.tokens
 type: qa
+step: 4
 ---
 ## Q
 What weakness do bearer tokens have by construction, and how do sender-constrained tokens (DPoP, mTLS-bound) fix it?

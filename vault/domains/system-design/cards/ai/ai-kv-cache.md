@@ -2,6 +2,7 @@
 id: ai-kv-cache
 node: ai.inference
 type: qa
+step: 2
 ---
 ## Q
 What does the KV cache store, why is it the scarce resource in LLM serving, and what does prefix caching exploit?

@@ -8,10 +8,10 @@ Two LeetCode-style problems plus work simulation and leadership-principle questi
 - [[amazon-leadership-principles|Amazon's Leadership Principles]]
 
 ## Cards (4)
-- [[cc-transfer-amazon-shape]]
-- [[cc-transfer-amazon-star-with-a-number]]
-- [[cc-transfer-amazon-two-problems-clock]]
-- [[cc-transfer-amazon-work-simulation]]
+1. [[cc-transfer-amazon-shape]]
+2. [[cc-transfer-amazon-star-with-a-number]]
+3. [[cc-transfer-amazon-two-problems-clock]]
+4. [[cc-transfer-amazon-work-simulation]]
 %% trellis:end %%
 
 ## Notes

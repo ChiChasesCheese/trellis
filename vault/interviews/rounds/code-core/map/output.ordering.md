@@ -22,12 +22,12 @@ Naming every tie-break, stable sort as the last resort, descending-plus-ascendin
 - [[tiered-billing-exact-output|Drill: tiered billing with an exact-output contract]]
 
 ## Cards (6)
-- [[cc-output-ordering-cmp-to-key]]
-- [[cc-output-ordering-mixed-directions]]
-- [[cc-output-ordering-rank-unrounded]]
-- [[cc-output-ordering-stable-two-pass]]
-- [[cc-output-ordering-string-vs-numeric]]
-- [[cc-output-ordering-total-order]]
+1. [[cc-output-ordering-cmp-to-key]]
+2. [[cc-output-ordering-mixed-directions]]
+3. [[cc-output-ordering-rank-unrounded]]
+4. [[cc-output-ordering-stable-two-pass]]
+5. [[cc-output-ordering-string-vs-numeric]]
+6. [[cc-output-ordering-total-order]]
 %% trellis:end %%
 
 ## Notes

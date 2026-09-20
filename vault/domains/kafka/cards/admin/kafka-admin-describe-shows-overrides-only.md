@@ -2,6 +2,7 @@
 id: kafka-admin-describe-shows-overrides-only
 node: admin.dynamic-config
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

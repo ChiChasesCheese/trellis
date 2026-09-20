@@ -2,6 +2,7 @@
 id: kafka-connect-pipeline-delivery-guarantee-levels
 node: connect.pipeline-design
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

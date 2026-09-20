@@ -2,6 +2,7 @@
 id: kafka-admin-quota-throttle-per-broker
 node: admin.dynamic-config
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

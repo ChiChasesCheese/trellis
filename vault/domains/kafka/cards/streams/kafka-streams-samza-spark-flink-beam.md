@@ -2,6 +2,7 @@
 id: kafka-streams-samza-spark-flink-beam
 node: streams.choosing-framework
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

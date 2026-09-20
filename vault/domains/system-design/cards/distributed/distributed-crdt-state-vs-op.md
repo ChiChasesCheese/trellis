@@ -2,6 +2,7 @@
 id: distributed-crdt-state-vs-op
 node: distributed.crdt
 type: qa
+step: 2
 ---
 ## Q
 State-based vs operation-based CRDTs — what does each ship over the network, and what does each demand from the delivery channel?

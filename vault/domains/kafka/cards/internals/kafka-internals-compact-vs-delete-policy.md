@@ -2,6 +2,7 @@
 id: kafka-internals-compact-vs-delete-policy
 node: internals.compaction
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

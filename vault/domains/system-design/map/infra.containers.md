@@ -9,10 +9,10 @@ Containers vs VMs, Kubernetes primitives (pods, services, autoscaling) at design
 - [[kubernetes-docs-concepts|Kubernetes Concepts (official docs)]]
 
 ## Cards (4)
-- [[infra-containers-vs-vms]]
-- [[infra-k8s-overkill]]
-- [[infra-k8s-primitives]]
-- [[infra-requests-limits-noisy-neighbor]]
+1. [[infra-containers-vs-vms]]
+2. [[infra-k8s-primitives]]
+3. [[infra-requests-limits-noisy-neighbor]]
+4. [[infra-k8s-overkill]]
 %% trellis:end %%
 
 ## Notes

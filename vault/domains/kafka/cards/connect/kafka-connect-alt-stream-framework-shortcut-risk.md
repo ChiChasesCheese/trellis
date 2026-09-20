@@ -2,6 +2,7 @@
 id: kafka-connect-alt-stream-framework-shortcut-risk
 node: connect.alternatives
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

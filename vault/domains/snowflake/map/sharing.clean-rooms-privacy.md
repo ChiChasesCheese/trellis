@@ -7,10 +7,10 @@
 **Requires:** [[domains/snowflake/map/sharing.secure-data-sharing-mechanics|安全数据共享（Secure Data Sharing）机制]]
 
 ## Cards (4)
-- [[cleanroom-built-on-sharing]]
-- [[cleanroom-min-aggregation-threshold]]
-- [[cleanroom-problem-it-solves]]
-- [[cleanroom-template-allowlist]]
+1. [[cleanroom-built-on-sharing]]
+2. [[cleanroom-min-aggregation-threshold]]
+3. [[cleanroom-problem-it-solves]]
+4. [[cleanroom-template-allowlist]]
 %% trellis:end %%
 
 ## Notes

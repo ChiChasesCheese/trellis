@@ -2,6 +2,7 @@
 id: infra-mesh-vs-code
 node: infra.mesh
 type: qa
+step: 2
 ---
 ## Q
 mTLS, retries, and traffic splitting can live in a shared library or in the mesh. When does the mesh win, and what does it inherently do worse than code?

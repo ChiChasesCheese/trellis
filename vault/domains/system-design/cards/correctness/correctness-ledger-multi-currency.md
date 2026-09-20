@@ -2,6 +2,7 @@
 id: correctness-ledger-multi-currency
 node: correctness.ledger
 type: qa
+step: 5
 ---
 ## Q
 How does a double-entry ledger handle a customer paying EUR 100 for a USD 108 charge — what does "entries sum to zero" mean with two currencies?

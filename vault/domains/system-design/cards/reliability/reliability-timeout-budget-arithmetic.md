@@ -2,6 +2,7 @@
 id: reliability-timeout-budget-arithmetic
 node: reliability.resilience.retries
 type: qa
+step: 3
 ---
 ## Q
 Gateway → A → B → C, each hop with a 1s timeout and 3 attempts, under a 3s user-facing budget. Do the arithmetic and give the configuration rules.

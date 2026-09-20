@@ -2,6 +2,7 @@
 id: networking-heartbeats-idle-timeouts
 node: networking.realtime
 type: qa
+step: 4
 ---
 ## Q
 Why do long-lived connections need application-level ping/pong when TCP already has keepalive?

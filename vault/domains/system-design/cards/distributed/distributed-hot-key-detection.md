@@ -2,6 +2,7 @@
 id: distributed-hot-key-detection
 node: distributed.partitioning.skew
 type: qa
+step: 3
 ---
 ## Q
 You suspect a hot key but can't emit a metric per key (billions of them). How do you actually find it, and at which layer?

@@ -2,6 +2,7 @@
 id: distributed-shard-key-one-way-door
 node: distributed.partitioning.schemes
 type: qa
+step: 6
 ---
 ## Q
 Why is the shard key the highest-stakes decision in a sharded design, and what four properties do you check before committing to one?

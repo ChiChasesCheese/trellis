@@ -2,6 +2,7 @@
 id: architecture-serverless-orchestration
 node: architecture.serverless
 type: qa
+step: 5
 ---
 ## Q
 A workflow (order → charge → fulfill → notify) takes hours and must survive crashes, but FaaS functions cap at ~15 minutes and keep no state. What's the pattern?

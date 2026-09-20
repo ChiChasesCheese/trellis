@@ -2,6 +2,7 @@
 id: kafka-consumer-avro-specific-reader-config
 node: consumer.deserialization
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

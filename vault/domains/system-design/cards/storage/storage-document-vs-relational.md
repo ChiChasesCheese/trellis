@@ -2,6 +2,7 @@
 id: storage-document-vs-relational
 node: storage.nosql
 type: qa
+step: 2
 ---
 ## Q
 When does a document store (MongoDB-style) genuinely beat relational, and what access pattern signals you chose wrong?

@@ -10,11 +10,11 @@
 - [[snowflak-micropartitions-clustering|微分区与数据聚簇的物理基础]]
 
 ## Cards (5)
-- [[pruning-depth-constant-state]]
-- [[pruning-depth-definition]]
-- [[pruning-depth-monitoring-functions]]
-- [[pruning-depth-not-absolute-measure]]
-- [[pruning-depth-overlap-hurts-pruning]]
+1. [[pruning-depth-constant-state]]
+2. [[pruning-depth-definition]]
+3. [[pruning-depth-monitoring-functions]]
+4. [[pruning-depth-not-absolute-measure]]
+5. [[pruning-depth-overlap-hurts-pruning]]
 %% trellis:end %%
 
 ## Notes

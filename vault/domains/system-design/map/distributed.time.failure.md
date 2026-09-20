@@ -5,10 +5,10 @@
 Timeouts as the only failure detector, process pauses (GC, VM suspend), system models, and defending a chosen timeout.
 
 ## Cards (4)
-- [[distributed-failure-detection]]
-- [[distributed-network-delay-queueing]]
-- [[distributed-process-pause-causes]]
-- [[distributed-system-models]]
+1. [[distributed-system-models]]
+2. [[distributed-network-delay-queueing]]
+3. [[distributed-process-pause-causes]]
+4. [[distributed-failure-detection]]
 %% trellis:end %%
 
 ## Notes

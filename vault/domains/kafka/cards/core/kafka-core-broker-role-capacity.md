@@ -2,6 +2,7 @@
 id: kafka-core-broker-role-capacity
 node: core.cluster-roles
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

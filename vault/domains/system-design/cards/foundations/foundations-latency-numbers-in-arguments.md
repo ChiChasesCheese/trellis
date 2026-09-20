@@ -2,6 +2,7 @@
 id: foundations-latency-numbers-in-arguments
 node: foundations.numbers
 type: qa
+step: 6
 ---
 ## Q
 A p99 budget is 200 ms and each service hop costs ~0.5 ms of same-DC RTT plus its own work. What design smell do the latency numbers expose in a 10-microservice synchronous call chain?

@@ -2,6 +2,7 @@
 id: analytics-lakehouse-snapshot-isolation
 node: analytics.warehouse
 type: qa
+step: 3
 ---
 ## Q
 Object storage has no transactions. How do Iceberg/Delta provide snapshot isolation and atomic commits on top of it?

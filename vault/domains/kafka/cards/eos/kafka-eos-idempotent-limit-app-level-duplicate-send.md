@@ -2,6 +2,7 @@
 id: kafka-eos-idempotent-limit-app-level-duplicate-send
 node: eos.idempotent-producer
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

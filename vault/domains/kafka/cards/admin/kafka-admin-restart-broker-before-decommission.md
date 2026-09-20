@@ -2,6 +2,7 @@
 id: kafka-admin-restart-broker-before-decommission
 node: admin.partition-reassignment
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

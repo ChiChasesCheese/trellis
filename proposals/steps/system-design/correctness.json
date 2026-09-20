@@ -1,0 +1,6 @@
+{
+  "correctness.idempotency": ["correctness-idempotency-key-design", "correctness-idempotency-payload-hash", "correctness-idempotency-response-replay", "correctness-idempotency-concurrent-retries", "correctness-idempotency-partial-failure", "correctness-dedup-window", "correctness-idempotent-consumer-patterns"],
+  "correctness.outbox": ["correctness-dual-write-problem", "correctness-outbox-mechanism", "correctness-outbox-event-payload", "correctness-outbox-ordering-cloze", "correctness-outbox-relay-lag", "correctness-outbox-cleanup"],
+  "correctness.saga": ["correctness-saga-vs-2pc", "correctness-saga-orchestration-choreography", "correctness-saga-compensation-limits", "correctness-saga-compensation-race", "correctness-saga-isolation", "correctness-saga-orchestrator-recovery"],
+  "correctness.ledger": ["correctness-double-entry-invariant", "correctness-ledger-immutability", "correctness-balance-derivation", "correctness-ledger-hot-accounts", "correctness-ledger-multi-currency", "correctness-ledger-cutoff-settlement", "correctness-reconciliation", "correctness-ledger-three-way-recon", "correctness-ledger-clearing-metric"]
+}

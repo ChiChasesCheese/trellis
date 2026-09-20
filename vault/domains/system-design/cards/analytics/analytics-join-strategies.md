@@ -2,6 +2,7 @@
 id: analytics-join-strategies
 node: analytics.batch
 type: qa
+step: 6
 ---
 ## Q
 Distributed join of a 10TB fact table with a 200MB dimension table: sort-merge join or broadcast hash join, and why?

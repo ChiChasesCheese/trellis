@@ -8,10 +8,10 @@
 - [[kafka-appendix-b4-other-clients|其他语言的客户端开发库]]
 
 ## Cards (4)
-- [[kafka-practice-go-two-client-options]]
-- [[kafka-practice-librdkafka-reused-by-other-langs]]
-- [[kafka-practice-python-two-client-options]]
-- [[kafka-practice-rest-proxy-language-agnostic-alt]]
+1. [[kafka-practice-librdkafka-reused-by-other-langs]]
+2. [[kafka-practice-go-two-client-options]]
+3. [[kafka-practice-python-two-client-options]]
+4. [[kafka-practice-rest-proxy-language-agnostic-alt]]
 %% trellis:end %%
 
 ## Notes

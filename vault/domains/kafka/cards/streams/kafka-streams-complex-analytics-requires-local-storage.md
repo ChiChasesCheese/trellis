@@ -2,6 +2,7 @@
 id: kafka-streams-complex-analytics-requires-local-storage
 node: streams.choosing-framework
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

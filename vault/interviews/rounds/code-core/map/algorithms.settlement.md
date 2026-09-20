@@ -13,11 +13,11 @@ Netting balances before transferring, minimum transfers to settle debts, FIFO co
 - [[settlement-minimum-transfers|Drill: settling a group of debts in the fewest transfers]]
 
 ## Cards (5)
-- [[cc-algorithms-settlement-assignment-capacity]]
-- [[cc-algorithms-settlement-fifo-lots]]
-- [[cc-algorithms-settlement-floor-and-feasibility]]
-- [[cc-algorithms-settlement-min-transfers]]
-- [[cc-algorithms-settlement-net-first]]
+1. [[cc-algorithms-settlement-assignment-capacity]]
+2. [[cc-algorithms-settlement-fifo-lots]]
+3. [[cc-algorithms-settlement-floor-and-feasibility]]
+4. [[cc-algorithms-settlement-min-transfers]]
+5. [[cc-algorithms-settlement-net-first]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: distributed-new-follower-setup
 node: distributed.replication.leader
 type: qa
+step: 3
 ---
 ## Q
 You need to add a new follower to a busy single-leader database without stopping writes. Copying the data files while the leader keeps writing yields a torn, inconsistent copy — what is the standard procedure, and what does it demand from the leader's log?

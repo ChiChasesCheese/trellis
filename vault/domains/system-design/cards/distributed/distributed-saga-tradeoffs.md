@@ -2,6 +2,7 @@
 id: distributed-saga-tradeoffs
 node: distributed.transactions.distributed
 type: qa
+step: 6
 ---
 ## Q
 A saga replaces a distributed transaction with local transactions plus compensations. Precisely which ACID property do you lose, and what do you do about it?

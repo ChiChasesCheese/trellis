@@ -2,6 +2,7 @@
 id: kafka-streams-leftjoin-stream-table-vs-stream-stream
 node: streams.streams-api
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

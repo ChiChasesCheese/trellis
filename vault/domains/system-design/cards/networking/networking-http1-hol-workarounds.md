@@ -2,6 +2,7 @@
 id: networking-http1-hol-workarounds
 node: networking.protocols
 type: qa
+step: 4
 ---
 ## Q
 HTTP/1.1's head-of-line blocking lives at the application layer. What exactly blocks, and which browser-era hacks did it force (now anti-patterns under HTTP/2)?

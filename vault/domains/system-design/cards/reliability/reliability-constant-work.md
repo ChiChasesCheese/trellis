@@ -2,6 +2,7 @@
 id: reliability-constant-work
 node: reliability.resilience.containment
 type: qa
+step: 6
 ---
 ## Q
 The constant-work pattern says a reliable system should do the *same amount of work* whether everything is calm or everything is failing — e.g. Route 53 pushes the full health-check result file every few seconds instead of sending deltas on change. What does this buy?

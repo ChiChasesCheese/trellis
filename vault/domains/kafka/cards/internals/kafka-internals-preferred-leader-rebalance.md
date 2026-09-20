@@ -2,6 +2,7 @@
 id: kafka-internals-preferred-leader-rebalance
 node: internals.replication-protocol
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

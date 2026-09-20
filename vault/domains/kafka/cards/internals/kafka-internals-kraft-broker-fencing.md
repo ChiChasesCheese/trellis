@@ -2,6 +2,7 @@
 id: kafka-internals-kraft-broker-fencing
 node: internals.kraft-mode
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

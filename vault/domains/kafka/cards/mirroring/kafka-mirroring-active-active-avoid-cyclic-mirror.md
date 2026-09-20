@@ -2,6 +2,7 @@
 id: kafka-mirroring-active-active-avoid-cyclic-mirror
 node: mirroring.architectures
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

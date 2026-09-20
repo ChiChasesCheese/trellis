@@ -10,11 +10,11 @@
 - [[kafka-3-3-send-modes|同步发送与异步发送]]
 
 ## Cards (5)
-- [[kafka-producer-bootstrap-servers-multiple-hosts]]
-- [[kafka-producer-callback-ordering-and-blocking]]
-- [[kafka-producer-required-config-three-props]]
-- [[kafka-producer-sync-send-throughput-problem]]
-- [[kafka-producer-three-send-modes]]
+1. [[kafka-producer-required-config-three-props]]
+2. [[kafka-producer-bootstrap-servers-multiple-hosts]]
+3. [[kafka-producer-three-send-modes]]
+4. [[kafka-producer-sync-send-throughput-problem]]
+5. [[kafka-producer-callback-ordering-and-blocking]]
 %% trellis:end %%
 
 ## Notes

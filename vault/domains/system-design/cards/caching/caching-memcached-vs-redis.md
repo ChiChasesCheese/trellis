@@ -2,6 +2,7 @@
 id: caching-memcached-vs-redis
 node: caching.strategies
 type: qa
+step: 6
 ---
 ## Q
 When is Memcached the right pick over Redis, and what does Redis add that decides most other cases?

@@ -13,11 +13,11 @@ Processing events in arrival order, what "current" means at each point, and the 
 - [[oa-q37-fraud-rule-timestamps|Drill: replay authorizations against a history of fraud rules]]
 
 ## Cards (5)
-- [[cc-model-ev-current-vs-ever]]
-- [[cc-model-ev-incremental-vs-replay]]
-- [[cc-model-ev-input-order-not-timestamp-order]]
-- [[cc-model-ev-passes-vs-interleaved]]
-- [[cc-model-ev-same-timestamp-ties]]
+1. [[cc-model-ev-current-vs-ever]]
+2. [[cc-model-ev-incremental-vs-replay]]
+3. [[cc-model-ev-input-order-not-timestamp-order]]
+4. [[cc-model-ev-passes-vs-interleaved]]
+5. [[cc-model-ev-same-timestamp-ties]]
 %% trellis:end %%
 
 ## Notes

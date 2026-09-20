@@ -2,6 +2,7 @@
 id: async-competing-consumers-ordering
 node: async.queues
 type: qa
+step: 3
 ---
 ## Q
 Why do competing consumers on a classic queue destroy message ordering even though the queue is FIFO — and what are the fixes when per-entity order matters?

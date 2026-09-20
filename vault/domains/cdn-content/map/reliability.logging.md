@@ -4,6 +4,8 @@
 
 Event design, request and deployment context, levels, sampling, redaction, retention, and turning logs into a searchable diagnostic surface.
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/cdn-content/map/reliability.slos|SLIs, SLOs & Error Budgets]]
 
 **Unlocks:** [[domains/cdn-content/map/reliability.tracing|Distributed Tracing]]
@@ -13,9 +15,9 @@ Event design, request and deployment context, levels, sampling, redaction, reten
 - [[reliability-sre-monitoring|Google SRE: Monitoring Distributed Systems]]
 
 ## Cards (3)
-- [[reliability-logging-redaction-boundary]]
-- [[reliability-logging-request-event]]
-- [[reliability-logging-sampling-evidence]]
+1. [[reliability-logging-redaction-boundary]]
+2. [[reliability-logging-request-event]]
+3. [[reliability-logging-sampling-evidence]]
 %% trellis:end %%
 
 ## Notes

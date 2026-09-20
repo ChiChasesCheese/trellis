@@ -2,6 +2,7 @@
 id: kafka-security-service-credentials-long-running
 node: security.authorization
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

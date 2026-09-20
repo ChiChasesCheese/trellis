@@ -8,6 +8,7 @@ A card lives anywhere under vault/cards/ and looks like:
     type: qa            # qa (default) | cloze
     tags: [tradeoffs]   # optional extra Anki tags
     source: primer      # optional attribution key
+    step: 2             # optional place among this node's cards; 1 is shown first
     ---
     ## Q
     What does the CAP theorem state?
@@ -55,6 +56,9 @@ class Card:
     text: str = ""  # cloze body
     tags: list[str] = field(default_factory=list)
     source: str = ""
+    # Where this card comes among its leaf's cards when they are new: 1 is
+    # shown first. Cards without a step follow the ones that have one.
+    step: int | None = None
     # The Anki note id when the note was authored by another tool and
     # merely mirrored here: placed on a leaf and read for its Trace, but
     # never built, pushed or moved by Trellis.
@@ -230,12 +234,15 @@ def parse_card(path: str | Path) -> Card:
     tags = meta.get("tags", []) or []
     if not (isinstance(tags, list) and all(isinstance(t, str) for t in tags)):
         raise CardError(f"{path}: tags must be a list of strings")
-    unknown = set(meta) - {"id", "node", "type", "tags", "source", "anki"}
+    unknown = set(meta) - {"id", "node", "type", "tags", "source", "anki", "step"}
     if unknown:
         raise CardError(f"{path}: unknown frontmatter keys {sorted(unknown)}")
     anki = meta.get("anki", 0) or 0
     if not isinstance(anki, int):
         raise CardError(f"{path}: anki must be the note's integer id")
+    step = meta.get("step")
+    if step is not None and (type(step) is not int or step < 1):
+        raise CardError(f"{path}: step must be a positive whole number, got {step!r}")
 
     card = Card(
         id=card_id,
@@ -245,6 +252,7 @@ def parse_card(path: str | Path) -> Card:
         tags=list(tags),
         source=str(meta.get("source", "") or ""),
         anki=anki,
+        step=step,
     )
     try:
         preamble, sections = _sections(body)
@@ -274,6 +282,15 @@ def load_cards(cards_dir: str | Path) -> tuple[list[Card], list[str]]:
             cards.append(parse_card(path))
         except CardError as exc:
             errors.append(str(exc))
+    # A step is a place in line; two cards cannot stand in the same one.
+    claimed: dict[tuple[str, int], Card] = {}
+    for card in cards:
+        if card.step is None:
+            continue
+        first = claimed.setdefault((card.node, card.step), card)
+        if first is not card:
+            errors.append(f"{card.path}: step {card.step} on {card.node} is already "
+                          f"taken by {first.id} — give {card.id} another")
     return cards, errors
 
 

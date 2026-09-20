@@ -2,6 +2,7 @@
 id: async-consumer-groups-offsets
 node: async.log
 type: qa
+step: 4
 ---
 ## Q
 In a Kafka consumer group, when should you commit offsets relative to processing, and what does each choice cost you?

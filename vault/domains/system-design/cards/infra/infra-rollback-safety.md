@@ -2,6 +2,7 @@
 id: infra-rollback-safety
 node: infra.delivery
 type: qa
+step: 4
 ---
 ## Q
 When is a deployment "rollback safe" (AWS's definition), and why must an automated test prove that version N-1 can read what version N wrote *before* N ever ships?

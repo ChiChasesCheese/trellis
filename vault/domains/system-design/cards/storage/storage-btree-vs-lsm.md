@@ -2,6 +2,7 @@
 id: storage-btree-vs-lsm
 node: storage.internals.tradeoffs
 type: qa
+step: 1
 ---
 ## Q
 When do you pick an LSM-tree engine (RocksDB, Cassandra) over a B-tree engine (Postgres, InnoDB), and what do you pay for it?

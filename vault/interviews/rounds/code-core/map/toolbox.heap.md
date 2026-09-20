@@ -14,12 +14,12 @@
 - [[oa-q28-worker-task-assignment|Drill: route tasks to the least-busy qualified worker]]
 
 ## Cards (6)
-- [[cc-toolbox-heap-heapify]]
-- [[cc-toolbox-heap-lazy-invalidation]]
-- [[cc-toolbox-heap-max-negation]]
-- [[cc-toolbox-heap-park-and-restore]]
-- [[cc-toolbox-heap-topk]]
-- [[cc-toolbox-heap-tuple-key]]
+1. [[cc-toolbox-heap-heapify]]
+2. [[cc-toolbox-heap-lazy-invalidation]]
+3. [[cc-toolbox-heap-max-negation]]
+4. [[cc-toolbox-heap-park-and-restore]]
+5. [[cc-toolbox-heap-topk]]
+6. [[cc-toolbox-heap-tuple-key]]
 %% trellis:end %%
 
 ## Notes

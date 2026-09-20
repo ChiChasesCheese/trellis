@@ -7,11 +7,11 @@
 **Requires:** [[domains/snowflake/map/semistructured.variant-type-storage|VARIANT 类型与存储]]
 
 ## Cards (5)
-- [[flatten-explodes-array-to-rows]]
-- [[flatten-nested-and-row-explosion]]
-- [[flatten-outer-keeps-empty-arrays]]
-- [[flatten-output-columns]]
-- [[flatten-why-lateral]]
+1. [[flatten-explodes-array-to-rows]]
+2. [[flatten-nested-and-row-explosion]]
+3. [[flatten-outer-keeps-empty-arrays]]
+4. [[flatten-output-columns]]
+5. [[flatten-why-lateral]]
 %% trellis:end %%
 
 ## Notes

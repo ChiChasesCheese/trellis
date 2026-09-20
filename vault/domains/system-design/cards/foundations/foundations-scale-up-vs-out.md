@@ -2,6 +2,7 @@
 id: foundations-scale-up-vs-out
 node: foundations.tradeoffs
 type: qa
+step: 3
 ---
 ## Q
 When do you keep scaling *up* (bigger machine) instead of *out* (more machines), and what eventually forces the switch?

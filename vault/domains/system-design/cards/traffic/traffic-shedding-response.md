@@ -2,6 +2,7 @@
 id: traffic-shedding-response
 node: traffic.rate-limiting
 type: qa
+step: 8
 ---
 ## Q
 When a rate limiter rejects a request, what exactly should the response contain — and why does the wrong response amplify load?

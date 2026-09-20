@@ -2,6 +2,7 @@
 id: kafka-monitoring-two-active-controllers
 node: monitoring.broker-metrics
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

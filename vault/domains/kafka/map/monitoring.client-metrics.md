@@ -9,12 +9,12 @@
 - [[kafka-3-9-quotas-throttling|配额与节流：限制客户端对broker资源的占用]]
 
 ## Cards (6)
-- [[kafka-monitoring-consumer-rate-min-alert-pitfall]]
-- [[kafka-monitoring-quota-three-types]]
-- [[kafka-monitoring-record-error-vs-retry-rate]]
-- [[kafka-monitoring-records-lag-max-not-recommended]]
-- [[kafka-monitoring-static-vs-dynamic-quota]]
-- [[kafka-monitoring-throttle-silent-must-monitor]]
+1. [[kafka-monitoring-record-error-vs-retry-rate]]
+2. [[kafka-monitoring-consumer-rate-min-alert-pitfall]]
+3. [[kafka-monitoring-records-lag-max-not-recommended]]
+4. [[kafka-monitoring-quota-three-types]]
+5. [[kafka-monitoring-static-vs-dynamic-quota]]
+6. [[kafka-monitoring-throttle-silent-must-monitor]]
 %% trellis:end %%
 
 ## Notes

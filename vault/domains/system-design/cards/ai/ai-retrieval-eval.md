@@ -2,6 +2,7 @@
 id: ai-retrieval-eval
 node: ai.vector-search
 type: qa
+step: 7
 ---
 ## Q
 You want to change chunk size and swap the embedding model in your RAG system. How do offline and online evaluation divide the work of proving it's an improvement?

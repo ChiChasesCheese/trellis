@@ -10,10 +10,10 @@
 - [[snowflak-secure-data-sharing|安全数据共享(Secure Data Sharing)、Reader 账户与 Listing]]
 
 ## Cards (4)
-- [[reader-compute-billed-to-provider]]
-- [[reader-no-dml]]
-- [[reader-owned-by-provider]]
-- [[reader-why-exists]]
+1. [[reader-compute-billed-to-provider]]
+2. [[reader-no-dml]]
+3. [[reader-owned-by-provider]]
+4. [[reader-why-exists]]
 %% trellis:end %%
 
 ## Notes

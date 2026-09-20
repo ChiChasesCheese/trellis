@@ -2,6 +2,7 @@
 id: kafka-connect-pipeline-etl-vs-elt
 node: connect.pipeline-design
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: kafka-reliability-unclean-leader-election-tradeoff
 node: reliability.broker-config
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

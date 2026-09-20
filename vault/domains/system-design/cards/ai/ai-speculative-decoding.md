@@ -2,6 +2,7 @@
 id: ai-speculative-decoding
 node: ai.inference
 type: qa
+step: 4
 ---
 ## Q
 Speculative decoding runs a *second* model per request yet makes serving faster. Explain the mechanism, why output quality is unchanged, and when it stops helping.

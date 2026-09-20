@@ -2,6 +2,7 @@
 id: reliability-exemplars
 node: reliability.observability
 type: qa
+step: 7
 ---
 ## Q
 You see a p99 latency spike on a dashboard and now need one concrete slow request to debug. What feature jumps you straight from the metric to a trace, and how does it work?

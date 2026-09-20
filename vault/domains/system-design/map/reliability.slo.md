@@ -8,12 +8,12 @@ SLIs worth measuring, percentiles over averages, and error budgets as a release 
 - [[google-sre-slo|Service Level Objectives (Google SRE Book, ch. 4)]]
 
 ## Cards (6)
-- [[reliability-burn-rate-alerting]]
-- [[reliability-error-budget-throttle]]
-- [[reliability-latency-sli-form]]
-- [[reliability-percentiles-over-averages]]
-- [[reliability-slo-dependency-ceiling]]
-- [[reliability-symptom-vs-cause-alerts]]
+1. [[reliability-percentiles-over-averages]]
+2. [[reliability-latency-sli-form]]
+3. [[reliability-error-budget-throttle]]
+4. [[reliability-burn-rate-alerting]]
+5. [[reliability-symptom-vs-cause-alerts]]
+6. [[reliability-slo-dependency-ceiling]]
 %% trellis:end %%
 
 ## Notes

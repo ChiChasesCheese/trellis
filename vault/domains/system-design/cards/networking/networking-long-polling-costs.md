@@ -2,6 +2,7 @@
 id: networking-long-polling-costs
 node: networking.realtime
 type: qa
+step: 2
 ---
 ## Q
 What does a hanging long-poll request cost the server, and why do thread-per-request servers cap out first?

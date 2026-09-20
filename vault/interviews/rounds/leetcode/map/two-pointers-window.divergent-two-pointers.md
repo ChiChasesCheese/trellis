@@ -3,11 +3,6 @@
 *双指针与滑动窗口（two pointers / sliding window）*
 
 需要以某个中心位置向左右两侧扩展探测(如回文中心扩展法)时,应使用背向双指针。
-
-## Cards (3)
-- [[leetcode-c-endlesscheng-0vinmk-divergent-two-pointers-invariant]]
-- [[leetcode-c-endlesscheng-0vinmk-divergent-two-pointers-recognition]]
-- [[leetcode-c-endlesscheng-0vinmk-divergent-two-pointers-template]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: reliability-metric-cardinality
 node: reliability.observability
 type: qa
+step: 4
 ---
 ## Q
 An engineer adds `user_id` as a label on a request-latency metric. Why does this melt the metrics system, and where does that data belong instead?

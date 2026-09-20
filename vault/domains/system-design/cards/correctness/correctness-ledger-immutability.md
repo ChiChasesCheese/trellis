@@ -2,6 +2,7 @@
 id: correctness-ledger-immutability
 node: correctness.ledger
 type: qa
+step: 2
 ---
 ## Q
 A posted ledger entry turns out to be wrong (wrong amount, wrong account). What does a payments-grade ledger do, and what is banned?

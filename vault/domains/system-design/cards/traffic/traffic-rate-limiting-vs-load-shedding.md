@@ -2,6 +2,7 @@
 id: traffic-rate-limiting-vs-load-shedding
 node: traffic.rate-limiting
 type: qa
+step: 1
 ---
 ## Q
 Rate limiting vs load shedding — different triggers, different fairness. Draw the distinction and say why you need both.

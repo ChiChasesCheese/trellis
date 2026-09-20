@@ -2,6 +2,7 @@
 id: reliability-trace-sampling
 node: reliability.observability
 type: qa
+step: 6
 ---
 ## Q
 Head-based vs tail-based trace sampling — what does each decide on, and which one keeps the traces you actually want during an incident?

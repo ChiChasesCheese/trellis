@@ -2,6 +2,7 @@
 id: kafka-admin-kafkafuture-nonblocking
 node: admin.topic-ops
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

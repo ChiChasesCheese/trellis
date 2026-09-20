@@ -2,6 +2,7 @@
 id: kafka-core-preferred-leader-rebalance
 node: core.replication-isr
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

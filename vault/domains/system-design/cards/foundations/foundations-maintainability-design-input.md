@@ -2,6 +2,7 @@
 id: foundations-maintainability-design-input
 node: foundations.method
 type: qa
+step: 6
 ---
 ## Q
 DDIA's three maintainability goals — name them, and where does each show up in a design interview answer?

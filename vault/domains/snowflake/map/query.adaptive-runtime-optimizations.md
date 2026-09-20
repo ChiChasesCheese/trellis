@@ -7,10 +7,10 @@
 **Requires:** [[domains/snowflake/map/query.join-strategies-broadcast-shuffle|连接（join）策略]]
 
 ## Cards (4)
-- [[adaptive-runtime-join-pruning]]
-- [[adaptive-vs-static-plan-tradeoff]]
-- [[adaptive-where-estimates-break]]
-- [[adaptive-why-defer-join-distribution]]
+1. [[adaptive-runtime-join-pruning]]
+2. [[adaptive-vs-static-plan-tradeoff]]
+3. [[adaptive-where-estimates-break]]
+4. [[adaptive-why-defer-join-distribution]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: kafka-mirroring-cross-dc-realities-principles
 node: mirroring.architectures
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

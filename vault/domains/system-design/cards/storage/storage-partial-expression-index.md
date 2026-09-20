@@ -2,6 +2,7 @@
 id: storage-partial-expression-index
 node: storage.relational.indexing
 type: qa
+step: 7
 ---
 ## Q
 A 500M-row `jobs` table has 2k rows in `status='pending'` that a worker polls constantly. What index do you build, and what related index type fixes `WHERE lower(email) = ?`?

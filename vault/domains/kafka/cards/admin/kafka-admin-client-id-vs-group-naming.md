@@ -2,6 +2,7 @@
 id: kafka-admin-client-id-vs-group-naming
 node: admin.dynamic-config
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

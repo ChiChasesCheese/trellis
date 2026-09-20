@@ -10,10 +10,10 @@
 - [[snowflak-secure-data-sharing|安全数据共享(Secure Data Sharing)、Reader 账户与 Listing]]
 
 ## Cards (4)
-- [[listing-four-sharing-options]]
-- [[listing-public-vs-private]]
-- [[listing-usage-metrics]]
-- [[listing-vs-direct-share-choice]]
+1. [[listing-four-sharing-options]]
+2. [[listing-public-vs-private]]
+3. [[listing-usage-metrics]]
+4. [[listing-vs-direct-share-choice]]
 %% trellis:end %%
 
 ## Notes

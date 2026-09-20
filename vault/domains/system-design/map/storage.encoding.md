@@ -12,15 +12,15 @@ Data formats as contracts between code versions — JSON, Protobuf, Avro; forwar
 - [[kleppmann-schema-evolution|Schema evolution in Avro, Protocol Buffers and Thrift (Kleppmann)]]
 
 ## Cards (9)
-- [[storage-avro-evolution-defaults]]
-- [[storage-avro-schema-resolution]]
-- [[storage-dataflow-modes]]
-- [[storage-encoding-compat-directions]]
-- [[storage-json-contract-pitfalls]]
-- [[storage-language-serialization-trap]]
-- [[storage-protobuf-tag-rules]]
-- [[storage-rolling-upgrade-compat]]
-- [[storage-unknown-field-roundtrip]]
+1. [[storage-encoding-compat-directions]]
+2. [[storage-json-contract-pitfalls]]
+3. [[storage-language-serialization-trap]]
+4. [[storage-protobuf-tag-rules]]
+5. [[storage-avro-schema-resolution]]
+6. [[storage-avro-evolution-defaults]]
+7. [[storage-dataflow-modes]]
+8. [[storage-rolling-upgrade-compat]]
+9. [[storage-unknown-field-roundtrip]]
 %% trellis:end %%
 
 ## Notes

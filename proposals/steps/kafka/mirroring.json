@@ -1,0 +1,26 @@
+{
+  "mirroring.architectures": [
+    "kafka-mirroring-cross-dc-realities-principles",
+    "kafka-mirroring-star-architecture-limitation",
+    "kafka-mirroring-active-active-conflict-challenge",
+    "kafka-mirroring-active-active-avoid-cyclic-mirror",
+    "kafka-mirroring-active-standby-tradeoff",
+    "kafka-mirroring-stretch-cluster-quorum"
+  ],
+  "mirroring.mirrormaker": [
+    "kafka-mirrormaker-custom-partition-assignment",
+    "kafka-mirrormaker-deploy-near-target-remote-consume",
+    "kafka-mirrormaker-offset-migration-safety",
+    "kafka-mirrormaker-topic-write-acl-not-migrated",
+    "kafka-mirrormaker-replication-lag-two-imperfect-methods",
+    "kafka-mirrormaker-tasks-max-tuning-approach"
+  ],
+  "mirroring.alternatives": [
+    "kafka-mirroring-alt-ureplicator-helix-controller",
+    "kafka-mirroring-alt-brooklin-general-purpose",
+    "kafka-mirroring-alt-replicator-vs-mirrormaker-diffs",
+    "kafka-mirroring-alt-cluster-linking-no-connect",
+    "kafka-mirroring-alt-cluster-linking-no-sync-manual-failover",
+    "kafka-mirroring-alt-mrc-observer-auto-promote"
+  ]
+}

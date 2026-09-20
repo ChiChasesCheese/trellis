@@ -2,6 +2,7 @@
 id: kafka-streams-exactly-once-config
 node: streams.concepts
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

@@ -3,11 +3,6 @@
 *双指针与滑动窗口（two pointers / sliding window）*
 
 当恰好型滑窗需要调用两次结构相同、仅阈值不同的滑窗函数时,可以合并为一次遍历的三指针滑动窗口。
-
-## Cards (3)
-- [[leetcode-c-endlesscheng-0vinmk-three-pointer-sliding-window-invariant]]
-- [[leetcode-c-endlesscheng-0vinmk-three-pointer-sliding-window-recognition]]
-- [[leetcode-c-endlesscheng-0vinmk-three-pointer-sliding-window-template]]
 %% trellis:end %%
 
 ## Notes

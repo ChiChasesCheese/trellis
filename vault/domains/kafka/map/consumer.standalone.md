@@ -8,10 +8,10 @@
 - [[kafka-4-11-standalone-consumer|独立的消费者]]
 
 ## Cards (4)
-- [[kafka-consumer-assign-vs-subscribe-exclusive]]
-- [[kafka-consumer-standalone-new-partitions-blind-spot]]
-- [[kafka-consumer-standalone-still-needs-group-id]]
-- [[kafka-consumer-standalone-when-to-use]]
+1. [[kafka-consumer-assign-vs-subscribe-exclusive]]
+2. [[kafka-consumer-standalone-when-to-use]]
+3. [[kafka-consumer-standalone-still-needs-group-id]]
+4. [[kafka-consumer-standalone-new-partitions-blind-spot]]
 %% trellis:end %%
 
 ## Notes

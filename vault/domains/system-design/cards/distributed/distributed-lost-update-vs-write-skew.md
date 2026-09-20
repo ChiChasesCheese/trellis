@@ -2,6 +2,7 @@
 id: distributed-lost-update-vs-write-skew
 node: distributed.transactions.isolation
 type: qa
+step: 4
 ---
 ## Q
 Lost update and write skew are both "two transactions read, then write based on what they read." What structurally separates them, and why do the standard lost-update defenses fail against write skew?

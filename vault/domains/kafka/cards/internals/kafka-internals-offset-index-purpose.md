@@ -2,6 +2,7 @@
 id: kafka-internals-offset-index-purpose
 node: internals.indexes
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

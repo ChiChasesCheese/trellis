@@ -7,11 +7,11 @@
 **Requires:** [[domains/snowflake/map/storage.micro-partition-metadata|微分区元数据]]
 
 ## Cards (5)
-- [[metadata-cache-always-consistent]]
-- [[metadata-cache-count-without-warehouse]]
-- [[metadata-cache-min-max-answerable]]
-- [[metadata-cache-pruning-before-scan]]
-- [[metadata-cache-where-clause-breaks-shortcut]]
+1. [[metadata-cache-always-consistent]]
+2. [[metadata-cache-count-without-warehouse]]
+3. [[metadata-cache-min-max-answerable]]
+4. [[metadata-cache-pruning-before-scan]]
+5. [[metadata-cache-where-clause-breaks-shortcut]]
 %% trellis:end %%
 
 ## Notes

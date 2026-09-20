@@ -2,6 +2,7 @@
 id: kafka-core-offset-tracks-consumer-progress
 node: core.offsets
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

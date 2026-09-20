@@ -2,6 +2,7 @@
 id: kafka-mirroring-active-standby-tradeoff
 node: mirroring.architectures
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

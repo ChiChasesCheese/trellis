@@ -2,6 +2,7 @@
 id: security-webauthn-ceremony
 node: security.authn.credentials
 type: qa
+step: 4
 ---
 ## Q
 At a systems level: what does your server store per passkey, and what must it verify on each login ceremony?

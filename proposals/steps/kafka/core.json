@@ -1,0 +1,38 @@
+{
+  "core.pubsub-why": [
+    "kafka-core-pubsub-vs-pointtopoint",
+    "kafka-core-consumer-independence-vs-traditional-queue",
+    "kafka-core-consumer-group-shared-once",
+    "kafka-core-multi-producer-unified-topic",
+    "kafka-core-disk-retention-benefit",
+    "kafka-core-scalability-no-downtime"
+  ],
+  "core.topics-partitions": [
+    "kafka-core-partitions-enable-scale",
+    "kafka-core-partition-ordering-scope",
+    "kafka-core-message-key-partition-routing",
+    "kafka-core-batch-latency-throughput-tradeoff",
+    "kafka-core-schema-avro-vs-json"
+  ],
+  "core.offsets": [
+    "kafka-core-offset-what-is",
+    "kafka-core-offset-not-strictly-sequential",
+    "kafka-core-offset-uniqueness-per-partition",
+    "kafka-core-offset-vs-key",
+    "kafka-core-offset-tracks-consumer-progress"
+  ],
+  "core.replication-isr": [
+    "kafka-core-leader-follower-roles",
+    "kafka-core-isr-definition",
+    "kafka-core-isr-leader-election-eligibility",
+    "kafka-core-preferred-leader-rebalance",
+    "kafka-core-follower-reads-latency-tradeoff"
+  ],
+  "core.cluster-roles": [
+    "kafka-core-broker-role-capacity",
+    "kafka-core-controller-role",
+    "kafka-core-multicluster-reasons",
+    "kafka-core-replication-scoped-to-single-cluster",
+    "kafka-core-mirrormaker-architecture"
+  ]
+}

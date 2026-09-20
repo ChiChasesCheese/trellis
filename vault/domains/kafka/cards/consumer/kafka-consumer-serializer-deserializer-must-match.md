@@ -2,6 +2,7 @@
 id: kafka-consumer-serializer-deserializer-must-match
 node: consumer.deserialization
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

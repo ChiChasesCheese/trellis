@@ -15,11 +15,11 @@ Comprehensions, unpacking, `sorted(key=...)`, `cmp_to_key`, `enumerate`/`zip`, f
 - [[oa-q33-analytical-db-min-by-key|Drill: build a toy analytical database, one abstraction layer at a time]]
 
 ## Cards (5)
-- [[cc-python-idioms-comprehensions]]
-- [[cc-python-idioms-fstring-format]]
-- [[cc-python-idioms-setdefault-vs-defaultdict]]
-- [[cc-python-idioms-sorted-key-mechanics]]
-- [[cc-python-idioms-unpacking-enumerate-zip]]
+1. [[cc-python-idioms-comprehensions]]
+2. [[cc-python-idioms-fstring-format]]
+3. [[cc-python-idioms-setdefault-vs-defaultdict]]
+4. [[cc-python-idioms-sorted-key-mechanics]]
+5. [[cc-python-idioms-unpacking-enumerate-zip]]
 %% trellis:end %%
 
 ## Notes

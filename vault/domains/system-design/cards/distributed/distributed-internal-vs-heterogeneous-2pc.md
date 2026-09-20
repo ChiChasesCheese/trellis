@@ -2,6 +2,7 @@
 id: distributed-internal-vs-heterogeneous-2pc
 node: distributed.transactions.distributed
 type: qa
+step: 4
 ---
 ## Q
 Spanner and CockroachDB run two-phase commit on essentially every cross-shard write and perform fine, while XA-style 2PC across a database plus a message broker is notorious. Same protocol — what makes the internal case workable and the heterogeneous case not?

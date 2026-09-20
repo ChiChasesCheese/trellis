@@ -2,6 +2,7 @@
 id: reliability-latency-sli-form
 node: reliability.slo
 type: qa
+step: 2
 ---
 ## Q
 Why do SRE teams define a latency SLI as "% of requests faster than 300ms" instead of "p99 < 300ms"?

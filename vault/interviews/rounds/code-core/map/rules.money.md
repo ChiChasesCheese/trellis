@@ -4,6 +4,8 @@
 
 Cents as `int`, `Decimal` with an explicit context, zero-decimal currencies, and why a float ever touching money is a bug.
 
+**Core** — part of the first pass through this subject.
+
 **Unlocks:** [[interviews/rounds/code-core/map/rules.rounding|Rounding Rules & Where to Apply Them]], [[interviews/rounds/code-core/map/rules.tiers|Tiered, Metered & Prorated Math]]
 
 ## Readings
@@ -21,16 +23,16 @@ Cents as `int`, `Decimal` with an explicit context, zero-decimal currencies, and
 - [[tiered-billing-exact-output|Drill: tiered billing with an exact-output contract]]
 
 ## Cards (10)
-- [[cc-rules-money-decimal-from-string]]
-- [[cc-rules-money-float-symptom]]
-- [[cc-rules-money-int-float-coercion]]
-- [[cc-rules-money-integer-minor-units]]
-- [[cc-rules-money-json-int-precision]]
-- [[cc-rules-money-max-digits-overflow]]
-- [[cc-rules-money-negative-formatting]]
-- [[cc-rules-money-same-currency-different-minor-unit]]
-- [[cc-rules-money-unit-in-the-name]]
-- [[cc-rules-money-zero-decimal-currencies]]
+1. [[cc-rules-money-decimal-from-string]]
+2. [[cc-rules-money-float-symptom]]
+3. [[cc-rules-money-integer-minor-units]]
+4. [[cc-rules-money-negative-formatting]]
+5. [[cc-rules-money-unit-in-the-name]]
+6. [[cc-rules-money-zero-decimal-currencies]]
+7. [[cc-rules-money-int-float-coercion]]
+8. [[cc-rules-money-json-int-precision]]
+9. [[cc-rules-money-max-digits-overflow]]
+10. [[cc-rules-money-same-currency-different-minor-unit]]
 %% trellis:end %%
 
 ## Notes

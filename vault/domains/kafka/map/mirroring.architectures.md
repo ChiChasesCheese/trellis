@@ -9,12 +9,12 @@
 - [[kafka-10-2-multi-cluster-architectures|多集群架构模式]]
 
 ## Cards (6)
-- [[kafka-mirroring-active-active-avoid-cyclic-mirror]]
-- [[kafka-mirroring-active-active-conflict-challenge]]
-- [[kafka-mirroring-active-standby-tradeoff]]
-- [[kafka-mirroring-cross-dc-realities-principles]]
-- [[kafka-mirroring-star-architecture-limitation]]
-- [[kafka-mirroring-stretch-cluster-quorum]]
+1. [[kafka-mirroring-cross-dc-realities-principles]]
+2. [[kafka-mirroring-star-architecture-limitation]]
+3. [[kafka-mirroring-active-active-conflict-challenge]]
+4. [[kafka-mirroring-active-active-avoid-cyclic-mirror]]
+5. [[kafka-mirroring-active-standby-tradeoff]]
+6. [[kafka-mirroring-stretch-cluster-quorum]]
 %% trellis:end %%
 
 ## Notes

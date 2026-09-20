@@ -2,6 +2,7 @@
 id: networking-websocket-scaling-cost
 node: networking.realtime
 type: qa
+step: 5
 ---
 ## Q
 What makes a WebSocket fleet fundamentally harder to scale than a stateless HTTP fleet? Name the three concrete problems.

@@ -2,6 +2,7 @@
 id: foundations-utilization-latency-knee
 node: foundations.tradeoffs
 type: qa
+step: 5
 ---
 ## Q
 A latency-sensitive service runs its servers at 60% CPU, and finance proposes 90% to cut cost. Why does response time — especially the tail — blow up long before utilization reaches 100%?

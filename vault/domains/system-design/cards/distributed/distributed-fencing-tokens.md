@@ -2,6 +2,7 @@
 id: distributed-fencing-tokens
 node: distributed.consensus
 type: qa
+step: 10
 ---
 ## Q
 A client holds a distributed-lock lease, pauses for a 20s GC, then resumes and writes — but its lease expired and another client took the lock. How do fencing tokens prevent the corruption, and why can't the client fix this itself?

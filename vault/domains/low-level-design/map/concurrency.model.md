@@ -9,10 +9,10 @@ Concurrency vs parallelism, thread lifecycle, visibility and reordering, why dat
 - [[jenkov-java-memory-model|Java Memory Model (Jakob Jenkov)]]
 
 ## Cards (4)
-- [[concurrency-check-then-act]]
-- [[concurrency-data-race-definition]]
-- [[concurrency-happens-before-edges]]
-- [[concurrency-visibility-stale-flag]]
+1. [[concurrency-check-then-act]]
+2. [[concurrency-data-race-definition]]
+3. [[concurrency-happens-before-edges]]
+4. [[concurrency-visibility-stale-flag]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: ai-corpus-freshness
 node: ai.vector-search
 type: qa
+step: 6
 ---
 ## Q
 How do you keep a RAG corpus fresh as source documents change, and why does upgrading the embedding model force a special migration?

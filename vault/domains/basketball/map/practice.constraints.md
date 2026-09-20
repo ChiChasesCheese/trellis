@@ -12,8 +12,8 @@ Changing the rules to force the read — the constraint-led approach and why 3-o
 - [[live-catch-1v1-two-dribble|Drill: 1-on-1 from a live catch, two dribbles]]
 
 ## Cards (2)
-- [[bb-constraint-forces-the-read]]
-- [[bb-small-sided-games-value]]
+1. [[bb-constraint-forces-the-read]]
+2. [[bb-small-sided-games-value]]
 %% trellis:end %%
 
 ## Notes

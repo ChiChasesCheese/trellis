@@ -10,12 +10,12 @@
 - [[snowflak-streams|流对象(Stream)的偏移量、类型与消费语义]]
 
 ## Cards (6)
-- [[stream-create-or-replace-table-stale]]
-- [[stream-retention-auto-extension-14-days]]
-- [[stream-shared-table-no-extension]]
-- [[stream-stale-after-calculation]]
-- [[stream-stale-definition-recreate]]
-- [[stream-stream-has-data-prevents-stale]]
+1. [[stream-create-or-replace-table-stale]]
+2. [[stream-retention-auto-extension-14-days]]
+3. [[stream-shared-table-no-extension]]
+4. [[stream-stale-after-calculation]]
+5. [[stream-stale-definition-recreate]]
+6. [[stream-stream-has-data-prevents-stale]]
 %% trellis:end %%
 
 ## Notes

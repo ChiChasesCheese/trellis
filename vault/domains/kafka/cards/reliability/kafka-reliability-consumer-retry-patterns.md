@@ -2,6 +2,7 @@
 id: kafka-reliability-consumer-retry-patterns
 node: reliability.consumer-reliable
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

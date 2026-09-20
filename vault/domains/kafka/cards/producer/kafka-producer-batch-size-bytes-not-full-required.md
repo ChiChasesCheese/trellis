@@ -2,6 +2,7 @@
 id: kafka-producer-batch-size-bytes-not-full-required
 node: producer.batching-throughput
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

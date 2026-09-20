@@ -2,6 +2,7 @@
 id: kafka-core-isr-definition
 node: core.replication-isr
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

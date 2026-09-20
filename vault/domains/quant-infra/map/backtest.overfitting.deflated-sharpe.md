@@ -4,6 +4,8 @@
 
 Adjusting Sharpe for skew, kurtosis, track length and trial count, and using minimum track record length to answer how long until you believe it.
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/quant-infra/map/backtest.metrics|Performance Metrics]]
 
 **Unlocks:** [[domains/quant-infra/map/platform.strategy-claim-types|What a Strategy Claims]]

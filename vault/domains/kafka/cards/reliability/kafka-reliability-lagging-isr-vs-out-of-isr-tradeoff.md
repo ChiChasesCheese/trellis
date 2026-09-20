@@ -2,6 +2,7 @@
 id: kafka-reliability-lagging-isr-vs-out-of-isr-tradeoff
 node: reliability.guarantees
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

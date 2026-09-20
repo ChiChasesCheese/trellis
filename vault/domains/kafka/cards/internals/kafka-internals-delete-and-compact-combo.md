@@ -2,6 +2,7 @@
 id: kafka-internals-delete-and-compact-combo
 node: internals.compaction
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

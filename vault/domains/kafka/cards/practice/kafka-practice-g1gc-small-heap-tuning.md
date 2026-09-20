@@ -2,6 +2,7 @@
 id: kafka-practice-g1gc-small-heap-tuning
 node: practice.sizing-tuning
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

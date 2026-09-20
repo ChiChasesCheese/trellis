@@ -2,6 +2,7 @@
 id: networking-cursor-vs-offset-pagination
 node: networking.api-styles
 type: qa
+step: 2
 ---
 ## Q
 Offset vs cursor pagination in an API — what breaks with `OFFSET` at depth and under concurrent writes?

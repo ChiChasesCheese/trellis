@@ -2,6 +2,7 @@
 id: kafka-reliability-commit-frequency-tradeoff
 node: reliability.consumer-reliable
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

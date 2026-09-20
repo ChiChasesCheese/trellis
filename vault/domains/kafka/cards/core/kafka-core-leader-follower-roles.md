@@ -2,6 +2,7 @@
 id: kafka-core-leader-follower-roles
 node: core.replication-isr
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

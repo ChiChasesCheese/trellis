@@ -2,6 +2,7 @@
 id: kafka-internals-tiered-storage-two-layers
 node: internals.tiered-storage
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

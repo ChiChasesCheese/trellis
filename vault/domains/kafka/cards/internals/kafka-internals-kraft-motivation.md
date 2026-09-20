@@ -2,6 +2,7 @@
 id: kafka-internals-kraft-motivation
 node: internals.kraft-mode
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: kafka-producer-idempotence-sequence-number-mechanism
 node: producer.idempotence-ordering
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

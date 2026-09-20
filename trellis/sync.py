@@ -20,6 +20,7 @@ from pathlib import Path
 from .cards import Card
 from .clippings import Clipping, canonical_url
 from .readings import Reading
+from .sequence import core_leaves, sequence
 from .skeleton import Node, Skeleton
 
 BEGIN = "%% trellis:begin %%"
@@ -68,6 +69,8 @@ def _node_body(
         lines.append(f"*{crumbs}*")
     if node.summary:
         lines += ["", node.summary]
+    if node.is_leaf and node.id in core_leaves(skeleton):
+        lines += ["", "**Core** — part of the first pass through this subject."]
     if node.requires:
         lines += ["", "**Requires:** " + ", ".join(
             _link(skeleton.by_id[r], prefix) for r in node.requires
@@ -91,10 +94,12 @@ def _node_body(
     if node_drills:
         lines += ["", "## Drills"]
         lines += [f"- [[{d.link_target}|{d.title}]]" for d in node_drills]
-    node_cards = [c for c in cards if c.node == node.id]
+    # Numbered, because this is the order they will be met in (their `step`,
+    # then the rest, grown cards last) — the same order Anki deals them.
+    node_cards = [c for c in sequence(skeleton, cards) if c.node == node.id]
     if node_cards:
         lines += ["", f"## Cards ({len(node_cards)})"]
-        lines += [f"- [[{c.id}]]" for c in node_cards]
+        lines += [f"{i}. [[{c.id}]]" for i, c in enumerate(node_cards, start=1)]
     return "\n".join(lines)
 
 

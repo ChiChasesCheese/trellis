@@ -4,6 +4,8 @@
 
 Bitemporal tables separating effective date from knowledge date, as-reported versus restated fundamentals, filing and announcement lags, and vendor vintages.
 
+**Core** — part of the first pass through this subject.
+
 ## Readings
 - [[qs-data-governance-contracts|Data Governance: Contracts, Catalog, and Health]]
 %% trellis:end %%

@@ -2,6 +2,7 @@
 id: distributed-ssi-detection-points
 node: distributed.transactions.concurrency-control
 type: qa
+step: 4
 ---
 ## Q
 SSI lets transactions run on snapshots without blocking, then aborts the ones whose premises went stale. Concretely, at which two points does the engine notice that a transaction acted on outdated information?

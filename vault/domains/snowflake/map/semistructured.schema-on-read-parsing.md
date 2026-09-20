@@ -10,11 +10,11 @@
 - [[snowflak-semistructured-loading|半结构化数据的加载与内部表示(VARIANT/ARRAY/OBJECT)]]
 
 ## Cards (5)
-- [[schema-on-read-auto-detect-alternative]]
-- [[schema-on-read-external-table-value-typing]]
-- [[schema-on-read-parse-json-vs-copy-type]]
-- [[schema-on-read-query-operators]]
-- [[schema-on-read-why-fixed-schema-fails]]
+1. [[schema-on-read-auto-detect-alternative]]
+2. [[schema-on-read-external-table-value-typing]]
+3. [[schema-on-read-parse-json-vs-copy-type]]
+4. [[schema-on-read-query-operators]]
+5. [[schema-on-read-why-fixed-schema-fails]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: kafka-streams-local-state-recovery-changelog
 node: streams.design-patterns
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

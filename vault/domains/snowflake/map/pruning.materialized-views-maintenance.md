@@ -10,11 +10,11 @@
 - [[snowflak-materialized-views|物化视图(Materialized View)的预计算与维护成本]]
 
 ## Cards (5)
-- [[mv-always-current-mechanism]]
-- [[mv-automatic-query-rewrite]]
-- [[mv-definition-limits]]
-- [[mv-vs-result-cache]]
-- [[mv-when-vs-regular-view]]
+1. [[mv-always-current-mechanism]]
+2. [[mv-automatic-query-rewrite]]
+3. [[mv-definition-limits]]
+4. [[mv-vs-result-cache]]
+5. [[mv-when-vs-regular-view]]
 %% trellis:end %%
 
 ## Notes

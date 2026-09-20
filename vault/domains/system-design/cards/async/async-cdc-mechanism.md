@@ -2,6 +2,7 @@
 id: async-cdc-mechanism
 node: async.streaming.cdc
 type: qa
+step: 1
 ---
 ## Q
 How does log-based CDC (e.g. Debezium) capture changes, and why is it preferred over the application publishing events itself or polling the table?

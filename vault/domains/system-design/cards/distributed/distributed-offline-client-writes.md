@@ -2,6 +2,7 @@
 id: distributed-offline-client-writes
 node: distributed.replication.multi-leader
 type: qa
+step: 7
 ---
 ## Q
 Why is an offline-capable mobile/desktop app a multi-leader system, and which two schema decisions does that force on you?

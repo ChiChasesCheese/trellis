@@ -2,6 +2,7 @@
 id: kafka-producer-avro-schema-evolution-example
 node: producer.serialization
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

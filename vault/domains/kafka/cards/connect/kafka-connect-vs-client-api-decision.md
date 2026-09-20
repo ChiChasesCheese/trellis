@@ -2,6 +2,7 @@
 id: kafka-connect-vs-client-api-decision
 node: connect.connect-basics
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

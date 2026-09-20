@@ -2,6 +2,7 @@
 id: security-refresh-rotation-reuse
 node: security.authn.tokens
 type: qa
+step: 3
 ---
 ## Q
 How does refresh token rotation turn token theft into a detectable event, and what happens on reuse?

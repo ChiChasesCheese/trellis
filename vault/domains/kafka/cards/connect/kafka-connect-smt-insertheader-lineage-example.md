@@ -2,6 +2,7 @@
 id: kafka-connect-smt-insertheader-lineage-example
 node: connect.smt
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

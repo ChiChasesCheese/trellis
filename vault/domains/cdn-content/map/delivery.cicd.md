@@ -4,6 +4,8 @@
 
 Reproducible builds, test gates, artifact provenance, environment promotion, deployment records, and evidence that a rollout is safe.
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/cdn-content/map/reliability.testing|Unit, Integration & End-to-End Testing]], [[domains/cdn-content/map/delivery.compatibility|Compatibility & Configuration Changes]]
 
 **Unlocks:** [[domains/cdn-content/map/delivery.terraform-kubernetes|Terraform & Kubernetes Basics]]
@@ -13,9 +15,9 @@ Reproducible builds, test gates, artifact provenance, environment promotion, dep
 - [[delivery-kubernetes-deployments|Kubernetes: Deployments]]
 
 ## Cards (3)
-- [[delivery-cicd-promote-artifact]]
-- [[delivery-cicd-release-evidence]]
-- [[delivery-cicd-reproducible]]
+1. [[delivery-cicd-promote-artifact]]
+2. [[delivery-cicd-release-evidence]]
+3. [[delivery-cicd-reproducible]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: analytics-replica-analytics-limits
 node: analytics.olap
 type: qa
+step: 7
 ---
 ## Q
 "Why buy a warehouse? Just point the analysts at a read replica of the production database." Give the reasons this stops working as analytics grows up.

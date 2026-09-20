@@ -2,6 +2,7 @@
 id: ai-hnsw-vs-ivf
 node: ai.vector-search
 type: qa
+step: 2
 ---
 ## Q
 HNSW vs IVF for a vector index: how does each search, and what pushes you from HNSW to IVF(+PQ)?

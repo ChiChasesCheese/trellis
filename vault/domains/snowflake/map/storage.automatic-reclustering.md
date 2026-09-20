@@ -10,12 +10,12 @@
 - [[snowflak-automatic-clustering|自动重新聚簇服务(Automatic Clustering)]]
 
 ## Cards (6)
-- [[auto-recluster-classic-vs-optima]]
-- [[auto-recluster-key-change-cost-traps]]
-- [[auto-recluster-not-under-resource-monitor]]
-- [[auto-recluster-optima-ingest-billing]]
-- [[auto-recluster-optima-suspend-catch-up]]
-- [[auto-recluster-serverless-nonblocking]]
+1. [[auto-recluster-classic-vs-optima]]
+2. [[auto-recluster-key-change-cost-traps]]
+3. [[auto-recluster-not-under-resource-monitor]]
+4. [[auto-recluster-optima-ingest-billing]]
+5. [[auto-recluster-optima-suspend-catch-up]]
+6. [[auto-recluster-serverless-nonblocking]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: distributed-clock-error-sources
 node: distributed.time.clocks
 type: qa
+step: 2
 ---
 ## Q
 Every server in your fleet runs NTP, so an engineer assumes timestamps are accurate "to within a millisecond or so." Walk through the error sources that make tens of milliseconds — or unbounded error — the honest assumption.

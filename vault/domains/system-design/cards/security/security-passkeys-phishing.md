@@ -2,6 +2,7 @@
 id: security-passkeys-phishing
 node: security.authn.credentials
 type: qa
+step: 3
 ---
 ## Q
 Why are passkeys (WebAuthn) phishing-resistant when passwords + TOTP codes are not?

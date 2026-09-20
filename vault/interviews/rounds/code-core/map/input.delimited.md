@@ -12,11 +12,11 @@ Splitting on a delimiter versus using `csv`, quoted fields containing the delimi
 - [[oa-q14-join-dataset|Drill: join a legacy processor's export into Stripe customer data]]
 
 ## Cards (5)
-- [[cc-input-del-csv-vs-split]]
-- [[cc-input-del-header-driven]]
-- [[cc-input-del-maxsplit]]
-- [[cc-input-del-variable-length-rows]]
-- [[cc-input-del-writing-back]]
+1. [[cc-input-del-csv-vs-split]]
+2. [[cc-input-del-header-driven]]
+3. [[cc-input-del-maxsplit]]
+4. [[cc-input-del-variable-length-rows]]
+5. [[cc-input-del-writing-back]]
 %% trellis:end %%
 
 ## Notes

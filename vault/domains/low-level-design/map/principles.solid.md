@@ -12,12 +12,12 @@ The five principles as concrete refactoring triggers, with the violation each on
 - [[qs-sink-the-shared-type-dont-invert-the-layer|When a low layer needs a high layer's type, sink the type]] — `quant-stroller`
 
 ## Cards (6)
-- [[principles-dip-trigger]]
-- [[principles-isp-trigger]]
-- [[principles-lsp-signals]]
-- [[principles-ocp-trigger]]
-- [[principles-solid-acronym]]
-- [[principles-srp-trigger]]
+1. [[principles-dip-trigger]]
+2. [[principles-isp-trigger]]
+3. [[principles-lsp-signals]]
+4. [[principles-ocp-trigger]]
+5. [[principles-solid-acronym]]
+6. [[principles-srp-trigger]]
 %% trellis:end %%
 
 ## Notes

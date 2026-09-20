@@ -2,6 +2,7 @@
 id: ai-prompt-regression-testing
 node: ai.evals
 type: qa
+step: 3
 ---
 ## Q
 A teammate "just tweaks the prompt" in production config, and a provider model upgrade lands next month. What discipline prevents these from silently breaking your AI feature?

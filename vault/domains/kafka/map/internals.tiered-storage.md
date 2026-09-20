@@ -8,11 +8,11 @@
 - [[kafka-6-5-physical-storage|物理存储：分层存储、分区分配、索引与压实]]
 
 ## Cards (5)
-- [[kafka-internals-tiered-storage-decouple-storage-compute]]
-- [[kafka-internals-tiered-storage-isolation-benchmark]]
-- [[kafka-internals-tiered-storage-motivation]]
-- [[kafka-internals-tiered-storage-read-path-choice]]
-- [[kafka-internals-tiered-storage-two-layers]]
+1. [[kafka-internals-tiered-storage-motivation]]
+2. [[kafka-internals-tiered-storage-two-layers]]
+3. [[kafka-internals-tiered-storage-decouple-storage-compute]]
+4. [[kafka-internals-tiered-storage-read-path-choice]]
+5. [[kafka-internals-tiered-storage-isolation-benchmark]]
 %% trellis:end %%
 
 ## Notes

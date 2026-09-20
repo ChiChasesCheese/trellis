@@ -8,8 +8,8 @@ Shooting, turnovers, rebounding, free throws — their real weights and what eac
 - [[bb-four-factors|Introduction to Oliver's Four Factors]]
 
 ## Cards (2)
-- [[bb-four-factors-fix-first]]
-- [[bb-four-factors-weights]]
+1. [[bb-four-factors-fix-first]]
+2. [[bb-four-factors-weights]]
 %% trellis:end %%
 
 ## Notes

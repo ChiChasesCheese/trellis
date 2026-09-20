@@ -2,6 +2,7 @@
 id: kafka-internals-kraft-pull-metadata-fetch
 node: internals.kraft-mode
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

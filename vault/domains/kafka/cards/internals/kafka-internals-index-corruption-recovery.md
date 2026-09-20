@@ -2,6 +2,7 @@
 id: kafka-internals-index-corruption-recovery
 node: internals.indexes
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

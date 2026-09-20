@@ -2,6 +2,7 @@
 id: kafka-monitoring-urp-not-a-good-alert
 node: monitoring.broker-metrics
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

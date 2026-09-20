@@ -4,6 +4,8 @@
 
 Resolution, handshakes, connection reuse, certificates, and the latency paid before HTTP content can flow.
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/cdn-content/map/foundations.request-path|End-to-End Request Path]]
 
 **Unlocks:** [[domains/cdn-content/map/networking.http-semantics|HTTP Semantics]]
@@ -15,9 +17,9 @@ Resolution, handshakes, connection reuse, certificates, and the latency paid bef
 - [[trace-a-cold-content-request|Drill: Trace a cold content request]]
 
 ## Cards (3)
-- [[net-setup-diagnosis]]
-- [[net-setup-reuse]]
-- [[net-setup-rtt-budget]]
+1. [[net-setup-diagnosis]]
+2. [[net-setup-reuse]]
+3. [[net-setup-rtt-budget]]
 %% trellis:end %%
 
 ## Notes

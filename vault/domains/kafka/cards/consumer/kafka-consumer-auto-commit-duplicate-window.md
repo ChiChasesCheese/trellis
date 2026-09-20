@@ -2,6 +2,7 @@
 id: kafka-consumer-auto-commit-duplicate-window
 node: consumer.offset-commit
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

@@ -11,11 +11,11 @@
 - [[oa-q12-platform-balance-radar-rules|Drill: a platform balance ledger behind a hand-written Radar rule language]]
 
 ## Cards (5)
-- [[cc-input-struct-json-lines]]
-- [[cc-input-struct-keep-unknown-keys]]
-- [[cc-input-struct-missing-key-policy]]
-- [[cc-input-struct-query-string]]
-- [[cc-input-struct-repeated-keys]]
+1. [[cc-input-struct-json-lines]]
+2. [[cc-input-struct-keep-unknown-keys]]
+3. [[cc-input-struct-missing-key-policy]]
+4. [[cc-input-struct-query-string]]
+5. [[cc-input-struct-repeated-keys]]
 %% trellis:end %%
 
 ## Notes

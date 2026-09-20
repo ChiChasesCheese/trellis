@@ -8,11 +8,11 @@ What interviewers grade — extensibility, readability, testability, and verifyi
 - [[hellointerview-lld|Hello Interview: Low-Level Design Guide]]
 
 ## Cards (5)
-- [[method-extension-live-change]]
-- [[method-extension-probe]]
-- [[method-rubric-dimensions]]
-- [[method-self-verification]]
-- [[method-testability-signals]]
+1. [[method-extension-live-change]]
+2. [[method-extension-probe]]
+3. [[method-rubric-dimensions]]
+4. [[method-self-verification]]
+5. [[method-testability-signals]]
 %% trellis:end %%
 
 ## Notes

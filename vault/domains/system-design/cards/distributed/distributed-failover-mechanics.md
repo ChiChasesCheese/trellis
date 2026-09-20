@@ -2,6 +2,7 @@
 id: distributed-failover-mechanics
 node: distributed.replication.leader
 type: qa
+step: 6
 ---
 ## Q
 Walk through automatic leader failover in leader-follower replication, and name the three classic hazards.

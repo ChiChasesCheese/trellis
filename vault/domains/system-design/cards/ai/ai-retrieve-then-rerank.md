@@ -2,6 +2,7 @@
 id: ai-retrieve-then-rerank
 node: ai.rag
 type: qa
+step: 3
 ---
 ## Q
 Why do production RAG systems use two stages — a fast retriever pulling top-100 and then a reranker cutting to top-5 — instead of one better retriever?

@@ -2,6 +2,7 @@
 id: async-eos-boundary-choice
 node: async.delivery.exactly-once
 type: qa
+step: 4
 ---
 ## Q
 Broker transactions or a transactional outbox? State the rule for choosing, and one place people wrongly assume broker EOS extends.

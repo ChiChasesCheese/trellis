@@ -14,15 +14,15 @@ Double-entry design, immutability, balance derivation, and reconciliation as the
 - [[design-payment-ledger|Drill: Design a payment ledger service]]
 
 ## Cards (9)
-- [[correctness-balance-derivation]]
-- [[correctness-double-entry-invariant]]
-- [[correctness-ledger-clearing-metric]]
-- [[correctness-ledger-cutoff-settlement]]
-- [[correctness-ledger-hot-accounts]]
-- [[correctness-ledger-immutability]]
-- [[correctness-ledger-multi-currency]]
-- [[correctness-ledger-three-way-recon]]
-- [[correctness-reconciliation]]
+1. [[correctness-double-entry-invariant]]
+2. [[correctness-ledger-immutability]]
+3. [[correctness-balance-derivation]]
+4. [[correctness-ledger-hot-accounts]]
+5. [[correctness-ledger-multi-currency]]
+6. [[correctness-ledger-cutoff-settlement]]
+7. [[correctness-reconciliation]]
+8. [[correctness-ledger-three-way-recon]]
+9. [[correctness-ledger-clearing-metric]]
 %% trellis:end %%
 
 ## Notes

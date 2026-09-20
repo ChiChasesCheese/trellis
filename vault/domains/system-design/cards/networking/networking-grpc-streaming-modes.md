@@ -2,6 +2,7 @@
 id: networking-grpc-streaming-modes
 node: networking.api-styles
 type: qa
+step: 4
 ---
 ## Q
 gRPC's four call types — match each to its use, and name the operational caveat long-lived streams create.

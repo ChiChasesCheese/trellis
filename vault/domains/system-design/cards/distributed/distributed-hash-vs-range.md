@@ -2,6 +2,7 @@
 id: distributed-hash-vs-range
 node: distributed.partitioning.schemes
 type: qa
+step: 1
 ---
 ## Q
 Hash partitioning vs range partitioning: what does each optimize, and what workload wrecks each?

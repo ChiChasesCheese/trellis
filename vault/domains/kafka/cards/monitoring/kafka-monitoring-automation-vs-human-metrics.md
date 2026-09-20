@@ -2,6 +2,7 @@
 id: kafka-monitoring-automation-vs-human-metrics
 node: monitoring.metrics-and-slo
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

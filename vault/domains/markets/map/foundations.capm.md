@@ -4,6 +4,8 @@
 
 CAPM and the security market line with beta as the first factor, plus the volatility/Sharpe/drawdown/skew vocabulary every premium gets quoted in.
 
+**Core** — part of the first pass through this subject.
+
 **Unlocks:** [[domains/markets/map/defensive.low-risk|Low Risk & Betting Against Beta]]
 
 ## Readings

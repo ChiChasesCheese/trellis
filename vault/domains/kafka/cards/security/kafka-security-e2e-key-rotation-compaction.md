@@ -2,6 +2,7 @@
 id: kafka-security-e2e-key-rotation-compaction
 node: security.protocols-auth-encryption
 type: qa
+step: 7
 source: kafka-2e
 ---
 ## Q

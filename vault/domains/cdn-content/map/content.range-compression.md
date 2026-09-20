@@ -10,9 +10,9 @@ Byte ranges, 206 and Content-Range, resumable delivery, gzip and Brotli, precomp
 - [[content-http-representations|RFC 9110: HTTP Semantics]]
 
 ## Cards (3)
-- [[content-compression-choice]]
-- [[content-range-compressed-bytes]]
-- [[content-range-conditional]]
+1. [[content-compression-choice]]
+2. [[content-range-compressed-bytes]]
+3. [[content-range-conditional]]
 %% trellis:end %%
 
 ## Notes

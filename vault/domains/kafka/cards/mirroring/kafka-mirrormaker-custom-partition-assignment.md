@@ -2,6 +2,7 @@
 id: kafka-mirrormaker-custom-partition-assignment
 node: mirroring.mirrormaker
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

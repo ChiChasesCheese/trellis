@@ -2,6 +2,7 @@
 id: kafka-reliability-retryable-vs-nonretryable-errors
 node: reliability.producer-reliable
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

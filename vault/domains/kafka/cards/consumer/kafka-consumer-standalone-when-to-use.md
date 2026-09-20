@@ -2,6 +2,7 @@
 id: kafka-consumer-standalone-when-to-use
 node: consumer.standalone
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

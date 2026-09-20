@@ -8,8 +8,8 @@ Watching your own game with a question, counting decisions rather than outcomes,
 - [[film-study-count-decisions|Drill: Film study of your own game, counting decisions]]
 
 ## Cards (2)
-- [[bb-decisions-not-outcomes]]
-- [[bb-film-study-one-question]]
+1. [[bb-decisions-not-outcomes]]
+2. [[bb-film-study-one-question]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: foundations-performance-vs-scalability
 node: foundations.tradeoffs
 type: qa
+step: 2
 ---
 ## Q
 "The service is slow" — how do you tell a performance problem from a scalability problem, and why does the distinction matter?

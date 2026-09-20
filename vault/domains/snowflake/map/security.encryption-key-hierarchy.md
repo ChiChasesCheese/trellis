@@ -7,11 +7,11 @@
 **Requires:** [[domains/snowflake/map/architecture.cloud-services-layer|云服务（Cloud Services，GS）层]]
 
 ## Cards (5)
-- [[enc-hierarchical-key-model]]
-- [[enc-rotation-vs-rekeying]]
-- [[enc-transparent-end-to-end]]
-- [[enc-tri-secret-secure]]
-- [[enc-why-hierarchy-limits-blast-radius]]
+1. [[enc-hierarchical-key-model]]
+2. [[enc-rotation-vs-rekeying]]
+3. [[enc-transparent-end-to-end]]
+4. [[enc-tri-secret-secure]]
+5. [[enc-why-hierarchy-limits-blast-radius]]
 %% trellis:end %%
 
 ## Notes

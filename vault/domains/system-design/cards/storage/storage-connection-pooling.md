@@ -2,6 +2,7 @@
 id: storage-connection-pooling
 node: storage.relational.operations
 type: qa
+step: 2
 ---
 ## Q
 Why does a fleet of 200 app instances talking straight to Postgres fall over even at modest QPS, and what is the standard fix?

@@ -5,10 +5,10 @@
 Server sessions vs JWTs, access/refresh pairs, rotation and reuse detection, sender-constrained tokens.
 
 ## Cards (4)
-- [[security-access-refresh-tokens]]
-- [[security-refresh-rotation-reuse]]
-- [[security-sender-constrained-tokens]]
-- [[security-sessions-vs-jwt]]
+1. [[security-sessions-vs-jwt]]
+2. [[security-access-refresh-tokens]]
+3. [[security-refresh-rotation-reuse]]
+4. [[security-sender-constrained-tokens]]
 %% trellis:end %%
 
 ## Notes

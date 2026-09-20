@@ -3,11 +3,6 @@
 *图的遍历、连通性与拓扑排序（graph traversal / topological sort）*
 
 每个节点至多有一条出边且需要找环时，识别为 基环树/函数图。
-
-## Cards (3)
-- [[leetcode-c-endlesscheng-wr1mjp-functional-graph-cycle-and-lca-invariant]]
-- [[leetcode-c-endlesscheng-wr1mjp-functional-graph-cycle-and-lca-recognition]]
-- [[leetcode-c-endlesscheng-wr1mjp-functional-graph-cycle-and-lca-template]]
 %% trellis:end %%
 
 ## Notes

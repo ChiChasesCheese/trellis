@@ -2,6 +2,7 @@
 id: kafka-reliability-monitor-producer-error-retry
 node: reliability.validation
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

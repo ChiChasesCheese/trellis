@@ -2,6 +2,7 @@
 id: kafka-consumer-assign-vs-subscribe-exclusive
 node: consumer.standalone
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

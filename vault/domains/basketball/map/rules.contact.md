@@ -8,8 +8,8 @@ Cylinder, verticality, the restricted area and charge/block, and freedom-of-move
 - [[bb-nba-rulebook|RULE NO. 10: Violations and Penalties | NBA Official]]
 
 ## Cards (2)
-- [[bb-restricted-area-charge-block]]
-- [[bb-verticality-and-cylinder]]
+1. [[bb-restricted-area-charge-block]]
+2. [[bb-verticality-and-cylinder]]
 %% trellis:end %%
 
 ## Notes

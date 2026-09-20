@@ -2,6 +2,7 @@
 id: correctness-idempotency-partial-failure
 node: correctness.idempotency
 type: qa
+step: 5
 ---
 ## Q
 A payment handler claims its idempotency key, calls the card processor, then crashes before recording the result. The key is stuck "in-progress". What must recovery do?

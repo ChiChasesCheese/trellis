@@ -2,6 +2,7 @@
 id: async-log-throughput-design
 node: async.log
 type: qa
+step: 2
 ---
 ## Q
 A single Kafka broker on spinning disks can move hundreds of MB/s — and a consumer replaying three days of backlog barely disturbs live traffic. Which design choices make the log this fast on cheap hardware?

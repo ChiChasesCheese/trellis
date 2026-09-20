@@ -10,9 +10,9 @@ Type narrowing, async failure, readable and writable streams, pipeline, highWate
 - [[runtime-node-streams|Node.js Streams API]]
 
 ## Cards (3)
-- [[runtime-node-streams-pipeline-errors]]
-- [[runtime-node-streams-respect-backpressure]]
-- [[runtime-node-streams-type-boundary]]
+1. [[runtime-node-streams-pipeline-errors]]
+2. [[runtime-node-streams-respect-backpressure]]
+3. [[runtime-node-streams-type-boundary]]
 %% trellis:end %%
 
 ## Notes

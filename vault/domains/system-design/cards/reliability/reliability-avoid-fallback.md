@@ -2,6 +2,7 @@
 id: reliability-avoid-fallback
 node: reliability.resilience.containment
 type: qa
+step: 5
 ---
 ## Q
 Why do fallback paths ("if the primary fails, switch to the backup logic") tend to fail exactly when they are needed, and what do teams like Amazon's do instead of writing them?

@@ -10,11 +10,11 @@
 - [[snowflak-result-cache|结果缓存(Result Cache)命中与失效条件]]
 
 ## Cards (5)
-- [[result-cache-invalidation-config-options]]
-- [[result-cache-invalidation-cross-session]]
-- [[result-cache-invalidation-reclustering]]
-- [[result-cache-invalidation-show-query-role-match]]
-- [[result-cache-invalidation-use-cached-result-param]]
+1. [[result-cache-invalidation-config-options]]
+2. [[result-cache-invalidation-cross-session]]
+3. [[result-cache-invalidation-reclustering]]
+4. [[result-cache-invalidation-show-query-role-match]]
+5. [[result-cache-invalidation-use-cached-result-param]]
 %% trellis:end %%
 
 ## Notes

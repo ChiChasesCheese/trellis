@@ -15,9 +15,9 @@ Baselines, control groups, stop conditions, automatic and manual rollback, roll-
 - [[roll-out-cache-key-change|Drill: Roll out a cache-key change]]
 
 ## Cards (3)
-- [[delivery-rollback-forward-or-back]]
-- [[delivery-rollback-prove-recovery]]
-- [[delivery-rollback-state]]
+1. [[delivery-rollback-forward-or-back]]
+2. [[delivery-rollback-prove-recovery]]
+3. [[delivery-rollback-state]]
 %% trellis:end %%
 
 ## Notes

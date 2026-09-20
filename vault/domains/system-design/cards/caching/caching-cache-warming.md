@@ -2,6 +2,7 @@
 id: caching-cache-warming
 node: caching.strategies
 type: qa
+step: 5
 ---
 ## Q
 A new cache cluster (or one recovering from a flush) goes live cold. What happens at cutover, and what are three warming techniques?

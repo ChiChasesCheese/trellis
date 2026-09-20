@@ -2,6 +2,7 @@
 id: kafka-reliability-manual-error-handling-categories
 node: reliability.producer-reliable
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

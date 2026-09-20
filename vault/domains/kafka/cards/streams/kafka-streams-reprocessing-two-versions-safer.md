@@ -2,6 +2,7 @@
 id: kafka-streams-reprocessing-two-versions-safer
 node: streams.design-patterns
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

@@ -14,12 +14,12 @@ Treating caches, indexes, and views as recomputable projections of a log — and
 - [[qs-write-model-is-a-log-read-model-is-a-projection|Write model as immutable log, read model as projection]] — `quant-stroller`
 
 ## Cards (6)
-- [[analytics-backfill-cdc]]
-- [[analytics-cache-as-derived]]
-- [[analytics-derived-data-framing]]
-- [[analytics-derived-view-versioning]]
-- [[analytics-lambda-vs-kappa]]
-- [[analytics-materialized-view-maintenance]]
+1. [[analytics-derived-data-framing]]
+2. [[analytics-cache-as-derived]]
+3. [[analytics-materialized-view-maintenance]]
+4. [[analytics-backfill-cdc]]
+5. [[analytics-lambda-vs-kappa]]
+6. [[analytics-derived-view-versioning]]
 %% trellis:end %%
 
 ## Notes

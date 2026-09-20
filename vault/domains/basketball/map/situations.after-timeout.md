@@ -8,8 +8,8 @@ Why ATO plays score at a higher rate, the counter to the obvious first option, a
 - [[bb-late-game-special-situations|Fran Fraschilla's Late Game Plays and Special Situations]]
 
 ## Cards (2)
-- [[bb-situations-ato-counter-and-switch]]
-- [[bb-situations-why-atos-score]]
+1. [[bb-situations-ato-counter-and-switch]]
+2. [[bb-situations-why-atos-score]]
 %% trellis:end %%
 
 ## Notes

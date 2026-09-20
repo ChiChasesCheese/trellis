@@ -2,6 +2,7 @@
 id: kafka-internals-network-io-thread-pipeline
 node: internals.request-handling
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

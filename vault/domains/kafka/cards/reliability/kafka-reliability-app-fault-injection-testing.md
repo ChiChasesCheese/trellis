@@ -2,6 +2,7 @@
 id: kafka-reliability-app-fault-injection-testing
 node: reliability.validation
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

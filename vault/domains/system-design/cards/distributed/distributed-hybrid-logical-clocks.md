@@ -2,6 +2,7 @@
 id: distributed-hybrid-logical-clocks
 node: distributed.time.clocks
 type: qa
+step: 6
 ---
 ## Q
 Lamport timestamps respect causality but bear no relation to wall time; wall clocks read like real time but can order a cause after its effect. What do hybrid logical clocks (HLC) do to get both, and where are they used?

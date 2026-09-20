@@ -2,6 +2,7 @@
 id: kafka-core-offset-vs-key
 node: core.offsets
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

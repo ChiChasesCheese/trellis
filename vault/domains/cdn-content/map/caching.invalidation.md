@@ -4,6 +4,8 @@
 
 TTL expiry, versioned keys, tag and path purge, soft purge, propagation, and defining consistency during invalidation.
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/cdn-content/map/caching.validators|Validators & Revalidation]], [[domains/cdn-content/map/caching.hierarchy|Multi-Tier Cache Hierarchy]]
 
 **Unlocks:** [[domains/cdn-content/map/content.versioning|Deployment, Versioning & Rollback]]
@@ -15,9 +17,9 @@ TTL expiry, versioned keys, tag and path purge, soft purge, propagation, and def
 - [[design-isr-serving|Drill: Design global ISR serving]]
 
 ## Cards (3)
-- [[cache-invalidation-consistency]]
-- [[cache-invalidation-purge-scope]]
-- [[cache-invalidation-versioned]]
+1. [[cache-invalidation-consistency]]
+2. [[cache-invalidation-purge-scope]]
+3. [[cache-invalidation-versioned]]
 %% trellis:end %%
 
 ## Notes

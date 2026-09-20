@@ -10,11 +10,11 @@
 - [[snowflak-streams|流对象(Stream)的偏移量、类型与消费语义]]
 
 ## Cards (5)
-- [[stream-advance-without-consuming]]
-- [[stream-crash-before-commit-retries-same]]
-- [[stream-explicit-txn-repeatable-read]]
-- [[stream-read-committed-vs-repeatable-read]]
-- [[stream-select-does-not-advance]]
+1. [[stream-advance-without-consuming]]
+2. [[stream-crash-before-commit-retries-same]]
+3. [[stream-explicit-txn-repeatable-read]]
+4. [[stream-read-committed-vs-repeatable-read]]
+5. [[stream-select-does-not-advance]]
 %% trellis:end %%
 
 ## Notes

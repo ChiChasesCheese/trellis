@@ -10,9 +10,9 @@ Rate and concurrency limits, bot and tenant quotas, amplification, decompression
 - [[security-vercel-firewall|Vercel Firewall]]
 
 ## Cards (3)
-- [[security-abuse-image-bomb]]
-- [[security-abuse-key-amplification]]
-- [[security-abuse-layered-limits]]
+1. [[security-abuse-image-bomb]]
+2. [[security-abuse-key-amplification]]
+3. [[security-abuse-layered-limits]]
 %% trellis:end %%
 
 ## Notes

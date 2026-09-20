@@ -8,12 +8,12 @@
 - [[kafka-6-5-physical-storage|物理存储：分层存储、分区分配、索引与压实]]
 
 ## Cards (6)
-- [[kafka-internals-active-segment-retention]]
-- [[kafka-internals-log-segment-basics]]
-- [[kafka-internals-open-file-handles]]
-- [[kafka-internals-partition-allocation-goals]]
-- [[kafka-internals-partition-allocation-roundrobin]]
-- [[kafka-internals-partition-disk-assignment]]
+1. [[kafka-internals-partition-allocation-goals]]
+2. [[kafka-internals-partition-allocation-roundrobin]]
+3. [[kafka-internals-partition-disk-assignment]]
+4. [[kafka-internals-log-segment-basics]]
+5. [[kafka-internals-active-segment-retention]]
+6. [[kafka-internals-open-file-handles]]
 %% trellis:end %%
 
 ## Notes

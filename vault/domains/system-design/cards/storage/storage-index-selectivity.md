@@ -2,6 +2,7 @@
 id: storage-index-selectivity
 node: storage.relational.indexing
 type: qa
+step: 5
 ---
 ## Q
 There is a B-tree index on the column, but `EXPLAIN` shows a sequential scan. Give the two distinct reasons a planner *chooses* not to use it, and the one that means it *cannot*.

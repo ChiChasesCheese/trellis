@@ -2,6 +2,7 @@
 id: distributed-linearizability-when-needed
 node: distributed.consistency
 type: qa
+step: 7
 ---
 ## Q
 Which concrete features genuinely require linearizability (not just causal or session guarantees), and why?

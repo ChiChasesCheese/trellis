@@ -2,6 +2,7 @@
 id: architecture-cold-starts
 node: architecture.serverless
 type: qa
+step: 3
 ---
 ## Q
 What actually happens during a FaaS cold start, roughly how expensive is it, and what are the mitigations?

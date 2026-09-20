@@ -2,6 +2,7 @@
 id: kafka-admin-delete-offset-vs-reset-offset
 node: admin.consumer-group-ops
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

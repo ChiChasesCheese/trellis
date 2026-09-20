@@ -8,8 +8,8 @@ The common set shapes and the actions they hide; how a set manufactures the two-
 - [[bb-spain-pick-and-roll|The Basics of Spain Pick & Roll | Ball Screen Offense]]
 
 ## Cards (2)
-- [[bb-set-vs-offense-distinction]]
-- [[bb-spain-pnr-mechanism]]
+1. [[bb-set-vs-offense-distinction]]
+2. [[bb-spain-pnr-mechanism]]
 %% trellis:end %%
 
 ## Notes

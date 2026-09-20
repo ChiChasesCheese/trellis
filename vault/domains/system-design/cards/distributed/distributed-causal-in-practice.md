@@ -2,6 +2,7 @@
 id: distributed-causal-in-practice
 node: distributed.consistency
 type: qa
+step: 3
 ---
 ## Q
 Causal consistency is theoretically the sweet spot — the strongest model that stays available under partition — yet almost no mainstream database offers it as a mode. Why not, and what do production systems use to get "causal enough" behavior?

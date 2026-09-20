@@ -2,6 +2,7 @@
 id: kafka-practice-strimzi-operator-not-managed-service
 node: practice.kubernetes-strimzi
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: kafka-practice-go-two-client-options
 node: practice.other-clients
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

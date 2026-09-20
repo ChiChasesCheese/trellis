@@ -2,6 +2,7 @@
 id: storage-btree-clustered-vs-heap
 node: storage.internals.btree
 type: qa
+step: 2
 ---
 ## Q
 InnoDB stores the full row inside the primary-key B-tree's leaf pages (clustered); Postgres leaves rows in a heap file and every index points into it. What does each layout win and lose on the read and write paths?

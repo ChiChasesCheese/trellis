@@ -2,6 +2,7 @@
 id: networking-sse-mechanics
 node: networking.realtime
 type: qa
+step: 3
 ---
 ## Q
 Two built-in SSE features that you'd otherwise hand-build on raw WebSockets?

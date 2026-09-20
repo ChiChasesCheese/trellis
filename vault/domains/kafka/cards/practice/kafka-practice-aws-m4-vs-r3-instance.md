@@ -2,6 +2,7 @@
 id: kafka-practice-aws-m4-vs-r3-instance
 node: practice.cloud-deployment
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

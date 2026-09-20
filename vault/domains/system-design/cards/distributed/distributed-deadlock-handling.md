@@ -2,6 +2,7 @@
 id: distributed-deadlock-handling
 node: distributed.transactions.concurrency-control
 type: qa
+step: 6
 ---
 ## Q
 Under 2PL, what makes the deadlock rate explode, how do engines resolve deadlocks, and what do you change in the application?

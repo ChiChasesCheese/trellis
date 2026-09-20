@@ -1,0 +1,5 @@
+{
+  "infra.containers": ["infra-containers-vs-vms", "infra-k8s-primitives", "infra-requests-limits-noisy-neighbor", "infra-k8s-overkill"],
+  "infra.mesh": ["infra-mesh-sidecar-intercept", "infra-mesh-vs-code", "infra-mesh-tax-ambient", "infra-mesh-when-not"],
+  "infra.delivery": ["infra-pipeline-quality-gates", "infra-canary-automation", "infra-flags-deploy-release", "infra-rollback-safety", "infra-schema-migration-deploys", "infra-two-phase-format-rollout"]
+}

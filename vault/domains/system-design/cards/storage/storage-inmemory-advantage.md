@@ -2,6 +2,7 @@
 id: storage-inmemory-advantage
 node: storage.internals.tradeoffs
 type: qa
+step: 5
 ---
 ## Q
 A disk database with its working set fully in OS page cache still loses to Redis. If not disk reads, what is the in-memory store's real advantage — and how does it get durability anyway?

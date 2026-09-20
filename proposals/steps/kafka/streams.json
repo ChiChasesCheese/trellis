@@ -1,0 +1,42 @@
+{
+  "streams.concepts": [
+    "kafka-streams-time-semantics-choice",
+    "kafka-streams-local-vs-external-state",
+    "kafka-streams-stream-table-duality",
+    "kafka-streams-tumbling-hopping-session-window",
+    "kafka-streams-window-grace-period",
+    "kafka-streams-exactly-once-config"
+  ],
+  "streams.design-patterns": [
+    "kafka-streams-local-state-recovery-changelog",
+    "kafka-streams-multistage-repartition",
+    "kafka-streams-external-lookup-vs-table-join",
+    "kafka-streams-table-join-vs-stream-join-windowing",
+    "kafka-streams-out-of-order-late-result-overwrite",
+    "kafka-streams-reprocessing-two-versions-safer"
+  ],
+  "streams.streams-api": [
+    "kafka-streams-application-id-role",
+    "kafka-streams-cluster-no-external-scheduler",
+    "kafka-streams-dsl-vs-processor-api",
+    "kafka-streams-groupbykey-noop-when-key-unchanged",
+    "kafka-streams-leftjoin-stream-table-vs-stream-stream",
+    "kafka-streams-joinwindows-asymmetric-before"
+  ],
+  "streams.streams-architecture": [
+    "kafka-streams-topology-optimization-flag",
+    "kafka-streams-testcontainers-vs-embedded-cluster",
+    "kafka-streams-topologytestdriver-limitation",
+    "kafka-streams-join-requires-copartition",
+    "kafka-streams-repartition-splits-subtopology",
+    "kafka-streams-standby-replica-and-compaction-speedup"
+  ],
+  "streams.choosing-framework": [
+    "kafka-streams-ingestion-connect-vs-streamproc",
+    "kafka-streams-low-latency-event-vs-microbatch",
+    "kafka-streams-async-microservice-requirements",
+    "kafka-streams-complex-analytics-requires-local-storage",
+    "kafka-streams-samza-spark-flink-beam",
+    "kafka-streams-selection-criteria-beyond-usecase"
+  ]
+}

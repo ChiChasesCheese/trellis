@@ -2,6 +2,7 @@
 id: kafka-internals-tiered-storage-decouple-storage-compute
 node: internals.tiered-storage
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

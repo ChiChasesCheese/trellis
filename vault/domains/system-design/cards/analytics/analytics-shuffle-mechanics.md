@@ -2,6 +2,7 @@
 id: analytics-shuffle-mechanics
 node: analytics.batch
 type: qa
+step: 5
 ---
 ## Q
 Walk through what a shuffle actually does in Spark/MapReduce, and why it's the step that dominates job cost.

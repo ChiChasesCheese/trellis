@@ -2,6 +2,7 @@
 id: foundations-p999-cost
 node: foundations.numbers
 type: qa
+step: 5
 ---
 ## Q
 Why does each further latency nine (p99 → p999) cost disproportionately more to fix — and when is p999 still worth paying for?

@@ -2,6 +2,7 @@
 id: kafka-admin-describeconfigs-isdefault
 node: admin.dynamic-config
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

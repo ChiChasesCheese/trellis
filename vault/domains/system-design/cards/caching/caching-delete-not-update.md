@@ -2,6 +2,7 @@
 id: caching-delete-not-update
 node: caching.invalidation
 type: qa
+step: 1
 ---
 ## Q
 On a DB write, why is *deleting* the cache key generally safer than *updating* it with the new value?

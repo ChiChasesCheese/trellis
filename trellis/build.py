@@ -20,6 +20,7 @@ import markdown
 from .cards import Card
 from .links import go_deeper
 from .readings import Reading
+from .sequence import CORE_FIRST, CORE_TAG, core_leaves, sequence
 from .skeleton import Skeleton
 from .traces import ID_TAG_PREFIX
 
@@ -137,6 +138,7 @@ def build_package(
     clippings: dict | None = None,
     cases: list | None = None,
     lang: str = "",
+    order: str = CORE_FIRST,
 ) -> dict:
     """Write the .apkg. Returns {'notes': int, 'decks': int, 'path': str}."""
     readings = readings or []
@@ -149,15 +151,19 @@ def build_package(
             decks[name] = genanki.Deck(_stable_id(f"trellis:deck:{name}"), name)
         return decks[name]
 
-    study_order = {n.id: i for i, n in enumerate(skeleton.walk())}
     note_count = 0
-    # An adopted card mirrors a note another tool owns; building it would
-    # put a second copy in the collection.
-    own = [c for c in cards if not c.adopted]
-    for card in sorted(own, key=lambda c: (study_order[c.node], c.path.name)):
+    core = core_leaves(skeleton)
+    # The Sequence leaves out adopted cards — building one would put a second
+    # copy of a note another tool owns into the collection. A card's place in
+    # it is its new-card position: what a first import studies in. A
+    # collection that already has the card keeps its old position through an
+    # import, which is why `anki-push` sets it again afterwards (ADR 0010).
+    for position, card in enumerate(sequence(skeleton, cards, order), start=1):
         node = skeleton.by_id[card.node]
         crumb = " › ".join(n.title for n in node.path())
         tags = [skeleton.domain + "::" + card.node.replace(".", "::")] + card.tags
+        if card.node in core:
+            tags.append(CORE_TAG)
         if card.source:
             tags.append(f"src::{card.source}")
         # The note GUID is a hash of the card id and cannot be reversed,
@@ -173,6 +179,7 @@ def build_package(
                 fields=[_html(question), _html(answer) + footer, crumb],
                 guid=genanki.guid_for(f"trellis:{card.id}"),
                 tags=tags,
+                due=position,
             )
         else:
             note = genanki.Note(
@@ -180,6 +187,7 @@ def build_package(
                 fields=[_html(question) + footer, crumb],
                 guid=genanki.guid_for(f"trellis:{card.id}"),
                 tags=tags,
+                due=position,
             )
         deck_for(card.node).add_note(note)
         note_count += 1

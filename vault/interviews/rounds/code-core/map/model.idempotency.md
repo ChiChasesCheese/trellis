@@ -17,12 +17,12 @@ Repeated ids, replayed events and double frees — recognizing the second occurr
 - [[oa-q27-payment-ledger|Drill: a payment ledger with three-state idempotency and partial refunds]]
 
 ## Cards (6)
-- [[cc-model-idem-dedupe-key-choice]]
-- [[cc-model-idem-double-free]]
-- [[cc-model-idem-replay-no-second-row]]
-- [[cc-model-idem-reused-id-after-close]]
-- [[cc-model-idem-same-key-different-payload]]
-- [[cc-model-idem-second-occurrence-noop]]
+1. [[cc-model-idem-dedupe-key-choice]]
+2. [[cc-model-idem-double-free]]
+3. [[cc-model-idem-replay-no-second-row]]
+4. [[cc-model-idem-reused-id-after-close]]
+5. [[cc-model-idem-same-key-different-payload]]
+6. [[cc-model-idem-second-occurrence-noop]]
 %% trellis:end %%
 
 ## Notes

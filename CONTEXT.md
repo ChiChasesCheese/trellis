@@ -74,6 +74,33 @@ A generated note mirroring one node, listing its prerequisites, children, cards,
 readings, and drills. Everything outside its managed block is the reader's own.
 _Avoid_: index note, MOC, hub
 
+**Sequence**:
+The one order in which a domain's new cards are first met: the Core, then the
+rest, each pass in the skeleton's order, and inside a leaf by Step. Computed
+from the vault, written into the package as each card's position, and
+converged onto a collection that already has the cards (ADR 0010).
+_Avoid_: priority, ranking, queue, schedule, study order (the skeleton has one too)
+
+**Core**:
+The leaves a learner short of time studies first: those declared `core: true`
+— on a leaf, or on a branch for its subtree — and everything they require.
+Bearing stands in only where nothing is declared. Core cards carry the
+`trellis::core` tag in Anki.
+_Avoid_: essentials, must-know, the 20%, priority topics, high-yield
+
+**Step**:
+A card's place among the cards of its leaf, `step: 1` being met first. A
+teaching judgement, so it is asked of a Runner and checked, never computed.
+Cards without a Step follow those with one; grown cards come last.
+_Avoid_: order (a top-level node has one), index, rank, position (that is Anki's word)
+
+**Pace**:
+How a domain's day is split in Anki, set under `study:` in its skeleton:
+whether new cards come before, among, or after reviews, and how many of each
+a day. Half and half is equal limits, mixed. Applied to a preset of the
+domain's own; a key left out is never written.
+_Avoid_: ratio, schedule, regimen, settings, limits (as the name of the whole)
+
 **Feed**:
 A deck built to be reviewed rather than authored: one stream across every
 Domain, ordered so that consecutive cards come from different subjects. The

@@ -10,10 +10,10 @@
 - [[snowflak-micropartitions-clustering|微分区与数据聚簇的物理基础]]
 
 ## Cards (4)
-- [[optimizer-stats-contents]]
-- [[optimizer-stats-never-stale-after-dml]]
-- [[optimizer-stats-no-analyze-command]]
-- [[optimizer-stats-plan-without-reading-data]]
+1. [[optimizer-stats-contents]]
+2. [[optimizer-stats-never-stale-after-dml]]
+3. [[optimizer-stats-no-analyze-command]]
+4. [[optimizer-stats-plan-without-reading-data]]
 %% trellis:end %%
 
 ## Notes

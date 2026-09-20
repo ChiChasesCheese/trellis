@@ -2,6 +2,7 @@
 id: correctness-outbox-cleanup
 node: correctness.outbox
 type: qa
+step: 6
 ---
 ## Q
 An outbox table in Postgres receives every event the system emits. What operational problem builds up, and how do you clean it without breaking the pattern?

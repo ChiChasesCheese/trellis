@@ -12,11 +12,11 @@ Reproducing the worked example verbatim first, two or three own cases per part, 
 - [[tiered-billing-exact-output|Drill: tiered billing with an exact-output contract]]
 
 ## Cards (5)
-- [[cc-verification-tests-can-it-fail]]
-- [[cc-verification-tests-table-driven]]
-- [[cc-verification-tests-two-or-three-per-part]]
-- [[cc-verification-tests-unit-plus-one-io]]
-- [[cc-verification-tests-worked-example-first]]
+1. [[cc-verification-tests-can-it-fail]]
+2. [[cc-verification-tests-table-driven]]
+3. [[cc-verification-tests-two-or-three-per-part]]
+4. [[cc-verification-tests-unit-plus-one-io]]
+5. [[cc-verification-tests-worked-example-first]]
 %% trellis:end %%
 
 ## Notes

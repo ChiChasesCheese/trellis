@@ -2,6 +2,7 @@
 id: architecture-api-versioning-strategies
 node: architecture.discovery
 type: qa
+step: 3
 ---
 ## Q
 URI versioning (/v2/) vs header versioning vs "no versions, additive-only": when is each the right API evolution strategy?

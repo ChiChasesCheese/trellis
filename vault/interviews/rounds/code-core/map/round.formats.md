@@ -5,11 +5,11 @@
 Timed OA, phone screen, machine coding, take-home — what the grader can and cannot see in each, and how that changes what you optimize.
 
 ## Cards (5)
-- [[cc-round-formats-hidden-vs-human]]
-- [[cc-round-formats-machine-coding]]
-- [[cc-round-formats-multipart-unlock]]
-- [[cc-round-formats-proctored-ide]]
-- [[cc-round-formats-take-home]]
+1. [[cc-round-formats-hidden-vs-human]]
+2. [[cc-round-formats-machine-coding]]
+3. [[cc-round-formats-multipart-unlock]]
+4. [[cc-round-formats-proctored-ide]]
+5. [[cc-round-formats-take-home]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: kafka-core-multi-producer-unified-topic
 node: core.pubsub-why
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

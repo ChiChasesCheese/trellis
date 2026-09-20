@@ -2,6 +2,7 @@
 id: kafka-consumer-standalone-still-needs-group-id
 node: consumer.standalone
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

@@ -9,10 +9,10 @@ Extract method/class, replace conditional with polymorphism, introduce parameter
 - [[refactoring-guru-smells|Code Smells & Refactoring Catalog (refactoring.guru)]]
 
 ## Cards (4)
-- [[quality-extract-method-triggers]]
-- [[quality-guard-clauses]]
-- [[quality-parameter-object]]
-- [[quality-replace-conditional-polymorphism]]
+1. [[quality-extract-method-triggers]]
+2. [[quality-guard-clauses]]
+3. [[quality-parameter-object]]
+4. [[quality-replace-conditional-polymorphism]]
 %% trellis:end %%
 
 ## Notes

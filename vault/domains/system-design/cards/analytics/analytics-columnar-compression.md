@@ -2,6 +2,7 @@
 id: analytics-columnar-compression
 node: analytics.olap
 type: qa
+step: 2
 ---
 ## Q
 Name the two compression tricks that make columnar storage so effective, and why sorting the column first multiplies their effect.

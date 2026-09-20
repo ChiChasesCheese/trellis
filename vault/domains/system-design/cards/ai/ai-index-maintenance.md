@@ -2,6 +2,7 @@
 id: ai-index-maintenance
 node: ai.vector-search
 type: qa
+step: 4
 ---
 ## Q
 Your vector index takes constant upserts and deletes. Why does incremental maintenance degrade HNSW over time, and when do you pay for a full rebuild?

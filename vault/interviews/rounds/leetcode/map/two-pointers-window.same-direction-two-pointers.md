@@ -3,11 +3,6 @@
 *双指针与滑动窗口（two pointers / sliding window）*
 
 滑动窗口本质上是同向双指针的一种特例,右指针负责扩展、左指针负责收缩。
-
-## Cards (3)
-- [[leetcode-c-endlesscheng-0vinmk-same-direction-two-pointers-invariant]]
-- [[leetcode-c-endlesscheng-0vinmk-same-direction-two-pointers-recognition]]
-- [[leetcode-c-endlesscheng-0vinmk-same-direction-two-pointers-template]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: distributed-hot-key
 node: distributed.partitioning.skew
 type: qa
+step: 2
 ---
 ## Q
 A celebrity account makes one partition take 100x the traffic of the rest. Why doesn't adding shards help, and what does?

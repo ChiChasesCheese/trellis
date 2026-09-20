@@ -2,6 +2,7 @@
 id: caching-local-vs-remote
 node: caching.placement
 type: qa
+step: 3
 ---
 ## Q
 In-process (local) cache vs shared remote cache (Redis): what do you gain and lose with each, and what pattern combines them?

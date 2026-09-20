@@ -2,6 +2,7 @@
 id: analytics-materialized-view-maintenance
 node: analytics.derived
 type: qa
+step: 3
 ---
 ## Q
 A materialized view is stale the moment its base table changes. Compare the two maintenance strategies and when each wins.

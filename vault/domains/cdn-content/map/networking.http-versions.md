@@ -10,9 +10,9 @@ Keep-alive, pipelining limits, multiplexing, head-of-line blocking, QUIC, and wh
 - [[net-mdn-http-evolution|Evolution of HTTP (MDN)]]
 
 ## Cards (3)
-- [[net-version-connection-scope]]
-- [[net-version-hol]]
-- [[net-version-selection]]
+1. [[net-version-connection-scope]]
+2. [[net-version-hol]]
+3. [[net-version-selection]]
 %% trellis:end %%
 
 ## Notes

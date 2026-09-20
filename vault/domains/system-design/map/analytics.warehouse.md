@@ -13,11 +13,11 @@ Warehouse vs data lake vs lakehouse; open table formats (Iceberg/Delta) over obj
 - [[qs-embedded-warehouse-and-a-hand-rolled-commit-log|An embedded warehouse and a hand-rolled commit log]] — `quant-stroller`
 
 ## Cards (5)
-- [[analytics-lake-vs-warehouse-vs-lakehouse]]
-- [[analytics-lakehouse-compaction]]
-- [[analytics-lakehouse-snapshot-isolation]]
-- [[analytics-table-formats]]
-- [[analytics-time-travel-retention]]
+1. [[analytics-lake-vs-warehouse-vs-lakehouse]]
+2. [[analytics-table-formats]]
+3. [[analytics-lakehouse-snapshot-isolation]]
+4. [[analytics-lakehouse-compaction]]
+5. [[analytics-time-travel-retention]]
 %% trellis:end %%
 
 ## Notes

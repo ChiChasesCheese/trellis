@@ -2,6 +2,7 @@
 id: kafka-producer-three-send-modes
 node: producer.client-basics
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

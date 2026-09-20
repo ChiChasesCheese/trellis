@@ -2,6 +2,7 @@
 id: kafka-consumer-heartbeat-session-timeout-death-detection
 node: consumer.groups-rebalance
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

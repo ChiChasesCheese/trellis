@@ -2,6 +2,7 @@
 id: storage-avro-schema-resolution
 node: storage.encoding
 type: qa
+step: 5
 ---
 ## Q
 Avro encodes no field names *and* no tag numbers — just values in order. How can a reader with a different schema version decode it?

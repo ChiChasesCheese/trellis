@@ -11,9 +11,9 @@ Ball-you-man, the I-line, one pass away versus two, and seeing both your man and
 - [[closeout-rotation-shell|Drill: Closeout and second-rotation shell]]
 
 ## Cards (3)
-- [[bb-defense-ball-you-man-iline]]
-- [[bb-defense-passes-away-ladder]]
-- [[bb-defense-vision-jump-to-ball]]
+1. [[bb-defense-ball-you-man-iline]]
+2. [[bb-defense-passes-away-ladder]]
+3. [[bb-defense-vision-jump-to-ball]]
 %% trellis:end %%
 
 ## Notes

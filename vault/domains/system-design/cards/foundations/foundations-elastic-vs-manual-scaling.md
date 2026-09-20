@@ -2,6 +2,7 @@
 id: foundations-elastic-vs-manual-scaling
 node: foundations.tradeoffs
 type: qa
+step: 4
 ---
 ## Q
 Elastic (auto) scaling vs manually planned capacity — what does each buy, and when is manual the right answer?

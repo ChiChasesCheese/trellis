@@ -2,6 +2,7 @@
 id: kafka-reliability-idempotence-dedupes-retries
 node: reliability.producer-reliable
 type: qa
+step: 3
 source: kafka-2e
 ---
 ## Q

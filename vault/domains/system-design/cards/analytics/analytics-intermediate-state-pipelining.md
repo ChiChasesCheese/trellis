@@ -2,6 +2,7 @@
 id: analytics-intermediate-state-pipelining
 node: analytics.batch
 type: qa
+step: 4
 ---
 ## Q
 A classic MapReduce workflow chains five jobs, writing every intermediate result to the replicated distributed filesystem; Spark runs the same logic as one job several times faster. What exactly did dataflow engines change about intermediate state, and what new problem did that create?

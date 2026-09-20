@@ -8,10 +8,10 @@
 - [[kafka-9-4-connect-alternatives|Connect之外的数据集成选择]]
 
 ## Cards (4)
-- [[kafka-connect-alt-flume-logstash-vs-connect]]
-- [[kafka-connect-alt-gui-etl-tools-tradeoff]]
-- [[kafka-connect-alt-kafka-as-integration-platform]]
-- [[kafka-connect-alt-stream-framework-shortcut-risk]]
+1. [[kafka-connect-alt-kafka-as-integration-platform]]
+2. [[kafka-connect-alt-flume-logstash-vs-connect]]
+3. [[kafka-connect-alt-gui-etl-tools-tradeoff]]
+4. [[kafka-connect-alt-stream-framework-shortcut-risk]]
 %% trellis:end %%
 
 ## Notes

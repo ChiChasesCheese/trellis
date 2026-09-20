@@ -10,11 +10,11 @@
 - [[snowflak-transactions-isolation|事务、隐式提交与 READ COMMITTED 隔离级别]]
 
 ## Cards (5)
-- [[ddl-change-tracking-brief-lock]]
-- [[ddl-concurrent-with-insert-inconsistency]]
-- [[ddl-ctas-counts-as-ddl]]
-- [[ddl-inside-nested-procedure-error]]
-- [[ddl-own-transaction-implicit-commit]]
+1. [[ddl-change-tracking-brief-lock]]
+2. [[ddl-concurrent-with-insert-inconsistency]]
+3. [[ddl-ctas-counts-as-ddl]]
+4. [[ddl-inside-nested-procedure-error]]
+5. [[ddl-own-transaction-implicit-commit]]
 %% trellis:end %%
 
 ## Notes

@@ -2,6 +2,7 @@
 id: kafka-admin-unclean-leader-election-tradeoff
 node: admin.dynamic-config
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

@@ -2,6 +2,7 @@
 id: async-consumer-lag-monitoring
 node: async.log
 type: qa
+step: 5
 ---
 ## Q
 "Consumer lag" is the first metric on any Kafka dashboard. Define it precisely, explain what a steadily growing lag tells you, and give the response options in order.

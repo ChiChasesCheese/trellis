@@ -2,6 +2,7 @@
 id: storage-record-discriminator-column
 node: storage.record-modeling
 type: qa
+step: 1
 ---
 ## Q
 You store several kinds of similar records — say invoices, credit notes, and refunds. Option A: one table with a `kind` discriminator column. Option B: one table per kind. What does each option make easy and each make painful?

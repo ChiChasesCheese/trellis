@@ -2,6 +2,7 @@
 id: architecture-serverless-economics
 node: architecture.serverless
 type: qa
+step: 2
 ---
 ## Q
 When does per-request (FaaS) pricing beat owning servers, and when does it flip?

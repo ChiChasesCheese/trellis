@@ -2,6 +2,7 @@
 id: kafka-monitoring-slo-burn-rate-alerting
 node: monitoring.metrics-and-slo
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

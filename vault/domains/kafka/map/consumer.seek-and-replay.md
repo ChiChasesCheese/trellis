@@ -10,10 +10,10 @@
 - [[kafka-4-8-seek-and-replay|从特定偏移量位置读取记录：seek 与按时间戳定位]]
 
 ## Cards (4)
-- [[kafka-consumer-offsetsfortimes-seek-mechanism]]
-- [[kafka-consumer-seek-changes-poll-position-not-commit]]
-- [[kafka-consumer-seek-use-cases]]
-- [[kafka-consumer-seektobeginning-seektoend-purpose]]
+1. [[kafka-consumer-seek-changes-poll-position-not-commit]]
+2. [[kafka-consumer-seektobeginning-seektoend-purpose]]
+3. [[kafka-consumer-offsetsfortimes-seek-mechanism]]
+4. [[kafka-consumer-seek-use-cases]]
 %% trellis:end %%
 
 ## Notes

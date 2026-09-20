@@ -10,10 +10,10 @@
 - [[snowflak-query-profile-history|查询画像(Query Profile)与查询历史的定位方法]]
 
 ## Cards (4)
-- [[spill-memory-local-remote-order]]
-- [[spill-remedies]]
-- [[spill-union-vs-union-all]]
-- [[spill-where-to-see-metrics]]
+1. [[spill-memory-local-remote-order]]
+2. [[spill-remedies]]
+3. [[spill-union-vs-union-all]]
+4. [[spill-where-to-see-metrics]]
 %% trellis:end %%
 
 ## Notes

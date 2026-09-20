@@ -2,6 +2,7 @@
 id: kafka-producer-batching-config-interaction
 node: producer.batching-throughput
 type: qa
+step: 1
 source: kafka-2e
 ---
 ## Q

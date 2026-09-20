@@ -2,6 +2,7 @@
 id: architecture-schema-compat-rules
 node: architecture.discovery
 type: qa
+step: 2
 ---
 ## Q
 You must evolve an event/API schema while old consumers and old producers are still live. Which changes are safe, and which direction of compatibility do you need?

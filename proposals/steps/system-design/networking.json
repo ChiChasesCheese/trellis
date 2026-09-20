@@ -1,0 +1,7 @@
+{
+  "networking.protocols": ["networking-tcp-vs-udp", "networking-connection-setup-cost", "networking-tls-resumption", "networking-http1-hol-workarounds", "networking-connection-pooling", "networking-http2-vs-http3"],
+  "networking.dns": ["networking-dns-resolution-path", "networking-dns-record-types", "networking-dns-negative-caching", "networking-dns-ttl-failover", "networking-dns-lb-failover-layers", "networking-anycast-vs-geodns"],
+  "networking.api-styles": ["networking-rest-as-default", "networking-cursor-vs-offset-pagination", "networking-grpc-over-rest", "networking-grpc-streaming-modes", "networking-graphql-when-and-cost", "networking-webhooks-vs-polling"],
+  "networking.realtime": ["networking-realtime-transport-choice", "networking-long-polling-costs", "networking-sse-mechanics", "networking-heartbeats-idle-timeouts", "networking-websocket-scaling-cost", "networking-realtime-backpressure"],
+  "networking.cdn": ["networking-push-vs-pull-cdn", "networking-cdn-cache-key", "networking-cdn-stale-while-revalidate", "networking-cdn-purge-vs-versioning", "networking-cdn-what-belongs-at-edge", "networking-cdn-dynamic-acceleration"]
+}

@@ -2,6 +2,7 @@
 id: distributed-partition-hash-properties
 node: distributed.partitioning.schemes
 type: qa
+step: 2
 ---
 ## Q
 What properties must the hash function used for hash partitioning have, which common property does it NOT need — and why is a language's built-in `hash()` a routing bug waiting to happen?

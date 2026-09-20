@@ -2,6 +2,7 @@
 id: foundations-storage-estimate-method
 node: foundations.estimation
 type: qa
+step: 3
 ---
 ## Q
 Estimate storage for 100M-DAU Twitter-like service, 2 tweets/user/day, ~1 KB/tweet (skip media), 5-year retention. Walk the math.

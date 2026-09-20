@@ -2,6 +2,7 @@
 id: kafka-streams-low-latency-event-vs-microbatch
 node: streams.choosing-framework
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q

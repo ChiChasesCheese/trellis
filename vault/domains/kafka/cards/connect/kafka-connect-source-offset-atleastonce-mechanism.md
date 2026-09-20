@@ -2,6 +2,7 @@
 id: kafka-connect-source-offset-atleastonce-mechanism
 node: connect.connect-basics
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

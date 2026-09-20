@@ -2,6 +2,7 @@
 id: kafka-core-scalability-no-downtime
 node: core.pubsub-why
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

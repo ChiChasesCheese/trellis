@@ -2,6 +2,7 @@
 id: kafka-mirroring-alt-mrc-observer-auto-promote
 node: mirroring.alternatives
 type: qa
+step: 6
 source: kafka-2e
 ---
 ## Q

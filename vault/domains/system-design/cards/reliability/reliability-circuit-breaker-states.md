@@ -2,6 +2,7 @@
 id: reliability-circuit-breaker-states
 node: reliability.resilience.containment
 type: qa
+step: 1
 ---
 ## Q
 What problem does a circuit breaker solve that per-request timeouts and retries do not, and how do its three states work?

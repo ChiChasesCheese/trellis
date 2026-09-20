@@ -2,6 +2,7 @@
 id: kafka-eos-transactions-zombie-fencing-epoch
 node: eos.transactions
 type: qa
+step: 4
 source: kafka-2e
 ---
 ## Q

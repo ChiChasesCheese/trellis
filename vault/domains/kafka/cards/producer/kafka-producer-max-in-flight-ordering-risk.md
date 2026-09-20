@@ -2,6 +2,7 @@
 id: kafka-producer-max-in-flight-ordering-risk
 node: producer.timeouts-retries
 type: qa
+step: 5
 source: kafka-2e
 ---
 ## Q

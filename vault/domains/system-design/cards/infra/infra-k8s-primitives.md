@@ -2,6 +2,7 @@
 id: infra-k8s-primitives
 node: infra.containers
 type: qa
+step: 2
 ---
 ## Q
 At design-conversation depth: what do a Kubernetes Pod, Deployment, Service, and HPA each abstract?

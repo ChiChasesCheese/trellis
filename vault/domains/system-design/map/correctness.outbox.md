@@ -10,12 +10,12 @@ Why writing DB-then-publish loses events, and how the transactional outbox close
 - [[microservices-io-outbox|Transactional Outbox (microservices.io, Chris Richardson)]]
 
 ## Cards (6)
-- [[correctness-dual-write-problem]]
-- [[correctness-outbox-cleanup]]
-- [[correctness-outbox-event-payload]]
-- [[correctness-outbox-mechanism]]
-- [[correctness-outbox-ordering-cloze]]
-- [[correctness-outbox-relay-lag]]
+1. [[correctness-dual-write-problem]]
+2. [[correctness-outbox-mechanism]]
+3. [[correctness-outbox-event-payload]]
+4. [[correctness-outbox-ordering-cloze]]
+5. [[correctness-outbox-relay-lag]]
+6. [[correctness-outbox-cleanup]]
 %% trellis:end %%
 
 ## Notes

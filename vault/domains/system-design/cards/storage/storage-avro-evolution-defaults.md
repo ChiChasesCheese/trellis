@@ -2,6 +2,7 @@
 id: storage-avro-evolution-defaults
 node: storage.encoding
 type: qa
+step: 6
 ---
 ## Q
 In Avro, which schema changes keep *both* backward and forward compatibility, and why does the rule hinge entirely on default values? (Contrast with how Protobuf earns the same property.)

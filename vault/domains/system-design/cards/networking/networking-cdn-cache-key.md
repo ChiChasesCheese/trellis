@@ -2,6 +2,7 @@
 id: networking-cdn-cache-key
 node: networking.cdn
 type: qa
+step: 2
 ---
 ## Q
 Your CDN hit rate is mysteriously low for static assets. What cache-key mistakes cause this, and what's the fix?

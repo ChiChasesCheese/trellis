@@ -2,6 +2,7 @@
 id: reliability-error-budget-throttle
 node: reliability.slo
 type: qa
+step: 3
 ---
 ## Q
 Your SLO is 99.9% monthly success rate. What is the error budget, and what concretely changes when it is exhausted?

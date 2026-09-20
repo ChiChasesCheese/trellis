@@ -7,11 +7,11 @@
 **Requires:** [[domains/snowflake/map/continuity.zero-copy-clone|零拷贝克隆（zero-copy clone）]]
 
 ## Cards (5)
-- [[clone-billing-divergence-charged]]
-- [[clone-billing-initially-free]]
-- [[clone-billing-retained-for-clone]]
-- [[clone-billing-storage-metrics-columns]]
-- [[clone-billing-transient-clone-dev]]
+1. [[clone-billing-divergence-charged]]
+2. [[clone-billing-initially-free]]
+3. [[clone-billing-retained-for-clone]]
+4. [[clone-billing-storage-metrics-columns]]
+5. [[clone-billing-transient-clone-dev]]
 %% trellis:end %%
 
 ## Notes

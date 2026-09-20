@@ -2,6 +2,7 @@
 id: kafka-eos-txn-perf-batch-amortizes-overhead
 node: eos.transactions-perf
 type: qa
+step: 2
 source: kafka-2e
 ---
 ## Q
