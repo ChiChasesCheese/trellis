@@ -119,31 +119,37 @@
 | 2026-09-20 | 题库试点 | parking-lot、lru-cache 验收通过。两处返工：停车场泄漏内部车位字典且展示牌脱锁重扫（改为快照 + 事件），LFU 空桶不回收且 `_min_freq` 有崩溃契约（改为自愈）。教训写入 AGENT 说明 |
 | 2026-09-20 | 额度 | 本会话 WebSearch 200 次配额在调研阶段用尽；sonnet 触发会话额度上限（重置 5:30am），写题代理改用 `model: "opus"`（CLAUDE.md 既有规则） |
 
-## 7. 写题队列（每组一个 opus 代理、两道同家族题；始终 3 组并行）
+## 7. 台账（完成）
 
-状态以 `uv run python scripts/check_lld_problems.py --all` 为准，这张表只记顺序。
-验收流程：代理回报 → 主会话跑验收、读 `solution.py`、读题解的关键设计决策、核对代理自报的疑点 → 改正或发回 → 按题提交。
+| 日期 | 步骤 | 结果 |
+|---|---|---|
+| 2026-09-20 | 题库 | **45/45 通过 `check_lld_problems.py --all`**：45 篇中文题解、45 套可运行的 Python 参考解与 starter、约 900 个测试、45 个分关 drill、381 张中文卡、约 210 条来源读物 |
+| 2026-09-20 | 复核 | 每组由主会话跑验收、读 `solution.py`、读关键设计决策、核对代理自报疑点。发回重做 9 次，主会话独立验证 3 处（国际象棋 perft 深度 4 = 197281；职业社交双向 BFS 对拍普通 BFS，400 个随机图零不一致；键值存储三层嵌套事务 + TTL 回滚） |
+| 2026-09-20 | 查重 | 题目卡之间、题目卡与概念卡之间按中文字符二元组比较，最高相似度 0.29（同类问题问在不同系统上），无重复 |
+| 2026-09-20 | 合规 | 公开仓库：商业站点与 CC BY-NC-ND（refactoring.guru）只留链接，共 53 条；付费课程的镜像仓库不作为来源；4 份历史遗留的剪藏已删除 |
+| 2026-09-20 | 剪藏 | 52 页入库（docs.python.org、PEP、论文、宽松许可仓库） |
+| 2026-09-20 | 发布 | `--all sync`、`path`、`--all validate`（12 个域 0 错误）、233 个测试通过；Anki 中 6 条重构中删除的笔记已清理（均无复习记录） |
 
-| 波次 | 组 1 | 组 2 | 组 3 |
-|---|---|---|---|
-| 1（进行中） | splitwise + online-shopping | elevator + vending-machine | movie-booking + hotel-booking |
-| 2 | chess + tic-tac-toe | atm + coffee-machine | logger + text-editor |
-| 3 | snake-and-ladder + deck-of-cards | amazon-locker + traffic-signal | pub-sub + notification-service |
-| 4 | ride-sharing + food-delivery | car-rental + library | rate-limiter + ttl-cache |
-| 5 | stock-brokerage + online-auction | airline + meeting-scheduler | task-scheduler + thread-pool |
-| 6 | digital-wallet + bank-account | restaurant + cricinfo | bounded-blocking-queue + kv-store |
-| 7 | social-network + chat-room | linkedin + stack-overflow | in-memory-file-system + music-streaming |
-| 8 | task-management | | |
+### 代理写题时反复犯的错（都已写进 `proposals/lld/PROBLEM_AGENT.md`）
 
-每个代理的提示词是同一个模板：读 `proposals/lld/PROBLEM_AGENT.md`，读两份 `proposals/lld/tasks/<slug>.md`，
-skim 已验收的 parking-lot 作为样板，先完整做完第一题再做第二题，跑验收命令，按说明的 Report 格式回报。
-代理自带续跑规则（验收已通过的题跳过），中断后原样重发即可。
+| 失误 | 实例 | 防线 |
+|---|---|---|
+| 内部可变集合外泄 | 停车场把内部车位字典交给调用方 | 只交快照；观察者事件携带「发生了什么」 |
+| 只转发的类 | 出入口闸机各只转发一次调用 | 要么给它职责，要么删掉并在题解里说明 |
+| 把缺陷写进文档当契约 | LFU 连续两次淘汰会崩溃 | 自查发现的缺陷必须修掉并补回归测试 |
+| 容器只增不减 | LFU 空桶、限流器一百万 key 泄漏 99 万 | 每个容器都要回答「空了谁回收」 |
+| 测试读私有属性 / 断言形状 | `ledger._net`、`not hasattr(deck, "cards")` | 暴露一个只读计数属性；测试只断言行为 |
+| 随机测试里的经验上限 | 交通信号灯「最长等待 40」 | 上限必须从设计参数推导，多种子验证 |
+| 为压行数牺牲可读性 | ATM 删访问器、压缩文档字符串挤到 699 行 | 验收改为只数代码行；超长就砍范围 |
+| 悄悄改领域规则 | 板球把无效球当宽球，不给击球员记分 | 要么做对，要么明说不做 |
+| 代理再派代理 | 一次子代理复查突破并行上限 | 代理不得启动任何代理 |
 
-## 8. 全部完成后
+## 8. 下一步（维护）
 
-1. `uv run python scripts/check_lld_problems.py --all` 与 `check_lld_concepts.py --all` 都全绿
-2. 跨题查重（题目卡之间、题目卡与概念卡之间）
-3. 中文标点检查、`scripts/lld_embed_code.py --check <slug>` 确认题解里的代码与被测代码一致
-4. 剪藏允许入库的来源（商业网站与无 LICENSE 仓库保持 `no-archive`）
-5. `trellis --all sync`、`--domain low-level-design path`、`--all validate`、根目录 pytest
-6. Anki：先快照，再 `anki-push`，然后回读验证位置与复习记录；旧的 5 张被删卡片需要在 Anki 里手动删除（都没有复习记录）
+- **学习节奏**：核心叶子先学；每道题先做 drill（不看题解），再读题解，卡片由 Anki 调度。
+  每周 `trellis --all pull` → `trellis brief` → 对滑落的叶子 `trellis grow`。
+- **刷新调研**：每季度重跑三个调研代理（`survey/LLD_SURVEY_AGENT.md`），跑
+  `scripts/design_problem_survey.py --domain low-level-design`；观察名单里升到 3 个来源的题补进骨架。
+- **跑某一道题的测试**：`IMPL=solution uv run --with pytest python -m pytest vault/domains/low-level-design/problems/<slug> -q`。
+  注意：多个题目文件夹不能在同一次 pytest 调用里跑（模块名 `solution` 冲突），验收脚本是逐个文件夹跑的。
+- **改了 `solution.py` 之后**：跑 `uv run python scripts/lld_embed_code.py <slug>`，否则题解里的代码会和被测代码不一致（`--check` 可只校验）。
