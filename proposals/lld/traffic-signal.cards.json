@@ -1,0 +1,66 @@
+[
+  {
+    "id": "problems-traffic-signal-conflict-graph-not-directions",
+    "node": "problems.machines.traffic-signal",
+    "type": "qa",
+    "q": "在交通信号灯（Traffic Signal）设计里，「安全」该怎么定义才不会在加新相位时失效？",
+    "a": "不要定义成「南北绿的时候东西必须红」——那是**结论**，不是定义，而且它把判据散在每个状态处理函数里（「我记得把另一方向设成红」），加一个左转箭头就会漏掉一处。\n\n定义成：**任意两个互相冲突的流向（movement），不能同时放行**。冲突是路口几何决定的一张图，写成数据：\n\n```python\nconflicts = [(ns, ew) for ns in (NORTH, SOUTH)\n                      for ew in (EAST, WEST)]\nintersection = Intersection(\"x\", movements, conflicts)\n```\n\n这张图买到三样东西：判据只有一处，加流向不会漏；可以在**启动时**校验每个相位内部无冲突，把配置错误变成启动失败；让随机演练的性质测试成为可能——每个 tick 问一次「同时放行的流向里有没有冲突对」。",
+    "tags": []
+  },
+  {
+    "id": "problems-traffic-signal-tick-driven-no-sleep",
+    "node": "problems.machines.traffic-signal",
+    "type": "qa",
+    "q": "交通信号灯（Traffic Signal）控制器里为什么不能写 `time.sleep(green_duration)` 加后台线程？替代方案是什么？",
+    "a": "`sleep` 让整份设计**不可测**：要验证「紧急车辆抢占之后确实经过了全红」，你只能真的等几秒；要跑一万个 tick 的随机演练，要等几小时。职责也错了——控制器不该知道「一秒有多长」，那是驱动它的那一层的事。\n\n替代方案是**按 tick 推进**：控制器提供 `step()`，推进一格仿真时间；真实时间只通过注入的时钟进入时间戳，逻辑里一处 `sleep` 都没有。谁来每秒调一次 `step()` 是部署问题（实时循环、仿真器、或者测试里的一个 `for`）。\n\n收益是可以写出精确到格的期望，比如 `[GREEN, GREEN, GREEN, CLEARANCE, CLEARANCE, ALL_RED, GREEN]`；整套测试含四千 tick 的随机演练跑完只要几十毫秒。附带好处：控制器内部没有线程，于是**根本不需要锁**——这是要主动说出口的设计选择，不是遗漏。",
+    "tags": []
+  },
+  {
+    "id": "problems-traffic-signal-all-red-clearance",
+    "node": "problems.machines.traffic-signal",
+    "type": "qa",
+    "q": "交通信号灯（Traffic Signal）的相位切换为什么必须有全红（all-red）段？黄灯算不算「放行」？",
+    "a": "因为安全不变式在**稳态**下很容易成立，恰恰在**切换的那一瞬间**破掉。若从南北绿直接跳到东西绿，南北向最后一辆车正以 50 公里时速开到路口中央——它既停不下也来不及驶出，而东西向的绿已经亮了。不变式在代码里成立，在物理上是破的。\n\n所以切换必须是三段：**清空段**（本相位显示黄，语义是「不要再进来了，进来的赶紧走」）→ **全红段**（所有流向一起红，给车真正驶离留余量）→ 下一相位绿。两者合称**相位间隔**（intergreen）。全红段的长度在真实工程里由路口宽度和进口道限速算出来。\n\n黄灯**不是**放行：判断「此刻是否允许进入路口」的属性里只能有绿和行人的「走」，把黄灯算进去，整条安全复核就失去意义。行人的闪烁「禁止通行」同理，它是清空不是放行。",
+    "tags": []
+  },
+  {
+    "id": "problems-traffic-signal-timing-plan-strategy",
+    "node": "problems.machines.traffic-signal",
+    "type": "qa",
+    "q": "交通信号灯（Traffic Signal）的定周期与感应式配时怎么做成可替换的？感应式里最短绿和最长绿各守什么？",
+    "a": "把决策收敛成一个布尔问题：**绿灯还要不要再保持一个 tick**。这是策略模式（Strategy）真正挣来的一次应用——两个实现都存在、都带配置状态，而且差别不是一个参数能表达的。\n\n```python\ndef hold(self, ctx: PhaseContext) -> bool:\n    if ctx.elapsed < ctx.phase.min_green:\n        return True\n    if ctx.elapsed >= ctx.phase.max_green:\n        return False\n    return ctx.waiting > 0 or ctx.gap_since_arrival <= self._gap\n```\n\n**最短绿**是安全参数不是调优参数：绿灯刚亮一格就跳黄，已经起步的司机没有停车距离。**最长绿**是公平上限：没有它，「有车就延长」在早高峰会把支路饿死。中间那一行是**断流**（gap-out）——连续若干 tick 没有新车到达就认为车流断了。\n\n方案拿到的是 `PhaseContext` 这个只读快照（相位、已走时长、排队数、距上次到达几格），不是控制器本身；把 `self` 传给策略是这道题最容易埋下的耦合。",
+    "tags": []
+  },
+  {
+    "id": "problems-traffic-signal-preemption-three-rules",
+    "node": "problems.machines.traffic-signal",
+    "type": "qa",
+    "q": "交通信号灯（Traffic Signal）的紧急车辆抢占，有哪三条容易写错的规则？",
+    "a": "**一、不能把红灯直接改绿。** 抢占改变的是「下一个相位是谁」，不是「能不能跳过相位间隔」。切换路径照旧：当前绿 → 清空 → 全红 → 目标相位绿。唯一被缩短的是当前绿灯的剩余时间，而且连这个也受最短绿保护——救护车要的是早几秒，不是把横向来车送进事故现场。\n\n**二、抢占必须有上限。** 「救护车没走就一直绿」意味着一个忘了发释放信号的设备（或一串连续到达的紧急车辆）就能让横向永远红。上限一到就回到原方案，这是防饿死的兜底。\n\n**三、说清楚「恢复」是什么。** 本设计的恢复是从被抢占到的那个相位**继续环**，而不是跳回被打断的相位补完它——被打断的相位刚刚至少拿到了最短绿，环上其它相位一格都没拿到。真实信号机还会做一段过渡恢复（transition），用几个周期把相位差拉回和相邻路口协调的位置。",
+    "tags": []
+  },
+  {
+    "id": "problems-traffic-signal-movement-go-clear-stop",
+    "node": "problems.machines.traffic-signal",
+    "type": "qa",
+    "q": "交通信号灯（Traffic Signal）要加行人相位（走 / 闪烁禁止通行 / 禁止通行）或保护左转箭头，怎么加才能不动相位引擎？",
+    "a": "关键是让引擎只问流向三个问题，而不是直接操作颜色：\n\n```python\n@property\ndef go(self) -> Aspect:\n    return Aspect.WALK if self.kind is PEDESTRIAN else Aspect.GREEN\n\n@property\ndef clear(self) -> Aspect:\n    return (Aspect.FLASHING_DONT_WALK\n            if self.kind is PEDESTRIAN else Aspect.YELLOW)\n```\n\n引擎在「亮绿」「进入清空」「全红」三处分别问 `go` / `clear` / `stop`，从不关心这个流向是车还是人。于是行人的三段显示和机动车的绿黄红走的是同一段代码。\n\n加行人相位 = 造一个 `Movement(\"ped-ns\", PEDESTRIAN)`、在冲突表里写明它横穿哪条车道、把它放进某个相位。加保护左转 = 造一个流向、写明它和对向直行冲突、加一个相位到环里。两者都是**只改数据**，控制器一个字不动——这就是「可扩展」该有的证据形态。",
+    "tags": []
+  },
+  {
+    "id": "problems-traffic-signal-refuse-state-class-per-color",
+    "node": "problems.machines.traffic-signal",
+    "type": "qa",
+    "q": "交通信号灯（Traffic Signal）设计里，为什么不给每个颜色写一个状态类、也不把控制器做成单例？",
+    "a": "**状态模式（State）值得上，是当每个状态都有成套的、彼此不同的进入与退出副作用时**，而不是「状态多」时。这道题里三个阶段（绿 / 清空 / 全红）的行为差异只有两点：给哪些流向设哪个显示、倒计时多少格。用一个枚举加三个分支写完只要十几行；换成六个类（三个颜色 + 每个相位一个），加一个相位就要再加两个类，而且「相位怎么轮转」这条主线被拆到六个文件里，再没有一个地方能一眼看完。\n\n**单例同理是错的**：「一个路口只有一台信号机」是业务事实，不是拦截构造函数的理由。做成单例之后，一个进程里跑两个路口的仿真就不可能了——而那恰恰是这道题最有用的测试场景（验证「加行人相位不动引擎」时，你需要现场造第二个路口）。\n\n同样该删的还有只转发调用的 `Road` 和只存一个枚举值的 `TrafficLight`：在 Python 里它们就是一个字典加一个枚举。",
+    "tags": []
+  },
+  {
+    "id": "problems-traffic-signal-property-test-and-assert",
+    "node": "problems.machines.traffic-signal",
+    "type": "qa",
+    "q": "怎么给交通信号灯（Traffic Signal）设计拿出最强的「它永远不会饿死」的证据？安全不变式该写成 `assert` 吗？",
+    "a": "最强的证据是**性质测试**（property test）：在**多个固定种子**上各跑几百个 tick，每个流向每格以一定概率到达车辆，并有随机的紧急抢占与释放；每一 tick 断言两件事——\n\n1. **安全**：同时放行的流向里没有冲突对。\n2. **公平**：每个流向距上一次放行的间隔不超过一个上界，即没有流向被饿死。\n\n**那个上界必须是推导出来的，不是跑出来的。** 写一个自己观察到的数字，换个种子就会翻车，而且它回答不了面试官真正在问的那句话：你凭什么说它永远不会饿死？从控制器参数算：\n\n```python\nintergreen   = clearance_ticks + all_red_ticks\nnormal_slot  = max_green + intergreen\npreempt_slot = max_green + max_preempt_ticks + intergreen\nbound = (intergreen\n         + (len(phases) - 1) * normal_slot\n         + preempt_slot + 1)\n```\n\n其余每个相位最多各插进来一次（切相位只沿环向前走），再单独留一个相位区间给抢占——它会改写下一个相位的选择，可能跳过几个相位，也可能把当前相位再点一次。前提是一个等待窗口里最多一次抢占，靠请求之间的冷却期保证。\n\n**不要用裸 `assert` 写安全不变式**：`python -O` 会把 `assert` 语句整条删掉，而这是一条会撞死人的不变式，恰恰不能在优化模式下消失。写成显式检查加一个自定义异常。「把不变式写成断言」这句话描述的是精神（每一步都复核），不是那个关键字。",
+    "tags": []
+  }
+]
