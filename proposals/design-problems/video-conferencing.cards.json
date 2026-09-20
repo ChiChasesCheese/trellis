@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-video-conferencing-mesh-bandwidth-n-squared",
+    "node": "problems.media.video-conferencing",
+    "type": "qa",
+    "q": "In a video conferencing design where each participant's audio+video stream is a steady 1.54 Mbps, a full mesh topology (every participant connects directly to every other participant) requires each participant to simultaneously upload and download (N-1) x 1.54 Mbps. At N=6 participants, why does this already break down for a typical home broadband connection, and how does total network traffic across the whole mesh scale with N?",
+    "a": "At N=6, each participant needs about 7.70 Mbps of *simultaneous* upload and download just for media — the upload figure alone already exceeds or sits right at the upload cap of many consumer broadband plans, which are commonly asymmetric with upload capped well below download. Total network traffic across a full mesh scales with N^2 (every one of N participants sends to N-1 others), so unlike the other two architectures, doubling participant count more than quadruples aggregate network load — this is why mesh is only viable for very small calls (2-3 participants), never for anything approaching a typical multi-party meeting.",
+    "q_zh": "在一个视频会议设计里，假设每路参会者的音视频流稳定占用 1.54Mbps，全网状（mesh，每个参会者与其余所有参会者直连）拓扑要求每个参会者同时上传和下载 (N-1)×1.54Mbps。为什么 N=6 时这个方案对典型家庭宽带来说已经撑不住了？整个 mesh 网络的总流量随 N 如何增长？",
+    "a_zh": "N=6 时，每个参会者需要约 7.70Mbps 的同时上传和下载带宽——仅上传这一项就已经逼近或超过许多消费级宽带套餐的上行上限，而这类套餐往往上下行不对称、上行远低于下行。整个 mesh 网络的总流量随 N² 增长（N 个参会者中每一个都要发给其余 N-1 个），这意味着和另外两种架构不同，参会人数翻倍会让总网络负载增长超过四倍——这正是 mesh 只适合 2-3 人的小型通话、无法用于任何接近典型多方会议规模场景的原因。",
+    "tags": []
+  },
+  {
+    "id": "problems-video-conferencing-signalling-media-plane-split",
+    "node": "problems.media.video-conferencing",
+    "type": "qa",
+    "q": "In a video conferencing system's architecture, why are the signalling plane (join/leave/mute control, carried over a persistent WebSocket) and the media plane (actual audio/video bytes, carried over UDP/SRTP) built as separate, decoupled systems rather than one unified service — and what failure-mode benefit does this decoupling produce?",
+    "a": "They're decoupled because their scaling and resource profiles are fundamentally different: signalling is lightweight control-plane traffic that a commodity long-connection gateway can handle at roughly 100K connections per machine, while media forwarding is bandwidth- and (for non-SFU architectures) CPU-intensive, requiring roughly two orders of magnitude more machines at the same concurrency. Decoupling them means an outage in the signalling gateway doesn't directly interrupt media already flowing between a client and its assigned media server — an in-progress call's audio and video keep working even if control operations like toggling mute or a new participant joining temporarily fail, because the media path never depended on the signalling connection staying up once it was established.",
+    "q_zh": "在一个视频会议系统架构里，为什么信令面（加入/离开/静音控制，走持久 WebSocket）和媒体面（真正的音视频字节，走 UDP/SRTP）要构建成两套互相解耦的独立系统，而不是一个统一的服务？这种解耦带来了什么故障模式上的好处？",
+    "a_zh": "解耦的原因是两者的扩展性和资源特征本质不同：信令是轻量的控制面流量，普通商用长连接网关单机就能撑住约 10 万条连接；而媒体转发对带宽（以及非 SFU 架构下对 CPU）的消耗很大，同等并发量下所需机器数比信令面高出大约两个数量级。解耦之后带来的好处是：信令网关故障不会直接中断客户端和它所分配的媒体服务器之间已经在传输的媒体——即便静音切换、新人加入这类控制操作暂时失败，一场进行中通话的音视频仍能继续工作，因为媒体路径一旦建立就不再依赖信令连接持续存活。",
+    "tags": []
+  },
+  {
+    "id": "problems-video-conferencing-sfu-vs-mcu-compute-cost",
+    "node": "problems.media.video-conferencing",
+    "type": "qa",
+    "q": "Both an MCU (which fully decodes every incoming stream, composites them, and re-encodes) and an SFU (which forwards encoded packets without decoding) can serve a multi-party call, but they push cost onto completely different resources. For a 25-participant meeting with one shared composite view, assuming a CPU core can real-time decode about 12 streams but only encode about 4 (encoding is several times more expensive than decoding), roughly how many cores does the MCU's mixing alone cost, and why is an SFU's cost structurally much lower regardless of N?",
+    "a": "The MCU's mixing costs roughly 25/12 (decode) + 1/4 (one shared encode) ≈ 2.33 cores for this one meeting — and if personalized per-viewer layouts require a separate encode per participant instead of one shared composite, the encode term becomes 25/4 ≈ 6.25 cores, so cost scales with N on the encode side too. An SFU's cost is structurally lower because it never decodes or re-encodes media at all — it only inspects packet headers to make forwarding decisions, so its server-side cost is pure network I/O rather than compute-bound transcoding, roughly one to two orders of magnitude cheaper at the same participant count. This is why SFU is the default in modern products and MCU survives mainly as a legacy-interop gateway for endpoints that can't handle multiple simultaneous streams (e.g. PSTN/H.323 conference room hardware).",
+    "q_zh": "MCU（完整解码每一路输入流、合成后再重新编码）和 SFU（转发编码后的数据包、不解码）都能支撑多方通话，但两者把成本压在完全不同的资源上。对于一场 25 人会议、共享一路合成画面，假设一个 CPU 核心能实时解码约 12 路流、但只能实时编码约 4 路（编码比解码贵好几倍），MCU 单纯做混流大约需要多少核？为什么 SFU 的成本结构无论 N 多大都天然低得多？",
+    "a_zh": "MCU 的混流大约需要 25/12（解码）+ 1/4（一路共享编码）≈ 2.33 核——如果需要千人千面的个性化布局、每个参会者单独编码而不是共享一路合成画面，编码这一项就变成 25/4≈6.25 核，说明编码侧的成本也会随 N 增长。SFU 的成本结构性更低，是因为它从不解码或重新编码媒体——只检查数据包头部就能做出转发决策，所以它的服务端成本是纯网络 I/O，而不是计算密集型的转码，同等参会人数下比 MCU 便宜一到两个数量级。这正是现代产品默认选择 SFU、而 MCU 主要作为兼容无法处理多路并发流的传统终端（比如 PSTN/H.323 会议室硬件）的遗留网关而存在的原因。",
+    "tags": []
+  },
+  {
+    "id": "problems-video-conferencing-turn-relay-mandatory-fallback",
+    "node": "problems.media.video-conferencing",
+    "type": "qa",
+    "q": "In NAT traversal for video conferencing, why must a TURN relay fallback be treated as a mandatory, separately-provisioned tier of infrastructure rather than a rare edge case, and why does a relay server carry a lower effective participant capacity than a normal media-forwarding server with the same network interface?",
+    "a": "TURN must be mandatory because certain NAT type combinations (specifically address-dependent or address-and-port-dependent mapping on both sides, common behind restrictive corporate firewalls and some carrier-grade NATs) make hole-punching structurally impossible, not just unlikely — for that subset of participants, a relay is the only path that can ever work, not a fallback for occasional failures. A relay server has lower effective capacity per unit of network throughput because it must both receive and retransmit the exact same media bytes for every relayed participant — the same bytes consume network I/O budget twice (once in, once out) — roughly halving how many participants a relay server can serve compared to a normal forwarding node with identical NIC capacity.",
+    "q_zh": "在视频会议的 NAT 穿透设计里，为什么 TURN 中继回退必须被当作一层强制的、需要单独规划容量的基础设施，而不是罕见的边缘情况？为什么在相同网卡容量下，一台中继服务器的有效参会者承载能力比一台普通媒体转发服务器更低？",
+    "a_zh": "TURN 之所以必须是强制的，是因为某些 NAT 类型组合（双方都是地址依赖或地址端口依赖映射，常见于限制性企业防火墙和部分运营商级 NAT 之后）会让打洞技术在协议层面上就不可能成功，而不只是「概率低」——对这部分参会者而言，中继是唯一能work的路径，而不是偶发失败时的兜底。中继服务器承载能力更低，是因为它必须为每个被中继的参会者同时接收和重新转发完全相同的媒体字节——同样的字节要消耗两次网络 I/O 预算（一次进、一次出）——在相同网卡容量下，能服务的参会者数量大约只有普通转发节点的一半。",
+    "tags": []
+  },
+  {
+    "id": "problems-video-conferencing-simulcast-tile-cap-bounds-downlink",
+    "node": "problems.media.video-conferencing",
+    "type": "qa",
+    "q": "An SFU that forwards every other participant's full-resolution stream to each receiver still has downlink bandwidth growing with N — at N=25 participants and 1.54 Mbps per stream, that's about 37 Mbps of downlink per receiver, which is infeasible for typical consumer bandwidth. What mechanism keeps SFU downlink bandwidth bounded regardless of meeting size, and roughly what downlink bandwidth does it produce?",
+    "a": "Senders encode simulcast layers (multiple independently-encoded quality tiers of the same video), and the SFU forwards only the layer each receiver actually needs based on what's visibly rendered on that receiver's screen — a high layer for whichever participant is shown large (e.g. the active speaker), and a thin, low-bitrate layer for the rest shown as thumbnails, rather than a full-resolution stream for every single other participant. Because a meeting UI only ever fully renders a small, bounded number of tiles regardless of how many people are in the call, downlink bandwidth is capped by that visible-tile limit rather than by N: for example, one active-speaker layer at 1.5 Mbps plus 24 thumbnail layers at 0.15 Mbps each comes to about 5.1 Mbps of downlink, largely independent of whether the meeting has 25 or 250 participants.",
+    "q_zh": "如果 SFU 对每个接收端都转发其余所有参会者的完整分辨率流，下行带宽仍会随 N 增长——N=25、每路流 1.54Mbps 时，每个接收端下行约需 37Mbps，对典型消费级带宽来说不可行。什么机制能让 SFU 的下行带宽不随会议规模增长？大致会产生多大的下行带宽？",
+    "a_zh": "发送端把视频编码成多个独立的 simulcast 质量层，SFU 只根据接收端屏幕上实际渲染的内容，为每个接收端转发它真正需要的那一层——放大显示的参会者（比如当前发言人）转发高层，其余以缩略图形式展示的参会者转发低码率的薄层，而不是给每一个其他参会者都转发完整分辨率流。因为一个会议界面无论通话里有多少人，一次能完整渲染的画面格子数量本身就是有限且固定的，下行带宽因此被这个「可见画面数上限」卡住，而不是随 N 增长：比如一路发言人高层（1.5Mbps）加 24 路缩略图低层（各 0.15Mbps）合计约 5.1Mbps，基本不随会议是 25 人还是 250 人而变化。",
+    "tags": []
+  },
+  {
+    "id": "problems-video-conferencing-degradation-order-audio-last",
+    "node": "problems.media.video-conferencing",
+    "type": "qa",
+    "q": "When a video conferencing client's available bandwidth degrades under congestion control, why does the design degrade resolution first, then frame rate, then turn video off entirely, and only degrade audio as an absolute last resort?",
+    "a": "The order follows information value versus bandwidth cost, which is wildly asymmetric between the two media types: audio typically needs only 24-40 kbps, a rate that survives almost any connection bad enough to still carry a call at all, so protecting it costs almost nothing even under severe constraint, and losing audio ends the conversation outright rather than just degrading it. Video degrades in stages that cost progressively more of the experience: dropping resolution (or switching to a lower simulcast layer) is the cheapest perceptual hit, reducing frame rate (e.g. 30fps to 15fps) costs more but is still tolerable, and disabling video entirely is reserved for when bandwidth can't sustain even a minimal video layer — each step is chosen because it preserves \"can the conversation continue at all\" for as long as possible before sacrificing it, rather than degrading video and audio quality in lockstep.",
+    "q_zh": "当视频会议客户端在拥塞控制下可用带宽下降时，为什么设计上先降分辨率，再降帧率，然后才整体关闭视频，只有在万不得已时才会降级音频？",
+    "a_zh": "这个顺序遵循的是信息价值和带宽成本的巨大不对称：音频通常只需要 24-40kbps，这个码率在几乎任何还能撑住通话的网络条件下都能保住，所以即便在严重受限下保护音频的代价也几乎为零，而一旦丢失音频，对话直接终止，而不只是体验下降。视频则分阶段降级、代价逐级增加：降低分辨率（或切到更低的 simulcast 层）对观感的损失最小，降低帧率（比如从 30fps 降到 15fps）代价更大但仍可接受，彻底关闭视频只在带宽连最低档视频层都撑不住时才用——每一步的选择都是为了尽可能长时间地保住「对话是否还能继续」这条底线，而不是让视频和音频质量同步下降。",
+    "tags": []
+  },
+  {
+    "id": "problems-video-conferencing-sfu-node-failure-isolated-blast-radius",
+    "node": "problems.media.video-conferencing",
+    "type": "qa",
+    "q": "When a single SFU node crashes in a video conferencing system that has split media forwarding across many independent SFU nodes, what happens to the participants assigned to that node, and why doesn't the failure affect participants on other SFU nodes even in the same meeting?",
+    "a": "Participants assigned to the crashed SFU node experience a visible interruption of a few seconds to tens of seconds: their client must perform an ICE restart, renegotiating connectivity and being reassigned to a healthy SFU node before media resumes. Participants on other SFU nodes are unaffected because media forwarding is deliberately partitioned across many independent nodes rather than concentrated in one giant central forwarder — each node's failure blast radius is limited to only the participants it was actively serving, which is the direct payoff of not building the media plane as a single scaled-up server.",
+    "q_zh": "在一个把媒体转发拆分到多个独立 SFU 节点的视频会议系统里，当某一个 SFU 节点崩溃时，分配到这个节点的参会者会发生什么？为什么这次故障不会影响同一场会议里其他 SFU 节点上的参会者？",
+    "a_zh": "分配到崩溃节点的参会者会经历几秒到几十秒可感知的中断：客户端必须执行 ICE 重启，重新协商连通性并被分配到一个健康的 SFU 节点，之后媒体才恢复。其他 SFU 节点上的参会者不受影响，是因为媒体转发被有意拆分到多个互相独立的节点上，而不是集中在一个巨型的中心化转发器里——每个节点的故障影响范围被限制在它当时实际服务的那部分参会者，这正是不把媒体面做成单一超大服务器所带来的直接收益。",
+    "tags": []
+  },
+  {
+    "id": "problems-video-conferencing-cascaded-sfu-decouples-backbone-from-audience",
+    "node": "problems.media.video-conferencing",
+    "type": "qa",
+    "q": "For a 1000-person webinar with 5 presenters and viewers spread across 5 regions, sending every remote viewer's stream directly from one origin region costs that region about 7.46 Gbps of egress. With regional SFU cascading — presenter streams sent once to each of the other 4 regions, then fanned out locally within each region — what happens to inter-region backbone traffic, and why does that number not depend on audience size?",
+    "a": "With cascading, inter-region backbone traffic drops to just 4 remote regions x 5 presenter streams x 1.5 Mbps = 30 Mbps total — compared to 7.46 Gbps without it. This number doesn't depend on audience size because inter-region traffic now only carries one copy of each presenter's stream to each region, regardless of how many viewers are in that region; the audience-proportional traffic (995 viewers x their downlink bandwidth) still exists, but it happens entirely within each region's local network fan-out from that region's own SFU, not across the expensive long-haul backbone link. This is what decouples backbone cost from audience size: backbone traffic scales with (presenters x regions), local fan-out scales with (viewers per region), and only the first one is expensive per byte.",
+    "q_zh": "对于一场 1000 人的网络研讨会（5 位主讲人，观众分布在 5 个区域），如果每个远端观众都直接从源区域拉流，源区域出口带宽约需 7.46Gbps。如果改用区域级联 SFU——主讲人的流各向其余 4 个区域各发一份，再由每个区域本地扇出——跨区域骨干网流量会变成多少？为什么这个数字不随观众规模变化？",
+    "a_zh": "采用级联后，跨区域骨干网流量降到仅 4 个远端区域 × 5 路主讲人流 × 1.5Mbps = 30Mbps——相比不做级联时的 7.46Gbps。这个数字之所以不随观众规模变化，是因为跨区域流量现在只需要把每位主讲人的流各送一份到每个区域，不管这个区域里有多少观众；和观众数量成正比的流量（995 名观众各自的下行带宽）依然存在，但它完全发生在每个区域内部、由该区域自己的 SFU 做本地扇出，不再经过昂贵的长途骨干链路。这正是让骨干网成本和观众规模解耦的机制：骨干网流量只随「主讲人数 × 区域数」增长，本地扇出才随「每区域观众数」增长，而只有前者的单字节成本才是昂贵的。",
+    "tags": []
+  }
+]
