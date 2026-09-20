@@ -4,17 +4,9 @@ node: principles.solid
 type: qa
 ---
 ## Q
-Your `Machine` interface declares print/scan/fax; the basic printer implements `scan()` and `fax()` as throwing stubs. Which principle, and the refactor?
-
-## A
-**ISP** — no client (or implementer) should be forced to depend on methods it doesn't use. Those throwing stubs are also latent LSP bombs: any caller holding a `Machine` can blow up.
-
-Refactor into role interfaces `Printer`, `Scanner`, `Fax`; the multifunction device implements all three; each client takes only the role it needs. Trigger to memorize: **no-op or throwing implementations = fat interface**.
-
-## Q zh
 什么时候你知道你的接口违反了接口分离原则？
 
-## A zh
+## A
 触发器：
 - 实现者强制实现它们不使用的方法
 - 调用者只调用接口的一部分

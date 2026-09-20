@@ -4,21 +4,9 @@ node: oop.interfaces
 type: qa
 ---
 ## Q
-You put shared logic in an abstract base class with `protected` hooks (template method). What are you paying for that reuse, and what's the alternative shape?
-
-## A
-Costs:
-
-- **You spend the single inheritance slot** — the subclass can never extend anything else.
-- **`protected` members are public API to subclasses**: you can't rename or reorder them later without breaking every child, and the base's call order becomes a contract.
-- The base is **hard to test alone** (needs a fake subclass), and subclasses can't be tested without dragging the base's behavior in.
-
-Alternative: **interface + a composed helper** — the algorithm lives in a collaborator that takes the varying step as a strategy object. Java's compromise is the *skeletal implementation* pattern: publish the interface, offer `AbstractFoo` as an optional convenience so implementers who need their own hierarchy can forward to it instead.
-
-## Q zh
 你把共享逻辑放进一个带 `protected` 钩子的抽象基类（模板方法）。这份复用你要付出什么代价，替代方案是什么形状？
 
-## A zh
+## A
 代价：
 
 - **你花掉了唯一的单继承名额** —— 子类以后再也不能继承别的东西了。

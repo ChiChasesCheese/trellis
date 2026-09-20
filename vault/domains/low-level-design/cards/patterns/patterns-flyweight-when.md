@@ -4,22 +4,9 @@ node: patterns.structural
 type: qa
 ---
 ## Q
-Flyweight: what state do you split, and what constraint makes the shared part safe?
-
-## A
-Split object state into:
-
-- **Intrinsic** — identical across many instances (glyph shape, tree species mesh/texture, chess piece type). Stored once, **shared** via a factory/cache.
-- **Extrinsic** — varies per use (position, color, owner). Passed in by the caller at each operation: `species.render(x, y)`.
-
-The shared intrinsic part must be **immutable** — otherwise one user's mutation corrupts every other user.
-
-Use only when instance counts are large enough that memory actually hurts (millions of particles/glyphs/cells); for ordinary object counts it's needless indirection. `Integer.valueOf` caching and string interning are the stock real-world examples.
-
-## Q zh
 什么时候 Flyweight 值得麻烦？成本-收益是什么？
 
-## A zh
+## A
 当你有**大量相似对象**且内存是瓶颈时。Flyweight 把**共享的、不可变的状态**（intrinsic，如字符编码）与**每个对象的、可变的**状态（extrinsic，如位置、颜色）分离。
 
 成本：

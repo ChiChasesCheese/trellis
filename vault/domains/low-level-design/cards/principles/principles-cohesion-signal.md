@@ -4,20 +4,9 @@ node: principles.coupling
 type: qa
 ---
 ## Q
-What does low cohesion look like *inside* a single class, and what's the standard refactor?
-
-## A
-Signals:
-- fields cluster into disjoint groups, each used by a different subset of methods
-- the name needs "Manager", "Util", or "Helper" to cover everything
-- methods neither call each other nor share state
-
-Refactor: **Extract Class** along the field-usage clusters, so each class's methods use most of its fields. High cohesion inside classes is what makes low coupling between them possible.
-
-## Q zh
 单个类内部低内聚的表现是什么，标准的重构方法是什么？
 
-## A zh
+## A
 信号：
 - 字段聚集成不相交的组，每组被不同的方法子集使用
 - 名字需要加上 "Manager"、"Util" 或 "Helper" 来涵盖所有东西

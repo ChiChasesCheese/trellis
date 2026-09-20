@@ -8,30 +8,11 @@ type: qa
 var svc = new ReportService();
 svc.setStore(store);
 svc.init();
-svc.run();          // NPE / IllegalStateException if you skip a step
-```
-Name this coupling, list its two detection signals, and give the fix.
-
-## A
-**Temporal coupling** — correctness depends on an ordering the type doesn't express. Signals:
-
-- Methods that begin with `if (!initialized) throw new IllegalStateException(...)`.
-- Setters for things the object cannot function without (`setStore`), i.e. a constructor that leaves the object invalid.
-
-Fix: **make the invalid state unconstructable** — take every required collaborator in the constructor (or a builder that validates and returns a ready object), and drop `init()` into it. When phases are genuinely distinct, encode them in *types*: `Connection.open()` returns an `OpenConnection` that is the only thing with `query()`.
-
-Same smell, larger scale: two calls that must happen in order across classes — merge them into one method that owns the sequence.
-
-## Q zh
-```java
-var svc = new ReportService();
-svc.setStore(store);
-svc.init();
 svc.run();          // 少走一步就 NPE / IllegalStateException
 ```
 说出这种耦合的名字、它的两个检测信号，以及修法。
 
-## A zh
+## A
 **Temporal coupling（时序耦合）** —— 正确性依赖于一个类型本身并未表达出来的调用顺序。信号：
 
 - 方法开头是 `if (!initialized) throw new IllegalStateException(...)`。

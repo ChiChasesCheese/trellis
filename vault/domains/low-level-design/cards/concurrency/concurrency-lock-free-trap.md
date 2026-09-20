@@ -4,21 +4,9 @@ node: concurrency.hazards
 type: qa
 ---
 ## Q
-A candidate says "I'll make it lock-free, so no deadlock." Why is this usually the wrong move in an LLD round?
-
-## A
-Lock-free removes deadlock but not the hazards that actually bite:
-
-- **CAS covers one word.** Any invariant spanning two fields (`balance` *and* `ledger`) can't be maintained by a CAS loop — you get torn, individually-atomic updates.
-- **Livelock/starvation remain**: under contention, CAS retry loops burn CPU and a slow thread can retry forever (lock-*free* guarantees system progress, not per-thread progress; that's wait-free).
-- Plus ABA and memory reclamation, and code no reviewer can verify in an hour.
-
-Right answer: use lock-free **components** others wrote — `AtomicLong` counters, `ConcurrentHashMap`, `LongAdder` — and a plain lock for your own multi-field invariants. If contention is the concern, shrink the critical section or shard the lock before going lock-free.
-
-## Q zh
 有候选人说"我做成 lock-free，这样就不会死锁了"。为什么在 LLD 轮里这通常是错的一步？
 
-## A zh
+## A
 Lock-free 消除了死锁，但没有消除真正会咬人的那些危险：
 
 - **CAS 只覆盖一个字**。任何跨两个字段的不变量（`balance` *和* `ledger`）都无法靠 CAS 循环维持 —— 你得到的是撕裂的、各自原子的更新。

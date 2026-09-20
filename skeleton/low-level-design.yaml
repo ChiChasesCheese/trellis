@@ -1,136 +1,427 @@
-# Low-level design / machine coding: study order top-to-bottom, `requires`
-# marks real cross-topic prerequisites. Classic interview problems live as
-# drills, not nodes — they exercise many leaves at once.
+# 低层设计 / 机器编码（LLD）：自上而下即学习顺序，`requires` 标出真实的跨主题前置。
+# 2026-09 重构：全中文、Python 视角；经典面试题从 drill 升级为 `problems` 分支下的叶子
+# （调研、入选线与覆盖矩阵见 vault/domains/low-level-design/BUILD.md）。
 domain: low-level-design
-title: Low-Level Design
-lang: en
+title: 低层设计（LLD）
+lang: zh
 vault: domains/low-level-design
+# Anki 里怎么学（ADR 0010）：`core: true` 先学；卡片的 `step:` 决定叶子内顺序。
+study:
+  order: core-first
+  mix: new-first
+  new_per_day: 20
+  reviews_per_day: 100
 nodes:
   - id: method
     order: 1
-    title: Machine Coding Method
-    summary: How to run the 60–90 minute LLD round — what is graded and how to structure the hour.
+    title: "作答方法（Machine Coding Method）"
+    summary: "60–90 分钟的 LLD / 机器编码轮怎么打：考什么、怎么分配时间、怎么从需求走到对象。"
     children:
       - id: method.delivery
-        title: Round Structure
-        summary: Requirement scoping, choosing core flows, time-boxing design vs code vs demo, driving the session.
+        core: true
+        title: "作答节奏（Delivery Framework）"
+        summary: "澄清需求、选核心流程、设计/编码/演示的时间盒，以及如何主导这一小时。"
       - id: method.evaluation
-        title: Evaluation Rubric
-        summary: What interviewers grade — extensibility, readability, testability, and verifying your own code before they do.
+        core: true
+        title: "评分标准（Evaluation Rubric）"
+        summary: "面试官打分的维度：可扩展、可读、可测，以及在对方之前先验证自己的代码。"
       - id: method.modeling
-        title: Requirements to Objects
-        summary: Noun–verb extraction, finding entities and invariants, sequence-of-interactions before class diagrams.
-
-  - id: oop
+        core: true
+        title: "从需求到对象（Requirements to Objects）"
+        summary: "名词-动词抽取、找实体与不变量（invariant）、先画交互序列再画类图。"
+      - id: method.diagrams
+        title: "白板上的 UML（Class & Sequence Diagrams）"
+        summary: "面试里真正用得上的 UML 子集：类图的四种箭头、时序图、状态图，画到什么粒度为止。"
+        requires: [method.modeling]
+  - id: python
     order: 2
-    title: Object Modeling
-    summary: The vocabulary of object design — used as decision tools, not textbook definitions.
+    title: "Python 对象模型与惯用法（Pythonic Design）"
+    summary: "用 Python 做对象设计时与 Java 式答案的分叉点：语言本身已经提供了什么。"
+    children:
+      - id: python.data-model
+        core: true
+        title: "数据模型与特殊方法（Data Model）"
+        summary: "`__eq__`/`__hash__`/`__repr__`/排序与容器协议：让自定义对象像内置类型一样工作，以及相等与哈希的契约。"
+      - id: python.dataclasses-enums
+        core: true
+        title: "dataclass 与 Enum"
+        summary: "`@dataclass(frozen, slots, order)`、`field(default_factory)`、带行为的 `Enum`：值对象与有限状态的标准写法。"
+        requires: [python.data-model]
+      - id: python.protocols-abc
+        core: true
+        title: "Protocol、ABC 与鸭子类型"
+        summary: "`typing.Protocol` 的结构化子类型、`abc.ABC` 的名义子类型、何时两者都不需要。"
+      - id: python.first-class-functions
+        title: "一等函数、闭包与装饰器"
+        summary: "函数即对象如何替代策略、命令、模板方法等单方法接口；`functools` 的常用工具。"
+      - id: python.context-iterators
+        title: "上下文管理器、迭代器与生成器"
+        summary: "`with` 保证成对操作、`__iter__`/生成器实现惰性遍历：资源管理与迭代器模式的 Python 形态。"
+      - id: python.typing
+        title: "类型注解作为设计工具"
+        summary: "泛型、`TypeVar`、`Literal`、`NewType`、`Optional` 的取舍：让接口自解释，让错误在写代码时暴露。"
+        requires: [python.protocols-abc]
+      - id: python.modules
+        title: "模块、包与依赖方向"
+        summary: "模块即单例、循环导入的成因与解法、`__init__` 里的公共接口、依赖只许朝一个方向流。"
+  - id: oop
+    order: 3
+    title: "对象建模（Object Modeling）"
+    summary: "对象设计的词汇——当作决策工具，而不是教科书定义。"
     children:
       - id: oop.pillars
-        title: OOP Pillars in Practice
-        summary: Encapsulation, abstraction, inheritance, polymorphism — each as a lever with a cost, not a virtue.
+        title: "OOP 四大特性的实际用法"
+        summary: "封装、抽象、继承、多态——每一个都是有代价的杠杆，不是美德。"
       - id: oop.relationships
-        title: Class Relationships
-        summary: Association vs aggregation vs composition vs dependency; lifetime ownership and the UML arrows for each.
+        core: true
+        title: "类之间的关系（Class Relationships）"
+        summary: "关联、聚合、组合、依赖的区别；生命周期归属，以及各自的 UML 箭头。"
       - id: oop.interfaces
-        title: Interfaces & Abstract Classes
-        summary: Program-to-interface, interface vs abstract class discrimination, default methods and their limits.
+        title: "接口与抽象基类"
+        summary: "面向接口编程；接口与抽象类的取舍；在 Python 里落到 Protocol 还是 ABC。"
+        requires: [python.protocols-abc]
       - id: oop.values
-        title: Value Objects & Immutability
-        summary: Entities vs value objects, equality semantics, enums with behavior, why immutability simplifies reasoning.
-
+        title: "值对象与不可变性（Value Objects）"
+        summary: "实体与值对象的区分、相等语义、不可变为什么让推理变简单。"
+        requires: [python.dataclasses-enums]
   - id: principles
-    order: 3
-    title: Design Principles
-    summary: The decision rules that make a design extensible — and the judgment of when to stop applying them.
+    order: 4
+    title: "设计原则（Design Principles）"
+    summary: "让设计可扩展的决策规则——以及知道何时停止套用它们的判断力。"
     children:
       - id: principles.solid
-        title: SOLID
-        summary: The five principles as concrete refactoring triggers, with the violation each one detects.
+        core: true
+        title: "SOLID"
+        summary: "五条原则各自作为重构触发器：每条检测的是哪一种违例。"
       - id: principles.composition
-        title: Composition over Inheritance
-        summary: Why deep hierarchies rot, delegation as the default reuse tool, when inheritance is still right.
+        core: true
+        title: "组合优于继承"
+        summary: "深继承树为什么会腐烂、委托作为默认复用手段、继承仍然正确的场合。"
         requires: [oop.relationships]
       - id: principles.coupling
-        title: Coupling, Cohesion & DI
-        summary: Afferent/efferent coupling, law of Demeter, dependency injection as the seam-maker.
+        title: "耦合、内聚与依赖注入"
+        summary: "传入/传出耦合、迪米特法则（Law of Demeter）、关注点分离、用依赖注入制造接缝。"
       - id: principles.simplicity
-        title: DRY, KISS, YAGNI
-        summary: The simplicity principles and their failure mode — premature abstraction and speculative generality.
-
+        title: "DRY、KISS、YAGNI"
+        summary: "简单性原则及其失败模式——过早抽象与臆想的通用性。"
   - id: patterns
-    order: 4
-    title: Design Patterns
-    summary: The GoF catalog as a shared vocabulary — intent and applicability over UML memorization.
-    children:
-      - id: patterns.creational
-        title: Creational Patterns
-        summary: Singleton, factory method, abstract factory, builder, prototype — who creates objects and how flexibly.
-      - id: patterns.structural
-        title: Structural Patterns
-        summary: Adapter, decorator, facade, composite, proxy, bridge, flyweight — composing objects into larger shapes.
-      - id: patterns.behavioral
-        title: Behavioral Patterns
-        summary: Strategy, observer, command, state, template method, iterator, chain of responsibility, mediator, memento, visitor.
-      - id: patterns.selection
-        title: Choosing (and Refusing) Patterns
-        summary: Mapping problem smells to patterns, pattern pairs that get confused, and over-engineering as the classic failure.
-        requires: [principles.simplicity]
-
-  - id: quality
     order: 5
-    title: Code Quality
-    summary: Recognizing rot and reversing it — the refactoring.guru layer.
+    title: "设计模式（Design Patterns）"
+    summary: "GoF 目录作为共享词汇：重意图与适用条件，轻 UML 背诵；每个模式都问一句「Python 里还需要它吗」。"
+    children:
+      - id: patterns.strategy
+        core: true
+        title: "策略模式与可替换算法（Strategy）"
+        summary: "把会变的算法抽到参数里：类形式与函数形式，定价、匹配、淘汰策略等面试常见落点。"
+        requires: [python.first-class-functions]
+      - id: patterns.observer
+        core: true
+        title: "观察者与事件（Observer）"
+        summary: "发布-订阅的进程内形态：回调注册、事件对象、弱引用与退订、同步通知的坑。"
+      - id: patterns.state
+        core: true
+        title: "状态模式（State）"
+        summary: "把「当前状态决定行为」从条件分支搬进对象或转移表：售货机、电梯、订单的共同骨架。"
+        requires: [python.dataclasses-enums]
+      - id: patterns.command
+        title: "命令与撤销重做（Command）"
+        summary: "把一次操作变成对象：撤销栈、重做栈、宏命令、与备忘录（Memento）的分工。"
+      - id: patterns.creational
+        title: "创建型模式（Creational）"
+        summary: "工厂方法、抽象工厂、建造者、原型、单例——以及 Python 里模块、类方法和关键字参数如何取代其中大半。"
+      - id: patterns.structural
+        title: "结构型模式（Structural）"
+        summary: "适配器、装饰器（与 `@decorator` 的区别）、外观、组合、代理、桥接、享元。"
+      - id: patterns.behavioral
+        title: "其余行为型模式（Behavioral）"
+        summary: "迭代器、模板方法、责任链、中介者、备忘录、访问者：意图、适用条件、Python 写法。"
+      - id: patterns.selection
+        title: "选择与拒绝模式"
+        summary: "从问题气味映射到模式、容易混淆的模式对，以及过度设计这个经典失败。"
+        requires: [principles.simplicity]
+  - id: quality
+    order: 6
+    title: "代码质量（Code Quality）"
+    summary: "识别腐化并逆转它。"
     children:
       - id: quality.smells
-        title: Code Smells
-        summary: Bloaters, OO abusers, change preventers, dispensables, couplers — and the refactoring each family calls for.
+        title: "代码坏味道（Code Smells）"
+        summary: "膨胀者、滥用面向对象、变更阻碍者、可有可无者、耦合者——以及各家族对应的重构。"
       - id: quality.refactoring
-        title: Core Refactorings
-        summary: Extract method/class, replace conditional with polymorphism, introduce parameter object, guard clauses.
+        title: "核心重构手法"
+        summary: "提取方法/类、用多态替换条件、引入参数对象、卫语句（guard clause）。"
       - id: quality.testability
-        title: Designing for Tests
-        summary: Seams, constructor injection, test double taxonomy, and why static/global state kills testability.
+        title: "为测试而设计"
+        summary: "接缝、构造函数注入、测试替身分类，以及全局/静态状态为什么扼杀可测性。"
         requires: [principles.coupling]
       - id: quality.fitness-functions
-        title: Fitness Functions
-        summary: Tests whose subject is the codebase rather than a unit — executable architecture probes, positive controls, and allowlists that may only shrink.
+        title: "适应度函数（Fitness Functions）"
+        summary: "以代码库本身为被测对象的测试：可执行的架构探针、正向对照、只许缩小的白名单。"
         requires: [quality.testability]
       - id: quality.errors
-        title: Error Handling Design
-        summary: Exceptions vs result types, validation at boundaries, designing failure paths as first-class flows.
-
+        title: "错误处理设计"
+        summary: "异常与结果类型的取舍、自定义异常层次、在边界做校验、把失败路径当作一等流程来设计。"
   - id: concurrency
-    order: 6
-    title: Concurrency
-    summary: Writing correct multi-threaded code — the LLD round's hardest add-on requirement.
+    order: 7
+    title: "并发（Concurrency）"
+    summary: "写出正确的多线程代码——LLD 轮最难的追加需求；在 Python 里还要先回答 GIL 的问题。"
     children:
       - id: concurrency.model
-        title: Threads & Memory Model
-        summary: Concurrency vs parallelism, thread lifecycle, visibility and reordering, why data races are undefined behavior.
+        core: true
+        title: "线程、GIL 与内存模型"
+        summary: "并发与并行、GIL 保护了什么又没保护什么、为什么 `x += 1` 仍然不是原子的、线程/进程/协程的选择。"
       - id: concurrency.primitives
-        title: Synchronization Primitives
-        summary: Mutex, semaphore, condition variable, reentrant and read-write locks, CAS and lock-free basics.
+        core: true
+        title: "同步原语（threading）"
+        summary: "`Lock`、`RLock`、`Condition`、`Semaphore`、`Event`、`queue.Queue`：各自解决的问题与误用方式。"
+        requires: [concurrency.model]
       - id: concurrency.hazards
-        title: Deadlock & Friends
-        summary: The four deadlock conditions and their breakers, livelock, starvation, lock ordering discipline.
-      - id: concurrency.patterns
-        title: Concurrency Patterns
-        summary: Producer-consumer, bounded blocking queue, thread pool, reader-writer, safe lazy initialization.
+        title: "死锁及其亲戚"
+        summary: "死锁四条件与各自的破法、活锁、饥饿、锁顺序纪律。"
         requires: [concurrency.primitives]
-
+      - id: concurrency.patterns
+        title: "并发模式"
+        summary: "生产者-消费者、有界阻塞队列、线程池与 `concurrent.futures`、读写锁、安全的惰性初始化。"
+        requires: [concurrency.primitives]
+      - id: concurrency.asyncio
+        title: "asyncio 与协程"
+        summary: "事件循环、`await` 的让出点、协程里的共享状态、何时选 asyncio 而不是线程。"
+        requires: [concurrency.model]
   - id: structure
-    order: 7
-    title: APIs & Program Structure
-    summary: The recurring skeleton of every machine-coding solution.
+    order: 8
+    title: "API 与程序结构（Program Structure）"
+    summary: "每一份机器编码答案里反复出现的骨架。"
     children:
       - id: structure.api
-        title: In-Process API Design
-        summary: Small stable interfaces, fluent builders, method contracts, and evolving an API without breaking callers.
+        title: "进程内 API 设计"
+        summary: "小而稳定的接口、方法契约、关键字参数与默认值，以及不破坏调用方地演进 API。"
       - id: structure.state-machines
-        title: State Machines
-        summary: Modeling lifecycles (order, elevator, game) as explicit states and transitions instead of boolean soup.
-        requires: [patterns.behavioral]
+        core: true
+        title: "状态机（State Machines）"
+        summary: "把生命周期（订单、电梯、游戏）建模为显式状态与转移，而不是一锅布尔值。"
+        requires: [patterns.state]
       - id: structure.storage
-        title: In-Memory Persistence
-        summary: Repository pattern, id generation, secondary indexes, and thread-safe in-memory stores for machine coding.
+        core: true
+        title: "内存持久化（In-Memory Persistence）"
+        summary: "仓储（repository）模式、id 生成、二级索引，以及线程安全的内存存储。"
+
+  # 题库：至少被 3 个独立来源当作一道题来教的 43 道，加 2 道按判断补入的并发题；家族与叶子按来源数排序。
+  - id: problems
+    order: 9
+    title: "设计题（Design Problems）"
+    summary: "题库：每个叶子是一道真实的 LLD 面试题，配分关题面、可运行的 Python 参考解与测试、题解文章、drill 和卡片。"
+    children:
+      - id: problems.machines
+        title: "设备与状态机"
+        summary: "一台有状态的设备：合法转移、硬件约束和并发请求。"
+        children:
+          - id: problems.machines.parking-lot
+            core: true
+            title: "停车场（Parking Lot）"
+            summary: "多楼层、多车型车位的分配与释放，计费策略可换，出入口并发。"
+            requires: [patterns.strategy, structure.storage]
+          - id: problems.machines.elevator
+            core: true
+            title: "电梯系统（Elevator System）"
+            summary: "多部电梯的请求调度：状态机、调度策略、方向与停靠队列。"
+            requires: [structure.state-machines, patterns.strategy]
+          - id: problems.machines.vending-machine
+            core: true
+            title: "自动售货机（Vending Machine）"
+            summary: "投币、选货、出货、找零的状态机，库存与找零不足的失败路径。"
+            requires: [patterns.state]
+          - id: problems.machines.atm
+            title: "ATM 取款机"
+            summary: "认证、取款、存款、查询的会话状态机，现钞面额分配与账户一致性。"
+            requires: [patterns.state]
+          - id: problems.machines.amazon-locker
+            title: "快递柜（Amazon Locker）"
+            summary: "按包裹尺寸分配柜格、取件码与过期回收。"
+            requires: [structure.storage]
+          - id: problems.machines.coffee-machine
+            title: "咖啡机（Coffee Machine）"
+            summary: "配方、原料库存的原子扣减与补货告警，多出口并发制作。"
+            requires: [concurrency.primitives]
+          - id: problems.machines.traffic-signal
+            title: "交通信号灯（Traffic Signal）"
+            summary: "路口多相位信号的定时状态机、紧急车辆抢占与可配置时序。"
+            requires: [structure.state-machines]
+      - id: problems.booking
+        title: "预订与库存"
+        summary: "有限资源按时间或座位售卖：不重复预订是核心不变量。"
+        children:
+          - id: problems.booking.movie-booking
+            core: true
+            title: "电影订票（BookMyShow）"
+            summary: "影院-影厅-场次-座位的层级模型，选座锁定、超时释放与并发下单。"
+            requires: [structure.storage, concurrency.primitives]
+          - id: problems.booking.hotel-booking
+            title: "酒店预订（Hotel Booking）"
+            summary: "按房型与日期区间的可订量、预订生命周期与取消规则。"
+            requires: [structure.state-machines]
+          - id: problems.booking.car-rental
+            title: "租车系统（Car Rental）"
+            summary: "车辆库存按门店与时间段可用性查询、预订、取还车与计费。"
+            requires: [patterns.strategy]
+          - id: problems.booking.library
+            title: "图书馆管理（Library Management）"
+            summary: "书目与馆藏副本的区分、借还与预约队列、逾期罚金。"
+            requires: [oop.relationships]
+          - id: problems.booking.airline
+            title: "航班管理（Airline Management）"
+            summary: "航班-航段-座位的建模、订座与值机、改签与取消。"
+            requires: [structure.state-machines]
+          - id: problems.booking.meeting-scheduler
+            title: "会议室预订（Meeting Scheduler）"
+            summary: "时间区间冲突检测、会议室容量匹配、周期会议与通知。"
+            requires: [structure.storage]
+          - id: problems.booking.restaurant
+            title: "餐厅管理（Restaurant Management）"
+            summary: "桌位预订、点单到后厨的订单流转、结账拆单。"
+            requires: [structure.state-machines]
+      - id: problems.games
+        title: "游戏与规则"
+        summary: "规则引擎题：棋盘、回合、合法着法与胜负判定。"
+        children:
+          - id: problems.games.chess
+            core: true
+            title: "国际象棋（Chess）"
+            summary: "棋子多态的走法生成、将军与将死判定、特殊着法与悔棋。"
+            requires: [oop.pillars, patterns.command]
+          - id: problems.games.tic-tac-toe
+            title: "井字棋（Tic-Tac-Toe）"
+            summary: "N×N 棋盘 O(1) 胜负判定、玩家轮转与可扩展规则——最常见的热身题。"
+            requires: [method.modeling]
+          - id: problems.games.snake-and-ladder
+            title: "蛇梯棋（Snake and Ladder）"
+            summary: "可配置棋盘与骰子策略、多人回合与胜利条件。"
+            requires: [patterns.strategy]
+          - id: problems.games.cricinfo
+            title: "体育比分系统（Cricinfo）"
+            summary: "比赛-局-回合的事件流建模，实时比分与统计的派生。"
+            requires: [patterns.observer]
+          - id: problems.games.deck-of-cards
+            title: "扑克牌与二十一点（Deck of Cards / Blackjack）"
+            summary: "通用牌组抽象，在其上实现具体游戏规则而不改动牌组。"
+            requires: [python.dataclasses-enums]
+      - id: problems.marketplaces
+        title: "交易与撮合"
+        summary: "多方参与、涉及金额与状态流转的业务系统。"
+        children:
+          - id: problems.marketplaces.splitwise
+            core: true
+            title: "分账（Splitwise）"
+            summary: "均分/按额/按比例的拆分策略、余额图与债务简化。"
+            requires: [patterns.strategy]
+          - id: problems.marketplaces.online-shopping
+            core: true
+            title: "在线购物（Amazon）"
+            summary: "商品目录、购物车、订单状态机与库存扣减。"
+            requires: [structure.state-machines, structure.storage]
+          - id: problems.marketplaces.ride-sharing
+            core: true
+            title: "网约车（Uber）"
+            summary: "乘客-司机匹配策略、行程状态机与计价。"
+            requires: [patterns.strategy, structure.state-machines]
+          - id: problems.marketplaces.stock-brokerage
+            title: "股票交易系统（Stock Brokerage）"
+            summary: "限价单与市价单、订单簿的价格-时间优先撮合、持仓与资金校验。"
+            requires: [structure.storage]
+          - id: problems.marketplaces.food-delivery
+            title: "外卖配送（Food Delivery）"
+            summary: "餐厅-订单-骑手三方的订单流转与派单策略。"
+            requires: [structure.state-machines]
+          - id: problems.marketplaces.online-auction
+            title: "在线拍卖（Online Auction）"
+            summary: "出价校验、最高价维护、到期结算与并发出价。"
+            requires: [concurrency.primitives]
+          - id: problems.marketplaces.digital-wallet
+            title: "数字钱包（Digital Wallet）"
+            summary: "充值、转账、交易记录，余额不能为负且转账两边一致。"
+            requires: [concurrency.hazards]
+          - id: problems.marketplaces.bank-account
+            title: "银行账户系统（Bank Account System）"
+            summary: "分关递进的机考题型：开户与转账 → 排名统计 → 定时支付 → 账户合并。"
+            requires: [structure.storage]
+      - id: problems.social
+        title: "社区与内容"
+        summary: "以用户、内容和关系为中心的平台题。"
+        children:
+          - id: problems.social.social-network
+            core: true
+            title: "社交网络（Social Network）"
+            summary: "好友关系、发帖与信息流、隐私可见性规则。"
+            requires: [patterns.observer]
+          - id: problems.social.linkedin
+            title: "职业社交（LinkedIn）"
+            summary: "个人档案、人脉连接请求、职位发布与申请。"
+            requires: [oop.relationships]
+          - id: problems.social.stack-overflow
+            title: "问答社区（Stack Overflow）"
+            summary: "问题-回答-评论、投票与声望、标签与搜索。"
+            requires: [oop.relationships]
+          - id: problems.social.chat-room
+            title: "聊天室（Chat Room）"
+            summary: "单聊与群聊、消息投递与已读、在线状态。"
+            requires: [patterns.observer]
+          - id: problems.social.task-management
+            title: "任务看板（Trello / Jira）"
+            summary: "看板-列-卡片、工作流状态转移、指派与活动记录。"
+            requires: [structure.state-machines]
+          - id: problems.social.music-streaming
+            title: "音乐流媒体（Spotify）"
+            summary: "曲库、播放列表、播放队列与播放器状态。"
+            requires: [patterns.state]
+      - id: problems.components
+        title: "基础组件"
+        summary: "机器编码轮最爱考的库级组件：接口小、数据结构和并发是重点。"
+        children:
+          - id: problems.components.lru-cache
+            core: true
+            title: "LRU / LFU 缓存"
+            summary: "O(1) 的 get/put：哈希表加双向链表，LFU 变体，线程安全版本。"
+            requires: [python.data-model, structure.api]
+          - id: problems.components.logger
+            title: "日志框架（Logging Framework）"
+            summary: "级别过滤、多输出目的地、格式化器，异步写入与线程安全。"
+            requires: [patterns.observer, patterns.structural]
+          - id: problems.components.in-memory-file-system
+            title: "内存文件系统（In-Memory File System）"
+            summary: "目录树的组合模式、路径解析、mkdir/ls/read/write 与搜索。"
+            requires: [patterns.structural]
+          - id: problems.components.notification-service
+            title: "通知服务（Notification Service）"
+            summary: "多渠道发送、用户偏好、模板与重试——进程内版本。"
+            requires: [patterns.strategy, patterns.observer]
+          - id: problems.components.pub-sub
+            title: "发布订阅与事件总线（Pub-Sub）"
+            summary: "主题、订阅者、消息分发与位点，线程安全的进程内消息队列。"
+            requires: [patterns.observer, concurrency.patterns]
+          - id: problems.components.rate-limiter
+            title: "限流器（Rate Limiter）"
+            summary: "令牌桶、滑动窗口的类设计，可注入时钟，按用户隔离与线程安全。"
+            requires: [patterns.strategy, concurrency.primitives]
+          - id: problems.components.task-scheduler
+            title: "任务调度器（Task Scheduler）"
+            summary: "延时与周期任务：堆加条件变量的调度线程、取消与工作线程池。"
+            requires: [concurrency.patterns]
+          - id: problems.components.text-editor
+            title: "文本编辑器与撤销重做（Text Editor）"
+            summary: "插入/删除/光标操作，命令模式实现的撤销重做。"
+            requires: [patterns.command]
+          - id: problems.components.ttl-cache
+            title: "带过期时间的缓存（TTL Cache）"
+            summary: "惰性过期与主动清理、可注入时钟、与淘汰策略组合。"
+            requires: [structure.api]
+          - id: problems.components.kv-store
+            title: "内存键值存储（In-Memory Key-Value Store）"
+            summary: "分关递进的机考题型：基本读写 → 扫描与前缀 → TTL → 事务或备份恢复。"
+            requires: [structure.storage]
+          - id: problems.components.thread-pool
+            title: "线程池（Thread Pool）"
+            summary: "工作线程、任务队列、Future 结果、优雅关闭与拒绝策略。"
+            requires: [concurrency.patterns]
+          - id: problems.components.bounded-blocking-queue
+            title: "有界阻塞队列（Bounded Blocking Queue）"
+            summary: "用 Condition 实现的生产者-消费者：满则阻塞、空则等待、超时与关闭。"
+            requires: [concurrency.primitives]

@@ -4,23 +4,9 @@ node: principles.composition
 type: qa
 ---
 ## Q
-```java
-class Stack<T> extends ArrayList<T> {
-  void push(T t) { add(t); }
-  T pop() { return remove(size() - 1); }
-}
-```
-What's wrong, and the refactor?
-
-## A
-Inheritance-for-reuse: `Stack` publicly inherits ~30 `List` methods (`add(i, e)`, `get(i)`, `clear()`) that let any caller break the LIFO invariant, and it permanently advertises is-a-List.
-
-Refactor to composition: hold a private `ArrayDeque`/`ArrayList`, expose only `push`/`pop`/`peek`. Inherit an interface only when you mean to honor its *entire* contract.
-
-## Q zh
 为什么 Stack 扩展 ArrayList 是一个设计错误？
 
-## A zh
+## A
 因为 Stack 是一个 LIFO（后进先出）数据结构，但 ArrayList 是一个 indexed、可随机访问的列表。
 
 如果 Stack 扩展 ArrayList：

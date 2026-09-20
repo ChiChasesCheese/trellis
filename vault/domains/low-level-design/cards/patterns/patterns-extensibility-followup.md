@@ -4,20 +4,9 @@ node: patterns.selection
 type: qa
 ---
 ## Q
-The classic LLD follow-up: "now add a new payment method / notification channel / pricing rule without touching existing code." What's the standard two-pattern answer, and what remains that you must still edit?
-
-## A
-**Strategy + factory (registry)** — the bread-and-butter OCP combo:
-
-1. The varying behavior sits behind an interface (`PaymentMethod.charge()`); core flow depends only on it — closed for modification.
-2. A **registry-based factory** maps a key to a `Supplier<PaymentMethod>`; adding UPI = one new class + one `register()` line (or an annotation/config entry).
-
-Honest caveat to state: something must still change — the registration line and the composition root. OCP means changes are **additive and localized**, not zero. If variants also need new *data* fields end-to-end (request parsing, storage), no pattern hides that; say so.
-
-## Q zh
 LLD 轮的经典追问："现在加一种新支付方式 / 通知渠道 / 定价规则，但不许改动已有代码。"标准的两模式答案是什么，又有什么是你仍然必须改的？
 
-## A zh
+## A
 **Strategy + factory（注册表）** —— 最家常的 OCP 组合：
 
 1. 变化的行为藏在一个接口后面（`PaymentMethod.charge()`）；核心流程只依赖这个接口 —— 对修改封闭。

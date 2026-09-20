@@ -4,20 +4,9 @@ node: patterns.behavioral
 type: qa
 ---
 ## Q
-Visitor makes one thing easy and one thing hard. Which, and what property of the class hierarchy must hold before you use it?
-
-## A
-Visitor flips the extension axis:
-
-- **Easy: adding operations.** A new operation over the hierarchy (type-check, pretty-print, evaluate over an AST) is one new visitor class — no touching the element classes.
-- **Hard: adding element types.** A new element forces a new `visit` method on **every existing visitor** — it's the exact mirror of adding a method to every subclass.
-
-Precondition: the element hierarchy is **stable** and the set of operations keeps growing (compilers, document models). If new element types arrive often, visitor is the wrong trade — use plain polymorphic methods. Mechanism worth naming: `element.accept(visitor)` → `visitor.visit(this)` is **double dispatch**, selecting behavior on both runtime types.
-
-## Q zh
 Visitor 让一件事变容易、另一件事变难。分别是哪两件，使用它之前类层次必须满足什么性质？
 
-## A zh
+## A
 Visitor 把扩展轴翻转了过来：
 
 - **变容易：新增操作。** 在整个层次上加一个新操作（类型检查、格式化输出、在 AST 上求值）就是一个新的 visitor 类 —— 完全不用碰元素类。

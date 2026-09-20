@@ -4,17 +4,9 @@ node: principles.simplicity
 type: qa
 ---
 ## Q
-Two modules contain near-identical 10-line blocks. When is extracting a shared helper the WRONG move?
-
-## A
-When the duplication is **accidental**: the blocks look alike today but encode different business knowledge that will change for different reasons. The merged helper then sprouts flags and branches per caller — the wrong abstraction.
-
-DRY deduplicates *knowledge*, not text. Heuristics: "duplication is cheaper than the wrong abstraction" (Sandi Metz); wait for the rule of three before extracting.
-
-## Q zh
 什么时候应该因为代码重复而不是因为不是 DRY 而违反 DRY 原则？
 
-## A zh
+## A
 两个代码片段看起来相似，但：
 - 它们由于不同的原因而改变（它们有不同的 "为什么")
 - 它们会在不同的时间演变成不同的方向

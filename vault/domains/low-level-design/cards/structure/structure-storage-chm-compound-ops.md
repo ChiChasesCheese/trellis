@@ -4,23 +4,9 @@ node: structure.storage
 type: qa
 ---
 ## Q
-You made the wallet store a `ConcurrentHashMap<UserId, Long>` and declared it thread-safe. Why does `map.put(user, map.get(user) + amount)` still lose money, and what's the correct call?
-
-## A
-`ConcurrentHashMap` makes each *individual* call atomic — not the **get-then-put compound**. Two concurrent deposits both read 100, both write 100+x; one deposit vanishes (lost update).
-
-```java
-map.merge(user, amount, Long::sum);          // atomic read-modify-write
-map.computeIfAbsent(user, u -> new Wallet())  // atomic check-then-insert
-```
-
-`compute`/`merge`/`putIfAbsent` run atomically per key. If an operation spans **multiple keys** (transfer between two wallets), no map method saves you — you're back to explicit locks with ordered acquisition.
-
-
-## Q zh
 你制造了钱包存储一个 `ConcurrentHashMap<UserId, Long>` 并宣称它是线程安全的。为什么 `map.put(user, map.get(user) + amount)` 仍然失去钱，正确的调用是什么?
 
-## A zh
+## A
 `ConcurrentHashMap` 制造每一个**单独的**调用原子的 — 不是**获得-然后-放置化合物**。两个并发存款都读取 100，都写 100+x；一个存款消失（丢失的更新）。
 
 ```java
