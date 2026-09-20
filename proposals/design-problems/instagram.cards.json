@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-instagram-read-write-ratio-forces-cdn",
+    "node": "problems.social.instagram",
+    "type": "qa",
+    "q": "In a photo-sharing app design with 150M daily active users uploading media (about 87 QPS average) versus users viewing images while scrolling their feed (about 694,444 QPS average, an ~8,000:1 read-to-write ratio), why does this ratio specifically force nearly all read traffic onto a CDN rather than just onto an application-layer cache?",
+    "a": "At roughly 8,000 image views for every one upload, even a well-tuned application-layer cache sitting in front of application servers would still route every one of those ~694,444 QPS through the application tier's network and compute capacity before reaching a cache lookup. A CDN's edge nodes sit geographically and topologically outside the application tier entirely, so at this ratio the only way to keep read traffic from overwhelming application servers and the origin store is to have edge nodes answer the vast majority of requests without ever reaching the application tier.",
+    "q_zh": "在一个图片分享应用设计中，1.5 亿日活用户上传媒体（平均约 87 QPS）对比用户刷信息流浏览图片（平均约 694,444 QPS，读写比约 8,000:1），为什么这个比例specifically 会把几乎全部读流量推给 CDN，而不是仅仅推给应用层缓存就够了？",
+    "a_zh": "在约 8,000 次图片浏览对应 1 次上传的比例下，即便应用服务器前面有调优良好的应用层缓存，约 694,444 QPS 的每一次请求也依然要先经过应用层的网络和计算能力才能走到缓存查找这一步。CDN 的边缘节点在地理和拓扑上完全在应用层之外，在这个比例下，唯一能防止读流量压垮应用服务器和存储源站的方法，就是让边缘节点直接回答绝大多数请求，根本不经过应用层。",
+    "tags": []
+  },
+  {
+    "id": "problems-instagram-presigned-url-direct-upload",
+    "node": "problems.social.instagram",
+    "type": "qa",
+    "q": "In a photo/video sharing app's upload path, why does routing every upload through the application server (client uploads to app server, app server forwards to object storage) waste resources compared to using pre-signed URLs for direct client-to-object-store upload?",
+    "a": "Proxying uploads through the application server means every media byte is received once and forwarded again, so the application tier's compute fleet has to be sized to absorb upload bandwidth even though that work is pure byte-forwarding, not business logic. With pre-signed URLs, the application server only issues a short-lived, scoped credential (valid for one specific object key and a limited time window) and the client uploads chunks directly to the object store, so the application tier's scaling is decoupled from upload bandwidth entirely, while the credential's narrow scope avoids the security risk of handing out long-lived storage credentials.",
+    "q_zh": "在一个图片/视频分享应用的上传路径中，为什么让每次上传都经过应用服务器（客户端上传到应用服务器，应用服务器再转发到对象存储）比用预签名 URL（pre-signed URL）让客户端直接上传到对象存储更浪费资源？",
+    "a_zh": "通过应用服务器代理上传意味着每一个媒体字节都要被接收一次、再转发一次，导致应用层的计算集群必须按上传带宽来配置容量，即使这部分工作只是纯粹的字节转发，不是业务逻辑。用预签名 URL 时，应用服务器只签发一个限时、限权限（只对某一个具体的对象 key 生效）的凭证，客户端直接向对象存储分片上传，应用层的扩容完全和上传带宽解耦；凭证权限范围窄，也避免了发放长期存储凭证带来的安全风险。",
+    "tags": []
+  },
+  {
+    "id": "problems-instagram-repackage-vs-retranscode",
+    "node": "problems.social.instagram",
+    "type": "qa",
+    "q": "In a video processing pipeline that must generate multiple adaptive-bitrate (ABR) renditions of an uploaded clip, why is re-transcoding each rendition from scratch far more expensive than repackaging already-encoded frame data into an ABR container, and roughly how much of a difference does this make?",
+    "a": "Independently transcoding each ABR rendition re-runs the full video encoding process (motion estimation, quantization, entropy coding) once per rendition, which is CPU-intensive work repeated redundantly. Repackaging reuses frame data that has already been encoded once (e.g. as a progressive file) and just restructures it into an ABR-compatible container without re-encoding. Meta's engineering team reported that transcoding a 23-second video to a 720p ABR rendition from scratch took about 86.17 seconds of CPU time, while repackaging the same content into ABR format took about 0.36 seconds — roughly a 239x difference.",
+    "q_zh": "在一个需要为上传视频生成多档自适应码率（ABR）版本的视频处理管道中，为什么从头独立转码每一档码率，比复用已经编码好的帧数据、重新打包成 ABR 容器格式要昂贵得多？大致差多少？",
+    "a_zh": "独立转码每一档 ABR 版本要为每一档都重新跑一遍完整的视频编码过程（运动估计、量化、熵编码），是重复消耗的 CPU 密集型工作。重新打包则复用已经编码过一次的帧数据（例如渐进式编码文件），只是把它重新组织成 ABR 兼容的容器格式，不需要重新编码。Meta 工程团队披露的真实数字：把一段 23 秒的视频从头转码到 720p ABR 版本约需 86.17 秒 CPU 时间，而把同样内容重新打包成 ABR 格式只需约 0.36 秒——约 239 倍的差距。",
+    "tags": []
+  },
+  {
+    "id": "problems-instagram-small-file-metadata-problem",
+    "node": "problems.social.instagram",
+    "type": "qa",
+    "q": "In a photo-sharing system storing billions of images, why does a traditional filesystem-style storage layer (one file per photo, looked up via filename-to-inode resolution) become a metadata bottleneck rather than a data-throughput bottleneck at scale, and how does an approach like Facebook's Haystack design fix this?",
+    "a": "Reading a single photo through a traditional NAS/NFS-style filesystem requires roughly 3 disk I/O operations on average — one to translate the filename to an inode, one to read the inode, and one to read the actual file content — so at billions of photos, disk seeks spent on metadata lookups dominate over the disk work needed to read actual photo bytes. Haystack's fix is to shrink per-photo metadata (just an id, the physical volume file, an offset, and a size) enough that the entire index can be kept in memory, collapsing a read to close to a single disk I/O for the data itself. Modern cloud object stores already implement similar internal optimizations, so most systems do not need to build a Haystack-style store themselves.",
+    "q_zh": "在一个存储数十亿张照片的图片分享系统中，为什么传统文件系统式的存储层（一张照片一个文件，靠文件名转 inode 的方式查找）在规模化后会变成元数据瓶颈而不是数据吞吐瓶颈？类似 Facebook Haystack 的设计如何解决这个问题？",
+    "a_zh": "通过传统 NAS/NFS 式文件系统读一张照片平均需要约 3 次磁盘 I/O——一次把文件名转成 inode、一次读 inode、一次读文件内容本身——所以在数十亿张照片的规模下，花在元数据查找上的磁盘寻道会远超真正读取照片字节所需的磁盘工作量。Haystack 的解法是把每张照片的元数据压缩到极小（只有 id、所在的物理卷文件、偏移量和大小），小到整个索引可以常驻内存，让一次读退化到接近一次针对数据本身的磁盘 I/O。现代云对象存储内部已经实现了类似的优化，所以大多数系统不需要真的自己从零构建 Haystack 式存储。",
+    "tags": []
+  },
+  {
+    "id": "problems-instagram-origin-shield-request-coalescing",
+    "node": "problems.social.instagram",
+    "type": "qa",
+    "q": "In a photo-sharing system's CDN design, when a newly published photo from a high-follower account causes many geographically nearby edge nodes to receive their first request for that object at nearly the same time, why does a pure pull CDN (no extra layer) create a spike at the origin, and what does an origin shield fix?",
+    "a": "In a pure pull CDN, each edge node independently treats its first request for an object as a cache miss and fetches it from the origin, so if dozens of nearby edge nodes each get a near-simultaneous first request for the same freshly-published object, they each independently issue an origin fetch, multiplying origin load by the number of edges rather than serving them from one fetch. An origin shield is a regional layer between edge nodes and the true origin that coalesces concurrent requests for the same object into a single origin fetch, with the other requests waiting on and reusing that one result instead of each triggering their own origin round trip.",
+    "q_zh": "在一个图片分享系统的 CDN 设计中，当某个高粉丝账号新发布的照片导致多个地理相邻的边缘节点几乎同时收到对该对象的第一次请求时，为什么纯拉取型（pull）CDN（没有额外保护层）会在源站产生流量尖峰？源站保护层（origin shield）如何解决这个问题？",
+    "a_zh": "在纯拉取型 CDN 中，每个边缘节点会独立把自己收到的第一次请求当作缓存未命中，各自去源站回源；如果几十个相邻的边缘节点几乎同时收到对同一个刚发布对象的第一次请求，它们就会各自独立发起一次回源，源站压力被放大到边缘节点数量的倍数，而不是只被服务一次。源站保护层是边缘节点和真正源站之间的一个区域性中间层，它把针对同一个对象的并发请求合并成一次真正的回源请求，其余请求等待并复用这一次结果，而不是各自触发自己的回源往返。",
+    "tags": []
+  },
+  {
+    "id": "problems-instagram-media-status-gates-fanout",
+    "node": "problems.social.instagram",
+    "type": "qa",
+    "q": "In a photo/video sharing app that reuses a generic news-feed fan-out mechanism, why must publishing a post (triggering fan-out to followers) be gated on the referenced media's processing status rather than happening immediately after the client finishes uploading?",
+    "a": "Media processing (resizing images or transcoding video into multiple renditions) takes measurably longer than the upload itself, so if fan-out is triggered the moment upload completes, followers can receive a feed item whose media derivatives are not yet ready — resulting in broken or blank media in their feed. Gating publication on a media status field (only allowing the post-creation call to succeed once status is 'ready') ensures fan-out only ever propagates posts whose media can already be displayed, at the cost of a short wait between 'upload complete' and 'post published' rather than making that wait block the upload confirmation itself.",
+    "q_zh": "在一个复用通用信息流 fan-out 机制的图片/视频分享应用中，为什么必须把'发布帖子（从而触发对粉丝的 fan-out）'这个动作用媒体的处理状态来门控，而不是客户端一上传完就立刻发布？",
+    "a_zh": "媒体处理（图片缩放或视频转码成多档版本）耗时明显长于上传本身，如果上传一完成就立刻触发 fan-out，粉丝的信息流里就可能出现一条媒体衍生版本还没就绪的帖子——表现为破损或空白的媒体。用一个媒体状态字段来门控发布（只有当状态变为'就绪'时，创建帖子的调用才允许成功），能保证 fan-out 传播出去的帖子背后的媒体一定已经可以展示，代价只是'上传完成'和'帖子发布'之间多了一小段等待，而不是让这段等待去阻塞上传本身的确认响应。",
+    "tags": []
+  },
+  {
+    "id": "problems-instagram-transcode-worker-failure-isolation",
+    "node": "problems.social.instagram",
+    "type": "qa",
+    "q": "In a photo/video sharing system, if the transcoding/resizing worker pool becomes completely unavailable, why does this degrade only the write (upload-to-publish) path and not the read path for already-published media?",
+    "a": "Already-published media has its derivatives (resized images, transcoded video renditions) already generated and stored in object storage, and the read path serves those bytes directly through the CDN and origin without ever involving the transcoding worker pool. A worker pool outage only prevents new uploads from progressing past their 'processing' status and getting their derivatives generated; once workers recover, they resume consuming the pipeline queue from where they left off, so no user needs to re-upload and no previously published content is affected.",
+    "q_zh": "在一个图片/视频分享系统中，如果转码/缩放工作节点池完全不可用，为什么这只会影响写路径（从上传到发布），而不影响已经发布的媒体的读路径？",
+    "a_zh": "已经发布的媒体，其衍生版本（缩放后的图片、转码后的视频版本）早已生成并存放在对象存储中，读路径直接通过 CDN 和源站提供这些字节，全程不涉及转码工作节点池。工作节点池故障只会导致新上传的媒体停留在'处理中'状态、无法生成衍生版本；节点池恢复后，它们从断点继续消费处理管道队列即可，不需要用户重新上传，也不影响任何已发布的历史内容。",
+    "tags": []
+  },
+  {
+    "id": "problems-instagram-100x-storage-tiering",
+    "node": "problems.social.instagram",
+    "type": "qa",
+    "q": "In a photo/video sharing system scaling to roughly 100x its original daily active users, why does the storage cost problem shift from 'can we store this much data' to 'is it worth keeping this data on fast storage', and what design change does that motivate?",
+    "a": "At the original scale, total media storage per year is a manageable, bounded number even though it is large; at 100x scale, the accumulated historical media (most of which is rarely accessed after the first few days or weeks) makes keeping everything on the same standard object storage tier increasingly wasteful relative to its actual access frequency. This motivates hot/warm/cold storage tiering: recently uploaded or frequently accessed media stays on the standard tier for low-latency reads, while old, rarely-accessed media is automatically migrated to a cheaper archival tier that accepts higher read latency, using existing access-frequency statistics to drive the migration decision rather than a new dedicated mechanism.",
+    "q_zh": "在一个图片/视频分享系统扩展到约 100 倍原始日活规模的场景下，为什么存储成本问题会从'能不能存得下这么多数据'变成'这些数据是否值得一直放在快速存储上'？这会推动什么样的设计变化？",
+    "a_zh": "在原始规模下，每年的媒体总存储量虽然很大，但仍是一个可控、有界的数字；扩展到 100 倍规模后，积累下来的历史媒体（其中大部分在发布后的头几天或几周就很少再被访问）如果继续全部放在同一个标准对象存储层上，相对于它们实际的访问频率会变得越来越浪费。这会推动引入热/温/冷分层存储（tiering）：近期上传或高频访问的媒体留在标准层以保证低延迟读取，长期低频访问的旧媒体自动迁移到更便宜、接受更高读取延迟的归档层，迁移决策可以直接复用已有的访问频率统计，不需要单独设计一套新的判定机制。",
+    "tags": []
+  }
+]

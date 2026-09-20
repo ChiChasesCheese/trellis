@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-news-feed-read-write-ratio-drives-precompute",
+    "node": "problems.social.news-feed",
+    "type": "qa",
+    "q": "In a news feed design with 200M daily active users where each user opens the app 8 times a day and views 3 feed pages per session (4.8 billion feed reads/day) against 4 million posts/day, why does the resulting ~1,200:1 read-to-write ratio push the design toward precomputing timelines at write time rather than aggregating them on every read?",
+    "a": "At a 1,200:1 read-to-write ratio, a read-time aggregation strategy (fan-out on read) would repeat the same expensive 'merge all followees' posts' computation on every one of ~55,556 average feed-read QPS, while write-time precomputation (fan-out on write) does that merge work only once per post, amortized over the much smaller ~46 posts/second write rate. Paying the aggregation cost on the rare write instead of the frequent read is what makes the 1,200x traffic asymmetry affordable.",
+    "q_zh": "在一个信息流设计中，2 亿日活用户平均每天打开 App 8 次、每次会话浏览 3 页时间线（合计 48 亿次/天的时间线读取），对应每天 400 万条发帖，由此得到约 1,200:1 的读写比，为什么这个比例会把设计推向'写时预计算时间线'而不是'每次读时实时聚合'？",
+    "a_zh": "在 1,200:1 的读写比下，如果采用读时聚合策略（fan-out on read），平均约 55,556 QPS 的每一次读请求都要重复一遍'合并所有关注对象最新帖子'这样昂贵的计算；而写时预计算（fan-out on write）只需要在每条帖子发布时做一次这个合并，分摊到小得多的约每秒 46 条的写入速率上。把聚合开销放在少见的写操作而不是频繁的读操作上，正是能够承受 1,200 倍流量不对称的关键。",
+    "tags": []
+  },
+  {
+    "id": "problems-news-feed-hybrid-fanout-threshold",
+    "node": "problems.social.news-feed",
+    "type": "qa",
+    "q": "In a news feed design with a power-law follower distribution (95% of accounts average 150 followers, 4.9% average 10,000, and the top 0.1% average 5 million), why does excluding only that top 0.1% of accounts from write-time fan-out reduce the average fan-out write QPS by nearly 9x, from about 260,764 to about 29,282?",
+    "a": "The weighted-average followers per post is dominated by the tiny top-0.1% segment: including it gives a weighted average of 5,632.5 followers/post (0.95x150 + 0.049x10,000 + 0.001x5,000,000), but excluding it drops the weighted average to about 633 followers/post. Because fan-out write volume scales directly with average followers per post, removing the small fraction of accounts that contributes most of the weighted average collapses the fan-out write rate from ~260,764 QPS to ~29,282 QPS — an 8.9x reduction — even though 99.9% of posts still get pushed normally.",
+    "q_zh": "在一个信息流设计中，粉丝数呈幂律分布（95% 的账号平均 150 粉丝，4.9% 平均 1 万粉丝，头部 0.1% 平均 500 万粉丝），为什么仅仅把这最上层 0.1% 的账号从写时 fan-out 中剔除，就能把平均 fan-out 写 QPS 从约 260,764 降到约 29,282，降低近 9 倍？",
+    "a_zh": "每条帖子的加权平均粉丝数主要由这极小的头部 0.1% 拉高：算上它，加权平均是每帖 5,632.5 个粉丝（0.95×150 + 0.049×10,000 + 0.001×5,000,000）；剔除它之后，加权平均降到约每帖 633 个粉丝。因为 fan-out 写入量直接正比于每帖平均粉丝数，去掉这一小部分贡献了大部分加权平均值的账号，就能把 fan-out 写速率从约 260,764 QPS 压到约 29,282 QPS——降低 8.9 倍——即便 99.9% 的帖子依然正常走推送。",
+    "tags": []
+  },
+  {
+    "id": "problems-news-feed-redundant-cache-hot-key",
+    "node": "problems.social.news-feed",
+    "type": "qa",
+    "q": "In a news feed system, why doesn't adding more shards to a post-content cache fix the read-side hot key problem when a single post from a high-follower account goes viral and millions of users request the same post_id within seconds?",
+    "a": "Sharding by post_id always routes every request for that one viral post_id to the same single shard, regardless of how many total shards exist — adding shards only spreads load for keys that are actually distributed across different post_ids, not for repeated requests to one hot key. The fix is a redundant/replicated cache: the hot post's content is copied to N independent cache instances, and reads are routed by request identity (e.g. a random value or requesting user id) rather than by post_id, spreading the hot key's traffic evenly across all N replicas at the cost of each replica independently missing to the database once.",
+    "q_zh": "在一个信息流系统中，当某个高粉丝账号的一条帖子爆红、数百万用户在几秒内并发请求同一个 post_id 时，为什么给帖子内容缓存加更多分片解决不了这种读侧热点（hot key）问题？",
+    "a_zh": "按 post_id 分片时，无论总共有多少分片，这一个爆红 post_id 的全部请求永远都会被路由到同一个分片——增加分片数只能分散那些真正分布在不同 post_id 上的负载，对重复请求同一个热 key 毫无帮助。正确做法是冗余/复制缓存（redundant/replicated cache）：把热帖内容复制到 N 个互相独立的缓存实例上，读请求按请求本身的身份（例如一个随机值或请求用户的 id）而不是按 post_id 路由，代价是每个副本各自要向数据库回源一次，换来的是热 key 的流量均匀摊到全部 N 个副本上。",
+    "tags": []
+  },
+  {
+    "id": "problems-news-feed-multipass-ranking-funnel",
+    "node": "problems.social.news-feed",
+    "type": "qa",
+    "q": "In a ranked news feed serving 200M daily active users where each user has over 1,000 ranking candidates per day on average, why is a single-stage 'run the heavy model on every candidate' ranking design computationally infeasible, and what architecture does Meta's real News Feed ranking system use instead?",
+    "a": "Running a heavy model on every candidate for every user works out to roughly 2x10^8 users x 1,000 candidates = 2x10^11 model inferences per day, which is not affordable at read-latency budgets. Meta's real architecture instead uses a multi-pass funnel: Pass 0 runs a lightweight model to narrow over 1,000 candidates down to about 500; Pass 1 runs a heavier multitask neural network to score only those ~500 candidates individually; Pass 2 applies contextual rules (like content-type diversity) to re-rank the final list. The expensive model only ever runs on the small candidate set that survives Pass 0.",
+    "q_zh": "在一个服务 2 亿日活用户的排序信息流（ranked feed）中，假设每个用户每天平均有超过 1,000 个排序候选，为什么'对每个候选都跑重模型'的单阶段排序方案在计算量上不可行？Meta 真实的信息流排序系统采用了什么架构来代替它？",
+    "a_zh": "对每个用户的每个候选都跑重模型，计算量约为 2×10^8 用户 × 1,000 候选 = 2×10^11 次模型推理/天，在读延迟预算下完全无法承受。Meta 真实架构采用的是多阶段（multi-pass）漏斗：Pass 0 用轻量模型把超过 1,000 条候选筛到约 500 条；Pass 1 用较重的多任务神经网络只对这约 500 条逐条打分；Pass 2 应用上下文规则（如内容类型多样性）对最终列表重排。昂贵的模型自始至终只运行在 Pass 0 筛选后剩下的小候选集上。",
+    "tags": []
+  },
+  {
+    "id": "problems-news-feed-capped-inbox-vs-unbounded",
+    "node": "problems.social.news-feed",
+    "type": "qa",
+    "q": "In a news feed design, why does capping each user's precomputed inbox (home timeline cache) at a fixed size like 800 entries matter more as the system runs over time than it does on day one?",
+    "a": "An uncapped inbox grows without bound as a function of both how many accounts a user follows and how long the system has been running: a user following 5,000 accounts that each post about once a day accumulates roughly 5,000 new entries per day, or about 1.8 million entries after a year, for a single user. A fixed 800-entry cap keeps each user's inbox memory footprint constant regardless of elapsed time or follow count, with older entries archived to cold storage that the normal read path never touches — trading unlimited scroll-back depth (which users rarely use) for bounded, predictable memory cost.",
+    "q_zh": "在一个信息流设计中，为什么把每个用户预计算收件箱（home timeline 缓存）的容量固定在类似 800 条这样的上限，会随着系统运行时间增长而变得越来越重要，而不只是上线第一天的细节？",
+    "a_zh": "不设上限的收件箱会随着'用户关注了多少账号'和'系统已经运行了多久'这两个维度同时无界增长：一个关注了 5,000 个账号、且这些账号平均每天各发一条帖子的用户，每天大约新增 5,000 条记录，一年后单个用户的收件箱就会累积约 180 万条。固定 800 条的上限能让每个用户的收件箱内存占用不随时间或关注数增长而变化，更早的条目归档到冷存储、正常读路径不会访问——用几乎没人会翻到的无限回溯深度，换取有界且可预测的内存开销。",
+    "tags": []
+  },
+  {
+    "id": "problems-news-feed-composite-pagination-cursor",
+    "node": "problems.social.news-feed",
+    "type": "qa",
+    "q": "In a ranked (not purely chronological) news feed, why is a plain timestamp an unreliable pagination cursor, and what cursor design fixes it?",
+    "a": "A ranked feed's display order is determined by a computed score, not strictly by creation time, so multiple items can share nearly the same timestamp while having different ranks; paginating on timestamp alone causes items at a shared or nearby timestamp to be duplicated or skipped as new posts keep being inserted concurrently. The fix is a composite cursor of (score, postId): the query compares both fields together, using postId to break ties deterministically when scores match, so the pagination boundary stays stable and consistent with the actual ranked order even under concurrent inserts.",
+    "q_zh": "在一个按算法排序（而非纯时间倒序）的信息流里，为什么单纯用时间戳做分页游标不可靠？什么样的游标设计能修复这个问题？",
+    "a_zh": "算法排序的信息流的展示顺序由一个计算出来的分数决定，不是严格按创建时间排列，所以多条内容可能时间戳几乎相同却排序不同；只用时间戳分页，在新帖不断并发插入的情况下，时间戳相同或相近的条目会被重复展示或遗漏。修复方法是用 (score, postId) 复合游标：查询同时比较这两个字段，分数相同时用 postId 做确定性的平局裁决，这样即使在并发插入下，分页边界依然和真实的排序结果保持稳定一致。",
+    "tags": []
+  },
+  {
+    "id": "problems-news-feed-inbox-cache-outage-degradation",
+    "node": "problems.social.news-feed",
+    "type": "qa",
+    "q": "In a news feed system, what is the correct degradation behavior when the inbox cache (the Redis-class store holding each user's precomputed home timeline) becomes unavailable, and why is this better than returning an error?",
+    "a": "The correct degradation is to fall back to real-time fan-out on read: reconstruct the requesting user's timeline by fetching recent posts directly from each followee's post store and merging them on the fly, instead of reading the precomputed inbox. This is strictly slower (latency degrades from sub-200ms to the second range) but keeps the feed functional, because the inbox cache is a materialized view that can always be rebuilt from the authoritative post store and follow graph — it is not the source of truth, so its unavailability should degrade performance, not correctness or availability.",
+    "q_zh": "在一个信息流系统中，当收件箱缓存（保存每个用户预计算主时间线的 Redis 类存储）不可用时，正确的降级行为是什么？为什么这比直接返回错误更好？",
+    "a_zh": "正确的降级是退化为实时的读时 fan-out：直接从每个被关注对象的帖子存储里拉取最新帖子并即时合并，重建请求用户的时间线，而不是去读预计算的收件箱。这样做延迟明显变差（从亚 200ms 劣化到秒级），但信息流功能依然可用，因为收件箱缓存只是一份可以随时从权威的帖子存储和关注关系图重建出来的物化视图，不是数据的权威来源——它的不可用应该只影响性能，不应该影响正确性或整体可用性。",
+    "tags": []
+  },
+  {
+    "id": "problems-news-feed-10x-physical-shard-inbox",
+    "node": "problems.social.news-feed",
+    "type": "qa",
+    "q": "In a news feed design scaling from 200M to 2 billion daily active users (a 10x jump), why does the inbox cache need to move from a single Redis cluster to multiple physically isolated clusters sharded by user_id, rather than just adding more nodes to one cluster?",
+    "a": "At 200M users with an 800-entry cap and ~20 bytes/entry, the inbox cache totals about 3.2TB; at 10x the user count it grows to about 32TB, which is beyond what a single cluster can reasonably hold or fail over as one unit. Sharding physically by user_id into multiple independent clusters bounds the blast radius of any single cluster's failure to the users it owns, and lets each cluster be scaled, upgraded, or recovered independently — the same isolation principle as partitioning a single hot resource (like one event's seat inventory) away from unrelated traffic, rather than trusting one ever-growing cluster to absorb unlimited scale.",
+    "q_zh": "在一个信息流设计从 2 亿日活扩展到 20 亿日活（10 倍增长）的场景下，为什么收件箱缓存需要从单一 Redis 集群改为按 user_id 物理隔离的多个独立集群，而不是简单地往一个集群里加更多节点？",
+    "a_zh": "在 2 亿用户、800 条上限、每条约 20 字节的假设下，收件箱缓存总量约 3.2TB；用户数增长 10 倍后会增长到约 32TB，这已经超出单一集群能合理承载或作为一个整体做故障转移的规模。按 user_id 物理拆分成多个独立集群，能把任何一个集群故障的影响范围限制在它所负责的那部分用户内，并让每个集群可以独立扩容、升级、恢复——这和把单一热点资源（比如某一场演出的座位库存）与无关流量隔离开是同一个隔离原则，而不是寄希望于一个不断膨胀的单一集群能无限吸收增长。",
+    "tags": []
+  }
+]

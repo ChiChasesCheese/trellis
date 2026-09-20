@@ -1,0 +1,12 @@
+{
+  "problems.social.news-feed": [
+    "problems-news-feed-read-write-ratio-drives-precompute",
+    "problems-news-feed-hybrid-fanout-threshold",
+    "problems-news-feed-redundant-cache-hot-key",
+    "problems-news-feed-multipass-ranking-funnel",
+    "problems-news-feed-capped-inbox-vs-unbounded",
+    "problems-news-feed-composite-pagination-cursor",
+    "problems-news-feed-inbox-cache-outage-degradation",
+    "problems-news-feed-10x-physical-shard-inbox"
+  ]
+}

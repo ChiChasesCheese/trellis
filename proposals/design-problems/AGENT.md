@@ -38,6 +38,11 @@ argument is structural ("Kafka's control plane is not built for a billion partit
 structural argument and drop the figure. Never write "industry experience says" for a number
 that came from one prep site.
 
+**The article speaks to the learner, never about how it was written.** No mention of these
+instructions or their rules, of fetching, of pages you could not reach, of "this survey" or
+"the task". What you could not verify is said as a fact about the claim ("secondhand; the
+primary source was not checked"), not as a story about your session.
+
 Ground it before you write. Read the free authoritative treatments (the URLs in your
 task, `github.com/donnemartin/system-design-primer`, the company's own engineering blog
 posts and papers about the real system) with WebFetch/WebSearch. Then **write in your own

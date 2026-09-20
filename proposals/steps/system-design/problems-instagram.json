@@ -1,0 +1,12 @@
+{
+  "problems.social.instagram": [
+    "problems-instagram-read-write-ratio-forces-cdn",
+    "problems-instagram-presigned-url-direct-upload",
+    "problems-instagram-repackage-vs-retranscode",
+    "problems-instagram-small-file-metadata-problem",
+    "problems-instagram-origin-shield-request-coalescing",
+    "problems-instagram-media-status-gates-fanout",
+    "problems-instagram-transcode-worker-failure-isolation",
+    "problems-instagram-100x-storage-tiering"
+  ]
+}
