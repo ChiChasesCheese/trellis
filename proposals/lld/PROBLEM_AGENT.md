@@ -56,7 +56,7 @@ released? Unbounded growth in a component whose job is bounded memory is a faile
 
 ## 1. The code — `vault/domains/low-level-design/problems/<slug>/`
 
-- `solution.py` — the reference solution. 150–500 lines, standard library only, Python 3.12, fully
+- `solution.py` — the reference solution. 120–700 lines (the gate's range; aim for 300–500), standard library only, Python 3.12, fully
   type-annotated, a Chinese module docstring that states the design in five lines, Chinese
   docstrings and comments (identifiers stay English). At least three top-level classes. No `print`
   in library code; an `if __name__ == "__main__":` demo at the bottom is welcome.

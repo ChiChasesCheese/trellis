@@ -1,0 +1,12 @@
+{
+  "problems.booking.hotel-booking": [
+    "problems-hotel-booking-night-is-the-unit",
+    "problems-hotel-booking-late-room-assignment",
+    "problems-hotel-booking-min-not-first",
+    "problems-hotel-booking-counter-vs-segment-tree",
+    "problems-hotel-booking-range-reserve-atomic",
+    "problems-hotel-booking-zero-bucket-deleted",
+    "problems-hotel-booking-transition-table",
+    "problems-hotel-booking-overbooking-and-pricing"
+  ]
+}
