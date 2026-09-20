@@ -64,7 +64,7 @@ tags: [solution]
 - `Conversation(id, type: direct|group, participant_ids[])`
 - `Group(id, name, owner_id, member_ids[], created_at)`
 - `Message(id, conversation_id, sender_id, client_msg_id, ciphertext, seq, server_ts)`——`id` 是全局唯一、时间可排序的（如 Snowflake ID）；`seq` 是**会话内**单调递增序号，只在该会话分区内有意义。
-- `DeliveryStatus(message_id, device_id, status: sent|delivered|read, updated_at)`——不是每收件人一份消息体，而是每（消息, 设备）一行状态。
+- `DeliveryStatus(message_id, device_id, status: sent|delivered|read, updated_at)`——不是每收件人一份消息体，而是每（消息，设备）一行状态。
 - `PresenceState(user_id, status: online|offline, last_seen_ts)`
 
 **API**（以长连接帧为主，REST 为辅）
@@ -125,7 +125,7 @@ flowchart LR
 
 两个真实做法的对比：
 
-- **纯客户端时间戳**：简单，但时钟漂移导致乱序,尤其在弱网重发时更明显；无法去重（两条时间戳相同的消息无法区分先后）。
+- **纯客户端时间戳**：简单，但时钟漂移导致乱序，尤其在弱网重发时更明显；无法去重（两条时间戳相同的消息无法区分先后）。
 - **逻辑时钟（Lamport/Vector Clock）**：如 systemdesign.one 对 Slack 架构的描述，用逻辑时钟而非物理时间戳排序，能在分布式写入下给出因果序，但实现和调试复杂度高，向量时钟随会话参与者数增长而增长。
 - **单分区单调序号（本设计选择）**：每个会话固定路由到消息存储的一个逻辑分区，由该分区的写入路径（类似 Kafka 单分区内的 offset）分配严格递增的 `seq`。因为一个会话的所有写入本就要落到同一分区（否则时间分桶和范围查询都做不到），"单分区=单一写入序"是免费获得的，不需要额外的协调服务。
 
@@ -144,7 +144,7 @@ flowchart LR
 **方案对比**：
 
 - **每收件人一份消息体副本**：实现简单（推给谁就复制一份到谁的"信箱"），但如容量估算所示，群聊场景下会把写入放大 9 倍、存储放大约 8 倍（4.05TB/天 vs 506GB/天）。
-- **单份消息体 + 每（消息,设备）一行状态**（本设计选择）：消息体只在会话分区里存一份，每个收件设备只需一行约 25 字节的状态记录（`message_id, device_id, status, updated_at`），配合客户端的 `since_seq` 游标做增量拉取。离线用户重新连接时携带自己最后确认的 `seq`，服务器返回 `seq` 之后的所有消息——这是 `GET /v1/conversations/{id}/messages?since_seq=` 存在的原因，也是为什么它必须幂等（断网重连多次调用同一个 since_seq 不会产生副作用）。
+- **单份消息体 + 每（消息，设备）一行状态**（本设计选择）：消息体只在会话分区里存一份，每个收件设备只需一行约 25 字节的状态记录（`message_id, device_id, status, updated_at`），配合客户端的 `since_seq` 游标做增量拉取。离线用户重新连接时携带自己最后确认的 `seq`，服务器返回 `seq` 之后的所有消息——这是 `GET /v1/conversations/{id}/messages?since_seq=` 存在的原因，也是为什么它必须幂等（断网重连多次调用同一个 since_seq 不会产生副作用）。
 
 **多设备**：每台 `Device` 独立维护 `last_ack_seq`，"delivered" 的判定是"至少一台设备确认"，"该用户所有设备都读完"则是另一个更弱的可选状态（多数产品不强求）。这样加一台新设备（比如新增桌面客户端）不需要改消息存储的写路径，只需要该设备携带 `since_seq=0` 走一次历史回放。
 

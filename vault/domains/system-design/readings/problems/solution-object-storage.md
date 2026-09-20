@@ -147,12 +147,12 @@ multipart 上传、十亿级 key 的列举、删除与覆盖对象的垃圾回�
 
 - **Bucket**：`name`, `region`, `versioning_enabled`, `default_storage_class`。
 - **Object**：`bucket`, `key`, `version_id`, `size`, `etag`, `storage_class`,
-  `placement_ref`（指向数据面的放置组/条带）, `created_at`, `tombstoned`
+  `placement_ref`（指向数据面的放置组/条带），`created_at`, `tombstoned`
   （逻辑删除标记，见「深入探讨」第 6 节）。
 - **MetadataShard**（内部实体）：`shard_id`, `key_range`, `backing_store`——元数据
   服务按 key 哈希或字典序范围分片，见「深入探讨」第 1 节。
 - **PlacementGroup / Stripe**（内部实体）：`stripe_id`, `scheme`
-  （`replication` 或 `erasure(k,m)`）, `fragment_locations[]`——数据实际落在哪些
+  （`replication` 或 `erasure(k,m)`），`fragment_locations[]`——数据实际落在哪些
   存储节点上，见「深入探讨」第 2、3 节。
 - **MultipartUpload**：`upload_id`, `bucket`, `key`, `parts[{part_number, etag,
   size}]`, `initiated_at`——对象在 `CompleteMultipartUpload` 成功前不存在。

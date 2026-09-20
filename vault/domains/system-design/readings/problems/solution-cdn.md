@@ -125,7 +125,7 @@ functions、WAF 规则引擎的具体实现、证书自动化颁发（ACME）细
 - **CacheRule（缓存规则）**：`path_pattern`, `ttl`, `cache_key_vary[]`
   （见「深入探讨」第 3 节）、`stale_while_revalidate`, `stale_if_error`。
 - **Origin（源站）**：`addresses[]`, `health_check`, `weight`（支持多源站与权重）。
-- **PurgeJob（清除任务）**：`id`, `mode`（url / prefix / surrogate-key）,
+- **PurgeJob（清除任务）**：`id`, `mode`（url / prefix / surrogate-key），
   `targets[]`, `status`, `pops_acked / pops_total`——purge 不是同步操作，而是一个
   可轮询的异步任务，这是它的正确抽象（见「深入探讨」第 3 节）。
 - **PopNode（边缘节点，内部实体，不对客户暴露）**：`pop_id`, `region_shield_id`,
