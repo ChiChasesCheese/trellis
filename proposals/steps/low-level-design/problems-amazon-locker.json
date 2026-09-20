@@ -1,0 +1,12 @@
+{
+  "problems.machines.amazon-locker": [
+    "problems-amazon-locker-size-value-object-not-enum",
+    "problems-amazon-locker-smallest-fitting-allocation",
+    "problems-amazon-locker-code-is-not-a-password",
+    "problems-amazon-locker-three-failures-differ",
+    "problems-amazon-locker-expiry-heap-lazy-deletion",
+    "problems-amazon-locker-every-container-shrinks",
+    "problems-amazon-locker-lock-covers-allocate-and-issue",
+    "problems-amazon-locker-reverse-flow-grant-purpose"
+  ]
+}

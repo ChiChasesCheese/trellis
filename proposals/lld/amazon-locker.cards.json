@@ -1,0 +1,66 @@
+[
+  {
+    "id": "problems-amazon-locker-size-value-object-not-enum",
+    "node": "problems.machines.amazon-locker",
+    "type": "qa",
+    "q": "在快递柜（Amazon Locker）设计里，柜格尺寸用 `IntEnum`（S/M/L 三档）表达有什么隐患？换成什么？",
+    "a": "隐患是**档位集合在导入时就封死了**：机考第 4 关加一种超大格时，要改枚举定义、改所有 `if size >= ...`，而枚举值通常已经被序列化进数据库和消息，改它等于一次数据迁移。它还默认尺寸是全序的，可真实柜格不是——又高又窄和又矮又宽哪个更大？\n\n换成带三维的**值对象**（value object，不可变、可哈希、按值相等的小对象）：\n\n```python\n@dataclass(frozen=True, slots=True)\nclass Size:\n    name: str\n    width: int\n    depth: int\n    height: int\n\n    def accommodates(self, other: \"Size\") -> bool:\n        return (self.width >= other.width\n                and self.depth >= other.depth\n                and self.height >= other.height)\n```\n\n判据很硬：分配逻辑里不许出现任何一个具体尺寸名，循环跑的是当前有空柜的那些尺寸类。做到了，新增尺寸就是多造一个 `Size` 对象，分配代码一行不改。",
+    "tags": []
+  },
+  {
+    "id": "problems-amazon-locker-smallest-fitting-allocation",
+    "node": "problems.machines.amazon-locker",
+    "type": "qa",
+    "q": "快递柜（Amazon Locker）给一件包裹挑柜格的规则是什么？它的代价是什么？用三维尺寸时「最小」怎么定义？",
+    "a": "规则是**最小可容纳优先**（smallest fitting）：在所有装得下它的空柜里挑最小的那个。不是精确匹配——小包裹在小柜用完时必须能占中号柜，否则柜子空着还拒单。\n\n代价要说出口：这是贪心，可能把中号柜浪费给小包裹，导致随后到来的中号包裹无处可放。接受它，因为拒收一次投递的成本远高于柜位利用率低一点。\n\n三维尺寸下「装得下」只是**偏序**（partial order），并列时无法比较，所以要补一个全序排序键打破并列：`sort_key = (volume, name)`——先比体积，再比名字。名字这一项纯粹为了确定性：否则同体积的两个尺寸谁先被选中取决于字典迭代顺序，测试会飘。",
+    "tags": []
+  },
+  {
+    "id": "problems-amazon-locker-code-is-not-a-password",
+    "node": "problems.machines.amazon-locker",
+    "type": "qa",
+    "q": "快递柜（Amazon Locker）的取件码和密码有什么本质区别？由此，「连续输错就锁定」该锁定什么？",
+    "a": "取件码是**持有即凭证**（bearer token）：不绑定任何身份，谁拿到谁能开那一个柜门；由系统生成所以熵可以很高；只能用一次；只开一扇门；只在几天内有效。密码则绑定身份、由用户自选（熵低）、可反复使用。\n\n推论是致命的：**错误尝试无法按包裹或账号计数**。一个错误的码不属于任何人——你根本不知道输它的人想开哪扇门。而且如果真按包裹锁定（比如先输手机号再输码），任何人都能对着别人的包裹连按三次，把机主锁在自己的包裹外面，认证机制变成拒绝服务武器。\n\n所以限流按**终端**：这台柜机连续被输错 N 次就整机冷却几分钟。真正的防护来自码的熵（用 `secrets` 而不是 `random`，8 位 31 进制约 8.5e11 种）加上这个分钟级窗口。",
+    "tags": []
+  },
+  {
+    "id": "problems-amazon-locker-three-failures-differ",
+    "node": "problems.machines.amazon-locker",
+    "type": "qa",
+    "q": "在快递柜（Amazon Locker）的取件口上，码不存在、码过期、码用错了门，这三种失败哪些算可疑、哪些要作废那个码？",
+    "a": "只有**码不存在**算可疑，也只有它累计失败计数、可能触发柜机冷却——码表里根本没有它，唯一的解释就是有人在猜。\n\n**码过期**：码是真的，只是本人来晚了。不计入失败计数，否则迟到三天的顾客会被当成攻击者锁在门外。但要就地把状态收干净：柜格回池、包裹标记退回寄件人、码从码表删除，然后才抛 `ExpiredCodeError`——只抛异常不回收，柜格会一直挂在已占用上直到下一次扫描。\n\n**码用错了门**（拿投件码按了取件口）：不计失败，**而且绝不能作废这个码**——否则顾客按错一次，退货就只能打客服。\n\n还有一条同源的纪律：**作废要推迟到动作真的成功之后**。校验一步、烧码另一步——否则「退货塞不进预留的柜格」这种失败会白白烧掉顾客手里的投件码。\n\n```python\ndef _validate(self, code, purpose, now, events):\n    ...            # 三条失败分支\n    self._failures = 0   # 出示了真码就不算可疑\n    return grant\n\ndef _burn(self, grant):\n    del self._grants[grant.code]\n```",
+    "tags": []
+  },
+  {
+    "id": "problems-amazon-locker-expiry-heap-lazy-deletion",
+    "node": "problems.machines.amazon-locker",
+    "type": "qa",
+    "q": "快递柜（Amazon Locker）的「三天没人取就回收」，为什么不用 `threading.Timer` 也不用后台线程定期全表扫？正确做法的坑在哪？",
+    "a": "每个授权一个定时器：一个网点上千个码就是上千个句柄，取件后忘了取消就是泄漏，而且测试只能真等，或把期限调成 0.1 秒再 `sleep`。后台线程定期全表扫：每次 O(码表大小)，更根本的问题是**逻辑里出现了真实时间**，这段代码从此只能靠 `sleep` 测。\n\n正确做法是**显式的 `expire_due()` + 注入时钟 + 到期小顶堆**：时间只从 `self._clock()` 进来（测试里是可手动推进的假时钟），谁来驱动扫描是部署问题；堆让扫描只看堆顶，代价 O(k log n)。\n\n坑是**惰性删除**（lazy deletion）：包裹被提前取走时只删了码表，堆里那条记录还在。弹出时必须识别并丢弃：\n\n```python\nwhile self._deadlines and self._deadlines[0][0] <= now:\n    _, code = heapq.heappop(self._deadlines)\n    grant = self._grants.get(code)\n    if grant is None or not grant.is_expired(now):\n        continue\n    events.append(self._expire(grant, now))\n```\n\n漏掉那两行 `continue`，堆就是一个功能全对、跑一个月才爆的内存泄漏。",
+    "tags": []
+  },
+  {
+    "id": "problems-amazon-locker-every-container-shrinks",
+    "node": "problems.machines.amazon-locker",
+    "type": "qa",
+    "q": "快递柜（Amazon Locker）里有三个容器必须会缩，分别是哪三个、被什么事件缩？怎么在不读私有属性的前提下测它们？",
+    "a": "1. **码表** `dict[code, AccessGrant]`：取走、过期、改派三条路径都要立刻删键。这是全系统唯一的码索引，它只增不减就等于码永远有效。\n2. **可用索引** `dict[Size, set[locker_id]]`：某个尺寸的桶空了就把**键也删掉**，不留计数为 0 的幽灵尺寸——否则「扫一遍装得下的尺寸类」这个循环会越扫越长。\n3. **到期堆**：扫描弹出时丢弃已被取走的陈旧条目。\n\n测法是把不变式做成**只读属性**：`code_count`、`pending_expiry_count`、`free_count(size)`。测试断言这些数字，而不是断言 `_grants` 或 `_free`——练习者完全可能选别的内部表示（用排序列表代替堆），断言私有字段的测试会判一份正确答案不及格。一条只在对象内部可见的不变式，就该有一个属性把它露出来。",
+    "tags": []
+  },
+  {
+    "id": "problems-amazon-locker-lock-covers-allocate-and-issue",
+    "node": "problems.machines.amazon-locker",
+    "type": "qa",
+    "q": "多个快递员同时在一台快递柜（Amazon Locker）柜机上投件，临界区应该覆盖哪几步？GIL 能帮上忙吗？多网点路由时还有什么坑？",
+    "a": "临界区必须整体覆盖：挑柜 → 从可用索引摘除 → 放包裹 → 生成唯一码 → 写码表 → 压到期堆。危险不在任何单独一步，而在步与步之间：A 选中了 L1 还没标占用，B 也选中了 L1。一把粗锁即可——柜机的操作频率是每秒个位数，按尺寸分锁只会带来锁顺序和死锁问题，收益为零。\n\n**GIL 帮不上忙**：它保证字节码级别的原子性，而读 `_free` 再改 `_free` 是好几条字节码，中间完全可能被切换；`heapq.heappush` 本身也不是原子的。GIL 只让你免于数据结构内部被写坏，对复合操作零保护。\n\n另外两条：订阅者通知必须在**锁外**发出（一个发短信的慢订阅者不该堵住整排柜子）；多网点路由时**不许先查后投**——`free_count()` 和 `deposit()` 之间隔着别的快递员，这是检查与使用竞态（TOCTOU）。正确写法是直接投，把「这家满了」当成可恢复异常换下一家。",
+    "tags": []
+  },
+  {
+    "id": "problems-amazon-locker-reverse-flow-grant-purpose",
+    "node": "problems.machines.amazon-locker",
+    "type": "qa",
+    "q": "快递柜（Amazon Locker）要加「退货投柜」（顾客投件、快递员来收）这条反向流程，怎么加才算证明了设计可扩展？",
+    "a": "不新开一套服务，而是承认：正反两个方向唯一的差别是**这个码允许做什么**。加一个两成员的枚举即可：\n\n```python\nclass GrantPurpose(Enum):\n    COLLECT = \"collect\"     # 开门，把东西拿走\n    DROP_OFF = \"drop_off\"   # 开门，把东西放进去\n```\n\n反向流程于是是：`reserve_return` 分配柜格并置为 `RESERVED`（离开可用池但里面是空的），签发 `DROP_OFF` 码给顾客；顾客 `drop_off` 用掉它把退货放进去，系统随即签发 `COLLECT` 码给快递员。\n\n证据形态是能指着 diff 说哪几块没动：分配、码表、限流、过期扫描全部复用，一行没改。过期扫描甚至不需要知道两种流程的区别——释放柜格时拿到 `None` 就说明这是一个没人来投的预留，没有包裹要标记退回。新增的只有一个枚举成员、一个柜格状态成员和两个方法。",
+    "tags": []
+  }
+]
