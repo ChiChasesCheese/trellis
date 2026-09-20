@@ -1,0 +1,58 @@
+[
+  {
+    "id": "problems-stock-brokerage-book-knows-no-money",
+    "node": "problems.marketplaces.stock-brokerage",
+    "type": "qa",
+    "q": "在股票交易系统（stock brokerage）设计里，订单簿（order book，挂着所有未成交买卖单的那本簿子）该不该负责扣钱过户？这一刀切在哪里，能换来什么？",
+    "a": "**不该。订单簿只认股数，一分钱都不碰。**\n\n切法是两层：\n\n- `OrderBook` / `BookSide`：谁排在谁前面、这一笔成交多少股、成交价是多少。它的输出是一串 `(对手挂单, 成交价, 成交股数)`。\n- `Brokerage`（门面 Facade）：账户、资金与持仓校验、按这串结果逐笔结算、成交流水、行情推送。\n\n换来三件事：撮合规则可以脱离钱被单独测试（撮合是纯粹的排序与配对）；资金规则怎么改（加手续费、加融资融券、改结算周期）都动不到撮合的任何一行；以及最实际的——撮合出错和记账出错在栈里是两个地方，不会混成一团。\n\n反面写法是在撮合循环里直接 `buyer.debit(...)`、`seller.credit(...)`，流行题解大多如此：一旦钱不够就得把已经改过的对手单和簿子结构回滚回去，而那几乎必然写错。"
+  },
+  {
+    "id": "problems-stock-brokerage-price-level-dict-fifo",
+    "node": "problems.marketplaces.stock-brokerage",
+    "type": "qa",
+    "q": "股票订单簿要支持四个操作：取最优价、按价格-时间优先取下一张该成交的单、挂新单、**撤单**。用「每侧一个堆（heap）」还是「有序价位表 + 每个价位一个 FIFO」？撤单分别要多少代价？",
+    "a": "选**有序价位表 + 每价位一个 FIFO**。分水岭就是撤单——真实市场里撤单笔数远超成交笔数。\n\n**堆**：挂单 O(log n)、取最优 O(1)，但堆不支持按单号删除。只能「惰性删除」：打个已撤标记，等它浮到堆顶再丢。于是堆的大小与**历史报单量**同阶而不是与当前挂单量同阶——一个本该有界的容器在无声地无限增长。\n\n**两级结构**：Python 的 `dict` 从 3.7 起保证保持插入顺序，所以一个价位的 FIFO 直接用 `dict[order_id, Order]`——它既是先进先出队列，又白送 O(1) 的按单号删除（`deque` 从中间删是 O(n)）。价位集合用一条 `list` 加 `bisect` 维持有序：\n\n```python\nlevel = self._levels.get(price)\nif level is None:\n    level = self._levels[price] = {}\n    bisect.insort(self._prices, price)\nlevel[order.id] = order\n```\n\n代价：挂到已存在的价位 O(1)，开新价位 O(L)（L = 活跃价位数），取最优价 O(1)（取列表端点），撤单 O(1) 删键、价位空了再 O(L) 摘掉价位。L 是几十到几百而订单数是几万，所以这笔账划算，而且**没有垃圾**。\n\n副作用：同价先后由 `dict` 插入序决定，因此这个设计**不需要序号字段**。"
+  },
+  {
+    "id": "problems-stock-brokerage-trade-at-resting-price",
+    "node": "problems.marketplaces.stock-brokerage",
+    "type": "qa",
+    "q": "股票撮合里，一张限价买单出价 100、簿子上挂着一张 97 的卖单，两张单交叉了。成交打在 100、97 还是中间价？多出来的钱归谁？",
+    "a": "打在 **97——挂单方（passive / maker，先到并公开报价的那一方）的价**。差额退给来单方（aggressive / taker）。\n\n理由：挂单方先到，它公布的价格是市场**已经承诺过**的价；来单方愿意出更好的条件是它自己的事。这叫价格改善（price improvement）。\n\n流行题解（包括 geektrust 那道被真实面试用过的题面）写的是「永远按**卖单**的价成交」。它在「卖单先挂、买单后到」时碰巧等价，但在「买单先挂 237.80、更低的卖单 236.00 后到」时就错了：凭什么让早就承诺出 237.80 的买家只付 236.00？\n\n记账上的体现是：冻结按限价，扣款按成交价，差额自动回到可用余额。\n\n```python\ndef apply_buy(self, symbol, quantity, price, reserve_price):\n    self.reserved_cash -= quantity * reserve_price\n    self.cash -= quantity * price\n    self._bump(self._positions, symbol, quantity)\n```\n\n由此还得到一条对称性：**挂单方永远按自己的价成交，所以它的预留被精确花光，只有来单方才有差额要退。**"
+  },
+  {
+    "id": "problems-stock-brokerage-reserve-before-match",
+    "node": "problems.marketplaces.stock-brokerage",
+    "type": "qa",
+    "q": "股票交易系统里，买方的购买力（buying power，可用于下单的现金）该在什么时候校验：撮合成功之后去扣钱，还是报单那一刻就冻结？为什么另一种一定会出事？",
+    "a": "**报单那一刻就冻结**（预留 / reserve）：买单锁钱 `数量 × 限价`，卖单锁股。账户因此多一个派生量：**可用 = 总量 − 已冻结**。\n\n「撮合完再扣」必然踩坑，因为撮合**已经发生了**：对手单的 `filled_quantity` 加过了，可能已经从簿子上摘掉了。这时发现钱不够要回滚，就得把对手单原样放回它原来的价位、原来的时间优先级上——在部分成交、多档穿透之后几乎不可能做对，做不对就是错账。\n\n预留之后，撮合阶段**不可能再失败一次**：它花的是已经锁住的额度。代价是每条终结路径都必须记得把剩余预留还回去，所以「释放」要写成唯一一处实现，并由一条不变式盯住：**订单一旦进入终态（FILLED / CANCELLED / REJECTED），它锁着的额度必定为 0。**\n\n配套细节：被风控拒掉的单仍然建出来并记成 REJECTED（挂在异常对象上），因为「为什么我的单没了」是必须留痕的事实。"
+  },
+  {
+    "id": "problems-stock-brokerage-market-buy-buying-power",
+    "node": "problems.marketplaces.stock-brokerage",
+    "type": "qa",
+    "q": "股票交易系统里限价买单按限价冻结资金，那**市价买单**（market order，不带价、要求立即按对手方价格成交）拿什么算购买力？用「最新成交价」估一下行不行？",
+    "a": "不行。最新成交价是**过去**的价，簿子可能早就跳空了，按它冻结会冻少，成交时又得回滚。\n\n正确做法：**先照着当前簿子试算一次（walk），按试算里最差的那一档价冻结**。\n\n```python\ndef walk_cost(self, quantity: int) -> tuple[int, int]:\n    remaining, worst = quantity, 0\n    for price in self.asks.prices_in_priority():\n        if remaining <= 0:\n            break\n        take = min(remaining, self.asks.quantity_at(price))\n        remaining -= take\n        if take:\n            worst = price\n    return quantity - remaining, worst\n```\n\n关键不在这段代码，而在**它和随后的撮合跑在同一把锁里**：试算不会过期，所以「按最差价冻结」一定够。冻多了的部分在逐笔成交时按真实价扣、当场退。\n\n两个边界必须说清：簿子上能吃到的量不够整张单时，只为能吃到的部分冻钱，**剩余量随即作废——市价单永远不挂单**；空簿子上报市价单的结果是一张 0 成交的 CANCELLED 单，而不是异常（簿子空是市场状态，不是用户的过错）。"
+  },
+  {
+    "id": "problems-stock-brokerage-status-enum-not-state-classes",
+    "node": "problems.marketplaces.stock-brokerage",
+    "type": "qa",
+    "q": "股票订单有 NEW → PARTIALLY_FILLED → FILLED / CANCELLED / REJECTED 五个状态，买卖还分两个方向。该不该用状态模式（State，每个状态一个类）和 `BuyOrder` / `SellOrder` 两个子类？",
+    "a": "**两个都不该。**\n\n判据是「每个状态下**行为**差异有多大」。订单里受状态影响的行为只有一个：能不能撤。那就是一行 `if not order.status.is_terminal`。为它建 `OpenState` / `FilledState` / `CancelledState` 三个类，等于把一行 `if` 摊成三个文件，把「撤单规则」从一处搬到三处；将来加一个 EXPIRED 状态，要新增一个类还要改另外三个。`Enum` 加一个 `is_terminal` 属性表达的信息一模一样，而且能穷举、能打印、能直接进数据库。\n\n```python\nclass OrderStatus(Enum):\n    NEW = \"new\"\n    PARTIALLY_FILLED = \"partially_filled\"\n    FILLED = \"filled\"\n    CANCELLED = \"cancelled\"\n    REJECTED = \"rejected\"\n\n    @property\n    def is_terminal(self) -> bool:\n        return self in (OrderStatus.FILLED, OrderStatus.CANCELLED, OrderStatus.REJECTED)\n```\n\n用状态模式的真正信号是：状态之间行为差异大、每个状态要处理多种事件、状态数还会增长。订单一条都不满足。\n\n`BuyOrder` / `SellOrder` 同理——买卖的差别是两三处 `if side is Side.BUY`，一个 `Side` 枚举（带 `opposite` 属性）就够，撮合循环还能两侧共用同一段代码。\n\n还有一点：**没有 PARTIALLY_FILLED_AND_CANCELLED 这种状态**。撤掉一张成交了一半的单，状态就是 CANCELLED，成交了多少由 `filled_quantity` 说话——同一件事不要两份表示。"
+  },
+  {
+    "id": "problems-stock-brokerage-cancel-races-a-fill",
+    "node": "problems.marketplaces.stock-brokerage",
+    "type": "qa",
+    "q": "股票交易系统里，一个用户点撤单的同时对手单正好把它吃掉了。这个竞争怎么裁定？Python 的 GIL（全局解释器锁）在这里帮得上忙吗？加并发字典（如 Java 的 `ConcurrentHashMap`）够不够？",
+    "a": "由**同一把锁**裁定：撤单和「校验 → 预留 → 撮合 → 结算」进的是同一个临界区，所以两者天然串行。成交先到，撤单看到的就是终态，抛 `OrderNotCancellableError`；撤单先到，后来的对手单在簿子上已经找不到它。成交了一半的单撤掉剩下的一半，`filled_quantity` 原样保留。\n\n**GIL 帮不上忙**：它只保证单条字节码不被打断，而「查可用资金」和「冻结资金」是两条——这就是先检查后动作（check-then-act）竞态，两个线程会同时通过同一笔钱的检查。\n\n**并发容器也不够**：它保证的是单次 `get` / `put` 原子，而这里的复合操作横跨两个账户和一本簿子。要原子，只能自己加锁。\n\n锁粒度的诚实说法：一把 `RLock` 罩住账户表、订单索引和所有订单簿，粗，但那四步必须原子，拆成账户锁 + 簿子锁只会换来锁顺序死锁。第一步优化是按股票分锁；真实撮合引擎走得更远——**每只股票一个单线程**，报单从队列进来，撮合完全无锁，因为串行本身就是最强的一致性保证。"
+  },
+  {
+    "id": "problems-stock-brokerage-feed-and-shrinking-containers",
+    "node": "problems.marketplaces.stock-brokerage",
+    "type": "qa",
+    "q": "股票交易系统加「盘口行情（top of book）推送给订阅者」这一关时，怎么证明设计是可扩展的？推送该在锁内还是锁外？这个系统里哪些容器必须会缩小？",
+    "a": "**可扩展的证据是：加行情推送没有动撮合的任何一行。** 新增的只有一个不可变事件类和门面上的 `subscribe`。\n\n事件要**自带订阅者需要的全部内容**（买一价量、卖一价量、最新成交价、时刻），订阅者读事件就够，不必回头去问撮合服务要数据——那等于绕过它的锁去读一份正在被改的状态。\n\n**快照在锁内生成（必须一致），推送在锁外进行**：订阅者是外部代码，握着撮合锁调它，一个慢订阅者就能让全场停摆。\n\n```python\ndef _publish(self, event: TopOfBook) -> None:\n    with self._lock:\n        subscribers = tuple(self._subscribers)\n    for subscriber in subscribers:\n        subscriber(event)\n```\n\n三个必须会缩小的容器，每个都要有明确的出口：\n\n1. **价位表**——价位上最后一张单被摘走时，价位本身立刻从两张表里一起删掉。\n2. **订单索引**——终结的单靠一个 `purge_terminal_orders_before(cutoff)` 定期清出；没有它，索引随报单量无限增长。\n3. **订阅者表**——`subscribe` 返回一个**退订函数**，把退订手段和订阅一起交出去。\n\n成交流水是故意只增的账（它记单号而不是订单引用，所以订单被清掉后流水仍然完整），真实系统把它流式写出去，内存里只留当日。"
+  }
+]
