@@ -24,6 +24,14 @@ at least two real alternatives, the failure modes and the 10× evolution spelled
 the questions a staff-level interviewer asks next. Depth means mechanism and arithmetic,
 not length: no filler, no restating the question, no "it depends" without saying on what.
 
+**Every number is computed, never recalled.** Before a figure goes into the article or a card —
+QPS, storage, a probability, a ratio, a per-node load — compute it with
+`python3 -c "print(...)"` and copy the result. The pilot article stated a birthday-bound
+collision probability of 38% where the arithmetic gives certainty (the exponent was off by six
+orders of magnitude), and the wrong number had already been copied into a card. Distinguish
+"at least one collision ever" from "this insert collides"; average from peak; per-cluster from
+per-node. A card inherits its numbers from the article, so fix the article first.
+
 Ground it before you write. Read the free authoritative treatments (the URLs in your
 task, `github.com/donnemartin/system-design-primer`, the company's own engineering blog
 posts and papers about the real system) with WebFetch/WebSearch. Then **write in your own
