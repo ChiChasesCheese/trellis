@@ -2,25 +2,16 @@
 id: principles-lsp-signals
 node: principles.solid
 type: qa
+step: 4
 ---
 ## Q
-Name three code signals that a subclass violates LSP, and the standard fix.
+什么信号说明一个子类违反了里氏替换原则（Liskov Substitution Principle）？
 
 ## A
-Signals:
-- an override throws `UnsupportedOperationException` (or silently no-ops)
-- overrides strengthen preconditions or weaken postconditions/invariants — `Square.setWidth` also changing height
-- callers `instanceof`-check to dodge particular subclasses
-
-Fix: the is-a is false — break the hierarchy or replace inheritance with composition. Substitutability under the base's contract, not real-world taxonomy, decides is-a.
-
-## Q zh
-什么时候你知道一个子类违反了 Liskov 替换原则？
-
-## A zh
 信号：
-- 调用者必须检查运行时类型才能安全调用方法：`if (x instanceof Circle) ...`
-- 子类抛出基类不抛出的异常
-- 子类削弱前置条件或强化后置条件（相对于基类）
-- 子类中的方法对调用者的期望没有满足（比如缓存的实现阻止重新计算，但调用者期望新值）
+- 调用方必须先做运行时类型判断才敢安全调用：`if isinstance(x, Circle): ...`；
+- 子类抛出了基类完全没有声明过的异常；
+- 子类相对基类**收紧了前置条件**或**放松了后置条件**（比如基类允许任意输入，子类却对某些输入抛错）；
+- 子类的方法没有满足调用方对基类的合理预期（比如一个"只读缓存"的子类悄悄阻止了刷新，但调用方期望能拿到最新值）。
 
+任何一条出现，都意味着"把子类实例传进去、代码本该照常工作"这个承诺被打破了。

@@ -2,21 +2,13 @@
 id: oop-interface-vs-abstract-class
 node: oop.interfaces
 type: qa
+step: 1
 ---
 ## Q
-Interface or abstract class — what's the decision rule? One example of each from a machine-coding problem.
+在 Python 里要不要共享一个契约，判定用 `Protocol` 还是用 `abc.ABC` 的规则是什么？各举一个机考题里的例子。
 
 ## A
-- **Interface**: a capability contract across otherwise-unrelated types; a class can hold many — `FareStrategy`, `Notifiable`.
-- **Abstract class**: a family sharing **state and a partial implementation** — chess `Piece` holding position with abstract `possibleMoves()`.
+- **没有共享状态、只是"看起来像什么"的能力契约** → `typing.Protocol`：`FareStrategy`、`Notifiable` 这类彼此无关的类型，只要实现同一组方法签名就能互换，不需要显式继承。
+- **有共享字段，或者想给一个共用的部分实现** → `abc.ABC`：国际象棋的 `Piece` 持有 `position` 字段，留一个抽象的 `possible_moves()`，让子类补完。
 
-Rule of thumb: no shared fields → interface; shared fields/protected helpers → abstract class. When torn, start with the interface — it's the weaker, easier-to-revise commitment.
-
-## Q zh
-接口还是抽象类 —— 判定规则是什么？各举一个机考题里的例子。
-
-## A zh
-- **接口**：跨越彼此无关的类型的一份能力契约；一个类可以同时持有多个 —— `FareStrategy`、`Notifiable`。
-- **抽象类**：共享**状态和部分实现**的一个家族 —— 国际象棋的 `Piece` 持有位置，并留下抽象的 `possibleMoves()`。
-
-经验法则：没有共享字段 → 接口；有共享字段或 protected 辅助方法 → 抽象类。拿不准时先从接口开始 —— 它是更弱、更容易改口的承诺。
+经验法则：没有共享字段 → `Protocol`（更弱、更容易改口的承诺）；有共享字段或想给默认实现 → `ABC`。拿不准时先从 `Protocol` 开始。

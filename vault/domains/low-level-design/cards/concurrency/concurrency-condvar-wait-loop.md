@@ -2,29 +2,18 @@
 id: concurrency-condvar-wait-loop
 node: concurrency.primitives
 type: qa
+step: 3
 ---
 ## Q
-Why must a condition-variable wait always be
-```java
-while (queue.isEmpty()) { notEmpty.await(); }
+为什么 `threading.Condition` 的等待必须写成
+```python
+with cond:
+    while not predicate():
+        cond.wait()
 ```
-and never `if (queue.isEmpty()) notEmpty.await();`? Two reasons.
+而不能写成 `if not predicate(): cond.wait()`？
 
 ## A
-- **Spurious wakeups**: the platform may wake a waiter with no signal at all — permitted by POSIX and the JVM.
-- **The predicate can be false again by the time you run**: between the signal and reacquiring the lock, another woken (or barging) thread may have consumed the item. `signalAll` deliberately wakes many threads that must re-check.
+两个理由。第一，`wait()` 允许**虚假唤醒**（spurious wakeup）——即使没人调用 `notify()`，等待也可能提前返回。第二，即使确实是被 `notify()` 唤醒的，从"被唤醒"到"重新拿回锁、真正往下执行"之间，可能有别的线程（包括被 `notify_all()` 唤醒的其他等待者）抢先把条件又改回不成立——比如队列刚被 `notify` 说"有元素了"，另一个消费者先醒来把它取走了。
 
-The loop re-tests the predicate *while holding the lock*, so you only proceed when the condition truly holds. Rule: wait is always inside a loop guarding the predicate.
-
-## Q zh
-为什么条件变量的等待必须写成
-```java
-while (queue.isEmpty()) { notEmpty.await(); }
-```
-而绝不能写成 `if (queue.isEmpty()) notEmpty.await();`？两个理由。
-
-## A zh
-- **虚假唤醒（spurious wakeup）**：平台可能在根本没有信号的情况下唤醒一个等待者 —— POSIX 和 JVM 都允许这样做。
-- **等你真正运行时谓词可能又不成立了**：在信号发出和你重新拿到锁之间，另一个被唤醒的（或插队的）线程可能已经把那个元素消费掉了。`signalAll` 正是要唤醒一批必须重新检查的线程。
-
-循环会在*持有锁的状态下*重新检验谓词，所以只有条件真正成立时你才会往下走。规则：wait 永远放在一个守护谓词的循环里。
+`while` 循环在拿到锁之后重新检查谓词，只有条件真正成立才会跳出循环继续执行；这是使用条件变量唯一安全的写法，标准库甚至提供了等价的 `cond.wait_for(predicate)` 帮你把这个循环写对。

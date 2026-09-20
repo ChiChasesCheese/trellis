@@ -1,0 +1,12 @@
+{
+  "problems.machines.parking-lot": [
+    "problems-parking-lot-spot-owns-state",
+    "problems-parking-lot-size-as-ordinal",
+    "problems-parking-lot-allocation-function-not-class",
+    "problems-parking-lot-tiered-needs-class",
+    "problems-parking-lot-no-singleton",
+    "problems-parking-lot-lock-scope",
+    "problems-parking-lot-display-board-zero-touch",
+    "problems-parking-lot-ceiling-hours-mistake"
+  ]
+}

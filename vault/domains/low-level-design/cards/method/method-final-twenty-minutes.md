@@ -2,28 +2,16 @@
 id: method-final-twenty-minutes
 node: method.delivery
 type: qa
+step: 5
 ---
 ## Q
-20 minutes left. Two features are half-written and nothing has been run end-to-end yet. What is the order of operations?
+只剩 20 分钟，两个功能都写了一半，甚至还没端到端跑通过一次，这时候操作顺序应该是什么？
 
 ## A
-1. **Freeze scope immediately** — no new feature enters the file after this point.
-2. **Delete or stub the half-written branches.** Code that doesn't compile costs more than a missing feature; a one-line `throw new UnsupportedOperationException("out of scope")` reads as a decision.
-3. **Get it running** (~8 min): compile, wire dependencies by hand in `main`, fix crashes.
-4. **Demo driver** (~7 min): happy path + one edge case, printed output.
-5. **Narrate** (~5 min): what's in, what's stubbed, where each stub plugs in.
+1. 立刻冻结范围——这之后不再有新功能进文件。
+2. 删掉或打桩写了一半的分支：跑不起来的代码比缺失的功能扣分更多，一行 `raise NotImplementedError("out of scope")` 读起来像一个主动的决定，而不是没写完。
+3. 花约 8 分钟让它先跑起来：跑通、在入口处手工拼好依赖、修掉崩溃。
+4. 花约 7 分钟跑一遍演示：一条正常路径加一个边界情况，把输出打印出来。
+5. 花约 5 分钟讲解：做了什么、哪里打了桩、将来接在哪里。
 
-Half-finished code scores as broken code; a stub scores as scoping.
-
-
-## Q zh
-20 分钟剩下。两个特性半写入，还没有什么端到端运行过。操作顺序是什么?
-
-## A zh
-1. **立即冻结范围** — 这个点之后没有新特性进入文件。
-2. **删除或存根半写入的分支。** 不编译的代码花费比缺失特性更多；一行 `throw new UnsupportedOperationException("out of scope")` 读作一个决定。
-3. **让它运行**(~8 分钟): 编译、在 `main` 中手工连接依赖、修复崩溃。
-4. **演示驱动**(~7 分钟): 快乐路径 + 一个边界情况，打印的输出。
-5. **讲述**(~5 分钟): 什么在里面，什么存根了，每个存根插入的地方。
-
-半完成的代码作为破碎代码得分；存根作为范围得分。
+半成品代码按"代码是坏的"扣分，打桩的占位按"范围内的取舍"计分。

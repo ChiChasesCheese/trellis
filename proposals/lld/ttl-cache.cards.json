@@ -1,0 +1,66 @@
+[
+  {
+    "id": "problems-ttl-cache-three-ways-to-expire",
+    "node": "problems.components.ttl-cache",
+    "type": "qa",
+    "q": "带过期时间的缓存（TTL Cache）里，「数据到点失效」这件事谁去发现？读时惰性判断、后台线程定期全表扫描、按截止时刻排序的索引——各自的代价是什么？",
+    "a": "关键判据是：**一条写进来之后再也没人读的数据，会怎样。**\n\n- **读时惰性判断**（`get` 时比一下 `now >= expires_at`）：三行代码、O(1)，但没人读的数据永远等不到那次 `get`，于是永远占着内存和容量。缓存里冷数据本就是多数，这个漏洞不是理论上的。\n- **后台线程定期全表扫描**：能收掉没人读的数据，但每轮 O(n)——一百万条里真过期一百条也要摸一百万下；扫描要持锁，产生周期性延迟毛刺；还给这个库引入了一个**线程的生命周期**（怎么启动、怎么优雅关闭、fork 之后怎么办），一个缓存类不该逼调用方管这些。\n- **按截止时刻排序的小顶堆**：任何一次操作先把堆顶所有到期条目弹掉，代价只和「这段时间真的到期了几条」成正比，与缓存规模无关；没人读的数据会被**别人的操作**顺手收掉；不需要任何后台线程。\n\n选第三种。它的新问题是堆不支持删除中间元素，于是要处理「改期」和「撤销」。",
+    "tags": []
+  },
+  {
+    "id": "problems-ttl-cache-tombstones-must-be-compacted",
+    "node": "problems.components.ttl-cache",
+    "type": "qa",
+    "q": "缓存用小顶堆按截止时刻管理过期。一个 key 被覆写就要改期，可堆不能删中间元素——标准解法是什么？只做一半会毁掉什么？",
+    "a": "标准解法是**惰性删除加墓碑**（tombstone，`heapq` 文档里的配方）：旧条目不从堆里拿走，只标成已删除，弹出时跳过。\n\n只做这一半是这道题最隐蔽的失败：**一个容量 1000 的缓存，被反复覆写的热 key 能在堆里留下几十万个死条目**。你对外承诺了内存有界，内部一个私有结构把承诺毁掉了，而且没有任何公开 API 会暴露它。\n\n所以必须补上**压实**（compaction），并把堆长度暴露成可断言的只读属性：\n\n```python\ndef discard(self, key):\n    entry = self._entries.pop(key, None)\n    if entry is None:\n        return\n    entry[2] = _REMOVED\n    self._stale += 1\n    if self._stale > 32 and self._stale * 2 > len(self._heap):\n        self._heap = [e for e in self._heap if e[2] is not _REMOVED]\n        heapq.heapify(self._heap)\n        self._stale = 0\n```\n\n重建一次 O(n)，摊到制造这些墓碑的 n/2 次操作上是 O(1)。**不变量只有能被断言，才算数**。",
+    "tags": []
+  },
+  {
+    "id": "problems-ttl-cache-heap-tuple-needs-a-counter",
+    "node": "problems.components.ttl-cache",
+    "type": "qa",
+    "q": "把 `(截止时刻, key)` 推进小顶堆来管理缓存过期，为什么会在生产里突然抛 `TypeError`？怎么修？",
+    "a": "因为两条**截止时刻完全相同**的记录，比较会落到第二项 `key` 上。而缓存对 key 的要求只有「可哈希」（hashable），从不要求「可比较」——放两个自定义对象、两个 `dict` 或两个不同类型的 key 进去，比较就抛 `TypeError: '<' not supported between instances of ...`。\n\n这类 bug 极难在开发期撞上：只有当两个 key 的浮点截止时刻**一模一样**时才触发，测试里用注入时钟反而更容易命中，线上则表现为偶发崩溃。\n\n修法是在中间塞一个全局自增序号：\n\n```python\nentry = [deadline, next(self._counter), key]\nheapq.heappush(self._heap, entry)\n```\n\n序号唯一，比较永远停在第二项，第三项再也不参与；顺带还给同一时刻到期的条目一个稳定的先后顺序，让测试可复现。",
+    "tags": []
+  },
+  {
+    "id": "problems-ttl-cache-expired-is-invisible",
+    "node": "problems.components.ttl-cache",
+    "type": "qa",
+    "q": "带过期时间的缓存（TTL Cache）里，一条已经过期但还没被物理删除的数据，`len()`、遍历、以及「容量满了吗」的判断应该怎么看待它？",
+    "a": "**对外必须当它不存在**：`__len__`、`keys()`、`__contains__` 都先做一次到期清理再回答。\n\n两个理由，第二个才是致命的：\n\n1. 把尸体算进去，`len(cache)` 就是一个会骗人的数字，调用方据此做的任何决定都是错的。\n2. **「容量满了」会因为一堆尸体而提前触发**，于是缓存去淘汰一条还活着、还会被命中的数据，而那些早该消失的条目还占着位置。命中率就是这样被悄悄拉垮的。\n\n配套的一条：`keys()` 要返回**快照**（`tuple`），不能返回内部视图或内部字典本身。交出去的活视图会在调用方遍历时被别的线程改动，等着他的是 `RuntimeError: dictionary changed size during iteration`；而且调用方还能反过来改你的内部状态。",
+    "tags": []
+  },
+  {
+    "id": "problems-ttl-cache-absolute-deadline-not-remaining",
+    "node": "problems.components.ttl-cache",
+    "type": "qa",
+    "q": "缓存里的一条数据，该存「还能活多久」还是「什么时刻死」？时钟又该怎么来？",
+    "a": "存**绝对截止时刻**（`expires_at = now + ttl`），不存剩余时间。\n\n存剩余时间意味着必须有人定期去减它——那又绕回一个后台线程，而且它在任何时刻都只是近似值。存绝对时刻则是写入时算一次、之后永不改动的常量，判定就是一次比较。\n\n如果还要支持「读一次续一次命」（滑动过期），就把原始的 `ttl` 也一起留着，续命等于用同一个 `ttl` 重新算一次截止时刻。是否续命应当是一个**构造参数**而不是两个类：会话缓存要续，价格缓存必须按绝对时效作废。\n\n时钟一律**注入**，并且用 `time.monotonic`：\n\n- 类内部硬编 `time.time()`，测试就只能靠 `sleep`，一套用例跑几十秒还不稳定；\n- `time.time` 会被 NTP 往回拨，回拨那一刻整批过期数据会集体「复活」。",
+    "tags": []
+  },
+  {
+    "id": "problems-ttl-cache-evict-by-policy-or-deadline",
+    "node": "problems.components.ttl-cache",
+    "type": "qa",
+    "q": "带 TTL 的缓存容量满了：该按淘汰策略（如 LRU）赶人，还是先赶走马上就要过期的那条？这个分歧该怎么落到代码里？",
+    "a": "两个答案都合理，所以它不该被写死，而该是**同一条接缝的两种实现**——接缝就是「容量满时淘汰谁」这个策略接口，只不过要给它多传一个参数：\n\n```python\nclass EvictionPolicy(Protocol[K]):\n    def record_insert(self, key: K, expires_at: float | None) -> None: ...\n    def record_access(self, key: K) -> None: ...\n    def remove(self, key: K) -> None: ...\n    def evict(self) -> K: ...\n```\n\n`record_insert` 收下 `expires_at` 不是 TTL 概念的泄漏：**「什么时候会死」本就是「该让谁先走」的合法输入**，LRU 选择无视它，那是 LRU 的决定。\n\n「最近截止时刻优先」的理由是：反正它马上要死，淘汰它损失的未来命中最少。它的实现可以直接复用那个到期小顶堆（取最早到期的一个）；没有设置 TTL 的 key 不在堆里，它们之间退回 LRU——给一条永不过期的数据硬编一个截止时刻，只会让策略无法解释。",
+    "tags": []
+  },
+  {
+    "id": "problems-ttl-cache-single-flight",
+    "node": "problems.components.ttl-cache",
+    "type": "qa",
+    "q": "一个热点 key 刚过期，一百个线程同时未命中、同时去打数据库。这叫什么？把整个「取不到就回源」锁起来为什么不是答案？正确做法的两个致命细节是什么？",
+    "a": "叫**缓存踩踏**（cache stampede）。特征是「缓存越有效，雪崩时越惨」：平时挡住 99% 的流量，失效那一瞬间 100% 一起落到后端。\n\n把 `get_or_load` 整个锁住确实能解决，但代价荒唐：**回源是慢操作**（一次网络往返几十毫秒），持着缓存的全局锁做慢操作，等于让所有其他 key 的读写一起停住。纪律是：不要持着锁调用外部代码，更不要持着锁做 I/O。\n\n正确做法是**单飞**（single-flight）：每个 key 一个「在途」标记（`threading.Event`），第一个线程当领跑者去回源，后来者在 Event 上等。两个致命细节：\n\n1. 顺序必须是**先写缓存、再唤醒**。反过来的话后来者醒来仍然未命中，又会选出一个新领跑者，踩踏只是被推迟了。\n2. 摘牌写在 `finally` 里。回源抛异常时也必须把在途标记摘掉，否则后来者永远等下去。\n\n顺带一提，这本「在途标记」字典本身也是一个会增长的容器，`finally` 里的 `pop` 就是它的回收。",
+    "tags": []
+  },
+  {
+    "id": "problems-ttl-cache-stats-and-callback-refuse-patterns",
+    "node": "problems.components.ttl-cache",
+    "type": "qa",
+    "q": "给缓存加「命中率统计」和「数据被淘汰时通知我」。为什么统计不该做成装饰器（Decorator）包一层？淘汰回调又有哪两条纪律？",
+    "a": "**统计不能做成装饰器**，因为「过期」和「容量淘汰」发生在缓存**内部**，外层根本看不见——它只能统计自己转发过的那些调用，漏掉的恰恰是最该看的两个数。装饰器擅长在边界上加行为，不擅长观察内部事件。这是一个该**拒绝模式**的地方：五个整数计数器加一个不可变的统计快照就够了。\n\n（返回快照而不是内部计数器字典，同样重要：交出内部可变对象，调用方既能改它，读到的数字还会在他眼皮底下自己变。）\n\n淘汰回调的两条纪律：\n\n1. **事件带着值**。`EvictionEvent(key, value, reason)` 是一个冻结的小对象，监听者拿到它就能释放那条数据持有的资源（关连接、删临时文件）。只带 key 的话监听者只能回头查缓存——那时数据已经没了，而且回查会绕过缓存的锁。\n2. **回调在锁外执行**。监听者是外部代码，持锁调用它等于把自己的锁交给不认识的人：它可能很慢，也可能回头调用缓存本身而死锁。所以每个公开方法的形状都是「持锁改状态、收集事件 → 放锁 → 广播」。",
+    "tags": []
+  }
+]

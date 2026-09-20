@@ -1,0 +1,12 @@
+{
+  "problems.components.in-memory-file-system": [
+    "problems-in-memory-file-system-no-shared-base-class",
+    "problems-in-memory-file-system-name-lives-in-parent-entry",
+    "problems-in-memory-file-system-no-parent-pointer-reresolve-from-root",
+    "problems-in-memory-file-system-recursive-delete-is-free",
+    "problems-in-memory-file-system-copy-file-is-o1",
+    "problems-in-memory-file-system-move-validate-before-detach",
+    "problems-in-memory-file-system-single-lock-for-move",
+    "problems-in-memory-file-system-snapshot-reuses-duplicate"
+  ]
+}

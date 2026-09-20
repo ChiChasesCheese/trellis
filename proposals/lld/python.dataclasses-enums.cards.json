@@ -1,0 +1,50 @@
+[
+ {
+  "id": "python-dataclass-hash-rule",
+  "node": "python.dataclasses-enums",
+  "type": "qa",
+  "q": "`@dataclass` 默认（`eq=True`, `frozen=False`）会自动生成 `__hash__` 吗？加上 `frozen=True` 呢？",
+  "a": "默认情况下 `eq=True` 且 `frozen=False`——dataclass 认为这是个可变对象，主动把 `__hash__` 设为 `None`，禁止哈希（避免可变对象被放进 `set`/`dict` 之后字段又变的坑）。只有当 `frozen=True`（同时 `eq=True`，是默认值）时，dataclass 才会基于各字段生成一个真正的 `__hash__`。想在可变类上强行拿到哈希需要显式传 `unsafe_hash=True`——这个名字本身就是警告。",
+  "tags": []
+ },
+ {
+  "id": "python-dataclass-default-factory",
+  "node": "python.dataclasses-enums",
+  "type": "qa",
+  "q": "为什么 `@dataclass` 里字段默认值不能直接写 `items: list = []`，而要写 `field(default_factory=list)`？",
+  "a": "类体里的默认值只求值**一次**，在类定义时；如果默认值是可变对象（列表、字典），所有没有显式传参的实例会**共享同一个**列表对象——一个实例 `append` 会影响所有实例。`field(default_factory=list)` 让 dataclass 在**每次构造实例**时才调用一次 `list()`，每个实例拿到自己独立的新列表。\n```python\nfrom dataclasses import dataclass, field\n\n@dataclass\nclass Cart:\n    items: list[str] = field(default_factory=list)\n```",
+  "tags": []
+ },
+ {
+  "id": "python-dataclass-frozen-post-init",
+  "node": "python.dataclasses-enums",
+  "type": "qa",
+  "q": "`frozen=True` 的 dataclass 想在 `__post_init__` 里算一个派生字段，为什么不能直接 `self.total = ...`？",
+  "a": "`frozen=True` 会给类生成一个抛 `FrozenInstanceError` 的 `__setattr__`，连 `__post_init__` 内的普通赋值也拦截。必须绕开这层拦截，用 `object.__setattr__(self, \"字段名\", 值)` 直接调用基类的 `__setattr__`——这也是 dataclass 自己生成的 `__init__` 在初始化字段时用的同一套手法。\n```python\n@dataclass(frozen=True)\nclass Rect:\n    w: float\n    h: float\n    area: float = field(init=False)\n    def __post_init__(self):\n        object.__setattr__(self, \"area\", self.w * self.h)\n```",
+  "tags": []
+ },
+ {
+  "id": "python-dataclass-shallow-frozen",
+  "node": "python.dataclasses-enums",
+  "type": "qa",
+  "q": "`frozen=True` 能阻止 `Order(frozen=True)` 实例里的 `items: list` 字段被修改吗？为什么说这种不可变是“浅的”？",
+  "a": "不能。`frozen=True` 只拦截**对字段本身重新赋值**（`order.items = other_list` 会抛异常），但字段指向的对象如果本身可变，完全可以 `order.items.append(x)`——`frozen` 从未触碰过那个列表对象本身。要做到真正不可变，字段本身也必须是不可变类型（`tuple` 而不是 `list`，或者一个同样 `frozen=True` 的对象），这也是为什么不可变值对象常把集合字段声明成 `tuple[...]`。",
+  "tags": []
+ },
+ {
+  "id": "python-dataclass-slots-cost",
+  "node": "python.dataclasses-enums",
+  "type": "qa",
+  "q": "`@dataclass(slots=True)` 买到了什么，代价/限制是什么？",
+  "a": "买到的是：每个实例不再有 `__dict__`，属性存进固定的槽（slot）——省内存（大量实例场景明显）、属性访问更快，并且**任何没有声明为字段的属性赋值都会报 `AttributeError`**，帮你在开发期抓到手误的新属性。代价：`slots=True` 会返回一个**新类**而不是原地修改原类；如果需要弱引用（weak reference），必须额外传 `weakref_slot=True` 才有 `__weakref__` 槽，默认没有；也不能再依赖实例 `__dict__` 做动态猴子补丁（monkeypatch）。",
+  "tags": []
+ },
+ {
+  "id": "python-dataclass-enum-behavior",
+  "node": "python.dataclasses-enums",
+  "type": "qa",
+  "q": "Python 的 `Enum` 成员可以带方法吗？举一个订单状态的例子，说明这比一堆布尔值或裸字符串常量多提供了什么。",
+  "a": "可以——`Enum` 就是一个普通类，方法定义在类体里，`self` 就是当前成员；每个成员是**单例**，`==` 退化成 `is`（身份比较），天然防止拼写错误的字符串常量互相“意外相等”。\n```python\nfrom enum import Enum\n\nclass OrderState(Enum):\n    CREATED = \"created\"\n    PAID = \"paid\"\n    SHIPPED = \"shipped\"\n\n    def is_terminal(self) -> bool:\n        return self is OrderState.SHIPPED\n```\n比起 `is_paid`/`is_shipped` 布尔值组合，`Enum` 把“当前只能处于一种状态”这个不变式直接编码进类型系统，状态相关的行为（如 `is_terminal`）也可以直接挂在枚举上，不用散落成一堆 `if`。",
+  "tags": []
+ }
+]

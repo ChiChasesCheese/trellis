@@ -1,0 +1,12 @@
+{
+  "problems.social.social-network": [
+    "problems-social-network-friend-vs-follow",
+    "problems-social-network-mutual-friend-request-collapse",
+    "problems-social-network-fanout-write-vs-read",
+    "problems-social-network-celebrity-skip-fanout",
+    "problems-social-network-can-view-single-place",
+    "problems-social-network-block-covers-fanned-out-posts",
+    "problems-social-network-like-idempotent-set",
+    "problems-social-network-comment-independent-entity"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "problems.components.logger": [
+    "problems-logger-two-level-thresholds",
+    "problems-logger-chain-vs-handler-list",
+    "problems-logger-formatter-split-from-handler",
+    "problems-logger-effective-level-and-notset",
+    "problems-logger-propagation-ignores-ancestor-level",
+    "problems-logger-handlers-tuple-and-gil",
+    "problems-logger-async-close-contract",
+    "problems-logger-drop-must-be-counted",
+    "problems-logger-filter-is-a-plain-function"
+  ]
+}

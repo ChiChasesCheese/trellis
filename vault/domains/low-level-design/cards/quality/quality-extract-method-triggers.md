@@ -2,44 +2,18 @@
 id: quality-extract-method-triggers
 node: quality.refactoring
 type: qa
+step: 1
 ---
 ## Q
-Extract method: what are the two classic triggers, and what does a well-composed method look like afterward?
+提炼方法（extract method）最常见的两个触发信号是什么？提炼之后一个"组合良好的方法"应该长什么样？
 
 ## A
-Triggers:
+第一个信号：一句给代码块起标题的注释——`# 校验输入并计算折扣` 上面跟着六行代码，说明这几行想成为一个叫 `validate_and_discount` 的方法，用名字取代那句注释。第二个信号：一段你需要停下来仔细读才能看懂在干嘛的代码，或者一段你想复用、想单独写测试的代码——这两种情况都值得单独拎出来命名。
 
-- **A comment announcing a block** — `// validate input` above six lines means the block wants to be `validateInput()`; the name replaces the comment.
-- **A fragment you must study to see what it does** — or one you'd like to reuse or test in isolation.
-
-Target shape (**composed method**): the body reads as a sequence of same-altitude, intention-named steps —
-
-```java
-void checkout(Cart c) {
-    validate(c);
-    var total = priceWithDiscounts(c);
-    charge(c.customer(), total);
-    emitReceipt(c, total);
-}
+```python
+def checkout(cart: Cart) -> None:
+    validate(cart)
+    total = price_with_discounts(cart)
+    charge(cart.customer, total)
 ```
-
-Each step is one level of abstraction; details live one call down. When several extracted methods keep sharing the same parameters, that's the follow-on trigger for **extract class**.
-
-## Q zh
-提炼函数：两个经典触发条件是什么，提炼之后一个组合良好的方法长什么样？
-
-## A zh
-触发条件：
-
-- **一句给代码块作预告的注释** —— 六行代码上面写着 `// validate input`，说明这个块想成为 `validateInput()`；用名字取代那句注释。
-- **一段你必须琢磨才能看懂在干嘛的片段** —— 或者一段你想复用、想单独测试的片段。
-
-目标形态（**composed method**）：方法体读起来是一串处在同一抽象高度、以意图命名的步骤 ——
-
-```java
-void checkout(Cart c) {
-    validate(c);
-    var total = priceWithDiscounts(c);
-    charge(c.customer(), total);
-}
-```
+目标形态是"组合方法"（composed method）：方法体读起来是一串处在同一抽象高度、以意图命名的步骤，读者不需要下钻到实现细节就能看懂整体流程在做什么。

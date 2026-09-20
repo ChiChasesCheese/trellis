@@ -1,0 +1,14 @@
+{
+  "problems.components.text-editor": [
+    "problems-text-editor-buffer-choice",
+    "problems-text-editor-gap-shrink",
+    "problems-text-editor-one-edit-record",
+    "problems-text-editor-command-vs-memento",
+    "problems-text-editor-redo-cleared-on-new-edit",
+    "problems-text-editor-cursor-clears-selection",
+    "problems-text-editor-coalescing-intent",
+    "problems-text-editor-undo-unit-reverse-order",
+    "problems-text-editor-history-knows-no-document",
+    "problems-text-editor-random-model-test"
+  ]
+}

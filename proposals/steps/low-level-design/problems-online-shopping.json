@@ -1,0 +1,13 @@
+{
+  "problems.marketplaces.online-shopping": [
+    "problems-online-shopping-reserve-timing",
+    "problems-online-shopping-reservation-expiry",
+    "problems-online-shopping-transition-table",
+    "problems-online-shopping-illegal-transition-raises",
+    "problems-online-shopping-saga-vs-try-except",
+    "problems-online-shopping-compensate-failed-step",
+    "problems-online-shopping-idempotency-key",
+    "problems-online-shopping-price-on-listing",
+    "problems-online-shopping-pricing-rule-function"
+  ]
+}

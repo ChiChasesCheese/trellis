@@ -1,0 +1,12 @@
+{
+  "problems.booking.library": [
+    "problems-library-title-vs-copy",
+    "problems-library-no-item-subclasses",
+    "problems-library-sweep-is-the-only-allocator",
+    "problems-library-hold-shelf-must-expire",
+    "problems-library-renewal-yields-to-the-queue",
+    "problems-library-fine-is-computed",
+    "problems-library-policy-table-not-inheritance",
+    "problems-library-concurrent-lend-assert"
+  ]
+}

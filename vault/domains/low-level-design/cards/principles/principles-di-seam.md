@@ -2,22 +2,15 @@
 id: principles-di-seam
 node: principles.coupling
 type: qa
+step: 5
 ---
 ## Q
-What exactly does constructor injection buy over `new`-ing the collaborator inside the class — and does it require a framework?
+依赖注入（Dependency Injection）怎么起到接缝（seam）的作用？它跟工厂函数、服务定位器有什么区别？
 
 ## A
-It creates a **seam**: the class sees only the interface, so tests substitute fakes and "swap MySQL for in-memory" becomes a wiring change instead of an edit. It also makes the dependency graph explicit — hidden `new`s are invisible coupling.
-
-No framework needed: plain constructor parameters wired by hand in `main()` is complete DI. Spring/Guice only automate the wiring — worth saying explicitly in an interview.
-
-## Q zh
-依赖注入如何充当一个接缝？它与工厂或服务定位器有什么区别？
-
-## A zh
-DI 是一个接缝，因为它让你在不改变代码的情况下在真实和测试依赖之间切换。调用者在构造函数中接收依赖，而不是创建它们，所以测试可以传入模拟对象。
+DI 是一个接缝，因为它能让你在不改代码的情况下把真实依赖换成测试用的依赖——调用方在构造函数里**接收**依赖，而不是自己去创建它，所以测试时可以直接传入一个假对象。
 
 区别：
-- 工厂：调用者仍然要求工厂创建依赖。仍然是隐式的依赖。
-- 服务定位器：调用者要求定位器查找依赖。同样隐式。
-- DI：调用者接收它需要的东西。依赖是显式的，在构造函数签名中可见。
+- **工厂函数**：调用方仍然要向工厂"要"一个依赖，工厂内部怎么造这个依赖对调用方是隐式的。
+- **服务定位器**：调用方向一个全局定位器"查"依赖，同样是隐式的，而且这个依赖没有出现在函数签名里。
+- **DI**：调用方直接拿到它需要的东西，依赖是显式的，在构造函数签名里一眼可见。

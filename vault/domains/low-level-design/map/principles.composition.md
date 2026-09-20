@@ -1,20 +1,22 @@
 %% trellis:begin %%
-# Composition over Inheritance
-*Design Principles*
+# 组合优于继承
+*设计原则（Design Principles）*
 
-Why deep hierarchies rot, delegation as the default reuse tool, when inheritance is still right.
+深继承树为什么会腐烂、委托作为默认复用手段、继承仍然正确的场合。
 
-**Requires:** [[domains/low-level-design/map/oop.relationships|Class Relationships]]
+**Core** — part of the first pass through this subject.
+
+**Requires:** [[domains/low-level-design/map/oop.relationships|类之间的关系（Class Relationships）]]
 
 ## Readings
 - [[python-patterns-composition|The Composition Over Inheritance Principle (Brandon Rhodes)]]
 
 ## Cards (5)
-1. [[principles-delegation-boilerplate]]
+1. [[principles-when-inherit]]
 2. [[principles-hierarchy-explosion]]
-3. [[principles-mixins-vs-delegation]]
-4. [[principles-stack-extends-arraylist]]
-5. [[principles-when-inherit]]
+3. [[principles-stack-extends-arraylist]]
+4. [[principles-delegation-boilerplate]]
+5. [[principles-mixins-vs-delegation]]
 %% trellis:end %%
 
 ## Notes

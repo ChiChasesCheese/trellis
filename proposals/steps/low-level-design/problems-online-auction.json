@@ -1,0 +1,12 @@
+{
+  "problems.marketplaces.online-auction": [
+    "problems-online-auction-proxy-bidding-three-rules",
+    "problems-online-auction-leader-raises-own-max",
+    "problems-online-auction-tie-goes-to-earliest",
+    "problems-online-auction-reserve-vs-starting-price",
+    "problems-online-auction-exactly-once-lazy-tick",
+    "problems-online-auction-lock-per-auction",
+    "problems-online-auction-callable-watcher-not-abc",
+    "problems-online-auction-shrinking-containers"
+  ]
+}

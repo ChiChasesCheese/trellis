@@ -2,35 +2,16 @@
 id: concurrency-check-then-act
 node: concurrency.model
 type: qa
+step: 3
 ---
 ## Q
-```java
-if (!map.containsKey(key)) {
-    map.put(key, createExpensive(key));
-}
+```python
+if key not in cache:
+    cache[key] = expensive_build(key)
 ```
-`map` is a `ConcurrentHashMap`, so every call is thread-safe. What's the bug, and what fixes it?
+`dict` 的单次读写在 CPython 里都是原子的，那这段代码在多线程下还有 bug 吗？
 
 ## A
-**Check-then-act race**: two threads both pass the check before either puts, so both create the value and one overwrites the other. A *composite* operation is not atomic just because each step is.
+有。`in` 检查和 `[key] =` 赋值是**两条**独立的字节码级操作，中间可以被切换到另一个线程；两个线程都可能在对方写入之前通过了 `not in` 检查，于是都调用了一次 `expensive_build(key)`，后写入的那次覆盖掉先写入的——这是一次典型的 check-then-act 竞态（race），不是字典本身不安全,是"先查后做"这个复合动作不安全。
 
-- Fix: one atomic operation — `computeIfAbsent(key, k -> createExpensive(k))` (or `putIfAbsent`).
-- Or hold one lock across **both** the check and the act.
-
-`volatile` cannot help here — it fixes visibility, not atomicity.
-
-## Q zh
-```java
-if (!map.containsKey(key)) {
-    map.put(key, createExpensive(key));
-}
-```
-`map` 是 `ConcurrentHashMap`，所以每次调用都是线程安全的。bug 在哪，怎么修？
-
-## A zh
-**Check-then-act 竞态**：两个线程都在对方 put 之前通过了检查，于是两个都创建了值，其中一个覆盖掉另一个。一个*复合*操作并不会因为每一步都原子就变得原子。
-
-- 修法：换成一个原子操作 —— `computeIfAbsent(key, k -> createExpensive(k))`（或 `putIfAbsent`）。
-- 或者拿一把锁，同时罩住**检查和动作两步**。
-
-`volatile` 在这里帮不上忙 —— 它解决的是可见性，不是原子性。
+修法：用一把 `threading.Lock` 把检查和写入一起罩住，或者干脆用 `cache.setdefault(key, expensive_build(key))`（注意它仍会无条件先算出 `expensive_build(key)`，真正省重复计算要靠锁或 `functools.cache`）。

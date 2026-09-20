@@ -1,0 +1,50 @@
+[
+ {
+  "id": "python-context-with-guarantee",
+  "node": "python.context-iterators",
+  "type": "qa",
+  "q": "`with` 语句到底保证了什么？和自己写 `try/finally` 手动调用 `close()` 相比，多了什么？",
+  "a": "`with obj:` 保证调用 `obj.__enter__()`，并且**无论 `with` 块正常结束还是抛异常**都会调用 `obj.__exit__(exc_type, exc, tb)`——这正是配对操作（打开/关闭、加锁/解锁、开启事务/提交或回滚）最容易写漏的部分：手写 `try/finally` 每次都要自己记得写全，`with` 把这个责任收进类型本身。额外的是 `__exit__` 的返回值：返回真值（truthy）会**吞掉**块内的异常，让它不再向外传播——这是手动 `try/finally` 默认拿不到的能力。",
+  "tags": []
+ },
+ {
+  "id": "python-context-contextmanager-decorator",
+  "node": "python.context-iterators",
+  "type": "qa",
+  "q": "`@contextlib.contextmanager` 怎么把一个生成器函数变成上下文管理器？`yield` 前后的代码各对应 `__enter__`/`__exit__` 的哪部分？",
+  "a": "装饰后的函数被调用时不会立即执行——`with` 触发 `__enter__` 时才真正启动这个生成器，跑到 `yield` 表达式为止，`yield` 出的值绑定给 `as` 变量；`with` 块结束时触发 `__exit__`，让生成器从 `yield` 处**恢复执行**，跑完 `yield` 之后的代码。所以 `yield` **之前**的代码相当于 `__enter__`，`yield` **之后**的代码相当于 `__exit__`。\n```python\nfrom contextlib import contextmanager\n\n@contextmanager\ndef transaction(conn):\n    conn.begin()\n    yield conn\n    conn.commit()\n```",
+  "tags": []
+ },
+ {
+  "id": "python-context-contextmanager-try-finally",
+  "node": "python.context-iterators",
+  "type": "qa",
+  "q": "上一张卡里的 `transaction` 少写了什么，导致 `with` 块内抛异常时行为不对？",
+  "a": "少了 `try/finally`。`with` 块内抛出的异常会在生成器的 `yield` 处被**重新抛出**；如果 `yield` 之后的代码（提交事务）不在 `try` 保护范围内，异常会直接从 `yield` 处向外冒泡，`conn.commit()` 根本不会被执行——但如果想要的是“出错就回滚”，需要用 `try/except`/`finally` 显式接住它：\n```python\n@contextmanager\ndef transaction(conn):\n    conn.begin()\n    try:\n        yield conn\n        conn.commit()\n    except Exception:\n        conn.rollback()\n        raise\n```",
+  "tags": []
+ },
+ {
+  "id": "python-context-generator-iterator",
+  "node": "python.context-iterators",
+  "type": "qa",
+  "q": "一个用 `yield` 写的生成器函数为什么能直接当迭代器（iterator）用，不用手写一个带 `__iter__`/`__next__` 的类？",
+  "a": "调用生成器函数不会立刻执行函数体，而是返回一个**生成器对象**，这个对象自动实现了 `__iter__`（返回自己）和 `__next__`（从上次 `yield` 处恢复，跑到下一个 `yield` 或函数结束抛 `StopIteration`）——Python 帮你把“记住当前遍历到哪、下次调用从哪继续”这套状态机全部生成好了，代价是你只写线性的、顺着读的代码，不用手动维护游标字段。",
+  "tags": []
+ },
+ {
+  "id": "python-context-class-vs-generator",
+  "node": "python.context-iterators",
+  "type": "qa",
+  "q": "什么时候一个惰性序列必须写成带 `__iter__` 的类，而不能只写一个生成器函数？",
+  "a": "当这个对象需要**支持多次独立遍历**时——一个生成器**函数**每调用一次返回一个新的生成器对象（可以重新遍历），但生成器**对象**本身只能被消费一次（遍历完就耗尽，`StopIteration` 之后不会重置）。如果把生成器对象本身当成“容器”反复 `for` 它，第二次会直接得到空结果。要让容器可以被反复 `for ... in container` 遍历，`__iter__` 必须**每次都返回一个新的生成器**，这也是很多容器类仍然要写一个 `__iter__` 方法、而不是直接把自己实现成生成器的原因。",
+  "tags": []
+ },
+ {
+  "id": "python-context-exit-suppress",
+  "node": "python.context-iterators",
+  "type": "qa",
+  "q": "`__exit__(self, exc_type, exc, tb)` 返回 `True` 和返回 `False`/`None` 在异常处理上分别意味着什么？",
+  "a": "返回真值（`True`）告诉解释器“这个异常我已经处理了”，`with` 语句**吞掉**异常，正常往下执行；返回假值（`False`/`None`，缺省）表示“没处理”，异常照常向外传播。\n```python\nclass SuppressKeyError:\n    def __enter__(self): return self\n    def __exit__(self, exc_type, exc, tb):\n        return exc_type is KeyError  # 只吞掉 KeyError\n\nwith SuppressKeyError():\n    {}[\"missing\"]  # 异常被吞掉，之后代码继续\n```",
+  "tags": []
+ }
+]

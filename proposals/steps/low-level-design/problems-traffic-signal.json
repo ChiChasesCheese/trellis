@@ -1,0 +1,12 @@
+{
+  "problems.machines.traffic-signal": [
+    "problems-traffic-signal-conflict-graph-not-directions",
+    "problems-traffic-signal-tick-driven-no-sleep",
+    "problems-traffic-signal-all-red-clearance",
+    "problems-traffic-signal-timing-plan-strategy",
+    "problems-traffic-signal-preemption-three-rules",
+    "problems-traffic-signal-movement-go-clear-stop",
+    "problems-traffic-signal-refuse-state-class-per-color",
+    "problems-traffic-signal-property-test-and-assert"
+  ]
+}

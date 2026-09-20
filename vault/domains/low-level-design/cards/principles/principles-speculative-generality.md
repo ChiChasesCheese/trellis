@@ -2,30 +2,18 @@
 id: principles-speculative-generality
 node: principles.simplicity
 type: qa
+step: 2
 ---
 ## Q
-Name three concrete signs of the *speculative generality* smell, and the refactor for each.
+什么是投机泛化（speculative generality）？为什么它是一个问题？
 
 ## A
-- Interface/abstract class with exactly one implementation and no test-seam need → **collapse hierarchy / inline**.
-- Parameters or type parameters added "for flexibility" but never varied → **remove parameter**.
-- Hooks and fields exercised only by tests, never by production code → **delete**.
+投机泛化是提前添加一个"以后可能会需要"、但当前需求完全用不到的抽象层。常见表现：
 
-It's YAGNI applied retroactively: generality that never earned its keep is a cost with no buyer.
+- 一个接口只有一个实现类，却已经按"未来可能有多个实现"的样子设计好了；
+- 一个参数存在，但代码里没有任何地方真正用它；
+- 抽象的层数比当前实际需要的更多。
 
-## Q zh
-什么是投机泛化，为什么它是问题？
+问题：增加了复杂度，却没有带来立即的收益；而且大概率猜错方向——真正需要的扩展点和你事先猜的往往不是同一个，过度工程的代码反而更难测试和维护。
 
-## A zh
-投机泛化是添加一个你认为将来可能需要的功能，但现在不需要。看起来像：
-- 一个接口有操作，但只有一个实现者
-- 一个参数存在但从未被使用
-- 抽象层数比实际需要的多
-- "我们可能想要这个"代码在 util 类中
-
-问题：
-- 增加复杂性，没有立即的益处
-- 你猜测错了；需要的功能与你抽象的不一样
-- 难以测试和维护过度工程的代码
-
-解决方案：YAGNI（你不需要它）。等到有第二个实现者或实际的需求才进行抽象。
+解法是 YAGNI：等真的出现第二个实现者，或者需求里已经明确要支持变体，再去做抽象。

@@ -2,27 +2,16 @@
 id: oop-abstract-partial-implementation-cost
 node: oop.interfaces
 type: qa
+step: 3
 ---
 ## Q
-You put shared logic in an abstract base class with `protected` hooks (template method). What are you paying for that reuse, and what's the alternative shape?
+你把共享逻辑放进一个 `abc.ABC` 基类，用受保护的钩子方法承载模板方法（template method）模式。这份复用要付出什么代价，替代方案是什么形状？
 
 ## A
-Costs:
-
-- **You spend the single inheritance slot** — the subclass can never extend anything else.
-- **`protected` members are public API to subclasses**: you can't rename or reorder them later without breaking every child, and the base's call order becomes a contract.
-- The base is **hard to test alone** (needs a fake subclass), and subclasses can't be tested without dragging the base's behavior in.
-
-Alternative: **interface + a composed helper** — the algorithm lives in a collaborator that takes the varying step as a strategy object. Java's compromise is the *skeletal implementation* pattern: publish the interface, offer `AbstractFoo` as an optional convenience so implementers who need their own hierarchy can forward to it instead.
-
-## Q zh
-你把共享逻辑放进一个带 `protected` 钩子的抽象基类（模板方法）。这份复用你要付出什么代价，替代方案是什么形状？
-
-## A zh
 代价：
 
-- **你花掉了唯一的单继承名额** —— 子类以后再也不能继承别的东西了。
-- **`protected` 成员对子类来说就是公开 API**：以后不能随意改名或调整调用顺序而不破坏每一个子类，基类的调用顺序也变成了一份契约。
-- 基类**难以单独测试**（需要一个假的子类），子类也无法脱离基类的行为单独测试。
+- **继承是所有方案里最强的耦合**：基类的调用顺序（`self._hook()` 什么时候被调用）从此是一份隐藏契约，改了就打断每一个子类。
+- 基类**难以单独测试**（要么实例化一个假的具体子类，要么把钩子方法拆出去单测），子类也测不出脱离基类骨架的独立行为。
+- Python 没有真正的 `protected`——一条下划线只是约定，挡不住子类去读写基类的"内部"方法，等于把它们变成了事实上的公开 API。
 
-替代方案：**接口 + 一个组合的 helper** —— 算法住在一个协作对象里，把会变化的那一步作为 strategy 对象传入。Java 的折中方案是 *skeletal implementation*（骨架实现）模式：发布接口，把 `AbstractFoo` 作为一个可选的便利类提供出来，这样需要自建继承体系的实现者可以转而委托给它。
+替代方案：**接口 + 一个组合的协作者**——算法住在一个独立对象里，把会变化的那一步作为一个函数或 strategy 对象传进来，而不是留一个钩子方法等着被覆盖。

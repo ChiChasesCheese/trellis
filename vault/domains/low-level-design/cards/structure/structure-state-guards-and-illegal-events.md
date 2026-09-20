@@ -2,36 +2,21 @@
 id: structure-state-guards-and-illegal-events
 node: structure.state-machines
 type: qa
+step: 3
 ---
 ## Q
-"An order may ship from PAID only if every line item is in stock." Why can't a state→state table express this, and how should the illegal case be reported?
+"订单只有在每个行项都有库存时才能从 PAID 变成 SHIPPED"——为什么一张简单的"状态→状态"表表达不了这条规则？拒绝的转移应该怎样上报？
 
 ## A
-Legality is a triple **(current state, event, guard)** — not a pair of states. Model transitions keyed by *event* and attach a predicate:
+合法性其实是一个三元组**（当前状态、事件、守卫条件（guard））**，不只是"这两个状态之间有没有一条边"——同样是 PAID → SHIPPED，库存够不够是运行时才能算出的谓词，编不进一张静态的状态对表。要把守卫作为转移规则的一部分：
 
-```java
-record Transition(State from, Event on, Predicate<Order> guard, State to) {}
+```python
+@dataclass
+class Transition:
+    frm: State
+    on: str
+    guard: Callable[["Order"], bool]
+    to: State
 ```
-`state × event` picks the row; the guard decides. Otherwise the stock check leaks back into the caller, which is what the table was supposed to prevent.
 
-Reporting the rejection — choose by what the caller can do:
-- **Throw** when it's a programming error (`SHIPPED → PAID`): unreachable if callers are correct.
-- **Return a typed failure** when it's expected business flow ("out of stock") — the caller retries or messages the user; exceptions for control flow here are noise.
-- **No-op** for idempotent repeats (`cancel()` on a CANCELLED order) — but only if repeat is genuinely harmless.
-
-
-## Q zh
-"一个订单可能从 PAID 只有当每一个行项是库存中的运送。"为什么一个状态→状态表不能表达这个，非法情况应该怎样被报告?
-
-## A zh
-合法性是一个三元组 **(当前状态、事件、保护)** — 不是一对状态。模型转变由**事件**作为关键并附加一个谓词:
-
-```java
-record Transition(State from, Event on, Predicate<Order> guard, State to) {}
-```
-`state × event` 挑选行；保护决定。否则库存检查泄漏回调用者，那是表所本想阻止的。
-
-报告拒绝 — 选择通过调用者能做什么:
-- **抛出**当它是一个编程错误（`SHIPPED → PAID`）: 无法接近如果调用者是正确的。
-- **返回一个类型化的失败**当它是预期的商业流（"缺货"）— 调用者重试或给用户消息；这里异常为控制流是噪音。
-- **不操作**对等幂重复（`cancel()` 在一个 CANCELLED 订单）— 但只有如果重复真正是无害的。
+拒绝时怎么上报看场景：**抛异常**用于编程错误（比如根本没有 `SHIPPED -> PAID` 这条边，调用方本不该走到这）；**返回一个带原因的失败值**用于预期内的业务流（"库存不足"，调用方可能要重试或提示用户，这里异常控制流反而是噪音）；**直接空操作**用于等幂的重复调用（对已取消订单再调用一次 `cancel()`）——但只有当重复调用真的无害时才这样做。

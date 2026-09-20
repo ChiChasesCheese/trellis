@@ -1,0 +1,12 @@
+{
+  "problems.games.cricinfo": [
+    "problems-cricinfo-derive-not-maintain",
+    "problems-cricinfo-ball-outcome-properties",
+    "problems-cricinfo-wide-noball-simplification",
+    "problems-cricinfo-strike-rotation-two-independent-rules",
+    "problems-cricinfo-amend-last-ball-only",
+    "problems-cricinfo-commentary-feed-wrapper",
+    "problems-cricinfo-notify-outside-lock",
+    "problems-cricinfo-format-is-one-number"
+  ]
+}

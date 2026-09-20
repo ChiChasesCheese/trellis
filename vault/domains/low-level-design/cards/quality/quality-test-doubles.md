@@ -2,23 +2,12 @@
 id: quality-test-doubles
 node: quality.testability
 type: qa
+step: 3
 ---
 ## Q
-Stub vs mock vs fake — separate the three doubles people actually confuse, by what the test asserts on.
+写一个依赖了 `EmailSender` 的类的测试，什么时候该用一个手写的 fake，什么时候不得不用 `unittest.mock.patch`，为什么默认应该偏向前者？
 
 ## A
-- **Stub**: returns canned answers so the code under test can run (`stubRates.get("EUR") → 1.1`). The test asserts on the **system's output/state** — the stub is scenery.
-- **Mock**: records calls and the test **asserts on the interaction itself** — "`emailSender.send()` was called once with X." Use only when the side effect *is* the requirement; over-mocking welds tests to implementation details.
-- **Fake**: a real, working, lightweight implementation (in-memory repository, embedded queue). Behaves properly across many calls, so it suits whole-flow tests without a DB.
+fake 是一个真实可用的轻量实现——`class FakeEmailSender: sent = []; def send(self, msg): self.sent.append(msg)`——它有自己的状态和行为，测试断言的是这个状态（"`sent` 里有一封给对方的邮件"），和生产实现之间只差"真的把邮件发出去"这一步。`patch` 打的是被测代码内部对某个名字的引用，测试断言变成"某个函数是不是被调用了、参数是什么"，这把测试焊死在了实现细节上——换一种实现方式（哪怕行为完全等价）测试就会跟着挂。
 
-(Remaining taxonomy: **dummy** — passed but never used; **spy** — a stub that also records, letting you assert afterward instead of setting expectations upfront.)
-
-## Q zh
-Stub、mock、fake —— 按"测试断言的是什么"来区分这三个真正被搞混的替身。
-
-## A zh
-- **Stub**：返回预设答案，好让被测代码能跑下去（`stubRates.get("EUR") → 1.1`）。测试断言的是**系统的输出/状态** —— stub 只是布景。
-- **Mock**：记录调用，测试**断言的是交互本身** —— "`emailSender.send()` 被调用了一次，参数是 X"。只在这个副作用*本身就是需求*时才用；过度 mock 会把测试焊死在实现细节上。
-- **Fake**：一个真实可用的轻量实现（内存仓储、嵌入式队列）。多次调用之间行为正确，所以适合不带数据库的全流程测试。
-
-（分类里剩下的两个：**dummy** —— 传进去但从不使用；**spy** —— 会记录的 stub，让你在事后断言，而不必预先设置期望。）
+fake 需要通过构造函数注入才能生效，前提是这个类本身是可测的（见接缝/构造函数注入）；如果依赖是一段遗留代码，构造函数注入不到（比如它内部直接 `import` 了一个模块级函数），`patch` 是唯一能插进去的办法，但这应该被当作一个临时的应急手段，理想状态是逐步把这类代码改造成可以接受注入的依赖，而不是把 `patch` 当成默认的测试风格。

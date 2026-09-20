@@ -1,0 +1,58 @@
+[
+  {
+    "id": "problems-online-auction-proxy-bidding-three-rules",
+    "node": "problems.marketplaces.online-auction",
+    "type": "qa",
+    "q": "在线拍卖（online auction）系统里，出价者交给系统的是一个愿意付的**上限**（maximum），不是一口价，这叫代理出价（proxy bidding）。设在位领先者的上限是 `L`、当前价是 `P`、加价档（increment）是 `k`，新挑战者的上限是 `M`，当前价该怎么算？",
+    "a": "分三种情况，而且**价格只涨不跌**这一条必须单独兜底：\n\n- `M > L`：换人。新价 = `min(M, L + k)`——挑战者只需要压过在位者一档，除非他的上限还不到那一档，那就按他的上限成交（险胜）。\n- `M <= L`：不换人，但在位者被顶上去：新价 = `min(L, M + k)`。\n- 无论哪一支，最后都执行 `P = max(P, 新价)`。\n\n```python\nif self._leader is None:\n    self._leader, self._leader_max = bidder_id, maximum\nelif maximum > self._leader_max:\n    self._price = max(self._price, min(maximum, self._leader_max + self.increment))\n    self._leader, self._leader_max = bidder_id, maximum\nelse:\n    self._price = max(self._price, min(self._leader_max, maximum + self.increment))\n```\n\n漏掉 `max(P, 新价)` 是最常见的 bug：会出现「后来的小额出价把价格打下去」的荒唐结果。加上这一条之后，最终结果与出价到达顺序无关——最终价永远是 `min(最高上限, 次高上限 + 一档)`。"
+  },
+  {
+    "id": "problems-online-auction-leader-raises-own-max",
+    "node": "problems.marketplaces.online-auction",
+    "type": "qa",
+    "q": "在线拍卖的代理出价（proxy bidding）设计里，如果**当前领先者自己**提高出价上限（比如从 150 提到 210），当前价该不该跟着涨？为什么把他当成一个新挑战者走常规分支是错的？",
+    "a": "**不该涨（除非中途有人插过手）**，而且必须给领先者单开一条路，不能走常规的 `M > L` 分支。\n\n天真的实现会把领先者提价当成新挑战者：`min(210, 旧上限 + 一档)`，于是他自己把自己的价顶上去了——**没有人应该和自己竞价**，这是本题最经典的 bug。\n\n正确处理：\n\n```python\nif bidder_id == self._leader:\n    if maximum <= self._leader_max:\n        raise BidTooLowError(...)\n    self._leader_max = maximum\n    # 价格不动，也不发\"价格变化\"事件\n```\n\n只改上限，价格一动不动。校验门槛也不一样：领先者加价的门槛是「必须超过自己现有的上限」，而不是「必须达到现价加一档」——后者对他毫无意义，因为现价本来就是他在付。"
+  },
+  {
+    "id": "problems-online-auction-tie-goes-to-earliest",
+    "node": "problems.marketplaces.online-auction",
+    "type": "qa",
+    "q": "在线拍卖里，两个出价者设定了**相同**的上限（比如都出到 210 元），谁应该赢，最终价是多少？",
+    "a": "**先提交那个上限的人赢**，价格被抬到那个共同上限。\n\n代理出价（proxy bidding）的换人条件是「新上限**严格高于**在位者」（`M > L`），上限相同时不满足，于是走「不换人」分支，在位者被顶到 `min(L, M + k)` = 共同上限本身。后到的那位即使上限相同也无法夺走领先位置，且他**一秒钟都没有领先过**——事件流不会先发\"你在领先\"再发\"你被超越了\"这种谎话。\n\n这不是随便定的规则：它让结果可复现（同一组出价、不同到达顺序，只要每个人的最终上限相同，结果必须一致），也符合直觉——你没能出得比对方更高，就没有理由夺走他的位置。"
+  },
+  {
+    "id": "problems-online-auction-exactly-once-lazy-tick",
+    "node": "problems.marketplaces.online-auction",
+    "type": "qa",
+    "q": "在线拍卖到了截止时间该怎么结束：每场拍卖一个 `sleep(delay)` 定时器、一个周期扫描线程，还是别的办法？如果进程重启、或者没有任何人访问这场拍卖，它算不算结束了？",
+    "a": "**都不是单独够用的答案。**\n\n- 每场一个定时器：上架一百万场就是一百万个待命任务；反狙击一延时，定时器就成了错误时间的炸弹，得取消重排；进程重启，所有定时器全部丢失，状态里没有任何东西记得\"这场该结束了\"。\n- 只用周期扫描线程：幂等、重启后自己会追上，但扫描间隔内读到的状态仍然可能是\"进行中\"（不够及时）。\n\n更好的答案是**惰性推进**：任何一次读或写都先调用一个 `_tick(now)`，在锁内把状态推进到 `now` 应有的样子（该开拍就开拍、该结束就结束），扫描线程只是让通知更及时，正确性不依赖它。\n\n```python\ndef _tick(self, now):\n    if self._status is ACTIVE and now >= self._ends_at:\n        self._status = SOLD if (self._leader and self._price >= self.reserve_price) else UNSOLD\n        events.append(self._event(CLOSED, now))\n```\n\n没人访问时，诚实的答案是「什么都还没发生，但也没有任何人能观察到\\`还没结束\\`」——谁来看，谁就在看到之前先把它结算了，对外可见的行为等价于\"到点即结束\"。状态从 ACTIVE 翻出去这个动作在锁内完成、在一场拍卖的一生中最多发生一次，因而 CLOSED 事件恰好发生一次——这就是「恰好一次」的全部含义，它不依赖任何定时器活着。"
+  },
+  {
+    "id": "problems-online-auction-lock-per-auction",
+    "node": "problems.marketplaces.online-auction",
+    "type": "qa",
+    "q": "在线拍卖系统里，锁应该挂在每一场 `Auction` 对象上，还是挂在管理全部拍卖的 `AuctionHouse` 上？判断的依据是什么？",
+    "a": "**挂在每一场 `Auction` 上**，`AuctionHouse` 自己另有一把很少被持有的小锁只保护它自己的目录字典。\n\n判据：**锁的粒度应该等于\"必须一起原子改变的那组状态\"的边界，不多也不少。** 两场拍卖之间没有任何共享状态——没有跨拍卖的资金、没有跨拍卖的库存，一次出价影响的永远只有一件拍品。挂一把全局大锁的后果是：一件爆款拍品在最后十秒的出价洪峰，会把同时进行的另外十万场冷门拍卖全部堵死。\n\n这和撮合类系统（股票交易所）不同：那里一笔成交要同时原子地改动两个账户和一本簿子，原子性跨越了多个对象，所以锁必须是全局的。把那个结论直接搬过来挂在拍卖行上，是没看清\"必须一起变的状态边界\"在哪里。\n\nGIL（全局解释器锁）在这里帮不上忙：\"读领先者的上限、算新价、写领先者\"是好几条字节码，两个线程可以在中间交错，结果是两个人同时被记成领先者。GIL 只保证单条字节码不被打断。"
+  },
+  {
+    "id": "problems-online-auction-callable-watcher-not-abc",
+    "node": "problems.marketplaces.online-auction",
+    "type": "qa",
+    "q": "在线拍卖要在出价、延期、结束时通知订阅者，这是观察者模式（Observer）的标准场景。Java 题解通常写一个 `AuctionObserver` 接口加 `on_update` 方法。Python 里该怎么做？观察者事件的内容该带什么？",
+    "a": "**不需要抽象基类。** 观察者只有一个方法，那它就是一个普通函数：关注者的类型直接声明成 `Callable[[AuctionEvent], None]`，`print`、`list.append`、一个闭包、一个实现了 `__call__` 的类，全都直接可用，不需要继承任何东西。抽象基类的价值在\"多个方法要一起实现\"或要用 `isinstance` 分派，这里两者都没有。\n\n真正值得花心思、且和用不用基类无关的是两处：\n\n1. **事件自带内容**：`AuctionEvent` 带齐现价、领先者、被顶掉的人、结束时间和状态。`on_update(auction, \"你被超越了\")` 这种签名会把订阅者推回去读 `auction` 的实时状态——那等于绕过锁读一份正在变化的数据。\n2. **退订的手段要和订阅一起交出去**：`watch()` 返回一个 `unwatch` 闭包，关注者表才会缩小；拍卖一结束，整张表当场清空，因为之后不会再有任何事件。没有这两条，关注者表就是一个只增不减的内存泄漏。"
+  },
+  {
+    "id": "problems-online-auction-reserve-vs-starting-price",
+    "node": "problems.marketplaces.online-auction",
+    "type": "qa",
+    "q": "在线拍卖里，起拍价（starting price）和底价（reserve price）是同一回事吗？它们分别控制什么，在代理出价（proxy bidding）算法里各自出现在哪一步？",
+    "a": "**不是同一回事，必须是两个独立字段。**\n\n- **起拍价**：第一次出价的下限，**公开**。它只出现一次——`minimum_bid()` 在还没有领先者时返回它，作为第一位出价者必须达到的门槛。\n- **底价**：低于这个数卖家宁可不卖，通常**不公开**。它出现在结算与代理出价两处：拍卖到点时，\"成交\"还是\"流拍\"取决于最终价是否达到底价（`sold = leader is not None and price >= reserve_price`）；而只要领先者的上限已经够到底价，代理出价就会把当前价直接抬到底价，因为卖家反正会接受这个数，没有理由让价格停在底价以下。\n\n把两者合成一个字段的后果：要么起拍价被迫等于底价（暴露了卖家的心理价位），要么底价被迫公开（丧失了它\"不公开\"的作用）。\n\n流拍也因此**只用一个状态** `UNSOLD`：没人出价、和出价了但没到底价，原因不同，但系统行为完全一样（没有赢家、不收款），原因由\"有没有领先者\"自己说明，不需要拆成两个状态。"
+  },
+  {
+    "id": "problems-online-auction-shrinking-containers",
+    "node": "problems.marketplaces.online-auction",
+    "type": "qa",
+    "q": "在线拍卖系统跑得越久，哪些容器会无限增长？各自靠什么机制保证会缩小？",
+    "a": "两个：**关注者表**和**拍卖行的拍品目录**。\n\n- **关注者表**（每场拍卖内部）：`watch()` 返回一个 `unwatch` 闭包，把退订手段和订阅一起交出去；更重要的是，拍卖一进入终态（`_tick` 发出 CLOSED 事件时），整张关注者表**当场清空**，因为结束之后不会再有任何事件，留着这些引用只是内存泄漏。\n- **拍品目录**（`AuctionHouse._auctions`）：靠 `purge_closed_before(cutoff)` 把结束早于 `cutoff` 的拍卖清出字典，`auction_count` 随之真的变小。没有它，目录会随着上架量无限增长，而其中绝大多数早就尘埃落定，能被清理是因为它们的关注者表在结束那一刻已经清空——`Auction` 对象因此没有任何外部引用拖着，真的能被回收。\n\n出价历史（`Auction._bids`）是唯一被故意设计成**只增不减**的容器：它是审计所需的流水账，真实系统会随拍卖归档一起搬走，而不是原地清理。"
+  }
+]

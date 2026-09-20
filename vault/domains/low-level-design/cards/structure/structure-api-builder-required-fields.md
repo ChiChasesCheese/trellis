@@ -2,24 +2,18 @@
 id: structure-api-builder-required-fields
 node: structure.api
 type: qa
+step: 3
 ---
 ## Q
-When does a fluent builder beat constructors/setters, and where do you enforce required fields and invariants with a builder?
+Java 里"可选参数很多时用 Builder"这条经验，在 Python 里通常应该换成什么写法？什么场景 Python 也仍然值得手写一个 builder？
 
 ## A
-- Builder wins when a type has **several optional parameters** (telescoping-constructor smell) or you want an **immutable** object assembled step by step. Two params, all required → just use a constructor.
-- **Required fields go in the builder's constructor** (can't even start without them); optional ones are fluent methods.
-- **Cross-field invariants are validated once, in `build()`** (e.g. `start < end`), so an invalid object can never exist.
+多数情况下换成**关键字参数加默认值**，或者用 `@dataclass` 配合 `field`——Python 的调用语法本来就支持 `Booking(room="101", nights=2, breakfast=True)`，不需要链式的 `.with_x().with_y().build()` 来避开"伸缩构造函数"的问题。真正还值得写 builder 的场景是：构造过程本身有**顺序依赖**（必须先选影厅、再按影厅座位表选座）、或者中间状态需要跨多步骤校验，且最终对象要保持不可变（构造完就 `frozen=True`）——这时一个显式的 builder 对象能把"正在构建、还不合法"的中间态和"构建完成、已校验、不可变"的最终态分开。
 
-Bonus: the built class gets a private constructor taking the builder — no setters, so every instance is valid and thread-safe to share.
-
-
-## Q zh
-什么时候流式构造器胜过构造函数/setter，以及你在哪里用构造器执行必需字段和不变式?
-
-## A zh
-- 构造器赢当一个类型有**多个可选参数**（伸缩构造器味道）或你想要一个**不可变**对象逐步组装。两个参数，所有必需 → 就用一个构造函数。
-- **必需字段进入构造器的构造函数**(甚至不能不它们就开始)；可选的是流式方法。
-- **跨字段不变式验证一次，在 `build()`**(例如 `start < end`)，所以一个无效的对象永远不能存在。
-
-额外: 构建的类得到一个私有构造函数接受构造器 — 没有 setter，所以每个实例是有效的和线程安全的共享。
+```python
+@dataclass(frozen=True)
+class Booking:
+    room: str
+    nights: int
+    breakfast: bool = False
+```

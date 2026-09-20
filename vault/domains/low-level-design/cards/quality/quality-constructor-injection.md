@@ -2,23 +2,18 @@
 id: quality-constructor-injection
 node: quality.testability
 type: qa
+step: 2
 ---
 ## Q
-Why is constructor injection preferred over setter/field injection — three concrete properties?
+为什么构造函数注入（constructor injection）优于事后靠属性赋值来"装配"依赖？
 
 ## A
-- **No invalid intermediate state**: the object is fully usable the moment it exists; setter injection allows a constructed-but-unwired object, adding "was it initialized?" as a bug class.
-- **Dependencies are honest and final**: `final` fields, visible in one signature — and a constructor demanding six collaborators is a *feature*: it makes the SRP violation impossible to ignore (field injection hides it).
-- **Framework-free tests**: `new Service(fakeRepo, fixedClock)` — no DI container, no reflection in unit tests.
+```python
+class OrderService:
+    def __init__(self, repo: OrderRepository, clock: Clock):
+        self._repo = repo
+        self._clock = clock
+```
+第一，对象一旦构造完成就是完整可用的——不存在"已经 new 出来了，但还没接好线"这种中间态；靠属性赋值装配的对象，调用方必须自己记得按正确顺序把每个依赖都设置一遍，漏了哪个只有运行时才会报错。第二，构造函数的参数列表就是一份诚实的依赖清单，全部摆在一个签名里——一个要求六个协作者的构造函数看着丑,但这正是好事：它让"这个类做的事太多"这条设计问题无处遁形,而分散的属性赋值会把同样的问题悄悄藏起来。
 
-Setter injection's remaining niche: genuinely **optional** or cyclic dependencies — both rare, and a cycle is usually a design smell to break instead.
-
-## Q zh
-为什么构造注入优于 setter/字段注入 —— 说出三条具体性质。
-
-## A zh
-- **不存在非法的中间状态**：对象一旦存在就完全可用；setter 注入允许出现"已构造但没接好线"的对象，凭空多出"它初始化了吗"这一类 bug。
-- **依赖是诚实且 final 的**：`final` 字段，全部出现在一个签名里 —— 而一个要求六个协作者的构造函数是*好事*：它让 SRP 违规无法被忽视（字段注入则会把它藏起来）。
-- **测试不需要框架**：`new Service(fakeRepo, fixedClock)` —— 单元测试里没有 DI 容器，也没有反射。
-
-setter 注入仅剩的适用场景：真正**可选的**依赖，或者循环依赖 —— 两者都罕见，而且循环通常是应该去打破的设计坏味道。
+第三，测试不需要任何框架或反射：`OrderService(FakeRepo(), FixedClock(...))` 就是一次普通的函数调用。属性注入仅剩的合理场景是真正**可选**的依赖，或者需要打破循环依赖——两者都少见，而循环依赖本身通常是该消灭的设计问题，不是该迁就的现状。

@@ -2,26 +2,12 @@
 id: method-time-budget
 node: method.delivery
 type: qa
+step: 2
 ---
 ## Q
-You have a 90-minute machine coding round. Give a defensible time budget across the phases — and name the phase candidates most often over-spend on.
+一场 90 分钟的机器编码轮，大致怎么把时间预算到各个阶段——候选人最容易在哪个阶段超时？
 
 ## A
-- ~10 min requirement scoping (in/out list, core flows)
-- ~10–15 min object model sketch (responsibilities, key interfaces)
-- ~50 min coding the core flows
-- ~10–15 min demo, tests, walkthrough
+大致：~10 分钟明确需求与范围；~10~15 分钟画对象模型草图（职责划分和关键接口，不是完整类图）；~50 分钟编码核心流程；~10~15 分钟跑演示、补测试、讲权衡。
 
-Most over-spent: upfront design/UML. Sketch responsibilities, not full class diagrams — the running code is the deliverable.
-
-
-## Q zh
-你有一个 90 分钟的机器编码轮次。给出一个可防御的时间预算跨越各阶段 — 以及候选最经常超支的阶段。
-
-## A zh
-- ~10 分钟需求范围确定（入/出列表、核心流）
-- ~10–15 分钟对象模型草图（责任、关键接口）
-- ~50 分钟编码核心流
-- ~10–15 分钟演示、测试、演走
-
-最超支: 前期设计/UML。草图责任，不是全类图 — 运行的代码是可交付物。
+最容易超时的是前期设计阶段——在完整 UML 上纠结太久。草图只需要画清职责，能跑起来的代码才是真正的交付物。

@@ -1,0 +1,12 @@
+{
+  "problems.booking.meeting-scheduler": [
+    "problems-meeting-scheduler-half-open-interval",
+    "problems-meeting-scheduler-room-vs-calendar",
+    "problems-meeting-scheduler-merge-intervals-cost",
+    "problems-meeting-scheduler-no-strategy-class-for-room-pick",
+    "problems-meeting-scheduler-lazy-recurrence-expansion",
+    "problems-meeting-scheduler-this-vs-this-and-following",
+    "problems-meeting-scheduler-local-time-plus-zone",
+    "problems-meeting-scheduler-lock-nesting-order"
+  ]
+}

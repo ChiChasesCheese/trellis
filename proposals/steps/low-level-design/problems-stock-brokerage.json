@@ -1,0 +1,12 @@
+{
+  "problems.marketplaces.stock-brokerage": [
+    "problems-stock-brokerage-book-knows-no-money",
+    "problems-stock-brokerage-reserve-before-match",
+    "problems-stock-brokerage-price-level-dict-fifo",
+    "problems-stock-brokerage-trade-at-resting-price",
+    "problems-stock-brokerage-market-buy-buying-power",
+    "problems-stock-brokerage-status-enum-not-state-classes",
+    "problems-stock-brokerage-cancel-races-a-fill",
+    "problems-stock-brokerage-feed-and-shrinking-containers"
+  ]
+}

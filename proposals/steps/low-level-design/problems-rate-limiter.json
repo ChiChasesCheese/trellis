@@ -1,0 +1,12 @@
+{
+  "problems.components.rate-limiter": [
+    "problems-rate-limiter-fixed-window-boundary-burst",
+    "problems-rate-limiter-decision-not-bool",
+    "problems-rate-limiter-used-is-the-seam",
+    "problems-rate-limiter-token-bucket-lazy-refill",
+    "problems-rate-limiter-state-map-must-shrink",
+    "problems-rate-limiter-amortised-threshold-trap",
+    "problems-rate-limiter-sharded-lock",
+    "problems-rate-limiter-composite-two-phase"
+  ]
+}

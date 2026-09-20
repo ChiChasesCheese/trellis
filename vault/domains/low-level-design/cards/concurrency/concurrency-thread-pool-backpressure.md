@@ -2,25 +2,24 @@
 id: concurrency-thread-pool-backpressure
 node: concurrency.patterns
 type: qa
+step: 4
 ---
 ## Q
-A fixed thread pool fed by an **unbounded** task queue never rejects work. What actually fails under sustained overload, and what's the disciplined setup?
+持续往一个固定大小的 `ThreadPoolExecutor` 里 `submit()` 任务，提交速度远超处理速度，会发生什么？怎么加上背压（backpressure）？
 
 ## A
-Nothing rejects, so nothing pushes back: the queue grows without limit — latency climbs (tasks wait behind thousands of others) and the process eventually **OOMs**. The failure is *hidden* until it's catastrophic.
+`ThreadPoolExecutor` 的内部任务队列没有容量上限，`submit()` 从不因为"排队太多"而拒绝或阻塞——它会一直接受新任务，队列在内存里无限堆积，延迟越排越长，最终可能把进程内存耗尽，而且这个过程在爆掉之前是"看不见"的，因为每次 `submit()` 都正常返回。
 
-- Disciplined: **bounded queue + explicit rejection policy**. `CallerRuns` is the classic backpressure choice — the submitter executes the task itself, naturally slowing producers.
-- Size CPU-bound pools ≈ number of cores; IO-bound pools larger (≈ cores × (1 + wait/compute)).
+加背压的标准做法是在 `submit()` 前面挡一个有界信号量：
 
-Rule: overload must surface at the boundary, not accumulate in memory.
+```python
+sem = threading.Semaphore(max_workers * 2)
 
-## Q zh
-一个固定线程池，喂给它的是**无界**任务队列，于是它从不拒绝任务。持续过载下真正会失败的是什么，有纪律的配置该是什么样？
+def submit_bounded(pool, fn, *args):
+    sem.acquire()
+    fut = pool.submit(fn, *args)
+    fut.add_done_callback(lambda _: sem.release())
+    return fut
+```
 
-## A zh
-没有任何东西被拒绝，也就没有任何东西往回推：队列无限增长 —— 延迟一路攀升（任务排在成千上万个任务后面），进程最终 **OOM**。这种失败在变成灾难之前是*看不见的*。
-
-- 有纪律的做法：**有界队列 + 明确的拒绝策略**。`CallerRuns` 是经典的背压选择 —— 提交者自己去执行这个任务，自然而然地拖慢了生产者。
-- 池大小：CPU 密集型 ≈ 核数；IO 密集型更大（≈ 核数 × (1 + 等待/计算)）。
-
-规则：过载必须在边界处显现出来，而不是在内存里堆积。
+`sem.acquire()` 在积压任务达到上限时阻塞提交者本身，让生产速度被处理速度自然拖住，而不是让队列无限增长。

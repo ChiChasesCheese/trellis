@@ -1,0 +1,12 @@
+{
+  "problems.marketplaces.bank-account": [
+    "problems-bank-account-event-log-vs-mutable-balance",
+    "problems-bank-account-timestamp-argument-not-real-clock",
+    "problems-bank-account-read-write-timestamp-split",
+    "problems-bank-account-top-spenders-tie-break",
+    "problems-bank-account-cashback-recorded-at-maturity-not-trigger",
+    "problems-bank-account-id-never-reused",
+    "problems-bank-account-merge-freezes-not-deletes",
+    "problems-bank-account-payment-follows-account-on-merge"
+  ]
+}

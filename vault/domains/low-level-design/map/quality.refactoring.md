@@ -1,8 +1,8 @@
 %% trellis:begin %%
-# Core Refactorings
-*Code Quality*
+# 核心重构手法
+*代码质量（Code Quality）*
 
-Extract method/class, replace conditional with polymorphism, introduce parameter object, guard clauses.
+提取方法/类、用多态替换条件、引入参数对象、卫语句（guard clause）。
 
 ## Readings
 - [[fowler-refactoring-video-store|Refactoring a JavaScript Video Store (Martin Fowler)]]

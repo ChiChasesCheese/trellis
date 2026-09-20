@@ -1,24 +1,15 @@
 ---
 id: patterns-observer-mediator-pubsub
-node: patterns.behavioral
+node: patterns.observer
 type: qa
+step: 5
 ---
 ## Q
-Observer vs mediator vs pub-sub — all decouple communicating objects. Separate them by topology and by who knows whom.
+Observer、Mediator 和 PubSub 都在"连接对象"，怎样区分它们，实际选型时又是怎么竞争的？
 
 ## A
-- **Observer**: one-to-many, **subject knows its observers** (holds the list, calls them directly, usually synchronously). Observers know the subject to subscribe. Decouples subject from observer *types*, not existence.
-- **Mediator**: many-to-many collapsed into a **star** — colleagues only know the mediator, which centralizes the interaction logic (air-traffic control, dialog coordinating its widgets). Use when peer-to-peer links have become a tangle; cost: the mediator can grow into a god object.
-- **Pub-sub**: publisher and subscriber **don't know each other at all** — an event channel/broker sits between, often async. Strongest decoupling, weakest traceability.
+- **Observer**：一个 subject 直接广播给多个观察者，观察者自己向 subject 注册。形状是一对多、直接调用。
+- **Mediator**：多个对象通过一个中介互相协调，而不是彼此直接引用。形状是多对多、集中在一个类里。
+- **PubSub**：发布者根本不知道有哪些订阅者，中间件（消息队列、事件总线）负责投递。形状是多对多、彻底解耦、通常异步。
 
-Axis: how much the sender knows about receivers — observer (list of them) → mediator (one hub) → pub-sub (nothing).
-
-## Q zh
-Observer、Mediator 和 PubSub 都连接对象。怎样区分，何时竞争？
-
-## A zh
-- **Observer**：一个**主题**广播给多个**观察者**。观察者注册自己。形状：一对多、直接。
-- **Mediator**：许多对象通过**中介**相互通信，而不是直接联系。形状：多对多、集中。
-- **PubSub**：发布者不知道订阅者；中间件（消息队列、事件总线）承载。形状：多对多、解耦、通常异步。
-
-何时竞争：简单的 UI 通知。Observer 最简单（直接注册）。Mediator 如果对象间通信变得复杂（对话框中的五个字段相互影响）。PubSub 如果你需要跨进程或微服务。
+选型上的竞争：简单的进程内通知优先用 Observer，实现最直接；对象之间的协调关系变复杂（表单里五个字段互相影响）时考虑 Mediator；需要跨进程、跨服务传递事件时才需要 PubSub。

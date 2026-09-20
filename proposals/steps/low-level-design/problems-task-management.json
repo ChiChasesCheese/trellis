@@ -1,0 +1,12 @@
+{
+  "problems.social.task-management": [
+    "problems-task-management-list-is-workflow-state",
+    "problems-task-management-rank-not-index",
+    "problems-task-management-rank-exhausted-rebalance",
+    "problems-task-management-workflow-per-board",
+    "problems-task-management-workflow-table-not-state-classes",
+    "problems-task-management-overdue-filtered-index",
+    "problems-task-management-archive-shrinks-indexes",
+    "problems-task-management-checklist-proves-extension"
+  ]
+}

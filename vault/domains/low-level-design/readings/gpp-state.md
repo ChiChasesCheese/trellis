@@ -1,5 +1,5 @@
 ---
-nodes: [structure.state-machines]
+nodes: [structure.state-machines, patterns.state]
 url: https://gameprogrammingpatterns.com/state.html
 tags: [canonical]
 ---

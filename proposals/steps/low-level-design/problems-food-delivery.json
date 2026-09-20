@@ -1,0 +1,12 @@
+{
+  "problems.marketplaces.food-delivery": [
+    "problems-food-delivery-role-on-every-edge",
+    "problems-food-delivery-illegal-vs-unpermitted",
+    "problems-food-delivery-dispatch-after-acceptance",
+    "problems-food-delivery-dispatch-timing-tradeoff",
+    "problems-food-delivery-batch-one-inequality",
+    "problems-food-delivery-batch-has-no-state-machine",
+    "problems-food-delivery-menu-check-is-atomic",
+    "problems-food-delivery-closing-is-not-cancelling"
+  ]
+}

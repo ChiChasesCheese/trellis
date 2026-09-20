@@ -1,0 +1,50 @@
+[
+ {
+  "id": "python-functions-first-class",
+  "node": "python.first-class-functions",
+  "type": "qa",
+  "q": "“函数是一等公民（first-class）”具体让你在设计里少写什么样的类？",
+  "a": "函数可以被赋值给变量、存进容器、当参数传递、当返回值返回——凡是**只有一个抽象方法**的接口（Strategy 的 `execute`、Command 的 `run`、Comparator 的 `compare`），在 Java 里需要一个接口加一堆实现类，在 Python 里直接就是一个函数签名：调用方传一个满足该签名的可调用对象（callable）就行，不需要为每种算法各写一个类。",
+  "tags": []
+ },
+ {
+  "id": "python-functions-strategy",
+  "node": "python.first-class-functions",
+  "type": "qa",
+  "q": "用函数替代“策略模式（Strategy）”的类层级，给一个定价策略的例子。",
+  "a": "```python\ndef regular_price(base: float) -> float:\n    return base\n\ndef member_discount(base: float) -> float:\n    return base * 0.9\n\ndef price(base: float, strategy) -> float:\n    return strategy(base)\n\nprice(100, member_discount)  # 90.0\n```\n`strategy` 只是一个 `Callable[[float], float]`；换策略就是传一个不同的函数，不需要 `PricingStrategy` 抽象基类和一堆只有一个方法的子类。",
+  "tags": []
+ },
+ {
+  "id": "python-functions-command-partial",
+  "node": "python.first-class-functions",
+  "type": "qa",
+  "q": "`functools.partial` 在实现“命令模式（Command）”时解决了什么问题？",
+  "a": "Command 模式要把“一次调用加它的参数”打包成一个可以延迟执行、可以存进撤销栈的对象。`functools.partial(func, *args, **kwargs)` 恰好把函数和它的部分/全部参数绑定成一个新的可调用对象——不用手写一个只存 `func` 和参数、只有一个 `execute()` 方法的 `Command` 类。\n```python\nfrom functools import partial\n\nundo_stack = []\ndef move(entity, dx, dy):\n    entity.x += dx; entity.y += dy\n\ncmd = partial(move, player, 1, 0)\nundo_stack.append(partial(move, player, -1, 0))  # 撤销动作\ncmd()\n```",
+  "tags": []
+ },
+ {
+  "id": "python-functions-closure-late-binding",
+  "node": "python.first-class-functions",
+  "type": "qa",
+  "q": "下面这段代码为什么三次打印出来的都是 `2`，而不是 `0, 1, 2`？\n```python\nfuncs = [lambda: i for i in range(3)]\nfor f in funcs:\n    print(f())\n```",
+  "a": "闭包（closure）捕获的是变量 `i` 本身（按引用捕获），不是循环当时的值；三个 lambda 共享同一个外层作用域里的 `i`，循环结束时 `i` 的值是 `2`，所以三次调用都读到 `2`——这就是“延迟绑定（late binding）”。修复方式是把当前值作为默认参数在定义时“冻结”进去：`lambda i=i: i`，因为默认参数在函数定义那一刻就求值并绑定了。",
+  "tags": []
+ },
+ {
+  "id": "python-functions-template-method",
+  "node": "python.first-class-functions",
+  "type": "qa",
+  "q": "模板方法模式（Template Method）通常用基类固定算法骨架、子类覆盖钩子方法实现，这个骨架能用一个普通函数替代类继承吗？",
+  "a": "可以，把“钩子”作为参数传入骨架函数，而不是让子类覆盖方法：\n```python\ndef process_order(order, validate, charge):\n    if not validate(order):\n        raise ValueError(\"invalid order\")\n    charge(order)\n    return \"done\"\n```\n骨架（先校验再扣费的顺序）固定在函数体里，`validate`/`charge` 这两个“钩子”作为可调用对象注入——不需要一个抽象基类和一堆子类。当骨架本身需要在子步骤之间共享大量状态（不只是参数传递），或者钩子彼此有复杂的组合关系时，继承加覆盖方法依然更自然。",
+  "tags": []
+ },
+ {
+  "id": "python-functions-when-class",
+  "node": "python.first-class-functions",
+  "type": "qa",
+  "q": "什么情况下即使 Python 支持一等函数，用类实现 Strategy/Command 仍然更好？",
+  "a": "当这个“策略”需要**携带并维护自己的状态**（不只是无状态计算，例如一个需要累计统计的定价策略）、需要**多个协作方法**（不止一个抽象操作）、或者需要参与 `isinstance` 检查/继承体系（比如要被序列化、要暴露多个可覆盖的钩子方法）时，一个类比一个闭包更清楚：状态是显式的实例属性，不是靠嵌套函数的自由变量隐藏起来的。",
+  "tags": []
+ }
+]

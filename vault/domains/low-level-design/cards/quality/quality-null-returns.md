@@ -2,23 +2,25 @@
 id: quality-null-returns
 node: quality.errors
 type: qa
+step: 4
 ---
 ## Q
-Your repository's `findById` can miss. Rank the return-type options for "not found" and say when absence should be an exception instead.
+```python
+def get(self, key, default=None):
+    return self._data.get(key, default)
+```
+如果字典里某个 key 对应的合法值本来就是 `None`，调用方用 `if store.get(key) is None` 判断"不存在"会出什么问题？
 
 ## A
-- **Best: `Optional<Order>`** — absence is in the signature; the compiler makes every caller decide (`orElseThrow`, `map`, default). For collections, return an **empty collection**, never null.
-- **Acceptable: null object** (`GuestUser.ANONYMOUS`) — only when there's a genuinely sensible do-nothing/default behavior; a null object that silently absorbs real work hides bugs.
-- **Worst: return `null`** — moves the check to every caller, and the NPE fires far from the cause.
+`None` 同时被用来表示两件不同的事——"这个 key 不存在"和"这个 key 存在，值恰好是 `None`"——调用方没法区分,于是把一个合法值误判成了缺失。这不是异常处理问题，是把"缺失"这个信号叠加在了"合法值可能取到的范围"里，是 `None` 作哨兵值最常见的坑。
 
-Absence should **throw** when it violates an invariant — the caller holds an id the system itself issued (`getById` on a just-created order), so "missing" means corruption, not a normal outcome. Pattern: offer `findById → Optional` and `getById → throws NotFoundException`, and let callers state their expectation.
+```python
+_MISSING = object()
 
-## Q zh
-你的仓储 `findById` 可能找不到。给"未找到"的各种返回类型排序，并说明什么时候"不存在"反而应该抛异常。
-
-## A zh
-- **最好：`Optional<Order>`** —— 不存在这件事写在签名里，编译器逼着每个调用方做决定（`orElseThrow`、`map`、默认值）。对集合，返回**空集合**，永远不要返回 null。
-- **可接受：null object**（`GuestUser.ANONYMOUS`）—— 仅当确实存在一个合理的"什么都不做/默认"行为时；一个默默吞掉真实工作的 null object 会把 bug 藏起来。
-- **最差：返回 `null`** —— 把检查推给每一个调用方，而且 NPE 会在离病因很远的地方爆炸。
-
-当"不存在"违反了一条不变量时，就该**抛异常** —— 调用方手里的 id 是系统自己发出去的（对刚创建的订单调 `getById`），那么"找不到"意味着数据损坏，而不是一个正常结果。惯用做法：同时提供 `findById → Optional` 和 `getById → throws NotFoundException`，让调用方自己表明预期。
+def get(self, key, default=_MISSING):
+    value = self._data.get(key, _MISSING)
+    if value is _MISSING:
+        return default
+    return value
+```
+修法是用一个只在这一处使用、和任何合法值都不可能相等的哨兵对象（`object()` 的一个实例）来表示"缺失"，而不是复用一个本身也是合法值的 `None`。如果调用方确实需要区分"不存在"和"存在但是 `None`"这两种情况,签名上也应该显式表达出来,而不是留给调用方自己猜。

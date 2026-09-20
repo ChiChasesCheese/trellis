@@ -2,20 +2,12 @@
 id: method-invariant-ownership
 node: method.modeling
 type: qa
+step: 3
 ---
 ## Q
-Requirement: "a spot holds at most one vehicle." Which class enforces this invariant — and why not the `ParkingService` that calls it?
+需求是"一个车位最多停一辆车"，应该由哪个类来执行这条规则——为什么不是调用它的 `ParkingService`？
 
 ## A
-The owner of the state: `Spot.park(vehicle)` fails if already occupied. Enforcing it in the service means every current and future call path can corrupt the spot — the invariant holds only by convention.
+应该由状态的所有者来执行：`Spot.park(vehicle)` 在车位已被占用时直接拒绝。如果放在 service 里执行，就意味着现在和将来任何一条调用路径都可能绕过检查去破坏这个车位——这条不变式就只是靠约定维持，而不是被强制保证。
 
-Rule: **entities protect their own invariants; services orchestrate**. Enforcement at the data owner makes the illegal state unreachable from any caller.
-
-
-## Q zh
-需求："一个位置最多持有一辆车。"哪个类执行这个不变式 — 为什么不是调用它的 `ParkingService`?
-
-## A zh
-状态的所有者: `Spot.park(vehicle)` 如果已被占用则失败。在服务中执行它意味着每个现在和未来的调用路径都能腐蚀位置 — 不变式只按约定保持。
-
-规则: **实体保护它们自己的不变式；服务编排**。在数据所有者处执行使得非法状态从任何调用者处不可达。
+原则：实体保护自己的不变式，service 只负责编排。把校验放在数据的所有者身上，非法状态就从任何调用方那里都到达不了。

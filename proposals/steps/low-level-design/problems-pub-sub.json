@@ -1,0 +1,14 @@
+{
+  "problems.components.pub-sub": [
+    "problems-pub-sub-push-vs-pull",
+    "problems-pub-sub-cursor-owned-by-topic",
+    "problems-pub-sub-shared-log-vs-per-subscriber-queue",
+    "problems-pub-sub-overflow-policy-three",
+    "problems-pub-sub-eviction-condition",
+    "problems-pub-sub-ordering-guarantee-scope",
+    "problems-pub-sub-failing-subscriber-isolation",
+    "problems-pub-sub-unsubscribe-releases-cursor",
+    "problems-pub-sub-dead-letter-is-a-topic",
+    "problems-pub-sub-no-new-singleton"
+  ]
+}

@@ -2,30 +2,23 @@
 id: structure-state-entry-exit-actions
 node: structure.state-machines
 type: qa
+step: 4
 ---
 ## Q
-Entering SHIPPED must email the customer, stop the cancellation timer, and release the reserved stock. Where do these side effects belong, and what's the ordering rule?
+进入 SHIPPED 状态要发邮件通知客户、停掉取消倒计时、释放预留库存——这些副作用应该写在哪里，先后顺序要遵守什么规则？
 
 ## A
-On the machine, not the callers — otherwise every call site must remember the full list:
+写在状态机本身内部，不是每个调用方各自记得做一遍——否则每个调用 `transition_to` 的地方都要背下完整的副作用清单。
 
-- **Exit action** of the old state: undo what the state owned (stop the cancel timer, release the hold).
-- **Entry action** of the new state (Moore) — runs no matter which transition arrived. Effects specific to *one* transition go on that transition (Mealy).
+规则是**先校验守卫、再切换状态、最后执行副作用**，副作用要在状态真正落地**之后**才运行：
 
-Ordering rule: **guard → mutate state → then effects**, and effects must run *outside* any lock and after the state change is committed. Otherwise you email "shipped" for a transition that then fails a later check, or an exception mid-effect leaves the entity between states.
+```python
+def ship(self) -> None:
+    if not self._can_ship():
+        raise ValueError("cannot ship")
+    self._state = State.SHIPPED       # 先切状态
+    self._release_reservation()       # 再执行副作用
+    self._notify_customer()
+```
 
-Make effects a list of collected commands the machine emits and the caller executes — that also keeps the transition logic testable without stubbing the mailer.
-
-
-## Q zh
-进入 SHIPPED 必须给客户邮件、停止取消计时器、释放预留的库存。这些副作用在哪里属于，顺序规则是什么?
-
-## A zh
-在机器上，不是调用者 — 否则每个调用站点必须记住完整的列表:
-
-- 旧状态的**退出动作**: 撤销状态拥有的什么（停止取消计时器、释放保留）。
-- 新状态的**进入动作**（Moore）— 运行不管哪个转变到达。特定于**一个**转变的效果进入那个转变（Mealy）。
-
-顺序规则: **保护 → 改变状态 → 然后效果**，效果必须运行**在任何锁之外**并且在状态改变被提交之后。否则你给"已发货"邮件给一个转变然后失败一个后期检查，或一个异常中期效果离开实体在状态之间。
-
-制造效果一个命令的列表机器发出的和调用者执行的 — 那也保持转变逻辑可测试没有存根邮件。
+如果顺序反过来，副作用先跑、状态切换又失败（比如中途抛异常），就会出现"邮件发了，但订单其实还没真的变成 SHIPPED"这种不一致。

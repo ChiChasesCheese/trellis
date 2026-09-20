@@ -1,0 +1,17 @@
+{
+  "problems.machines.coffee-machine": [
+    "problems-coffee-machine-all-or-nothing",
+    "problems-coffee-machine-critical-section",
+    "problems-coffee-machine-one-lock-at-a-time",
+    "problems-coffee-machine-counter-not-atomic",
+    "problems-coffee-machine-release-after-failed-brew",
+    "problems-coffee-machine-outlets-as-resource-pool",
+    "problems-coffee-machine-concurrency-test",
+    "problems-coffee-machine-event-carries-what-happened",
+    "problems-coffee-machine-publish-outside-lock",
+    "problems-coffee-machine-alert-latch",
+    "problems-coffee-machine-ingredients-are-data",
+    "problems-coffee-machine-new-ingredient-extension",
+    "problems-coffee-machine-refuse-forwarding-classes"
+  ]
+}

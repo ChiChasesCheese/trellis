@@ -1,5 +1,5 @@
 ---
-nodes: [patterns.behavioral]
+nodes: [patterns.behavioral, patterns.observer]
 url: https://gameprogrammingpatterns.com/observer.html
 tags: [canonical]
 ---

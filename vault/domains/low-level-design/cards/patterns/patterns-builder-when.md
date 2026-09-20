@@ -2,21 +2,12 @@
 id: patterns-builder-when
 node: patterns.creational
 type: qa
+step: 4
 ---
 ## Q
-What two construction problems does Builder solve, and when is it over-engineering?
+Python 里，Builder 原本要解决的"参数太多、可选参数太多"问题，为什么大多数时候关键字参数就够了？
 
 ## A
-- **Telescoping constructors**: many parameters, several optional — `new Pizza(12, true, false, null, true)` is unreadable and error-prone. Builder gives named, order-free steps.
-- **Immutable objects built in stages**: collect values mutably, validate everything once in `build()`, emit an immutable result — no half-initialized object ever escapes.
+`def __init__(self, size=12, cheese=True, pepperoni=False, ...)` 配合调用时用关键字传参，已经解决了"参数顺序记不住"的问题；需要基于已有实例改几个字段时，`dataclasses.replace(pizza, cheese=False)` 比手写一个 builder 更短。
 
-Skip it when the class has ≤3 required params and no optionals — a plain constructor (or static factory with named intent) is clearer. The GoF "director" role is almost never needed in practice; the fluent-builder form is what interviews expect.
-
-## Q zh
-Builder 解决哪两个构造问题，什么时候它会过度设计？
-
-## A zh
-- **伸缩式构造函数**：很多参数，几个可选——`new Pizza(12, true, false, null, true)` 难以阅读且容易出错。Builder 提供命名的、顺序无关的步骤。
-- **分阶段构造的不可变对象**：可变地收集值，在 `build()` 中验证所有内容，输出不可变结果——没有半初始化对象会逃逸。
-
-当类只有≤3个必需参数且没有可选参数时跳过它——普通构造函数（或有命名意图的静态工厂）更清晰。GoF 中的「director」角色在实践中几乎不需要；流式 builder 形式是面试期望的。
+Builder 真正还值回票价的场景是**分步骤、每一步都要校验**的构造——比如查询构造器每加一个 `.where()` 就要检查列名是否存在，或者要求"在调用 `.build()` 之前，半初始化的对象绝不能被外部拿到"。这类"过程本身带规则"的构造，关键字参数替代不了。

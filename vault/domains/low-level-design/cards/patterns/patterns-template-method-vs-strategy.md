@@ -2,26 +2,19 @@
 id: patterns-template-method-vs-strategy
 node: patterns.behavioral
 type: qa
+step: 5
 ---
 ## Q
-Template method and strategy both vary steps of an algorithm. When is each right, and why has the default shifted to strategy?
+Template Method 和直接传一个函数相比，继承换来的"骨架复用"什么时候真正值得？
 
 ## A
-- **Template method**: the *skeleton* is fixed in a base class; subclasses override selected hook steps (**inheritance**, variation chosen at class-definition time). Right when the invariant sequence is the point and variants are few and stable — e.g. a test framework's setup/run/teardown.
-- **Strategy**: the varying step is an injected object (**composition**, swappable at runtime, independently testable, combinable — one class can hold several strategies).
+Template Method 把固定顺序的步骤写在基类方法里，只留一两个钩子（hook）给子类覆盖，比如 `PaymentFlow.run()` 固定调用 `validate()` → `charge()` → `confirm()`，子类只重写其中某一步。当只有**一个**钩子要变时，Python 里通常直接给这个固定流程的函数传一个回调参数，比专门声明子类更直接：
 
-Default is strategy because template method inherits inheritance's problems: one variation axis only, fragile base class, subclass locked to one variant forever. Rule of thumb: template method for framework skeletons you own; strategy everywhere the variation is a *domain* concept (pricing, parsing, matching).
+```python
+def run_payment(charge, amount: int) -> None:
+    print("validate")
+    charge(amount)
+    print("confirm")
+```
 
-## Q zh
-Template Method vs Strategy——都定义可变步骤。何时选择哪一个？
-
-## A zh
-- **Template Method**：基类中的**骨架**（固定顺序的步骤），子类覆盖**钩子**。绑定在继承中。例：`PaymentProcessor` 有 `process()`，`validate()` / `charge()` / `confirm()` 是钩子。
-- **Strategy**：**完整的算法**由外部对象持有，用 `setStrategy()` 或构造函数注入交换。解耦、灵活。例：`Sorter` 持有 `Comparator`。
-
-选择：
-- 步骤顺序**固定**，只有实现不同？→ Template Method。
-- 想**在运行时交换**整个算法？→ Strategy。
-- 步骤**独立/独立变化**？→ Strategy（更灵活）。
-
-Modern 偏好：Strategy（组合）优于 Template Method（继承）。
+继承版本值得的场景是：钩子不止一个，而且几个钩子之间要共享状态（写在 `self` 上），传参数会让函数签名爆炸；只有一个钩子、也不需要共享状态时，传函数更简单，不必为每种变体建一个子类。

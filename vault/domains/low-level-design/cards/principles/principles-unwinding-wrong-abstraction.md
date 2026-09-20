@@ -2,33 +2,16 @@
 id: principles-unwinding-wrong-abstraction
 node: principles.simplicity
 type: qa
+step: 5
 ---
 ## Q
-A shared helper now takes `(input, boolean isLegacy, Mode mode)` and branches on them; the fourth caller needs a fifth flag. What's the prescribed fix, and why isn't it "add the flag"?
+当你意识到一个抽象是错的，为什么应该解开它，而不是继续在它上面打补丁？
 
 ## A
-The flags are the abstraction telling you the callers don't actually share behavior. Adding another compounds it — every caller pays for paths it never takes, and every change risks all four.
+一个抽象一旦方向错了，继续在它上面修修补补往往只会堆出更多复杂度——每一次新需求都要在这个错的骨架里硬塞一个特例分支。更好的做法：
 
-Prescription (Sandi Metz's "unwinding"):
-1. **Re-inline** the helper back into each caller, flags resolved to constants.
-2. Delete the branches each caller can't reach — now you can see what is genuinely common.
-3. Re-extract only that, along the real seam, if anything is left.
+1. 把代码复制回每一个调用点（没错，重新引入重复）；
+2. 在各自独立的场景里分别把每一份代码打磨清楚；
+3. 等它们稳定下来、真正共通的模式显现出来之后，再提取一个贴合实际的抽象。
 
-Rule to state: **a boolean parameter that selects behavior is a merged-too-early signal**, and sunk cost in the existing helper is not a reason to keep it.
-
-## Q zh
-当你意识到一个抽象是错误的，为什么解开它而不是改进它？
-
-## A zh
-当一个抽象错误时，尝试改进它通常会导致更多的复杂性。更好的方法：
-
-1. 复制代码回到每个调用者（是的，重新引入重复）
-2. 现在在隔离的上下文中优化每个版本
-3. 一旦它们稳定并且真正的模式出现，提取正确的抽象
-
-这违反了 DRY，但：
-- 一个坏的抽象比重复更糟
-- 重复暴露了真正的差异
-- 改进一个坏的抽象很难；更好地开始就是正确的
-
-这来自 Sandi Metz 的 "All the Little Things" 演讲。
+这在短期内违反了 DRY，但一个错误的抽象比重复代码更糟——重复至少诚实地暴露了各自的差异；改进一个方向错误的抽象很难，不如从头把它做对。这个手法来自 Sandi Metz 的演讲《All the Little Things》。

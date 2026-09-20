@@ -1,0 +1,12 @@
+{
+  "problems.games.tic-tac-toe": [
+    "problems-tic-tac-toe-turn-is-derived",
+    "problems-tic-tac-toe-illegal-move-order",
+    "problems-tic-tac-toe-o1-only-when-k-equals-n",
+    "problems-tic-tac-toe-counter-must-shrink",
+    "problems-tic-tac-toe-two-win-questions",
+    "problems-tic-tac-toe-undo-no-command",
+    "problems-tic-tac-toe-player-thin-strategy",
+    "problems-tic-tac-toe-readonly-view-protocol"
+  ]
+}

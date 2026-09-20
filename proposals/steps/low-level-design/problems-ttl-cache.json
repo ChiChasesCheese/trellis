@@ -1,0 +1,12 @@
+{
+  "problems.components.ttl-cache": [
+    "problems-ttl-cache-three-ways-to-expire",
+    "problems-ttl-cache-absolute-deadline-not-remaining",
+    "problems-ttl-cache-tombstones-must-be-compacted",
+    "problems-ttl-cache-heap-tuple-needs-a-counter",
+    "problems-ttl-cache-expired-is-invisible",
+    "problems-ttl-cache-evict-by-policy-or-deadline",
+    "problems-ttl-cache-single-flight",
+    "problems-ttl-cache-stats-and-callback-refuse-patterns"
+  ]
+}

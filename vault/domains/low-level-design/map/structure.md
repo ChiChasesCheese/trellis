@@ -1,12 +1,12 @@
 %% trellis:begin %%
-# APIs & Program Structure
+# API 与程序结构（Program Structure）
 
-The recurring skeleton of every machine-coding solution.
+每一份机器编码答案里反复出现的骨架。
 
 ## Topics
-- [[domains/low-level-design/map/structure.api|In-Process API Design]]
-- [[domains/low-level-design/map/structure.state-machines|State Machines]]
-- [[domains/low-level-design/map/structure.storage|In-Memory Persistence]]
+- [[domains/low-level-design/map/structure.api|进程内 API 设计]]
+- [[domains/low-level-design/map/structure.state-machines|状态机（State Machines）]]
+- [[domains/low-level-design/map/structure.storage|内存持久化（In-Memory Persistence）]]
 %% trellis:end %%
 
 ## Notes

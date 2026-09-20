@@ -1,0 +1,12 @@
+{
+  "problems.social.linkedin": [
+    "problems-linkedin-profile-structured-not-dict",
+    "problems-linkedin-connection-undirected-graph",
+    "problems-linkedin-request-directed-connection-undirected",
+    "problems-linkedin-degrees-bidirectional-bfs-cost",
+    "problems-linkedin-skill-reverse-index",
+    "problems-linkedin-application-transition-table",
+    "problems-linkedin-endorsement-proves-decoupling",
+    "problems-linkedin-single-lock-rationale"
+  ]
+}

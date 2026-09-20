@@ -2,25 +2,15 @@
 id: principles-ocp-trigger
 node: principles.solid
 type: qa
+step: 3
 ---
 ## Q
-Every new discount type means editing the same growing `if/else` in `PriceCalculator` — and re-testing it. Which principle, what refactor, and when should you NOT apply it?
+什么信号说明一段代码违反了开闭原则（Open-Closed Principle，对扩展开放、对修改关闭）？
 
 ## A
-**OCP**: extend behavior by adding code, not by modifying tested code. Refactor: extract a `DiscountRule` interface; each discount is a new class; the calculator folds over an injected list of rules.
+触发信号：
+- 每新增一种变体（新的支付方式、新的报表类型、新的日志级别），都要回去改一个已有的类；
+- 一处 `if/elif` 或 `match` 在按类型分派，每加一种类型就要在这里多加一支；
+- 测试新功能需要改动已有代码，也就带着回归风险。
 
-Don't apply speculatively: a conditional with two stable cases doesn't earn the abstraction. OCP triggers on the *second or third* variant of the same axis — that's evidence the axis really varies.
-
-## Q zh
-什么时候你知道你的代码对修改不是开放的？
-
-## A zh
-触发器：
-- 每次添加新的变化（新的支付方式、新的报告类型、新的日志级别），你都修改现有的类
-- 一个 if-else 或 switch 在分派新类型，每种类型都需要修改
-- 测试新功能需要修改现有代码，这意味着回归风险
-
-解决方案通常涉及：
-- 多态性：让子类实现扩展点
-- 策略模式：注入新的行为对象
-- 尽可能让变化通过参数或配置进行，而不是代码
+通常的解法：把"会变的那一步"变成一个多态调用点——每个变体实现同一个接口，新增变体只需要新增一个类并注册，不用编辑既有分支。

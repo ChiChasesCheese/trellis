@@ -1,36 +1,29 @@
 ---
 id: concurrency-rwlock-when
-node: concurrency.primitives
+node: concurrency.patterns
 type: qa
+step: 5
 ---
 ## Q
-When does replacing a mutex with a read-write lock make your code *slower*, and what failure mode does a naive reader-preferring RW lock add?
+Python 标准库没有读写锁（reader-writer lock）。什么场景下值得自己实现一个，怎么用 `Condition` 搭出最简单的版本？
 
 ## A
-- RW locks have **higher per-acquire overhead** (they track reader counts). With short critical sections or few concurrent readers, a plain mutex — or a concurrent data structure — wins.
-- It only pays off when reads are **frequent and long** relative to writes.
-- Reader-preference adds **writer starvation**: a continuous stream of readers keeps the write lock unavailable forever. Fair/writer-preferring modes fix this at the cost of read throughput.
+读写锁允许多个读者并发持有，但写者要求独占——只有当读远多于写、且读操作本身持锁时间较长时才划算；如果读写比例接近，或者单次操作很快（微秒级），读写锁自身的计数管理开销可能反而比直接用一把 `Lock` 更慢，这种情况下应该先测量，而不是想当然地引入它。
 
-Also: upgrading read → write while holding the read lock deadlocks in most implementations — release, reacquire, and re-validate instead.
+最简单的实现用一把 `Condition` 加一个读者计数：
 
-## Q zh
-读写锁什么时候有益，什么时候会伤害性能？
+```python
+class SimpleRWLock:
+    def __init__(self):
+        self._cond = threading.Condition()
+        self._readers = 0
+        self._writer = False
 
-## A zh
-**有益于**：
-- 读远多于写（比例 10:1 或更高）
-- 读操作计算密集且长期持有锁
-- 例子：缓存读者多，偶尔写入器
+    def acquire_read(self):
+        with self._cond:
+            while self._writer:
+                self._cond.wait()
+            self._readers += 1
+```
 
-**伤害性能**：
-- 读和写大致相等
-- 读操作很快（微秒）
-- 线程计数低（竞争很少）
-- 例子：计时器、计数器、单写数据结构
-
-为什么伤害：
-- 获取读锁的开销 > 独占 mutex
-- 在低竞争下，mutex 通常赢
-- 读写锁实现更复杂，缓存不友好
-
-经验法则：测量。单独的 mutex 可能更简单且更快，除非你有证据证明大量读竞争。
+`acquire_write` 在 `_readers == 0 and not self._writer` 时才能通过，取得后置 `self._writer = True`；对应的 release 方法递减计数并 `notify_all()`。这个朴素版本没做"写者优先"，长期高频写入下可能出现读者持续插队饿死写者的问题。

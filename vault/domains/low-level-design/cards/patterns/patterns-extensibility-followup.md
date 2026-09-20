@@ -2,25 +2,15 @@
 id: patterns-extensibility-followup
 node: patterns.selection
 type: qa
+step: 2
 ---
 ## Q
-The classic LLD follow-up: "now add a new payment method / notification channel / pricing rule without touching existing code." What's the standard two-pattern answer, and what remains that you must still edit?
+LLD 面试里经典的追问是"现在要加一种新支付方式 / 通知渠道 / 定价规则，但不许改动已有代码"，标准的两模式答案是什么？又有什么是你仍然必须改的？
 
 ## A
-**Strategy + factory (registry)** — the bread-and-butter OCP combo:
+**Strategy + 工厂（注册表）**——最常见的开闭原则（OCP）组合：
 
-1. The varying behavior sits behind an interface (`PaymentMethod.charge()`); core flow depends only on it — closed for modification.
-2. A **registry-based factory** maps a key to a `Supplier<PaymentMethod>`; adding UPI = one new class + one `register()` line (or an annotation/config entry).
+1. 会变化的行为被抽象成一个接口——哪怕只是一个函数签名，比如 `charge(amount: float) -> None`；核心流程只依赖这个签名，对修改封闭。
+2. 一个基于注册表的工厂把 key 映射到构造函数，比如 `REGISTRY: dict[str, Callable[[], PaymentMethod]]`；新增一种支付方式就是新写一个类或函数，再加一行 `REGISTRY["upi"] = UpiPayment`。
 
-Honest caveat to state: something must still change — the registration line and the composition root. OCP means changes are **additive and localized**, not zero. If variants also need new *data* fields end-to-end (request parsing, storage), no pattern hides that; say so.
-
-## Q zh
-LLD 轮的经典追问："现在加一种新支付方式 / 通知渠道 / 定价规则，但不许改动已有代码。"标准的两模式答案是什么，又有什么是你仍然必须改的？
-
-## A zh
-**Strategy + factory（注册表）** —— 最家常的 OCP 组合：
-
-1. 变化的行为藏在一个接口后面（`PaymentMethod.charge()`）；核心流程只依赖这个接口 —— 对修改封闭。
-2. 一个**基于注册表的工厂**把 key 映射到 `Supplier<PaymentMethod>`；加 UPI = 一个新类 + 一行 `register()`（或者一条注解/配置项）。
-
-要诚实说出的保留意见：总有东西必须改 —— 那行注册代码，以及 composition root。OCP 的意思是改动**可加且局部**，不是零改动。如果新变体还需要端到端的新*数据*字段（请求解析、存储），没有哪个模式能掩盖这一点；直说。
+要诚实说出的保留意见：总有地方必须改——那一行注册代码，以及组合根（composition root）。OCP 的意思是改动**可加且局部**，不是零改动；如果新变体还需要端到端的新数据字段（请求解析、存储结构），没有哪个模式能替你掩盖这一点。

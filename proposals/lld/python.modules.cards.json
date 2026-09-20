@@ -1,0 +1,50 @@
+[
+ {
+  "id": "python-modules-singleton",
+  "node": "python.modules",
+  "type": "qa",
+  "q": "为什么一个定义在模块顶层的对象（比如 `_registry = {}` 或 `client = APIClient()`）天然就是单例（singleton），不需要写 Singleton 设计模式？",
+  "a": "一个模块在一个进程里**只会被真正执行一次**——第一次 `import` 时 Python 执行模块体并把结果对象缓存进 `sys.modules`，之后任何地方再 `import` 同一个模块名，拿到的都是 `sys.modules` 里的同一个模块对象，模块顶层定义的名字自然也是同一份。这就是为什么 Python 里实现单例最地道的方式是“把它做成一个模块级对象”，而不是写一个带 `__new__` 拦截、加锁的 Singleton 类。",
+  "tags": []
+ },
+ {
+  "id": "python-modules-circular-import-cause",
+  "node": "python.modules",
+  "type": "qa",
+  "q": "`a.py` 顶部写 `import b`，`b.py` 顶部写 `import a`，运行会出什么问题？根因是什么？",
+  "a": "假设先 `import a`：Python 开始执行 `a.py`，执行到 `import b` 时去执行 `b.py`；`b.py` 执行到对应的 `import a` 时，发现 `a` 已经在 `sys.modules` 里（正在被加载，防止无限递归），于是直接拿回这个**尚未执行完**的 `a` 模块对象——如果 `b.py` 接着想用 `a` 模块里、还没执行到的那个名字（比如 `a.some_func`），就会得到 `AttributeError`。根因是**两个模块在各自顶层依赖对方还没执行完的内容**，不是“循环 import 本身违法”。",
+  "tags": []
+ },
+ {
+  "id": "python-modules-break-circular",
+  "node": "python.modules",
+  "type": "qa",
+  "q": "有三种常见办法打破循环导入，分别是什么，什么场景选哪种？",
+  "a": "**延迟导入**：把 `import b` 从模块顶层挪到用到它的函数体内部——函数被调用时 `b` 早已加载完毕，适合只在一两个函数里偶尔用到对方的情况，代价是依赖关系变得不那么一眼可见。**抽出公共依赖**：把 `a`、`b` 都要用的东西抽到第三个模块 `c`，两边都只依赖 `c`，不再互相依赖——这是最治本的做法，通常说明原来的模块边界划错了。**重构依赖方向**：让其中一个模块不再需要另一个（比如把接口/协议类型挪到更底层的模块，具体实现留在上层），恢复“依赖只朝一个方向流”。",
+  "tags": []
+ },
+ {
+  "id": "python-modules-init-contents",
+  "node": "python.modules",
+  "type": "qa",
+  "q": "`__init__.py` 应该放什么，不应该放什么？为什么把业务逻辑写进 `__init__.py` 是个坏主意？",
+  "a": "应该放这个包对外的**公共入口**：把内部子模块的关键名字重新导出（`from .order import Order`），可选地用 `__all__` 声明 `from pkg import *` 该导出什么。不应该放真正的业务逻辑——因为 `import pkg` 这一行会**立即、完整**执行 `__init__.py`：逻辑越多，import 的副作用越大、越慢，也越容易在这个包被别的模块 import 时触发循环导入（因为 `__init__.py` 几乎总是最早被执行的那份代码）。",
+  "tags": []
+ },
+ {
+  "id": "python-modules-dependency-direction",
+  "node": "python.modules",
+  "type": "qa",
+  "q": "“依赖只许朝一个方向流”这条规则，在模块/包这一层具体是什么意思？Python 会在你违反它的时候报错吗？",
+  "a": "意思是低层的工具/基础设施包（比如 `pkg.utils`、`pkg.storage`）永远不应该 `import` 高层的业务编排包（比如 `pkg.orders`），只能反过来——依赖关系画出来应该是一张有向无环图（DAG），越底层的模块越通用、越稳定。Python **不会**在语言层面阻止你违反这个方向——只有当它真的形成一个 import 环时才会报错（见循环导入那张卡）；单向的“层级倒挂”（低层偷偷 `import` 了高层的一个具体类，但没形成环）完全能正常运行，需要靠代码评审或 `import-linter` 这类工具在 CI 里强制检查。",
+  "tags": []
+ },
+ {
+  "id": "python-modules-type-checking-guard",
+  "node": "python.modules",
+  "type": "qa",
+  "q": "`if TYPE_CHECKING: import b` 这种写法解决了什么问题？和直接在函数体内延迟 `import b` 有什么不同？",
+  "a": "当 `a.py` 只是想在类型注解里引用 `b` 模块的类型（比如 `def handle(order: \"b.Order\") -> None`），并不需要在**运行时**真的拿到 `b` 模块，这种引用完全可以打破循环导入而不牺牲类型检查：`typing.TYPE_CHECKING` 在运行时永远是 `False`，所以 `import b` 根本不会执行，不会触发循环导入；但类型检查器（mypy）会把它当成 `True` 来解析，注解依然能被正确检查。区别于函数内延迟导入：延迟导入是**运行时真的需要**这个模块（只是推迟加载时机），`TYPE_CHECKING` 守卫的导入**运行时根本不需要**，纯粹是给类型检查器看的。",
+  "tags": []
+ }
+]

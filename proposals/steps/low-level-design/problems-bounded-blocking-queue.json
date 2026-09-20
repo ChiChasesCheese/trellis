@@ -1,0 +1,12 @@
+{
+  "problems.components.bounded-blocking-queue": [
+    "problems-bounded-blocking-queue-while-not-if",
+    "problems-bounded-blocking-queue-two-conditions-vs-one",
+    "problems-bounded-blocking-queue-single-notify-lost-signal",
+    "problems-bounded-blocking-queue-timeout-raises",
+    "problems-bounded-blocking-queue-close-semantics",
+    "problems-bounded-blocking-queue-close-no-event",
+    "problems-bounded-blocking-queue-drain-reuses-wait",
+    "problems-bounded-blocking-queue-waiting-counts-for-tests"
+  ]
+}

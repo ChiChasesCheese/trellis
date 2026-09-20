@@ -1,0 +1,12 @@
+{
+  "problems.components.task-scheduler": [
+    "problems-task-scheduler-not-earlier-never-exactly",
+    "problems-task-scheduler-fixed-rate-vs-fixed-delay",
+    "problems-task-scheduler-cancel-is-a-tombstone",
+    "problems-task-scheduler-no-strategy-class-for-two-modes",
+    "problems-task-scheduler-two-locks-one-direction",
+    "problems-task-scheduler-worker-pool-decoupled-from-timing",
+    "problems-task-scheduler-shutdown-drain-vs-abandon",
+    "problems-task-scheduler-priority-without-touching-heap"
+  ]
+}

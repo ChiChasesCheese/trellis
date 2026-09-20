@@ -2,28 +2,12 @@
 id: method-testability-signals
 node: method.evaluation
 type: qa
+step: 2
 ---
 ## Q
-A grader skims your code for "testable" in about 30 seconds. What are they actually looking at?
+面试官花 30 秒扫一眼你的代码判断"可测试"，实际在看什么？
 
 ## A
-Whether they could exercise one rule **without constructing the world**:
+看能不能在不搭建整个系统的情况下单独验证一条规则：计费或分配这类逻辑，输入是不是作为参数传进来的，还是要先拿到一个装配完整的 `ParkingLot` 才能跑；逻辑内部有没有直接写死 `Singleton.instance()`、`datetime.now()` 这类依赖——每一个都是没法替换的耦合，反过来接受一个 `clock` 参数就是你已经想过这件事的信号；那条有意思的规则本身是不是一个纯函数，I/O 和副作用有没有推到边缘。
 
-- Does the fee/allocation logic take its inputs as parameters, or does it reach into a fully-built `ParkingLot`?
-- Any `new Collaborator()`, `Singleton.getInstance()`, or `LocalDateTime.now()` **inside** logic? Each is an unsubstitutable dependency — an injected `Clock` is the standard tell that you've met this before.
-- Are the interesting rules pure functions of their arguments, with I/O and mutation pushed to the edges?
-
-"I wrote tests" is weaker evidence than a constructor that lets them.
-
-
-## Q zh
-一个评分者用 30 秒的时间浏览你的代码"可测试"。他们实际上看的是什么?
-
-## A zh
-他们是否能**不构建世界**的情况下练习一个规则:
-
-- 费用/分配逻辑是参数作为其输入，还是到达一个完全构建的 `ParkingLot`?
-- 任何 `new Collaborator()`、`Singleton.getInstance()` 或 `LocalDateTime.now()` **内部**逻辑? 每一个是一个不可替代的依赖 — 一个注入的 `Clock` 是标准的迹象你已经遇见过这个。
-- 是否有趣的规则是它们的参数的纯函数，I/O 和突变推到边缘?
-
-"我写了测试"比让他们的构造函数弱。
+嘴上说"我写了测试"，不如让构造函数本身就说明这一点。

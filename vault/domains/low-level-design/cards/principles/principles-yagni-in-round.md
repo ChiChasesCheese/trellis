@@ -2,27 +2,15 @@
 id: principles-yagni-in-round
 node: principles.simplicity
 type: qa
+step: 1
 ---
 ## Q
-In the machine coding round, how do you reconcile YAGNI with the interviewer's known love of extensibility probes?
+在机器编码轮里应用 YAGNI（You Aren't Gonna Need It，你不会需要它）是什么样子？
 
 ## A
-**Build seams, not features.** An interface at a variation point the requirements actually signal (pricing, spot allocation) costs one file and makes the probe answer additive. Don't build unrequested capability — config systems, factories over a single implementation, generics "for later."
+YAGNI 意味着不要去实现当下需求没有要求的功能。落到编码轮里：
 
-When probed about something you skipped, pointing at the seam where it plugs in scores; dead speculative code reads as poor judgment, not foresight.
+- **第一版**：只实现能让当前场景走通的最小东西，不要"预计"以后可能要的分支、扩展点或配置项。
+- **发现真的需要扩展时再抽象**：等出现第二个具体的变体，或者面试官真的追问扩展性，再把那一步提出去做成接口。
 
-## Q zh
-在迭代开发中应用 YAGNI 是什么样子？
-
-## A zh
-YAGNI（你不需要它）意味着不要添加你现在不需要的功能。在迭代中：
-
-第一次迭代：
-- 实现最小的东西来传递测试
-- 不要"预计"分支、扩展、配置
-
-第二次迭代：
-- 需要第二个实现者或变化吗？现在进行抽象
-- 发现重复的代码吗？现在提取它
-
-这与投机泛化相反。结果代码更简单、更易理解、更快交付。反讽刺的是，YAGNI 导致比过度工程的代码更长久的架构。
+这跟"投机泛化"正好相反——结果是代码更简单、更容易讲清楚、也更快能跑起来给面试官看。

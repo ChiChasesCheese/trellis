@@ -1,0 +1,13 @@
+{
+  "problems.booking.restaurant": [
+    "problems-restaurant-smallest-fitting-table",
+    "problems-restaurant-waitlist-skip-too-big",
+    "problems-restaurant-served-total-is-query",
+    "problems-restaurant-split-functions-not-classes",
+    "problems-restaurant-largest-remainder-method",
+    "problems-restaurant-course-gating-ordinal",
+    "problems-restaurant-mark-unavailable-partial",
+    "problems-restaurant-atomic-submit-rollback",
+    "problems-restaurant-reservation-grace-lazy-sweep"
+  ]
+}

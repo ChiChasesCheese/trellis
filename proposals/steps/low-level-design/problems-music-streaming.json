@@ -1,0 +1,12 @@
+{
+  "problems.social.music-streaming": [
+    "problems-music-streaming-playlist-reference-not-copy",
+    "problems-music-streaming-referenced-track-count-shrinks",
+    "problems-music-streaming-shuffle-splits-history-upcoming",
+    "problems-music-streaming-add-track-random-insert-when-shuffled",
+    "problems-music-streaming-repeat-all-regenerate-not-extend",
+    "problems-music-streaming-player-enum-table-small-diff",
+    "problems-music-streaming-stats-derived-not-counters",
+    "problems-music-streaming-collaborative-playlist-proves-extension"
+  ]
+}

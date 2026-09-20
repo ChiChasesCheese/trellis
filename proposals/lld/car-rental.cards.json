@@ -1,0 +1,66 @@
+[
+  {
+    "id": "problems-car-rental-availability-needs-location",
+    "node": "problems.booking.car-rental",
+    "type": "qa",
+    "q": "租车系统（Car Rental）支持异地还车（one-way，在 A 门店取、在 B 门店还）时，为什么「这辆车这段时间有没有被别人订」不足以判断它能不能接单？给一个三行的反例。",
+    "a": "因为一次租约不只占用**时间**，它还**搬动了车**——所以可用性同时是一个位置问题。\n\n反例：一辆基地在浦东机场的 SUV，7 月 1 日 9 点从浦东取、19 点还到虹桥。现在有人要 7 月 3 日在**浦东**租它。\n\n- 纯时间重叠判据 `start < r.end and end > r.start`：7 月 3 日和 7 月 1 日那段毫无交叠 → **放行**。\n- 现实：车在虹桥。浦东柜台那天根本没有这辆车可交。\n\n正确判据必须同时回答「那时候这辆车**会**在哪」。做法是给每段行程同时记取车门店 `origin` 和还车门店 `destination`，让某时刻的位置沿着这辆车的行程链算出来，而不是存成一个字段。\n\n这是几乎所有公开题解共同的错误：它们的可用性谓词里只有时间，没有位置。",
+    "tags": []
+  },
+  {
+    "id": "problems-car-rental-one-invariant-chain",
+    "node": "problems.booking.car-rental",
+    "type": "qa",
+    "q": "租车系统（Car Rental）里，一辆车的排期用「按开始时间排好的行程链」表示后，判断「这辆车能不能接这一单」只需要一条不变量。这条不变量是什么？它一口气解决了哪三件事？",
+    "a": "不变量：**按时间排好之后，每一段的取车门店等于上一段的还车门店（第一段等于基地门店），且租约段与上一段之间留够周转时间。**\n\n它一口气解决三件事：\n\n1. **不重叠**——两段交叠时，后一段的开始时刻落在前一段结束之前，被周转条件挡住；\n2. **接得上**——门店链首尾相接，异地还车带来的位置变化自动传播给后面每一段；\n3. **周转缓冲**——清洁、加油、检查的时间写在同一个判断里。\n\n于是「能不能接单」就是一句话：把候选段插进链里排好序，再检查整条链是否仍然自洽。\n\n```python\ndef accepts(self, leg: ScheduleLeg) -> bool:\n    return self._consistent(self._ordered([*self._legs, leg]))\n```\n\n这条不变量的含金量在于**复用**：可用性查询、迟还后的修复、维修封锁后的复核，全部调同一个 `_consistent`。",
+    "tags": []
+  },
+  {
+    "id": "problems-car-rental-early-vs-late-binding",
+    "node": "problems.booking.car-rental",
+    "type": "qa",
+    "q": "酒店预订把房号推迟到入住那一刻才分配（晚绑定），租车系统（Car Rental）却必须在**预约时**就定下车牌（早绑定）。同样是「客人订的是型号不是个体」，为什么结论相反？",
+    "a": "因为**车有轨迹，房间没有**。\n\n酒店晚绑定是为了避免日历碎片化：一间房永远在这家店，谁住哪间都不影响「今晚还剩几间」这个数字。\n\n租车里，一辆车未来的取车门店由它**之前的行程**决定。如果预约只记「SUV 一辆，7 月 5 日浦东取、7 月 6 日虹桥还」而不绑定车牌，系统就无法回答「7 月 7 日虹桥还剩几辆 SUV」——因为不知道 7 月 5 日派的是哪辆车，也就不知道 7 月 6 日是哪辆车出现在虹桥。**位置沿着单辆车的链传播，不绑车牌，链就断了。**\n\n早绑定的代价是现实会打翻计划（迟还、事故）。设计对这个代价的回答是**改派**：被打翻的预约换一辆同型车，而不是取消订单——这正是真实租车行柜台的做法。",
+    "tags": []
+  },
+  {
+    "id": "problems-car-rental-settle-unifies-three-failures",
+    "node": "problems.booking.car-rental",
+    "type": "qa",
+    "q": "租车系统（Car Rental）的还车环节有三种现实失败：迟还五小时、还到了约定之外的门店、还车时发现刮蹭要进厂 48 小时。为什么它们该写成同一条代码路径，而不是三个分支？",
+    "a": "因为三者都是同一件事：**计划被现实推翻，时间轴要按现实重排。**\n\n统一成一次「强行写入一段 + 修复时间轴」：\n\n- 迟还 = 这一段的 `end` 变大；\n- 还错门店 = 这一段的 `destination` 变了；\n- 事故 = 再强行写入一段 `rental=False` 的维修封锁段。\n\n修复规则只有一条：已经开始的行程、维修段、以及刚写入的这一段不动；尚未开始的租约从早到晚逐段复核，复核不过的整段丢掉并把预约号交出去，由上层改派。\n\n三个好处：**准点还车时这次调用什么也挤不掉**，所以还车路径只有一条，不需要为「正常还车」单写分支；「又迟还又刮蹭」这种组合自动正确；而分开写的三个分支几乎必然漏掉它们的交互。",
+    "tags": []
+  },
+  {
+    "id": "problems-car-rental-displacement-cascades",
+    "node": "problems.booking.car-rental",
+    "type": "qa",
+    "q": "租车系统（Car Rental）里一辆车排了 A→B、B→C、C→A 三段行程。第一段迟还把第二段挤掉了。第三段会怎样？为什么这个结论在只支持同点还车的系统里不会出现？",
+    "a": "第三段**也留不住**——挤占会**连锁**。\n\n第三段的取车门店是 C，可是第二段（B→C）被丢掉之后，车停在 B 而不是 C，于是第三段的「取车门店 = 上一段的还车门店」对不上，复核不通过。\n\n只支持同点还车时不会发生：那时每段的 `origin` 恒等于 `destination`，丢掉中间一段只是腾出时间，后面一段的门店永远对得上。**连锁是异地还车（one-way）独有的推论。**\n\n实现上它不需要任何额外代码：修复时间轴的那个循环是「从早到晚逐段拿同一条不变量复核」，链式失效自然就被它捕获。反过来说，如果你用三个 `if` 分支分别处理迟还、维修、改点，几乎必然漏掉这一条——这也是「一条不变量、到处复用」最值钱的地方。",
+    "tags": []
+  },
+  {
+    "id": "problems-car-rental-purge-absorbs-location",
+    "node": "problems.booking.car-rental",
+    "type": "qa",
+    "q": "租车系统（Car Rental）里每辆车的行程链必须会缩（否则开十年的租车行链会无限长大）。清理历史行程时有一个很容易漏的陷阱，是什么？",
+    "a": "陷阱：**位置是沿着链算出来的，删掉最后一段历史却不前移链的起点，这辆车就会凭空瞬移回基地门店。**\n\n一辆基地在浦东的车，上个月异地还到了南京。如果把那段历史直接删掉，`location_at` 沿着（现在空的）链往前走，得到的答案又是浦东——于是系统开始在浦东卖一辆停在南京的车。\n\n正确写法是先吸收再删：\n\n```python\nstale = self._ordered(l for l in self._legs if l.period.end <= cutoff)\nif not stale:\n    return 0\nself._base = stale[-1].destination      # 先把\"最后停在哪\"吸收进起点\nself._legs = [l for l in self._legs if l.period.end > cutoff]\n```\n\n一句话记住：**容器可以缩，但不能连它承载的状态一起丢。**同一个陷阱在数据库版的归档任务里一模一样，而且更难查。",
+    "tags": []
+  },
+  {
+    "id": "problems-car-rental-claim-is-one-call",
+    "node": "problems.booking.car-rental",
+    "type": "qa",
+    "q": "租车系统（Car Rental）里两个客人同时抢同一门店最后一辆 SUV。为什么「先调 `is_available()` 再调 `make_reservation()`」一定会双开？Python 的 GIL 为什么救不了它？",
+    "a": "因为查和占之间有一条**没有锁的缝**：线程 A 查到「有车」还没写入时，线程 B 也查到「有车」，两个都写入，同一辆车被卖了两次。这是检查后行动（check-then-act）竞态的教科书形态。\n\nGIL 救不了：它只保证**单条字节码**不被切开。`dict` 的一次 `get` 或 `set` 是原子的，但「遍历一遍车队 + 逐辆判定 + 写入一段行程」是几百条字节码，中间随时可能切换线程。**锁保护的是复合操作，不是某一次赋值。**\n\n正确形状是把两步合成一个原子方法，返回已经占好的那辆车：\n\n```python\ndef claim(self, category, branch, period, destination, ref) -> Vehicle:\n    leg = ScheduleLeg(ref, period, branch, destination)\n    with self._lock:\n        for plate in sorted(self._schedules):\n            schedule = self._schedules[plate]\n            if schedule.vehicle.category is category and schedule.accepts(leg):\n                schedule.add(leg)\n                return schedule.vehicle\n    raise NoVehicleAvailableError(...)\n```\n\n测试要用真线程 + `threading.Barrier` 对齐起跑，断言「恰好一个成功、排期上恰好一段」这样的不变量，而不是断言时序。",
+    "tags": []
+  },
+  {
+    "id": "problems-car-rental-pricing-is-a-pipeline",
+    "node": "problems.booking.car-rental",
+    "type": "qa",
+    "q": "租车系统（Car Rental）的报价包含车型基础价 × 时长、异地还车附加费、保险等加购项、会员折扣，而且随时要加「周末加价」「机场取车费」。为什么不该用 `PricingStrategy` 抽象基类加一堆子类？",
+    "a": "因为定价不是「**几选一**」，而是「**几项相加**」——策略模式（Strategy）解决的是前者。\n\n用抽象基类你会立刻需要一个 `CompositePricingStrategy` 去组合它们；又因为会员折扣要对**小计**打折，还得给接口加一个 `subtotal` 参数。最后得到的就是一串函数，只不过外面套了四层类。\n\nPython 里的自然形态是一串可调用对象，按顺序跑：\n\n```python\nPriceComponent = Callable[[RentalRequest, int], Charge | None]\n\ndef one_way_fee(amount: int) -> PriceComponent:\n    def component(request: RentalRequest, subtotal: int) -> Charge | None:\n        return Charge(\"one_way\", amount) if request.one_way else None\n    return component\n```\n\n策略只有一个方法且不共享状态时，它**就是**一个函数；需要参数就用闭包。两个细节：签名里**没有** `Fleet`，所以定价函数绕不过车队的锁去读内部状态；返回 `Charge | None` 而不是 `int`，因为报价必须是分项的——只给一个总数的设计在第一次客诉时就会崩。金额一律用整数分，不用 `float`。",
+    "tags": []
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "problems.booking.movie-booking": [
+    "problems-movie-booking-seat-two-layers",
+    "problems-movie-booking-who-owns-hold-state",
+    "problems-movie-booking-all-or-nothing-hold",
+    "problems-movie-booking-lazy-expiry",
+    "problems-movie-booking-lock-granularity",
+    "problems-movie-booking-payment-outside-lock",
+    "problems-movie-booking-no-pending-status",
+    "problems-movie-booking-policies-dont-touch-locks"
+  ]
+}

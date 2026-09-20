@@ -2,35 +2,10 @@
 id: patterns-when-to-refuse
 node: patterns.selection
 type: qa
+step: 6
 ---
 ## Q
-In an LLD round, what signals tell you to REFUSE a pattern, and what's the disciplined way to hold the door open for it?
+你被要求给一个简单问题加一个设计模式，什么时候应该说"不需要"？
 
 ## A
-Refuse when:
-
-- There's **one concrete case** and the second is hypothetical — an interface with a single implementation is speculative generality (YAGNI / rule of three: abstract on the ~3rd occurrence, not the 1st).
-- The pattern adds **more classes than the logic it organizes** — a strategy interface + factory + 2 one-line strategies vs a 5-line `if`.
-- You'd be pattern-dropping to impress: the interviewer grades whether the design fits, not vocabulary count.
-
-Disciplined move: write the simple version, then **say out loud where the seam is** — "if a third pricing rule appears, this `if` becomes a `PricingStrategy`." Patterns are best introduced as *refactoring targets* when duplication actually arrives, not as upfront scaffolding.
-
-## Q zh
-你被要求为一个简单问题添加一个模式。何时说「不，不需要」？
-
-## A zh
-**拒绝条件**：
-
-1. **模式解决不存在的问题**。例：添加 Singleton「为了标准化」，但没有多个实例或全局访问的实际需求。
-
-2. **普通代码已经足够**。
-   - 一个排序函数；不需要 Strategy。
-   - 一个工厂方法；不需要 Factory Method 接口和子类。
-   - 一个类 with `log()` 和 `save()` 方法；不需要 Decorator。
-
-3. **模式会增加成本**：
-   - 增加文件数量。
-   - 使代码路径变长/间接。
-   - 引入初级开发人员的学习曲线。
-
-**黄金法则**：首先用普通代码写它。模式是**针对重复出现的问题的重构**，不是初始设计。
+三种情况都该拒绝：模式在解决一个不存在的问题（比如给只会有一个实例、也没有全局访问需求的类加 Singleton"图个规范"）；普通代码已经把事情做得很清楚（一个排序函数不需要 Strategy，一个只有 `log()`、`save()` 两个方法的类不需要 Decorator）；引入模式的成本高于收益（多出文件和间接层，让新人更难读懂代码路径）。黄金法则：先用最直接的代码写出来，模式是**应对已经出现的重复变化**时的重构方向，不是设计之初就该预设的骨架。

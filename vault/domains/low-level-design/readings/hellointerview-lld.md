@@ -1,7 +1,7 @@
 ---
 nodes: [method.evaluation, method.modeling]
 url: https://www.hellointerview.com/learn/low-level-design
-tags: [canonical, intro]
+tags: [canonical, intro, no-archive]
 ---
 # Hello Interview: Low-Level Design Guide
 
@@ -19,7 +19,4 @@ interfaces→code pipeline, with worked deliveries of classic problems.
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://www.hellointerview.com/learn/low-level-design)
-
-## Archived copy
-![[hellointerview-lld-clip]]
 %% trellis:end %%

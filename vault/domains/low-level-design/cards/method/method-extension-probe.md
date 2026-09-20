@@ -2,22 +2,12 @@
 id: method-extension-probe
 node: method.evaluation
 type: qa
+step: 4
 ---
 ## Q
-The interviewer probes: "how would you add a new vehicle type / discount rule?" What separates a passing answer from a strong one?
+面试官口头追问"如果要新增一种车辆类型或折扣规则，你会怎么改？"及格答案和强答案的区别在哪？
 
 ## A
-- **Passing**: correctly describing which code you'd edit.
-- **Strong**: the change is *additive* — one new class or enum constant implementing an existing interface, registered in one place, zero edits to existing conditionals.
+**及格**：准确说出会改哪些文件、哪些代码。**强**：改动是纯加法——新增一个类或枚举值去实现已有接口，在一个地方注册它，不需要碰任何一处已有的条件分支。
 
-If your design would force shotgun edits, say so and name the refactor (extract a strategy interface) — owning the weakness scores better than defending it.
-
-
-## Q zh
-面试官探测："你会怎样添加一个新的车辆类型/折扣规则?"什么将通过答案与强答案分开?
-
-## A zh
-- **通过**: 正确描述你会编辑哪个代码。
-- **强**: 改变是**加法的** — 一个新类或枚举常数实现现有接口，在一个地方注册，零编辑到现有条件语句。
-
-如果你的设计会强制霰弹枪编辑，说出来并命名重构（提取策略接口）— 拥有弱点的得分比辩护它好。
+如果你的设计做不到这一点，会强制到处改代码，就直接说出来并叫出对应的重构名字（比如"提取一个策略接口"）——承认弱点并给出修法，比硬撑着辩护要加分。

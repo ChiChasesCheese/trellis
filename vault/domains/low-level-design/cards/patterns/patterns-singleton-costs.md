@@ -2,25 +2,12 @@
 id: patterns-singleton-costs
 node: patterns.creational
 type: qa
+step: 6
 ---
 ## Q
-Why is Singleton the most criticized GoF pattern, and what's the modern alternative when you genuinely need one instance?
+Python 里"整个进程只要一个实例"这个需求，为什么模块本身通常就是答案？用 `__new__` 拦截实例化实现单例又错在哪？
 
 ## A
-Singleton couples two decisions that should be separate: *one instance exists* and *everyone accesses it globally*.
+Python 模块在一个进程里只会被 `import` 求值一次，之后所有 `import` 拿到的都是同一个模块对象——把状态直接放成模块级变量，天然就是"进程唯一"，不需要专门的 Singleton 类。
 
-- The global access point makes dependencies **invisible** (nothing in a signature says the class uses it) and makes tests share **hidden mutable state** you can't swap or reset.
-- It hard-codes the concrete class — no substituting a test double.
-
-Modern alternative: keep the class ordinary, create **one instance at the composition root** and inject it (DI container or hand-wired `main`). Reserve true singletons for stateless, cross-cutting facts (e.g. a process-wide logger), and if forced, use an `enum` singleton / static holder for safe lazy init.
-
-## Q zh
-为什么 Singleton 是 GoF 里被批评最多的模式，当你确实只需要一个实例时，现代的替代方案是什么？
-
-## A zh
-Singleton 把两个本该分开的决定耦合在了一起：*只存在一个实例*，以及*所有人都通过全局入口访问它*。
-
-- 那个全局访问点让依赖**变得不可见**（签名里没有任何东西表明这个类用了它），也让测试之间共享**隐藏的可变状态**，既换不掉也重置不了。
-- 它把具体类写死了 —— 没法替换成测试替身。
-
-现代替代方案：让这个类保持普通，在 **composition root 创建唯一的那个实例**并注入下去（DI 容器，或者手写装配的 `main`）。真正的单例留给无状态的、横切的事实（比如进程级 logger）；如果确实被迫要写，就用 `enum` 单例 / static holder 来获得安全的延迟初始化。
+用 `__new__` 拦截、让类的多次实例化返回同一对象是常见的反模式：它把"这是唯一实例"这件事藏进了构造过程里，调用方从签名上完全看不出来，测试之间还会共享一份换不掉、重置不了的隐藏状态。真正需要"可注入、测试时能替换"的唯一实例时，在组合根（composition root）里手动创建一份并传下去，比藏在 `__new__` 里更诚实。

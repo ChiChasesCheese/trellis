@@ -1,7 +1,7 @@
 ---
 nodes: [patterns.creational]
 url: https://refactoring.guru/design-patterns/builder
-tags: [canonical]
+tags: [canonical, no-archive]
 ---
 # Builder (refactoring.guru)
 
@@ -24,7 +24,4 @@ construct".
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://refactoring.guru/design-patterns/builder)
-
-## Archived copy
-![[refactoring-guru-builder-clip]]
 %% trellis:end %%

@@ -2,21 +2,12 @@
 id: quality-couplers-refactorings
 node: quality.smells
 type: qa
+step: 5
 ---
 ## Q
-Diagnose and fix each coupler: feature envy, message chains, inappropriate intimacy, middle man.
+诊断并修复四种耦合者（coupler）味道：功能依恋（feature envy）、消息链（message chains）、不当亲密关系（inappropriate intimacy）、中间人（middle man）。
 
 ## A
-- **Feature envy** — a method uses another object's data more than its own (`order.getCustomer().getAddress().format()` logic living in `InvoicePrinter`). Fix: **move method** to where the data lives; behavior belongs with state.
-- **Message chains** — `a.getB().getC().doIt()` couples the caller to the whole navigation path (Law of Demeter violation). Fix: **hide delegate** — ask the first object to do it (`a.doIt()`).
-- **Inappropriate intimacy** — two classes poke each other's internals. Fix: move method/field to concentrate the interaction in one class, or extract the shared part.
-- **Middle man** — a class that only forwards calls. Fix: **remove middle man**, talk to the target directly. (Note: it's the *over-applied* cure for message chains — the two smells pull in opposite directions, so aim between.)
+功能依恋：一个方法用别的对象的数据比用自己的还多，比如 `order.customer.address.formatted()` 这段格式化逻辑却住在 `InvoicePrinter` 里——修法是搬移方法（move method），把行为搬到数据实际所在的地方，因为行为应该跟着状态走。消息链：`order.customer.address.city` 这种一路点下去的调用，把调用方焊死在整条导航路径上——修法是隐藏委托（hide delegate），让 `order` 自己暴露一个 `order.customer_city()`。
 
-## Q zh
-诊断并修复这四种 coupler：feature envy、message chains、inappropriate intimacy、middle man。
-
-## A zh
-- **Feature envy** —— 一个方法用别人的数据比用自己的还多（`order.getCustomer().getAddress().format()` 这段逻辑却住在 `InvoicePrinter` 里）。修法：**move method**，搬到数据所在的地方；行为属于状态。
-- **Message chains** —— `a.getB().getC().doIt()` 把调用方耦合到整条导航路径上（违反 Law of Demeter）。修法：**hide delegate** —— 让第一个对象自己去做（`a.doIt()`）。
-- **Inappropriate intimacy** —— 两个类互相掏对方的内部。修法：move method/field 把这段交互集中到一个类里，或者把共享部分抽出来。
-- **Middle man** —— 一个只做转发的类。修法：**remove middle man**，直接和目标对话。（注意：它正是 message chains 那副药*用过头*的产物 —— 这两个坏味道方向相反，所以要瞄准中间地带。）
+不当亲密关系：两个类频繁互相翻对方的内部字段——修法是把这段交互收进一个类，或者把共享部分抽成第三个类。中间人：一个类的方法几乎全部只是转发给另一个对象——修法是移除中间人（remove middle man），让调用方直接找目标对象说话；注意它和消息链其实互为镜像，一个是"链太长"，一个是"专门为了缩短链而加了一层没有自己逻辑的壳"，治过头就会从一个坏味道换成另一个。

@@ -1,0 +1,14 @@
+{
+  "problems.components.notification-service": [
+    "problems-notification-service-reliability-belongs-to-dispatcher",
+    "problems-notification-service-channel-is-not-an-enum",
+    "problems-notification-service-policies-before-the-queue",
+    "problems-notification-service-quiet-hours-and-urgent",
+    "problems-notification-service-priority-lanes-and-quota",
+    "problems-notification-service-transient-vs-permanent",
+    "problems-notification-service-backoff-uses-a-delay-heap",
+    "problems-notification-service-idempotency-key-and-scope",
+    "problems-notification-service-claim-is-check-then-act",
+    "problems-notification-service-never-call-provider-under-lock"
+  ]
+}

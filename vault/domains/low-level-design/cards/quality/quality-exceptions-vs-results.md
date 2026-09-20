@@ -2,35 +2,20 @@
 id: quality-exceptions-vs-results
 node: quality.errors
 type: qa
+step: 3
 ---
 ## Q
-Exceptions vs result types (`Result`/`Either`/`Optional`) — what's the decision rule, and what failure of each style should you name?
+什么时候该抛异常，什么时候该返回一个 `None`/结果对象，让调用方自己判断成功还是失败？
 
 ## A
-Rule: model by **expectedness at the call site**.
+预期之内、属于业务逻辑正常分支的失败——用户名不存在、余额不足、库存不够——应该用返回值表达，因为这不是"意外",调用方几乎总是要在成功和失败两条路径上分别写代码,把它做成异常反而是在用控制流跳转表达一个本该是普通分支的判断。真正意外的、破坏了前置条件或代表编程错误的情况——不可能出现的状态、违反了调用契约——应该用异常，因为调用方大概率没有为它写处理逻辑，异常能保证它不会被默默吞掉。
 
-- **Expected domain outcomes** the caller must handle every time — insufficient funds, seat already booked, validation failure — return a **result type**: the compiler forces handling, and outcomes are values you can log, map, and test.
-- **Exceptional conditions** the immediate caller can't fix — connection lost, invariant broken, bug — **throw**, and let a boundary handler translate (crashing on a programmer error beats limping on).
-
-Failure modes to name: exceptions for expected cases become **control flow** — invisible in signatures, easy to forget, expensive; results for truly unrecoverable errors force `.map/.flatMap` plumbing through code that could do nothing anyway. Never signal failure with `null` or sentinel values — that's the worst of both.
-
-## Q zh
-什么时候应该使用异常而不是返回结果对象？
-
-## A zh
-**使用异常**：
-- 不可恢复的错误（null 指针、系统故障）
-- 意外情况（违反前置条件）
-- 编程错误（应该从不发生）
-
-**使用结果对象**（Result、Option、Either）：
-- 预期的故障模式（用户不存在、余额不足）
-- 业务逻辑的一部分
-- 调用者需要以不同的方式处理成功/失败
-- Kotlin 的 `Result<T>`、Rust 的 `Result<T, E>`、Java 的 Optional
-
-权衡：
-- 异常：调用者无法忽略错误，但会隐藏流程
-- 结果：显式处理，但调用者可能忽视失败情况
-
-现代趋势：对预期的故障使用结果，对编程错误使用异常。
+```python
+def find_user(user_id: str) -> User | None: ...   # 预期会找不到：返回值
+def get_user(user_id: str) -> User:                # 调用方自己发的 id 应该存在：不存在就是数据损坏
+    user = find_user(user_id)
+    if user is None:
+        raise UserNotFoundError(user_id)
+    return user
+```
+判据不是"这件事有多常见",而是"调用方原本就该为这种情况写代码,还是这种情况本身就意味着某处出了错"。

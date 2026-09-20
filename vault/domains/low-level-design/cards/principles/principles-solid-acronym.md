@@ -2,8 +2,6 @@
 id: principles-solid-acronym
 node: principles.solid
 type: cloze
+step: 1
 ---
-SOLID: {{c1::Single responsibility}} (one reason to change), {{c2::Open–closed}} (extend by adding, not editing), {{c3::Liskov substitution}} (subtypes honor the base contract), {{c4::Interface segregation}} (no forced dependence on unused methods), {{c5::Dependency inversion}} (policy and detail both depend on abstractions).
-
-## zh
-SOLID: {{c1::Single responsibility}}（改变的理由只有一个）、{{c2::Open–closed}}（通过添加而非编辑来扩展）、{{c3::Liskov substitution}}（子类型必须遵守基类契约）、{{c4::Interface segregation}}（不被迫依赖无用的方法）、{{c5::Dependency inversion}}（策略和细节都依赖抽象）。
+SOLID 是五条原则英文名的首字母：S 代表{{c1::单一职责原则（Single Responsibility Principle）——一个类改变的理由只应该有一个}}；O 代表{{c2::开闭原则（Open-Closed Principle）——对扩展开放，对修改关闭，靠新增代码而不是编辑既有代码去支持变化}}；L 代表{{c3::里氏替换原则（Liskov Substitution Principle）——子类型必须能替换父类型，且不破坏调用方对父类型的假设}}；I 代表{{c4::接口隔离原则（Interface Segregation Principle）——不应该被迫依赖自己用不到的方法}}；D 代表{{c5::依赖倒置原则（Dependency Inversion Principle）——高层模块和低层模块都应该依赖于抽象，而不是高层依赖低层的具体实现}}。

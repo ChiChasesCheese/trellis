@@ -2,40 +2,12 @@
 id: concurrency-mutex-vs-semaphore
 node: concurrency.primitives
 type: qa
+step: 2
 ---
 ## Q
-A binary semaphore and a mutex both admit one thread at a time. What's the real difference, and when do you reach for a semaphore?
+`threading.Lock` 和 `threading.Semaphore` 分别用来解决什么问题？`BoundedSemaphore` 又比普通 `Semaphore` 多做了什么？
 
 ## A
-**Ownership.** A mutex must be released by the thread that locked it (enabling reentrancy and priority-inheritance); a semaphore's permit can be released by *any* thread.
+`Lock` 是二元的（锁住/未锁住），表达"同一时刻只有一个线程能进临界区"；`Semaphore` 内部是一个计数器，表达"同一时刻最多 N 个线程能进入"——典型用法是限制并发连接数或线程池大小，比如 `Semaphore(5)` 保护一个最多支持 5 个并发连接的资源池。二者都用 `acquire()`/`release()`，都支持 `with` 语句。
 
-- Reach for a **counting semaphore** to limit access to N identical resources (connection pool of 10, rate-limit concurrent downloads).
-- Reach for a **binary semaphore** for cross-thread signaling: thread A `acquire`s, thread B `release`s to wake it — impossible with a mutex.
-- Protecting shared mutable state = mutex; permits/signaling = semaphore.
-
-## Q zh
-mutex 和 semaphore 之间有什么区别？何时使用每个？
-
-## A zh
-**Mutex（互斥体）**：
-- 二元：锁定（1）或解锁（0）
-- 仅持有者可以解锁
-- 用途：保护临界区，强制独占访问
-
-**Semaphore**：
-- 计数器：N 许可
-- 任何线程都可以释放许可（甚至没有获取的线程）
-- 用途：控制 N 个资源的池访问、信令
-
-例子：
-- Mutex：保护`count`变量的增量
-- Semaphore：有 10 个线程的线程池；10 个许可，一个线程获取一个许可来工作
-
-混淆：
-- 二元信号量 (N=1) 似乎像 mutex，但任何线程都可以释放它
-- Java 的 `synchronized` 是 mutex
-- `Semaphore(1)` 和 `ReentrantLock` 类似但不一样
-
-何时使用：
-- Mutex：保护数据
-- Semaphore：管理资源池
+`Semaphore` 的计数器可以被任何线程 `release()`（甚至是没调用过 `acquire()` 的线程），这让它也能当"信号"用；但这也是常见误用来源——多 `release()` 一次会让计数器超过设计上限而不报错。`BoundedSemaphore` 在计数器超过初始值时会抛 `ValueError`，专门用来在测试里捕获这种"释放多了"的编程错误。
