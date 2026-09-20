@@ -39,6 +39,7 @@ Rules that are not derivable from the code:
 | `building-study-domains` | learning a subject systematically as a trellis domain (Kafka, Snowflake internals): field survey → Chinese skeleton → corpus → cards (digest / grow, card agents) → grown-card review → readings → drills → Anki loop; progress in `vault/domains/<domain>/BUILD.md` |
 | `distilling-work-into-domains` | connecting real work or an employer codebase to domain leaves as cases and stories; private tier stays on the work machine |
 | `building-company-interview-kits` | preparing a company's interview loop in `vault/interviews/companies/<co>/` |
+| `building-problem-banks` | a bank of real interview problems inside a domain (system design, low-level design): survey → cut line → problem leaves → gate → pilot → agent waves → orchestrator review. Holds the measured costs, the failure table and the fetch reachability list |
 
 ## Interview kit methodology (the Stripe way — reuse for every company)
 
@@ -86,6 +87,12 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
   Chi set `worktree.bgIsolation: "none"` (2026-09-14); sessions started before that stay isolated
   and cannot run `git -C ~/Code/trellis` — Chi pulls the main checkout from a normal terminal.
   Agents may not edit permission or isolation settings themselves; hand Chi the exact snippet.
+- **Review is the orchestrator's job, and the gate is not the review.** For written content: re-derive every number with
+  `python3 -c`, check the conclusion is something a product could ship, check the agent's self-reported weakest claims,
+  grep for process talk. Small fixes in place; substantive ones back to the same agent with `SendMessage` (it keeps its
+  context and returns in ~5 min). Every defect found becomes a rule in the group's instruction file.
+- Keep exactly three agents running: when one returns, review, commit, launch the next. Two sibling deliverables per
+  agent is the sweet spot (~250k tokens, ~20 min); budget ~130k tokens and ~12 min per problem-sized deliverable.
 - Never accept a subagent's "done": re-run `tools/verify_suites.py` (reference green **and** empty
   starter red) and `check_tree.py --strict` yourself. A 429 usage-limit death leaves partial files —
   salvage and finish them, don't respawn from scratch.
@@ -112,8 +119,8 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
   (see `tests/test_loop_e2e.py`). `tests/conftest.py` makes the real client refuse, because a fixture deck once reached the live collection.
 - The repo is public: a reading for a commercial prep site is tagged `no-archive` (linked, never clipped); `clip` skips it.
   A reading with no `url:` and a real body is an *authored* article and needs no clipping — card footers open it directly.
-- Card agents miscompute and misattribute: re-derive every estimate, check assumptions against each other and against
-  sibling articles, and keep unverified numbers out of cards (four lessons recorded in `proposals/design-problems/AGENT.md`).
+- Card agents miscompute, contradict their own assumptions and pass off secondhand numbers: the failure table and guards are in
+  the `building-problem-banks` skill. Medium-hosted blogs, uber.com, dl.acm.org, w3.org and LeetCode Discuss refuse fetches (same skill).
 - `anki-push` moves a domain's decks onto their own preset `Trellis · <title>` (cloned, deals new cards by position) and
   repositions only cards Anki still calls new. Never write to the shared `Default` preset or to a reviewed card's `due`.
 - A leaf is weak only on cards with a verdict (taken / slipped); young cards are not evidence, and a weak leaf whose grown

@@ -80,6 +80,10 @@ finished step, and the next action. A new session resumes from it.
 An older English domain being deepened adds translations instead of rewriting: follow
 `docs/translation-spec.md` and audit a 10% sample by hand.
 
+A domain whose interview form is *problems* (design X, implement Y) gets a problem bank on top of its concept
+leaves: skill `building-problem-banks`. An article written in the vault is a reading with no `url:` — it needs no
+clipping and card footers open it; a reading tagged `no-archive` keeps its link and is never clipped.
+
 ## Card agents
 
 - Split the leaves by top-level node into up to 3 disjoint groups; one agent per group owns
