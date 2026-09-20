@@ -1,0 +1,12 @@
+{
+  "problems.machines.elevator": [
+    "problems-elevator-tick-not-sleep",
+    "problems-elevator-sweep-outlives-doors",
+    "problems-elevator-three-stop-sets",
+    "problems-elevator-scan-vs-nearest-starvation",
+    "problems-elevator-policies-as-functions",
+    "problems-elevator-one-call-one-car",
+    "problems-elevator-out-of-service-orthogonal",
+    "problems-elevator-lock-scope"
+  ]
+}

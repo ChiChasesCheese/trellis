@@ -1,0 +1,12 @@
+{
+  "problems.machines.vending-machine": [
+    "problems-vending-machine-table-vs-state-classes",
+    "problems-vending-machine-guard-vs-illegal",
+    "problems-vending-machine-escrow",
+    "problems-vending-machine-plan-change-before-dispensing",
+    "problems-vending-machine-greedy-change-fails",
+    "problems-vending-machine-bank-drops-empty-denomination",
+    "problems-vending-machine-second-payment-method",
+    "problems-vending-machine-lock-granularity"
+  ]
+}
