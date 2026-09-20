@@ -1,0 +1,12 @@
+{
+  "problems.marketplaces.digital-wallet": [
+    "problems-digital-wallet-transfer-atomicity",
+    "problems-digital-wallet-external-account",
+    "problems-digital-wallet-signed-delta-not-kind",
+    "problems-digital-wallet-balance-cache-vs-derive",
+    "problems-digital-wallet-lock-ordering-stable-key",
+    "problems-digital-wallet-idempotency-reuses-account-lock",
+    "problems-digital-wallet-idempotency-conflict",
+    "problems-digital-wallet-ledger-append-only-idempotency-purged"
+  ]
+}
