@@ -4,7 +4,11 @@
 
 Double-entry design, immutability, balance derivation, and reconciliation as the payments-grade safety net.
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/system-design/map/correctness.idempotency|Idempotency]]
+
+**Unlocks:** [[domains/system-design/map/problems.commerce.payment-system|Payment System]], [[domains/system-design/map/problems.commerce.digital-wallet|Digital Wallet]]
 
 ## Readings
 - [[modern-treasury-ledgers|Ledgers (Modern Treasury Learn series)]]
@@ -12,6 +16,7 @@ Double-entry design, immutability, balance derivation, and reconciliation as the
 
 ## Drills
 - [[design-payment-ledger|Drill: Design a payment ledger service]]
+- [[design-digital-wallet|Drill: Design a digital wallet that transfers balances between accounts on different shards]]
 
 ## Cards (9)
 1. [[correctness-double-entry-invariant]]

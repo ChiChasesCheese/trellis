@@ -12,3 +12,11 @@ Haystack 的三副本+RAID-6（3.6×）降到单区域 2.8×、跨区域加 XOR 
 纠删码参数（RS(10,4)）和倍数取自这篇论文，但耐久性概率本身是题解按 Backblaze 的
 实测年故障率自行用二项分布计算的简化模型，不是论文里给出的数字，这一点在正文中
 明确区分。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.usenix.org/system/files/conference/osdi14/osdi14-paper-muralidhar.pdf)
+
+## Archived copy
+![[src-usenix-f4-object-storage-clip]]
+%% trellis:end %%

@@ -10,3 +10,8 @@ url: https://blog.x.com/engineering/en_us/a/2010/announcing-snowflake
 按时间有序的 64 位 ID。本题解把这套具体数字当成"专用发号机群"这一种部署形态下的
 合理选择，并通过和 Instagram 不同的位分配对比，得出"位预算该由需要多少独立生成
 身份决定，而不是照抄某个知名系统的数字"这条更一般的结论。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://blog.x.com/engineering/en_us/a/2010/announcing-snowflake)
+%% trellis:end %%

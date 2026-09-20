@@ -10,3 +10,8 @@ url: https://dl.acm.org/doi/10.1145/509907.509965
 节采用了这个技术构造单一定长指纹的做法，作为和 Broder 式多维 MinHash 签名相对的另一个
 方案，并在本设计自己的语料规模上重新计算了内存占用对比；原文是纯理论构造论文，不涉及
 新闻聚合或网页去重的具体应用场景，应用层的参数和场景都是本题解自己补上的。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://dl.acm.org/doi/10.1145/509907.509965)
+%% trellis:end %%

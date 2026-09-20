@@ -11,3 +11,11 @@ order 不能以任何形式被修改,调整只能通过新开一笔 order 完成
 存储选型,而是把余额做成从追加写账本条目推导出的快照 + 增量重放(参见 Stripe 和 Square
 的披露),原因是本设计假设的规模(年 12 亿笔)还不需要 Uber 那种超过十亿级实体、要求
 余额行本身强一致更新的极端场景。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.uber.com/us/en/blog/ubers-payments-platform/)
+
+## Archived copy
+![[src-uber-zerosum-payment-system-clip]]
+%% trellis:end %%

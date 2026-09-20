@@ -10,3 +10,8 @@ association）数据模型、按 id 分片、leader/follower 缓存分层、跨�
 佐证"图查询重复率高、缓存不需要做得很精巧"，也用它披露的跨地域异步复制模式作为本设计
 "边写入选择强一致"这一决定的对照组——本设计的写入量级远低于 TAO 服务的真实规模，所以能
 负担得起 TAO 为了性能而放弃的强一致性。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.usenix.org/conference/atc13/technical-sessions/presentation/bronson)
+%% trellis:end %%

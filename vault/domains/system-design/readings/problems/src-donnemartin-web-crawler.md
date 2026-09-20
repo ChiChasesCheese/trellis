@@ -10,3 +10,11 @@ tags: [engineering-blog]
 思路。本题解与它的区别在于：它把去重当成一次性批处理问题，本题解把 URL 去重设计成一个持续
 运行、内存常驻的 Bloom filter，并给出了具体的位数和分片内存估算，更贴近一个持续增量抓取系
 统的真实运行方式。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/donnemartin/system-design-primer/blob/master/solutions/system_design/web_crawler/README.md)
+
+## Archived copy
+![[src-donnemartin-web-crawler-clip]]
+%% trellis:end %%

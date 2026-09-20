@@ -11,3 +11,11 @@ tags: [reference]
 工作因子调到一个具体的耗时区间内。本题解「深入探讨」第 1 节直接采用 Argon2id 基线，
 并补充了这篇文章没有给出的部分——把耗时参数和峰值登录 QPS 联立，算出需要多少 CPU
 核心，而不是停留在"应该多慢"这个定性建议。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)
+
+## Archived copy
+![[src-owasp-password-storage-auth-service-clip]]
+%% trellis:end %%

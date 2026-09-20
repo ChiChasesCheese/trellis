@@ -8,3 +8,8 @@ url: https://www.sec.gov/Archives/edgar/data/1792789/000179278926000012/prodq4da
 月活跃用户超过 5,600 万、市场总交易额（Marketplace GOV）293.7 亿美元。本题解「容量
 估算」一节的订单量和 MAU 锚点直接取自这份官方文件，比任何刷题站给出的估算数字都更
 可信，因为它是一手财报披露而不是二手估算。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.sec.gov/Archives/edgar/data/1792789/000179278926000012/prodq4dashex991-pressrelea.htm)
+%% trellis:end %%

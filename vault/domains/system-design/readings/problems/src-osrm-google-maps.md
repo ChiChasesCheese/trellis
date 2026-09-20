@@ -10,3 +10,11 @@ url: https://github.com/Project-OSRM/osrm-backend/wiki/Traffic
 分区，路况变化时只需要局部重算受影响分区的边界捷径。本题解「深入探讨」第 2 节从纯 CH
 过渡到分区方案的论证直接建立在这份文档上，比多数刷题站只停留在"用 CH 加速路径规划"这
 一层更进一步，指出了 CH 本身在实时路况场景下的局限。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/Project-OSRM/osrm-backend/wiki/Traffic)
+
+## Archived copy
+![[src-osrm-google-maps-clip]]
+%% trellis:end %%

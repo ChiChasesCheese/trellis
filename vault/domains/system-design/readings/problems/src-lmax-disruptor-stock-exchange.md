@@ -9,3 +9,11 @@ url: https://lmax-exchange.github.io/disruptor/disruptor.html
 32,757 纳秒，现代硬件上吞吐可达每秒过亿次操作。本题「瓶颈、故障与演进」的 10 倍演进部分
 用这组数字说明序列化层本身的吞吐远非瓶颈；需要注意这组基准是通用无锁队列场景的测量，不是
 专门针对股票交易系统的实测，本文引用时保留了这个限定。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://lmax-exchange.github.io/disruptor/disruptor.html)
+
+## Archived copy
+![[src-lmax-disruptor-stock-exchange-clip]]
+%% trellis:end %%

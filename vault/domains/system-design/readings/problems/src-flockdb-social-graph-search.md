@@ -8,3 +8,11 @@ url: https://github.com/twitter-archive/flockdb
 生产数字（130 亿条边、峰值 2 万写/秒、10 万读/秒）。本题解与它的区别在于：FlockDB 明确
 不支持多跳遍历（文档里写明这是非目标），而多跳的最短路径查询正是本题解的核心难点之一，
 本题解必须在 FlockDB 划定的范围之外单独设计这一部分。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/twitter-archive/flockdb)
+
+## Archived copy
+![[src-flockdb-social-graph-search-clip]]
+%% trellis:end %%

@@ -10,3 +10,11 @@ tags: []
 `m ≥ 1/ε`）。还给出了 Zipf 分布下更紧的界，以及和 Sticky Sampling、Lossy Counting、
 GroupTest 的对比表。本题「深入探讨」第 3 节的参数反推和"为什么不能像 CMS 一样逐 cell
 相加"直接来自这篇论文；本题没有用到它 Zipf 分布下的更紧界。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.cse.ust.hk/~raywong/comp5331/References/EfficientComputationOfFrequentAndTop-kElementsInDataStreams.pdf)
+
+## Archived copy
+![[src-metwally-space-saving-top-k-clip]]
+%% trellis:end %%

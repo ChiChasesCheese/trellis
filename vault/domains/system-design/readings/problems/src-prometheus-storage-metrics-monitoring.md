@@ -10,3 +10,11 @@ url: https://prometheus.io/docs/prometheus/latest/storage/
 没有照搬它给出的"1–2 字节/样本"经验值，而是用自己实现的 Gorilla 式压缩算法在三种合成场景
 上重新计算，得到一个范围（约 0.7–7.1 字节/样本）而不是单一常数——因为真实压缩比强烈依赖
 指标本身的变化模式，一个笼统的经验值不足以支撑容量估算。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://prometheus.io/docs/prometheus/latest/storage/)
+
+## Archived copy
+![[src-prometheus-storage-metrics-monitoring-clip]]
+%% trellis:end %%

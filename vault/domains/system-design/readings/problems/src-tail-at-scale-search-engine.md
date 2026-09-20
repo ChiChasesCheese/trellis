@@ -11,3 +11,11 @@ url: https://www.barroso.org/publications/TheTailAtScale.pdf
 内容未能完整解析），本题解给出的全部具体数字（32/480 个分片、27.5%/99.2%/4.7% 的长尾
 命中概率）都是本题解按自己的分片规模和假设的单分片超时概率重新计算得出，不是照抄论文
 里的示例数字。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.barroso.org/publications/TheTailAtScale.pdf)
+
+## Archived copy
+![[src-tail-at-scale-search-engine-clip]]
+%% trellis:end %%

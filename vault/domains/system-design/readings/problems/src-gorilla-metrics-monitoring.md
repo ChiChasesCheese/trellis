@@ -12,3 +12,11 @@ url: https://www.vldb.org/pvldb/vol8/p1816-teller.pdf
 噪声仪表）上重新计算压缩比，而不是照抄论文的生产集群平均数——因为压缩比强依赖指标本身
 的变化模式；第 6 节的告警评估容灾设计把论文"写两个 region、故障读切换"的思路应用到告警
 评估子系统本身，原文本身只讨论了写路径和查询路径的可靠性，没有专门讨论告警评估路径。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.vldb.org/pvldb/vol8/p1816-teller.pdf)
+
+## Archived copy
+![[src-gorilla-metrics-monitoring-clip]]
+%% trellis:end %%

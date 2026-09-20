@@ -11,3 +11,11 @@ Lua 脚本的事务特性实现"读取剩余库存后扣减"；文中还给出�
 本题「深入探讨」第 2 节的核心扣减方案和「瓶颈、故障与演进」100 倍演进一节的真实数字均以此
 为依据；本文比它多走一步的地方，是补上了 Redis 作为库存判定真相来源时的持久化风险和对账
 兜底，原文没有展开这一层。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.alibabacloud.com/blog/system-stability-assurance-for-large-scale-flash-sales_596968)
+
+## Archived copy
+![[src-alibabacloud-flash-sale-clip]]
+%% trellis:end %%

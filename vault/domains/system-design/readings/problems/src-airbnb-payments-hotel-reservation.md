@@ -11,3 +11,8 @@ tags: [engineering-blog]
 和 [[solution-ticket-booking]] 的支付编排结论都以此为依据；本篇比多数题解文章更具体的地
 方是它给出了真实的生产结果（支付量翻倍的同时一致性做到五个九），而不是抽象地说"用幂等
 键"。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://medium.com/airbnb-engineering/avoiding-double-payments-in-a-distributed-payments-system-2981f6b070bb)
+%% trellis:end %%

@@ -10,3 +10,11 @@ url: https://www.riotgames.com/en/news/peeking-valorants-netcode
 2.3 毫秒的单帧处理时间使一个 CPU 核心能容纳三局并发游戏。本题解用这组第一手数字，和
 自己算出的回合制走子密度做了量化对比（约 878 倍的事件速率差异），说明回合制和快节奏
 实时游戏的权威服务器虽然原则相同，运转频率却差了近三个数量级。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.riotgames.com/en/news/peeking-valorants-netcode)
+
+## Archived copy
+![[src-riot-multiplayer-game-clip]]
+%% trellis:end %%

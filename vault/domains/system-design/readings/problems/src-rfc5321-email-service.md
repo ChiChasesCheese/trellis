@@ -8,3 +8,11 @@ url: https://www.rfc-editor.org/rfc/rfc5321
 本题解「深入探讨」第 1 节的按目的域名分队列重试设计、以及"入站不可用不等于邮件
 丢失"这个结论都直接建立在这条规则上；具体的重试时间表 RFC 没有规定，是本题解自己
 的假设。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.rfc-editor.org/rfc/rfc5321)
+
+## Archived copy
+![[src-rfc5321-email-service-clip]]
+%% trellis:end %%

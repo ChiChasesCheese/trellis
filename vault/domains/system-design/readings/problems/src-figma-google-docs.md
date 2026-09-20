@@ -12,3 +12,11 @@ wins）+ 服务器校验树结构合法性"这一更简单的模型，并详述�
 是属性级的独立取值，但文本编辑的核心难点是"同一位置的并发字符插入"不能简单按属性取最后写
 入胜出，这是本题解选择 OT 而不是 Figma 式简化 CRDT 的关键原因（详见题解「深入探讨」第 1
 节）。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.figma.com/blog/how-figmas-multiplayer-technology-works/)
+
+## Archived copy
+![[src-figma-google-docs-clip]]
+%% trellis:end %%

@@ -9,3 +9,11 @@ url: https://platform.claude.com/docs/en/docs/build-with-claude/prompt-caching
 比正常输入便宜约 90%。本题解「深入探讨」第 3 节引用这些机制细节，并与 OpenAI 的自动
 前缀缓存对比说明"省去重复 prefill 计算"这件事有不止一种工程实现；文档本身只讲计费和
 API 行为，不涉及 prefill/decode 物理分离，这是本题解在其上叠加的一层。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://platform.claude.com/docs/en/docs/build-with-claude/prompt-caching)
+
+## Archived copy
+![[src-anthropic-llm-chat-service-clip]]
+%% trellis:end %%

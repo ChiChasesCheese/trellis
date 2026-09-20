@@ -9,3 +9,11 @@ url: https://www.usenix.org/conference/osdi22/presentation/yu
 提升。[[ai.inference|Inference Serving]] 的概念卡已经覆盖了这个机制本身是什么，本题解
 不重复其内容，只在容量估算和「深入探讨」第 2 节引用其数量级作为"批处理价值有多大"的
 参照，重点转向 KV 缓存容量和路由这一层。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.usenix.org/conference/osdi22/presentation/yu)
+
+## Archived copy
+![[src-usenix-orca-llm-chat-service-clip]]
+%% trellis:end %%

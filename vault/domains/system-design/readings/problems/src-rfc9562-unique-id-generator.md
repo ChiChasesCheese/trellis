@@ -10,3 +10,11 @@ url: https://www.rfc-editor.org/rfc/rfc9562.html
 数据库索引局部性。本题解用这份规范里的位布局，独立算出了本设计场景下纯随机模式
 的生日悖论碰撞概率，量化论证"即使不用计数器模式，UUIDv7 在这个规模下也不会因为
 随机性本身撞车"，这个数字规范原文没有给出。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.rfc-editor.org/rfc/rfc9562.html)
+
+## Archived copy
+![[src-rfc9562-unique-id-generator-clip]]
+%% trellis:end %%

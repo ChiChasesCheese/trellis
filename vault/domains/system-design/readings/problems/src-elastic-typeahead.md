@@ -9,3 +9,8 @@ url: https://www.elastic.co/guide/en/elasticsearch/reference/current/near-real-t
 "预计算结构 vs 实时可更新"这个权衡最权威的一手说明。本题解在「深入探讨」第 1 节引用了
 它"in-memory、构建代价高"这一权衡，但把具体的数据结构对比（trie 现算 vs 预计算 top-K
 vs FST）和构建/更新代价的量化论证做成了本题解自己的分析，不停留在原文的一般性描述。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.elastic.co/guide/en/elasticsearch/reference/current/near-real-time.html)
+%% trellis:end %%

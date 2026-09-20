@@ -10,3 +10,11 @@ url: https://engineering.fb.com/2021/01/26/ml-applications/news-feed-ranking/
 题解不同的地方在于：本题解补充了"如果对全部候选直接跑重模型"这一反例在 2 亿日活假设下
 的具体计算量（约 2×10^11 次推理/天），用来量化说明为什么必须分阶段收窄候选集，原文本身
 没有给出这个对比数字。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://engineering.fb.com/2021/01/26/ml-applications/news-feed-ranking/)
+
+## Archived copy
+![[src-meta-engineering-news-feed-clip]]
+%% trellis:end %%

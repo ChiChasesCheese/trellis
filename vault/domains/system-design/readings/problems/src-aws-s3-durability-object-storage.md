@@ -10,3 +10,8 @@ tags: [no-archive]
 题解「深入探讨」第 3 节引用这个数字作为真实系统达到的耐久性量级，并明确区分于
 题解自己用简化二项分布模型算出的、量级低得多的条带丢失概率——两者不是同一个东西，
 差距的原因（持续修复窗口远小于一年、跨故障域隔离）在正文中说明。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://docs.aws.amazon.com/AmazonS3/latest/userguide/DataDurability.html)
+%% trellis:end %%

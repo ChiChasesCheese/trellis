@@ -10,3 +10,8 @@ url: https://www.uber.com/en-US/blog/uber-eats-trip-optimization/
 状态切换的时间点，目标是让骑手恰好在餐做好时到店。本题解「深入探讨」第 3 节用它来
 补充 DoorDash 博客"谁指派给谁"这一层之外、"什么时候指派"这一层的论证，两篇原文的
 侧重点不同，本题解把它们结合成一个更完整的调度论证。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.uber.com/en-US/blog/uber-eats-trip-optimization/)
+%% trellis:end %%

@@ -8,3 +8,11 @@ url: https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
 公式、每级缩放瓦片数变为 4 倍、以及每级缩放对应的米/像素分辨率表。本题解「深入探讨」
 第 1 节的瓦片金字塔算术直接引用它；和 Google Maps Platform 自己的坐标文档相比，这份
 文档额外给出了完整的 Mercator 分辨率公式和到 zoom 19 的分辨率表。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames)
+
+## Archived copy
+![[src-osm-google-maps-clip]]
+%% trellis:end %%

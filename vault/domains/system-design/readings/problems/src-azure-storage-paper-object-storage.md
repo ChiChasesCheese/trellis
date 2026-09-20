@@ -11,3 +11,8 @@ Partition Layer（可扩展索引、事务顺序、强一致性）与 Stream Lay
 的设计。题解「深入探讨」第 1 节的元数据-数据分离和第 3 节 LRC(12,2,2) 的存储倍数
 计算（16/12 ≈ 1.33×）都以此为依据，但没有采用论文里完整的容错域（fault domain）
 与升级域（upgrade domain）布局细节，是一个简化版本。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://azure.microsoft.com/en-us/blog/sosp-paper-windows-azure-storage-a-highly-available-cloud-storage-service-with-strong-consistency/)
+%% trellis:end %%

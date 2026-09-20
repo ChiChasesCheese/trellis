@@ -10,3 +10,11 @@ url: https://github.com/donnemartin/system-design-primer/blob/master/solutions/s
 采用它"对高粉丝账号完全依赖搜索合并"的做法，而是把"读时合并"限定在用户自己关注的极少数
 几个名人账号范围内，因为对普通用户而言需要合并的名人账号通常是个位数到十位数，比全局
 搜索合并代价小得多，也不需要额外维护一套独立的搜索索引。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/donnemartin/system-design-primer/blob/master/solutions/system_design/twitter/README.md)
+
+## Archived copy
+![[src-donnemartin-news-feed-clip]]
+%% trellis:end %%

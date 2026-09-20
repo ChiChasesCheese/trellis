@@ -10,3 +10,8 @@ tags: [engineering-blog, no-archive]
 family，不存在宽限期。本题解「深入探讨」第 3 节采用同样的机制，并补充了这篇文档
 未涉及的部分：为什么这个存储必须和账号核心凭证记录物理分离（见深入探讨第 7 节给
 出的四个数量级 QPS 差异），这是一个纯架构容量问题，不是 Auth0 文档讨论的范畴。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://auth0.com/docs/secure/tokens/refresh-tokens/refresh-token-rotation)
+%% trellis:end %%

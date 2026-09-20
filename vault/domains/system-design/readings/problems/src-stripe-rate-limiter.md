@@ -10,3 +10,11 @@ load shedder、以及最后一道防线 worker-utilization load shedder，并给
 的 bug 或 Redis 故障都不该影响请求"这条 fail-open 原则和各层真实的月度拒绝量级。本题解
 在此基础上补充了"为什么保护公平性的层可以 fail-open、保护后端自身的层反而要保守退化"
 这条因果论证，原文没有展开这一层区别。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://stripe.com/blog/rate-limiters)
+
+## Archived copy
+![[stripe-rate-limiters-clip]]
+%% trellis:end %%

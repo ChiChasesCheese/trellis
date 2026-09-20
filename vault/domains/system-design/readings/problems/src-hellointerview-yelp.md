@@ -10,3 +10,8 @@ tags: [no-archive]
 与本题解不同的地方在于：本题解用 Yelp 真实披露的 SEC 文件数字（App 月活 2,859.5 万、
 已认领商户 773.6 万）重新推导了容量估算，并给出了完整的字节级存储计算，而不是采用一个
 未说明来源的整数规模假设。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.hellointerview.com/learn/system-design/problem-breakdowns/yelp)
+%% trellis:end %%

@@ -7,3 +7,11 @@ url: https://www.rfc-editor.org/rfc/rfc8656
 必须用中继,并且中继对服务提供方而言"成本很高"。本题解「深入探讨」第 2 节把这
 句定性描述转化成了中继服务器容量的具体数字（约 6,374 台,承载能力约为普通媒体
 节点的一半）。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.rfc-editor.org/rfc/rfc8656)
+
+## Archived copy
+![[src-rfc8656-video-conferencing-clip]]
+%% trellis:end %%

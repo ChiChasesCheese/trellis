@@ -9,3 +9,11 @@ url: https://firebase.google.com/docs/cloud-messaging/customize-messages/setting
 二手资料更精确的地方在于明确了 collapsible 消息按 `collapse_key` 折叠的具体触发条件；
 本题解用它来区分"提供商愿意存多久"和"我方需要去重多久"是两个不同的时间窗口，容易被
 混淆成同一个数字。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://firebase.google.com/docs/cloud-messaging/customize-messages/setting-message-lifespan)
+
+## Archived copy
+![[src-firebase-notification-system-clip]]
+%% trellis:end %%

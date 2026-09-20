@@ -11,3 +11,11 @@ tags: [engineering-blog]
 制组合方案和「面试官会追问什么」参谋级问题里"用反馈控制动态校准放行速率"的思路直接借鉴这
 篇文章；本文额外加入了抽签模式作为先到先得之外的选项，是这篇 Shopify 文章没有涉及的部
 分。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://shopify.engineering/surviving-flashes-of-high-write-traffic-using-scriptable-load-balancers-part-i)
+
+## Archived copy
+![[src-shopify-flash-sale-clip]]
+%% trellis:end %%

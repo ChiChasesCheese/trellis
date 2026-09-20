@@ -12,3 +12,8 @@ url: https://instagram-engineering.com/sharding-ids-at-instagram-1cf5a71e5a5c
 数据库。本题解在引用这组数字时，自己重新算了一遍 41 位毫秒时间戳的可寻址跨度：精确计算
 约为 69.7 年，而不是常见转述里粗略给出的"41 年"——这是"数字必须自己算，不能照抄"这条
 规则的一个具体例子，也是本题解和很多转述这篇文章的二手资料的分歧所在。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://instagram-engineering.com/sharding-ids-at-instagram-1cf5a71e5a5c)
+%% trellis:end %%

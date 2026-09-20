@@ -10,3 +10,11 @@ fan-out P99 延迟可达 5 分钟。本题解「容量估算」一节沿用了�
 用这篇文章"几 TB 内存服务 1.5 亿活跃用户"的真实数字，交叉验证了本题解自己按 2 亿日活
 算出的 3.2TB inbox 缓存量级是否处在合理区间；本题解与原文的分歧在于：原文没有给出"剔除
 头部账号能带来多少写放大下降"的量化数字，本题解把这个下降算成了具体的 8.9 倍。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://highscalability.com/the-architecture-twitter-uses-to-deal-with-150m-active-users/)
+
+## Archived copy
+![[src-highscalability-news-feed-clip]]
+%% trellis:end %%

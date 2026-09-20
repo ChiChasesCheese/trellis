@@ -12,3 +12,11 @@ tags: [engineering-blog]
 处理"样式区间在文字插入后要跟着扩展""不冲突的变更不需要转换"这类规则。本题解「深入探讨」
 第 1 节引用这篇文章作为"Google Docs 使用 OT"这一事实的一手依据，不再转引维基百科或商业备
 考网站。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://drive.googleblog.com/2010/09/whats-different-about-new-google-docs_22.html)
+
+## Archived copy
+![[src-googledriveblog-google-docs-clip]]
+%% trellis:end %%

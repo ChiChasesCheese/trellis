@@ -11,3 +11,8 @@ Temporal/Step Functions 这类持久化执行框架处理超时重试的思路�
 判断上与它一致；与本题解不同的地方在于：本题解用 Uber 真实披露的 2025 年第四季度
 经营数据（日行程数、月活司机数）重新推导了摄入 QPS 和撮合 QPS 的具体数字，而不是
 采用一个未说明来源的"同一位置 10 万并发请求"规模假设。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.hellointerview.com/learn/system-design/problem-breakdowns/uber)
+%% trellis:end %%

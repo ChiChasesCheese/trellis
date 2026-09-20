@@ -11,3 +11,8 @@ tags: []
 于：论文报告的是一个区间而不是单点数字，本题解出于保守只取 10 倍作为下界假设，并在
 正文里明确算出按论文真实区间折算会得到更少的机器数（170–281 台），不把保守假设包装
 成论文的原始结论。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://research.google/pubs/pub50300/)
+%% trellis:end %%

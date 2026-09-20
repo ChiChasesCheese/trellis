@@ -9,3 +9,11 @@ url: https://redis.io/docs/latest/develop/programmability/eval-intro/
 库存、判断、扣减"这三步包进一条 `EVAL` 就足以防止并发超卖，而不是笼统地说"Redis 很快所以
 安全"；比大多数题解文章更精确的地方是明确了这个保证的代价——脚本执行期间会阻塞其他所有命
 令，长脚本会拖慢整个实例。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://redis.io/docs/latest/develop/programmability/eval-intro/)
+
+## Archived copy
+![[src-redis-eval-flash-sale-clip]]
+%% trellis:end %%

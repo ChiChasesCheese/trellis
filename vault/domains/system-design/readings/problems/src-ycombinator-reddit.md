@@ -9,3 +9,11 @@ url: https://news.ycombinator.com/item?id=1781013
 的持续衰减方案，和 Reddit "分数是创建时刻的纯函数、只在新投票时才重算"的方案形成一组真实
 存在的架构分歧。本题解选择了 Reddit 的做法并在正文里说明了原因：连续衰减意味着即使没有
 新投票，所有帖子的相对排名理论上也在每一秒变化。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://news.ycombinator.com/item?id=1781013)
+
+## Archived copy
+![[src-ycombinator-reddit-clip]]
+%% trellis:end %%

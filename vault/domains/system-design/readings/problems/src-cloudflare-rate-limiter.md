@@ -9,3 +9,11 @@ url: https://blog.cloudflare.com/counting-things-a-lot-of-different-things/
 6%——是"近似限流算法在生产规模上够用"最直接的证据。本题解沿用了同一个滑动窗口计数器
 公式处理 sustained 层，但额外把令牌桶分给了 burst 层单独处理，原文只讨论单一限流场景，
 没有区分两种时间尺度的配额。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://blog.cloudflare.com/counting-things-a-lot-of-different-things/)
+
+## Archived copy
+![[src-cloudflare-rate-limiter-clip]]
+%% trellis:end %%

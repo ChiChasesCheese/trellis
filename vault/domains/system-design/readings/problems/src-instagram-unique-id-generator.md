@@ -10,3 +10,8 @@ url: https://instagram-engineering.com/sharding-ids-at-instagram-1cf5a71e5a5c
 单独的时间索引。本题解把它"生成逻辑下推到数据层、不做独立服务"的思路作为嵌入式
 生成的参照系，并在容量估算里独立算出了和它相同的 13 位 worker id，作为两条推理
 路径互相印证的交叉验证，而不是直接照抄这个数字。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://instagram-engineering.com/sharding-ids-at-instagram-1cf5a71e5a5c)
+%% trellis:end %%

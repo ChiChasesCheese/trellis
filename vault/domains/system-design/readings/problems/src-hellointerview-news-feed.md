@@ -11,3 +11,8 @@ tags: [no-archive]
 把"naive 全量推送"和"剔除头部账号后的混合推送"两种写放大都用具体的幂律粉丝分布假设算了
 出来（分别约 260,764 QPS 和 29,282 QPS，降低约 8.9 倍），而不是停留在"名人会造成写放大"
 这样的定性描述。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.hellointerview.com/learn/system-design/problem-breakdowns/fb-news-feed)
+%% trellis:end %%

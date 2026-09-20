@@ -10,3 +10,8 @@ url: https://www.elastic.co/guide/en/elasticsearch/reference/current/near-real-t
 预算还要覆盖变更事件从源系统传到索引摄取worker的排队延迟，而不只是刷新间隔本身；分段
 和合并的更底层机制（segment 不可变、删除只是标记、合并压实）本题解不重复展开，见
 [[storage.search|Search Indexes]] 域内相关卡片。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.elastic.co/guide/en/elasticsearch/reference/current/near-real-time.html)
+%% trellis:end %%

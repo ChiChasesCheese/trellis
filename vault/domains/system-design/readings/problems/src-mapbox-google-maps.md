@@ -9,3 +9,11 @@ url: https://docs.mapbox.com/data/tilesets/guides/vector-tiles-introduction/
 对比（单张矢量瓦片 PBF 可能比对应的栅格 PNG 更大）纠正了"矢量瓦片总是文件更小"这个
 常见误解，改写为"矢量瓦片真正省的是同一份几何数据能服务任意多种视觉风格，不必因为
 每个风格都重新渲染一整套金字塔"——这一点原文没有直接讲清楚，是本题解自己的论证。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://docs.mapbox.com/data/tilesets/guides/vector-tiles-introduction/)
+
+## Archived copy
+![[src-mapbox-google-maps-clip]]
+%% trellis:end %%

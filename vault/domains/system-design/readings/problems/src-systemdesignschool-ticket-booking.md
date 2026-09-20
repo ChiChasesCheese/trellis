@@ -10,3 +10,8 @@ tags: [no-archive]
 holds/秒、3.3M 浏览读/秒），比 Hello Interview 更强调座位表是唯一真相来源、缓存永远只是
 派生视图。本文容量估算一节独立推导了自己的一组数字，量级与它一致但假设不同（本文用 20:1
 的平均竞争比和分层的排队放行速率，而不是直接假设峰值全量涌向数据库），可以互相印证。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://systemdesignschool.io/problems/ticketmaster/solution)
+%% trellis:end %%

@@ -10,3 +10,11 @@ tags: [reference]
 可验证的单调递增令牌。本题解认同它的核心结论（锁的正确性依赖必须用 fencing token，效率
 优化场景可以不用），但把落地方式放在了一个真正的共识系统里，而不是停留在"该不该用 Redlock"
 这个问题本身。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html)
+
+## Archived copy
+![[kleppmann-distributed-locking-clip]]
+%% trellis:end %%

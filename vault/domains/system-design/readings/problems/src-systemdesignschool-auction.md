@@ -10,3 +10,8 @@ tags: [no-archive]
 票务预订不同"没有展开对比，也没有涉及代理出价或软关闭的具体机制。本题用「深入探讨」
 第 1 节和[[solution-ticket-booking]]的显式对比、以及第 3、4 节的代理出价与软关闭分析
 补上了这些空白，这是本题与它最大的分歧所在。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://systemdesignschool.io/problems)
+%% trellis:end %%

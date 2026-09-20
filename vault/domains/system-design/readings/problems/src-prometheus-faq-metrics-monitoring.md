@@ -10,3 +10,11 @@ url: https://prometheus.io/docs/introduction/faq/
 论述加上"什么情况下才该用 Pushgateway"的简短说明；本题解额外补充了"为生命周期短于抓取
 间隔的批处理作业保留一条独立推送通道，并把它当作已知的可用性/扩展性风险"这一具体设计
 取舍，原文没有展开这条例外路径本身的架构含义。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://prometheus.io/docs/introduction/faq/)
+
+## Archived copy
+![[src-prometheus-faq-metrics-monitoring-clip]]
+%% trellis:end %%

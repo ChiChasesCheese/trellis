@@ -10,3 +10,11 @@ tags: [docs]
 题解用它做一致性哲学的对照样本（严格 quorum/vector clock vs 异步复制/last-failover-wins
 的取舍差异）；分布式缓存题解用它作为 Redis Cluster 分片、resharding 和故障转移机制本身
 的一手依据。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://redis.io/docs/latest/operate/oss_and_stack/reference/cluster-spec/)
+
+## Archived copy
+![[src-redis-cluster-spec-clip]]
+%% trellis:end %%

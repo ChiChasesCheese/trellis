@@ -11,3 +11,11 @@ url: https://www.linkedin.com/blog/engineering/open-source/cleo-open-source-tech
 数据源和 Cleo（基于实体表）不同，因此新鲜度的实现方式也不同——本题解需要一整套离线
 聚合管道，Cleo 的信号直接来自实体表变更；「深入探讨」第 4 节的个性化叠加思路借鉴了 Cleo
 "全局分数与个人分数分层存储、独立调权"这一原则。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.linkedin.com/blog/engineering/open-source/cleo-open-source-technology-behind-linkedins-typeahead-search)
+
+## Archived copy
+![[src-linkedin-typeahead-clip]]
+%% trellis:end %%

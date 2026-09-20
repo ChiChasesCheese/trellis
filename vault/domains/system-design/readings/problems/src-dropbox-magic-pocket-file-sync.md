@@ -10,3 +10,11 @@ tags: []
 运营数字。本题解「需求」一节的耐久度假设参考了这个数量级作为现实校准，但容量估算部分
 是本题解独立按假设规模重新推导的，不直接挪用这篇文章里 Dropbox 全站的真实运营数字
 当作本设计的计算结果，两者在文中明确区分开。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://dropbox.tech/infrastructure/magic-pocket-infrastructure)
+
+## Archived copy
+![[src-dropbox-magic-pocket-file-sync-clip]]
+%% trellis:end %%

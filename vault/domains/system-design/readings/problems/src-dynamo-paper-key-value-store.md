@@ -10,3 +10,11 @@ sloppy quorum、hinted handoff、vector clock 和 Merkle 树反熵组合成一�
 本题解与论文的不同：论文本身不给出某个具体业务规模下需要多少物理/虚拟节点这类容量估算，
 本题解把论文描述的机制套进一个假设的 3 亿月活场景，推导出约 167 台物理节点、约 2,672
 个虚拟节点这类具体数字，供读者理解"这些机制在什么规模下真正开始起作用"。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf)
+
+## Archived copy
+![[dynamo-paper-clip]]
+%% trellis:end %%

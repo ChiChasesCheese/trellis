@@ -11,3 +11,8 @@ tags: [reference]
 基础上补充了这道题规模特有的落地约束——RP ID 必须选可注册域后缀（如
 `example.com` 而非 `app.example.com`），因为几亿账号规模下一旦选错域名归属，事
 后无法批量迁移已注册的 passkey。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.w3.org/TR/webauthn-3/)
+%% trellis:end %%

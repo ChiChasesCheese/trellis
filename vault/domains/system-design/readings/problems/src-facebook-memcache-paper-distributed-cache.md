@@ -12,3 +12,11 @@ memcache 集群的真实读写比（读比写高两个数量级）、单次热�
 论文披露的这些机制套进一个假设的 2 亿日活场景重新做了一遍容量估算，并补充了论文未
 展开的"同一工作负载下 Redis 风格与 Memcached 风格谁是 QPS 瓶颈、谁是内存瓶颈"这个
 技术选型对比。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.usenix.org/system/files/conference/nsdi13/nsdi13-final170_update.pdf)
+
+## Archived copy
+![[src-facebook-memcache-paper-distributed-cache-clip]]
+%% trellis:end %%

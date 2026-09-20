@@ -10,3 +10,11 @@ url: https://www.uber.com/us/en/blog/high-throughput-processing/
 推到 30+ 次/秒。与本题解不同的地方在于：本题解把这组数字用在"平台手续费账户"这个更
 具体的场景上,并额外论证了为什么本设计的手续费账户选择了更简单的无锁异步方案,而把
 这篇文章描述的批处理留给"必须维持实时强一致余额的具体高频账户"这一更窄的场景。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.uber.com/us/en/blog/high-throughput-processing/)
+
+## Archived copy
+![[src-uber-batching-payment-system-clip]]
+%% trellis:end %%

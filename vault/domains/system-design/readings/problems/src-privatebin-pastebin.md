@@ -11,3 +11,11 @@ fragment 里，服务端从不接触明文）和阅后即焚选项，证明"私�
 代价是服务端完全无法读取内容，因而做不了语法高亮渲染或恶意内容/密钥泄露扫描；本题解需要
 服务端可见内容才能满足扫描需求，因此改用高熵随机 id（16 位 Base62）加访问控制作为私有
 粘贴的防线，这是两者在隐私模型上的主要分歧。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://privatebin.info/)
+
+## Archived copy
+![[src-privatebin-pastebin-clip]]
+%% trellis:end %%

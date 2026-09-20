@@ -4,6 +4,8 @@
 
 Multi-datacenter writes, conflict detection and resolution, why LWW loses data.
 
+**Core** — part of the first pass through this subject.
+
 ## Cases
 - [[qs-two-writers-and-the-conflict-you-cannot-see|Two writers and the conflict you cannot see]] — `quant-stroller`
 

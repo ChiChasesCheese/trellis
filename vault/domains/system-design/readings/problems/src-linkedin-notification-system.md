@@ -10,3 +10,11 @@ url: https://www.linkedin.com/blog/engineering/messaging-notifications/air-traff
 和本题解不同之处：ATC 把排序/去重/偏好判断都揉进一个统一的"决策引擎"以追求联合优化，
 本题解为了组件可独立替换（比如单独换短信提供商），把队列隔离、去重、偏好过滤拆成了
 独立组件。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.linkedin.com/blog/engineering/messaging-notifications/air-traffic-controller-member-first-notifications-at-linkedin)
+
+## Archived copy
+![[src-linkedin-notification-system-clip]]
+%% trellis:end %%

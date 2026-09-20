@@ -11,3 +11,11 @@ tags: [engineering-blog, no-archive]
 字段长 TTL、价格/库存字段短 TTL + 写穿透）直接采用了这个双 TTL 框架，并补充了这篇
 文章没有覆盖的问题：结账那一刻的强一致权威判定如何和这层"允许陈旧"的缓存共存而不
 互相矛盾。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://aws.amazon.com/builders-library/caching-challenges-and-strategies/)
+
+## Archived copy
+![[aws-caching-challenges-clip]]
+%% trellis:end %%

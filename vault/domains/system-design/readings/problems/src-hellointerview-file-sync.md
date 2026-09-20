@@ -11,3 +11,8 @@ URL 直传对象存储、内容定义分块（content-defined chunking）作为�
 提出，没有展开固定分块和 CDC 各自的量化收益。本题解与它不同的地方在于：用具体的块数
 和触发比例算出了 25 倍的带宽节省，并论证了按文件大小/类型分流两种分块策略，而不是无
 差别全部换成 CDC（见本题解「深入探讨」第 1 节）。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.hellointerview.com/learn/system-design/problem-breakdowns/dropbox)
+%% trellis:end %%

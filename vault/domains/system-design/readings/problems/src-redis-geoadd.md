@@ -9,3 +9,11 @@ url: https://redis.io/docs/latest/commands/geoadd/
 球体（用 Haversine 公式）带来的最坏 0.5% 距离误差。与本题解不同的地方在于：本题解把
 这个实现方式作为"geohash 相比 quadtree 更适合高频写入的移动对象（附近好友场景）"这一
 结论的具体依据，原文本身只是命令参考，不涉及和其他空间索引结构的取舍讨论。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://redis.io/docs/latest/commands/geoadd/)
+
+## Archived copy
+![[src-redis-geoadd-clip]]
+%% trellis:end %%

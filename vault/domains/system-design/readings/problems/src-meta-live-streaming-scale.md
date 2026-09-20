@@ -10,3 +10,11 @@ url: https://engineering.fb.com/2020/10/22/video-engineering/live-streaming/
 的分发，不涉及评论广播，本题解引用它只是为了用一个有源可查的真实并发观众数量级
 （720 万）校验容量估算里 1,000 万这个假设峰值处在合理的同一数量级，而不是凭空拍出来的
 数字；文章没有给出评论/聊天层的任何架构细节，是它和本题主题的差距所在。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://engineering.fb.com/2020/10/22/video-engineering/live-streaming/)
+
+## Archived copy
+![[src-meta-live-streaming-scale-clip]]
+%% trellis:end %%

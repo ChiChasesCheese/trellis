@@ -12,3 +12,11 @@ inode、读 inode、读文件内容），Haystack 通过把每张照片的元数
 本题解认为现代云对象存储已经在内部实现了类似的优化，多数系统不需要真的从零自建
 Haystack，只有在极端规模或特殊成本约束下才值得考虑，并用本设计自己假设的字节数估算了
 这两种索引方式的内存占用差距（约 6.4 倍）。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.usenix.org/legacy/event/osdi10/tech/full_papers/Beaver.pdf)
+
+## Archived copy
+![[src-usenix-haystack-instagram-clip]]
+%% trellis:end %%

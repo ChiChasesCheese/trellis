@@ -9,3 +9,11 @@ url: https://arxiv.org/abs/2401.09670
 7.4 倍吞吐，或同吞吐下 12.6 倍更紧的延迟 SLO。本题解「深入探讨」第 3 节引用这一方案和
 数字，并补充了对话场景下 prompt 长度方差（几个 token 到几千 token）比论文评测负载更
 极端，因此这个取舍在聊天产品里价值更明显这一论点。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://arxiv.org/abs/2401.09670)
+
+## Archived copy
+![[src-arxiv-distserve-llm-chat-service-clip]]
+%% trellis:end %%

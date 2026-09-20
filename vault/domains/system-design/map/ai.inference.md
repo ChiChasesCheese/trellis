@@ -6,8 +6,13 @@ GPU batching, KV-cache reuse, streaming responses, and cost/latency levers uniqu
 
 **Requires:** [[domains/system-design/map/ai.foundations|LLM Foundations for Engineers]]
 
+**Unlocks:** [[domains/system-design/map/problems.realtime.llm-chat-service|LLM Chat Service (ChatGPT)]]
+
 ## Readings
 - [[vllm-docs|vLLM Documentation]]
+
+## Drills
+- [[design-llm-chat-service|Drill: Design an LLM chat service like ChatGPT]]
 
 ## Cards (7)
 1. [[ai-prefill-vs-decode]]

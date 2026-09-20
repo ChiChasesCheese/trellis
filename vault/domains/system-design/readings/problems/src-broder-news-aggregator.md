@@ -12,3 +12,11 @@ MinHash 技术，并披露了真实生产经验——用几百字节的"sketch"�
 字节/文档"sketch 体积作为方案一（Shingling+MinHash+LSH banding）的成本基准，并把它和
 方案二（SimHash 的 8 字节指纹）做直接对比，得出本设计选择方案二的具体理由——原文本身
 没有做这个跨技术的内存占用对比，因为论文写作时 SimHash 技术尚未发表。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://cs.brown.edu/courses/cs253/papers/nearduplicate.pdf)
+
+## Archived copy
+![[src-broder-news-aggregator-clip]]
+%% trellis:end %%

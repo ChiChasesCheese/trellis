@@ -10,3 +10,8 @@ tags: []
 以上）同时维持同等负载的具体优化数字。本题解「深入探讨」第 6 节的多租户公平调度
 方案直接参考了这套模型，但把虚拟队列拆分的判定标准简化为"是否持续超出配额"，没有
 覆盖 Cadence 原文里更细的队列分裂深度限制等运维细节。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://eng.uber.com/cadence-multi-tenant-task-processing/)
+%% trellis:end %%

@@ -11,3 +11,11 @@ url: https://engineering.fb.com/2011/02/07/core-infra/live-commenting-behind-the
 它的跨数据中心聚合模型（假设单区域部署更简单），只借用了"写入与广播分离、广播时才聚合"
 的思路设计 Dispatcher 层；这篇文章未披露具体 pub/sub 技术选型，是本题解没有验证到的
 部分。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://engineering.fb.com/2011/02/07/core-infra/live-commenting-behind-the-scenes/)
+
+## Archived copy
+![[src-meta-live-comments-clip]]
+%% trellis:end %%

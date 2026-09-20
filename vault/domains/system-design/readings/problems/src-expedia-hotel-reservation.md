@@ -11,3 +11,8 @@ tags: [engineering-blog]
 做昂贵定价）不是理论上的优化建议，而是他们真实生产系统的做法；本题据此设计了搜索索引与权
 威可用性查询这两条物理上独立的路径，比文章本身多走一步的地方是把这个两阶段落到了两套不同
 的存储技术上。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://medium.com/expedia-group-tech/choosing-the-right-candidates-for-lodging-ranking-d0841bf40c0e)
+%% trellis:end %%

@@ -12,3 +12,11 @@ url: https://redis.io/docs/latest/operate/oss_and_stack/management/optimization/
 本题解采用的单节点可持续上限（约 50,000 op/s）是在这个基线上打五折（为有序集合
 O(log N) 操作和生产开销留出余量）得到的工程假设，文中已明确标注，不是文档给出的
 精确数字，与本知识库姊妹题 rate-limiter 对同一数量级操作采用的假设方向一致。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://redis.io/docs/latest/operate/oss_and_stack/management/optimization/benchmarks/)
+
+## Archived copy
+![[src-redis-benchmark-leaderboard-clip]]
+%% trellis:end %%

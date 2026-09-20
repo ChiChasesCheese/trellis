@@ -11,3 +11,8 @@ tags: [no-archive]
 基于本题解自己的 DAU/QPS 假设独立计算得出不同的数字，两者不能直接对比；该文对"近似
 排名 vs 精确排名"的头部/长尾分流讨论不如本题解深入，本题解在此基础上补充了具体的
 精度与陈旧窗口权衡。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://systemdesign.one/leaderboard-system-design/)
+%% trellis:end %%

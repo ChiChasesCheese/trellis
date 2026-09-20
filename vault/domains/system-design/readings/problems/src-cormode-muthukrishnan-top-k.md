@@ -10,3 +10,11 @@ tags: []
 `â_i ≤ a_i + ε‖a‖₁`），以及它作为线性摘要天然可跨节点相加的性质。本题「深入探讨」第 2、5
 节的误差计算和跨分片合并论证直接引用这篇论文；论文本身还覆盖了区间查询和内积查询，
 本题没有用到。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://dsf.berkeley.edu/cs286/papers/countmin-latin2004.pdf)
+
+## Archived copy
+![[src-cormode-muthukrishnan-top-k-clip]]
+%% trellis:end %%

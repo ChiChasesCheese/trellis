@@ -11,3 +11,11 @@ tags: [paper]
 字符标识而非数值下标的 CRDT 解法。本题解虽然选择中心化 OT 而非 CRDT 作为主算法，但在「深
 入探讨」第 3 节直接借用了这篇论文对交错异常问题的形式化定义，并说明同样的"格式锚定稳定标
 识"思路在 OT 实现里同样适用——论文本身只在 CRDT 语境下给出解法，是本题解与它的分歧点。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.inkandswitch.com/peritext/)
+
+## Archived copy
+![[src-inkandswitch-google-docs-clip]]
+%% trellis:end %%

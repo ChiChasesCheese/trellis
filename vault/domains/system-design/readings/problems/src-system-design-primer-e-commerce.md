@@ -10,3 +10,11 @@ tags: [reference-repo]
 把这些通用构件按目录/购物车/结账/库存/订单五个不同一致性域的具体需求重新组合（哪个
 域用哪种存储、哪种一致性保证），而不是停留在"缓存能加速读、队列能解耦写"这一层通用
 结论。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/donnemartin/system-design-primer)
+
+## Archived copy
+![[system-design-primer-clip]]
+%% trellis:end %%

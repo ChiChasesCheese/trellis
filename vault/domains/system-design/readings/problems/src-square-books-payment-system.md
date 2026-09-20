@@ -10,3 +10,11 @@ url: https://developer.squareup.com/blog/books-an-immutable-double-entry-account
 而不是聚合查询的具体例子。与本题解不同的地方在于：Square 的文章没有讨论幂等提交与账本
 写入的关系,本题解把幂等发起(客户端幂等键 + PSP 侧幂等键)和账本不可变性当作两个独立
 但互补的机制分别设计,而不是把幂等归入账本本身的职责。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://developer.squareup.com/blog/books-an-immutable-double-entry-accounting-database-service/)
+
+## Archived copy
+![[src-square-books-payment-system-clip]]
+%% trellis:end %%

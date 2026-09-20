@@ -11,3 +11,8 @@ tags: [no-archive]
 选型——这不是这道题最容易出错的地方——而是把篇幅集中在撮合并发正确性（排他锁）和
 位置摄入相对撮合请求两个数量级的负载不对称上，这两点在该课程里只是一带而过，没有
 展开具体的数量级论证。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.karanpratapsingh.com/courses/system-design/uber)
+%% trellis:end %%

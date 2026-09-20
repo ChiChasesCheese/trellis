@@ -10,3 +10,8 @@ Performance Rating），把玩家一局或一段时间内走子质量的分布�
 分布相比较，用统计显著性（z-score）量化可疑程度。本题解在「深入探讨」第 7 节采纳其
 "统计打分驱动人工复核而非自动定论"的结构性原则，同时明确说明 Chess.com/Lichess 各自
 具体的检测参数并未公开，不作为设计里任何数字的引用依据。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://cse.buffalo.edu/~regan/personal/JuneCLarticleKWR.pdf)
+%% trellis:end %%

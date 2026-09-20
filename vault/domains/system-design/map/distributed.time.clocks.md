@@ -4,6 +4,11 @@
 
 Time-of-day vs monotonic clocks, NTP drift, timestamp ordering hazards, confidence intervals, logical clocks.
 
+**Unlocks:** [[domains/system-design/map/problems.foundations.unique-id-generator|Unique ID Generator]]
+
+## Drills
+- [[design-unique-id-generator|Drill: Design a unique ID generator]]
+
 ## Cards (6)
 1. [[distributed-monotonic-vs-wallclock]]
 2. [[distributed-clock-error-sources]]

@@ -10,3 +10,11 @@ url: https://seata.apache.org/blog/seata-tcc-fence/
 条件更新的状态机，与业务操作同事务提交）。与本题解不同的地方在于：原文分别描述三个
 问题各自的对策，本题解额外指出三者共享同一个根因（后到达的操作没有先查询本地状态就
 执行），并把这套机制具体应用在钱包充值/提现这一"外部参与者只能走 TCC"的场景上。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://seata.apache.org/blog/seata-tcc-fence/)
+
+## Archived copy
+![[src-seata-digital-wallet-clip]]
+%% trellis:end %%

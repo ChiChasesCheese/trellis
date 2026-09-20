@@ -11,3 +11,11 @@ tags: []
 要求落到了本题的具体表结构上；这与既有卡片
 [[async.delivery.exactly-once|Effectively Exactly-Once]] 的内容一致，文档本身还覆盖了
 跨集群复制场景下事务边界不延伸的细节，本题在「常见错误」里只简要提及。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://docs.confluent.io/kafka/design/delivery-semantics.html)
+
+## Archived copy
+![[src-confluent-delivery-semantics-ad-click-aggregation-clip]]
+%% trellis:end %%

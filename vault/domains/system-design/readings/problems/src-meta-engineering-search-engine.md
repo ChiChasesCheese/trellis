@@ -10,3 +10,11 @@ url: https://engineering.fb.com/2013/03/14/core-infra/under-the-hood-indexing-an
 分级聚合思路，用来解决扇出宽度随分片数持续增长而自身成为瓶颈的问题；原文没有给出量化的
 分片数或延迟数字，本题解自己按容量估算重新算出了分片数量级和长尾概率，与原文的差异在
 这一层的具体数字。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://engineering.fb.com/2013/03/14/core-infra/under-the-hood-indexing-and-ranking-in-graph-search/)
+
+## Archived copy
+![[src-meta-engineering-search-engine-clip]]
+%% trellis:end %%

@@ -10,3 +10,11 @@ tags: [reference]
 它"内容和元数据分开存"的骨架，但认为按单一平均值估算会掩盖大文件对字节总量的主导作用，
 因此改用条数分桶（片段/日志/大文件三档）重新推导存储量，并补充了它完全没有涉及的隐私
 （去重旁路）、阅后即焚、私有 id 熵这三个维度。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/donnemartin/system-design-primer/blob/master/solutions/system_design/pastebin/README.md)
+
+## Archived copy
+![[src-donnemartin-pastebin-clip]]
+%% trellis:end %%

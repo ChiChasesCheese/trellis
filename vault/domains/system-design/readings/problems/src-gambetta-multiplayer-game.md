@@ -9,3 +9,11 @@ url: https://www.gabrielgambetta.com/client-server-game-architecture.html
 时间源、但为可预期的网络延迟预留缓冲"这一设计哲学，迁移到了回合制用时制式的滞后补偿上
 （见「深入探讨」第 4 节），并明确说明两者的作用对象不同——原文作用在连续的世界状态时间线
 上，本题解的版本作用在离散的走子级时钟扣减上。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.gabrielgambetta.com/client-server-game-architecture.html)
+
+## Archived copy
+![[src-gambetta-multiplayer-game-clip]]
+%% trellis:end %%

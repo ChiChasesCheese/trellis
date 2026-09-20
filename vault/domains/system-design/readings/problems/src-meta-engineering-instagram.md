@@ -11,3 +11,11 @@ url: https://engineering.fb.com/2022/11/04/video-engineering/instagram-video-pro
 比堆算力更重要"这一结论的依据，并补充了这一节原文没有展开的对比：如果每一档码率都独立
 转码，会在容量估算里"视频只占 20% 上传量却贡献约 73% 存储"这个结论之外，成为一个隐藏
 更大的计算成本大头。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://engineering.fb.com/2022/11/04/video-engineering/instagram-video-processing-encoding-reduction/)
+
+## Archived copy
+![[src-meta-engineering-instagram-clip]]
+%% trellis:end %%

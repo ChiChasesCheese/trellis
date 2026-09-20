@@ -10,3 +10,8 @@ Netflix 架构的组件划分和术语速览，本题解用它做整体组件划
 同的地方在于：它没有给出可验证来源的容量数字，本题解的所有数字要么现场用真实上传量
 （500 小时/分钟）计算得出，要么直接引用 Netflix 官方工程博客（见另两篇来源），不采用
 本仓库未注明出处的估算。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/karanpratapsingh/system-design#netflix)
+%% trellis:end %%

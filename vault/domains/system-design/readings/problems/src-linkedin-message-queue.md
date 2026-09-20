@@ -10,3 +10,11 @@ tags: []
 设定的假设场景（3 亿 DAU、日均 600 亿事件），量级比这篇文章披露的真实规模小一个数量级
 左右，此文用于校验本题解算出的 broker 数、存储量级是否落在同一个合理区间，而不是作为
 本题场景本身的数据来源。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://engineering.linkedin.com/kafka/running-kafka-scale)
+
+## Archived copy
+![[src-linkedin-message-queue-clip]]
+%% trellis:end %%

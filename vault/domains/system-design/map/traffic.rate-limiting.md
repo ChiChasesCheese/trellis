@@ -6,6 +6,8 @@ Token bucket vs sliding window, local vs distributed enforcement, and what to re
 
 **Core** — part of the first pass through this subject.
 
+**Unlocks:** [[domains/system-design/map/problems.foundations.rate-limiter|Distributed Rate Limiter]], [[domains/system-design/map/problems.commerce.flash-sale|Flash Sale & High-Contention Inventory]]
+
 ## Readings
 - [[stripe-rate-limiters|Scaling your API with Rate Limiters (Stripe)]]
 
@@ -14,6 +16,7 @@ Token bucket vs sliding window, local vs distributed enforcement, and what to re
 
 ## Drills
 - [[design-rate-limiter|Drill: Design a distributed rate limiter]]
+- [[design-flash-sale|Drill: Design a flash sale like a 10-second, 1,000-unit product drop]]
 
 ## Cards (8)
 1. [[traffic-rate-limiting-vs-load-shedding]]

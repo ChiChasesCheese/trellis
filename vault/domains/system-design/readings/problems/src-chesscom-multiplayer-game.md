@@ -9,3 +9,11 @@ url: https://www.chess.com/blog/CHESScom/an-update-regarding-our-server
 Server 过载掉线，最终推动把单体 Live Server 重写为跨机器水平扩展的分布式服务、对数据库
 做分片。本题解在「瓶颈、故障与演进」一节直接引用这次事故，说明"每局一个 actor 放在单机
 内存里"这类简化设计必须尽早规划成可以跨机器分片，而不是等过载后才补救。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.chess.com/blog/CHESScom/an-update-regarding-our-server)
+
+## Archived copy
+![[src-chesscom-multiplayer-game-clip]]
+%% trellis:end %%

@@ -10,3 +10,11 @@ url: https://www.rfc-editor.org/rfc/rfc6578
 情况——本题解「深入探讨」第 6 节引用它作为增量同步设计的参照,同时特意说明本设计的同步
 端点在游标失效时选择了和 Google Calendar API 的 `410 Gone` 更接近的具体行为,没有把
 两种协议的失效语义混为一谈。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.rfc-editor.org/rfc/rfc6578)
+
+## Archived copy
+![[src-rfc6578-calendar-clip]]
+%% trellis:end %%

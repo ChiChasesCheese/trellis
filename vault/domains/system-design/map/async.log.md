@@ -8,7 +8,7 @@ The append-only log as system of record; partitions, consumer groups, offsets, r
 
 **Requires:** [[domains/system-design/map/storage.internals|Storage Engine Internals]]
 
-**Unlocks:** [[domains/system-design/map/analytics.derived|Derived Data & Materialized Views]]
+**Unlocks:** [[domains/system-design/map/analytics.derived|Derived Data & Materialized Views]], [[domains/system-design/map/problems.foundations.message-queue|Distributed Message Queue]]
 
 ## Readings
 - [[kafka-docs|Apache Kafka Documentation (Design section)]]
@@ -20,6 +20,7 @@ The append-only log as system of record; partitions, consumer groups, offsets, r
 
 ## Drills
 - [[design-payment-ledger|Drill: Design a payment ledger service]]
+- [[design-message-queue|Drill: Design a distributed message queue like Apache Kafka]]
 
 ## Cards (8)
 1. [[async-log-vs-queue]]

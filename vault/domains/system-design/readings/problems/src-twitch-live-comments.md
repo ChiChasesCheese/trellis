@@ -10,3 +10,11 @@ url: https://blog.twitch.tv/en/2015/12/18/twitch-engineering-an-introduction-and
 互动（更接近聊天室），本题解的直播评论场景里观众到服务器方向流量稀疏得多，因此本文
 选择 SSE 而不是 Twitch 这种保留双向协议支持的架构；本文也没有说明 Twitch 具体的分区
 键选择和排序保证，是本题解无法从这篇文章验证的部分。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://blog.twitch.tv/en/2015/12/18/twitch-engineering-an-introduction-and-overview-a23917b71a25/)
+
+## Archived copy
+![[src-twitch-live-comments-clip]]
+%% trellis:end %%

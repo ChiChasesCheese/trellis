@@ -11,3 +11,11 @@ tags: [reference]
 解「深入探讨」第 4 节的登录防滥用设计比这份文档更进一步的地方在于：它把"单账号限
 流"本身论证为对撞库（credential stuffing）无效，需要舰队级信号作为主要防线，而不
 是把账号级失败次数上限当作唯一防护手段。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://pages.nist.gov/800-63-3/sp800-63b.html)
+
+## Archived copy
+![[src-nist-800-63b-auth-service-clip]]
+%% trellis:end %%

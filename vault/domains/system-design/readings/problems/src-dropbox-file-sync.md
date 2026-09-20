@@ -10,3 +10,11 @@ tags: []
 而不是猜测出来的。本题解在分块策略上与这篇文章的真实选择不同并明确标注了分歧：本
 设计认为对大文件采用内容定义分块（CDC）更适合局部插入式编辑场景，固定分块只保留给
 小文件和已压缩格式，这是本题解自己的设计取舍，不代表 Dropbox 的真实实现。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://dropbox.tech/infrastructure/streaming-file-synchronization)
+
+## Archived copy
+![[src-dropbox-file-sync-clip]]
+%% trellis:end %%

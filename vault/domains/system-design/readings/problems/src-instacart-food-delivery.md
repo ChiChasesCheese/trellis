@@ -9,3 +9,8 @@ url: https://tech.instacart.com/instacarts-item-availability-architecture-solvin
 商品可用性一致性，而不是对每次展示都做强一致查询。本题解在「容量估算」和「深入探讨」
 第 1 节用它印证"展示层可用性数据走缓存、容忍陈旧，只在真正扣减库存那一步做强一致"这个
 决策——它是比 DoorDash/Uber Eats 更贴近 Gopuff 场景（平台自持库存）的一手参照。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://tech.instacart.com/instacarts-item-availability-architecture-solving-for-scale-and-consistency-f5661acb20a6)
+%% trellis:end %%

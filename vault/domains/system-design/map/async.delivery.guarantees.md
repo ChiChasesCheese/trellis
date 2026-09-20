@@ -6,8 +6,13 @@ At-most-once vs at-least-once, ordering scope, dead-letter queues and poison pil
 
 **Core** — part of the first pass through this subject.
 
+**Unlocks:** [[domains/system-design/map/problems.foundations.message-queue|Distributed Message Queue]]
+
 ## Readings
 - [[treat-exactly-once-delivery|You Cannot Have Exactly-Once Delivery (Tyler Treat)]]
+
+## Drills
+- [[design-message-queue|Drill: Design a distributed message queue like Apache Kafka]]
 
 ## Cards (6)
 1. [[async-delivery-semantics-cloze]]

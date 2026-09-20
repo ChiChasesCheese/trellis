@@ -10,3 +10,11 @@ tags: []
 边缘、不触达源站"这句话。题解「深入探讨」第 2 节的源站保护倍数计算（5x/20x）建立在
 这篇文章描述的同一机制上，只是用了本题自己假设的边缘/屏蔽层数量而不是 Fastly 的真实
 拓扑数字。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.fastly.com/blog/let-the-edge-work-for-you-how-shielding-improves-performance)
+
+## Archived copy
+![[src-fastly-shielding-cdn-clip]]
+%% trellis:end %%

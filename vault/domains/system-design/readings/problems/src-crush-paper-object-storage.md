@@ -10,3 +10,11 @@ tags: []
 都能独立算出同一个放置结果，拓扑变化时只有被改变的那一支需要重新映射。题解「深入
 探讨」第 2 节采用这个思路作为数据放置方案，但没有实现论文里针对不同故障域权重的
 完整规则语言（rule language），是一个简化版本。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://ceph.com/assets/pdfs/weil-crush-sc06.pdf)
+
+## Archived copy
+![[src-crush-paper-object-storage-clip]]
+%% trellis:end %%

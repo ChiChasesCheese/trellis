@@ -10,3 +10,11 @@ url: https://en.wikipedia.org/wiki/Contraction_hierarchies
 第 2 节的算法描述以此为基础；原始论文（Geisberger, Sanders, Schultes, Delling,
 WEA 2008）的具体实验数字（西欧路网规模、预处理时间、查询时间）本题解未能直接核对
 论文原文表格，只通过多篇独立二次引用交叉印证后作为二手信息写入正文，未写入任何卡片。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://en.wikipedia.org/wiki/Contraction_hierarchies)
+
+## Archived copy
+![[src-wikipedia-contraction-hierarchies-clip]]
+%% trellis:end %%

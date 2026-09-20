@@ -10,3 +10,8 @@ url: https://www.uber.com/en-EG/blog/h3/
 一题里本题解把这个性质接到了"候选集边界查询"和"密度自适应"上，ride-hailing 一题里则
 接到了"周边供需密度插值/动态定价为什么需要均匀邻居距离"这个更具体的应用场景，原文只泛泛
 提到"优化定价和调度"，没有展开为什么均匀性对这两类计算分别重要。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.uber.com/en-EG/blog/h3/)
+%% trellis:end %%

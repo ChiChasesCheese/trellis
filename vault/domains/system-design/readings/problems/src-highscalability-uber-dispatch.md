@@ -11,3 +11,11 @@ url: http://highscalability.com/blog/2015/9/14/how-uber-scales-their-real-time-m
 描述。与本题解不同的地方在于：本题解独立推导了在当前披露的司机规模下，同样的 4 秒
 上报间隔会产生多大的摄入 QPS（约 363,750 QPS），原文只描述了架构本身，没有给出这个
 量级换算。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](http://highscalability.com/blog/2015/9/14/how-uber-scales-their-real-time-market-platform.html)
+
+## Archived copy
+![[src-highscalability-uber-dispatch-clip]]
+%% trellis:end %%

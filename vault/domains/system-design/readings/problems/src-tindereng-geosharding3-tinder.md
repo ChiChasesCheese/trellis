@@ -9,3 +9,8 @@ url: https://medium.com/tinder-engineering/geosharded-recommendations-part-3-con
 比多数题解文章更具体的地方是给出了两个可落地的机制——用 Kafka 按 key 分区保证同一用户
 的多次迁移事件按顺序处理，以及用 Elasticsearch 的 Get API（而非 Reindex API）强制
 refresh 后再迁移，避免近实时搜索的 buffer/refresh/flush 语义带来的中间态。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://medium.com/tinder-engineering/geosharded-recommendations-part-3-consistency-2d2cb2f0594b)
+%% trellis:end %%

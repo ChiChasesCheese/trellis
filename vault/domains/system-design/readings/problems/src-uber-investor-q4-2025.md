@@ -9,3 +9,11 @@ url: https://investor.uber.com/news-events/news/press-release-details/2026/Uber-
 作为设计锚点。与本题解不同的地方在于：这是一份商业财报，完全不涉及工程架构，本题解
 把这些指标换算成了位置摄入 QPS（峰值约 363,750）、撮合请求 QPS（峰值约 1,389）和
 行程/位置存储量的具体架构结论。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://investor.uber.com/news-events/news/press-release-details/2026/Uber-Announces-Results-for-Fourth-Quarter-and-Full-Year-2025/default.aspx)
+
+## Archived copy
+![[src-uber-investor-q4-2025-clip]]
+%% trellis:end %%

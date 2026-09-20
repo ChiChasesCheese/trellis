@@ -9,3 +9,8 @@ url: https://careersatdoordash.com/blog/using-ml-and-optimization-to-solve-doord
 骑手的候选配对联合求解，决定打包（batching）和是否延迟指派。本题解「深入探讨」第 3
 节"批量优化而不是逐单贪心"的架构决策和"批量率"这一权衡指标均直接引自该文；比多数刷题
 站只停留在"用优化算法做匹配"这一层更进一步，给出了两层结构（预测 + 优化）的具体分工。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://careersatdoordash.com/blog/using-ml-and-optimization-to-solve-doordashs-dispatch-problem/)
+%% trellis:end %%

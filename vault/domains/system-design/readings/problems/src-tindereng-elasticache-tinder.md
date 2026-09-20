@@ -10,3 +10,8 @@ url: https://medium.com/tinder/taming-elasticache-with-auto-discovery-at-scale-d
 题解文章更具体的地方是给出了故障转移期间连接不到新主节点导致的真实生产事故描述，本题解
 没有覆盖这部分运维细节，因为它属于基础设施可靠性范畴，不是这道题在候选人生成/匹配判定
 上的核心难点。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://medium.com/tinder/taming-elasticache-with-auto-discovery-at-scale-dc5e7c4c9ad0)
+%% trellis:end %%
