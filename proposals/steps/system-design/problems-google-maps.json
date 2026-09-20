@@ -1,0 +1,12 @@
+{
+  "problems.geo.google-maps": [
+    "problems-google-maps-eta-refresh-vs-route-qps",
+    "problems-google-maps-eta-refresh-endpoint-decision",
+    "problems-google-maps-contraction-hierarchies-mechanism",
+    "problems-google-maps-ch-vs-mld-tradeoff",
+    "problems-google-maps-gnn-eta-supersegment",
+    "problems-google-maps-eta-outage-fallback",
+    "problems-google-maps-offline-needs-road-subgraph",
+    "problems-google-maps-10x-graph-partition-finer"
+  ]
+}

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-food-delivery-read-write-ratio-cache-vs-strong-consistency",
+    "node": "problems.geo.food-delivery",
+    "type": "qa",
+    "q": "In a food/grocery delivery design, if browsing sessions that check menu or item availability outnumber the orders those sessions eventually produce by about 20 to 1, why should that ratio push the architecture toward two separate paths — a cache-heavy read path for availability display and a narrow, strongly-consistent write path only for the actual inventory decrement at checkout?",
+    "a": "A 20:1 read-to-write ratio means the availability-browsing traffic is by far the dominant load, so serving it from a cache with a short TTL (tolerating a few seconds to tens of seconds of staleness) keeps the read-heavy path cheap and fast. The correctness-critical operation — making sure two concurrent orders can't both claim the last unit of a specific item — only has to happen once, at the moment of checkout, on a single inventory row. Applying strong consistency to the whole browsing path as well would drag 20x more traffic through unnecessary coordination overhead, when only the narrow decrement operation actually needs it.",
+    "q_zh": "在一个外卖/生鲜配送设计中，如果浏览菜单或库存可用性的会话数量，比这些会话最终转化出的订单数量多出约 20 倍，为什么这个比例应该把架构推向两条分离的路径——一条给可用性展示用的、以缓存为主的读路径，一条只在结账时对真实库存做扣减、窄而强一致的写路径？",
+    "a_zh": "20:1 的读写比意味着可用性浏览流量是绝对的主导负载，用短 TTL 的缓存来服务它（容忍几秒到几十秒的陈旧）能让这条读多的路径保持轻量和快速。真正关乎正确性的操作——确保两个并发订单不能同时抢到某个商品的最后一件——只需要在结账那一刻、针对单独一行库存发生一次。如果把强一致性也套用到整条浏览路径上，会让 20 倍于此的流量都承受不必要的协调开销，而实际上只有这个窄操作本身需要它。",
+    "tags": []
+  },
+  {
+    "id": "problems-food-delivery-two-consistency-granularities",
+    "node": "problems.geo.food-delivery",
+    "type": "qa",
+    "q": "In a design that has to support both a three-sided marketplace variant (independent restaurants, like DoorDash) and a single-party local-inventory variant (platform-owned micro-fulfillment centers, like Gopuff), why do the two variants need fundamentally different mechanisms to prevent overselling, rather than one shared mechanism?",
+    "a": "In the marketplace variant, the platform doesn't own a countable stock number for a restaurant's dish — \"available\" is a coarse flag the merchant sets themselves, and it can lag reality, so the real backstop against overselling is the merchant's explicit order-acceptance step, which can reject an order after the fact. In the local-inventory variant, the platform owns the warehouse and the item count is a precise, countable integer, so overselling has to be prevented with a strongly consistent, conditional decrement on that specific inventory row (an update that only succeeds if quantity is still above zero) — there is no merchant to fall back on for a final check. Applying the marketplace's coarse-flag-plus-acceptance model to the local-inventory variant would let concurrent orders both succeed against the last unit; applying the local-inventory variant's row-level locking to every restaurant menu item would add consistency machinery the marketplace variant has no countable quantity to protect.",
+    "q_zh": "在一个既要支持三方市场变体（独立餐厅，类似 DoorDash）、又要支持单一方本地库存变体（平台自持微仓，类似 Gopuff）的设计中，为什么这两种变体防止超卖需要根本不同的机制，而不能共用一套？",
+    "a_zh": "在市场变体里，平台并不掌握某道菜可数的库存数字——「有货」只是商户自己设置的粗粒度标志，可能落后于真实情况，所以真正防止超卖的兜底是商户显式的接单确认这一步，它可以在事后拒绝订单。在本地库存变体里，平台自己拥有仓储，商品数量是精确可数的整数，所以必须用对那一行库存做强一致的条件扣减（只有数量仍大于零时更新才成功）来防止超卖——这里没有商户可以作为最后一道检查。如果把市场变体「粗粒度标志+接单确认」这套模型套用到本地库存变体上，会让并发订单都对最后一件库存扣减成功；反过来把本地库存变体的行级锁套用到每一道餐厅菜品上，也会为一个根本没有可数库存需要保护的场景引入不必要的一致性机制。",
+    "tags": []
+  },
+  {
+    "id": "problems-food-delivery-saga-compensation-capture-timing",
+    "node": "problems.geo.food-delivery",
+    "type": "qa",
+    "q": "In a food delivery order saga, why does whether payment has already been captured (not just authorized) determine whether a failure's compensating action is a cheap authorization void or an actual refund?",
+    "a": "An authorization hold that has not yet been captured represents no real movement of funds, so voiding it is close to free and instantaneous — this is the right compensation for an early failure like the merchant rejecting the order before any real cost has been incurred. Once payment has been captured (typically because the merchant has already started preparing the order, representing a real, sunk cost), a later failure such as a dispatch timeout can't be treated as if nothing happened; the compensating action has to be an actual refund, and often only a partial one, because real cost was already incurred. This means the saga's compensation logic isn't uniform across all failure points — it depends on how much of the transaction's real-world effect is already irreversible at the point of failure.",
+    "q_zh": "在一个外卖订单的 saga（编排式工作流）里，为什么支付是否已经被扣款（capture，而不只是授权 authorize）会决定失败时的补偿动作是一次几乎零成本的授权撤销，还是一次真正的退款？",
+    "a_zh": "一笔尚未 capture 的支付授权（authorization hold）没有产生真实的资金转移，所以撤销它几乎零成本、即时完成——这适合商户在产生任何真实成本之前就拒绝订单这类早期失败。一旦支付已经被 capture（通常是因为商户已经开始备餐，产生了真实的沉没成本），之后再发生的失败（比如调度超时找不到骑手）就不能当作什么都没发生过来处理；这时补偿动作必须是一次真正的退款，而且往往只能是部分退款，因为真实成本已经产生。这说明 saga 的补偿逻辑在各个失败点上并不是统一的——它取决于失败发生时，这笔交易对真实世界的影响已经有多少变得不可逆。",
+    "tags": []
+  },
+  {
+    "id": "problems-food-delivery-batched-mip-vs-greedy-dispatch",
+    "node": "problems.geo.food-delivery",
+    "type": "qa",
+    "q": "In a food delivery courier dispatch design, why is assigning each newly confirmed order to \"the single nearest available courier\" (greedy nearest-match) systematically not optimal for the whole marketplace, even though it is locally optimal for that one order?",
+    "a": "Greedy nearest-match commits a courier to one order immediately, which can mean the courier misses a different order that appears moments later and would have been closer, forcing either a detour back or assigning that new order to a farther courier instead. It also completely misses batching: if two orders share a nearby pickup or drop-off, one courier picking up both in a single trip cuts courier-time cost roughly in half compared to sending two separate couriers, but greedy per-order assignment never considers pairing orders together because it decides one order at a time. A periodic batched optimizer that jointly considers all orders confirmed and all couriers online within a short window can find these batching opportunities and avoid the myopic mistakes that come from deciding one order in isolation.",
+    "q_zh": "在外卖骑手调度设计中，为什么把每个新确认的订单指派给「当前最近的空闲骑手」（贪心最近匹配）对整个市场来说系统性地不是最优的，即便这对单独这一单来说是局部最优的？",
+    "a_zh": "贪心最近匹配会立刻把一个骑手绑定给一单，这可能导致这个骑手错过几分钟后出现、其实离他更近的另一单，迫使他要么绕路回来，要么这个新订单被指派给一个更远的骑手。它还完全错过了打包（batching）的机会：如果两个订单的取餐点或送达点相近，一个骑手一趟取送两单，比派两个骑手各跑一单节省了近一半的骑手时间成本，但逐单贪心指派永远不会考虑把订单配对，因为它每次只决定一单。一个周期性运行、同时考虑一个短窗口内所有已确认订单和所有在线骑手的批量优化器，能发现这些打包机会，避免逐单孤立决策带来的短视错误。",
+    "tags": []
+  },
+  {
+    "id": "problems-food-delivery-uber-eats-crf-dispatch-timing",
+    "node": "problems.geo.food-delivery",
+    "type": "qa",
+    "q": "Beyond deciding which courier to assign to which order, Uber Eats' engineering blog describes a second dispatch-timing problem: figuring out exactly when to send a courier to a restaurant. How does the system infer this timing, and why does it matter for delivery quality?",
+    "a": "The system fuses a courier's phone GPS with accelerometer and gyroscope readings and the Android Activity Recognition API to infer which of five trip states the courier is currently in (arrived at restaurant, parked, waiting at restaurant, walking to car, en route to eater), and uses a Conditional Random Field (CRF) to detect the moments when the courier transitions between these states from noisy sensor data. The goal is to time each courier's dispatch so they arrive at the restaurant just as the food finishes preparing, using the restaurant's historical prep-time patterns — dispatching too early leaves the courier waiting idle, while dispatching too late leaves food sitting and cooling before pickup, so this timing decision is a separate problem from matching, not something that comes for free once a courier is assigned.",
+    "q_zh": "除了决定把哪个订单指派给哪个骑手之外，Uber Eats 的工程博客还描述了另一个调度时机问题：准确判断什么时候该派骑手去商户取餐。系统是如何推断这个时机的？为什么它对配送质量很重要？",
+    "a_zh": "系统把骑手手机的 GPS 和加速度计、陀螺仪读数，以及 Android 的活动识别 API 融合起来，推断骑手当前处于五种行程状态中的哪一种（已到店、停车中、在店内等待、走向车辆、前往顾客），并用条件随机场（Conditional Random Field, CRF）从带噪声的传感器数据里识别骑手在这些状态之间切换的时间点。目标是利用商户的历史备餐时长模式，让骑手恰好在餐做好的那一刻到店——派得太早会让骑手空等，派得太晚会让餐在后厨放凉才被取走，所以这个时机决策是一个独立于匹配本身的问题，不是指派好骑手之后自动就解决的。",
+    "tags": []
+  },
+  {
+    "id": "problems-food-delivery-batch-window-order-count",
+    "node": "problems.geo.food-delivery",
+    "type": "qa",
+    "q": "In a food delivery design where the busiest single market handles about 24 orders per second at its national peak minute and the dispatch service batches orders every 5 seconds, roughly how many orders sit in a single dispatch batch, and why does that number matter for choosing a real optimization solver over a pure heuristic?",
+    "a": "At about 24 orders/second over a 5-second window, a single batch holds on the order of 120 orders (24 * 5 = 120) to be jointly matched against the couriers currently online in that market. A problem of that size — even at the busiest market's busiest minute — is well within what a mixed-integer programming solver can solve within a dispatch cycle's time budget, which is why batching orders and couriers into one joint optimization problem is computationally practical rather than just theoretically appealing; a design shouldn't default to a pure heuristic out of an assumption that the batch would be too large to solve exactly.",
+    "q_zh": "在一个外卖配送设计中，假设全国最繁忙的单个市场在峰值分钟的订单速率约为每秒 24 单，调度服务每 5 秒批量处理一次订单，一次调度批次里大约有多少订单？这个数字为什么关系到该选用真正的优化求解器而不是纯启发式方法？",
+    "a_zh": "在约每秒 24 单、5 秒窗口的条件下，一个批次大约有 120 单（24×5=120）需要和当前在该市场在线的骑手一起联合匹配。即便是全国最繁忙市场最繁忙的那一分钟，这个规模的问题也完全在混合整数规划（MIP）求解器能在一次调度周期的时间预算内求解的范围之内——这正是「把订单和骑手打包成一个联合优化问题」在计算上可行、而不只是理论上好看的原因；不应该因为假设批次规模求不动精确解，就默认退回纯启发式方法。",
+    "tags": []
+  },
+  {
+    "id": "problems-food-delivery-hot-sku-sharded-counters",
+    "node": "problems.geo.food-delivery",
+    "type": "qa",
+    "q": "In a local-inventory delivery design, if a promoted item at a single micro-fulfillment center becomes a hot spot with a very high rate of concurrent checkout attempts against its inventory row, what happens even though each conditional decrement update is individually fast, and what's a standard fix?",
+    "a": "Even though each conditional-decrement update (subtract one if quantity is still above zero) completes quickly on its own, a very high rate of concurrent writes targeting the exact same row creates row-level lock contention, which becomes the bottleneck regardless of how fast any single update is. The standard fix is to shard that one inventory row into several sub-counters that can be decremented independently and concurrently, spreading the write contention across them; reading the total available quantity then requires summing across the shards, which is the trade-off this fix accepts in exchange for removing the single-row bottleneck.",
+    "q_zh": "在一个本地库存配送设计中，如果某个微仓里一件促销商品成为热点，大量并发的结账请求同时对它的库存行做扣减，即便每次条件扣减更新本身都很快，会发生什么？标准的解决办法是什么？",
+    "a_zh": "即便每次条件扣减更新（数量仍大于零才扣减一件）本身完成得很快，极高速率的并发写入同时打到完全相同的一行，仍然会造成行级锁竞争，无论单次更新有多快，这都会成为瓶颈。标准的解决办法是把这一行库存拆分成多个可以独立、并发扣减的子计数器（分段库存），把写竞争分散到多个子分片上；代价是查询库存总量时需要对各个分片求和，这是为消除单行瓶颈而接受的权衡。",
+    "tags": []
+  },
+  {
+    "id": "problems-food-delivery-10x-mip-degrades-heuristic",
+    "node": "problems.geo.food-delivery",
+    "type": "qa",
+    "q": "In a food delivery dispatch design, if order volume grows 10x so a single dense market's dispatch batch grows from roughly 120 orders to roughly 1,200 orders per window, why might the dispatch service need to shift from solving the batch as an exact mixed-integer program to a pre-filtered heuristic instead?",
+    "a": "The time an exact mixed-integer programming solver needs to find the optimal assignment tends to grow much faster than linearly with the number of orders and couriers being jointly considered, so a batch that was comfortably solvable within the dispatch cycle's time budget at 120 orders may no longer fit that budget at 1,200 orders. The standard response is to first use cheap rules to narrow the candidate order-courier pairings down to a smaller, more tractable set, then run the exact solver only on that reduced subproblem — trading a small amount of solution quality for keeping the whole batch inside the time budget as scale grows, the same pattern combinatorial-optimization systems generally follow as their input size increases.",
+    "q_zh": "在一个外卖调度设计中，如果订单量涨到 10 倍，导致单个稠密市场一次调度窗口内的订单数从约 120 涨到约 1,200，为什么调度服务可能需要从把这一批精确求解为混合整数规划问题，转向使用预筛选的启发式方法？",
+    "a_zh": "混合整数规划求解器找到最优指派所需的时间，通常随联合考虑的订单和骑手数量增长得远比线性更快，所以一个在 120 单规模下能舒服地在调度周期时间预算内求解的批次，到了 1,200 单规模下可能就超出这个预算了。标准的应对方式是先用低成本的规则把候选的订单-骑手配对缩小到一个更小、更容易处理的子集，再只对这个缩小后的子问题跑精确求解——用一点解的质量换取整个批次能随规模增长仍然留在时间预算之内，这是组合优化系统在输入规模增长时普遍遵循的模式。",
+    "tags": []
+  }
+]
