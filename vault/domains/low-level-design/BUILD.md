@@ -111,8 +111,39 @@
 | 2026-09-20 | 骨架 | 全中文重写：40 个概念叶子 + 45 个题目叶子，`validate` 0 错误 |
 | 2026-09-20 | 卡片格式 | 125 张旧卡的中文段提升为正文、id 不变；中文为机翻质量，待逐张重写 |
 
-## 6. 下一步
+## 6. 台账（续）
 
-概念层分 4 组重写（method+oop+principles、python+structure、patterns、quality+concurrency），同时题库先做 3 道试点，再按家族每组两道题分批写；
-始终保持 3 个并行代理，每批由主会话复核（跑验收、读代码、读题解、核对代理自报的疑点）后按题提交。
-全部通过后：清理 Anki 里已不存在的旧卡（只删从未复习过的）、剪藏允许入库的来源、sync、validate、`anki-push` 并回读验证。
+| 日期 | 步骤 | 结果 |
+|---|---|---|
+| 2026-09-20 | 概念层 | 8/8 分支通过 `check_lld_concepts.py`，220 张中文卡；新增 python 分支 42 张、asyncio 与 fitness-functions 各 4–6 张；删掉 5 张 Java 内存模型/无锁 CAS 的卡（Python 无对应物） |
+| 2026-09-20 | 题库试点 | parking-lot、lru-cache 验收通过。两处返工：停车场泄漏内部车位字典且展示牌脱锁重扫（改为快照 + 事件），LFU 空桶不回收且 `_min_freq` 有崩溃契约（改为自愈）。教训写入 AGENT 说明 |
+| 2026-09-20 | 额度 | 本会话 WebSearch 200 次配额在调研阶段用尽；sonnet 触发会话额度上限（重置 5:30am），写题代理改用 `model: "opus"`（CLAUDE.md 既有规则） |
+
+## 7. 写题队列（每组一个 opus 代理、两道同家族题；始终 3 组并行）
+
+状态以 `uv run python scripts/check_lld_problems.py --all` 为准，这张表只记顺序。
+验收流程：代理回报 → 主会话跑验收、读 `solution.py`、读题解的关键设计决策、核对代理自报的疑点 → 改正或发回 → 按题提交。
+
+| 波次 | 组 1 | 组 2 | 组 3 |
+|---|---|---|---|
+| 1（进行中） | splitwise + online-shopping | elevator + vending-machine | movie-booking + hotel-booking |
+| 2 | chess + tic-tac-toe | atm + coffee-machine | logger + text-editor |
+| 3 | snake-and-ladder + deck-of-cards | amazon-locker + traffic-signal | pub-sub + notification-service |
+| 4 | ride-sharing + food-delivery | car-rental + library | rate-limiter + ttl-cache |
+| 5 | stock-brokerage + online-auction | airline + meeting-scheduler | task-scheduler + thread-pool |
+| 6 | digital-wallet + bank-account | restaurant + cricinfo | bounded-blocking-queue + kv-store |
+| 7 | social-network + chat-room | linkedin + stack-overflow | in-memory-file-system + music-streaming |
+| 8 | task-management | | |
+
+每个代理的提示词是同一个模板：读 `proposals/lld/PROBLEM_AGENT.md`，读两份 `proposals/lld/tasks/<slug>.md`，
+skim 已验收的 parking-lot 作为样板，先完整做完第一题再做第二题，跑验收命令，按说明的 Report 格式回报。
+代理自带续跑规则（验收已通过的题跳过），中断后原样重发即可。
+
+## 8. 全部完成后
+
+1. `uv run python scripts/check_lld_problems.py --all` 与 `check_lld_concepts.py --all` 都全绿
+2. 跨题查重（题目卡之间、题目卡与概念卡之间）
+3. 中文标点检查、`scripts/lld_embed_code.py --check <slug>` 确认题解里的代码与被测代码一致
+4. 剪藏允许入库的来源（商业网站与无 LICENSE 仓库保持 `no-archive`）
+5. `trellis --all sync`、`--domain low-level-design path`、`--all validate`、根目录 pytest
+6. Anki：先快照，再 `anki-push`，然后回读验证位置与复习记录；旧的 5 张被删卡片需要在 Anki 里手动删除（都没有复习记录）
