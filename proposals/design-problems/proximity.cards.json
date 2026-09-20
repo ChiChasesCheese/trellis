@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-proximity-index-fits-in-memory",
+    "node": "problems.geo.proximity",
+    "type": "qa",
+    "q": "In a Yelp-like proximity search design with 20 million indexed businesses, each business record (id, geohash, name, category, lat/lon, address, phone, rating stats, and overhead) taking about 188 bytes, why does the resulting ~3.76GB total size push the design toward keeping the entire spatial index in memory on every search server instance rather than treating it as a sharding problem?",
+    "a": "20 million businesses x 188 bytes/record is about 3.76GB, small enough to fit comfortably in the RAM of a single modern server, and a compact geohash-to-business-id index adds under 0.4GB more. Since the dataset easily fits in memory, distributing it across shards would only add cross-shard merge overhead without solving a capacity problem that doesn't exist at this scale — sharding only becomes necessary once the indexed set grows 2-3 orders of magnitude (e.g. covering all global points of interest), not at ordinary business-directory scale.",
+    "q_zh": "在一个类 Yelp 邻近搜索设计中，索引 2,000 万个商户，每条商户记录（id、geohash、名称、类别、经纬度、地址、电话、评分统计和其他开销）约 188 字节，为什么由此得到的约 3.76GB 总大小会把设计推向'把整个空间索引放进每个搜索服务实例的内存里'，而不是把它当作一个分片问题处理？",
+    "a_zh": "2,000 万商户 × 188 字节/记录约等于 3.76GB，完全能舒服地放进一台现代服务器的内存，一份紧凑的 geohash 到 business_id 的索引再加不到 0.4GB。既然整个数据集轻松放进内存，把它分布到多个分片上只会带来跨分片合并的额外开销，却解决不了一个在这个规模下根本不存在的容量问题——只有当索引规模再涨 2 到 3 个数量级（比如覆盖全球所有兴趣点）时，分片才是必需品，普通商户目录量级用不上。",
+    "tags": []
+  },
+  {
+    "id": "problems-proximity-geohash-vs-quadtree-density",
+    "node": "problems.geo.proximity",
+    "type": "qa",
+    "q": "In a proximity search index covering both a dense downtown area and a sparse rural area, why does a geohash grid handle the two regions worse than a quadtree, even though both structures flatten 2D coordinates into an indexable key?",
+    "a": "Geohash cells of a fixed character length cover a uniform physical area regardless of local density — a downtown cell at a given precision might contain hundreds of businesses while a rural cell of the same precision contains none, so query cost is density-blind and hot cells scan almost as much data as a full table. A quadtree instead recursively splits a region only when the number of businesses inside it exceeds a threshold, so dense downtown areas automatically get subdivided into many small leaf nodes while sparse rural areas stay as large leaf nodes — the index structure adapts to the actual data distribution instead of applying one grid size everywhere.",
+    "q_zh": "在一个同时覆盖密集市中心和稀疏郊区的邻近搜索索引中，尽管 geohash 网格和四叉树（quadtree）都是把二维坐标拍平成可索引的键，为什么 geohash 网格处理这两种区域的效果比四叉树差？",
+    "a_zh": "固定字符长度的 geohash 格子覆盖的物理面积是均匀的，与局部密度无关——某个精度下市中心的一个格子可能挤着几百个商户，同样精度下郊区的格子可能一个都没有，导致查询开销对密度毫无感知，热点格子几乎要扫描和全表一样多的数据。四叉树则是只在某个区域内商户数超过阈值时才递归分裂——密集的市中心自动分裂出很多细小的叶子节点，稀疏的郊区保留成大的叶子节点，索引结构本身适配真实的数据分布，而不是到处套用同一个网格大小。",
+    "tags": []
+  },
+  {
+    "id": "problems-proximity-s2-hilbert-vs-geohash-zorder",
+    "node": "problems.geo.proximity",
+    "type": "qa",
+    "q": "Google's S2 library projects the earth onto a cube and orders cells along a Hilbert curve, while geohash interleaves latitude/longitude bits, which is equivalent to ordering along a Z-order curve. Why does this specific difference make S2 cells better at preserving spatial locality near cell boundaries than geohash?",
+    "a": "Both a Hilbert curve and a Z-order curve are space-filling curves that map 2D coordinates to a 1D ordering so nearby points tend to get nearby index values, but a Z-order curve has more discontinuities where the curve jumps a long physical distance between consecutive index values, especially at boundaries between larger grid quadrants. A Hilbert curve is constructed specifically to minimize the number and severity of these jumps, so two S2 cells with numerically close 64-bit cell IDs are more consistently close in physical space than two geohash strings with a shared prefix, reducing the boundary cases where a physically nearby point falls outside the searched cell range.",
+    "q_zh": "Google 的 S2 库把地球投影到一个立方体上、沿希尔伯特曲线（Hilbert curve）给单元排序，而 geohash 是交织纬度/经度的二进制位，这等价于沿 Z 字形曲线（Z-order curve）排序。为什么这个具体差异让 S2 单元在格子边界附近保持空间局部性的能力比 geohash 更好？",
+    "a_zh": "希尔伯特曲线和 Z 字形曲线都是空间填充曲线，把二维坐标映射成一维排序，使得相邻的点倾向于拿到相邻的索引值，但 Z 字形曲线有更多不连续点——曲线会在相邻索引值之间跳跃很长的物理距离，尤其是在更大网格象限的边界处。希尔伯特曲线的构造就是专门为了最小化这类跳跃的数量和严重程度，所以两个数值上接近的 S2 64 位单元 ID，对应的物理位置比两个共享前缀的 geohash 字符串更稳定地接近，减少了'物理上很近的点却落在被搜索的单元范围之外'这种边界情况。",
+    "tags": []
+  },
+  {
+    "id": "problems-proximity-h3-uniform-neighbor-distance",
+    "node": "problems.geo.proximity",
+    "type": "qa",
+    "q": "Uber's H3 spatial index divides the globe into hexagonal cells instead of square cells. Why does a hexagonal grid matter specifically for computations like density interpolation or spatial smoothing, beyond just being a different tiling shape?",
+    "a": "A square grid cell has two different distances to its neighbors: 4 edge-adjacent neighbors at one distance and 4 diagonal neighbors at a longer distance, so any computation that treats all neighbors symmetrically (like averaging nearby demand to smooth a density estimate) introduces a systematic bias toward the closer edge-adjacent neighbors. A hexagonal cell has exactly 6 neighbors, all at the same distance from its center, so density interpolation or smoothing across hexagon neighbors doesn't have to correct for an asymmetry baked into the grid geometry — the tradeoff is that hexagons cannot be recursively subdivided into four equal children the way a square can, making the subdivision logic more complex.",
+    "q_zh": "Uber 的 H3 空间索引把地球划分成六边形（hexagon）单元而不是正方形单元。除了'只是换了一种拼接形状'之外，为什么六边形网格对密度插值或空间平滑这类计算特别重要？",
+    "a_zh": "正方形网格单元到邻居有两种不同的距离：4 个边相邻的邻居是一种距离，4 个对角相邻的邻居是更长的另一种距离，所以任何对所有邻居一视同仁的计算（比如平均周边需求来平滑密度估计）都会系统性地偏向更近的边相邻邻居。六边形单元恰好有 6 个邻居，且都与中心距离相等，所以在六边形邻居之间做密度插值或平滑不需要修正网格几何本身带来的不对称——代价是六边形不能像正方形那样递归地四等分成子单元，subdivision 的实现逻辑更复杂。",
+    "tags": []
+  },
+  {
+    "id": "problems-proximity-two-stage-ranking-composite-cursor",
+    "node": "problems.geo.proximity",
+    "type": "qa",
+    "q": "In a proximity search that ranks results by a blend of distance and rating rather than pure distance, why must candidate generation and ranking be split into two stages, and why does plain offset-based pagination (`OFFSET n LIMIT m`) break for the ranked result list?",
+    "a": "A blended distance+rating score is not monotonic in distance alone, so a spatial index that returns results ordered purely by distance cannot directly produce the final ranked order — the design must first use the spatial index to generate a widened candidate set (e.g. 1.5x the requested radius), then re-rank that candidate set by the blended score in a second stage. Offset-based pagination breaks because the candidate set can shift between page requests as businesses are added or removed, so the record at a given OFFSET drifts, causing duplicates or skipped results; a composite cursor of (blended_score, business_id) is stable because the next page starts strictly after that exact score/id pair regardless of how the rest of the candidate set changes.",
+    "q_zh": "在一个按'距离 + 评分'综合分而不是纯距离排序的邻近搜索中，为什么候选集生成和排序必须拆成两个阶段？为什么纯偏移量分页（`OFFSET n LIMIT m`）对这种排序结果会失效？",
+    "a_zh": "距离和评分的综合分并不是距离的单调函数，所以一个只按纯距离排序返回结果的空间索引无法直接产出最终的排序结果——设计必须先用空间索引生成一个放宽的候选集（例如请求半径的 1.5 倍），再在第二阶段对这个候选集按综合分重排。偏移量分页会失效，是因为候选集可能在两次翻页请求之间因商户增删而变化，某个 OFFSET 对应的记录会漂移，导致翻页时看到重复或缺失的商户；而 `(综合分, business_id)` 的组合游标是稳定的，因为下一页总是严格从这个精确的分数/id 组合之后开始，不受候选集其余部分变化的影响。",
+    "tags": []
+  },
+  {
+    "id": "problems-proximity-nearby-friends-pull-vs-push",
+    "node": "problems.geo.proximity",
+    "type": "qa",
+    "q": "In a nearby-friends feature where users report their location roughly every 15 seconds and have an average of 150 friends with about 15 online at once, why does a pull model (compute nearby friends only when queried) beat a push model (notify all friends on every location update) as the default design, even though it means friends don't get instantly notified when someone enters range?",
+    "a": "A push model's fan-out cost scales with location update rate times online friends per user, which in this scenario produces a worst-case notification rate roughly equal to the location update rate itself (each update potentially notifying up to 15 online friends), while a pull model only pays the cost of a lookup when a user actually opens the nearby-friends view — a much rarer event than a location ping. Since query frequency is far lower than location-update frequency, computing nearby friends on demand from a TTL-based location cache is cheaper overall; a push-based subscription model only becomes worth its fan-out cost when the product specifically needs an instant 'friend entered range' notification.",
+    "q_zh": "在一个附近好友功能中，用户大约每 15 秒上报一次位置，平均有 150 个好友、约 15 个同时在线，为什么拉模型（只在被查询时才计算附近好友）比推模型（每次位置更新都通知所有好友）更适合作为默认设计，即便这意味着好友进入范围时不会被立刻通知？",
+    "a_zh": "推模型的扇出成本正比于'位置更新频率 × 每用户在线好友数'，在这个场景下得到的最坏情况通知速率大致等于位置更新速率本身（每次更新最多通知 15 个在线好友），而拉模型只在用户真正打开'附近好友'页面时才付出一次查询成本——这比位置上报频率低得多。由于查询频率远低于位置更新频率，从一个带 TTL 的位置缓存按需计算附近好友总体更便宜；只有当产品明确需要'好友进入范围立刻通知'这种即时推送时，基于订阅的推模型才值得承担它的扇出成本。",
+    "tags": []
+  },
+  {
+    "id": "problems-proximity-double-buffer-index-outage",
+    "node": "problems.geo.proximity",
+    "type": "qa",
+    "q": "In a proximity search system where the in-memory spatial index is rebuilt periodically and swapped in with double buffering, why is falling back to the last successfully loaded index snapshot a better degradation strategy than either returning an error or scanning the business database directly when a rebuild fails?",
+    "a": "Returning an error takes search fully down even though a perfectly usable (if slightly stale) index snapshot already exists in memory; scanning the database directly for every search request replaces a fast in-memory lookup with an unprotected full scan of millions of rows, which can overload the database and cascade into failures in the business-write path and the index-builder itself. Falling back to the previous snapshot keeps search serving at full speed with only minutes of staleness, because double buffering means the old snapshot is never discarded until a new one has been fully validated and atomically swapped in — a failed rebuild simply means the swap doesn't happen, not that service is lost.",
+    "q_zh": "在一个内存空间索引周期性重建、用双缓冲（double buffering）方式原子切换的邻近搜索系统中，为什么'重建失败时回退到上一份成功加载的索引快照'比'直接返回错误'或'直接扫描商户数据库'这两种降级策略更好？",
+    "a_zh": "直接返回错误会让搜索完全不可用，即便内存里已经有一份完全可用（只是稍微陈旧）的索引快照；对每个搜索请求都直接扫描数据库，则是把一次快速的内存查找换成了对几百万行数据毫无保护的全表扫描，可能压垮数据库并连带拖垮商户写入路径和索引构建器本身。回退到上一份快照能让搜索继续以全速提供服务，只是数据陈旧几分钟，因为双缓冲机制意味着旧快照在新快照完全验证并原子切换之前永远不会被丢弃——重建失败只意味着这次切换没有发生，不意味着服务丢失。",
+    "tags": []
+  },
+  {
+    "id": "problems-proximity-10x-geo-sharding-boundary",
+    "node": "problems.geo.proximity",
+    "type": "qa",
+    "q": "At 10x scale (200 million indexed businesses, about 38GB), a single in-memory quadtree no longer fits on one machine and the index must be sharded by geographic region. Why do queries near a shard boundary need special handling, and why does a hierarchical index like S2 or H3 make that handling cheaper than plain country-based sharding?",
+    "a": "A user standing near the edge of one geographic shard may have nearby businesses that actually live in the adjacent shard, so a boundary query must be broadcast to neighboring shards and the results merged, rather than trusting a single shard's answer to be complete. With plain country-based sharding, 'neighboring' can mean querying an entire adjacent country's shard just to catch a few businesses across the border; a hierarchical index like S2 or H3 lets the shard key be a coarser-resolution cell, so a boundary query only needs to additionally query the small number of adjacent coarse cells rather than an entire neighboring region's shard.",
+    "q_zh": "在 10 倍规模下（2 亿索引商户，约 38GB），单台机器的内存四叉树装不下了，索引必须按地理区域分片。为什么靠近分片边界的查询需要特殊处理？为什么 S2 或 H3 这类层级索引处理这种情况比按国界分片更省？",
+    "a_zh": "站在某个地理分片边缘的用户，附近的商户实际上可能属于相邻分片，所以边界查询必须向相邻分片广播并合并结果，而不能相信单个分片给出的答案是完整的。如果按国界分片，'相邻'可能意味着为了捕获边境线对面的少数几个商户就要查询整个相邻国家的分片；而 S2 或 H3 这类层级索引可以把分片键设为更粗一级分辨率的单元，边界查询只需要额外查询少数几个相邻的粗粒度单元，而不是相邻整个区域的分片。",
+    "tags": []
+  }
+]

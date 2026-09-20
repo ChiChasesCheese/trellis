@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-key-value-store-qps-bound-not-storage-bound",
+    "node": "problems.foundations.key-value-store",
+    "type": "qa",
+    "q": "In a Dynamo-style key-value store design sized for 555,556 peak client QPS and 3.6 TB of replicated data (N=3), why does the cluster end up sized at roughly 167 nodes driven by QPS rather than 7.2 nodes driven by storage capacity?",
+    "a": "Because a coordinator sends every read and write to all N=3 replicas in a key's preference list (not just one), the load each physical node absorbs is the client-facing QPS multiplied by the replication factor: 555,556 × 3 ≈ 1,666,667 node-level ops/sec. At an assumed 10,000 ops/sec per node, that needs ≈167 nodes — about 23× more than the ≈7.2 nodes a 500 GB/node capacity would need to just hold 3.6 TB of data. The design lever is therefore per-node operation throughput under replication fan-out, not raw byte count.",
+    "tags": [],
+    "q_zh": "在一个为峰值 555,556 客户端 QPS、3.6TB 三副本（N=3）数据设计的 Dynamo 风格键值存储中，为什么集群规模最终由 QPS 决定为约 167 台节点，而不是由存储容量决定为约 7.2 台？",
+    "a_zh": "因为协调节点会把每次读写都发给一个 key 偏好列表上的全部 N=3 个副本（而不是只发给一个），所以每台物理节点承受的负载是客户端 QPS 乘以复制因子：555,556 × 3 ≈ 1,666,667 次/秒的节点级操作。假设单节点能承受 10,000 次/秒，就需要约 167 台节点——比按 500GB/节点容量只需装下 3.6TB 数据所需的约 7.2 台节点多出约 23 倍。设计杠杆是复制扇出下的单节点操作吞吐，而不是原始字节数。"
+  },
+  {
+    "id": "problems-key-value-store-consistent-hashing-vnode-choice",
+    "node": "problems.foundations.key-value-store",
+    "type": "qa",
+    "q": "In a distributed key-value store that only needs point lookups (no range scans), why is consistent hashing with virtual nodes chosen over both range partitioning and a fixed number of hash partitions (`hash(key) % P`)?",
+    "a": "Range partitioning enables range scans this store doesn't need, and creates hotspots on sequentially-increasing keys that need auto-splitting to fix. Fixed hash partitioning (`% P`) is simple but P is fixed at cluster creation: adding a physical node changes almost every key's target partition under modulo arithmetic, forcing a full remap. Consistent hashing places both keys and nodes on a ring so a key belongs to the next node clockwise; adding one physical node only moves the range between it and its predecessor. Because one virtual node per physical node causes uneven load at small node counts, each physical node is given multiple virtual nodes (tokens) on the ring to average load out.",
+    "tags": [],
+    "q_zh": "在一个只需要点查（不需要范围扫描）的分布式键值存储中，为什么选择带虚拟节点的一致性哈希，而不是范围分区或固定数量的哈希分区（`hash(key) % P`）？",
+    "a_zh": "范围分区能支持这个存储不需要的范围扫描，并且会在递增 key 上产生需要自动分裂来修复的热点。固定哈希分区（`% P`）简单，但 P 在建集群时就定死：取模运算下，新增一个物理节点会改变几乎每个 key 的目标分区，逼出一次全量重映射。一致性哈希把 key 和节点都放到同一个环上，key 归属于顺时针方向下一个节点；只加一个物理节点时，只有它和前一个节点之间的那段区间需要迁移。因为节点数少时每个物理节点只对应环上一个点会导致负载不均，所以每个物理节点在环上持有多个虚拟节点（token）来平均负载。"
+  },
+  {
+    "id": "problems-key-value-store-quorum-availability-math",
+    "node": "problems.foundations.key-value-store",
+    "type": "qa",
+    "q": "In a leaderless key-value store with N=3 replicas and quorum reads/writes requiring 2 of 3 nodes, if each node independently has 99.9% steady-state availability, what is the resulting availability of a quorum operation, and roughly how much does that cut annual downtime?",
+    "a": "P(at least 2 of 3 available) = C(3,2)×0.999²×0.001 + 0.999³ = 0.002994 + 0.997003 ≈ 0.999997 (about 99.9997%). A single node at 99.9% availability accounts for about 525.6 minutes of downtime per year; the quorum's ~99.9997% availability cuts that to about 1.58 minutes per year — roughly a 333× reduction, purely from requiring only 2-of-3 independent nodes to agree instead of depending on one specific node.",
+    "tags": [],
+    "q_zh": "在一个 N=3、读写都要求 3 个节点中 2 个响应的无主键值存储中，如果每个节点独立可用性是 99.9%，quorum 操作的可用性是多少？年停机时间大约缩短了多少？",
+    "a_zh": "P(3 个中至少 2 个可用) = C(3,2)×0.999²×0.001 + 0.999³ = 0.002994 + 0.997003 ≈ 0.999997（约 99.9997%）。单节点 99.9% 可用性对应每年约 525.6 分钟停机；quorum 的约 99.9997% 可用性把它降到每年约 1.58 分钟——约缩短 333 倍，纯粹来自「只要求 3 个独立节点中的 2 个同意」而不是依赖某一个特定节点。"
+  },
+  {
+    "id": "problems-key-value-store-sloppy-quorum-hinted-handoff",
+    "node": "problems.foundations.key-value-store",
+    "type": "qa",
+    "q": "In a Dynamo-style key-value store, why does a strict quorum (write must land on real preference-list nodes or fail) undermine the goal of never rejecting writes during node failure, and what mechanism fixes it?",
+    "a": "A strict quorum rejects a write whenever more than N−W of the key's specific preference-list nodes are unreachable, even if the rest of the cluster is healthy — a single unlucky node failure can block writes for the keys it owns. The fix is a sloppy quorum: when a preferred node is down, the coordinator writes to the next healthy node outside the preference list instead of failing, tagging the data with hinted handoff metadata identifying the true owner. Once the original node recovers, the substitute asynchronously forwards the data to it and deletes its temporary copy. This means any W reachable nodes — not specifically the 'correct' W — are enough for a write to succeed.",
+    "tags": [],
+    "q_zh": "在一个 Dynamo 风格的键值存储中，为什么严格 quorum（写入必须落在真正的偏好列表节点上，否则失败）会破坏「节点故障时绝不拒绝写入」这个目标？什么机制解决了它？",
+    "a_zh": "严格 quorum 会在某个 key 的偏好列表节点中有超过 N−W 个不可达时拒绝写入，哪怕集群其余部分完全健康——一个不走运的节点故障就可能阻塞它所拥有的那些 key 的写入。解法是 sloppy quorum：当某个偏好节点不可达时，协调节点不让写入失败，而是写到偏好列表之外的下一个健康节点，并给这份数据打上标明真正归属节点的 hinted handoff 元数据。原节点恢复后，代管节点异步把数据转交给它并删除本地临时副本。这意味着任意 W 个可达节点——不一定是「正确」的那 W 个——就足以让写入成功。"
+  },
+  {
+    "id": "problems-key-value-store-vector-clock-vs-lww",
+    "node": "problems.foundations.key-value-store",
+    "type": "qa",
+    "q": "In a key-value store where sloppy quorums let two clients write the same key to different node subsets during a partition, why is last-write-wins by wall-clock timestamp dangerous, and what does using vector clocks trade away instead?",
+    "a": "Wall clocks on different nodes disagree, so a genuinely later write can carry an earlier timestamp and be silently discarded under LWW — unacceptable data loss for something like a shopping cart. Vector clocks instead attach a `{(node, counter), ...}` version to each write; if one version's counters all dominate another's, it's a clean successor and overwrites it, but if neither dominates, the writes are concurrent and both are kept as 'sibling' versions returned to the client to merge, since only the application knows how to merge business data. The trade is unbounded metadata growth: Dynamo bounds it by dropping the oldest (node, counter) pair once a threshold (the paper's example is 10) is reached, which can occasionally misjudge a true ancestor as concurrent, producing a harmless extra sibling.",
+    "tags": [],
+    "q_zh": "在一个键值存储中，sloppy quorum 会让两个客户端在网络分区期间把同一个 key 写到不同的节点子集上，为什么按墙钟时间戳的 last-write-wins 很危险？用 vector clock 换来了什么代价？",
+    "a_zh": "不同节点的墙钟本身就不一致，所以一次真正更晚的写入可能携带更早的时间戳，在 LWW 下被悄悄丢弃——对购物车这类场景是不可接受的数据丢失。Vector clock 则给每次写附加一个 `{(node, counter), ...}` 版本：如果一个版本的所有计数器都支配另一个版本，判定为干净的后继并覆盖；如果谁也不支配谁，判定为并发写入，两个版本都作为「兄弟版本」保留并返回给客户端合并，因为只有应用层才知道该怎么合并业务数据。代价是元数据可能无限增长：Dynamo 的做法是一旦分量数超过阈值（论文举例为 10）就丢弃最旧的 (node, counter) 分量，这偶尔会把一个真正的祖先版本误判成并发，产生一个无害但多余的兄弟版本。"
+  },
+  {
+    "id": "problems-key-value-store-merkle-tree-anti-entropy",
+    "node": "problems.foundations.key-value-store",
+    "type": "qa",
+    "q": "In a key-value store's background replica-repair (anti-entropy) process, why does comparing Merkle tree roots beat comparing every key between two replicas directly, when only a small fraction of keys have actually diverged?",
+    "a": "A full scan-and-compare has to read and transmit both replicas' entire datasets to find the differences, and that cost doesn't shrink even when divergence is tiny — at terabyte scale this makes frequent runs impractical. A Merkle tree hashes each small key range at the leaves and combines hashes up to a single root per replica; two replicas first compare root hashes, and only descend into subtrees whose hashes differ, narrowing down to the actually-diverged key ranges in a number of comparisons proportional to the tree's depth and the fraction diverged, not the size of the dataset. The cost is that the tree must be rebuilt for any key range affected by rebalancing, which is one reason virtual-node counts aren't set arbitrarily high.",
+    "tags": [],
+    "q_zh": "在键值存储的后台副本修复（反熵，anti-entropy）过程中，当只有很小一部分 key 真正发生分歧时，为什么比较 Merkle 树根哈希优于直接逐条比较两个副本的全部 key？",
+    "a_zh": "全量扫描比较需要读取并传输两个副本的全部数据才能找出差异，而且即便分歧很小，这个成本也不会随之下降——在 TB 级数据量下这让频繁运行变得不现实。Merkle 树在叶子节点对每个小 key 范围做哈希，逐层向上合并成每个副本各自的一个根哈希；两个副本先比较根哈希，只在哈希不同的子树里继续往下比较，最终定位到真正分歧的 key 范围，比较次数正比于树的深度和分歧比例，而不是数据集大小。代价是节点重分布影响到的 key 范围对应的树需要重建，这也是虚拟节点数不能设得任意大的原因之一。"
+  },
+  {
+    "id": "problems-key-value-store-gossip-convergence-log-n",
+    "node": "problems.foundations.key-value-store",
+    "type": "qa",
+    "q": "In a key-value store that manages cluster membership with a gossip protocol instead of a centralized coordination service, why does membership convergence time scale well as the cluster grows from about 167 nodes to about 1,700 nodes?",
+    "a": "Gossip convergence rounds scale roughly as log2(N): log2(167) ≈ 7.4, so about 8 rounds; log2(1,700) ≈ 10.7, so about 11 rounds — a 10x increase in node count adds only 3 more rounds. This logarithmic (not linear) scaling is why gossip-based membership stays viable at hundreds to thousands of nodes without a centralized coordination service, which would instead make its own availability and write throughput the ceiling on how fast membership changes propagate.",
+    "tags": [],
+    "q_zh": "在一个用 gossip 协议而不是中心化协调服务来管理集群成员的键值存储中，为什么从约 167 台节点扩容到约 1,700 台节点时，成员收敛时间依然扩展得很好？",
+    "a_zh": "gossip 的收敛轮数大致按 log2(N) 增长：log2(167) ≈ 7.4，约 8 轮；log2(1,700) ≈ 10.7，约 11 轮——节点数增长 10 倍，只多了 3 轮。这种对数（而非线性）的扩展性，正是 gossip 式成员管理能在成百上千节点规模下不依赖中心化协调服务的原因；换成中心化协调服务，它自身的可用性和写吞吐会反过来成为成员变更传播速度的天花板。"
+  },
+  {
+    "id": "problems-key-value-store-10x-node-growth",
+    "node": "problems.foundations.key-value-store",
+    "type": "qa",
+    "q": "In a Dynamo-style key-value store designed for 300M monthly active users at ~167 physical nodes (2,672 virtual nodes at 16 per physical node), what changes mechanically at 10x scale (3 billion MAU), and what does NOT need to change?",
+    "a": "Peak QPS grows from ~555,556 to ~5,555,556, and physical node count grows proportionally from ~167 to ~1,667 (virtual nodes to ~26,672 at the same 16-per-node ratio). The consistent-hashing ring routing and gossip-based membership mechanisms don't need to change in kind — gossip convergence only grows from ~8 to ~11 rounds (log2 scaling). What does grow disproportionately is Merkle tree rebuild cost and hinted-handoff queue buildup as node count rises, which pushes toward hierarchical gossip (converging locally within a rack/AZ before syncing across them) to bound cross-domain traffic.",
+    "tags": [],
+    "q_zh": "在一个为 3 亿月活设计、约 167 台物理节点（每节点 16 个虚拟节点，共 2,672 个）的 Dynamo 风格键值存储中，扩大到 10 倍规模（30 亿月活）时机制上会发生什么变化？什么不需要变？",
+    "a_zh": "峰值 QPS 从约 555,556 增长到约 5,555,556，物理节点数相应从约 167 增长到约 1,667（按同样每节点 16 个的比例，虚拟节点增长到约 26,672 个）。一致性哈希环的路由和基于 gossip 的成员管理机制本身不需要发生质变——gossip 收敛只从约 8 轮增长到约 11 轮（对数级扩展）。不成比例增长的是 Merkle 树重建成本和 hinted handoff 队列随节点数上升而产生的积压，这会推动引入分层 gossip（先在机架/可用区内局部收敛，再跨域同步）来约束跨域流量。"
+  }
+]

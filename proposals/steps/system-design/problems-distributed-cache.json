@@ -1,0 +1,12 @@
+{
+  "problems.foundations.distributed-cache": [
+    "problems-distributed-cache-fanout-multiplier-qps",
+    "problems-distributed-cache-lease-thundering-herd",
+    "problems-distributed-cache-sharding-tradeoffs",
+    "problems-distributed-cache-eviction-slab-vs-approx-lru",
+    "problems-distributed-cache-hot-key-mitigation",
+    "problems-distributed-cache-cold-start-peer-warm",
+    "problems-distributed-cache-durability-tradeoff-memcached-vs-redis",
+    "problems-distributed-cache-10x-hash-slot-granularity"
+  ]
+}

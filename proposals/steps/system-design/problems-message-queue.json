@@ -1,0 +1,12 @@
+{
+  "problems.foundations.message-queue": [
+    "problems-message-queue-partition-count-two-lower-bounds",
+    "problems-message-queue-pull-based-consumer-model",
+    "problems-message-queue-isr-quorum-f-plus-1-tradeoff",
+    "problems-message-queue-page-cache-consumer-lag-cliff",
+    "problems-message-queue-cooperative-rebalancing-stabilization",
+    "problems-message-queue-log-compaction-vs-time-retention",
+    "problems-message-queue-hot-partition-key-skew",
+    "problems-message-queue-tiered-storage-10x-evolution"
+  ]
+}

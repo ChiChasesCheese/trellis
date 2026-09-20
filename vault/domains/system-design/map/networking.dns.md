@@ -4,8 +4,15 @@
 
 Resolution path, record types, TTL as a blunt failover and traffic-steering instrument.
 
+**Core** — part of the first pass through this subject.
+
+**Unlocks:** [[domains/system-design/map/problems.search.web-crawler|Web Crawler]]
+
 ## Readings
 - [[cloudflare-dns|What is DNS? (Cloudflare Learning Center)]]
+
+## Drills
+- [[design-web-crawler|Drill: Design a polite, distributed web crawler]]
 
 ## Cards (6)
 1. [[networking-dns-resolution-path]]

@@ -1,0 +1,11 @@
+{
+  "problems.media.email-service": [
+    "problems-email-service-attachment-dominates-storage",
+    "problems-email-service-immutable-message-mutable-mailboxentry",
+    "problems-email-service-spf-dkim-dmarc-distinct-proofs",
+    "problems-email-service-per-destination-retry-queue-depth",
+    "problems-email-service-per-user-search-sharding-changes-problem",
+    "problems-email-service-spam-classifier-fail-open",
+    "problems-email-service-quota-protects-tail-not-median"
+  ]
+}

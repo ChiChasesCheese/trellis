@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-ad-click-aggregation-dollar-error-budget",
+    "node": "problems.search.ad-click-aggregation",
+    "type": "qa",
+    "q": "In an ad click aggregation design billing on 500 million clicks/day at an average CPC (cost per click) of $0.35, why does even a tiny relative accuracy target like 0.01% translate into a design requirement, not just a nice-to-have?",
+    "a": "Daily ad spend is `5e8 * 0.35 = $175,000,000`. A 0.01% (1e-4) error rate against that spend is `175,000,000 * 0.0001 = $17,500` per day — a concrete dollar figure that would appear in an incident report, not an abstract rounding error. This is why click aggregation cannot tolerate the kind of bounded-but-nonzero error that a heavy-hitters/Top-K design accepts in exchange for bounded memory: the same 'small percentage error' that's harmless when ranking trending content becomes a specific, auditable sum of money when it's attached to billing.",
+    "q_zh": "在一个日均 5 亿次点击、平均 CPC（每次点击成本）$0.35 的广告点击聚合计费设计中，为什么哪怕 0.01% 这么小的准确率目标也会变成一条设计约束，而不只是锦上添花？",
+    "a_zh": "日均广告花费是 `5e8 * 0.35 = $175,000,000`。对这笔花费而言 0.01%（1e-4）的误差率对应 `175,000,000 * 0.0001 = $17,500`/天——这是一个会出现在事故报告里的具体数字，不是抽象的舍入误差。这就是为什么点击聚合不能像 Top-K/热门内容这类设计那样，为了换取有界内存而接受「有界但非零」的误差：同样一个「百分之几的小误差」，在给内容排名时无关紧要，一旦挂上计费，就变成一笔具体的、需要审计的钱。",
+    "tags": []
+  },
+  {
+    "id": "problems-ad-click-aggregation-exact-dedup-vs-sketch",
+    "node": "problems.search.ad-click-aggregation",
+    "type": "qa",
+    "q": "In an ad click aggregation design, why must click deduplication use an exact key-value store rather than a probabilistic structure like a Bloom filter or Count-Min Sketch, even though such structures would use far less memory?",
+    "a": "Deduplication is a binary decision — does this click count for billing or not — and a probabilistic structure's false positive (wrongly treating a genuinely new click as a duplicate) silently and permanently discards a real, billable event with no way to recover which one was dropped from the summary itself. That's a fundamentally different failure than a heavy-hitters sketch's error, where a count being off by a bounded amount doesn't change which items are considered popular. Because deduplication decides whether money changes hands, it needs an exact existence check (e.g. a keyed store like RocksDB) even at the cost of more memory than a sketch would use.",
+    "q_zh": "在一个广告点击聚合设计中，为什么点击去重必须用精确的 key-value 存储，而不能用 Bloom filter 或 Count-Min Sketch 这类概率性结构，即便后者能省下大量内存？",
+    "a_zh": "去重是一个二元判断——这次点击算不算计费——概率性结构的假阳性（把一次真实的新点击误判为重复）会悄无声息、且永久地丢掉一个真实的、本该计费的事件，而且没办法从摘要本身反推出丢的是哪一条。这和热门内容 sketch 的误差本质不同：后者计数偏差一点，并不改变「哪些内容算热门」这个结论。因为去重决定的是钱要不要转手，它需要一次精确的存在性检查（比如 RocksDB 这类 key-value 存储），哪怕比 sketch 多花内存也要用。",
+    "tags": []
+  },
+  {
+    "id": "problems-ad-click-aggregation-dual-partition-key",
+    "node": "problems.search.ad-click-aggregation",
+    "type": "qa",
+    "q": "In an ad click aggregation pipeline, why can't a single Kafka partitioning scheme serve both the deduplication stage and the aggregation stage, and what does the design do about it?",
+    "a": "Deduplication needs every repeated delivery of the *same click* to land on the same shard, so it must partition by the click's own identity (e.g. `insertion_id`). Aggregation needs every click for the *same ad* to land on the same shard so per-ad counts can be summed locally, so it must partition by `ad_id`. A single stream cannot be partitioned by two unrelated keys at once, so the design consumes the deduplication-stage topic (partitioned by `insertion_id`), deduplicates, and then explicitly repartitions (shuffles) the deduplicated events into a second topic keyed by `ad_id` before aggregating — the same co-partitioning requirement that stream-stream and stream-table joins have.",
+    "q_zh": "在一个广告点击聚合流水线中，为什么去重阶段和聚合阶段不能共用同一套 Kafka 分区方案？设计上是怎么处理的？",
+    "a_zh": "去重要求同一次点击的所有重复投递都落在同一个分片上，所以必须按点击自身的身份（比如 `insertion_id`）分区。聚合要求同一个广告的所有点击都落在同一个分片上才能就地求和，所以必须按 `ad_id` 分区。同一份流不可能同时按两个不相关的 key 天然分区，所以设计上先消费按 `insertion_id` 分区的去重阶段 topic，去重之后再显式地重新分区（shuffle）成按 `ad_id` 分区的第二个 topic，然后才做聚合——这和 stream-stream / stream-table join 所要求的 co-partitioning 是同一个道理。",
+    "tags": []
+  },
+  {
+    "id": "problems-ad-click-aggregation-watermark-heuristic-retraction",
+    "node": "problems.search.ad-click-aggregation",
+    "type": "qa",
+    "q": "According to Google's Dataflow model, is a watermark a correctness guarantee that all data up to a given event time has arrived? In an ad click aggregation design, what mechanism does this force when a window re-triggers after new late data arrives?",
+    "a": "No — the Dataflow paper is explicit that a watermark is only a heuristic estimate of when the system thinks data up to that point has likely all arrived, not a guarantee ('we won't rely on watermarks as such'). Because of this, a window can legitimately re-trigger after emitting a result, if a late event arrives within the allowed-lateness grace period. Simply overwriting the old emitted value with the new one is unsafe if any downstream stage does a second grouping/aggregation on top of the first result — that downstream stage would then double-count the old and new values as separate inputs. The fix is Accumulating & Retracting: emit an explicit retraction of the previous value before emitting the corrected one, so downstream aggregations can subtract the old contribution before adding the new one.",
+    "q_zh": "根据 Google 的 Dataflow 模型，水位线（watermark）是不是「某个事件时间之前的数据都已到齐」的正确性保证？在广告点击聚合设计中，当一个窗口因为新到达的迟到数据而重新触发时，这逼出了什么机制？",
+    "a_zh": "不是——Dataflow 论文明确说水位线只是系统对「这个时间点之前的数据大概率都到齐了」的一个启发式估计，不是保证（原文：\"we won't rely on watermarks as such\"）。正因如此，一个窗口在发出结果之后，如果迟到事件落在允许的宽限期内，是可以合法地重新触发的。如果下游还有基于这个聚合结果做的二级分组/聚合，直接用新值覆盖旧值是不安全的——下游会把新旧两个值当成两笔独立输入重复计入。解决办法是 Accumulating & Retracting（累积与撤回）：重新触发前先显式发出对上一次值的撤回，再发出修正后的新值，这样下游聚合才能先减去旧贡献再加上新贡献。",
+    "tags": []
+  },
+  {
+    "id": "problems-ad-click-aggregation-late-data-three-tiers",
+    "node": "problems.search.ad-click-aggregation",
+    "type": "qa",
+    "q": "In an ad click aggregation design, describe the three-tier policy for handling a click event that arrives after its window's watermark has passed, from least to most costly to handle.",
+    "a": "(1) Within the allowed-lateness grace period after the window closes: the window re-triggers, recomputing and emitting a retraction plus a corrected value (see the watermark/retraction card). (2) After the grace period but before the daily reconciliation cutoff: the streaming layer no longer re-triggers that window (to avoid windows staying open indefinitely); the event is instead side-outputted to a separate late-events stream and only folded in by the next batch reconciliation run. (3) After the reconciliation cutoff (e.g. 48 hours after the event's own timestamp): the event is treated as anomalous and routed to a manual/fraud-review path rather than being auto-applied to the billing ledger, since a click arriving that late is itself suspicious.",
+    "q_zh": "在一个广告点击聚合设计中，描述对「到达时其所在窗口的水位线已经过去」的点击事件的三层处理策略，按处理代价从低到高排列。",
+    "a_zh": "(1) 在窗口关闭后的允许迟到宽限期内：窗口重新触发，重新计算并发出一次撤回加一个修正后的值（见水位线/撤回卡片）。(2) 超过宽限期、但在每日对账截止时间之前：流式层不再对该窗口重新触发（避免窗口无限期悬而不决），该事件改为侧输出到一个单独的「迟到事件」流，只在下一次批处理对账时才被并入。(3) 超过对账截止时间（例如事件自身时间戳之后 48 小时）：视为异常，转入人工/反欺诈复核流程，而不是自动应用到计费账本上——一次点击迟到这么久本身就值得怀疑。",
+    "tags": []
+  },
+  {
+    "id": "problems-ad-click-aggregation-deterministic-upsert-key",
+    "node": "problems.search.ad-click-aggregation",
+    "type": "qa",
+    "q": "In an ad click aggregation pipeline writing windowed aggregates into an OLAP store, why must the upsert key used to make the sink idempotent be built entirely from deterministic fields of the aggregation (like `ad_id` and `window_start`), and what breaks if it isn't?",
+    "a": "After a stream processor restarts from a checkpoint, it replays and re-emits output for everything since the last checkpoint — end-to-end exactly-once depends on that replayed output landing as a harmless overwrite rather than a duplicate. An upsert keyed by fully deterministic fields (`ad_id`, `campaign_id`, `window_start`, `window_granularity`) produces the identical key on replay, so the second write just overwrites the first with the same (correctly recomputed) value. If the key instead includes something non-deterministic — a freshly generated `uuid4()`, or a wall-clock `received_time` — replay produces a *different* key each time, so the replayed aggregate lands as a brand-new row instead of overwriting the old one, silently double-counting the affected clicks.",
+    "q_zh": "在一个把窗口聚合结果写入 OLAP 存储的广告点击聚合流水线中，为什么用来让 sink 幂等的 upsert key 必须完全由聚合本身的确定性字段（比如 `ad_id` 和 `window_start`）构成？如果不是会出什么问题？",
+    "a_zh": "流处理器从 checkpoint 重启后，会重放并重新发出上一次 checkpoint 之后的所有输出——端到端精确一次依赖于这次重放的输出落地时是一次无害的覆盖写，而不是一条重复记录。用完全确定性的字段（`ad_id`、`campaign_id`、`window_start`、`window_granularity`）构成的 upsert key，在重放时会得到完全相同的 key，所以第二次写入只是用同一个（重新算出的、正确的）值覆盖第一次。如果 key 里混入了非确定性的部分——比如每次新生成的 `uuid4()`，或者一个挂钟时间的 `received_time`——重放每次都会得到不同的 key，于是重放的聚合结果会落地成一条全新的记录而不是覆盖旧记录，悄悄把受影响的点击重复计费。",
+    "tags": []
+  },
+  {
+    "id": "problems-ad-click-aggregation-hot-ad-id-salting",
+    "node": "problems.search.ad-click-aggregation",
+    "type": "qa",
+    "q": "In an ad click aggregation design partitioned by `ad_id` for aggregation, what happens when a single ad campaign suddenly drives a disproportionate share of clicks, and how does the fix compare to merging Top-K results across shards?",
+    "a": "Because the aggregation stage partitions by `ad_id`, every click for that one viral campaign lands on a single shard, which becomes a processing hot spot while the rest of the cluster is comparatively idle. The fix mirrors a Top-K design's hot-item salting: detect the hot `ad_id` and append a random suffix (`ad_id + rand(0,N)`) to fan its clicks out across multiple sub-partitions that aggregate independently, then sum the sub-aggregates back together before writing to the OLAP store. Unlike merging Top-K candidate lists across shards, this merge is always exact — the sub-counts being summed are all counts for the same `ad_id`, so there's no risk of a candidate being missed, only ordinary addition.",
+    "q_zh": "在一个聚合阶段按 `ad_id` 分区的广告点击聚合设计中，当单个广告 campaign 突然占据了不成比例的点击量份额时会发生什么？这个修复手段和 Top-K 跨分片合并结果相比有什么不同？",
+    "a_zh": "因为聚合阶段按 `ad_id` 分区，这一个爆量 campaign 的所有点击都会落在同一个分片上，该分片成为处理热点，而集群其余部分相对空闲。修复手段和 Top-K 设计里的热点 item 加盐是同一个思路：探测到热点 `ad_id` 后，给它拼上一个随机后缀（`ad_id + rand(0,N)`）把点击打散到多个独立聚合的子分区，写入 OLAP 之前再把各子聚合加总合并。和跨分片合并 Top-K 候选列表不同的是，这里的合并永远是精确的——被相加的各个子计数都是同一个 `ad_id` 的计数，不存在候选被遗漏的风险，只是普通的加法。",
+    "tags": []
+  },
+  {
+    "id": "problems-ad-click-aggregation-reconciliation-source-of-truth",
+    "node": "problems.search.ad-click-aggregation",
+    "type": "qa",
+    "q": "In an ad click aggregation design, why is the streaming aggregation result never treated as the final billing figure, and what does the daily reconciliation job actually establish?",
+    "a": "The streaming result's completeness rests on the watermark, which is only ever a heuristic estimate of when data has likely all arrived (per the Dataflow model), never a proof — so no amount of tuning the watermark or the allowed-lateness window can make the streaming result provably final. The design instead runs a nightly batch job over the immutable raw click log for the previous day, recomputing counts with no watermark constraint at all (it simply waits until the whole day's log is available), and compares that recount against the streaming result per `(ad_id, day)`. Only rows where the two agree exactly are marked `is_reconciled=true` and treated as the final billing figure; any discrepancy is corrected with an auditable, logged change rather than a silent overwrite. This is the same lambda-architecture pattern (fast approximate layer plus a slower authoritative batch layer) applied specifically to make billing correctness provable rather than merely probable.",
+    "q_zh": "在一个广告点击聚合设计中，为什么流式聚合的结果从不被当作最终计费数字？每日对账任务实际确立的是什么？",
+    "a_zh": "流式结果的完整性依赖水位线，而水位线（按 Dataflow 模型）永远只是「数据大概率已到齐」的启发式估计，从来不是证明——无论怎么调水位线或允许迟到的宽限期，都不能让流式结果被证明为最终值。设计上改为每天对前一天不可变的原始点击日志跑一次批处理任务，完全不受水位线约束地重新计数（只是简单地等整天的日志都齐了），再按 `(ad_id, day)` 和流式结果比较。只有两者完全一致的行才被标记 `is_reconciled=true`、当作最终计费数字；任何分歧都通过一条可审计、留痕的更正记录来修正，而不是静默覆盖。这就是 lambda 架构模式（快速的近似层加一个较慢的权威批处理层）专门用来让计费正确性「可证明」而不只是「大概率正确」的具体应用。",
+    "tags": []
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "problems.media.file-sync": [
+    "problems-file-sync-delta-sync-bandwidth-reduction",
+    "problems-file-sync-cross-user-dedup-savings",
+    "problems-file-sync-block-content-addressed-model",
+    "problems-file-sync-cdc-vs-fixed-chunking",
+    "problems-file-sync-optimistic-concurrency-conflict",
+    "problems-file-sync-cursor-log-vs-merkle-tree",
+    "problems-file-sync-dedup-confirmation-side-channel",
+    "problems-file-sync-e2e-encryption-dedup-tradeoff"
+  ]
+}

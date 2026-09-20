@@ -1,0 +1,11 @@
+{
+  "problems.geo.ride-hailing": [
+    "problems-ride-hailing-ingestion-vs-matching-order-of-magnitude",
+    "problems-ride-hailing-exclusive-lock-not-optimistic",
+    "problems-ride-hailing-websocket-bidirectional",
+    "problems-ride-hailing-surge-streaming-precompute",
+    "problems-ride-hailing-hexagon-supply-demand-gradient",
+    "problems-ride-hailing-lock-outage-no-safe-fallback",
+    "problems-ride-hailing-10x-shared-shard-key"
+  ]
+}

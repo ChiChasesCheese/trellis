@@ -27,6 +27,10 @@ import yaml
 
 _H1_RE = re.compile(r"^#\s+(.+)$", re.MULTILINE)
 
+# The same bar a clipped page has to clear (trellis/clippings.py): below it a
+# note is a pointer or a stub, not something to sit down and read.
+AUTHORED_MIN_PROSE = 2500
+
 
 class ReadingError(ValueError):
     """Raised for a reading file that violates the format."""
@@ -40,10 +44,18 @@ class Reading:
     url: str = ""
     tags: list[str] = field(default_factory=list)
     extra: dict = field(default_factory=dict)
+    prose: int = 0                # characters of body, for telling an article from a pointer
 
     @property
     def link_target(self) -> str:
         return self.path.stem
+
+    @property
+    def authored(self) -> bool:
+        """An article written in the vault rather than a pointer at one
+        elsewhere: no URL, and a body long enough to be the text itself. It
+        needs no clipping — the note is its own archive."""
+        return not self.url and self.prose >= AUTHORED_MIN_PROSE
 
 
 def parse_reading(path: str | Path, allowed_extra: frozenset[str] = frozenset()) -> Reading:
@@ -82,6 +94,7 @@ def parse_reading(path: str | Path, allowed_extra: frozenset[str] = frozenset())
         url=str(meta.get("url", "") or ""),
         tags=list(tags),
         extra={k: meta[k] for k in allowed_extra if k in meta},
+        prose=len(body.strip()),
     )
 
 

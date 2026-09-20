@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-file-sync-delta-sync-bandwidth-reduction",
+    "node": "problems.media.file-sync",
+    "type": "qa",
+    "q": "In a file sync system that splits files into fixed 4MB blocks, why does a localized edit to a 200MB file (touching only 2 of its 50 blocks) upload roughly 25x less data than re-uploading the whole file, and what design choice does this justify?",
+    "a": "A 200MB file split into 4MB blocks has 50 blocks; if an edit only changes 2 of them, block-level delta sync uploads just 2 x 4MB = 8MB instead of the full 200MB, a 200/8 = 25x reduction. This gap justifies making block-level chunking and delta sync a core part of the write path rather than an optional optimization, because without it the platform's raw daily change-data volume would need to be multiplied by dozens of times in workloads where large files are common, which no realistic bandwidth or storage budget could absorb.",
+    "tags": [],
+    "q_zh": "在一个把文件切成固定 4MB 块的文件同步系统中，为什么对一个 200MB 文件的一次局部编辑（只改动其 50 个块中的 2 个）上传的数据量比重传整个文件少约 25 倍？这个数字支撑了什么设计决策？",
+    "a_zh": "一个 200MB 的文件按 4MB 分块共有 50 个块；如果一次编辑只改动其中 2 个，块级增量同步只需要上传 2 × 4MB = 8MB，而不是整份 200MB，即 200÷8 = 25 倍的减少。这个差距证明块级分块和增量同步必须是写路径的核心部分，而不是可选优化——如果不做，在大文件常见的场景下，平台每日原始变更数据量要再乘以几十倍，任何现实的带宽或存储预算都扛不住。"
+  },
+  {
+    "id": "problems-file-sync-cross-user-dedup-savings",
+    "node": "problems.media.file-sync",
+    "type": "qa",
+    "q": "In a file sync system where blocks are keyed by their SHA-256 content hash rather than by owner, why does storing blocks this way automatically deduplicate identical content uploaded by different users, and what fraction of raw storage growth might this save?",
+    "a": "Because the block's storage key is derived purely from its byte content (its hash), two different users uploading byte-identical content (a common installer, a shared template, a public dataset) produce the same hash and therefore reference the same stored block instead of each writing a separate copy; the block only needs one physical copy regardless of how many files or users reference it. Assuming roughly 30% of blocks across a large user base are byte-identical to blocks already stored by someone else, this content-addressed model can cut actual new storage writes by about 30% relative to a design that stores every user's blocks in an isolated per-owner namespace.",
+    "tags": [],
+    "q_zh": "在一个块以其 SHA-256 内容哈希（而不是所有者）为键的文件同步系统中，为什么这种存储方式能自动对不同用户上传的相同内容去重？这大概能省下多大比例的原始存储增长？",
+    "a_zh": "因为块的存储键完全由其字节内容（哈希值）派生，两个不同用户上传字节完全相同的内容（常见安装包、共享模板、公开数据集）会产生同一个哈希，从而引用同一个已存储的块，而不是各自写一份独立拷贝——无论多少文件或用户引用它，这个块只需要一份物理拷贝。假设在一个大用户群体中，约 30% 的块与其他人已存储的块字节完全相同，这种内容寻址模型相比「每个所有者独立命名空间存储」的设计，能把实际新增存储写入量减少约 30%。"
+  },
+  {
+    "id": "problems-file-sync-block-content-addressed-model",
+    "node": "problems.media.file-sync",
+    "type": "qa",
+    "q": "In a file sync system's data model, why is a Block keyed by its content hash and referenced by multiple FileVersion records (via an ordered blockIds list), rather than each FileVersion owning a private copy of its bytes?",
+    "a": "Keying blocks by content hash means identical content — whether from two versions of the same file that only changed a small part, or from two different files entirely — is stored exactly once and simply referenced by however many FileVersion records need it, with a refCount tracking how many references still exist so unreferenced blocks can eventually be garbage collected. If each FileVersion instead embedded its own private copy of the bytes, every new version of a large file would duplicate the storage of every unchanged block, defeating both the delta-sync bandwidth savings and cross-user deduplication that the content-addressed model provides for free.",
+    "tags": [],
+    "q_zh": "在文件同步系统的数据模型中，为什么 Block 以内容哈希为键、被多个 FileVersion 记录（通过一个有序的 blockIds 列表）引用，而不是每个 FileVersion 各自拥有一份私有的字节拷贝？",
+    "a_zh": "以内容哈希为键存储块，意味着相同的内容——无论是同一文件只改了一小部分的两个版本，还是完全不同的两个文件——都只存一份，被需要它的任意数量 FileVersion 记录引用，用 refCount 跟踪还有多少引用存在，没有引用的块最终可以被垃圾回收。如果每个 FileVersion 都各自内嵌一份私有字节拷贝，一个大文件的每个新版本都会把所有未变化的块重复存一遍，白白丢掉了内容寻址模型本该免费获得的增量同步带宽节省和跨用户去重收益。"
+  },
+  {
+    "id": "problems-file-sync-cdc-vs-fixed-chunking",
+    "node": "problems.media.file-sync",
+    "type": "qa",
+    "q": "In a file sync system, why does fixed-size chunking cause a 'cascading hash invalidation' when bytes are inserted in the middle of a file, and how does content-defined chunking (CDC) avoid it?",
+    "a": "With fixed-size chunking, block boundaries are determined purely by byte offset (every 4MB, say); inserting even a few bytes shifts every subsequent boundary, so every block from the insertion point onward gets a different hash even though most of their actual content is unchanged, forcing all of them to be re-uploaded. Content-defined chunking instead places boundaries at positions determined by a rolling hash (e.g. a Rabin fingerprint) over the content itself, so an insertion only affects the one or two blocks immediately around it — boundaries further along the file re-synchronize with the content and stay unchanged, at the cost of the client having to compute the rolling hash over every byte instead of just counting offsets.",
+    "tags": [],
+    "q_zh": "在文件同步系统中，为什么固定大小分块在文件中间插入字节时会引发「级联哈希失效」？内容定义分块（CDC）是如何避免这个问题的？",
+    "a_zh": "固定大小分块的块边界完全由字节偏移量决定（比如每 4MB 一块）；即使只插入几个字节，之后所有的块边界都会整体偏移，导致插入点之后的每个块都得到不同的哈希，即使它们的实际内容大部分没变，也会被迫全部重新上传。内容定义分块则用对内容本身计算的滚动哈希（如 Rabin 指纹）来确定边界位置，所以插入只影响紧邻插入点的一两个块——更靠后的边界会随内容重新对齐、保持不变，代价是客户端要对每个字节计算滚动哈希，而不是简单地按偏移量计数。"
+  },
+  {
+    "id": "problems-file-sync-dedup-confirmation-side-channel",
+    "node": "problems.media.file-sync",
+    "type": "qa",
+    "q": "In a file sync system with cross-user content-addressed deduplication, why is exposing a client-facing 'does a block with this hash already exist' API a security risk, and how can a design keep the storage savings without exposing it?",
+    "a": "If any client can freely query whether a given content hash already exists in the system, an attacker who knows the hash of a specific known file can probe the API to learn whether that exact file has been uploaded by anyone — a 'confirmation of a file' side channel that leaks information about other users' stored content without ever downloading it. A design can keep the underlying storage-layer deduplication (identical bytes still map to one stored block) while scoping the client-visible 'do you already have this' check to only the blocks already visible within the requesting account or shared space, so the boolean existence check is never exposed as a global, freely queryable oracle.",
+    "tags": [],
+    "q_zh": "在一个具有跨用户内容寻址去重能力的文件同步系统中，为什么向客户端暴露一个「这个哈希的块是否已存在」的 API 是一种安全风险？设计上如何在不暴露它的前提下保留存储节省？",
+    "a_zh": "如果任何客户端都能自由查询某个内容哈希是否已存在于系统中，一个知道某份已知文件哈希的攻击者就可以探测这个 API，从而得知这份确切的文件是否已经被别人上传过——这是一种「确认文件存在」的侧信道，在不下载任何内容的情况下泄露了其他用户已存储内容的信息。设计上可以保留底层存储层的去重能力（相同字节仍然映射到同一个已存储的块），同时把面向客户端可见的「你是否已拥有这个」检查限定在请求账号或共享空间内已经可见的块范围内，从不把这个布尔存在性检查暴露成一个全局可自由查询的预言机。"
+  },
+  {
+    "id": "problems-file-sync-optimistic-concurrency-conflict",
+    "node": "problems.media.file-sync",
+    "type": "qa",
+    "q": "In a file sync system, how does having each version-submission request carry the parentVersionId it was based on let the server detect a true concurrent edit conflict, and what does the server do instead of silently picking a winner?",
+    "a": "The server only accepts a submitted new version as a linear update when the submitted parentVersionId matches the file's current version id; if two devices went offline, each based their edit on the same now-stale parent, and both later submit, the second submission's parentVersionId no longer matches (because the first submission already advanced it), which the server detects as a genuine concurrent conflict rather than a normal sequential update. Instead of using a rule like last-write-wins to silently overwrite one device's changes, the server stores the losing submission as a separate conflicted copy alongside the accepted version, so both sets of changes are preserved and a human or client can resolve the conflict later.",
+    "tags": [],
+    "q_zh": "在文件同步系统中，每次版本提交请求携带其所基于的 parentVersionId，是如何让服务器检测到真正的并发编辑冲突的？服务器不会静默选一个赢家，而是怎么做？",
+    "a_zh": "服务器只在提交的 parentVersionId 与文件当前版本号一致时，才把这次提交当作线性更新接受；如果两台设备断线期间各自基于同一个（此时已过期的）父版本做了修改，之后都提交上来，后到的那个提交的 parentVersionId 就不再匹配（因为第一个提交已经推进了版本号），服务器据此检测出这是一次真正的并发冲突，而不是普通的顺序更新。服务器不会用类似最后写入胜出（last-write-wins）的规则静默覆盖某一方的改动，而是把落败的那次提交存成一个与被接受版本并列的冲突副本，让双方的改动都被保留下来，后续由人工或客户端解决冲突。"
+  },
+  {
+    "id": "problems-file-sync-cursor-log-vs-merkle-tree",
+    "node": "problems.media.file-sync",
+    "type": "qa",
+    "q": "In a file sync system, why does a monotonically increasing, append-only change log with per-device cursors achieve savings similar to a Merkle-tree directory diff, without requiring the server to maintain an explicit tree structure?",
+    "a": "A Merkle-tree diff avoids comparing every file by comparing subtree hashes and only descending into subtrees that changed, so the comparison cost scales with the number of changed files rather than the total directory size. A cursor-based change log achieves the same effect differently: every change is appended once with a monotonically increasing cursor, and a reconnecting device simply asks for every log entry since its last known cursor, which is naturally just the changed files, without any hash comparison or tree traversal — the log's append order already encodes 'what changed since X', so the server never needs to build or incrementally update a separate tree structure to get an equivalent reduction in sync cost.",
+    "tags": [],
+    "q_zh": "在文件同步系统中，为什么一条单调递增、只追加写入、每台设备各自维护游标的变更日志，能达到和默克尔树目录差异比对相近的节省效果，而不需要服务器维护一棵显式的树结构？",
+    "a_zh": "默克尔树差异比对通过比较子树哈希、只往下遍历发生变化的子树来避免逐文件比较，所以比较成本随变化文件数而不是目录总大小增长。基于游标的变更日志用另一种方式达到同样的效果：每次变更都以单调递增的游标追加写入一次，重新联网的设备只需要请求自己上次已知游标之后的全部日志条目，而这天然就只是发生变化的文件，不需要任何哈希比较或树遍历——日志的追加顺序本身就已经编码了「自某个点之后变化了什么」，服务器根本不需要构建或增量维护一棵单独的树结构，就能获得等价的同步成本节省。"
+  },
+  {
+    "id": "problems-file-sync-e2e-encryption-dedup-tradeoff",
+    "node": "problems.media.file-sync",
+    "type": "qa",
+    "q": "In a file sync system that relies on cross-user content-addressed deduplication for roughly 30% of its storage savings, why would making end-to-end (zero-knowledge) encryption the default break that deduplication entirely, and what is the design's remaining option to partially preserve it?",
+    "a": "Cross-user deduplication works because the server can compute a content hash over plaintext bytes and recognize when two users' content is identical; if clients encrypt content with their own per-user keys before upload, the same underlying plaintext produces completely different ciphertext (and thus a different hash) for each user, so the server can no longer tell that two encrypted blobs originated from the same content, and deduplication across users stops working. The remaining option is convergent encryption — deriving the encryption key from a hash of the plaintext itself, so identical plaintext still produces identical ciphertext across users — but this reintroduces a weaker version of the same confirmation-of-a-file side-channel risk that scoping the existence check was designed to avoid, so it trades away some of the privacy benefit it was meant to add.",
+    "tags": [],
+    "q_zh": "在一个约 30% 存储节省依赖跨用户内容寻址去重的文件同步系统中，为什么把端到端（零知识）加密设为默认会让这个去重能力彻底失效？设计上还有什么办法能部分保留它？",
+    "a_zh": "跨用户去重之所以有效，是因为服务器能对明文字节计算内容哈希、识别出两个用户的内容是否相同；如果客户端在上传前就用各自专属的密钥加密内容，同样的明文在不同用户那里会产生完全不同的密文（因而哈希也不同），服务器就再也无法判断两份加密内容是否源自同一份明文，跨用户去重直接失效。剩下的选项是收敛加密（convergent encryption）——用明文自身的哈希派生加密密钥，让相同明文在不同用户下仍产生相同密文——但这会重新引入一种较弱形式的、与「限定存在性检查范围」本来要避免的同一类「确认文件存在」侧信道风险，等于用它原本想增加的隐私收益去换一部分回来。"
+  }
+]

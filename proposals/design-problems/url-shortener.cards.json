@@ -1,0 +1,80 @@
+[
+  {
+    "id": "problems-url-shortener-capacity-arithmetic",
+    "node": "problems.foundations.url-shortener",
+    "type": "cloze",
+    "text": "In a URL shortener design that creates {{c1::1,000,000}} new short links per day with a {{c2::100:1}} read-to-write (redirect-to-create) ratio, average write QPS is about {{c3::12}} (1,000,000 ÷ 86,400 seconds/day) and average read (redirect) QPS is about {{c4::1,160}} (100,000,000 redirects/day ÷ 86,400).",
+    "text_zh": "在一个每天新增 {{c1::1,000,000}} 条短链接、读写比（重定向 : 创建）为 {{c2::100:1}} 的短链接设计中，平均写 QPS 约为 {{c3::12}}（1,000,000 ÷ 86,400 秒/天），平均读（重定向）QPS 约为 {{c4::1,160}}（每天 1 亿次重定向 ÷ 86,400）。",
+    "tags": []
+  },
+  {
+    "id": "problems-url-shortener-nosql-vs-relational",
+    "node": "problems.foundations.url-shortener",
+    "type": "qa",
+    "q": "In a URL shortener design, why choose a NoSQL key-value / wide-column store for the short_code → long_url mapping instead of a relational database, given that the whole dataset is well under 1TB and would easily fit on a single Postgres instance?",
+    "a": "Because the deciding factor is access pattern, not data volume: every read and write is a pure primary-key lookup (short_code → long_url) with no joins and no multi-row transactions. NoSQL key-value/wide-column stores natively support horizontal partitioning and multi-region active-active writes without extra coordination middleware, which matters because the redirect path carries a 99.99%-availability target; a relational database could handle this data volume, but achieving the same multi-region write availability with it needs significantly more operational machinery.",
+    "q_zh": "在一个短链接（URL shortener）设计中，即便全部数据远小于 1TB、单台 Postgres 就能装下，为什么 short_code → long_url 映射还是选择 NoSQL 键值 / 宽列族（wide-column）存储而不是关系型数据库？",
+    "a_zh": "因为决定性因素是访问模式而不是数据量：每次读写都是纯粹的主键查找（short_code → long_url），没有 join，也没有跨行事务。NoSQL 键值 / 宽列族存储原生支持水平分区和多区域主动写（active-active），不需要额外的协调中间件——这一点很重要，因为重定向路径承担着 99.99% 的可用性目标；关系型数据库能扛住这个数据量，但要达到同等的多区域写可用性需要多得多的运维机制。",
+    "tags": []
+  },
+  {
+    "id": "problems-url-shortener-counter-vs-hash",
+    "node": "problems.foundations.url-shortener",
+    "type": "qa",
+    "q": "In a URL shortener design, why is a pre-generated counter-based key pool (a Key Generation Service, or KGS) preferred over hashing the long URL (e.g., MD5) and truncating to 7 Base62 characters for short-code generation?",
+    "a": "Truncating a hash to 7 Base62 characters gives a keyspace of about 3.52×10^12 codes; by the birthday-paradox approximation, inserting 1.825 billion codes (5 years at 1,000,000/day) into that space yields a collision probability around 38%, forcing a check-then-retry step on every write and erasing the hash approach's supposed statelessness advantage. A counter-based KGS instead hands out pre-generated, guaranteed-unique codes in batches (e.g., 1,000 per writer instance), so there is zero collision by construction, and each instance only contacts the coordination service roughly once per exhausted batch — at 35 peak write QPS that's under 0.04 coordinator calls per second per instance.",
+    "q_zh": "在一个短链接设计中，为什么用预生成的计数器键池（短码生成服务，Key Generation Service / KGS）而不是对长 URL 做哈希（如 MD5）后截断成 7 位 Base62 字符来生成短码？",
+    "a_zh": "把哈希截断成 7 位 Base62 字符，键空间约为 3.52×10^12 个码；按生日悖论（birthday paradox）近似估算，把 18.25 亿个码（5 年、每天 100 万条）插入这个空间，碰撞概率约为 38%，这就要求每次写入都做「检查后重试」，抵消了哈希方案本应具备的无状态优势。基于计数器的 KGS 则以批次（例如每批 1,000 个）预先分配保证唯一的短码，从结构上做到零碰撞，且每个实例大约每消耗完一批才需要联系协调服务一次——在峰值写 QPS 为 35 的情况下，每实例每秒调用协调服务的次数低于 0.04 次。",
+    "tags": []
+  },
+  {
+    "id": "problems-url-shortener-hot-key-mitigation",
+    "node": "problems.foundations.url-shortener",
+    "type": "qa",
+    "q": "In a URL shortener design, a single viral short link can push traffic on one cache shard far above the system's overall peak (thousands of QPS on one key while the system-wide peak is only around 5,800 QPS). What two mechanisms address this hot-key problem specifically, as opposed to just adding more cache capacity?",
+    "a": "(1) Request coalescing / single-flight: when a hot key's cache entry expires, concurrent cache misses for that key are merged so only one request goes to the database while the rest wait on that single result, preventing a cache-stampede (thundering herd) from overwhelming the database. (2) Hot-key replication: once a key's access rate crosses a threshold, its value is replicated across multiple cache nodes and clients are routed to one of the replicas, trading memory for the ability to serve one key at a rate no single cache node could sustain alone.",
+    "q_zh": "在一个短链接设计中，一条爆款（viral）短链可能把单个缓存分片的流量推到远高于系统整体峰值的水平（单键达到数千 QPS，而系统整体峰值只有约 5,800 QPS）。有哪两种机制专门用来解决这种热点键（hot key）问题，而不是单纯增加缓存容量？",
+    "a_zh": "（1）请求合并 / single-flight：当热点键的缓存条目过期时，把针对该键的并发缓存未命中请求合并，只让一个请求打到数据库，其余请求等待这一个结果，从而防止缓存失效风暴（thundering herd）打垮数据库。（2）热点键复制：一旦某个键的访问频率超过阈值，就把它的值复制到多个缓存节点上，客户端路由到其中一个副本，用空间换取单个键的水平扩展能力，而不是依赖单个缓存节点独自扛住。",
+    "tags": []
+  },
+  {
+    "id": "problems-url-shortener-async-analytics",
+    "node": "problems.foundations.url-shortener",
+    "type": "qa",
+    "q": "In a URL shortener design with a 100:1 read-to-write ratio, why would synchronously incrementing a click_count column in the primary database on every redirect be a design mistake, and what should happen instead?",
+    "a": "Doing it synchronously turns every redirect — the high-QPS read path — into a write against the primary store, forcing the primary database to absorb the full 100:1 read volume as writes and defeating the point of separating a low-QPS write path from a high-QPS read path. Instead, the redirect service should fire an async click event to a message queue after already returning the 302 to the client, and a downstream stream aggregator should batch-increment counts on a fixed window (e.g., every minute), accepting eventually-consistent click counts in exchange for keeping redirect latency independent of the analytics pipeline.",
+    "q_zh": "在一个读写比为 100:1 的短链接设计中，为什么在每次重定向时同步地对主数据库中的 click_count 列做自增会是一个设计错误？应该怎么做？",
+    "a_zh": "同步自增会把每一次重定向——也就是高 QPS 的读路径——都变成对主存储的一次写入，等于让主数据库承受全部 100:1 的读流量作为写流量，抵消了把低 QPS 写路径和高 QPS 读路径分离开的意义。正确做法是重定向服务在已经向客户端返回 302 之后，异步地把一条点击事件发送到消息队列，由下游的流式聚合器按固定时间窗口（例如每分钟）批量地做增量写入，用「点击计数最终一致」换取重定向延迟不依赖分析管道。",
+    "tags": []
+  },
+  {
+    "id": "problems-url-shortener-302-vs-301",
+    "node": "problems.foundations.url-shortener",
+    "type": "qa",
+    "q": "In a URL shortener design, why default to HTTP 302 (temporary redirect) instead of 301 (permanent redirect) for the short-code redirect response, given that 301 would let browsers and proxies cache the redirect and offload traffic from the origin?",
+    "a": "A 301 gets cached by browsers and intermediate proxies, so after the first visit a client never sends that request to the origin again — meaning the service loses the ability to later change the link's target, disable it (e.g., to take down a malicious link), or collect click analytics from that client. A 302 forces every visit to return to the origin, preserving control and analytics at the cost of the free traffic offload; 301 is only appropriate when the product guarantees a link's target will never change.",
+    "q_zh": "在一个短链接设计中，尽管 301（永久重定向）会被浏览器和代理缓存、从而为源站卸载流量，为什么重定向响应默认使用 302（临时重定向）而不是 301？",
+    "a_zh": "301 会被浏览器和中间代理缓存，客户端第一次访问之后就再也不会把这个请求发回源站——这意味着服务失去了之后修改链接目标、下线链接（例如下架恶意链接）或者采集该客户端点击分析的能力。302 强制每次访问都回源，用放弃「免费的流量卸载」换取对链接的持续控制力和分析能力；只有当产品明确承诺某条链接的目标永不改变时，才适合用 301。",
+    "tags": []
+  },
+  {
+    "id": "problems-url-shortener-kgs-outage",
+    "node": "problems.foundations.url-shortener",
+    "type": "qa",
+    "q": "In a URL shortener design, if the key-generation coordination service (KGS) that hands out short-code ranges becomes unavailable, what happens to link creation versus link redirection, and why?",
+    "a": "Link creation degrades or fails — writer instances that have exhausted their locally cached batch of codes can't obtain a new range and start rejecting create requests — but link redirection is completely unaffected, because the redirect path depends only on the cache and the primary key-value store, never on the KGS. This isolation is a direct consequence of decoupling the low-QPS write path (which needs the KGS) from the high-QPS read path (which doesn't); a KGS outage of a few minutes is tolerable because writer instances pre-fetch batches (e.g., 1,000 codes) and don't call the coordinator on every request.",
+    "q_zh": "在一个短链接设计中，如果负责分配短码区间的短码生成协调服务（KGS）不可用了，链接创建和链接重定向分别会受到什么影响，为什么？",
+    "a_zh": "链接创建会降级或失败——本地缓存的短码批次已耗尽的写服务实例无法获取新区间，开始拒绝创建请求——但链接重定向完全不受影响，因为重定向路径只依赖缓存和主键值存储，从不依赖 KGS。这种隔离性质是把低 QPS 的写路径（依赖 KGS）和高 QPS 的读路径（不依赖 KGS）解耦的直接结果；由于写服务实例会预取批次（例如每批 1,000 个短码），并不需要每次请求都联系协调服务，几分钟的 KGS 中断是可以容忍的。",
+    "tags": []
+  },
+  {
+    "id": "problems-url-shortener-10x-100x-evolution",
+    "node": "problems.foundations.url-shortener",
+    "type": "qa",
+    "q": "In a URL shortener design, what changes structurally when redirect traffic grows from a baseline peak of about 5,800 QPS to 10x (~58,000 QPS) and then 100x (~580,000 QPS)?",
+    "a": "At 10x, the system moves to multi-region deployment: each region gets a disjoint counter range for short-code creation (e.g., region A gets 0–1B, region B gets 1B–2B) so creation needs no cross-region coordination, and redirect logic is pushed to edge compute (e.g., Cloudflare Workers or Lambda@Edge) so most redirects never reach the origin. At 100x, the short_code → long_url mapping itself is replicated into an edge key-value store (e.g., DynamoDB Global Tables or a CDN's edge KV), so the origin database becomes mainly a write target and source of truth rather than something most reads touch, and analytics shifts from per-click aggregation to sampled counting because exact click counts stop being worth their write throughput at that volume.",
+    "q_zh": "在一个短链接设计中，当重定向流量从基准峰值约 5,800 QPS 增长到 10 倍（约 58,000 QPS）、再到 100 倍（约 58 万 QPS）时，系统结构上会发生什么变化？",
+    "a_zh": "在 10 倍规模，系统转向多区域部署：每个区域拿到不相交的计数器区间用于短码创建（例如区域 A 为 0–10 亿，区域 B 为 10 亿–20 亿），创建路径不再需要跨区域协调，重定向逻辑下沉到边缘计算（例如 Cloudflare Workers 或 Lambda@Edge），使得大多数重定向永远不会到达源站。在 100 倍规模，short_code → long_url 映射本身被复制到边缘键值存储（例如 DynamoDB Global Tables 或 CDN 的边缘 KV）中，源站数据库主要变成写入目标和最终真源，而不是大多数读请求会触达的地方；分析也从逐次点击聚合转为采样统计，因为在这个量级下精确点击计数的价值已经比不上它占用的写吞吐。",
+    "tags": []
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "problems.social.live-comments": [
+    "problems-live-comments-fanout-amplification",
+    "problems-live-comments-sse-vs-websocket",
+    "problems-live-comments-dispatcher-subscription-registry",
+    "problems-live-comments-sampling-ratio",
+    "problems-live-comments-per-video-ordering",
+    "problems-live-comments-catchup-recent-n",
+    "problems-live-comments-single-video-hotspot",
+    "problems-live-comments-10x-sampling-tightens"
+  ]
+}

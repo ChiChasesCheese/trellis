@@ -1,0 +1,12 @@
+{
+  "problems.commerce.digital-wallet": [
+    "problems-digital-wallet-cross-shard-probability",
+    "problems-digital-wallet-2pc-vs-tcc-by-participant",
+    "problems-digital-wallet-why-not-saga-for-core-transfer",
+    "problems-digital-wallet-tcc-dangling-fence",
+    "problems-digital-wallet-deterministic-reducer",
+    "problems-digital-wallet-heavy-account-snapshot-cadence",
+    "problems-digital-wallet-shard-migration-freeze-drain-replay",
+    "problems-digital-wallet-more-shards-worsen-coordination"
+  ]
+}

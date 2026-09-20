@@ -6,11 +6,15 @@ Why single-leader systems need election, what Raft guarantees, fencing tokens, a
 
 **Requires:** [[domains/system-design/map/distributed.replication|Replication]]
 
-**Unlocks:** [[domains/system-design/map/reliability.multi-region|Multi-Region]]
+**Unlocks:** [[domains/system-design/map/reliability.multi-region|Multi-Region]], [[domains/system-design/map/problems.foundations.lock-service|Distributed Lock & Coordination Service]], [[domains/system-design/map/problems.commerce.stock-exchange|Stock Exchange & Trading (Robinhood)]]
 
 ## Readings
 - [[aws-leader-election|Leader election in distributed systems (AWS Builders' Library)]]
 - [[raft-paper|In Search of an Understandable Consensus Algorithm (Raft)]]
+
+## Drills
+- [[design-lock-service|Drill: Design a distributed lock and coordination service]]
+- [[design-stock-exchange|Drill: Design a stock exchange and the retail brokerage in front of it]]
 
 ## Cards (10)
 1. [[distributed-consensus-in-practice]]

@@ -1,0 +1,12 @@
+{
+  "problems.foundations.unique-id-generator": [
+    "problems-unique-id-generator-sequence-bits-not-bottleneck",
+    "problems-unique-id-generator-worker-id-bits-from-deployment-count",
+    "problems-unique-id-generator-embedded-vs-service-placement",
+    "problems-unique-id-generator-clock-rollback-refuse",
+    "problems-unique-id-generator-two-exhaustion-scales",
+    "problems-unique-id-generator-uuidv7-collision-math",
+    "problems-unique-id-generator-lease-coordinator-outage",
+    "problems-unique-id-generator-sign-bit-boundary"
+  ]
+}

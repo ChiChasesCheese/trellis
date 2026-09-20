@@ -6,8 +6,13 @@ Key-value, document, wide-column, graph — the access patterns each one exists 
 
 **Core** — part of the first pass through this subject.
 
+**Unlocks:** [[domains/system-design/map/problems.foundations.url-shortener|URL Shortener]]
+
 ## Readings
 - [[fowler-nosql|NoSQL Guide (Martin Fowler)]]
+
+## Drills
+- [[design-url-shortener|Drill: Design a URL shortener]]
 
 ## Cards (9)
 1. [[storage-keyvalue-fit]]

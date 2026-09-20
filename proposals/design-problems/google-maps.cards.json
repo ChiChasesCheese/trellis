@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-google-maps-eta-refresh-vs-route-qps",
+    "node": "problems.geo.google-maps",
+    "type": "qa",
+    "q": "In a Google Maps-style navigation design where the average trip lasts 20 minutes and the client polls for an updated ETA every 30 seconds, why does the average request rate for in-trip ETA refreshes end up about 40x higher than the average request rate for initial route requests, and what does that ratio imply for the system's architecture?",
+    "a": "A single navigation session issues one initial route request but roughly (20*60)/30 = 40 ETA-refresh requests over the course of the trip, so refresh traffic scales with trip duration divided by refresh interval while route-request traffic scales with the number of trips started — at these parameters the refresh stream is about 40x the route-request stream. This means the in-trip refresh path must be a cheap, separate operation from full route planning: if every refresh re-ran a complete point-to-point route search, the dominant cost in the whole system would be redundant re-planning of routes that mostly haven't changed, so refreshes need to be incremental updates against the already-computed route instead.",
+    "q_zh": "在一个类 Google Maps 的导航设计中，假设平均单次行程 20 分钟，客户端每 30 秒轮询一次 ETA 更新，为什么行程中 ETA 刷新请求的平均速率会比初始路线请求的平均速率高出约 40 倍？这个比例对系统架构有什么含义？",
+    "a_zh": "一次导航会话只发起一次初始路线请求，但整趟行程会产生大约 (20×60)/30 = 40 次 ETA 刷新请求——也就是说刷新流量随「行程时长 / 刷新间隔」扩展，而路线请求流量只随「发起的行程数」扩展，在这组参数下刷新流量约是路线请求流量的 40 倍。这意味着行程中的刷新路径必须是一个和完整路径规划分离、代价很轻的操作：如果每次刷新都重新做一次完整的点对点路径搜索，整个系统里最大的开销会变成对大概率没怎么变化的路线做冗余的重新规划——刷新应该是针对已经算好的路线做增量更新，而不是重新规划。",
+    "tags": []
+  },
+  {
+    "id": "problems-google-maps-eta-refresh-endpoint-decision",
+    "node": "problems.geo.google-maps",
+    "type": "qa",
+    "q": "In a Google Maps-style navigation design, why does the API expose a separate lightweight `eta-refresh` endpoint for in-trip updates instead of having the client call the same route-planning endpoint it used to start the trip?",
+    "a": "The route-planning endpoint does a full point-to-point search over the road graph plus a heavy ETA-model inference combining live traffic and historical patterns, sized for the much lower request rate of trips being started. In-trip refreshes happen far more often than new trips start (about 40x more often at typical trip-length and refresh-interval assumptions), and the client's position and remaining route are already known, so a refresh only needs to apply the latest traffic delta to the remaining legs of the existing route rather than re-searching the graph from scratch — treating it as a distinct, cheap endpoint keeps the expensive full-planning path sized for its actual (much lower) load.",
+    "q_zh": "在一个类 Google Maps 的导航设计中，为什么 API 要为行程中的更新单独暴露一个轻量的 `eta-refresh` 端点，而不是让客户端复用它一开始发起行程时调用的路线规划端点？",
+    "a_zh": "路线规划端点要在路网图上做一次完整的点对点搜索，还要跑一次结合实时路况和历史模式的重量级 ETA 模型推理，它的容量是按发起新行程这个低得多的请求速率设计的。行程中的刷新请求远比新行程的发起频繁（在典型的行程时长和刷新间隔假设下约高出 40 倍），而且此时客户端的位置和剩余路线已经知道，一次刷新只需要把最新的路况增量应用到既有路线的剩余路段上，不需要在图上重新搜索——把它做成一个独立的轻量端点，能让昂贵的完整规划路径按它真实（低得多）的负载来设计容量。",
+    "tags": []
+  },
+  {
+    "id": "problems-google-maps-contraction-hierarchies-mechanism",
+    "node": "problems.geo.google-maps",
+    "type": "qa",
+    "q": "In a road-network routing design, how does Contraction Hierarchies (CH) preprocessing let a query at serve time avoid exploring most of the graph, and why is that necessary for point-to-point routes spanning a continental-scale road network?",
+    "a": "CH orders every node by an importance heuristic and then contracts them from least to most important, one at a time: when a node is removed, a shortcut edge is added directly between any pair of its neighbors whose shortest path actually went through it, preserving distances. A query then runs a bidirectional search that only follows edges toward more-important nodes from both the origin and destination side, so it explores almost none of the low-importance local-road nodes and instead converges quickly through the highway-level shortcuts. Plain Dijkstra fails at continental scale because it settles nodes in order of raw distance from the origin, and a route spanning thousands of kilometers forces it to settle a large fraction of all nodes before reaching the destination — CH avoids this by moving that cost into a one-time offline preprocessing step instead of paying it on every query.",
+    "q_zh": "在路网路径规划设计中，Contraction Hierarchies（CH，收缩分层）的预处理是如何让查询时的搜索避免遍历图中大部分节点的？为什么这对横跨洲际尺度路网的点对点路线规划是必要的？",
+    "a_zh": "CH 按某种重要性启发式给所有节点排序，然后按重要性从低到高逐个收缩（contract）节点：移除一个节点时，如果它的某两个邻居之间的最短路径确实经过它，就在这两个邻居之间直接加一条保留原距离信息的捷径边（shortcut）。查询时做一次双向搜索，起点侧和终点侧都只沿着通向更重要节点的方向扩展，这样几乎不会遍历不重要的本地道路节点，而是很快通过高速公路级别的捷径收敛。朴素 Dijkstra 在洲际尺度会失效，是因为它按到起点的距离从近到远逐个结算节点，一条横跨数千公里的路线会迫使它在到达终点之前结算掉图中相当大比例的节点——CH 把这部分开销挪到一次性的离线预处理阶段，而不是每次查询都重新付出这个代价。",
+    "tags": []
+  },
+  {
+    "id": "problems-google-maps-gnn-eta-supersegment",
+    "node": "problems.geo.google-maps",
+    "type": "qa",
+    "q": "In Google Maps' production ETA system (described in a September 2020 Google DeepMind blog post), how does the graph neural network (GNN) model traffic, and what real-world accuracy gain did it report?",
+    "a": "The model groups adjacent road segments that share significant traffic volume into units called 'Supersegments,' then represents the local road network as a graph where each route segment is a node and edges connect segments that are consecutive on the same road or meet at an intersection; a message-passing algorithm lets the predicted state of upstream segments propagate to influence predictions for downstream segments, and the model combines this with historical traffic patterns rather than relying only on a live snapshot. Google DeepMind reported real-time ETA accuracy improvements of up to 50% in cities such as Berlin, Jakarta, Sao Paulo, Sydney, Tokyo, and Washington D.C. (51% in Taichung), though smaller gains (16%) in London and Copenhagen — the wide spread shows the gain is highly dependent on local road structure and historical data density, not a uniform global effect.",
+    "q_zh": "在 Google Maps 生产环境的 ETA 系统中（2020 年 9 月 Google DeepMind 官方博客所述），图神经网络（GNN）是如何建模路况的？它公开报告的真实准确率提升幅度是多少？",
+    "a_zh": "该模型把共享显著交通量的相邻路段组合成称为超级路段（Supersegment）的单元，再把局部路网表示成一个图——每个路段是一个节点，同一条路上相邻或在交叉口相连的路段之间连边；用消息传递（message passing）算法让上游路段的预测状态传播、影响下游路段的预测，并把这个结果和历史路况模式结合，而不是只依赖实时快照。Google DeepMind 报告在柏林、雅加达、圣保罗、悉尼、东京、华盛顿特区等城市把实时 ETA 准确率提升最多达 50%（台中达 51%），但伦敦和哥本哈根的提升幅度较小（16%）——这个差异说明提升幅度高度依赖当地路网结构和历史数据密度，不是一个全球统一的效果。",
+    "tags": []
+  },
+  {
+    "id": "problems-google-maps-ch-vs-mld-tradeoff",
+    "node": "problems.geo.google-maps",
+    "type": "qa",
+    "q": "When a road-routing engine needs to incorporate live traffic updates, why might a design choose a partitioned hierarchical method (Multi-Level Dijkstra / Customizable Route Planning-style, as used by OSRM) over plain Contraction Hierarchies (CH), even though plain CH gives faster individual queries?",
+    "a": "Plain CH's shortcuts and node-importance ordering are computed from the graph's edge weights (travel times), so when live traffic changes those weights across the network, correctness in principle requires re-running the whole contraction preprocessing — an offline batch job that can take on the order of an hour on a large road network, far slower than the minute-level freshness live traffic needs. A partitioned method instead divides the graph into cells and only precomputes shortcuts between each cell's boundary nodes; when traffic changes edge weights, only the affected cells' boundary shortcuts need to be recomputed ('customized'), which is fast enough to run frequently. The trade-off is that partitioned queries are somewhat slower than pure CH queries (though still millisecond-scale), in exchange for being able to absorb live traffic changes without a full preprocessing rebuild.",
+    "q_zh": "当一个路径规划引擎需要接入实时路况更新时，为什么设计可能会选择一种分区式的分层方案（类似 Multi-Level Dijkstra / Customizable Route Planning，OSRM 所采用的方式），而不是纯粹的 Contraction Hierarchies（CH），即便纯 CH 的单次查询更快？",
+    "a_zh": "纯 CH 的捷径边和节点重要性排序都是基于图的边权重（通行时间）算出来的，一旦实时路况让网络里的这些权重整体改变，理论上要保证正确性就需要重新跑一遍完整的收缩预处理——这是一个离线批处理，在大规模路网上可能要花上小时级的时间，远跟不上实时路况要求的分钟级新鲜度。分区式方案则把图划分成若干分区（cell），只预计算每个分区边界节点之间的捷径；路况改变边权重时，只需要重新计算（customize）受影响分区的边界捷径，这个开销小到可以频繁执行。代价是分区式查询比纯 CH 查询略慢（但仍是毫秒级），换来的是不需要整体重建预处理就能吸收实时路况变化。",
+    "tags": []
+  },
+  {
+    "id": "problems-google-maps-eta-outage-fallback",
+    "node": "problems.geo.google-maps",
+    "type": "qa",
+    "q": "In a Google Maps-style navigation design, if the live traffic aggregation service or the ETA prediction model becomes unavailable, what should the route-planning service do instead of rejecting route requests?",
+    "a": "It should degrade to computing ETA from each road segment's static speed limit and historical average speed for that time of day, rather than refusing to serve requests. An ETA with roughly 10-20% more error than the live-traffic-informed prediction is still far more useful to a user trying to navigate than no route at all — the same degrade-gracefully principle used when a spatial index rebuild fails and the system falls back to the last good snapshot rather than going fully unavailable.",
+    "q_zh": "在一个类 Google Maps 的导航设计中，如果实时路况聚合服务或 ETA 预测模型不可用，路线规划服务应该怎么做，而不是直接拒绝路线请求？",
+    "a_zh": "应该降级为用每条路段的静态限速和该时段的历史平均车速来计算 ETA，而不是拒绝服务请求。一个比结合实时路况的预测多出约 10%–20% 误差的 ETA，对一个正在导航的用户来说仍然远比完全无法获得路线有用——这和空间索引重建失败时回退到上一份可用快照、而不是让系统整体不可用，是同一个优雅降级原则。",
+    "tags": []
+  },
+  {
+    "id": "problems-google-maps-10x-graph-partition-finer",
+    "node": "problems.geo.google-maps",
+    "type": "qa",
+    "q": "In a Google Maps-style routing design, if the size of the in-memory, region-partitioned road graph grows roughly 10x (for example, by adding pedestrian paths and trails to a graph that previously only had drivable roads), what has to change about the graph's partitioning, and what tension does that create?",
+    "a": "Each geographic partition has to become finer-grained so the graph for any single partition still fits comfortably in one node's memory, since the coarser partitioning that worked at the smaller scale would now produce partitions too large to hold in RAM. This creates a direct tension in choosing partition granularity: partitions that are too coarse don't fit in memory, but partitions that are too fine increase the number of cross-partition boundary queries and the overhead of merging results across partition boundaries — the same granularity trade-off that governs how finely a partitioned hierarchical routing index (like Multi-Level Dijkstra) divides the graph in the first place.",
+    "q_zh": "在一个类 Google Maps 的路径规划设计中，如果常驻内存、按区域分区的路网图规模涨到约 10 倍（比如把此前只包含可驾驶道路的图，扩展到也包含步行道和小径），路网图的分区方式需要怎么变？这会带来什么样的张力？",
+    "a_zh": "每个地理分区必须切得更细，才能保证单个分区的图仍然能舒服地放进一台节点的内存——在更小规模下够用的粗粒度分区，现在会产生大到内存装不下的分区。这在分区粒度的选择上造成直接的张力：分区太粗会放不进内存，分区太细则会增加跨分区边界查询的数量和跨分区合并结果的开销——这正是决定分层路径规划索引（比如 Multi-Level Dijkstra）一开始该把图切多细的同一种粒度取舍。",
+    "tags": []
+  },
+  {
+    "id": "problems-google-maps-offline-needs-road-subgraph",
+    "node": "problems.geo.google-maps",
+    "type": "qa",
+    "q": "In a Google Maps-style design, why does an offline map download need to include more than just the map tiles for the selected region in order to support turn-by-turn navigation while offline?",
+    "a": "Tiles only let the client display the map visually; computing a route requires access to the road graph itself, so the offline package must also include a self-contained subgraph of the road network for that region, extracted with a buffer extending past the selected boundary so routes that briefly leave and re-enter the region (for example, to go around an overpass) still resolve correctly. Because this offline subgraph can't reach the online live-traffic service, offline routing can only use static speed limits and historical average speeds, and offline rerouting can't benefit from live-traffic-informed replanning the way online navigation can.",
+    "q_zh": "在一个类 Google Maps 的设计中，为什么离线地图下载想要支持离线状态下的逐向导航（turn-by-turn navigation），就必须包含的不只是所选区域的地图瓦片？",
+    "a_zh": "瓦片只能让客户端把地图画出来，计算路线需要访问路网图本身，所以离线包还必须包含这个区域一份自成一体的路网子图——提取时要在所选边界之外再多留一圈缓冲区，这样即便路线短暂离开又重新进入这个区域（比如绕过一座立交桥），依然能正确解算。因为这份离线子图无法连接在线的实时路况服务，离线路径规划只能使用静态限速和历史平均车速，离线状态下的重新规划也无法像在线导航那样受益于基于实时路况的重新规划。",
+    "tags": []
+  }
+]

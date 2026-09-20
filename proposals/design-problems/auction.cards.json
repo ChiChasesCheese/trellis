@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-auction-collision-rate-drives-serialized-actor",
+    "node": "problems.commerce.auction",
+    "type": "qa",
+    "q": "A hot online auction receives bids at 50 bids/sec in its final seconds, and each single-row conditional write to update the current highest bid takes about 5ms to commit. Modeling arrivals within one 5ms commit window as Poisson with mean mu = 50 x 0.005 = 0.25, the probability that 2 or more bids land in the same commit window is about 2.65%, giving roughly 5.3 colliding windows per second (200 windows/sec x 2.65%). Why does this number push the design toward routing all bids for one auction to a single serialized writer, instead of relying on plain optimistic conditional writes with client-side retry?",
+    "a": "5.3 collision-windows per second is not a rare edge case, it's roughly one collision every 190ms during the busiest second — meaning a meaningful fraction of bidders would need a full failed-write, re-read-current-price, re-submit round trip right when the confirmation latency budget is tightest. Routing every bid for that auction to one in-memory, single-threaded actor resolves who's leading before any durable write happens, so the write itself never fails due to a concurrent bid; it can only be rejected by business logic (the bid was too low), which needs no retry loop.",
+    "q_zh": "一场热门在线拍卖在最后几秒的出价到达速率是 50 次/秒，更新当前最高价的单行条件写提交耗时约 5ms。把一个 5ms 提交窗口内的到达建模为泊松分布，均值 μ = 50 × 0.005 = 0.25，则该窗口内出现 2 个或更多出价的概率约为 2.65%，对应每秒约 5.3 次冲突窗口（200 个窗口/秒 × 2.65%）。为什么这个数字会把设计推向“把同一场拍卖的所有出价路由到单一序列化写者”，而不是依赖普通的乐观条件写加客户端重试？",
+    "a_zh": "每秒 5.3 次冲突窗口不是罕见的边缘情况，而是最繁忙的那一秒里大约每 190 毫秒就发生一次——意味着相当一部分出价者会在确认延迟预算最紧张的时刻，经历一次完整的“写入失败 → 重新读取当前价 → 重新提交”往返。把同一场拍卖的所有出价路由到一个内存中的单线程 actor，能在任何持久化写入发生之前就先判断出谁领先，所以写入本身永远不会因为并发出价而失败，只会被业务逻辑判定为“出价不够高”而直接拒绝，不需要重试循环。",
+    "tags": []
+  },
+  {
+    "id": "problems-auction-contention-differs-from-ticket-booking",
+    "node": "problems.commerce.auction",
+    "type": "qa",
+    "q": "In an online auction, all bidders on one popular item compete to update the exact same row (the current highest bid). Why does this make a single-row conditional-write pattern (like `UPDATE ... WHERE version = :expected`, which works well for reserving one of many independent seats in a ticket-booking system) behave differently here than it does when many buyers are each trying to claim a different seat?",
+    "a": "In a ticket-booking system, contention is spread across many independent rows — ten thousand buyers usually aren't all fighting over the same seat, so most conditional writes succeed on the first try. In an auction, every bidder on a hot item is writing to the same single row, so the contention doesn't dilute across rows at all — it concentrates entirely on one row, and the fraction of conditional writes that lose the race and must retry rises sharply as bid arrival rate increases, which is exactly the scenario a per-item serialized writer is built to avoid.",
+    "q_zh": "在一场在线拍卖里，所有对同一件热门商品出价的人都在竞争更新完全相同的一行数据（当前最高价）。为什么这会让单行条件写模式（例如 `UPDATE ... WHERE version = :expected`，在票务预订系统里用来抢多个互相独立的座位之一时效果很好）在这里表现出不同的行为？",
+    "a_zh": "在票务预订系统里，竞争分散在许多相互独立的行上——一万个买家通常不会全都抢同一个座位，所以大多数条件写第一次尝试就能成功。而在拍卖里，一件热门商品的每个出价者都在写同一行，竞争完全不会被分摊到多行上——而是全部集中在一行上，随着出价到达速率上升，条件写输掉竞争、需要重试的比例会急剧上升，这正是按商品分配单一序列化写者要避免的场景。",
+    "tags": []
+  },
+  {
+    "id": "problems-auction-proxy-bid-increment-table-worked-example",
+    "node": "problems.commerce.auction",
+    "type": "qa",
+    "q": "Using eBay's published bid-increment table (e.g. a $0.50 increment applies in the $5.00–$24.99 price band, a $2.50 increment in the $100.00–$249.99 band), if the current display price is $19.99 (meaning the current leader's private maximum bid is $20.50) and a new bidder enters a proxy maximum of $45.02, what is the new display price and why is it not $45.02?",
+    "a": "The new maximum ($45.02) exceeds the current leader's maximum ($20.50), so the new bidder becomes the leader. But proxy bidding only raises the display price as far as needed to beat the previous leader by one increment, not to the new leader's own ceiling: the increment applicable at $20.50 (the $5.00–$24.99 band) is $0.50, so the new display price is min($45.02, $20.50 + $0.50) = $21.00. The new leader's true ceiling of $45.02 stays private and is only revealed incrementally if someone else bids higher.",
+    "q_zh": "用 eBay 公开的价位递增表（例如 5.00–24.99 美元区间对应 0.50 美元的递增单位，100.00–249.99 美元区间对应 2.50 美元），如果当前展示价是 19.99 美元（即当前领先者的私密出价上限是 20.50 美元），一个新出价者提交了 45.02 美元的代理出价上限，新的展示价是多少？为什么不是 45.02 美元？",
+    "a_zh": "新上限（45.02 美元）超过了当前领先者的上限（20.50 美元），所以新出价者成为领先者。但代理出价只会把展示价提高到刚好压过前一位领先者一个递增单位的程度，而不是直接跳到新领先者自己的上限：20.50 美元所在的区间（5.00–24.99 美元）对应的递增单位是 0.50 美元，所以新的展示价是 min(45.02, 20.50+0.50) = 21.00 美元。新领先者真正的 45.02 美元上限仍然保密，只有在别人出价更高时才会被逐步揭示。",
+    "tags": []
+  },
+  {
+    "id": "problems-auction-soft-close-expected-extension-needs-cap",
+    "node": "problems.commerce.auction",
+    "type": "qa",
+    "q": "A soft-close rule resets a 60-second countdown to 60 seconds every time a new bid arrives within that window. Modeling a hot auction's late-stage bid arrivals as Poisson with an average of one bid every 20 seconds (lambda = 0.05/sec), the probability of a 60-second gap with no bid is e^(-0.05*60) = e^(-3) ≈ 0.0498, so the expected number of 60-second windows before the auction naturally closes is about 1/0.0498 ≈ 20.1, for an expected total extension of about 20.1 x 60 ≈ 1,205 seconds (~20 minutes). What design implication follows from this number?",
+    "a": "A pure soft-close rule with no other bound has no guaranteed end time — under sustained bidding, expected extension is unbounded in principle and, even under this modest arrival rate, already averages about 20 minutes past the original close time. This means soft-close must be paired with a hard ceiling on total extension time (or a rule that tightens the window after repeated extensions), otherwise a sufficiently persistent bidder (or coordinated bidding) could keep an auction open indefinitely, which is an unacceptable product outcome even though it isn't a correctness bug.",
+    "q_zh": "一条软关闭（soft close）规则规定：只要在最后 60 秒的窗口内出现新出价，倒计时就重置为 60 秒。把一场热门拍卖后期的出价到达建模为泊松过程，平均每 20 秒一次（λ = 0.05/秒），则 60 秒窗口内没有出价的概率是 e^(-0.05×60) = e^(-3) ≈ 0.0498，因此拍卖自然结束前预期要经历约 1/0.0498 ≈ 20.1 个 60 秒窗口，预期总延长时间约为 20.1 × 60 ≈ 1,205 秒（约 20 分钟）。这个数字带来了什么设计上的含义？",
+    "a_zh": "单纯的软关闭规则如果不加其他约束，就没有确定的结束时间上限——在持续出价的情况下，理论上预期延长时间是无界的，即使在这个并不算激进的到达速率假设下，平均也已经比原定结束时间多拖了约 20 分钟。这意味着软关闭必须搭配一个总延长时间的硬上限（或者在多次延长后收紧窗口的规则），否则足够持久的出价者（或者协同刷单）理论上可以让拍卖无限期不结束——这虽然不是正确性 bug，但在产品层面是不可接受的结果。",
+    "tags": []
+  },
+  {
+    "id": "problems-auction-watcher-fanout-decoupled-eventual-consistency",
+    "node": "problems.commerce.auction",
+    "type": "qa",
+    "q": "In an online auction design, why is the pub/sub fan-out that pushes the current price to watchers built as a completely separate, asynchronous path from the write that actually decides the new current price, rather than having the bid-writing operation itself push to every watcher before returning success to the bidder?",
+    "a": "The write path (deciding who is currently leading) has to be strongly consistent — every read of the current price must reflect every accepted bid so far, with no split-brain view. Watchers, in contrast, only need eventual consistency — seeing the new price a few hundred milliseconds late is an acceptable product trade-off, not a correctness violation. Coupling the fan-out into the same transaction as the bid write would make the bid's confirmation latency depend on how many thousands of watchers must be notified, which directly threatens the bid path's own tight latency budget for no correctness benefit, since the fan-out layer doesn't need the same consistency guarantee.",
+    "q_zh": "在一个在线拍卖设计中，为什么把当前价格推送给围观者的发布订阅扇出，要构建成一条和“真正决定新的当前价格”的写入完全分离的异步路径，而不是让出价写入操作本身在返回成功之前就推送给每一个围观者？",
+    "a_zh": "写路径（决定谁当前领先）必须强一致——任何时刻查询当前价格都必须反映到目前为止所有被接受的出价，不能出现两个视图分裂的情况。而围观者只需要最终一致——晚几百毫秒看到新价格是可以接受的产品取舍，不是正确性问题。如果把扇出耦合进和出价写入相同的事务，出价的确认延迟就会取决于需要通知多少成千上万个围观者，这会直接威胁出价路径本就紧张的延迟预算，却换不来任何正确性上的好处，因为扇出层根本不需要相同的一致性保证。",
+    "tags": []
+  },
+  {
+    "id": "problems-auction-actor-crash-rebuild-from-store-not-replay",
+    "node": "problems.commerce.auction",
+    "type": "qa",
+    "q": "When the single serialized actor handling bids for one auction crashes, how does its replacement instance recover the correct current-price state before accepting new bids, and how is this different from how a stock exchange's matching engine recovers after a crash?",
+    "a": "The replacement actor reads the current price and current leader from the authoritative store (a single row read) to rebuild its in-memory state, because an auction's entire state is just that one row — there's no larger order book to reconstruct. This differs from a stock exchange's matching engine, whose recovery replays an entire durable journal of every input event to deterministically rebuild a much larger in-memory order book; an auction's state is small enough that reading the latest row directly is sufficient, and bids arriving during the recovery window simply queue until the new actor is ready rather than needing replay.",
+    "q_zh": "当处理某场拍卖出价的单一序列化 actor 崩溃时，它的替代实例在接受新出价之前，如何恢复正确的当前价格状态？这和股票交易所的撮合引擎崩溃后的恢复方式有什么不同？",
+    "a_zh": "替代 actor 从权威存储读取当前价格和当前领先者（只读一行）来重建内存状态，因为一场拍卖的全部状态就是这一行数据——不存在需要重建的更大的订单簿。这和股票交易所撮合引擎的恢复方式不同：后者要重放整份持久化日志里的每一条输入事件，才能确定性地重建一个大得多的内存订单簿；拍卖的状态小到直接读最新的一行就够了，恢复窗口内到达的出价只需要排队等待新 actor 就绪，不需要重放。",
+    "tags": []
+  },
+  {
+    "id": "problems-auction-close-exactly-once-idempotent-token",
+    "node": "problems.commerce.auction",
+    "type": "qa",
+    "q": "Multiple scheduler instances (running for high availability) may all attempt to trigger the close of the same auction at roughly its end time. How does routing every close attempt through the same per-auction serialized actor, combined with a conditional write like `UPDATE auctions SET status='closed', close_token=:token WHERE id=:id AND status='active'`, guarantee the close side effects (declaring a winner, sending notifications) happen exactly once rather than zero or multiple times?",
+    "a": "Every scheduler instance's close attempt is routed to the same actor for that auction, so attempts are serialized rather than racing independently against the database. The conditional write only succeeds for the first attempt to reach the actor while status is still 'active' — it flips status to 'closed' and records a unique close_token in that same atomic operation. Every subsequent close attempt (from other scheduler instances, or from a retry) finds status already 'closed', so its conditional write matches zero rows, and the actor short-circuits: it returns 'already closed' without re-running the winner-declaration or notification logic, so those side effects never execute more than once.",
+    "q_zh": "多个调度器实例（为了高可用而并行运行）可能都在同一场拍卖的结束时间附近尝试触发关闭。为什么把每一次关闭尝试都路由到同一个按拍卖分区的序列化 actor，并配合一条条件写语句 `UPDATE auctions SET status='closed', close_token=:token WHERE id=:id AND status='active'`，能保证关闭的副作用（确定赢家、发送通知）恰好执行一次，而不是零次或多次？",
+    "a_zh": "每个调度器实例针对同一场拍卖的关闭尝试都被路由到同一个 actor，所以这些尝试是被串行化的，而不是各自独立地和数据库竞争。条件写只有在 status 仍是“active”时到达 actor 的第一个尝试才会成功——它在同一个原子操作里把 status 改成“closed”并记录一个唯一的 close_token。之后的每一次关闭尝试（无论来自其他调度器实例还是重试）都会发现 status 已经是“closed”，它的条件写会匹配到零行，actor 直接短路返回“已经关闭”，不会重新执行确定赢家或发送通知的逻辑，所以这些副作用永远不会被执行超过一次。",
+    "tags": []
+  },
+  {
+    "id": "problems-auction-10x-fanout-sharding-not-actor-throughput",
+    "node": "problems.commerce.auction",
+    "type": "qa",
+    "q": "At 10x scale, the number of simultaneously active auctions grows from 5 million to 50 million, and the count of the hottest 0.1% of auctions grows proportionally from 5,000 to 50,000. Given that each auction already gets its own dedicated serialized actor (which scales horizontally since actors for different auctions are independent), why does the watcher fan-out layer — not the per-auction actors — become the part of the design that needs to change at 10x?",
+    "a": "Adding more auctions just means instantiating more independent, stateless-to-scale actors, one per auction, which is not a bottleneck since they don't coordinate with each other. But the pub/sub fan-out layer that broadcasts price updates to watchers has active watch relationships that scale with both the number of hot auctions and watchers per auction — going from roughly 5,000 x 50,000 = 250 million active watch relationships to about 2.5 billion at 10x. That growth concentrates load on whichever fan-out nodes serve the busiest auctions, so the fan-out layer needs finer-grained sharding by auction id to keep any single node from carrying a disproportionate share of the busiest auctions' broadcast traffic.",
+    "q_zh": "在 10 倍演进场景下，同时活跃的拍卖数从 500 万增长到 5,000 万，最热门的 0.1% 拍卖数量同比例从 5,000 场增长到 5 万场。既然每场拍卖已经有自己专属的序列化 actor（这天然可以水平扩展，因为不同拍卖的 actor 互相独立），为什么真正需要在 10 倍规模下调整的是围观者扇出层，而不是每场拍卖的 actor？",
+    "a_zh": "增加拍卖数量只是意味着实例化更多互相独立的 actor，每场拍卖一个，这不是瓶颈，因为它们之间不需要协调。但负责把价格更新广播给围观者的发布订阅扇出层，其活跃围观关系数量同时随热门拍卖数量和每场拍卖的围观者数量增长——从大约 5,000 × 50,000 = 2.5 亿活跃围观关系，在 10 倍后增长到约 25 亿。这种增长会把负载集中在服务最繁忙拍卖的那些扇出节点上，所以扇出层需要按拍卖 id 做更细粒度的分片，避免单个节点承担不成比例的最繁忙拍卖广播流量。",
+    "tags": []
+  }
+]

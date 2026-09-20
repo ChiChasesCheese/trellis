@@ -1,0 +1,12 @@
+{
+  "problems.social.tinder": [
+    "problems-tinder-swipe-write-forces-wide-column",
+    "problems-tinder-match-gate-safety-margin",
+    "problems-tinder-bidirectional-preference-filter",
+    "problems-tinder-bloom-filter-storage-reduction",
+    "problems-tinder-index-side-filter-terms-cap",
+    "problems-tinder-match-detection-canonical-pair-key",
+    "problems-tinder-geoshard-timezone-imbalance",
+    "problems-tinder-10x-match-gate-sharding"
+  ]
+}

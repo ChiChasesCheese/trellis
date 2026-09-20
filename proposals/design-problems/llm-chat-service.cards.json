@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-llm-chat-service-kv-cache-bytes-per-token",
+    "node": "problems.realtime.llm-chat-service",
+    "type": "qa",
+    "q": "For a 70-billion-parameter chat model shaped like Llama 3 70B (80 layers, 8 key-value heads from grouped-query attention, head dimension 128, FP16 weights), how do you compute the KV cache（键值缓存）memory cost of a single token, and why does that number, not GPU compute power, cap how many conversations one GPU replica can serve concurrently?",
+    "a": "Per token, each of the 80 layers stores one key vector and one value vector, each sized (KV heads × head dimension): 2 (K and V) × 8 × 128 × 2 bytes (FP16) = 4,096 bytes per layer, times 80 layers = 327,680 bytes ≈ 320 KiB per token. A conversation holding 2,000 tokens of context therefore pins about 0.65 GB of GPU memory for as long as it stays active — memory that no other conversation can use. A serving replica has a fixed pool of GPU memory left over after loading model weights, so however fast its GPUs compute, the number of conversations it can hold open at once is capped by dividing that leftover memory by the per-conversation KV cache size, not by FLOPs.",
+    "q_zh": "对于一个 700 亿参数、形状类似 Llama 3 70B 的聊天模型（80 层、8 个分组查询注意力的 KV 头、每头维度 128、FP16 权重），如何计算单个 token 的 KV 缓存（键值缓存）内存开销？为什么这个数字而不是 GPU 算力，决定了一个 GPU 副本能同时服务多少个会话？",
+    "a_zh": "每个 token，80 层中的每一层都要存一个 key 向量和一个 value 向量，每个的大小是（KV 头数 × 头维度）：2（K 和 V）× 8 × 128 × 2 字节（FP16）= 每层 4,096 字节，乘以 80 层 = 327,680 字节 ≈ 每 token 320 KiB。因此一个持有 2,000 token 上下文的会话，只要保持活跃，就会占用约 0.65 GB 的 GPU 显存——这是其他任何会话都无法使用的显存。一个推理副本在加载完模型权重后剩下固定大小的显存池，无论 GPU 算力多强，它能同时保持多少个会话，都由「剩余显存 ÷ 每会话 KV 缓存大小」决定，而不是由 FLOPs 决定。",
+    "tags": []
+  },
+  {
+    "id": "problems-llm-chat-service-messages-vs-prompt-source-of-truth",
+    "node": "problems.realtime.llm-chat-service",
+    "type": "qa",
+    "q": "In a multi-turn chat service backend, why should the raw, per-turn messages be stored as the only authoritative data, with the actual prompt sent to the model on each turn treated as a disposable value recomputed at request time — rather than storing the assembled prompt itself as the record of what happened?",
+    "a": "The assembled prompt depends on a policy that changes over time: how much context window budget is available, how older turns get truncated or summarized, and which model is serving the conversation. If the assembled prompt were stored as the authoritative record, upgrading the model (a different context window size) or changing the summarization policy would leave historical records built under a stale policy with no way to regenerate them under the new one. Keeping raw messages as the only source of truth and rebuilding the prompt fresh on every turn means a policy or model change only requires changing the assembly logic, not migrating stored data.",
+    "q_zh": "在一个多轮对话服务的后端里，为什么应该把每一轮的原始消息存储为唯一权威数据，把每一轮实际发给模型的 prompt 当作运行时重新计算出的一次性派生值——而不是把拼装好的 prompt 本身当作「发生过什么」的记录存起来？",
+    "a_zh": "拼装出的 prompt 依赖一套会随时间变化的策略：有多少上下文窗口预算可用、更早的轮次如何被截断或摘要、以及当前是哪个模型在服务这个会话。如果把拼装好的 prompt 当作权威记录存起来，一旦升级模型（上下文窗口大小变了）或调整摘要策略，历史记录里存的就是在旧策略下构建的产物，无法用新策略重新生成。只把原始消息当作唯一权威数据、每一轮都动态重新拼装 prompt，意味着策略或模型的变化只需要改拼装逻辑，不需要迁移存量数据。",
+    "tags": []
+  },
+  {
+    "id": "problems-llm-chat-service-disconnect-decoupled-from-generation",
+    "node": "problems.realtime.llm-chat-service",
+    "type": "qa",
+    "q": "In an LLM chat service streaming tokens over SSE (Server-Sent Events), why should a dropped client connection NOT automatically cancel the in-progress generation on the GPU, and how does the server let the client catch up after reconnecting?",
+    "a": "By the time a connection drops mid-generation, the GPU has already spent real compute and memory producing the tokens generated so far; canceling on disconnect throws that already-paid-for work away, and network blips (especially on mobile) are common enough that this waste would recur constantly. Instead, generation keeps running server-side regardless of the client's connection state, with generated tokens written to a server-side buffer keyed by the request id. On reconnect, the client requests that buffer starting from the last event id it received: the server first replays whatever was generated while it was disconnected, then seamlessly continues streaming new tokens as they're produced. Only an explicit cancel call — a separate, deliberate action — actually stops generation and frees the GPU's KV cache for that request.",
+    "q_zh": "在一个通过 SSE（Server-Sent Events）流式传输 token 的 LLM 聊天服务中，为什么客户端连接断开不应该自动取消 GPU 上正在进行的生成？服务端如何让客户端在重连后接上进度？",
+    "a_zh": "在生成过程中连接断开时，GPU 已经为目前为止生成的 token 花费了真实的计算和显存；一断线就取消，等于把已经付出的成本直接扔掉，而网络抖动（尤其在移动端）足够常见，这种浪费会反复发生。正确做法是：无论客户端连接状态如何，生成都在服务端持续进行，已生成的 token 被写入一个按请求 id 索引的服务端缓冲区。重连时，客户端携带上次收到的最后一个事件 id 请求这个缓冲区：服务端先回放断线期间生成的内容，再无缝切换到继续流式发送新生成的 token。只有显式的取消调用——一个独立的、刻意的操作——才会真正停止生成并释放这个请求占用的 GPU KV 缓存。",
+    "tags": []
+  },
+  {
+    "id": "problems-llm-chat-service-paged-kv-vs-contiguous",
+    "node": "problems.realtime.llm-chat-service",
+    "type": "qa",
+    "q": "In a chat service where conversations range from a few tokens to several thousand tokens of context, why does allocating each conversation's KV cache as one contiguous block of GPU memory (that grows as the conversation grows) waste capacity even when the total free memory is sufficient, and what's the standard fix?",
+    "a": "Contiguous allocation requires a single unbroken span of free memory large enough for the request; as conversations of different lengths start and finish, the freed gaps between them end up scattered in sizes that don't line up with what a new, growing conversation needs next — external fragmentation — so a GPU can be unable to admit a new session even though the sum of its free memory would be more than enough. The fix, used by PagedAttention/vLLM-style serving, is to allocate KV cache in small fixed-size blocks that don't need to be physically contiguous, the same idea as virtual-memory paging in an OS: a conversation's KV cache is a list of blocks scattered wherever space is free, eliminating the fragmentation problem and letting memory utilization approach the theoretical capacity.",
+    "q_zh": "在一个会话上下文从几个 token 到几千 token 不等的聊天服务里，为什么把每个会话的 KV 缓存分配成一块随会话增长而扩大的连续 GPU 内存，即便总空闲显存足够，也会浪费容量？标准的解决办法是什么？",
+    "a_zh": "连续分配要求有一整段足够大的、不间断的空闲内存来满足请求；随着长度不同的会话陆续开始和结束，它们释放出的空隙大小参差不齐，往往和下一个正在增长的会话需要的大小对不上——这就是外部碎片——于是即使空闲显存总量绰绰有余，GPU 也可能无法容纳一个新会话。标准的解决办法（PagedAttention/vLLM 一类服务系统采用）是把 KV 缓存分配成不要求物理连续的小块固定大小的 block，和操作系统虚拟内存分页是同一个思路：一个会话的 KV 缓存是散落在任意空闲位置的一组 block 列表，从而消除碎片问题，让内存利用率逼近理论容量。",
+    "tags": []
+  },
+  {
+    "id": "problems-llm-chat-service-prefill-decode-disaggregation-tradeoff",
+    "node": "problems.realtime.llm-chat-service",
+    "type": "qa",
+    "q": "In a chat service that colocates prefill and decode on the same batch of GPUs, why does one user pasting a long document into the chat degrade the token-streaming latency other users are currently experiencing, and what's the alternative architecture?",
+    "a": "Prefill (processing an entire prompt in one parallel pass) is compute-bound, while decode (producing one token at a time) is memory-bandwidth-bound — the two phases have opposite resource profiles. When they run on the same batch of GPUs, a large prefill job for one long document consumes compute that the GPU would otherwise use to advance the next decode step for every other in-flight conversation, so those other users see their token stream visibly stall while the big prefill runs. The alternative — prefill/decode disaggregation — runs the two phases on physically separate GPU pools, each tuned for its own bottleneck, and hands off the KV cache between pools once prefill finishes; published benchmarks of this approach report throughput gains of several times, or equivalently much tighter latency SLOs, versus keeping both phases colocated on the same GPUs.",
+    "q_zh": "在一个把 prefill 和 decode 混部在同一批 GPU 上的聊天服务中，为什么某个用户粘贴一大段长文档会拖慢其他用户当前正在接收的逐字流式输出？替代架构是什么？",
+    "a_zh": "Prefill（一次并行处理整个 prompt）是计算受限的，而 decode（一次生成一个 token）是显存带宽受限的——两个阶段的资源画像正好相反。当它们跑在同一批 GPU 上时，一个长文档的大 prefill 任务会占用本该被 GPU 用来推进其他所有在飞会话下一个 decode 步骤的计算资源，于是其他用户会明显看到自己的 token 流在这段大 prefill 运行期间卡顿。替代架构——prefill/decode 分离——把两个阶段调度到物理独立的 GPU 池上，各自针对自己的瓶颈优化，prefill 完成后把 KV 缓存移交给 decode 池；已发表的基准测试报告这种方案相比两阶段混部在同一批 GPU 上，能达到数倍的吞吐提升，或者等价地在同吞吐下把延迟 SLO 收紧数倍。",
+    "tags": []
+  },
+  {
+    "id": "problems-llm-chat-service-per-tier-reserved-capacity",
+    "node": "problems.realtime.llm-chat-service",
+    "type": "qa",
+    "q": "In an LLM chat service where free and paying users share the same GPU fleet, why does a single global request queue with only per-user rate limiting fail to protect paying users during a surge of free-tier traffic, and what's the alternative admission-control design?",
+    "a": "Per-user rate limiting caps how fast any one user can send requests, but it does nothing about the aggregate effect of many free users being active at once — a surge across thousands of individual free users, each staying within their own rate limit, can still collectively saturate the shared GPU capacity that paying users' requests are waiting on, since the queue and the capacity pool are undifferentiated. The alternative is to reserve a fixed share of the GPU replica fleet per subscription tier (e.g. free, plus, enterprise each get their own slice) so tiers compete for capacity only within their own reservation; when a tier's own reserved capacity is exhausted, the admission controller rejects further requests from that tier (429 with a retry hint) rather than borrowing from another tier's reservation, even if the other tier's capacity is currently idle. This guarantees paying users' latency can't degrade because of free-tier volume, at the cost of not being globally utilization-optimal.",
+    "q_zh": "在一个免费用户和付费用户共享同一个 GPU 集群的 LLM 聊天服务中，为什么仅靠按用户做速率限制、所有人共用一个全局请求队列，无法在免费用户流量暴涨时保护付费用户？替代的准入控制设计是什么？",
+    "a_zh": "按用户做速率限制只能约束单个用户发请求的速度，管不住「大量免费用户同时活跃」这种群体性效应——成千上万个各自都没超出自己速率限制的免费用户，叠加起来仍然可能把付费用户的请求正在等待的共享 GPU 容量打满，因为队列和容量池本身没有做区分。替代方案是按订阅档位为 GPU 副本集群预留固定比例的容量（例如免费、付费、企业各自拥有自己的份额），各档位只在自己的预留额度内竞争；当某个档位自己的预留容量耗尽时，准入控制器会拒绝该档位的后续请求（返回 429 和重试提示），而不会借用其他档位的预留容量，即使那部分容量当前是空闲的。这保证了付费用户的延迟不会因为免费用户的流量而变差，代价是集群整体利用率不是全局最优。",
+    "tags": []
+  },
+  {
+    "id": "problems-llm-chat-service-gpu-node-failure-unresumable",
+    "node": "problems.realtime.llm-chat-service",
+    "type": "qa",
+    "q": "In an LLM chat service, a GPU node dying mid-generation is a fundamentally different failure than a client's network connection dropping mid-generation — why can't the reconnect-and-resume mechanism designed for dropped client connections rescue a session whose GPU node has failed?",
+    "a": "The reconnect-and-resume mechanism works because generation and its KV cache keep running on a healthy GPU node regardless of the client's connection state, so a client that comes back can simply be handed the buffered output and the still-live stream. When the GPU node itself dies, the KV cache for every session it was holding is lost along with it — replicating KV cache across nodes for every in-flight session would be far more expensive than the failure it protects against, so it isn't done. There is nothing left to resume: the client's SSE stream simply terminates, and the service can only offer a fresh generation attempt, distinguished from a duplicate submission by the client's idempotency key representing a new attempt rather than a retry of a completed one.",
+    "q_zh": "在一个 LLM 聊天服务中，GPU 节点在生成中途宕机和客户端网络连接在生成中途断开，是两种本质不同的故障——为什么为「客户端断线」设计的重连恢复机制救不回一个所在 GPU 节点已经故障的会话？",
+    "a_zh": "重连恢复机制之所以有效，是因为生成过程和它的 KV 缓存一直在一个健康的 GPU 节点上继续运行，不受客户端连接状态影响，所以重新连上的客户端只需要被交回已缓冲的输出和仍然存活的流。而当 GPU 节点本身宕机时，它持有的每一个会话的 KV 缓存都随之丢失——为每一个在飞会话都在多个节点间复制 KV 缓存，其代价会远高于它防范的这次故障本身，所以不这样做。这种情况下没有什么可以恢复：客户端的 SSE 流直接终止，服务只能提供一次全新的生成尝试，靠客户端的幂等键把它标记为一次新的尝试，而不是对一次已完成请求的重复提交。",
+    "tags": []
+  },
+  {
+    "id": "problems-llm-chat-service-10x-model-routing-lever",
+    "node": "problems.realtime.llm-chat-service",
+    "type": "qa",
+    "q": "As an LLM chat service scales DAU by roughly 10x, why does simply adding a proportional number of GPUs stop being the primary scaling lever, and what design change takes over as the main way to keep serving demand?",
+    "a": "GPU fleet size for the decode tier scales close to linearly with peak concurrent sessions, which scales with request volume — so a 10x growth in DAU pushes toward roughly a 10x growth in GPU count, quickly reaching a scale where a single region or cluster is no longer practical, and where GPU supply itself (not budget) becomes hard to source on short notice. The lever that changes the scaling curve is routing requests to differently-sized models rather than running every request through the same large model: cheap, fast requests get served by a small or distilled model, and only requests that need the large model's capability are escalated to it. This turns \"serve more requests\" from \"acquire proportionally more GPUs of the largest model\" into \"serve more requests per GPU\" by shrinking the fraction of traffic that needs the most expensive model at all.",
+    "q_zh": "当一个 LLM 聊天服务的 DAU 增长约 10 倍时，为什么单纯按比例增加 GPU 数量不再是主要的扩展杠杆？取而代之成为维持服务能力的主要设计变化是什么？",
+    "a_zh": "解码层的 GPU 集群规模大致随峰值并发会话数线性增长，而并发会话数又随请求量增长——所以 DAU 增长 10 倍会把 GPU 数量也推高约 10 倍，很快到达单一区域或单一集群不再现实的规模，GPU 供给本身（而不是预算）也会变得难以在短时间内采购到。真正改变这条增长曲线的杠杆是把请求路由到大小不同的模型，而不是让每个请求都跑同一个大模型：便宜、简单的请求交给一个小型或蒸馏模型处理，只有真正需要大模型能力的请求才升级过去。这把「服务更多请求」从「按比例采购更多跑最大模型的 GPU」，变成了「每张 GPU 服务更多请求」，因为需要最贵模型的流量占比被主动压缩了。",
+    "tags": []
+  }
+]

@@ -101,3 +101,44 @@ def test_go_deeper_sends_a_video_to_the_footage_not_the_note(tmp_path):
     assert links["Drill"].is_video
     assert links["Essay"].is_local
     assert not links["Essay"].is_video
+
+
+# --- an article written in the vault is its own archive ----------------------------
+#
+# A reading usually points at a page somewhere else, and is only "at hand"
+# once that page has been clipped. A solution article written here has no
+# page to point at: the note *is* the text. It must count as a readable
+# source and the card footer must open it, or the longest thing in the
+# vault would be the one thing a card cannot reach.
+
+from trellis.readings import parse_reading  # noqa: E402
+
+
+def authored(tmp_path, name="solution-demo", prose=3000):
+    path = tmp_path / f"{name}.md"
+    path.write_text("---\nnodes: [alpha.one]\n---\n# Designing Demo\n\n" + "A real sentence of prose. " * (prose // 26),
+                    encoding="utf-8")
+    return parse_reading(path)
+
+
+def test_a_reading_with_no_url_and_real_prose_is_authored(tmp_path):
+    assert authored(tmp_path).authored
+    assert not authored(tmp_path, "stub", prose=200).authored           # a stub is not an article
+    assert not reading(tmp_path, "elsewhere", "https://example.org/x").authored
+
+
+def test_an_authored_reading_is_a_readable_source_and_ranks_first(tmp_path):
+    ours = authored(tmp_path)
+    web = reading(tmp_path, "unclipped-page", "https://example.org/page")
+    assert is_readable_source(ours, {})
+    assert [r.title for r in sources_for(skeleton(tmp_path), [web, ours], "alpha.one")][0] == "Designing Demo"
+    assert leaves_without_readable_source(skeleton(tmp_path), [ours], {}) == []
+
+
+def test_the_footer_opens_an_authored_reading_in_the_vault(tmp_path):
+    [link] = go_deeper(skeleton(tmp_path), [authored(tmp_path)], "alpha.one", vault="vault")
+    assert link.is_local and "solution-demo" in link.href and link.web_href is None
+
+
+def test_without_a_vault_an_authored_reading_has_nowhere_to_link(tmp_path):
+    assert go_deeper(skeleton(tmp_path), [authored(tmp_path)], "alpha.one") == []

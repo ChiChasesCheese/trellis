@@ -1,5 +1,5 @@
 ---
-nodes: [correctness.ledger, correctness.idempotency, distributed.transactions, async.log]
+nodes: [correctness.ledger, correctness.idempotency, distributed.transactions, async.log, problems.commerce.payment-system]
 tags: [fintech, flagship]
 ---
 # Drill: Design a payment ledger service
@@ -19,8 +19,13 @@ settlement and reconciliation.
 - Idempotency keys on the write API; stored-response replay ([[correctness-idempotency-response-replay]]).
 - Balance = snapshot + delta replay; hot-account strategy ([[correctness-ledger-hot-accounts]], [[correctness-balance-derivation]]).
 - Ledger as append-only log feeding derived views ([[analytics-derived-data-framing]]).
-- Cutoff semantics and three-way reconciliation ([[correctness-ledger-cutoff-settlement]], [[correctness-ledger-three-way-recon]]).
+- Cutoff semantics and three-way reconciliation ([[correctness-ledger-cutoff-settlement]], [[correctness-ledger-three-way-recon]], [[problems-payment-system-three-way-vs-two-way-recon]]).
 - Isolation level choice for concurrent entry + balance check ([[distributed-write-skew]]).
+- PSP-side idempotency key layered on top of the client-facing one, so losing our own state never causes a second real charge ([[problems-payment-system-dual-idempotency-keys]]).
+- A PSP call timeout is treated as unknown, never retried blindly — the pending ledger entry is written before the call so recovery can query the PSP's true state instead of guessing ([[problems-payment-system-timeout-as-unknown]], [[problems-payment-system-write-intent-before-call]]).
+- The platform fee account is touched by every charge, so its write rate tracks total system throughput regardless of merchant-based sharding; at 10x volume this forces batched writes rather than further sharding ([[problems-payment-system-hot-fee-account-decouple-balance]], [[problems-payment-system-10x-batching-vs-sharding]]).
+
+**Solution**: [[solution-payment-system]] — attempt first, then read.
 
 **Attempt log**
 - [ ] Attempt 1 (date, 40 min, self-graded notes):

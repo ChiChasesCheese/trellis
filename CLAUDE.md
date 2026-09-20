@@ -39,6 +39,7 @@ Rules that are not derivable from the code:
 | `building-study-domains` | learning a subject systematically as a trellis domain (Kafka, Snowflake internals): field survey → Chinese skeleton → corpus → cards (digest / grow, card agents) → grown-card review → readings → drills → Anki loop; progress in `vault/domains/<domain>/BUILD.md` |
 | `distilling-work-into-domains` | connecting real work or an employer codebase to domain leaves as cases and stories; private tier stays on the work machine |
 | `building-company-interview-kits` | preparing a company's interview loop in `vault/interviews/companies/<co>/` |
+| `building-problem-banks` | a bank of real interview problems inside a domain (system design, low-level design): survey → cut line → problem leaves → gate → pilot → agent waves → orchestrator review. Holds the measured costs, the failure table and the fetch reachability list |
 
 ## Interview kit methodology (the Stripe way — reuse for every company)
 
@@ -86,6 +87,12 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
   Chi set `worktree.bgIsolation: "none"` (2026-09-14); sessions started before that stay isolated
   and cannot run `git -C ~/Code/trellis` — Chi pulls the main checkout from a normal terminal.
   Agents may not edit permission or isolation settings themselves; hand Chi the exact snippet.
+- **Review is the orchestrator's job, and the gate is not the review.** For written content: re-derive every number with
+  `python3 -c`, check the conclusion is something a product could ship, check the agent's self-reported weakest claims,
+  grep for process talk. Small fixes in place; substantive ones back to the same agent with `SendMessage` (it keeps its
+  context and returns in ~5 min). Every defect found becomes a rule in the group's instruction file.
+- Keep exactly three agents running: when one returns, review, commit, launch the next. Two sibling deliverables per
+  agent is the sweet spot (~250k tokens, ~20 min); budget ~130k tokens and ~12 min per problem-sized deliverable.
 - Never accept a subagent's "done": re-run `tools/verify_suites.py` (reference green **and** empty
   starter red) and `check_tree.py --strict` yourself. A 429 usage-limit death leaves partial files —
   salvage and finish them, don't respawn from scratch.
@@ -110,6 +117,10 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
 - `python3 -c "…"` that builds a path at runtime is refused by the guard like a heredoc: use a script file.
 - Desktop Anki is usually running while tests are: a CLI test that touches Anki must replace `cli._anki_call` with a fake
   (see `tests/test_loop_e2e.py`). `tests/conftest.py` makes the real client refuse, because a fixture deck once reached the live collection.
+- The repo is public: a reading for a commercial prep site is tagged `no-archive` (linked, never clipped); `clip` skips it.
+  A reading with no `url:` and a real body is an *authored* article and needs no clipping — card footers open it directly.
+- Card agents miscompute, contradict their own assumptions and pass off secondhand numbers: the failure table and guards are in
+  the `building-problem-banks` skill. Medium-hosted blogs, uber.com, dl.acm.org, w3.org and LeetCode Discuss refuse fetches (same skill).
 - `anki-push` moves a domain's decks onto their own preset `Trellis · <title>` (cloned, deals new cards by position) and
   repositions only cards Anki still calls new. Never write to the shared `Default` preset or to a reviewed card's `due`.
 - A leaf is weak only on cards with a verdict (taken / slipped); young cards are not evidence, and a weak leaf whose grown
@@ -133,6 +144,11 @@ uv run trellis --domain <d> digest <corpus> --status | --leaf L -n 5 -o p.md | -
 uv run trellis grow --leaf <d>:<leaf> -o p.md      # cards for a leaf no corpus covers; --import a.json
 uv run trellis --domain <d> stats                  # cards per branch, leaves without cards
 uv run trellis --all sync && uv run trellis --all build && uv run trellis --all anki-push
+
+# the system-design problem bank (vault/domains/system-design/BUILD.md; agent instructions in proposals/design-problems/AGENT.md)
+uv run python scripts/check_design_problems.py --all     # acceptance gate: 49/49 is the bar
+uv run python scripts/review_design_problem.py <slug>    # what to re-derive before accepting a problem
+uv run python scripts/design_problem_survey.py           # problems x sources, from the survey files
 
 # study order and pace (ADR 0010): `core: true` + `study:` in the skeleton, `step:` in a card
 uv run trellis --domain <d> steps                  # which leaves have no card order yet

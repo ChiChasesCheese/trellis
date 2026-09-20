@@ -1,0 +1,11 @@
+{
+  "problems.commerce.ticket-booking": [
+    "problems-ticket-booking-hold-vs-lock-contention",
+    "problems-ticket-booking-seat-state-conditional-update",
+    "problems-ticket-booking-isolation-write-skew-risk",
+    "problems-ticket-booking-hold-vs-decrement-model",
+    "problems-ticket-booking-hot-seats-candidate-set",
+    "problems-ticket-booking-virtual-queue-admission",
+    "problems-ticket-booking-payment-hold-extension-saga"
+  ]
+}

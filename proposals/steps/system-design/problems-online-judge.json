@@ -1,0 +1,12 @@
+{
+  "problems.realtime.online-judge": [
+    "problems-online-judge-burst-littles-law-prewarm",
+    "problems-online-judge-firecracker-vs-container-vs-gvisor",
+    "problems-online-judge-cpu-time-vs-wallclock-fairness",
+    "problems-online-judge-pids-limit-fork-bomb",
+    "problems-online-judge-sse-not-websocket-verdict-stream",
+    "problems-online-judge-queue-partition-by-contest-tenant-isolation",
+    "problems-online-judge-single-use-sandbox-leakage",
+    "problems-online-judge-plagiarism-review-not-autoban"
+  ]
+}

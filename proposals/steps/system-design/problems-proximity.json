@@ -1,0 +1,12 @@
+{
+  "problems.geo.proximity": [
+    "problems-proximity-index-fits-in-memory",
+    "problems-proximity-geohash-vs-quadtree-density",
+    "problems-proximity-s2-hilbert-vs-geohash-zorder",
+    "problems-proximity-h3-uniform-neighbor-distance",
+    "problems-proximity-two-stage-ranking-composite-cursor",
+    "problems-proximity-nearby-friends-pull-vs-push",
+    "problems-proximity-double-buffer-index-outage",
+    "problems-proximity-10x-geo-sharding-boundary"
+  ]
+}

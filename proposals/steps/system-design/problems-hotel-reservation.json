@@ -1,0 +1,12 @@
+{
+  "problems.commerce.hotel-reservation": [
+    "problems-hotel-reservation-peak-booking-vs-search-qps",
+    "problems-hotel-reservation-per-night-inventory-model",
+    "problems-hotel-reservation-check-then-write-double-books",
+    "problems-hotel-reservation-multirow-conditional-update-rollback",
+    "problems-hotel-reservation-overbooking-risk-budget",
+    "problems-hotel-reservation-search-index-vs-booking-path",
+    "problems-hotel-reservation-cross-channel-conflict",
+    "problems-hotel-reservation-10x-inventory-sharding"
+  ]
+}

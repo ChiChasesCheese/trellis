@@ -1,0 +1,12 @@
+{
+  "problems.geo.food-delivery": [
+    "problems-food-delivery-read-write-ratio-cache-vs-strong-consistency",
+    "problems-food-delivery-two-consistency-granularities",
+    "problems-food-delivery-saga-compensation-capture-timing",
+    "problems-food-delivery-batched-mip-vs-greedy-dispatch",
+    "problems-food-delivery-batch-window-order-count",
+    "problems-food-delivery-uber-eats-crf-dispatch-timing",
+    "problems-food-delivery-hot-sku-sharded-counters",
+    "problems-food-delivery-10x-mip-degrades-heuristic"
+  ]
+}

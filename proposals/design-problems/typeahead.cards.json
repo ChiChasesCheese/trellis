@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-typeahead-6x-suggest-ratio-drives-precompute",
+    "node": "problems.search.typeahead",
+    "type": "qa",
+    "q": "In a typeahead design with 300M DAU where each user completes 3 searches/day but triggers about 6 debounced suggestion requests per search session, giving ~62,500 average suggestion QPS against only ~10,417 average submitted-search QPS, why does this 6x ratio push the design toward precomputing every prefix's suggestions offline rather than computing them at request time?",
+    "a": "Suggestion requests run at 6x the volume of actual search submissions and must each complete within a ~100ms budget, so any per-request work heavier than an in-memory O(prefix-length) lookup — a database query, a sort over candidates, a ranking model call — multiplied across ~62,500 average QPS would blow the latency budget. The only way to keep each request cheap regardless of that multiplier is to move all the expensive work (ranking, sorting) to an offline pipeline that precomputes each prefix's top-K candidates in advance, leaving the online path to do nothing more than a lookup.",
+    "q_zh": "在一个服务 3 亿日活的 typeahead 设计中，每个用户每天完成 3 次搜索提交，但每次搜索会话平均触发约 6 次经过节流的联想请求，得到约 62,500 的平均联想 QPS，而真正提交的搜索平均 QPS 只有约 10,417，为什么这个 6 倍的比例会把设计推向'离线预计算每个前缀的建议'而不是'请求时现算'？",
+    "a_zh": "联想请求的流量是真正搜索提交量的 6 倍，且每一次都要在约 100ms 的预算内完成，所以任何比内存里一次 O(前缀长度) 查找更重的单次请求开销——查一次数据库、对候选排序、调用一次排序模型——乘上约 62,500 的平均 QPS 都会击穿延迟预算。唯一能让每次请求始终廉价、不受这个倍数影响的办法，是把全部昂贵的工作（排序、打分）挪到一条离线管道里提前算好每个前缀的 top-K 候选，在线路径只做一次查找。",
+    "tags": []
+  },
+  {
+    "id": "problems-typeahead-precomputed-topk-vs-onthefly-dfs",
+    "node": "problems.search.typeahead",
+    "type": "qa",
+    "q": "A plain trie supports fast prefix lookup (O(prefix length) to reach the node), but why is it not sufficient on its own for a typeahead system, and what has to be added to each node?",
+    "a": "A plain trie's node only tells you which characters can follow — it doesn't tell you which of the many words under that node are the most popular ones to suggest. Answering 'what are the top-K completions of this prefix' from a plain trie requires a depth-first traversal of the entire subtree under that node at request time, collecting and sorting all matching words — for a short, popular prefix that subtree can cover tens or hundreds of thousands of words, making per-request traversal infeasible at typeahead's request volume and latency budget. The fix is to precompute and cache the top-K completions directly at each trie node during the offline aggregation pass, so an online request only needs O(prefix length) to reach the node and O(K) to copy its cached list — no traversal or sorting happens on the request path.",
+    "q_zh": "普通 trie 支持快速的前缀查找（O(前缀长度) 就能定位到节点），但为什么它本身不足以支撑一个 typeahead 系统？需要在每个节点上额外加什么？",
+    "a_zh": "普通 trie 的节点只告诉你'接下来可以是哪些字符'，并不知道该节点下众多单词里哪些是最该被建议的热门词。要从普通 trie 里回答'这个前缀的 top-K 补全是什么'，需要在请求时对该节点下的整棵子树做一次深度优先遍历，收集并排序所有匹配的词——对一个很短、很热门的前缀，这棵子树可能覆盖数万到数十万个词，在 typeahead 的请求量和延迟预算下，逐请求遍历完全不可行。修复方法是在离线聚合阶段就把每个 trie 节点的 top-K 补全预先算好并缓存在该节点上，在线请求只需要 O(前缀长度) 走到节点、O(K) 复制它缓存的列表——请求路径上不发生任何遍历或排序。",
+    "tags": []
+  },
+  {
+    "id": "problems-typeahead-trie-cache-vs-fst-tradeoff",
+    "node": "problems.search.typeahead",
+    "type": "qa",
+    "q": "Lucene's finite state transducer (FST) structure compresses 9.8 million terms into a 69MB structure built in about 8 seconds using under 256MB of heap, by sharing common suffixes in addition to prefixes. Why does a typeahead system that needs new trending queries to surface within an hour still choose a mutable trie with a per-node precomputed cache over an FST, despite the FST's superior memory compression?",
+    "a": "An FST's compact representation comes from being built once, in a single pass, over sorted static input — it does not support incremental updates, so inserting even one new term requires rebuilding the entire structure from scratch. A typeahead system that needs a newly-trending query to appear in suggestions within an hour cannot afford to rebuild its entire candidate structure every time a single prefix's ranking needs to change. A mutable trie with a precomputed top-K cache at each node supports patching individual nodes incrementally, at the cost of using more memory than an equivalent FST — a trade this design accepts because the memory footprint (tens of gigabytes) is already affordable, while rebuild latency directly conflicts with the freshness requirement.",
+    "q_zh": "Lucene 的有限状态转换机（FST）结构通过在共享公共前缀之外还共享公共后缀，把 980 万个词项压缩进一个约 69MB、构建耗时约 8 秒、堆内存不到 256MB 的结构。为什么一个需要新流行查询词在一小时内出现在建议里的 typeahead 系统，仍然选择'可变 trie + 每节点预计算缓存'而不是压缩率更高的 FST？",
+    "a_zh": "FST 的紧凑表示来自对排好序的静态输入做一次性单遍构建——它不支持增量更新，插入哪怕一个新词项都需要把整个结构从头重建。一个需要新流行查询词在一小时内出现在建议里的 typeahead 系统，承受不起每次某个前缀的排名需要变化就重建整个候选结构的代价。可变 trie + 每节点预计算 top-K 缓存支持对单个节点做增量补丁，代价是比等价的 FST 占用更多内存——这个设计接受了这个取舍，因为内存占用（几十 GB 级）本身已经可以承受，而重建延迟直接和新鲜度要求冲突。",
+    "tags": []
+  },
+  {
+    "id": "problems-typeahead-uniform-sampling-loses-long-tail",
+    "node": "problems.search.typeahead",
+    "type": "qa",
+    "q": "At a much larger scale where the offline aggregation pipeline needs to subsample its query logs (say, keep only 1% of events uniformly), why does uniform sampling risk silently dropping legitimate long-tail queries, and what's the fix?",
+    "a": "A legitimate query typed only 50 times nationwide in a day has an expected sampled count of just 0.5 under 1% uniform sampling; modeling this as a Poisson process, the probability that this query is sampled zero times — and therefore never appears in the aggregated counts at all — is about e^(-0.5) ≈ 60.7%. Uniform sampling applied everywhere would make a majority of legitimate rare queries invisible to the aggregation, not just noisy. The fix is asymmetric sampling: apply the uniform sampling rate only to already-popular ('head') prefixes to control processing volume, while counting long-tail prefixes (below some occurrence threshold) exactly, without sampling, until they've accumulated enough volume to be safely sampled.",
+    "q_zh": "在规模大得多、离线聚合管道需要对查询日志做下采样（比如均匀只保留 1% 的事件）的场景下，为什么均匀采样有可能悄悄丢掉真实存在的长尾查询词？修复方法是什么？",
+    "a_zh": "一个全国范围内一天只被搜索 50 次的真实查询词，在 1% 均匀采样下期望只被采到 0.5 次；用泊松过程建模，这个查询词被采样到 0 次——因此在聚合计数里完全不出现——的概率约为 e^(-0.5)≈60.7%。如果对所有前缀一视同仁地均匀采样，大多数真实存在的长尾查询词会变得对聚合完全不可见，而不只是带噪声。修复方法是非对称采样：只对已经确认高频的头部前缀应用均匀采样比例来控制处理量，对计数还很低的长尾前缀（在越过某个出现次数阈值之前）保留全量计数，不做采样。",
+    "tags": []
+  },
+  {
+    "id": "problems-typeahead-trending-booster-patch-layer",
+    "node": "problems.search.typeahead",
+    "type": "qa",
+    "q": "A daily batch aggregation job produces the base prefix-to-top-K ranking for a typeahead system, but a query that starts trending right after that day's batch run would not appear in suggestions for up to a full day under batch alone. What layer fixes this, and why does it apply a patch rather than replace the whole cache?",
+    "a": "A separate streaming layer (a trending booster) computes an approximate count over a short recent window (e.g. the last hour) and identifies which queries are surging well above their historical batch baseline. It emits a small incremental patch — just the handful of surging prefixes and their boosted candidates — merged into the existing precomputed cache, rather than recomputing or replacing the entire prefix structure. This keeps the cost of reacting to a sudden trend proportional to the small number of prefixes actually affected, instead of paying the cost of a full batch rerun every time freshness needs to improve.",
+    "q_zh": "一个每日批处理任务产出 typeahead 系统里'前缀到 top-K'的基础排名，但一个恰好在当天批处理跑完之后才开始流行的查询词，单靠批处理最多要等将近一整天才会出现在建议里。什么层解决了这个问题？为什么它是打补丁而不是替换整个缓存？",
+    "a_zh": "一个独立的流式层（趋势助推器/trending booster）在一个较短的最近窗口（比如最近 1 小时）内做近似计数，识别出哪些查询词的热度明显超出了它们的历史批处理基线。它产出一个小的增量补丁——只包含这一小撮正在飙升的前缀及其提权后的候选——合并进已有的预计算缓存，而不是重新计算或替换整个前缀结构。这样响应突发趋势的成本和实际受影响的前缀数量成正比，而不是每次需要提升新鲜度就要付出一次完整批处理重跑的代价。",
+    "tags": []
+  },
+  {
+    "id": "problems-typeahead-personalization-overlay-not-duplicated-structure",
+    "node": "problems.search.typeahead",
+    "type": "qa",
+    "q": "In a typeahead design with 300M DAU, storing even a small per-user recent-history list (about 20 recent queries, ~2KB per user) for every active user costs about 600GB total, roughly 50x more than the entire global precomputed prefix structure (~12GB). Given this, how should personalization be implemented?",
+    "a": "Personalization should not maintain a full duplicated candidate structure per user — that would cost far more than the shared global structure it's meant to complement. Instead, keep only a small per-user recent-history list, and apply personalization as a lightweight request-time rerank: fetch the global top-K candidates for the prefix from the shared cache, then boost or reorder that small candidate set using the requesting user's own recent history, rather than computing or storing personalized candidates ahead of time for every user.",
+    "q_zh": "在一个服务 3 亿日活的 typeahead 设计中，即使只为每个活跃用户保存一份很小的最近查询历史列表（约 20 条最近查询，每用户约 2KB），总存储成本也约为 600GB——大约是整个全局预计算前缀结构（约 12GB）的 50 倍。据此，个性化应该怎么实现？",
+    "a_zh": "个性化不应该为每个用户维护一整套复制出来的候选结构——那样的代价会远超它本该辅助的共享全局结构本身。正确做法是只保留一份很小的每用户最近历史列表，把个性化实现成一次请求时的轻量重排：先从共享缓存里取出该前缀的全局 top-K 候选，再用发起请求的用户自己的最近历史对这个小候选集做提权或重排，而不是为每个用户提前计算或存储一整套个性化候选。",
+    "tags": []
+  },
+  {
+    "id": "problems-typeahead-hot-prefix-replication",
+    "node": "problems.search.typeahead",
+    "type": "qa",
+    "q": "In a typeahead system, what happens when a single short or viral prefix (e.g. a celebrity name suddenly trending) receives a disproportionate share of all suggestion requests, and how should the cache serving it be scaled to handle this?",
+    "a": "Because that one prefix's cache entry lives on a single logical location, simply adding more cache nodes doesn't help — every request for that prefix still targets the same entry, the same hot-key problem seen with a viral post's content cache. The fix is to replicate that specific hot prefix's cached entry across several independent read replicas and route requests to one of them by request identity (e.g. a random value) rather than always hitting the same instance, spreading the disproportionate load across replicas instead of concentrating it on one.",
+    "q_zh": "在一个 typeahead 系统中，当某一个很短或突然爆红的前缀（比如一个名人的名字突然开始流行）收到不成比例的大量联想请求时会发生什么？该如何扩容承载它的缓存来应对？",
+    "a_zh": "因为这一个前缀的缓存条目只存在于一个逻辑位置，单纯增加更多缓存节点没有帮助——这个前缀的全部请求依然会打到同一个条目上，这和爆款帖子内容缓存的热 key 问题是同一个模式。修复方法是把这个特定热门前缀的缓存条目复制到几个互相独立的只读副本上，按请求本身的身份（例如一个随机值）而不是永远命中同一个实例来路由请求，把这份不成比例的负载分散到多个副本上，而不是集中在一处。",
+    "tags": []
+  },
+  {
+    "id": "problems-typeahead-10x-hot-cold-split-fst",
+    "node": "problems.search.typeahead",
+    "type": "qa",
+    "q": "In a typeahead design scaling from 300M to 3B DAU (10x), the precomputed prefix structure grows from about 12GB to about 120GB, which is still affordable in memory. What optimization becomes worthwhile at this scale, and how does it split the cache?",
+    "a": "Once a large fraction of prefixes have stopped changing meaningfully (their candidate rankings are stable), it becomes worthwhile to split the prefix cache into a 'hot' region — prefixes still receiving frequent incremental patches, kept as the mutable trie-with-cache structure — and a 'cold' region — stable prefixes rebuilt periodically as a read-only FST snapshot, trading FST's inability to update incrementally for its superior memory compression, since stable prefixes don't need frequent patching anyway. Prefixes are routed to whichever region currently holds them based on how recently their ranking has changed.",
+    "q_zh": "在一个从 3 亿日活扩展到 30 亿日活（10 倍）的 typeahead 设计中，预计算的前缀结构从约 12GB 增长到约 120GB，仍然可以放进内存。在这个规模下，什么优化变得值得做？它如何拆分缓存？",
+    "a_zh": "一旦相当一部分前缀的候选排名已经趋于稳定、不再频繁变化，把前缀缓存拆成'热区'和'冷区'两部分就变得值得：热区是仍在频繁接收增量补丁的前缀，继续用可变的 trie + 缓存结构；冷区是排名已经稳定的前缀，周期性整体重建为只读的 FST 快照，用 FST 无法增量更新的代价换取它更高的内存压缩率——反正稳定前缀本来也不需要频繁打补丁。请求按某个前缀最近一次排名变化的时间，路由到当前持有它的那个区域。",
+    "tags": []
+  }
+]

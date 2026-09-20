@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-online-judge-burst-littles-law-prewarm",
+    "node": "problems.realtime.online-judge",
+    "type": "qa",
+    "q": "In an online judge design for a contest with 80,000 arriving contestants, if 50% of them submit at least once within the first 5 minutes (a burst rate of about 133 submissions/second) and each submission occupies a sandbox for an average of 4 seconds end-to-end, how many concurrent sandboxes does Little's Law say the system needs at the burst, and why does this favor pre-warmed capacity over reactive autoscaling?",
+    "a": "Little's Law gives concurrency = arrival rate x service time = 133.3 x 4 ≈ 533 concurrent sandboxes needed at the burst, versus roughly 32 in steady state — about a 17x jump. A reactive autoscaler that scales on CPU or queue depth typically takes several minutes to detect load and boot new capacity, slower than the burst itself, which arrives within about a minute of contest start. Because the contest start time and registrant count are both known in advance, the system instead pre-warms worker capacity to the computed concurrency a few minutes before the bell, with reactive autoscaling only absorbing overflow beyond that.",
+    "q_zh": "在一个在线判题系统设计中，一场竞赛有 8 万名到场参赛者，如果其中 50% 会在开考后前 5 分钟内至少提交一次（爆发速率约每秒 133 次提交），且每次提交平均占用沙箱 4 秒，利特尔法则（Little's Law）算出爆发期需要多少并发沙箱？为什么这个结果更支持预热式容量而不是被动式自动伸缩？",
+    "a_zh": "利特尔法则给出并发度 = 到达速率 × 服务时间 = 133.3 × 4 ≈ 533 个并发沙箱，而常态下大约只需要 32 个——跳变约 17 倍。基于 CPU 或队列深度触发的被动式自动伸缩通常需要几分钟才能检测到负载并拉起新容量，比开考约一分钟内就到来的爆发本身还慢。由于开考时间和报名人数都是提前已知的，系统改为在开考前几分钟把工作节点容量预热到算出的这个并发度，被动式伸缩只用来吸收预热容量之外的额外波动。",
+    "tags": []
+  },
+  {
+    "id": "problems-online-judge-firecracker-vs-container-vs-gvisor",
+    "node": "problems.realtime.online-judge",
+    "type": "qa",
+    "q": "In an online judge design that must run anonymous, untrusted user code with zero tolerance for sandbox escape, why does a Firecracker microVM (one per submission) get chosen over a plain container (namespaces + cgroups + runc) or gVisor, given Firecracker's own published numbers of under 125ms boot time and under 5MiB memory overhead per microVM?",
+    "a": "A plain container shares the host kernel directly, so a kernel privilege-escalation bug lets an escape reach the host — too thin a boundary for anonymous, adversarial code. gVisor's Sentry intercepts syscalls in userspace, narrowing the attack surface, but still runs on and shares the same host kernel, so it isn't an independent hardware boundary. Firecracker instead boots a minimal KVM-backed virtual machine per submission, so escape requires breaking KVM itself rather than an application-layer syscall filter — and because it boots in under 125ms with under 5MiB overhead, running one disposable microVM per submission stays cheap enough to support thousands of them densely packed on a host.",
+    "q_zh": "在一个必须运行匿名、不可信用户代码、且对沙箱逃逸零容忍的在线判题系统设计中，为什么最终选择'每次提交一个 Firecracker microVM'，而不是普通容器（namespaces + cgroups + runc）或 gVisor？（Firecracker 官方数字：启动时间 < 125ms，每个 microVM 内存开销 < 5MiB）",
+    "a_zh": "普通容器直接和宿主机共享内核，一旦内核存在提权漏洞，逃逸后就能直接危及宿主机——对匿名、高对抗性的代码而言这道边界太薄。gVisor 的 Sentry 在用户态拦截系统调用，收窄了攻击面，但依然运行在同一个宿主机内核上，不是一个独立的硬件级边界。Firecracker 则为每次提交启动一台基于 KVM 的极简虚拟机，逃逸需要突破 KVM 本身而不是应用层的系统调用过滤；又因为它启动时间 < 125ms、开销 < 5MiB，每次提交用完即弃一个 microVM 依然便宜到可以在单机上密集打包成千个。",
+    "tags": []
+  },
+  {
+    "id": "problems-online-judge-cpu-time-vs-wallclock-fairness",
+    "node": "problems.realtime.online-judge",
+    "type": "qa",
+    "q": "In an online judge design, why should Time Limit Exceeded (TLE) be judged against CPU time measured from a cgroup's cpu.stat rather than wall-clock time, and why is a separate, much looser wall-clock ceiling still required on top of that?",
+    "a": "If TLE were judged by wall-clock time, the same submission could pass when the host is idle and fail purely from scheduling contention when the host is busy, violating fairness — identical code should get identical verdicts regardless of when it runs. Measuring CPU time instead ties the verdict only to the computation the code actually performed. But CPU time alone lets a submission sleep or wait on a never-ready connection indefinitely while consuming almost no CPU, occupying a sandbox slot without triggering the CPU limit — so a separate wall-clock cap (e.g. 3-5x the CPU limit) is still needed as a backstop.",
+    "q_zh": "在一个在线判题系统设计中，为什么超时（Time Limit Exceeded, TLE）的判定应该用 cgroup 的 cpu.stat 统计出的 CPU 时间，而不是墙钟时间（wall-clock time）？为什么在此基础上还需要一个宽松得多的独立墙钟时间上限？",
+    "a_zh": "如果按墙钟时间判 TLE，同一份提交在宿主机空闲时能通过，在宿主机繁忙时却可能纯粹因为调度争抢而超时，违反公平性——相同代码在任何时候运行都应该得到相同判定。改用 CPU 时间可以让判定只取决于代码实际执行的计算量。但只用 CPU 时间的话，一份代码可以通过无限期 sleep 或等待一个永不就绪的连接、几乎不消耗 CPU 却长期占用一个沙箱槽位，不会触发 CPU 限额——因此仍需要一个宽松得多的独立墙钟时间上限（例如 CPU 限额的 3–5 倍）作为兜底。",
+    "tags": []
+  },
+  {
+    "id": "problems-online-judge-pids-limit-fork-bomb",
+    "node": "problems.realtime.online-judge",
+    "type": "qa",
+    "q": "In an online judge design, why can a submission that stays within its CPU and memory limits still take down a judge host, and what specifically prevents it?",
+    "a": "A fork bomb repeatedly spawns child processes without necessarily using much CPU or memory per process, exhausting the host's process table and scheduler capacity rather than its CPU or memory quota — so CPU and memory limits alone don't stop it. The fix is the cgroup pids controller, which caps the total number of processes/threads a cgroup may create (e.g. 32) independently of the CPU and memory limits; all three limits must be configured together, since a submission compliant on CPU and memory but unbounded on process count would bypass the other two.",
+    "q_zh": "在一个在线判题系统设计中，为什么一份 CPU 和内存都没有超限的提交，依然可能拖垮整台判题主机？具体靠什么机制阻止这种情况？",
+    "a_zh": "fork bomb 通过不断派生子进程发起攻击，每个子进程本身未必消耗多少 CPU 或内存，而是耗尽宿主机的进程表和调度器容量——仅靠 CPU 和内存限额挡不住这种攻击。解决办法是 cgroup 的 pids 控制器，它独立于 CPU 和内存限额之外，单独限制一个 cgroup 能创建的进程/线程总数（例如上限 32）；三类限额必须同时配置，否则一份 CPU 和内存都合规、但进程数不受限的提交就能绕过另外两道限额。",
+    "tags": []
+  },
+  {
+    "id": "problems-online-judge-sse-not-websocket-verdict-stream",
+    "node": "problems.realtime.online-judge",
+    "type": "qa",
+    "q": "In an online judge design, why is SSE (Server-Sent Events) chosen over WebSocket for streaming a submission's per-test-case verdicts back to the client, when both would work?",
+    "a": "The verdict stream only ever needs to push data one direction — from the judge worker to the client as each test case finishes — the client never needs to send messages back over that channel during judging. WebSocket provides a full bidirectional channel, which costs connection state and complexity the judge doesn't need for this path. SSE provides exactly the unidirectional server-push semantics required, at lower connection overhead, while polling GET /submissions/{id} remains as a fallback for clients that can't hold an SSE connection.",
+    "q_zh": "在一个在线判题系统设计中，两种方案都能实现的情况下，为什么把一次提交逐条测试用例的判定结果流式返回给客户端，选择 SSE（Server-Sent Events）而不是 WebSocket？",
+    "a_zh": "判题结果流自始至终只需要单向推送——从判题工作节点在每条测试跑完时推给客户端——客户端在判题过程中完全不需要通过这条通道往回发消息。WebSocket 提供的是完整的双向通道，会带来这条链路根本用不上的连接状态和复杂度开销。SSE 恰好提供所需的单向服务器推送语义，连接开销更低；同时保留轮询 `GET /submissions/{id}` 作为无法维持 SSE 连接的客户端的兜底方案。",
+    "tags": []
+  },
+  {
+    "id": "problems-online-judge-queue-partition-by-contest-tenant-isolation",
+    "node": "problems.realtime.online-judge",
+    "type": "qa",
+    "q": "In an online judge design, why does the judge queue partition submissions by contestId rather than randomly, and how does this same tenant-isolation idea need to evolve at 10x scale (contest registrants growing from 100K to 1M, burst concurrency from ~533 to ~5,300 sandboxes)?",
+    "a": "Partitioning by contestId concentrates one contest's submissions on a small number of partitions, so the judge workers consuming those partitions get a higher local cache hit rate for that contest's test data (already pre-warmed onto their local disk) instead of spreading requests thin across every worker. At 10x scale, a single shared queue and worker pool is no longer enough — a single contest large enough to saturate it would delay judging for every other concurrent contest or practice submission — so the design needs physically separate queues and worker pools per tenant class (e.g. paid timing-sensitive contests vs. free practice), not just soft priority fields on a shared queue.",
+    "q_zh": "在一个在线判题系统设计中，为什么判题队列按 contestId 而不是随机分区？在 10 倍规模演进下（竞赛报名人数从 10 万到 100 万，爆发期并发沙箱需求从约 533 涨到约 5,300），这个租户隔离的思路要怎么进一步演进？",
+    "a_zh": "按 contestId 分区能让同一场竞赛的提交集中落在少数几个分区上，消费这些分区的判题工作节点对该场竞赛的测试数据（已经预热在本地磁盘上）有更高的缓存命中率，而不是把请求稀释到所有工作节点上。到了 10 倍规模，单一共享队列和工作节点池不再够用——一场足够大的竞赛就能把它占满，拖慢其他并发竞赛或练习提交的判题——因此需要按租户类型（比如对计时敏感的付费竞赛 vs. 免费练习）做物理隔离的独立队列和工作节点池，而不只是在共享队列上加一个软优先级字段。",
+    "tags": []
+  },
+  {
+    "id": "problems-online-judge-single-use-sandbox-leakage",
+    "node": "problems.realtime.online-judge",
+    "type": "qa",
+    "q": "In an online judge design, why must every sandbox be destroyed after a single submission rather than reused across submissions, and how does the sandbox choice from the isolation deep dive make this affordable?",
+    "a": "Reusing a sandbox across submissions risks one tenant's code reading filesystem or memory residue left by a previous tenant's execution — a cross-submission information leak, which is unacceptable when submissions are mutually untrusted. The fix is to destroy the sandbox after every run and start fresh for the next one. This is only cheap because the sandbox is a Firecracker microVM that boots in under 125ms and costs under 5MiB of memory overhead — a traditional, slower-booting VM would make 'destroy after every submission' a real performance tax instead of a nearly-free security guarantee.",
+    "q_zh": "在一个在线判题系统设计中，为什么每个沙箱都必须在一次提交后销毁、不能跨提交复用？隔离机制这一深入探讨里的沙箱选型为什么让这个做法负担得起？",
+    "a_zh": "跨提交复用沙箱会有一个租户的代码读到上一个租户执行残留在文件系统或内存里的痕迹的风险——这是提交之间互不信任的场景下无法接受的信息泄露。解决办法是每次跑完就销毁沙箱，下一次提交重新起一个全新的。这之所以便宜，是因为沙箱选的是启动时间 < 125ms、内存开销 < 5MiB 的 Firecracker microVM——如果用传统的、启动慢得多的虚拟机，'每次提交后销毁'就会变成实打实的性能税，而不是近乎免费的安全保证。",
+    "tags": []
+  },
+  {
+    "id": "problems-online-judge-plagiarism-review-not-autoban",
+    "node": "problems.realtime.online-judge",
+    "type": "qa",
+    "q": "In an online judge design, why should code-plagiarism detection route flagged submission pairs to human review instead of automatically banning accounts?",
+    "a": "Structural similarity checks (comparing submissions to the same problem within a time window, typically at an abstract-syntax-tree level to resist superficial changes like renaming variables) will inevitably produce false positives — two contestants can independently converge on the same standard, idiomatic solution to a problem. The cost of wrongly banning a legitimate contestant for a coincidental match is much higher than the cost of a missed detection, so the detector's output should be treated as a ranked queue for human review rather than an automated verdict.",
+    "q_zh": "在一个在线判题系统设计中，为什么代码抄袭检测应该把标记出的可疑提交对交给人工复核，而不是自动封号？",
+    "a_zh": "结构相似度检测（在一个时间窗口内比较同一题目的提交，通常在抽象语法树层面做比较以抵抗改变量名之类的表面改动）必然会产生假阳性——两名选手完全可能各自独立地写出同一种标准、惯用的解法。错误封禁一个恰好写法相似的正当选手，代价远高于漏掉一次真正的抄袭，因此检测系统的输出应该当作一份排好序的人工复核队列，而不是自动判决。",
+    "tags": []
+  }
+]

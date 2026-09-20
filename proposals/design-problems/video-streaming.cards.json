@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-video-streaming-ladder-storage-amplification",
+    "node": "problems.media.video-streaming",
+    "type": "qa",
+    "q": "In a video streaming platform that generates a 6-rung bitrate ladder (240p–4K) in two codec families (H.264 + AV1/VP9) for every uploaded video, why does the resulting ~6.1x storage multiplier over the master file force a design decision about which videos get the full ladder?",
+    "a": "Summing the ladder's per-rendition bitrates across two codec families comes to roughly 6.1x the master's own bitrate, so if every uploaded video is eagerly transcoded into the full ladder, transcoded storage alone dwarfs master storage at platform scale. Because video popularity is heavy-tailed, most uploads get few or no views, so generating expensive high-resolution renditions for all of them wastes most of that storage; the fix is to generate only base renditions (e.g. 360p–720p) at upload time and defer costly renditions like 4K until a video's view count crosses a threshold that justifies the extra storage.",
+    "tags": [],
+    "q_zh": "在一个视频流媒体平台中，每个上传的视频都会生成一套 6 档的码率阶梯（240p–4K），再乘以两套编码格式（H.264 + AV1/VP9），为什么由此产生的约 6.1 倍存储放大倍数会迫使团队做出一个关于哪些视频该拿到全套阶梯的设计决策？",
+    "a_zh": "把阶梯里各档码率在两套编码格式下加总，大约是母版自身码率的 6.1 倍，所以如果对每个上传的视频都无差别生成全套阶梯，转码产物存储在平台规模下会远远超过母版存储。由于视频播放量分布是重尾的，大多数上传视频播放量很少甚至为零，为它们全部生成昂贵的高分辨率版本会浪费大部分存储；解决办法是上传时只生成基础档位（如 360p–720p），把 4K 这类高成本档位延迟到该视频的播放量超过某个阈值、值得为它多花这部分存储时才生成。"
+  },
+  {
+    "id": "problems-video-streaming-peak-egress-cdn",
+    "node": "problems.media.video-streaming",
+    "type": "qa",
+    "q": "In a video streaming platform with 12.5 million peak concurrent viewers each streaming at an average blended bitrate of 3 Mbps, why does the resulting ~37.5 Tbps peak egress bandwidth rule out serving playback traffic directly from an origin data center?",
+    "a": "12.5 million concurrent viewers times 3 Mbps each is about 37.5 Tbps of simultaneous outbound traffic, a figure far larger than any single data center's practical network egress capacity, regardless of how much compute or storage it has. This forces the playback path to be served almost entirely from geographically distributed CDN edge caches, with the origin (object storage) only absorbing cache misses — origin capacity only needs to cover a fraction (e.g. the ~30% of requests not served from cached popular content) rather than the full peak.",
+    "tags": [],
+    "q_zh": "在一个视频流媒体平台中，峰值有 1,250 万并发观众，每路平均混合码率约 3 Mbps，为什么由此得出的约 37.5 Tbps 峰值出口带宽会排除直接从源站数据中心提供播放流量这个选项？",
+    "a_zh": "1,250 万并发观众乘以每路 3 Mbps，约为 37.5 Tbps 的同时出口流量，这个数字远超任何单一数据中心实际能承受的网络出口能力，无论它有多少计算或存储资源。这迫使播放路径几乎完全由地理上分布的 CDN 边缘缓存节点提供服务，源站（对象存储）只需要吸收缓存未命中的那部分——源站容量只需覆盖一小部分请求（例如热门内容缓存命中之外约 30% 的请求），而不是应对全部峰值。"
+  },
+  {
+    "id": "problems-video-streaming-video-asset-model",
+    "node": "problems.media.video-streaming",
+    "type": "qa",
+    "q": "In a video streaming platform's data model, why is a single Video entity modeled as owning multiple independent VideoAsset (rendition) records — one per (codec, resolution) pair — rather than storing all renditions as fields on the Video record itself?",
+    "a": "Each rendition is produced by an independent transcode job that can succeed or fail on its own schedule (a 1080p job can finish while a 4K job is still queued or retrying), so each VideoAsset needs its own status field and its own lifecycle independent of the Video's overall record. Modeling renditions as a one-to-many child collection lets the manifest generator publish a video as soon as a subset of renditions (e.g. the lower rungs) are ready, while higher renditions are added later — a single Video record with fixed rendition fields couldn't represent 'partially ready' without becoming a wide table of nullable columns that grows every time a new codec is added.",
+    "tags": [],
+    "q_zh": "在视频流媒体平台的数据模型中，为什么一个 Video 实体要对应多个独立的 VideoAsset（渲染版本）记录——每个 (编码格式, 分辨率) 组合一条——而不是把所有渲染版本都存成 Video 记录本身的字段？",
+    "a_zh": "每个渲染版本都由一个独立的转码任务生成，各自可能按自己的节奏成功或失败（1080p 任务可能已完成，而 4K 任务还在排队或重试），所以每个 VideoAsset 需要有自己的状态字段和独立于 Video 整体记录的生命周期。把渲染版本建模成一对多的子集合，能让 manifest 生成器在部分渲染版本（如较低档位）就绪后立即发布视频，高档位之后再补上——如果用固定字段把所有渲染版本塞进一条 Video 记录，就无法表达「部分就绪」这种状态，而且每新增一种编码格式都要给表加一列可空字段，越来越臃肿。"
+  },
+  {
+    "id": "problems-video-streaming-dag-failure-isolation",
+    "node": "problems.media.video-streaming",
+    "type": "qa",
+    "q": "In a video transcoding pipeline, why does splitting the work into a DAG of independent per-rendition jobs (one node per codec/resolution combination) give better failure isolation than a single sequential script that generates the full bitrate ladder for one video end to end?",
+    "a": "Because the rendition jobs have no dependency on each other, a failure in one job (for example, a corrupted-frame error during 4K encoding) can be retried in isolation without discarding or re-running the renditions that already succeeded, and the jobs can run concurrently across a worker pool instead of one after another. A single sequential script, by contrast, treats the whole ladder as one unit of work, so any single rendition's failure forces a full retry of everything, and there is no way to run renditions in parallel across machines.",
+    "tags": [],
+    "q_zh": "在视频转码流水线中，为什么把工作拆成一个由多个独立的按渲染版本划分的任务组成的 DAG（每个 编码格式/分辨率 组合一个节点），比一个从头到尾顺序生成全套码率阶梯的单一脚本有更好的故障隔离？",
+    "a_zh": "因为各渲染版本任务之间互不依赖，某一个任务的失败（例如 4K 编码遇到损坏帧错误）可以被单独重试，而不需要丢弃或重跑已经成功的其他渲染版本，而且这些任务可以在一个 worker 池里并发执行，而不是逐个顺序执行。相比之下，单一顺序脚本把整个阶梯当成一个工作单元，任何一个渲染版本失败都要整体重来，也无法把不同渲染版本分摊到多台机器并行处理。"
+  },
+  {
+    "id": "problems-video-streaming-per-title-vs-per-shot",
+    "node": "problems.media.video-streaming",
+    "type": "qa",
+    "q": "Why does per-title bitrate encoding (choosing a custom resolution/bitrate ladder per video based on its complexity) save less bandwidth than per-shot encoding (choosing quality per shot within the same video), and what does per-shot encoding cost in return?",
+    "a": "Per-title encoding treats a whole video's complexity as uniform, so a video with both a quiet dialogue scene and a fast action scene still gets one ladder sized for its average complexity — it cannot give the quiet scene less bitrate and the action scene more. Per-shot encoding splits the video into shots and optimizes bits per shot under a total bitrate budget (e.g. via Lagrangian optimization), letting simple shots drop further and complex shots reclaim the saved bits, which is why it captures additional savings (an extra ~17.1% on top of per-title in Netflix's reported numbers) beyond per-title alone. The cost is an extra round of exploratory encoding at finer granularity, which only pays off for content with enough repeat views to amortize that one-time encoding cost.",
+    "tags": [],
+    "q_zh": "为什么按标题定制码率（per-title encoding，按整个视频的复杂度选一套自定义分辨率/码率阶梯）比按镜头定制（per-shot encoding，在同一视频内部按镜头选质量）省下更少的带宽？按镜头定制的代价是什么？",
+    "a_zh": "按标题定制把整部视频的复杂度当作均匀的，所以一部既有安静对话场景又有快速动作场景的视频，仍然只用一套按其平均复杂度定的阶梯——无法给安静场景更少码率、给动作场景更多码率。按镜头定制把视频切成镜头，在总码率预算下按镜头优化码率分配（例如用拉格朗日优化），让简单镜头进一步降码率、复杂镜头把省下来的码率要回来，这就是为什么它能在按标题定制之外再省下额外的带宽（Netflix 披露的数字是额外约 17.1%）。代价是要多跑一轮更细粒度的探测编码，只有播放次数足够多、能摊薄这次一次性编码成本的内容才划算。"
+  },
+  {
+    "id": "problems-video-streaming-cdn-build-vs-buy",
+    "node": "problems.media.video-streaming",
+    "type": "qa",
+    "q": "In a video streaming platform, why would a design use a self-operated edge appliance network (Netflix-Open-Connect style, deployed inside ISP facilities) for the head of the content catalog while still relying on a third-party commercial CDN for long-tail content, instead of picking one strategy for all traffic?",
+    "a": "A self-operated edge network trades a fixed hardware and power cost for near-zero marginal bandwidth cost, which only pays off when traffic is large and predictable enough to justify the investment — this fits the head of the catalog (e.g. the top 1% of videos that account for the majority of views), which is stable and forecastable. Long-tail content is unpredictable, low-volume per title, and constantly changing as new content is uploaded, so it is cheaper to serve through a pay-per-gigabyte third-party CDN that offers elastic reach without fixed infrastructure commitment. Picking only one strategy either overpays for elastic capacity on predictable head traffic, or overpays fixed hardware costs to cover unpredictable long-tail demand.",
+    "tags": [],
+    "q_zh": "在一个视频流媒体平台中，为什么设计会对内容库头部（类 Netflix Open Connect，部署在 ISP 机房内的自建边缘设备网络）用自建边缘网络，而对长尾内容仍然依赖第三方商业 CDN，而不是对所有流量统一选一种策略？",
+    "a_zh": "自建边缘网络用固定的硬件和电力成本换取接近零的边际带宽成本，只有当流量足够大且足够可预测、值得为它投入这笔固定成本时才划算——这正好匹配内容库头部（例如贡献大部分播放量的头部 1% 视频），这部分流量稳定且可预测。长尾内容不可预测、单个标题播放量低、且随新内容上传不断变化，用按流量计费的第三方 CDN 提供弹性覆盖，比为它承诺固定基础设施更便宜。只选一种策略要么在可预测的头部流量上为弹性能力多付钱，要么为覆盖不可预测的长尾需求多背固定硬件成本。"
+  },
+  {
+    "id": "problems-video-streaming-long-tail-lazy-transcode",
+    "node": "problems.media.video-streaming",
+    "type": "qa",
+    "q": "In a video streaming platform, why does purely lazy transcoding — generating a rendition only the first time a viewer requests it — risk a bad experience during a sudden spike in a previously-cold video's popularity, and what mitigation avoids that while still controlling storage cost?",
+    "a": "Under pure lazy transcoding, if a previously unpopular video suddenly goes viral, a burst of viewers all requesting a not-yet-generated rendition at once can flood the transcode queue and each of them experiences the transcode latency (tens of seconds to minutes) instead of instant playback. The mitigation is tiered transcoding: generate a base set of renditions (e.g. 360p–720p) eagerly at upload time so there is always something playable immediately, and defer only the expensive high-end renditions (e.g. 4K) to be generated asynchronously once view count crosses a threshold, serving a lower-tier rendition in the meantime rather than blocking playback on the transcode.",
+    "tags": [],
+    "q_zh": "在视频流媒体平台中，为什么纯惰性转码——只在观众第一次请求某个渲染版本时才生成它——在一个原本冷门的视频突然爆红时会带来体验风险？什么缓解方案能在控制存储成本的同时避免这个问题？",
+    "a_zh": "在纯惰性转码下，如果一个原本不受欢迎的视频突然爆红，大量观众同时请求一个尚未生成的渲染版本会瞬间打满转码队列，每个人都要经历转码延迟（数十秒到几分钟）而不是立即播放。缓解方案是分层转码：上传时就主动生成一套基础渲染版本（如 360p–720p），保证随时有可播放的内容；只把昂贵的高档位（如 4K）延迟到播放量超过某个阈值后再异步生成，在此期间用低档位渲染版本播放，而不是让播放卡在转码上。"
+  },
+  {
+    "id": "problems-video-streaming-abr-two-phase",
+    "node": "problems.media.video-streaming",
+    "type": "qa",
+    "q": "In a video player implementing adaptive bitrate (ABR) streaming, why does a well-designed client use a different selection policy for startup than it uses once playback is stable, rather than running one throughput-plus-buffer algorithm throughout?",
+    "a": "At startup there is no playback buffer yet and no history of recent segment download speed, so a buffer-aware algorithm has nothing to react to — the client instead blind-selects a safe mid-or-low rendition to minimize time-to-first-frame. Once playback is underway, a hybrid policy that weighs both recent throughput and current buffer occupancy is used instead: high buffer occupancy tolerates a noisier throughput estimate and can safely step up quality, while low buffer occupancy favors a conservative rendition even if throughput looks adequate, to avoid rebuffering. Using the buffer-aware algorithm at startup would either stall waiting for buffer data that doesn't exist yet, or make a poorly-informed first choice.",
+    "tags": [],
+    "q_zh": "在实现自适应码率（ABR）流媒体的播放器中，为什么设计良好的客户端在起播阶段和播放稳定后使用不同的选码策略，而不是从头到尾用同一套吞吐量+缓冲区算法？",
+    "a_zh": "起播时还没有播放缓冲区、也没有最近分段下载速度的历史数据，所以一个依赖缓冲区状态的算法根本无东西可依据——客户端此时直接盲选一个安全的中低档位以最小化首帧延迟。播放开始后则切换到同时权衡最近吞吐量和当前缓冲区水位的混合策略：缓冲区水位高时即使吞吐量估计有噪声也能安全升档，缓冲区水位低时即使吞吐量看起来足够也优先选保守档位以避免卡顿。如果起播阶段就用依赖缓冲区的算法，要么会卡在等待尚不存在的缓冲区数据，要么会做出信息不足的错误首选。"
+  }
+]

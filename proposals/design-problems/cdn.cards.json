@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-cdn-shield-reduces-origin-qps-5x",
+    "node": "problems.foundations.cdn",
+    "type": "qa",
+    "q": "In a CDN design with 300 edge PoPs grouped into 15 regional origin-shield tiers (20 edges per shield), edge cache hit rate is 95% and the regional shield further absorbs 80% of the edge-miss traffic it receives. If peak traffic is 17,361,111 QPS, why does adding the shield tier cut origin QPS from about 868,056 to about 173,611 rather than to zero?",
+    "a": "Without a shield, origin sees the full edge-miss rate: 17,361,111 x 0.05 = 868,056 QPS, because every edge PoP that misses goes straight to origin. With a shield, that same 868,056 QPS of edge misses first hits the regional shield, which is itself a cache and absorbs 80% of it (because it aggregates requests from 20 edges, so the same object's misses from many edges collapse into fewer distinct origin-bound requests) - leaving 868,056 x (1 - 0.80) = 173,611 QPS, a 5x reduction. It isn't zero because the shield's own cache still misses on genuinely new or cold content, and that residual miss traffic is exactly what the origin must be sized for.",
+    "q_zh": "在一个 CDN 设计中，300 个边缘 PoP 分成 15 个区域源站屏蔽层（origin shield），每个屏蔽层覆盖 20 个边缘节点。边缘命中率 95%，区域屏蔽层对它收到的边缘未命中流量进一步吸收 80%。峰值流量为 17,361,111 QPS 时，为什么加入屏蔽层会把到达源站的 QPS 从约 868,056 降到约 173,611，而不是降为零？",
+    "a_zh": "没有屏蔽层时，源站看到完整的边缘未命中量：17,361,111 × 0.05 = 868,056 QPS，因为每个未命中的边缘 PoP 都直接回源。有了屏蔽层后，这 868,056 QPS 的边缘未命中先打到区域屏蔽层，屏蔽层本身也是一个缓存，能吸收其中 80%（因为它汇聚了 20 个边缘节点的请求，同一对象在多个边缘的未命中会合并成更少的对源站的请求）——剩下 868,056 × (1 − 0.80) = 173,611 QPS，降低 5 倍。之所以不是零，是因为屏蔽层自己的缓存对真正新或冷门内容仍然会未命中，而这部分残余未命中流量正是源站必须按其容量规划的目标。",
+    "tags": []
+  },
+  {
+    "id": "problems-cdn-viral-object-shield-20x",
+    "node": "problems.foundations.cdn",
+    "type": "qa",
+    "q": "In a CDN with 300 edge PoPs and 15 regional origin shields (20 edges per shield), a single 500MB object suddenly goes viral and every edge PoP misses on it at roughly the same time. Why does adding the shield tier cut the resulting origin egress for this one object from about 146.5GB to about 7.3GB, a 20x reduction, and what does that 20x number equal?",
+    "a": "Without a shield, all 300 edge PoPs independently miss and each fetches the full 500MB from origin: 300 x 500MB = 146.5GB of origin egress for one object. With a shield tier, only the 15 shield nodes ever contact origin - each edge's miss is routed to its regional shield first, and the shield coalesces concurrent requests for the same object into a single origin fetch, so origin egress is 15 x 500MB = 7.3GB. The reduction factor (146.5 / 7.3 = 20) is exactly the number of edge PoPs each shield covers (300 edges / 15 shields = 20): the shield's entire value is replacing N independent first-fetches with 1.",
+    "q_zh": "在一个有 300 个边缘 PoP 和 15 个区域源站屏蔽层（每个屏蔽层覆盖 20 个边缘）的 CDN 中，一个 500MB 的对象突然爆红，所有边缘 PoP 几乎同时未命中。为什么加入屏蔽层会把这个对象对应的源站出口流量从约 146.5GB 降到约 7.3GB，降低 20 倍？这个 20 倍对应的是什么？",
+    "a_zh": "没有屏蔽层时，300 个边缘 PoP 各自独立未命中并各自从源站拉取完整的 500MB：300 × 500MB = 146.5GB 的源站出口流量。有了屏蔽层后，只有 15 个屏蔽节点会接触源站——每个边缘的未命中先被路由到它所属的区域屏蔽层，屏蔽层将对同一对象的并发请求合并成一次对源站的请求，所以源站出口流量是 15 × 500MB = 7.3GB。这个降低倍数（146.5 / 7.3 = 20）恰好等于每个屏蔽层覆盖的边缘 PoP 数（300 / 15 = 20）：屏蔽层的价值就是把 N 个独立的首次回源变成 1 个。",
+    "tags": []
+  },
+  {
+    "id": "problems-cdn-anycast-vs-geodns-failover-granularity",
+    "node": "problems.foundations.cdn",
+    "type": "qa",
+    "q": "When designing the request-routing layer of a CDN, why does choosing anycast (the same IP announced from every PoP via BGP) over GeoDNS (a resolver returning different IPs per region) fundamentally change how fast the system can fail over a dead PoP, rather than just how it's implemented?",
+    "a": "With GeoDNS, failover means the authoritative DNS server changes which IP it returns, but clients and resolvers keep using a cached answer until its TTL expires - and some resolvers or apps ignore TTLs entirely - so a dead PoP keeps receiving traffic for minutes. With anycast, failover is a network-layer event: the dead PoP withdraws its BGP route announcement, and internet routers recompute the shortest AS-path to the next PoP announcing that same IP - no DNS cache, no client behavior, and no TTL is involved, so convergence happens in seconds. The trade-off is that anycast gives up GeoDNS's fine-grained, centrally controlled routing (e.g., steering by customer tier or capacity) in exchange for that faster, DNS-independent failover.",
+    "q_zh": "在设计 CDN 的请求路由层时，为什么选择 anycast（所有 PoP 通过 BGP 宣告同一个 IP）而不是 GeoDNS（解析器根据区域返回不同 IP），会从根本上改变系统对一个死亡 PoP 的故障转移速度，而不仅仅是实现方式的不同？",
+    "a_zh": "用 GeoDNS 时，故障转移意味着权威 DNS 服务器改变它返回的 IP，但客户端和解析器会继续使用已缓存的答案直到 TTL 过期——而且有些解析器或应用完全忽略 TTL——所以死亡 PoP 会继续收到流量好几分钟。用 anycast 时，故障转移是一个网络层事件：死亡 PoP 撤回它的 BGP 路由宣告，互联网路由器重新计算到同一 IP 的下一个最短 AS-path——不涉及 DNS 缓存、客户端行为或任何 TTL，收敛发生在秒级。代价是 anycast 放弃了 GeoDNS 的细粒度、集中控制的路由能力（如按客户等级或容量进行调度），换取这种更快、不依赖 DNS 的故障转移。",
+    "tags": []
+  },
+  {
+    "id": "problems-cdn-purge-not-atomic-versioned-urls",
+    "node": "problems.foundations.cdn",
+    "type": "qa",
+    "q": "In a CDN that propagates a purge request to all edge PoPs through a fan-out broadcast tree with a P99 target of under 2 seconds, why is it wrong to treat that 2-second budget as a guarantee that all users see either the old or the new content, never a mix - and what design choice avoids relying on that guarantee for content like prices?",
+    "a": "Purge propagation across physically distributed PoPs takes real, non-zero network time, so during that window different edge nodes in different regions have genuinely confirmed the purge at different moments - some serve the old cached copy, some already serve fresh content, which is a physical constraint of distributed broadcast, not an implementation bug. Content whose correctness depends on being read as either fully-new or fully-old (like a price) should not rely on purge speed at all: the fix is fingerprinted, immutable URLs (e.g. `product-42.v7.json`) - deploying a new version means publishing a new URL, which is an atomic, instantaneous swap at the page that references it, with no propagation window to reason about.",
+    "q_zh": "在一个 CDN 中，purge 请求通过广播树传递到所有边缘 PoP，P99 目标是 2 秒内。为什么把这个 2 秒预算当成「所有用户要么看到旧内容要么看到新内容、不会看到混合状态」的保证是错的？对于价格这类内容，什么设计选择能避免依赖这个保证？",
+    "a_zh": "purge 在物理分布的 PoP 之间传播需要真实、非零的网络时间，所以在这段窗口内，不同区域的不同边缘节点确实会在不同时刻确认 purge——有些还在提供旧缓存，有些已经提供新内容，这是分布式广播的物理约束，不是实现缺陷。正确性依赖「要么完全新要么完全旧」的内容（如价格）不应该依赖 purge 速度：修复方法是指纹化、不可变的 URL（如 `product-42.v7.json`）——发布新版本变成发布一个新 URL，在引用它的页面上是原子、瞬时的切换，没有传播窗口需要考虑。",
+    "tags": []
+  },
+  {
+    "id": "problems-cdn-cache-key-scope-and-vary",
+    "node": "problems.foundations.cdn",
+    "type": "qa",
+    "q": "In a CDN's control-plane API, a `CacheRule` entity carries a `cache_key_vary` list alongside `ttl`. Why does putting the `Cookie` header in that list collapse a page's cache hit rate toward zero, even if the page's HTML body is identical for every visitor?",
+    "a": "The cache key is what the CDN uses to decide whether two requests are 'the same object' - by default the URL, plus anything named in `cache_key_vary`. Adding `Cookie` to that list means every distinct cookie value (which is different per visitor, since cookies typically carry a session or user id) produces a distinct cache key, even when the underlying response body would have been byte-identical. In effect the cache is fragmented into roughly one entry per visitor, so almost every request is a first-time miss for its unique key - hit rate collapses toward zero. The fix is to vary the key only on headers that actually change the response body, and serve identical-body content behind auth through a mechanism other than a cookie-keyed cache entry.",
+    "q_zh": "在 CDN 的控制面 API 中，`CacheRule` 实体除了 `ttl` 还带有一个 `cache_key_vary` 列表。为什么把 `Cookie` 头加进这个列表，会把一个页面的缓存命中率拉到接近零——即使这个页面的 HTML 内容对每个访客都一模一样？",
+    "a_zh": "缓存键决定 CDN 如何判断两个请求是否算「同一个对象」——默认是 URL，加上 `cache_key_vary` 中列出的任何字段。把 `Cookie` 加进这个列表意味着每个不同的 cookie 值（通常每个访客都不同，因为 cookie 通常携带 session 或用户 id）都会产生一个不同的缓存键，即使底层响应体本来逐字节相同。实际效果是缓存被拆成大约每个访客一条条目，几乎每个请求都对其独一无二的键算首次未命中——命中率拉到接近零。修复方法是只对真正改变响应体的头做 vary，对需要鉴权但内容相同的请求，用除 cookie 键入缓存条目之外的机制处理。",
+    "tags": []
+  },
+  {
+    "id": "problems-cdn-bdp-limits-parallel-segments-fix",
+    "node": "problems.foundations.cdn",
+    "type": "qa",
+    "q": "Downloading a large file through a CDN over a single HTTP connection with a 40ms round-trip time and 100Mbps available bandwidth is limited to roughly 488KB of data in flight at once (the bandwidth-delay product, 100Mbps x 40ms). Why does splitting the same download into parallel Range-request segments across multiple connections raise achievable throughput well past what one connection can reach?",
+    "a": "A single TCP connection's throughput is capped near the bandwidth-delay product because that's how much unacknowledged data can be 'in flight' before the sender must wait for ACKs, and real single-connection throughput is pushed further below the theoretical cap by slow start and any packet loss. Opening multiple parallel connections, each fetching a different byte range of the same object via `Range: bytes=...`, gives each connection its own independent congestion window, so the achievable data-in-flight scales roughly with the number of connections rather than staying capped at one connection's window - for example 6 connections at 30Mbps each combine to about 180Mbps aggregate, well above what one connection achieves alone. This requires the CDN's cache to support serving partial byte ranges from a cached object, not only whole-object hits.",
+    "q_zh": "通过 CDN 下载一个大文件时，如果只用单一 HTTP 连接，在 RTT 为 40ms、可用带宽为 100Mbps 的情况下，单连接在路上的数据量大约受限于带宽时延积（bandwidth-delay product）约 488KB（100Mbps × 40ms）。为什么把同一个下载拆成多个并行的 Range 请求分段能把实际吞吐量推到远高于单连接的上限？",
+    "a_zh": "单一 TCP 连接的吞吐量接近受带宽时延积限制，因为这是发送方在必须等待确认前能「在途」的未确认数据量，而真实单连接吞吐量还会因慢启动和丢包而进一步低于理论上限。开多个并行连接，每个通过 `Range: bytes=...` 拉取同一对象的不同字节范围，每个连接都有自己独立的拥塞窗口，所以在途数据量大致随连接数线性增长，而不是被锁定在单连接的窗口上——例如 6 条连接各自 30Mbps，聚合可以达到约 180Mbps 的聚合吞吐量，远高于单连接单独能达到的水平。这要求 CDN 的缓存能对缓存对象支持部分字节范围的命中，而不只是整对象命中。",
+    "tags": []
+  },
+  {
+    "id": "problems-cdn-pop-failure-5pct-neighbor-overload",
+    "node": "problems.foundations.cdn",
+    "type": "qa",
+    "q": "In a CDN using anycast routing with 300 edge PoPs grouped into 15 shield regions of 20 edges each, one PoP handling its peak share of about 57,870 QPS fails and withdraws its BGP route. Why does each of the 19 remaining PoPs in its shield group only absorb about 5.3% more load rather than being overwhelmed, and why does this number depend on the shield group's size?",
+    "a": "Anycast routing means the failed PoP's traffic is redistributed by BGP path selection to the topologically nearest remaining PoPs, which in this design are the other 19 members of its shield group; splitting 57,870 QPS across 19 peers adds about 57,870 / 19 = 3,046 QPS to each, which is about 3,046 / 57,870 = 5.3% of each peer's own peak load. That percentage is a direct function of group size - a smaller shield group (e.g., 5 nodes) would leave only 4 peers to absorb the same failed node's traffic, raising each peer's overload to about 25% instead of 5.3% - so shield group size is a capacity-planning parameter that trades purge/shield efficiency against single-node-failure blast radius, and each edge node must be provisioned with enough headroom (N+1) to absorb its group's worst-case single failure.",
+    "q_zh": "在一个使用 anycast 路由的 CDN 中，300 个边缘 PoP 分成 15 个屏蔽区域，每个区域 20 个边缘。一个承担其峰值份额约 57,870 QPS 的 PoP 故障并撤回 BGP 路由。为什么同组剩下的 19 个 PoP 每个只多承担约 5.3% 的额外负载而不是被压垮，且这个数字为什么取决于屏蔽组的大小？",
+    "a_zh": "anycast 路由意味着故障 PoP 的流量会被 BGP 路径选择重新分配给拓扑上最近的剩余 PoP，在本设计中就是同一屏蔽组内其余 19 个成员；把 57,870 QPS 分摊到 19 个同伴上，每个大约多 57,870 / 19 ≈ 3,046 QPS，占每个同伴自身峰值负载的约 3,046 / 57,870 ≈ 5.3%。这个百分比直接取决于分组大小——更小的屏蔽组（如 5 个节点）只剩 4 个同伴分担同一个故障节点的流量，每个同伴的过载会升到约 25% 而不是 5.3%——所以屏蔽组大小是一个在「屏蔽/purge 效率」与「单节点故障的影响半径」之间权衡的容量规划参数，每个边缘节点都必须预留足够的冗余（N+1）来吸收本组最坏情况下的单节点故障。",
+    "tags": []
+  },
+  {
+    "id": "problems-cdn-10x-needs-second-shield-tier",
+    "node": "problems.foundations.cdn",
+    "type": "qa",
+    "q": "A CDN designed for 17,361,111 peak QPS across 300 edge PoPs and 15 regional origin shields is scaled 10x to 173,611,111 peak QPS by growing traffic (not by changing the shield topology). Why does the origin start seeing overload again at this scale even though the shield tier's edge-miss-absorption percentage (80%) hasn't changed, and what structural fix restores the original protection?",
+    "a": "Origin-bound QPS after the shield is proportional to total peak traffic: at 1x it was about 173,611 QPS, so at 10x traffic with the same edge hit rate and shield absorption percentages, origin-bound QPS scales to about 1,736,111 QPS - ten times what the origin was sized for, because the shield's 80% absorption is a fixed ratio, not a fixed cap. The fix is structural, not just adding origin capacity: insert a second, cross-regional aggregation tier above the 15 regional shields, so shield-tier misses are themselves coalesced across regions before reaching origin, re-creating the same kind of many-to-one funneling that made the first shield tier effective, rather than letting the growth flow straight through to origin.",
+    "q_zh": "一个为峰值 17,361,111 QPS、300 个边缘 PoP 、15 个区域源站屏蔽层设计的 CDN，在拓扑不变、流量增长 10 倍到 173,611,111 峰值 QPS 后，即使屏蔽层对边缘未命中流量的吸收比例（80%）没有变，为什么源站会再次面临过载？什么结构性修复能恢复原有的保护效果？",
+    "a_zh": "经过屏蔽层后到达源站的 QPS 与总峰值流量成正比：1 倍时约为 173,611 QPS，在边缘命中率和屏蔽层吸收比例不变的情况下，流量 10 倍时到达源站的 QPS 也等比放大到约 1,736,111——是源站原本容量的 10 倍，因为屏蔽层 80% 的吸收是一个固定比例而不是固定上限。修复方法是结构性的，而不只是给源站加容量：在 15 个区域屏蔽层之上再加一层跨区域的汇聚层，让屏蔽层自己的未命中在到达源站前先跨区域合并——重建出和第一屏蔽层同样的「多对一」汇聚效果，而不是任由增长直接穿透到源站。",
+    "tags": []
+  }
+]

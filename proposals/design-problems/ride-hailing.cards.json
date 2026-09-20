@@ -1,0 +1,72 @@
+[
+  {
+    "id": "problems-ride-hailing-ingestion-vs-matching-order-of-magnitude",
+    "node": "problems.geo.ride-hailing",
+    "type": "qa",
+    "q": "In a ride-hailing design with 9.7 million monthly drivers, assuming 15% are concurrently online at peak and each sends a location update every 4 seconds, versus roughly 1,389 peak ride-request QPS derived from 40 million trips/day, why does the resulting ~363,750 QPS of location writes force driver location ingestion onto a completely separate pipeline from the ride-matching request path rather than sharing the same transactional flow?",
+    "a": "Peak location-update QPS (about 1,455,000 online drivers / 4 seconds ~= 363,750 QPS) is roughly two orders of magnitude higher than peak ride-matching QPS (~1,389), so location ingestion — not matching — is the dominant write load in the whole system. Location updates also have no 'must not be lost' semantics (a dropped update is superseded four seconds later by the next one), so routing them through the same transactional database used for trip records would pay locking and logging costs for a durability guarantee the data doesn't need, while starving the trip database's actual transactional writes under two orders of magnitude more traffic than it was sized for.",
+    "q_zh": "在一个网约车设计中，970 万月活司机，假设峰值 15% 同时在线、每人每 4 秒上报一次位置，相比之下由日行程数 4,000 万推算出的峰值叫车请求约 1,389 QPS，为什么由此得到的约 363,750 QPS 位置写入会迫使司机位置摄入走一条和撮合请求路径完全独立的管道，而不是共用同一条事务路径？",
+    "a_zh": "峰值位置更新 QPS（约 1,455,000 在线司机 / 4 秒 ≈ 363,750 QPS）比峰值撮合请求 QPS（约 1,389）高大约两个数量级，所以位置摄入而不是撮合，才是整个系统里的主负载。位置更新也没有'不能丢'的语义（丢一次，4 秒后的下一次更新自然覆盖），所以把它路由进用于行程记录的同一个事务型数据库，会为一个数据本身用不上的持久性保证付出加锁和写日志的代价，同时让行程数据库真正需要事务保证的写入被淹没在比它设计容量高两个数量级的流量里。",
+    "tags": []
+  },
+  {
+    "id": "problems-ride-hailing-exclusive-lock-not-optimistic",
+    "node": "problems.geo.ride-hailing",
+    "type": "qa",
+    "q": "In a ride-hailing matching service, two riders in the same sparse area can both have the same driver selected as their top candidate at nearly the same instant. Why does this design use an explicit short-TTL exclusive lock on the driver before sending an invitation, instead of optimistic concurrency (match both, detect the conflict, retry the loser)?",
+    "a": "Optimistic concurrency assumes conflicts are rare and a losing retry is cheap, but here the cost is asymmetric: once an invitation has actually been pushed to the driver's app, a conflict is no longer an invisible internal retry — the driver would receive two contradictory ride invitations that the user directly experiences as a bug. The design instead locks the driver_id with a short TTL (a few seconds, covering the longest reasonable response time) before sending any invitation; a failed lock attempt means another matching flow already holds it, so the service immediately moves to the next candidate rather than waiting, and the short TTL guarantees the lock releases automatically if the driver never responds or the client crashes, instead of depending on an explicit release that might never arrive.",
+    "q_zh": "在一个网约车撮合服务中，同一片稀疏区域里的两个乘客几乎在同一时刻都可能把同一个司机选为各自的首选候选人。为什么这个设计在发邀请之前先对该司机加一把短 TTL 排他锁，而不是用乐观并发（先各自撮合，检测到冲突后重试落败的一方）？",
+    "a_zh": "乐观并发的前提是冲突很少见、落败方重试的代价可以接受，但这里代价是不对称的：一旦邀请已经真的推送到司机的 App 上，冲突就不再是一个不可见的内部重试，而是司机会收到两条互相矛盾的邀请，用户能直接感知到这是一个错误。这个设计改为在发任何邀请之前，先对 driver_id 加一把 TTL 很短（几秒，覆盖合理的最长响应时间）的锁；加锁失败说明另一个撮合流程已经持有它，服务立刻转向下一个候选人而不是等待，而短 TTL 保证了即使司机永远不响应或客户端崩溃，锁也会自动释放，而不依赖一个可能永远不会到达的显式释放信号。",
+    "tags": []
+  },
+  {
+    "id": "problems-ride-hailing-websocket-bidirectional",
+    "node": "problems.geo.ride-hailing",
+    "type": "qa",
+    "q": "In a ride-hailing app, why does the design choose WebSockets over Server-Sent Events (SSE) for real-time trip updates, given that SSE would be sufficient for a rider passively watching a driver's location move on a map?",
+    "a": "SSE is one-directional (server to client), which covers the rider's passive view fine, but the driver side needs to send data back over the same real-time channel — responding to match invitations and streaming frequent location updates — so SSE alone would force the driver client into two separate channels (SSE for receiving plus ordinary HTTP requests for sending). Choosing WebSockets, which are bidirectional, lets both the rider and driver clients use one connection protocol and lets the real-time delivery service implement a single connection-management path instead of two different ones for the two client types; the tradeoff is that WebSocket connections are stateful, so scaling the delivery service requires consistent-hash routing by connection, and reconnects need an explicit way to resend updates missed while disconnected.",
+    "q_zh": "在一个网约车 App 中，既然 Server-Sent Events（SSE）已经足够让乘客被动地在地图上看司机位置移动，为什么这个设计在实时行程更新上选择 WebSocket 而不是 SSE？",
+    "a_zh": "SSE 是单向的（服务端到客户端），完全能覆盖乘客被动查看这一面，但司机端需要通过同一条实时通道把数据发回去——响应撮合邀请、持续上报高频位置更新——所以单用 SSE 会迫使司机端客户端拆成两条通道（SSE 收 + 普通 HTTP 请求发）。选择双向的 WebSocket，能让乘客端和司机端用同一种连接协议，也让实时推送服务只需要实现一套连接管理逻辑，而不是为两种客户端类型分别维护两套；代价是 WebSocket 连接本身是有状态的，推送服务的扩容需要按连接做一致性哈希路由，断线重连还需要一个明确的机制来补发断线期间错过的更新。",
+    "tags": []
+  },
+  {
+    "id": "problems-ride-hailing-surge-streaming-precompute",
+    "node": "problems.geo.ride-hailing",
+    "type": "qa",
+    "q": "In a ride-hailing design with roughly 1,389 peak ride-request QPS, why does surge pricing use a separate streaming pipeline that continuously aggregates supply and demand per geographic cell and caches a multiplier, rather than computing the supply/demand ratio fresh on every ride request?",
+    "a": "The supply/demand ratio for a region is computed from an aggregation over a recent time window of driver locations and open orders, and that aggregate barely changes on a timescale of a few seconds — so if every one of the ~1,389 peak requests per second recomputed it from scratch, the system would be repeating the same expensive aggregation for a result that is almost always identical to the previous request's answer. Decoupling computation from lookup — a streaming pipeline (Kafka ingesting trip and location data, aggregated per H3 cell, e.g. by Flink) continuously updates a region-to-multiplier cache, and a ride request just does one fast key lookup against it — turns a rarely-changing, expensive-to-compute value into a cheap read, the same pattern as precomputing a read-heavy index instead of recomputing it per query.",
+    "q_zh": "在一个峰值撮合请求约 1,389 QPS 的网约车设计中，为什么动态定价（surge pricing）用一条独立的流式管道持续按地理单元聚合供需并缓存一个倍率，而不是在每次叫车请求时都重新计算供需比？",
+    "a_zh": "一个区域的供需比是对最近一段时间窗口内的司机位置和未完成订单做聚合算出来的，这个聚合结果在几秒钟的时间尺度上几乎不会变化——所以如果峰值每秒约 1,389 次请求都从头重新计算一遍，系统就是在为一个几乎总是和上一次请求答案相同的结果，重复执行同一次昂贵的聚合。把计算和查询解耦——一条流式管道（Kafka 摄入行程和位置数据，按 H3 单元聚合，例如用 Flink）持续更新一份'区域到倍率'的缓存，叫车请求只做一次快速的键查找——把一个变化很慢、计算代价很高的值变成了廉价的读取，和'预计算一个读多的索引而不是每次查询都重算'是同一个模式。",
+    "tags": []
+  },
+  {
+    "id": "problems-ride-hailing-hexagon-supply-demand-gradient",
+    "node": "problems.geo.ride-hailing",
+    "type": "qa",
+    "q": "In a ride-hailing design that computes a supply/demand gradient between a geographic pricing cell and its neighbors, why does using a hexagonal grid (like Uber's H3) avoid a systematic bias that a rectangular grid would introduce?",
+    "a": "A rectangular grid cell has two different neighbor distances — shorter to its 4 edge-adjacent neighbors, longer to its 4 diagonal neighbors — so any gradient computed by comparing a cell to its neighbors would be systematically skewed toward the closer edge-adjacent cells, an artifact of the grid's orientation rather than the real underlying supply/demand pattern. A hexagonal cell has exactly 6 neighbors all at the same distance from its center, so the same gradient computation doesn't need a correction term for grid orientation, which is the specific geometric reason surge-pricing regions are built on hexagonal cells rather than rectangular ones.",
+    "q_zh": "在一个网约车设计中计算某个地理定价单元和其相邻单元之间的供需梯度时，为什么使用六边形网格（比如 Uber 的 H3）能避免矩形网格会引入的一种系统性偏差？",
+    "a_zh": "矩形网格单元到邻居有两种不同的距离——到 4 个边相邻的邻居更近，到 4 个对角相邻的邻居更远——所以任何通过比较一个单元和它的邻居算出来的梯度，都会系统性地偏向更近的边相邻单元，这是网格朝向带来的假象，不是真实的供需模式。六边形单元恰好有 6 个邻居且都与中心距离相等，所以同样的梯度计算不需要为网格朝向额外做修正，这正是动态定价区域用六边形而不是矩形单元搭建的具体几何原因。",
+    "tags": []
+  },
+  {
+    "id": "problems-ride-hailing-lock-outage-no-safe-fallback",
+    "node": "problems.geo.ride-hailing",
+    "type": "qa",
+    "q": "In a ride-hailing matching service, when the distributed lock store used for driver exclusivity becomes unavailable, why is queuing matching requests until the lock store recovers the correct response, rather than falling back to matching without a lock?",
+    "a": "Falling back to lock-free matching to keep availability up would reintroduce the exact race condition the lock exists to prevent — two concurrent requests could both select and invite the same driver, producing a duplicate-booking bug the user directly experiences. Unlike other components in this design (like the location store, where falling back to a slightly stale position is an acceptable degradation), there is no safe degraded mode for the exclusivity guarantee itself, so the correct response is to accept a temporary increase in matching latency by queuing requests until the lock store is healthy again, rather than trading away correctness for availability.",
+    "q_zh": "在一个网约车撮合服务中，当用于司机排他性的分布式锁存储不可用时，为什么正确的应对是把撮合请求排队等待锁存储恢复，而不是退回到不加锁直接撮合？",
+    "a_zh": "为了保住可用性而退回到无锁撮合，会重新引入锁本来要防止的那个竞态条件——两个并发请求完全可能同时选中并邀请同一个司机，产生一个用户能直接感知到的重复绑定 bug。和这个设计里其他组件不同（比如位置存储，退回到稍微陈旧的位置是可以接受的降级），排他性这个保证本身没有安全的降级模式，所以正确的应对是接受撮合延迟暂时变长、把请求排队等到锁存储恢复健康，而不是用正确性换可用性。",
+    "tags": []
+  },
+  {
+    "id": "problems-ride-hailing-10x-shared-shard-key",
+    "node": "problems.geo.ride-hailing",
+    "type": "qa",
+    "q": "At 10x scale (daily trips growing from 40 million to 400 million, peak location-ingestion QPS growing to roughly 3.6 million), the location ingestion pipeline and the spatial index must be sharded geographically. Why must the matching service's shard routing use the same hierarchical cell ID (S2 or H3) as both the ingestion shard key and the matching query key, rather than choosing shard keys independently for each?",
+    "a": "If ingestion and matching used different, independently-chosen shard keys, a matching request for a given area could no longer assume that all of the relevant drivers' latest locations live in one place — it would have to query and merge results across shards just to answer a single geographic query, on every request. Using the same hierarchical cell ID as the shard key for both ingestion writes and matching reads means a driver's location update and a matching query for that driver's area land on the same shard, so a typical (non-boundary) matching query only needs to read from one shard instead of fanning out and merging across the whole cluster.",
+    "q_zh": "在 10 倍规模下（日行程数从 4,000 万涨到 4 亿，峰值位置摄入 QPS 涨到约 360 万），位置摄入管道和空间索引都必须按地理区域分片。为什么撮合服务的分片路由必须和位置摄入用同一个层级单元 ID（S2 或 H3）作为分片键，而不能各自独立选择分片键？",
+    "a_zh": "如果摄入和撮合各自独立选择分片键，某个区域的撮合请求就不能再假设该区域相关司机的最新位置都在同一个地方——每一次查询都要跨分片查询并合并结果，才能回答一个本来只是单一地理范围的问题。用同一个层级单元 ID 同时作为摄入写入和撮合查询的分片键，意味着一个司机的位置更新和针对他所在区域的撮合查询会落在同一个分片上，这样一次典型（非边界）撮合查询只需要读一个分片，而不需要跨整个集群扇出再合并。",
+    "tags": []
+  }
+]

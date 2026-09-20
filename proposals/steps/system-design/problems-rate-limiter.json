@@ -1,0 +1,12 @@
+{
+  "problems.foundations.rate-limiter": [
+    "problems-rate-limiter-check-volume-forces-shard-count",
+    "problems-rate-limiter-three-layer-quota-model",
+    "problems-rate-limiter-local-first-hybrid-enforcement",
+    "problems-rate-limiter-sliding-log-vs-counter-memory",
+    "problems-rate-limiter-token-bucket-vs-counter-split",
+    "problems-rate-limiter-asymmetric-fail-open-closed",
+    "problems-rate-limiter-single-key-shard-hotspot",
+    "problems-rate-limiter-10x-shard-count-growth"
+  ]
+}

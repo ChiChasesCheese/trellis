@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-object-storage-metadata-shard-count-from-prefix-throughput",
+    "node": "problems.foundations.object-storage",
+    "type": "qa",
+    "q": "An object storage design stores 1 exabyte of logical data at an average object size of 256KB (about 3.8 trillion objects) and must sustain a peak of 2,314,815 GET requests/second. Given a real, documented per-key-prefix throughput ceiling of 5,500 GET/HEAD requests/second, why does this alone prove the metadata service cannot be a single database, and what minimum shard count does it imply?",
+    "a": "Dividing the peak GET rate by the per-prefix ceiling gives 2,314,815 / 5,500 ≈ 421 - meaning even a metadata layer that could sustain the documented per-prefix throughput on every one of its partitions would still need at least about 421 independent partitions just to survive peak read traffic, before even accounting for the roughly 763TB the metadata itself occupies (3.8 trillion objects x ~200 bytes each) which no single-machine database can hold. This makes the metadata service a distributed, sharded system by necessity, not a design preference; a design would round up to a power of two like 512 shards for simpler hash-based routing.",
+    "q_zh": "一个对象存储设计存储 1 EB 逻辑数据，平均对象大小 256KB（约 3.8 万亿个对象），需要支撑峰值 2,314,815 GET 请求/秒。已知一个真实、有文档记载的单 key 前缀吞吐上限是 5,500 GET/HEAD 请求/秒，为什么光凭这一点就能证明元数据服务不可能是单一数据库，它暗示的最小分片数是多少？",
+    "a_zh": "用峰值 GET 速率除以单前缀上限：2,314,815 / 5,500 ≈ 421——意味着即使每个分区都能跑到文档给出的单前缀上限，也至少需要约 421 个独立分区才能扣住峰值读流量，还没算元数据本身约 763TB（3.8 万亿个对象 × 约 200 字节）——这个体量没有任何单机数据库能装下。这使得元数据服务必然是一个分布式分片系统，而不是设计偏好；实际设计会向上取整到 2 的幂（如 512 个分片）以简化基于哈希的路由。",
+    "tags": []
+  },
+  {
+    "id": "problems-object-storage-put-replaces-whole-object",
+    "node": "problems.foundations.object-storage",
+    "type": "qa",
+    "q": "In an S3-style object storage design, a client wants to append a few bytes to the end of an existing 10GB object. Why does the object's API only expose whole-object PUT (no seek-and-write into the middle or append operation), and what does this force the client to do instead?",
+    "a": "PUT is defined to replace the entire object atomically: the new version doesn't become visible to GET/List until the whole write completes, and there is no operation that mutates only a byte range of an already-stored object in place. This means the client cannot append in place - it must either download the object, append locally, and PUT the whole 10GB back (expensive for a small append), or restructure its data model to write new, smaller immutable objects over time (e.g. one object per log batch) instead of repeatedly mutating one large object. This whole-object-replacement rule is also why large objects need multipart upload: parts are assembled and only become visible as one unit on a single atomic completion call, not through incremental in-place writes.",
+    "q_zh": "在一个 S3 风格的对象存储设计中，客户端想在一个已存在的 10GB 对象末尾追加几个字节。为什么对象的 API 只暴露整体 PUT（没有向中间写入或 append 操作），这迫使客户端只能怎么做？",
+    "a_zh": "PUT 被定义为原子性地替换整个对象：新版本在整个写入完成前对 GET/List 不可见，且没有任何操作可以只修改已存对象的某个字节范围。这意味着客户端不能就地追加——它必须要么下载整个对象、本地追加、再把整个 10GB 写回去（对小小的追加来说代价很高），要么重新设计数据模型，随时间写新的、更小的不可变对象（例如每批日志一个对象）而不是反复修改一个大对象。这个「整体替换」规则也是大对象需要 multipart 上传的原因：分片被拼装，只在一次原子性的完成调用后才作为一个整体变得可见，而不是通过逐步就地写入。",
+    "tags": []
+  },
+  {
+    "id": "problems-object-storage-crush-no-central-lookup-table",
+    "node": "problems.foundations.object-storage",
+    "type": "qa",
+    "q": "In an object storage design using CRUSH-style placement, the metadata service stores only a placement-group id for each object, not a literal list of storage node addresses. Why does this let the system add a batch of new storage nodes without rewriting any of the (potentially hundreds of terabytes of) existing metadata records?",
+    "a": "CRUSH computes an object's physical node set deterministically from a pseudo-random hash of its placement-group id combined with a shared cluster map describing the current topology - both clients and storage nodes can independently compute the same answer without consulting a central lookup table. Adding new nodes changes the cluster map, and re-running the same deterministic function against the updated map yields the new (mostly unchanged, with only a small fraction remapped) node set for every placement group automatically - the metadata records themselves, which only ever stored the placement-group id, never needed to change. A design that instead stored explicit node lists per object would have to rewrite every affected metadata record whenever topology changed.",
+    "q_zh": "在一个采用 CRUSH 风格放置策略的对象存储设计中，元数据服务对每个对象只存一个放置组 id，而不是存具体的存储节点地址列表。为什么这使得系统能在新增一批存储节点时，不需要改写任何一条（可能数百 TB 量级的）已有元数据记录？",
+    "a_zh": "CRUSH 通过对放置组 id 做伪随机哈希、结合一个描述当前拓扑的共享 cluster map，确定性地计算出对象的物理节点集合——客户端和存储节点都能独立算出同一个答案，不需要查任何中心化查找表。新增节点会改变 cluster map，对更新后的 map 重新跑同一个确定性函数，会自动得到每个放置组的新节点集合（大部分不变，只有小部分重新映射）——元数据记录本身从头到尾只存了放置组 id，根本不需要改。如果改成每个对象直接存显式节点列表，拓扑变化时就必须改写每一条受影响的元数据记录。",
+    "tags": []
+  },
+  {
+    "id": "problems-object-storage-wide-ec-more-durable-than-triple-replication",
+    "node": "problems.foundations.object-storage",
+    "type": "qa",
+    "q": "Using a simplified failure model of independent per-drive annual failures at a 1.36% rate (a real observed annualized failure rate), a triple-replication stripe (3 fragments, tolerates 2 simultaneous failures, object lost only if all 3 fail) has an annual per-stripe loss probability of about 2.52x10^-6, while a Reed-Solomon(10,4) erasure-coded stripe (14 fragments, tolerates 4 simultaneous failures) has about 8.41x10^-7 - roughly 3x lower - despite RS(10,4) using only 1.4x storage versus triple replication's 3x. Why does the wider scheme end up more durable with less storage, rather than less durable?",
+    "a": "Durability under this binomial model isn't driven by the raw storage multiplier, it's driven by how many simultaneous fragment failures a stripe can absorb before data is lost - the 'tolerance count' - relative to how quickly the probability of exceeding that count grows with more independent chances to fail. Triple replication tolerates only 2 simultaneous failures out of 3 fragments; RS(10,4) tolerates 4 simultaneous failures out of 14. Even though RS(10,4) has more fragments that could individually fail, the binomial tail probability of exceeding a tolerance of 4 drops off faster than the tail probability of exceeding a tolerance of 2, so the absolute tolerance count matters more than the fragment count or the storage ratio - a wider stripe with a proportionally higher absolute parity count can be both cheaper and more durable than a narrow, high-multiplier replication scheme.",
+    "q_zh": "用一个简化的失效模型（各盘独立，年故障率 1.36%，这是一个真实观测到的年化故障率），三副本条带（3 个分片，容忍 2 个同时失效，只有 3 个都坏才算丢）年丢失概率约为 2.52×10⁻⁶，而 Reed-Solomon(10,4) 纠删码条带（14 个分片，容忍 4 个同时失效）约为 8.41×10⁻⁷，低约 3 倍——尽管 RS(10,4) 只用 1.4 倍存储而三副本用 3 倍。为什么更宽的方案反而用更少存储得到更高的耐久性，而不是更低？",
+    "a_zh": "在这个二项分布模型下，耐久性不由原始存储倍数决定，而由「一个条带在数据丢失前能吸收多少个同时失效」——即容忍数——相对于「超过这个容忍数的概率随独立失败机会增多而增长的速度」决定。三副本在 3 个分片中只容忍 2 个同时失效；RS(10,4) 在 14 个分片中容忍 4 个同时失效。即使 RS(10,4) 有更多分片可能单独失效，超过「容忍 4」这个阈值的二项分布尾部概率下降得比超过「容忍 2」更快，所以绝对容忍数比分片数或存储比例更关键——一个更宽、校验比例相对更高的条带，可以同时比窄窄的高倍数副本方案更便宜、更耐久。",
+    "tags": []
+  },
+  {
+    "id": "problems-object-storage-multipart-atomic-completion",
+    "node": "problems.foundations.object-storage",
+    "type": "qa",
+    "q": "In multipart object upload, a client uploads 5,120 parts of a 500GB object in parallel over several minutes, and part 3,000 fails and is retried twice before succeeding. Why does none of this partial progress ever become visible to a concurrent GET on that key, even though most parts have already landed on the server?",
+    "a": "Uploaded parts are staged but not registered as the object - the object identified by that key does not exist (or, if overwriting, the old version is still what GET returns) until the client makes a single CompleteMultipartUpload call listing all part numbers and their checksums, which the server processes as one atomic operation that assembles the parts and flips the key to point at the new, complete object. Individual part failures and retries only affect that one part's staging area and are invisible outside the upload session; there is no intermediate state where a reader could see an object that is half-old, half-new bytes.",
+    "q_zh": "在 multipart 对象上传中，客户端在几分钟内并行上传一个 500GB 对象的 5,120 个分片，第 3,000 个分片失败并重试了两次才成功。即使大多数分片已经到达服务器，为什么这些部分进度从不会对并发的 GET 请求可见？",
+    "a_zh": "已上传的分片只是暂存，并未注册为该对象——这个 key 对应的对象不存在（或者如果是覆盖，GET 返回的仍然是旧版本），直到客户端发起一次 CompleteMultipartUpload 调用、列出所有分片号和校验值，服务器将其作为一个原子操作处理：拼装分片并把 key 指向新的、完整的对象。单个分片的失败和重试只影响该分片自己的暂存区，对上传会话以外不可见；不存在一种读者能看到「一半旧字节、一半新字节」的中间状态。",
+    "tags": []
+  },
+  {
+    "id": "problems-object-storage-tombstone-then-compaction-gc",
+    "node": "problems.foundations.object-storage",
+    "type": "qa",
+    "q": "In an object storage design at 1 exabyte scale, deletes run at a steady 5 million per day, which projects to about 67 petabytes of physical bytes needing reclamation per year at a 1.4x erasure-coding storage multiplier. Why does the DELETE request itself only mark the object's metadata record as a tombstone rather than immediately freeing the underlying disk bytes, and what reclaims the space?",
+    "a": "An object's physical bytes commonly share the same underlying stripe or storage file with other, still-live objects (this is deliberate, to avoid the overhead of one tiny file per object), so there is no single byte range that can be safely erased in place at DELETE time without touching other objects' data - and even where it could be done, tying DELETE's response latency to a disk-erase operation would make deletes slow and I/O-heavy. Instead DELETE only flips a tombstone flag in metadata and returns immediately; a separate background compaction process later copies the still-live objects out of a stripe or file into a new one, skipping tombstoned and superseded entries, then atomically swaps the old file out - the same shape as LSM-tree compaction, and at 67PB/year this reclamation has to be a continuously running, rate-limited, monitored subsystem rather than an incidental side effect of delete.",
+    "q_zh": "在一个 1 EB 规模的对象存储设计中，删除请求稳定保持每天 500 万次，按 1.4 倍纠删码存储倍数换算，预计每年需要回收约 67PB 的物理字节。为什么 DELETE 请求本身只把对象的元数据记录标记为墨碑（tombstone）而不是立即释放底层磁盘字节？空间最终由什么回收？",
+    "a_zh": "一个对象的物理字节通常和其他仍存活的对象共享同一个底层条带或存储文件（这是故意的，为了避免每个对象一个小文件带来的开销），所以在 DELETE 时没有一段字节能在不影响其他对象的前提下安全地就地擦除；即使能做到，把 DELETE 的响应延迟和一次磁盘擦除操作绑在一起也会让删除变得慢且 I/O 重。因此 DELETE 只在元数据里翻一个墨碑标记就立即返回；另有一个后台压实（compaction）进程之后把条带或文件里仍存活的对象复制到一个新文件里，跳过墨碑和已被覆盖的条目，然后原子性地把旧文件换掉——和 LSM 树的 compaction 是同一个形状，而在 67PB/年这个量级下，这个回收过程必须是一个持续运行、限速、可监控的子系统，而不是删除操作的顺带副产品。",
+    "tags": []
+  },
+  {
+    "id": "problems-object-storage-sequential-key-prefix-hotspot",
+    "node": "problems.foundations.object-storage",
+    "type": "qa",
+    "q": "A customer of an object storage service writes keys with a strictly increasing timestamp prefix, like `2026-09-20/log-000001`, `2026-09-20/log-000002`, and so on. Even though the metadata service has 512 hash-based shards, why does this key pattern still overload a small number of shards instead of spreading load evenly, and what's the fix?",
+    "a": "Sequential, monotonically increasing prefixes mean that at any given moment, almost all newly written keys share the same narrow, currently-active prefix range - and whatever shard(s) that narrow range hashes to (or, in a range-partitioned index used for listing, whatever shard owns that lexicographic range) absorb effectively all of the current write traffic, while the other 500+ shards sit nearly idle. Having many shards doesn't help because the problem isn't total capacity, it's that all writes are concentrated on the same few keys at any point in time. The fix is to mix a hash of the key (e.g. the first few hex digits of a hash) into the prefix itself, so consecutively-written objects land on effectively random, spread-out shards instead of a single hot one.",
+    "q_zh": "一个对象存储服务的客户用严格递增的时间戳前缀写 key，如 `2026-09-20/log-000001`、`2026-09-20/log-000002` 依次类推。即使元数据服务有 512 个基于哈希的分片，为什么这种 key 模式仍然会把负载集中到少数几个分片上，而不是均匀分散？修复方法是什么？",
+    "a_zh": "递增前缀意味着在任何一个时刻，几乎所有新写入的 key 都共享同一个狭窄的、当前活跃的前缀范围——这个狭窄范围无论哈希到哪个分片（或在用于列举的范围分片索引中，无论哪个分片拥有这段字典序范围），都会吸收几乎全部当前写入流量，而其余 500 多个分片几乎空闲。分片数多不能解决这个问题，因为问题不在于总容量，而在于任何时刻的写入都集中在同几个 key 上。修复方法是把 key 的哈希值（例如哈希的前几位十六进制数字）混入前缀本身，让连续写入的对象落在实际上随机、分散的分片上，而不是集中在一个热点上。",
+    "tags": []
+  },
+  {
+    "id": "problems-object-storage-10x-metadata-shards-4096",
+    "node": "problems.foundations.object-storage",
+    "type": "qa",
+    "q": "An object storage design planned for 512 metadata shards (sized for 421 shards' worth of peak GET traffic at 1x scale) grows 10x in traffic to a peak of 23,148,148 GET requests/second. Why isn't simply keeping the same 512 shards and giving each one more hardware a viable fix, and what shard count does the same per-shard throughput ceiling imply instead?",
+    "a": "The 5,500 GET/HEAD-per-second ceiling used to size shards is a ceiling for a single partitioned key range/prefix, not a number that scales by adding hardware behind an existing shard - it reflects how the request rate can be sustained for one logical partition of the keyspace, so the only way to sustain 10x the request rate is to have roughly 10x as many independent partitions. Dividing the new peak by the same per-shard ceiling gives 23,148,148 / 5,500 ≈ 4,209, so the design needs to grow to about 4,096 shards (the next convenient power of two) - and because the shard count itself is 8x larger, the routing layer that maps a key to its shard (previously trivial at 512 shards) also needs to change, typically by adding a level of indirection rather than a single flat hash table.",
+    "q_zh": "一个元数据服务按 512 个分片规划（1 倍规模下峰值 GET 流量需要 421 个分片的容量），流量增长 10 倍到峰值 23,148,148 GET 请求/秒。为什么单纯给现有 512 个分片堆硬件不是可行的修复方案，同样的单分片吞吐上限暗示的分片数应该是多少？",
+    "a_zh": "用来确定分片大小的 5,500 GET/HEAD 每秒上限是单一分区好的 key 范围/前缀的上限，而不是一个可以通过给现有分片背后加硬件来提升的数字——它反映的是 key 空间单一逻辑分区能扣住的请求速率，所以扣住 10 倍请求速率的唯一办法是拥有大约 10 倍多的独立分区。用新峰值除以同样的单分片上限：23,148,148 / 5,500 ≈ 4,209，所以需要增长到约 4,096 个分片（下一个方便的 2 的幂）——且因为分片数本身变大了 8 倍，把 key 映射到分片的路由层（在 512 个分片时很简单）也需要变化，通常要加一层间接寻址而不是单层平坦哈希表。",
+    "tags": []
+  }
+]

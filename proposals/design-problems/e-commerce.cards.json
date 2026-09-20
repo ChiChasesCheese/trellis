@@ -1,0 +1,92 @@
+[
+  {
+    "id": "problems-e-commerce-five-consistency-domains",
+    "node": "problems.commerce.e-commerce",
+    "type": "qa",
+    "q": "In an e-commerce checkout design, why is it a mistake to treat the catalogue, cart, checkout/inventory, and order as one consistency model instead of picking a guarantee per domain?",
+    "a": "Each domain needs a different trade-off: the product catalogue is read at a ratio of roughly 1,400 reads per order in a typical design, so it must be served from cache/CDN and tolerates seconds of staleness (eventual consistency); inventory decrement at checkout must never oversell, so it needs a strongly-consistent conditional update; the cart tolerates conflicts resolved by a merge; and the order, once created, must never be lost, driving downstream work through a durable saga. Forcing one model onto all of them either makes the read path too expensive (strong consistency everywhere) or lets inventory oversell (eventual consistency everywhere).",
+    "tags": [],
+    "q_zh": "在电商结账设计中，为什么把目录、购物车、结账/库存、订单当成同一种一致性模型而不是按域各自选择保证是一个错误？",
+    "a_zh": "每个域需要不同的权衡：商品目录在典型设计中每笔订单大约对应 1,400 次读，所以必须走缓存/CDN 服务且容忍秒级陈旧（最终一致）；结账时的库存扣减绝不能超卖，需要强一致的条件更新（conditional update）；购物车容忍冲突、靠合并解决；订单一旦创建绝不能丢失，需要通过持久化的 saga 驱动下游。给全部域套同一种模型，要么让读路径代价过高（处处强一致），要么让库存超卖（处处最终一致）。"
+  },
+  {
+    "id": "problems-e-commerce-read-write-ratio-drives-caching",
+    "node": "problems.commerce.e-commerce",
+    "type": "qa",
+    "q": "In an e-commerce design with 50M DAU browsing product pages and roughly 850,000 orders/day, what read:write ratio does this imply, and what design decision does it drive?",
+    "a": "With about 1.2 billion product-page views/day against roughly 850,000 orders/day, the ratio is about 1,400:1. This is the number that rules out querying the authoritative inventory/price row on every product-page request: at tens of thousands of QPS, that read load would crowd out the write path a relational primary is sized for. It forces product pages onto a cache/CDN layer with layered freshness (long TTL for static fields, short TTL with write-through for price/stock) rather than reading the source of truth on every view.",
+    "tags": [],
+    "q_zh": "在一个 50M 日活、每日约 85 万订单的电商设计中，这意味着什么样的读写比，它驱动了什么设计决策？",
+    "a_zh": "约 12 亿次商品页浏览/天对约 85 万笔订单/天，比例约为 1,400:1。这个数字排除了每次商品页请求都查权威库存/价格行的做法：在几万 QPS 的规模下，这种读负载会挤占为写路径设计的关系型主库。它迫使商品页走缓存/CDN 分层新鲜度（静态字段长 TTL，价格/库存字段短 TTL + 写穿透），而不是每次浏览都读权威数据源。"
+  },
+  {
+    "id": "problems-e-commerce-inventory-decrement-below-relational-ceiling",
+    "node": "problems.commerce.e-commerce",
+    "type": "qa",
+    "q": "In an e-commerce design, ordinary-SKU inventory decrements peak at roughly 136 QPS (850,000 orders/day x 2.3 items/order, x6 peak factor). Why does this number mean you should NOT reach for a Redis atomic-decrement (Lua script) approach by default?",
+    "a": "A single managed relational primary is assumed to sustain a few thousand simple conditional updates per second. A peak of ~136 QPS for ordinary inventory is one to two orders of magnitude below that ceiling, so a plain `UPDATE inventory SET stock = stock - qty WHERE stock >= qty` on the relational store is sufficient and simpler to operate. The Redis-Lua atomic-decrement pattern only becomes necessary when a single SKU's contention spikes far above this average — e.g. a flash promotion on one item — at which point that SKU's problem is structurally the flash-sale hot-key problem, not the ordinary checkout path.",
+    "tags": [],
+    "q_zh": "在一个电商设计中，普通 SKU 的库存扣减峰值约为 136 QPS（85 万订单/天 × 2.3 件/订单 × 6 倍峰值系数）。为什么这个数字意味着默认不该用 Redis 原子递减（Lua 脚本）方案？",
+    "a_zh": "一个托管关系型主库被假设能承受每秒几千次简单条件更新。普通库存峰值约 136 QPS，比这个上限低一到两个数量级，所以对关系型存储直接做 `UPDATE inventory SET stock = stock - qty WHERE stock >= qty` 就足够，也更简单。Redis-Lua 原子递减模式只在单个 SKU 的瞬时争用远超这个平均值时才需要——比如某单品的限时促销——这时这个 SKU 的问题在结构上就是秒杀（flash-sale）的热 key 问题，而不是普通结账路径的问题。"
+  },
+  {
+    "id": "problems-e-commerce-cart-anonymous-vs-logged-in",
+    "node": "problems.commerce.e-commerce",
+    "type": "qa",
+    "q": "In an e-commerce cart design, why does an anonymous cart live in a TTL-bound key-value store while a logged-in cart lives in durable storage, and what happens at the moment of login?",
+    "a": "An anonymous shopper has no stable long-lived identity to key a durable record on, and losing an anonymous cart only costs re-adding a few items, so it's kept in a fast, TTL-bound key-value store (e.g. Redis-class, ~30-day TTL) keyed by a device/cookie id. A logged-in cart is durable and keyed by account id. Login triggers a single, explicit merge (not continuous sync): for the same offer, take the larger quantity; for different offers, take the union. Merging once, at a single well-defined moment, avoids having to handle concurrent multi-writer conflicts on the cart in general.",
+    "tags": [],
+    "q_zh": "在电商购物车设计中，为什么匿名购物车存在带 TTL 的键值存储里，而登录购物车存在耐久存储里，登录那一刻发生什么？",
+    "a_zh": "匿名用户没有稳定的长期身份可以作为耐久记录的 key，丢失匿名购物车的代价也只是重新加购几件商品，所以它存在快速的、带 TTL 的键值存储中（Redis 一类，约 30 天 TTL），以设备/cookie id 为 key。登录购物车是耐久的，以账号 id 为 key。登录会触发一次显式合并（不是持续同步）：同一 offer 取数量较大者，不同 offer 取并集。只在一个明确的时刻合并一次，避免了一般情况下处理购物车并发多写冲突的复杂度。"
+  },
+  {
+    "id": "problems-e-commerce-reservation-timing-tradeoff",
+    "node": "problems.commerce.e-commerce",
+    "type": "qa",
+    "q": "In an e-commerce design, why is reserving inventory at checkout-start (with a short TTL) preferred over reserving at add-to-cart or only decrementing after payment succeeds?",
+    "a": "Reserving at add-to-cart locks stock for the entire cart dwell time (minutes to days), creating widespread phantom out-of-stock on popular items. Waiting until payment succeeds to decrement allows two concurrent buyers to both receive a successful-payment confirmation for the last unit before either decrement runs, causing oversell that can only be fixed by an after-the-fact refund. Reserving with a short TTL (roughly the time to fill out a payment form, ~10-15 minutes) at the moment checkout starts bounds the phantom-stock window to that short interval while still using a strongly-consistent conditional update, so checkout-time oversell is prevented without long-lived stock lockup.",
+    "tags": [],
+    "q_zh": "在电商设计中，为什么在结账开始时（带短 TTL）预留库存比加购时预留或只在支付成功后才扣减更好？",
+    "a_zh": "加购时锁定库存会占用整个购物车停留时间（几十分钟到几天），在热门商品上造成大范围'假库存'。等支付成功才扣减,会让两个并发买家在任一方扣减执行前都收到最后一件库存的支付成功确认，造成只能靠事后退款解决的超卖。在结账开始那一刻用短 TTL（大约是填写支付表单的时间，10-15 分钟）预留，把假库存窗口压缩到这个短区间内，同时仍然使用强一致的条件更新，从而在不长期锁定库存的前提下防止结账时刻的超卖。"
+  },
+  {
+    "id": "problems-e-commerce-order-saga-pivot-ordering",
+    "node": "problems.commerce.e-commerce",
+    "type": "qa",
+    "q": "In an e-commerce order saga spanning inventory, payment, fulfillment, and notification, why should inventory reservation happen before payment, and payment happen before fulfillment, rather than some other order?",
+    "a": "Saga steps should be ordered so the hardest-to-compensate action comes last (the 'pivot' comes after everything cheaply reversible). Releasing an inventory reservation is nearly free (it's just letting a TTL expire or clearing a row), so it goes first. Payment involves real money movement and its compensation is a refund — more costly than releasing a reservation, so it comes after inventory is locked. Fulfillment (shipping) is nearly irreversible once triggered, so it must wait until payment is confirmed successful. This ordering minimizes the cost of the compensations that actually run when a later step fails.",
+    "tags": [],
+    "q_zh": "在跨库存-支付-履约-通知的电商订单 saga 中，为什么库存预留要在支付之前、支付要在履约之前，而不是其他顺序？",
+    "a_zh": "saga 步骤应该让最难补偿的动作排在最后（转折点/pivot 放在所有廉价可逆的步骤之后）。释放库存预留几乎零成本（只是让 TTL 过期或清掉一行），所以排最前。支付涉及真实资金移动，其补偿是退款——比释放预留代价更高，所以在库存锁定之后进行。履约（发货）一旦触发几乎不可逆，所以必须等支付确认成功后才能进行。这个顺序把后续步骤失败时真正要执行的补偿代价降到最低。"
+  },
+  {
+    "id": "problems-e-commerce-outbox-for-checkout",
+    "node": "problems.commerce.e-commerce",
+    "type": "qa",
+    "q": "In an e-commerce checkout, why does the Checkout Orchestrator write the Order row and the saga-kickoff event in the same local transaction instead of writing the order and then publishing the event afterward?",
+    "a": "Writing the order and publishing separately is the dual-write problem: a crash between the two steps leaves an order with no event to drive it (inventory silently stays reserved and payment never gets triggered) — an order that appears created but never gets acted on. Writing both the Order row and an outbox event row in one local transaction (the transactional outbox pattern) guarantees they are atomic: either both exist or neither does. A relay then delivers the outbox row to the queue at-least-once, and downstream workers dedupe by the event id so a redelivered event can't trigger payment or fulfillment twice.",
+    "tags": [],
+    "q_zh": "在电商结账中，为什么 Checkout Orchestrator 要在同一个本地事务里写 Order 行和触发 saga 的事件，而不是先写订单再单独发布事件？",
+    "a_zh": "分开写订单和发布事件是典型的双写问题：两步之间崩溃会留下一个没有事件驱动它的订单（库存悄悄保持预留状态，支付永远不会被触发）——一个看起来已创建却永远不会被处理的订单。在同一个本地事务里写 Order 行和一条 outbox 事件行（事务型 outbox 模式）保证两者原子：要么都存在要么都不存在。之后 relay 以至少一次的方式把 outbox 行投递到队列，下游 worker 按事件 id 去重，这样重复投递的事件不会把支付或履约触发两次。"
+  },
+  {
+    "id": "problems-e-commerce-marketplace-buy-box-refresh",
+    "node": "problems.commerce.e-commerce",
+    "type": "qa",
+    "q": "In a multi-seller e-commerce marketplace, why is the 'buy box' (the recommended offer for a product with several sellers) precomputed and stored in the product-detail cache, but refreshed by an event rather than only on a batch schedule?",
+    "a": "Recomputing the buy box on every product-page request means fetching every seller's live price/stock/rating for that product on each read, reintroducing the fan-out read load the product-page cache exists to avoid. A pure scheduled batch recompute (e.g. hourly) avoids that fan-out but leaves price drops or a sold-out seller stale until the next batch run — unacceptable when a competing seller cuts price or sells out. The middle path precomputes the buy box into the cached product document, but when a specific seller's offer changes price or stock, that write path emits an event that triggers recompute for just that one product — turning staleness from 'one batch interval' into roughly the latency of one event, without reintroducing read-time fan-out.",
+    "tags": [],
+    "q_zh": "在多商家电商市场中，为什么'buy box'（一件商品在多个商家中被推荐的报价）要预计算并存进商品详情缓存里，但要靠事件而不是纯批处理周期刷新？",
+    "a_zh": "每次商品页请求都重算 buy box，意味着每次读都要拉取该商品全部商家的实时价格/库存/评分，重新引入了商品页缓存本该避免的扇出读负载。纯定期批处理重算（比如每小时）避免了扇出，但会让降价或某商家售罄的信息陈旧到下一次批处理才更新——当竞争商家降价或卖光时这是不可接受的。折中方案是把 buy box 预计算进缓存的商品文档里，但当某个商家的 offer 价格或库存变化时，该写路径发一个事件只触发这一个商品的重算——把陈旧度从'一个批处理周期'降级成大约一次事件处理的延迟，同时不重新引入读时扇出。"
+  },
+  {
+    "id": "problems-e-commerce-black-friday-order-vs-read-scaling",
+    "node": "problems.commerce.e-commerce",
+    "type": "qa",
+    "q": "In an e-commerce design, why does Black Friday scaling mainly require pre-warming the read cache rather than emergency-scaling the order-write path, given a computed peak of about 354 orders/sec in the promotional window against a 200,000 QPS read peak?",
+    "a": "Even a 5x order-volume Black Friday with 60% of orders concentrated in a 4-hour window and a further 2x burst factor works out to roughly 354 orders/sec — still one to two orders of magnitude below the few-thousand-per-second ceiling assumed for a single relational primary doing conditional updates, so the ordinary checkout write path needs no special scaling. The read side, by contrast, can spike to roughly 200,000 QPS on product pages, which does threaten to overwhelm a cold cache with a stampede of origin fetches. The scaling work that matters is pre-warming CDN/application caches before the event starts and routing any deliberately promoted 'doorbuster' SKU into a flash-sale-style admission-control path, since that one SKU's contention is structurally different from the rest of the catalogue.",
+    "tags": [],
+    "q_zh": "在电商设计中，给定推广窗口内峰值约 354 订单/秒、读峰值约 20 万 QPS 的计算结果，为什么黑五扩容主要需要预热读缓存而不是给订单写路径做应急扩容？",
+    "a_zh": "即使黑五订单量是平常的 5 倍、60% 集中在 4 小时窗口内、再叠加 2 倍突发系数，算出来也只是约 354 订单/秒——仍比假设的单个关系型主库做条件更新的每秒几千次上限低一到两个数量级，所以普通结账写路径不需要特殊扩容。相比之下，读侧商品页峰值可能冲到约 20 万 QPS，这确实可能让冷缓存被回源请求的踩踏效应压垮。真正需要做的扩容工作是活动开始前预热 CDN/应用缓存，以及把刻意推广的'秒杀单品'路由进类似秒杀设计的准入控制路径，因为这一个 SKU 的争用在结构上和目录里其余商品完全不同。"
+  }
+]

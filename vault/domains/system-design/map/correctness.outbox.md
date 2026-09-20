@@ -9,6 +9,9 @@ Why writing DB-then-publish loses events, and how the transactional outbox close
 ## Readings
 - [[microservices-io-outbox|Transactional Outbox (microservices.io, Chris Richardson)]]
 
+## Drills
+- [[design-e-commerce|Drill: Design the core purchase flow for an e-commerce platform (Amazon-style)]]
+
 ## Cards (6)
 1. [[correctness-dual-write-problem]]
 2. [[correctness-outbox-mechanism]]

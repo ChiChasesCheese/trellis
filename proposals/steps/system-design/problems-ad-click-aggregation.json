@@ -1,0 +1,12 @@
+{
+  "problems.search.ad-click-aggregation": [
+    "problems-ad-click-aggregation-dollar-error-budget",
+    "problems-ad-click-aggregation-exact-dedup-vs-sketch",
+    "problems-ad-click-aggregation-dual-partition-key",
+    "problems-ad-click-aggregation-watermark-heuristic-retraction",
+    "problems-ad-click-aggregation-late-data-three-tiers",
+    "problems-ad-click-aggregation-deterministic-upsert-key",
+    "problems-ad-click-aggregation-hot-ad-id-salting",
+    "problems-ad-click-aggregation-reconciliation-source-of-truth"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "problems.foundations.url-shortener": [
+    "problems-url-shortener-capacity-arithmetic",
+    "problems-url-shortener-nosql-vs-relational",
+    "problems-url-shortener-counter-vs-hash",
+    "problems-url-shortener-hot-key-mitigation",
+    "problems-url-shortener-async-analytics",
+    "problems-url-shortener-302-vs-301",
+    "problems-url-shortener-kgs-outage",
+    "problems-url-shortener-10x-100x-evolution"
+  ]
+}

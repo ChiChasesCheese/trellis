@@ -4,6 +4,13 @@
 
 Dynamo-style quorums, sloppy quorums and hinted handoff, read repair and anti-entropy.
 
+**Core** — part of the first pass through this subject.
+
+**Unlocks:** [[domains/system-design/map/problems.foundations.key-value-store|Distributed Key-Value Store]]
+
+## Drills
+- [[design-key-value-store|Drill: Design a highly-available distributed key-value store]]
+
 ## Cards (7)
 1. [[distributed-quorum-math]]
 2. [[distributed-leaderless-failed-write]]

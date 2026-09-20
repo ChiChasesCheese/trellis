@@ -266,6 +266,9 @@ def cmd_import(args, project: Project) -> int:
     return 0
 
 
+NO_ARCHIVE_TAG = "no-archive"
+
+
 def cmd_clip(args, project: Project) -> int:
     """Archive readings' pages into the vault so they can be read in
     Obsidian offline. Already-clipped readings are skipped, so this is
@@ -280,6 +283,13 @@ def cmd_clip(args, project: Project) -> int:
     ]
     if args.node:
         todo = [r for r in todo if any(n.startswith(args.node) for n in r.nodes)]
+    # The repository is public: a page we may link to is not thereby a page
+    # we may republish. A reading says so with the `no-archive` tag, and keeps
+    # its link without ever being copied here.
+    link_only = [r for r in todo if NO_ARCHIVE_TAG in r.tags]
+    todo = [r for r in todo if NO_ARCHIVE_TAG not in r.tags]
+    if link_only:
+        print(f"{project.skeleton.domain}: {len(link_only)} kept as a link only ({NO_ARCHIVE_TAG})")
     if not todo:
         print(f"{project.skeleton.domain}: every reading is already clipped")
         return 0

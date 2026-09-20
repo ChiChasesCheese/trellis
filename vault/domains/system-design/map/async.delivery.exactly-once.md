@@ -6,8 +6,13 @@ Idempotent producers, transactional consume-process-produce, and why end-to-end 
 
 **Core** — part of the first pass through this subject.
 
+**Unlocks:** [[domains/system-design/map/problems.search.ad-click-aggregation|Ad Click Aggregation]]
+
 ## Readings
 - [[confluent-exactly-once-kafka|Exactly-once Semantics is Possible: Here's How Apache Kafka Does it (Neha Narkhede)]]
+
+## Drills
+- [[design-ad-click-aggregation|Drill: Design a billing-grade ad click aggregation pipeline]]
 
 ## Cards (5)
 1. [[async-idempotent-producer]]

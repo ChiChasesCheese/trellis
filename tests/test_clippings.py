@@ -172,3 +172,30 @@ def test_a_book_pointer_does_not_count_as_a_readable_source(tmp_path):
     index = load_clippings(clips)
     assert is_readable_source(readings[0], index)
     assert leaves_without_readable_source(skeleton, readings, index) == []
+
+
+def test_a_reading_marked_no_archive_is_linked_but_never_copied_into_the_vault(tmp_path, monkeypatch, capsys):
+    """The repository is public. A page we may link to is not thereby a page
+    we may republish, and the tag lets a reading say so."""
+    import yaml
+    from trellis import cli
+    from trellis.clippings import FetchedPage as Page
+
+    (tmp_path / "skeleton").mkdir()
+    (tmp_path / "skeleton" / "demo.yaml").write_text(yaml.safe_dump({
+        "domain": "demo", "title": "Demo",
+        "nodes": [{"id": "alpha", "title": "Alpha", "children": [{"id": "alpha.one", "title": "One"}]}],
+    }), encoding="utf-8")
+    readings = tmp_path / "vault" / "demo" / "readings"
+    readings.mkdir(parents=True)
+    (readings / "open-post.md").write_text(
+        "---\nnodes: [alpha.one]\nurl: https://example.org/open\n---\n# Open post\nWhy read.\n", encoding="utf-8")
+    (readings / "paid-course.md").write_text(
+        "---\nnodes: [alpha.one]\nurl: https://example.com/course\ntags: [no-archive]\n---\n# Paid course\nWhy read.\n",
+        encoding="utf-8")
+    fetched = []
+    monkeypatch.setattr(cli, "fetch_page", lambda url: fetched.append(url) or Page(
+        title="Open post", markdown="Real prose. " * 400))
+    assert cli.main(["--root", str(tmp_path), "clip"]) == 0
+    assert fetched == ["https://example.org/open"]
+    assert "1 kept as a link only (no-archive)" in capsys.readouterr().out

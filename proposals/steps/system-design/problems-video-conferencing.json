@@ -1,0 +1,12 @@
+{
+  "problems.media.video-conferencing": [
+    "problems-video-conferencing-mesh-bandwidth-n-squared",
+    "problems-video-conferencing-signalling-media-plane-split",
+    "problems-video-conferencing-sfu-vs-mcu-compute-cost",
+    "problems-video-conferencing-turn-relay-mandatory-fallback",
+    "problems-video-conferencing-simulcast-tile-cap-bounds-downlink",
+    "problems-video-conferencing-degradation-order-audio-last",
+    "problems-video-conferencing-sfu-node-failure-isolated-blast-radius",
+    "problems-video-conferencing-cascaded-sfu-decouples-backbone-from-audience"
+  ]
+}

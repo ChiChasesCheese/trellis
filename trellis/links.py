@@ -63,13 +63,14 @@ def sources_for(
 
     candidates: dict[str, tuple[tuple, Reading]] = {}
     for reading in readings:
-        if not reading.url:
+        if not reading.url and not reading.authored:
             continue
         near = min((distance[n] for n in reading.nodes if n in distance), default=None)
         if near is None:
             continue
-        clip = clippings.get(canonical_url(reading.url))
-        at_hand = (clip is not None and clip.is_substantive) or is_video(reading)
+        clip = clippings.get(canonical_url(reading.url)) if reading.url else None
+        at_hand = reading.authored or (clip is not None and clip.is_substantive) \
+            or is_video(reading)
         rank = (
             # A book or an index is last whatever else is true of it: its
             # homepage archiving cleanly does not put the chapter in your
@@ -77,8 +78,10 @@ def sources_for(
             1 if _POINTER_TAGS & set(reading.tags) else 0,
             0 if at_hand else 1,
             near,
+            # among equals, what was written for this leaf beats what was found for it
+            0 if reading.authored else 1,
         )
-        key = canonical_url(reading.url)
+        key = canonical_url(reading.url) if reading.url else f"vault:{reading.path.stem}"
         if key not in candidates or rank < candidates[key][0]:
             candidates[key] = (rank, reading)
     return [r for _, r in sorted(candidates.values(), key=lambda x: x[0])][:limit]
@@ -123,9 +126,11 @@ def go_deeper(
                 for c in cases or [] if node_id in c.nodes]
     for reading in sources_for(skeleton, readings, node_id, clippings=clippings):
         video = is_video(reading)
+        if reading.authored and not vault:
+            continue                     # it lives only in the vault; no vault, no link
         if vault and not video:
             out.append(
-                GoDeeper(reading.title, open_uri(vault, reading.path.stem), reading.url)
+                GoDeeper(reading.title, open_uri(vault, reading.path.stem), reading.url or None)
             )
         else:
             # A video has nothing embedded in its note to open — send the tap
@@ -146,7 +151,7 @@ def is_readable_source(reading: Reading, clippings: dict[str, Clipping]) -> bool
     navigate."""
     if _POINTER_TAGS & set(reading.tags):
         return False
-    if is_video(reading):
+    if is_video(reading) or reading.authored:
         return True
     clip = clippings.get(canonical_url(reading.url))
     return clip is not None and clip.is_substantive

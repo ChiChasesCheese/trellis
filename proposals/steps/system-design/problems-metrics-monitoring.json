@@ -1,0 +1,12 @@
+{
+  "problems.search.metrics-monitoring": [
+    "problems-metrics-monitoring-cardinality-not-sample-rate",
+    "problems-metrics-monitoring-pull-signal-ambiguity",
+    "problems-metrics-monitoring-write-path-compression-data-dependent",
+    "problems-metrics-monitoring-cardinality-admission-quota",
+    "problems-metrics-monitoring-downsampling-keep-min-max",
+    "problems-metrics-monitoring-field-index-fanout-pruning",
+    "problems-metrics-monitoring-alert-eval-independent-region",
+    "problems-metrics-monitoring-noisy-tenant-isolation"
+  ]
+}

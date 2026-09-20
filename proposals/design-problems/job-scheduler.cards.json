@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-job-scheduler-full-scan-vs-timing-wheel",
+    "node": "problems.foundations.job-scheduler",
+    "type": "qa",
+    "q": "In a distributed job scheduler holding 3x10^8 outstanding scheduled jobs, why does a naive full-table scan for due jobs (WHERE due_ts <= now(), even with an index touching every not-yet-due row) fail to meet a P95 < 1 second trigger-latency target, and what does this force the design toward?",
+    "a": "At a conservative 1 microsecond per row, scanning 3x10^8 outstanding rows once takes about 300 seconds -- three hundred times slower than the 1-second P95 target, and that cost only grows as more jobs get scheduled, regardless of how many are actually due right now. This forces the design toward a discovery mechanism whose cost scales with how many jobs are due, not with how many are outstanding: a hierarchical timing wheel (cascading circular buffers of increasing time granularity, each giving O(1) insert/expire) for the near-term window, backed by a time-bucketed persistent store for everything further out.",
+    "q_zh": "在一个持有 3×10^8 个待定任务的分布式任务调度器里，为什么朴素的全表扫描找到期任务（WHERE due_ts <= now()，即使有索引也要触达每一行未到期的记录）满足不了 P95 < 1 秒的触发延迟目标？这个结论把设计逼向了什么方向？",
+    "a_zh": "按保守的每行 1 微秒计算，扫描 3×10^8 行待定记录一次大约要 300 秒——比 1 秒的 P95 目标慢 300 倍，而且这个成本只会随着待定任务越来越多而持续增长，跟当下实际到期的任务数量无关。这把设计逼向一种成本只跟「当前有多少到期」成正比、而不是跟「总共有多少待定」成正比的发现机制：用分层时间轮（hierarchical timing wheel，级联多层不同时间粒度的循环缓冲区，每层都能做到 O(1) 的插入/到期检查）处理近期窗口，更远期的任务留在按时间分桶的持久化存储里。",
+    "tags": []
+  },
+  {
+    "id": "problems-job-scheduler-at-least-once-vs-no-double-execution",
+    "node": "problems.foundations.job-scheduler",
+    "type": "qa",
+    "q": "In a distributed job scheduler, why are 'the job executes at least once' and 'the job never executes concurrently on two workers at the same time' two completely independent guarantees that both need their own mechanism, rather than one implying the other?",
+    "a": "At-least-once is about not silently dropping a job -- it is satisfied even if the same job runs sequentially multiple times across separate, non-overlapping attempts, and is achieved by having the scheduler err on the side of redelivering whenever it is uncertain a dispatch succeeded, combined with idempotent workers absorbing any resulting duplicate execution. Preventing concurrent double execution is about mutual exclusion at a single point in time -- a worker that only paused (rather than truly died) resuming and writing results after a second worker has already taken over the same job -- and needs its own mechanism (a lease with a fencing token) because idempotency alone does nothing to stop two workers from running simultaneously and racing on side effects before either one's write is even attempted.",
+    "q_zh": "在一个分布式任务调度器里，为什么「任务至少被执行一次」和「任务不会被两个 worker 同时并发执行」是两个完全独立、各自需要不同机制的保证，而不是满足其中一个就自动满足另一个？",
+    "a_zh": "至少一次执行关心的是「不会悄悄丢任务」——即使同一个任务在若干次互不重叠的尝试里被顺序执行了多次，这条保证依然成立，实现方式是调度器在不确定上一次分发是否成功时宁可重新投递，再配合幂等的 worker 吸收由此产生的重复执行。防止并发重复执行关心的是某一时刻的互斥性——一个只是暂停（而非真正死亡）的 worker 恢复后，在第二个 worker 已经接管同一任务的情况下仍然写入结果——这需要自己的机制（带 fencing token 的租约），因为幂等性本身完全阻止不了两个 worker 同时运行、在任何一方真正写入之前就已经产生副作用层面的竞争。",
+    "tags": []
+  },
+  {
+    "id": "problems-job-scheduler-fencing-token-lease",
+    "node": "problems.foundations.job-scheduler",
+    "type": "qa",
+    "q": "In a distributed job scheduler, why is a lease timeout ALONE insufficient to guarantee a job never runs concurrently on two workers, and what does adding a monotonically increasing fencing token fix?",
+    "a": "A lease timeout only controls how long the system waits before allowing a second worker to take over -- it cannot stop the first worker from resuming after a pause (GC stall, network partition) still believing it holds the lease, and writing its result anyway even though a second worker has since been granted the same job. A monotonically increasing fencing token fixes this by making the resource being written to -- not the worker -- the enforcer: every lease grant carries a token strictly greater than the last one issued for that job, and the store rejects any write carrying a token older than the latest one it has already accepted, so the resumed first worker's stale-token write is rejected outright regardless of whether that worker believes its execution succeeded.",
+    "q_zh": "在一个分布式任务调度器里，为什么单靠租约超时不足以保证一个任务不会被两个 worker 并发执行？加上一个单调递增的 fencing token 修复了什么？",
+    "a_zh": "租约超时只能控制系统等多久之后才允许第二个 worker 接管——它阻止不了第一个 worker 在暂停（GC 停顿、网络分区）后恢复时仍然认为自己持有租约、继续写入结果，哪怕这期间第二个 worker 已经拿到了同一个任务。单调递增的 fencing token 通过让被写入的资源本身（而不是 worker）来做执行者，修复了这个问题：每次发放租约都携带一个严格大于该任务上一次 token 的新 token，存储层拒绝任何携带比自己已接受过的最新 token 更旧的写入——这样即使已恢复的第一个 worker 自认为执行成功，它带着过期 token 的写入也会被直接拒绝。",
+    "tags": []
+  },
+  {
+    "id": "problems-job-scheduler-cron-reuses-oneoff-discovery",
+    "node": "problems.foundations.job-scheduler",
+    "type": "qa",
+    "q": "In a distributed job scheduler, why does a recurring cron job not need its own separate discovery data structure alongside one-off jobs, even though a cron expression describes an infinite sequence of future trigger times?",
+    "a": "Instead of feeding the infinite cron sequence into the discovery mechanism, the scheduler precomputes only the single next due timestamp from the cron expression and stores it on the job as an ordinary due_ts field; the moment that trigger fires, the scheduler immediately recomputes and writes back the next due timestamp. This turns an infinite sequence into 'exactly one pending future timestamp at any given moment,' letting cron jobs reuse the exact same timing-wheel/time-bucket discovery path built for one-off jobs, with no separate structure needed for recurrence itself.",
+    "q_zh": "在一个分布式任务调度器里，即使一个 cron 表达式描述的是一个无限的未来触发时间序列，为什么周期性（cron）任务不需要在一次性任务之外单独维护一套发现数据结构？",
+    "a_zh": "调度器不把整个无限的 cron 序列喂给发现机制，而是只从 cron 表达式预先算出下一次到期时间，把它作为一个普通的 due_ts 字段存在任务上；这次触发一旦发生，调度器立刻重新计算并写回下一次到期时间。这把一个无限序列变成了「任意时刻只有一个待定的未来时间点」，让 cron 任务可以直接复用为一次性任务搭建的同一套时间轮/时间分桶发现路径，不需要为周期性本身单独设计结构。",
+    "tags": []
+  },
+  {
+    "id": "problems-job-scheduler-dag-event-driven-trigger",
+    "node": "problems.foundations.job-scheduler",
+    "type": "qa",
+    "q": "In a distributed job scheduler that supports DAG (directed acyclic graph) task dependencies, why is a DAG step's 'due' condition fundamentally different from a time-based job's, and how does the scheduler determine when a downstream step becomes due?",
+    "a": "A one-off or cron job's due condition is purely a function of time -- it becomes due when the clock reaches a stored timestamp -- so it fits naturally into a timing-wheel or time-bucket discovery mechanism. A DAG step's due condition is event-driven instead: it becomes due only when every step it depends on has reached a succeeded state, which has nothing to do with wall-clock time. The scheduler determines this by checking, each time a step completes, which downstream steps list it as a dependency, and pushing a downstream step into the dispatch path as 'due' only once all of its listed dependencies have independently reached succeeded.",
+    "q_zh": "在一个支持 DAG（有向无环图）任务依赖的分布式任务调度器里，为什么一个 DAG step 的「到期」条件和基于时间的任务在根本上不同？调度器怎么判断一个下游 step 什么时候变为到期？",
+    "a_zh": "一次性任务或 cron 任务的到期条件纯粹是时间的函数——时钟走到存好的时间戳就到期，所以能自然地放进时间轮或时间分桶的发现机制里。DAG step 的到期条件则是事件驱动的：只有当它依赖的全部前置 step 都进入 succeeded 状态时它才到期，这和墙上时钟的时间毫无关系。调度器的判断方式是：每当一个 step 完成时，查询有哪些下游 step 把它列为依赖，只有当某个下游 step 列出的全部依赖都各自独立进入 succeeded 之后，才把这个下游 step 作为「到期」推入分发路径。",
+    "tags": []
+  },
+  {
+    "id": "problems-job-scheduler-retry-backoff-dead-letter",
+    "node": "problems.foundations.job-scheduler",
+    "type": "qa",
+    "q": "In a distributed job scheduler, why does retrying a failed job with fixed-interval, unlimited retries cause worse problems than exponential backoff with a retry cap and dead-letter queue, specifically for a job that fails permanently (e.g. malformed payload) rather than transiently?",
+    "a": "A permanently failing job retried at a fixed interval forever keeps consuming queue and worker capacity indefinitely without ever succeeding, and gives operators no signal that something needs human attention -- it just silently loops. Exponential backoff with a retry cap (e.g. delays of 1s, 2s, 4s, 8s, 16s across 5 attempts, 31 seconds of cumulative backoff) bounds how much capacity a single failing job can consume before the system gives up automatically; once the cap is hit, the job moves to a dead-letter queue that halts automatic retries, preserves full failure context (error, last lease token, execution history), and surfaces the job for manual inspection instead of retrying it forever.",
+    "q_zh": "在一个分布式任务调度器里，对于一个永久性失败（比如 payload 格式错误）而非瞬时故障的任务，为什么固定间隔、无限次数的重试比指数退避加重试上限加死信队列会造成更坏的问题？",
+    "a_zh": "一个永久性失败的任务如果按固定间隔无限重试，会一直无休止地占用队列和 worker 容量却永远不会成功，也不给运维任何「这里需要人介入」的信号——它只是悄悄地无限循环。指数退避加重试上限（比如 5 次尝试分别延迟 1s、2s、4s、8s、16s，累计退避 31 秒）限定了单个失败任务在系统自动放弃之前最多能消耗多少容量；一旦达到上限，任务进入死信队列（dead-letter queue），停止自动重试、保留完整的失败上下文（错误信息、最后一次 lease token、执行历史），把这个任务暴露出来等待人工排查，而不是无限重试下去。",
+    "tags": []
+  },
+  {
+    "id": "problems-job-scheduler-cron-clustering-peak-multiplier",
+    "node": "problems.foundations.job-scheduler",
+    "type": "qa",
+    "q": "In a distributed job scheduler averaging about 1,157 trigger QPS from 10^8 jobs/day, why would the design use a higher peak multiplier (around 6x) than the 3-4x commonly used for organic user traffic, and what does this reveal about scheduled workloads specifically?",
+    "a": "Unlike organic user traffic, which tends to spread smoothly across the day with only moderate diurnal peaks, scheduled job due times are not uniformly distributed -- large numbers of jobs get configured to fire at shared boundaries like the top of the hour or midnight, so actual due-time load spikes well above what a uniform-distribution average would suggest. This reveals that scheduled workloads have a structural clustering problem baked into how users configure schedules, which is also the root cause the multi-tenant fairness mechanism (per-tenant rate limiting and weighted dispatch) has to address, since one tenant's boundary-aligned burst can otherwise crowd out every other tenant's on-time triggering at that same moment.",
+    "q_zh": "在一个每天 10^8 个任务、平均触发 QPS 约 1,157 的分布式任务调度器里，为什么设计会采用比普通用户流量常见的 3-4 倍更高的峰值系数（约 6 倍）？这揭示了调度类工作负载的什么特殊性？",
+    "a_zh": "不同于通常在一天内相对平滑分布、只有中等日间峰值的自然用户流量，调度任务的到期时间并不是均匀分布的——大量任务被配置成在整点、午夜这类共享的时间边界上触发，导致真实到期负载的尖峰远高于均匀分布假设下的估计。这揭示了调度类负载天生带有一种结构性的扎堆问题，根源来自用户配置调度的方式本身——这也正是多租户公平机制（按租户限流和加权分发）必须处理的根本原因，因为一个租户在这些边界上的突发流量如果不加控制，会挤占同一时刻其他所有租户本该准时触发的任务。",
+    "tags": []
+  },
+  {
+    "id": "problems-job-scheduler-multi-tenant-weighted-fairness",
+    "node": "problems.foundations.job-scheduler",
+    "type": "qa",
+    "q": "In a distributed job scheduler shared by thousands of tenants, why does plain FIFO dispatch fail the requirement that one tenant's job burst must not systematically delay other tenants, and what mechanism fixes it without resorting to full per-tenant infrastructure isolation?",
+    "a": "Under FIFO dispatch, any tenant's traffic spike is served strictly in arrival order alongside everyone else's jobs, so a burst from one tenant directly translates into delayed on-time triggering for every other tenant sharing the same dispatch path and worker pool -- there is no mechanism separating 'this tenant is over its normal share' from 'this tenant is dispatching normally.' The fix is a per-tenant token-bucket rate limiter combined with dynamic priority: tenants that persistently exceed their allotted share get their subsequent jobs marked lower priority, and the dispatch queue processes different priority levels via weighted round-robin, so high-priority (normal-rate) tenants get served more often while low-priority (bursting) tenants still make progress without being starved -- confining one tenant's burst to mostly affecting its own latency instead of everyone else's.",
+    "q_zh": "在一个被数千个租户共享的分布式任务调度器里，为什么普通的 FIFO 分发满足不了「一个租户的任务洪峰不能系统性拖慢其他租户」这条要求？在不采用完全按租户做基础设施硬隔离的前提下，什么机制能修复这个问题？",
+    "a_zh": "在 FIFO 分发下，任何租户的流量突增都严格按到达顺序和其他所有租户的任务混在一起处理，所以一个租户的突发流量会直接转化为共享同一分发路径和 worker 池的其他所有租户触发延迟——没有任何机制能区分「这个租户超出了它正常的份额」和「这个租户在正常分发」。修复办法是按租户维护令牌桶（token bucket）速率限制器，配合动态优先级：持续超出自己配额的租户，后续任务会被标记为低优先级，分发队列按加权轮询（weighted round-robin）处理不同优先级，让高优先级（正常速率）的租户被更频繁地服务，同时低优先级（突发中）的租户依然能推进、不会被饿死——把一个租户洪峰的影响限制在主要拖慢它自己，而不是所有人。",
+    "tags": []
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "problems.foundations.cdn": [
+    "problems-cdn-shield-reduces-origin-qps-5x",
+    "problems-cdn-anycast-vs-geodns-failover-granularity",
+    "problems-cdn-cache-key-scope-and-vary",
+    "problems-cdn-purge-not-atomic-versioned-urls",
+    "problems-cdn-bdp-limits-parallel-segments-fix",
+    "problems-cdn-viral-object-shield-20x",
+    "problems-cdn-pop-failure-5pct-neighbor-overload",
+    "problems-cdn-10x-needs-second-shield-tier"
+  ]
+}

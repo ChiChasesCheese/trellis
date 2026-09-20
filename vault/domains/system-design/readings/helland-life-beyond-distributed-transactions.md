@@ -1,5 +1,5 @@
 ---
-nodes: [distributed.transactions.distributed]
+nodes: [distributed.transactions.distributed, problems.commerce.digital-wallet]
 url: https://www.ics.uci.edu/~cs223/papers/cidr07p15.pdf
 tags: [canonical, paper]
 ---

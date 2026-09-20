@@ -1,0 +1,12 @@
+{
+  "problems.foundations.job-scheduler": [
+    "problems-job-scheduler-full-scan-vs-timing-wheel",
+    "problems-job-scheduler-cron-clustering-peak-multiplier",
+    "problems-job-scheduler-at-least-once-vs-no-double-execution",
+    "problems-job-scheduler-fencing-token-lease",
+    "problems-job-scheduler-cron-reuses-oneoff-discovery",
+    "problems-job-scheduler-dag-event-driven-trigger",
+    "problems-job-scheduler-retry-backoff-dead-letter",
+    "problems-job-scheduler-multi-tenant-weighted-fairness"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "problems.realtime.multiplayer-game": [
+    "problems-multiplayer-game-widening-rating-window",
+    "problems-multiplayer-game-never-trust-client-state",
+    "problems-multiplayer-game-turnbased-vs-realtime-tick-rate",
+    "problems-multiplayer-game-per-game-actor-serializes-moves",
+    "problems-multiplayer-game-clock-lag-compensation",
+    "problems-multiplayer-game-disconnect-grace-pool",
+    "problems-multiplayer-game-spectator-fanout-reuse-live-comments",
+    "problems-multiplayer-game-statistical-anticheat-review-queue"
+  ]
+}

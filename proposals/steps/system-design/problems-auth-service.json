@@ -1,0 +1,13 @@
+{
+  "problems.foundations.auth-service": [
+    "problems-auth-service-hashing-cost-cores",
+    "problems-auth-service-token-verification-qps-forces-stateless",
+    "problems-auth-service-two-stores-two-consistency-levels",
+    "problems-auth-service-refresh-rotation-reuse-detection",
+    "problems-auth-service-stuffing-fleet-signals-not-lockout",
+    "problems-auth-service-jwks-overlap-window",
+    "problems-auth-service-oidc-vs-saml-by-client-type",
+    "problems-auth-service-lazy-rehash-avoids-batch-spike",
+    "problems-auth-service-recovery-shares-rate-limiting"
+  ]
+}

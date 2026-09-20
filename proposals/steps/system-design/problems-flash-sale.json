@@ -1,0 +1,12 @@
+{
+  "problems.commerce.flash-sale": [
+    "problems-flash-sale-hot-key-safety-margin",
+    "problems-flash-sale-bottleneck-order",
+    "problems-flash-sale-lottery-vs-first-come-first-served",
+    "problems-flash-sale-lua-atomic-check-and-decrement",
+    "problems-flash-sale-redis-vs-db-division-of-labor",
+    "problems-flash-sale-reservation-ttl-vs-ticket-booking",
+    "problems-flash-sale-undersell-vs-oversell",
+    "problems-flash-sale-10x-100x-evolution"
+  ]
+}

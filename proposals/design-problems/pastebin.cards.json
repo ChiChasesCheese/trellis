@@ -1,0 +1,76 @@
+[
+  {
+    "id": "problems-pastebin-read-write-ratio",
+    "node": "problems.foundations.pastebin",
+    "type": "cloze",
+    "text": "In a pastebin design ingesting 2,000,000 new pastes/day, if each paste is read an average of 5 times over its lifetime with most reads landing within the first day, the resulting read-to-write ratio is about {{c1::5:1}} — structurally far lower than a URL shortener's typical {{c2::100:1}}, because a paste link is normally shared with a known small audience rather than embedded broadly and clicked by strangers, so {{c3::caching strategy carries far less of the design's weight here than in a URL shortener, and storage layering/expiry carry far more}}.",
+    "text_zh": "在一个每天新增 200 万条粘贴的 pastebin 设计中，如果每条粘贴一生平均被读取 5 次、且大多数读取发生在创建后第一天内，得到的读写比约为 {{c1::5:1}}——比 URL 短链接典型的 {{c2::100:1}} 低得多，因为粘贴链接通常发给一个已知的小群体，而不是被广泛嵌入、被陌生人反复点击；这意味着 {{c3::缓存策略在这道题里承担的权重远不如 URL 短链接，存储分层和过期回收承担的权重要大得多}}。",
+    "tags": []
+  },
+  {
+    "id": "problems-pastebin-byte-vs-count-weighted-storage",
+    "node": "problems.foundations.pastebin",
+    "type": "cloze",
+    "text": "In a pastebin design where pastes split by count into three size tiers (85% snippets averaging 1.5KB, 13% logs averaging 80KB, 2% large files averaging 3MB), the large-file tier — only 2% of pastes by count — accounts for about {{c1::84%}} of total daily bytes written. This shows why {{c2::a single count-weighted average paste size}} badly understates real storage pressure: capacity must be estimated per size tier and summed, not from one blended average.",
+    "text_zh": "在一个按数量分为三档的 pastebin 设计中（85% 片段档均值 1.5KB，13% 日志档均值 80KB，2% 大文件档均值 3MB），仅占数量 2% 的大文件档贡献了当日新增字节量的约 {{c1::84%}}。这说明 {{c2::单一的、按条数加权的平均粘贴大小}} 会严重低估真实的存储压力：必须按大小分档分别估算再求和，而不是用一个笼统的平均值。",
+    "tags": []
+  },
+  {
+    "id": "problems-pastebin-inline-vs-object-routing",
+    "node": "problems.foundations.pastebin",
+    "type": "qa",
+    "q": "In a pastebin design, why route pastes smaller than a threshold (e.g. 4KB) to be stored inline inside the metadata row, instead of sending every paste's content to object storage regardless of size?",
+    "a": "Because the large majority of pastes are tiny (in one such design, 85% average around 1.5KB), and object storage's first-byte latency is typically an order of magnitude higher than a row-store lookup (tens of milliseconds vs single-digit milliseconds). Forcing every read/write of a small paste through object storage would add an unnecessary network hop to the common case. Inlining content directly in the metadata row for pastes under the threshold keeps the dominant, high-frequency small-paste path fast, while larger pastes — which are rarer but dominate total bytes — still get routed to object storage, the technology class actually built for large blob throughput and cheap per-GB storage.",
+    "q_zh": "在一个 pastebin 设计中，为什么要把小于某个阈值（例如 4KB）的粘贴内容内联存进元数据行，而不是不论大小一律把内容发到对象存储？",
+    "a_zh": "因为绝大多数粘贴都很小（在某个此类设计里，85% 的粘贴平均约 1.5KB），而对象存储的首字节延迟通常比行存储查找高一个数量级（几十毫秒 vs 个位数毫秒）。如果不论大小都强制经过对象存储，会给最常见、高频的小粘贴场景多加一次不必要的网络往返。把阈值以下的粘贴内容直接内联存进元数据行，能让占主导地位的小粘贴路径保持快速；更大的粘贴——虽然更少见，但主导了总字节量——仍然路由到对象存储，这才是真正为大 blob 吞吐量和低廉的按 GB 存储成本而设计的存储技术类别。",
+    "tags": []
+  },
+  {
+    "id": "problems-pastebin-dedup-privacy-tradeoff",
+    "node": "problems.foundations.pastebin",
+    "type": "qa",
+    "q": "In a pastebin design that content-addresses object-storage-backed blobs by their SHA-256 hash (so two identical pastes collapse to one stored object with a reference count), why should this deduplication be applied only to public pastes and never to private or unlisted ones?",
+    "a": "Content-addressed dedup on private content creates two privacy problems. First, an existence oracle: an attacker who already possesses specific sensitive content can compute its hash and create a paste with that same content; if the write completes unusually fast (because it only bumps a reference count instead of uploading bytes), that timing difference lets the attacker infer that someone else already pasted the identical content, even without ever reading it. Second, deletion stops being real erasure: if one user's private paste references the same deduplicated bytes as another user's paste, deleting the first user's paste only decrements the reference count — the underlying bytes remain until every reference is gone, breaking a private paste's implicit promise that deleting it removes the content. Public pastes have no such secrecy claim to protect, so the storage savings from dedup are worth taking only there.",
+    "q_zh": "在一个 pastebin 设计中，对象存储里的 blob 按其 SHA-256 哈希做内容寻址（两条内容相同的粘贴会合并成一份带引用计数的物理对象），为什么这种去重应该只应用于公开粘贴，绝不能用于私有或不可列出的粘贴？",
+    "a_zh": "对私有内容做内容寻址去重会带来两个隐私问题。第一，存在性预言：已经掌握某份敏感内容的攻击者可以计算出它的哈希，然后创建一条内容相同的粘贴；如果这次写入明显异常地快（因为只是把引用计数加一，而不是真的上传字节），这个耗时差异就能让攻击者推断出已经有人贴过完全相同的内容，即使他从未真正读到这份内容。第二，删除不再是真正的擦除：如果一个用户的私有粘贴和另一个用户的粘贴恰好引用了同一份去重后的字节，删除前者只会让引用计数减一——底层字节要等所有引用都消失才会真正释放，这打破了私有粘贴「删除即移除内容」这一隐含承诺。公开粘贴没有这种保密诉求需要保护，所以去重带来的存储节省只值得在公开粘贴上拿。",
+    "tags": []
+  },
+  {
+    "id": "problems-pastebin-private-id-entropy",
+    "node": "problems.foundations.pastebin",
+    "type": "cloze",
+    "text": "In a pastebin design, private/unlisted pastes rely on the link itself as the only access control, so their id needs enough entropy to resist brute-force scanning. Against a sustained attacker guessing {{c1::100,000 ids/second for 10 years}} (about 3.15×10^13 total attempts) trying to find any one of 50 million live private pastes, a 7-character Base62 id (the same scheme reused from a URL shortener's public short codes, ~41.7 bits) gives a near-certain hit, while a {{c2::16-character Base62 random id (~95.3 bits)}} drives that probability down to about {{c3::3.3×10^-8}} — which is why private pastes must use a different, much higher-entropy id scheme than public ones, not the same short-code generator.",
+    "text_zh": "在一个 pastebin 设计中，私有/不可列出粘贴把链接本身当作唯一的访问控制，因此其 id 需要足够的熵来抵御暴力扫描。面对一个持续 {{c1::以每秒 10 万次、坚持 10 年}} 的攻击者（总尝试次数约 3.15×10¹³），试图在 5000 万条存活的私有粘贴中命中任意一条：一个 7 位 Base62 id（沿用 URL 短链接公开短码同款方案，约 41.7 bit）几乎必然被命中，而 {{c2::16 位 Base62 随机 id（约 95.3 bit）}} 能把这个概率压到约 {{c3::3.3×10⁻⁸}}——这正是为什么私有粘贴必须使用和公开粘贴完全不同、熵高得多的 id 方案，而不能复用同一套短码生成器。",
+    "tags": []
+  },
+  {
+    "id": "problems-pastebin-ttl-sweeper-defense-in-depth",
+    "node": "problems.foundations.pastebin",
+    "type": "qa",
+    "q": "In a pastebin design, expired pastes are cleaned up by a background sweeper that scans an expires_at-sorted index and deletes rows in batches. If this sweeper process goes down for a while, why does that cause wasted storage rather than incorrect serving of expired content?",
+    "a": "Because the read path independently re-checks a paste's expires_at at serve time, on every request, regardless of whether the sweeper has physically deleted the row yet. This is a deliberate defense-in-depth split: the sweeper's job is resource reclamation (deleting rows and, once a referenced blob's reference count hits zero, the underlying object-storage bytes), while correctness (never serving expired content) is enforced independently at read time. A sweeper outage therefore only means expired rows pile up and storage isn't reclaimed promptly — it never means a client can read content past its expiration.",
+    "q_zh": "在一个 pastebin 设计中，过期粘贴由一个后台 Sweeper 扫描按 expires_at 排序的索引、批量删除过期行来清理。如果这个 Sweeper 进程停摆一段时间，为什么造成的后果是存储浪费，而不是把已过期的内容错误地提供给读者？",
+    "a_zh": "因为读路径在每次请求返回内容前，都会独立地、实时地再检查一次这条粘贴的 expires_at，不管 Sweeper 是否已经把这一行物理删除。这是刻意做的纵深防御分工：Sweeper 的职责是资源回收（删除行，以及在某个被引用 blob 的引用计数归零后回收底层对象存储的字节），而「绝不提供已过期内容」这条正确性保证在读取时独立执行、强制生效。因此 Sweeper 停摆只意味着过期行会堆积、存储得不到及时回收，绝不会导致客户端读到已经过期的内容。",
+    "tags": []
+  },
+  {
+    "id": "problems-pastebin-highlighting-tail-latency",
+    "node": "problems.foundations.pastebin",
+    "type": "qa",
+    "q": "In a pastebin design, synchronous server-side syntax highlighting only needs an estimated ~2 CPU cores fleet-wide to keep up with peak read traffic, yet the design still defaults to client-side highlighting. Why, if the aggregate cost is so small?",
+    "a": "Because the aggregate CPU cost hides a tail-latency problem: highlighting a large paste (e.g. a multi-megabyte log dump) synchronously on the server can take over a second at typical lexer throughput, which blows through a sub-second read-latency budget for that single request — and large pastes are not a rare edge case, since a small fraction of pastes by count routinely accounts for the large majority of bytes served. Defaulting to client-side rendering moves that cost onto the requester's own browser and keeps the server's response time independent of paste size; only small pastes below a size threshold get a one-time server-side pre-render at write time, since their per-request cost is low and rendering once amortizes across all future reads of that paste.",
+    "q_zh": "在一个 pastebin 设计中，服务端同步语法高亮据估算全机群只需要约 2 个 CPU 核心就能撑住峰值读流量，但设计仍然默认走客户端高亮。既然聚合成本这么小，为什么还要这样选？",
+    "a_zh": "因为聚合 CPU 成本掩盖了一个尾延迟问题：在典型的词法高亮器吞吐下，同步为一条大粘贴（例如几兆字节的日志转储）做服务端高亮可能耗时超过一秒，直接击穿这一次请求本应是亚秒级的读延迟预算——而大粘贴并不是罕见的边缘情况，因为很小一部分（按条数）粘贴通常贡献了被服务的绝大多数字节量。默认走客户端渲染把这份成本转移到请求方自己的浏览器上，让服务端响应时间与粘贴大小无关；只有小于某个尺寸阈值的粘贴才会在写入时做一次性的服务端预渲染，因为它们单次渲染成本低，而且渲染一次就能被这条粘贴之后所有读取复用。",
+    "tags": []
+  },
+  {
+    "id": "problems-pastebin-burn-after-reading-atomicity",
+    "node": "problems.foundations.pastebin",
+    "type": "qa",
+    "q": "In a pastebin design supporting burn-after-reading pastes, why must the 'read and destroy' operation be a single atomic conditional update at the paste's authoritative storage location, and why must burn-after-reading responses also bypass CDN caching?",
+    "a": "If reading and deleting were two separate steps, two concurrent requests arriving close together could both read the content before either deletion takes effect, breaking the 'readable exactly once' guarantee — the same check-then-act race that affects any concurrent unique-claim operation. The fix is a single atomic conditional update (e.g. flip a consumed flag from false to true) at storage; only the request that actually flips it is allowed to return the content, and it must happen at the paste's linearizable authoritative copy, not at a regional replica or cache, or different regions could each believe they served the 'first' read. Separately, if the first successful read's response were cached at a CDN edge, every subsequent request — which should be rejected — would instead be served the cached content straight from the edge, completely bypassing the origin's conditional-update logic; so burn-after-reading responses must be marked non-cacheable and always go to origin.",
+    "q_zh": "在一个支持阅后即焚（burn-after-reading）粘贴的 pastebin 设计中，为什么「读取并销毁」必须是在该粘贴权威存储位置上的一次原子条件操作，为什么阅后即焚的响应还必须绕开 CDN 缓存？",
+    "a_zh": "如果读取和删除是两个独立的步骤，两个几乎同时到达的并发请求可能都会在删除生效前读到内容，从而打破「只能被读取恰好一次」的承诺——这和任何并发唯一性申领操作面临的先检查后动作（check-then-act）竞态是同一类问题。解法是在存储层做一次原子条件更新（例如把一个 consumed 标志从 false 翻转为 true）；只有真正完成这次翻转的那个请求才被允许返回内容，且这个操作必须发生在该粘贴线性一致的权威副本上，而不是某个区域副本或缓存上，否则不同区域可能各自认为自己提供了「第一次」读取。另外，如果第一次成功读取的响应被 CDN 边缘节点缓存下来，后续所有本应被拒绝的请求就会直接从边缘拿到缓存内容，完全绕开源站的条件更新逻辑；因此阅后即焚的响应必须标记为不可缓存，强制每次都回源。",
+    "tags": []
+  }
+]

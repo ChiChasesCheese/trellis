@@ -1,0 +1,12 @@
+{
+  "problems.foundations.pastebin": [
+    "problems-pastebin-read-write-ratio",
+    "problems-pastebin-byte-vs-count-weighted-storage",
+    "problems-pastebin-inline-vs-object-routing",
+    "problems-pastebin-dedup-privacy-tradeoff",
+    "problems-pastebin-private-id-entropy",
+    "problems-pastebin-ttl-sweeper-defense-in-depth",
+    "problems-pastebin-highlighting-tail-latency",
+    "problems-pastebin-burn-after-reading-atomicity"
+  ]
+}

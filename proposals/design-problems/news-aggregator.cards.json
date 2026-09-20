@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-news-aggregator-adaptive-polling-reduction",
+    "node": "problems.search.news-aggregator",
+    "type": "qa",
+    "q": "In a news aggregator design polling hundreds of thousands of publisher RSS feeds, why does a single fixed polling interval applied to every publisher waste most of its request budget, and what does adapting each feed's poll interval to its own observed update frequency achieve?",
+    "a": "Publisher update frequency follows a power-law-like distribution: a small fraction of high-frequency wire-service sources update every few minutes, while the long tail of feeds updates every few days, so a single interval tuned for the average either polls quiet long-tail feeds far more often than they ever change (wasted requests) or polls high-frequency feeds too rarely to catch breaking updates. Setting each feed's poll interval from its own observed update interval (clamped to a min/max range) concentrates request budget where content actually changes. In a worked example with 300,000 publishers split into a 5% high-frequency tier, 20% daily tier, and 75% long-tail tier, adaptive polling drops total polling load from 1,000 requests/sec (uniform 5-minute interval) to about 141 requests/sec — roughly a 7.1x reduction.",
+    "q_zh": "在一个轮询几十万个发布方 RSS 源的新闻聚合器设计中，为什么对所有发布方使用同一个固定轮询间隔会浪费大部分请求预算？把每个源的轮询间隔按自己观测到的更新频率自适应调整能带来什么？",
+    "a_zh": "发布方更新频率近似服从幂律分布：一小部分高频通讯社类源每几分钟更新一次，而长尾的大部分源每几天才更新一次，所以按平均值统一设置的间隔要么对几乎不变的长尾源过度轮询（浪费请求），要么对高频源轮询不够频繁而错过突发更新。把每个源的轮询间隔按自己观测到的更新间隔设置（限制在一个最小/最大范围内），能把请求预算集中在真正有内容变化的地方。在一个具体算例中，30 万个发布方按 5% 高频层、20% 日更层、75% 长尾层划分，自适应轮询把总轮询负载从统一 5 分钟间隔的 1,000 请求/秒降到约 141 请求/秒——降低约 7.1 倍。",
+    "tags": []
+  },
+  {
+    "id": "problems-news-aggregator-simhash-vs-minhash-memory",
+    "node": "problems.search.news-aggregator",
+    "type": "qa",
+    "q": "In a news aggregator's near-duplicate detection design, why would a design choose a single 64-bit SimHash fingerprint per article over a multi-value MinHash signature (from shingling + LSH banding) for the primary duplicate-detection index, given both can estimate document similarity?",
+    "a": "A MinHash signature needs many hash values per document to estimate Jaccard resemblance accurately — a 128-value signature at 4 bytes each is about 512 bytes/article — while SimHash's random-hyperplane rounding compresses similarity information into a single 64-bit (8-byte) fingerprint, about 64x smaller per document. For an index that must stay resident in memory to support fast incremental cluster lookups as articles arrive continuously (rather than a one-time batch similarity computation), that memory footprint difference is decisive: at 7.2 million actively-clustered articles, the SimHash index costs about 58 MB versus roughly 3.7 GB for the equivalent MinHash signatures. MinHash retains an advantage when arbitrary similarity thresholds or asymmetric containment queries are needed, but a design that only needs a fast, safe near-duplicate check doesn't need that flexibility.",
+    "q_zh": "在一个新闻聚合器的近似重复检测设计中，两种技术都能估计文档相似度，为什么设计会选择每篇文章一个 64 位 SimHash 指纹，而不是来自 shingling + LSH banding 的多维 MinHash 签名，作为主要判重索引？",
+    "a_zh": "MinHash 签名需要每篇文档保留很多个哈希值才能准确估计 Jaccard 相似度——一个 128 维、每个哈希值 4 字节的签名约 512 字节/篇——而 SimHash 的随机超平面舍入把相似度信息压缩进单个 64 位（8 字节）指纹，每篇文档体积约小 64 倍。对一个必须常驻内存以支撑文章持续到达时快速增量聚类查找（而不是一次性批量相似度计算）的索引来说，这个内存占用差距是决定性的：在 720 万篇活跃聚类文章的规模下，SimHash 索引约 58 MB，而等价的 MinHash 签名约需 3.7 GB。当需要任意相似度阈值或非对称包含关系查询时 MinHash 仍有优势，但一个只需要快速、安全判重检查的设计不需要那种灵活性。",
+    "tags": []
+  },
+  {
+    "id": "problems-news-aggregator-lsh-banding-collision-curve",
+    "node": "problems.search.news-aggregator",
+    "type": "qa",
+    "q": "In an LSH banding scheme for MinHash-based near-duplicate detection, splitting a 128-value signature into b=16 bands of r=8 rows each, why does the candidate-pair probability form a sharp S-curve as true Jaccard similarity increases, rather than a straight line?",
+    "a": "A pair becomes a candidate if it matches exactly on at least one band, and the probability of matching within any single band is s^r (all r rows in that band must agree), so the probability of NOT matching any of the b bands is (1-s^r)^b, making the candidate probability 1-(1-s^r)^b. Because this formula raises s to the r-th power before the b-th power is applied, low-similarity pairs are suppressed multiplicatively across two exponents, producing a steep transition rather than a gradual one. Computed for b=16, r=8: at s=0.5 the candidate probability is about 6.1% (weakly similar pairs are filtered out), at s=0.65 about 40.4%, at s=0.8 about 94.7% (near-duplicates are almost always recalled), with the 50% crossover near s≈0.67.",
+    "q_zh": "在一个基于 MinHash 的近似重复检测 LSH banding 方案中，把 128 维签名切成 b=16 个宽度 r=8 的 band，为什么候选对概率随真实 Jaccard 相似度增加会形成一条陡峭的 S 型曲线，而不是一条直线？",
+    "a_zh": "一对文档只要在至少一个 band 上完全匹配就成为候选对，而在任意一个 band 内完全匹配的概率是 s^r（该 band 内全部 r 行都要一致），所以在全部 b 个 band 上都不匹配的概率是 `(1-s^r)^b`，候选概率因此是 `1-(1-s^r)^b`。因为这个公式先把 s 取 r 次方，再对结果取 b 次方，低相似度的对会在两层指数上被同时压低，产生陡峭而不是渐变的过渡。以 b=16、r=8 计算：s=0.5 时候选概率约 6.1%（弱相似对被过滤），s=0.65 时约 40.4%，s=0.8 时约 94.7%（真正的近似重复几乎都被召回），50% 临界点在 s≈0.67 附近。",
+    "tags": []
+  },
+  {
+    "id": "problems-news-aggregator-hamming-multitable-scale",
+    "node": "problems.search.news-aggregator",
+    "type": "qa",
+    "q": "In a news aggregator using 64-bit SimHash fingerprints with a Hamming-distance threshold of k=3 for near-duplicate detection, how does the multi-table permutation technique (splitting the fingerprint into blocks, building one sorted table per choice of blocks) let the number of tables be tuned to the size of the active corpus, and what design works for a 7.2-million-article active window?",
+    "a": "Each table is built by permuting fingerprints so a chosen subset of blocks (totaling p_i bits) becomes the leading bits, then sorting; a probe for a query fingerprint retrieves on average 2^d × 2^-p_i matching (permuted) fingerprints, where d = log2(corpus size). Larger p_i (more leading bits per table) means fewer candidates per probe but requires more tables to guarantee covering every possible k-bit-position combination. For a 7.2-million-article active window (d ≈ 22.78), splitting the 64-bit fingerprint into 6 blocks of about 11 bits and choosing 2 of the 6 blocks per table gives C(6,2) = 15 tables with p_i ≈ 22, yielding about 1.7 candidate fingerprints per probe on average — fewer tables than a design built for a much larger corpus would need to hit a similar candidates-per-probe target.",
+    "q_zh": "在一个用 64 位 SimHash 指纹、汉明距离阈值 k=3 做近似重复检测的新闻聚合器中，多表置换技术（把指纹切成若干块，为每种块的选择方式建一张排序表）如何让表的数量能按活跃语料规模调节？对一个 720 万篇文章的活跃窗口，什么设计是合适的？",
+    "a_zh": "每张表通过把指纹按某个选定的块子集（共 p_i 位）置换成前导位再排序来构建；对一个查询指纹的一次探测平均会返回 `2^d × 2^-p_i` 个匹配的（置换后）指纹，其中 d = log2(语料规模)。p_i 越大（每张表的前导位越多）每次探测的候选数越少，但需要更多张表才能覆盖所有可能的 k 位差异组合。对一个 720 万篇文章的活跃窗口（d ≈ 22.78），把 64 位指纹切成 6 个约 11 位的块、每张表选其中 2 块，得到 `C(6,2) = 15` 张表、`p_i ≈ 22`，平均每次探测约 1.7 个候选指纹——比为规模大得多的语料设计的方案所需的表数要少，却能达到类似的候选数目标。",
+    "tags": []
+  },
+  {
+    "id": "problems-news-aggregator-incremental-cluster-assignment",
+    "node": "problems.search.news-aggregator",
+    "type": "qa",
+    "q": "In a news aggregator's story-clustering design, why is batch reclustering (periodically re-running full clustering over all active articles) worse than incremental cluster assignment for a breaking news story specifically, and what consistency trade-off does incremental assignment accept in exchange?",
+    "a": "Batch reclustering means any two publishers covering the same breaking story within the same batch window before the next reclustering run stay as separate stories in the feed for up to that entire window — exactly during the highest-traffic moment of a breaking story. Incremental assignment instead probes the near-duplicate index for each new article's fingerprint as it arrives and immediately upserts it into a matching existing cluster (or creates a new one if no match is found), so a story starts corroborating within one lookup rather than waiting for the next batch cycle. In exchange, this design accepts that an article can briefly sit in the 'wrong' (not-yet-merged) cluster if two independently-created early clusters turn out later to be the same event — a bounded, cheaply-fixed inconsistency handled by a periodic background job that retroactively merges such clusters, rather than delaying all display until a full reclustering pass confirms correctness.",
+    "q_zh": "在一个新闻聚合器的故事聚类设计中，为什么批量重新聚类（定期对全部活跃文章重新跑一次聚类）对突发新闻这个具体场景特别不利？增量聚类分配换来这个好处的代价是什么一致性妥协？",
+    "a_zh": "批量重新聚类意味着，如果多家发布方在同一个批次窗口内报道同一条突发新闻，在下一次重新聚类运行之前它们会作为多个独立故事留在信息流里长达一整个窗口——而这恰好是突发新闻流量最大的时刻。增量分配则在每篇新文章的指纹到达时立即探测近似重复索引，命中就直接并入已有故事，没命中就新建一个，所以一个故事只需一次查找就能开始积累佐证，不用等下一个批次周期。作为交换，这个设计接受了一种情况：如果两个各自独立创建的早期故事后来发现其实是同一事件，一篇文章可能短暂待在「错误的（尚未合并的）」故事里——这是一个有界、修复成本低的不一致，由一个定期后台任务回溯性合并这类故事来解决，而不是让所有展示都等到一次完整的重新聚类确认正确性之后。",
+    "tags": []
+  },
+  {
+    "id": "problems-news-aggregator-freshness-corroboration-score",
+    "node": "problems.search.news-aggregator",
+    "type": "qa",
+    "q": "In a news aggregator's ranking design, why does combining exponential time decay with a log-dampened corroboration count (rather than either signal alone) let a well-corroborated older story compete with a fresher, thinly-sourced one, and what does a worked example show?",
+    "a": "Pure chronological ranking gives an unverified single-source article the same prominence as a widely-corroborated major story; pure corroboration ranking lets a story that accumulated many sources earlier in the day keep outranking a genuinely new story until the new one accumulates comparable corroboration, by which point it is no longer news. Multiplying an exponential time-decay factor by log(1 + corroboration_count) balances both: the log keeps a story's marginal 50th source from moving its score much once it's already well-corroborated, while decay keeps pulling older stories down. With a 6-hour half-life, a story 2 hours old with 1 source (authority weight 0.9) scores about 0.495, while a story 10 hours old with 12 corroborating sources (average authority weight 0.6) scores about 0.485 — nearly tied, showing the design deliberately lets the two signals compete rather than letting either dominate outright.",
+    "q_zh": "在一个新闻聚合器的排序设计中，为什么把指数时间衰减和对数压缩的佐证来源数结合起来（而不是只用其中一个信号）能让一条被广泛佐证的旧故事和一条更新但佐证尚少的故事相互竞争？一个具体算例展示了什么？",
+    "a_zh": "纯时间倒序会让一篇未经证实的单一来源文章获得和被广泛佐证的重大报道相同的展示权重；纯佐证数量排序会让一条当天早些时候就积累了大量来源的故事持续压制一条真正新出现的故事，直到后者也积累出可比的佐证数——那时它往往已经不再是「新」闻了。把指数时间衰减因子乘以 `log(1+佐证来源数)` 平衡了两者：对数项让一个故事已经被广泛佐证后，边际的第 50 个来源不会再明显推高分数，而衰减持续把旧故事往下拉。取 6 小时半衰期：一条 2 小时前发布、1 个来源（权威度 0.9）的故事得分约 0.495，一条 10 小时前发布、12 个佐证来源（平均权威度 0.6）的故事得分约 0.485——两者几乎打平，说明这个设计刻意让两个信号相互竞争，而不是让任何一个单方面压制另一个。",
+    "tags": []
+  },
+  {
+    "id": "problems-news-aggregator-edition-cache-decouples-read-cost",
+    "node": "problems.search.news-aggregator",
+    "type": "qa",
+    "q": "In a news aggregator's read path, why can't per-request live re-ranking simply be replaced by 'invalidate the cache when a new article arrives,' the way a write-triggered cache invalidation might work elsewhere, and what does a periodic per-edition ranking cache do instead?",
+    "a": "A story's ranking score keeps drifting over time purely from the time-decay factor even when no new article arrives, so a cache that only invalidates on writes would still serve a score that's silently gone stale between writes. Instead, a background ranking worker recomputes each (region, language) edition's full ranked list on a short fixed cadence (e.g. every 60 seconds) and publishes it to a shared read cache keyed by edition rather than by user, since ranking is shared across every reader of that edition rather than personalized; read requests are served directly from this cache, decoupling read QPS entirely from ranking computation cost. The trade-off is a bounded, known staleness window (at most one refresh cycle) rather than perfect per-request freshness or an unbounded stale cache.",
+    "q_zh": "在一个新闻聚合器的读路径中，为什么不能简单地用「有新文章到达时才让缓存失效」这种写触发的缓存失效策略来代替每次请求现场重新排序？周期性的按版面排序缓存做了什么不同的事？",
+    "a_zh": "一个故事的排序分数即使没有新文章到达，也会单纯因为时间衰减因子持续漂移，所以一个只在写入时才失效的缓存，在两次写入之间依然会悄悄返回一个已经过期的分数。取而代之的是，一个后台排序 worker 按固定的短周期（比如每 60 秒）为每个（地区、语言）版面重新计算完整排序列表，写入一个按版面而不是按用户分 key 的共享读缓存——因为排序结果是同版面所有读者共享的，不是个性化的；读请求直接从这个缓存返回，读 QPS 因此和排序计算成本完全解耦。代价是一个有界、已知的陈旧窗口（最多一个刷新周期），而不是完美的每请求实时性，也不是一个永不过期的陈旧缓存。",
+    "tags": []
+  },
+  {
+    "id": "problems-news-aggregator-per-language-clustering-cross-link",
+    "node": "problems.search.news-aggregator",
+    "type": "qa",
+    "q": "In a news aggregator serving multiple region/language editions, why must near-duplicate clustering stay strictly scoped per language rather than being a design choice, and how does the design still let a globally significant story benefit a smaller-language edition?",
+    "a": "The near-duplicate fingerprint is computed from language-specific tokens (shingles or words), so two articles describing the same event in different languages produce unrelated shingle sets and SimHash fingerprints purely as a consequence of how the fingerprint is built — they cannot cluster together by construction, regardless of design intent, making per-language clustering a correctness requirement rather than an optimization. To still let global stories be visible in smaller editions, a lightweight secondary linking step runs only on clusters that already cross a per-language corroboration threshold, using structured signals that don't require translation (shared wire-service tags, or named entities independently extracted in each language) to connect same-event clusters across language editions into a single global-story record; each edition's ranking score is still computed independently from its own publishers, but can borrow a modest boost from the linked global story's significance.",
+    "q_zh": "在一个服务多个地区/语言版面的新闻聚合器中，为什么近似重复聚类必须严格按语言分开而不是一个可选的设计决定？这个设计如何仍然让一个全球性重大故事惠及一个较小语言的版面？",
+    "a_zh": "近似重复指纹是从语言相关的 token（shingle 或词）计算出来的，所以两篇用不同语言描述同一事件的文章，仅仅因为指纹的构造方式就会产生完全不相关的 shingle 集合和 SimHash 指纹——无论设计意图如何，它们在构造上就无法被聚到一起，这让按语言分开聚类成为一个正确性要求而不是可选的优化项。为了仍然让全球性故事在较小语言的版面里可见，一个轻量的次级关联步骤只对已经跨过单语言佐证阈值的故事运行，使用不需要翻译的结构化信号（共享的通讯社标签，或各语言独立抽取出的命名实体）把描述同一事件的不同语言故事关联成一个全球故事记录；每个版面的排序分数仍然只用该版面自己的发布方数据独立计算，但可以从关联到的全球故事的显著性里借到一点适度的加成。",
+    "tags": []
+  }
+]

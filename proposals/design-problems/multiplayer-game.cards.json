@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-multiplayer-game-widening-rating-window",
+    "node": "problems.realtime.multiplayer-game",
+    "type": "qa",
+    "q": "In an online chess matchmaking design, why does the rating window used to pair opponents start narrow (e.g. plus or minus 100) and widen the longer a player waits (e.g. plus or minus 50 every 2 seconds), rather than using one fixed window width for everyone?",
+    "a": "A fixed narrow window keeps match quality high but can leave players waiting indefinitely when few compatible opponents are online; a fixed wide window guarantees fast matches but frequently pairs mismatched opponents, hurting both the game experience and the accuracy of rating updates (which assume comparable opponents). Widening the window only as wait time grows gets the best of both: short waits still get tight, high-quality matches, and the window only loosens once it's clear a tight match isn't available soon — trading match quality for wait time only when necessary rather than upfront for everyone.",
+    "q_zh": "在一个在线国际象棋匹配设计中，为什么用来配对对手的评分窗口从一个较窄的值开始（例如 ±100），随着等待时间增长而扩大（例如每等待 2 秒扩大 ±50），而不是给所有人用一个固定宽度的窗口？",
+    "a_zh": "固定的窄窗口能保持高匹配质量，但在符合条件的在线对手不多时，可能让玩家无限期等待；固定的宽窗口能保证快速匹配，但经常配对到实力悬殊的对手，既损害游戏体验，也影响评分更新的准确性（评分更新假设对局双方实力接近）。只在等待时间变长时才扩大窗口，能同时兼顾两者：短等待依然能获得严格、高质量的匹配，只有在确实短期内找不到合适对手时窗口才放宽——用等待时间换匹配质量，而不是一开始就对所有人做这个取舍。",
+    "tags": []
+  },
+  {
+    "id": "problems-multiplayer-game-never-trust-client-state",
+    "node": "problems.realtime.multiplayer-game",
+    "type": "qa",
+    "q": "In an online chess design, why must the server never accept a client's own report of the board state, clock values, or game outcome as authoritative, even though the client already validates moves locally for UI responsiveness?",
+    "a": "Local client validation only prevents accidental UI mistakes; it does nothing to stop a modified or malicious client from submitting a fabricated request, such as an illegal move or a false 'checkmate' outcome. The server holds the only authoritative current state (current board position and both clocks) and derives every update solely from move requests it has itself validated against that state — this is the same principle Riot states for real-time games ('a server must never trust a client's view of the world'), applied to a turn-based game's state machine instead of a continuously simulated world.",
+    "q_zh": "在一个在线国际象棋设计中，即使客户端已经在本地做走子合法性校验以提升响应体验，为什么服务器绝不能把客户端自己上报的棋盘状态、时钟数值或对局结果当作权威事实？",
+    "a_zh": "客户端本地校验只能防止 UI 层面的误操作，无法阻止一个被修改过的恶意客户端直接提交伪造的请求，比如一步非法走子，或一个虚假的'已将死'结果。服务器持有唯一权威的当前状态（当前局面和双方时钟），每一次更新都只能由服务器自己针对这份状态校验通过的走子请求推导出来——这和 Riot 在实时游戏里强调的'服务器绝不能信任客户端对世界状态的上报'是同一个原则，只是应用在回合制的状态机上，而不是持续模拟的世界上。",
+    "tags": []
+  },
+  {
+    "id": "problems-multiplayer-game-turnbased-vs-realtime-tick-rate",
+    "node": "problems.realtime.multiplayer-game",
+    "type": "qa",
+    "q": "In a design where the average move in an active chess game arrives roughly every 6.86 seconds (from ~70 plies over an average 480-second game), versus a fast-paced real-time game simulating the world at a fixed 128 ticks per second, roughly how many times more frequently does the real-time game's authoritative server do active work per unit time for one concurrent game, and why does chess's authoritative server not need a fixed simulation loop at all?",
+    "a": "128 ticks/second versus about 1/6.86 ≈ 0.146 move-events/second works out to roughly 878x more frequent server work for the real-time game. Chess's server only needs to act when a move request actually arrives — the rest of the time the game's state machine is idle waiting for input — because there's no continuously changing world state between discrete moves. A real-time game has no such gaps: the world keeps evolving (physics, positions, hit detection) whether or not a player just acted, so its authoritative server must run a fixed-frequency loop regardless of input timing.",
+    "q_zh": "在一个设计里，一局进行中的国际象棋对局平均每 6.86 秒才有一步走子（来自平均 480 秒的对局中约 70 步半回合），而一款快节奏实时游戏以固定的 128 tick/秒持续模拟世界，对于一局并发对局而言，实时游戏的权威服务器每单位时间要做的活跃工作量大约是回合制的多少倍？为什么国际象棋的权威服务器完全不需要一个固定频率的模拟循环？",
+    "a_zh": "128 tick/秒 对比约 1/6.86 ≈ 0.146 次走子事件/秒，算出实时游戏的服务器工作频率约是回合制的 878 倍。国际象棋的服务器只需要在真正收到走子请求时才行动——其余时间这局对局的状态机都在空闲等待输入——因为两步离散走子之间不存在持续变化的世界状态。实时游戏没有这种空档：不管玩家刚才是否有操作，物理、位置、命中判定这些世界状态都在持续演化，所以它的权威服务器必须不论输入时机如何都运行一个固定频率的循环。",
+    "tags": []
+  },
+  {
+    "id": "problems-multiplayer-game-per-game-actor-serializes-moves",
+    "node": "problems.realtime.multiplayer-game",
+    "type": "qa",
+    "q": "In an online chess design, why does giving each in-progress game its own single-threaded actor (holding that game's mutable state and processing its move requests one at a time) avoid the need for a distributed lock when two moves for the same game arrive nearly simultaneously?",
+    "a": "Because exactly one actor instance owns a given game's state and that actor processes incoming move requests for the game strictly one at a time, two near-simultaneous requests for the same game are naturally serialized by the actor's own message queue rather than by any external locking mechanism — the second request is simply evaluated against the state left by the first. This only works because state and concurrency control are both scoped to a single game: different games run on independent actors with no shared mutable state, so there is nothing to lock across games in the first place.",
+    "q_zh": "在一个在线国际象棋设计中，为什么给每一局进行中的对局分配一个独立的单线程 actor（持有该局的可变状态、逐个处理走子请求），能在同一局的两步走子几乎同时到达时，不需要引入分布式锁？",
+    "a_zh": "因为某一局对局的状态恰好只由一个 actor 实例持有，且这个 actor 严格按顺序、一次处理一个走子请求，同一局的两个几乎同时到达的请求会被 actor 自己的消息队列自然串行化，而不依赖任何外部加锁机制——后到达的请求只是基于前一个请求处理完之后的状态被评估。这之所以成立，是因为状态和并发控制都被限定在单局范围内：不同对局运行在互相独立的 actor 上、没有共享的可变状态，所以对局之间本来就不存在需要加锁的东西。",
+    "tags": []
+  },
+  {
+    "id": "problems-multiplayer-game-clock-lag-compensation",
+    "node": "problems.realtime.multiplayer-game",
+    "type": "qa",
+    "q": "In an online chess design, why does timing a move purely by 'when the server received the move request' unfairly penalize a player, and why is 'trust the client's self-reported thinking time' not an acceptable fix?",
+    "a": "If the server deducts time strictly from receipt timestamp, ordinary network latency between the client and server gets charged against the player's own thinking time — a player whose request takes an extra 300ms to arrive effectively loses 300ms of clock for a delay that wasn't their decision-making at all, which feels especially unfair under fast time controls. Trusting the client's self-reported elapsed time would fix the fairness problem but breaks the authoritative-server principle: a malicious client could simply under-report its thinking time to gain unlimited effective clock. The fix that preserves authority is having the server still time from its own receipt timestamp, but subtract a small fixed lag-compensation allowance before any time is actually deducted, absorbing ordinary jitter without trusting anything the client claims.",
+    "q_zh": "在一个在线国际象棋设计中，为什么单纯按'服务器收到走子请求的那一刻'来计时，会不公平地惩罚玩家？为什么'完全信任客户端自己上报的思考用时'不是一个可接受的修复方案？",
+    "a_zh": "如果服务器严格按收到请求的时间戳扣时间，客户端和服务器之间正常的网络延迟就会被算进玩家自己的思考用时里——一次请求多花 300 毫秒才到达，玩家实际上就白白损失了这 300 毫秒的时钟，而这根本不是他的决策时间，在用时紧张的快棋制式下尤其不公平。信任客户端自己上报的用时能解决公平性问题，但破坏了权威服务器的原则：恶意客户端完全可以谎报更短的思考用时来变相获得无限的有效时间。既保持权威性又解决公平性的做法是：服务器依然按自己收到请求的时间戳计时，但在真正扣减时间之前先减去一个小的固定滞后补偿值，用来吸收正常的网络抖动，同时不信任客户端上报的任何数值。",
+    "tags": []
+  },
+  {
+    "id": "problems-multiplayer-game-disconnect-grace-pool",
+    "node": "problems.realtime.multiplayer-game",
+    "type": "qa",
+    "q": "In an online chess design, why should a disconnected player's offline time be deducted from a separate per-game 'disconnection grace pool' instead of directly from their own game clock, and why should the grace pool's initial size scale with the time control?",
+    "a": "Deducting offline time directly from the player's game clock conflates a network problem with the game's own thinking-time budget — a brief Wi-Fi drop would cost the same clock time as if the player had spent it thinking, which is unrelated to the game itself. A separate grace pool isolates connectivity issues from clock fairness: once the pool is exhausted, the choice of whether to keep waiting, offer a draw, or claim the win passes to the opponent rather than being decided automatically by the system. The pool's initial size should scale with the time control because a disconnect that's a minor inconvenience in a 30-minute game can single-handedly decide a 30-second bullet game if the grace period is the same fixed length in both.",
+    "q_zh": "在一个在线国际象棋设计中，为什么掉线玩家的离线时长应该从一个独立于该局本身时钟之外的'断线宽限池'里扣除，而不是直接从他自己的对局用时里扣？为什么这个宽限池的初始额度应该随用时制式的长短而变化？",
+    "a_zh": "直接从玩家自己的对局时钟里扣离线时长，会把网络问题和棋局本身的思考用时预算混为一谈——一次短暂的 Wi-Fi 断连会消耗和真正思考同样多的时钟时间，而这和棋局本身毫无关系。用独立的宽限池把连接问题和时钟公平性隔离开：宽限池耗尽后，是继续等待、提和还是判对手获胜的选择权交给对手，而不是由系统自动决定。宽限池的初始额度应该随用时制式变化，因为如果两种制式用同样固定长度的宽限期，一次掉线在 30 分钟的慢棋里只是小麻烦，在 30 秒的超快棋里却足以单方面决定整局胜负。",
+    "tags": []
+  },
+  {
+    "id": "problems-multiplayer-game-spectator-fanout-reuse-live-comments",
+    "node": "problems.realtime.multiplayer-game",
+    "type": "qa",
+    "q": "In an online chess design, why is broadcasting moves to hundreds of thousands of spectators of one viral game structurally the same fan-out problem as a live-comment broadcast, and why does it not need that system's sampling/rate-limiting degradation strategy?",
+    "a": "Both are the same shape of problem: one event source (a move, or a comment) needs to reach every subscriber of one shared channel (a gameId, or a video id), and the subscriber count can scale from single digits to hundreds of thousands — the fix is the same broadcast-bus-plus-gateway-fanout architecture in both cases, not something a game service should reinvent. They differ in event rate: a game's move events arrive roughly every several seconds even under heavy spectator load, far below a busy live stream's comment rate, so the load spectators add is concentrated in connection count and fan-out width rather than event-production rate — the sampling/rate-limiting degradation a live-comment system needs to survive its own event volume isn't necessary here.",
+    "q_zh": "在一个在线国际象棋设计中，为什么把一场爆红对局的走子广播给几十万观众，在结构上和直播评论的广播是同一个扇出问题？为什么它不需要直播评论方案里的采样/限速降级策略？",
+    "a_zh": "两者是同一种问题形状：一个事件源（一步走子，或一条评论）需要触达同一个共享频道（一个 gameId，或一个视频 id）的全部订阅者，订阅者数量可以从个位数扩展到几十万——两种场景下的修复方案都是同一套广播总线加网关扇出的架构，而不该由对局服务自己重新发明一套。两者的区别在事件产生速率上：即使在观众压力很大的情况下，一局对局的走子事件依然大约每几秒才产生一次，远低于一场热门直播的评论产生速率，所以观众带来的压力集中在连接数和扇出宽度上，而不是事件产生速率上——直播评论系统为了扛住自身事件量而需要的采样/限速降级，在这里并不需要。",
+    "tags": []
+  },
+  {
+    "id": "problems-multiplayer-game-statistical-anticheat-review-queue",
+    "node": "problems.realtime.multiplayer-game",
+    "type": "qa",
+    "q": "In an online chess design, why should engine-assist cheat detection be built as a statistical model that flags suspicious players for human review, rather than a rule that automatically bans players whose moves match a chess engine's top choice too often?",
+    "a": "Move quality naturally varies with a player's skill, and even strong human players sometimes match an engine's top move by legitimate skill or by the position simply having one clearly best move — a fixed match-rate threshold would produce false positives against strong, honest players. A statistically grounded approach instead compares a player's observed move-quality distribution against what their official rating would predict, converting the deviation into a significance measure (a z-score-style statistic, as in academic chess cheat-detection research) so suspicion scales with how implausible the deviation is. That score should route to human review, not an automatic verdict, since a wrongly banned honest player is a much worse outcome than a delayed detection of an actual cheater.",
+    "q_zh": "在一个在线国际象棋设计中，为什么检测借助引擎辅助作弊应该建成一个把可疑玩家标记出来交给人工复核的统计模型，而不是一条'走子和引擎首选一致率过高就自动封号'的规则？",
+    "a_zh": "走子质量本身会随玩家实力自然变化，即使是很强的人类玩家，也可能因为真实水平高、或者某个局面本来就只有一步明显最优解，而经常和引擎的首选走法一致——固定的一致率阈值会对实力强但诚实的玩家产生大量误判。统计化的方法则是把玩家实际观察到的走子质量分布，和其官方评分'应有'的质量分布相比较，把偏差转换成一个统计显著性指标（类似学术界棋类反作弊研究里用的 z-score），可疑程度随偏差有多不可能而变化。这个分数应该导向人工复核，而不是自动判决，因为错误封禁一个诚实玩家的代价，远高于延迟发现一个真正作弊者的代价。",
+    "tags": []
+  }
+]

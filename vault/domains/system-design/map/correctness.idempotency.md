@@ -8,7 +8,7 @@ Idempotency keys, dedup windows, and designing every mutation to survive a retry
 
 **Requires:** [[domains/system-design/map/async.delivery|Delivery Semantics]]
 
-**Unlocks:** [[domains/system-design/map/correctness.ledger|Ledgers & Reconciliation]]
+**Unlocks:** [[domains/system-design/map/correctness.ledger|Ledgers & Reconciliation]], [[domains/system-design/map/problems.foundations.job-scheduler|Distributed Job Scheduler]], [[domains/system-design/map/problems.social.notification-system|Notification System]], [[domains/system-design/map/problems.commerce.payment-system|Payment System]]
 
 ## Readings
 - [[stripe-idempotency|Designing robust and predictable APIs with idempotency (Stripe)]]
@@ -19,6 +19,8 @@ Idempotency keys, dedup windows, and designing every mutation to survive a retry
 
 ## Drills
 - [[design-payment-ledger|Drill: Design a payment ledger service]]
+- [[design-job-scheduler|Drill: Design a distributed job scheduler like a cron-as-a-service platform]]
+- [[design-notification-system|Drill: Design a multi-channel notification system]]
 
 ## Cards (7)
 1. [[correctness-idempotency-key-design]]
