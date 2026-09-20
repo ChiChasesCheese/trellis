@@ -402,3 +402,246 @@ nodes:
       - id: ai.evals
         title: Evals & AI Observability
         summary: Offline vs online evaluation, LLM-as-judge, regression suites for prompts, and tracing AI pipelines.
+
+  # The design-problem bank (vault/domains/system-design/BUILD.md): every problem at least three
+  # independent sources teach, one leaf each, families and leaves ordered by how many do.
+  - id: problems
+    order: 15
+    title: Design Problems
+    summary: "The question bank: each leaf is one design-X interview problem with a full solution, a drill and cards."
+    children:
+      - id: problems.foundations
+        title: "Building Blocks & Warm-ups"
+        summary: "The small designs bigger ones are assembled from, and the two classic openers."
+        children:
+          - id: problems.foundations.url-shortener
+            core: true
+            title: "URL Shortener"
+            summary: "Short-code generation, a read path that is almost all cache, redirects and analytics at 100:1 read/write."
+            requires: [caching.strategies, storage.nosql]
+          - id: problems.foundations.rate-limiter
+            core: true
+            title: "Distributed Rate Limiter"
+            summary: "Per-key quotas enforced across many gateways inside a 2 ms budget, and what happens when the counter store is down."
+            requires: [traffic.rate-limiting]
+          - id: problems.foundations.unique-id-generator
+            title: "Unique ID Generator"
+            summary: "Roughly time-ordered 64-bit ids with no coordinator on the hot path; clock skew and sequence exhaustion."
+            requires: [distributed.time.clocks]
+          - id: problems.foundations.key-value-store
+            title: "Distributed Key-Value Store"
+            summary: "Partitioning, replication, quorums, conflict resolution and repair in a Dynamo-style store."
+            requires: [distributed.replication.leaderless, distributed.partitioning.schemes]
+          - id: problems.foundations.distributed-cache
+            title: "Distributed Cache"
+            summary: "A Memcached/Redis-class cluster: sharding, eviction, hot keys, replication and cold-start."
+            requires: [caching.invalidation, distributed.partitioning.skew]
+          - id: problems.foundations.cdn
+            title: "Content Delivery Network"
+            summary: "Request routing, tiered caches, purge and origin shielding for static and large-file delivery."
+            requires: [networking.cdn, caching.placement]
+          - id: problems.foundations.message-queue
+            title: "Distributed Message Queue"
+            summary: "A Kafka-class log: partitions, replication, consumer groups, retention and delivery semantics."
+            requires: [async.log, async.delivery.guarantees]
+          - id: problems.foundations.job-scheduler
+            title: "Distributed Job Scheduler"
+            summary: "Run millions of scheduled and ad-hoc jobs at least once, on time, with retries and no double-firing."
+            requires: [async.queues, correctness.idempotency]
+          - id: problems.foundations.pastebin
+            title: "Pastebin"
+            summary: "Store and serve text blobs by short link: metadata vs blob storage, expiry, and abuse limits."
+            requires: [storage.object]
+          - id: problems.foundations.object-storage
+            title: "Object Storage (S3)"
+            summary: "Buckets and immutable blobs at exabyte scale: metadata service, placement, erasure coding, durability math."
+            requires: [storage.object]
+          - id: problems.foundations.lock-service
+            title: "Distributed Lock & Coordination Service"
+            summary: "Leases, fencing tokens and sessions on top of consensus — a Chubby/ZooKeeper-class service."
+            requires: [distributed.consensus]
+          - id: problems.foundations.auth-service
+            title: "Authentication & Identity Service"
+            summary: "Sign-up, login, sessions vs tokens, SSO and revocation for hundreds of millions of accounts."
+            requires: [security.authn.tokens]
+      - id: problems.social
+        title: "Social, Feeds & Messaging"
+        summary: "Fan-out, ordering and presence: the problems asked most often."
+        children:
+          - id: problems.social.chat-messaging
+            core: true
+            title: "Chat & Messaging (WhatsApp)"
+            summary: "1:1 and group messaging with delivery receipts, ordering, offline sync and presence over persistent connections."
+            requires: [networking.realtime, async.queues]
+          - id: problems.social.news-feed
+            core: true
+            title: "News Feed & Timeline (Twitter/Facebook)"
+            summary: "Fan-out on write vs on read, the celebrity problem, ranking, and keeping a timeline fresh and cheap."
+            requires: [caching.strategies, async.queues]
+          - id: problems.social.instagram
+            core: true
+            title: "Photo Sharing (Instagram)"
+            summary: "Upload and media processing, feed generation, and serving images globally."
+            requires: [storage.object, networking.cdn]
+          - id: problems.social.notification-system
+            title: "Notification System"
+            summary: "Multi-channel push/SMS/email with preferences, rate caps, retries and deduplication at billions a day."
+            requires: [async.queues, correctness.idempotency]
+          - id: problems.social.reddit
+            title: "Forum & Threaded Comments (Reddit)"
+            summary: "Voting, ranking, nested comment trees and hot-post caching."
+            requires: [caching.strategies]
+          - id: problems.social.social-graph-search
+            title: "Social Graph & Friend Search"
+            summary: "Storing a graph of billions of edges and answering degree-of-separation and mutual-friend queries."
+            requires: [distributed.partitioning.schemes]
+          - id: problems.social.live-comments
+            title: "Live Comments"
+            summary: "Broadcasting comments on a live video to millions of viewers in order and in real time."
+            requires: [networking.realtime]
+          - id: problems.social.tinder
+            title: "Dating & Matching (Tinder)"
+            summary: "Geo-filtered candidate feeds, swipes at high write rates, and exactly-once match detection."
+            requires: [distributed.consistency]
+      - id: problems.media
+        title: "Media, Files & Collaboration"
+        summary: "Large objects, sync and concurrent editing."
+        children:
+          - id: problems.media.video-streaming
+            core: true
+            title: "Video Streaming (YouTube/Netflix)"
+            summary: "Upload, transcoding pipelines, adaptive bitrate delivery and the economics of the CDN."
+            requires: [networking.cdn, storage.object]
+          - id: problems.media.google-docs
+            core: true
+            title: "Collaborative Editing (Google Docs)"
+            summary: "Concurrent edits converging through OT or CRDTs, cursors and presence, and document storage."
+            requires: [distributed.crdt, networking.realtime]
+          - id: problems.media.file-sync
+            core: true
+            title: "File Sync (Dropbox/Google Drive)"
+            summary: "Chunking, deduplication, delta sync, conflict handling and metadata consistency across devices."
+            requires: [storage.object, distributed.consistency]
+          - id: problems.media.email-service
+            title: "Email Service (Gmail)"
+            summary: "Sending and receiving at scale: SMTP edges, mailbox storage, search, spam and threading."
+            requires: [storage.search]
+          - id: problems.media.video-conferencing
+            title: "Video Conferencing (Zoom)"
+            summary: "Real-time media: SFU vs MCU, signalling, NAT traversal, and degrading gracefully on bad networks."
+            requires: [networking.realtime]
+      - id: problems.search
+        title: "Search, Crawling & Data Pipelines"
+        summary: "Ingest a firehose, index it, and answer from it fast."
+        children:
+          - id: problems.search.web-crawler
+            core: true
+            title: "Web Crawler"
+            summary: "A polite, distributed crawler: URL frontier, deduplication, politeness, freshness and traps."
+            requires: [async.queues, networking.dns]
+          - id: problems.search.search-engine
+            title: "Search Engine & Post Search"
+            summary: "Inverted indexes, sharded query fan-out, ranking, and near-real-time indexing of new content."
+            requires: [storage.search]
+          - id: problems.search.typeahead
+            title: "Typeahead & Autocomplete"
+            summary: "Prefix suggestions under 100 ms: tries vs precomputed top-k, sampling query logs, personalisation."
+            requires: [caching.strategies]
+          - id: problems.search.top-k
+            title: "Top-K & Trending (Heavy Hitters)"
+            summary: "Most-viewed over sliding windows: exact vs approximate counting, count-min sketch, stream aggregation."
+            requires: [async.streaming.processing]
+          - id: problems.search.metrics-monitoring
+            title: "Metrics, Monitoring & Alerting"
+            summary: "A time-series pipeline: ingestion, downsampling, storage, query and alert evaluation."
+            requires: [reliability.observability]
+          - id: problems.search.ad-click-aggregation
+            title: "Ad Click Aggregation"
+            summary: "Counting billions of clicks exactly enough to bill on: streaming aggregation, late data, reconciliation."
+            requires: [async.streaming.processing, async.delivery.exactly-once]
+          - id: problems.search.news-aggregator
+            title: "News Aggregator (Google News)"
+            summary: "Pull from many publishers, deduplicate and cluster stories, and serve a fresh ranked feed."
+            requires: [async.queues]
+      - id: problems.geo
+        title: "Location & Mobility"
+        summary: "Spatial indexes and things that move."
+        children:
+          - id: problems.geo.proximity
+            core: true
+            title: "Proximity & Nearby Search (Yelp)"
+            summary: "Geohash vs quadtree vs S2, read-heavy place search, and nearby friends on moving data."
+            requires: [storage.relational.indexing]
+          - id: problems.geo.ride-hailing
+            title: "Ride Hailing (Uber)"
+            summary: "Driver location ingestion, matching under contention, trip state machines and surge."
+            requires: [distributed.consistency, networking.realtime]
+          - id: problems.geo.google-maps
+            title: "Maps & Navigation (Google Maps)"
+            summary: "Map tiles, routing over a road graph, ETA, and live traffic from location streams."
+            requires: [networking.cdn]
+          - id: problems.geo.food-delivery
+            title: "Food & Grocery Delivery (DoorDash/Gopuff)"
+            summary: "Inventory by location, order orchestration across three parties, and dispatch."
+            requires: [correctness.saga]
+      - id: problems.realtime
+        title: "Real-Time, Compute & AI Services"
+        summary: "Stateful sessions, sandboxes and GPUs."
+        children:
+          - id: problems.realtime.online-judge
+            title: "Online Judge (LeetCode)"
+            summary: "Safely running untrusted code at contest scale: sandboxing, queues, and live leaderboards."
+            requires: [async.queues, infra.containers]
+          - id: problems.realtime.multiplayer-game
+            title: "Online Multiplayer Game (Chess)"
+            summary: "Matchmaking, authoritative game state, low-latency moves and reconnection."
+            requires: [networking.realtime]
+          - id: problems.realtime.llm-chat-service
+            title: "LLM Chat Service (ChatGPT)"
+            summary: "Streaming token delivery, GPU batching, conversation state, quotas and cost per request."
+            requires: [ai.inference]
+          - id: problems.realtime.calendar
+            title: "Calendar & Scheduling (Google Calendar)"
+            summary: "Recurring events, free/busy queries, invitations, reminders and time zones."
+            requires: [storage.relational.indexing]
+          - id: problems.realtime.leaderboard
+            title: "Real-Time Leaderboard"
+            summary: "Rank millions of players live: sorted sets, sharded rankings and approximate rank."
+            requires: [caching.strategies]
+      - id: problems.commerce
+        title: "Commerce, Booking & Money"
+        summary: "Contention and correctness: where losing a write costs money."
+        children:
+          - id: problems.commerce.payment-system
+            core: true
+            title: "Payment System"
+            summary: "Idempotent charge flows through a PSP, the ledger behind them, reconciliation and retries."
+            requires: [correctness.idempotency, correctness.ledger]
+          - id: problems.commerce.stock-exchange
+            title: "Stock Exchange & Trading (Robinhood)"
+            summary: "A matching engine with deterministic sequencing, market data fan-out, and a brokerage in front."
+            requires: [distributed.consensus]
+          - id: problems.commerce.ticket-booking
+            title: "Ticket Booking (Ticketmaster)"
+            summary: "Seat holds under a stampede: reservation vs lock, virtual queues, and no double-selling."
+            requires: [distributed.transactions.isolation]
+          - id: problems.commerce.hotel-reservation
+            title: "Hotel & Marketplace Reservation (Airbnb)"
+            summary: "Inventory by date range, overbooking policy, search vs booking paths."
+            requires: [distributed.transactions.isolation]
+          - id: problems.commerce.digital-wallet
+            title: "Digital Wallet"
+            summary: "Balance transfers that never lose or create money: distributed transactions vs event sourcing."
+            requires: [distributed.transactions.distributed, correctness.ledger]
+          - id: problems.commerce.auction
+            title: "Online Auction (eBay)"
+            summary: "Concurrent bids with a strict winner, bid fan-out to watchers, and sniping at the close."
+            requires: [distributed.transactions.concurrency-control]
+          - id: problems.commerce.e-commerce
+            title: "E-Commerce Platform (Amazon)"
+            summary: "Catalogue, cart, checkout and inventory as separate consistency domains."
+            requires: [correctness.saga]
+          - id: problems.commerce.flash-sale
+            title: "Flash Sale & High-Contention Inventory"
+            summary: "A million buyers, a thousand items, ten seconds: admission control and atomic decrement."
+            requires: [traffic.rate-limiting, distributed.transactions.concurrency-control]
