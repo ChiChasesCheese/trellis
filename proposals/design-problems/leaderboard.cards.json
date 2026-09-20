@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-leaderboard-memory-vs-single-thread-ceiling",
+    "node": "problems.realtime.leaderboard",
+    "type": "qa",
+    "q": "In a leaderboard design serving 150 million total accounts where a Redis sorted set costs roughly 112 bytes per member (skip-list-and-hash-table overhead plus the member id and score), the whole leaderboard fits in about 17GB of memory on a single node — comfortably within one primary's RAM. At a peak of roughly 41,700 combined reads and writes per second, is memory or throughput the constraint that actually matters here, and does either one force sharding at this scale?",
+    "a": "Memory and throughput are separate constraints, and throughput is the one that matters for this workload, not memory — 17GB is trivial for a single node to hold. But throughput doesn't force sharding at this particular scale either: because Redis executes commands on a single thread, one primary has a hard ceiling on sustained operations per second — conservatively, on the order of 50,000 op/s once you derate a simple-command benchmark baseline for sorted sets' O(log N) cost plus replication and persistence overhead — and a peak of ~41,700 combined ops/sec still fits under that ceiling with some headroom, especially once writes (the only traffic that must land on one primary) are separated from reads (which read replicas can absorb). Sharding only earns its keep once write throughput itself grows enough to exceed a single primary's ceiling; it's a request-rate problem, not a data-size problem, and shouldn't be assumed just because the player count sounds large.",
+    "q_zh": "在一个服务 1.5 亿总账号的排行榜设计中，Redis 有序集合每条记录大约 112 字节开销（跳表+哈希表开销加上成员 id 和分数），整个排行榜在单节点上只占约 17GB 内存——一个主节点的内存轻松装得下。在峰值读写合计约每秒 41,700 次的情况下，真正卡脖子的是内存还是吞吐？这两者中有没有哪一个在这个规模下就已经逼出分片？",
+    "a_zh": "内存和吞吐是两个独立的约束，对这个工作负载来说真正卡脖子的是吞吐，不是内存——17GB 对单节点来说微不足道。但即便是吞吐，在这个具体规模下也还没有逼出分片：因为 Redis 对命令执行是单线程的，一个主节点在每秒可持续处理的操作数上有一个硬上限——保守估计约为 50,000 次/秒（把简单命令的基准吞吐打折，为有序集合 O(log N) 的开销以及复制、持久化的生产成本留出余量）——而约每秒 41,700 次的峰值合计吞吐仍然在这个上限之内、留有余量，尤其是在把写入（唯一必须落到一个主节点上的流量）和读取（可以由只读副本承担）分开之后。只有当写入吞吐本身增长到超过单个主节点的上限时，分片才真正值回成本；这是一个请求速率问题，不是数据规模问题，不应该仅仅因为玩家数量听起来很大就默认需要分片。",
+    "tags": []
+  },
+  {
+    "id": "problems-leaderboard-score-range-sharding-rank-sum",
+    "node": "problems.realtime.leaderboard",
+    "type": "qa",
+    "q": "Once a leaderboard's write throughput has grown past what a single Redis primary can sustain and it must be sharded, answering \"what's my global rank\" requires knowing how many players across the whole leaderboard outrank you. Why does sharding by player id make this expensive, and what sharding key keeps it cheap?",
+    "a": "Sharding by player id spreads write load evenly, but it scatters players with similar scores across every shard at random, so computing a global rank requires scattering a query to every shard and merging the results — a cost that grows with the number of shards instead of shrinking with it. Sharding by score range instead keeps each shard responsible for a contiguous slice of the score distribution, and each shard maintains a cheap O(1) count of its own members. A player's global rank then becomes the sum of the member counts of every shard entirely above their score range, plus their local rank within their own shard — a sum over a small, fixed number of shards, independent of the total player count. This is worth doing only once sharding is actually needed for throughput; a single primary answers rank queries directly without any of this cross-shard bookkeeping.",
+    "q_zh": "一旦排行榜的写入吞吐超出了单个 Redis 主节点能撑住的范围、必须分片之后，回答「我的全球排名是多少」需要知道整个排行榜里有多少玩家分数比自己高。为什么按玩家 id 分片会让这件事变贵？什么样的分片键能让它保持便宜？",
+    "a_zh": "按玩家 id 分片能让写入负载均匀分散，但它会把分数相近的玩家随机打散到每个分片里，于是计算全局排名需要向所有分片发起查询再合并结果——这个代价随分片数增长而变大，而不是变小。改成按分数区间分片，则每个分片只负责分数分布里连续的一段，每个分片维护自己成员数量的廉价 O(1) 计数。这样一名玩家的全局排名就等于「排在其分数区间之上的所有分片成员数之和」加上「他在自己分片内的本地排名」——这只是对固定的、少量分片求和，和总玩家数无关。这套机制只有在吞吐真的逼出分片时才值得引入；一个单一主节点可以直接回答排名查询，完全不需要这套跨分片的记账。",
+    "tags": []
+  },
+  {
+    "id": "problems-leaderboard-exact-top-approx-long-tail",
+    "node": "problems.realtime.leaderboard",
+    "type": "qa",
+    "q": "Once a leaderboard is sharded by score range, computing any single player's exact rank (a per-shard count sum plus a local rank lookup) is still individually cheap. So why does it still make sense to serve the top segment of players a live, exact rank while giving the long tail an approximate, periodically-recomputed rank instead of computing everyone's rank live?",
+    "a": "The value and query frequency of an exact rank aren't uniform across the population: top-ranked players have real rewards riding on their position and check it often, so paying the small, per-query cost of computing their exact rank live, every time, is worthwhile. A player ranked in the tens of millions gains essentially nothing from knowing their rank is 34,412,857 rather than 34,412,900 — precision nobody acts on — so even though any single one of their rank queries is cheap, the aggregate volume of millions of such low-value live queries is load worth avoiding entirely. Giving the long tail an approximate percentile computed by a periodic offline job (recomputed every few minutes from a full scan) instead of a live per-query computation means the vast majority of rank queries never touch the live path at all, and the resulting staleness window is invisible to a user who was never going to notice a change of a few dozen places anyway.",
+    "q_zh": "一旦排行榜按分数区间分片之后，计算任意一名玩家的精确排名（分片计数求和加上分片内本地排名查询）本身单次代价仍然很便宜。那为什么头部玩家仍然值得给实时精确排名，而长尾玩家改用周期性离线重算的近似排名，而不是对所有人都实时计算？",
+    "a_zh": "精确排名的价值和查询频率在玩家群体中并不均匀：头部玩家的排名关系到实际奖励，会被频繁查看，所以每次都付出这个不大的实时计算代价是值得的。一个排在几千万名开外的玩家，知道自己是第 34,412,857 名还是第 34,412,900 名几乎没有任何意义——这种精度没有人会据此采取任何行动——所以即便单次查询很便宜，数百万次这类低价值实时查询累加起来的负载仍然值得整体避免。给长尾玩家提供由周期性离线任务（例如每隔几分钟做一次全量扫描重算）计算出的近似百分位，而不是每次都实时计算，意味着绝大多数排名查询根本不会触碰实时路径，由此产生的陈旧窗口对一个本来就不会注意到名次变化几十位的用户来说是不可见的。",
+    "tags": []
+  },
+  {
+    "id": "problems-leaderboard-composite-score-tiebreak",
+    "node": "problems.realtime.leaderboard",
+    "type": "qa",
+    "q": "Relying on a sorted set's default tie-break (lexicographic ordering of the member string) when two players have the same score produces an ordering unrelated to who actually achieved that score first. How can a leaderboard encode \"earliest achiever ranks first\" directly into the numeric score, and why does the precision of a standard double comfortably support it?",
+    "a": "Encode both the primary metric and a time-based tiebreaker into one number: composite_score = raw_score × 10^6 + (period_length_in_seconds − seconds_elapsed_in_period_when_achieved). Because seconds_elapsed is smaller for an earlier achievement, the subtraction produces a larger value for players who reached the same raw_score sooner, so higher composite scores naturally sort first without any special-case logic. This works because a standard double (as used for Redis sorted-set scores) represents integers exactly up to 2^53 (about 9.007×10^15); with a raw score capped at 10^9 and a 10^6 multiplier leaving room for a tiebreak component up to 999,999 (comfortably covering an 86,400-second day), the largest composite score is about 10^15 — well inside the exact-integer range, so no rounding error can corrupt the ordering.",
+    "q_zh": "两名玩家分数相同时，如果依赖有序集合的默认并列打破规则（按成员字符串的字典序），排出的顺序和「谁真正先达成这个分数」毫无关系。排行榜要如何把「先达成者排前面」直接编码进数值分数本身？为什么标准双精度浮点数的精度足以支撑这样做？",
+    "a_zh": "把主指标和一个基于时间的打破并列指标编码进同一个数字：组合分数 = 原始分数 × 10^6 + (周期总秒数 − 达成时本周期内已过秒数)。因为更早达成的玩家「已过秒数」更小，减法结果对他们来说更大，所以在原始分数相同的情况下，更早达成的玩家组合分数更高，自然排在前面，不需要任何特殊逻辑分支。这之所以可行，是因为标准双精度浮点数（Redis 有序集合分数所使用的类型）能精确表示到 2^53（约 9.007×10^15）以内的整数；原始分数上限设为 10^9，乘数 10^6 给打破并列部分留出到 999,999 的空间（足够覆盖一天 86,400 秒），最大组合分数约为 10^15——完全落在精确整数范围之内，不会有舍入误差破坏排序。",
+    "tags": []
+  },
+  {
+    "id": "problems-leaderboard-friends-board-read-time-vs-dedicated-set",
+    "node": "problems.realtime.leaderboard",
+    "type": "qa",
+    "q": "For a friends-only leaderboard, why is maintaining a dedicated sorted set per user (containing only their friends) the wrong default, and what read-time alternative avoids the problem — and what other well-known fan-out problem is this the same trade-off as?",
+    "a": "A dedicated sorted set per user scales the number of maintained data structures with the total user count, and every friend-list change (adding or removing a friend) requires updating that structure — write cost and storage grow with the product of users and their average friend count, largely independent of how often anyone actually looks at their friends leaderboard. The read-time alternative looks up a user's (bounded, typically at most a few hundred) friend ids, batch-fetches their scores from the single global per-period sorted set, and sorts that small result set in the application layer on each request — avoiding any dedicated per-user structure and any need to keep one in sync with friend-graph changes, at the cost of a small amount of read-time compute. This is the same write-fan-out-vs-read-fan-out trade-off a social news feed faces deciding whether to push a new post into every follower's inbox versus assembling a feed by reading follows at request time; here, the read-time option wins because a friends leaderboard query is cheap and infrequent relative to the write amplification of the alternative.",
+    "q_zh": "对于一个好友专属排行榜，为什么给每个用户维护一份专属有序集合（只含其好友）是错误的默认做法？读时现算的替代方案如何避免这个问题？这和哪个知名的扇出问题是同一种权衡？",
+    "a_zh": "为每个用户维护一份专属有序集合，意味着需要维护的数据结构数量随总用户数增长，而且每一次好友关系变化（加好友/删好友）都要更新这份结构——写入成本和存储量随「用户数 × 平均好友数」增长，且这个成本和实际有多少人真的会去查看好友榜基本无关。读时现算的替代方案是：查询该用户（数量有限，通常不超过几百）的好友 id 列表，从唯一的全局周期榜单里批量查询这些好友的分数，在应用层对这个小结果集排序后返回——不需要任何专属数据结构，也不需要让任何东西和好友关系的变化保持同步，代价只是每次请求时一点点排序计算。这和信息流场景里「发帖时把内容推给每个粉丝的收件箱」还是「读时现拉取关注列表拼装」是同一种写扇出 vs 读扇出的权衡；这里读时现算胜出，是因为一次好友榜查询相对于另一种方案的写放大而言足够便宜、足够不频繁。",
+    "tags": []
+  },
+  {
+    "id": "problems-leaderboard-time-windowed-keys-not-in-place-reset",
+    "node": "problems.realtime.leaderboard",
+    "type": "qa",
+    "q": "For daily and weekly leaderboards that need to \"reset\" at the start of each period, why is clearing and reusing the same sorted set in place the wrong approach, and what key design avoids the problem while still supporting a reset?",
+    "a": "Clearing a single reused sorted set at the start of each period permanently destroys the previous period's final standings the moment the reset happens, with no way to look back at yesterday's or last week's results for history, disputes, or reward settlement after the fact. The alternative is to give each period its own independently-keyed sorted set (e.g. one key per calendar day, one per week), written to by fanning out each incoming score event to every period key it belongs to (daily, weekly, and an all-time key) rather than reading and aggregating on demand. \"Resetting\" then just means the next period's key starts empty by construction — nothing is destroyed — and an old period's key can be archived to durable storage and given an expiration with a grace window (e.g. a day or two) so it remains queryable for a while after the period ends before it's finally cleaned up.",
+    "q_zh": "对于需要在每个周期开始时「重置」的日榜和周榜，为什么原地清空并复用同一个有序集合是错误的做法？什么样的键设计能既避免这个问题、又支持重置？",
+    "a_zh": "在每个周期开始时清空一个被反复复用的有序集合，会在重置发生的那一刻永久销毁上一个周期的最终排名，之后完全无法回看昨天或上周的结果用于历史查询、争议核实或事后的奖励结算。替代方案是给每个周期一个各自独立的键（例如每个自然日一个键、每周一个键），每条新到的分数事件被同时扇出写入它所属的每一个周期键（日榜键、周榜键、以及一个永久累积键），而不是按需读取时再聚合。这样「重置」只是意味着下一个周期的键从构造上就是空的——什么都没被销毁——而一个已结束周期的键可以被归档到持久存储，并设置一个带宽限期的过期时间（比如一到两天），让它在周期结束后仍可查询一段时间，最终再被清理。",
+    "tags": []
+  },
+  {
+    "id": "problems-leaderboard-sorted-set-rebuildable-cache",
+    "node": "problems.realtime.leaderboard",
+    "type": "qa",
+    "q": "If a leaderboard's Redis sorted sets are treated as the only place score data lives, what specific recovery capability is lost, and what design keeps that capability while still using Redis's own persistence (RDB/AOF) as a fast-path optimization?",
+    "a": "Relying only on Redis's own persistence means recovery can restore whatever was previously written to Redis — including the output of a buggy scoring calculation — but it cannot recompute results under a corrected rule after the fact, since the corrected logic was never applied to the raw inputs. The fix is to treat the sorted sets as a rebuildable cache derived from an authoritative, append-only event log of raw score events (the true source of truth), with Redis's RDB/AOF kept only as a fast-restart optimization on top. This means a scoring bug discovered after the fact can be fixed by replaying the event log with corrected logic to produce a new leaderboard, rather than being permanently baked into whatever Redis happened to have stored.",
+    "q_zh": "如果把排行榜的 Redis 有序集合当作分数数据存在的唯一地方，会失去什么具体的恢复能力？什么样的设计能在继续使用 Redis 自身持久化（RDB/AOF）作为快速恢复优化的同时，保留这个能力？",
+    "a_zh": "只依赖 Redis 自身的持久化，意味着恢复只能还原此前写入 Redis 的内容——包括一次有 bug 的计分逻辑算出的结果——但无法事后用修正过的规则重新计算，因为修正后的逻辑从未被应用到原始输入上过。解决办法是把有序集合当作从一份权威的、只追加的原始分数事件日志（真正的数据来源）派生出的可重建缓存，Redis 的 RDB/AOF 只作为其上的一层快速重启优化保留。这意味着事后发现的计分 bug 可以通过用修正后的逻辑重放事件日志来生成一份新的排行榜来修复，而不是永久固化在 Redis 当时恰好存了什么里。",
+    "tags": []
+  },
+  {
+    "id": "problems-leaderboard-server-authoritative-score-submission",
+    "node": "problems.realtime.leaderboard",
+    "type": "qa",
+    "q": "Why is having the game client submit its own final score directly to a leaderboard API a weak anti-cheat design, and what structural change closes off the cheapest class of cheating, even though it doesn't eliminate cheating entirely?",
+    "a": "A client-submitted final score trusts an input source that is fully under the attacker's control — the score can be forged by modifying the client, replaying a captured request, or calling the API directly, with no game logic ever actually enforced. The structural fix is to never accept a final score directly from the client at all: scores can only be written by a trusted backend match-settlement service that computes the result from the authoritative game state it observed, not from a number the client asserts. This doesn't eliminate cheating — a flaw in the settlement service's own logic could still be exploited — but it closes off the cheapest and most common attack, forging a single request, which no amount of after-the-fact anomaly detection can substitute for as a first line of defense.",
+    "q_zh": "为什么让游戏客户端直接把自己算出的最终分数提交给排行榜 API 是一种薄弱的反作弊设计？什么样的结构性改变能堵住成本最低的一类作弊，即便它不能彻底消灭作弊？",
+    "a_zh": "客户端提交的最终分数信任了一个完全被攻击者控制的输入源——分数可以通过修改客户端、重放抓到的请求、或者直接调用 API 来伪造，游戏逻辑本身从未被真正执行过。结构性的修复是彻底不再直接接受来自客户端的最终分数：分数只能由一个受信任的后端比赛结算服务写入，这个服务根据它自己观测到的权威比赛状态计算结果，而不是客户端自己断言的一个数字。这不能消灭作弊——结算服务自身的逻辑漏洞仍可能被利用——但它堵死了成本最低、也最常见的一类攻击，即伪造一次请求，而任何事后的异常检测都无法替代这第一道防线。",
+    "tags": []
+  }
+]
