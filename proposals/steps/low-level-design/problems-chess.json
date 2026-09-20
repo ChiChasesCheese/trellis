@@ -1,0 +1,12 @@
+{
+  "problems.games.chess": [
+    "problems-chess-piece-is-a-value",
+    "problems-chess-pseudo-then-filter",
+    "problems-chess-make-unmake-memento",
+    "problems-chess-castling-rights-not-has-moved",
+    "problems-chess-en-passant-two-squares",
+    "problems-chess-promotion-four-moves",
+    "problems-chess-repetition-fingerprint",
+    "problems-chess-notation-long-algebraic"
+  ]
+}
