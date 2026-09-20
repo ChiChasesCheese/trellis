@@ -110,6 +110,10 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
 - `python3 -c "…"` that builds a path at runtime is refused by the guard like a heredoc: use a script file.
 - Desktop Anki is usually running while tests are: a CLI test that touches Anki must replace `cli._anki_call` with a fake
   (see `tests/test_loop_e2e.py`). `tests/conftest.py` makes the real client refuse, because a fixture deck once reached the live collection.
+- The repo is public: a reading for a commercial prep site is tagged `no-archive` (linked, never clipped); `clip` skips it.
+  A reading with no `url:` and a real body is an *authored* article and needs no clipping — card footers open it directly.
+- Card agents miscompute and misattribute: re-derive every estimate, check assumptions against each other and against
+  sibling articles, and keep unverified numbers out of cards (four lessons recorded in `proposals/design-problems/AGENT.md`).
 - `anki-push` moves a domain's decks onto their own preset `Trellis · <title>` (cloned, deals new cards by position) and
   repositions only cards Anki still calls new. Never write to the shared `Default` preset or to a reviewed card's `due`.
 - A leaf is weak only on cards with a verdict (taken / slipped); young cards are not evidence, and a weak leaf whose grown
@@ -133,6 +137,11 @@ uv run trellis --domain <d> digest <corpus> --status | --leaf L -n 5 -o p.md | -
 uv run trellis grow --leaf <d>:<leaf> -o p.md      # cards for a leaf no corpus covers; --import a.json
 uv run trellis --domain <d> stats                  # cards per branch, leaves without cards
 uv run trellis --all sync && uv run trellis --all build && uv run trellis --all anki-push
+
+# the system-design problem bank (vault/domains/system-design/BUILD.md; agent instructions in proposals/design-problems/AGENT.md)
+uv run python scripts/check_design_problems.py --all     # acceptance gate: 49/49 is the bar
+uv run python scripts/review_design_problem.py <slug>    # what to re-derive before accepting a problem
+uv run python scripts/design_problem_survey.py           # problems x sources, from the survey files
 
 # study order and pace (ADR 0010): `core: true` + `study:` in the skeleton, `step:` in a card
 uv run trellis --domain <d> steps                  # which leaves have no card order yet
