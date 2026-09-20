@@ -54,7 +54,8 @@ tags: [solution]
 - **`Playlist`** — 一份播放列表：所有者、协作者、有序的曲目**引用**。它自己守"谁能编辑"
   这条不变量；曲目从曲库消失时的摘除是系统动作（`_discard`），不走编辑权限校验。
 - **`PlaylistStore`** — 播放列表的存储，加一份"曲目 id → 引用过它的播放列表 id 集合"的
-  反向索引，用来让"一首歌下架"这件事不必扫描每一份播放列表。
+  反向索引，用来让"一首歌下架"这件事不必扫描每一份播放列表；一把锁保证播放列表内容和这份
+  反向索引在协作者并发编辑时始终一致。
 - **`PlayQueue`** — 播放队列：一个来源加洗牌、循环两个修饰符。它自己守"`previous` 永远
   沿真实播放过的顺序走"和"repeat=all 不无限增长"这两条不变量。
 - **`Player`** — 播放器：停止/播放/暂停三态之间哪条边合法，"下一首是谁"完全委托给
@@ -255,25 +256,33 @@ _PLAYER_TRANSITIONS = {
     PlayerState.PAUSED: frozenset({PlayerState.PLAYING, PlayerState.STOPPED}),
 }
 def play(self) -> str | None:
-    resuming = self._state is PlayerState.PAUSED
+    if self._state is PlayerState.PAUSED:
+        self._move(PlayerState.PLAYING)
+        return self.queue.now_playing          # 恢复：不 advance
+    track_id = self.queue.advance()
+    if track_id is None:
+        return None                             # 队列此刻拿不出下一首：不转移状态
     self._move(PlayerState.PLAYING)
-    return self.queue.now_playing if resuming else self.queue.advance()
+    return track_id
 ```
 
 这道题和任务看板题的工作流决策看起来相似，但这里的差别更微妙、值得单独讲清楚：播放器的
 "播放"动作在从 `STOPPED` 和从 `PAUSED` 触发时**确实**有一行行为差异（要不要 `advance`）——
-选项 1 的判据在这里是成立的一半。但差异只有这一处、只在一个方法里，用一个布尔量
-`resuming = self._state is PlayerState.PAUSED` 就能表达清楚，为此建两个只有一个方法不同
-的类，是把"一行分支"的复杂度换成了"两个类之间要保持哪些方法签名一致"的复杂度，得不偿失。
-**这仍然是同一条判据的应用：状态间的行为差异有多大、多分散，决定了值不值得为它建类层级**；
-任务看板的工作流状态之间没有任何行为差异（纯数据），播放器这里有一处、很小的差异，
-足以用一个局部变量表达，还没到需要类层级的规模。
+选项 1 的判据在这里是成立的一半。但差异只有这一处、只在一个方法里，用一句 `if self._state
+is PlayerState.PAUSED` 就能表达清楚，为此建两个只有一个方法不同的类，是把"一行分支"的
+复杂度换成了"两个类之间要保持哪些方法签名一致"的复杂度，得不偿失。**这仍然是同一条判据的
+应用：状态间的行为差异有多大、多分散，决定了值不值得为它建类层级**；任务看板的工作流状态
+之间没有任何行为差异（纯数据），播放器这里有一处、很小的差异，足以用一句分支表达，还没到
+需要类层级的规模。这个分支同时回答了"播放一个此刻拿不出任何曲目的队列会发生什么"：
+`advance()` 返回 `None` 时函数直接返回，**不**调用 `self._move`——状态留在原地，因为
+"播放"这个动作根本没有真正发生。
 
 ## 代码走读
 
 整份实现如下。读的时候盯住四处：`Playlist._discard` 与 `PlaylistStore.scrub_track` 那对
 "系统摘除不查权限"的配合、`PlayQueue.previous` 只读 `_history` 不读 `_shuffle`、
-`PlayQueue.advance` 里"耗尽才重新生成"的分支、以及 `Player.play` 里 `resuming` 这个布尔量。
+`PlayQueue.advance` 里"耗尽才重新生成"的分支、以及 `Player.play` 先判断暂停恢复、再判断
+队列有没有下一首、最后才转移状态的三步顺序。
 
 %% code:begin solution.py %%
 ```python
@@ -293,6 +302,7 @@ from __future__ import annotations
 
 import itertools
 import random
+import threading
 from collections import Counter, deque
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
@@ -487,42 +497,61 @@ class Playlist:
 
 class PlaylistStore:
     """播放列表的存储，加一份"曲目 id -> 引用过它的播放列表 id 集合"的反向索引。一首歌下架
-    时，靠这份索引直接找到受影响的播放列表，而不必扫描系统里的每一份播放列表。"""
+    时，靠这份索引直接找到受影响的播放列表，而不必扫描系统里的每一份播放列表。
+
+    协作播放列表意味着好几个编辑者会并发改同一份播放列表，因此一份播放列表自己的曲目列表
+    与这份反向索引必须在**同一次加锁**里一起更新——和 `CardStore` 是同一个纪律：写路径把
+    "改内容"和"改索引"钉成一次原子操作，读路径也经过这把锁，不直接把播放列表对象交出去。
+    """
 
     def __init__(self) -> None:
         self._playlists: dict[str, Playlist] = {}
         self._by_track: dict[str, set[str]] = {}
+        self._lock = threading.Lock()
 
-    def create_playlist(self, playlist_id: str, name: str, owner_id: str) -> Playlist:
-        playlist = Playlist(playlist_id, name, owner_id)
-        self._playlists[playlist_id] = playlist
-        return playlist
-
-    def playlist(self, playlist_id: str) -> Playlist:
+    def _require(self, playlist_id: str) -> Playlist:
         try:
             return self._playlists[playlist_id]
         except KeyError:
             raise UnknownPlaylistError(playlist_id) from None
 
+    def create_playlist(self, playlist_id: str, name: str, owner_id: str) -> Playlist:
+        with self._lock:
+            playlist = Playlist(playlist_id, name, owner_id)
+            self._playlists[playlist_id] = playlist
+            return playlist
+
+    def add_editor(self, playlist_id: str, user_id: str, actor: str) -> None:
+        with self._lock:
+            self._require(playlist_id).add_editor(user_id, actor)
+
     def add_track(self, playlist_id: str, track_id: str, actor: str) -> None:
-        self.playlist(playlist_id).add_track(track_id, actor)
-        self._by_track.setdefault(track_id, set()).add(playlist_id)
+        with self._lock:
+            self._require(playlist_id).add_track(track_id, actor)
+            self._by_track.setdefault(track_id, set()).add(playlist_id)
 
     def remove_track(self, playlist_id: str, track_id: str, actor: str) -> None:
-        self.playlist(playlist_id).remove_track(track_id, actor)
-        self._by_track.get(track_id, set()).discard(playlist_id)
+        with self._lock:
+            self._require(playlist_id).remove_track(track_id, actor)
+            self._by_track.get(track_id, set()).discard(playlist_id)
+
+    def track_ids(self, playlist_id: str) -> tuple[str, ...]:
+        with self._lock:
+            return self._require(playlist_id).track_ids
 
     def scrub_track(self, track_id: str) -> tuple[str, ...]:
         """曲库删除了这首歌：把它从所有引用过它的播放列表里摘掉，返回受影响的播放列表 id。"""
-        affected = tuple(self._by_track.pop(track_id, ()))
-        for playlist_id in affected:
-            self._playlists[playlist_id]._discard(track_id)
-        return affected
+        with self._lock:
+            affected = tuple(self._by_track.pop(track_id, ()))
+            for playlist_id in affected:
+                self._playlists[playlist_id]._discard(track_id)
+            return affected
 
     @property
     def referenced_track_count(self) -> int:
         """还被至少一份播放列表引用着的曲目数——一首歌下架并被摘除引用后，这个数会变小。"""
-        return len(self._by_track)
+        with self._lock:
+            return len(self._by_track)
 
 
 # --------------------------------------------------------------------------
@@ -684,11 +713,19 @@ class Player:
         self._state = target
 
     def play(self) -> str | None:
-        resuming = self._state is PlayerState.PAUSED
+        """从 `STOPPED` 播放会推进到队列的下一首；从 `PAUSED` 恢复播放的是同一首，不重新
+        `advance`。队列此刻没有下一首可播（来源为空，或非循环模式下已经放完）时，`advance`
+        返回 `None`，播放器**留在原状态不转移**——播放一个此刻拿不出任何曲目的队列不是一次
+        成功的"开始播放"，不该把播放器切成"正在播放"却什么都没有在放。
+        """
+        if self._state is PlayerState.PAUSED:
+            self._move(PlayerState.PLAYING)
+            return self.queue.now_playing
+        track_id = self.queue.advance()
+        if track_id is None:
+            return None
         self._move(PlayerState.PLAYING)
-        track_id = self.queue.now_playing if resuming else self.queue.advance()
-        if track_id is not None and not resuming:
-            self._history.record(track_id, self._clock())
+        self._history.record(track_id, self._clock())
         return track_id
 
     def pause(self) -> None:
@@ -780,7 +817,7 @@ class MusicLibrary:
         return self._playlists.create_playlist(playlist_id, name, owner_id)
 
     def add_editor(self, playlist_id: str, user_id: str, actor: str) -> None:
-        self._playlists.playlist(playlist_id).add_editor(user_id, actor)
+        self._playlists.add_editor(playlist_id, user_id, actor)
 
     def add_to_playlist(self, playlist_id: str, track_id: str, actor: str) -> None:
         self._catalog.track(track_id)
@@ -790,7 +827,7 @@ class MusicLibrary:
         self._playlists.remove_track(playlist_id, track_id, actor)
 
     def playlist_tracks(self, playlist_id: str) -> tuple[str, ...]:
-        return self._playlists.playlist(playlist_id).track_ids
+        return self._playlists.track_ids(playlist_id)
 
     @property
     def referenced_track_count(self) -> int:
@@ -806,7 +843,7 @@ class MusicLibrary:
         self._load_source(self._catalog.tracks_of_album(album_id))
 
     def play_playlist(self, playlist_id: str) -> None:
-        self._load_source(self._playlists.playlist(playlist_id).track_ids)
+        self._load_source(self._playlists.track_ids(playlist_id))
 
     def play_radio(self, seed_track_id: str, limit: int = 20) -> None:
         """"电台"：以一首种子曲目为起点，拼上同一艺人的其它曲目，打乱后作为来源——一个简单、
@@ -912,10 +949,13 @@ if __name__ == "__main__":
 的语义因此是"被触发播放的次数"，单曲循环会让它涨得快，这是选择的代价，写在这里而不是
 悄悄发生）。
 
-**`Player.play` 里的 `resuming` 判断必须在 `self._move(PlayerState.PLAYING)` 之前算好**——
-`_move` 会真的改写 `self._state`，如果先转移状态再判断"是不是在恢复"，`self._state` 已经
-变成 `PLAYING`，`resuming` 永远算不出正确的值。这是一个容易在重构时踩到的顺序依赖，值得
-在读代码时专门确认一次。
+**`Player.play` 把"要不要转移状态"推迟到最后一行**：先判断是不是从 `PAUSED` 恢复（这时候
+一定有内容可播，因为能进入 `PAUSED` 就说明之前成功播放过），不是的话就先问队列要下一首，
+只有真的拿到了 `track_id` 才调用 `self._move(PlayerState.PLAYING)`。这个顺序不是随意的：
+如果反过来先转移状态、再问队列要下一首，播放一个空队列会把播放器留在一个自己撒了谎的
+`PLAYING` 状态里——`state` 说"正在播放"，`now_playing` 却是 `None`。`test_play_empty_
+album_returns_none_and_stays_stopped` 直接断言这条路径：加载一张没有任何曲目的专辑之后
+调用 `play()`，返回 `None`，`state` 仍然是 `STOPPED`。
 
 **`PlayHistory.most_played` 每次调用都对 `self._events` 重新做一次 `Counter`**，不维护
 一份增量计数字典。这道题的历史容量有上限（`maxlen`），`Counter` 的开销是 O(历史长度)，
@@ -925,13 +965,15 @@ if __name__ == "__main__":
 
 ## 测试与自检
 
-二十三个测试，按四关分组：
+二十六个测试，按四关加并发分组：
 
 - **曲库与播放列表**：播放列表存的是曲目 id，改曲目对象的字段不会让播放列表跟着变；一首
   歌被两份播放列表引用，下架后两份都收缩，`referenced_track_count` 从 2 变成 1；未经授权
   的编辑被拒绝，所有者能添加协作者、协作者能编辑但不能再添加协作者。
 - **播放器状态机**：停止→播放→暂停→播放→停止的合法路径；暂停前先播放这条非法转移被拒绝；
-  停止状态下切歌被拒绝；从暂停恢复播放的是同一首，不推进队列。
+  停止状态下切歌被拒绝；从暂停恢复播放的是同一首，不推进队列；播放一张没有任何曲目的专辑
+  返回 `None` 且状态留在 `STOPPED`，不会被错误地切成"正在播放"；不开 repeat 播完来源后
+  再切歌返回 `None`，但这和"停止"不是一回事——状态仍然是 `PLAYING`，只是此刻没有下一首。
 - **播放队列**：按专辑顺序建队列；洗过牌之后的 `queue_upcoming` 集合不变但顺序变了（用
   固定随机种子保证确定性）；关掉洗牌后剩下的部分恢复成来源顺序里还没播过的那些；洗牌开着
   时新加的曲目会出现在队列里（不强行断言具体位置，只断言恰好出现一次）；不开洗牌时新曲目
@@ -945,7 +987,11 @@ if __name__ == "__main__":
   播放次数正确地涨到 2；历史容量有上限时，`history_event_count` 不会超过设定的容量，即便
   播放次数远多于它。
 - **离线标记**：一首歌标记下载不影响另一首；取消标记恢复默认值。
-- **失败路径**：未知曲目、未知播放列表、空队列播放都各自抛出对应的异常。
+- **失败路径**：未知曲目、未知播放列表、完全没加载队列时播放都各自抛出对应的异常。
+- **并发**：十个线程、十个不同的协作者，用 `Barrier` 同步起跑，同时往同一份播放列表各加
+  一首不同的歌，断言的是不变量——播放列表最终恰好有十首歌，`referenced_track_count` 和
+  播放列表的实际长度对得上，没有一次并发写入被另一次覆盖或丢失，没有一句依赖线程调度
+  顺序或计时。
 
 **两分钟怎么给面试官演示**：跑 `python solution.py`。它建一张专辑、按专辑顺序播放、开
 repeat=all、切一首歌，打印当前播放和最近播放列表。
@@ -969,10 +1015,16 @@ repeat=all、切一首歌，打印当前播放和最近播放列表。
   这个队列"，这和"多设备同步"是同一个问题的两面：真正需要并发访问的场景，是多个设备/线程
   同时想当"当前播放位置"的权威，这需要的不是一把 `Lock`，而是上面提到的共享状态架构。给
   单播放位置的模型加锁是"看起来严谨"但解决不了真实并发问题的防御性编程。
-- *`PlaylistStore` 要不要加锁？* 如果多个用户能并发编辑同一份协作播放列表（这道题第 4 关
-  的场景），`add_track`/`remove_track`/`scrub_track` 之间确实存在竞态——`_by_track` 这份
-  反向索引和 `Playlist._track_ids` 必须在同一次加锁里保持一致，这是留给读者的一个练习：
-  给 `PlaylistStore` 加一把锁，模式和任务看板题的 `CardStore` 完全一样。
+- *`PlaylistStore` 要不要加锁？* 要，而且本文已经加了：多个协作者并发编辑同一份播放
+  列表（这道题第 4 关的场景）时，`add_track`/`remove_track`/`scrub_track` 之间确实存在
+  竞态——`_by_track` 这份反向索引和 `Playlist._track_ids` 必须在同一次加锁里保持一致，
+  否则一个线程可能读到"播放列表里有这首歌，但反向索引不知道"或者反过来的中间状态。做法
+  和任务看板题的 `CardStore` 完全一样：一把 `threading.Lock`，每个会改内容或索引的方法都
+  在同一次加锁范围内把两者一起改完；`PlaylistStore.track_ids` 这个读路径也经过同一把锁，
+  不把播放列表对象本身交出去，调用方拿到的永远是一份快照元组。`test_concurrent_
+  collaborative_edits_keep_index_in_sync_with_playlist` 用十个线程、十个不同的协作者
+  并发各加一首歌，断言的是不变量——播放列表最终恰好有十首歌、一首不多一首不少，且
+  `referenced_track_count` 和播放列表的实际长度对得上，不依赖线程调度顺序或计时。
 
 **持久化与规模**
 
