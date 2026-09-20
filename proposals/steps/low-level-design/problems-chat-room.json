@@ -1,0 +1,12 @@
+{
+  "problems.social.chat-room": [
+    "problems-chat-room-server-arrival-order",
+    "problems-chat-room-direct-room-is-a-flag-not-subclass",
+    "problems-chat-room-unread-derived-from-cursor",
+    "problems-chat-room-connection-protocol",
+    "problems-chat-room-reconnect-reuses-cursor",
+    "problems-chat-room-typing-shrinks-on-disconnect",
+    "problems-chat-room-edit-preserves-position",
+    "problems-chat-room-dm-idempotent-index"
+  ]
+}
