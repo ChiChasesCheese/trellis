@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-unique-id-generator-sequence-bits-not-bottleneck",
+    "node": "problems.foundations.unique-id-generator",
+    "type": "qa",
+    "q": "In a Snowflake-style unique ID generator design targeting a platform-wide peak of 200,000 IDs/second across thousands of independent generator nodes, why does a 10-bit sequence field (1,024 IDs/millisecond, or 1,024,000 IDs/second per single node) prove that sequence-number capacity is not the real constraint on this design?",
+    "a": "A single node's theoretical cap of 1,024,000 IDs/second is already about 5x the entire platform's peak demand of 200,000 IDs/second — meaning even if all ID generation across the whole company were hypothetically funneled through one node, the sequence field would not be the limiting factor. Since real generator throughput per node is never close to this cap (traffic is naturally spread across thousands of nodes), adding more sequence bits would not solve any real problem; the bit budget is better spent on the worker-id field, which is constrained by a different variable entirely: how many independent generator identities the deployment needs, not how many IDs per second any one of them produces.",
+    "q_zh": "在一个面向整个平台 200,000 ID/秒峰值、由数千个独立生成节点组成的 Snowflake 风格唯一 ID 生成器设计中，为什么 10 位序列号字段（每毫秒 1,024 个 ID，单节点每秒 1,024,000 个）证明了序列号容量根本不是这个设计真正的约束？",
+    "a_zh": "单节点理论上限 1,024,000 ID/秒已经是整个平台峰值需求 200,000 ID/秒的约 5 倍——也就是说，即使假设全公司的 ID 生成需求都压到一个节点上，序列号字段也不会成为限制因素。因为现实中每个节点的实际吞吐远远够不到这个上限（流量天然分散在数千个节点上），再增加序列号位数解决不了任何真实问题；这部分位预算更应该留给 worker id 字段，它受另一个完全不同的变量约束：部署需要多少个独立的生成身份，而不是其中任何一个每秒能产生多少 ID。",
+    "tags": []
+  },
+  {
+    "id": "problems-unique-id-generator-worker-id-bits-from-deployment-count",
+    "node": "problems.foundations.unique-id-generator",
+    "type": "qa",
+    "q": "In a unique ID generator design, if the generation logic will be embedded into roughly 5,000 independent deployment units (e.g. one per database shard) rather than run as a small dedicated fleet, why does the design need a 13-bit worker-id field (8,192 identities) rather than Twitter Snowflake's original 10-bit field (1,024 identities)?",
+    "a": "The worker-id field size must be at least ceil(log2(number of independent generator identities needed)); for 5,000 deployment units, ceil(log2(5,000))=13, giving 8,192 available identities with headroom for growth, whereas 10 bits only covers 1,024 — too few if the ID generation logic is embedded directly into thousands of shards instead of run by a small number of dedicated generator machines. The number of worker-id bits should be chosen based on how many independent generator identities the actual deployment topology requires, not copied from a well-known system's number designed for a different topology.",
+    "q_zh": "在一个唯一 ID 生成器设计中，如果生成逻辑要嵌入到约 5,000 个独立部署单元里（例如每个数据库分片一个），而不是由一小撮专用机器运行，为什么设计需要 13 位 worker id 字段（8,192 个身份），而不是 Twitter Snowflake 原版的 10 位字段（1,024 个身份）？",
+    "a_zh": "worker id 字段的位数至少要满足 ceil(log2(需要的独立生成身份数))；5,000 个部署单元对应 ceil(log2(5,000))=13，给出 8,192 个可用身份并留有增长空间，而 10 位只能覆盖 1,024 个——如果生成逻辑直接嵌入到成千上万个分片里而不是由少数专用发号机运行，10 位就不够用了。worker id 的位数应该根据实际部署拓扑需要多少个独立生成身份来选择，而不是照抄某个为不同拓扑设计的知名系统的数字。",
+    "tags": []
+  },
+  {
+    "id": "problems-unique-id-generator-embedded-vs-service-placement",
+    "node": "problems.foundations.unique-id-generator",
+    "type": "qa",
+    "q": "In a unique ID generator design with a sub-1ms P99 latency requirement, why does running ID generation as a separate network service (called via RPC on every write) undermine the design's own goal, and what placement does the design use instead?",
+    "a": "A separate ID-generation service means every business write now makes an extra network round trip whose latency and availability get added directly onto the write's critical path — this reintroduces exactly the kind of synchronous cross-node dependency the design was built to avoid in the first place. Instead, the design embeds the generation logic as a library inside each deployment unit's own process (or pushes it further down, e.g. as a database function colocated with the write, as Instagram does), so id generation is a pure in-process call with zero network I/O; the only coordination point is a one-time worker-id lease acquired at startup and renewed in the background, never on the generation path itself.",
+    "q_zh": "在一个 P99 延迟要求低于 1ms 的唯一 ID 生成器设计中，为什么把 ID 生成做成一个独立的网络服务（每次写入都发一次 RPC 调用）会违背设计本身的目标？这个设计用了什么样的放置方式来代替？",
+    "a_zh": "独立的 ID 生成服务意味着每一次业务写入都要多一次网络往返，这一跳的延迟和可用性会直接叠加进写入的关键路径——这恰恰重新引入了这个设计最初就要避免的那种同步跨节点依赖。这个设计改为把生成逻辑作为一个库嵌入到每个部署单元自己的进程里（或者进一步下推，例如像 Instagram 那样做成和写入同处一地的数据库函数），让 ID 生成成为一次纯进程内调用、零网络 I/O；唯一的协调点是启动时申请一次的 worker id 租约，之后在后台续约，从不出现在生成路径本身上。",
+    "tags": []
+  },
+  {
+    "id": "problems-unique-id-generator-clock-rollback-refuse",
+    "node": "problems.foundations.unique-id-generator",
+    "type": "qa",
+    "q": "In a Snowflake-style ID generator, why must the generator explicitly compare the current local clock reading against the timestamp used for its last generated ID, and refuse to generate when the clock reads earlier than that — instead of just using whatever the clock currently says?",
+    "a": "A time-of-day clock can step backwards (e.g. an NTP correction), so a later call to the generator could read a wall-clock value smaller than the timestamp embedded in an ID it already produced. If the generator naively used that smaller value, it could produce a new ID with a timestamp equal to or less than one already issued, directly violating the guarantee that IDs from the same node are strictly increasing, and risking a duplicate if the sequence counter also happens to collide. The correct behavior is to detect now < lastTimestampMs and refuse to generate (block or error) until the local clock catches back up to the last used timestamp, accepting a bounded pause in availability on that node rather than a correctness violation.",
+    "q_zh": "在一个 Snowflake 风格的 ID 生成器里，为什么生成器必须显式比较当前本地时钟读数和它上一次生成 ID 所用的时间戳，并在时钟读数比这个时间戳更早时拒绝生成，而不是直接用当前时钟给出的值？",
+    "a_zh": "日期时间时钟可能向后跳变（例如一次 NTP 纠偏），所以生成器之后某次调用读到的墙钟值可能比它已经产出的某个 ID 里编码的时间戳更小。如果生成器天真地直接用这个更小的值，就可能产出一个时间戳等于或小于已发出 ID 的新 ID，直接违反'同节点 ID 严格递增'的保证，如果序列号计数器恰好也撞上，还有产生重复 ID 的风险。正确做法是检测到 now < lastTimestampMs 时拒绝生成（阻塞或报错），直到本地时钟追上上一次使用的时间戳为止，宁可接受该节点上一段有界的可用性暂停，也不接受正确性被破坏。",
+    "tags": []
+  },
+  {
+    "id": "problems-unique-id-generator-two-exhaustion-scales",
+    "node": "problems.foundations.unique-id-generator",
+    "type": "qa",
+    "q": "In a Snowflake-style ID generator, sequence-number exhaustion and worker-id exhaustion are both 'running out of bits,' but why do they require completely different responses?",
+    "a": "Sequence exhaustion happens within a single millisecond on a single node when its request rate briefly exceeds the sequence field's per-millisecond capacity (e.g. 1,024 with a 10-bit field); the fix is to spin-wait for the next millisecond tick before continuing, a sub-millisecond stall with no lasting effect, and it must never wrap the counter, which would produce a duplicate of an ID already issued in that same millisecond. Worker-id exhaustion happens at the deployment-topology scale, when the number of active generator instances approaches the worker-id field's total capacity (e.g. 8,192 with 13 bits); once exhausted, new instances simply cannot start (their lease request fails), which is not something a brief wait resolves — it requires reclaiming leases from inactive instances and, eventually, a planned migration to a wider worker-id field with old and new layouts coexisting during a transition period.",
+    "q_zh": "在一个 Snowflake 风格的 ID 生成器里，序列号耗尽和 worker id 耗尽都是'位数用完了'，但为什么它们需要完全不同的应对方式？",
+    "a_zh": "序列号耗尽发生在单个节点的单个毫秒内，当它的请求速率短暂超过序列号字段每毫秒的容量时（例如 10 位字段对应的 1,024 个）；解决办法是自旋等待下一个毫秒 tick 再继续，这只是一次不到 1 毫秒的停顿，没有持久影响，而且绝不能让计数器回绕，回绕会产生和同一毫秒内已发出的 ID 重复的数值。worker id 耗尽发生在部署拓扑的规模级别，当活跃生成实例数量逼近 worker id 字段的总容量时（例如 13 位对应的 8,192 个）；一旦耗尽，新实例根本无法启动（它的租约请求会失败），这不是稍等一下能解决的问题——需要靠回收不活跃实例的租约来缓解，最终还需要一次有计划的迁移，扩大 worker id 字段位宽，迁移期内新旧位布局并存。",
+    "tags": []
+  },
+  {
+    "id": "problems-unique-id-generator-uuidv7-collision-math",
+    "node": "problems.foundations.unique-id-generator",
+    "type": "qa",
+    "q": "In a system generating unique IDs at a platform-wide peak of 200 IDs per millisecond, why does using UUIDv7 in pure-random mode (74 bits of combined rand_a and rand_b entropy per RFC 9562) still avoid collisions in practice, even without spending any bits on a monotonic counter?",
+    "a": "With 74 bits of random space (about 1.9x10^22 possible values) and 200 IDs generated within any single millisecond window at peak, the birthday-bound collision probability for that one window is on the order of 10^-18 — vanishingly small even before considering that a full day contains only about 86.4 million such millisecond windows. This shows that pure randomness in UUIDv7's rand_a/rand_b fields is sufficient to avoid collisions at realistic scale without needing the counter-based monotonicity method the RFC also allows; the counter method exists to guarantee strict same-millisecond ordering, not because pure randomness would otherwise collide.",
+    "q_zh": "在一个整个平台峰值每毫秒生成 200 个 ID 的系统中，为什么即使不把任何位数花在单调计数器上，使用纯随机模式的 UUIDv7（RFC 9562 里 rand_a 和 rand_b 合计 74 位随机熵）在实践中依然能避免碰撞？",
+    "a_zh": "74 位随机空间（约 1.9×10^22 种可能取值），配合峰值下任意一个毫秒窗口内生成 200 个 ID，该窗口的生日悖论碰撞概率量级约为 10^-18——即使不考虑一整天只有约 8,640 万个这样的毫秒窗口，这个数字也已经微乎其微。这说明 UUIDv7 的 rand_a/rand_b 字段单纯依靠随机性，在现实规模下就足以避免碰撞，不需要动用规范同时允许的基于计数器的单调性方法；计数器方法存在的目的是保证严格的同毫秒排序，而不是因为纯随机性本身会撞车。",
+    "tags": []
+  },
+  {
+    "id": "problems-unique-id-generator-lease-coordinator-outage",
+    "node": "problems.foundations.unique-id-generator",
+    "type": "qa",
+    "q": "In a unique ID generator design where each node leases a worker id from a coordination service only at startup (never on the generation path), what happens to already-running generator nodes when that coordination service becomes completely unavailable?",
+    "a": "Already-running nodes are entirely unaffected for ID generation itself: since GenerateId() never contacts the coordination service, a node that has already leased its worker id keeps generating IDs normally with no dependency on the coordination service's availability. The only thing that breaks is starting new nodes (their initial AcquireWorkerId call fails) and eventually renewing leases — once a lease renewal fails past the lease's expiry, a node should proactively stop generating rather than keep using a worker id that may have been reclaimed and reassigned to another instance, which would risk two nodes producing IDs with the same worker-id segment.",
+    "q_zh": "在一个每个节点只在启动时向协调服务申请一次 worker id 租约（从不在生成路径上访问它）的唯一 ID 生成器设计中，当这个协调服务完全不可用时，已经在运行的生成节点会发生什么？",
+    "a_zh": "已经在运行的节点在 ID 生成本身上完全不受影响：因为 GenerateId() 从不联系协调服务，已经拿到 worker id 租约的节点会继续正常生成 ID，不依赖协调服务的可用性。真正受影响的是启动新节点（它们最初的 AcquireWorkerId 调用会失败）以及之后的租约续约——一旦续约失败超过租约有效期，节点应该主动停止生成，而不是继续使用一个可能已被回收并重新分配给别的实例的 worker id，否则会有两个节点用同一个 worker id 段生成 ID 的风险。",
+    "tags": []
+  },
+  {
+    "id": "problems-unique-id-generator-sign-bit-boundary",
+    "node": "problems.foundations.unique-id-generator",
+    "type": "qa",
+    "q": "In a 64-bit ID packed as 41 timestamp bits + 13 worker-id bits + 10 sequence bits (summing to exactly 64, with no bit reserved as an explicit sign bit), why does this layout only guarantee the ID reads as a non-negative signed 64-bit integer for about 34.9 years after the custom epoch, rather than for the full ~69.7-year life of the 41-bit timestamp field?",
+    "a": "With all 64 bits consumed by timestamp, worker id, and sequence, there is no bit left to reserve explicitly as a sign bit the way a design with a separate 1-bit sign field (like the original Twitter Snowflake's 1+41+10+12 layout) would. Instead, non-negativity depends entirely on the top bit of the 41-bit timestamp field (which is also the top bit of the full 64-bit value) staying 0 — true only while elapsed milliseconds since the epoch stay under 2^40, or about 34.9 years, exactly half of the timestamp field's full 2^41-millisecond (~69.7-year) range. After that point, the same 64-bit value could be interpreted as negative by languages using signed 64-bit integers unless it is explicitly treated as unsigned, making this an earlier practical constraint than the timestamp field's full exhaustion.",
+    "q_zh": "在一个由 41 位时间戳 + 13 位 worker id + 10 位序列号拼成、恰好用满 64 位（没有额外预留符号位）的 ID 布局里，为什么这个方案只能保证 ID 在自定义纪元之后约 34.9 年内被解读为非负的有符号 64 位整数，而不是覆盖 41 位时间戳字段约 69.7 年的全部寿命？",
+    "a_zh": "因为 64 位已经被时间戳、worker id 和序列号全部用完，没有位可以像原版 Twitter Snowflake（1+41+10+12 布局）那样显式预留一个符号位。非负性完全依赖 41 位时间戳字段的最高位（同时也是整个 64 位值的最高位）保持为 0——这只在自纪元以来经过的毫秒数小于 2^40（约 34.9 年，正好是时间戳字段 2^41 毫秒即约 69.7 年全部寿命的一半）时成立。过了这个时间点，同一个 64 位数值在使用有符号 64 位整数的语言里可能被解读为负数，除非显式按无符号处理——这是一个比时间戳字段完全耗尽更早到来的现实约束。",
+    "tags": []
+  }
+]

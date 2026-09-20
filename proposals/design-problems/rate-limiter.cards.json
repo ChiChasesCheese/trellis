@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-rate-limiter-check-volume-forces-shard-count",
+    "node": "problems.foundations.rate-limiter",
+    "type": "qa",
+    "q": "In a rate limiter design with a 20-gateway fleet averaging 100,000 req/s (peak 300,000 req/s at a 3x diurnal factor) where every request must pass three independent limit checks (per-key sustained, per-key burst, per-endpoint), why does a fully synchronous 'check every request against a central Redis store' design need on the order of 14 Redis shards at peak, not 1 or 2?",
+    "a": "Three checks per request at 300,000 req/s peak gives 900,000 rate-limit checks/second. Budgeting conservatively for about 100,000 atomic Lua-script operations per Redis shard per second, covering that volume needs ceil(900,000/100,000)=9 shards with zero redundancy, or ceil(900,000/100,000*1.5)=14 shards with 1.5x headroom for failover and uneven load. The number of shards is driven by operation throughput, not by how many keys exist or how much memory the counters use.",
+    "q_zh": "在一个速率限制器设计中，20 台网关组成的集群均值 100,000 req/s（日间峰值系数 3，峰值 300,000 req/s），每个请求都要通过三层独立的限流检查（per-key sustained、per-key burst、per-endpoint），为什么一个'每个请求都同步查中心 Redis'的设计在峰值下需要大约 14 个 Redis 分片，而不是 1 个或 2 个？",
+    "a_zh": "每个请求 3 次检查，峰值 300,000 req/s 意味着每秒 900,000 次限流检查。保守估计单个 Redis 分片每秒能稳定承载约 100,000 次原子 Lua 脚本操作，覆盖这个量级需要 ceil(900,000/100,000)=9 个零冗余分片，或者 ceil(900,000/100,000×1.5)=14 个含 1.5 倍冗余（故障转移和负载不均）的分片。分片数量由操作吞吐量决定，与 key 的总数或计数器占用的内存无关。",
+    "tags": []
+  },
+  {
+    "id": "problems-rate-limiter-three-layer-quota-model",
+    "node": "problems.foundations.rate-limiter",
+    "type": "qa",
+    "q": "In a rate limiter design, why does enforcing only a per-API-key limit fail to protect the backend even when every single key stays within its own quota, and what three layers does the design use instead?",
+    "a": "Every key individually staying under its own limit says nothing about the sum of all keys' traffic — thousands of keys each safely under quota can still add up to far more load than the backend can serve, an 'individually compliant, collectively overloaded' failure. The design stacks three layers that a request must pass simultaneously: (1) per-key sustained and burst limits for fairness between callers, (2) per-endpoint limits weighted by cost (e.g. a bulk export consumes 50 quota units versus 1 for a simple GET) so cheap and expensive operations aren't counted the same, and (3) a global fleet limit that caps total admitted traffic regardless of which keys it comes from, protecting the backend even when every individual key is compliant.",
+    "q_zh": "在一个速率限制器设计中，为什么即使每一个 API key 都没有超过自己的配额，只做 per-key 限制仍然保护不了后端？这个设计用了哪三层来代替它？",
+    "a_zh": "每个 key 各自没超额，并不能说明所有 key 加总的流量有多大——成千上万个各自安全达标的 key，加总流量仍可能远超后端承载能力，这是一种'个体合规、整体过载'的故障模式。这个设计让请求必须同时通过三层：①per-key 的 sustained 和 burst 限制，保证调用方之间的公平性；②按成本加权的 per-endpoint 限制（例如一次批量导出消耗 50 个配额单位，一次简单 GET 消耗 1 个），让昂贵操作和廉价操作不被同等计数；③不挂在任何单一 key 上的全局 fleet 限制，无论流量来自哪些 key，都对总放行量设上限，即使每个 key 都合规也能保护后端。",
+    "tags": []
+  },
+  {
+    "id": "problems-rate-limiter-local-first-hybrid-enforcement",
+    "node": "problems.foundations.rate-limiter",
+    "type": "qa",
+    "q": "In a rate limiter spanning 20 gateway nodes, why does a design that splits each key's limit into a static 'limit/20' share per node, enforced purely locally with no cross-node communication, produce incorrect throttling — and what does a local-first hybrid design do instead?",
+    "a": "If a key's traffic happens to concentrate on fewer nodes than the fleet size (e.g. due to sticky client routing), those nodes hit their static limit/20 share and start rejecting requests even though the key's global quota is nowhere near exhausted elsewhere in the fleet — an under-admission error caused purely by how traffic happened to be distributed, not by actual overuse. A local-first hybrid design instead starts from the static split but has each node periodically (e.g. every 100ms) report its observed share of a key's traffic to a central store, which recomputes and redistributes each node's local share to match real traffic patterns; local checks stay in-process (no network call) for the common case, only falling back to a synchronous central-store check when a node's local state looks close to its (dynamically adjusted) share.",
+    "q_zh": "在一个横跨 20 台网关节点的速率限制器里，为什么把每个 key 的限额静态切成 'limit/20' 份、每个节点纯本地执行、互不通信的方案会产生错误的限流？'本地优先'的混合方案又是怎么做的？",
+    "a_zh": "如果某个 key 的流量恰好集中在少数几个节点上（例如客户端连接粘性导致），这几个节点会先撞上自己静态的 limit/20 份额并开始拒绝请求，即使这个 key 在集群其它地方的全局配额远未用完——这是纯粹由流量分布方式造成的错误拒绝（under-admission），而不是真的用量超标。本地优先的混合方案从静态切分出发，但让每个节点周期性地（例如每 100ms）向中心存储上报自己观测到的该 key 流量份额，中心重新计算并下发各节点应得的份额，使其匹配真实流量分布；大多数情况下本地判定完全在进程内完成（不发网络请求），只有当某节点的本地状态逼近它（动态调整后）的份额时，才退化为一次同步的中心存储核验。",
+    "tags": []
+  },
+  {
+    "id": "problems-rate-limiter-sliding-log-vs-counter-memory",
+    "node": "problems.foundations.rate-limiter",
+    "type": "qa",
+    "q": "In a rate limiter with 5 million API keys, each enforcing a 100 req/s sustained limit over a 60-second sliding window plus a 200 req/1s burst limit, why does storing every request's timestamp (a sliding window log) cost roughly 331x more memory than storing two constant-size counters per key per tier (a sliding window counter)?",
+    "a": "A sliding window log must retain one 8-byte timestamp per admitted request within the window: the 60-second sustained window can hold up to 100*60=6,000 timestamps (48,000 bytes/key) and the 1-second burst window up to 200 timestamps (1,600 bytes/key), totaling about 248GB across 5 million keys. A sliding window counter instead stores a fixed number of small counters per key per tier regardless of the limit or window size — about 15 million counters (5M keys x 3 tiers) at roughly 50 bytes each, totaling about 0.75GB. The ratio (248GB / 0.75GB is approximately 331) shows the log's memory cost scales with the limit and window size while the counter's does not, which is why constant-space approximations, not exact logs, are the default choice at this scale.",
+    "q_zh": "在一个有 500 万 API key 的速率限制器里，每个 key 都要执行 60 秒滑动窗口内 100 req/s 的 sustained 限制，加上 1 秒窗口内 200 req 的 burst 限制，为什么给每个请求存一条时间戳（滑动窗口日志）比每个 key 每层只存两个固定大小的计数器（滑动窗口计数器）多耗费约 331 倍内存？",
+    "a_zh": "滑动窗口日志必须为窗口内每个被放行的请求保留一条 8 字节时间戳：60 秒的 sustained 窗口最多容纳 100×60=6,000 条时间戳（每 key 48,000 字节），1 秒的 burst 窗口最多 200 条（每 key 1,600 字节），500 万 key 合计约 248GB。滑动窗口计数器则不管限额或窗口大小多大，每个 key 每层只存固定数量的小计数器——约 1,500 万个计数器（500 万 key × 3 层），每个约 50 字节，合计约 0.75GB。这个比例（248GB / 0.75GB 约等于 331）说明日志方案的内存开销随限额和窗口大小线性增长，而计数器方案不会——这正是这个规模下默认选择常数空间近似算法、而不是精确日志的原因。",
+    "tags": []
+  },
+  {
+    "id": "problems-rate-limiter-token-bucket-vs-counter-split",
+    "node": "problems.foundations.rate-limiter",
+    "type": "qa",
+    "q": "In a rate limiter that must enforce both a burst limit and a sustained limit for the same API key, why does the design use a token bucket for the burst tier and a sliding window counter for the sustained tier, rather than the same algorithm for both?",
+    "a": "A token bucket's defining property is that unused capacity accumulates as saved tokens that can be spent all at once, which is exactly what a burst limit needs to express: 'allow a short spike now, as long as the long-run average refill rate stays capped.' A sliding window counter has no such saved allowance — it estimates a smoothed rate from the current and previous window's counts and deliberately does not let extra capacity bank up, which matches what a sustained limit needs: a precise long-run average with no accumulated slack. Using the counter for burst would wrongly permit sustained overuse smoothed across windows, and using the token bucket for the sustained tier would let saved-up tokens from quiet periods produce longer-than-intended bursts later.",
+    "q_zh": "在一个速率限制器里，同一个 API key 既要有 burst 限制又要有 sustained 限制，为什么 burst 层用令牌桶、sustained 层用滑动窗口计数器，而不是两层用同一个算法？",
+    "a_zh": "令牌桶的核心特性是：没花掉的容量会作为积攒的令牌保留下来，可以一次性花完——这正是 burst 限制需要表达的语义：'允许现在有一次短暂的突发，只要长期平均的补充速率仍被限制住'。滑动窗口计数器没有这种可积攒的余量——它用当前窗口和上一窗口的计数估算一个平滑速率，刻意不允许多余容量累积，这正好匹配 sustained 限制需要的语义：精确的长期平均值、不带累积余量。如果 burst 层用计数器，会错误地允许持续超量在多个窗口间被平滑掉；如果 sustained 层用令牌桶，安静期积攒的令牌会在之后产生比预期更长的突发。",
+    "tags": []
+  },
+  {
+    "id": "problems-rate-limiter-asymmetric-fail-open-closed",
+    "node": "problems.foundations.rate-limiter",
+    "type": "qa",
+    "q": "In a rate limiter with both per-key fairness limits and a global fleet-protection limit, why does the design fail open for the per-key layer but fail closed (in a degraded, self-tracked form) for the fleet layer when the central counter store becomes unreachable?",
+    "a": "The two layers protect different things. The per-key layer's job is fairness between callers — losing exact enforcement briefly and letting some extra traffic through is a small cost compared to turning a rate-limiter outage into an API availability incident, so it fails open. The fleet layer's job is protecting the backend from being overwhelmed at all, which is not a cost worth trading away even during a central-store outage, so each gateway node keeps enforcing a degraded limit based on its own recently observed admitted traffic rather than admitting everything unconditionally. The general principle: the layer closer to the user, whose purpose is fairness, favors availability on failure; the layer closer to backend protection, whose purpose is self-preservation, favors staying conservative on failure.",
+    "q_zh": "在一个既有 per-key 公平性限制、又有全局 fleet 自保限制的速率限制器里，为什么中心计数器存储不可达时，per-key 层选择 fail-open，而全局 fleet 层选择（以本地自主追踪的方式）保守退化，而不是同样 fail-open？",
+    "a_zh": "这两层保护的目标不同。per-key 层的职责是调用方之间的公平性——短暂失去精确执行、放行一些额外流量，代价远小于把一次限流器故障变成一场 API 可用性事故，所以它 fail-open。fleet 层的职责是保护后端完全不被打垮，这个目标不值得在中心存储故障时被牺牲，所以每个网关节点会基于自己最近观测到的放行流量继续执行一个退化版本的限制，而不是无条件放开。一般原则是：离用户更近、目的是公平性的那一层，故障时偏向可用性；离后端保护更近、目的是自保的那一层，故障时偏向保守。",
+    "tags": []
+  },
+  {
+    "id": "problems-rate-limiter-single-key-shard-hotspot",
+    "node": "problems.foundations.rate-limiter",
+    "type": "qa",
+    "q": "In a rate limiter that shards its Redis counter store by hash(API key), why does adding more Redis shards fail to fix the case where one abnormally active API key (e.g. a client stuck in a retry storm) overloads a single shard, and what does the design do instead?",
+    "a": "Hashing by API key routes every request for that one key to exactly one shard no matter how many total shards exist, so a single hot key's operations always land on the same shard while every other shard stays idle relative to it — this is identical in shape to a hot-key problem on a content cache, not something more shards resolves. The fix is not more shards but a local static hard cap for that specific key enforced independently at the gateway, so an abnormal key gets throttled without depending on the real-time responsiveness of the one shard it happens to hash to.",
+    "q_zh": "在一个按 hash(API key) 分片 Redis 计数器存储的速率限制器里，为什么增加 Redis 分片数量解决不了'某个异常活跃的 API key（例如客户端卡在重试风暴里）压垮单个分片'这个问题？这个设计用什么代替加分片？",
+    "a_zh": "按 API key 哈希分片时，无论总共有多少分片，这一个 key 的所有操作永远会被路由到同一个分片，这个热 key 所在的那个分片始终承压，其它分片相对闲置——这和内容缓存上的热 key 问题形状完全一样，不是增加分片数量能解决的。解决办法不是加分片，而是在网关侧对这个特定 key 独立执行一个本地静态硬上限，让异常 key 被限流，且不依赖它恰好哈希到的那一个分片能否实时响应。",
+    "tags": []
+  },
+  {
+    "id": "problems-rate-limiter-10x-shard-count-growth",
+    "node": "problems.foundations.rate-limiter",
+    "type": "qa",
+    "q": "In a rate limiter scaling from 100,000 to 1,000,000 average req/s (a 10x jump, same 3x peak factor and 3 checks per request), how many Redis shards (with 1.5x headroom, ~100,000 ops/shard/second) does exact central-store enforcement need at each scale, and what problem does this shard count growth create beyond raw compute capacity?",
+    "a": "At 100,000 avg req/s: peak checks/s = 100,000*3*3 = 900,000, needing ceil(900,000/100,000*1.5)=14 shards. At 1,000,000 avg req/s (10x): peak checks/s = 1,000,000*3*3 = 9,000,000, needing ceil(9,000,000/100,000*1.5)=135 shards. Beyond the raw operation throughput, 135 independent shards each become their own failure domain requiring monitoring, rebalancing, and capacity planning — at this point the operational complexity of managing a large, flat, hash-sharded cluster becomes a bigger problem than the compute itself, pushing toward automated shard-topology management rather than a manually maintained hash table.",
+    "q_zh": "在一个从均值 100,000 req/s 增长到 1,000,000 req/s（10 倍，峰值系数和每请求检查次数都不变）的速率限制器里，精确的中心存储执行方案在两个规模下各需要多少 Redis 分片（1.5 倍冗余，每分片约 100,000 次操作/秒）？这个分片数量的增长除了纯算力之外还带来了什么问题？",
+    "a_zh": "均值 100,000 req/s 时：峰值检查量 = 100,000×3×3 = 900,000 次/s，需要 ceil(900,000/100,000×1.5)=14 个分片。均值 1,000,000 req/s（10 倍）时：峰值检查量 = 1,000,000×3×3 = 9,000,000 次/s，需要 ceil(9,000,000/100,000×1.5)=135 个分片。除了纯算力需求，135 个独立分片各自都是一个需要监控、再平衡和容量规划的独立故障域——这个规模下，管理一个庞大扁平的哈希分片集群本身的运维复杂度，已经超过了算力本身带来的问题，逼出自动化分片拓扑管理，而不是手工维护一张哈希表。",
+    "tags": []
+  }
+]
