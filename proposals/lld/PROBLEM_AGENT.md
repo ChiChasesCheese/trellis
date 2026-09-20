@@ -47,6 +47,11 @@ so shortening a docstring buys you nothing: if the solution runs long, drop a st
 describe it in 扩展与追问 instead. Never delete a read-only accessor a test or a reader needs.
 Landing a line under the cap means the next edit breaks the gate: aim for 250–400 and stop adding.
 
+**A bound in a randomised test is derived, never observed.** "I ran it and the worst wait was 40"
+is a flaky test and teaches nothing: write the bound as an expression over the design's own
+parameters, run the property over many seeds, and put the derivation in the article. If the
+derived bound fails, that is a finding about the design, not a number to loosen.
+
 **A test asserts behaviour, never shape.** `assert not hasattr(obj, "cards")` and its relatives
 fail a correct answer that happens to name something the same way. Pin what the design promises —
 the operation is atomic, the container shrank, the invariant held — and leave "this must not be
