@@ -1,0 +1,12 @@
+{
+  "problems.components.thread-pool": [
+    "problems-thread-pool-base-exception-in-worker",
+    "problems-thread-pool-backpressure-semaphore-not-queue-maxsize",
+    "problems-thread-pool-admission-release-on-dequeue",
+    "problems-thread-pool-shutdown-wait-false-only-abandons-queued",
+    "problems-thread-pool-finish-atomic-check-then-act",
+    "problems-thread-pool-priority-queue-tie-break",
+    "problems-thread-pool-future-two-state",
+    "problems-thread-pool-cpu-vs-io"
+  ]
+}
