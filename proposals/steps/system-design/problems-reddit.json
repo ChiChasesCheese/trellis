@@ -1,0 +1,12 @@
+{
+  "problems.social.reddit": [
+    "problems-reddit-per-community-vs-per-user-cache",
+    "problems-reddit-hot-score-pure-function",
+    "problems-reddit-wilson-score-vs-average",
+    "problems-reddit-adjacency-list-vs-closure-table",
+    "problems-reddit-vote-idempotency-natural-key",
+    "problems-reddit-vote-fuzzing-display-vs-ranking",
+    "problems-reddit-viral-post-write-hotkey-sharding",
+    "problems-reddit-10x-cache-decoupled-from-dau"
+  ]
+}

@@ -1,0 +1,57 @@
+[
+  {"id": "problems-social-graph-search-mutual-friends-two-shard-cost", "node": "problems.social.social-graph-search", "type": "qa",
+    "q": "In a social graph where the edge store is hash-partitioned by user id (so each user's roughly 300 direct connections could be spread across many different shards), why is a 'mutual friends between user A and user B' query cheap — touching only 2 shards — regardless of how many shards the partitioning scheme uses overall?",
+    "a": "The query only needs the full adjacency list of A (one single-shard fetch, since all of A's edges live on A's own shard by definition of the partitioning scheme) and the full adjacency list of B (one single-shard fetch on B's shard), then a local set intersection of the two roughly-300-element lists, which is cheap (on the order of a few hundred comparisons). The number of shards touched is bounded by the number of distinct users named in the query (2), not by how many shards those users' individual friends happen to be scattered across — that fan-out only becomes a problem for a different query, like generating friend-of-friend candidates.",
+    "q_zh": "在一个按用户 id 哈希分片的社交关系图存储里（一个用户约 300 个直接连接可能散落在很多不同的分片上），为什么「查询用户 A 和用户 B 的共同好友」很便宜——只需要 touch 2 个分片——而与分片方案总共用了多少个分片无关？",
+    "a_zh": "这个查询只需要取到 A 的完整邻接表（一次单分片读取，因为按分片方案的定义，A 的全部边都在 A 自己所在的分片上）和 B 的完整邻接表（在 B 所在分片上的一次单分片读取），然后对这两个各约 300 个元素的集合做一次本地求交（大约几百次比较，很便宜）。查询要 touch 的分片数由查询里点名的用户数（2 个）决定，而不是由这些用户各自的好友散落在多少个分片上决定——后者的扇出只在另一类查询（比如生成好友的好友候选集）里才会成为问题。",
+    "tags": []},
+
+  {"id": "problems-social-graph-search-graph-partitioning-decay", "node": "problems.social.social-graph-search", "type": "qa",
+    "q": "In designing where to physically place a social graph's edges, why is co-locating densely-connected users on the same shard (community-aware graph partitioning) a weaker choice than simple hash partitioning by user id, even though it would reduce cross-shard traffic for local queries in theory?",
+    "a": "Finding an optimal graph partition (a minimum-cut style problem) is NP-hard at billions-of-nodes scale, and a real social graph continuously gains new edges, so any static partition computed today decays as the graph evolves — it would need repeated, expensive re-partitioning and data migration to stay effective. Hash partitioning by user id avoids this entirely: it gives predictable, even load and O(1) single-shard lookups for any one user's connections, accepting that a user's individual friends land on many different shards rather than trying to solve an NP-hard problem that would need constant maintenance anyway.",
+    "q_zh": "在决定社交关系图的边该物理存放在哪里时，为什么把连接紧密的用户共置到同一分片（社区感知的图分区）是比按用户 id 简单哈希分片更弱的选择，即便理论上它能减少局部查询的跨分片流量？",
+    "a_zh": "在数十亿节点的规模下，找到最优图分区（一种最小割式的问题）本身是 NP 难问题，而真实的社交图谱在持续新增边，任何今天算出的静态分区都会随图的演化而腐化——需要反复、代价高昂地重新分区和迁移数据才能维持效果。按用户 id 哈希分片完全绕开了这个问题：它给出可预测、均匀的负载，以及任意单个用户连接的 O(1) 单分片查询，代价是接受一个用户的好友会散落在很多不同分片上，而不是去解一个本身就需要持续维护的 NP 难问题。",
+    "tags": []},
+
+  {"id": "problems-social-graph-search-bidirectional-bfs-exponent-halving", "node": "problems.social.social-graph-search", "type": "qa",
+    "q": "For finding the shortest path (degree of separation) between two users in a social graph with an average of 300 connections per user, why does bidirectional BFS explore roughly 2×300^2 = 180,000 nodes to find a distance-4 path, while a single-direction BFS from one user would need to explore on the order of 300^4 ≈ 8.1 billion — a difference of about 45,000x?",
+    "a": "A single-direction search's explored-node count grows as (branching factor)^(full distance), so at distance 4 it grows to 300^4, a number close to the entire user base's size. A bidirectional search expands from both endpoints simultaneously and only needs each side to reach the midpoint, at distance/2 hops, so its cost is roughly 2×(branching factor)^(distance/2) — halving the exponent rather than the base, which produces an exponential reduction in work, not just a constant-factor speedup.",
+    "q_zh": "在一个人均 300 个连接的社交图里查找两个用户之间的最短路径（分隔度）时，为什么双向 BFS 找到一条距离为 4 的路径大约只需要探索 2×300^2 = 180,000 个节点，而从一端出发的单向 BFS 大约需要探索 300^4 ≈ 81 亿个节点——相差约 4.5 万倍？",
+    "a_zh": "单向搜索探索过的节点数随（分支因子）的（完整距离次方）增长，所以在距离为 4 时会长到 300^4，这个数字已经接近全站用户总数。双向搜索从两端同时扩展，每一端只需要走到中点，即 距离/2 跳，所以代价大约是 2×（分支因子）^（距离/2）——减半的是指数而不是底数，带来的是指数级的工作量下降，不只是一个常数倍的加速。",
+    "tags": []},
+
+  {"id": "problems-social-graph-search-why-not-precompute-all-pairs-shortest-path", "node": "problems.social.social-graph-search", "type": "qa",
+    "q": "Why does a social graph design with 100M users avoid precomputing an all-pairs shortest-path table, and instead compute shortest paths on demand with a depth-bounded bidirectional search?",
+    "a": "The number of distinct user pairs at 100M users is about 5×10^15 — even storing a single byte per pair would run into the petabyte range, and every new edge added to the graph can change the shortest path for a large number of unrelated pairs, making the table's maintenance cost far exceed the cost of answering queries on demand. This mirrors why even offline analytics computing a single aggregate statistic like average degree of separation across a real social graph use approximate, sample-based algorithms rather than computing exact distances for every pair.",
+    "q_zh": "为什么一个 1 亿用户规模的社交图设计会避免预计算全量的两两最短路径表，转而用有界深度的按需双向搜索来计算最短路径？",
+    "a_zh": "1 亿用户对应的不同用户对数量约为 5×10^15——即便每对只存 1 个字节，存储量也会达到 PB 级，而且图上每新增一条边都可能改变大量不相关用户对之间的最短路径，导致这张表的维护成本远超按需回答查询的成本。这也解释了为什么即便是离线分析真实社交图谱上「平均分隔度」这样一个单一的全局统计量，业界用的也是近似、基于抽样的算法，而不是为每一对用户计算精确距离。",
+    "tags": []},
+
+  {"id": "problems-social-graph-search-raw-edge-cache-vs-feed-inbox", "node": "problems.social.social-graph-search", "type": "qa",
+    "q": "In a social graph design, a read-through cache in front of the sharded edge store can hold the entire graph (hundreds of gigabytes) rather than only a 'hot' subset. Why does a cache miss here cost far less than a cache miss in a follow-based news feed's per-user inbox cache?",
+    "a": "The graph cache stores raw edges — a cache miss just means issuing one indexed point read against the owning shard, which is cheap and requires no further computation. A news feed's inbox cache stores a precomputed, ranked view of content assembled from many followees; a miss there means reconstructing that ranked view by aggregating and scoring content from potentially thousands of followed accounts, which is a genuinely expensive computation, not a single lookup. The difference is caching raw source data versus caching an expensive derived aggregate.",
+    "q_zh": "在一个社交关系图设计里，架在分片边存储前面的读穿缓存可以缓存整张图（几百 GB 级），而不只是「热门」的一小部分。为什么这里的一次缓存未命中，代价远低于基于关注关系的信息流里按用户收件箱缓存的一次未命中？",
+    "a_zh": "图缓存存的是原始边——一次未命中只是对拥有该数据的分片发一次索引点查询，很便宜，不需要任何进一步的计算。信息流的收件箱缓存存的是从很多个被关注对象聚合而来的、预先算好排序的内容视图；那里的一次未命中意味着要重新聚合并打分可能成千上万个被关注账号的内容来重建这份排序视图，是真正昂贵的计算，不是一次简单查找。区别在于缓存原始源数据，还是缓存一份代价高昂的衍生聚合结果。",
+    "tags": []},
+
+  {"id": "problems-social-graph-search-typed-edge-inverted-index", "node": "problems.social.social-graph-search", "type": "qa",
+    "q": "In a social graph store that holds multiple edge types (friend, follow, blocked) in the same underlying storage, why does indexing by the composite key `(edgeType, srcId)` — each mapping to a posting list of target ids — outperform a single `(srcId)` index that filters by edge type at the application layer?",
+    "a": "A single `(srcId)` index returns every edge for that user regardless of type, forcing the application to read rows it doesn't need and discard them after the fact whenever edge types are unevenly distributed. Indexing by `(edgeType, srcId)` lets the index itself narrow the scan to exactly the requested type's posting list before any rows are read — structurally the same idea as an inverted index mapping a search term to a list of matching document ids, just with 'edge type + source user' playing the role of the term.",
+    "q_zh": "在一个把多种边类型（好友、关注、拉黑）存在同一份底层存储里的社交图存储中，为什么按复合键 `(edgeType, srcId)`——每个键映射到一份目标 id 的倒排列表（posting list）——建索引，会比只用单一 `(srcId)` 索引、在应用层按边类型过滤更好？",
+    "a_zh": "单一的 `(srcId)` 索引会返回该用户的全部边而不管类型，一旦边类型分布不均，应用层就得读一堆用不到的行再事后丢弃。按 `(edgeType, srcId)` 建索引，能让索引本身在读任何行之前就把扫描范围收窄到请求的那个类型对应的倒排列表——结构上和「搜索词映射到匹配文档 id 列表」的倒排索引是同一个思路，只是这里「边类型 + 源用户」扮演了词项的角色。",
+    "tags": []},
+
+  {"id": "problems-social-graph-search-strong-consistency-tradeoff-by-write-volume", "node": "problems.social.social-graph-search", "type": "qa",
+    "q": "A social graph design stores a friendship as two directed rows (A→B and B→A) and writes both synchronously inside a cross-shard transaction so they always succeed or fail together, at an estimated peak write rate of about 29 edge writes/sec. Why would this same choice stop making sense if this store also had to carry a much higher-frequency edge type, such as a 'like' modeled as an edge at tens of thousands of writes/sec?",
+    "a": "A cross-shard transaction's coordination overhead is a fixed per-write cost that a design can afford when write volume is low relative to what the coordination mechanism can sustain — at ~29 writes/sec, that overhead is negligible. At a vote/like-scale write rate, the same per-write coordination cost would become the dominant bottleneck, the way a high-write-rate voting system instead accepts asynchronous propagation of the second row plus a reconciliation pass that repairs any temporarily one-sided edges, trading brief inconsistency for throughput headroom the strongly consistent approach can't provide at that scale.",
+    "q_zh": "一个社交图设计把一条好友关系存成两行有向记录（A→B 和 B→A），并把两者包进一个跨分片事务同步写入，使其要么同时成功要么同时失败，估算的边写入峰值约为每秒 29 条。如果这份存储还要承载一种频率高得多的边类型（比如把「点赞」也建模成一条边，写入量级到每秒几万条），为什么这个选择就不再成立了？",
+    "a_zh": "跨分片事务的协调开销是每次写入固定要付的成本，当写入量级相对协调机制能承受的上限很低时（约每秒 29 条写入下，这点开销可以忽略），这个成本负担得起。到了投票/点赞级别的写入速率，同样的每次写协调成本会变成主导瓶颈，这时候需要转向像高写入速率投票系统那样，异步传播第二行、再配合一个修复临时单向边的对账流程，用短暂的不一致换取强一致方案在那个量级下给不了的吞吐余量。",
+    "tags": []},
+
+  {"id": "problems-social-graph-search-high-degree-node-hotspot", "node": "problems.social.social-graph-search", "type": "qa",
+    "q": "In a social graph where the average user has about 300 connections, why does a public figure or organization account with tens of thousands of connections create a hot spot different in kind from ordinary read/write load skew, and what does the design do about it?",
+    "a": "That single account's adjacency-list row set is disproportionately large compared to an ordinary user's, meaning reads that page through its connections and any 'mutual friends' query naming it as one of the two users cost far more per-request than the typical case, concentrated on whatever shard hosts that one account. The mitigation is the same class of fix used for celebrity accounts in a follow-based feed design: store and paginate that account's edges specially rather than assuming every user's adjacency list is cheap to read in full.",
+    "q_zh": "在一个人均约 300 个连接的社交图里，为什么一个有数万连接的公众人物/机构账号会造成一种和普通读写负载倾斜不同类型的热点？设计上怎么处理？",
+    "a_zh": "这单个账号的邻接表记录集在物理上远大于普通用户，意味着分页读取它的连接、以及任何把它作为共同好友查询里一方的请求，单次请求的代价都远高于典型情况，而且集中在承载这一个账号的那个分片上。缓解方式和基于关注关系的信息流设计里处理名人账号是同一类思路：对这类账号的边单独存储和分页读取，而不是假设每个用户的邻接表都能廉价地整取。",
+    "tags": []}
+]

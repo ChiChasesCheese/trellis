@@ -1,0 +1,12 @@
+{
+  "problems.social.social-graph-search": [
+    "problems-social-graph-search-graph-partitioning-decay",
+    "problems-social-graph-search-mutual-friends-two-shard-cost",
+    "problems-social-graph-search-typed-edge-inverted-index",
+    "problems-social-graph-search-raw-edge-cache-vs-feed-inbox",
+    "problems-social-graph-search-bidirectional-bfs-exponent-halving",
+    "problems-social-graph-search-why-not-precompute-all-pairs-shortest-path",
+    "problems-social-graph-search-strong-consistency-tradeoff-by-write-volume",
+    "problems-social-graph-search-high-degree-node-hotspot"
+  ]
+}

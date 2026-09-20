@@ -1,0 +1,55 @@
+[
+  {"id": "problems-reddit-per-community-vs-per-user-cache", "node": "problems.social.reddit", "type": "qa",
+    "q": "In a Reddit-style forum design with 100M DAU and about 150,000 active communities, a hot-listing cache holding the top 1,000 ranked posts per community (20 bytes/entry) totals about 3GB (9GB at 3x replication). Why is this roughly 1,000x smaller than the multi-terabyte per-user inbox cache used in a follow-based news feed design at similar user scale, and what does that imply about how the cache grows as the user base grows?",
+    "a": "A follow-based feed personalizes content per follower, so it needs one precomputed inbox per user — the cache scales with (users × entries per user). A forum's hot listing is shared: every subscriber of a community reads the same cached ranked list, so the cache scales with (communities × entries per community) instead, and the user count doesn't appear in that formula at all. The direct implication: growing DAU 10x barely changes this cache's size (it only grows if the number of communities grows), whereas a per-user inbox cache grows roughly linearly with DAU.",
+    "q_zh": "在一个 100M 日活、约 15 万个活跃社区的 Reddit 式论坛设计里，一份每社区保留前 1,000 条排名帖子（每条 20 字节）的热门列表缓存总共约 3GB（三副本 9GB）。为什么这比同等用户规模下、基于关注关系的信息流设计所用的、以 TB 计的按用户收件箱缓存要小约 1,000 倍？这对缓存随用户规模增长的方式意味着什么？",
+    "a_zh": "基于关注关系的信息流按每个关注者个性化内容，所以需要为每个用户各存一份预计算收件箱——缓存大小是（用户数 × 每用户条目数）。论坛的热门列表是共享的：一个社区的全体订阅者读的是同一份缓存好的排序列表，所以缓存大小是（社区数 × 每社区条目数），公式里根本不出现用户数这一项。直接的推论是：日活涨 10 倍几乎不改变这份缓存的大小（只有社区数量增长才会让它变大），而按用户收件箱的缓存大小基本随日活线性增长。",
+    "tags": []},
+
+  {"id": "problems-reddit-adjacency-list-vs-closure-table", "node": "problems.social.reddit", "type": "qa",
+    "q": "For storing a Reddit-style nested comment tree where the dominant read pattern is 'fetch one page of a given comment's direct children, sorted by score' rather than 'fetch an entire subtree', why is an adjacency list (a `parentId` pointer per row, with a composite index on `(parentId, score)`) preferred over a closure table (storing every ancestor-descendant pair), even though the closure table makes subtree queries O(1)?",
+    "a": "A closure table's O(1) subtree lookup comes at the cost of write amplification: inserting one comment requires writing one row per ancestor, so a 50,000-comment thread with an average nesting depth of 6 produces about 300,000 closure-table rows — roughly 6x the row count of the adjacency list's 50,000 rows — for a query pattern (whole-subtree fetch) that this workload rarely needs. The adjacency list's composite index already answers the actually-common query ('one sorted page of a node's direct children') in O(log N + K), so the closure table's extra write cost buys a capability this design doesn't use.",
+    "q_zh": "在存储 Reddit 式嵌套评论树时，如果主要的读取模式是「取某条评论按分数排序的一页直接子评论」而不是「取整棵子树」，为什么邻接表（每行一个 `parentId` 指针，配合 `(parentId, score)` 复合索引）优于闭包表（存储全部祖先-后代对），即便闭包表能把子树查询做到 O(1)？",
+    "a_zh": "闭包表 O(1) 的子树查询是用写放大换来的：插入一条评论需要为每个祖先各写一行，一个 5 万条评论、平均嵌套深度 6 层的帖子会产生约 30 万行闭包表记录——约是邻接表 5 万行的 6 倍——而这换来的能力（整棵子树查询）在这个工作负载里很少用到。邻接表的复合索引已经能以 O(log N + K) 回答真正常见的查询（「某节点按分数排序的一页直接子评论」），闭包表额外的写入成本买到的是这个设计用不上的能力。",
+    "tags": []},
+
+  {"id": "problems-reddit-hot-score-pure-function", "node": "problems.social.reddit", "type": "cloze",
+    "text": "In Reddit's open-sourced `hot` ranking function, the score is computed as {{c1::sign(ups − downs) × log10(max(|ups − downs|, 1)) + (created_at − epoch) / 45000}}, where `created_at` is the post's fixed creation time, not the current time. Because the formula never references 'now', a post's hot score {{c2::only needs to be recomputed when a new vote changes its ups/downs}}, not on a recurring schedule — one `ZADD`-style update per vote, touching only that post, instead of a periodic full-site rescan.",
+    "text_zh": "在 Reddit 开源的 `hot` 排序函数里，分数的计算方式是 {{c1::sign(ups − downs) × log10(max(|ups − downs|, 1)) + (created_at − epoch) / 45000}}，其中 `created_at` 是帖子固定的创建时间，不是当前时间。因为公式里从不出现「现在几点」，一篇帖子的 hot 分数{{c2::只需要在新投票改变了它的 ups/downs 时才重算}}，不需要按周期性任务重算——每次投票只对应一次类似 `ZADD` 的单条更新，只影响这一篇帖子，而不是对全站做周期性全量重扫描。",
+    "tags": []},
+
+  {"id": "problems-reddit-wilson-score-vs-average", "node": "problems.social.reddit", "type": "qa",
+    "q": "When sorting comments by 'best', why does a design that ranks comments by the raw ratio 'upvotes / (upvotes + downvotes)' produce a worse ordering than one using the Wilson score confidence interval lower bound, given a comment with 2 upvotes and 0 downvotes versus a comment with 6 upvotes and 1 downvote?",
+    "a": "The raw ratio gives 2/0 a perfect score of 1.0 versus 6/1's 0.857, so the raw-ratio design ranks the 2-vote comment first — but a 100% approval rate on only 2 votes carries far less statistical confidence than an 85.7% approval rate on 7 votes. The Wilson score lower bound (computed at 80% confidence) accounts for sample size directly, giving roughly 0.549 to the 2-upvote comment and about 0.622 to the 6-upvote-1-downvote comment — correctly flipping the order to favor the larger, more-certain sample instead of rewarding a small sample's lucky perfect ratio.",
+    "q_zh": "在按'最佳'（best）给评论排序时，为什么用赞成票 / (赞成票+反对票) 这个原始比例排序，会比用 Wilson 得分区间下界排序得出更差的顺序——以一条 2 赞成 0 反对的评论对比一条 6 赞成 1 反对的评论为例？",
+    "a_zh": "原始比例给 2 赞 0 反的评论打出满分 1.0，6 赞 1 反只有 0.857，所以原始比例排序会把 2 票的评论排在前面——但只有 2 票的 100% 好评率，统计置信度远低于 7 票里 85.7% 的好评率。Wilson 得分区间下界（按 80% 置信度计算）直接把样本量纳入考虑，给 2 赞的评论打出约 0.549，给 6 赞 1 反的评论打出约 0.622——正确地把顺序反了过来，让更大、更确定的样本胜出，而不是奖励小样本侥幸凑出的完美比例。",
+    "tags": []},
+
+  {"id": "problems-reddit-vote-idempotency-natural-key", "node": "problems.social.reddit", "type": "qa",
+    "q": "In a voting system, why does making the primary key of the vote table `(userId, targetId, targetType)` itself, storing the current `direction` per row, make votes idempotent without needing a client-supplied idempotency token?",
+    "a": "Because the same user voting on the same target twice — whether from a genuine vote change or a network retry of the same request — always resolves to an upsert on the same row, and applying a vote computes a delta relative to whatever direction was previously stored there (e.g. switching from upvote to downvote yields delta ups −1, downs +1). A duplicate request for the same direction produces a delta of zero, so the same vote can never be double-counted; the natural key IS the idempotency key because the system stores current vote state rather than appending a log of vote events.",
+    "q_zh": "在一个投票系统里，为什么把投票表的主键直接设成 `(userId, targetId, targetType)`、每行存当前的 `direction`，就能让投票天然幂等，而不需要客户端另外传一个幂等令牌？",
+    "a_zh": "因为同一个用户对同一个目标的第二次投票——无论是真的改票还是同一请求的网络重试——总是解析成对同一行的一次 upsert，应用一次投票时算出的是相对该行之前存的方向的 delta（例如从赞成改成反对，delta 是赞成 −1、反对 +1）。同一方向的重复请求算出的 delta 是零，所以同一票永远不会被重复计数；这个自然键本身就是幂等键，因为系统存的是当前投票状态，而不是追加一份投票事件日志。",
+    "tags": []},
+
+  {"id": "problems-reddit-vote-fuzzing-display-vs-ranking", "node": "problems.social.reddit", "type": "qa",
+    "q": "In a Reddit-style voting system, why can the vote count shown to users (the display value) deliberately differ from the vote count used internally to compute the ranking score, and why doesn't this divergence affect the correctness of the ranking?",
+    "a": "The displayed count can carry a small pseudo-random perturbation tied to the target, which raises the cost of a script trying to read back the exact vote count in real time (useful for detecting or timing manipulation attempts), while the ranking functions (hot, confidence, controversy) always read the true stored ups/downs from the vote ledger. Because these are two separate read paths — one serving the display field, one serving the ranking computation — perturbing the display value has no effect on which content actually ranks higher.",
+    "q_zh": "在 Reddit 式的投票系统里，为什么展示给用户的票数（展示值）可以刻意和内部用来计算排序分数的票数不同，而且这种差异不会影响排序结果的正确性？",
+    "a_zh": "展示的票数可以携带一个和目标绑定的小幅伪随机扰动，提高了脚本实时读出精确票数的成本（有助于探测或延缓刷票行为），而排序函数（hot、confidence、controversy）永远读投票账本里存的真实 ups/downs。因为这是两条独立的读路径——一条服务展示字段，一条服务排序计算——扰动展示值不会影响哪条内容实际排名更高。",
+    "tags": []},
+
+  {"id": "problems-reddit-viral-post-write-hotkey-sharding", "node": "problems.social.reddit", "type": "qa",
+    "q": "In a forum system where a single viral post can absorb up to 50% of the site's peak vote QPS (e.g. 41,667 votes/sec out of an 83,333/sec site-wide peak), why does a single atomic counter (e.g. one Redis key incremented per vote) become risky at that concentration, and what does splitting the counter into 16 sub-counters change?",
+    "a": "A single key's throughput ceiling is bounded by what one instance can sustain (on the order of 100,000-180,000 ops/sec for a single Redis instance); 41,667 votes/sec on one key leaves a thin safety margin against jitter, GC pauses, or co-located slow commands. Splitting the target's counter into 16 independently-writable sub-counters reduces the write rate on any single sub-counter to roughly 41,667/16 ≈ 2,604/sec, and reads sum the sub-counters together — acceptable because vote counts only need to be eventually consistent, unlike inventory counters that require a single strictly-consistent value.",
+    "q_zh": "在一个论坛系统里，如果单条爆红帖子能吸走站内峰值投票 QPS 的高达 50%（比如站内峰值 83,333/秒里的 41,667 票/秒都落在它身上），为什么在这种集中度下，单个原子计数器（比如每票自增一次的单个 Redis key）会变得危险？把计数器拆成 16 个子计数器改变了什么？",
+    "a_zh": "单个 key 的吞吐上限受限于单实例能承受的量级（单个 Redis 实例大约在 10 万~18 万次操作/秒这个量级）；41,667 票/秒打在一个 key 上，相对抖动、GC 暂停或同机慢命令的安全边际很薄。把该目标的计数器拆成 16 个可独立写入的子计数器，能把落在任意单个子计数器上的写入速率降到约 41,667/16 ≈ 2,604/秒，读取时把各子计数器求和即可——这是可以接受的，因为投票计数只需要最终一致，不像库存计数器那样要求严格的单一真值。",
+    "tags": []},
+
+  {"id": "problems-reddit-10x-cache-decoupled-from-dau", "node": "problems.social.reddit", "type": "qa",
+    "q": "In a forum design whose hot-listing cache is sized by (number of communities × entries per community) rather than by user count, what specifically breaks at 10x DAU growth (100M to 1B), and what does NOT break?",
+    "a": "The hot-listing cache itself barely grows — it stays roughly the same size unless the number of communities also grows, since DAU doesn't appear in its sizing formula. What does break is everything sized by write volume: vote, comment, and post throughput all grow roughly with DAU, so the vote ledger and comment store both need more shards, and any individual community whose own write QPS now exceeds a single shard's capacity needs to be physically isolated onto a dedicated shard, the same way an extreme single-target vote hot key gets split into sub-counters.",
+    "q_zh": "在一个热门列表缓存大小由（社区数量 × 每社区条目数）而不是用户数决定的论坛设计里，日活涨 10 倍（1 亿到 10 亿）时，具体什么会出问题？什么不会？",
+    "a_zh": "热门列表缓存本身几乎不会变大——只要社区数量不同步增长，它的大小基本不变，因为日活根本不出现在它的容量公式里。会出问题的是一切按写入量计算的部分：投票、评论、发帖的吞吐都大致随日活增长，所以投票账本和评论存储都需要增加分片；任何单个社区自身的写 QPS 一旦超出单个分片的承受能力，就需要把它物理隔离到专属分片上，和极端情况下把单一目标的投票计数器拆成子计数器是同一种思路。",
+    "tags": []}
+]
