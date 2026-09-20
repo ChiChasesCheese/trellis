@@ -42,6 +42,11 @@ dataclass), so subscribers update themselves from the event instead of reaching 
 subject's storage without its lock. (3) A class that only forwards one call to another object is
 a Java habit: give it a responsibility or delete it, and say which in the article.
 
+**Length is cut by removing scope, never by compressing prose.** If the solution runs long, drop a
+stage-4 extra and describe it in 扩展与追问 instead; never delete a read-only accessor a test or a
+reader needs, and never squeeze docstrings to fit. Landing one line under the cap means the next
+edit breaks the gate: aim for 300–500 and stop adding.
+
 **A test never reads a private attribute.** `starter.py` is filled in by a learner who may pick a
 different internal representation, so a test that asserts on `_something` fails a correct answer.
 When an invariant is only visible inside (a container shrank, a pointer was repaired), expose it as
