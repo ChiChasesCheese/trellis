@@ -1,0 +1,12 @@
+{
+  "problems.media.video-streaming": [
+    "problems-video-streaming-ladder-storage-amplification",
+    "problems-video-streaming-peak-egress-cdn",
+    "problems-video-streaming-video-asset-model",
+    "problems-video-streaming-dag-failure-isolation",
+    "problems-video-streaming-per-title-vs-per-shot",
+    "problems-video-streaming-cdn-build-vs-buy",
+    "problems-video-streaming-long-tail-lazy-transcode",
+    "problems-video-streaming-abr-two-phase"
+  ]
+}
