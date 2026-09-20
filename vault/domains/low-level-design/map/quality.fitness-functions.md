@@ -6,6 +6,10 @@
 
 **Requires:** [[domains/low-level-design/map/quality.testability|为测试而设计]]
 
+## Readings
+- [[archunit-fitness-functions|ArchUnit User Guide]]
+- [[thoughtworks-fitness-function|Architectural Fitness Function]]
+
 ## Cases
 - [[qs-a-claim-without-a-probe-is-a-guess|A claim without a probe is a guess]] — `quant-stroller`
 

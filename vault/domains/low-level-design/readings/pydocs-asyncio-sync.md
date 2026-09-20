@@ -11,4 +11,7 @@ url: https://docs.python.org/3/library/asyncio-sync.html
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://docs.python.org/3/library/asyncio-sync.html)
+
+## Archived copy
+![[pydocs-asyncio-sync-clip]]
 %% trellis:end %%

@@ -8,6 +8,9 @@
 
 **Unlocks:** [[domains/low-level-design/map/problems.games.chess|国际象棋（Chess）]], [[domains/low-level-design/map/problems.components.text-editor|文本编辑器与撤销重做（Text Editor）]]
 
+## Readings
+- [[gpp-command|Command (Game Programming Patterns, Bob Nystrom)]]
+
 ## Drills
 - [[design-chess|Drill：国际象棋（Chess）]]
 - [[design-text-editor|Drill：文本编辑器与撤销重做（Text Editor）]]

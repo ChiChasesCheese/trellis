@@ -10,4 +10,7 @@ url: https://google.github.io/eng-practices/review/reviewer/looking-for.html
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://google.github.io/eng-practices/review/reviewer/looking-for.html)
+
+## Archived copy
+![[eng-practices-review-criteria-clip]]
 %% trellis:end %%

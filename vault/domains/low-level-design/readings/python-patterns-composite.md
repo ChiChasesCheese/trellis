@@ -11,4 +11,7 @@ url: https://python-patterns.guide/gang-of-four/composite/
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://python-patterns.guide/gang-of-four/composite/)
+
+## Archived copy
+![[python-patterns-composite-clip]]
 %% trellis:end %%

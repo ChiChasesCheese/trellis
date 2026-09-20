@@ -8,6 +8,9 @@
 
 **Unlocks:** [[domains/low-level-design/map/python.dataclasses-enums|dataclass 与 Enum]], [[domains/low-level-design/map/problems.components.lru-cache|LRU / LFU 缓存]]
 
+## Readings
+- [[pydocs-data-model|3. Data model]]
+
 ## Drills
 - [[design-lru-cache|Drill：LRU / LFU 缓存]]
 

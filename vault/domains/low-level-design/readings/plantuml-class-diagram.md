@@ -10,4 +10,7 @@ url: https://plantuml.com/class-diagram
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://plantuml.com/class-diagram)
+
+## Archived copy
+![[plantuml-class-diagram-clip]]
 %% trellis:end %%

@@ -9,6 +9,8 @@
 **Unlocks:** [[domains/low-level-design/map/method.diagrams|白板上的 UML（Class & Sequence Diagrams）]], [[domains/low-level-design/map/problems.games.tic-tac-toe|井字棋（Tic-Tac-Toe）]]
 
 ## Readings
+- [[agilemodeling-crc-cards|Class Responsibility Collaborator (CRC) Cards: An Agile Introduction]]
+- [[fowler-uml-as-sketch|UML as Sketch]]
 - [[hellointerview-lld|Hello Interview: Low-Level Design Guide]]
 
 ## Drills

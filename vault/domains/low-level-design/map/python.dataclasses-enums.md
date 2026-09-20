@@ -10,6 +10,10 @@
 
 **Unlocks:** [[domains/low-level-design/map/oop.values|值对象与不可变性（Value Objects）]], [[domains/low-level-design/map/patterns.state|状态模式（State）]], [[domains/low-level-design/map/problems.games.deck-of-cards|扑克牌与二十一点（Deck of Cards / Blackjack）]]
 
+## Readings
+- [[pydocs-dataclasses|dataclasses — Data Classes]]
+- [[pydocs-enum|enum — Support for enumerations]]
+
 ## Drills
 - [[design-deck-of-cards|Drill：扑克牌与二十一点（Deck of Cards / Blackjack）]]
 

@@ -4,6 +4,11 @@
 
 `with` 保证成对操作、`__iter__`/生成器实现惰性遍历：资源管理与迭代器模式的 Python 形态。
 
+## Readings
+- [[pep255-generators|PEP 255 – Simple Generators]]
+- [[pep343-with-statement|PEP 343 – The "with" Statement]]
+- [[pydocs-contextlib|contextlib — Utilities for with-statement contexts]]
+
 ## Cards (6)
 1. [[python-context-with-guarantee]]
 2. [[python-context-contextmanager-decorator]]

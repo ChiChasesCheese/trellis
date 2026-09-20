@@ -11,4 +11,7 @@ url: https://peps.python.org/pep-0544/
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://peps.python.org/pep-0544/)
+
+## Archived copy
+![[pep544-protocols-clip]]
 %% trellis:end %%

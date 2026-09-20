@@ -6,6 +6,10 @@
 
 **Requires:** [[domains/low-level-design/map/python.protocols-abc|Protocol、ABC 与鸭子类型]]
 
+## Readings
+- [[pep484-type-hints|PEP 484 – Type Hints]]
+- [[pydocs-typing|typing — Support for type hints]]
+
 ## Cards (6)
 1. [[python-typing-not-enforced]]
 2. [[python-typing-generic-repository]]

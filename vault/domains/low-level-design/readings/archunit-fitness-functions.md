@@ -12,4 +12,7 @@ url: https://www.archunit.org/userguide/html/000_Index.html
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://www.archunit.org/userguide/html/000_Index.html)
+
+## Archived copy
+![[archunit-fitness-functions-clip]]
 %% trellis:end %%

@@ -7,6 +7,7 @@
 **Core** — part of the first pass through this subject.
 
 ## Readings
+- [[eng-practices-review-criteria|What to Look For In a Code Review]]
 - [[hellointerview-lld|Hello Interview: Low-Level Design Guide]]
 
 ## Cards (5)

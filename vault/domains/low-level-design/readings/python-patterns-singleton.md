@@ -11,4 +11,7 @@ url: https://python-patterns.guide/gang-of-four/singleton/
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://python-patterns.guide/gang-of-four/singleton/)
+
+## Archived copy
+![[python-patterns-singleton-clip]]
 %% trellis:end %%

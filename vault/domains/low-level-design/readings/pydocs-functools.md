@@ -12,4 +12,7 @@ url: https://docs.python.org/3/library/functools.html
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://docs.python.org/3/library/functools.html)
+
+## Archived copy
+![[pydocs-functools-clip]]
 %% trellis:end %%

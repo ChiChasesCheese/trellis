@@ -11,4 +11,7 @@ url: https://peps.python.org/pep-0255/
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://peps.python.org/pep-0255/)
+
+## Archived copy
+![[pep255-generators-clip]]
 %% trellis:end %%

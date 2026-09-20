@@ -11,4 +11,7 @@ url: https://peps.python.org/pep-0343/
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://peps.python.org/pep-0343/)
+
+## Archived copy
+![[pep343-with-statement-clip]]
 %% trellis:end %%

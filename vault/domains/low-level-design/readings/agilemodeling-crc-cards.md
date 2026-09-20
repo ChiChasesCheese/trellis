@@ -12,4 +12,7 @@ url: https://www.agilemodeling.com/artifacts/crcModel.htm
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://www.agilemodeling.com/artifacts/crcModel.htm)
+
+## Archived copy
+![[agilemodeling-crc-cards-clip]]
 %% trellis:end %%

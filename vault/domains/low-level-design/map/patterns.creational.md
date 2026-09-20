@@ -5,6 +5,8 @@
 工厂方法、抽象工厂、建造者、原型、单例——以及 Python 里模块、类方法和关键字参数如何取代其中大半。
 
 ## Readings
+- [[python-patterns-factory-method|The Factory Method Pattern]]
+- [[python-patterns-singleton|The Singleton Pattern]]
 - [[refactoring-guru-builder|Builder (refactoring.guru)]]
 - [[refactoring-guru-patterns|Design Patterns Catalog (refactoring.guru)]]
 

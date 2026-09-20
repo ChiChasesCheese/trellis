@@ -11,4 +11,7 @@ url: https://docs.python.org/3/library/enum.html
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://docs.python.org/3/library/enum.html)
+
+## Archived copy
+![[src-python-docs-enum-linkedin-clip]]
 %% trellis:end %%

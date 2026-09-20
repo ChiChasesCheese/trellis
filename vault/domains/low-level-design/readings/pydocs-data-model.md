@@ -11,4 +11,7 @@ url: https://docs.python.org/3/reference/datamodel.html
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://docs.python.org/3/reference/datamodel.html)
+
+## Archived copy
+![[pydocs-data-model-clip]]
 %% trellis:end %%

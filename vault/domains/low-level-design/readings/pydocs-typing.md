@@ -11,4 +11,7 @@ url: https://docs.python.org/3/library/typing.html
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://docs.python.org/3/library/typing.html)
+
+## Archived copy
+![[src-pydocs-traffic-signal-clip]]
 %% trellis:end %%

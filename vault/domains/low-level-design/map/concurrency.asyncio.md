@@ -6,6 +6,10 @@
 
 **Requires:** [[domains/low-level-design/map/concurrency.model|线程、GIL 与内存模型]]
 
+## Readings
+- [[pydocs-asyncio-sync|Synchronization Primitives]]
+- [[pydocs-asyncio-task|Coroutines and Tasks]]
+
 ## Cards (6)
 1. [[concurrency-asyncio-event-loop]]
 2. [[concurrency-asyncio-await-yield-points]]

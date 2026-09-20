@@ -11,4 +11,7 @@ url: https://peps.python.org/pep-0484/
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://peps.python.org/pep-0484/)
+
+## Archived copy
+![[pep484-type-hints-clip]]
 %% trellis:end %%

@@ -10,4 +10,7 @@ url: https://plantuml.com/sequence-diagram
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://plantuml.com/sequence-diagram)
+
+## Archived copy
+![[plantuml-sequence-diagram-clip]]
 %% trellis:end %%

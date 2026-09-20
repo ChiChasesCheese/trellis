@@ -8,6 +8,9 @@
 
 **Unlocks:** [[domains/low-level-design/map/patterns.strategy|策略模式与可替换算法（Strategy）]]
 
+## Readings
+- [[pydocs-functools|functools — Higher-order functions and operations on callable objects]]
+
 ## Cards (6)
 1. [[python-functions-first-class]]
 2. [[python-functions-strategy]]

@@ -12,4 +12,7 @@ tags: [canonical]
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://gameprogrammingpatterns.com/command.html)
+
+## Archived copy
+![[gpp-command-clip]]
 %% trellis:end %%

@@ -12,4 +12,7 @@ url: https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/re
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/restaurant-management-system.md)
+
+## Archived copy
+![[src-ashishps1-restaurant-clip]]
 %% trellis:end %%

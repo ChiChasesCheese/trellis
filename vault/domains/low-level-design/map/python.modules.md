@@ -4,6 +4,10 @@
 
 模块即单例、循环导入的成因与解法、`__init__` 里的公共接口、依赖只许朝一个方向流。
 
+## Readings
+- [[pydocs-importlib|importlib — The implementation of import]]
+- [[pydocs-modules-tutorial|6. Modules]]
+
 ## Cards (6)
 1. [[python-modules-singleton]]
 2. [[python-modules-circular-import-cause]]

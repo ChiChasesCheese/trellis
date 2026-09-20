@@ -11,4 +11,7 @@ url: https://github.com/donnemartin/system-design-primer#how-to-approach-a-syste
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://github.com/donnemartin/system-design-primer#how-to-approach-a-system-design-interview-question)
+
+## Archived copy
+![[sdp-interview-approach-clip]]
 %% trellis:end %%

@@ -9,6 +9,7 @@
 ## Readings
 - [[awesome-low-level-design|awesome-low-level-design (ashishps1)]]
 - [[hellointerview-delivery|The Low Level Design Delivery Framework (Hello Interview)]]
+- [[sdp-interview-approach|How to approach a system design interview question]]
 
 ## Cards (5)
 1. [[method-scope-first-move]]

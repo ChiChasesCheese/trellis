@@ -6,6 +6,10 @@
 
 **Requires:** [[domains/low-level-design/map/method.modeling|从需求到对象（Requirements to Objects）]]
 
+## Readings
+- [[plantuml-class-diagram|Class Diagram syntax and features]]
+- [[plantuml-sequence-diagram|Sequence Diagram syntax and features]]
+
 ## Cards (5)
 1. [[method-diagram-scope]]
 2. [[method-class-diagram-grain]]

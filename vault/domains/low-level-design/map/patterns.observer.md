@@ -8,6 +8,9 @@
 
 **Unlocks:** [[domains/low-level-design/map/problems.games.cricinfo|体育比分系统（Cricinfo）]], [[domains/low-level-design/map/problems.social.social-network|社交网络（Social Network）]], [[domains/low-level-design/map/problems.social.chat-room|聊天室（Chat Room）]], [[domains/low-level-design/map/problems.components.logger|日志框架（Logging Framework）]], [[domains/low-level-design/map/problems.components.notification-service|通知服务（Notification Service）]], [[domains/low-level-design/map/problems.components.pub-sub|发布订阅与事件总线（Pub-Sub）]]
 
+## Readings
+- [[gpp-observer|Observer (Game Programming Patterns, Bob Nystrom)]]
+
 ## Drills
 - [[design-chat-room|Drill：聊天室（Chat Room）]]
 - [[design-coffee-machine|Drill：咖啡机（Coffee Machine）]]

@@ -11,4 +11,7 @@ url: https://python-patterns.guide/gang-of-four/factory-method/
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://python-patterns.guide/gang-of-four/factory-method/)
+
+## Archived copy
+![[python-patterns-factory-method-clip]]
 %% trellis:end %%

@@ -11,4 +11,7 @@ url: https://docs.python.org/3/library/abc.html
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://docs.python.org/3/library/abc.html)
+
+## Archived copy
+![[pydocs-abc-clip]]
 %% trellis:end %%

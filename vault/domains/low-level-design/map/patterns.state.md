@@ -10,6 +10,9 @@
 
 **Unlocks:** [[domains/low-level-design/map/structure.state-machines|状态机（State Machines）]], [[domains/low-level-design/map/problems.machines.vending-machine|自动售货机（Vending Machine）]], [[domains/low-level-design/map/problems.machines.atm|ATM 取款机]], [[domains/low-level-design/map/problems.social.music-streaming|音乐流媒体（Spotify）]]
 
+## Readings
+- [[gpp-state|State (Game Programming Patterns, Bob Nystrom)]]
+
 ## Drills
 - [[design-atm|Drill：ATM 取款机（ATM）]]
 - [[design-music-streaming|Drill：音乐流媒体（Spotify）]]

@@ -8,6 +8,10 @@
 
 **Unlocks:** [[domains/low-level-design/map/python.typing|类型注解作为设计工具]], [[domains/low-level-design/map/oop.interfaces|接口与抽象基类]]
 
+## Readings
+- [[pep544-protocols|PEP 544 – Protocols: Structural subtyping (static duck typing)]]
+- [[pydocs-abc|abc — Abstract Base Classes]]
+
 ## Cards (6)
 1. [[python-protocol-structural]]
 2. [[python-protocol-abc-nominal]]

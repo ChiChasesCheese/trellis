@@ -11,4 +11,7 @@ url: https://docs.python.org/3/library/dataclasses.html
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://docs.python.org/3/library/dataclasses.html)
+
+## Archived copy
+![[src-python-docs-dataclasses-stack-overflow-clip]]
 %% trellis:end %%

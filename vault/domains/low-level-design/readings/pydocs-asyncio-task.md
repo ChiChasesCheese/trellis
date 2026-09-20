@@ -12,4 +12,7 @@ url: https://docs.python.org/3/library/asyncio-task.html
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://docs.python.org/3/library/asyncio-task.html)
+
+## Archived copy
+![[pydocs-asyncio-task-clip]]
 %% trellis:end %%

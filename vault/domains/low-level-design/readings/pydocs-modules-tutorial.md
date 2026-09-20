@@ -11,4 +11,7 @@ url: https://docs.python.org/3/tutorial/modules.html
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://docs.python.org/3/tutorial/modules.html)
+
+## Archived copy
+![[pydocs-modules-tutorial-clip]]
 %% trellis:end %%

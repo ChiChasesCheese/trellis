@@ -12,4 +12,7 @@ url: https://docs.python.org/3/library/contextlib.html
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://docs.python.org/3/library/contextlib.html)
+
+## Archived copy
+![[pydocs-contextlib-clip]]
 %% trellis:end %%

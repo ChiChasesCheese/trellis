@@ -7,6 +7,7 @@
 **Unlocks:** [[domains/low-level-design/map/problems.components.logger|日志框架（Logging Framework）]], [[domains/low-level-design/map/problems.components.in-memory-file-system|内存文件系统（In-Memory File System）]]
 
 ## Readings
+- [[python-patterns-composite|The Composite Pattern]]
 - [[refactoring-guru-decorator|Decorator (refactoring.guru)]]
 - [[refactoring-guru-patterns|Design Patterns Catalog (refactoring.guru)]]
 

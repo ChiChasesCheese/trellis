@@ -10,6 +10,9 @@
 
 **Unlocks:** [[domains/low-level-design/map/problems.machines.parking-lot|停车场（Parking Lot）]], [[domains/low-level-design/map/problems.machines.elevator|电梯系统（Elevator System）]], [[domains/low-level-design/map/problems.booking.car-rental|租车系统（Car Rental）]], [[domains/low-level-design/map/problems.games.snake-and-ladder|蛇梯棋（Snake and Ladder）]], [[domains/low-level-design/map/problems.marketplaces.splitwise|分账（Splitwise）]], [[domains/low-level-design/map/problems.marketplaces.ride-sharing|网约车（Uber）]], [[domains/low-level-design/map/problems.components.notification-service|通知服务（Notification Service）]], [[domains/low-level-design/map/problems.components.rate-limiter|限流器（Rate Limiter）]]
 
+## Readings
+- [[pydocs-functools|functools — Higher-order functions and operations on callable objects]]
+
 ## Drills
 - [[design-car-rental|Drill：租车系统（Car Rental）]]
 - [[design-elevator|Drill：电梯系统（Elevator System）]]
