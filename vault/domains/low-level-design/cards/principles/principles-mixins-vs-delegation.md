@@ -2,16 +2,16 @@
 id: principles-mixins-vs-delegation
 node: principles.composition
 type: qa
+step: 5
 ---
 ## Q
-Mixin/trait（Java default method、Scala/Rust trait、Python mixin、Go embedding）承诺不写转发代码就能复用。它们实际的代价是什么？
+Python 的 mixin（比如给多个类共用的 `ComparableMixin`）承诺不写转发代码就能复用行为。它实际的代价是什么？
 
 ## A
-它们是**槽位更宽的继承** —— 脆弱性基本还在：
+Mixin 本质上是**槽位更宽的继承**——脆弱性基本还在：
 
-- **Java default method**：没有实例状态，而且同签名的菱形会强制你显式覆盖并写 `X.super.m()`。
-- **Python mixin**：复用是和 **MRO** 绑在一起的 —— 到底跑哪个兄弟类的方法，取决于这个类的线性化顺序，所以改一下基类就可能悄无声息地改变行为走向。
-- **Go embedding**：转发是自动的，但不存在回到外层类型的虚分派 —— 完整的 SELF 问题。
-- 以上全部都会把 mixin 的成员暴露成你公开接口的一部分。
+- 复用是和 **MRO（方法解析顺序）**绑在一起的：到底跑哪个祖先类的方法，取决于整个继承链的 C3 线性化顺序，改一下某个基类的继承关系就可能悄悄改变行为走向。
+- Mixin 的方法和属性会自动成为最终类公开接口的一部分——它没有办法只暴露"能力"而隐藏实现细节。
+- 多个 mixin 叠加时，方法名冲突靠 MRO 的先后顺序隐式解决，而不是显式声明谁盖过谁。
 
-规则：只把 trait/mixin 用于**无状态的能力**，且各使用方之间没有差异（`Comparable`、`Serializable` 那一类）。凡是带状态或带生命周期的 → 委托给一个协作者。
+规则：只把 mixin 用于**无状态的能力**，且各使用方之间没有差异（比如给类加上排序比较能力）。凡是带状态或带生命周期的复用，都应该改成委托给一个组合进来的协作者。

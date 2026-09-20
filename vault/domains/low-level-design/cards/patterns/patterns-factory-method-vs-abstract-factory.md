@@ -2,14 +2,12 @@
 id: patterns-factory-method-vs-abstract-factory
 node: patterns.creational
 type: qa
+step: 3
 ---
 ## Q
-Factory Method vs Abstract Factory——两者都隐藏创建。什么时候你选择哪一个？
+Factory Method 在 Python 里常见的实现形式是什么？它和 Abstract Factory 的区别是什么？
 
 ## A
-- **Factory Method**：一个类中的**一个** `create()` 方法或接口方法。用于创建**一个产品系列**（如 `PDFGenerator.create()`）。简单、单一职责。
-- **Abstract Factory**：跨多个产品**系列**的**许多**工厂方法。用于**互相关联的产品组**（如 UIComponentFactory 有 `createButton()`、`createTextBox()` 等）。
+Factory Method 经常就是一个 `classmethod`（比如 `Shape.from_config(cfg)`），或者上一张卡片里那种"字典查表"——只负责创建**一种**产品，通常和调用它的类定义在一起。Abstract Factory 是一组必须配套出现的 Factory Method（`create_button()`、`create_checkbox()` 都属于同一个"主题工厂"，保证造出来的东西风格一致）。
 
-简单的启发式：
-- 需要选择**一个产品类型**？→ Factory Method。
-- 需要创建**多个相关产品**并确保它们来自**同一系列**（主题、平台、风格）？→ Abstract Factory。
+判断标准：只是想让子类或配置决定"造哪一个"，用 Factory Method；需要保证一整套相关对象来自同一个变体（暗色主题的按钮必须配暗色主题的输入框），才需要 Abstract Factory。

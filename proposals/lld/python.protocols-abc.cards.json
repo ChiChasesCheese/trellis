@@ -1,0 +1,50 @@
+[
+ {
+  "id": "python-protocol-structural",
+  "node": "python.protocols-abc",
+  "type": "qa",
+  "q": "`typing.Protocol` 的“结构化子类型（structural subtyping）”具体是什么意思？一个类需要显式声明“实现”某个 Protocol 吗？",
+  "a": "不需要。只要一个类拥有 Protocol 要求的方法/属性（名字和签名匹配），静态类型检查器（如 mypy）就认为它满足这个 Protocol——这是“鸭子类型的静态版本”：类型兼容性由**形状（结构）**决定，不是由继承关系声明的。定义 Protocol 的一方和实现它的一方可以完全互不知情、不互相 import，很适合给标准库/第三方类型“补”一个接口。",
+  "tags": []
+ },
+ {
+  "id": "python-protocol-abc-nominal",
+  "node": "python.protocols-abc",
+  "type": "qa",
+  "q": "`abc.ABC` 的“名义子类型（nominal subtyping）”和 Protocol 的结构化子类型区别在哪？`abstractmethod` 是什么时候被检查的？",
+  "a": "`ABC` 要求显式声明继承关系（`class Foo(MyABC)`）或调用 `MyABC.register(Foo)`，类型兼容性由**血统**决定，不是由形状决定。`@abstractmethod` 的检查发生在**实例化时**，不是在 import/定义类时——一个没有覆盖抽象方法的子类可以被正常定义、正常 import，只有真的 `Foo()` 的那一刻才会抛 `TypeError`。",
+  "tags": []
+ },
+ {
+  "id": "python-protocol-form",
+  "node": "python.protocols-abc",
+  "type": "qa",
+  "q": "用 `Protocol` + `runtime_checkable` 写一个“可序列化为 JSON”的接口，并在运行时用 `isinstance` 判断，代码怎么写？",
+  "a": "```python\nfrom typing import Protocol, runtime_checkable\n\n@runtime_checkable\nclass JSONSerializable(Protocol):\n    def to_json(self) -> dict: ...\n\ndef emit(obj: JSONSerializable) -> None:\n    if isinstance(obj, JSONSerializable):\n        print(obj.to_json())\n```\n`Protocol` 本身只能用于静态检查；加上 `@runtime_checkable` 才解锁 `isinstance`/`issubclass`——但这只是方法名存在性检查，见下一张卡的限制。",
+  "tags": []
+ },
+ {
+  "id": "python-protocol-runtime-checkable-limits",
+  "node": "python.protocols-abc",
+  "type": "qa",
+  "q": "`@runtime_checkable` 装饰的 `Protocol` 用 `isinstance()` 检查时，到底验证了什么，没有验证什么？",
+  "a": "只验证**同名方法/属性是否存在**，完全不检查方法的**签名、参数类型或返回类型**。标准库文档给的例子是：`ssl.SSLObject` 因为存在 `__call__` 这个名字而通过了对 `Callable` 的 `issubclass` 检查，但它的 `__init__` 实际上只会抛 `TypeError`，根本不能被调用/实例化。所以 `runtime_checkable` 的 `isinstance` 结果只是“形状对得上”的弱保证，不能替代真正调用一次去验证行为。",
+  "tags": []
+ },
+ {
+  "id": "python-protocol-vs-abc-decision",
+  "node": "python.protocols-abc",
+  "type": "qa",
+  "q": "面试里被问“这个接口用 `Protocol` 还是 `abc.ABC`”，怎么决策？",
+  "a": "看两件事：**是否拥有实现方的代码**，以及**是否需要共享实现/强制约束**。要给标准库/第三方类型、或调用方尚未写出的类型补一个接口，只能用 `Protocol`（结构化，不需要它们继承你的类）。如果接口的实现者都在自己的代码里，并且想在基类里放共享逻辑、或者想让“忘记实现某方法”在实例化时就报错而不是运行到那一行才 `AttributeError`，`ABC` 更合适。",
+  "tags": []
+ },
+ {
+  "id": "python-protocol-neither",
+  "node": "python.protocols-abc",
+  "type": "qa",
+  "q": "什么时候一个方法根本不需要声明成 `Protocol` 或 `ABC`？",
+  "a": "只有**一个调用点**和**一个实现**时——这种“接口”只是在为将来可能存在的第二个实现预付利息。Python 是鸭子类型语言，直接调用对象的方法（EAFP：先做，出错再处理）就够了；等真的出现第二个实现、或者需要给类型检查器一个契约时，再回头提炼出 `Protocol`（这正是 YAGNI 在类型系统层面的体现）。",
+  "tags": []
+ }
+]

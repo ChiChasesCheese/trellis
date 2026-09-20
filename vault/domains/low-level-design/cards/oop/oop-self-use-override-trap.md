@@ -2,23 +2,22 @@
 id: oop-self-use-override-trap
 node: oop.pillars
 type: qa
+step: 4
 ---
 ## Q
-```java
-class CountingSet<E> extends HashSet<E> {
-  int added = 0;
-  public boolean add(E e) { added++; return super.add(e); }
-  public boolean addAll(Collection<? extends E> c) { added += c.size(); return super.addAll(c); }
-}
+```python
+class CountingList(list):
+    def __init__(self) -> None:
+        super().__init__()
+        self.added = 0
+
+    def append(self, item) -> None:
+        self.added += 1
+        super().append(item)
 ```
-`addAll` 加 3 个元素，报出来是 6。为什么？这件事关于继承说明了什么？
+`CountingList().extend([1, 2, 3])` 之后 `added` 仍然是 `0`，不是可能猜的 `3`。为什么？这件事关于继承内置类型说明了什么？
 
 ## A
-`HashSet.addAll` 的实现方式是在循环里调用 `this.add()` —— 这叫 **self-use（自用）**。被覆盖的 `add` 会执行并再数一遍，于是每个元素都被计了两次。
+CPython 的 `list.extend` 是 C 层实现，直接操作底层数组，并不会经过 `self.append()` 这条 Python 路径去回调。**self-use（自用）**是"高层方法内部调用同一对象上的其他公开方法"这条约定——Java 的 `AbstractCollection.addAll` 依赖并文档化了这种约定，但 Python 内置的 `list`/`dict`/`set` 完全不承诺这一点：覆盖一个方法未必能拦到通过其他方法发生的操作。
 
-子类之所以坏掉，是因为它依赖了基类*未被规定的内部细节*。两个后果：
-
-- 一个基类只有在**把自己的 self-use 写进文档**时才可以被安全继承（Java 的 "@implSpec / this implementation calls…"），而这份文档从此就把基类的内部实现永久冻住了。
-- 构造函数里有同样的陷阱：基类构造函数调用可被覆盖的方法，那个覆盖会在子类字段初始化**之前**执行。
-
-这里的修法：改用组合 —— 包一个 `Set` 并转发。
+如果确实需要"覆盖一个方法、所有路径都生效"的语义：改为继承 `collections.UserList`（纯 Python 实现，方法之间彼此调用，self-use 有保证），或者用组合——包一个 `list`，自己去转发和记录每个操作。

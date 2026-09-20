@@ -2,9 +2,10 @@
 id: oop-composition-vs-aggregation
 node: oop.relationships
 type: qa
+step: 4
 ---
 ## Q
-`ParkingLot`–`Floor` 与 `Course`–`Student`：哪个是 composition，哪个是 aggregation —— 靠哪一个问题就能判定？
+`ParkingLot`–`Floor` 与 `Course`–`Student`：哪个是 composition，哪个是 aggregation——靠哪一个问题就能判定？
 
 ## A
 那个问题是：**部件的生命周期是否随整体结束，并且被独占拥有？**

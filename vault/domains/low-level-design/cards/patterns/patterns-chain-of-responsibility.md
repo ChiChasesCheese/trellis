@@ -2,17 +2,26 @@
 id: patterns-chain-of-responsibility
 node: patterns.behavioral
 type: qa
+step: 2
 ---
 ## Q
-什么样的请求形状需要 Chain of Responsibility，它与 decorator 栈（相同的「链式包装器」外观）有何不同？
+什么样的请求形状需要 Chain of Responsibility？它和 decorator 栈（同样是"链式包装器"的外观）有什么不同？
 
 ## A
-当请求应沿着一条处理程序管道传递，其中**每一个可能处理、转换或拒绝，且集合/顺序必须可配置**时使用它：HTTP 中间件（auth → rate-limit → validate）、批准升级（经理→总监→副总）、日志级别、支持工单路由。
+适用场景：请求要沿着一串处理器传递，**每一个都可能处理、转换或拒绝，而且这串处理器的组成和顺序要能配置**——HTTP 中间件（鉴权 → 限流 → 校验）、审批升级（经理 → 总监 → VP）、日志级别过滤。
 
-```java
-abstract class Handler {
-    Handler next;
-    void handle(Request r) { if (!process(r) && next != null) next.handle(r); }
+```python
+from typing import Callable
+
+Handler = Callable[[dict], dict | None]
+
+def run_chain(handlers: list[Handler], request: dict) -> dict | None:
+    for h in handlers:
+        result = h(request)
+        if result is None:
+            return None
+        request = result
+    return request
 ```
 
-Decorator 修饰单个对象；Chain 让多个对象有机会处理请求。
+Decorator 是给**一个**对象叠加行为；Chain of Responsibility 是让**多个**候选处理器依次获得处理请求的机会，其中任何一个都可能提前终止整个流程。
