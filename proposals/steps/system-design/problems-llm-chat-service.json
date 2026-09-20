@@ -1,0 +1,12 @@
+{
+  "problems.realtime.llm-chat-service": [
+    "problems-llm-chat-service-kv-cache-bytes-per-token",
+    "problems-llm-chat-service-messages-vs-prompt-source-of-truth",
+    "problems-llm-chat-service-paged-kv-vs-contiguous",
+    "problems-llm-chat-service-prefill-decode-disaggregation-tradeoff",
+    "problems-llm-chat-service-disconnect-decoupled-from-generation",
+    "problems-llm-chat-service-per-tier-reserved-capacity",
+    "problems-llm-chat-service-gpu-node-failure-unresumable",
+    "problems-llm-chat-service-10x-model-routing-lever"
+  ]
+}
