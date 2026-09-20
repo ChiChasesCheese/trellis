@@ -1,0 +1,12 @@
+{
+  "problems.social.chat-messaging": [
+    "problems-chat-messaging-gateway-connection-capacity",
+    "problems-chat-messaging-group-fanout-storage-model",
+    "problems-chat-messaging-session-directory-routing",
+    "problems-chat-messaging-per-conversation-ordering",
+    "problems-chat-messaging-idempotent-send",
+    "problems-chat-messaging-sync-vs-async-fanout-threshold",
+    "problems-chat-messaging-hot-partition-time-bucketing",
+    "problems-chat-messaging-ten-x-evolution"
+  ]
+}

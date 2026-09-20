@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-chat-messaging-gateway-connection-capacity",
+    "node": "problems.social.chat-messaging",
+    "type": "qa",
+    "q": "In a WhatsApp-style chat system with 45 million peak concurrent WebSocket connections, why does that number — rather than messages-per-second — usually size the gateway (chat server) fleet, and what does a commodity stack assumption of about 100,000 connections per box imply for fleet size?",
+    "a": "Each gateway server holds WebSocket connections statefully, and a socket costs memory and file-descriptor state whether or not it is actively sending, so the fleet size tracks concurrent connections, not throughput. On a commodity stack (e.g. Go or Netty on Linux with epoll) a single box can typically hold about 100,000 concurrent WebSocket connections. At 45 million peak concurrent connections that requires roughly 450 gateway servers, plus about 30% headroom for multi-AZ redundancy and rolling deploys, landing around 600 boxes.",
+    "tags": [],
+    "q_zh": "在一个类 WhatsApp 的聊天系统中，峰值有 4500 万并发 WebSocket 连接，为什么是这个数字（而不是每秒消息数）通常决定网关（chat server）机群的规模？商用栈假设单机约 10 万连接意味着需要多少台机器？",
+    "a_zh": "每台网关服务器以有状态方式持有 WebSocket 连接，一个连接无论是否在发送数据都要占用内存和文件描述符状态，所以机群规模跟随并发连接数，而不是吞吐量。用商用栈（例如 Linux 上基于 epoll 的 Go 或 Netty）估算，单机通常能稳定维持约 10 万条并发 WebSocket 连接。在峰值 4500 万并发连接下，这需要约 450 台网关服务器，再加约 30% 的余量用于多可用区冗余和滚动发布，最终约 600 台。"
+  },
+  {
+    "id": "problems-chat-messaging-group-fanout-storage-model",
+    "node": "problems.social.chat-messaging",
+    "type": "qa",
+    "q": "In a group chat system, why is storing one copy of the message body plus a narrow per-recipient delivery-status row cheaper than copying the full message body into every recipient's inbox, and by roughly how much at scale?",
+    "a": "If 15% of 15 billion daily messages go to groups averaging 9 other recipients, duplicating a ~200-byte message body per recipient adds about 4.05 TB/day of extra storage and write volume. Adding instead a ~25-byte status row (message_id, user_id, status, timestamp) per recipient adds only about 486 GB/day — roughly an 8x storage saving — because the message body is written exactly once per conversation regardless of how many people are in the group, and only the small per-recipient status rows scale with group size.",
+    "tags": [],
+    "q_zh": "在一个群聊系统中，为什么只存一份消息体、再为每个收件人存一行窄的送达状态记录，会比把完整消息体复制进每个收件人的信箱更省空间？在这个规模下大约省多少？",
+    "a_zh": "假设 150 亿条日消息中有 15% 发到群组，平均群大小为 10 人（9 个其他收件人），若为每个收件人复制一份约 200 字节的消息体，会额外增加约 4.05TB/天的存储与写入量；而只为每个收件人增加一行约 25 字节的状态记录（message_id、user_id、status、timestamp），只增加约 486GB/天——大约省 8 倍存储——因为消息体无论群多大都只写一次，只有很小的每收件人状态行会随群规模线性增长。"
+  },
+  {
+    "id": "problems-chat-messaging-session-directory-routing",
+    "node": "problems.social.chat-messaging",
+    "type": "qa",
+    "q": "In a chat system where a sender's and a recipient's WebSocket connections can land on different gateway servers, why is a centralized session directory (e.g. Redis mapping user/device to gateway) usually preferred over giving every user a dedicated Kafka topic for cross-gateway routing?",
+    "a": "A session directory only stores a lookup record — which gateway currently holds a given user's socket, tens of bytes per online user — so it stays small and fast even at a billion online users. Giving every user a dedicated Kafka topic imposes a fixed per-topic metadata and filesystem overhead on the order of 50 KB per topic; at a billion users that is 50+ TB of pure metadata overhead, and Kafka's control plane cannot manage millions of topics well. So routing is kept as a cheap 'who is online where' lookup, separate from any durable delivery queue used for offline fan-out.",
+    "tags": [],
+    "q_zh": "在一个聊天系统中，发送方和接收方的 WebSocket 连接可能落在不同的网关服务器上，为什么跨网关路由通常选择一个集中式会话目录（例如 Redis 存储用户/设备到网关的映射），而不是为每个用户建一个专属的 Kafka 主题？",
+    "a_zh": "会话目录只存一条查找记录——某个用户当前的连接在哪台网关，每个在线用户仅占几十字节——所以即使十亿在线用户规模也依然很小很快。为每个用户建一个专属 Kafka 主题会带来固定的每主题元数据与文件系统开销（业界经验约 50KB/主题），十亿用户就是 50TB+ 的纯元数据开销，而且 Kafka 控制面根本无法良好管理百万级主题。所以路由被保持为一个廉价的「谁在哪」查找，和用于离线扇出的持久化投递队列是分开的。"
+  },
+  {
+    "id": "problems-chat-messaging-per-conversation-ordering",
+    "node": "problems.social.chat-messaging",
+    "type": "qa",
+    "q": "In a chat system, why does assigning each message a monotonically increasing sequence number scoped to a single conversation (rather than a global sequence or client wall-clock timestamps) solve ordering without a separate coordination service?",
+    "a": "All writes for one conversation already have to land on the same storage partition so that time-range queries and history scrolling work, so that partition can hand out a strictly increasing per-conversation `seq` as a free side effect of being the single writer for that conversation — no extra coordination service is needed. This only guarantees order within a conversation, not across different conversations, which matches what chat users actually care about. Client wall-clock timestamps are avoided because clock drift between devices routinely causes visible reordering.",
+    "tags": [],
+    "q_zh": "在一个聊天系统中，为什么给每条消息分配一个限定在单个会话内的单调递增序号（而不是全局序号或客户端墙钟时间戳）能在不引入额外协调服务的情况下解决顺序问题？",
+    "a_zh": "一个会话的所有写入本来就必须落到同一个存储分区（否则按时间范围查询和历史滚动加载都做不到），所以该分区作为该会话唯一的写入者，可以顺带分配严格递增的会话内 `seq`，不需要额外的协调服务。这只保证会话内有序，不保证跨不同会话有序，这恰好符合聊天用户真正关心的东西。客户端墙钟时间戳被避免使用，因为设备间的时钟漂移经常导致明显的乱序。"
+  },
+  {
+    "id": "problems-chat-messaging-idempotent-send",
+    "node": "problems.social.chat-messaging",
+    "type": "qa",
+    "q": "In a chat system, a client's network retry after a timeout could otherwise cause the same message to be persisted and delivered twice. What mechanism prevents this, and what does the server do differently between a first send and a retried send?",
+    "a": "The client generates a `client_msg_id` (typically a UUID) once when the user hits send, and includes it on every retry of that same message. The server keeps a dedupe index keyed by (conversation_id, client_msg_id) with a TTL matching its offline-retention window. On the first send it persists the message and records the mapping to the resulting server-assigned message_id; on any retry with the same client_msg_id it does not persist or redeliver again — it just returns the original ACK (server message_id, sequence number, timestamp) it already produced.",
+    "tags": [],
+    "q_zh": "在一个聊天系统中，客户端在超时后发起的网络重试原本可能导致同一条消息被持久化和投递两次。什么机制防止了这一点？服务器在首次发送和重试发送之间具体做了什么不同处理？",
+    "a_zh": "客户端在用户点击发送时生成一个 `client_msg_id`（通常是 UUID），并在该消息的每次重试中携带同一个值。服务器维护一个按 (conversation_id, client_msg_id) 建索引的去重表，TTL 与离线保留窗口一致。首次发送时服务器持久化消息，并记录到最终生成的 server message_id 的映射；之后任何携带相同 client_msg_id 的重试都不会再次持久化或再次投递——只会返回它已经产生过的那个原始确认（server message_id、序号、时间戳）。"
+  },
+  {
+    "id": "problems-chat-messaging-sync-vs-async-fanout-threshold",
+    "node": "problems.social.chat-messaging",
+    "type": "qa",
+    "q": "In a chat system, why does group message fan-out need to switch from synchronous push to an asynchronous queue past some group-size threshold, and what determines where roughly that threshold sits?",
+    "a": "If a gateway synchronously pushes a message to every online recipient's gateway before acknowledging the sender, the sender's tail latency grows with the number of recipients — one slow cross-gateway RPC delays the whole send. The threshold is roughly the sender's acceptable latency budget divided by the typical cost of one cross-gateway delivery hop: e.g. a 200ms budget over a 5ms typical hop gives a theoretical ceiling around 40 synchronous fan-out targets, so in practice teams set the cutover well below that (on the order of 100 recipients) and hand larger groups to an async fan-out queue that acknowledges the sender immediately and delivers in the background.",
+    "tags": [],
+    "q_zh": "在一个聊天系统中，为什么群消息扇出必须在群规模超过某个阈值后，从同步推送切换到异步队列？这个阈值大致由什么决定？",
+    "a_zh": "如果网关在给发送方回确认之前，同步地把消息推给每个在线收件人的网关，发送方的尾延迟就会随收件人数量增长——一次慢的跨网关 RPC 就会拖慢整次发送。阈值大致等于发送方可接受的延迟预算除以单次跨网关投递的典型开销：例如 200ms 预算除以 5ms 的典型单跳开销，理论上限约为 40 个同步扇出目标，实践中团队会把切换点设在明显更低的位置（数量级在 100 个收件人左右），并把更大的群交给一个异步扇出队列，让它立刻确认发送方、在后台完成投递。"
+  },
+  {
+    "id": "problems-chat-messaging-hot-partition-time-bucketing",
+    "node": "problems.social.chat-messaging",
+    "type": "qa",
+    "q": "In a chat system whose message store partitions by conversation_id, what real production failure mode does one unusually large or active group/channel cause, and what fix does Discord's own engineering blog describe after migrating from Cassandra to ScyllaDB?",
+    "a": "One very active conversation (a large group or channel) can generate an order of magnitude more writes than a typical one, concentrating on a single partition and its owning storage node — Discord's engineering blog documents this hot-partition pattern causing latency spikes that, under quorum reads/writes, dragged down the whole cluster, on top of garbage-collection pauses severe enough to require manual node reboots. The documented mitigation is finer time-bucketing of the partition key (e.g. hourly rather than daily buckets) so a single busy conversation's writes are spread across more physical partitions, plus Discord's broader move to ScyllaDB, which cut their node count from 177 to 72 and improved p99 read latency from 40-125ms to 15ms.",
+    "tags": [],
+    "q_zh": "在一个按 conversation_id 分区消息存储的聊天系统中，一个异常大或异常活跃的群/频道会导致什么真实的生产故障模式？Discord 官方工程博客在从 Cassandra 迁移到 ScyllaDB 之后描述了什么修复方法？",
+    "a_zh": "一个非常活跃的会话（大群或频道）产生的写入量可能比普通会话高一个数量级，集中在单个分区及其所在的存储节点上——Discord 工程博客记录了这种热分区模式导致延迟飙升，并在 quorum 读写机制下拖慢了整个集群，同时还伴随着严重到需要人工重启节点的垃圾回收（GC）停顿。文中记录的缓解方法是把分区键的时间分桶做得更细（例如按小时而非按天分桶），把单个繁忙会话的写入摊到更多物理分区上；此外 Discord 更大范围地迁移到了 ScyllaDB，将节点数从 177 降到 72，并把 P99 读延迟从 40-125ms 降到 15ms。"
+  },
+  {
+    "id": "problems-chat-messaging-ten-x-evolution",
+    "node": "problems.social.chat-messaging",
+    "type": "qa",
+    "q": "In a chat system designed for 300 million DAU and 45 million peak concurrent connections, what has to change at 10x scale (3 billion DAU, ~450 million peak concurrent connections), and why does the presence subsystem need to change even though it seemed fine at the original scale?",
+    "a": "The gateway fleet scales roughly linearly, from around 600 to around 6,000 instances, because it is bound by concurrent connections rather than CPU. At this size a single global session directory becomes the new bottleneck, so it must shard by user-id range or region, with cross-region lookups proxied only when a conversation actually spans regions. The message store similarly moves from one global keyspace to per-region clusters with async cross-region replication for conversations that span regions, deliberately giving up global cross-region ordering (which was never required — only per-conversation order was). Presence has to tighten further to a strict subscribe-to-open-chats model, because any lingering broadcast-style fan-out that was merely expensive at 45 million concurrent users becomes architecturally impossible at 450 million.",
+    "tags": [],
+    "q_zh": "在一个为 3 亿日活、峰值 4500 万并发连接设计的聊天系统中，扩展到 10 倍规模（30 亿日活，约 4.5 亿峰值并发连接）时哪些部分必须改变？为什么 presence（在线状态）子系统即使在原规模下看起来没问题，也必须进一步改变？",
+    "a_zh": "网关机群大致线性扩展，从约 600 台增长到约 6000 台，因为它受并发连接数而非 CPU 限制。在这个规模下，单一的全局会话目录会成为新的瓶颈，因此必须按用户 ID 区间或地域分片，只有当一个会话确实跨地域时才代理查询对方地域。消息存储同样从单一全局 keyspace 演变为按地域独立的集群，对跨地域会话做异步复制，主动放弃跨地域的全局顺序保证（这本来就不是需求——只需要会话内有序）。presence 必须进一步收紧为严格的「仅订阅当前打开会话」模型，因为任何在 4500 万并发时只是「代价较高」的残留广播式扇出，在 4.5 亿规模下会在架构上直接不可行。"
+  }
+]
