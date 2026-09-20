@@ -1,7 +1,7 @@
 ---
 nodes: [method.delivery]
 url: https://www.hellointerview.com/learn/low-level-design/in-a-hurry/delivery
-tags: [intro]
+tags: [intro, no-archive]
 ---
 # The Low Level Design Delivery Framework (Hello Interview)
 

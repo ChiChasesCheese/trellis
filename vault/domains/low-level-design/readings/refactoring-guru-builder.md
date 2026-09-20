@@ -1,7 +1,7 @@
 ---
 nodes: [patterns.creational]
 url: https://refactoring.guru/design-patterns/builder
-tags: [canonical]
+tags: [canonical, no-archive]
 ---
 # Builder (refactoring.guru)
 

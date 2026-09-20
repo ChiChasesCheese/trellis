@@ -1,7 +1,7 @@
 ---
 nodes: [patterns.structural]
 url: https://refactoring.guru/design-patterns/decorator
-tags: [canonical]
+tags: [canonical, no-archive]
 ---
 # Decorator (refactoring.guru)
 

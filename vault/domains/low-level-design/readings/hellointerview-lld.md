@@ -1,7 +1,7 @@
 ---
 nodes: [method.evaluation, method.modeling]
 url: https://www.hellointerview.com/learn/low-level-design
-tags: [canonical, intro]
+tags: [canonical, intro, no-archive]
 ---
 # Hello Interview: Low-Level Design Guide
 
