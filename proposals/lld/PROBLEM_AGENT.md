@@ -42,6 +42,12 @@ dataclass), so subscribers update themselves from the event instead of reaching 
 subject's storage without its lock. (3) A class that only forwards one call to another object is
 a Java habit: give it a responsibility or delete it, and say which in the article.
 
+**A test never reads a private attribute.** `starter.py` is filled in by a learner who may pick a
+different internal representation, so a test that asserts on `_something` fails a correct answer.
+When an invariant is only visible inside (a container shrank, a pointer was repaired), expose it as
+a tiny read-only property on the class — `row_count`, `bucket_count` — mirror it in `starter.py`,
+and assert on that.
+
 **A defect you find is a defect you fix.** The second pilot documented, in a docstring, a call
 order that crashed its LFU policy, and never noticed that emptied frequency buckets were kept
 forever. Repair the invariant and add a regression test — never ship a described landmine. For
