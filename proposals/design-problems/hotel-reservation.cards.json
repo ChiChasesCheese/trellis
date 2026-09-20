@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-hotel-reservation-peak-booking-vs-search-qps",
+    "node": "problems.commerce.hotel-reservation",
+    "type": "qa",
+    "q": "A hotel/marketplace reservation platform processes 1,000,000 bookings/day and, at a 2% search-to-booking conversion rate, 50,000,000 search sessions/day. What is the average read:write QPS ratio, and why can this system get away with a much smaller booking peak-to-average ratio than a single-event ticket sale?",
+    "a": "Average booking QPS ≈ 1,000,000 / 86,400 ≈ 11.6; average search QPS ≈ 50,000,000 / 86,400 ≈ 578.7; the read:write ratio is about 50:1. Unlike a ticket sale, where demand concentrates on one scarce resource at one instant (peak-to-average ratios in the hundreds), hotel/marketplace demand is spread across millions of independently-booked room-types, so a modest peak-to-average factor (e.g. 5x, giving roughly 58 peak booking QPS) is enough — booking traffic never needs a virtual admission queue to survive its peak; only the 50:1 read:write gap forces search onto a separate read path from booking.",
+    "q_zh": "一个酒店/民宿预订平台每天处理 100 万笔预订，按 2% 的搜索到预订转化率计算，每天有 5000 万次搜索会话。平均读写 QPS 比是多少？为什么这个系统能接受比单场演出票务开售小得多的预订峰谷比？",
+    "a_zh": "平均预订 QPS ≈ 1,000,000 / 86,400 ≈ 11.6；平均搜索 QPS ≈ 50,000,000 / 86,400 ≈ 578.7；读写比约为 50:1。和票务开售不同（需求在同一瞬间集中在同一批稀缺资源上，峰谷比可达数百倍），酒店/民宿的需求分散在数百万个独立可预订的房型上，所以一个不算大的峰谷因子（比如 5 倍，对应峰值预订 QPS 约 58）就够用——预订路径不需要虚拟准入队列来扛峰值，真正逼出架构决策的是 50:1 这个读写比，它要求搜索走一条独立于预订的读路径。",
+    "tags": []
+  },
+  {
+    "id": "problems-hotel-reservation-per-night-inventory-model",
+    "node": "problems.commerce.hotel-reservation",
+    "type": "qa",
+    "q": "In a hotel/marketplace reservation system, why is 'one row per room-type per night, with a total-units and booked-units counter' usually preferred over 'one row per physical room instance with a date-range exclusion constraint', even though PostgreSQL directly supports the latter via `EXCLUDE USING GIST (during WITH &&)`?",
+    "a": "A range-exclusion-constraint row per physical unit only enforces 'no two overlapping bookings on the SAME unit' — it can't express pooled capacity like '50 interchangeable rooms, sell up to 50 total' without creating and maintaining 50 separate constrained rows, and it binds a guest to a specific physical unit before check-in, which can produce a false 'fully booked' result when one specific unit is taken but an equivalent one is free. A per-room-type-per-night counter row lets any of the interchangeable units satisfy a booking, maximizing bin-packing efficiency; the exclusion-constraint model is reserved for cases that genuinely need to lock a specific physical unit at booking time (e.g. a boutique hotel assigning a room number up front rather than at check-in).",
+    "q_zh": "在酒店/民宿预订系统里，为什么通常优先选择'每个房型每晚一行，带总量和已订数量计数器'的模型，而不是 PostgreSQL 通过 `EXCLUDE USING GIST (during WITH &&)` 原生支持的'每个物理房间实例一行、用日期区间排他约束'的模型？",
+    "a_zh": "按物理单元建的区间排他约束行，只能保证'同一个物理单元不出现两段重叠预订'——它无法表达'50 个可互换房间，总共最多卖 50 份'这种池化容量语义，除非建 50 个各自独立的约束行分别维护；而且它会在入住前就把客人绑定到一个具体物理单元，可能出现「某个特定单元被占、但等价的另一个单元还空着」却显示「已满」的假象。按房型-夜计数的行让任意一个可互换单元都能满足一次预订，装箱效率最大化；排他约束模型只留给那些确实需要在预订时就锁定具体物理单元（比如精品酒店在预订时而非入住时分配房间号）的场景。",
+    "tags": []
+  },
+  {
+    "id": "problems-hotel-reservation-check-then-write-double-books",
+    "node": "problems.commerce.hotel-reservation",
+    "type": "qa",
+    "q": "In a hotel reservation system under PostgreSQL's default read-committed isolation, why does 'SELECT remaining capacity for each night, check it in application code, then UPDATE that night's booked-unit count' allow two concurrent bookings to jointly overbook a room-type's last available night, even though neither individual UPDATE conflicts with the other?",
+    "a": "Between the SELECT and the UPDATE there is no lock protecting the decision window: two concurrent transactions can both read the same 'remaining = 1' snapshot, each independently decide in application code that the night is bookable, and then both issue non-conflicting UPDATEs (each just increments booked_units by one). This is the write-skew anomaly — two transactions read a shared snapshot, make disjoint writes, and jointly violate an invariant that neither write alone violates. Serializable isolation would catch this, but the cheaper fix is to never split the check from the write: fold the capacity check directly into the UPDATE's own WHERE clause so the check and the write happen atomically.",
+    "q_zh": "在 PostgreSQL 默认的读已提交（read committed）隔离级别下，酒店预订系统里「先 SELECT 查每晚剩余库存、在应用层判断、再 UPDATE 已订数量」这种写法，为什么会让两笔并发预订共同超卖某个房型最后一晚的库存，即使两次 UPDATE 本身并不冲突？",
+    "a_zh": "SELECT 和 UPDATE 之间没有任何锁保护这段决策窗口：两个并发事务可以都读到同一份「剩余 = 1」的快照，各自在应用层独立判断「这一晚可以订」，然后都发出互不冲突的 UPDATE（各自只是把 booked_units 加一）。这正是写偏斜（write skew）异常——两个事务基于同一份共享快照做出互不相交的写入，合并后共同违反了一个任何一次写单独看都不违反的不变量。可串行化隔离能挡住这种情况，但更便宜的修法是从一开始就不要把检查和写入拆成两步：把容量检查直接写进 UPDATE 自己的 WHERE 子句，让检查和写入原子地一起发生。",
+    "tags": []
+  },
+  {
+    "id": "problems-hotel-reservation-multirow-conditional-update-rollback",
+    "node": "problems.commerce.hotel-reservation",
+    "type": "qa",
+    "q": "A hotel reservation system books a 3-night stay with one multi-row `UPDATE ... WHERE date = ANY(:dates) AND booked_units < total_units*(1+overbook_pct)`. If only 2 of the 3 target nights satisfy that WHERE clause, does PostgreSQL fail the whole statement, and what must the application do to guarantee that this reservation succeeds or fails as one unit?",
+    "a": "No — PostgreSQL's UPDATE simply skips rows that don't match the WHERE clause and updates only the rows that do, reporting an affected-row count of 2 rather than raising an error. The application must check, inside the same database transaction, whether the affected-row count equals the number of nights requested, and explicitly ROLLBACK if it doesn't; the ROLLBACK undoes even the rows that individually passed their own capacity check, which is what actually delivers the 'the whole date range succeeds or fails together' guarantee that a single-row conditional update doesn't need to worry about.",
+    "q_zh": "酒店预订系统用一条多行 `UPDATE ... WHERE date = ANY(:dates) AND booked_units < total_units*(1+overbook_pct)` 来预订 3 个晚上。如果目标的 3 晚里只有 2 晚满足 WHERE 子句，PostgreSQL 会让整条语句失败吗？应用层必须做什么才能保证这笔预订整体成功或整体失败？",
+    "a_zh": "不会——PostgreSQL 的 UPDATE 只会跳过不满足 WHERE 子句的行，只更新满足条件的那些行，返回的受影响行数是 2 而不是报错。应用层必须在同一个数据库事务内检查受影响行数是否等于请求的晚数，不等于就显式 ROLLBACK；这次 ROLLBACK 会撤销那些单独看已经通过自己容量检查的行，这才真正实现了「整段日期区间要么一起成功、要么一起失败」的保证——这一步是单行条件更新不需要操心的额外复杂度。",
+    "tags": []
+  },
+  {
+    "id": "problems-hotel-reservation-overbooking-risk-budget",
+    "node": "problems.commerce.hotel-reservation",
+    "type": "qa",
+    "q": "Using a binomial no-show model with a historical no-show rate of 6%, why is a flat 'overbook by 2%' policy unsafe for a 50-room inventory pool but overly conservative for a 500-room pool, if the target risk of actually exceeding physical capacity is 1%?",
+    "a": "For a 50-room pool, overbooking to 51 bookings (+2%) already gives about a 4.26% chance that actual arrivals exceed 50 rooms (no-shows among 51 bookings, modeled as Binomial(51, 0.06), need to number fewer than 1) — over 4x the 1% risk budget, so a small pool has almost no safe overbooking headroom at that risk tolerance. For a 500-room pool, the same 6% no-show rate allows overbooking all the way to 519 bookings (+3.8%) while staying within the 1% risk budget, because the binomial distribution's relative variance shrinks as the pool grows (law of large numbers). A correct overbooking policy therefore computes its safe percentage from pool size and historical no-show rate per room-type, rather than applying one constant percentage everywhere.",
+    "q_zh": "用一个历史不入住率（no-show rate）为 6% 的二项分布模型，如果可接受的超容风险目标是 1%，为什么统一的「超售 2%」策略对一个 50 间房的库存池不安全，对一个 500 间房的库存池又过于保守？",
+    "a_zh": "对 50 间房的池子，超售到 51 笔预订（+2%）时，实际到店人数超过 50 间的概率就已经约有 4.26%（51 笔预订中不入住数服从 Binomial(51, 0.06)，需要少于 1 次才安全）——已经超过 1% 风险预算的 4 倍以上，说明小库存池在这个风险容忍度下几乎没有安全的超售空间。对 500 间房的池子，同样 6% 的不入住率可以超售到 519 笔预订（+3.8%）仍能控制在 1% 风险预算内，因为二项分布的相对方差随池子规模增大而收窄（大数定律）。所以正确的超售策略应该按每个房型的库存池规模和历史不入住率动态计算安全比例，而不是到处套用同一个固定百分比。",
+    "tags": []
+  },
+  {
+    "id": "problems-hotel-reservation-search-index-vs-booking-path",
+    "node": "problems.commerce.hotel-reservation",
+    "type": "qa",
+    "q": "Why does a hotel/marketplace search system serve results from a denormalized, minutes-stale index rather than querying the authoritative per-night inventory table directly for every search request?",
+    "a": "Computing precise per-night availability and price for every candidate listing is expensive and combinatorially explodes with the number of nights and candidates — a single mid-size destination can have 10,000+ properties, and pricing all of them on every search would make search compete with booking for the same database connections and buffer pool. Instead the system runs two stages: a fast candidate-generation query against a denormalized index (coarse price range, rough availability flag, refreshed asynchronously) narrows millions of listings to the handful a user will actually view, and only those listings get a precise, authoritative availability+price query against the real inventory table — keeping the expensive per-night computation off the critical path for every search.",
+    "q_zh": "为什么酒店/民宿搜索系统用一份反规范化的、允许有几分钟延迟的索引来返回结果，而不是每次搜索都直接查权威的按夜库存表？",
+    "a_zh": "为每一个候选房源精确计算逐晚可用性和价格代价很高，而且会随晚数和候选数产生组合爆炸——一个中等城市目的地就可能有一万多个房源，如果每次搜索都对全部候选做精确定价，搜索会和预订争抢同一批数据库连接和缓冲池。系统改用两阶段：先对一份反规范化索引（粗粒度价格区间、粗略可订标记，异步刷新）做快速候选生成，把上百万房源收窄到用户实际会看的一小撮；只有这些被点开的房源才触发对真实库存表的精确、权威的可用性+价格查询——把昂贵的逐晚计算挡在每次搜索的关键路径之外。",
+    "tags": []
+  },
+  {
+    "id": "problems-hotel-reservation-cross-channel-conflict",
+    "node": "problems.commerce.hotel-reservation",
+    "type": "qa",
+    "q": "A hotel property sells the same physical rooms through both its own platform and an external OTA channel. When the platform and the external channel's webhook both try to confirm a booking for the same last-available night at nearly the same time, how should the system decide who wins, and what happens to the loser?",
+    "a": "The external channel's webhook is treated as just another writer competing for the same conditional UPDATE against the shared inventory table — whichever request's UPDATE reaches the database first and satisfies the capacity WHERE clause wins; the later one fails the same way a second internal booking attempt would. The losing side then enters a reconciliation flow rather than being silently dropped: if the platform's own confirmed booking loses (payment may already be collected), it triggers an automatic refund and apology flow; if an external channel's pushed event loses, the platform reports a conflict back to that channel to handle. Cross-channel sync is inherently eventually consistent because the two systems don't share a database transaction, so this reconciliation path is mandatory, not an edge case.",
+    "q_zh": "一家酒店同时在自己的平台和一个外部 OTA 渠道上出售同一批物理房间。当平台内部预订和外部渠道的 webhook 几乎同时争抢同一晚最后一间房的确认权时，系统该怎么判定谁赢？输的一方怎么处理？",
+    "a_zh": "外部渠道的 webhook 被当成和平台内部预订完全一样的一个写入方，去争抢对同一张库存表的同一次条件更新——谁的 UPDATE 先到达数据库并满足容量的 WHERE 子句，谁就赢；后到的一方失败的方式和内部第二笔预订失败完全一样。输的一方会进入对账流程，而不是被静默丢弃：如果输的是平台自己已确认的预订（可能已经收款），触发自动退款和道歉流程；如果输的是外部渠道推来的事件，平台把冲突回报给该渠道自行处理。跨渠道同步天然是最终一致的，因为两个系统不共享同一个数据库事务，所以这条对账路径是必须存在的机制，不是一个可以忽略的边缘情况。",
+    "tags": []
+  },
+  {
+    "id": "problems-hotel-reservation-10x-inventory-sharding",
+    "node": "problems.commerce.hotel-reservation",
+    "type": "qa",
+    "q": "In a hotel/marketplace reservation system storing one inventory row per room-type per night over a 365-day booking window, what happens to the inventory table's row count at 10x listing scale (6 million to 60 million listings), and what architectural change does that force?",
+    "a": "Row count scales linearly with listings: at 6 million listings (about 9 million room-types) the table holds roughly 3.3 billion rows; at 60 million listings it grows to roughly 33 billion rows, which starts to strain even a sharded relational cluster. This forces the inventory table toward coarser geographic physical sharding (on top of sharding by room-type) and time-window tiering — keeping the near-term booking window (e.g. the next 90 days, where the overwhelming majority of bookings land) on high-performance storage while pushing the far-future window to cheaper storage, rather than treating the full 365-day window as uniformly hot.",
+    "q_zh": "在一个按'每个房型每晚一行、开放未来 365 天预订窗口'存储库存的酒店/民宿预订系统里，房源数增长 10 倍（600 万到 6000 万）时，库存表的行数会发生什么变化？这会迫使架构做出什么改变？",
+    "a_zh": "行数随房源数线性增长：600 万房源（约 900 万房型）时库存表约有 32.85 亿行；6000 万房源时会涨到约 328.5 亿行，此时即便是分片良好的关系型集群也开始吃力。这会迫使库存表转向更粗粒度的地理物理分片（在按房型分片之上再加一层），并按时间窗口做分层存储——把近期预订窗口（比如未来 90 天，绝大多数预订都落在这个区间）放在高性能存储上，把更远的窗口挪到更廉价的存储上，而不是把整个 365 天窗口都当成同等热度的数据对待。",
+    "tags": []
+  }
+]
