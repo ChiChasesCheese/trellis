@@ -24,3 +24,8 @@ delta 是新效果减旧效果，而不是新效果本身），并且用重新�
 身上——两个角色的扣分被调换了。此外它的 `accept_answer` 一旦设置过 `accepted_answer` 就
 永远不能再改（`if self.accepted_answer is None`），不支持"改指到另一个回答"；也完全没有
 关闭或删除问题的实现。这两处都是本题解第 3 关特意要做对的地方。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/stack-overflow.md)
+%% trellis:end %%

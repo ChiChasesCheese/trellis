@@ -11,3 +11,8 @@ tags: [no-archive]
 查询的二级索引维护讲得比本题解细，适合对照着读。本题解刻意不建二级索引：几千场的量级上，索引
 的一致性成本高于它省下的扫描时间，而且 Manager 分层在这道题里容易退化成只转发一次调用的空壳。
 仓库没有 LICENSE 文件，只链接、不摘抄。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/prsnt558908/CodeZymSolutions/tree/main/1-100/q10_movie_booking_app)
+%% trellis:end %%

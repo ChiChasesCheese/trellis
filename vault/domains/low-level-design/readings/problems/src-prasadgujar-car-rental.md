@@ -16,3 +16,8 @@ tags: [no-archive]
 车"取决于车**将会**在哪。本题解把库存单位定成带 `origin` / `destination` 的一段行程，并把
 "门店首尾相接 + 周转缓冲"写成唯一一条不变量；迟还挤占、事故封车、改派都复用这条判据，
 这些在清单里都没有出现。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/prasadgujar/low-level-design-primer/blob/master/solutions.md)
+%% trellis:end %%

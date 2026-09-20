@@ -10,3 +10,8 @@ url: https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/lo
 这种最常见的需求它答不出来；也完全没有 logger 层级与传播。本题解用 handler 列表 + 两层阈值
 （logger 省开销、handler 做分流）取代它的单 appender，用模块级实例取代 `__new__` 单例，理由都在
 "关键设计决策"里。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/logging-framework.md)
+%% trellis:end %%

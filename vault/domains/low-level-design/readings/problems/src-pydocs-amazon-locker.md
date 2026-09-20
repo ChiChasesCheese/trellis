@@ -11,3 +11,11 @@ url: https://docs.python.org/3/library/secrets.html
 本题解用 `secrets.choice` 从 31 个去掉了 0/O/1/I/L 的字符里取 8 位——可读性也是安全性的一
 部分，让人在小键盘上输错的码是白白消耗的爆破额度。同页的 `secrets.token_hex` 和
 `compare_digest` 在"把码哈希后落库"那一步会用上。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://docs.python.org/3/library/secrets.html)
+
+## Archived copy
+![[src-pydocs-amazon-locker-clip]]
+%% trellis:end %%

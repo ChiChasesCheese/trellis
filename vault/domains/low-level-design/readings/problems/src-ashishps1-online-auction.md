@@ -17,3 +17,8 @@ url: https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/on
 它的通知机制（`auction_observer.py`）是一个抽象基类加 `on_bid_update` 方法，本题解把观察者
 换成一个普通的 `Callable[[AuctionEvent], None]`，事件自带现价、领先者与结束时间，订阅者
 不必回头去问 `Auction` 要数据。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/online-auction-system.md)
+%% trellis:end %%

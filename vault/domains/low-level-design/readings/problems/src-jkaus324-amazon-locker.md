@@ -13,3 +13,8 @@ tags: [no-archive]
 体积排序，新增尺寸时无需改表；它把通知做成一组必须注册的 `NotificationChannel`，本题解只
 发一条不带取件码的事件，短信推送只是众多订阅者之一。实现是五种语言的同一份 Java 风格设计。
 （仓库无 LICENSE，只链接不复制。）
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/jkaus324/machine-coding-interview-questions/tree/main/problems/tier2-intermediate/016-amazon-locker)
+%% trellis:end %%

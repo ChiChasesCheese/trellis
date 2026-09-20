@@ -11,3 +11,11 @@ url: https://github.com/jkaus324/machine-coding-interview-questions/tree/main/pr
 代价：发布贵、阅读几乎免费），"关键设计决策"一节里用同一个 k 路归并的直觉去谈大V的读时合并，
 方向相反、道理相通。五种语言实现，Python 版可读性最好，但两个版本都没有"好友"与"关注"分离、
 也没有拉黑，属于社交图谱里更简单的一个子问题。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/jkaus324/machine-coding-interview-questions/tree/main/problems/tier2-intermediate/018-twitter)
+
+## Archived copy
+![[src-jkaus324-social-network-clip]]
+%% trellis:end %%

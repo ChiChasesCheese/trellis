@@ -13,3 +13,8 @@ tags: [no-archive]
 它用 `CacheFactory` 组装对象，在 Python 里这是一个函数的事；
 `Storage` 接口上的 `getSize()` 这类 getter，Python 里应当是 `@property` 或 `__len__`。
 仓库无 LICENSE 文件，故只链接不摘录。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/anomaly2104/cache-low-level-system-design)
+%% trellis:end %%

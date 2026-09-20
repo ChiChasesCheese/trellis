@@ -15,3 +15,8 @@ tags: [no-archive]
 是因为一间房今晚被住了，明晚它还在这家店；一辆异地还车的车走了就不回来了，任何按门店计数的
 结构都表达不了"它那时候会在哪"。复习时把这几道题放在一起对比很值得，但要对比的是它们**不同**的
 那一半，而不是照搬。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://algomaster.io/learn/lld)
+%% trellis:end %%

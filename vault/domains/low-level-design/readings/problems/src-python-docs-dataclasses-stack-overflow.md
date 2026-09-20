@@ -10,3 +10,11 @@ url: https://docs.python.org/3/library/dataclasses.html
 都可能让增量缓存和重放结果对不上；`frozen=True` 把这条不变量交给解释器在赋值时报错，
 而不是靠代码审查去保证。`slots=True` 则是这套系统里几十万条事件在内存里堆起来时，一个
 不需要额外争论的从属优化。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://docs.python.org/3/library/dataclasses.html)
+
+## Archived copy
+![[src-python-docs-dataclasses-stack-overflow-clip]]
+%% trellis:end %%

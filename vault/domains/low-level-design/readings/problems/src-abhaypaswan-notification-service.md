@@ -10,3 +10,11 @@ url: https://github.com/abhaypaswan/lld-python/tree/main/problems/notification-s
 `RetryingChannel(RateLimitedChannel(DeduplicatingChannel(EmailChannel())))`。本题解在"关键设计
 决策"第一条里明确不采用——每个渠道都要各自包一遍，而且跨渠道的用户级限额与优先级在装饰链里
 没有位置（它的实现也确实没有优先级这一关）。同步发送、注入时钟、注入传输这三点两边一致。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/abhaypaswan/lld-python/tree/main/problems/notification-service)
+
+## Archived copy
+![[src-abhaypaswan-notification-service-clip]]
+%% trellis:end %%

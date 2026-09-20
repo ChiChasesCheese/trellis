@@ -20,3 +20,8 @@ url: https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/ca
 另外它没有门店、没有取还车状态机、没有迟还与事故处理，`RentalSystem` 还是 `get_instance()` 单例。
 本题解相应地改成：库存单位是"一辆车在时间轴上的一段行程"，可用性判据同时管时间与位置，
 查与占在同一把锁里，迟还／还错门店／事故封车收敛成同一次"改写 + 修复时间轴"。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/car-rental-system.md)
+%% trellis:end %%

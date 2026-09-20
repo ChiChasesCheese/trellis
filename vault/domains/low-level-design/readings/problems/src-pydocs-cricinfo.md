@@ -8,3 +8,11 @@ url: https://docs.python.org/3/library/dataclasses.html#dataclasses.replace
 给定的字段，产生一个新实例。这是本文 `_add_batter`/`_add_bowler` 在"给一份不可变统计对象
 产生下一个版本"这个模式上的直接依据，比手动复制全部字段再逐一赋值更短，也更不容易在加
 字段时漏改一处。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://docs.python.org/3/library/dataclasses.html#dataclasses.replace)
+
+## Archived copy
+![[src-python-docs-dataclasses-stack-overflow-clip]]
+%% trellis:end %%

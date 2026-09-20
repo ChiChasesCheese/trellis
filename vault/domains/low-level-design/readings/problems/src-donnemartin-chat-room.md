@@ -10,3 +10,11 @@ url: https://github.com/donnemartin/system-design-primer/tree/master/solutions/o
 `message_group` 只有方法签名和 `pass`，投递、持久化都留空。本题解用一个 `is_direct: bool` 字段
 而不是子类区分单聊群聊（两者除了成员数没有任何字段或行为差异，继承不出的额外语义），并且用
 **服务端到达顺序**（`seq`）取代客户端时间戳排序——"关键设计决策"第一条就是这一点。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/donnemartin/system-design-primer/tree/master/solutions/object_oriented_design/online_chat)
+
+## Archived copy
+![[src-donnemartin-chat-room-clip]]
+%% trellis:end %%

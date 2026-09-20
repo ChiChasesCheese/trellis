@@ -11,3 +11,11 @@ url: https://docs.python.org/3/library/logging.html
 `QueueHandler`/`QueueListener`/`RotatingFileHandler` 的现成形态。本题解在第 1、2 条上与它完全
 一致并写了测试钉死；唯一故意的偏离是用 `level: LogLevel | None` 取代 `NOTSET = 0`，因为 0 同时
 表示"一个级别"和"没设过"是这份 API 里最容易误用的一处。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://docs.python.org/3/library/logging.html)
+
+## Archived copy
+![[src-pydocs-logger-clip]]
+%% trellis:end %%

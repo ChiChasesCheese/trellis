@@ -11,3 +11,8 @@ url: https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/on
 没有"预留"这个中间态，于是加购到下单之间的超卖窗口完全没有被处理；`OnlineShoppingService`
 是 Singleton；订单状态只是一个枚举字段，没有任何转移约束，也没有跨支付/库存/履约的补偿。
 本题解在"关键设计决策"和"常见错误"两节逐条说明了为什么不这样做。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/online-shopping-service.md)
+%% trellis:end %%

@@ -20,3 +20,8 @@ tags: [no-archive]
 分歧也有两处。它的模型比本题解更物理：书架、空位、上架路径都要建模，而本题解把物理位置放进了
 「范围之外」，把预算花在预约队列上。反过来，它**没有**要求预约队列、罚金与续借，而那三样正是
 本题解着墨最多的地方——尤其是「预约的人不来取怎么办」，那是整道题唯一的泄漏点。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://workat.tech/machine-coding/practice/design-library-management-system-jgjrv8q8b136/index.html)
+%% trellis:end %%

@@ -13,3 +13,8 @@ tags: [no-archive]
 它的价值是**定位**而不是范本：目录告诉你这道题该和哪些概念一起复习，但具体实现仍然沿用
 "每个颜色一个状态类 + 时长写死"的经典形态，和本题解选择的"枚举三段 + 冲突图 + tick 驱动"
 不同——三个阶段的行为差异只有两行时，六个状态类换不回任何东西。商业站点，只链接不摘录。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://algomaster.io/learn/lld)
+%% trellis:end %%

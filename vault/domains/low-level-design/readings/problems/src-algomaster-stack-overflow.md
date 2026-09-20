@@ -13,3 +13,8 @@ tags: [no-archive]
 
 文章明确说关闭与删除问题超出了它设定的需求范围，没有实现——本题解第 3 关正是要把这两个
 行为、以及它们对回答的影响说清楚。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://algomaster.io/learn/lld/design-stack-overflow)
+%% trellis:end %%

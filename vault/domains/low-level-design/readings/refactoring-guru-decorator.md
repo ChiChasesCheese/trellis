@@ -25,7 +25,4 @@ difference anywhere free.
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://refactoring.guru/design-patterns/decorator)
-
-## Archived copy
-![[refactoring-guru-decorator-clip]]
 %% trellis:end %%

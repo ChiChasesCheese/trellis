@@ -19,3 +19,11 @@ url: https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/li
 第三，`LinkedInService`"遵循单例模式，保证系统里只有一个实例"——这是一处教科书式的
 Java 单例误用：它唯一的效果是让测试没法构造两个互不干扰的网络实例，这道题的测试恰恰
 需要很多个。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/linkedin.md)
+
+## Archived copy
+![[src-github-linkedin-clip]]
+%% trellis:end %%

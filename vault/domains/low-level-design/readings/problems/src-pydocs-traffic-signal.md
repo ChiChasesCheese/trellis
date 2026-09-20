@@ -13,3 +13,11 @@ url: https://docs.python.org/3/library/typing.html#typing.Protocol
 只查方法名，不查签名，所以别把它当类型检查用）；协议里的方法体写 `...` 就够，不必
 `raise NotImplementedError`——协议不是用来被继承的。什么时候仍然该用抽象基类？当你想给所有
 实现一段共享的具体代码时；配时方案没有这种共享代码，所以协议是更轻的那一个。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://docs.python.org/3/library/typing.html#typing.Protocol)
+
+## Archived copy
+![[src-pydocs-traffic-signal-clip]]
+%% trellis:end %%

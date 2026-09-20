@@ -10,3 +10,8 @@ BOOKED / OCCUPIED）加一张 `Reservation` 列表，也就是"每间房一条�
 Singleton，并发靠 synchronized 方法。本题解在三点上明确反着做：库存单位是"房型 × 一晚"的计数
 而不是房间状态（一个房间状态字段没法表达"下周二这间房已经被订了"）、房号到入住才绑定、拒绝
 Singleton。它的支付方式抽象在本题解里被整块省掉，因为那属于另一道题。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/hotel-management-system.md)
+%% trellis:end %%

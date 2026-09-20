@@ -11,3 +11,8 @@ tags: [no-archive]
 本题解在三处反着做，并在"关键设计决策"里逐条给出理由：棋子不存坐标（否则棋盘和棋子是两份真源，
 每次试走都要同步）、棋子只**生成**落点而不判合法（合法性是整个局面的性质，牵制让棋子答不了这个问题）、
 将死不是一个单独的算法而是"没有合法着法 + 王在将中"的推论。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/chess-game.md)
+%% trellis:end %%

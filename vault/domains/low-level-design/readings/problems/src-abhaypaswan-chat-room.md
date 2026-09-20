@@ -13,3 +13,11 @@ url: https://github.com/abhaypaswan/lld-python/tree/main/problems/chat-room
 再包一层"中介者"对象只是多一层不增加信息的转发，"关键设计决策"里有一条专门讲这个取舍。direct
 message 在该实现里刻意跳过历史记录以保护隐私；本题解选择让单聊复用完全相同的历史与已读机制
 （"核心对象与职责"一节说明了为什么）。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/abhaypaswan/lld-python/tree/main/problems/chat-room)
+
+## Archived copy
+![[src-abhaypaswan-chat-room-clip]]
+%% trellis:end %%

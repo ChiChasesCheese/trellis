@@ -12,3 +12,8 @@ tags: [no-archive]
 把它和本题解并排看，能清楚看到"加一个参与方"让难度跳了一级：一旦骑手进来，状态机就必须回答
 "谁有权走这条边"，派单时机也才成为一个问题。它的评分规则（rating 是所有评价的平均）可以
 当作本题第 4 关的一个额外追问。（仓库无 LICENSE，只链接不复制。）
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/kumaransg/LLD/tree/main/FoodKart)
+%% trellis:end %%

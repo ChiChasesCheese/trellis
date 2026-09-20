@@ -12,3 +12,11 @@ url: https://docs.python.org/3/library/enum.html
 三十行 `if`。配套要读的是[`threading`](https://docs.python.org/3/library/threading.html)：
 `Restaurant.quote` 的"校验可售 + 抄下价格"和 `CourierPool.assign` 的"查空闲 + 写占用"都靠
 `Lock` 合成一次原子操作，GIL 两件事都不负责。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://docs.python.org/3/library/enum.html)
+
+## Archived copy
+![[src-python-docs-enum-linkedin-clip]]
+%% trellis:end %%

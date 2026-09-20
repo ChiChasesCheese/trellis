@@ -10,3 +10,8 @@ tags: [no-archive]
 配房逻辑做成了 `FirstAvailable`/`BestFit`/`PriorityBased` 三个只有一个方法的策略类，`bookMeeting`
 没有任何锁保护，也没有周期会议、多人找空档、时区的建模。本文在这三点上明确反着做，见「关键设计
 决策」决策二、六。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/jkaus324/machine-coding-interview-questions/tree/main/problems/tier2-intermediate/009-meeting-scheduler)
+%% trellis:end %%

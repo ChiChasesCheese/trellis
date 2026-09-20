@@ -12,3 +12,8 @@ url: https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/mu
 优先花在了这里，而不是重复它已经做得足够好的曲库建模。它的免费/付费播放策略（插播广告）
 是一处正当的策略模式用例——订阅等级在运行时决定用哪个实现，和本文播放器状态不建类层级的
 理由（差异太小）互相印证：判据是差异有多大，不是"看起来像状态/策略"。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/music-streaming-service.md)
+%% trellis:end %%

@@ -10,3 +10,8 @@ tags: [no-archive]
 局面（两边都还能双向易位、满盘牵制与吃子）是 1 层 48、2 层 2039。设计轮不需要写引擎，
 但这几个数字是**走法生成唯一一条便宜又彻底的正确性保险**：一旦对上，伪合法生成、合法性过滤、
 易位、吃过路兵、升变，以及落子与回滚是否严格互逆，全部被一次性验到。本题解的测试就用了这两组数。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.chessprogramming.org/Perft_Results)
+%% trellis:end %%

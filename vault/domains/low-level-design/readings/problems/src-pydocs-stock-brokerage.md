@@ -14,3 +14,11 @@ O(价位数)，而不是 O(log 订单数)；其二，文档明确建议把 `bise
 这句话上，而 `dict` 的按键删除是 O(1)，这正是它比 `deque` 更适合当撤单频繁的队列的理由；
 以及 [`heapq` 的 Priority Queue Implementation Notes](https://docs.python.org/3/library/heapq.html)，
 它自己讨论了堆无法删除任意元素、只能标记为已删除，以及由此堆积的垃圾——那是订单簿否决堆的依据。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://docs.python.org/3/library/bisect.html)
+
+## Archived copy
+![[src-pydocs-stock-brokerage-clip]]
+%% trellis:end %%

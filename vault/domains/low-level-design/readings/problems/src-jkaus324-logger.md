@@ -11,3 +11,8 @@ tags: [no-archive]
 队列满时的丢弃计数；本题解把 flush → drain → join 的关闭三步和 `dropped_count` 列成了第 3 关的
 硬性评分点，并用一个"八线程写满 800 条、队列只有 16 个位置、关闭后一条不少"的测试把它钉死。
 仓库没有 LICENSE 文件，因此只链接、不归档。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/jkaus324/machine-coding-interview-questions/tree/main/problems/tier2-intermediate/020-logger-system)
+%% trellis:end %%

@@ -10,3 +10,8 @@ tags: [no-archive]
 和本题"进程内库组件"的定位不同，读时要自行切换语境，否则很容易在机器编码轮里跑题。
 它也没有展开本题解最看重的两件事：按 key 的状态如何回收（一百万个 IP 怎么办），
 以及多条规则同时生效时"先全查、全过才全扣"的两阶段判定。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.hellointerview.com/learn/low-level-design/problem-breakdowns/rate-limiter)
+%% trellis:end %%

@@ -9,3 +9,11 @@ url: https://docs.python.org/3/library/datetime.html#datetime.date
 `timedelta(days=1)`。文档里关于 `date` 与 `datetime` 的区别、以及 `weekday()` 的取值
 （周一是 0）值得确认一遍：周末加价和按周中超卖两条政策都直接读它。不要用 `datetime` 表示
 "哪一晚"——带上时分秒之后，作为字典键就再也对不齐了。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://docs.python.org/3/library/datetime.html#datetime.date)
+
+## Archived copy
+![[src-pydocs-hotel-booking-clip]]
+%% trellis:end %%

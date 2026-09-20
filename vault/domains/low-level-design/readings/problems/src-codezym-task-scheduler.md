@@ -14,3 +14,8 @@ balancing），不涉及时间、不涉及延时或周期执行、没有堆。�
 `pop_due`"是同一种"扩展点设计在数据结构里，而不是设计成新增分支"的思路，值得对照着看。
 这道题的核心数据结构是一个按机器分组的候选集合加 `min(key=...)`，不是按时间排序的堆，
 所以"到期"与"取消"这两个本题解真正的难点，在这道题里都不存在。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/prsnt558908/CodeZymSolutions/tree/main/q22_job_scheduler)
+%% trellis:end %%

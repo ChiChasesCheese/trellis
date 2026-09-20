@@ -1,12 +1,10 @@
 %% trellis:begin %%
-# DRY, KISS, YAGNI
-*Design Principles*
+# DRY、KISS、YAGNI
+*设计原则（Design Principles）*
 
-The simplicity principles and their failure mode — premature abstraction and speculative generality.
+简单性原则及其失败模式——过早抽象与臆想的通用性。
 
-**Core** — part of the first pass through this subject.
-
-**Unlocks:** [[domains/low-level-design/map/patterns.selection|Choosing (and Refusing) Patterns]]
+**Unlocks:** [[domains/low-level-design/map/patterns.selection|选择与拒绝模式]]
 
 ## Readings
 - [[fowler-yagni|Yagni (Martin Fowler, bliki)]]
@@ -15,11 +13,11 @@ The simplicity principles and their failure mode — premature abstraction and s
 - [[qs-unify-the-declaration-fork-the-implementation|Unify the declaration, fork the implementation]] — `quant-stroller`
 
 ## Cards (5)
-1. [[principles-dry-limit]]
-2. [[principles-shallow-abstraction-test]]
-3. [[principles-speculative-generality]]
-4. [[principles-unwinding-wrong-abstraction]]
-5. [[principles-yagni-in-round]]
+1. [[principles-yagni-in-round]]
+2. [[principles-speculative-generality]]
+3. [[principles-shallow-abstraction-test]]
+4. [[principles-dry-limit]]
+5. [[principles-unwinding-wrong-abstraction]]
 %% trellis:end %%
 
 ## Notes

@@ -12,3 +12,8 @@ tags: [no-archive]
 不同之处：它更偏服务端视角（分布式锁、数据库事务、乐观并发控制），本题解是单进程内存模型，
 用注入的时钟 + 一把可重入锁把同一条不变式守住，并把分布式那部分的取舍放到"扩展与追问"里讲；
 它也不涉及订单状态机与跨参与方的补偿。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.hellointerview.com/learn/low-level-design/problem-breakdowns/inventory-management)
+%% trellis:end %%

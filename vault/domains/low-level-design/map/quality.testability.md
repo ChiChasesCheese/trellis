@@ -1,23 +1,21 @@
 %% trellis:begin %%
-# Designing for Tests
-*Code Quality*
+# 为测试而设计
+*代码质量（Code Quality）*
 
-Seams, constructor injection, test double taxonomy, and why static/global state kills testability.
+接缝、构造函数注入、测试替身分类，以及全局/静态状态为什么扼杀可测性。
 
-**Core** — part of the first pass through this subject.
+**Requires:** [[domains/low-level-design/map/principles.coupling|耦合、内聚与依赖注入]]
 
-**Requires:** [[domains/low-level-design/map/principles.coupling|Coupling, Cohesion & DI]]
-
-**Unlocks:** [[domains/low-level-design/map/quality.fitness-functions|Fitness Functions]]
+**Unlocks:** [[domains/low-level-design/map/quality.fitness-functions|适应度函数（Fitness Functions）]]
 
 ## Readings
 - [[fowler-mocks-arent-stubs|Mocks Aren't Stubs (Martin Fowler)]]
 
 ## Cards (4)
-1. [[quality-constructor-injection]]
-2. [[quality-global-state-tests]]
-3. [[quality-seams-di]]
-4. [[quality-test-doubles]]
+1. [[quality-seams-di]]
+2. [[quality-constructor-injection]]
+3. [[quality-test-doubles]]
+4. [[quality-global-state-tests]]
 %% trellis:end %%
 
 ## Notes

@@ -12,3 +12,11 @@ README 用一行 ASCII 输出把**边界突发**演示得极直观——同一�
 `check`，子类只答 `_used`／`_retry_after`／`commit`；它的状态回收是 `forget_idle(older_than)`，
 正确性依赖调用方传对阈值，本题解改用"状态与新建等价即可丢"的 `is_idle` 不变量；
 它没有锁，也没有"同时按用户和按接口"的两阶段组合判定。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/abhaypaswan/lld-python/tree/main/problems/rate-limiter)
+
+## Archived copy
+![[src-abhaypaswan-rate-limiter-clip]]
+%% trellis:end %%

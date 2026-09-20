@@ -10,3 +10,11 @@ url: https://docs.python.org/3/library/queue.html
 削峰与背压（调用方不等结果），资源池解决的是并发度上限（调用方一直在等结果）。咖啡机的
 调用方就是站在机器前面按按钮的人，所以要的是后者。相比自己写 `Semaphore` 加一个 id 列表，
 队列还白送了编号，于是事件里能写出"这杯从 outlet-2 出"。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://docs.python.org/3/library/queue.html)
+
+## Archived copy
+![[src-python-docs-queue-thread-pool-clip]]
+%% trellis:end %%

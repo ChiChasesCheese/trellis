@@ -11,3 +11,8 @@ url: https://github.com/kumaransg/LLD/tree/main/StockExchange
 枚举。与本题解唯一但关键的分歧在成交价规则：它规定"成交一律记在**卖单**的价上"，所以在
 "买单先挂、更低价的卖单后到"那一笔上，它让买家按 236.00 成交，而本题解按挂单方（买方）
 公布的 237.80 成交。看懂这处差别，就看懂了 maker/taker 的价格改善归谁。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/kumaransg/LLD/tree/main/StockExchange)
+%% trellis:end %%

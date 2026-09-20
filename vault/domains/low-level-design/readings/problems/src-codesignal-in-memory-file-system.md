@@ -11,3 +11,11 @@ url: https://github.com/PaulLockett/CodeSignal_Practice_Industry_Coding_Framewor
 父子关系，`size`/`copy`/`remove` 因此是对树的递归而不是对所有路径的一次线性扫描，代价
 换来的是"复制一个目录、改动复制出来的那份不影响原目录"这类需求可以直接靠深拷贝子树
 回答，不需要额外发明一套前缀重写逻辑。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/PaulLockett/CodeSignal_Practice_Industry_Coding_Framework/tree/main/practice_assessments/file_storage)
+
+## Archived copy
+![[src-codesignal-in-memory-file-system-clip]]
+%% trellis:end %%

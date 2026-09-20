@@ -10,3 +10,11 @@ url: https://github.com/abhaypaswan/lld-python/tree/main/problems/logging-framew
 handler 的 `next` 指针串成一条链、没有 logger 层级，配置集中在一个双重检查锁的单例注册表里；
 本题解换成"logger 持有 handler 元组 + 按点分名字成树、记录沿祖先链向上"，并把它列为后续的
 异步写入（队列、排空、丢弃计数）和按大小滚动补成了第 3、4 关的硬要求。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/abhaypaswan/lld-python/tree/main/problems/logging-framework)
+
+## Archived copy
+![[src-abhaypaswan-logger-clip]]
+%% trellis:end %%

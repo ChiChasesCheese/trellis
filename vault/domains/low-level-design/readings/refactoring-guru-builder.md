@@ -24,7 +24,4 @@ construct".
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://refactoring.guru/design-patterns/builder)
-
-## Archived copy
-![[refactoring-guru-builder-clip]]
 %% trellis:end %%

@@ -10,3 +10,11 @@ url: https://docs.python.org/3/library/queue.html
 不是日志——取出即消失，给不了重放，也给不了多个订阅者各自的位点。但三种溢出策略的语义刻意与
 它保持一致（阻塞对应 `put(block=True)`，拒绝对应 `put_nowait` 抛 `Full`），这样面试时可以用
 一句"和标准库的 Queue 同义"把语义说清。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://docs.python.org/3/library/queue.html)
+
+## Archived copy
+![[src-python-docs-queue-thread-pool-clip]]
+%% trellis:end %%

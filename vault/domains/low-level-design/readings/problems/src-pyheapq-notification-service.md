@@ -10,3 +10,11 @@ url: https://docs.python.org/3/library/heapq.html
 入堆的任务"——标准答案是标记为失效而不是从堆里找出来删。本题解的重试堆键是
 `(到期时间, 递增序号, 信封)`，就是这一节的直接应用。顺带一提，这一节也解释了为什么本题的优先级
 车道**不**用堆：堆天然是严格优先级，低优先级会饿死，而分道加配额才能给出可配置的公平性。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://docs.python.org/3/library/heapq.html)
+
+## Archived copy
+![[src-pythondocs-ttl-cache-clip]]
+%% trellis:end %%

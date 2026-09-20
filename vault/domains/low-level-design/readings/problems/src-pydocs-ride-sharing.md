@@ -12,3 +12,11 @@ url: https://docs.python.org/3/library/fractions.html
 配套要读的是[`threading`](https://docs.python.org/3/library/threading.html)：本题解的
 `DriverPool` 靠 `Lock` 把"判断空闲"和"写入占用"合成一次原子操作，测试则用 `Barrier` 让
 二十个线程同时起跑；这两件事 GIL 都不负责。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://docs.python.org/3/library/fractions.html)
+
+## Archived copy
+![[src-pydocs-ride-sharing-clip]]
+%% trellis:end %%

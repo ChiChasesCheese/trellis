@@ -13,3 +13,8 @@ tags: [no-archive]
 Python 里一个工厂函数（甚至一个 lambda）就够了，`@property` 取代 getter。
 并发部分它止步于"加一把全局锁"，也没有讨论按 key 的状态怎么回收——而这两点正是本题解第 3 关的重心。
 仓库无 LICENSE 文件，故只链接不摘录。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/jkaus324/machine-coding-interview-questions/tree/main/problems/tier1-foundation/011-rate-limiter)
+%% trellis:end %%

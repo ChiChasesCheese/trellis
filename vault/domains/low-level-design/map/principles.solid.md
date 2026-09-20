@@ -1,8 +1,10 @@
 %% trellis:begin %%
 # SOLID
-*Design Principles*
+*设计原则（Design Principles）*
 
-The five principles as concrete refactoring triggers, with the violation each one detects.
+五条原则各自作为重构触发器：每条检测的是哪一种违例。
+
+**Core** — part of the first pass through this subject.
 
 ## Readings
 - [[cleancoder-srp|The Single Responsibility Principle (Robert C. Martin)]]
@@ -12,12 +14,12 @@ The five principles as concrete refactoring triggers, with the violation each on
 - [[qs-sink-the-shared-type-dont-invert-the-layer|When a low layer needs a high layer's type, sink the type]] — `quant-stroller`
 
 ## Cards (6)
-1. [[principles-dip-trigger]]
-2. [[principles-isp-trigger]]
-3. [[principles-lsp-signals]]
-4. [[principles-ocp-trigger]]
-5. [[principles-solid-acronym]]
-6. [[principles-srp-trigger]]
+1. [[principles-solid-acronym]]
+2. [[principles-srp-trigger]]
+3. [[principles-ocp-trigger]]
+4. [[principles-lsp-signals]]
+5. [[principles-isp-trigger]]
+6. [[principles-dip-trigger]]
 %% trellis:end %%
 
 ## Notes

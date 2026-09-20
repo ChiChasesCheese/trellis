@@ -13,3 +13,8 @@ tags: [no-archive]
 成立，但只有后者需要面对独占、超时与拒单。它几乎不涉及并发，也没有显式的行程状态机，
 状态只是 `Ride` 上的一个 `active` 布尔值。实现是五种语言的同一份设计。（仓库无 LICENSE，
 只链接不复制。）
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/jkaus324/machine-coding-interview-questions/tree/main/problems/tier2-intermediate/021-ride-sharing)
+%% trellis:end %%

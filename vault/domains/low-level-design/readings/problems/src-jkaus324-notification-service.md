@@ -10,3 +10,11 @@ url: https://github.com/jkaus324/machine-coding-interview-questions/tree/main/pr
 渠道做 observer、事件来了逐个 `update()`，于是偏好判断散落在每个 observer 内部，而且没有地方
 安放队列、优先级与用户级限额；本题解把偏好收进一个 `decide()`，把投递收进一条分道队列，
 渠道退回成只有 `channel` 和 `send` 的策略对象。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/jkaus324/machine-coding-interview-questions/tree/main/problems/tier1-foundation/003-notification-system)
+
+## Archived copy
+![[src-jkaus324-notification-service-clip]]
+%% trellis:end %%

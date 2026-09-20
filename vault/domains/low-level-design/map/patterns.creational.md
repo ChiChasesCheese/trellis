@@ -1,8 +1,8 @@
 %% trellis:begin %%
-# Creational Patterns
-*Design Patterns*
+# 创建型模式（Creational）
+*设计模式（Design Patterns）*
 
-Singleton, factory method, abstract factory, builder, prototype — who creates objects and how flexibly.
+工厂方法、抽象工厂、建造者、原型、单例——以及 Python 里模块、类方法和关键字参数如何取代其中大半。
 
 ## Readings
 - [[refactoring-guru-builder|Builder (refactoring.guru)]]
@@ -11,15 +11,12 @@ Singleton, factory method, abstract factory, builder, prototype — who creates 
 ## Cases
 - [[qs-sealed-constructor-as-unforgeable-permission|Sealed constructors: when holding the object is the proof]] — `quant-stroller`
 
-## Drills
-- [[parking-lot|Drill: Parking Lot]]
-
 ## Cards (6)
-1. [[patterns-builder-when]]
-2. [[patterns-creational-cues]]
+1. [[patterns-creational-cues]]
+2. [[patterns-simple-factory-enough]]
 3. [[patterns-factory-method-vs-abstract-factory]]
-4. [[patterns-prototype-when]]
-5. [[patterns-simple-factory-enough]]
+4. [[patterns-builder-when]]
+5. [[patterns-prototype-when]]
 6. [[patterns-singleton-costs]]
 %% trellis:end %%
 

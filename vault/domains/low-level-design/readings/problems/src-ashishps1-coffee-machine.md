@@ -11,3 +11,8 @@ url: https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/co
 是整份扣减——否则就会出现"扣了牛奶没扣咖啡"的半杯；它的 `CoffeeMachine` 是单例，而测试必须
 能同时造出两台互不干扰的机器；它没有讨论临界区的边界（冲煮要不要在锁里），而那恰恰是这道题
 唯一真正的考点。它还把支付和找零一起放了进来，本文把那部分留给售货机那道题。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/coffee-vending-machine.md)
+%% trellis:end %%

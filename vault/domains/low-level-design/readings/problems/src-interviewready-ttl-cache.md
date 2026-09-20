@@ -12,3 +12,8 @@ tags: [no-archive]
 因此没有到期索引、没有墓碑压实，也没有单飞（single-flight）这条防缓存踩踏的闸；
 类层次也是 Java 味的多层接口，Python 里只有一个实现的接口是负担而不是扩展点。
 仓库无 LICENSE 文件，故只链接不摘录。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/InterviewReady/Low-Level-Design/tree/main/distributed-cache)
+%% trellis:end %%

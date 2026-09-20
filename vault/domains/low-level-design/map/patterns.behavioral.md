@@ -1,28 +1,24 @@
 %% trellis:begin %%
-# Behavioral Patterns
-*Design Patterns*
+# 其余行为型模式（Behavioral）
+*设计模式（Design Patterns）*
 
-Strategy, observer, command, state, template method, iterator, chain of responsibility, mediator, memento, visitor.
-
-**Core** — part of the first pass through this subject.
-
-**Unlocks:** [[domains/low-level-design/map/structure.state-machines|State Machines]]
+迭代器、模板方法、责任链、中介者、备忘录、访问者：意图、适用条件、Python 写法。
 
 ## Readings
 - [[gpp-observer|Observer (Game Programming Patterns, Bob Nystrom)]]
 - [[refactoring-guru-patterns|Design Patterns Catalog (refactoring.guru)]]
 
 ## Drills
-- [[elevator-system|Drill: Elevator System]]
+- [[design-text-editor|Drill：文本编辑器与撤销重做（Text Editor）]]
 
 ## Cards (7)
-1. [[patterns-chain-of-responsibility]]
-2. [[patterns-command-when]]
-3. [[patterns-memento-vs-command-undo]]
-4. [[patterns-observer-mediator-pubsub]]
-5. [[patterns-strategy-vs-state]]
-6. [[patterns-template-method-vs-strategy]]
-7. [[patterns-visitor-tradeoff]]
+1. [[patterns-iterator-python]]
+2. [[patterns-chain-of-responsibility]]
+3. [[patterns-mediator-when]]
+4. [[patterns-memento-what]]
+5. [[patterns-template-method-vs-strategy]]
+6. [[patterns-visitor-tradeoff]]
+7. [[patterns-visitor-python-alternative]]
 %% trellis:end %%
 
 ## Notes

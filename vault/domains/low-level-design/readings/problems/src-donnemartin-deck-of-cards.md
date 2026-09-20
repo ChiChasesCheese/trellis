@@ -11,3 +11,11 @@ url: https://github.com/donnemartin/system-design-primer/tree/master/solutions/o
 第二个游戏无处安放——战争里 A 最大、21 点里 A 是 1 或 11）、`Deck` 不交出内部列表、A 的点数
 用"最多一张 A 能算 11"的一次加法代替 2ⁿ 枚举、牌是 `frozen` 的值对象（没有 setter，
 "有没有被发出去"是牌堆的状态而不是牌的状态）。仓库根目录的 `LICENSE.txt` 是 CC BY 4.0。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/donnemartin/system-design-primer/tree/master/solutions/object_oriented_design/deck_of_cards)
+
+## Archived copy
+![[src-donnemartin-deck-of-cards-clip]]
+%% trellis:end %%

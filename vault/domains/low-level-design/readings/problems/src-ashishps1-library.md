@@ -22,3 +22,8 @@ url: https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/li
 `get_instance()` 单例，还为检索建了一组 `SearchByXxxStrategy` 类。本题解相应地改成：书目与副本
 分离、预约是真正的 FIFO 队列加带到期时刻的取书架、分配规则收敛成一个惰性 `_sweep`、
 政策做成一张按 (读者类型, 介质) 查的表、失败路径是一个小异常层级。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/library-management-system.md)
+%% trellis:end %%

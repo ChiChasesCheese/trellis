@@ -12,3 +12,8 @@ TODO/IN_PROGRESS/DONE/BLOCKED 四段，非法转移时用 `print` 打印一句�
 两件事——每个状态一个类、以及硬编码的三/四段式——的一个真实反例；本文用一张按看板各自声明
 的转移表取代它，非法转移抛 `IllegalTransitionError`。它的 `TaskList` 也没有位置的概念，
 任务只是 `append` 进一个列表，没有讨论"插入到中间"要付出的代价。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/task-management-system.md)
+%% trellis:end %%

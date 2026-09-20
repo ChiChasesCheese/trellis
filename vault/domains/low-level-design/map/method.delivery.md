@@ -1,22 +1,21 @@
 %% trellis:begin %%
-# Round Structure
-*Machine Coding Method*
+# 作答节奏（Delivery Framework）
+*作答方法（Machine Coding Method）*
 
-Requirement scoping, choosing core flows, time-boxing design vs code vs demo, driving the session.
+澄清需求、选核心流程、设计/编码/演示的时间盒，以及如何主导这一小时。
+
+**Core** — part of the first pass through this subject.
 
 ## Readings
 - [[awesome-low-level-design|awesome-low-level-design (ashishps1)]]
 - [[hellointerview-delivery|The Low Level Design Delivery Framework (Hello Interview)]]
 
-## Drills
-- [[elevator-system|Drill: Elevator System]]
-
 ## Cards (5)
-1. [[method-design-pitch-before-coding]]
-2. [[method-final-twenty-minutes]]
-3. [[method-running-out-of-time]]
-4. [[method-scope-first-move]]
-5. [[method-time-budget]]
+1. [[method-scope-first-move]]
+2. [[method-time-budget]]
+3. [[method-design-pitch-before-coding]]
+4. [[method-running-out-of-time]]
+5. [[method-final-twenty-minutes]]
 %% trellis:end %%
 
 ## Notes

@@ -11,3 +11,8 @@ tags: [no-archive]
 再 make/unmake 过滤"。两点不同值得对照：它把"这个子动过没有"留在棋子上，本题解改成棋盘上的
 易位权集合加一张"格子被离开或被吃就丢权"的小表（这样"车在原地被吃"不会漏）；它不跟踪三次重复，
 本题解用含该谁走、易位权、吃过路兵格的局面指纹实现了，并保证那张计数表会随悔棋收缩。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/abhaypaswan/lld-python/tree/main/problems/chess)
+%% trellis:end %%

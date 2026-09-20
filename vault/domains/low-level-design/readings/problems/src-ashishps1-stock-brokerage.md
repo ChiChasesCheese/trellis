@@ -14,3 +14,8 @@ tags: [no-archive]
 部分成交"，于是 `PARTIALLY_FILLED` 成了摆设；成交价一律取卖单价，买单先挂时这是错的；
 扣款发生在撮合之后，一旦钱不够就必须回滚已经改过的簿子。它的 `ExecutionStrategy` 与
 `OrderState` 两族抽象基类在 Python 里可以（也应该）被一个枚举加一行 `if` 取代。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/online-stock-brokerage-system.md)
+%% trellis:end %%

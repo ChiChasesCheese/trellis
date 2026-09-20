@@ -16,3 +16,8 @@ tags: [no-archive]
 注入的比较函数，而不需要一整族类——这也是本题解在"关闭策略"扩展点上选择"注入一个函数"而
 不是"新增一个策略类"的理由。它的密封出价规则也提醒了一件本题解没有覆盖的事：如果拍卖不是
 公开叫价而是密封递交，代理出价这套机制本身就不成立，因为没有"对手当前出到多少"可供压过。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/jkaus324/machine-coding-interview-questions/tree/main/problems/tier2-intermediate/019-auction-system)
+%% trellis:end %%

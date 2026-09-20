@@ -10,3 +10,8 @@ tags: [no-archive]
 是每个账户一个可变余额字段加一份单独维护的交易列表，排行和历史查询需要另写遍历逻辑；
 本文把余额、排行、历史时点查询统一成对同一份只增不减的事件日志的不同归约，没有可变的
 余额字段，合并账户因此不需要搬迁任何历史数据。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/kumaransg/LLD/tree/main/ledger_company_navi)
+%% trellis:end %%

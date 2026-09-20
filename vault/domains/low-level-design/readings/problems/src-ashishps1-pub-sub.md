@@ -11,3 +11,8 @@ url: https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/pu
 消息投完即丢，第 2 关以后的问题（重放、迟到订阅、慢订阅者隔离）它一个也答不了。本题解用
 "共享保留日志 + 每订阅者游标"取代即时广播，用模块级实例取代 `__new__` 单例，理由都在
 "关键设计决策"里。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/pub-sub-system.md)
+%% trellis:end %%

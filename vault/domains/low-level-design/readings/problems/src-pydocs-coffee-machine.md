@@ -10,3 +10,11 @@ url: https://docs.python.org/3/library/threading.html
 因此故意用不可重入的 `Lock`，让这类错误立刻暴露，并把事件投递挪到锁外。其二是 `Barrier`：
 它让"恰好 N 个线程同时到齐"成为一个可以断言的事实，于是并发测试不必靠 `sleep` 赌时序——
 本题解用它同时验证了"不超卖"和"并发度恰好等于出口数"两条不变式。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://docs.python.org/3/library/threading.html)
+
+## Archived copy
+![[src-python-docs-bounded-blocking-queue-clip]]
+%% trellis:end %%

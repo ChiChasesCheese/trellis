@@ -11,3 +11,11 @@ url: https://github.com/jkaus324/machine-coding-interview-questions/tree/main/pr
 不同之处：它把 State 模式推荐为默认答案，本题解拒绝了——订单在各个状态下没有行为差异，
 只有"允许往哪走"的许可差异，用一张表比五个类更好读也更好用；它的金额是 `double`，本题解
 一律用整数最小货币单位；它不涉及支付、库存、履约之间的补偿，也没有库存预留与过期。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/jkaus324/machine-coding-interview-questions/tree/main/problems/tier1-foundation/007-order-management)
+
+## Archived copy
+![[src-jkaus324-online-shopping-clip]]
+%% trellis:end %%

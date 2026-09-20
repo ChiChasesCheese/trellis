@@ -11,3 +11,11 @@ url: https://docs.python.org/3/library/enum.html
 （印在牌上的字样）和 `order`（牌面自然顺序）的做法——注意那个字段叫 `order` 而不是
 `value`，就是为了挡住"顺手拿它当分数用"的冲动。配套读
 <https://docs.python.org/3/library/dataclasses.html> 里 `frozen` 与 `__hash__` 的那一节。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://docs.python.org/3/library/enum.html)
+
+## Archived copy
+![[src-python-docs-enum-linkedin-clip]]
+%% trellis:end %%

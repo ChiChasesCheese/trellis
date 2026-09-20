@@ -11,3 +11,11 @@ url: https://docs.python.org/3/library/enum.html
 这种写法的依据——`Enum` 成员是可哈希、可比较身份的单例，天然适合做字典的键，"当前状态
 允许转到哪些状态"因此可以整个收进一张表，而不是在每个转移方法里各写一遍
 `if status == ApplicationStatus.SUBMITTED and ...`。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://docs.python.org/3/library/enum.html)
+
+## Archived copy
+![[src-python-docs-enum-linkedin-clip]]
+%% trellis:end %%

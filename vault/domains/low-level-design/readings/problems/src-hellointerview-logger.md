@@ -10,3 +10,8 @@ tags: [no-archive]
 拿它来校准分关节奏很合适。它偏向讲话术与评分维度，代码骨架仍是 Java 味的单例加 appender 列表；
 本题解的重点完全落在它一笔带过的两处：logger 层级与传播的准确语义、异步 handler 的关闭契约。
 付费站点，只链接不摘录。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.hellointerview.com/learn/low-level-design/problem-breakdowns/logging-service)
+%% trellis:end %%

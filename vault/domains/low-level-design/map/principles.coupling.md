@@ -1,12 +1,10 @@
 %% trellis:begin %%
-# Coupling, Cohesion & DI
-*Design Principles*
+# 耦合、内聚与依赖注入
+*设计原则（Design Principles）*
 
-Afferent/efferent coupling, law of Demeter, dependency injection as the seam-maker.
+传入/传出耦合、迪米特法则（Law of Demeter）、关注点分离、用依赖注入制造接缝。
 
-**Core** — part of the first pass through this subject.
-
-**Unlocks:** [[domains/low-level-design/map/quality.testability|Designing for Tests]]
+**Unlocks:** [[domains/low-level-design/map/quality.testability|为测试而设计]]
 
 ## Readings
 - [[fowler-injection|Inversion of Control Containers and the Dependency Injection Pattern (Fowler)]]
@@ -20,9 +18,9 @@ Afferent/efferent coupling, law of Demeter, dependency injection as the seam-mak
 ## Cards (5)
 1. [[principles-cohesion-signal]]
 2. [[principles-demeter-train-wreck]]
-3. [[principles-di-seam]]
+3. [[principles-temporal-coupling]]
 4. [[principles-stable-dependencies]]
-5. [[principles-temporal-coupling]]
+5. [[principles-di-seam]]
 %% trellis:end %%
 
 ## Notes

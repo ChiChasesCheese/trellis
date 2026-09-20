@@ -9,3 +9,11 @@ url: https://docs.python.org/3/library/math.html#math.gcd
 **无论钞箱装多满**都吐不出来，它和"库存凑不出"是两种不同的错误，屏幕上该说的下一步也不同。
 附带的好处是新增面额（比如 5 元）时 `NOT_REPRESENTABLE` 的判据自动跟着变，没有任何一处
 判断要改。同页的 `math.isqrt`、`math.prod` 在别的题里也常用，但这里只需要 `gcd` 这一个。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://docs.python.org/3/library/math.html#math.gcd)
+
+## Archived copy
+![[src-pydocs-atm-clip]]
+%% trellis:end %%

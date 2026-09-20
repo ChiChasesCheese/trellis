@@ -11,3 +11,8 @@ tags: [no-archive]
 哪个方向长"很合适。它对大文档的插入删除没有任何优化（行内是一个列表），也没有光标、选区和历史；
 本题解正文保持纯文本、把样式列进"扩展与追问"，并把重点放在缓冲区选型和撤销单元上。
 它镜像的是 codezym.com 上的付费题库，因此只链接、不摘录。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/prsnt558908/CodeZymSolutions/tree/main/1-100/q09_text_editor_lld)
+%% trellis:end %%

@@ -10,3 +10,8 @@ tags: [no-archive]
 读写、扫描和过期，没有涉及嵌套事务；本题解的撤销日志设计、"commit 折叠进上一层"这套
 事务语义，以及方案 A（写时复制覆盖栈）与方案 B（撤销日志）的成本对比，都是独立设计的，
 题面里找不到对应内容。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://workat.tech/machine-coding/practice/design-key-value-store-6gz6cq124k65/index.html)
+%% trellis:end %%

@@ -11,3 +11,11 @@ url: https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/so
 把关系（`SocialGraph`）、内容（`ContentStore`）、信息流（`FeedService`）拆成三个不持有彼此
 单例引用的类，并且显式讨论了写扩散在大V账号上会失效、必须换成读时合并，这是原实现完全没有
 覆盖的问题。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/social-networking-service.md)
+
+## Archived copy
+![[src-ashishps1-social-network-clip]]
+%% trellis:end %%

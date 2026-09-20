@@ -14,3 +14,11 @@ url: https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/ri
 "先查空闲再写占用"这个复合操作，并发容器对它无能为力，本文用一把锁内的比较并交换解决。
 另外它的计价与支付都是占位方法，本文把计价做成可注入的价目表加倍数策略，并说明倍数在下单
 那一刻锁死。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/ride-sharing-service.md)
+
+## Archived copy
+![[src-ashishps1-ride-sharing-clip]]
+%% trellis:end %%

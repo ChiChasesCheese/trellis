@@ -13,3 +13,8 @@ tags: [no-archive]
 新增尺寸时分配逻辑一行不改；有效期它写死在令牌里，我做成网点的构造参数；它没有讨论连续
 输错码该按什么维度限流，而那恰恰是"一次性码不是密码"这条性质最锋利的推论。付费站点，
 只链接不摘录。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://www.hellointerview.com/learn/low-level-design/problem-breakdowns/amazon-locker)
+%% trellis:end %%

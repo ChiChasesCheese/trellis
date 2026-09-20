@@ -9,3 +9,11 @@ url: https://github.com/abhaypaswan/lld-python/tree/main/problems/parking-lot
 `FakeClock` 固定时间），和本文的写法同一个方向。分配和计费都拆成了独立的策略类
 （`FirstAvailableStrategy`/`NearestParkingStrategy`/…、`HourlyPricingStrategy`/…），
 比本文更倾向"处处用类"；本文里分配策略没有状态，改成了普通函数，见"关键设计决策"。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/abhaypaswan/lld-python/tree/main/problems/parking-lot)
+
+## Archived copy
+![[src-abhaypaswan-parking-lot-clip]]
+%% trellis:end %%

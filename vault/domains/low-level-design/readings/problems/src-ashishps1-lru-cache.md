@@ -9,3 +9,8 @@ url: https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/lr
 Python 没有语言内置的 `synchronized`，`threading.Lock` 加 `with` 语句是对应写法，但更值得
 说清楚的是"为什么这里没有只加锁在 get 或只加锁在 put 就够"，这份索引本身没有展开这一点。
 `get` 未命中返回 `null`/`-1` 而不是抛异常，也是本文选择 `KeyError` 时要论证的对比对象。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/lru-cache.md)
+%% trellis:end %%

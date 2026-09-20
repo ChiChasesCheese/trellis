@@ -8,3 +8,8 @@ url: https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/pa
 `ParkingFloor`、`ParkingSpot` 和一棵 `Vehicle` 继承树（`Car`/`Motorcycle`/`Truck` 继承抽象
 `Vehicle`）。这份题解正是本文要反着做的参照系：Singleton 和继承树在 Python 里都不是必需
 的——本文改用可比较的 `VehicleSize` 加普通函数策略，理由见"关键设计决策"一节。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/parking-lot.md)
+%% trellis:end %%

@@ -12,3 +12,8 @@ url: https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/ta
 对照一下会发现，跟踪应用里的"优先级"只是给人看的一个展示字段，而本题解里的优先级是参与堆
 排序的真实比较键，两者形似神离。它的 `TaskManager` 仍然用 `__new__` 单例，这一点和本站
 其它题解里反复出现的反例一致。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/task-management-system.md)
+%% trellis:end %%

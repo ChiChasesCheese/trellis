@@ -14,3 +14,11 @@ Python 版把转移规则写成一串 `(old == X and new == Y) or (old == Y and 
 （round-robin/least-loaded/specialist）三个类共享同一个只有一个方法的接口，是运行时确实
 会被替换实现的正当策略模式用例——和本文"分账不用策略类"那条决策形成对照：判据是运行时
 会不会真的换实现，这里会，所以类层级是合理的。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/jkaus324/machine-coding-interview-questions/tree/main/problems/tier1-foundation/005-issue-resolver)
+
+## Archived copy
+![[src-jkaus324-task-management-clip]]
+%% trellis:end %%

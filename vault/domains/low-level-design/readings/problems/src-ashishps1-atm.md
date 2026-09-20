@@ -11,3 +11,8 @@ url: https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/at
 类，本文改用三个方法加一条不可变流水（`JournalEntry`）；它的 `CashDispenser` 只回答"够不够"，
 而本文把"取不出来"拆成金额不可表示、库存凑不出、张数超过送钞上限三种，因为它们给客户的
 下一步建议完全不同。它对"先扣账还是先吐钞"没有展开，那恰是本文花篇幅最多的地方。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/atm.md)
+%% trellis:end %%

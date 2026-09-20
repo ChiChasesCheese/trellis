@@ -11,3 +11,8 @@ tags: [no-archive]
 3×3，`Player` 只有名字和符号、不具备决策能力，没有悔棋也没有 K 子连珠。本题解正是反着做的：
 不设入口类（Python 用 `if __name__ == "__main__":`），判赢做成增量计数与局部行走两种规则，
 并把"决策"作为一个可选的函数字段放进 `Player`，这样接入电脑玩家不需要任何新的继承层次。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/tic-tac-toe.md)
+%% trellis:end %%

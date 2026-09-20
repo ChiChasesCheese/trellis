@@ -14,3 +14,8 @@ url: https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/tr
 **没有全红清空间隔**；而那一段正是安全不变式在切换瞬间仍然成立的原因。第三，安全没有显式
 判据，靠每个状态处理函数里"我记得把另一方向设成红"的人工纪律，加一个左转箭头就会漏。
 本题解相应地改成：`step()` 推 tick、冲突写成图、每一 tick 末尾显式复核。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/traffic-signal.md)
+%% trellis:end %%

@@ -10,3 +10,8 @@ tags: [no-archive]
 分歧在于关卡顺序——它把事务放在 TTL 之前，本题解遵照任务书给定的顺序（TTL 第 3 关、
 事务第 4 关），因为"事务里设置的 TTL 提交/回滚后是否正确"本身是检验撤销日志实现是否
 正确的最佳测试，放在 TTL 之后更能形成递进关系，而不是两个互相独立的能力。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://codezym.com/lld/amazon)
+%% trellis:end %%

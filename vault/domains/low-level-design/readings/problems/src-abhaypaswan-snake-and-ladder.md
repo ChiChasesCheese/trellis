@@ -13,3 +13,11 @@ tags: []
 `Dice` 壳被删掉）、位置从 `Player` 收回 `Game`（否则"和领先者换位"这种规则没法原子地移动
 两个人）；另外它没有处理"整局循环在精确落子规则下可能不终止"和"连续三个六作废整轮需要
 事务性回合"这两件事。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/abhaypaswan/lld-python/tree/main/problems/snake-and-ladder)
+
+## Archived copy
+![[src-abhaypaswan-snake-and-ladder-clip]]
+%% trellis:end %%

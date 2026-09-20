@@ -11,3 +11,11 @@ url: https://github.com/abhaypaswan/lld-python/tree/main/problems/text-editor
 table），命令层是 `InsertCommand`/`DeleteCommand`/`ReplaceCommand`/`CompositeCommand` 四个类
 加一个抽象基类。本题解把数据结构的选择正面做成了第 1 关（选 gap buffer 并给出代价表），
 并把四个命令类坍缩成一个 `Edit` splice 数据类——因为插入、删除、替换本来就是同一种操作的三个特例。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/abhaypaswan/lld-python/tree/main/problems/text-editor)
+
+## Archived copy
+![[src-abhaypaswan-text-editor-clip]]
+%% trellis:end %%

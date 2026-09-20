@@ -19,7 +19,4 @@ interfaces→code pipeline, with worked deliveries of classic problems.
 %% trellis:begin %%
 ## Source
 [Open the original ↗](https://www.hellointerview.com/learn/low-level-design)
-
-## Archived copy
-![[hellointerview-lld-clip]]
 %% trellis:end %%

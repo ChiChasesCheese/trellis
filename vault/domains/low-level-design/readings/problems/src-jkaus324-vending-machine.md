@@ -11,3 +11,8 @@ tags: [no-archive]
 是一条带条件的答案：判据不是状态多不多，而是每个状态有没有自己成套的进入／退出副作用；
 在只有四个状态、动作各自只有几行的规模下，转移表更短，而且能被一个穷举测试盖满。
 （仓库无 LICENSE，只链接不复制。）
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/jkaus324/machine-coding-interview-questions/tree/main/problems/tier1-foundation/004-vending-machine)
+%% trellis:end %%

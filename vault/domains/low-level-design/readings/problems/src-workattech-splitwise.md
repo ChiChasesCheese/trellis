@@ -13,3 +13,8 @@ tags: [no-archive]
 没有给出规则依据；债务化简被标为可选需求并跳过了。它还按拆分方式给 `Expense` 分出
 `EqualExpense`/`ExactExpense`/`PercentExpense` 三个子类——本文认为开销和拆分方式是正交的两个
 维度，应该组合而不是继承。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://workat.tech/machine-coding/editorial/how-to-design-splitwise-machine-coding-ayvnfo1tfst6/)
+%% trellis:end %%

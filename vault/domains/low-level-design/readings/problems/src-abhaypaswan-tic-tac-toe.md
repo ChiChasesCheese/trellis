@@ -11,3 +11,8 @@ tags: [no-archive]
 往前推了一格：计数器的 O(1) **只在 K == N 时成立**，所以判赢被抽成 `WinRule` 这个 seam，
 K 子连珠换成 O(K) 的局部行走；另外机器人在这里是一个普通函数（闭包）而不是策略类，并且
 额外提供了"假设判定"`completes_line`，让机器人问"我走这里会赢吗"时不必碰棋盘的记账状态。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/abhaypaswan/lld-python/tree/main/problems/tic-tac-toe)
+%% trellis:end %%

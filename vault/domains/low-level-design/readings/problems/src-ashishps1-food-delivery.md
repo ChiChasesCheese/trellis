@@ -13,3 +13,8 @@ url: https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/fo
 `assignDeliveryAgent` 在下单后立刻指派，既没有"等餐厅接单"这道闸，也没有出餐时间估计，
 于是"什么时候派骑手"这个真正的取舍题在它那里根本不存在。它的菜单可售状态是 `MenuItem` 上的
 一个布尔字段，本题解把它移到餐厅上，并要求校验与抄价在餐厅的锁里一次完成。
+
+%% trellis:begin %%
+## Source
+[Open the original ↗](https://github.com/ashishps1/awesome-low-level-design/blob/main/problems/food-delivery-service.md)
+%% trellis:end %%
