@@ -106,9 +106,35 @@ Data infrastructure system（3）、Web analytics（2）、Tax-filing platform�
 |---|---|---|
 | 2026-09-19 | 调研 | 538 行 / 20 来源，三份原始记录入库 |
 | 2026-09-19 | 骨架 | `problems` 分支：7 个家族、49 个叶子，`validate` 0 错误 |
+| 2026-09-19 | 试点 3 题 | url-shortener、chat-messaging、ticket-booking 验收通过；主会话复算后改正 3 处数字（哈希碰撞概率差六个数量级、状态行 486→506GB、一个未核实的二手数字从卡片移除）；两条教训写入 AGENT.md |
 
 ## 5. 下一步
 
 按家族分批写题（每批 3 个并行 sonnet 代理，每个代理拥有自己那几道题的文件）。
 每批由主会话重跑验收脚本和 `validate`、抽读题解后提交。全部通过后：核对各代理报告的「最不确定的论断」，
 对开放许可和一手工程来源跑 `trellis --domain system-design clip --node problems`，然后 sync、build、anki-push。
+
+### 写题队列（每组一个 sonnet 代理，两道同家族的题；最多 3 组并行）
+
+状态以 `uv run python scripts/check_design_problems.py --all` 为准，这张表只记顺序。
+验收流程：代理回报 → 主会话跑 `scripts/review_design_problem.py <slug>…`，复算容量估算，核对代理自报的
+「最不确定的三条论断」，抽读题解 → 改正 → 按题提交。
+
+| # | 题目 | | # | 题目 |
+|---|---|---|---|---|
+| 1 | news-feed + instagram | | 13 | notification-system + live-comments |
+| 2 | video-streaming + file-sync | | 14 | metrics-monitoring + news-aggregator |
+| 3 | google-docs + web-crawler | | 15 | google-maps + food-delivery |
+| 4 | proximity + ride-hailing | | 16 | online-judge + multiplayer-game |
+| 5 | payment-system + digital-wallet | | 17 | llm-chat-service + leaderboard |
+| 6 | rate-limiter + unique-id-generator | | 18 | pastebin + lock-service |
+| 7 | key-value-store + distributed-cache | | 19 | hotel-reservation + flash-sale |
+| 8 | search-engine + typeahead | | 20 | email-service + video-conferencing |
+| 9 | top-k + ad-click-aggregation | | 21 | reddit + social-graph-search |
+| 10 | cdn + object-storage | | 22 | tinder + calendar |
+| 11 | message-queue + job-scheduler | | 23 | e-commerce + auth-service |
+| 12 | stock-exchange + auction | | | |
+
+每个代理的提示词是同一个模板：读 `proposals/design-problems/AGENT.md`，读两份
+`proposals/design-problems/tasks/<slug>.md`，先完整做完第一题再做第二题，跑验收命令，按 AGENT.md 的格式回报。
+代理自带续跑规则（验收已通过的题跳过），所以中断后原样重发即可。
