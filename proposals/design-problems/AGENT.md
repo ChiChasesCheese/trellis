@@ -32,6 +32,12 @@ orders of magnitude), and the wrong number had already been copied into a card. 
 "at least one collision ever" from "this insert collides"; average from peak; per-cluster from
 per-node. A card inherits its numbers from the article, so fix the article first.
 
+**Assumptions must agree with each other, not only with the arithmetic.** An accepted article
+computed a 1,560x peak-to-average ratio correctly from two assumptions that contradicted each
+other: 2% of daily users ordering in the opening minute, 0.5% ordering all day. Before you keep
+a ratio, check that the peak population is a subset of the daily one, that a share of a share
+is not larger than the whole, and that a surprising result is surprising for a reason you can say.
+
 **A number you could not verify never goes into a card.** In the article it may appear with its
 source named and marked as secondhand; a card states only what stands on its own — if the
 argument is structural ("Kafka's control plane is not built for a billion partitions"), make the
