@@ -1,0 +1,12 @@
+{
+  "problems.commerce.stock-exchange": [
+    "problems-stock-exchange-headroom-vs-lmax-benchmark",
+    "problems-stock-exchange-order-book-price-bucket-linked-list",
+    "problems-stock-exchange-single-thread-vs-multithread-locking",
+    "problems-stock-exchange-journal-before-match-replay-recovery",
+    "problems-stock-exchange-market-data-conflation-375x",
+    "problems-stock-exchange-buying-power-conditional-update",
+    "problems-stock-exchange-sequencer-down-halt-not-degrade",
+    "problems-stock-exchange-10x-symbol-count-not-throughput"
+  ]
+}

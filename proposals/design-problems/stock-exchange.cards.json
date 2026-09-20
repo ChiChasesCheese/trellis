@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-stock-exchange-headroom-vs-lmax-benchmark",
+    "node": "problems.commerce.stock-exchange",
+    "type": "qa",
+    "q": "In a stock exchange design with 8,000 listed symbols and a peak market-wide order rate of 300,000 orders/sec skewed so the hottest 1% of symbols (80 symbols) carry 40% of that volume, the busiest single symbol sees about 1,500 orders/sec. LMAX, a real trading platform, has publicly benchmarked its single-threaded business logic processor at 6,000,000 orders/sec on one thread. What does comparing these two numbers (6,000,000 / 1,500 = 4,000x headroom) tell you about whether the matching engine needs multi-threading per symbol?",
+    "a": "It shows that even the single busiest symbol's real order load uses only 1/4,000th of what a single CPU thread has been shown capable of processing, so raw compute is not the constraint on a per-symbol matching engine — one dedicated single thread per symbol has enormous headroom. This flips the common assumption that matching must be parallelized for throughput: the actual engineering problem is guaranteeing that all orders for one symbol are processed by exactly one place in one deterministic order, not finding enough compute.",
+    "q_zh": "在一个有 8,000 支上市股票的交易所设计中，全市场峰值订单速率为 300,000 单/秒，按幂律倾斜假设最热门 1%（80 支）股票占 40% 的量，最繁忙的单支股票每秒约有 1,500 笔订单。真实交易平台 LMAX 公开披露其单线程业务逻辑处理器（business logic processor）在一个线程上实测可达每秒 600 万笔订单。把这两个数字对比（6,000,000 / 1,500 = 4,000 倍冗余）说明了什么，关于撮合引擎是否需要为每支股票做多线程？",
+    "a_zh": "这说明即使是负载最重的单支股票，其真实订单量也只用到了单个 CPU 线程已证明能力的 1/4,000，所以算力从来不是单支股票撮合引擎的约束——每支股票绑定一个专用单线程有巨大的冗余空间。这推翻了“撮合必须并行化才能扛住吞吐”的常见直觉：真正的工程难题是保证同一支股票的所有订单只被一个地方、按一个确定的顺序处理，而不是找到足够的算力。",
+    "tags": []
+  },
+  {
+    "id": "problems-stock-exchange-order-book-price-bucket-linked-list",
+    "node": "problems.commerce.stock-exchange",
+    "type": "qa",
+    "q": "In a matching engine's order book, why is a price bucket (array or hash table indexed by price) with a doubly-linked list of orders per bucket a better data structure than a balanced tree (e.g. red-black tree) keyed by price, given a microsecond-level latency budget per order?",
+    "a": "Prices are discrete (bounded by a minimum tick size), so they can be indexed directly in O(1) via an array or hash table instead of requiring O(log N) tree traversal and rebalancing. Within a price bucket, orders sit in a linked list ordered by arrival time, which preserves price-time priority automatically: adding an order is an O(1) tail insert, cancelling is an O(1) removal (the order holds a pointer to its own list node), and matching just pops from the head of the best-price bucket. A tree's O(log N) operations carry constant-factor overhead from pointer rebalancing and comparisons that, while individually small, accumulate to matter at a microsecond budget, and a tree still needs separate bookkeeping for time priority within equal prices.",
+    "q_zh": "在撮合引擎的订单簿（order book）中，为什么在每单订单延迟预算是微秒级的前提下，用按价格索引的价位桶（数组或哈希表）+ 每个价位一条双向链表，会比用一棵按价格排序的平衡树（如红黑树）更合适？",
+    "a_zh": "价格是离散的（受最小报价单位 tick size 限制），所以可以用数组或哈希表直接 O(1) 索引，而不需要 O(log N) 的树遍历和重平衡。价位桶内部，订单按到达时间排成一条链表，天然维持价格-时间优先级：新增订单是 O(1) 的链表尾部插入，撤单是 O(1) 的移除（订单本身持有指向自己链表节点的指针），撮合只需要从最优价位桶的表头弹出。树的 O(log N) 操作带有指针重平衡和比较带来的常数开销，单次看似很小，但在微秒级预算下会累积成不可忽视的延迟，而且树还需要额外维护同一价位内的时间优先级。",
+    "tags": []
+  },
+  {
+    "id": "problems-stock-exchange-journal-before-match-replay-recovery",
+    "node": "problems.commerce.stock-exchange",
+    "type": "qa",
+    "q": "In a single-threaded, in-memory matching engine, why must an input event (a new order or cancel) be durably written to a replicated journal BEFORE the matching engine processes it, rather than after?",
+    "a": "If the engine processed the event first and only journaled it afterward, a crash between those two steps would lose an event that had already changed the in-memory order book but was never recorded — so a passive replica replaying the journal to reconstruct state would produce a different, inconsistent result from what the crashed primary actually had. Journaling first guarantees that every event the matching engine ever acts on is also part of the durable, ordered log that any replica can replay to deterministically reconstruct the exact same sequence of state changes, which is what lets a replica take over after a failure without running a separate consensus protocol on the engine's internal state.",
+    "q_zh": "在一个单线程、纯内存运行的撮合引擎里，为什么一条输入事件（新订单或撤单）必须先持久化写入一份复制的日志（journal），然后才能被撮合引擎处理，而不能反过来？",
+    "a_zh": "如果引擎先处理事件、之后才写日志，那么处理和写日志之间的崩溃会丢失一条已经改变了内存中订单簿状态、却从未被记录下来的事件——这样被动副本靠重放日志重建状态时，得到的结果会和崩溃前的主节点实际状态不一致。先写日志能保证撮合引擎处理过的每一条事件都必然也是那份持久化、有序日志的一部分，任何副本都能重放出完全相同的一串状态变化，这正是副本能在故障后直接接管、而不需要对引擎内部状态另外跑一套共识协议的原因。",
+    "tags": []
+  },
+  {
+    "id": "problems-stock-exchange-market-data-conflation-375x",
+    "node": "problems.commerce.stock-exchange",
+    "type": "qa",
+    "q": "A hot stock has a tick rate of 1,500 order/trade events per second and 1,500,000 subscribers watching it. Pushing every tick to every subscriber directly would be 1,500 x 1,500,000 = 2,250,000,000 messages/sec for that one symbol. If a market-data fan-out layer instead conflates updates into one snapshot per subscriber every 250ms (4 updates/sec/subscriber), the push rate becomes 4 x 1,500,000 = 6,000,000 messages/sec — a 375x reduction. What is given up to get that reduction, and why is it an acceptable trade for a retail brokerage's quote feed?",
+    "a": "Conflation discards the intermediate ticks between snapshots: a subscriber only ever sees the latest price at each 250ms interval, not every individual trade that happened in between. This is acceptable specifically because a retail quote feed is allowed to be eventually consistent and briefly stale (unlike the exchange's own matching, which must be exact and deterministic) — the fan-out layer is not the system of record, so dropping intermediate state is safe as long as the next snapshot always carries the current truth.",
+    "q_zh": "一支热门股票的 tick（成交/挂单变化）速率是每秒 1,500 次，有 1,500,000 个订阅者在关注它。如果把每次 tick 都直接推给每个订阅者，速率会是 1,500 × 1,500,000 = 22.5 亿条消息/秒。如果行情分发层改为把更新合并（conflate）成每个订阅者每 250ms 一份快照（相当于每秒 4 次更新），推送速率就变成 4 × 1,500,000 = 6,000,000 条/秒——降低了 375 倍。换来这个降低倍数，牺牲了什么？为什么这对零售经纪商的报价推送来说是可以接受的？",
+    "a_zh": "合并（conflation）丢弃了两次快照之间的所有中间 tick：订阅者在每 250ms 的间隔里只会看到那一刻的最新价格，看不到期间发生的每一笔具体成交。这之所以可以接受，是因为零售报价推送本身被允许最终一致、短暂陈旧（不像交易所自己的撮合必须精确且确定性）——分发层不是权威数据源，只要下一份快照始终携带当前的真实状态，丢弃中间状态就是安全的。",
+    "tags": []
+  },
+  {
+    "id": "problems-stock-exchange-single-thread-vs-multithread-locking",
+    "node": "problems.commerce.stock-exchange",
+    "type": "qa",
+    "q": "Why would adding multiple threads to a single symbol's matching engine, protected by locks, actually be a worse design than keeping it single-threaded, given that the matching engine's whole job is to produce a deterministic, replayable order of matches?",
+    "a": "Multiple threads racing to acquire locks introduce a scheduling order that depends on OS thread scheduling and lock contention timing, which is not deterministic from one run to the next — the exact interleaving of operations can differ even given the identical set of input orders. This breaks the requirement that a replay of the same input sequence must always reproduce the same trade results, which is what durability and failover (replaying the journal on a replica) depend on. A single thread, by contrast, processes events strictly one at a time in the order it receives them, so the output is a pure function of the input sequence with no scheduling nondeterminism, and locking's cost (cache invalidation, contention) is avoided entirely.",
+    "q_zh": "撮合引擎的整个职责是产出一个确定性、可重放的成交顺序。既然如此，为什么给单支股票的撮合引擎加多线程（配合加锁保护）反而是比保持单线程更差的设计？",
+    "a_zh": "多个线程争抢锁会引入一个依赖操作系统线程调度和锁竞争时机的执行顺序，这个顺序在不同运行之间不是确定性的——即使输入的订单集合完全相同，操作的具体交错顺序也可能不同。这违反了“重放同一份输入序列必须始终得到同一个成交结果”这条要求，而这正是持久化和故障转移（副本重放日志）赖以成立的前提。相比之下，单线程严格按照事件到达的顺序逐个处理，输出是输入序列的纯函数，不存在调度上的不确定性，同时也完全避免了加锁的代价（缓存失效、锁竞争）。",
+    "tags": []
+  },
+  {
+    "id": "problems-stock-exchange-buying-power-conditional-update",
+    "node": "problems.commerce.stock-exchange",
+    "type": "qa",
+    "q": "A brokerage needs to reserve buying power for a new order without letting two concurrent order submissions both pass a balance check and together overdraw the account. Why does a single conditional SQL update like `UPDATE accounts SET buying_power = buying_power - :notional, reserved = reserved + :notional WHERE id = :accountId AND buying_power >= :notional` close this race, where a read-then-write pattern (SELECT buying_power, check in application code, then UPDATE) does not?",
+    "a": "In a read-then-write pattern, two concurrent requests can both execute the SELECT and see the same pre-deduction balance, both pass the application-level check, and both then issue an UPDATE — over-committing the account. The single conditional UPDATE instead evaluates the balance check and performs the deduction in one atomic database statement: the database's row-level write serializes concurrent attempts, so only the first to execute actually has its WHERE clause matched (rows affected = 1); any later concurrent attempt re-evaluates the condition against the now-reduced balance and fails (rows affected = 0), which the caller treats as insufficient buying power. There is no window between checking and writing because they are the same operation.",
+    "q_zh": "经纪商需要为一笔新订单预占用买力（buying power），同时不能让两个并发的下单请求都通过余额校验、合计超支账户。为什么单条 SQL 条件更新语句 `UPDATE accounts SET buying_power = buying_power - :notional, reserved = reserved + :notional WHERE id = :accountId AND buying_power >= :notional` 能关闭这个竞态窗口，而“先查询余额、应用层判断、再更新”的模式不能？",
+    "a_zh": "在“先查后写”的模式下，两个并发请求可能都执行了 SELECT、看到同一份扣减前的余额、都在应用层判断通过、然后都发起 UPDATE——导致账户被超额占用。单条条件更新语句则把余额校验和扣减压缩进同一条原子的数据库语句：数据库的行级写会把并发尝试串行化，只有先执行的那个请求的 WHERE 条件真正匹配（受影响行数为 1）；之后的并发尝试会针对已经被扣减过的新余额重新判断条件，因而失败（受影响行数为 0），调用方把这个结果当作买力不足处理。因为校验和写入是同一个操作，两者之间不存在窗口期。",
+    "tags": []
+  },
+  {
+    "id": "problems-stock-exchange-sequencer-down-halt-not-degrade",
+    "node": "problems.commerce.stock-exchange",
+    "type": "qa",
+    "q": "When the sequencer/journal layer for a symbol's matching engine becomes unavailable, why should the exchange stop accepting new orders for that symbol rather than let orders bypass sequencing and go straight to the matching engine to keep availability up?",
+    "a": "The sequencer's job is to assign each incoming event a single, globally agreed, unalterable order number, which is the sole basis for the deterministic replay that durability and failover depend on. If orders bypassed sequencing during an outage, the matching engine would be free to process them in whatever order it happened to receive them, and there would be no durable, ordered record to replay if that matching engine then also failed — silently breaking the 'one authoritative order' guarantee that is the exchange's core correctness property. Rejecting new orders for that symbol until the sequencer recovers sacrifices availability but preserves correctness, which for a matching engine is the higher-priority requirement.",
+    "q_zh": "当某支股票撮合引擎的序列化/日志层（sequencer/journal）不可用时，为什么交易所应该停止接受这支股票的新订单，而不是让订单绕过序列化、直接进撮合引擎以维持可用性？",
+    "a_zh": "序列化层的职责是给每一条到达的事件分配一个全局唯一、公认、不可篡改的顺序号，这是持久化和故障转移所依赖的确定性重放的唯一依据。如果在故障期间让订单绕过序列化，撮合引擎就会按它恰好收到的顺序处理，而且如果撮合引擎随后也发生故障，将不存在可重放的、有序的持久记录——这会在无声无息中打破“单一权威顺序”这条交易所最核心的正确性保证。在序列化层恢复之前拒绝该股票的新订单，牺牲的是可用性，保住的是正确性，而对撮合引擎来说，正确性是优先级更高的要求。",
+    "tags": []
+  },
+  {
+    "id": "problems-stock-exchange-10x-symbol-count-not-throughput",
+    "node": "problems.commerce.stock-exchange",
+    "type": "qa",
+    "q": "At 10x scale, a stock exchange design grows from 8,000 symbols to 80,000 symbols, with market-wide peak order rate growing proportionally to 3,000,000 orders/sec. Given that even the busiest single symbol has thousands of times more per-thread matching headroom than it needs, why is the 10x bottleneck about symbol-to-partition assignment rather than about matching engine throughput?",
+    "a": "A single symbol's matching load stays far below what one thread can process even after 10x growth, so no individual matching engine needs to get faster or more parallel. The actual risk is at the sequencer/partition layer: if symbols are assigned to sequencing partitions in a way that happens to cluster several of the hottest symbols onto the same partition, that partition's aggregate load can exceed its capacity even though every symbol on it is individually cheap — so the design problem becomes distributing symbols across more partitions in a way that spreads hot symbols apart, not adding more compute per symbol.",
+    "q_zh": "在 10 倍演进场景下，一个股票交易所设计从 8,000 支股票增长到 80,000 支，全市场峰值订单速率同比例增长到 3,000,000 单/秒。既然连负载最重的单支股票，其单线程撮合冗余都是所需算力的数千倍，为什么 10 倍演进的瓶颈在于“股票如何分配到分区”而不是“撮合引擎吞吐”？",
+    "a_zh": "即使经过 10 倍增长，单支股票的撮合负载仍然远低于单线程能处理的量，所以不需要任何一个撮合引擎变得更快或更并行。真正的风险在序列化/分区层：如果股票被分配到序列化分区的方式恰好把好几支最热门的股票聚集到了同一个分区，即使这个分区上每支股票单独看都很轻量，这个分区的总负载也可能超出它的容量——所以真正要解决的设计问题是如何把股票分布到更多分区上、让热门股票彼此分开，而不是给单支股票增加更多算力。",
+    "tags": []
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "problems.commerce.auction": [
+    "problems-auction-contention-differs-from-ticket-booking",
+    "problems-auction-collision-rate-drives-serialized-actor",
+    "problems-auction-proxy-bid-increment-table-worked-example",
+    "problems-auction-watcher-fanout-decoupled-eventual-consistency",
+    "problems-auction-soft-close-expected-extension-needs-cap",
+    "problems-auction-close-exactly-once-idempotent-token",
+    "problems-auction-actor-crash-rebuild-from-store-not-replay",
+    "problems-auction-10x-fanout-sharding-not-actor-throughput"
+  ]
+}
