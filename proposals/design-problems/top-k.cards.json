@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-top-k-cms-error-bound",
+    "node": "problems.search.top-k",
+    "type": "qa",
+    "q": "In a Top-K trending design counting views with a Count-Min Sketch (CMS) over a daily window of N=60 billion events, using parameters ε=1e-6 and δ=1e-3, what are the sketch's width, depth, memory footprint (4-byte counters), and guaranteed absolute error — and why can't the same ε be reused unchanged for a 1-minute window's sketch?",
+    "a": "Width `w = ⌈e/ε⌉ = 2,718,282`, depth `d = ⌈ln(1/δ)⌉ = 7`, memory `w*d*4 bytes ≈ 76.1MB`. The Count-Min Sketch guarantee (Cormode & Muthukrishnan) is: the estimate never undercounts, and with probability ≥ 1-δ it overcounts by at most `ε*N`, giving an absolute error of `1e-6 * 6e10 = 60,000` here. Because the error is `ε*N` (not just `ε`), the same ε produces a wildly different absolute error at a different window's event volume `N` — a 1-minute window has roughly 1,440x fewer events than a full day, so reusing the day's ε there is fine (error shrinks proportionally), but reusing a 1-minute window's looser ε for the full day would blow up the absolute error by that same factor.",
+    "q_zh": "在一个用 Count-Min Sketch（CMS）统计观看次数的热门榜设计中，某天窗口的事件总量 N=600 亿，取参数 ε=1e-6、δ=1e-3，这个 sketch 的宽度、深度、内存占用（4 字节计数器）和保证的绝对误差各是多少？为什么不能把同一个 ε 原封不动地用到 1 分钟窗口的 sketch 上？",
+    "a_zh": "宽度 `w = ⌈e/ε⌉ = 2,718,282`，深度 `d = ⌈ln(1/δ)⌉ = 7`，内存 `w*d*4 字节 ≈ 76.1MB`。Count-Min Sketch 的保证（Cormode & Muthukrishnan）是：估计值永不低估，且以至少 1-δ 的概率，过计数不超过 `ε*N`，这里绝对误差是 `1e-6 * 6e10 = 60,000`。因为误差是 `ε*N`（不只是 ε），同一个 ε 在不同窗口的事件总量 N 下绝对误差天差地别——1 分钟窗口的事件量大约是全天的 1/1440，把全天的 ε 直接用在 1 分钟窗口上没问题（误差按比例缩小），但反过来把 1 分钟窗口那种更宽松的 ε 用到全天窗口上，绝对误差会按同样的倍数放大。",
+    "tags": []
+  },
+  {
+    "id": "problems-top-k-partition-by-item-id-exact-merge",
+    "node": "problems.search.top-k",
+    "type": "qa",
+    "q": "In a Top-K trending design with no dimension slicing (just a single global ranking), why does partitioning the ingestion stream by item_id — rather than round-robin across consumers — let per-shard local Top-K lists be merged into a globally exact result with a simple K-way merge, and what breaks if you partition round-robin instead?",
+    "a": "Partitioning by `item_id` (hashing the key) guarantees every event for a given item lands on the same shard, so each shard's item set is disjoint from every other shard's — a shard's locally-computed exact count for an item IS the item's true global count, and its local Top-K list is final for those items. Merging then reduces to a lossless K-way merge of S sorted lists (O(S*K*log S), no sketches needed). Round-robin (or any key-independent) partitioning splits one item's events across many shards; each shard sees only a fraction of that item's count, so it may never rank high enough to enter any single shard's local Top-K list, and a naive K-way merge of the local lists silently drops it even though its true global count is large.",
+    "q_zh": "在一个没有维度切片（只有单一全局排行）的热门榜设计中，为什么按 item_id 对摄入流分区（而不是轮询分给多个 consumer）能让各分片的局部 Top-K 列表通过一次简单的 K 路归并就得到全局精确结果？如果改成轮询分区会出什么问题？",
+    "a_zh": "按 `item_id` 哈希分区能保证同一个 item 的所有事件都落在同一个分片上，所以每个分片的 item 集合和其他分片互不相交——一个分片本地算出的某 item 精确计数就是该 item 的全局真实计数，其局部 Top-K 列表对这些 item 而言就是最终结果。合并因此退化为对 S 个有序列表的无损 K 路归并（`O(S*K*log S)`），不需要任何 sketch。而轮询（或任何与 key 无关）的分区会把同一个 item 的事件分散到多个分片，每个分片只看到它计数的一小部分，可能在任何一个分片的局部 Top-K 里都排不进去，对局部列表做朴素 K 路归并会悄悄漏掉这个真实全局计数很高的 item。",
+    "tags": []
+  },
+  {
+    "id": "problems-top-k-space-saving-guarantee",
+    "node": "problems.search.top-k",
+    "type": "qa",
+    "q": "State the Space-Saving algorithm's deterministic guarantee (Metwally, Agrawal & El Abbadi's Theorem 3) for finding Top-K candidates in a stream, and compute how many counters `m` are needed to guarantee capturing every item with at least 500,000 views out of a 60-billion-event daily window.",
+    "a": "Space-Saving keeps only `m` counters: on a new, unmonitored element it evicts the currently-smallest counter and gives the new element that counter's value + 1. Theorem 3's guarantee, with no assumption about data distribution: as long as `m ≥ 1/ε`, any element whose true frequency `f_i > ε*N` is guaranteed to be present in the final monitored set — this is a zero-false-negative guarantee, not a probabilistic one. To guarantee capturing every item with ≥500,000 daily views out of N=6e10: `ε = 500,000 / 6e10 ≈ 8.33e-6`, so `m ≥ 1/ε ≈ 120,000` counters.",
+    "q_zh": "陈述 Space-Saving 算法（Metwally、Agrawal、El Abbadi 的定理 3）在流中寻找 Top-K 候选时的确定性保证，并计算：要保证捕获全天 600 亿事件窗口中所有观看量 ≥ 50 万的 item，需要多少个计数器 `m`？",
+    "a_zh": "Space-Saving 只保留 `m` 个计数器：遇到一个未被监控的新元素时，淘汰当前值最小的计数器，把新元素的计数设为该最小值 + 1。定理 3 的保证不假设任何数据分布：只要 `m ≥ 1/ε`，任何真实频次 `f_i > ε*N` 的元素一定会出现在最终的监控集合里——这是零漏报保证，不是概率性的。要保证捕获所有全天观看量 ≥50 万的 item（N=6×10^10）：`ε = 500,000 / 6e10 ≈ 8.33e-6`，所以 `m ≥ 1/ε ≈ 120,000` 个计数器。",
+    "tags": []
+  },
+  {
+    "id": "problems-top-k-cms-vs-space-saving-tradeoff",
+    "node": "problems.search.top-k",
+    "type": "qa",
+    "q": "In a Top-K trending design, why do systems typically run a Count-Min Sketch (CMS) and a Space-Saving structure side by side instead of picking just one of the two?",
+    "a": "The two structures cover complementary gaps. CMS answers point queries for a known key with a mergeable, linear update rule — summing two independently-maintained CMS's cell-by-cell gives exactly the same result as running one CMS over the combined stream — but it cannot enumerate which keys are frequent; you must already know which item_id to ask about. Space-Saving does enumerate: it maintains a bounded candidate set with a deterministic guarantee that any sufficiently frequent item is in it, but merging two Space-Saving summaries by adding their counters does not reproduce the guarantee you'd get from running Space-Saving on the combined stream, so it doesn't merge cleanly across shards. The combination used is: Space-Saving (per shard) to discover which item_ids are worth asking about, CMS (merged across shards by summing cells) to get a merge-safe, error-bounded count for each candidate.",
+    "q_zh": "在一个热门榜设计中，为什么系统通常会同时运行 Count-Min Sketch（CMS）和 Space-Saving 两种结构，而不是只选其中一个？",
+    "a_zh": "这两种结构互补了彼此的缺口。CMS 用线性的更新规则回答「某个已知 key 的计数是多少」这类点查询，且天然可合并——把两个独立维护的 CMS 逐 cell 相加，结果和把两路数据流合并后跑一个 CMS 完全一样——但它无法枚举出哪些 key 是热门的，你必须已经知道要问哪个 item_id。Space-Saving 恰好能枚举：它维护一个有界的候选集合，并保证任何频次足够高的 item 一定在其中，但把两份 Space-Saving 摘要的计数器直接相加，并不能复现「对合并后的流跑一遍 Space-Saving」应有的保证，所以它在跨分片场景下不能干净地合并。实际用法是：每个分片用 Space-Saving 发现「哪些 item_id 值得问」，再用跨分片按 cell 相加合并后的 CMS 给出每个候选的、误差有界且合并安全的计数。",
+    "tags": []
+  },
+  {
+    "id": "problems-top-k-hierarchical-window-rollup",
+    "node": "problems.search.top-k",
+    "type": "qa",
+    "q": "In a Top-K design that must serve four window granularities at once (1 minute, 1 hour, 1 day, all-time), how are the coarser windows computed without reprocessing the raw event stream for each one, and which of Count-Min Sketch or Space-Saving supports this directly?",
+    "a": "Only the finest granularity (1-minute tumbling buckets) consumes the raw event stream. Coarser windows are built by rolling up buckets: an hour = 60 one-minute Count-Min Sketches summed cell-by-cell, a day = 24 hourly sketches summed, all-time = a running cell-wise sum across days — this works because CMS's update rule is linear (summing sketches is equivalent to summing the underlying streams). Space-Saving summaries do NOT support this rollup directly — a coarser window's candidate set is instead built as the union of the finer windows' candidate sets (a safe superset, since Theorem 3's guarantee only grows more items into candidacy as N grows, never fewer) and then re-ranked by querying the rolled-up CMS.",
+    "q_zh": "在一个必须同时提供 4 档时间粒度（1 分钟、1 小时、1 天、全量）的热门榜设计中，粗粒度窗口如何在不对每一档都重新消费原始事件流的情况下算出来？Count-Min Sketch 和 Space-Saving 哪一个直接支持这种做法？",
+    "a_zh": "只有最细粒度（1 分钟 tumbling bucket）直接消费原始事件流。粗粒度窗口靠桶的滚动汇总得到：1 小时 = 60 个 1 分钟 Count-Min Sketch 按 cell 相加，1 天 = 24 个小时 sketch 相加，全量 = 跨天持续按 cell 累加——这成立是因为 CMS 的更新规则是线性的（sketch 相加等价于底层数据流合并后再统计）。Space-Saving 摘要不直接支持这种滚动：粗粒度窗口的候选集合改为取各细粒度窗口候选集合的并集（这是一个安全的超集，因为定理 3 的保证只会随 N 增大而让更多 item 够格成为候选，不会更少），再用滚动汇总后的 CMS 对候选重新排序。",
+    "tags": []
+  },
+  {
+    "id": "problems-top-k-dimension-sharding-merge-correctness",
+    "node": "problems.search.top-k",
+    "type": "qa",
+    "q": "In a Top-K design where a single dimension (e.g. one country) is further sub-sharded across multiple workers because its traffic is too large for one node — so the sub-shards see overlapping item sets — why is unioning or truncating each sub-shard's local Top-K list the wrong way to compute that dimension's global Top-K, and what is the correct two-step merge?",
+    "a": "An item can be popular in aggregate while being only moderately popular on every individual sub-shard — e.g. spread evenly across 8 sub-shards, never ranking high enough locally to make any single sub-shard's Top-K list — so naively unioning or truncating the sub-shards' local Top-K lists silently drops items whose true combined frequency is large. The correct merge: (1) take the union of each sub-shard's Space-Saving candidate-id set (a safe superset per its zero-false-negative guarantee), and (2) sum the sub-shards' Count-Min Sketches cell-by-cell to get a merge-correct combined sketch, then query it for each candidate's count and rank by that.",
+    "q_zh": "在一个热门榜设计中，某个维度（例如某个国家）因为流量太大又被再切分给多个子分片处理，导致这些子分片看到的 item 集合互相重叠——为什么把各子分片的局部 Top-K 列表直接取并集或截断拼接是算出该维度全局 Top-K 的错误做法？正确的两步合并是什么？",
+    "a_zh": "一个 item 完全可能整体很热，但在每一个单独的子分片上都只是中等热度——比如被平均分散在 8 个子分片上，在任何一个子分片本地都排不进它的局部 Top-K 列表——所以直接对各子分片的局部 Top-K 列表取并集或截断拼接，会悄悄漏掉那些真实合计频次很高的 item。正确的合并分两步：(1) 取各子分片 Space-Saving 候选 id 集合的并集（凭借其零漏报保证，这是一个安全的超集）；(2) 把各子分片的 Count-Min Sketch 按 cell 相加得到一个合并正确的组合 sketch，再用它查询每个候选的计数并据此排序。",
+    "tags": []
+  },
+  {
+    "id": "problems-top-k-hot-item-salting",
+    "node": "problems.search.top-k",
+    "type": "qa",
+    "q": "In a Top-K design partitioned by hashing item_id, what happens to processing when a single item suddenly goes viral, and what's the standard mitigation?",
+    "a": "Because the partition key is item_id, every event for that one viral item lands on exactly one shard — that shard's stream processor becomes a hot spot doing far more work than the other shards, which sit comparatively idle, even though total cluster capacity is fine on average. The standard mitigation is to detect the hot key and salt it: append a random suffix (e.g. item_id + rand(0,15)) to fan that single item's events out across multiple sub-keys/partitions, counting each sub-key separately and summing the sub-counts back together to get the item's true count. This trades away the no-merge-needed property that item_id partitioning normally gives (see the exact K-way merge card) for a small, targeted merge, but only for the items detected as hot.",
+    "q_zh": "在一个按 item_id 哈希分区的热门榜设计中，当某个 item 突然爆红时处理会发生什么？标准的缓解手段是什么？",
+    "a_zh": "因为分区 key 是 item_id，那个爆红 item 的所有事件都会落在同一个分片上——该分片的流处理器成为热点，承担的工作量远超其他分片，而其他分片相对空闲，即使集群总容量平均而言绰绰有余。标准的缓解手段是探测到热 key 后对其加盐：给 item_id 拼上一个随机后缀（例如 item_id + rand(0,15)），把这一个 item 的事件打散到多个子 key/分区上分别计数，再把各子计数加总得到该 item 的真实计数。这牺牲了 item_id 分区本来带来的「无需合并」的好处（换成需要一次小范围的合并），但只针对被探测为热点的 item。",
+    "tags": []
+  },
+  {
+    "id": "problems-top-k-10x-tree-merge",
+    "node": "problems.search.top-k",
+    "type": "qa",
+    "q": "In a Top-K trending design, when event volume grows 10x, why does the Count-Min Sketch / Space-Saving memory footprint stay manageable, and what becomes the new bottleneck instead?",
+    "a": "Both structures' memory scales as O(1/ε), independent of the number of distinct items — holding the same absolute error target after a 10x volume increase just requires shrinking ε roughly 10x (e.g. Count-Min Sketch width grows about 10x, moving memory from tens of MB to roughly ten times that), which stays a manageable, linear cost. The bottleneck that actually emerges is the merge step's fan-in: the number of shards or sub-shards whose sketches must be summed cell-by-cell grows with volume, so a flat fan-in into one coordinator node becomes the new limiting point. The fix is the same idea used for rolling up time windows, applied to topology instead: merge sketches in a tree (sub-shards merge pairwise within a rack or availability zone first, then those partial merges combine at the next level up) rather than flat fan-in to a single node.",
+    "q_zh": "在一个热门榜设计中，当事件量增长 10 倍时，为什么 Count-Min Sketch / Space-Saving 的内存占用依然可控？新的瓶颈会出现在哪里？",
+    "a_zh": "两种结构的内存都是 `O(1/ε)`，与不同 item 的个数无关——事件量增长 10 倍后要维持同样的绝对误差目标，只需要把 ε 缩小大约 10 倍（例如 Count-Min Sketch 的宽度增长约 10 倍，内存从几十 MB 变成大约十倍），仍然是可控的线性代价。真正冒出来的瓶颈是合并这一步的扇入：需要按 cell 相加的分片/子分片数量会随流量线性增长，扁平地扇入一个协调节点会成为新的限制点。修复思路和时间窗口的滚动汇总是同一个道理，只是换成了拓扑维度：把 sketch 的合并做成树形（子分片先在机架或可用区内部两两合并，再往上一级合并），而不是扁平地全部扇入一个节点。",
+    "tags": []
+  }
+]
