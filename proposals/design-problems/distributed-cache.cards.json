@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-distributed-cache-fanout-multiplier-qps",
+    "node": "problems.foundations.distributed-cache",
+    "type": "qa",
+    "q": "In a distributed cache design, why does the fan-out multiplier (distinct cache keys fetched per user page load) matter more for sizing cache QPS than the raw user action rate does, and how does this differ from sizing a durable key-value store?",
+    "a": "A durable key-value store's QPS tracks the rate of user-triggered operations directly. A look-aside cache's QPS instead tracks that rate multiplied by however many independent cache lookups one page load triggers, because a page is assembled from many components that each query their own cache entries. In one estimate at 200M DAU with 15 requests/day and 40 keys fetched per request, peak cache QPS reaches ≈4,166,667 — a number driven almost entirely by the fan-out multiplier, not by how often users act. Facebook has publicly disclosed an average of 521 distinct memcache items fetched per popular page load, an order of magnitude higher, underscoring that this multiplier must be measured per application, not assumed.",
+    "tags": [],
+    "q_zh": "在分布式缓存设计中，为什么「每次页面加载触发多少个不同缓存 key 查询」这个放大倍数，比原始用户操作速率更能决定缓存 QPS？这和为一个可持久化键值存储做容量估算有什么不同？",
+    "a_zh": "可持久化键值存储的 QPS 直接跟踪用户触发操作的速率。旁路缓存的 QPS 则要再乘以「一次页面加载触发多少次独立缓存查询」这个倍数，因为页面是由多个各自查询自己缓存条目的组件拼装而成的。在一个 2 亿日活、每天 15 次请求、每次请求 40 个 key 的估算里，峰值缓存 QPS 达到约 4,166,667——这个数字几乎完全由放大倍数决定，而不是由用户实际操作频率决定。Facebook 曾公开披露热门页面平均每次加载触发约 521 次不同的 memcache 条目查询，比这个例子高一个数量级，说明这个倍数必须针对具体应用实际测量，不能凭空假设。"
+  },
+  {
+    "id": "problems-distributed-cache-lease-thundering-herd",
+    "node": "problems.foundations.distributed-cache",
+    "type": "qa",
+    "q": "In a distributed cache's GET/SET API, why does a cache miss return a lease token to only the first requester, and how does this token prevent two distinct failure modes?",
+    "a": "Without coordination, a hot key expiring triggers every concurrent requester to independently query the backing database and then write the result back — a thundering herd that can overwhelm the database. With leases, the first request to miss on a key receives a unique token and permission to query the database and populate the cache; subsequent concurrent requesters for the same key are told to wait instead of also querying the database. The token also prevents stale sets: a SET is only accepted if it carries the currently-valid lease for that key, so a slow database read that returns after a newer write has already happened is silently rejected instead of overwriting fresher data with stale data.",
+    "tags": [],
+    "q_zh": "在一个分布式缓存的 GET/SET API 中，为什么未命中只把 lease token 发给第一个请求方？这个 token 如何同时防止两种不同的故障模式？",
+    "a_zh": "如果没有这种协调，一个热门 key 过期的瞬间，所有并发请求方都会各自独立查询数据库再各自写回缓存——形成能压垮数据库的惊群效应（thundering herd）。有了 lease 机制，第一个未命中的请求会拿到一个唯一 token 以及查库并回填缓存的权限；同一 key 的后续并发请求会被告知等待，而不是各自也去查库。这个 token 同时防止了脏写（stale set）：只有携带该 key 当前有效 lease 的 SET 才会被接受，所以一次比更新的写晚返回的慢查询会被静默拒绝，而不是用旧数据覆盖掉更新的数据。"
+  },
+  {
+    "id": "problems-distributed-cache-sharding-tradeoffs",
+    "node": "problems.foundations.distributed-cache",
+    "type": "qa",
+    "q": "In a distributed cache, what does client-side sharding, a proxy layer (like mcrouter), and Redis Cluster's built-in hash-slot protocol each make pay the cost of a topology change?",
+    "a": "Client-side sharding embeds the shard map directly in each application process — lowest latency (no extra hop), but every process must receive and apply topology updates promptly, or it routes to the wrong node. A proxy layer centralizes the shard map in a stateless, horizontally-scalable proxy tier — application code stays simple and topology changes are transparent to it, at the cost of one extra network hop per request. Redis Cluster embeds sharding in the protocol itself: keys hash into one of 16384 fixed slots, and a client contacting the wrong node gets a `-MOVED` redirect telling it the right one, so no client needs the full topology upfront and no separate proxy tier is needed, at the cost of a redirect round-trip during migrations.",
+    "tags": [],
+    "q_zh": "在分布式缓存中，客户端分片、代理层（如 mcrouter）和 Redis Cluster 内建的哈希槽协议，各自把拓扑变化的代价转嫁给了谁？",
+    "a_zh": "客户端分片把分片映射直接嵌入每个应用进程——延迟最低（没有额外跳数），但每个进程都必须及时收到并应用拓扑更新，否则会路由到错误的节点。代理层把分片映射集中在一层无状态、可水平扩展的代理里——应用代码保持简单，拓扑变化对它透明，代价是每次请求多一跳网络往返。Redis Cluster 把分片内建在协议里：key 哈希到 16384 个固定槽位之一，联系错节点的客户端会收到 `-MOVED` 重定向告知正确节点，因此客户端不需要预先知道完整拓扑，也不需要独立的代理层，代价是迁移期间的重定向往返。"
+  },
+  {
+    "id": "problems-distributed-cache-eviction-slab-vs-approx-lru",
+    "node": "problems.foundations.distributed-cache",
+    "type": "qa",
+    "q": "In a distributed cache node under memory pressure, why does a single global, exact LRU linked list not scale, and what do Memcached and Redis each do instead?",
+    "a": "An exact global LRU requires moving a node in a shared linked list on every access, which becomes a lock-contention bottleneck on a multithreaded server and violates tight P99 latency budgets. Memcached instead partitions memory into fixed-size slab classes; eviction happens only within the slab class a value belongs to, avoiding any single global structure, at the cost of internal fragmentation (a value wastes the unused remainder of its slab class's size). Redis instead avoids any linked list: it stores an access timestamp per key and, on eviction, randomly samples a small number of keys and evicts the least-recently-used one among the sample, repeating until enough memory is freed — approximate rather than exact, but with no global locking structure at all.",
+    "tags": [],
+    "q_zh": "在内存压力下的分布式缓存节点中，为什么一条全局精确的 LRU 链表无法扩展？Memcached 和 Redis 各自用什么替代它？",
+    "a_zh": "精确的全局 LRU 要求每次访问都在一条共享链表上做移动操作，这在多线程服务器上会变成锁竞争瓶颈，违反紧张的 P99 延迟预算。Memcached 的做法是把内存划分成固定大小的 slab class，驱逐只发生在值所属的那个 slab class 内部，避免了任何全局结构，代价是内部碎片（一个值会浪费它所在 slab class 未用满的剩余空间）。Redis 的做法是完全不用链表：为每个 key 存一个访问时间戳，驱逐时随机采样少量 key，淘汰采样里最久未访问的一个，重复几轮直到腾出足够空间——是近似而非精确，但完全没有全局锁定结构。"
+  },
+  {
+    "id": "problems-distributed-cache-hot-key-mitigation",
+    "node": "problems.foundations.distributed-cache",
+    "type": "qa",
+    "q": "In a distributed cache, why does adding more shards not help when a single key becomes disproportionately hot (Facebook has reported a single key reaching 20% of one server's request volume), and what mitigation does?",
+    "a": "Sharding only guarantees that different keys land on different nodes — it guarantees nothing about how much traffic any one key's own single node absorbs. No matter how many shards exist, one hot key still lands on exactly one node, so adding shards dilutes nothing for that key. The mitigation is detecting the hot key by sampling per-key request rates, then replicating its value under several suffixed copies (`key#1`...`key#R`) stored on different nodes; readers pick a suffix at random, spreading the hot key's read load across R nodes at the cost of R-way invalidation fan-out and brief cross-copy inconsistency.",
+    "tags": [],
+    "q_zh": "在分布式缓存中，当单个 key 的流量异常集中（Facebook 曾披露单个 key 能占到它所在服务器请求量的 20%）时，为什么增加分片数没有帮助？什么方法有用？",
+    "a_zh": "分片只保证不同的 key 落在不同节点上——对某一个 key 自己所在的那个节点要承受多少流量毫无保证。不管分片数多少，这个热 key 依然只落在恰好一个节点上，增加分片对这个 key 而言没有任何稀释作用。缓解办法是通过采样每个 key 的请求频率来探测热 key，然后把它的值复制成若干个带后缀的副本（`key#1`...`key#R`）分别存到不同节点，读请求随机选一个后缀读取，把这个热 key 的读流量摊到 R 个节点上，代价是失效时要向全部 R 个副本广播，且短时间内各副本之间可能不完全一致。"
+  },
+  {
+    "id": "problems-distributed-cache-cold-start-peer-warm",
+    "node": "problems.foundations.distributed-cache",
+    "type": "qa",
+    "q": "In a distributed cache design, why is warming a newly-added node or a freshly-built cluster purely from the backing database dangerous, and what alternative do Facebook's regional pools and Netflix's EVCache use instead?",
+    "a": "A node or cluster starting at a 0% hit rate turns every request it serves into a database query until it naturally warms up — potentially for minutes to hours — pushing database load toward the level it would see with no cache at all, which is especially dangerous if the cold start is happening during an incident recovery. Instead of warming purely from the database, both Facebook's regional cache pools and Netflix's EVCache warm a cold node or region from an already-warm peer node or peer region first: a miss checks the peer's cache before falling through to the database, so only a true miss on both sides reaches the database.",
+    "tags": [],
+    "q_zh": "在分布式缓存设计中，为什么让新加入的节点或全新集群完全靠回源数据库来预热是危险的？Facebook 的区域缓存池和 Netflix 的 EVCache 各自用什么替代方案？",
+    "a_zh": "一个从 0% 命中率开始的节点或集群，在自然预热完成之前（可能长达几十分钟到几小时）会把它服务的每一个请求都变成一次数据库查询，把数据库负载推向接近完全没有缓存保护时的水平——如果冷启动恰好发生在故障恢复期间，这尤其危险。Facebook 的区域缓存池和 Netflix 的 EVCache 都不是纯粹从数据库预热，而是先让冷节点或冷区域向一个已经暖机的对等节点或对等区域查询：未命中时先查对等方的缓存，只有双方都未命中才真正落到数据库。"
+  },
+  {
+    "id": "problems-distributed-cache-durability-tradeoff-memcached-vs-redis",
+    "node": "problems.foundations.distributed-cache",
+    "type": "qa",
+    "q": "In a distributed cache, classic Memcached deployments replicate nothing across nodes while Redis Cluster deployments typically pair each shard with an async replica. What does each choice trade off, and why doesn't the 'better' choice generalize?",
+    "a": "Unreplicated Memcached loses a node's entire cached content on failure — that key range's hit rate drops to zero until it re-warms — but avoids doubling memory usage. Redis Cluster's replica-per-shard setup keeps hit rate nearly unaffected by a single node failure (the replica is promoted automatically), but costs double the memory for the same working set. Neither is universally better: since caching accepts data loss by design, the question is whether the spare memory capacity is worth spending on replicas versus more working-set headroom — and that answer depends on whether the deployment is already throughput-bound (where memory is comparatively cheap to spend) or already memory-bound (where doubling it is expensive).",
+    "tags": [],
+    "q_zh": "在分布式缓存中，经典 Memcached 部署不在节点间做任何复制，而 Redis Cluster 部署通常给每个分片配一个异步复制的从节点。这两种选择各自的代价是什么？为什么「更好」的那个选择不能一概而论？",
+    "a_zh": "不做复制的 Memcached 在节点故障时会丢失该节点的全部缓存内容——对应 key 范围的命中率归零直到重新预热——但避免了双倍内存开销。Redis Cluster 的每分片配从节点方案让命中率在单节点故障时几乎不受影响（从节点自动被提升接管），但要为同样的工作集付出双倍内存成本。两者没有绝对的优劣：既然缓存在设计上就接受数据丢失，真正的问题是这部分富余内存该花在副本上还是花在更大的工作集空间上——答案取决于这套部署本身已经是吞吐瓶颈（内存相对富余）还是已经是内存瓶颈（双倍内存代价高昂）。"
+  },
+  {
+    "id": "problems-distributed-cache-10x-hash-slot-granularity",
+    "node": "problems.foundations.distributed-cache",
+    "type": "qa",
+    "q": "In a Redis Cluster deployment sized at ~43 nodes for 200M DAU, what happens to per-node hash-slot granularity at 10x scale (2B DAU, ~421 nodes), given the cluster's fixed 16,384 total slots?",
+    "a": "At ~43 nodes, each node owns roughly 16,384/43 ≈ 381 slots on average. At ~421 nodes (peak ops scaled 10x from ≈4.2M to ≈42M, still at 100,000 ops/sec/node), each node's share drops to roughly 16,384/421 ≈ 38 slots — a 10x reduction in per-node slot granularity because the total slot count doesn't grow with the cluster. Each slot now represents a coarser chunk of the key space, making rebalancing and migration less fine-grained, which is part of why Redis's own documentation recommends keeping cluster size on the order of hundreds to about a thousand nodes rather than scaling this single-namespace design indefinitely.",
+    "tags": [],
+    "q_zh": "在一个为 2 亿日活配置约 43 台节点的 Redis Cluster 部署中，给定集群固定 16,384 个总槽位，扩大到 10 倍规模（20 亿日活，约 421 台节点）时，每个节点的哈希槽粒度会发生什么变化？",
+    "a_zh": "在约 43 台节点时，平均每个节点持有约 16,384/43 ≈ 381 个槽位。在约 421 台节点时（峰值操作数从约 420 万增长 10 倍到约 4,200 万，仍按每节点 10 万次/秒计算），每个节点的份额降到约 16,384/421 ≈ 38 个槽位——由于总槽位数不随集群增长，每节点的槽位粒度缩小了约 10 倍。每个槽位现在代表更粗粒度的一块 key 空间，让重分片和迁移的粒度变粗，这也是 Redis 官方文档建议把集群规模控制在几百到约一千台节点量级、而不是无限扩展这种单一命名空间设计的原因之一。"
+  }
+]

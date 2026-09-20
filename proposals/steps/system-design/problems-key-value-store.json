@@ -1,0 +1,12 @@
+{
+  "problems.foundations.key-value-store": [
+    "problems-key-value-store-qps-bound-not-storage-bound",
+    "problems-key-value-store-consistent-hashing-vnode-choice",
+    "problems-key-value-store-quorum-availability-math",
+    "problems-key-value-store-sloppy-quorum-hinted-handoff",
+    "problems-key-value-store-vector-clock-vs-lww",
+    "problems-key-value-store-merkle-tree-anti-entropy",
+    "problems-key-value-store-gossip-convergence-log-n",
+    "problems-key-value-store-10x-node-growth"
+  ]
+}
