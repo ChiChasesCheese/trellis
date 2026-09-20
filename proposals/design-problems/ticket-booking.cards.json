@@ -1,0 +1,72 @@
+[
+  {
+    "id": "problems-ticket-booking-hold-vs-lock-contention",
+    "node": "problems.commerce.ticket-booking",
+    "type": "qa",
+    "q": "In an assigned-seating ticket booking system (like Ticketmaster) with 1 million buyers competing for 50,000 seats in the first minute, why is the average 20:1 seat contention ratio not the number that determines the database's write bottleneck?",
+    "a": "Because the 1 million requests are spread across 50,000 different rows (seats), so each individual row only sees roughly 20 concurrent conditional-update attempts, not 1 million. The true bottleneck is the database's aggregate row-update throughput across all rows, not lock contention on any single row — a naively-computed 100K QPS peak (1M requests / 10s) overstates per-row contention but understates the total write volume a single relational instance must absorb.",
+    "q_zh": "在一个划位（assigned-seating）票务系统（如 Ticketmaster）里，开售第一分钟有 100 万买家争抢 5 万个座位，为什么平均 20:1 的座位竞争比并不是决定数据库写瓶颈的那个数字？",
+    "a_zh": "因为这 100 万个请求分散在 5 万个不同的行（座位）上，所以单行实际只面对约 20 个并发的条件更新尝试，而不是 100 万个。真正的瓶颈是数据库跨所有行的聚合写吞吐，而不是某一行上的锁竞争——简单算出的 10 万 QPS 峰值（100 万请求 / 10 秒）高估了单行竞争，却低估了单个关系型实例需要承受的总写入量。",
+    "tags": []
+  },
+  {
+    "id": "problems-ticket-booking-seat-state-conditional-update",
+    "node": "problems.commerce.ticket-booking",
+    "type": "qa",
+    "q": "In a ticket booking system, what single SQL pattern lets a seat's available→held transition succeed atomically without holding a cross-request lock or relying on a background cron job to expire stale holds?",
+    "a": "A conditional UPDATE whose WHERE clause checks both current availability and lazy expiry in one statement: `UPDATE seats SET status='held', expires_at=now()+interval '10 minutes' WHERE status='available' OR (status='held' AND expires_at < now())`. The database's row-level write lock is held only for the statement's execution, rows affected = 1 means success and 0 means someone else already holds it; a low-priority background job may still archive long-expired rows, but it never carries correctness responsibility.",
+    "q_zh": "在票务预订系统中，用什么样的一条 SQL 能让座位从 available 到 held 的转移在不持有跨请求锁、也不依赖后台 cron 任务清理过期占座的情况下原子地成功？",
+    "a_zh": "一条 WHERE 子句里同时检查当前可用性和惰性过期的条件更新：`UPDATE seats SET status='held', expires_at=now()+interval '10 minutes' WHERE status='available' OR (status='held' AND expires_at < now())`。数据库的行级写锁只在语句执行期间短暂持有，受影响行数为 1 表示抢到，为 0 表示已被别人占用；低优先级的后台任务仍可以定期归档长期过期的行，但它从不承担正确性职责。",
+    "tags": []
+  },
+  {
+    "id": "problems-ticket-booking-isolation-write-skew-risk",
+    "node": "problems.commerce.ticket-booking",
+    "type": "qa",
+    "q": "Why is read-committed isolation sufficient for a ticket booking system's single-statement conditional UPDATE on a seat row, but not sufficient if the hold logic were instead implemented as a separate SELECT of available seats followed by an INSERT?",
+    "a": "A single conditional UPDATE re-evaluates its WHERE clause against the latest committed state at execution time, so a concurrent transaction can never read a stale 'available' value under read committed — there is no window for an anomaly. But splitting it into 'read a set of available seats, then write to one of them' reintroduces the classic write-skew anomaly (two transactions independently read the same snapshot, each picks a seat they believe is free, and both commit), which requires serializable isolation or explicit row locks to prevent.",
+    "q_zh": "为什么票务预订系统中对一个座位行的单语句条件更新，用读已提交（read committed）隔离级别就足够安全，但如果把占座逻辑拆成先 SELECT 查可用座位、再对其中一个做 INSERT，就不够了？",
+    "a_zh": "单语句条件更新在执行时会针对最新的已提交状态重新求值 WHERE 子句，所以在读已提交级别下并发事务永远不会读到过期的 'available' 值——不存在产生异常的窗口。但如果拆成\"先读一批可用座位，再写其中一个\"两步，就会重新引入经典的写偏斜（write skew）异常（两个事务各自基于同一份快照读取，各自认为选中的座位是空的，然后都提交成功），这时必须用可串行化（serializable）隔离级别或显式行锁才能防止。",
+    "tags": []
+  },
+  {
+    "id": "problems-ticket-booking-virtual-queue-admission",
+    "node": "problems.commerce.ticket-booking",
+    "type": "qa",
+    "q": "In a ticket booking system's virtual waiting room, why does the admission controller throttle to a rate like 3,000-5,000 admits/second based on the downstream seat database's capacity, rather than admitting users as fast as they arrive?",
+    "a": "Because entry traffic (up to ~1 million requests/minute for a hot on-sale) can be two orders of magnitude larger than what a single relational seat database can safely absorb as row-update throughput (a few thousand QPS). The admission controller's job is to reshape the traffic spike into a stream the database can sustain, ideally using a feedback signal like database latency or hold-success rate to adjust the admission rate dynamically, rather than admitting on a fixed schedule regardless of downstream load.",
+    "q_zh": "在票务系统的虚拟排队厅（虚拟候机厅）里，为什么 admission controller 要按下游座位数据库的承受能力把放行速率限制在每秒 3,000–5,000 人左右，而不是用户到达多快就放行多快？",
+    "a_zh": "因为一场热门开售的入口流量（峰值可达每分钟约 100 万请求）可能比单个关系型座位数据库能安全承受的行更新吞吐（每秒几千 QPS）高出两个数量级。admission controller 的职责是把这个流量脉冲整形成数据库能持续消化的速率，理想情况下用数据库延迟或占座成功率之类的反馈信号动态调整放行速率，而不是不顾下游负载按固定节奏放人。",
+    "tags": []
+  },
+  {
+    "id": "problems-ticket-booking-hold-vs-decrement-model",
+    "node": "problems.commerce.ticket-booking",
+    "type": "qa",
+    "q": "Why doesn't the atomic-decrement inventory pattern used for general-admission flash sales (e.g. `UPDATE stock = stock - 1 WHERE stock > 0`) work for an assigned-seating ticket booking system?",
+    "a": "Atomic decrement treats inventory as a single number, which is correct for undifferentiated general-admission tickets but breaks down when tickets are distinct physical seats: a counter can tell you how many tickets are left but not which specific seat a buyer gets. Assigned seating needs a one-row-per-seat state machine (available/held/sold) so a buyer can pick and be assigned a specific seat, which is a fundamentally different concurrency problem — many distinct objects each claimed exactly once, not one shared count decremented many times.",
+    "q_zh": "为什么通用入场（general admission）闪购常用的原子递减库存模式（如 `UPDATE stock = stock - 1 WHERE stock > 0`）不适用于划位票务预订系统？",
+    "a_zh": "原子递减把库存当成一个数字来处理，这对不区分座位的通用入场票是对的，但票如果是具体的物理座位就不成立了：计数器只能告诉你还剩多少张票，不能告诉你某个买家具体买到了哪个座位。划位场景需要\"一票一行\"的状态机（available/held/sold），让买家能选中并被分配到一个具体座位——这是本质不同的并发问题：是很多个不同对象各自被恰好认领一次，而不是一个共享计数被反复递减。",
+    "tags": []
+  },
+  {
+    "id": "problems-ticket-booking-hot-seats-candidate-set",
+    "node": "problems.commerce.ticket-booking",
+    "type": "qa",
+    "q": "In a ticket booking system, if the front/VIP section has 200 seats and 500,000 people are trying to book them, giving a per-seat contention ratio of 2,500:1, what mitigation lowers the wasted-work rate without changing the seat-per-row data model?",
+    "a": "Instead of the client specifying one exact seat id to hold, the client submits a batch of several acceptable candidate seat ids and the server's conditional update tries them and returns whichever one succeeds first. This spreads contention from 'many buyers racing for the same single row' to 'many buyers racing for any one of a larger candidate set,' cutting the rate of failed 409 attempts, at the cost of the buyer giving up the ability to pick one exact seat.",
+    "q_zh": "在票务系统中，如果前排/VIP 区有 200 个座位，同时有 50 万人在抢，单座竞争比高达 2,500:1，在不改变一票一行数据模型的前提下，什么方法能降低无效竞争的比例？",
+    "a_zh": "让客户端不再指定唯一的一个座位 id 去占座，而是一次提交一批可接受的候选座位 id，服务器的条件更新依次尝试，返回第一个成功的那个。这把竞争从\"很多买家抢同一行\"打散成\"很多买家抢一个更大候选集合中的任意一行\"，降低了 409 失败尝试的比例，代价是买家放弃了精确挑选某个座位的能力。",
+    "tags": []
+  },
+  {
+    "id": "problems-ticket-booking-payment-hold-extension-saga",
+    "node": "problems.commerce.ticket-booking",
+    "type": "qa",
+    "q": "In a ticket booking system, why does entering the payment page extend a seat hold's TTL, and how does the reserve-charge-confirm saga combined with idempotency on the hold id prevent both double-selling and double-charging?",
+    "a": "The base hold TTL (e.g. 10 minutes) is sized for browsing and form-filling, but the payment gateway itself adds latency, retries, and asynchronous webhook delivery; without extension, a hold could expire mid-payment, letting the seat resell out from under a buyer who is about to pay. Structuring the flow as a saga — reserve (done) → charging (call the PSP) → confirmed (one transaction flips the seat to sold and the order to confirmed, keyed by the hold id) — means a failed charge or an expired hold triggers automatic compensation (refund/release), and a duplicate payment webhook for the same hold id just hits the already-confirmed branch and returns idempotently instead of re-running the state transition.",
+    "q_zh": "在票务系统中，为什么进入支付页面会把座位占座（hold）的有效期续长，reserve-charge-confirm 这个 saga 配合以 hold id 为幂等键的确认逻辑，是如何同时防止重复售出和重复扣款的？",
+    "a_zh": "基础占座有效期（如 10 分钟）是按浏览和填表所需时间定的，但支付网关本身会带来延迟、重试和异步 webhook，如果不续期，占座可能在支付过程中过期，导致座位在买家即将付款时被转卖给别人。把流程做成一个 saga——reserve（已完成）→ charging（调用 PSP）→ confirmed（一个事务里同时把座位改为 sold、订单改为 confirmed，以 hold id 为键）——意味着扣款失败或 hold 已过期都会触发自动补偿（退款/释放），而同一个 hold id 的重复支付 webhook 只会命中已确认分支并幂等返回，不会重新执行状态转移。",
+    "tags": []
+  }
+]
