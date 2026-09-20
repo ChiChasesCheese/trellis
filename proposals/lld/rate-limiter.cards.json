@@ -1,0 +1,66 @@
+[
+  {
+    "id": "problems-rate-limiter-fixed-window-boundary-burst",
+    "node": "problems.components.rate-limiter",
+    "type": "qa",
+    "q": "限流器（Rate Limiter）用固定窗口计数（fixed window counter，把时间切成对齐的格子、每格一个计数器）实现时，为什么说它是错的？用限额「每 10 秒 5 次」把账算给面试官看。",
+    "a": "因为**边界突发**（boundary burst）：窗口只按格子对齐，不看真实的时间间隔。\n\n限额 5 次／10 秒，客户端在 t=9.9 秒连发 5 次——全落在第 0 格（0–10 秒），计数 5，不超；再在 t=10.1 秒连发 5 次——全落在第 1 格（10–20 秒），计数 5，也不超。两格各自都合法，**可是 0.2 秒之内真实放行了 10 次，是限额的 2 倍**。\n\n最坏情况恒为 2×limit，且与窗口长度无关。换来的是最省的内存（两个整数）。修法是让窗口滑动：滑动窗口日志（sliding window log，精确，内存 O(limit)）或滑动窗口计数（sliding window counter，近似，三个数字）。\n\n在机考里，主动把这笔算术算出来比写完四种算法更能加分——它证明你知道自己第一版错在哪。",
+    "tags": []
+  },
+  {
+    "id": "problems-rate-limiter-decision-not-bool",
+    "node": "problems.components.rate-limiter",
+    "type": "qa",
+    "q": "限流器（Rate Limiter）的 `allow(key)` 该返回 `bool`、抛异常，还是别的？三种选项各付什么代价？",
+    "a": "返回一个不可变的小结果对象，并让它实现 `__bool__`：\n\n```python\n@dataclass(frozen=True, slots=True)\nclass Decision:\n    allowed: bool\n    remaining: int\n    retry_after: float\n    rule: str = \"\"\n\n    def __bool__(self) -> bool:\n        return self.allowed\n```\n\n- **裸 `bool` 的代价**：HTTP 429 要带 `Retry-After`、响应头要带 `X-RateLimit-Remaining`，而这两个数只有算法内部算得出来（令牌桶算 `(cost − 令牌数) / 速率`，滑动日志算第几条旧记录何时滑出窗口）。丢掉它们，调用方只能猜一个退避时间；更糟的是所有客户端都猜同一个数，被拒的请求在同一刻集体重试，形成惊群（thundering herd）。\n- **抛异常的代价**：被限流是**正常的业务结果**，不是错误——一个健康的公开 API 每秒都在拒绝请求。把高频正常分支写成 `try/except` 既是控制流滥用，也让一次拒绝不能作为值被传递、统计和记录。异常留给配置错误（非正的 limit、非正的 cost）。\n\n`__bool__` 是关键一笔：`if limiter.allow(key):` 照样读得通，所以从 `bool` 升级成结构化结果**不需要调用方改一行既有代码**。",
+    "tags": []
+  },
+  {
+    "id": "problems-rate-limiter-used-is-the-seam",
+    "node": "problems.components.rate-limiter",
+    "type": "qa",
+    "q": "限流器（Rate Limiter）要同时支持固定窗口、令牌桶、滑动窗口日志、滑动窗口计数四种算法。可替换的接缝该切在 `allow(now, cost)` 上，还是更低的地方？",
+    "a": "切在更低的地方：四种算法唯一真正的差别是**此刻这个 key 已经占掉了多少额度**。\n\n固定窗口说「格子里的计数」，令牌桶说「容量减去现有令牌」，滑动日志说「窗口内的条目数」，滑动计数说「加权估计值」。把它抽成 `_used(now) -> float`，判定骨架就只写一次：够不够、还剩多少、`cost` 超上限返回 `math.inf`、被拒时一份都不扣——这四条规则全在基类的 `check` 里。子类只剩 `_used`／`_retry_after`／`commit` 三个方法，每个十行以内。\n\n切在 `allow` 上的代价是那四条规则被抄四遍，迟早不一致（最常见的走样是某个算法在被拒路径上仍然写了状态）。\n\n红利是回收判据可以在基类里一行写完：`is_idle(now)` 就是 `self._used(now) <= 0.0`。因为占用为 0 的状态和刚新建的状态对任何后续判定给出完全相同的答案，删掉它是**观察上等价**的，四种算法白捡了正确的回收语义。",
+    "tags": []
+  },
+  {
+    "id": "problems-rate-limiter-token-bucket-lazy-refill",
+    "node": "problems.components.rate-limiter",
+    "type": "qa",
+    "q": "限流器（Rate Limiter）里的令牌桶（token bucket）为什么绝不能用后台线程定时补充令牌？正确写法是什么，还要额外防一件什么事？",
+    "a": "因为限流是**按 key 隔离**的：一百万个用户就是一百万个桶，用定时器补充等于一百万个定时任务，CPU 全烧在闲置 key 上。\n\n正确写法是**惰性补充**——令牌数在每次判定时用「距上次记账过了多久」现算，闲置 key 一分钱不花：\n\n```python\ndef _tokens_at(self, now: float) -> float:\n    if self._stamp is None:\n        return self.capacity\n    elapsed = max(0.0, now - self._stamp)\n    return min(self.capacity, self._tokens + elapsed * self._rate)\n```\n\n要额外防的是**时钟倒退**：`now - stamp` 为负会凭空造出令牌，把 `elapsed` 夹到 0 以上是唯一安全的处理。时钟本身也要选 `time.monotonic` 而不是 `time.time`，后者会被 NTP 往回拨。\n\n顺带一提，令牌桶把瞬时容量 `capacity` 和持续速率 `limit/window` 分开，于是能表达「每分钟 60 次，但一口气最多 5 次」——这是其他三种算法做不到的。",
+    "tags": []
+  },
+  {
+    "id": "problems-rate-limiter-sharded-lock",
+    "node": "problems.components.rate-limiter",
+    "type": "qa",
+    "q": "多线程限流器（Rate Limiter）的锁该怎么加？「每个 key 一把锁」为什么是个陷阱？Python 的 GIL 在这里帮得上忙吗？",
+    "a": "用**分片锁**（sharded lock）：固定 N 个分片，每片一把 `threading.Lock` 加一个自己的 key→状态 字典，`hash(key) % N` 决定归属。\n\n- **全局一把锁**：正确但所有 key 互相排队，而限流器坐在每个请求的必经之路上。\n- **每个 key 一把锁**：粒度最细，但那本「锁的字典」自己也要一把锁保护，而且**它同样会无限增长**——为了解决一个容器的回收问题，造出了第二个更难回收的容器（删一把可能正被持有的锁是经典竞态）。\n- **分片**：锁数量是常数，不需要生命周期管理；竞争降到约 1/N；同一个 key 的所有读写天然在同一把锁下；扫描回收时只锁一个分片，其余流量照常通过。\n\nGIL（全局解释器锁）保证单条字节码不被撕开，所以 `dict.get` 不会读到半个对象；它**不**保证 `check` 到 `commit` 之间不切换线程。`used + cost <= capacity` 是一次检查再动作（check-then-act），两百个线程能同时看到「还剩 50 个令牌」然后各自扣一个。锁保护的不是数据结构，是这条复合操作的原子性。",
+    "tags": []
+  },
+  {
+    "id": "problems-rate-limiter-state-map-must-shrink",
+    "node": "problems.components.rate-limiter",
+    "type": "qa",
+    "q": "限流器（Rate Limiter）按 key 懒创建状态，一百万个 IP 各来过一次会怎样？可是回收又不能太早——太早会出什么事？判据该怎么定？",
+    "a": "不回收就是内存泄漏，而内存有界恰恰是限流器存在的意义之一。\n\n回收太早的后果更隐蔽：**删掉一个 key 的状态等于把它的配额清零**，客户端只要停一下就能给自己解封。\n\n判据不该是「多久没用过」（那要靠调用方传对一个阈值，把正确性寄托在参数上），而该是**状态与新建状态等价**：\n\n```python\ndef is_idle(self, now: float) -> bool:\n    return self._used(now) <= 0.0\n```\n\n占用为 0 的状态，留着和删掉对后续任何一次判定都给出相同答案，所以「删早了」根本不可能发生。具体到各算法：固定窗口是格号已翻篇，令牌桶是令牌补满，滑动日志是条目全部滑出窗口。\n\n扫描时机用摊还：每个分片累计的操作数超过门槛就扫一遍自己，一次 O(条目数)，摊到那么多次操作上是 O(1)。",
+    "tags": []
+  },
+  {
+    "id": "problems-rate-limiter-amortised-threshold-trap",
+    "node": "problems.components.rate-limiter",
+    "type": "qa",
+    "q": "限流器（Rate Limiter）用「攒够一批操作就扫一遍分片、回收闲置 key」来摊还清理成本。把触发条件写成 `if ops >= max(64, len(states))` 有什么致命问题？",
+    "a": "在「每次操作都带来一个新 key」的场景下它**永远追不上**：`ops` 每加一，`len(states)` 也加一。\n\n第一次扫描（ops=64、条目 64，此时还没有东西过期，回收 0 个）之后 `ops` 归零，从此两者恒差 64，`ops >= len(states)` 再也不成立，扫描不再触发，内存一路涨到一百万。\n\n正确写法是把门槛**定死在上一次整理完的规模**上，而不是每次和当前规模比较：\n\n```python\nshard.ops = 0\nshard.purge_at = max(64, len(shard.states))\n```\n\n修好之后，一百万个只来过一次的 key，常驻条目稳定在一个窗口内出现的 key 数（约一万），不随总量增长。\n\n这和哈希表「按上次 rehash 之后的大小决定下次扩容点」是同一种摊还论证：**和一个会被自己撑大的量比较，摊还就不成立**。",
+    "tags": []
+  },
+  {
+    "id": "problems-rate-limiter-composite-two-phase",
+    "node": "problems.components.rate-limiter",
+    "type": "qa",
+    "q": "限流器（Rate Limiter）要同时按用户和按接口限流、任一条拒绝即整体拒绝。逐条调用 `allow` 会出什么错？正确做法带来的死锁风险又怎么处理？",
+    "a": "逐条 `allow` 的错在于**扣早了**：用户规则先通过并已经扣掉一份额度，接口规则随后拒绝——这次请求根本没被服务，却吃掉了用户的配额，用户会发现自己被限流得莫名其妙地快。\n\n正确做法是**两阶段判定**：先把所有涉及的状态锁住并各自 `check`（纯查询、绝不写状态），全过了才逐个 `commit`。这也正是要把算法的 `check` 和 `commit` 拆开、把「持锁取状态」公开成上下文管理器的原因：\n\n```python\nwith ExitStack() as stack:\n    for rule in self._rules:\n        state = stack.enter_context(\n            rule.limiter.reserve(rule.key_of(subject), now))\n        decision = state.check(now, cost)\n        if not decision.allowed:\n            return replace(decision, rule=rule.name)\n        reserved.append(state)\n    for state in reserved:\n        state.commit(now, cost)\n```\n\n同时持有多把锁就有死锁风险，这里靠**固定的加锁顺序**规避：规则元组顺序不变，所有线程按同一顺序拿锁。这个前提有个漏洞——两条规则若共用同一个限流器实例，加锁顺序就取决于 key 落在哪个分片，不再固定；所以构造函数直接拒绝这种配置，把一条只存在于脑子里的约束变成一次会抛异常的检查。\n\n另外：组合判定必须让所有规则读到**同一个 `now`**，否则判定基准不一致——这是时钟必须注入、而算法绝不自己读时钟的另一个理由。",
+    "tags": []
+  }
+]
