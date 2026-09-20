@@ -42,10 +42,10 @@ dataclass), so subscribers update themselves from the event instead of reaching 
 subject's storage without its lock. (3) A class that only forwards one call to another object is
 a Java habit: give it a responsibility or delete it, and say which in the article.
 
-**Length is cut by removing scope, never by compressing prose.** If the solution runs long, drop a
-stage-4 extra and describe it in 扩展与追问 instead; never delete a read-only accessor a test or a
-reader needs, and never squeeze docstrings to fit. Landing one line under the cap means the next
-edit breaks the gate: aim for 300–500 and stop adding.
+**Length is cut by removing scope, never by compressing prose.** The gate measures lines of *code*,
+so shortening a docstring buys you nothing: if the solution runs long, drop a stage-4 extra and
+describe it in 扩展与追问 instead. Never delete a read-only accessor a test or a reader needs.
+Landing a line under the cap means the next edit breaks the gate: aim for 250–400 and stop adding.
 
 **A test never reads a private attribute.** `starter.py` is filled in by a learner who may pick a
 different internal representation, so a test that asserts on `_something` fails a correct answer.
@@ -61,7 +61,9 @@ released? Unbounded growth in a component whose job is bounded memory is a faile
 
 ## 1. The code — `vault/domains/low-level-design/problems/<slug>/`
 
-- `solution.py` — the reference solution. 120–700 lines (the gate's range; aim for 300–500), standard library only, Python 3.12, fully
+- `solution.py` — the reference solution. **120–480 lines of code** — blank lines, comments and docstrings do not count, so write the
+  Chinese prose your reader needs and spend the budget on design, not on words; aim for 250–400
+  lines of code and stop adding scope. Standard library only, Python 3.12, fully
   type-annotated, a Chinese module docstring that states the design in five lines, Chinese
   docstrings and comments (identifiers stay English). At least three top-level classes. No `print`
   in library code; an `if __name__ == "__main__":` demo at the bottom is welcome.

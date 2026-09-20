@@ -31,7 +31,10 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "vault/domains/low-level-design"
 BRANCH = "problems"
 MIN_ARTICLE, MIN_CARDS, MIN_TESTS, MIN_DECISIONS = 8000, 6, 10, 3
-SOLUTION_LINES = (120, 700)
+# Measured on the *code*: blank lines, comments and docstrings are excluded, because this bank
+# requires Chinese docstrings and comments and must not then penalise writing them. A third to a
+# half of an accepted file is prose. The generous total cap is only a bloat guard.
+SOLUTION_CODE_LINES, SOLUTION_TOTAL_MAX = (120, 480), 900
 SECTIONS = ["题目与澄清", "需求与分级", "核心对象与职责", "关键设计决策", "代码走读", "测试与自检",
             "扩展与追问", "常见错误", "45 分钟怎么分配", "来源与延伸"]
 COMMERCIAL = ("hellointerview.com", "educative.io", "designgurus.io", "algomaster.io", "codemia.io",
@@ -64,9 +67,21 @@ def check_code(slug: str) -> list[str]:
         return problems
     source = solution.read_text(encoding="utf-8")
     tree = ast.parse(source)
-    n = len(source.splitlines())
-    if not SOLUTION_LINES[0] <= n <= SOLUTION_LINES[1]:
-        problems.append(f"solution.py is {n} lines, want {SOLUTION_LINES[0]}–{SOLUTION_LINES[1]}")
+    lines = source.splitlines()
+    doc_lines: set[int] = set()
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.Module, ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef)):
+            if ast.get_docstring(node, clean=False) is not None:
+                first = node.body[0]
+                doc_lines |= set(range(first.lineno, first.end_lineno + 1))
+    code = sum(1 for i, line in enumerate(lines, 1)
+               if line.strip() and not line.strip().startswith("#") and i not in doc_lines)
+    lo, hi = SOLUTION_CODE_LINES
+    if not lo <= code <= hi:
+        problems.append(f"solution.py has {code} lines of code (excluding docstrings and comments), "
+                        f"want {lo}–{hi}")
+    if len(lines) > SOLUTION_TOTAL_MAX:
+        problems.append(f"solution.py is {len(lines)} lines in total, over the {SOLUTION_TOTAL_MAX} cap")
     for node in ast.walk(tree):
         names = [a.name for a in node.names] if isinstance(node, ast.Import) else \
                 [node.module or ""] if isinstance(node, ast.ImportFrom) and node.level == 0 else []
