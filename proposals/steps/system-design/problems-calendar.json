@@ -1,0 +1,12 @@
+{
+  "problems.realtime.calendar": [
+    "problems-calendar-event-attendee-split",
+    "problems-calendar-rsvp-write-margin",
+    "problems-calendar-recurring-storage-blowup",
+    "problems-calendar-tzid-not-utc",
+    "problems-calendar-freebusy-permission-boundary",
+    "problems-calendar-itip-external-interop",
+    "problems-calendar-sync-token-invalidation",
+    "problems-calendar-10x-attendee-sharding"
+  ]
+}
