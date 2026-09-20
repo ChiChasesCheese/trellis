@@ -32,6 +32,12 @@ orders of magnitude), and the wrong number had already been copied into a card. 
 "at least one collision ever" from "this insert collides"; average from peak; per-cluster from
 per-node. A card inherits its numbers from the article, so fix the article first.
 
+**A number you could not verify never goes into a card.** In the article it may appear with its
+source named and marked as secondhand; a card states only what stands on its own — if the
+argument is structural ("Kafka's control plane is not built for a billion partitions"), make the
+structural argument and drop the figure. Never write "industry experience says" for a number
+that came from one prep site.
+
 Ground it before you write. Read the free authoritative treatments (the URLs in your
 task, `github.com/donnemartin/system-design-primer`, the company's own engineering blog
 posts and papers about the real system) with WebFetch/WebSearch. Then **write in your own
