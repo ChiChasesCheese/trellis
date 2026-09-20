@@ -1,0 +1,66 @@
+[
+  {
+    "id": "problems-ride-sharing-offer-not-assignment",
+    "node": "problems.marketplaces.ride-sharing",
+    "type": "qa",
+    "q": "在网约车（Uber）派单设计里，系统给乘客找到司机之后，是把行程**指派**给他，还是发一张**要约**（offer）？为什么这个选择是这道题的题眼？",
+    "a": "发**要约**：一张只给一位司机、带超时、可以被拒绝的邀请；司机 `accept` 之前，行程上根本没有司机。\n\n直接指派（`driver.status = ON_TRIP` 然后「通知」他）的问题不是性能，是**它撒谎**——「这位司机在跑这一单」在他点同意之前就是假的。他可能在吃饭、准备收车、不想去那个方向。系统一旦把未经同意的事实写成数据，后面所有补偿逻辑都是在给这个谎打补丁。\n\n第三个选项是**广播抢单**（推给附近所有人，先点的赢）：真实的货运与众包配送就这么干，响应最快，但推送量是 O(附近司机数)，抢单对司机是零和的，而且「谁赢」仍然要靠一次锁内的原子操作来裁定。\n\n逐个要约的代价必须说出口：最坏撮合时延 = 候选数 × 超时，所以超时要短（十几秒）并且要有候选上限。",
+    "tags": []
+  },
+  {
+    "id": "problems-ride-sharing-offered-status-cas",
+    "node": "problems.marketplaces.ride-sharing",
+    "type": "qa",
+    "q": "网约车派单时，一张要约敞开的那十几秒里，这位司机算不算「空闲」？用一个 `is_available` 布尔字段会出什么事？",
+    "a": "不算。必须给他一个**第四个状态** `OFFERED`：被一张敞开的要约独占着——既不是空闲（不能再被派单），也不是在跑车（还没人接单）。\n\n用布尔字段会踩**先检查后动作**（check-then-act）竞态：`if d.is_available` 和 `d.is_available = False` 是两段字节码，两个线程会同时挑中同一位司机，两位乘客匹配到同一辆车。Python 的 GIL 在这里什么也不保证——它只保证单条字节码不被打断。\n\n正确形态是锁内的一次**比较并交换**（compare-and-swap）：\n\n```python\ndef hold(self, driver_id: str, offer_id: str) -> bool:\n    with self._lock:\n        driver = self._drivers.get(driver_id)\n        if driver is None or driver.status is not DriverStatus.AVAILABLE:\n            return False\n        self._drivers[driver_id] = replace(\n            driver, status=DriverStatus.OFFERED, held_by=offer_id)\n        return True\n```\n\n它返回 `bool` 而不是抛异常：抢不到司机是派单的正常路径（换下一个候选），不是错误。`held_by` 记的是「被哪张要约占着」，`release` / `commit` 都只认当前持有者，于是迟到的超时清扫不会把已经在跑下一单的司机打回空闲——这是 fencing token（护栏令牌）的最小形式。",
+    "tags": []
+  },
+  {
+    "id": "problems-ride-sharing-decline-timeout-and-terminal",
+    "node": "problems.marketplaces.ride-sharing",
+    "type": "qa",
+    "q": "网约车里司机拒单和司机不吭声（要约超时）该走几条代码路径？所有候选都问遍了还没人接，行程应该停在哪个状态？",
+    "a": "**一条路径**。对乘客来说「被拒」和「没人理」没有任何区别，代码里也就不该有两套。这条统一路径做四件事：把司机放回可派池、把要约从表里摘掉、把这位司机加进**该行程的排除集**、顺位发给下一位。\n\n排除集是必需的：没有它，打分最高的那位会被反复骚扰，而乘客永远等不到车。\n\n候选耗尽时**必须给行程一个终态**（CANCELLED，由系统发起，带 reason），而不是把它留在 REQUESTED。宁可给乘客一个确定的失败，也不让他停在「正在找车」里——App 上转着圈、系统里没人管它，是最糟的结果。\n\n由此得到一条可以直接被并发测试断言的不变量：**行程处在 REQUESTED，当且仅当它恰好有一张敞开的要约。**",
+    "tags": []
+  },
+  {
+    "id": "problems-ride-sharing-two-tables-not-state-classes",
+    "node": "problems.marketplaces.ride-sharing",
+    "type": "qa",
+    "q": "网约车的行程生命周期（REQUESTED → MATCHED → ARRIVED → IN_PROGRESS → COMPLETED，外加 CANCELLED）为什么用两张表而不是状态模式（State，每个状态一个类）？两张表分别管什么？",
+    "a": "两张模块级的表：\n\n```python\nALLOWED_TRANSITIONS = {\n    TripState.REQUESTED: frozenset({TripState.MATCHED, TripState.CANCELLED}),\n    TripState.MATCHED: frozenset({TripState.ARRIVED, TripState.CANCELLED}),\n    TripState.ARRIVED: frozenset({TripState.IN_PROGRESS, TripState.CANCELLED}),\n    TripState.IN_PROGRESS: frozenset({TripState.COMPLETED}),\n}\nCANCELLABLE_BY = {\n    TripState.REQUESTED: frozenset({Party.RIDER, Party.SYSTEM}),\n    TripState.MATCHED: frozenset({Party.RIDER, Party.DRIVER, Party.SYSTEM}),\n}\n```\n\n第一张管「能往哪走」，第二张管「谁有权走」——这是两件事，挤进一张表就会变成一堆特判。\n\n判据：**状态之间只有「允许／不允许」的差别，用表；状态之间有行为和数据的差别，才用类。** 行程在每个状态下什么也不「做」，不像电梯在「上行」和「待机」时对同一个按钮有截然不同的响应。为一层纯粹的许可关系造六个类、写一堆「此状态下该动作非法」的空方法，是把两张十行的表摊成六个文件。表还能被程序读：画状态图、统计转移覆盖率、生成文档都只是遍历一次。\n\n纪律：非法转移**抛异常，绝不静默忽略**；每次转移追加一条留痕（时刻、从哪到哪、谁干的、为什么），因为「这单几点被谁取消的」只能来自事中记录。",
+    "tags": []
+  },
+  {
+    "id": "problems-ride-sharing-in-progress-is-not-cancellable",
+    "node": "problems.marketplaces.ride-sharing",
+    "type": "qa",
+    "q": "网约车的行程已经处在 IN_PROGRESS（乘客已上车）时，乘客、司机还是平台可以取消它？为什么给 IN_PROGRESS 加一条通向 CANCELLED 的边是错的？",
+    "a": "**三方都不能。** IN_PROGRESS 只通向 COMPLETED。\n\n候选人常常顺手加上这条边，理由是「万一路上出事呢」。但「车开了一半、乘客中途下车」在业务上**不是取消**，是「提前结束并按已走里程计费」——它有账要结、有钱要收，和取消的语义完全相反。把两件事挤进同一个状态，报表上「取消率」这个指标立刻失去意义，客服也无法区分「没接上人」和「半路下车」。\n\n一般规律：**状态机的边是业务约定，不是防御性编程。**「以防万一」加出来的边，代价是一个语义被污染的终态。真需要中途结束，就加一个新动作（`end_early`）和一条新边，而不是复用 CANCELLED。\n\n同理，取消权限要按方区分：还没人接单的行程上根本没有「这位司机」，所以司机方无权取消一趟 REQUESTED 的行程。",
+    "tags": []
+  },
+  {
+    "id": "problems-ride-sharing-match-policy-is-a-function",
+    "node": "problems.marketplaces.ride-sharing",
+    "type": "qa",
+    "q": "网约车的匹配规则要从「最近优先」换成「距离 + 评分 + 空闲时长」的综合打分。在 Python 里该怎么留这条缝？打分函数本身有哪两个坑？",
+    "a": "留成一个**函数类型**，不是一族抽象基类的子类——这就是策略模式（Strategy）在 Python 里的自然形态：\n\n```python\nMatchPolicy = Callable[[RideRequest, Driver, datetime], float]\n\ndef weighted_score(per_km=1.0, per_rating_point=1.0, per_idle_minute=0.05) -> MatchPolicy:\n    def score(request, driver, now) -> float:\n        idle = (now - driver.idle_since).total_seconds() / 60\n        return (driver.location.distance_to(request.pickup) * per_km\n                - driver.rating * per_rating_point - idle * per_idle_minute)\n    return score\n```\n\n策略只有一个方法、没有跨调用要记的状态，就该是函数；要参数用闭包，要组合就套一层函数。写成抽象基类唯一的收益是「能被 `isinstance` 认出来」，而这里没人需要。\n\n两个坑：\n\n1. **量纲**。距离是公里、评分是分、空闲是分钟，相加没有物理意义——所以权重本身就是换算率（「一个评分点值多少公里」）。说出这句话等于承认这是业务调参，不是数学。\n2. **并列必须被打破**。排序键要写成 `(score, driver.id)`。只按 score 排，同分时派给谁取决于字典迭代顺序，测试会飘，线上会出现没法复现的投诉。确定性是可测试性的前提。\n\n另外，空闲时长取负权重是司机端公平性的最低限度：只按距离排，市中心那位永远抢不到单。",
+    "tags": []
+  },
+  {
+    "id": "problems-ride-sharing-surge-locked-at-request",
+    "node": "problems.marketplaces.ride-sharing",
+    "type": "qa",
+    "q": "网约车乘客下单时 App 显示 1.5 倍动态加价（surge），行程结束时街上车多了、实时倍数已经回到 1.0。该按几倍收钱？倍数用什么类型存？",
+    "a": "按 **1.5** 倍——倍数在**下单那一刻**算出来、写进行程，结束时只是读出来用。\n\n结束时重算不只是「体验差」，它让**报价无法兑现**：系统对外说的每一句话都隐含「以最终解释为准」。把倍数当成合同的一部分，它就和里程、时长一样是行程数据。代价是行程上多一个字段，以及「倍数为什么是这个」需要另外留痕。\n\n类型用 `fractions.Fraction`（精确有理数）而不是 `float`：`Fraction(3, 2)` 乘以整数分仍然精确，整套计价里只有最后 `int()` 那一处取整，「明细相加 × 倍数 == 实付」这条等式在任何输入下都成立。用 `float` 的话，`0.1 + 0.2 != 0.3` 那类误差会顺着对账单渗进去。注意要从整数对构造（`Fraction(6, 5)`），`Fraction(1.2)` 会把 float 的误差忠实地带进来。\n\n同一条纪律：金额一律用整数最小货币单位（分）。",
+    "tags": []
+  },
+  {
+    "id": "problems-ride-sharing-legs-make-pooling-free",
+    "node": "problems.marketplaces.ride-sharing",
+    "type": "qa",
+    "q": "网约车第 4 关加「拼车」（第二位乘客上同一辆车）。如果第 1 关就把 `rider_id`、`pickup`、`dropoff` 直接放在 `Trip` 上，会发生什么？正确的建模是什么？",
+    "a": "会**推倒重来**：三个字段要变成列表，所有读它们的代码都要改，计价、上下车、座位校验全部重写。\n\n正确建模是从一开始就让行程持有一串**腿**（`RideLeg`）：每条腿是一位乘客的那一段（上下车点、占几个座、何时上车、锁死的加价倍数、结束时回填的车费）。于是「独享」和「拼车」是同一种东西——一条腿 vs 两条腿。\n\n加拼车只需要两道闸加一次追加：\n\n```python\nif trip.seats_taken + request.seats > driver.seats:\n    raise SeatUnavailableError\ndetour = (a.distance_to(p) + p.distance_to(q) + q.distance_to(b)) - a.distance_to(b)\nif detour > self._max_detour_km:\n    raise SeatUnavailableError\ntrip.add_leg(RideLeg(...))\n```\n\n（绕路判据是一条朴素的椭圆式不等式：走 A→P→Q→B 比直接 A→B 多出来的公里数。）\n\n关键在于加人这一步**一次都没有调用状态转移**——多一个人上车不是一次状态转移。这件事可以被直接断言：拼车前后行程的状态轨迹完全相同。「加需求没动老代码」是能被测出来的，不是嘴上说的。",
+    "tags": []
+  }
+]

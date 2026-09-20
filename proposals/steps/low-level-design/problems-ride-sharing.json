@@ -1,0 +1,12 @@
+{
+  "problems.marketplaces.ride-sharing": [
+    "problems-ride-sharing-offer-not-assignment",
+    "problems-ride-sharing-offered-status-cas",
+    "problems-ride-sharing-decline-timeout-and-terminal",
+    "problems-ride-sharing-two-tables-not-state-classes",
+    "problems-ride-sharing-in-progress-is-not-cancellable",
+    "problems-ride-sharing-match-policy-is-a-function",
+    "problems-ride-sharing-surge-locked-at-request",
+    "problems-ride-sharing-legs-make-pooling-free"
+  ]
+}

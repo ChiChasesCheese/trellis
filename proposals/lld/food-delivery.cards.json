@@ -1,0 +1,66 @@
+[
+  {
+    "id": "problems-food-delivery-role-on-every-edge",
+    "node": "problems.marketplaces.food-delivery",
+    "type": "qa",
+    "q": "外卖（Food Delivery）的订单要在顾客、餐厅、骑手三方之间流转。状态机除了「能不能走这条边」还必须回答什么？这个信息放在哪里？",
+    "a": "必须同时回答「**谁**有资格走」。顾客不能把订单标成「已送达」，骑手不能替餐厅接单，餐厅接单之后顾客不能单方面取消。\n\n把角色直接挂在**边**上，写成一张 `{当前态: {目标态: 允许的角色}}` 的嵌套表：\n\n```python\nTRANSITIONS = {\n    OrderState.PLACED: {\n        OrderState.ACCEPTED: frozenset({Actor.RESTAURANT}),\n        OrderState.REJECTED: frozenset({Actor.RESTAURANT, Actor.PLATFORM}),\n        OrderState.CANCELLED: frozenset({Actor.CUSTOMER, Actor.PLATFORM}),\n    },\n    OrderState.ACCEPTED: {\n        OrderState.READY: frozenset({Actor.RESTAURANT}),\n        OrderState.CANCELLED: frozenset({Actor.PLATFORM}),\n    },\n}\n```\n\n判据：**例外用第二张表，通例进第一张表。** 两方系统（比如网约车）里往往只有「取消」需要分方，那就单独列一张小的许可表；三方系统里**每一条边都属于某一方**，许可就该和边住在一起——否则两张表的键必须一一对应，漏掉一行没人发现。\n\n把权限散成十个方法里的十个 `if` 是最差的写法：没有任何一处能一眼看全「谁能做什么」，而这恰恰是三方系统最需要被审计的东西。",
+    "tags": []
+  },
+  {
+    "id": "problems-food-delivery-illegal-vs-unpermitted",
+    "node": "problems.marketplaces.food-delivery",
+    "type": "qa",
+    "q": "外卖订单状态机里，「菜还没好就想取餐」和「顾客想把订单标成已送达」应该抛同一个异常吗？",
+    "a": "**不应该，必须分成两个。**\n\n```python\nallowed = TRANSITIONS[self._state].get(target)\nif allowed is None:\n    raise IllegalTransitionError(...)   # 这条边根本不存在，谁来都不行\nif by not in allowed:\n    raise NotPermittedError(...)        # 边存在，但你没资格走\n```\n\n前者是**流程错**：动作本身在当前状态下不成立，正确的反应是等（或者提示「请等餐厅出餐」）。后者是**权限错**：动作在当前状态下成立，只是发起者不对，正确的反应是查这个调用是从哪来的——它多半意味着客户端有 bug 或者有人在越权。\n\n给 App 的提示文案、给客服的解释、给监控的告警级别全都不同。合并成一个 `ValueError`，线上排障时就分不清「系统慢」和「有人在越权」。",
+    "tags": []
+  },
+  {
+    "id": "problems-food-delivery-dispatch-after-acceptance",
+    "node": "problems.marketplaces.food-delivery",
+    "type": "qa",
+    "q": "外卖平台在顾客下单的那一刻就给这一单派骑手，会出什么问题？预计出餐时间应该在哪一步算出来？",
+    "a": "问题是**餐厅还没看这一单**。它可能因为食材用完、后厨太忙、地址太远而拒单，派出去的骑手白跑一趟——这笔成本平台自己吃。所以「餐厅接单之前一个骑手都不派」是一条硬规则，不是优化。\n\n预计出餐时间 `ready_at` 必须在**接单那一刻**算：下单时餐厅还没看单，不知道后厨排了多少单。它是订单上除状态之外最重要的字段，因为派单的全部时机判断都挂在它上面。\n\n出餐时长估计本身也有个常见错误：它是「基础准备时间 + **最慢的那道菜**」，不是所有菜的制作时间相加——后厨是并行的。一单三菜里有一道要 12 分钟、两道要 2 分钟，出餐时间由 12 那一道决定。",
+    "tags": []
+  },
+  {
+    "id": "problems-food-delivery-dispatch-timing-tradeoff",
+    "node": "problems.marketplaces.food-delivery",
+    "type": "qa",
+    "q": "外卖派单：餐厅一接单就让骑手出发，和掐着出餐时间再出发，各自的成本落在谁身上？给出一个能写成一行的派单判据。",
+    "a": "派早了，**骑手**在店门口空等——他的有效工时被占用，平台要么多付钱要么少接单。派晚了，**顾客**吃到凉菜——投诉里「凉了」永远排第一。两边都有成本，所以面试时必须说清楚你在优化哪一个。\n\n一个优化食物温度的判据：骑手**现在出发**会在 `now + 路程` 到店，只要这个时刻还早于 `出餐时刻 - 可接受空等`，就再等一轮。\n\n```python\narrival = now + self._travel(courier.location, pickup)\nif arrival < order.ready_at - self._max_courier_wait:\n    continue          # 还早，下一轮再说\n```\n\n于是发车时刻自动落在 `ready_at - 路程 - 可接受空等`：骑手最多空等那一小段，而做好的菜一秒都不用等。\n\n失败模式要主动交代：如果那一刻没有空闲骑手，这一单只能等，菜真的会凉。真实平台在这里会提前扩大搜索半径、并给这一单加钱提高接单意愿。",
+    "tags": []
+  },
+  {
+    "id": "problems-food-delivery-batch-one-inequality",
+    "node": "problems.marketplaces.food-delivery",
+    "type": "qa",
+    "q": "外卖要把两三单拼给同一位骑手。直觉上有三条约束（两家店要近、两单要差不多时候出餐、不能太耽误第一单）。为什么只留一条就够，留哪一条？",
+    "a": "只留「拼进来给**第一单**（锚单）增加的送达时延不超过上限」。路线固定为「锚店 → 第二家店 → 锚单地址 → 第二单地址」，那么：\n\n```python\ngap = other.ready_at - anchor.ready_at\nadded = max(travel(a, b), gap) + travel(b, drop) - travel(a, drop)\n```\n\n骑手在锚单出餐时拿到第一份，骑到第二家店要 `travel(a, b)`；若第二单还没出餐他还得等，所以这一段是两者取大。**两家店远，`travel(a, b)` 就大；出餐差得多，`gap` 就大——三条约束已经全在这一条不等式里了。**\n\n多配一个旋钮就多一处要向产品解释的取舍，而且几个阈值之间还会互相打架（店很近但出餐差二十分钟，拼还是不拼？）。一个参数、一句能直接对顾客说的业务承诺（「拼单最多让你晚五分钟收到」）胜过三个需要调参的魔数。\n\n配套纪律：锚单按出餐时间排序后取最早的，而且**必须先送到**，否则那句承诺无法兑现，也无法被测试断言。",
+    "tags": []
+  },
+  {
+    "id": "problems-food-delivery-batch-has-no-state-machine",
+    "node": "problems.marketplaces.food-delivery",
+    "type": "qa",
+    "q": "外卖里一位骑手一次带走的两三单组成一个批次（batch）。要不要给批次也配一套状态机（CREATED → PICKING_UP → DELIVERING → DONE）？",
+    "a": "**不要。** 批次的状态就是其中每一单状态之和，另起一套只会多一份要对齐的真相：骑手取了两单里的一单，批次算 PICKING_UP 还是 DELIVERING？两份状态一旦不一致，你既不知道该信哪个，也说不清是谁写错的。\n\n所以批次是一个 `frozen dataclass`——id、骑手、订单 id 的元组、创建时间，**没有任何方法**。「整个批次送完了吗」是一次对订单状态的查询：\n\n```python\nif all(orders[i].state is OrderState.DELIVERED for i in batch.order_ids):\n    couriers.finish(batch.courier_id, order.dropoff)\n    del self._batches[batch.id]\n```\n\n判据：**一个对象只有在它拥有别人不能回答的问题时，才需要自己的状态。**\n\n顺带，上面那两行也是批次表唯一会缩小的地方——没有它，批次表会随每一单永久增长。每个容器都要能回答「谁在什么时候删我」。",
+    "tags": []
+  },
+  {
+    "id": "problems-food-delivery-menu-check-is-atomic",
+    "node": "problems.marketplaces.food-delivery",
+    "type": "qa",
+    "q": "外卖的菜品可售状态由后厨随时改动，可能正好发生在顾客点「提交」的那一刻。校验应该放在哪一步？某道菜售罄时，少送一道还是整单失败？",
+    "a": "校验、开店判断和**抄下价格**必须在餐厅自己的锁里**一次做完**，拆成两步就留下一条缝：\n\n```python\ndef quote(self, wanted: Mapping[str, int]) -> tuple[OrderLine, ...]:\n    with self._lock:\n        if not self._open:\n            raise RestaurantClosedError(...)\n        missing = [i for i in wanted if i not in self._items or i in self._sold_out]\n        if missing:\n            raise ItemUnavailableError(...)\n        return tuple(OrderLine(...) for i, n in wanted.items() if n > 0)\n```\n\n但它**不消灭**餐厅的拒单权：最终裁决权永远在餐厅手上，所以 REJECTED 这条边必须存在。校验只是把绝大多数缺货挡在两百毫秒内，而不是让顾客等两分钟——典型的「乐观校验 + 权威兜底」。\n\n**缺货一律整单失败，不做部分履约。** 少送一道菜，配送成本一分不少，顾客满意度却断崖式下跌；而且「哪几道可以不送」系统根本判断不了。真要支持，那是一个需要顾客当场确认的新流程（「米饭没了，是否继续？」），不是这里加一个 `if`。\n\n价格必须抄进订单行：餐厅晚上改一次价，不能让白天的历史订单金额跟着变。",
+    "tags": []
+  },
+  {
+    "id": "problems-food-delivery-closing-is-not-cancelling",
+    "node": "problems.marketplaces.food-delivery",
+    "type": "qa",
+    "q": "外卖平台上一家餐厅中途打烊，此刻它手上有已接单和未接单两种订单。各自该怎么处理？为什么这个需求不会动到派单代码？",
+    "a": "**关店不是撤单。** 餐厅接单那一刻就已经承诺了，菜也已经在做，所以：\n\n- 已接的单（ACCEPTED）**照常做完、照常送**，派单逻辑毫不知情；\n- 还没被接的单（PLACED，以及还没放出来的定时单）由**平台代为拒绝**（REJECTED，`by=PLATFORM`，reason 写明「餐厅打烊」）；\n- 新单在下单时就被挡回（`RestaurantClosedError`）。\n\n不动派单的原因很具体：派单只认 `ready_at`，而 `ready_at` 只在餐厅接单那一刻产生；被拒掉的单从来没有过 `ready_at`，本来就不在派单的候选集里。所以「打烊」只是**批量走一条已经存在的边**。\n\n同一个道理适用于定时单：它多一个 SCHEDULED 状态和一条 `SCHEDULED → PLACED` 的出边，到点由平台放出来，之后和普通订单完全一样。老实说这里确实**加了**一个状态——说「完全没动」是不诚实的，说「只加不改」才是对的。",
+    "tags": []
+  }
+]
