@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-metrics-monitoring-cardinality-not-sample-rate",
+    "node": "problems.search.metrics-monitoring",
+    "type": "qa",
+    "q": "In a metrics monitoring system design, a normal metric grouped by instance × endpoint × status class across 500 instances, 20 endpoints, and 5 status classes produces 50,000 time series. If someone adds a `user_id` label with 10 million distinct values to that same metric, how many series does it produce, and why does this make cardinality (the number of distinct label combinations) a far more dangerous scaling dimension than sample rate?",
+    "a": "50,000 × 10,000,000 = 5×10^11 series — a 10-million-fold increase from one added label. Sample rate is a linear cost knob: halving the scrape interval doubles ingestion cost. Cardinality is multiplicative: one unbounded label multiplies the total series count by its own distinct-value count, so a single mislabeled metric can outgrow the entire cluster's capacity in one release, while no plausible change to scrape frequency could ever do the same. This is why cardinality, not sample rate, is the dimension that has to be bounded by design rather than tuned after the fact.",
+    "q_zh": "在一个指标监控系统设计中，一个按实例 × 接口 × 状态类分组的正常指标，在 500 个实例、20 个接口、5 个状态类下产生 50,000 条时间序列。如果有人给这个指标加了一个有 1000 万个不同取值的 `user_id` 标签，会产生多少条序列？为什么这让基数（cardinality，不同标签组合的数量）比采样率危险得多？",
+    "a_zh": "50,000 × 10,000,000 = 5×10^11 条序列——一个新增标签就让序列数增长了 1000 万倍。采样率是线性成本旋钮：抓取间隔减半，写入成本翻倍。基数是乘法维度：一个无界标签会把总序列数乘上它自己的不同取值数，所以一个打错标签的指标可能在一次发布里就让整个集群容量被打穿，而对抓取频率做任何合理调整都不可能造成同等后果。这就是为什么必须靠设计而不是事后调优来限制基数，而不是采样率。",
+    "tags": []
+  },
+  {
+    "id": "problems-metrics-monitoring-cardinality-admission-quota",
+    "node": "problems.search.metrics-monitoring",
+    "type": "qa",
+    "q": "In a metrics monitoring system design, why should a per-tenant series-cardinality quota be enforced at the ingestion router at write-admission time, rather than relying on monitoring the cluster and cleaning up after a cardinality spike is discovered?",
+    "a": "By the time a cardinality spike is discovered through monitoring, the cluster has often already exhausted memory in its in-memory head-block storage, because each new label combination creates a brand-new series that must be tracked — the failure and the detection happen at roughly the same moment. Enforcing a quota at admission time means the ingestion router rejects new series that would push a tenant over its budget and returns an explicit error to the caller, so a labeling mistake is caught the instant it is introduced, scoped to one tenant, and never gets the chance to consume unbounded memory across the whole cluster.",
+    "q_zh": "在一个指标监控系统设计中，为什么应该在写入路由（ingestion router）的写入准入（admission）时刻，就对每个租户的序列基数强制配额，而不是靠监控集群、在发现基数暴涨后再清理？",
+    "a_zh": "等到通过监控发现基数暴涨时，集群往往已经因为内存驻留的头块（head block）存储耗尽而出问题了——因为每一个新的标签组合都会创建一条全新的序列并被持续追踪，故障和被发现几乎同时发生。在准入时刻强制配额意味着写入路由会拒绝会让某个租户超出预算的新序列，并向调用方返回明确错误，这样打错标签这类问题在被引入的那一刻就被拦住、影响范围被限定在一个租户内，永远不会有机会在整个集群上无限制消耗内存。",
+    "tags": []
+  },
+  {
+    "id": "problems-metrics-monitoring-write-path-compression-data-dependent",
+    "node": "problems.search.metrics-monitoring",
+    "type": "qa",
+    "q": "In a metrics monitoring system's write path using Gorilla-style compression (delta-of-delta timestamps, XOR'd floating-point values), why can't a design assume a single fixed bytes-per-sample number for capacity planning, and what does simulating the algorithm on different metric shapes show?",
+    "a": "The achievable compression ratio depends heavily on how the metric's value actually changes between samples, because XOR compression is cheap only when consecutive values share long runs of identical leading/trailing bits. Running the actual delta-of-delta and XOR algorithm on three synthetic but representative series shows the range: a flat/idle metric that never changes compresses to about 0.70 bytes/sample (~23x reduction from the uncompressed 16 bytes), a steadily incrementing counter to about 2.54 bytes/sample (~6.3x), and a continuously noisy gauge to about 7.13 bytes/sample (~2.2x) — noise in the low mantissa bits prevents the XOR result from reusing the previous sample's bit window, forcing the more expensive encoding branch almost every time. A capacity estimate has to be computed from the design's own expected mix of metric types, not borrowed from another system's published average.",
+    "q_zh": "在一个使用 Gorilla 式压缩（delta-of-delta 时间戳、XOR 浮点数值）的指标监控系统写路径中，为什么设计不能假设一个固定的每样本字节数来做容量估算？对不同形状的指标模拟这个算法会看到什么？",
+    "a_zh": "能达到的压缩比强烈依赖指标数值在相邻样本间实际的变化方式，因为 XOR 压缩只有在相邻数值共享一长段相同的前导/尾随比特时才便宜。在三种合成但有代表性的序列上真实运行 delta-of-delta 和 XOR 算法会看到一个区间：从不变化的空闲指标压缩到约 0.70 字节/样本（相对未压缩的 16 字节约 23 倍压缩比），稳定递增的计数器约 2.54 字节/样本（约 6.3 倍），持续带噪声的仪表约 7.13 字节/样本（约 2.2 倍）——尾数低位的噪声让 XOR 结果几乎无法复用上一个样本的比特窗口，几乎每次都要走更贵的编码分支。容量估算必须按设计自己预期的指标类型构成来计算，而不能照搬别的系统公布的平均值。",
+    "tags": []
+  },
+  {
+    "id": "problems-metrics-monitoring-pull-signal-ambiguity",
+    "node": "problems.search.metrics-monitoring",
+    "type": "qa",
+    "q": "In a metrics monitoring system, why does a pure push-based collection model (targets actively send metrics to a collector) make it harder to tell whether a target is unhealthy, compared to a pull-based model (a collector scrapes each target on a schedule)?",
+    "a": "In a pure push model, the collector has no independent signal about a silent target: not receiving data could mean the application crashed, a network path dropped the push, or the collector itself throttled and discarded it — three very different causes that look identical from missing data alone. In a pull model, the collector actively initiates each scrape on a known schedule, so a failed or timed-out scrape is itself a first-class signal (typically recorded as its own `up=0` time series) generated by the collector's own observation, without needing a separate heartbeat mechanism layered on top.",
+    "q_zh": "在一个指标监控系统中，为什么纯推送（push）式采集模型（目标主动把指标发给收集端）比拉取（pull）式模型（收集端按计划周期性抓取每个目标）更难判断一个目标是否健康？",
+    "a_zh": "在纯推送模型中，收集端对一个沉默的目标没有独立信号：收不到数据可能是应用崩溃了、也可能是网络丢了这次推送、也可能是收集端自己限流丢弃了——三种完全不同的原因，仅从数据缺失这一点上看完全一样。在拉取模型中，收集端按已知计划主动发起每次抓取，所以一次失败或超时的抓取本身就是收集端自己观测到的一等公民信号（通常记录为一条独立的 `up=0` 时间序列），不需要在上面额外叠加一套心跳机制。",
+    "tags": []
+  },
+  {
+    "id": "problems-metrics-monitoring-downsampling-keep-min-max",
+    "node": "problems.search.metrics-monitoring",
+    "type": "qa",
+    "q": "In a metrics monitoring system's tiered downsampling design, why must a background rollup job store count/sum/min/max for each rolled-up window instead of just an average, and what storage reduction does tiering give versus keeping raw resolution forever?",
+    "a": "Storing only the average silently flattens historical spikes: months later, there is no way to tell from a 1-hour average whether a metric briefly crossed an alert threshold, because the spike and a smooth value that happens to share the same mean are indistinguishable once only the average survives. Keeping min/max/count alongside the average preserves the fact that a spike happened, even at reduced time resolution. On a worked example with 15 days of raw resolution, 90 days at a 1-minute rollup (4x reduction), and 730 days at a 1-hour rollup (240x reduction), total storage comes out to about 91.5 TB versus about 1,648 TB for keeping raw resolution for the full 730 days — roughly an 18x reduction.",
+    "q_zh": "在一个指标监控系统的分层降采样（downsampling）设计中，为什么后台 rollup 任务必须为每个滚动窗口存储 count/sum/min/max，而不是只存平均值？分层相比永久保留原始精度能带来多大的存储降低？",
+    "a_zh": "只存平均值会把历史尖峰悄悄抹平：几个月后，无法从一个 1 小时平均值判断某个指标是否曾短暂越过告警阈值，因为一次真实尖峰和一个恰好均值相同的平稳值，一旦只剩下平均值就无法区分。在平均值之外同时保留 min/max/count，即使在更粗的时间精度下也能保留「确实发生过尖峰」这个事实。在一个具体算例中，15 天原始精度、90 天 1 分钟粒度滚动（降采样系数 4 倍）、730 天 1 小时粒度滚动（降采样系数 240 倍），总存储约 91.5 TB，相比把原始精度一路保留满 730 天所需的约 1,648 TB，降低约 18 倍。",
+    "tags": []
+  },
+  {
+    "id": "problems-metrics-monitoring-field-index-fanout-pruning",
+    "node": "problems.search.metrics-monitoring",
+    "type": "qa",
+    "q": "In a metrics monitoring system's query path, why does broadcasting every query to all storage leaf nodes stop scaling as the cluster grows, and how does a small label/field index at each zone and root level fix this without ever risking an incorrect result?",
+    "a": "A naive broadcast makes query cost scale with total cluster node count rather than with how selective the query's label predicates actually are, so even a narrow query touching one service's data still fans out to every leaf. A compact field index at each zone and at the root tracks approximately which leaves or zones could possibly hold a match for a given label predicate, and prunes candidates before the query fans out — Google's Monarch reports this cuts zone-level fan-out by about 99.5% and root-level fan-out by about 80%. Applying both rates to a topology of 20 zones × 500 leaves each (10,000 leaves total) collapses a query from touching all 10,000 leaves down to about 4 zones × 3 leaves ≈ 12, roughly an 833x reduction. The index is allowed to produce false positives (over-including a candidate) but never false negatives, because the actual leaf node still verifies the exact match — correctness never depends on the index being precise, only conservative.",
+    "q_zh": "在一个指标监控系统的查询路径中，为什么把每个查询广播给全部存储叶子节点会随集群增长而不可扩展？每个 zone 和 root 层级的一个小型标签/字段索引如何在不冒着返回错误结果的风险下解决这个问题？",
+    "a_zh": "朴素广播让查询成本和集群总节点数挂钩，而不是和查询本身标签谓词的选择性挂钩，所以即使是只涉及一个服务数据的窄查询也要触达每一个叶子节点。每个 zone 和 root 各维护一个轻量字段索引，记录哪些叶子/zone 大致可能持有某个标签谓词的匹配，在查询真正扇出前做候选裁剪——Google 的 Monarch 披露这能把 zone 级扇出减少约 99.5%，root 级减少约 80%。把这两个比例套到一个 20 个 zone、每个 500 个叶子（共 10,000 个叶子）的拓扑上，查询从触达全部 10,000 个叶子降到约 4 个 zone × 3 个叶子 ≈ 12 个，降低约 833 倍。索引允许产生假阳性（多裁剪出不必要的候选），但绝不允许假阴性，因为真正的叶子节点仍会校验精确匹配——正确性从不依赖索引精确，只依赖它足够保守。",
+    "tags": []
+  },
+  {
+    "id": "problems-metrics-monitoring-alert-eval-independent-region",
+    "node": "problems.search.metrics-monitoring",
+    "type": "qa",
+    "q": "In a metrics monitoring and alerting system design, why must the alert-rule evaluator avoid a hard synchronous dependency on any single storage region, and what number shows the benefit of evaluating against pre-aggregated recording rules instead of raw data?",
+    "a": "The alert-evaluation path is most needed to work at exactly the moment its own infrastructure might be failing — if evaluation reads from the same storage region that just went down, the system goes silent precisely when a page is most needed. The evaluator must read from at least two independently replicated storage regions with automatic read failover, the same way the underlying write path stores each sample in two separate regions, so a single region's outage degrades read capacity in the surviving region rather than blacking out evaluation. Separately, evaluating a rule directly over 50,000 raw per-instance series at a 30-second cadence costs about 50,000/30 ≈ 1,667 series-scans/sec; pre-aggregating away the instance dimension with a continuously maintained recording rule first (down to 20 endpoints × 5 status classes = 100 series) drops this to about 100/30 ≈ 3.33 series-scans/sec — a 500x reduction, and this cost then stops scaling with fleet size.",
+    "q_zh": "在一个指标监控与告警系统设计中，为什么告警规则评估器不能对任何单一存储 region 有硬性同步依赖？用预聚合的 recording rule 而不是原始数据来评估，能带来多大的数字优势？",
+    "a_zh": "告警评估路径最需要正常工作的时刻，恰恰是它自己的基础设施可能正在故障的时刻——如果评估读的是刚刚宕机的那个存储 region，系统会在最需要发声的时候恰好沉默。评估器必须从至少两个独立复制的存储 region 读取并有自动读故障切换，就像底层写路径把每个样本存进两个独立 region 一样，这样单一 region 故障只会让健康 region 的读容量吃紧，而不会让评估整体失声。另外，如果一条规则直接对 50,000 条原始的按实例分组序列以 30 秒周期现场评估，成本约为 50,000/30 ≈ 1,667 次序列扫描/秒；先用一条持续维护的 recording rule 把实例维度聚合掉（降到 20 个接口 × 5 个状态类 = 100 条序列），评估成本降到约 100/30 ≈ 3.33 次序列扫描/秒——降低 500 倍，且此后这个成本不再随主机规模增长。",
+    "tags": []
+  },
+  {
+    "id": "problems-metrics-monitoring-noisy-tenant-isolation",
+    "node": "problems.search.metrics-monitoring",
+    "type": "qa",
+    "q": "In a multi-tenant metrics monitoring system design, what two independent mechanisms prevent one tenant's misbehaving query or write burst from degrading every other tenant sharing the cluster?",
+    "a": "On the write side, per-tenant series-cardinality quotas enforced at admission time cap how many new series a single tenant can introduce, so one tenant's labeling mistake cannot consume the cluster's shared memory budget. On the query side, each query's memory usage is tracked both locally and cluster-wide, with queries that exceed a per-tenant budget cancelled outright, and query-execution threads are placed into per-tenant cgroups so CPU time is shared fairly rather than first-come-first-served. These two mechanisms are independent: the write-side quota alone would not stop an expensive query with no filters from starving other tenants' CPU and memory, and the query-side controls alone would not stop a cardinality explosion from exhausting shared storage memory.",
+    "q_zh": "在一个多租户指标监控系统设计中，哪两个独立的机制能防止一个租户失控的查询或写入突增拖慢共享同一集群的所有其他租户？",
+    "a_zh": "在写入侧，准入时强制的每租户序列基数配额限制了单个租户能引入多少新序列，所以一个租户的打标签错误无法侵占集群共享的内存预算。在查询侧，每个查询的内存占用被本地和跨集群双重追踪，超出租户预算的查询直接被取消，查询执行线程被放进按租户划分的 cgroup，让 CPU 时间被公平分配而不是先到先得。这两个机制彼此独立：只有写入侧配额挡不住一个没有过滤条件的昂贵查询独占其他租户的 CPU 和内存；只有查询侧控制也挡不住一次基数爆炸耗尽共享的存储内存。",
+    "tags": []
+  }
+]

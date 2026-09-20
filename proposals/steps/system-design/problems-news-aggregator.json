@@ -1,0 +1,12 @@
+{
+  "problems.search.news-aggregator": [
+    "problems-news-aggregator-adaptive-polling-reduction",
+    "problems-news-aggregator-simhash-vs-minhash-memory",
+    "problems-news-aggregator-lsh-banding-collision-curve",
+    "problems-news-aggregator-hamming-multitable-scale",
+    "problems-news-aggregator-incremental-cluster-assignment",
+    "problems-news-aggregator-freshness-corroboration-score",
+    "problems-news-aggregator-edition-cache-decouples-read-cost",
+    "problems-news-aggregator-per-language-clustering-cross-link"
+  ]
+}
