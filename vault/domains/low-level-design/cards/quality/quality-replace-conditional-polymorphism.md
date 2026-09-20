@@ -2,19 +2,27 @@
 id: quality-replace-conditional-polymorphism
 node: quality.refactoring
 type: qa
+step: 4
 ---
 ## Q
-"用多态替换条件" —— 触发条件是什么，什么时候 switch 反而是更好的设计？
+```python
+def pay(emp):
+    if isinstance(emp, Engineer):
+        return emp.base * 1.1
+    elif isinstance(emp, Manager):
+        return emp.base + emp.bonus
+```
+这条 `isinstance` 阶梯不止在 `pay()` 里出现，`in_report()`、`annual_review()` 里也各有一份几乎一样的分支。该怎么重构，什么时候反而不该这样做？
 
 ## A
-触发条件：**同一个**基于类型的 `switch`/`if` 出现在**多个地方** —— 每加一个类型都要在所有这些地方做散弹式修改。把每个分支的主体搬进子类/策略的覆盖方法里，用分派取代这些条件判断。
+触发条件是**同一组类型分支**重复出现在多个地方——每加一种员工类型，就要在所有这些地方各加一个分支，是一条霰弹式修改的路径。修法是把每个分支的逻辑搬进各自子类的同名方法里，用多态分派取代类型判断：
 
-```java
-switch (emp.type) { ENGINEER -> base*1.1; MANAGER -> base+bonus; }  // pay() 里有、inBonus() 里有、inReport() 里还有…
-// 变成：emp.pay() —— 每个类型一个类，自己拥有自己的全部分支
+```python
+class Engineer(Employee):
+    def pay(self) -> float:
+        return self.base * 1.1
+class Manager(Employee):
+    def pay(self) -> float:
+        return self.base + self.bonus
 ```
-
-该保留 switch 的情况：
-
-- 它只出现**一次** —— 多态是拿一段可读的代码块，换来散落在多个文件里的类。
-- 新增**操作**比新增**类型**更频繁 —— 多态为"加类型"优化，switch（或 visitor）为"加操作"优化。这就是 expression problem：选那个真正在变的轴。
+如果不想引入类层次，`functools.singledispatch` 能达到类似效果，把分支拆成按类型注册的独立函数。该保留 `isinstance`/`match` 分支的情况：这组判断只出现**一次**（多态是拿"一处可读的代码"换"散落在多个文件里的类"，划不来）；或者新增的是**操作**而不是**类型**——多态为"加类型不改分支"优化，集中式的条件判断为"加操作不改每个类型"优化，这就是 expression problem，要选那个真正在变的轴。

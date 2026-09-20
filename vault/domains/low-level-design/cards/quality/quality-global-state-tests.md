@@ -2,14 +2,22 @@
 id: quality-global-state-tests
 node: quality.testability
 type: qa
+step: 4
 ---
 ## Q
-说出静态/全局状态破坏测试的两种不同方式，以及对时间这类不确定依赖的标准修法。
+模块级的全局状态是怎么破坏测试的？以时间依赖为例，标准修法是什么？
 
 ## A
-两种失败模式：
+两种破坏方式：一是没有可替换的位置——一个函数内部直接调用 `datetime.now()` 或读一个模块级变量，测试没有任何参数能把这个依赖换掉，只能被迫拖着真实实现一起跑；二是状态在测试之间泄漏——一个可变的模块级变量跨测试用例存活，于是单独跑这个测试能过、整个套件一起跑（或者并行跑）就可能挂,取决于执行顺序,这是最难排查的一类不稳定测试（flaky test）。
 
-- **没有可替换点**：`Payment.process()` 这样的静态调用（或 `Singleton.getInstance()`）无法被替换 —— 每个测试都被迫拖着真实实现一起跑。
-- **状态在测试之间泄漏**：可变的全局变量跨测试方法存活，于是测试单独跑能过、进了套件（或并行）就挂，取决于**执行顺序** —— 最难缠的一类 flaky。
+```python
+class Clock(Protocol):
+    def now(self) -> datetime: ...
 
-时间的修法（最典型的例子）：领域逻辑里永远不要调用 `LocalDateTime.now()` —— 注入一个 `Clock`；测试传 `Clock.fixed(...)`，还能确定性地推进时间。随机性（`Random` 种子或接口）和 UUID（注入 `IdGenerator`）是同一套配方。遗留代码的逃生口：把静态调用包进一个可注入的实例类里 —— 然后再迁移。
+class FixedClock:
+    def __init__(self, value: datetime):
+        self._value = value
+    def now(self) -> datetime:
+        return self._value
+```
+领域逻辑永远不直接调用 `datetime.now()`，而是接受一个注入的 `Clock`；测试传 `FixedClock(...)`，既能断言确定的时间点，也能显式"推进"时间来测试超时之类的逻辑。同样的配方适用于随机性（注入一个 `Random` 实例或种子）和 id 生成（注入一个 `IdGenerator`）。

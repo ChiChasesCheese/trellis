@@ -2,21 +2,28 @@
 id: concurrency-bounded-queue-invariants
 node: concurrency.patterns
 type: qa
+step: 2
 ---
 ## Q
-有界队列在并发中的不变量是什么？关键的临界区是什么？
+如果 `queue.Queue` 的接口不够用，需要自己用 `Condition` 从零实现一个有界阻塞队列，核心不变量和临界区是什么？
 
 ## A
-不变量：
-- `size >= 0` 且 `size <= capacity`
-- 如果 `size == 0`，消费者会阻塞
-- 如果 `size == capacity`，生产者会阻塞
+不变量：`0 <= len(items) <= capacity`；队列空时消费者必须阻塞，队列满时生产者必须阻塞。用一把锁配两个条件变量表达这两种等待：
 
-关键的临界区：
-- 锁保护：`size`、`head`、`tail` 指针（或数组索引）
-- 入队操作：增加大小，获取下一个写位置
-- 出队操作：减少大小，获取下一个读位置
+```python
+class BoundedQueue:
+    def __init__(self, capacity):
+        self._items, self._cap = [], capacity
+        self._lock = threading.Lock()
+        self._not_empty = threading.Condition(self._lock)
+        self._not_full = threading.Condition(self._lock)
 
-条件变量：
-- `notEmpty`：当大小从 0 变为 1 时发出信号（通知等待的消费者）
-- `notFull`：当大小从 capacity 变为 capacity-1 时发出信号（通知等待的生产者）
+    def put(self, item):
+        with self._not_full:
+            while len(self._items) == self._cap:
+                self._not_full.wait()
+            self._items.append(item)
+            self._not_empty.notify()
+```
+
+`get()` 是镜像结构：在 `_not_empty` 上等待非空，取出元素后 `notify()` 对应的 `_not_full`。所有对 `_items` 的读写都必须在持有同一把锁的情况下进行，这就是这个结构里唯一的临界区。
