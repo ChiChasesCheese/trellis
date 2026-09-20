@@ -1,0 +1,12 @@
+{
+  "problems.booking.car-rental": [
+    "problems-car-rental-availability-needs-location",
+    "problems-car-rental-one-invariant-chain",
+    "problems-car-rental-early-vs-late-binding",
+    "problems-car-rental-settle-unifies-three-failures",
+    "problems-car-rental-displacement-cascades",
+    "problems-car-rental-purge-absorbs-location",
+    "problems-car-rental-claim-is-one-call",
+    "problems-car-rental-pricing-is-a-pipeline"
+  ]
+}

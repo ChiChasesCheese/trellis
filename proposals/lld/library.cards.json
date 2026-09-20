@@ -1,0 +1,66 @@
+[
+  {
+    "id": "problems-library-title-vs-copy",
+    "node": "problems.booking.library",
+    "type": "qa",
+    "q": "图书馆管理（Library Management）设计里，「书目」（Title，一部作品的著录记录）和「馆藏副本」（Copy，贴着条码的那一本实体书）必须分开建模。搜索、借还、预约这三件事分别挂在哪一个上？为什么？",
+    "a": "- **搜索挂书目**：读者找的是《沙丘》，不是「条码 D001 那张碟」。\n- **借、还、罚金、丢失挂副本**：被搬走、被弄脏、被算逾期的是那一本实体。\n- **预约排队挂书目**：排队的人要的是「任何一本《沙丘》」；但**一旦为他留出来放上取书架，留的就是那一本副本**。\n\n合成一个 `Book` 类会立刻撞墙：加 `available: bool` 只能表达「有没有」，表达不了「还剩几本」；改成 `count: int` 又丢了副本的**身份**，而身份是罚金、丢失注销、「这本给你留着」的前提。\n\n流行题解里 `book.available = False` 那一行，本质上是把一个多副本系统压成了单副本系统。",
+    "tags": []
+  },
+  {
+    "id": "problems-library-no-item-subclasses",
+    "node": "problems.booking.library",
+    "type": "qa",
+    "q": "图书馆管理（Library Management）要同时支持图书、DVD 和期刊。为什么不该建 `LibraryItem` 抽象基类加 `Book` / `DVD` / `Magazine` 三个子类？那些真实差异放哪？",
+    "a": "因为模板答案里那个抽象方法 `get_author_or_publisher()`（图书返作者、DVD 返导演、期刊返出版者）解决的是**命名问题，不是多态问题**——三个子类的行为完全相同，差别只在同一个字段叫什么。\n\n一个字段按介质换角色就够了：\n\n```python\n@dataclass(frozen=True, slots=True)\nclass Title:\n    id: str\n    name: str\n    kind: MediaKind = MediaKind.BOOK\n    creator: str = \"\"   # 作者 / 导演 / 出版者\n    code: str = \"\"      # ISBN / 碟片编号 / 刊期号\n```\n\n期刊的「每一期」就是名字相同、`code` 不同的独立书目——这也正是现实：你借的是某一期，不是刊名。\n\n真实差异（DVD 只能借 2 天、罚金翻四倍、取书架只留 1 天）全部去**政策表**，按 `(读者类型, 介质)` 查。\n\n判据：**子类的正当理由是行为不同，不是字段不同、也不是参数不同。**",
+    "tags": []
+  },
+  {
+    "id": "problems-library-sweep-is-the-only-allocator",
+    "node": "problems.booking.library",
+    "type": "qa",
+    "q": "图书馆管理（Library Management）里，「哪本副本归哪位预约者」这个决定该写在还书那一步吗？还是该用定时器？",
+    "a": "都不该。把分配规则收敛成**一个方法**，在每次读写入口惰性调用：\n\n```python\ndef _sweep(self, now: datetime) -> None:\n    self._holds.expire(now)                       # 过期的先下架\n    for title_id in self._holds.queued_titles():  # 再按队列依次上架\n        while self._holds.queue_length(title_id):\n            free = self._free_barcodes(title_id)\n            if not free:\n                break\n            member_id = self._holds.pop(title_id)\n            self._holds.place_on_shelf(free[0], HoldEntry(member_id, title_id, expires))\n```\n\n- **写在还书里**的问题：新入藏一册、取消预约、保留到期时同样需要重新分配，于是这段逻辑被复制三遍（更常见的是漏写两遍）。\n- **定时器**的问题：一万条活跃预约就是一万个定时任务，而且**测试无法控制时间**，只能靠 `sleep` 去验。\n\n代价要说清：惰性过期意味着**只读属性也得先跑一次 `_sweep`**，否则会把早该下架的条目报给调用方。换来的是整个系统没有一个后台线程。",
+    "tags": []
+  },
+  {
+    "id": "problems-library-hold-shelf-must-expire",
+    "node": "problems.booking.library",
+    "type": "qa",
+    "q": "图书馆管理（Library Management）里，一位读者预约的书还回来了、给他留着，可他再也没来取。如果设计里没有「保留到期」，会发生什么？",
+    "a": "**这本副本永远停在「给他留着」的状态：馆里有书，谁也借不到。**这不是性能问题，是功能被彻底锁死——把预约做成「观察者列表」的常见写法就是这么坏掉的。\n\n正确做法是给取书架上的每一条加一个到期时刻，并且到期就清掉：\n\n```python\ndef expire(self, now: datetime) -> tuple[str, ...]:\n    stale = [b for b, e in self._shelf.items() if e.expires_at <= now]\n    for barcode in stale:\n        del self._shelf[barcode]\n    return tuple(stale)\n```\n\n还要当场回答一个策略问题：**过期之后这个人回队尾还是彻底出局？**选出局——预约是一次意愿表达，几天不来说明意愿已经不成立；自动回队尾等于让一个不来的人无限期挡在后面的人前面。要书就重新排。\n\n把这个选择**说出来**比选哪一边更重要。\n\n顺带把队列的**四条离队路径**数全：被排上取书架、主动取消、**通过别的副本先借到了**（漏了这条，一个人会既借着书又排着队）、保留到期。每条路径让队列变空时还要把整个键删掉，不留空 `deque`。",
+    "tags": []
+  },
+  {
+    "id": "problems-library-renewal-yields-to-the-queue",
+    "node": "problems.booking.library",
+    "type": "qa",
+    "q": "图书馆管理（Library Management）里，某个书目有人在排队预约，正借着它的读者申请续借。该批准吗？说出判据。",
+    "a": "**不批准。**判据：**排队是对还没拿到书的人的承诺，续借只是对已经拿到书的人的方便，后者让位。**\n\n这是这道题里唯一一条真正的业务规则冲突，面试官最爱追，所以要主动说出来。实现上就是续借的第一道校验：\n\n```python\nif self._holds.queue_length(loan.title_id):\n    raise RenewalRefusedError(...)\nif loan.renewals >= policy.max_renewals:\n    raise RenewalRefusedError(...)\n```\n\n另外两个值得定的细节：续借次数有上限（否则一本热门书可以被一个人永久持有）；新的到期日从**今天**起算而不是从原到期日顺延（提前续借不该白拿额外天数），实现是 `max(原到期日, now + 借期)`。\n\n排队的人撤销预约后，续借应当立刻恢复可用——这一点值得写成一条测试。",
+    "tags": []
+  },
+  {
+    "id": "problems-library-fine-is-computed",
+    "node": "problems.booking.library",
+    "type": "qa",
+    "q": "图书馆管理（Library Management）的逾期罚金，为什么不能在还书那一刻算好、存进一个 `fine` 字段？",
+    "a": "因为柜台要回答的问题是「这位读者**现在**欠多少」——书还在他手上、还没还的时候就要答得出。存字段就只能在还书那一刻更新，之后立刻过期。\n\n正确做法是按时刻算，而且同一个方法要覆盖两种语义：\n\n```python\ndef days_overdue(self, now: datetime) -> int:\n    moment = self.returned_at or now     # 还着：按现在算；还了：冻结在归还时刻\n    if moment <= self.due_at:\n        return 0\n    return max(1, math.ceil((moment - self.due_at).total_seconds() / 86400))\n```\n\n「欠款总额」＝已结算的历史罚金 ＋ 手上逾期书**正在**产生的罚金。\n\n两个配套要求：时钟必须**注入**（`clock: Callable[[], datetime]`），不然测试只能靠 `sleep`；金额用**整数分**或 `Decimal`，不要 `float`。不足一天按一天算，所以用向上取整。",
+    "tags": []
+  },
+  {
+    "id": "problems-library-policy-table-not-inheritance",
+    "node": "problems.booking.library",
+    "type": "qa",
+    "q": "图书馆管理（Library Management）要让借阅上限、借期、续借次数、罚金费率、留架天数随读者类型（学生／教师／公众）和介质（图书／DVD／期刊）变化。用 `Member` 的继承树、`if` 分支，还是别的？",
+    "a": "用一张按 `(读者类型, 介质)` 查、允许退化的**政策表**：\n\n```python\ndef resolve(self, member_type: MemberType, kind: MediaKind) -> LoanPolicy:\n    for key in ((member_type, kind), (member_type, None), (None, kind)):\n        found = self.overrides.get(key)\n        if found is not None:\n            return found\n    return self.default\n```\n\n- **继承树的代价**：读者类型是会变的（学生毕业成校友），而 Python 里给对象换类是件脏事；更本质的是，类型只是一个**属性**，不是他的种类——用继承表达属性是最典型的误用。\n- **`if` 分支的代价**：维度一多就是笛卡尔积，而且分支会散落在借、还、续借、分配四个地方，改一处漏三处。\n\n表的收益是可验证的：加「教师借 DVD 可以借 7 天」＝加一个键；加一种介质＝枚举加一个成员；加第三个维度＝键变三元组、`resolve` 多循环一档。**流程代码一行不动。**\n\n它不需要模式的名字：策略里没有算法只有一组数字时，就让它只是数据。",
+    "tags": []
+  },
+  {
+    "id": "problems-library-concurrent-lend-assert",
+    "node": "problems.booking.library",
+    "type": "qa",
+    "q": "图书馆管理（Library Management）里，十个读者同时借一个有三本副本的书目。并发测试该断言什么？只断言「恰好三笔借阅」够吗？",
+    "a": "**不够。**「恰好三笔」挡不住同一本副本被借出两次——那也是三笔。必须同时断言**三个条码互不相同**：\n\n```python\nassert len(loans) == 3, f\"over-lent: {loans}\"\nassert len(set(loans)) == 3, f\"same copy lent twice: {loans}\"\nassert desk.library.availability(\"T1\") == 0\n```\n\n写法上用真线程 + `threading.Barrier` 让所有线程在同一时刻起跑，把竞态放大到可复现；断言的是**不变量**，不是时序，所以不会 flaky。\n\n根因在于「算出空闲副本 + 写入借阅记录」是一个**复合操作**。Python 的 GIL 只保证单条字节码不被切开，`dict` 的一次读写是原子的，但这几百条字节码中间随时会切换线程——所以必须自己加锁，把查与占放进同一个临界区。",
+    "tags": []
+  }
+]
