@@ -1,0 +1,82 @@
+[
+  {
+    "id": "problems-message-queue-partition-count-two-lower-bounds",
+    "node": "problems.foundations.message-queue",
+    "type": "qa",
+    "q": "In a Kafka-class distributed message queue sized for a peak write rate of about 2,777,778 messages/sec at 400 bytes each, why does a design that only computes partition count from write throughput (about 150 partitions at a 10MB/s-per-partition sequential-write budget) risk under-provisioning, even though 150 partitions is enough to absorb the peak write load?",
+    "a": "Partition count also has to satisfy a second, independent lower bound: the largest consumer group's maximum useful parallelism, since a partition can only be consumed by one instance within a given consumer group at a time. If the heaviest downstream consumer group needs roughly 556 parallel instances at peak (2,777,778 msgs/sec divided by an assumed 5,000 msgs/sec per instance), the topic needs at least that many partitions (rounded up to 600) regardless of what raw throughput alone would require -- and because reshuffling a key across a different number of partitions breaks that key's prior ordering guarantee, partition count must be set from the larger of the two bounds up front rather than grown incrementally later.",
+    "q_zh": "在一个按峰值写入速率约 2,777,778 条/秒（每条 400 字节）设计的 Kafka 一类分布式消息队列里，如果分区数只按写入吞吐来算（以每分区 10MB/s 的顺序写预算得到约 150 个分区），即便 150 个分区足以吸收峰值写入负载，为什么这种设计仍然有供给不足的风险？",
+    "a_zh": "分区数还必须满足另一个独立的下限：下游最大消费者组的最大有效并行度——因为在同一个消费者组内，一个分区在同一时刻只能被一个实例消费。如果下游最重的消费者组在峰值下需要约 556 个并行实例（2,777,778 条/秒除以假设的每实例 5,000 条/秒），那么无论纯吞吐算出的下限是多少，这个主题都至少需要这么多分区（向上取整到 600）——而且因为把某个 key 重新哈希到不同数量的分区上会破坏该 key 此前的顺序保证，分区数必须一开始就按两个下限中较大的那个来定，而不能之后再逐步增长。",
+    "tags": []
+  },
+  {
+    "id": "problems-message-queue-pull-based-consumer-model",
+    "node": "problems.foundations.message-queue",
+    "type": "qa",
+    "q": "In a Kafka-class message queue, why do consumers pull records from brokers (via long-polling fetch requests) rather than brokers pushing records to consumers, and what does this design choice give the system for free?",
+    "a": "A push-based broker has to guess each consumer's processing capacity and either overwhelm a slow consumer or under-utilize a fast one, requiring a separate flow-control protocol layered on top. With a pull model, each consumer requests data at whatever rate it can actually process, so backpressure is inherent in the protocol itself rather than a bolted-on feature -- a slow consumer simply polls less often or requests smaller batches, and the broker never needs to track per-consumer send rates or implement throttling logic of its own.",
+    "q_zh": "在一个 Kafka 一类的消息队列里，为什么消费者是主动向 broker 拉取（pull，通过长轮询的 fetch 请求）记录，而不是 broker 主动推送给消费者？这个设计选择白白带来了什么好处？",
+    "a_zh": "推送模型下 broker 必须猜测每个消费者的处理能力，结果要么压垮慢消费者，要么浪费快消费者的能力，还需要在协议之上再叠加一层独立的流控机制。而在拉取模型下，每个消费者按自己实际能处理的速率主动发起请求，背压天然内建在协议本身里，不是额外加装的功能——慢消费者只需要更少地轮询或请求更小的批次，broker 完全不需要为每个消费者维护发送速率或实现自己的限流逻辑。",
+    "tags": []
+  },
+  {
+    "id": "problems-message-queue-isr-quorum-f-plus-1-tradeoff",
+    "node": "problems.foundations.message-queue",
+    "type": "qa",
+    "q": "In a Kafka-class message queue's ISR (in-sync replicas) replication model, why does tolerating f broker failures without losing committed data need only f+1 replicas, compared to the 2f+1 replicas a majority-quorum protocol (like Raft) needs for the same guarantee -- and what does this model give up in exchange?",
+    "a": "A majority-quorum protocol commits a write once more than half of all replicas acknowledge it, so it needs 2f+1 total replicas to guarantee f+1 of them (a majority) survive any f failures. The ISR model instead requires ALL currently in-sync replicas -- not a fixed majority -- to acknowledge before a write commits, so with f+1 replicas total, losing up to f of them still leaves at least one ISR member holding every committed message. The trade-off is that when the ISR shrinks to fewer members than the configured min.insync.replicas (for example, down to just the leader), the partition must choose between blocking acks=all writes until a replica catches back up (preserving durability, reducing availability) or letting an out-of-sync replica become leader anyway (unclean leader election, preserving availability at the risk of losing already-acknowledged data).",
+    "q_zh": "在一个 Kafka 一类消息队列的 ISR（in-sync replicas，同步副本集）复制模型里，为什么要容忍 f 个 broker 故障而不丢已提交数据，只需要 f+1 个副本，而不像多数派协议（如 Raft）那样需要 2f+1 个副本？这个模型换来这个优势的代价是什么？",
+    "a_zh": "多数派协议要在超过半数副本确认后才算提交，所以需要总共 2f+1 个副本，才能保证任意 f 个故障后仍有 f+1 个（多数）存活。ISR 模型则要求当前全部同步副本（而不是固定的多数派）都确认之后才算提交，所以只要总共有 f+1 个副本，丢掉其中最多 f 个仍然至少有一个 ISR 成员持有全部已提交消息。代价是：当 ISR 收缩到少于配置的 min.insync.replicas 个成员时（比如只剩 leader 自己），该分区必须在「阻塞 acks=all 写入直到有副本重新追上」（保持持久性、牺牲可用性）和「让一个没追上的副本直接顶替成为 leader」（unclean leader election，保持可用性但可能丢失已确认的数据）之间做出选择。",
+    "tags": []
+  },
+  {
+    "id": "problems-message-queue-page-cache-consumer-lag-cliff",
+    "node": "problems.foundations.message-queue",
+    "type": "qa",
+    "q": "In a Kafka-class message queue relying on the OS page cache (not an in-process cache) to serve reads, why does a consumer's lag falling behind roughly 15-16 minutes (in a design where 50GB of page cache buffers about 52.9MB/s of per-broker peak write traffic) create a problem for OTHER producers and consumers on the cluster, not just for that one lagging consumer?",
+    "a": "As long as a consumer's read position stays within the recent window still held in page cache (about 945 seconds here), its fetches are served from memory via zero-copy and cost the broker almost nothing extra. Once a consumer falls further behind than that window, its reads start missing the page cache and hitting the disk directly -- and because that disk is the same device the partition leader is using for its own sequential append writes, the lagging consumer's random-ish reads now compete for the same disk I/O bandwidth as the write path. The result is that one consumer falling behind can measurably slow down write latency for every producer on that broker, not just degrade the lagging consumer's own read latency.",
+    "q_zh": "在一个依赖操作系统 page cache（而非进程内缓存）来服务读请求的 Kafka 一类消息队列里，如果消费者滞后（lag）超过大约 15-16 分钟（本设计里 50GB page cache 大约能缓冲每台 broker 峰值写入流量 52.9MB/s 所对应的时长），为什么这不仅会让这一个滞后的消费者变慢，还会给集群上其他生产者和消费者造成问题？",
+    "a_zh": "只要消费者的读取位置还落在 page cache 覆盖的最近窗口内（此处约 945 秒），它的拉取请求走内存、通过零拷贝服务，几乎不给 broker 带来额外开销。一旦消费者滞后超过这个窗口，它的读请求就开始未命中 page cache、直接打到磁盘——而这块磁盘正是分区 leader 用来做自己顺序追加写入的同一个设备，滞后消费者这种偏随机的读请求由此和写路径争抢同一份磁盘 I/O 带宽。结果是一个滞后的消费者可以显著拖慢这台 broker 上所有生产者的写入延迟，而不只是让这个滞后消费者自己的读延迟变差。",
+    "tags": []
+  },
+  {
+    "id": "problems-message-queue-cooperative-rebalancing-stabilization",
+    "node": "problems.foundations.message-queue",
+    "type": "qa",
+    "q": "In a Kafka-class consumer group's eager (stop-the-world) rebalance protocol, why does ANY single member joining or leaving force EVERY member to release ALL of its assigned partitions, and what does incremental cooperative rebalancing (KIP-429) change about this?",
+    "a": "Eager rebalancing works by incrementing a group generation id on any membership change and requiring every member to rejoin the new generation via JoinGroup/SyncGroup before receiving a fresh assignment; the protocol has no notion of a partition that does not need to move, so it revokes everything and recomputes globally, which a Confluent-published Kafka Connect benchmark (900 tasks across 3 workers) measured at 12-14 minutes to stabilize with all partitions unconsumed. Incremental cooperative rebalancing instead lets assignment converge over a few rounds: the coordinator only asks members to revoke the specific partitions that actually need to move to a different member, so partitions that keep the same owner are never interrupted -- the same benchmark scenario stabilized in about 1 minute with 2.13x higher aggregate throughput.",
+    "q_zh": "在 Kafka 一类消费者组的 eager（stop-the-world，停下整个世界）再平衡协议里，为什么任意一个成员的加入或离开都会强制所有成员释放它们全部已分配的分区？增量协作式再平衡（incremental cooperative rebalancing，KIP-429）改变了什么？",
+    "a_zh": "Eager 再平衡的做法是：任何成员变更都会让组的世代号（generation id）递增，所有成员必须通过 JoinGroup/SyncGroup 重新加入新世代才能拿到新的分配——这个协议里没有「这个分区不需要移动」这个概念，所以每次都是全部释放、全局重算。Confluent 公开的一次 Kafka Connect 基准测试（900 个任务分布在 3 个 worker 上）测出这个过程要 12-14 分钟才能稳定，期间全部分区都未被消费。增量协作式再平衡则让分配在几轮内逐步收敛：协调者只要求那些真正需要换主的分区所在成员释放它们，其余分区的所有者不变、从未被打断——同样的基准场景下稳定时间降到约 1 分钟，聚合吞吐提升到 2.13 倍。",
+    "tags": []
+  },
+  {
+    "id": "problems-message-queue-log-compaction-vs-time-retention",
+    "node": "problems.foundations.message-queue",
+    "type": "qa",
+    "q": "In a Kafka-class message queue, why would applying the same time/size-based retention policy (delete whole segments older than N days) to a topic used as the authoritative store of each key's current state (rather than a pure event stream) cause data loss, and what alternative cleanup policy fixes it?",
+    "a": "Time/size-based deletion removes entire log segments once they age past the retention window, regardless of whether a given key's most recent (and still valid) value happens to live in that old segment -- a key that was last updated 8 days ago on a 7-day retention topic would simply disappear, even though its value is still current. Log compaction (cleanup.policy=compact) fixes this by having a background log cleaner rewrite each partition keeping only the latest record per key (tracked via a per-partition hash table of key to last offset), discarding earlier values for the same key but never discarding a key's current value purely due to age; a null-payload tombstone record marks a key as deleted until the tombstone itself is later cleaned up.",
+    "q_zh": "在一个 Kafka 一类消息队列里，如果把同样的按时间/大小保留策略（删除超过 N 天的整个 segment）用在一个作为「每个 key 当前状态」权威存储的主题上（而不是纯事件流），为什么会导致数据丢失？什么样的替代清理策略能修复这个问题？",
+    "a_zh": "按时间/大小删除是整段整段地删除超出保留窗口的 log segment，完全不管某个 key 最新（依然有效）的那条记录是不是恰好落在这个旧 segment 里——在一个保留期 7 天的主题上，一个 8 天前才最后更新过的 key 会直接消失，即使它的值依然是当前有效的。日志压缩（log compaction，cleanup.policy=compact）解决了这个问题：后台的 log cleaner 进程重写每个分区，只保留每个 key 最新的一条记录（通过一张按分区维护的「key 到最后 offset」哈希表跟踪），丢弃同一 key 更早的旧值，但绝不会仅仅因为太旧就丢弃一个 key 当前有效的值；一条 value 为空的墓碑（tombstone）记录用来标记某个 key 已被删除，直到墓碑本身之后被清理。",
+    "tags": []
+  },
+  {
+    "id": "problems-message-queue-hot-partition-key-skew",
+    "node": "problems.foundations.message-queue",
+    "type": "qa",
+    "q": "In a Kafka-class message queue with 600 partitions, if a single large customer id concentrates enough traffic that 1% of partitions (6 partitions) absorb 20% of total write volume, why does simply increasing the total partition count fail to fix this hot spot, and what actually mitigates it?",
+    "a": "Every message for a given partition key always hashes to the same partition regardless of how many total partitions exist, so adding more partitions only spreads load for keys that are already well-distributed -- it does nothing for the traffic already concentrated on that one key's partition, which in this scenario would run at roughly 20x the uniform-average per-partition QPS (about 23,148 vs about 1,157 QPS/partition). Mitigation requires changing how that specific key is routed: either appending a random suffix to the hot key to spread its traffic across multiple partitions (at the cost of losing strict ordering for that key), or identifying the hot key ahead of time and routing it to a partition specifically provisioned with extra throughput headroom.",
+    "q_zh": "在一个有 600 个分区的 Kafka 一类消息队列里，如果某一个大客户 ID 集中了足够多的流量，导致 1% 的分区（6 个分区）吸收了 20% 的总写入量，为什么单纯增加总分区数解决不了这个热点？真正能缓解它的做法是什么？",
+    "a_zh": "同一个分区键的每一条消息，无论总分区数是多少，永远哈希到同一个分区——所以增加分区数只能分散那些本来就分布均匀的 key 的负载，对已经集中在这一个 key 所在分区上的流量毫无帮助：在这个场景里，这个分区的 QPS 大约是均匀分布假设下每分区平均值的 20 倍（约 23,148 对比约每分区 1,157 QPS）。真正的缓解办法是改变这一个特定 key 的路由方式：要么给这个热 key 加随机后缀把它的流量打散到多个分区（代价是失去该 key 的严格顺序保证），要么提前识别出这个热 key，把它单独路由到一个专门预留了更大吞吐余量的分区。",
+    "tags": []
+  },
+  {
+    "id": "problems-message-queue-tiered-storage-10x-evolution",
+    "node": "problems.foundations.message-queue",
+    "type": "qa",
+    "q": "In a Kafka-class message queue where broker storage capacity (not write throughput) is the binding constraint on cluster size for a long-retention event topic, why does scaling DAU 10x (which grows 7-day-retention, 3x-replicated storage from 504TB to 5,040TB) eventually force a shift to tiered storage, and how does an architecture like Pulsar/BookKeeper avoid needing this shift?",
+    "a": "When each broker owns its partition replicas on local disk, growing storage 10x means adding either far more brokers or far bigger disks per broker, and the latter eventually hits the physical limit on disk slots per machine -- at that point the fix is tiered storage: splitting segments by age into a hot tier on local disk (serving page-cache reads and catch-up consumers) and a cold tier offloaded to object storage. Pulsar/BookKeeper architectures need this fix less urgently because they separate the serving layer (stateless brokers) from the storage layer (BookKeeper bookies) from the start: a ledger's entries are striped across an ensemble of bookies rather than fully replicated onto whichever broker happens to be the partition leader, so storage capacity scales independently of broker count by simply adding bookies.",
+    "q_zh": "在一个 Kafka 一类消息队列里，如果 broker 存储容量（而不是写入吞吐）是限制一个长保留期事件主题集群规模的约束，为什么 DAU 增长 10 倍（把 7 天保留、三副本的存储量从 504TB 推高到 5,040TB）最终会迫使系统转向分层存储（tiered storage）？Pulsar/BookKeeper 这类架构又是怎么从一开始就不那么急迫需要这个转变的？",
+    "a_zh": "当每个 broker 在本地磁盘上直接拥有自己的分区副本时，存储量增长 10 倍意味着要么加更多 broker，要么给每台 broker 配更大的盘，而后者最终会撞上单机磁盘槽位数量的物理上限——到那时的解法是分层存储：按数据年龄把 segment 拆成本地磁盘上的「热」层（服务 page cache 读取和追赶中的消费者）和卸载到对象存储的「冷」层。Pulsar/BookKeeper 这类架构对这次转变没那么迫切，是因为它们从一开始就把服务层（无状态的 broker）和存储层（BookKeeper 的 bookie）分离开：一个 ledger 的条目是条带化分布存储在一组 bookie（ensemble）上的，而不是完整复制到恰好是分区 leader 的那台 broker 上，所以存储容量可以只靠增加 bookie 数量来独立扩展，不受 broker 数量的限制。",
+    "tags": []
+  }
+]
