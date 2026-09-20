@@ -1,0 +1,13 @@
+{
+  "problems.marketplaces.splitwise": [
+    "problems-splitwise-pairwise-ledger",
+    "problems-splitwise-canonical-key-and-shrink",
+    "problems-splitwise-largest-remainder",
+    "problems-splitwise-split-class-not-function",
+    "problems-splitwise-validation-in-strategy",
+    "problems-splitwise-expense-immutable",
+    "problems-splitwise-greedy-not-optimal",
+    "problems-splitwise-balance-sign-bug",
+    "problems-splitwise-lock-and-notify"
+  ]
+}
