@@ -2,16 +2,19 @@
 id: structure-storage-chm-compound-ops
 node: structure.storage
 type: qa
+step: 4
 ---
 ## Q
-你制造了钱包存储一个 `ConcurrentHashMap<UserId, Long>` 并宣称它是线程安全的。为什么 `map.put(user, map.get(user) + amount)` 仍然失去钱，正确的调用是什么?
+用一个 `dict` 加一把 `threading.Lock` 做钱包余额存储，为什么 `balances[user] = balances[user] + amount` 这一行本身仍然可能丢钱？正确的写法是什么？
 
 ## A
-`ConcurrentHashMap` 制造每一个**单独的**调用原子的 — 不是**获得-然后-放置化合物**。两个并发存款都读取 100，都写 100+x；一个存款消失（丢失的更新）。
+`dict` 的**单次**读或写操作（`__getitem__`、`__setitem__`）在 CPython 里因为 GIL，一个字节码内是原子的；但 `balances[user] = balances[user] + amount` 是"读取旧值 → 计算新值 → 写回"**三个独立步骤**的组合，GIL 只保证每一步各自原子，不保证整条语句作为一个整体不被切换出去。两个线程可能都读到旧余额 100，各自算出 100+x 再写回，其中一次充值就此丢失（丢失更新，lost update）。
 
-```java
-map.merge(user, amount, Long::sum);          // 原子的读-改-写
-map.computeIfAbsent(user, u -> new Wallet())  // 原子的检查-然后-插入
+正确写法是把"读改写"整体包进一把锁：
+
+```python
+with self._lock:
+    balances[user] = balances.get(user, 0) + amount
 ```
 
-`compute`/`merge`/`putIfAbsent` 每个关键原子地运行。如果一个操作跨越**多个关键**（在两个钱包之间转移），没有地图方法保存你 — 你回到明确的锁加上有序获得。
+如果一次操作要跨越**多个 key**（比如在两个用户的钱包之间转账），单把锁仍然管用，但要注意锁的获取顺序一致，否则会有死锁风险。

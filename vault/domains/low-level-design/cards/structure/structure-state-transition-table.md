@@ -2,24 +2,25 @@
 id: structure-state-transition-table
 node: structure.state-machines
 type: qa
+step: 2
 ---
 ## Q
-"一个订单能从 PAID 去到 CANCELLED 吗?"应该在哪里生活，实体怎样改变状态不暴露一个 setter?
+"订单能不能从 PAID 直接变成 CANCELLED？"这类规则应该放在哪里？用 Python 写一个不暴露裸 setter 的状态转移检查。
 
 ## A
-在**一个声明性的转变表**中，不是在零散的 `if` 中:
+放进一张**声明式的转移表**，而不是散落在各处的 `if`：
 
-```java
-static final Map<State, Set<State>> ALLOWED = Map.of(
-    CREATED,  Set.of(PAID, CANCELLED),
-    PAID,     Set.of(SHIPPED, CANCELLED),
-    SHIPPED,  Set.of(DELIVERED));
-
-private void transitionTo(State next) {
-    if (!ALLOWED.getOrDefault(state, Set.of()).contains(next))
-        throw new IllegalStateException(state + " -> " + next);
-    state = next;
+```python
+ALLOWED = {
+    State.CREATED: {State.PAID, State.CANCELLED},
+    State.PAID: {State.SHIPPED, State.CANCELLED},
+    State.SHIPPED: {State.DELIVERED},
 }
+
+def transition_to(self, next_state: State) -> None:
+    if next_state not in ALLOWED.get(self._state, set()):
+        raise ValueError(f"{self._state} -> {next_state} not allowed")
+    self._state = next_state
 ```
 
-`transitionTo(CANCELLED)` 给你表驱动的检查。所有合法转变是一个可视的列表，没有 `setState()` 调用者能操纵。
+所有合法转移变成一张可以整体审阅的表；没有 `set_state()` 方法给调用方随意改状态，唯一入口是 `transition_to`，它自己查表校验。
