@@ -47,6 +47,11 @@ so shortening a docstring buys you nothing: if the solution runs long, drop a st
 describe it in 扩展与追问 instead. Never delete a read-only accessor a test or a reader needs.
 Landing a line under the cap means the next edit breaks the gate: aim for 250–400 and stop adding.
 
+**A domain rule is got right or left out, never quietly bent.** "I simplified the no-ball to behave
+like a wide" is not a scope cut: it teaches a wrong rule in an article a learner will believe.
+Either model the rule correctly or say in 题目与澄清 that the whole feature is out of scope. If you
+are unsure of a rule in an unfamiliar domain, say so in the article rather than inventing one.
+
 **A safety invariant is an exception, not an `assert`.** `python -O` strips asserts, so anything
 that must hold for the design to be safe — two conflicting movements never green together, money
 never created — raises a named exception. `assert x is not None` to narrow a type for the checker
