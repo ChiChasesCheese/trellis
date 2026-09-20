@@ -4,7 +4,7 @@
 Google (Beyer, Jones, Petoff, Murphy eds.) · free-online · [[System Design MOC|System Design]]
 [Home ↗](https://sre.google/sre-book/table-of-contents/)
 
-5 sections · 0 readings · 0 cards · 0/76 leaves reached
+5 sections · 0 readings · 0 cards · 0/125 leaves reached
 
 ## Outline
 - Service Level Objectives — *skipped*
@@ -13,7 +13,7 @@ Google (Beyer, Jones, Petoff, Murphy eds.) · free-online · [[System Design MOC
 - Managing Critical State: Distributed Consensus for Reliability — *skipped*
 - Data Integrity: What You Read Is What You Wrote — *skipped*
 
-## Leaves this corpus never reached (76)
+## Leaves this corpus never reached (125)
 Your reading list: the map says these exist and the book does not teach them.
 - [[foundations.method|Interview Method]] — Requirements clarification, scoping functional vs non-functional needs, driving the 40-minute structure yourself.
 - [[foundations.estimation|Back-of-Envelope Estimation]] — QPS, storage, and bandwidth sizing from DAU and access patterns; when an estimate changes the design.
@@ -91,6 +91,55 @@ Your reading list: the map says these exist and the book does not teach them.
 - [[ai.rag|RAG Pipelines]] — Chunking, retrieval, reranking, and grounding as a data pipeline — where quality is won and lost.
 - [[ai.inference|Inference Serving]] — GPU batching, KV-cache reuse, streaming responses, and cost/latency levers unique to LLM backends.
 - [[ai.evals|Evals & AI Observability]] — Offline vs online evaluation, LLM-as-judge, regression suites for prompts, and tracing AI pipelines.
+- [[problems.foundations.url-shortener|URL Shortener]] — Short-code generation, a read path that is almost all cache, redirects and analytics at 100:1 read/write.
+- [[problems.foundations.rate-limiter|Distributed Rate Limiter]] — Per-key quotas enforced across many gateways inside a 2 ms budget, and what happens when the counter store is down.
+- [[problems.foundations.unique-id-generator|Unique ID Generator]] — Roughly time-ordered 64-bit ids with no coordinator on the hot path; clock skew and sequence exhaustion.
+- [[problems.foundations.key-value-store|Distributed Key-Value Store]] — Partitioning, replication, quorums, conflict resolution and repair in a Dynamo-style store.
+- [[problems.foundations.distributed-cache|Distributed Cache]] — A Memcached/Redis-class cluster: sharding, eviction, hot keys, replication and cold-start.
+- [[problems.foundations.cdn|Content Delivery Network]] — Request routing, tiered caches, purge and origin shielding for static and large-file delivery.
+- [[problems.foundations.message-queue|Distributed Message Queue]] — A Kafka-class log: partitions, replication, consumer groups, retention and delivery semantics.
+- [[problems.foundations.job-scheduler|Distributed Job Scheduler]] — Run millions of scheduled and ad-hoc jobs at least once, on time, with retries and no double-firing.
+- [[problems.foundations.pastebin|Pastebin]] — Store and serve text blobs by short link: metadata vs blob storage, expiry, and abuse limits.
+- [[problems.foundations.object-storage|Object Storage (S3)]] — Buckets and immutable blobs at exabyte scale: metadata service, placement, erasure coding, durability math.
+- [[problems.foundations.lock-service|Distributed Lock & Coordination Service]] — Leases, fencing tokens and sessions on top of consensus — a Chubby/ZooKeeper-class service.
+- [[problems.foundations.auth-service|Authentication & Identity Service]] — Sign-up, login, sessions vs tokens, SSO and revocation for hundreds of millions of accounts.
+- [[problems.social.chat-messaging|Chat & Messaging (WhatsApp)]] — 1:1 and group messaging with delivery receipts, ordering, offline sync and presence over persistent connections.
+- [[problems.social.news-feed|News Feed & Timeline (Twitter/Facebook)]] — Fan-out on write vs on read, the celebrity problem, ranking, and keeping a timeline fresh and cheap.
+- [[problems.social.instagram|Photo Sharing (Instagram)]] — Upload and media processing, feed generation, and serving images globally.
+- [[problems.social.notification-system|Notification System]] — Multi-channel push/SMS/email with preferences, rate caps, retries and deduplication at billions a day.
+- [[problems.social.reddit|Forum & Threaded Comments (Reddit)]] — Voting, ranking, nested comment trees and hot-post caching.
+- [[problems.social.social-graph-search|Social Graph & Friend Search]] — Storing a graph of billions of edges and answering degree-of-separation and mutual-friend queries.
+- [[problems.social.live-comments|Live Comments]] — Broadcasting comments on a live video to millions of viewers in order and in real time.
+- [[problems.social.tinder|Dating & Matching (Tinder)]] — Geo-filtered candidate feeds, swipes at high write rates, and exactly-once match detection.
+- [[problems.media.video-streaming|Video Streaming (YouTube/Netflix)]] — Upload, transcoding pipelines, adaptive bitrate delivery and the economics of the CDN.
+- [[problems.media.google-docs|Collaborative Editing (Google Docs)]] — Concurrent edits converging through OT or CRDTs, cursors and presence, and document storage.
+- [[problems.media.file-sync|File Sync (Dropbox/Google Drive)]] — Chunking, deduplication, delta sync, conflict handling and metadata consistency across devices.
+- [[problems.media.email-service|Email Service (Gmail)]] — Sending and receiving at scale: SMTP edges, mailbox storage, search, spam and threading.
+- [[problems.media.video-conferencing|Video Conferencing (Zoom)]] — Real-time media: SFU vs MCU, signalling, NAT traversal, and degrading gracefully on bad networks.
+- [[problems.search.web-crawler|Web Crawler]] — A polite, distributed crawler: URL frontier, deduplication, politeness, freshness and traps.
+- [[problems.search.search-engine|Search Engine & Post Search]] — Inverted indexes, sharded query fan-out, ranking, and near-real-time indexing of new content.
+- [[problems.search.typeahead|Typeahead & Autocomplete]] — Prefix suggestions under 100 ms: tries vs precomputed top-k, sampling query logs, personalisation.
+- [[problems.search.top-k|Top-K & Trending (Heavy Hitters)]] — Most-viewed over sliding windows: exact vs approximate counting, count-min sketch, stream aggregation.
+- [[problems.search.metrics-monitoring|Metrics, Monitoring & Alerting]] — A time-series pipeline: ingestion, downsampling, storage, query and alert evaluation.
+- [[problems.search.ad-click-aggregation|Ad Click Aggregation]] — Counting billions of clicks exactly enough to bill on: streaming aggregation, late data, reconciliation.
+- [[problems.search.news-aggregator|News Aggregator (Google News)]] — Pull from many publishers, deduplicate and cluster stories, and serve a fresh ranked feed.
+- [[problems.geo.proximity|Proximity & Nearby Search (Yelp)]] — Geohash vs quadtree vs S2, read-heavy place search, and nearby friends on moving data.
+- [[problems.geo.ride-hailing|Ride Hailing (Uber)]] — Driver location ingestion, matching under contention, trip state machines and surge.
+- [[problems.geo.google-maps|Maps & Navigation (Google Maps)]] — Map tiles, routing over a road graph, ETA, and live traffic from location streams.
+- [[problems.geo.food-delivery|Food & Grocery Delivery (DoorDash/Gopuff)]] — Inventory by location, order orchestration across three parties, and dispatch.
+- [[problems.realtime.online-judge|Online Judge (LeetCode)]] — Safely running untrusted code at contest scale: sandboxing, queues, and live leaderboards.
+- [[problems.realtime.multiplayer-game|Online Multiplayer Game (Chess)]] — Matchmaking, authoritative game state, low-latency moves and reconnection.
+- [[problems.realtime.llm-chat-service|LLM Chat Service (ChatGPT)]] — Streaming token delivery, GPU batching, conversation state, quotas and cost per request.
+- [[problems.realtime.calendar|Calendar & Scheduling (Google Calendar)]] — Recurring events, free/busy queries, invitations, reminders and time zones.
+- [[problems.realtime.leaderboard|Real-Time Leaderboard]] — Rank millions of players live: sorted sets, sharded rankings and approximate rank.
+- [[problems.commerce.payment-system|Payment System]] — Idempotent charge flows through a PSP, the ledger behind them, reconciliation and retries.
+- [[problems.commerce.stock-exchange|Stock Exchange & Trading (Robinhood)]] — A matching engine with deterministic sequencing, market data fan-out, and a brokerage in front.
+- [[problems.commerce.ticket-booking|Ticket Booking (Ticketmaster)]] — Seat holds under a stampede: reservation vs lock, virtual queues, and no double-selling.
+- [[problems.commerce.hotel-reservation|Hotel & Marketplace Reservation (Airbnb)]] — Inventory by date range, overbooking policy, search vs booking paths.
+- [[problems.commerce.digital-wallet|Digital Wallet]] — Balance transfers that never lose or create money: distributed transactions vs event sourcing.
+- [[problems.commerce.auction|Online Auction (eBay)]] — Concurrent bids with a strict winner, bid fan-out to watchers, and sniping at the close.
+- [[problems.commerce.e-commerce|E-Commerce Platform (Amazon)]] — Catalogue, cart, checkout and inventory as separate consistency domains.
+- [[problems.commerce.flash-sale|Flash Sale & High-Contention Inventory]] — A million buyers, a thousand items, ten seconds: admission control and atomic decrement.
 %% trellis:end %%
 
 ## Notes
