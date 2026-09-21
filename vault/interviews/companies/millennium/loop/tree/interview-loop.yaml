@@ -1,0 +1,88 @@
+# Millennium LEaD 面试 Loop 知识树（受限 YAML：2 空格缩进、`key: value`、`- item`、行内列表 `[a, b]`）
+# 校验：python3 loop/tree/check_tree.py [--strict]
+# 节点：round → skill → problems（rounds ID）→ study（kit 根目录下相对路径）
+# 非编码轮 ID：rc = 00_recruiter · py = 02_python_internals · exp = 03_project_deep_dive · hm = 05_hm_behavioral（bank.json）
+version: 1
+prereq:
+  study: [study/20-cards/python_internals.md, study/20-cards/finance_vocab.md]
+  cards: [study/20-cards/python_internals.md]
+
+rounds:
+  - id: 00_recruiter
+    name: Recruiter / 邮件往来（LEaD 无单独 call）
+    duration_min: 15
+    study: [03-reply-email.md, fit.md]
+    skills:
+      - id: why_millennium_lead
+        name: 具体化的 why Millennium / why LEaD / why finance（Quant-Stroller 证据）
+        problems: [rc]
+      - id: logistics
+        name: Miami onsite、年限口径、薪资不报数字
+        problems: [rc]
+
+  - id: 01_first_round
+    name: R1 45 min · SWE · Webex + HackerRank（15 简历 + 30 一题）
+    duration_min: 45
+    study: [loop/rounds/01_first_round/playbook.md, study/20-cards/python_internals.md]
+    core: [round.time, algorithms.recognition, verification.edge-catalog, performance.budget]
+    skills:
+      - id: practical_data_tasks
+        name: 实用数据任务：流式分组聚合、分块 + 并行、金额用 Decimal
+        problems: [pc01, pc10]
+      - id: async_and_decorators
+        name: Python 机制编码：asyncio 分页拉取、装饰器（retry / memoize / rate-limit）
+        problems: [pc02, pc03]
+      - id: data_structure_design
+        name: 数据结构设计：anagram 分组、LRU + TTL、中位数流、价格 as-of 存储
+        problems: [pc07, pc08, pc09]
+      - id: lc_medium_arrays
+        name: LC medium：前缀和取模、双指针盛水、字符串大数
+        problems: [pc05, pc06, pc04]
+      - id: python_internals_verbal
+        name: 穿插口头题：GIL / asyncio / 内存 / list vs tuple / Java HashMap
+        problems: [py]
+
+  - id: 02_python_internals
+    name: Python / Java 内功口头题（R1 穿插 · onsite 突袭）
+    duration_min: 20
+    study: [study/20-cards/python_internals.md, loop/rounds/02_python_internals/questions.md]
+    skills:
+      - id: concurrency_verbal
+        name: 线程 / 进程 / asyncio / GIL / race
+        problems: [py]
+      - id: language_mechanics_verbal
+        name: 装饰器 / 生成器 / 上下文管理器 / 内存 / 拷贝
+        problems: [py]
+
+  - id: 03_project_deep_dive
+    name: 项目深挖（R1 前 15 min · 后续整轮）
+    duration_min: 30
+    study: [loop/rounds/03_project_deep_dive/questions.md, loop/rounds/01_first_round/playbook.md]
+    skills:
+      - id: quant_stroller_three_layers
+        name: Quant-Stroller：headline → 三层机制 → 我决定 → 最难挑战 → 替代方案
+        problems: [exp]
+      - id: paypal_production_stories
+        name: PayPal 生产系统：S1 管线 · S3/S9 事故 · S5 迁移
+        problems: [exp]
+
+  - id: 04_system_design
+    name: 系统 / 数据设计（R2+，可能）
+    duration_min: 45
+    study: [loop/LOOP_GUIDE.md]
+    skills:
+      - id: market_data_pipeline
+        name: 行情/价格数据服务：point-in-time、迟到修正、多币种、订阅推送
+        problems: [sd01]
+
+  - id: 05_hm_behavioral
+    name: HM / Behavioral（R2+）
+    duration_min: 45
+    study: [loop/rounds/05_hm_behavioral/questions.md, loop/rounds/05_hm_behavioral/stories.md, fit.md]
+    skills:
+      - id: official_four_dimensions
+        name: ownership · abstract reasoning · teamwork · feedback（官方四维 → S1–S11）
+        problems: [hm]
+      - id: finance_interest_and_fit
+        name: why finance / why LEaD / pod 结构 / 非技术沟通
+        problems: [hm]
