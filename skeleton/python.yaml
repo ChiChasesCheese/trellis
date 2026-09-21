@@ -11,8 +11,8 @@ vault: domains/python
 study:
   order: core-first
   mix: new-first
-  new_per_day: 30
-  reviews_per_day: 150
+  new_per_day: 70
+  reviews_per_day: 400
 nodes:
 - id: model
   core: true
