@@ -1,0 +1,86 @@
+[
+  {
+    "round": "hm_behavioral",
+    "q": "Tell me about a time you took ownership of something that wasn't assigned to you.",
+    "source": "官方 John",
+    "principle": "ownership & initiative",
+    "story": "[[S7]] schema pool · [[S1]] 从 stub 起"
+  },
+  {
+    "round": "hm_behavioral",
+    "q": "Describe a time you solved a problem in a way others hadn't thought of.",
+    "source": "官方 John",
+    "principle": "abstract reasoning & creativity",
+    "story": "[[S5]] 影子核对 · [[S2]] strictest-wins"
+  },
+  {
+    "round": "hm_behavioral",
+    "q": "Tell me about a time you worked with another team to solve a problem.",
+    "source": "官方 John",
+    "principle": "teamwork",
+    "story": "[[S4]] AU refund fee · [[S9]] SLA 定论"
+  },
+  {
+    "round": "hm_behavioral",
+    "q": "Tell me about a time you received critical feedback. What did you change?",
+    "source": "官方 Abhinav",
+    "principle": "handle feedback",
+    "story": "[[S10]] 推翻自己 10× 的 blast radius · [[S2]] 接受批评"
+  },
+  {
+    "round": "hm_behavioral",
+    "q": "How do you explain technical work to non-technical partners?",
+    "source": "PracHub 2026-02",
+    "principle": "communication",
+    "story": "[[S4]]（给 PM 同一份证据）· [[S9]]（SLA 用业务语言）"
+  },
+  {
+    "round": "hm_behavioral",
+    "q": "Tell me about a production incident you handled under pressure.",
+    "source": "TechPrep",
+    "principle": "pressure",
+    "story": "[[S8]] 7 分钟 RCA · [[S3]]"
+  },
+  {
+    "round": "hm_behavioral",
+    "q": "How do you decide what technical debt to pay down?",
+    "source": "TechPrep",
+    "principle": "judgment",
+    "story": "[[S6]] go/no-go · [[S1]] 六份偏移表\"我会改\""
+  },
+  {
+    "round": "hm_behavioral",
+    "q": "Tell me about a time you disagreed with a decision. What did you do?",
+    "source": "通用",
+    "principle": "integrity",
+    "story": "[[S6]] 叫停实习生项目 · [[S9]] 主张 region conditional > revert"
+  },
+  {
+    "round": "hm_behavioral",
+    "q": "Describe a time you had to learn a large unfamiliar system quickly.",
+    "source": "Glassdoor",
+    "principle": "learning（LEaD 轮岗核心）",
+    "story": "[[S8]]（Terraform 状态 → 日志）· 接手 Amex stub"
+  },
+  {
+    "round": "hm_behavioral",
+    "q": "How do you stay current with industry / technology trends?",
+    "source": "官方 Abhinav / Steve",
+    "principle": "industry trends",
+    "story": "Quant-Stroller（新市场适配）· AI-native 工作流 · 每日读"
+  },
+  {
+    "round": "hm_behavioral",
+    "q": "Why do you want to join Millennium, and why now?",
+    "source": "LC 7423863 R4",
+    "principle": "motivation",
+    "story": "`fit.md` §1–§3"
+  },
+  {
+    "round": "hm_behavioral",
+    "q": "Where do you want to be at the end of the LEaD program?",
+    "source": "推断（LEaD）",
+    "principle": "fit",
+    "story": "\"in the division closest to data and risk infrastructure, owning a system end to end again — with the context of having seen front, middle and back office\""
+  }
+]

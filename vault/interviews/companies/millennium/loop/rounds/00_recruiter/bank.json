@@ -1,0 +1,50 @@
+[
+  {
+    "round": "recruiter",
+    "q": "Tell me about your background.",
+    "source": "通用",
+    "keys": "自我介绍 60–75 s（`01_first_round/playbook.md` §2.1）"
+  },
+  {
+    "round": "recruiter",
+    "q": "Why Millennium?",
+    "source": "TechPrep",
+    "keys": "`fit.md` §1"
+  },
+  {
+    "round": "recruiter",
+    "q": "Why the LEaD program rather than a direct team role?",
+    "source": "推断（LEaD 特有）",
+    "keys": "`fit.md` §2"
+  },
+  {
+    "round": "recruiter",
+    "q": "Why are you interested in finance?",
+    "source": "TechPrep / Steve Johnson 官方建议",
+    "keys": "`fit.md` §4（Quant-Stroller 证据）"
+  },
+  {
+    "round": "recruiter",
+    "q": "Do you understand our multi-manager / pod structure?",
+    "source": "TechPrep",
+    "keys": "30 s：几百个独立 pod 各自做策略与风险，公司层统一风险、基础设施与技术；技术团队服务 pod（前台）与中后台；LEaD 轮岗横跨三者"
+  },
+  {
+    "round": "recruiter",
+    "q": "Are you open to relocating to Miami / working onsite?",
+    "source": "JD（Onsite）· 1p3a 1078136",
+    "keys": "\"Yes — Miami onsite is a yes; I'd relocate for the program start.\""
+  },
+  {
+    "round": "recruiter",
+    "q": "What are your compensation expectations?",
+    "source": "TechPrep",
+    "keys": "`fit.md` §7（不报数字）"
+  },
+  {
+    "round": "recruiter",
+    "q": "Where are you in other processes / what's your timeline?",
+    "source": "通用",
+    "keys": "\"I'm in a couple of processes, but this is the one I'm prioritizing; I can move as fast as your process allows.\" 不透露他家进度"
+  }
+]
