@@ -1,0 +1,274 @@
+{
+  "chapters": {
+    "https://docs.python.org/3/faq/design.html": {
+      "file": "sources/archive/python-docs/20-design.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/faq/programming.html": {
+      "file": "sources/archive/python-docs/21-programming.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/howto/a-conceptual-overview-of-asyncio.html": {
+      "file": "sources/archive/python-docs/06-a-conceptual-overview-of-asyncio.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/howto/annotations.html": {
+      "file": "sources/archive/python-docs/12-annotations.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/howto/descriptor.html": {
+      "file": "sources/archive/python-docs/05-descriptor.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/howto/enum.html": {
+      "file": "sources/archive/python-docs/14-enum.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/howto/free-threading-python.html": {
+      "file": "sources/archive/python-docs/07-free-threading-python.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/howto/functional.html": {
+      "file": "sources/archive/python-docs/10-functional.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/howto/logging.html": {
+      "file": "sources/archive/python-docs/13-logging.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/howto/mro.html": {
+      "file": "sources/archive/python-docs/08-mro.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/howto/sorting.html": {
+      "file": "sources/archive/python-docs/09-sorting.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/howto/unicode.html": {
+      "file": "sources/archive/python-docs/11-unicode.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/abc.html": {
+      "file": "sources/archive/python-docs/50-abc.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/array.html": {
+      "file": "sources/archive/python-docs/59-array.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/asyncio-dev.html": {
+      "file": "sources/archive/python-docs/33-asyncio-dev.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/asyncio-eventloop.html": {
+      "file": "sources/archive/python-docs/29-asyncio-eventloop.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/asyncio-exceptions.html": {
+      "error": "only 1182 characters of prose — a landing page, index, or paywall, not an article worth archiving",
+      "status": "failed"
+    },
+    "https://docs.python.org/3/library/asyncio-future.html": {
+      "file": "sources/archive/python-docs/30-asyncio-future.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/asyncio-protocol.html": {
+      "file": "sources/archive/python-docs/37-asyncio-protocol.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/asyncio-queue.html": {
+      "file": "sources/archive/python-docs/32-asyncio-queue.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/asyncio-runner.html": {
+      "file": "sources/archive/python-docs/34-asyncio-runner.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/asyncio-stream.html": {
+      "file": "sources/archive/python-docs/36-asyncio-stream.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/asyncio-sync.html": {
+      "file": "sources/archive/python-docs/31-asyncio-sync.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/asyncio-task.html": {
+      "file": "sources/archive/python-docs/28-asyncio-task.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/asyncio-threading.html": {
+      "file": "sources/archive/python-docs/38-asyncio-threading.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/bisect.html": {
+      "file": "sources/archive/python-docs/58-bisect.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/collections.abc.html": {
+      "file": "sources/archive/python-docs/49-collections-abc.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/collections.html": {
+      "file": "sources/archive/python-docs/48-collections.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/concurrent.futures.html": {
+      "file": "sources/archive/python-docs/24-concurrent-futures.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/concurrent.interpreters.html": {
+      "file": "sources/archive/python-docs/27-concurrent-interpreters.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/contextlib.html": {
+      "file": "sources/archive/python-docs/46-contextlib.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/contextvars.html": {
+      "file": "sources/archive/python-docs/26-contextvars.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/copy.html": {
+      "file": "sources/archive/python-docs/41-copy.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/dataclasses.html": {
+      "file": "sources/archive/python-docs/47-dataclasses.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/datetime.html": {
+      "file": "sources/archive/python-docs/54-datetime.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/decimal.html": {
+      "file": "sources/archive/python-docs/53-decimal.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/dis.html": {
+      "file": "sources/archive/python-docs/61-dis.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/exceptions.html": {
+      "file": "sources/archive/python-docs/52-exceptions.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/functools.html": {
+      "file": "sources/archive/python-docs/44-functools.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/gc.html": {
+      "file": "sources/archive/python-docs/39-gc.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/heapq.html": {
+      "file": "sources/archive/python-docs/57-heapq.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/itertools.html": {
+      "file": "sources/archive/python-docs/45-itertools.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/json.html": {
+      "file": "sources/archive/python-docs/56-json.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/logging.html": {
+      "file": "sources/archive/python-docs/65-logging.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/multiprocessing.html": {
+      "file": "sources/archive/python-docs/23-multiprocessing.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/pickle.html": {
+      "file": "sources/archive/python-docs/55-pickle.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/profile.html": {
+      "file": "sources/archive/python-docs/63-profile.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/queue.html": {
+      "file": "sources/archive/python-docs/25-queue.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/stdtypes.html": {
+      "file": "sources/archive/python-docs/60-stdtypes.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/sys.html": {
+      "file": "sources/archive/python-docs/42-sys.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/threading.html": {
+      "file": "sources/archive/python-docs/22-threading.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/timeit.html": {
+      "file": "sources/archive/python-docs/62-timeit.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/tracemalloc.html": {
+      "file": "sources/archive/python-docs/43-tracemalloc.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/typing.html": {
+      "file": "sources/archive/python-docs/51-typing.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/unittest.mock.html": {
+      "file": "sources/archive/python-docs/64-unittest-mock.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/venv.html": {
+      "file": "sources/archive/python-docs/67-venv.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/warnings.html": {
+      "file": "sources/archive/python-docs/66-warnings.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/library/weakref.html": {
+      "file": "sources/archive/python-docs/40-weakref.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/reference/compound_stmts.html": {
+      "file": "sources/archive/python-docs/04-compound-stmts.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/reference/datamodel.html": {
+      "file": "sources/archive/python-docs/01-datamodel.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/reference/executionmodel.html": {
+      "file": "sources/archive/python-docs/02-executionmodel.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/reference/import.html": {
+      "file": "sources/archive/python-docs/03-import.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/tutorial/classes.html": {
+      "file": "sources/archive/python-docs/15-classes.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/tutorial/datastructures.html": {
+      "file": "sources/archive/python-docs/17-datastructures.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/tutorial/errors.html": {
+      "file": "sources/archive/python-docs/16-errors.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/tutorial/floatingpoint.html": {
+      "file": "sources/archive/python-docs/19-floatingpoint.md",
+      "status": "done"
+    },
+    "https://docs.python.org/3/tutorial/modules.html": {
+      "file": "sources/archive/python-docs/18-modules.md",
+      "status": "done"
+    }
+  },
+  "corpus": "python-docs",
+  "updated": "2026-09-21T22:01:48+00:00"
+}
