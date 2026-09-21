@@ -106,6 +106,7 @@ Outline → node mapping (every surveyed heading lands on a leaf or an out-of-sc
 | 2026-09-21 | 4 cards: asyncio | 59 cards / 10 leaves, all digest (python-docs, InternalDocs, PEP 567); cancel/gather cards re-read against docs | `validate` 0 errors |
 | 2026-09-21 | 4 cards: functions | 36 cards / 6 leaves (decorator-patterns grown); digest auto-picked the wrong section for 3 leaves, agent read the right section of the same corpus file instead | `validate` 0 errors |
 | 2026-09-21 | 4 cards: model | 54 cards / 9 leaves, all digest; dictnotes cache-locality card checked against `dictnotes.txt` §Results of Cache Locality Experiments | `validate` 0 errors |
+| 2026-09-21 | 4 cards: iteration | 42 cards / 7 leaves, all digest (PEP 380/342/636, InternalDocs generators, docs); islice(it,2,5,2) advances 5 and the bare-name capture trap re-run in Python | `validate` 0 errors |
 
 
 ## Next action
