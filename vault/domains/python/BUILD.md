@@ -105,6 +105,7 @@ Outline → node mapping (every surveyed heading lands on a leaf or an out-of-sc
 | 2026-09-21 | 4 cards: concurrency, memory | concurrency 44 cards / 8 leaves (choosing grown); memory 36 cards / 7 leaves (allocator grown; pymalloc pool 4 KiB→16 KiB and 8 B→16 B alignment corrected against `pycore_obmalloc.h` 3.13). Skeleton `concurrency.multiprocessing` summary corrected: 3.14 POSIX default is forkserver, not spawn | `validate` 0 errors, no self-contained warnings |
 | 2026-09-21 | 4 cards: asyncio | 59 cards / 10 leaves, all digest (python-docs, InternalDocs, PEP 567); cancel/gather cards re-read against docs | `validate` 0 errors |
 | 2026-09-21 | 4 cards: functions | 36 cards / 6 leaves (decorator-patterns grown); digest auto-picked the wrong section for 3 leaves, agent read the right section of the same corpus file instead | `validate` 0 errors |
+| 2026-09-21 | 4 cards: model | 54 cards / 9 leaves, all digest; dictnotes cache-locality card checked against `dictnotes.txt` §Results of Cache Locality Experiments | `validate` 0 errors |
 
 
 ## Next action
