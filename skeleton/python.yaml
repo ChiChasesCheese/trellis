@@ -139,6 +139,9 @@ nodes:
   - id: iteration.comprehensions
     title: 推导式与 `else` 块：可读性边界与作用域
     summary: 掌握推导式有自己的作用域、超过两层控制子表达式应改写为循环、`for/else` 与 `try/else` 的语义，以及何时用 `map/filter`。
+  - id: iteration.pattern-matching
+    title: 结构化模式匹配：`match`/`case`、捕获、守卫与类模式
+    summary: 理解 3.10 的 `match` 不是 switch：模式会解构序列、映射与类实例并绑定名字，`case _` 兜底、`if` 守卫、`__match_args__` 决定位置模式，以及什么时候一串 `if` 反而更清楚。
 - id: classes
   core: true
   title: 类、协议与元编程
@@ -346,6 +349,11 @@ nodes:
     summary: 理解高层 `open_connection`/`StreamReader` 与低层 Protocol 回调的分工、背压与 `drain()`，以及分页拉取 API 时并发限流与重试的组合模式。
     requires:
     - asyncio.sync-primitives
+  - id: asyncio.contextvars
+    title: 上下文变量（contextvars）：为什么线程局部存储在 `await` 之间会失效
+    summary: 理解 `ContextVar` 按任务隔离而不是按线程隔离、每个 Task 在创建时复制当前 Context、`decimal` 上下文与追踪 ID 如何借此跨 await 传播，以及 `threading.local` 在 asyncio 里为何出错。
+    requires:
+    - asyncio.coroutines-tasks
 - id: runtime
   title: 解释器与执行模型
   summary: 源码如何变成字节码并被求值：编译、代码对象与帧、导入系统、异常机制，以及 3.11+ 自适应解释器与 JIT 带来的变化。
