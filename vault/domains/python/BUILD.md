@@ -100,6 +100,7 @@ Outline → node mapping (every surveyed heading lands on a leaf or an out-of-sc
 | runtime.compile-bytecode | 3.7 起支持基于哈希的 .pyc 校验 | correct: PEP 552 (3.7) |
 | runtime.adaptive-jit | JIT 默认关闭，需 `--enable-experimental-jit` | correct for 3.13/3.14 source builds; 3.14 official macOS/Windows binaries ship the JIT built but disabled unless `PYTHON_JIT=1` |
 | runtime.frames-eval | CPython 不做尾调用优化 | correct; Guido's 2009 position, unchanged; 3.14's tail-calling interpreter is an interpreter implementation detail, not TCO for Python code |
+| engineering.testing / packaging-env | pytest fixtures/parametrize; `python -m` puts cwd on `sys.path`; pyproject as single source; lockfiles | standard, retagged grown; pytest docs and PEP 621/751 back them |
 
 ## Ledger
 
@@ -118,6 +119,7 @@ Outline → node mapping (every surveyed heading lands on a leaf or an out-of-sc
 | 2026-09-21 | 4 cards: runtime | 42 cards / 7 leaves, all digest (InternalDocs compiler/frames/interpreter/JIT/exceptions; docs import system, execution model) | `validate` 0 errors |
 | 2026-09-21 | 4 cards: types | 23 cards / 4 leaves, all digest (typing reference, annotations HOWTO, PEP 484 variance); 8 straight-quote emphases rewritten to 「」 | `validate` 0 errors |
 | 2026-09-21 | 4 duplicate sweep (10 nodes) | trigram similarity on all 447 questions: 1 cross-node duplicate (comprehension-in-class-body, iteration vs runtime) → iteration copy deleted | script in session, threshold 0.35 |
+| 2026-09-21 | 4 cards: engineering | 38 cards / 6 leaves; 5 cards (2 pytest, 3 packaging) had no corpus text and were retagged `grown` (digest --import had stamped them python-docs) | `validate` 0 errors; all 79 leaves have cards |
 
 
 ## Next action
