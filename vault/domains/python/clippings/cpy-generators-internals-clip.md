@@ -1,6 +1,6 @@
 ---
 title: Generators
-source: https://github.com/python/cpython/tree/main/InternalDocs
+source: https://github.com/python/cpython/blob/main/InternalDocs/generators.md
 corpus: cpython-internals
 section: 006-generators
 clipped: '2026-09-21'

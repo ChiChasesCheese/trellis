@@ -1,6 +1,6 @@
 ---
 title: Quiescent-State Based Reclamation
-source: https://github.com/python/cpython/tree/main/InternalDocs
+source: https://github.com/python/cpython/blob/main/InternalDocs/qsbr.md
 corpus: cpython-internals
 section: 012-quiescent-state-based-reclamation
 clipped: '2026-09-21'

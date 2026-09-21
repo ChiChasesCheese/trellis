@@ -1,6 +1,6 @@
 ---
 title: Exception Handling
-source: https://github.com/python/cpython/tree/main/InternalDocs
+source: https://github.com/python/cpython/blob/main/InternalDocs/exception_handling.md
 corpus: cpython-internals
 section: 011-exception-handling
 clipped: '2026-09-21'

@@ -1,6 +1,6 @@
 ---
 title: asyncio
-source: https://github.com/python/cpython/tree/main/InternalDocs
+source: https://github.com/python/cpython/blob/main/InternalDocs/asyncio.md
 corpus: cpython-internals
 section: 014-asyncio
 clipped: '2026-09-21'

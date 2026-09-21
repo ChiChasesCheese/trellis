@@ -1,6 +1,6 @@
 ---
 title: Dict Implementation Notes
-source: https://github.com/python/cpython/tree/main/InternalDocs
+source: https://github.com/python/cpython/blob/main/Objects/dictnotes.txt
 corpus: cpython-internals
 section: 016-dict-implementation-notes
 clipped: '2026-09-21'

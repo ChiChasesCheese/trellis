@@ -1,6 +1,6 @@
 ---
 title: Garbage Collector Design
-source: https://github.com/python/cpython/tree/main/InternalDocs
+source: https://github.com/python/cpython/blob/main/InternalDocs/garbage_collector.md
 corpus: cpython-internals
 section: 010-garbage-collector-design
 clipped: '2026-09-21'

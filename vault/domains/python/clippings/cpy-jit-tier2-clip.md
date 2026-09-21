@@ -1,6 +1,6 @@
 ---
 title: The JIT
-source: https://github.com/python/cpython/tree/main/InternalDocs
+source: https://github.com/python/cpython/blob/main/InternalDocs/jit.md
 corpus: cpython-internals
 section: 009-the-jit
 clipped: '2026-09-21'

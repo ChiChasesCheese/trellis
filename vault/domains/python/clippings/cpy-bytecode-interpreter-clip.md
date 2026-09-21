@@ -1,6 +1,6 @@
 ---
 title: The Bytecode Interpreter
-source: https://github.com/python/cpython/tree/main/InternalDocs
+source: https://github.com/python/cpython/blob/main/InternalDocs/interpreter.md
 corpus: cpython-internals
 section: 008-the-bytecode-interpreter
 clipped: '2026-09-21'

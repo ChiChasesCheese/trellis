@@ -1,6 +1,6 @@
 ---
 title: Frames
-source: https://github.com/python/cpython/tree/main/InternalDocs
+source: https://github.com/python/cpython/blob/main/InternalDocs/frames.md
 corpus: cpython-internals
 section: 007-frames
 clipped: '2026-09-21'

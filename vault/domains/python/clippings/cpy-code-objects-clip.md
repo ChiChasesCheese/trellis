@@ -1,6 +1,6 @@
 ---
 title: Code Objects
-source: https://github.com/python/cpython/tree/main/InternalDocs
+source: https://github.com/python/cpython/blob/main/InternalDocs/code_objects.md
 corpus: cpython-internals
 section: 005-code-objects
 clipped: '2026-09-21'

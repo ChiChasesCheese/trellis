@@ -1,6 +1,6 @@
 ---
 title: Compiler Design
-source: https://github.com/python/cpython/tree/main/InternalDocs
+source: https://github.com/python/cpython/blob/main/InternalDocs/compiler.md
 corpus: cpython-internals
 section: 004-compiler-design
 clipped: '2026-09-21'

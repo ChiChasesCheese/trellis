@@ -1,6 +1,6 @@
 ---
 title: List Sort Algorithm (Timsort)
-source: https://github.com/python/cpython/tree/main/InternalDocs
+source: https://github.com/python/cpython/blob/main/Objects/listsort.txt
 corpus: cpython-internals
 section: 015-list-sort-algorithm-timsort
 clipped: '2026-09-21'

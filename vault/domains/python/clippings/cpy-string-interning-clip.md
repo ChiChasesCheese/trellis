@@ -1,6 +1,6 @@
 ---
 title: String Interning
-source: https://github.com/python/cpython/tree/main/InternalDocs
+source: https://github.com/python/cpython/blob/main/InternalDocs/string_interning.md
 corpus: cpython-internals
 section: 013-string-interning
 clipped: '2026-09-21'
