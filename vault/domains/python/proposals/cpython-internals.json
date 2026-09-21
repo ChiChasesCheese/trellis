@@ -1,0 +1,158 @@
+{
+  "corpus": "cpython-internals",
+  "items": [
+    {
+      "section": "001-cpython-internaldocs",
+      "verdict": "skip",
+      "why": "只是 InternalDocs 的标题页，无正文内容。"
+    },
+    {
+      "section": "002-source-code-structure",
+      "verdict": "skip",
+      "why": "罗列 CPython 仓库里各模块/内建类型对应的 .c/.py/.rst 文件路径，纯粹是给 CPython 贡献者定位源码用的目录索引，不教任何 Python 使用或语言语义知识。"
+    },
+    {
+      "section": "003-guide-to-the-parser",
+      "verdict": "skip",
+      "why": "详细讲 CPython 自己的 PEG 语法文件写法、pegen 生成器、如何 regen 语法/元语法、verbose 调试模式，是给要修改 CPython 语法的贡献者看的开发文档，技能树里没有关于文法/解析器的叶子，也不该有——这是维护 CPython 本身的知识，不是使用 Python 的知识。"
+    },
+    {
+      "section": "004-compiler-design",
+      "verdict": "reading",
+      "nodes": [
+        "runtime.compile-bytecode"
+      ],
+      "slug": "cpy-compiler-pipeline",
+      "title": "编译流水线：从源码到字节码经过了几道工序",
+      "body": "这篇讲的是 CPython 编译器的完整流水线：源码先被词法分析、再由 PEG 语法解析成抽象语法树（AST，用 ASDL 描述节点结构），接着 `_PySymtable_Build` 生成符号表确定每个名字的作用域，然后 AST 被转换成一串伪指令，再构造控制流图（CFG）并做窥孔优化，最后汇编成真正的字节码，打包进一个 `PyCodeObject`。读它的价值不是记住这些 C 函数名，而是把“Python 是解释型语言”这句面试常问的话说准确：CPython 并不是逐行扫源码执行，而是先跑一条完整的编译流水线产出字节码，运行时执行的其实是字节码解释器（ceval.c），这也是为什么同一份 `.py` 文件反复运行会被缓存为字节码、以及为什么语法错误在“编译”阶段就会报出来而不是运行到那一行才报。跳过流水线中间的 C 结构体和宏细节，只需要建立“源码→AST→CFG→字节码”这条主线的心智模型。"
+    },
+    {
+      "section": "005-code-objects",
+      "verdict": "reading",
+      "nodes": [
+        "runtime.compile-bytecode",
+        "runtime.exceptions"
+      ],
+      "slug": "cpy-code-objects",
+      "title": "代码对象：字节码之外还带着什么",
+      "body": "`CodeObject` 是编译器产出的成品：除了字节码本身，还携带常量表、变量名表、以及一张压缩过的“源码位置表”（`co_linetable`），记录每条指令对应源码里的起止行号和列号。代码对象名义上不可变，会被 `marshal` 协议序列化写到磁盘（也就是 `__pycache__` 里 `.pyc` 文件的真身），下次导入时直接反序列化跳过重新编译。读这篇的价值有两点：一是理解“字节码缓存”到底缓存的是什么对象、为什么改了源码时间戳/哈希就要重新编译；二是理解异常发生时 traceback 上的行号是怎么来的——`tb_lasti`（最后执行的指令位置）配合位置表被懒惰地换算成行号，而不是解释器执行时时刻都在维护一个行号变量。知道位置表存在，能解释为什么 3.11 之后的报错能精确定位到表达式内的某个子部分而不只是整行。"
+    },
+    {
+      "section": "006-generators",
+      "verdict": "reading",
+      "nodes": [
+        "iteration.generators",
+        "iteration.yield-from",
+        "runtime.frames-eval"
+      ],
+      "slug": "cpy-generators-internals",
+      "title": "生成器对象怎么把一次函数调用变成可以反复挂起的执行",
+      "body": "生成器对象（`PyGenObject`）内部直接嵌了一份自己的帧（frame），这就是“生成器为什么能挂起”的答案：普通函数返回后帧就销毁了，而 `RETURN_GENERATOR` 字节码在生成器第一次被调用时把当前帧复制一份，交给生成器对象持有；`yield` 对应的 `YIELD_VALUE` 指令把返回地址和异常状态存进这份帧再交还调用者，下次 `send()` 时解释器把同一份帧重新压回调用栈继续跑，局部变量原样还在。`yield from` 则是用 `SEND` 指令把值和异常在生成器链上转发，一层层委托子生成器，直到 `StopIteration`——这正是 async/await 底层复用的机制。读完能把“生成器只能消费一次”“yield 挂起后局部变量还在”这类现象从“记忆规则”变成“看得懂原理”，也顺带理解为什么生成器和协程会共用同一套 frame 基础设施。"
+    },
+    {
+      "section": "007-frames",
+      "verdict": "reading",
+      "nodes": [
+        "runtime.frames-eval"
+      ],
+      "slug": "cpy-frames-internals",
+      "title": "帧（Frame）的内存布局与 3.11 的惰性创建优化",
+      "body": "每次函数调用的“活动记录”——局部变量、求值栈、以及全局字典/代码对象等元信息——统称一个帧。3.11 之前每次调用都要在堆上分配一个 `PyFrameObject`，开销不小；3.11 起帧被拆成轻量的 `_PyInterpreterFrame`，绝大多数情况下连续分配在每线程私有的栈上（类似 C 的调用栈），只有当 Python 代码真的用到 `sys._getframe()`、或者要生成 traceback 时，才会临时创建出一个货真价实的 `PyFrameObject` 并把内容拷过去——这就是“帧对象的惰性创建”。生成器/协程是特例：它们的帧直接嵌在生成器对象里，不走每线程栈。读这篇能解释递归为什么会撞 `sys.setrecursionlimit`（每层调用都要占一份帧空间）、以及为什么 3.11 之后函数调用明显变快（省掉了大部分堆分配）。"
+    },
+    {
+      "section": "008-the-bytecode-interpreter",
+      "verdict": "reading",
+      "nodes": [
+        "runtime.adaptive-jit",
+        "runtime.frames-eval"
+      ],
+      "slug": "cpy-bytecode-interpreter",
+      "title": "字节码解释器：栈机、调用栈重构与自适应特化",
+      "body": "这是理解“解释器循环”本身的核心文档：CPython 的解释器是一台栈机，每条指令从求值栈上弹出/压入对象；3.11 起 Python 调用 Python 不再递归进 C 函数栈（避免 C 栈溢出风险），而是把新帧压进解释器自己维护的调用栈、直接跳转到被调函数的字节码开头，返回时再跳回去，省掉大量 C 栈开销。文档后半部分讲“特化”（specialization）：像 `LOAD_GLOBAL` 这类通用指令执行到一定次数后，会用内联缓存里记录的运行时信息把自己替换成 `LOAD_GLOBAL_MODULE`/`LOAD_GLOBAL_BUILTIN` 这类针对具体情况优化过的快指令，一旦假设不成立就退化回通用版本。读完能把“3.11+ 自适应解释器按类型内联快速路径”这句话具体化成“为什么、怎么内联、什么时候会退化”，是回答“Python 到底慢在哪、3.11 做了什么”的第一手材料。"
+    },
+    {
+      "section": "009-the-jit",
+      "verdict": "reading",
+      "nodes": [
+        "runtime.adaptive-jit"
+      ],
+      "slug": "cpy-jit-tier2",
+      "title": "分层执行：从追踪记录到 copy-and-patch JIT",
+      "body": "在“逐指令特化”（tier 1）之上，CPython 还有一层实验性的 JIT（tier 2）：某段循环被判定“热”之后，解释器切到追踪模式，把连续执行的字节码翻译成更细粒度的微操作（micro-ops/uops）序列并加以优化，生成一个执行器（executor）；如果编译时开启了完整 JIT（`--enable-experimental-jit`），这段 uops 还会用 copy-and-patch 技术（用预先编译好的代码片段“stencil”在运行时拼接、填充具体信息）直接生成机器码，跳过解释开销。读这篇的价值是知道“Python 3.13 有实验性 JIT”这句话具体指什么阶段、以及它和一般语言的 JIT（如 V8 的分层编译）思路的相似与不同——它仍处于实验阶段，面试里被问到时可以准确地说“基于 copy-and-patch，处于早期、默认不开启”，而不是笼统地说“Python 出 JIT 了”。"
+    },
+    {
+      "section": "010-garbage-collector-design",
+      "verdict": "reading",
+      "nodes": [
+        "memory.cyclic-gc",
+        "memory.refcounting"
+      ],
+      "slug": "cpy-gc-design",
+      "title": "循环垃圾回收器：分代、可达性扫描与销毁顺序",
+      "body": "引用计数处理不了自引用的环（比如一个列表把自己装进自己），CPython 用单独的 `gc` 模块专门找这些环。算法思路是：先给每个容器对象记一份“临时引用计数”副本，扫描一遍把所有指向集合内部的引用都减掉，剩下计数大于 0 的就是能从外部直接到达的对象，再从这些对象出发做一次广度优先搜索把可达对象都捞回来，剩下的就真的不可达了。为了不用每次都扫全堆，对象按存活轮数分成 3 代（`gc.get_threshold()` 能看到触发阈值），新对象在第 0 代，扛过几轮回收才晋升。销毁顺序也有讲究：先处理弱引用回调，再调用 `__del__`/`tp_finalize`，如果对象在 finalizer 里“复活”还要重新跑一遍可达性分析。读完能把“循环引用为什么需要 GC”“分代假设”“weakref 回调什么时候执行”这几件事串成一条因果链，而不是零散的结论。"
+    },
+    {
+      "section": "011-exception-handling",
+      "verdict": "reading",
+      "nodes": [
+        "runtime.exceptions"
+      ],
+      "slug": "cpy-exception-table",
+      "title": "零成本异常处理：try 不抛异常时到底付了多少代价",
+      "body": "Python 的异常处理是“零成本”的：`try`/`except` 编译后并不会插入运行时判断，`SETUP_FINALLY`/`POP_BLOCK` 这类伪指令在生成最终字节码时会被整体删掉，取而代之的是一张单独存在代码对象里的“异常表”（`co_exceptiontable`），把每个指令区间映射到覆盖它的异常处理器、以及处理器期望的求值栈深度。只有真的抛出异常时，解释器才去查这张表（用紧凑的变长编码存储，支持二分查找），把栈弹到匹配深度、跳到处理器继续执行——没有异常发生时完全不产生额外开销。文档也讲了隐式链式异常 `__context__` 和显式 `raise ... from` 对应的 `__cause__` 分别在哪里被设置。读完能把“try 块本身几乎不花钱，只有真抛异常才花钱”这个直觉背后的机制讲清楚，对应到面试里“异常控制流成本”这类追问。"
+    },
+    {
+      "section": "012-quiescent-state-based-reclamation",
+      "verdict": "reading",
+      "nodes": [
+        "concurrency.free-threading"
+      ],
+      "slug": "cpy-qsbr-reclaim",
+      "title": "自由线程构建里，读操作为什么能不加锁",
+      "body": "去掉 GIL 之后有一个新麻烦：多个线程可能正在无锁地读一个 dict/list 的内部数组，这时候另一个线程把它 resize 了、旧数组该什么时候真正释放？释放早了会踩上正在读它的线程，释放晚了内存又降不下来。CPython 的自由线程（free-threaded）构建用了一种叫 QSBR（Quiescent-State Based Reclamation）的方案：每个线程定期在“安全点”（eval breaker 处）汇报一次“我现在没有持有任何可能被回收的共享引用”，全局维护一个所有线程都已经越过的“最小安全序号”，只有序号早于这个值的待释放对象才会被真正 free。读这篇不需要记实现细节，只要建立一个认识：`--disable-gil` 构建能让读操作不加锁，不是没有代价，而是把代价换成了一套后台的、批量化的内存延迟回收机制，这也是回答“free-threading 的成熟度/工程复杂度”这类问题时更有说服力的素材。"
+    },
+    {
+      "section": "013-string-interning",
+      "verdict": "reading",
+      "nodes": [
+        "memory.interning-immortal",
+        "model.names-objects"
+      ],
+      "slug": "cpy-string-interning",
+      "title": "字符串驻留与不朽对象：is 比较为什么能又快又准",
+      "body": "驻留（interning）的本质是维护一个“同内容只留一份”的字符串集合，好处是驻留过的字符串可以直接用指针比较（`is`）代替逐字符比较，被大量用在 dict/属性查找的快速路径上。CPython 用两套机制：一是单字符 latin-1 字符串和编译期已知的标识符（`_Py_ID`/`_Py_STR`）在运行时启动阶段就被静态驻留进全局表；二是普通字符串在运行时按需驻留进一个解释器级别的 dict。驻留过的字符串还分“会死”和“不朽”（immortal）：3.12 引入的不朽对象机制让 `None`/`True`/小整数以及这类常驻字符串不再参与引用计数的加减——省掉了多核下对同一块内存反复写引用计数带来的缓存行竞争，也对 `fork` 后的写时复制更友好，因为不朽对象永远不会因为引用计数变化而被“写”。读完能把“小整数/短字符串驻留只是实现细节”这句话背后的具体机制和它为什么对多核有意义讲清楚。"
+    },
+    {
+      "section": "014-asyncio",
+      "verdict": "reading",
+      "nodes": [
+        "asyncio.debugging",
+        "asyncio.coroutines-tasks"
+      ],
+      "slug": "cpy-asyncio-internals",
+      "title": "异步生成器为什么会漏跑 finally，以及 Task 是怎么被追踪的",
+      "body": "这篇解释一个真实会踩到的坑：`async for i in agen(): break` 提前跳出循环后，`agen` 没有被完全迭代完，它的 `finally` 块不会立刻执行——因为事件循环需要在“循环还在运行”的时候才能安全地 await 清理代码。CPython 通过 `sys.set_asyncgen_hooks`（PEP 525）注册两个钩子：第一次迭代时把生成器登记进事件循环的弱引用集合，生成器被判定不再被引用时再由事件循环创建一个任务去调用 `aclose()` 补跑 `finally`，循环关闭前还会兜底 `gather` 一遍所有存活的异步生成器。文档也提到 3.14 把 Task 的追踪从全局 `WeakSet`+字典 改成了每线程双向链表，为的是减少多线程下的锁竞争。读完能解释“为什么我的异步生成器 finally 没打印”这类真实 bug，也知道 Task 本质上是被事件循环/运行时登记追踪的对象，而不是凭空存在的协程包装。"
+    },
+    {
+      "section": "015-list-sort-algorithm-timsort",
+      "verdict": "reading",
+      "nodes": [
+        "performance.containers"
+      ],
+      "slug": "cpy-timsort",
+      "title": "Timsort：为什么 list.sort() 对“已经有点顺序”的数据特别快",
+      "body": "Timsort 先从左到右识别天然存在的升序/降序片段（run），太短的话用二分插入排序把它补到 `minrun` 长度，再两两归并相邻的 run。关键的自适应设计有两处：一是用“powersort”策略决定先合并哪两个 run，保证归并树尽量平衡，为了稳定性永远只合并相邻的两个 run（不能跳着合并，否则会打乱相同元素的原始相对顺序）；二是“galloping”模式——当某个 run 连续赢了好几轮比较，就切换成指数查找去一次性搬一大块，把比较次数从 O(n) 降到 O(log n)，代价是在真正随机的数据上会略微多做一点无用功，所以有 `min_gallop` 动态调节要不要保持这个模式。读完能把“Timsort 稳定且利用已有序段”这句结论具体化：面试被追问“为什么快”“最坏情况是多少”时能讲出 run/merge/gallop 这条机制链，而不只是背“它是归并和插入排序的混合体”。"
+    },
+    {
+      "section": "016-dict-implementation-notes",
+      "verdict": "reading",
+      "nodes": [
+        "model.dict-set-internals",
+        "memory.object-size"
+      ],
+      "slug": "cpy-dict-notes",
+      "title": "dict 的键值分离设计：为什么同一个类的实例能共享一张键表",
+      "body": "这份笔记讲的是紧凑 dict（3.6+）背后的取舍：dict 由 dictobject 本体、一份 keys 对象（键+哈希）、一份 values 数组三部分组成，拆开后同一个类的所有实例可以共享同一张键表（split table），只各自保留自己的 values 数组，官方估算能省下约 60% 的内存——这正是“百万级对象为什么该考虑 `__slots__`”这类问题的另一面：普通实例字典其实已经在用共享键表省内存，`__slots__` 是进一步连字典都不要了。笔记也讲了调节稀疏度的参数（`USABLE_FRACTION`、`GROWTH_RATE`）如何在“减少哈希冲突”和“遍历/清空的固定开销”之间权衡，以及为什么尝试利用 CPU 缓存局部性去顺带探测相邻槽位反而会增加冲突、没有被采用。读完能把“字典哈希表怎么定位槽位、为什么装载因子触发扩容”这些结论和“键共享省内存”这个常被面试问到的优化点连起来。"
+    }
+  ]
+}

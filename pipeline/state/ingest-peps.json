@@ -1,0 +1,110 @@
+{
+  "chapters": {
+    "https://peps.python.org/pep-0020/": {
+      "error": "only 1257 characters of prose — a landing page, index, or paywall, not an article worth archiving",
+      "status": "failed"
+    },
+    "https://peps.python.org/pep-0318/": {
+      "file": "sources/archive/peps/10-pep-0318.md",
+      "status": "done"
+    },
+    "https://peps.python.org/pep-0342/": {
+      "file": "sources/archive/peps/08-pep-0342.md",
+      "status": "done"
+    },
+    "https://peps.python.org/pep-0343/": {
+      "file": "sources/archive/peps/09-pep-0343.md",
+      "status": "done"
+    },
+    "https://peps.python.org/pep-0380/": {
+      "file": "sources/archive/peps/07-pep-0380.md",
+      "status": "done"
+    },
+    "https://peps.python.org/pep-0412/": {
+      "file": "sources/archive/peps/24-pep-0412.md",
+      "status": "done"
+    },
+    "https://peps.python.org/pep-0484/": {
+      "file": "sources/archive/peps/13-pep-0484.md",
+      "status": "done"
+    },
+    "https://peps.python.org/pep-0492/": {
+      "file": "sources/archive/peps/06-pep-0492.md",
+      "status": "done"
+    },
+    "https://peps.python.org/pep-0526/": {
+      "file": "sources/archive/peps/15-pep-0526.md",
+      "status": "done"
+    },
+    "https://peps.python.org/pep-0544/": {
+      "file": "sources/archive/peps/14-pep-0544.md",
+      "status": "done"
+    },
+    "https://peps.python.org/pep-0557/": {
+      "file": "sources/archive/peps/12-pep-0557.md",
+      "status": "done"
+    },
+    "https://peps.python.org/pep-0567/": {
+      "file": "sources/archive/peps/25-pep-0567.md",
+      "status": "done"
+    },
+    "https://peps.python.org/pep-0572/": {
+      "file": "sources/archive/peps/22-pep-0572.md",
+      "status": "done"
+    },
+    "https://peps.python.org/pep-0612/": {
+      "file": "sources/archive/peps/16-pep-0612.md",
+      "status": "done"
+    },
+    "https://peps.python.org/pep-0636/": {
+      "file": "sources/archive/peps/23-pep-0636.md",
+      "status": "done"
+    },
+    "https://peps.python.org/pep-0649/": {
+      "file": "sources/archive/peps/18-pep-0649.md",
+      "status": "done"
+    },
+    "https://peps.python.org/pep-0654/": {
+      "file": "sources/archive/peps/21-pep-0654.md",
+      "status": "done"
+    },
+    "https://peps.python.org/pep-0659/": {
+      "file": "sources/archive/peps/04-pep-0659.md",
+      "status": "done"
+    },
+    "https://peps.python.org/pep-0683/": {
+      "file": "sources/archive/peps/03-pep-0683.md",
+      "status": "done"
+    },
+    "https://peps.python.org/pep-0695/": {
+      "file": "sources/archive/peps/17-pep-0695.md",
+      "status": "done"
+    },
+    "https://peps.python.org/pep-0703/": {
+      "file": "sources/archive/peps/01-pep-0703.md",
+      "status": "done"
+    },
+    "https://peps.python.org/pep-0734/": {
+      "file": "sources/archive/peps/02-pep-0734.md",
+      "status": "done"
+    },
+    "https://peps.python.org/pep-0744/": {
+      "file": "sources/archive/peps/05-pep-0744.md",
+      "status": "done"
+    },
+    "https://peps.python.org/pep-3119/": {
+      "file": "sources/archive/peps/19-pep-3119.md",
+      "status": "done"
+    },
+    "https://peps.python.org/pep-3134/": {
+      "file": "sources/archive/peps/20-pep-3134.md",
+      "status": "done"
+    },
+    "https://peps.python.org/pep-3148/": {
+      "file": "sources/archive/peps/11-pep-3148.md",
+      "status": "done"
+    }
+  },
+  "corpus": "peps",
+  "updated": "2026-09-21T22:00:10+00:00"
+}

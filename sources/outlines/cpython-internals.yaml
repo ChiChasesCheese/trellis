@@ -1,0 +1,106 @@
+corpus: cpython-internals
+title: InternalDocs
+sections:
+- id: 001-cpython-internaldocs
+  title: CPython InternalDocs
+  level: 1
+- id: 002-source-code-structure
+  title: Source Code Structure
+  level: 1
+  children:
+  - CPython source code
+  - Source code layout
+- id: 003-guide-to-the-parser
+  title: Guide to the Parser
+  level: 1
+- id: 004-compiler-design
+  title: Compiler Design
+  level: 1
+- id: 005-code-objects
+  title: Code Objects
+  level: 1
+  children:
+  - Code objects
+  - Source code locations
+- id: 006-generators
+  title: Generators
+  level: 1
+- id: 007-frames
+  title: Frames
+  level: 1
+  children:
+  - Frames
+  - Allocation
+  - Layout
+- id: 008-the-bytecode-interpreter
+  title: The Bytecode Interpreter
+  level: 1
+  children:
+  - The bytecode interpreter
+  - Instruction decoding
+  - Jumps
+  - Inline cache entries
+  - The evaluation stack
+  - Error handling
+  - Python-to-Python calls
+  - The call stack
+  - All sorts of variables
+  - Introducing a new bytecode instruction
+  - Specialization
+  - Families of instructions
+  - Example family
+  - Performance analysis
+  - Design considerations
+  - Interpreter types
+- id: 009-the-jit
+  title: The JIT
+  level: 1
+  children:
+  - The JIT
+  - The Trace Recorder and Executors
+  - The micro-op optimizer
+  - The JIT interpreter
+  - Invalidating Executors
+  - The JIT
+- id: 010-garbage-collector-design
+  title: Garbage Collector Design
+  level: 1
+- id: 011-exception-handling
+  title: Exception Handling
+  level: 1
+- id: 012-quiescent-state-based-reclamation
+  title: Quiescent-State Based Reclamation
+  level: 1
+  children:
+  - Quiescent-State Based Reclamation (QSBR)
+  - Introduction
+  - Use in Free-Threaded Python
+  - Implementation Details
+  - Limitations
+  - References
+- id: 013-string-interning
+  title: String Interning
+  level: 1
+  children:
+  - String interning
+  - Singletons
+  - Dynamically allocated strings
+  - Immortality and reference counting
+  - Internal API
+  - State
+- id: 014-asyncio
+  title: asyncio
+  level: 1
+  children:
+  - Task management
+  - Pre-Python 3.14 implementation
+  - Python 3.14 implementation
+  - Per-thread double linked list for tasks
+  - Per-thread current task
+  - async generators
+- id: 015-list-sort-algorithm-timsort
+  title: List Sort Algorithm (Timsort)
+  level: 1
+- id: 016-dict-implementation-notes
+  title: Dict Implementation Notes
+  level: 1

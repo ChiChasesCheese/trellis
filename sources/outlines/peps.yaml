@@ -1,0 +1,103 @@
+corpus: peps
+title: PEP：语言特性的设计文档
+sections:
+- id: 01-pep-0703
+  title: PEP 703 – Making the Global Interpreter Lock Optional in CPython | peps.python.org
+  level: 1
+  locator: https://peps.python.org/pep-0703/
+- id: 02-pep-0734
+  title: PEP 734 – Multiple Interpreters in the Stdlib | peps.python.org
+  level: 1
+  locator: https://peps.python.org/pep-0734/
+- id: 03-pep-0683
+  title: PEP 683 – Immortal Objects, Using a Fixed Refcount | peps.python.org
+  level: 1
+  locator: https://peps.python.org/pep-0683/
+- id: 04-pep-0659
+  title: PEP 659 – Specializing Adaptive Interpreter | peps.python.org
+  level: 1
+  locator: https://peps.python.org/pep-0659/
+- id: 05-pep-0744
+  title: PEP 744 – JIT Compilation | peps.python.org
+  level: 1
+  locator: https://peps.python.org/pep-0744/
+- id: 06-pep-0492
+  title: PEP 492 – Coroutines with async and await syntax | peps.python.org
+  level: 1
+  locator: https://peps.python.org/pep-0492/
+- id: 07-pep-0380
+  title: PEP 380 – Syntax for Delegating to a Subgenerator | peps.python.org
+  level: 1
+  locator: https://peps.python.org/pep-0380/
+- id: 08-pep-0342
+  title: PEP 342 – Coroutines via Enhanced Generators | peps.python.org
+  level: 1
+  locator: https://peps.python.org/pep-0342/
+- id: 09-pep-0343
+  title: PEP 343 – The “with” Statement | peps.python.org
+  level: 1
+  locator: https://peps.python.org/pep-0343/
+- id: 10-pep-0318
+  title: PEP 318 – Decorators for Functions and Methods | peps.python.org
+  level: 1
+  locator: https://peps.python.org/pep-0318/
+- id: 11-pep-3148
+  title: PEP 3148 – futures - execute computations asynchronously | peps.python.org
+  level: 1
+  locator: https://peps.python.org/pep-3148/
+- id: 12-pep-0557
+  title: PEP 557 – Data Classes | peps.python.org
+  level: 1
+  locator: https://peps.python.org/pep-0557/
+- id: 13-pep-0484
+  title: PEP 484 – Type Hints | peps.python.org
+  level: 1
+  locator: https://peps.python.org/pep-0484/
+- id: 14-pep-0544
+  title: 'PEP 544 – Protocols: Structural subtyping (static duck typing) | peps.python.org'
+  level: 1
+  locator: https://peps.python.org/pep-0544/
+- id: 15-pep-0526
+  title: PEP 526 – Syntax for Variable Annotations | peps.python.org
+  level: 1
+  locator: https://peps.python.org/pep-0526/
+- id: 16-pep-0612
+  title: PEP 612 – Parameter Specification Variables | peps.python.org
+  level: 1
+  locator: https://peps.python.org/pep-0612/
+- id: 17-pep-0695
+  title: PEP 695 – Type Parameter Syntax | peps.python.org
+  level: 1
+  locator: https://peps.python.org/pep-0695/
+- id: 18-pep-0649
+  title: PEP 649 – Deferred Evaluation Of Annotations Using Descriptors | peps.python.org
+  level: 1
+  locator: https://peps.python.org/pep-0649/
+- id: 19-pep-3119
+  title: PEP 3119 – Introducing Abstract Base Classes | peps.python.org
+  level: 1
+  locator: https://peps.python.org/pep-3119/
+- id: 20-pep-3134
+  title: PEP 3134 – Exception Chaining and Embedded Tracebacks | peps.python.org
+  level: 1
+  locator: https://peps.python.org/pep-3134/
+- id: 21-pep-0654
+  title: PEP 654 – Exception Groups and except* | peps.python.org
+  level: 1
+  locator: https://peps.python.org/pep-0654/
+- id: 22-pep-0572
+  title: PEP 572 – Assignment Expressions | peps.python.org
+  level: 1
+  locator: https://peps.python.org/pep-0572/
+- id: 23-pep-0636
+  title: 'PEP 636 – Structural Pattern Matching: Tutorial | peps.python.org'
+  level: 1
+  locator: https://peps.python.org/pep-0636/
+- id: 24-pep-0412
+  title: PEP 412 – Key-Sharing Dictionary | peps.python.org
+  level: 1
+  locator: https://peps.python.org/pep-0412/
+- id: 25-pep-0567
+  title: PEP 567 – Context Variables | peps.python.org
+  level: 1
+  locator: https://peps.python.org/pep-0567/

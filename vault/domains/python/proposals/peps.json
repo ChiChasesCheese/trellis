@@ -1,0 +1,259 @@
+{
+ "corpus": "peps",
+ "items": [
+  {
+   "section": "01-pep-0703",
+   "verdict": "reading",
+   "nodes": [
+    "concurrency.free-threading"
+   ],
+   "slug": "peps-pep703-free-threading",
+   "title": "PEP 703：让 GIL 可选（Making the GIL Optional）",
+   "body": "这是 free-threading 构建（--disable-gil）的原始设计文档。面试常追问“为什么不干脆用读写锁保护 dict/list”——PEP 给出明确答案：读写锁在小临界区上扩展性差，改用类似 RCU 的乐观无锁访问加延迟回收（mimalloc 分页粒度）。要带走三点：一是用有偏引用计数（biased reference counting）替代朴素原子计数，配合 immortalization 和 deferred refcounting 减少多核缓存失效；二是为什么弃用分代 GC 只保留老年代——分代链表在无 GIL 下难以做到线程安全，且 CPython 因引用计数已提前回收大部分“年轻”对象，分代假设不像 Java 那样成立；三是动机部分的真实案例（PyTorch、DeepMind、scikit-learn/joblib）说明为何多线程在 GIL 下不可扩展、多进程又受 IPC/pickle 成本所限。读完能回答“GIL 保护的到底是什么、去掉它要动哪些子系统”。"
+  },
+  {
+   "section": "02-pep-0734",
+   "verdict": "reading",
+   "nodes": [
+    "concurrency.free-threading"
+   ],
+   "slug": "peps-pep734-subinterpreters",
+   "title": "PEP 734：标准库中的多解释器（Multiple Interpreters）",
+   "body": "补上“除了线程和进程还有第三条并行路径”这一常被面试者忽略的选项：子解释器（subinterpreter）。文档先讲清楚线程状态（PyThreadState）与解释器状态（PyInterpreterState）的一对多关系，再说明 CPython 的子解释器彼此严格隔离——不共享 sys.modules、类、函数，甚至同名类也各有一份，只有不可变的内建单例（None、小整数）才共享。这解决了什么：per-interpreter GIL（PEP 684）让每个子解释器有自己的 GIL，从而在同一进程内获得真并行，同时避免了多进程方案的 fork/pickle 开销和 CUDA 上下文冲突。动机部分点明这是把长期只有 C API 才能用的能力，通过新的 interpreters 模块和 InterpreterPoolExecutor 开放给纯 Python 代码。面试追问“子解释器和多进程有什么本质区别”时，隔离边界和共享内存的取舍就是答案。"
+  },
+  {
+   "section": "03-pep-0683",
+   "verdict": "reading",
+   "nodes": [
+    "memory.interning-immortal"
+   ],
+   "slug": "peps-pep683-immortal-objects",
+   "title": "PEP 683：用固定引用计数实现不朽对象（Immortal Objects）",
+   "body": "解释 3.12 起 None、True、False、小整数、驻留字符串为什么会“免疫”引用计数——把 refcount 置为一个特殊哨兵值，Py_INCREF/DECREF 对其直接变成空操作。动机部分给出两条面试常问的理由：一是多核下每次 incref/decref 都会使 CPU 缓存行失效，高频访问的全局单例（如 None）在多线程下会互相“抢”缓存；二是为了给 per-interpreter GIL 铺路——若对象仍可变，跨解释器共享内建单例就会有数据竞争，只能给每个解释器复制一份，而不朽对象让“真正不可变”成立，从而免去复制。Rationale 部分列出了被否决的替代方案（用高位标记但不改 INCREF、加显式 flag、按类型跟踪、独立表跟踪），它们都没能解决缓存失效的性能问题。也提到唯一的行为破坏：读到的 refcount 会是一个异常大的常量，依赖具体数值的代码会出错。"
+  },
+  {
+   "section": "04-pep-0659",
+   "verdict": "reading",
+   "nodes": [
+    "runtime.adaptive-jit"
+   ],
+   "slug": "peps-pep659-specializing-interpreter",
+   "title": "PEP 659：特化自适应解释器（Specializing Adaptive Interpreter）",
+   "body": "这是 3.11 性能飞跃背后“为什么不直接上 JIT，而是先做特化字节码”的原始论证。核心思想：把 LOAD_ATTR、CALL、BINARY_ADD 这类通用指令按运行时实际遇到的类型替换成对应的“特化家族”指令（quickening），失败次数过多就用计数器退化回通用版本；由于特化发生在单条字节码内，反优化不需要处理“区域中途退出”的复杂情况，这是它相对学术界更大粒度优化区域方案的关键优势。要带走的面试要点：这不是 JIT（不生成机器码），而是用内联缓存（inline cache）+ 自适应指令实现的解释器级优化，收益主要来自属性查找、全局变量和函数调用这几类高频操作，实测提速 10%-60%。理解这一层是理解后续 PEP 744 JIT 为什么要建立在它之上的前提。"
+  },
+  {
+   "section": "05-pep-0744",
+   "verdict": "reading",
+   "nodes": [
+    "runtime.adaptive-jit"
+   ],
+   "slug": "peps-pep744-jit-compilation",
+   "title": "PEP 744：JIT 编译器现状说明",
+   "body": "讲清楚 3.13 起合入的实验性 JIT 为什么选择 copy-and-patch 而不是 LLVM 这类成熟框架：后者会引入沉重的运行时依赖和更高的编译开销，而 copy-and-patch 直接从生成解释器用的同一份字节码 DSL 生成 JIT 模板，核心开发者只需编辑指令定义就能让所有平台的 JIT 后端“免费”同步更新。文档还交代了技术脉络——3.11 的特化自适应解释器（PEP 659）产生了丰富的运行时画像信息，3.13 起始终存在但默认关闭的微操作（micro-op）追踪与优化管线，因为解释微操作本身开销太大而收益有限，才促使把优化后的追踪静态编译成机器码。面试要点：JIT 何时会“转正”有三条明确门槛（至少一个平台 5% 提速、可低成本构建分发、指导委员会评估价值），当前仍应视为实验特性，不能用于生产。"
+  },
+  {
+   "section": "06-pep-0492",
+   "verdict": "reading",
+   "nodes": [
+    "asyncio.coroutines-tasks",
+    "iteration.yield-from"
+   ],
+   "slug": "peps-pep492-async-await",
+   "title": "PEP 492：async/await 语法与原生协程",
+   "body": "说明为什么 async/await 不是简单给生成器加语法糖，而是把“原生协程”做成完全独立的类型。Rationale 列出用生成器模拟协程（PEP 342 + PEP 380 的 yield from）的三个痛点：协程和普通生成器语法相同容易混淆；一个函数是不是协程取决于函数体里有没有 yield，重构时容易悄悄改变语义；yield 只能出现在语法允许的位置，限制了 with/for 这类语句里做异步调用。async/await 通过 async def、await、async with、async for 从根上解决了这些问题，也让 linter 和 IDE 能可靠识别协程。读这篇要建立的直觉是：async/await 是 yield from 协程用法的“正名”和收口，理解它和 PEP 380/342 的关系，才能回答“协程和生成器到底是什么关系”这类高频追问。"
+  },
+  {
+   "section": "07-pep-0380",
+   "verdict": "reading",
+   "nodes": [
+    "iteration.yield-from"
+   ],
+   "slug": "peps-pep380-yield-from",
+   "title": "PEP 380：yield from 委托子生成器语法",
+   "body": "解决的是“把带 yield 的代码块拆成子函数很难”这个具体痛点：用 for v in g: yield v 只能转发值，一旦子生成器需要正确响应 send()、throw()、close()，手写转发代码极其繁琐且容易漏掉边界情况。yield from 把这套协议转发完整封装：子生成器 yield 的值直接传给调用者，调用者 send() 的值直接转发给子生成器，异常通过 throw() 转发，子生成器用 return value 结束时该值成为 yield from 表达式本身的值（依赖 StopIteration 新增的 value 属性实现）。面试要点是理解形式化语义那段给出的展开代码——本质是一个状态机，处理了正常迭代、send、异常、GeneratorExit 四种路径。这是 async/await 出现之前，Python 协程能够“委托调用”的唯一机制，也是 PEP 492 的直接铺垫。"
+  },
+  {
+   "section": "08-pep-0342",
+   "verdict": "reading",
+   "nodes": [
+    "iteration.yield-from"
+   ],
+   "slug": "peps-pep342-enhanced-generators",
+   "title": "PEP 342：用增强生成器实现协程",
+   "body": "这是 send()/throw()/close() 方法的源头，把 yield 从语句变成表达式的那次改动。动机很直接：生成器只能向直接调用者产出值，没法接收值或异常，也不能在 try/finally 里安全 yield（无法保证清理代码执行）。这次改动把 yield 变成可以接住 send() 传入值的表达式，让生成器能实现真正的协作式调度——一个 trampoline 函数可以在多个生成器间来回 send，从而实现非阻塞 I/O 而不必写线程或回调地狱。同时新增 close() 在垃圾回收时自动调用，使 yield 出现在 try/finally 块中变得安全。理解这篇是理解“为什么生成器只能消费一次”“生成器为什么能当协程用”这两个常见问题的必要背景，也是 PEP 380/492 的直接前身。"
+  },
+  {
+   "section": "09-pep-0343",
+   "verdict": "reading",
+   "nodes": [
+    "iteration.context-managers"
+   ],
+   "slug": "peps-pep343-with-statement",
+   "title": "PEP 343：with 语句的设计取舍",
+   "body": "不只是讲 with 的语法，而是记录了它为什么长成现在这样。作者先否决了更早的 PEP 340（用生成器当“匿名代码块模板”，支持 break/continue 穿透），理由是它会把控制流藏进看似普通的语句里，代码变得难以推理；又否决了 PEP 310 的 with VAR = EXPR 写法，改成 with EXPR as VAR，因为前者会让 VAR 实际绑定的是 __enter__() 的返回值而非 EXPR 本身，语义具有欺骗性。文档也解释了 @contextmanager 装饰器为什么必须存在：把生成器包成 __enter__/__exit__ 对象后，用 try/finally 包住 yield 就能保证清理代码在异常时也执行。带走的追问点：__exit__ 返回真值会吞掉异常这一设计，以及为什么 with 不是循环、不支持 break/continue。"
+  },
+  {
+   "section": "10-pep-0318",
+   "verdict": "reading",
+   "nodes": [
+    "functions.decorators"
+   ],
+   "slug": "peps-pep318-decorators",
+   "title": "PEP 318：函数与方法的装饰器语法",
+   "body": "讲清楚装饰器语法要解决什么丑陋现状：在 @ 语法之前，classmethod、staticmethod 这类变换只能写在函数体之后（foo = classmethod(foo)），函数越长这行代码离定义越远，读起来容易漏看，多个变换叠加时还要写 foo = synchronized(lock)(foo); foo = classmethod(foo) 这种重复赋值。@classmethod 语法把“转换意图”挪到声明处，等价于 f = d(f) 在模块导入时立即执行。Motivation 部分同时交代了历史争议：语法讨论从 2002 年持续到 2004 年，核心分歧是“声明意图该放哪里”和“如何不让新手一眼看不懂”，最终选定的 @decorator 写法（“pie syntax”）只是众多提案中的一个。读完能回答“为什么装饰器是这个语法、而不是别的”，以及装饰器在类定义里为什么只加了函数/方法装饰器，类装饰器要等 PEP 3129。"
+  },
+  {
+   "section": "11-pep-3148",
+   "verdict": "reading",
+   "nodes": [
+    "concurrency.executors"
+   ],
+   "slug": "peps-pep3148-futures",
+   "title": "PEP 3148：concurrent.futures 的执行器设计",
+   "body": "这是 ThreadPoolExecutor/ProcessPoolExecutor 统一接口的原始设计文档。动机很朴素：在此之前用线程或进程实现并行，每次都要手写启动、work/result 队列、等待完成或失败超时这套模板代码，各模块各写一套还没法设一个全局并发上限。Rationale 说明设计深受 Java java.util.concurrent 影响：Future 类本身不绑定具体求值方式（可以是线程、进程甚至 RPC），Executor 是具体实现（对应 Java 的 ExecutorService）。文档也交代了被否决的替代方案——像 weakref 那样返回透明代理对象，或者引入新语法标记异步调用；都因为增加复杂度或改变语言语义被放弃，最终选择“显式 Future，调用方必须知道自己在消费 Future”这条路线。理解这段取舍，能解释 submit()/map()/as_completed() 为什么是现在这个样子。"
+  },
+  {
+   "section": "12-pep-0557",
+   "verdict": "reading",
+   "nodes": [
+    "classes.dataclasses"
+   ],
+   "slug": "peps-pep557-dataclasses",
+   "title": "PEP 557：数据类（Data Classes）",
+   "body": "把 dataclass 定位讲得很清楚：不是 namedtuple 的替代品，而是“带默认值的可变 namedtuple”，靠类装饰器扫描 PEP 526 风格的类型注解字段，自动生成 __init__、__repr__ 和比较方法，但不改变类本身——不用元类、不用基类，用户仍可自由继承。Rationale 部分列出了在它之前解决同一问题的方案谱系（namedtuple、typing.NamedTuple、attrs、各种手写 recipe），说明标准库版本的定位是覆盖“简单场景”，复杂校验和第三方生态仍然并存而非被取代。同时明确划出不适用边界：需要和 tuple/dict 做 API 兼容、或需要超出 PEP 484/526 的类型校验和值转换时不该用 dataclass。这段边界判断是面试里“什么时候该用 dataclass、什么时候该用 attrs 或手写类”的直接依据。"
+  },
+  {
+   "section": "13-pep-0484",
+   "verdict": "reading",
+   "nodes": [
+    "types.basics",
+    "types.gradual-typing"
+   ],
+   "slug": "peps-pep484-type-hints",
+   "title": "PEP 484：类型提示（Type Hints）的奠基文档",
+   "body": "这是整个 typing 生态的起点，讲清楚两个常被面试问到的边界：一是类型注解在运行时不做任何检查（no type checking happens at runtime），它们只是存在 __annotations__ 里的元数据，真正的检查由 mypy 这类离线工具完成；二是引入 Any 类型，它与所有类型双向兼容（consistent with all types），这正是“渐进式类型”（gradual typing）思想的核心——允许代码部分标注、部分不标注地混用。文档还说明了类型提示语法为什么用方括号（Sequence[int]）而不引入新语法：靠 __getitem__ 在元类上的实现，对运行时零侵入。读完能回答“类型提示到底能不能防住类型错误”“Any 和不标注有什么区别”这两个高频追问，也是理解后续几乎所有 typing 相关 PEP 的前提。"
+  },
+  {
+   "section": "14-pep-0544",
+   "verdict": "reading",
+   "nodes": [
+    "types.protocols-generics",
+    "classes.abc-protocols"
+   ],
+   "slug": "peps-pep544-protocols",
+   "title": "PEP 544：Protocol 与结构化子类型",
+   "body": "解答“鸭子类型明明是运行时的事，为什么还需要静态检查”。在这之前 typing 只支持名义子类型（nominal subtyping）——要被识别成 Iterable 就必须显式继承或注册，这和 Python 惯常的动态风格格格不入。Protocol 引入结构化子类型（structural subtyping）：只要类实现了 __len__ 和 __iter__，静态检查器就认它是 Sized 和 Iterable，不需要显式声明。文档系统梳理了此前各路方案的取舍——zope.interface 需要显式声明实现、纯 ABC 需要显式 register、collections.abc 靠 __subclasshook__ 做到部分运行时结构化检查但没有静态支持；Protocol 补上的正是“静态 + 无侵入”这一块。明确声明这是对 PEP 484 名义子类型的补充而非替代，@runtime_checkable 只是为了兼容已有的 ABC 使用习惯，并非本意。"
+  },
+  {
+   "section": "15-pep-0526",
+   "verdict": "reading",
+   "nodes": [
+    "types.basics"
+   ],
+   "slug": "peps-pep526-variable-annotations",
+   "title": "PEP 526：变量注解语法",
+   "body": "在函数注解（PEP 484）之后，把注解扩展到变量、类变量和实例变量：primes: List[int] = [] 这种写法取代了此前只能用注释表达的 # type: List[int]。Rationale 列出了类型注释（type comment）的六个实际痛点：编辑器不会高亮注释里的类型信息、无法在不赋初值的情况下标注未定义变量、条件分支里的类型注释难以对齐阅读、注释不是语言的一部分导致想解析它就得自己写解析器而不能复用 ast、普通注释和类型注释混在一起难以区分、运行时也拿不到这些信息。文档同时强调这不是要把 Python 变成静态类型语言，变量注解依旧不做运行时类型检查，只是提供更规整的元数据载体，也为后续 dataclass 读取字段类型铺了路。"
+  },
+  {
+   "section": "16-pep-0612",
+   "verdict": "reading",
+   "nodes": [
+    "types.protocols-generics",
+    "functions.decorators"
+   ],
+   "slug": "peps-pep612-paramspec",
+   "title": "PEP 612：参数规范变量 ParamSpec",
+   "body": "精确回答“装饰器签名保真为什么需要专门语法”。用 Callable[..., R] 标注一个转发 *args/**kwargs 的装饰器时，被装饰函数的具体参数类型全部丢失，PEP 里给出的例子会在类型检查通过的情况下运行时报错——这正是“类型系统跟不上一个非常常见的装饰器写法”的具体证据。ParamSpec 把参数列表本身当作一个可以被引用、转发的类型变量：Callable[P, R] 配合 *args: P.args, **kwargs: P.kwargs，让装饰器返回值的参数签名和被装饰函数保持一致；Concatenate 则处理装饰器额外插入或移除首个参数（例如注入 Request 对象）的情况。理解这篇能解释为什么写“万能转发装饰器”时类型检查总是形同虚设，以及标准库/第三方装饰器要写对类型签名该用什么工具。"
+  },
+  {
+   "section": "17-pep-0695",
+   "verdict": "reading",
+   "nodes": [
+    "types.protocols-generics"
+   ],
+   "slug": "peps-pep695-type-parameter-syntax",
+   "title": "PEP 695：3.12 类型参数新语法",
+   "body": "把此前必须 T = TypeVar(\"T\") 全局声明、再作为 Generic[T] 基类使用的老写法，收口成 class Box[T]:、def func[T](...)、type ListOrSet[T] = ... 这种就地声明。Motivation 部分点出老写法的三个真实困惑点：TypeVar 明明定义在模块全局作用域，语义却只在某个具体的泛型上下文里成立，同一个变量在不同上下文含义还可能不同；协变/逆变（variance）这种类型论概念，用户定义第一个泛型类就得面对；多个类型参数时的排序规则会被 Generic[V, K] 悄悄改变顺序，容易踩坑。新语法把作用域收紧到声明处、去掉了大部分场景下对 variance 的显式声明负担、排序也变得显式。这是回答“为什么 3.12 之后不用再手写 TypeVar”的直接依据。"
+  },
+  {
+   "section": "18-pep-0649",
+   "verdict": "reading",
+   "nodes": [
+    "types.gradual-typing"
+   ],
+   "slug": "peps-pep649-deferred-annotations",
+   "title": "PEP 649：注解的延迟求值",
+   "body": "讲的是 TYPE_CHECKING 这个常见变通手段背后真正的问题，以及它未来可能被替代的方式。注解默认在函数/类绑定时立即求值，如果类 C 的方法标注了后定义的类 D、D 又反过来标注 C，就会遇到无法解开的循环引用；PEP 563（from __future__ import annotations）用把注解整体转成字符串的办法绕开，但代价是运行时想用注解就得手动 eval，字符串化也不总能准确还原表达式。这篇提出第三条路：把注解表达式编译进一个独立函数 __annotate__，直到真正访问 __annotations__ 时才调用求值，从而在不牺牲运行时可用性的前提下解决前向引用和循环导入问题。理解这段历史，能解释 TYPE_CHECKING 这种 hack 为什么存在、以及它未来可能不再必要的方向。"
+  },
+  {
+   "section": "19-pep-3119",
+   "verdict": "reading",
+   "nodes": [
+    "classes.abc-protocols"
+   ],
+   "slug": "peps-pep3119-abstract-base-classes",
+   "title": "PEP 3119：引入抽象基类（ABC）",
+   "body": "从面向对象理论的“调用 vs 检视”（invocation vs inspection）二分讲起，说明为什么 Python 需要给“检视对象类型”这件事一个标准做法。在 ABC 之前，判断“这是不是一个可变序列容器”要么查 list 基类、要么查有没有 __getitem__ 方法，两种做法都不准确（一个漏检、一个误检）。ABC 的方案是把这些检视规则标准化并组织进一个类层级，通过重载 isinstance()/issubclass() 让检查同时具备鸭子类型的灵活性和名义继承的可靠性；abc 模块提供元类和 @abstractmethod 装饰器阻止不完整实现被实例化。这是 collections.abc（Iterable、Sized 等）能够 register 虚拟子类的根基，也是理解 PEP 544 Protocol 为什么要在此基础上再补一层结构化检查的前提。"
+  },
+  {
+   "section": "20-pep-3134",
+   "verdict": "reading",
+   "nodes": [
+    "runtime.exceptions"
+   ],
+   "slug": "peps-pep3134-exception-chaining",
+   "title": "PEP 3134：异常链与内嵌回溯",
+   "body": "解释 raise ... from 和 __context__/__cause__/__traceback__ 三个属性从何而来、各解决什么问题。在这之前，处理异常 A 时如果又抛出异常 B，A 会被直接丢弃，调试时看不到最初的错误——这就是 __context__ 要解决的隐式链（异常处理过程中意外发生了另一个异常）。__cause__ 解决的是另一种场景：故意重新抛出或转译异常类型时，显式记录“这是由谁引起的”。文档还讨论了命名取舍——__cause__ 表示明确因果，__context__ 表示“发生在处理另一个异常的上下文中”，语义比单纯的时间先后更精确。带走的要点：外层看到的异常永远是最近抛出的那个，回溯按从旧到新排列，这与其它语言（Java/Ruby 直接丢弃原异常）的做法形成对比，是回答“except 里再抛异常，原来的信息去哪了”的标准答案。"
+  },
+  {
+   "section": "21-pep-0654",
+   "verdict": "reading",
+   "nodes": [
+    "runtime.exceptions"
+   ],
+   "slug": "peps-pep654-exception-groups",
+   "title": "PEP 654：异常组与 except*",
+   "body": "解决的是解释器一次只能传播一个异常这个根本限制。动机部分给了很有说服力的真实案例：asyncio.gather() 只能选择“抛第一个异常”或“把异常放进结果列表”两种笨办法；atexit 注册的多个回调如果都失败，只有最后一个被重新抛出；TemporaryDirectory.__exit__ 清理时的异常会掩盖用户代码本来抛出的异常。Rationale 说明了为什么不能靠一个普通容器异常类型（如 Trio 的 MultiError）解决——调用方必须手动拆包才能按类型分别处理，还得小心保留每个异常自己的 __traceback__/__cause__/__context__。也解释了为什么不修改 except 的语义而是新增 except*：两者语义差异太大，硬改会破坏向后兼容。理解这段能回答“并发场景下多个任务同时失败该怎么处理”这个 asyncio 高频追问。"
+  },
+  {
+   "section": "22-pep-0572",
+   "verdict": "reading",
+   "nodes": [
+    "iteration.comprehensions"
+   ],
+   "slug": "peps-pep572-assignment-expressions",
+   "title": "PEP 572：赋值表达式（walrus 操作符）",
+   "body": "讲清楚 := 要解决的真实问题和它的作用域陷阱。Rationale 用真实代码库统计说明：程序员为了省一行代码，宁愿重复调用一次 re.match() 或重新做一次模式匹配，也不愿多写一行赋值——walrus 让 (match := re.match(data)) 这类写法可以直接嵌进表达式里，避免重复计算。这篇要重点带走的是 Scope of the target 一节：赋值表达式不引入新作用域，在推导式里使用时，目标变量会绑定到推导式的外层作用域而不是推导式自己的隐式函数作用域——这与推导式变量本身的作用域规则（PEP 289）形成鲜明对比，是“列表推导式有没有自己的作用域”这个问题最容易被问倒的例外情况，面试里常被用来考察是否真的理解推导式的作用域边界。"
+  },
+  {
+   "section": "23-pep-0636",
+   "verdict": "reading",
+   "nodes": [
+    "iteration.pattern-matching"
+   ],
+   "slug": "peps-pattern-matching-tutorial",
+   "title": "PEP 636：结构化模式匹配教程",
+   "body": "PEP 636 是 `match`/`case` 的官方教程，用一个文字冒险游戏的命令解析把模式匹配从最简单的字面量匹配一步步推到序列模式、通配符 `_`、捕获变量、`|` 或模式、`if` 守卫、映射模式与类模式（class pattern）。读它是为了建立一个关键认识：`match` 不是 C 的 switch，每个 case 是一次结构解构（destructuring）加名字绑定，匹配失败时已绑定的名字仍可能残留。带走三点：位置类模式依赖类的 `__match_args__`（dataclass 自动生成）；守卫在模式匹配成功之后才求值；一串只比较相等的 `if/elif` 用 `match` 只会更难读——这正是 Effective Python 第 9 条的判断标准。"
+  },
+  {
+   "section": "24-pep-0412",
+   "verdict": "reading",
+   "nodes": [
+    "memory.object-size"
+   ],
+   "slug": "peps-pep412-key-sharing-dict",
+   "title": "PEP 412：键共享字典（Key-Sharing Dictionary）",
+   "body": "解释同一个类的多个实例，它们的 __dict__ 为什么能共享内存而不是各自复制一份键。核心机制是把字典拆成“键表”和“值数组”两部分（split-table）：实例属性字典默认以 split 形式创建，键表缓存在类型对象上，只要各实例没有动态增删不同的属性，键表就能被同一个类的所有实例共享，值数组各自独立。一旦某个实例的键开始分化（比如动态加了别的没有的属性），该字典会惰性转换回普通的合并表（combined-table）形式，保证正确性优先于内存优化。实测收益是面向对象程序内存降低 10%-20%，字典本身可以缩小近一半。也说明了代价：改变了内部数据结构，直接操作字典内部的第三方代码会失效；split 字典的迭代顺序可能和以前不同。这是回答“为什么该用 __slots__ 而不是普通属性字典”时的背景知识。"
+  },
+  {
+   "section": "25-pep-0567",
+   "verdict": "reading",
+   "nodes": [
+    "asyncio.contextvars"
+   ],
+   "slug": "peps-context-variables",
+   "title": "PEP 567：上下文变量（contextvars）",
+   "body": "PEP 567 解释了为什么 `threading.local` 在异步代码里是错的：一个线程上交替运行着许多 Task，线程局部存储会让不同请求互相污染。它定义了 `ContextVar`、不可变的 `Context` 映射与 `copy_context()`：asyncio 在创建每个 Task 时复制当前上下文，之后 Task 内对变量的 `set()` 只影响自己那份，`await` 之间自然隔离。读时抓住三个机制：Context 是写时复制的不可变映射（HAMT），所以复制是 O(1)；`Token` 让 `reset()` 精确回滚；`decimal` 模块的精度上下文正是第一个迁移到 contextvars 的标准库用户。面试里由此能回答「追踪 ID 怎么跨 await 传播」与「为什么 gather 里各协程看到的上下文一样」。"
+  }
+ ]
+}
