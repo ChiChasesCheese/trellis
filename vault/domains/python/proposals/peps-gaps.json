@@ -1,0 +1,25 @@
+{
+ "corpus": "peps",
+ "items": [
+  {
+   "section": "23-pep-0636",
+   "verdict": "reading",
+   "nodes": [
+    "iteration.pattern-matching"
+   ],
+   "slug": "peps-pattern-matching-tutorial",
+   "title": "PEP 636：结构化模式匹配教程",
+   "body": "PEP 636 是 `match`/`case` 的官方教程，用一个文字冒险游戏的命令解析把模式匹配从最简单的字面量匹配一步步推到序列模式、通配符 `_`、捕获变量、`|` 或模式、`if` 守卫、映射模式与类模式（class pattern）。读它是为了建立一个关键认识：`match` 不是 C 的 switch，每个 case 是一次结构解构（destructuring）加名字绑定，匹配失败时已绑定的名字仍可能残留。带走三点：位置类模式依赖类的 `__match_args__`（dataclass 自动生成）；守卫在模式匹配成功之后才求值；一串只比较相等的 `if/elif` 用 `match` 只会更难读——这正是 Effective Python 第 9 条的判断标准。"
+  },
+  {
+   "section": "25-pep-0567",
+   "verdict": "reading",
+   "nodes": [
+    "asyncio.contextvars"
+   ],
+   "slug": "peps-context-variables",
+   "title": "PEP 567：上下文变量（contextvars）",
+   "body": "PEP 567 解释了为什么 `threading.local` 在异步代码里是错的：一个线程上交替运行着许多 Task，线程局部存储会让不同请求互相污染。它定义了 `ContextVar`、不可变的 `Context` 映射与 `copy_context()`：asyncio 在创建每个 Task 时复制当前上下文，之后 Task 内对变量的 `set()` 只影响自己那份，`await` 之间自然隔离。读时抓住三个机制：Context 是写时复制的不可变映射（HAMT），所以复制是 O(1)；`Token` 让 `reset()` 精确回滚；`decimal` 模块的精度上下文正是第一个迁移到 contextvars 的标准库用户。面试里由此能回答「追踪 ID 怎么跨 await 传播」与「为什么 gather 里各协程看到的上下文一样」。"
+  }
+ ]
+}
