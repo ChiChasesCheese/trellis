@@ -78,10 +78,10 @@ Outline → node mapping (every surveyed heading lands on a leaf or an out-of-sc
 
 | id | licence | chapters | status |
 |---|---|---|---|
-| `python-docs` | free-online | 70 URLs (reference, HOWTO, tutorial, FAQ, library) | declared |
-| `cpython-internals` | free-online | 15 (InternalDocs + listsort/dictnotes) | declared |
-| `peps` | free-online | 26 | declared |
-| Fluent Python 2e / Effective Python 3e / HPP 2e / CPython Internals / Fowler | commercial | — | readings only (`no-archive`); if Chi supplies epubs, declare `license: commercial` + `file:` and ingest into `sources/local/` |
+| `python-docs` | free-online | 66 sections archived (of 70 URLs; PEP 20 page and asyncio-exceptions too short) | accepted → 66 readings; gaps: `14-enum` → new leaf `classes.enums`, `26-contextvars` → `asyncio.contextvars` |
+| `cpython-internals` | free-online | `file:` (gitignored `sources/local/cpython-internals/InternalDocs.md`; raw GitHub URLs are refused as text/plain) → 16 sections | accepted → 13 readings; no gaps |
+| `peps` | free-online | 25 PEPs archived | accepted → 25 readings; gaps: PEP 636 → new leaf `iteration.pattern-matching`, PEP 567 → new leaf `asyncio.contextvars` |
+| Fluent Python 2e / Effective Python 3e / HPP 2e / CPython Internals / Fowler | commercial | 67 chapter pointers (24/14/12/6/11) | readings only (`no-archive`); if Chi supplies epubs, declare `license: commercial` + `file:` and ingest into `sources/local/` |
 
 ## Ledger
 
@@ -89,8 +89,12 @@ Outline → node mapping (every surveyed heading lands on a leaf or an out-of-sc
 |---|---|---|---|
 | 2026-09-21 | 1 survey | 5 book outlines + official docs + InternalDocs + 26 PEPs + 3 question sets; GitHub has no curated internals outline | §1 |
 | 2026-09-21 | 2 skeleton | `skeleton/python.yaml` — 11 nodes / 74 leaves / 32 core; mapping table §2 | `validate` (see below) |
+| 2026-09-21 | 3 corpora | 3 corpora ingested and accepted (104 readings) + 67 book pointer readings = 171 readings; 3 leaves added from gaps (`iteration.pattern-matching`, `asyncio.contextvars`, `classes.enums`) → 90 nodes / 79 leaves; 74 leaves have a corpus section, 5 are grow-only: `concurrency.choosing`, `functions.decorator-patterns`, `performance.compiling`, `performance.numpy-vectorization`, `performance.pandas-at-scale` | `validate`: 90 nodes, 0 cards, 171 readings, 0 errors |
 
 ## Next action
 
-3. Ingest the three corpora (`uv run --extra clip trellis ingest python-docs` etc.), triage each onto leaves, accept; record gap verdicts and leaves with no reading.
-4. Cards, core leaves first, by top-level node in groups of ≤ 3 sonnet agents (prompt file `vault/domains/python/proposals/AGENT_CARDS.md`).
+4. Cards by top-level node, ≤ 3 sonnet agents at a time, brief `proposals/AGENT_CARDS.md`. Wave 1 (running): concurrency, asyncio, memory. Wave 2: model, functions, iteration. Wave 3: classes, runtime, performance. Wave 4: types, engineering. Gate per node: `validate` 0 errors, no `not_self_contained`/`leans_on_source`, ≥ 4 cards per leaf, orchestrator reads ≥ 1 card and re-derives numbers.
+5. Grown-card claims: each agent's 3 weakest claims go into §5 below and are checked against a source.
+6. `uv run --extra clip trellis clip` for the docs/PEP readings (book readings are `no-archive`).
+7. Drills, one per top-level node, brief `proposals/AGENT_DRILLS.md`.
+8. `trellis --all sync/validate/build`; Chi runs `scripts/sync_laptop.sh` for anki-push.
