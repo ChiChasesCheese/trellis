@@ -273,7 +273,7 @@ nodes:
   - id: concurrency.multiprocessing
     core: true
     title: 多进程：`multiprocessing`、fork vs spawn、pickle 边界与共享内存
-    summary: 理解进程绕过 GIL 实现真并行、参数与返回值必须可 pickle、fork 在多线程程序中的危险与 3.14 默认 spawn、`shared_memory` 与 `Manager` 的取舍。
+    summary: 理解进程绕过 GIL 实现真并行、参数与返回值必须可 pickle、fork 在多线程程序中的危险与 3.14 起 POSIX 默认 forkserver（Windows/macOS 仍是 spawn）、`shared_memory` 与 `Manager` 的取舍。
     requires:
     - concurrency.gil
   - id: concurrency.executors

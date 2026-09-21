@@ -83,6 +83,16 @@ Outline → node mapping (every surveyed heading lands on a leaf or an out-of-sc
 | `peps` | free-online | 25 PEPs archived | accepted → 25 readings; gaps: PEP 636 → new leaf `iteration.pattern-matching`, PEP 567 → new leaf `asyncio.contextvars` |
 | Fluent Python 2e / Effective Python 3e / HPP 2e / CPython Internals / Fowler | commercial | 67 chapter pointers (24/14/12/6/11) | readings only (`no-archive`); if Chi supplies epubs, declare `license: commercial` + `file:` and ingest into `sources/local/` |
 
+## 5. Grown-card claims to verify (step 5)
+
+| Leaf | Claim | Status |
+|---|---|---|
+| concurrency.choosing | CPU 密集任务加线程可能比单线程更慢（GIL 争用 + 切换开销） | qualitative, matches python-docs threading/GIL text; no number claimed |
+| concurrency.choosing | 同步阻塞调用会卡住整条事件循环 | covered by asyncio.blocking-and-threads corpus (python-docs asyncio-dev) |
+| concurrency.choosing | 进程方案内存占用是线程的数倍 | qualitative; no number claimed |
+| memory.allocator | arena 1 MiB / pool 16 KiB / ≤512 B / 16 B 对齐 | verified against `Include/internal/pycore_obmalloc.h` (3.13, 64-bit) 2026-09-21 |
+| memory.leaks-tracemalloc | 四类泄漏来源（无界缓存、闭包回调、循环引用+`__del__`、C 扩展） | card rewritten 2026-09-21: cycles wait for threshold-triggered GC; `__del__` cycles collectable since 3.4 (PEP 442) |
+
 ## Ledger
 
 | Date | Step | Result | Evidence |
@@ -90,6 +100,8 @@ Outline → node mapping (every surveyed heading lands on a leaf or an out-of-sc
 | 2026-09-21 | 1 survey | 5 book outlines + official docs + InternalDocs + 26 PEPs + 3 question sets; GitHub has no curated internals outline | §1 |
 | 2026-09-21 | 2 skeleton | `skeleton/python.yaml` — 11 nodes / 74 leaves / 32 core; mapping table §2 | `validate` (see below) |
 | 2026-09-21 | 3 corpora | 3 corpora ingested and accepted (104 readings) + 67 book pointer readings = 171 readings; 3 leaves added from gaps (`iteration.pattern-matching`, `asyncio.contextvars`, `classes.enums`) → 90 nodes / 79 leaves; 74 leaves have a corpus section, 5 are grow-only: `concurrency.choosing`, `functions.decorator-patterns`, `performance.compiling`, `performance.numpy-vectorization`, `performance.pandas-at-scale` | `validate`: 90 nodes, 0 cards, 171 readings, 0 errors |
+| 2026-09-21 | 4 cards: concurrency, memory | concurrency 44 cards / 8 leaves (choosing grown); memory 36 cards / 7 leaves (allocator grown; pymalloc pool 4 KiB→16 KiB and 8 B→16 B alignment corrected against `pycore_obmalloc.h` 3.13). Skeleton `concurrency.multiprocessing` summary corrected: 3.14 POSIX default is forkserver, not spawn | `validate` 0 errors, no self-contained warnings |
+
 
 ## Next action
 

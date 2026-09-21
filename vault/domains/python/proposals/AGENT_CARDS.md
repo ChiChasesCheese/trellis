@@ -48,7 +48,10 @@ grow 出来的卡没有来源背书：**在你的最终回复里列出你最没�
 ## 3. 硬规则（validate 会抓）
 
 - 每张卡**自包含**：不出现"如上文"、"该章节"、"文档里说"；问题单独读也能答（`not_self_contained` / `leans_on_source` 警告 = 退回）。
-- 一题一答，答案 ≤ 120 字，先结论后机制；cloze 卡只挖一个空。
+- 一题一答，答案 ≤ 180 字，先结论后机制；cloze 卡最多挖三个空。
+- JSON 里的中文答案**不要用直引号 `"…"` 做强调**（会让 `--import` 报 invalid JSON），用「」；导入前先 `python3 -c "import json;json.load(open('<file>'))"`。
+- `digest --status` 说有段落但打开 prompt 发现源文本与叶子无关（如 FAQ 页被映射到 allocator）：改用 `grow`，并在最终回复里说明。
+- 平台口径：数字按 64 位 CPython 3.12/3.13（pymalloc：≤512 B、16 B 对齐、pool 16 KiB、arena 1 MiB；`sys.getsizeof(1) == 28`）。
 - 不编数字、不编版本号；不确定就写"量级"或不写。
 - Python 版本口径：以 3.12/3.13 为准，历史差异注明版本（如"3.11 起…"）。
 - 不写过程话；不改 skeleton、不改别人的节点。
