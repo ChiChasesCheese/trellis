@@ -92,6 +92,8 @@ Outline → node mapping (every surveyed heading lands on a leaf or an out-of-sc
 | concurrency.choosing | 进程方案内存占用是线程的数倍 | qualitative; no number claimed |
 | memory.allocator | arena 1 MiB / pool 16 KiB / ≤512 B / 16 B 对齐 | verified against `Include/internal/pycore_obmalloc.h` (3.13, 64-bit) 2026-09-21 |
 | memory.leaks-tracemalloc | 四类泄漏来源（无界缓存、闭包回调、循环引用+`__del__`、C 扩展） | card rewritten 2026-09-21: cycles wait for threshold-triggered GC; `__del__` cycles collectable since 3.4 (PEP 442) |
+| functions.decorator-patterns | 只实现 `__call__` 不实现 `__get__` 的类装饰器装饰方法时不会自动绑定 `self` | verified 2026-09-21 by running it: `C().m(1)` → TypeError missing `x` |
+| functions.decorator-patterns | `lru_cache` 只有 `maxsize`/`typed`，没有按时间过期 | verified: signature `lru_cache(maxsize=128, typed=False)` |
 
 ## Ledger
 
@@ -102,6 +104,7 @@ Outline → node mapping (every surveyed heading lands on a leaf or an out-of-sc
 | 2026-09-21 | 3 corpora | 3 corpora ingested and accepted (104 readings) + 67 book pointer readings = 171 readings; 3 leaves added from gaps (`iteration.pattern-matching`, `asyncio.contextvars`, `classes.enums`) → 90 nodes / 79 leaves; 74 leaves have a corpus section, 5 are grow-only: `concurrency.choosing`, `functions.decorator-patterns`, `performance.compiling`, `performance.numpy-vectorization`, `performance.pandas-at-scale` | `validate`: 90 nodes, 0 cards, 171 readings, 0 errors |
 | 2026-09-21 | 4 cards: concurrency, memory | concurrency 44 cards / 8 leaves (choosing grown); memory 36 cards / 7 leaves (allocator grown; pymalloc pool 4 KiB→16 KiB and 8 B→16 B alignment corrected against `pycore_obmalloc.h` 3.13). Skeleton `concurrency.multiprocessing` summary corrected: 3.14 POSIX default is forkserver, not spawn | `validate` 0 errors, no self-contained warnings |
 | 2026-09-21 | 4 cards: asyncio | 59 cards / 10 leaves, all digest (python-docs, InternalDocs, PEP 567); cancel/gather cards re-read against docs | `validate` 0 errors |
+| 2026-09-21 | 4 cards: functions | 36 cards / 6 leaves (decorator-patterns grown); digest auto-picked the wrong section for 3 leaves, agent read the right section of the same corpus file instead | `validate` 0 errors |
 
 
 ## Next action
