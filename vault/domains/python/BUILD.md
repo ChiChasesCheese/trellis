@@ -120,12 +120,12 @@ Outline → node mapping (every surveyed heading lands on a leaf or an out-of-sc
 | 2026-09-21 | 4 cards: types | 23 cards / 4 leaves, all digest (typing reference, annotations HOWTO, PEP 484 variance); 8 straight-quote emphases rewritten to 「」 | `validate` 0 errors |
 | 2026-09-21 | 4 duplicate sweep (10 nodes) | trigram similarity on all 447 questions: 1 cross-node duplicate (comprehension-in-class-body, iteration vs runtime) → iteration copy deleted | script in session, threshold 0.35 |
 | 2026-09-21 | 4 cards: engineering | 38 cards / 6 leaves; 5 cards (2 pytest, 3 packaging) had no corpus text and were retagged `grown` (digest --import had stamped them python-docs) | `validate` 0 errors; all 79 leaves have cards |
+| 2026-09-21 | 7 drills | 11 drills, one per top-level node, 85 grading points all wikilinked to real card ids; gc threshold claim version-qualified (700 → 2000 in 3.13) | `validate` 0 errors |
+| 2026-09-21 | 8 ship | `sync` + `build`: `dist/python.apkg` 466 notes in 79 decks; `STUDY_PLAN.md` 7-day sprint; `anki-push` is Chi's step (desktop Anki via `scripts/sync_laptop.sh`) | final `stats`: 466 cards, 79/79 leaves, links 100% every node; `validate`: 90 nodes, 466 cards, 171 readings, 11 drills, 0 errors, 1 warning (5 grown-only leaves have no archived source) |
 
 
 ## Next action
 
-4. Cards by top-level node, ≤ 3 sonnet agents at a time, brief `proposals/AGENT_CARDS.md`. Wave 1 (running): concurrency, asyncio, memory. Wave 2: model, functions, iteration. Wave 3: classes, runtime, performance. Wave 4: types, engineering. Gate per node: `validate` 0 errors, no `not_self_contained`/`leans_on_source`, ≥ 4 cards per leaf, orchestrator reads ≥ 1 card and re-derives numbers.
-5. Grown-card claims: each agent's 3 weakest claims go into §5 below and are checked against a source.
-6. `uv run --extra clip trellis clip` for the docs/PEP readings (book readings are `no-archive`).
-7. Drills, one per top-level node, brief `proposals/AGENT_DRILLS.md`.
-8. `trellis --all sync/validate/build`; Chi runs `scripts/sync_laptop.sh` for anki-push.
+- Chi: `git pull` main on the work laptop, `bash scripts/sync_laptop.sh` (anki-push), follow `STUDY_PLAN.md`; after the 7 days set `study:` back to 30/150.
+- Weekly loop: `trellis pull` → `trellis brief` → `trellis grow --next`; only leaves with slipped verdicts get new cards (ADR 0009).
+- Optional: `trellis steps` per branch to fix card order inside each leaf (ADR 0010); readable sources for the 5 grown-only leaves (NumPy/pandas/Polars user guides, Numba docs, Real Python decorators) if their cards slip.
