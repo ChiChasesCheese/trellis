@@ -1,0 +1,727 @@
+{
+ "corpus": "python-docs",
+ "items": [
+  {
+   "section": "01-datamodel",
+   "verdict": "reading",
+   "nodes": [
+    "model.names-objects",
+    "model.mutability",
+    "model.numbers",
+    "model.sequences",
+    "model.dunder-protocols",
+    "model.hash-eq",
+    "classes.operator-overloading",
+    "iteration.context-managers",
+    "memory.refcounting",
+    "classes.metaprogramming"
+   ],
+   "slug": "py-pydocs-data-model",
+   "title": "数据模型（Data Model）参考",
+   "body": "这是 Python 官方参考手册中最核心的一章，定义了整个对象系统的底层规则：每个对象都有身份（identity）、类型（type）、值（value）三要素，`is` 比较身份而 `==` 调用 `__eq__` 比较值；可变对象与不可变对象的区别决定了别名与副作用；数值、序列、映射等内建类型如何归入统一的类型层级；对象在引用计数归零时立即释放，但循环引用需要额外的垃圾回收器处理。第 3.3 节逐一列出解释器通过哪些特殊方法（dunder）实现 repr、比较运算符、算术运算符与 with 语句，并明确规定 `__eq__` 与 `__hash__` 必须保持一致；`__init_subclass__` 和 `__set_name__` 这两个钩子让多数\"需要元类\"的场景（注册子类、拿到属性名）不用真的写元类就能实现。这不是一篇教程，而是权威定义，遇到\"这个行为到底该不该这样\"的疑问时应回来查这里，而不是凭直觉猜测。"
+  },
+  {
+   "section": "02-executionmodel",
+   "verdict": "reading",
+   "nodes": [
+    "functions.scope-closure",
+    "runtime.namespaces-execution"
+   ],
+   "slug": "pydocs-execution-model",
+   "title": "执行模型：命名空间与作用域",
+   "body": "这一章用权威语言讲清了 Python 变量到底活在哪里：模块、函数体、类体各自是独立的代码块（block），有自己的命名空间；一个名字如果在块内任何位置被赋值，整个块内对它的引用都会被当作局部变量处理，这正是很多人踩过的坑——先用后赋值会抛 UnboundLocalError 而不是退回外层作用域。文中给出了名字解析顺序（LEGB 的官方表述）、global/nonlocal 语句如何改变绑定目标，以及类作用域的特殊之处（方法体访问不到类体里定义的名字，但注解作用域可以）。读完能准确回答\"为什么这段代码会报 UnboundLocalError\"这类面试常见追问，而不是停留在\"闭包能记住外部变量\"的表面理解。"
+  },
+  {
+   "section": "03-import",
+   "verdict": "reading",
+   "nodes": [
+    "runtime.import-system"
+   ],
+   "slug": "pydocs-import-system",
+   "title": "导入系统（import system）完整机制",
+   "body": "这是 import 语句背后发生的一切的权威说明：模块只会被真正执行一次，结果缓存在 sys.modules 里，之后的 import 只是查表；查找模块要经过 finder（决定去哪找）和 loader（决定怎么加载）两步，sys.meta_path 上的一串 finder 依次尝试；常规包靠 __init__.py，命名空间包没有这个文件也能被识别为包；相对导入（from . import x）只在包内部有效，脚本直接运行时会报错。这篇文档能解释两个常被问到的现象：为什么同一个模块在两个不同路径下 import 会被当成两个不同对象，以及循环导入到底卡在哪一步。把它当作 import 出问题时该去哪查的手册，不需要逐字记住，但要知道 finder/loader/sys.modules 这几个关键词分别对应什么阶段。"
+  },
+  {
+   "section": "04-compound-stmts",
+   "verdict": "reading",
+   "nodes": [
+    "iteration.context-managers",
+    "runtime.exceptions",
+    "types.protocols-generics",
+    "types.basics"
+   ],
+   "slug": "pydocs-compound-statements",
+   "title": "复合语句语法参考：with / try / 泛型参数",
+   "body": "这是 if/while/for/try/with/match/函数与类定义等所有复合语句的权威语法定义，最值得精读的是三处：with 语句给出了逐字节码级别的执行步骤，明确了 __exit__() 返回真值会把异常吞掉、返回假值或 None 时异常会重新抛出；try 语句区分了 except、except*（异常组）、else（无异常时才执行）、finally（无论如何都执行）四个子句各自的时机；3.12 引入的类型参数列表语法（def f[T](x: T) -> T、class Box[T]）展示了泛型的现代写法。读这一章的目的不是背语法，而是把\"with 到底保证了什么\"\"try/else 和直接写在 try 里有什么区别\"这类问题的答案钉死在权威定义上。"
+  },
+  {
+   "section": "05-descriptor",
+   "verdict": "reading",
+   "nodes": [
+    "classes.properties-descriptors",
+    "classes.pythonic-object",
+    "classes.attribute-lookup"
+   ],
+   "slug": "pydocs-descriptor-guide",
+   "title": "描述符指南（Descriptor Guide）",
+   "body": "描述符是 Python 里最容易被低估的机制：property、classmethod、staticmethod、方法本身，甚至 __slots__，底层全部靠描述符协议（__get__/__set__/__set_name__）实现。这篇官方指南从最简单的\"返回常量的描述符\"讲到完整的校验器（validator）案例，再到用纯 Python 重新实现 property、classmethod、staticmethod，让你看清这些内建装饰器其实是什么而不是该怎么用。文中还讲清了数据描述符（同时定义 __get__ 和 __set__）优先级高于实例 __dict__，而非数据描述符（只有 __get__，如普通方法）优先级低于实例属性，这正是\"为什么实例属性能覆盖方法\"的根本原因。读完能用描述符统一实现多个属性共享的校验逻辑，而不是给每个属性写一遍重复的 @property。"
+  },
+  {
+   "section": "06-a-conceptual-overview-of-asyncio",
+   "verdict": "reading",
+   "nodes": [
+    "asyncio.event-loop",
+    "asyncio.coroutines-tasks",
+    "asyncio.futures"
+   ],
+   "slug": "pydocs-asyncio-overview",
+   "title": "asyncio 概念全景：事件循环、协程与 Future",
+   "body": "这是从零理解 asyncio 最好的入门文章，用类比讲清三个角色如何配合：事件循环（event loop）是一个不断轮询待办任务队列的调度器；协程函数（async def）本身只是配方，必须被包装成 Task 交给循环才会真正执行；Future 是一个承诺未来会有结果的占位符，Task 是能自己跑代码的 Future。文章第二部分动手实现了一个简化版 asyncio.sleep，让你看清 await 在字节码层面到底做了什么，协程在遇到 await 时把控制权交还给事件循环，循环记下这个协程在等什么，等条件满足再把它唤醒。这篇文章解决的不是怎么写 async 代码，而是为什么 async 代码是这样运作的，建议在动手写 asyncio 项目之前先读完建立心智模型。"
+  },
+  {
+   "section": "07-free-threading-python",
+   "verdict": "reading",
+   "nodes": [
+    "concurrency.free-threading",
+    "memory.interning-immortal"
+   ],
+   "slug": "pydocs-free-threading",
+   "title": "自由线程 Python（无 GIL 构建）",
+   "body": "3.13 起 CPython 提供了可选的自由线程构建（--disable-gil），真正去掉了 GIL，让多线程可以并行执行 Python 字节码。这篇文档讲清了代价：单线程性能有约 1-8% 的开销（因为改用偏向引用计数和逐对象锁替代了 GIL 的粗粒度保护）；C 扩展如果没有针对性适配可能不兼容；帧对象、迭代器等原本隐式线程安全的东西现在需要显式加锁。文中特别提到不朽对象（immortal objects，如 None/True/小整数）在自由线程下如何避免引用计数的写竞争，这是 3.12 引入、3.13 起发挥关键作用的优化。面试被问到 Python 会不会去掉 GIL 时，这篇文档给出的是官方现状而不是道听途说：目前是可选构建，不是默认行为，生态兼容性仍在推进中。"
+  },
+  {
+   "section": "08-mro",
+   "verdict": "reading",
+   "nodes": [
+    "classes.inheritance-mro"
+   ],
+   "slug": "pydocs-mro-c3",
+   "title": "方法解析顺序（MRO）：C3 算法",
+   "body": "这篇历史文档由 Python 之父 Guido 亲自撰写附录，解释了 Python 2.3 起为什么改用 C3 线性化算法来决定 super() 到底调用哪个父类的方法。核心结论：C3 保证了两条直觉性质，子类永远排在父类之前，且多个父类之间的声明顺序会被保留，不会因为继承关系而颠倒。文中给出了坏的 MRO 的具体例子：如果继承关系本身自相矛盾（比如两个基类的声明顺序和它们各自的继承链冲突），Python 会直接抛出 TypeError 拒绝创建类，而不是给出一个不一致的顺序。读完能准确解释 super() 调的到底是父类还是 MRO 里的下一个（是后者），以及为什么 mixin 类要设计成能被安全插入到 MRO 任意位置。"
+  },
+  {
+   "section": "09-sorting",
+   "verdict": "reading",
+   "nodes": [
+    "performance.containers"
+   ],
+   "slug": "pydocs-sorting-howto",
+   "title": "排序技巧（Sorting Techniques）",
+   "body": "这篇 HOWTO 系统讲解 list.sort() 和 sorted() 的实战用法：用 key= 参数而不是自定义比较函数（更快也更清晰）、用 operator.itemgetter/attrgetter 代替 lambda 提升性能、如何组合多个排序键实现多级排序，以及最重要的一点，Python 的排序算法（Timsort）是稳定的，相同键的元素会保持原有的相对顺序，这让先按 A 排序再按 B 排序这种多级排序技巧成立。文中还讲了旧式比较函数（cmp 风格）如何通过 functools.cmp_to_key 转换成 key 函数以兼容现代 API，以及面对不可比较类型（如 None 和 int 混排）该怎么处理。读完能说清为什么 Python 排序默认稳定以及如何利用这一点写出正确的多级排序，而不需要自己实现排序算法。"
+  },
+  {
+   "section": "10-functional",
+   "verdict": "reading",
+   "nodes": [
+    "iteration.iterator-protocol",
+    "iteration.generators",
+    "iteration.itertools",
+    "functions.functools",
+    "functions.first-class"
+   ],
+   "slug": "pydocs-functional-howto",
+   "title": "函数式编程 HOWTO",
+   "body": "这篇 HOWTO 把 Python 里函数式的那一面串了起来：可迭代对象（iterable）和迭代器（iterator）的区别、生成器表达式与列表推导式的内存差异（前者惰性、后者一次性物化）、yield 如何让函数变成可暂停的生成器工厂、send() 如何往生成器里塞值。中段系统介绍了 itertools 模块的工具分类（创建新迭代器、对元素调用函数、筛选元素、组合数学函数、分组），以及 functools 模块里 reduce、partial、lru_cache 等高阶函数工具。文章反复强调函数式风格的好处：更容易做形式化证明、更容易做单元测试（无副作用的小函数易于隔离验证）、组合性更强。这是把迭代器/生成器/高阶函数这几块知识串成一条线的最佳读物，读完再去看具体模块的参考文档会容易得多。"
+  },
+  {
+   "section": "11-unicode",
+   "verdict": "reading",
+   "nodes": [
+    "model.text-bytes"
+   ],
+   "slug": "pydocs-unicode-howto",
+   "title": "Unicode HOWTO：字符串与字节的边界",
+   "body": "这篇 HOWTO 讲清了 Python 3 字符串模型的根本设定：str 是 Unicode 码点（code point）序列，bytes 是原始字节序列，两者之间必须显式通过编码（encode）/解码（decode）转换，绝不会隐式互转。文中详细讲了各种编码方式（UTF-8/UTF-16/Latin-1 等）的取舍，以及为什么 UTF-8 是网络传输和文件存储的事实标准。特别有价值的是读写 Unicode 数据一节：建议尽早把输入解码成 str，只在程序内部处理文本，写出前再编码成 bytes，这就是常说的 Unicode 三明治原则，能一次性避免大部分乱码和 UnicodeDecodeError。文末还讨论了不同操作系统上文件名编码的坑。读完能准确判断一段报错到底是编码问题还是解码问题，而不是靠试错加 .encode()/.decode()。"
+  },
+  {
+   "section": "12-annotations",
+   "verdict": "reading",
+   "nodes": [
+    "types.basics"
+   ],
+   "slug": "pydocs-annotations-best-practices",
+   "title": "注解（Annotations）最佳实践",
+   "body": "这篇文档讲的是一个常被忽略的事实：函数和变量的类型注解在运行时只是存在 __annotations__ 字典里的普通数据，解释器不会因为参数类型不对就拒绝调用，类型检查完全是外部工具（mypy 等）在做的事。文档给出了 3.10 及以后版本获取注解字典的推荐方式（inspect.get_annotations()），以及旧版本的兼容写法，并讨论了字符串化注解（annotations 以字符串形式延迟求值）带来的坑：直接读 __annotations__ 可能拿到字符串而不是真实类型对象，需要手动反字符串化。读完能准确回答给函数加了类型注解、传错类型的参数会怎样，答案是完全不会报错，这正是面试里经常用来考察对类型系统本质理解程度的问题。"
+  },
+  {
+   "section": "13-logging",
+   "verdict": "reading",
+   "nodes": [
+    "engineering.logging-config"
+   ],
+   "slug": "pydocs-logging-howto",
+   "title": "日志 HOWTO：从基础用法到多模块配置",
+   "body": "这是学 logging 模块该读的第一篇文档，从最简单的 logging.basicConfig() 讲到完整的日志体系：logger（发出日志）、handler（决定日志去哪，比如控制台还是文件）、formatter（决定日志长什么样）三者职责分离，可以任意组合。核心要点是日志的传播机制：logger 按名字组成树状层级（如 myapp.db 的日志会传播给 myapp），且默认会一路往上传播直到根 logger；文档明确建议，写库代码时永远不要配置根 logger 或调用 basicConfig()，配置应该完全交给使用这个库的应用来决定，否则会污染调用方的日志输出。文中还讲了日志级别的选择原则和如果没有做任何配置会发生什么（会看到一条一次性的警告并把日志丢到 stderr）。这是团队协作写库代码时最容易踩的坑之一。"
+  },
+  {
+   "section": "14-enum",
+   "verdict": "reading",
+   "nodes": [
+    "classes.enums"
+   ],
+   "slug": "pydocs-enum-howto",
+   "title": "Enum HOWTO：枚举成员是类的单例实例",
+   "body": "Enum HOWTO 是标准库枚举的完整说明：从最基础的 `class Color(Enum)` 到 `IntEnum`、`StrEnum`（3.11 起）、`Flag`/`IntFlag` 的位运算组合，再到 `auto()` 的取值规则、`@unique` 对别名的约束、成员迭代顺序按定义顺序、pickle 与 dataclass 混用。读它抓住一个机制：类体里的赋值在元类 `EnumType` 里被拦截，每个成员被替换成该类的一个单例实例，所以 `Color.RED is Color.RED`、成员可比较身份但默认不可比较大小；`IntEnum` 之所以能和整数互换，是因为它同时继承 `int`。带走三点：`auto()` 的默认值是从 1 起的递增整数，`StrEnum` 里则是小写成员名；值相同的成员是别名而不是新成员；`Flag` 的组合值（`Color.RED | Color.BLUE`）是运行时合成的伪成员。面试里用它回答「为什么不用模块级常量」：类型检查、穷举性、`__repr__` 可读性与 `match` 里的类模式。"
+  },
+  {
+   "section": "15-classes",
+   "verdict": "reading",
+   "nodes": [
+    "classes.pythonic-object",
+    "functions.scope-closure",
+    "classes.inheritance-mro",
+    "classes.attribute-lookup"
+   ],
+   "slug": "pydocs-tutorial-classes",
+   "title": "Python 教程第 9 章：类",
+   "body": "这是官方教程里讲类的入门章节，用最平实的语言建立起类的基本概念：类定义在执行时才创建命名空间，类对象、实例对象、方法对象是三个不同的东西，self 是通过属性查找自动传入的第一个参数而非语法糖。9.6 节私有变量讲清了以双下划线开头的属性名会被 name mangling 成 _ClassName__attr，这是一种防止子类意外覆盖的约定而非真正的访问控制。9.5 节简要介绍了多继承，为理解后面更深入的 MRO 文档打基础。文中反复用作用域和命名空间的例子演示 Python 变量查找规则如何应用到类和函数场景中。这是建立类基础心智模型该读的第一篇，比参考手册更好懂，适合在深入描述符、元类之前先打底。"
+  },
+  {
+   "section": "16-errors",
+   "verdict": "reading",
+   "nodes": [
+    "runtime.exceptions"
+   ],
+   "slug": "pydocs-tutorial-errors",
+   "title": "Python 教程第 8 章：错误与异常",
+   "body": "官方教程对异常处理的入门讲解，用递进的例子讲清 try/except/else/finally 的完整语义：else 子句只有在 try 块没有抛出异常时才执行，适合放确认成功后才做的代码；finally 无论是否发生异常都会执行，常用来做资源清理。异常链一节讲了 raise NewError from original_exc 如何显式关联两个异常（保留原始异常的追踪信息，而不是丢失上下文），这在把底层异常包装成业务异常时很关键。8.10 节介绍了较新的 add_note() 方法，能在不改变异常类型的前提下给异常追加调试信息。这是异常处理体系最好的入口文章，把术语和心智模型讲清楚之后，再去看 Built-in Exceptions 参考文档会更容易理解异常继承体系的设计意图。"
+  },
+  {
+   "section": "17-datastructures",
+   "verdict": "reading",
+   "nodes": [
+    "iteration.comprehensions",
+    "model.sequences",
+    "performance.containers"
+   ],
+   "slug": "pydocs-tutorial-datastructures",
+   "title": "Python 教程第 5 章：数据结构",
+   "body": "官方教程系统梳理列表、元组、集合、字典的基本用法，其中两点特别值得注意：一是明确指出用 list 当队列（在头部插入/弹出）效率低下，应该用 collections.deque，这是为什么容器选型很重要最直接的官方例证；二是列表推导式和嵌套推导式的写法与可读性边界，文档建议超过两层嵌套就该拆成显式循环。5.6 节循环技巧给出了 zip()、enumerate()、sorted() 组合使用的惯用写法，是写出 Pythonic 循环代码的基础。5.8 节讲了序列之间比较（如元组、列表比较）按字典序逐元素比较的规则。这是数据结构选型和推导式使用边界最好的入门读物，适合在深入 CPython 内部实现细节之前先建立正确的使用直觉。"
+  },
+  {
+   "section": "18-modules",
+   "verdict": "reading",
+   "nodes": [
+    "runtime.import-system",
+    "runtime.compile-bytecode"
+   ],
+   "slug": "pydocs-tutorial-modules",
+   "title": "Python 教程第 6 章：模块",
+   "body": "官方教程讲模块系统的入门篇，比参考手册的 import 系统章节好懂得多：模块搜索路径（sys.path）的构成顺序、.pyc 编译缓存文件为什么会出现在 __pycache__ 目录下（按文件名加版本标签存放，避免不同 Python 版本互相覆盖）、以及为什么 .pyc 只是加载更快而不是运行更快。6.4 节讲包（package）的 __init__.py 作用和 from package import * 如何通过 __all__ 控制导出内容，还讲了包内如何用相对导入互相引用。这是理解为什么改了 .py 文件有时候不生效（多半是读到了过期的 .pyc 缓存或者装的是另一个同名包）的基础，适合作为深入学习 import 系统权威文档之前的热身读物。"
+  },
+  {
+   "section": "19-floatingpoint",
+   "verdict": "reading",
+   "nodes": [
+    "model.numbers"
+   ],
+   "slug": "pydocs-floating-point-issues",
+   "title": "浮点数运算：问题与限制",
+   "body": "这篇简短但权威的文档用一句话点明了几乎所有初学者都会遇到的困惑：0.1 + 0.2 != 0.3，原因不是 Python 的 bug，而是绝大多数十进制小数根本无法用二进制浮点数精确表示，就像十进制无法精确表示 1/3 一样。文档展示了 0.1 在计算机里实际存储的是一个非常接近但不完全等于 0.1 的二进制近似值，repr() 显示的位数已经是能唯一还原该近似值的最短表示。这解释了为什么直接用 == 比较浮点数是危险的，应该用误差范围比较（如 math.isclose()），也解释了为什么涉及金额的计算必须用 Decimal 或者干脆用整数分而不是 float 累加。这是任何做数值计算或金额处理的人都该精读一遍的文档，而不是道听途说浮点数不精确就够了。"
+  },
+  {
+   "section": "20-design",
+   "verdict": "reading",
+   "nodes": [
+    "model.numbers",
+    "memory.allocator",
+    "memory.refcounting",
+    "memory.cyclic-gc",
+    "model.dict-set-internals",
+    "memory.object-size"
+   ],
+   "slug": "pydocs-design-faq",
+   "title": "设计与历史 FAQ：CPython 内部实现精选问答",
+   "body": "这篇 FAQ 用一问一答的形式回答了大量为什么 Python 是这样设计的，其中几组问答直接对应 CPython 实现细节：内存管理用的是引用计数为主、可选循环检测为辅的混合方案，而不是传统标记清除或分代 GC，因为大多数对象生命周期短、引用归零就能立刻确定性释放，不需要等一整轮扫描；CPython 退出时不一定释放所有内存，因为清理顺序和 C 扩展持有的资源不受保证；列表底层会过量分配（over-allocate）以摊薷 append 的成本，这也是为什么 list 和 tuple 要分成两种类型（一个为追加优化，一个为不可变值优化）；字典底层是哈希表，要求键的哈希值在生命周期内不变，这正是字典键必须不可变（或可哈希）的根本原因。这些问答比读源码省时间得多，是面试被追问 CPython 底层怎么实现时最省力的复习材料。"
+  },
+  {
+   "section": "21-programming",
+   "verdict": "reading",
+   "nodes": [
+    "functions.scope-closure",
+    "functions.arguments",
+    "model.mutability",
+    "model.copy",
+    "functions.first-class",
+    "model.numbers"
+   ],
+   "slug": "pydocs-programming-faq",
+   "title": "编程 FAQ：作用域、参数与可变性高频坑",
+   "body": "这篇超长 FAQ 精选了 Python 里最容易踩坑的具体场景，逐条给出官方解释：为什么明明变量有值却抛 UnboundLocalError（本地赋值让整个函数体内该名字都被当局部变量）；为什么循环里创建的多个 lambda 最后都返回同一个结果（闭包捕获的是变量本身而非某次循环的值，需要用默认参数 lambda x=x 强制立即求值）；为什么修改列表 y 会连带改了 x（两者是同一对象的两个别名，赋值只是绑定引用不是复制）；如何正确复制一个对象（浅拷贝 vs 深拷贝该怎么选）；参数名前的 / 和 * 分别限定只能按位置传和只能按关键字传；以及 -22 // 10 为什么等于 -3 而不是 -2（floor division 向负无穷取整）。每一条都是面试高频追问题，比自己踩坑总结要系统得多。"
+  },
+  {
+   "section": "22-threading",
+   "verdict": "reading",
+   "nodes": [
+    "concurrency.threads",
+    "concurrency.locks-races",
+    "concurrency.gil"
+   ],
+   "slug": "pydocs-threading-module",
+   "title": "threading 模块：线程、锁与同步原语",
+   "body": "threading 模块的官方参考，重点在两处：一是 GIL 与性能考量一节直接讨论了在有 GIL 的构建下，多线程能有效隐藏 I/O 等待延迟，但对 CPU 密集型代码几乎没有加速甚至因为锁争用而变慢；二是完整的同步原语家族，Lock（互斥锁）、RLock（可重入锁，同一线程可重复获取）、Condition（配合锁实现等待/通知，典型用于生产者消费者模式）、Semaphore（限制同时访问资源的数量）、Event（一次性广播信号）、Barrier（等待固定数量线程都到达某点再一起放行）。文档强调这些同步对象都支持 with 语句自动获取/释放，减少忘记 release() 导致死锁的风险。读完能准确区分该用哪种同步原语，而不是所有场景都无脑用一把 Lock。"
+  },
+  {
+   "section": "23-multiprocessing",
+   "verdict": "reading",
+   "nodes": [
+    "concurrency.multiprocessing"
+   ],
+   "slug": "pydocs-multiprocessing-module",
+   "title": "multiprocessing 模块：绕开 GIL 的真并行",
+   "body": "multiprocessing 用独立的操作系统进程绕开 GIL 实现真正的并行计算，代价是进程间不共享内存，传参和返回值都必须能被 pickle 序列化。文档系统讲了三种启动方式的取舍：fork（Unix 默认，速度快但在多线程程序里继承锁状态可能导致死锁，且 3.14 起不再是默认）、spawn（跨平台安全、3.14 起的新默认，但启动慢且要求代码在模块级别的 main 保护块下）、forkserver（折中方案）。进程间通信靠 Pipe、Queue，共享状态则靠 shared_memory 或更重的 Manager（后者用代理对象模拟共享数据结构，牺牲性能换取易用性）。这篇文档能回答多线程和多进程该怎么选的下一层问题：选了多进程之后，启动方式和进程间通信手段又该怎么权衡，这是 CPU 密集任务落地时绕不开的实操细节。"
+  },
+  {
+   "section": "24-concurrent-futures",
+   "verdict": "reading",
+   "nodes": [
+    "concurrency.executors"
+   ],
+   "slug": "pydocs-concurrent-futures",
+   "title": "concurrent.futures：线程池与进程池的统一接口",
+   "body": "concurrent.futures 给线程池和进程池提供了统一的高层接口，是比直接用 threading/multiprocessing 更省心的选择。Executor.submit() 立即返回一个 Future 对象，真正的结果要调 .result() 才能拿到（如果任务还没完成会阻塞等待，如果任务抛了异常，异常会在这里被重新抛出）；.map() 按提交顺序返回结果（哪怕后提交的先完成也要等前面的），而 as_completed() 则是谁先完成先返回谁，更适合尽快处理完成的任务场景。文档给出的完整示例展示了如何用 with 语句包裹 ThreadPoolExecutor 确保线程池被正确清理。选择 ThreadPoolExecutor 还是 ProcessPoolExecutor 的判断标准很直接：I/O 密集用线程池，CPU 密集用进程池，这是并发选型面试题的标准答案框架。"
+  },
+  {
+   "section": "25-queue",
+   "verdict": "reading",
+   "nodes": [
+    "concurrency.queues"
+   ],
+   "slug": "pydocs-queue-module",
+   "title": "queue 模块：线程安全队列",
+   "body": "queue.Queue 是专为多线程生产者消费者模式设计的线程安全队列，内部已经用锁保护好了，不需要使用者自己再加锁。文档重点讲了任务完成协议：消费者处理完一个任务要调用 task_done()，生产者可以调用 join() 阻塞等待队列里所有任务都被标记完成，这是判断一批任务是否全部处理完的标准写法，比自己维护计数器可靠。终止队列常用的模式是放入一个哨兵值（sentinel，如 None），消费者读到哨兵就知道该退出了。文档还介绍了更轻量的 SimpleQueue，去掉了任务跟踪的开销，适合只需要简单传递数据不需要 join()/task_done() 的场景。这是无共享状态、靠消息传递协调线程这一设计原则最直接的工程实现。"
+  },
+  {
+   "section": "26-contextvars",
+   "verdict": "reading",
+   "nodes": [
+    "asyncio.contextvars"
+   ],
+   "slug": "pydocs-contextvars",
+   "title": "contextvars：按任务隔离的上下文变量",
+   "body": "contextvars 模块文档定义了 `ContextVar`、`Token` 与 `Context` 三个对象，以及 asyncio 如何在创建每个 Task 时调用 `copy_context()` 复制当前上下文。读它抓住一个机制：`Context` 是不可变映射，`ContextVar.set()` 只改当前上下文里自己那一项并返回可用于 `reset()` 的 Token；Task 启动时拿到的是复制品，所以 Task 内的 `set()` 不会泄漏到父协程或兄弟 Task，`await` 之间自然隔离。这正是 `threading.local` 在异步代码里出错的原因：一个线程上交替运行着多个 Task。带走三点：`ContextVar` 要定义在模块顶层（每次创建都是新变量）；`Context.run(fn)` 可以在指定上下文里同步运行函数；追踪 ID、请求 ID、`decimal` 精度都靠它跨 await 传播。"
+  },
+  {
+   "section": "27-concurrent-interpreters",
+   "verdict": "reading",
+   "nodes": [
+    "concurrency.free-threading"
+   ],
+   "slug": "pydocs-concurrent-interpreters",
+   "title": "concurrent.interpreters：子解释器提供的另一条多核路径",
+   "body": "3.14 新增的 concurrent.interpreters 模块暴露了 CPython 长期存在但此前只能通过 C API 使用的子解释器（subinterpreter）能力：在同一个进程里跑多个互相隔离的解释器实例，每个都有自己的 sys.modules 和全局状态，彼此不共享内存（除非显式通过专门的通信原语传递数据）。这和多进程类似，都是靠隔离换并行，但子解释器比进程轻量得多，创建和切换的开销更小。文档明确指出子解释器之间的通信需要用专门设计的 API（类似跨进程通信但更受限），不能像多线程那样直接共享 Python 对象。这是除了多线程（受 GIL 限制）、多进程（重）、自由线程构建（还在推广期）之外，Python 应对多核的第四条路径，面试聊 Python 的并发/并行选项时提到这个会显得对生态现状很了解。"
+  },
+  {
+   "section": "28-asyncio-task",
+   "verdict": "reading",
+   "nodes": [
+    "asyncio.coroutines-tasks",
+    "asyncio.cancellation",
+    "asyncio.gather-wait-timeout",
+    "asyncio.blocking-and-threads"
+   ],
+   "slug": "pydocs-asyncio-coroutines-tasks",
+   "title": "asyncio：协程与任务完整参考",
+   "body": "这是 asyncio 高层 API 里信息密度最高的一篇：协程对象必须被 await 或者用 create_task() 包装成 Task 才会真正开始执行，create_task() 会立即把协程加入事件循环调度，而单纯创建协程对象什么都不会发生，忘记 await 会触发 coroutine was never awaited 警告。文档系统讲了取消机制：task.cancel() 会在任务下一次 await 处注入 CancelledError，asyncio.shield() 可以保护关键代码段不被外部取消打断。3.11 引入的 TaskGroup 提供了结构化并发，组内任何一个任务失败，其余任务会被自动取消，最后用异常组（ExceptionGroup）汇总所有失败原因，比手写 gather() 更安全。还讲了如何用 asyncio.to_thread() 把阻塞调用丢进线程池而不卡住事件循环。这篇文档基本覆盖了写 asyncio 业务代码日常会用到的全部 API。"
+  },
+  {
+   "section": "29-asyncio-eventloop",
+   "verdict": "reading",
+   "nodes": [
+    "asyncio.event-loop",
+    "asyncio.blocking-and-threads"
+   ],
+   "slug": "pydocs-asyncio-eventloop-ref",
+   "title": "asyncio 事件循环底层 API 参考",
+   "body": "这是事件循环本身的低层 API 参考，平时写业务代码很少直接用，但理解它能解释高层 API 背后到底发生了什么：loop.call_soon() 把回调排进下一轮循环立即执行，call_later()/call_at() 支持延迟调度；loop.run_in_executor() 是把阻塞的同步函数丢进线程池（或进程池）执行、返回一个可以被 await 的 Future 的底层机制，asyncio.to_thread() 就是它的简化封装。文档还讲了如何监听文件描述符的可读/可写事件、如何注册 Unix 信号处理器，以及错误处理 API（loop.set_exception_handler()）如何捕获没人处理的异常。这篇偏底层，适合在遇到 asyncio 到底是怎么把回调和协程调度起来的这类刨根问底的问题时查阅，日常业务开发用高层 API（asyncio.run、TaskGroup）就够了。"
+  },
+  {
+   "section": "30-asyncio-future",
+   "verdict": "reading",
+   "nodes": [
+    "asyncio.futures"
+   ],
+   "slug": "pydocs-asyncio-futures",
+   "title": "asyncio Future 对象参考",
+   "body": "asyncio.Future 是一个尚未完成、将来会有结果（或异常）的占位符，Task 就是 Future 的子类，专门用来包装协程。文档讲清了它的核心状态机：set_result() 设置结果并唤醒所有等待者，set_exception() 设置异常（这个异常会在 .result() 被调用时重新抛出），add_done_callback() 注册完成时执行的回调。特别值得注意的是 run_in_executor() 如何把一个运行在线程池里的同步函数的结果桥接成一个能被 await 的 Future，这是同步代码和异步世界对接的关键桥梁。理解 Future 的状态机（pending 到 done，done 之后不能再变）是理解 gather()、wait_for()、TaskGroup 等所有高层并发原语的基础，因为它们本质上都是在组合多个 Future 的完成时机。"
+  },
+  {
+   "section": "31-asyncio-sync",
+   "verdict": "reading",
+   "nodes": [
+    "asyncio.sync-primitives"
+   ],
+   "slug": "pydocs-asyncio-sync-primitives",
+   "title": "asyncio 同步原语：Lock / Semaphore / Event / Barrier",
+   "body": "asyncio 提供了和 threading 同名但语义不同的同步原语家族：asyncio.Lock、Event、Condition、Semaphore、BoundedSemaphore、Barrier。关键点是，即使 asyncio 程序通常运行在单线程里，跨 await 点的临界区依然可能被其他协程插入执行，所以单线程就不需要加锁的直觉在异步代码里是错的：两个协程可能交替执行同一段逻辑，中间的 await 就是切换点。Semaphore 最常见的用法是限制同时在途的并发请求数（比如最多 10 个并发 HTTP 请求），避免打爆下游服务。这些同步原语专为事件循环设计，不能跨线程使用，如果需要协调线程和协程，要用线程安全的 asyncio.run_coroutine_threadsafe() 而不是直接共享这些对象。"
+  },
+  {
+   "section": "32-asyncio-queue",
+   "verdict": "reading",
+   "nodes": [
+    "asyncio.sync-primitives"
+   ],
+   "slug": "pydocs-asyncio-queues",
+   "title": "asyncio.Queue：异步生产者消费者队列",
+   "body": "asyncio.Queue 是专为协程之间传递数据设计的队列，API 和 queue.Queue 神似（put/get/join/task_done）但内部用协程友好的方式实现等待，满队列时 put() 会 await 而不是阻塞线程，空队列时 get() 同理，这样事件循环在等待期间可以去处理其他协程。文档还提供了 PriorityQueue（按优先级出队）和 LifoQueue（后进先出）两个变体，接口和普通 Queue 完全一致，只是出队顺序不同。这是实现异步生产者消费者流水线的标准工具：比如一个协程负责抓取数据放入队列，多个消费者协程并发处理队列里的数据，用 join() 等待所有数据处理完毕。相比手写信号量控制并发，用队列解耦生产和消费的速度差异往往是更清晰的设计。"
+  },
+  {
+   "section": "33-asyncio-dev",
+   "verdict": "reading",
+   "nodes": [
+    "asyncio.debugging",
+    "asyncio.blocking-and-threads"
+   ],
+   "slug": "pydocs-asyncio-dev-practices",
+   "title": "asyncio 开发实践与调试",
+   "body": "这是排查 asyncio 疑难问题该读的文档，列出了最常见的几类程序没反应的根因：协程对象创建了但忘记 await（会有专门的警告提示）；gather() 本身也是一个需要被 await 的对象，直接调用不加 await 什么都不会发生；异常留在了一个从未被读取结果的 Task 里，会在垃圾回收时才打印出来，容易被忽略；Jupyter 之类环境本身跑着事件循环，再手动调 asyncio.run() 会报事件循环已在运行。文档建议开启 debug 模式（asyncio.run(main(), debug=True)）能捕获阻塞事件循环超过阈值的慢回调、未等待的协程等一整类问题。异步生成器一节强调要显式调用 aclose() 关闭，否则垃圾回收时的清理行为是未定义的。这是 asyncio 从能跑到跑得稳必须知道的排错手册。"
+  },
+  {
+   "section": "34-asyncio-runner",
+   "verdict": "reading",
+   "nodes": [
+    "asyncio.event-loop"
+   ],
+   "slug": "pydocs-asyncio-runners",
+   "title": "asyncio.run() 与 Runner",
+   "body": "asyncio.run() 是运行一个 asyncio 程序最简单也是官方推荐的入口：它会创建一个全新的事件循环，运行传入的协程直到完成，然后负责关闭循环、清理未完成的异步生成器，最后销毁循环，这一整套生命周期管理不需要使用者手动操心。文档也介绍了更底层的 asyncio.Runner 上下文管理器，适合需要在多次 run() 调用之间复用同一个事件循环状态（比如测试场景）的情况。文中特别提醒：asyncio.run() 每次调用都会创建全新的循环，不能在一个已经运行着事件循环的环境（比如已经在协程内部）里再调用它，否则会报错。还讲了如何优雅处理 KeyboardInterrupt（Ctrl+C）不把清理逻辑打断。这是几乎每个 asyncio 程序主入口该知道的全部细节。"
+  },
+  {
+   "section": "36-asyncio-stream",
+   "verdict": "reading",
+   "nodes": [
+    "asyncio.streams-protocols"
+   ],
+   "slug": "pydocs-asyncio-streams",
+   "title": "asyncio Streams：高层网络 I/O",
+   "body": "StreamReader/StreamWriter 是 asyncio 里做网络编程最省心的高层 API，open_connection() 一步建立 TCP 连接并返回这一对读写对象，比直接用底层 Protocol 回调简单得多。文档给出了完整的 TCP 回显客户端/服务端示例，以及一个抓取 HTTP 响应头的实用例子。特别要注意背压（backpressure）机制：writer.write() 只是把数据放进内部缓冲区，真正等待数据发送完毕、避免无限堆积内存要调用 await writer.drain()，很多人写爬虫或代理时忘记 drain 导致内存暴涨就是这个原因。这篇文档配合分页拉取 API 时如何做并发限流的模式（Semaphore 限并发加失败重试）是写异步网络客户端最常用的组合，比自己手搓 socket 处理省心得多。"
+  },
+  {
+   "section": "37-asyncio-protocol",
+   "verdict": "reading",
+   "nodes": [
+    "asyncio.streams-protocols"
+   ],
+   "slug": "pydocs-asyncio-transports-protocols",
+   "title": "asyncio Transports 与 Protocols：底层网络 API",
+   "body": "这是比 Streams 更底层的网络 API，用回调风格（类似 Twisted）而不是协程风格处理 I/O：Transport 负责实际的字节读写，Protocol 定义收到数据、连接建立/断开时该做什么（connection_made、data_received、connection_lost 等回调方法）。文档区分了流式协议（基于字节流，如 TCP）和数据报协议（基于独立数据包，如 UDP），以及只读/只写/子进程等特化 Transport。这套 API 是 Streams 高层封装的实现基础，绝大多数业务代码不需要直接用它，但理解它能解释为什么 Streams 的读写是 await 风格而底层却是回调风格，是 asyncio 在高层 API 上做的语法糖包装。文末给出了 TCP/UDP 回显服务器和 loop.subprocess_exec() 结合 SubprocessProtocol 管理子进程的完整例子。"
+  },
+  {
+   "section": "38-asyncio-threading",
+   "verdict": "reading",
+   "nodes": [
+    "concurrency.free-threading",
+    "asyncio.blocking-and-threads"
+   ],
+   "slug": "pydocs-asyncio-free-threading",
+   "title": "asyncio 与自由线程 Python",
+   "body": "这篇文档讨论了 asyncio 在无 GIL（自由线程）构建下的行为变化：原本很多 asyncio 内部数据结构隐式依赖 GIL 提供的原子性保护，在自由线程构建下这层保护消失了，asyncio 库本身已经针对性加了必要的锁来保证线程安全，但使用者如果在多个真正并行的线程里各自跑事件循环、并试图跨线程直接操作 Task/Future 等对象，仍然需要格外小心。文档给出了一个跨线程生产者消费者的例子，展示正确的做法是用 asyncio.run_coroutine_threadsafe() 把跨线程调用安全地转交给事件循环所在的线程，而不是直接从别的线程操作事件循环内部对象。这是自由线程构建逐渐成熟后，asyncio 使用者需要更新的心智模型：单线程时代反正只有一个线程在跑的隐含假设不再绝对成立。"
+  },
+  {
+   "section": "39-gc",
+   "verdict": "reading",
+   "nodes": [
+    "memory.cyclic-gc"
+   ],
+   "slug": "pydocs-gc-module",
+   "title": "gc 模块：垃圾回收器接口",
+   "body": "gc 模块是操作 CPython 循环垃圾回收器的接口，补充引用计数处理不了的循环引用场景。核心 API：gc.disable() 可以完全关掉自动回收（如果确信代码不产生循环引用，能省下扫描开销）；gc.collect(generation) 手动触发指定代（0/1/2）的回收，不传参数则做一次全量回收；gc.set_debug(gc.DEBUG_LEAK) 能让回收不掉的对象保留在 gc.garbage 里供检查，是定位为什么内存一直涨的常用手段。这个模块和分代假设（大多数对象活得很短，所以新对象所在的第 0 代扫描最频繁）直接对应，是理解 CPython 内存管理策略之后能立刻上手排查内存问题的实操工具，比单纯读理论文章更有用。"
+  },
+  {
+   "section": "40-weakref",
+   "verdict": "reading",
+   "nodes": [
+    "memory.weakref"
+   ],
+   "slug": "pydocs-weakref-module",
+   "title": "weakref 模块：弱引用",
+   "body": "weakref 让你持有一个对象的引用而不增加它的引用计数，也就不会阻止这个对象被垃圾回收，这在实现缓存或观察者列表时特别关键：如果缓存本身持有强引用，被缓存的对象永远不会被回收，等于造成了逻辑上的内存泄漏。文档讲了 weakref.ref() 创建弱引用对象、调用它拿到目标对象（如果已被回收则返回 None）；WeakValueDictionary/WeakKeyDictionary 是最常用的场景化封装，字典里的键或值一旦在别处不再被强引用就会自动从字典中消失。weakref.finalize 提供了比 __del__ 更可靠的清理钩子注册方式，不依赖类本身定义析构方法，也能正确处理循环引用中的清理。这是写不阻止对象被回收的缓存或对象生命周期观察器时的标准工具，比自己维护引用计数逻辑安全得多。"
+  },
+  {
+   "section": "41-copy",
+   "verdict": "reading",
+   "nodes": [
+    "model.copy"
+   ],
+   "slug": "pydocs-copy-module",
+   "title": "copy 模块：浅拷贝与深拷贝",
+   "body": "copy 模块提供了 copy.copy()（浅拷贝，只复制最外层容器，内部元素仍是同一对象的引用）和 copy.deepcopy()（深拷贝，递归复制所有层级）两个函数。文档明确说明 deepcopy() 内部维护了一个已复制对象的记忆表（memo），专门用来正确处理循环引用，如果对象 A 引用了 B、B 又引用回 A，deepcopy 不会陷入无限递归，而是复用已经复制好的对象。文档还讲了如何通过 __copy__() 和 __deepcopy__() 自定义类的拷贝行为，以及 __deepcopy__ 优先级高于 __reduce__。这是判断该用切片、list()、copy.copy() 还是 copy.deepcopy() 的权威依据：前三者都只做一层复制，遇到嵌套的可变对象（如列表的列表）仍会共享内部引用，必须用 deepcopy 才能真正互不影响。"
+  },
+  {
+   "section": "42-sys",
+   "verdict": "reading",
+   "nodes": [
+    "runtime.frames-eval",
+    "memory.interning-immortal",
+    "memory.object-size",
+    "runtime.import-system"
+   ],
+   "slug": "pydocs-sys-module",
+   "title": "sys 模块：解释器内部状态入口",
+   "body": "sys 模块是查看和调整解释器内部状态的官方入口，几个高频用到的点：sys.getrecursionlimit()/setrecursionlimit() 控制 Python 调用栈的最大深度，超过会抛 RecursionError（本质是为了防止无限递归撑爆底层 C 栈）；sys.intern() 可以手动把字符串加入驻留池，强制让相同内容的字符串复用同一个对象，从而让 == 判断退化成更快的 is 判断，适合大量重复短字符串（如字典的固定键名）的场景；sys.getsizeof() 返回一个对象自身占用的字节数（不含它引用的其他对象），是排查内存占用问题的基本工具；sys.modules 是所有已加载模块的缓存字典，直接操作它可以强制重新加载模块（不推荐但有时用于调试）。这几个函数分散在不同主题下，但都是深入理解 Python 运行时绕不开的基础工具箱。"
+  },
+  {
+   "section": "43-tracemalloc",
+   "verdict": "reading",
+   "nodes": [
+    "memory.leaks-tracemalloc"
+   ],
+   "slug": "pydocs-tracemalloc",
+   "title": "tracemalloc：追踪内存分配",
+   "body": "tracemalloc 是定位内存泄漏的标准工具：开启后它会记录每一次内存分配发生的调用栈（traceback），之后可以拍摄快照（take_snapshot()）并用 compare_to() 对比两次快照之间的差异，直接看出哪几行代码新分配了最多内存且没有释放，比盲目猜测精确得多。文档给出的完整示例展示了典型排查流程：在程序运行一段时间后拍第一次快照，触发怀疑有泄漏的操作，再拍第二次快照，然后打印按内存增量排序的差异统计（Statistic/StatisticDiff 对象）。文档还提供了 Pretty top 示例，演示如何格式化输出让人一眼看出问题代码位置。相比 gc 模块告诉你有循环引用没被回收，tracemalloc 回答的是更实际的问题，内存到底被谁分配掉了，两者结合是排查生产环境内存问题的标准组合拳。"
+  },
+  {
+   "section": "44-functools",
+   "verdict": "reading",
+   "nodes": [
+    "functions.functools",
+    "functions.decorators"
+   ],
+   "slug": "pydocs-functools-module",
+   "title": "functools 模块：高阶函数工具箱",
+   "body": "functools 是写装饰器和函数式代码离不开的工具箱：lru_cache/cache 提供开箱即用的记忆化缓存，但要求所有参数都可哈希，且默认不会自动过期，长期运行的服务如果缓存键空间无限增长（比如以请求 ID 为键）会造成事实上的内存泄漏，这是使用它最容易忽略的陷阱；partial() 可以固定一个函数的部分参数生成新函数，比写 lambda 包装更清晰也更快；singledispatch 让你根据第一个参数的运行时类型自动分派到不同实现，是给函数重载最 Pythonic 的方式；wraps（update_wrapper 的装饰器形式）在写装饰器时用来把原函数的 __name__、__doc__ 等元数据复制到包装函数上，否则被装饰的函数在调试器、文档生成工具里会显示成包装器的名字而不是原名字。total_ordering 则只需定义一个比较方法就能自动补全其余几个。"
+  },
+  {
+   "section": "45-itertools",
+   "verdict": "reading",
+   "nodes": [
+    "iteration.itertools"
+   ],
+   "slug": "pydocs-itertools-module",
+   "title": "itertools 模块：惰性迭代器工具",
+   "body": "itertools 提供的函数全部返回惰性迭代器，可以自由组合成处理流水线而不需要在中间步骤把数据物化成完整列表，这对处理大数据流或无限序列（如 itertools.count()）至关重要。文档把函数分成几类：创建新迭代器（chain、cycle、repeat）、按元素处理（starmap、accumulate）、筛选（filterfalse、takewhile、dropwhile）、组合数学（product、permutations、combinations）、分组（groupby）。两个最容易踩坑的点文档都特别强调了：groupby 只会对连续相同的键分组，如果数据没有事先按分组键排序，结果会不符合预期（把相同键但不连续出现的元素分到不同组）；tee() 把一个迭代器拆成多份，但内部要为跑得慢的那一份缓存所有跳过的数据，分支之间进度差太多会导致内存占用暴涨。文末的 Recipes 部分给出了大量用这些原语组合实现常见算法的示例，值得收藏。"
+  },
+  {
+   "section": "46-contextlib",
+   "verdict": "reading",
+   "nodes": [
+    "iteration.context-managers"
+   ],
+   "slug": "pydocs-contextlib-module",
+   "title": "contextlib 模块：上下文管理器工具箱",
+   "body": "contextlib 是写上下文管理器的效率工具箱：@contextmanager 装饰器让你用一个普通生成器函数就能实现上下文管理器协议，规则是把资源获取代码放在 yield 之前，把清理代码放在 yield 之后并用 try/finally 包住，这样即使 with 块内抛了异常，清理代码依然会执行，异常会在 yield 那一行被重新抛出。ExitStack 用来管理运行时才知道有多少个的一组上下文管理器（比如根据配置动态打开若干个文件），可以在循环里动态 enter_context() 累加，退出时保证按后进先出的顺序全部清理。文档还讲了单次使用（用过一次的生成器 CM 不能重新进入）、可重入（可以嵌套多次进入自身）、可复用（可以多次独立使用）这三类上下文管理器的区别，避免误用导致运行时报错。"
+  },
+  {
+   "section": "47-dataclasses",
+   "verdict": "reading",
+   "nodes": [
+    "classes.dataclasses"
+   ],
+   "slug": "pydocs-dataclasses-module",
+   "title": "dataclasses 模块：数据类完整参考",
+   "body": "dataclasses 是 Python 官方给只用来装数据的类提供的样板代码生成器，@dataclass 装饰器会自动生成 __init__、__repr__、__eq__（默认基于所有字段逐一比较）。文档的重点在几个容易用错的地方：字段默认值如果是可变对象（如列表）不能直接写等号加方括号，必须用 field(default_factory=list)，否则所有实例会共享同一个列表，这是可变默认参数陷阱在 dataclass 里的变体；frozen=True 让实例变成不可变（赋值会抛异常）同时自动获得基于字段值的 __hash__，适合用作字典键；__post_init__ 是在自动生成的 __init__ 跑完之后执行的钩子，常用来做字段合法性校验或计算派生字段。文档还讲了继承时字段顺序如何合并、以及关键字专属字段可以打乱默认值必须靠后排列的传统限制。"
+  },
+  {
+   "section": "48-collections",
+   "verdict": "reading",
+   "nodes": [
+    "runtime.stdlib-map",
+    "performance.containers"
+   ],
+   "slug": "pydocs-collections-module",
+   "title": "collections 模块：专用容器数据类型",
+   "body": "collections 模块提供了一组比内建 list/dict 更专用、性能特征更明确的容器：deque 在两端插入/删除都是 O(1)（普通 list 在头部插入是 O(n)，需要搬移全部元素），是实现队列、滑动窗口的首选；Counter 是专为计数设计的字典子类，most_common(n) 一步拿到出现次数最多的元素；defaultdict 通过工厂函数自动填充缺失键的默认值，省去每次访问前判断键是否存在；namedtuple 让元组的每个位置有了名字，兼顾了元组的轻量和可读性；ChainMap 把多个字典串成一个视图，常用来实现局部配置覆盖全局配置的查找链。这些数据结构各自解决一个具体的性能或表达力问题，选对容器往往比优化算法本身收益更大，是容器选型时该第一时间想到的工具箱。"
+  },
+  {
+   "section": "49-collections-abc",
+   "verdict": "reading",
+   "nodes": [
+    "classes.abc-protocols"
+   ],
+   "slug": "pydocs-collections-abc",
+   "title": "collections.abc：容器的抽象基类",
+   "body": "collections.abc 定义了一整套容器相关的抽象基类（Iterable、Iterator、Sequence、Mapping、Hashable 等），是鸭子类型和显式接口约束之间的桥梁。核心机制是虚拟子类（virtual subclass）：一个类不需要真的继承某个 ABC，只要通过 ABC.register(MyClass) 注册，或者恰好实现了该 ABC 要求的全部方法，isinstance(obj, ABC) 就会返回 True，这让第三方类型也能被判定为符合某个协议而不需要修改其继承关系。文档给出了每个 ABC 要求实现哪些抽象方法、哪些方法是自动获得的混入（mixin）方法的详细表格，比如只要实现了 __len__ 和 __getitem__，Sequence 就能自动提供 __contains__、__iter__、index()、count() 等一整套方法。这是判断我的自定义容器类该继承哪个 ABC 才能少写代码的权威依据。"
+  },
+  {
+   "section": "50-abc",
+   "verdict": "reading",
+   "nodes": [
+    "classes.abc-protocols"
+   ],
+   "slug": "pydocs-abc-module",
+   "title": "abc 模块：抽象基类机制",
+   "body": "abc 模块提供了实现抽象基类的底层机制：继承 ABC（或使用 ABCMeta 元类）并用 @abstractmethod 标记的方法，会阻止这个类被直接实例化，必须等到子类把所有抽象方法都实现了才能创建实例，这是 Python 里强制子类必须实现某些方法的官方手段，比只在文档里写请子类实现这个方法的君子协定可靠得多。文档还讲了 register() 方法可以把一个完全不相关继承链的类认证为某个 ABC 的虚拟子类，使 isinstance 检查通过，但注意虚拟子类不会继承 ABC 的具体实现代码。abc 和 collections.abc 是配套关系：前者是造抽象基类的底层机制，后者是用这套机制预先造好的一批容器相关抽象基类，日常写代码大多数时候只需要用后者提供的现成 ABC，少数情况才需要自己用 abc 定义新的抽象基类。"
+  },
+  {
+   "section": "51-typing",
+   "verdict": "reading",
+   "nodes": [
+    "types.basics",
+    "types.gradual-typing",
+    "types.protocols-generics",
+    "types.typeddict-literal"
+   ],
+   "slug": "pydocs-typing-module",
+   "title": "typing 模块：类型提示完整参考",
+   "body": "typing 模块是 Python 类型系统的核心，这篇长文档覆盖了从基础到进阶的完整体系：类型别名让复杂类型有个好记的名字；NewType 在运行时其实什么都不做，纯粹是给类型检查器看的标签，能区分底层类型相同但语义不同的两个概念（比如同样是 int 的 UserId 和普通整数不能互相误传）；泛型（TypeVar、3.12 起的 class Box[T] 简化语法）让容器和函数能对元素类型做参数化约束，协变（covariant）/逆变（contravariant）决定了子类型关系在泛型场景下如何传递；Protocol 提供了结构化子类型，不需要显式继承，只要具备相同方法签名就算实现了该协议；ParamSpec 专门解决装饰器场景下包装函数要保留原函数完整参数签名的类型标注难题；Any 则是类型系统里的万能钥匙，和所有类型双向兼容，但用多了等于放弃了类型检查的价值。"
+  },
+  {
+   "section": "52-exceptions",
+   "verdict": "reading",
+   "nodes": [
+    "runtime.exceptions"
+   ],
+   "slug": "pydocs-builtin-exceptions",
+   "title": "内建异常完整参考",
+   "body": "这是所有内建异常类型的权威参考，最重要的是异常层级结构：BaseException 是所有异常的根，但 except Exception 不会捕获 KeyboardInterrupt（Ctrl+C）和 SystemExit（sys.exit()），因为它们特意被设计成 BaseException 的直接子类而不是 Exception 的子类，这样捕获所有异常的代码不会意外吞掉用户中断程序或正常退出的信号。文档详细列出了每个具体异常类的含义（OSError 及其一系列子类对应不同的系统调用失败原因）、异常上下文（__context__ 隐式记录、__cause__ 通过 raise from 显式记录）的区别，以及 3.11 引入的异常组（ExceptionGroup）及配套的 except* 语法，用于表示一批并发操作里同时发生了多个独立异常这种传统单异常模型表达不了的场景，正是 TaskGroup 失败后异常聚合的底层机制。"
+  },
+  {
+   "section": "53-decimal",
+   "verdict": "reading",
+   "nodes": [
+    "model.numbers",
+    "engineering.money-time"
+   ],
+   "slug": "pydocs-decimal-module",
+   "title": "decimal 模块：精确十进制运算",
+   "body": "decimal 模块提供了不会有二进制浮点误差的十进制定点/浮点运算，是处理金额等要求精确的场景的标准选择。文档开篇的快速上手教程就点出了最容易用错的地方：直接用浮点数构造 Decimal 会把 float 本身已经存在的二进制近似误差原样带进来，正确做法是用字符串构造，即 Decimal(str(x))，从字符串构造才能得到真正精确的值。Context 对象控制精度和舍入模式，四舍五入（ROUND_HALF_UP）等舍入模式需要显式指定，因为默认的银行家舍入（ROUND_HALF_EVEN）和日常直觉的四舍五入不一致，财务场景搞混这一点会导致对账差一分钱的诡异 bug。文档还讲了如何在多线程环境下给每个线程设置独立的精度上下文（localcontext()）。这是回答金额计算该用什么类型这一常见问题时的标准依据。"
+  },
+  {
+   "section": "54-datetime",
+   "verdict": "reading",
+   "nodes": [
+    "engineering.money-time",
+    "runtime.stdlib-map"
+   ],
+   "slug": "pydocs-datetime-module",
+   "title": "datetime 模块：日期时间完整参考",
+   "body": "这是 datetime 模块的完整参考，最核心的一组概念是 aware（带时区信息）与 naive（不带时区信息）对象的区别：两者之间直接比较或相减会抛 TypeError，文档给出了判断一个对象到底是 aware 还是 naive 的标准方法（检查 tzinfo 是否为 None 以及 utcoffset() 的返回值）。文档系统介绍了 timedelta（时间差）、date、time、datetime、tzinfo、timezone 各个类型的构造和常用方法，以及 strftime()/strptime() 完整的格式码对照表。工程实践上的教训是：涉及跨时区的系统应该始终存储和传递 aware 的 UTC 时间，只在展示给用户时才转换成本地时区的 naive 表示，混用 naive 和 aware 对象是分布式系统里常见且难排查的 bug 来源。这篇参考是查具体格式码或方法签名时该回来的地方。"
+  },
+  {
+   "section": "55-pickle",
+   "verdict": "reading",
+   "nodes": [
+    "engineering.serialization",
+    "runtime.stdlib-map"
+   ],
+   "slug": "pydocs-pickle-module",
+   "title": "pickle 模块：Python 对象序列化",
+   "body": "pickle 能把几乎任意 Python 对象（包括自定义类实例、函数引用）序列化成字节流再还原，但文档用醒目的警告强调了一个安全事实：反序列化不可信来源的 pickle 数据等同于执行任意代码，因为 pickle 的还原过程可以调用任意可导入的函数，绝不能用来解析来自网络请求或用户上传的数据。文档还讲了一个容易被忽视的运维坑：pickle 数据里记录的是类的模块路径和类名，如果之后重命名了类或者搬动了模块，旧的 pickle 文件会加载失败，需要用 copyreg 注册兼容的加载逻辑或者提供模块级别的别名来兼容旧数据。文档还对比了 pickle 和 json：前者是 Python 专属、支持任意对象但不安全不跨语言，后者跨语言、安全但只能表示有限的数据类型。"
+  },
+  {
+   "section": "56-json",
+   "verdict": "reading",
+   "nodes": [
+    "engineering.serialization"
+   ],
+   "slug": "pydocs-json-module",
+   "title": "json 模块：JSON 编解码",
+   "body": "json 模块提供了 Python 对象和 JSON 文本之间的标准转换，dumps/loads 处理字符串，dump/load 直接处理文件对象。文档重点讲了默认能编码的类型集合（dict、list、str、数字、bool、None）之外的类型都会抛 TypeError，像 Decimal、datetime、自定义类实例这些常见的业务对象都不在默认支持范围内，需要通过自定义 JSONEncoder 子类重写 default() 方法，或者给 dumps 传 default= 回调函数来处理。反过来解码时如果要把 JSON 里的字符串还原成 datetime 或自定义对象，需要用 object_hook 回调在解析过程中拦截。文档还提到 JSON 标准本身不支持 NaN/Infinity，Python 的实现默认会输出这些非标准值，跨语言对接时需要注意关闭这个行为以避免被其他语言的解析器拒绝。"
+  },
+  {
+   "section": "57-heapq",
+   "verdict": "reading",
+   "nodes": [
+    "runtime.stdlib-map"
+   ],
+   "slug": "pydocs-heapq-module",
+   "title": "heapq 模块：堆队列算法",
+   "body": "heapq 把普通 list 变成一个最小堆，不是一个独立的堆类型，而是一组操作 list 的函数（heappush、heappop、heapify），堆顶（最小元素）永远是 list 的第一个元素。文档给出的典型应用包括优先级队列（用元组 priority, item 入堆，天然按 priority 排序）、以及 heapq.merge() 合并多个已排序的输入、nlargest/nsmallest 在不需要完整排序的情况下高效取 Top-K。文档特别讨论了用堆实现优先级队列时的两个实操问题：如何给同优先级的元素加一个递增序号避免比较元组时因为 item 不可比较而报错，以及如何处理任务优先级变化或任务被取消这种需要更新已入堆元素的场景（标准做法是标记旧条目为无效而不是真的从堆中删除）。这是要 Top-K 或者优先级调度时该用什么数据结构的标准答案。"
+  },
+  {
+   "section": "58-bisect",
+   "verdict": "reading",
+   "nodes": [
+    "runtime.stdlib-map"
+   ],
+   "slug": "pydocs-bisect-module",
+   "title": "bisect 模块：有序数组二分查找",
+   "body": "bisect 提供了在已排序列表里做二分查找和二分插入的函数：bisect_left/bisect_right 返回该插入的位置（区别在于遇到相等元素时插在左边还是右边），insort_left/insort_right 直接完成插入并保持列表有序。文档强调这些函数只在输入列表本身已经有序的前提下才有意义，对无序列表调用不会报错但结果没有意义。典型应用包括用一组阈值给数值分级（比如按分数划分等级）、维护一个动态更新还要保持有序的列表（比如排行榜插入新分数）。文档还给出了性能提示：反复调用 insort 维护一个大列表有序，插入本身是 O(n)（要搬移元素），如果频繁插入删除，heapq 或平衡树结构可能更合适，bisect 更适合插入不频繁、查找频繁的场景。"
+  },
+  {
+   "section": "59-array",
+   "verdict": "reading",
+   "nodes": [
+    "performance.less-ram",
+    "model.sequences"
+   ],
+   "slug": "pydocs-array-module",
+   "title": "array 模块：紧凑数值数组",
+   "body": "array 模块提供了一种比普通 list 更节省内存的同质数值数组：list 存的是一串指向 Python 对象的指针，即使全是整数，每个元素依然是一个完整的 Python int 对象，有可观的对象头开销；array 则按 C 语言的方式紧凑存储原始数值（通过类型码指定是 int、float 等哪种 C 类型及字节宽度），内存占用能降低数倍。文档列出了支持的类型码表（i 表示有符号 int、d 表示 double 等）。这是存海量同质数值但又不想引入 NumPy 依赖时的轻量选择，如果确实需要向量化运算，NumPy 数组通常是更好的选择，array 更适合只需要紧凑存储、顺序读写，不需要复杂数值运算的场景，比如从二进制协议里解析出的定长数值序列。"
+  },
+  {
+   "section": "60-stdtypes",
+   "verdict": "reading",
+   "nodes": [
+    "model.numbers",
+    "model.sequences",
+    "model.text-bytes",
+    "model.dict-set-internals",
+    "types.basics"
+   ],
+   "slug": "pydocs-builtin-types",
+   "title": "内建类型（Built-in Types）完整参考",
+   "body": "这是查内建类型方法签名和行为细节时最该回来的一份文档，覆盖了数值类型（int/float/complex 及各自的位运算、哈希规则）、序列类型（list/tuple/range 的通用操作、可变与不可变序列各自支持哪些方法）、文本与二进制序列（str/bytes/bytearray/memoryview，包括 f-string、百分号格式化的完整语法）、集合类型、映射类型（dict 极其完整的方法列表和保留插入顺序这一语言保证）、上下文管理器类型，以及泛型别名和联合类型（list[int]、X | None）的运行时对象表示。这份文档篇幅巨大但结构清晰，日常不需要通读，遇到这个方法到底支持什么参数、这个类型到底能不能这样用时按目录定位查阅即可，是内建类型行为的最终裁决来源。"
+  },
+  {
+   "section": "61-dis",
+   "verdict": "reading",
+   "nodes": [
+    "runtime.compile-bytecode"
+   ],
+   "slug": "pydocs-dis-module",
+   "title": "dis 模块：字节码反汇编",
+   "body": "dis 模块能把一个函数、模块或代码对象反汇编成人类可读的字节码指令序列，是理解这两种写法到底哪个更快、为什么的终极手段，与其靠直觉猜测，不如直接调用 dis.dis(func) 看编译出来的指令数量和种类。文档给出了完整的字节码指令参考（每条指令的作用、操作数含义），以及命令行用法。这是解释性能差异问题时最有说服力的工具，比如对比用局部变量缓存频繁访问的属性前后字节码指令数量的差异，直接看到属性加载指令是否被消除。日常写业务代码几乎不需要直接用它，但在面试被问你怎么验证某个优化确实有效或者需要向团队解释某个性能建议的依据时，dis 输出比我觉得会更快有说服力得多。"
+  },
+  {
+   "section": "62-timeit",
+   "verdict": "reading",
+   "nodes": [
+    "performance.profiling"
+   ],
+   "slug": "pydocs-timeit-module",
+   "title": "timeit 模块：微基准测试",
+   "body": "timeit 是专门为这一小段代码到底哪种写法更快设计的微基准测试工具，和分析整个程序哪里慢的 cProfile 定位完全不同，timeit 关心的是单条语句或小函数在大量重复执行下的平均耗时，cProfile 关心的是一整个程序运行过程中每个函数各占用了多少时间。文档给出了命令行用法和 Python API 两种方式，并特别提醒微基准测试容易踩的坑：默认会关闭垃圾回收以减少测量噪声，但这和真实生产环境的运行条件不完全一致，结果只能用来做写法 A 和写法 B 相对谁快的横向比较，不能直接当作生产环境的绝对耗时预期。这是回答这两种写法哪个快这类问题时该动手验证而不是凭感觉回答的正确工具。"
+  },
+  {
+   "section": "63-profile",
+   "verdict": "reading",
+   "nodes": [
+    "performance.profiling"
+   ],
+   "slug": "pydocs-profilers",
+   "title": "Python Profilers：cProfile 与 profile",
+   "body": "这是官方剖析器（profiler）参考，cProfile（C 实现，开销较小，推荐日常使用）和 profile（纯 Python 实现，可扩展但开销大得多）提供相同接口。文档讲清了确定性剖析（deterministic profiling）的原理：在每个函数调用和返回时插桩计时，能精确统计每个函数被调用了多少次、自身耗时多少、连同子调用一共耗时多少（Stats 类提供了按不同维度排序输出这些统计的方法），但插桩本身带来的开销会让结果比真实运行慢，需要用校准（calibration）机制扣除测量工具自身引入的系统性偏差。文档也坦承了局限性：C 扩展函数内部的调用不会被逐层统计，多线程程序的剖析结果需要额外小心解读。这是整个程序到底慢在哪个函数这类问题该先用的工具，比 timeit 的适用范围更宏观。"
+  },
+  {
+   "section": "64-unittest-mock",
+   "verdict": "reading",
+   "nodes": [
+    "engineering.testing"
+   ],
+   "slug": "pydocs-unittest-mock",
+   "title": "unittest.mock：模拟对象库",
+   "body": "unittest.mock 是写单元测试隔离外部依赖的标准工具，核心是 Mock/MagicMock 对象，访问任意属性或调用任意方法都不会报错，而是自动返回新的 Mock 对象，同时记录下被怎样调用过，供之后用 assert_called_with() 等断言验证。patch 系列（patch、patch.object、patch.dict）用于在测试期间临时替换掉被测代码依赖的对象，文档专门用一整节 Where to patch 讲清了一个极易踩坑的点：要 patch 的是使用该对象的模块里的引用，而不是对象原本定义的地方，patch 错位置是 mock 测试失败最常见的原因。autospec/create_autospec 能让 Mock 对象的接口签名自动匹配被替换对象的真实签名，调用时传参数错误会像真实调用一样报错，比裸 Mock() 更能捕获接口不匹配的 bug。这是把时间、I/O 等副作用替换成可控假对象、获得确定性测试的核心工具。"
+  },
+  {
+   "section": "65-logging",
+   "verdict": "reading",
+   "nodes": [
+    "engineering.logging-config"
+   ],
+   "slug": "pydocs-logging-module-ref",
+   "title": "logging 模块：完整 API 参考",
+   "body": "这是 logging 模块的完整参考手册，配合 HOWTO 教程一起读效果更好：Logger 对象讲清了层级传播规则和 propagate 属性如何关闭向上传播；Handler 决定日志输出到哪（StreamHandler、FileHandler、RotatingFileHandler 等）；Formatter 决定输出格式；Filter 提供比日志级别更细粒度的过滤逻辑。LogRecord 属性表列出了每条日志自带的全部元数据（时间戳、模块名、行号、线程 ID 等），是自定义 Formatter 格式字符串时的查阅依据。文档强调的最佳实践是每个模块用 logging.getLogger(__name__) 获取自己的 logger，这样日志的来源天然按模块名分层，也让调用方能针对特定模块单独调整日志级别。还讲了 logging 模块本身是线程安全的，可以在多线程程序里放心使用而不用额外加锁。"
+  },
+  {
+   "section": "66-warnings",
+   "verdict": "reading",
+   "nodes": [
+    "engineering.robustness"
+   ],
+   "slug": "pydocs-warnings-module",
+   "title": "warnings 模块：警告控制",
+   "body": "warnings 模块是做 API 迁移和废弃提示的标准工具：库作者在计划移除或改变某个接口行为之前，先用 warnings.warn(..., DeprecationWarning) 提醒调用方这个用法即将失效，给使用者留出迁移时间，而不是直接一刀切改行为搞出破坏性变更。文档讲了警告过滤器（filter）机制，同一条警告默认只在同一个位置报一次，避免刷屏，也可以用 simplefilter/filterwarnings 精细控制某类警告是忽略、报错还是每次都显示；catch_warnings() 上下文管理器可以在测试代码里临时改变过滤规则，专门用来断言这段代码确实触发了某个警告。文档还提到默认情况下 DeprecationWarning 在非主模块里是被忽略的，只有开发者主动加参数或者是在测试框架里才会显示出来，这是很多人以为警告没生效的常见原因。"
+  },
+  {
+   "section": "67-venv",
+   "verdict": "reading",
+   "nodes": [
+    "engineering.packaging-env"
+   ],
+   "slug": "pydocs-venv-module",
+   "title": "venv 模块：虚拟环境",
+   "body": "venv 是 Python 官方自带的虚拟环境工具，命令行一步创建一个独立的 Python 环境，有自己的 site-packages 目录，和系统全局的包互不干扰，这是为什么每个项目都该有独立虚拟环境的官方实现基础，避免了不同项目对同一个包要求不同版本时互相冲突。文档讲了虚拟环境的工作原理：并不是真的复制一份完整的 Python 解释器，而是通过一套符号链接（或 Windows 上的拷贝）加上 pyvenv.cfg 配置文件，让解释器在启动时优先从虚拟环境目录查找包。文末给出了通过继承 EnvBuilder 类自定义虚拟环境创建流程的例子，比如创建后自动安装一批固定的包。这是理解 pip install 到底把包装到哪里去了、以及为什么忘记激活虚拟环境导致装错地方这类问题根因的基础文档。"
+  }
+ ]
+}

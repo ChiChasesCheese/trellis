@@ -194,6 +194,9 @@ nodes:
     summary: 理解类本身是 `type` 的实例、类体执行完后由元类创建类对象、`__init_subclass__` 与类装饰器在多数场景下足以替代元类，以及元类的典型用途（注册、校验、ORM）。
     requires:
     - classes.inheritance-mro
+  - id: classes.enums
+    title: 枚举（Enum）：`Enum`/`IntEnum`/`StrEnum`/`Flag`、`auto()` 与唯一性
+    summary: 理解枚举成员是类属性求值后由元类替换成的单例、`auto()` 与 `_generate_next_value_` 的取值规则、`@unique` 与别名、`Flag` 的位运算组合，以及什么时候该用 `StrEnum`/`IntEnum` 而不是裸常量。
 - id: memory
   core: true
   title: 内存管理与垃圾回收
