@@ -101,6 +101,7 @@ Outline → node mapping (every surveyed heading lands on a leaf or an out-of-sc
 | 2026-09-21 | 2 skeleton | `skeleton/python.yaml` — 11 nodes / 74 leaves / 32 core; mapping table §2 | `validate` (see below) |
 | 2026-09-21 | 3 corpora | 3 corpora ingested and accepted (104 readings) + 67 book pointer readings = 171 readings; 3 leaves added from gaps (`iteration.pattern-matching`, `asyncio.contextvars`, `classes.enums`) → 90 nodes / 79 leaves; 74 leaves have a corpus section, 5 are grow-only: `concurrency.choosing`, `functions.decorator-patterns`, `performance.compiling`, `performance.numpy-vectorization`, `performance.pandas-at-scale` | `validate`: 90 nodes, 0 cards, 171 readings, 0 errors |
 | 2026-09-21 | 4 cards: concurrency, memory | concurrency 44 cards / 8 leaves (choosing grown); memory 36 cards / 7 leaves (allocator grown; pymalloc pool 4 KiB→16 KiB and 8 B→16 B alignment corrected against `pycore_obmalloc.h` 3.13). Skeleton `concurrency.multiprocessing` summary corrected: 3.14 POSIX default is forkserver, not spawn | `validate` 0 errors, no self-contained warnings |
+| 2026-09-21 | 4 cards: asyncio | 59 cards / 10 leaves, all digest (python-docs, InternalDocs, PEP 567); cancel/gather cards re-read against docs | `validate` 0 errors |
 
 
 ## Next action
