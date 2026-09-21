@@ -116,6 +116,7 @@ Outline → node mapping (every surveyed heading lands on a leaf or an out-of-sc
 | 2026-09-21 | 4 cards: classes | 57 cards / 9 leaves, all digest (datamodel §3.3, Descriptor HOWTO, MRO paper, Enum HOWTO); dataclass-vs-namedtuple size claim measured: 2-field dataclass instance + `__dict__` ≈ 350 B vs namedtuple 56 B vs slots dataclass 48 B (3.12, 64-bit) | `validate` 0 errors |
 | 2026-09-21 | 4 cards: performance | 36 cards / 6 leaves (numpy, pandas, compiling grown); Numba card corrected: since 0.59 `@jit` no longer falls back to object mode, only `forceobj=True` does | `validate` 0 errors |
 | 2026-09-21 | 4 cards: runtime | 42 cards / 7 leaves, all digest (InternalDocs compiler/frames/interpreter/JIT/exceptions; docs import system, execution model) | `validate` 0 errors |
+| 2026-09-21 | 4 cards: types | 23 cards / 4 leaves, all digest (typing reference, annotations HOWTO, PEP 484 variance); 8 straight-quote emphases rewritten to 「」 | `validate` 0 errors |
 
 
 ## Next action
