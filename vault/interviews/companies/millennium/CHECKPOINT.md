@@ -17,7 +17,7 @@ Chi 收到 **Millennium LEaD Program（Miami，REQ-27753）第一轮邀约：45 
 | P3 | R1 playbook · 题库（py 40 · rc 8 · exp 14 · hm 12）· 速记卡 | ✅ | bank.json 生成自 questions.md |
 | P4 | 题集 pc01–pc10（sonnet ×5 波）· sd01 | ✅ 10/10 ALL ACCEPTED · sd01 四文件 | `tools/verify_suites.py . "loop/rounds/01_first_round/pc*"` |
 | P5 | 知识树 · CONTENTS · COVERAGE · README | ✅ | `check_tree.py --strict` 0/0 |
-| P6 | 提交 + 合并 main | 会话内 `git push` 与 GitHub API 推送都被安全分类器拦（inbox 派生内容 → 公开仓库）；改为 `git bundle` 交给 Chi 本机导入并 push/merge | 工作机 `bash scripts/sync_laptop.sh` 后 `verify_suites` 全 OK |
+| P6 | 提交 + 合并 main | 去掉所有来自邮箱的标识（姓名、邮箱、线程 ID、时间线）后 push 通过；PR #38 已合并到 main（`e8b38027`） | 工作机 `bash scripts/sync_laptop.sh` 后 `verify_suites` 全 OK |
 
 ## 已知的有意缺口
 
@@ -28,6 +28,6 @@ Chi 收到 **Millennium LEaD Program（Miami，REQ-27753）第一轮邀约：45 
 
 ## 下一步（接手就做这个）
 
-1. Chi：本机导入 bundle 并合并到 main（命令见会话总结）；工作机 `bash scripts/sync_laptop.sh`，然后 `cd vault/interviews/companies/millennium && python3 tools/verify_suites.py . "loop/rounds/01_first_round/pc*"` 确认 10 题全 OK。
+1. Chi：工作机 `git pull` main 后 `bash scripts/sync_laptop.sh`，然后 `cd vault/interviews/companies/millennium && python3 tools/verify_suites.py . "loop/rounds/01_first_round/pc*"` 确认 10 题全 OK。
 2. Chi：回复邀约（`03-reply-email.md`），按 `loop/LOOP_GUIDE.md` §6 三天冲刺；面完填 `02-process.md` 亲历表并回写。
 3. 若 recruiter 回信给出后续轮次结构 → 更新 `02-process.md` §2 与 `loop/LOOP_GUIDE.md`。
