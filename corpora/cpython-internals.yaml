@@ -1,0 +1,12 @@
+# CPython's own InternalDocs (python/cpython, PSF licence): implementation notes for maintainers on
+# the interpreter, compiler, garbage collector, generators, frames, exceptions, string interning and
+# asyncio, plus Objects/listsort.txt (Timsort) and Objects/dictnotes.txt. The closest free substitute
+# for the CPython Internals book (Anthony Shaw, commercial).
+# GitHub blob pages are blocked from this network and raw files are text/plain (not clippable), so
+# the markdown is concatenated locally: see vault/domains/python/BUILD.md §4 for the fetch script.
+title: "CPython InternalDocs：解释器、编译器、GC 与运行时对象"
+author: "CPython core developers"
+license: free-online
+domain: python
+home: https://github.com/python/cpython/tree/main/InternalDocs
+file: sources/local/cpython-internals/InternalDocs.md

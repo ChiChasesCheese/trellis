@@ -1,0 +1,267 @@
+corpus: python-docs
+title: Python 官方文档：数据模型、HOWTO 与标准库
+sections:
+- id: 01-datamodel
+  title: 3. Data model
+  level: 1
+  locator: https://docs.python.org/3/reference/datamodel.html
+- id: 02-executionmodel
+  title: 4. Execution model
+  level: 1
+  locator: https://docs.python.org/3/reference/executionmodel.html
+- id: 03-import
+  title: 5. The import system
+  level: 1
+  locator: https://docs.python.org/3/reference/import.html
+- id: 04-compound-stmts
+  title: 8. Compound statements
+  level: 1
+  locator: https://docs.python.org/3/reference/compound_stmts.html
+- id: 05-descriptor
+  title: Descriptor Guide
+  level: 1
+  locator: https://docs.python.org/3/howto/descriptor.html
+- id: 06-a-conceptual-overview-of-asyncio
+  title: A Conceptual Overview of asyncio
+  level: 1
+  locator: https://docs.python.org/3/howto/a-conceptual-overview-of-asyncio.html
+- id: 07-free-threading-python
+  title: Python support for free threading
+  level: 1
+  locator: https://docs.python.org/3/howto/free-threading-python.html
+- id: 08-mro
+  title: The Python 2.3 Method Resolution Order
+  level: 1
+  locator: https://docs.python.org/3/howto/mro.html
+- id: 09-sorting
+  title: Sorting Techniques
+  level: 1
+  locator: https://docs.python.org/3/howto/sorting.html
+- id: 10-functional
+  title: Functional Programming HOWTO
+  level: 1
+  locator: https://docs.python.org/3/howto/functional.html
+- id: 11-unicode
+  title: Unicode HOWTO
+  level: 1
+  locator: https://docs.python.org/3/howto/unicode.html
+- id: 12-annotations
+  title: Annotations Best Practices
+  level: 1
+  locator: https://docs.python.org/3/howto/annotations.html
+- id: 13-logging
+  title: Logging HOWTO
+  level: 1
+  locator: https://docs.python.org/3/howto/logging.html
+- id: 14-enum
+  title: Enum HOWTO
+  level: 1
+  locator: https://docs.python.org/3/howto/enum.html
+- id: 15-classes
+  title: 9. Classes
+  level: 1
+  locator: https://docs.python.org/3/tutorial/classes.html
+- id: 16-errors
+  title: 8. Errors and Exceptions
+  level: 1
+  locator: https://docs.python.org/3/tutorial/errors.html
+- id: 17-datastructures
+  title: 5. Data Structures
+  level: 1
+  locator: https://docs.python.org/3/tutorial/datastructures.html
+- id: 18-modules
+  title: 6. Modules
+  level: 1
+  locator: https://docs.python.org/3/tutorial/modules.html
+- id: 19-floatingpoint
+  title: '15. Floating-Point Arithmetic: Issues and Limitations'
+  level: 1
+  locator: https://docs.python.org/3/tutorial/floatingpoint.html
+- id: 20-design
+  title: Design and History FAQ
+  level: 1
+  locator: https://docs.python.org/3/faq/design.html
+- id: 21-programming
+  title: Programming FAQ
+  level: 1
+  locator: https://docs.python.org/3/faq/programming.html
+- id: 22-threading
+  title: threading — Thread-based parallelism
+  level: 1
+  locator: https://docs.python.org/3/library/threading.html
+- id: 23-multiprocessing
+  title: multiprocessing — Process-based parallelism
+  level: 1
+  locator: https://docs.python.org/3/library/multiprocessing.html
+- id: 24-concurrent-futures
+  title: concurrent.futures — Launching parallel tasks
+  level: 1
+  locator: https://docs.python.org/3/library/concurrent.futures.html
+- id: 25-queue
+  title: queue — A synchronized queue class
+  level: 1
+  locator: https://docs.python.org/3/library/queue.html
+- id: 26-contextvars
+  title: contextvars — Context Variables
+  level: 1
+  locator: https://docs.python.org/3/library/contextvars.html
+- id: 27-concurrent-interpreters
+  title: concurrent.interpreters — Multiple interpreters in the same process
+  level: 1
+  locator: https://docs.python.org/3/library/concurrent.interpreters.html
+- id: 28-asyncio-task
+  title: Coroutines and tasks
+  level: 1
+  locator: https://docs.python.org/3/library/asyncio-task.html
+- id: 29-asyncio-eventloop
+  title: Event loop
+  level: 1
+  locator: https://docs.python.org/3/library/asyncio-eventloop.html
+- id: 30-asyncio-future
+  title: Futures
+  level: 1
+  locator: https://docs.python.org/3/library/asyncio-future.html
+- id: 31-asyncio-sync
+  title: Synchronization Primitives
+  level: 1
+  locator: https://docs.python.org/3/library/asyncio-sync.html
+- id: 32-asyncio-queue
+  title: Queues
+  level: 1
+  locator: https://docs.python.org/3/library/asyncio-queue.html
+- id: 33-asyncio-dev
+  title: Developing with asyncio
+  level: 1
+  locator: https://docs.python.org/3/library/asyncio-dev.html
+- id: 34-asyncio-runner
+  title: Runners
+  level: 1
+  locator: https://docs.python.org/3/library/asyncio-runner.html
+- id: 36-asyncio-stream
+  title: Streams
+  level: 1
+  locator: https://docs.python.org/3/library/asyncio-stream.html
+- id: 37-asyncio-protocol
+  title: Transports and Protocols
+  level: 1
+  locator: https://docs.python.org/3/library/asyncio-protocol.html
+- id: 38-asyncio-threading
+  title: asyncio and free-threaded Python
+  level: 1
+  locator: https://docs.python.org/3/library/asyncio-threading.html
+- id: 39-gc
+  title: gc — Garbage Collector interface
+  level: 1
+  locator: https://docs.python.org/3/library/gc.html
+- id: 40-weakref
+  title: weakref — Weak references
+  level: 1
+  locator: https://docs.python.org/3/library/weakref.html
+- id: 41-copy
+  title: copy — Shallow and deep copy operations
+  level: 1
+  locator: https://docs.python.org/3/library/copy.html
+- id: 42-sys
+  title: sys — System-specific parameters and functions
+  level: 1
+  locator: https://docs.python.org/3/library/sys.html
+- id: 43-tracemalloc
+  title: tracemalloc — Trace memory allocations
+  level: 1
+  locator: https://docs.python.org/3/library/tracemalloc.html
+- id: 44-functools
+  title: functools — Higher-order functions and operations on callable objects
+  level: 1
+  locator: https://docs.python.org/3/library/functools.html
+- id: 45-itertools
+  title: itertools — Functions creating iterators for efficient looping
+  level: 1
+  locator: https://docs.python.org/3/library/itertools.html
+- id: 46-contextlib
+  title: contextlib — Utilities for with-statement contexts
+  level: 1
+  locator: https://docs.python.org/3/library/contextlib.html
+- id: 47-dataclasses
+  title: dataclasses — Data Classes
+  level: 1
+  locator: https://docs.python.org/3/library/dataclasses.html
+- id: 48-collections
+  title: collections — Container datatypes
+  level: 1
+  locator: https://docs.python.org/3/library/collections.html
+- id: 49-collections-abc
+  title: collections.abc — Abstract Base Classes for Containers
+  level: 1
+  locator: https://docs.python.org/3/library/collections.abc.html
+- id: 50-abc
+  title: abc — Abstract Base Classes
+  level: 1
+  locator: https://docs.python.org/3/library/abc.html
+- id: 51-typing
+  title: typing — Support for type hints
+  level: 1
+  locator: https://docs.python.org/3/library/typing.html
+- id: 52-exceptions
+  title: Built-in Exceptions
+  level: 1
+  locator: https://docs.python.org/3/library/exceptions.html
+- id: 53-decimal
+  title: decimal — Decimal fixed-point and floating-point arithmetic
+  level: 1
+  locator: https://docs.python.org/3/library/decimal.html
+- id: 54-datetime
+  title: datetime — Basic date and time types
+  level: 1
+  locator: https://docs.python.org/3/library/datetime.html
+- id: 55-pickle
+  title: pickle — Python object serialization
+  level: 1
+  locator: https://docs.python.org/3/library/pickle.html
+- id: 56-json
+  title: json — JSON encoder and decoder
+  level: 1
+  locator: https://docs.python.org/3/library/json.html
+- id: 57-heapq
+  title: heapq — Heap queue algorithm
+  level: 1
+  locator: https://docs.python.org/3/library/heapq.html
+- id: 58-bisect
+  title: bisect — Array bisection algorithm
+  level: 1
+  locator: https://docs.python.org/3/library/bisect.html
+- id: 59-array
+  title: array — Efficient arrays of numeric values
+  level: 1
+  locator: https://docs.python.org/3/library/array.html
+- id: 60-stdtypes
+  title: Built-in Types
+  level: 1
+  locator: https://docs.python.org/3/library/stdtypes.html
+- id: 61-dis
+  title: dis — Disassembler for Python bytecode
+  level: 1
+  locator: https://docs.python.org/3/library/dis.html
+- id: 62-timeit
+  title: timeit — Measure execution time of small code snippets
+  level: 1
+  locator: https://docs.python.org/3/library/timeit.html
+- id: 63-profile
+  title: The Python Profilers
+  level: 1
+  locator: https://docs.python.org/3/library/profile.html
+- id: 64-unittest-mock
+  title: unittest.mock — mock object library
+  level: 1
+  locator: https://docs.python.org/3/library/unittest.mock.html
+- id: 65-logging
+  title: logging — Logging facility for Python
+  level: 1
+  locator: https://docs.python.org/3/library/logging.html
+- id: 66-warnings
+  title: warnings — Warning control
+  level: 1
+  locator: https://docs.python.org/3/library/warnings.html
+- id: 67-venv
+  title: venv — Creation of virtual environments
+  level: 1
+  locator: https://docs.python.org/3/library/venv.html

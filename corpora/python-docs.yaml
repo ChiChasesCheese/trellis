@@ -1,0 +1,84 @@
+# Python official documentation (docs.python.org, PSF licence, published free online): the
+# mechanism-level pages behind the `python` skeleton — Language Reference, HOWTOs, Library
+# reference, tutorial and FAQ. Archived copies stay in this personal repo for offline reading
+# (same treatment as snowflake-docs / mixu-distsys).
+title: "Python 官方文档：数据模型、HOWTO 与标准库"
+author: "Python Software Foundation"
+license: free-online
+domain: python
+home: https://docs.python.org/3/
+chapters:
+  # Language Reference
+  - https://docs.python.org/3/reference/datamodel.html
+  - https://docs.python.org/3/reference/executionmodel.html
+  - https://docs.python.org/3/reference/import.html
+  - https://docs.python.org/3/reference/compound_stmts.html
+  # HOWTOs
+  - https://docs.python.org/3/howto/descriptor.html
+  - https://docs.python.org/3/howto/a-conceptual-overview-of-asyncio.html
+  - https://docs.python.org/3/howto/free-threading-python.html
+  - https://docs.python.org/3/howto/mro.html
+  - https://docs.python.org/3/howto/sorting.html
+  - https://docs.python.org/3/howto/functional.html
+  - https://docs.python.org/3/howto/unicode.html
+  - https://docs.python.org/3/howto/annotations.html
+  - https://docs.python.org/3/howto/logging.html
+  - https://docs.python.org/3/howto/enum.html
+  # Tutorial
+  - https://docs.python.org/3/tutorial/classes.html
+  - https://docs.python.org/3/tutorial/errors.html
+  - https://docs.python.org/3/tutorial/datastructures.html
+  - https://docs.python.org/3/tutorial/modules.html
+  - https://docs.python.org/3/tutorial/floatingpoint.html
+  # FAQ
+  - https://docs.python.org/3/faq/design.html
+  - https://docs.python.org/3/faq/programming.html
+  # Library: concurrency
+  - https://docs.python.org/3/library/threading.html
+  - https://docs.python.org/3/library/multiprocessing.html
+  - https://docs.python.org/3/library/concurrent.futures.html
+  - https://docs.python.org/3/library/queue.html
+  - https://docs.python.org/3/library/contextvars.html
+  - https://docs.python.org/3/library/concurrent.interpreters.html
+  # Library: asyncio
+  - https://docs.python.org/3/library/asyncio-task.html
+  - https://docs.python.org/3/library/asyncio-eventloop.html
+  - https://docs.python.org/3/library/asyncio-future.html
+  - https://docs.python.org/3/library/asyncio-sync.html
+  - https://docs.python.org/3/library/asyncio-queue.html
+  - https://docs.python.org/3/library/asyncio-dev.html
+  - https://docs.python.org/3/library/asyncio-runner.html
+  - https://docs.python.org/3/library/asyncio-exceptions.html
+  - https://docs.python.org/3/library/asyncio-stream.html
+  - https://docs.python.org/3/library/asyncio-protocol.html
+  - https://docs.python.org/3/library/asyncio-threading.html
+  # Library: runtime, memory, functional
+  - https://docs.python.org/3/library/gc.html
+  - https://docs.python.org/3/library/weakref.html
+  - https://docs.python.org/3/library/copy.html
+  - https://docs.python.org/3/library/sys.html
+  - https://docs.python.org/3/library/tracemalloc.html
+  - https://docs.python.org/3/library/functools.html
+  - https://docs.python.org/3/library/itertools.html
+  - https://docs.python.org/3/library/contextlib.html
+  - https://docs.python.org/3/library/dataclasses.html
+  - https://docs.python.org/3/library/collections.html
+  - https://docs.python.org/3/library/collections.abc.html
+  - https://docs.python.org/3/library/abc.html
+  - https://docs.python.org/3/library/typing.html
+  - https://docs.python.org/3/library/exceptions.html
+  - https://docs.python.org/3/library/decimal.html
+  - https://docs.python.org/3/library/datetime.html
+  - https://docs.python.org/3/library/pickle.html
+  - https://docs.python.org/3/library/json.html
+  - https://docs.python.org/3/library/heapq.html
+  - https://docs.python.org/3/library/bisect.html
+  - https://docs.python.org/3/library/array.html
+  - https://docs.python.org/3/library/stdtypes.html
+  - https://docs.python.org/3/library/dis.html
+  - https://docs.python.org/3/library/timeit.html
+  - https://docs.python.org/3/library/profile.html
+  - https://docs.python.org/3/library/unittest.mock.html
+  - https://docs.python.org/3/library/logging.html
+  - https://docs.python.org/3/library/warnings.html
+  - https://docs.python.org/3/library/venv.html

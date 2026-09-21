@@ -1,0 +1,34 @@
+# Python Enhancement Proposals (peps.python.org, public domain / open licence): the design
+# documents behind the language features the `python` skeleton teaches — each PEP explains the
+# motivation and rejected alternatives that interview follow-ups probe.
+title: "PEP：语言特性的设计文档"
+author: "Python core developers"
+license: free-online
+domain: python
+home: https://peps.python.org/
+chapters:
+  - https://peps.python.org/pep-0703/   # making the GIL optional (free-threading)
+  - https://peps.python.org/pep-0734/   # multiple interpreters in the stdlib
+  - https://peps.python.org/pep-0683/   # immortal objects
+  - https://peps.python.org/pep-0659/   # specializing adaptive interpreter
+  - https://peps.python.org/pep-0744/   # JIT compilation
+  - https://peps.python.org/pep-0492/   # coroutines with async and await syntax
+  - https://peps.python.org/pep-0380/   # yield from
+  - https://peps.python.org/pep-0342/   # coroutines via enhanced generators (send/throw)
+  - https://peps.python.org/pep-0343/   # the with statement
+  - https://peps.python.org/pep-0318/   # decorators for functions and methods
+  - https://peps.python.org/pep-3148/   # futures — execute computations asynchronously
+  - https://peps.python.org/pep-0557/   # data classes
+  - https://peps.python.org/pep-0484/   # type hints
+  - https://peps.python.org/pep-0544/   # protocols: structural subtyping
+  - https://peps.python.org/pep-0526/   # variable annotations
+  - https://peps.python.org/pep-0612/   # parameter specification variables
+  - https://peps.python.org/pep-0695/   # type parameter syntax
+  - https://peps.python.org/pep-0649/   # deferred evaluation of annotations
+  - https://peps.python.org/pep-3119/   # abstract base classes
+  - https://peps.python.org/pep-3134/   # exception chaining
+  - https://peps.python.org/pep-0654/   # exception groups and except*
+  - https://peps.python.org/pep-0572/   # assignment expressions
+  - https://peps.python.org/pep-0636/   # structural pattern matching tutorial
+  - https://peps.python.org/pep-0412/   # key-sharing dictionary
+  - https://peps.python.org/pep-0567/   # context variables
