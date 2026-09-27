@@ -16,6 +16,7 @@
 | `solution.py` | reference solution |
 | `solution_level1.py` | Level 1 standard answer on its own (plain dict of dicts) |
 | `solution_level2.py` | Level 2 standard answer: `solution_level1.py` + two listing methods |
+| `solution_level3.py` | Level 3 standard answer: `solution_level2.py` refactored once for `(value, expires_at)` |
 | `tests/test_level_{1..4}.py` | 34 `unittest` cases (L1 10, of which 01–04 copied from the real file; L2–L4 8 each); `IMPL=starter` runs them against your file |
 | `run_single_test.sh` | `bash run_single_test.sh case_03` |
 

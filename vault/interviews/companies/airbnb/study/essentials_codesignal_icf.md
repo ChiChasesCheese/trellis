@@ -43,8 +43,8 @@ Level 1 就是 `dict[parcel_id, dict[tag, value]]` 加三个方法，大约 10 �
 ### 心法 2：到 Level 3 才做的一次重构：旧方法委托给新方法
 
 ```python
-def get_tag(self, p, t):         return self._get(p, t, None)
-def get_tag_at(self, p, t, ts):  return self._get(p, t, ts)
+def get_tag(self, p, t):         return self.get_tag_at(p, t, None)   # 旧方法只剩一行
+def get_tag_at(self, p, t, ts):  ...                                  # 逻辑只写在这里
 ```
 
 `None` 的意思是"忽略过期"。**这是 Level 3 解锁后才做的重构**，不是 Level 1 就写好的。

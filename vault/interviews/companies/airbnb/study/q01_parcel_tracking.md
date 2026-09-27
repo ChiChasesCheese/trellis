@@ -130,35 +130,62 @@ self.tracker.set_tag('sender_name', 'parcel6', 'error')   # 参数故意反过�
 **复杂度：** 每次调用 O(k log k)，k 是这个包裹的 tag 数。每个测试的时限是 0.4 秒，这个量级完全够用。
 不需要为前缀查询上 trie 或有序容器，那样既超前设计，又会让 Level 3/4 更难改。
 
-## Level 3：时间来了，做一次重构
+## Level 3：时间来了，做第一次重构
 
-到了 Level 3，Level 1 的写法才开始不够用：value 需要带上过期时间。这时候做**两处改动**，大约 5 分钟。
+> 方法名是 **(reconstructed)**。照片里的概要是"timestamped tag operations with optional time-to-live (TTL) expiry"；
+> `_at` / `_at_with_ttl` 这两个后缀，以及存活区间 `[timestamp, timestamp + ttl)`，来自同构原题。
 
-**改动 1：value 换成 `(value, expires_at)`**，`expires_at=None` 表示永不过期。
+到这一级，Level 2 的写法才第一次不够用：value 需要带上过期时间。完整文件是 `solution_level3.py`。
+相对 Level 2 **只有两处改动**，大约 5 分钟：
+
+**改动 1：存储从 `{tag: value}` 变成 `{tag: (value, expires_at)}`**，`expires_at=None` 表示永不过期。另外加一个判断存活的函数：
 
 ```python
-def _alive(expires_at, timestamp):
+def _alive(entry, timestamp):
+    expires_at = entry[1]
     return timestamp is None or expires_at is None or timestamp < expires_at
 ```
 
-**改动 2：旧方法委托给带时间戳的版本。** 与其把 `get_tag` 和 `get_tag_at` 写成两份几乎一样的代码，不如让 `timestamp=None` 表示"不看过期"：
+**改动 2：逻辑搬进 `_at` 版本，旧方法改成调用它，传 `timestamp=None`**（表示不看过期）：
 
 ```python
-def _get(self, parcel_id, tag, timestamp):
+def get_tag(self, parcel_id, tag):
+    return self.get_tag_at(parcel_id, tag, None)
+
+def get_tag_at(self, parcel_id, tag, timestamp):
     entry = self.parcels.get(parcel_id, {}).get(tag)
-    if entry is None or not _alive(entry[1], timestamp):
+    if entry is None or not _alive(entry, timestamp):
         return None
     return entry[0]
 
-def get_tag(self, parcel_id, tag):              return self._get(parcel_id, tag, None)
-def get_tag_at(self, parcel_id, tag, timestamp): return self._get(parcel_id, tag, timestamp)
+def remove_tag_at(self, parcel_id, tag, timestamp):
+    tags = self.parcels.get(parcel_id)
+    if tags is None or tag not in tags or not _alive(tags[tag], timestamp):
+        return False
+    del tags[tag]
+    return True
+
+def list_tags_by_prefix_at(self, parcel_id, prefix, timestamp):
+    tags = self.parcels.get(parcel_id, {})
+    return [f"{tag}({tags[tag][0]})" for tag in sorted(tags)
+            if tag.startswith(prefix) and _alive(tags[tag], timestamp)]
 ```
 
-set / remove 同理。Level 2 的 `list_tags_by_prefix` 也照此处理：改成带 `timestamp` 的 `_list`，在推导式里加一个 `_alive(...)` 过滤条件。重构完先把 Level 1、2 的测试重跑一遍，确认没有退化（regression），再去跑 Level 3。
+对照 Level 2 看改了什么：`get` 多一个 `_alive` 判断；`remove` 的 `if` 多一个条件；`list` 的推导式多一个 `and _alive(...)`，
+value 变成 `tags[tag][0]`。结构完全没变，**这就是 Level 1/2 不超前设计的回报**：没有多余的东西需要拆。
 
-注意 `entry is None`：**不要写成 `if not entry[0]`**，空字符串 `""` 是合法值。
+**为什么让旧方法调用 `_at` 版本，而不是复制一份？** 如果 `get_tag` 和 `get_tag_at` 各写一份，Level 4 或者以后改存储格式时就要改两处，漏改一处测试就会挂。
+这次重构是 Level 3 真的需要了才做的，不是提前准备的。
+（小瑕疵：签名写的是 `timestamp: int`，这里传的是 `None`。Python 不强制类型标注，测试也不检查；介意的话可以另写一个私有的 `_get(…, timestamp)`，效果一样。）
 
-`_remove` 也要跟着改：已经过期的 tag 等于不存在，删除它应该返回 `False`，但过期条目还是顺手删掉。
+**重构完先重跑 Level 1、2 的测试，再跑 Level 3。** 下面错法 G 就是例子：`set_tag` 忘了改，还在存裸字符串，Level 1、2 挂了 14 个测试。
+
+几个细节：
+
+- **`set_tag_at` 直接调用 `set_tag`**：没有 TTL 就是永不过期，时间戳用不上（题目保证时间递增，存活区间从设置时刻开始）。
+- **`remove_tag_at` 遇到过期的 tag 返回 `False`，但不删除它。** 过期条目留在 dict 里没有害处，因为 get 和 list 都会过滤掉它。
+  删不删是性能问题，不是正确性问题，OA 里不管它。
+- **`entry is None`**，不要写成 `if not entry[0]`：空字符串 `""` 是合法值。
 
 语义要点（每条都有测试）：
 
@@ -168,6 +195,18 @@ set / remove 同理。Level 2 的 `list_tags_by_prefix` 也照此处理：改成
 | TTL 值被 `set_tag_at` 覆盖 | 变成永不过期 | set 就是整个替换 tuple，旧的 `expires_at` 自然没了 |
 | TTL 值被新的 TTL 覆盖 | 按新的 TTL 算 | 同上 |
 | 删除已过期的 tag | `False` | 过期即不存在 |
+
+### 常见错法对照（每一种都用测试实际跑过）
+
+| 错法 | 挂在哪些测试 | 错在哪里 |
+|---|---|---|
+| A. `timestamp <= expires_at` | L3 case_01, 02, 04–07 | 区间是左闭右开，到 `expires_at` 那一刻就已经过期 |
+| B. `expires_at = timestamp + ttl - 1` | L3 case_01, 02, 04, 06 | 用 `<` 判断时，再减 1 就提前一刻过期了 |
+| C. `set_tag_at` 保留旧的 TTL | L3 case_03, 05 | 重新 set 就是整条替换，旧的过期时间应该清掉 |
+| D. 删除过期 tag 返回 `True` | L3 case_01, 05 | 过期等于不存在 |
+| E. list 不过滤过期 | L3 case_01, 06, 07 | 所有读操作都要判断存活 |
+| F. get 不看过期 | L3 case_01, 02, 04, 07 | 同上 |
+| G. 重构时 `set_tag` 忘了改，还存裸字符串 | L1 挂 9 个、L2 挂 5 个、L3 挂 4 个 | **重构后必须回归测试** |
 
 **为什么采用"惰性过期"（lazy expiry），而不是后台清理？** 题目保证时间戳严格递增，但并不会每个时刻都调用你。
 惰性过期就是读的时候再判断 `_alive(...)`，实现最简单，也不会出错。
