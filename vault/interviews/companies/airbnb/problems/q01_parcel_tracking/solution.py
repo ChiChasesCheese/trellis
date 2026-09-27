@@ -107,10 +107,10 @@ class ParcelTrackingSystemImpl(ParcelTrackingSystem):
         self._snapshots.append(snapshot)
         return len(snapshot)
 
-    def restore(self, timestamp: int, timestamp_to_restore: int) -> None:
+    def restore_checkpoint(self, timestamp: int, timestamp_to_restore: int) -> None:
         i = bisect.bisect_right(self._checkpoint_times, timestamp_to_restore) - 1
         if i < 0:
-            return  # the spec guarantees a checkpoint exists; do nothing rather than crash
+            return  # the spec: no checkpoint at or before timestamp_to_restore = no effect
         self._parcels = {
             parcel_id: {
                 t: (value, None if remaining is None else timestamp + remaining)

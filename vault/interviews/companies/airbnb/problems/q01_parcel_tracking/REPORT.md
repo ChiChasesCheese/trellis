@@ -14,11 +14,12 @@ modelling, not algorithms.
 | Level 1 spec + example + test cases 01–04 | high | photos, verbatim |
 | Level 2–4 one-line summaries | high | photos, verbatim |
 | Level 3 full spec + 2 examples | high | photos (third batch), verbatim |
-| Level 2 and 4 names, signatures, formats, TTL-on-restore rule | medium, **(reconstructed)** | `../../catalog/raw/in_memory_db_isomorph.md` |
+| Level 4 full spec + examples | high | photos (fifth batch), verbatim |
+| Level 2 names and format | high | real interface docstrings from Chi's mock run |
 | Company = Airbnb | medium | Chi + FastPrep isomorph label; the photos name no company |
 
-The real hidden tests call the real Level 2 and 4 method names, which we have not seen (our Level 3 guess got the TTL
-method name and `ttl == 0` wrong until the spec arrived). What transfers is the data model
+All four levels now follow the real spec. Our earlier reconstruction got three things wrong: the TTL method name
+(`set_tag_with_hold`), `ttl == 0` (never expires) and the restore name (`restore_checkpoint`). What transfers is the data model
 and the semantics, not the names.
 
 ## Approach by level
@@ -28,7 +29,8 @@ and the semantics, not the names.
 2. One `_list(parcel_id, prefix, timestamp)`: filter alive, `startswith`, `sorted`, format `tag(value)`.
 3. `expires_at = timestamp + ttl`, or `None` when `ttl == 0`; lazy expiry via `_alive(expires_at, ts)`: `ts < expires_at`.
 4. Checkpoint = fresh tuples of alive tags with `remaining = expires_at - ts`; restore = `bisect_right - 1`,
-   then rebuild fresh tuples with `restore_ts + remaining`.
+   then rebuild fresh tuples with `restore_ts + remaining`. The progressive `solution_level4.py` instead copies the raw
+   state and shifts each finite expiry by `timestamp - checkpoint_timestamp` (same results, see below).
 
 ## Pitfalls the tests target (all verified by mutation, see below)
 
@@ -44,12 +46,13 @@ set/get/remove O(1); list O(k log k); checkpoint O(N); restore O(N + log C).
 
 ## Test inventory
 
-36 tests: Level 1 has 10 like the real file (cases 01–04 copied from the photos, 05–10 ours); Level 2 has 8 (ours);
-Level 3 has 10 (01–02 are the statement's examples, the rest ours); Level 4 has 8 (ours). The real Levels 2–4 share 15
+38 tests: Level 1 has 10 like the real file (cases 01–04 copied from the photos, 05–10 ours); Level 2 has 8 (ours);
+Levels 3 and 4 have 10 each (01–02 from the statement's examples, the rest ours). The real Levels 2–4 share 15
 tests we have not seen.
 
-- Reference `solution.py`: 36/36 pass (`python3 -m unittest discover -s tests -p "test_*.py"`, also under pytest).
-- Empty `starter.py`: 29/36 fail; every level has failures (L1 9, L2 4, L3 9, L4 7). The 7 that pass do so because
+- Reference `solution.py` and the progressive `solution_level4.py`: 38/38 pass; a 200-seed × 1500-op differential run
+  finds them identical (`python3 -m unittest discover -s tests -p "test_*.py"`, also under pytest).
+- Empty `starter.py`: 32/38 fail; every level has failures (L1 9, L2 4, L3 9, L4 10). The 6 that pass do so because
   the interface defaults (`None`, `False`, `[]`) happen to match, plus the perf test.
 - Mutation check (11 hand-written bugs, one per pitfall above plus `ttl == 0` expiring): 11/11 killed.
 

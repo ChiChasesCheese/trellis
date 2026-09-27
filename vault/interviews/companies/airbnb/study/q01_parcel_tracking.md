@@ -7,7 +7,7 @@
 cd vault/interviews/companies/airbnb/problems/q01_parcel_tracking
 IMPL=starter python3 -m unittest tests.test_level_1      # 只跑 Level 1
 IMPL=starter bash run_single_test.sh case_06              # 只跑一个测试
-python3 -m unittest discover -s tests -p "test_*.py"      # 参考解：36/36 应该全绿
+python3 -m unittest discover -s tests -p "test_*.py"      # 参考解：38/38 应该全绿
 ```
 
 ## 第 0 步：读题。先看 4 行概要，再看 Level 1
@@ -241,44 +241,76 @@ value 变成 `tags[tag][0]`。结构完全没变，**这就是 Level 1/2 不超�
 惰性过期就是读的时候再判断 `_alive(...)`，实现最简单，也不会出错。
 主动清理（用堆 heap 按 `expires_at` 排）是生产系统的做法，比如 Redis 就是惰性 + 定期抽样两种结合；放在 OA 里是过度设计。
 
-## Level 4：checkpoint / restore，本题真正的难点
+## Level 4：checkpoint / restore_checkpoint，只加不改
 
-### checkpoint：只存活着的，存剩余寿命
+> 题面已有真实截图（`../catalog/raw/codesignal_parcel_tracking_photos.md` 第五批）。和我最初补全的版本相比，只有方法名不同：
+> 真实的是 **`restore_checkpoint`**，不是 `restore`。过期时间公式 `original_expiration + (timestamp - checkpoint_timestamp)`
+> 和我补全的 `timestamp + (original_expiration - checkpoint_timestamp)` 代数上等价。
 
-```python
-def checkpoint(self, timestamp):
-    snapshot = {}
-    for parcel_id, tags in self._parcels.items():
-        kept = {t: (v, None if exp is None else exp - timestamp)
-                for t, (v, exp) in tags.items() if _alive(exp, timestamp)}
-        if kept:
-            snapshot[parcel_id] = kept
-    self._checkpoint_times.append(timestamp)
-    self._snapshots.append(snapshot)
-    return len(snapshot)
-```
+完整文件是 `solution_level4.py`。和 Level 3 的 diff 只有三块，**已有代码一行都没改**：
 
-这几行里有三个决定：
-
-1. **新建字典和 tuple**，而不是引用活状态。这是深拷贝，也就是心法 4：`test_level_4_case_05` 专门测浅拷贝漏写。
-2. **只存还活着的**。已经过期的不进快照，否则 restore 会让它复活（`case_07`）。
-3. **存 `remaining = expires_at - timestamp`**（心法 5）。返回值 = 至少有一个活 tag 的包裹数，`len(snapshot)` 正好就是。
-
-### restore：找"≤ t 的最近一个"，再重建
+**第 1 块：`__init__` 加一个字段**
 
 ```python
-def restore(self, timestamp, timestamp_to_restore):
-    i = bisect.bisect_right(self._checkpoint_times, timestamp_to_restore) - 1
-    self._parcels = {pid: {t: (v, None if r is None else timestamp + r) for t, (v, r) in tags.items()}
-                     for pid, tags in self._snapshots[i].items()}
+        self.checkpoints = []  # [(checkpoint_timestamp, copy of self.parcels)], oldest first
 ```
 
-- **`bisect_right(..) - 1`** 就是"最后一个 ≤ x 的位置"的标准写法。`bisect_left` 找的是"第一个 ≥ x"，差一位，而恰好等于 x 的情形会错。
-  checkpoint 时间是按不减的顺序追加的，列表天然有序，所以可以直接二分。时间相同的话，`bisect_right` 会取最后一个，也就是最新的那次。
-  不用 bisect 也行，线性扫一遍完全够用；但 bisect 这个写法值得背下来，它在 Time-Based Key-Value Store（LC 981）等一大类"按时间查历史版本"的题里反复出现。
-- **重新构造一份新的 dict**，而不是 `self._parcels = self._snapshots[i]`。后者让活状态和快照共享对象，下一次写入就污染了快照（`case_06`）。
-- **TTL 换算**：`timestamp + remaining`。例子：checkpoint(3) 时 p1.a 在 11 过期，剩 8；restore(20, 3) 之后在 28 过期。
-- restore **整体替换**状态，所以 checkpoint 之后新建的包裹会消失（`case_08`）。
+**第 2 块：`checkpoint`**
+
+```python
+    def checkpoint(self, timestamp: int) -> int:
+        self.checkpoints.append((timestamp, {pid: dict(tags) for pid, tags in self.parcels.items()}))
+        return sum(1 for tags in self.parcels.values() if any(_alive(e, timestamp) for e in tags.values()))
+```
+
+- **拷贝要拷两层**：外层 dict（包裹）和内层 dict（tag）各新建一份。tuple 本身不可变，不用再往下拷。
+  只拷外层（`dict(self.parcels)`）的话，内层 tag dict 还是共享的，之后 `set_tag` 往里写，快照就跟着变了（错法 A）。
+- **原样存，不过滤、不换算**。过期的 tag 也一起存进去，这样是安全的：它的过期时刻 ≤ checkpoint 时刻，
+  平移 `delta` 之后 ≤ restore 时刻，而之后的查询都 ≥ restore 时刻（时间不倒退），所以它永远查不出来。
+  我拿"先过滤过期、再存剩余寿命"的旧版 `solution.py` 和这份答案做了对照：200 个随机种子，每个 1500 次操作，结果完全一致。
+- **返回值数的是包裹，不是 tag**："number of parcels that are currently alive (have at least one valid tag)"。
+  `any(...)` 表示至少有一个有效 tag，`sum(1 for ...)` 数有多少个这样的包裹。
+
+**第 3 块：`restore_checkpoint`**
+
+```python
+    def restore_checkpoint(self, timestamp: int, timestamp_to_restore: int) -> None:
+        for checkpoint_timestamp, saved in reversed(self.checkpoints):
+            if checkpoint_timestamp <= timestamp_to_restore:
+                delta = timestamp - checkpoint_timestamp
+                self.parcels = {
+                    pid: {tag: (value, None if exp is None else exp + delta) for tag, (value, exp) in tags.items()}
+                    for pid, tags in saved.items()
+                }
+                return
+```
+
+- **找"最后一个 ≤ `timestamp_to_restore`"的 checkpoint**：checkpoint 按时间顺序追加，所以倒着扫，第一个满足条件的就是。
+  时间相同时，倒着扫先遇到的是后加的那个，也就是最新的。
+  `bisect_right(times, x) - 1` 也能做（旧版 `solution.py` 就是这么写的），但线性扫描更短、不容易写错，0.4 秒的时限完全够用。
+- **`delta` 用 `checkpoint_timestamp` 算，不是 `timestamp_to_restore`**。题面专门给了一个例子讲这一点：
+  checkpoint 在 31，`restore_checkpoint(110, 35)` 的 delta 是 110 − 31 = 79，不是 110 − 35 = 75。`route_east` 从 100 过期变成 179 过期。
+- **`None` 保持 `None`**："Tags that were set without a TTL keep no expiration"。`ttl == 0` 在 Level 3 已经存成 `None`，这里自然也不会被平移。
+- **restore 时再新建一份 dict**。如果直接 `self.parcels = saved`，活状态和快照就是同一个对象，下一次写入会污染快照，第二次 restore 就错了（错法 C）。**拷贝要两个方向都做。**
+- **找不到就什么都不做**：循环走完没有 `return`，状态不变，正好符合 "the operation has no effect"。
+
+### 常见错法对照（每一种都用测试实际跑过）
+
+| 错法 | 挂在哪些测试 | 错在哪里 |
+|---|---|---|
+| A. `dict(self.parcels)` 浅拷贝 | L4 case_02, 05, 06 | 内层 tag dict 共享，之后的写入漏进快照 |
+| B. 直接存 `self.parcels` 的引用 | L4 case_02, 05, 06, 10 | 快照就是活状态本身 |
+| C. restore 时 `self.parcels = saved` | L4 case_02, 07 | 活状态指向快照，下一次写入污染快照 |
+| D. `delta = timestamp - timestamp_to_restore` | L4 case_02 | 题面例子专门考这一点 |
+| E. 不平移过期时间 | L4 case_02 | 恢复出来的 tag 会提前过期 |
+| F. 正着扫，选到最早的 checkpoint | L4 case_05 | 要的是最近的那个 |
+| G. `<` 而不是 `<=` | L4 case_05, 06, 07, 10 | "at or before"，恰好相等也算 |
+| H. 计数时不看过期 | L4 case_04 | 要"至少有一个有效 tag" |
+| I. 数的是 tag 数，不是包裹数 | L4 case_02 | 同一个包裹两个 tag，应该算 1 |
+| J. 找不到 checkpoint 时清空状态 | L4 case_03 | 应该什么都不做 |
+| K. 给 `None` 也加 delta | L4 case_05–10 | 没有 TTL 的 tag 应该保持永不过期 |
+
+**这一级最值得记住的是：快照的拷贝，存和取两个方向都要做。** 错法 A、B、C 都是同一个问题：共享了可变对象。
 
 ## 复杂度（实测）
 
@@ -287,7 +319,7 @@ def restore(self, timestamp, timestamp_to_restore):
 | set / get / remove（含 `_at`） | O(1) | dict |
 | list（含前缀、`_at`） | O(k log k) | k = 这个包裹的 tag 数 |
 | checkpoint | O(N) | N = 全部 tag 数，每次全量拷贝 |
-| restore | O(N + log C) | C = checkpoint 个数 |
+| restore_checkpoint | O(N + C) | C = checkpoint 个数，线性倒扫 |
 
 `test_level_3_case_08`：5 万次 set + 5 千次 get + 500 次前缀列表，在本机几十毫秒内跑完，离真实测试的 `@timeout(0.4)` 还很远。
 全量快照的内存是 O(N × C)；OA 的规模下没问题。生产系统会用写时复制（copy-on-write）或持久化数据结构（persistent data structure）来共享没有变化的部分，面试可以口头提一句，**OA 里别写**。
@@ -301,8 +333,8 @@ def restore(self, timestamp, timestamp_to_restore):
 ## 自测清单（合上代码，能答出来就算掌握）
 
 1. Level 1 为什么用两层 dict，而不是 `f"{parcel_id}:{tag}"` 拼成一个 key？（提示：`case_04`）
-2. `alive` 为什么用 `<` 而不是 `<=`？
-3. 为什么 `_get` 里不能写 `if not entry[0]`？
-4. 浅拷贝快照和 restore 引用别名分别会让哪个测试挂掉？
-5. 快照里为什么存 remaining，而不是 expires_at？
-6. `bisect_right(a, x) - 1` 求的是什么？换成 `bisect_left` 会在什么输入上错？
+2. `_alive` 为什么用 `<` 而不是 `<=`？`ttl == 0` 为什么要存成 `None`？
+3. 为什么 `get_tag_at` 里不能写 `if not entry[0]`？重构后怎么确认没有漏改的方法？
+4. 快照为什么要拷两层？restore 时为什么还要再拷一次？
+5. 快照里原样存过期的 tag 为什么是安全的？这依赖题面的哪条保证？
+6. `restore_checkpoint(110, 35)` 在 checkpoint 为 31 时，delta 是多少，为什么不是 75？

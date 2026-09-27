@@ -1,8 +1,7 @@
 """The locked interface, as CodeSignal ships it.
 
-Levels 1 and 3 are transcribed from the assessment photos. Levels 2 and 4 are (reconstructed): the photos show only
-one-line summaries, so names and signatures follow the isomorphic "In-Memory Database" problem
-(see ../../catalog/raw/in_memory_db_isomorph.md).
+Levels 1, 3 and 4 are transcribed from the assessment photos. Level 2's names and docstrings are confirmed by the
+real interface text Chi pasted from a mock run (see ../../catalog/raw/codesignal_parcel_tracking_photos.md).
 """
 from abc import ABC
 
@@ -40,7 +39,7 @@ class ParcelTrackingSystem(ABC):
         # default implementation
         return False
 
-    # ---- Level 2 (reconstructed) --------------------------------------------------------
+    # ---- Level 2 (names confirmed by the real interface) --------------------------------
 
     def list_tags(self, parcel_id: str) -> list[str]:
         """
@@ -117,24 +116,27 @@ class ParcelTrackingSystem(ABC):
         # default implementation
         return []
 
-    # ---- Level 4 (reconstructed) --------------------------------------------------------
+    # ---- Level 4 (verbatim from the fifth batch of photos) ------------------------------
 
     def checkpoint(self, timestamp: int) -> int:
         """
-        Should save the state of all parcels at `timestamp`, including the
-        remaining TTL of every tag. Returns the number of parcels that have
-        at least one tag alive at `timestamp`.
+        Should create a checkpoint of the current state of all parcels at
+        `timestamp`. Returns the number of parcels that are currently alive
+        (have at least one valid tag) at `timestamp`.
         """
         # default implementation
         return 0
 
-    def restore(self, timestamp: int, timestamp_to_restore: int) -> None:
+    def restore_checkpoint(self, timestamp: int, timestamp_to_restore: int) -> None:
         """
-        Should restore the state from the latest checkpoint taken at or
-        before `timestamp_to_restore`. Expiry times are recalculated from
-        `timestamp`: a tag that had `r` time units left when the checkpoint
-        was taken expires at `timestamp + r`. Such a checkpoint is
-        guaranteed to exist.
+        Should restore the state of all parcels to the latest checkpoint at or
+        before `timestamp_to_restore` (its own timestamp, `checkpoint_timestamp`,
+        may be earlier). Tags added or removed after `checkpoint_timestamp` are
+        rolled back. Every restored tag with a finite expiration gets
+        `original_expiration + (timestamp - checkpoint_timestamp)`; tags set
+        without a TTL keep no expiration. If no checkpoint exists at or before
+        `timestamp_to_restore`, the operation has no effect.
+        `timestamp_to_restore` never exceeds `timestamp`.
         """
         # default implementation
         pass

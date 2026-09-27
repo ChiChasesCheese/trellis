@@ -1,6 +1,6 @@
 # CHECKPOINT — Airbnb kit
 
-**State (2026-09-27):** q01 Parcel Tracking done and verified: reference 36/36 green (Level 1 cases 01–04 and the Level 3 spec + examples copied from the real assessment), empty starter red on every
+**State (2026-09-27):** q01 Parcel Tracking done and verified: reference 38/38 green; all four levels follow the real spec (Levels 1, 3, 4 from photos, Level 2 from the real interface), empty starter red on every
 level, 11/11 mutants killed; Chinese study articles written. Chi is working through it level by level in `starter.py`.
 
 **Not done (the kit procedure, in order):**

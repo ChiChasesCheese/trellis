@@ -3,8 +3,8 @@
 - **Format:** CodeSignal Industry Coding Framework (ICF/ICA): one project, 4 levels unlocked in sequence, 90 minutes,
   25 unit tests (10 of them Level 1), Python 3 + `unittest`; the page says 3 s, but every test carries `@timeout(0.4)`.
 - **Source:** phone photos of a live assessment → `../../catalog/raw/codesignal_parcel_tracking_photos.md`.
-  Levels 1 and 3 are verbatim (high confidence). Levels 2 and 4 are **(reconstructed)** from one-line summaries plus the
-  isomorphic "In-Memory Database" problem → `../../catalog/raw/in_memory_db_isomorph.md` (medium confidence).
+  Levels 1, 3 and 4 are verbatim (high confidence); Level 2's names and format are confirmed by the real interface
+  docstrings. Earlier reconstructions came from the isomorphic "In-Memory Database" problem → `../../catalog/raw/in_memory_db_isomorph.md` (medium confidence).
 - **Company:** Airbnb per Chi; the photos name no company. FastPrep lists the isomorph as an Airbnb OA.
 
 ## Files
@@ -17,7 +17,8 @@
 | `solution_level1.py` | Level 1 standard answer on its own (plain dict of dicts) |
 | `solution_level2.py` | Level 2 standard answer: `solution_level1.py` + two listing methods |
 | `solution_level3.py` | Level 3 standard answer: `solution_level2.py` refactored once for `(value, expires_at)` |
-| `tests/test_level_{1..4}.py` | 36 `unittest` cases (L1 10, 01–04 copied from the real file; L2 8; L3 10, 01–02 the statement's examples; L4 8); `IMPL=starter` runs them against your file |
+| `solution_level4.py` | Level 4 standard answer: `solution_level3.py` + a checkpoint list and two methods |
+| `tests/test_level_{1..4}.py` | 38 `unittest` cases (L1 10, 01–04 copied from the real file; L2 8; L3 10 and L4 10, 01–02 from the statement's examples); `IMPL=starter` runs them against your file |
 | `run_single_test.sh` | `bash run_single_test.sh case_03` |
 
 ## Level 1 — basic tag operations (verbatim)
@@ -80,22 +81,25 @@ The `timestamp` argument is non-decreasing across all operations from Level 3 on
 | `remove_tag_at("parcel1", "hold_reason", 80)` | `False` (already expired) |
 | `remove_tag_at("parcel1", "priority", …)` | `False` (never set) |
 
-## Level 4 — checkpoints (reconstructed)
+## Level 4 — checkpoints (verbatim)
 
-- `checkpoint(timestamp) -> int` — save every parcel's state including each tag's remaining TTL; return the number of
-  parcels with at least one tag alive at `timestamp`.
-- `restore(timestamp, timestamp_to_restore) -> None` — restore the latest checkpoint taken at or before
-  `timestamp_to_restore` (guaranteed to exist). A tag with `r` units left at checkpoint time expires at `timestamp + r`.
+- `checkpoint(timestamp) -> int` — create a checkpoint of the current state of all parcels at `timestamp`; return the
+  number of parcels alive (at least one valid tag) at `timestamp`.
+- `restore_checkpoint(timestamp, timestamp_to_restore) -> None` — restore all parcels to the latest checkpoint at or
+  before `timestamp_to_restore` (its own `checkpoint_timestamp` may be earlier). Tags added or removed after
+  `checkpoint_timestamp` are rolled back. A finite expiration becomes
+  `original_expiration + (timestamp - checkpoint_timestamp)`; tags without a TTL keep no expiration. No checkpoint at
+  or before `timestamp_to_restore` → no effect. `timestamp_to_restore` never exceeds `timestamp`.
 
 | Query | Result |
 |---|---|
-| `set_tag_with_hold("p1", "a", "x", 1, 10)` | alive on [1, 11) |
-| `set_tag_at("p2", "b", "y", 2)` | |
-| `checkpoint(3)` | `2` (p1.a has 8 left) |
-| `set_tag_at("p1", "c", "z", 4)` | |
-| `remove_tag_at("p2", "b", 5)` | `True` |
-| `restore(20, 3)` | p1.a now expires at 28; p1.c gone; p2.b back |
-| `get_tag_at("p1", "a", 27)` / `(.., 28)` | `"x"` / `None` |
+| `set_tag_with_hold("parcel1", "route_east", "active", 30, 70)` | expires at 100 |
+| `checkpoint(31)` | `1` |
+| `set_tag_with_hold("parcel1", "route_west", "queued", 35, 25)` | expires at 60 |
+| `checkpoint(41)` | `1` |
+| `restore_checkpoint(110, 35)` | uses the checkpoint at 31; delta = 110 − 31 = 79 |
+| `get_tag_at("parcel1", "route_west", 115)` | `None` (not in the ts=31 checkpoint) |
+| `get_tag_at("parcel1", "route_east", 115)` | `"active"` (expires at 100 + 79 = 179) |
 
 ## Edge cases the tests pin
 
