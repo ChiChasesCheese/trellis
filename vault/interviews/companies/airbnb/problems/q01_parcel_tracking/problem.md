@@ -1,7 +1,7 @@
 # q01 · Parcel Tracking System (CodeSignal ICF, 4 levels)
 
 - **Format:** CodeSignal Industry Coding Framework (ICF/ICA): one project, 4 levels unlocked in sequence, 90 minutes,
-  25 hidden-until-level unit tests, Python 3 + `unittest`, 3 s per test.
+  25 unit tests (10 of them Level 1), Python 3 + `unittest`; the page says 3 s, but every test carries `@timeout(0.4)`.
 - **Source:** phone photos of a live assessment → `../../catalog/raw/codesignal_parcel_tracking_photos.md`.
   Level 1 is verbatim (high confidence). Levels 2–4 are **(reconstructed)** from one-line summaries plus the isomorphic
   "In-Memory Database" problem → `../../catalog/raw/in_memory_db_isomorph.md` (medium confidence).
@@ -14,7 +14,7 @@
 | `parcel_tracking_system.py` | the locked ABC interface (all levels, default implementations) |
 | `starter_template.py` → `starter.py` | your file (CodeSignal's `parcel_tracking_system_impl.py`) |
 | `solution.py` | reference solution |
-| `tests/test_level_{1..4}.py` | 32 `unittest` cases; `IMPL=starter` runs them against your file |
+| `tests/test_level_{1..4}.py` | 34 `unittest` cases (L1 10, of which 01–04 copied from the real file; L2–L4 8 each); `IMPL=starter` runs them against your file |
 | `run_single_test.sh` | `bash run_single_test.sh case_03` |
 
 ## Level 1 — basic tag operations (verbatim)
@@ -84,7 +84,7 @@ Timestamps across all `*_at` calls strictly increase.
 
 ## Edge cases the tests pin
 
-Missing parcel vs missing tag · empty-string value is a value · `bool` returns, not truthy values · uppercase sorts
+Missing parcel vs missing tag · parcel ids and tags are separate namespaces (real `case_04`) · empty-string value is a value · `bool` returns, not truthy values · uppercase sorts
 before lowercase · prefix ≠ substring · expiry end exclusive · plain set clears an old TTL · overwrite resets TTL ·
 expired tag cannot be removed · checkpoint count skips expired and emptied parcels · checkpoint isolated from later
 writes · restoring twice gives the same state · tag expired at checkpoint time never returns · restore drops parcels

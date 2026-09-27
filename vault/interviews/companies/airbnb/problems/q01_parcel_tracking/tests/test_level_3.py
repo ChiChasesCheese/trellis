@@ -60,7 +60,7 @@ class Level3Tests(unittest.TestCase):
         self.assertIsNone(self.s.get_tag_at("p1", "a", 2))
 
     def test_level_3_case_08_perf_within_time_limit(self):
-        # CodeSignal's execution limit is 3 s per test; a sane O(tags) design should need well under 1 s.
+        # The real tests carry @timeout(0.4): 0.4 s per test. A plain dict-of-dicts design needs ~0.03 s here.
         s = self.s
         start = time.perf_counter()
         ts = 0
@@ -72,7 +72,7 @@ class Level3Tests(unittest.TestCase):
             s.get_tag_at(f"p{i % 1000}", f"t{i % 50}", ts)
             if i % 10 == 0:
                 s.list_tags_by_prefix_at(f"p{i % 1000}", "t1", ts)
-        self.assertLess(time.perf_counter() - start, 3.0)
+        self.assertLess(time.perf_counter() - start, 0.4)
 
 
 if __name__ == "__main__":

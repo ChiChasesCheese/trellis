@@ -1,26 +1,21 @@
-"""Reference solution: all four levels.
+"""Reference solution: the end state after all four levels.
 
-Design in one sentence: every public method is a thin wrapper over a few private primitives that take an optional
-`timestamp`, so Level 1/2 calls are Level 3 calls with `timestamp=None` ("ignore expiry").
+Level 1 alone is just `dict[parcel_id, dict[tag, value]]` (see study/q01_parcel_tracking.md). Level 3 turned each value
+into `(value, expires_at)` and made the Level 1/2 methods call private helpers with `timestamp=None` ("ignore expiry").
 """
 import bisect
-from dataclasses import dataclass
 
 from parcel_tracking_system import ParcelTrackingSystem
 
 
-@dataclass
-class _Tag:
-    value: str
-    expires_at: int | None = None  # None = never expires; alive on [set time, expires_at)
-
-    def alive(self, timestamp: int | None) -> bool:
-        return timestamp is None or self.expires_at is None or timestamp < self.expires_at
+def _alive(expires_at: int | None, timestamp: int | None) -> bool:
+    # None = never expires / ignore expiry; a TTL tag is alive on [set time, expires_at)
+    return timestamp is None or expires_at is None or timestamp < expires_at
 
 
 class ParcelTrackingSystemImpl(ParcelTrackingSystem):
     def __init__(self):
-        self._parcels: dict[str, dict[str, _Tag]] = {}
+        self._parcels: dict[str, dict[str, tuple[str, int | None]]] = {}  # tag -> (value, expires_at)
         # Checkpoints in timestamp order (timestamps strictly increase, so appending keeps it sorted).
         self._checkpoint_times: list[int] = []
         # Each snapshot: parcel_id -> tag -> (value, remaining ttl or None). Plain tuples, never shared with live state.
@@ -29,21 +24,23 @@ class ParcelTrackingSystemImpl(ParcelTrackingSystem):
     # ---- private primitives ---------------------------------------------------------------
 
     def _set(self, parcel_id: str, tag: str, value: str, expires_at: int | None) -> None:
-        self._parcels.setdefault(parcel_id, {})[tag] = _Tag(value, expires_at)
+        self._parcels.setdefault(parcel_id, {})[tag] = (value, expires_at)
 
     def _alive_tags(self, parcel_id: str, timestamp: int | None) -> dict[str, str]:
         tags = self._parcels.get(parcel_id, {})
-        return {t: e.value for t, e in tags.items() if e.alive(timestamp)}
+        return {t: v for t, (v, exp) in tags.items() if _alive(exp, timestamp)}
 
     def _get(self, parcel_id: str, tag: str, timestamp: int | None) -> str | None:
         entry = self._parcels.get(parcel_id, {}).get(tag)
-        return entry.value if entry is not None and entry.alive(timestamp) else None
+        if entry is None or not _alive(entry[1], timestamp):
+            return None
+        return entry[0]
 
     def _remove(self, parcel_id: str, tag: str, timestamp: int | None) -> bool:
         tags = self._parcels.get(parcel_id)
         if tags is None or tag not in tags:
             return False
-        alive = tags[tag].alive(timestamp)
+        alive = _alive(tags[tag][1], timestamp)
         del tags[tag]  # an expired entry is garbage either way
         if not tags:
             del self._parcels[parcel_id]
@@ -100,9 +97,9 @@ class ParcelTrackingSystemImpl(ParcelTrackingSystem):
         snapshot: dict[str, dict[str, tuple[str, int | None]]] = {}
         for parcel_id, tags in self._parcels.items():
             kept = {
-                t: (e.value, None if e.expires_at is None else e.expires_at - timestamp)
-                for t, e in tags.items()
-                if e.alive(timestamp)
+                t: (v, None if exp is None else exp - timestamp)
+                for t, (v, exp) in tags.items()
+                if _alive(exp, timestamp)
             }
             if kept:
                 snapshot[parcel_id] = kept
@@ -116,7 +113,7 @@ class ParcelTrackingSystemImpl(ParcelTrackingSystem):
             return  # the spec guarantees a checkpoint exists; do nothing rather than crash
         self._parcels = {
             parcel_id: {
-                t: _Tag(value, None if remaining is None else timestamp + remaining)
+                t: (value, None if remaining is None else timestamp + remaining)
                 for t, (value, remaining) in tags.items()
             }
             for parcel_id, tags in self._snapshots[i].items()
