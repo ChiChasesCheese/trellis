@@ -93,8 +93,8 @@ self.tracker.set_tag('sender_name', 'parcel6', 'error')   # 参数故意反过�
 
 > 方法名和输出格式是 **(reconstructed)**：照片里 Level 2 只有一行概要"support listing tags on parcels"。
 > 格式 `"<tag>(<value>)"`、按 tag 字典序排列，来自同构的 In-Memory Database 原题。真实考试的方法名可能不同，**解锁后以题面为准**，思路不变。
-> 旁证：后来拿到的真实 Level 3 题面里有 `list_tags_at` / `list_tags_by_prefix_at`，格式正是 `"tag(value)"`、按 tag 字典序。
-> 所以 Level 2 大概率就叫 `list_tags` / `list_tags_by_prefix`，格式相同，但仍然没有亲眼见过。
+> **已核实**：Chi 在 mock 里贴出的真实接口 docstring 确认，Level 2 就叫 `list_tags` / `list_tags_by_prefix`，
+> 格式 `"tag(value)"`，按 tag 名字典序排列，包裹不存在时返回空列表。真实 Level 2 有 10 个测试。
 
 在 `solution_level1.py` 的基础上，只在类的末尾追加这两个方法，前面一个字都不改（完整文件：`solution_level2.py`）：
 
@@ -228,6 +228,11 @@ value 变成 `tags[tag][0]`。结构完全没变，**这就是 Level 1/2 不超�
 | G. 重构时 `set_tag` 忘了改，还存裸字符串 | L1 挂 9 个、L2 挂 5 个、L3 挂 4 个 | **重构后必须回归测试** |
 | H. `ttl == 0` 当成立即过期 | L3 case_03 | 题面明写 "If `ttl` is `0`, the tag does not expire" |
 | I. 方法名写错（比如写成 `set_tag_at_with_ttl`） | L3 case_01–04, 06, 08 | 报的是 **FAIL 不是 AttributeError**：锁定的接口类有默认实现（`pass`），写错名字的调用被它悄悄吞掉了 |
+
+**真实案例（Chi 的 mock，2026-09-27）**：重构后 `list_tags_by_prefix` 还保留着 Level 2 的方法体，把整个 tuple 格式化了出来：
+`"address(('1', None))"` 对比期望的 `"address(1)"`，Level 2 挂了 6 个测试。`list_tags` 没挂，因为它已经改成直接调用 `_at` 版本。
+这正是错法 G 那一类问题。**检查办法：重构后在编辑器里搜 `self.parcels`，只有 5 个方法应该直接碰它**
+（`set_tag`、`set_tag_with_hold`、`get_tag_at`、`remove_tag_at`、`list_tags_by_prefix_at`），其余都应该是一行转调。多出来的那个就是漏改的。
 
 错法 I 值得单独记住：CodeSignal 的接口类给每个方法都写了默认实现。**方法名拼错时不会报"方法不存在"，只会出现"值不对"**，很容易误以为是逻辑错了。
 遇到"整级都在 FAIL"时，先对一遍方法名和参数顺序。

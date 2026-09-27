@@ -188,3 +188,23 @@ Notes:
   **`ttl == 0` means never expires**; timestamps are non-decreasing, not strictly increasing. `set_tag_at`,
   `get_tag_at`, `remove_tag_at`, `list_tags_at`, `list_tags_by_prefix_at`, the `"tag(value)"` format, lexicographic
   order by tag and the exclusive expiry boundary all matched.
+
+## Fourth batch: Chi's mock run at Level 3 (pasted text, 2026-09-27)
+
+- Chi's own attempt in a CodeSignal mock ("39m left", score `50/75`). The pasted interface docstrings confirm the Level 2
+  names: `list_tags(self, parcel_id: str) -> list[str]` — "all tag-value pairs for parcel `parcel_id`, sorted
+  lexicographically by tag name. Each entry is formatted as `"tag(value)"`. Returns an empty list if the parcel does
+  not exist." — and `list_tags_by_prefix(self, parcel_id: str, prefix: str) -> list[str]` — "... where the tag starts
+  with `prefix` ... Returns an empty list if no matching tags exist."
+- `python3 -m unittest discover` ran **31 tests** with Levels 1–3 unlocked. Real Level 2 test names seen in failures:
+  `test_level_2_case_02_simple_set_get_and_scan`, `case_04_multiple_parcels_with_same_tag_1`,
+  `case_05_multiple_parcels_with_same_tag_2`, `case_07_resets_and_deletes_with_same_tags`,
+  `case_09_mixed_multiple_operations_1`, `case_10_mixed_multiple_operations_2`. Assertions seen:
+  `list_tags_by_prefix('parcel4', 'a') == ['address(1)', 'arrival_date(2)']`,
+  `list_tags_by_prefix('parcel6', 'first') == ['first_scan(HubA)']`,
+  `list_tags_by_prefix('a', 'b') == ['b(c)', 'bb(cc)', 'bc(ca)']`,
+  `list_tags_by_prefix('pkg3', 'lane') == ['lane_1(dock_4)', 'lane_2(dock_5)', 'lane_3(dock_6)']`,
+  `list_tags_by_prefix('a', 'c') == ['c(d)']`, `list_tags_by_prefix('a', 'a') == ['a(b)']`.
+- The failure: after the Level 3 refactor, `list_tags_by_prefix` still had its Level 2 body, so it formatted the whole
+  `(value, expires_at)` tuple: `"address(('1', None))"`. 6 failures, all in Level 2. Fix: delegate to
+  `list_tags_by_prefix_at(parcel_id, prefix, None)`.

@@ -39,7 +39,7 @@ both strings.
 | `get_tag("parcel1", "status")` | `None` |
 | `remove_tag("parcel1", "status")` | `False` |
 
-## Level 2 — listing tags (reconstructed)
+## Level 2 — listing tags (names and format confirmed by the real interface docstrings)
 
 - `list_tags(parcel_id) -> list[str]` — every tag as `"<tag>(<value>)"`, sorted lexicographically by tag; `[]` if the
   parcel does not exist or has no tags.
