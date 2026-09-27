@@ -89,24 +89,46 @@ self.tracker.set_tag('sender_name', 'parcel6', 'error')   # 参数故意反过�
 **教训：只看测试全绿不能证明代码是对的，要拿故意写错的版本去验证测试本身能不能抓到 bug。**
 
 
-## Level 2：一个通用的列表函数
+## Level 2：在 Level 1 上加两个方法，别的不动
+
+> 方法名和输出格式是 **(reconstructed)**：照片里 Level 2 只有一行概要"support listing tags on parcels"。
+> 格式 `"<tag>(<value>)"`、按 tag 字典序排列，来自同构的 In-Memory Database 原题。真实考试的方法名可能不同，**解锁后以题面为准**，思路不变。
+
+在 `solution_level1.py` 的基础上，只在类的末尾追加这两个方法，前面一个字都不改（完整文件：`solution_level2.py`）：
 
 ```python
-def _list(self, parcel_id, prefix, timestamp):
-    alive = self._alive_tags(parcel_id, timestamp)
-    return [f"{t}({alive[t]})" for t in sorted(alive) if t.startswith(prefix)]
+    def list_tags(self, parcel_id: str) -> list[str]:
+        return self.list_tags_by_prefix(parcel_id, "")
+
+    def list_tags_by_prefix(self, parcel_id: str, prefix: str) -> list[str]:
+        tags = self.parcels.get(parcel_id, {})
+        return [f"{tag}({tags[tag]})" for tag in sorted(tags) if tag.startswith(prefix)]
 ```
 
-`list_tags` 就是 `prefix=""` 的特例，因为任何字符串都以空串开头。一个函数覆盖 4 个公有方法（L2 两个、L3 两个）。
+逐行说明：
 
-这一级的坑：
+- **`list_tags` 委托给 `list_tags_by_prefix(parcel_id, "")`**：任何字符串都以空串开头，所以空前缀就是"全部"。
+  这不是超前设计，是**避免同一段逻辑写两遍**：排序规则或格式只要改一处。
+- **`self.parcels.get(parcel_id, {})`**：和 Level 1 的 `get_tag` 一样的写法，包裹不存在就返回 `[]`，不会抛 `KeyError`。
+- **`sorted(tags)`**：对 dict 排序得到的就是排好序的 key 列表。先排序再过滤，结果和先过滤再排序一样。
+- **列表推导式**：一行做完三件事，过滤（`startswith`）、排序（`sorted`）、格式化（f-string）。
 
-- **排序是按码点（code point）排的**：`"B" < "a"`，大写在前。题目说 "lexicographically"，就用 Python 默认的 `sorted`，
-  **不要自作主张加 `key=str.lower`**。
-- **前缀不是子串**：要用 `startswith`，不能用 `in`。`"to"` 出现在 `"city_to"` 里，但不是它的前缀。
-- 格式逐字照抄：`tag(value)`，中间没有空格。
+**为什么这里不写 `_list(parcel_id, prefix, timestamp)`？** 因为 Level 2 没有时间戳。现在就加 `timestamp` 参数属于超前设计：
+你不知道 Level 3 的时间语义具体长什么样，写了也可能要改。Level 3 解锁后再改，也就是在这个方法里加一个"是否还活着"的过滤条件，大约 1 分钟。
 
-复杂度：每次调用是 O(k log k)，k 是这个包裹的 tag 数。题目明说不要求最优，所以**不需要**为前缀查询上 trie 或者维护有序结构，那样只会增加 Level 3/4 的改动面。
+### 常见错法对照（每一种都用测试实际跑过）
+
+| 错法 | 挂在哪些测试 | 错在哪里 |
+|---|---|---|
+| A. 不排序，直接遍历 dict | case_01, 04, 08 | dict 保持的是**插入顺序**，不是字典序 |
+| B. `sorted(tags, key=str.lower)` | case_04 | 题目说 lexicographically，也就是按码点排，`"B" < "a"`，别自作主张忽略大小写 |
+| C. `prefix in tag` | case_07 | 这是子串，不是前缀：`"to"` 在 `"city_to"` 里，但不是它的前缀 |
+| D. `f"{tag} ({value})"` 多了一个空格 | case_01, 04, 07, 08 | 字符串格式要逐字照抄 |
+| E. 按 value 排序 | case_01, 04, 08 | 排序键是 tag |
+| F. `self.parcels[parcel_id]` | case_02 | 包裹不存在会抛 `KeyError`，应该返回 `[]` |
+
+**复杂度：** 每次调用 O(k log k)，k 是这个包裹的 tag 数。每个测试的时限是 0.4 秒，这个量级完全够用。
+不需要为前缀查询上 trie 或有序容器，那样既超前设计，又会让 Level 3/4 更难改。
 
 ## Level 3：时间来了，做一次重构
 
@@ -132,7 +154,7 @@ def get_tag(self, parcel_id, tag):              return self._get(parcel_id, tag,
 def get_tag_at(self, parcel_id, tag, timestamp): return self._get(parcel_id, tag, timestamp)
 ```
 
-set / remove / list 同理。重构完先把 Level 1、2 的测试重跑一遍，确认没有退化（regression），再去跑 Level 3。
+set / remove 同理。Level 2 的 `list_tags_by_prefix` 也照此处理：改成带 `timestamp` 的 `_list`，在推导式里加一个 `_alive(...)` 过滤条件。重构完先把 Level 1、2 的测试重跑一遍，确认没有退化（regression），再去跑 Level 3。
 
 注意 `entry is None`：**不要写成 `if not entry[0]`**，空字符串 `""` 是合法值。
 
