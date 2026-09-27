@@ -248,3 +248,15 @@ Differences from our reconstruction: the restore method is `restore_checkpoint`,
 `original_expiration + (timestamp - checkpoint_timestamp)` is algebraically the same as our
 `timestamp + (original_expiration - checkpoint_timestamp)`. "Latest at or before", "no checkpoint = no effect" and the
 return value of `checkpoint` all matched.
+
+## Sixth batch: Chi's mock run at Level 4 (pasted text, 2026-09-27)
+
+- 41 tests ran with all four levels unlocked (so Level 4 has 10: 10 + 10 + 11 + 10). Score shown `75/100`.
+- The real Level 4 tests use `self.fixed_timestamp + N` for timestamps and call it "backup" in names:
+  `test_level_4_case_02_simple_backup_and_restore`, `case_03_backup_and_restore_with_other_operations`,
+  `case_04_multiple_parcels_with_same_tag_1`, `case_05_multiple_parcels_with_same_tag_2`, `case_09_resets`,
+  `case_10_resets_and_deletes_with_same_tags`.
+- The failure: `return None` sat inside the `for` loop but outside the `if`, so `restore_checkpoint` only ever looked at
+  the newest checkpoint and did nothing when that one was later than `timestamp_to_restore`. 6 Level 4 failures, all
+  "restore should have happened". Fix: indent the `return` into the `if`. Reproduced locally: our suite catches it in
+  2 cases (L4 case_02 and case_05).

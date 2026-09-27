@@ -310,6 +310,20 @@ value 变成 `tags[tag][0]`。结构完全没变，**这就是 Level 1/2 不超�
 | J. 找不到 checkpoint 时清空状态 | L4 case_03 | 应该什么都不做 |
 | K. 给 `None` 也加 delta | L4 case_05–10 | 没有 TTL 的 tag 应该保持永不过期 |
 
+| L. `return` 写在 `for` 里、`if` 外 | L4 case_02, 05（真实测试挂 6 个） | 循环只看最新的一个 checkpoint，它不满足条件就直接返回，更早的永远看不到 |
+
+**真实案例（Chi 的 mock，2026-09-27）**：错法 L。
+
+```python
+for cptime, saved in reversed(self.checkpoints):
+    if cptime <= timestamp_to_restore:
+        ...
+    return None          # 错：应该再缩进一级，放进 if 里
+```
+
+真实测试挂了 6 个，全是"本该恢复却没恢复"：值是 `None`、列表为空、`remove_tag_at` 返回 `False`、覆盖写没有回滚。
+Python 靠缩进表达逻辑，这种错不会报语法错误。**写"找到就返回"的循环时，确认 `return` 比 `if` 多缩进一级。**
+
 **这一级最值得记住的是：快照的拷贝，存和取两个方向都要做。** 错法 A、B、C 都是同一个问题：共享了可变对象。
 
 ## 复杂度（实测）
