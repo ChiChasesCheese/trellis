@@ -64,6 +64,10 @@ class Level1Tests(unittest.TestCase):
         self.tracker.remove_tag("p1", "status")
         self.assertIsNone(self.tracker.get_tag("p1", "status"))
         self.assertEqual(self.tracker.get_tag("p2", "status"), "b")
+        # A single dict keyed by parcel_id + tag collides: "ab"+"c" == "a"+"bc".
+        self.tracker.set_tag("ab", "c", "first")
+        self.tracker.set_tag("a", "bc", "second")
+        self.assertEqual(self.tracker.get_tag("ab", "c"), "first")
 
     def test_level_1_case_08_remove_one_tag_keeps_others(self):
         self.tracker.set_tag("p1", "status", "x")

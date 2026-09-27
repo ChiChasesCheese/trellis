@@ -73,6 +73,22 @@ self.tracker.set_tag('sender_name', 'parcel6', 'error')   # 参数故意反过�
 
 跑测试：`IMPL=starter python3 -m unittest tests.test_level_1`，10 个全绿就进 Level 2。
 
+标准答案单独存在 `../problems/q01_parcel_tracking/solution_level1.py`，可以直接贴进 CodeSignal。
+
+### 常见错法对照（每一种都用测试实际跑过）
+
+| 错法 | 挂在哪些测试 | 错在哪里 |
+|---|---|---|
+| A. 单层 dict，`f"{parcel_id}{tag}"` 拼 key | case_07 | `"ab"+"c"` 和 `"a"+"bc"` 撞 key；而且 Level 2 列一个包裹的 tag 时得扫全表 |
+| B. `get` 写成 `self.parcels[pid][tag]` | case_02–07 | 包裹或 tag 不存在就抛 `KeyError`，题目要求返回 `None` |
+| C. `remove` 不判断直接 `del` | case_05, 06 | 删不存在的 tag 会抛 `KeyError`，应该返回 `False` |
+| D. `set` 写成 `self.parcels[pid] = {tag: value}` | case_04, 08 | 每次 set 都把这个包裹的其他 tag 冲掉了 |
+| E. `remove` 永远返回 `True` | case_05, 06 | 返回值要区分"删掉了"和"本来就没有" |
+
+写法 A 一开始通过了全部 10 个测试，说明我最初的测试漏了撞 key。后来在 case_07 里补了一条断言才抓到。
+**教训：只看测试全绿不能证明代码是对的，要拿故意写错的版本去验证测试本身能不能抓到 bug。**
+
+
 ## Level 2：一个通用的列表函数
 
 ```python
