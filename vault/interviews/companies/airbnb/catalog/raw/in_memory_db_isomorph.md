@@ -13,7 +13,8 @@ backup → checkpoint. The four level summaries in the parcel photos match these
 ## Reconstruction decisions (each labelled in `problem.md`)
 
 1. Level 2 names `list_tags` / `list_tags_by_prefix` follow the Level 2 summary ("listing tags"); format from the isomorph.
-2. Level 3 names add `_at` / `_at_with_ttl`, as in the isomorph.
+2. ~~Level 3 names add `_at` / `_at_with_ttl`, as in the isomorph.~~ Superseded: the real Level 3 spec is now transcribed
+   (third batch). The TTL method is `set_tag_with_hold`, `ttl == 0` never expires, timestamps are non-decreasing.
 3. Level 4 names `checkpoint` / `restore` follow the Level 4 summary ("checkpoints for saving and restoring").
 4. TTL recalculation on restore: remaining lifetime at checkpoint time is preserved and re-anchored at the restore
    timestamp (`new_expiry = restore_ts + (expiry - checkpoint_ts)`). This is the standard reading of "recalculated

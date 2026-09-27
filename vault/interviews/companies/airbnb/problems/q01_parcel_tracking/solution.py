@@ -16,7 +16,7 @@ def _alive(expires_at: int | None, timestamp: int | None) -> bool:
 class ParcelTrackingSystemImpl(ParcelTrackingSystem):
     def __init__(self):
         self._parcels: dict[str, dict[str, tuple[str, int | None]]] = {}  # tag -> (value, expires_at)
-        # Checkpoints in timestamp order (timestamps strictly increase, so appending keeps it sorted).
+        # Checkpoints in timestamp order (timestamps never decrease, so appending keeps it sorted).
         self._checkpoint_times: list[int] = []
         # Each snapshot: parcel_id -> tag -> (value, remaining ttl or None). Plain tuples, never shared with live state.
         self._snapshots: list[dict[str, dict[str, tuple[str, int | None]]]] = []
@@ -74,10 +74,10 @@ class ParcelTrackingSystemImpl(ParcelTrackingSystem):
     def set_tag_at(self, parcel_id: str, tag: str, value: str, timestamp: int) -> None:
         self._set(parcel_id, tag, value, None)
 
-    def set_tag_at_with_ttl(
+    def set_tag_with_hold(
         self, parcel_id: str, tag: str, value: str, timestamp: int, ttl: int
     ) -> None:
-        self._set(parcel_id, tag, value, timestamp + ttl)
+        self._set(parcel_id, tag, value, None if ttl == 0 else timestamp + ttl)  # the spec: ttl 0 = never expires
 
     def get_tag_at(self, parcel_id: str, tag: str, timestamp: int) -> str | None:
         return self._get(parcel_id, tag, timestamp)

@@ -134,3 +134,57 @@ Not visible: Level 2–4 method names, signatures, return formats and examples.
       # two more assertIsNone(get_tag('parcel6', ...)) lines, cut off at the screen edge
   ```
   Cases 05–10 are below the fold and not visible.
+
+## Third batch: Level 3 spec (2 photos, supplied 2026-09-27) — verbatim
+
+> **Level 3.** Introduce timestamped tag operations, allowing tags to be set at a specific timestamp and optionally
+> expire after a TTL. It is guaranteed that the `timestamp` argument is non-decreasing across all operations from
+> Level 3 onward, and that `ttl` is never negative.
+>
+> - `set_tag_at(self, parcel_id: str, tag: str, value: str, timestamp: int) -> None` — should set or overwrite the
+>   `tag` to `value` for parcel `parcel_id` at the given `timestamp`. A tag set with `set_tag_at` does not expire
+>   unless overwritten.
+> - `get_tag_at(self, parcel_id: str, tag: str, timestamp: int) -> str | None` — should return the value of `tag` for
+>   parcel `parcel_id` as it was at `timestamp`. Returns `None` if the tag did not exist or had expired at `timestamp`.
+> - `remove_tag_at(self, parcel_id: str, tag: str, timestamp: int) -> bool` — should remove the `tag` from parcel
+>   `parcel_id` only if the tag is currently valid at `timestamp`, i.e. it exists and has not yet expired at that time
+>   (using the same exclusive expiry boundary as `get_tag_at`: a tag expiring at `timestamp` is already considered
+>   expired). Returns `True` if the tag was removed this way. Returns `False` if the parcel does not exist, the tag was
+>   never set on it, the tag was already removed, or the tag had already expired by `timestamp`.
+> - `set_tag_with_hold(self, parcel_id: str, tag: str, value: str, timestamp: int, ttl: int) -> None` — should set or
+>   overwrite the `tag` to `value` for parcel `parcel_id` at `timestamp`, with a time-to-live of `ttl` milliseconds.
+>   The tag expires at `timestamp + ttl`. If `ttl` is `0`, the tag does not expire.
+> - `list_tags_at(self, parcel_id: str, timestamp: int) -> list[str]` — should return a list of all tag-value pairs
+>   for parcel `parcel_id` that were valid at `timestamp`, sorted lexicographically by tag name. Each entry is
+>   formatted as `"tag(value)"`.
+> - `list_tags_by_prefix_at(self, parcel_id: str, prefix: str, timestamp: int) -> list[str]` — should return a list of
+>   all tag-value pairs for parcel `parcel_id` where the tag starts with `prefix` and was valid at `timestamp`, sorted
+>   lexicographically by tag name. Each entry is formatted as `"tag(value)"`.
+>
+> **Examples**
+>
+> | Queries | Explanations |
+> |---|---|
+> | `set_tag_with_hold("parcel1", "status", "held", 100, 50)` | sets "status" to "held" at ts=100, expires after 50 (at 150) |
+> | `get_tag_at("parcel1", "status", 120)` | returns "held"; valid at 120 |
+> | `get_tag_at("parcel1", "status", 150)` | returns None; expired at 150 |
+> | `get_tag_at("parcel1", "status", 180)` | returns None; still expired |
+>
+> Example demonstrating `remove_tag_at`:
+>
+> | Queries | Explanations |
+> |---|---|
+> | `set_tag_with_hold("parcel1", "status", "held", 20, 60)` | sets "status" to "held" at ts=20, expires after 60 (at 80) |
+> | `remove_tag_at("parcel1", "status", 50)` | returns True; "status" is still valid at ts=50, so it is removed |
+> | `set_tag_with_hold("parcel1", "hold_reason", "customs", 20, 60)` | sets "hold_reason" to "customs" at ts=20, expires after 60 (at 80) |
+> | `remove_tag_at("parcel1", "hold_reason", 80)` | returns False; "hold_reason" already expired at ts=80 (exclusive boundary, same rule as getTagAt) |
+> | `remove_tag_at("parcel1", "priority", …)` | returns False; parcel "parcel1" never had a tag "priority" (timestamp cut off in the photo) |
+
+Notes:
+- The second example calls `set_tag_with_hold(..., 20, ...)` right after `remove_tag_at(..., 50)`, which breaks the
+  stated "non-decreasing timestamp" guarantee. The spec contradicts its own example; a correct solution must not rely
+  on monotonic timestamps at Level 3.
+- Differences from our earlier reconstruction: the TTL method is `set_tag_with_hold`, not `set_tag_at_with_ttl`;
+  **`ttl == 0` means never expires**; timestamps are non-decreasing, not strictly increasing. `set_tag_at`,
+  `get_tag_at`, `remove_tag_at`, `list_tags_at`, `list_tags_by_prefix_at`, the `"tag(value)"` format, lexicographic
+  order by tag and the exclusive expiry boundary all matched.

@@ -7,7 +7,7 @@
 cd vault/interviews/companies/airbnb/problems/q01_parcel_tracking
 IMPL=starter python3 -m unittest tests.test_level_1      # 只跑 Level 1
 IMPL=starter bash run_single_test.sh case_06              # 只跑一个测试
-python3 -m unittest discover -s tests -p "test_*.py"      # 参考解：34/34 应该全绿
+python3 -m unittest discover -s tests -p "test_*.py"      # 参考解：36/36 应该全绿
 ```
 
 ## 第 0 步：读题。先看 4 行概要，再看 Level 1
@@ -93,6 +93,8 @@ self.tracker.set_tag('sender_name', 'parcel6', 'error')   # 参数故意反过�
 
 > 方法名和输出格式是 **(reconstructed)**：照片里 Level 2 只有一行概要"support listing tags on parcels"。
 > 格式 `"<tag>(<value>)"`、按 tag 字典序排列，来自同构的 In-Memory Database 原题。真实考试的方法名可能不同，**解锁后以题面为准**，思路不变。
+> 旁证：后来拿到的真实 Level 3 题面里有 `list_tags_at` / `list_tags_by_prefix_at`，格式正是 `"tag(value)"`、按 tag 字典序。
+> 所以 Level 2 大概率就叫 `list_tags` / `list_tags_by_prefix`，格式相同，但仍然没有亲眼见过。
 
 在 `solution_level1.py` 的基础上，只在类的末尾追加这两个方法，前面一个字都不改（完整文件：`solution_level2.py`）：
 
@@ -132,13 +134,22 @@ self.tracker.set_tag('sender_name', 'parcel6', 'error')   # 参数故意反过�
 
 ## Level 3：时间来了，做第一次重构
 
-> 方法名是 **(reconstructed)**。照片里的概要是"timestamped tag operations with optional time-to-live (TTL) expiry"；
-> `_at` / `_at_with_ttl` 这两个后缀，以及存活区间 `[timestamp, timestamp + ttl)`，来自同构原题。
+> 题面已有真实截图（`../catalog/raw/codesignal_parcel_tracking_photos.md` 第三批），下面是按真实签名写的。
+> 我最初按同构原题补全的版本错了两处：带 TTL 的方法叫 **`set_tag_with_hold`**，不叫 `set_tag_at_with_ttl`；
+> **`ttl == 0` 表示永不过期**，不是立即过期。其余（方法名、`"tag(value)"` 格式、按 tag 字典序、右端点开区间）都对上了。
 
 到这一级，Level 2 的写法才第一次不够用：value 需要带上过期时间。完整文件是 `solution_level3.py`。
 相对 Level 2 **只有两处改动**，大约 5 分钟：
 
 **改动 1：存储从 `{tag: value}` 变成 `{tag: (value, expires_at)}`**，`expires_at=None` 表示永不过期。另外加一个判断存活的函数：
+
+```python
+def set_tag_with_hold(self, parcel_id, tag, value, timestamp, ttl):
+    expires_at = None if ttl == 0 else timestamp + ttl   # 题面：ttl 为 0 时不过期
+    self.parcels.setdefault(parcel_id, {})[tag] = (value, expires_at)
+```
+
+`ttl == 0` 这一条是题面里最容易读漏的一句。直接写 `timestamp + ttl` 的话，tag 在设置的那一刻就过期了，因为 `timestamp < timestamp` 为假。
 
 ```python
 def _alive(entry, timestamp):
@@ -182,7 +193,10 @@ value 变成 `tags[tag][0]`。结构完全没变，**这就是 Level 1/2 不超�
 
 几个细节：
 
-- **`set_tag_at` 直接调用 `set_tag`**：没有 TTL 就是永不过期，时间戳用不上（题目保证时间递增，存活区间从设置时刻开始）。
+- **`set_tag_at` 直接调用 `set_tag`**：题面说"does not expire unless overwritten"，所以时间戳用不上。
+- **时间戳是"非递减"（non-decreasing），不是严格递增**：同一时刻可以有多个操作（测试 case_09）。
+  另外，题面自己的第二个例子在 `remove_tag_at(..., 50)` 之后又调用了 `set_tag_with_hold(..., 20, ...)`，时间倒回去了，和它自己的保证矛盾。
+  好在 Level 3 的写法根本不依赖时间单调，所以不受影响。**一般原则：别让正确性依赖题面上看起来可有可无的保证。**
 - **`remove_tag_at` 遇到过期的 tag 返回 `False`，但不删除它。** 过期条目留在 dict 里没有害处，因为 get 和 list 都会过滤掉它。
   删不删是性能问题，不是正确性问题，OA 里不管它。
 - **`entry is None`**，不要写成 `if not entry[0]`：空字符串 `""` 是合法值。
@@ -200,15 +214,20 @@ value 变成 `tags[tag][0]`。结构完全没变，**这就是 Level 1/2 不超�
 
 | 错法 | 挂在哪些测试 | 错在哪里 |
 |---|---|---|
-| A. `timestamp <= expires_at` | L3 case_01, 02, 04–07 | 区间是左闭右开，到 `expires_at` 那一刻就已经过期 |
-| B. `expires_at = timestamp + ttl - 1` | L3 case_01, 02, 04, 06 | 用 `<` 判断时，再减 1 就提前一刻过期了 |
-| C. `set_tag_at` 保留旧的 TTL | L3 case_03, 05 | 重新 set 就是整条替换，旧的过期时间应该清掉 |
-| D. 删除过期 tag 返回 `True` | L3 case_01, 05 | 过期等于不存在 |
-| E. list 不过滤过期 | L3 case_01, 06, 07 | 所有读操作都要判断存活 |
-| F. get 不看过期 | L3 case_01, 02, 04, 07 | 同上 |
+| A. `timestamp <= expires_at` | L3 case_01, 02, 04, 06–08 | 区间是左闭右开，到 `expires_at` 那一刻就已经过期 |
+| B. `expires_at = timestamp + ttl - 1` | L3 case_04, 06, 08 | 用 `<` 判断时，再减 1 就提前一刻过期了 |
+| C. `set_tag_at` 保留旧的 TTL | L3 case_05, 07 | 重新 set 就是整条替换，旧的过期时间应该清掉 |
+| D. 删除过期 tag 返回 `True` | L3 case_02, 07 | 过期等于不存在 |
+| E. list 不过滤过期 | L3 case_08 | 所有读操作都要判断存活 |
+| F. get 不看过期 | L3 case_01, 04, 06 | 同上 |
 | G. 重构时 `set_tag` 忘了改，还存裸字符串 | L1 挂 9 个、L2 挂 5 个、L3 挂 4 个 | **重构后必须回归测试** |
+| H. `ttl == 0` 当成立即过期 | L3 case_03 | 题面明写 "If `ttl` is `0`, the tag does not expire" |
+| I. 方法名写错（比如写成 `set_tag_at_with_ttl`） | L3 case_01–04, 06, 08 | 报的是 **FAIL 不是 AttributeError**：锁定的接口类有默认实现（`pass`），写错名字的调用被它悄悄吞掉了 |
 
-**为什么采用"惰性过期"（lazy expiry），而不是后台清理？** 题目保证时间戳严格递增，但并不会每个时刻都调用你。
+错法 I 值得单独记住：CodeSignal 的接口类给每个方法都写了默认实现。**方法名拼错时不会报"方法不存在"，只会出现"值不对"**，很容易误以为是逻辑错了。
+遇到"整级都在 FAIL"时，先对一遍方法名和参数顺序。
+
+**为什么采用"惰性过期"（lazy expiry），而不是后台清理？** 题目保证时间戳不会倒退，但并不会每个时刻都调用你。
 惰性过期就是读的时候再判断 `_alive(...)`，实现最简单，也不会出错。
 主动清理（用堆 heap 按 `expires_at` 排）是生产系统的做法，比如 Redis 就是惰性 + 定期抽样两种结合；放在 OA 里是过度设计。
 
@@ -245,7 +264,7 @@ def restore(self, timestamp, timestamp_to_restore):
 ```
 
 - **`bisect_right(..) - 1`** 就是"最后一个 ≤ x 的位置"的标准写法。`bisect_left` 找的是"第一个 ≥ x"，差一位，而恰好等于 x 的情形会错。
-  checkpoint 时间是严格递增追加的，列表天然有序，所以可以直接二分。
+  checkpoint 时间是按不减的顺序追加的，列表天然有序，所以可以直接二分。时间相同的话，`bisect_right` 会取最后一个，也就是最新的那次。
   不用 bisect 也行，线性扫一遍完全够用；但 bisect 这个写法值得背下来，它在 Time-Based Key-Value Store（LC 981）等一大类"按时间查历史版本"的题里反复出现。
 - **重新构造一份新的 dict**，而不是 `self._parcels = self._snapshots[i]`。后者让活状态和快照共享对象，下一次写入就污染了快照（`case_06`）。
 - **TTL 换算**：`timestamp + remaining`。例子：checkpoint(3) 时 p1.a 在 11 过期，剩 8；restore(20, 3) 之后在 28 过期。

@@ -14,7 +14,7 @@ class Level4Tests(unittest.TestCase):
 
     def test_level_4_case_01_example(self):
         s = self.s
-        s.set_tag_at_with_ttl("p1", "a", "x", 1, 10)  # [1, 11)
+        s.set_tag_with_hold("p1", "a", "x", 1, 10)  # [1, 11)
         s.set_tag_at("p2", "b", "y", 2)
         self.assertEqual(s.checkpoint(3), 2)  # p1.a has 11 - 3 = 8 left
         s.set_tag_at("p1", "c", "z", 4)
@@ -27,7 +27,7 @@ class Level4Tests(unittest.TestCase):
 
     def test_level_4_case_02_count_ignores_expired_and_empty_parcels(self):
         s = self.s
-        s.set_tag_at_with_ttl("p1", "a", "x", 1, 5)  # [1, 6)
+        s.set_tag_with_hold("p1", "a", "x", 1, 5)  # [1, 6)
         s.set_tag_at("p2", "b", "y", 2)
         s.set_tag_at("p3", "c", "z", 3)
         s.remove_tag_at("p3", "c", 4)
@@ -73,7 +73,7 @@ class Level4Tests(unittest.TestCase):
 
     def test_level_4_case_07_expired_at_checkpoint_does_not_come_back(self):
         s = self.s
-        s.set_tag_at_with_ttl("p1", "a", "x", 1, 2)  # [1, 3)
+        s.set_tag_with_hold("p1", "a", "x", 1, 2)  # [1, 3)
         s.set_tag_at("p1", "b", "y", 2)
         s.checkpoint(3)  # a is already dead at 3
         s.restore(4, 3)

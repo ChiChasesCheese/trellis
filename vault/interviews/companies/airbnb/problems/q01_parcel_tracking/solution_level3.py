@@ -35,10 +35,11 @@ class ParcelTrackingSystemImpl(ParcelTrackingSystem):
     def set_tag_at(self, parcel_id: str, tag: str, value: str, timestamp: int) -> None:
         self.set_tag(parcel_id, tag, value)
 
-    def set_tag_at_with_ttl(
+    def set_tag_with_hold(
         self, parcel_id: str, tag: str, value: str, timestamp: int, ttl: int
     ) -> None:
-        self.parcels.setdefault(parcel_id, {})[tag] = (value, timestamp + ttl)
+        expires_at = None if ttl == 0 else timestamp + ttl  # the spec: ttl 0 = never expires
+        self.parcels.setdefault(parcel_id, {})[tag] = (value, expires_at)
 
     def get_tag_at(self, parcel_id: str, tag: str, timestamp: int) -> str | None:
         entry = self.parcels.get(parcel_id, {}).get(tag)

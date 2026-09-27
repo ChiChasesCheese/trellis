@@ -1,7 +1,7 @@
 # CHECKPOINT — Airbnb kit
 
-**State (2026-09-27):** q01 Parcel Tracking done and verified: reference 34/34 green (Level 1 cases 01–04 copied from the real test file), empty starter red on every
-level, 10/10 mutants killed; Chinese study articles written. Chi is working through it level by level in `starter.py`.
+**State (2026-09-27):** q01 Parcel Tracking done and verified: reference 36/36 green (Level 1 cases 01–04 and the Level 3 spec + examples copied from the real assessment), empty starter red on every
+level, 11/11 mutants killed; Chinese study articles written. Chi is working through it level by level in `starter.py`.
 
 **Not done (the kit procedure, in order):**
 1. GitHub-first survey → `catalog/raw/github_repos.md`; `lc_company.py Airbnb` for LeetCode originals.
