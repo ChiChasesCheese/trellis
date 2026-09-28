@@ -80,6 +80,14 @@ class RuleTests(unittest.TestCase):
         self.assertTrue(cats["G"].out)
         self.assertFalse(cats["R"].out)
 
+    def test_head_on_swap_is_a_fight(self):
+        # Turn 1: R -> c1; G bounces off the east edge (stays at c2, now facing west).
+        # Turn 2: R -> c2 and G -> c1 cross head-on: they fight, and R wins the 0-0 tie (topmost bed).
+        cats, _, _ = run(None, 2, rows=[["startR", "grass", "startG"], IDLE_B])
+        self.assertTrue(cats["G"].out)
+        self.assertFalse(cats["R"].out)
+        self.assertEqual(cats["R"].c, 2)
+
     def test_absorb_mode_adds_loser_power(self):
         # R smashes H (1000) and walks east; G bounces, smashes L (500) and walks west; they meet at c3 on turn 4.
         rows = [["startR", ("H",), "grass", "grass", ("L",), "startG"], IDLE_B]

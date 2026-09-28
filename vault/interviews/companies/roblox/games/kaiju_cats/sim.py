@@ -15,10 +15,12 @@ ASSUMPTIONS = """
 A1 Cats start with 0 power (the beds show 0 before any test) and face east.
 A2 Each turn every cat acts once, all at the same time: it moves one tile, or stays if stuck or still smashing.
 A3 Entering a building destroys its top floor that turn; the cat stays on the tile and destroys one more floor per
-   turn until the building is gone, then moves on (entry_mode="one_floor_per_turn"). Alternative: "all_on_entry".
+   turn until the building is gone, then moves on (entry_mode="one_floor_per_turn"). CONFIRMED by Chi in play
+   ("逐层拆", 2026-09-28). The alternative "all_on_entry" is kept only for comparison.
 A4 A floor's command fires when that floor is destroyed and sets the cat's direction.
 A5 Walls, missing tiles, a boulder and another cat's bed block: the cat stays this turn and reverses direction.
-A6 Two cats on one tile fight; the loser is out and its power is lost (fight_mode="eliminate"). Alternative: "absorb".
+A6 Two cats on one tile fight, and so do two cats that swap tiles head-on; the loser is out and its power is lost
+   (fight_mode="eliminate"). CONFIRMED by Chi in play ("会撞死一个", 2026-09-28). Alternative kept: "absorb".
 A7 Commands are the four direction arrows at $50 each, so $200 buys 4 (cost_per_command).
 A8 Commands already on the board are part of the level and free; the paw command has no effect.
 A9 After 15 turns the score is the sum of the powers of the cats still in play, in a bed or not.
@@ -114,6 +116,7 @@ def simulate(plan: dict | None = None, rules: Rules = Rules(), board=BOARD, trac
 
     for turn in range(1, rules.turns + 1):
         moved = []  # cats that entered a new tile this turn
+        origin = {}  # color -> tile it left this turn
         for cat in cats:
             if cat.out or cat.in_bed:
                 continue
@@ -129,8 +132,24 @@ def simulate(plan: dict | None = None, rules: Rules = Rules(), board=BOARD, trac
             if nxt is None or nxt.kind == "boulder" or (nxt.kind == "bed" and nxt.bed != cat.color):
                 cat.d = REVERSE[cat.d]
                 continue
+            origin[cat.color] = (cat.r, cat.c)
             cat.r, cat.c = cat.r + dr, cat.c + dc
             moved.append(cat)
+
+        def fight(group):
+            group.sort(key=lambda k: (-k.power, BED_RANK[k.color]))
+            winner = group[0]
+            for loser in group[1:]:
+                if rules.fight_mode == "absorb":
+                    winner.power += loser.power
+                loser.out = True
+
+        # Head-on swap: two cats crossing each other's tiles collide (Chi, 2026-09-28: "会撞死一个").
+        for a in moved:
+            for b in moved:
+                if a.color < b.color and not a.out and not b.out \
+                        and origin[a.color] == (b.r, b.c) and origin[b.color] == (a.r, a.c):
+                    fight([a, b])
 
         # Fights: any tile holding two or more cats in play.
         by_tile = {}
@@ -138,14 +157,8 @@ def simulate(plan: dict | None = None, rules: Rules = Rules(), board=BOARD, trac
             if not cat.out:
                 by_tile.setdefault((cat.r, cat.c), []).append(cat)
         for group in by_tile.values():
-            if len(group) < 2:
-                continue
-            group.sort(key=lambda k: (-k.power, BED_RANK[k.color]))
-            winner = group[0]
-            for loser in group[1:]:
-                if rules.fight_mode == "absorb":
-                    winner.power += loser.power
-                loser.out = True
+            if len(group) >= 2:
+                fight(group)
 
         # Tile effects for cats that entered a tile this turn and are still in play.
         arriving = []
