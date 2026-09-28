@@ -1,0 +1,15 @@
+{
+ "_source": "Tutorial screenshot shared by Chi, 2026-09-27. Rates, periods and raw prices are read off the screen; recipes, the sandwich price and max_rate are GUESSED (not visible) - replace them before trusting a result.",
+ "hours": 24,
+ "start_cash": 0,
+ "nodes": {
+  "peanut_butter": {"rate": 15, "unit_cost": 0.5},
+  "bread": {"rate": 24, "unit_cost": 0.5},
+  "sugar": {"rate": 30, "unit_cost": 0.2},
+  "strawberry": {"rate": 20, "unit_cost": 0.5},
+  "slices": {"rate": 10, "inputs": {"bread": 1}, "buffs": ["half_input", "double_output"]},
+  "jam": {"rate": 20, "period": 2, "inputs": {"sugar": 1, "strawberry": 1}, "buffs": ["half_input", "double_output", "fast"]},
+  "sandwich": {"rate": 12, "inputs": {"slices": 2, "peanut_butter": 1, "jam": 1}, "price": 25}
+ },
+ "buff_cost": {"half_input": {"per_unit": 0.25}, "double_output": {"per_unit": 0.25}, "fast": {"flat": 25}}
+}
