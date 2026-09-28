@@ -5,186 +5,218 @@ in ASSUMPTIONS below and switchable through `Rules`, so a result can be re-run u
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 DIRS = {"N": (-1, 0), "S": (1, 0), "E": (0, 1), "W": (0, -1)}
 REVERSE = {"N": "S", "S": "N", "E": "W", "W": "E"}
 BED_RANK = {"R": 0, "G": 1, "B": 2}  # top bed beats middle beats bottom (stated tie-break in fights)
+COST = {"N": 10, "S": 10, "E": 10, "W": 10, "stomp": 20, "powerup": 30}  # command panel, 2026-09-28
 
 ASSUMPTIONS = """
 A1 Cats start with 0 power (the beds show 0 before any test) and face east.
-A2 Each turn every cat acts once, all at the same time: it moves one tile, or stays if stuck or still smashing.
-A3 Entering a building destroys its top floor that turn; the cat stays on the tile and destroys one more floor per
-   turn until the building is gone, then moves on (entry_mode="one_floor_per_turn"). CONFIRMED by Chi in play
-   ("逐层拆", 2026-09-28). The alternative "all_on_entry" is kept only for comparison.
-A4 A floor's command fires when that floor is destroyed and sets the cat's direction.
+A2 Each turn every cat acts once, all at the same time: it moves one tile, or stays if stuck or stomping.
+A3 Entering a building destroys its top floor; next turn the cat moves on and the rest of the building stays
+   (entry_mode="one_floor_per_visit"). Reason: the Stomp command ("that cat will wait and stomp again next turn")
+   only makes sense if cats do not stay by default. Chi confirmed floors fall one at a time ("逐层拆").
+   Alternatives kept for comparison: "stay_until_gone", "all_on_entry".
+A4 A floor's command fires when that floor is destroyed: a turn command sets the direction; Stomp makes the cat stay
+   next turn and destroy the next floor of the same building (if none is left, it just waits).
 A5 Walls, missing tiles, a boulder and another cat's bed block: the cat stays this turn and reverses direction.
-A6 Two cats on one tile fight, and so do two cats that swap tiles head-on; the loser is out and its power is lost
-   (fight_mode="eliminate"). CONFIRMED by Chi in play ("会撞死一个", 2026-09-28). Alternative kept: "absorb".
-A7 Commands are the four direction arrows at $50 each, so $200 buys 4 (cost_per_command).
-A8 Commands already on the board are part of the level and free; the paw command has no effect.
+A6 Two cats on one tile fight, and so do two cats that swap tiles head-on; the loser is out and its power is lost.
+   CONFIRMED by Chi ("会撞死一个").
+A7 Power Up ($30): effect not yet known; the search leaves it out until its description is transcribed.
+A8 Every command on the board is bought from the $200 budget; the board starts with none.
 A9 After 15 turns the score is the sum of the powers of the cats still in play, in a bed or not.
 """
 
 
-@dataclass
+@dataclass(frozen=True)
 class Rules:
-    entry_mode: str = "one_floor_per_turn"  # or "all_on_entry"
+    entry_mode: str = "one_floor_per_visit"  # or "stay_until_gone" | "all_on_entry"
     fight_mode: str = "eliminate"  # or "absorb"
     turns: int = 15
     budget: int = 200
-    cost_per_command: int = 50
 
 
-@dataclass
-class Cat:
-    color: str  # "R" | "G" | "B"
-    r: int
-    c: int
-    d: str = "E"
-    power: float = 0
-    stuck: int = 0
-    in_bed: bool = False
-    out: bool = False
-
-
-# Board legend. Buildings: H = high value (2 x 500), L = low value (2 x 250), P = power plant (1 floor, x2).
-# A building cell may carry commands per floor, top floor first, e.g. ("L", None, "E") = bottom floor points east.
-# Read off the photo on 2026-09-28; floor positions of the pre-placed icons are a best reading of a slanted shot.
-BOARD = [
-    # c0        c1      c2                 c3        c4                 c5                  c6
-    ["startB", ("L",), ("L", None, "E"),  ("H",),   ("L", None, "paw"), "grass",            None],
-    [None,     "grass", "mud",             ("P",),   ("H",),            ("L",),             "bedR"],
-    ["startR", ("H",), ("L", "N", None),   "grass",  "spike",           ("H", "E", None),   "bedG"],
-    [None,     "grass", ("P",),            "boulder", ("L",),           ("L",),             "bedB"],
-    ["startG", ("H",), ("L",),             "grass",  ("P",),            ("L", "rev", "N"),  None],
+# Board legend. H = high value (2 x 500), L = low value (2 x 250), P = power plant (1 floor, x2).
+# BOARD_B: the board from Chi's second photo (2026-09-28), with Chi's own draft commands removed.
+BOARD_B = [
+    # c0        c1       c2        c3       c4         c5       c6
+    ["startB", "L",     "L",      "grass", "H",       "P",     None],
+    [None,     "L",     "spike",  "L",     "grass",   "P",     "bedR"],
+    ["startR", "L",     "L",      "grass", "boulder", "H",     "bedG"],
+    [None,     "H",     "P",      "mud",   "grass",   "H",     "bedB"],
+    ["startG", "H",     "L",      "grass", "L",       "L",     None],
 ]
+# BOARD_A: the board from Chi's first photo (a different layout), empty.
+BOARD_A = [
+    ["startB", "L",     "L",      "H",       "L",     "grass", None],
+    [None,     "grass", "mud",    "P",       "H",     "L",     "bedR"],
+    ["startR", "H",     "L",      "grass",   "spike", "H",     "bedG"],
+    [None,     "grass", "P",      "boulder", "L",     "L",     "bedB"],
+    ["startG", "H",     "L",      "grass",   "P",     "L",     None],
+]
+BOARD = BOARD_B
 
 FLOOR_VALUE = {"H": 500, "L": 250, "P": "x2"}
 FLOORS = {"H": 2, "L": 2, "P": 1}
 
 
-@dataclass
-class Tile:
-    kind: str  # grass | mud | spike | boulder | bed | building | rubble
-    bed: str | None = None
-    floors: list = field(default_factory=list)  # [(value, command)], top floor first
-
-
-def build_board(board=BOARD):
-    tiles, starts = {}, {}
+def parse(board):
+    """-> (kind grid dict, starts, building list). Buildings are indexed; floors[i] counts floors left."""
+    kinds, starts, buildings = {}, {}, []
     for r, row in enumerate(board):
         for c, cell in enumerate(row):
             if cell is None:
                 continue
-            if isinstance(cell, tuple):
-                kind, cmds = cell[0], list(cell[1:]) + [None] * FLOORS[cell[0]]
-                tiles[(r, c)] = Tile("building", floors=[[FLOOR_VALUE[kind], cmds[i]] for i in range(FLOORS[kind])])
+            if cell in FLOORS:
+                kinds[(r, c)] = ("building", len(buildings))
+                buildings.append(((r, c), cell))
             elif cell.startswith("start"):
-                tiles[(r, c)] = Tile("grass")
+                kinds[(r, c)] = ("grass", None)
                 starts[cell[-1]] = (r, c)
             elif cell.startswith("bed"):
-                tiles[(r, c)] = Tile("bed", bed=cell[-1])
+                kinds[(r, c)] = ("bed", cell[-1])
             else:
-                tiles[(r, c)] = Tile(cell)
-    return tiles, starts
+                kinds[(r, c)] = (cell, None)
+    return kinds, starts, buildings
 
 
-def simulate(plan: dict | None = None, rules: Rules = Rules(), board=BOARD, trace: list | None = None):
-    """plan maps (r, c, floor_index_from_top) -> "N"|"S"|"E"|"W". Returns (score, cats, destroyed_floor_events)."""
-    plan = plan or {}
-    tiles, starts = build_board(board)
-    for (r, c, i), d in plan.items():
-        tiles[(r, c)].floors[i][1] = d
-    cats = [Cat(col, *starts[col]) for col in ("R", "G", "B")]
-    arrivals = 0
-    events = []  # (turn, cat_color, r, c, floor_index) for every destroyed floor, in order
+class Game:
+    """Simulator over plain-tuple states so search can hash and copy them cheaply.
 
-    def smash(cat, tile, turn):
-        idx = FLOORS_TOTAL[(cat.r, cat.c)] - len(tile.floors)
-        value, cmd = tile.floors.pop(0)
-        cat.power = cat.power * 2 if value == "x2" else cat.power + value
-        events.append((turn, cat.color, cat.r, cat.c, idx))
-        if cmd in DIRS:
-            cat.d = cmd
-        elif cmd == "rev":
-            cat.d = REVERSE[cat.d]
-        if not tile.floors:
-            tile.kind = "rubble"
+    state = (turn, cats, floors_left, arrivals, money)
+    cat   = (color, r, c, d, power, stuck, stomp, status)   status: "" | "bed" | "out"
+    """
 
-    FLOORS_TOTAL = {pos: len(t.floors) for pos, t in tiles.items() if t.kind == "building"}
+    def __init__(self, board=BOARD, rules: Rules = Rules(), colors=("R", "G", "B")):
+        self.rules = rules
+        self.kinds, starts, self.buildings = parse(board)
+        cats = tuple((col, *starts[col], "E", 0, 0, 0, "") for col in colors)
+        floors = tuple(FLOORS[kind] for _, kind in self.buildings)
+        self.initial = (0, cats, floors, 0, rules.budget)
 
-    for turn in range(1, rules.turns + 1):
-        moved = []  # cats that entered a new tile this turn
-        origin = {}  # color -> tile it left this turn
-        for cat in cats:
-            if cat.out or cat.in_bed:
+    def floor_id(self, b, floors_left):
+        """(r, c, floor index from the top) of the floor about to be destroyed in building b."""
+        (r, c), kind = self.buildings[b]
+        return (r, c, FLOORS[kind] - floors_left)
+
+    def step(self, state, choose):
+        """Advance one turn. `choose(cat_color, floor_id, money)` returns the command on the floor being destroyed
+        (None for no command). Returns the next state, or None if a choice exceeds the budget."""
+        turn, cats, floors, arrivals, money = state
+        cats = [list(k) for k in cats]
+        floors = list(floors)
+        rules = self.rules
+        moved, origin = [], {}
+
+        smash_now = []  # cats that destroy a floor this turn without moving (stomp / stay_until_gone)
+        for k in cats:
+            color, r, c, d, power, stuck, stomp, status = k
+            if status:
                 continue
-            here = tiles[(cat.r, cat.c)]
-            if cat.stuck:
-                cat.stuck -= 1
+            if stuck:
+                k[5] = stuck - 1
                 continue
-            if here.kind == "building" and here.floors and rules.entry_mode == "one_floor_per_turn":
-                smash(cat, here, turn)
+            kind, b = self.kinds[(r, c)]
+            if stomp:
+                k[6] = 0
+                if kind == "building" and floors[b]:
+                    smash_now.append(k)
                 continue
-            dr, dc = DIRS[cat.d]
-            nxt = tiles.get((cat.r + dr, cat.c + dc))
-            if nxt is None or nxt.kind == "boulder" or (nxt.kind == "bed" and nxt.bed != cat.color):
-                cat.d = REVERSE[cat.d]
+            if rules.entry_mode == "stay_until_gone" and kind == "building" and floors[b]:
+                smash_now.append(k)
                 continue
-            origin[cat.color] = (cat.r, cat.c)
-            cat.r, cat.c = cat.r + dr, cat.c + dc
-            moved.append(cat)
+            dr, dc = DIRS[d]
+            nxt = self.kinds.get((r + dr, c + dc))
+            if nxt is None or nxt[0] == "boulder" or (nxt[0] == "bed" and nxt[1] != color):
+                k[3] = REVERSE[d]
+                continue
+            origin[color] = (r, c)
+            k[1], k[2] = r + dr, c + dc
+            moved.append(k)
 
         def fight(group):
-            group.sort(key=lambda k: (-k.power, BED_RANK[k.color]))
-            winner = group[0]
+            group.sort(key=lambda k: (-k[4], BED_RANK[k[0]]))
             for loser in group[1:]:
                 if rules.fight_mode == "absorb":
-                    winner.power += loser.power
-                loser.out = True
+                    group[0][4] += loser[4]
+                loser[7] = "out"
 
-        # Head-on swap: two cats crossing each other's tiles collide (Chi, 2026-09-28: "会撞死一个").
-        for a in moved:
-            for b in moved:
-                if a.color < b.color and not a.out and not b.out \
-                        and origin[a.color] == (b.r, b.c) and origin[b.color] == (a.r, a.c):
+        for i, a in enumerate(moved):  # head-on swaps
+            for b in moved[i + 1:]:
+                if not a[7] and not b[7] and origin[a[0]] == (b[1], b[2]) and origin[b[0]] == (a[1], a[2]):
                     fight([a, b])
-
-        # Fights: any tile holding two or more cats in play.
         by_tile = {}
-        for cat in cats:
-            if not cat.out:
-                by_tile.setdefault((cat.r, cat.c), []).append(cat)
+        for k in cats:
+            if k[7] != "out":
+                by_tile.setdefault((k[1], k[2]), []).append(k)
         for group in by_tile.values():
-            if len(group) >= 2:
+            if len(group) > 1:
                 fight(group)
 
-        # Tile effects for cats that entered a tile this turn and are still in play.
+        def smash(k):
+            nonlocal money
+            _, b = self.kinds[(k[1], k[2])]
+            fid = self.floor_id(b, floors[b])
+            kind = self.buildings[b][1]
+            floors[b] -= 1
+            k[4] = k[4] * 2 if FLOOR_VALUE[kind] == "x2" else k[4] + FLOOR_VALUE[kind]
+            cmd = choose(k[0], fid, money)
+            if isinstance(cmd, tuple):  # ("paid", cmd): a command already paid for elsewhere
+                cmd = cmd[1]
+            elif cmd is not None:
+                money -= COST[cmd]
+                if money < 0:
+                    return False
+            if cmd in DIRS:
+                k[3] = cmd
+            elif cmd == "stomp":
+                k[6] = 1
+            return True
+
         arriving = []
-        for cat in moved:
-            if cat.out:
+        for k in smash_now:
+            if k[7] != "out" and not smash(k):
+                return None
+        for k in moved:
+            if k[7] == "out":
                 continue
-            tile = tiles[(cat.r, cat.c)]
-            if tile.kind == "building":
-                smash(cat, tile, turn)
+            kind, b = self.kinds[(k[1], k[2])]
+            if kind == "building" and floors[b]:
+                if not smash(k):
+                    return None
                 if rules.entry_mode == "all_on_entry":
-                    while tile.kind == "building":
-                        smash(cat, tile, turn)
-            elif tile.kind == "mud":
-                cat.stuck = 1
-            elif tile.kind == "spike":
-                cat.power /= 2
-            elif tile.kind == "bed":
-                arriving.append(cat)
-        for cat in sorted(arriving, key=lambda k: k.power):  # simultaneous: lower score enters first
+                    while floors[b]:
+                        if not smash(k):
+                            return None
+            elif kind == "mud":
+                k[5] = 1
+            elif kind == "spike":
+                k[4] = k[4] / 2
+            elif kind == "bed":
+                arriving.append(k)
+        for k in sorted(arriving, key=lambda k: k[4]):  # simultaneous: lower score enters first
             arrivals += 1
-            cat.in_bed = True
-            cat.power = cat.power + 2000 if arrivals == 1 else cat.power * (3 if arrivals == 2 else 5)
+            k[7] = "bed"
+            k[4] = k[4] + 2000 if arrivals == 1 else k[4] * (3 if arrivals == 2 else 5)
 
+        return (turn + 1, tuple(tuple(k) for k in cats), tuple(floors), arrivals, money)
+
+    @staticmethod
+    def score(state):
+        return sum(k[4] for k in state[1] if k[7] != "out")
+
+
+def simulate(plan=None, rules: Rules = Rules(), board=BOARD, trace=None):
+    """Run a fixed plan {(r, c, floor_index_from_top): command}. Returns (score, final_state)."""
+    plan = plan or {}
+    game = Game(board, rules)
+    if sum(COST[v] for v in plan.values()) > rules.budget:
+        raise ValueError("plan exceeds budget")
+    state = game.initial
+    for _ in range(rules.turns):
+        state = game.step(state, lambda color, fid, money: plan.get(fid))
         if trace is not None:
-            trace.append((turn, [(k.color, k.r, k.c, k.d, k.power, "bed" if k.in_bed else "out" if k.out else "")
-                                 for k in cats]))
-
-    score = sum(k.power for k in cats if not k.out)
-    return score, cats, events
+            trace.append(state)
+    return Game.score(state), state
