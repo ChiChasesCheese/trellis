@@ -1,15 +1,20 @@
 {
- "_source": "Tutorial screenshot shared by Chi, 2026-09-27. Rates, periods and raw prices are read off the screen; recipes, the sandwich price and max_rate are GUESSED (not visible) - replace them before trusting a result.",
+ "_source": "Tutorial, Chi's screenshots 2026-09-28. Read off the screen: start $3,000, supplier rates and costs, Bread Maker 10 (max 50, storage 100, Crusty/Crustless), jam 2 h. Derived: sandwich $10 (3,828 - 3,000 + 24 x 35.50 = 168 x 10). NOT on screen, chosen from the 20 settings that reproduce the Initial Test ($3,828, 168 sandwiches; calibrate_tutorial.py): recipes, sandwich 14/h, Crustless Bread, mod fees.",
  "hours": 24,
- "start_cash": 0,
+ "start_cash": 3000,
  "nodes": {
-  "peanut_butter": {"rate": 15, "unit_cost": 0.5},
-  "bread": {"rate": 24, "unit_cost": 0.5},
-  "sugar": {"rate": 30, "unit_cost": 0.2},
-  "strawberry": {"rate": 20, "unit_cost": 0.5},
-  "slices": {"rate": 10, "inputs": {"bread": 1}, "buffs": ["half_input", "double_output"]},
-  "jam": {"rate": 20, "period": 2, "inputs": {"sugar": 1, "strawberry": 1}, "buffs": ["half_input", "double_output", "fast"]},
-  "sandwich": {"rate": 12, "inputs": {"slices": 2, "peanut_butter": 1, "jam": 1}, "price": 25}
- },
- "buff_cost": {"half_input": {"per_unit": 0.25}, "double_output": {"per_unit": 0.25}, "fast": {"flat": 25}}
+  "peanut_butter": {"kind": "supplier", "row": 0, "rate": 15, "unit_cost": 0.5},
+  "dough": {"kind": "supplier", "row": 1, "rate": 24, "unit_cost": 0.5},
+  "sugar": {"kind": "supplier", "row": 2, "rate": 30, "unit_cost": 0.2},
+  "strawberry": {"kind": "supplier", "row": 3, "rate": 20, "unit_cost": 0.5},
+  "bread": {"kind": "maker", "row": 1, "rate": 10,
+            "options": [{"name": "Crusty Bread", "inputs": {"dough": 1}},
+                        {"name": "Crustless Bread", "inputs": {"dough": 2}}],
+            "mods": {"output2x": 0.1, "half": 0.1, "storage2x": 0.05}},
+  "jam": {"kind": "maker", "row": 3, "rate": 20,
+          "options": [{"name": "Jam", "inputs": {"sugar": 1, "strawberry": 1}, "period": 2}],
+          "mods": {"output2x": 0.1, "half": 0.1, "fast": 0.25, "storage2x": 0.05}},
+  "sandwich": {"kind": "seller", "row": 1, "rate": 14,
+               "options": [{"name": "Sandwich", "inputs": {"bread": 1, "peanut_butter": 2, "jam": 1}, "price": 10}]}
+ }
 }
