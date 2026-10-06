@@ -68,12 +68,14 @@ def cmd_start(a) -> None:
     if dest.exists():
         sys.exit(f"{dest} exists")
     shutil.copytree(d / "starter", dest, ignore=shutil.ignore_patterns("__pycache__", "*.db", ".pytest_cache"))
+    gi = dest / ".gitignore"
+    if not gi.exists():
+        gi.write_text("__pycache__/\n*.pyc\n*.db\n.pytest_cache/\n.ai_screen.json\n")
     _git(dest, "init", "-q")
     _git(dest, "add", "-A")
     subprocess.run(["git", "-C", str(dest), "-c", "user.name=practice", "-c", "user.email=practice@local",
                     "commit", "-qm", "starter"], check=True)
     (dest / ".ai_screen.json").write_text(json.dumps({"cb": a.cb, "t": a.t, "started": dt.datetime.now().isoformat()}))
-    _git(dest, "update-index", "--assume-unchanged", ".ai_screen.json")
     print(f"workspace: {dest}\n  code {dest}    # then `claude` in its terminal\n")
     print((d / "BRIEF.md").read_text())
     print("\n--- the ticket (read it at minute 10, not before) ---\n")
