@@ -1,6 +1,6 @@
 # Add notification fan-out worker for high-severity alerts
 
-**Author:** Dana Whitfield (@dwhitfield) · **Reviewers:** you · **Size:** +512 / -0 (18 files)
+**Author:** Dana Whitfield (@dwhitfield) · **Reviewers:** you · **Size:** +388 / -2 (18 files, tests included)
 
 ## Why
 
