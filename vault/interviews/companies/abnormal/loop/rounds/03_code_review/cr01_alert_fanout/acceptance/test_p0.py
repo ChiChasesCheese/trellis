@@ -37,8 +37,9 @@ def test_cr02_same_alert_id_in_two_tenants_notifies_both():
     rec = Recorder()
     rig = Rig([webhook("acme", "https://hooks.example.com/acme"), webhook("globex", "https://hooks.example.com/globex")], {"webhook": rec})
     rig.queue.send(alert_body(tenant="acme", alert_id="1001"))
+    rig.worker.run_once()  # one batch at a time: the cache must remember acme's alert...
     rig.queue.send(alert_body(tenant="globex", alert_id="1001"))
-    rig.worker.run_once()
+    rig.worker.run_once()  # ...without it swallowing globex's
     assert sorted(s[1] for s in rec.sent) == ["https://hooks.example.com/acme", "https://hooks.example.com/globex"]
     rig.close()
 
