@@ -131,7 +131,7 @@ def scan_duplicates(
                     if p not in bad:
                         classes.append([p])
             groups.extend(classes)
-    return ScanResult(_finish(g for g in groups if not (set(g) & bad) or True), skipped + len(bad))
+    return ScanResult(_finish(groups), skipped + len(bad))
 
 
 def find_duplicates(root: str, chunk_size: int = DEFAULT_CHUNK) -> list[list[str]]:

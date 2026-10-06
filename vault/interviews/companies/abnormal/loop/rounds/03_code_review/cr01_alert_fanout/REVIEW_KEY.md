@@ -19,7 +19,7 @@
 | CR-10 | `queue.py:59,65,72`（diff 外） | P2 | receipt handle 就是消息 id，不是"每次投递一个" | visibility 过期后消息被 B 收到，A 慢了一步 `delete(old receipt)` 会删掉 B 正在处理的消息。需要超时与慢处理叠加才触发，所以 P2；但修了 CR-01 之后 visibility 的语义就依赖它 | 每次 `receive` 生成新 receipt（uuid），`delete`/`change_visibility` 按 receipt 匹配 | `test_cr10_stale_receipt_cannot_delete_a_redelivered_message` |
 | CR-11 | `worker.py:81-82` | P2 | 把 UTC 字符串去掉 `Z` 变成 naive datetime，再减 `datetime.now()`（本地时间） | 非 UTC 主机上告警年龄偏差若干小时，误判 stale 而静默丢弃；生产全是 UTC 所以概率低；但测试机/开发机会不一致 | 解析为 aware（`+00:00`），与 `datetime.now(timezone.utc)` 比较 | `test_cr11_staleness_check_is_timezone_independent` |
 | CR-12 | `worker.py:93` | P2 | 每条消息各查一次租户渠道（N+1） | 一批 10 条同租户 = 10 次查询；sqlite 现在不痛，换 Postgres 后是延迟和连接数放大器 | 每批按租户缓存一次，或 `IN (...)` 批量查 | `test_cr12_channel_config_is_fetched_once_per_tenant_per_batch` |
-| CR-13 | `worker.py:70-112`；`tests/` | P2 | `process_message` 40+ 行做六件事；魔法数字（900/3600/3）散落；测试只有 happy path，没有任何失败路径 | 不是故障本身，但正是它让 CR-01/03/08 逃过了测试：评审里应当指出"没有测试覆盖失败路径"并要求补 | 拆成 解析/过滤/发送/收尾；阈值进 `Settings`；补 `tests/test_failure_paths.py`（solution 里有示例） | solution 自带 `tests/test_failure_paths.py`（3 个测试） |
+| CR-13 | `worker.py:69-112`；`tests/` | P2 | `process_message` 44 行做六件事；魔法数字（900/3600/3）散落；测试只有 happy path，没有任何失败路径 | 不是故障本身，但正是它让 CR-01/03/08 逃过了测试：评审里应当指出"没有测试覆盖失败路径"并要求补 | 拆成 解析/过滤/发送/收尾；阈值进 `Settings`；补 `tests/test_failure_paths.py`（solution 里有示例） | solution 自带 `tests/test_failure_paths.py`（3 个测试） |
 
 ## 评审中的"陷阱"与判断
 
