@@ -2,11 +2,12 @@ from __future__ import annotations
 
 from typing import Any
 
-from sentinel.enrichment.base import Enricher, EnrichmentContext
+from sentinel.enrichment.base import Enricher, EnrichmentContext, register_enricher
 from sentinel.models import SecurityEvent
 from sentinel.timeutil import iso
 
 
+@register_enricher
 class HistoryEnricher(Enricher):
     """What we already know about this user. Reads the stored geo of past events and the
     current event's geo (so it must run after GeoIpEnricher)."""

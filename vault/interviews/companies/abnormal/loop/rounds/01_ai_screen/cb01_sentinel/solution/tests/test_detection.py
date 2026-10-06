@@ -188,3 +188,64 @@ def test_apply_drops_and_audits(make_event):
     assert [h.rule_id for h in kept] == ["brute_force"]
     assert metrics.get("suppression.applied", rule="known_bad_ip") == 1
     assert service.apply(make_event(tenant_id="globex"), hits) == hits
+
+
+# ---------------------------------------------------------------- alert dedup
+
+
+def _dedup_service(window=60):
+    from dataclasses import replace
+
+    conn = connect()
+    migrate(conn)
+    settings = load_settings("acme")
+    settings = replace(settings, alerts=replace(settings.alerts, dedup_window_minutes=window))
+    repo = AlertRepository(conn)
+    return AlertService(settings, repo, AssetCatalog(settings.alerts.assets), lambda: NOW), repo
+
+
+HIT = [RuleHit("brute_force", ThreatLevel.MEDIUM, "spray")]
+
+
+def test_repeats_inside_the_window_merge(make_event):
+    service, repo = _dedup_service()
+    base = make_event(ts=NOW)
+    first = service.create_from(base, HIT)
+    second = service.create_from(make_event(ts=NOW + timedelta(minutes=50)), [RuleHit("brute_force", ThreatLevel.HIGH, "spray")])
+    third = service.create_from(make_event(ts=NOW + timedelta(minutes=100)), HIT)  # 50 min after the last one
+    assert first.id == second.id == third.id
+    stored = repo.get("acme", first.id)
+    assert stored.event_count == 3 and len(stored.event_ids) == 3
+    assert stored.threat_level is ThreatLevel.HIGH  # the highest level seen wins
+    assert repo.count("acme") == 1
+
+
+def test_different_source_or_window_opens_a_new_alert(make_event):
+    service, repo = _dedup_service(window=30)
+    first = service.create_from(make_event(ts=NOW), HIT)
+    assert service.create_from(make_event(ts=NOW, user="bob@acme.test"), HIT).id != first.id
+    assert service.create_from(make_event(ts=NOW + timedelta(minutes=31)), HIT).id != first.id
+    assert repo.count("acme") == 3
+
+
+def test_acked_alert_is_not_reopened_by_new_events(make_event):
+    service, repo = _dedup_service()
+    first = service.create_from(make_event(ts=NOW), HIT)
+    repo.set_status("acme", first.id, AlertStatus.ACKED)
+    second = service.create_from(make_event(ts=NOW + timedelta(minutes=1)), HIT)
+    assert second.id != first.id and repo.get("acme", first.id).event_count == 1
+
+
+def test_window_zero_disables_dedup(make_event):
+    service, repo = _dedup_service(window=0)
+    service.create_from(make_event(ts=NOW), HIT)
+    service.create_from(make_event(ts=NOW), HIT)
+    assert repo.count("acme") == 2
+
+
+def test_event_count_raises_the_score(make_event):
+    service, _ = _dedup_service()
+    one = service.create_from(make_event(ts=NOW, user="x@acme.test"), HIT)
+    score_one = one.score
+    again = service.create_from(make_event(ts=NOW, user="x@acme.test"), HIT)
+    assert again.score > score_one

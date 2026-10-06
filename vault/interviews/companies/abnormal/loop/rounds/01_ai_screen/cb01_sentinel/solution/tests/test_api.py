@@ -79,3 +79,10 @@ def test_suppressed_rule_raises_no_alert(app, acme, tmp_path, make_event):
     app.pipeline.run([first, second])
     rules = [a["rule_ids"] for a in acme.get("/alerts").json["items"]]
     assert rules == [["new_country_login"]]  # travel muted, the other rule still alerts
+
+
+def test_alert_listing_shows_event_count(app, acme, events_dir):
+    _seed(app, events_dir)
+    items = acme.get("/alerts").json["items"]
+    assert all(a["event_count"] >= 1 and a["last_seen"] for a in items)
+    assert max(a["event_count"] for a in items) == 5  # the brute-force burst from the fixture

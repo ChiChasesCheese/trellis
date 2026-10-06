@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import math
 from collections.abc import Sequence
 from pathlib import Path
 
@@ -42,6 +43,9 @@ def score(
     criticality: float,
     age_hours: float,
     half_life_hours: float,
+    event_count: int = 1,
 ) -> float:
+    """Severity weight x criticality x decay, nudged up (+25% per doubling) for alerts covering many events."""
     decay = 0.5 ** (max(age_hours, 0.0) / half_life_hours)
-    return float(f"{weights[level.name] * criticality * decay:.6g}")
+    volume = 1 + 0.25 * math.log2(max(event_count, 1))
+    return float(f"{weights[level.name] * criticality * decay * volume:.6g}")

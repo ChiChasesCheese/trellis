@@ -17,7 +17,7 @@ def iw_json(root, db, *args):
     return json.loads(proc.stdout)
 
 
-HENRY = "henry.ross@acme.example"  # two night bursts: 09-02..09-03 (45 alerts) and 09-27 (22 alerts)
+HENRY = "henry.ross@acme.example"  # two night bursts: 09-02..09-03 (26 alerts) and 09-27 (22 alerts)
 ORDER = {"low": 0, "medium": 1, "high": 2}
 
 

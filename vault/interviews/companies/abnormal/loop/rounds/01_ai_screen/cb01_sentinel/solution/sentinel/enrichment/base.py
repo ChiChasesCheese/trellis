@@ -34,3 +34,14 @@ class Enricher(ABC):
     @abstractmethod
     def enrich(self, event: SecurityEvent, ctx: EnrichmentContext) -> dict[str, Any]:
         """Return facts about ``event``, or ``{}`` when the enricher does not apply."""
+
+
+#: built-in enrichers by name. Tenant plugins are *not* added here (see enrichment/plugins.py).
+ENRICHERS: dict[str, type[Enricher]] = {}
+
+
+def register_enricher(cls: type[Enricher]) -> type[Enricher]:
+    if cls.name in ENRICHERS:
+        raise ValueError(f"duplicate enricher name: {cls.name}")
+    ENRICHERS[cls.name] = cls
+    return cls

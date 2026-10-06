@@ -11,6 +11,7 @@ class OktaConnector(Connector):
     source = "okta"
 
     def parse_page(self, payload: dict) -> tuple[list[dict], str | None]:
+        # TODO: the real API paginates with a Link header, not a body field.
         return payload["data"], payload.get("next")
 
     def normalize(self, raw: RawRecord) -> Event | None:

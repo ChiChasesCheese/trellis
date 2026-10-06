@@ -27,6 +27,9 @@ class Alert:
     created_at: datetime
     event_ids: list[str] = field(default_factory=list)
     status: AlertStatus = AlertStatus.OPEN
+    event_count: int = 1
+    last_seen: datetime | None = None
+    dedup_key: str = ""
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -39,6 +42,8 @@ class Alert:
             "status": self.status.value,
             "created_at": iso(self.created_at),
             "event_ids": self.event_ids,
+            "event_count": self.event_count,
+            "last_seen": iso(self.last_seen or self.created_at),
         }
 
 

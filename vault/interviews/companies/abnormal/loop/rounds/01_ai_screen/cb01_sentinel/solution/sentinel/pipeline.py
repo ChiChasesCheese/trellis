@@ -64,17 +64,17 @@ class Pipeline:
 
     def ingest_dir(self, root: Path, tenant_id: str) -> list[Alert]:
         """Collect every source under ``root`` for one tenant and run the pipeline."""
-        self.settings.for_tenant(tenant_id)  # fail fast on an unknown/invalid tenant config
+        self._runtime(tenant_id)  # fail fast on a bad tenant config (unknown enrichers, broken plugin)
         return self.run(collect_all(root, tenant_id))
 
     def run(self, events: Iterable[SecurityEvent]) -> list[Alert]:
-        """Process events oldest-first; returns the alerts they produced."""
-        alerts: list[Alert] = []
+        """Process events oldest-first; returns the alerts they created or updated (each once)."""
+        touched: dict[str, Alert] = {}
         for event in sorted(events, key=lambda e: (e.ts, e.id)):
             alert = self.process(event)
             if alert is not None:
-                alerts.append(alert)
-        return alerts
+                touched[alert.id] = alert
+        return list(touched.values())
 
     def process(self, event: SecurityEvent) -> Alert | None:
         runtime = self._runtime(event.tenant_id)

@@ -11,6 +11,7 @@ from ..config import Config
 from .console import format_alert
 
 
+# TODO(INSIDER-256): a sender process that drains `outbox` and POSTs to the webhook.
 class SlackWebhookNotifier:
     def __init__(self, conn: sqlite3.Connection, config: Config) -> None:
         self._conn = conn

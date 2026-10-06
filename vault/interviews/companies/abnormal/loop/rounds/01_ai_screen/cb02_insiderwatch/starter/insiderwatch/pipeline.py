@@ -85,6 +85,7 @@ class Pipeline:
         summary = ReplaySummary()
         watermark = self._watermark()
         limit = day_end(until)
+        # TODO: stream day by day; this holds every event of every source in memory.
         events: list[Event] = []
         for connector in self._connectors:
             for ev in connector.events():

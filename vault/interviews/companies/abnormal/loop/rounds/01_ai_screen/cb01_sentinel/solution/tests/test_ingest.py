@@ -171,7 +171,8 @@ def test_fixture_run_produces_expected_alerts(app, events_dir):
             by_rule.setdefault(rid, []).append(a)
     assert len(by_rule["impossible_travel"]) == 1
     assert len(by_rule["new_country_login"]) == 3  # alice -> SG, carol -> DE, bob -> DE
-    assert len(by_rule["brute_force"]) == 5  # attempts 4..8 at acme's threshold of 4
+    (flood,) = by_rule["brute_force"]  # attempts 4..8 at acme's threshold of 4 fold into one alert
+    assert flood.event_count == 5
     assert len(by_rule["rare_admin_action"]) == 2
     assert max(a.threat_level for a in alerts).name == "CRITICAL"
 
@@ -207,3 +208,72 @@ def test_rules_command():
 def test_config_error_exits_2(tmp_path, capsys):
     assert main(["ingest", str(tmp_path), "--tenant", "Bad Name", "--db", str(tmp_path / "x.db")]) == 2
     assert "invalid tenant" in capsys.readouterr().err
+
+
+# ---------------------------------------------------------------- configurable enrichment
+
+import textwrap  # noqa: E402
+
+from sentinel.config import build_settings  # noqa: E402
+from sentinel.enrichment import ENRICHERS  # noqa: E402
+
+PLUGIN = textwrap.dedent(
+    '''
+    from sentinel.enrichment.base import Enricher
+
+    class AsnOwner(Enricher):
+        name = "asn_owner"
+        requires = ("geo",)
+
+        def enrich(self, event, ctx):
+            asn = event.enrichment["geo"].get("asn")
+            return {"owner": f"AS{asn}"} if asn else {}
+
+    class Exploding(Enricher):
+        name = "exploding"
+
+        def enrich(self, event, ctx):
+            raise RuntimeError("boom")
+    '''
+)
+
+
+def _service(tmp_path, enabled):
+    plugins = tmp_path / "plugins"
+    plugins.mkdir(exist_ok=True)
+    (plugins / "mine.py").write_text(PLUGIN)
+    (plugins / "_helper.py").write_text("raise RuntimeError('underscore files are skipped')")
+    raw = {"enrichment": {"geoip": "intel/geoip.json", "bad_ips": "intel/bad_ips.json", "enabled": enabled, "plugin_dirs": [str(plugins)]}}
+    settings = build_settings("acme", {**{"alerts": {"assets": "assets.json"}, "ranking": {}}, **raw}, FIXTURES_DIR, tmp_path)
+    conn = connect()
+    migrate(conn)
+    return EnrichmentService(settings, EventRepository(conn))
+
+
+def test_builtins_register_themselves():
+    assert set(ENRICHERS) == {"geo", "history", "threat_intel"}
+
+
+def test_plugin_runs_after_its_dependency(tmp_path, make_event):
+    svc = _service(tmp_path, ["asn_owner", "geo"])  # listed out of order on purpose
+    assert [e.name for e in svc._enrichers] == ["geo", "asn_owner"]
+    event = svc.enrich(make_event())
+    assert event.enrichment["asn_owner"] == {"owner": "AS64500"}
+
+
+def test_unlisted_enrichers_do_not_run(tmp_path, make_event):
+    event = _service(tmp_path, ["geo"]).enrich(make_event())
+    assert set(event.enrichment) == {"geo"}
+
+
+def test_failing_plugin_is_counted_and_others_continue(tmp_path, make_event):
+    event = _service(tmp_path, ["exploding", "geo"]).enrich(make_event())
+    assert "exploding" not in event.enrichment and "geo" in event.enrichment
+    assert metrics.get("enrichment.error", enricher="exploding") == 1
+
+
+def test_config_errors_surface_at_startup(tmp_path):
+    with pytest.raises(ConfigError, match="unknown enrichers: nope"):
+        _service(tmp_path, ["geo", "nope"])
+    with pytest.raises(ConfigError, match="requires 'geo'"):
+        _service(tmp_path, ["history"])

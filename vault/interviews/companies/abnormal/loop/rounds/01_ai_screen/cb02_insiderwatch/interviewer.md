@@ -17,7 +17,7 @@
 | dave.kim | 合作伙伴经理，每天外享 2-4 次，被裁，行为如常 | t1 不能误报 |
 | frank.okafor | 没有任何 HR 离职信息，却从 09-21 开始每天外享 4 次 | t1 不该产生离职告警 |
 | gina.park | 09-18 已离职，账号 09-22/23 仍在使用 | t1 stretch |
-| henry.ross | "夜间爆发"的坏人：09-02/03 与 09-27 各一次，共 ~70 条告警 | t2 |
+| henry.ross | "夜间爆发"的坏人：09-02/03 与 09-27 各一次，共 48 条告警（26 + 22） | t2 |
 | alice.nguyen | 三个旧信号各触发一次（volume_spike / off_hours / 新国家登录） | 回归 |
 | jack.lee / kim.sato | 只出现在 `fixtures/raw/gdrive/` | t3 |
 
@@ -111,7 +111,7 @@
 
 ### ④ 追问
 
-1. "Henry has two bursts three weeks apart and a third later the same night. Show me how your window handles that."
+1. "Henry has one burst on 09-02/03 and another three weeks later. Show me how your window handles that."
 2. "What if 10x the alerts: what query runs per alert in `assign`, and what index does it use?"（`idx_cases_user_status`）
 3. "Replay stops at 09-02, an analyst closes the case, replay continues. Walk me through what the analyst sees."（stretch 验收即此场景）
 4. "How would you roll this out? Customers already have scripts reading `alerts`."（保持 `alerts` 不变；case 只增不改；flag）

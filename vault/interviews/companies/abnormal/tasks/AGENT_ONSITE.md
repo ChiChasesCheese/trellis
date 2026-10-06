@@ -67,3 +67,7 @@ REPORT.md        快照规模、红鲱鱼清单、awsim 支持的查询、测试
 - Part 3 **(reconstructed)**：`plan_deletions(groups, policy)` 选保留哪一个（最早 mtime / 最短路径 / 指定目录优先），返回要删的列表，`dry_run` 默认 True；以及近似重复（视觉相同但字节不同）：输入给 8×8 灰度矩阵（不依赖 PIL），实现 average hash + 汉明距离阈值分组（只讲 + 小实现）。
 - `problem.md` 的追问与 §SD：内存受限、海量文件（分布式：按大小/前缀哈希分片、MapReduce 式两阶段）、对象存储（S3 ETag 不等于内容哈希的坑）、照片去重服务（上传时 perceptual hash + 近邻索引）。
 - 测试用 `tmp_path` 建文件；`perf`：2 万个小文件 + 若干大文件 < 2 s。题解文章 `study/30-articles/pc01_image_dedup.md`（模板 `../../millennium/study/30-articles/_TEMPLATE.md`）。
+
+## 4. 若 Write 工具拒绝写 `REPORT.md`
+
+子代理环境可能拒绝写名为 REPORT 的文件。**不要绕过**：把 REPORT.md 的完整内容放在最终回复里（标题 `## REPORT.md`），编排者保存。

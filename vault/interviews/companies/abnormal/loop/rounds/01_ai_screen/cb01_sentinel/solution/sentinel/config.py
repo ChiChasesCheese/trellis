@@ -22,6 +22,10 @@ DEFAULT_DB = REPO_ROOT / "var" / "sentinel.db"
 class EnrichmentSettings:
     geoip: Path
     bad_ips: Path
+    # Names of the enrichers to run, in any order (dependencies are sorted out at startup).
+    # None means "all built-ins". Plugin enrichers only run when listed here.
+    enabled: tuple[str, ...] | None = None
+    plugin_dirs: tuple[Path, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -39,6 +43,8 @@ class RankingSettings:
 @dataclass(frozen=True)
 class AlertSettings:
     assets: Path
+    # An open alert absorbs matching events seen within this many minutes of its last one. 0 disables.
+    dedup_window_minutes: int = 60
 
 
 @dataclass(frozen=True)
@@ -55,10 +61,10 @@ class Settings:
 _TENANT_RE = re.compile(r"^[a-z0-9][a-z0-9_-]*$")
 
 _ALLOWED: dict[str, set[str]] = {
-    "enrichment": {"geoip", "bad_ips"},
+    "enrichment": {"geoip", "bad_ips", "enabled", "plugin_dirs"},
     "threat": {"escalate_at"},
     "ranking": {"half_life_hours", "weights"},
-    "alerts": {"assets"},
+    "alerts": {"assets", "dedup_window_minutes"},
 }
 
 
@@ -90,7 +96,7 @@ def _section(raw: dict[str, Any], name: str) -> dict[str, Any]:
     return data
 
 
-def build_settings(tenant: str, raw: dict[str, Any], fixtures_dir: Path) -> Settings:
+def build_settings(tenant: str, raw: dict[str, Any], fixtures_dir: Path, base_dir: Path) -> Settings:
     unknown = set(raw) - set(_ALLOWED) - {"rules"}
     if unknown:
         raise ConfigError(f"unknown config sections: {', '.join(sorted(unknown))}")
@@ -110,17 +116,31 @@ def build_settings(tenant: str, raw: dict[str, Any], fixtures_dir: Path) -> Sett
     if not isinstance(half_life, (int, float)) or half_life <= 0:
         raise ConfigError("[ranking] half_life_hours must be > 0")
 
+    dedup = alerts.get("dedup_window_minutes", 60)
+    if not isinstance(dedup, int) or isinstance(dedup, bool) or dedup < 0:
+        raise ConfigError("[alerts] dedup_window_minutes must be an integer >= 0")
+
+    enabled = enr.get("enabled")
+    plugin_dirs = enr.get("plugin_dirs", [])
+    for key, value in (("enabled", enabled or []), ("plugin_dirs", plugin_dirs)):
+        if not isinstance(value, list) or not all(isinstance(v, str) for v in value):
+            raise ConfigError(f"[enrichment] {key} must be a list of strings")
+
     try:
         return Settings(
             tenant=tenant,
             enrichment=EnrichmentSettings(
-                geoip=fixtures_dir / enr["geoip"], bad_ips=fixtures_dir / enr["bad_ips"]
+                geoip=fixtures_dir / enr["geoip"],
+                bad_ips=fixtures_dir / enr["bad_ips"],
+                enabled=tuple(enabled) if enabled is not None else None,
+                # relative plugin directories are relative to the repository root, not the CWD
+                plugin_dirs=tuple(base_dir / d for d in plugin_dirs),
             ),
             threat=ThreatSettings(escalate_at=escalate_at),
             ranking=RankingSettings(
                 half_life_hours=float(half_life), weights=dict(rank.get("weights", {}))
             ),
-            alerts=AlertSettings(assets=fixtures_dir / alerts["assets"]),
+            alerts=AlertSettings(assets=fixtures_dir / alerts["assets"], dedup_window_minutes=dedup),
             rules=rules,
         )
     except KeyError as exc:
@@ -136,7 +156,7 @@ def load_settings(
     override = config_dir / "tenants" / f"{tenant}.toml"
     if override.exists():
         raw = _merge(raw, _read(override))
-    return build_settings(tenant, raw, fixtures_dir)
+    return build_settings(tenant, raw, fixtures_dir, config_dir.parent)
 
 
 class SettingsProvider:

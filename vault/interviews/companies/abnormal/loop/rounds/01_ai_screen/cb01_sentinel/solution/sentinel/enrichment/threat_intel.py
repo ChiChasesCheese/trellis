@@ -6,7 +6,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
-from sentinel.enrichment.base import Enricher, EnrichmentContext
+from sentinel.enrichment.base import Enricher, EnrichmentContext, register_enricher
 from sentinel.models import SecurityEvent
 
 
@@ -17,6 +17,7 @@ def _load(path: Path) -> tuple[dict[str, dict], list[tuple[ipaddress._BaseNetwor
     return dict(raw.get("ips", {})), nets
 
 
+@register_enricher
 class ThreatIntelEnricher(Enricher):
     name = "threat_intel"
 

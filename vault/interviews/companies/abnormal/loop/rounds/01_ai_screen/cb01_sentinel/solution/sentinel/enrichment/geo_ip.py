@@ -9,7 +9,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
-from sentinel.enrichment.base import Enricher, EnrichmentContext
+from sentinel.enrichment.base import Enricher, EnrichmentContext, register_enricher
 from sentinel.models import SecurityEvent
 
 EARTH_RADIUS_KM = 6371.0088
@@ -67,6 +67,7 @@ def load_geo_db(path: Path) -> GeoDb:
     )
 
 
+@register_enricher
 class GeoIpEnricher(Enricher):
     name = "geo"
 

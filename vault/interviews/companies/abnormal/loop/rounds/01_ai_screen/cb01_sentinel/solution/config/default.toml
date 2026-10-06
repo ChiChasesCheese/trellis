@@ -18,6 +18,7 @@ CRITICAL = 15
 
 [alerts]
 assets = "assets.json"
+dedup_window_minutes = 60
 
 [rules.impossible_travel]
 max_speed_kmh = 900

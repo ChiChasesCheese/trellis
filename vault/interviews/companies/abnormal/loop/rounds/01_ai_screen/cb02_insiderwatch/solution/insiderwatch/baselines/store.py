@@ -70,6 +70,7 @@ class BaselineStore:
                     (user, country, day),
                 )
 
+    # TODO(INSIDER-198): keep percentile sketches instead of re-reading the daily rows on every call.
     def get(self, user: str, action: Action, as_of: date) -> Baseline | None:
         """Baseline of `user`'s daily `action` activity before `as_of`; None during cold start."""
         row = self._conn.execute("SELECT first_day FROM user_activity WHERE user = ?", (user,)).fetchone()

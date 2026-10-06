@@ -58,7 +58,7 @@ def main(argv: list[str] | None = None, out=None) -> int:
         elif args.command == "alerts":
             status = AlertStatus(args.status) if args.status else None
             for a in AlertRepository(app.conn).list(args.tenant, status=status, limit=args.limit):
-                print(f"{a.id}  {a.threat_level.name:8} {a.score:10.4g}  {a.status.value:6}  {a.title}", file=out)
+                print(f"{a.id}  {a.threat_level.name:8} {a.score:10.4g}  {a.status.value:6}  x{a.event_count:<4} {a.title}", file=out)
         elif args.command == "serve":
             from wsgiref.simple_server import make_server
 

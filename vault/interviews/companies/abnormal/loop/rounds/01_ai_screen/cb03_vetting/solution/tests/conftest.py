@@ -74,3 +74,38 @@ def write_json(path: Path, data) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data))
     return path
+
+
+def gh_record(app_id, first, last, phone, ip, *, country="US", email=None, digest=None, author=None, resume_name=None):
+    """A Greenhouse application dict for tests that need specific overlaps."""
+    full = f"{first} {last}"
+    email = email or f"{first}.{last}.{app_id}@example.com".lower()
+    return {
+        "id": app_id,
+        "applied_at": "2026-09-20T12:00:00Z",
+        "candidate": {
+            "first_name": first,
+            "last_name": last,
+            "email_addresses": [{"value": email}],
+            "phone_numbers": [{"value": phone}],
+            "location": {"country": country},
+        },
+        "submission": {"ip_address": ip, "user_agent": "FixtureBrowser/1.0"},
+        "attachments": [
+            {
+                "type": "resume",
+                "metadata": {
+                    "author": author or full,
+                    "creator_tool": "Example Word 16.0",
+                    "sha256": digest or f"{app_id:064x}",
+                    "extracted": {"name": resume_name or full, "email": email, "phone": phone},
+                },
+            }
+        ],
+    }
+
+
+def ingest(db_path, tenant, root):
+    store = Store.open(db_path)
+    Pipeline.for_tenant(tenant, store).ingest(root)
+    store.close()

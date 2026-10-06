@@ -86,7 +86,7 @@ def cmd_start(a) -> None:
 
 def _pytest(args: list[str], cwd: Path, env: dict) -> tuple[int, str]:
     p = subprocess.run(["uv", "run", "--project", str(REPO_ROOT), "--with", "pytest", "python", "-m", "pytest",
-                        *args, "-q", "-p", "no:cacheprovider"], cwd=cwd, env=env, capture_output=True, text=True)
+                        *args, "-q", "-o", "addopts=", "-p", "no:cacheprovider"], cwd=cwd, env=env, capture_output=True, text=True)
     lines = [l for l in re.sub(r"\x1b\[[0-9;]*m", "", p.stdout).splitlines() if l.strip()]
     return p.returncode, "\n".join(lines[-25:])
 

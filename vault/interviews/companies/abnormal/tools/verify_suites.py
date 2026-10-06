@@ -16,7 +16,7 @@ ANSI = re.compile(r"\x1b\[[0-9;]*m")
 def run(args, cwd, **env):
     e = dict(os.environ, **env)
     p = subprocess.run(["uv", "run", "--project", PROJECT, "--with", "pytest", "python", "-m", "pytest",
-                        *args, "-q", "-p", "no:cacheprovider"], cwd=cwd, env=e, capture_output=True, text=True)
+                        *args, "-q", "-o", "addopts=", "-p", "no:cacheprovider", "-W", "ignore::DeprecationWarning"], cwd=cwd, env=e, capture_output=True, text=True)
     lines = [ANSI.sub("", l) for l in p.stdout.strip().splitlines() if l.strip()]
     return p.returncode, (lines[-1] if lines else p.stderr.strip()[-200:])
 
