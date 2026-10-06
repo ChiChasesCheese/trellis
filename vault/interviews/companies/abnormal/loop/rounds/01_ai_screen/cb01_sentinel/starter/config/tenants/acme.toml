@@ -1,0 +1,3 @@
+# Acme: smaller brute-force threshold, they run a public SSO page.
+[rules.brute_force]
+threshold = 4

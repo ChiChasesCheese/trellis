@@ -33,13 +33,13 @@ def rows():
     text = (KIT / "catalog" / "RANK.md").read_text(encoding="utf-8")
     for line in text.splitlines():
         cells = [c.strip() for c in line.strip().strip("|").split("|")]
-        if len(cells) < 6 or not re.match(r"^(q|pc|od|sd)\d+$", cells[0]):
+        if len(cells) < 6 or not re.match(r"^(q|pc|od|sd|cb|cr|ic)\d+$", cells[0]):
             continue
         yield cells[0], cells[1], cells[2], int(re.search(r"\d+", cells[4]).group())
 
 
 def bucket(pid: str) -> str:
-    return {"q": "OA", "pc": "第一轮 coding", "od": "OOD", "sd": "系统设计"}[re.match(r"[a-z]+", pid).group()]
+    return {"q": "OA", "pc": "旧流程 coding", "od": "OOD", "sd": "系统设计", "cb": "AI screen 代码库", "cr": "Code review", "ic": "Incident"}[re.match(r"[a-z]+", pid).group()]
 
 
 def main() -> None:
@@ -58,7 +58,7 @@ def main() -> None:
     tot = [sum(v[i] for v in by.values()) for i in range(4)]
     print("| 轮次 | 出现次数覆盖 | 题族覆盖 |")
     print("|---|---:|---:|")
-    for k in ("OA", "第一轮 coding", "OOD", "系统设计"):
+    for k in ("AI screen 代码库", "Code review", "Incident", "系统设计", "旧流程 coding", "OA", "OOD"):
         rb, rt, nb, nt = by[k]
         if rt == 0:
             continue
