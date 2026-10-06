@@ -23,7 +23,7 @@ from pathlib import Path
 LOOP = Path(__file__).resolve().parents[1]
 ROUNDS = LOOP / "rounds"
 YAML = LOOP / "tree" / "interview-loop.yaml"
-NONCODE = {"rc": "00_recruiter", "py": "02_python_internals", "exp": "03_project_deep_dive", "hm": "05_hm_behavioral"}
+NONCODE = {"hm": "04_manager_deep_dive", "team": "05_team_values"}
 KIT = LOOP.parent
 PROBLEMS = KIT / "problems"  # OA 题（qNN）在公司根目录 problems/ 下，不在 loop/rounds/
 STUDY_BASE = KIT  # study/ 在公司根目录，不在 loop/ 下（与 Stripe 布局不同）

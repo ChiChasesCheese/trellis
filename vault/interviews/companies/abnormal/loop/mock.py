@@ -12,11 +12,12 @@
   python3 loop/mock.py bq [round] [-n N] [-m MIN] [--seed S]
                                                  # draw N random non-coding questions and time them
 
-Rounds:
-  pc  01_first_round     30 min   problem.md   (starter_template.py/starter.py/solution.py/test_*.py; 45-min round = 15 intro + 30 code)
-  sd  04_system_design   45 min   prompt.md    (no automated test; rubric.md printed as a hint)
-  00_recruiter / 02_python_internals / 03_project_deep_dive / 05_hm_behavioral: bank.json banks, drawn via `bq`
-  (aliases: recruiter/rc · py/python · expertise/exp · hm/behavioral).
+Rounds (Abnormal kit):
+  01_ai_screen        codebase exercises — use loop/ai_screen.py (start/check/reveal), not this runner
+  02_incident_sd      ic* incident drills (env/ + awsim.py) · sd* prompt.md
+  03_code_review      cr* code review exercises (PR.md + starter/ + acceptance/)
+  06_legacy_coding    pc* single-file problems (start/test/ref work here)
+  04_manager_deep_dive / 05_team_values: bank.json banks, drawn via `bq` (aliases: hm/manager/deep · team/values).
 """
 from __future__ import annotations
 
@@ -45,14 +46,11 @@ DEFAULT_MINUTES = {"pc": 30, "od": 45, "sd": 45, "ps": 45, "cd": 60, "int": 60, 
 SHOW_FILE = {"bs": "README.md", "sd": "prompt.md"}  # everything else: problem.md
 
 NONCODING_ALIASES = {
-    "recruiter": "00_recruiter",
-    "rc": "00_recruiter",
-    "py": "02_python_internals",
-    "python": "02_python_internals",
-    "expertise": "03_project_deep_dive",
-    "exp": "03_project_deep_dive",
-    "hm": "05_hm_behavioral",
-    "behavioral": "05_hm_behavioral",
+    "hm": "04_manager_deep_dive",
+    "manager": "04_manager_deep_dive",
+    "deep": "04_manager_deep_dive",
+    "team": "05_team_values",
+    "values": "05_team_values",
 }
 NONCODING_ROUNDS = list(NONCODING_ALIASES.values())
 
@@ -389,6 +387,8 @@ def cmd_bq(a):
             print(f"    keys: {q['keys']}")
         if q.get("source"):
             print(f"    source: {q['source']}")
+        if q.get("point"):
+            print(f"    point: {q['point']}")
         print(f"    限时 {a.minutes} 分钟\n")
 
 
