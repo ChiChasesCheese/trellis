@@ -15,6 +15,9 @@ pytestmark = pytest.mark.t3
 SOURCE_IP = "198.51.100.99"  # a plain US address, not on any intel list
 # acme alerts from the 4th failed login inside 10 minutes, so a 12-attempt burst trips the rule 9 times.
 HITS_IN_12 = 9
+# Counting every failed login of the burst (12) is an equally defensible reading of "how many events it covers";
+# the tests accept either, and interviewer.md asks the candidate to say which one they chose.
+COVERS_12 = {HITS_IN_12, 12}
 
 
 @pytest.fixture
@@ -45,7 +48,7 @@ def test_one_source_one_open_alert(env):
 def test_event_count_covers_every_event_that_tripped_the_rule(env):
     env.ingest("acme", burst("acme", "v@acme.test", SOURCE_IP, 12))
     (alert,) = env.alerts("acme", rule="brute_force")
-    assert alert["event_count"] == HITS_IN_12
+    assert alert["event_count"] in COVERS_12
 
 
 @pytest.mark.core
@@ -71,7 +74,8 @@ def test_a_burst_days_later_is_a_new_alert(env):
     env.ingest("acme", burst("acme", "v@acme.test", SOURCE_IP, 12, start=T0 + timedelta(days=4), prefix="second"))
     alerts = env.alerts("acme", rule="brute_force")
     assert len(alerts) == 2
-    assert sorted(a["event_count"] for a in alerts) == [HITS_IN_12, HITS_IN_12]
+    counts = [a["event_count"] for a in alerts]
+    assert counts[0] == counts[1] and counts[0] in COVERS_12
 
 
 @pytest.mark.core
@@ -84,7 +88,7 @@ def test_events_after_an_ack_open_a_fresh_alert(env):
     fresh = env.alerts("acme", status="OPEN", rule="brute_force")
     assert len(fresh) == 1 and fresh[0]["id"] != first["id"]
     acked = env.client("acme").get(f"/alerts/{first['id']}").json
-    assert acked["status"] == "ACKED" and acked["event_count"] == HITS_IN_12  # history was not rewritten
+    assert acked["status"] == "ACKED" and acked["event_count"] in COVERS_12  # history was not rewritten
 
 
 @pytest.mark.core
@@ -99,7 +103,7 @@ def test_tenants_dedup_independently(env):
 def test_alert_detail_also_reports_event_count(env):
     env.ingest("acme", burst("acme", "v@acme.test", SOURCE_IP, 12))
     (alert,) = env.alerts("acme", rule="brute_force")
-    assert env.client("acme").get(f"/alerts/{alert['id']}").json["event_count"] == HITS_IN_12
+    assert env.client("acme").get(f"/alerts/{alert['id']}").json["event_count"] in COVERS_12
 
 
 @pytest.mark.stretch
@@ -108,4 +112,4 @@ def test_a_bigger_flood_outranks_a_smaller_one_of_the_same_severity(env):
     env.ingest("acme", burst("acme", "big@acme.test", SOURCE_IP, 12, start=T0, prefix="big"))
     env.ingest("acme", burst("acme", "small@acme.test", "198.51.100.98", 5, start=T0 + timedelta(minutes=30), prefix="small"))
     order = [a["event_count"] for a in env.alerts("acme", rule="brute_force")]  # API order: highest score first
-    assert order == sorted(order, reverse=True) and order[0] == HITS_IN_12
+    assert order == sorted(order, reverse=True) and order[0] in COVERS_12

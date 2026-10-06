@@ -32,7 +32,7 @@ sys.path.insert(0, str(ROOT))
 def pytest_configure(config):
     for m in ("core", "stretch", "regression"):
         config.addinivalue_line("markers", f"{m}: acceptance tier")
-    for t in ():
+    for t in ("t1", "t2", "t3"):
         config.addinivalue_line("markers", f"{t}: ticket")
 
 

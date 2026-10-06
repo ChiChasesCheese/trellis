@@ -125,7 +125,7 @@
 | 窗口多长？固定窗口还是滑动？ | "An hour is fine. Make it configurable."（本实现：自上一个事件起的滑动窗口） |
 | 分析师 ack 之后又来了事件？ | "That's new information. They should see it."（→ 开新告警） |
 | 合并后严重度？ | "Show the worst one." |
-| `event_count` 数什么？ | "How many events the alert covers."（本实现：触发了命中的事件数——不含未触发的失败登录） |
+| `event_count` 数什么？ | "How many events the alert covers."（本实现：触发了命中的事件数——不含未触发的失败登录；把整串失败登录都算上（12 而非 9）同样说得通，验收两者都接受，关键是**说出你选的口径**） |
 | 已存在的旧告警怎么办？ | "Don't lose them."（→ migration 回填 `event_count=1`） |
 | 要不要去重所有规则，还是只 brute-force？ | "The queue is the problem, not one rule."（→ 在 `AlertService` 通用实现） |
 | 排序要变吗？ | "If it falls out naturally."（stretch：score 随 `event_count` 增长） |
