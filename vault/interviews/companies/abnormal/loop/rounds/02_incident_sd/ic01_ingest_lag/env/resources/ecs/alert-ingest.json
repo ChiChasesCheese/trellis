@@ -1,0 +1,34 @@
+{
+  "services": [
+    {
+      "serviceName": "alert-ingest",
+      "clusterArn": "arn:aws:ecs:us-east-1:111122223333:cluster/prod",
+      "status": "ACTIVE",
+      "desiredCount": 8,
+      "runningCount": 8,
+      "launchType": "FARGATE",
+      "taskDefinition": "alert-ingest:57",
+      "cpu": 1024,
+      "memory": 2048,
+      "deployments": [
+        {
+          "status": "PRIMARY",
+          "taskDefinition": "alert-ingest:57",
+          "rolloutState": "COMPLETED",
+          "createdAt": "2026-09-30T14:02:03Z",
+          "updatedAt": "2026-09-30T14:07:20Z"
+        }
+      ],
+      "deploymentConfiguration": {
+        "minimumHealthyPercent": 100,
+        "maximumPercent": 200,
+        "deploymentCircuitBreaker": {
+          "enable": true,
+          "rollback": true
+        }
+      },
+      "healthCheck": "GET /healthz (process alive; does not look at consumer lag or enrichment errors)",
+      "autoScaling": "none (fixed 8 tasks)"
+    }
+  ]
+}

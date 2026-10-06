@@ -1,0 +1,40 @@
+{
+  "ClusterInfo": {
+    "ClusterName": "security-events-cluster",
+    "State": "ACTIVE",
+    "ClusterArn": "arn:aws:kafka:us-east-1:111122223333:cluster/security-events-cluster/6a1f",
+    "BrokerNodeGroupInfo": {
+      "InstanceType": "kafka.m5.large",
+      "ClientSubnets": 3,
+      "StorageInfo": {
+        "EbsStorageInfo": {
+          "VolumeSize": 1500
+        }
+      }
+    },
+    "NumberOfBrokerNodes": 3,
+    "CreationTime": "2025-11-04T09:12:00Z"
+  },
+  "Topics": [
+    {
+      "Name": "security-events",
+      "Partitions": 12,
+      "ReplicationFactor": 3,
+      "RetentionHours": 72
+    },
+    {
+      "Name": "security-events-dlq",
+      "Partitions": 3,
+      "ReplicationFactor": 3,
+      "RetentionHours": 168
+    }
+  ],
+  "ConsumerGroups": [
+    {
+      "GroupId": "alert-ingest",
+      "State": "Stable",
+      "Members": 8,
+      "AssignedPartitions": 12
+    }
+  ]
+}

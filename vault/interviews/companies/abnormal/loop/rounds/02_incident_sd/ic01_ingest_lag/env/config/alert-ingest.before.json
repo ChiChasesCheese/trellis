@@ -1,0 +1,18 @@
+{
+  "consumer": {
+    "group_id": "alert-ingest",
+    "max_poll_records": 500,
+    "topic": "security-events"
+  },
+  "geoip": {
+    "url": "https://geoip-svc.internal.example.com",
+    "mode": "batch",
+    "batch_size": 500,
+    "cache": "lru",
+    "cache_ttl_s": 3600,
+    "max_attempts": 5,
+    "backoff_ms": 250,
+    "jitter": true,
+    "timeout_ms": 2000
+  }
+}

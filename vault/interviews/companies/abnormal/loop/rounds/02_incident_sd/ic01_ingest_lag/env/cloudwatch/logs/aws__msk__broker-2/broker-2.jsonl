@@ -1,0 +1,4 @@
+{"timestamp":"2026-09-30T12:50:00Z","level":"WARN","logger":"kafka.log","message":"log dir /kafka/data usage 71%: retention.bytes backlog on __consumer_offsets-14 and security-events-7"}
+{"timestamp":"2026-09-30T12:55:00Z","level":"WARN","logger":"kafka.log","message":"log dir /kafka/data usage 87%: segment cleaner behind (compaction of __consumer_offsets)"}
+{"timestamp":"2026-09-30T13:01:10Z","level":"INFO","logger":"kafka.ops","message":"storage volume resize 1000 GiB -> 1500 GiB requested via UpdateBrokerStorage"}
+{"timestamp":"2026-09-30T13:05:00Z","level":"INFO","logger":"kafka.log","message":"log dir /kafka/data usage 61% after volume resize and segment cleanup"}

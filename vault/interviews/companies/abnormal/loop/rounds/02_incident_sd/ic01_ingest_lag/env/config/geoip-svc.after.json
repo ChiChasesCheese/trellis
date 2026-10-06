@@ -1,0 +1,10 @@
+{
+  "ratelimit": {
+    "per_client_rpm": {
+      "alert-ingest": 1200,
+      "risk-engine": 1200
+    },
+    "response": 429
+  },
+  "mmdb": "2026-09"
+}

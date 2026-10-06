@@ -1,0 +1,16 @@
+{
+  "services": [
+    {
+      "serviceName": "report-renderer",
+      "clusterArn": "arn:aws:ecs:us-east-1:111122223333:cluster/prod-batch",
+      "status": "ACTIVE",
+      "desiredCount": 3,
+      "runningCount": 3,
+      "launchType": "FARGATE",
+      "taskDefinition": "report-renderer:112",
+      "cpu": 2048,
+      "memory": 4096,
+      "note": "separate cluster, separate Fargate tasks: no CPU shared with prod"
+    }
+  ]
+}

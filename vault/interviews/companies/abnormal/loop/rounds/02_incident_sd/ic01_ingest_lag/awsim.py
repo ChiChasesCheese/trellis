@@ -606,6 +606,8 @@ def cmd_now(a):
 def table(cmd: str, res: dict) -> str | None:
     if "Datapoints" in res:
         return "\n".join(f"{p['Timestamp']}  {p[res['Statistic']]}" for p in res["Datapoints"])
+    if "Metrics" in res:
+        return "\n".join(f"{m['Namespace']}  {m['MetricName']}  " + ";".join(f"{d['Name']}={d['Value']}" for d in m["Dimensions"]) for m in res["Metrics"])
     if "events" in res:
         rows = []
         for e in res["events"]:

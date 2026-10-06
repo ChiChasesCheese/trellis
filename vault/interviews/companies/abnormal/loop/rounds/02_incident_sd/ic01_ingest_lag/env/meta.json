@@ -1,0 +1,7 @@
+{
+  "account": "111122223333",
+  "region": "us-east-1",
+  "now": "2026-09-30T14:30:00Z",
+  "windowStart": "2026-09-30T12:30:00Z",
+  "note": "All timestamps are UTC (ISO 8601). Metrics are one datapoint per minute."
+}

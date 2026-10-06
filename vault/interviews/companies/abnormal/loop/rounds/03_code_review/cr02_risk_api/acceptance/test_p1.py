@@ -83,7 +83,7 @@ def test_cr07_pagination_by_a_non_unique_sort_key_is_stable():
 def test_cr08_limit_is_bounded():
     w = World(extra_acme_users=300)
     status, body = w.client.get("/tenants/acme/users", ACME_KEY, limit=100000)
-    assert status == 200 and len(body["items"]) <= 200
+    assert status == 400 or (status == 200 and len(body["items"]) <= 200)  # reject or clamp, never the whole table
     for bad in ("0", "-1", "abc"):
         assert w.client.get("/tenants/acme/users", ACME_KEY, limit=bad)[0] == 400
 

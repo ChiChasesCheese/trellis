@@ -53,7 +53,7 @@ class World:
         dbmod.create_api_key(db, "acme", "k_acme", "acme-secret-0001")
         dbmod.create_api_key(db, "globex", "k_globex", "globex-secret-0002")
         for i, name in enumerate(["Ann", "Bob", "Cy", "Di", "Eve"], start=1):
-            dbmod.add_user(db, "acme", f"u{i}", f"{name.lower()}@acme.example.com", name, "eng", risk_score=(i * 7) % 5 * 10)
+            dbmod.add_user(db, "acme", f"u{i}", f"{name.lower()}@acme.example.com", name, "eng", risk_score=[20, 20, 10, 10, 0][i - 1])
         for i in range(6, 6 + extra_acme_users):
             dbmod.add_user(db, "acme", f"u{i:04d}", f"user{i}@acme.example.com", f"User {i}", "eng", risk_score=i % 7)
         dbmod.add_user(db, "globex", "u1", "zed@globex.example.com", "Zed", "ops", risk_score=5)

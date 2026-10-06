@@ -1,0 +1,89 @@
+[
+  {
+    "service": "alert-ingest",
+    "cluster": "prod",
+    "id": "ecs-svc/4401",
+    "startedAt": "2026-09-28T12:15:00Z",
+    "completedAt": "2026-09-28T12:21:10Z",
+    "status": "COMPLETED",
+    "taskDefinition": "alert-ingest:55",
+    "imageTag": "2026.09.28-1215-3c8e2f0",
+    "image": "111122223333.dkr.ecr.us-east-1.amazonaws.com/alert-ingest:2026.09.28-1215-3c8e2f0",
+    "commit": {
+      "sha": "3c8e2f0",
+      "author": "Mateo Okafor",
+      "pr": 4163,
+      "message": "bump kafka-python to 2.0.4"
+    }
+  },
+  {
+    "service": "alert-ingest",
+    "cluster": "prod",
+    "id": "ecs-svc/4409",
+    "startedAt": "2026-09-29T16:40:00Z",
+    "completedAt": "2026-09-29T16:46:20Z",
+    "status": "COMPLETED",
+    "taskDefinition": "alert-ingest:56",
+    "imageTag": "2026.09.29-1640-5e1d9b2",
+    "image": "111122223333.dkr.ecr.us-east-1.amazonaws.com/alert-ingest:2026.09.29-1640-5e1d9b2",
+    "commit": {
+      "sha": "5e1d9b2",
+      "author": "Lena Fischer",
+      "pr": 4171,
+      "message": "add dlq headers (original topic/partition/offset)"
+    }
+  },
+  {
+    "service": "alert-ingest",
+    "cluster": "prod",
+    "id": "ecs-svc/4417",
+    "startedAt": "2026-09-30T14:02:03Z",
+    "completedAt": "2026-09-30T14:07:20Z",
+    "status": "COMPLETED",
+    "taskDefinition": "alert-ingest:57",
+    "previousTaskDefinition": "alert-ingest:56",
+    "imageTag": "2026.09.30-1402-a91f3c7",
+    "image": "111122223333.dkr.ecr.us-east-1.amazonaws.com/alert-ingest:2026.09.30-1402-a91f3c7",
+    "rollout": "ROLLING (min 100% / max 200%), health check GET /healthz only, circuit breaker enabled, no canary gate",
+    "commit": {
+      "sha": "a91f3c7",
+      "author": "Mateo Okafor",
+      "pr": 4182,
+      "message": "simplify geoip client\n\nDrop the LRU cache and the batch lookup; call /v1/lookup once per record. Less code, one code path."
+    }
+  },
+  {
+    "service": "geoip-svc",
+    "cluster": "prod",
+    "id": "ecs-svc/3920",
+    "startedAt": "2026-09-17T10:30:00Z",
+    "completedAt": "2026-09-17T10:34:00Z",
+    "status": "COMPLETED",
+    "taskDefinition": "geoip-svc:31",
+    "imageTag": "2026.09.17-1030-0d44a6e",
+    "image": "111122223333.dkr.ecr.us-east-1.amazonaws.com/geoip-svc:2026.09.17-1030-0d44a6e",
+    "commit": {
+      "sha": "0d44a6e",
+      "author": "Ravi Menon",
+      "pr": 977,
+      "message": "update MaxMind mmdb to 2026-09"
+    }
+  },
+  {
+    "service": "report-renderer",
+    "cluster": "prod-batch",
+    "id": "ecs-svc/880",
+    "startedAt": "2026-09-30T13:58:41Z",
+    "completedAt": "2026-09-30T14:00:10Z",
+    "status": "COMPLETED",
+    "taskDefinition": "report-renderer:112",
+    "imageTag": "2026.09.30-1358-b07c4de",
+    "image": "111122223333.dkr.ecr.us-east-1.amazonaws.com/report-renderer:2026.09.30-1358-b07c4de",
+    "commit": {
+      "sha": "b07c4de",
+      "author": "Ines Duarte",
+      "pr": 2210,
+      "message": "render monthly PDFs in-process instead of shelling out to wkhtmltopdf"
+    }
+  }
+]
