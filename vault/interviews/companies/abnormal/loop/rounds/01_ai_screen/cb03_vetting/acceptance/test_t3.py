@@ -81,11 +81,17 @@ def test_the_decision_keeps_applying_when_everything_is_ingested_again(world):
 @pytest.mark.t3
 @pytest.mark.stretch
 def test_an_escalated_value_is_never_softened(world):
-    world.ingest_records("acme", [a(), gh_record(605, "Eve", "Epsilon", "(404) 555-0105", ASN_ONE[2])])
+    world.ingest_records("acme", [
+        a(),
+        gh_record(605, "Eve", "Epsilon", "(770) 555-0105", ASN_ONE[2]),
+        gh_record(606, "Fay", "Zeta", "(678) 555-0106", "203.0.113.141"),
+    ])
     world.decide("acme", "greenhouse:601", "cleared")
     world.decide("acme", "greenhouse:605", "escalated", "operator network")
-    world.ingest_records("acme", [b()])
-    assert world.level("acme", "greenhouse:602") == RANK["RECOMMENDED"]
+    world.decide("acme", "greenhouse:606", "cleared")  # a different network that nobody escalated
+    world.ingest_records("acme", [b(), d()])
+    assert world.level("acme", "greenhouse:602") == RANK["RECOMMENDED"]  # AS64500: cleared once, escalated once
+    assert world.level("acme", "greenhouse:604") < RANK["RECOMMENDED"]  # AS64501: only cleared
 
 
 @pytest.mark.t3
