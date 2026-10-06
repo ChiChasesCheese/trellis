@@ -1,0 +1,79 @@
+# Abnormal AI · SWE II – Insider Risk 面试 Loop 知识树（受限 YAML：2 空格缩进、`key: value`、`- item`、行内列表 `[a, b]`）
+# 校验：python3 loop/tree/check_tree.py [--strict]
+# 节点：round → skill → problems（rounds ID）→ study（kit 根目录下相对路径）
+# 非编码轮 ID：hm = 04_manager_deep_dive · team = 05_team_values（bank.json）
+version: 1
+prereq:
+  study: [study/00-essentials.md, study/20-cards/claude_code.md, study/20-cards/security_vocab.md, 01-company-brief.md]
+  cards: [study/20-cards/claude_code.md, study/20-cards/security_vocab.md]
+
+rounds:
+  - id: 01_ai_screen
+    name: AI Technical Screen · 60 min · 已有 Python 代码库 + Claude Code（探索 10 / 模糊 feature 35 / walkthrough 15）
+    duration_min: 60
+    study: [loop/rounds/01_ai_screen/playbook.md, study/00-essentials.md, study/20-cards/claude_code.md]
+    core: [round.reading, round.ambiguity, round.time, round.communication, transfer.abnormal]
+    skills:
+      - id: reported_codebase
+        name: 报道原形态：security-events 管线 · 规则抑制 · enrichment 插件化 · 告警去重
+        problems: [cb01]
+      - id: format_transfer
+        name: 换领域练格式：insider-risk（离职外泄 · 告警归并 · 新数据源）
+        problems: [cb02]
+      - id: team_domain
+        name: 团队真实领域：候选人身份欺诈（关联引擎 · Workday 数据源 · 审核反馈）
+        problems: [cb03]
+
+  - id: 02_incident_sd
+    name: Incident（AWS 环境排查）+ System Design（扩容已有系统）
+    duration_min: 60
+    study: [loop/LOOP_GUIDE.md]
+    core: [round.debugging]
+    skills:
+      - id: incident_investigation
+        name: 假设驱动排查：影响面 → 最近变更 → 指标 → 日志 → 根因 → 止血 vs 长期修复
+        problems: [ic01, ic02]
+      - id: scale_existing_system
+        name: 读/写扩展、键控状态、热分区、幂等写、迁移路径
+        problems: [sd01]
+
+  - id: 03_code_review
+    name: Code Review（P0/P1 排序 + 用 AI 修）+ System Extensions（并发、worker、队列扩容）
+    duration_min: 60
+    study: [loop/LOOP_GUIDE.md]
+    core: [model.idempotency]
+    skills:
+      - id: review_prioritize
+        name: 找问题并按影响面排序：正确性 · 数据丢失 · 安全 · 租户隔离 · 并发
+        problems: [cr01, cr02]
+
+  - id: 04_manager_deep_dive
+    name: Manager / Behavioral + Technical Deep Dive（判断力）
+    duration_min: 45
+    study: [loop/rounds/04_manager_deep_dive/questions.md, fit.md]
+    skills:
+      - id: judgment_five_steps
+        name: 约束 → 备选 → 选择与理由 → 结果证据 → 回头看
+        problems: [hm]
+      - id: ai_native_story
+        name: How do you use AI / how do you trust it（[[S7]]）
+        problems: [hm]
+
+  - id: 05_team_values
+    name: Team Interviews · 跨职能 · VOICE 价值观
+    duration_min: 45
+    study: [loop/rounds/05_team_values/questions.md, 06-questions-to-ask.md]
+    skills:
+      - id: voice_values
+        name: Velocity · Ownership · Intellectual honesty · Customer obsession · Excellence
+        problems: [team]
+
+  - id: 06_legacy_coding
+    name: 旧流程 coding（2024–2025）：图片/文件去重 · 20 min 讨论 + 30 min 写
+    duration_min: 50
+    study: [loop/LOOP_GUIDE.md]
+    core: [toolbox.hash]
+    skills:
+      - id: dedup_hashing
+        name: 按大小分桶 → 分块哈希 → 碰撞时逐字节确认 → 近似重复
+        problems: [pc01]

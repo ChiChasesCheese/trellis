@@ -98,7 +98,7 @@ def test_list_and_delete_roundtrip_restores_alerting(env):
     assert len(env.alerts("acme", rule="impossible_travel")) == 1
 
 
-@pytest.mark.core
+@pytest.mark.regression
 def test_suppression_requires_authentication(env):
     from sentinel.api.testing import TestClient
 

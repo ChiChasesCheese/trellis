@@ -86,6 +86,7 @@
     - [[interviews/rounds/code-core/map/transfer.stripe-oa|The Stripe-Shaped Assessment]]
     - [[interviews/rounds/code-core/map/transfer.snowflake|The Snowflake-Shaped Rounds]]
     - [[interviews/rounds/code-core/map/transfer.amazon|The Amazon-Shaped Assessment]]
+    - [[interviews/rounds/code-core/map/transfer.abnormal|The Abnormal-Shaped Rounds]]
     - [[interviews/rounds/code-core/map/transfer.quant|The Quant-Shaped Assessment]]
     - [[interviews/rounds/code-core/map/transfer.playbook|Building a Playbook From One Round]]
 %% trellis:end %%

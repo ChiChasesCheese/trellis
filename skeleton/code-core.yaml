@@ -315,6 +315,9 @@ nodes:
       - id: transfer.amazon
         title: The Amazon-Shaped Assessment
         summary: Two LeetCode-style problems plus work simulation and leadership-principle questions, and what the debrief actually scores.
+      - id: transfer.abnormal
+        title: The Abnormal-Shaped Rounds
+        summary: A sixty-minute AI-assisted screen inside an existing Python codebase with Claude Code — explore, then ship an intentionally underspecified feature that fits the system's own abstractions — followed by incident, scale, code-review and judgment rounds.
       - id: transfer.quant
         title: The Quant-Shaped Assessment
         summary: Probability and expectation under time pressure, simulation over closed form, numerical care, and market-making brainteasers.
