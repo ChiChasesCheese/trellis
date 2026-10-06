@@ -1,0 +1,31 @@
+# Defaults for every tenant. A tenant file in config/tenants/ overrides single keys.
+
+[scoring]
+# score is the sum of finding weights, capped at 100
+highly_recommended_at = 50
+recommended_at = 20
+
+[weights]
+# one entry per registered signal; a missing weight is a startup error
+voip_phone = 30
+ip_geo_mismatch = 20
+resume_name_mismatch = 25
+disposable_email = 20
+vpn_hosting_ip = 20
+coordinated_applicants = 40
+
+[lookups]
+cache_ttl_seconds = 3600
+
+[correlation]
+# applicants are linked when they overlap on at least `min_overlap_kinds` of: phone block, IP /24,
+# resume fingerprint, email. A single shared value is never enough on its own.
+phone_prefix_digits = 9
+min_overlap_kinds = 2
+allowlist_cidrs = []
+
+[feedback]
+# reviewer-cleared values only soften a lone finding no heavier than this
+weak_signal_max_weight = 30
+# fraction of the weight kept for a finding on a value a reviewer already cleared
+cleared_weight_factor = 0.25

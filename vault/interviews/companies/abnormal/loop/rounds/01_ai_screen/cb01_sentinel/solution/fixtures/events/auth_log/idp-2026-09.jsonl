@@ -1,0 +1,23 @@
+{"id": "a-001", "tenant": "acme", "time": "2026-09-01T08:00:00Z", "user": "alice@acme.test", "ip": "198.51.100.7", "ua": "Mozilla/5.0 (Macintosh) Chrome/126", "result": "success"}
+{"id": "a-002", "tenant": "acme", "time": "2026-09-01T13:00:00Z", "user": "alice@acme.test", "ip": "198.51.100.7", "ua": "Mozilla/5.0 (Macintosh) Chrome/126", "result": "success"}
+{"id": "a-003", "tenant": "acme", "time": "2026-09-01T13:30:00Z", "user": "alice@acme.test", "ip": "198.18.5.5", "ua": "Mozilla/5.0 (Windows NT 10.0) Firefox/128", "result": "success"}
+{"id": "a-004", "tenant": "acme", "time": "2026-09-01T09:15:00Z", "user": "bob@acme.test", "ip": "198.51.100.20", "ua": "Mozilla/5.0 (Macintosh) Chrome/126", "result": "success"}
+{"id": "a-005", "tenant": "acme", "time": "2026-09-02T09:15:00Z", "user": "bob@acme.test", "ip": "198.51.100.20", "ua": "Mozilla/5.0 (Macintosh) Chrome/126", "result": "success"}
+{"id": "a-006", "tenant": "acme", "time": "2026-09-03T09:15:00Z", "user": "bob@acme.test", "ip": "198.51.100.20", "ua": "Mozilla/5.0 (Macintosh) Chrome/126", "result": "success"}
+{"id": "a-007", "tenant": "acme", "time": "2026-09-10T09:00:00Z", "user": "bob@acme.test", "ip": "203.0.113.30", "ua": "Mozilla/5.0 (Windows NT 10.0) Firefox/128", "result": "success"}
+{"id": "a-008", "tenant": "acme", "time": "2026-09-02T10:00:00Z", "user": "carol@acme.test", "ip": "198.51.100.31", "ua": "Mozilla/5.0 (Macintosh) Chrome/126", "result": "success"}
+{"id": "a-009", "tenant": "acme", "time": "2026-09-03T00:00:00Z", "user": "carol@acme.test", "ip": "203.0.113.250", "ua": "Mozilla/5.0 (Macintosh) Chrome/126", "result": "success"}
+{"id": "a-010", "tenant": "acme", "time": "2026-09-03T02:00:00Z", "user": "dave@acme.test", "ip": "203.0.113.140", "ua": "Mozilla/5.0 (Macintosh) Chrome/126", "result": "failure"}
+{"id": "a-011", "tenant": "acme", "time": "2026-09-03T02:01:10Z", "user": "dave@acme.test", "ip": "203.0.113.140", "ua": "Mozilla/5.0 (Macintosh) Chrome/126", "result": "failure"}
+{"id": "a-012", "tenant": "acme", "time": "2026-09-03T02:02:20Z", "user": "dave@acme.test", "ip": "203.0.113.140", "ua": "Mozilla/5.0 (Macintosh) Chrome/126", "result": "failure"}
+{"id": "a-013", "tenant": "acme", "time": "2026-09-03T02:03:30Z", "user": "dave@acme.test", "ip": "203.0.113.140", "ua": "Mozilla/5.0 (Macintosh) Chrome/126", "result": "failure"}
+{"id": "a-014", "tenant": "acme", "time": "2026-09-03T02:04:40Z", "user": "dave@acme.test", "ip": "203.0.113.140", "ua": "Mozilla/5.0 (Macintosh) Chrome/126", "result": "failure"}
+{"id": "a-015", "tenant": "acme", "time": "2026-09-03T02:05:00Z", "user": "dave@acme.test", "ip": "203.0.113.140", "ua": "Mozilla/5.0 (Macintosh) Chrome/126", "result": "failure"}
+{"id": "a-016", "tenant": "acme", "time": "2026-09-03T02:06:10Z", "user": "dave@acme.test", "ip": "203.0.113.140", "ua": "Mozilla/5.0 (Macintosh) Chrome/126", "result": "failure"}
+{"id": "a-017", "tenant": "acme", "time": "2026-09-03T02:07:20Z", "user": "dave@acme.test", "ip": "203.0.113.140", "ua": "Mozilla/5.0 (Macintosh) Chrome/126", "result": "failure"}
+{"id": "a-018", "tenant": "acme", "time": "2026-09-03T02:30:00Z", "user": "dave@acme.test", "ip": "198.51.100.44", "ua": "Mozilla/5.0 (Macintosh) Chrome/126", "result": "success"}
+{"id": "a-019", "tenant": "globex", "time": "2026-09-01T08:00:00Z", "user": "gus@globex.test", "ip": "198.51.100.90", "ua": "Mozilla/5.0 (Macintosh) Chrome/126", "result": "success"}
+{"id": "a-020", "tenant": "globex", "time": "2026-09-01T09:00:00Z", "user": "gus@globex.test", "ip": "192.0.2.15", "ua": "Mozilla/5.0 (Windows NT 10.0) Firefox/128", "result": "success"}
+{"id": "a-021", "tenant": "globex", "time": "2026-09-02T08:00:00Z", "user": "hana@globex.test", "ip": "198.51.100.91", "ua": "Mozilla/5.0 (Macintosh) Chrome/126", "result": "success"}
+{"id": "a-bad", "tenant": "acme", "time": "yesterday", "user": "x", "ip": "1.2.3.4", "result": "success"}
+not json at all
