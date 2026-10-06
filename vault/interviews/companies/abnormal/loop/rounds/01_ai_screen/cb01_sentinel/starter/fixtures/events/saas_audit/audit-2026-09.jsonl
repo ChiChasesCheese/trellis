@@ -1,0 +1,4 @@
+{"uid": "s-1", "org": "acme", "timestamp": "2026-09-04T11:00:00+00:00", "actor": "erin@acme.test", "action": "mfa.disable", "ip": "198.51.100.52", "target": "frank@acme.test", "app": "okta"}
+{"uid": "s-2", "org": "acme", "timestamp": "2026-09-04T11:05:00+00:00", "actor": "erin@acme.test", "action": "doc.share", "ip": "198.51.100.52", "target": "q3-plan.xlsx", "app": "drive"}
+{"uid": "s-3", "org": "acme", "timestamp": "2026-09-05T09:00:00-07:00", "actor": "carol@acme.test", "action": "role.grant", "ip": "198.51.100.31", "target": "gina@acme.test", "app": "salesforce"}
+{"uid": "s-4", "org": "globex", "timestamp": "2026-09-04T12:00:00+00:00", "actor": "gus@globex.test", "action": "api_key.create", "ip": "198.51.100.90", "target": "ci-deploy", "app": "github"}

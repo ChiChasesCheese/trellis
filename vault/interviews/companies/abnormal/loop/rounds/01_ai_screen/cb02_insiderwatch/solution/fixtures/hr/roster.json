@@ -1,0 +1,113 @@
+{
+ "as_of": "2026-09-30",
+ "employees": [
+  {
+   "email": "olivia.chen@acme.example",
+   "name": "Olivia Chen",
+   "department": "Executive",
+   "manager": null,
+   "timezone": "America/New_York",
+   "termination_date": null,
+   "resignation_submitted": null
+  },
+  {
+   "email": "alice.nguyen@acme.example",
+   "name": "Alice Nguyen",
+   "department": "Engineering",
+   "manager": "olivia.chen@acme.example",
+   "timezone": "America/New_York",
+   "termination_date": null,
+   "resignation_submitted": null
+  },
+  {
+   "email": "bob.martin@acme.example",
+   "name": "Bob Martin",
+   "department": "Sales",
+   "manager": "olivia.chen@acme.example",
+   "timezone": "America/New_York",
+   "termination_date": "2026-10-09",
+   "resignation_submitted": "2026-09-15"
+  },
+  {
+   "email": "carol.diaz@acme.example",
+   "name": "Carol Diaz",
+   "department": "Finance",
+   "manager": "olivia.chen@acme.example",
+   "timezone": "America/New_York",
+   "termination_date": "2026-09-26",
+   "resignation_submitted": "2026-09-11"
+  },
+  {
+   "email": "dave.kim@acme.example",
+   "name": "Dave Kim",
+   "department": "Partnerships",
+   "manager": "olivia.chen@acme.example",
+   "timezone": "America/New_York",
+   "termination_date": "2026-10-02",
+   "resignation_submitted": null
+  },
+  {
+   "email": "erin.walsh@acme.example",
+   "name": "Erin Walsh",
+   "department": "Customer Success",
+   "manager": "olivia.chen@acme.example",
+   "timezone": "America/New_York",
+   "termination_date": "2026-10-05",
+   "resignation_submitted": null
+  },
+  {
+   "email": "frank.okafor@acme.example",
+   "name": "Frank Okafor",
+   "department": "Product",
+   "manager": "olivia.chen@acme.example",
+   "timezone": "America/New_York",
+   "termination_date": null,
+   "resignation_submitted": null
+  },
+  {
+   "email": "gina.park@acme.example",
+   "name": "Gina Park",
+   "department": "Marketing",
+   "manager": "olivia.chen@acme.example",
+   "timezone": "America/New_York",
+   "termination_date": "2026-09-18",
+   "resignation_submitted": null
+  },
+  {
+   "email": "henry.ross@acme.example",
+   "name": "Henry Ross",
+   "department": "Engineering",
+   "manager": "alice.nguyen@acme.example",
+   "timezone": "America/New_York",
+   "termination_date": null,
+   "resignation_submitted": null
+  },
+  {
+   "email": "ivy.tran@acme.example",
+   "name": "Ivy Tran",
+   "department": "Engineering",
+   "manager": "alice.nguyen@acme.example",
+   "timezone": "America/New_York",
+   "termination_date": "2026-10-12",
+   "resignation_submitted": "2026-09-28"
+  },
+  {
+   "email": "jack.lee@acme.example",
+   "name": "Jack Lee",
+   "department": "Sales",
+   "manager": "olivia.chen@acme.example",
+   "timezone": "America/Los_Angeles",
+   "termination_date": null,
+   "resignation_submitted": null
+  },
+  {
+   "email": "kim.sato@acme.example",
+   "name": "Kim Sato",
+   "department": "Finance",
+   "manager": "olivia.chen@acme.example",
+   "timezone": "America/Los_Angeles",
+   "termination_date": null,
+   "resignation_submitted": null
+  }
+ ]
+}

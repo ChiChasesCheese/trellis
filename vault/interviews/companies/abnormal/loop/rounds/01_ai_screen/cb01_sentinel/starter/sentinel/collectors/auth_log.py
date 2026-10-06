@@ -4,8 +4,7 @@ from __future__ import annotations
 import hashlib
 from typing import Any
 
-from sentinel.collectors.base import Collector
-from sentinel.collectors.registry import register_collector
+from sentinel.collectors.base import Collector, register_collector
 from sentinel.errors import CollectorError
 from sentinel.models import SecurityEvent
 from sentinel.timeutil import parse_ts

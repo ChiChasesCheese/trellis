@@ -4,8 +4,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from sentinel.collectors import auth_log, endpoint, saas_audit  # noqa: F401  (registration side effect)
-from sentinel.collectors.base import Collector
-from sentinel.collectors.registry import COLLECTORS, register_collector
+from sentinel.collectors.base import COLLECTORS, Collector, register_collector
 from sentinel.models import SecurityEvent
 
 

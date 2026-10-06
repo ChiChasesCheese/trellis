@@ -1,0 +1,93 @@
+{
+  "Report_Entry": [
+    {
+      "Job_Application_ID": "JA-100234",
+      "Application_Date": "2026-09-14T10:22:00.000-07:00",
+      "Job_Requisition": {
+        "Title": "Platform Engineer"
+      },
+      "Candidate": {
+        "Legal_Name": {
+          "First_Name": "Sam",
+          "Last_Name": "Workdayton"
+        },
+        "Country_Reference": {
+          "ISO_3166_1_Alpha_2_Code": "US"
+        },
+        "Email_Address": "sam.workdayton@example.com",
+        "Phone": {
+          "Country_Code": "1",
+          "Phone_Number": "(628) 555-0171",
+          "Extension": "204"
+        }
+      },
+      "Source_Details": {
+        "IP_Address": "192.0.2.20",
+        "User_Agent": "Mozilla/5.0 (X11; Linux x86_64) FixtureBrowser/1.0"
+      },
+      "Attachments": [
+        {
+          "Filename": "workdayton_cv.pdf",
+          "Document_Category": "Resume",
+          "Metadata": {
+            "Author": "Sam Workdayton",
+            "Creator_Tool": "Example Writer 7.2",
+            "Pages": 2,
+            "SHA256": "209a16a53142d4f7a253b3c8f368e677a4f8fa7905d30cdc426521171eaf4cf3",
+            "Extracted_Name": "Sam Workdayton",
+            "Extracted_Email": "sam.workdayton@example.com",
+            "Extracted_Phone": "+1 (628) 555-0171"
+          }
+        }
+      ]
+    },
+    {
+      "Job_Application_ID": "JA-100237",
+      "Application_Date": "2026-09-15T09:30:00.000-07:00",
+      "Job_Requisition": {
+        "Title": "Platform Engineer"
+      },
+      "Candidate": {
+        "Legal_Name": {
+          "First_Name": "Lee",
+          "Last_Name": "Nophone"
+        },
+        "Country_Reference": {
+          "ISO_3166_1_Alpha_2_Code": "US"
+        },
+        "Email_Address": "lee.nophone@example.com"
+      },
+      "Source_Details": {
+        "IP_Address": "192.0.2.23",
+        "User_Agent": "Mozilla/5.0 (X11; Linux x86_64) FixtureBrowser/1.0"
+      },
+      "Attachments": [
+        {
+          "Filename": "nophone_cv.pdf",
+          "Document_Category": "Resume",
+          "Metadata": {
+            "Author": "Lee Nophone",
+            "Creator_Tool": "Example Writer 7.2",
+            "Pages": 2,
+            "SHA256": "c34c73c55822107c43b369473e37cf63b9c183fb16c3c92ec2727aa7723ac9f9",
+            "Extracted_Name": "Lea Nophoner",
+            "Extracted_Email": "lee.nophone@example.com",
+            "Extracted_Phone": null
+          }
+        }
+      ]
+    },
+    {
+      "Candidate": {
+        "Legal_Name": {
+          "First_Name": "No",
+          "Last_Name": "Applicationid"
+        }
+      },
+      "Application_Date": "2026-09-16T09:00:00.000-07:00"
+    }
+  ],
+  "Paging": {
+    "next": null
+  }
+}

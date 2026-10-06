@@ -1,0 +1,504 @@
+{
+ "kind": "admin#reports#activities",
+ "items": [
+  {
+   "kind": "admin#reports#activity",
+   "id": {
+    "time": "2026-09-21T17:15:00.000Z",
+    "uniqueQualifier": "85b14c40d2d2290c",
+    "applicationName": "drive",
+    "customerId": "C01abc23"
+   },
+   "actor": {
+    "email": "jack.lee@acme.example"
+   },
+   "ipAddress": "198.51.100.77",
+   "events": [
+    {
+     "type": "access",
+     "name": "download",
+     "parameters": [
+      {
+       "name": "doc_id",
+       "value": "1Bx1Kq"
+      },
+      {
+       "name": "doc_title",
+       "value": "Q3 pricing.xlsx"
+      },
+      {
+       "name": "doc_type",
+       "value": "document"
+      },
+      {
+       "name": "file_size",
+       "intValue": "2048000"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "admin#reports#activity",
+   "id": {
+    "time": "2026-09-22T09:30:00-07:00",
+    "uniqueQualifier": "8f9d2d32054aa7cf",
+    "applicationName": "drive",
+    "customerId": "C01abc23"
+   },
+   "actor": {
+    "email": "jack.lee@acme.example"
+   },
+   "ipAddress": "198.51.100.77",
+   "events": [
+    {
+     "type": "access",
+     "name": "download",
+     "parameters": [
+      {
+       "name": "doc_id",
+       "value": "1Bx2Kq"
+      },
+      {
+       "name": "doc_title",
+       "value": "Roadmap.pdf"
+      },
+      {
+       "name": "doc_type",
+       "value": "document"
+      },
+      {
+       "name": "file_size",
+       "intValue": "1500000"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "admin#reports#activity",
+   "id": {
+    "time": "2026-09-22T18:00:00.000Z",
+    "uniqueQualifier": "6ea3ac424b1cf2ad",
+    "applicationName": "drive",
+    "customerId": "C01abc23"
+   },
+   "actor": {
+    "email": "jack.lee@acme.example"
+   },
+   "ipAddress": "198.51.100.77",
+   "events": [
+    {
+     "type": "access",
+     "name": "view",
+     "parameters": [
+      {
+       "name": "doc_id",
+       "value": "1Bx2Kq"
+      },
+      {
+       "name": "doc_title",
+       "value": "Roadmap.pdf"
+      },
+      {
+       "name": "doc_type",
+       "value": "document"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "admin#reports#activity",
+   "id": {
+    "time": "2026-09-22T19:10:00.000Z",
+    "uniqueQualifier": "0ea497208dac3eaf",
+    "applicationName": "drive",
+    "customerId": "C01abc23"
+   },
+   "actor": {
+    "email": "kim.sato@acme.example"
+   },
+   "ipAddress": "198.51.100.77",
+   "events": [
+    {
+     "type": "access",
+     "name": "edit",
+     "parameters": [
+      {
+       "name": "doc_id",
+       "value": "1Bx3Kq"
+      },
+      {
+       "name": "doc_title",
+       "value": "Plan.docx"
+      },
+      {
+       "name": "doc_type",
+       "value": "document"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "admin#reports#activity",
+   "id": {
+    "time": "2026-09-23T16:00:00.000Z",
+    "uniqueQualifier": "eb61b8274d870265",
+    "applicationName": "drive",
+    "customerId": "C01abc23"
+   },
+   "actor": {
+    "email": "jack.lee@acme.example"
+   },
+   "ipAddress": "198.51.100.77",
+   "events": [
+    {
+     "type": "acl_change",
+     "name": "change_document_visibility",
+     "parameters": [
+      {
+       "name": "doc_id",
+       "value": "1Bx1Kq"
+      },
+      {
+       "name": "doc_title",
+       "value": "Q3 pricing.xlsx"
+      },
+      {
+       "name": "doc_type",
+       "value": "document"
+      },
+      {
+       "name": "visibility",
+       "value": "people_with_link"
+      },
+      {
+       "name": "old_visibility",
+       "value": "private"
+      },
+      {
+       "name": "visibility_change",
+       "value": "external"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "admin#reports#activity",
+   "id": {
+    "time": "2026-09-23T17:30:00.000Z",
+    "uniqueQualifier": "f595074b625c160d",
+    "applicationName": "drive",
+    "customerId": "C01abc23"
+   },
+   "actor": {
+    "email": "kim.sato@acme.example"
+   },
+   "ipAddress": "198.51.100.77",
+   "events": [
+    {
+     "type": "acl_change",
+     "name": "change_document_visibility",
+     "parameters": [
+      {
+       "name": "doc_id",
+       "value": "1Bx4Kq"
+      },
+      {
+       "name": "doc_title",
+       "value": "Customer list.xlsx"
+      },
+      {
+       "name": "doc_type",
+       "value": "document"
+      },
+      {
+       "name": "visibility",
+       "value": "public_on_the_web"
+      },
+      {
+       "name": "old_visibility",
+       "value": "private"
+      },
+      {
+       "name": "visibility_change",
+       "value": "external"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "admin#reports#activity",
+   "id": {
+    "time": "2026-09-23T20:00:00.000Z",
+    "uniqueQualifier": "0ee584692df8ec72",
+    "applicationName": "drive",
+    "customerId": "C01abc23"
+   },
+   "actor": {
+    "email": "kim.sato@acme.example"
+   },
+   "ipAddress": "198.51.100.77",
+   "events": [
+    {
+     "type": "acl_change",
+     "name": "change_document_visibility",
+     "parameters": [
+      {
+       "name": "doc_id",
+       "value": "1Bx4Kq"
+      },
+      {
+       "name": "doc_title",
+       "value": "Customer list.xlsx"
+      },
+      {
+       "name": "doc_type",
+       "value": "document"
+      },
+      {
+       "name": "visibility",
+       "value": "private"
+      },
+      {
+       "name": "old_visibility",
+       "value": "public_on_the_web"
+      },
+      {
+       "name": "visibility_change",
+       "value": "internal"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "admin#reports#activity",
+   "id": {
+    "time": "2026-09-24T16:40:00.000Z",
+    "uniqueQualifier": "877e941c32da39de",
+    "applicationName": "drive",
+    "customerId": "C01abc23"
+   },
+   "actor": {
+    "email": "jack.lee@acme.example"
+   },
+   "ipAddress": "198.51.100.77",
+   "events": [
+    {
+     "type": "acl_change",
+     "name": "change_user_access",
+     "parameters": [
+      {
+       "name": "doc_id",
+       "value": "1Bx2Kq"
+      },
+      {
+       "name": "doc_title",
+       "value": "Roadmap.pdf"
+      },
+      {
+       "name": "doc_type",
+       "value": "document"
+      },
+      {
+       "name": "target_user",
+       "value": "partner@vendor.example"
+      },
+      {
+       "name": "old_value",
+       "value": [
+        "none"
+       ]
+      },
+      {
+       "name": "new_value",
+       "value": [
+        "can_view"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "admin#reports#activity",
+   "id": {
+    "time": "2026-09-24T17:45:00.000Z",
+    "uniqueQualifier": "15240b73beacf331",
+    "applicationName": "drive",
+    "customerId": "C01abc23"
+   },
+   "actor": {
+    "email": "jack.lee@acme.example"
+   },
+   "ipAddress": "198.51.100.77",
+   "events": [
+    {
+     "type": "acl_change",
+     "name": "change_user_access",
+     "parameters": [
+      {
+       "name": "doc_id",
+       "value": "1Bx2Kq"
+      },
+      {
+       "name": "doc_title",
+       "value": "Roadmap.pdf"
+      },
+      {
+       "name": "doc_type",
+       "value": "document"
+      },
+      {
+       "name": "target_user",
+       "value": "kim.sato@acme.example"
+      },
+      {
+       "name": "new_value",
+       "value": [
+        "can_edit"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "admin#reports#activity",
+   "id": {
+    "time": "2026-09-24T18:20:00.000Z",
+    "uniqueQualifier": "bc87141f4bc5de43",
+    "applicationName": "drive",
+    "customerId": "C01abc23"
+   },
+   "actor": {
+    "email": "Kim.Sato@Acme.Example"
+   },
+   "ipAddress": "198.51.100.77",
+   "events": [
+    {
+     "type": "acl_change",
+     "name": "change_user_access",
+     "parameters": [
+      {
+       "name": "doc_id",
+       "value": "1Bx5Kq"
+      },
+      {
+       "name": "doc_title",
+       "value": "Offer letters.pdf"
+      },
+      {
+       "name": "doc_type",
+       "value": "document"
+      },
+      {
+       "name": "target_user",
+       "value": "someone.private@gmail.com"
+      },
+      {
+       "name": "new_value",
+       "value": [
+        "can_view"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "admin#reports#activity",
+   "id": {
+    "time": "2026-09-24T19:00:00.000Z",
+    "uniqueQualifier": "e40bfb1eb64345c7",
+    "applicationName": "drive",
+    "customerId": "C01abc23"
+   },
+   "actor": {
+    "email": "jack.lee@acme.example"
+   },
+   "ipAddress": "198.51.100.77",
+   "events": [
+    {
+     "type": "access",
+     "name": "rename",
+     "parameters": [
+      {
+       "name": "doc_id",
+       "value": "1Bx2Kq"
+      },
+      {
+       "name": "doc_title",
+       "value": "Roadmap v2.pdf"
+      },
+      {
+       "name": "doc_type",
+       "value": "document"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "admin#reports#activity",
+   "id": {
+    "time": "2026-09-24T21:15:00.000Z",
+    "uniqueQualifier": "cfb2e44ceef5e80c",
+    "applicationName": "drive",
+    "customerId": "C01abc23"
+   },
+   "actor": {
+    "email": "jack.lee@acme.example"
+   },
+   "ipAddress": "198.51.100.77",
+   "events": [
+    {
+     "type": "access",
+     "name": "view",
+     "parameters": [
+      {
+       "name": "doc_id",
+       "value": "1Bx6Kq"
+      },
+      {
+       "name": "doc_title",
+       "value": "Notes"
+      },
+      {
+       "name": "doc_type",
+       "value": "document"
+      }
+     ]
+    },
+    {
+     "type": "access",
+     "name": "download",
+     "parameters": [
+      {
+       "name": "doc_id",
+       "value": "1Bx6Kq"
+      },
+      {
+       "name": "doc_title",
+       "value": "Notes"
+      },
+      {
+       "name": "doc_type",
+       "value": "document"
+      },
+      {
+       "name": "file_size",
+       "intValue": "700000"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "nextPageToken": "page-0002.json"
+}
