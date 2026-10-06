@@ -43,8 +43,8 @@ O(k·B_bucket)，k 为桶内等价类数。`python3` 实测（本机）：2 万�
 34 test functions（`grep -c "def test"` = 34）；
 `python3 tools/verify_suites.py . "loop/rounds/06_legacy_coding/pc01*"` → `solution: 33 passed, 1 skipped`
 （跳过的是依赖 `chmod 000` 的用例，root 下权限不生效；同一场景由"读时抛 `PermissionError`"的用例覆盖）；
-`IMPL=starter` → `27 failed, 6 passed, 1 skipped`（通过的 6 个是对"空结果 / 抛不出 `ValueError` 以外的
-默认值"本就成立的断言，例如无重复时返回 `[]`）。按 marker（`grep -c "mark.<m>"`）：part1 10 · part2 8 ·
+`IMPL=starter` → `27 failed, 6 passed, 1 skipped`（通过的 6 个都是"期望结果本来就是空列表"的断言：无重复返回 `[]`、碰撞不产生假组、空输入、给定哈希确实碰撞、
+恒空输出的 io；空桩在这些上等价于正确答案，属弱断言的已知边界，不影响"大面积红"的口径）。按 marker（`grep -c "mark.<m>"`）：part1 10 · part2 8 ·
 part3 7 · part4 6；edge 13 · perf 2 · io 3。
 
 ## Skills exercised

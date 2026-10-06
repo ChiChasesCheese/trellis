@@ -39,6 +39,7 @@
 
 | | 题 | 题集 | 题解 | #refs | 最近 | 置信度 |
 |---|---|---|---|---:|---|---|
+| ★ | **ic01** AWS incident 排查：根因、信号、止血、长期修复 | [`loop/rounds/02_incident_sd/ic01_ingest_lag/`](loop/rounds/02_incident_sd/ic01_ingest_lag/) | — | 4 | 2026-09 | MED |
 
 ### 读/写扩展、键控状态、热分区、幂等写、迁移路径
 
@@ -57,7 +58,8 @@
 
 | | 题 | 题集 | 题解 | #refs | 最近 | 置信度 |
 |---|---|---|---|---:|---|---|
-| ★ | **cr01** Code review 小仓库：P0/P1 排序 + 用 AI 修 | [`loop/rounds/03_code_review/cr01_alert_fanout/`](loop/rounds/03_code_review/cr01_alert_fanout/) | — | 5 | 2026-09 | MED |
+| ★ | **cr01** Code review 小仓库：P0/P1 排序 + 用 AI 修 | [`loop/rounds/03_code_review/cr01_alert_fanout/`](loop/rounds/03_code_review/cr01_alert_fanout/) | [walkthrough](loop/rounds/03_code_review/cr01_alert_fanout/walkthrough.md) | 5 | 2026-09 | MED |
+|  | **cr02** cr02_risk_api | [`loop/rounds/03_code_review/cr02_risk_api/`](loop/rounds/03_code_review/cr02_risk_api/) | — | — | — | — |
 
 
 ## 04_manager_deep_dive · Manager / Behavioral + Technical Deep Dive（判断力）
@@ -83,3 +85,4 @@
 
 | | 题 | 题集 | 题解 | #refs | 最近 | 置信度 |
 |---|---|---|---|---:|---|---|
+| ★ | **pc01** 图片/文件去重（内存受限、哈希碰撞） | [`loop/rounds/06_legacy_coding/pc01_image_dedup/`](loop/rounds/06_legacy_coding/pc01_image_dedup/) | [题解](study/30-articles/pc01_image_dedup.md) | 4 | 2025-07 | MED |

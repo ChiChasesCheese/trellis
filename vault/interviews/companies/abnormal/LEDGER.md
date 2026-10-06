@@ -9,3 +9,5 @@
 | 2026-10-06 | cb02_insiderwatch（sonnet） | 代码库 + 3 ticket + 31 验收测试 + interviewer/walkthrough；REPORT 由编排者保存 | `verify_suites.py`：OK（31 passed · starter core 19 failed · 53/71 own） | 见下一次提交 |
 | 2026-10-06 | cb01_sentinel（sonnet） | 报道原形态代码库 + 3 ticket + 32 验收；编排者把 t3 `event_count` 放宽为 {9, 12}（两种口径都说得通）并在 interviewer.md 注明 | `verify_suites.py`：OK（32 passed · starter core 20 failed · 44/59 own） | 见提交 |
 | 2026-10-06 | cb03_vetting（sonnet） | 团队领域代码库 + 3 ticket + 34 验收；REPORT 由编排者保存 | `verify_suites.py`：OK（34 passed · starter core 18 failed · 52/64 own） | 见提交 |
+| 2026-10-06 | sd02 worker/queue scaling（编排者） | prompt/rubric/model_answer/followups，数字 `python3 -c` 计算 | — | 见提交 |
+| 2026-10-06 | pc01_image_dedup（sonnet） | 4 parts（3–4 reconstructed）+ 34 tests + 题解 | `verify_suites.py`：OK（33 passed 1 skipped · starter 27 failed） | 见提交 |
