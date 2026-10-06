@@ -1,0 +1,580 @@
+diff -ruN before/README.md starter/README.md
+--- before/README.md	2026-10-06 22:22:23.973121515 +0000
++++ starter/README.md	2026-10-06 22:20:14.307230282 +0000
+@@ -1,7 +1,9 @@
+ # fanout
+ 
+-Delivers high-severity alerts to each tenant's configured channels.
++Delivers high-severity alerts to each tenant's configured channels (webhook, email, Slack).
+ 
++    python -m fanout          # run the worker (FANOUT_DB, FANOUT_QUEUE, FANOUT_CONCURRENCY)
+     python -m pytest          # unit tests
+ 
+-Layout: `queue.py` (sqlite queue with SQS semantics), `models.py`.
++Layout: `queue.py` (sqlite queue with SQS semantics), `models.py`, `config_store.py` (tenant channels),
++`dedup.py`, `senders/`, `worker.py`.
+diff -ruN before/fanout/__main__.py starter/fanout/__main__.py
+--- before/fanout/__main__.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/fanout/__main__.py	2026-10-06 22:20:14.306637424 +0000
+@@ -0,0 +1,3 @@
++from .cli import main
++
++main()
+diff -ruN before/fanout/cli.py starter/fanout/cli.py
+--- before/fanout/cli.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/fanout/cli.py	2026-10-06 22:20:14.303230283 +0000
+@@ -0,0 +1,39 @@
++"""`python -m fanout` runs the worker until interrupted."""
++from __future__ import annotations
++
++import logging
++import threading
++
++from .config_store import ConfigStore
++from .dedup import DedupCache
++from .queue import Queue
++from .senders import EmailSender, SlackSender, WebhookSender
++from .settings import Settings
++from .worker import Worker
++
++
++def build_worker(settings: Settings) -> Worker:
++    return Worker(
++        queue=Queue(settings.queue_path),
++        store=ConfigStore(settings.db_path),
++        dedup=DedupCache(settings.dedup_ttl_s),
++        senders={"webhook": WebhookSender(), "email": EmailSender(), "slack": SlackSender()},
++        settings=settings,
++    )
++
++
++def main() -> None:
++    settings = Settings.from_env()
++    logging.basicConfig(level=settings.log_level)
++    stop = threading.Event()
++    worker = build_worker(settings)
++    try:
++        worker.run_forever(stop)
++    except KeyboardInterrupt:
++        stop.set()
++    finally:
++        worker.close()
++
++
++if __name__ == "__main__":
++    main()
+diff -ruN before/fanout/config_store.py starter/fanout/config_store.py
+--- before/fanout/config_store.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/fanout/config_store.py	2026-10-06 22:19:56.059230700 +0000
+@@ -0,0 +1,32 @@
++"""Per-tenant notification channel configuration (sqlite)."""
++from __future__ import annotations
++
++import sqlite3
++
++from .models import Channel
++
++
++class ConfigStore:
++    def __init__(self, path: str = ":memory:"):
++        self._db = sqlite3.connect(path, check_same_thread=False)
++        self._db.execute(
++            "CREATE TABLE IF NOT EXISTS channels ("
++            " tenant_id TEXT NOT NULL, kind TEXT NOT NULL, target TEXT NOT NULL,"
++            " secret TEXT NOT NULL DEFAULT '', min_severity INTEGER NOT NULL DEFAULT 1,"
++            " enabled INTEGER NOT NULL DEFAULT 1)"
++        )
++        self._db.commit()
++
++    def add_channel(self, ch: Channel, enabled: bool = True) -> None:
++        self._db.execute(
++            "INSERT INTO channels (tenant_id, kind, target, secret, min_severity, enabled) VALUES (?,?,?,?,?,?)",
++            (ch.tenant_id, ch.kind, ch.target, ch.secret, ch.min_severity, int(enabled)),
++        )
++        self._db.commit()
++
++    def channels_for(self, tenant_id: str) -> list[Channel]:
++        sql = (
++            "SELECT tenant_id, kind, target, secret, min_severity FROM channels "
++            f"WHERE tenant_id = '{tenant_id}' AND enabled = 1 ORDER BY rowid"
++        )
++        return [Channel(*row) for row in self._db.execute(sql).fetchall()]
+diff -ruN before/fanout/dedup.py starter/fanout/dedup.py
+--- before/fanout/dedup.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/fanout/dedup.py	2026-10-06 22:20:14.299296466 +0000
+@@ -0,0 +1,23 @@
++"""Suppress duplicate notifications for the same alert within a TTL window."""
++from __future__ import annotations
++
++import time
++from typing import Callable
++
++
++class DedupCache:
++    def __init__(self, ttl_s: int = 3600, clock: Callable[[], float] = time.time):
++        self.ttl_s = ttl_s
++        self._clock = clock
++        self._seen: dict[str, float] = {}
++
++    def seen(self, key: str) -> bool:
++        expires = self._seen.get(key)
++        return expires is not None and expires > self._clock()
++
++    def add(self, key: str) -> None:
++        now = self._clock()
++        for k, exp in list(self._seen.items()):  # drop expired entries
++            if exp <= now:
++                del self._seen[k]
++        self._seen[key] = now + self.ttl_s
+diff -ruN before/fanout/errors.py starter/fanout/errors.py
+--- before/fanout/errors.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/fanout/errors.py	2026-10-06 22:19:41.471231033 +0000
+@@ -0,0 +1,2 @@
++class SendError(Exception):
++    """A channel could not deliver a notification."""
+diff -ruN before/fanout/senders/__init__.py starter/fanout/senders/__init__.py
+--- before/fanout/senders/__init__.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/fanout/senders/__init__.py	2026-10-06 22:19:56.063389219 +0000
+@@ -0,0 +1,6 @@
++from .base import Sender
++from .email import EmailSender
++from .slack import SlackSender
++from .webhook import WebhookSender
++
++__all__ = ["Sender", "EmailSender", "SlackSender", "WebhookSender"]
+diff -ruN before/fanout/senders/base.py starter/fanout/senders/base.py
+--- before/fanout/senders/base.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/fanout/senders/base.py	2026-10-06 22:19:56.065372266 +0000
+@@ -0,0 +1,17 @@
++from __future__ import annotations
++
++from typing import Protocol
++
++from ..models import Alert, Channel
++
++
++class Sender(Protocol):
++    def send(self, channel: Channel, alert: Alert) -> None:
++        """Deliver `alert` through `channel`; raise SendError if it was not delivered."""
++
++
++def format_message(alert: Alert, fields: list[str] = []) -> str:
++    if alert.user:
++        fields.append(f"user={alert.user}")
++    fields.append(f"severity={alert.severity}")
++    return f"[{alert.rule}] {alert.title} ({', '.join(fields)})"
+diff -ruN before/fanout/senders/email.py starter/fanout/senders/email.py
+--- before/fanout/senders/email.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/fanout/senders/email.py	2026-10-06 22:19:56.067626635 +0000
+@@ -0,0 +1,25 @@
++"""Email channel. The SMTP client is stubbed behind `transport`."""
++from __future__ import annotations
++
++import logging
++from typing import Callable
++
++from ..models import Alert, Channel
++from .base import format_message
++
++log = logging.getLogger(__name__)
++
++
++def _log_transport(to: str, subject: str, body: str) -> None:
++    log.info("email stub: to=%s subject=%s", to, subject)
++
++
++class EmailSender:
++    def __init__(self, transport: Callable[[str, str, str], None] = _log_transport):
++        self.transport = transport
++
++    def send(self, channel: Channel, alert: Alert) -> None:
++        try:
++            self.transport(channel.target, f"Alert: {alert.title}", format_message(alert))
++        except Exception:
++            pass
+diff -ruN before/fanout/senders/slack.py starter/fanout/senders/slack.py
+--- before/fanout/senders/slack.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/fanout/senders/slack.py	2026-10-06 22:19:56.069553597 +0000
+@@ -0,0 +1,25 @@
++"""Slack channel. The Slack API client is stubbed behind `transport`."""
++from __future__ import annotations
++
++import logging
++from typing import Callable
++
++from ..models import Alert, Channel
++from .base import format_message
++
++log = logging.getLogger(__name__)
++
++
++def _log_transport(channel: str, text: str) -> None:
++    log.info("slack stub: channel=%s text=%s", channel, text)
++
++
++class SlackSender:
++    def __init__(self, transport: Callable[[str, str], None] = _log_transport):
++        self.transport = transport
++
++    def send(self, channel: Channel, alert: Alert) -> None:
++        try:
++            self.transport(channel.target, format_message(alert))
++        except Exception as exc:
++            log.debug("slack send failed: %s", exc)
+diff -ruN before/fanout/senders/webhook.py starter/fanout/senders/webhook.py
+--- before/fanout/senders/webhook.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/fanout/senders/webhook.py	2026-10-06 22:19:56.071230700 +0000
+@@ -0,0 +1,37 @@
++"""Webhook channel: POST the alert as JSON to the tenant's URL."""
++from __future__ import annotations
++
++import json
++import logging
++import urllib.error
++import urllib.request
++
++from ..errors import SendError
++from ..models import Alert, Channel
++
++log = logging.getLogger(__name__)
++
++
++class WebhookSender:
++    def send(self, channel: Channel, alert: Alert) -> None:
++        payload = json.dumps(
++            {
++                "alert_id": alert.alert_id,
++                "rule": alert.rule,
++                "severity": alert.severity,
++                "title": alert.title,
++                "created_at": alert.created_at,
++            }
++        ).encode()
++        headers = {
++            "Content-Type": "application/json",
++            "Authorization": f"Bearer {channel.secret}",
++        }
++        req = urllib.request.Request(channel.target, data=payload, headers=headers, method="POST")
++        log.info("POST %s headers=%s", channel.target, headers)
++        try:
++            with urllib.request.urlopen(req) as resp:
++                if resp.status >= 300:
++                    raise SendError(f"webhook returned {resp.status}")
++        except urllib.error.URLError as exc:
++            raise SendError(f"webhook failed: {exc}") from exc
+diff -ruN before/fanout/settings.py starter/fanout/settings.py
+--- before/fanout/settings.py	2026-10-06 22:22:23.971231777 +0000
++++ starter/fanout/settings.py	2026-10-06 22:19:56.055230872 +0000
+@@ -9,6 +9,15 @@
+     db_path: str = "fanout.db"
+     queue_path: str = "queue.db"
+     log_level: str = "INFO"
++    # --- fan-out worker ---
++    batch_size: int = 10
++    visibility_timeout_s: int = 30
++    concurrency: int = 8
++    max_attempts: int = 5
++    dedup_ttl_s: int = 3600
++    max_alert_age_s: int = 900
++    min_severity: int = 3
++    poll_interval_s: float = 1.0
+ 
+     @classmethod
+     def from_env(cls) -> "Settings":
+@@ -16,4 +25,5 @@
+         s.db_path = os.environ.get("FANOUT_DB", s.db_path)
+         s.queue_path = os.environ.get("FANOUT_QUEUE", s.queue_path)
+         s.log_level = os.environ.get("FANOUT_LOG_LEVEL", s.log_level)
++        s.concurrency = int(os.environ.get("FANOUT_CONCURRENCY", s.concurrency))
+         return s
+diff -ruN before/fanout/worker.py starter/fanout/worker.py
+--- before/fanout/worker.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/fanout/worker.py	2026-10-06 22:20:14.300220872 +0000
+@@ -0,0 +1,112 @@
++"""Notification fan-out worker.
++
++Pulls high-severity alerts off the queue, looks up the tenant's channels, and sends each channel a
++notification. Sends run on a thread pool so one slow tenant endpoint does not stall the batch.
++"""
++from __future__ import annotations
++
++import logging
++import threading
++import time
++from concurrent.futures import ThreadPoolExecutor
++from datetime import datetime
++from typing import Callable, Mapping, Optional
++
++from . import metrics
++from .config_store import ConfigStore
++from .dedup import DedupCache
++from .errors import SendError
++from .models import Alert, MalformedAlert
++from .queue import Message, Queue
++from .senders import Sender
++from .settings import Settings
++
++log = logging.getLogger(__name__)
++
++
++class Worker:
++    def __init__(
++        self,
++        queue: Queue,
++        store: ConfigStore,
++        dedup: DedupCache,
++        senders: Mapping[str, Sender],
++        settings: Optional[Settings] = None,
++        dlq: Optional[Queue] = None,
++        sleep: Callable[[float], None] = time.sleep,
++    ):
++        self.queue = queue
++        self.store = store
++        self.dedup = dedup
++        self.senders = dict(senders)
++        self.settings = settings or Settings()
++        self.dlq = dlq  # TODO: dead-letter poison messages once ops has created the DLQ
++        self.sleep = sleep
++        self.pool = ThreadPoolExecutor(max_workers=self.settings.concurrency)
++
++    def run_once(self) -> int:
++        """Receive one batch and process it; returns the number of messages received."""
++        msgs = self.queue.receive(self.settings.batch_size, self.settings.visibility_timeout_s)
++        futures = []
++        for msg in msgs:
++            self.queue.delete(msg.receipt)  # ack so the message is not delivered to another worker
++            futures.append(self.pool.submit(self.process_message, msg))
++        for fut in futures:
++            try:
++                fut.result()
++            except Exception:
++                log.exception("worker error")
++        return len(msgs)
++
++    def run_forever(self, stop: threading.Event) -> None:
++        while not stop.is_set():
++            if self.run_once() == 0:
++                self.sleep(self.settings.poll_interval_s)
++
++    def close(self) -> None:
++        self.pool.shutdown(wait=True)
++
++    def process_message(self, msg: Message) -> None:
++        try:
++            alert = Alert.from_json(msg.body)
++        except MalformedAlert as exc:
++            log.error("dropping message %s: %s", msg.id, exc)
++            metrics.inc("fanout.malformed")
++            return
++
++        if alert.severity < self.settings.min_severity:
++            metrics.inc("fanout.below_threshold")
++            return
++
++        created = datetime.fromisoformat(alert.created_at.replace("Z", ""))
++        age = (datetime.now() - created).total_seconds()
++        if age > self.settings.max_alert_age_s:
++            log.info("alert %s is stale (%.0fs old), skipping", alert.alert_id, age)
++            metrics.inc("fanout.stale")
++            return
++
++        if self.dedup.seen(alert.dedup_key):
++            log.info("alert %s already notified, skipping", alert.dedup_key)
++            metrics.inc("fanout.duplicate")
++            return
++
++        channels = self.store.channels_for(alert.tenant_id)
++        for ch in channels:
++            if alert.severity < ch.min_severity:
++                continue
++            sender = self.senders.get(ch.kind)
++            if sender is None:
++                log.warning("no sender for channel kind %r", ch.kind)
++                continue
++            attempt = 0
++            while True:
++                try:
++                    sender.send(ch, alert)
++                    metrics.inc(f"fanout.sent.{ch.kind}")
++                    break
++                except SendError as exc:
++                    attempt += 1
++                    log.warning("send to %s failed (attempt %d): %s", ch.kind, attempt, exc)
++                    metrics.inc(f"fanout.failed.{ch.kind}")
++
++        self.dedup.add(alert.dedup_key)
+diff -ruN before/tests/conftest.py starter/tests/conftest.py
+--- before/tests/conftest.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/tests/conftest.py	2026-10-06 22:20:28.378784769 +0000
+@@ -0,0 +1,52 @@
++import json
++from datetime import datetime, timezone
++
++import pytest
++
++from fanout import metrics
++from fanout.config_store import ConfigStore
++from fanout.dedup import DedupCache
++from fanout.models import Channel
++from fanout.queue import Queue
++from fanout.settings import Settings
++from fanout.worker import Worker
++
++
++class Recorder:
++    def __init__(self):
++        self.sent = []
++
++    def send(self, channel, alert):
++        self.sent.append((channel.tenant_id, channel.target, alert.alert_id))
++
++
++def alert_body(tenant="acme", alert_id="a1", rule="impossible_travel", severity=4, user="ann@example.com", age_s=5):
++    created = datetime.fromtimestamp(datetime.now(timezone.utc).timestamp() - age_s, timezone.utc)
++    return json.dumps(
++        {
++            "tenant_id": tenant,
++            "alert_id": alert_id,
++            "rule": rule,
++            "severity": severity,
++            "title": "Impossible travel",
++            "user": user,
++            "created_at": created.strftime("%Y-%m-%dT%H:%M:%SZ"),
++        }
++    )
++
++
++@pytest.fixture(autouse=True)
++def _reset_metrics():
++    metrics.reset()
++
++
++@pytest.fixture
++def rig():
++    store = ConfigStore()
++    store.add_channel(Channel("acme", "webhook", "https://hooks.example.com/acme", secret="s3cr3t"))
++    store.add_channel(Channel("acme", "email", "secops@example.com"))
++    rec = {"webhook": Recorder(), "email": Recorder()}
++    queue = Queue()
++    worker = Worker(queue, store, DedupCache(), rec, Settings(concurrency=2), sleep=lambda s: None)
++    yield queue, store, rec, worker
++    worker.close()
+diff -ruN before/tests/test_config_store.py starter/tests/test_config_store.py
+--- before/tests/test_config_store.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/tests/test_config_store.py	2026-10-06 22:20:28.385372184 +0000
+@@ -0,0 +1,10 @@
++from fanout.config_store import ConfigStore
++from fanout.models import Channel
++
++
++def test_channels_for_returns_only_enabled_channels_of_tenant():
++    s = ConfigStore()
++    s.add_channel(Channel("acme", "email", "a@example.com"))
++    s.add_channel(Channel("acme", "slack", "#sec"), enabled=False)
++    s.add_channel(Channel("globex", "email", "g@example.com"))
++    assert [c.target for c in s.channels_for("acme")] == ["a@example.com"]
+diff -ruN before/tests/test_dedup.py starter/tests/test_dedup.py
+--- before/tests/test_dedup.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/tests/test_dedup.py	2026-10-06 22:20:28.383243068 +0000
+@@ -0,0 +1,20 @@
++from fanout.dedup import DedupCache
++
++
++def test_seen_after_add_until_ttl():
++    t = [0.0]
++    c = DedupCache(ttl_s=10, clock=lambda: t[0])
++    assert not c.seen("k")
++    c.add("k")
++    assert c.seen("k")
++    t[0] = 11
++    assert not c.seen("k")
++
++
++def test_add_evicts_expired_entries():
++    t = [0.0]
++    c = DedupCache(ttl_s=10, clock=lambda: t[0])
++    c.add("old")
++    t[0] = 20
++    c.add("new")
++    assert not c.seen("old") and c.seen("new")
+diff -ruN before/tests/test_senders.py starter/tests/test_senders.py
+--- before/tests/test_senders.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/tests/test_senders.py	2026-10-06 22:20:28.389654117 +0000
+@@ -0,0 +1,41 @@
++import io
++
++from fanout.models import Alert, Channel
++from fanout.senders import EmailSender, SlackSender, WebhookSender
++
++ALERT = Alert("acme", "a1", "r", 4, "T", "ann@example.com", "2026-10-01T12:00:00Z")
++
++
++def test_email_sender_uses_transport():
++    got = []
++    EmailSender(transport=lambda to, subj, body: got.append((to, subj))).send(Channel("acme", "email", "a@example.com"), ALERT)
++    assert got == [("a@example.com", "Alert: T")]
++
++
++def test_slack_sender_uses_transport():
++    got = []
++    SlackSender(transport=lambda ch, text: got.append(ch)).send(Channel("acme", "slack", "#sec"), ALERT)
++    assert got == ["#sec"]
++
++
++def test_webhook_sender_posts_json(monkeypatch):
++    import urllib.request
++
++    seen = {}
++
++    class Resp(io.BytesIO):
++        status = 200
++
++        def __enter__(self):
++            return self
++
++        def __exit__(self, *a):
++            return False
++
++    def fake_urlopen(req, *a, **kw):
++        seen["url"] = req.full_url
++        return Resp()
++
++    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
++    WebhookSender().send(Channel("acme", "webhook", "https://hooks.example.com/x", secret="k"), ALERT)
++    assert seen["url"] == "https://hooks.example.com/x"
+diff -ruN before/tests/test_worker.py starter/tests/test_worker.py
+--- before/tests/test_worker.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/tests/test_worker.py	2026-10-06 22:20:28.387516363 +0000
+@@ -0,0 +1,32 @@
++from conftest import alert_body
++
++
++def test_alert_is_sent_to_every_channel(rig):
++    queue, _store, rec, worker = rig
++    queue.send(alert_body())
++    assert worker.run_once() == 1
++    assert [s[1] for s in rec["webhook"].sent] == ["https://hooks.example.com/acme"]
++    assert [s[1] for s in rec["email"].sent] == ["secops@example.com"]
++    assert queue.stats()["total"] == 0
++
++
++def test_low_severity_is_not_sent(rig):
++    queue, _store, rec, worker = rig
++    queue.send(alert_body(severity=2))
++    worker.run_once()
++    assert rec["webhook"].sent == [] and rec["email"].sent == []
++
++
++def test_same_alert_twice_is_sent_once(rig):
++    queue, _store, rec, worker = rig
++    queue.send(alert_body())
++    worker.run_once()
++    queue.send(alert_body())
++    worker.run_once()
++    assert len(rec["webhook"].sent) == 1
++
++
++def test_malformed_message_does_not_crash_worker(rig):
++    queue, _store, rec, worker = rig
++    queue.send("not json")
++    assert worker.run_once() == 1

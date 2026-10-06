@@ -47,6 +47,6 @@ def rig():
     store.add_channel(Channel("acme", "email", "secops@example.com"))
     rec = {"webhook": Recorder(), "email": Recorder()}
     queue = Queue()
-    worker = Worker(queue, store, DedupCache(), rec, Settings(concurrency=2), sleep=lambda s: None)
+    worker = Worker(queue, store, DedupCache(), rec, Settings(concurrency=2), dlq=Queue(), sleep=lambda s: None)
     yield queue, store, rec, worker
     worker.close()

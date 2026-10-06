@@ -16,7 +16,7 @@ import re
 from pathlib import Path
 
 KIT = Path(__file__).resolve().parents[1]
-FOCUS = ["OA", "电面", "PS", "技术筛"]
+FOCUS = ["AI screen"]
 
 
 def _load(name: str, path: Path):
@@ -54,8 +54,14 @@ def problem_dir(pid: str) -> Path | None:
     return p if p and p.is_dir() else None
 
 
+RANK_TITLES = dict(re.findall(r"^\| (\w+) \| ([^|]+?) \|", (KIT / "catalog" / "RANK.md").read_text(encoding="utf-8"), re.M))
+
+
 def title_of(d: Path) -> str:
-    for name in ("problem.md", "prompt.md"):
+    pid = d.name.split("_", 1)[0]
+    if pid in RANK_TITLES:
+        return RANK_TITLES[pid]
+    for name in ("problem.md", "prompt.md", "PR.md", "PAGE.md", "BRIEF.md"):
         f = d / name
         if f.exists():
             first = f.read_text(encoding="utf-8").splitlines()[0]
@@ -69,14 +75,15 @@ def main() -> None:
     rounds, _prereq = tree.parse(text)
     names = dict(re.findall(r"- id: (\S+)\n\s+name: (.+)", text))
     sc, cut = scores()
-    readme = (KIT / "study" / "30-articles" / "README.md").read_text(encoding="utf-8")
+    rp = KIT / "study" / "30-articles" / "README.md"
+    readme = rp.read_text(encoding="utf-8") if rp.exists() else ""
     lc_links = dict(re.findall(r"^\| (\w+) \| (\[LC [^]]+\]\([^)]+\)) \|", readme, re.M))
     lines = [
         "# 目录 — 按轮次读，按分数练",
         "",
         "> 由 `python3 tools/contents.py` 从 `loop/tree/interview-loop.yaml` + `catalog/RANK.md` 生成，**勿手改**。",
         "> 每个技能下的题按 28 法则分数（#refs × 时效 × 轮次权重）降序；**★ = cut line 以内**（累计 80% 流出次数）。",
-        "> 每题：题集目录（题面 + 测试 + 参考解）→ 题解文章（先做后读）。LeetCode 原题的公司标签全表见 `../../core/leetcode/companies/snowflake.md`。",
+        "> 每题：题集目录（题面 + 测试 + 参考解）→ 题解文章（先做后读）。练习代码库（cb）用 `python3 loop/ai_screen.py start <cb> <t>`；Abnormal 在 LeetCode 公司标签源里没有题单（`catalog/raw/github_repos.md`）。",
         "",
     ]
     for rnd in rounds:
@@ -103,7 +110,9 @@ def main() -> None:
                 rel = d.relative_to(KIT).as_posix()
                 art = KIT / "study" / "30-articles" / f"{d.name}.md"
                 art_cell = (f"[题解](study/30-articles/{d.name}.md)" if art.exists()
-                            else lc_links.get(d.name, f"[model_answer]({rel}/model_answer.md)" if (d / "model_answer.md").exists() else "—"))
+                            else f"[walkthrough]({rel}/walkthrough.md)" if (d / "walkthrough.md").exists()
+                            else f"[REVIEW_KEY]({rel}/REVIEW_KEY.md)" if (d / "REVIEW_KEY.md").exists()
+                            else f"[model_answer]({rel}/model_answer.md)" if (d / "model_answer.md").exists() else "—")
                 s = sc.get(pid)
                 star = "★" if s and s[4] else ""
                 lines.append(f"| {star} | **{pid}** {title_of(d)} | [`{rel}/`]({rel}/) | {art_cell} | {s[1] if s else '—'} | {s[2] if s else '—'} | {s[3] if s else '—'} |")
