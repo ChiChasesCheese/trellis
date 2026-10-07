@@ -2,6 +2,7 @@
 
 > 依据：`../../../catalog/raw/inbox.md`（门户官方原文，[高]）· `../../../catalog/raw/ai_screen_format.md`（视频 / VP of AI 博客 / 同类面试，[中]）· `../../../catalog/raw/process_and_rounds.md`（面经）。
 > 练：`python3 loop/ai_screen.py start cb02 t1` → 在打印出的目录里开 VS Code + `claude`，严格 60 分钟 → `check` → `reveal`。
+> 怎么驾驶 Claude（哲学、当场提示词卡、亮点、练习配置、38 场真实会话的规律）：`claude_playbook.md`。
 > 一句话：**这一轮不考你会不会写代码，考你像不像一个第一天就能接 ticket 的工程师——AI 是你带的实习生，你是 owner。**
 >
 > **报道过的真题（LeetCode Discuss #8335187，2026-06-15，编排者已逐字核对）**：代码库 = security-events 管线（collection/ingestion → enrichment（geo-ip、history、+1，**硬编码**）→ 规则 threat level → ranking → alerts → API → DB）；feature ① "allow users to suppress some rules (it can be complex rules like based on geo-ip)" ② "clients want more configurability without touching platform code. Implement a plugin based mechanism"。该候选人 20 分钟只在口头讲 decorator pattern，最后让 Claude 全写，自评 No。**cb01 就是照这个形态造的，先练它。原题原文、中文讲解与参考答案：`cb01_sentinel/REAL_QUESTION.md`；口述版原题练习：`python3 loop/ai_screen.py start cb01 real`。**
