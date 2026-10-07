@@ -21,12 +21,6 @@
       "Partitions": 12,
       "ReplicationFactor": 3,
       "RetentionHours": 72
-    },
-    {
-      "Name": "security-events-dlq",
-      "Partitions": 3,
-      "ReplicationFactor": 3,
-      "RetentionHours": 168
     }
   ],
   "ConsumerGroups": [

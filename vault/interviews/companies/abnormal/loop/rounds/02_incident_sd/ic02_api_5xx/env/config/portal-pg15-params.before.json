@@ -1,0 +1,13 @@
+{
+  "max_connections": 300,
+  "superuser_reserved_connections": 3,
+  "statement_timeout": 0,
+  "lock_timeout": 0,
+  "deadlock_timeout": "1s",
+  "log_lock_waits": 1,
+  "log_min_duration_statement": 2000,
+  "log_statement": "ddl",
+  "client_connection_check_interval": 10000,
+  "shared_preload_libraries": "pg_stat_statements,auto_explain",
+  "auto_explain.log_min_duration": 5000
+}

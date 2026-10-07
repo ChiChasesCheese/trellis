@@ -10,7 +10,7 @@ import pytest
 from ic01_helpers import ENV, ISO_ANY, ISO_OK, at, awsim, q, series, window_vals
 
 KAFKA = ["--dim", "ConsumerGroup=alert-ingest", "--dim", "Topic=security-events", "--dim", "ClusterName=security-events-cluster"]
-LAG = lambda **kw: series("AWS/Kafka", "MaxOffsetLag", "Maximum", ["ConsumerGroup=alert-ingest", "Topic=security-events", "ClusterName=security-events-cluster"], **kw)
+LAG = lambda **kw: series("AWS/Kafka", "SumOffsetLag", "Maximum", ["ConsumerGroup=alert-ingest", "Topic=security-events", "ClusterName=security-events-cluster"], **kw)
 DAY = "2026-09-30"
 NOW = f"{DAY}T14:30:00Z"
 
@@ -78,8 +78,9 @@ def test_config_diff_shows_batch_cache_and_backoff_removed():
 
 def test_lag_is_flat_until_the_deploy_then_grows_linearly():
     lag = LAG()
-    assert max(window_vals(lag, "12:30", "14:05")) < 1000
-    assert at(lag, "14:12") > 50000 and at(lag, "14:11") <= 50000          # first minute over the threshold
+    assert max(window_vals(lag, "12:30", "14:03")) < 1000
+    assert 1000 < at(lag, "14:03") < at(lag, "14:04") < at(lag, "14:05")    # grows from the first new task on (its partitions)
+    assert at(lag, "14:10") > 50000 and at(lag, "14:09") <= 50000          # first minute over the threshold
     assert at(lag, "14:30") > 150000
     growth = [at(lag, f"14:{m + 1}") - at(lag, f"14:{m}") for m in range(10, 29)]
     assert all(6500 < g < 8500 for g in growth), growth                    # ~ (produce - consume) * 60, i.e. linear
@@ -87,9 +88,11 @@ def test_lag_is_flat_until_the_deploy_then_grows_linearly():
 
 def test_lag_alarm_matches_ten_minutes_over_threshold():
     a = q("alarms", "--name", "alert-ingest-consumer-lag-high", "--history")["MetricAlarms"][0]
-    assert a["StateValue"] == "ALARM" and a["StateUpdatedTimestamp"] == f"{DAY}T14:21:00Z" and a["EvaluationPeriods"] == 10
+    assert a["StateValue"] == "ALARM" and a["StateUpdatedTimestamp"] == f"{DAY}T14:19:00Z" and a["EvaluationPeriods"] == 10
     lag = LAG()
-    assert all(at(lag, f"14:{m}") > 50000 for m in range(12, 22)) and at(lag, "14:11") <= 50000
+    assert all(at(lag, f"14:{m}") > 50000 for m in range(10, 20)) and at(lag, "14:09") <= 50000
+    age = series("AWS/Kafka", "EstimatedMaxTimeLag", "Maximum", ["ConsumerGroup=alert-ingest", "Topic=security-events", "ClusterName=security-events-cluster"])
+    assert max(window_vals(age, "12:30", "14:03")) < 5 and 20 * 60 < at(age, "14:30") < 25 * 60   # alerts ~23 min stale at 14:30
 
 
 def test_it_is_a_consumption_collapse_not_a_traffic_spike():

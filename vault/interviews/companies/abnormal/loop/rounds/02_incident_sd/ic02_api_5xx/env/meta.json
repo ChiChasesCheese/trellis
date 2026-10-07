@@ -1,0 +1,7 @@
+{
+  "account": "111122223333",
+  "region": "us-east-1",
+  "now": "2026-10-02T10:05:00Z",
+  "windowStart": "2026-10-02T08:30:00Z",
+  "note": "All timestamps are UTC (ISO 8601). Metrics are one datapoint per minute. Request logs are sampled: every line carries sample_rate (1 line = sample_rate requests)."
+}

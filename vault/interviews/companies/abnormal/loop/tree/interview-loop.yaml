@@ -27,7 +27,7 @@ rounds:
   - id: 02_incident_sd
     name: Incident（AWS 环境排查）+ System Design（扩容已有系统）
     duration_min: 60
-    study: [loop/LOOP_GUIDE.md]
+    study: [loop/LOOP_GUIDE.md, study/20-cards/aws_incident.md]
     core: [round.debugging]
     skills:
       - id: incident_investigation

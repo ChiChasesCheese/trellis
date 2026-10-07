@@ -14,10 +14,13 @@ Chi 已过 HR + HM（SWE II – Insider Risk）。下一轮 = **AI Technical Scr
 | P0 | 骨架 + codebase 题型约定 + 练习 runner | ✅ |
 | P1 | 尽调：A 面经/流程/GitHub · B 官方/产品/JD/AI 面试口径 | ✅ |
 | P2 | 练习代码库 cb01 sentinel · cb02 insiderwatch · cb03 vetting（`tasks/AGENT_CODEBASES.md`） | ✅ 三个均过 gate |
-| P3 | CATALOG / RANK / PARETO · LOOP_GUIDE · AI screen playbook · 其它轮（sd01 sd02 cr01 cr02 pc01 ✅；ic01/ic02 opus 进行中） | 大部分 ✅ |
-| P4 | study（中文）· 知识树 · CONTENTS · COVERAGE · README | ✅（ic 完成后重跑 contents/coverage/check_tree --strict） |
+| P3 | CATALOG / RANK / PARETO · LOOP_GUIDE · AI screen playbook · 其它轮（sd01 sd02 cr01 cr02 pc01 ic01 ic02 全部 ✅） | ✅ |
+| P4 | study（中文）· 知识树 · CONTENTS · COVERAGE · README | ✅（COVERAGE 26/31 = 84%；check_tree --strict 0/0） |
 | P5 | commit + push + draft PR | PR #43（draft） |
 
 ## 下一步
 
-见上表第一个非 ✅ 行。子代理任务的恢复规则写在各自的 tasks/*.md 里。
+1. Chi：按 `loop/LOOP_GUIDE.md` §7 练 AI screen（`python3 loop/ai_screen.py start cb01 t1` 起），每次填 `loop/rounds/01_ai_screen/playbook.md` §7 复盘表。
+2. 面完 AI screen：在 `02-process.md` 亲历表回写代码库与 feature 原话；若与 cb01 不同，`catalog/CATALOG.md` 加行，重跑 `tools/pareto.py` · `tools/coverage.py` · `tools/contents.py`。
+3. 门户更新 onsite 轮次后：更新 `loop/LOOP_GUIDE.md` §0 与 `02-process.md` §2。
+4. 可选补题：sd03 照片去重服务（目前在 pc01 的 SD 追问里）。

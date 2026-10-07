@@ -198,3 +198,13 @@ def test_cli_exit_codes_and_table(tiny):
     assert ok.returncode == 0 and ok.stdout.splitlines()[0] == "2026-01-02T10:00:00Z  4"
     bad = subprocess.run([sys.executable, str(DRILL / "awsim.py"), "logs", "tail", "--group", "/nope"], capture_output=True, text=True, env=env)
     assert bad.returncode == 254 and "ResourceNotFoundException" in bad.stderr
+
+
+def test_table_mode_for_alarms_deploys_and_trail(tiny):
+    t = awsim.table
+    assert [l.split()[1:3] for l in t("alarms", q("alarms")).splitlines()] == [["ALARM", "A"], ["OK", "B"]]
+    dep = t("deploys", {"deployments": [{"startedAt": "2026-01-02T10:00:00Z", "service": "b", "taskDefinition": "b:2", "imageTag": "x",
+                                         "commit": {"message": "fix it\n\nlong body"}}]})
+    assert dep == "2026-01-02T10:00:00Z  b  b:2  x  fix it"
+    tr = t("trail", q("trail", "lookup", "--event-name", "UpdateService")).split()
+    assert tr[:4] == ["2026-01-02T10:01:00Z", "ecs.amazonaws.com", "UpdateService", "ci"]

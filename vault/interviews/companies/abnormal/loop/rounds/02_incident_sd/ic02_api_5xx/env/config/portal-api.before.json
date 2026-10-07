@@ -1,0 +1,16 @@
+{
+  "flags": {
+    "bulk_export": false
+  },
+  "db": {
+    "pool_size": 20,
+    "max_overflow": 0,
+    "pool_timeout_s": 10,
+    "statement_timeout_ms": 30000
+  },
+  "migrations": {
+    "mode": "post-deploy-async",
+    "timeout_s": 720,
+    "transactional": true
+  }
+}

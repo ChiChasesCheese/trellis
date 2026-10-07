@@ -55,33 +55,43 @@ def new_tasks(d: datetime) -> int:
 
 
 def simulate(rng: random.Random):
+    """Per-minute model.  Partitions are spread evenly over the 8 consumers, so during the rolling deploy the
+    k new (slow) tasks own k/8 of the partitions and their backlog grows while the old tasks keep up with theirs.
+    When the last old task leaves, its (small) backlog moves to the new owners."""
     rows = []
-    lag = 240.0
+    lag_old, lag_new = 240.0, 0.0
     dlq = 0.0
     for d in minutes():
         k = new_tasks(d)
         hour = (d - START).total_seconds() / 3600
         prod = PRODUCE + 6 * (hour / 2) + rng.uniform(-7, 7)
-        demand = k * 60000 / ATTEMPT_MS                       # attempts/min if every task retries hot
-        p = 1.0 if demand <= LIMIT_RPM else LIMIT_RPM / demand  # per-attempt success probability
+        demand = k * 60000 / ATTEMPT_MS * (1 + rng.uniform(-0.03, 0.03))   # attempts/min: every new task loops hot
+        p = 1.0 if demand <= LIMIT_RPM else LIMIT_RPM / demand            # per-attempt success probability
         q = 1 - p
         avg_attempts = 1.0 if p == 1 else (1 - q ** MAX_ATTEMPTS) / p
         succ_frac = 1 - q ** MAX_ATTEMPTS
         new_msgs_s = (demand / avg_attempts / 60) if k else 0.0
-        cap = (TASKS - k) * OLD_RATE + new_msgs_s
-        consumed = min(cap, prod + lag / 60)
-        lag = max(200 + rng.uniform(-60, 90), lag + (prod - consumed) * 60)
-        dead = new_msgs_s * 60 * (1 - succ_frac) if k else 0.0
+        old_share = (TASKS - k) / TASKS
+        old_in, new_in = prod * old_share, prod * (1 - old_share)
+        if k == TASKS and lag_old:
+            lag_new, lag_old = lag_new + lag_old, 0.0
+        c_old = min((TASKS - k) * OLD_RATE, old_in + lag_old / 60) if k < TASKS else 0.0
+        c_new = min(new_msgs_s, new_in + lag_new / 60)
+        if k < TASKS:
+            lag_old = max((200 + rng.uniform(-60, 90)) * old_share, lag_old + (old_in - c_old) * 60)
+        lag_new = max(0.0, lag_new + (new_in - c_new) * 60)
+        consumed = c_old + c_new
+        lag = lag_old + lag_new
+        dead = c_new * 60 * (1 - succ_frac) if k else 0.0
         dlq += dead
         throttled = demand * q
-        new_share = (new_msgs_s / consumed) if consumed else 0
-        lat_avg = (1 - new_share) * 3.0 + new_share * (avg_attempts * ATTEMPT_MS + 3)
-        lat_p99 = 9.0 if k == 0 else (MAX_ATTEMPTS * ATTEMPT_MS + 40 if q > 0 else 190.0)
-        if 0 < k < TASKS and new_share < 0.02:
-            lat_p99 = 9.0 + 180 * (k > 0)
+        new_share = (c_new / consumed) if consumed else 0
+        lat_avg = (1 - new_share) * (3.0 + rng.uniform(-0.3, 0.3)) + new_share * (avg_attempts * ATTEMPT_MS + 3)
+        lat_p99 = (9.0 + rng.uniform(-1.5, 1.5) if k == 0 else
+                   MAX_ATTEMPTS * ATTEMPT_MS + 40 + rng.uniform(-15, 15) if q > 0 else 190.0 + rng.uniform(-10, 10))
         rows.append(dict(d=d, k=k, prod=prod, consumed=consumed, lag=lag, dlq=dlq, dead=dead, throttled=throttled,
                          attempts=demand, p=p, avg_attempts=avg_attempts, lat_avg=lat_avg, lat_p99=lat_p99,
-                         new_msgs_s=new_msgs_s))
+                         new_msgs_s=c_new))
     return rows
 
 
@@ -124,7 +134,9 @@ def build(out: Path):
     LAG = f"ConsumerGroup=alert-ingest;Topic=security-events;{CL}"
 
     # ---- Kafka
-    write_csv(out, "AWS/Kafka", "MaxOffsetLag", [(r["d"], r["lag"], LAG) for r in sim])
+    write_csv(out, "AWS/Kafka", "SumOffsetLag", [(r["d"], r["lag"], LAG) for r in sim])
+    # age of the oldest unconsumed record ~ backlog / arrival rate (MSK: EstimatedMaxTimeLag, seconds)
+    write_csv(out, "AWS/Kafka", "EstimatedMaxTimeLag", [(r["d"], r["lag"] / r["prod"], LAG) for r in sim])
     write_csv(out, "AWS/Kafka", "MessagesInPerSec", [(r["d"], r["prod"], f"Topic=security-events;{CL}") for r in sim])
     disk = []
     for d in minutes():
@@ -202,7 +214,7 @@ def build(out: Path):
                 "EvaluationPeriods": n, "ComparisonOperator": op, "Threshold": thr, "StateValue": state,
                 "StateUpdatedTimestamp": iso(since), "StateReason": reason, "History": history, **kw}
     alarms = [
-        alarm("alert-ingest-consumer-lag-high", "AWS/Kafka", "MaxOffsetLag",
+        alarm("alert-ingest-consumer-lag-high", "AWS/Kafka", "SumOffsetLag",
               {"ConsumerGroup": "alert-ingest", "Topic": "security-events", "ClusterName": "security-events-cluster"},
               "Maximum", "GreaterThanThreshold", 50000, 10, "ALARM", lag_t,
               "10 datapoints were greater than the threshold (50000.0)",
@@ -268,14 +280,18 @@ def build(out: Path):
                 for s in range(6):                              # rate-limited logger: one line / 10 s, with a suppressed count
                     ts = r["d"] + timedelta(seconds=10 * s + rng.randint(0, 6))
                     sup = int(per_task_429 / 6)
-                    add(sid, ts, "WARN", f"geoip lookup throttled status=429 attempt={rng.randint(1, MAX_ATTEMPTS)} elapsed_ms={rng.randint(131, 170)} retry_in_ms=0 (suppressed {sup} similar in last 10s)",
-                        logger="ingest.geoip", status=429, attempt=rng.randint(1, MAX_ATTEMPTS), elapsed_ms=rng.randint(131, 170),
-                        retry_in_ms=0, suppressed=sup)
+                    att, el = rng.randint(1, MAX_ATTEMPTS), rng.randint(131, 170)
+                    add(sid, ts, "WARN", f"geoip lookup throttled status=429 attempt={att} elapsed_ms={el} retry_in_ms=0 (suppressed {sup} similar in last 10s)",
+                        logger="ingest.geoip", status=429, attempt=att, elapsed_ms=el, retry_in_ms=0, suppressed=sup)
                     if per_task_dead >= 1:
                         sup = int(per_task_dead / 6)
                         add(sid, ts + timedelta(seconds=1), "ERROR", f"enrichment failed after {MAX_ATTEMPTS} attempts, message sent to DLQ topic=security-events partition={rng.randint(0, 11)} (suppressed {sup} similar in last 10s)",
                             logger="ingest.consumer", attempts=MAX_ATTEMPTS, dlq="security-events-dlq", suppressed=sup)
-    for sid, recs in streams.items():
+    for sid, recs in streams.items():          # structured logs carry the image version and the task id on every line
+        ver = "2026.09.30-1402-a91f3c7" if sid[5:] in new_ids else "2026.09.29-1640-5e1d9b2"
+        for rec in recs:
+            rec.setdefault("version", ver)
+            rec.setdefault("task", sid[5:13])
         write_jsonl(lg / "ecs__alert-ingest" / f"{sid}.jsonl", recs)
 
     streams = {}
@@ -308,7 +324,7 @@ def build(out: Path):
     add(bsid, DAY.replace(hour=12, minute=50), "WARN", "log dir /kafka/data usage 71%: retention.bytes backlog on __consumer_offsets-14 and security-events-7", logger="kafka.log")
     add(bsid, DAY.replace(hour=12, minute=55), "WARN", "log dir /kafka/data usage 87%: segment cleaner behind (compaction of __consumer_offsets)", logger="kafka.log")
     add(bsid, DAY.replace(hour=13, minute=1, second=10), "INFO", "storage volume resize 1000 GiB -> 1500 GiB requested via UpdateBrokerStorage", logger="kafka.ops")
-    add(bsid, DAY.replace(hour=13, minute=5), "INFO", "log dir /kafka/data usage 61% after volume resize and segment cleanup", logger="kafka.log")
+    add(bsid, DAY.replace(hour=13, minute=5), "INFO", "log dir /kafka/data usage 59% after volume resize and segment cleanup", logger="kafka.log")
     write_jsonl(lg / "aws__msk__broker-2" / "broker-2.jsonl", streams[bsid])
 
     # ---- cloudtrail
@@ -382,8 +398,7 @@ def build(out: Path):
         "ClusterInfo": {"ClusterName": "security-events-cluster", "State": "ACTIVE", "ClusterArn": f"arn:aws:kafka:{REGION}:{ACCOUNT}:cluster/security-events-cluster/6a1f",
                         "BrokerNodeGroupInfo": {"InstanceType": "kafka.m5.large", "ClientSubnets": 3, "StorageInfo": {"EbsStorageInfo": {"VolumeSize": 1500}}},
                         "NumberOfBrokerNodes": 3, "CreationTime": "2025-11-04T09:12:00Z"},
-        "Topics": [{"Name": "security-events", "Partitions": 12, "ReplicationFactor": 3, "RetentionHours": 72},
-                   {"Name": "security-events-dlq", "Partitions": 3, "ReplicationFactor": 3, "RetentionHours": 168}],
+        "Topics": [{"Name": "security-events", "Partitions": 12, "ReplicationFactor": 3, "RetentionHours": 72}],
         "ConsumerGroups": [{"GroupId": "alert-ingest", "State": "Stable", "Members": 8, "AssignedPartitions": 12}]})
     svc = lambda name, cluster, rev, cpu_, mem, launch, extra=None: {"services": [dict({
         "serviceName": name, "clusterArn": f"arn:aws:ecs:{REGION}:{ACCOUNT}:cluster/{cluster}", "status": "ACTIVE", "desiredCount": 8 if name == "alert-ingest" else 3,

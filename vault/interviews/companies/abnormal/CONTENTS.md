@@ -31,7 +31,7 @@
 
 ## 02_incident_sd · Incident（AWS 环境排查）+ System Design（扩容已有系统）
 
-先读：[LOOP_GUIDE](loop/LOOP_GUIDE.md)
+先读：[LOOP_GUIDE](loop/LOOP_GUIDE.md) · [aws_incident](study/20-cards/aws_incident.md)
 
 通用能力（[[Code Core MOC|code-core]] 卡组与练习）：[[round.debugging]]
 
@@ -39,7 +39,8 @@
 
 | | 题 | 题集 | 题解 | #refs | 最近 | 置信度 |
 |---|---|---|---|---:|---|---|
-| ★ | **ic01** AWS incident 排查：根因、信号、止血、长期修复 | [`loop/rounds/02_incident_sd/ic01_ingest_lag/`](loop/rounds/02_incident_sd/ic01_ingest_lag/) | — | 4 | 2026-09 | MED |
+| ★ | **ic01** AWS incident 排查：根因、信号、止血、长期修复 | [`loop/rounds/02_incident_sd/ic01_ingest_lag/`](loop/rounds/02_incident_sd/ic01_ingest_lag/) | [model_answer](loop/rounds/02_incident_sd/ic01_ingest_lag/model_answer.md) | 4 | 2026-09 | MED |
+|  | **ic02** PAGE · ic02 | [`loop/rounds/02_incident_sd/ic02_api_5xx/`](loop/rounds/02_incident_sd/ic02_api_5xx/) | [model_answer](loop/rounds/02_incident_sd/ic02_api_5xx/model_answer.md) | — | — | — |
 
 ### 读/写扩展、键控状态、热分区、幂等写、迁移路径
 

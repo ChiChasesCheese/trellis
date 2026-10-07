@@ -2,7 +2,7 @@
   {
     "AlarmName": "alert-ingest-consumer-lag-high",
     "Namespace": "AWS/Kafka",
-    "MetricName": "MaxOffsetLag",
+    "MetricName": "SumOffsetLag",
     "Dimensions": {
       "ConsumerGroup": "alert-ingest",
       "Topic": "security-events",
@@ -14,11 +14,11 @@
     "ComparisonOperator": "GreaterThanThreshold",
     "Threshold": 50000,
     "StateValue": "ALARM",
-    "StateUpdatedTimestamp": "2026-09-30T14:21:00Z",
+    "StateUpdatedTimestamp": "2026-09-30T14:19:00Z",
     "StateReason": "10 datapoints were greater than the threshold (50000.0)",
     "History": [
       {
-        "Timestamp": "2026-09-30T14:21:00Z",
+        "Timestamp": "2026-09-30T14:19:00Z",
         "From": "OK",
         "To": "ALARM"
       }

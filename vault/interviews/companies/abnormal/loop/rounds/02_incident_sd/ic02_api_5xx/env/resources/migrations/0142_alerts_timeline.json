@@ -1,0 +1,12 @@
+{
+  "name": "0142_alerts_timeline",
+  "transactional": true,
+  "ranBy": "portal-api-migrate:88",
+  "status": "ROLLED_BACK",
+  "statements": [
+    "ALTER TABLE alerts ADD COLUMN triage_note_id bigint;",
+    "CREATE INDEX alerts_tenant_user_created_idx ON alerts (tenant_id, user_id, created_at DESC);"
+  ],
+  "applied": false,
+  "note": "runner wraps each migration file in one transaction; connection lost at 2026-10-02T09:52:14Z, transaction rolled back"
+}

@@ -621,6 +621,24 @@ def table(cmd: str, res: dict) -> str | None:
         return "\n".join(rows)
     if "results" in res:
         return "\n".join("  ".join(f"{c['field']}={c['value']}" for c in r) for r in res["results"])
+    if "changed" in res and "removed" in res:
+        rows = [f"~ {k}: {json.dumps(v['before'])} -> {json.dumps(v['after'])}" for k, v in res["changed"].items()]
+        rows += [f"+ {k}: {json.dumps(v)}" for k, v in res["added"].items()]
+        rows += [f"- {k}: {json.dumps(v)}" for k, v in res["removed"].items()]
+        return "\n".join(rows) or "(no differences)"
+    if "logGroups" in res:
+        return "\n".join(f"{g['logGroupName']}  streams={g['streams']}  storedBytes={g['storedBytes']}" for g in res["logGroups"])
+    if "MetricAlarms" in res:
+        return "\n".join(f"{x.get('StateUpdatedTimestamp', '-')}  {x['StateValue']:<5}  {x['AlarmName']}  ({x.get('Namespace', '')} "
+                         f"{x.get('MetricName', '')} {x.get('ComparisonOperator', '')} {x.get('Threshold', '')})" for x in res["MetricAlarms"])
+    if "deployments" in res:
+        def first_line(d):
+            return ((d.get("commit") or {}).get("message") or "").split("\n")[0]
+        return "\n".join(f"{d.get('startedAt', '')}  {d.get('service', '')}  {d.get('taskDefinition', '')}  {d.get('imageTag', '')}  "
+                         f"{first_line(d)}" for d in res["deployments"])
+    if "Events" in res:
+        return "\n".join(f"{e['EventTime']}  {e['EventSource']}  {e['EventName']}  {e['Username']}  "
+                         + json.dumps(e["CloudTrailEvent"].get("requestParameters", {}), separators=(",", ":")) for e in res["Events"])
     return None
 
 

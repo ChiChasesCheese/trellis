@@ -13,3 +13,5 @@
 | 2026-10-06 | pc01_image_dedup（sonnet） | 4 parts（3–4 reconstructed）+ 34 tests + 题解 | `verify_suites.py`：OK（33 passed 1 skipped · starter 27 failed） | 见提交 |
 | 2026-10-07 | cr01_alert_fanout + cr02_risk_api（sonnet，第二个因用量上限中断） | PR + diff + 隐藏测试 + REVIEW_KEY（各 13 条）+ walkthrough + followups；cr02 REPORT 由编排者补写 | `verify_suites.py`：cr01 OK（24 · core 8 红）· cr02 OK（24 · core 9 红） | 见提交 |
 | 2026-10-07 | ic01（sonnet 中断，部分）→ ic01 补完 + ic02 交给 opus（恢复规则） | — | 待验收 | — |
+| 2026-10-07 | ic01_ingest_lag + ic02_api_5xx（opus，恢复规则续做 ic01） | 离线 AWS 快照 + awsim.py + investigation/model_answer/rubric；model_answer 的每个证据块由测试重跑；REPORT 由编排者保存 | 编排者重跑：`pytest loop/rounds/02_incident_sd` → 152 passed | 见提交 |
+| 2026-10-07 | 收尾 | `reports/COVERAGE.md`（26/31 = 84%）· `study/20-cards/aws_incident.md` · CONTENTS 10 题 · `check_tree.py --strict` 0/0 | — | 见提交 |

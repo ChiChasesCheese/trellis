@@ -1,0 +1,11 @@
+{"timestamp":"2026-10-02T09:40:05Z","level":"INFO","message":"starting migration runner 2026.10.02-0939-e7b05f1 mode=post-deploy-async timeout=720s","logger":"migrate"}
+{"timestamp":"2026-10-02T09:40:06Z","level":"INFO","message":"applying 0142_alerts_timeline (transactional=true)","logger":"migrate"}
+{"timestamp":"2026-10-02T09:40:07Z","level":"INFO","message":"BEGIN","logger":"migrate.sql"}
+{"timestamp":"2026-10-02T09:40:07Z","level":"INFO","message":"ALTER TABLE alerts ADD COLUMN triage_note_id bigint -- ok (4 ms)","logger":"migrate.sql"}
+{"timestamp":"2026-10-02T09:40:07Z","level":"INFO","message":"CREATE INDEX alerts_tenant_user_created_idx ON alerts (tenant_id, user_id, created_at DESC)","logger":"migrate.sql"}
+{"timestamp":"2026-10-02T09:42:07Z","level":"INFO","message":"still running: CREATE INDEX alerts_tenant_user_created_idx (elapsed 120s)","logger":"migrate"}
+{"timestamp":"2026-10-02T09:44:07Z","level":"INFO","message":"still running: CREATE INDEX alerts_tenant_user_created_idx (elapsed 240s)","logger":"migrate"}
+{"timestamp":"2026-10-02T09:46:07Z","level":"INFO","message":"still running: CREATE INDEX alerts_tenant_user_created_idx (elapsed 360s)","logger":"migrate"}
+{"timestamp":"2026-10-02T09:48:07Z","level":"INFO","message":"still running: CREATE INDEX alerts_tenant_user_created_idx (elapsed 480s)","logger":"migrate"}
+{"timestamp":"2026-10-02T09:50:07Z","level":"INFO","message":"still running: CREATE INDEX alerts_tenant_user_created_idx (elapsed 600s)","logger":"migrate"}
+{"timestamp":"2026-10-02T09:52:10Z","level":"WARN","message":"SIGTERM received: stopped by deploy pipeline (migration timeout 720s exceeded); closing connection","logger":"migrate"}
