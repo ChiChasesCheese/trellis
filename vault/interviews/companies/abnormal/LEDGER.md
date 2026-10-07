@@ -11,3 +11,5 @@
 | 2026-10-06 | cb03_vetting（sonnet） | 团队领域代码库 + 3 ticket + 34 验收；REPORT 由编排者保存 | `verify_suites.py`：OK（34 passed · starter core 18 failed · 52/64 own） | 见提交 |
 | 2026-10-06 | sd02 worker/queue scaling（编排者） | prompt/rubric/model_answer/followups，数字 `python3 -c` 计算 | — | 见提交 |
 | 2026-10-06 | pc01_image_dedup（sonnet） | 4 parts（3–4 reconstructed）+ 34 tests + 题解 | `verify_suites.py`：OK（33 passed 1 skipped · starter 27 failed） | 见提交 |
+| 2026-10-07 | cr01_alert_fanout + cr02_risk_api（sonnet，第二个因用量上限中断） | PR + diff + 隐藏测试 + REVIEW_KEY（各 13 条）+ walkthrough + followups；cr02 REPORT 由编排者补写 | `verify_suites.py`：cr01 OK（24 · core 8 红）· cr02 OK（24 · core 9 红） | 见提交 |
+| 2026-10-07 | ic01（sonnet 中断，部分）→ ic01 补完 + ic02 交给 opus（恢复规则） | — | 待验收 | — |

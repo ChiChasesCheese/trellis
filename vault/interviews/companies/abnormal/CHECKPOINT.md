@@ -14,9 +14,9 @@ Chi 已过 HR + HM（SWE II – Insider Risk）。下一轮 = **AI Technical Scr
 | P0 | 骨架 + codebase 题型约定 + 练习 runner | ✅ |
 | P1 | 尽调：A 面经/流程/GitHub · B 官方/产品/JD/AI 面试口径 | ✅ |
 | P2 | 练习代码库 cb01 sentinel · cb02 insiderwatch · cb03 vetting（`tasks/AGENT_CODEBASES.md`） | ✅ 三个均过 gate |
-| P3 | CATALOG / RANK / PARETO · LOOP_GUIDE · AI screen playbook · 其它轮 | 待 |
-| P4 | study（中文）· 知识树 · CONTENTS · COVERAGE · README | 待 |
-| P5 | commit + push + draft PR | 待 |
+| P3 | CATALOG / RANK / PARETO · LOOP_GUIDE · AI screen playbook · 其它轮（sd01 sd02 cr01 cr02 pc01 ✅；ic01/ic02 opus 进行中） | 大部分 ✅ |
+| P4 | study（中文）· 知识树 · CONTENTS · COVERAGE · README | ✅（ic 完成后重跑 contents/coverage/check_tree --strict） |
+| P5 | commit + push + draft PR | PR #43（draft） |
 
 ## 下一步
 

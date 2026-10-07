@@ -59,7 +59,13 @@
 | | 题 | 题集 | 题解 | #refs | 最近 | 置信度 |
 |---|---|---|---|---:|---|---|
 | ★ | **cr01** Code review 小仓库：P0/P1 排序 + 用 AI 修 | [`loop/rounds/03_code_review/cr01_alert_fanout/`](loop/rounds/03_code_review/cr01_alert_fanout/) | [walkthrough](loop/rounds/03_code_review/cr01_alert_fanout/walkthrough.md) | 5 | 2026-09 | MED |
-|  | **cr02** cr02_risk_api | [`loop/rounds/03_code_review/cr02_risk_api/`](loop/rounds/03_code_review/cr02_risk_api/) | — | — | — | — |
+|  | **cr02** Add per-user risk score endpoint with caching | [`loop/rounds/03_code_review/cr02_risk_api/`](loop/rounds/03_code_review/cr02_risk_api/) | [walkthrough](loop/rounds/03_code_review/cr02_risk_api/walkthrough.md) | — | — | — |
+
+### 扩展 + 规模：Little 定律、下游限流、按租户隔离、幂等与 DLQ（"beyond add more workers"）
+
+| | 题 | 题集 | 题解 | #refs | 最近 | 置信度 |
+|---|---|---|---|---:|---|---|
+|  | **sd02** Code review 后的扩展：并发、worker、队列扩容、失败场景 | [`loop/rounds/03_code_review/sd02_worker_queue_scaling/`](loop/rounds/03_code_review/sd02_worker_queue_scaling/) | [model_answer](loop/rounds/03_code_review/sd02_worker_queue_scaling/model_answer.md) | 2 | 2026-09 | MED |
 
 
 ## 04_manager_deep_dive · Manager / Behavioral + Technical Deep Dive（判断力）

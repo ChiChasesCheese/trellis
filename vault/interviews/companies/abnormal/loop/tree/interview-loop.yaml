@@ -46,6 +46,9 @@ rounds:
       - id: review_prioritize
         name: 找问题并按影响面排序：正确性 · 数据丢失 · 安全 · 租户隔离 · 并发
         problems: [cr01, cr02]
+      - id: extension_at_scale
+        name: 扩展 + 规模：Little 定律、下游限流、按租户隔离、幂等与 DLQ（"beyond add more workers"）
+        problems: [sd02]
 
   - id: 04_manager_deep_dive
     name: Manager / Behavioral + Technical Deep Dive（判断力）
