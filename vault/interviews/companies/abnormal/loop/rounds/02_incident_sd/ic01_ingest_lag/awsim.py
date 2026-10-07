@@ -289,6 +289,8 @@ class FilterParser:
         return self.t[self.p] if self.p < len(self.t) else (None, None)
 
     def eat(self):
+        if self.p >= len(self.t):
+            fail("MalformedQueryException", "filter expression ends unexpectedly")
         self.p += 1
         return self.t[self.p - 1]
 
