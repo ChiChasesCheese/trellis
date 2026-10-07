@@ -1,0 +1,7 @@
+domains = ["globex.test", "globex-labs.test"]
+
+[decision]
+quarantine_at = 60
+
+[display_name]
+protected = ["Dana Whitfield"]

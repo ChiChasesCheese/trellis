@@ -1,0 +1,11 @@
+{
+  "message_id": "<20260914.0003@newsletter.example>",
+  "reporter": "dave@acme.test",
+  "headers": {
+    "From": "Weekly Digest <digest@newsletter.example>",
+    "Date": "Mon, 14 Sep 2026 07:00:00 +0000",
+    "Subject": "Your weekly digest"
+  },
+  "links": ["https://track.bulkmail.example/open/abc", "https://docs.partner.example/guide"],
+  "attachments": []
+}

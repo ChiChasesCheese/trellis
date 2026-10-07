@@ -1,0 +1,26 @@
+{"id": "a-001", "tenant": "acme", "ts": "2026-09-01T09:00:00Z", "kind": "email", "from": "ivy@acme.example", "to": ["erin@acme.example"], "subject": "Standup notes", "links": []}
+{"id": "a-002", "tenant": "acme", "ts": "2026-09-01T09:30:00Z", "kind": "email", "from": "erin@acme.example", "to": ["ivy@acme.example"], "subject": "Re: Standup notes", "links": []}
+{"id": "a-003", "tenant": "acme", "ts": "2026-09-02T10:00:00Z", "kind": "email", "from": "vendor@acme-vendor.example", "to": ["erin@acme.example"], "subject": "PO 1138", "links": []}
+{"id": "a-004", "tenant": "acme", "ts": "2026-09-02T10:20:00Z", "kind": "email", "from": "erin@acme.example", "to": ["vendor@acme-vendor.example"], "subject": "Re: PO 1138", "links": []}
+{"id": "a-010", "tenant": "acme", "ts": "2026-09-03T08:00:00Z", "kind": "email", "from": "bob@fresh-supplier.example", "to": ["erin@acme.example"], "subject": "Updated banking details", "links": ["https://login-secure.evil-payments.example/pay?id=7"]}
+{"id": "a-011", "tenant": "acme", "ts": "2026-09-03T09:00:00Z", "kind": "email", "from": "billing@acme-vend0r.example", "to": ["erin@acme.example"], "subject": "Invoice overdue", "links": ["https://acme-vend0r.example/invoice/1138"]}
+{"id": "a-012", "tenant": "acme", "ts": "2026-09-03T10:00:00Z", "kind": "email", "from": "ceo@acme.example", "to": ["emp00@acme.example", "emp01@acme.example", "emp02@acme.example", "emp03@acme.example", "emp04@acme.example", "emp05@acme.example", "emp06@acme.example", "emp07@acme.example", "emp08@acme.example", "emp09@acme.example", "emp10@acme.example", "emp11@acme.example"], "subject": "All hands", "links": []}
+{"id": "a-020", "tenant": "acme", "ts": "2026-09-04T08:00:00Z", "kind": "login", "user": "dana@acme.example", "ip": "198.51.100.7", "country": "US", "lat": 40.71, "lon": -74.01}
+{"id": "a-021", "tenant": "acme", "ts": "2026-09-04T09:00:00Z", "kind": "login", "user": "dana@acme.example", "ip": "203.0.113.90", "country": "NG", "lat": 6.52, "lon": 3.38}
+{"id": "a-030", "tenant": "acme", "ts": "2026-09-04T09:10:00Z", "kind": "mailbox_rule_created", "user": "dana@acme.example", "rule_name": "fwd-all", "forward_to": "collector@mailbox-drop.example"}
+{"id": "a-031", "tenant": "acme", "ts": "2026-09-04T09:15:00Z", "kind": "mailbox_rule_created", "user": "erin@acme.example", "rule_name": "to-assistant", "forward_to": "ivy@acme.example"}
+{"id": "c-001", "tenant": "acme", "ts": "2026-09-05T11:00:00Z", "kind": "email", "from": "dana@acme.example", "to": ["old@acme.example"], "subject": "Before the incident", "links": []}
+{"id": "c-002", "tenant": "acme", "ts": "2026-09-05T11:30:00Z", "kind": "email", "from": "dana@acme.example", "to": ["pat@acme.example"], "subject": "Before the incident", "links": []}
+{"id": "c-003", "tenant": "acme", "ts": "2026-09-09T10:00:00Z", "kind": "email", "from": "erin@acme.example", "to": ["old@acme.example"], "subject": "Lunch?", "links": []}
+{"id": "c-004", "tenant": "acme", "ts": "2026-09-10T08:00:00Z", "kind": "email", "from": "ivy@acme.example", "to": ["dana@acme.example"], "subject": "Quick question", "links": []}
+{"id": "c-005", "tenant": "acme", "ts": "2026-09-10T09:30:00Z", "kind": "email", "from": "erin@acme.example", "to": ["jon@acme.example"], "subject": "Unrelated", "links": []}
+{"id": "c-006", "tenant": "acme", "ts": "2026-09-10T10:00:00Z", "kind": "email", "from": "dana@acme.example", "to": ["erin@acme.example"], "subject": "Please review", "links": ["https://docs-share.phish-kit.example/d/9"]}
+{"id": "c-007", "tenant": "acme", "ts": "2026-09-10T10:05:00Z", "kind": "email", "from": "dana@acme.example", "to": ["vendor@acme-vendor.example"], "subject": "Please review", "links": []}
+{"id": "c-008", "tenant": "acme", "ts": "2026-09-10T10:30:00Z", "kind": "email", "from": "dana@acme.example", "to": ["pat@acme.example"], "subject": "Please review", "links": []}
+{"id": "c-009", "tenant": "acme", "ts": "2026-09-10T11:00:00Z", "kind": "email", "from": "erin@acme.example", "to": ["frank@acme.example"], "subject": "Fwd: Please review", "links": []}
+{"id": "c-010", "tenant": "acme", "ts": "2026-09-10T11:30:00Z", "kind": "email", "from": "erin@acme.example", "to": ["gus@acme.example"], "subject": "Fwd: Please review", "links": []}
+{"id": "c-011", "tenant": "acme", "ts": "2026-09-10T12:00:00Z", "kind": "email", "from": "frank@acme.example", "to": ["hank@acme.example"], "subject": "Fwd: Fwd: Please review", "links": []}
+{"id": "c-012", "tenant": "acme", "ts": "2026-09-10T13:00:00Z", "kind": "email", "from": "vendor@acme-vendor.example", "to": ["zoe@acme.example"], "subject": "Re: Please review", "links": []}
+{"id": "a-900", "tenant": "acme", "ts": "yesterday", "kind": "email", "from": "x@y.example", "to": ["z@acme.example"]}
+not json at all
+{"tenant": "acme", "ts": "2026-09-04T09:00:00Z", "kind": "login", "user": "q@acme.example"}

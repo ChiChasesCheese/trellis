@@ -1,0 +1,11 @@
+{
+  "message_id": "<20260914.0001@mail.payroll-update.example>",
+  "reporter": "bob@acme.test",
+  "headers": {
+    "From": "Payroll Team <payroll@payroll-update.example>",
+    "Date": "Mon, 14 Sep 2026 09:12:00 +0000",
+    "Subject": "Action required: confirm your direct deposit details"
+  },
+  "links": ["https://secure-payroll-update.example/confirm?u=bob"],
+  "attachments": []
+}

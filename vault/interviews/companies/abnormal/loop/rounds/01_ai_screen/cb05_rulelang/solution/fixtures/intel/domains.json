@@ -1,0 +1,11 @@
+{
+  "acme.example": {"age_days": 4200},
+  "acme-vendor.example": {"age_days": 2900},
+  "acme-vend0r.example": {"age_days": 3},
+  "fresh-supplier.example": {"age_days": 3},
+  "oldcorp.example": {"age_days": 4000},
+  "evil-payments.example": {"age_days": 6},
+  "mailbox-drop.example": {"age_days": 11},
+  "globex.example": {"age_days": 5100},
+  "globex-supply.example": {"age_days": 3300}
+}

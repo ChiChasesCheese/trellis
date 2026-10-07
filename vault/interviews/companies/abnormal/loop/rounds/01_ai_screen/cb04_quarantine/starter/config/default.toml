@@ -1,0 +1,20 @@
+# Platform defaults. Tenants override any key in config/tenants/<tenant>.toml.
+
+[decision]
+quarantine_at = 70   # highest analyzer score at or above this -> QUARANTINE
+review_at = 40       # at or above this (and below quarantine_at) -> NEEDS_REVIEW
+
+[sender]
+unknown_score = 30           # score for a sender domain we have no intel on
+repeat_window_hours = 24     # how far back "this sender was reported before" looks
+repeat_bonus = 25            # added per earlier report from the same sender
+repeat_cap = 50
+
+[attachments]
+risky_extensions = [".exe", ".scr", ".js", ".vbs", ".iso", ".html", ".docm", ".xlsm"]
+
+[display_name]
+protected = []       # names that must only be used from the tenant's own domains
+
+[intake]
+max_links = 50

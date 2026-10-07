@@ -86,6 +86,67 @@ ticket：
 - **t2_workday_source**："We're onboarding a customer that uses Workday instead of Greenhouse. Add Workday as a source." 给出 `fixtures/workday/*.json`（starter 里就有：不同字段名、嵌套结构、`Phone_Number` 带分机/国家码分离、时间是 `2026-09-14T10:22:00.000-07:00`、简历元数据在 `Attachments[]`、分页 `next` 游标、一条缺邮箱、一条重复投递）。隐藏期望：照 `Source` 基类与 greenhouse 的结构写并注册；产出同样的 `Identity`/`Observation`，使所有已有 signals 不改代码就生效；复用 `normalize.py`；重复投递幂等；缺字段不崩（计数 + 跳过该观测，不是整条丢弃）；时区转 UTC。验收：ingest Workday 夹具后，其中一个 VoIP 号候选人得到 `voip_phone` finding；时间线的 source 标为 workday；重复投递不产生两个 identity；缺邮箱的记录仍有其它 findings；greenhouse 行为不变（regression）。
 - **t3_reviewer_feedback**："Security reviewers clear a lot of candidates we flag — mostly people on a corporate VPN or using Google Voice legitimately. Use their decisions so we stop re-flagging the same benign patterns." 隐藏期望：用已有 `POST /reviews/<id>/disposition` 的数据（`ReviewRepository`）；在 scoring 层按租户对"被 cleared 过的具体值"（某 VPN ASN、某号码）降权或抑制，而不是全局关掉 signal；保留证据但标"previously cleared by reviewer"（透明，可审计）；**判断力**：别让攻击者"洗白"——被 escalated 的同值不降权，降权只对单一弱信号，强信号组合不受影响（模糊点，stretch）。验收：某 ASN 的 VPN 候选人被 cleared 后，新的、同 ASN、仅此一个弱信号的候选人推荐等级下降；同时有 VoIP + 姓名不符的候选人不受影响；其他租户不受影响；disposition 历史仍可查（regression）。
 
+### cb04_quarantine —— 钓鱼邮件隔离服务：修埋好的 bug + 推到生产可用（题型：fix-the-codebase，HI Schedulr/Transcribe 同类）
+
+> 题型说明：开放式面试最常见的一类是"这个服务带着埋好的 bug，找到并修好，然后按你的判断推向 production-ready"。这一题专练：先建反馈回路再修（Prove-It）、bug 清单分级、加固时的取舍、收口（点名的要么做完要么写进 known gaps）。
+
+包名 `quarantine`。多租户。数据流：
+- `intake/`：用户在邮件客户端点"Report phishing"→ `POST /reports`（message_id、reporter、headers、links、attachments 元数据）；`Report` dataclass；去重键 = (tenant, message_id)。
+- `analyzers/`：`Analyzer` 基类 + `@register_analyzer`；已有 `sender_reputation`、`link_reputation`（查 `lookups/url.py` 假实现读 `fixtures/intel/urls.json`）、`attachment_type`、`display_name_spoof`。每个返回 `Verdict(analyzer, score 0–100, reasons)`。
+- `decision.py`：verdict 聚合 → `Disposition`（QUARANTINE / RELEASE / NEEDS_REVIEW，阈值在租户 config）。
+- `actions/`：`Mailbox` 接口 + `FakeMailbox`（内存，记录调用）；`quarantine_message`、`release_message`；`notify.py` 给报告人回执（同步发送，故意在请求路径里）。
+- `store/`：sqlite + migrations + repositories（`ReportRepository`、`ActionLogRepository`）；`db.py` 的连接辅助。
+- `api/`：标准库 WSGI 迷你框架（router、errors、Bearer token → tenant、`TestClient`）：`POST /reports`、`GET /reports/<id>`、`POST /reports/<id>/release`（管理员放行）。
+- `config/`：`tomllib` default + tenant 覆盖。CLI：`python -m quarantine ingest fixtures/reports --tenant acme`、`python -m quarantine show <id>`、`python -m quarantine serve`。
+- 噪音：`legacy/regex_filter.py`（deprecated），README 一处过时。
+
+**埋 bug（starter 自带测试必须全绿，bug 只在 ticket 的场景下暴露）**，至少 5 个，写进 REPORT 埋点清单：
+1. 同一封邮件被两人几乎同时报告 → check-then-insert 竞态，产生两条 report、两次 quarantine 调用（SQLite 多线程 `TestClient` 可复现）。
+2. 跨租户泄露：`GET /reports/<id>` 的 repository 查询漏了 `tenant_id` 条件（只在某一个查询里）。
+3. 时间：header 的 `Date` 带时区偏移，存储时用 naive datetime 比较，"24 小时内重复报告"窗口在跨时区时算错。
+4. `link_reputation` 里 `except Exception: return Verdict(score=0)` 吞掉异常 → lookup 失败的恶意链接被判为安全。
+5. `release` 不检查当前状态，已释放的邮件再次 release 会重复调用 mailbox（非幂等）；连接在异常路径不关闭。
+
+ticket：
+- **t1_planted_bugs**："Support says some reported phishing emails stay in inboxes, and one customer saw another customer's report ID in a support screenshot. Find what's broken and fix it." 隐藏期望：先写能复现的测试（红）再修；修跨租户、吞异常、竞态（唯一约束 + 冲突处理，而不是加锁）；按影响排序说出来。验收：跨租户 GET 返回 404；lookup 抛异常时不得 RELEASE（应 NEEDS_REVIEW）；两个并发报告只产生一条 report、一次 quarantine；正常路径不变（regression）。
+- **t2_production_ready**："We're turning this on for our largest customer next week. Make it production-ready — your call on what matters most." 刻意开放。隐藏期望（面试官的"好 v1"）：幂等的 release、输入校验（缺 message_id → 400 而不是 500）、通知移出请求路径（outbox 表 + `python -m quarantine drain-outbox`，复用 `ActionLogRepository` 的模式）、结构化日志不打 PII；**判断力**：说出优先级和不做的（鉴权模型、真实队列）。验收：缺字段 400；重复 release 只调用 mailbox 一次；通知失败不影响 `POST /reports` 返回 201，`drain-outbox` 之后回执出现在 FakeMailbox；regression。
+- **t3_burst_scale**："During a phishing campaign we get thousands of reports for the same message within minutes, and the API falls over." 隐藏期望：按 (tenant, message_id) 聚合成一个 incident + 计数，而不是逐条跑 analyzers；`GET /reports/<id>` 显示报告人数；analyzers 结果按 message 缓存；不能丢报告人（每个报告人都要回执）。验收：同一 message 2,000 条报告 → analyzers 每个只跑一次（用已有的 analyzer 调用计数钩子或 FakeMailbox 调用数观测）、quarantine 一次、报告人计数 2,000、耗时 < 2 s；不同 message 不合并；regression。
+
+### cb05_rulelang —— 检测规则引擎：解析 · 依赖排序 · 图搜索（题型：算法型扩展，HI 统计的三大模式）
+
+> 题型说明：HI 观察到 AI 编码题集中在图搜索、拓扑排序、回溯、字符串解析、数据结构设计；"AI can implement topological sort just fine, but it can't look at a vague feature request and decide that topological sort is what's needed."本题把三种模式放进一个 Abnormal 风格的检测平台，每张 ticket 的难点是**认出模式 + 契合已有代码**，而不是写算法本身。
+
+包名 `rulelang`。多租户。数据流：
+- `events/`：邮件事件（sender、recipients、subject、links、ts、tenant）与账户事件（login、mailbox_rule_created）；`fixtures/events/*.jsonl`。
+- `detectors/`：`Detector` 基类 + `@register_detector`；已有 6 个 Python 写的检测器（`new_sender`、`suspicious_link`、`impossible_travel`、`mailbox_forwarding_rule`、`vendor_lookalike`、`mass_mailing`）；每个有 `name`、`evaluate(event, ctx) -> Signal | None`。**已有 `ctx.signals`**：检测器可以读同一事件上已经产生的 signal——但目前执行顺序是注册顺序，`vendor_lookalike` 读 `new_sender` 的结果，碰巧顺序对。
+- `graph/`：`CommGraph`（谁给谁发过邮件，邻接表 + 首次/最近时间，`store/` 持久化），已有 `neighbors(addr)`、`first_contact(a, b)`。
+- `store/`、`config/`、CLI：`python -m rulelang run fixtures/events --tenant acme`、`python -m rulelang signals <event_id>`、`python -m rulelang serve`（`GET /signals?event_id=`）。
+- 噪音：`legacy/yaml_rules.py`（deprecated 的旧规则格式，半成品 parser，不要扩展它），README 一处过时。
+
+ticket：
+- **t1_custom_rules**："Customers want to write their own detection rules without waiting on us, e.g. `sender.domain_age_days < 7 and any(link.host in intel.bad_hosts)` . Let them." 隐藏期望：小型表达式语言（字段访问、比较、and/or/not、括号、`any(...)`、字符串/数字字面量）的 tokenizer + 递归下降 parser + evaluator；规则作为一种 detector 注册（`CustomRuleDetector` 读租户 config `[rules]` 或 `rules/*.rule` 文件），产生的 Signal 与内置检测器同形；解析错误在加载时报出（行列号），不在运行时崩；不允许 `eval`（安全）。验收：示例规则在夹具上命中预期事件；语法错误 → CLI 退出码 2 + 位置信息；未知字段 → 加载时报错；规则结果出现在 `signals` 输出；不同租户的规则互不影响；regression。
+- **t2_detector_dependencies**："Detectors are starting to build on each other's results, and we've had wrong verdicts when one runs before the thing it depends on. Make this safe." 隐藏期望：`Detector.requires`（已有字段但没被使用，埋点）→ 拓扑排序（Kahn），环在启动时报错并点名环上的检测器；被依赖的检测器失败/被租户关闭时，下游跳过并计数而不是用缺失数据；custom rules（若 t1 已做）也能声明依赖。验收：把注册顺序打乱后结果不变；环 → 启动报错列出环；关闭上游时下游不产出 signal 且计数可见；regression。
+- **t3_blast_radius**："When we confirm an account is compromised, the SOC wants to know who else is at risk: people that account emailed after the compromise time, and who they forwarded it to." 隐藏期望：在 `CommGraph` 上做按时间约束的 BFS（只走 compromise 时间之后的边，跳数上限在 config，默认 2）；结果带路径（为什么这个人在名单里）；外部域名作为叶子不展开；新端点 `GET /blast-radius?account=&since=` + CLI `python -m rulelang blast-radius <addr> --since <ts>`。验收：夹具里一个被盗账户 → 预期名单（含 2 跳）且每人有路径；compromise 时间之前的联系不算；跳数上限生效；外部域不展开；其他租户不可见；regression。
+
+### cb06_filevault —— 文件存储服务：去重 · 搜索过滤 · 配额与统计（题型：Abnormal 真实 take-home 同形 + 并发正确性）
+
+> 依据：`catalog/raw/ai_round_sweep_2026-10-07.md`（Abnormal File Vault take-home，GitHub 40 个 fork，2025-06 → 2026-07；"Contributed to an existing codebase with a pre-configured setup. Focused solely on implementing file deduplication to optimize storage, along with search and filtering functionality… Also added metrics to monitor deduplication efficiency."；README 要求录屏 "How you leveraged Gen AI… Your prompting techniques and strategies"）。原题是 Django/DRF；本题用标准库重造同形代码库，保留同样的难点。
+
+包名 `filevault`。多用户（`X-User-Id` 头 → user；每个 user 是一个隔离单元）。数据流：
+- `storage/`：`BlobStore` 接口 + `LocalDiskStore`（写到 `data/blobs/`，按路径存）+ `InMemoryStore`（测试用）。**t1 必须复用这个接口**，不能直接 `open()`。
+- `models.py`：`FileRecord`（id、owner、filename、content_type、size、created_at、blob_path）。
+- `store/`：sqlite + migrations + `FileRepository`（`add`、`get`、`list_for_owner`、`delete`），`db.py` 里有 `transaction()` 上下文管理器（BEGIN IMMEDIATE），**目前没人用**（埋点）。`query.py` 有一个参数化的 `Where` 构造器，`list_for_owner` 用到它。
+- `api/`：标准库 WSGI 迷你框架（router、errors、`TestClient`，同 cb01 风格独立实现）：`POST /files`（multipart 或 JSON base64 都行，选一种并写进 README）、`GET /files`（列表，有分页 helper `paginate(cursor, limit)`）、`GET /files/<id>`（元数据）、`GET /files/<id>/content`、`DELETE /files/<id>`。
+- `ratelimit.py`：`TokenBucket` 类 + 测试，**还没挂到任何端点上**（埋点）。
+- `metrics.py`：计数器注册表（`metrics.incr(name)`、`metrics.snapshot()`），已有 `uploads_total`。
+- `config/`：`tomllib` default + 环境覆盖（`quota_bytes_per_user`、`rate_limit_per_sec`、`max_upload_bytes`）。CLI：`python -m filevault serve`、`python -m filevault upload <path> --user u1`、`python -m filevault ls --user u1`。
+- 噪音：`legacy/hash_index.py`（deprecated 的 md5 索引，半成品），README 一处过时。
+
+ticket：
+- **t1_dedup**："Storage costs doubled last quarter — the same attachments get uploaded over and over. Store each unique file once, without changing what users see." 隐藏期望：按 SHA-256 内容寻址（新表 `blobs(sha256, blob_path, ref_count)` 或在 `FileRecord` 上加引用），每个用户仍然看到自己的 `FileRecord`（文件名、时间各自保留）；删除时引用计数 -1，归零才删 blob；**并发正确性**：两个请求同时上传相同内容只产生一个 blob（用已有的 `transaction()` + 唯一约束，不是 Python 锁），删除与上传交错时不能删掉正在被引用的 blob；`metrics` 增加 `dedup_hits_total`、`bytes_saved`。模糊点：跨用户去重是否允许（隐私：用户 A 能否通过上传时延推断 B 有某文件）→ interviewer.md 默认"v1 跨用户去重，但对外行为不暴露，说明侧信道风险"。验收：同内容上传两次 → BlobStore 里只有一份、两个 FileRecord 各自可下载；删一个另一个仍可下载；全删后 blob 消失；两个线程用 `TestClient` 并发上传同内容 → 一个 blob、两个记录；内容相同文件名不同 → 都保留；regression。
+- **t2_search**："Users with thousands of files can't find anything. Let them search and filter." 刻意模糊。隐藏期望：`GET /files?q=&type=&min_size=&max_size=&from=&to=&cursor=&limit=`，复用 `query.py` 的 `Where`（参数化，**不拼 SQL 字符串**——夹具里有文件名 `x' OR '1'='1.pdf`）和 `paginate`；`q` 不区分大小写的子串；日期用 ISO-8601，非法参数 → 400 带字段名；只能搜到自己的文件。验收：各过滤器单独与组合生效；分页稳定（同一时间戳的记录不重不漏）；注入文件名被当作普通字符串；他人文件不可见；非法 `min_size` → 400；regression。
+- **t3_quota_stats**："We're launching a free tier: 10 MB per user, and finance wants to see how much dedup is saving us." 隐藏期望：配额按用户"逻辑占用"（他上传的文件大小之和，去重不减免用户配额——模糊点，interviewer.md 给默认并说明另一种算法）在上传前检查，超额 → 413 + 剩余额度；`GET /stats`（当前用户：used、quota、files）与 `GET /admin/stats`（物理占用、逻辑占用、节省比例，来自 `metrics` 与 blobs 表）；把已有 `TokenBucket` 挂到 `POST /files`（每用户，速率在 config），超限 → 429 + `Retry-After`。验收：刚好等于配额可传、超 1 字节 413；删除后额度恢复；admin stats 的节省字节在两次相同上传后等于文件大小；429 与 `Retry-After`；他人配额不受影响；regression。
+
 ## 4. 若 Write 工具拒绝写 `REPORT.md`
 
 不要绕过：把 REPORT.md 的完整内容放在最终回复里（标题 `## REPORT.md`），编排者保存。

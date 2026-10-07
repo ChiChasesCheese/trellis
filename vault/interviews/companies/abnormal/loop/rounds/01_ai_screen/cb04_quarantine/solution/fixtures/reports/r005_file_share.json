@@ -1,0 +1,11 @@
+{
+  "message_id": "<20260915.0005@docshare.example>",
+  "reporter": "frank@acme.test",
+  "headers": {
+    "From": "Docs <share@docshare.example>",
+    "Date": "Tue, 15 Sep 2026 08:30:00 +0000",
+    "Subject": "A file was shared with you"
+  },
+  "links": ["https://files.docshare.example/d/9fa3"],
+  "attachments": [{"filename": "q3-plan.zip", "content_type": "application/zip", "size": 90311}]
+}

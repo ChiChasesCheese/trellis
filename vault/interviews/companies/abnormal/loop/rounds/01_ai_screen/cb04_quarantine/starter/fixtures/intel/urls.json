@@ -1,0 +1,11 @@
+{
+  "hosts": {
+    "login-micros0ft.example": {"category": "phishing", "score": 95},
+    "secure-payroll-update.example": {"category": "phishing", "score": 90},
+    "track.bulkmail.example": {"category": "tracking", "score": 20},
+    "files.docshare.example": {"category": "file-sharing", "score": 45},
+    "www.acme.test": {"category": "clean", "score": 0},
+    "docs.partner.example": {"category": "clean", "score": 0}
+  },
+  "unavailable": ["flaky-intel.example"]
+}

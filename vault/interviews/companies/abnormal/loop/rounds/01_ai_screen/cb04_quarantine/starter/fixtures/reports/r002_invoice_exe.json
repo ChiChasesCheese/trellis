@@ -1,0 +1,11 @@
+{
+  "message_id": "<20260914.0002@vendor.partner.example>",
+  "reporter": "carol@acme.test",
+  "headers": {
+    "From": "Accounts <accounts@partner.example>",
+    "Date": "Mon, 14 Sep 2026 10:41:00 +0000",
+    "Subject": "Invoice 88123 attached"
+  },
+  "links": [],
+  "attachments": [{"filename": "invoice_88123.pdf.exe", "content_type": "application/x-msdownload", "size": 482113}]
+}

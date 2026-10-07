@@ -25,7 +25,7 @@
 
 ## 2. 必会快捷键（考前在干净配置里各按一次）
 
-`Shift+Tab` 切换模式（含 plan mode）· `/context` 看上下文用量（Shrivu："run /context mid coding session at least once"）· `Esc` 打断当前生成 · `Esc Esc` 回到上一条消息改写 · `@path` 把文件放进上下文 · `!cmd` 直接跑 shell · `/clear` 清上下文（换任务时）· `/compact` 压缩 · `/resume` 接回会话。VS Code：`Ctrl/Cmd+\`` 开终端、`+` 开第二个、`Ctrl/Cmd+Shift+F` 全局搜、左栏 Source Control 看 diff。
+见 `shortcuts.md`（含网页版 VS Code 里会被浏览器抢走的键）。
 
 ## 3. 模糊性：澄清 → 假设 → 推进（被评分的核心）
 

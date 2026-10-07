@@ -15,3 +15,6 @@
 | 2026-10-07 | ic01（sonnet 中断，部分）→ ic01 补完 + ic02 交给 opus（恢复规则） | — | 待验收 | — |
 | 2026-10-07 | ic01_ingest_lag + ic02_api_5xx（opus，恢复规则续做 ic01） | 离线 AWS 快照 + awsim.py + investigation/model_answer/rubric；model_answer 的每个证据块由测试重跑；REPORT 由编排者保存 | 编排者重跑：`pytest loop/rounds/02_incident_sd` → 152 passed | 见提交 |
 | 2026-10-07 | 收尾 | `reports/COVERAGE.md`（26/31 = 84%）· `study/20-cards/aws_incident.md` · CONTENTS 10 题 · `check_tree.py --strict` 0/0 | — | 见提交 |
+| 2026-10-07 | 尽调 sweep（sonnet） | `catalog/raw/ai_round_sweep_2026-10-07.md`：6 个新来源 + 题型地图 16 行；File Vault take-home 由编排者 `gh api` 复核 | — | 见提交 |
+| 2026-10-07 | cb04_quarantine（sonnet；REPORT 由编排者代存） | fix-the-codebase：6 处埋点 + production-ready + burst；walkthrough 按 T 编号 | 编排者重跑 3 次：验收 38 passed · starter core 19 failed · starter 54 · solution 78 | 见提交 |
+| 2026-10-07 | cb05_rulelang（sonnet；REPORT 由编排者代存） | 解析器 / Kahn 拓扑 / 带时间约束的 BFS | 编排者重跑：验收 36 passed · starter core 22 failed · starter 39 · solution 69 | 见提交 |

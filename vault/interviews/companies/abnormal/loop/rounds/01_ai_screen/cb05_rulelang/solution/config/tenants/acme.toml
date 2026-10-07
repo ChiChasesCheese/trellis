@@ -1,0 +1,6 @@
+# Acme: smaller fan-out threshold, they send very little bulk mail.
+[tenant]
+internal_domains = ["acme.example"]
+
+[detectors.mass_mailing]
+recipient_threshold = 10

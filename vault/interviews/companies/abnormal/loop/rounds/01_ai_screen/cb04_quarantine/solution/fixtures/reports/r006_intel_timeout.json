@@ -1,0 +1,11 @@
+{
+  "message_id": "<20260915.0006@mail.partner.example>",
+  "reporter": "gina@acme.test",
+  "headers": {
+    "From": "Support <support@partner.example>",
+    "Date": "Tue, 15 Sep 2026 09:45:00 +0000",
+    "Subject": "Re: your ticket"
+  },
+  "links": ["https://flaky-intel.example/ticket/771"],
+  "attachments": []
+}

@@ -4,7 +4,7 @@
 
 ## 结论
 
-没有任何 company-wise LeetCode 仓库收录 Abnormal；也没有找到 Abnormal 面试题/take-home 的公开 GitHub 仓库。Abnormal 的"题"全部来自 Blind / LeetCode Discuss / 一亩三分地 / Glassdoor / PracHub（见 `questions_reported.md`）。覆盖分母不能依赖 GitHub，Abnormal 的 LC 式题基本不存在（官方口径与多份面经一致："not leetcode"）。
+没有任何 company-wise LeetCode 仓库收录 Abnormal；take-home 的公开仓库后来找到了（2026-10-07 更正）："Abnormal File Vault"（Django/DRF，去重 · 搜索过滤 · 配额 · 统计，要求录屏讲 GenAI 用法），`gh api search/repositories -f q="abnormal file vault"` 得 40 个，见 `ai_round_sweep_2026-10-07.md`；练习版 `cb06_filevault`。Abnormal 的"题"全部来自 Blind / LeetCode Discuss / 一亩三分地 / Glassdoor / PracHub（见 `questions_reported.md`）。覆盖分母不能依赖 GitHub，Abnormal 的 LC 式题基本不存在（官方口径与多份面经一致："not leetcode"）。
 
 ## 已查仓库
 
@@ -27,5 +27,5 @@
 
 ## 未决
 
-- take-home（"AI-powered Development Challenge"，Cursor/Copilot，2–4 小时、一周内交，见 `process_and_rounds.md` §旧流程）没有公开仓库；若主会话要练手，需要自建。
+- take-home（"AI-powered Development Challenge"，Cursor/Copilot，2–4 小时、一周内交，见 `process_and_rounds.md` §旧流程）公开仓库见第 7 行更正（File Vault）。
 - "AI Technical Screen" 的练习代码库官方不公开；候选人报道的领域是 security events 管线（见 `questions_reported.md` Q1）。

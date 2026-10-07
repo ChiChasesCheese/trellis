@@ -1,0 +1,24 @@
+# Platform defaults. Tenants override any key in config/tenants/<tenant>.toml.
+
+[tenant]
+internal_domains = []
+
+[intel]
+bad_hosts = "intel/bad_hosts.json"
+domains = "intel/domains.json"
+vendors = "intel/vendors.json"
+
+[blast_radius]
+max_hops = 2
+
+[detectors]
+disabled = []
+
+[detectors.impossible_travel]
+max_speed_kmh = 900
+min_distance_km = 100
+
+[detectors.mass_mailing]
+recipient_threshold = 15
+window_minutes = 60
+email_threshold = 30

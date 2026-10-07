@@ -1,0 +1,10 @@
+{
+  "domains": {
+    "payroll-update.example": 85,
+    "gmail-support.example": 60,
+    "partner.example": 10,
+    "newsletter.example": 15,
+    "acme.test": 2,
+    "globex.test": 2
+  }
+}

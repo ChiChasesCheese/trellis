@@ -1,0 +1,6 @@
+# Globex: runs its own bulk mailer, so mass_mailing is off.
+[tenant]
+internal_domains = ["globex.example", "globex-eu.example"]
+
+[detectors]
+disabled = ["mass_mailing"]
