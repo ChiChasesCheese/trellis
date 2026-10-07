@@ -10,6 +10,9 @@
 | cb01 | Security-events 管线：规则抑制 · enrichment 插件化 · 告警去重 | AI screen | 2026-06 | 2 | MED-HIGH |
 | cb02 | 已有代码库 + 未披露 feature（insider-risk 领域库练格式） | AI screen | 2026-09 | 5 | MED |
 | cb03 | 团队领域：候选人身份欺诈（关联 · 新数据源 · 审核反馈） | AI screen（迁移） | 2026-09 | 0 | — |
+| cb04 | 修埋好的 bug + 推到生产可用 + 突发流量 | AI screen（题型练习） | 2026-10 | 0 | — |
+| cb05 | 算法型扩展：解析器 · 拓扑排序 · 图搜索 | AI screen（题型练习） | 2026-10 | 0 | — |
+| cb06 | File Vault take-home 同形：去重 + 并发 · 搜索 · 配额 | take-home · AI screen（迁移） | 2026-07 | 1 | MED |
 | cr01 | Code review 小仓库：P0/P1 排序 + 用 AI 修 | onsite | 2026-09 | 5 | MED |
 | sd02 | Code review 后的扩展：并发、worker、队列扩容、失败场景 | onsite | 2026-09 | 2 | MED |
 | ic01 | AWS incident 排查：根因、信号、止血、长期修复 | onsite | 2026-09 | 4 | MED |

@@ -11,7 +11,7 @@ rounds:
   - id: 01_ai_screen
     name: AI Technical Screen · 60 min · 已有 Python 代码库 + Claude Code（探索 10 / 模糊 feature 35 / walkthrough 15）
     duration_min: 60
-    study: [loop/rounds/01_ai_screen/cb01_sentinel/REAL_QUESTION.md, loop/rounds/01_ai_screen/claude_playbook.md, loop/rounds/01_ai_screen/playbook.md, study/00-essentials.md, study/20-cards/claude_code.md]
+    study: [loop/rounds/01_ai_screen/cb01_sentinel/REAL_QUESTION.md, loop/rounds/01_ai_screen/claude_playbook.md, loop/rounds/01_ai_screen/WEEK_PLAN.md, loop/rounds/01_ai_screen/prompt_patterns.md, loop/rounds/01_ai_screen/playbook.md, loop/rounds/01_ai_screen/shortcuts.md, loop/rounds/01_ai_screen/hi_practice.md, study/00-essentials.md, study/20-cards/claude_code.md]
     core: [round.reading, round.ambiguity, round.time, round.communication, transfer.abnormal]
     skills:
       - id: reported_codebase
@@ -23,6 +23,15 @@ rounds:
       - id: team_domain
         name: 团队真实领域：候选人身份欺诈（关联引擎 · Workday 数据源 · 审核反馈）
         problems: [cb03]
+      - id: fix_and_harden
+        name: 修埋好的 bug + 推到生产可用（HI 开放式最常见题型）
+        problems: [cb04]
+      - id: algorithmic_core
+        name: 算法型扩展：解析 · 拓扑排序 · 图搜索
+        problems: [cb05]
+      - id: takehome_shape
+        name: 真实 take-home 同形：去重 + 并发 · 搜索 · 配额与统计
+        problems: [cb06]
 
   - id: 02_incident_sd
     name: Incident（AWS 环境排查）+ System Design（扩容已有系统）

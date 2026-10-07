@@ -1,0 +1,11 @@
+[
+  {"user": "alice", "filename": "q3-report.pdf", "content_type": "application/pdf", "text": "Quarterly report, third quarter. Revenue up, costs flat."},
+  {"user": "alice", "filename": "Q3-Report-final.PDF", "content_type": "application/pdf", "text": "Quarterly report, third quarter. Revenue up, costs flat. FINAL."},
+  {"user": "alice", "filename": "notes.txt", "content_type": "text/plain", "text": "weekly sync notes"},
+  {"user": "alice", "filename": "logo.png", "content_type": "image/png", "text": "not really a png, but small enough for tests"},
+  {"user": "alice", "filename": "x' OR '1'='1.pdf", "content_type": "application/pdf", "text": "this filename is a SQL injection attempt"},
+  {"user": "alice", "filename": "100%_done_(draft).txt", "content_type": "text/plain", "text": "percent and underscore in a filename"},
+  {"user": "bob", "filename": "q3-report.pdf", "content_type": "application/pdf", "text": "Quarterly report, third quarter. Revenue up, costs flat."},
+  {"user": "bob", "filename": "bob-private.txt", "content_type": "text/plain", "text": "only bob should ever see this"},
+  {"user": "carol", "filename": "q3-report.pdf", "content_type": "application/pdf", "text": "Quarterly report, third quarter. Revenue up, costs flat."}
+]

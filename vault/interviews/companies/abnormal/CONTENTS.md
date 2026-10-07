@@ -6,7 +6,7 @@
 
 ## 01_ai_screen · AI Technical Screen · 60 min · 已有 Python 代码库 + Claude Code（探索 10 / 模糊 feature 35 / walkthrough 15）
 
-先读：[REAL_QUESTION](loop/rounds/01_ai_screen/cb01_sentinel/REAL_QUESTION.md) · [claude_playbook](loop/rounds/01_ai_screen/claude_playbook.md) · [playbook](loop/rounds/01_ai_screen/playbook.md) · [00-essentials](study/00-essentials.md) · [claude_code](study/20-cards/claude_code.md)
+先读：[REAL_QUESTION](loop/rounds/01_ai_screen/cb01_sentinel/REAL_QUESTION.md) · [claude_playbook](loop/rounds/01_ai_screen/claude_playbook.md) · [WEEK_PLAN](loop/rounds/01_ai_screen/WEEK_PLAN.md) · [prompt_patterns](loop/rounds/01_ai_screen/prompt_patterns.md) · [playbook](loop/rounds/01_ai_screen/playbook.md) · [shortcuts](loop/rounds/01_ai_screen/shortcuts.md) · [hi_practice](loop/rounds/01_ai_screen/hi_practice.md) · [00-essentials](study/00-essentials.md) · [claude_code](study/20-cards/claude_code.md)
 
 通用能力（[[Code Core MOC|code-core]] 卡组与练习）：[[round.reading]] · [[round.ambiguity]] · [[round.time]] · [[round.communication]] · [[transfer.abnormal]]
 
@@ -27,6 +27,24 @@
 | | 题 | 题集 | 题解 | #refs | 最近 | 置信度 |
 |---|---|---|---|---:|---|---|
 |  | **cb03** 团队领域：候选人身份欺诈（关联 · 新数据源 · 审核反馈） | [`loop/rounds/01_ai_screen/cb03_vetting/`](loop/rounds/01_ai_screen/cb03_vetting/) | [walkthrough](loop/rounds/01_ai_screen/cb03_vetting/walkthrough.md) | 0 | 2026-09 | — |
+
+### 修埋好的 bug + 推到生产可用（HI 开放式最常见题型）
+
+| | 题 | 题集 | 题解 | #refs | 最近 | 置信度 |
+|---|---|---|---|---:|---|---|
+|  | **cb04** 修埋好的 bug + 推到生产可用 + 突发流量 | [`loop/rounds/01_ai_screen/cb04_quarantine/`](loop/rounds/01_ai_screen/cb04_quarantine/) | [walkthrough](loop/rounds/01_ai_screen/cb04_quarantine/walkthrough.md) | 0 | 2026-10 | — |
+
+### 算法型扩展：解析 · 拓扑排序 · 图搜索
+
+| | 题 | 题集 | 题解 | #refs | 最近 | 置信度 |
+|---|---|---|---|---:|---|---|
+|  | **cb05** 算法型扩展：解析器 · 拓扑排序 · 图搜索 | [`loop/rounds/01_ai_screen/cb05_rulelang/`](loop/rounds/01_ai_screen/cb05_rulelang/) | [walkthrough](loop/rounds/01_ai_screen/cb05_rulelang/walkthrough.md) | 0 | 2026-10 | — |
+
+### 真实 take-home 同形：去重 + 并发 · 搜索 · 配额与统计
+
+| | 题 | 题集 | 题解 | #refs | 最近 | 置信度 |
+|---|---|---|---|---:|---|---|
+|  | **cb06** File Vault take-home 同形：去重 + 并发 · 搜索 · 配额 | [`loop/rounds/01_ai_screen/cb06_filevault/`](loop/rounds/01_ai_screen/cb06_filevault/) | [walkthrough](loop/rounds/01_ai_screen/cb06_filevault/walkthrough.md) | 1 | 2026-07 | MED |
 
 
 ## 02_incident_sd · Incident（AWS 环境排查）+ System Design（扩容已有系统）
@@ -66,7 +84,7 @@
 
 | | 题 | 题集 | 题解 | #refs | 最近 | 置信度 |
 |---|---|---|---|---:|---|---|
-|  | **sd02** Code review 后的扩展：并发、worker、队列扩容、失败场景 | [`loop/rounds/03_code_review/sd02_worker_queue_scaling/`](loop/rounds/03_code_review/sd02_worker_queue_scaling/) | [model_answer](loop/rounds/03_code_review/sd02_worker_queue_scaling/model_answer.md) | 2 | 2026-09 | MED |
+| ★ | **sd02** Code review 后的扩展：并发、worker、队列扩容、失败场景 | [`loop/rounds/03_code_review/sd02_worker_queue_scaling/`](loop/rounds/03_code_review/sd02_worker_queue_scaling/) | [model_answer](loop/rounds/03_code_review/sd02_worker_queue_scaling/model_answer.md) | 2 | 2026-09 | MED |
 
 
 ## 04_manager_deep_dive · Manager / Behavioral + Technical Deep Dive（判断力）

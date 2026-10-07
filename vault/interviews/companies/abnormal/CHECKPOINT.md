@@ -16,9 +16,12 @@ Chi 已过 HR + HM（SWE II – Insider Risk）。下一轮 = **AI Technical Scr
 | P2 | 练习代码库 cb01 sentinel · cb02 insiderwatch · cb03 vetting（`tasks/AGENT_CODEBASES.md`） | ✅ 三个均过 gate |
 | P3 | CATALOG / RANK / PARETO · LOOP_GUIDE · AI screen playbook · 其它轮（sd01 sd02 cr01 cr02 pc01 ic01 ic02 全部 ✅） | ✅ |
 | P4 | study（中文）· 知识树 · CONTENTS · COVERAGE · README | ✅（COVERAGE 26/31 = 84%；check_tree --strict 0/0） |
-| P5 | commit + push + draft PR | PR #43（draft） |
+| P5 | commit + push + draft PR | PR #43（已合并） |
+| P6 | AI screen 练习扩充（2026-10-07）：Claude Code 心法技法 `claude_playbook.md`（X1–X10 · T1–T12）· 9 个逐场脚本 · 新题 cb04 quarantine / cb05 rulelang / cb06 filevault · 尽调 sweep（File Vault take-home）· `prompt_patterns.md`（38 场 HI 会话）· `hi_practice.md` · `WEEK_PLAN.md` · `shortcuts.md` | ✅ 本地 main |
 
 ## 下一步
+
+0. Chi：按 `loop/rounds/01_ai_screen/WEEK_PLAN.md` 逐日练（D1 = `start cb01 real`）；面试 2026-10-12 3–4pm PT（Rishi Kavikondala SWE II + Lindsey Sawatzky Sr SWE）。
 
 1. Chi：按 `loop/LOOP_GUIDE.md` §7 练 AI screen（`python3 loop/ai_screen.py start cb01 t1` 起），每次填 `loop/rounds/01_ai_screen/playbook.md` §7 复盘表。
 2. 面完 AI screen：在 `02-process.md` 亲历表回写代码库与 feature 原话；若与 cb01 不同，`catalog/CATALOG.md` 加行，重跑 `tools/pareto.py` · `tools/coverage.py` · `tools/contents.py`。

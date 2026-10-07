@@ -1,0 +1,19 @@
+# FileVault defaults. Override per environment with FILEVAULT_<KEY> variables.
+
+# Logical storage allowance per user, in bytes (10 MiB).
+quota_bytes_per_user = 10485760
+
+# Sustained request rate per user for write endpoints.
+rate_limit_per_sec = 50.0
+
+# Largest single upload, in bytes (10 MiB).
+max_upload_bytes = 10485760
+
+# Users allowed to call /admin/* endpoints.
+admin_users = ["admin"]
+
+default_page_size = 50
+max_page_size = 200
+
+# Where the sqlite database and blobs live (relative to the working directory).
+data_dir = "data"

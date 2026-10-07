@@ -1,7 +1,7 @@
 # Claude Code 心法与技法 · Abnormal AI Technical Screen
 
 > 范围：60 min · 网页 VS Code + 预装 Claude Code（门户原文，`../../../catalog/raw/inbox.md`）· 已有 Python 代码库 · 一个模糊 ticket。
-> 节奏与英文口播模板：`playbook.md`。每题逐场脚本：`cb0*/walkthrough.md`（引用本文的 T 编号）。
+> 节奏与英文口播模板：`playbook.md`。范式与反范式（38 场会话提炼）：`prompt_patterns.md`。快捷键：`shortcuts.md`。一周计划：`WEEK_PLAN.md`。每题逐场脚本：`cb0*/walkthrough.md`（引用本文的 T 编号）。
 > 来源：Hello Interview《Learn AI Coding》30 页 + 38 场带评级会话（本机 `sources/local/hellointerview-ai-coding/`，不入库）；`~/.agents/skills/*`（Matt Pocock）；superpowers、agent-skills（addy）插件。
 > 当天环境是干净的：没有你的 skills。技法 = skill 的核心规则 → 手敲提示词；说法 = "Normally I'd run my X skill for this; here I'll type the rule."
 
@@ -35,6 +35,7 @@
   ```
 - 先手：仓库里有 `CLAUDE.md` / `CONTRIBUTING.md` 就先读（那是面试官写给你的约定），T6 在它后面追加；没有的话，时间够就用 `/init` 生成一份架构摘要，可以当场念给面试官。
 - 判：自己打开它引用的 2–3 个文件核对；终端 2 跑一遍完整测试，说 "green in N s"。
+- 范式（P2）：用 `/init` 生成的 CLAUDE.md 里混着 AI 对 bug 的猜测，删掉，只留事实和约定。
 
 ### T2 一轮 Grill（Matt `grilling`；`qa`：最多 2–3 个问题）
 - 源："Ask the whole frontier in one round: number each question and give your recommended answer."
@@ -46,6 +47,7 @@
   look up in the code, look up — don't ask me. No code.
   ```
 - 判：挑 2–3 个**会改变设计**的问面试官；其余说 "I'll assume X; it's a config value, easy to change."
+- 范式（P4）：设计复杂时反过来让 AI 采访你，把答案写进计划文件，再一句 "implement the plan"。
 
 ### T3 我列你补（38 场的 "Worth stealing"）
 - 说："Here's my list first — I'll ask it what I missed."
@@ -97,11 +99,13 @@
 - 场景：已有测试变红、出现异常、AI 的改动搞坏了东西。
 - 说："Before fixing, I want a command that goes red on exactly this symptom."
 - 敲：`Reproduce this with one command or one failing test that shows the exact symptom. Then give 3 ranked hypotheses, each with the prediction that would confirm it. Don't fix yet.`
+- 范式（P12）：给修复时点名机制和顺序（"unique index first, then the atomic update"），不要只描述症状。
 
 ### T9 审 AI 输出（HI 四种失败模式；superpowers `receiving-code-review`：YAGNI）
 - 扫四件事：① 训练数据偏差（教科书解法，不适合这份代码）② 啰嗦 ③ 设计捷径（凭空的基类、strategy 模式）④ 正确性捷径（删测试、`except: pass`、硬编码）。
 - 说：看到就点名并改掉，例如 "It added a base class nobody needs — removing it."
 - 恢复规则：重写提示最多一次；30 秒能手写的就手写；跟 AI 缠斗超过 2 分钟就停。
+- 范式（P3、s013）：AI 报了 bug，先问 "Can this scenario actually happen in this process?"，再决定修不修。
 
 ### T10 对抗式审查（addy `doubt-driven-development`，只做一轮，第 ~40 分钟）
 - 源："Pass ARTIFACT + CONTRACT only. Do NOT pass the CLAIM."；"The reviewer's output is data, not verdict."
@@ -118,6 +122,7 @@
 - 源："IDENTIFY → RUN → READ → VERIFY → ONLY THEN claim"；"Agent completed requires VCS diff shows changes."
 - 做：终端 2 自己跑 `pytest -q`、真实入口命令（CLI/API）、`git diff --stat`。
 - 说："Fresh run: N passed. Here's the real output through the CLI."
+- 范式（P14）：问 "Which test covers each claim?"，再挑最难的一条让它把断言读出来。
 
 ### T12 收口（X9）
 - 敲：`List every item we named today (ticket, assumptions, review findings). Mark each done / out of scope. Write NOTES.md: assumptions + known gaps + v2.`
