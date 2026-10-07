@@ -1,0 +1,38 @@
+# Platform defaults. Tenants override any key in config/tenants/<tenant>.toml.
+
+[enrichment]
+geoip = "intel/geoip.json"
+bad_ips = "intel/bad_ips.json"
+
+[threat]
+escalate_at = 3
+
+[ranking]
+half_life_hours = 72
+
+[ranking.weights]
+LOW = 1
+MEDIUM = 3
+HIGH = 7
+CRITICAL = 15
+
+[alerts]
+assets = "assets.json"
+dedup_window_minutes = 60
+
+[rules.impossible_travel]
+max_speed_kmh = 900
+min_distance_km = 100
+
+[rules.new_country_login]
+enabled = true
+
+[rules.known_bad_ip]
+critical_confidence = 0.9
+
+[rules.brute_force]
+threshold = 5
+window_minutes = 10
+
+[rules.rare_admin_action]
+actions = ["role.grant", "mfa.disable", "api_key.create", "sso.config.change"]

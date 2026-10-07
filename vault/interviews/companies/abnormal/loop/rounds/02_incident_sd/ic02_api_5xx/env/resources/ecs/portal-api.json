@@ -1,0 +1,35 @@
+{
+  "services": [
+    {
+      "serviceName": "portal-api",
+      "clusterArn": "arn:aws:ecs:us-east-1:111122223333:cluster/prod",
+      "status": "ACTIVE",
+      "desiredCount": 12,
+      "runningCount": 12,
+      "launchType": "FARGATE",
+      "taskDefinition": "portal-api:88",
+      "cpu": 1024,
+      "memory": 2048,
+      "deployments": [
+        {
+          "status": "PRIMARY",
+          "taskDefinition": "portal-api:88",
+          "rolloutState": "COMPLETED",
+          "createdAt": "2026-10-02T09:39:30Z",
+          "updatedAt": "2026-10-02T09:44:10Z"
+        }
+      ],
+      "deploymentConfiguration": {
+        "minimumHealthyPercent": 100,
+        "maximumPercent": 125
+      },
+      "healthCheck": "GET /healthz (static 200; does not touch the database)",
+      "autoScaling": "target tracking on CPUUtilization 60%, min 12 max 24",
+      "dbPool": {
+        "perTask": 20,
+        "maxOverflow": 0,
+        "timeoutSeconds": 10
+      }
+    }
+  ]
+}

@@ -1,0 +1,386 @@
+[
+  {
+    "id": 40101,
+    "applied_at": "2026-09-14T17:22:00Z",
+    "job": {
+      "id": 9001,
+      "name": "Backend Engineer"
+    },
+    "candidate": {
+      "first_name": "Casey",
+      "last_name": "Fixture",
+      "email_addresses": [
+        {
+          "value": "casey.fixture@example.com",
+          "type": "personal"
+        }
+      ],
+      "phone_numbers": [
+        {
+          "value": "(212) 555-0101",
+          "type": "mobile"
+        }
+      ],
+      "location": {
+        "country": "US"
+      }
+    },
+    "submission": {
+      "ip_address": "192.0.2.10",
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64) FixtureBrowser/1.0"
+    },
+    "attachments": [
+      {
+        "filename": "fixture_resume.pdf",
+        "type": "resume",
+        "metadata": {
+          "author": "Casey Fixture",
+          "creator_tool": "Example Word 16.0",
+          "page_count": 2,
+          "sha256": "6ed0b0661a76c274b8413a61aeac6f21219c723177904984c65768ca8bc5b905",
+          "extracted": {
+            "name": "Casey Fixture",
+            "email": "casey.fixture@example.com",
+            "phone": "(212) 555-0101"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": 40102,
+    "applied_at": "2026-09-14T18:05:00Z",
+    "job": {
+      "id": 9001,
+      "name": "Backend Engineer"
+    },
+    "candidate": {
+      "first_name": "Jordan",
+      "last_name": "Placeholder",
+      "email_addresses": [
+        {
+          "value": "jordan.placeholder@example.com",
+          "type": "personal"
+        }
+      ],
+      "phone_numbers": [
+        {
+          "value": "+1 (646) 555-0102",
+          "type": "mobile"
+        }
+      ],
+      "location": {
+        "country": "US"
+      }
+    },
+    "submission": {
+      "ip_address": "192.0.2.12",
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64) FixtureBrowser/1.0"
+    },
+    "attachments": [
+      {
+        "filename": "placeholder_resume.pdf",
+        "type": "resume",
+        "metadata": {
+          "author": "Jordan Placeholder",
+          "creator_tool": "Example Word 16.0",
+          "page_count": 2,
+          "sha256": "e8f2630fb516e0db58f58e6c070d6171db4e10def875ab2b90b7eac59c3e766a",
+          "extracted": {
+            "name": "Jordan Placeholder",
+            "email": "jordan.placeholder@example.com",
+            "phone": "+1 (646) 555-0102"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": 40103,
+    "applied_at": "2026-09-15T09:40:00Z",
+    "job": {
+      "id": 9001,
+      "name": "Backend Engineer"
+    },
+    "candidate": {
+      "first_name": "Riley",
+      "last_name": "Sample",
+      "email_addresses": [
+        {
+          "value": "riley.sample@burner.example.org",
+          "type": "personal"
+        }
+      ],
+      "phone_numbers": [
+        {
+          "value": "312-555-0103",
+          "type": "mobile"
+        }
+      ],
+      "location": {
+        "country": "US"
+      }
+    },
+    "submission": {
+      "ip_address": "192.0.2.14",
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64) FixtureBrowser/1.0"
+    },
+    "attachments": [
+      {
+        "filename": "sample_resume.pdf",
+        "type": "resume",
+        "metadata": {
+          "author": "Riley Sample",
+          "creator_tool": "Example Word 16.0",
+          "page_count": 2,
+          "sha256": "74cb922fa9eb221fe3519050e24b8b6fab14e68d4a36e1215120c92f56ddf877",
+          "extracted": {
+            "name": "Ryley Sampler",
+            "email": "riley.sample@burner.example.org",
+            "phone": "312-555-0103"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": 40104,
+    "applied_at": "2026-09-15T11:12:00Z",
+    "job": {
+      "id": 9001,
+      "name": "Backend Engineer"
+    },
+    "candidate": {
+      "first_name": "Morgan",
+      "last_name": "Demo",
+      "email_addresses": [
+        {
+          "value": "morgan.demo@example.com",
+          "type": "personal"
+        }
+      ],
+      "phone_numbers": [
+        {
+          "value": "303.555.0104",
+          "type": "mobile"
+        }
+      ],
+      "location": {
+        "country": "US"
+      }
+    },
+    "submission": {
+      "ip_address": "203.0.113.20",
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64) FixtureBrowser/1.0"
+    },
+    "attachments": [
+      {
+        "filename": "demo_resume.pdf",
+        "type": "resume",
+        "metadata": {
+          "author": "Morgan Demo",
+          "creator_tool": "Example Word 16.0",
+          "page_count": 2,
+          "sha256": "573d77764c29b113fbe3a3a6ee69ca6ebb892ae9f278e996641eb510e9343d57",
+          "extracted": {
+            "name": "Morgan Demo",
+            "email": "morgan.demo@example.com",
+            "phone": "303.555.0104"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": 40105,
+    "applied_at": "2026-09-15T13:30:00Z",
+    "job": {
+      "id": 9001,
+      "name": "Backend Engineer"
+    },
+    "candidate": {
+      "first_name": "Zoë",
+      "last_name": "Testwood",
+      "email_addresses": [
+        {
+          "value": "zoe.testwood@example.com",
+          "type": "personal"
+        }
+      ],
+      "phone_numbers": [
+        {
+          "value": "+44 20 7946 0105",
+          "type": "mobile"
+        }
+      ],
+      "location": {
+        "country": "GB"
+      }
+    },
+    "submission": {
+      "ip_address": "192.0.2.140",
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64) FixtureBrowser/1.0"
+    },
+    "attachments": [
+      {
+        "filename": "testwood_resume.pdf",
+        "type": "resume",
+        "metadata": {
+          "author": "Zoë Testwood",
+          "creator_tool": "Example Word 16.0",
+          "page_count": 2,
+          "sha256": "18e92ca248db8cc09f99412da7997421990bbf29213e53e51dbb242093e1874a",
+          "extracted": {
+            "name": "Testwood, Zoe",
+            "email": "zoe.testwood@example.com",
+            "phone": "+44 20 7946 0105"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": 40106,
+    "applied_at": "2026-09-16T08:15:00Z",
+    "job": {
+      "id": 9001,
+      "name": "Backend Engineer"
+    },
+    "candidate": {
+      "first_name": "Avery",
+      "last_name": "Corporate",
+      "email_addresses": [
+        {
+          "value": "avery.corporate@example.com",
+          "type": "personal"
+        }
+      ],
+      "phone_numbers": [
+        {
+          "value": "206-555-0106",
+          "type": "mobile"
+        }
+      ],
+      "location": {
+        "country": "US"
+      }
+    },
+    "submission": {
+      "ip_address": "192.0.2.70",
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64) FixtureBrowser/1.0"
+    },
+    "attachments": [
+      {
+        "filename": "corporate_resume.pdf",
+        "type": "resume",
+        "metadata": {
+          "author": "Avery Corporate",
+          "creator_tool": "Example Word 16.0",
+          "page_count": 2,
+          "sha256": "b22ff85d5b26e7215522ba645ca9e74616525b22d5084955854e9ae54a541cb2",
+          "extracted": {
+            "name": "Avery Corporate",
+            "email": "avery.corporate@example.com",
+            "phone": "206-555-0106"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": 40107,
+    "applied_at": "2026-09-16T08:47:00Z",
+    "job": {
+      "id": 9001,
+      "name": "Backend Engineer"
+    },
+    "candidate": {
+      "first_name": "Blake",
+      "last_name": "Corporate",
+      "email_addresses": [
+        {
+          "value": "blake.corporate@example.com",
+          "type": "personal"
+        }
+      ],
+      "phone_numbers": [
+        {
+          "value": "(503) 555-0107",
+          "type": "mobile"
+        }
+      ],
+      "location": {
+        "country": "US"
+      }
+    },
+    "submission": {
+      "ip_address": "192.0.2.70",
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64) FixtureBrowser/1.0"
+    },
+    "attachments": [
+      {
+        "filename": "corporate_resume.pdf",
+        "type": "resume",
+        "metadata": {
+          "author": "Blake Corporate",
+          "creator_tool": "Example Word 16.0",
+          "page_count": 2,
+          "sha256": "77a9953b08140db3686265bd07bea06cf3564f973f93417fa1ca976586b893ff",
+          "extracted": {
+            "name": "Blake Corporate",
+            "email": "blake.corporate@example.com",
+            "phone": "(503) 555-0107"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": 40120,
+    "applied_at": "2026-09-17T02:20:00Z",
+    "job": {
+      "id": 9001,
+      "name": "Backend Engineer"
+    },
+    "candidate": {
+      "first_name": "Kai",
+      "last_name": "Mismatchwood",
+      "email_addresses": [
+        {
+          "value": "kai.mismatchwood@example.com",
+          "type": "personal"
+        }
+      ],
+      "phone_numbers": [
+        {
+          "value": "929-555-0120",
+          "type": "mobile"
+        }
+      ],
+      "location": {
+        "country": "US"
+      }
+    },
+    "submission": {
+      "ip_address": "192.0.2.200",
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64) FixtureBrowser/1.0"
+    },
+    "attachments": [
+      {
+        "filename": "mismatchwood_resume.pdf",
+        "type": "resume",
+        "metadata": {
+          "author": "Kai Mismatchwood",
+          "creator_tool": "Example Word 16.0",
+          "page_count": 2,
+          "sha256": "457ab3f83ac7ac4355219f66b52e2b778a71944ec756bac09b87e934686a7ca5",
+          "extracted": {
+            "name": "Kay Mismatchwoode",
+            "email": "kai.mismatchwood@example.com",
+            "phone": "929-555-0120"
+          }
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "listener": {
+    "port": 443,
+    "protocol": "HTTPS",
+    "sslPolicy": "ELBSecurityPolicy-TLS13-1-2-2021-06",
+    "certificateArn": "arn:aws:acm:us-east-1:111122223333:certificate/2f71c0a4-old"
+  },
+  "attributes": {
+    "idle_timeout.timeout_seconds": 15
+  },
+  "targetGroup": {
+    "healthCheckPath": "/healthz",
+    "healthyThreshold": 2,
+    "unhealthyThreshold": 3
+  }
+}

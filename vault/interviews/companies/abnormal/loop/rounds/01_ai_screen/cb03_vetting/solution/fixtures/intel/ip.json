@@ -1,0 +1,9 @@
+[
+  {"cidr": "192.0.2.0/26",   "country": "US", "asn": "AS64496", "org": "Example Broadband", "vpn": false, "hosting": false},
+  {"cidr": "192.0.2.64/26",  "country": "US", "asn": "AS64497", "org": "Example Tower Office NAT", "vpn": false, "hosting": false},
+  {"cidr": "192.0.2.128/26", "country": "GB", "asn": "AS64498", "org": "Example Telecom UK", "vpn": false, "hosting": false},
+  {"cidr": "192.0.2.192/26", "country": "DE", "asn": "AS64499", "org": "Beispiel Netz", "vpn": false, "hosting": false},
+  {"cidr": "198.51.100.0/24", "country": "US", "asn": "AS64520", "org": "Example Fiber", "vpn": false, "hosting": false},
+  {"cidr": "203.0.113.0/25", "country": "US", "asn": "AS64500", "org": "ExampleVPN", "vpn": true, "hosting": false},
+  {"cidr": "203.0.113.128/25", "country": "US", "asn": "AS64501", "org": "OtherExampleVPN", "vpn": true, "hosting": false}
+]

@@ -1,0 +1,66 @@
+[
+  {
+    "id": 40130,
+    "applied_at": "2026-09-19T10:00:00Z",
+    "job": {
+      "id": 9001,
+      "name": "Backend Engineer"
+    },
+    "candidate": {
+      "first_name": "Sage",
+      "last_name": "Okayson",
+      "email_addresses": [
+        {
+          "value": "sage.okayson@example.com",
+          "type": "personal"
+        }
+      ],
+      "phone_numbers": [
+        {
+          "value": "(718) 555-0130",
+          "type": "mobile"
+        }
+      ],
+      "location": {
+        "country": "US"
+      }
+    },
+    "submission": {
+      "ip_address": "192.0.2.15",
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64) FixtureBrowser/1.0"
+    },
+    "attachments": [
+      {
+        "filename": "okayson_resume.pdf",
+        "type": "resume",
+        "metadata": {
+          "author": "Sage Okayson",
+          "creator_tool": "Example Word 16.0",
+          "page_count": 2,
+          "sha256": "43ec6f5a6e23046b784eac1afc94de1b8ffd327a3f32ae2f12c6114ad8488bbf",
+          "extracted": {
+            "name": "Sage Okayson",
+            "email": "sage.okayson@example.com",
+            "phone": "(718) 555-0130"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "first_name": "No",
+      "last_name": "Identifier"
+    },
+    "applied_at": "2026-09-19T10:05:00Z"
+  },
+  {
+    "id": 40131,
+    "candidate": {
+      "first_name": "No",
+      "last_name": "Timestamp"
+    },
+    "applied_at": "yesterday"
+  },
+  "not-an-object"
+]

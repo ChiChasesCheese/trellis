@@ -1,0 +1,17 @@
+# Defaults for every tenant. A tenant file in config/tenants/ overrides single keys.
+
+[scoring]
+# score is the sum of finding weights, capped at 100
+highly_recommended_at = 50
+recommended_at = 20
+
+[weights]
+# one entry per registered signal; a missing weight is a startup error
+voip_phone = 30
+ip_geo_mismatch = 20
+resume_name_mismatch = 25
+disposable_email = 20
+vpn_hosting_ip = 20
+
+[lookups]
+cache_ttl_seconds = 3600

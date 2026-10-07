@@ -1,0 +1,454 @@
+diff -ruN before/README.md starter/README.md
+--- before/README.md	2026-10-06 22:29:46.063217205 +0000
++++ starter/README.md	2026-10-06 22:26:58.150215835 +0000
+@@ -1,6 +1,11 @@
+ # riskapi
+ 
+-Insider-risk scoring library and nightly job.
++Read-only HTTP API over per-user insider-risk scores.
+ 
+-    python -m riskapi.rescore  # recompute users.risk_score
+-    python -m pytest           # unit tests
++    GET /tenants/<tenant>/users/<user>/risk
++    GET /tenants/<tenant>/users?sort=&cursor=&limit=
++
++Requests carry `X-API-Key: <key_id>.<secret>`.
++
++    python -m riskapi         # dev server (RISKAPI_DB, RISKAPI_PORT, RISKAPI_CACHE_TTL)
++    python -m pytest          # unit tests
+diff -ruN before/riskapi/__main__.py starter/riskapi/__main__.py
+--- before/riskapi/__main__.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/riskapi/__main__.py	2026-10-06 22:26:58.147221046 +0000
+@@ -0,0 +1,3 @@
++from .server import main
++
++main()
+diff -ruN before/riskapi/app.py starter/riskapi/app.py
+--- before/riskapi/app.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/riskapi/app.py	2026-10-06 22:26:58.145261961 +0000
+@@ -0,0 +1,81 @@
++"""WSGI application: routing and handlers."""
++from __future__ import annotations
++
++import base64
++import json
++import logging
++import re
++from typing import Optional
++from urllib.parse import parse_qs
++
++from . import repo
++from .auth import authenticate
++from .cache import Cache
++from .db import Database
++from .service import RiskService
++from .settings import Settings
++
++log = logging.getLogger(__name__)
++
++RISK_RE = re.compile(r"^/tenants/([^/]+)/users/([^/]+)/risk$")
++LIST_RE = re.compile(r"^/tenants/([^/]+)/users$")
++
++
++def encode_cursor(sort_value, user_id) -> str:
++    return base64.urlsafe_b64encode(json.dumps([sort_value, user_id]).encode()).decode()
++
++
++def decode_cursor(raw: str):
++    return json.loads(base64.urlsafe_b64decode(raw.encode()))
++
++
++def create_app(db: Database, cache: Optional[Cache] = None, settings: Optional[Settings] = None):
++    settings = settings or Settings()
++    cache = cache if cache is not None else Cache()
++    service = RiskService(db, cache, settings)
++
++    def route(environ):
++        path = environ.get("PATH_INFO", "")
++        qs = parse_qs(environ.get("QUERY_STRING", ""))
++        headers = {"X-API-Key": environ.get("HTTP_X_API_KEY", "")}
++        if environ.get("REQUEST_METHOD") != "GET":
++            return "405 Method Not Allowed", {"error": "method not allowed"}
++
++        m = RISK_RE.match(path)
++        if m:
++            tenant, user = m.groups()
++            principal = authenticate(db, headers)
++            if principal is None:
++                return "401 Unauthorized", {"error": "unauthorized"}
++            result = service.get_risk(tenant, user)
++            if result is None:
++                return "404 Not Found", {"message": "user not found"}
++            return "200 OK", result
++
++        m = LIST_RE.match(path)
++        if m:
++            tenant = m.group(1)
++            principal = authenticate(db, headers)
++            if principal is None:
++                return "401 Unauthorized", {"error": "unauthorized"}
++            sort = qs.get("sort", ["user_id"])[0]
++            cursor = decode_cursor(qs["cursor"][0]) if "cursor" in qs else None
++            limit = int(qs.get("limit", [settings.default_limit])[0])
++            rows = repo.list_users(db, tenant, sort, cursor, limit)
++            items = [{"user_id": r[0], "name": r[1], "risk_score": r[2]} for r in rows]
++            next_cursor = encode_cursor(rows[-1][3], rows[-1][0]) if len(rows) == limit else None
++            return "200 OK", {"items": items, "next_cursor": next_cursor}
++
++        return "404 Not Found", {"error": "no such route"}
++
++    def app(environ, start_response):
++        try:
++            status, body = route(environ)
++        except Exception as exc:
++            log.exception("unhandled error")
++            status, body = "500 Internal Server Error", {"error": str(exc)}
++        data = json.dumps(body).encode()
++        start_response(status, [("Content-Type", "application/json"), ("Content-Length", str(len(data)))])
++        return [data]
++
++    return app
+diff -ruN before/riskapi/auth.py starter/riskapi/auth.py
+--- before/riskapi/auth.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/riskapi/auth.py	2026-10-06 22:26:58.139511637 +0000
+@@ -0,0 +1,28 @@
++"""API-key authentication. Keys look like `<key_id>.<secret>` and belong to one tenant."""
++from __future__ import annotations
++
++import hashlib
++from dataclasses import dataclass
++from typing import Mapping, Optional
++
++from .db import Database
++
++
++@dataclass(frozen=True)
++class Principal:
++    tenant_id: str
++    key_id: str
++
++
++def authenticate(db: Database, headers: Mapping[str, str]) -> Optional[Principal]:
++    raw = headers.get("X-API-Key", "")
++    key_id, _, secret = raw.partition(".")
++    if not key_id or not secret:
++        return None
++    rows = db.query("SELECT tenant_id, key_md5 FROM api_keys WHERE key_id = ?", (key_id,))
++    if not rows:
++        return None
++    tenant_id, stored = rows[0]
++    if hashlib.md5(secret.encode()).hexdigest() == stored:
++        return Principal(tenant_id=tenant_id, key_id=key_id)
++    return None
+diff -ruN before/riskapi/cache.py starter/riskapi/cache.py
+--- before/riskapi/cache.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/riskapi/cache.py	2026-10-06 22:26:58.137484236 +0000
+@@ -0,0 +1,36 @@
++"""In-memory stand-in for Redis: bytes values with a TTL. Swap for a redis client in production."""
++from __future__ import annotations
++
++import threading
++import time
++from typing import Callable, Optional
++
++
++class Cache:
++    def __init__(self, clock: Callable[[], float] = time.monotonic):
++        self._clock = clock
++        self._lock = threading.Lock()
++        self._data: dict[str, tuple[bytes, float]] = {}
++
++    def get(self, key: str) -> Optional[bytes]:
++        with self._lock:
++            hit = self._data.get(key)
++            if hit is None:
++                return None
++            value, expires = hit
++            if expires <= self._clock():
++                del self._data[key]
++                return None
++            return value
++
++    def set(self, key: str, value: bytes, ttl: float) -> None:
++        with self._lock:
++            self._data[key] = (value, self._clock() + ttl)
++
++    def delete(self, key: str) -> None:
++        with self._lock:
++            self._data.pop(key, None)
++
++    def keys(self, prefix: str = "") -> list[str]:
++        with self._lock:
++            return [k for k in self._data if k.startswith(prefix)]
+diff -ruN before/riskapi/repo.py starter/riskapi/repo.py
+--- before/riskapi/repo.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/riskapi/repo.py	2026-10-06 22:26:58.141714897 +0000
+@@ -0,0 +1,34 @@
++"""SQL for the endpoints."""
++from __future__ import annotations
++
++from typing import Optional
++
++from .db import Database
++
++
++def get_user(db: Database, tenant_id: str, user_id: str) -> Optional[tuple]:
++    rows = db.query(
++        "SELECT user_id, name, email, department FROM users WHERE tenant_id = ? AND user_id = ?",
++        (tenant_id, user_id),
++    )
++    return rows[0] if rows else None
++
++
++def load_signals(db: Database, tenant_id: str, user_id: str) -> list[tuple[str, int, str]]:
++    return db.query(
++        "SELECT kind, weight, observed_at FROM signals WHERE tenant_id = ? AND user_id = ? ORDER BY observed_at",
++        (tenant_id, user_id),
++    )
++
++
++def list_users(db: Database, tenant_id: str, sort: str, cursor, limit: int) -> list[tuple]:
++    """Keyset pagination ordered by (`sort`, user_id). Returns (user_id, name, risk_score, sort_value)."""
++    sql = f"SELECT user_id, name, risk_score, {sort} FROM users WHERE tenant_id = ?"
++    params: list = [tenant_id]
++    if cursor:
++        sort_value, last_id = cursor
++        sql += f" AND ({sort}, user_id) >= (?, ?)"
++        params += [sort_value, last_id]
++    sql += f" ORDER BY {sort}, user_id LIMIT ?"
++    params.append(limit)
++    return db.query(sql, params)
+diff -ruN before/riskapi/server.py starter/riskapi/server.py
+--- before/riskapi/server.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/riskapi/server.py	2026-10-06 22:26:58.147221046 +0000
+@@ -0,0 +1,21 @@
++"""`python -m riskapi` serves the API with wsgiref (dev only; production runs behind gunicorn)."""
++from __future__ import annotations
++
++import logging
++from wsgiref.simple_server import make_server
++
++from .app import create_app
++from .db import Database
++from .settings import Settings
++
++
++def main() -> None:
++    settings = Settings.from_env()
++    logging.basicConfig(level=logging.INFO)
++    app = create_app(Database(settings.db_path), settings=settings)
++    with make_server(settings.host, settings.port, app) as httpd:
++        httpd.serve_forever()
++
++
++if __name__ == "__main__":
++    main()
+diff -ruN before/riskapi/service.py starter/riskapi/service.py
+--- before/riskapi/service.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/riskapi/service.py	2026-10-06 22:26:58.143414589 +0000
+@@ -0,0 +1,45 @@
++"""Risk lookup with a read-through cache."""
++from __future__ import annotations
++
++import logging
++import pickle
++from datetime import datetime, timezone
++from typing import Optional
++
++from . import repo
++from .cache import Cache
++from .db import Database
++from .scoring import compute_risk
++from .settings import Settings
++
++log = logging.getLogger(__name__)
++
++
++class RiskService:
++    def __init__(self, db: Database, cache: Cache, settings: Settings):
++        self.db = db
++        self.cache = cache
++        self.settings = settings
++
++    def get_risk(self, tenant_id: str, user_id: str) -> Optional[dict]:
++        key = f"risk:{user_id}"
++        cached = self.cache.get(key)
++        if cached is not None:
++            return pickle.loads(cached)
++
++        user = repo.get_user(self.db, tenant_id, user_id)
++        if user is None:
++            return None
++        result = compute_risk(repo.load_signals(self.db, tenant_id, user_id))
++        payload = {
++            "tenant_id": tenant_id,
++            "user_id": user_id,
++            "name": user[1],
++            "score": result.score,
++            "level": result.level,
++            "factors": result.factors,
++            "computed_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
++        }
++        self.cache.set(key, pickle.dumps(payload), self.settings.cache_ttl_s)
++        log.info("risk lookup tenant=%s user=%s email=%s score=%s", tenant_id, user_id, user[2], result.score)
++        return payload
+diff -ruN before/riskapi/settings.py starter/riskapi/settings.py
+--- before/riskapi/settings.py	2026-10-06 22:29:46.059217205 +0000
++++ starter/riskapi/settings.py	2026-10-06 22:26:58.130911753 +0000
+@@ -9,10 +9,14 @@
+     db_path: str = "riskapi.db"
+     host: str = "127.0.0.1"
+     port: int = 8080
++    # --- risk endpoint / caching ---
++    cache_ttl_s: int = 300
++    default_limit: int = 50
+ 
+     @classmethod
+     def from_env(cls) -> "Settings":
+         s = cls()
+         s.db_path = os.environ.get("RISKAPI_DB", s.db_path)
+         s.port = int(os.environ.get("RISKAPI_PORT", s.port))
++        s.cache_ttl_s = int(os.environ.get("RISKAPI_CACHE_TTL", s.cache_ttl_s))
+         return s
+diff -ruN before/tests/conftest.py starter/tests/conftest.py
+--- before/tests/conftest.py	2026-10-06 22:29:46.062776477 +0000
++++ starter/tests/conftest.py	2026-10-06 22:27:13.146261313 +0000
+@@ -1,8 +1,38 @@
++import io
++import json
++
+ import pytest
+ 
+ from riskapi import db as dbmod
++from riskapi.app import create_app
++from riskapi.cache import Cache
+ from riskapi.db import Database
+ 
++ACME_KEY = "k_acme.acme-secret-0001"
++GLOBEX_KEY = "k_globex.globex-secret-0002"
++
++
++class Client:
++    def __init__(self, app):
++        self.app = app
++
++    def get(self, path, key=None, query=""):
++        environ = {
++            "REQUEST_METHOD": "GET",
++            "PATH_INFO": path,
++            "QUERY_STRING": query,
++            "wsgi.input": io.BytesIO(b""),
++        }
++        if key:
++            environ["HTTP_X_API_KEY"] = key
++        out = {}
++
++        def start_response(status, headers):
++            out["status"] = int(status.split()[0])
++
++        body = b"".join(self.app(environ, start_response))
++        return out["status"], json.loads(body)
++
+ 
+ @pytest.fixture
+ def world():
+@@ -15,4 +45,5 @@
+     dbmod.add_signal(db, "acme", "u1", "mass_download", 40, "2026-10-01T10:00:00Z")
+     dbmod.add_signal(db, "acme", "u1", "impossible_travel", 30, "2026-10-01T11:00:00Z")
+     dbmod.add_signal(db, "globex", "u1", "off_hours_login", 10, "2026-10-01T03:00:00Z")
+-    return db, None, None
++    cache = Cache()
++    return db, cache, Client(create_app(db, cache))
+diff -ruN before/tests/test_app.py starter/tests/test_app.py
+--- before/tests/test_app.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/tests/test_app.py	2026-10-06 22:27:13.154967550 +0000
+@@ -0,0 +1,46 @@
++from conftest import ACME_KEY
++
++
++def test_risk_for_own_user(world):
++    _db, _cache, client = world
++    status, body = client.get("/tenants/acme/users/u1/risk", ACME_KEY)
++    assert status == 200
++    assert body["score"] == 70 and body["level"] == "high"
++    assert [f["kind"] for f in body["factors"]] == ["mass_download", "impossible_travel"]
++
++
++def test_risk_is_cached(world):
++    _db, cache, client = world
++    client.get("/tenants/acme/users/u1/risk", ACME_KEY)
++    assert len(cache.keys("risk:")) == 1
++
++
++def test_missing_key_is_401(world):
++    _db, _cache, client = world
++    assert client.get("/tenants/acme/users/u1/risk")[0] == 401
++
++
++def test_unknown_user_is_404(world):
++    _db, _cache, client = world
++    assert client.get("/tenants/acme/users/nobody/risk", ACME_KEY)[0] == 404
++
++
++def test_list_sorted_by_user_id_by_default(world):
++    _db, _cache, client = world
++    status, body = client.get("/tenants/acme/users", ACME_KEY)
++    assert status == 200
++    assert [i["user_id"] for i in body["items"]] == ["u1", "u2", "u3", "u4", "u5"]
++    assert body["next_cursor"] is None
++
++
++def test_list_sorted_by_name(world):
++    _db, _cache, client = world
++    _status, body = client.get("/tenants/acme/users", ACME_KEY, "sort=name")
++    assert [i["name"] for i in body["items"]] == ["Ann", "Bob", "Cy", "Di", "Eve"]
++
++
++def test_first_page_has_cursor_when_full(world):
++    _db, _cache, client = world
++    _status, body = client.get("/tenants/acme/users", ACME_KEY, "limit=2")
++    assert [i["user_id"] for i in body["items"]] == ["u1", "u2"]
++    assert body["next_cursor"]
+diff -ruN before/tests/test_auth.py starter/tests/test_auth.py
+--- before/tests/test_auth.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/tests/test_auth.py	2026-10-06 22:27:13.153003386 +0000
+@@ -0,0 +1,16 @@
++from conftest import ACME_KEY
++
++from riskapi.auth import authenticate
++
++
++def test_valid_key(world):
++    db, _cache, _client = world
++    p = authenticate(db, {"X-API-Key": ACME_KEY})
++    assert p is not None and p.tenant_id == "acme"
++
++
++def test_wrong_secret_and_malformed_keys(world):
++    db, _cache, _client = world
++    assert authenticate(db, {"X-API-Key": "k_acme.nope"}) is None
++    assert authenticate(db, {"X-API-Key": "no-dot"}) is None
++    assert authenticate(db, {}) is None
+diff -ruN before/tests/test_cache.py starter/tests/test_cache.py
+--- before/tests/test_cache.py	1970-01-01 00:00:00.000000000 +0000
++++ starter/tests/test_cache.py	2026-10-06 22:27:13.150622629 +0000
+@@ -0,0 +1,19 @@
++from riskapi.cache import Cache
++
++
++def test_value_expires():
++    t = [0.0]
++    c = Cache(clock=lambda: t[0])
++    c.set("k", b"v", ttl=10)
++    assert c.get("k") == b"v"
++    t[0] = 10
++    assert c.get("k") is None
++
++
++def test_delete_and_keys():
++    c = Cache()
++    c.set("a:1", b"x", 10)
++    c.set("b:1", b"y", 10)
++    assert c.keys("a:") == ["a:1"]
++    c.delete("a:1")
++    assert c.keys() == ["b:1"]

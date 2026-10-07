@@ -1,0 +1,8 @@
+{
+  "Attributes": {
+    "QueueName": "security-events-dlq",
+    "ApproximateNumberOfMessages": 3232,
+    "MessageRetentionPeriod": 1209600,
+    "note": "application-level DLQ: the consumer publishes enrichment failures here"
+  }
+}

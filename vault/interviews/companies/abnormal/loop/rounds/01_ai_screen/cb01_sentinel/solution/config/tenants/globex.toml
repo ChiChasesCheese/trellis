@@ -1,0 +1,5 @@
+[rules.impossible_travel]
+max_speed_kmh = 1200
+
+[rules.new_country_login]
+enabled = false

@@ -1,0 +1,26 @@
+{"timestamp":"2026-09-30T13:58:50Z","level":"INFO","logger":"renderer.main","message":"starting report-renderer 2026.09.30-1358-b07c4de"}
+{"timestamp":"2026-09-30T14:05:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}
+{"timestamp":"2026-09-30T14:06:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}
+{"timestamp":"2026-09-30T14:07:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}
+{"timestamp":"2026-09-30T14:08:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}
+{"timestamp":"2026-09-30T14:09:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}
+{"timestamp":"2026-09-30T14:10:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}
+{"timestamp":"2026-09-30T14:11:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}
+{"timestamp":"2026-09-30T14:12:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}
+{"timestamp":"2026-09-30T14:13:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}
+{"timestamp":"2026-09-30T14:14:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}
+{"timestamp":"2026-09-30T14:15:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}
+{"timestamp":"2026-09-30T14:16:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}
+{"timestamp":"2026-09-30T14:17:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}
+{"timestamp":"2026-09-30T14:18:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}
+{"timestamp":"2026-09-30T14:19:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}
+{"timestamp":"2026-09-30T14:20:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}
+{"timestamp":"2026-09-30T14:21:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}
+{"timestamp":"2026-09-30T14:22:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}
+{"timestamp":"2026-09-30T14:23:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}
+{"timestamp":"2026-09-30T14:24:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}
+{"timestamp":"2026-09-30T14:25:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}
+{"timestamp":"2026-09-30T14:26:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}
+{"timestamp":"2026-09-30T14:27:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}
+{"timestamp":"2026-09-30T14:28:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}
+{"timestamp":"2026-09-30T14:29:15Z","level":"WARN","logger":"renderer.jobs","message":"job monthly-pdf-export running in-process, cpu-bound, 41 pages/min","job":"monthly-pdf-export"}

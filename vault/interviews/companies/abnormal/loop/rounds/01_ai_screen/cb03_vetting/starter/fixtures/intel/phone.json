@@ -1,0 +1,17 @@
+{
+  "+12125550101": {"line_type": "MOBILE", "carrier": "Example Wireless", "country": "US"},
+  "+16465550102": {"line_type": "VOIP", "carrier": "Example Voice", "country": "US"},
+  "+13125550103": {"line_type": "MOBILE", "carrier": "Example Wireless", "country": "US"},
+  "+13035550104": {"line_type": "MOBILE", "carrier": "Example Wireless", "country": "US"},
+  "+442079460105": {"line_type": "LANDLINE", "carrier": "Example Telecom UK", "country": "GB"},
+  "+12065550106": {"line_type": "MOBILE", "carrier": "Example Wireless", "country": "US"},
+  "+15035550107": {"line_type": "MOBILE", "carrier": "Example Wireless", "country": "US"},
+  "+14155550143": {"line_type": "MOBILE", "carrier": "Example Wireless", "country": "US"},
+  "+14155550147": {"line_type": "MOBILE", "carrier": "Example Wireless", "country": "US"},
+  "+14155550152": {"line_type": "MOBILE", "carrier": "Example Wireless", "country": "US"},
+  "+17185550130": {"line_type": "MOBILE", "carrier": "Example Wireless", "country": "US"},
+  "+19295550120": {"line_type": "VOIP", "carrier": "Example Voice", "country": "US"},
+  "+16285550171": {"line_type": "VOIP", "carrier": "Example Voice", "country": "US"},
+  "+15105550172": {"line_type": "MOBILE", "carrier": "Example Wireless", "country": "US"},
+  "+16695550173": {"line_type": "MOBILE", "carrier": "Example Wireless", "country": "US"}
+}

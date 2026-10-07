@@ -1,0 +1,46 @@
+{
+  "relation": "public.alerts",
+  "oid": 16421,
+  "database_oid": 16401,
+  "n_live_tup": 182400000,
+  "total_size": "214 GB",
+  "columns": [
+    "id bigint",
+    "tenant_id text",
+    "user_id text",
+    "kind text",
+    "severity smallint",
+    "status text",
+    "payload jsonb",
+    "created_at timestamptz"
+  ],
+  "indexes": [
+    {
+      "name": "alerts_pkey",
+      "def": "UNIQUE btree (id)"
+    },
+    {
+      "name": "alerts_tenant_created_idx",
+      "def": "btree (tenant_id, created_at DESC)"
+    },
+    {
+      "name": "alerts_tenant_status_created_idx",
+      "def": "btree (tenant_id, status, created_at DESC, id DESC)"
+    }
+  ],
+  "rows_by_tenant_top": [
+    {
+      "tenant_id": "tn-orbit",
+      "rows": 38100000
+    },
+    {
+      "tenant_id": "tn-kestrel",
+      "rows": 9400000
+    },
+    {
+      "tenant_id": "tn-larch",
+      "rows": 6200000
+    }
+  ],
+  "note": "snapshot of pg_class / pg_indexes / pg_stat_user_tables at 2026-10-02T10:05:00Z; column triage_note_id is absent"
+}

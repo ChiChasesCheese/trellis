@@ -1,0 +1,72 @@
+[
+  {
+    "round": "team",
+    "q": "Tell me about a time you shipped something quickly and it went wrong. What did you own?",
+    "principle": "**V**elocity（\"owning our mistakes\"）",
+    "story": "[[S3]] fail loudly · [[S10]]",
+    "point": "快不是问题，静默失败才是；我加了\"响亮失败\"的守卫"
+  },
+  {
+    "round": "team",
+    "q": "Give an example of stepping into a problem that wasn't yours.",
+    "principle": "**O**wnership（\"moving on purpose, not permission\"）",
+    "story": "[[S7]] schema pool · [[S8]]",
+    "point": "没人分配，但每个人都被它拖慢"
+  },
+  {
+    "round": "team",
+    "q": "Tell me about a time you were wrong and changed your mind publicly.",
+    "principle": "**I**ntellectual honesty（\"facts over ego … disagree, commit, move forward\"）",
+    "story": "[[S10]] 推翻自己 10×",
+    "point": "用数据推翻自己的估算并主动更正"
+  },
+  {
+    "round": "team",
+    "q": "Tell me about a disagreement where you committed to a decision you didn't agree with.",
+    "principle": "Intellectual honesty（\"disagree, commit\"）",
+    "story": "[[S9]]",
+    "point": "讲清我的主张、最后的决定、我如何全力执行"
+  },
+  {
+    "round": "team",
+    "q": "How do you make sure what you build is actually useful to the customer?",
+    "principle": "**C**ustomer obsession（\"never do work that holds no customer value\"）",
+    "story": "[[S4]] · [[S6]]（告警量 = 分析师的痛）",
+    "point": "先问谁会看这个输出、误报的代价是谁付"
+  },
+  {
+    "round": "team",
+    "q": "What's a bar you raised on your team?",
+    "principle": "**E**xcellence",
+    "story": "[[S2]] 质量门禁 · [[S1]] 校验 UDTF",
+    "point": "把\"对不对\"变成自动门禁"
+  },
+  {
+    "round": "team",
+    "q": "How do you work when there's no process for what you need to do?",
+    "principle": "O-11 \"rigid rules … the open-endedness\" · O-13 \"When the path isn't clear, you're expected to make one\"",
+    "story": "[[S6]] · [[S5]]",
+    "point": "先写下已知/未知，提出方案，设可回滚点，推进"
+  },
+  {
+    "round": "team",
+    "q": "How has AI changed the way you work in the last six months?",
+    "principle": "O-12 \"rethink your work around what AI makes possible\"",
+    "story": "[[S7]]",
+    "point": "不是更快写同样的代码，而是做以前不值得做的事（clone 池、on-call copilot）"
+  },
+  {
+    "round": "team",
+    "q": "How do you give and receive feedback?",
+    "principle": "Excellence（\"raise the bar in our work, our feedback\"）",
+    "story": "[[S2]] 接受批评",
+    "point": "具体、基于证据、对事"
+  },
+  {
+    "round": "team",
+    "q": "What would make you leave a job?",
+    "principle": "fit",
+    "story": "—",
+    "point": "不能 own 结果、离用户太远（真诚，短）"
+  }
+]

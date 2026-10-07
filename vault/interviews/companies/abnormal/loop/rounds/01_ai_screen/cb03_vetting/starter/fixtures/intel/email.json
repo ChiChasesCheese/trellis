@@ -1,0 +1,4 @@
+{
+  "disposable_domains": ["burner.example.org", "tempbox.example.org"],
+  "domain_age_days": {"example.com": 9000, "mail.example.org": 9000, "burner.example.org": 12, "tempbox.example.org": 30}
+}

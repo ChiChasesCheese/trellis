@@ -1,0 +1,2303 @@
+{
+ "data": [
+  {
+   "uuid": "ac1f674d3db04c5f",
+   "published": "2026-09-10T14:05:02.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "carol.diaz@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.198",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "36968d52a9183140",
+   "published": "2026-09-10T14:08:12.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "gina.park@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.73",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "4a1e84172e76601a",
+   "published": "2026-09-10T19:58:10.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "bob.martin@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "c8530b816276122c",
+   "published": "2026-09-10T20:05:02.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "carol.diaz@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "5ff02dde5dc038e3",
+   "published": "2026-09-11T13:37:01.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "henry.ross@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.39",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "df003a7257fc1d57",
+   "published": "2026-09-11T13:41:21.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "alice.nguyen@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.15",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "911e9c53f166be06",
+   "published": "2026-09-11T13:50:10.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "gina.park@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.175",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "f98235cf973c1ae4",
+   "published": "2026-09-11T13:54:58.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "erin.walsh@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.169",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "82eef06a63f10606",
+   "published": "2026-09-11T13:56:03.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "bob.martin@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.158",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "bc7baa7343f1c0f4",
+   "published": "2026-09-11T14:00:35.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "carol.diaz@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.26",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "c2cb5dece66d962e",
+   "published": "2026-09-11T14:01:56.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "frank.okafor@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.56",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "d607f088bdaee886",
+   "published": "2026-09-11T14:03:10.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "dave.kim@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.8",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "db603ea47865eb9b",
+   "published": "2026-09-14T13:36:24.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "henry.ross@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.94",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "468491cc987923ab",
+   "published": "2026-09-14T13:37:04.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "bob.martin@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.31",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "bbdef29433ab7dde",
+   "published": "2026-09-14T13:41:15.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "gina.park@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.40",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "1da4238444481324",
+   "published": "2026-09-14T13:55:41.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "alice.nguyen@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.86",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "51beb00ef7d84f03",
+   "published": "2026-09-14T13:59:02.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "carol.diaz@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.140",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "3d07248d231bbd58",
+   "published": "2026-09-14T13:59:20.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "erin.walsh@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.148",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "b8cd9fb26e22d576",
+   "published": "2026-09-14T14:04:04.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "frank.okafor@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.171",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "6653ad462756da3e",
+   "published": "2026-09-14T14:09:44.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "dave.kim@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.187",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "88380e8f0fcfca32",
+   "published": "2026-09-14T19:59:02.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "carol.diaz@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "177f3ef71e3abec5",
+   "published": "2026-09-14T19:59:20.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "erin.walsh@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "c3a4782f5392c1a2",
+   "published": "2026-09-14T20:04:04.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "frank.okafor@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "395850b156623164",
+   "published": "2026-09-15T13:30:36.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "dave.kim@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.27",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "ccd3fc23b050ea87",
+   "published": "2026-09-15T13:38:12.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "bob.martin@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.109",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "eac3296bcc273fb9",
+   "published": "2026-09-15T13:42:21.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "erin.walsh@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.133",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "6d0ed072d1ce2fd2",
+   "published": "2026-09-15T13:43:45.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "henry.ross@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.152",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "79c968ccb5235a44",
+   "published": "2026-09-15T13:45:33.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "alice.nguyen@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.160",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "75ea1201837d8ece",
+   "published": "2026-09-15T13:49:03.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "frank.okafor@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.78",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "dafe20fa568ed202",
+   "published": "2026-09-15T13:51:59.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "gina.park@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.52",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "d992af290a46f7c3",
+   "published": "2026-09-15T14:06:37.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "carol.diaz@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.119",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "1f8a6d2d4817acec",
+   "published": "2026-09-15T19:49:03.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "frank.okafor@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "fda182b6c4272d8c",
+   "published": "2026-09-16T13:32:29.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "frank.okafor@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.9",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "de03bb4afa0b5ee4",
+   "published": "2026-09-16T13:37:25.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "carol.diaz@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.10",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "395b1e36327eb72d",
+   "published": "2026-09-16T13:39:19.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "gina.park@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.67",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "c53f61688066e089",
+   "published": "2026-09-16T13:39:27.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "bob.martin@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.15",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "fca3fcaca714ca1f",
+   "published": "2026-09-16T13:40:35.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "alice.nguyen@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.128",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "1fcf6865162859e5",
+   "published": "2026-09-16T13:42:05.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "dave.kim@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.36",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "78dbe3c7a9ad0425",
+   "published": "2026-09-16T13:42:23.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "henry.ross@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.73",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "0b068db232eaa3bb",
+   "published": "2026-09-16T13:51:15.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "erin.walsh@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.191",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "bd66a5939f6aa218",
+   "published": "2026-09-16T19:32:29.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "frank.okafor@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "355198e7b5e0cdce",
+   "published": "2026-09-16T19:39:19.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "gina.park@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "86734b34450b4aa5",
+   "published": "2026-09-16T19:40:35.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "alice.nguyen@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "4a74c23a49017659",
+   "published": "2026-09-17T13:30:19.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "frank.okafor@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.77",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "aeb5c620d38716f0",
+   "published": "2026-09-17T13:33:56.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "erin.walsh@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.101",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "85dd76fbd8a760a3",
+   "published": "2026-09-17T13:34:45.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "carol.diaz@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.1",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "82e77771f57a4aad",
+   "published": "2026-09-17T13:39:21.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "henry.ross@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.93",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "8d8c2615498f1edb",
+   "published": "2026-09-17T13:59:54.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "gina.park@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.159",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "a439c08c1084a239",
+   "published": "2026-09-17T14:01:49.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "dave.kim@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.35",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "ebb252063c69534c",
+   "published": "2026-09-17T14:02:50.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "bob.martin@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.182",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "2985f02adfaf7bfd",
+   "published": "2026-09-17T14:06:50.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "alice.nguyen@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.54",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "c3a08e1930d6e07b",
+   "published": "2026-09-17T19:39:21.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "henry.ross@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "dab4c33a641ab540",
+   "published": "2026-09-17T19:59:54.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "gina.park@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "9c415f5a38c1a1a8",
+   "published": "2026-09-17T20:01:49.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "dave.kim@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "9092af8cb2d9c74b",
+   "published": "2026-09-18T13:37:47.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "henry.ross@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.199",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "d7f9d7e1cca9d1d6",
+   "published": "2026-09-18T13:45:06.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "alice.nguyen@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.117",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "03d18592d7674e01",
+   "published": "2026-09-18T13:45:17.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "carol.diaz@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.75",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "ffc7efae4f921a37",
+   "published": "2026-09-18T13:53:38.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "gina.park@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.68",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "b950c47f2f5b1634",
+   "published": "2026-09-18T13:54:45.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "bob.martin@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.134",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "67e91d72ca15635e",
+   "published": "2026-09-18T13:58:20.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "erin.walsh@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.104",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "2036b2bfaa72350d",
+   "published": "2026-09-18T14:04:17.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "frank.okafor@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.121",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "ea9016aef93a14e2",
+   "published": "2026-09-18T14:04:50.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "dave.kim@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.89",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "7afe8ba38e3710b8",
+   "published": "2026-09-18T19:58:20.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "erin.walsh@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "0f3668a53cc30922",
+   "published": "2026-09-21T13:30:32.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "alice.nguyen@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.147",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "8ed170d9a0a401e0",
+   "published": "2026-09-21T13:32:06.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "henry.ross@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.190",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "b19408749bd015af",
+   "published": "2026-09-21T13:54:25.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "dave.kim@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.132",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "5bfb05aec9644b66",
+   "published": "2026-09-21T14:03:57.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "erin.walsh@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.5",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "e688a9a856ed0eb7",
+   "published": "2026-09-21T14:06:33.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "carol.diaz@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.59",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "21006a86c84512c1",
+   "published": "2026-09-21T14:09:24.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "bob.martin@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.71",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "1b3a89f2bde2c760",
+   "published": "2026-09-21T14:09:46.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "frank.okafor@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.185",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "26e22be9f8a0d908",
+   "published": "2026-09-21T19:32:06.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "henry.ross@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "057d024128276615",
+   "published": "2026-09-21T20:06:33.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "carol.diaz@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "f5144b4c331130fd",
+   "published": "2026-09-21T20:09:46.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "frank.okafor@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "935c8d76d57ea938",
+   "published": "2026-09-22T13:34:48.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "carol.diaz@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.146",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "6fe5601aaa1acf70",
+   "published": "2026-09-22T13:36:20.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "frank.okafor@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.131",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "e1ad8da56365584e",
+   "published": "2026-09-22T13:38:30.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "alice.nguyen@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.28",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "9a8a208b051e151c",
+   "published": "2026-09-22T13:45:18.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "gina.park@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.30",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "e99860661b1ec91e",
+   "published": "2026-09-22T13:48:39.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "henry.ross@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.118",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "c214f12c6ca9b31c",
+   "published": "2026-09-22T13:55:00.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "dave.kim@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.145",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "28155fafdc070027",
+   "published": "2026-09-22T14:06:40.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "erin.walsh@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.106",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "1a5cfbf603940bee",
+   "published": "2026-09-22T14:07:46.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "bob.martin@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.137",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "58e23c30e17ddce0",
+   "published": "2026-09-22T15:05:00.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "alice.nguyen@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.66",
+    "geographicalContext": {
+     "country": "Brazil"
+    }
+   }
+  },
+  {
+   "uuid": "129b38f36c4d5fee",
+   "published": "2026-09-22T20:06:40.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "erin.walsh@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "e8d5b0382214675d",
+   "published": "2026-09-23T13:34:04.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "frank.okafor@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.187",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "50ed1e366c8e3c93",
+   "published": "2026-09-23T13:36:11.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "henry.ross@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.66",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "ea640f0f0df9264c",
+   "published": "2026-09-23T13:37:27.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "alice.nguyen@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.157",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "9c0f19f7b4ff51ad",
+   "published": "2026-09-23T13:48:47.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "erin.walsh@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.193",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "3a6de3022bb70460",
+   "published": "2026-09-23T13:50:48.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "carol.diaz@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.71",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "1c51b26168b4effa",
+   "published": "2026-09-23T13:51:27.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "dave.kim@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.94",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "b83dfd22938bbe70",
+   "published": "2026-09-23T14:03:13.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "bob.martin@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.99",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "a195c60f3f9097da",
+   "published": "2026-09-23T19:34:04.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "frank.okafor@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "57783ab6dc804a99",
+   "published": "2026-09-23T19:51:27.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "dave.kim@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "f446875295e4a813",
+   "published": "2026-09-24T13:31:14.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "henry.ross@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.154",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "b23a50ccf67f8678",
+   "published": "2026-09-24T13:48:15.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "carol.diaz@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.8",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "ccd37f638b978250",
+   "published": "2026-09-24T13:51:22.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "alice.nguyen@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.72",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "2e256fca8cbe3c39",
+   "published": "2026-09-24T13:58:51.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "erin.walsh@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.162",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "cd5ce70cf4c7be3b",
+   "published": "2026-09-24T14:02:04.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "dave.kim@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.57",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "4bd437acd09b5217",
+   "published": "2026-09-24T14:02:51.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "frank.okafor@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.7",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "d1fd5e3dacd2b5bb",
+   "published": "2026-09-24T14:07:36.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "bob.martin@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.58",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "a298538564ed56da",
+   "published": "2026-09-24T20:07:36.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "bob.martin@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "f78d18a12aa638d3",
+   "published": "2026-09-25T13:41:18.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "carol.diaz@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.36",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "022a31aedb4a1fde",
+   "published": "2026-09-25T13:45:41.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "dave.kim@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.106",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "770cbe5374e37c3a",
+   "published": "2026-09-25T13:46:38.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "bob.martin@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.156",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "9766e834c5270fda",
+   "published": "2026-09-25T13:52:22.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "frank.okafor@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.181",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "8a9a26bb8e8eb689",
+   "published": "2026-09-25T13:53:45.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "erin.walsh@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.98",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "5601328b1415899c",
+   "published": "2026-09-25T14:00:04.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "alice.nguyen@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.96",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "6d3c26a04bc527be",
+   "published": "2026-09-25T14:07:15.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "henry.ross@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.197",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "28bc5a46cac3a856",
+   "published": "2026-09-25T20:07:15.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "henry.ross@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "faba09f841d7f924",
+   "published": "2026-09-27T14:00:00.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "henry.ross@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.84",
+    "geographicalContext": {
+     "country": "Romania"
+    }
+   }
+  },
+  {
+   "uuid": "4089682210843a0a",
+   "published": "2026-09-28T13:34:01.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "alice.nguyen@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.2",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "c8d6a8258a358eb4",
+   "published": "2026-09-28T13:49:44.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "frank.okafor@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.102",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "826a8a940ed299ae",
+   "published": "2026-09-28T13:59:13.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "erin.walsh@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.158",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "b73aee20fcdc61a2",
+   "published": "2026-09-28T14:00:09.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "bob.martin@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.86",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "90f16b7f7e376655",
+   "published": "2026-09-28T14:00:43.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "henry.ross@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.136",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "1d41cff6959e59e7",
+   "published": "2026-09-28T14:07:04.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "dave.kim@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.39",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "ad9bb80acbcc4a61",
+   "published": "2026-09-28T19:59:13.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "erin.walsh@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "c5e1c6b3c56f836c",
+   "published": "2026-09-28T20:00:09.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "bob.martin@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "f25ad695dab883d6",
+   "published": "2026-09-28T20:07:04.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "dave.kim@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "84e87d70a1757abc",
+   "published": "2026-09-29T13:33:51.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "henry.ross@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.187",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "236546d51425f0ca",
+   "published": "2026-09-29T13:41:20.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "erin.walsh@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.187",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "a246250035942ed5",
+   "published": "2026-09-29T13:50:54.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "frank.okafor@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.69",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "f3e3c89a29526a02",
+   "published": "2026-09-29T13:55:29.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "dave.kim@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.184",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "484d75f29d9167bb",
+   "published": "2026-09-29T13:56:45.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "alice.nguyen@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.198",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "50615ee849c7ff74",
+   "published": "2026-09-29T13:57:21.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "bob.martin@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.134",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "5c31e7d7c2eaed94",
+   "published": "2026-09-29T19:33:51.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "henry.ross@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "c20b9d25ef471459",
+   "published": "2026-09-29T19:55:29.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "dave.kim@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "24d979ca3107c15f",
+   "published": "2026-09-29T19:57:21.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "bob.martin@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "cf863595b9f8e8ca",
+   "published": "2026-09-30T13:33:52.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "alice.nguyen@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.89",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "1506e98d9a303cd3",
+   "published": "2026-09-30T13:44:00.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "dave.kim@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.54",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "d31e26670aff6143",
+   "published": "2026-09-30T13:51:46.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "bob.martin@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.93",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "223f1824680e3913",
+   "published": "2026-09-30T13:57:01.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "henry.ross@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.35",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "b91c8b0e73f5c58f",
+   "published": "2026-09-30T13:57:23.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "erin.walsh@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.41",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "2c34b9863e255270",
+   "published": "2026-09-30T14:05:58.000Z",
+   "eventType": "user.session.start",
+   "actor": {
+    "alternateId": "frank.okafor@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {
+    "ipAddress": "203.0.113.195",
+    "geographicalContext": {
+     "country": "United States"
+    }
+   }
+  },
+  {
+   "uuid": "3967f38d5843544c",
+   "published": "2026-09-30T19:44:00.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "dave.kim@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "c3b4dccae85d05bf",
+   "published": "2026-09-30T19:51:46.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "bob.martin@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  },
+  {
+   "uuid": "e02e4c3f45397259",
+   "published": "2026-09-30T20:05:58.000Z",
+   "eventType": "user.session.end",
+   "actor": {
+    "alternateId": "frank.okafor@acme.example",
+    "type": "User"
+   },
+   "outcome": {
+    "result": "SUCCESS"
+   },
+   "client": {}
+  }
+ ],
+ "next": null
+}

@@ -1,0 +1,3 @@
+# Acme runs a lot of agency hiring where throwaway addresses are rarer, so weigh them higher.
+[weights]
+disposable_email = 25

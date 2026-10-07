@@ -1,0 +1,13 @@
+{
+  "DBInstances": [
+    {
+      "DBInstanceIdentifier": "alerts-prod",
+      "Engine": "postgres",
+      "EngineVersion": "15.7",
+      "DBInstanceClass": "db.r6g.xlarge",
+      "DBInstanceStatus": "available",
+      "MultiAZ": true,
+      "AllocatedStorage": 1000
+    }
+  ]
+}

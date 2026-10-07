@@ -1,0 +1,4532 @@
+{
+ "Records": [
+  {
+   "Id": "71490bf015b5ae0a",
+   "CreationTime": "2026-09-01T16:40:40",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.26",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-83.pdf",
+   "FileSize": 6390301
+  },
+  {
+   "Id": "313bb6333f7f1f21",
+   "CreationTime": "2026-09-01T17:03:30",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.55",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-805.pdf",
+   "FileSize": 21542949
+  },
+  {
+   "Id": "e9b89964bf712136",
+   "CreationTime": "2026-09-01T17:09:56",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.59",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-396.pdf",
+   "FileSize": 5984444
+  },
+  {
+   "Id": "fb00b3b958cd2170",
+   "CreationTime": "2026-09-01T17:24:31",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.33",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-65.pdf",
+   "FileSize": 10894410
+  },
+  {
+   "Id": "30e269546f1d70ab",
+   "CreationTime": "2026-09-01T17:25:34",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.20",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-34.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner0@vendor.example"
+  },
+  {
+   "Id": "aad5ce80e1af6e06",
+   "CreationTime": "2026-09-01T17:34:32",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.22",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-193.pdf",
+   "FileSize": 8357314
+  },
+  {
+   "Id": "6a778d84c8fef90a",
+   "CreationTime": "2026-09-01T17:38:51",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.16",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-806.pdf",
+   "FileSize": 4763475
+  },
+  {
+   "Id": "066b735703fbdbb3",
+   "CreationTime": "2026-09-01T17:39:38",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.51",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-376.pdf",
+   "FileSize": 20239116
+  },
+  {
+   "Id": "92c5532e79828660",
+   "CreationTime": "2026-09-01T18:24:46",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.52",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-693.pdf",
+   "FileSize": 21754894
+  },
+  {
+   "Id": "cca0fb846ef8eabc",
+   "CreationTime": "2026-09-01T18:36:40",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.34",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-122.pdf",
+   "FileSize": 9794793
+  },
+  {
+   "Id": "68e53b40d82fd50b",
+   "CreationTime": "2026-09-01T18:40:46",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.57",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-851.pdf",
+   "FileSize": 8909791
+  },
+  {
+   "Id": "ce0891c15fc04e39",
+   "CreationTime": "2026-09-01T18:41:08",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.31",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-38.pdf",
+   "FileSize": 6761986
+  },
+  {
+   "Id": "5ec3338cbd0c9fcd",
+   "CreationTime": "2026-09-01T18:46:05",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.49",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-319.pdf",
+   "FileSize": 21555794
+  },
+  {
+   "Id": "57edcab4e12b1560",
+   "CreationTime": "2026-09-01T18:51:35",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.47",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-471.pdf",
+   "FileSize": 12255410
+  },
+  {
+   "Id": "9c564f54fe8cd94f",
+   "CreationTime": "2026-09-01T19:16:25",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.18",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-13.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner3@vendor.example"
+  },
+  {
+   "Id": "6b6d530018daaca3",
+   "CreationTime": "2026-09-01T19:20:24",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.10",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-239.pdf",
+   "FileSize": 7407128
+  },
+  {
+   "Id": "cdbde82a185e5d7a",
+   "CreationTime": "2026-09-01T19:28:18",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.24",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-577.pdf",
+   "FileSize": 7451303
+  },
+  {
+   "Id": "af513c1f832d1b85",
+   "CreationTime": "2026-09-01T19:30:51",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.56",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-340.pdf",
+   "FileSize": 8309634
+  },
+  {
+   "Id": "118aa9bd21fdf003",
+   "CreationTime": "2026-09-01T19:38:36",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.43",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-751.pdf",
+   "FileSize": 9453622
+  },
+  {
+   "Id": "f2967f7034f597fe",
+   "CreationTime": "2026-09-01T19:43:38",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.50",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-881.pdf",
+   "FileSize": 20663988
+  },
+  {
+   "Id": "296498702326fa9c",
+   "CreationTime": "2026-09-01T19:51:11",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.44",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-374.pdf",
+   "FileSize": 13536818
+  },
+  {
+   "Id": "d21da40d2b178e9e",
+   "CreationTime": "2026-09-01T20:06:47",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.45",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-876.pdf",
+   "FileSize": 12281312
+  },
+  {
+   "Id": "6a7acbc8da9afa5a",
+   "CreationTime": "2026-09-01T20:23:28",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.11",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-1.pdf",
+   "FileSize": 6133237
+  },
+  {
+   "Id": "975680e5642c0b87",
+   "CreationTime": "2026-09-01T20:23:35",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.14",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-511.pdf",
+   "FileSize": 5369277
+  },
+  {
+   "Id": "f6971699ea3564f2",
+   "CreationTime": "2026-09-02T05:00:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.47",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a0.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "e3f0f8542b6da04d",
+   "CreationTime": "2026-09-02T05:05:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.48",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a1.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "a7bde3a3271964ba",
+   "CreationTime": "2026-09-02T05:10:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.49",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a2.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "8d0b67c1ea8f63da",
+   "CreationTime": "2026-09-02T05:15:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.50",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a3.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "17e062690ec70be4",
+   "CreationTime": "2026-09-02T05:20:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.51",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a4.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "82757a58d431ac68",
+   "CreationTime": "2026-09-02T05:25:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.52",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a5.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "85519bda79e972e3",
+   "CreationTime": "2026-09-02T05:30:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.53",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a6.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "e35d2b92f4222559",
+   "CreationTime": "2026-09-02T05:35:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.54",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a7.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "d1bae747c4897874",
+   "CreationTime": "2026-09-02T05:40:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.55",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a8.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "24137bdb17ce0384",
+   "CreationTime": "2026-09-02T05:45:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.56",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a9.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "33fab68b5a14e443",
+   "CreationTime": "2026-09-02T05:50:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.57",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a10.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "5b8900eba883aa81",
+   "CreationTime": "2026-09-02T05:55:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.58",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a11.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "63fda4a9cd70e1a5",
+   "CreationTime": "2026-09-02T06:00:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.59",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a12.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "03f40571ee427a5a",
+   "CreationTime": "2026-09-02T06:05:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.10",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a13.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "ae6533d02efdfbd6",
+   "CreationTime": "2026-09-02T06:10:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.11",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a14.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "d2d97d0a92ed1a56",
+   "CreationTime": "2026-09-02T06:15:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.12",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a15.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "91ec0e0ba0b6d233",
+   "CreationTime": "2026-09-02T06:20:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.13",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a16.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "f9ae656f844265ff",
+   "CreationTime": "2026-09-02T06:25:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.14",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a17.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "88c5a16a0de0b1bc",
+   "CreationTime": "2026-09-02T06:30:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.15",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a18.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "c7df97c7afbd4a5f",
+   "CreationTime": "2026-09-02T06:35:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.16",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a19.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "4f6ef05283a886f2",
+   "CreationTime": "2026-09-02T13:50:58",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.13",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-283.pdf",
+   "FileSize": 6226821
+  },
+  {
+   "Id": "117cbb7ddb8880f4",
+   "CreationTime": "2026-09-02T13:58:33",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.19",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-343.pdf",
+   "FileSize": 10621294
+  },
+  {
+   "Id": "12c3d2d1e6d21098",
+   "CreationTime": "2026-09-02T14:09:59",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.46",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-382.pdf",
+   "FileSize": 7474614
+  },
+  {
+   "Id": "f273b772746a49e5",
+   "CreationTime": "2026-09-02T14:14:56",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.15",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-507.pdf",
+   "FileSize": 7825667
+  },
+  {
+   "Id": "1c99098f1e5249e1",
+   "CreationTime": "2026-09-02T14:16:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.21",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-781.pdf",
+   "FileSize": 9819033
+  },
+  {
+   "Id": "db0ea775d417e766",
+   "CreationTime": "2026-09-02T14:21:09",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.40",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-5.pdf",
+   "FileSize": 21270730
+  },
+  {
+   "Id": "9fed84f1fcf53b47",
+   "CreationTime": "2026-09-02T14:25:20",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.55",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-30.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner3@vendor.example"
+  },
+  {
+   "Id": "2628fae62154674c",
+   "CreationTime": "2026-09-02T14:28:09",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.56",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-3.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner4@vendor.example"
+  },
+  {
+   "Id": "55f0443339612260",
+   "CreationTime": "2026-09-02T14:33:23",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.44",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-172.pdf",
+   "FileSize": 21925252
+  },
+  {
+   "Id": "0d2b60671a863520",
+   "CreationTime": "2026-09-02T14:46:17",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.52",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-252.pdf",
+   "FileSize": 4836526
+  },
+  {
+   "Id": "1ec9727aafa44704",
+   "CreationTime": "2026-09-02T14:49:01",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.53",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-859.pdf",
+   "FileSize": 4542214
+  },
+  {
+   "Id": "0871a7ca90bf5f4d",
+   "CreationTime": "2026-09-02T14:51:23",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.36",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-738.pdf",
+   "FileSize": 13794610
+  },
+  {
+   "Id": "609c3ef1db7a13cd",
+   "CreationTime": "2026-09-02T14:53:03",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.10",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-300.pdf",
+   "FileSize": 9329292
+  },
+  {
+   "Id": "3b4dcf94e236950a",
+   "CreationTime": "2026-09-02T15:11:43",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.41",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-603.pdf",
+   "FileSize": 22992893
+  },
+  {
+   "Id": "257569ad79932bfb",
+   "CreationTime": "2026-09-02T15:23:11",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.37",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-262.pdf",
+   "FileSize": 8231790
+  },
+  {
+   "Id": "906be4d069f30f95",
+   "CreationTime": "2026-09-02T15:31:06",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.59",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-425.pdf",
+   "FileSize": 7560581
+  },
+  {
+   "Id": "71c7c03f0981ce91",
+   "CreationTime": "2026-09-02T15:42:50",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.38",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-757.pdf",
+   "FileSize": 22053337
+  },
+  {
+   "Id": "f88f32d212e98c13",
+   "CreationTime": "2026-09-02T15:54:53",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.20",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-504.pdf",
+   "FileSize": 10278361
+  },
+  {
+   "Id": "e12ea3fc7c77a805",
+   "CreationTime": "2026-09-02T16:01:21",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.54",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-266.pdf",
+   "FileSize": 5608288
+  },
+  {
+   "Id": "d74aae1054e45bbd",
+   "CreationTime": "2026-09-02T16:36:27",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.58",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-244.pdf",
+   "FileSize": 9964083
+  },
+  {
+   "Id": "8cde95229904670a",
+   "CreationTime": "2026-09-02T16:47:53",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.48",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-76.pdf",
+   "FileSize": 5086944
+  },
+  {
+   "Id": "e5ebaa54614d3b00",
+   "CreationTime": "2026-09-02T17:15:15",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.45",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-693.pdf",
+   "FileSize": 23230216
+  },
+  {
+   "Id": "236db229952abaaa",
+   "CreationTime": "2026-09-02T17:21:21",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.49",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-239.pdf",
+   "FileSize": 6290262
+  },
+  {
+   "Id": "76b920d3fe702ab2",
+   "CreationTime": "2026-09-02T17:21:35",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.51",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-449.pdf",
+   "FileSize": 5778633
+  },
+  {
+   "Id": "4e38cac17dc89c3c",
+   "CreationTime": "2026-09-02T17:31:20",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.43",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-399.pdf",
+   "FileSize": 21486752
+  },
+  {
+   "Id": "9f6c7c013469cd8a",
+   "CreationTime": "2026-09-02T17:34:08",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.22",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-272.pdf",
+   "FileSize": 10744027
+  },
+  {
+   "Id": "12a6f5ceb092b3db",
+   "CreationTime": "2026-09-02T17:51:08",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.11",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-808.pdf",
+   "FileSize": 6329024
+  },
+  {
+   "Id": "580b00ca87997a20",
+   "CreationTime": "2026-09-02T17:59:18",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.12",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-445.pdf",
+   "FileSize": 5557461
+  },
+  {
+   "Id": "394207e72c631f6a",
+   "CreationTime": "2026-09-02T18:22:11",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.14",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-184.pdf",
+   "FileSize": 5414223
+  },
+  {
+   "Id": "8fb03415055f086a",
+   "CreationTime": "2026-09-02T18:32:28",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.42",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-107.pdf",
+   "FileSize": 23031591
+  },
+  {
+   "Id": "1b2e075b2c7a17f2",
+   "CreationTime": "2026-09-02T18:43:42",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.17",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-831.pdf",
+   "FileSize": 8123272
+  },
+  {
+   "Id": "e1c856cd387d56b9",
+   "CreationTime": "2026-09-02T18:51:23",
+   "Operation": "SharingSet",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.50",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/close-checklist.xlsx",
+   "TargetUserOrGroupType": "Member",
+   "TargetUserOrGroupName": "olivia.chen@acme.example"
+  },
+  {
+   "Id": "9182acc074431ed7",
+   "CreationTime": "2026-09-02T18:53:57",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.57",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-35.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner1@vendor.example"
+  },
+  {
+   "Id": "f0ae7aaaf5062740",
+   "CreationTime": "2026-09-02T19:01:48",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.39",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-57.pdf",
+   "FileSize": 23941704
+  },
+  {
+   "Id": "ebd7a2e48ead46f7",
+   "CreationTime": "2026-09-02T19:12:32",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.35",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-459.pdf",
+   "FileSize": 10358709
+  },
+  {
+   "Id": "67020c8be40409a2",
+   "CreationTime": "2026-09-02T19:45:33",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.18",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-738.pdf",
+   "FileSize": 9816245
+  },
+  {
+   "Id": "6e7b8a57cefbdd68",
+   "CreationTime": "2026-09-02T19:53:08",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.47",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-99.pdf",
+   "FileSize": 8113260
+  },
+  {
+   "Id": "99c2e70d1fc3fafc",
+   "CreationTime": "2026-09-02T19:59:17",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.16",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-140.pdf",
+   "FileSize": 6525953
+  },
+  {
+   "Id": "70f85454d7f7cc7c",
+   "CreationTime": "2026-09-03T05:00:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.17",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a2-0.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "ab58c4ce5b765db3",
+   "CreationTime": "2026-09-03T05:04:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.18",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a2-1.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "844632f7bd7c98f2",
+   "CreationTime": "2026-09-03T05:08:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.19",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a2-2.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "3735206324f98d2c",
+   "CreationTime": "2026-09-03T05:12:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.20",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a2-3.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "5b3384382a737862",
+   "CreationTime": "2026-09-03T05:16:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.21",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/dump-a2-4.zip",
+   "FileSize": 25000000
+  },
+  {
+   "Id": "381f80f7c199f5f3",
+   "CreationTime": "2026-09-03T13:39:06",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.32",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-756.pdf",
+   "FileSize": 23705246
+  },
+  {
+   "Id": "a8b16686f8e8c01e",
+   "CreationTime": "2026-09-03T13:40:15",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.29",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-229.pdf",
+   "FileSize": 23869705
+  },
+  {
+   "Id": "8e2f604f673116a5",
+   "CreationTime": "2026-09-03T13:43:33",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.28",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-137.pdf",
+   "FileSize": 23218008
+  },
+  {
+   "Id": "cdc0d8c8424cf963",
+   "CreationTime": "2026-09-03T13:50:18",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.53",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-355.pdf",
+   "FileSize": 6452175
+  },
+  {
+   "Id": "c8df9537f2749364",
+   "CreationTime": "2026-09-03T13:57:20",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.44",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-696.pdf",
+   "FileSize": 5034748
+  },
+  {
+   "Id": "51eb42d8706c973f",
+   "CreationTime": "2026-09-03T13:59:49",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.15",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-564.pdf",
+   "FileSize": 9043571
+  },
+  {
+   "Id": "7c4b5f08077d7f92",
+   "CreationTime": "2026-09-03T14:06:07",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.25",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-250.pdf",
+   "FileSize": 10140309
+  },
+  {
+   "Id": "33a1a6557017d3d4",
+   "CreationTime": "2026-09-03T14:18:45",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.36",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-279.pdf",
+   "FileSize": 20715885
+  },
+  {
+   "Id": "62a7e8ccbbc05f75",
+   "CreationTime": "2026-09-03T14:32:33",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.52",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-242.pdf",
+   "FileSize": 6054668
+  },
+  {
+   "Id": "d53466d569d6603f",
+   "CreationTime": "2026-09-03T14:33:29",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.37",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-512.pdf",
+   "FileSize": 21974367
+  },
+  {
+   "Id": "6cd015192976d935",
+   "CreationTime": "2026-09-03T14:54:52",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.40",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-650.pdf",
+   "FileSize": 5074035
+  },
+  {
+   "Id": "0432a2814fc24c6a",
+   "CreationTime": "2026-09-03T15:05:04",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.47",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-205.pdf",
+   "FileSize": 4648700
+  },
+  {
+   "Id": "48a67b1975f347ca",
+   "CreationTime": "2026-09-03T15:09:16",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.33",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-613.pdf",
+   "FileSize": 20070749
+  },
+  {
+   "Id": "3e44bc3148cb34d5",
+   "CreationTime": "2026-09-03T15:34:21",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.11",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-524.pdf",
+   "FileSize": 6664741
+  },
+  {
+   "Id": "df73334766c13937",
+   "CreationTime": "2026-09-03T15:38:35",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.31",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-30.pdf",
+   "FileSize": 23268614
+  },
+  {
+   "Id": "f487f0e110a1f4cf",
+   "CreationTime": "2026-09-03T15:50:15",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.57",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-758.pdf",
+   "FileSize": 7207792
+  },
+  {
+   "Id": "0adfead2aaa3744f",
+   "CreationTime": "2026-09-03T15:55:56",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.14",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-302.pdf",
+   "FileSize": 10975021
+  },
+  {
+   "Id": "2c68fd1dafb86d42",
+   "CreationTime": "2026-09-03T16:00:58",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.56",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-295.pdf",
+   "FileSize": 6219632
+  },
+  {
+   "Id": "3f83af16e1b90eab",
+   "CreationTime": "2026-09-03T16:15:35",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.13",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-276.pdf",
+   "FileSize": 9650955
+  },
+  {
+   "Id": "a7190ff30fc3e8a6",
+   "CreationTime": "2026-09-03T16:30:15",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.45",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-679.pdf",
+   "FileSize": 5740993
+  },
+  {
+   "Id": "17669f78f5aa8ca2",
+   "CreationTime": "2026-09-03T16:49:44",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.41",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-859.pdf",
+   "FileSize": 6681936
+  },
+  {
+   "Id": "c7e822cd5cabd49e",
+   "CreationTime": "2026-09-03T17:05:25",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.49",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-2.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner3@vendor.example"
+  },
+  {
+   "Id": "c1b8d943ddb0bbbc",
+   "CreationTime": "2026-09-03T17:25:57",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.59",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-627.pdf",
+   "FileSize": 7644089
+  },
+  {
+   "Id": "045b6bdbf618a127",
+   "CreationTime": "2026-09-03T17:34:30",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.10",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-31.pdf",
+   "FileSize": 8456459
+  },
+  {
+   "Id": "d3b73f8f3b4471e5",
+   "CreationTime": "2026-09-03T17:53:57",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.55",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-477.pdf",
+   "FileSize": 7073646
+  },
+  {
+   "Id": "8f0b48c1847a5fdc",
+   "CreationTime": "2026-09-03T17:56:59",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.24",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-528.pdf",
+   "FileSize": 10674604
+  },
+  {
+   "Id": "30a1a9211280026e",
+   "CreationTime": "2026-09-03T18:09:18",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.58",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-624.pdf",
+   "FileSize": 7519241
+  },
+  {
+   "Id": "de0ff345a19e3b56",
+   "CreationTime": "2026-09-03T18:09:24",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.12",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-405.pdf",
+   "FileSize": 8908817
+  },
+  {
+   "Id": "83a2a148b2587df9",
+   "CreationTime": "2026-09-03T18:24:38",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.23",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-364.pdf",
+   "FileSize": 13148438
+  },
+  {
+   "Id": "19c02df3328b37b5",
+   "CreationTime": "2026-09-03T18:33:14",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.38",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-150.pdf",
+   "FileSize": 8444360
+  },
+  {
+   "Id": "4535a859626ed4ab",
+   "CreationTime": "2026-09-03T18:38:33",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.42",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-53.pdf",
+   "FileSize": 5144829
+  },
+  {
+   "Id": "fd6d1cf8fa52c0ba",
+   "CreationTime": "2026-09-03T18:46:11",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.30",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-319.pdf",
+   "FileSize": 20671521
+  },
+  {
+   "Id": "cc60581312648011",
+   "CreationTime": "2026-09-03T18:53:00",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.46",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-543.pdf",
+   "FileSize": 4728863
+  },
+  {
+   "Id": "19e2f6c735a0c4b7",
+   "CreationTime": "2026-09-03T18:56:36",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.34",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-244.pdf",
+   "FileSize": 21855760
+  },
+  {
+   "Id": "6344c1c516bb763e",
+   "CreationTime": "2026-09-03T18:58:39",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.51",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-39.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner2@vendor.example"
+  },
+  {
+   "Id": "aec3ed788e5f49c5",
+   "CreationTime": "2026-09-03T19:01:10",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.54",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-608.pdf",
+   "FileSize": 6481525
+  },
+  {
+   "Id": "4302f11cfd00e97a",
+   "CreationTime": "2026-09-03T19:12:01",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.48",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-8.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner1@vendor.example"
+  },
+  {
+   "Id": "eb0b2e1560b1d96a",
+   "CreationTime": "2026-09-03T19:12:36",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.39",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-406.pdf",
+   "FileSize": 6848218
+  },
+  {
+   "Id": "4fdfe7b3da8b6669",
+   "CreationTime": "2026-09-03T19:29:28",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.35",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-890.pdf",
+   "FileSize": 20411458
+  },
+  {
+   "Id": "8ac6a8c02a1a25fc",
+   "CreationTime": "2026-09-03T20:07:23",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.43",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-246.pdf",
+   "FileSize": 6354194
+  },
+  {
+   "Id": "8ca9bc5225af2884",
+   "CreationTime": "2026-09-03T20:08:45",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.27",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-590.pdf",
+   "FileSize": 13208548
+  },
+  {
+   "Id": "566da15dde7fa374",
+   "CreationTime": "2026-09-03T20:24:56",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.50",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-2.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner0@vendor.example"
+  },
+  {
+   "Id": "703c5b0240f9e67f",
+   "CreationTime": "2026-09-03T20:28:53",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.26",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-328.pdf",
+   "FileSize": 13192831
+  },
+  {
+   "Id": "1a3902f4cfcc39a2",
+   "CreationTime": "2026-09-04T13:33:50",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.29",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-511.pdf",
+   "FileSize": 22983110
+  },
+  {
+   "Id": "06663093706c58a1",
+   "CreationTime": "2026-09-04T13:35:50",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.49",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-727.pdf",
+   "FileSize": 5008337
+  },
+  {
+   "Id": "8d8e027d0296f475",
+   "CreationTime": "2026-09-04T13:43:03",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.33",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-509.pdf",
+   "FileSize": 6026194
+  },
+  {
+   "Id": "196862347f576a2b",
+   "CreationTime": "2026-09-04T14:15:52",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.30",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-331.pdf",
+   "FileSize": 8680646
+  },
+  {
+   "Id": "7d1db06e19af898a",
+   "CreationTime": "2026-09-04T14:24:01",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.54",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-174.pdf",
+   "FileSize": 9200207
+  },
+  {
+   "Id": "48e170fbde0c3617",
+   "CreationTime": "2026-09-04T14:24:22",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.47",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-646.pdf",
+   "FileSize": 6709600
+  },
+  {
+   "Id": "9944767b2accb745",
+   "CreationTime": "2026-09-04T14:44:10",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.53",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-521.pdf",
+   "FileSize": 10036847
+  },
+  {
+   "Id": "cbf9e2cefbbe61dd",
+   "CreationTime": "2026-09-04T14:46:26",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.24",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-286.pdf",
+   "FileSize": 23399786
+  },
+  {
+   "Id": "0c8f1daec8eb168e",
+   "CreationTime": "2026-09-04T14:59:31",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.51",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-580.pdf",
+   "FileSize": 8306898
+  },
+  {
+   "Id": "987586dabb07a994",
+   "CreationTime": "2026-09-04T15:03:03",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.46",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-617.pdf",
+   "FileSize": 6890294
+  },
+  {
+   "Id": "df41a8bf89881454",
+   "CreationTime": "2026-09-04T15:06:26",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.40",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-25.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner3@vendor.example"
+  },
+  {
+   "Id": "bc8f18931e4ab93e",
+   "CreationTime": "2026-09-04T15:14:27",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.32",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-10.pdf",
+   "FileSize": 8565015
+  },
+  {
+   "Id": "7ce734e7971ce11a",
+   "CreationTime": "2026-09-04T15:16:32",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.45",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-422.pdf",
+   "FileSize": 7679423
+  },
+  {
+   "Id": "4970d5c21bcf962a",
+   "CreationTime": "2026-09-04T15:27:06",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.38",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-512.pdf",
+   "FileSize": 4819038
+  },
+  {
+   "Id": "5df49f28b6941c86",
+   "CreationTime": "2026-09-04T15:46:55",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.52",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-544.pdf",
+   "FileSize": 7940434
+  },
+  {
+   "Id": "008b6f36ddf9da9d",
+   "CreationTime": "2026-09-04T16:00:44",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.44",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-521.pdf",
+   "FileSize": 7373420
+  },
+  {
+   "Id": "20bce2583d50cc39",
+   "CreationTime": "2026-09-04T16:09:32",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.43",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-671.pdf",
+   "FileSize": 6702343
+  },
+  {
+   "Id": "5d6f6dd603384ee2",
+   "CreationTime": "2026-09-04T16:30:18",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.27",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-538.pdf",
+   "FileSize": 21411814
+  },
+  {
+   "Id": "0ad35ff499e24cc6",
+   "CreationTime": "2026-09-04T16:33:02",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.36",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-359.pdf",
+   "FileSize": 5189441
+  },
+  {
+   "Id": "a9d9b9d62385393e",
+   "CreationTime": "2026-09-04T16:35:20",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.42",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-76.pdf",
+   "FileSize": 7466630
+  },
+  {
+   "Id": "c707a8eeff561fc2",
+   "CreationTime": "2026-09-04T17:00:49",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.22",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-120.pdf",
+   "FileSize": 22199785
+  },
+  {
+   "Id": "85157552d71fcb98",
+   "CreationTime": "2026-09-04T17:15:22",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.16",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-111.pdf",
+   "FileSize": 12412478
+  },
+  {
+   "Id": "2a31078c006c18e1",
+   "CreationTime": "2026-09-04T17:15:49",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.41",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-37.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner4@vendor.example"
+  },
+  {
+   "Id": "6463ed1591c50d28",
+   "CreationTime": "2026-09-04T17:21:00",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.37",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-537.pdf",
+   "FileSize": 5352954
+  },
+  {
+   "Id": "f58e7fd24edf3a57",
+   "CreationTime": "2026-09-04T17:21:44",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.26",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-740.pdf",
+   "FileSize": 21831609
+  },
+  {
+   "Id": "40546668fa752516",
+   "CreationTime": "2026-09-04T17:44:25",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.23",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-585.pdf",
+   "FileSize": 23850969
+  },
+  {
+   "Id": "6f2420766d3a5f8c",
+   "CreationTime": "2026-09-04T17:55:06",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.21",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-761.pdf",
+   "FileSize": 12432599
+  },
+  {
+   "Id": "82579471cbcc5ba4",
+   "CreationTime": "2026-09-04T17:56:14",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.17",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-693.pdf",
+   "FileSize": 13935840
+  },
+  {
+   "Id": "46870f7956a39e42",
+   "CreationTime": "2026-09-04T17:57:31",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.55",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-627.pdf",
+   "FileSize": 10646281
+  },
+  {
+   "Id": "8415f5af36be85ab",
+   "CreationTime": "2026-09-04T18:04:49",
+   "Operation": "SharingSet",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.34",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/close-checklist.xlsx",
+   "TargetUserOrGroupType": "Member",
+   "TargetUserOrGroupName": "olivia.chen@acme.example"
+  },
+  {
+   "Id": "4d6e52f561ad651c",
+   "CreationTime": "2026-09-04T18:14:38",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.28",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-329.pdf",
+   "FileSize": 21538003
+  },
+  {
+   "Id": "d4d21ee87de19545",
+   "CreationTime": "2026-09-04T18:30:00",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.50",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-201.pdf",
+   "FileSize": 8004319
+  },
+  {
+   "Id": "c68848761bdfd115",
+   "CreationTime": "2026-09-04T18:41:53",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.31",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-333.pdf",
+   "FileSize": 5970611
+  },
+  {
+   "Id": "bafce2509ec6c482",
+   "CreationTime": "2026-09-04T18:45:39",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.20",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-840.pdf",
+   "FileSize": 13099955
+  },
+  {
+   "Id": "000b6b4d94b2705c",
+   "CreationTime": "2026-09-04T18:48:38",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.25",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-872.pdf",
+   "FileSize": 20444104
+  },
+  {
+   "Id": "d11e2cb50d94bf02",
+   "CreationTime": "2026-09-04T18:55:46",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.48",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-421.pdf",
+   "FileSize": 5126941
+  },
+  {
+   "Id": "438db83d4ff337a1",
+   "CreationTime": "2026-09-04T19:02:35",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.39",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-9.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner4@vendor.example"
+  },
+  {
+   "Id": "de3e51c44c9548e6",
+   "CreationTime": "2026-09-04T19:12:22",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.19",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-207.pdf",
+   "FileSize": 8841963
+  },
+  {
+   "Id": "e47e03f125056ed7",
+   "CreationTime": "2026-09-04T19:42:43",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.35",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-475.pdf",
+   "FileSize": 4860112
+  },
+  {
+   "Id": "f82bc786bd5b0a47",
+   "CreationTime": "2026-09-04T19:48:59",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.18",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-345.pdf",
+   "FileSize": 8927129
+  },
+  {
+   "Id": "77ed56ecf67ff63f",
+   "CreationTime": "2026-09-07T14:04:35",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.35",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-824.pdf",
+   "FileSize": 9655400
+  },
+  {
+   "Id": "d7e1c951f2d3a56f",
+   "CreationTime": "2026-09-07T14:16:34",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.32",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-24.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner2@vendor.example"
+  },
+  {
+   "Id": "b18bf0bc4318bddc",
+   "CreationTime": "2026-09-07T14:37:59",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.39",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-30.pdf",
+   "FileSize": 5829563
+  },
+  {
+   "Id": "ae3c2f1b92954a20",
+   "CreationTime": "2026-09-07T14:43:45",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.56",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-282.pdf",
+   "FileSize": 9429577
+  },
+  {
+   "Id": "aac51c8cf6f48729",
+   "CreationTime": "2026-09-07T14:56:02",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.57",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-101.pdf",
+   "FileSize": 9599660
+  },
+  {
+   "Id": "4e11d583e38e176d",
+   "CreationTime": "2026-09-07T14:58:20",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.11",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-887.pdf",
+   "FileSize": 20024653
+  },
+  {
+   "Id": "f4e611c27f0565f7",
+   "CreationTime": "2026-09-07T15:18:08",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.31",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-32.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner0@vendor.example"
+  },
+  {
+   "Id": "0878ebe1354f1e1c",
+   "CreationTime": "2026-09-07T15:28:20",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.34",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-111.pdf",
+   "FileSize": 6753257
+  },
+  {
+   "Id": "33fe9d9690befe9d",
+   "CreationTime": "2026-09-07T15:33:45",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.23",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-201.pdf",
+   "FileSize": 5519460
+  },
+  {
+   "Id": "b4091d95c375553c",
+   "CreationTime": "2026-09-07T15:34:05",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.17",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-366.pdf",
+   "FileSize": 20693870
+  },
+  {
+   "Id": "d2f5e981cd8c4627",
+   "CreationTime": "2026-09-07T15:34:43",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.14",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-735.pdf",
+   "FileSize": 21559181
+  },
+  {
+   "Id": "330f170c2923552d",
+   "CreationTime": "2026-09-07T15:36:25",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.30",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-32.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner4@vendor.example"
+  },
+  {
+   "Id": "8f559056709159ee",
+   "CreationTime": "2026-09-07T15:39:56",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.13",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-69.pdf",
+   "FileSize": 21982207
+  },
+  {
+   "Id": "d93b209ce1074ab7",
+   "CreationTime": "2026-09-07T15:48:34",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.24",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-130.pdf",
+   "FileSize": 8340031
+  },
+  {
+   "Id": "0fdc5b42fccabce6",
+   "CreationTime": "2026-09-07T15:59:07",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.43",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-623.pdf",
+   "FileSize": 6812664
+  },
+  {
+   "Id": "fce9ad7b369f6d51",
+   "CreationTime": "2026-09-07T16:26:15",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.21",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-285.pdf",
+   "FileSize": 6742305
+  },
+  {
+   "Id": "05126993a07b034a",
+   "CreationTime": "2026-09-07T16:29:57",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.41",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-674.pdf",
+   "FileSize": 6237711
+  },
+  {
+   "Id": "b6f6a77e0050e587",
+   "CreationTime": "2026-09-07T16:30:57",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.42",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-186.pdf",
+   "FileSize": 7886481
+  },
+  {
+   "Id": "a4806581f9957769",
+   "CreationTime": "2026-09-07T16:37:43",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.40",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-707.pdf",
+   "FileSize": 7398173
+  },
+  {
+   "Id": "3f93d63780a59359",
+   "CreationTime": "2026-09-07T16:44:11",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.18",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-297.pdf",
+   "FileSize": 20030526
+  },
+  {
+   "Id": "9669d855f2ed47e8",
+   "CreationTime": "2026-09-07T16:52:35",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.19",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-343.pdf",
+   "FileSize": 21451745
+  },
+  {
+   "Id": "980df687fcbd53fa",
+   "CreationTime": "2026-09-07T16:52:37",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.10",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-44.pdf",
+   "FileSize": 12584335
+  },
+  {
+   "Id": "556c5bd7c3b8fb27",
+   "CreationTime": "2026-09-07T16:54:18",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.37",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-864.pdf",
+   "FileSize": 6067694
+  },
+  {
+   "Id": "119d5afae7dc8cc3",
+   "CreationTime": "2026-09-07T16:57:02",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.45",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-441.pdf",
+   "FileSize": 7825588
+  },
+  {
+   "Id": "61a965bc07f09f69",
+   "CreationTime": "2026-09-07T17:15:37",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.29",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-34.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner2@vendor.example"
+  },
+  {
+   "Id": "319f308a643c8b65",
+   "CreationTime": "2026-09-07T17:27:49",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.38",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-643.pdf",
+   "FileSize": 6884105
+  },
+  {
+   "Id": "448498708bce92e2",
+   "CreationTime": "2026-09-07T17:46:48",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.36",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-67.pdf",
+   "FileSize": 7187834
+  },
+  {
+   "Id": "436e5aad5ab850a3",
+   "CreationTime": "2026-09-07T17:48:13",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.27",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-463.pdf",
+   "FileSize": 4454545
+  },
+  {
+   "Id": "be3c47f1c4e5ccbc",
+   "CreationTime": "2026-09-07T18:03:55",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.20",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-412.pdf",
+   "FileSize": 21542389
+  },
+  {
+   "Id": "9293d0f1f9b5ca18",
+   "CreationTime": "2026-09-07T18:12:19",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.46",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-183.pdf",
+   "FileSize": 10258911
+  },
+  {
+   "Id": "01e761b29039f17b",
+   "CreationTime": "2026-09-07T18:14:28",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.25",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-814.pdf",
+   "FileSize": 6868211
+  },
+  {
+   "Id": "696db0568371bc45",
+   "CreationTime": "2026-09-07T18:19:53",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.47",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-509.pdf",
+   "FileSize": 9455309
+  },
+  {
+   "Id": "b90eb9c88162b7c1",
+   "CreationTime": "2026-09-07T18:28:04",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.58",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-460.pdf",
+   "FileSize": 10093361
+  },
+  {
+   "Id": "df9ea56fdfde4a82",
+   "CreationTime": "2026-09-07T18:29:14",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.15",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-408.pdf",
+   "FileSize": 21653979
+  },
+  {
+   "Id": "83ec8bfad93452a7",
+   "CreationTime": "2026-09-07T18:49:24",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.59",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-225.pdf",
+   "FileSize": 8117290
+  },
+  {
+   "Id": "8edf6380502c41c3",
+   "CreationTime": "2026-09-07T18:52:37",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.26",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-487.pdf",
+   "FileSize": 4416117
+  },
+  {
+   "Id": "6b37fc5ad456151e",
+   "CreationTime": "2026-09-07T19:10:01",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.22",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-159.pdf",
+   "FileSize": 6365684
+  },
+  {
+   "Id": "cf0aef42da646ac1",
+   "CreationTime": "2026-09-07T19:15:08",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.28",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-267.pdf",
+   "FileSize": 5884174
+  },
+  {
+   "Id": "b91109b7d42d003f",
+   "CreationTime": "2026-09-07T19:33:05",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.33",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-794.pdf",
+   "FileSize": 8778653
+  },
+  {
+   "Id": "2dcf60d2f348957c",
+   "CreationTime": "2026-09-07T19:34:31",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.16",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-889.pdf",
+   "FileSize": 20089705
+  },
+  {
+   "Id": "6eaf7d94c61e3487",
+   "CreationTime": "2026-09-07T19:36:33",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.48",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-445.pdf",
+   "FileSize": 9509418
+  },
+  {
+   "Id": "fac35a0550c6251f",
+   "CreationTime": "2026-09-07T19:45:14",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.44",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-41.pdf",
+   "FileSize": 8137761
+  },
+  {
+   "Id": "7a8452484f9b12bf",
+   "CreationTime": "2026-09-07T20:27:29",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.12",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-617.pdf",
+   "FileSize": 21214706
+  },
+  {
+   "Id": "dafd4e60e10334a9",
+   "CreationTime": "2026-09-08T13:34:22",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.26",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-659.pdf",
+   "FileSize": 7758669
+  },
+  {
+   "Id": "558460c7ac881a85",
+   "CreationTime": "2026-09-08T13:35:29",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.23",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-768.pdf",
+   "FileSize": 9968511
+  },
+  {
+   "Id": "d56736416919606e",
+   "CreationTime": "2026-09-08T13:52:44",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.59",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-572.pdf",
+   "FileSize": 23300702
+  },
+  {
+   "Id": "a5260b70dc220fa5",
+   "CreationTime": "2026-09-08T14:28:44",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.18",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-0.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner2@vendor.example"
+  },
+  {
+   "Id": "419cc5b34840e4b7",
+   "CreationTime": "2026-09-08T14:56:06",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.31",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-850.pdf",
+   "FileSize": 8353850
+  },
+  {
+   "Id": "326cc04861264a7a",
+   "CreationTime": "2026-09-08T15:39:15",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.34",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-109.pdf",
+   "FileSize": 9115444
+  },
+  {
+   "Id": "d2c506711322c4e5",
+   "CreationTime": "2026-09-08T15:43:11",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.10",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-799.pdf",
+   "FileSize": 22185613
+  },
+  {
+   "Id": "e930134a47ef1ea6",
+   "CreationTime": "2026-09-08T15:56:40",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.27",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-748.pdf",
+   "FileSize": 6840067
+  },
+  {
+   "Id": "8445cd5f48203336",
+   "CreationTime": "2026-09-08T15:58:10",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.22",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-46.pdf",
+   "FileSize": 8230126
+  },
+  {
+   "Id": "862af60da56313a2",
+   "CreationTime": "2026-09-08T16:01:23",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.29",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-653.pdf",
+   "FileSize": 6557204
+  },
+  {
+   "Id": "2e28dad978ae657e",
+   "CreationTime": "2026-09-08T16:08:28",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.20",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-165.pdf",
+   "FileSize": 9851539
+  },
+  {
+   "Id": "23a47a8dd633d7db",
+   "CreationTime": "2026-09-08T16:16:28",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.21",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-371.pdf",
+   "FileSize": 7874637
+  },
+  {
+   "Id": "514496c8a80afb80",
+   "CreationTime": "2026-09-08T16:32:20",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.32",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-139.pdf",
+   "FileSize": 9460451
+  },
+  {
+   "Id": "4139c2ed504a96d1",
+   "CreationTime": "2026-09-08T16:34:31",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.19",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-2.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner1@vendor.example"
+  },
+  {
+   "Id": "c21a9052bcb57557",
+   "CreationTime": "2026-09-08T17:16:59",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.54",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-515.pdf",
+   "FileSize": 21361198
+  },
+  {
+   "Id": "c2b0d1df6729eb42",
+   "CreationTime": "2026-09-08T17:17:08",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.14",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-359.pdf",
+   "FileSize": 8743374
+  },
+  {
+   "Id": "d6068b24a0e837fb",
+   "CreationTime": "2026-09-08T17:34:07",
+   "Operation": "PageViewed",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.42",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Home.aspx"
+  },
+  {
+   "Id": "c26f7364e3a15eb6",
+   "CreationTime": "2026-09-08T17:38:05",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.24",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-339.pdf",
+   "FileSize": 8989163
+  },
+  {
+   "Id": "262eed605fdecead",
+   "CreationTime": "2026-09-08T17:40:12",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.25",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-329.pdf",
+   "FileSize": 7351628
+  },
+  {
+   "Id": "e57c7e3788bed845",
+   "CreationTime": "2026-09-08T17:59:05",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.53",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-434.pdf",
+   "FileSize": 21396146
+  },
+  {
+   "Id": "0a3aae2f3b7ffda8",
+   "CreationTime": "2026-09-08T17:59:54",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.30",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-698.pdf",
+   "FileSize": 8686808
+  },
+  {
+   "Id": "56795d14b0912c21",
+   "CreationTime": "2026-09-08T18:12:58",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.33",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-851.pdf",
+   "FileSize": 9738552
+  },
+  {
+   "Id": "98531f185b393d8b",
+   "CreationTime": "2026-09-08T18:20:51",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.35",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-839.pdf",
+   "FileSize": 10256422
+  },
+  {
+   "Id": "c949e21f810fc5d2",
+   "CreationTime": "2026-09-08T18:29:38",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.50",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-250.pdf",
+   "FileSize": 12176026
+  },
+  {
+   "Id": "d5fe43d49f407b8c",
+   "CreationTime": "2026-09-08T18:36:29",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.17",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-415.pdf",
+   "FileSize": 5678971
+  },
+  {
+   "Id": "dcd6895e279116e5",
+   "CreationTime": "2026-09-08T18:50:28",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.56",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-692.pdf",
+   "FileSize": 22034633
+  },
+  {
+   "Id": "d09e7fad058a307d",
+   "CreationTime": "2026-09-08T18:52:52",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.15",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-434.pdf",
+   "FileSize": 4235942
+  },
+  {
+   "Id": "143ba19462290b12",
+   "CreationTime": "2026-09-08T18:55:19",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.11",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-702.pdf",
+   "FileSize": 5548761
+  },
+  {
+   "Id": "3d89ac11e949f1f9",
+   "CreationTime": "2026-09-08T19:04:44",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.28",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-251.pdf",
+   "FileSize": 5754236
+  },
+  {
+   "Id": "6f69256ce1e83ce5",
+   "CreationTime": "2026-09-08T19:18:07",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.51",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-326.pdf",
+   "FileSize": 8222784
+  },
+  {
+   "Id": "a2cb293e8c5b1bea",
+   "CreationTime": "2026-09-08T19:27:13",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.57",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-524.pdf",
+   "FileSize": 21713401
+  },
+  {
+   "Id": "740e78b33a5dc2c9",
+   "CreationTime": "2026-09-08T19:31:15",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.13",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-708.pdf",
+   "FileSize": 5023519
+  },
+  {
+   "Id": "53e60aba0a64b0ac",
+   "CreationTime": "2026-09-08T19:31:25",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.36",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-221.pdf",
+   "FileSize": 10810391
+  },
+  {
+   "Id": "2f7bcd3e0a80cd92",
+   "CreationTime": "2026-09-08T19:31:31",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.12",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-243.pdf",
+   "FileSize": 7681337
+  },
+  {
+   "Id": "29b7d4114249531a",
+   "CreationTime": "2026-09-08T19:48:44",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.55",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-643.pdf",
+   "FileSize": 23319957
+  },
+  {
+   "Id": "633cb83786685278",
+   "CreationTime": "2026-09-08T19:52:39",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.52",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-287.pdf",
+   "FileSize": 23314968
+  },
+  {
+   "Id": "d8cec3e3af5d9125",
+   "CreationTime": "2026-09-08T19:59:10",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.16",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-158.pdf",
+   "FileSize": 5354050
+  },
+  {
+   "Id": "3e77b8c3ecd1ec4a",
+   "CreationTime": "2026-09-08T20:01:49",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.49",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-43.pdf",
+   "FileSize": 11932515
+  },
+  {
+   "Id": "a572a4b0e1766946",
+   "CreationTime": "2026-09-08T20:08:08",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.58",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-193.pdf",
+   "FileSize": 21958040
+  },
+  {
+   "Id": "0b6413e4c2fb2693",
+   "CreationTime": "2026-09-09T13:44:54",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.52",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-694.pdf",
+   "FileSize": 5755378
+  },
+  {
+   "Id": "920eee3a19dd04a5",
+   "CreationTime": "2026-09-09T13:58:32",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.42",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-346.pdf",
+   "FileSize": 22843110
+  },
+  {
+   "Id": "4b32e14c24b51451",
+   "CreationTime": "2026-09-09T14:00:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.28",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-0.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "b27bc2edbff0a007",
+   "CreationTime": "2026-09-09T14:02:28",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.43",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-845.pdf",
+   "FileSize": 20035191
+  },
+  {
+   "Id": "2140c6efa87887cc",
+   "CreationTime": "2026-09-09T14:07:51",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.12",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-8.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner3@vendor.example"
+  },
+  {
+   "Id": "524cef7b63142388",
+   "CreationTime": "2026-09-09T14:09:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.29",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-1.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "618bff82dc3d4dc1",
+   "CreationTime": "2026-09-09T14:11:51",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.50",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-740.pdf",
+   "FileSize": 23238780
+  },
+  {
+   "Id": "a99a340a76484ac4",
+   "CreationTime": "2026-09-09T14:13:34",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.47",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-471.pdf",
+   "FileSize": 21294778
+  },
+  {
+   "Id": "7e2d57576df108fa",
+   "CreationTime": "2026-09-09T14:18:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.30",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-2.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "00b08ddda576ea91",
+   "CreationTime": "2026-09-09T14:27:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.31",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-3.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "817700bdf2be855a",
+   "CreationTime": "2026-09-09T14:36:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.32",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-4.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "8bcfd0b7039b1028",
+   "CreationTime": "2026-09-09T14:45:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.33",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-5.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "7768e9e1b78dac0f",
+   "CreationTime": "2026-09-09T14:49:25",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.49",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-634.pdf",
+   "FileSize": 23847271
+  },
+  {
+   "Id": "4f93cef898165ba5",
+   "CreationTime": "2026-09-09T14:54:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.34",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-6.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "da32aee455049268",
+   "CreationTime": "2026-09-09T15:00:57",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.44",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-387.pdf",
+   "FileSize": 22899006
+  },
+  {
+   "Id": "31728e792ef77ff4",
+   "CreationTime": "2026-09-09T15:02:56",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.57",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-767.pdf",
+   "FileSize": 5811281
+  },
+  {
+   "Id": "9c4ddf63d42413f9",
+   "CreationTime": "2026-09-09T15:03:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.35",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-7.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "09990eae72da3e96",
+   "CreationTime": "2026-09-09T15:04:09",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.28",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-296.pdf",
+   "FileSize": 10108492
+  },
+  {
+   "Id": "1746a4c49539d39d",
+   "CreationTime": "2026-09-09T15:12:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.36",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-8.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "e564e3f492ad02ec",
+   "CreationTime": "2026-09-09T15:21:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.37",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-9.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "5bd7e1043caa9d63",
+   "CreationTime": "2026-09-09T15:26:35",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.59",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-554.pdf",
+   "FileSize": 4916309
+  },
+  {
+   "Id": "ead7c680f6d3bdb0",
+   "CreationTime": "2026-09-09T15:30:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.38",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-10.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "3bb5e79caadf8291",
+   "CreationTime": "2026-09-09T15:31:03",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.17",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-15.pdf",
+   "FileSize": 7489387
+  },
+  {
+   "Id": "64577a8694526c6e",
+   "CreationTime": "2026-09-09T15:39:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.39",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-11.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "55ed3a69f367f530",
+   "CreationTime": "2026-09-09T15:39:41",
+   "Operation": "SharingSet",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.58",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/close-checklist.xlsx",
+   "TargetUserOrGroupType": "Member",
+   "TargetUserOrGroupName": "olivia.chen@acme.example"
+  },
+  {
+   "Id": "4e88fe78932eb7fb",
+   "CreationTime": "2026-09-09T15:48:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.40",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-12.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "c5e2f2e3365c1257",
+   "CreationTime": "2026-09-09T15:57:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.41",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-13.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "02bf58f4b3f8dcbc",
+   "CreationTime": "2026-09-09T16:01:00",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.45",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-576.pdf",
+   "FileSize": 21772622
+  },
+  {
+   "Id": "ea2f2e5857fd3f22",
+   "CreationTime": "2026-09-09T16:06:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.42",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-14.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "979e345d59b82a0a",
+   "CreationTime": "2026-09-09T16:15:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.43",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-15.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "799e2f0002b52c76",
+   "CreationTime": "2026-09-09T16:20:16",
+   "Operation": "PageViewed",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.43",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Home.aspx"
+  },
+  {
+   "Id": "624e589c9cddc53d",
+   "CreationTime": "2026-09-09T16:24:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.44",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-16.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "e2bf8efe922eb8d3",
+   "CreationTime": "2026-09-09T16:30:06",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.24",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-335.pdf",
+   "FileSize": 7067220
+  },
+  {
+   "Id": "ba67a0bc2545cad3",
+   "CreationTime": "2026-09-09T16:33:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.45",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-17.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "a6bdfe04686f7fe7",
+   "CreationTime": "2026-09-09T16:40:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.41",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-625.pdf",
+   "FileSize": 8192127
+  },
+  {
+   "Id": "d21945b548593f60",
+   "CreationTime": "2026-09-09T16:41:49",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.16",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-414.pdf",
+   "FileSize": 8475139
+  },
+  {
+   "Id": "d897537fe31ab21e",
+   "CreationTime": "2026-09-09T16:42:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.46",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-18.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "aa56443ae91b83e3",
+   "CreationTime": "2026-09-09T16:51:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.47",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-19.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "3211f7e63659f5f7",
+   "CreationTime": "2026-09-09T17:00:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.48",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-20.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "52add15eeb7f134f",
+   "CreationTime": "2026-09-09T17:03:23",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.55",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-578.pdf",
+   "FileSize": 7119913
+  },
+  {
+   "Id": "0a75a6b24826876d",
+   "CreationTime": "2026-09-09T17:09:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.49",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-21.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "a36ac9bf95bfd680",
+   "CreationTime": "2026-09-09T17:09:34",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.48",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-886.pdf",
+   "FileSize": 23634826
+  },
+  {
+   "Id": "e6d5d9d3ccdaaf11",
+   "CreationTime": "2026-09-09T17:15:25",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.56",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-232.pdf",
+   "FileSize": 6044324
+  },
+  {
+   "Id": "00c8d0d11542d659",
+   "CreationTime": "2026-09-09T17:15:30",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.40",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-740.pdf",
+   "FileSize": 9144885
+  },
+  {
+   "Id": "0008e16782c36066",
+   "CreationTime": "2026-09-09T17:18:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.50",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-22.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "0552f7e150439e22",
+   "CreationTime": "2026-09-09T17:25:53",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.15",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-34.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner3@vendor.example"
+  },
+  {
+   "Id": "b0b7dd257faa6cce",
+   "CreationTime": "2026-09-09T17:27:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.51",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-23.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "8a1485403aac8e5e",
+   "CreationTime": "2026-09-09T17:36:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.52",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-24.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "205121b07fbe068c",
+   "CreationTime": "2026-09-09T17:39:07",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.27",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-264.pdf",
+   "FileSize": 9147509
+  },
+  {
+   "Id": "58c37f0a3c82ab87",
+   "CreationTime": "2026-09-09T17:45:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.53",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-25.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "1a8b5001512a4612",
+   "CreationTime": "2026-09-09T17:47:35",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.13",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-7.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner4@vendor.example"
+  },
+  {
+   "Id": "256c71ca2748bc0b",
+   "CreationTime": "2026-09-09T17:52:47",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.22",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-365.pdf",
+   "FileSize": 7574126
+  },
+  {
+   "Id": "cb0298338cc33281",
+   "CreationTime": "2026-09-09T17:54:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.54",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-26.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "8bd0fdf536ca60b6",
+   "CreationTime": "2026-09-09T18:03:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.55",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-27.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "558b22efe294c685",
+   "CreationTime": "2026-09-09T18:12:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.56",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-28.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "7e70d196d733588c",
+   "CreationTime": "2026-09-09T18:21:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.57",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-29.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "13fc00a88297bc05",
+   "CreationTime": "2026-09-09T18:23:44",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.10",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-525.pdf",
+   "FileSize": 4226035
+  },
+  {
+   "Id": "734735a346f37b74",
+   "CreationTime": "2026-09-09T18:27:28",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.26",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-21.pdf",
+   "FileSize": 9227152
+  },
+  {
+   "Id": "72932bb27239dd79",
+   "CreationTime": "2026-09-09T18:30:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.58",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-30.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "25d74aae58f8f28c",
+   "CreationTime": "2026-09-09T18:31:36",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.11",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-417.pdf",
+   "FileSize": 4160457
+  },
+  {
+   "Id": "0ba95570ff50a9fb",
+   "CreationTime": "2026-09-09T18:38:37",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.37",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-145.pdf",
+   "FileSize": 11758964
+  },
+  {
+   "Id": "f468ff068b6d2c08",
+   "CreationTime": "2026-09-09T18:39:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.59",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-31.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "95547140107667bd",
+   "CreationTime": "2026-09-09T18:48:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.10",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-32.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "d40f560e869389cf",
+   "CreationTime": "2026-09-09T18:48:55",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.19",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-117.pdf",
+   "FileSize": 5604797
+  },
+  {
+   "Id": "6c464c502e8eb76d",
+   "CreationTime": "2026-09-09T18:50:46",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.14",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-6.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner4@vendor.example"
+  },
+  {
+   "Id": "183a7008048c0009",
+   "CreationTime": "2026-09-09T18:56:25",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.39",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-40.pdf",
+   "FileSize": 8537966
+  },
+  {
+   "Id": "a4b01474fc247442",
+   "CreationTime": "2026-09-09T18:57:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.11",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-33.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "359465238cb6b56b",
+   "CreationTime": "2026-09-09T19:06:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.12",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-34.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "c62e29064564ed81",
+   "CreationTime": "2026-09-09T19:08:37",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.54",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-594.pdf",
+   "FileSize": 6488039
+  },
+  {
+   "Id": "30004470b2f5020d",
+   "CreationTime": "2026-09-09T19:15:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.13",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-35.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "e23f78de9810167a",
+   "CreationTime": "2026-09-09T19:15:22",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.46",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-480.pdf",
+   "FileSize": 22270060
+  },
+  {
+   "Id": "3cd54daf4bdd1352",
+   "CreationTime": "2026-09-09T19:16:21",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.51",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-304.pdf",
+   "FileSize": 22436594
+  },
+  {
+   "Id": "328a8bd42e68e323",
+   "CreationTime": "2026-09-09T19:22:14",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.38",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-453.pdf",
+   "FileSize": 8981828
+  },
+  {
+   "Id": "7743130a60f4dee2",
+   "CreationTime": "2026-09-09T19:24:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.14",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-36.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "8cb2fbb683adaa74",
+   "CreationTime": "2026-09-09T19:29:38",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.18",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-470.pdf",
+   "FileSize": 9822515
+  },
+  {
+   "Id": "3736b4230d30460f",
+   "CreationTime": "2026-09-09T19:33:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.15",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-37.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "56541afa0a546bc2",
+   "CreationTime": "2026-09-09T19:39:31",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.23",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-618.pdf",
+   "FileSize": 6130511
+  },
+  {
+   "Id": "8ffe9d367e2f6c7b",
+   "CreationTime": "2026-09-09T19:42:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.16",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-38.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "689a6f0c7f57f48e",
+   "CreationTime": "2026-09-09T19:42:55",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.20",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-375.pdf",
+   "FileSize": 6063984
+  },
+  {
+   "Id": "8cf89fc7500ce27b",
+   "CreationTime": "2026-09-09T19:48:28",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.53",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-150.pdf",
+   "FileSize": 7765437
+  },
+  {
+   "Id": "d4ee301c1f166769",
+   "CreationTime": "2026-09-09T19:51:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.17",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/export-39.zip",
+   "FileSize": 30000000
+  },
+  {
+   "Id": "6d321b49ed390014",
+   "CreationTime": "2026-09-09T19:51:53",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.21",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-781.pdf",
+   "FileSize": 6024186
+  },
+  {
+   "Id": "7b9496fa3ea9c852",
+   "CreationTime": "2026-09-09T20:21:38",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.25",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-691.pdf",
+   "FileSize": 6338908
+  },
+  {
+   "Id": "3067c7c3f7ee1c61",
+   "CreationTime": "2026-09-10T13:33:21",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.39",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-341.pdf",
+   "FileSize": 22316646
+  },
+  {
+   "Id": "16c1ec25fbb997c9",
+   "CreationTime": "2026-09-10T14:00:45",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.49",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-330.pdf",
+   "FileSize": 4674432
+  },
+  {
+   "Id": "f6aaa8553b97ccaf",
+   "CreationTime": "2026-09-10T14:02:32",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.43",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-365.pdf",
+   "FileSize": 23965438
+  },
+  {
+   "Id": "8aba643263388621",
+   "CreationTime": "2026-09-10T14:10:37",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.56",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-594.pdf",
+   "FileSize": 6714973
+  },
+  {
+   "Id": "53fae81443bab598",
+   "CreationTime": "2026-09-10T14:20:23",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.45",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-812.pdf",
+   "FileSize": 8167609
+  },
+  {
+   "Id": "6d8875159d1a9969",
+   "CreationTime": "2026-09-10T15:10:15",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.11",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-132.pdf",
+   "FileSize": 8201668
+  },
+  {
+   "Id": "b0d96314ebc12ddf",
+   "CreationTime": "2026-09-10T15:15:00",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.52",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-25.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner3@vendor.example"
+  },
+  {
+   "Id": "e7455f62cddcb890",
+   "CreationTime": "2026-09-10T15:20:19",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.35",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-603.pdf",
+   "FileSize": 23575938
+  },
+  {
+   "Id": "35ba5ea1750af0ed",
+   "CreationTime": "2026-09-10T15:26:01",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.40",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-897.pdf",
+   "FileSize": 20994959
+  },
+  {
+   "Id": "331e531b02cb3c0e",
+   "CreationTime": "2026-09-10T15:39:46",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.54",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-674.pdf",
+   "FileSize": 8287594
+  },
+  {
+   "Id": "755d338b6a0540c8",
+   "CreationTime": "2026-09-10T15:51:57",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.58",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-23.pdf",
+   "FileSize": 5772617
+  },
+  {
+   "Id": "df41e0a2fcfd5039",
+   "CreationTime": "2026-09-10T16:14:20",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.15",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-27.pdf",
+   "FileSize": 10735466
+  },
+  {
+   "Id": "c9d136a33e22c338",
+   "CreationTime": "2026-09-10T16:24:04",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.55",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-597.pdf",
+   "FileSize": 9684897
+  },
+  {
+   "Id": "1d847b70a80dd586",
+   "CreationTime": "2026-09-10T16:30:29",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.57",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-793.pdf",
+   "FileSize": 7427906
+  },
+  {
+   "Id": "b4b33c5143c4ca8a",
+   "CreationTime": "2026-09-10T16:34:46",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.37",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-590.pdf",
+   "FileSize": 21871039
+  },
+  {
+   "Id": "9c0c9cc62d9519ca",
+   "CreationTime": "2026-09-10T16:35:32",
+   "Operation": "SharingSet",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.48",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/close-checklist.xlsx",
+   "TargetUserOrGroupType": "Member",
+   "TargetUserOrGroupName": "olivia.chen@acme.example"
+  },
+  {
+   "Id": "5c88faff14716c80",
+   "CreationTime": "2026-09-10T16:48:39",
+   "Operation": "PageViewed",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.44",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Home.aspx"
+  },
+  {
+   "Id": "5d7af7908afe7e0e",
+   "CreationTime": "2026-09-10T17:17:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.30",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-154.pdf",
+   "FileSize": 8148548
+  },
+  {
+   "Id": "429b5cae6d600ded",
+   "CreationTime": "2026-09-10T17:18:25",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.53",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-19.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner4@vendor.example"
+  },
+  {
+   "Id": "7a62aee4f86d93c7",
+   "CreationTime": "2026-09-10T17:29:24",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.38",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-321.pdf",
+   "FileSize": 23749649
+  },
+  {
+   "Id": "d9837db1e54e57bf",
+   "CreationTime": "2026-09-10T17:39:32",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.31",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-32.pdf",
+   "FileSize": 10903816
+  },
+  {
+   "Id": "e56bf7f9342c3351",
+   "CreationTime": "2026-09-10T17:54:04",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.34",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-540.pdf",
+   "FileSize": 21443729
+  },
+  {
+   "Id": "7a280e27c80f683e",
+   "CreationTime": "2026-09-10T18:05:44",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.29",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-275.pdf",
+   "FileSize": 12568661
+  },
+  {
+   "Id": "c82635ae20ded0d6",
+   "CreationTime": "2026-09-10T18:37:03",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.12",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-828.pdf",
+   "FileSize": 6237925
+  },
+  {
+   "Id": "b8c28d972bea96f7",
+   "CreationTime": "2026-09-10T18:41:02",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.41",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-744.pdf",
+   "FileSize": 22523498
+  },
+  {
+   "Id": "01e26439617831f8",
+   "CreationTime": "2026-09-10T18:47:52",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.33",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-614.pdf",
+   "FileSize": 11868119
+  },
+  {
+   "Id": "fc74f93f063fcc15",
+   "CreationTime": "2026-09-10T18:49:02",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.36",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-838.pdf",
+   "FileSize": 20845520
+  },
+  {
+   "Id": "52fc6193803fdaf9",
+   "CreationTime": "2026-09-10T18:57:20",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.14",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-217.pdf",
+   "FileSize": 10845775
+  },
+  {
+   "Id": "a19241d5bcaa8953",
+   "CreationTime": "2026-09-10T19:02:31",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.16",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-695.pdf",
+   "FileSize": 9810635
+  },
+  {
+   "Id": "03684e7c44b4378e",
+   "CreationTime": "2026-09-10T19:13:09",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.42",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-279.pdf",
+   "FileSize": 21090667
+  },
+  {
+   "Id": "5005112868d586ea",
+   "CreationTime": "2026-09-10T19:18:04",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.47",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-781.pdf",
+   "FileSize": 6215983
+  },
+  {
+   "Id": "1363d5e33a271991",
+   "CreationTime": "2026-09-10T19:30:01",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.10",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-409.pdf",
+   "FileSize": 5654942
+  },
+  {
+   "Id": "470a1271b48f15e5",
+   "CreationTime": "2026-09-10T19:58:10",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.59",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-242.pdf",
+   "FileSize": 6879348
+  },
+  {
+   "Id": "80c547f445770049",
+   "CreationTime": "2026-09-10T20:06:27",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.44",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-649.pdf",
+   "FileSize": 7532407
+  },
+  {
+   "Id": "4c50a9408225f1ef",
+   "CreationTime": "2026-09-10T20:10:30",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.50",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-249.pdf",
+   "FileSize": 5007466
+  },
+  {
+   "Id": "3041a70efdbf5c60",
+   "CreationTime": "2026-09-10T20:17:15",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.46",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-144.pdf",
+   "FileSize": 8491254
+  },
+  {
+   "Id": "58492e4a659b58ba",
+   "CreationTime": "2026-09-10T20:19:53",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.32",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-186.pdf",
+   "FileSize": 8212753
+  },
+  {
+   "Id": "28859a133e1e84b6",
+   "CreationTime": "2026-09-10T20:24:15",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.51",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-154.pdf",
+   "FileSize": 5993266
+  },
+  {
+   "Id": "5447d887dff52aa6",
+   "CreationTime": "2026-09-10T20:27:56",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.13",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-736.pdf",
+   "FileSize": 7726445
+  },
+  {
+   "Id": "3a75fa2eb2dedb0d",
+   "CreationTime": "2026-09-11T13:36:01",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.19",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-577.pdf",
+   "FileSize": 13551733
+  },
+  {
+   "Id": "c7e4189777e177fb",
+   "CreationTime": "2026-09-11T13:43:06",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.37",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-15.pdf",
+   "FileSize": 5320056
+  },
+  {
+   "Id": "7ee8d321c638097f",
+   "CreationTime": "2026-09-11T13:45:16",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.40",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-726.pdf",
+   "FileSize": 6083060
+  },
+  {
+   "Id": "d1219788be9fe87d",
+   "CreationTime": "2026-09-11T13:53:49",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.48",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-449.pdf",
+   "FileSize": 8321820
+  },
+  {
+   "Id": "99c8a671dbf375e9",
+   "CreationTime": "2026-09-11T14:00:14",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.39",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-24.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner4@vendor.example"
+  },
+  {
+   "Id": "f6627069b58ac299",
+   "CreationTime": "2026-09-11T14:14:40",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.17",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-794.pdf",
+   "FileSize": 11676751
+  },
+  {
+   "Id": "0543607130f116a8",
+   "CreationTime": "2026-09-11T14:16:59",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.30",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-137.pdf",
+   "FileSize": 5111804
+  },
+  {
+   "Id": "539975b02b04a525",
+   "CreationTime": "2026-09-11T14:32:03",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.31",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-209.pdf",
+   "FileSize": 7173086
+  },
+  {
+   "Id": "0695cdaab0ff66ba",
+   "CreationTime": "2026-09-11T14:38:58",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.50",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-514.pdf",
+   "FileSize": 9605417
+  },
+  {
+   "Id": "a42cd6ba0a064819",
+   "CreationTime": "2026-09-11T14:43:33",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.21",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-92.pdf",
+   "FileSize": 23068753
+  },
+  {
+   "Id": "474b95b728cd2b54",
+   "CreationTime": "2026-09-11T14:47:40",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.29",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-774.pdf",
+   "FileSize": 5912670
+  },
+  {
+   "Id": "4ce73c385f4c3eea",
+   "CreationTime": "2026-09-11T14:48:42",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.24",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-588.pdf",
+   "FileSize": 23925571
+  },
+  {
+   "Id": "cd390bfb10215307",
+   "CreationTime": "2026-09-11T14:50:05",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.20",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-215.pdf",
+   "FileSize": 20074405
+  },
+  {
+   "Id": "47584d2f847d741b",
+   "CreationTime": "2026-09-11T15:03:27",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.49",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-304.pdf",
+   "FileSize": 8591900
+  },
+  {
+   "Id": "dd239e4386d0913b",
+   "CreationTime": "2026-09-11T15:17:54",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.47",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-369.pdf",
+   "FileSize": 8650706
+  },
+  {
+   "Id": "20716f2263797bc5",
+   "CreationTime": "2026-09-11T15:18:37",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.46",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-800.pdf",
+   "FileSize": 6156383
+  },
+  {
+   "Id": "e9080240265a6f24",
+   "CreationTime": "2026-09-11T15:19:40",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.35",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-819.pdf",
+   "FileSize": 5824706
+  },
+  {
+   "Id": "d1cfa1e74c4eefba",
+   "CreationTime": "2026-09-11T15:34:28",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.34",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-510.pdf",
+   "FileSize": 5964662
+  },
+  {
+   "Id": "a213ea84143c47dc",
+   "CreationTime": "2026-09-11T15:46:48",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.44",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-307.pdf",
+   "FileSize": 5409574
+  },
+  {
+   "Id": "3c5c5b5960cd176d",
+   "CreationTime": "2026-09-11T15:54:05",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.45",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-497.pdf",
+   "FileSize": 5994584
+  },
+  {
+   "Id": "62601a76a3f1c5ce",
+   "CreationTime": "2026-09-11T16:16:48",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.42",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-285.pdf",
+   "FileSize": 7702439
+  },
+  {
+   "Id": "b034570b522a6d11",
+   "CreationTime": "2026-09-11T16:19:14",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.25",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-264.pdf",
+   "FileSize": 22964332
+  },
+  {
+   "Id": "10d6d571b5f3bf06",
+   "CreationTime": "2026-09-11T16:33:52",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.22",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-352.pdf",
+   "FileSize": 21446906
+  },
+  {
+   "Id": "630569dfdb573a4a",
+   "CreationTime": "2026-09-11T16:37:47",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.33",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-181.pdf",
+   "FileSize": 5597261
+  },
+  {
+   "Id": "30aea9881b7596c4",
+   "CreationTime": "2026-09-11T16:49:29",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.36",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-808.pdf",
+   "FileSize": 4424185
+  },
+  {
+   "Id": "e901aced1a2084cc",
+   "CreationTime": "2026-09-11T17:12:15",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.41",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-208.pdf",
+   "FileSize": 6925522
+  },
+  {
+   "Id": "965656c45b0288ca",
+   "CreationTime": "2026-09-11T17:27:43",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.52",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-424.pdf",
+   "FileSize": 9794347
+  },
+  {
+   "Id": "ac60c34f1ae565fa",
+   "CreationTime": "2026-09-11T17:34:55",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.43",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-787.pdf",
+   "FileSize": 7801662
+  },
+  {
+   "Id": "a29378c1d7f0bbd6",
+   "CreationTime": "2026-09-11T17:43:38",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.18",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-474.pdf",
+   "FileSize": 10397344
+  },
+  {
+   "Id": "7c4a238d5d943c2e",
+   "CreationTime": "2026-09-11T18:05:43",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.23",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-568.pdf",
+   "FileSize": 22353956
+  },
+  {
+   "Id": "ce7a575c0527c53b",
+   "CreationTime": "2026-09-11T18:11:45",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.28",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-284.pdf",
+   "FileSize": 21812644
+  },
+  {
+   "Id": "a6de237695cab907",
+   "CreationTime": "2026-09-11T18:14:49",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.32",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-620.pdf",
+   "FileSize": 5727277
+  },
+  {
+   "Id": "026edf9553d39e7b",
+   "CreationTime": "2026-09-11T18:41:36",
+   "Operation": "PageViewed",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.45",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Home.aspx"
+  },
+  {
+   "Id": "c57d9b04db52490c",
+   "CreationTime": "2026-09-11T19:46:22",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.51",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-172.pdf",
+   "FileSize": 9195096
+  },
+  {
+   "Id": "a8cad95d3989520f",
+   "CreationTime": "2026-09-11T20:07:41",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.27",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-791.pdf",
+   "FileSize": 21237011
+  },
+  {
+   "Id": "d31ceb4253f6a46d",
+   "CreationTime": "2026-09-11T20:23:41",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.38",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-22.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner3@vendor.example"
+  },
+  {
+   "Id": "517cfa7dcf291ed8",
+   "CreationTime": "2026-09-11T20:26:45",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.26",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-32.pdf",
+   "FileSize": 21910243
+  },
+  {
+   "Id": "d645bc0e8fd7e80c",
+   "CreationTime": "2026-09-12T20:12:54",
+   "Operation": "PageViewed",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.46",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Home.aspx"
+  },
+  {
+   "Id": "f2c4d96089224c10",
+   "CreationTime": "2026-09-13T15:43:01",
+   "Operation": "PageViewed",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.47",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Home.aspx"
+  },
+  {
+   "Id": "5f24c7eb62d67196",
+   "CreationTime": "2026-09-14T13:37:16",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.12",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-44.pdf",
+   "FileSize": 21076015
+  },
+  {
+   "Id": "90e284c09fb0bd46",
+   "CreationTime": "2026-09-14T14:03:59",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.32",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-372.pdf",
+   "FileSize": 7271769
+  },
+  {
+   "Id": "4d9eab608400bdf2",
+   "CreationTime": "2026-09-14T14:46:00",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.42",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-375.pdf",
+   "FileSize": 10360359
+  },
+  {
+   "Id": "8287f49e9d215993",
+   "CreationTime": "2026-09-14T15:00:40",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.34",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-876.pdf",
+   "FileSize": 8842083
+  },
+  {
+   "Id": "546511d8ead5a851",
+   "CreationTime": "2026-09-14T15:10:32",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.13",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-808.pdf",
+   "FileSize": 20191427
+  },
+  {
+   "Id": "760638f5332cfce4",
+   "CreationTime": "2026-09-14T15:11:42",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.20",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-863.pdf",
+   "FileSize": 4232330
+  },
+  {
+   "Id": "2fc1d4f90d2690ba",
+   "CreationTime": "2026-09-14T15:46:39",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.28",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-846.pdf",
+   "FileSize": 8638403
+  },
+  {
+   "Id": "363730cfcac2507f",
+   "CreationTime": "2026-09-14T15:50:25",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.39",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-456.pdf",
+   "FileSize": 9581000
+  },
+  {
+   "Id": "328a18c980196fcf",
+   "CreationTime": "2026-09-14T16:12:34",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.16",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-154.pdf",
+   "FileSize": 6676596
+  },
+  {
+   "Id": "d4c803651edcdb4a",
+   "CreationTime": "2026-09-14T16:28:13",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.10",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-229.pdf",
+   "FileSize": 23412707
+  },
+  {
+   "Id": "b9c8ff481f586fa1",
+   "CreationTime": "2026-09-14T16:31:45",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.27",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-538.pdf",
+   "FileSize": 6256471
+  },
+  {
+   "Id": "a3768fe64eae1174",
+   "CreationTime": "2026-09-14T16:31:53",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.59",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-79.pdf",
+   "FileSize": 21985066
+  },
+  {
+   "Id": "aa6faa3807b9d272",
+   "CreationTime": "2026-09-14T16:45:23",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.36",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-837.pdf",
+   "FileSize": 8496362
+  },
+  {
+   "Id": "8be957f9474b0401",
+   "CreationTime": "2026-09-14T16:48:48",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.17",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-419.pdf",
+   "FileSize": 6541659
+  },
+  {
+   "Id": "696fdb6cb33a512c",
+   "CreationTime": "2026-09-14T16:57:44",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.22",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-20.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner4@vendor.example"
+  },
+  {
+   "Id": "26138a8d1d158589",
+   "CreationTime": "2026-09-14T17:09:07",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.37",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-719.pdf",
+   "FileSize": 7230078
+  },
+  {
+   "Id": "3f9aa131be30f2ae",
+   "CreationTime": "2026-09-14T17:32:54",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.30",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-534.pdf",
+   "FileSize": 7164684
+  },
+  {
+   "Id": "5b4a8a8a0160058f",
+   "CreationTime": "2026-09-14T17:56:19",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.38",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-90.pdf",
+   "FileSize": 9905610
+  },
+  {
+   "Id": "a06238ab304dff41",
+   "CreationTime": "2026-09-14T17:58:13",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.33",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-832.pdf",
+   "FileSize": 6582422
+  },
+  {
+   "Id": "740dd71253ce4d32",
+   "CreationTime": "2026-09-14T17:59:27",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.56",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-229.pdf",
+   "FileSize": 20010282
+  },
+  {
+   "Id": "fed4977db0f87a0d",
+   "CreationTime": "2026-09-14T18:09:32",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.58",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-542.pdf",
+   "FileSize": 23973556
+  },
+  {
+   "Id": "e5b09129418275af",
+   "CreationTime": "2026-09-14T18:29:15",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.53",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-642.pdf",
+   "FileSize": 9208267
+  },
+  {
+   "Id": "a714d829f7366591",
+   "CreationTime": "2026-09-14T18:31:30",
+   "Operation": "FileDownloaded",
+   "UserId": "frank.okafor@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.31",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-145.pdf",
+   "FileSize": 6712116
+  },
+  {
+   "Id": "58fe5c8f96b7d5c2",
+   "CreationTime": "2026-09-14T18:33:34",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.25",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-240.pdf",
+   "FileSize": 9978994
+  },
+  {
+   "Id": "68a4e64e75ce300d",
+   "CreationTime": "2026-09-14T18:34:14",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.55",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-715.pdf",
+   "FileSize": 11449104
+  },
+  {
+   "Id": "24f1913481d70a3f",
+   "CreationTime": "2026-09-14T18:41:32",
+   "Operation": "SharingSet",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.19",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/close-checklist.xlsx",
+   "TargetUserOrGroupType": "Member",
+   "TargetUserOrGroupName": "olivia.chen@acme.example"
+  },
+  {
+   "Id": "5211fc742ed21895",
+   "CreationTime": "2026-09-14T18:47:50",
+   "Operation": "FileDownloaded",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.21",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-733.pdf",
+   "FileSize": 4067305
+  },
+  {
+   "Id": "cadf807431c8d3f0",
+   "CreationTime": "2026-09-14T18:52:50",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.26",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-387.pdf",
+   "FileSize": 8973223
+  },
+  {
+   "Id": "4f730be1d29486ba",
+   "CreationTime": "2026-09-14T19:01:54",
+   "Operation": "FileDownloaded",
+   "UserId": "erin.walsh@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.24",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-350.pdf",
+   "FileSize": 7882430
+  },
+  {
+   "Id": "c2970c4cff2340e2",
+   "CreationTime": "2026-09-14T19:03:55",
+   "Operation": "FileDownloaded",
+   "UserId": "gina.park@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.35",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-329.pdf",
+   "FileSize": 8731662
+  },
+  {
+   "Id": "909258cee10c2578",
+   "CreationTime": "2026-09-14T19:20:34",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.57",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-755.pdf",
+   "FileSize": 20591743
+  },
+  {
+   "Id": "dd02e69dcca5b5b9",
+   "CreationTime": "2026-09-14T19:20:41",
+   "Operation": "SharingSet",
+   "UserId": "dave.kim@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.23",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/deck-35.pptx",
+   "TargetUserOrGroupType": "Guest",
+   "TargetUserOrGroupName": "partner3@vendor.example"
+  },
+  {
+   "Id": "f1e48f5628999120",
+   "CreationTime": "2026-09-14T19:23:00",
+   "Operation": "FileDownloaded",
+   "UserId": "alice.nguyen@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.54",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-516.pdf",
+   "FileSize": 8227244
+  },
+  {
+   "Id": "7c5ea4660b7cedc6",
+   "CreationTime": "2026-09-14T19:23:26",
+   "Operation": "FileDownloaded",
+   "UserId": "carol.diaz@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.14",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-895.pdf",
+   "FileSize": 8929445
+  },
+  {
+   "Id": "c4cf4f8dbbc303c2",
+   "CreationTime": "2026-09-14T19:25:07",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.40",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-489.pdf",
+   "FileSize": 9898629
+  },
+  {
+   "Id": "55a6115ba4a89a79",
+   "CreationTime": "2026-09-14T19:44:04",
+   "Operation": "FileDownloaded",
+   "UserId": "bob.martin@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.11",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-181.pdf",
+   "FileSize": 21091891
+  },
+  {
+   "Id": "a8fabc9091e2cff9",
+   "CreationTime": "2026-09-14T19:44:51",
+   "Operation": "FileDownloaded",
+   "UserId": "henry.ross@acme.example",
+   "Workload": "SharePoint",
+   "ClientIP": "198.51.100.41",
+   "ObjectId": "https://acme.sharepoint.example/sites/work/Shared Documents/doc-529.pdf",
+   "FileSize": 9349026
+  }
+ ],
+ "NextPage": "page-0003.json"
+}

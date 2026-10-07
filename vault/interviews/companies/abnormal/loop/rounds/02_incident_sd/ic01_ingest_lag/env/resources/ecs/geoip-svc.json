@@ -1,0 +1,17 @@
+{
+  "services": [
+    {
+      "serviceName": "geoip-svc",
+      "clusterArn": "arn:aws:ecs:us-east-1:111122223333:cluster/prod",
+      "status": "ACTIVE",
+      "desiredCount": 3,
+      "runningCount": 3,
+      "launchType": "FARGATE",
+      "taskDefinition": "geoip-svc:31",
+      "cpu": 1024,
+      "memory": 2048,
+      "autoScaling": "target tracking CPU 60%, min 3 max 6",
+      "note": "per-client rate limit lives in config (see: config show geoip-svc)"
+    }
+  ]
+}

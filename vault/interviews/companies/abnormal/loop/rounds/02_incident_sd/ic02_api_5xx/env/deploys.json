@@ -1,0 +1,82 @@
+[
+  {
+    "service": "portal-api",
+    "cluster": "prod",
+    "id": "ecs-svc/7288",
+    "startedAt": "2026-10-01T16:10:00Z",
+    "completedAt": "2026-10-01T16:14:30Z",
+    "status": "COMPLETED",
+    "taskDefinition": "portal-api:87",
+    "imageTag": "2026.10.01-1610-c41d2a9",
+    "image": "111122223333.dkr.ecr.us-east-1.amazonaws.com/portal-api:2026.10.01-1610-c41d2a9",
+    "commit": {
+      "sha": "c41d2a9",
+      "author": "Priya Raman",
+      "pr": 5107,
+      "message": "paginate /api/v2/alerts with a keyset cursor"
+    }
+  },
+  {
+    "service": "portal-web",
+    "cluster": "prod",
+    "id": "ecs-svc/7301",
+    "startedAt": "2026-10-02T09:33:10Z",
+    "completedAt": "2026-10-02T09:35:40Z",
+    "status": "COMPLETED",
+    "taskDefinition": "portal-web:214",
+    "imageTag": "2026.10.02-0933-9a0c3e1",
+    "image": "111122223333.dkr.ecr.us-east-1.amazonaws.com/portal-web:2026.10.02-0933-9a0c3e1",
+    "commit": {
+      "sha": "9a0c3e1",
+      "author": "Jonas Weber",
+      "pr": 2876,
+      "message": "user page: show alert timeline (calls GET /api/v2/users/{id}/timeline)"
+    }
+  },
+  {
+    "service": "portal-api",
+    "cluster": "prod",
+    "id": "ecs-svc/7304",
+    "startedAt": "2026-10-02T09:39:30Z",
+    "completedAt": "2026-10-02T09:44:10Z",
+    "status": "COMPLETED",
+    "taskDefinition": "portal-api:88",
+    "previousTaskDefinition": "portal-api:87",
+    "imageTag": "2026.10.02-0939-e7b05f1",
+    "image": "111122223333.dkr.ecr.us-east-1.amazonaws.com/portal-api:2026.10.02-0939-e7b05f1",
+    "rollout": "ROLLING (min 100% / max 125%), health check GET /healthz (static, no DB)",
+    "migrations": {
+      "names": [
+        "0142_alerts_timeline"
+      ],
+      "mode": "post-deploy-async",
+      "timeoutSeconds": 720,
+      "task": "portal-api-migrate:88"
+    },
+    "commit": {
+      "sha": "e7b05f1",
+      "author": "Marta Silva",
+      "pr": 5120,
+      "message": "add user alert timeline endpoint\n\nGET /api/v2/users/{id}/timeline behind flag timeline_v2 (default on).\nMigration 0142 adds an alerts(tenant_id, user_id, created_at) index for it."
+    }
+  },
+  {
+    "service": "portal-api-migrate",
+    "cluster": "prod",
+    "id": "ecs-task/1958f81b4df6",
+    "type": "migration",
+    "startedAt": "2026-10-02T09:40:05Z",
+    "completedAt": "2026-10-02T09:52:10Z",
+    "status": "FAILED",
+    "taskDefinition": "portal-api-migrate:88",
+    "imageTag": "2026.10.02-0939-e7b05f1",
+    "migration": "0142_alerts_timeline",
+    "reason": "stopped by deploy pipeline: migration step exceeded 720s timeout",
+    "commit": {
+      "sha": "e7b05f1",
+      "author": "Marta Silva",
+      "pr": 5120,
+      "message": "add user alert timeline endpoint"
+    }
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "default": 1.0,
+  "tenants": {
+    "acme": {
+      "users": {"carol@acme.test": 3.0, "erin@acme.test": 2.0, "dave@acme.test": 1.5},
+      "hosts": {"fin-db-01": 3.0, "laptop-114": 1.0}
+    },
+    "globex": {
+      "users": {"gus@globex.test": 2.5},
+      "hosts": {}
+    }
+  }
+}

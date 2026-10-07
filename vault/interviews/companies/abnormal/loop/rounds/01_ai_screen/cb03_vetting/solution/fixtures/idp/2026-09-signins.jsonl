@@ -1,0 +1,5 @@
+{"ts": "2026-09-20T08:00:00Z", "identity_id": "greenhouse:40101", "event": "login", "ip": "192.0.2.11", "device": "laptop-fixture-01", "geo": {"country": "US", "city": "Exampleville"}}
+{"ts": "2026-09-20T09:30:00Z", "identity_id": "greenhouse:40104", "event": "login", "ip": "203.0.113.20", "device": "laptop-fixture-04", "geo": {"country": "US", "city": "Exampleville"}}
+{"ts": "2026-09-20T03:10:00Z", "identity_id": "greenhouse:40120", "event": "login", "ip": "192.0.2.201", "device": "laptop-fixture-20", "geo": {"country": "DE", "city": "Beispielstadt"}}
+{"ts": "2026-09-20T03:40:00Z", "identity_id": "greenhouse:49999", "event": "login", "ip": "192.0.2.202", "device": "laptop-fixture-99", "geo": {"country": "US", "city": "Exampleville"}}
+{"ts": "not-a-time", "identity_id": "greenhouse:40101", "event": "login", "ip": "192.0.2.11"}

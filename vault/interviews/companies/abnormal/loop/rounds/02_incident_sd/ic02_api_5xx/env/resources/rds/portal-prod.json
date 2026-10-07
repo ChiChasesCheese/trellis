@@ -1,0 +1,24 @@
+{
+  "DBInstances": [
+    {
+      "DBInstanceIdentifier": "portal-prod",
+      "Engine": "postgres",
+      "EngineVersion": "15.7",
+      "DBInstanceClass": "db.r6g.2xlarge",
+      "vCPU": 8,
+      "DBInstanceStatus": "available",
+      "MultiAZ": true,
+      "StorageType": "gp3",
+      "AllocatedStorage": 2000,
+      "Iops": 12000,
+      "DBParameterGroups": [
+        {
+          "DBParameterGroupName": "portal-pg15",
+          "ParameterApplyStatus": "in-sync"
+        }
+      ],
+      "PerformanceInsightsEnabled": true,
+      "note": "max_connections=300 comes from parameter group portal-pg15 (see: config show portal-pg15-params)"
+    }
+  ]
+}

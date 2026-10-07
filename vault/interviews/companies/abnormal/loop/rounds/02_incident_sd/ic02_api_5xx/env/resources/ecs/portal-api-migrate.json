@@ -1,0 +1,19 @@
+{
+  "tasks": [
+    {
+      "taskArn": "arn:aws:ecs:us-east-1:111122223333:task/prod/1958f81b4df6de960658e63ae0caa45f",
+      "taskDefinitionArn": "portal-api-migrate:88",
+      "lastStatus": "STOPPED",
+      "startedAt": "2026-10-02T09:40:05Z",
+      "stoppedAt": "2026-10-02T09:52:10Z",
+      "stopCode": "UserInitiated",
+      "stoppedReason": "Migration step exceeded 720s timeout (deploy-pipeline/portal-api#2291)",
+      "containers": [
+        {
+          "name": "migrate",
+          "exitCode": 143
+        }
+      ]
+    }
+  ]
+}

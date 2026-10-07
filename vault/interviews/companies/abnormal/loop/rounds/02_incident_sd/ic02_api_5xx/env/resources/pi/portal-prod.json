@@ -1,0 +1,111 @@
+{
+  "Identifier": "portal-prod",
+  "MetricType": "db.load.avg",
+  "vCPU": 8,
+  "Windows": [
+    {
+      "Start": "2026-10-02T09:00:00Z",
+      "End": "2026-10-02T09:40:00Z",
+      "AvgLoad": 1.2,
+      "TopWaits": [
+        {
+          "wait": "CPU",
+          "load": 1.0
+        },
+        {
+          "wait": "IO:DataFileRead",
+          "load": 0.15
+        }
+      ],
+      "TopSQL": [
+        {
+          "sql": "SELECT id, kind, severity, status, created_at FROM alerts WHERE tenant_id = $1 AND status = $2 AND (created_at, id) < ($3, $4) ORDER BY created_at DESC, id DESC LIMIT 100",
+          "load": 0.5
+        },
+        {
+          "sql": "SELECT ... FROM user_risk WHERE tenant_id = $1 AND user_id = $2",
+          "load": 0.2
+        }
+      ]
+    },
+    {
+      "Start": "2026-10-02T09:41:00Z",
+      "End": "2026-10-02T09:52:00Z",
+      "AvgLoad": 270,
+      "TopWaits": [
+        {
+          "wait": "Lock:relation",
+          "load": 266.8
+        },
+        {
+          "wait": "CPU",
+          "load": 1.6
+        },
+        {
+          "wait": "IO:DataFileRead",
+          "load": 1.2
+        }
+      ],
+      "TopSQL": [
+        {
+          "sql": "SELECT id, kind, severity, status, created_at FROM alerts WHERE tenant_id = $1 AND status = $2 AND (created_at, id) < ($3, $4) ORDER BY created_at DESC, id DESC LIMIT 100",
+          "load": 118.0
+        },
+        {
+          "sql": "SELECT id, kind, severity, status, payload FROM alerts WHERE tenant_id = $1 AND id = $2",
+          "load": 66.4
+        },
+        {
+          "sql": "SELECT id, kind, severity, created_at FROM alerts WHERE tenant_id = $1 AND user_id = $2 ORDER BY created_at DESC LIMIT 50",
+          "load": 30.9
+        },
+        {
+          "sql": "CREATE INDEX alerts_tenant_user_created_idx ON alerts (tenant_id, user_id, created_at DESC)",
+          "load": 1.0
+        }
+      ],
+      "Blockers": [
+        {
+          "pid": 40117,
+          "user": "migrator",
+          "application_name": "portal-api-migrate",
+          "state": "active",
+          "xact_start": "2026-10-02T09:40:07Z",
+          "lock": "AccessExclusiveLock on relation 16421",
+          "query": "CREATE INDEX alerts_tenant_user_created_idx ON alerts (tenant_id, user_id, created_at DESC)",
+          "blocked_sessions": 268
+        }
+      ]
+    },
+    {
+      "Start": "2026-10-02T09:53:00Z",
+      "End": "2026-10-02T10:05:00Z",
+      "AvgLoad": 38,
+      "TopWaits": [
+        {
+          "wait": "IO:DataFileRead",
+          "load": 27.9
+        },
+        {
+          "wait": "CPU",
+          "load": 7.4
+        },
+        {
+          "wait": "Client:ClientRead",
+          "load": 1.3
+        }
+      ],
+      "TopSQL": [
+        {
+          "sql": "SELECT id, kind, severity, created_at FROM alerts WHERE tenant_id = $1 AND user_id = $2 ORDER BY created_at DESC LIMIT 50",
+          "load": 31.2
+        },
+        {
+          "sql": "SELECT id, kind, severity, status, created_at FROM alerts WHERE tenant_id = $1 AND status = $2 AND (created_at, id) < ($3, $4) ORDER BY created_at DESC, id DESC LIMIT 100",
+          "load": 4.1
+        }
+      ],
+      "Blockers": []
+    }
+  ]
+}

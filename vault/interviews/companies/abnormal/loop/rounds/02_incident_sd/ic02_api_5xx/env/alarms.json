@@ -1,0 +1,117 @@
+[
+  {
+    "AlarmName": "portal-api-5xx-rate-and-p99",
+    "Namespace": "AWS/ApplicationELB",
+    "MetricName": "5xxRatePct AND TargetResponseTime.p99",
+    "Dimensions": {
+      "LoadBalancer": "app/portal-alb/7f3e2b1c9d4a6e05"
+    },
+    "Statistic": "metric math",
+    "Period": 60,
+    "EvaluationPeriods": 3,
+    "ComparisonOperator": "GreaterThanThreshold",
+    "Threshold": 5,
+    "StateValue": "ALARM",
+    "StateUpdatedTimestamp": "2026-10-02T09:42:00Z",
+    "StateReason": "3 datapoints: 100*(HTTPCode_Target_5XX_Count+HTTPCode_ELB_5XX_Count)/RequestCount > 5 AND TargetResponseTime p99 > 3 s",
+    "History": [
+      {
+        "Timestamp": "2026-10-02T09:42:00Z",
+        "From": "OK",
+        "To": "ALARM"
+      }
+    ],
+    "Expression": "100*(HTTPCode_Target_5XX_Count+HTTPCode_ELB_5XX_Count)/RequestCount > 5 AND TargetResponseTime(p99) > 3"
+  },
+  {
+    "AlarmName": "rds-portal-prod-connections-high",
+    "Namespace": "AWS/RDS",
+    "MetricName": "DatabaseConnections",
+    "Dimensions": {
+      "DBInstanceIdentifier": "portal-prod"
+    },
+    "Statistic": "Maximum",
+    "Period": 60,
+    "EvaluationPeriods": 3,
+    "ComparisonOperator": "GreaterThanThreshold",
+    "Threshold": 270,
+    "StateValue": "ALARM",
+    "StateUpdatedTimestamp": "2026-10-02T09:42:00Z",
+    "StateReason": "3 datapoints were greater than the threshold (270.0)",
+    "History": [
+      {
+        "Timestamp": "2026-10-02T09:42:00Z",
+        "From": "OK",
+        "To": "ALARM"
+      }
+    ]
+  },
+  {
+    "AlarmName": "rds-portal-prod-cpu-high",
+    "Namespace": "AWS/RDS",
+    "MetricName": "CPUUtilization",
+    "Dimensions": {
+      "DBInstanceIdentifier": "portal-prod"
+    },
+    "Statistic": "Average",
+    "Period": 60,
+    "EvaluationPeriods": 5,
+    "ComparisonOperator": "GreaterThanThreshold",
+    "Threshold": 80,
+    "StateValue": "ALARM",
+    "StateUpdatedTimestamp": "2026-10-02T09:57:00Z",
+    "StateReason": "5 datapoints were greater than the threshold (80.0)",
+    "History": [
+      {
+        "Timestamp": "2026-10-02T09:57:00Z",
+        "From": "OK",
+        "To": "ALARM"
+      }
+    ]
+  },
+  {
+    "AlarmName": "acm-portal-cert-days-to-expiry",
+    "Namespace": "AWS/CertificateManager",
+    "MetricName": "DaysToExpiry",
+    "Dimensions": {
+      "CertificateArn": "arn:aws:acm:us-east-1:111122223333:certificate/2f71c0a4-old"
+    },
+    "Statistic": "Minimum",
+    "Period": 60,
+    "EvaluationPeriods": 1,
+    "ComparisonOperator": "LessThanThreshold",
+    "Threshold": 14,
+    "StateValue": "OK",
+    "StateUpdatedTimestamp": "2026-10-02T09:39:00Z",
+    "StateReason": "certificate replaced on the listener; the new certificate has 397 days left",
+    "History": [
+      {
+        "Timestamp": "2026-09-25T09:00:00Z",
+        "From": "OK",
+        "To": "ALARM"
+      },
+      {
+        "Timestamp": "2026-10-02T09:39:00Z",
+        "From": "ALARM",
+        "To": "OK"
+      }
+    ]
+  },
+  {
+    "AlarmName": "portal-alb-tls-negotiation-errors",
+    "Namespace": "AWS/ApplicationELB",
+    "MetricName": "ClientTLSNegotiationErrorCount",
+    "Dimensions": {
+      "LoadBalancer": "app/portal-alb/7f3e2b1c9d4a6e05"
+    },
+    "Statistic": "Sum",
+    "Period": 60,
+    "EvaluationPeriods": 3,
+    "ComparisonOperator": "GreaterThanThreshold",
+    "Threshold": 20,
+    "StateValue": "OK",
+    "StateUpdatedTimestamp": "2026-10-02T08:30:00Z",
+    "StateReason": "no datapoint above 20.0 in the snapshot window",
+    "History": []
+  }
+]

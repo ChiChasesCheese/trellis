@@ -1,0 +1,9 @@
+{
+  "networks": [
+    {"cidr": "198.51.100.0/24", "country": "US", "city": "Austin", "lat": 30.2672, "lon": -97.7431, "asn": 64500},
+    {"cidr": "203.0.113.0/25", "country": "DE", "city": "Frankfurt", "lat": 50.1109, "lon": 8.6821, "asn": 64501},
+    {"cidr": "203.0.113.128/25", "country": "RU", "city": "Moscow", "lat": 55.7558, "lon": 37.6173, "asn": 64502},
+    {"cidr": "192.0.2.0/24", "country": "GB", "city": "London", "lat": 51.5074, "lon": -0.1278, "asn": 64503},
+    {"cidr": "198.18.0.0/16", "country": "SG", "city": "Singapore", "lat": 1.3521, "lon": 103.8198, "asn": 64504}
+  ]
+}

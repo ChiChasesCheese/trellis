@@ -1,0 +1,114 @@
+[
+  {
+    "AlarmName": "alert-ingest-consumer-lag-high",
+    "Namespace": "AWS/Kafka",
+    "MetricName": "SumOffsetLag",
+    "Dimensions": {
+      "ConsumerGroup": "alert-ingest",
+      "Topic": "security-events",
+      "ClusterName": "security-events-cluster"
+    },
+    "Statistic": "Maximum",
+    "Period": 60,
+    "EvaluationPeriods": 10,
+    "ComparisonOperator": "GreaterThanThreshold",
+    "Threshold": 50000,
+    "StateValue": "ALARM",
+    "StateUpdatedTimestamp": "2026-09-30T14:19:00Z",
+    "StateReason": "10 datapoints were greater than the threshold (50000.0)",
+    "History": [
+      {
+        "Timestamp": "2026-09-30T14:19:00Z",
+        "From": "OK",
+        "To": "ALARM"
+      }
+    ]
+  },
+  {
+    "AlarmName": "report-renderer-cpu-high",
+    "Namespace": "AWS/ECS",
+    "MetricName": "CPUUtilization",
+    "Dimensions": {
+      "ClusterName": "prod-batch",
+      "ServiceName": "report-renderer"
+    },
+    "Statistic": "Average",
+    "Period": 60,
+    "EvaluationPeriods": 3,
+    "ComparisonOperator": "GreaterThanThreshold",
+    "Threshold": 85,
+    "StateValue": "ALARM",
+    "StateUpdatedTimestamp": "2026-09-30T14:07:00Z",
+    "StateReason": "3 datapoints were greater than the threshold (85.0)",
+    "History": [
+      {
+        "Timestamp": "2026-09-30T14:07:00Z",
+        "From": "OK",
+        "To": "ALARM"
+      }
+    ]
+  },
+  {
+    "AlarmName": "msk-broker-2-disk-high",
+    "Namespace": "AWS/Kafka",
+    "MetricName": "KafkaDataLogsDiskUsed",
+    "Dimensions": {
+      "BrokerID": "2",
+      "ClusterName": "security-events-cluster"
+    },
+    "Statistic": "Maximum",
+    "Period": 60,
+    "EvaluationPeriods": 3,
+    "ComparisonOperator": "GreaterThanThreshold",
+    "Threshold": 80,
+    "StateValue": "OK",
+    "StateUpdatedTimestamp": "2026-09-30T13:01:00Z",
+    "StateReason": "Threshold Crossed: 1 datapoint was not greater than the threshold (80.0)",
+    "History": [
+      {
+        "Timestamp": "2026-09-30T12:55:00Z",
+        "From": "OK",
+        "To": "ALARM"
+      },
+      {
+        "Timestamp": "2026-09-30T13:01:00Z",
+        "From": "ALARM",
+        "To": "OK"
+      }
+    ]
+  },
+  {
+    "AlarmName": "alerts-prod-rds-cpu-high",
+    "Namespace": "AWS/RDS",
+    "MetricName": "CPUUtilization",
+    "Dimensions": {
+      "DBInstanceIdentifier": "alerts-prod"
+    },
+    "Statistic": "Average",
+    "Period": 60,
+    "EvaluationPeriods": 5,
+    "ComparisonOperator": "GreaterThanThreshold",
+    "Threshold": 80,
+    "StateValue": "OK",
+    "StateUpdatedTimestamp": "2026-09-30T12:30:00Z",
+    "StateReason": "no datapoint above 80.0 in the snapshot window",
+    "History": []
+  },
+  {
+    "AlarmName": "geoip-svc-5xx-high",
+    "Namespace": "Abnormal/GeoipSvc",
+    "MetricName": "Http5xxCount",
+    "Dimensions": {
+      "Service": "geoip-svc"
+    },
+    "Statistic": "Sum",
+    "Period": 60,
+    "EvaluationPeriods": 3,
+    "ComparisonOperator": "GreaterThanThreshold",
+    "Threshold": 50,
+    "StateValue": "OK",
+    "StateUpdatedTimestamp": "2026-09-30T12:30:00Z",
+    "StateReason": "no datapoint above 50.0 (note: HTTP 429 is not a 5xx; there is no alarm on ThrottledCount)",
+    "History": []
+  }
+]

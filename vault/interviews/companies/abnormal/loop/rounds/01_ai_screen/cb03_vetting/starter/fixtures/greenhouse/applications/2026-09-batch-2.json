@@ -1,0 +1,146 @@
+[
+  {
+    "id": 40111,
+    "applied_at": "2026-09-18T19:01:00Z",
+    "job": {
+      "id": 9001,
+      "name": "Backend Engineer"
+    },
+    "candidate": {
+      "first_name": "Taylor",
+      "last_name": "Exampleton",
+      "email_addresses": [
+        {
+          "value": "taylor.e+jobs@mail.example.org",
+          "type": "personal"
+        }
+      ],
+      "phone_numbers": [
+        {
+          "value": "(415) 555-0143",
+          "type": "mobile"
+        }
+      ],
+      "location": {
+        "country": "US"
+      }
+    },
+    "submission": {
+      "ip_address": "198.51.100.21",
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64) FixtureBrowser/1.0"
+    },
+    "attachments": [
+      {
+        "filename": "exampleton_resume.pdf",
+        "type": "resume",
+        "metadata": {
+          "author": "Resume Factory",
+          "creator_tool": "ExamplePDF Engine 3.1",
+          "page_count": 2,
+          "sha256": "2cbf6e49aebe45ea9dd6337781d07abf8ee4cd1154858d27136f0cc98bdb0380",
+          "extracted": {
+            "name": "Taylor Exampleton",
+            "email": "taylor.e+jobs@mail.example.org",
+            "phone": "(415) 555-0143"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": 40112,
+    "applied_at": "2026-09-18T19:09:00Z",
+    "job": {
+      "id": 9001,
+      "name": "Backend Engineer"
+    },
+    "candidate": {
+      "first_name": "Jamie",
+      "last_name": "Samplesmith",
+      "email_addresses": [
+        {
+          "value": "taylore@mail.example.org",
+          "type": "personal"
+        }
+      ],
+      "phone_numbers": [
+        {
+          "value": "415.555.0147",
+          "type": "mobile"
+        }
+      ],
+      "location": {
+        "country": "US"
+      }
+    },
+    "submission": {
+      "ip_address": "198.51.100.22",
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64) FixtureBrowser/1.0"
+    },
+    "attachments": [
+      {
+        "filename": "samplesmith_resume.pdf",
+        "type": "resume",
+        "metadata": {
+          "author": "Resume Factory",
+          "creator_tool": "ExamplePDF Engine 3.1",
+          "page_count": 2,
+          "sha256": "2cbf6e49aebe45ea9dd6337781d07abf8ee4cd1154858d27136f0cc98bdb0380",
+          "extracted": {
+            "name": "Jamie Samplesmith",
+            "email": "taylore@mail.example.org",
+            "phone": "415.555.0147"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": 40113,
+    "applied_at": "2026-09-18T19:20:00Z",
+    "job": {
+      "id": 9001,
+      "name": "Backend Engineer"
+    },
+    "candidate": {
+      "first_name": "Robin",
+      "last_name": "Testovich",
+      "email_addresses": [
+        {
+          "value": "robin.testovich@example.com",
+          "type": "personal"
+        }
+      ],
+      "phone_numbers": [
+        {
+          "value": "+1-415-555-0152 ext. 9",
+          "type": "mobile"
+        }
+      ],
+      "location": {
+        "country": "US"
+      }
+    },
+    "submission": {
+      "ip_address": "198.51.100.37",
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64) FixtureBrowser/1.0"
+    },
+    "attachments": [
+      {
+        "filename": "testovich_resume.pdf",
+        "type": "resume",
+        "metadata": {
+          "author": "Resume Factory",
+          "creator_tool": "ExamplePDF Engine 3.1",
+          "page_count": 2,
+          "sha256": "9ae1572dcb8b74e0adaf8e67b63968dd43cb3d0621c1f333f6c0b035cb7fa6c1",
+          "extracted": {
+            "name": "Robin Testovich",
+            "email": "robin.testovich@example.com",
+            "phone": "+1-415-555-0152 ext. 9"
+          }
+        }
+      }
+    ]
+  }
+]
