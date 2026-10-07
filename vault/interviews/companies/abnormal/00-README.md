@@ -19,7 +19,7 @@ tags:
 
 ## 先读这三样（30 分钟）
 
-0. **真题复刻** `loop/rounds/01_ai_screen/cb01_sentinel/REAL_QUESTION.md` —— 报道过的原题（规则抑制 + 富化插件化）原文、中文讲解、参考答案；练：`python3 loop/ai_screen.py start cb01 real`。
+0. **真题复刻** `loop/rounds/01_ai_screen/cb01_sentinel/REAL_QUESTION.md` —— 报道过的原题（规则抑制 + 富化插件化）原帖与错因；逐场脚本与参考答案见 `cb01_sentinel/walkthrough.md` §t2；练：`python3 loop/ai_screen.py start cb01 real`。
 1. `loop/rounds/01_ai_screen/playbook.md` —— 逐分钟打法、Claude Code 提示词、英文口播。**报道过的真题形态在它开头。**
 2. `study/00-essentials.md` —— 十分钟找到扩展点；七种扩展点该怎么挂；安全产品的四类隐藏期望。
 3. `loop/LOOP_GUIDE.md` —— 每轮：形式 · 评什么 · 通过线 · 挂点 · 备考动作，全部带证据编号。

@@ -1,222 +1,157 @@
-# cb02_insiderwatch · 60 分钟参考走法
+# cb02 · 逐场脚本
+> insiderwatch：纯标准库的 Insider Risk 检测后端（审计日志 → `Event` → `@signal` → `scoring` → `Alert` → `Notifier`，状态在 SQLite）。t1 离职前数据外泄信号 · t2 告警归并成 case · t3 接入 Google Drive 审计日志。练：`python3 loop/ai_screen.py start cb02 <t>` · 面试官视角：`interviewer.md`
 
-> 官方评分原话：*Judgment*（evaluate approaches, scope work into milestones, decide what fits the existing system）、*Agency*（make decisions, state assumptions, test your own work, keep momentum）。
-> "AI doesn't know what's already in the codebase unless you tell it to look." 所以整场的节奏是：**先让 AI 读，再让 AI 写，最后你来审。**
-> 每张 ticket 独立从 `starter/` 开始。练习：`python3 loop/ai_screen.py start cb02 t1`（在 kit 根目录）。
+## 0. 探索（0–10 min，三个 ticket 通用）
 
-## 0. 探索 10 分钟
-
-先自己 90 秒：`cat README.md CONTRIBUTING.md`，`git log --oneline | head`（如有），`find insiderwatch -name '*.py' | head -50`，`ls fixtures/*`。注意 README 里写"每个事件都过 `legacy/dlp_rules.py`"——和代码对不上（现在是 `signals/`），**这是个信号：README 不可全信，以代码为准。**
-
-然后依次给 Claude Code 这 7 条提示词（按顺序，每条读完回复再发下一条；总共 ≤ 6 分钟）：
-
-1. `Map the architecture of this repo: entry points, the main data flow from raw files to alerts, and the extension points (registries, base classes, config). Cite files and symbols. Do not edit anything.`
-2. `README.md and CONTRIBUTING.md: which statements are true for the current code and which are stale? Verify each against the code and list contradictions.`
-3. `Explain how a new Signal gets registered and run: what must I touch for it to show up in replay? Same question for a new Connector. Show the exact import/registration lines.`
-4. `How are baselines computed and read? What does BaselineStore.get return during cold start, and for an action the user never performed? Which config keys control it?`
-5. `Trace one alert end to end: finding -> scoring -> alert row -> notifier. Where are weights, thresholds and severity labels defined? Where do schema changes go?`
-6. `Run the test suite and then run: python -m insiderwatch --db /tmp/iw.db replay fixtures/raw --until 2026-09-30 --json, then alerts. Summarize who gets alerts and from which signals. Which modules look deprecated or off limits?`
-7. `List the conventions a new contribution must follow (tests location, migrations, logging, time handling, config) and the three places where a generic implementation would most likely diverge from them.`
-
-### 第 10 分钟对面试官说的 60 秒心智模型（英文口播）
-
-> "Here's my mental model. Raw audit logs sit under `fixtures/raw/<source>/` as pages. Each source has a `Connector` — registered with a decorator and imported in the package `__init__` — that parses pages and normalizes records into a single `Event` model with a fixed `Action` enum; anything it doesn't model is counted via `drop()`. The replay pipeline processes events one UTC day at a time: per user, every registered `Signal` returns findings with a 0-to-1 strength, using per-user rolling baselines from SQLite and the HR roster. `scoring` multiplies by a weight from `config.py`, and anything over `alert_threshold` becomes an `Alert` in SQLite and goes to a `Notifier`. Schema changes are numbered migrations. `legacy/dlp_rules.py` is deprecated and the README is stale about it. So the extension points are: signals, connectors, config, migrations, and the CLI command table. Which ticket would you like me to take?"
-
----
+- 先打开：
+  - `README.md` + `CONTRIBUTING.md`：约定全在这里（迁移只增不改、signal 不决定告警、`parse_ts`、测试镜像包结构）。README 图里写"每个事件过 `legacy/dlp_rules.py`"，代码里只有 `pipeline.py:Pipeline._process_day` 末尾 `config.flag("legacy_dlp_rules")`（默认 `False`）才调它，README 已过时。
+  - `insiderwatch/pipeline.py:Pipeline.run` / `_process_day`：数据流主干（逐 UTC 日 → signals → `score_finding` → `AlertStore.add` → `notifier.notify`）。
+  - `insiderwatch/signals/base.py:signal` + `signals/__init__.py`：import 才注册。
+  - `insiderwatch/connectors/base.py:Connector`（`parse_page` / `normalize` / `drop`；分页、计数在基类）+ `connectors/__init__.py`。
+  - `insiderwatch/baselines/store.py:BaselineStore.get`：冷启动返回 `None`（`baseline_min_days=14` 天以内），没做过的动作是真实的 0 基线。
+  - `tests/conftest.py:history` / `make_event`、`config.py:Config`。
+- T1 结果应包含：
+  - 入口：`cli.py:main` → `COMMANDS` 表（replay / alerts / outbox / risk / export / check）；错误统一走 `errors.InsiderWatchError` → exit 2。
+  - 数据流：`fixtures/raw/<source>/page-NNNN.json` → `Connector.events()` → `Event` → `Pipeline._process_day` → `Signal.evaluate` → `Finding` → `scoring.score_finding`（`signal_weights`，漏配落到 `default_signal_weight=0.2`）→ `alert_threshold=0.15` → `Alert`。
+  - 扩展点：`@signal`、`@register_connector`、`Config`、`migrations/NNNN_*.sql`、`COMMANDS`。
+  - 测试：全量 `uv run --with pytest python -m pytest -q`（starter：`53 passed in 0.40s`）；单文件加路径 `tests/test_signals.py`。
+  - 现状：`replay fixtures/raw --until 2026-09-30` 得 51 条告警（alice 3、henry 48）；`check fixtures/raw` 末尾 `warning: no connector registered for gdrive/`。
+- 心智模型（60 s，英文原句）："Raw audit logs sit under `fixtures/raw/<source>/` as pages. Each source has a `Connector`, registered by decorator and imported in the package `__init__`, that normalizes records into one `Event` model with a fixed `Action` enum; anything it doesn't model is counted with `drop()`. Replay walks one UTC day at a time: every registered `Signal` returns findings with a 0-to-1 strength, using per-user baselines from SQLite and the HR roster. `scoring` multiplies by a weight from `config.py`, anything over `alert_threshold` becomes an `Alert` and goes to a `Notifier`. Schema changes are numbered migrations. `legacy/dlp_rules.py` is deprecated and the README is stale about it, so my extension points are signals, connectors, config, migrations and the CLI table."
 
 ## t1 · departing_exfil
 
-**读 ticket 后的 3 个澄清问题（英文）**
+### 题
+INSIDER-318：离职前几周的数据外带要被标出来，分析师要信任标记（不能被"本来就搬很多数据"的人淹没）。验收：`replay fixtures/raw --until 2026-09-30` 后 `alerts --user <email>`（`--json`）里出现对的人。
 
-1. "How far back from the last day should we watch, and should that be tunable per customer?"
-2. "What counts as taking data: downloads only, or also external sharing and forwarding to personal mail? And is it measured against the person's own baseline or a global threshold?"
-3. "What should we do for people with no baseline yet, and for activity after the termination date?"
+### 参考答案
+- 设计：缝是 `@signal` 注册表。第二个、第三个 signal（`volume_spike`、`off_hours_activity`）已经在这条缝后面，所以是真缝；signal 只返回 `Finding`，是否告警由 `scoring` + `alert_threshold` 决定。备选是在 `pipeline.py` 里按 `emp.termination_date` 分支，会破坏"signal 出 finding、scoring 决定告警"的分层，故不选。判断标准用本人基线（`BaselineStore.get` 的 `p95_count` / `p95_bytes`），不用全局阈值（`legacy/dlp_rules.py` 的 500 MB 规则会误报 bob）。
+- 改动：
+  - `signals/departing_exfil.py:DepartingExfil.evaluate`：从 `ctx.roster.get(user)` 取最后一天（无 `termination_date` 时 `resignation_submitted` + `departure_notice_days`）；窗口内逐动作比本人 p95；离职日后任何非 `LOGIN_FAILED` 活动 strength 1.0。
+  - `signals/__init__.py`：加 `departing_exfil` 的 import。
+  - `config.py:Config`：`departure_window_days=14`、`departure_notice_days=14`、`departing_exfil_actions`；`_default_weights` 加 `"departing_exfil": 1.0`；`load_config` 把 `departing_exfil_actions` 转成 `Action`。
+  - `tests/test_departing_exfil.py`；`tests/test_pipeline_cli.py` 的"没有告警"断言加入 dave、frank。
+- 关键测试：
+  - `test_departing_exfil.py::test_usual_volume_is_not_flagged_for_a_heavy_user`：30 次/天 × 20 MB 的重度用户照常行为 → `[]`。
+  - `test_cold_start_flags_external_egress_but_not_downloads`：无基线时外部分享出 1 条 finding，下载为空。
+  - `test_any_activity_after_the_last_day_is_maximum_strength`：离职后活动 `strength == 1.0` 且 `evidence["post_departure"]`。
+  - 验收 `acceptance/test_t1.py::test_habitual_external_sharer_is_not_flagged`：dave 每天外享仍不报。
 
-**显式假设清单（口头说出并写进代码注释/commit message）**
+### 逐阶段
+| 分钟 | 做 | 说（英文原句） | 敲（T 编号 + 填好的具体内容） |
+|---|---|---|---|
+| 10–13 读题+Grill | 用分析师视角复述；T4 定义"离职窗口"= 最后一天前 N 天；问 3 个问题，其余写成假设 | "Normally I'd run a grilling pass; here's the short version. Window length, what counts as taking data, and compared to what?" 问：(1) "How early before leaving should we watch?" 面试官："Last two weeks, but make it tunable." 默认 14 天进 config。(2) "Compared to a global threshold or the person's own normal?" 面试官："Their own normal." 默认本人基线。(3) "What if there's no baseline, and what about activity after the last day?" 面试官："Your call." / "That would be bad." 默认：无基线时外部分享/转发标、下载不标；离职后活动最高严重度。其余："I'll assume downloads, external shares, external forwards and Slack export count; a resignation date alone means last day plus 14 days; no backfill." | T2：`Given INSIDER-318 and this repo, list the decisions I must make, each depending only on earlier ones. Format: Q<n> — question; → option you'd pick and why. Look up facts in the code (roster fields, Action enum, baseline API) instead of asking me. No code.` |
+| 13–16 方案 | T3 我列你补；T5 两方案；定 M1–M3；T6 写规矩 | "The seam is the `@signal` registry in `signals/base.py` — `volume_spike`, `off_hours_activity` and `unusual_login_location` already sit behind it, so it's real. Option A: a new signal reading roster and baseline. Option B: a branch in `Pipeline._process_day`. I'll take A: findings stay separate from alerting, and weights live in `config.py`. M1 is carol flagged and bob quiet in fifteen minutes." | T3：`Here's my list: (1) new signal departing_exfil, registered in signals/__init__.py; (2) window/notice days/actions/weight in config.py; (3) own-baseline comparison via BaselineStore.get, None = cold start; (4) activity after last day = strength 1.0; (5) test with a heavy user. What did I miss? Add only what's missing, ranked by user impact. Don't rewrite mine.` T5：`I think the seam is the @signal registry (existing: volume_spike, off_hours_activity). Compare (A) new signal vs (B) branch in pipeline._process_day in 5 lines each: fit, failure isolation, config. Recommend one. Don't edit.` T6：写 `CLAUDE.md`：`Propose before editing. Reuse Signal/Config/BaselineStore; no new tables, base classes or global thresholds. Tests next to tests/test_signals.py, expected values as literals. Never delete or weaken a test. Don't touch legacy/ or pipeline.py. Run the single test file after each change.` |
+| 16–30 M1 | plan mode 审计划 → T7 红 → 绿 → 真实入口 | "First a failing test: three external shares in the window for a layoff, 20 days of quiet history. Then the minimal signal. Not touching `pipeline.py`." | T7 红：`Write ONE failing test in tests/test_departing_exfil.py in the style of tests/test_signals.py: ann has termination_date 2026-09-25, history("ann@acme.example","2026-09-01",20) in baselines, 3 FILE_SHARE_EXTERNAL events on 2026-09-21; the signal named "departing_exfil" returns exactly one Finding with 0.4 < strength < 1.0. Show it fails.`（真实首个红：`test_new_external_sharing_in_window_is_flagged`；starter 上 `next(s for s in all_signals() if s.name == "departing_exfil")` 找不到。）T7 绿：`Minimal change: signals/departing_exfil.py with @signal("departing_exfil"), import it in signals/__init__.py, add "departing_exfil": 1.0 to signal_weights and departure_window_days=14 to Config. External shares only, compare len(todays) to baseline.p95_count. Run that test file.` 演示：`python3 -m insiderwatch --db /tmp/iw.db replay fixtures/raw --until 2026-09-30` 后 `alerts --user carol.diaz@acme.example` 有 `departing_exfil`，`--user bob.martin@acme.example` 为空。 |
+| 30–40 M2 | 补下载/转发/导出（`departing_exfil_actions`）、reasons 带次数/本人均值/距最后一天；erin（无辞呈）、gina（离职后）、frank（无 HR）；红了走 T8 | "Next slice: all four actions, and reasons the analyst can read: count, usual per day, days before the last day. If bob or dave goes red I'll reproduce it with one command before touching the threshold." | T7 红：`Add a failing test: heavy user with history("ann@acme.example","2026-09-01",20,per_day=30,nbytes=20_000_000) and 30 downloads of 20_000_000 bytes on 2026-09-21 with a termination date four days later returns []. Show it fails or passes honestly.` 绿：`Extend to cfg.departing_exfil_actions; per action compare count against max(p95_count*1.25, p95_count+0.5) and bytes against p95_bytes*1.25; reasons "<n>x <action> (<MB> MB) vs usual <mean>/day; <d>d before last day". Cold start: external actions flag, FILE_DOWNLOAD doesn't.` T8（红的时候）：`Reproduce with one command: replay then alerts --user dave.kim@acme.example, show the alert row. Then 3 ranked hypotheses, each with the prediction that would confirm it. Don't fix yet.` |
+| ~40 审查 | T10 一轮；收一条、拒一条，说出分类 | "I'd normally run a doubt pass with a fresh reviewer — one round now. Accepting the first finding, rejecting the second: it's valid but out of scope for v1, going into NOTES.md." | T10：`Adversarial review of the current diff against INSIDER-318. Assume the author is overconfident. Look for unstated assumptions, edge cases, broken conventions (see CONTRIBUTING.md). Do NOT validate or summarize. Max 5 issues, ranked.` 典型 v1 的两条：(1) 按 `bytes` 比 `p95_bytes`，但 `FILE_SHARE_EXTERNAL` 的 `bytes` 是 0（carol 的告警里写着 `(0 MB)`），外享永远不触发 → 有效且要改：改比 `len(todays)` 对 `p95_count`；(2) 建议按部门同侪均值比较、把 `Action` 白名单做成每租户配置 → 有效但接受为 known gap（YAGNI，当前 roster 有 `department` 但无同侪基线）。另一条常见：`ctx.roster.get(user)` 返回 `None` 时直接 `.termination_date` 崩 → 收下，加 `if emp is None: return`。 |
+| 42–45 收尾 | T11 证据；T12 NOTES.md | "Fresh run: 71 passed. Carol, erin and gina alert; bob, dave and frank stay quiet. Out of scope for v1: peer baselines, rollout flag — written down in NOTES.md." | T11：`uv run --with pytest python -m pytest -q`（`71 passed in 0.8 s`）；`rm -f /tmp/iw.db; python3 -m insiderwatch --db /tmp/iw.db replay fixtures/raw --until 2026-09-30` 后 `alerts --user carol.diaz@acme.example`：`29  2026-09-21T18:38  carol.diaz@acme.example      departing_exfil          0.75 high   4x FILE_SHARE_EXTERNAL (0 MB) vs usual 0.0/day; 5d before last day; 1x EMAIL_FORWARD_EXTERNAL ...`；erin 3 条（`7d before last day` 起）；gina 2 条（`4 events after last day 2026-09-18`）；bob、dave、frank 无输出；alice 仍是 3 条旧信号。`git diff --stat`。T12：`List every item we named today (ticket, assumptions, review findings). Mark each done / out of scope. Write NOTES.md: assumptions + known gaps + v2.` |
+| 45+ 讲解（做了什么·契合） | 3–5 min 口述，边说边指 diff | "I shipped a `departing_exfil` signal: inside the last 14 days before someone's last day it compares each data-egress action with that person's own p95 and reports a finding with the reason. It's registered like the other signals, window and weight are in `Config`, and it reuses `BaselineStore.get` and `Roster`. Insider-risk-wise, bob and dave are the point: both are leaving and both work like they always do, so staying quiet is what keeps an analyst's trust." | 指 `signals/departing_exfil.py`、`config.py`、`signals/__init__.py` 三处；跑 T11 的 `alerts --user dave.kim@acme.example` 给空输出。 |
+| 45+ 讲解（假设·测试） | 说 5 条假设；说测了什么 | "Assumptions: 14-day window and 14-day notice are config; resignation-only users get last day = notice + 14; external shares and forwards are suspicious with no baseline, downloads aren't; activity after the last day is maximum strength. Tests: six unit tests next to the existing ones, plus replay on the fixtures through the CLI." | 展示 `tests/test_departing_exfil.py`（6 个）与 `alerts --json` 里 `reasons`、`evidence.last_day`。 |
+| 45+ 讲解（known gaps·v2·insider risk） | 说 2–3 个缺口；被追问扩展时联系产品 | "Gaps: the 1.25× p95 margin is a heuristic I'd calibrate on real data; replay is incremental, so a pushed-back termination date doesn't re-evaluate old days. V2 for the insider-risk product: gina shows the other half — activity after the last day usually means a deprovisioning gap, so I'd route it to IT as well as the analyst. Frank shares four times a day from 09-21 with no HR record at all: that's a risk before anyone has resigned, so the roster's `resignation_submitted` day should start a watch of its own, and an HR feed that is missing or late should be visible, not silent. Reasons carry counts and days-to-last-day, never file contents, which keeps the analyst's view auditable." | 不写代码；必要时开 `fixtures/hr/roster.json` 指 frank（无日期）、gina（`termination_date` 2026-09-18）。 |
 
-- 离职窗口 = 最后一天前 14 天（`departure_window_days`），最后一天 = `termination_date`；只有辞呈日时按 14 天通知期推算。
-- 动作 = 下载 / 外部分享 / 外部转发（/ Slack 导出），全部用已有 `Action`。
-- 判断相对**本人**基线（`BaselineStore.get`，超过本人 p95 的一定余量）；重度下载者照常行为不报。
-- 冷启动：外部分享/转发无基线也标（本身就是外流），下载不标。
-- 离职日之后任何非失败活动 → strength 1.0。
-- 不回填、不通知逻辑变更；告警由现有 `scoring` + `alert_threshold` 决定。
+### 追问与答
+- **10 倍事件量，这个 signal 哪里先慢？** 每用户每天每动作一次 `BaselineStore.get`（一次 `user_activity` 查询加一次 `daily_totals` 查询）。先只对窗口内的用户跑（已经如此：窗口外直接 return）；再把基线按用户预取或缓存。更早坏的其实是 `Pipeline.run` 把所有事件放进内存的 `list`。
+- **怎么上线才不淹没客户分析师？** 先 shadow：只落库不通知，用 `Config.feature_flags` 按租户开；跑两周看 alert 率再把 `signal_weights["departing_exfil"]` 调到位。
+- **Dave 每天外享又被裁，为什么不报？什么情况会报？** 他的 `p95_count` 本来就高，当天次数不超过 `max(1.25 × p95, p95 + 0.5)`；他某天的外享次数或字节明显超过自己的历史，或离职日后仍有活动就会报。
+- **v1 缺什么？** 没有 manager 信号，没有辞呈前的异常，冷启动策略粗糙（新人外享就标），不按部门调权重。
+- **termination_date 在告警后被推迟呢？** replay 有 watermark，只处理新日子，历史告警不会重算；这是已知局限，要重算得 `replay --reset`。
+- **怎么知道它不是对所有人都报？** 回放 fixtures，bob、dave、frank 无告警，且 `acceptance/test_t1.py` 把它们作反例；`alerts` 全量只多出 carol、erin、gina 三人。
 
-**里程碑**
-
-- **M1（≤ 15 min，可演示）**：`@signal("departing_exfil")` 注册；只处理"窗口内外部分享 vs 本人基线"；加权重进 `config`；replay 后 `alerts --user carol...` 有告警，bob 没有。
-- **M2**：加入下载/转发/导出，按动作 p95 比较，reasons 写清次数与"距最后一天 N 天"；erin（无辞呈）也命中。
-- **M3**：离职日后活动（gina）、冷启动策略、单测（窗口内外、heavy user、冷启动、离职后）、跑全量测试。
-
-**给 Claude 的实现提示词**
-
-```
-Add a new detection for departing employees. Follow the existing Signal pattern exactly:
-- create insiderwatch/signals/departing_exfil.py with @signal("departing_exfil") (see signals/volume_spike.py and signals/base.py), and register it by importing it in signals/__init__.py
-- read termination_date / resignation_submitted from ctx.roster (hr/roster.py); treat resignation + notice as the last day when no termination_date
-- compare against the user's OWN baseline with ctx.baselines.get(user, action, ctx.day) (baselines/store.py); handle None as cold start
-- use the existing Action enum members FILE_DOWNLOAD, FILE_SHARE_EXTERNAL, EMAIL_FORWARD_EXTERNAL; do not add new ones
-- put the window length, notice days and the action list in config.py, and add the weight to Config.signal_weights; do not decide alerting inside the signal, return Findings only
-- do not touch legacy/ or pipeline.py
-- add tests/test_departing_exfil.py in the style of tests/test_signals.py (use the history()/make_event() helpers from conftest.py)
-Then run the tests and replay fixtures/raw --until 2026-09-30 and show alerts for carol.diaz, bob.martin, dave.kim, erin.walsh.
-```
-
-**审 AI 输出时看什么（right altitude）**
-
-- 有没有 `if bytes > 500 * 1024 * 1024`（= 照抄 `legacy/dlp_rules.py` 的全局阈值）？有就退回。
-- `signals/__init__.py` 里有没有加 import？没有的话测试能过（直接构造类）但 replay 没有任何新告警。
-- 阈值/窗口/权重是否在 `config.py`，`signal_weights` 有没有漏（漏了会走 default weight 0.2 并打 warning，分数可能低于 `alert_threshold`）。
-- 用 `date` 比较而不是 naive `datetime`；用户不在名册时不崩。
-- AI 有没有自己实现一遍均值/标准差（`baselines/stats.py` 已有），或绕过 `BaselineStore` 自己查 SQLite。
-- 过度工程信号：新建表、新建 HR 加载器、改 `pipeline.py`。
-
-**验证命令**
-
-```
-python3 -m pytest -q
-rm -f /tmp/iw.db; python3 -m insiderwatch --db /tmp/iw.db replay fixtures/raw --until 2026-09-30 --json | head -5
-for u in carol.diaz bob.martin dave.kim erin.walsh gina.park frank.okafor; do echo $u; python3 -m insiderwatch --db /tmp/iw.db alerts --user $u@acme.example; done
-```
-（期望：carol、erin、gina 有告警；bob、dave、frank 没有。）
-
-**收尾 known gaps（英文口播）**
-
-> "v1 flags carol, erin and post-termination activity, and stays quiet for bob and dave because it compares against their own baseline. Known gaps: cold-start handling is crude — new hires with external shares get flagged, downloads don't; the 1.25x-p95 margin is a heuristic I'd calibrate on real data; there's no per-customer tuning beyond the config window; and replay is incremental, so changing a termination date doesn't re-evaluate past days."
-
----
+### 翻车点
+- 全局阈值（"下载 > 500 MB 即告警"）→ 与 deprecated 的 `legacy/dlp_rules.py` 同款，bob 每天 200 MB 被误报；`BaselineStore` 就是为"相对本人"建的。
+- 新文件加单测直接构造类，不 import 进 `signals/__init__.py` → 单测全绿，replay 里 signal 根本不存在。
+- 不配 `signal_weights` 的条目 → `scoring.score_finding` 落到 `default_signal_weight=0.2` 并 warning，strength 0.5 的 finding 只得 0.1，低于 `alert_threshold=0.15`，replay 里一条告警都没有。
+- 在 `Pipeline._process_day` 里加 `if emp.termination_date` 分支 → 破坏 signal 只出 finding、scoring 决定告警的分层。
 
 ## t2 · alert_cases
 
-**3 个澄清问题（英文）**
+### 题
+INSIDER-331：一个坏人一晚上 40 条告警，要按事件归并，分析师一件事看一次，on-call Slack 不要刷 40 次。新命令 `cases [--user U] [--json]`（键 `id` / `user` / `status` / `severity` / `alerts`）和 `cases close <id>`。
 
-1. "What defines one incident — same user within some time gap? How big a gap?"
-2. "How severe is a case: the worst alert in it or an aggregate? And when does the Slack/outbox ping fire — per alert, or when the incident starts and gets worse?"
-3. "When an analyst closes a case and a new alert comes in for the same person, is that a new case? Does the existing `alerts` command stay as is?"
+### 参考答案
+- 设计：缝是 `Pipeline._process_day` 里 `AlertStore.add` 与 `notifier.notify` 之间；`Notifier` 协议（`console`、`slack` 两个实现）已有两个适配器，不改它，改调用条件。case 要有状态（`close` 要落地），所以用新迁移 `0005_cases.sql` + `CaseStore(conn, config)`，与 `AlertStore` 同风格；备选是 CLI 里现算分组，没有持久状态也就没法 close、没法判断"升级"，不选。严重度取成员最高分经 `severity_label`。
+- 改动：
+  - `migrations/0005_cases.sql`：`cases`、`case_alerts` 两张表和 `idx_cases_user_status`，不动 `0002_alerts.sql`。
+  - `alerts/cases.py:CaseStore.assign`：同用户、`status='open'`、`last_alert_at >= alert.ts - case_window_hours` 的最近一个 case，否则新开；返回 `CaseChange(created, escalated)`。
+  - `alerts/cases.py:CaseStore.close`：不存在或已关闭抛 `InsiderWatchError`。
+  - `pipeline.py:Pipeline._process_day`：`change = self._cases.assign(alert)`，只有 `change.created or change.escalated` 才 `notify`。
+  - `config.py:Config.case_window_hours = 48`。
+  - `cli.py:cmd_cases` + `COMMANDS["cases"]`。
+  - `tests/test_cases.py`；`tests/test_pipeline_cli.py:test_slack_notifier_queues_one_message_per_case_event`。
+- 关键测试：
+  - `test_cases.py::test_window_is_measured_from_the_latest_alert`：间隔 40h 的四条告警（0/40/80/120 h）同一个 case。
+  - `test_cases.py::test_severity_is_the_maximum_and_escalation_is_reported`：0.2、0.25 不升级，0.9 升级且 `case.score == 0.9`，随后 0.3 不降级。
+  - `test_cases.py::test_closed_case_is_not_reopened`：关闭后新告警 `created` 且 id 不同。
+  - 验收 `acceptance/test_t2.py::test_escalation_of_an_open_case_notifies_again`。
 
-**假设清单**
+### 逐阶段
+| 分钟 | 做 | 说（英文原句） | 敲（T 编号 + 填好的具体内容） |
+|---|---|---|---|
+| 10–13 读题+Grill | T4 定义 case = 同一用户相邻告警间隔不超过窗口；问 3 个问题 | "Let me pin the vocabulary: alert, case, incident. A case is one user's alerts with no gap longer than the window. Three questions." 问：(1) "How close in time is one incident?" 面试官："A day or two. Make it configurable." 默认 48h 滚动。(2) "Severity: max or sum, and when do we notify?" 面试官："Analysts triage by the worst thing in it… when an incident starts, and again if it gets worse." 默认取 max，新建与升级各一次。(3) "Closed, then a new alert arrives?" 面试官："That's a new incident." 默认不重开。其余："`alerts` command stays unchanged; no backfill; status is open/closed only." | T2：`Given INSIDER-331 and this repo, list the decisions I must make, ordered so each depends only on earlier ones. Format: Q<n> — question; → option you'd pick and why. Look up facts in the code (migrations convention, severity_label, Notifier call site). No code.` |
+| 13–16 方案 | T3；T5；M1–M3；T6 | "The seam is between `AlertStore.add` and `notifier.notify` in `Pipeline._process_day`; `ConsoleNotifier` and `SlackWebhookNotifier` already share the `Notifier` protocol, so I change when I call it, not the notifiers. Option A: persisted cases through a new migration. Option B: group on the fly in the CLI. A, because `cases close` needs state and notifications need to know when a case escalates. M1: `cases --json` lists henry's two cases." | T3：`Here's my list: (1) new migration 0005_cases.sql, never edit 0002; (2) CaseStore(conn, config) like AlertStore; (3) window in config.case_window_hours; (4) severity = severity_label(max score); (5) notify only on create/escalate; (6) cases close with InsiderWatchError. What did I miss? Add only what's missing, ranked by user impact.` T5：`Seam: Pipeline._process_day between AlertStore.add and notifier.notify (existing: ConsoleNotifier, SlackWebhookNotifier). Compare (A) persisted cases via migration vs (B) CLI-side grouping in 5 lines each: fit, failure isolation, what an analyst sees. Recommend one. Don't edit.` T6：同 t1 的 CLAUDE.md，改两行：`New schema = new numbered migration; never edit an applied one. Do not touch notify/ or the alerts table.` |
+| 16–30 M1 | T7 红 → 绿 → `cases` 演示 | "Failing test first: two alerts five hours apart share a case. The test import fails, so I stub `CaseStore.assign` first, then watch it fail on behaviour." | T7 红：`In tests/test_cases.py using the conn and config fixtures from tests/conftest.py: add two alerts for ann@acme.example 5 hours apart through AlertStore.add and CaseStore.assign; assert the second change is not created and has the same case id as the first. Show it fails.`（starter 上先是 `ModuleNotFoundError: insiderwatch.alerts.cases`，先加空类再红。）绿：`Minimal: migrations/0005_cases.sql (cases, case_alerts), alerts/cases.py CaseStore.assign joining the user's open case with last_alert_at within config.case_window_hours (add it to Config, 48), wire it in Pipeline._process_day after AlertStore.add. No notifier change yet.` 演示：`replay fixtures/raw --until 2026-09-30 --notifier slack` 后 `cases` 出 8 个 case，henry 两个。 |
+| 30–40 M2 | 严重度 + 通知条件；再做 `cases close`、`--user`、`--json` | "Slice two: severity is the worst alert through `severity_label`, and the notifier is only called when a case is created or its label rises. Outbox should drop from one message per alert to the order of the case count." | T7 红：`Add a failing test: alerts scoring 0.2, 0.25 then 0.9 in one window — escalated is False, False, True and case.score is 0.9 afterwards; a later 0.3 does not lower it.` 绿：`CaseChange(case, created, escalated); in _process_day call notify only if change.created or change.escalated; severity via scoring.severity_label on max score.` 再红：`cases close <id>: unknown id and already-closed raise InsiderWatchError (exit 2); closed case is never reopened.` 若 `outbox` 条数不对走 T8。 |
+| ~40 审查 | T10；收一条拒一条 | "One doubt round. I'll take the one about closing, and park the Slack-text one as a known gap." | T10：`Adversarial review of the current diff against INSIDER-331. Assume the author is overconfident. Look for assumptions about the window, replay idempotency, notification behavior, CLI errors. Do NOT validate or summarize. Max 5 issues, ranked.` 两条：(1) `cases close` 对已关闭 case 静默成功/对未知 id 抛 `KeyError`，应走 `InsiderWatchError` → exit 2 → 有效且要改；(2) `notify(alert)` 只发触发那条告警的文字，Slack 里看不出它属于哪个 case、是升级 → 有效但接受（known gap：notifier 协议只收 `Alert`，改协议会动 `notify/`，不属于 v1）。常见噪声：要求给 `cases` 表加 `assigned_to`、`comments` → 拒绝（YAGNI）。 |
+| 42–45 收尾 | T11；T12 | "Fresh run: 71 passed. Henry's two bursts are two cases, outbox went from 59 to 10. Out of scope: merge/split, assignment, backfill — in NOTES.md." | T11：`uv run --with pytest python -m pytest -q`（`71 passed`）；`rm -f /tmp/iw.db; python3 -m insiderwatch --db /tmp/iw.db replay fixtures/raw --until 2026-09-30 --notifier slack`；`python3 -m insiderwatch --db /tmp/iw.db cases` 输出 `1  open   high   henry.ross@acme.example      26 alerts  2026-09-02T05:00 .. 2026-09-03T05:16` 与 `7  open   medium henry.ross@acme.example      22 alerts  2026-09-27T14:00 .. 2026-09-27T16:35`；`alerts` 59 行、`outbox` 10 行；`cases close 99` → `error: no such case: 99`（exit 2）；`cases close 7` 后 henry 的 case 7 变 `closed`，case 1 仍 open。T12 同前。 |
+| 45+ 讲解（做了什么·契合） | 口述 + 指 diff | "I shipped cases: every alert that clears the threshold is filed into its user's open case when it lands within 48 hours of that case's last alert, otherwise it opens a new one. Cases are persisted through a new migration, the store takes a connection like `AlertStore`, severity is the worst alert through `severity_label`, and Slack is pinged when a case opens or escalates. `alerts` is untouched, so customers' scripts keep working." | 指 `0005_cases.sql`、`alerts/cases.py:CaseStore.assign`、`pipeline.py` 三行改动。 |
+| 45+ 讲解（假设·测试） | 说假设与测试 | "Assumptions: same user, rolling 48-hour gap, max severity, closed cases never reopen, no backfill of existing alerts. Tests: window boundary, other user, rolling window, escalation, closed-not-reopened and close errors, plus the CLI replay on the fixtures." | 展示 `tests/test_cases.py`（6 个）和 `cases --user henry.ross@acme.example --json` 的键。 |
+| 45+ 讲解（known gaps·v2·insider risk） | known gaps；扩展联系产品 | "Gaps: no backfill, no merge or split, the Slack text shows the triggering alert, not the case. For insider risk the case is the real unit of work: investigations run for weeks and need an audit trail, so I'd add who closed it and why, and keep the alert rows untouched when a case closes — the evidence stays. Carol's three days of departing alerts are one case with one ping; henry's second burst opens with a first login from Romania, so a case should show login anomalies and data movement together — account takeover or insider is the analyst's first question. Cross-user cases, say two people sharing to the same outside address, are the next step." | `cases --user carol.diaz@acme.example`（case 4，3 条告警）；`outbox --json` 里 henry 的 `unusual_login_location` 那条（alert 35）。 |
 
-- case = 同一用户、相邻告警间隔 ≤ 48h（`case_window_hours`，滚动）；关闭后的 case 永不重开。
-- 严重度 = 成员最高分，经 `scoring.severity_label` 映射；通知只在新建/升级时发一次。
-- `alerts` 命令与表结构不变；不回填历史；状态仅 open/closed。
-- 持久化在 SQLite，走**新迁移**。
+### 追问与答
+- **Henry 09-02/03 一波、三周后又一波，窗口怎么处理？** 窗口按"相邻告警间隔"滚动，第一波最后一条 09-03 05:16，第二波 09-27 14:00 间隔远超 48h，所以是 case 1 和 case 7；同一波内 26 条因为每条都距上一条不到 48h 而留在 case 1。
+- **10 倍告警量，`assign` 每条跑什么查询？** 一次 `SELECT * FROM cases WHERE user = ? AND status = 'open' AND last_alert_at >= ?`，走 `idx_cases_user_status`；再一次写事务（INSERT/UPDATE + `case_alerts`）。`_hydrate` 每个 case 再查一次成员，列表命令会有 N+1，v2 合并成一次 JOIN。
+- **回放到 09-02 停、分析师关 case、再继续回放，分析师看到什么？** 关闭的 case 永不重开，之后的告警新开 case 并再通知一次；`replay` 有 watermark，重复回放不产生重复 case（`acceptance/test_t2.py::test_replaying_again_changes_nothing`）。
+- **怎么上线？客户已有脚本在读 `alerts`。** `alerts` 命令与表不动，case 只增不改；通知行为变化（从每条到每个 case）按租户用 `Config.feature_flags` 灰度。
+- **缺什么？** case 合并/拆分、分配给分析师、评论、回填、跨用户关联。
+- **为什么 max 不用 sum？什么时候 sum 对？** 分析师按最坏的一条分诊，10 条 0.2 不比一条 0.9 更急，sum 或平均会把 high 稀释或把噪声堆成 high；sum 适合"累计暴露量"的指标，那是 `scoring.user_risk` 的职责，已经存在。
 
-**里程碑**
-
-- **M1（≤ 15 min）**：`0005_cases.sql` + `CaseStore.assign()`；pipeline 里每个新 alert 归入 case；`cases --json` 能列出 henry 的 2 个 case。
-- **M2**：严重度 = max；通知只在新建/升级时发（`outbox` 从 59 条降到个位数）。
-- **M3**：`cases close <id>`；关闭后新告警开新 case；`--user`；单测（窗口、关闭、升级）。
-
-**给 Claude 的实现提示词**
-
-```
-Group alerts into cases. Follow existing patterns:
-- add a NEW numbered migration insiderwatch/migrations/0005_cases.sql (see db.py:migrate and CONTRIBUTING.md); do not edit 0002_alerts.sql or the alerts table
-- add insiderwatch/alerts/cases.py with a CaseStore(conn, config) in the same style as alerts/store.py; severity must come from scoring.severity_label applied to the max alert score
-- put the grouping window in config.py (case_window_hours)
-- in pipeline.py, after AlertStore.add, assign the alert to a case and only call the existing notifier when the case is created or its severity label rises; do not change notify/
-- add `cases [--user U] [--json]` and `cases close <id>` to cli.py using the COMMANDS table; errors must use InsiderWatchError
-- JSON per case: id, user, status (open/closed), severity, alerts (list of alert ids)
-- add tests/test_cases.py using the conn/config fixtures from tests/conftest.py
-Then replay fixtures/raw --until 2026-09-30 --notifier slack and show `cases --user henry.ross@acme.example` and the outbox count.
-```
-
-**审 AI 输出时看什么**
-
-- 有没有在 `alerts` 表加列 / 修改 0002（违反迁移约定）；`CREATE TABLE IF NOT EXISTS` 写进 Python 而不是迁移。
-- 严重度是不是平均/求和后自造阈值（应复用 `severity_label`）；
-- 通知去重是否做在 `notify/slack_webhook.py` 里（错层：notifier 不知道 case）。
-- 窗口写死 24h/48h 在代码里；每次 CLI 现算分组（`close` 无处落地）。
-- `cases close` 对不存在/已关闭 case 的错误是否走统一错误出口（exit code 2）。
-- 过度工程：case 状态机、分配给分析师、评论。
-
-**验证命令**
-
-```
-python3 -m pytest -q
-rm -f /tmp/iw.db; python3 -m insiderwatch --db /tmp/iw.db replay fixtures/raw --until 2026-09-30 --notifier slack >/dev/null
-python3 -m insiderwatch --db /tmp/iw.db cases
-python3 -m insiderwatch --db /tmp/iw.db alerts | wc -l; python3 -m insiderwatch --db /tmp/iw.db outbox | wc -l
-```
-（期望：henry 2 个 case；outbox 行数远小于 alerts 行数。）
-
-**known gaps**
-
-> "Alerts are grouped per user with a 48-hour rolling gap; severity is the worst alert; we notify when a case opens or escalates. Gaps: existing alerts aren't backfilled, no merging or splitting of cases, no cross-user correlation like shared IPs, no assignment or comments, and the window isn't per customer yet."
-
----
+### 翻车点
+- 在 `0002_alerts.sql` 加 `case_id` 列 → CONTRIBUTING 写明"Never edit an applied migration"，已有库不会重跑，新迁移才是约定。
+- `cases` 命令里读 `alerts` 再 `itertools.groupby` → 没有持久状态，`close` 无处存，通知时机也拿不到。
+- 在 `SlackWebhookNotifier` 里按用户去重 → 错层：notifier 只认 `Alert`，不知道 case 与升级，`ConsoleNotifier` 还是照旧刷屏。
+- 严重度取平均或自写 `if score > 0.7` → 已有 `scoring.severity_label` 与 `severity_medium/high`，平均会稀释 high。
 
 ## t3 · gdrive_connector
 
-**3 个澄清问题（英文）**
+### 题
+INSIDER-340：新客户用 Google Workspace，把 Drive 审计日志加成数据源。导出样例在 `fixtures/raw/gdrive/`，要出现在 `replay <raw_dir> --json` 的 `gdrive` 数据源名下。
 
-1. "What should count as an external share — link sharing, public, sharing with someone outside our domains?"
-2. "What do we do with events we don't model, like view or rename? Do we need to know how many we skipped?"
-3. "Do I add new Action values or map onto the existing ones, and does replay need a flag to include the new source?"
+### 参考答案
+- 设计：缝是 `Connector` 基类 + `@register_connector`：`m365_audit`、`okta`、`slack_audit` 三个已在其后，是真缝；分页、`fetch`、`events`、`drop` 计数都在基类，只实现 `parse_page` 与 `normalize`。备选是写一个"通用 Google API 客户端"自己翻页，会绕开基类的分页防环与统计，不选。映射全部落到已有 `Action`，下游 signal 才认得。
+- 改动：
+  - `connectors/gdrive.py:GDriveConnector.parse_page`：`items[].events[]` 逐 event 展开成记录，token = `nextPageToken`。
+  - `connectors/gdrive.py:_params`：把 `[{name, value|intValue|boolValue|multiValue}]` 压成 dict，`intValue` 是字符串，`int()` 转换。
+  - `connectors/gdrive.py:GDriveConnector.normalize`：`download` → `FILE_DOWNLOAD`（`bytes` = `file_size`，缺省 0）；`change_document_visibility` 为 `people_with_link` / `public_on_the_web` → `FILE_SHARE_EXTERNAL`；`change_user_access` 且 `events.is_external(target_user, config.internal_domains)` → `FILE_SHARE_EXTERNAL`；其余 `self.drop(reason)`；时间 `timeutil.parse_ts`。
+  - `connectors/__init__.py`：import `gdrive`。
+  - `tests/test_gdrive.py`。
+- 关键测试：
+  - `test_gdrive.py::test_unmapped_records_are_dropped_and_counted`：`unmapped_event` 5、`no_user` 1、`internal_access_change` 1、`visibility_not_exposed` 1。
+  - `test_gdrive.py::test_item_with_two_events_yields_both`：一条 item 里 `view` + `download`，产出 `bytes == 5`，丢弃计 1。
+  - `test_gdrive.py::test_replay_includes_gdrive_automatically`：`by_source["gdrive"] == 9`（`2026-09-30T20:00-07:00` 已是 10-01 UTC，被 `--until` 排除）。
+  - 验收 `acceptance/test_t3.py::test_utc_offsets_are_honoured_by_until`、`test_existing_sources_are_unchanged`。
 
-**假设清单**
+### 逐阶段
+| 分钟 | 做 | 说（英文原句） | 敲（T 编号 + 填好的具体内容） |
+|---|---|---|---|
+| 10–13 读题+Grill | 先自己打开 `fixtures/raw/gdrive/page-0001.json` 看真实形状（`intValue` 字符串、一条 item 多个 event、`Kim.Sato@Acme.Example` 大小写）；T4 定义"external share"；问 3 个问题 | "Let me pin the vocabulary: external share means link-sharing, public on the web, or access granted to an address outside our domains. Three questions." 问：(1) "What counts as an external share?" 面试官："Link sharing or public on the web, or sharing with someone outside our domains." 默认同。(2) "What about view, edit, rename?" 面试官："We don't model them. Don't lose track of how many we skip." 默认 `drop` 并计数。(3) "New `Action` values?" 面试官："Only if you can justify it." 默认不加。其余："`file_size` else zero; time zones to UTC; actor without email is skipped and counted; no CLI flag." | T2：`Given INSIDER-340, fixtures/raw/gdrive and connectors/base.py, list the decisions I must make, each depending only on earlier ones. Format: Q<n> — question; → option you'd pick and why. Read the fixtures instead of asking me for their shape. No code.` |
+| 13–16 方案 | T3；T5；M1–M3；T6 | "The seam is the `Connector` base class with `@register_connector` — three connectors already sit behind it. Option A: subclass and implement `parse_page` and `normalize`. Option B: a standalone Google client that loops over pages. A: paging, drop counting and `check` support come from the base. M1 is downloads only, visible under `gdrive` in `replay --json`." | T3：`Here's my list: (1) connectors/gdrive.py subclass with @register_connector, import in connectors/__init__.py; (2) flatten items[].events[]; (3) map to existing Action only; (4) parse_ts for times; (5) drop() with a reason for everything else; (6) tests/test_gdrive.py. What did I miss? Add only what's missing, ranked by user impact.` T5：`Seam: Connector (existing: m365_audit, okta, slack_audit). Compare (A) subclass implementing parse_page/normalize vs (B) standalone client with its own paging in 5 lines each. Recommend one. Don't edit.` T6：同 t1 的 CLAUDE.md，改一行：`Follow connectors/base.py and m365_audit.py; never override fetch/events; no new Action values.` |
+| 16–30 M1 | T7 红 → 绿 → `replay --json` 演示 | "First failing test: the gdrive connector is registered and the paged export yields events. Only downloads for now." | T7 红：`In tests/test_gdrive.py: build registered_connectors()["gdrive"](fixtures_dir/"raw"/"gdrive", Config()), list(connector.events()) and assert connector.stats.emitted == len(events). Show it fails.`（starter 上 `KeyError: 'gdrive'`。）绿：`Minimal: connectors/gdrive.py with @register_connector class GDriveConnector, source="gdrive"; parse_page flattens items[].events[] into {time, actor, ip, event} and returns payload.get("nextPageToken"); normalize maps only name == "download" to FILE_DOWNLOAD with bytes from the file_size parameter (intValue is a string); everything else self.drop("unmapped_event"). Import it in connectors/__init__.py. Run that test file.` 演示：`python3 -m insiderwatch --db /tmp/g.db replay fixtures/raw --until 2026-09-30 --json` 的 `by_source` 里出现 `gdrive`。 |
+| 30–40 M2 | 分享映射 + 多 event + 偏移 + drop 原因；红了走 T8 | "Slice two: link and public visibility and sharing with an outside address both become external shares; each drop gets its own reason so I can tell the customer what we skipped." | T7 红：`Add failing tests: a page with one item holding view then download yields one event with bytes == 5 and dropped_total == 1; the fixtures yield 6 downloads and 4 FILE_SHARE_EXTERNAL; the 09-22T09:30-07:00 download is 2026-09-22T16:30:00+00:00.` 绿：`Add change_document_visibility (people_with_link/public_on_the_web → FILE_SHARE_EXTERNAL, otherwise drop visibility_not_exposed) and change_user_access (events.is_external(target_user, config.internal_domains) → FILE_SHARE_EXTERNAL, otherwise drop internal_access_change); no email → drop no_user; times via timeutil.parse_ts.` T8（`--until` 计数不对时）：`Reproduce with one command: replay fixtures/raw --until 2026-09-30 --json and show by_source.gdrive. Then 3 ranked hypotheses with the prediction that would confirm each. Don't fix yet.` |
+| ~40 审查 | T10；收一条拒一条 | "One doubt round. I'll accept the missing-key crash, and reject the new `Action`, because every signal speaks the existing enum." | T10：`Adversarial review of the current diff against INSIDER-340. Assume the author is overconfident. Look at fixtures shapes (intValue strings, missing keys, multi-event items), registration, time handling, drop accounting. Do NOT validate or summarize. Max 5 issues, ranked.` 两条：(1) `change_user_access` 缺 `target_user` 时 `params["target_user"]` 崩 → 有效且要改：`.get` 并 drop；(2) 建议加 `Action.FILE_VISIBILITY_CHANGE` → 拒绝（下游 signal 与 `departing_exfil_actions` 都不认识，属于契约外的扩展）。常见：`datetime.fromisoformat` 代替 `parse_ts` → 收下并改回。 |
+| 42–45 收尾 | T11；T12 | "Fresh run: 71 passed. `replay --json` shows `gdrive: 9` events with 8 dropped; `check` lists each drop reason. Out of scope: live Reports API pull, shared-drive events — in NOTES.md." | T11：`uv run --with pytest python -m pytest -q`（`71 passed`）；`replay fixtures/raw --until 2026-09-30 --json` 输出 `"gdrive": 9`（`by_source`）、`"gdrive": 8`（`dropped`），`events` 1701；`python3 -m insiderwatch check fixtures/raw` 输出 `"gdrive"`：`emitted` 10、`fetched` 18、`dropped` = `internal_access_change` 1 / `no_user` 1 / `unmapped_event` 5 / `visibility_not_exposed` 1，且不再有 `warning: no connector registered for gdrive/`。T12 同前。 |
+| 45+ 讲解（做了什么·契合） | 口述 + 指 diff | "I shipped a Drive connector. It's a `Connector` subclass registered like the others, it flattens each activity item's events, maps downloads and external shares onto the existing `Action` enum, parses times through `parse_ts`, and counts everything else by reason. Replay picks it up with no flag. The shape I checked in the fixtures first: `intValue` is a string and one item can carry two events." | 指 `connectors/gdrive.py`、`connectors/__init__.py`；跑 T11 的 `replay --json`。 |
+| 45+ 讲解（假设·测试） | 假设与测试 | "Assumptions: link or public visibility and outside addresses count as external shares; view, edit and rename aren't modelled; size is `file_size` or zero; no email means skip and count. Tests: pagination, action mapping, drop counts by reason, offsets to UTC, the two-event item, and replay including `gdrive` automatically." | 展示 `tests/test_gdrive.py`（6 个）。 |
+| 45+ 讲解（known gaps·v2·insider risk） | known gaps；扩展联系产品 | "Gaps: it reads exported pages, not the Reports API with a persisted cursor; shared-drive events aren't modelled; `replay` still loads every event in memory. Insider-risk follow-ups, all visible in this code: an external share already feeds `departing_exfil` through `FILE_SHARE_EXTERNAL`, so no detection changed — but `is_external` can't tell a vendor like `partner@vendor.example` from a personal `someone.private@gmail.com` (kim.sato in the fixtures), and a personal address is the stronger exfiltration signal, so I'd classify the target domain and carry it in `attrs`. Baselines key on user and action, not source, so Drive downloads fold into the same daily totals as M365 and a new source steps the counts on its first day; I'd backfill Drive history before enabling alerts, and treat the first 14 days as cold start. `view` is dropped today; for insider risk, bulk viewing of sensitive files is reconnaissance, which is why the drop is counted, not silent." | 开 `fixtures/raw/gdrive/page-0001.json` 指 `partner@vendor.example` 与 `someone.private@gmail.com`；`baselines/store.py` 的 `daily_totals` 写入语句无 `source` 列。 |
 
-- 外部分享 = `visibility ∈ {people_with_link, public_on_the_web}` 或 `change_user_access` 的 `target_user` 在 `config.internal_domains` 之外。
-- `download` → `FILE_DOWNLOAD`，`bytes = file_size`（`intValue` 是字符串）。
-- 其余（view/edit/rename/未知/无 email）全部 `drop(reason)` 并计数；一个 item 里的每个 event 独立。
-- 时间一律 `timeutil.parse_ts`；不加新 `Action`；replay 自动发现。
+### 追问与答
+- **一个客户每天 5000 万条 Drive 事件，`replay` 先在哪里坏？** `Pipeline.run` 把所有 connector 的事件 `list` 后再整体排序（代码里有 TODO），内存先爆；基类 `events()` 本身是生成器。方向是按天流式处理，connector 按 `since` 取。
+- **怎么安全上线这个客户？** 先 `check <raw_dir>` 干跑，按 drop 原因分布和 `emitted/fetched` 确认映射没丢大头，再正式 replay；基线需要 14 天（`baseline_min_days`），之前不要期待下载类告警。
+- **Google 明天加一个新事件类型呢？** 落进 `unmapped_event` 计数，不崩，`check` 里能看到数量涨起来。
+- **内部域之间共享，你怎么决定的？谁会不同意？** `change_user_access` 的目标在 `internal_domains` 内记为 `internal_access_change` 丢弃（样例里 jack.lee → kim.sato）。风险团队可能不同意：内部转手也可能是外带的中转，v2 可以在 `attrs` 里保留而不产出 `FILE_SHARE_EXTERNAL`。
+- **缺什么？** 真实 API 拉取与游标持久化、`since`、组织单元、共享盘级别事件、`copy` / `print` 动作。
 
-**里程碑**
-
-- **M1（≤ 15 min）**：`GDriveConnector` 注册并 import；只映射 `download`；`replay --json` 里出现 `gdrive`。
-- **M2**：分享映射（可见性 + 外部用户）、多 event item、分页（基类已做）。
-- **M3**：drop 计数、时区（`--until 2026-09-30` 排除 09-30T20:00-07:00 的事件）、`tests/test_gdrive.py`。
-
-**给 Claude 的实现提示词**
-
-```
-Add a Google Drive audit-log connector. Look at connectors/base.py, connectors/m365_audit.py and connectors/okta.py first and follow them:
-- new file connectors/gdrive.py: a Connector subclass decorated with @register_connector, source = "gdrive"; implement parse_page (items[].events[] flattened into one record per event, continuation token = nextPageToken) and normalize; do not override fetch/events
-- map to EXISTING Action members only: download -> FILE_DOWNLOAD (bytes from the file_size parameter, which is an int64 string); change_document_visibility to people_with_link/public_on_the_web -> FILE_SHARE_EXTERNAL; change_user_access to a target_user outside config.internal_domains (use events.is_external) -> FILE_SHARE_EXTERNAL
-- anything else: return self.drop("<reason>") so it is counted
-- parse timestamps with timeutil.parse_ts (they carry UTC offsets); skip actors without an email
-- register it by importing it in connectors/__init__.py
-- add tests/test_gdrive.py using fixtures/raw/gdrive
-Then run `python -m insiderwatch --db /tmp/g.db replay fixtures/raw --until 2026-09-30 --json` and show by_source/by_action/dropped.
-```
-
-**审 AI 输出时看什么**
-
-- `int(p["intValue"])`：AI 常假设它是 int；
-- 只读 `events[0]`，丢掉同一 item 的其他事件；
-- 自写分页循环/`json.load` 目录（基类已处理）；
-- `datetime.fromisoformat(...)` 直接用（3.11 下对 `Z` 可行，但对 naive/混合偏移的处理与项目约定不一致；应走 `parse_ts`）；
-- 忘记 `connectors/__init__.py` import（测试直接构造类能过，replay 却没有 gdrive）；
-- 新增 `Action.FILE_VISIBILITY_CHANGE` 之类枚举（下游 signals 不认识）；
-- 从 `slack_audit.py` 复制 epoch 时间戳逻辑。
-
-**验证命令**
-
-```
-python3 -m pytest -q
-python3 -m insiderwatch --db /tmp/g.db replay fixtures/raw --until 2026-10-02 --json | python3 -c "import json,sys;d=json.load(sys.stdin);print(d['by_source'],d['dropped'])"
-python3 -m insiderwatch check fixtures/raw
-```
-（期望：`gdrive` 10 条事件，其中 6 个下载、4 个外部分享；`dropped.gdrive` = 8。）
-
-**known gaps**
-
-> "Drive downloads and external shares are ingested and mapped onto the existing actions; everything else is dropped and counted by reason. Gaps: it reads exported pages rather than calling the Reports API with a persisted cursor, internal-only access changes and shared-drive-level events aren't modelled, and `replay` still loads all events in memory, which won't survive a customer at Drive scale."
-
----
-
-## 3. 常见翻车（照抄 AI 通用写法为什么不契合）
-
-| 翻车 | 通用 AI 写法 | 为什么不契合本系统 |
-|---|---|---|
-| t1 全局阈值 | "FILE_DOWNLOAD > 500MB in the last 14 days of employment" | 与 deprecated 的 `legacy/dlp_rules.py` 同款；bob 每天 200MB 被误报；`BaselineStore` 就是为"相对本人"而存在 |
-| t1 忘记注册 | 新文件 + 单测直接构造类，测试全绿 | `signals/__init__.py` 没 import，replay 里 signal 根本不存在；不看 `__init__` 就不知道 |
-| t1 漏权重 | 在 signal 里 `strength=1.0` 就当完事 | `signal_weights` 没有条目 → 默认 0.2 + warning → 低于 `alert_threshold` → 0 告警 |
-| t1 pipeline 分支 | 在 `_process_day` 里 `if emp.termination_date` | 破坏"signal 返回 finding、scoring 决定告警"的分层 |
-| t2 改旧迁移 | 在 `0002_alerts.sql` 加 `case_id` 列 | CONTRIBUTING："Never edit an applied migration"；已有库不会重跑 |
-| t2 现算分组 | `cases` 命令里读 alerts 再 `itertools.groupby` | 无持久状态，`close` 没地方存；通知时机拿不到 |
-| t2 notifier 去重 | 在 `SlackWebhookNotifier` 里按用户去重 | 错层：notifier 不知道 case/升级；console 通知也要变 |
-| t2 自造严重度 | 平均分 / 求和 / 自己写 `if score > 0.7` | 已有 `scoring.severity_label` + config 阈值；平均会把一条 high 稀释掉 |
-| t3 自写分页 | `for f in sorted(glob)` 读文件 | 基类 `fetch` 已按 token 分页并防环 |
-| t3 `intValue` / 多 event | 假设 `intValue` 是 int、只取 `events[0]` | fixtures 里是字符串 + 一条 item 两个 event；不看 fixtures 就会错 |
-| t3 新枚举 | 加 `FILE_VISIBILITY_CHANGE` | 所有 signal/配置都按现有 `Action`；下游无人处理 |
-| t3 时间 | 直接 `fromisoformat` 或忽略偏移 | `--until` 边界被打破（09-30T20:00-07:00 实为 10-01 UTC）；项目约定统一 `parse_ts` |
+### 翻车点
+- 自写分页循环、`json.load` 整个目录 → 基类 `fetch` 已按 token 分页并防环（`MAX_PAGES`），还会统计 `fetched`。
+- `int` 假设与只取 `events[0]` → fixtures 里 `intValue` 是字符串，`page-0001.json` 有一条 item 含 `view` + `download` 两个 event。
+- 新增 `Action.FILE_VISIBILITY_CHANGE` → 下游 signal、`departing_exfil_actions` 都按现有枚举，没人处理新值。
+- `datetime.fromisoformat` 或忽略偏移 → `2026-09-30T20:00:00-07:00` 实为 10-01 UTC，`--until 2026-09-30` 的边界会被破坏；项目约定统一走 `timeutil.parse_ts`。

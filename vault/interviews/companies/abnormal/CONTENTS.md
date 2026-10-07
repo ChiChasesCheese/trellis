@@ -6,7 +6,7 @@
 
 ## 01_ai_screen · AI Technical Screen · 60 min · 已有 Python 代码库 + Claude Code（探索 10 / 模糊 feature 35 / walkthrough 15）
 
-先读：[REAL_QUESTION](loop/rounds/01_ai_screen/cb01_sentinel/REAL_QUESTION.md) · [playbook](loop/rounds/01_ai_screen/playbook.md) · [00-essentials](study/00-essentials.md) · [claude_code](study/20-cards/claude_code.md)
+先读：[REAL_QUESTION](loop/rounds/01_ai_screen/cb01_sentinel/REAL_QUESTION.md) · [claude_playbook](loop/rounds/01_ai_screen/claude_playbook.md) · [playbook](loop/rounds/01_ai_screen/playbook.md) · [00-essentials](study/00-essentials.md) · [claude_code](study/20-cards/claude_code.md)
 
 通用能力（[[Code Core MOC|code-core]] 卡组与练习）：[[round.reading]] · [[round.ambiguity]] · [[round.time]] · [[round.communication]] · [[transfer.abnormal]]
 

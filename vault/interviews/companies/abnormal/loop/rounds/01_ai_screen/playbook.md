@@ -19,50 +19,11 @@
 | **AI relationship** — supervise, explain, own | 给 AI 的提示词带上下文（文件、约束、"follow the pattern in X"）；能解释 AI 写的每个关键决定；在 right altitude 审 diff | 复制粘贴；说不清生成的代码；被问"为什么这样"答"AI 写的" |
 | **Communication** — synthesize, don't narrate | 每 3–5 分钟一句结论："So the flow is ingest → enrich → detect → policy → act; the extension point I need is detectors." | 念文件名；长时间沉默 |
 
-## 1. 逐分钟（写在纸上，贴屏幕边）
+## 1. 逐分钟与 Claude Code 驾驶
 
-| 分钟 | 段 | 目标 | 动作 |
-|---|---|---|---|
-| 0–1 | 开场 | 环境可用 | 开终端，`claude`；第二个终端留给跑测试/CLI。说："I'll spend about ten minutes building a mental model before touching code." |
-| 1–8 | **探索** | 心智模型 | §2 的探索提示词 E1→E4（并行：AI 在读时你自己看 README、目录树、跑一遍测试与 CLI） |
-| 8–10 | **说出心智模型** | 被看见 | §5.1 的 60 秒模板：入口 · 数据流 · 扩展点 · 约定 · 一个你注意到的风险 |
-| 10–13 | 读 ticket | 澄清 | 复述 ticket 一句（用户视角）；问 2–3 个**会改变设计**的问题（§3）；没有答案就说出默认假设 |
-| 13–16 | 方案 + 里程碑 | Judgment | 2 个方案一句话对比 → 选一个；M1（≤ 15 min 可演示）/ M2 / M3；把假设与里程碑写进 `NOTES.md` 或对 Claude 的 plan 里 |
-| 16–30 | **M1** | 可用 v1 | Plan mode 让 Claude 出方案（点名要复用的文件）→ 你审 → 实现 → 跑测试 → **通过真实入口演示**（CLI / API） |
-| 30–42 | M2 | 迭代 | 模糊点里最重要的一个（安全产品：误报 / 漏报 / 租户隔离 / 幂等）；补测试 |
-| 42–45 | 收尾 | 交付 | 全量测试；`git diff --stat`；停止加功能 |
-| 45–52 | Walkthrough | 讲清楚 | §5.3 模板：做了什么 · 为什么这样契合 · 假设 · 测了什么 · known gaps · v2 |
-| 52–60 | 反问 | | `../../../06-questions-to-ask.md` |
+见 `claude_playbook.md` §三（阶段流程）与 §二（技法 T1–T12）。
 
-**节奏红线**：第 10 分钟还没说出心智模型 → 立刻说当前版本；第 30 分钟 M1 还不能演示 → 砍范围（去掉 M1 里非核心的部分），先演示；第 45 分钟后不写新功能。
-
-## 2. Claude Code 工作流
-
-### 2.1 开场 30 秒
-
-- 终端 1：`claude`。终端 2：跑 `pytest -q`、CLI。（新终端里接上会话：`claude --resume` 或 `/resume` —— 官方 tip。）
-- 先看有没有 `CLAUDE.md` / `README.md` / `CONTRIBUTING.md`：有就让 Claude 先读（Abnormal 自己的 monorepo 有 13 KB 的根 CLAUDE.md，面试库很可能也放了一份——那就是面试官写给你的约定）；没有可以用 `/init` 让它生成（≈1–2 分钟，产物本身就是一份架构摘要，可以当场念给面试官）。时间紧就用 E1 代替 `/init`。
-
-### 2.2 探索提示词（复制即用；边等边自己看目录树）
-
-- **E1 架构地图**："Map this repo for me: entry points (CLI/HTTP), the main data flow end to end, the core domain models, and the extension points (registries, base classes, plugin hooks). Cite file paths. Keep it under 25 lines."
-- **E2 约定**："What conventions does this codebase follow — configuration, persistence, error handling, logging, testing layout, naming? Point to one canonical example of each. Flag anything deprecated or legacy I should avoid."
-- **E3 跑一遍**（你自己在终端 2）：`pytest -q`；README 里的 CLI 命令跑一次，看真实输出长什么样。说一句"tests are green in N seconds, the CLI produces X"。
-- **E4 拿到 ticket 后定位**："Given this ticket: <paste>. Which existing modules and abstractions would a change like this touch? Is there an existing pattern for a similar feature I should copy? Don't write code yet."
-- **E4b 让 AI 反问歧义**（Shrivu 本人的工作流，F-9："Flesh out CONCEPT.md, what's ambiguous, ask me questions, what are dimensions I'm not considering"）："Before planning: what is ambiguous in this ticket given this codebase? List the decisions I need to make, with the option you'd pick and why. No code." —— 你从它的清单里挑 2–3 个问面试官，其余自己定。
-- **E5（可选）追一条路径**："Trace what happens to one <message/event/request> from <entry> to <output>, function by function."
-
-> 用 AI 做探索本身是加分项（官方："Candidates who only use AI to write code leave signal on the table"）。但**结论要你说出来**，不是把 AI 的输出念一遍。
-
-### 2.3 实现：Plan mode → 审 → 执行
-
-- `Shift+Tab` 切到 **plan mode**（官方点名）："Plan the smallest change that implements M1: <M1 一句话>. Constraints: reuse <X registry / settings / store / util> (look at <file> as the pattern), put tests in <tests/…> following <existing test>, no new dependencies, don't touch <legacy module>. List files to change and the test cases."
-- **审 plan（right altitude 的三问）**：① 方法对吗（挂在正确的扩展点上？）② 集成对吗（配置/存储/注册/审计走已有的路？）③ 覆盖了要紧的情况吗（误报样本、租户隔离、空/缺字段）？不对就当场改 plan，并**说出来**："I'm changing this: it added a new JSON config file, but tenants already have settings in `settings.py` — use that."
-- 执行后：终端 2 跑测试 + 真实入口演示。**证据优先**（Abnormal 工程博客 "Make Every PR Prove Itself"，F-3："a diff shows you what the agent typed, not whether it works"）：演示时给面试官看真实输出——CLI 结果、API 响应里的新字段、日志行——而不只是"tests pass"。让 Claude 加测试时点名约定："Add tests next to `tests/detectors/test_suspicious_links.py` in the same style: one benign and one malicious fixture."
-- **审 diff**：`git diff` 扫一遍形状（改了哪些文件、有没有新建平行结构、有没有改不该改的文件），关键函数读透。可以再让 Claude 自审："Review this diff against the codebase conventions you found earlier. List deviations, not style nits."
-- 卡住（AI 来回改不对）超过 3 分钟：`Esc` 打断，自己读那段代码，给更窄的指令；或缩小 M1。
-
-### 2.4 必会快捷键（考前在本地 Claude Code 里各按一次）
+## 2. 必会快捷键（考前在干净配置里各按一次）
 
 `Shift+Tab` 切换模式（含 plan mode）· `/context` 看上下文用量（Shrivu："run /context mid coding session at least once"）· `Esc` 打断当前生成 · `Esc Esc` 回到上一条消息改写 · `@path` 把文件放进上下文 · `!cmd` 直接跑 shell · `/clear` 清上下文（换任务时）· `/compact` 压缩 · `/resume` 接回会话。VS Code：`Ctrl/Cmd+\`` 开终端、`+` 开第二个、`Ctrl/Cmd+Shift+F` 全局搜、左栏 Source Control 看 diff。
 
@@ -81,10 +42,6 @@
 > "Then I'll go with X for v1 because <user reason>. I'll put the threshold in the tenant settings so it's a config change, not a code change, and I'll note it as an assumption."
 
 把假设写下来（`NOTES.md` 或 PR 描述式的注释），walkthrough 时逐条念。
-
-### 2.5 一个容易忽略的点：你也可以手写
-
-"You are the engineer; AI is a resource you supervise." 小改动（一个配置键、一行注册、一个测试断言）自己敲比写提示词快，也让面试官看到你真懂。经验法则：**说得清楚的大块交给 AI，改一两行的自己来**；被 AI 来回改错两次，自己接手。
 
 ## 4. 地雷（练习代码库里都埋了，真实面试大概率也有）
 
@@ -114,13 +71,9 @@
 
 > "It <does X>. I kept it because <fits Y / handles Z>. The part I checked carefully is <edge>, since that's where it could be wrong. I'd change <minor thing> with more time."
 
-## 6. 考前 48 小时
+## 6. 练习顺序
 
-1. 按 `../../../catalog/PARETO.md` 的顺序做：**cb01 t1（规则抑制）→ cb01 t2（插件化 enrichment）→ cb02 t1 → cb03 t1 → cb01 t3 → cb02 t3 → cb03 t2 → cb02 t2 → cb03 t3**。前两张是报道过的原题形态，至少各做两遍（第二遍换一种设计）。每次严格 60 分钟、出声（或录屏）。
-2. 每次 `check` 后 `reveal`，把自评表里的 0 写进 `../../../debrief/`（若有）或本文件末尾的复盘表。
-3. 本地 Claude Code 熟练度：plan mode、`Esc` 打断、`@file`、`!cmd`、`/resume` 各用一次；VS Code 网页版快捷键试一遍。
-4. 准备 2 个反问 + Why Abnormal / Why Insider Risk（`../../../fit.md`）。
-5. 面试当天：门户再看一次（"It'll update as you move through each stage"）。
+见 `claude_playbook.md` §五。
 
 ## 7. 复盘表（每次模拟后填一行）
 
