@@ -11,7 +11,7 @@ rounds:
   - id: 01_ai_screen
     name: AI Technical Screen · 60 min · 已有 Python 代码库 + Claude Code（探索 10 / 模糊 feature 35 / walkthrough 15）
     duration_min: 60
-    study: [loop/rounds/01_ai_screen/playbook.md, study/00-essentials.md, study/20-cards/claude_code.md]
+    study: [loop/rounds/01_ai_screen/cb01_sentinel/REAL_QUESTION.md, loop/rounds/01_ai_screen/playbook.md, study/00-essentials.md, study/20-cards/claude_code.md]
     core: [round.reading, round.ambiguity, round.time, round.communication, transfer.abnormal]
     skills:
       - id: reported_codebase

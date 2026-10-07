@@ -13,7 +13,7 @@
 
 | ID | 题族 | 轮次 | 最近 | #refs | 置信度 | 来源 | 本 kit |
 |---|---|---|---|---:|---|---|---|
-| cb01 | **Security-events 管线扩展**：规则抑制（geo-ip 等复杂条件，多租户 API）· 硬编码 enrichment → 插件机制（客户不碰平台代码）· +告警去重（reconstructed） | AI screen | 2026-06 | 2 | MED-HIGH | Q1/Q2 LC #8335187（全文）· Q3/Q4 PracHub 标题 + 1p3a 1181621 摘要（同源，算 1） | `loop/rounds/01_ai_screen/cb01_sentinel/` t1 t2 t3 |
+| cb01 | **Security-events 管线扩展**：规则抑制（geo-ip 等复杂条件，多租户 API）· 硬编码 enrichment → 插件机制（客户不碰平台代码）· +告警去重（reconstructed） | AI screen | 2026-06 | 2 | MED-HIGH | Q1/Q2 LC #8335187（全文）· Q3/Q4 PracHub 标题 + 1p3a 1181621 摘要（同源，算 1） | `loop/rounds/01_ai_screen/cb01_sentinel/` t1 t2 t3 · **原题复刻 `REAL_QUESTION.md` + `start cb01 real`** |
 | cb02 | **已有代码库 + 未披露 feature + 测试 + 扩展讨论**（格式本身；领域未知 → 以 insider-risk 领域库练） | AI screen | 2026-09 | 5 | MED | Q5 #8496901 · Q6 #8387564 · Q7 PracHub a2857641b5 · PracHub 874b1387d9 · Glassdoor Sr SWE 2026-06（"coding exercise with AI assistant"） | `cb02_insiderwatch/` t1 t2 t3 |
 | cb03 | **团队真实领域**：候选人身份欺诈（Infiltration Prevention）——关联引擎、新 ATS 数据源、审核反馈 | AI screen（迁移练习）· 团队面 | 2026-09 | 0 | — | 无面试报道；领域来自 JD 与产品页 O-1/O-4（官方） | `cb03_vetting/` t1 t2 t3 |
 | cr01 | **Code review 一个小仓库**：找问题、P0/P1 排序、给具体修法（+ 用 AI 修） | onsite | 2026-09 | 5 | MED | Q12 #8496901 · Glassdoor 2026-04（"Code review & fix implementation with AI"）· Glassdoor Sr SWE 2026-06（"take-home code review"）· PracHub（"PR or code-review discussion"）· Q14 1p3a 1148780（2025-10，预发 link） | `loop/rounds/03_code_review/cr01_*` |

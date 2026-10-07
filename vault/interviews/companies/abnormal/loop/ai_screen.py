@@ -6,6 +6,7 @@
   python3 loop/ai_screen.py check cb02 t1 DIR             # hidden acceptance tests + the repo's own tests + your diff
   python3 loop/ai_screen.py reveal cb02 t1                # the interviewer's notes for that ticket (after you finish)
   python3 loop/ai_screen.py time DIR                      # minutes elapsed in a started session
+  python3 loop/ai_screen.py start cb01 real               # the reported screening question, worded as the interviewer said it
 
 Open DIR in VS Code and run `claude` there: the session is the codebase, nothing else (no kit, no solution).
 """
@@ -100,8 +101,12 @@ def cmd_check(a) -> None:
     env = dict(os.environ, CODEBASE=str(ws))
     env.pop("IMPL", None)
     print(f"== acceptance {a.cb} {a.t} (hidden tests) against {ws}")
+    tickets = "t2" if a.t == "real" else a.t
+    if a.t == "real":
+        print("  (real = 原题口述版：面试官最终要的是题②，验收跑 t2；题①可另跑 `check cb01 t1`。t2 的测试用 tickets/t2_*.md 里点名的配置键 `[enrichment] plugin_dirs / enabled`，"
+              "做完 v1 后读一下 t2 ticket 的接口约定再对齐)")
     for tier in ("core", "stretch", "regression"):
-        rc, out = _pytest([str(d / "acceptance"), "-m", f"{a.t} and {tier}"], KIT, env)
+        rc, out = _pytest([str(d / "acceptance"), "-m", f"{tickets} and {tier}"], KIT, env)
         last = out.splitlines()[-1] if out else "(no output)"
         print(f"  {tier:10s} {'PASS' if rc == 0 else ('none' if rc == 5 else 'FAIL')}  {last}")
         if rc not in (0, 5) and a.verbose:
@@ -132,6 +137,9 @@ def cmd_check(a) -> None:
 
 def cmd_reveal(a) -> None:
     d = _codebase(a.cb)
+    if a.t == "real" and (d / "REAL_QUESTION.md").exists():
+        print((d / "REAL_QUESTION.md").read_text())
+        return
     text = (d / "interviewer.md").read_text()
     m = re.search(rf"^##+ [^\n]*\b{a.t}\b.*?(?=^## |\Z)", text, re.S | re.M | re.I)
     print(m.group(0) if m else text)

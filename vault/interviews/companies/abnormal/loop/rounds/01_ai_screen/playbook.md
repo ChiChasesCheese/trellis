@@ -4,7 +4,7 @@
 > 练：`python3 loop/ai_screen.py start cb02 t1` → 在打印出的目录里开 VS Code + `claude`，严格 60 分钟 → `check` → `reveal`。
 > 一句话：**这一轮不考你会不会写代码，考你像不像一个第一天就能接 ticket 的工程师——AI 是你带的实习生，你是 owner。**
 >
-> **报道过的真题（LeetCode Discuss #8335187，2026-06-15，编排者已逐字核对）**：代码库 = security-events 管线（collection/ingestion → enrichment（geo-ip、history、+1，**硬编码**）→ 规则 threat level → ranking → alerts → API → DB）；feature ① "allow users to suppress some rules (it can be complex rules like based on geo-ip)" ② "clients want more configurability without touching platform code. Implement a plugin based mechanism"。该候选人 20 分钟只在口头讲 decorator pattern，最后让 Claude 全写，自评 No。**cb01 就是照这个形态造的，先练它。**
+> **报道过的真题（LeetCode Discuss #8335187，2026-06-15，编排者已逐字核对）**：代码库 = security-events 管线（collection/ingestion → enrichment（geo-ip、history、+1，**硬编码**）→ 规则 threat level → ranking → alerts → API → DB）；feature ① "allow users to suppress some rules (it can be complex rules like based on geo-ip)" ② "clients want more configurability without touching platform code. Implement a plugin based mechanism"。该候选人 20 分钟只在口头讲 decorator pattern，最后让 Claude 全写，自评 No。**cb01 就是照这个形态造的，先练它。原题原文、中文讲解与参考答案：`cb01_sentinel/REAL_QUESTION.md`；口述版原题练习：`python3 loop/ai_screen.py start cb01 real`。**
 > 另一份 SWE II 报道（#8496901，2026-09-02）：先"explain how it worked"，再实现 feature，最后"discuss possible extensions and modifications … mostly discussion-based"——**第 45 分钟后的扩展讨论也是评分段**，每个练习的 `interviewer.md` 追问就是为它准备的。
 
 ## 0. 评分 → 可被看见的行为（每一条都要"被看见"，没说出口 = 没发生）

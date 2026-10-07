@@ -36,3 +36,9 @@ Next quarter a very large customer onboards; we expect **~50,000 events/s at pea
 - Retention? → "Events 30 days hot, a year cold for compliance. Alerts forever."
 - Can we lose events? → "No. Duplicated alerts are annoying; missed alerts are an incident."
 - Ordering requirements? → "Per user, roughly — brute-force and impossible-travel reason over a user's sequence."
+
+## 中文题意
+
+上图是现有的安全事件管线：采集器每 60 秒按租户拉取（每条 ~1 KB JSON）→ 单个 Kafka topic（12 个分区，按 tenant_id 分区）→ 6 个 Python worker，每条事件：HTTP 调 geoip-svc、查 Postgres 的用户历史、HTTP 调 intel-svc、brute_force 规则用 `count(*)` 查 10 分钟窗口、写事件行、命中则写告警行（同一个 Postgres 主库）→ 分析师用的告警 API（`ORDER BY score DESC LIMIT 50 OFFSET n`）。
+现状：峰值 ~2,000 事件/秒、~300 租户；告警 API p99 = 2 s 且在变差。下季度一个超大客户接入：峰值 **~50,000 事件/秒**，单个租户占 ~40% 流量。**问：怎么扩容？读、写分别怎么办，哪里先坏？**
+可问到的答案：事件→告警延迟 1 分钟内可接受（登录类最好 10 s 内）；分析师要搜 30 天内原始事件；事件热存 30 天、冷存 1 年、告警永久；不能丢事件（重复告警可以忍，漏告警是事故）；同一用户的事件大致要有序。
