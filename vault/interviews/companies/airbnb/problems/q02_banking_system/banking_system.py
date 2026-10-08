@@ -78,7 +78,8 @@ class BankingSystem(ABC):
         either account does not exist, or if the source has
         insufficient funds.
         A transfer expires 24 hours (86400000 ms) after it was
-        initiated: from `timestamp + 86400000` on it can no longer be
+        initiated: it can still be accepted at `timestamp + 86400000`;
+        from `timestamp + 86400001` on it can no longer be
         accepted and the held money returns to the source account.
         """
         # default implementation

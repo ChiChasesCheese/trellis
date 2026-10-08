@@ -124,4 +124,39 @@ def test_level_1_case_03_basic_create_deposit_and_pay(self):
 | https://github.com/DrustZ/ai_interview_prep_2026/blob/main/online_resource/drills/09_banking_system.py | low | An AI-written drill: expiry at `ts >= expires_at` (half-open), merged account has `ended_at`, `get_balance` → `None` before creation or after merge. |
 
 The photos say "ranking accounts based on the **total value of transactions**", which matches `top_activity`, not
-`top_spenders`. Where the sources disagree (the 24 h boundary), `problem.md` labels the choice **(reconstructed)**.
+`top_spenders`. Where the sources disagree, `problem.md` labels the choice **(reconstructed)**.
+
+## Real Level 3 tests (second batch, 2026-10-08)
+
+Photos of the real `tests/level_3_tests.py` (locked) and of a Unit Tests run. Test names seen: `case_02_basic_transfer_expiration`,
+`case_03_basic_transfer_and_accept_transfer`, `case_04_multiple_transfers_and_acceptances`, `case_05_transfer_edge_cases`,
+`case_10_all_operations_3`. Confirms `transfer` / `accept_transfer` names, `'transfer<k>'` ids, and the 24 h boundary:
+
+```python
+def test_level_3_case_02_basic_transfer_expiration(self):
+    self.assertTrue(self.system.create_account(1, 'account1'))
+    self.assertTrue(self.system.create_account(2, 'account2'))
+    self.assertEqual(self.system.deposit(3, 'account1', 2000), 2000)
+    self.assertEqual(self.system.transfer(4, 'account1', 'account2', 1000), 'transfer1')
+    self.assertEqual(self.system.deposit(86400004, 'account1', 100), 1100)   # t + 1 day exactly: NOT refunded yet
+    self.assertEqual(self.system.deposit(86400005, 'account2', 100), 100)
+
+def test_level_3_case_03_basic_transfer_and_accept_transfer(self):
+    ...create account1, account2; deposit(3, 'account1', 2000) == 2000
+    self.assertEqual(self.system.transfer(4, 'account1', 'account2', 1000), 'transfer1')
+    self.assertTrue(self.system.accept_transfer(5, 'account2', 'transfer1'))
+    self.assertEqual(self.system.deposit(6, 'account1', 100), 1100)
+    self.assertEqual(self.system.deposit(7, 'account2', 100), 1100)
+
+def test_level_3_case_04_multiple_transfers_and_acceptances(self):
+    ...create account1..3; deposit(4, 'account1', 2000) == 2000
+    transfer(5, 'account1', 'account2', 500) == 'transfer1'; transfer(6, 'account1', 'account3', 500) == 'transfer2'
+    deposit(86400002, 'account1', 100) == 1100; deposit(86400003, 'account2', 100) == 100; deposit(86400004, 'account3', 100) == 100
+    self.assertTrue(self.system.accept_transfer(86400005, 'account2', 'transfer1'))   # made at 5: t + 1 day exactly, still valid
+    self.assertTrue(self.system.accept_transfer(86400006, 'account3', 'transfer2'))
+    deposit(86400007, 'account1', 100) == 1200; deposit(86400008, 'account2', 100) == 700; deposit(86400009, 'account3', 100) == 700
+```
+
+`case_05_transfer_edge_cases` (partly covered by a phone overlay): transfers from / to `'non-existing'`, amount 2001 > balance,
+`account1 → account1`, all `None`; then `transfer(7, 'account1', 'account2', 1000) == 'transfer1'`.
+The run screen showed `2100 != 1100` on case 02 and `False is not true` on case 04 for an implementation expiring at `ts >= t + 1 day`.

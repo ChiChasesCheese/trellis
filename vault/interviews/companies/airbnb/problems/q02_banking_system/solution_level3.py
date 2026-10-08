@@ -14,7 +14,7 @@ class BankingSystemImpl(BankingSystem):
     def _expire(self, timestamp):
         # Every public method calls this first: refunds land before anything reads a balance.
         for transfer_id, (source, _, amount, expires_at) in list(self.pending.items()):
-            if timestamp < expires_at:
+            if timestamp <= expires_at:   # real tests: still pending at exactly t + 1 day
                 continue
             self.balances[source] += amount
             del self.pending[transfer_id]

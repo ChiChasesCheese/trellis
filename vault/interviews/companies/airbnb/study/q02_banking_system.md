@@ -7,7 +7,7 @@
 cd vault/interviews/companies/airbnb/problems/q02_banking_system
 IMPL=starter python3 -m unittest tests.test_level_1      # 只跑 Level 1
 IMPL=starter bash run_single_test.sh case_05              # 只跑一个测试
-python3 -m unittest discover -s tests -p "test_*.py"      # 参考解：39/39
+python3 -m unittest discover -s tests -p "test_*.py"      # 参考解：42/42
 python3 mutation_check.py                                 # 16 个错误版本全部被测试抓到
 ```
 
@@ -98,7 +98,7 @@ DAY_MS = 24 * 60 * 60 * 1000
 
     def _expire(self, timestamp):
         for transfer_id, (source, _, amount, expires_at) in list(self.pending.items()):
-            if timestamp < expires_at:
+            if timestamp <= expires_at:   # 满 24 小时那一刻仍有效
                 continue
             self.balances[source] += amount      # 退回转出方
             del self.pending[transfer_id]
@@ -128,8 +128,10 @@ DAY_MS = 24 * 60 * 60 * 1000
 **这一级的核心心法：所有公开方法的第一行都是 `self._expire(timestamp)`。** 包括 `create_account`、`deposit`、`pay`、`top_activity`。
 过期退款没有后台线程来做，只能在下一次有人来读数据之前补上。漏掉一个方法，就会有一个测试看到"钱还没退回来"。
 
-- **过期区间是左闭右开 `[t, t + 1 天)`**：`timestamp < expires_at` 表示还有效。正好满 24 小时的那一刻已经过期。
-  这个边界是重建的（有一个 GitHub 版本在那一刻还接受），只影响 `L3 case 05` 一个测试。
+- **过期边界是闭区间 `[t, t + 1 天]`（真题测试确认）**：`timestamp <= expires_at` 表示还有效，正好满 24 小时那一刻**仍可接受**，
+  `t + 86400001` 起才退款。真题 `level_3_tests.py` 的 case 02（`deposit(86400004)` 期望 1100，即还没退款）和 case 04
+  （`accept_transfer(86400005, ..., 'transfer1')` 期望 True，transfer1 发起于 5）都卡在这一毫秒上。
+  我最初按 q01 的 TTL 惯例写成左闭右开 `<`，错了：**边界以测试为准，不以惯例为准。**
 - **转账编号只在成功时 +1。** 失败的转账不占编号。
 - **交易总额在 accept 时才算，两边都算。** 挂起中的、过期的转账都不算。
 - **已接受、已过期、不存在，统一用"不在 `pending` 里"来判断**，一个 `if` 就够了。
@@ -138,7 +140,7 @@ DAY_MS = 24 * 60 * 60 * 1000
 
 | 错法 | 挂在哪些测试 |
 |---|---|
-| `<=`：满 24 小时那一刻还接受 | L3 case 05, 06, 07 |
+| `<`：满 24 小时那一刻就退款（左闭右开） | L3 case 02r, 04r, 05, 06, 07 |
 | 只在 `accept_transfer` 里处理过期 | L3 case 06 |
 | 发起转账时就计入总额 | L3 case 08；L4 case 05, 06 |
 | 失败的转账也让编号 +1 | L3 几乎全部 |
@@ -188,7 +190,7 @@ Level 4 要回答"某个时刻的余额是多少"，所以**每一次余额变�
 - **`bisect_right` 包含 `time_at` 本身**：查的是"处理完 `time_at` 这一刻的操作之后"的余额。
   （`key=` 参数需要 Python 3.10 以上；没有的话就倒着线性扫一遍，同样能过。）
 - **原账户的过去不改写。** 合并只在 `id1` 的历史末尾追加一条，`get_balance(id1, 合并之前)` 仍然是 `id1` 自己当时的余额。
-- **过期退款的时间记在 `expires_at`，不记在发现它的那次查询上**：钱是在过期那一刻回来的，只是我们到下一次查询才处理。
+- **过期退款的时间记在 `expires_at + 1`，不记在发现它的那次查询上**：钱是在过期那一刻回来的，只是我们到下一次查询才处理。
   `_expire` 是按创建顺序处理的，而每笔转账都是 24 小时过期，所以历史列表仍然按时间有序。
 
 | 错法 | 挂在哪些测试 |

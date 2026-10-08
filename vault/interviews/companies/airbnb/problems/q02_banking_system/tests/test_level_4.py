@@ -110,8 +110,8 @@ class Level4Tests(unittest.TestCase):
         s.transfer(5, "a", "b", 400)
         s.deposit(5 + 2 * DAY, "b", 0)                        # first query after the expiry
         self.assertEqual(s.get_balance(5 + 2 * DAY + 1, "a", 5), 600)
-        self.assertEqual(s.get_balance(5 + 2 * DAY + 2, "a", 5 + DAY - 1), 600)
-        self.assertEqual(s.get_balance(5 + 2 * DAY + 3, "a", 5 + DAY), 1000)
+        self.assertEqual(s.get_balance(5 + 2 * DAY + 2, "a", 5 + DAY), 600)       # last valid ms: still held
+        self.assertEqual(s.get_balance(5 + 2 * DAY + 3, "a", 5 + DAY + 1), 1000)  # refunded from t + 1 day + 1
 
     def test_level_4_case_10_recreated_id_has_a_gap(self):
         s = self._two_accounts()

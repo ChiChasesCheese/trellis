@@ -1,5 +1,6 @@
 """Level 3 — transfer / accept_transfer (reconstructed). Case 01 is the GitHub statement example; the rest are ours.
-The 24 h boundary (case 05) is the half-open reading [t, t + 86400000); one GitHub solution accepts at exactly t + 1 day."""
+Cases 02r-04r are copied from photos of the real level_3_tests.py; they fix the 24 h boundary as inclusive:
+a transfer made at t can still be accepted at t + 86400000 and expires from t + 86400001 on."""
 import importlib
 import os
 import sys
@@ -57,28 +58,67 @@ class Level3Tests(unittest.TestCase):
         self.assertIs(s.accept_transfer(8, "b", "transfer1"), False)       # already accepted
         self.assertEqual(s.deposit(9, "b", 0), 100)
 
-    def test_level_3_case_05_expiry_boundary_is_exclusive(self):
+    def test_level_3_case_05_expiry_boundary_is_inclusive(self):
         s = self.system
         s.transfer(10, "a", "b", 100)
         s.transfer(11, "a", "b", 100)
-        self.assertIs(s.accept_transfer(10 + DAY - 1, "b", "transfer1"), True)    # last valid millisecond
-        self.assertIs(s.accept_transfer(11 + DAY, "b", "transfer2"), False)       # expired at exactly t + 1 day
+        self.assertIs(s.accept_transfer(10 + DAY, "b", "transfer1"), True)       # exactly t + 1 day: still valid
+        self.assertIs(s.accept_transfer(11 + DAY + 1, "b", "transfer2"), False)   # one ms later: expired
+
+    # ---- verbatim from the real level_3_tests.py (photos, 2026-10-08) -----------------------
+
+    def test_level_3_case_02r_basic_transfer_expiration(self):
+        s = Impl()
+        self.assertTrue(s.create_account(1, 'account1'))
+        self.assertTrue(s.create_account(2, 'account2'))
+        self.assertEqual(s.deposit(3, 'account1', 2000), 2000)
+        self.assertEqual(s.transfer(4, 'account1', 'account2', 1000), 'transfer1')
+        self.assertEqual(s.deposit(86400004, 'account1', 100), 1100)
+        self.assertEqual(s.deposit(86400005, 'account2', 100), 100)
+
+    def test_level_3_case_03r_basic_transfer_and_accept_transfer(self):
+        s = Impl()
+        self.assertTrue(s.create_account(1, 'account1'))
+        self.assertTrue(s.create_account(2, 'account2'))
+        self.assertEqual(s.deposit(3, 'account1', 2000), 2000)
+        self.assertEqual(s.transfer(4, 'account1', 'account2', 1000), 'transfer1')
+        self.assertTrue(s.accept_transfer(5, 'account2', 'transfer1'))
+        self.assertEqual(s.deposit(6, 'account1', 100), 1100)
+        self.assertEqual(s.deposit(7, 'account2', 100), 1100)
+
+    def test_level_3_case_04r_multiple_transfers_and_acceptances(self):
+        s = Impl()
+        self.assertTrue(s.create_account(1, 'account1'))
+        self.assertTrue(s.create_account(2, 'account2'))
+        self.assertTrue(s.create_account(3, 'account3'))
+        self.assertEqual(s.deposit(4, 'account1', 2000), 2000)
+        self.assertEqual(s.transfer(5, 'account1', 'account2', 500), 'transfer1')
+        self.assertEqual(s.transfer(6, 'account1', 'account3', 500), 'transfer2')
+        self.assertEqual(s.deposit(86400002, 'account1', 100), 1100)
+        self.assertEqual(s.deposit(86400003, 'account2', 100), 100)
+        self.assertEqual(s.deposit(86400004, 'account3', 100), 100)
+        self.assertTrue(s.accept_transfer(86400005, 'account2', 'transfer1'))
+        self.assertTrue(s.accept_transfer(86400006, 'account3', 'transfer2'))
+        self.assertEqual(s.deposit(86400007, 'account1', 100), 1200)
+        self.assertEqual(s.deposit(86400008, 'account2', 100), 700)
+        self.assertEqual(s.deposit(86400009, 'account3', 100), 700)
 
     def test_level_3_case_06_expired_money_returns_to_source(self):
         s = self.system
         s.transfer(4, "a", "b", 300)
         self.assertEqual(s.deposit(5, "a", 0), 700)
-        self.assertEqual(s.deposit(4 + DAY, "a", 0), 1000)    # refunded before the deposit is applied
-        self.assertEqual(s.deposit(4 + DAY + 1, "b", 0), 0)
+        self.assertEqual(s.deposit(4 + DAY, "a", 0), 700)     # still held at exactly t + 1 day
+        self.assertEqual(s.deposit(4 + DAY + 1, "a", 0), 1000)  # refunded before the deposit is applied
+        self.assertEqual(s.deposit(4 + DAY + 2, "b", 0), 0)
 
     def test_level_3_case_07_refund_visible_to_pay_and_transfer(self):
         s = self.system
         s.transfer(4, "a", "b", 1000)
-        self.assertIsNone(s.pay(5, "a", 1))
-        self.assertEqual(s.pay(4 + DAY, "a", 1000), 0)        # pay sees the refund first
-        s.deposit(4 + DAY + 1, "a", 50)
-        s.transfer(4 + DAY + 2, "a", "b", 50)
-        self.assertEqual(s.transfer(4 + 2 * DAY + 2, "a", "b", 50), "transfer3")  # refund visible to transfer
+        self.assertIsNone(s.pay(4 + DAY, "a", 1))
+        self.assertEqual(s.pay(4 + DAY + 1, "a", 1000), 0)    # pay sees the refund first
+        s.deposit(4 + DAY + 2, "a", 50)
+        s.transfer(4 + DAY + 3, "a", "b", 50)
+        self.assertEqual(s.transfer(4 + 2 * DAY + 4, "a", "b", 50), "transfer3")  # refund visible to transfer
 
     def test_level_3_case_08_activity_counts_on_accept_only(self):
         s = self.system

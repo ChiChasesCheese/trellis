@@ -15,7 +15,7 @@
 | `starter_template.py` → `starter.py` | your file (CodeSignal's `banking_system_impl.py`) |
 | `solution_level1.py` … `solution_level4.py` | the standard answer after each level; each is the previous one plus the smallest change |
 | `solution.py` | reference solution (= `solution_level4.py`) |
-| `tests/test_level_{1..4}.py` | 39 `unittest` cases (L1 10, L2 8, L3 10, L4 11); `IMPL=starter` runs them against your file |
+| `tests/test_level_{1..4}.py` | 42 `unittest` cases (L1 10, L2 8, L3 13 incl. 3 copied from the real file, L4 11); `IMPL=starter` runs them against your file |
 | `mutation_check.py` | 16 one-bug mutants of `solution.py`; every one must fail a test |
 | `run_single_test.sh` | `bash run_single_test.sh case_03` |
 
@@ -72,10 +72,11 @@ transfers). The photos say "total value of transactions", so this kit follows `t
   account does not exist, or the source has insufficient funds.
 - `accept_transfer(timestamp, account_id, transfer_id) -> bool` — credit the target. `False` if the transfer does not
   exist, was already accepted, has expired, or `account_id` is not its target.
-- A transfer expires 24 h = `86400000` ms after it was initiated: it is acceptable on `[t, t + 86400000)`; from
-  `t + 86400000` on, the held money is back in the source account (visible to every later query).
-  **(reconstructed boundary)** One GitHub solution still accepts at exactly `t + 86400000`; the half-open reading is the
-  CodeSignal convention for every other window. Only `test_level_3_case_05` depends on it.
+- A transfer expires 24 h = `86400000` ms after it was initiated. **Boundary confirmed by the real tests** (cases 02–04
+  of the real `level_3_tests.py`, photographed 2026-10-08): it is still pending and acceptable at exactly
+  `t + 86400000`; from `t + 86400001` on, the held money is back in the source account (visible to every later query).
+  Our first reconstruction used the half-open window `[t, t + 86400000)` and was wrong by one millisecond; the
+  CodeSignal convention for TTLs elsewhere (q01), which is exactly why it is a trap here.
 
 Example: create both, deposit 2000 to `account1`; `transfer(4, "account1", "account2", 1000) == "transfer1"`;
 `accept_transfer(5, "account2", "transfer1") is True`.

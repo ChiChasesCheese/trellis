@@ -22,10 +22,10 @@ class BankingSystemImpl(BankingSystem):
     def _expire(self, timestamp):
         # Every public method calls this first: refunds land before anything reads a balance.
         for transfer_id, (source, _, amount, expires_at) in list(self.pending.items()):
-            if timestamp < expires_at:
+            if timestamp <= expires_at:   # real tests: still pending at exactly t + 1 day
                 continue
-            # Recorded at the moment it expired, not at the query that noticed it.
-            self._set_balance(source, expires_at, self.balances[source] + amount)
+            # Recorded at the moment it expired (first ms after expires_at), not at the query that noticed it.
+            self._set_balance(source, expires_at + 1, self.balances[source] + amount)
             del self.pending[transfer_id]
 
     def create_account(self, timestamp: int, account_id: str) -> bool:
