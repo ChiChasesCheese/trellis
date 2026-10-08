@@ -16,7 +16,8 @@ tests state modelling under changing requirements; the new parts are a **deferre
 | Level 2–4 one-line summaries | high | photos, verbatim |
 | L2 `top_activity`, L3 `transfer`/`accept_transfer` + 24 h expiry, L4 `merge_accounts`/`get_balance` | medium | FazeelUsmani/Industry-Problems (titles match the photos one-to-one) |
 | L3 24 h boundary (inclusive: acceptable at `t + 86400000`) + real cases 02–04 | high | photos of the real `level_3_tests.py`, 2026-10-08 |
-| Status method in L3, what "histories" means after a merge | low | sources disagree or are silent; each choice is labelled in `problem.md` |
+| L4 statement (merge rules, incoming transfers to the removed id stay pending; `get_balance` after the query) | high | photo of the real Level 4 statement, 2026-10-08 |
+| Status method in L3; `get_balance` of `account_id_1` before the merge; re-creating a removed id | low | sources disagree or are silent; each choice is labelled in `problem.md` |
 | Company = Airbnb | low–medium | Chi; the photos name no company |
 
 ## Approach by level
@@ -34,7 +35,7 @@ tests state modelling under changing requirements; the new parts are a **deferre
 Re-creating an account resets it · overdraft allowed · ties not alphabetical · totals sorted as strings · failed
 payment counted as activity · expiring one ms early (`<` instead of `<=`) · expiry processed only in `accept_transfer` · activity counted at
 transfer time instead of on accept · transfer ordinal consumed by a failed transfer · accept by a non-target · merge
-keeps the merged account's outgoing transfers · merge drops instead of redirecting incoming transfers · transfers
+keeps the merged account's outgoing transfers · merge redirects (or cancels) the third-party incoming transfers instead of leaving them pending · transfers
 between the two merged accounts not cancelled · refund dated at the query time · `get_balance` exclusive of `time_at` ·
 merged id still has a balance after the merge.
 
@@ -52,7 +53,7 @@ GitHub statement example, the rest ours).
 
 - `solution_levelN.py` passes Levels 1..N and fails Level N+1 (checked for N = 1..4); `solution.py` 42/42.
 - Empty `starter.py`: fails on every level (L1 10, L2 7, L3 12, L4 10).
-- `python3 mutation_check.py`: 16/16 mutants killed.
+- `python3 mutation_check.py`: 17/17 mutants killed.
 
 ## Skills exercised
 

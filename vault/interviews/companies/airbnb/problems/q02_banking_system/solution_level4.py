@@ -94,7 +94,7 @@ class BankingSystemImpl(BankingSystem):
                 self._set_balance(source, timestamp, self.balances[source] + amount)
                 del self.pending[transfer_id]
             elif target == account_id_2:
-                entry[1] = account_id_1
+                entry[1] = None   # spec: stays pending, can never be accepted, refunds when it expires
         self._set_balance(account_id_1, timestamp,
                           self.balances[account_id_1] + self.balances.pop(account_id_2))
         self.activity[account_id_1] += self.activity.pop(account_id_2)

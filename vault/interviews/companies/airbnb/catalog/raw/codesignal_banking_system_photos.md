@@ -157,6 +157,35 @@ def test_level_3_case_04_multiple_transfers_and_acceptances(self):
     deposit(86400007, 'account1', 100) == 1200; deposit(86400008, 'account2', 100) == 700; deposit(86400009, 'account3', 100) == 700
 ```
 
+## Real Level 4 statement (third batch, 2026-10-08)
+
+Photo taken at a steep angle; read carefully, one clause (marked) is the least certain. The run panel shows `21/41 tests
+passed`, so the real project has 41 tests in total.
+
+> **Level 4.** The banking system should support merging two accounts while retaining the original accounts' balances
+> and transaction histories.
+>
+> - `merge_accounts(self, timestamp: int, account_id_1: str, account_id_2: str) -> bool` — should merge
+>   `account_id_2` into the `account_id_1`.
+>   - Returns `True` if accounts are merged successfully, and `False` otherwise.
+>   - Returns `False` if `account_id_1` is equal to `account_id_2`.
+>   - Returns `False` if either `account_id_1` or `account_id_2` doesn't exist.
+>   - All outgoing transfers from `account_id_2` are canceled (the same state as expired). *(least certain line)*
+>   - All outgoing transfers from `account_id_1` to `account_id_2` are canceled (the same state as expired). Any other
+>     pending incoming transfer to `account_id_2` (from an account other than `account_id_1`) is left unchanged: it
+>     still targets the now-removed `account_id_2`, so it can never be accepted, and it remains pending until it
+>     expires naturally like any other transfer.
+>   - The balance of `account_id_1` should be increased by the balance of `account_id_2`.
+>   - The total value of transactions for the merged account equals the sum of all transactions for both
+>     `account_id_1` and `account_id_2`.
+>   - `account_id_2` should be removed from the system.
+> - `get_balance(self, timestamp: int, account_id: str, time_at: int) -> int | None` — should return the total amount
+>   of money in `account_id` (balance) at the given timestamp `time_at`. If the specified account did not exist at
+>   `time_at`, should return `None`.
+>
+>   Note that if a query has been processed at `time_at`, `get_balance` must reflect the account balance **after** the
+>   query has been processed.
+
 `case_05_transfer_edge_cases` (partly covered by a phone overlay): transfers from / to `'non-existing'`, amount 2001 > balance,
 `account1 → account1`, all `None`; then `transfer(7, 'account1', 'account2', 1000) == 'transfer1'`.
 The run screen showed `2100 != 1100` on case 02 and `False is not true` on case 04 for an implementation expiring at `ts >= t + 1 day`.

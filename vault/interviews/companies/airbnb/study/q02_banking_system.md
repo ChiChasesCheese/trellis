@@ -148,6 +148,9 @@ DAY_MS = 24 * 60 * 60 * 1000
 
 ## Level 4：唯一的写入口 + 历史 + 二分查找
 
+> 真题题面已拍到（`../catalog/raw/codesignal_banking_system_photos.md`）。和我最初重建不同的一条：**别人转给 id2 的挂起转账不转给 id1**，
+> 它保持原样、永远无法被接受（id2 重新开户也不行）、到期后自然退回转出方。实现：把它的 target 设成 `None`。
+
 Level 4 要回答"某个时刻的余额是多少"，所以**每一次余额变化都要留下记录**。最稳的做法是先重构一次：
 所有改余额的地方，都改成调用同一个函数。
 
@@ -171,8 +174,8 @@ Level 4 要回答"某个时刻的余额是多少"，所以**每一次余额变�
             if source == id2 or (source == id1 and target == id2):   # 从 id2 转出的、两个账户之间的：取消并退款
                 self._set_balance(source, timestamp, self.balances[source] + amount)
                 del self.pending[transfer_id]
-            elif target == id2:                                      # 转给 id2 的：改成转给 id1
-                entry[1] = id1                                       # pending 的值要改成 list 才能原地修改
+            elif target == id2:                                      # 别人转给 id2 的：不动，但永远无法被接受
+                entry[1] = None                                      # 到期自然退款；pending 的值要用 list 才能原地改
         self._set_balance(id1, timestamp, self.balances[id1] + self.balances.pop(id2))
         self.activity[id1] += self.activity.pop(id2)
         self.history[id2].append((timestamp, None))                  # None 表示从这一刻起这个 id 不存在
@@ -196,7 +199,7 @@ Level 4 要回答"某个时刻的余额是多少"，所以**每一次余额变�
 | 错法 | 挂在哪些测试 |
 |---|---|
 | 合并时不取消 id2 转出的转账 | L4 case 04, 06 |
-| 转给 id2 的转账没有改成转给 id1 | L4 case 05 |
+| 别人转给 id2 的转账被改成转给 id1（我最初的重建就是这么错的） | L4 case 05 |
 | 两个账户之间的转账没有取消 | L4 case 06 |
 | 退款时间记成了查询时间 | L4 case 09 |
 | `get_balance` 不包含 `time_at`（用了 `bisect_left`） | L4 case 01, 07, 08, 09, 10 |

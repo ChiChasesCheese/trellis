@@ -103,9 +103,12 @@ class BankingSystem(ABC):
         Should merge `account_id_2` into `account_id_1`.
         Returns `True` on success, `False` if the ids are equal or
         either account does not exist.
-        Pending transfers from `account_id_2`, and between the two
-        accounts, are cancelled and refunded; pending transfers to
-        `account_id_2` are redirected to `account_id_1`. Balance and
+        All outgoing transfers from `account_id_2`, and from
+        `account_id_1` to `account_id_2`, are canceled (the same state
+        as expired). Any other pending incoming transfer to
+        `account_id_2` is left unchanged: it still targets the removed
+        `account_id_2`, so it can never be accepted, and it remains
+        pending until it expires naturally. Balance and
         total transaction value of `account_id_2` are added to
         `account_id_1`. `account_id_2` stops existing (its id may be
         created again later).

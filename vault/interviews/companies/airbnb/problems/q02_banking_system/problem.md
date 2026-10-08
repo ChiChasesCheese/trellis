@@ -16,7 +16,7 @@
 | `solution_level1.py` … `solution_level4.py` | the standard answer after each level; each is the previous one plus the smallest change |
 | `solution.py` | reference solution (= `solution_level4.py`) |
 | `tests/test_level_{1..4}.py` | 42 `unittest` cases (L1 10, L2 8, L3 13 incl. 3 copied from the real file, L4 11); `IMPL=starter` runs them against your file |
-| `mutation_check.py` | 16 one-bug mutants of `solution.py`; every one must fail a test |
+| `mutation_check.py` | 17 one-bug mutants of `solution.py`; every one must fail a test |
 | `run_single_test.sh` | `bash run_single_test.sh case_03` |
 
 ## Requirements (verbatim)
@@ -84,15 +84,22 @@ Example: create both, deposit 2000 to `account1`; `transfer(4, "account1", "acco
 The summary also says "checking the status of those transfers". No reconstruction has a status method; if the real
 Level 3 has one (e.g. `get_transfer_status`), keep the accepted / expired transfers instead of deleting them.
 
-## Level 4 — merge and historical balance (reconstructed)
+## Level 4 — merge and historical balance (from the real statement, photographed 2026-10-08)
 
-- `merge_accounts(timestamp, account_id_1, account_id_2) -> bool` — merge account 2 into account 1. `False` if the ids are
-  equal or either account does not exist. Pending transfers **from** account 2, and pending transfers between the two
-  accounts, are cancelled and refunded; pending transfers **to** account 2 are redirected to account 1. Balance and
-  activity of account 2 are added to account 1; account 2 stops existing (its id can be created again).
-- `get_balance(timestamp, account_id, time_at) -> int | None` — the balance after every operation with timestamp
-  `<= time_at`; `None` if the account did not exist at `time_at` (not yet created, or merged away). The past of each
-  original account is kept as it was: `get_balance(·, account_id_1, before_merge)` is account 1's own balance then.
+- `merge_accounts(timestamp, account_id_1, account_id_2) -> bool` — merge `account_id_2` into `account_id_1`.
+  `True` on success; `False` if the ids are equal or either account does not exist.
+  - All outgoing transfers from `account_id_2`, and from `account_id_1` to `account_id_2`, are **canceled** (the same
+    state as expired: the held money returns to the source).
+  - **Any other pending incoming transfer to `account_id_2` is left unchanged**: it still targets the removed
+    `account_id_2`, so it can never be accepted, and it stays pending until it expires naturally (then it refunds its
+    source like any other transfer). *Our first reconstruction redirected these to `account_id_1` — wrong.*
+  - The balance of `account_id_1` is increased by the balance of `account_id_2`; the total value of transactions of the
+    merged account is the sum for both. `account_id_2` is removed from the system.
+- `get_balance(timestamp, account_id, time_at) -> int | None` — the balance of `account_id` at `time_at`; `None` if the
+  account did not exist at `time_at`. "If a query has been processed at `time_at`, `get_balance` must reflect the account
+  balance **after** the query has been processed." Not stated, kept as reconstructed: the past of each original account is
+  kept as it was (`get_balance(·, account_id_1, before_merge)` is account 1's own balance then), and a removed id can be
+  created again.
 
 Example: create both, deposit 1000 each, `merge_accounts(5, "account1", "account2") is True`;
 `get_balance(6, "account1", 3) == 1000`; `get_balance(7, "account2", 6) is None`.

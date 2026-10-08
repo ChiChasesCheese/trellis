@@ -61,16 +61,23 @@ class Level4Tests(unittest.TestCase):
         self.assertEqual(s.deposit(9, "a", 0), 1500)         # the held 300 came back with b
         self.assertEqual(s.deposit(10, "c", 0), 0)
 
-    def test_level_4_case_05_incoming_transfers_redirected(self):
+    def test_level_4_case_05_incoming_transfers_left_pending_then_expire(self):
+        # Real spec: an incoming transfer to account_id_2 from a third account is NOT redirected. It still targets the
+        # removed id, can never be accepted (not even by a re-created id), and refunds its source when it expires.
         s = self._two_accounts()
         s.create_account(5, "c")
         s.deposit(6, "c", 200)
         tid = s.transfer(7, "c", "b", 200)
         s.merge_accounts(8, "a", "b")
-        self.assertIs(s.accept_transfer(9, "b", tid), False)
-        self.assertIs(s.accept_transfer(10, "a", tid), True)
-        self.assertEqual(s.deposit(11, "a", 0), 1700)
-        self.assertEqual(s.top_activity(12, 3), ["a(1700)", "c(400)"])
+        self.assertIs(s.accept_transfer(9, "a", tid), False)
+        self.assertIs(s.accept_transfer(10, "b", tid), False)
+        s.create_account(11, "b")
+        self.assertIs(s.accept_transfer(12, "b", tid), False)
+        self.assertEqual(s.deposit(13, "c", 0), 0)              # still held
+        self.assertEqual(s.deposit(7 + DAY, "c", 0), 0)         # still held at exactly t + 1 day
+        self.assertEqual(s.deposit(7 + DAY + 1, "c", 0), 200)   # expired naturally: refunded
+        self.assertEqual(s.deposit(7 + DAY + 2, "a", 0), 1500)
+        self.assertEqual(s.top_activity(7 + DAY + 3, 3), ["a(1500)", "c(200)", "b(0)"])
 
     def test_level_4_case_06_transfer_between_the_two_cancelled(self):
         s = self._two_accounts()
