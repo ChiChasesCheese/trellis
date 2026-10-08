@@ -37,7 +37,7 @@ payment counted as activity · expiring one ms early (`<` instead of `<=`) · ex
 transfer time instead of on accept · transfer ordinal consumed by a failed transfer · accept by a non-target · merge
 keeps the merged account's outgoing transfers · merge redirects (or cancels) the third-party incoming transfers instead of leaving them pending · transfers
 between the two merged accounts not cancelled · refund dated at the query time · `get_balance` exclusive of `time_at` ·
-merged id still has a balance after the merge.
+merged id still has a balance after the merge · `defaultdict.pop` on an account that never transacted (KeyError; found by the real L4 case 07).
 
 ## Complexity + measured
 
@@ -48,10 +48,10 @@ not needed: the plain full scan runs Level 3 in 0.08 s with 1000 pending transfe
 
 ## Test inventory
 
-42 tests: L1 10 (01–03 from the photos, 04 the statement example, 05–10 ours); L2 8; L3 13 (02r–04r copied from the real file); L4 11 (01 of L2–L4 is the
+43 tests: L1 10 (01–03 from the photos, 04 the statement example, 05–10 ours); L2 8; L3 13 (02r–04r copied from the real file); L4 12 (01 of L2–L4 is the
 GitHub statement example, the rest ours).
 
-- `solution_levelN.py` passes Levels 1..N and fails Level N+1 (checked for N = 1..4); `solution.py` 42/42.
+- `solution_levelN.py` passes Levels 1..N and fails Level N+1 (checked for N = 1..4); `solution.py` 43/43.
 - Empty `starter.py`: fails on every level (L1 10, L2 7, L3 12, L4 10).
 - `python3 mutation_check.py`: 17/17 mutants killed.
 

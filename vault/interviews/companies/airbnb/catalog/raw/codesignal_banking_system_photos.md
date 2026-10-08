@@ -186,6 +186,11 @@ passed`, so the real project has 41 tests in total.
 >   Note that if a query has been processed at `time_at`, `get_balance` must reflect the account balance **after** the
 >   query has been processed.
 
+Real L4 run (fourth batch): `test_level_4_case_07_account_not_found` calls
+`self.assertTrue(self.system.merge_accounts(5, 'account2', 'account1'))`; an implementation that kept the transaction
+log in a `defaultdict(list)` and did `acc2history.pop(account_id_2)` raised `KeyError: 'account1'` (account1 never
+transacted). Our case 12 reproduces it.
+
 `case_05_transfer_edge_cases` (partly covered by a phone overlay): transfers from / to `'non-existing'`, amount 2001 > balance,
 `account1 → account1`, all `None`; then `transfer(7, 'account1', 'account2', 1000) == 'transfer1'`.
 The run screen showed `2100 != 1100` on case 02 and `False is not true` on case 04 for an implementation expiring at `ts >= t + 1 day`.

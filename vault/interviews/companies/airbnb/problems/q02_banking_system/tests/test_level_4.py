@@ -130,6 +130,20 @@ class Level4Tests(unittest.TestCase):
         self.assertEqual(s.get_balance(11, "b", 7), 0)
         self.assertEqual(s.get_balance(12, "b", 8), 30)
 
+    def test_level_4_case_12_merge_account_with_no_transactions(self):
+        # From the real level_4_tests.py run (case_07_account_not_found calls merge_accounts(5, 'account2', 'account1')
+        # on an account that never transacted). A transaction log kept in a defaultdict has no key for it, and
+        # defaultdict.pop does not create one: pop(id) raises KeyError.
+        s = self.system
+        s.create_account(1, "account1")
+        s.create_account(2, "account2")
+        s.deposit(3, "account2", 100)
+        self.assertIs(s.merge_accounts(5, "account2", "account1"), True)
+        self.assertEqual(s.top_activity(6, 5), ["account2(100)"])
+        self.assertIsNone(s.get_balance(7, "account1", 5))
+        self.assertEqual(s.get_balance(8, "account1", 4), 0)
+        self.assertIsNone(s.deposit(9, "account1", 10))
+
     def test_level_4_case_11_perf_within_time_limit(self):
         s = self.system
         start = time.perf_counter()

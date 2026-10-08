@@ -15,7 +15,7 @@
 | `starter_template.py` → `starter.py` | your file (CodeSignal's `banking_system_impl.py`) |
 | `solution_level1.py` … `solution_level4.py` | the standard answer after each level; each is the previous one plus the smallest change |
 | `solution.py` | reference solution (= `solution_level4.py`) |
-| `tests/test_level_{1..4}.py` | 42 `unittest` cases (L1 10, L2 8, L3 13 incl. 3 copied from the real file, L4 11); `IMPL=starter` runs them against your file |
+| `tests/test_level_{1..4}.py` | 43 `unittest` cases (L1 10, L2 8, L3 13 incl. 3 copied from the real file, L4 12); `IMPL=starter` runs them against your file |
 | `mutation_check.py` | 17 one-bug mutants of `solution.py`; every one must fail a test |
 | `run_single_test.sh` | `bash run_single_test.sh case_03` |
 

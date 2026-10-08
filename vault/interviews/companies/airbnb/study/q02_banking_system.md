@@ -7,7 +7,7 @@
 cd vault/interviews/companies/airbnb/problems/q02_banking_system
 IMPL=starter python3 -m unittest tests.test_level_1      # 只跑 Level 1
 IMPL=starter bash run_single_test.sh case_05              # 只跑一个测试
-python3 -m unittest discover -s tests -p "test_*.py"      # 参考解：42/42
+python3 -m unittest discover -s tests -p "test_*.py"      # 参考解：43/43
 python3 mutation_check.py                                 # 16 个错误版本全部被测试抓到
 ```
 
@@ -204,6 +204,10 @@ Level 4 要回答"某个时刻的余额是多少"，所以**每一次余额变�
 | 退款时间记成了查询时间 | L4 case 09 |
 | `get_balance` 不包含 `time_at`（用了 `bisect_left`） | L4 case 01, 07, 08, 09, 10 |
 | 合并后没给 id2 追加 `None` | L4 case 01, 08, 10 |
+| 交易流水存在 `defaultdict(list)` 里，合并时 `acc2history.pop(id2)`；id2 从没交易过就 `KeyError` | L4 case 12（真题 L4 case 07 就挂在这里） |
+
+**`defaultdict` 只在 `d[key]` 读取时补默认值，`d.pop(key)` 和 `d.get(key)` 都不会补。** 所以 `pop` 一律写成 `d.pop(key, [])` 或 `d.pop(key, 0)`。
+参考解没这个问题，是因为 `activity` 在开户时就初始化为 0，每个账户必有这个 key。
 
 ## 时间分配（90 分钟）
 

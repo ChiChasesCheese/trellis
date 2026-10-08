@@ -4,7 +4,7 @@
 level, 11/11 mutants killed; Chinese study articles written. Chi is working through it level by level in `starter.py`.
 
 **State (2026-10-08):** q02 Banking System added from 7 photos Chi brought in: Level 1 verbatim, Levels 2–4
-reconstructed from GitHub versions (FazeelUsmani/Industry-Problems matches the four summaries). Reference 42/42 (L3 boundary fixed from real tests; L4 merge rules from the real statement),
+reconstructed from GitHub versions (FazeelUsmani/Industry-Problems matches the four summaries). Reference 43/43 (L3 boundary fixed from real tests; L4 merge rules from the real statement),
 `solution_levelN.py` passes exactly Levels 1..N, empty starter red on every level, `mutation_check.py` 17/17 killed;
 Chinese walkthrough `study/q02_banking_system.md`. Chi is doing it level by level in `starter.py`.
 
