@@ -37,3 +37,30 @@
 ---
 
 讲解、参考答案、澄清问题、方案对比、里程碑、实现要点与追问：见 `walkthrough.md` §t2（口述版练习：`python3 loop/ai_screen.py start cb01 real`）。
+
+---
+
+## PracHub 付费版还原（reconstructed）
+
+PracHub "Screening Round Built on a Live Security Events Codebase"（Premium，`"locked":true`，正文不下发）读不到；它的报告月份（Jun 2026）、结构描述与一亩三分地 1181621（2026-06-29，正文需 188 积分）一致，疑为同一篇的编辑版。以下由四份来源拼出，**不是原文**：
+
+| 来源 | 贡献 |
+|---|---|
+| LC #8335187（英文原帖，全文） | 代码库流程、题①规则抑制、题②插件化富化、候选人的失败方式 |
+| 一亩三分地 1181621 可见片段 | 同样的流程描述；"Decorator Pattern 或其他设计模式，让客户可以自主选择开启或规避哪些威胁检测逻辑"；"提供具体的架构设计思路并完成相应的 Coding 实现" |
+| PracHub 题目页元数据（id 9362） | **"multi-tenant processing pipeline"**；把写死的逻辑拆成可配置组件（enrichment steps、rule suppression），**"without requiring redeployment"**；"spanning both high-level architecture and low-level implementation trade-offs" |
+| PracHub 面经页元数据 | Technical Screen · Medium · Software Engineer · Jun 2026 |
+
+还原题面（英文，面试官口吻）：
+
+> You have a multi-tenant security-events pipeline: ingestion → enrichment → rule evaluation and threat levelling → ranking → alerts → API → DB. Two problems customers raise:
+> 1. They need to suppress specific rules for their tenant, sometimes under complex conditions (for example based on geo-ip, which the pipeline already computes).
+> 2. Enrichment is hardcoded (geo-ip, history, threat intel). Customers want to choose and add enrichments for their tenant without us touching platform code or redeploying.
+> Walk me through the design, then implement it.
+
+比原帖多出的两个约束，以及怎么应对：
+
+- **多租户**：抑制规则与启用的富化器都按租户存与读；跨租户不可见是隐藏验收点（cb01 t1 / t2 都有对应测试）。
+- **不重新部署**：v1 的标准答案是"配置驱动 + 目录发现"——改租户配置、放插件文件即可生效，不需要发版。若追问"不重启也要生效"，答法见 `walkthrough.md` §t2 追问"能不能运行时生效"。
+
+练法：`python3 loop/ai_screen.py start cb01 real` 做完后，加练 15 分钟：让租户配置变更不重启即生效（见下一节答案），并为"改配置后下一批事件用新插件集"写一个测试。

@@ -105,6 +105,8 @@
 7. "How do rules know an enricher is missing?" → 规则声明 `requires_enrichment = ("geo",)`；启动时校验已启用规则所需的 enricher 都启用，否则报错或告警；运行时缺失则规则跳过并计数。
 8. "What's missing?" → 沙箱、超时、热加载（"No. Restart is fine."）、列出/干跑 CLI、接口版本。
 
+- **"Customers can't wait for a restart — can config changes take effect at runtime?"**（PracHub 版题面的 "without requiring redeployment"，见 `REAL_QUESTION.md` 末节）→ 按租户缓存已构建的 `EnrichmentService`，缓存键 = 租户配置文件的 mtime 或内容哈希；每批事件前比对一次（或提供 `POST /admin/reload` / SIGHUP），变了就在旁边构建新实例，**构建成功才原子替换引用**，失败保留旧实例并计数 `enrichment.reload_error`；插件模块按文件内容哈希命名导入，避免 `sys.modules` 里的旧版本被复用。说清代价：正在处理的批次用旧插件集，下一批才生效；多进程部署时每个 worker 各自检测。
+
 ### 翻车点
 - 提 decorator 模式却不看代码（真题原帖那位）→ 代码里已有未被使用的 `Enricher` 基类；decorator 只能注册我们自己 import 的类，客户代码要进来仍要改平台。
 - 新造 `PluginBase` / `PluginManager` / setuptools entry points → 已有 `Enricher`；本仓库不是 pip 安装模型。

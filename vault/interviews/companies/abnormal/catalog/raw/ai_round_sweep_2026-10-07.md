@@ -83,6 +83,7 @@ URL：https://prachub.com/interview-guide/abnormal-ai-software-engineer-intervie
   - other："How does Python's Global Interpreter Lock (GIL) impact the performance of multi-threaded data ingestion scripts, and how do you bypass these limitations?" → **新**。
   - behavioral：锚点 `question-reported-behavioral-6`，未在技术题分类中展示。
 - drill 题（站方自出，不计入报道）：SQL 并发配额（write skew）、按小时汇总去重、webhook 多签名校验、限流响应语义、网关 p99 五分钟尖峰（cache stampede）。
+- 付费面经 "Screening Round Built on a Live Security Events Codebase" 的 HTML 数据 `"locked":true`（正文不下发）；关联题 id 9362 "Extensible Security-Event Pipeline: Rule Suppression and Plugin-Based Enrichment" 题目页同样锁定，元数据原文："Evaluates whether you can design extensible, plugin-based software architecture for a multi-tenant processing pipeline."；"decoupling hardcoded logic into configurable components, such as enrichment steps and rule suppression, without requiring redeployment"（2026-10-09 curl）。还原题面见 `loop/rounds/01_ai_screen/cb01_sentinel/REAL_QUESTION.md` 末节。
 - 独立性：reported 题没有日期与来源，可能来自同一批面经的改写；#refs 不另计，只作题型佐证。
 
 ## 2. 本次新增 3 条最重要事实（摘要）

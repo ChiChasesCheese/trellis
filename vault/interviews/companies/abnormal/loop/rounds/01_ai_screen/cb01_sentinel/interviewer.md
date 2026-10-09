@@ -79,7 +79,7 @@
 | 插件是 Python 代码——信任问题？ | "They're our customers' engineers on a managed deployment, not arbitrary tenants. Mention it as a risk, but don't build a sandbox today." |
 | `plugin_dirs` 相对路径相对谁？ | "Pick something sensible and tell me."（本实现：相对仓库根，不是 CWD） |
 | 不同租户能共享同一个插件目录吗？ | "Sure, but tenants who don't enable it must not see its output." |
-| 要热加载吗？ | "No. Restart is fine." |
+| 要热加载吗？ | "No. Restart is fine."（PracHub 版题面强调 "without requiring redeployment"：若面试官改口要运行时生效，答法见 `walkthrough.md` §t2 追问） |
 | 禁用 `geo` 后 `impossible_travel` 怎么办？ | "It shouldn't crash. Quietly not firing is fine." |
 | 插件的 `name` 和内置重名？ | "Reject it."（`ConfigError`） |
 

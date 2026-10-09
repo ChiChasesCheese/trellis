@@ -23,3 +23,4 @@
 | 2026-10-09 | Glassdoor 全量（sonnet）+ PracHub 指南（编排者浏览器） | `catalog/raw/glassdoor_2026-10-09.md`：工程岗 78 条（新 67）；sweep S-7；`study/20-cards/python_runtime_data.md`；CATALOG/RANK/PARETO/LOOP_GUIDE/手册/计划按新证据更新 | 编排者核对原始 HTML：104787687 "Sentinal … rule engine"、104679337 "prompting claude code"、105890472 "ai coding, use an provided codebase" | 见提交 |
 | 2026-10-09 | LC 尽调 + 练习总表（编排者） | LC #8496901 正文与 4 条评论复核（评论无作者回复，无新信息）；LC 全部 19 帖与 kit 对照，面试相关的全部已收；`loop/PRACTICE_INDEX.md`（A/B/C/D 按可信度） | `lc_search.py` 输出 · GD 编号逐个核对 | 见提交 |
 | 2026-10-09 | 一亩三分地全量（编排者浏览器） | `catalog/raw/1p3a_2026-10-09.md`：标签页 11 主题，8 篇面经已收，新 2 帖（MLE 电面、PI 团队评价）；4 帖隐藏内容需积分 ≥ 188 | 浏览器逐帖读取 | 见提交 |
+| 2026-10-09 | PracHub 付费面经还原（编排者） | 正文服务端锁定；用 LC #8335187 + 1p3a 可见片段 + PracHub 题目元数据拼出 reconstructed 题面（新约束：多租户、不重新部署）→ `REAL_QUESTION.md` 末节、cb01 walkthrough t2 追问、interviewer 设定 | curl 确认 `locked:true`；符号 grep 核对 | 见提交 |
