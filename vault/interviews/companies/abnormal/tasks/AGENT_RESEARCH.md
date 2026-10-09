@@ -24,7 +24,7 @@
    - leetcode discuss：HTML 403；`POST https://leetcode.com/graphql`（discuss 搜索查询）可用。
    - 1point3acres：直连 Cloudflare 死锁；**Telegram 镜像** `https://t.me/s/usinterview?q=abnormal` 可读摘要（再试 `?q=Abnormal%20Security`）。1p3a 已知帖：thread 1072363（Tech Phone Screen · Image Deduplication）、1074077（Full process）。
    - GitHub：`api.github.com` 不可用；`git clone --depth 1` 公开仓库可用，`raw.githubusercontent.com` 可用；用 WebSearch `site:github.com` 找。
-   - prachub / interviewdb / levels.fyi / nowcoder 直接抓。glassdoor / medium 403 → 用搜索摘要，标"摘要"。
+   - prachub / interviewdb / levels.fyi / nowcoder 直接抓。medium 403 → 用搜索摘要，标"摘要"。glassdoor：`curl -A <浏览器 UA> https://api.glassdoor.com/Interview/...htm` 返回 200，评论正文以转义 JSON 嵌在 HTML 里（2026-10-09 实测，全量 152 条）。
    - 用 `curl -sS -L --max-time 30` 走默认代理（不要关 TLS 校验、不要 unset HTTPS_PROXY）。
 4. 中间产物放 `$CLAUDE_JOB_DIR/tmp/` 或 `/tmp/claude-0/.../scratchpad`，不要进仓库。
 5. 文件用中文写说明、英文保留原句。不写过程话。

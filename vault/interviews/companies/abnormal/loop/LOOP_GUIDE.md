@@ -12,6 +12,8 @@
 | 3 | **Skills Assessment** | **AI Technical Screen**：60 min，已有 Python 代码库 + Claude Code，探索 ~10 → 模糊 feature ~35 → walkthrough + 反问（inbox）；报道过的代码库 = security-events 管线（#8335187） | **下一轮（排期中）** |
 | 4 | Team Interviews（"cross-functional … values fit, how you collaborate"） | SWE II 2026-09（#8496901）：**Incident + System Design** · **Code Review + System Extensions** · **Manager/Behavioral** · 可能追加 **Technical Deep Dive**；Glassdoor 2026-04："Assignment review · System design & Incident handling · Code review & fix implementation with AI · Engineering manager"；F-13："system-design and incident-management-style conversation plus a PR or code-review discussion where I could use AI agents throughout" | 未知；门户会更新（inbox："It'll update as you move through each stage"） |
 
+**Glassdoor 全量（2026-10-09，`catalog/raw/glassdoor_2026-10-09.md`）补充**：AI coding 轮之后报告为 "technical deep dive"（105890472，2026-10-08）；incident 轮是 on-call 模拟（103339969、104329591）；后续轮次普遍允许用 AI（104329591、103476901）；现场 AI 轮代码库名 "Sentinal"、题 "implement a rule engine"（104787687）；复盘问 "Explain the architecture of the codebase, explain the feature which I have added and how will you make sure it works"（104679337）。
+
 **贯穿全程的评分词**：Judgment · Agency（inbox）；VOICE 价值观——Velocity · Ownership · Intellectual honesty · Customer obsession · Excellence（O-10）；"how you maximize your output with AI, and your willingness to own outcomes without waiting for permission"（O-14）。唯一一份详细挂掉原因："lacked sufficient **judgment** in a few areas"（#8496901 deep dive）。
 
 ---

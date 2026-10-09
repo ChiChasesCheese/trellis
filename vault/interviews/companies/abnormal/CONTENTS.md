@@ -14,13 +14,13 @@
 
 | | 题 | 题集 | 题解 | #refs | 最近 | 置信度 |
 |---|---|---|---|---:|---|---|
-| ★ | **cb01** Security-events 管线：规则抑制 · enrichment 插件化 · 告警去重 | [`loop/rounds/01_ai_screen/cb01_sentinel/`](loop/rounds/01_ai_screen/cb01_sentinel/) | [walkthrough](loop/rounds/01_ai_screen/cb01_sentinel/walkthrough.md) | 2 | 2026-06 | MED-HIGH |
+| ★ | **cb01** Security-events 管线（真实代码库名 "Sentinal"）：规则引擎 / 规则抑制 · enrichment 插件化 · 告警去重 | [`loop/rounds/01_ai_screen/cb01_sentinel/`](loop/rounds/01_ai_screen/cb01_sentinel/) | [walkthrough](loop/rounds/01_ai_screen/cb01_sentinel/walkthrough.md) | 3 | 2026-07 | HIGH |
 
 ### 换领域练格式：insider-risk（离职外泄 · 告警归并 · 新数据源）
 
 | | 题 | 题集 | 题解 | #refs | 最近 | 置信度 |
 |---|---|---|---|---:|---|---|
-| ★ | **cb02** 已有代码库 + 未披露 feature（insider-risk 领域库练格式） | [`loop/rounds/01_ai_screen/cb02_insiderwatch/`](loop/rounds/01_ai_screen/cb02_insiderwatch/) | [walkthrough](loop/rounds/01_ai_screen/cb02_insiderwatch/walkthrough.md) | 5 | 2026-09 | MED |
+| ★ | **cb02** 已有代码库 + 未披露 feature（insider-risk 领域库练格式） | [`loop/rounds/01_ai_screen/cb02_insiderwatch/`](loop/rounds/01_ai_screen/cb02_insiderwatch/) | [walkthrough](loop/rounds/01_ai_screen/cb02_insiderwatch/walkthrough.md) | 8 | 2026-10 | MED |
 
 ### 团队真实领域：候选人身份欺诈（关联引擎 · Workday 数据源 · 审核反馈）
 
@@ -44,7 +44,7 @@
 
 | | 题 | 题集 | 题解 | #refs | 最近 | 置信度 |
 |---|---|---|---|---:|---|---|
-|  | **cb06** File Vault take-home 同形：去重 + 并发 · 搜索 · 配额 | [`loop/rounds/01_ai_screen/cb06_filevault/`](loop/rounds/01_ai_screen/cb06_filevault/) | [walkthrough](loop/rounds/01_ai_screen/cb06_filevault/walkthrough.md) | 1 | 2026-07 | MED |
+| ★ | **cb06** File Vault take-home 同形：去重 + 并发 · 搜索 · 配额 | [`loop/rounds/01_ai_screen/cb06_filevault/`](loop/rounds/01_ai_screen/cb06_filevault/) | [walkthrough](loop/rounds/01_ai_screen/cb06_filevault/walkthrough.md) | 2 | 2026-07 | MED |
 
 
 ## 02_incident_sd · Incident（AWS 环境排查）+ System Design（扩容已有系统）
@@ -84,7 +84,7 @@
 
 | | 题 | 题集 | 题解 | #refs | 最近 | 置信度 |
 |---|---|---|---|---:|---|---|
-| ★ | **sd02** Code review 后的扩展：并发、worker、队列扩容、失败场景 | [`loop/rounds/03_code_review/sd02_worker_queue_scaling/`](loop/rounds/03_code_review/sd02_worker_queue_scaling/) | [model_answer](loop/rounds/03_code_review/sd02_worker_queue_scaling/model_answer.md) | 2 | 2026-09 | MED |
+|  | **sd02** Code review 后的扩展：并发、worker、队列扩容、失败场景 | [`loop/rounds/03_code_review/sd02_worker_queue_scaling/`](loop/rounds/03_code_review/sd02_worker_queue_scaling/) | [model_answer](loop/rounds/03_code_review/sd02_worker_queue_scaling/model_answer.md) | 2 | 2026-09 | MED |
 
 
 ## 04_manager_deep_dive · Manager / Behavioral + Technical Deep Dive（判断力）
@@ -110,4 +110,4 @@
 
 | | 题 | 题集 | 题解 | #refs | 最近 | 置信度 |
 |---|---|---|---|---:|---|---|
-| ★ | **pc01** 图片/文件去重（内存受限、哈希碰撞） | [`loop/rounds/06_legacy_coding/pc01_image_dedup/`](loop/rounds/06_legacy_coding/pc01_image_dedup/) | [题解](study/30-articles/pc01_image_dedup.md) | 4 | 2025-07 | MED |
+|  | **pc01** 图片/文件去重（内存受限、哈希碰撞） | [`loop/rounds/06_legacy_coding/pc01_image_dedup/`](loop/rounds/06_legacy_coding/pc01_image_dedup/) | [题解](study/30-articles/pc01_image_dedup.md) | 4 | 2025-07 | MED |

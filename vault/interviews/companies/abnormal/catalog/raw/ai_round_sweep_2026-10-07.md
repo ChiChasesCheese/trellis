@@ -69,6 +69,22 @@
 - Reddit r/cscareerquestions https://www.reddit.com/r/cscareerquestions/comments/1wvr0da/ （2026-10-02）标题 "Got rejected in a final round because of how I answered "how do you use AI?""——**非 Abnormal**，只作 Q19（HM 问 "how I used AI in everyday work"）的类比：该问题可以单独致拒。[低，未读正文]
 - 意义：AI 辅助代码库题已扩散到 Amazon / Atlassian / JioHotstar，"repo question 很简单、考的是流程与验证"是共同口径。
 
+### S-7 · PracHub 指南 "Abnormal AI Software Engineer Interview Guide"（Updated 2026-09-24，2026-10-09 编排者用浏览器读全文）· [低]（编辑撰写）+ 题库 [中]
+URL：https://prachub.com/interview-guide/abnormal-ai-software-engineer-interview-questions-guide-2026
+- 页面自述："The stages below are what candidates describe, not a published process."；4 轮 Recruiter / HM / Technical Assessments / Interactive Pair-Programming；各轮正文是通用写法（换公司名即可复用），**不采信为 Abnormal 事实**。`#plan` 是 7 天通用系统设计清单（Numbers before diagrams … Defend it while being interrupted），面向资深候选人，与 AI screen 无关。
+- 页面计数："1 Company bank questions · 3 Candidate experiences · 15 Practice prompts · 3 With worked solutions"。3 篇面经 = 已收的 874b1387d9 · 6e26945209 · "Screening Round Built on a Live Security Events Codebase"（付费，2026-10-09 仍未读到正文；页面显示 "Curated and edited by PracHub"，配套题 "Extensible Security-Event Pipeline: Rule Suppression and Plugin-Based Enrichment" = cb01 形态，疑与 LC #8335187 同源）。
+- 题目锚点区分 `question-reported-*`（报告过）与 `question-drill-*`（站方自出）。**reported 的 8 题**（逐字标题）：
+  - coding："Build a secure file storage vault application with backend and frontend components. Explain how you prompted your AI tool to generate the boilerplate and handle file encryption." → 与 S-1 File Vault take-home 互证；练习 `cb06_filevault`。
+  - coding："Implement a rate-limiting middleware for an API endpoint. Show how you use an AI assistant to write unit tests that cover edge cases like concurrent requests and token bucket exhaustion." → `cb06` t3（`TokenBucket` 挂载 + 429/`Retry-After`）部分覆盖。
+  - system design："How would you architect a system to detect and mitigate hash collisions in a high-volume photography and metadata storage service?" → 已有 sd03 / pc01。
+  - system design："Describe how you would design an end-to-end incident management system that automatically triggers alerts and orchestrates response workflows when a security anomaly is detected." → 已有 ic01 / ic02（形态不同：设计 vs 排查）。
+  - system design："Explain how you would structure a distributed data processing job in Apache Spark to analyze historical communication patterns. How do you identify and resolve bottlenecks like data skew?" → **新**。
+  - other："Debug a complex Python script that is experiencing memory leaks during large-scale JSON parsing." → **新**。
+  - other："How does Python's Global Interpreter Lock (GIL) impact the performance of multi-threaded data ingestion scripts, and how do you bypass these limitations?" → **新**。
+  - behavioral：锚点 `question-reported-behavioral-6`，未在技术题分类中展示。
+- drill 题（站方自出，不计入报道）：SQL 并发配额（write skew）、按小时汇总去重、webhook 多签名校验、限流响应语义、网关 p99 五分钟尖峰（cache stampede）。
+- 独立性：reported 题没有日期与来源，可能来自同一批面经的改写；#refs 不另计，只作题型佐证。
+
 ## 2. 本次新增 3 条最重要事实（摘要）
 
 1. 公开可见的 take-home 模板仓库 "Abnormal File Vault"（Django/DRF）+ Gen-AI 屏幕录像要求（S-1）。

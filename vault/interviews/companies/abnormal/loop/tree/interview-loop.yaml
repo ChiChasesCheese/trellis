@@ -5,7 +5,7 @@
 version: 1
 prereq:
   study: [study/00-essentials.md, study/20-cards/claude_code.md, study/20-cards/security_vocab.md, 01-company-brief.md]
-  cards: [study/20-cards/claude_code.md, study/20-cards/security_vocab.md]
+  cards: [study/20-cards/claude_code.md, study/20-cards/security_vocab.md, study/20-cards/python_runtime_data.md]
 
 rounds:
   - id: 01_ai_screen

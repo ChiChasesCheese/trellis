@@ -141,7 +141,7 @@
 | 30–40 | M2 | 下一片；有东西变红就走 T8 | 改方向时说原因 | T7 T8 |
 | ~40 | 审查 | T10 一轮；收一条、拒一条 | 说出分类和理由 | T10 |
 | 42–45 | 收尾 | T11 证据；T12 写 NOTES.md；停止加功能 | "Fresh run, N passed." | T11 T12 |
-| 45–60 | 讲解 + 扩展讨论 | 做了什么 · 为什么契合 · 假设 · 测了什么 · known gaps · v2 | 用 seam / depth / locality 这套词 | X5 |
+| 45–60 | 讲解 + 扩展讨论 | 做了什么 · 为什么契合 · 假设 · 测了什么 · known gaps · v2；真实复盘问题（Glassdoor 104679337）："Explain the architecture of the codebase, explain the feature which I have added and how will you make sure it works" | 用 seam / depth / locality 这套词 | X5 |
 
 红线：第 10 分钟说不出心智模型 → 说出当前版本；第 30 分钟 M1 还不能演示 → 砍范围；第 45 分钟后不加功能。
 

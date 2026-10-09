@@ -86,7 +86,7 @@
 | 2024-07-28 / 2024-11-20 / 2025-01-08 | Blind 帖 https://www.teamblind.com/post/interview-process-at-abnormal-security-india-mslv57b6 / .../abnormal-security-interview-ioxm8wuu / .../interview-process-abnormal-security-yofhrsz0 | 只有提问，无实质回复；ioxm8wuu 评论 "The recruiter said it's not leetcode, what exactly is it"（2025-05-15）；yofhrsz0（Staff SWE）评论里有人"free mock security interviews" | [低] 无内容 |
 | 2024-01-12 | Blind https://www.teamblind.com/post/interview-at-abnormal-security-enowilwg | "I have an on-site interview with Abnormal Security with technical, project discussion and Manager interview." 无回答 | [低] |
 | 2024-09 (Glassdoor 2025-09-16 发布) | Glassdoor SWE https://api.glassdoor.com/Interview/Abnormal-AI-Software-Engineer-Interview-Questions-EI_IE3146005.0,11_KO12,29_IP2.htm | "1st round was an online coding round. Then a take home assignment, which was discussed in another round. Had a final round which was discussion around past work." Q："Online assignment was around JSON Schema Parsing" | [中] |
-| Jun 2023 面（Glassdoor 2024-06-12） | Glassdoor SWE 2 https://api.glassdoor.com/Interview/Abnormal-AI-Software-Engineer-2-Interview-Questions-EI_IE3146005.0,11_KO12,31.htm | "Had the first online assessment. Need to do using Python … The assessment had one real world coding challenge which is needed to be done using Python (not focused on DSA)." | [中] |
+| Jun 2023 面（Glassdoor 2024-06-12） | Glassdoor SWE 2 https://api.glassdoor.com/Interview/Abnormal-AI-Software-Engineer-2-Interview-Questions-EI_IE3146005.0,11_KO12,32.htm | "Had the first online assessment. Need to do using Python … The assessment had one real world coding challenge which is needed to be done using Python (not focused on DSA)." | [中] |
 | 2025-01-30 | LeetCode Discuss #6347241 SWE II OA | "The OA was not a typical 1-hour assessment; it was a take-home assignment with a strong focus on security. The problem statement was quite open-ended, and completing it took me around 2 days. I was given 1 week" 被拒无反馈 | [中] |
 | 2025-07-09 | LeetCode Discuss #6939818 SSE-Site Reliability | 两轮各 1h：Operational Fundamental + CodeSignal Python coding（CSV session → 每用户平均 session 时间，"Very similar to the leetcode design-underground-system"） | [中]（SRE 岗位，与 SWE II 不同） |
 | 2024-09-12 | Glassdoor Senior SWE（Toronto） | 招聘人员电话 + 另一个 HM（senior engineering manager）电话；Q："What is the project that you are most proud of in your career?" | [中] |
@@ -106,7 +106,7 @@
 | 问题 | 报道 | 来源 |
 |---|---|---|
 | Python？ | LeetCode #6071134（SWE3，2024-11）"it was mentioned something to do with Python"；SRE CodeSignal "You must write code in Python only"；旧 OA "Need to do using Python" | [中] |
-| Django/Flask/FastAPI | **所有渠道均未提及框架** | — |
+| Django/Flask/FastAPI | 现场 AI screen：未提及框架（只有代码库名 "Sentinal"）；**take-home 多次明说 Django**（2026-10-09 更正，见 `glassdoor_2026-10-09.md`） | — |
 | email / 安全领域 | 一人明确报道 security-events 管线（ingestion/ranking/rule-based threat level/alerts/API/DB） | #8335187 [中] |
 | feature 类型（原话） | (1) "allow users to suppress some rules (it can be complex rules like based on geo-ip (existing in code) and other rules)"（面试官自称给错的题）；(2) "The enrichment layer currently hardcodes based on some threats (geo-ip, history, 1 more) clients want more configurability without touching platform code. Implement a plugin based mechanism …（very vague）" | #8335187 [中] |
 | 同一代码库？ | 无直接证据；#8335187 与 PracHub 标题 "Live Security Events Codebase" 同域，推测 screen 代码库相同 | [低/中] |
