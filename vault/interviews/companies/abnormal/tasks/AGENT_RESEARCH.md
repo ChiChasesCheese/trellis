@@ -22,7 +22,7 @@
    - reddit：`https://www.reddit.com/r/<sub>/search.rss?q=<q>&restrict_sr=1&sort=new`、全站 `https://www.reddit.com/search.rss?q=...`（可能 0 条）、单帖 `/comments/<id>/.rss`（含评论全文）。试 r/cscareerquestions、r/csMajors、r/leetcode、r/ExperiencedDevs。
    - Hacker News：`https://hn.algolia.com/api/v1/search?query=abnormal%20security%20interview&tags=comment`（和 story）。
    - leetcode discuss：HTML 403；`POST https://leetcode.com/graphql`（discuss 搜索查询）可用。
-   - 1point3acres：直连 Cloudflare 死锁；**Telegram 镜像** `https://t.me/s/usinterview?q=abnormal` 可读摘要（再试 `?q=Abnormal%20Security`）。1p3a 已知帖：thread 1072363（Tech Phone Screen · Image Deduplication）、1074077（Full process）。
+   - 1point3acres：直连 Cloudflare 死锁；**用 Chi 的 Chrome（browser-use）可直接打开**（2026-10-09 实测；公司标签页 `bbs/tag-8728-1.html`，隐藏内容需积分 ≥ 188）；**Telegram 镜像** `https://t.me/s/usinterview?q=abnormal` 可读摘要（再试 `?q=Abnormal%20Security`）。1p3a 已知帖：thread 1072363（Tech Phone Screen · Image Deduplication）、1074077（Full process）。
    - GitHub：`api.github.com` 不可用；`git clone --depth 1` 公开仓库可用，`raw.githubusercontent.com` 可用；用 WebSearch `site:github.com` 找。
    - prachub / interviewdb / levels.fyi / nowcoder 直接抓。medium 403 → 用搜索摘要，标"摘要"。glassdoor：`curl -A <浏览器 UA> https://api.glassdoor.com/Interview/...htm` 返回 200，评论正文以转义 JSON 嵌在 HTML 里（2026-10-09 实测，全量 152 条）。
    - 用 `curl -sS -L --max-time 30` 走默认代理（不要关 TLS 校验、不要 unset HTTPS_PROXY）。
