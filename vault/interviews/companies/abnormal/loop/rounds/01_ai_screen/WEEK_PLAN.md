@@ -1,5 +1,7 @@
 # 一周练习计划 · AI Technical Screen
 
+> 全部练习按可信度排序：`../../PRACTICE_INDEX.md`（A 一手原题 → B 报告过的轮次 → C 推断 → D 长期能力）。
+
 > 目标：周一面试能过；之后任何 AI coding 轮都不怵；平时工作用同一套方法。
 > 每天约 3 小时：**学 30 · 模拟 60 · 复盘 30 · 专项 30 · 迁移 15**。面试在 10/12（周一）就按 D1=10/7 排，D6 压到周日，D7 只做最后检查。
 > 环境：`CLAUDE_CONFIG_DIR=~/.claude-interview claude`（`claude_playbook.md` §五）。模拟一律录屏、出声、严格计时。

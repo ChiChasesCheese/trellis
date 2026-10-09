@@ -21,3 +21,4 @@
 | 2026-10-07 | cb06_filevault（sonnet；REPORT 由编排者代存；并发测试按编排者要求加固） | File Vault 同形：去重 + 并发 · 搜索 · 配额/统计/限流；5 分钟录屏提纲 | 编排者重跑：验收 41 passed · starter core 25 failed · starter 95 · solution 133 · 朴素去重 2 红、朴素配额 1 红 | 见提交 |
 | 2026-10-07 | prompt_patterns（sonnet） | 18 范式 · 9 反范式 · 节奏统计（7 份完整对话 + 38 份 Overview）；5 条并入 claude_playbook T1/T2/T8/T9/T11 | 编排者复核：无 >20 词引用；节奏数字的局限已写明 | 见提交 |
 | 2026-10-09 | Glassdoor 全量（sonnet）+ PracHub 指南（编排者浏览器） | `catalog/raw/glassdoor_2026-10-09.md`：工程岗 78 条（新 67）；sweep S-7；`study/20-cards/python_runtime_data.md`；CATALOG/RANK/PARETO/LOOP_GUIDE/手册/计划按新证据更新 | 编排者核对原始 HTML：104787687 "Sentinal … rule engine"、104679337 "prompting claude code"、105890472 "ai coding, use an provided codebase" | 见提交 |
+| 2026-10-09 | LC 尽调 + 练习总表（编排者） | LC #8496901 正文与 4 条评论复核（评论无作者回复，无新信息）；LC 全部 19 帖与 kit 对照，面试相关的全部已收；`loop/PRACTICE_INDEX.md`（A/B/C/D 按可信度） | `lc_search.py` 输出 · GD 编号逐个核对 | 见提交 |
