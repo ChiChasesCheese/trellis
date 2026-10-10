@@ -76,6 +76,11 @@ class JobRunnerTest {
                 Arguments.of("next job does not exist", HEADER + "1,5,2\n"),
                 Arguments.of("self loop", HEADER + "1,5,1\n"),
                 Arguments.of("two-job cycle", HEADER + "1,5,2\n2,5,1\n"),
+                Arguments.of("three-job cycle", HEADER + "1,5,2\n2,5,3\n3,5,1\n"),
+                // "rho": a tail runs into a cycle; job 2 has two predecessors (1 and 3)
+                Arguments.of("tail running into a cycle", HEADER + "1,5,2\n2,5,3\n3,5,2\n"),
+                // a fork needs one job with two next ids, which the format can only express as a repeated id
+                Arguments.of("fork written as a repeated id", HEADER + "1,5,2\n1,5,3\n2,5,0\n3,5,0\n"),
                 Arguments.of("cycle beside a valid chain", HEADER + "1,5,0\n2,5,3\n3,5,2\n"),
                 Arguments.of("two jobs before the same job", HEADER + "1,5,3\n2,5,3\n3,5,0\n"),
                 // counting jobs alone is fooled here: job 3 is walked twice and the self loop 4 never, 4 == 4

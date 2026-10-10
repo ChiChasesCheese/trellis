@@ -44,8 +44,11 @@ MUTANTS = {
 
 def grade(problem: str, impl: str) -> tuple[int, str]:
     """Runs the problem's tests against impl; returns (failures + errors, summary). Raises if no test ran."""
-    run = subprocess.run(["mvn", "-B", "-q", "test", f"-Dimpl={impl}", f"-Dtest=headland/{problem}/**",
-                          "-Dsurefire.failIfNoSpecifiedTests=true"], capture_output=True, text=True)
+    try:
+        run = subprocess.run(["mvn", "-B", "-q", "test", f"-Dimpl={impl}", f"-Dtest=headland/{problem}/**",
+                              "-Dsurefire.failIfNoSpecifiedTests=true"], capture_output=True, text=True, timeout=600)
+    except subprocess.TimeoutExpired:
+        raise RuntimeError(f"impl={impl}: the build itself hung; a test without a time limit?")
     out = run.stdout + run.stderr
     found = re.findall(r"Tests run: (\d+), Failures: (\d+), Errors: (\d+)", out)
     if not found:

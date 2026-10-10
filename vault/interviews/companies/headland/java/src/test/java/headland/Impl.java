@@ -7,6 +7,8 @@ import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+import java.util.concurrent.atomic.AtomicReference;
 
 /** Test helpers: pick Starter or Solution from -Dimpl, and capture what a call prints to System.out. */
 public final class Impl {
@@ -24,21 +26,46 @@ public final class Impl {
         }
     }
 
-    /** Invokes a static method and returns everything it printed; System.out is restored even if it throws. */
+    /** Longest any single call may run; an infinite loop fails the test instead of hanging the whole build. */
+    public static final Duration TIME_LIMIT = Duration.ofSeconds(5);
+
+    /**
+     * Invokes a static method on a daemon thread and returns everything it printed. System.out is restored even if
+     * the call throws or runs past {@link #TIME_LIMIT}; a call still running then is abandoned (daemon threads do not
+     * keep the JVM alive).
+     */
     public static String stdoutOf(Method method, Object... args) {
         PrintStream original = System.out;
         var buffer = new ByteArrayOutputStream();
-        try (var capture = new PrintStream(buffer, true, StandardCharsets.UTF_8)) {
-            System.setOut(capture);
-            method.invoke(null, args);
-        } catch (InvocationTargetException e) {
-            throw new AssertionError("the implementation threw", e.getCause());
-        } catch (IllegalAccessException e) {
-            throw new IllegalStateException(e);
+        var capture = new PrintStream(buffer, true, StandardCharsets.UTF_8);
+        var thrown = new AtomicReference<Throwable>();
+        Thread worker = Thread.ofPlatform().daemon().name("impl-under-test").unstarted(() -> {
+            try {
+                method.invoke(null, args);
+            } catch (InvocationTargetException e) {
+                thrown.set(e.getCause());
+            } catch (IllegalAccessException e) {
+                thrown.set(e);
+            }
+        });
+        System.setOut(capture);
+        try {
+            worker.start();
+            worker.join(TIME_LIMIT);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new AssertionError("interrupted while waiting for the implementation", e);
         } finally {
             System.setOut(original);
         }
-        return buffer.toString(StandardCharsets.UTF_8);
+        if (worker.isAlive()) {
+            throw new AssertionError("did not finish within " + TIME_LIMIT.toSeconds() + " s: an infinite loop?");
+        }
+        if (thrown.get() != null) {
+            throw new AssertionError("the implementation threw", thrown.get());
+        }
+        capture.flush();
+        return buffer.toString(StandardCharsets.UTF_8);  // join() above makes the worker's writes visible here
     }
 
     /** Runs {@code main} of the chosen implementation with {@code stdin} as System.in; returns what it printed. */
