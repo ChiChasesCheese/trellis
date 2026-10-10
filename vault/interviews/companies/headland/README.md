@@ -9,12 +9,17 @@ done. See `CHECKPOINT.md`.
 | `catalog/raw/` | sources, verbatim, URL or photo + date |
 | `java/` | one Maven project (Java 21, JUnit 5) for every problem in this kit; one package per problem |
 | `study/` | 中文：逐题带写、Java 21 语法与最佳实践回顾 |
+| `java/mutation_check.py` | one-bug variants of a problem's `Solution.java`; every one must fail a test (`python3 mutation_check.py q01`) |
+
+| Problem | Package | Tests | Study |
+|---|---|---|---|
+| q01 FizzBuzz | `headland.q01` | `FizzBuzzTest` (12), 7/7 mutants killed | `study/q01_fizzbuzz.md` |
 
 ```bash
 cd vault/interviews/companies/headland/java
 mvn -q test                                   # reference solutions (default -Dimpl=solution)
 mvn -q test -Dimpl=starter                    # your code
-mvn -q test -Dimpl=starter -Dtest='*Level1*'  # one level
+mvn -q test -Dimpl=starter -Dtest='headland/q01/**'  # one problem
 ```
 
 Layout per problem `qNN_name` (package `headland.qNN`): the interface in `src/main/java/headland/qNN/`,
