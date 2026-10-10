@@ -1,0 +1,23 @@
+# Headland kit
+
+Started 2026-10-10 for a Headland mock coding test that Chi takes in **Java 21**. This is not yet a full kit: the
+GitHub-first survey, `catalog/CATALOG.md` ranking and loop guide from `building-company-interview-kits` have not been
+done. See `CHECKPOINT.md`.
+
+| Path | What |
+|---|---|
+| `catalog/raw/` | sources, verbatim, URL or photo + date |
+| `java/` | one Maven project (Java 21, JUnit 5) for every problem in this kit; one package per problem |
+| `study/` | 中文：逐题带写、Java 21 语法与最佳实践回顾 |
+
+```bash
+cd vault/interviews/companies/headland/java
+mvn -q test                                   # reference solutions (default -Dimpl=solution)
+mvn -q test -Dimpl=starter                    # your code
+mvn -q test -Dimpl=starter -Dtest='*Level1*'  # one level
+```
+
+Layout per problem `qNN_name` (package `headland.qNN`): the interface in `src/main/java/headland/qNN/`,
+`Starter.java` (yours) and `Solution.java` (reference) next to it, tests in `src/test/java/headland/qNN/`, one class per
+level. Tests pick the implementation from the `impl` system property, so the same suite grades both.
+`.java` files are invisible to Obsidian and ignored by `trellis` (it reads `*.md` only); `java/target/` is git-ignored.
