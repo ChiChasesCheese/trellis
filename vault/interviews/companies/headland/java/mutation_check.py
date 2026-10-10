@@ -1,7 +1,8 @@
 """Mutation check: each mutant is a problem's Solution.java with one bug, compiled as class Mutant and graded by the
 same tests (-Dimpl=mutant). Every mutant must fail at least one test.
 
-Usage (inside java/): python3 mutation_check.py q01
+Usage (inside java/): python3 mutation_check.py q01              # mutants of q01/Solution.java
+                      python3 mutation_check.py q02 Functional   # mutants of q02/Functional.java (key "q02/Functional")
 """
 import pathlib
 import re
@@ -39,6 +40,15 @@ MUTANTS = {
         "trailing blank lines rejected": ("while (end > 0 && lines.get(end - 1).isBlank()) {", "while (end < 0) {"),  # while (false) does not compile
         "partial report before the error": ("output = render(chains(parse(lines)));", "var parsed = parse(lines);\n            System.out.print(\"-\\n\");\n            output = render(chains(parsed)).substring(2);"),
     },
+    "q02/Functional": {
+        "missing next not checked": ("if (!jobs.keySet().containsAll(predecessors.keySet())) {", "if (false) {"),
+        "two predecessors allowed": ("anyMatch(count -> count > 1)", "anyMatch(count -> count > 2)"),
+        "cycle not detected": ("if (chains.stream().mapToLong(Chain::jobs).sum() != jobs.size()) {", "if (false) {"),
+        "ascending by runtime": ("Comparator.comparingLong(Chain::runtime).reversed()", "Comparator.comparingLong(Chain::runtime)"),
+        "every job treated as a start": (".filter(job -> !predecessors.containsKey(job.id()))", ".filter(job -> true)"),
+        "last job is the first job": ("Collectors.reducing((earlier, later) -> later)", "Collectors.reducing((earlier, later) -> earlier)"),
+        "walk stops after the start": ("Stream.iterate(start, Objects::nonNull, job -> jobs.get(job.next()))", "Stream.of(start)"),
+    },
 }
 
 
@@ -63,27 +73,28 @@ def grade(problem: str, impl: str) -> tuple[int, str]:
     return failures + errors, f"Tests run: {ran}, Failures: {failures}, Errors: {errors}"
 
 
-def main(problem: str) -> int:
+def main(problem: str, source: str = "Solution") -> int:
+    key = problem if source == "Solution" else f"{problem}/{source}"
     pkg = pathlib.Path("src/main/java/headland") / problem
-    solution = (pkg / "Solution.java").read_text()
-    bad, summary = grade(problem, "solution")
-    assert bad == 0, f"the reference itself fails: {summary}"
-    print(f"control  solution -> {summary}")
+    original = (pkg / f"{source}.java").read_text()
+    bad, summary = grade(problem, source[0].lower() + source[1:])
+    assert bad == 0, f"{source} itself fails: {summary}"
+    print(f"control  {source} -> {summary}")
     mutant_file = pkg / "Mutant.java"
     killed = 0
     try:
-        for name, (old, new) in MUTANTS[problem].items():
-            assert old in solution, f"pattern for {name!r} not found"
-            code = solution.replace(old, new, 1).replace("class Solution", "class Mutant").replace("Solution()", "Mutant()")
+        for name, (old, new) in MUTANTS[key].items():
+            assert old in original, f"pattern for {name!r} not found"
+            code = original.replace(old, new, 1).replace(f"class {source}", "class Mutant").replace(f"{source}()", "Mutant()")
             mutant_file.write_text(code)
             bad, summary = grade(problem, "mutant")
             killed += bad > 0
             print(("KILLED   " if bad else "SURVIVED ") + f"{name} -> {summary}")
     finally:
         mutant_file.unlink(missing_ok=True)
-    print(f"{killed}/{len(MUTANTS[problem])} killed")
-    return 0 if killed == len(MUTANTS[problem]) else 1
+    print(f"{killed}/{len(MUTANTS[key])} killed")
+    return 0 if killed == len(MUTANTS[key]) else 1
 
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1]))
+    sys.exit(main(*sys.argv[1:3]))

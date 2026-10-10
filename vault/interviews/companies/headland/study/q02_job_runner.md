@@ -7,6 +7,7 @@ cd vault/interviews/companies/headland/java
 mvn -q test -Dimpl=starter -Dtest='headland/q02/**'   # 你的 Starter.java
 mvn -q test -Dtest='headland/q02/**'                  # 参考解：42/42
 python3 mutation_check.py q02                          # 17 个错误版本全部被抓到
+python3 mutation_check.py q02 Functional               # 函数式版本的 7 个错误版本全部被抓到
 ```
 
 ## 1. 规则：题面写明的，和我们推断的
@@ -166,6 +167,56 @@ List<String> lines = reader.lines().toList();
 - `BufferedReader.lines()` 能识别 `\n`、`\r\n` 和 `\r` 三种换行，所以 CRLF 的文件不用特殊处理。
 - 题目要求"exit zero"：**不要调用 `System.exit(1)`**。异常也不要从 `main` 抛出去，否则 JVM 会以非零状态退出。
   另外，在我们的测试环境里调用 `System.exit` 会直接杀掉测试进程。
+
+## 3.5 `chains` 的函数式写法（`Functional.java`）
+
+同一套 42 个测试全部通过（`mvn -q test -Dimpl=functional -Dtest='headland/q02/**'`），7 个错误版本也全部被抓到
+（`python3 mutation_check.py q02 Functional`）。`parse` 和 `render` 直接复用 `Solution` 的。
+
+```java
+Map<Long, Long> predecessors = jobs.values().stream()
+        .map(Job::next).filter(next -> next != 0)
+        .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));     // 每个 job 有几个前驱
+if (!jobs.keySet().containsAll(predecessors.keySet())) throw ...;                     // 集合包含关系：每个 next 都必须存在
+if (predecessors.values().stream().anyMatch(count -> count > 1)) throw ...;           // 汇合 / ρ 字形
+List<Chain> chains = jobs.values().stream()
+        .filter(job -> !predecessors.containsKey(job.id()))                           // 起点 = 没有前驱的 job
+        .map(start -> walk(start, jobs))
+        .sorted(LONGEST_FIRST)
+        .toList();
+if (chains.stream().mapToLong(Chain::jobs).sum() != jobs.size()) throw ...;           // 环
+
+private static Chain walk(Job start, Map<Long, Job> jobs) {
+    return Stream.iterate(start, Objects::nonNull, job -> jobs.get(job.next()))        // Java 9：带结束条件的 iterate
+            .collect(Collectors.teeing(                                               // Java 12：同一个流同时交给两个收集器
+                    Collectors.reducing((earlier, later) -> later),                   // 最后一个元素，结果是 Optional<Job>
+                    Collectors.summarizingLong(Job::runtime),                         // 一次遍历同时拿到个数和总和
+                    (last, stats) -> new Chain(start.id(), last.orElseThrow().id(),
+                            Math.toIntExact(stats.getCount()), stats.getSum())));
+}
+```
+
+要点：
+- **受检异常不要放进 lambda 里**。`Function` 和 `Predicate` 的签名都不允许抛受检异常，所以三道校验都写在流**外面**的普通 `if` 语句里，
+  流只做纯计算。如果硬要在 lambda 里抛，就得把异常包成 `RuntimeException`，再到外面解包，代码反而更乱。
+- **`Stream.iterate(seed, hasNext, next)` 能结束，靠的是 `jobs.get(0)` 返回 `null`**，而这又依赖 `parse` 已经拒绝了 id 为 0 的 job。
+  这是一个**隐含的耦合**，注释里写明了。另外，next 指向不存在的 job 时也会得到 `null`，流会悄悄结束，看起来和正常的链尾一样，
+  所以 `containsAll` 那道检查必须放在 `walk` **之前**（错误版本 "missing next not checked" 挂 1 个测试）。
+- **能结束还有另一个前提，和命令式写法一样**："前驱 ≤ 1"必须先检查。否则 ρ 字形会让 `iterate` 变成无限流，`collect` 永远不会返回
+  （错误版本 "two predecessors allowed" 就是被 5 秒超时判失败的）。
+- `groupingBy(..., counting())` 比命令式写法里的 `Set.add` 多知道一件事：每个 job **有几个**前驱。代价是每个 job 都要装箱一个 `Long`。
+- 排序用的比较器提成了常量 `LONGEST_FIRST`：给它起了名字，读起来就是一句话。
+
+**两种写法怎么选（实测，整个 JVM 运行，取 3 次中最快的一次）**：
+
+| 输入 | 命令式 `Solution` | 函数式 `Functional` |
+|---|---|---|
+| 5 万条短链（10 万个 job） | 754 ms | 711 ms |
+| 1 条 10 万个 job 的长链 | 243 ms | 329 ms |
+
+两者在同一个量级，选哪个看可读性就行。函数式版本把"有哪几道校验"分成了清楚的几段；命令式版本一次循环做完多件事，更容易逐行跟踪执行过程。
+面试时如果有人工审代码，**两种都可以，但不要为了显得高级而用**。`teeing` 和 `reducing` 这类收集器要是团队里没人熟悉，反而会扣分。
+两种写法有一个共同的风险，必须在注释里说清楚：**"为什么这个循环一定会结束"**。
 
 ## 4. 测试抓的错（`mutation_check.py q02`，全部实际跑过）
 
