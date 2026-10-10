@@ -14,7 +14,7 @@ done. See `CHECKPOINT.md`.
 | Problem | Package | Tests | Study |
 |---|---|---|---|
 | q01 FizzBuzz | `headland.q01` | `FizzBuzzTest` (12), 7/7 mutants killed | `study/q01_fizzbuzz.md` |
-| q02 Job Runner | `headland.q02` (`Solution` imperative, `Functional` stream-based `chains`) | `JobRunnerTest` (42); mutants 17/17 and 7/7 | `study/q02_job_runner.md` |
+| q02 Job Runner | `headland.q02` (`Solution` imperative, `Functional` streams throughout) | `JobRunnerTest` (42); mutants 17/17 and 15/15 | `study/q02_job_runner.md` |
 
 ```bash
 cd vault/interviews/companies/headland/java

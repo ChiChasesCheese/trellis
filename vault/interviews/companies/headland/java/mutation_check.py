@@ -48,6 +48,14 @@ MUTANTS = {
         "every job treated as a start": (".filter(job -> !predecessors.containsKey(job.id()))", ".filter(job -> true)"),
         "last job is the first job": ("Collectors.reducing((earlier, later) -> later)", "Collectors.reducing((earlier, later) -> earlier)"),
         "walk stops after the start": ("Stream.iterate(start, Objects::nonNull, job -> jobs.get(job.next()))", "Stream.of(start)"),
+        "trailing blank lines kept": (".dropWhile(String::isBlank)", ".dropWhile(line -> false)"),
+        "header not checked": ("if (content.isEmpty() || !content.getFirst().strip().equals(Solution.HEADER)) {", "if (content.isEmpty()) {"),
+        "sign accepted": ('Pattern.compile("(\\\\d+),(\\\\d+),(\\\\d+)")', 'Pattern.compile("([+-]?\\\\d+),([+-]?\\\\d+),([+-]?\\\\d+)")'),
+        "find instead of matches": ("if (!fields.matches()) {", "if (!fields.find()) {"),
+        "id 0 allowed": ("if (jobs.stream().anyMatch(job -> job.id() == 0)) {", "if (false) {"),
+        "duplicate ids kept": ("if (jobs.stream().map(Job::id).distinct().count() != jobs.size()) {", "if (false) {"),
+        "no opening dash": ('Collectors.joining("", "-\\n", "")', 'Collectors.joining("", "", "")'),
+        "minutes as a total, not a part": ("d.toMinutesPart()", "d.toMinutes()"),
     },
 }
 
@@ -85,7 +93,7 @@ def main(problem: str, source: str = "Solution") -> int:
     try:
         for name, (old, new) in MUTANTS[key].items():
             assert old in original, f"pattern for {name!r} not found"
-            code = original.replace(old, new, 1).replace(f"class {source}", "class Mutant").replace(f"{source}()", "Mutant()")
+            code = original.replace(old, new, 1).replace(f"class {source}", "class Mutant").replace(f"{source}()", "Mutant()").replace(f"{source}::", "Mutant::")
             mutant_file.write_text(code)
             bad, summary = grade(problem, "mutant")
             killed += bad > 0

@@ -7,7 +7,7 @@ cd vault/interviews/companies/headland/java
 mvn -q test -Dimpl=starter -Dtest='headland/q02/**'   # 你的 Starter.java
 mvn -q test -Dtest='headland/q02/**'                  # 参考解：42/42
 python3 mutation_check.py q02                          # 17 个错误版本全部被抓到
-python3 mutation_check.py q02 Functional               # 函数式版本的 7 个错误版本全部被抓到
+python3 mutation_check.py q02 Functional               # 函数式版本的 15 个错误版本全部被抓到
 ```
 
 ## 1. 规则：题面写明的，和我们推断的
@@ -168,10 +168,10 @@ List<String> lines = reader.lines().toList();
 - 题目要求"exit zero"：**不要调用 `System.exit(1)`**。异常也不要从 `main` 抛出去，否则 JVM 会以非零状态退出。
   另外，在我们的测试环境里调用 `System.exit` 会直接杀掉测试进程。
 
-## 3.5 `chains` 的函数式写法（`Functional.java`）
+## 3.5 全函数式写法（`Functional.java`）：chains
 
-同一套 42 个测试全部通过（`mvn -q test -Dimpl=functional -Dtest='headland/q02/**'`），7 个错误版本也全部被抓到
-（`python3 mutation_check.py q02 Functional`）。`parse` 和 `render` 直接复用 `Solution` 的。
+同一套 42 个测试全部通过（`mvn -q test -Dimpl=functional -Dtest='headland/q02/**'`），15 个错误版本全部被抓到
+（`python3 mutation_check.py q02 Functional`）。只复用了 `Solution` 里的类型 `Job`、`Chain`、`MalformedInputException` 和常量 `HEADER`。
 
 ```java
 Map<Long, Long> predecessors = jobs.values().stream()
@@ -217,6 +217,58 @@ private static Chain walk(Job start, Map<Long, Job> jobs) {
 两者在同一个量级，选哪个看可读性就行。函数式版本把"有哪几道校验"分成了清楚的几段；命令式版本一次循环做完多件事，更容易逐行跟踪执行过程。
 面试时如果有人工审代码，**两种都可以，但不要为了显得高级而用**。`teeing` 和 `reducing` 这类收集器要是团队里没人熟悉，反而会扣分。
 两种写法有一个共同的风险，必须在注释里说清楚：**"为什么这个循环一定会结束"**。
+
+## 3.6 全函数式写法：parse 和 render
+
+```java
+private static final Pattern JOB_LINE = Pattern.compile("(\\d+),(\\d+),(\\d+)");    // 用一条正则校验整行
+
+static Map<Long, Job> parse(List<String> lines) throws MalformedInputException {
+    List<String> content = lines.reversed().stream().dropWhile(String::isBlank).toList().reversed();
+    if (content.isEmpty() || !content.getFirst().strip().equals(Solution.HEADER)) throw ...;
+    List<Optional<Job>> rows = content.stream().skip(1).map(Functional::toJob).toList();
+    if (rows.stream().anyMatch(Optional::isEmpty)) throw ...;
+    List<Job> jobs = rows.stream().map(Optional::orElseThrow).toList();
+    if (jobs.stream().anyMatch(job -> job.id() == 0)) throw ...;
+    if (jobs.stream().map(Job::id).distinct().count() != jobs.size()) throw ...;
+    return jobs.stream().collect(Collectors.toMap(Job::id, Function.identity(), (first, second) -> first, LinkedHashMap::new));
+}
+
+private static Optional<Job> toJob(String line) {          // 解析失败用 Optional.empty() 表示，不在 lambda 里抛异常
+    Matcher fields = JOB_LINE.matcher(line.strip());
+    if (!fields.matches()) return Optional.empty();
+    try { return Optional.of(new Job(parseLong(g1), parseLong(g2), parseLong(g3))); }
+    catch (NumberFormatException beyondLong) { return Optional.empty(); }
+}
+
+static String render(List<Chain> chains) {
+    return chains.stream().map(Functional::section).collect(Collectors.joining("", "-\n", ""));
+}
+
+static String hhmmss(long seconds) {
+    Duration d = Duration.ofSeconds(seconds);
+    return "%02d:%02d:%02d".formatted(d.toHours(), d.toMinutesPart(), d.toSecondsPart());
+}
+```
+
+要点：
+- **去掉末尾空行（Java 21）**：`lines.reversed()` 是 `SequencedCollection` 提供的**视图**，不会复制列表。
+  先 `dropWhile(String::isBlank)`（Java 9）从末尾丢掉空行，再 `toList().reversed()` 把顺序转回来。
+  `dropWhile` 只丢**开头连续**满足条件的元素，所以夹在中间的空行会保留下来，随后被正则判为格式错误，和命令式写法的行为一致。
+- **一条整行正则代替 `split` 加逐字段校验**：`(\d+),(\d+),(\d+)` 配合 `matches()`（要求整行匹配），
+  一次就挡住了字段数不对、末尾多逗号、空字段、正负号、空格和小数。注意不能用 `find()`：它只要求某一段子串匹配，
+  `"1,2,3,4"` 里的 `"1,2,3"` 就能匹配上（错误版本 "find instead of matches" 挂 2 个测试）。
+- **用 `Optional` 代替在 lambda 里抛受检异常**：`toJob` 用 `Optional.empty()` 表示"这一行不合法"，流外面再用 `anyMatch(Optional::isEmpty)` 统一判断。
+  代价是丢掉了具体的出错原因；本题只要求打印 `Malformed Input`，所以这个代价可以接受。
+  如果需要保留原因，可以用 Java 21 的 sealed 结果类型：`sealed interface Row permits Parsed, Rejected`，再配合记录模式 `case Rejected(String line) -> ...`。
+- **用 `distinct().count()` 判断重复 id**，然后才 `toMap`。`toMap` 的第三个参数是合并函数，key 重复时调用；这里重复的情况已经被排除，所以随便返回哪个都行，并写了注释说明。
+  如果不先检查，而是让 `toMap` 在 key 冲突时抛 `IllegalStateException`，就得去捕获一个很宽泛的运行时异常，容易把别的错误一起吞掉。
+- **`joining(分隔符, 前缀, 后缀)` 在流为空时也会输出前缀和后缀**，所以只有表头的输入照样输出 `-`。
+- **`Duration` 的两类方法**：`toHours()` 返回**总**小时数（100 小时就是 100），`toMinutesPart()` 和 `toSecondsPart()`（Java 9）返回的是**零头**。
+  如果误用 `toMinutes()`，拿到的是总分钟数（错误版本 "minutes as a total" 挂 3 个测试）。
+
+**实测（整个 JVM 运行，3 次中取最快）**：5 万条短链，命令式 566 ms，函数式 641 ms；10 万个 job 的长链，命令式 277 ms，函数式 310 ms。
+两个版本的输出逐字节相同。前后几次测量本身有约 ±100 ms 的波动，所以两者没有实质差别。
 
 ## 4. 测试抓的错（`mutation_check.py q02`，全部实际跑过）
 

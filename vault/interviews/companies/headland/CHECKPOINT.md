@@ -10,8 +10,9 @@ toolchain smoke test (sealed interface, records, pattern `switch`).
 labelled *inferred* in `study/q02_job_runner.md` §1. `Solution.java` 42/42, empty `Starter.java` all red,
 `mutation_check.py q02` 17/17 killed (two survivors found and fixed by new tests).
 
-**q02 functional variant (2026-10-10):** `Functional.java` (streams: `groupingBy`/`counting`, `Stream.iterate`,
-`teeing`) passes the same 42 tests; `mutation_check.py q02 Functional` 7/7.
+**q02 functional variant (2026-10-10):** `Functional.java` written with streams throughout (`List.reversed` +
+`dropWhile`, whole-line regex + `Optional`, `groupingBy`/`counting`, `Stream.iterate`, `teeing`, `joining` prefix,
+`Duration` parts) passes the same 42 tests; `mutation_check.py q02 Functional` 15/15.
 
 **Next action:** Chi read the reference block by block, then rewrites `headland/q02/Starter.java` from scratch and
 pastes it for a line-by-line review. q01 Starter still open.
