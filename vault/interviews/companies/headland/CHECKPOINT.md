@@ -6,5 +6,9 @@ toolchain smoke test (sealed interface, records, pattern `switch`).
 **q01 FizzBuzz (2026-10-10):** statement from a photo of the HackerRank screen; `Solution.java` 12/12, empty
 `Starter.java` 12/12 red, `mutation_check.py q01` 7/7 killed; `study/q01_fizzbuzz.md`.
 
-**Next action:** Chi writes `headland/q01/Starter.java` alone, then pastes it for a line-by-line review
-(correctness, Java 21 idiom, best practice). Then the next problem of the mock.
+**q02 Job Runner (2026-10-10):** statement from photos; malformed rules the statement leaves open are decided and
+labelled *inferred* in `study/q02_job_runner.md` §1. `Solution.java` 39/39, empty `Starter.java` all red,
+`mutation_check.py q02` 17/17 killed (two survivors found and fixed by new tests).
+
+**Next action:** Chi read the reference block by block, then rewrites `headland/q02/Starter.java` from scratch and
+pastes it for a line-by-line review. q01 Starter still open.

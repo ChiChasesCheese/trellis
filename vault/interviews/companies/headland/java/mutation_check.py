@@ -20,6 +20,25 @@ MUTANTS = {
         "own PrintWriter, never flushed": ("System.out.print(out);\n        System.out.flush();",
                                            "new java.io.PrintWriter(System.out).print(out);"),
     },
+    "q02": {
+        "average rounded, not truncated": ("return runtime / jobs;", "return Math.round((double) runtime / jobs);"),
+        "ascending by runtime": ("Comparator.comparingLong(Chain::runtime).reversed()", "Comparator.comparingLong(Chain::runtime)"),
+        "ties by start descending": (".thenComparingLong(Chain::start)", ".thenComparing(Comparator.comparingLong(Chain::start).reversed())"),
+        "header not checked": ("if (end == 0 || !lines.get(0).strip().equals(HEADER)) {", "if (end == 0) {"),
+        "split drops trailing empty fields": ('split(",", -1)', 'split(",")'),
+        "sign accepted": ('Pattern.compile("\\\\d+")', 'Pattern.compile("[+-]?\\\\d+")'),
+        "spaces inside fields trimmed": ("if (!NON_NEGATIVE_INTEGER.matcher(field).matches()) {", "field = field.strip();\n        if (!NON_NEGATIVE_INTEGER.matcher(field).matches()) {"),
+        "id 0 allowed": ("if (job.id() == 0) {", "if (false) {"),
+        "duplicate id overwrites": ("if (jobs.putIfAbsent(job.id(), job) != null) {", "if (jobs.put(job.id(), job) == job) {"),
+        "missing next not checked": ("if (!jobs.containsKey(job.next())) {", "if (false) {"),
+        "two predecessors allowed": ("if (!hasPredecessor.add(job.next())) {", "if (!hasPredecessor.add(job.next()) && false) {"),
+        "cycle not detected": ("if (jobsOnChains != jobs.size()) {", "if (false) {"),
+        "minutes not taken mod 60": ("seconds % 3600 / 60", "seconds / 60"),
+        "hours wrapped at 24": ("seconds / 3600, seconds", "seconds / 3600 % 24, seconds"),
+        "no opening dash": ('new StringBuilder("-\\n")', "new StringBuilder()"),
+        "trailing blank lines rejected": ("while (end > 0 && lines.get(end - 1).isBlank()) {", "while (end < 0) {"),  # while (false) does not compile
+        "partial report before the error": ("output = render(chains(parse(lines)));", "var parsed = parse(lines);\n            System.out.print(\"-\\n\");\n            output = render(chains(parsed)).substring(2);"),
+    },
 }
 
 

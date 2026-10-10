@@ -1,6 +1,8 @@
 package headland;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -37,5 +39,18 @@ public final class Impl {
             System.setOut(original);
         }
         return buffer.toString(StandardCharsets.UTF_8);
+    }
+
+    /** Runs {@code main} of the chosen implementation with {@code stdin} as System.in; returns what it printed. */
+    public static String runMain(String problem, String stdin) {
+        Method main = staticMethod(problem, "main", String[].class);
+        InputStream original = System.in;
+        System.setIn(new ByteArrayInputStream(stdin.getBytes(StandardCharsets.UTF_8)));
+        try {
+            // the cast matters: a bare String[] would be spread into the Object... varargs as zero arguments
+            return stdoutOf(main, (Object) new String[0]);
+        } finally {
+            System.setIn(original);
+        }
     }
 }
