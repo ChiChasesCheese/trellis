@@ -1,0 +1,647 @@
+[
+  {
+    "id": "kqld-01",
+    "topic": "A 速度与延迟：为什么快、什么时候不够快（kq04）",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "Why can Java be fast even though it is garbage-collected and runs on a VM? What does the JVM do at run time that a C++ compiler does ahead of time?",
+    "short_answer": "Java 源码先编成字节码，运行时热点方法被 JIT（C1/C2）编成机器码，并且可以利用**运行时才知道的信息**（真实的类型分布、分支概率、哪些类已加载）做内联、逃逸分析、去虚化；代价是预热、GC 和比 C++ 更大的内存占用。",
+    "source": "`推断：Java 对应`。C++ 原题（1p3a 1011799，F-A13，2023-08，CATALOG kq04）：「为什么C++比别的语言快？」→ https://www.1point3acres.com/interview/thread/1011799",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K04EscapeAnalysis.java",
+      "K10Jit.java"
+    ]
+  },
+  {
+    "id": "kqld-02",
+    "topic": "A 速度与延迟：为什么快、什么时候不够快（kq04）",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "You said Java is also compiled. Then what makes C++ faster than other compiled languages — and where does Java sit relative to C++, Go and Rust?",
+    "short_answer": "速度差异不来自\"是否编译\"，而来自**运行时系统的厚度和内存布局的控制权**：GC、边界检查、虚调用、对象头、能否把数据内联进父对象；C++/Rust 把这些成本设计成\"用才付费\"，Java/Go 把一部分成本变成默认。",
+    "source": "`推断：Java 对应`。C++ 原题（F-A13 follow-up，CATALOG kq04 p2）：「follow up：为什么C++比别的需要compile的语言也快？」→ https://www.1point3acres.com/interview/thread/1011799",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K03ObjectSize.java",
+      "K21Locality.java"
+    ]
+  },
+  {
+    "id": "kqld-03",
+    "topic": "A 速度与延迟：为什么快、什么时候不够快（kq04）",
+    "difficulty": "hard",
+    "stars": 3,
+    "question": "Where can Java approach C++ latency, and where can't it? How would you build a low-latency Java system?",
+    "short_answer": "**稳态热路径可以接近 C++（几百纳秒到微秒级），差距在尾部**：GC/safepoint 暂停、JIT 预热与去优化、对象头与指针追逐、没有内联值类型；做法是\"热路径零分配 + 预热 + 选低暂停 GC + 绑核 + 必要时堆外\"。",
+    "source": "`推断：Java 低延迟岗经典`；与 JD 对应：「Address performance limitations within our own software … Linux」「Improve networking communication … to achieve optimal latency and throughput」（O-C2）。公司博客 #3 讲热/冷数据与缓存行（O-B2，C++），同一思想。",
+    "source_kind": "java-classic",
+    "inferred": true,
+    "demos": [
+      "K04EscapeAnalysis.java",
+      "K19Pauses.java"
+    ]
+  },
+  {
+    "id": "kqld-04",
+    "topic": "A 速度与延迟：为什么快、什么时候不够快（kq04）",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "Your Java service is slow for the first few seconds after start-up, then fine. Why, and what would you do about it?",
+    "short_answer": "因为代码一开始在**解释器**里跑，热点要累计到阈值才被编译，而且 JIT 编译线程、类加载、CDS 都要时间；做法是预热（回放真实流量）、减少启动期类加载、必要时提前编译（AOT/CDS 类共享），并不要把预热前的数据计入延迟 SLO。",
+    "source": "`推断：Java 低延迟岗经典`（预热是 Java vs C++ 的标准差距；与 Q01 的 follow-up 同源）。",
+    "source_kind": "java-classic",
+    "inferred": true,
+    "demos": [
+      "K10Jit.java"
+    ]
+  },
+  {
+    "id": "kqld-05",
+    "topic": "B 版本差异（kq02）",
+    "difficulty": "easy",
+    "stars": 1,
+    "question": "What are the main differences between Java 8, 11, 17 and 21? Which features would you actually use?",
+    "short_answer": "8 = lambda/Stream/Optional/`java.time`；11 = `var`、HttpClient、字符串/集合小工具（第一个 8 之后的 LTS）；17 = record、sealed、文本块、`switch` 表达式、`instanceof` 模式；21 = `switch` 模式匹配 + record 模式、虚拟线程、Sequenced Collections、分代 ZGC。LTS 是 8/11/17/21。",
+    "source": "`推断：Java 对应`。C++ 原题（WSO 2020-11，F-W2，kq02）：「Differences between C++ 11, 14, 17, and 20」→ https://www.wallstreetoasis.com/company/headlands-technologies-llc/interview ；1p3a 974931（F-A16）「C++ versions」→ https://www.1point3acres.com/interview/thread/974931",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K14Versions.java"
+    ]
+  },
+  {
+    "id": "kqld-06",
+    "topic": "B 版本差异（kq02）",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "Beyond language features: what changed in the JVM and runtime between Java 8 and 21 that matters for performance?",
+    "short_answer": "G1 成为默认（9）、分代 ZGC（21）、紧凑字符串与 indy 字符串拼接（9）、容器感知（10）、统一日志与 JFR 免费可用（9/11）、偏向锁移除、字符串/Stream 实现持续优化、虚拟线程（21）。",
+    "source": "`推断：Java 对应`（kq02 的\"运行时\"侧；C++ 版本题里常见的追问是\"编译器/标准库改了什么\"）。",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K03ObjectSize.java",
+      "K05Concat.java",
+      "OUTPUTS.txt"
+    ]
+  },
+  {
+    "id": "kqld-07",
+    "topic": "C 语言对比与所有权（kq05）",
+    "difficulty": "easy",
+    "stars": 1,
+    "question": "Compare Java and Python in detail. When would you use each?",
+    "short_answer": "Java 是静态类型、JIT 编译、真正多线程、低延迟可预测；Python 是动态类型、解释执行、GIL 限制 CPU 并行、开发快生态强。选择：延迟敏感/长期服务/大型团队 → Java；研究、胶水、数据分析、原型 → Python（热点交给 NumPy 等 C 扩展）。",
+    "source": "`推断：Java 对应`。C++ 原题（1p3a 1068621，F-A8，2024-05，kq05）：「c++/Python的区别，会问得比较详细。在哪种情…」→ https://www.1point3acres.com/interview/thread/1068621",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K13SmartPtr.java",
+      "K15Overflow.java"
+    ]
+  },
+  {
+    "id": "kqld-08",
+    "topic": "C 语言对比与所有权（kq05）",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "C++ has `unique_ptr`, `shared_ptr` and `weak_ptr`. What is the Java equivalent — how does Java handle ownership and resource cleanup?",
+    "short_answer": "Java 没有所有权概念：**每个引用都像 `shared_ptr` 但由 GC 追踪可达性，不用引用计数，所以没有循环引用泄漏**；`WeakReference` ≈ `weak_ptr`；RAII 对应 **try-with-resources**（`AutoCloseable`）；`Cleaner` 是兜底，不是析构函数。",
+    "source": "`推断：Java 对应`。C++ 原题（1p3a 1068621，F-A8）：「smart pointers」→ https://www.1point3acres.com/interview/thread/1068621",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K13SmartPtr.java"
+    ]
+  },
+  {
+    "id": "kqld-09",
+    "topic": "C 语言对比与所有权（kq05）",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "What does Java guarantee that C++ does not (and vice versa)? Think undefined behaviour, integer semantics, memory safety.",
+    "short_answer": "Java 的每个程序行为都有定义（整数溢出回绕、数组越界抛异常、空指针抛 NPE、数据竞争也有受限的弱语义，不会\"凭空\"产生值）；C++ 的 UB 让优化器更激进但程序员背风险。",
+    "source": "`推断：Java 对应`。C++ 原题族（A8「c++/Python 差异，问得比较详细」F-A8；A13「language features」F-A13）的 Java 视角。",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K15Overflow.java"
+    ]
+  },
+  {
+    "id": "kqld-10",
+    "topic": "C 语言对比与所有权（kq05）",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "How do Java generics differ from C++ templates? What is type erasure and what does it cost?",
+    "short_answer": "C++ 模板为每个类型实例化一份代码；Java 泛型在编译期检查、运行时**擦除**成 `Object`，所以泛型容器不能装原始类型（要装箱）、运行时没有 `T`，这就是 `List<Integer>` 比 `int[]` 慢且占内存的原因。",
+    "source": "`推断：Java 低延迟岗经典`（C++/Java 对比的标准追问；源于 A8 的\"差异问得详细\"）。",
+    "source_kind": "java-classic",
+    "inferred": true,
+    "demos": [
+      "K02Boxing.java"
+    ]
+  },
+  {
+    "id": "kqld-11",
+    "topic": "D 分配与内存（kq06）",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "What happens on `new Foo()` in Java? Compare with `malloc` / `new` in C++. How fast is Java allocation, and what does it cost later?",
+    "short_answer": "Java 的 `new` 在线程私有的 **TLAB** 里做**指针碰撞**（几条指令），内存已清零，再跑构造器；快的原因是 GC 统一回收、不做 free-list 搜索。代价后移到 GC：分配速率越高，GC 越频繁。C++ 的 `malloc` 要找空闲块，`new` = `malloc` + 构造。",
+    "source": "`推断：Java 对应`。C++ 原题（Blind 2023-03，OP §D2，kq06，**置信度低**，发帖人断言）：「`malloc` vs `new`」→ OP §D2 Blind 2023-03 行（帖链接见 `official_and_process.md` 缺口 §4 的 teamblind 链接）。",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K03ObjectSize.java",
+      "K04EscapeAnalysis.java"
+    ]
+  },
+  {
+    "id": "kqld-12",
+    "topic": "D 分配与内存（kq06）",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "`System.arraycopy` vs a hand-written loop vs `Arrays.copyOf` vs `clone` — what's the difference? How does that compare to `std::copy` vs `memcpy`?",
+    "short_answer": "`System.arraycopy` 是 JIT 内联的 intrinsic，语义是 **memmove**（重叠安全），带边界和类型检查；`Arrays.copyOf` = 新数组（分配 + 清零 + 拷贝）；手写循环在热路径上 C2 常识别成同样的拷贝。C++ 里 `memcpy` 要求不重叠、只能用于平凡可拷贝类型，`std::copy` 会按类型选择最优实现（可退化为 `memmove`）。",
+    "source": "`推断：Java 对应`。C++ 原题（Blind 2023-03，OP §D2，kq06，置信度低）：「`std::copy` vs `memcpy`」。",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K12ArrayCopy.java"
+    ]
+  },
+  {
+    "id": "kqld-13",
+    "topic": "D 分配与内存（kq06）",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "How much memory does a Java object take? What's in an object header? How big is `new Integer(5)`, a two-field class, an `int[10]`?",
+    "short_answer": "64 位 HotSpot（压缩类指针）：对象头 12 字节（8 字节 mark word + 4 字节类指针），数组再加 4 字节长度 = 16；所有对象大小向 8 字节对齐。所以空对象 16、`Integer` 16、`int[10]` 56。",
+    "source": "`推断：Java 对应`（kq06 的\"内存布局\"侧；公司博客 #3「OutOfLine」讲对象大小与缓存行，OP §B2，C++）。",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K02Boxing.java",
+      "K03ObjectSize.java"
+    ]
+  },
+  {
+    "id": "kqld-14",
+    "topic": "D 分配与内存（kq06）",
+    "difficulty": "easy",
+    "stars": 1,
+    "question": "What's the cost of autoboxing? Explain `Integer` caching and why `==` on two `Integer`s can give different answers.",
+    "short_answer": "自动装箱 `int → Integer` 调 `Integer.valueOf`：在 -128..127 返回缓存对象，其它新分配；所以 `==`（比引用）对 127 为 true、对 128 为 false，必须用 `equals`。成本：分配 + 间接访问 + 拆箱时的 NPE 风险。",
+    "source": "`推断：Java 低延迟岗经典`（Java 版 hash map / 容器题的标配前置；hc07 ticker hash map 的追问常涉及，见 `loop/rounds/01_video/hc07_ticker_hash_map/`）。",
+    "source_kind": "java-classic",
+    "inferred": true,
+    "demos": [
+      "K02Boxing.java"
+    ]
+  },
+  {
+    "id": "kqld-15",
+    "topic": "D 分配与内存（kq06）",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "How are Java `String`s implemented? Immutability, interning, `+` in a loop, hash caching, `substring`.",
+    "short_answer": "`String` 不可变，内部是 `byte[]` + 编码标志（紧凑字符串：Latin-1 一字节、否则 UTF-16），`hashCode` 缓存在对象里，字面量进常量池可 `intern`，`substring` 拷贝，循环里 `+=` 是 O(n²)。",
+    "source": "`推断：Java 低延迟岗经典`（Java 对 C++ `std::string`/`string_view` 问题的翻译；博客 #3 的例子是 `std::string` 让对象变大，OP §B2）。",
+    "source_kind": "java-classic",
+    "inferred": true,
+    "demos": [
+      "K03ObjectSize.java",
+      "K05Concat.java",
+      "K05Strings.java"
+    ]
+  },
+  {
+    "id": "kqld-16",
+    "topic": "D 分配与内存（kq06）",
+    "difficulty": "hard",
+    "stars": 3,
+    "question": "When and how would you use off-heap memory in Java? What are the risks?",
+    "short_answer": "堆外 = 不受 GC 管理的内存：`ByteBuffer.allocateDirect`（受 `-XX:MaxDirectMemorySize` 限制）、`MappedByteBuffer`（mmap 文件）、`sun.misc.Unsafe`（内部）、**FFM API**（`Arena` + `MemorySegment`，21 预览）。用在大数据缓存、避免 GC 扫描/拷贝、与 native/IO 零拷贝、跨进程共享。风险：手动生命周期、越界/悬空（FFM 帮你检查）、泄漏不可见于堆 dump。",
+    "source": "`推断：Java 低延迟岗经典`；对应 C++ 的\"自己管内存\"（kq06 的 `malloc` 问法的 Java 对偶）；FFM API 见 CONVENTIONS 特性矩阵 J17。",
+    "source_kind": "java-classic",
+    "inferred": true,
+    "demos": [
+      "K11OffHeap.java",
+      "K16Ipc.java"
+    ]
+  },
+  {
+    "id": "kqld-17",
+    "topic": "D 分配与内存（kq06）",
+    "difficulty": "hard",
+    "stars": 3,
+    "question": "How do CPU caches affect Java performance? Why is `long[]` faster than `List<Long>`? What is false sharing?",
+    "short_answer": "CPU 读内存以 64 字节**缓存行**为单位；顺序访问连续数组命中缓存、预取器能提前加载，追指针（每个 `Long` 一个对象，位置随机）每次都可能 miss（约 100 ns）；**伪共享**：两个线程各写同一缓存行里的不同变量，缓存行在核间来回抢，写变慢。",
+    "source": "`推断：Java 低延迟岗经典`；公司博客 #3「OutOfLine – A Memory-Locality Pattern」讲热/冷数据、缓存行（O-B2，C++，面试官最可能引用）。",
+    "source_kind": "java-classic",
+    "inferred": true,
+    "demos": [
+      "K21Locality.java"
+    ]
+  },
+  {
+    "id": "kqld-18",
+    "topic": "E JIT 与 GC（JVM 内部）",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "How does the JIT work? Explain the interpreter, C1, C2, tiered compilation, and OSR.",
+    "short_answer": "分层编译：tier 0 解释器（收集计数）→ tier 1–3 C1（快速编译，tier 3 带完整 profiling）→ tier 4 C2（用 profile 做激进优化）；热点循环用 OSR 在循环中途切换；编译在后台线程完成，完成前继续用旧版本。",
+    "source": "`推断：Java 对应`。C++ 原题（F-A13）：「为什么C++比别的语言快？」的 Java 侧机制层追问；KQ04。",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K10Jit.java"
+    ]
+  },
+  {
+    "id": "kqld-19",
+    "topic": "E JIT 与 GC（JVM 内部）",
+    "difficulty": "hard",
+    "stars": 3,
+    "question": "What is inlining and why is it \"the mother of all optimisations\"? How does the JIT inline virtual calls?",
+    "short_answer": "内联把被调方法的代码拷进调用者，消除调用开销，并让后续优化（常量传播、逃逸分析、循环优化）能跨方法工作。接口/虚调用靠 **类层次分析（CHA）+ 类型 profile**：只有一个实现就直接内联（带\"类没变\"的依赖），1–2 种见过的类型用类型检查 + 内联，见过 ≥3 种（megamorphic）退回虚表/接口表调用。",
+    "source": "`推断：Java 对应`（C++ 的\"模板/内联/虚函数代价\"问法的 Java 版）。",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K10Jit.java"
+    ]
+  },
+  {
+    "id": "kqld-20",
+    "topic": "E JIT 与 GC（JVM 内部）",
+    "difficulty": "hard",
+    "stars": 3,
+    "question": "What is escape analysis? What optimisations come from it, and when does it fail?",
+    "short_answer": "C2 分析一个对象是否\"逃出\"当前编译单元（被存到字段/静态变量/返回/传给未内联的方法）；不逃逸就可以 **标量替换**（对象拆成寄存器里的字段，根本不分配）、**锁消除**；失败的常见原因是方法没被内联、对象存进了集合/字段、分支太复杂。",
+    "source": "`推断：Java 对应`（C++ 对应问法：栈对象 vs 堆对象、`new` 的代价，kq06）。JD 层面对应「Address performance limitations」。",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K02Boxing.java",
+      "K04EscapeAnalysis.java"
+    ]
+  },
+  {
+    "id": "kqld-21",
+    "topic": "E JIT 与 GC（JVM 内部）",
+    "difficulty": "hard",
+    "stars": 3,
+    "question": "What is deoptimisation? Give an example of when the JVM throws away compiled code.",
+    "short_answer": "JIT 为了快会做**投机**（只见过一种类型、某分支从没走过、没有第二个实现类）；假设被破坏时，JVM 在一个 uncommon trap 处把执行**回退到解释器**并丢弃/作废编译版本（日志里 `made not entrant`），之后重新 profile 再编译。",
+    "source": "`推断：Java 低延迟岗经典`（Java 与 C++ 的核心差异之一：投机优化）。",
+    "source_kind": "java-classic",
+    "inferred": true,
+    "demos": [
+      "K10Jit.java"
+    ]
+  },
+  {
+    "id": "kqld-22",
+    "topic": "E JIT 与 GC（JVM 内部）",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "How does garbage collection work? Explain generations, roots, and the differences among Parallel, G1 and ZGC.",
+    "short_answer": "GC 从根（线程栈、静态变量、JNI 引用）沿引用标记存活对象，其余回收。分代假说：大部分对象朝生夕死，所以把年轻代频繁小回收、老年代少回收。Parallel = 全停顿、吞吐高；G1 = 分 Region、按预期暂停时间增量回收（默认）；ZGC = 并发标记 + 并发整理，暂停亚毫秒、与堆大小基本无关，代价是吞吐/内存开销。",
+    "source": "`推断：Java 对应`（C++ `malloc/free`、智能指针问题的 Java 对偶；kq04–06）。",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K19Pauses.java",
+      "K20Busy.java"
+    ]
+  },
+  {
+    "id": "kqld-23",
+    "topic": "E JIT 与 GC（JVM 内部）",
+    "difficulty": "hard",
+    "stars": 3,
+    "question": "Your Java trading component has latency spikes. How do you choose and tune the GC? When ZGC, when G1?",
+    "short_answer": "先量化：谁在暂停？（`-Xlog:gc*,safepoint`）。再选：延迟敏感且堆大 → 分代 ZGC（21 用 `-XX:+UseZGC -XX:+ZGenerational`）；通用/吞吐 → G1。然后治本：降低分配率（热路径零分配）、堆大小留余量（`-Xms=-Xmx`）、`-XX:+AlwaysPreTouch`，最后才是微调。",
+    "source": "`推断：Java 低延迟岗经典`；JD「Address performance limitations …」「Develop and improve monitoring and proactive detection」（O-C2）。",
+    "source_kind": "java-classic",
+    "inferred": true,
+    "demos": [
+      "K19Pauses.java"
+    ]
+  },
+  {
+    "id": "kqld-24",
+    "topic": "E JIT 与 GC（JVM 内部）",
+    "difficulty": "hard",
+    "stars": 3,
+    "question": "Besides GC, what else makes a JVM pause? What's a safepoint?",
+    "short_answer": "**safepoint** 是所有 Java 线程都停在已知安全位置的时刻，JVM 在其中做 GC、去优化、类重定义、线程转储等操作；等所有线程到达的时间（time-to-safepoint）和 safepoint 里的工作都算暂停。GC 之外的抖动来源还有：页错误/内存回收、操作系统调度与 CPU 争用（含 JIT 编译线程）、类加载、日志与 I/O。",
+    "source": "`推断：Java 低延迟岗经典`。",
+    "source_kind": "java-classic",
+    "inferred": true,
+    "demos": [
+      "K19Pauses.java",
+      "OUTPUTS.txt"
+    ]
+  },
+  {
+    "id": "kqld-25",
+    "topic": "F 并发与内存模型（kq01）",
+    "difficulty": "hard",
+    "stars": 3,
+    "question": "What is the Java Memory Model? What does \"happens-before\" mean, and why do we need it?",
+    "short_answer": "JMM 规定了\"一个线程的写在什么条件下**一定**对另一个线程的读可见、以及指令可以怎样重排\"。**happens-before** 是这套规则的核心：若 A happens-before B，则 A 的写对 B 可见且 A 不会被重排到 B 之后；没有 happens-before 关系的读写就是**数据竞争**，结果不保证。",
+    "source": "`推断：Java 对应`。C++ 报告（Glassdoor RVW89062704，F-G2，2026-02）：「Later rounds covered algorithms, OS concepts, concurrency, and open-ended systems questions」→ https://fr.glassdoor.ca/Entretien/Headlands-Technologies-Entretien-E715901-RVW89062704.htm ；CATALOG kq01 的 Java 对应写作「JMM / 线程与锁」。",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K01Visibility.java"
+    ]
+  },
+  {
+    "id": "kqld-26",
+    "topic": "F 并发与内存模型（kq01）",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "What does `volatile` guarantee and what doesn't it? Is `volatile int count; count++` thread-safe?",
+    "short_answer": "`volatile` 保证 **可见性**（写立刻对后续读可见）和 **有序性**（写前的操作不会被重排到写后；读后的操作不会被重排到读前），**不保证复合操作的原子性**；`count++` 是读-改-写三步，不安全。",
+    "source": "`推断：Java 对应`（kq01 并发类；Java 面试第一高频题）。",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K01Visibility.java",
+      "K22VolatileCounter.java"
+    ]
+  },
+  {
+    "id": "kqld-27",
+    "topic": "F 并发与内存模型（kq01）",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "`synchronized` vs `ReentrantLock` — differences, cost, and what changed with virtual threads?",
+    "short_answer": "两者语义相近（互斥 + 可见性 + 可重入）；`ReentrantLock` 多了 `tryLock`、可中断、公平性、多个 `Condition`，需要手动 `unlock`（放进 `finally`）；`synchronized` 简洁、自动释放、JIT 可做锁消除/粗化。**JDK 21 里虚拟线程在 `synchronized` 里阻塞会 pin 住载体线程，`ReentrantLock` 不会。**",
+    "source": "`推断：Java 对应`（C++ 的 `std::mutex` / `lock_guard` 问法在 Java 的对应）。",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K08Counters.java",
+      "K09Pinning.java"
+    ]
+  },
+  {
+    "id": "kqld-28",
+    "topic": "F 并发与内存模型（kq01）",
+    "difficulty": "hard",
+    "stars": 3,
+    "question": "What is CAS? How do atomics work? Is lock-free always faster than locking? What is `LongAdder`?",
+    "short_answer": "CAS（compare-and-swap）是一条原子指令：\"如果内存值 == 期望值就写入新值，否则失败\"，`AtomicLong` 在循环里重试它。无锁 ≠ 更快：高竞争下 CAS 重试风暴会比锁还慢；`LongAdder` 把一个热点计数器拆成多个 `Cell`（分段），读时求和，写扩展性极好。",
+    "source": "`推断：Java 对应`；C++ 报告里反复出现的\"lock-free\"主题：C++ JD「lock-free data structures」（O-C3）。",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K08Counters.java"
+    ]
+  },
+  {
+    "id": "kqld-29",
+    "topic": "F 并发与内存模型（kq01）",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "How does `HashMap` work internally? Resizing, collisions, treeification, why is the capacity a power of two?",
+    "short_answer": "数组 + 链表/红黑树。`index = (n-1) & (h ^ (h >>> 16))`；负载因子 0.75 触发翻倍扩容；同一桶链表 ≥ 8 且表容量 ≥ 64 时转红黑树（≤ 6 退回）。容量取 2 的幂，是为了用位与代替取模。",
+    "source": "`推断：Java 低延迟岗经典`；关联 Blind 2024-08（F-B1）第二题「optimizing a C++ unordered_map for stock tickers」→ 的 Java 版是 hc07（`loop/rounds/01_video/hc07_ticker_hash_map/`）。",
+    "source_kind": "java-classic",
+    "inferred": true,
+    "demos": [
+      "K06HashMap.java"
+    ]
+  },
+  {
+    "id": "kqld-30",
+    "topic": "F 并发与内存模型（kq01）",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "How does `ConcurrentHashMap` achieve thread safety? How is it different from `Collections.synchronizedMap`? Why no null keys/values?",
+    "short_answer": "Java 8+ 的 CHM：空桶用 **CAS** 放入首节点；非空桶只对**该桶的头节点** `synchronized`（细粒度锁）；读不加锁（`volatile` 读）；计数用分段 `CounterCell`。所以并发度 ≈ 桶数。不允许 `null` 是为了让 `get` 返回 `null` 无歧义（\"没有\"而不是\"值是 null\"）。",
+    "source": "`推断：Java 对应`；CATALOG kq01 的 Java 对应列表中明确写了「ConcurrentHashMap」。",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K07Chm.java"
+    ]
+  },
+  {
+    "id": "kqld-31",
+    "topic": "F 并发与内存模型（kq01）",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "What are virtual threads? How do they differ from platform threads, and when should you NOT use them?",
+    "short_answer": "虚拟线程是 JVM 调度的轻量线程（挂在少量载体平台线程上）。阻塞操作（I/O、sleep、锁）时**卸载**载体线程让别人用，所以可以一个请求一个线程且同时有几十万个。对 **CPU 密集**没帮助、池化它们没意义；在 21 里 `synchronized` 阻塞会 pin 载体。",
+    "source": "`推断：Java 对应`（Java 21 的招牌特性；CATALOG kq01/kq02 的 Java 对应）。",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K09Pinning.java",
+      "K09VirtualThreads.java"
+    ]
+  },
+  {
+    "id": "kqld-32",
+    "topic": "F 并发与内存模型（kq01）",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "How do you size a thread pool? What are the pitfalls of `Executors`?",
+    "short_answer": "CPU 密集 ≈ 核数（+1）；I/O 密集 ≈ 核数 × (1 + 等待时间/计算时间)，或直接用虚拟线程；队列必须有界、拒绝策略显式；别用 `Executors.newFixedThreadPool` 的无界队列和 `newCachedThreadPool` 的无界线程。",
+    "source": "`推断：Java 对应`（C++ 的\"线程数/任务队列\"问法；hc02「多线程无阻塞合并数据流」追问相关，见 `loop/rounds/01_video/hc02_merge_k_streams/`）。",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K09VirtualThreads.java"
+    ]
+  },
+  {
+    "id": "kqld-33",
+    "topic": "F 并发与内存模型（kq01）",
+    "difficulty": "hard",
+    "stars": 3,
+    "question": "What is safe publication? Why is double-checked locking broken without `volatile`? What do `final` fields guarantee?",
+    "short_answer": "对象构造完成后，如果通过数据竞争（无同步）发布引用，别的线程可能看到引用但看到**未初始化完的字段**（重排）。安全发布方式：volatile 字段、`final` 字段、静态初始化器、持锁发布、线程安全容器。DCL 单例的引用必须 `volatile`；`final` 字段在构造器结束时有\"冻结\"保证，其它线程看到引用就保证看到 final 字段的值。",
+    "source": "`推断：Java 低延迟岗经典`（JMM 追问；可由 Q25 引出）。",
+    "source_kind": "java-classic",
+    "inferred": true,
+    "demos": []
+  },
+  {
+    "id": "kqld-34",
+    "topic": "G 操作系统与 Linux 性能工具（kq01 + JD）",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "Process vs thread vs virtual thread: what is a context switch and what does it cost? How do you pin a thread to a core?",
+    "short_answer": "进程 = 独立地址空间 + 资源；线程 = 同一进程内共享地址空间的调度单位；虚拟线程 = JVM 里的用户态线程。上下文切换要保存/恢复寄存器、换调度实体（进程切换还要换页表，TLB 失效），**直接成本是微秒级，间接成本（缓存变冷）通常更大**；Java 标准库没有绑核 API，用 `taskset`/`numactl` 或第三方库。",
+    "source": "`推断：Java 对应`。C++ 报告（Glassdoor RVW89062704，F-G2）：「OS concepts, concurrency」；54skyxenon 博客：onsite 约 6 轮低层概念（GH §1 #9；OSTEP 级别）。",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": []
+  },
+  {
+    "id": "kqld-35",
+    "topic": "G 操作系统与 Linux 性能工具（kq01 + JD）",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "Explain virtual memory, the page cache and page faults. Why is a JVM's RSS bigger than `-Xmx`?",
+    "short_answer": "每个进程看到自己的**虚拟地址空间**，MMU 通过页表映射到物理页；没映射的页被访问触发**缺页（page fault）**，内核按需分配/从文件读入；文件 I/O 先经过 **page cache**（内核缓存）。JVM 的 RSS = 堆 + 元空间 + 代码缓存 + 线程栈 + GC 数据结构 + 直接内存 + 共享库，所以必然大于 `-Xmx`。",
+    "source": "`推断：JD`（「Strong knowledge of the details of computing all throughout the technical stack」「Address performance limitations within … Linux」，O-C2）；OSTEP 类题（GH §1 #9）。",
+    "source_kind": "jd",
+    "inferred": true,
+    "demos": [
+      "run_tools.sh"
+    ]
+  },
+  {
+    "id": "kqld-36",
+    "topic": "G 操作系统与 Linux 性能工具（kq01 + JD）",
+    "difficulty": "hard",
+    "stars": 3,
+    "question": "A Java service is slow in production. Walk me through how you would investigate with `top`, `vmstat`, `perf` and `strace`.",
+    "short_answer": "先看全局再下钻（USE 方法：对每种资源看 利用率、饱和度、错误）：`top`/`vmstat`/`iostat`/`ss` 判断是 CPU、内存、磁盘还是网络的问题 → `top -H`/`pidstat -t` 找热线程 → `perf`（或 JFR）看热点函数 → `strace -c`/`-T` 看系统调用 → 回到代码/配置。",
+    "source": "`推断：JD`。JD 原话：「Address performance limitations within our own software, open-source libraries and applications, Linux, etc.」「Develop and improve monitoring and proactive detection capabilities」「Plus: Linux」（O-C2）。**没有任何面经报告过这类题**，这是 Java 基础设施岗最可能的 JD 派生问法。",
+    "source_kind": "jd",
+    "inferred": true,
+    "demos": []
+  },
+  {
+    "id": "kqld-37",
+    "topic": "G 操作系统与 Linux 性能工具（kq01 + JD）",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "How do you profile and diagnose a JVM: JFR, `jcmd`, thread dumps, heap histograms? Show me what you would look at.",
+    "short_answer": "JDK 自带的就够用：`jcmd <pid> Thread.print`（线程栈与锁）、`jstat -gcutil`（GC 概况）、`jcmd GC.class_histogram`（谁占堆）、`jcmd VM.native_memory`（堆外）、**JFR**（低开销事件录制，含 CPU 采样、分配、锁、GC）。本机都跑过。",
+    "source": "`推断：JD`（「Develop and improve monitoring and proactive detection capabilities」，O-C2）；Java 低延迟岗经典。",
+    "source_kind": "jd",
+    "inferred": true,
+    "demos": [
+      "K20Busy.java",
+      "OUTPUTS.txt",
+      "run_tools.sh"
+    ]
+  },
+  {
+    "id": "kqld-38",
+    "topic": "H 进程间通信（kq03）",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "What are the ways processes can communicate on one machine? Compare pipes, sockets, shared memory, message queues, files.",
+    "short_answer": "管道（单向字节流）、Unix 域/TCP 套接字（双向、可跨机器）、**共享内存**（最快：零拷贝，但要自己同步）、消息队列、信号（通知）、文件。取舍：越靠近共享内存延迟越低、越需要自己处理同步与崩溃恢复；越靠近套接字越通用、越慢。",
+    "source": "`推断：Java 对应`。C++ 原题（1p3a 974931，F-A16，2023-03）：「IPC methods」→ https://www.1point3acres.com/interview/thread/974931 ；1p3a 938472（F-A18，2022-10）：「interprocess communication topics」→ https://www.1point3acres.com/interview/thread/938472 ；1p3a 1011799（F-A13）：「shared memory」。",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K16Ipc.java"
+    ]
+  },
+  {
+    "id": "kqld-39",
+    "topic": "H 进程间通信（kq03）",
+    "difficulty": "hard",
+    "stars": 3,
+    "question": "How would you implement shared memory IPC in Java? How do you get correct visibility across processes?",
+    "short_answer": "用 `FileChannel.map` 把同一个文件（Linux 上放 `/dev/shm`）映射进两个 JVM，得到 `MappedByteBuffer`；用 `VarHandle`（`MethodHandles.byteBufferViewVarHandle`）对映射内存做 `getVolatile/setVolatile`（或 acquire/release），设计成**单生产者单消费者环形缓冲**：各自只写自己的序号，先写数据后发布序号。",
+    "source": "`推断：Java 对应`。C++ 原题族（F-A13「shared memory」、F-A16/F-A18「IPC」）；1p3a 1011799 摘要中的 `language features, shared memory, system design`。",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K16Ipc.java"
+    ]
+  },
+  {
+    "id": "kqld-40",
+    "topic": "I 网络",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "Explain TCP basics relevant to latency: handshake, Nagle's algorithm, delayed ACK, `TCP_NODELAY`.",
+    "short_answer": "TCP 是可靠的字节流（三次握手建连、序号+确认、重传、拥塞控制）。**Nagle** 为减少小包，会把小写入攒着等前一个包的 ACK；**延迟 ACK** 让接收方等一会儿再确认；两者叠加会让「写-写-读」模式卡几十毫秒。低延迟程序设置 `TCP_NODELAY` 并把一条消息合成一次写入。",
+    "source": "`推断：JD`。「Good knowledge of networking and storage systems」「Improve networking communication between different components of the system to achieve optimal latency and throughput」（O-C2）；C++ 岗 JD 额外有「low-level networking protocols」（O-C3）。kq01 的 Java 对应列表含「NIO 与 TCP」。",
+    "source_kind": "jd",
+    "inferred": true,
+    "demos": [
+      "K17Nagle.java"
+    ]
+  },
+  {
+    "id": "kqld-41",
+    "topic": "I 网络",
+    "difficulty": "hard",
+    "stars": 3,
+    "question": "Blocking I/O vs NIO vs epoll vs Netty vs virtual threads: how do you serve many connections? What does `read()` do inside the kernel?",
+    "short_answer": "三种模型——(1) 每连接一线程 + 阻塞 I/O（简单，线程数受限）；(2) **反应器（reactor）**：少量线程用 `Selector`（Linux 下是 `epoll`）监听就绪事件，非阻塞读写（Netty 的模型）；(3) 虚拟线程：写回阻塞风格的代码，JVM 在底层用非阻塞 I/O 调度。`select/poll` 每次要扫描所有 fd（O(n)），`epoll` 只返回就绪的（O(就绪数)）。",
+    "source": "`推断：Java 对应`；CATALOG kq01「NIO 与 TCP」；Glassdoor G2「OS concepts, concurrency」（F-G2）。",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K17Nagle.java"
+    ]
+  },
+  {
+    "id": "kqld-42",
+    "topic": "I 网络",
+    "difficulty": "hard",
+    "stars": 3,
+    "question": "How would you reduce network latency between two components of a trading or research system?",
+    "short_answer": "先量：每一跳的延迟分布（p50/p99/p999，不是平均）。再减：少拷贝少序列化（二进制定长协议，不用 Java 序列化/JSON）、一次 `write` 一条消息 + `TCP_NODELAY`、长连接、专用线程绑核忙轮询、缓冲区合理、避免 GC 与锁、必要时 UDP 多播/内核旁路。",
+    "source": "`推断：JD`。「Improve networking communication between different components of the system to achieve optimal latency and throughput」（O-C2）；博客 #5 讲实盘链路 market data parser → strategy → order gateway 与延迟量级（O-B2）。",
+    "source_kind": "jd",
+    "inferred": true,
+    "demos": [
+      "K16Ipc.java",
+      "K17Nagle.java"
+    ]
+  },
+  {
+    "id": "kqld-43",
+    "topic": "J 存储",
+    "difficulty": "medium",
+    "stars": 2,
+    "question": "What happens when you `write()` to a file? What are the page cache and `fsync`? How do you make writes durable and fast?",
+    "short_answer": "`write()` 只是把数据拷进内核 **page cache** 就返回（很快，但还没落盘，断电会丢）；`fsync`/`FileChannel.force()` 才等待数据到达持久介质（慢，毫秒级）。做法：批量写 + **组提交（group commit）**：很多记录共享一次 fsync；顺序追加（WAL）而不是随机写。",
+    "source": "`推断：JD`。「Design, implement, and maintain distributed storage systems with various performance and reliability requirements」「Good knowledge of networking and storage systems」（O-C2）。",
+    "source_kind": "jd",
+    "inferred": true,
+    "demos": [
+      "K18Storage.java"
+    ]
+  },
+  {
+    "id": "kqld-44",
+    "topic": "J 存储",
+    "difficulty": "hard",
+    "stars": 3,
+    "question": "`mmap` vs `read/write` for files: when would you use a `MappedByteBuffer`, and what are its pitfalls?",
+    "short_answer": "`mmap` 把文件的 page cache 页直接映射进进程地址空间，访问像读内存（缺页时才读盘），省去 `read` 的一次内核到用户拷贝，适合大文件的随机访问和多进程共享；坑：缺页延迟不可预期、Java 里无法确定性 unmap、大小/下标限制、I/O 错误变成 `InternalError`/崩溃。",
+    "source": "`推断：JD`（storage systems）；`推断：Java 对应` 于 kq03/kq06 的 mmap / 共享内存话题（Q39）。",
+    "source_kind": "cpp-translation",
+    "inferred": true,
+    "demos": [
+      "K16Ipc.java",
+      "K18Storage.java"
+    ]
+  },
+  {
+    "id": "kqld-45",
+    "topic": "J 存储",
+    "difficulty": "hard",
+    "stars": 3,
+    "question": "Distributed storage: replication, consistency and the trade-offs between LSM trees and B-trees. What would you think about when designing a storage layer for research data?",
+    "short_answer": "先问需求（读写比、延迟 vs 吞吐、顺序 vs 随机、一致性、规模、故障容忍），再选：**B 树**读友好、原地更新、写放大随机；**LSM 树**写友好（顺序追加+后台合并），读放大和合并放大要管；跨机器用复制（同步/异步）或纠删码，用共识（Raft/Paxos）保证一致，权衡 CAP 与延迟。",
+    "source": "`推断：JD`。「Design, implement, and maintain distributed storage systems with various performance and reliability requirements」「Investigate new technologies to improve stability, scalability, and performance of a distributed computing farm」（O-C2）；quant 公司背景：回测 tick 数据「每天数百 GB」（博客 #5，O-B2）。**没有面经报告过这类题，纯 JD 推断。**",
+    "source_kind": "jd",
+    "inferred": true,
+    "demos": [
+      "K18Storage.java"
+    ]
+  }
+]
