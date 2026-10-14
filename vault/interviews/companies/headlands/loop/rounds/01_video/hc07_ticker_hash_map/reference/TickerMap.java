@@ -32,14 +32,17 @@ public final class TickerMap {
     /** expectedSize：预计放多少条，预留够用的容量，避免途中 resize。 */
     public TickerMap(int expectedSize) {
         if (expectedSize < 0) throw new IllegalArgumentException("expectedSize < 0");
-        allocate(capacityFor((long) expectedSize));
+        allocate(capacityFor((long) expectedSize, 2));
     }
 
     // ------------------------------------------------------------------ 容量与哈希
 
-    /** 让「装载因子 <= 1/4」的最小 2 的幂；resize 之后最多半满，再插入一半才会触发下一次 resize。 */
-    private static int capacityFor(long entries) {
-        long want = Math.max(MIN_CAPACITY, entries * 4);
+    /**
+     * 容纳 entries 条记录、且装载因子 <= 1/loadInverse 的最小 2 的幂。
+     * 构造时按 1/2 预留（刚好不触发 resize）；resize 时按 1/4 重建，于是纯插入场景下每次正好翻倍。
+     */
+    private static int capacityFor(long entries, int loadInverse) {
+        long want = Math.max(MIN_CAPACITY, entries * loadInverse);
         if (want > (1 << 30)) throw new IllegalStateException("map too large");
         return Integer.highestOneBit((int) want - 1) << 1;
     }
@@ -163,7 +166,7 @@ public final class TickerMap {
     private void rehash() {
         String[] oldKeys = keys;
         long[] oldVals = vals;
-        allocate(capacityFor(size + 1L));
+        allocate(capacityFor(size, 4)); // 触发 rehash 时 size == capacity/2（纯插入），所以新容量正好翻倍
         for (int j = 0; j < oldKeys.length; j++) {
             String k = oldKeys[j];
             if (k == null || k == TOMB) continue;

@@ -18,7 +18,6 @@ import java.util.Arrays;
 public final class SymbolIndex {
     private static final int MAX_SEEDS = 64;
     private static final int MAX_DISPLACEMENT = 1 << 22;
-    private static final long WEYL = 0x9E3779B9L;  // 32 位黄金比例奇数：d*WEYL 在 2^32 上均匀撒点
 
     private final long[] keys;   // keys[slot] = 分到这个格子的 key
     private final int[] disp;    // 每个桶的位移
@@ -59,9 +58,14 @@ public final class SymbolIndex {
     /** 乘法移位把 32 位无符号数缩到 [0, range)，不用除法（Lemire 的 fastrange）。 */
     private static int bucket(long h, int r) { return (int) (((h >>> 32) * r) >>> 32); }
 
+    /**
+     * 第 d 号候选格子：把 d 搅进 h 再乘一个大奇数，取高 32 位缩到 [0, m)。
+     * 不同的 d 给出「看起来互相独立」的格子 —— 如果只是等差地加（h + d*常数），桶里两个 key 的格子差永远固定，
+     * 剩下两个空格子之差不匹配时无论试多少个 d 都放不进去（小表上真的会发生）。
+     */
     private static int slot(long h, int d, int m) {
-        long x = ((h & 0xFFFFFFFFL) + d * WEYL) & 0xFFFFFFFFL;
-        return (int) ((x * m) >>> 32);
+        long x = (h ^ (d * 0x9E3779B97F4A7C15L)) * 0xD6E8FEB86659FD93L;
+        return (int) (((x >>> 32) * m) >>> 32);
     }
 
     private static SymbolIndex tryBuild(long[] universe, int seed) {

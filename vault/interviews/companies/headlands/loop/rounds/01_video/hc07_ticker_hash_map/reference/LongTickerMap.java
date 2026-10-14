@@ -27,7 +27,7 @@ public final class LongTickerMap {
 
     public LongTickerMap(int expectedSize) {
         if (expectedSize < 0) throw new IllegalArgumentException("expectedSize < 0");
-        long want = Math.max(MIN_CAPACITY, expectedSize * 4L);
+        long want = Math.max(MIN_CAPACITY, expectedSize * 2L); // 预留装载因子 1/2：放满 expectedSize 条恰好不 resize
         if (want > (1 << 29)) throw new IllegalArgumentException("expectedSize too large");
         allocate(Integer.highestOneBit((int) want - 1) << 1);
     }
@@ -136,7 +136,7 @@ public final class LongTickerMap {
 
     private void rehash() {
         long[] old = slots;
-        long want = Math.max(MIN_CAPACITY, (size + 1L) * 4);
+        long want = Math.max(MIN_CAPACITY, size * 4L); // 纯插入触发时 size == capacity/2，所以正好翻倍
         if (want > (1 << 29)) throw new IllegalStateException("map too large");
         allocate(Integer.highestOneBit((int) want - 1) << 1);
         for (int j = 0; j < old.length; j += 2) {
