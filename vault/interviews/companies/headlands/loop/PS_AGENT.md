@@ -29,6 +29,8 @@ Rules:
   「读题前你需要知道」 paragraph linking the lecture. Comments in `reference/` explain *why*, not just *what*.
   The lecture is owned by you too (one file per problem).
 
+- The harness refuses subagent writes to `REPORT.md`: put the full REPORT.md text in your final reply instead (the orchestrator saves it).
+
 Acceptance (run it yourself before replying; the orchestrator re-runs it):
 `python3 tools/jtest.py verify "loop/rounds/*/<your-id>*"` → every line `OK`.
 

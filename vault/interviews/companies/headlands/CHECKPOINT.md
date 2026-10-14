@@ -17,10 +17,10 @@ Chi 的要求（2026-10-14）：**Java 21 + 新特性，越多越好；教科书
 | P1 | 三路尽调 `catalog/raw/{github_repos,forums,official_and_process}.md` | ✅ | — |
 | P2 | CATALOG（A–G）· RANK 43 行 · PARETO（cut line 第 22 行） | ✅ | `tools/pareto.py catalog/RANK.md --table 总表 --focus 电面` |
 | P3 | `loop/LOOP_GUIDE.md`（视频面） | ✅ | — |
-| P4 | 题集 + 讲义：oa01 hc02 hc03 hc04 hc05(+hc14) hc06 hc08 ✅；hc01 hc07 进行中 | 进行中 | `python3 tools/jtest.py verify "loop/rounds/*/*"` |
-| P5 | `study/10-java21/` J01–J09、J10–J19 进行中；`study/00-foundations/` 待写 | 进行中 | 示例全部 javac 通过 |
-| P6 | kq 语言深度题库（C++ 问法 → Java 问法）· 反问 · 故事 | 待做 | — |
-| P7 | 第三波题：hc09 hc11 hc13 ld01 · CONTENTS/COVERAGE · README | 待做 | — |
+| P4 | 题集 + 讲义：oa01 hc01–hc09 hc11 hc13 ld01（13 个目录全部 verify OK） | ✅ | `python3 tools/jtest.py verify "loop/rounds/*/*"` |
+| P5 | `study/10-java21/` J01–J19 · `study/00-foundations/` 6 章 | ✅ | 示例全部 javac 通过 |
+| P6 | kq 语言深度题库 45 题 · 简报 · fit · stories（3 处待 Chi 填）· 反问 | ✅ | — |
+| P7 | README 学习路径 ✅；可选：hc10/hc12/hc15–hc20、oa02 Disaster Recovery、sd01–03、onsite | 待 Chi 决定 | — |
 
 ## 公开仓库约束
 
@@ -28,6 +28,7 @@ Chi 的要求（2026-10-14）：**Java 21 + 新特性，越多越好；教科书
 
 ## 下一步（接手就做这个）
 
-1. 收 hc01/hc07、J01–J09、J10–J19 → 跑 `jtest.py verify` + 抽查讲义数字 → commit → LEDGER 加行。
-2. 派 `study/00-foundations/`（复杂度、哈希、堆、JMM、JIT/GC、CPU 缓存）与 kq 题库。
-3. 第三波题（见 P7），讲义同样教科书模式。
+1. Chi：签 NDA → 提交可用时段；按 `README.md` 学习路径刷；`stories.md` 的 3 个模板（性能排查、Quant-Stroller、code review）要 Chi 本人填。
+2. Chi 若读到 1p3a 正文（1169914、1134455、1089956、1059121），把 (reconstructed) 的 Part 改成原题。
+3. 过了电面：展开 onsite（`02_onsite/`、`04_sd/`），见 CATALOG C / LOOP_GUIDE §2。
+4. 合并 PR #46 只在 Chi 说了之后。

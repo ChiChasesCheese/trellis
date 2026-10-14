@@ -14,6 +14,8 @@
 | 读某道题的讲义 | `study/30-articles/<id>_*.md` |
 | 动手做题 | `loop/rounds/<轮次>/<id>_*/`，命令见下 |
 | 语言深度口头题（C++ 面经翻成 Java 问法，45 题） | [loop/rounds/01_video/kq_language_depth/questions.md](loop/rounds/01_video/kq_language_depth/questions.md) |
+| 公司是做什么的（从零讲自营交易） | [01-company-brief.md](01-company-brief.md) |
+| 简历 vs JD、故事、反问 | [fit.md](fit.md) · [stories.md](stories.md)（有待填模板）· [06-questions-to-ask.md](06-questions-to-ask.md) |
 | 证据原文（每条都有 URL + 日期） | `catalog/raw/` |
 | 进度 / 已验收 | [CHECKPOINT.md](CHECKPOINT.md) · [LEDGER.md](LEDGER.md) |
 
@@ -61,8 +63,8 @@ JDK：`brew install openjdk@21`（已装）。想在终端直接用 `java`：`ex
 | hc06 | 32 位寄存器位运算解释器 | 电面 | ✅ |
 | hc07 | 股票代码 hash map 优化 | 电面 | ✅ |
 | hc08 | 订单序列 API（树状数组） | 电面 | ✅ |
-| hc09 | Top-K 成交额（含滑动窗口） | 电面 | 制作中 |
-| hc11 | 订单区间最大重叠 + 撤单 | 电面 | 制作中 |
+| hc09 | Top-K 成交额（含滑动窗口、并行聚合） | 电面 | ✅ |
+| hc11 | 订单区间最大重叠 + 撤单（扫描线、线段树） | 电面 | ✅ |
 | hc13 | 固定大小内存池（FFM、无锁） | 电面 | ✅ |
 | ld01 | 共享内存 SPSC 通道（跨进程） | LLD | ✅ |
 | kq | 语言深度 45 题 | 电面口头 | — |
