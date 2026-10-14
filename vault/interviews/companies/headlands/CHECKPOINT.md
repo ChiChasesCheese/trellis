@@ -7,16 +7,20 @@
 
 Chi 投 Headlands Technologies **Software Engineer（Java）**，通过 HackerRank「Headlands Tech Coding Test - Java」，被邀约 **一小时技术视频面（phone screen）**；先签 NDA，再提交多个工作日可用时段。
 
+Chi 的要求（2026-10-14）：**Java 21 + 新特性，越多越好；教科书模式**（`study/TEXTBOOK.md`）。题集规范是 Java 版 `CONVENTIONS.md`，运行/验收用 `tools/jtest.py`。
+
 ## 阶段与状态
 
 | 阶段 | 内容 | 状态 | 验收 |
 |---|---|---|---|
-| P0 | 骨架（tools/conftest/pytest.ini/check_tree.py 从 snowflake 复制） | ✅ | — |
-| P1 | 三路尽调：A GitHub（`raw/github_repos.md`）· B 面经（`raw/forums.md`）· C 官方/JD/流程/薪资（`raw/official_and_process.md`） | A ✅ B ✅ C ✅ | 每个文件有来源表 + 缺口段 |
-| P2 | CATALOG · RANK · PARETO · 简报 · 流程 · fit · 反问 | 待做 | `tools/pareto.py` |
-| P3 | 技术视频面 playbook · 题库 | 待做 | — |
-| P4 | 题集（cut line 以上） | 待做 | `tools/verify_suites.py` |
-| P5 | 知识树 · CONTENTS · COVERAGE · README | 待做 | `check_tree.py --strict` |
+| P0 | 骨架 + Java 21 工具链（`openjdk@21` brew、JUnit console jar 在 `~/.cache/trellis-java/`） | ✅ | `jtest.py verify` |
+| P1 | 三路尽调 `catalog/raw/{github_repos,forums,official_and_process}.md` | ✅ | — |
+| P2 | CATALOG（A–G）· RANK 43 行 · PARETO（cut line 第 22 行） | ✅ | `tools/pareto.py catalog/RANK.md --table 总表 --focus 电面` |
+| P3 | `loop/LOOP_GUIDE.md`（视频面） | ✅ | — |
+| P4 | 题集 + 讲义：oa01 hc02 hc03 hc04 hc05(+hc14) hc06 hc08 ✅；hc01 hc07 进行中 | 进行中 | `python3 tools/jtest.py verify "loop/rounds/*/*"` |
+| P5 | `study/10-java21/` J01–J09、J10–J19 进行中；`study/00-foundations/` 待写 | 进行中 | 示例全部 javac 通过 |
+| P6 | kq 语言深度题库（C++ 问法 → Java 问法）· 反问 · 故事 | 待做 | — |
+| P7 | 第三波题：hc09 hc11 hc13 ld01 · CONTENTS/COVERAGE · README | 待做 | — |
 
 ## 公开仓库约束
 
@@ -24,5 +28,6 @@ Chi 投 Headlands Technologies **Software Engineer（Java）**，通过 HackerRa
 
 ## 下一步（接手就做这个）
 
-1. P1 已收齐并审过（FastPrep 分阶段计数用 awk 复核 18/8/5）。等 Chi 确认：练习语言（建议 Java）、HackerRank 是否 job chain 题。
-2. P2：合并成 `catalog/CATALOG.md`，`tools/pareto.py` 出 cut line。
+1. 收 hc01/hc07、J01–J09、J10–J19 → 跑 `jtest.py verify` + 抽查讲义数字 → commit → LEDGER 加行。
+2. 派 `study/00-foundations/`（复杂度、哈希、堆、JMM、JIT/GC、CPU 缓存）与 kq 题库。
+3. 第三波题（见 P7），讲义同样教科书模式。
