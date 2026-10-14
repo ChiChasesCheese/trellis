@@ -12,3 +12,7 @@
 | 2026-10-14 | hc05 + hc08 | 题集 + 讲义 | verify OK（59 / 36 测试）；Fenwick 表复核 | 04cfddae |
 | 2026-10-14 | hc03 + hc06 | 题集 + 讲义 | verify OK（29 / 71）；65536 溢出点复核 | 79df016f |
 | 2026-10-14 | hc02 + hc04 | 题集 + 讲义 | verify OK（82 / 61）；conc ×3 稳定 | 7a9a6391 |
+| 2026-10-14 | hc01 + hc07 | 题集 + 讲义 | verify OK（37 / 79） | ac7783ca |
+| 2026-10-14 | J01–J09 课本 | study/10-java21 | 36 示例 javac 通过；J04 矩阵例子改正 | 277ff22a |
+| 2026-10-14 | J10–J19 课本 | study/10-java21 | 50 示例 javac 通过；抽查 JEP 事实 | 962be943 |
+| 2026-10-14 | 基础课本 6 章 + kq 题库 45 题 | study/00-foundations, kq_language_depth | 44 代码块编译通过；EA 64 元素 PrintFlagsFinal 核对（注：此 commit 误带了 hc13/ld01 半成品，验收后覆盖） | 438d0aaf |
