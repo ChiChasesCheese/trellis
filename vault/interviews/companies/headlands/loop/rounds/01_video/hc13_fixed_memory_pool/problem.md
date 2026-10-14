@@ -14,7 +14,7 @@
 讲义 `study/30-articles/hc13_fixed_memory_pool.md`（从零讲：为什么 Java 程序要池化、GC 与分配速率、空闲链表、ABA 与版本号、堆外内存、CAS 与 Treiber 栈、每线程缓存）。最少要先懂：
 
 * **空闲链表（free list）**：把「还没被借走的块」串成一条链，借 = 摘链头，还 = 插链头，都是 O(1)；
-* **GC 压力**为什么会变成延迟：见讲义 §2.1–2.2；
+* **GC 压力**为什么会变成延迟：见讲义 §2.1；
 * **CAS（compare-and-set）** 和 **ABA 问题**：见讲义 §2.7 和 `study/10-java21/J16_concurrency_primitives.md`；
 * **堆外内存**与 FFM：`study/10-java21/J17_ffm_api.md`；
 * CPU 缓存：`study/00-foundations/cpu_cache_locality.md`。
@@ -172,7 +172,7 @@ g.isLive(b);                 // true
 | 回绕 | `new GenPool(1, -2)`：版本号从 `0xFFFFFFFE` 起，分配得到 `-1`，归还后回绕为 `0` |
 | 堆外 | 极值 `Long.MIN_VALUE` / `Integer.MIN_VALUE` 往返；相邻记录互不覆盖；复用记录是零；`close` 后访问；重复 `close` |
 | 并发 | 小池 + 8 线程反复借还不能出现两个主人；三个线程同时 `free` 同一批 handle；跨线程借 / 还；大量虚拟线程 |
-| 性能 | 300 万次随机借还 < 2 s；100 万记录的堆外池 < 2 s；4 线程各 10 万轮 × 16 次借还 < 2 s |
+| 性能 | 300 万次随机借还 < 2 s；**池几乎一直是满的**时 150 万次「换掉随机一块」< 2 s（O(n) 扫描空位的写法死在这里）；100 万记录的堆外池 < 2 s；4 线程各 5 万轮 × 16 次借还 < 2 s |
 
 ## 野外变体
 

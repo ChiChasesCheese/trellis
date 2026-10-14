@@ -150,6 +150,29 @@ class IndexPoolTest {
         assertEquals(IndexPool.NONE, pool.allocate());
     }
 
+    /** 池几乎一直是满的，每步换掉随机一块：O(n) 扫描空位的写法在这里会慢几个数量级（空位平均在中间，每次扫 n/2）。 */
+    @Test @Tag("part1") @Tag("perf")
+    void nearFullChurnIsFast() {
+        assertTimeoutPreemptively(Duration.ofSeconds(2), () -> {
+            int cap = 1 << 16;
+            var rnd = new Random(0);
+            var pool = new IndexPool(cap);
+            int[] held = new int[cap];
+            for (int i = 0; i < cap; i++) held[i] = pool.allocate();
+            assertEquals(IndexPool.NONE, pool.allocate());
+            for (int step = 0; step < 1_500_000; step++) {
+                int k = rnd.nextInt(cap);
+                assertEquals(FreeResult.FREED, pool.free(held[k]));
+                int b = pool.allocate();
+                assertNotEquals(IndexPool.NONE, b);
+                held[k] = b;
+            }
+            assertEquals(0, pool.available());
+            var seen = new BitSet(cap);
+            for (int b : held) { assertFalse(seen.get(b)); seen.set(b); }
+        });
+    }
+
     @Test @Tag("part1") @Tag("perf")
     void randomOpsMatchModelAndAreFast() {
         assertTimeoutPreemptively(Duration.ofSeconds(2), () -> {

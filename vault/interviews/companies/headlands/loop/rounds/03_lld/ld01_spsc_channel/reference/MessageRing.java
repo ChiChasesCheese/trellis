@@ -75,7 +75,11 @@ public final class MessageRing {
         this.cachedTail = tail;
     }
 
-    public static long segmentBytes(int capacity) { return HEADER_BYTES + (long) capacity; }
+    /** 整块 segment 需要的字节数 = HEADER_BYTES + capacity。capacity 不合法 → IllegalArgumentException（调用方可以在动文件之前先校验）。 */
+    public static long segmentBytes(int capacity) {
+        checkCapacity(capacity);
+        return HEADER_BYTES + (long) capacity;
+    }
 
     private static void checkCapacity(int capacity) {
         if (capacity < MIN_CAPACITY || capacity > MAX_CAPACITY || Integer.bitCount(capacity) != 1)
@@ -102,7 +106,7 @@ public final class MessageRing {
         int capacity = seg.get(JAVA_INT_UNALIGNED, OFF_CAPACITY);
         if (version != VERSION) throw new IllegalStateException("unsupported version " + version);
         if (capacity < MIN_CAPACITY || capacity > MAX_CAPACITY || Integer.bitCount(capacity) != 1
-                || seg.byteSize() < segmentBytes(capacity))
+                || seg.byteSize() < HEADER_BYTES + (long) capacity)
             throw new IllegalStateException("corrupt header: capacity=" + capacity + ", segment=" + seg.byteSize());
         return new MessageRing(seg, capacity);
     }

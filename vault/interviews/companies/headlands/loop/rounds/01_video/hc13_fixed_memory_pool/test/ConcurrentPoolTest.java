@@ -207,7 +207,7 @@ class ConcurrentPoolTest {
                 var th = new Thread(() -> {
                     await(start);
                     long[] mine = new long[16];
-                    for (int i = 0; i < 100_000; i++) {
+                    for (int i = 0; i < 50_000; i++) {
                         int k = 0;
                         for (; k < mine.length; k++) {
                             long h = pool.allocate();

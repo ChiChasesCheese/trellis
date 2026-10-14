@@ -85,8 +85,13 @@ class SharedChannelTest {
     }
 
     @Test @Tag("part4") @Tag("edge")
-    void createRejectsBadCapacityAndCloseIsIdempotent(@TempDir Path dir) throws IOException {
+    void createRejectsBadCapacityWithoutTouchingFilesAndCloseIsIdempotent(@TempDir Path dir) throws IOException {
         assertThrows(IllegalArgumentException.class, () -> SharedChannel.create(dir.resolve("x"), 100));
+        assertFalse(Files.exists(dir.resolve("x")), "非法容量不能留下文件");
+        Path existing = dir.resolve("existing.bin");
+        Files.write(existing, new byte[] {1, 2, 3});
+        assertThrows(IllegalArgumentException.class, () -> SharedChannel.create(existing, 1000));
+        assertArrayEquals(new byte[] {1, 2, 3}, Files.readAllBytes(existing), "非法容量不能截断已有文件");
         var ch = SharedChannel.create(dir.resolve("y"), 64);
         ch.close();
         ch.close();
