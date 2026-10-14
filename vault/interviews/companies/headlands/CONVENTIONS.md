@@ -58,7 +58,7 @@ starter 必须能编译，并且至少一个测试红：验收门 `jtest.py veri
 | J01 | `record`（含紧凑构造器校验） | 16 | 不可变值对象、map key、解析后的行 |
 | J02 | `sealed` 接口 / 类 + `permits` | 17 | 事件/命令/结果的封闭代数类型 |
 | J03 | `switch` 模式匹配（JEP 441），`when` 守卫，穷尽性检查 | 21 | 对 sealed 层级分派 |
-| J04 | record 模式 / 嵌套解构（JEP 440） | 21 | `case Order(var id, Side.BUY, var px, var q)` |
+| J04 | record 模式 / 嵌套解构（JEP 440） | 21 | `case Order(var id, var side, var px, var q) when side == Side.BUY`（record 模式里不能写常量，要用 `when` 守卫） |
 | J05 | `switch` 表达式 + `yield` | 14 | 无 fallthrough 的映射 |
 | J06 | `instanceof` 模式 | 16 | `if (o instanceof Foo f && f.x() > 0)` |
 | J07 | 文本块 `"""` | 15 | 测试里的多行输入/期望输出 |
