@@ -46,22 +46,22 @@
 kit 的参考解用到了 Java 21 的**预览**特性：未命名模式 `_`（`case Malformed _ ->`，J13）、结构化并发（J11）。
 所以编译和运行都要加 `--enable-preview`（`CONVENTIONS.md` 已规定）。J01–J09 的示例本身**不依赖预览特性**，但用同一组参数编译也没有问题。
 
-## J10–J19（待写，标题仅作预告）
+## J10–J19（并发与运行时）
 
 下面这些课由另一位作者后续补写，写完后会把标题变成链接。顺序是建议的阅读顺序。
 
 | 课 | 标题（来自特性矩阵） | 版本 |
 |---|---|---|
-| J18 | `Comparator` 组合子、接口 `default`/`private` 方法、`Objects.requireNonNull*` | 8–9 |
-| J14 | 新 Stream/Collector API：`Stream.toList()`、`mapMulti`、`Collectors.teeing`、`Stream.iterate(seed, hasNext, next)` | 9–16 |
-| J15 | 数学与字符串小工具：`Math.addExact/multiplyExact`、`Math.clamp`（21）、`StringBuilder.repeat`（21）、`String.formatted`、`HexFormat`、`Integer.compress/expand`（19） | 8–21 |
-| J13 | 未命名模式和变量 `_`（预览 JEP 443） | 21 预览 |
-| J10 | 虚拟线程（JEP 444）：`Thread.ofVirtual()`、`Executors.newVirtualThreadPerTaskExecutor()` | 21 |
-| J16 | 并发原语：`VarHandle`、`LongAdder`、`ConcurrentSkipListMap`、`ReentrantLock`（虚拟线程下不 pin，`synchronized` 在 21 会 pin） | 9–21 |
-| J11 | 结构化并发 `StructuredTaskScope`（预览 JEP 453） | 21 预览 |
-| J12 | `ScopedValue`（预览 JEP 446） | 21 预览 |
-| J17 | Foreign Function & Memory API：`Arena`、`MemorySegment`（21 预览，22 正式） | 21 预览 |
-| J19 | 运行时：Generational ZGC（JEP 439）、JFR、`-XX:+PrintCompilation`/JIT 基础 | 21 |
+| [J18](J18_comparators_interfaces.md) | `Comparator` 组合子、接口 `default`/`private` 方法、`Objects.requireNonNull*` | 8–9 |
+| [J14](J14_stream_api.md) | 新 Stream/Collector API：`Stream.toList()`、`mapMulti`、`Collectors.teeing`、`Stream.iterate(seed, hasNext, next)` | 9–16 |
+| [J15](J15_math_string_utils.md) | 数学与字符串小工具：`Math.addExact/multiplyExact`、`Math.clamp`（21）、`StringBuilder.repeat`（21）、`String.formatted`、`HexFormat`、`Integer.compress/expand`（19） | 8–21 |
+| [J13](J13_unnamed_variables.md) | 未命名模式和变量 `_`（预览 JEP 443） | 21 预览 |
+| [J10](J10_virtual_threads.md) | 虚拟线程（JEP 444）：`Thread.ofVirtual()`、`Executors.newVirtualThreadPerTaskExecutor()` | 21 |
+| [J16](J16_concurrency_primitives.md) | 并发原语：`VarHandle`、`LongAdder`、`ConcurrentSkipListMap`、`ReentrantLock`（虚拟线程下不 pin，`synchronized` 在 21 会 pin） | 9–21 |
+| [J11](J11_structured_concurrency.md) | 结构化并发 `StructuredTaskScope`（预览 JEP 453） | 21 预览 |
+| [J12](J12_scoped_values.md) | `ScopedValue`（预览 JEP 446） | 21 预览 |
+| [J17](J17_ffm_api.md) | Foreign Function & Memory API：`Arena`、`MemorySegment`（21 预览，22 正式） | 21 预览 |
+| [J19](J19_runtime_zgc_jit.md) | 运行时：Generational ZGC（JEP 439）、JFR、`-XX:+PrintCompilation`/JIT 基础 | 21 |
 
 ## 一个需要订正的地方
 
