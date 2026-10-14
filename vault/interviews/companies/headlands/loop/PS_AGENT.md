@@ -23,6 +23,12 @@ Rules:
 - REPORT.md: all sections in CONVENTIONS, including ≥ 3 interviewer follow-ups with answer points; the test count comes from running the suite, not counting by hand.
 - Measured times in REPORT come from an actual run on this machine.
 
+- **Textbook mode (Chi's explicit request — the most important rule here):** read `study/TEXTBOOK.md`. Besides the problem directory,
+  every problem gets a lecture `study/30-articles/<id>_<slug>.md` following its 10 sections. Assume the reader knows basic Java
+  only; explain every data structure, complexity claim and concurrency idea from zero. problem.md also gets a short
+  「读题前你需要知道」 paragraph linking the lecture. Comments in `reference/` explain *why*, not just *what*.
+  The lecture is owned by you too (one file per problem).
+
 Acceptance (run it yourself before replying; the orchestrator re-runs it):
 `python3 tools/jtest.py verify "loop/rounds/*/<your-id>*"` → every line `OK`.
 
