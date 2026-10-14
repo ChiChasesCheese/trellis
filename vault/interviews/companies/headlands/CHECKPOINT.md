@@ -12,7 +12,7 @@ Chi 投 Headlands Technologies **Software Engineer（Java）**，通过 HackerRa
 | 阶段 | 内容 | 状态 | 验收 |
 |---|---|---|---|
 | P0 | 骨架（tools/conftest/pytest.ini/check_tree.py 从 snowflake 复制） | ✅ | — |
-| P1 | 三路尽调：A GitHub（`raw/github_repos.md`）· B 面经（`raw/forums.md`）· C 官方/JD/流程/薪资（`raw/official_and_process.md`） | B ✅ C ✅ A 进行中 | 每个文件有来源表 + 缺口段 |
+| P1 | 三路尽调：A GitHub（`raw/github_repos.md`）· B 面经（`raw/forums.md`）· C 官方/JD/流程/薪资（`raw/official_and_process.md`） | A ✅ B ✅ C ✅ | 每个文件有来源表 + 缺口段 |
 | P2 | CATALOG · RANK · PARETO · 简报 · 流程 · fit · 反问 | 待做 | `tools/pareto.py` |
 | P3 | 技术视频面 playbook · 题库 | 待做 | — |
 | P4 | 题集（cut line 以上） | 待做 | `tools/verify_suites.py` |
@@ -24,5 +24,5 @@ Chi 投 Headlands Technologies **Software Engineer（Java）**，通过 HackerRa
 
 ## 下一步（接手就做这个）
 
-1. 等 P1 三个文件落地 → 主会话审（来源可达性、推断标注、HRT 混淆）→ commit。
+1. P1 已收齐并审过（FastPrep 分阶段计数用 awk 复核 18/8/5）。等 Chi 确认：练习语言（建议 Java）、HackerRank 是否 job chain 题。
 2. P2：合并成 `catalog/CATALOG.md`，`tools/pareto.py` 出 cut line。
