@@ -1,0 +1,94 @@
+# hc01 · REPORT
+
+## 概要
+
+「买卖股票」是 Headlands 电面里证据最扎实的算法题之一（4 个独立来源，2023–2026，见 CATALOG Q4）：1p3a 2023-03 说「经典买股票 + follow-up」，1p3a 2025-12 说「**DP-based coding question requiring detailed state tracking**」，WSO 2025-03 说「Leetcode hard, best time to buy and sell stock」。
+面试官要看的不是你背过 188 题，而是：从暴力出发一步步改进的思路；状态定义清楚；k 很大时不炸内存；溢出怎么办；以及加规则（冷却 / 手续费 / 还原交易）时你是**改一条箭头**还是**重写整个解法**。
+讲义（从零讲 DP）：`study/30-articles/hc01_stock_trading_dp.md`。
+
+## 来源与置信度
+
+置信度 **高**（4 个独立来源）。问题正文几乎都在登录墙后，公开可读的只有：FastPrep 标题 + LC 121 / 122 的第一句话；1p3a / WSO 的摘要。
+**(reconstructed) 的部分**：
+* Part 3（最多 k 次）和 Part 4（冷却、手续费、还原交易）：由「LeetCode hard」「DP」「detailed state tracking」这几个词推出，真题具体是 123 / 188 / 309 / 714 里的哪一道不知道；
+* 全部工程化外壳：`Rules` / `Plan` / `Trade` / `replay` API；`MAX_PRICE = 2⁴⁰`、`MAX_DAYS = 2²²`、`MAX_PLAN_CELLS = 2²⁸` 这些上界；输入校验的异常类型；`plan` 里「净利润 > 0」和「平局选休息」的约定；
+* 「同一天卖出又买入算非法」的规则（LeetCode 允许，但等价于不操作）。
+
+## 逐 Part 思路
+
+1. **一次交易**：暴力 O(n²) 先做出来（用作后续对拍）；再发现「对固定卖出日，最好的买入日是此前的最低价」，一次扫描维护 `minSoFar`。讲义里把它重新解释成两个状态的 DP，为后面铺路。
+2. **不限次数**：两状态 `free / hold`，`hold' = max(hold, free − p)`，`free' = max(free, hold + p)`；再化简成「所有正差之和」（给出上界 + 可达性的证明）。面试里先说通用的状态机，再说化简。
+3. **最多 k 次**：给两个状态加下标 j（「最多做过 j 笔」，初值全 0，答案 `free[k]`）；滚动数组，`j` 倒序，每个转移只读昨天的值；`k ≥ n/2` 退化成 Part 2（既避免 `new long[k+1]` 爆内存，也把 O(nk) 降成 O(n)）。
+4. **冷却 / 手续费 / 还原**：
+   * 手续费 = 卖出箭头多减一个 `fee`；
+   * 冷却 = 多一个 `COOL` 状态（今天刚卖出），`free' = max(free, cool)`，买入只能用昨天的 `free`；
+   * 三组滚动数组共用一个引擎 `run`；`how` 是可选的决策记录（每格 2 个比特），`maxProfit` 传 `null`，`plan` 传数组，所以两者共用同一段代码；
+   * 回溯：从终点状态倒着走，`COOL`→记卖出，`HOLD`+bit0→记买入，`FREE`+bit1→冷却结束或卖出；走完必须回到 `FREE`，且各笔净利润之和必须等于 DP 的数字（两处自检）；
+   * `replay` 用 `State` 状态机独立回放，作为 `plan` 的第二道检查。
+
+## 隐藏测试会打的坑
+
+* 全局最大 − 全局最小（最小值在最大值之后，如 `[10,9,8,1]`）；单价 0、全相等、全递减；空数组、1 天。
+* `k = Integer.MAX_VALUE` / `1_000_000_000`：`new long[k+1]` 直接 OOM；`k == n/2` 临界。
+* 冷却下读了「今天已更新的 free」去买入：`[1,2,3,0,2]` 得 4 不是 3。
+* 手续费等于价差时仍然交易（净利润 0 的废交易）；手续费大于所有价差时没有返回 0。
+* 用 `Long.MIN_VALUE` 当不可达哨兵再减价格 → 下溢变成巨大正数。
+* 利润用 `int` 累加；价格上界附近（`0, 2⁴⁰, 0, 2⁴⁰ …` 共 1000 笔）。
+* `plan` 回溯：先 `j--` 再读决策位；终点状态没比较 `cool` 和 `free`；冷却时多记或漏记卖出日。
+* `replay` 对非法方案不报错（重叠 / 冷却期买入 / 超过 k 笔 / 同一天两个动作 / 日期越界）。
+
+## 复杂度 + 实测时间
+
+n = 天数，k = 交易笔数上限，K = min(k, n/2)。本机（M 系列 Mac，JDK 21.0.12，Generational ZGC）预热后取 7 次最好值（`/tmp` 里的临时计时程序，不在仓库里）：
+
+| 操作 | 复杂度 | 实测 |
+|---|---|---|
+| `maxProfitBrute` | O(n²) 时间，O(1) 空间 | n = 3,000：2.0 ms；n = 30,000：**186 ms** |
+| `maxProfitOnce` | O(n)，O(1) | n = 30,000：**0.018 ms**；n = 1,000,000：0.6 ms |
+| `maxProfitUnlimited` | O(n)，O(1) | n = 1,000,000：2.1 ms |
+| `maxProfitAtMost` | O(n·K) 时间，O(K) 空间 | n = 200,000、k = 50：3.6 ms；n = 1,000,000、k = 2：1.3 ms |
+| `maxProfit`（冷却 + 手续费，不限次数） | O(n) | n = 1,000,000：3.4 ms |
+| `plan` | O(n·K) 时间，O(n·K) 字节 | n = 100,000、冷却 + 手续费：0.8 ms；n = 100,000、k = 20：1.8 ms；n = 2,000、k = 500、冷却：1.0 ms |
+
+暴力 vs 线性：3 万天差 **约 1 万倍**（186 ms 对 0.018 ms）。测试里的 perf 预算是 2 秒，参考解余量在三个数量级以上；
+真正会超时的是暴力 O(n²)、对大 k 做 O(n·k)、或者每天 `new` 数组的写法。
+
+## 测试清单
+
+`python3 tools/jtest.py run loop/rounds/01_video/hc01_stock_trading_dp --impl reference`：**37 个测试**（含参数化展开），全绿。按 tag（一个测试可带多个 tag，不互斥）：
+
+| tag | 个数 | tag | 个数 |
+|---|---|---|---|
+| part1 | 7 | edge | 17 |
+| part2 | 5 | fmt | 0（无文本输出） |
+| part3 | 6 | perf | 7 |
+| part4 | 19 | conc | 0（纯计算，无并发） |
+
+标准答案不依赖被测代码：`oracle` 枚举「所有 (买1<卖1<买2<卖2<…) 的交易序列」（不用状态机），对 n ≤ 10 的随机输入、所有规则组合（k × fee × cooldown）逐一对拍；
+`plan` 用独立的 `assertValidPlan`（排序、不重叠、冷却间隔、笔数、净利润 > 0、总和）检查，再与 `replay` 的结果交叉验证。
+
+验收：`python3 tools/jtest.py verify "loop/rounds/*/hc01*"` → `reference=green starter=red`。
+
+## Java 21 特性
+
+| id | 用在哪 | 比旧写法好在哪 |
+|---|---|---|
+| J01 record（含紧凑构造器） | `Trade`（买入日 < 卖出日）、`Rules`（k / fee 校验）、`Plan`（`List.copyOf` 防御性拷贝） | 非法值构造不出来；`equals` 白送，测试直接 `assertEquals(List.of(new Trade(1,2), …), plan.trades())` |
+| J02 sealed | `Move permits Buy, Sell` | 动作种类封闭；新增一种动作时所有 `switch` 编译失败 |
+| J03 + J04 模式匹配 switch + record 模式 | `replay`：`case null` / `case Buy(var d)` / `case Sell(var d)` | 类型判断、取字段、null 处理合在一个表达式里；穷尽性由编译器检查，没有 `default` |
+| J05 switch 表达式 + `yield` / 箭头 | `replay` 的块分支；`plan` 回溯里对 `State` 的 `switch` | 没有 fallthrough；表达式直接产生新状态 |
+| J09 Sequenced Collections | `plan` 里 `reversed.reversed()` | 倒序视图，不拷贝、不改原列表；旧写法要 `Collections.reverse` 或倒着的下标循环 |
+| J15 数学小工具 | `Math.addExact` / `subtractExact`（`replay`）、`Math.max`（DP） | 溢出直接抛而不是静默回绕 |
+| J08 `var` | `plan` / `replay` 里 `var reversed = new ArrayList<Trade>()` | 只在右边类型显然时用 |
+| enum（非矩阵项） | `State.FREE/HOLD/COOL` + `afterRest/afterBuy/afterSell` | 状态图上的每类箭头是一个方法；比 `int` 常量安全 |
+
+## 面试官可能的追问
+
+1. **你的状态是什么？为什么只记「最大现金」就够？** 状态 = 足以决定未来可行操作的最小信息（持有/空仓/冷却 × 已用笔数）；同一状态下现金多的历史永远不差（优势论证）。
+2. **k 很大怎么办？** 交易至少占两天，有效 k ≤ n/2；`k ≥ n/2` 直接按不限次数做，O(n)。
+3. **O(nk) 能更好吗？** 有 O(n log n) 的解法（把序列拆成波谷-波峰段，利用「边际收益递减」用堆合并），知道方向即可，通常不要求写出。
+4. **怎么还原交易？** 正向记每格决策（2 个比特），倒着走；空间 O(nK)；平局选休息避免零利润交易；走到起点必须回到初始状态做自检；再用独立的 `replay` 回放。
+5. **怎么证明/验证你的答案？** 暴力枚举小数据对拍（所有规则组合）；`plan` 与 `replay` 互相印证；这比手算样例可靠。
+6. **溢出？** 先问约束；没有就 `addExact` / `BigInteger`；有约束就从界限证明不溢出（天数/2 × 最大价格 < 2⁶³）并在入口拒绝越界输入，内循环就不用检查。
+7. **流式输入？** 只要利润的话，滚动数组天然在线（O(K) 内存）；要还原则要保存决策。
+8. **如果买入价和卖出价不同（bid-ask spread）？** 买用 ask、卖用 bid，转移里 `free − ask[i]`、`hold + bid[i]`，状态机不变。

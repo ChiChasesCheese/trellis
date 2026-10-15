@@ -1,0 +1,345 @@
+# 2026-10-14 | openjdk version "21.0.12.1" 2026-08-18 | Darwin arm64 | cores=12
+
+$ /opt/homebrew/opt/openjdk@21/bin/java --enable-preview K01Visibility
+plain   : reader finished within 1.5s after the write? false
+volatile: reader finished within 1.5s after the write? true
+
+$ /opt/homebrew/opt/openjdk@21/bin/java -Xint --enable-preview K01Visibility
+plain   : reader finished within 1.5s after the write? true
+volatile: reader finished within 1.5s after the write? true
+
+$ /opt/homebrew/opt/openjdk@21/bin/java --enable-preview K02Boxing
+127 == 127 (boxed): true
+128 == 128 (boxed): false   equals: true
+unboxing null -> NPE
+round 0: long sum    5 ms, alloc          240 B | Long sum   25 ms, alloc  479,999,776 B
+round 1: long sum   10 ms, alloc            0 B | Long sum   17 ms, alloc  239,999,832 B
+round 2: long sum    4 ms, alloc            0 B | Long sum   19 ms, alloc  239,999,832 B
+int[1M]: 4,000,016 B   ArrayList<Integer>(1M): 20,000,208 B (incl. 1M Integer objects)
+
+$ /opt/homebrew/opt/openjdk@21/bin/java --enable-preview K03ObjectSize
+new Object()                          16 bytes
+new Empty()                           16 bytes
+new P2(int,int)                       24 bytes
+new P3(long,long,long)                40 bytes
+Integer.valueOf(1000)  (boxed)        16 bytes
+new int[0]                            16 bytes
+new int[10]                           56 bytes
+new long[10]                          96 bytes
+new Integer[10]  (refs only)          56 bytes
+"中".repeat(1000)  (UTF16)           2040 bytes
+"a".repeat(1000)   (LATIN1)         1040 bytes
+
+$ /opt/homebrew/opt/openjdk@21/bin/java --enable-preview K04EscapeAnalysis
+round 0:   22 ms, allocated       1,642,304 bytes
+round 1:   49 ms, allocated               0 bytes
+round 2:   48 ms, allocated               0 bytes
+round 3:   48 ms, allocated               0 bytes
+round 4:   48 ms, allocated               0 bytes
+(checksum 12500001250000000)
+
+$ /opt/homebrew/opt/openjdk@21/bin/java --enable-preview -XX:-DoEscapeAnalysis K04EscapeAnalysis
+round 0:  378 ms, allocated   4,800,004,448 bytes
+round 1:  386 ms, allocated   4,800,000,000 bytes
+round 2:  383 ms, allocated   4,800,000,000 bytes
+round 3:  384 ms, allocated   4,800,000,000 bytes
+round 4:  388 ms, allocated   4,800,000,000 bytes
+(checksum 12500001250000000)
+
+$ /opt/homebrew/opt/openjdk@21/bin/java --enable-preview K05Strings
+literal == folded literal : true
+literal == runtime concat : false
+literal == new String     : false
+literal == s3.intern()    : true
+equals                    : true
+hashCode of 50M chars: first 31776 us, second 0 us (cached)
+substring length 3 independent of source: yes (copy)
+n= 20000  +=     10 ms | StringBuilder   0 ms
+n= 40000  +=     29 ms | StringBuilder   0 ms
+n= 80000  +=     94 ms | StringBuilder   0 ms
+
+$ /opt/homebrew/opt/openjdk@21/bin/javap -c -p K05Concat
+Compiled from "K05Concat.java"
+public class K05Concat {
+  public K05Concat();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  static java.lang.String f(java.lang.String, int);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: invokedynamic #7,  0              // InvokeDynamic #0:makeConcatWithConstants:(Ljava/lang/String;I)Ljava/lang/String;
+       7: areturn
+
+  public static void main(java.lang.String[]);
+    Code:
+       0: getstatic     #11                 // Field java/lang/System.out:Ljava/io/PrintStream;
+       3: ldc           #17                 // String a
+       5: iconst_1
+       6: invokestatic  #19                 // Method f:(Ljava/lang/String;I)Ljava/lang/String;
+       9: invokevirtual #24                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+      12: return
+}
+
+$ /opt/homebrew/opt/openjdk@21/bin/java --add-opens java.base/java.util=ALL-UNNAMED K06HashMap
+new HashMap(): table = null (lazy allocation)
+after 1 puts: table.length = 16
+after 13 puts: table.length = 32
+after 25 puts: table.length = 64
+after 49 puts: table.length = 128
+after 97 puts: table.length = 256
+"Aa".hashCode()=="BB".hashCode(): true (2112)
+spread(0x12345678)=0x1234444c ; index in 16 buckets = 12
+colliding put #1: table.length=16, bin type=Node
+colliding put #2: table.length=16, bin type=Node
+colliding put #3: table.length=16, bin type=Node
+colliding put #4: table.length=16, bin type=Node
+colliding put #5: table.length=16, bin type=Node
+colliding put #6: table.length=16, bin type=Node
+colliding put #7: table.length=16, bin type=Node
+colliding put #8: table.length=16, bin type=Node
+colliding put #9: table.length=32, bin type=Node
+colliding put #10: table.length=64, bin type=Node
+colliding put #11: table.length=64, bin type=TreeNode
+colliding put #12: table.length=64, bin type=TreeNode
+Comparable-colliding       table.length=4096, the one used bin is a TreeNode; 8000 lookups took 3373 us
+non-Comparable-colliding   table.length=4096, the one used bin is a TreeNode; 8000 lookups took 19860 us
+
+$ /opt/homebrew/opt/openjdk@21/bin/java K07Chm
+HashMap              expected 1,600,000  got 1,231,627  lost 368,373
+ConcurrentHashMap    expected 1,600,000  got 1,600,000  lost 0
+CHM.put(k, null) -> NPE
+check-then-act race: if(!containsKey) put  vs  putIfAbsent -> 1 (returned existing)
+
+$ /opt/homebrew/opt/openjdk@21/bin/java K08Counters
+threads=1  synchronized    13 ms | ReentrantLock    16 ms | AtomicLong     6 ms | LongAdder    12 ms
+threads=4  synchronized   115 ms | ReentrantLock   131 ms | AtomicLong   195 ms | LongAdder    13 ms
+threads=8  synchronized   228 ms | ReentrantLock   236 ms | AtomicLong   320 ms | LongAdder    17 ms
+AtomicLong total 130000000 LongAdder total 130000000 (each = threads*per summed over reps)
+
+$ /opt/homebrew/opt/openjdk@21/bin/java --enable-preview K09VirtualThreads
+inside: VirtualThread[#20,v1]/runnable@ForkJoinPool-1-worker-1
+isVirtual=true
+10,000 virtual threads each blocking 1 s: finished=10000 in 1195 ms
+100,000 virtual threads each blocking 1 s: finished=100000 in 1592 ms
+2,000 tasks on a 200-thread platform pool: 11281 ms (= 2000/200 * 1 s)
+availableProcessors=12
+
+$ /opt/homebrew/opt/openjdk@21/bin/java -Djdk.virtualThreadScheduler.parallelism=1 -Djdk.virtualThreadScheduler.maxPoolSize=1 K09Pinning
+1 carrier, 8 tasks each sleeping 200 ms
+sleep inside synchronized : 2455 ms  (serialised: ~8 x 200)
+sleep outside synchronized: 348 ms (overlapped: ~200)
+
+$ /opt/homebrew/opt/openjdk@21/bin/java K10Jit
+cold batch  0 (20k calls):    471 us =    23.6 ns/call
+cold batch  1 (20k calls):    402 us =    20.1 ns/call
+cold batch  2 (20k calls):    397 us =    19.9 ns/call
+cold batch  3 (20k calls):    170 us =     8.5 ns/call
+cold batch  4 (20k calls):     44 us =     2.2 ns/call
+cold batch  5 (20k calls):     49 us =     2.5 ns/call
+cold batch  6 (20k calls):     43 us =     2.2 ns/call
+cold batch  7 (20k calls):     47 us =     2.4 ns/call
+cold batch  8 (20k calls):     43 us =     2.2 ns/call
+cold batch  9 (20k calls):     43 us =     2.2 ns/call
+cold batch 10 (20k calls):     43 us =     2.2 ns/call
+cold batch 11 (20k calls):     43 us =     2.2 ns/call
+1 type  (Sq)           run 0:  0.38 ns/call
+1 type  (Sq)           run 1:  0.29 ns/call
+1 type  (Sq)           run 2:  0.27 ns/call
+2 types (Sq,Tri)       run 0:  0.36 ns/call
+2 types (Sq,Tri)       run 1:  0.34 ns/call
+2 types (Sq,Tri)       run 2:  0.34 ns/call
+3 types (Sq,Tri,Cir)   run 0:  0.90 ns/call
+3 types (Sq,Tri,Cir)   run 1:  1.35 ns/call
+3 types (Sq,Tri,Cir)   run 2:  1.36 ns/call
+
+$ java -XX:+PrintCompilation K10Jit | grep -E "K10Jit::run|Tri::area|Cir::area"
+19  133 %     3       K10Jit::run @ 4 (34 bytes)
+19  134       3       K10Jit::run (34 bytes)
+cold batch 11 (20k calls): 20   143 %     4       K10Jit::run @ 4 (34 bytes)
+21  133 %     3       K10Jit::run @ 4 (34 bytes)   made not entrant
+21  167       4       K10Jit::run (34 bytes)
+22  134       3       K10Jit::run (34 bytes)   made not entrant
+61  143 %     4       K10Jit::run @ 4 (34 bytes)   made not entrant
+61  174       3       K10Jit$Tri::area (6 bytes)
+61  175 %     4       K10Jit::run @ 4 (34 bytes)
+62  176       4       K10Jit$Tri::area (6 bytes)
+62  174       3       K10Jit$Tri::area (6 bytes)   made not entrant
+79  167       4       K10Jit::run (34 bytes)   made not entrant
+79  182       3       K10Jit::run (34 bytes)
+114  185       3       K10Jit$Cir::area (4 bytes)
+114  186       4       K10Jit$Cir::area (4 bytes)
+114  175 %     4       K10Jit::run @ 4 (34 bytes)   made not entrant
+114  187 %     3       K10Jit::run @ 4 (34 bytes)
+114  185       3       K10Jit$Cir::area (4 bytes)   made not entrant
+114  188 %     4       K10Jit::run @ 4 (34 bytes)
+115  187 %     3       K10Jit::run @ 4 (34 bytes)   made not entrant
+115  189       4       K10Jit::run (34 bytes)
+115  182       3       K10Jit::run (34 bytes)   made not entrant
+
+$ java -XX:+UnlockDiagnosticVMOptions -XX:+PrintInlining K10Jit | grep area (unique lines)
+   2 @ 19   K10Jit$Shape::area (0 bytes)   no static binding
+   1 @ 19   K10Jit$Shape::area (0 bytes)   virtual call
+   2 @ 19   K10Jit$Sq::area (4 bytes)   inline
+   4 @ 19   K10Jit$Sq::area (4 bytes)   inline (hot)
+   1 @ 19   K10Jit$Tri::area (6 bytes)   inline (hot)
+
+$ /opt/homebrew/opt/openjdk@21/bin/java --enable-preview -XX:MaxDirectMemorySize=16m K11OffHeap
+allocateDirect(64MB) with MaxDirectMemorySize=16m -> java.lang.OutOfMemoryError: Cannot reserve 67108864 bytes of direct buffer memory (allocated: 0, limit: 16777216)
+direct buffer isDirect=true readback=123456789
+1M longs off-heap, sum=999999000000, byteSize=8000000
+out of bounds -> IndexOutOfBoundsException
+use after Arena.close() -> IllegalStateException: Already closed
+struct Order size=24 alignment=8
+
+$ /opt/homebrew/opt/openjdk@21/bin/java K12ArrayCopy
+overlap copy (src=0,dst=2,len=4): [1, 2, 1, 2, 3, 4]
+ArrayStoreException: arraycopy: element type mismatch: can not cast one of the elements of java.lang.Object[] to the type of the destination array, java.lang.String
+bounds: arraycopy: last destination index 9 out of bounds for int[6]
+64MB: arraycopy    4 ms | for-loop    5 ms | Arrays.copyOf (alloc+zero+copy)   11 ms
+64MB: arraycopy    3 ms | for-loop    9 ms | Arrays.copyOf (alloc+zero+copy)    3 ms
+64MB: arraycopy    1 ms | for-loop    1 ms | Arrays.copyOf (alloc+zero+copy)    3 ms
+64MB: arraycopy    1 ms | for-loop    1 ms | Arrays.copyOf (alloc+zero+copy)    3 ms
+16-long arraycopy + store + load: 1.55 ns/iter (acc=1249999975000000)
+16-long arraycopy + store + load: 1.74 ns/iter (acc=1249999975000000)
+16-long arraycopy + store + load: 1.98 ns/iter (acc=1249999975000000)
+
+$ /opt/homebrew/opt/openjdk@21/bin/java K13SmartPtr
+open  A
+open  B
+body
+close B
+close A
+caught boom
+strong ref alive -> weak.get() != null : true
+after dropping strong ref + System.gc() -> weak.get() == null : true
+reference cycle collected (shared_ptr would leak): true
+Cleaner action ran (some time after unreachable)
+
+$ /opt/homebrew/opt/openjdk@21/bin/java --enable-preview K14Versions
+[1, 2, 3]
+{"k": 1}
+instanceof pattern: hi
+6.0 4.0
+[c, b, a] first=a
+teeing count/sum: 4/10
+virtual: true
+21.0.12.1 | HttpClient (11): HttpClient
+
+$ /opt/homebrew/opt/openjdk@21/bin/java K15Overflow
+MAX+1 = -2147483648  (wraps, defined by JLS)
+Math.addExact -> integer overflow
+-7 / 2 = -3, -7 % 2 = -1, Math.floorMod(-7,2) = 1   (Python: -4, 1)
+0.1+0.2 == 0.3 ? false
+(int) 3_000_000_000L = -1294967296, (byte) 200 = -56
+1 << 33 = 2 (shift count masked to 5 bits), 1L << 33 = 8589934592
+
+$ /opt/homebrew/opt/openjdk@21/bin/java K16Ipc
+pipe (stdin/stdout)                    3.08 us per round trip
+loopback TCP (NODELAY)                12.32 us per round trip
+shared mmap, spin on volatile seq      0.15 us per round trip
+
+$ /opt/homebrew/opt/openjdk@21/bin/java K17Nagle
+TCP_NODELAY=true  two small writes then wait:      17.0 us per request (n=20000)
+TCP_NODELAY=false two small writes then wait:      21.0 us per request (n=200)
+
+$ /opt/homebrew/opt/openjdk@21/bin/java K18Storage
+write only (page cache)                2000 recs x 4KB:      7 ms
+write + force() after EVERY record     2000 recs x 4KB:   6286 ms
+write all, one force() at end          2000 recs x 4KB:     30 ms
+mmap store + force() at end            2000 recs x 4KB:     15 ms
+re-read 31 MB just written: 11 ms (served from page cache)
+os.name=Mac OS X
+
+$ /opt/homebrew/opt/openjdk@21/bin/java -Xmx3g K21Locality
+sum of 12,000,000: long[]    2 ms | Long[] (alloc order)    3 ms | Long[] (shuffled)   34 ms
+sum of 12,000,000: long[]    8 ms | Long[] (alloc order)    7 ms | Long[] (shuffled)   29 ms
+sum of 12,000,000: long[]    2 ms | Long[] (alloc order)    6 ms | Long[] (shuffled)   29 ms
+
+$ /opt/homebrew/opt/openjdk@21/bin/java -XX:+UseBiasedLocking -version
+Unrecognized VM option 'UseBiasedLocking'
+Error: Could not create the Java Virtual Machine.
+Error: A fatal exception has occurred. Program will exit.
+
+$ /opt/homebrew/opt/openjdk@21/bin/java -Xms1g -Xmx1g -XX:+UseParallelGC K19Pauses
+PS MarkSweep iterations=247,431,528  max gap=22.35 ms  gaps>1ms=230  gaps>10ms=10
+
+$ /opt/homebrew/opt/openjdk@21/bin/java -Xms1g -Xmx1g -XX:+UseG1GC K19Pauses
+G1 Young Generation iterations=246,837,123  max gap=8.21 ms  gaps>1ms=116  gaps>10ms=0
+
+$ /opt/homebrew/opt/openjdk@21/bin/java -Xms1g -Xmx1g -XX:+UseZGC -XX:+ZGenerational K19Pauses
+ZGC Minor Cycles iterations=302,270,166  max gap=0.14 ms  gaps>1ms=0  gaps>10ms=0
+
+$ /opt/homebrew/opt/openjdk@21/bin/java -Xms1g -Xmx1g -XX:+UseG1GC K19Pauses nochurn
+G1 Young Generation iterations=543,556,772  max gap=2.26 ms  gaps>1ms=1  gaps>10ms=0
+
+$ jcmd/jstat against K20Busy
+  S0     S1     E      O      M     CCS    YGC     YGCT     FGC    FGCT     CGC    CGCT       GCT   
+     -  97.37  68.64  88.79  40.17   8.74   1245     0.273     0     0.000    22     0.001     0.274
+     -  95.77   2.59  57.90  40.17   8.74   1477     0.321     0     0.000    28     0.002     0.323
+     -  81.91  31.50  60.98  40.17   8.74   1685     0.366     0     0.000    32     0.002     0.368
+97640:
+ garbage-first heap   total 144384K, used 91870K [0x0000000123800000, 0x0000000133800000)
+  region size 1024K, 69 young (70656K), 6 survivors (6144K)
+ Metaspace       used 154K, committed 384K, reserved 1114112K
+  class space    used 11K, committed 128K, reserved 1048576K
+"holds-lock" #22 [33027] daemon prio=5 os_prio=31 cpu=0.04ms elapsed=4.31s tid=0x00000075e5143800 nid=33027 waiting on condition  [0x000000016dd2a000]
+   java.lang.Thread.State: TIMED_WAITING (sleeping)
+	at java.lang.Thread.sleep0(java.base@21.0.12.1/Native Method)
+	at java.lang.Thread.sleep(java.base@21.0.12.1/Thread.java:509)
+	at K20Busy.lambda$main$2(K20Busy.java:12)
+	- locked <0x0000000123800108> (a java.lang.Object)
+--
+"waits-for-lock" #23 [34563] daemon prio=5 os_prio=31 cpu=0.10ms elapsed=4.21s tid=0x00000075e51d8000 nid=34563 waiting for monitor entry  [0x000000016e972000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+	at K20Busy.lambda$main$3(K20Busy.java:13)
+	- waiting to lock <0x0000000123800108> (a java.lang.Object)
+	at K20Busy$$Lambda/0x0000007001001a28.run(Unknown Source)
+	at java.lang.Thread.runWith(java.base@21.0.12.1/Thread.java:1596)
+97640:
+ num     #instances         #bytes  class name (module)
+-------------------------------------------------------
+   1:          7987       16352640  [B (java.base@21.0.12.1)
+   2:           544         686296  [Ljdk.internal.vm.FillerElement; (java.base@21.0.12.1)
+
+# --- supplementary runs (appended after the main run_all pass) ---
+
+$ java K22VolatileCounter
+expected 4,000,000 | volatile++ 2,148,166 | synchronized 4,000,000 | AtomicInteger 4,000,000
+
+$ java -Xlog:safepoint -Xms512m -Xmx512m -XX:+UseG1GC K19Pauses | grep safepoint | head -3
+[0.034s][info][safepoint] Safepoint "G1CollectForAllocation", Time since last: 22903042 ns, Reaching safepoint: 97125 ns, Cleanup: 8166 ns, At safepoint: 1463917 ns, Leaving safepoint: 3875 ns, Total: 1573083 ns
+[0.045s][info][safepoint] Safepoint "G1CollectForAllocation", Time since last: 7802417 ns, Reaching safepoint: 99166 ns, Cleanup: 2334 ns, At safepoint: 2854333 ns, Leaving safepoint: 3333 ns, Total: 2959166 ns
+[0.056s][info][safepoint] Safepoint "G1CollectForAllocation", Time since last: 7745750 ns, Reaching safepoint: 99625 ns, Cleanup: 5209 ns, At safepoint: 3128500 ns, Leaving safepoint: 4708 ns, Total: 3238042 ns
+
+$ java -Xlog:gc -Xms1g -Xmx1g -XX:+UseG1GC K19Pauses | tail -3
+[7.881s][info][gc] GC(114) Pause Young (Mixed) (G1 Evacuation Pause) 767M->244M(1024M) 5.259ms
+[7.960s][info][gc] GC(115) Pause Young (Normal) (G1 Evacuation Pause) 781M->267M(1024M) 5.288ms
+G1 Young Generation iterations=215,313,102  max gap=14.04 ms  gaps>1ms=113  gaps>10ms=15
+
+# --- JDK tools (run_tools.sh) ---
+
+$ jcmd PID VM.native_memory summary   (java -Xmx256m -XX:NativeMemoryTracking=summary)
+Total: reserved=1819114KB, committed=419594KB
+-                 Java Heap (reserved=270336KB, committed=225280KB)
+-                     Class (reserved=1048738KB, committed=610KB)
+-                    Thread (reserved=68072KB, committed=68072KB)
+-                      Code (reserved=247815KB, committed=7831KB)
+-                        GC (reserved=59334KB, committed=58630KB)
+-        Shared class space (reserved=16384KB, committed=12880KB, readonly=0KB)
+-               Arena Chunk (reserved=22908KB, committed=22908KB)
+-                 Metaspace (reserved=65549KB, committed=3405KB)
+$ ps -o rss= -p PID    (KB)
+321808
+$ jfr view hot-methods /tmp/k20.jfr
+
+                      Java Methods that Executes the Most
+
+Method                                                          Samples Percent
+--------------------------------------------------------------- ------- -------
+K20Busy.fib(int)                                                     30  78.95%
+java.util.Random.nextInt(int)                                         7  18.42%
+K20Busy.lambda$main$1()                                               1   2.63%
