@@ -11,7 +11,34 @@
 - 三个交付物：CDC 摄取管线扩展；Kotlin/Spring Boot + JPA 合规审计日志模块；Spark + Airflow EOD 合规校验器。
 - 【待 Chi 补：实习项目的量化结果（处理的事件量、校验器发现过几个问题、审计日志被谁用）；无就不要编】
 
-## 2. 60–90 秒口播版（≈ 170 词）
+## 2. 60–90 秒（口述提纲）
+
+**"As an intern I extended the Kafka-to-Snowflake event path, and I made sure one bad message could never poison the pipeline."**
+
+**S · Situation**
+- Summer **2024** intern on the fee platform team, event-streaming side.
+- A settled transaction publishes a **protobuf event to Kafka**; the pricing service books it **idempotently** and publishes a fee event.
+
+**T · Task**
+- Extend the live **CDC path from Kafka into Snowflake**.
+- Also own two smaller pieces: an **audit-log module** and **end-of-day validators**.
+
+**A · Action** (in the order it happened)
+1. Extended the **Kafka Connect sink** into Snowflake with **Snowpipe Streaming**.
+2. Wrote a **custom protobuf converter** that returns a **null record** on a poison message, not a dead task.
+3. Added a **CDC filter** that whitelists tables and **drops deletes**.
+4. Wrote a **Spring Boot + JPA audit-log module** with dynamic criteria queries.
+5. Wrote **Spark validators**, scheduled by **Airflow**, checking pricing-schedule provenance at end of day.
+
+**R · Result**
+- **Three deliverables** in one summer: CDC extension, audit log, Spark validators.
+- No business numbers. 【待 Chi 补：实习项目的量化结果（处理的事件量、校验器发现过几个问题、审计日志被谁用）；无就不要编】
+
+**L · Learning / Mechanism**
+- **At-least-once plus an idempotent consumer** is effectively once.
+- **One bad message must never poison a pipeline**; same instinct as "record, never drop" in the Amex pipeline I built later.
+
+<details><summary>逐字稿（参考，不背）</summary>
 
 > As an intern I worked on the event-streaming side of the fee platform. A settled transaction publishes a protobuf event to Kafka; the pricing service consumes it in batches, books it idempotently — dedup before insert, unique constraint as the backstop — computes the fee and publishes a fee event for payouts.
 >
@@ -19,15 +46,50 @@
 >
 > What I took from it: at-least-once delivery plus an idempotent consumer is effectively once, and one bad message must never poison a pipeline. That's the same instinct as the "record, never drop" rule in the Amex pipeline I built later.
 
-## 3. 2 分钟版
+</details>
 
-在 60–90 秒版基础上加 **Learn and Be Curious** 角度（≈ 260 词）：
+## 3. 2 分钟（口述提纲）
+
+在 60–90 秒版基础上加 **Learn and Be Curious** 角度。
+
+**"As an intern I extended the Kafka-to-Snowflake event path, and I made sure one bad message could never poison the pipeline."**
+
+**S · Situation**
+- Summer **2024** intern, same team; the event-streaming side of the **fee platform**.
+- Protobuf event on **Kafka**; the pricing service consumes in **batches** and books **idempotently**.
+- Everything ran on **Kubernetes**: one **Deployment per topic**.
+
+**T · Task**
+- Extend a **live CDC path** from Kafka into Snowflake.
+- Starting point and how I learned it: 【待 Chi 补：入职时你对 Kafka Connect / Snowpipe Streaming 的起点是什么、怎么学的——源笔记没写，不要编；这一句决定它能不能算 Learn and Be Curious】
+
+**A · Action** (in the order it happened)
+1. A malformed protobuf message could **kill a task**; I made the converter return a **null record** and surface it.
+2. For the **CDC filter**, a **JSONPath whitelist** on kind keeps upserts, drops deletes; warehouse tables follow inserts and updates only.
+3. Parallelism is **replicas times `tasks.max`**, capped by **partitions**; short on throughput, I check partition count first.
+4. On the consumer side Kafka is **at-least-once**, so redelivery happens.
+5. The pricing service **dedups a batch before insert**, relies on a **unique constraint** for races, and **skips** integrity violations.
+6. A **batch-listener failure** re-delivers exactly the failed record.
+7. Also built the **audit-log module** (Spring Boot + JPA) and **Spark/Airflow validators**.
+8. A moment I actively learned something new and used it: 【待 Chi 补：你在这个实习里"主动学新东西然后用上"的一个具体瞬间（例如第一次读懂 Connect 配置后怎么验证）；用于 Learn and Be Curious 的 senior 版】
+
+**R · Result**
+- **Three deliverables** in one summer: CDC extension, audit log, Spark validators.
+- Numbers: 【待 Chi 补：实习项目的量化结果；无就不要编】
+
+**L · Learning / Mechanism**
+- **At-least-once plus idempotent consumer** is effectively once; **one bad message must not poison the pipeline**.
+- What I'd do differently: 【待 Chi 补：无源材料；实习成果在转正后是否仍被使用？】
+
+<details><summary>逐字稿（参考，不背）</summary>
 
 > The task was to extend a live CDC path from Kafka into Snowflake. 【待 Chi 补：入职时你对 Kafka Connect / Snowpipe Streaming 的起点是什么、怎么学的——源笔记没写，不要编；这一句决定它能不能算 Learn and Be Curious】 The decision I'd highlight: a malformed protobuf message used to be able to kill a task; I made the converter return a null record and surface it, so one bad message can't block the stream. For the CDC filter, a JSONPath whitelist on kind keeps upserts and drops deletes, because the warehouse tables should only follow inserts and updates. Consumers and connectors run on Kubernetes, one deployment per topic; parallelism is replicas times tasks, capped by partitions, so if throughput is short the first thing I check is partition count.
 >
 > The consumer side: Kafka is at-least-once, so redelivery happens. The pricing service dedups a batch before insert, relies on a unique constraint for concurrent races, catches the integrity violation to skip duplicates, and uses a batch-listener failure to re-deliver exactly the failed record.
 >
 > 【待 Chi 补：你在这个实习里"主动学新东西然后用上"的一个具体瞬间（例如第一次读懂 Connect 配置后怎么验证）；用于 Learn and Be Curious 的 senior 版】
+
+</details>
 
 ## 4. 适用 LP 与改角度
 
@@ -40,13 +102,27 @@
 
 ## 5. 追问（≥5）
 
-1. **How do you not double-charge / not miss fees?** → at-least-once + 消费侧幂等：落库前批量去重、唯一约束兜并发、catch `DataIntegrityViolationException` 跳过、`BatchListenerFailedException` 精确重投失败那条。
-2. **How does Connect scale?** → replicas × `tasks.max`，上限被 partition 数卡住。
-3. **What's the Kafka proxy?** → 放在 broker 前做 SASL SCRAM + 双向 TLS 的代理，凭据走 vault；不是出网代理。**broker / proxy 是平台团队的；我的地盘是消费/落库/校验侧。**
-4. **Proto → table?** → 自定义 converter → JSON → Snowflake schematization 自动展开；坏消息返回 NULL。
-5. **Real-time vs batch?** → 实时（Kafka + Connect，秒级）搬数据、算费用；批（Spark + Airflow，天级）事后校验。
-6. **What if a consumer crashes?** → 自动提交 + 短间隔更偏 at-most-once；真正防丢靠上游重试 + 对账/健康检查。
-7. **What did the Spark validators check?** → pricing schedule 创建来源、settlement 数据合规，结果推 Slack。
+1. **How do you not double-charge / not miss fees?**
+   - **At-least-once + consumer idempotency**.
+   - **Batch dedup before insert**; **unique constraint** backstops races.
+   - Catch **`DataIntegrityViolationException`** and skip.
+   - **`BatchListenerFailedException`** re-delivers exactly the failed record.
+2. **How does Connect scale?**
+   - **Replicas × `tasks.max`**, capped by **partition count**.
+3. **What's the Kafka proxy?**
+   - A proxy in front of the broker: **SASL SCRAM + mutual TLS**, credentials via **vault**; **not** an egress proxy.
+   - **Broker/proxy belong to the platform team**; mine was **consume / land / validate**.
+4. **Proto → table?**
+   - **Custom converter → JSON → Snowflake schematization** expands columns.
+   - Bad message returns **NULL**.
+5. **Real-time vs batch?**
+   - **Real-time** (Kafka + Connect, seconds) moves data and computes fees.
+   - **Batch** (Spark + Airflow, daily) validates after the fact.
+6. **What if a consumer crashes?**
+   - Auto-commit with a short interval leans **at-most-once**.
+   - Real protection: **upstream retries + reconciliation / health checks**.
+7. **What did the Spark validators check?**
+   - **Pricing-schedule creation provenance** and **settlement data compliance**; results to **Slack**.
 
 ## 6. Senior 升级点（bar = senior）
 

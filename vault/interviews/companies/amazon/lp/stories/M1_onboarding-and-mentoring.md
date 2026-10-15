@@ -19,19 +19,80 @@
 | 规划：让团队在没有我在场时也能处理 fee-calc 事故（从最可靠的单点到 multiplier） | Answers Q23 |
 | 没有：新人的成长结果（他独立 own 了什么）、onboarding doc 的使用者数、被带者反馈 | 【待 Chi 补】 |
 
-## 2. 60–90 秒口播版（≈ 170 词；全部取自 Answers）
+## 2. 60–90 秒（口述提纲）
 
-> I mentor a newer engineer on the team, and his three pieces of work — an exclusion service that prevents double-billing merchants who've migrated, a gRPC sync of payout journaling schedules into the pricing service, and an ML estimator for scheme fees — all plug into the fee platform I own. I can't claim a code-review trail, so here's what I did: I defined the boundaries up front — which merchants count as migrated in which accounting state, what schema and what consistency the downstream needs — and reviewed his designs by asking how the same upstream events would be consumed on my side. In incidents, I was the fee-calc authority he could depend on.
+**"I raise the bar by defining the contract first and reviewing designs by how downstream consumes them; I can't claim a code-review trail, so here is what I actually did."**
+
+**S · Situation**
+- Domain knowledge of the **fee platform** sat with **me**: a single point.
+- A newer engineer's **three pieces** all plug into the platform I own: an **exclusion service**, a **gRPC journaling-schedule sync**, and a **scheme-fee ML estimator**.
+
+**T · Task**
+- Make the platform usable **without me in the room**: new people can start, and his work stays **correct** against my domain.
+
+**A · Action** (dated step first; the other dates aren't in my sources)
+1. In **2024** I wrote the team's **onboarding doc**, and I still maintain it.
+2. For the mentee, I **defined boundaries up front**: which merchants count as **migrated** in which accounting state.
+3. I also defined the **schema and consistency** the downstream needs.
+4. I reviewed his designs by asking **how the same upstream events are consumed on my side**.
+5. In incidents, I was the **fee-calc authority** he could depend on.
+6. I built the **quality-check framework** so standards spread as the **easiest path**, not through my reviews.
+
+**R · Result**
+- The quality-check framework rolled out **eight times**, which forces standards to spread.
+- 【待 Chi 补：新人现在独立 own 了什么、onboarding doc 帮助过几个人上手】
+
+**L · Learning / Mechanism**
+- **Contract first**, then review by downstream consumption.
+- **Doc, framework, ADR**: mechanisms, not my personal reviews.
+
+<details><summary>逐字稿（参考，不背）</summary>
+
+> I wrote the team's onboarding doc in 2024 and I still maintain it. I also mentor a newer engineer on the team, and his three pieces of work — an exclusion service that prevents double-billing merchants who've migrated, a gRPC sync of payout journaling schedules into the pricing service, and an ML estimator for scheme fees — all plug into the fee platform I own. I can't claim a code-review trail, so here's what I did: I defined the boundaries up front — which merchants count as migrated in which accounting state, what schema and what consistency the downstream needs — and reviewed his designs by asking how the same upstream events would be consumed on my side. In incidents, I was the fee-calc authority he could depend on.
 >
-> Separately, I wrote the team's onboarding doc in 2024 and I still maintain it, and I built the quality-check framework so that standards spread by being the easiest path rather than through my reviews. 【待 Chi 补：新人现在独立 own 了什么、onboarding doc 帮助过几个人上手】
+> And I built the quality-check framework so that standards spread by being the easiest path rather than through my reviews. 【待 Chi 补：新人现在独立 own 了什么、onboarding doc 帮助过几个人上手】
 
-## 3. 2 分钟版结构
+</details>
 
-1. **Why this matters**：领域知识集中在我一个人 → 单点（Answers Q23 的"从最可靠的单点到 multiplier"）。
-2. **Mechanisms**：onboarding doc、框架、ADR、契约先行。
-3. **The mentee**：三块工作 + 我定义的边界。
-4. **Result**：【待 Chi 补：可数结果，例如"他的服务上线了"/"他独立处理过一次事故"】
-5. **What I'd do differently**：【待 Chi 补】
+## 3. 2 分钟（口述提纲）
+
+**"I raise the bar by defining the contract first and reviewing designs by how downstream consumes them; I can't claim a code-review trail, so here is what I actually did."**
+
+**S · Situation**
+- **Why this matters**: domain knowledge concentrated in me, a **single point** (the plan: from most reliable single point to **multiplier**).
+- A newer engineer's three pieces all connect to my **fee platform**.
+
+**T · Task**
+- Build **mechanisms** so the team handles fee-calc work and incidents **without me**.
+- Make his work **correct** against my domain boundaries.
+
+**A · Action** (dated step first; the other dates aren't in my sources)
+1. **Onboarding doc**, written in **2024**, still maintained.
+2. Mentee piece one: an **exclusion service** that prevents **double-billing migrated merchants**.
+3. Piece two: a **gRPC sync** of payout **journaling schedules** into the pricing service. Piece three: a **scheme-fee ML estimator**.
+4. I **defined boundaries and contracts up front**: which merchants count as migrated, in which accounting state.
+5. I defined the **schema and consistency** the downstream needs.
+6. I reviewed designs by **how downstream consumes the same events**, plus correctness and retry behavior.
+7. In incidents, I was the **fee-calc authority** he depended on.
+8. **Quality-check framework** (rolled out eight times) and **ADRs** carry the standards.
+9. I also **took over and re-scoped an intern's ML project**.
+
+**R · Result**
+- 【待 Chi 补：可数结果，例如"他的服务上线了"/"他独立处理过一次事故"】
+
+**L · Learning / Mechanism**
+- **Mechanisms** over heroics: onboarding doc, framework, ADR, **contract first**.
+- What I'd do differently: 【待 Chi 补】
+
+<details><summary>逐字稿（参考，不背；2 分钟版原为结构列表，无逐字稿）</summary>
+
+> 1. **Why this matters**：领域知识集中在我一个人 → 单点（Answers Q23 的"从最可靠的单点到 multiplier"）。
+> 2. **Mechanisms**：onboarding doc、框架、ADR、契约先行。
+> 3. **The mentee**：三块工作 + 我定义的边界。
+> 4. **Result**：【待 Chi 补：可数结果，例如"他的服务上线了"/"他独立处理过一次事故"】
+> 5. **What I'd do differently**：【待 Chi 补】
+
+</details>
 
 ## 4. 适用 LP 与改角度
 
@@ -44,13 +105,23 @@
 
 ## 5. 追问（≥5）
 
-1. **How did you help him grow, concretely?** → 前置边界与契约；按下游消费方式审设计；事故里的权威。**不说 1:1 细节。**
-2. **What did he disagree with you on?** → 【待 Chi 补：一次他提出不同意见、你改变了想法的例子】
-3. **What happened to his projects?** → 【待 Chi 补】
-4. **What's in the onboarding doc?** → 【待 Chi 补：目录/结构，使用者反馈】
-5. **How do you give feedback?** → 【待 Chi 补：一个真实的反馈场景】
-6. **A time you raised the bar for hiring/promotion?** → 【待 Chi 补：是否参与过面试/评级；没有就如实说"没有，我的影响是通过框架和文档"】
-7. **What if someone doesn't improve?** → 【待 Chi 补】
+1. **How did you help him grow, concretely?**
+   - **Boundaries and contracts up front**.
+   - Reviewed designs by **downstream consumption**.
+   - **Incident authority** he could rely on.
+   - **No 1:1 details.**
+2. **What did he disagree with you on?**
+   - 【待 Chi 补：一次他提出不同意见、你改变了想法的例子】
+3. **What happened to his projects?**
+   - 【待 Chi 补】
+4. **What's in the onboarding doc?**
+   - 【待 Chi 补：目录/结构，使用者反馈】
+5. **How do you give feedback?**
+   - 【待 Chi 补：一个真实的反馈场景】
+6. **A time you raised the bar for hiring/promotion?**
+   - 【待 Chi 补：是否参与过面试/评级；没有就如实说"没有，我的影响是通过框架和文档"】
+7. **What if someone doesn't improve?**
+   - 【待 Chi 补】
 
 ## 6. Senior 升级点（bar = senior）
 

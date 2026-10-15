@@ -14,13 +14,69 @@
 | 相邻团队采用 on-call copilot | 来自 S7 笔记；采用者数量无记录 |
 | 其余 | 无团队级采用数据 【待 Chi 补：团队/队友里有多少人用过 schema pool？】 |
 
-## 2. 60–90 秒口播版（≈ 190 词）
+## 2. 60–90 秒口述提纲
 
-> Nobody asked for this. Our integration tests run migrations against a shared Snowflake schema, so two engineers — or two AI coding-agent sessions — on different branches collide on DDL. I built a schema pool. A `MAIN` schema is synced to whatever commit is actually deployed to production — I query the GitHub Deployments API rather than trust the release tag, because a tag can be cut and never deployed. Each pool slot is a zero-copy clone of `MAIN`, about two seconds, because a clone copies micro-partition metadata, not data. A session borrows a slot, runs migrations and tests in isolation, and drops it.
+**Nobody assigned it: two engineers, or two AI agents, collided on shared-schema DDL, so I built a pool of two-second zero-copy clones.**
+
+**S · Situation**
+- Our integration tests run migrations against one **shared Snowflake schema**.
+- Two engineers, or two **AI coding-agent sessions**, on different branches **collide on DDL**.
+
+**T · Task**
+- Nobody asked for this — **no ticket, no owner**; I chose to fix the friction.
+
+**A · Action** (in the order it happened)
+1. Built **V1**: pool slots cloned from the shared `PUBLIC` schema.
+2. Learned `PUBLIC`'s state depends on **who migrated last** — slots weren't reproducible.
+3. Rewrote as **V2** with three **ADRs**: a separate `MAIN` schema synced to the **production-deployed commit**.
+4. Queried the **GitHub Deployments API**, not the release tag — a tag can be cut and never deployed.
+5. Each slot is a **zero-copy clone** of `MAIN`, ~**2 seconds** (metadata, not data); a session borrows it, tests, drops it.
+6. Fixed real edge cases: **cross-database streams** break by clone order, so I clone the **replication DB first** and auto-repair after a swap.
+
+**R · Result**
+- I can run **several Claude Code sessions in parallel** on the same repo without collisions.
+- **23 commits** in my **personal repo** — not the team's official toolchain.
+
+**L · Learning / Mechanism**
+- I'm the **tech lead of a team of agents** — and I still own **every diff**.
+
+<details><summary>逐字稿（参考，不背）</summary>
+
+> Nobody asked for this. Our integration tests run migrations against a shared Snowflake schema, so two engineers — or two AI coding-agent sessions — on different branches collide on DDL. I built a schema pool. Version one cloned from a shared schema whose state depended on who last ran a migration, so version two was a rewrite with three ADRs. In V2 a `MAIN` schema is synced to whatever commit is actually deployed to production — I query the GitHub Deployments API rather than trust the release tag, because a tag can be cut and never deployed. Each pool slot is a zero-copy clone of `MAIN`, about two seconds, because a clone copies micro-partition metadata, not data. A session borrows a slot, runs migrations and tests in isolation, and drops it.
 >
-> Version one cloned from a shared schema whose state depended on who last ran a migration, so version two was a rewrite with three ADRs. I fixed real edge cases: cross-database streams break depending on clone order, so I clone the replication DB before the app DB and auto-detect the pattern after a swap. It's what lets me run several Claude Code sessions in parallel on the same repo. I think of it as being the tech lead of a team of agents — and I still own every diff.
+> I fixed real edge cases: cross-database streams break depending on clone order, so I clone the replication DB before the app DB and auto-detect the pattern after a swap. It's what lets me run several Claude Code sessions in parallel on the same repo. I think of it as being the tech lead of a team of agents — and I still own every diff.
 
-## 3. 2 分钟版（≈ 300 词）
+</details>
+
+## 3. 2 分钟口述提纲
+
+**Nobody assigned it: two engineers, or two AI agents, collided on shared-schema DDL, so I built a pool of two-second zero-copy clones.**
+
+**S · Situation**
+- Integration tests migrate against a **shared schema**; people, and increasingly **AI agent sessions**, collide on **DDL** and break each other's runs.
+- No ticket, no owner.
+
+**T · Task**
+- Mine by choice — and it's my **personal repo**, not the team's official toolchain.
+
+**A · Action** (in the order it happened)
+1. **V1**: pool slots cloned from `PUBLIC` — its state depends on whoever migrated last, so **not reproducible**.
+2. **V2**: a separate `MAIN`, synced from the **production-deployed SHA** via the GitHub Deployments API; all slots clone from `MAIN`.
+3. Wrote **three ADRs**: sync runs locally, default target is the deployed SHA, deliberately **skip Flyway for `share`** ("don't fix this").
+4. Fixed **cross-database streams**: clone the **replication DB first**, auto-repair after a swap.
+5. **Excluded** duplicate repeatable migrations from a test directory.
+6. Added **structure-only stub tables** for prod-only dependencies — the least stable, ~**10 commits** in a day.
+7. Built an **on-call copilot** on top: polls Slack, PagerDuty and Datadog, opens the right agent session, drafts replies I **review before sending**.
+
+**R · Result**
+- Clones take ~**2 seconds**; **23 commits**; Claude Code, Codex and Cursor sessions run migrations and tests **concurrently**.
+- **Adjacent teams** adopted the copilot; I built it and the team used it. Schema-pool usage: 【待 Chi 补：团队/队友里有多少人用过 schema pool？】
+
+**L · Learning / Mechanism**
+- I'm the **tech lead of a team of agents**; in money code I **read every diff**.
+- **What I'd do differently:** start from the **deployed SHA** instead of a shared schema — V1 taught me that.
+
+<details><summary>逐字稿（参考，不背）</summary>
 
 > **The friction.** Integration tests ran migrations against a shared schema. Two people, or increasingly two AI agent sessions, would collide on DDL and break each other's runs. No ticket, no owner.
 >
@@ -31,6 +87,8 @@
 > **Hard parts.** Cross-database stream invalidation: cloning the app DB before the replication DB breaks streams that depend on replication tables, so the order is fixed — replication first — with an automatic repair after a swap. Duplicate repeatable migrations from a test directory: excluded from the scan. Prod-only dependencies: structure-only stub tables so DDL compiles — the least stable, it took about ten commits in a day to settle.
 >
 > **Why it matters.** I run Claude Code, Codex and Cursor in parallel — each has its own usage limits — and several agent sessions can run migrations and integration tests concurrently. On top I built an on-call copilot that polls Slack, PagerDuty and Datadog, opens the right agent session with context, and drafts replies I review before sending; adjacent teams adopted it. **Boundary:** it's my personal repo; I built it and the team used it, it isn't the team's official toolchain. In money code I read every diff.
+
+</details>
 
 ## 4. 适用 LP 与改角度
 
@@ -45,13 +103,27 @@
 
 ## 5. 追问（≥5）
 
-1. **Why GitHub Deployments API, not tags?** → 打了 tag 没部署；Deployments API 记录生产环境实际部署的 SHA。
-2. **Why is a clone 2 seconds?** → 不可变微分区 + 元数据指针，不拷数据。
-3. **What broke in V1?** → `PUBLIC` 的状态取决于谁最后跑了什么迁移，不可预测。
-4. **Cross-database streams?** → 先克隆 APP_DB 再 REPL_DB 会让依赖 REPL 表的 stream 失效；固定顺序先 REPL 后 APP + `MAIN_STAGING → MAIN` 交换后自动扫描修复（Pattern A）。
-5. **How do you trust AI-generated code?** → plan with the agent → TDD every phase → CI + monitoring gates；关注 gates 和 thresholds 而非行数；money code 里我读每一个 diff。
-6. **Who uses it?** → 【待 Chi 补：团队里其他工程师是否用了 schema pool？人数/频率】；on-call copilot 相邻团队采用（人数无记录）。
-7. **Why direct-push to main?** → 个人仓库，不影响团队代码；诚实说明。
+1. **Why GitHub Deployments API, not tags?**
+   - 打了 **tag 没部署**。
+   - Deployments API 记录**生产环境实际部署**的 SHA。
+2. **Why is a clone 2 seconds?**
+   - **不可变微分区** + **元数据指针**。
+   - 不拷数据。
+3. **What broke in V1?**
+   - `PUBLIC` 的状态取决于**谁最后跑了什么迁移**，不可预测。
+4. **Cross-database streams?**
+   - 先克隆 APP_DB 再 REPL_DB 会让依赖 REPL 表的 **stream 失效**。
+   - 固定顺序：**先 REPL 后 APP**。
+   - `MAIN_STAGING → MAIN` 交换后**自动扫描修复**（Pattern A）。
+5. **How do you trust AI-generated code?**
+   - **plan with the agent → TDD every phase → CI + monitoring gates**。
+   - 关注 **gates 和 thresholds**，不看行数。
+   - money code 里我读**每一个 diff**。
+6. **Who uses it?**
+   - 【待 Chi 补：团队里其他工程师是否用了 schema pool？人数/频率】
+   - on-call copilot：**相邻团队**采用（人数无记录）。
+7. **Why direct-push to main?**
+   - **个人仓库**，不影响团队代码；诚实说明。
 
 ## 6. Senior 升级点（bar = senior）
 
