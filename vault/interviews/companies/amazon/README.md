@@ -18,7 +18,10 @@
 
 ## 面试前必须处理
 
-1. **简历数字**：简历写「$600B+ annual transaction volume」，S1 笔记里是「半年约 2200 万笔、约 $1.39B」。统一口径，或者准备好 $600B 的出处。另外，「Spearheaded net settlement」和 S5 的角色描述有冲突。
+1. **简历数字**：`core/resume/resume.tex` 已在 2026-10-15 改成证据口径：S1 是「tens of millions of Amex transactions (billions of dollars) a year」，S5 是「Owned the interchange-fee track … 13.7M rows, >99.9% parity」。但 PDF 还没重新生成（本机没有 TeX），而且**投给 Amazon 的那版还写着 $600B+**。面试官手里是旧版。【待 Chi 确认 $600B 的真实出处】，然后按情况选一句：
+   - 如果它是平台级口径：*"That's the platform-level volume; the pipeline I built handles tens of millions of Amex transactions a year — billions of dollars."*
+   - 如果找不到出处：*"Let me correct a number on my resume: the figure I can stand behind for my pipeline is tens of millions of Amex transactions a year, billions of dollars."*
+   主动纠正，比被追问出来强。
 2. **`lp/stories/` 里的【待 Chi 补】**：先补 matrix 标出的高风险 LP，也就是只靠一个故事撑着的、或者完全没有故事的。
 3. **Disagree and Commit 缺一个「争论输了、最后照样执行」的故事**；LP16 没有故事。
 
