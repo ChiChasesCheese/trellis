@@ -2,7 +2,7 @@
 """Run every solution and every lecture code block. Exit code 0 only if all of it passes.
 
 1. coding/solutions/*.py            each file is run alone with `python3 -I` (its own asserts must pass).
-2. coding/patterns/*.md              all ```python blocks of one lecture are concatenated in order and run
+2. coding/patterns/*.md + coding/*.md  all ```python blocks of one document are concatenated in order and run
                                      with `python3 -I` (so templates, helpers and traces are executable).
 3. block <-> solution consistency    a lecture block whose first line is `# solutions/<file>.py` must appear
                                      verbatim inside that file's `# --- solution ---` ... `# --- end ---` region,
@@ -46,8 +46,8 @@ def main():
         if not ok:
             failures.append(f"{f.name}: {out[-400:]}")
 
-    lectures = sorted(PAT.glob("*.md"))
-    print(f"== lectures: {len(lectures)} files")
+    lectures = sorted(PAT.glob("*.md")) + sorted(HERE.glob("*.md"))
+    print(f"== markdown documents: {len(lectures)} files")
     total_blocks = refs = 0
     for md in lectures:
         text = md.read_text(encoding="utf-8")
@@ -72,11 +72,12 @@ def main():
             script.write_text("\n\n".join(blocks), encoding="utf-8")
             code, out, dt = run(script)
         ok = code == 0 and not bad
-        print(f"  {'PASS' if ok else 'FAIL'}  {md.name:<46} {len(blocks):>3} blocks {dt:5.2f}s")
+        label = ("patterns/" if md.parent == PAT else "") + md.name
+        print(f"  {'PASS' if ok else 'FAIL'}  {label:<46} {len(blocks):>3} blocks {dt:5.2f}s")
         if not ok:
             failures.append(f"{md.name}: {'; '.join(bad)} {out[-400:]}")
 
-    print(f"== {len(sols)} solution files, {len(lectures)} lectures, {total_blocks} code blocks "
+    print(f"== {len(sols)} solution files, {len(lectures)} markdown documents, {total_blocks} code blocks "
           f"({refs} verified verbatim against solutions)")
     if failures:
         print("FAILURES:")
