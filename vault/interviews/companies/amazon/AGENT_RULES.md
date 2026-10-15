@@ -15,6 +15,10 @@ Context (fixed by the orchestrator, first-hand):
   (`git show origin/headlands-kit:vault/interviews/companies/headlands/study/TEXTBOOK.md`) for the house style.
 - Coding language for Amazon: **Python** (Chi's Anki LeetCode deck is Python).
 
+- **Bar: senior, always (Chi, 2026-10-15: 「不要调整 bar 我们永远准备的内容对标 senior」).** The posted level is SDE I, but every
+  layer is prepared to the senior (SDE II/III) bar: senior-scope LP stories, coding with senior follow-ups, full
+  data-intensive system design and LLD. Never write "SDE I doesn't need X" as a reason to skip X.
+
 Rules:
 1. You own only the files/dirs named in your task. Do not commit. Do not spawn agents.
 2. Resume rule: if your outputs exist, read them and only add what is missing.
