@@ -67,6 +67,13 @@ JDK：`brew install openjdk@21`（已装）。想在终端直接用 `java`：`ex
 | hc11 | 订单区间最大重叠 + 撤单（扫描线、线段树） | 电面 | ✅ |
 | hc13 | 固定大小内存池（FFM、无锁） | 电面 | ✅ |
 | ld01 | 共享内存 SPSC 通道（跨进程） | LLD | ✅ |
+| ld02 | 交易相关 OOD：订单状态机 · 仓位 PnL · 交易前风控 · 事件溯源重放 | LLD | ✅ |
+| ld03 | 异步 TCP 消息通道：成帧 · 部分 I/O · 背压 · 半关闭 · 重连 | LLD | ✅ |
+| sd01 | 无用代码分析（符号图 + 可达性 + 证据 + 安全删除） | 系统设计（onsite） | [model_answer](loop/rounds/04_sd/sd01_unused_code_analysis/model_answer.md) |
+| sd02 | 未来时刻任务调度器（WAL + 分层时间轮 + 有界延迟） | 系统设计（onsite） | [model_answer](loop/rounds/04_sd/sd02_future_job_scheduler/model_answer.md) |
+| sd03 | 低延迟电子交易系统（行情 → 风控 → 路由 → 对账） | 系统设计（onsite） | [model_answer](loop/rounds/04_sd/sd03_low_latency_trading_system/model_answer.md) |
 | kq | 语言深度 45 题 | 电面口头 | — |
+
+系统设计轮（sd01–sd03）每题四个文件：`prompt.md` · `model_answer.md` · `followups.md` · `rubric.md`，总体方法见 [loop/rounds/04_sd/00_how_to_run.md](loop/rounds/04_sd/00_how_to_run.md)（和大厂设计轮的区别、µs 延迟预算、从零估算）。ld02 / ld03 讲义：`study/30-articles/ld02_trading_ood.md`、`ld03_async_tcp_channel.md`。
 
 **注意**：除了 oa01，大部分题网上只有题目名和一句话，Part 的具体规则是 kit 补全的，题面里标了 **(reconstructed)**。真面试时以面试官为准——先问清规则再写，本身就是加分项。

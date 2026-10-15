@@ -62,8 +62,34 @@
 4. 准备 2 个故事：一次性能排查（从现象到根因）、一次推动自动化/测试（对应 JD）。
 5. 反问（`06-questions-to-ask.md`，待写）。
 
-## 2. Onsite（占位，过了电面再展开）
+## 2. Onsite（设计层已展开；轮次结构仍低置信，过了电面再细化）
 
 * 「algorithms, OS concepts, concurrency, and open-ended systems questions」[F-G2]；「dp on trees」[F-G2]。
 * 3 小时 final：2 技术 + 1 行为 [F-W1]；或 6 轮 + 加面 [F-A10]。
-* 系统设计：Unused-code analysis、future-time job scheduler、low-latency trading system [CATALOG C]。
+* 系统设计：Unused-code analysis、future-time job scheduler、low-latency trading system [CATALOG C]——三题都只有 1–2 个来源，sd02 / sd03 只有标题 + 一句摘要且标注两家公司（Keychain / Optiver 共享），**题面是 (reconstructed)**。
+* 低层设计（LLD）：共享内存 SPSC 通道 [ld01]、交易相关 OOD [ld02，33 分钟电面里的一道简单题]、异步 TCP 消息通道 [ld03] [CATALOG B]。
+
+### 2.1 设计层材料（全部按 senior 门槛准备）
+
+| 先读 | 内容 |
+|---|---|
+| [loop/rounds/04_sd/00_how_to_run.md](rounds/04_sd/00_how_to_run.md) | 交易公司的设计轮 vs 大厂：µs 延迟预算、决定性、单机性能、内核旁路、行情组播、风控、日志重放、co-location；从零估算 |
+
+| id | 题 | 参考答案 / 追问 / 评分 | 动手配套 |
+|---|---|---|---|
+| sd01 | 无用代码分析 [F-G3：首轮视频口述题] | [prompt](rounds/04_sd/sd01_unused_code_analysis/prompt.md) · [model_answer](rounds/04_sd/sd01_unused_code_analysis/model_answer.md) · [followups](rounds/04_sd/sd01_unused_code_analysis/followups.md) · [rubric](rounds/04_sd/sd01_unused_code_analysis/rubric.md) | — |
+| sd02 | 未来时刻任务调度器 | [prompt](rounds/04_sd/sd02_future_job_scheduler/prompt.md) · [model_answer](rounds/04_sd/sd02_future_job_scheduler/model_answer.md) · [followups](rounds/04_sd/sd02_future_job_scheduler/followups.md) · [rubric](rounds/04_sd/sd02_future_job_scheduler/rubric.md) | ld02 Part 4（journal + 重放）的方法 |
+| sd03 | 低延迟电子交易系统 | [prompt](rounds/04_sd/sd03_low_latency_trading_system/prompt.md) · [model_answer](rounds/04_sd/sd03_low_latency_trading_system/model_answer.md) · [followups](rounds/04_sd/sd03_low_latency_trading_system/followups.md) · [rubric](rounds/04_sd/sd03_low_latency_trading_system/rubric.md) | [ld01](rounds/03_lld/ld01_spsc_channel/problem.md) · [ld02](rounds/03_lld/ld02_trading_ood/problem.md) · [ld03](rounds/03_lld/ld03_async_tcp_channel/problem.md) · [hc05](rounds/01_video/hc05_market_order_book/problem.md) |
+
+| id | LLD 题 | 题面 | 讲义 |
+|---|---|---|---|
+| ld01 | 共享内存 SPSC 通道 | [problem](rounds/03_lld/ld01_spsc_channel/problem.md) | [ld01](../study/30-articles/ld01_spsc_channel.md) |
+| ld02 | 交易相关 OOD（订单状态机 / 仓位 PnL / 风控 / 事件溯源） | [problem](rounds/03_lld/ld02_trading_ood/problem.md) | [ld02](../study/30-articles/ld02_trading_ood.md) |
+| ld03 | 异步 TCP 消息通道（成帧 / 背压 / 半关闭 / 重连） | [problem](rounds/03_lld/ld03_async_tcp_channel/problem.md) | [ld03](../study/30-articles/ld03_async_tcp_channel.md) |
+
+### 2.2 设计轮的评分（推断，来源是 JD 与官方视频）
+
+* **「knowledgeable about a lot of different areas」[O-G]**：设计题会一层层往下追（JVM → OS → CPU → 网卡）；准备「是什么 → 为什么 → 怎么验证」三层回答。
+* **「Comfortable operating at various levels of abstraction, from individual machines to large scale distributed systems」[O-C2]**：既要会算一台机器够不够，也要会讲分片与复制；先算数，再选架构。
+* **「fully automated, scalable, and maintainable solutions with extensive testing」[O-C2]**：每个方案都主动说怎么测（确定性重放、虚拟时钟、故障注入）。
+* 面试官是将来的同事并写评价 [O-C2]：主动攻击自己的设计、每 10 分钟确认方向。
