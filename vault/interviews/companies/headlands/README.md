@@ -17,6 +17,7 @@
 | 公司是做什么的（从零讲自营交易） | [01-company-brief.md](01-company-brief.md) |
 | 简历 vs JD、故事、反问 | [fit.md](fit.md) · [stories.md](stories.md)（有待填模板）· [06-questions-to-ask.md](06-questions-to-ask.md) |
 | 证据原文（每条都有 URL + 日期） | `catalog/raw/` |
+| 另一套 Maven 版模拟题（q01 FizzBuzz、q02 Job Runner 原题截图抄录 + 变异检查） | [mock_maven/README.md](mock_maven/README.md)（`cd mock_maven/java && mvn -q test`） |
 | 进度 / 已验收 | [CHECKPOINT.md](CHECKPOINT.md) · [LEDGER.md](LEDGER.md) |
 
 ## 建议学习路径

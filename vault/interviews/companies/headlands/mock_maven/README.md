@@ -17,7 +17,7 @@ done. See `CHECKPOINT.md`.
 | q02 Job Runner | `headland.q02` (`Solution` imperative, `Functional` streams throughout) | `JobRunnerTest` (42); mutants 17/17 and 15/15 | `study/q02_job_runner.md` |
 
 ```bash
-cd vault/interviews/companies/headland/java
+cd vault/interviews/companies/headlands/mock_maven/java
 mvn -q test                                   # reference solutions (default -Dimpl=solution)
 mvn -q test -Dimpl=starter                    # your code
 mvn -q test -Dimpl=starter -Dtest='headland/q01/**'  # one problem

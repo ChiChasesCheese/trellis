@@ -1,7 +1,7 @@
 # oa01 · Job Chain 报表（HackerRank「Headlands Tech Coding Test」）
 
 > 阶段：OA（HackerRank，1 题，100–120 分钟）· 置信度：**高**（≥ 8 个独立来源 2020–2026-08；Chi 2026-10 亲历 Java 版，确认是这道题）
-> 公开题面只有 WSO 2020 的转述与一份 C++ 题解；**排序规则与 average 取整方式是 (reconstructed)**，Chi 记得原文的话改这里。
+> 原题题面已由 Chi 的 HackerRank 截图逐字抄录：`../../../mock_maven/catalog/raw/hackerrank_job_runner_photos.md`（2026-10-10）。降序排序、平均值截断取整、非法输入 **exit zero** 都以原文为准；只有「总时长相同时的 tie-break」原文没说，是 (inferred)。
 
 ## 背景
 
@@ -41,8 +41,8 @@ average_job_time: 00:00:35
 
 * 每条链一段，段前段后都有 `-`。
 * 时长格式 `hh:mm:ss`，小时至少两位、不截断（`100:00:00`）。
-* `average_job_time` = 总时长 / job 数，整秒向下取整 (reconstructed)。
-* 链按 `job_chain_runtime` 降序，相同按 `start_job` 升序 (reconstructed)。
+* `average_job_time` = 总时长 / job 数，整秒**截断**（原题样例：35 s / 2 = 17.5 → `00:00:17`）。
+* 链按 `job_chain_runtime` **降序**（原文）；相同时按 `start_job` 升序 (inferred)。
 
 ## Part
 
@@ -54,7 +54,7 @@ average_job_time: 00:00:35
 
 `Job`、`Chain`、`Outcome`（sealed：`Ok` / `Malformed`）在 starter 里已给出。
 
-## 非法输入（全部 → 只输出 `Malformed Input`，退出码非 0）
+## 非法输入（全部 → 只输出 `Malformed Input`，原文要求 **exit zero**）
 
 | 类别 | 例子 |
 |---|---|

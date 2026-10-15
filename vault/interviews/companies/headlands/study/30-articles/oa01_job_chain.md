@@ -213,7 +213,7 @@ Math.addExact(a, a);      // 抛 ArithmeticException：明确告诉你溢出了
 
 **第 5 步：排序和输出**
 * 链的条数 k ≤ n，排序 O(k log k)。
-* 排序规则：总时长降序，相同时按头编号升序（题面没说清，这是 (reconstructed) 的选择；写清楚 tie-break 是好习惯）。
+* 排序规则：总时长降序，相同时按头编号升序（降序是原题原文；同总时长时按头编号升序是原题没说的 (inferred) 选择——写清楚 tie-break 是好习惯）。
 
 总复杂度 O(n + k log k)，内存 O(n)。
 

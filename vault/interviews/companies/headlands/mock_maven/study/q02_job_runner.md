@@ -3,7 +3,7 @@
 题面原文：`../catalog/raw/hackerrank_job_runner_photos.md`。代码：`../java/src/main/java/headland/q02/`。
 
 ```bash
-cd vault/interviews/companies/headland/java
+cd vault/interviews/companies/headlands/mock_maven/java
 mvn -q test -Dimpl=starter -Dtest='headland/q02/**'   # 你的 Starter.java
 mvn -q test -Dtest='headland/q02/**'                  # 参考解：42/42
 python3 mutation_check.py q02                          # 17 个错误版本全部被抓到
