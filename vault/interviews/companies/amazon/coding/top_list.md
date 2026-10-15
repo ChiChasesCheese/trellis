@@ -143,3 +143,84 @@ order-by-frequency: 1(100), 3(88), 42(88), 121(88), 146(88), 200(88), 49(81), 2(
 - 先读 `plan.md`，按天读讲义、做每天的 2 道必做题。
 - 每道题的参考解在 `solutions/<LC编号>_<slug>.py`，里面有 `assert` 和（多数题）与暴力解的随机对拍，用 `python3 -I coding/run_all.py` 一次全跑。
 - 讲义编号与模式编号一一对应：`patterns/01_…` 到 `patterns/11_…`。
+
+
+---
+
+## 可选第二轨道：模式 12–16（回溯 · 贪心 · 字典树 · 并查集 · 矩阵模拟）
+
+> 上面「这份清单没有覆盖的东西」里提到的回溯、贪心、矩阵模拟、Trie、并查集，现在有了单独的讲义 `patterns/12_…` 到 `patterns/16_…` 和 30 道题的参考解（`solutions/`，各自带暴力对拍）。**上面那一节的「没有覆盖」说法以本节为准**；原来的 11 讲、51 题和 `plan.md` 的 5 天计划不变，本节是**可选轨道**。
+> 选题脚本：`python3 -I coding/pick.py --extra`（同一个 A 档 + 近 ✓ + 双源 ✓ 过滤；跳过上面 51 题已经选过的；去重家族扩充了 spiral、word-break；**普通题**按频率取前 N，**Hard** 单独补到 2 道，顺序 `EX_HARD_PREFER`）。下面是脚本的**原始输出**（2026-10-15）。
+> 诚实说明：305 Number of Islands II 的频率只有 12（A 档里最低的一档），入选是因为它是并查集的标准题（Hard 补强）；14 Longest Common Prefix 是 Easy，入选是因为它频率最高（75）且能引出 trie 的"结构即答案"。没有入选的高频题：46 Permutations（56，在 78 的解里作为变体写了）、45 Jump Game II（在 55 里）、Word Break II（140，回溯 + 记忆化，只在 14 讲里提到）、289 Game of Life（25）。
+
+## 脚本输出（`python3 -I coding/pick.py --extra`，2026-10-15）
+
+- candidates after filter + classification: 138
+- picked: 30
+
+### 12 Backtracking (choose / explore / un-choose)  (6 picked; quota 4 + Hard add-ons)
+
+| LC | Problem | Diff | Freq | Why | Tags |
+|---:|---|---|---:|---|---|
+| 22 | [Generate Parentheses](https://leetcode.com/problems/generate-parentheses/) | Medium | 75 | freq | String, Dynamic Programming, Backtracking, Bracket Sequences |
+| 17 | [Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/) | Medium | 67 | freq | Hash Table, String, Backtracking |
+| 79 | [Word Search](https://leetcode.com/problems/word-search/) | Medium | 65 | freq | Array, String, Backtracking, Depth-First Search, Matrix |
+| 78 | [Subsets](https://leetcode.com/problems/subsets/) | Medium | 64 | freq | Array, Backtracking, Bit Manipulation |
+| 51 | [N-Queens](https://leetcode.com/problems/n-queens/) | Hard | 62 | Hard add-on | Array, Backtracking, Algorithm X |
+| 37 | [Sudoku Solver](https://leetcode.com/problems/sudoku-solver/) | Hard | 50 | Hard add-on | Array, Hash Table, Backtracking, Matrix, Algorithm X |
+
+### 13 Greedy (exchange argument)  (6 picked; quota 4 + Hard add-ons)
+
+| LC | Problem | Diff | Freq | Why | Tags |
+|---:|---|---|---:|---|---|
+| 55 | [Jump Game](https://leetcode.com/problems/jump-game/) | Medium | 68 | freq | Array, Dynamic Programming, Greedy |
+| 621 | [Task Scheduler](https://leetcode.com/problems/task-scheduler/) | Medium | 63 | freq | Array, Hash Table, Greedy, Sorting, Heap (Priority Queue) |
+| 134 | [Gas Station](https://leetcode.com/problems/gas-station/) | Medium | 54 | freq | Array, Greedy |
+| 179 | [Largest Number](https://leetcode.com/problems/largest-number/) | Medium | 51 | freq | Array, String, Greedy, Sorting |
+| 135 | [Candy](https://leetcode.com/problems/candy/) | Hard | 53 | Hard add-on | Array, Greedy |
+| 871 | [Minimum Number of Refueling Stops](https://leetcode.com/problems/minimum-number-of-refueling-stops/) | Hard | 38 | Hard add-on | Array, Dynamic Programming, Greedy, Heap (Priority Queue) |
+
+### 14 Trie (prefix tree)  (6 picked; quota 4 + Hard add-ons)
+
+| LC | Problem | Diff | Freq | Why | Tags |
+|---:|---|---|---:|---|---|
+| 14 | [Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/) | Easy | 75 | freq | Array, String, Trie |
+| 139 | [Word Break](https://leetcode.com/problems/word-break/) | Medium | 62 | freq | Array, Hash Table, String, Dynamic Programming, Trie |
+| 1268 | [Search Suggestions System](https://leetcode.com/problems/search-suggestions-system/) | Medium | 50 | freq | Array, String, Binary Search, Trie, Sorting |
+| 211 | [Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/) | Medium | 38 | freq | String, Depth-First Search, Design, Trie |
+| 212 | [Word Search II](https://leetcode.com/problems/word-search-ii/) | Hard | 54 | Hard add-on | Array, String, Backtracking, Trie, Matrix |
+| 472 | [Concatenated Words](https://leetcode.com/problems/concatenated-words/) | Hard | 53 | Hard add-on | Array, String, Dynamic Programming, Depth-First Search, Trie |
+
+### 15 Union-Find (disjoint set union)  (6 picked; quota 4 + Hard add-ons)
+
+| LC | Problem | Diff | Freq | Why | Tags |
+|---:|---|---|---:|---|---|
+| 547 | [Number of Provinces](https://leetcode.com/problems/number-of-provinces/) | Medium | 51 | freq | Depth-First Search, Breadth-First Search, Union-Find, Graph Theory |
+| 130 | [Surrounded Regions](https://leetcode.com/problems/surrounded-regions/) | Medium | 50 | freq | Array, Depth-First Search, Breadth-First Search, Union-Find, Matrix |
+| 399 | [Evaluate Division](https://leetcode.com/problems/evaluate-division/) | Medium | 50 | freq | Array, String, Depth-First Search, Breadth-First Search, Union-Find |
+| 721 | [Accounts Merge](https://leetcode.com/problems/accounts-merge/) | Medium | 42 | freq | Array, Hash Table, String, Depth-First Search, Breadth-First Search |
+| 827 | [Making A Large Island](https://leetcode.com/problems/making-a-large-island/) | Hard | 40 | Hard add-on | Array, Depth-First Search, Breadth-First Search, Union-Find, Matrix |
+| 305 | [Number of Islands II](https://leetcode.com/problems/number-of-islands-ii/) | Hard | 12 | Hard add-on | Array, Hash Table, Union-Find |
+
+### 16 Matrix simulation / in-place grid work  (6 picked; quota 5 + Hard add-ons)
+
+| LC | Problem | Diff | Freq | Why | Tags |
+|---:|---|---|---:|---|---|
+| 54 | [Spiral Matrix](https://leetcode.com/problems/spiral-matrix/) | Medium | 65 | freq | Array, Matrix, Simulation |
+| 48 | [Rotate Image](https://leetcode.com/problems/rotate-image/) | Medium | 64 | freq | Array, Math, Matrix |
+| 36 | [Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) | Medium | 62 | freq | Array, Hash Table, Matrix |
+| 73 | [Set Matrix Zeroes](https://leetcode.com/problems/set-matrix-zeroes/) | Medium | 56 | freq | Array, Hash Table, Matrix |
+| 348 | [Design Tic-Tac-Toe](https://leetcode.com/problems/design-tic-tac-toe/) | Medium | 38 | freq | Array, Hash Table, Design, Matrix, Simulation |
+| 68 | [Text Justification](https://leetcode.com/problems/text-justification/) | Hard | 38 | Hard add-on | Array, String, Simulation |
+
+order-by-frequency: 14(75), 22(75), 55(68), 17(67), 54(65), 79(65), 48(64), 78(64), 621(63), 36(62), 51(62), 139(62), 73(56), 134(54), 212(54), 135(53), 472(53), 179(51), 547(51), 37(50), 130(50), 399(50), 1268(50), 721(42), 827(40), 68(38), 211(38), 348(38), 871(38), 305(12)
+
+## 讲义对照
+
+| 模式 | 讲义 | 参考解数量 |
+|---|---|---:|
+| 12 回溯 | `patterns/12_backtracking.md` | 6（22, 17, 79, 78, 51, 37） |
+| 13 贪心 | `patterns/13_greedy.md` | 6（55, 621, 134, 179, 135, 871） |
+| 14 字典树 | `patterns/14_trie.md` | 6（14, 139, 1268, 211, 212, 472） |
+| 15 并查集 | `patterns/15_union_find.md` | 6（547, 130, 399, 721, 827, 305） |
+| 16 矩阵模拟 | `patterns/16_matrix_simulation.md` | 6（54, 48, 36, 73, 348, 68） |

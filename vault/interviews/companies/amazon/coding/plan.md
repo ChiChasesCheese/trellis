@@ -75,3 +75,20 @@
 | 日期 | 题号 | 错在哪里 | 下次怎么避免 |
 |---|---|---|---|
 | | | | |
+
+
+---
+
+## 可选轨道：模式 12–16（回溯 · 贪心 · 字典树 · 并查集 · 矩阵模拟）
+
+> 上面的 5 天计划只覆盖前 11 讲。如果 10/19 之后（或者某天提前做完）还有时间，按下面三个「模块」补，每个模块 2–2.5 小时；**时间只够一个模块就先做模块 A 的回溯，其次是模块 C**（22、17、79、54、48 都是 65 以上的高频题）。题单与选题规则见 `top_list.md` 的「可选第二轨道」；全部参考解和讲义示例仍由 `python3 -I coding/run_all.py` 一次跑完。
+> 节奏同上：先读讲义第 1–3 节、默写模板；必做题先不看解法，计时 40 分钟；然后口述资深追问。
+
+| 模块 | 先读 | 必做 1（40 分钟） | 必做 2（40 分钟） | 加练（Hard / 高频） | 今天要能口述的 |
+|---|---|---|---|---|---|
+| A · 约 2.5 小时 | `patterns/12_backtracking.md`，再读 `patterns/13_greedy.md` | LC 22 Generate Parentheses（75）——两个计数器的剪枝；讲义 12 §4.1 | LC 55 Jump Game（68）——`farthest` 和一句话证明；讲义 13 §4.1 | LC 79 Word Search（65）；LC 78 Subsets（64，含 90、46）；LC 51 N-Queens（Hard，62）；LC 621 Task Scheduler（63）；LC 135 Candy（Hard，53）；LC 871 Refueling Stops（Hard，38） | 回溯为什么要撤销、为什么记录答案要拷贝；贪心的交换论证，以及硬币 `[1,3,4]` 为什么贪心失败 |
+| B · 约 2.5 小时 | `patterns/14_trie.md`，再读 `patterns/15_union_find.md` | LC 211 Design Add and Search Words（38）或 LC 1268（50）——手写 trie；讲义 14 §4.4 / §4.3 | LC 547 Number of Provinces（51）——手写并查集（路径减半 + 按大小）；讲义 15 §4.1 | LC 212 Word Search II（Hard，54）；LC 399 Evaluate Division（50，带权）；LC 721 Accounts Merge（42）；LC 827 Making A Large Island（Hard，40）；LC 472 Concatenated Words（Hard，53）；LC 305 Number of Islands II（Hard，12） | trie 的内存代价与替代方案；为什么 `union` 要合并根、要返回布尔值；`find` 为什么不是线程安全的 |
+| C · 约 2 小时 | `patterns/16_matrix_simulation.md` | LC 54 Spiral Matrix（65）——四条边界 + 两个保护条件；讲义 16 §4.1 | LC 48 Rotate Image（64）——转置 + 翻转，并写出下标公式；讲义 16 §4.2 | LC 73 Set Matrix Zeroes（56）；LC 36 Valid Sudoku（62）；LC 348 Design Tic-Tac-Toe（38）；LC 68 Text Justification（Hard，38）；回到 LC 37 Sudoku Solver（Hard，50） | 为什么 `[[0]*c]*r` 是错的；73 的顺序；矩阵题的固定边界测试清单 |
+
+- 每个模块结束后，把两道必做题的「资深追问」各回答 3 条（规模 ×1000 / 流式 / 内存 / 并发 / 接口 / 测试任选），并在上面的**错题本**里记 2 条。
+- 覆盖诚实说明：这个轨道的 30 道题里，只有 10 道要求「必做」；其余是读懂 + 看参考解的「加练」。回溯、贪心、矩阵模拟题在白板上最容易漏边界，所以每道参考解都带暴力对拍——面试时也可以向面试官说"我会写一个暴力解做随机对拍"。

@@ -11,6 +11,9 @@ Senior bar (Chi, 2026-10-15): after the quota pass, every pattern is topped up w
         until it has TARGET_HARD of them (when the tag list has such Hards): HARD_PREFER order first, then frequency.
 Output: a markdown table on stdout (this is pasted into top_list.md).
 Run   : python3 -I coding/pick.py [path-to-amazon.md]
+Extra : python3 -I coding/pick.py --extra [path]  -> the optional second track (patterns 12-16: backtracking, greedy,
+        trie, union-find, matrix simulation). Same A-tier + recent + both filter; skips every problem the 11-pattern
+        run already picked; quota applies to non-Hard problems, Hards are filled separately (EX_HARD_PREFER, then freq).
 """
 import re
 import sys
@@ -201,9 +204,117 @@ def pick(rows):
     return chosen, stats
 
 
+# ---------------------------------------------------------------- optional track: patterns 12-16
+EXTRA_PATTERNS = [
+    ("12_backtracking", "Backtracking (choose / explore / un-choose)", 4),
+    ("13_greedy", "Greedy (exchange argument)", 4),
+    ("14_trie", "Trie (prefix tree)", 4),
+    ("15_union_find", "Union-Find (disjoint set union)", 4),
+    ("16_matrix_simulation", "Matrix simulation / in-place grid work", 5),
+]
+EX_QUOTA = {s: q for s, _, q in EXTRA_PATTERNS}
+BT, GD, TRIE, UF, MX = (p[0] for p in EXTRA_PATTERNS)
+EX_TAG_RULES = [("Union-Find", UF), ("Trie", TRIE), ("Backtracking", BT), ("Greedy", GD)]
+EX_OVERRIDE = {
+    212: TRIE,   # Word Search II: backtracking on a grid, but the trie is the point
+    472: TRIE, 140: None,   # 140 Word Break II: backtracking + memo, not taught (mentioned in 14)
+    126: None,               # Word Ladder II: BFS + path rebuild, not taught
+    692: None,               # Top K Frequent Words: heap lecture (05) territory
+    494: None, 698: None, 301: None, 980: None,
+    68: MX,                  # Text Justification: pure simulation Hard (no Matrix tag)
+    36: MX, 48: MX, 73: MX,  # tag "Matrix" alone is too broad, so these three are named explicitly
+    11: None, 435: None, 410: None, 253: None, 767: None,   # already taught in 02/03/05/07
+}
+EX_PREFER = [55, 621, 22, 79]
+EX_HARD_PREFER = [51, 37, 135, 871, 212, 472, 305, 827, 68]
+EX_TARGET_HARD = 2
+EX_FAMILIES = dict(FAMILIES, spiral={54, 59}, **{"word-break": {139, 140}})
+
+
+def classify_extra(r):
+    if r["num"] in EX_OVERRIDE:
+        return EX_OVERRIDE[r["num"]]
+    if "Matrix" in r["tags"] and "Simulation" in r["tags"]:
+        return MX
+    for tag, slug in EX_TAG_RULES:
+        if tag in r["tags"]:
+            return slug
+    return None
+
+
+def extra_family(num):
+    for fam, members in EX_FAMILIES.items():
+        if num in members:
+            return fam
+    return f"solo-{num}"
+
+
+def pick_extra(rows, base_chosen):
+    taken = {r["num"] for r in base_chosen}
+    seen = {family_of(n) for n in taken} | {extra_family(n) for n in taken}
+    cands = [r for r in rows
+             if r["tier"] == "A" and r["recent"] and r["both"] and r["num"] not in taken
+             and not (set(r["tags"]) & EXCLUDE_TAGS) and r["num"] not in EXCLUDE_NUMS]
+    for r in cands:
+        r["pattern"] = classify_extra(r)
+    cands = [r for r in cands if r["pattern"]]
+
+    def key(r):
+        pref = EX_PREFER.index(r["num"]) if r["num"] in EX_PREFER else len(EX_PREFER)
+        return (-r["freq"], pref, r["num"])
+
+    cands.sort(key=key)
+    chosen, per = [], {s: 0 for s in EX_QUOTA}
+    for r in cands:
+        if r["diff"] == "Hard" or extra_family(r["num"]) in seen or per[r["pattern"]] >= EX_QUOTA[r["pattern"]]:
+            continue
+        seen.add(extra_family(r["num"]))
+        per[r["pattern"]] += 1
+        r["why"] = "freq"
+        chosen.append(r)
+    for slug in EX_QUOTA:
+        pool = [r for r in cands if r["pattern"] == slug and r["diff"] == "Hard"
+                and (r["num"] in EX_HARD_PREFER or r["freq"] >= 50)]
+        pool.sort(key=lambda r: (EX_HARD_PREFER.index(r["num"]) if r["num"] in EX_HARD_PREFER else 99, -r["freq"], r["num"]))
+        have = 0
+        for r in pool:
+            if have >= EX_TARGET_HARD:
+                break
+            if extra_family(r["num"]) in seen:
+                continue
+            seen.add(extra_family(r["num"]))
+            r["why"] = "Hard add-on"
+            chosen.append(r)
+            have += 1
+    return chosen, {"candidates after filter + classification": len(cands)}
+
+
+def main_extra(rows):
+    base, _ = pick(rows)
+    chosen, stats = pick_extra(rows, base)
+    for k, v in stats.items():
+        print(f"- {k}: {v}")
+    print(f"- picked: {len(chosen)}\n")
+    for slug, title, quota in EXTRA_PATTERNS:
+        group = sorted([r for r in chosen if r["pattern"] == slug], key=lambda r: (r["diff"] == "Hard", -r["freq"], r["num"]))
+        print(f"### {slug.split('_')[0]} {title}  ({len(group)} picked; quota {quota} + Hard add-ons)\n")
+        print("| LC | Problem | Diff | Freq | Why | Tags |\n|---:|---|---|---:|---|---|")
+        for r in group:
+            print(f"| {r['num']} | [{r['name']}]({r['url']}) | {r['diff']} | {r['freq']} | {r['why']} | {', '.join(r['tags'][:5])} |")
+        print()
+    print("order-by-frequency:", ", ".join(f"{r['num']}({r['freq']})" for r in sorted(chosen, key=key_by_freq)))
+
+
+def key_by_freq(r):
+    return (-r["freq"], r["num"])
+
+
 def main():
-    src = Path(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_SRC
+    args = [a for a in sys.argv[1:] if a != "--extra"]
+    src = Path(args[0]) if args else DEFAULT_SRC
     rows = list(parse(src))
+    if "--extra" in sys.argv[1:]:
+        return main_extra(rows)
     chosen, stats = pick(rows)
     for k, v in stats.items():
         print(f"- {k}: {v}")
