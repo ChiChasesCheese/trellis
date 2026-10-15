@@ -22,8 +22,7 @@
 | [S3PERF] | S3 request-rate performance guidelines | https://docs.aws.amazon.com/AmazonS3/latest/userguide/optimizing-performance.html | 已抓取 |
 | [ATH] | Athena: partition your data | https://docs.aws.amazon.com/athena/latest/ug/partitions.html | 已抓取 |
 
-本文件里出现的、**没有**在上表标记来源的 AWS 产品细节（例如 Kinesis 默认保留期、DynamoDB Streams 保留 24 小时、Global Tables 的冲突策略、
-Aurora 的隔离级别细节、Redshift RA3 托管存储）是我凭记忆写的，行内会标 `【凭记忆，面试前核对】`。自己的推断标 `推断`。
+本文件里出现的、**没有**在上表标记来源的 AWS 产品细节（例如 Kinesis 默认保留期、DynamoDB Streams 保留 24 小时、Global Tables 的冲突策略）已于 2026-10-15 逐条对照官方文档核对，行内附 `（来源：URL，2026-10-15 核对）`；核对不到的会标 `【未能核对：…】`。自己的推断标 `推断`。
 
 ---
 
@@ -141,7 +140,7 @@ W+R=4>3 ✓.        若 W=1,R=1: W+R=2<3 ✗ → 可能读到 C 的旧值
 - **Aurora**：6 副本跨 3 AZ（每 AZ 2 个），**写 quorum 4/6，读 quorum 3/6**。两条规则：`Vr + Vw > V`（读看得到最新写）与 `Vw > V/2`（写之间不冲突）；
   能挂掉整个 AZ 外加一个节点仍不丢数据（AZ+1），挂一个 AZ 仍能写（[AUR17] §2.1）。
   为什么不用 2/3：AZ 整体宕机时，别的 AZ 里的后台随机故障会让 2/3 quorum 破掉。**日常读不需要 quorum**——数据库自己记录哪个 segment 已追上，直接读那一个（[AUR17] §4.2.3）。
-- **DynamoDB Global Tables** 是多主跨区域复制，冲突按 last-writer-wins `【凭记忆，面试前核对】`。
+- **DynamoDB Global Tables** 是多主跨区域复制。默认的多区域最终一致模式（MREC）异步复制（通常一秒内），同一 item 在多个区域同时修改时按"最新内部时间戳"取胜，即 last-writer-wins；另有较新的多区域强一致模式（MRSC，必须恰好 3 个区域，同步复制到至少另一个区域、RPO=0，冲突写直接报 `ReplicatedWriteConflictException` 而不是 LWW，且不支持事务/TTL/LSI）（来源：https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_HowItWorks.html ，2026-10-15 核对）。
 
 ### 2.7 回去复习
 - 地图：[map:distributed.replication.leader](../../../../domains/system-design/map/distributed.replication.leader.md)、[map:distributed.replication.multi-leader](../../../../domains/system-design/map/distributed.replication.multi-leader.md)、[map:distributed.replication.leaderless](../../../../domains/system-design/map/distributed.replication.leaderless.md)
@@ -173,7 +172,7 @@ key: a────────m────────z                hash(key
 
 ### 3.3 AWS 里谁体现了它
 - **DynamoDB**：分区键经过内部哈希函数决定位置；**每个分区承载一段连续、不相交的 key 范围**，所以 sort key 范围查询能在分区内高效完成（[DDB22] §3）。
-  Global Secondary Index 是全局索引、异步更新（`【凭记忆，面试前核对】`），Local Secondary Index 与基表同分区。
+  Global Secondary Index 是全局索引、异步更新（官方："updated asynchronously, using an eventually consistent model"，正常情况下亚秒级传播，GSI 只支持最终一致读），Local Secondary Index 与基表同分区（每个 LSI 分区限定在同 partition key 的基表分区内，可选强一致读）（来源：https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.html 与 https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SecondaryIndexes.html ，2026-10-15 核对）。
 - **DynamoDB 的"热分区"故事是最好的 senior 素材**（[DDB22] §4）：
   早期把表的预置吞吐**平均分给各分区**，两个问题：(1) *hot partition*——流量集中在少数 key；(2) *throughput dilution*——为存储大小分裂分区后，每个子分区拿到的吞吐被均摊变少。
   解法演进：burst（令牌桶，攒最多 300 秒的闲置容量）→ adaptive capacity（按表级吞吐动态加给热分区）→ **global admission control（GAC，请求路由器本地令牌桶 + 中心 GAC 服务每隔数秒补发令牌）** →
@@ -222,10 +221,10 @@ Read Committed   →   Snapshot Isolation(RR)   →   Serializable
 
 ### 4.5 AWS 里谁体现了它
 - **DynamoDB**：单 item 操作带条件表达式（`ConditionExpression`，等价 CAS）；还支持跨 item 的 ACID 事务（[DDB22] §3："supports ACID transactions enabling applications to update multiple items … without compromising the scalability, availability, and performance"）。
-  事务的内部协议（时间戳排序、无读锁）出自 2023 年 ATC 的另一篇论文，**本次未抓取** `【凭记忆，面试前核对】`。
+  事务的内部协议出自 2023 年 ATC 的另一篇论文《Distributed Transactions at Scale in Amazon DynamoDB》：用**时间戳排序**（timestamp ordering）做串行化，**事务不加任何锁**（"Transactions do not acquire locks"，不是只"无读锁"）；写事务由 transaction coordinator 走**两阶段协议**（prepare / commit，但这不是两阶段锁），只读事务可在一轮内完成，同分区的写事务也可单轮完成（来源：https://www.usenix.org/conference/atc23/presentation/idziorek 及全文 https://www.usenix.org/system/files/atc23-idziorek.pdf ，2026-10-15 核对）。
 - **Aurora**：单写者 + 最多 15 个只读副本共享同一份存储卷（[AUR17] §4.2.4）。**不需要 2PC**，因为复制是存储层的 quorum，而不是多个数据库各自提交。
   提交是异步的：事务记录自己的 commit LSN，等 VDL（Volume Durable LSN）追上才回复客户端（[AUR17] §4.2.2）；崩溃恢复一般 10 秒内（[AUR17] §4.3）。
-- **S3**：现在对同 key 的 PUT/GET/LIST 提供强读后写一致性（2020-12 公告） `【凭记忆，面试前核对】`；条件写 `If-None-Match` / `If-Match` 可做 CAS，见卡 [storage-s3-conditional-writes](../../../../domains/system-design/cards/storage/storage-s3-conditional-writes.md)。
+- **S3**：现在对同 key 的 PUT/GET/LIST 提供强读后写一致性（2020-12-01 公告，GET/PUT/LIST 均强一致）（来源：https://aws.amazon.com/blogs/aws/amazon-s3-update-strong-read-after-write-consistency/ ，2026-10-15 核对）；条件写 `If-None-Match` / `If-Match` 可做 CAS，见卡 [storage-s3-conditional-writes](../../../../domains/system-design/cards/storage/storage-s3-conditional-writes.md)。
 
 ### 4.6 回去复习
 - 地图：[map:distributed.transactions.isolation](../../../../domains/system-design/map/distributed.transactions.isolation.md)、[map:distributed.transactions.concurrency-control](../../../../domains/system-design/map/distributed.transactions.concurrency-control.md)、[map:distributed.transactions.distributed](../../../../domains/system-design/map/distributed.transactions.distributed.md)
@@ -319,10 +318,10 @@ at-least-once 重试 ─▶ 下游可能收到同一事件两次
 
 ### 6.5 AWS 里谁体现了它
 - **Kinesis Data Streams**：分片日志，每 shard 写 1 MB/s 或 1,000 条/s、读 2 MB/s（[KDS]）；同 partition key 进同 shard 保序；消费者自己管理检查点 → 至少一次，需要幂等消费。
-  默认保留 24 小时、可延长 `【凭记忆，面试前核对】`。
+  默认保留 24 小时，可延长到最长 8760 小时（365 天），超过 24 小时要额外收费（来源：https://docs.aws.amazon.com/streams/latest/dev/kinesis-extended-retention.html ，2026-10-15 核对）。
 - **AWS DMS**：用各引擎原生接口读事务日志做 CDC（Oracle LogMiner / binary reader，MySQL 要开 row 级 binlog）；文档明确写"**CDC does not provide real-time replication … There are no SLAs for CDC latency**"（[DMS]）。
   面试里讲 DMS 类系统时，要把"没有延迟 SLA"当成需求边界而不是缺陷。
-- **DynamoDB Streams**：按 item 的变更日志，24 小时保留，分片有序 `【凭记忆，面试前核对】`。
+- **DynamoDB Streams**：按 item 的变更日志，24 小时保留；顺序保证是**按 item（同一主键）**的，**不是**整个分区/分片全局有序（同一 partition key 的 item collection 可能跨多个分区）；分片有父子谱系，必须先处理父分片再处理子分片（来源：https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html ，2026-10-15 核对）。
 - **DynamoDB 自己的 PITR**：定期快照 + 归档到 S3 的 WAL，恢复 = 找最近快照 + 重放日志到目标时间点（[DDB22] §5.5）——一个"日志 + 快照"的教科书实例。
 
 ### 6.6 回去复习
@@ -358,8 +357,8 @@ AWS Data Services 的产品几乎都是这几块的托管版：**对象存储（
 ### 7.3 AWS 里谁体现了它
 - **S3**：对象存储，11 个 9 的设计耐久度（[DDB22] §5.1 引用）；高吞吐靠并行化前缀与多实例聚合（[S3PERF]）。
 - **Glue**：Data Catalog（元数据，**不含数据本身**）+ Crawler（推断 schema 建表）+ Spark ETL Job + Trigger（[GLUE]）。
-- **Redshift**：列存 MPP 数仓（[RS]）；排序键/分布键决定裁剪与 join 的数据搬运 `【凭记忆，面试前核对】`。
-- **Athena**：无服务器 SQL 查询 S3 上的数据——官方文档原话 "serverless, so there is no infrastructure to set up or manage, and you pay only for the queries you run"（https://docs.aws.amazon.com/athena/latest/ug/what-is.html ，2026-10-15 抓取）；"按扫描的字节数计费"是公开定价模型，但定价页是动态页面、本次没读到具体价格 `【凭记忆，面试前核对】`。在这个模型下，列存格式+分区裁剪直接等于省钱（[ATH]）。
+- **Redshift**：列存 MPP 数仓（[RS]）；排序键/分布键决定裁剪与 join 的数据搬运：排序键让每个 1 MB 块的 min/max 元数据可用来跳过大量磁盘块；分布键/分布方式决定 join 与聚合时需要重分布（redistribute）或广播多少数据（来源：https://docs.aws.amazon.com/redshift/latest/dg/t_Sorting_data.html 与 https://docs.aws.amazon.com/redshift/latest/dg/t_Distributing_data.html ，2026-10-15 核对）。
+- **Athena**：无服务器 SQL 查询 S3 上的数据——官方文档原话 "serverless, so there is no infrastructure to set up or manage, and you pay only for the queries you run"（https://docs.aws.amazon.com/athena/latest/ug/what-is.html ，2026-10-15 抓取）；"按扫描的字节数计费"是 SQL 查询的公开定价模型（定价页同时提到还可选 Provisioned Capacity 按计算计费；定价页示例按 $5/TB 计算：3 TB 全表扫描 = $15，转 Parquet+压缩后只扫 0.25 TB = $1.25，实际单价按区域而异，面试不报具体单价）（来源：https://aws.amazon.com/athena/pricing/ ，经 r.jina.ai 镜像读取，2026-10-15 核对）。在这个模型下，列存格式+分区裁剪直接等于省钱（[ATH]）。
 
 ### 7.4 回去复习
 - 地图：[map:analytics.batch](../../../../domains/system-design/map/analytics.batch.md)、[map:analytics.olap](../../../../domains/system-design/map/analytics.olap.md)、[map:analytics.warehouse](../../../../domains/system-design/map/analytics.warehouse.md)、[map:analytics.derived](../../../../domains/system-design/map/analytics.derived.md)
@@ -391,7 +390,7 @@ AWS Data Services 的产品几乎都是这几块的托管版：**对象存储（
 ### 8.3 AWS 里谁体现了它
 - **DynamoDB 的 read-write deployment**：第一步先部署"能读新消息格式"的软件；全部节点都能读之后，第二步才部署"开始发送新消息"。回滚时两种格式仍可共存（[DDB22] §6.4）。
   这就是 forward compatibility 的运维版，也是 Builders' Library《Ensuring rollback safety during deployments》的核心。
-- **Glue Schema Registry**（Avro/JSON Schema/Protobuf 的兼容性检查） `【凭记忆，面试前核对】`。
+- **Glue Schema Registry**（Avro/JSON Schema/Protobuf 的兼容性检查；注册新版本时按 NONE/DISABLED/BACKWARD/BACKWARD_ALL/FORWARD/FORWARD_ALL/FULL/FULL_ALL 共 8 种兼容模式校验，免费）（来源：https://docs.aws.amazon.com/glue/latest/dg/schema-registry.html ，2026-10-15 核对）。
 - DMS/Kinesis/Glue 表之间传的都是"带 schema 的行"，列加减就是 schema 演进问题。
 
 ### 8.4 回去复习
@@ -438,7 +437,7 @@ client ──▶ request router ──(查 metadata: key→分区→leader)─�
 | 分布式限流的 central leasing service（LC8428653，SDE3）| §5 | 租约、令牌批量预取、失败时退化策略 |
 | OT vs CRDT（LC8286346）| 本文未展开 | 见卡 `distributed-crdt-convergence`、`problems-google-docs-ot-vs-crdt-tradeoff`、题库 [design-google-docs](../../../../domains/system-design/drills/problems/design-google-docs.md) |
 
-**Kafka ISR（本文其余部分没讲，补一段）** `【凭记忆，面试前核对；官方文档见 [kafka-docs](../../../../domains/system-design/readings/kafka-docs.md)】`
+**Kafka ISR（本文其余部分没讲，补一段）** （来源：https://kafka.apache.org/40/design/design/ ，2026-10-15 核对：落后超过 `replica.lag.time.max.ms` 的副本被移出 ISR；`min.insync.replicas` 仅在 `acks=all` 时生效；`unclean.leader.election.enable` 自 0.11.0.0 起默认关闭；另见 [kafka-docs](../../../../domains/system-design/readings/kafka-docs.md)）
 - **是什么**：一个分区的副本集合里，"跟得上 leader 的那些副本"叫 ISR（In-Sync Replicas）。
 - **为什么**：全同步等所有副本会被最慢的拖垮；全异步 leader 挂了会丢数据。ISR 是折中：**只等"跟得上的"副本**，落后太久的被踢出 ISR（不再等它）。
 - **怎么工作**：生产者 `acks=all` 时，leader 等 **ISR 中所有副本**都写入才确认；再配 `min.insync.replicas=2`，ISR 少于 2 个时拒绝写入（宁可不可用也不丢数据）。leader 挂了从 ISR 里选新 leader（不会丢已确认数据）；若 ISR 为空且允许"不干净选举"（unclean leader election），可能选出落后的副本，**用丢数据换可用性**。

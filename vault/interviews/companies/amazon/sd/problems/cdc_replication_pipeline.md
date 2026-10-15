@@ -91,14 +91,15 @@ TableState(task_id, table, phase ∈ {pending, full_load, cdc, error}, last_pk, 
 2. 以一致性快照读 (如 MySQL REPEATABLE READ + 事务开始时的位点, PG 导出快照) 做全量
 3. 全量完成后，从 P0 开始应用日志；日志里"早于快照"的事件会重复应用，靠 *主键 upsert 幂等* 吸收
 ```
-**做法 B：DBLog 式水位线（无锁、可暂停、不依赖长事务快照）** —— Netflix DBLog（arXiv 2010.12597；摘要已核对："watermark based approach … interleave transaction log events with rows that we directly select from tables … does not use locks"，按块 select、可暂停恢复；下面的低/高水位步骤细节我凭记忆写，`【凭记忆，面试前对照论文 §3 核对】`）：
+**做法 B：DBLog 式水位线（无锁、可暂停、不依赖长事务快照）** —— Netflix DBLog（arXiv 2010.12597；摘要已核对："watermark based approach … interleave transaction log events with rows that we directly select from tables … does not use locks"，按块 select、可暂停恢复；下面的低/高水位步骤已对照论文全文 §3.2 Algorithm 1 核对并按原文修正（来源：https://arxiv.org/abs/2010.12597 ，全文 https://arxiv.org/pdf/2010.12597 ，2026-10-15 核对）：水位线不是"插入标记"，而是 **UPDATE 源库里专用命名空间下的单行 UUID 水位表**，该 UPDATE 产生的变更事件出现在日志里；块结果先放**内存**；第 1 步会**短暂暂停**日志处理；要求源库支持 *non-stale reads*（MySQL/PG 用 READ COMMITTED 的单条 select 即可）；选块只在有主键且支持主键范围扫描的表上进行，已完成块的最后主键存 ZooKeeper 以便暂停/恢复）：
 把表按主键**分块**；对每一块：
 ```
-写一条 "低水位" 标记到源库的某张水位表 → 日志里出现 LW 事件
-SELECT 这一块的行（普通查询，不加锁）
-写一条 "高水位" 标记 → 日志里出现 HW 事件
-在 LW..HW 之间日志里出现的、主键落在本块内的变更 → 丢弃块内对应行的旧值（日志事件更新、以日志为准）
-然后把"块结果 − 被覆盖的行"插入输出，*夹在日志事件流中间*
+1. 短暂暂停日志事件处理；生成 lw = uuid()、hw = uuid()
+2. UPDATE 水位表 SET value = lw        → 日志里将出现 LW 事件
+3. SELECT 下一块的行（按主键升序、主键 > 上一块最后主键；普通查询，不加锁），结果放内存
+4. UPDATE 水位表 SET value = hw        → 日志里将出现 HW 事件
+5. 恢复日志处理：日志事件照常送到输出；等到读到 LW 事件后，开始把块内主键与日志事件相同的行从内存块里删掉（日志事件更新、以日志为准）
+6. 读到 HW 事件后，把块里剩余的行追加到输出缓冲，*夹在日志事件流中间*，再继续顺序处理日志
 ```
 好处：(1) **日志处理不被全量阻塞**，随时可暂停/恢复；(2) 对源库无锁、影响小；(3) 可对任意表/任意主键再次触发（"重新同步某几行"）。
 代价：需要在源库有一张可写的水位表（写权限），并且表必须有主键。
@@ -116,7 +117,7 @@ SELECT 这一块的行（普通查询，不加锁）
 崩溃点 ②: 写目标之后,写 checkpoint 之前 → 重启会 *重放* 这批 → 目标必须幂等
 ```
 - **DB 目标**：按主键 upsert / delete；`checkpoint` 与数据在**同一个目标库事务**里提交（把位点写进目标库的一张控制表），则崩溃后可从目标库读出"真正已应用到的位点"，应用侧"恰好一次"。
-  （DMS 在目标库建控制表的做法我凭记忆写 `【凭记忆，面试前核对】`；这个"位点与数据同事务"的模式本身是标准做法。）
+  （DMS 确实会在目标库建控制表：`awsdms_apply_exceptions` 总会建，Full Load+CDC / 仅 CDC 任务还可建 `awsdms_status`（含 SOURCE_CURRENT_POSITION 等源位点）、`awsdms_suspended_tables`、`awsdms_history`；但文档**没有**说它把位点与数据放进同一个目标事务里——它们是任务状态/统计表；且 DMS 文档明确说任务恢复时"may replay CDC"，Redshift 目标会出现重复行，所以仍要靠主键幂等/去重（来源：https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.CustomizingTasks.TaskSettings.ControlTable.html 与 https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.Redshift.html ，2026-10-15 核对）。"位点与数据同事务"是我们自己设计里的标准模式，不是 DMS 文档保证的行为，`推断`。）
 - **对象存储目标**：写不可变的文件，文件名含任务 id + 起止位点（确定性命名）。重放写出**同名同内容**文件，覆盖无副作用；下游读者按位点去重。
 - **流目标（Kinesis/Kafka）**：天然至少一次；事件带 `(source_id, position)` 作为幂等键，消费者去重（见 [correctness-idempotent-consumer-patterns](../../../../../domains/system-design/cards/correctness/correctness-idempotent-consumer-patterns.md)）。
 - **批量合并（net changes）**：同一批里同一主键的多次变更可合并成最后一条（INSERT+UPDATE → INSERT；INSERT+DELETE → 无），吞吐高但**丢失中间状态**（审计型目标不能用）。

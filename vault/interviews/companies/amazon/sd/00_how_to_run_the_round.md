@@ -233,7 +233,7 @@ URL：https://aws.amazon.com/builders-library/workload-isolation-using-shuffle-s
 2. **告警**：症状告警优先（客户看得到的），原因告警辅助（[reliability-symptom-vs-cause-alerts](../../../../domains/system-design/cards/reliability/reliability-symptom-vs-cause-alerts.md)）；与 SLO/burn rate 挂钩（[reliability-burn-rate-alerting](../../../../domains/system-design/cards/reliability/reliability-burn-rate-alerting.md)）。
 3. **发布**：one-box → 波次 → bake → 自动回滚；回滚安全（[infra-rollback-safety](../../../../domains/system-design/cards/infra/infra-rollback-safety.md)）。
 4. **容量**：提前留 AZ 冗余（静态稳定），而不是故障后再扩容。
-5. **on-call 与复盘**：值班手册（runbook）、一键回滚、事后复盘（COE：Correction of Errors，Amazon 术语；本次未抓取细节 `【凭记忆，面试前核对】`）。
+5. **on-call 与复盘**：值班手册（runbook）、一键回滚、事后复盘（COE：Correction of Errors，Amazon 术语；AWS 官方博客称 "The mechanism is called the Correction of Error (COE) process"，用于重大事件后的复盘并防止复发；（来源：https://aws.amazon.com/blogs/mt/why-you-should-develop-a-correction-of-error-coe/ ，2026-10-15 核对）；具体 COE 文档模板本次未抓取）。
 
 ---
 

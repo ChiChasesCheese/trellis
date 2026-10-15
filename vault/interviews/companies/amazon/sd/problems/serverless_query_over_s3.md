@@ -109,7 +109,7 @@
 
 ### 4.6 成本与计费模型：按扫描量计费意味着什么
 
-> 来源说明：Athena 官方文档称 "serverless … you pay only for the queries you run"（https://docs.aws.amazon.com/athena/latest/ug/what-is.html ，2026-10-15 抓取）；"按扫描字节计费"的具体价格在动态定价页，本次未读到 `【凭记忆，面试前核对】`，面试里不要报具体单价。
+> 来源说明：Athena 官方文档称 "serverless … you pay only for the queries you run"（https://docs.aws.amazon.com/athena/latest/ug/what-is.html ，2026-10-15 抓取）；SQL 查询按扫描数据量计费（定价页另有 Provisioned Capacity 按计算计费的选项）；定价页示例按 $5/TB 计算（3 TB 未压缩文本 = $15；GZIP 后 1 TB = $5；Parquet+压缩只读一列 0.25 TB = $1.25，说明计费的是实际读取的压缩/列裁剪后字节），实际单价按区域而异，面试里不要报具体单价（来源：https://aws.amazon.com/athena/pricing/ ，经 r.jina.ai 镜像读取，2026-10-15 核对）。
 
 - 计费字节 = **实际从 S3 读取的字节**（压缩后的列块字节，而非解压后），所以：列存、压缩、列裁剪、分区裁剪、行组跳过**直接降低客户账单**，也是产品的核心卖点。
 - 引擎必须**精确且可审计**地统计每查询的扫描量；失败/取消的查询要有明确计费规则（例如失败的不收费，取消的按已扫描收费）。

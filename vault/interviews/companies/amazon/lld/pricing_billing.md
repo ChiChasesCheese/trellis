@@ -207,7 +207,7 @@ def total(items, discount_type, tax_rate):
 6. （senior）如何让"封顶累计"在多实例部署下正确？
 <details><summary>答案</summary>状态下沉到共享存储，用条件更新做原子累加（`paid + x <= cap`，或先读后写加版本号乐观锁）；幂等键（行程 ID）防止重试重复扣；跨日边界用乘客所在时区的"日期"作为分区键，注意夏令时造成的 23/25 小时。</details>
 
-## 10. 延伸阅读（凭记忆，未抓取）
-- Fowler《Patterns of Enterprise Application Architecture》的 Money 模式（值对象 + 分摊算法）`【凭记忆，面试前核对】`。
-- Python `decimal` 文档的舍入模式表（`ROUND_HALF_UP` / `ROUND_HALF_EVEN`）`【凭记忆，面试前核对】`；本文断言已在本地运行验证。
+## 10. 延伸阅读（已核对）
+- Fowler《Patterns of Enterprise Application Architecture》的 Money 模式（值对象 + 分摊算法）。Fowler 的 Money 页面确认其用途是"表示货币值"，并指出按最小货币单位舍入时"很容易丢零头"（lose pennies）；分摊算法在书第 18 章，网页本身未展开（来源：https://martinfowler.com/eaaCatalog/money.html ，2026-10-15 核对）。
+- Python `decimal` 文档的舍入模式表（`ROUND_HALF_UP` / `ROUND_HALF_EVEN`；表中共 8 种模式，默认上下文 prec=28、rounding=`ROUND_HALF_EVEN`，不是 HALF_UP）（来源：https://docs.python.org/3/library/decimal.html ，2026-10-15 核对）；本文断言已在本地运行验证。
 - 同一思想的系统设计版本：`../sd/problems/metrics_timeseries_store.md`（可合并聚合）。

@@ -223,4 +223,4 @@ class Filter(ABC):
 ## 10. 延伸阅读
 - POSIX `find`：条件的短路求值、`-prune`、`-H/-L` 对符号链接的语义（本文已抓取核对）。
 - 题库：[lld:design-in-memory-file-system](../../../../domains/low-level-design/drills/problems/design-in-memory-file-system.md)（树的建模与 glob 搜索的取舍）、[lld:design-amazon-locker](../../../../domains/low-level-design/drills/problems/design-amazon-locker.md)、[lld:design-parking-lot](../../../../domains/low-level-design/drills/problems/design-parking-lot.md)。
-- 模式参考（凭记忆，未抓取）：Evans & Fowler《Specifications》(2002) 为 Specification 模式的出处 `【凭记忆，面试前核对】`。
+- 模式参考（已核对）：Evans & Fowler《Specifications》为 Specification 模式的出处，论文发表于 **1997 年**（PLoP '97；原写 2002 有误），提出 `isSatisfiedBy(candidate)`，并给出 Hard Coded / Parameterized / Composite 三种实现（来源：https://martinfowler.com/apsupp/spec.pdf 与 https://martinfowler.com/tags/1997.html ，2026-10-15 核对）。
