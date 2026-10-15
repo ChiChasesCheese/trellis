@@ -17,17 +17,17 @@
 
 ## F3 内核旁路是什么？Java 怎么用？
 
-**要点**：绕过内核协议栈，应用直接轮询网卡环形队列：省系统调用（~0.1–1 µs）、中断、内核/用户拷贝、调度唤醒；典型内核栈单跳几 µs–十几 µs，旁路 ~1 µs 或更低（量级，未实测）。实现：DPDK 轮询驱动、Solarflare OpenOnload/ef_vi 一类用户态栈。代价：独占核心 100% 忙等、特殊网卡驱动、调试困难、功能受限（防火墙、`tcpdump` 等工具）。Java：多数通过对 socket 透明的用户态栈（`LD_PRELOAD`）或 JNI/FFM 调本地库；普通内核栈下用 NIO `Selector` + `TCP_NODELAY`。
+**要点**：绕过内核协议栈，应用直接轮询网卡环形队列：省系统调用（~0.1–1 µs）、中断、内核/用户拷贝、调度唤醒；典型内核栈单跳几 µs–十几 µs，旁路 ~1 µs 或更低（量级，未实测）。实现：DPDK 轮询驱动、Solarflare OpenOnload/ef_vi 一类用户态栈。（来源：https://docs.amd.com/r/en-US/ug1586-onload-user/Latency-Test-Results、https://doc.dpdk.org/guides/prog_guide/overview.html、https://blog.cloudflare.com/kernel-bypass，2026-10-15 核对）代价：独占核心 100% 忙等、特殊网卡驱动、调试困难、功能受限（防火墙、`tcpdump` 等工具）。Java：多数通过对 socket 透明的用户态栈（`LD_PRELOAD`）或 JNI/FFM 调本地库；普通内核栈下用 NIO `Selector` + `TCP_NODELAY`。
 **可以说**：「旁路省的是内核这一跳，不是网线；Java 用透明的用户态栈最省事。」
 
 ## F4 组播行情丢包、乱序、重复怎么办？
 
-**要点**：序号 + A/B 双路"先到者胜"去重（已见序号位图）；任一路丢包无感；两路同缺 ⟹ 缺口：标记 STALE，请求重传或快照 + 增量重新对齐，对齐前禁止对该品种发新单；小窗口重排处理轻微乱序；监控缺口率、包间隔。
+**要点**：序号 + A/B 双路"先到者胜"去重（已见序号位图）；任一路丢包无感；两路同缺 ⟹ 缺口：标记 STALE，请求重传或快照 + 增量重新对齐，对齐前禁止对该品种发新单；小窗口重排处理轻微乱序；监控缺口率、包间隔。（来源：https://www.nasdaqtrader.com/content/technicalsupport/specifications/dataproducts/moldudp64.pdf、https://cmegroupclientsite.atlassian.net/wiki/x/QQdGGw，2026-10-15 核对）
 **可以说**：「缺口不是错误，是状态：该品种进入 STALE，策略看不到它也不能交易它。」
 
 ## F5 风控放在哪？为什么不只在进程内做？
 
-**要点**：进程内内联 O(1) 检查最快（~0.3 µs），但与策略同进程/同内存，bug 或内存损坏可同源；所以三层：进程内闸门、独立风控进程/设备（独立仓位视图，可切断会话）、交易所/清算侧（cancel-on-disconnect、整体撤单、信用额度）。监管上要求对订单设置自己直接且排他控制的预交易风控（SEC 15c3-5，通识）。O(1) 靠增量维护的聚合量（ld02 `OrderManager.openLeaves`）和数组查表。
+**要点**：进程内内联 O(1) 检查最快（~0.3 µs），但与策略同进程/同内存，bug 或内存损坏可同源；所以三层：进程内闸门、独立风控进程/设备（独立仓位视图，可切断会话）、交易所/清算侧（cancel-on-disconnect、整体撤单、信用额度）。监管上要求对订单设置自己直接且排他控制的预交易风控（SEC 15c3-5，通识）。（来源：https://www.ecfr.gov/current/title-17/section-240.15c3-5，2026-10-15 核对）O(1) 靠增量维护的聚合量（ld02 `OrderManager.openLeaves`）和数组查表。
 **可以说**：「快的检查和独立的检查是两件事，我两个都要，所以是纵深防御。」
 
 ## F6 重启后怎么保证不重复发单、状态正确？
@@ -67,7 +67,7 @@
 
 ## F13 时钟：时间戳从哪来？PTP 失步会怎样？
 
-**要点**：网卡硬件时间戳 + PTP/GPS 同步，精度远优于 NTP；业务时间用事件里的时间戳（决定性）；监控偏移，失步 ⟹ 告警，对账与延迟度量降级（交易功能不应依赖绝对时间，只依赖单调与序号）；`System.nanoTime()` 只用于相对延迟。
+**要点**：网卡硬件时间戳 + PTP/GPS 同步，精度远优于 NTP（来源：https://en.wikipedia.org/wiki/Precision_Time_Protocol、https://en.wikipedia.org/wiki/Network_Time_Protocol，2026-10-15 核对）；业务时间用事件里的时间戳（决定性）；监控偏移，失步 ⟹ 告警，对账与延迟度量降级（交易功能不应依赖绝对时间，只依赖单调与序号）；`System.nanoTime()` 只用于相对延迟。
 **可以说**：「决定性要求时间是输入，不是环境。」
 
 ## F14 如果 Java 的下限不够，你怎么办？

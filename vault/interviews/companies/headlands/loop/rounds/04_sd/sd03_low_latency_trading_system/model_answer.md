@@ -23,7 +23,7 @@
 | 项 | 取值 |
 |---|---|
 | tick-to-trade（软件部分） | p99 ≤ 10 µs，p99.99 ≤ 50 µs（假设，用来演示拆预算） |
-| 品种 / 行情 | 5,000 个品种，聚合峰值 1M msg/s，平均消息 40 B（假设；ITCH 类 Add Order 约 36 B） |
+| 品种 / 行情 | 5,000 个品种，聚合峰值 1M msg/s，平均消息 40 B（假设；ITCH 类 Add Order 约 36 B）（来源：https://www.nasdaqtrader.com/content/technicalsupport/specifications/dataproducts/NQTVITCHspecification.pdf，2026-10-15 核对） |
 | 场所 | 3 个，行情走 UDP 组播（A/B 双路），订单走 TCP 二进制会话 |
 | 订单 | 限价单、撤单、改单；策略峰值 5×10⁴ 意图/s（撤改单占多数，通识） |
 | 错误优先级 | 错单 ≫ 丢行情 ≫ 延迟变差 ≫ 停摆 |
@@ -117,7 +117,7 @@ t=0     包到达网卡，硬件打时间戳                                    
 ### 4.2 SPSC 环（Disruptor 思想）
 
 * 序号只增不减，`index = seq & mask`；生产者 `setRelease(tail)`，消费者 `getAcquire(tail)`；cached index 减少对方缓存行读取；头尾字段之间填充 128 字节防伪共享。完整推导见 [ld01 讲义](../../../../study/30-articles/ld01_spsc_channel.md)。
-* **批处理的自平衡**：消费者落后时，一次取走环中全部已发布的事件逐条处理——积压越多，每条摊到的同步开销越小。这是 Disruptor 比"一条一唤醒"的队列在突发下稳定的原因。
+* **批处理的自平衡**：消费者落后时，一次取走环中全部已发布的事件逐条处理——积压越多，每条摊到的同步开销越小。这是 Disruptor 比"一条一唤醒"的队列在突发下稳定的原因。（来源：https://lmax-exchange.github.io/disruptor/disruptor.html，2026-10-15 核对）
 * **环满怎么办**（背压策略因通道而异）：
   * 行情 → 分片：**不能丢也不能阻塞 Feed Handler**。环要足够大（按"最大突发 × 最大消费者停顿"算），仍然满了 ⟹ 视为严重故障：对该分片触发熔断（fail closed），并告警。
   * 热线程 → 监控：**有损**（环满就丢指标），永不阻塞热线程。
@@ -141,13 +141,13 @@ t=0     包到达网卡，硬件打时间戳                                    
 * 交易所用 UDP 组播同时发给所有订阅者；**A/B 两路冗余**（不同交换机 / 路径），每条消息有**序号**。Feed Handler 对两路同时收，**先到者胜**，用"已见序号"的环形位图去重——任一路丢包不影响（见 [networking_basics §6](../../../../study/00-foundations/networking_basics.md) 的序号 + 缺口检测）。
 * **缺口（gap）处理**：两路都没有序号 n：
   1. 标记所有受影响的品种为 **STALE**（簿不可信）；
-  2. 请求重传（交易所通常提供 TCP 重传 / 快照通道）或拉取快照 + 之后的增量重新对齐（"快照 + 增量"协议）；
+  2. 请求重传（交易所通常提供重传 / 快照通道，传输方式因交易所而异：Nasdaq MoldUDP64 是向重传服务器发单播 UDP 请求包，CME MDP 3.0 是 TCP replay + 快照回环）（来源：https://www.nasdaqtrader.com/content/technicalsupport/specifications/dataproducts/moldudp64.pdf、https://cmegroupclientsite.atlassian.net/wiki/x/QQdGGw，2026-10-15 核对）或拉取快照 + 之后的增量重新对齐（"快照 + 增量"协议）；
   3. 重新对齐前：**策略不得对 STALE 品种发新单**（fail closed）；已有挂单按策略配置决定是否撤单。
 * **乱序**：UDP 可能乱序；对少量乱序用小窗口缓冲重排，窗口超时仍缺 ⟹ 当作缺口。
 
 ### 5.2 解码与订单簿（零分配）
 
-* 解码：**flyweight**——一个预分配的"视图"对象指向缓冲区中的偏移量，字段读取是 `buffer.getLong(offset + FIELD_OFFSET)`，不拷贝、不创建对象。缓冲区是堆外/直接内存（`MemorySegment` 或 `ByteBuffer.allocateDirect`，[J17](../../../../study/10-java21/J17_ffm_api.md)）。二进制协议用固定布局（SBE 一类的模板化编码思想）。
+* 解码：**flyweight**——一个预分配的"视图"对象指向缓冲区中的偏移量，字段读取是 `buffer.getLong(offset + FIELD_OFFSET)`，不拷贝、不创建对象。缓冲区是堆外/直接内存（`MemorySegment` 或 `ByteBuffer.allocateDirect`，[J17](../../../../study/10-java21/J17_ffm_api.md)）。二进制协议用固定布局（SBE 一类的模板化编码思想）。（来源：https://github.com/aeron-io/simple-binary-encoding，2026-10-15 核对）
 * 订单簿数据结构（对照 [hc05](../../01_video/hc05_market_order_book/problem.md) 的 TickBook）：
   * 价位：围绕当前价的**连续数组**，下标 = (价格 − 基准价) / tick；数量用 `long[]`；最优价用游标维护（只在最优档清空时向外扫）。O(1) 更新，顺序访问，缓存友好。比 `TreeMap` 少一次对象指针追逐，少全部分配。
   * 订单 ID → 订单位置：开放寻址的 `long → int` 哈希表（原语集合，无装箱）。
@@ -203,7 +203,7 @@ interface Strategy {
  层 3：交易所/清算行侧  断线即撤(cancel-on-disconnect)、交易所提供的整体撤单(mass cancel)、券商/清算行的信用额度与风控工具
 ```
 
-* 为什么要三层：层 1 的 bug 可能与策略 bug 同源（同进程、同内存）；层 2 隔离故障，但自己的状态可能滞后；层 3 是最后一道，不依赖我们的任何代码。监管上要求券商/市场准入者对订单设置自己直接且排他控制的预交易风控（美国 SEC 15c3-5 市场准入规则，通识；细节以法规为准），这也是层 2 存在的理由。
+* 为什么要三层：层 1 的 bug 可能与策略 bug 同源（同进程、同内存）；层 2 隔离故障，但自己的状态可能滞后；层 3 是最后一道，不依赖我们的任何代码。监管上要求券商/市场准入者对订单设置自己直接且排他控制的预交易风控（美国 SEC 15c3-5 市场准入规则，通识；细节以法规为准），这也是层 2 存在的理由。（来源：https://www.ecfr.gov/current/title-17/section-240.15c3-5，2026-10-15 核对）
 * 熔断后：**撤销所有未完成订单**、禁止新单、保持行情与状态接收（以便恢复），需要人工确认才能恢复。
 
 ### 7.3 订单管理（OMS）与状态
@@ -253,7 +253,7 @@ Journaler 线程：环 ──追加──▶ mmap 文件(页缓存) ──异步
 | 机器掉电 / 内核崩溃 | 未刷盘的页缓存丢失 | 需要 fsync，或已复制到另一台机器 |
 | 机房级故障 | 本机全部丢失 | 需要跨机房异步复制（延迟大，不进热路径）；恢复靠交易所 + 清算对账 |
 
-* 概念对应物：Chronicle Queue（基于内存映射文件的堆外持久化队列）、Aeron Archive（录制 / 重放）、Aeron Cluster（Raft 复制状态机）。面试时说"思想相同"，不要承诺 API 细节。
+* 概念对应物：Chronicle Queue（基于内存映射文件的堆外持久化队列）、Aeron Archive（录制 / 重放）、Aeron Cluster（Raft 复制状态机）。面试时说"思想相同"，不要承诺 API 细节。（来源：https://github.com/aeron-io/aeron、https://github.com/OpenHFT/Chronicle-Queue，2026-10-15 核对）
 * **日志格式**：定长头（序号、事件类型、硬件时间戳、长度）+ 二进制载荷；只追加；按大小/时间切段；段头带校验。
 
 ### 8.3 恢复流程
@@ -323,7 +323,7 @@ Journaler 线程：环 ──追加──▶ mmap 文件(页缓存) ──异步
 | **并发** | 单写者 + SPSC 环 + `VarHandle` acquire/release；热路径无 `synchronized`、无 `ReentrantLock`、无 `ConcurrentHashMap`（[J16](../../../../study/10-java21/J16_concurrency_primitives.md)）。 |
 | **线程** | 平台线程，OS 绑核，忙等；**虚拟线程不进热路径**，用于外围（对账查询、重连管理、批处理）（[J10](../../../../study/10-java21/J10_virtual_threads.md)）。 |
 | **字符串 / 装箱 / 流** | 热路径禁用：品种用 `int`，价格用 `long`，日志用预格式化的二进制，延迟日志异步写。 |
-| **网络** | 对 Java 而言内核旁路通常通过"对 socket 透明的用户态栈"（如 Onload 类产品，`LD_PRELOAD`）或 JNI/FFM 调用本地库；NIO `Selector` 是普通内核栈下的折中（[networking_basics §8](../../../../study/00-foundations/networking_basics.md)）。 |
+| **网络** | 对 Java 而言内核旁路通常通过"对 socket 透明的用户态栈"（如 Onload 类产品，`LD_PRELOAD`）（来源：https://github.com/Xilinx-CNS/onload/blob/master/scripts/onload、https://blog.cloudflare.com/kernel-bypass，2026-10-15 核对）或 JNI/FFM 调用本地库；NIO `Selector` 是普通内核栈下的折中（[networking_basics §8](../../../../study/00-foundations/networking_basics.md)）。 |
 
 **诚实的上限**（面试里主动说）：
 
@@ -374,10 +374,10 @@ Journaler 线程：环 ──追加──▶ mmap 文件(页缓存) ──异步
 
 ## 17. 延伸阅读
 
-* LMAX Architecture（Martin Fowler, 2011）与 LMAX Disruptor 技术论文——环形缓冲区、单写者、业务逻辑处理器。
+* LMAX Architecture（Martin Fowler, 2011）与 LMAX Disruptor 技术论文——环形缓冲区、单写者、业务逻辑处理器。（来源：https://martinfowler.com/articles/lmax.html、https://lmax-exchange.github.io/disruptor/disruptor.html，2026-10-15 核对）
 * Martin Thompson 的 Mechanical Sympathy 博客系列——缓存行、伪共享、写合并。
-* Aeron、Chronicle Queue、SBE（Real Logic）文档——概念对应物。
-* SEC Rule 15c3-5 原文（市场准入规则）——预交易风控的法规背景。
+* Aeron、Chronicle Queue、SBE（Real Logic）文档——概念对应物。（来源：https://github.com/aeron-io/aeron、https://github.com/OpenHFT/Chronicle-Queue、https://github.com/aeron-io/simple-binary-encoding，2026-10-15 核对）
+* SEC Rule 15c3-5 原文（市场准入规则）——预交易风控的法规背景。（来源：https://www.ecfr.gov/current/title-17/section-240.15c3-5，2026-10-15 核对）
 * DDIA 第 11 章（流处理与日志）、第 8 章（时钟与暂停）。
 * trellis：[design-stock-exchange](../../../../../../../domains/system-design/drills/problems/design-stock-exchange.md)（交易所一侧）；卡片 `problems-stock-exchange-single-thread-vs-multithread-locking` · `problems-stock-exchange-order-book-price-bucket-linked-list` · `problems-stock-exchange-sequencer-down-halt-not-degrade`（fail closed 的同一思想）。
 * 本 kit：[00_how_to_run](../00_how_to_run.md) · [followups](followups.md) · [rubric](rubric.md)。

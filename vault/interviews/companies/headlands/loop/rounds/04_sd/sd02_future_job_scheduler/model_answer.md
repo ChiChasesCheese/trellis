@@ -140,9 +140,9 @@ Dead(jobId)
 
 ### 4.4 分层时间轮（hierarchical timing wheel）
 
-**问题**：用优先队列（二叉堆，`java.util.concurrent.DelayQueue`、`ScheduledThreadPoolExecutor` 内部就是堆）管理定时器：插入 / 删除 O(log n)。10⁶ 级定时器时每个操作约 20 次比较、随机访存，而且 JDK 的实现每个定时器是一个对象 → GC 压力。
+**问题**：用优先队列（二叉堆，`java.util.concurrent.DelayQueue`、`ScheduledThreadPoolExecutor` 内部就是堆）（来源：https://github.com/openjdk/jdk/blob/master/src/java.base/share/classes/java/util/concurrent/ScheduledThreadPoolExecutor.java、https://github.com/apache/kafka/blob/trunk/server-common/src/main/java/org/apache/kafka/server/util/timer/TimingWheel.java，2026-10-15 核对）管理定时器：插入 / 删除 O(log n)。10⁶ 级定时器时每个操作约 20 次比较、随机访存，而且 JDK 的实现每个定时器是一个对象 → GC 压力。
 
-**时间轮**（Varghese & Lauck, 1987）：把时间切成 tick，用一个环形数组，每个槽（slot）挂一条链表，放"在这个 tick 到期的定时器"。
+**时间轮**（Varghese & Lauck, 1987）（来源：https://blog.acolyer.org/2015/11/23/hashed-and-hierarchical-timing-wheels/，2026-10-15 核对）：把时间切成 tick，用一个环形数组，每个槽（slot）挂一条链表，放"在这个 tick 到期的定时器"。
 
 ```text
  当前 tick 指针 →
@@ -167,7 +167,7 @@ L4  671,089 s × 64  覆盖 4.29×10^7 s (≈497 天)  ≥ 最远 1 年
 
 * 每个定时器最多被"降级" 4 次（层数−1）→ 均摊 O(1)。总槽数仅 256 + 4×64 = 512 个链表头，**内存小得可以忽略**。
 * 但近期窗口模型更省：我们只让时间轮装"未来 ≤10 分钟"的任务（约 28 MB–167 MB），更远的放在磁盘桶里，临近时批量装载。这样时间轮只需 L0–L2 三层，且重启恢复时只需装载近期窗口。
-* **Kafka 的实现技巧**（值得一提）：不让线程每 tick 醒一次，而是把"非空的槽"放进一个 `DelayQueue`，线程在 `DelayQueue.take()` 上睡到下一个非空槽到期。稀疏时省 CPU。我们的 tick = 10 ms，100 次/秒空转的成本可以忽略，但若 tick 取 1 ms 就值得这样做。
+* **Kafka 的实现技巧**（值得一提）：不让线程每 tick 醒一次，而是把"非空的槽"放进一个 `DelayQueue`，线程在 `DelayQueue.poll(timeoutMs, …)`（带超时的 poll）上睡到下一个非空槽到期。稀疏时省 CPU。（来源：https://github.com/apache/kafka/blob/trunk/server-common/src/main/java/org/apache/kafka/server/util/timer/SystemTimer.java、https://github.com/apache/kafka/blob/trunk/server-common/src/main/java/org/apache/kafka/server/util/timer/TimingWheel.java，2026-10-15 核对）我们的 tick = 10 ms，100 次/秒空转的成本可以忽略，但若 tick 取 1 ms 就值得这样做。
 * **精度**：任务实际在其 tick 的开始被取出——最多晚 1 tick（10 ms）。要保证"不早"，把 tick 号向上取整：`fireTick = ceil(fireAt / tickMs)`。
 
 ### 4.5 Java 实现要点（零分配、结构体数组）
@@ -186,8 +186,8 @@ final class JobTable {
 }
 ```
 
-* **单写线程**拥有所有这些数组，其他线程只通过 MPSC 队列提交命令（JCTools 的 `MpscArrayQueue` 一类，或 Disruptor）——单写者原则，不需要锁。
-* **时间源**：推进时间轮用 `System.nanoTime()`（单调，不受 NTP 回拨影响）；与 `fireAt` 的比较用校准后的墙上时钟（`System.currentTimeMillis()` 加上离线测得的偏移）。睡眠到**绝对**截止时间：`LockSupport.parkNanos(deadline - now)`，每次循环用截止时间推算下一个，而不是 `Thread.sleep(10)` 累积漂移。
+* **单写线程**拥有所有这些数组，其他线程只通过 MPSC 队列提交命令（JCTools 的 `MpscArrayQueue` 一类，或 Disruptor）（来源：https://github.com/JCTools/JCTools/blob/master/jctools-core/src/main/java/org/jctools/queues/MpscArrayQueue.java、https://lmax-exchange.github.io/disruptor/disruptor.html，2026-10-15 核对）——单写者原则，不需要锁。
+* **时间源**：推进时间轮用 `System.nanoTime()`（单调，不受 NTP 回拨影响）（来源：https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/System.html，2026-10-15 核对）；与 `fireAt` 的比较用校准后的墙上时钟（`System.currentTimeMillis()` 加上离线测得的偏移）。睡眠到**绝对**截止时间：`LockSupport.parkNanos(deadline - now)`，每次循环用截止时间推算下一个，而不是 `Thread.sleep(10)` 累积漂移。
 * **JDK 内置结构的位置**：`ScheduledThreadPoolExecutor` 适合进程内几万以内的定时器；这里的量级和持久化需求不适合。
 
 ---
@@ -221,7 +221,7 @@ final class JobTable {
 
 * 为什么先日志后内存：若先改内存、日志落盘前崩溃，调用方没收到成功、内存也丢了——是安全的；反过来**已经回复成功但日志没落盘**才是危险的。我们的顺序保证"回复成功 ⟹ 日志在 ≥2 处"。
 * **group commit**：单次 fsync 在 NVMe 上的耗时从几十 µs 到 ms 不等（取决于设备；**本机未测**）。2 万条/s 的峰值若每条一次 fsync 会压垮设备，所以把"上一次 fsync 期间到达的所有记录"凑成一批再刷——吞吐随负载自适应，延迟只增加一个 fsync 周期。
-* 复制：leader→follower 顺序流式复制日志（概念上与 Raft 的 AppendEntries 同构）；多数派（3 副本取 2）确认即提交。选 Raft/ZooKeeper 之类的外部组件管理**选主与成员**，而数据路径用自己的日志流以获得吞吐。（这一层的细节参见 trellis `distributed.consensus`、`distributed.replication.leader`；Aeron Cluster 就是 Raft + 复制状态机的 Java 实现，概念对应。）
+* 复制：leader→follower 顺序流式复制日志（概念上与 Raft 的 AppendEntries 同构）（来源：https://en.wikipedia.org/wiki/Raft_(algorithm)，2026-10-15 核对）；多数派（3 副本取 2）确认即提交。选 Raft/ZooKeeper 之类的外部组件管理**选主与成员**，而数据路径用自己的日志流以获得吞吐。（这一层的细节参见 trellis `distributed.consensus`、`distributed.replication.leader`；Aeron Cluster 就是 Raft + 复制状态机的 Java 实现，概念对应。（来源：https://github.com/aeron-io/aeron，2026-10-15 核对））
 
 ### 6.2 快照与恢复
 
@@ -293,7 +293,7 @@ final class JobTable {
 ## 10. 时钟与时区
 
 * **fireAt 是 UTC 瞬时点**（epoch 毫秒）。"明天上午 9:00（纽约）"在**提交时**由 API 层按时区库解析成瞬时点；时区规则（夏令时）之后可能被更新，所以对远期任务要保存原始意图（本地时间 + 时区 id），在装载进时间轮前**再解析一次**。
-* 服务端时钟误差 ε：NTP 通常毫秒到十几毫秒量级（trellis 卡片 `distributed-clock-error-sources`）。要保证"不早"，触发条件用 `now_calibrated − ε_max ≥ fireAt`；ε_max 取监控到的偏移上界。ε ≪ Δ（10 ms vs 1 s），所以代价可忽略。
+* 服务端时钟误差 ε：NTP 在局域网理想条件下可优于 1 ms，公网通常在几十毫秒以内（来源：https://en.wikipedia.org/wiki/Network_Time_Protocol，2026-10-15 核对）（trellis 卡片 `distributed-clock-error-sources`）。要保证"不早"，触发条件用 `now_calibrated − ε_max ≥ fireAt`；ε_max 取监控到的偏移上界。ε ≪ Δ（几十 ms vs 1 s），所以代价可忽略。
 * **偏移监控**：节点周期性与时间源比较；偏移 > 阈值 → leader 主动让位（自我 fencing）并告警，避免用错误的时钟早发。
 * **单调 vs 墙上**：推进时间轮只用 `nanoTime`；墙上时钟只用来比较 fireAt（trellis `distributed-monotonic-vs-wallclock`）。墙上时钟被向后调整时，**不让时间轮倒退**，而是暂停推进直到墙上时间追上。
 * 调用方时钟与服务端时钟不同：提交时若 `fireAt ≤ now`，立即触发并在响应里标明"已过期，立即触发"。
@@ -343,8 +343,8 @@ final class JobTable {
 
 ## 15. 延伸阅读
 
-* Varghese & Lauck, 「Hashed and Hierarchical Timing Wheels: Efficient Data Structures for Implementing a Timer Facility」（SOSP 1987）。
-* Kafka 的 `TimingWheel` 与 `SystemTimer` 实现（`DelayQueue` 驱动的分层时间轮）。
+* Varghese & Lauck, 「Hashed and Hierarchical Timing Wheels: Data Structures for the Efficient Implementation of a Timer Facility」（SOSP 1987）。（来源：https://blog.acolyer.org/2015/11/23/hashed-and-hierarchical-timing-wheels/，2026-10-15 核对）
+* Kafka 的 `TimingWheel` 与 `SystemTimer` 实现（`DelayQueue` 驱动的分层时间轮）。（来源：https://github.com/apache/kafka/blob/trunk/server-common/src/main/java/org/apache/kafka/server/util/timer/TimingWheel.java、https://github.com/apache/kafka/blob/trunk/server-common/src/main/java/org/apache/kafka/server/util/timer/SystemTimer.java，2026-10-15 核对）
 * DDIA 第 3 章（存储引擎）、第 8 章（时钟、暂停、fencing token）、第 9 章（共识）。
 * trellis：[design-job-scheduler](../../../../../../../domains/system-design/drills/problems/design-job-scheduler.md)（多租户 cron/DAG 版本）；卡片 `problems-job-scheduler-fencing-token-lease`、`problems-job-scheduler-full-scan-vs-timing-wheel`。
 * 追问 [followups.md](followups.md)；评分 [rubric.md](rubric.md)。

@@ -141,7 +141,7 @@
 * **成本低 ~100 倍**：读 `.class` 是线性扫描常量池和方法体（ASM 之类的库一核每秒处理数百 MB），不需要 javac 的类型归属。（量级估计，**未测**。）
 * **精确**：lambda 在字节码里是 `invokedynamic`，其引导方法（bootstrap method）参数里能读到真实的目标 `MethodHandle`，所以方法引用 / lambda 的边可以静态恢复。
 * **缺点**：没有源码位置 → 用调试信息（`SourceFile`、`LineNumberTable`）回映射；依赖构建产物（但 CI 本来就产出，且可以缓存）；泛型信息被擦除（对可达性影响很小）；Kotlin / Scala 等的合成方法需要过滤。
-* 对 C++：没有字节码，用 clang 索引；**链接器本身就是一个可达性分析器**：编译时 `-ffunction-sections -fdata-sections`，链接时 `-Wl,--gc-sections,--print-gc-sections`（GNU ld / gold / lld 均有对应选项）会列出被丢弃的函数段——免费的静态证据。
+* 对 C++：没有字节码，用 clang 索引；**链接器本身就是一个可达性分析器**：编译时 `-ffunction-sections -fdata-sections`，链接时 `-Wl,--gc-sections,--print-gc-sections`（GNU ld / gold / lld 均有对应选项）会列出被丢弃的函数段——免费的静态证据。（来源：https://sourceware.org/binutils/docs/ld/Options.html、https://llvm.googlesource.com/lld/+/refs/heads/master/test/ELF/gc-sections-print.s，2026-10-15 核对）
 
 ### 5.2 索引记录与符号 ID
 
@@ -226,7 +226,7 @@ suggested   : 软删除 PR #… (按簇一起删，含 3 个测试类)
 
 | 信号 | 怎么收 | 成本 | 能证明什么 | 不能证明什么 |
 |---|---|---|---|---|
-| **类是否被加载过** | JVM 的 `-Xlog:class+load`（或 JFR 的 ClassLoad 事件）按 (服务, 版本) 去重上报 | 极低（每个 JVM 只在启动 / 首次加载时记一次） | 「类在 N 个月里从未被加载」→ 很强的负证据 | 类加载了不等于方法被调用 |
+| **类是否被加载过** | JVM 的 `-Xlog:class+load`（或 JFR 的 ClassLoad 事件）（来源：https://docs.oracle.com/en/java/javase/21/docs/specs/man/java.html、https://github.com/openjdk/jdk/blob/master/src/jdk.jfr/share/conf/jfr/default.jfc，2026-10-15 核对）按 (服务, 版本) 去重上报 | 极低（每个 JVM 只在启动 / 首次加载时记一次） | 「类在 N 个月里从未被加载」→ 很强的负证据 | 类加载了不等于方法被调用 |
 | **方法是否被调用过** | Java agent / JaCoCo 一类的探针；抽样版用 JFR 执行采样 | 全量探针开销可观（热路径不可用）；采样会漏稀有路径 | 采样命中 = 肯定用过 | 采样没命中 ≠ 没用过（假阴性），**稀有路径正是风险所在** |
 | **日志 / 指标里出现过** | 日志里的类名 / 指标名 | 低 | 辅助 | 间接 |
 | **演练（game day）** | 定期演练熔断 / 灾备，演练期间开启探针 | 人力 | 给 L3 路径产生「被执行过」的证据 | |
@@ -271,7 +271,7 @@ suggested   : 软删除 PR #… (按簇一起删，含 3 个测试类)
 1. **回测（backtest）历史删除**：在 git 历史里找所有被人工标注为「remove unused / dead code」的提交。对每个这样的提交，在**它的父提交**上跑分析器：这些被人删掉的符号，被我们标为候选的比例 = 召回的下界估计；被我们标为「活」的 = 漏报，逐条分析原因（几乎都能找到一类缺失的模型）。
 2. **种子注入**：在快照里注入一批已知死代码（形状逼真：有测试、有死环、有包内引用），看检出率。
 3. **抽样人审**：随机抽 100 个 HIGH 候选让 owner 判断 → 精度估计，附置信区间（n = 100，p̂ = 0.98 时，标准误 ≈ √(0.98×0.02/100) ≈ 1.4%）。
-4. **对照现有工具**：IDE inspection / `javac -Xlint` / ProGuard 的 `-printusage` 报告：交集与差集都值得看。
+4. **对照现有工具**：IDE inspection / ProGuard 的 `-printusage` 报告（来源：https://www.guardsquare.com/manual/configuration/usage、https://docs.oracle.com/en/java/javase/21/docs/specs/man/javac.html，2026-10-15 核对）：交集与差集都值得看。
 5. **回归**：同一快照两次运行输出逐字节相同；改动分析器时对固定快照做 diff，所有变化必须有解释。
 
 ---
@@ -287,7 +287,7 @@ suggested   : 软删除 PR #… (按簇一起删，含 3 个测试类)
 **多语言边**（真实代码库的难点）：
 
 * JNI：Java `native` 方法 ↔ C++ 导出符号 `Java_pkg_Class_method`，按名字规则连边。
-* 协议 / IDL（protobuf、Thrift、SBE 模板）：生成的类是「叶子」，但消息类型是否被用要看生成代码的引用，别把生成代码当死代码；从 IDL 文件出发建边。
+* 协议 / IDL（protobuf、Thrift、SBE 模板（来源：https://github.com/aeron-io/simple-binary-encoding，2026-10-15 核对））：生成的类是「叶子」，但消息类型是否被用要看生成代码的引用，别把生成代码当死代码；从 IDL 文件出发建边。
 * 配置 / 脚本里的类名：§4 的字符串命中。
 * SQL / 动态查询里的表名列名：可选，低置信度。
 * **覆盖率阈值**：任何模块的索引覆盖率低于阈值（构建失败、缺文件），则**不对依赖它的符号做死判定**（fail closed）。
@@ -326,6 +326,6 @@ suggested   : 软删除 PR #… (按簇一起删，含 3 个测试类)
 
 * Java 虚拟线程 / 并发无关；本题相关的 JVM 工具：`jdeps`（包依赖）、`jlink`（模块裁剪）、ProGuard / R8 的 shrinker 文档（`-keep` 规则与 `-printusage`）。
 * 调用图构造：Dean, Grove, Chambers, 「Optimization of Object-Oriented Programs Using Static Class Hierarchy Analysis」（ECOOP 1995，CHA）；Bacon & Sweeney, 「Fast Static Analysis of C++ Virtual Function Calls」（OOPSLA 1996，RTA）。
-* 代码索引的工业实践：Google Kythe；Sourcegraph 的 SCIP / LSIF 格式。
+* 代码索引的工业实践：Google Kythe；Sourcegraph 的 SCIP 格式，以及 LSP 生态的 LSIF 格式。（来源：https://kythe.io/docs/kythe-overview.html、https://github.com/sourcegraph/scip、https://microsoft.github.io/language-server-protocol/specifications/lsif/0.6.0/specification/，2026-10-15 核对）
 * 反例思维：Chesterton's fence。
 * 追问见 [followups.md](followups.md)；评分见 [rubric.md](rubric.md)。

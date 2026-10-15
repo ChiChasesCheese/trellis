@@ -19,3 +19,4 @@
 | 2026-10-14 | hc13 + ld01 | 题集 + 讲义 + 实验程序；REPORT 由主会话落盘（子代理 Write 被拒） | verify OK（119 / 155）；ld01 conc ×3 稳定 | (this) |
 | 2026-10-14 | hc09 + hc11 | 题集 + 讲义；REPORT 由主会话落盘 | verify OK（135 / 73）；hc09 conc ×2 稳定；3037000500² 溢出边界复核 | (this) |
 | 2026-10-14 | 简报 / fit / stories / 反问 | 01-company-brief.md, fit.md, stories.md, 06-questions-to-ask.md | 链接检查、隐私 grep 干净 | (this) |
+| 2026-10-15 | onsite 层（senior） | 04_sd/00_how_to_run + sd01–sd03 + ld02/ld03 + 讲义 | ld02 56 / ld03 49 测试 verify OK；ld03 ×2 复跑稳定；38 处事实核对 | 046a45f0, 1672446d, (this) |

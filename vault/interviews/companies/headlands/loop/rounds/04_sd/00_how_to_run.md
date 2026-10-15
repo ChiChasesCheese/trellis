@@ -88,7 +88,7 @@
 | 系统调用（空） | ~0.1–1 µs，有安全缓解措施时更高 | | 热路径不进内核 |
 | 上下文切换 | ~1–5 µs（含缓存冷却的后续代价更大） | | 热线程不睡眠、不被抢占 |
 | 内核 TCP/UDP 单跳（收或发） | 几 µs 到十几 µs | | 内核旁路（kernel bypass）要省的就是它 |
-| 内核旁路收发 | ~1 µs 或更低 | | |
+| 内核旁路收发 | ~1 µs 或更低 | | （来源：https://docs.amd.com/r/en-US/ug1586-onload-user/Latency-Test-Results，2026-10-15 核对） |
 | 同机房网络往返（RTT） | ~50–500 µs（普通）；同机架/直连更低 | | 复制日志到另一台机器的价格 |
 | NVMe 一次 fsync | 数十 µs 到 ms，不稳定 | | 热路径不 fsync，或做 group commit |
 | 光在光纤里 | **~5 µs / km**（真空光速的约 2/3，约 200,000 km/s） | | 物理距离就是延迟；这就是 co-location |
@@ -108,7 +108,7 @@
 
 两个结论：(1) 小包把包速率顶满而不是带宽；(2) 序列化时间本身就是延迟——为什么交易公司在乎「cut-through 交换机」（边收边转，不等整帧）和 10G/25G 网卡。
 
-**行情消息大小**（通识）：交易所二进制行情协议的单条增量消息一般几十字节，如 Nasdaq ITCH 5.0 的 Add Order 约 36 字节；多条消息被打包进一个 UDP 数据报（MoldUDP64 / 类似协议）。
+**行情消息大小**（通识）：交易所二进制行情协议的单条增量消息一般几十字节，如 Nasdaq ITCH 5.0 的 Add Order 约 36 字节；多条消息被打包进一个 UDP 数据报（MoldUDP64 / 类似协议）。（来源：https://www.nasdaqtrader.com/content/technicalsupport/specifications/dataproducts/NQTVITCHspecification.pdf、https://www.nasdaqtrader.com/content/technicalsupport/specifications/dataproducts/moldudp64.pdf，2026-10-15 核对）
 
 ### 3.4 把速率翻译成「每条消息的预算」——最重要的一步
 
@@ -150,7 +150,7 @@
   年轻代 1 GB → 每 10 s 一次 minor GC
   Parallel/G1 的 minor GC 停顿：几 ms 到几十 ms（取决于存活对象）→ 超出 10 µs 预算 3 个数量级
   → 结论：稳态下分配率必须 ≈ 0（对象复用 / 预分配 / 堆外），而不是"调好 GC"
-  ZGC / Shenandoah 把停顿压到亚毫秒，但仍有读屏障、并发线程抢缓存/CPU；对 µs 级热路径仍不够 → 见 J19
+  ZGC 把停顿压到亚毫秒（JEP 439：通常 < 1 ms）、Shenandoah 通常在 0–10 ms、少数情况下亚毫秒，但仍有读屏障、并发线程抢缓存/CPU；对 µs 级热路径仍不够 → 见 J19 （来源：https://openjdk.org/jeps/439、https://wiki.openjdk.org/display/shenandoah/Main，2026-10-15 核对）
 ```
 
 ### 3.7 估算的写法（交给面试官看的格式）
@@ -187,7 +187,7 @@ tick-to-trade 目标（软件部分）：p99 ≤ 10 µs
 1. 每一段**有人认领**（线程 / 组件）、有**测量点**（硬件时间戳或单调时钟）。
 2. 报**分位数**，不是平均：p50 / p99 / p99.99 / max。交易看尾部——一次 2 ms 的 GC 停顿，在那 2 ms 里行情继续跑，你的报价已经陈旧（逆向选择：[公司简报 §2.2](../../../01-company-brief.md)）。
 3. **抖动来源清单**（面试可以逐条念）：GC 停顿 / safepoint；JIT 反优化（deopt）与编译线程；缺页（page fault）、透明大页压缩（THP compaction）；中断、`irqbalance`；同核心超线程（SMT）兄弟；NUMA 远端内存；CPU 降频 / C-state 唤醒；其他进程抢占；日志/监控线程争用缓存；Nagle / 延迟确认；`System.nanoTime()` 在虚拟化环境下变慢。
-4. 测量要避免**协调遗漏**（coordinated omission）：压测器在被测系统卡住时停止发送，就把最差的延迟藏起来了。用固定速率的发送器 + 记录「应该发出」的时间；工具层面用 HdrHistogram 一类的直方图。详见 trellis 卡片 `foundations-coordinated-omission`。
+4. 测量要避免**协调遗漏**（coordinated omission）：压测器在被测系统卡住时停止发送，就把最差的延迟藏起来了。用固定速率的发送器 + 记录「应该发出」的时间；工具层面用 HdrHistogram 一类的直方图。（来源：https://github.com/HdrHistogram/HdrHistogram，2026-10-15 核对）详见 trellis 卡片 `foundations-coordinated-omission`。
 5. 把 OS 配置当作设计的一部分：`isolcpus`/`nohz_full` 隔离核心、线程绑核（`taskset`）、关闭 `irqbalance` 把中断引到别的核、`performance` 调频策略、大页（hugepages）、NUMA 就近分配、关闭 swap。
 
 ---
@@ -225,7 +225,7 @@ tick-to-trade 目标（软件部分）：p99 ≤ 10 µs
 * **交易所自己的撮合引擎**：输入必须先进（复制的）日志，再被处理——否则崩溃会丢一条已改变簿的事件（trellis 卡片 `problems-stock-exchange-journal-before-match-replay-recovery`）。
 * **我们作为交易所的客户**：订单的最终真相在**交易所**。所以我们的日志主要为了重放 / 复盘 / 重建策略状态；崩溃恢复时靠**与交易所对账**（查未完成订单、drop copy、会话序号补发）补上日志没来得及记的部分。因此热路径不必等 fsync。
 * 持久化的层次：进程崩溃（`kill -9`）→ 数据在 `mmap` 的页缓存里还在，不需要 fsync；机器掉电 → 需要 fsync 或复制到另一台机器；机房级故障 → 跨机房复制（延迟太大，不进热路径）。
-* 概念对应物（不是要你背 API）：Chronicle Queue（基于内存映射文件的堆外持久化队列）、Aeron（可靠 UDP / IPC 传输，Aeron Archive 做录制与重放，Aeron Cluster 在其上做 Raft 复制状态机）、LMAX Disruptor（环形缓冲区 + 序号 + 单写者；Fowler 2011 的文章说单线程业务处理器每秒可处理约 600 万订单）。trellis 对应材料：[design-stock-exchange 练习](../../../../../../domains/system-design/drills/problems/design-stock-exchange.md)、读物 `the-log-jay-kreps`。
+* 概念对应物（不是要你背 API）：Chronicle Queue（基于内存映射文件的堆外持久化队列）、Aeron（可靠 UDP / IPC 传输，Aeron Archive 做录制与重放，Aeron Cluster 在其上做 Raft 复制状态机）、LMAX Disruptor（环形缓冲区 + 序号 + 单写者；Fowler 2011 的文章说单线程业务处理器每秒可处理约 600 万订单）。（来源：https://github.com/aeron-io/aeron、https://github.com/OpenHFT/Chronicle-Queue、https://martinfowler.com/articles/lmax.html，2026-10-15 核对）trellis 对应材料：[design-stock-exchange 练习](../../../../../../domains/system-design/drills/problems/design-stock-exchange.md)、读物 `the-log-jay-kreps`。
 
 ### 5.4 Java 在热路径上的纪律（mechanical sympathy for Java）
 
@@ -238,7 +238,7 @@ tick-to-trade 目标（软件部分）：p99 ≤ 10 µs
 | JIT 预热与反优化 | 开盘前用合成 / 回放流量跑到编译稳定；热路径**调用点保持单态**（别让同一个调用点见到很多实现类）；避免在热方法里抛异常 | 第一次冷执行比稳态慢 10–100 倍；类型假设失败会 deopt 回解释器 | J19 |
 | safepoint | 避免热路径里的长计数循环无 safepoint、避免大数组拷贝、关闭偏向/其他全局停顿触发器 | 任何 safepoint 操作都会停住所有线程 | J19 |
 | 字符串与装箱 | 品种用 `int` id；价格用 `long` 定点；禁止 `String`、`Long` 装箱、`stream`、捕获型 lambda | 每一个都是分配或间接寻址 | [hc07](../01_video/hc07_ticker_hash_map/problem.md) |
-| 定时 / 时钟 | 业务时间用单调、可注入的时钟（回放时用事件里的时间戳）；测延迟用 `System.nanoTime()` | 决定性 + 不受 NTP 回拨影响 | |
+| 定时 / 时钟 | 业务时间用单调、可注入的时钟（回放时用事件里的时间戳）；测延迟用 `System.nanoTime()` | 决定性 + 不受 NTP 回拨影响 （来源：https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/System.html，2026-10-15 核对） | |
 | 线程亲和 | 用 OS 绑核（`taskset`）或库；一个热线程独占一个物理核（避开 SMT 兄弟） | 避免被调度、缓存保持热 | |
 | 虚拟线程 | **不要**用在热路径；用在 I/O 密集的外围（对账、批处理、重连管理线程） | 虚拟线程解决的是「很多阻塞等待」，不是「最低延迟」 | [J10](../../../study/10-java21/J10_virtual_threads.md) |
 
@@ -246,14 +246,14 @@ tick-to-trade 目标（软件部分）：p99 ≤ 10 µs
 
 ### 5.5 网络：内核旁路、组播、重连
 
-* **内核旁路（kernel bypass）**：绕过内核协议栈，应用直接从网卡的环形队列读写（DPDK 轮询模式驱动；Solarflare OpenOnload / ef_vi 一类的用户态栈）。省的是：系统调用、中断、内核到用户的拷贝、调度唤醒。代价：独占核心 100% 忙等、需要特殊网卡和驱动、调试困难、Java 要借 JNI/FFM 或使用对 socket 透明的用户态栈。基础讲解：[networking_basics §7](../../../study/00-foundations/networking_basics.md)。
-* **市场数据组播（market-data multicast）**：交易所用 UDP 组播把行情同时发给所有订阅者（一份数据，网络复制），不可靠，靠**序号 + 缺口检测 + A/B 双路冗余 + 快照/重传通道**保证完整。[networking_basics §6](../../../study/00-foundations/networking_basics.md)。
-* **订单入口**：TCP 会话（FIX 或交易所专有二进制协议），带会话序号、心跳、断线重发；常见安全网：**断线即撤（cancel-on-disconnect）**。[ld03](../03_lld/ld03_async_tcp_channel/problem.md) 是它的缩小版。
+* **内核旁路（kernel bypass）**：绕过内核协议栈，应用直接从网卡的环形队列读写（DPDK 轮询模式驱动；Solarflare OpenOnload / ef_vi 一类的用户态栈）。省的是：系统调用、中断、内核到用户的拷贝、调度唤醒。代价：独占核心 100% 忙等、需要特殊网卡和驱动、调试困难、Java 要借 JNI/FFM 或使用对 socket 透明的用户态栈。（来源：https://doc.dpdk.org/guides/prog_guide/overview.html、https://blog.cloudflare.com/kernel-bypass、https://github.com/Xilinx-CNS/onload、https://github.com/Xilinx-CNS/onload/blob/master/scripts/onload，2026-10-15 核对）基础讲解：[networking_basics §7](../../../study/00-foundations/networking_basics.md)。
+* **市场数据组播（market-data multicast）**：交易所用 UDP 组播把行情同时发给所有订阅者（一份数据，网络复制），不可靠，靠**序号 + 缺口检测 + A/B 双路冗余 + 快照/重传通道**保证完整。（来源：https://www.nasdaqtrader.com/content/technicalsupport/specifications/dataproducts/moldudp64.pdf、https://cmegroupclientsite.atlassian.net/wiki/x/QQdGGw，2026-10-15 核对）[networking_basics §6](../../../study/00-foundations/networking_basics.md)。
+* **订单入口**：TCP 会话（FIX 或交易所专有二进制协议），带会话序号、心跳、断线重发（来源：https://en.wikipedia.org/wiki/Financial_Information_eXchange，2026-10-15 核对）；常见安全网：**断线即撤（cancel-on-disconnect）**。[ld03](../03_lld/ld03_async_tcp_channel/problem.md) 是它的缩小版。
 * **co-location**：把服务器放进交易所机房，物理距离几十米，往返几微秒；交叉连接（cross-connect）线缆长度也被当作公平性的一部分。
 
 ### 5.6 风控：交易前检查（pre-trade risk check）
 
-每一个要发出的订单必经的闸门：单笔数量 / 名义金额上限、价格带（胖手指）、最坏情况仓位（含未完成订单）、未完成订单数、下单速率、自成交预防、熔断开关。要点：**O(1)**（数组查表，增量维护聚合量）、**fail closed**、**独立于策略代码**（策略出 bug 不应能绕过它）、在美国有监管要求（SEC Rule 15c3-5「市场准入规则」要求券商 / 市场准入者对其客户和自身订单设置预交易风险控制——通识，细节以法规为准）。本 kit 的可运行版本：[ld02](../03_lld/ld02_trading_ood/problem.md) Part 3。
+每一个要发出的订单必经的闸门：单笔数量 / 名义金额上限、价格带（胖手指）、最坏情况仓位（含未完成订单）、未完成订单数、下单速率、自成交预防、熔断开关。要点：**O(1)**（数组查表，增量维护聚合量）、**fail closed**、**独立于策略代码**（策略出 bug 不应能绕过它）、在美国有监管要求（SEC Rule 15c3-5「市场准入规则」要求券商 / 市场准入者对其客户和自身订单设置预交易风险控制——通识，细节以法规为准）（来源：https://www.ecfr.gov/current/title-17/section-240.15c3-5，2026-10-15 核对）。本 kit 的可运行版本：[ld02](../03_lld/ld02_trading_ood/problem.md) Part 3。
 
 ### 5.7 对账（reconciliation）
 

@@ -20,7 +20,7 @@ Chi 的要求（2026-10-14）：**Java 21 + 新特性，越多越好；教科书
 | P4 | 题集 + 讲义：oa01 hc01–hc09 hc11 hc13 ld01（13 个目录全部 verify OK） | ✅ | `python3 tools/jtest.py verify "loop/rounds/*/*"` |
 | P5 | `study/10-java21/` J01–J19 · `study/00-foundations/` 6 章 | ✅ | 示例全部 javac 通过 |
 | P6 | kq 语言深度题库 45 题 · 简报 · fit · stories（3 处待 Chi 填）· 反问 | ✅ | — |
-| P7 | README 学习路径 ✅；可选：hc10/hc12/hc15–hc20、oa02 Disaster Recovery、sd01–03、onsite | 待 Chi 决定 | — |
+| P7 | README 学习路径 ✅；onsite 层（senior 标准）：04_sd 设计轮指南 + sd01–sd03 + ld02 + ld03 ✅，38 处库/法规细节核对（31 对 7 改）；可选：hc10/hc12/hc15–hc20、oa02 | ✅（可选项待 Chi 决定） | — |
 
 ## 公开仓库约束
 

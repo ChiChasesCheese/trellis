@@ -74,7 +74,7 @@
 
 ## F12 多语言（Java + C++ + Python + 脚本）怎么统一？
 
-**要点**：统一符号 ID 与图格式（Kythe / SCIP 的思想），各语言有自己的索引器；跨语言边：JNI（符号名规则）、IDL（protobuf / SBE）、脚本与配置（字符串命中）；C++ 免费证据：链接器 `--gc-sections --print-gc-sections`；Python 动态强，置信度整体降一级；覆盖率不够则不下结论。
+**要点**：统一符号 ID 与图格式（Kythe / SCIP 的思想（来源：https://kythe.io/docs/kythe-overview.html、https://github.com/sourcegraph/scip，2026-10-15 核对）），各语言有自己的索引器；跨语言边：JNI（符号名规则）、IDL（protobuf / SBE）、脚本与配置（字符串命中）；C++ 免费证据：链接器 `--gc-sections --print-gc-sections`（来源：https://sourceware.org/binutils/docs/ld/Options.html、https://llvm.googlesource.com/lld/+/refs/heads/master/test/ELF/gc-sections-print.s，2026-10-15 核对）；Python 动态强，置信度整体降一级；覆盖率不够则不下结论。
 **可以说**：「各语言一个索引器，一个图格式；跨语言边靠命名规则和 IDL，缺口 fail closed。」
 
 ## F13 多个构建配置（`#ifdef`、Maven profile、平台专用代码）？
