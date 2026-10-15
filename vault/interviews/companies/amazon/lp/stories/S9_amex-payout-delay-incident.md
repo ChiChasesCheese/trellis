@@ -14,7 +14,35 @@
 | 6/23 一次 Agg-Amex effective-date 改动（为 EU 合规）把 US 出款日推后 ~1 天 | 真实根因 |
 | 事故 2026-07-06 → 07-09 关闭，三天 | 时间线 |
 
-## 2. 60–90 秒口播版（≈ 175 词）
+## 2. 60–90 秒（口述提纲）
+
+**"A merchant said four million dollars of Amex payouts were missing; I was one of three fix owners, and I separated expected latency from a real regression."**
+
+**S · Situation**
+- A large marketplace merchant reported about **$4M** of Amex payouts "missing".
+- A **formal incident channel** opened.
+
+**T · Task**
+- The commander named me **one of three fix owners**.
+- My job: say whether this was a **breach** or expected latency, and fix the real cause.
+
+**A · Action** (in the order it happened)
+1. A senior teammate had **no context** on US aggregated-Amex SLAs and **deferred to me**.
+2. I stated **T+7 is our internal pipeline SLA**, and we **disburse only after Amex settles** to us.
+3. That split **expected latency** from **real regression** and stopped the breach argument.
+4. The commander traced the regression to a **June 23 effective-date change** made for **EU compliance**; it pushed US payouts out about **a day**.
+5. Revert was fast; I **argued for a region conditional** in the table function, so EU and US stay independent.
+6. The group chose it; **two teammates deployed** the fix.
+
+**R · Result**
+- Incident **closed in three days**.
+- My share: **SLA determination** and **fix direction**; the deployment was my teammates'.
+
+**L · Learning / Mechanism**
+- In multi-owner incidents, take the part where I'm the **authority** and state it **plainly**.
+- Argue for the **robust** fix over the fast one.
+
+<details><summary>逐字稿（参考，不背）</summary>
 
 > A large marketplace merchant reported roughly four million dollars of Amex payouts "missing," and a formal incident channel spun up. The incident commander named me one of three engineers who own the fix.
 >
@@ -22,7 +50,39 @@
 >
 > Second, the regression itself. A change made for EU compliance to an effective date had shifted US disbursement dates by a day. Reverting was the fast option. I argued for the robust one: a region conditional in the table function, so EU and US keep independent semantics. The group chose it. The fix was deployed by two teammates and the incident closed in three days.
 
-## 3. 2 分钟版（≈ 265 词）
+</details>
+
+## 3. 2 分钟（口述提纲）
+
+**"A merchant said four million dollars of Amex payouts were missing; I was one of three fix owners, and I separated expected latency from a real regression."**
+
+**S · Situation**
+- A large marketplace merchant reported about **$4M** of Amex payouts they couldn't find.
+- Their phrasing: it looked like **seven days** to pay out over a weekend.
+- A **formal incident channel** opened (July 6).
+
+**T · Task**
+- The commander named **three fix owners**; I was one, for the **Amex payout logic** I knew best.
+- First job: tell the merchant whether this was a **breach**.
+
+**A · Action** (in the order it happened)
+1. The costliest thing in the room was **disagreement about where the line was**, not a bug.
+2. A senior engineer said he had **no context** on US aggregated-Amex SLAs and **deferred to me**.
+3. I said: **seven days is our internal pipeline SLA** for the US, and we **disburse only after Amex settles** to us.
+4. That separated "slower than the merchant expected" from "something **regressed**".
+5. The commander reported an **effective-date change on June 23**, made for **EU compliance**, had pushed US payouts out about a day.
+6. Options: **revert plus backfill**, or a **US/EU condition** inside the table function.
+7. I **argued for the conditional**: EU and US semantics stay independent, so the next compliance change won't re-break the other region. The group preferred it as more robust.
+
+**R · Result**
+- **Two teammates deployed** the fix; incident **closed July 9**, **three days** after opening.
+- I'm clear on my share: **one of three owners**; mine was the **SLA determination** and **fix direction**.
+
+**L · Learning / Mechanism**
+- Take the part where you're the **authority**, state it plainly, and argue for the **robust** fix over the fast one.
+- What I'd do differently / what changed afterward: 【待 Chi 补：事故后你推动的 action item（SLA 文档、effective-date 变更的双区域测试、告警）】
+
+<details><summary>逐字稿（参考，不背）</summary>
 
 > **Customer impact.** A large marketplace merchant reported about four million dollars of Amex payouts they couldn't find; their phrasing was that it looked like seven days to pay out over a weekend. A formal incident channel opened.
 >
@@ -35,6 +95,8 @@
 > **Result.** Two teammates deployed the fix; the incident closed July 9, three days after opening. I'm clear about my share: I was one of three owners; my piece was the SLA determination and the fix direction.
 >
 > **Learning.** In multi-owner incidents, take the part where you're the authority, state it plainly, and argue for the robust fix over the fast one.
+
+</details>
 
 ## 4. 适用 LP 与改角度
 
@@ -49,13 +111,25 @@
 
 ## 5. 追问（≥5）
 
-1. **What exactly did you do vs. the others?** → "one of three owners; my piece was the SLA determination and the fix direction"；修复由另两位同事落地部署。
-2. **How did you know T+7 is the internal SLA?** → 【待 Chi 补：这个 SLA 的出处（设计文档/runbook）以及你如何确认"只在 Amex 结算到账后才出款"】
-3. **Why region conditional over revert?** → revert 会把 EU 合规改动一起撤；条件分支让 EU/US 语义独立；代价：UDTF 里多一个分支和需要的测试 【待 Chi 补：测试怎么覆盖】。
-4. **Did the merchant get their money?** → 【待 Chi 补：最终出款/是否补偿；$4M 是延迟不是丢失】
-5. **What changed afterward so this wouldn't repeat?** → 【待 Chi 补：事故后有无 action item（如 effective-date 变更的 region 测试、SLA 文档化）；旧稿说"上游时序不是故障"是错的，别说】
-6. **Whose PR caused it?** → 本组的一个 PR；不点名。说 "an effective-date change we made for EU compliance"。
-7. **How did you handle disagreement in the channel?** → 把边界讲清，冲突自然消解；不去挤部署环节。
+1. **What exactly did you do vs. the others?**
+   - **One of three owners**; my piece: **SLA determination** + **fix direction**.
+   - The fix was **deployed by two teammates**.
+2. **How did you know T+7 is the internal SLA?**
+   - 【待 Chi 补：这个 SLA 的出处（设计文档/runbook）以及你如何确认"只在 Amex 结算到账后才出款"】
+3. **Why region conditional over revert?**
+   - Revert would **undo the EU compliance change** too.
+   - Conditional keeps **EU/US semantics independent**.
+   - Cost: **one more branch** in the UDTF plus tests 【待 Chi 补：测试怎么覆盖】.
+4. **Did the merchant get their money?**
+   - 【待 Chi 补：最终出款/是否补偿；$4M 是延迟不是丢失】
+5. **What changed afterward so this wouldn't repeat?**
+   - 【待 Chi 补：事故后有无 action item（如 effective-date 变更的 region 测试、SLA 文档化）；旧稿说"上游时序不是故障"是错的，别说】
+6. **Whose PR caused it?**
+   - **A PR from our own team**; no names.
+   - Say "an **effective-date change** we made for EU compliance".
+7. **How did you handle disagreement in the channel?**
+   - **Made the boundary clear**; the conflict dissolved.
+   - Did **not** crowd into the deployment.
 
 ## 6. Senior 升级点（bar = senior）
 

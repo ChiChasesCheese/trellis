@@ -15,7 +15,34 @@
 | 验证过的策略 | 中国小盘月度策略，两关均通过，**excess Sharpe 1.39（扣 10 bps 成本）**；上线 paper-trading（Alpaca / CCXT 路由、事前风控、5 因子风险报告） |
 | 数据 | point-in-time 数据平面（raw → bars → panel，DuckDB/Parquet）；2,300+ 因子目录、9 个数据商；5,500 只 A 股面板；8-GPU 服务器 PyTorch 训练 + 自托管 CI；FastAPI + React 研究控制台 |
 
-## 2. 60–90 秒口播版（≈ 175 词，全部取自简历）
+## 2. 60–90 秒（口述提纲）
+
+**"Outside work I built a research platform where no strategy goes live until it passes two independent gates, and I log every idea I tried, not just the ones that worked."**
+
+**S · Situation**
+- Personal project, **Jun 2026–present**: a **multi-market** quant research platform in **Python**.
+- About **66K lines**, **470+ test files**; US equities, crypto, China A-shares, FX.
+
+**T · Task**
+- Design goal: a new market or vendor is a **thin adapter**, **zero strategy-code changes**.
+- Second goal: **discipline against overfitting**.
+
+**A · Action** (in the order the resume lists it)
+1. Kept **four narrow seams**: data source, factor, strategy, broker.
+2. Built a **dual gate**: **purged cross-validation, Deflated Sharpe, PBO**, then **NautilusTrader execution replay**.
+3. Logged **340+ experiments** to an **append-only ledger**, with per-market cost models.
+4. Ran a China small-cap monthly strategy through **both gates**.
+5. Deployed it to a **live paper-trading loop** with **pre-trade risk checks**.
+
+**R · Result**
+- **Excess Sharpe 1.39** after **10 bps** costs; paper-trading, not proof of profit.
+- 【待 Chi 补：340 个实验里通过双关卡的有几个（"拒绝了多少自己的想法"）——这是 Are Right A Lot 的核心数字】
+
+**L · Learning / Mechanism**
+- A **process to disconfirm my own ideas**: the ledger shows how many I tried.
+- Nothing goes live without passing **two independent gates**.
+
+<details><summary>逐字稿（参考，不背）</summary>
 
 > Outside work I built a multi-market quantitative research platform in Python — about sixty-six thousand lines and over four hundred and seventy test files — covering US equities, crypto, China A-shares and FX. The design goal was that adding a market or a data vendor should be a thin adapter with zero strategy-code changes, so I kept four narrow seams: data source, factor, strategy, broker.
 >
@@ -23,13 +50,40 @@
 >
 > 【待 Chi 补：340 个实验里通过双关卡的有几个（"拒绝了多少自己的想法"）——这是 Are Right A Lot 的核心数字】
 
-## 3. 2 分钟版
+</details>
 
-在 §2 基础上补三段（每段都有待补，不要用推测填）：
+## 3. 2 分钟（口述提纲）
 
-1. **Why**：【待 Chi 补：为什么做这个项目，一句话动机；起点是什么问题（例如被过拟合坑过一次？）】
-2. **A decision with a rejected alternative**：【待 Chi 补：一个架构取舍——例如"把 Broker 做成 seam 而不是在策略里直接调交易所 API"，你否决了什么；或"只存 append-only ledger 而不是可覆盖的实验表"，原因】
-3. **A time the gate said no**：【待 Chi 补：一个你喜欢的想法被 DSR/PBO 拒绝的具体例子，你如何处理（Are Right A Lot：disconfirm 自己）】
+在 §2 基础上补三段（每段都有待补，不要用推测填）。
+
+**"Outside work I built a research platform where no strategy goes live until it passes two independent gates, and I log every idea I tried, not just the ones that worked."**
+
+**S · Situation**
+- Personal project, **Jun 2026–present**; **Python**, **66K+ lines**, **470+ test files**, four markets.
+- Why I started: 【待 Chi 补：为什么做这个项目，一句话动机；起点是什么问题（例如被过拟合坑过一次？）】
+
+**T · Task**
+- Make a new market or vendor a **thin adapter** with **zero strategy-code changes**.
+- Make **overfitting** hard to hide.
+
+**A · Action** (in the order the resume lists it)
+1. **Four narrow seams**: data source, factor, strategy, broker.
+2. A decision with a rejected alternative: 【待 Chi 补：一个架构取舍——例如"把 Broker 做成 seam 而不是在策略里直接调交易所 API"，你否决了什么；或"只存 append-only ledger 而不是可覆盖的实验表"，原因】
+3. **Dual gate**: **purged CV, DSR, PBO**, then **NautilusTrader** execution replay.
+4. **Append-only ledger**: **340+ experiments**, calibrated per-market **cost models**.
+5. A time the gate said no: 【待 Chi 补：一个你喜欢的想法被 DSR/PBO 拒绝的具体例子，你如何处理（Are Right A Lot：disconfirm 自己）】
+6. Validated a **China small-cap monthly** strategy through both gates.
+7. Deployed to **paper trading**: **Alpaca/CCXT** routing, **pre-trade risk checks**, **5-factor risk report**.
+8. Also built the **point-in-time data plane** (raw to bars to panel, **DuckDB/Parquet**), **2,300+ factors** across **9 vendors**.
+
+**R · Result**
+- **Excess Sharpe 1.39** net of **10 bps**; live in **paper trading**, so not a profit claim.
+- 5,500-stock A-share panels, **8-GPU** PyTorch training, **self-hosted CI**, **FastAPI + React** console.
+- Gate pass count: 【待 Chi 补：340 个实验里通过双关卡的有几个】
+
+**L · Learning / Mechanism**
+- **Disconfirm my own ideas** with a process, not willpower.
+- What I'd do differently: 【待 Chi 补】
 
 ## 4. 适用 LP 与改角度
 
@@ -43,13 +97,22 @@
 
 ## 5. 追问（≥5）
 
-1. **Why a purged CV?** → 【待 Chi 补：用你自己的话解释 purging/embargo 的理由；这是 Dive Deep 现场检验，必须是你真的懂的版本】
-2. **What does DSR correct for?** → 【待 Chi 补】（多重检验 / 非正态；用 340+ 实验作为例子）
-3. **How much of the 1.39 survives costs and live?** → 简历：扣 10 bps 成本；paper-trading 中；【待 Chi 补：paper-trading 运行多久、偏差多少】
-4. **Biggest bug in the data plane?** → 【待 Chi 补：point-in-time 的一个真实坑】
-5. **Why Python / DuckDB?** → 【待 Chi 补】
-6. **How do you test a 66K-line codebase solo?** → 470+ 测试文件、自托管 CI（简历）；【待 Chi 补：测试策略取舍】
-7. **Would this scale to a team?** → 【待 Chi 补】
+1. **Why a purged CV?**
+   - 【待 Chi 补：用你自己的话解释 purging/embargo 的理由；这是 Dive Deep 现场检验，必须是你真的懂的版本】
+2. **What does DSR correct for?**
+   - 【待 Chi 补】（多重检验 / 非正态；用 340+ 实验作为例子）
+3. **How much of the 1.39 survives costs and live?**
+   - Resume: **net of 10 bps** costs; **paper-trading** only.
+   - 【待 Chi 补：paper-trading 运行多久、偏差多少】
+4. **Biggest bug in the data plane?**
+   - 【待 Chi 补：point-in-time 的一个真实坑】
+5. **Why Python / DuckDB?**
+   - 【待 Chi 补】
+6. **How do you test a 66K-line codebase solo?**
+   - **470+ test files** and **self-hosted CI** (resume).
+   - 【待 Chi 补：测试策略取舍】
+7. **Would this scale to a team?**
+   - 【待 Chi 补】
 
 ## 6. Senior 升级点（bar = senior）
 

@@ -14,7 +14,24 @@
 
 **最先背的 20 秒开场（回答 "How do you use GenAI?"）**——全部来自 S7 与简历：
 
+**Hook：「I use it in two layers.」**
+
+**Layer 1 · Day to day**
+- I run **Claude Code, Codex and Cursor** in parallel.
+- I **plan** the change with the agent, do **TDD** for each phase, and let **CI and monitoring gates** decide.
+- In **money code** I **read every diff** myself.
+
+**Layer 2 · On top**
+- I treat it as a **team of agents I lead**: I set the **rules** and an **acceptance gate that's a command**.
+- I **never accept** an agent's own "done".
+- My **study-system repo** is where those rules are written down and measured.
+- 【待 Chi 补：一句具体的日常例子——最近一次用它做的具体任务和结果。】
+
+<details><summary>逐字稿（参考，不背）</summary>
+
 > I use it in two layers. Day to day I run Claude Code, Codex and Cursor in parallel — I plan the change with the agent, do TDD for each phase, and let CI and monitoring gates decide; in money code I read every diff myself. On top of that I treat it as a team of agents I lead: I set the rules, an acceptance gate that's a command, and I never accept an agent's own "done". My study-system repo is where those rules are written down and measured. 【待 Chi 补：一句具体的日常例子——最近一次用它做的具体任务和结果。】
+
+</details>
 
 边界：S7 的 schema pool 与 on-call copilot 是**个人仓库**，相邻团队采用，不是团队官方工具链。
 
@@ -24,7 +41,33 @@
 
 **主 LP：Dive Deep。** 备用 LP：Insist on the Highest Standards（"defects do not get sent down the line"）、Earn Trust（对读者负责）。
 
-### 口播（216 词，≈ 86 秒）
+### 口述提纲（60–90 秒）
+
+**Hook：「I re-derived the number with a script instead of trusting how confident it sounded.」**
+
+**S · Situation**
+- I'm building a **system-design study bank**: about **50 problems**, drafted by **Claude Code subagents**.
+- A learner **memorizes** those numbers, so a wrong one is a **shipped defect**.
+
+**T · Task**
+- I **own correctness**: the agent drafts, and **I** make sure nothing wrong gets through.
+
+**A · Action** (in the order it happened)
+1. On the **first pilot problem**, the article stated a hash-collision probability of **38 percent**.
+2. I **re-derived** it with a one-line script: the real answer was **certainty**, the exponent off by **six orders of magnitude**.
+3. The wrong figure was **already in a flashcard**, so I fixed the **article first, then the card**.
+4. I stopped treating it as one bug and wrote a **rule** into the shared agent instructions: every number is **computed, never recalled**.
+5. Second rule: a number you **couldn't verify** never goes into a card.
+6. **Later**, a second article had correct arithmetic on **two contradicting assumptions** (a **1,560x** peak ratio), so I added: assumptions must **agree with each other**.
+
+**R · Result**
+- All **49** problems passed the gate; **two** were redone for design substance.
+- **Four lessons** now live in the instruction file.
+
+**L · Learning / Mechanism**
+- The model's **confidence tells you nothing**; arithmetic is cheap, so **check it by machine**.
+
+<details><summary>逐字稿（参考，不背）</summary>
 
 > **Situation.** I'm building a system-design study bank — about fifty problems, each a worked solution plus flashcards — and Claude Code subagents write the drafts. A learner will memorize those numbers, so a wrong one is a shipped defect.
 >
@@ -35,6 +78,8 @@
 > **Result.** All 49 problems passed the gate, two were redone for design substance, and four lessons now live in the instruction file.
 >
 > **Learning.** The model's confidence tells you nothing. Arithmetic is cheap to check, so check it by machine.
+
+</details>
 
 ### 证据（Chi 可以引用）
 
@@ -51,14 +96,29 @@
 
 ### 追问与答题要点
 
-| 追问 | 要点 |
-|---|---|
-| **How did you notice?** | 用 `python3 -c` 复算（orchestrator 的 review 规则：每个数字复算，`/CLAUDE.md`）。不是"感觉不对"。`【待 Chi 补：这一次是你本人复算的，还是 review 步骤里发现的？照实说。】` |
-| **Is that really a hallucination?** | 定义：模型生成流畅、自信但没有依据的内容。这是**算术/数量级错误**，更准确叫 confident wrong claim；hallucination 的机制见 `primer.md` §2。主动说出这个区分，是加分项。 |
-| **What did you change so it doesn't recur?** | 规则进共享指令文件（每个被发现的缺陷变成一条规则）；review 辅助脚本 `scripts/review_design_problem.py`；门禁 `scripts/check_design_problems.py`。 |
-| **Why not just use a better model?** | 更强的模型降低频率，不提供 oracle；检查的成本（一行脚本）远低于任何模型升级，而且对未来的模型同样有效。 |
-| **Did a wrong number reach a learner?** | 这个错数字在卡片发布前被抓到（卡片在 BUILD 流程里，`anki-push` 是最后一步）。`【待 Chi 补：是否有任何已进入 Anki 复习的卡片后来被纠错？没有就说没有。】` |
-| **What would you do differently?** | 在 pilot 之前就把"数字必须脚本复算"写进指令（现在 AGENT.md 开头就有）。 |
+**How did you notice?**
+- 用 **`python3 -c` 复算**（orchestrator 的 review 规则：**每个数字复算**，`/CLAUDE.md`），不是"感觉不对"。
+- `【待 Chi 补：这一次是你本人复算的，还是 review 步骤里发现的？照实说。】`
+
+**Is that really a hallucination?**
+- 定义：模型生成**流畅、自信但没有依据**的内容。
+- 这是**算术/数量级错误**，更准确叫 **confident wrong claim**；hallucination 的机制见 `primer.md` §2。
+- **主动说出这个区分**，是加分项。
+
+**What did you change so it doesn't recur?**
+- 规则进**共享指令文件**（每个被发现的缺陷变成一条规则）。
+- review 辅助脚本 `scripts/review_design_problem.py`；**门禁** `scripts/check_design_problems.py`。
+
+**Why not just use a better model?**
+- 更强的模型**降低频率**，不提供 **oracle**。
+- 检查的成本（**一行脚本**）远低于任何模型升级，而且对**未来的模型**同样有效。
+
+**Did a wrong number reach a learner?**
+- 这个错数字在**卡片发布前**被抓到（卡片在 BUILD 流程里，`anki-push` 是**最后一步**）。
+- `【待 Chi 补：是否有任何已进入 Anki 复习的卡片后来被纠错？没有就说没有。】`
+
+**What would you do differently?**
+- 在 pilot 之前就把"**数字必须脚本复算**"写进指令（现在 AGENT.md 开头就有）。
 
 ---
 
@@ -66,24 +126,54 @@
 
 **主 LP：Insist on the Highest Standards。** 备用：Invent and Simplify（机制简单到一条命令）、Ownership（持续到不再出问题）、Are Right, A Lot（怎么找反证）。
 
-### 口播（218 词，≈ 87 秒）
+### 口述提纲（60–90 秒）
+
+**Hook：「A green suite isn't proof, so I test the tests.」**
+
+**S · Situation**
+- I produced about **100 interview-prep artifacts**: **49 system-design** and **45 low-level-design** problems, via **parallel Claude Code subagents**.
+- A model that grades its own work says "**done**" every time.
+
+**T · Task**
+- Make correctness **independent of the agent's word**.
+- It must **scale** to more agents without me re-reading everything.
+
+**A · Action** (in the order it happened)
+1. I rejected **self-reports plus a spot check**.
+2. **One agent owns one directory**; **three at a time**.
+3. I wrote the **acceptance gate as a command** before any content: reference solution must **pass**, empty starter must **fail**.
+4. I also rejected **agents reviewing agents**: one spawned a reviewer and broke my cap, so "**never start another agent**" became a rule.
+5. I **re-run the gate myself**, **re-derive every number**, and read the agent's **weakest-claims list**; every defect becomes a **rule**.
+6. **Later**, to test the tests, I used **mutation**: on one kata, a **concatenated-key** bug passed all **10 tests**.
+7. I added the missing assertion; the suite now kills **11 of 11** hand-written mutants.
+
+**R · Result**
+- **45 of 45** LLD problems and about **900 tests** passed.
+- **Nine** drafts went back for rework.
+
+**L · Learning / Mechanism**
+- Verification has to be a **mechanism, not a mood**.
+
+<details><summary>逐字稿（参考，不背）</summary>
 
 > **Situation.** I produced about a hundred interview-prep artifacts — 49 system-design problems and 45 low-level-design problems — through parallel Claude Code subagents. A model that grades its own work says "done" every time.
 >
 > **Task.** Make correctness independent of the agent's word, in a way that scales to more agents without me re-reading everything.
 >
-> **Action.** I rejected two alternatives: trusting self-reports with a spot check, and agents reviewing agents — one spawned a reviewer and broke my three-agent cap, so "never start another agent" became a rule. What I built instead: first, an acceptance gate that is a command, written before any content, where the reference solution must pass and the empty starter must fail, so I know the tests can fail. Second, each agent owns one directory; three at a time. Third, I re-run the gate myself, re-derive every number, and read the agent's own list of weakest claims. Fourth, every defect I find becomes a rule in the instruction file. And fifth, for the tests themselves, I use mutation: on one kata, a buggy version that concatenated keys passed all ten tests, so I added the missing assertion, and the suite now kills 11 of 11 hand-written mutants.
+> **Action.** I rejected trusting self-reports with a spot check. So, first, each agent owns one directory, and I run three at a time. Second, I wrote an acceptance gate that is a command, before any content, where the reference solution must pass and the empty starter must fail, so I know the tests can fail. Third, I rejected agents reviewing agents: one spawned a reviewer and broke my three-agent cap, so "never start another agent" became a rule. Fourth, I re-run the gate myself, re-derive every number, and read the agent's own list of weakest claims; every defect I find becomes a rule in the instruction file. And fifth, later, for the tests themselves, I used mutation: on one kata, a buggy version that concatenated keys passed all ten tests, so I added the missing assertion, and the suite now kills 11 of 11 hand-written mutants.
 >
 > **Result.** 45 of 45 LLD problems and about 900 tests passed; nine drafts went back for rework.
 >
 > **Learning.** Verification has to be a mechanism, not a mood.
 
+</details>
+
 ### 证据
 
 | 事实 | 证据 |
 |---|---|
-| 规则本体：sonnet 子代理 ≤3、不得再派代理、一个代理一个目录、交付物可由命令验证、"Never accept a subagent's done"、复算数字、每个缺陷变规则 | `/CLAUDE.md` "Orchestration rules for multi-agent work in this repo"；规则成文于 `1634949e`（2026-09-13）、`9743d8b3`（2026-09-20） |
-| 验收门 = 命令，参考解绿 + 空 starter 红 | `vault/interviews/companies/amazon/tools/verify_suites.py`（同款在各公司 kit 的 `tools/`）；`scripts/check_design_problems.py`、`scripts/check_lld_problems.py`；"先写门禁再写内容"见 `.claude/skills/building-problem-banks/SKILL.md` step 4（提交 `52474eb1`） |
+| 规则本体：sonnet 子代理 ≤3、不得再派代理、一个代理一个目录、交付物可由命令验证、"Never accept a subagent's done"、复算数字、每个缺陷变规则 | `/CLAUDE.md` "Orchestration rules for multi-agent work in this repo"；规则成文于 `1634949e`（2026-09-13）、`58061727`（2026-09-20，复算/读自报弱项/缺陷变规则）、`9743d8b3`（2026-09-20） |
+| 验收门 = 命令，参考解绿 + 空 starter 红 | `vault/interviews/companies/amazon/tools/verify_suites.py`（同款在各公司 kit 的 `tools/`）；`scripts/check_design_problems.py`、`scripts/check_lld_problems.py`；"先写门禁再写内容"见 `.claude/skills/building-problem-banks/SKILL.md` step 4（技能成文 `58061727`，2026-09-20；设计题门禁本体 `52474eb1`，2026-09-19） |
 | "不得再派代理，连复查自己也不行" | `proposals/lld/PROBLEM_AGENT.md`，提交 `9429f863` |
 | 45/45、约 900 个测试、发回重做 9 次；3 处独立复核（国际象棋 perft 深度 4 = 197,281；职业社交双向 BFS 对拍普通 BFS，400 个随机图零不一致；键值存储三层嵌套事务 + TTL 回滚） | `vault/domains/low-level-design/BUILD.md` §7 台账（提交 `f5bddda7`，2026-09-20） |
 | 代理反复犯的 9 类错 → 9 条防线 | 同文件 "代理写题时反复犯的错" 表；规则提交 `eb16176f`、`a15a15bd`、`27b9deae`、`4b7d6d66`… |
@@ -94,16 +184,39 @@
 
 ### 追问与答题要点
 
-| 追问 | 要点 |
-|---|---|
-| **Why a gate and not just careful reading?** | 门禁检查**形状**（必需小节、测试能红能绿、卡片数量），读才检查**实质**（"一个建立在合理假设上的错误结论"门禁看不到，skill 明确写了）。两者都要：gate is not the review。 |
-| **Why must the empty starter fail?** | 否则测试可能什么都没测。红灯证明测试有区分能力；这是变异测试的最小形态。 |
-| **What does mutation testing add?** | 全绿不证明代码对；故意写错的版本能不能被抓到才证明测试对。Airbnb 例子：写法 A 通过了全部 10 个测试，说明测试漏了撞 key。 |
-| **Who reviews the reviewer?** | 台账 + 独立复核：国际象棋 perft 的已知值、双向 BFS 对拍普通 BFS（差分测试）——用**另一条独立路径**得到同一个答案。 |
-| **How did it scale/others adopt?** | 规则在共享指令文件里，新代理读同一份；`CHECKPOINT.md` 让新会话零上下文接手。`【待 Chi 补：有没有别人（队友/同事）采用过这套？没有就别说。】` |
-| **Cost?** | 技能文件里有实测：一个问题单独 8–10 分钟/130–145k tokens；两题一个代理 17–29 分钟；一轮 SendMessage 修订 5–6 分钟/+40–60k tokens；整库约 6–7M tokens。我对 3 surveys + 3 pilots + 23 pairs 做了加总一致性检查（见 G3）。 |
-| **What did you give up?** | 并行度（硬上限 3）、速度（每个返回都要复核）、以及对代理自治的信任——换来可审计。 |
-| **Would this work at Amazon scale?** | 原则可迁移：门禁 = CI；agent 自述 = PR 描述，不是证据；差分/变异测试 = 对测试的测试。`【待 Chi 补：PayPal 的对应物，如迁移里的 parity 测试，见 R2。】` |
+**Why a gate and not just careful reading?**
+- 门禁检查**形状**（必需小节、测试能红能绿、卡片数量）；读才检查**实质**。
+- "一个建立在合理假设上的错误结论"门禁看不到，skill 明确写了。
+- 两者都要：**gate is not the review**。
+
+**Why must the empty starter fail?**
+- 否则测试可能**什么都没测**。
+- 红灯证明测试有**区分能力**；这是**变异测试的最小形态**。
+
+**What does mutation testing add?**
+- **全绿不证明代码对**；故意写错的版本能不能被抓到，才证明**测试对**。
+- Airbnb 例子：写法 A 通过了全部 10 个测试，说明测试**漏了撞 key**。
+
+**Who reviews the reviewer?**
+- **台账 + 独立复核**：国际象棋 **perft** 的已知值、双向 BFS **对拍**普通 BFS（差分测试）。
+- 用**另一条独立路径**得到同一个答案。
+
+**How did it scale/others adopt?**
+- 规则在**共享指令文件**里，新代理读同一份；`CHECKPOINT.md` 让新会话**零上下文接手**。
+- `【待 Chi 补：有没有别人（队友/同事）采用过这套？没有就别说。】`
+
+**Cost?**
+- 技能文件里有**实测**：一个问题单独 **8–10 分钟 / 130–145k tokens**；两题一个代理 **17–29 分钟**。
+- 一轮 SendMessage 修订 **5–6 分钟 / +40–60k tokens**；整库约 **6–7M tokens**。
+- 我对 3 surveys + 3 pilots + 23 pairs 做了**加总一致性检查**（见 G3）。
+
+**What did you give up?**
+- **并行度**（硬上限 3）、**速度**（每个返回都要复核）、对**代理自治的信任**。
+- 换来**可审计**。
+
+**Would this work at Amazon scale?**
+- 原则可迁移：**门禁 = CI**；agent 自述 = **PR 描述，不是证据**；差分/变异测试 = **对测试的测试**。
+- `【待 Chi 补：PayPal 的对应物，如迁移里的 parity 测试，见 R2。】`
 
 ---
 
@@ -111,17 +224,46 @@
 
 **主 LP：Frugality。** 备用：Dive Deep（用数据而非印象）、Bias for Action。**诚实提示**：repo 证明的是规则和实测成本；"我最初想让 agent 做"这件事的回忆，只有 Chi 能确认。
 
-### 口播（200 词，≈ 80 秒）
+### 口述提纲（60–90 秒）
+
+**Hook：「Where the answer is deterministic, I write ten lines of code instead of prompting.」**
+
+**S · Situation**
+- Same build. My first instinct was to hand **everything** to an agent.
+- That included **counting things** and fixing **small review comments**.
+
+**T · Task**
+- Find where that actually **cost more than it saved**.
+
+**A · Action** (in the order it happened)
+1. First, **counts**: cut lines, coverage percentages, "N problems" in prose had been wrong by hand, **twice**.
+2. So **every count comes from a script**; a model **never counts**.
+3. Second, **small fixes**: an agent revision round measured **5–6 minutes** and **40–60k extra tokens**.
+4. So a one-line fix I **edit in place**; the agent round trip is for **substantive** changes.
+5. Third, **parallelism**: one agent per problem wasted context; four agents "just this once" broke the cap.
+6. I settled on **two problems per agent**, **three agents** at a time.
+7. **Later**, my Amazon-prep **coverage matrix** is generated by a script from **one mapping**, so it cannot drift.
+
+**R · Result**
+- Reviewing a finished pair takes **three to six tool calls**, using a **script**, not a model.
+
+**L · Learning / Mechanism**
+- Use a model where output is **open-ended and checkable**.
+- Where the answer is **deterministic**, write **ten lines of code**.
+
+<details><summary>逐字稿（参考，不背）</summary>
 
 > **Situation.** In the same build, my first instinct was to hand everything to an agent — including counting things and fixing small review comments.
 >
 > **Task.** Find out where that actually cost more than it saved.
 >
-> **Action.** Three places. One: counts. Cut lines, coverage percentages, "N problems" in prose — those had been wrong when done by hand, twice, so I made it a rule that every count comes from a script, and a model never counts. In my Amazon prep the story-versus-principle coverage matrix is generated by a small script from one mapping, so it cannot drift. Two: small fixes. A revision round through an agent measured about five to six minutes and forty to sixty thousand extra tokens; so for a one-line fix I edit in place and reserve the agent round trip for substantive changes. Three: parallelism. One agent per problem wasted context, four agents "just this once" broke the cap, so I settled on two problems per agent and three agents at a time.
+> **Action.** Three places. One: counts. Cut lines, coverage percentages, "N problems" in prose — those had been wrong when done by hand, twice, so I made it a rule that every count comes from a script, and a model never counts. Two: small fixes. A revision round through an agent measured about five to six minutes and forty to sixty thousand extra tokens; so for a one-line fix I edit in place and reserve the agent round trip for substantive changes. Three: parallelism. One agent per problem wasted context, four agents "just this once" broke the cap, so I settled on two problems per agent and three agents at a time. Later, the same rule reached my Amazon prep: the story-versus-principle coverage matrix is generated by a small script from one mapping, so it cannot drift.
 >
 > **Result.** Review of a finished pair takes three to six tool calls, using a script rather than a model.
 >
 > **Learning.** Use a model where the output is open-ended and checkable. Where the answer is deterministic, write ten lines of code.
+
+</details>
 
 ### 证据
 
@@ -136,13 +278,25 @@
 
 ### 追问与答题要点
 
-| 追问 | 要点 |
-|---|---|
-| **Give me a case where the AI was just wrong for the job.** | 计数/覆盖率：确定性问题，模型给出的是"看起来合理的数"。脚本是 oracle 本身。 |
-| **Did that ever cost you?** | 有：错误的手数计数进了 prose（两次，CLAUDE.md）。成本是读者拿到错的 cut line。`【待 Chi 补：具体是哪两次？没有记忆就别展开。】` |
-| **How do you decide to delegate vs. do it?** | 三个问题：答案是确定性的吗（→ 脚本）？改动多大（一行 → 就地改；实质 → 回到同一个代理，它还有上下文）？有可执行的验收吗（没有 → 先写门禁再委派）？ |
-| **What about at work?** | `【待 Chi 补：PayPal 里一个"用脚本/SQL 比 agent 好"的真实例子。没有就说 repo 里这个。】` |
-| **Isn't that anti-AI?** | 不是；是把 AI 放在它的优势区：开放式、可验证。`primer.md` §7 成本/延迟取舍。 |
+**Give me a case where the AI was just wrong for the job.**
+- **计数/覆盖率**：确定性问题，模型给出的是"看起来合理的数"。
+- **脚本就是 oracle 本身**。
+
+**Did that ever cost you?**
+- 有：**错误的手数计数**进了 prose（**两次**，CLAUDE.md）。成本是读者拿到**错的 cut line**。
+- `【待 Chi 补：具体是哪两次？没有记忆就别展开。】`
+
+**How do you decide to delegate vs. do it?**
+- 三个问题：答案是**确定性**的吗（→ **脚本**）？
+- 改动多大（一行 → **就地改**；实质 → 回到**同一个代理**，它还有上下文）？
+- 有**可执行的验收**吗（没有 → **先写门禁再委派**）？
+
+**What about at work?**
+- `【待 Chi 补：PayPal 里一个"用脚本/SQL 比 agent 好"的真实例子。没有就说 repo 里这个。】`
+
+**Isn't that anti-AI?**
+- 不是；是把 AI 放在它的**优势区**：**开放式、可验证**。
+- `primer.md` §7 **成本/延迟**取舍。
 
 ---
 
@@ -150,7 +304,33 @@
 
 **主 LP：Are Right, A Lot**（判断力 + 找反证）。备用：Ownership、Learn and Be Curious。
 
-### 口播（210 词，≈ 84 秒）
+### 口述提纲（60–90 秒）
+
+**Hook：「Trust depends on whether an oracle can say the output is wrong.」**
+
+**S · Situation**
+- After months of **running agents in parallel**, I needed a rule better than "it **feels right**".
+
+**T · Task**
+- Decide **per task** how much to trust the output, and **write it down**.
+
+**A · Action**
+1. The rule has two inputs: is there an **oracle** (compiler, test, re-runnable script), and what does a wrong answer **cost**?
+2. Oracle plus **low blast radius**: I **trust and verify by machine** — refactors under green tests, scaffolding, examples that must compile.
+3. **No oracle**: I **don't trust** numbers, claims about external systems, anything **secondhand**.
+4. Example: an agent labelled a figure **officially disclosed**; it came from a **single prep site**.
+5. **High cost**, like money code: I **read every diff** myself regardless.
+6. The blind spot is a **wrong conclusion on a plausible assumption**: gates check **shape**, only reading checks **substance**.
+7. So I read the agent's own "**least sure**" list first.
+
+**R · Result**
+- Defects surface at the **gate or in review**, not with the reader.
+- Example: a Java example that **would not compile**, caught when I **compiled every textbook example**.
+
+**L · Learning / Mechanism**
+- Trust is a property of the **verification around the model**, not of the model.
+
+<details><summary>逐字稿（参考，不背）</summary>
 
 > **Situation.** After months of running agents in parallel, I needed a rule better than "it feels right".
 >
@@ -161,6 +341,8 @@
 > **Result.** Defects surface at the gate or in review rather than with the reader — for example, a Java example in my conventions table that would not compile was caught when I compiled every textbook example.
 >
 > **Learning.** Trust is a property of the verification around the model, not of the model.
+
+</details>
 
 ### 证据
 
@@ -183,13 +365,24 @@
 
 ### 追问与答题要点
 
-| 追问 | 要点 |
-|---|---|
-| **Tell me about a time you overrode the tool / didn't trust it.** | G1（38%）、J04（编译失败）、Numba（官方行为已变）。`【待 Chi 补：工作中一次你拒绝了 AI 建议的具体决定——R2 senior 升级点 (b)。】` |
-| **How do you stop a teammate from over-trusting?** | 把规则放进仓库而不是口头：门禁、PR 模板、"AI 写的也要你能解释每一行"。`【待 Chi 补：真实带教/code review 里的做法，见 M1。】` |
-| **What's the failure of your rule?** | oracle 本身错了（测试和代码同源盲区）→ 变异测试、独立路径对拍；以及"合理假设上的错误结论"门禁看不见。 |
-| **Would you let an agent run unsupervised?** | 不。agent 提议、测试裁决、人读 diff（R2 追问 6）；并且权限由 Chi 控制，agent 不能改自己的权限（CLAUDE.md）。 |
-| **Security?** | 公开仓库规则（不放招聘人员姓名、邮件内容）、爆炸半径 guard、最小权限；`primer.md` §6。 |
+**Tell me about a time you overrode the tool / didn't trust it.**
+- **G1（38%）**、**J04（编译失败）**、**Numba（官方行为已变）**。
+- `【待 Chi 补：工作中一次你拒绝了 AI 建议的具体决定——R2 senior 升级点 (b)。】`
+
+**How do you stop a teammate from over-trusting?**
+- 把规则放进**仓库**而不是口头：**门禁**、**PR 模板**、"AI 写的也要你能解释每一行"。
+- `【待 Chi 补：真实带教/code review 里的做法，见 M1。】`
+
+**What's the failure of your rule?**
+- **oracle 本身错了**（测试和代码同源盲区）→ **变异测试**、**独立路径对拍**。
+- 以及"**合理假设上的错误结论**"门禁看不见。
+
+**Would you let an agent run unsupervised?**
+- **不**。agent **提议**、测试**裁决**、人**读 diff**（R2 追问 6）。
+- **权限由 Chi 控制**，agent 不能改自己的权限（CLAUDE.md）。
+
+**Security?**
+- 公开仓库规则（**不放招聘人员姓名、邮件内容**）、**爆炸半径 guard**、**最小权限**；`primer.md` §6。
 
 ---
 
@@ -207,13 +400,13 @@
 
 ## 附：字数脚本
 
-口播英文词数（脚本统计，约 150 词/分钟估算；实际口语 160–170 词/分钟更快）：
+逐字稿（`<details>` 内）英文词数（脚本统计，约 150 词/分钟估算；实际口语 160–170 词/分钟更快）：
 
 | 故事 | 词数 | 150 词/分钟 |
 |---|---|---|
 | G1 | 216 | ≈ 86 s |
-| G2 | 218 | ≈ 87 s |
-| G3 | 200 | ≈ 80 s |
+| G2 | 219 | ≈ 88 s |
+| G3 | 204 | ≈ 82 s |
 | G4 | 210 | ≈ 84 s |
 
 各故事小标题里写的"约 N 词"以此表为准。

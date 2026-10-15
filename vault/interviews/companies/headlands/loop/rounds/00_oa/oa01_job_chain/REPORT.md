@@ -7,7 +7,7 @@ Headlands 的 HackerRank 六年没换题。Chi 已经用 Java 过了这一关，
 
 ## 来源与置信度
 
-见 `problem.md` §来源。题面主体高；排序与取整 (reconstructed)。
+见 `problem.md` §来源。题面已有原文（Chi 截图抄录）；只有同总时长的 tie-break 是 (inferred)。
 
 ## 逐 Part 思路
 

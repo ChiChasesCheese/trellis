@@ -183,7 +183,7 @@
 | 14.4 | Describe a time you delivered despite ambiguity. | **S5** | S6 | 无需求文档 |
 | 14.5 | Tell me about a goal you missed. | **S2** | S10 | 粒度选错，用 ADR 修；【待 Chi 补：是否有真正"错过交付日期"的例子】 |
 
-**Fallback：** 不需要。注意简历 `$600B+` 口径（见 `story_matrix.md` §4）。
+**Fallback：** 不需要。简历 `$600B+` 已于 2026-10-15 在 `resume.tex` 改为证据口径；投递版仍是旧数字，答法见 `../README.md`「面试前必须处理」。
 
 ## LP15 · Strive to be Earth's Best Employer
 *Senior angle：对同事成长/安全/包容的具体机制。无故事。*
@@ -213,7 +213,22 @@
 
 | Question | Best | Backup |
 |---|---|---|
-| Tell me about yourself（≤ 1 分钟） | 简历主线：PayPal 费用平台 → S1 / S5 / S2 → 想做 AWS 数据服务 | — |
+| Tell me about yourself（≤ 1 分钟） | 见下方「Tell me about yourself」口述提纲 | — |
 | Tell me about a time you failed | **S2**（自己的设计缺陷，ADR 修复） | S10 |
 | What is your biggest weakness? | 【待 Chi 补：真实的，与 senior 档相关；例如 influence 的记录太少】 | — |
 | Why Amazon / Why AWS Data Services? | 【待 Chi 补：由 `AGENT_RULES.md` 里的 JD 与 Chi 自己的动机组合】 | — |
+
+### Tell me about yourself（≤ 1 分钟 · 口述提纲）
+
+简历主线：PayPal 费用平台 → S1 / S5 / S2 → 想做 AWS 数据服务。按时间顺序讲，英文。
+
+**"I'm a software engineer at PayPal who owns the Amex fee pipeline end to end, and I'm looking to do that kind of data-platform work on AWS."**
+
+- **Education**: **NYU MS in CS** (2023–Jan 2025); before that a **BS in Construction Management** at Tianjin University.
+- **Summer 2024**: **PayPal intern** in Chicago; **Kotlin/Spring Boot**, **Kafka**, **Spark + Airflow** on the fee platform (S11).
+- **Feb 2025**: full-time **Software Engineer**, San Jose; **designed and built the Amex settlement and fee pipeline** on **Snowflake** from a stub — **tens of millions** of transactions, **billions of dollars** a year, ingestion through validation to fee calculation (S1).
+- **Then**: inside Braintree's **net-settlement program** (next-day fund transfers), I **owned the interchange-fee track** — **13.7M rows** cut over at **>99.9% parity** (S5).
+- **Alongside**: **on-call owner**, built the **tracing and observability stack**; a **config-driven quality-check framework** (S2).
+- **Recently**: **AI-native migration** of Ruby/Kotlin logic to Snowflake/Java, held to **behavioral parity** (R2); and my own **quant research platform** (R1).
+- **Why here**: **AWS data services** 【待 Chi 补：Why Amazon / Why AWS Data Services 的真实动机】
+

@@ -16,13 +16,68 @@
 | 99.5% 阈值 × 每天数亿行 = 每天数百万条告警 | 告警量风险 |
 | 唯一不可再生的是分析师 disposition 标注 | 离职前导出 |
 
-## 2. 60–90 秒口播版（≈ 190 词）
+## 2. 60–90 秒口述提纲
+
+**I inherited a departing intern's ML detector, and instead of momentum I wrote a go/no-go that split it into a safe SQL phase and a gated ML phase.**
+
+**S · Situation**
+- A leaving **intern** left an ML **fee-anomaly detector** that had only ever run in **QA**.
+
+**T · Task**
+- Decide: keep building, or **assess** — and decide what had to **survive** their departure.
+
+**A · Action** (in the order it happened)
+1. Wrote a **go/no-go assessment** instead of continuing to build.
+2. Compared **QA vs production**: six synthetic merchants vs ~**18,000**; under a billion rows vs **tens of billions**; ~**760M** rows on a peak day.
+3. Saw the **per-row numpy** serving would time out at that scale — QA could never show it.
+4. Split **what dies** with the departure from what is **reproducible**; got the analysts' **labels** exported before the last day.
+5. Phased it: **Phase 1** the deterministic rule as pure **SQL**; **Phase 2** ML retrain, 2–3 months, behind a **gate**.
+6. **Froze** the Slack alerting and CI/CD work until the gate says go.
+
+**R · Result**
+- The irreplaceable **labels are safe**; the cheap defensive layer has a clear path.
+- Numbers come from **my own assessment**, not yet re-verified on production.
+
+**L · Learning / Mechanism**
+- A **written gate** my manager can audit; I'd rather stop a project than ship one that pages the team at **3 a.m.**
+
+<details><summary>逐字稿（参考，不背）</summary>
 
 > I inherited an ML fee-anomaly detector from an intern who was leaving. It had only ever run in QA. The easy path was to keep building. Instead I wrote a go/no-go assessment. QA had six synthetic merchants and under a billion rows; production is eighteen thousand merchants, around fifteen thousand plan combinations, and up to about 760 million rows on a peak day. The serving design was a per-row numpy forward pass, which would time out at that scale, and QA could never have shown it.
 >
 > I split the problem. What disappears when the intern leaves versus what's reproducible from code: only the analysts' labels were irreplaceable, so I got those exported before their last day. Then a phased plan. Phase one ships only the deterministic consistency rule — amount equals rate times quantity plus fixed — as pure SQL, which Snowflake handles at billions of rows. Phase two, retraining and a new serving design, is two to three months and sits behind an explicit go/no-go gate. I froze the Slack alerting and CI/CD work until the gate says go. I'd rather stop a project than ship one that pages the team at 3 a.m.
 
-## 3. 2 分钟版（≈ 300 词）
+</details>
+
+## 3. 2 分钟口述提纲
+
+**I inherited a departing intern's ML detector, and instead of momentum I wrote a go/no-go that split it into a safe SQL phase and a gated ML phase.**
+
+**S · Situation**
+- The intern left a **three-layer detector**: autoencoder (PyTorch train, numpy inference), plan-deviation features, **deterministic rules**; five sources, deployed **by hand**.
+- Nobody had ever seen it on **production data**.
+
+**T · Task**
+- Mine to decide: **keep building**, or stop and **assess**.
+
+**A · Action** (in the order it happened)
+1. Wrote a **State / Handoff / Prod-Cutover** assessment instead of pushing on.
+2. Found QA: **6 synthetic merchants**, the first two **97%** of ~830M rows; production: **18,140 merchants**, **15,293** plan-and-description combinations, ~**39B** rows.
+3. Flagged three risks: per-row numpy **times out**; precision unknowable without ground truth (**shadow mode** only); a 99.5% threshold means **millions of alerts a day**.
+4. Exported the **analysts' disposition labels** — the one irreplaceable asset — before the last day.
+5. Planned **Phase 1** (deterministic rule, SQL pushdown, a few weeks) and **Phase 2** (ML retrain and inference, **2–3 months**, behind a business-driver gate).
+6. **Froze** alerting and CI/CD work until the gate says go; wrote it all down so my manager could **judge independently**.
+
+**R · Result**
+- Labels **safe**, the cheap defensive layer has a path, and the team's time went to a real **P1**.
+- Cost I accepted: I said **no** to a quick win and delayed visible output.
+- The numbers are from my own assessment, not re-verified on production — I'd say so.
+
+**L · Learning / Mechanism**
+- I turned a hunch ("this won't scale") into a **written gate** my manager could audit.
+- **What I'd do differently:** 【待 Chi 补：What I'd do differently（原稿未写）】
+
+<details><summary>逐字稿（参考，不背）</summary>
 
 > **Situation.** An intern left behind a three-layer detector: an autoencoder trained in PyTorch with numpy inference, plan-deviation features, and deterministic consistency rules, with five data sources each having its own model and daily scoring procedure, deployed by hand. Nobody had ever seen it on production data.
 >
@@ -33,6 +88,8 @@
 > **What I did.** First, what's irreplaceable — the analysts' disposition labels — exported before the last day. Second, a phase plan: Phase one is the deterministic rule only, as SQL pushdown, a few weeks. Phase two, the ML retrain and new inference, two to three months, behind a business-driver gate. Third, I froze alerting and CI/CD work until the gate gives a go, and wrote the whole thing down so my manager could judge it independently.
 >
 > **Cost I accepted.** I said no to something that looked like a quick win and delayed visible output. **Result:** the labels are safe, the cheap defensive layer has a clear path, and the team's time went to a real P1. The numbers are from my own assessment and not yet re-verified on production; I'd say that if asked.
+
+</details>
 
 ## 4. 适用 LP 与改角度
 
@@ -48,13 +105,27 @@
 
 ## 5. 追问（≥5）
 
-1. **Who asked you to make this assessment?** → 【待 Chi 补：是自己发起还是经理要求？（影响 Ownership vs 被分配）】
-2. **How did you decide it was a no-go for Phase 2 and not just 'harder'?** → 推理在大 warehouse 上必然超时；精确率无 ground truth；告警量=每天数百万条；估算 5–8 人周 + 2–3 月。
-3. **What was the pushback?** → 【待 Chi 补：有没有人希望照原计划上线？你怎么回应？】
-4. **How do you know your numbers are right?** → 来自我自己的评估文档，尚未从生产复核；口播用量级；这是诚实边界。
-5. **What happened after?** → Jira DTBTTFOUND-3254 … 3261（label `anomaly-detector`）已开；Phase 1 进度 【待 Chi 补：Phase 1 是否已排期/上线、gate 当前状态】
-6. **What would make you say go?** → 业务驱动明确 + shadow 精确率达到阈值（具体阈值 【待 Chi 补】）。
-7. **Wasn't that wasted intern work?** → 代码/terraform/训练配方（固定 seed）都可重建；唯一不可再生的是标注，已导出。
+1. **Who asked you to make this assessment?**
+   - 【待 Chi 补：是自己发起还是经理要求？（影响 Ownership vs 被分配）】
+2. **How did you decide it was a no-go for Phase 2 and not just 'harder'?**
+   - 推理在大 warehouse 上**必然超时**。
+   - 精确率**无 ground truth**。
+   - 告警量 = **每天数百万条**。
+   - 估算 **5–8 人周** + **2–3 月**。
+3. **What was the pushback?**
+   - 【待 Chi 补：有没有人希望照原计划上线？你怎么回应？】
+4. **How do you know your numbers are right?**
+   - 来自**我自己的评估文档**，尚未从生产复核。
+   - 口播用**量级**；这是诚实边界。
+5. **What happened after?**
+   - Jira **DTBTTFOUND-3254 … 3261**（label `anomaly-detector`）已开。
+   - Phase 1 进度：【待 Chi 补：Phase 1 是否已排期/上线、gate 当前状态】
+6. **What would make you say go?**
+   - **业务驱动明确** + **shadow 精确率**达到阈值。
+   - 具体阈值：【待 Chi 补】
+7. **Wasn't that wasted intern work?**
+   - 代码 / terraform / 训练配方（**固定 seed**）都可重建。
+   - 唯一不可再生的是**标注**，已导出。
 
 ## 6. Senior 升级点（bar = senior）
 

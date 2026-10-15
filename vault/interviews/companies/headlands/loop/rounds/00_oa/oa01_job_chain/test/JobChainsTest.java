@@ -128,6 +128,33 @@ class JobChainsTest {
     }
 
     @Test @Tag("part3") @Tag("fmt")
+    void officialHackerRankExample() {
+        // 原题样例（Chi 截图逐字抄录，mock_maven/catalog/raw/hackerrank_job_runner_photos.md）
+        var out = JobChains.solve(lines("""
+                #job_id,runtime_in_seconds,next_job_id
+                1,60,23
+                2,23,3
+                3,12,0
+                23,30,0
+                """));
+        assertEquals(lines("""
+                -
+                start_job: 1
+                last_job: 23
+                number_of_jobs: 2
+                job_chain_runtime: 00:01:30
+                average_job_time: 00:00:45
+                -
+                start_job: 2
+                last_job: 3
+                number_of_jobs: 2
+                job_chain_runtime: 00:00:35
+                average_job_time: 00:00:17
+                -
+                """), out);
+    }
+
+    @Test @Tag("part3") @Tag("fmt")
     void malformedIsASingleLine() {
         var outcome = JobChains.analyze(List.of("#h", "1,10,2"));
         assertInstanceOf(JobChains.Malformed.class, outcome);

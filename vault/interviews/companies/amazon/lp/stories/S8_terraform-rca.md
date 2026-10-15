@@ -16,13 +16,70 @@
 
 ⚠️ 面试里曾说过 "the only resource in the whole repo missing it"——**不成立**。现在的说法：「I checked the neighboring modules that day; afterwards I scanned the whole repo and found dozens missing it, mostly harmless future grants, but two real ones in another module that haven't fired yet.」
 
-## 2. 60–90 秒口播版（≈ 170 词）
+## 2. 60–90 秒口述提纲
+
+**I was only cc'd on a failed release, posted the root cause and fix in seven minutes, then scanned the whole repo and flagged the next two.**
+
+**S · Situation**
+- A release of our **Snowflake infrastructure** repo failed in **QA**: `GRANT OWNERSHIP` was rejected.
+- A reviewer role already held a dependent **USAGE** grant.
+
+**T · Task**
+- Someone else was **assigned** to investigate; I was only **cc'd** — but the release was blocked.
+
+**A · Action** (in the order it happened)
+1. **Read the error** and matched it to the grant structure I knew.
+2. In **seven minutes** posted the root cause: the ownership resource didn't set `outbound_privileges`.
+3. Posted the **one-line fix**, `outbound_privileges = "REVOKE"`, plus a check of **neighboring modules**.
+4. **Asked** whether I could push; the PR went in.
+5. **After**: scanned the **whole repo** for the same omission.
+6. **Flagged two** same-shape resources in another module that haven't fired yet.
+
+**R · Result**
+- QA, pre-prod and prod deployed the **same afternoon**.
+- Repo scan: dozens lack the parameter, mostly harmless `future_*` grants; **two real risks** surfaced.
+
+**L · Learning / Mechanism**
+- **Fix this instance** and **eliminate the class** are different jobs; I'd rather own "here's the next one".
+
+<details><summary>逐字稿（参考，不背）</summary>
 
 > A release of our Snowflake infrastructure repo failed in QA. `GRANT OWNERSHIP` on a database was rejected because a reviewer role already held a dependent `USAGE` grant. Someone else was assigned to investigate; I was cc'd. Seven minutes later I'd posted the root cause — the ownership resource didn't set `outbound_privileges`, so Terraform tried to transfer ownership without revoking dependents — the one-line fix, `outbound_privileges = "REVOKE"`, and a check of neighboring modules. I asked whether I could push, the PR went in, and QA, pre-prod and prod deployed that afternoon.
 >
 > The part I care about is what came after. I scanned the whole repo: dozens of ownership resources lack the parameter — most are `future_*` grants where it's harmless — but two in another module are the exact same shape as the one that broke, and haven't fired yet. I flagged them. I'd rather own "here's the next one" than only the one that paged.
 
-## 3. 2 分钟版（≈ 260 词）
+</details>
+
+## 3. 2 分钟口述提纲
+
+**I was only cc'd on a failed release, posted the root cause and fix in seven minutes, then scanned the whole repo and flagged the next two.**
+
+**S · Situation**
+- The release pipeline for our **Snowflake infrastructure** repo failed in **QA**, blocking a deploy.
+- Snowflake rejected a `GRANT OWNERSHIP`: the target already had a **dependent grant** held by a reviewer role.
+- Ownership transfer needs dependents revoked; the provider expresses that as `outbound_privileges` (**REVOKE** or **COPY**).
+
+**T · Task**
+- I was **cc'd, not assigned**; Terraform has **no transactions**, so any fix must be **re-entrant**.
+
+**A · Action** (in the order it happened)
+1. **Read the error** and matched it to the repo's grant structure.
+2. In **seven minutes** posted the **root cause**, the fix `outbound_privileges = "REVOKE"`, and a check of **adjacent modules**.
+3. **Asked** whether I could push; the PR was **reviewed**.
+4. **QA, pre-prod and prod** deployed the same day.
+5. **After**: scanned the whole repo — **79** ownership resources, **42** without the parameter.
+6. Most are `future_*` variants where it **doesn't matter**; the `scheme_fees` module had **two** with the same shape as the one that failed.
+7. **Flagged** them before they fired.
+
+**R · Result**
+- **Same-day** three-environment deploy.
+- **Two** known-risk items surfaced proactively; flagged, and I don't claim they're fixed.
+
+**L · Learning / Mechanism**
+- "Fixed this one" and "eliminated this class" are different jobs; seven minutes was the easy part.
+- **What I'd do differently:** a repo-wide **lint or policy check** at plan stage — my inference, not landed.
+
+<details><summary>逐字稿（参考，不背）</summary>
 
 > **Situation.** The release pipeline for our Snowflake infrastructure repo failed in QA, blocking a deploy. Snowflake rejected a `GRANT OWNERSHIP` because the target already had a dependent grant held by a reviewer role.
 >
@@ -33,6 +90,8 @@
 > **After.** "Fixed this one" and "eliminated this class" are different jobs. I scanned the whole repo: 79 ownership resources, 42 without the parameter. Most are `future_*` variants where it doesn't matter. But the `scheme_fees` module had two resources with the same shape as the one that failed. I flagged them before they fired.
 >
 > **Result:** same-day three-environment deploy, plus two known-risk items surfaced proactively.
+
+</details>
 
 > 说话边界：不要说 "only resource missing it"（Chi 之前面试说过，不成立）；只说「那天核查了相邻模块，事后扫了全仓库」。
 
@@ -48,13 +107,26 @@
 
 ## 5. 追问（≥5）
 
-1. **How did you get to the root cause in 7 minutes?** → 对整个 repo 的 grant 结构有全局图景；错误信息指向依赖授权；Provider 对应参数。
-2. **Why REVOKE and not COPY?** → 【待 Chi 补：选 REVOKE 而非 COPY 的理由（COPY 会复制授权到新所有者）；若当时没权衡，如实说】
-3. **What are the risks of this fix?** → Terraform 无事务；REVOKE 会撤销 reviewer 角色的 USAGE，需确认 reviewer 角色是否依赖它 【待 Chi 补：当时怎么确认的】
-4. **Why didn't you fix the two risky ones?** → 【待 Chi 补：是标出未修、还是已提 PR？以事实为准】
-5. **How would you prevent this class?** → 全仓库 lint/policy check（无事务环境里把问题前移到 plan 阶段）；推断，非已落地。
-6. **Why the scan?** → "修完这一次"和"消灭这一类"是两件事。
-7. **Terraform pitfalls?** → 重命名资源默认删了重建（`moved` block / `state mv`）；危险变更拆小、可重入。
+1. **How did you get to the root cause in 7 minutes?**
+   - 对整个 repo 的 **grant 结构**有全局图景。
+   - 错误信息指向**依赖授权**。
+   - Provider 有对应参数。
+2. **Why REVOKE and not COPY?**
+   - 【待 Chi 补：选 REVOKE 而非 COPY 的理由（COPY 会复制授权到新所有者）；若当时没权衡，如实说】
+3. **What are the risks of this fix?**
+   - Terraform **无事务**。
+   - REVOKE 会撤销 reviewer 角色的 **USAGE**，需确认 reviewer 角色是否依赖它。
+   - 【待 Chi 补：当时怎么确认的】
+4. **Why didn't you fix the two risky ones?**
+   - 【待 Chi 补：是标出未修、还是已提 PR？以事实为准】
+5. **How would you prevent this class?**
+   - 全仓库 **lint/policy check**，把问题前移到 **plan 阶段**。
+   - **推断，非已落地**。
+6. **Why the scan?**
+   - 「修完这一次」和「消灭这一类」是**两件事**。
+7. **Terraform pitfalls?**
+   - **重命名资源**默认删了重建（`moved` block / `state mv`）。
+   - 危险变更**拆小、可重入**。
 
 ## 6. Senior 升级点（bar = senior）
 

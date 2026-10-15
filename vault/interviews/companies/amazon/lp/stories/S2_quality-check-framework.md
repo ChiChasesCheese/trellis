@@ -17,13 +17,68 @@
 
 **状态口径（必须背）**："The framework and eight rollouts are live; merchant-level readiness is designed, reviewed, and proven for one subject area, and the framework-wide rollout is sequenced behind the net-settlement ramp." **不说**「已改成商户级 / 上线效果」。
 
-## 2. 60–90 秒口播版（≈ 190 词）
+## 2. 60–90 秒口述提纲
+
+**I replaced hand-written validation tasks with a config-driven quality gate, then wrote the ADR that overturned the granularity of my own design.**
+
+**S · Situation**
+- The team had **dozens of reconciliation tables**, each with its own **hand-written validation task**.
+
+**T · Task**
+- Make adding a check cheap, and make "is this data safe to read" a **hard condition**, not a Slack convention.
+
+**A · Action** (in the order it happened)
+1. Built a **config table**: one row says which stored procedure runs for which subject area, with what **SLA**.
+2. Built a **generic executor** that writes a normalized pass / fail / warning row; an **exception handler** isolates broken checks.
+3. Added a status row that flips to **Completed** and replicates to a share layer — downstream teams **JOIN** on it.
+4. **Rolled it out** across eight subject areas myself — adding a check became inserting a row.
+5. At production scale I saw **my own flaw**: readiness was per table, so ~**50 bad merchants** of **35,000** blocked everybody.
+6. Wrote an **ADR** — four alternatives, a correctness argument, a volume analysis.
+
+**R · Result**
+- Framework and **eight rollouts live**; merchant-level readiness **designed, reviewed, proven in one subject area**.
+- Broader rollout is **sequenced behind net settlement** — not claimed as shipped.
+
+**L · Learning / Mechanism**
+- **Granularity** is a design parameter to revisit at scale; I fix my own flaws through a formal **ADR**.
+
+<details><summary>逐字稿（参考，不背）</summary>
 
 > Our team had dozens of reconciliation tables, and every new one got its own hand-written validation task. I replaced that with a config-driven quality-check framework. One row in a config table says which stored procedure to run for which subject area, with what SLA. A generic executor builds the call, captures the result, and writes a normalized pass, fail or warning row, and an exception handler means one broken check never takes down the others. When every enabled check passes, a status row flips to `Completed` and replicates to a share layer where downstream teams `JOIN` on it. So "is this data safe to read" went from a Slack convention to a SQL condition.
 >
 > I rolled it out across eight subject areas myself — adding a check became inserting a row. Then I saw a flaw in my own design: readiness was per table, so roughly fifty bad merchants out of thirty-five thousand blocked everybody. I didn't patch it quietly. I wrote an ADR: four alternatives, a correctness argument, and a volume analysis. The direction is reviewed and proven in one subject area; the broader rollout is sequenced behind the net-settlement work.
 
-## 3. 2 分钟版（≈ 290 词）
+</details>
+
+## 3. 2 分钟口述提纲
+
+**I replaced hand-written validation tasks with a config-driven quality gate, then wrote the ADR that overturned the granularity of my own design.**
+
+**S · Situation**
+- Every reconciliation table — acquirer settlement, adjustments, tax, transaction reconciliation — had its **own validation task**.
+- Each new table meant **write, review, deploy** another task.
+
+**T · Task**
+- I **owned** replacing that with one **platform** other people plug into.
+
+**A · Action** (in the order it happened)
+1. Built a **contract-config table**: procedure name, date column, **SLA hours**, JSON parameter blob.
+2. Built a generic **executor** with `EXECUTE IMMEDIATE` that writes PASS / FAIL / WARNING; crashes become a **FAIL row**.
+3. Built a **trigger-status** state machine: all enabled checks pass, status becomes **Completed**, replicated to a share layer.
+4. Accepted the **dynamic SQL** trade-off — no static checking; config is migration-controlled, plus a **health check** on the results table.
+5. Shipped the ~**1,500-line** framework, then **rolled out eight subject areas** myself.
+6. Saw my **own flaw**: ~50 failing merchants (~4%) blocked **35,000**; wrote an **ADR** with four options.
+7. Rejected **VARIANT** (kills pushdown), **flatten** (size cap), a **new table** (new infrastructure); chose **summary row plus per-merchant failure rows**, "**strictest wins**".
+
+**R · Result**
+- **96.4%** of checks pass, so only failures are stored: at worst ~**800K rows a month**, not 2.4M a day.
+- Framework and **eight rollouts live**; merchant-level **designed, reviewed, proven** in one area (16 months); rollout sequenced behind net settlement.
+
+**L · Learning / Mechanism**
+- Downstream **joins on a status row** — safety is a SQL condition, not a convention.
+- **What I'd do differently:** ask "who is the **blast radius** if one check fails?" before designing any gate.
+
+<details><summary>逐字稿（参考，不背）</summary>
 
 > **Problem.** Every reconciliation table — acquirer settlement, adjustments, tax, transaction reconciliation — had its own validation task, so each new one meant writing, reviewing and deploying another task.
 >
@@ -34,6 +89,8 @@
 > **My own flaw.** At production scale I noticed that readiness was per subject area: about fifty persistently failing merchants, around four percent, blocked all thirty-five thousand. I'd designed that. I wrote an ADR with four options: a VARIANT column with per-row functions, which disables predicate pushdown on a fifty-million-row table; VARIANT plus flatten, which hits a per-cell size cap; a new per-merchant table, which needs new infrastructure; and my choice, reusing the results table with a summary row plus per-merchant failure rows. The safety argument is "strictest wins": the read checks table-level failure first, so mixed old and new procedures are always safe. Since 96 percent of checks pass, storing only failures is nearly free.
 >
 > **Status.** Merchant-level readiness is designed, reviewed, and proven in one subject area; the broader rollout is sequenced behind net settlement.
+
+</details>
 
 ## 4. 适用 LP 与改角度
 
@@ -50,14 +107,32 @@
 
 ## 5. 追问（≥5）
 
-1. **Why dynamic SQL, isn't that risky?** → config-driven 的代价；配置经 migration 控制不是用户输入；风险是失去静态检查；缓解 = exception handler + 结果表健康检查。
-2. **Why a status table, not task dependencies?** → 下游在不同库/不同账号，复制的状态行是跨边界的最低公约数；`AFTER` 依赖不跨账号。
-3. **Correctness argument for merchant-level?** → strictest wins：先判 `NOT EXISTS(表级失败)` 再判 `NOT EXISTS(商户级失败)`；未改造的 procedure 退化成表级阻塞 = 今天的行为。
-4. **Why not VARIANT?** → secure view 上逐行 UDF / VARIANT 解析会关闭谓词下推；VARIANT 16 MB/cell 上限（~98K 商户）；扁平行 + 等值 JOIN 保留剪枝。
-5. **What's the actual status?** → 框架 + 8 次铺开在生产；商户级 designed, reviewed, proven in one area (TRANSFERS 16 个月), sequenced behind net-settlement。
-6. **What did you learn / what changed in how you work?** → 粒度是随规模要重新审视的设计参数；修自己的缺陷走比修别人 bug 更正式的流程（ADR）；设计任何 gate 先问「失败的爆炸半径是谁」。
-7. **Did anyone disagree?** → 【待 Chi 补：ADR 评审里有没有人提出异议、你如何回应——没有就如实说「review 无实质异议」，不要编冲突】
-8. **How many teams use it?** → 【待 Chi 补：除 Snowglobe 团队外有无其他团队接入】
+1. **Why dynamic SQL, isn't that risky?**
+   - 这是 **config-driven 的代价**；配置经 **migration** 控制，不是用户输入。
+   - 真风险：失去**静态检查**。
+   - 缓解：**exception handler** + 结果表**健康检查**。
+2. **Why a status table, not task dependencies?**
+   - 下游在**不同库/不同账号**。
+   - **复制的状态行**是跨边界的最低公约数；`AFTER` 依赖不跨账号。
+3. **Correctness argument for merchant-level?**
+   - **Strictest wins**：先判 `NOT EXISTS(表级失败)`，再判 `NOT EXISTS(商户级失败)`。
+   - 未改造的 procedure 退化成**表级阻塞** = 今天的行为。
+4. **Why not VARIANT?**
+   - secure view 上逐行 UDF / VARIANT 解析会**关闭谓词下推**。
+   - VARIANT **16 MB/cell** 上限（~98K 商户）。
+   - **扁平行 + 等值 JOIN** 保留剪枝。
+5. **What's the actual status?**
+   - 框架 + **8 次铺开**在生产。
+   - 商户级：**designed, reviewed, proven in one area**（TRANSFERS，16 个月）。
+   - 全框架铺开 **sequenced behind net-settlement**。
+6. **What did you learn / what changed in how you work?**
+   - **粒度**是随规模要重新审视的设计参数。
+   - 修自己的缺陷走比修别人 bug 更**正式的流程（ADR）**。
+   - 设计任何 gate 先问「失败的**爆炸半径**是谁」。
+7. **Did anyone disagree?**
+   - 【待 Chi 补：ADR 评审里有没有人提出异议、你如何回应——没有就如实说「review 无实质异议」，不要编冲突】
+8. **How many teams use it?**
+   - 【待 Chi 补：除 Snowglobe 团队外有无其他团队接入】
 
 ## 6. 证据边界
 

@@ -15,17 +15,60 @@
 | 日常并行跑 Claude Code / Codex / Cursor，各有 usage 上限；schema pool 让多个 agent 会话并行跑迁移与集成测试 | S7 笔记 |
 | **没有**：迁移规模（多少行/多少服务）、周期、parity 测试的通过率、加速倍数 | 【待 Chi 补】 |
 
-## 2. 60–90 秒口播版（只用已有事实；缺口留空）
+## 2. 60–90 秒（口述提纲）
+
+**"The agent proposes, tests decide: I migrated legacy Ruby and Kotlin logic to Snowflake and Java with Claude Code, and held it to behavioral parity."**
+
+**S · Situation**
+- PayPal fee platform, **Feb 2025–present**: legacy **Ruby/Kotlin** business logic.
+- Scale of the migration: 【待 Chi 补：迁移的具体对象与规模，例如"X 个规则/Y 个服务/Z 行"】
+
+**T · Task**
+- Migrate it to **Snowflake/Java** while ensuring **behavioral parity**.
+- Deliver **faster**, using an **AI-native workflow**, not AI as autocomplete.
+
+**A · Action**
+1. Used **Claude Code** for **code review, test generation, and refactoring**.
+2. Ensured parity with **comprehensive testing**. 【待 Chi 补：parity 测试具体怎么做——先写测试固定旧行为？影子对拍？】
+3. My general rule with agents: **plan the phase**, **TDD each phase**, let **CI and monitoring gates** catch regressions.
+4. It is money code, so **I read every diff myself**.
+
+**R · Result**
+- **Behavioral parity** through comprehensive testing; delivery **accelerated** (resume wording).
+- 【待 Chi 补：结果——parity 测试的通过情况、发现了几个旧逻辑里的隐藏行为、交付时间比预期短多少（给出基线）】
+
+**L · Learning / Mechanism**
+- **Agent proposes, tests decide, human reads the diff.**
+- Trust **gates and thresholds**, not lines of code.
+
+<details><summary>逐字稿（参考，不背）</summary>
 
 > I migrated legacy Ruby and Kotlin business logic into Snowflake and Java, and I did it with an AI-native workflow rather than treating AI as autocomplete. The rule I worked by: the agent proposes, tests decide. 【待 Chi 补：迁移的具体对象与规模，例如"X 个规则/Y 个服务/Z 行"】 I used Claude Code for code review, test generation and refactoring, and I ensured behavioral parity through comprehensive testing. 【待 Chi 补：parity 测试具体怎么做——先写测试固定旧行为？影子对拍？】 My general rule with agents is to plan the phase with them, do TDD for each phase, and let CI and monitoring gates catch regressions. Because this is money code, I read every diff myself. 【待 Chi 补：结果——parity 测试的通过情况、发现了几个旧逻辑里的隐藏行为、交付时间比预期短多少（给出基线）】
 
-## 3. 2 分钟版结构（等 Chi 补完再成文）
+</details>
 
-1. **Situation**：legacy 逻辑在哪里、为什么要迁（【待 Chi 补】）。
-2. **Decision**：怎么使用 AI——只让它做什么、不让它做什么；【待 Chi 补：是否 parity-test-first，被否决的备选是什么】。
-3. **Mechanism**：parity 测试集、CI gate、你读每个 diff 的规则。
-4. **Result**：加速 + 零行为偏差的证据（【待 Chi 补：基线与度量】）。
-5. **Learning**：对 AI 工具的信任边界。
+## 3. 2 分钟（口述提纲，等 Chi 补完再成文）
+
+**"The agent proposes, tests decide: I migrated legacy Ruby and Kotlin logic to Snowflake and Java with Claude Code, and held it to behavioral parity."**
+
+**S · Situation**
+- Legacy **Ruby/Kotlin** logic, PayPal, **Feb 2025–present**.
+- Where it lives and why it had to move: 【待 Chi 补】
+
+**T · Task**
+- Move it to **Snowflake/Java** with **no behavioral drift**, and faster.
+
+**A · Action**
+1. **Decision**: what the AI may do (**review, test generation, refactoring**) and may not. 【待 Chi 补：是否 parity-test-first，被否决的备选是什么】
+2. **Mechanism**: a **parity test set**, **CI gates**, and my rule to **read every diff** on money code.
+3. Rule I work by: **plan with the agent, TDD every phase, gates and thresholds over lines of code**.
+
+**R · Result**
+- **Speed-up plus zero behavioral deviation**: 【待 Chi 补：基线与度量】
+
+**L · Learning / Mechanism**
+- Where the **trust boundary** with AI tools sits: **agent proposes, tests decide**.
+- What I'd do differently: 【待 Chi 补】
 
 ## 4. 适用 LP 与改角度
 
@@ -38,13 +81,23 @@
 
 ## 5. 追问（≥5）
 
-1. **How did you verify parity?** → 【待 Chi 补】（对拍/影子运行/表级 diff？）
-2. **What did the AI get wrong?** → 【待 Chi 补：一个真实例子；没有就说"没有记录"，别编】
-3. **How do you trust AI-generated code?** → plan → TDD → CI + monitoring gates；gates 和 thresholds 而不是行数；money code 读每个 diff。
-4. **How much faster?** → 【待 Chi 补：基线（按什么算）+ 度量方式；没有精确数字就给可数事实】
-5. **What did you learn about the legacy logic?** → 【待 Chi 补】
-6. **Would you let an agent do this unsupervised?** → 不；agent 提议、测试裁决、人读 diff。
-7. **Team adoption?** → S7：多会话并行靠 schema pool；on-call copilot 相邻团队采用。
+1. **How did you verify parity?**
+   - 【待 Chi 补】（对拍/影子运行/表级 diff？）
+2. **What did the AI get wrong?**
+   - 【待 Chi 补：一个真实例子；没有就说"没有记录"，别编】
+3. **How do you trust AI-generated code?**
+   - **Plan → TDD → CI + monitoring gates.**
+   - Focus on **gates and thresholds**, not lines of code.
+   - **Money code: I read every diff.**
+4. **How much faster?**
+   - 【待 Chi 补：基线（按什么算）+ 度量方式；没有精确数字就给可数事实】
+5. **What did you learn about the legacy logic?**
+   - 【待 Chi 补】
+6. **Would you let an agent do this unsupervised?**
+   - **No**: agent proposes, **tests decide**, human reads the diff.
+7. **Team adoption?**
+   - S7: **schema pool** lets multiple sessions run in parallel.
+   - **On-call copilot** adopted by an adjacent team.
 
 ## 6. Senior 升级点（bar = senior）
 
