@@ -39,17 +39,19 @@
 | 13 | **Notification service / router** | HLD 与 LLD 混 | 题库：[lld:design-notification-service](../../../../domains/low-level-design/drills/problems/design-notification-service.md) | LC8315111：电商通知路由，考官期待 Strategy / Singleton / Factory |
 | 14 | **Library management / Snake game / Stock broker / DNS 解析器（带健康检查、TTL、快速读）** | 各 1 | 题库：[lld:design-library](../../../../domains/low-level-design/drills/problems/design-library.md)、[lld:design-snake-and-ladder](../../../../domains/low-level-design/drills/problems/design-snake-and-ladder.md)、[lld:design-stock-brokerage](../../../../domains/low-level-design/drills/problems/design-stock-brokerage.md) | 长尾；做一遍即可。DNS 解析器（LC6841317）≈ TTL 缓存 + 健康检查：用 [lld:design-ttl-cache](../../../../domains/low-level-design/drills/problems/design-ttl-cache.md) 的思路 |
 | 15 | **办公室人数追踪（presence tracker）** | 1 / 0（拿到 offer）| **本 kit 新写**：`occupancy_tracker.md` + `code/occupancy_tracker.py` | 小型数据模型 + 时间戳查询 + SQL |
+| 16 | **内存数据库（CRUD + 模拟 `SELECT … FROM … JOIN … WHERE … ORDER BY`）** | **Chi 亲历**（2026-10-16，过去被问过、当时写不出来）+ LeetCode **LC 2408 Design SQL**（API 为 `ins/rmv/sel/exp`）| **本 kit 新写**：`in_memory_database.md` + `code/in_memory_database.py`（完整参考）+ `code/in_memory_database_45min.py`（面试紧凑版）| 来源是第一手而非论坛转述，**优先级不按频次排**：建议紧跟 #1–#3 之后做。先读 md 的"45 分钟怎么写"，再自己写，最后用 `sqlite3` 对拍思路自测；邻近：#1 file search（谓词组合）、#15 occupancy tracker（SQL 版）|
 
 **为什么这个顺序**：先做 #1–#3（本 kit 新写，且频次最高，题库没有），再回到题库做 #2、#4、#5（题库已有完整 4 关 + 测试），最后长尾。
 建议总用时：新写的 3 道各 90 分钟（含重写一遍），题库的每道 60 分钟（只做第 1–3 关），长尾各 20 分钟看一遍题解。
 
-## 3. 本 kit 新写三份的内容与运行
+## 3. 本 kit 新写四份的内容与运行
 
 | 文件 | 解决的问题 | 运行 |
 |---|---|---|
 | `file_search.md` / `code/file_search.py` | 过滤器组合（Specification / Composite）、惰性遍历、符号链接环、剪枝、查询小语言 | `python3 -I code/file_search.py` → `OK file_search` |
 | `pricing_billing.md` / `code/pricing_billing.py` | `Money` 值对象、规则引擎（策略 / 装饰器）、披萨 Builder、阶梯计价与免费额度、票价封顶、手续费 | `python3 -I code/pricing_billing.py` → `OK pricing_billing` |
 | `occupancy_tracker.md` / `code/occupancy_tracker.py` | 事件溯源、前缀和 + 二分、可追加线段树、同一模型的 SQL 版 | `python3 -I code/occupancy_tracker.py` → `OK occupancy_tracker` |
+| `in_memory_database.md` / `code/in_memory_database.py` / `code/in_memory_database_45min.py` | LC 2408 → 类型化表与 CRUD → 三值逻辑谓词与稳定多键 ORDER BY → 嵌套循环 / 哈希连接 / LEFT JOIN → SQL 文本前端（tokenizer + 递归下降）→ 索引与规划器、聚合、事务、线程安全；与 `sqlite3` 随机对拍 | `python3 -I code/in_memory_database.py` → `OK in_memory_database`；`python3 -I code/in_memory_database_45min.py` → `OK in_memory_database_45min` |
 
 题库的 pytest：在仓库根目录 `IMPL=starter uv run --with pytest python -m pytest vault/domains/low-level-design/problems/<name> -q`（starter 是空壳，应该红；把你的实现填进去再跑；参考解用 `IMPL=solution`）。
 
