@@ -12,7 +12,7 @@
 | **LP**：原理 → 故事 → 题库 → 练习 | [lp/00_how_lp_works.md](lp/00_how_lp_works.md) · [lp/story_matrix.md](lp/story_matrix.md) · `lp/stories/` · [lp/question_bank.md](lp/question_bank.md) · [lp/drill.md](lp/drill.md) |
 | **GenAI 这一轮** | [lp/genai/00_what_they_ask.md](lp/genai/00_what_they_ask.md) · [stories](lp/genai/stories.md) · [question_bank](lp/genai/question_bank.md) · [primer](lp/genai/primer.md) |
 | **编码**（Python，16 个模式、81 道题） | [coding/plan.md](coding/plan.md) · [coding/amazon_bar.md](coding/amazon_bar.md) · [coding/top_list.md](coding/top_list.md) · `coding/patterns/01–16` |
-| **LLD / OOD** | [lld/route.md](lld/route.md) · 文件搜索、计费、人数追踪（附可运行代码 `lld/code/`） |
+| **LLD / OOD** | [lld/route.md](lld/route.md) · 文件搜索、计费、人数追踪、**[内存数据库（Chi 亲历 + LC 2408）](lld/in_memory_database.md)**（附可运行代码 `lld/code/`） |
 | **系统设计** | [sd/00_ddia_refresh.md](sd/00_ddia_refresh.md) · [sd/00_how_to_run_the_round.md](sd/00_how_to_run_the_round.md) · `sd/problems/`（5 道 AWS 数据题）· [sd/route.md](sd/route.md) · [sd/hld_sketches.md](sd/hld_sketches.md) |
 | 证据原文 | `catalog/raw/official.md`（官方）· `catalog/raw/forums.md`（110 条 2025–2026 面经）· `catalog/raw/github_repos.md` |
 
