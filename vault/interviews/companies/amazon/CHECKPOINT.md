@@ -23,3 +23,15 @@ Chi 的要求：教科书模式；编码用 Python。
 1. 统一简历 $600B / net settlement 口径（README「面试前必须处理」）。
 2. 按 `lp/drill.md` 补【待 Chi 补】，先补 matrix 里的单点风险 LP。
 3. 按 LOOP_GUIDE §6 的 5 天表走；面完写 debrief 回填 `catalog/raw/`。
+
+## P6 近一月面经（2026-10-16 起，分支 `amazon-recent-1p3a`）
+
+入口 [[RECENT_amazon_2026-10]]。来源 `catalog/raw/1p3a_2026-10-16.md`、`hellointerview_2026-10-16.md`。
+
+| 层 | 位置 | 验收 | 状态 |
+|---|---|---|---|
+| OOD 12 叶 | LLD 域 `amazon` 分支 → Anki `低层设计（LLD）::10 Amazon 专项` | `uv run python scripts/check_lld_problems.py --branch amazon --all` | discount-engine、linux-find ✅；其余进行中 |
+| Coding 12 题 | `recent/coding/`、`coding/solutions/` → Anki `LeetCode Tops::22 Amazon 近一月原题` | `python3 -I coding/run_all.py`；`recent/push_cards.py` | 进行中 |
+| SD 7 题 | `interviews/core/system-design/` | `python3 vault/interviews/core/system-design/check_sd.py` | 待启动 |
+
+下一步：按 `proposals/lld/AMAZON_AGENT.md`、`proposals/sd-reported/AGENT.md`、`recent/AGENT.md` 续做未通过的项（各自带 resume rule）。

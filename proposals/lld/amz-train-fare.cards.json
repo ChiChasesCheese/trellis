@@ -1,0 +1,74 @@
+[
+  {
+    "id": "amz-train-fare-how-asked-and-three-questions",
+    "node": "amazon.amz-train-fare",
+    "type": "qa",
+    "q": "Amazon 面试里「火车线路票价（Train Fare Calculator）」是怎么问的？开场先问哪三个澄清问题？",
+    "a": "报告（一亩三分地，2026-10-12 现场面）：线路 G→U→H→K→I，相邻站费用 1（G 到 I 是 4），实现 calculateFare(start, stop)；再支持动态加站；再追问周末总票价封顶。三问：(1) 封顶封「单程」还是「一人一天累计」——前者无状态，后者要记账；(2) 加站只追加还是可插中间——O(1) 对 O(n)；(3) 每区间是否同价——决定用位置差还是前缀和。",
+    "tags": []
+  },
+  {
+    "id": "amz-train-fare-objects-and-their-jobs",
+    "node": "amazon.amz-train-fare",
+    "type": "qa",
+    "q": "在 Amazon 火车票价设计里，应有哪几个对象？各自只负责什么？",
+    "a": "`Money`：整数「分」的值对象，没有浮点。`Route`：线路，拥有站名、各区间价格与前缀和，任意两站票价由它回答。`FareRule`：无状态的定价规则（如周末封顶），输入当前价格与行程，输出新价格。`FareCalculator`：把线路与规则按列表顺序串起来，时钟注入。`DailyCapLedger`：唯一有状态的类，记同一乘客同一天已付多少。切分依据：变化原因各不相同。",
+    "tags": []
+  },
+  {
+    "id": "amz-train-fare-stage1-calculate-fare-in-code",
+    "node": "amazon.amz-train-fare",
+    "type": "qa",
+    "q": "在 Amazon 火车票价设计的第 1 关，线路固定为 G→U→H→K→I、相邻站费用 1，用 Python 写出 `calculate_fare(stations, start, stop)`。",
+    "a": "票价就是两站位置之差的绝对值（每个区间 1）：\n\n```python\ndef calculate_fare(stations: list[str], start: str, stop: str) -> int:\n    pos = {name: i for i, name in enumerate(stations)}\n    try:\n        return abs(pos[start] - pos[stop])\n    except KeyError as err:\n        raise LookupError(f\"unknown station {err}\") from None\n```\n\n例：stations=[\"G\",\"U\",\"H\",\"K\",\"I\"]，G 到 I 位置 0 和 4，返回 4；I 到 G 同样 4；同站返回 0。",
+    "tags": []
+  },
+  {
+    "id": "amz-train-fare-prefix-sums-and-middle-insertion",
+    "node": "amazon.amz-train-fare",
+    "type": "qa",
+    "q": "在 Amazon 火车票价设计里，要让区间价格可以不同，票价怎么算才能 O(1)？追加一站与在中间插入一站的代价为什么不同？",
+    "a": "存每个区间的价格，再存前缀和 prefix（prefix[i] 是首站到第 i 站的累计价格），票价 = |prefix[a] − prefix[b]|，查询 O(1)。追加一站：只在 prefix 末尾加一项，O(1)，已有两站间票价不变。在中间插入：其后所有站的位置和前缀和都要重排，O(n)，且被切开的区间会改变跨越它的票价。例：G→U→H→K→I 在 U 后插 N，G 到 I 由 4 变 5。",
+    "tags": []
+  },
+  {
+    "id": "amz-train-fare-rule-object-vs-if-in-method",
+    "node": "amazon.amz-train-fare",
+    "type": "qa",
+    "q": "在 Amazon 火车票价设计里，周末封顶是写成 `calculate_fare` 里的一个 `if`，还是做成 `FareRule` 对象？各自的代价和选择？",
+    "a": "写 `if`：第 3 关当场可用，但第 4 关的高峰加价、节假日各再加一个 `if`，核心方法越改越长，每次都要动它。做成协议 `FareRule.apply(fare, trip)`：`WeekendCap`、`PeakSurcharge` 各是一个小类，计算器只循环应用，加规则只新增类并改装配列表。因为已经有至少两个真实现，选对象；规则顺序有语义（先加价后封顶与反过来结果不同），由调用方列表顺序决定。",
+    "tags": []
+  },
+  {
+    "id": "amz-train-fare-followup-weekend-cap-and-injected-clock",
+    "node": "amazon.amz-train-fare",
+    "type": "qa",
+    "q": "在 Amazon 火车票价设计里，面试官追加「周末总票价要封顶」。时间从哪来？该改哪里、不改哪里？",
+    "a": "新增 `WeekendCap(cap)` 一个类：周末（`weekday() >= 5`）取 `min(fare, cap)`。时间不在规则里取：`FareCalculator` 构造时注入时钟，`calculate_fare(start, stop)` 签名不变，另有 `quote(start, stop, when)`。`Route` 与已有规则不动。例：注入周六 9 点，G 到 I 原价 4.00、封顶 3.00，得 3.00。",
+    "tags": []
+  },
+  {
+    "id": "amz-train-fare-edge-per-trip-vs-per-day-cap",
+    "node": "amazon.amz-train-fare",
+    "type": "qa",
+    "q": "在 Amazon 火车票价设计里，「总票价封顶」若指一个人一天累计不超过封顶，怎样记账才对？一个具体例子是什么？",
+    "a": "`DailyCapLedger` 记 `(日期 → 乘客 → 已付)`，本次实付 = min(本次票价, max(封顶 − 已付, 0))。例：封顶 6.00，乘客 ann 周一 G→I（4.00）实付 4.00，I→G（4.00）实付 2.00，再 G→U 实付 0。关键细节：整个 `charge` 只取一次时间，避免 23:59 算价、00:01 记账落到两天；封顶已满时剩余额度取 0 而不是负数；字典按天增长，要清理旧日期。",
+    "tags": []
+  },
+  {
+    "id": "amz-train-fare-concurrency-lock-read-compute-write",
+    "node": "amazon.amz-train-fare",
+    "type": "qa",
+    "q": "在 Amazon 火车票价设计里，同一乘客的多个行程同时记账，会出什么并发问题？用什么结构防止？",
+    "a": "「读已付、算实付、写回」是三步，GIL 只保证单条字节码原子。两个线程同时读到已付 0，各自算出可付 600，各写 600，总共收了 1200，突破封顶 600。做法：`DailyCapLedger` 用一把 `threading.Lock` 罩住整个读—算—写，持锁只有微秒；`Route` 另有自己的锁，保证加站与查价不会读到半个更新。`charge` 在锁外调 `quote`，两把锁不嵌套，因此不会死锁。",
+    "tags": []
+  },
+  {
+    "id": "amz-train-fare-common-mistake-now-and-float",
+    "node": "amazon.amz-train-fare",
+    "type": "qa",
+    "q": "在 Amazon 火车票价设计里，候选人最常见的错误是什么？给出一个会暴露它的输入。",
+    "a": "在计费方法里直接调 `datetime.now()` 判断周末，同时用 float 存价格。前者使测试无法固定「今天是周六」，也让第 4 关加规则时必须改核心方法；后者：`0.1 * 3` 得 `0.30000000000000004`，三个 0.10 的区间累计不等于 0.30。修法：注入时钟，金额用整数分的值对象。另一个同类错误：只处理 start 在 stop 之前，I 到 G 得到负数。",
+    "tags": []
+  }
+]

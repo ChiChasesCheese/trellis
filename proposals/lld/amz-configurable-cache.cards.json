@@ -1,0 +1,74 @@
+[
+ {
+  "id": "amz-configurable-cache-prompt-and-three-questions",
+  "node": "amazon.amz-configurable-cache",
+  "type": "qa",
+  "q": "Amazon 面试里「可配置缓存（Configurable Cache）」怎么问的？开场先问哪三个澄清问题？",
+  "a": "报告的原话：设计一个缓存，支持可插拔的淘汰策略（eviction policy，如 LRU、LFU）和可互换的存储后端（storage backend，如内存、文件；还提到 heap、stack）。先问三件事：(1) 策略与后端是创建时选定，还是运行时可换？决定要不要支持热切换；(2) 值是什么类型？文件后端要求能序列化，决定存储接口收不收任意对象；(3) 要不要过期、统计、线程安全？这几项各是一层可以后加的东西。",
+  "tags": []
+ },
+ {
+  "id": "amz-configurable-cache-objects-and-one-job-each",
+  "node": "amazon.amz-configurable-cache",
+  "type": "qa",
+  "q": "在可配置缓存设计里，有哪几个核心对象？各自只负责哪一件事？",
+  "a": "`Cache`：编排一次读写、守容量上限，不知道淘汰谁、数据放哪；`EvictionPolicy`（`LruPolicy`/`LfuPolicy`）：只记 key 的使用顺序或次数，不存值；`Store`（`MemoryStore`/`FileStore`）：只按 key 存取值，不懂顺序；`CacheConfig`：把「lru」「file」这样的名字翻成对象。划分依据：策略只依赖 key，后端只依赖值，两者互不引用，才能自由组合。",
+  "tags": []
+ },
+ {
+  "id": "amz-configurable-cache-stage1-put-flow-code",
+  "node": "amazon.amz-configurable-cache",
+  "type": "qa",
+  "q": "在可配置缓存里，写入一个新 key 的核心流程是什么？用 Python 写出 `put`（策略 `policy` 只记 key，后端 `store` 存值，`victim()` 返回该淘汰的 key）。",
+  "a": "先写后端（会失败的一步放最前），再淘汰，最后让策略登记新 key：\n```python\ndef put(self, key, value):\n    exists = key in self._policy\n    self._store.put(key, value)\n    if exists:\n        self._policy.on_access(key)\n        return\n    if len(self._policy) >= self._capacity:\n        victim = self._policy.victim()\n        self._store.delete(victim)\n        self._policy.on_remove(victim)\n    self._policy.on_insert(key)\n```\n覆盖已有 key 不涨容量，只算一次使用。",
+  "tags": []
+ },
+ {
+  "id": "amz-configurable-cache-lfu-frequency-buckets",
+  "node": "amazon.amz-configurable-cache",
+  "type": "qa",
+  "q": "在可配置缓存里，LFU（最不经常使用，Least Frequently Used）策略怎样让「选受害者」和「访问一次」都是 O(1)？",
+  "a": "按访问次数分桶：`freq -> OrderedDict(key)`，再记一个指向最小非空桶的 `min`。victim 就是 `min` 桶里最旧的 key（同频时退化成 LRU）；访问一次是把 key 从 f 桶挪到 f+1 桶，若 f 桶空了且 f==min 则 `min=f+1`。例：容量 2，put a、put b、get a、put c，a 频率 2、b 频率 1，淘汰 b，留下 a 和 c。空桶要立刻删。",
+  "tags": []
+ },
+ {
+  "id": "amz-configurable-cache-bridge-vs-subclass-explosion",
+  "node": "amazon.amz-configurable-cache",
+  "type": "qa",
+  "q": "在可配置缓存里，淘汰策略和存储后端两条轴怎么组合？为什么不写成 `LruMemoryCache`、`LfuFileCache` 这样的子类？",
+  "a": "两种做法：(1) 子类组合：2 种策略 x 2 种后端要写 4 个类，每多一种后端再多 2 个，策略的 bug 要在每个组合里各修一遍；(2) 组合（桥接 Bridge）：`Cache` 持有一个策略和一个后端，只写 2+2 个小类，新增后端只加 1 个类。选 (2)：两个维度互相独立变化，就该用持有关系而不是继承。策略只有一个方法族、不带状态时才能写成函数；LRU/LFU 带状态，所以写成类。",
+  "tags": []
+ },
+ {
+  "id": "amz-configurable-cache-followup-add-fifo-policy",
+  "node": "amazon.amz-configurable-cache",
+  "type": "qa",
+  "q": "在可配置缓存里，面试官追问「再加一种 FIFO 淘汰策略」，要改哪里、哪些代码不能动？",
+  "a": "只新增一个类并在注册表登记一行，`Cache`、`LruPolicy`、`LfuPolicy` 和所有后端一行不改：\n```python\nclass FifoPolicy:\n    def __init__(self): self._order = OrderedDict()\n    def __len__(self): return len(self._order)\n    def __contains__(self, key): return key in self._order\n    def on_insert(self, key): self._order[key] = None\n    def on_access(self, key): pass\n    def on_remove(self, key): self._order.pop(key, None)\n    def victim(self): return next(iter(self._order))\n\nPOLICIES[\"fifo\"] = FifoPolicy\n```\n访问不改变顺序：容量 2 时 put a、b，get a，put c，被淘汰的仍是 a。",
+  "tags": []
+ },
+ {
+  "id": "amz-configurable-cache-failed-write-policy-store-disagree",
+  "node": "amazon.amz-configurable-cache",
+  "type": "qa",
+  "q": "在可配置缓存里，文件后端写入失败（例如值是 `{1, 2}`，不能转成 JSON）时，策略和后端会怎样不一致？怎样的操作顺序能避免？",
+  "a": "反例顺序：先让策略淘汰旧 key、登记新 key，再写后端。容量 2 的文件缓存存着 a、b，`put(\"c\", {1, 2})` 时策略已经淘汰了 b、登记了 c，后端写入才抛 `StoreError`：b 白白丢了，c 在策略里却没有数据。正确顺序：先写后端，成功后才动策略；失败时两边都停在操作之前（a、b 仍在）。淘汰时后端删旧值失败，则要把刚写入的新值撤回再抛错。",
+  "tags": []
+ },
+ {
+  "id": "amz-configurable-cache-concurrency-lock-covers-reads",
+  "node": "amazon.amz-configurable-cache",
+  "type": "qa",
+  "q": "在可配置缓存里，为什么连 `get` 也要加锁？只靠 GIL（全局解释器锁）够不够？",
+  "a": "不够。`get` 会改策略（LRU 挪到队尾、LFU 升一个桶），是写操作。`put` 的「检查还有没有空位 -> 淘汰 -> 登记」是多步复合操作，GIL 只保证单个字节码原子：容量 1 时两个线程同时看到「有空位」，缓存就有 2 条，超出容量。做法：一把锁包住每个公开操作，文件 IO 也在锁内（吞吐换正确性）；要提高吞吐再按 key 分片，每片一套策略和后端。",
+  "tags": []
+ },
+ {
+  "id": "amz-configurable-cache-lfu-new-key-evicted-immediately",
+  "node": "amazon.amz-configurable-cache",
+  "type": "qa",
+  "q": "在可配置缓存里，LFU 实现最常见的错误是什么？",
+  "a": "先登记新 key、再选受害者。新 key 的频率是 1，通常是最小的，于是刚写入的 key 当场被淘汰。例：容量 1，put a、get a、put b，错误实现里 b 一写就被淘汰，`get(b)` 返回 None。修法：选受害者发生在新 key 登记之前（本设计先 `victim()`、再 `on_insert`），受害者只会是已有的 key。",
+  "tags": []
+ }
+]
