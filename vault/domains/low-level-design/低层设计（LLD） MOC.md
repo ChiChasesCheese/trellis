@@ -101,6 +101,19 @@
         - [[domains/low-level-design/map/problems.components.kv-store|内存键值存储（In-Memory Key-Value Store）]]
         - [[domains/low-level-design/map/problems.components.thread-pool|线程池（Thread Pool）]]
         - [[domains/low-level-design/map/problems.components.bounded-blocking-queue|有界阻塞队列（Bounded Blocking Queue）]]
+- [[domains/low-level-design/map/amazon|Amazon 专项（Amazon OOD）]]
+    - [[domains/low-level-design/map/amazon.amz-round|Amazon 的 LLD 轮怎么打（Amazon OOD Round）]]
+    - [[domains/low-level-design/map/amazon.amz-closest-store|增删查最近值（Add / Remove / Closest）]]
+    - [[domains/low-level-design/map/amazon.amz-train-fare|火车线路票价（Train Fare Calculator）]]
+    - [[domains/low-level-design/map/amazon.amz-discount-engine|购物车折扣引擎（Checkout Price Engine）]]
+    - [[domains/low-level-design/map/amazon.amz-linux-find|Linux find 命令 API（File Search API）]]
+    - [[domains/low-level-design/map/amazon.amz-emergency-pubsub|应急事件发布订阅（Emergency Pub/Sub）]]
+    - [[domains/low-level-design/map/amazon.amz-configurable-cache|可配置缓存（Configurable Cache）]]
+    - [[domains/low-level-design/map/amazon.amz-parking-fees|停车场计费（Parking Lot Fees）]]
+    - [[domains/low-level-design/map/amazon.amz-locker-onsite|Amazon 现场版快递柜（Amazon Locker, onsite）]]
+    - [[domains/low-level-design/map/amazon.amz-robot-restaurant|机器人餐厅（Robot Restaurant）]]
+    - [[domains/low-level-design/map/amazon.amz-file-watcher|文件监听器（File Watcher）]]
+    - [[domains/low-level-design/map/amazon.amz-dag-runner|DAG 执行器与依赖安装（DAG Runner）]]
 %% trellis:end %%
 
 ## Notes

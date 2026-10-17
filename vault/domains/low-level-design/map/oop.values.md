@@ -4,12 +4,18 @@
 
 实体与值对象的区分、相等语义、不可变为什么让推理变简单。
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/low-level-design/map/python.dataclasses-enums|dataclass 与 Enum]]
+
+**Unlocks:** [[domains/low-level-design/map/amazon.amz-train-fare|火车线路票价（Train Fare Calculator）]], [[domains/low-level-design/map/amazon.amz-discount-engine|购物车折扣引擎（Checkout Price Engine）]]
 
 ## Readings
 - [[fowler-value-object|ValueObject (Martin Fowler, bliki)]]
 
 ## Drills
+- [[design-amz-discount-engine|Drill：购物车折扣引擎（Checkout Price Engine）]]
+- [[design-amz-train-fare|Drill：火车线路票价（Train Fare Calculator）]]
 - [[design-splitwise|Drill：分账（Splitwise）]]
 
 ## Cards (5)
