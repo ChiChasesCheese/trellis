@@ -1,0 +1,13 @@
+{
+  "amazon.amz-discount-engine": [
+    "amz-discount-engine-how-it-is-asked",
+    "amz-discount-engine-objects-and-jobs",
+    "amz-discount-engine-stage-one-flow",
+    "amz-discount-engine-integer-cents-single-rounding",
+    "amz-discount-engine-line-level-vs-cart-level",
+    "amz-discount-engine-buy-x-get-y",
+    "amz-discount-engine-stacking-and-clamp",
+    "amz-discount-engine-thread-safety",
+    "amz-discount-engine-float-money-mistake"
+  ]
+}

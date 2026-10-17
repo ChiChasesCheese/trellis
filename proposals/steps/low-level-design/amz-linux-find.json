@@ -1,0 +1,13 @@
+{
+  "amazon.amz-linux-find": [
+    "amz-linux-find-how-it-is-asked",
+    "amz-linux-find-objects-and-jobs",
+    "amz-linux-find-stage-one-flow",
+    "amz-linux-find-specification-filter-tree",
+    "amz-linux-find-traversal-and-judgement-separate",
+    "amz-linux-find-follow-up-new-condition",
+    "amz-linux-find-size-and-extension-edge-cases",
+    "amz-linux-find-lazy-walk-and-symlink-loops",
+    "amz-linux-find-common-mistake-all-combinations"
+  ]
+}

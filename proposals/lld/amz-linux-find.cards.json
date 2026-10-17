@@ -1,0 +1,83 @@
+[
+  {
+    "id": "amz-linux-find-how-it-is-asked",
+    "node": "amazon.amz-linux-find",
+    "type": "qa",
+    "q": "Amazon 面试里「Linux find 命令 API（File Search API）」怎么问的？开场先问哪三个澄清问题？",
+    "a": "被报告的问法：设计一个类似 Linux `find` 的 API，按大小、格式、名字等条件跨目录搜索文件，如「大于 5MB 的文件」「所有 XML 文件」，接口要干净、可扩展。\n\n三个问题：\n1. 树是内存对象还是真实磁盘？（决定遍历怎么写，过滤器不变）\n2. 条件只有 AND，还是要 OR / NOT？（决定参数列表够不够，还是要可组合的对象树）\n3. 返回列表还是边找边处理、符号链接要不要跟随？（决定生成器与环检测）",
+    "tags": [],
+    "step": 1
+  },
+  {
+    "id": "amz-linux-find-objects-and-jobs",
+    "node": "amazon.amz-linux-find",
+    "type": "qa",
+    "q": "在 Amazon 文件搜索 API（Linux find）设计里，有哪几个核心类？各自只负责什么？",
+    "a": "系统有一棵已存在的目录树，要按条件找出满足的文件。树只存放，过滤器只回答「这个位置满足吗」，搜索器只走树。\n\n- `File` / `Directory` / `Symlink`：三种节点，不存自己的路径。\n- `Entry`：遍历时算出的「路径 + 节点 + 深度」。\n- `Filter`：只有 `matches(entry) -> bool`，子类是各种条件。\n- `FileSearcher`：惰性遍历，只认识 `Filter` 接口。\n\n节点不存路径，因为同一目录可通过符号链接从两个路径到达。",
+    "tags": [],
+    "step": 2
+  },
+  {
+    "id": "amz-linux-find-stage-one-flow",
+    "node": "amazon.amz-linux-find",
+    "type": "qa",
+    "q": "在 Linux find 文件搜索设计里，「找出所有大于 5MB 的 XML 文件」的最小实现怎么写？",
+    "a": "把「条件」做成对象，遍历时只问 `matches`。\n\n```python\nclass Filter(ABC):\n    @abstractmethod\n    def matches(self, entry) -> bool: ...\n    def __and__(self, other):\n        return AndFilter(self, other)\n\nclass AndFilter(Filter):\n    def __init__(self, left, right):\n        self.left, self.right = left, right\n    def matches(self, entry):\n        return self.left.matches(entry) and self.right.matches(entry)\n\nflt = Extension(\"xml\") & Size.over(\"5MB\")\npaths = FileSearcher().paths(root, flt)\n```",
+    "tags": [],
+    "step": 3
+  },
+  {
+    "id": "amz-linux-find-specification-filter-tree",
+    "node": "amazon.amz-linux-find",
+    "type": "qa",
+    "q": "在 Linux find 文件搜索设计里，条件为什么做成可组合的 Filter 对象树，而不是 find(name, ext, min_size, ...) 的参数列表？",
+    "a": "参数列表每加一个条件就要改签名和函数体，参数之间只能是 AND，OR 和 NOT 无处可放。\n\n`Filter` 对象树（规约模式 Specification + 组合模式 Composite）：叶子条件是一个类，`AndFilter` / `OrFilter` / `NotFilter` 持有子过滤器，`& | ~` 返回新对象、不改原对象。\n\n`Extension(\"py\") & Size(min_bytes=1024)` 求值时左边为假就不求右边（短路），所以便宜的条件放左边。新增条件只加一个子类，`FileSearcher` 零处修改。",
+    "tags": [],
+    "step": 4
+  },
+  {
+    "id": "amz-linux-find-traversal-and-judgement-separate",
+    "node": "amazon.amz-linux-find",
+    "type": "qa",
+    "q": "在 Linux find 文件搜索设计里，为什么让 FileSearcher 外部遍历，而不是给每个节点加 search(filter) 方法递归搜索？",
+    "a": "两个选项：\n- 节点上加 `search`：经典组合模式写法，但遍历策略（深度还是广度、跟不跟随链接、剪枝）被固化进每个节点类。\n- 节点只是数据，遍历集中在 `FileSearcher.find`。\n\n选后者：遍历策略正是面试官最爱追问的变化点，集中在一处，所有变化只影响一个类。\n\n也不用访问者模式（Visitor）：这里只有一种操作，「对结果做什么」是调用方消费迭代器的事。",
+    "tags": [],
+    "step": 5
+  },
+  {
+    "id": "amz-linux-find-follow-up-new-condition",
+    "node": "amazon.amz-linux-find",
+    "type": "qa",
+    "q": "在 Linux find 文件搜索设计里，面试官要求新增「空目录」和「修改时间」两种条件，需要改哪里、哪里不动？",
+    "a": "各新增一个 `Filter` 子类，别处不动。\n\n```python\nclass EmptyDir(Filter):\n    def matches(self, entry):\n        return entry.node.kind is Kind.DIR and not entry.node.children\n\nflt = EmptyDir() | Extension(\"gz\")\n```\n\n`FileSearcher`、`AndFilter`、`Extension` 一行不改，这就是开闭原则的证据。要「查询语言」（`ext=py and size>1k`）：写一个解析器把字符串变成 `Filter` 树，树本身就是语法树。",
+    "tags": [],
+    "step": 6
+  },
+  {
+    "id": "amz-linux-find-size-and-extension-edge-cases",
+    "node": "amazon.amz-linux-find",
+    "type": "qa",
+    "q": "在 Linux find 文件搜索设计里，「大于 5MB」「后缀是 gz」这两个条件有哪些边界要先说清？",
+    "a": "- 「大于 5MB」是严格大于：`Size.over(\"5MB\")` 的下界是 5MB+1，恰好 5242880 字节的文件不在结果里；闭区间的 `Size(min_bytes=5MB)` 才包含它。\n- 只有普通文件有大小，目录和链接恒不匹配。\n- `archive.tar.gz` 的后缀取最后一段 `gz`；`.bashrc` 这类隐藏文件没有后缀；`spec.XML` 不区分大小写匹配 `xml`。\n- `~Extension(\"py\")` 会把目录也选进来，要排除须再 `& OfType(Kind.FILE)`。",
+    "tags": [],
+    "step": 7
+  },
+  {
+    "id": "amz-linux-find-lazy-walk-and-symlink-loops",
+    "node": "amazon.amz-linux-find",
+    "type": "qa",
+    "q": "在 Linux find 文件搜索设计里，遍历为什么用生成器加显式栈？跟随符号链接时怎么检测环？",
+    "a": "生成器让调用方 `next(...)` 取第一个结果就停，不必走完整棵树；显式栈不受 Python 约 1000 层递归上限限制（3000 层目录链也能搜）。\n\n环检测用「祖先目录链」，不用全局 visited：\n\n```python\nif id(node) in ancestors:\n    continue                      # 走回了自己的祖先，才是环\nchain = ancestors | {id(node)}    # 子节点带着这条链\n```\n\n全局 visited 会漏掉合法的第二条路径：`/alias -> /a` 与 `/a` 都该报告 `x.txt`。默认不跟随链接，链接当叶子。",
+    "tags": [],
+    "step": 8
+  },
+  {
+    "id": "amz-linux-find-common-mistake-all-combinations",
+    "node": "amazon.amz-linux-find",
+    "type": "qa",
+    "q": "在 Linux find 文件搜索设计里，候选人最常见的结构性错误是什么？给一个会暴露它的追问。",
+    "a": "为每种条件组合写一个类（`ExtAndSize`、`ExtOrName` ……），或写一个参数越来越多的 `find(...)`。\n\n暴露它的追问：「再加 NOT，再加 OR 里套 AND」。组合类的数量随条件数指数增长；参数列表则根本表达不了 `(py OR md) AND NOT old*`。\n\n修复：条件是叶子类，组合只有 `And` / `Or` / `Not` 三个，`(Extension(\"py\") | Extension(\"md\")) & ~NameGlob(\"old*\")` 一行写完。",
+    "tags": [],
+    "step": 9
+  }
+]

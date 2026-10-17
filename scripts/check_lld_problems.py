@@ -2,6 +2,7 @@
 
     uv run python scripts/check_lld_problems.py problems.games.tic-tac-toe [...]
     uv run python scripts/check_lld_problems.py --all
+    uv run python scripts/check_lld_problems.py --branch amazon --all   # a company branch: problem leaves + cards-only leaves
 
 A problem leaf is done when: its reference solution passes its own tests and the empty starter
 fails them; the code is standard-library Python with Chinese docstrings and comments; the solution
@@ -196,19 +197,34 @@ def check(project, leaf_id: str) -> list[str]:
     return problems
 
 
+def check_cards_only(project, leaf_id: str) -> list[str]:
+    """A leaf of another branch with no problem folder (a round guide, or a company's variant of a
+    bank problem) is held only to its cards: at least four, each with a step."""
+    cards = [c for c in project.cards if c.node == leaf_id]
+    problems = [f"only {len(cards)} card(s); a cards-only leaf needs at least 4"] if len(cards) < 4 else []
+    problems += [f"{c.id}: no step" for c in cards if c.step is None]
+    return problems
+
+
 def main(argv: list[str]) -> int:
+    branch = BRANCH
+    if argv[:1] == ["--branch"]:
+        branch, argv = argv[1], argv[2:]
     project = load_project(ROOT, "low-level-design")
     errors = project.card_errors + project.reading_errors + project.drill_errors
-    leaves = [l.id for l in project.skeleton.leaves() if l.id.startswith(BRANCH + ".")]
+    leaves = [l.id for l in project.skeleton.leaves() if l.id.startswith(branch + ".")]
     wanted = leaves if argv == ["--all"] else argv
     failed = 0
     for leaf_id in wanted:
         if leaf_id not in leaves:
-            print(f"FAIL {leaf_id}: not a leaf under `{BRANCH}`")
+            print(f"FAIL {leaf_id}: not a leaf under `{branch}`")
             failed += 1
             continue
         slug = leaf_id.rsplit(".", 1)[-1]
-        found = check(project, leaf_id) + [e for e in errors if slug in e]
+        if branch != BRANCH and not (BASE / "problems" / slug).is_dir():
+            found = check_cards_only(project, leaf_id) + [e for e in errors if slug in e]
+        else:
+            found = check(project, leaf_id) + [e for e in errors if slug in e]
         print(f"{'FAIL' if found else 'ok  '} {leaf_id}" + "".join(f"\n       - {p}" for p in found))
         failed += bool(found)
     print(f"{len(wanted) - failed}/{len(wanted)} problem(s) pass")

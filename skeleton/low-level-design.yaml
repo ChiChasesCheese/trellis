@@ -425,3 +425,57 @@ nodes:
             title: "有界阻塞队列（Bounded Blocking Queue）"
             summary: "用 Condition 实现的生产者-消费者：满则阻塞、空则等待、超时与关闭。"
             requires: [concurrency.primitives]
+  - id: amazon
+    order: 10
+    core: true
+    title: "Amazon 专项（Amazon OOD）"
+    summary: "2026-09-16..10-16 一亩三分地与 Hello Interview 报告的 Amazon OOD 原题，从最小的数据结构型设计到并发执行器，由浅入深；叶子顺序与卡片 step 即学习顺序。来源与置信度见 Amazon kit 的 RECENT_amazon_2026-10。"
+    children:
+      - id: amazon.amz-round
+        title: "Amazon 的 LLD 轮怎么打（Amazon OOD Round）"
+        summary: "45 分钟、LP 开场、记事本写可编译但不运行的代码、追加 5–6 条需求；评分是「Logical and Maintainable」。"
+        requires: [method.delivery, method.evaluation]
+      - id: amazon.amz-closest-store
+        title: "增删查最近值（Add / Remove / Closest）"
+        summary: "电面 OOD：维护一组数，支持插入、删除、查询离 target 最近的数；从排序列表到值域分桶。（重建）"
+        requires: [python.data-model, oop.interfaces]
+      - id: amazon.amz-train-fare
+        title: "火车线路票价（Train Fare Calculator）"
+        summary: "G→U→H→K→I 相邻站一元，calculateFare(start, stop)，动态加站，周末封顶。"
+        requires: [oop.values, patterns.strategy]
+      - id: amazon.amz-discount-engine
+        title: "购物车折扣引擎（Checkout Price Engine）"
+        summary: "折扣基类 isEligible / apply，百分比、满减、买 X 送 Y 叠加；钱用整数分；规则可插拔。"
+        requires: [patterns.strategy, oop.values]
+      - id: amazon.amz-linux-find
+        title: "Linux find 命令 API（File Search API）"
+        summary: "按大小、后缀、名字过滤文件，AND / OR 组合，新增条件只加一个类；符号链接环与惰性遍历。"
+        requires: [patterns.structural, oop.interfaces]
+      - id: amazon.amz-emergency-pubsub
+        title: "应急事件发布订阅（Emergency Pub/Sub）"
+        summary: "组件订阅 / 发布应急事件；一个订阅者失败不拖累其他人，主题过滤、优先级与重试。"
+        requires: [patterns.observer]
+      - id: amazon.amz-configurable-cache
+        title: "可配置缓存（Configurable Cache）"
+        summary: "淘汰策略（LRU / LFU）与存储后端（内存、文件）可互换：两条独立变化的轴。"
+        requires: [patterns.strategy, patterns.structural]
+      - id: amazon.amz-parking-fees
+        title: "停车场计费（Parking Lot Fees）"
+        summary: "停车场的重点放在计费：按车型、时段、封顶、会员等不同规则，规则可组合、时间可注入。"
+        requires: [patterns.strategy, problems.machines.parking-lot]
+      - id: amazon.amz-locker-onsite
+        title: "Amazon 现场版快递柜（Amazon Locker, onsite）"
+        summary: "SDE II 现场原题：在题库快递柜之上，Amazon 面试官会追问什么、45 分钟写到哪一步。"
+        requires: [problems.machines.amazon-locker]
+      - id: amazon.amz-robot-restaurant
+        title: "机器人餐厅（Robot Restaurant）"
+        summary: "电面 OOD：点单、机器人分配、做菜与送餐状态机，机器人忙闲调度。（重建）"
+        requires: [patterns.state, patterns.strategy]
+      - id: amazon.amz-file-watcher
+        title: "文件监听器（File Watcher）"
+        summary: "监听目录的创建 / 修改 / 删除并回调：快照比对、去抖、递归目录、回调线程与关闭。（重建）"
+        requires: [patterns.observer, concurrency.primitives]
+      - id: amazon.amz-dag-runner
+        title: "DAG 执行器与依赖安装（DAG Runner）"
+        summary: "依赖安装顺序与环检测，Step Function 式 DAG 执行顺序的 code review 找 bug，再到并行执行与失败传播。"
+        requires: [concurrency.patterns]
