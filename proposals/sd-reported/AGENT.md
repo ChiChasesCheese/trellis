@@ -6,6 +6,8 @@ Reader: Chi, payments data-infrastructure engineer (PayPal), Amazon onsite 2026-
 staff bar** (Chi: 「不要调整 bar」). Repository root `/Users/chizhang/Code/trellis`. Do not run git; do not start agents;
 touch only your own `sdNN-*.md` files.
 
+> **`proposals/WRITING_RULES.md` overrides everything below** (Chi, 2026-10-16): provenance only in the last section, textbook voice to the reader, cause → effect, self-contained, diagrams `flowchart TB` that fit the page. `scripts/plain_style.py` enforces it inside the gate.
+
 ## Inputs (read-only)
 
 - Your problem's brief below (quotes, dates, confidence).
@@ -24,8 +26,8 @@ touch only your own `sdNN-*.md` files.
 
 ## The write-up — exactly these `##` sections, in order (the gate checks)
 
-1. `## 题目与来源` — a `> 来源：` line with every URL; the reported prompt verbatim (≤ 1 sentence per source) with date,
-   level, confidence; then one line naming what is **（重建）**.
+1. `## 题目` — the system in plain words (what it is, who uses it, what makes it hard), then the prompt as an
+   interviewer would give it to you. No sources, dates or labels here.
 2. `## 澄清问题` — 6–8 questions, each with what the answer changes in the design.
 3. `## 需求` — functional (3–5, ranked), non-functional with numbers (latency p99, availability, durability,
    consistency per operation), explicitly out of scope.
@@ -43,15 +45,16 @@ touch only your own `sdNN-*.md` files.
    region story, cost drivers, migration/rollout, operability (metrics, alarms, runbooks). This is what separates
    senior from staff — be concrete.
 9. `## 面试官追问` — 6–10 follow-ups an Amazon interviewer asks, each with a 2–4 sentence answer.
-10. `## 与 Hello Interview 及本库的对照` — what HI's breakdown does (paraphrased), where this write-up agrees, where it
-    differs and why; which repo solution covers the generic part. If HI has no page for the problem, say which HI
-    patterns apply.
-11. `## 60 分钟怎么分配` — minute table: what to draw/say, what to cut when short (Amazon rounds often spend 10–15
+10. `## 60 分钟怎么分配` — minute table: what to draw/say, what to cut when short (Amazon rounds often spend 10–15
     minutes on LP first, so give the 45-minute version too).
-12. `## 自测` — 5 questions, answers in `<details>`.
+11. `## 自测` — 5 questions, answers in `<details>`.
+12. `## 来源与延伸阅读` — **last section, the only place for provenance**: where and when the question was reported
+    (URLs, dates, level, confidence), which parts of the prompt above are reconstructed, then further reading — the
+    Hello Interview page(s) with what they do and where this write-up differs, and the repo's general solution.
 
 Chinese prose, English terms in full-width parentheses on first use; ≥ 9,000 characters outside code. Diagrams: valid
-mermaid (quote labels containing parentheses or slashes: `A["S3 (blob)"]`). No 「本题」「这道题」, no process talk
+mermaid, `flowchart TB` only, ≤ 12 nodes and ≤ 16-char labels each — draw the write path and the read path as two
+diagrams rather than one big one. No 「本题」「这道题」, no process talk
 (「我验证过」「对拍」), no lodely / vervecopilot. Wikilinks must resolve to an existing note name.
 
 ## Gate

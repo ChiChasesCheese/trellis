@@ -3,10 +3,11 @@
     python3 vault/interviews/core/system-design/check_sd.py            # every sdNN-*.md
     python3 vault/interviews/core/system-design/check_sd.py sd01       # one
 
-A write-up passes when it has every required section in order, at least three mermaid diagrams
-(one architecture flowchart, one sequence diagram), 9,000+ characters of prose outside code, a
-source line with URLs, at least three deep dives, self-check answers in <details>, wikilinks that
-resolve to a note in the vault, and none of the phrases the instructions forbid.
+A write-up passes when it has every required section in order with provenance only in the last one,
+at least three mermaid diagrams that fit the page (one architecture flowchart, one sequence diagram),
+9,000+ characters of prose outside code, at least three deep dives, self-check answers in <details>,
+wikilinks that resolve to a note in the vault, and the plain-style rules of proposals/WRITING_RULES.md
+(scripts/plain_style.py).
 """
 from __future__ import annotations
 
@@ -14,12 +15,15 @@ import re
 import sys
 from pathlib import Path
 
+HERE_ = Path(__file__).resolve()
+sys.path.insert(0, str(HERE_.parents[4] / "scripts"))
+from plain_style import problems as style_problems  # noqa: E402
+
 HERE = Path(__file__).resolve().parent
 VAULT = HERE.parents[2]
-SECTIONS = ["题目与来源", "澄清问题", "需求", "容量估算", "核心实体与 API", "高层架构", "深挖",
-            "Staff 视角：权衡、故障与演进", "面试官追问", "与 Hello Interview 及本库的对照",
-            "60 分钟怎么分配", "自测"]
-FORBIDDEN = ["本题", "这道题", "我验证过", "对拍", "如上所述", "本文作者"]
+SECTIONS = ["题目", "澄清问题", "需求", "容量估算", "核心实体与 API", "高层架构", "深挖",
+            "Staff 视角：权衡、故障与演进", "面试官追问", "60 分钟怎么分配", "自测", "来源与延伸阅读"]
+FORBIDDEN = ["我验证过", "对拍", "如上所述"]
 MIN_PROSE = 9000
 FENCE = re.compile(r"^```.*?^```", re.S | re.M)
 WIKILINK = re.compile(r"\[\[([^\]|#]+)")
@@ -50,8 +54,10 @@ def check(path: Path, names: set[str]) -> list[str]:
     prose = FENCE.sub("", text)
     if len(prose) < MIN_PROSE:
         problems.append(f"prose {len(prose)} chars < {MIN_PROSE}")
-    if not re.search(r"^> 来源.*https?://", text, re.M):
-        problems.append("no '> 来源' line with a URL")
+    tail = text.split("\n## 来源与延伸阅读", 1)[-1]
+    if not re.search(r"https?://", tail):
+        problems.append("'## 来源与延伸阅读' has no URL")
+    problems += style_problems(text, "来源与延伸阅读")
     deep = text.split("## 深挖", 1)[-1].split("\n## ", 1)[0]
     if len(re.findall(r"^### ", deep, re.M)) < 3:
         problems.append("fewer than 3 ### deep dives")

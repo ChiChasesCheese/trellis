@@ -5,6 +5,8 @@ Read `../AGENT_RULES.md` first (role, senior bar, textbook mode, Python, public 
 OOD problems live in the low-level-design `amazon` branch and system design in `vault/interviews/core/system-design/` — not here.
 The cards you write become the Anki deck `LeetCode Tops::22 Amazon 近一月原题（2026-10）`.
 
+> **`proposals/WRITING_RULES.md` overrides everything below** (Chi, 2026-10-16): provenance only in the last section, textbook voice to the reader, cause → effect, self-contained, diagrams `flowchart TB` that fit the page. `scripts/plain_style.py` enforces it inside the gate.
+
 ## Inputs (read-only)
 
 - 1p3a digest of all 39 Amazon threads 2026-09-16..10-16 (visible text only; most thread bodies are hidden behind
@@ -22,11 +24,11 @@ The cards you write become the Anki deck `LeetCode Tops::22 Amazon 近一月原�
 
 ## What you write (only in the paths your task names)
 
-1. **One Chinese study note per item** — textbook mode: 面经原话（verbatim quote + thread/report + date, mark
-   **(reconstructed)** for every part you had to infer）→ 开场先问的澄清问题 → 最笨解 → 逐步改进（每步：问题 / 想法 /
+1. **One Chinese study note per item** — textbook mode: the problem in plain words → 开场先问的澄清问题 → 最笨解 → 逐步改进（每步：问题 / 想法 /
    为什么有效）→ 最终代码 → 复杂度 → senior 追问（并发、规模、扩展需求 5–6 条，每条说「改哪里」）→ 自测题（答案放
    `<details>`）. File names start with `amz_` (Obsidian resolves notes by name; names must be unique in the vault).
-   First line `# <中文名>（<English>）`. Put a `> 来源` line with every URL.
+   First line `# <中文名>（<English>）`. The last section `## 来源` holds every URL, date, and which parts are
+   reconstructed — nowhere else.
 2. **Runnable code** for every coding / OOD item: one `.py` per item, `python3 -I <file>` must print `OK <name>` and
    exit 0. Coding items cross-check against a brute force on ≥ 300 random small inputs (seeded `Random`) plus the
    reported examples. OOD items: asserts that exercise every requirement and every extension you claim is "one class".

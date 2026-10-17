@@ -206,6 +206,24 @@ def check_cards_only(project, leaf_id: str) -> list[str]:
     return problems
 
 
+def check_style(project, leaf_id: str) -> list[str]:
+    """proposals/WRITING_RULES.md for a company branch: provenance only in the article's last section,
+    none on drills or cards, no third-person narration, diagrams that fit the page."""
+    from plain_style import problems as style
+    slug = leaf_id.rsplit(".", 1)[-1]
+    found: list[str] = []
+    article = BASE / "readings/problems" / f"solution-{slug}.md"
+    if article.exists():
+        found += [f"{article.name}: {p}" for p in style(article.read_text(encoding="utf-8"), "来源与延伸")]
+    drill = BASE / "drills/problems" / f"design-{slug}.md"
+    if drill.exists():
+        found += [f"{drill.name}: {p}" for p in style(drill.read_text(encoding="utf-8"), None)]
+    for c in project.cards:
+        if c.node == leaf_id:
+            found += [f"{c.id}: {p}" for p in style(c.path.read_text(encoding="utf-8"), None)]
+    return found
+
+
 def main(argv: list[str]) -> int:
     branch = BRANCH
     if argv[:1] == ["--branch"]:
@@ -225,6 +243,8 @@ def main(argv: list[str]) -> int:
             found = check_cards_only(project, leaf_id) + [e for e in errors if slug in e]
         else:
             found = check(project, leaf_id) + [e for e in errors if slug in e]
+        if branch != BRANCH:
+            found += check_style(project, leaf_id)
         print(f"{'FAIL' if found else 'ok  '} {leaf_id}" + "".join(f"\n       - {p}" for p in found))
         failed += bool(found)
     print(f"{len(wanted) - failed}/{len(wanted)} problem(s) pass")

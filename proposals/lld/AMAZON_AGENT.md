@@ -4,6 +4,8 @@ Chi has an Amazon onsite on 2026-10-20/21. The `amazon` branch of `skeleton/low-
 reported for Amazon on 1point3acres and Hello Interview between 2026-09-16 and 2026-10-16. In Anki they become the deck
 `低层设计（LLD）::10 Amazon 专项（Amazon OOD）`, studied **in card order, beginner first**.
 
+> **`proposals/WRITING_RULES.md` overrides everything below** (Chi, 2026-10-16): provenance only in the last section, textbook voice to the reader, cause → effect, self-contained, diagrams `flowchart TB` that fit the page. `scripts/plain_style.py` enforces it inside the gate.
+
 **Follow `proposals/lld/PROBLEM_AGENT.md` in full**, with the changes below. Where the two disagree, this file wins.
 
 ## Changes to PROBLEM_AGENT.md
@@ -12,10 +14,10 @@ reported for Amazon on 1point3acres and Hello Interview between 2026-09-16 and 2
    folder is `vault/domains/low-level-design/problems/amz-train-fare/`, the article `solution-amz-train-fare.md`, the
    drill `design-amz-train-fare.md`. **Card ids start with `<slug>-`** (`amz-train-fare-…`), not `problems-<slug>-`.
    The gate is `uv run python scripts/check_lld_problems.py --branch amazon <leaf id>`.
-2. **The prompt is Amazon's, verbatim first.** `## 题目与澄清` opens with a blockquote of what the candidate reported
-   (one sentence per source at most, with the thread/report URL and date from your task brief), then says in one line
-   which parts below are **(reconstructed)**. Stage 1 of the drill and of `## 需求与分级` is exactly what was reported
-   as the first ask; later stages are the follow-ups reported, then the ones you add (labelled 推断).
+2. **The prompt, in plain words, first.** `## 题目与澄清` opens by stating the problem the way an interviewer would
+   pose it to you (no quotes, no source, no labels). Stage 1 of the drill and of `## 需求与分级` is the first ask the
+   brief reports; later stages are its follow-ups, then yours. *Which* stages were reported and which are
+   reconstructed, with the URLs and dates, is said once, in `## 来源与延伸` (the last section).
 3. **The reader is a beginner on this problem** (Chi: "for beginner 并且逐步深入"). The article still meets the senior bar,
    but every term of art is explained the first time it appears, and `## 核心对象与职责` starts with a two-sentence plain
    description of the system before any class.
@@ -24,7 +26,7 @@ reported for Amazon on 1point3acres and Hello Interview between 2026-09-16 and 2
 
    | step | the card asks | the answer gives |
    |---|---|---|
-   | 1 | 「Amazon 面试里 <题名> 怎么问的？开场先问哪三个澄清问题？」 | the reported prompt in one sentence + three questions and what each answer changes |
+   | 1 | 「<题名>要你设计什么？开场先问哪三个澄清问题？」 | the problem in one sentence + three questions and what each answer changes |
    | 2 | the 3–5 objects and the one job of each | one line per class; the invariant that decides the split |
    | 3 | the stage-1 flow in code | ≤ 15 lines of Python, the core method only |
    | 4 | the data structure / algorithm that makes the key operation right or fast | the choice, its complexity, a concrete input → output |
@@ -53,7 +55,7 @@ reported for Amazon on 1point3acres and Hello Interview between 2026-09-16 and 2
 - 「本题」「这道题」「上一张卡」on a card: name the system every time (「在 Amazon 火车票价设计里，…」).
 - Process talk in an article or card (「我验证过」「对拍 300 组通过」): show the concrete input and output instead.
 - Numbers typed from memory: every complexity bound, example output and size in prose is computed by running code.
-- An invented interviewer requirement presented as reported: everything not in the brief's quotes is 推断 / (reconstructed).
+- An invented interviewer requirement presented as reported: the final source section lists which stages were reported and which were added.
 
 ## Report (≤ 12 lines)
 
