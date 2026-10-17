@@ -25,11 +25,11 @@
 
 | 题 | 考什么 | 题解 | 先读的通用题解 |
 |---|---|---|---|
-| 托管数据库控制面 | 控制面与数据面分离；租约与 fencing；主从切换、备份与时间点恢复；多租户 | [[managed_db_control_plane]] | [[solution-job-scheduler]]、[[solution-key-value-store]] |
-| 变更数据捕获复制管道 | 日志式捕获；至少一次加幂等；初始全量与增量衔接；顺序与重放 | [[cdc_replication_pipeline]] | [[solution-message-queue]] |
-| 指标时序存储 | 降采样与保留分层；基数治理；百分位不能平均；告警路径与查询路径分离 | [[metrics_timeseries_store]] | [[solution-metrics-monitoring]] |
-| 数据湖摄取与目录 | 摄取幂等；表格式；目录与治理 | [[data_lake_ingestion_catalog]] | [[solution-object-storage]]、[[solution-ad-click-aggregation]] |
-| S3 上的无服务器查询 | 分区裁剪；列存；S3 吞吐；无服务器多租户 | [[serverless_query_over_s3]] | [[solution-object-storage]] |
+| 托管数据库控制面 | 控制面与数据面分离；租约与 fencing；主从切换、备份与时间点恢复；多租户 | [[sd10-managed-db-control-plane]] | [[solution-job-scheduler]]、[[solution-key-value-store]] |
+| 变更数据捕获复制管道 | 日志式捕获；至少一次加幂等；初始全量与增量衔接；顺序与重放 | [[sd08-cdc-replication-pipeline]] | [[solution-message-queue]] |
+| 指标时序存储 | 降采样与保留分层；基数治理；百分位不能平均；告警路径与查询路径分离 | [[sd11-metrics-timeseries-store]] | [[solution-metrics-monitoring]] |
+| 数据湖摄取与目录 | 摄取幂等；表格式；目录与治理 | [[sd09-data-lake-ingestion-catalog]] | [[solution-object-storage]]、[[solution-ad-click-aggregation]] |
+| S3 上的无服务器查询 | 分区裁剪；列存；S3 吞吐；无服务器多租户 | [[sd12-serverless-query-over-s3]] | [[solution-object-storage]] |
 
 ## 通用题解的练习顺序与追加练习点
 
@@ -41,12 +41,12 @@
 | 2 | [[solution-object-storage]] | S3 | 11 个 9 的耐久度怎么来：纠删码、校验和、持续巡检；前缀速率上限与 503 Slow Down 的含义；条件写做 CAS |
 | 3 | [[solution-message-queue]] | SQS / Kinesis | 用每分片的写入上限估算分区数；积压、溢出队列、延迟队列、死信队列；公平：每客户分队列或 shuffle sharding |
 | 4 | [[solution-job-scheduler]] | EventBridge Scheduler / Step Functions | 「每个任务只被一个 worker 执行」讲成租约加 fencing token；多租户公平调度；固定节奏扫描（常量工作）；毒丸任务隔离到 shuffle shard |
-| 5 | [[solution-metrics-monitoring]] | CloudWatch | 保留分层与降采样；基数治理；告警评估路径与查询路径分离；接着做 [[metrics_timeseries_store]] |
+| 5 | [[solution-metrics-monitoring]] | CloudWatch | 保留分层与降采样；基数治理；告警评估路径与查询路径分离；接着做 [[sd11-metrics-timeseries-store]] |
 | 6 | [[solution-ad-click-aggregation]] | Kinesis + Flink + DynamoDB / S3 | 精确一次的边界；用条件写做去重键而不是相信队列；热门 key 加盐；批流对账 |
 | 7 | [[solution-distributed-cache]] | ElastiCache / DAX | 缓存的双峰行为：命中率很高，但冷启动时后端流量飙升；别让缓存隐藏本该承担的工作量；冷启动预热 |
 | 8 | [[solution-top-k]] | Kinesis Analytics / Redis | Count-Min Sketch 与 Space-Saving 的误差界；分片局部 top-k 再合并；与「可合并的分位数草图」同一个思想 |
 
-只剩一天：做 1（KV 存储）和 [[managed_db_control_plane]]，因为 Dynamo 式存储与「控制面 / 故障切换 / 多租户」是 AWS 数据服务的基础。
+只剩一天：做 1（KV 存储）和 [[sd10-managed-db-control-plane]]，因为 Dynamo 式存储与「控制面 / 故障切换 / 多租户」是 AWS 数据服务的基础。
 
 其他值得各过 15 分钟（只看追问）的题解：[[solution-lock-service]]（leader election、fencing）、[[solution-unique-id-generator]]、
 [[solution-notification-system]]（扇出、去重、供应商故障切换）、[[solution-file-sync]]（内容寻址分块、元数据与数据分离）。
@@ -59,9 +59,9 @@
 | 题 | 读哪里 |
 |---|---|
 | 制品仓库、Kindle 多设备同步、日志存储、员工目录（DynamoDB 分区键）、设备管理 / 配置同步、评论与评分 | [[hld_sketches]]（六个 25 分钟骨架） |
-| 监控 / 指标 / 告警 | [[solution-metrics-monitoring]]、[[metrics_timeseries_store]] |
-| 主库加只读副本的故障切换 | [[managed_db_control_plane]] |
-| S3 上的分析查询 API | [[serverless_query_over_s3]]、[[metrics_timeseries_store]] |
+| 监控 / 指标 / 告警 | [[solution-metrics-monitoring]]、[[sd11-metrics-timeseries-store]] |
+| 主库加只读副本的故障切换 | [[sd10-managed-db-control-plane]] |
+| S3 上的分析查询 API | [[sd12-serverless-query-over-s3]]、[[sd11-metrics-timeseries-store]] |
 | 分布式限流器 | [[solution-rate-limiter]] |
 | Lambda 式代码执行 | [[solution-online-judge]]（沙箱、冷启动） |
 

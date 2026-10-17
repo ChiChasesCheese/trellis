@@ -1,6 +1,6 @@
 # 六个答题骨架（HLD Sketches）
 
-这六道题没有完整题解：每道只给需求关键点、数据模型、4–5 个关键决策和常见追问，够你在 25 分钟里口述出一个站得住的设计。它们覆盖制品仓库、多设备同步、日志存储、员工目录、设备管理、评论与评分。完整的深度示范看 [[managed_db_control_plane]]、[[cdc_replication_pipeline]]、[[metrics_timeseries_store]]、[[data_lake_ingestion_catalog]]、[[serverless_query_over_s3]]。
+这六道题没有完整题解：每道只给需求关键点、数据模型、4–5 个关键决策和常见追问，够你在 25 分钟里口述出一个站得住的设计。它们覆盖制品仓库、多设备同步、日志存储、员工目录、设备管理、评论与评分。完整的深度示范看 [[sd10-managed-db-control-plane]]、[[sd08-cdc-replication-pipeline]]、[[sd11-metrics-timeseries-store]]、[[sd09-data-lake-ingestion-catalog]]、[[sd12-serverless-query-over-s3]]。
 
 练法：每个骨架限时 25 分钟口述，然后对照 [[00_how_to_run_the_round]] 第 8 节的评分维度检查有没有漏项。
 
@@ -42,13 +42,13 @@
 - 需求要点：海量日志写入（至少一次、允许少量重复）；按时间范围 + 服务 + 关键字/trace id 查询；保留期与成本；多租户。
 - 数据流：应用 agent（本地磁盘缓冲，断网不丢）→ 区域收集器（批量、压缩）→ 分区日志（Kinesis 类）→ 写入器按 `(租户, 服务, 小时)` 聚成 128 MB+ 的压缩块落对象存储 → 索引层。
 - 关键决策：
-  1. **索引取舍**：全文倒排索引贵（写放大、内存）；常见做法是**稀疏索引**——按 `(服务, 时间窗)` 记块位置 + 每块的布隆过滤器/字段统计，查询先剪枝块再扫描；热数据（最近几小时）才建倒排索引。成本是"扫描量"，与 Athena 同理（见 [[serverless_query_over_s3]]）。
+  1. **索引取舍**：全文倒排索引贵（写放大、内存）；常见做法是**稀疏索引**——按 `(服务, 时间窗)` 记块位置 + 每块的布隆过滤器/字段统计，查询先剪枝块再扫描；热数据（最近几小时）才建倒排索引。成本是"扫描量"，与 Athena 同理（见 [[sd12-serverless-query-over-s3]]）。
   2. **去重**：`(source_id, seq)` 为幂等键；下游容忍重复或在写块时去重。
   3. **背压与丢弃策略**：agent 缓冲满了先丢低优先级（debug）；收集器过载 → 限流返回 429，agent 带抖动退避（[[aws-timeouts-retries-jitter]]）。
   4. **保留分层**：热（SSD/索引）→ 温（对象存储标准）→ 冷（归档），生命周期策略；合规保留与删除。
   5. **多租户**：每租户摄取配额；查询并发与扫描预算；shuffle sharding 到写入器（[[aws-shuffle-sharding]]）。
 - 追问：日志里的敏感信息；跨区域查询；时钟偏差下的排序（事件时间 vs 接收时间）。
-- 相邻题目：[[design-metrics-monitoring]]、[[design-message-queue]]；新题 [[metrics_timeseries_store]]、[[data_lake_ingestion_catalog]]。
+- 相邻题目：[[design-metrics-monitoring]]、[[design-message-queue]]；新题 [[sd11-metrics-timeseries-store]]、[[sd09-data-lake-ingestion-catalog]]。
 
 ## S4. 员工目录（DynamoDB 分区键选择）
 
@@ -59,7 +59,7 @@
   - 主表：分区键 `employee_id`（高基数、均匀）。**不要**用 `department` 当分区键：部门大小悬殊，热分区（[[distributed-data-skew-vs-access-skew]]；DynamoDB 论文 §4 的热分区故事）。
   - GSI：`manager_id → employee_id`（直接下属）；`department → employee_id`（按需，分区键加盐或限制大小）。GSI 异步更新，**写后读索引可能陈旧**，要在需求里说明（[[distributed-global-index-staleness]]）。
   - 管理链：向上追溯用迭代 `GetItem` 沿 `manager_id` 走（深度很浅，≤20）；整棵子树用**物化路径**（`/ceo/vp/dir/mgr`）字段 + 前缀查询，或预计算闭包表（写放大换读快）。
-  - 姓名搜索：不适合直接放 DynamoDB → 旁挂搜索服务（OpenSearch）通过 **CDC/Streams** 同步（呼应 [[cdc_replication_pipeline]]）。
+  - 姓名搜索：不适合直接放 DynamoDB → 旁挂搜索服务（OpenSearch）通过 **CDC/Streams** 同步（呼应 [[sd08-cdc-replication-pipeline]]）。
   - 读多：DAX/ElastiCache；员工变更少，TTL + 变更事件失效。
 - 追问：谁能看到谁（权限，按字段过滤）；组织重组时批量更新经理字段（批处理幂等）；多区域读。
 - 相邻题目：[[design-key-value-store]]、[[storage-wide-column-modeling]]、[[debrie-single-table-design]]。
@@ -69,11 +69,11 @@
 - 题目：设计一个管理成千上万台设备的系统；变体是配置同步 / 备份（full、diff、log 三种备份）。
 - 需求要点：设备注册与身份（证书）、在线状态、下发配置/命令、批量升级（OTA）、遥测上报。
 - 设计骨架：
-  1. **期望状态 vs 报告状态（device shadow）**：控制面存"期望配置 + 版本号"，设备上报"实际配置 + 版本号"；设备上线后对比版本、自行拉取差异——**水平触发（level-triggered）而不是边沿触发**，掉线期间错过的命令不丢（对应 [[managed_db_control_plane]] §4.1 的 reconcile）。
+  1. **期望状态 vs 报告状态（device shadow）**：控制面存"期望配置 + 版本号"，设备上报"实际配置 + 版本号"；设备上线后对比版本、自行拉取差异——**水平触发（level-triggered）而不是边沿触发**，掉线期间错过的命令不丢（对应 [[sd10-managed-db-control-plane]] §4.1 的 reconcile）。
   2. **命令至少一次 + ack + 幂等**；命令带过期时间。
   3. **心跳与在线状态**：设备数 × 心跳频率决定写入量（100 万设备 × 每 60 s ≈ 1.7 万次/s），用 TTL 键或聚合写入，不要每次心跳都落强一致库；**重连风暴**：大面积断线后同时重连 → 设备端指数退避 + 抖动，服务端接入层限流。
   4. **分波次升级（OTA）**：1% → 5% → 25% → 100%，每波有 bake time 和自动回滚阈值——直接套用 Builders' Library《Automating safe, hands-off deployments》的 one-box / waves / bake（见 [[00_how_to_run_the_round]] 第 7.1 节）。
-  5. **备份三种类型**：full（整体）、diff（相对上一次 full 的差异）、log（持续的变更日志）；恢复 = 最近 full + 对应 diff + 重放 log（与 [[managed_db_control_plane]] §4.5 的 PITR 同构）。
+  5. **备份三种类型**：full（整体）、diff（相对上一次 full 的差异）、log（持续的变更日志）；恢复 = 最近 full + 对应 diff + 重放 log（与 [[sd10-managed-db-control-plane]] §4.5 的 PITR 同构）。
 - 追问：证书轮换；设备时钟不可信；弱网下的大文件分块断点续传；多租户（每客户设备配额）。
 - 相邻题目：[[design-job-scheduler]]、[[design-notification-system]]。
 
