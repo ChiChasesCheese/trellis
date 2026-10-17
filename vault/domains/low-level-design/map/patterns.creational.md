@@ -17,6 +17,9 @@
 ## Cases
 - [[qs-sealed-constructor-as-unforgeable-permission|Sealed constructors: when holding the object is the proof]] — `quant-stroller`
 
+## Drills
+- [[design-amz-pizza-order|Drill：披萨订单（Pizza Order）]]
+
 ## Cards (6)
 1. [[patterns-creational-cues]]
 2. [[patterns-simple-factory-enough]]

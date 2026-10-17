@@ -18,6 +18,7 @@
 
 ## Drills
 - [[design-amz-configurable-cache|Drill：可配置缓存（Configurable Cache）]]
+- [[design-amz-in-memory-db|Drill：内存数据库（In-Memory Database）]]
 - [[design-amz-linux-find|Drill：Linux find 命令 API（File Search API）]]
 - [[design-in-memory-file-system|Drill：内存文件系统（In-Memory File System）]]
 - [[design-logger|Drill：日志框架（Logging Framework）]]

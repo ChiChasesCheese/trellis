@@ -12,9 +12,12 @@
 
 ## Readings
 - [[fowler-value-object|ValueObject (Martin Fowler, bliki)]]
+- [[solution-amz-aws-billing|设计题解：AWS 账单服务（AWS Billing Service）（low priority）]]
 
 ## Drills
+- [[design-amz-aws-billing|Drill：AWS 账单服务（AWS Billing Service）]]
 - [[design-amz-discount-engine|Drill：购物车折扣引擎（Checkout Price Engine）]]
+- [[design-amz-pizza-order|Drill：披萨订单（Pizza Order）]]
 - [[design-amz-train-fare|Drill：火车线路票价（Train Fare Calculator）]]
 - [[design-splitwise|Drill：分账（Splitwise）]]
 

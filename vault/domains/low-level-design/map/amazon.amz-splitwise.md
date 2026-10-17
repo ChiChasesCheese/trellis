@@ -7,6 +7,14 @@
 **Core** — part of the first pass through this subject.
 
 **Requires:** [[domains/low-level-design/map/problems.marketplaces.splitwise|分账（Splitwise）]]
+
+## Cards (6)
+1. [[amz-splitwise-what-and-three-questions]]
+2. [[amz-splitwise-objects-and-jobs]]
+3. [[amz-splitwise-remainder-largest-remainder]]
+4. [[amz-splitwise-balances-vs-transactions]]
+5. [[amz-splitwise-simplify-debts]]
+6. [[amz-splitwise-concurrent-expenses]]
 %% trellis:end %%
 
 ## Notes

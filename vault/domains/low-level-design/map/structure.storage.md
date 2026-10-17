@@ -11,9 +11,12 @@
 ## Readings
 - [[fowler-repository|Repository (Fowler, P of EAA catalog)]]
 - [[msdocs-persistence-layer|Designing the Infrastructure Persistence Layer (Microsoft .NET Architecture)]]
+- [[solution-amz-occupancy-tracker|设计题解：办公室人数追踪（Occupancy Tracker）（low priority）]]
 
 ## Drills
 - [[design-amazon-locker|Drill：快递柜（Amazon Locker）]]
+- [[design-amz-in-memory-db|Drill：内存数据库（In-Memory Database）]]
+- [[design-amz-occupancy-tracker|Drill：办公室人数追踪（Occupancy Tracker）]]
 - [[design-bank-account|Drill：银行账户系统（Bank Account System）]]
 - [[design-hotel-booking|Drill：酒店预订（Hotel Booking）]]
 - [[design-kv-store|Drill：内存键值存储（In-Memory Key-Value Store）]]

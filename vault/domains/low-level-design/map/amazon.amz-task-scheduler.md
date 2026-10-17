@@ -7,6 +7,14 @@
 **Core** — part of the first pass through this subject.
 
 **Requires:** [[domains/low-level-design/map/problems.components.task-scheduler|任务调度器（Task Scheduler）]]
+
+## Cards (6)
+1. [[amz-task-scheduler-what-and-three-questions]]
+2. [[amz-task-scheduler-objects-and-jobs]]
+3. [[amz-task-scheduler-heap-and-condition-variable]]
+4. [[amz-task-scheduler-delayed-vs-periodic]]
+5. [[amz-task-scheduler-cancel-lazy-deletion]]
+6. [[amz-task-scheduler-worker-pool-and-blocking]]
 %% trellis:end %%
 
 ## Notes
