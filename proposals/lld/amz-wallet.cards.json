@@ -1,0 +1,50 @@
+[
+  {
+    "id": "amz-wallet-what-and-three-questions",
+    "node": "amazon.amz-wallet",
+    "type": "qa",
+    "q": "钱包 / 银行账户（Wallet）要你设计什么？开场先问哪三个澄清问题？",
+    "a": "钱包系统管理账户余额，支持存入、取出、转账，并能出月度汇总。三问：(1) 金额用什么单位、有几种币种、能否透支——决定用整数最小单位和余额不足的规则；(2) 有哪些费用和税，今后会不会加——决定费用做成可插拔规则；(3) 失败语义——余额不足抛异常，同一请求重试会不会重复扣款——决定要不要幂等键。",
+    "tags": []
+  },
+  {
+    "id": "amz-wallet-money-integer-minor-units",
+    "node": "amazon.amz-wallet",
+    "type": "qa",
+    "q": "在钱包设计里，金额为什么用整数最小单位（分）而不是浮点数？怎么防止币种混加？",
+    "a": "浮点无法精确表示 0.1：`0.1 + 0.2 = 0.30000000000000004`，累加后账对不平。用整数分（1.50 美元存 150），只在展示时格式化。再把金额和币种打包成不可变的 `Money`，不同币种相加直接报错，把「美元加欧元」这类错误挡在类型层。\n```python\n@dataclass(frozen=True)\nclass Money:\n    minor: int\n    currency: str = \"USD\"\n\n    def __add__(self, other):\n        if other.currency != self.currency:\n            raise ValueError(\"currency mismatch\")\n        return Money(self.minor + other.minor, self.currency)\n```",
+    "tags": []
+  },
+  {
+    "id": "amz-wallet-balance-from-append-only-ledger",
+    "node": "amazon.amz-wallet",
+    "type": "qa",
+    "q": "在钱包设计里，余额是存一个字段，还是由流水推出来？转账在账本里记几条？",
+    "a": "账本只追加（append-only）：每条 `LedgerEntry(账户、变动额、类型、时间、转账号)`，永不修改。转账记两条同转账号的分录，一条 -100、一条 +100，全账本总和恒为 0，这是可校验的不变量。余额读流水求和是 O(n)，所以另存一个缓存余额字段，并提供 `reconcile`：缓存值必须等于流水求和，不等就是 bug。好处是任何一分钱都能追到来源。",
+    "tags": []
+  },
+  {
+    "id": "amz-wallet-transfer-atomicity-lock-order",
+    "node": "amazon.amz-wallet",
+    "type": "qa",
+    "q": "在钱包设计里，A 转给 B 和 B 转给 A 同时发生会出什么错？怎么防？",
+    "a": "转账要同时锁两个账户。线程 1 先锁 A 再等 B，线程 2 先锁 B 再等 A，互相等待——死锁。固定加锁顺序：总是按账户 id 排序后再加锁，两个线程都先锁 id 小的，就不会互相等待。锁内做「检查余额、写两条分录」，保证不会出现只扣不加。\n```python\ndef transfer(self, src, dst, amount):\n    first, second = sorted((src, dst))\n    with self._locks[first], self._locks[second]:\n        if self._balance[src] < amount:\n            raise InsufficientFunds(src)\n        self._append(src, -amount)\n        self._append(dst, +amount)\n```",
+    "tags": []
+  },
+  {
+    "id": "amz-wallet-fee-and-tax-rules-as-strategies",
+    "node": "amazon.amz-wallet",
+    "type": "qa",
+    "q": "在钱包设计里，追加「转账收手续费、利息要交税」，怎么做到以后再加规则不改核心代码？",
+    "a": "定义 `FeeRule`：`apply(txn) → 额外分录列表`，手续费、税、跨境费各是一个类，转账时依次执行规则列表。规则返回的是分录而不是直接改金额，所以费用也在账本上可查。舍入全用整数：税 = `(金额 × 税率千分点 + 500) // 1000`，固定为四舍五入。加新规则 = 新增一个类并加入列表，转账代码不动。",
+    "tags": []
+  },
+  {
+    "id": "amz-wallet-monthly-summary",
+    "node": "amazon.amz-wallet",
+    "type": "qa",
+    "q": "在钱包设计里，月度汇总怎么算？有什么不变量可以自检？",
+    "a": "期初余额 = 本月开始前所有分录的变动额之和；本月按类型（存入、取出、手续费、税）分组求和；期末 = 期初 + 本月合计。自检不变量：期末必须等于账户当前余额（本月是最后一个月时）。汇总只读流水，不改任何数据，所以可以重复算、随时算。\n```python\ndef summary(self, acct, start, end):\n    entries = self._entries[acct]\n    opening = sum(e.delta for e in entries if e.ts < start)\n    by_kind = Counter()\n    for e in entries:\n        if start <= e.ts < end:\n            by_kind[e.kind] += e.delta\n    return opening, dict(by_kind), opening + sum(by_kind.values())\n```",
+    "tags": []
+  }
+]

@@ -14,9 +14,10 @@ tags: [grown]
 环检测用「祖先目录链」，不用全局 visited：
 
 ```python
-if id(node) in ancestors:
-    continue                      # 走回了自己的祖先，才是环
-chain = ancestors | {id(node)}    # 子节点带着这条链
+for node in children:
+    if id(node) in ancestors:
+        continue                      # 走回了自己的祖先，才是环
+    chain = ancestors | {id(node)}    # 子节点带着这条链
 ```
 
 全局 visited 会漏掉合法的第二条路径：`/alias -> /a` 与 `/a` 都该报告 `x.txt`。默认不跟随链接，链接当叶子。

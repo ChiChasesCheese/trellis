@@ -1,0 +1,50 @@
+[
+  {
+    "id": "amz-playlist-dj-what-and-three-questions",
+    "node": "amazon.amz-playlist-dj",
+    "type": "qa",
+    "q": "歌单混音（Playlist DJ）服务要你设计什么？开场先问哪三个澄清问题？",
+    "a": "歌单混音服务把若干歌单按规则混成一个播放顺序，歌放不完时由推荐服务补歌。三问：(1) 「混」指什么——轮流取、随机、按比例——决定混音做成可替换的策略；(2) 推荐依据什么（同艺人、热门、播放历史）——决定推荐也做成策略；(3) 需求有十条，哪些必须第一版就有——决定先分档再写代码。",
+    "tags": []
+  },
+  {
+    "id": "amz-playlist-dj-triage-ten-requirements",
+    "node": "amazon.amz-playlist-dj",
+    "type": "qa",
+    "q": "歌单混音服务的需求有十条写在纸上，时间只有 45 分钟，怎么取舍？",
+    "a": "先花 3 分钟把十条分三档并说出理由。第一档（骨架，必须跑通）：建歌单、加删歌、混成队列、取下一首。第二档（接口先留好，实现一个最简版）：推荐、去重、同艺人不连播。第三档（只口头说明怎么扩展）：持久化、多人并发编辑、实时同步。判断标准：这条需求改的是数据、策略，还是核心流程——改策略的可以后做，改核心流程的必须先定。",
+    "tags": []
+  },
+  {
+    "id": "amz-playlist-dj-objects-and-interleave",
+    "node": "amazon.amz-playlist-dj",
+    "type": "qa",
+    "q": "在歌单混音服务里应该有哪几个对象？「轮流取」的混音怎么写？",
+    "a": "`Track`（id、艺人）、`Playlist`（名字、有序曲目）、`MixStrategy`（`mix(playlists) → 曲目列表`）、`Recommender`、`DjService`（门面，把两个策略串起来）。轮流取：每个歌单一个队列，取队首一首，歌单没空就排到队尾；总复杂度 O(总曲目数)。\n```python\ndef interleave(playlists):\n    queues = [deque(p.tracks) for p in playlists if p.tracks]\n    out = []\n    while queues:\n        q = queues.pop(0)\n        out.append(q.popleft())\n        if q:\n            queues.append(q)\n    return out\n```",
+    "tags": []
+  },
+  {
+    "id": "amz-playlist-dj-mix-strategy-pluggable",
+    "node": "amazon.amz-playlist-dj",
+    "type": "qa",
+    "q": "在歌单混音服务里，混音规则为什么做成 `MixStrategy` 接口？加一种「按比例混」要改哪里？",
+    "a": "混音规则是最容易被追加的需求（轮流、随机、按 2:1 比例……）。把它做成一个只有 `mix(playlists)` 的接口：`RoundRobin`、`Shuffle(seed)`、`Weighted(ratio)` 各是一个类，`DjService` 持有一个策略对象。加「按比例混」就是新增一个类，`DjService` 和已有策略一行不动。随机策略要接收种子，测试才可复现。",
+    "tags": []
+  },
+  {
+    "id": "amz-playlist-dj-recommender-pluggable",
+    "node": "amazon.amz-playlist-dj",
+    "type": "qa",
+    "q": "在歌单混音服务里，推荐怎么接入？「不重复推荐刚播过的歌」这条规则放在哪一层？",
+    "a": "`Recommender` 接口：`recommend(history, k) → 曲目列表`，实现可以是「同艺人」「热门」。`DjService` 在队列剩余曲目少于阈值时调用它补歌。去重放在 `DjService` 里统一过滤（排除队列中和最近播放的），不放进每个推荐实现，否则每写一个新推荐都要重复写一遍去重，还容易漏。",
+    "tags": []
+  },
+  {
+    "id": "amz-playlist-dj-requirement-arrives-decorator",
+    "node": "amazon.amz-playlist-dj",
+    "type": "qa",
+    "q": "在歌单混音服务里，后来追加「同一艺人不能连播」，怎么加？为什么不改已有的混音策略？",
+    "a": "把它做成包住任何策略的装饰器 `NoBackToBack(inner)`：先让内层混出顺序，再逐个挑出「艺人和上一首不同」的第一首；实在没有（只剩同一艺人）就放行，避免死循环。`DjService` 和所有已有策略都不改，约束可以叠加在轮流或随机上。判断：新需求是「对结果加约束」时，用装饰器；是「换算法」时，用新策略。\n```python\nclass NoBackToBack:\n    def __init__(self, inner):\n        self.inner = inner\n\n    def mix(self, playlists):\n        pool, out = self.inner.mix(playlists), []\n        while pool:\n            i = next((k for k, t in enumerate(pool)\n                      if not out or t.artist != out[-1].artist), 0)\n            out.append(pool.pop(i))\n        return out\n```",
+    "tags": []
+  }
+]

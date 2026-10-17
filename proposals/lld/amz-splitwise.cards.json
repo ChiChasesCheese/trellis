@@ -1,0 +1,50 @@
+[
+  {
+    "id": "amz-splitwise-what-and-three-questions",
+    "node": "amazon.amz-splitwise",
+    "type": "qa",
+    "q": "分账（Splitwise）要你设计什么？开场先问哪三个澄清问题？",
+    "a": "分账记录「谁垫了钱、谁该分担多少」，随时能回答「A 和 B 之间谁欠谁多少」。三问：(1) 支持哪些分法（均分、指定金额、按百分比）——决定分法做成策略；(2) 金额用什么单位、除不尽怎么办（100 分三人分）——决定用整数分和余数规则；(3) 只要两两余额，还是要「最少笔转账结清」——决定是否需要债务简化。",
+    "tags": []
+  },
+  {
+    "id": "amz-splitwise-objects-and-jobs",
+    "node": "amazon.amz-splitwise",
+    "type": "qa",
+    "q": "在分账设计里应该有哪几个对象？各自只负责一件什么事？",
+    "a": "`User`：参与者。`Expense`：一笔支出（付款人、总额、参与者、分法）。`Split` 策略（均分、精确、百分比）：只回答 `compute(amount, users) → {user: 分}`。`Ledger`：记录两两净余额。`ExpenseManager`：门面，先算分摊再更新账本。切分依据：分法会增加，账本结构不变。",
+    "tags": []
+  },
+  {
+    "id": "amz-splitwise-remainder-largest-remainder",
+    "node": "amazon.amz-splitwise",
+    "type": "qa",
+    "q": "在分账设计里，100 分钱按 1:1:1 分给三个人，除不尽的余数怎么分？怎么保证加起来恰好等于总额？",
+    "a": "先给每人取整数部分，再把剩下的几分钱按「小数余数最大者优先」逐个补上（最大余数法，Largest Remainder）。100 分三等份：基础 33、33、33，余数相同，补 1 分给第一个人，得 34、33、33，总和恰好 100。绝不能每人四舍五入（33+33+33=99，丢一分）也不能用浮点。\n```python\ndef largest_remainder(amount, weights):\n    total = sum(weights)\n    base = [amount * w // total for w in weights]\n    order = sorted(range(len(weights)),\n                   key=lambda i: -(amount * weights[i] % total))\n    for i in order[:amount - sum(base)]:\n        base[i] += 1\n    return base\n```",
+    "tags": []
+  },
+  {
+    "id": "amz-splitwise-balances-vs-transactions",
+    "node": "amazon.amz-splitwise",
+    "type": "qa",
+    "q": "在分账设计里，应该存每一笔交易，还是只存两两余额？查询「A 欠 B 多少」怎么做到 O(1)？",
+    "a": "两样都存，职责不同：交易流水只追加，用来审计和撤销；两两净余额 `dict[(a, b)] → 分` 用来回答查询。键要规范化——总是把 id 较小的放前面，正数表示前者欠后者——否则 (A,B) 和 (B,A) 各存一份会互相抵消不掉。每笔支出只更新「付款人 × 每个参与者」那几条余额，查询是一次字典读取。",
+    "tags": []
+  },
+  {
+    "id": "amz-splitwise-simplify-debts",
+    "node": "amazon.amz-splitwise",
+    "type": "qa",
+    "q": "在分账设计里，追加需求「最少笔转账结清全组」，怎么做？它能保证最少吗？",
+    "a": "先算每人净额（别人欠他的减去他欠别人的），净额为正的是债权人，为负的是债务人。每次让最大债务人还给最大债权人 `min(两者)`，至少一方清零，所以至多 n-1 笔。例：A +50、B -30、C -20，得 B→A 30、C→A 20。贪心不保证最少——真正最少等价于把人划分成尽可能多个「净额和为 0」的小组，是 NP 难问题；面试说清这一点即可。\n```python\ndef simplify(net):\n    pos = [(v, u) for u, v in net.items() if v > 0]\n    neg = [(-v, u) for u, v in net.items() if v < 0]\n    out = []\n    while pos and neg:\n        pos.sort(); neg.sort()\n        c, cu = pos.pop(); d, du = neg.pop()\n        t = min(c, d)\n        out.append((du, cu, t))\n        if c > t: pos.append((c - t, cu))\n        if d > t: neg.append((d - t, du))\n    return out\n```",
+    "tags": []
+  },
+  {
+    "id": "amz-splitwise-concurrent-expenses",
+    "node": "amazon.amz-splitwise",
+    "type": "qa",
+    "q": "在分账设计里，两个人同时往同一个群里记账，会出什么错？怎么防？",
+    "a": "两条线程都「读 A–B 余额 → 加上自己的份额 → 写回」，后写的覆盖先写的，丢掉一笔（丢失更新，lost update）。做法：分摊的计算是纯函数，放在锁外；「更新这笔支出涉及的所有余额行」放在一把锁里，保证一笔支出要么全部生效要么都不生效，不会有人读到只更新了一半的账。`settle`（还款）用同一把锁。规模大了按群分锁，不同群互不阻塞。",
+    "tags": []
+  }
+]
