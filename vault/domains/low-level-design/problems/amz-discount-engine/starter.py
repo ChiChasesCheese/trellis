@@ -140,7 +140,7 @@ class CartDiscount(ABC):
 
 
 class ThresholdOff(CartDiscount):
-    """满 threshold 减 off：门槛按折后小计判断（推断：与 Amazon 优惠券“满 X”的常见口径一致）。"""
+    """满 threshold 减 off：门槛按折后小计判断：先打折、再看够不够满额，和常见优惠券「满 X」的口径一致。"""
 
     def __init__(self, label: str, threshold_cents: int, off_cents: int) -> None:
         raise NotImplementedError

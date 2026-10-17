@@ -4,7 +4,7 @@
 1. Route 拥有「有序站点 + 相邻两站的价格 + 前缀和」，任意两站的票价是两个前缀和的差，查询 O(1)。
 2. Money 是整数「分」的值对象，所有金额运算都不碰浮点。
 3. FareRule 是一条小接缝：拿「原价 + 行程」返回新价格，周末封顶、高峰加价各是一个无状态规则。
-4. FareCalculator 把 Route 与规则串起来；时钟从构造函数注入，签名仍是报告里的 calculate_fare(start, stop)。
+4. FareCalculator 把 Route 与规则串起来；时钟从构造函数注入，对外签名仍是 calculate_fare(start, stop)。
 5. DailyCapLedger 是唯一有状态的部分：同一乘客同一天的累计封顶，一把锁保证不超额，并清理过期的日期。
 """
 
@@ -163,7 +163,7 @@ class PeakSurcharge:
 
 
 class FareCalculator:
-    """报告里的 calculateFare(start, stop)：线路给原价，规则依次调整。"""
+    """两站之间的票价：线路给原价，规则依次调整。"""
 
     def __init__(
         self,

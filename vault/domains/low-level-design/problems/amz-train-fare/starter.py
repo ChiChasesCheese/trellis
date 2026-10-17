@@ -102,7 +102,7 @@ class PeakSurcharge:
         raise NotImplementedError
 
 class FareCalculator:
-    """报告里的 calculateFare(start, stop)：线路给原价，规则依次调整。"""
+    """两站之间的票价：线路给原价，规则依次调整。"""
 
     def __init__(self, route: Route, rules: Sequence[FareRule]=(), clock: Callable[[], datetime]=datetime.now) -> None:
         raise NotImplementedError
