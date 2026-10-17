@@ -10,8 +10,7 @@
 
 ## Readings
 - [[solution-amz-linux-find|设计题解：Linux find 命令 API（File Search API）]]
-- [[src-1p3a-qbank-amz-linux-find|一亩三分地题库：按大小和后缀搜索文件（file-search-by-size-and-suffix）]]
-- [[src-hellointerview-amz-linux-find|Hello Interview 社区题库：Amazon 条目（Design a Linux Find Command API）]]
+- [[src-hellointerview-amz-linux-find|Linux find 命令 API：题目与要求]]
 - [[src-pythondocs-fnmatch-amz-linux-find|fnmatch — Unix filename pattern matching]]
 
 ## Drills

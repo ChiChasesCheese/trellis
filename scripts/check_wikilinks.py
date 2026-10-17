@@ -30,7 +30,7 @@ def main(argv: list[str]) -> int:
                 continue
             text = CODE.sub("", p.read_text(encoding="utf-8"))
             for target in WIKI.findall(text):
-                t = target.strip()
+                t = target.strip().rstrip("\\")
                 if t in names or t in rels or any(r.endswith("/" + t) for r in rels):
                     continue
                 bad += 1

@@ -8,10 +8,10 @@
 
 **Requires:** [[domains/low-level-design/map/patterns.strategy|策略模式与可替换算法（Strategy）]], [[domains/low-level-design/map/oop.values|值对象与不可变性（Value Objects）]]
 
+**Unlocks:** [[domains/low-level-design/map/amazon.amz-pizza-order|披萨订单（Pizza Order）]]
+
 ## Readings
 - [[solution-amz-discount-engine|设计题解：购物车折扣引擎（Checkout Price Engine）]]
-- [[src-1p3a-amz-discount-engine|一亩三分地 thread-1191754：Amazon VO 一轮 OOD（2026-10-02）]]
-- [[src-1p3a-shopping-cart-amz-discount-engine|一亩三分地 thread-1190571：AI infra 面经（2026-09-23，拿到 offer）]]
 - [[src-pythondocs-decimal-amz-discount-engine|decimal — Decimal fixed point and floating point arithmetic]]
 
 ## Drills

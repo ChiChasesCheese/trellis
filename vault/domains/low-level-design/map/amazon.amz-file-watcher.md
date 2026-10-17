@@ -2,7 +2,7 @@
 # 文件监听器（File Watcher）
 *Amazon 专项（Amazon OOD）*
 
-监听目录的创建 / 修改 / 删除并回调：快照比对、去抖、递归目录、回调线程与关闭。（重建）
+监听目录的创建 / 修改 / 删除并回调：快照比对、去抖、递归目录、回调线程与关闭。
 
 **Core** — part of the first pass through this subject.
 
@@ -10,7 +10,6 @@
 
 ## Readings
 - [[solution-amz-file-watcher|设计题解：文件监听器（File Watcher）]]
-- [[src-1p3a-amz-file-watcher|一亩三分地：Amazon SDE II 电面（先 tech 再 LP）]]
 - [[src-pydocs-amz-file-watcher|os.scandir（Python 标准库文档）]]
 - [[src-pydocs-threading-amz-file-watcher|threading — Event Objects（Python 标准库文档）]]
 

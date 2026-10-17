@@ -10,7 +10,7 @@
 
 ## Readings
 - [[solution-amz-emergency-pubsub|设计题解：应急事件发布订阅（Emergency Pub/Sub）]]
-- [[src-hellointerview-amz-emergency-pubsub|Hello Interview 社区题库：Amazon（题目 publish-subscribe-system）]]
+- [[src-hellointerview-amz-emergency-pubsub|应急事件发布订阅：题目与要求]]
 - [[src-pythondocs-amz-emergency-pubsub|heapq — Heap queue algorithm（Python 标准库文档）]]
 
 ## Drills

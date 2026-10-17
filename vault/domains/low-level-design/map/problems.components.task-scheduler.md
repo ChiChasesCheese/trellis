@@ -4,7 +4,11 @@
 
 延时与周期任务：堆加条件变量的调度线程、取消与工作线程池。
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/low-level-design/map/concurrency.patterns|并发模式]]
+
+**Unlocks:** [[domains/low-level-design/map/amazon.amz-task-scheduler|任务调度器（Task Scheduler）（low priority）]]
 
 ## Readings
 - [[solution-task-scheduler|设计题解：任务调度器（Task Scheduler）]]

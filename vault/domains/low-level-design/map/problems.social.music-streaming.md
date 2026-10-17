@@ -4,7 +4,11 @@
 
 曲库、播放列表、播放队列与播放器状态。
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/low-level-design/map/patterns.state|状态模式（State）]]
+
+**Unlocks:** [[domains/low-level-design/map/amazon.amz-playlist-dj|播放列表与推荐（Playlist DJ）（low priority）]], [[domains/low-level-design/map/amazon.amz-video-catalogue|视频目录与续播（Video Catalogue）（low priority）]]
 
 ## Readings
 - [[solution-music-streaming|设计题解：音乐流媒体（Spotify）]]

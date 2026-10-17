@@ -10,8 +10,7 @@
 
 ## Readings
 - [[solution-amz-dag-runner|设计题解：DAG 执行器与依赖安装（DAG Runner）]]
-- [[src-1p3a-amz-dag-runner|一亩三分地：Amazon L5 电话面（AWS agentic-AI 安全团队）]]
-- [[src-hellointerview-amz-dag-runner|Hello Interview 社区题库：Amazon 条目（package-installation-order、dag-execution-order）]]
+- [[src-hellointerview-amz-dag-runner|依赖顺序与 DAG 执行：题目与要求]]
 - [[src-pydocs-amz-dag-runner|graphlib — Functionality to operate with graph-like structures（Python 标准库文档）]]
 
 ## Drills

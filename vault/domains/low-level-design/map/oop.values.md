@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/low-level-design/map/python.dataclasses-enums|dataclass 与 Enum]]
 
-**Unlocks:** [[domains/low-level-design/map/amazon.amz-train-fare|火车线路票价（Train Fare Calculator）]], [[domains/low-level-design/map/amazon.amz-discount-engine|购物车折扣引擎（Checkout Price Engine）]]
+**Unlocks:** [[domains/low-level-design/map/amazon.amz-train-fare|火车线路票价（Train Fare Calculator）]], [[domains/low-level-design/map/amazon.amz-discount-engine|购物车折扣引擎（Checkout Price Engine）]], [[domains/low-level-design/map/amazon.amz-aws-billing|AWS 账单服务（AWS Billing Service）（low priority）]]
 
 ## Readings
 - [[fowler-value-object|ValueObject (Martin Fowler, bliki)]]

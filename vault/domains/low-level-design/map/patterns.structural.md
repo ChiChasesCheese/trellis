@@ -6,7 +6,7 @@
 
 **Core** — part of the first pass through this subject.
 
-**Unlocks:** [[domains/low-level-design/map/problems.components.logger|日志框架（Logging Framework）]], [[domains/low-level-design/map/problems.components.in-memory-file-system|内存文件系统（In-Memory File System）]], [[domains/low-level-design/map/amazon.amz-linux-find|Linux find 命令 API（File Search API）]], [[domains/low-level-design/map/amazon.amz-configurable-cache|可配置缓存（Configurable Cache）]]
+**Unlocks:** [[domains/low-level-design/map/problems.components.logger|日志框架（Logging Framework）]], [[domains/low-level-design/map/problems.components.in-memory-file-system|内存文件系统（In-Memory File System）]], [[domains/low-level-design/map/amazon.amz-linux-find|Linux find 命令 API（File Search API）]], [[domains/low-level-design/map/amazon.amz-configurable-cache|可配置缓存（Configurable Cache）]], [[domains/low-level-design/map/amazon.amz-in-memory-db|内存数据库（In-Memory Database）]]
 
 ## Readings
 - [[python-patterns-composite|The Composite Pattern]]

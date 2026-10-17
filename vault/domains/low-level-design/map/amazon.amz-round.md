@@ -8,9 +8,6 @@
 
 **Requires:** [[domains/low-level-design/map/method.delivery|作答节奏（Delivery Framework）]], [[domains/low-level-design/map/method.evaluation|评分标准（Evaluation Rubric）]]
 
-## Readings
-- [[src-1p3a-amz-round|一亩三分地：Amazon SDE II 现场面经（4 轮）]]
-
 ## Cards (7)
 1. [[amz-round-format-dry-run-and-lp-opening]]
 2. [[amz-round-logical-and-maintainable-scoring]]

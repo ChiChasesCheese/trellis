@@ -10,7 +10,6 @@ G→U→H→K→I 相邻站一元，calculateFare(start, stop)，动态加站，
 
 ## Readings
 - [[solution-amz-train-fare|设计题解：火车线路票价（Train Fare Calculator）]]
-- [[src-1p3a-amz-train-fare|一亩三分地：Amazon SDE 现场面（LP + 火车票价 OOP）]]
 - [[src-python-datetime-amz-train-fare|datetime — Basic date and time types（Python 标准库文档）]]
 
 ## Drills

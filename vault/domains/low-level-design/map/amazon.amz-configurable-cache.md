@@ -10,8 +10,7 @@
 
 ## Readings
 - [[solution-amz-configurable-cache|设计题解：可配置缓存（Configurable Cache）]]
-- [[src-1p3a-amz-configurable-cache|一亩三分地：Amazon SDE II 电面（第一题 LRU 缓存）]]
-- [[src-hellointerview-amz-configurable-cache|Hello Interview 社区题库：Amazon（题目 configurable-cache-design）]]
+- [[src-hellointerview-amz-configurable-cache|可配置缓存：题目与要求]]
 - [[src-pythondocs-amz-configurable-cache|collections — OrderedDict objects（Python 标准库文档）]]
 
 ## Drills

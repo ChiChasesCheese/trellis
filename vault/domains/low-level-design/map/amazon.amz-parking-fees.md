@@ -10,7 +10,7 @@
 
 ## Readings
 - [[solution-amz-parking-fees|设计题解：停车场计费（Parking Lot Fees）]]
-- [[src-hellointerview-amz-parking-fees|Hello Interview 社区：Amazon 面试题报告（parking-lot-system）]]
+- [[src-hellointerview-amz-parking-fees|停车场系统：题目与要求]]
 - [[src-pydocs-amz-parking-fees|datetime — Basic date and time types]]
 
 ## Drills

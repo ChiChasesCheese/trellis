@@ -2,7 +2,7 @@
 # 增删查最近值（Add / Remove / Closest）
 *Amazon 专项（Amazon OOD）*
 
-电面 OOD：维护一组数，支持插入、删除、查询离 target 最近的数；从排序列表到值域分桶。（重建）
+电面 OOD：维护一组数，支持插入、删除、查询离 target 最近的数；从排序列表到值域分桶。
 
 **Core** — part of the first pass through this subject.
 
@@ -10,7 +10,6 @@
 
 ## Readings
 - [[solution-amz-closest-store|设计题解：增删查最近值（Add / Remove / Closest）]]
-- [[src-1p3a-amz-closest-store|一亩三分地：Amazon 电面 OOD（add / remove / search 最近值）]]
 - [[src-python-bisect-amz-closest-store|bisect — Array bisection algorithm（Python 标准库文档）]]
 
 ## Drills
