@@ -1,8 +1,9 @@
 # 05 · 堆 / Top-K（Heap & top-k）
 
-> 本讲覆盖：LC 347 Top K Frequent Elements · 767 Reorganize String · 23 Merge k Sorted Lists（Hard）· 295 Find Median from Data Stream（Hard）
-> 前置：`dict` / `Counter`（第 01 讲）、链表节点（第 08 讲会细讲，这里只需要知道 `node.val`、`node.next`）。
-> 读完你应该能：(1) 解释堆（heap）是什么、为什么 push/pop 是 O(log n)；(2) 在 Python 里正确使用只有最小堆的 `heapq`（取负、元组、tie-breaker）；(3) 判断「大小为 k 的堆」与「全排序」何时划算。
+堆（heap）是一棵始终能 O(1) 看到最小（或最大）元素、O(log n) 插入删除的树。遇到「第 k 大 / 前 k 个」「合并多个有序序列」「动态中位数」「每次取当前最紧迫的一项」就想到堆；大小为 k 的堆比全排序便宜，O(n log k) 对 O(n log n)。Python 的 `heapq` 只有最小堆，所以最大堆要取负，元组比较要加 tie-breaker。下面先讲堆是什么，再给模板和四道题。
+
+覆盖的题目：LC 347 Top K Frequent Elements · 767 Reorganize String · 23 Merge k Sorted Lists（Hard）· 295 Find Median from Data Stream（Hard）
+
 
 ## 1. 这个模式是什么，为什么存在
 
@@ -152,7 +153,7 @@ class ListNode:
         self.next = next
 ```
 
-### 4.1 LC 347 · Top K Frequent Elements（Medium，频率 75）
+### 4.1 LC 347 · Top K Frequent Elements（Medium）
 
 ```python
 # solutions/347_top_k_frequent_elements.py
@@ -192,7 +193,7 @@ def top_k_frequent_buckets(nums, k):
 - **接口**：并列怎么处理（返回任意 k 个还是需要稳定排序规则）？`k > 不同元素数` 返回全部；返回顺序是否要求按次数降序？
 - **测试**：并列、`k` 等于不同值个数、全相同、负数；与「按次数排序取前 k」的暴力对比时要注意并列的顺序不确定，比较**次数的多重集**而不是值的顺序。
 
-### 4.2 LC 767 · Reorganize String（Medium，频率 78）
+### 4.2 LC 767 · Reorganize String（Medium）
 
 ```python
 # solutions/767_reorganize_string.py
@@ -227,7 +228,7 @@ def reorganize_string(s):
 - **接口**：多个合法答案时返回哪一个（任意 / 字典序最小）？不可能时返回 `""`。如果要求字典序最小，堆的键要改为 `(−count, ch)` 并重新证明正确性。
 - **测试**：**不要比较具体输出**，用性质检验——相邻字符不同、多重集与原串一致；不可行的用例 `aaab`、`aaaaabbc`；刚好可行的边界 `aaaabbc`（a 占 4/7）；单字符。
 
-### 4.3 LC 23 · Merge k Sorted Lists（Hard，频率 75）
+### 4.3 LC 23 · Merge k Sorted Lists（Hard）
 
 ```python
 # solutions/23_merge_k_sorted_lists.py
@@ -260,7 +261,7 @@ def merge_k_lists(lists):
 - **接口**：节点是复用还是拷贝（是否允许改输入）？允许 `None` 元素和空列表；值相同时是否要求稳定（先出现的列表先出）——`i` 作为 tie-breaker 恰好保证稳定。
 - **测试**：空列表、全 `None`、含 `None`、重复值（测试 tie-breaker）、一条很长其他很短；与排序所有节点的暴力对拍。
 
-### 4.4 LC 295 · Find Median from Data Stream（Hard，频率 63）
+### 4.4 LC 295 · Find Median from Data Stream（Hard）
 
 ```python
 # solutions/295_find_median_from_data_stream.py
@@ -290,8 +291,8 @@ class MedianFinder:
 - **流式**：这题本身就是流式；加上「删除」或「滑动窗口中位数」（LC 480）需要懒删除（lazy deletion）或有序结构（`SortedList`）。
 - **内存**：精确中位数必须保留全部数据（信息论下界）；近似可以 O(1/ε)。
 - **并发**：多个生产者线程写入：加锁，或每个线程一个本地结构、定期合并（草图可合并，两个堆合并要重新插入）。
-- **接口**：偶数个时返回 `float`（均值）；空流调用 `find_median` 要抛异常还是返回 `None`（本题保证非空，面试中要问）；数据类型整数 / 浮点？
-- **测试**：每次插入后与 `sorted` 列表的中位数对拍（文件里已有）；重复值、负数、单个元素、递增 / 递减输入。
+- **接口**：偶数个时返回 `float`（均值）；空流调用 `find_median` 要抛异常还是返回 `None`（题目保证非空，面试中要问）；数据类型整数 / 浮点？
+- **测试**：每次插入后与 `sorted` 列表的中位数对拍；重复值、负数、单个元素、递增 / 递减输入。
 
 ## 5. 常见 bug
 

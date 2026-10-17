@@ -1,0 +1,317 @@
+[
+ {
+  "id": "amp-01-signals",
+  "slug": "01-signals",
+  "title": "识别信号：哈希表计数 / 前缀和",
+  "meta": "模式",
+  "question_md": "什么样的题该想到哈希表计数 / 前缀和？说出 3–4 个信号，并各举一道例题。",
+  "answer_md": "思路｜你反复在问「之前见过 X 吗」或「X 出现过几次」，就把答案存进哈希表，把重复扫描变成 O(1) 查找。\n\n- 要找补数 / 配对：`target - x` 之前出现过吗。例：LC 1 Two Sum。\n- 要把「等价」的东西归成一组：先算规范键（canonical key）当 dict 的键。例：LC 49 Group Anagrams。\n- 要数「和恰为 k 的连续子数组」：前缀和之差等于 k，把前缀和出现次数存起来。例：LC 560 Subarray Sum Equals K。\n- 要 O(n) 找连续序列：用 set 判断「x-1 在不在」，只从序列起点向右数。例：LC 128 Longest Consecutive Sequence。",
+  "note": "interviews/core/coding/amazon/patterns/01_hash_map_counting.md"
+ },
+ {
+  "id": "amp-01-template",
+  "slug": "01-template",
+  "title": "模板：三种哈希形态",
+  "meta": "模式",
+  "question_md": "写出哈希表三种形态的模板（查补数、规范键分组、前缀和计数），并说明每个变量的含义。",
+  "answer_md": "模板｜\n\n```python\n# Template 1: \"have I already seen what I need?\"  (one pass, look BEFORE you insert)\ndef find_pair(items, need_of):\n    seen = {}                                   # value -> index\n    for i, x in enumerate(items):\n        want = need_of(x)\n        if want in seen:\n            return seen[want], i\n        seen[x] = i\n    return None\n\n# Template 2: group by a canonical key (anything that is equal for \"equivalent\" items)\ndef group_by(items, key):\n    groups = defaultdict(list)\n    for it in items:\n        groups[key(it)].append(it)              # the key must be hashable: use tuple/str/int, never list\n    return dict(groups)\n```\n\n思路｜`seen` 记「之前见过的值 → 下标」；`need_of` / `key` 是换题时唯一要换的函数；查补数发生在存入**之前**，同一个元素才不会用两次；分组的键必须可哈希（用 tuple / str，不用 list）。\n\n复杂度｜时间 O(n)，空间 O(n)。",
+  "note": "interviews/core/coding/amazon/patterns/01_hash_map_counting.md"
+ },
+ {
+  "id": "amp-01-template-prefix",
+  "slug": "01-template-prefix",
+  "title": "模板：前缀和 + 出现次数",
+  "meta": "模式",
+  "question_md": "写出「统计和为 k 的连续子数组个数」的前缀和模板，并说明为什么 `Counter` 要以 `{0: 1}` 开头。",
+  "answer_md": "模板｜\n\n```python\n# Template 3: running state + how many times each state has been seen\ndef count_prefix_pairs(nums, k):\n    seen = Counter({0: 1})                      # the empty prefix\n    state = pairs = 0\n    for x in nums:\n        state += x                              # prefix sum so far\n        pairs += seen[state - k]                # earlier prefixes that make a window with sum k\n        seen[state] += 1\n    return pairs\n```\n\n思路｜`state` 是当前前缀和；`seen[state - k]` 是之前有多少个前缀与当前前缀相差 k，每个都对应一个以当前位置结尾、和为 k 的子数组；`{0: 1}` 是空前缀，没有它从下标 0 开始的子数组会被漏掉；先统计再存入。\n\n复杂度｜时间 O(n)，空间 O(n)。",
+  "note": "interviews/core/coding/amazon/patterns/01_hash_map_counting.md"
+ },
+ {
+  "id": "amp-01-pitfall",
+  "slug": "01-pitfall",
+  "title": "易错点：Two Sum 先存后查 / 560 漏掉空前缀",
+  "meta": "模式",
+  "question_md": "`two_sum([3, 2, 4], 6)` 应该返回 `[1, 2]`。如果写成「先 `seen[x] = i` 再查 `target - x`」会返回什么？LC 560 去掉 `{0: 1}` 后 `subarray_sum([2], 2)` 又返回什么？",
+  "answer_md": "易错｜先存后查时 `x = 3` 的补数 3 就是它自己，返回 `[0, 0]`（同一个元素用了两次）；正确写法先查再存，返回 `[1, 2]`。LC 560 去掉 `{0: 1}` 后返回 `0`，正确答案是 `1`，因为从下标 0 开始的子数组需要「空前缀出现过一次」。\n\n思路｜两个 bug 是同一条纪律：先查再存，并且起点状态（空前缀）要预先放进表里。\n\n```python\ndef two_sum(nums, target):\n    seen = {}                       # value -> index where we saw it\n    for i, x in enumerate(nums):\n        need = target - x\n        if need in seen:            # look BEFORE inserting x: no element is used twice\n            return [seen[need], i]\n        seen[x] = i\n    return []\n```",
+  "note": "interviews/core/coding/amazon/patterns/01_hash_map_counting.md"
+ },
+ {
+  "id": "amp-01-followups",
+  "slug": "01-followups",
+  "title": "常见追问：哈希表计数 / 前缀和",
+  "meta": "模式",
+  "question_md": "哈希表计数 / 前缀和：面试官接着会追问哪几件事？各用一句话回答。",
+  "answer_md": "追问｜\n\n- **规模 ×1000（Two Sum）**：dict 装不下；按 `min(x, target - x)` 哈希分区，让互为补数的数进同一个分区，再在分区内用 dict，或外排序 + 双指针\n- **流式输入**：边来边查 `seen`，每个元素 O(1)；只关心最近 W 个元素时要加过期（TTL），否则内存无限增长\n- **为什么 560 不能用滑动窗口**：数组有负数和 0，窗口和不单调，「和太大就收左边」不成立",
+  "note": "interviews/core/coding/amazon/patterns/01_hash_map_counting.md"
+ },
+ {
+  "id": "amp-02-signals",
+  "slug": "02-signals",
+  "title": "识别信号：双指针 / 滑动窗口",
+  "meta": "模式",
+  "question_md": "什么样的题该想到双指针 / 滑动窗口？说出 3–4 个信号，并各举一道例题。",
+  "answer_md": "思路｜要找「满足条件的最长 / 最短连续段」，或在有序数据里找一对，指针只前进不回退就能 O(n)。\n\n- 求最长（最短）的连续子串 / 子数组，且窗口一旦无效再变大也无效（单调性）。例：LC 3 Longest Substring Without Repeating Characters。\n- 要覆盖一组字符的最短窗口：右扩到满足，再左缩到刚好。例：LC 76 Minimum Window Substring。\n- 有序数组里找和为 target 的一对或一组：相向指针，每步丢掉一端。例：LC 15 3Sum。\n- 面积 / 容量由两端较矮的一边决定，从两端向中间收缩。例：LC 11 Container With Most Water，LC 42 Trapping Rain Water。",
+  "note": "interviews/core/coding/amazon/patterns/02_two_pointers_sliding_window.md"
+ },
+ {
+  "id": "amp-02-template",
+  "slug": "02-template",
+  "title": "模板：可变窗口与相向指针",
+  "meta": "模式",
+  "question_md": "写出可变大小滑动窗口的模板，并说明三步（增、修、记）各做什么。",
+  "answer_md": "模板｜\n\n```python\n# Template S: variable-size sliding window (\"longest/shortest window that is valid\")\ndef longest_window(seq, is_valid_after_add, add, remove):\n    left = best = 0\n    for right, x in enumerate(seq):\n        add(x)                                   # 1. grow: take seq[right] into the window\n        while not is_valid_after_add():          # 2. repair: shrink from the left until valid again\n            remove(seq[left])\n            left += 1\n        best = max(best, right - left + 1)       # 3. record: window seq[left..right] is valid here\n    return best\n```\n\n思路｜`right` 每轮加一个元素（add）；窗口无效就 `while` 缩左端（repair）；此刻窗口有效，更新答案（record）。状态更新必须 O(1)。求最短窗口时，记录写在 `while` 内部。\n\n复杂度｜时间 O(n)：`left` 和 `right` 各最多走 n 步。空间取决于窗口状态。",
+  "note": "interviews/core/coding/amazon/patterns/02_two_pointers_sliding_window.md"
+ },
+ {
+  "id": "amp-02-pitfall",
+  "slug": "02-pitfall",
+  "title": "易错点：LC 3 的 left 不能回退",
+  "meta": "模式",
+  "question_md": "`lengthOfLongestSubstring(\"abba\")` 的答案是 2。如果在遇到重复字符时直接写 `left = last[ch] + 1`，会返回什么？",
+  "answer_md": "易错｜`\"abba\"` 在第二个 `a` 处，`last['a'] = 0`，直接赋值会把 `left` 从 2 拉回 1，返回 `3`；正确写法 `left = max(left, last[ch] + 1)`，返回 `2`。\n\n思路｜`left` 只能向前走；重复字符的旧位置可能已经在窗口外，用 `max` 保证不回退。\n\n```python\ndef length_of_longest_substring(s):\n    last = {}                       # char -> most recent index\n    left = 0                        # window is s[left..right]\n    best = 0\n    for right, ch in enumerate(s):\n        if ch in last and last[ch] >= left:   # duplicate INSIDE the window\n            left = last[ch] + 1               # jump left just past the old copy\n        last[ch] = right\n        best = max(best, right - left + 1)\n    return best\n```",
+  "note": "interviews/core/coding/amazon/patterns/02_two_pointers_sliding_window.md"
+ },
+ {
+  "id": "amp-02-followups",
+  "slug": "02-followups",
+  "title": "常见追问：双指针 / 滑动窗口",
+  "meta": "模式",
+  "question_md": "双指针 / 滑动窗口：面试官接着会追问哪几件事？各用一句话回答。",
+  "answer_md": "追问｜\n\n- **为什么指针只前进还是 O(n)**：`left` 和 `right` 各最多走 n 步，每个元素最多进出窗口一次\n- **相向指针为什么可以丢掉一端（LC 11）**：若 `height[lo] < height[hi]`，以 `lo` 为左墙的其余容器宽度更小、高度仍被 `height[lo]` 限制，面积不会更大，安全丢弃 `lo`\n- **3Sum 怎么避免重复三元组**：排序后固定第一个数，相同的数跳过；找到解后左右指针也跳过重复值",
+  "note": "interviews/core/coding/amazon/patterns/02_two_pointers_sliding_window.md"
+ },
+ {
+  "id": "amp-03-signals",
+  "slug": "03-signals",
+  "title": "识别信号：区间",
+  "meta": "模式",
+  "question_md": "什么样的题该想到区间？说出 3–4 个信号，并各举一道例题。",
+  "answer_md": "思路｜给你一堆 `[start, end]` 要合并、数重叠或选子集，先排序再一次扫描。\n\n- 合并重叠区间：按起点排序，只和最后一个块比较。例：LC 56 Merge Intervals。\n- 同一时刻最多几个区间重叠（要几间会议室）：扫描线 +1 / −1，或最小堆放结束时间。例：LC 253 Meeting Rooms II。\n- 最少删掉几个区间使其互不重叠：按终点排序的贪心。例：LC 435 Non-overlapping Intervals。\n- 区间带权重，选互不重叠且总权重最大：贪心失效，排序 + DP + 二分。例：LC 1235 Maximum Profit in Job Scheduling。",
+  "note": "interviews/core/coding/amazon/patterns/03_intervals.md"
+ },
+ {
+  "id": "amp-03-template",
+  "slug": "03-template",
+  "title": "模板：排序后扫描合并 / 扫描线计数",
+  "meta": "模式",
+  "question_md": "写出区间合并和扫描线计数最大重叠数的模板。",
+  "answer_md": "模板｜\n\n```python\n# Template: sort by start, then one pass comparing each interval with the LAST block only\ndef sweep_blocks(intervals):\n    blocks = []\n    for start, end in sorted(intervals):\n        if blocks and start <= blocks[-1][1]:       # overlaps the last block\n            blocks[-1][1] = max(blocks[-1][1], end)\n        else:\n            blocks.append([start, end])\n    return blocks\n```\n\n```python\n# Template: counting overlap with +1/-1 events (sweep line)\ndef max_overlap(intervals):\n    events = sorted([(s, 1) for s, e in intervals] + [(e, -1) for s, e in intervals])  # -1 sorts before +1 at a tie\n    cur = best = 0\n    for _, delta in events:\n        cur += delta\n        best = max(best, cur)\n    return best\n```\n\n思路｜`blocks[-1][1]` 是最后一个块的右端，新区间起点 `<=` 它就重叠，右端取 `max`；扫描线事件 `(e, -1)` 排在 `(s, 1)` 之前，终点和起点相同时先释放再占用。\n\n复杂度｜时间 O(n log n)（排序），空间 O(n)。",
+  "note": "interviews/core/coding/amazon/patterns/03_intervals.md"
+ },
+ {
+  "id": "amp-03-pitfall",
+  "slug": "03-pitfall",
+  "title": "易错点：合并时右端必须取 max",
+  "meta": "模式",
+  "question_md": "合并 `[[1, 10], [2, 3]]`，如果重叠时直接 `blocks[-1][1] = end`，结果是什么？正确结果是什么？",
+  "answer_md": "易错｜直接赋值得到 `[[1, 3]]`，把大区间缩短了；用 `max(blocks[-1][1], end)` 得到 `[[1, 10]]`。\n\n思路｜嵌套区间的右端比新区间更大，必须取 `max`。另外 `<=` 还是 `<` 取决于契约：LC 56 首尾相接要合并，LC 435 相接不算重叠。\n\n```python\ndef merge(intervals):\n    merged = []\n    for start, end in sorted(intervals):             # sorted() copies: input is not mutated\n        if merged and start <= merged[-1][1]:        # overlaps (or touches) the last block\n            merged[-1][1] = max(merged[-1][1], end)  # max: the new one may be fully inside\n        else:\n            merged.append([start, end])\n    return merged\n```",
+  "note": "interviews/core/coding/amazon/patterns/03_intervals.md"
+ },
+ {
+  "id": "amp-03-followups",
+  "slug": "03-followups",
+  "title": "常见追问：区间",
+  "meta": "模式",
+  "question_md": "区间：面试官接着会追问哪几件事？各用一句话回答。",
+  "answer_md": "追问｜\n\n- **为什么 435 按终点排序、56 按起点**：56 要把相连的区间粘起来，起点顺序保证相邻；435 要尽早结束给后面留空间，终点衡量「占了多少未来」\n- **253 要返回具体分配的房间号**：堆里放 `(end, room_id)`；预订是 check-then-act，并发时要加锁或乐观并发\n- **435 加上权重怎么办**：贪心不再成立，变成 LC 1235：按终点排序，DP 加二分",
+  "note": "interviews/core/coding/amazon/patterns/03_intervals.md"
+ },
+ {
+  "id": "amp-03-lc435",
+  "slug": "03-lc435",
+  "title": "无重叠区间（Non-overlapping Intervals, LC 435）",
+  "meta": "Medium",
+  "question_md": "给定区间数组 `intervals`，`intervals[i] = [start_i, end_i]`。返回最少需要删除多少个区间，才能让剩下的区间互不重叠。只在端点相接的区间（如 `[1,2]` 与 `[2,3]`）不算重叠。\n\n约束：`1 <= intervals.length <= 10^5`，`-5*10^4 <= start_i < end_i <= 5*10^4`。\n\n例：`[[1,2],[2,3],[3,4],[1,3]]` → `1`（删掉 `[1,3]`）；`[[1,2],[1,2],[1,2]]` → `2`。",
+  "answer_md": "思路｜删最少等于保留最多。按终点排序，贪心保留：结束越早，给后面留的空间越多；当前区间起点 `>= last_end` 就保留。\n\n```python\ndef erase_overlap_intervals(intervals):\n    intervals = sorted(intervals, key=lambda iv: iv[1])   # earliest end first leaves most room\n    kept = 0\n    last_end = float(\"-inf\")\n    for start, end in intervals:\n        if start >= last_end:        # touching ([1,2],[2,3]) is NOT an overlap here\n            kept += 1\n            last_end = end\n    return len(intervals) - kept\n```\n\n复杂度｜时间 O(n log n)，空间 O(1)（不计排序）。\n\n易错｜相接不算重叠，所以比较是 `>=`；按起点排序会选错。\n\n追问｜每个区间带权重怎么办？贪心失效，改成 LC 1235 的 DP。",
+  "note": "interviews/core/coding/amazon/patterns/03_intervals.md"
+ },
+ {
+  "id": "amp-03-lc1235",
+  "slug": "03-lc1235",
+  "title": "规划兼职工作（Maximum Profit in Job Scheduling, LC 1235）",
+  "meta": "Hard",
+  "question_md": "有 `n` 个兼职工作，第 `i` 个从 `startTime[i]` 到 `endTime[i]`，报酬 `profit[i]`。选一组时间上互不重叠的工作，使总报酬最大，返回最大值。结束时刻为 X 的工作与开始时刻为 X 的工作不冲突。\n\n约束：`1 <= n <= 5*10^4`，`1 <= startTime[i] < endTime[i] <= 10^9`，`1 <= profit[i] <= 10^4`。\n\n例：`startTime=[1,2,3,3], endTime=[3,4,5,6], profit=[50,10,40,70]` → `120`（选第 1 和第 4 个）。",
+  "answer_md": "思路｜带权区间调度：按结束时间排序，`dp[i]` 是前 i 个工作的最大报酬。第 i 个工作要么跳过（`dp[i-1]`），要么接在最后一个与它兼容的工作之后（`dp[k] + p`），`k` 用二分找。\n\n```python\ndef job_scheduling(start_time, end_time, profit):\n    jobs = sorted(zip(end_time, start_time, profit))      # by end time\n    ends = [e for e, _, _ in jobs]\n    dp = [0] * (len(jobs) + 1)                            # dp[i]: best profit using the first i jobs\n    for i, (e, s, p) in enumerate(jobs, 1):\n        k = bisect.bisect_right(ends, s, 0, i - 1)        # jobs that end at or before s are compatible\n        dp[i] = max(dp[i - 1], dp[k] + p)                 # skip job i, or take it on top of dp[k]\n    return dp[-1]\n```\n\n复杂度｜时间 O(n log n)，空间 O(n)。\n\n易错｜终点等于 `s` 的工作兼容，所以用 `bisect_right`；`hi = i - 1` 防止把自己算进去。\n\n追问｜要输出选中的工作而不只是总额？记录父指针，回溯。",
+  "note": "interviews/core/coding/amazon/patterns/03_intervals.md"
+ },
+ {
+  "id": "amp-04-signals",
+  "slug": "04-signals",
+  "title": "识别信号：栈 / 单调栈",
+  "meta": "模式",
+  "question_md": "什么样的题该想到栈 / 单调栈？说出 3–4 个信号，并各举一道例题。",
+  "answer_md": "思路｜题里出现「最近的」「下一个更大的」「成对匹配」，用栈把还没解决的元素放在顶上。\n\n- 括号 / 嵌套结构的匹配。例：LC 20 Valid Parentheses。\n- 每个元素要找右边第一个更大（更小）的元素。例：LC 739 Daily Temperatures。\n- 每个元素向左右各找最近的更小值，算最大矩形。例：LC 84 Largest Rectangle in Histogram。\n- 滑动窗口里要 O(1) 取最大值：单调队列（deque）。例：LC 239 Sliding Window Maximum。",
+  "note": "interviews/core/coding/amazon/patterns/04_stack_monotonic_stack.md"
+ },
+ {
+  "id": "amp-04-template",
+  "slug": "04-template",
+  "title": "模板：下一个更大元素的单调栈",
+  "meta": "模式",
+  "question_md": "写出「下一个更大元素」的单调栈模板，并说明栈里存什么、为什么。",
+  "answer_md": "模板｜\n\n```python\n# Template: monotonic stack of INDICES, \"next greater element\" version\ndef next_greater(nums):\n    ans = [-1] * len(nums)                      # -1 = no greater element to the right\n    stack = []                                  # indices still waiting for their answer; values non-increasing\n    for i, x in enumerate(nums):\n        while stack and nums[stack[-1]] < x:    # x answers every waiting smaller element\n            ans[stack.pop()] = x\n        stack.append(i)\n    return ans                                  # whatever is still on the stack has no answer\n```\n\n思路｜栈里存**下标**，对应值非递增；`x` 比栈顶大，就是栈顶等待的答案，用 `while` 弹到不能弹为止。栈里剩下的元素没有答案，默认 −1。存下标是为了算距离（LC 739）和宽度（LC 84）。\n\n复杂度｜时间 O(n)：每个元素最多入栈、出栈各一次。空间 O(n)。",
+  "note": "interviews/core/coding/amazon/patterns/04_stack_monotonic_stack.md"
+ },
+ {
+  "id": "amp-04-pitfall",
+  "slug": "04-pitfall",
+  "title": "易错点：严格 < 还是 <=",
+  "meta": "模式",
+  "question_md": "LC 739 的温度 `[73, 73, 75]` 应该返回 `[2, 1, 0]`。如果弹栈条件写成 `<=`，会返回什么？",
+  "answer_md": "易错｜`<=` 会让第二个 73 把第一个 73 也弹出，返回 `[1, 1, 0]`；严格 `<` 才返回 `[2, 1, 0]`（相等不算更热）。LC 84 则相反，相等高度要合并宽度。\n\n思路｜每次写栈题都先想：相等元素算不算「更大」。\n\n```python\ndef daily_temperatures(temps):\n    ans = [0] * len(temps)\n    stack = []                                   # indices whose answer is still unknown; temps decreasing\n    for i, t in enumerate(temps):\n        while stack and temps[stack[-1]] < t:    # t is the next warmer day for everything it beats\n            j = stack.pop()\n            ans[j] = i - j\n        stack.append(i)\n    return ans\n```",
+  "note": "interviews/core/coding/amazon/patterns/04_stack_monotonic_stack.md"
+ },
+ {
+  "id": "amp-04-followups",
+  "slug": "04-followups",
+  "title": "常见追问：栈 / 单调栈",
+  "meta": "模式",
+  "question_md": "栈 / 单调栈：面试官接着会追问哪几件事？各用一句话回答。",
+  "answer_md": "追问｜\n\n- **为什么单调栈是 O(n)**：每个元素最多入栈一次、出栈一次，`while` 里的总弹出次数不超过 n\n- **LC 84 怎么推到 LC 85 Maximal Rectangle**：逐行累计高度，每行当作一次 LC 84，O(R·C)\n- **柱子逐根流入时怎么办**：栈在线维护，弹出时结算已确认的最大矩形；仍在栈里的要等到看见后面的柱子",
+  "note": "interviews/core/coding/amazon/patterns/04_stack_monotonic_stack.md"
+ },
+ {
+  "id": "amp-05-signals",
+  "slug": "05-signals",
+  "title": "识别信号：堆 / Top-K",
+  "meta": "模式",
+  "question_md": "什么样的题该想到堆 / Top-K？说出 3–4 个信号，并各举一道例题。",
+  "answer_md": "思路｜只要最大 / 最小的 k 个、合并多个有序序列、动态中位数、反复取当前最紧迫的一项，用堆。\n\n- 前 k 个高频 / 最大 / 最小：大小为 k 的堆，O(n log k)。例：LC 347 Top K Frequent Elements。\n- 合并 k 个有序序列：堆里放每个序列的当前头。例：LC 23 Merge k Sorted Lists。\n- 中间插入新元素、持续取当前最大频率的一项。例：LC 767 Reorganize String。\n- 动态中位数：最大堆放较小一半，最小堆放较大一半。例：LC 295 Find Median from Data Stream。",
+  "note": "interviews/core/coding/amazon/patterns/05_heap_top_k.md"
+ },
+ {
+  "id": "amp-05-template",
+  "slug": "05-template",
+  "title": "模板：大小为 k 的最小堆与多路合并",
+  "meta": "模式",
+  "question_md": "写出用最小堆求最大的 k 个的模板，说明为什么用最小堆。",
+  "answer_md": "模板｜\n\n```python\n# Template: the k LARGEST of a stream with a size-k MIN-heap (the heap's root is the weakest member)\ndef k_largest(nums, k):\n    heap = []\n    for x in nums:\n        if len(heap) < k:\n            heapq.heappush(heap, x)\n        elif x > heap[0]:\n            heapq.heapreplace(heap, x)          # pop root + push x in one O(log k) step\n    return sorted(heap, reverse=True)\n```\n\n思路｜堆顶是这 k 个里最小的，相当于门槛；新元素 `x > heap[0]` 才有资格进来，用 `heapreplace` 一步换掉门槛。用最大堆就得放全部 n 个。\n\n复杂度｜时间 O(n log k)，空间 O(k)。",
+  "note": "interviews/core/coding/amazon/patterns/05_heap_top_k.md"
+ },
+ {
+  "id": "amp-05-pitfall",
+  "slug": "05-pitfall",
+  "title": "易错点：堆里放不可比较的对象",
+  "meta": "模式",
+  "question_md": "把 `(1, node_a)` 和 `(1, node_b)`（`node` 是自定义链表节点）先后 `heappush` 进 `heapq`，会发生什么？怎么避免？",
+  "answer_md": "易错｜第一项相同时 Python 会比较第二项，抛出 `TypeError: '<' not supported between instances of 'N' and 'N'`。\n\n思路｜在元组里放一个递增序号当 tie-breaker：`(val, idx, node)`，`idx` 唯一，就不会比到 `node`。另一个常见错误是以为 `heapq` 是最大堆，最大堆要存 `-x`。\n\n```python\n# Template: tuples compare element by element -> add a tiebreaker when the payload is not comparable\ndef merge_sorted(*lists):\n    heap = [(lst[0], i, 0) for i, lst in enumerate(lists) if lst]     # (value, which list, position)\n    heapq.heapify(heap)\n    out = []\n    while heap:\n        v, i, j = heapq.heappop(heap)\n        out.append(v)\n        if j + 1 < len(lists[i]):\n            heapq.heappush(heap, (lists[i][j + 1], i, j + 1))\n    return out\n```",
+  "note": "interviews/core/coding/amazon/patterns/05_heap_top_k.md"
+ },
+ {
+  "id": "amp-05-followups",
+  "slug": "05-followups",
+  "title": "常见追问：堆 / Top-K",
+  "meta": "模式",
+  "question_md": "堆 / Top-K：面试官接着会追问哪几件事？各用一句话回答。",
+  "answer_md": "追问｜\n\n- **为什么求最大的 k 个用最小堆**：堆顶是门槛，堆大小固定为 k，O(n log k)；最大堆要放全部 n 个\n- **流里 key 种类无限时求 Top-K**：近似算法：Count-Min Sketch + 堆，或 Misra-Gries / Space-Saving，内存 O(k)\n- **两个堆的中位数怎么保持平衡**：`len(low) - len(high)` 必须在 {0, 1}，每次插入后调整一次",
+  "note": "interviews/core/coding/amazon/patterns/05_heap_top_k.md"
+ },
+ {
+  "id": "amp-06-signals",
+  "slug": "06-signals",
+  "title": "识别信号：图 BFS / DFS / 拓扑排序",
+  "meta": "模式",
+  "question_md": "什么样的题该想到图的 BFS / DFS / 拓扑排序？说出 3–4 个信号，并各举一道例题。",
+  "answer_md": "思路｜把格子、单词、课程翻译成点和边，再选遍历方式：连通块用 DFS 或 BFS，最短步数用 BFS，依赖顺序用拓扑排序。\n\n- 数连通块、可达性：网格上的 DFS / BFS。例：LC 200 Number of Islands。\n- 多个起点同时扩散、求最少分钟：多源 BFS，一层是一步。例：LC 994 Rotting Oranges。\n- 无权图最短转换步数：BFS。例：LC 127 Word Ladder。\n- 有先后依赖、判断能否排完或求顺序：Kahn 算法拓扑排序，检测环。例：LC 207 Course Schedule，LC 269 Alien Dictionary。",
+  "note": "interviews/core/coding/amazon/patterns/06_graph_bfs_dfs_topo.md"
+ },
+ {
+  "id": "amp-06-template",
+  "slug": "06-template",
+  "title": "模板：BFS 分层与 Kahn 拓扑排序",
+  "meta": "模式",
+  "question_md": "写出 BFS 求最短距离的模板，说明 visited 在什么时候标记。",
+  "answer_md": "模板｜\n\n```python\n# Template G1: BFS by levels (shortest path in an UNWEIGHTED graph; multi-source = many starts at level 0)\ndef bfs_levels(graph, sources):\n    dist = {s: 0 for s in sources}               # dist doubles as the visited set\n    queue = deque(sources)\n    while queue:\n        u = queue.popleft()\n        for v in graph.get(u, []):\n            if v not in dist:                    # mark when ENQUEUED so a node is queued once\n                dist[v] = dist[u] + 1\n                queue.append(v)\n    return dist\n```\n\n思路｜`dist` 同时当 visited；多个起点一起放进队列就是多源 BFS；邻居**入队时**就标记，保证每个点只入队一次。拓扑排序见同一讲的 Kahn 算法：入度为 0 的先出，最后 `len(order) == n` 才没有环。\n\n复杂度｜时间 O(V + E)，空间 O(V)。",
+  "note": "interviews/core/coding/amazon/patterns/06_graph_bfs_dfs_topo.md"
+ },
+ {
+  "id": "amp-06-pitfall",
+  "slug": "06-pitfall",
+  "title": "易错点：BFS 要在入队时标记 visited",
+  "meta": "模式",
+  "question_md": "图 `a→b, a→c, b→d, c→d` 从 `a` 出发做 BFS。入队时标记 visited，一共入队几次？出队时才标记呢？",
+  "answer_md": "易错｜入队时标记，4 个点各入队 4 次；出队才标记时，`d` 被 `b` 和 `c` 各入队一次，共 5 次，网格上会指数级膨胀或重复计数。\n\n思路｜`if v not in dist: dist[v] = dist[u] + 1; queue.append(v)`，标记和入队写在一起。\n\n```python\n# Template G1: BFS by levels (shortest path in an UNWEIGHTED graph; multi-source = many starts at level 0)\ndef bfs_levels(graph, sources):\n    dist = {s: 0 for s in sources}               # dist doubles as the visited set\n    queue = deque(sources)\n    while queue:\n        u = queue.popleft()\n        for v in graph.get(u, []):\n            if v not in dist:                    # mark when ENQUEUED so a node is queued once\n                dist[v] = dist[u] + 1\n                queue.append(v)\n    return dist\n```",
+  "note": "interviews/core/coding/amazon/patterns/06_graph_bfs_dfs_topo.md"
+ },
+ {
+  "id": "amp-06-followups",
+  "slug": "06-followups",
+  "title": "常见追问：图 BFS / DFS / 拓扑排序",
+  "meta": "模式",
+  "question_md": "图 BFS / DFS / 拓扑排序：面试官接着会追问哪几件事？各用一句话回答。",
+  "answer_md": "追问｜\n\n- **Python 递归 DFS 的坑**：默认递归深度 1000，大网格会 `RecursionError`；改 BFS 或显式栈\n- **拓扑排序发现有环要做什么**：最终 `len(order) != n` 就有环；排查依赖时要报告环上的点\n- **Word Ladder 求具体路径（LC 126）**：BFS 记录父指针，回溯所有最短路径",
+  "note": "interviews/core/coding/amazon/patterns/06_graph_bfs_dfs_topo.md"
+ },
+ {
+  "id": "amp-07-signals",
+  "slug": "07-signals",
+  "title": "识别信号：二分 / 对答案二分",
+  "meta": "模式",
+  "question_md": "什么样的题该想到二分 / 对答案二分？说出 3–4 个信号，并各举一道例题。",
+  "answer_md": "思路｜问「最小的 x 使得……」或「最小化最大值 / 最大化最小值」，且 x 越大越容易可行，就对答案二分。\n\n- 有序数组里找位置或插入点。例：LC 33 Search in Rotated Sorted Array。\n- 最小的吃香蕉速度 / 最小运载能力，可行性检查是一个 O(n) 贪心。例：LC 875 Koko Eating Bananas。\n- 最小化最大的子数组和：答案区间二分 + 贪心切分。例：LC 410 Split Array Largest Sum。\n- 要求 O(log) 的两个有序数组中位数：对较短数组的切分点二分。例：LC 4 Median of Two Sorted Arrays。",
+  "note": "interviews/core/coding/amazon/patterns/07_binary_search_on_answer.md"
+ },
+ {
+  "id": "amp-07-template",
+  "slug": "07-template",
+  "title": "模板：第一个 True 的二分",
+  "meta": "模式",
+  "question_md": "写出「单调谓词上找第一个 True」的二分模板，说明不变量。",
+  "answer_md": "模板｜\n\n```python\n# Template: \"first True\" binary search on a monotone predicate  (False False False True True True)\ndef first_true(lo, hi, ok):\n    \"\"\"Smallest x in [lo, hi] with ok(x) True; assumes ok(hi) is True and ok is monotone.\"\"\"\n    while lo < hi:\n        mid = (lo + hi) // 2            # lower middle: never equals hi, so hi = mid always shrinks\n        if ok(mid):\n            hi = mid                    # mid might be the answer: keep it\n        else:\n            lo = mid + 1                # mid is too small: discard it\n    return lo\n```\n\n思路｜不变量：答案始终在 `[lo, hi]` 内，且 `ok(hi)` 为真。`mid` 取下中位，所以 `hi = mid` 一定缩小区间；`mid` 不行就 `lo = mid + 1`。对答案二分时 `ok(x)` 就是 O(n) 的可行性检查。\n\n复杂度｜时间 O(log(范围) × 检查成本)，空间 O(1)。",
+  "note": "interviews/core/coding/amazon/patterns/07_binary_search_on_answer.md"
+ },
+ {
+  "id": "amp-07-pitfall",
+  "slug": "07-pitfall",
+  "title": "易错点：lo = mid 会死循环",
+  "meta": "模式",
+  "question_md": "`first_true(0, 1, lambda x: x >= 1)` 应该返回 1。如果 else 分支写成 `lo = mid`（不加 1），会怎样？",
+  "answer_md": "易错｜`lo=0, hi=1` 时 `mid = 0`，`ok(0)` 为假，`lo = mid` 仍是 0，区间永不缩小；限制 20 步后仍停在 `0`，实际是死循环。正确写法 `lo = mid + 1`，1 步返回 `1`。\n\n思路｜规则：`hi = mid` 配下中位和 `lo = mid + 1`；选一种写法只用这一种。\n\n```python\n# Template: \"first True\" binary search on a monotone predicate  (False False False True True True)\ndef first_true(lo, hi, ok):\n    \"\"\"Smallest x in [lo, hi] with ok(x) True; assumes ok(hi) is True and ok is monotone.\"\"\"\n    while lo < hi:\n        mid = (lo + hi) // 2            # lower middle: never equals hi, so hi = mid always shrinks\n        if ok(mid):\n            hi = mid                    # mid might be the answer: keep it\n        else:\n            lo = mid + 1                # mid is too small: discard it\n    return lo\n```",
+  "note": "interviews/core/coding/amazon/patterns/07_binary_search_on_answer.md"
+ },
+ {
+  "id": "amp-07-followups",
+  "slug": "07-followups",
+  "title": "常见追问：二分 / 对答案二分",
+  "meta": "模式",
+  "question_md": "二分 / 对答案二分：面试官接着会追问哪几件事？各用一句话回答。",
+  "answer_md": "追问｜\n\n- **Koko 的答案范围**：下界 1，上界 `max(piles)`；`ceil` 用 `(p + s - 1) // s`，不用浮点\n- **LC 410 的下界**：必须是 `max(nums)`，否则切分检查在 `limit < max(nums)` 时会误判可行\n- **LC 33 旋转数组里 `nums[lo] <= nums[mid]` 的等号**：两个元素时 `lo == mid`，`[lo..mid]` 也是有序的，等号不能漏",
+  "note": "interviews/core/coding/amazon/patterns/07_binary_search_on_answer.md"
+ },
+ {
+  "id": "amp-08-signals",
+  "slug": "08-signals",
+  "title": "识别信号：链表",
+  "meta": "模式",
+  "question_md": "什么样的题该想到链表？说出 3–4 个信号，并各举一道例题。",
+  "answer_md": "思路｜题目给的是单向链表节点，要改指针、合并、反转或判环，先画图，再用 dummy 头节点和 prev/cur/nxt 三指针。\n\n- 就地反转整条或一段链表。例：LC 206 Reverse Linked List，LC 25 Reverse Nodes in k-Group。\n- 合并或逐位相加，结果链表头未知：dummy 头节点。例：LC 21 Merge Two Sorted Lists，LC 2 Add Two Numbers。\n- 找中点、判环、倒数第 k 个：快慢指针。例：LC 141 Linked List Cycle。\n- 复制带随机指针的结构：哈希表 旧节点 → 新节点。例：LC 138 Copy List with Random Pointer。",
+  "note": "interviews/core/coding/amazon/patterns/08_linked_list.md"
+ },
+ {
+  "id": "amp-08-template",
+  "slug": "08-template",
+  "title": "模板：dummy 头节点与快慢指针",
+  "meta": "模式",
+  "question_md": "写出用 dummy 头节点删除链表中所有值为 target 的节点的模板，说明为什么删除后不前进 prev。",
+  "answer_md": "模板｜\n\n```python\n# Template L1: dummy head -- the head might change or not exist; a dummy makes every node \"have a previous\"\ndef remove_value(head, target):\n    dummy = ListNode(0, head)\n    prev = dummy\n    while prev.next:\n        if prev.next.val == target:\n            prev.next = prev.next.next            # unlink; do NOT advance prev (the next one may match too)\n        else:\n            prev = prev.next\n    return dummy.next\n```\n\n思路｜`dummy` 让每个真实节点都有前驱，头节点被删也不需要特判；总是看 `prev.next`。删除后 `prev` 不动，因为新的 `prev.next` 可能也要删；不删才前进。\n\n复杂度｜时间 O(n)，空间 O(1)。",
+  "note": "interviews/core/coding/amazon/patterns/08_linked_list.md"
+ },
+ {
+  "id": "amp-08-pitfall",
+  "slug": "08-pitfall",
+  "title": "易错点：先改 cur.next 会丢掉后面的链表",
+  "meta": "模式",
+  "question_md": "反转 `[1, 2, 3]`，如果循环体写成 `cur.next = prev; prev = cur; cur = cur.next`（没有先保存 `nxt`），结果是什么？",
+  "answer_md": "易错｜`cur.next = prev` 之后，`cur.next` 已经指回前面，`cur = cur.next` 回到 `prev`，剩余的 `2 → 3` 丢了，返回 `[1]`。正确写法先 `nxt = cur.next`，再改指针，最后 `cur = nxt`。\n\n思路｜改指针会丢信息，改之前先把要用的存起来。\n\n```python\ndef reverse_list(head):\n    prev = None\n    cur = head\n    while cur:\n        nxt = cur.next        # 1. remember the rest before we cut the link\n        cur.next = prev       # 2. point backwards\n        prev = cur            # 3. advance prev\n        cur = nxt             # 4. advance cur\n    return prev               # prev is the new head when cur falls off the end\n\n\ndef reverse_list_recursive(head):\n    if not head or not head.next:\n        return head\n    new_head = reverse_list_recursive(head.next)   # reverse the tail first\n    head.next.next = head                          # the node after head now points back at head\n    head.next = None\n    return new_head\n```",
+  "note": "interviews/core/coding/amazon/patterns/08_linked_list.md"
+ },
+ {
+  "id": "amp-08-followups",
+  "slug": "08-followups",
+  "title": "常见追问：链表",
+  "meta": "模式",
+  "question_md": "链表：面试官接着会追问哪几件事？各用一句话回答。",
+  "answer_md": "追问｜\n\n- **判环为什么快指针一定追上慢指针**：环里每步两者距离缩短 1，必然相遇；无环时快指针先到 `None`。O(n) 时间 O(1) 空间\n- **反转的递归版和迭代版**：递归版栈深度 O(n)，Python 默认深度 1000 会爆；面试里写迭代版\n- **LC 25 不足 k 个的尾部怎么处理**：题目要求保持原样；先数够 k 个再反转这一组，不足就停",
+  "note": "interviews/core/coding/amazon/patterns/08_linked_list.md"
+ }
+]

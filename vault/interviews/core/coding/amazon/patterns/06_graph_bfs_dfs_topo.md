@@ -1,8 +1,9 @@
 # 06 · 图：BFS / DFS（网格与图）与拓扑排序（Graph traversal & topological sort）
 
-> 本讲覆盖：LC 200 Number of Islands · 994 Rotting Oranges · 127 Word Ladder（Hard）· 207 Course Schedule（含 210）· 269 Alien Dictionary（Hard）
-> 前置：`collections.deque`、`dict` / `set`、递归的基本概念。图的概念从零讲。
-> 读完你应该能：(1) 把任何「格子 / 单词 / 课程」问题翻译成「点 + 边」；(2) 在 BFS 与 DFS 之间选对并解释原因；(3) 用 Kahn 算法做拓扑排序并检测环；(4) 对每道题说出 Python 递归深度的坑。
+图（graph）题的第一步是把「格子 / 单词 / 课程」翻译成「点 + 边」。要数连通块或探索所有可能时用 DFS 或 BFS；要最短步数（无权图）时用 BFS，一层对应一步；要处理有依赖关系的顺序时用拓扑排序（topological sort），Kahn 算法同时能检测环。网格题还有 Python 递归深度的坑，大网格要改成显式栈或 BFS。下面从零讲图，再给模板和五道题。
+
+覆盖的题目：LC 200 Number of Islands · 994 Rotting Oranges · 127 Word Ladder（Hard）· 207 Course Schedule（含 210）· 269 Alien Dictionary（Hard）
+
 
 ## 1. 这个模式是什么，为什么存在
 
@@ -182,7 +183,7 @@ minute 4: newly rotten=[(2, 2)] fresh=0
 from collections import defaultdict, deque
 ```
 
-### 4.1 LC 200 · Number of Islands（Medium，频率 88）
+### 4.1 LC 200 · Number of Islands（Medium）
 
 ```python
 # solutions/200_number_of_islands.py
@@ -221,7 +222,7 @@ def num_islands(grid):
 - **接口 / 边界**：4 连通还是 8 连通？字符 `'1'` 还是整数 `1`？不规则（ragged）网格？空网格？返回数量还是每个岛的面积 / 坐标？
 - **测试**：全水、全陆、棋盘（对角线不连通）、蛇形长岛（测试递归深度）、单格；与基于并查集的另一实现互相对拍。
 
-### 4.2 LC 994 · Rotting Oranges（Medium，频率 75）
+### 4.2 LC 994 · Rotting Oranges（Medium）
 
 ```python
 # solutions/994_rotting_oranges.py
@@ -261,7 +262,7 @@ def oranges_rotting(grid):
 - **接口**：返回 `-1` 表示不可能；没有新鲜橘子返回 0（即使没有腐烂橘子）；对角线是否传播？
 - **测试**：不可达的新鲜橘子（返回 −1）、全空、只有新鲜（−1）、已有多个源同时扩散。
 
-### 4.3 LC 127 · Word Ladder（Hard，频率 75）
+### 4.3 LC 127 · Word Ladder（Hard）
 
 ```python
 # solutions/127_word_ladder.py
@@ -297,10 +298,10 @@ def ladder_length(begin, end, word_list):
 - **流式**：词典增量更新时，只需把新词加入对应的 L 个桶，已有索引不需要重建。
 - **内存**：桶键 `h*t` 总数约 N·L 个；可以用哈希值代替字符串键，或不建桶而逐位尝试 26 个字母（时间 O(N·L·26)，内存更省）。
 - **并发**：索引只读，多个查询并行；单次 BFS 做层同步并行。
-- **接口**：`beginWord` 不必在词典里；`endWord` 不在词典里返回 0；返回长度（本题含起点，所以 +1）还是具体路径（LC 126，需要记录父指针并回溯所有最短路径）？
+- **接口**：`beginWord` 不必在词典里；`endWord` 不在词典里返回 0；返回长度（长度含起点，所以 +1）还是具体路径（LC 126，需要记录父指针并回溯所有最短路径）？
 - **测试**：终点不在词典、起点等于终点、词典很小、存在多条等长路径（对拍一个朴素 BFS）。
 
-### 4.4 LC 207 · Course Schedule（Medium，频率 75）；附 LC 210
+### 4.4 LC 207 · Course Schedule（Medium）；附 LC 210
 
 ```python
 # solutions/207_course_schedule.py
@@ -353,7 +354,7 @@ def find_order(num_courses, prerequisites):      # LC 210: same loop, keep the o
 - **接口**：只返回布尔值，还是返回一个合法顺序（210）？有环时是否要**报告环上的点**（排查依赖用，比单纯 `False` 有用得多）？重复边、自环（`[0,0]`）、课程编号越界怎么办？
 - **测试**：随机生成 DAG（先随机排列再只允许从前向后连边）必须返回 True，再加一条反向边必须返回 False；自环、菱形（diamond）、空依赖。
 
-### 4.5 LC 269 · Alien Dictionary（Hard，频率 38）
+### 4.5 LC 269 · Alien Dictionary（Hard）
 
 ```python
 # solutions/269_alien_dictionary.py

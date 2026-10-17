@@ -1,8 +1,9 @@
 # 08 · 链表（Linked list）
 
-> 本讲覆盖：LC 206 Reverse Linked List · 21 Merge Two Sorted Lists · 2 Add Two Numbers · 138 Copy List with Random Pointer · 25 Reverse Nodes in k-Group（Hard）
-> 前置：Python 中「变量是对象的引用」这一点（本讲会讲）。第 05 讲的 LC 23 也用到了本讲的 `ListNode`。
-> 读完你应该能：(1) 在脑中（或纸上）画出指针的变化；(2) 用 dummy 头节点消灭「头节点特殊情况」；(3) 写出 `prev / cur / nxt` 三指针反转，并推广到分段反转。
+链表（linked list）题考的是指针操作的细心程度：每个节点只知道下一个节点，改一条边之前要先把后面的链保存好。三个必会的工具是 dummy 头节点（消灭头节点的特殊情况）、`prev / cur / nxt` 三指针反转、快慢指针。画图并逐步更新指针比凭感觉写更不容易错。下面从「变量是对象引用」讲起，再给模板和五道题。
+
+覆盖的题目：LC 206 Reverse Linked List · 21 Merge Two Sorted Lists · 2 Add Two Numbers · 138 Copy List with Random Pointer · 25 Reverse Nodes in k-Group（Hard）
+
 
 ## 1. 这个模式是什么，为什么存在
 
@@ -162,7 +163,7 @@ class Node:                                   # LC 138's node: next pointer + a 
         self.random = random
 ```
 
-### 4.1 LC 206 · Reverse Linked List（Easy，频率 62）
+### 4.1 LC 206 · Reverse Linked List（Easy）
 
 ```python
 # solutions/206_reverse_linked_list.py
@@ -198,7 +199,7 @@ def reverse_list_recursive(head):
 - **接口 / 边界**：原地修改还是返回新链表？原来的 `head` 在反转后变成尾节点，调用者手里的旧引用现在指向尾——要在文档里写明。空链表和单节点；输入如果有环会死循环（可先用快慢指针检测）。
 - **测试**：长度 0、1、2、n；`to_list(reverse(x)) == to_list(x)[::-1]`；性质：节点身份（`id`）集合不变，说明是原地的。
 
-### 4.2 LC 21 · Merge Two Sorted Lists（Easy，频率 67）
+### 4.2 LC 21 · Merge Two Sorted Lists（Easy）
 
 ```python
 # solutions/21_merge_two_sorted_lists.py
@@ -226,7 +227,7 @@ def merge_two_lists(a, b):
 - **接口**：稳定性（值相等时哪个列表在前——`<=` 取第一个列表的）；降序列表怎么办；是否允许修改输入。
 - **测试**：两个空、一个空、全部相等、一个列表全小于另一个、交错；与 `sorted(a + b)` 对拍。
 
-### 4.3 LC 2 · Add Two Numbers（Medium，频率 80）
+### 4.3 LC 2 · Add Two Numbers（Medium）
 
 ```python
 # solutions/2_add_two_numbers.py
@@ -259,7 +260,7 @@ def add_two_numbers(a, b):
 - **接口**：数字是否有前导零？负数？不同进制？链表是空（表示 0 还是非法）？
 - **测试**：`999 + 1`（进位链）、长度不等、两个 0、单个节点进位（5+5）；与 Python 大整数运算对拍。
 
-### 4.4 LC 138 · Copy List with Random Pointer（Medium，频率 75）
+### 4.4 LC 138 · Copy List with Random Pointer（Medium）
 
 ```python
 # solutions/138_copy_list_with_random_pointer.py
@@ -311,7 +312,7 @@ def copy_random_list_o1(head):
 - **接口**：`random` 可以指向 `None`；如果 `random` 指向链表之外的节点怎么办？一般图的深拷贝（LC 133）要处理环，同样用「旧→新」映射。
 - **测试**：空链表、单节点自指、所有 `random` 为 `None`、全部指向头；检查：副本与原链表**没有共享节点**，结构（值 + random 下标）相同，原链表没有被改动。
 
-### 4.5 LC 25 · Reverse Nodes in k-Group（Hard，频率 62）
+### 4.5 LC 25 · Reverse Nodes in k-Group（Hard）
 
 ```python
 # solutions/25_reverse_nodes_in_k_group.py
@@ -343,7 +344,7 @@ def reverse_k_group(head, k):
 - **流式**：每次只需要缓冲 k 个节点，内存 O(k)；输出可以按组吐出，最后一个不足 k 的组原样输出。
 - **内存**：O(1) 额外。
 - **并发**：先顺序找到各组边界（O(n) 一遍），然后各组的反转互相独立，可以并行；但接回前后的指针要在合并阶段统一处理。
-- **接口**：`k = 1` 或 `k > 长度`原样返回；最后不足 k 的组是否也反转（本题不反转，某些变体反转）；`k <= 0` 非法。
+- **接口**：`k = 1` 或 `k > 长度`原样返回；最后不足 k 的组是否也反转（题目要求不反转，某些变体反转）；`k <= 0` 非法。
 - **测试**：长度恰为 k 的倍数、不是倍数、`k = 1`、`k = 长度`、空链表、单节点；与「把数组切块 + 每块反转」的数组实现对拍。
 
 ## 5. 常见 bug

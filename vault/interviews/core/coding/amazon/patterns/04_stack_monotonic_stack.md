@@ -1,8 +1,9 @@
 # 04 · 栈 / 单调栈（Stack & monotonic stack）
 
-> 本讲覆盖：LC 20 Valid Parentheses · 739 Daily Temperatures · 84 Largest Rectangle in Histogram（Hard）· 239 Sliding Window Maximum（Hard，单调队列）
-> 前置：Python `list` 当栈用（`append` / `pop` 都是 O(1)）、`collections.deque`。
-> 读完你应该能：(1) 认出「最近的…」「下一个更大的…」「配对」这三类栈题；(2) 解释为什么单调栈每个元素最多进出一次；(3) 把「每个元素向左右各找最近的更小值」转成一次扫描。
+栈（stack）处理「最近的」「下一个更大的」「成对匹配」这三类问题：后进先出正好对应「离我最近的未解决项」。单调栈（monotonic stack）让栈内元素保持有序，每个元素最多进栈出栈各一次，所以整体 O(n)；单调队列（monotonic deque）把同一思路用到滑动窗口的最大值。严格 `<` 还是 `<=` 决定相等元素怎么处理，是这类题最常见的 bug 来源。
+
+覆盖的题目：LC 20 Valid Parentheses · 739 Daily Temperatures · 84 Largest Rectangle in Histogram（Hard）· 239 Sliding Window Maximum（Hard，单调队列）
+
 
 ## 1. 这个模式是什么，为什么存在
 
@@ -109,7 +110,7 @@ i=7 t=73  pops: -                            stack(values)=[76, 73]
 from collections import deque
 ```
 
-### 4.1 LC 20 · Valid Parentheses（Easy，频率 75）
+### 4.1 LC 20 · Valid Parentheses（Easy）
 
 ```python
 # solutions/20_valid_parentheses.py
@@ -134,10 +135,10 @@ def is_valid(s):
 - **流式输入**：天然在线；一旦出现栈空时的右括号，可以立刻判定失败（fail-fast）而不用读完。
 - **内存**：只有一种括号时，栈退化成**计数器**，O(1) 空间；多种括号才需要真栈，空间 = 最大嵌套深度。
 - **并发**：括号匹配可以并行归约：每一段文本归约成「(多余的右括号序列, 多余的左括号序列)」，两段合并时左段的多余左括号和右段的多余右括号相消——这个合并是结合律的，所以可以树形并行（parallel reduce）。
-- **接口 / 边界**：非括号字符是忽略还是非法？只返回 `bool`，还是返回第一个出错的位置（IDE 报错体验）？空串是否有效（本题有效）？
+- **接口 / 边界**：非括号字符是忽略还是非法？只返回 `bool`，还是返回第一个出错的位置（IDE 报错体验）？空串是否有效（这里有效）？
 - **测试**：`")("`、`"(("`、`"([)]"`、空串、深嵌套；用文法随机生成合法串再随机改一个字符，检查是否被识别为非法。
 
-### 4.2 LC 739 · Daily Temperatures（Medium，频率 62）
+### 4.2 LC 739 · Daily Temperatures（Medium）
 
 ```python
 # solutions/739_daily_temperatures.py
@@ -162,9 +163,9 @@ def daily_temperatures(temps):
 - **内存**：最坏（一路下降）栈大小 O(n)；设窗口上限 W 就可以丢弃过老的项，O(W)。
 - **并发**：块间有依赖；用上面「传递剩余栈」的方式串行流水，块内并行不划算。
 - **接口**：「更热」是严格更大；未来没有更热返回 0；输入为整数还是浮点？返回天数还是目标日期？
-- **测试**：全相等、严格递增、严格递减、空、单个；暴力 O(n²) 对拍（文件里已有）。
+- **测试**：全相等、严格递增、严格递减、空、单个；暴力 O(n²) 对拍。
 
-### 4.3 LC 84 · Largest Rectangle in Histogram（Hard，频率 62）
+### 4.3 LC 84 · Largest Rectangle in Histogram（Hard）
 
 ```python
 # solutions/84_largest_rectangle_in_histogram.py
@@ -183,7 +184,7 @@ def largest_rectangle_area(heights):
 - **一句话洞见**：以第 `h` 号柱子为高的最大矩形，左右边界是它**左右两侧第一个更矮的柱子**。单调栈（高度递增）在弹出某根柱子时，同时知道了「右边第一个更矮」（当前 `i`）和「左边第一个更矮」（弹出后的新栈顶）。
 - **末尾加哨兵 0**：保证最后栈里所有柱子都被弹出并结算。
 - **复杂度**：时间 O(n)，空间 O(n)。
-- **延伸**：LC 85 Maximal Rectangle = 逐行累计高度后，每行调用本题，O(R·C)。
+- **延伸**：LC 85 Maximal Rectangle = 逐行累计高度后，每行调用 LC 84，O(R·C)。
 
 **资深追问**
 
@@ -192,9 +193,9 @@ def largest_rectangle_area(heights):
 - **内存**：最坏递增序列栈大小 O(n)。
 - **并发**：栈是串行的；并行用上面的分治。
 - **接口**：高度 ≥ 0；宽度恒为 1；空数组返回 0；高度可以是浮点吗（可以，算法不变）？
-- **测试**：全相等（`>=` vs `>` 的 bug）、单调递增、单调递减、含 0、单个、空；暴力 O(n²) 对拍（文件里已有）。
+- **测试**：全相等（`>=` vs `>` 的 bug）、单调递增、单调递减、含 0、单个、空；暴力 O(n²) 对拍。
 
-### 4.4 LC 239 · Sliding Window Maximum（Hard，频率 66）
+### 4.4 LC 239 · Sliding Window Maximum（Hard）
 
 ```python
 # solutions/239_sliding_window_maximum.py
@@ -223,7 +224,7 @@ def max_sliding_window(nums, k):
 - **内存**：想要 O(1) 额外内存可以用「分块前后缀最大」（van Herk / Gil-Werman）：把数组切成长度为 k 的块，预计算块内的前缀最大和后缀最大，窗口最大 = `max(suffix[left], prefix[right])`，需要两个 O(n) 数组但是对并行很友好。
 - **并发**：上面的分块方法每个块独立，易于并行；单调队列本身是串行的。
 - **接口**：`k > n`、`k <= 0` 怎么处理（抛错 / 返回空）；返回最大值列表还是下标列表；元素可否为浮点 / NaN。
-- **测试**：`k = 1`、`k = n`、全相等（`<=` 与 `<` 的区别）、递减、递增、随机对拍（文件里已有）。
+- **测试**：`k = 1`、`k = n`、全相等（`<=` 与 `<` 的区别）、递减、递增、随机对拍。
 
 ## 5. 常见 bug
 

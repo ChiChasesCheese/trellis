@@ -1,8 +1,9 @@
 # 02 · 双指针 / 滑动窗口（Two pointers & sliding window）
 
-> 本讲覆盖：LC 3 Longest Substring Without Repeating Characters · 42 Trapping Rain Water（Hard）· 15 3Sum · 11 Container With Most Water · 76 Minimum Window Substring（Hard）
-> 前置：数组下标、`for` / `while`、上一讲的 `dict` 计数。
-> 读完你应该能：(1) 判断题目该用「同向窗口」还是「两端相向」；(2) 说清楚为什么指针只前进不回退所以是 O(n)；(3) 口述「丢弃一半候选」的正确性证明。
+双指针（two pointers）和滑动窗口（sliding window）靠一个事实把 O(n²) 降到 O(n)：指针只前进不回退，每个元素最多被两个指针各经过一次。同向窗口用于「最长 / 最短的满足条件的连续段」，相向指针用于「有序数组里找一对」或「从两端向中间收缩」。每一步丢掉的那一半候选必须有正确性证明，面试里要能口述。下面按「最笨解法 → 慢在哪 → 模板 → 五道题」展开。
+
+覆盖的题目：LC 3 Longest Substring Without Repeating Characters · 42 Trapping Rain Water（Hard）· 15 3Sum · 11 Container With Most Water · 76 Minimum Window Substring（Hard）
+
 
 ## 1. 这个模式是什么，为什么存在
 
@@ -154,7 +155,7 @@ L=3 R=4 h[L]=0 < h[R]=4: left_max=3, +3 (cell 3)  water=7
 from collections import Counter
 ```
 
-### 4.1 LC 3 · Longest Substring Without Repeating Characters（Medium，频率 88）
+### 4.1 LC 3 · Longest Substring Without Repeating Characters（Medium）
 
 ```python
 # solutions/3_longest_substring_without_repeating.py
@@ -180,9 +181,9 @@ def length_of_longest_substring(s):
 - **内存**：`last` 的大小受字符集限制（ASCII 128，Unicode 约 110 万）；如果需要返回子串本身，额外记 `best_start`。
 - **并发**：把文本切块并行时，跨块边界的窗口会被切断。因为最长无重复子串长度 ≤ 字符集大小 `A`，每块多读 `A` 个字符的重叠区即可保证不漏。
 - **接口 / 边界**：「字符」是什么——字节、Unicode 码点、还是字形簇（emoji + 变音符号）？大小写是否区分？返回长度还是子串？空串返回 0。
-- **测试**：`"abba"`（`left` 不能回退）、全相同、全不同、空串、与 O(n²) 暴力随机对拍（已在文件里）。
+- **测试**：`"abba"`（`left` 不能回退）、全相同、全不同、空串、与 O(n²) 暴力随机对拍。
 
-### 4.2 LC 42 · Trapping Rain Water（Hard，频率 88）
+### 4.2 LC 42 · Trapping Rain Water（Hard）
 
 ```python
 # solutions/42_trapping_rain_water.py
@@ -216,7 +217,7 @@ def trap(height):
 - **接口**：高度非负整数？可以是浮点吗？返回水的体积；2D 版本（LC 407）要换成「最小堆 + BFS 从边界向内」。
 - **测试**：谷（valley）、平台（plateau）、单调递增 / 递减（0 水）、空数组、与 `O(n²)` 公式对拍。
 
-### 4.3 LC 15 · 3Sum（Medium，频率 78）
+### 4.3 LC 15 · 3Sum（Medium）
 
 ```python
 # solutions/15_three_sum.py
@@ -252,9 +253,9 @@ def three_sum(nums):
 - **内存**：`sorted()` 会复制，允许修改输入就用 `nums.sort()` 做到 O(1) 额外空间。
 - **并发**：外层 `i` 之间互不依赖（排序后数组只读），可以按 `i` 分段并行；由于「第一个数不同」，结果天然无重复，合并只需拼接。
 - **接口**：返回三元组的顺序？是 `list` 还是 `tuple`？不足 3 个元素返回 `[]`；推广到 kSum / 目标值 ≠ 0 时，把 `0` 参数化。
-- **测试**：`[0,0,0,0]`（不能重复输出）、没有解、全正数、含大量重复、与 `set(combinations)` 暴力对拍（文件里已有）。
+- **测试**：`[0,0,0,0]`（不能重复输出）、没有解、全正数、含大量重复、与 `set(combinations)` 暴力对拍。
 
-### 4.4 LC 11 · Container With Most Water（Medium，频率 77）
+### 4.4 LC 11 · Container With Most Water（Medium）
 
 ```python
 # solutions/11_container_with_most_water.py
@@ -281,7 +282,7 @@ def max_area(height):
 - **接口**：至少 2 堵墙；高度可以为 0；返回面积还是下标对？有并列最优时返回哪一个？
 - **测试**：`[1,1]`、递减 / 递增、两端最高、与 O(n²) 暴力对拍。
 
-### 4.5 LC 76 · Minimum Window Substring（Hard，频率 62）
+### 4.5 LC 76 · Minimum Window Substring（Hard）
 
 ```python
 # solutions/76_minimum_window_substring.py

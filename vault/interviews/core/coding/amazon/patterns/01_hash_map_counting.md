@@ -1,8 +1,9 @@
 # 01 · Hash map 计数 / 前缀和（Hash map counting & prefix sums）
 
-> 本讲覆盖：LC 1 Two Sum · 49 Group Anagrams · 128 Longest Consecutive Sequence · 560 Subarray Sum Equals K · 41 First Missing Positive（Hard）
-> 前置知识：会写 Python 的 `for` / `dict` / `set`。其余从零讲。
-> 读完你应该能：(1) 一眼认出「我在反复问：之前见过 X 吗？」这类题；(2) 在三种哈希模板里选对一种；(3) 对每道题说出规模 ×1000、流式、内存受限时怎么改。
+哈希表（hash table）计数是最常用的面试模式：只要你发现自己在反复问「之前见过 X 吗」或「X 出现了几次」，就该把答案存进 `dict` / `set`，把每次 O(n) 的重新扫描变成 O(1) 的查找。它有三种形态：查补数（Two Sum）、用规范键分组（Group Anagrams）、前缀和加计数（Subarray Sum Equals K）。代价是 O(n) 额外空间，所以资深追问通常围绕「数据太大 / 流式 / 内存受限」怎么改。下面从最笨的解法讲起，依次给模板、手算、五道题和常见 bug。
+
+覆盖的题目：LC 1 Two Sum · 49 Group Anagrams · 128 Longest Consecutive Sequence · 560 Subarray Sum Equals K · 41 First Missing Positive（Hard）
+
 
 ## 1. 这个模式是什么，为什么存在
 
@@ -128,13 +129,13 @@ x= 1 prefix= 3 look up 3-2= 1 -> +1  ans=2  seen={0: 1, 1: 1, 2: 1, 3: 1}
 
 ## 4. 题目
 
-先放本讲所有解法需要的 import：
+先放下面所有解法需要的 import：
 
 ```python
 from collections import Counter, defaultdict
 ```
 
-### 4.1 LC 1 · Two Sum（Easy，频率 100）
+### 4.1 LC 1 · Two Sum（Easy）
 
 ```python
 # solutions/1_two_sum.py
@@ -160,7 +161,7 @@ def two_sum(nums, target):
 - **接口 / 边界契约**：返回下标还是值？多组答案返回哪一组？无解返回 `[]`、`None` 还是抛异常？是否保证恰好一解？能否有重复值（`[3,3]`）、负数、0？输入会不会被修改？先问清楚再写——这是资深面试官看的「澄清」环节。
 - **测试策略**：表驱动用例（重复值、负数、无解、两个元素、同一元素不能用两次）+ 与 O(n²) 暴力解随机对拍；性质：返回的两个下标不同且和等于 `target`。
 
-### 4.2 LC 49 · Group Anagrams（Medium，频率 81）
+### 4.2 LC 49 · Group Anagrams（Medium）
 
 ```python
 # solutions/49_group_anagrams.py
@@ -186,7 +187,7 @@ def group_anagrams(strs):
 - **接口**：输出顺序是否有要求？组内顺序？大小写是否区分？空字符串算不算？（`[""]` → `[[""]]`）
 - **测试**：随机生成单词 + 洗牌得到已知异位词，验证同组；与「排序键」版本对拍；空串、单字符、全相同。
 
-### 4.3 LC 128 · Longest Consecutive Sequence（Medium，频率 75）
+### 4.3 LC 128 · Longest Consecutive Sequence（Medium）
 
 ```python
 # solutions/128_longest_consecutive_sequence.py
@@ -216,7 +217,7 @@ def longest_consecutive(nums):
 - **接口**：空数组返回 0；重复元素不重复计数；返回长度还是序列本身？
 - **测试**：重复、负数、全相同、单元素、乱序；对拍排序版本。
 
-### 4.4 LC 560 · Subarray Sum Equals K（Medium，频率 75）
+### 4.4 LC 560 · Subarray Sum Equals K（Medium）
 
 ```python
 # solutions/560_subarray_sum_equals_k.py
@@ -242,9 +243,9 @@ def subarray_sum(nums, k):
 - **内存**：如果只需要「是否存在」而不是个数，`set` 即可；个数要 `dict`。若 `k` 是区间（≥ k）则哈希不再适用，需要平衡树 / 树状数组。
 - **并发**：前缀和是顺序依赖，但可以分块并行：各块独立算块内前缀，再用块总和做偏移（并行前缀和 / parallel scan）。
 - **接口**：值域会不会溢出（Python 不会，Java/C++ 要用 `long`）？`k` 可负吗？是否要返回子数组本身而不是个数？
-- **测试**：含负数和 0 的用例（滑动窗口会错）、`k = 0`、全 0、空数组、与 O(n²) 暴力对拍（文件里已有 300 组随机用例）。
+- **测试**：含负数和 0 的用例（滑动窗口会错）、`k = 0`、全 0、空数组、与 O(n²) 暴力对拍。
 
-### 4.5 LC 41 · First Missing Positive（Hard，频率 62）
+### 4.5 LC 41 · First Missing Positive（Hard）
 
 ```python
 # solutions/41_first_missing_positive.py

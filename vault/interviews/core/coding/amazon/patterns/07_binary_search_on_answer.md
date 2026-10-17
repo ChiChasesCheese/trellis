@@ -1,8 +1,9 @@
 # 07 · 二分查找（含「对答案二分」）（Binary search & binary search on the answer）
 
-> 本讲覆盖：LC 875 Koko Eating Bananas · 33 Search in Rotated Sorted Array · 4 Median of Two Sorted Arrays（Hard）· 410 Split Array Largest Sum（Hard）
-> 前置：整数除法 `//`、循环不变量（loop invariant）的概念（本讲会讲）。相关：LC 1011 Capacity To Ship Packages 与 875 是同一个模板。
-> 读完你应该能：(1) 把「有序数组查找」推广为「单调谓词的第一个 True」；(2) 写出不会死循环、不会少一位的二分；(3) 认出「最小化最大值 / 最大化最小值」类题可以对答案二分。
+二分查找（binary search）的本质是在一个单调谓词上找第一个 True，而不只是在有序数组里找数。当题目问「最小的可行值」或「最小化最大值 / 最大化最小值」，并且「答案越大越容易可行」时，就可以对答案二分：写一个 O(n) 的可行性检查，再在答案范围上二分。写二分的关键是循环不变量：区间定义清楚，才不会死循环、不会少一位。下面从循环不变量讲起，再给模板和四道题。
+
+覆盖的题目：LC 875 Koko Eating Bananas · 33 Search in Rotated Sorted Array · 4 Median of Two Sorted Arrays（Hard）· 410 Split Array Largest Sum（Hard）
+
 
 ## 1. 这个模式是什么，为什么存在
 
@@ -116,7 +117,7 @@ lo==hi==4
 
 ## 4. 题目
 
-### 4.1 LC 875 · Koko Eating Bananas（Medium，频率 75）
+### 4.1 LC 875 · Koko Eating Bananas（Medium）
 
 ```python
 # solutions/875_koko_eating_bananas.py
@@ -144,10 +145,10 @@ def min_eating_speed(piles, h):
 - **流式输入**：`piles` 不断变化时无法复用结果；若只是增删少量堆，可以维护排序结构，对相同速度增量更新总小时数。
 - **内存**：O(1)，只需要遍历。
 - **并发**：每次判定是只读的归约，可以并行；二分步骤之间有依赖，串行。
-- **接口 / 边界**：`h < len(piles)` 无解——返回 −1 还是抛异常？有 0 根的堆？`speed` 是否必须是整数（本题是）？溢出（`sum` 在 Java/C++ 需要 `long`）？
-- **测试**：`h == len(piles)`（答案是 `max`）、单堆、巨大数值、`h` 很大（答案是 1）；与逐个速度试探的暴力对拍（文件里已有）。
+- **接口 / 边界**：`h < len(piles)` 无解——返回 −1 还是抛异常？有 0 根的堆？`speed` 是否必须是整数（题目要求整数）？溢出（`sum` 在 Java/C++ 需要 `long`）？
+- **测试**：`h == len(piles)`（答案是 `max`）、单堆、巨大数值、`h` 很大（答案是 1）；与逐个速度试探的暴力对拍。
 
-### 4.2 LC 33 · Search in Rotated Sorted Array（Medium，频率 75）
+### 4.2 LC 33 · Search in Rotated Sorted Array（Medium）
 
 ```python
 # solutions/33_search_in_rotated_sorted_array.py
@@ -180,9 +181,9 @@ def search(nums, target):
 - **内存 / 流式**：不适用（需要随机访问）。
 - **并发**：只读，天然线程安全；多个查询可以并行。
 - **接口**：找不到返回 −1；有重复时返回哪个下标？旋转点未知；数组为空？
-- **测试**：对所有旋转量枚举（文件里随机生成「有序数组 + 旋转」并与 `list.index` 对拍）；两个元素（`nums[lo] <= nums[mid]` 里的 `=` 号）、单元素、目标不在数组中、目标在最小 / 最大值。
+- **测试**：对所有旋转量枚举；两个元素（`nums[lo] <= nums[mid]` 里的 `=` 号）、单元素、目标不在数组中、目标在最小 / 最大值。
 
-### 4.3 LC 4 · Median of Two Sorted Arrays（Hard，频率 77）
+### 4.3 LC 4 · Median of Two Sorted Arrays（Hard）
 
 ```python
 # solutions/4_median_of_two_sorted_arrays.py
@@ -223,9 +224,9 @@ def find_median_sorted_arrays(a, b):
 - **内存**：O(1)，不需要合并。
 - **并发**：只读；二分步骤串行。
 - **接口**：两个都为空是非法输入；偶数个元素返回 `float`；元素为整数还是浮点；`-inf/+inf` 哨兵对整数数组仍然有效。
-- **测试**：一个数组为空、长度悬殊、全相同、不重叠（一个数组全小于另一个）、奇偶总长；与「合并后排序取中位数」的暴力对拍（文件里已有 500 组）。
+- **测试**：一个数组为空、长度悬殊、全相同、不重叠（一个数组全小于另一个）、奇偶总长；与「合并后排序取中位数」的暴力对拍。
 
-### 4.4 LC 410 · Split Array Largest Sum（Hard，频率 52）
+### 4.4 LC 410 · Split Array Largest Sum（Hard）
 
 ```python
 # solutions/410_split_array_largest_sum.py
@@ -260,7 +261,7 @@ def split_array(nums, k):
 - **流式 / 内存**：O(1) 内存，每轮顺序读一遍数据；在外存上每轮一次顺序 I/O。
 - **并发**：同上；也可以把多个 limit 的候选并行测试（k 路搜索而不是二路）。
 - **接口**：`k > n` 非法（或每段至少一个元素）；元素非负（负数破坏单调性，本方法不适用）；返回最小的最大和还是具体切分点（需要在最终 limit 上重放一遍贪心）。
-- **测试**：`k = 1`（答案是 sum）、`k = n`（答案是 max）、全相同、一个很大的元素；与「枚举所有切分」的暴力对拍（文件里已有）。
+- **测试**：`k = 1`（答案是 sum）、`k = n`（答案是 max）、全相同、一个很大的元素；与「枚举所有切分」的暴力对拍。
 
 ## 5. 常见 bug
 
