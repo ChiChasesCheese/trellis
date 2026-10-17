@@ -2,8 +2,8 @@
 
     uv run python scripts/plain_style.py <file.md | cards.json> [...]
 
-`problems(text, source_heading)` returns the defects of one page: provenance words before the final source section,
-third-person narration anywhere, and mermaid diagrams that will not fit Obsidian's reading column.
+`problems(text)` returns the defects of one learning page: any provenance or process words, third-person narration,
+and mermaid diagrams that will not fit Obsidian's reading column.
 """
 from __future__ import annotations
 
@@ -12,9 +12,14 @@ import re
 import sys
 from pathlib import Path
 
-# Words that belong only in the final source section.
-PROVENANCE = ["一亩三分地", "1p3a", "1point3acres", "Hello Interview", "hellointerview", "面经", "帖子", "楼主",
-              "置信度", "重建", "reconstructed", "推断", "报告里", "据报告", "有人报告", "被报告"]
+# Provenance and process never appear on a learning page (Chi, 2026-10-17: 「完全不要提到来源；留档用你自己的 log」).
+# Regexes, so ordinary technical words (类型推断, 重建索引, 数据来源) are not false hits. URLs are stripped first, so a
+# study link to a tutorial page is fine; naming where a question was reported is not.
+PROVENANCE = [r"一亩三分地", r"1p3a", r"(?i)1point3acres", r"(?i)hello interview", r"面经", r"帖子", r"楼主", r"置信度",
+              r"（重建）", r"\(reconstructed\)", r"reconstructed", r"重建题", r"(?<!类型)推断", r"报告里", r"据报告",
+              r"有人报告", r"被报告", r"候选人报告", r"抓取", r"原帖", r"来源[：:]", r"^## 来源", r"(?i)\bgit commit\b|\bcommit [0-9a-f]{7}",
+              r"AGENT\.md", r"proposals/", r"台账", r"LEDGER", r"CHECKPOINT", r"子代理", r"编排者", r"门禁",
+              r"(?<![0-9a-zA-Z])(?=[0-9a-f]*[a-f])(?=[0-9a-f]*[0-9])[0-9a-f]{8,40}(?![0-9a-zA-Z])"]
 # Narration about the text or its sources, never allowed. Regexes, so a compound word that merely contains the
 # phrase (工作者, 版本文件, 基本题型) is not a false hit.
 THIRD_PERSON = [r"本篇", r"(?<![版样根基资日脚剧成账])本文(?![件档本])", r"(?<![基课样])本题(?![型单库])", r"这道题",
@@ -64,26 +69,17 @@ def mermaid_problems(block: str) -> list[str]:
     return out
 
 
-def problems(text: str, source_heading: str | None) -> list[str]:
-    """Defects of one markdown page. `source_heading` is the final section where provenance may appear
-    (None: provenance words are not allowed anywhere, e.g. on a card)."""
+def problems(text: str, source_heading: str | None = None) -> list[str]:
+    """Defects of one learning page or card. `source_heading` is accepted for old callers and ignored: there is no
+    place on a learning page where provenance may appear."""
     out: list[str] = []
-    body = text
-    if source_heading:
-        idx = text.find(f"\n## {source_heading}")
-        if idx < 0:
-            out.append(f"no final '## {source_heading}' section")
-        else:
-            body = text[:idx]
-            if re.search(r"^## ", text[idx + 4:], re.M):
-                out.append(f"'## {source_heading}' is not the last section")
-    prose = FENCE.sub("", body)
-    for w in PROVENANCE:
-        if w.lower() in prose.lower():
-            out.append(f"provenance word before the source section: {w}")
-    all_prose = FENCE.sub("", text)
+    prose = re.sub(r"https?://\S+", "", FENCE.sub("", text))
+    for pattern in PROVENANCE:
+        hit = re.search(pattern, prose, re.M)
+        if hit:
+            out.append(f"provenance/process on a learning page: {hit.group(0)}")
     for pattern in THIRD_PERSON:
-        hit = re.search(pattern, all_prose)
+        hit = re.search(pattern, prose)
         if hit:
             out.append(f"third-person narration: {hit.group(0)}")
     for block in MERMAID.findall(text):
@@ -103,8 +99,7 @@ def main(argv: list[str]) -> int:
                     print(f"FAIL {path.name}:{card.get('id')}" + "".join(f"\n       - {p}" for p in found))
         else:
             text = path.read_text(encoding="utf-8")
-            heading = next((h for h in ("来源与延伸阅读", "来源与延伸", "来源") if f"\n## {h}" in text), "来源")
-            found = problems(text, heading)
+            found = problems(text)
             if found:
                 bad += 1
                 print(f"FAIL {path}" + "".join(f"\n       - {p}" for p in found))

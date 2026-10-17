@@ -119,7 +119,9 @@ def check_code(slug: str) -> list[str]:
     return problems
 
 
-def check(project, leaf_id: str) -> list[str]:
+def check(project, leaf_id: str, company: bool = False) -> list[str]:
+    """`company`: a company branch leaf — its article ends in 延伸阅读 (study links only, no provenance;
+    proposals/WRITING_RULES.md) instead of 来源与延伸, and it needs no source readings."""
     slug = leaf_id.rsplit(".", 1)[-1]
     problems = check_code(slug)
     card_ids = {c.id for c in project.cards}
@@ -138,7 +140,8 @@ def check(project, leaf_id: str) -> list[str]:
         if len(CJK.findall(outside_code)) / max(1, len(outside_code)) < 0.35:
             problems.append(f"{s.path.name}: the prose is not predominantly Chinese")
         heads = re.findall(r"^## (.+)$", text, re.M)
-        missing = [h for h in SECTIONS if not any(x.strip().startswith(h) for x in heads)]
+        wanted = SECTIONS[:-1] + ["延伸阅读"] if company else SECTIONS
+        missing = [h for h in wanted if not any(x.strip().startswith(h) for x in heads)]
         if missing:
             problems.append(f"{s.path.name}: missing sections {missing}")
         decisions = text.split("## 关键设计决策", 1)[1].split("\n## ", 1)[0] if "## 关键设计决策" in text else ""
@@ -154,9 +157,14 @@ def check(project, leaf_id: str) -> list[str]:
             problems.append(f"{s.path.name}: Java in the article; this bank is Python")
         if any(m.lower() in text.lower() for m in MIRRORS):
             problems.append(f"{s.path.name}: links a mirror of paid material")
-        tail = text.split("## 来源与延伸", 1)[1] if "## 来源与延伸" in text else ""
-        if len(re.findall(r"https?://", tail)) < 3:
-            problems.append(f"{s.path.name}: fewer than 3 source links under 来源与延伸")
+        if company:
+            tail = text.split("## 延伸阅读", 1)[1] if "## 延伸阅读" in text else ""
+            if not re.search(r"https?://|\[\[", tail):
+                problems.append(f"{s.path.name}: 延伸阅读 has no link")
+        else:
+            tail = text.split("## 来源与延伸", 1)[1] if "## 来源与延伸" in text else ""
+            if len(re.findall(r"https?://", tail)) < 3:
+                problems.append(f"{s.path.name}: fewer than 3 source links under 来源与延伸")
 
     if len(cards) < MIN_CARDS:
         problems.append(f"{len(cards)} card(s), need ≥ {MIN_CARDS}")
@@ -186,7 +194,7 @@ def check(project, leaf_id: str) -> list[str]:
             problems.append(f"{d.path.name}: does not say where the starter and tests are (problems/{slug}/)")
 
     pointers = [r for r in readings if r.url]
-    if len(pointers) < 2:
+    if len(pointers) < 2 and not company:
         problems.append(f"{len(pointers)} source reading(s) with a url, need ≥ 2")
     for r in pointers:
         if any(m.lower() in r.url.lower() for m in MIRRORS):
@@ -214,7 +222,7 @@ def check_style(project, leaf_id: str) -> list[str]:
     found: list[str] = []
     article = BASE / "readings/problems" / f"solution-{slug}.md"
     if article.exists():
-        found += [f"{article.name}: {p}" for p in style(article.read_text(encoding="utf-8"), "来源与延伸")]
+        found += [f"{article.name}: {p}" for p in style(article.read_text(encoding="utf-8"), None)]
     drill = BASE / "drills/problems" / f"design-{slug}.md"
     if drill.exists():
         found += [f"{drill.name}: {p}" for p in style(drill.read_text(encoding="utf-8"), None)]
@@ -242,7 +250,7 @@ def main(argv: list[str]) -> int:
         if branch != BRANCH and not (BASE / "problems" / slug).is_dir():
             found = check_cards_only(project, leaf_id) + [e for e in errors if slug in e]
         else:
-            found = check(project, leaf_id) + [e for e in errors if slug in e]
+            found = check(project, leaf_id, company=branch != BRANCH) + [e for e in errors if slug in e]
         if branch != BRANCH:
             found += check_style(project, leaf_id)
         print(f"{'FAIL' if found else 'ok  '} {leaf_id}" + "".join(f"\n       - {p}" for p in found))
