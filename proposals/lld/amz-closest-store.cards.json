@@ -1,0 +1,74 @@
+[
+  {
+    "id": "amz-closest-store-how-asked-and-three-questions",
+    "node": "amazon.amz-closest-store",
+    "type": "qa",
+    "q": "Amazon 面试里「增删查最近值（Add / Remove / Closest）」这道 OOD 题是怎么问的？开场先问哪三个澄清问题？",
+    "a": "报告（一亩三分地，2026-09 电面，只有片段）：维护一组整数，支持 add、remove，以及找离 target 最近的数；后来又给了值域约束（range constraint）。三个问题：(1) 一样近怎么办——决定平局规则（在增删查最近值设计里默认取较小的）；(2) 允许重复值吗——决定 remove 删一个还是全部；(3) 值域多大——有界就能用树状数组，无界只能用有序列表。",
+    "tags": []
+  },
+  {
+    "id": "amz-closest-store-objects-and-their-jobs",
+    "node": "amazon.amz-closest-store",
+    "type": "qa",
+    "q": "在 Amazon 增删查最近值设计里，应该有哪几个对象？各自只负责一件什么事？",
+    "a": "三个核心对象：`NumberStore`（门面）——校验输入是整数、决定平局规则、持有锁；`OrderedIndex`（协议）——只回答 add、remove、count、floor（不大于 x 的最大值）、ceiling（不小于 x 的最小值）；`SortedListIndex` 与 `FenwickIndex` 是它的两个实现。切分依据：「怎么存」会变（值域一出现就换），「怎么比较最近」不变。",
+    "tags": []
+  },
+  {
+    "id": "amz-closest-store-stage1-closest-with-bisect",
+    "node": "amazon.amz-closest-store",
+    "type": "qa",
+    "q": "在 Amazon 增删查最近值设计的第 1 关，已经升序排好一个列表 `xs`，用 `bisect` 写出 `closest(xs, target)`，平局取较小的值。",
+    "a": "最近的数只可能是 target 的前驱（不大于它的最大值）或后继（不小于它的最小值），比较这两个候选即可：\n\n```python\nimport bisect\n\ndef closest(xs: list[int], target: int) -> int:\n    if not xs:\n        raise ValueError(\"empty\")\n    i = bisect.bisect_left(xs, target)   # 第一个 >= target 的位置\n    if i == 0:\n        return xs[0]\n    if i == len(xs):\n        return xs[-1]\n    lower, higher = xs[i - 1], xs[i]\n    return lower if target - lower <= higher - target else higher\n```\n\n例：xs=[10, 40, 70]，target=44 → i=2，候选 40 与 70，返回 40。",
+    "tags": []
+  },
+  {
+    "id": "amz-closest-store-data-structure-sorted-list-vs-fenwick",
+    "node": "amazon.amz-closest-store",
+    "type": "qa",
+    "q": "在 Amazon 增删查最近值设计里，要支持随时增删又能快速找最近值，有序列表 + `bisect`、树状数组（Fenwick tree）、自写平衡树各自的代价是什么？怎么选？",
+    "a": "有序列表 + `insort`：查 O(log n)，增删要 O(n) 搬移，但不需要知道值域；实测随机整数 100 万个时每次插入约 33 微秒。树状数组：要求值域 [lo, hi] 已知，增删查都是 O(log R)，实测每次插入约 0.7 微秒且与 n 无关，内存 O(R)。平衡树：渐近最优，但 45 分钟写不稳、Python 里常数大。结论：默认有序列表，出现值域约束就换树状数组。",
+    "tags": []
+  },
+  {
+    "id": "amz-closest-store-seam-only-where-two-implementations",
+    "node": "amazon.amz-closest-store",
+    "type": "qa",
+    "q": "在 Amazon 增删查最近值设计里，存储做成 `Protocol` 接缝，但「平局取较小还是较大」只做成一个 `Tie` 枚举，不做成策略类。为什么这样分？",
+    "a": "存储有两个真实现（有序列表、树状数组），门面不改就能互换，所以值得一条接缝。平局规则只有两个取值，差别只是 `_prefers_lower` 里的一行比较；做成 `TieBreaker` 抽象类加两个子类，就是三个类干一个布尔值的活。判据：同一职责真有两个以上实现再抽象，否则用枚举或参数。",
+    "tags": []
+  },
+  {
+    "id": "amz-closest-store-followup-range-constraint-fenwick",
+    "node": "amazon.amz-closest-store",
+    "type": "qa",
+    "q": "在 Amazon 增删查最近值设计里，面试官追加「所有值都落在 [lo, hi] 内」。该改哪里、哪些类保持不动？树状数组怎么找前驱？",
+    "a": "只新增 `FenwickIndex(lo, hi)` 一个类实现 `OrderedIndex`，`NumberStore` 和测试不动。前驱 `floor(x)`：求前缀个数 k，k 为 0 则无前驱，否则取全集第 k 小的值（树上倍增下降）。例：值域 1..8 插入 2、3、3、7，`floor(5)` 得 3，`ceiling(5)` 得 7。",
+    "tags": []
+  },
+  {
+    "id": "amz-closest-store-failure-path-remove-missing",
+    "node": "amazon.amz-closest-store",
+    "type": "qa",
+    "q": "在 Amazon 增删查最近值设计里，对不存在的值 `remove(31)` 应该怎么处理？树状数组实现里最容易埋下什么 bug？",
+    "a": "门面抛 `ValueNotFoundError`（继承 `LookupError`），并保证集合不变；索引层的 `remove` 返回 `bool` 只报告「删没删成」。bug：树状数组不先检查个数就直接减 1，该值的个数变成 −1，此后 `floor` 会返回一个根本不存在的值。修法：先看计数数组 `cnt[v]` 是否为 0，为 0 直接返回 False；测试断言失败后 `values()` 与之前相同。",
+    "tags": []
+  },
+  {
+    "id": "amz-closest-store-concurrency-one-lock-two-reads",
+    "node": "amazon.amz-closest-store",
+    "type": "qa",
+    "q": "在 Amazon 增删查最近值设计里，多个线程同时 add、remove、closest，为什么即使有 GIL 也要加锁？锁放在哪一层、锁多大？",
+    "a": "`closest` 要读 `floor(target)` 与 `ceiling(target)` 两次，GIL 只保证单条字节码原子，两次读之间另一个线程可能删掉其中一个，得到「从未同时存在过」的答案；树状数组一次写更新 O(log R) 个节点，读到一半会看到半成品。做法：门面 `NumberStore` 的每个公开方法持有同一把 `threading.Lock`，临界区只含索引调用（微秒级）。读写锁、写时复制在这个体量下得不偿失。",
+    "tags": []
+  },
+  {
+    "id": "amz-closest-store-common-mistake-one-candidate",
+    "node": "amazon.amz-closest-store",
+    "type": "qa",
+    "q": "在 Amazon 增删查最近值设计里，候选人最常见的错误是什么？给出一个会暴露它的输入。",
+    "a": "只比较一个候选：拿 `bisect_left` 返回位置的元素当答案，忘了它的左邻居。输入：集合 {10, 20}，target=11，`bisect_left` 指向 20，但 10 更近（距离 1 对 9）。修法：同时取 `xs[i-1]` 与 `xs[i]`（并处理 i 为 0 或 len 的两个边界）再比距离。另一个同类错误：用 `bisect_left` 当前驱用，target 恰好在集合里时会取到它左边的值。",
+    "tags": []
+  }
+]

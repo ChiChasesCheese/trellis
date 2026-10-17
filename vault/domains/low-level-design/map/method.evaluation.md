@@ -6,6 +6,8 @@
 
 **Core** — part of the first pass through this subject.
 
+**Unlocks:** [[domains/low-level-design/map/amazon.amz-round|Amazon 的 LLD 轮怎么打（Amazon OOD Round）]]
+
 ## Readings
 - [[eng-practices-review-criteria|What to Look For In a Code Review]]
 - [[hellointerview-lld|Hello Interview: Low-Level Design Guide]]

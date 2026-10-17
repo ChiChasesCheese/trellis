@@ -1,0 +1,13 @@
+{
+  "amazon.amz-in-memory-db": [
+    "amz-in-memory-db-how-it-is-asked",
+    "amz-in-memory-db-objects-and-jobs",
+    "amz-in-memory-db-stage1-insert-with-autoincrement",
+    "amz-in-memory-db-hash-join",
+    "amz-in-memory-db-null-three-valued-logic",
+    "amz-in-memory-db-followup-sql-text-parser",
+    "amz-in-memory-db-failure-update-is-atomic",
+    "amz-in-memory-db-index-maintenance",
+    "amz-in-memory-db-limit-before-order-mistake"
+  ]
+}

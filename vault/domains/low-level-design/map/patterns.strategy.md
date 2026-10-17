@@ -8,12 +8,20 @@
 
 **Requires:** [[domains/low-level-design/map/python.first-class-functions|一等函数、闭包与装饰器]]
 
-**Unlocks:** [[domains/low-level-design/map/problems.machines.parking-lot|停车场（Parking Lot）]], [[domains/low-level-design/map/problems.machines.elevator|电梯系统（Elevator System）]], [[domains/low-level-design/map/problems.booking.car-rental|租车系统（Car Rental）]], [[domains/low-level-design/map/problems.games.snake-and-ladder|蛇梯棋（Snake and Ladder）]], [[domains/low-level-design/map/problems.marketplaces.splitwise|分账（Splitwise）]], [[domains/low-level-design/map/problems.marketplaces.ride-sharing|网约车（Uber）]], [[domains/low-level-design/map/problems.components.notification-service|通知服务（Notification Service）]], [[domains/low-level-design/map/problems.components.rate-limiter|限流器（Rate Limiter）]]
+**Unlocks:** [[domains/low-level-design/map/problems.machines.parking-lot|停车场（Parking Lot）]], [[domains/low-level-design/map/problems.machines.elevator|电梯系统（Elevator System）]], [[domains/low-level-design/map/problems.booking.car-rental|租车系统（Car Rental）]], [[domains/low-level-design/map/problems.games.snake-and-ladder|蛇梯棋（Snake and Ladder）]], [[domains/low-level-design/map/problems.marketplaces.splitwise|分账（Splitwise）]], [[domains/low-level-design/map/problems.marketplaces.ride-sharing|网约车（Uber）]], [[domains/low-level-design/map/problems.components.notification-service|通知服务（Notification Service）]], [[domains/low-level-design/map/problems.components.rate-limiter|限流器（Rate Limiter）]], [[domains/low-level-design/map/amazon.amz-train-fare|火车线路票价（Train Fare Calculator）]], [[domains/low-level-design/map/amazon.amz-discount-engine|购物车折扣引擎（Checkout Price Engine）]], [[domains/low-level-design/map/amazon.amz-configurable-cache|可配置缓存（Configurable Cache）]], [[domains/low-level-design/map/amazon.amz-parking-fees|停车场计费（Parking Lot Fees）]], [[domains/low-level-design/map/amazon.amz-robot-restaurant|机器人餐厅（Robot Restaurant）]], [[domains/low-level-design/map/amazon.amz-aws-billing|AWS 账单服务（AWS Billing Service）（low priority）]]
 
 ## Readings
+- [[solution-amz-aws-billing|设计题解：AWS 账单服务（AWS Billing Service）（low priority）]]
 - [[pydocs-functools|functools — Higher-order functions and operations on callable objects]]
 
 ## Drills
+- [[design-amz-aws-billing|Drill：AWS 账单服务（AWS Billing Service）]]
+- [[design-amz-configurable-cache|Drill：可配置缓存（Configurable Cache）]]
+- [[design-amz-discount-engine|Drill：购物车折扣引擎（Checkout Price Engine）]]
+- [[design-amz-parking-fees|Drill：停车场计费（Parking Lot Fees）]]
+- [[design-amz-pizza-order|Drill：披萨订单（Pizza Order）]]
+- [[design-amz-robot-restaurant|Drill：机器人餐厅（Robot Restaurant）]]
+- [[design-amz-train-fare|Drill：火车线路票价（Train Fare Calculator）]]
 - [[design-car-rental|Drill：租车系统（Car Rental）]]
 - [[design-elevator|Drill：电梯系统（Elevator System）]]
 - [[design-notification-service|Drill：通知服务（Notification Service）]]

@@ -1,0 +1,74 @@
+[
+  {
+    "id": "amz-dag-runner-how-asked-and-three-questions",
+    "node": "amazon.amz-dag-runner",
+    "type": "qa",
+    "q": "Amazon 面试里「DAG 执行器与依赖安装（DAG Runner）」是怎么问的？开场先问哪三个澄清问题？",
+    "a": "报告（Hello Interview，2026-10-01）：给依赖邻接表，返回安装顺序，有环就抛异常；另有代码评审形态：改一段算 Step Function 执行顺序的 bug 代码。三问：(1) deps[a]=[b] 是 a 依赖 b 还是反过来——方向反了顺序全倒；(2) 有环只抛异常还是说出环——后者可直接告诉用户改哪条；(3) 多个合法顺序要哪个——要确定性就得定平局规则。",
+    "tags": []
+  },
+  {
+    "id": "amz-dag-runner-objects-and-their-jobs",
+    "node": "amazon.amz-dag-runner",
+    "type": "qa",
+    "q": "在 Amazon DAG 执行器设计里，需要哪几个对象？各自的一个职责是什么？",
+    "a": "Graph：不可变依赖图，边去重，只管排序、找环、求后代，不知道执行。CycleError：带着环本身的异常。Step：冻结数据类（名字、函数、依赖名）。Workflow：登记步骤并执行，运行前建图检查环。RunReport：并行结局，每个步骤恰好在成功、失败、跳过三个桶之一。拆分依据：图的算法与执行分开，第一关函数能单独使用。",
+    "tags": []
+  },
+  {
+    "id": "amz-dag-runner-stage1-kahn-in-code",
+    "node": "amazon.amz-dag-runner",
+    "type": "qa",
+    "q": "在 Amazon DAG 执行器的第 1 关，用 Python 写出 Kahn 算法（入度为 0 的节点反复出队）的 install_order，deps[x] 是 x 的前置依赖。",
+    "a": "只出现在依赖里的名字也要登记，入度按去重后的集合算，排完要核对数量：\n\n```python\ndef install_order(deps):\n    need = {n: set(ds) for n, ds in deps.items()}\n    users = {}\n    for n, ds in list(need.items()):\n        for d in ds:\n            need.setdefault(d, set())\n            users.setdefault(d, []).append(n)\n    left = {n: len(ds) for n, ds in need.items()}\n    ready = [n for n, c in left.items() if c == 0]\n    for n in ready:  # 遍历中追加：列表迭代会看到新元素\n        for u in users.get(n, ()):\n            left[u] -= 1\n            if left[u] == 0: ready.append(u)\n    if len(ready) != len(need): raise ValueError(\"cycle\")\n    return ready\n```\n\n例：{\"a\": [\"b\"]} 返回 [\"b\", \"a\"]；时间 O(V+E)。",
+    "tags": []
+  },
+  {
+    "id": "amz-dag-runner-cycle-report-walk-prerequisites",
+    "node": "amazon.amz-dag-runner",
+    "type": "qa",
+    "q": "在 Amazon DAG 执行器里，Kahn 算法卡住后怎样得到具体的环？以 {\"app\":[\"x\"],\"x\":[\"y\"],\"y\":[\"x\"]} 为例。",
+    "a": "卡住的节点入度都大于 0，所以每个都至少还有一个同样卡住的前置依赖。从任一卡住的节点出发不断跳到它卡住的前置依赖，路径必然重复，截取重复段就是环，O(V)。例中卡住 app、x、y；从 app 走 app→x→y→x，截得环 (x, y)；app 只是挂在环下面，不进报告。\n\n```python\ndef find_cycle(need, stuck):\n    node, path, pos = next(iter(stuck)), [], {}\n    while node not in pos:\n        pos[node] = len(path); path.append(node)\n        node = next(d for d in need[node] if d in stuck)\n    return path[pos[node]:]\n```",
+    "tags": []
+  },
+  {
+    "id": "amz-dag-runner-decision-kahn-vs-dfs",
+    "node": "amazon.amz-dag-runner",
+    "type": "qa",
+    "q": "在 Amazon DAG 执行器里，拓扑排序选 Kahn 算法还是 DFS 后序？各自代价是什么？",
+    "a": "DFS 后序：代码短，遇到灰色节点即环；但 Python 递归默认深度约 1000，长依赖链会 RecursionError，改显式栈就不短了，平局顺序也难规定。Kahn：迭代无栈深问题，且「就绪节点集合」正好是第 4 关并行调度需要的概念，两关共用入度表；代价是卡住后要另外找环。选 Kahn。",
+    "tags": []
+  },
+  {
+    "id": "amz-dag-runner-followup-results-flow-between-steps",
+    "node": "amazon.amz-dag-runner",
+    "type": "qa",
+    "q": "在 Amazon DAG 执行器里，面试官追问「每个节点是一个函数，上游的结果要传给下游」（Step Function 式），在哪里改？什么不动？",
+    "a": "新增 Step（名字、函数、依赖名）和 Workflow.run：按 Graph.order() 执行，每个函数入参是 {依赖名: 结果} 字典，只含它声明的依赖。Graph、CycleError、install_order 一个字不改。例：load→10，double 收到 {\"load\":10} 返回 20。失败时抛 StepError 指出步骤名，后继不再运行。",
+    "tags": []
+  },
+  {
+    "id": "amz-dag-runner-code-review-duplicate-edge-indegree",
+    "node": "amazon.amz-dag-runner",
+    "type": "qa",
+    "q": "在 Amazon DAG 执行器的代码评审练习里，入度用 len(ds) 数，后继表却用 set(ds) 建，会出什么错？给出具体输入。",
+    "a": "输入 {\"a\": [\"b\", \"b\"], \"b\": []}：a 的入度被数成 2，但 b 完成时只通知 a 一次，入度停在 1，a 永远不就绪，输出 ['b'] 而不是 ['b', 'a']，且不报错。修法：建图时用集合去重，入度取 len(集合)，入度与后继表来自同一份数据。同类 bug 还有：只出现在依赖里的节点不入队；排完不核对数量，环被吞成空列表。",
+    "tags": []
+  },
+  {
+    "id": "amz-dag-runner-parallel-failure-skips-descendants",
+    "node": "amazon.amz-dag-runner",
+    "type": "qa",
+    "q": "在 Amazon DAG 执行器里，线程池并行执行时一个步骤失败，怎样只取消它的后代？调度状态怎样避免竞态？",
+    "a": "调用线程是唯一调度者：wait(FIRST_COMPLETED) 后由它更新入度表和结果，worker 只跑 fn，状态无需加锁。失败时 skipped |= descendants(name)，之后别的分支把后代入度减到 0 也被 skipped 挡住，不提交；无关分支照常完成。\n\n```python\nwhile running:\n    done, _ = wait(running, return_when=FIRST_COMPLETED)\n    for fut in done:\n        name = running.pop(fut)\n        if fut.exception() is not None:\n            skipped |= graph.descendants(name)\n            continue\n        results[name] = fut.result()\n        for nxt in graph.users(name):\n            left[nxt] -= 1\n            if left[nxt] == 0 and nxt not in skipped:\n                submit(nxt)\n```",
+    "tags": []
+  },
+  {
+    "id": "amz-dag-runner-common-mistake-no-length-check",
+    "node": "amazon.amz-dag-runner",
+    "type": "qa",
+    "q": "在 Amazon DAG 执行器里，最常见的错误是 Kahn 排完不核对数量。给出一个会暴露它的输入和正确做法。",
+    "a": "输入 {\"a\": [\"b\"], \"b\": [\"a\"]}：没有入度为 0 的节点，循环一次不进，返回 []，调用方以为没东西要装。正确做法：循环后比较 len(out) 与节点总数，不等就抛 CycleError 并带上具体的环。这类 bug 在普通示例上不出现，只能靠评审清单发现：节点是否全登记、重复边怎么数、数量是否核对。",
+    "tags": []
+  }
+]

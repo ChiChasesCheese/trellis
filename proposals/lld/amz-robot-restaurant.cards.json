@@ -1,0 +1,74 @@
+[
+ {
+  "id": "amz-robot-restaurant-how-asked-and-three-questions",
+  "node": "amazon.amz-robot-restaurant",
+  "type": "qa",
+  "q": "Amazon 面试里「机器人餐厅（Robot Restaurant）」是怎么问的？开场先问哪三个澄清问题？",
+  "a": "报告里只有题名：2026-09 一亩三分地的 SDE II 电面，三道题之一是「设计机器人餐厅」并有追问，题面细节不可见，其余都是重建。三问：(1) 一台机器人是否做菜送餐一条龙——决定状态机与订单阶段是否一一对应；(2) 时间用真实时钟还是离散的刻（tick）——决定能否测试；(3) 分配规则与电量不足怎么办——决定策略要不要可换、要不要加充电状态。",
+  "tags": []
+ },
+ {
+  "id": "amz-robot-restaurant-objects-and-their-jobs",
+  "node": "amazon.amz-robot-restaurant",
+  "type": "qa",
+  "q": "在 Amazon 机器人餐厅设计里，应有哪几个对象？各自只负责什么？",
+  "a": "`Order`：订单记录（桌号、菜、状态），无行为。`Robot`：拥有状态、电量、手上订单，每刻 `step()` 一次，是状态机的唯一执行者。`RobotView`：机器人的只读快照，策略只能看它。`AssignmentPolicy`：选哪台机器人接单的函数。`Restaurant`：收单、排队、推进时间、派单，并持有锁。切分依据：变化原因各不相同。",
+  "tags": []
+ },
+ {
+  "id": "amz-robot-restaurant-stage1-tick-flow-in-code",
+  "node": "amazon.amz-robot-restaurant",
+  "type": "qa",
+  "q": "在 Amazon 机器人餐厅设计里，第 1 关「一台机器人把一张单做完并送到」的推进循环怎么写？（离散时间：一刻 tick 是时间的最小单位）",
+  "a": "每刻先让机器人走一步，再给空闲机器人派单：\n```python\ndef tick(self) -> None:\n    with self._lock:\n        self._now += 1\n        for robot in self._robots:\n            kind = robot.step()          # 扣电、减刻数，到点转移状态\n            if kind is not None:\n                self._log(kind, robot, robot.order)\n        self._dispatch()                 # 队首订单 -> 能接的空闲机器人\n```\n时间只靠 `tick()` 推进，没有 `sleep`，所以测试可以逐刻断言。",
+  "tags": []
+ },
+ {
+  "id": "amz-robot-restaurant-robot-state-machine-transition-table",
+  "node": "amazon.amz-robot-restaurant",
+  "type": "qa",
+  "q": "在 Amazon 机器人餐厅设计里，机器人的状态机有哪些状态、哪些转移合法？这些规则放在哪里？",
+  "a": "状态：IDLE、COOKING、DELIVERING、CHARGING。合法转移只有 IDLE→COOKING、IDLE→CHARGING、COOKING→DELIVERING、DELIVERING→IDLE、CHARGING→IDLE，写成一张字典 `_ALLOWED`，唯一改状态的方法 `_to(new)` 查表，不在表里就抛 `InvalidTransitionError`。所以做菜中的机器人不可能被直接派去充电。四个状态用枚举加表就够，不必拆成四个状态类。",
+  "tags": []
+ },
+ {
+  "id": "amz-robot-restaurant-assignment-policy-function-vs-class",
+  "node": "amazon.amz-robot-restaurant",
+  "type": "qa",
+  "q": "在 Amazon 机器人餐厅设计里，「哪台空闲机器人接这张单」怎么做成可替换的？为什么策略拿到的是快照而不是机器人本身？",
+  "a": "策略就是一个函数 `(candidates: Sequence[RobotView], dish) -> int | None`，`first_idle`、`most_battery` 各三行；只有一个方法的类是 Java 习惯。候选交快照（frozen dataclass），策略只能选、不能改机器人。餐厅收到编号后校验它在候选里，否则抛 `PolicyError`——写错的策略不能把单派给正在送餐的机器人。",
+  "tags": []
+ },
+ {
+  "id": "amz-robot-restaurant-followup-split-cook-and-delivery-robots",
+  "node": "amazon.amz-robot-restaurant",
+  "type": "qa",
+  "q": "在 Amazon 机器人餐厅设计里，若追问「做菜机器人和送餐机器人分开」（推断的追问），哪里要改、哪里不动？",
+  "a": "改：订单阶段拆成「等厨师」「等送餐」两个队列；`Robot` 增加 `role`；`_dispatch` 按阶段选队列和角色匹配的候选；做完菜的订单放进送餐队列。不动：机器人状态机与转移表、`Config`、策略函数签名、`Order`、`Dish`。能这么改，是因为状态机与「谁派给谁」本来就是分开的。",
+  "tags": []
+ },
+ {
+  "id": "amz-robot-restaurant-edge-low-battery-no-free-charger",
+  "node": "amazon.amz-robot-restaurant",
+  "type": "qa",
+  "q": "在 Amazon 机器人餐厅设计里，机器人电量低于阈值 30、而唯一的充电桩被占着，它该不该接单？电量 25 与 12 的机器人对一碗耗电 8 的汤各自怎样？",
+  "a": "接单条件不是「当前是否低于阈值」，而是「做完后电量仍不低于保底电量」：`battery - job_cost >= reserve`（保底 10）。25 − 8 = 17 ≥ 10，可以接，做完剩 17；12 − 8 = 4 < 10，不能接，订单继续排队，机器人原地等桩。再配一条下界：下单时拒绝耗电超过 `low_battery − reserve` 的菜，保证系统总有进展，不死锁。",
+  "tags": []
+ },
+ {
+  "id": "amz-robot-restaurant-concurrency-one-lock-around-queue-and-robots",
+  "node": "amazon.amz-robot-restaurant",
+  "type": "qa",
+  "q": "在 Amazon 机器人餐厅设计里，多个线程同时下单、另一个线程推进时间，什么会出错？怎么防？",
+  "a": "「看队首订单 → 选机器人 → 改机器人状态与队列」是多步操作，CPython 的 GIL 只保证单条字节码原子，不保证这一整体：两个线程可能把同一张单派给两台机器人。用一把 `threading.Lock` 罩住全部可变状态（队列、机器人、事件日志、订单号计数），对外只给快照（`RobotView` 元组、事件元组）。测试用 `Barrier` 让线程同时下单，断言每张单恰好送达一次。",
+  "tags": []
+ },
+ {
+  "id": "amz-robot-restaurant-common-mistake-charger-counter-leak",
+  "node": "amazon.amz-robot-restaurant",
+  "type": "qa",
+  "q": "在 Amazon 机器人餐厅设计里，常见错误是给充电桩另设一个 `occupied` 计数器。它会怎样出错？怎么避免？",
+  "a": "计数器是第二份真相：机器人状态说「在充电」，计数说「占了几个」，任何一条路径改了状态却忘了释放（比如充电中途被取消），桩就泄漏，最后所有低电量机器人永远等一个不空的桩。避免：占用数 = 处于 CHARGING 的机器人个数，每次现数，机器人离开该状态时占用自然减一，没有可忘记的释放步骤。",
+  "tags": []
+ }
+]

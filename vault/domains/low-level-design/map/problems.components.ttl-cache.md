@@ -4,7 +4,11 @@
 
 惰性过期与主动清理、可注入时钟、与淘汰策略组合。
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/low-level-design/map/structure.api|进程内 API 设计]]
+
+**Unlocks:** [[domains/low-level-design/map/amazon.amz-dns-resolver|DNS 解析器（DNS Resolver）（low priority）]]
 
 ## Readings
 - [[solution-ttl-cache|设计题解：带过期时间的缓存（TTL Cache）]]

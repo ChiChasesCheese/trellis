@@ -1,0 +1,74 @@
+[
+ {
+  "id": "amz-emergency-pubsub-prompt-and-three-questions",
+  "node": "amazon.amz-emergency-pubsub",
+  "type": "qa",
+  "q": "Amazon 面试里「应急事件发布订阅（Emergency Pub/Sub）」怎么问的？开场先问哪三个澄清问题？",
+  "a": "报告的原话：有一个应急响应系统，一些组件订阅（subscribe）应急事件，另一些组件发布（publish）事件，请实现处理发布和订阅逻辑的类。先问三件事：(1) 事件在发布线程里同步送，还是异步送？决定要不要给订阅者配队列和线程；(2) 订阅者处理时抛异常怎么办？是重试、记录还是直接忽略；(3) 订阅者能按事件类型或严重度过滤吗，紧急事件要不要优先送？",
+  "tags": []
+ },
+ {
+  "id": "amz-emergency-pubsub-objects-and-one-job-each",
+  "node": "amazon.amz-emergency-pubsub",
+  "type": "qa",
+  "q": "在应急发布订阅设计里，有哪几个核心对象？各自只负责哪一件事？",
+  "a": "`EmergencyBus`：注册表、给事件编号、路由、记死信，不知道处理函数做什么；`Subscription`：一个订阅者的过滤条件、重试次数和计数，一次 `deliver` 把失败吞在自己里面；`Mailbox`：只有异步订阅者才有，一条有界优先队列加一个工作线程；`EmergencyEvent`：冻结的事件快照；`DeadLetter`：一次没送到的记录。划分依据：总线管「送给谁」，订阅者管「怎么接」，信箱管「什么时候接」。",
+  "tags": []
+ },
+ {
+  "id": "amz-emergency-pubsub-stage1-publish-flow-code",
+  "node": "amazon.amz-emergency-pubsub",
+  "type": "qa",
+  "q": "在应急发布订阅里，`publish` 的核心流程是什么？用 Python 写出来（订阅者出错不能影响别人，处理函数里可能再调 `publish`）。",
+  "a": "持锁时只做编号和拍订阅快照，处理函数放到锁外调用：\n```python\ndef publish(self, topic, severity, message, location=\"\"):\n    with self._lock:\n        self._seq += 1\n        event = EmergencyEvent(self._seq, topic, severity,\n                               message, location, self._clock())\n        targets = [(s, box) for s, box in self._subs.items()\n                   if s.accepts(event)]\n    for sub, box in targets:\n        dead = sub.deliver(event) if box is None else box.offer(event)\n        if dead is not None:\n            self._record_dead(dead)\n    return event\n```\n锁外调用才允许处理函数再发布或退订而不死锁。",
+  "tags": []
+ },
+ {
+  "id": "amz-emergency-pubsub-priority-heap-order",
+  "node": "amazon.amz-emergency-pubsub",
+  "type": "qa",
+  "q": "在应急发布订阅里，异步信箱用什么数据结构按严重度出队？队列里依次排着 INFO、CRITICAL、WARNING、CRITICAL、INFO 五条事件时，出队顺序是什么？",
+  "a": "用小根堆（heap），元素是 `(-severity, seq, event)`：严重度取负号，于是 CRITICAL 先出；严重度相同时比编号 `seq`，先发布的先出，保证同级 FIFO。设五条依次是 i1、c1、w1、c2、i2，出队顺序是 c1、c2、w1、i1、i2。入队出队都是 O(log n)；信箱有界，满了才对整个堆扫一遍找最该挤掉的那条。",
+  "tags": []
+ },
+ {
+  "id": "amz-emergency-pubsub-failure-boundary-in-subscription",
+  "node": "amazon.amz-emergency-pubsub",
+  "type": "qa",
+  "q": "在应急发布订阅里，「一个订阅者抛异常不能拖累其他人」这条保证应该放在哪一层实现？有哪些选择？",
+  "a": "三个位置：(1) `publish` 的整个循环外包一层 try：出错者之后的订阅者全收不到；(2) 要求订阅者自己不抛：一个 bug 就破坏全局；(3) `Subscription.deliver` 内部只对 `Exception` 做 try/except，换成一条 `DeadLetter` 返回。选 (3)：边界只有一处，同步和异步共用，`KeyboardInterrupt` 这类 `BaseException` 仍然放行。",
+  "tags": []
+ },
+ {
+  "id": "amz-emergency-pubsub-followup-topic-and-severity-filter",
+  "node": "amazon.amz-emergency-pubsub",
+  "type": "qa",
+  "q": "在应急发布订阅里，面试官追问「消防队只要火灾事件，指挥中心只要 CRITICAL 事件」，要改哪里？",
+  "a": "只在 `Subscription` 里加一个判断，总线的路由循环一行不改：\n```python\ndef accepts(self, event):\n    return (event.severity >= self._min_severity\n            and (self._topics is None or event.topic in self._topics))\n```\n`Severity` 是 `IntEnum`，所以「至少 WARNING」就是一个 `>=` 比较。`topics=None` 表示全部订阅。事件类型不是固定的枚举而是字符串，新增一种事件不需要改任何类。",
+  "tags": []
+ },
+ {
+  "id": "amz-emergency-pubsub-retry-then-dead-letter",
+  "node": "amazon.amz-emergency-pubsub",
+  "type": "qa",
+  "q": "在应急发布订阅里，三个订阅者 A、B、C 依次订阅火灾事件，B 的处理函数总是抛 `ZeroDivisionError`，B 设置 `max_attempts=2`。发布一条火灾事件后会发生什么？",
+  "a": "A、C 各收到一次且 `publish` 不抛异常；B 被调用两次都失败后，总线的死信列表里多一条 `DeadLetter(subscriber='B', reason=HANDLER_FAILED, attempts=2, error='ZeroDivisionError: …')`，B 的 `failed` 计数加 1。如果 B 第二次成功，就不产生死信，`delivered` 加 1。死信队列有上限（只留最近 N 条），内存有界。",
+  "tags": []
+ },
+ {
+  "id": "amz-emergency-pubsub-slow-subscriber-mailbox",
+  "node": "amazon.amz-emergency-pubsub",
+  "type": "qa",
+  "q": "在应急发布订阅里，一个订阅者处理很慢（比如调用外部寻呼系统）会拖住发布者和其他订阅者，怎么办？信箱满了怎么处理？",
+  "a": "给慢订阅者配一个独立的信箱（有界优先队列加一个工作线程）：`publish` 只把事件放进信箱就返回，慢的只堵自己。信箱满了不阻塞发布者，而是挤掉「最不重要且最旧」的那条（可能就是新来的），记一条 `QUEUE_FULL` 死信。例：容量 2，信箱里是 i1、w1，来了 c1，则 i1 被挤掉；再来一条 i2，它比信箱里任何一条都不重要，被直接丢掉。",
+  "tags": []
+ },
+ {
+  "id": "amz-emergency-pubsub-holding-lock-while-calling-handlers",
+  "node": "amazon.amz-emergency-pubsub",
+  "type": "qa",
+  "q": "在应急发布订阅里，一个常见的错误是持有总线的锁去调用订阅者的处理函数，它会出什么问题？",
+  "a": "处理函数里很自然会再发布一条后续事件（火灾触发「疏散」事件）或退订自己。总线的锁不可重入，持锁调用时这次 `publish` 在同一线程上再拿锁，死锁。正确做法：持锁只拍订阅快照，释放后再逐个调用。例：A 收到 fire 后发布 evacuate，排在 A 之后的订阅者 R 先收到 evacuate、后收到 fire（嵌套的那次先送完），两条都能送到。",
+  "tags": []
+ }
+]

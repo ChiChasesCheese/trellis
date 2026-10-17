@@ -8,6 +8,8 @@
 
 **Requires:** [[domains/low-level-design/map/patterns.strategy|策略模式与可替换算法（Strategy）]], [[domains/low-level-design/map/structure.storage|内存持久化（In-Memory Persistence）]]
 
+**Unlocks:** [[domains/low-level-design/map/amazon.amz-parking-fees|停车场计费（Parking Lot Fees）]]
+
 ## Readings
 - [[solution-parking-lot|设计题解：停车场（Parking Lot）]]
 - [[src-abhaypaswan-parking-lot|lld-python — parking-lot]]
@@ -15,6 +17,7 @@
 - [[src-hellointerview-parking-lot|Hello Interview — Parking Lot]]
 
 ## Drills
+- [[design-amz-parking-fees|Drill：停车场计费（Parking Lot Fees）]]
 - [[design-parking-lot|Drill：停车场（Parking Lot）]]
 
 ## Cards (8)

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "amz-dns-resolver-what-and-three-questions",
+    "node": "amazon.amz-dns-resolver",
+    "type": "qa",
+    "q": "DNS 解析器（DNS Resolver）要你设计什么？开场先问哪三个澄清问题？",
+    "a": "解析器把域名翻译成 IP：先查本地缓存，没有再问上游，并缓存结果。三问：(1) 上游是真实 DNS 还是要自己递归查询——决定把上游抽象成接口；(2) 缓存多久——每条记录自带 TTL（生存时间，Time To Live），不能写死；(3) 上游挂了怎么办——决定要健康检查、切换备用上游，或返回已过期的旧数据。",
+    "tags": []
+  },
+  {
+    "id": "amz-dns-resolver-objects-and-jobs",
+    "node": "amazon.amz-dns-resolver",
+    "type": "qa",
+    "q": "在 DNS 解析器设计里应该有哪几个对象？各自只负责一件什么事？",
+    "a": "`Record`：域名、IP 列表、TTL。`TTLCache`：存记录并判断过期。`Upstream` 接口：`resolve(name)`，每个上游自带健康状态。`Resolver`：门面，缓存没有就按顺序问健康的上游，成功后写缓存。切分依据：「存多久」「问谁」「怎么串起来」各自变化，测试时上游可以换成假的。",
+    "tags": []
+  },
+  {
+    "id": "amz-dns-resolver-ttl-lazy-and-active-expiry",
+    "node": "amazon.amz-dns-resolver",
+    "type": "qa",
+    "q": "在 DNS 解析器设计里，缓存过期为什么要同时做惰性过期和主动过期？",
+    "a": "惰性过期：读到时才检查 `expires <= now`，过期就当没有并删除，保证读到的数据永远正确。但从此再也没人查的域名会永久占着内存，所以还要主动过期：一个按过期时间排序的最小堆，后台线程定期弹出到期项删除。惰性保证正确，主动保证内存有界，两者缺一不可。时钟用单调时钟并注入。\n```python\ndef get(self, name):\n    entry = self._data.get(name)\n    if entry is None:\n        return None\n    if entry.expires <= self._clock():\n        del self._data[name]\n        return None\n    return entry.record\n```",
+    "tags": []
+  },
+  {
+    "id": "amz-dns-resolver-upstream-health-and-failover",
+    "node": "amazon.amz-dns-resolver",
+    "type": "qa",
+    "q": "在 DNS 解析器设计里，上游超时后怎样自动切换到备用上游，又不会每次请求都先去试已经挂掉的那个？",
+    "a": "每个上游记连续失败次数：失败 3 次就标为不健康，冷却 30 秒内直接跳过；冷却结束后放一个请求过去试探（半开，half-open），成功就恢复，失败就继续冷却。`resolve` 按顺序遍历健康上游，全部失败时可以返回已过期的缓存（serve stale）而不是报错。\n```python\ndef resolve(self, name):\n    for up in self._upstreams:\n        if not up.healthy(self._clock()):\n            continue\n        try:\n            rec = up.resolve(name)\n            up.ok()\n            return rec\n        except TimeoutError:\n            up.fail(self._clock())\n    raise ResolveError(name)\n```",
+    "tags": []
+  },
+  {
+    "id": "amz-dns-resolver-read-mostly-concurrency",
+    "node": "amazon.amz-dns-resolver",
+    "type": "qa",
+    "q": "在 DNS 解析器设计里，读远多于写时，缓存的并发怎么处理？同一个域名同时未命中怎么办？",
+    "a": "三个选项：整个缓存一把互斥锁（简单，但读也互相排队）；读写锁（读并行，Python 标准库没有）；写时复制（copy-on-write）——写者复制整个字典、改完后原子替换引用，读者拿到引用就无锁读，适合写少的场景，代价是每次写 O(n)。同名并发未命中时，让第一个请求去问上游，其余等同一个结果（single-flight），否则上游被打 N 次。",
+    "tags": []
+  },
+  {
+    "id": "amz-dns-resolver-negative-caching",
+    "node": "amazon.amz-dns-resolver",
+    "type": "qa",
+    "q": "在 DNS 解析器设计里，查询不存在的域名（NXDOMAIN）为什么也要缓存？哪些失败不该缓存？",
+    "a": "不缓存的话，对不存在域名的重复查询（拼写错误、扫描器）每次都打到上游。负缓存用较短的 TTL（如 30 秒）。缓存值要用哨兵对象区分「查过且不存在」和「没查过」，否则 `None` 有歧义。上游超时、服务器故障不能缓存：否则一次短暂故障会被放大成整个 TTL 长度的故障。\n```python\n_MISS = object()\n\ndef lookup(self, name):\n    hit = self._cache.get(name, _MISS)\n    if hit is NXDOMAIN:\n        raise NameNotFound(name)\n    if hit is not _MISS:\n        return hit\n    try:\n        rec = self._resolve_upstream(name)\n    except NameNotFound:\n        self._cache.put(name, NXDOMAIN, self.neg_ttl)\n        raise\n    self._cache.put(name, rec, rec.ttl)\n    return rec\n```",
+    "tags": []
+  }
+]

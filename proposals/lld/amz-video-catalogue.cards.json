@@ -1,0 +1,50 @@
+[
+  {
+    "id": "amz-video-catalogue-what-and-three-questions",
+    "node": "amazon.amz-video-catalogue",
+    "type": "qa",
+    "q": "视频目录与续播（Video Catalogue）要你设计什么？开场先问哪三个澄清问题？",
+    "a": "视频目录让用户按类型浏览片子，并记住每个人看到哪里，下次接着看。三问：(1) 位置按什么记——同一账号下多个用户档案（profile）各看各的，所以按「档案 × 视频」记；(2) 剧集按集记还是按整部记——决定要不要 `Episode`；(3) 两台设备同时在看，以谁为准——决定冲突规则。",
+    "tags": []
+  },
+  {
+    "id": "amz-video-catalogue-objects-and-jobs",
+    "node": "amazon.amz-video-catalogue",
+    "type": "qa",
+    "q": "在视频目录设计里应该有哪几个对象？各自只负责一件什么事？",
+    "a": "`Title`（片名、类型列表、电影还是剧集）、`Episode`（所属片、季、集、时长）、`Profile`（档案，属于账号）、`Catalogue`（添加和按类型浏览）、`PositionStore`（`(档案, 视频) → 秒数、更新时间`）。切分依据：目录所有人共享、几乎只读；观看位置每个档案私有、频繁写——读写比和一致性要求不同，所以分成两个对象。",
+    "tags": []
+  },
+  {
+    "id": "amz-video-catalogue-browse-by-genre-index",
+    "node": "amazon.amz-video-catalogue",
+    "type": "qa",
+    "q": "在视频目录设计里，按类型浏览怎样避免每次扫描全部片子？",
+    "a": "加片子时顺手维护倒排索引 `genre → 片子 id 列表`，浏览一个类型直接取这个列表，耗时和返回条数成正比，而不是和全库大小成正比（扫全库 O(N)）。一部片有多个类型就加进多个列表。删片或改类型时要同步更新索引，否则会出现点进去已不存在的片子。\n```python\nclass Catalogue:\n    def __init__(self):\n        self._titles, self._by_genre = {}, defaultdict(list)\n\n    def add(self, title):\n        self._titles[title.id] = title\n        for g in title.genres:\n            self._by_genre[g].append(title.id)\n\n    def browse(self, genre):\n        return [self._titles[i] for i in self._by_genre.get(genre, ())]\n```",
+    "tags": []
+  },
+  {
+    "id": "amz-video-catalogue-resume-position-per-profile",
+    "node": "amazon.amz-video-catalogue",
+    "type": "qa",
+    "q": "在视频目录设计里，「暂停时记录最后观看位置」怎么存？什么时候该清除续播点？",
+    "a": "键是 `(档案 id, 视频 id)`，值是 `Position(秒数, 更新时间)`；暂停时写，再次点开时读。播放过程中每 30 秒写一次心跳，否则暂停前崩溃会丢整段进度。看到 95% 以上就视为看完，删除续播点，下次从头开始，否则用户会被带到片尾字幕。剧集按集记，「继续观看」取该档案最近更新的一集。\n```python\ndef save(self, profile, video, seconds, duration, now):\n    key = (profile, video)\n    if seconds >= 0.95 * duration:\n        self._pos.pop(key, None)\n    else:\n        self._pos[key] = Position(seconds, now)\n```",
+    "tags": []
+  },
+  {
+    "id": "amz-video-catalogue-cross-device-last-writer-wins",
+    "node": "amazon.amz-video-catalogue",
+    "type": "qa",
+    "q": "在视频目录设计里，电视上看到 20:00，手机上随后暂停在 05:00，续播点以谁为准？怎么实现？",
+    "a": "采用最后写入者胜（last-writer-wins）：每次写带更新时间，已存的更新时间比新写入的晚，就忽略这次写入。时间必须用服务端时间——设备时钟可能差几分钟，会让旧写入盖掉新的。迟到的老写入（弱网设备补发）被丢弃是对的。取舍：这个规则简单，但「手机上回看前面一段」会覆盖掉电视的 20:00，产品上可接受。\n```python\ndef save(self, key, seconds, server_now):\n    old = self._pos.get(key)\n    if old is not None and old.updated_at > server_now:\n        return False\n    self._pos[key] = Position(seconds, server_now)\n    return True\n```",
+    "tags": []
+  },
+  {
+    "id": "amz-video-catalogue-what-moves-to-a-service",
+    "node": "amazon.amz-video-catalogue",
+    "type": "qa",
+    "q": "在视频目录设计里，用户量变成千万级后，目录和续播点分别应该怎么拆？",
+    "a": "两者读写特征相反，拆成两个服务。目录读多写少：前面放缓存（CDN），类型倒排索引搬到搜索服务或带二级索引的表。续播点写多读少：放键值存储，按档案 id 分区，主键 `(档案, 视频)`，写入靠客户端 30 秒心跳合并成低频写。目录可以接受分钟级过期，续播点要求自己的写马上读到。",
+    "tags": []
+  }
+]

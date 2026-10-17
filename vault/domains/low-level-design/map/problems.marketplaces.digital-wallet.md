@@ -4,7 +4,11 @@
 
 充值、转账、交易记录，余额不能为负且转账两边一致。
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/low-level-design/map/concurrency.hazards|死锁及其亲戚]]
+
+**Unlocks:** [[domains/low-level-design/map/amazon.amz-wallet|钱包与账户（Wallet / Bank Account）（low priority）]]
 
 ## Readings
 - [[solution-digital-wallet|设计题解：数字钱包（Digital Wallet）]]

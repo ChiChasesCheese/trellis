@@ -4,6 +4,8 @@
 
 死锁四条件与各自的破法、活锁、饥饿、锁顺序纪律。
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/low-level-design/map/concurrency.primitives|同步原语（threading）]]
 
 **Unlocks:** [[domains/low-level-design/map/problems.marketplaces.digital-wallet|数字钱包（Digital Wallet）]]

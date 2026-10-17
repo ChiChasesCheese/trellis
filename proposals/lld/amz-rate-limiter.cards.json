@@ -1,0 +1,50 @@
+[
+  {
+    "id": "amz-rate-limiter-what-and-three-questions",
+    "node": "amazon.amz-rate-limiter",
+    "type": "qa",
+    "q": "限流器（Rate Limiter）要你设计什么？开场先问哪三个澄清问题？",
+    "a": "限流器在请求进来时判断「这个调用方此刻还能不能放行」，超额就拒绝。三问：(1) 按什么维度限（用户、IP、接口）——决定状态的 key；(2) 单进程还是多机共享额度——决定状态放内存还是外部存储；(3) 被拒时只回 bool，还是要回剩余额度和多久后重试——决定返回值是 `Decision` 而不是裸 bool。",
+    "tags": []
+  },
+  {
+    "id": "amz-rate-limiter-objects-and-jobs",
+    "node": "amazon.amz-rate-limiter",
+    "type": "qa",
+    "q": "在限流器设计里应该有哪几个对象？各自只负责一件什么事？",
+    "a": "`RateLimiter`：按 key 找到状态、加锁、调用算法。`Algorithm`（每个 key 一份状态）：只回答 `allow(now)`。`Decision`（allowed、remaining、retry_after）：一次判定的结果。时钟 `clock` 从构造函数注入。切分依据：「怎么记住最近的流量」会换（固定窗口、令牌桶……），「按 key 隔离并加锁」不变。",
+    "tags": []
+  },
+  {
+    "id": "amz-rate-limiter-token-bucket-code",
+    "node": "amazon.amz-rate-limiter",
+    "type": "qa",
+    "q": "在限流器设计里，令牌桶（Token Bucket）的 `allow` 怎么写？为什么不用后台线程定时补令牌？",
+    "a": "令牌桶：桶里最多存 `burst` 个令牌，每秒补 `rate` 个，一次请求拿走 `cost` 个。不开线程，而是在每次请求时按「距上次的时间差」一次性补齐——零后台线程、每个 key 只存两个数。\n```python\nclass TokenBucket:\n    def __init__(self, rate, burst, now):\n        self.rate, self.burst = rate, burst\n        self.tokens, self.last = burst, now\n\n    def allow(self, now, cost=1):\n        self.tokens = min(self.burst, self.tokens + (now - self.last) * self.rate)\n        self.last = now\n        if self.tokens < cost:\n            return False\n        self.tokens -= cost\n        return True\n```",
+    "tags": []
+  },
+  {
+    "id": "amz-rate-limiter-window-algorithm-choice",
+    "node": "amazon.amz-rate-limiter",
+    "type": "qa",
+    "q": "在限流器设计里，固定窗口、滑动日志、滑动计数、令牌桶怎么选？各自的内存和最坏误差是多少？",
+    "a": "限额 100 次/分钟：固定窗口每 key 一个计数，O(1)，但第 59 秒放 100、第 61 秒再放 100，2 秒内过了 200（边界突发，最坏 2 倍）。滑动日志存每次时间戳，精确但每 key O(limit)。滑动计数用 `上窗口计数 × 剩余比例 + 本窗口计数` 近似：上窗 80、已过 25% 时 80×0.75+30=90，O(1)。令牌桶 O(1) 且显式允许突发。默认选令牌桶或滑动计数。",
+    "tags": []
+  },
+  {
+    "id": "amz-rate-limiter-per-key-isolation-and-memory",
+    "node": "amazon.amz-rate-limiter",
+    "type": "qa",
+    "q": "在限流器设计里，怎样让每个用户互不影响，又不让内存随用户数无限增长？并发时锁怎么放？",
+    "a": "用 `dict[key → Algorithm]`，key 第一次出现时才用工厂创建状态。内存：状态回到「和新建一样」（令牌满了、窗口里没有请求）就可以丢，定期扫描回收闲置 key；否则一百万个只来过一次的用户永远占内存。并发：「读状态、判定、写状态」必须在同一把锁里，否则两个线程都看到剩 1 个令牌，各放行一次。按 key 哈希分片加锁，不同用户不争同一把锁。",
+    "tags": []
+  },
+  {
+    "id": "amz-rate-limiter-distributed-and-naive-break",
+    "node": "amazon.amz-rate-limiter",
+    "type": "qa",
+    "q": "在限流器设计里，部署到多台机器后，「每台机器各自限 100 次/分钟」为什么错？共享额度有哪两种做法？",
+    "a": "3 台机器各限 100，整体最多放行 300，且负载均衡不均时单个用户的上限不可预测。做法一：集中计数——Redis 用 Lua 脚本原子地「读计数、判定、自增并设过期」，精确，但每个请求多一次网络往返，Redis 故障要决定放行还是拒绝（fail-open / fail-closed）。做法二：中央租约——每台机器向中心批量领一份额度（如 20 个令牌）本地花，用完再领，延迟低，代价是额度在机器间有浪费、精度变粗。",
+    "tags": []
+  }
+]
