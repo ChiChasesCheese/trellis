@@ -1,10 +1,6 @@
 # 多粒度滑动窗口限流（Sliding-window rate limiter）
 
-> 来源：Hello Interview `sliding-window-rate-limiter`，电话面，约 2026-10-01 中级 USA，https://www.hellointerview.com/community/questions/sliding-window-rate-limiter ；公司页 https://www.hellointerview.com/community/questions?company=Amazon 。该题另有两条 Amazon 报告（2026-08、2026-06，Senior）。
-> 代码：`code/amz_rate_limiter.py`。这是 coding 轮，不是 OOD。
-
-## 面经原话
-HI 题目描述：「Implement a rate limiter using a sliding window algorithm ... Extend the solution to support rate limiting at multiple granularities, including per IP address, per user, and per experience.」
+限流器（rate limiter）决定一个请求现在能不能放行：在任意长度为 W 的时间窗口内，同一个对象最多放行 limit 个请求。对象可以是 IP 地址、用户、或某个业务场景（experience），这就是「多粒度」。这是一道编码题，不是类的设计题：要写出能运行的限流逻辑，说清楚精确算法（滑动窗口日志）和近似算法（滑动窗口计数）的取舍，以及内存怎样不无限增长。
 
 ## 开场先问的澄清问题
 1. 接口长什么样：`allow(request, now)` 返回 True/False？时间由调用者传入还是读系统时钟？
@@ -96,7 +92,7 @@ class RateLimiter:
 1. **分布式**：每个 key 的状态放 Redis；日志版用 sorted set（`ZREMRANGEBYSCORE` 清过期 + `ZCARD` + `ZADD`），把这几步放进 Lua 脚本保证原子；计数版用两个计数器 + `INCR` 与 TTL。
 2. **热点 key（一个 IP 压垮单个 Redis 分片）**：本地令牌预取（每个实例先领一批配额），牺牲精度换吞吐。
 3. **时钟不一致**：用 Redis 的 `TIME` 或单调时钟，不要用各机器本地时间。
-4. **突发允许（令牌桶 token bucket）**：窗口限流是「窗口内总量」，令牌桶是「平均速率 + 突发上限」，面试官常问两者区别。
+4. **突发允许（令牌桶 token bucket）**：窗口限流是「窗口内总量」，令牌桶是「平均速率 + 突发上限」，两者的区别是常见追问。
 5. **返回 `Retry-After`**：日志版 = 队首时间戳 + W − now；计数版需要解方程估算。
 6. **限额按付费等级不同**：`rules` 里 limit 变成函数 `limit(key)`，key 函数不变。
 7. **统计被拒绝的请求**：另开计数，不要和限流状态混在一起。
@@ -110,3 +106,8 @@ class RateLimiter:
 <details><summary>答案</summary>只记录被接受的请求，窗口内被接受的不会超过 limit，而过期的会被弹出。</details>
 4. 计数版相对日志版丢了什么？
 <details><summary>答案</summary>精确性：它假设上一桶请求均匀分布，估计会偏高或偏低；换来每 key 常数内存。</details>
+
+## 来源
+- Hello Interview 社区题目 `sliding-window-rate-limiter`，电话面，约 2026-10-01，中级 USA：https://www.hellointerview.com/community/questions/sliding-window-rate-limiter ；公司页 https://www.hellointerview.com/community/questions?company=Amazon 。该题另有两条 Amazon 报告（2026-08、2026-06，Senior）。
+- 题目描述：「Implement a rate limiter using a sliding window algorithm ... Extend the solution to support rate limiting at multiple granularities, including per IP address, per user, and per experience.」
+- 这是 coding 轮的题，不是 OOD。代码：`code/amz_rate_limiter.py`。

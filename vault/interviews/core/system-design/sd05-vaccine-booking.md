@@ -137,30 +137,49 @@ flowchart TB
 **流 2：补货。** 仓库系统调用补货接口，提交批次和分配方案；账本在一个事务里增加 `SiteStock.available`，并在需要时放出更多时段；DynamoDB Streams 把变化推到读模型，搜索页上才出现新号。补货永远是「增加」，减少（报废、召回）走专门的路径，见深挖。
 
 ```mermaid
+%%{init: {'sequence': {'actorMargin': 16, 'width': 104, 'messageMargin': 28}}}%%
 sequenceDiagram
+    autonumber
     participant C as 客户端
     participant W as 等候室
     participant E as 资格服务
     participant B as 预约服务
     participant D as DynamoDB
-    C->>W: 进入 (设备/用户标识)
-    W-->>C: 放行令牌 (签名, 带过期)
-    C->>E: GET /eligibility (令牌)
-    E-->>C: eligible, rule_version=17
-    C->>B: POST /holds (Idempotency-Key, 令牌)
-    B->>E: 以 rule_version=17 复核
-    B->>D: TransactWrite: Slot.booked<capacity, SiteStock.available>0, 写 Hold
+    C->>W: 进入等候室
+    W-->>C: 放行令牌
+    C->>E: 查询资格
+    E-->>C: 有资格, 规则 v17
+    C->>B: 申请占位
+    B->>E: 按 v17 复核
+    B->>D: 事务: 时段+剂量+占位
     alt 事务成功
-        D-->>B: ok
-        B-->>C: 201 hold_id, expires_at
-        C->>B: POST /appointments (hold_id)
-        B->>D: TransactWrite: Hold→Appointment, 清除 Hold TTL
-        B-->>C: 201 appt_id
+        D-->>B: 成功
+        B-->>C: 201 占位
+        C->>B: 确认预约
+        B->>D: 占位转为预约
+        B-->>C: 201 预约号
     else 条件不满足
-        D-->>B: TransactionCanceled
-        B-->>C: 409 sold_out
+        D-->>B: 条件失败
+        B-->>C: 409 已约满
     end
 ```
+
+图中编号对应的每一步：
+
+1. 开放日的流量远远超过系统的处理速度，所以每个人先进「等候室」：一个排队页面，按顺序放人进去。
+2. 轮到你时，等候室发一个带签名、会过期的放行令牌。后面的服务只认这个令牌，绕过排队直接调接口的请求会被挡在外面。
+3. 客户端带着令牌查询自己的资格。
+4. 资格服务按当前规则判定，并把规则的版本号（这里是 v17）一起返回。之后每一步都能说清「你是按哪一版规则被判定有资格的」，出了争议可以追溯。
+5. 客户端申请占一个时段，请求里带幂等键（Idempotency-Key）：网络超时重试时，同一个请求不会占两个位置。
+6. 预约服务用同一个版本 v17 再复核一次资格，防止令牌被转给不符合资格的人。
+7. 用一次 DynamoDB 事务同时检查并扣减两种库存（这个时段还有空位、这个站点还有剂量），再写入一条占位。两个条件必须在同一个事务里：分开扣，就可能出现有时段没疫苗、或者有疫苗没时段。
+8. 事务成功。
+9. 返回占位和它的过期时间，客户端要在过期前确认。
+10. 客户端确认预约。
+11. 占位转成正式预约，同时去掉占位的过期时间。
+12. 返回预约号。
+13. 任一条件不满足（时段满了或剂量没了），事务整体取消。
+14. 返回 409「已约满」。因为是整个事务一起失败，不会出现扣了时段、没扣剂量这种半截状态。
 
 ## 深挖
 

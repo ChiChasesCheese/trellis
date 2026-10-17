@@ -1,4 +1,4 @@
-"""Directional BFS (reconstructed): a step moves one cell; the new heading is straight or a left turn, never right / U-turn. State = (r, c, heading)."""
+"""Directional BFS: a step moves one cell; the new heading is straight or a left turn, never right / U-turn. State = (r, c, heading)."""
 from collections import deque
 from random import Random
 

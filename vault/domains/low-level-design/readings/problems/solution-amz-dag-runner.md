@@ -6,23 +6,17 @@ tags: [solution]
 
 ## 题目与澄清
 
-候选人报告的原题（Hello Interview 社区题库与一亩三分地，Amazon，2026-09 至 2026-10）：
+DAG 执行器要解决的是依赖排序：有一批任务（或软件包），其中一些必须等另一些做完才能开始；系统要算出一个能依次做完它们的顺序，发现「A 等 B、B 又等 A」这种死结（环，cycle）就报错，再进一步把互不相关的任务同时跑起来，并让结果从上游流到下游。这样的图叫有向无环图（DAG，Directed Acyclic Graph）：边有方向，沿着边走不会绕回出发点。包管理器装软件、构建系统编译、工作流引擎调度步骤，都是这个结构。
 
-> 「Given a dependency adjacency list to install packages, return the installation order or throw an exception if a cycle is found.」——Hello Interview `package-installation-order`，2026-10-01，中级岗位，共 3 份报告。
->
-> 「Given Python code that determines the correct execution order of nodes in a DAG representing a step function, identify and fix the bug(s).」——Hello Interview `dag-execution-order`，代码评审（CODE_REVIEW）形态，2026-09-20；发帖人说面试官先给了一大段带表格的题面，「问题归根结底是一个有向无环图（DAG），要找执行顺序」。
->
-> 「第一轮 二姨已无(=LC 210) 是一个DAG 拓扑排序」——[一亩三分地 thread-1192714](https://www.1point3acres.com/bbs/thread-1192714-1-1.html)，2026-10-11，L5 电话面。
-
-三份报告对得上的是：输入是依赖关系，输出是一个合法顺序，有环要报错。**以下是重建（reconstructed）的部分**：报告里没有出现那份有 bug 的代码，本题解自己写了一份带三个典型 bug 的 `buggy_runner.py` 供你做评审练习（推断）；Step Function 式的「结果传给下游」语义，以及第 4 关的线程池并行与失败传播，同样是推断。面试时以面试官当场给出的版本为准。
+面试官通常这样提出：先给你一份依赖邻接表（adjacency list，每个名字对应它依赖的名字列表），要求返回安装顺序、有环就抛异常；接着给一段计算执行顺序的 Python 代码，让你找出并修好其中的 bug（代码评审形态）；再追问让每个节点成为一个函数、上游结果传给下游，以及独立节点并行执行。输入输出的细节没有给定，下面是一套自洽的默认约定，面试时以面试官当场给出的为准。
 
 先用两句话说清系统：有一批任务（或软件包），其中一些必须等另一些做完才能开始；系统要算出一个能依次做完它们的顺序，发现「A 等 B、B 又等 A」这种死结就报错，再进一步把互不相关的任务同时跑起来，并让结果从上游流到下游。
 
 开场该问的三个澄清问题：
 
-1. **输入的方向是什么：`deps["a"] = ["b"]` 是「a 依赖 b」还是「a 之后要做 b」？** 方向反了，整个顺序就倒过来。本题解约定 `deps[x]` 是 x 的前置依赖（必须先于 x）。再问：只出现在依赖列表里、自己没有一行的名字（例如 `{"a": ["b"]}` 里的 b）算不算节点？应当算，否则 b 永远装不上。
-2. **有环时要什么：只抛异常，还是要说出环是哪几个？** 报告原话是「throw an exception」。只抛异常最省事，但一个能说出 `a -> b -> c -> a` 的异常才是评审者想看到的，因为调用方可以直接告诉用户该改哪一条依赖。本题解的 `CycleError` 带着环本身。
-3. **多个合法顺序时，要哪一个？** 拓扑序一般不唯一。如果面试官要求确定性（同样的输入每次同样的输出），就必须规定平局规则。本题解按「首次出现的先后」，这样测试可以断言整个列表而不只是「合法」。
+1. **输入的方向是什么：`deps["a"] = ["b"]` 是「a 依赖 b」还是「a 之后要做 b」？** 方向反了，整个顺序就倒过来。下面约定 `deps[x]` 是 x 的前置依赖（必须先于 x）。再问：只出现在依赖列表里、自己没有一行的名字（例如 `{"a": ["b"]}` 里的 b）算不算节点？应当算，否则 b 永远装不上。
+2. **有环时要什么：只抛异常，还是要说出环是哪几个？** 只抛异常最省事，但一个能说出 `a -> b -> c -> a` 的异常才是评审者想看到的，因为调用方可以直接告诉用户该改哪一条依赖。下面的 `CycleError` 带着环本身。
+3. **多个合法顺序时，要哪一个？** 拓扑序一般不唯一。如果面试官要求确定性（同样的输入每次同样的输出），就必须规定平局规则。下面按「首次出现的先后」，这样测试可以断言整个列表而不只是「合法」。
 
 范围外：版本约束与可选依赖、增量安装与缓存、持久化的任务状态、重试与超时、跨机器调度。
 
@@ -30,17 +24,17 @@ tags: [solution]
 
 | 关 | 需求 | 本关逼出的设计 |
 |---|---|---|
-| 第 1 关（报告第 1 问） | 依赖邻接表 -> 安装顺序；有环抛异常并指出环 | `Graph`：边去重、Kahn 算法、从卡住的节点里找出具体的环 |
-| 第 2 关（报告：code review） | 读一段有 bug 的执行顺序代码，找出并修好 | 不新增代码：`buggy_runner.py` 三个 bug 各对应第 1 关的一条不变量 |
-| 第 3 关（推断） | 每个节点是一个函数，按依赖顺序执行，上游的结果传给下游 | `Step`、`Workflow.run`：入参是 `{依赖名: 结果}`，失败就停 |
-| 第 4 关（推断） | 独立节点用线程池并行；一个失败只取消它的后代 | `Workflow.run_parallel`、`RunReport`：调度状态只由调用线程持有 |
+| 第 1 关 | 依赖邻接表 -> 安装顺序；有环抛异常并指出环 | `Graph`：边去重、Kahn 算法、从卡住的节点里找出具体的环 |
+| 第 2 关 | 读一段有 bug 的执行顺序代码，找出并修好 | 不新增代码：`buggy_runner.py` 三个 bug 各对应第 1 关的一条不变量 |
+| 第 3 关 | 每个节点是一个函数，按依赖顺序执行，上游的结果传给下游 | `Step`、`Workflow.run`：入参是 `{依赖名: 结果}`，失败就停 |
+| 第 4 关 | 独立节点用线程池并行；一个失败只取消它的后代 | `Workflow.run_parallel`、`RunReport`：调度状态只由调用线程持有 |
 
 注意第 2 关不是「写新功能」，而是「读别人的代码」。它考的是你有没有一份清单：入度怎么数、孤立的被依赖节点怎么办、排完以后是否检查数量。第 1 关写对了，这份清单就是你自己写代码时的自检表。
 
 ## 核心对象与职责
 
 - `Graph`：一张不可变的依赖图。拥有「节点 -> 前置依赖集合」和「节点 -> 后继集合」两张表。不变量：边是去重后的（同一条依赖声明两次只算一条）；`prerequisites` 与 `descendants` 是由这两张表推出的快照。它知道怎么排序、怎么找环，但不知道什么是「执行」。
-- `install_order`：第 1 关的函数入口，就是 `Graph(deps).order()`。一个函数一行，保留它是因为报告里的题面就是一个函数。
+- `install_order`：第 1 关的函数入口，就是 `Graph(deps).order()`。一个函数一行，保留它是因为面试的第一问就是写一个函数。
 - `CycleError`：异常，带着 `cycle` 元组。不变量：`cycle` 里每个名字依赖它后面那个，最后一个依赖第一个。
 - `Step`：冻结的数据类，包含名字、函数、依赖名。函数的入参是 `{依赖名: 依赖的结果}`。
 - `Workflow`：步骤的登记处，也是执行入口。拥有所有 `Step`。不变量：同名步骤不能重复登记；运行前统一检查环和未登记的依赖。
@@ -128,7 +122,7 @@ classDiagram
 
 ### 决策五（简单者胜出）：不做 Node 类层次，也不做 Visitor
 
-很容易把"节点"做成 `Node` 基类，再派生 `InstallNode`、`TaskNode`、`ParallelNode`、`ChoiceNode`。但这里所有节点的行为是同一个：等依赖、跑函数、交出结果。变化的只是函数本身，而函数是一等公民。所以 `Step` 就是一个冻结的数据类，不是类层次。真实的 Step Functions 还有 Choice（条件分支）和 Parallel（并行块）两种状态，那是另一个模型（状态机，而不是依赖图）：要做的话，是在 `Workflow` 外面再包一层，而不是把 `Step` 变成继承树。本题解没有做它们，在 `## 扩展与追问` 里说明落在哪里。
+很容易把"节点"做成 `Node` 基类，再派生 `InstallNode`、`TaskNode`、`ParallelNode`、`ChoiceNode`。但这里所有节点的行为是同一个：等依赖、跑函数、交出结果。变化的只是函数本身，而函数是一等公民。所以 `Step` 就是一个冻结的数据类，不是类层次。真实的 Step Functions 还有 Choice（条件分支）和 Parallel（并行块）两种状态，那是另一个模型（状态机，而不是依赖图）：要做的话，是在 `Workflow` 外面再包一层，而不是把 `Step` 变成继承树。这里没有做它们，在 `## 扩展与追问` 里说明落在哪里。
 
 ## 代码走读
 
@@ -382,7 +376,7 @@ if __name__ == "__main__":
 **持久化与规模**
 - **崩溃后续跑**：把 `results` 持久化，重启时把已完成的步骤从图里去掉，再对剩下的跑同样的算法。
 - **图很大（百万节点）**：Kahn 是 O(V+E)，内存瓶颈在两张字典，可以换成整数下标加数组；调用线程循环的开销会成为瓶颈，这时用多个调度分片，但这是另一个设计题了。
-- **标准库能做吗**：`graphlib.TopologicalSorter` 提供 `prepare / get_ready / done`，本质上就是第 4 关的调度接口，遇到环抛 `graphlib.CycleError`。面试时说出它的存在是加分；但被要求手写时必须能写出 Kahn，也要能讲清它的 cycle 信息与本题的区别。
+- **标准库能做吗**：`graphlib.TopologicalSorter` 提供 `prepare / get_ready / done`，本质上就是第 4 关的调度接口，遇到环抛 `graphlib.CycleError`。面试时说出它的存在是加分；但被要求手写时必须能写出 Kahn，也要能讲清它的 cycle 信息与这里 `CycleError.cycle` 的区别。
 
 ## 常见错误
 
@@ -421,8 +415,8 @@ if __name__ == "__main__":
 
 ## 来源与延伸
 
-- [Hello Interview 社区题库：Amazon 条目（package-installation-order、dag-execution-order）](https://www.hellointerview.com/community/questions?company=Amazon)：只有题面和报告摘要，没有标准答案。本题解补的是三个 bug 的具体形态（推断）与第 4 关；与它不同之处是我们把"报出环本身"当作第 1 关的要求，而不是可选项。
-- [Python 文档：graphlib.TopologicalSorter](https://docs.python.org/3/library/graphlib.html)：标准库自带拓扑排序，`prepare()` 会在有环时抛 `graphlib.CycleError`，`get_ready()` / `done()` 就是并行调度的接口。本题解不直接用它，因为面试要你展示算法；但第 4 关的调度循环与它的用法同构，工作中应当优先用它。
-- [一亩三分地 thread-1192714](https://www.1point3acres.com/bbs/thread-1192714-1-1.html)：L5 电话面报告，第一题就是 LC 210（课程表 II）的拓扑排序，说明这类题在电话面就会出现，不必等到 onsite。
-- 本仓库的 Amazon 题库里有课程表（LC 207）的参考解，可对照：LC 207 只问"能不能排完"，本题要产出顺序并报出环。
+- [Hello Interview 社区题库：Amazon 条目（package-installation-order、dag-execution-order）](https://www.hellointerview.com/community/questions?company=Amazon)：第 1 关来自 `package-installation-order`（「Given a dependency adjacency list to install packages, return the installation order or throw an exception if a cycle is found」，2026-10-01，中级岗位，3 份报告）；第 2 关的形态来自 `dag-execution-order`（代码评审，2026-09-20，要求找出并修好执行顺序代码里的 bug）。报告里没有出现那份有 bug 的代码，`buggy_runner.py` 的三个 bug 是推断出的典型形态；第 3 关的「结果传给下游」和第 4 关的线程池并行与失败传播同样是推断。它只有题面和摘要，没有标准答案；与它不同之处是把「报出环本身」当作第 1 关的要求，而不是可选项。
+- [Python 文档：graphlib.TopologicalSorter](https://docs.python.org/3/library/graphlib.html)：标准库自带拓扑排序，`prepare()` 会在有环时抛 `graphlib.CycleError`，`get_ready()` / `done()` 就是并行调度的接口。这里不直接用它，因为面试要你展示算法；但第 4 关的调度循环与它的用法同构，工作中应当优先用它。
+- [一亩三分地 thread-1192714](https://www.1point3acres.com/bbs/thread-1192714-1-1.html)：2026-10-11 的 L5 电话面报告，第一轮是 LC 210（课程表 II）的拓扑排序，说明这类题在电话面就会出现，不必等到 onsite。
+- 题库里有课程表（LC 207）的参考解，可对照：LC 207 只问「能不能排完」，这里要产出顺序并报出环。
 - 相关：[[solution-task-scheduler]]（调度与优先级）、[[solution-thread-pool]]（自己实现线程池）、[[concurrency.patterns|并发模式]]。

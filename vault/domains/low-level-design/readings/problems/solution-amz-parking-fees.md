@@ -6,21 +6,15 @@ tags: [solution]
 
 ## 题目与澄清
 
-候选人报告的原题（Hello Interview 社区，Amazon 资深岗，亚太地区，2026-09-20）：
-
-> 「The focus was more on calculating the parking fees and has different logics for different scenarios.」代码要求「syntactically correct, although it will not be executed」。——[Hello Interview 社区题库](https://www.hellointerview.com/community/questions?company=Amazon)（题目 `parking-lot-system`）
-
-本仓库的 Amazon kit 还记着三份相关的论坛报告（停车场加车型并追加五六条新需求、按车型找最佳车位、停车票据与收据），编号见 `vault/interviews/companies/amazon/lld/route.md`。它们共同的信号是：停车场在 Amazon 不是考「车位怎么分配」，而是考**出场时那一笔钱怎么算**，并且面试官会一条一条地追加计价场景。
-
-报告没有给出任何具体费率。**以下全部是重建（reconstructed）的部分**：车型的小时单价、高峰与非高峰的时段、周末按非高峰、免费宽限期、每日封顶、会员折扣、丢票罚款，以及并发那一关。它们是本题解为了让「不同场景、不同逻辑」有具体对象而选的一组规则，面试时每一条都应当先问。
+你要设计停车场的计费部分：重点是出场时那一笔钱怎么算，而且不同场景有不同的计价逻辑。停车场考的不是「车位怎么分配」，而是**出场时那一笔钱怎么算**，并且面试官会一条一条地追加计价场景。代码要求语法正确，但不会被运行。题目没有给任何具体费率，车型的小时单价、高峰与非高峰的时段、周末按非高峰、免费宽限期、每日封顶、会员折扣、丢票罚款，以及并发那一关，都是为了让「不同场景、不同逻辑」有具体对象而选的一组规则；面试时每一条都应当先问。
 
 先用两句话说清系统：车进停车场时领一张票，票上记着车牌、车型和入场时间；车出场时凭票结算，系统按停了多久、什么车型、什么时段算出该付多少钱，然后这张票作废。车位怎么分配、满了怎么办，在题库的停车场题里已经做过（见 [[solution-parking-lot]]），这里不重做，只在它的出场环节上做一个更精细的计费引擎。
 
 开场该问的三个澄清问题：
 
-1. **不足一小时怎么收？** 整小时进位（停 61 分钟收两小时），还是按时间比例折算？答案决定整个算法的形状：整小时进位下，一次停留只有一个数字（总时长），而按比例折算并且费率随时段变化时，必须把停留切成段。本题解选后者，因为这样「跨过费率边界」才是个真问题，而且按秒折算再每日取整一次，是一个可以用独立算法验证的确定规则。免费宽限期也在这里问：「前 15 分钟免费」是只要不超过 15 分钟就全免，还是从总时长里扣掉 15 分钟？本题解取前者（停留不超过 15 分钟免费，超过则从入场起全额计费）。
+1. **不足一小时怎么收？** 整小时进位（停 61 分钟收两小时），还是按时间比例折算？答案决定整个算法的形状：整小时进位下，一次停留只有一个数字（总时长），而按比例折算并且费率随时段变化时，必须把停留切成段。这里选后者，因为这样「跨过费率边界」才是个真问题，而且按秒折算再每日取整一次，是一个可以用独立算法验证的确定规则。免费宽限期也在这里问：「前 15 分钟免费」是只要不超过 15 分钟就全免，还是从总时长里扣掉 15 分钟？这里取前者（停留不超过 15 分钟免费，超过则从入场起全额计费）。
 2. **费率随什么变？** 车型（摩托、小汽车、大车）、一天中的时段（工作日白天与夜间）、周末。这决定价目表是一张按车型的表，还是一棵条件树。
-3. **封顶封什么，丢票怎么收？** 「每天最多 20 元」是日历日，还是从入场起算的 24 小时？丢票是收一笔固定的罚款，还是按最高档收？本题解选日历日封顶，并且丢票照常计价后加一笔固定罚款。
+3. **封顶封什么，丢票怎么收？** 「每天最多 20 元」是日历日，还是从入场起算的 24 小时？丢票是收一笔固定的罚款，还是按最高档收？这里选日历日封顶，并且丢票照常计价后加一笔固定罚款。
 
 没有问到、但要主动声明的范围外内容：车位分配与楼层（见 [[solution-parking-lot]]）、预约、支付和发票、跨时区与夏令时（见「扩展与追问」）、持久化。
 
@@ -28,10 +22,10 @@ tags: [solution]
 
 | 关 | 需求 | 本关逼出的设计 |
 |---|---|---|
-| 第 1 关（报告：重点在计费） | 按车型的小时单价，出场时算钱 | `Money` 用整数分；`Tariff` 价目表；`FeeDesk` 发票与结算 |
-| 第 2 关（报告：不同场景有不同逻辑；具体场景为推断） | 工作日高峰、夜间、周末的单价不同；停留可能跨过这些边界 | 把停留沿变价时刻切段，每段单价固定；每天只取整一次 |
-| 第 3 关（推断） | 前 15 分钟免费；每车型每个日历日封顶 | 宽限期和封顶都是 `Tariff` 里的数据，引擎里各多一两行 |
-| 第 4 关（推断） | 会员折扣、丢票罚款；两个出口同时扫同一张票 | `Adjustment` 接缝；用锁一次性取走票；收据留明细 |
+| 第 1 关 | 按车型的小时单价，出场时算钱 | `Money` 用整数分；`Tariff` 价目表；`FeeDesk` 发票与结算 |
+| 第 2 关 | 工作日高峰、夜间、周末的单价不同；停留可能跨过这些边界 | 把停留沿变价时刻切段，每段单价固定；每天只取整一次 |
+| 第 3 关 | 前 15 分钟免费；每车型每个日历日封顶 | 宽限期和封顶都是 `Tariff` 里的数据，引擎里各多一两行 |
+| 第 4 关 | 会员折扣、丢票罚款；两个出口同时扫同一张票 | `Adjustment` 接缝；用锁一次性取走票；收据留明细 |
 
 要特别说一句：第 2 关最容易写成 `if is_weekend: ... elif is_night: ... else: ...`，再配一个「入场时刻的单价 × 总时长」。这样的代码在第 2 关的第一个测试（19:30 入场、次日 08:30 出场）里就是错的，而且每多一个场景就要多改一次核心方法。
 
@@ -73,8 +67,6 @@ classDiagram
         +label
         +apply(amount, stay) Money
     }
-    class MemberDiscount
-    class LostTicketPenalty
     class Ticket
     class Receipt
     class FeeDesk {
@@ -85,14 +77,14 @@ classDiagram
     }
     FeeEngine o-- Tariff
     FeeEngine o-- Adjustment : 按顺序
-    Adjustment <|.. MemberDiscount
-    Adjustment <|.. LostTicketPenalty
     FeeDesk o-- FeeEngine
     FeeDesk o-- Ticket : 未结算的
     FeeEngine ..> Receipt
     Tariff ..> VehicleType
     Tariff ..> Money
 ```
+
+图里省略了 `Adjustment` 的两个实现 `MemberDiscount` 与 `LostTicketPenalty`（都是无状态的 frozen dataclass）。
 
 所有权上，`FeeDesk` 拥有票的生命周期：入场时放进表里，结算时取走。`FeeEngine` 和 `Tariff` 没有生命周期，创建后不再变化，因此无需任何锁。这一点是整个设计的安全来源：**把有状态的部分压缩到一个类里，其余全部做成纯函数式的东西**，并发问题就只剩下一处需要回答。
 
@@ -470,7 +462,7 @@ class FeeDesk:
 
 
 def default_tariff() -> Tariff:
-    """示例价目表（推断的数字，不是 Amazon 报告里的）。"""
+    """示例价目表（演示用的数字，面试时应先问清费率）。"""
     return Tariff(
         rates={
             VehicleType.MOTORCYCLE: HourlyRate(Money(200), Money(100)),
@@ -535,7 +527,7 @@ if __name__ == "__main__":
 **持久化与规模**
 
 - 价目表放配置或数据库里，更新时生成新的 `Tariff` 对象整体替换（不可变对象，替换是一次原子的引用赋值）。注意票在入场后价目表若变了，出场用哪一版价目表，是业务问题：可以把版本号写进票。
-- 夏令时：本题解用朴素本地时间。夏令时切换日有 23 或 25 小时，按墙上时钟切段会多算或少算一小时；做法是内部全部用 UTC，只在 `rate_at` 里转换成本地时间判断时段，`next_change` 也在本地时间上生成再转回 UTC。这是对数据表示的改动，不是对结构的改动。
+- 夏令时：这里用朴素本地时间。夏令时切换日有 23 或 25 小时，按墙上时钟切段会多算或少算一小时；做法是内部全部用 UTC，只在 `rate_at` 里转换成本地时间判断时段，`next_change` 也在本地时间上生成再转回 UTC。这是对数据表示的改动，不是对结构的改动。
 - 停留非常长（几个月）时循环是线性的；可以对完整的日历日使用预先算好的整日金额，但这是优化，不应在第一版里写。
 
 ## 常见错误
@@ -565,10 +557,11 @@ if __name__ == "__main__":
 
 ## 来源与延伸
 
-- [Hello Interview 社区题库](https://www.hellointerview.com/community/questions?company=Amazon)：本题的主要来源，2026-09-20 的资深岗报告，说明重点在停车费计算、不同场景有不同逻辑，且代码不会被运行。可见部分没有具体费率，所以本题解的一切数字都标为推断。需要登录，只链接不摘录。
-- [Python 标准库 datetime](https://docs.python.org/3/library/datetime.html)：`weekday()` 周一为 0、周日为 6，所以工作日是 `< 5`；`datetime.combine` 把日期与时间拼成当天的某个边界。本题解处理的是不带时区的本地时间。
-- [Hello Interview：停车场题解](https://www.hellointerview.com/learn/low-level-design/problem-breakdowns/parking-lot)：题库停车场的主要参考。它的计费是「所有车型同一个小时费率、按小时向上取整」，并明确说不要过度设计。本题解不同意的只是前提：Amazon 的报告说重点在计费，面试官一旦说「不同场景不同逻辑」，价目表加切段就是正确的形状；而在没有这句话的版本里，一个函数就够。商业站点，只链接不摘录。
+- 题目来源：[Hello Interview 社区题库](https://www.hellointerview.com/community/questions?company=Amazon)（题目 `parking-lot-system`，Amazon 资深岗，亚太地区，2026-09-20 的报告）：原文只说重点在停车费计算、不同场景有不同逻辑，代码「syntactically correct, although it will not be executed」。需要登录，只链接不摘录。仓库的 Amazon kit 还记着三份相关的论坛报告（停车场加车型并追加五六条新需求、按车型找最佳车位、停车票据与收据），编号见 `vault/interviews/companies/amazon/lld/route.md`，共同的信号是停车场在 Amazon 考的是出场计费。
+- 哪些是报告的、哪些是补的：报告没有给出任何具体费率；四关分级、全部费率与时段、免费宽限期、每日封顶、会员折扣、丢票罚款、并发那一关都是推断，在这里是重建（reconstructed）的规则。
+- [Python 标准库 datetime](https://docs.python.org/3/library/datetime.html)：`weekday()` 周一为 0、周日为 6，所以工作日是 `< 5`；`datetime.combine` 把日期与时间拼成当天的某个边界。这里处理的是不带时区的本地时间。
+- [Hello Interview：停车场题解](https://www.hellointerview.com/learn/low-level-design/problem-breakdowns/parking-lot)：题库停车场的主要参考。它的计费是「所有车型同一个小时费率、按小时向上取整」，并明确说不要过度设计。这里不同意的只是前提：题目说重点在计费，面试官一旦说「不同场景不同逻辑」，价目表加切段就是正确的形状；而在没有这句话的版本里，一个函数就够。商业站点，只链接不摘录。
 - 题库已有的停车场题解 [[solution-parking-lot]]：车位分配、楼层、占用状态和阶梯计价（`TieredRate`）。它的阶梯计价是按总时长的边际分档，与这里按时间轴切段是两个正交的问题：一个按「停了多久」分档，一个按「什么时候停的」分段。
 - Amazon kit 的 `vault/interviews/companies/amazon/lld/pricing_billing.md`：同一个骨架的其他变体（地铁封顶、购物车折扣、AWS 账单），共同点是用整数分和一个按顺序应用的规则列表。
 
-概念背景：[[patterns.strategy|策略模式与可替换算法（Strategy）]]（什么时候需要策略接缝，什么时候是数据；决策二与决策四正是两个方向的例子）、[[problems.machines.parking-lot|停车场（Parking Lot）]]（本题站在它之上）。
+概念背景：[[patterns.strategy|策略模式与可替换算法（Strategy）]]（什么时候需要策略接缝，什么时候是数据；决策二与决策四正是两个方向的例子）、[[problems.machines.parking-lot|停车场（Parking Lot）]]（这里站在它之上）。

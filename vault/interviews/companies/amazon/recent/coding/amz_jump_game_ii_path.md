@@ -1,22 +1,18 @@
 # 跳跃游戏 II，返回路径（Jump Game II, return the jumps）
 
-> 来源：Hello Interview `leetcode-jump-game`，约 2026-09-10 Senior EMEA，https://www.hellointerview.com/community/questions/leetcode-jump-game ；公司页 https://www.hellointerview.com/community/questions?company=Amazon ；LC 官方 https://leetcode.com/problems/jump-game-ii/ （约束取自该页）。
-> 代码：`../../coding/solutions/45_jump_game_ii.py`。
-
-## 面经原话
-报告：「Jump game II but to return array of choices」。**(reconstructed)** 「choices」的含义没有展开；下文取「所经过的下标序列」，并说明如何改成「每次跳的步长」。
+数组 `nums` 的第 i 个数表示：站在下标 i，最多可以向前跳 `nums[i]` 步。从下标 0 出发，要到达最后一个下标，求最少需要跳几次（LeetCode 45）。这一讲还要多做一步：不只返回次数，还要返回具体怎么跳的，也就是经过的下标序列。难点是把 O(n²) 的动态规划压成一次扫描，同时还能还原路径。
 
 ## 题面与约束
 `nums[i]` 是从下标 i 最多向前跳的步数。从下标 0 出发，求到达最后一个下标的最少跳数。
 约束：`1 <= nums.length <= 10^4`，`0 <= nums[i] <= 1000`，保证可以到达最后一个下标。
 
 ## 开场先问的澄清问题
-1. 「返回 choices」是返回经过的下标，还是每一步的跳跃长度？
+1. 「返回路径」是返回经过的下标，还是每一步的跳跃长度？（下面返回下标序列，改成步长只需相邻两项相减。）
 2. 最短路径有多条时，返回任意一条还是有规则？
 3. 跳跃长度是「最多 nums[i]」还是「恰好」？（最多。）
 
 ## 最笨解
-动态规划：`dp[j] = min(dp[i] + 1)`，对每个 i 更新所有它能到达的 j。时间 O(n·max(nums)) 到 O(n²)，n = 1e4 时约 1e8，勉强但慢（见代码 `_dp`，用来对拍）。
+动态规划：`dp[j] = min(dp[i] + 1)`，对每个 i 更新所有它能到达的 j。时间 O(n·max(nums)) 到 O(n²)，n = 1e4 时约 1e8，勉强但慢（见代码 `_dp`，用来核对贪心的结果）。
 
 ## 逐步改进
 1. **问题**：DP 对每个 i 都更新一遍所有可达点，大量重复。
@@ -55,8 +51,8 @@ def jump_path(nums):
 ## senior 追问
 1. **不保证可达**：循环中若 `far <= i` 且 `i == end`，则无法前进，返回 -1。
 2. **要返回所有最短路径**：计数用 DP，枚举要回溯，可能指数级，需要问清是否要全部。
-3. **字典序最小/最少「落脚点」的路径**：把「选最远」换成「选满足约束的最小下标」，仍在层内贪心。
-4. **每个位置有代价（点权）**：贪心不再成立，改用 DP 或 Dijkstra：`dp[j] = min(dp[i] + cost[j])`，可用单调队列/线段树优化。
+3. **字典序最小或最少「落脚点」的路径**：把「选最远」换成「选满足约束的最小下标」，仍在层内贪心。
+4. **每个位置有代价（点权）**：贪心不再成立，改用 DP 或 Dijkstra：`dp[j] = min(dp[i] + cost[j])`，可用单调队列或线段树优化。
 5. **能向前向后跳**：变成一般图的 BFS，O(n·k)；每个下标只访问一次的剪枝依然成立（visited）。
 6. **数组超大且流式输入**：贪心只需 `end/far/best`，可以在线处理；路径需存 O(跳数)。
 
@@ -67,3 +63,9 @@ def jump_path(nums):
 <details><summary>答案</summary>落脚点要使下一层覆盖范围最大；当前层最后一个下标不一定能跳得最远。</details>
 3. 路径里相邻两项 a、b 一定满足什么？
 <details><summary>答案</summary>`0 < b - a <= nums[a]`，代码测试里逐段断言了这一点。</details>
+
+## 来源
+- Hello Interview 社区题目 `leetcode-jump-game`，约 2026-09-10，Senior EMEA：https://www.hellointerview.com/community/questions/leetcode-jump-game ；公司页 https://www.hellointerview.com/community/questions?company=Amazon 。
+- 原话：「Jump game II but to return array of choices」。「choices」的含义没有展开，上文取「所经过的下标序列」**(reconstructed)**。
+- LC 官方 https://leetcode.com/problems/jump-game-ii/ （约束取自该页）。
+- 代码：`../../coding/solutions/45_jump_game_ii.py`。

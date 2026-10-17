@@ -1,10 +1,6 @@
 # 任务调度器 II（Task Scheduler II, LC 2365）
 
-> 来源：Hello Interview `task-scheduler-ii`，约 2026-09-10 Staff，https://www.hellointerview.com/community/questions/task-scheduler-ii ；公司页 https://www.hellointerview.com/community/questions?company=Amazon ；LC 官方 https://leetcode.com/problems/task-scheduler-ii/ （约束取自该页）。
-> 代码：`../../coding/solutions/2365_task_scheduler_ii.py`。与已有的 LC 621 Task Scheduler 不同：该题任务**必须按给定顺序**执行。
-
-## 面经原话
-HI 摘要：「find the minimum total days (including required breaks) to finish all tasks while ensuring any two tasks of the same type are separated by at least space days」。报告只有题目名和级别（Staff），没有追问。
+有一串任务，每个任务有一个类型，必须**按给定顺序**一个接一个完成。每天只能做一个任务，或者休息。同一类型的两个任务之间必须至少隔 `space` 天。问做完所有任务最少需要多少天。它和 LC 621 的差别在于：621 允许重排任务，这里顺序固定，所以不需要任何贪心排序，只要知道每种类型上次是哪一天做的。
 
 ## 题面与约束
 `tasks[i]` 是第 i 个任务的类型，必须按顺序完成；每天做一个任务或休息；同一类型的两个任务之间至少间隔 `space` 天。求完成所有任务的最少天数。
@@ -58,3 +54,9 @@ def task_scheduler_ii(tasks, space):
 <details><summary>答案</summary>要求中间隔 `space` 天，所以两次相差 `space + 1`。</details>
 3. 最后一次任务完成日就是答案吗？
 <details><summary>答案</summary>是，最后一天做完最后一个任务，之后不再需要休息。</details>
+
+## 来源
+- Hello Interview 社区题目 `task-scheduler-ii`，约 2026-09-10，Staff：https://www.hellointerview.com/community/questions/task-scheduler-ii ；公司页 https://www.hellointerview.com/community/questions?company=Amazon 。
+- 摘要：「find the minimum total days (including required breaks) to finish all tasks while ensuring any two tasks of the same type are separated by at least space days」。报告只有题目名和级别，没有追问。
+- LC 官方 https://leetcode.com/problems/task-scheduler-ii/ （约束取自该页）。
+- 代码：`../../coding/solutions/2365_task_scheduler_ii.py`。与已有的 LC 621 Task Scheduler 不同：这里任务必须按给定顺序执行。

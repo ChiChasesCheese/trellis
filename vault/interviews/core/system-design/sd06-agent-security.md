@@ -128,23 +128,38 @@ flowchart TB
 **流 2：调查与回溯。** 分析师打开一条告警，控制台从 DynamoDB 取 Finding，再用其中的事件 ID 和时间范围去 OpenSearch（7 天内）取上下文；更久的数据走 Athena 对 Parquet 分区做查询。新规则发布时，批处理作业对过去 30 天数据用同一份规则定义回溯运行，生成的 Finding 带 `source=backfill`。
 
 ```mermaid
+%%{init: {'sequence': {'actorMargin': 16, 'width': 104, 'messageMargin': 28}}}%%
 sequenceDiagram
-    participant A as 代理 SDK
+    autonumber
+    participant A as Agent SDK
     participant I as 接入层
     participant K as Kinesis
-    participant F as 脱敏与 Flink
+    participant F as 流处理
     participant D as DynamoDB
-    A->>I: POST /events:batch (event_ids)
-    I->>I: 认证、租户配额、校验
-    I->>K: PutRecords (键 = tenant#agent)
+    A->>I: 批量上报事件
+    I->>I: 认证, 配额, 校验
+    I->>K: 按租户+代理写入
     K-->>I: 序列号
-    I-->>A: 202 accepted
-    K->>F: 读取
-    F->>F: 脱敏、规范化、按代理窗口评估规则
-    F->>D: 条件写入 fingerprint
-    D-->>F: created 或 merged
-    F->>F: 仅 created 或严重度升级时通知
+    I-->>A: 202 已接收
+    K->>F: 消费
+    F->>F: 脱敏, 规范化, 评估
+    F->>D: 条件写告警指纹
+    D-->>F: 新建或合并
+    F->>F: 新建或升级才通知
 ```
+
+图中编号对应的每一步：
+
+1. Agent 的 SDK 把一批事件一次上报，每条事件带唯一的 event_id。批量上报是为了减少请求次数，event_id 是为了重发时能去重。
+2. 接入层先认证、检查租户配额、校验格式：一个租户的流量突然暴增，不能挤占其他租户的写入能力。
+3. 以「租户 + 代理」作为分区键写入 Kinesis。同一个代理的事件进同一个分区，先后顺序就能保住，「先读密钥、再向外网发请求」这类看顺序的规则才判断得出来。
+4. Kinesis 返回序列号，表示数据已经持久化。
+5. 这时才回 202。SDK 收到 202 才能丢掉本地副本；没收到就重发，靠 event_id 去重，事件不会丢也不会重复计数。
+6. 流处理任务（Flink）按分区消费。
+7. 先脱敏（把提示词里的密钥、个人信息遮掉），再统一字段格式，然后按代理维度的时间窗口评估检测规则。脱敏放在最前面，是为了后面任何存储和日志都见不到敏感原文。
+8. 规则命中时，用「告警指纹」（规则 + 代理 + 时间窗）做一次条件写入：同一件事反复命中，只产生一条告警。
+9. 返回这是一条新告警，还是合并进了已有的告警。
+10. 只有新告警或严重度升级时才通知值班的人，避免告警风暴把真正重要的信号淹没。
 
 ## 深挖
 

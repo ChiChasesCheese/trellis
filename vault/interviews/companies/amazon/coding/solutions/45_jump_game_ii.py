@@ -1,4 +1,4 @@
-"""LC 45 Jump Game II -- greedy BFS by levels; the 'return the choices' follow-up keeps the farthest-reaching index per level."""
+"""LC 45 Jump Game II -- greedy BFS by levels; the path-returning version keeps the farthest-reaching index per level."""
 from random import Random
 
 # --- solution ---

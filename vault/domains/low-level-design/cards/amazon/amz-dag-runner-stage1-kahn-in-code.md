@@ -9,7 +9,7 @@ tags: [grown]
 在 Amazon DAG 执行器的第 1 关，用 Python 写出 Kahn 算法（入度为 0 的节点反复出队）的 install_order，deps[x] 是 x 的前置依赖。
 
 ## A
-只出现在依赖里的名字也要登记，入度按去重后的集合算，排完要核对数量：
+入度（indegree）是一个节点还没做完的前置依赖个数，Kahn 算法每次取入度为 0 的节点，做完后给依赖它的节点入度减 1。只出现在依赖里的名字也要登记，入度按去重后的集合算，排完要核对数量：
 
 ```python
 def install_order(deps):

@@ -44,7 +44,8 @@ def check(path: Path, names: set[str]) -> list[str]:
             pending = next(want, None)
     if pending:
         problems.append(f"missing or out-of-order section: ## {pending}")
-    mermaid = re.findall(r"^```mermaid\n(.*?)^```", text, re.S | re.M)
+    mermaid = [re.sub(r"^\s*%%.*\n", "", m, flags=re.M)        # drop init directives before reading the type
+               for m in re.findall(r"^```mermaid\n(.*?)^```", text, re.S | re.M)]
     if len(mermaid) < 3:
         problems.append(f"{len(mermaid)} mermaid diagram(s); need >= 3")
     if not any(m.lstrip().startswith(("flowchart", "graph")) for m in mermaid):

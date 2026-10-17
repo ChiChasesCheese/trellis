@@ -9,7 +9,7 @@ tags: [grown]
 在应急发布订阅里，`publish` 的核心流程是什么？用 Python 写出来（订阅者出错不能影响别人，处理函数里可能再调 `publish`）。
 
 ## A
-持锁时只做编号和拍订阅快照，处理函数放到锁外调用：
+处理函数（handler）是订阅者登记的回调函数。持锁时只做编号和拍订阅快照，处理函数放到锁外调用：
 ```python
 def publish(self, topic, severity, message, location=""):
     with self._lock:

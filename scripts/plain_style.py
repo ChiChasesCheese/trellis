@@ -22,11 +22,17 @@ THIRD_PERSON = [r"本篇", r"(?<![版样根基资日脚剧成账])本文(?![件�
 FENCE = re.compile(r"^```.*?^```", re.S | re.M)
 MERMAID = re.compile(r"^```mermaid\n(.*?)^```", re.S | re.M)
 NODE = re.compile(r"\b([A-Za-z_][\w]*)\s*(?:\[\[|\[\(|\(\(|\[|\(|\{\{|\{|>)(\"?)([^\]\)\}\n]*?)\2\s*(?:\]\]|\)\]|\)\)|\]|\)|\}\}|\})")
-MAX_NODES, MAX_LABEL, MAX_PARTICIPANTS, MAX_CLASSES = 12, 16, 5, 8
+MAX_NODES, MAX_LABEL, MAX_PARTICIPANTS, MAX_CLASSES, MAX_MESSAGE = 12, 16, 5, 8, 24
+
+
+def display_width(s: str) -> int:
+    """Rendered width in Latin-character units: a CJK character is as wide as two."""
+    return sum(2 if ord(ch) > 0x2E80 else 1 for ch in s)
 
 
 def mermaid_problems(block: str) -> list[str]:
-    head = block.lstrip().splitlines()[0].strip() if block.strip() else ""
+    lines = [ln.strip() for ln in block.splitlines() if ln.strip() and not ln.strip().startswith("%%")]
+    head = lines[0] if lines else ""
     out: list[str] = []
     if re.match(r"(flowchart|graph)\s+(LR|RL)\b", head):
         out.append(f"mermaid `{head}`: use TB/TD so it fits the page")
@@ -45,6 +51,12 @@ def mermaid_problems(block: str) -> list[str]:
         parts = set(re.findall(r"^\s*(?:participant|actor)\s+(\S+)", block, re.M))
         if len(parts) > MAX_PARTICIPANTS:
             out.append(f"sequenceDiagram has {len(parts)} participants > {MAX_PARTICIPANTS}")
+        # the widest message between two neighbours sets the diagram's width: keep messages short, explain below
+        msgs = re.findall(r"^\s*\S+?\s*-[-)x>]*[>x)]\+?-?\s*\S+?\s*:\s*(.+)$", block, re.M)
+        msgs += re.findall(r"^\s*[Nn]ote\s+(?:over|left of|right of)\s+[^:]+:\s*(.+)$", block, re.M)
+        long = [m.strip() for m in msgs if display_width(m.strip()) > MAX_MESSAGE]
+        if long:
+            out.append(f"sequenceDiagram messages longer than {MAX_MESSAGE} chars (use autonumber, explain below): {long[:2]}")
     if head.startswith("classDiagram"):
         classes = set(re.findall(r"^\s*class\s+(\w+)", block, re.M))
         if len(classes) > MAX_CLASSES:

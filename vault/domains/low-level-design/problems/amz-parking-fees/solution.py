@@ -291,7 +291,7 @@ class FeeDesk:
 
 
 def default_tariff() -> Tariff:
-    """示例价目表（推断的数字，不是 Amazon 报告里的）。"""
+    """示例价目表（演示用的数字，面试时应先问清费率）。"""
     return Tariff(
         rates={
             VehicleType.MOTORCYCLE: HourlyRate(Money(200), Money(100)),

@@ -20,4 +20,4 @@ def tick(self) -> None:
                 self._log(kind, robot, robot.order)
         self._dispatch()                 # 队首订单 -> 能接的空闲机器人
 ```
-时间只靠 `tick()` 推进，没有 `sleep`，所以测试可以逐刻断言。
+时间只靠 `tick()` 推进，没有 `sleep`：测试不用等真实时间，可以逐刻断言订单的状态。

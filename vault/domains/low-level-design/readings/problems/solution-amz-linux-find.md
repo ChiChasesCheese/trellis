@@ -6,11 +6,7 @@ tags: [solution]
 
 ## 题目与澄清
 
-> Hello Interview 社区题库把这道 Amazon 题记作「Design a Linux Find Command API」：按大小、格式、名字等条件跨目录搜索文件，过滤条件如“大于 5MB 的文件”或“所有 XML 文件”，要有一个干净、可扩展的接口（共 11 份报告，最近一份 2026-10-01，中级岗位，美国）。 https://www.hellointerview.com/community/questions?company=Amazon
->
-> 一亩三分地题库里相邻的一行是「按大小和后缀搜索文件」（现场编码，4 份来源，2026-07-25 至 09-18，标签含 filesystem、oop-design、testing、cycle-detection）。 https://www.1point3acres.com/
-
-以上是可见报告的全部内容。**下面这些是 (reconstructed)**：AND / OR / NOT 组合这一追问的出现顺序，以及符号链接环（来自题库标签 cycle-detection 的推断）；报告里没有写明面试官的原话，只有“清晰、可扩展的接口”这个要求。
+你要设计一个类似 Linux `find` 的搜索 API：给定一棵目录树，按大小、格式（后缀）、名字等条件跨目录找文件，条件如「大于 5MB 的文件」「所有 XML 文件」。接口要干净、可扩展：以后加新条件，不该去改搜索代码。
 
 先用两句话说清这个系统：**有一棵已经存在的目录树，我们要提供一个函数，按条件（大小、后缀、名字……）把树里满足条件的文件找出来。** 难点不在遍历，而在“条件”怎么表示，才能在不改搜索代码的前提下新增条件、并让条件自由组合。
 
@@ -25,9 +21,9 @@ tags: [solution]
 ## 需求与分级
 
 - **第 1 关：单个条件的搜索。** 目录树（`Directory` / `File`）和 `find(root, filter)`：按后缀找“所有 XML 文件”，按大小找“大于 5MB 的文件”，按名字通配符找。这一关为节点类型、`Filter` 抽象基类与几个最基本的子类（`Extension`、`Size`、`NameGlob`）而存在。
-- **第 2 关：条件组合。** “XML 且大于 5MB”“后缀是 py 或 md，但名字不以 old 开头”。这一关为 `AndFilter`、`OrFilter`、`NotFilter` 和 `& | ~` 运算符而存在（推断：报告强调“可扩展接口”，组合是最自然的第一个追问）。
+- **第 2 关：条件组合。** “XML 且大于 5MB”“后缀是 py 或 md，但名字不以 old 开头”。这一关为 `AndFilter`、`OrFilter`、`NotFilter` 和 `& | ~` 运算符而存在（“可扩展接口”最自然的第一个追问就是组合）。
 - **第 3 关：新增条件。** 面试官要求加“修改时间”或“是否空目录”。判据是：**改了几个文件？** 好的答案是新增一个类、零处修改。这一关为“开闭”而存在，也是 Amazon 评分里 “Logical and Maintainable” 的直接体现。
-- **第 4 关：遍历的工程问题。** 惰性（取第一个结果就停）、剪枝（`-prune`）、深度限制、符号链接环、真实磁盘（推断，来自题库标签 cycle-detection）。
+- **第 4 关：遍历的工程问题。** 惰性（取第一个结果就停）、剪枝（`-prune`）、深度限制、符号链接环、真实磁盘。
 
 ## 核心对象与职责
 
@@ -43,29 +39,21 @@ tags: [solution]
 classDiagram
     class Filter { <<abstract>> +matches(entry) bool }
     class AndFilter
-    class OrFilter
-    class NotFilter
     class Extension
     class Size
-    class NameGlob
     class FileSearcher { +find(root, filter) Iterator~Entry~ }
     class Entry { +path +node +depth }
     class Directory { +children +add() }
     class File { +size +mtime }
-    class Symlink { +target }
     Filter <|-- AndFilter
-    Filter <|-- OrFilter
-    Filter <|-- NotFilter
     Filter <|-- Extension
     Filter <|-- Size
-    Filter <|-- NameGlob
     AndFilter o-- Filter
-    NotFilter o-- Filter
     FileSearcher ..> Filter : uses
     FileSearcher ..> Entry : yields
     Directory *-- File
-    Directory *-- Symlink
 ```
+图只画了有代表性的类：`OrFilter`、`NotFilter` 与 `AndFilter` 结构相同，`NameGlob` 与 `Extension` 一样是叶子条件，`Symlink` 与 `File` 一样挂在 `Directory` 下。
 
 注意 `AndFilter` 与 `NotFilter` 都“持有”`Filter`，同时又是 `Filter`——这就是组合模式（Composite）：叶子和容器对调用方是同一个接口。
 
@@ -418,7 +406,7 @@ if __name__ == "__main__":
 - **短路：** 用一个会记录调用的过滤器放在 `&` 右边，只有三个 `.py` 文件触发它。
 - **惰性与剪枝：** 取第一个结果访问了 3 个位置；剪掉 `src` 后，访问数比完整遍历少 4，展开的目录数少 2。
 - **深度：** 3000 层的目录链不触发 `RecursionError`。
-- **符号链接：** 不跟随时链接是叶子；跟随时 `/a/loop` 不会死循环，`/alias/x.txt` 与 `/a/x.txt` 都被报告。
+- **符号链接：** 不跟随时链接是叶子；跟随时 `/a/loop` 不会死循环，`/alias/x.txt` 与 `/a/x.txt` 都出现在结果里。
 - **真实磁盘：** `scan_disk` 读 `tmp_path` 里的真实目录和链接，同一套过滤器直接可用。
 
 两分钟演示：建一个三层的小树，现场写 `Extension("xml") & Size.over("5MB")`，打印路径；再把 `&` 换成 `|` 看结果变化；最后说“新增条件只加一个类”。
@@ -462,10 +450,10 @@ if __name__ == "__main__":
 - **时间不够时先砍：** `scan_disk`、`Modified`、`prune`；保住 `Filter` 的组合和惰性遍历。
 
 ## 来源与延伸
-
-- Hello Interview 社区题库 Amazon 条目（Design a Linux Find Command API）：https://www.hellointerview.com/community/questions?company=Amazon ——说明题目的措辞与热度。它的文件系统题解讲的是内存文件系统本身的创建、移动、重命名；本文是它的补集：树已经存在，重点放在“条件如何组合与扩展”。
-- 一亩三分地题库（按大小和后缀搜索文件）：https://www.1point3acres.com/ ——标签里的 cycle-detection 是我们把符号链接环列入第 4 关的依据。
-- POSIX `find` 规范：https://pubs.opengroup.org/onlinepubs/9699919799/utilities/find.html ——AND 隐含、`-o` 为 OR、`!` 为 NOT，以及短路求值的要求；本文的 `&`、`|`、`~` 与之对应。
+- 题目来源：Hello Interview 社区题库 Amazon 条目「Design a Linux Find Command API」（共 11 份报告，最近一份 2026-10-01，中级岗位，美国）：https://www.hellointerview.com/community/questions?company=Amazon ——原文只有“按大小、格式、名字等条件跨目录搜索，如大于 5MB 的文件、所有 XML 文件；接口干净、可扩展”。一亩三分地题库里相邻的一行是「按大小和后缀搜索文件」（现场编码，4 份来源，2026-07-25 至 09-18，标签含 filesystem、oop-design、testing、cycle-detection）：https://www.1point3acres.com/
+- 哪些是报告的、哪些是补的：第 1 关（单个条件）来自报告；第 2 关 AND / OR / NOT 的追问顺序、第 4 关的符号链接环（依据是题库标签 cycle-detection）是推断（reconstructed）；面试官原话没有留下。
+- Hello Interview 的文件系统题解讲的是内存文件系统本身的创建、移动、重命名；这里是它的补集：树已经存在，重点放在“条件如何组合与扩展”。
+- POSIX `find` 规范：https://pubs.opengroup.org/onlinepubs/9699919799/utilities/find.html ——AND 隐含、`-o` 为 OR、`!` 为 NOT，以及短路求值的要求；这里的 `&`、`|`、`~` 与之对应。
 - Python 官方文档 `fnmatch`：https://docs.python.org/3/library/fnmatch.html ——`fnmatchcase` 区分大小写，我们用它实现 `NameGlob`。
-- 规约模式（Specification）原始论文：https://martinfowler.com/apsupp/spec.pdf ——Evans 与 Fowler 对可组合业务规则的描述；本文在 Python 里用运算符重载实现。
+- 规约模式（Specification）原始论文：https://martinfowler.com/apsupp/spec.pdf ——Evans 与 Fowler 对可组合业务规则的描述；这里在 Python 里用运算符重载实现。
 - 题库里的 [[solution-in-memory-file-system]]：同一棵树的另一面。概念：[[patterns.structural|结构型模式（Structural）]]、[[oop.interfaces|接口与抽象基类]]。

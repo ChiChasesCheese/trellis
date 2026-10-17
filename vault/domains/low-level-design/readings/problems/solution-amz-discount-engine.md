@@ -43,14 +43,33 @@ tags: [solution]
 
 ```mermaid
 classDiagram
-    class LineItem { +sku +unit_cents +qty +category +original_cents }
-    class Cart { +add() +remove() +lines }
-    class LineDiscount { <<abstract>> +is_eligible(line) +apply(line, remaining) }
+    class LineItem {
+        +sku
+        +unit_cents
+        +qty
+        +category
+    }
+    class Cart {
+        +add()
+        +remove()
+        +lines
+    }
+    class LineDiscount {
+        <<abstract>>
+        +is_eligible(line)
+        +apply(line, remaining)
+    }
     class PercentOff
     class BuyXGetY
-    class CartDiscount { <<abstract>> +is_eligible(subtotal) +apply(subtotal) }
+    class CartDiscount {
+        <<abstract>>
+        +is_eligible(subtotal)
+        +apply(subtotal)
+    }
     class ThresholdOff
-    class PriceEngine { +compute(cart) }
+    class PriceEngine {
+        +compute(cart)
+    }
     Cart o-- LineItem
     LineDiscount <|-- PercentOff
     LineDiscount <|-- BuyXGetY

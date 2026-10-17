@@ -1,4 +1,4 @@
-"""有三个 bug 的 install_order，代码评审练习用（推断：按 Hello Interview 的 code-review 形态重建）。
+"""有三个 bug 的 install_order，代码评审练习用。
 
 读它、找出 bug、写出能暴露每个 bug 的最小输入，再对照题解。
 """

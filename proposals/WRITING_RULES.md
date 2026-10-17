@@ -22,7 +22,10 @@ Applies to every article, drill, study note, write-up and card a learner reads. 
    - `flowchart TB` / `graph TD` only — never `LR`/`RL`.
    - ≤ 12 nodes per flowchart, ≤ 4 nodes side by side; split a big system into two diagrams (e.g. 写路径 / 读路径).
    - Node labels ≤ 16 characters (no long parentheticals: `CDN` not `CloudFront (CDN, edge cache)`); explain in prose.
-   - `sequenceDiagram` ≤ 5 participants; `classDiagram` ≤ 8 classes, members trimmed to what the text discusses.
+   - `sequenceDiagram` ≤ 5 participants, `autonumber`, every message ≤ 24 display units, a CJK character counting 2 (the
+     longest message sets the width); explain each numbered step in a list under the diagram. Start it with
+     `%%{init: {'sequence': {'actorMargin': 16, 'width': 104, 'messageMargin': 28}}}%%` (narrow actors).
+   - `classDiagram` ≤ 8 classes, members trimmed to what the text discusses.
 8. **Cards.** The front asks something answerable from understanding (「火车票价系统里，为什么用前缀和算两站票价？」),
    not 「Amazon 面试里怎么问的」. Provenance goes only in the card's footer link. A meta chip says at most difficulty
    and 「Amazon 2026-10」.

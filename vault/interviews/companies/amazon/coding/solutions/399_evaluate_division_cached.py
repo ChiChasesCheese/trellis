@@ -1,4 +1,4 @@
-"""LC 399 follow-up -- BFS evaluator with a result cache; a new equation drops only the cached MISSES (-1), found ratios never change."""
+"""LC 399 with caching -- BFS evaluator with a result cache; a new equation drops only the cached MISSES (-1), found ratios never change."""
 from collections import deque
 from random import Random
 

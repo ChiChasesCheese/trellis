@@ -1,4 +1,4 @@
-"""Fewest moves to capture the king (reconstructed): BFS on the piece's square; own pieces block; extension = BFS over a tuple of squares."""
+"""Fewest moves to capture the king: BFS on the piece's square; own pieces block; extension = BFS over a tuple of squares."""
 from collections import deque
 from random import Random
 

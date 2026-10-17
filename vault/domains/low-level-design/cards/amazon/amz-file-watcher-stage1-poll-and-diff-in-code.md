@@ -6,10 +6,10 @@ step: 3
 tags: [grown]
 ---
 ## Q
-在 Amazon 文件监听器设计里，第 1 关的核心 `poll()` 怎么写？第一次调用该报什么？
+在 Amazon 文件监听器设计里，第 1 关的核心 `poll()` 怎么写？第一次调用该发出什么事件？
 
 ## A
-第一次只拍基线，不报事件；之后拍快照、与已提交的世界比对：
+第一次只拍基线（baseline，记下此刻目录的样子），不发事件；之后每次拍快照（snapshot，路径到指纹的字典），与「订阅者已经知道的目录状态」（已提交的世界）比对：
 ```python
 def poll(self) -> list[Event]:
     raw = self._fs.scan(self._root, self._recursive)
