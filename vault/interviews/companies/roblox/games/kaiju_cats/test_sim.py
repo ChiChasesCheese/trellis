@@ -1,128 +1,158 @@
-"""One test per rule. Cats not under test start boxed in (a missing tile on both sides) so they never move."""
-import json
-import os
+"""One test per rule, each on a tiny board so the rule is the only thing happening.  python3 -m unittest test_sim -v"""
 import unittest
-from dataclasses import replace
 
-from sim import BOARD_A, BOARD_B, COST, Game, Rules, simulate
+from board import CHI_PLAN_MAP2, COST, GRASS as g, H, L, MAP1, MUD, P, ROCK, SPIKE
+from sim import Rules, simulate
 
-IDLE_G = ["startG", None]
-IDLE_B = ["startB", None]
-
-
-def run(rows, turns, plan=None, rules=Rules()):
-    """rows may omit idle cats; returns ({color: cat tuple}, trace of states)."""
-    colors = {cell[-1] for row in rows for cell in row if isinstance(cell, str) and cell.startswith("start")}
-    board = rows + ([IDLE_G] if "G" not in colors else []) + ([IDLE_B] if "B" not in colors else [])
-    trace = []
-    _, state = simulate(plan, replace(rules, turns=turns), board, trace)
-    return {k[0]: k for k in state[1]}, trace
+def run(board, plan=None, turns=15, **kw):
+    return simulate(plan, Rules(turns=turns, **kw), board=board)
 
 
-# cat tuple fields
-R_, C_, D_, P_, OUT = 1, 2, 3, 4, 7
+def cat(state, color):
+    return next(k for k in state[1] if k[0] == color)
 
 
-class RuleTests(unittest.TestCase):
-    def test_one_floor_per_visit_then_move_on(self):
-        cats, trace = run([["startR", "L", "grass"]], 2)
-        self.assertEqual([t[1][0][P_] for t in trace], [250, 250])
-        self.assertEqual(cats["R"][C_], 2)
+EMPTY = [g, g, g]
 
-    def test_second_visit_takes_the_next_floor(self):
-        # t1 enters L (250), t2 walks on, t3 bounces off the boulder, t4 walks back into L for its bottom floor.
-        _, trace = run([["startR", "L", "grass", "boulder"]], 4)
-        self.assertEqual([(t[1][0][C_], t[1][0][P_]) for t in trace], [(1, 250), (2, 250), (2, 250), (1, 500)])
 
-    def test_stomp_waits_and_destroys_the_next_floor(self):
-        _, trace = run([["startR", "L", "grass"]], 3, plan={(0, 1, 0): "stomp"})
-        self.assertEqual([(t[1][0][C_], t[1][0][P_]) for t in trace], [(1, 250), (1, 500), (2, 500)])
+class Buildings(unittest.TestCase):
+    def test_one_floor_per_visit_then_moves_on(self):
+        _, st, _ = run([["start:R", H, g], ["start:G", *EMPTY], ["start:B", *EMPTY]], turns=2)
+        self.assertEqual(cat(st, "R")[1:5], (0, 2, "E", 500))
+        self.assertEqual(st[2][0], 1)  # one floor of the high building is left
 
-    def test_stomp_on_the_last_floor_just_waits(self):
-        _, trace = run([["startR", "P", "grass"]], 2, plan={(0, 1, 0): "stomp"})
-        self.assertEqual([t[1][0][C_] for t in trace], [1, 1])
+    def test_second_visit_takes_the_bottom_floor_and_rubble_is_ground(self):
+        # R goes E through L, bounces off the edge, comes back W through L (bottom floor), then rubble next pass
+        _, st, _ = run([["start:R", L, g], ["start:G", *EMPTY], ["start:B", *EMPTY]], turns=6)
+        self.assertEqual(st[2][0], 0)
+        self.assertEqual(cat(st, "R")[4], 500)
 
-    def test_alternative_stay_until_gone(self):
-        cats, _ = run([["startR", "H", "grass"]], 3, rules=Rules(entry_mode="stay_until_gone"))
-        self.assertEqual((cats["R"][C_], cats["R"][P_]), (2, 1000))
+    def test_power_plant_doubles(self):
+        _, st, _ = run([["start:R", H, P], ["start:G", *EMPTY], ["start:B", *EMPTY]], turns=2)
+        self.assertEqual(cat(st, "R")[4], 1000)
 
-    def test_alternative_all_on_entry(self):
-        cats, _ = run([["startR", "H", "grass"]], 1, rules=Rules(entry_mode="all_on_entry"))
-        self.assertEqual(cats["R"][P_], 1000)
 
-    def test_power_plant_doubles_current_power(self):
-        cats, _ = run([["startR", "H", "P", "grass"]], 2)
-        self.assertEqual(cats["R"][P_], 1000)  # 500, then x2
+class Obstacles(unittest.TestCase):
+    def test_mud_stuck_one_turn_then_same_direction(self):
+        board = [["start:R", MUD, g, g], ["start:G", g, g, g], ["start:B", g, g, g]]
+        _, st, _ = run(board, turns=2)
+        self.assertEqual(cat(st, "R")[1:3], (0, 1))  # turn 2 stuck
+        _, st, _ = run(board, turns=3)
+        self.assertEqual(cat(st, "R")[1:4], (0, 2, "E"))
 
-    def test_mud_holds_for_one_turn_then_same_direction(self):
-        _, trace = run([["startR", "mud", "grass"]], 3)
-        self.assertEqual([t[1][0][C_] for t in trace], [1, 1, 2])
+    def test_spike_halves_and_keeps_going(self):
+        _, st, _ = run([["start:R", H, SPIKE, g], ["start:G", *EMPTY], ["start:B", *EMPTY]], turns=3)
+        self.assertEqual(cat(st, "R")[1:5], (0, 3, "E", 250))
 
-    def test_spike_halves_power_and_keeps_moving(self):
-        cats, _ = run([["startR", "H", "spike", "grass"]], 3)
-        self.assertEqual((cats["R"][C_], cats["R"][P_]), (3, 250))
+    def test_boulder_rebound_stay(self):
+        board = [["start:R", g, ROCK], ["start:G", *EMPTY], ["start:B", *EMPTY]]
+        _, st, _ = run(board, turns=2, rebound="stay")
+        self.assertEqual(cat(st, "R")[1:4], (0, 1, "W"))
 
-    def test_boulder_rebounds(self):
-        _, trace = run([["startR", "grass", "boulder"]], 3)
-        self.assertEqual([(t[1][0][C_], t[1][0][D_]) for t in trace], [(1, "E"), (1, "W"), (0, "W")])
+    def test_boulder_rebound_step(self):
+        board = [["start:R", g, ROCK], ["start:G", *EMPTY], ["start:B", *EMPTY]]
+        _, st, _ = run(board, turns=2, rebound="step")
+        self.assertEqual(cat(st, "R")[1:4], (0, 0, "W"))
 
-    def test_turn_command_fires_when_its_floor_is_destroyed(self):
-        rows = [["startR", "L", None], [None, "grass", None]]
-        cats, _ = run(rows, 2, plan={(0, 1, 0): "S"})
-        self.assertEqual((cats["R"][R_], cats["R"][C_]), (1, 1))
+    def test_edge_and_missing_tile_rebound_like_boulder(self):
+        _, st, _ = run([["start:R", g, None], ["start:G", g], ["start:B", g]], turns=2)
+        self.assertEqual(cat(st, "R")[1:4], (0, 1, "W"))
+        self.assertEqual(cat(st, "G")[1:4], (1, 1, "W"))
 
-    def test_budget_is_enforced(self):
+    def test_other_cats_bed_blocks(self):
+        _, st, _ = run([["start:R", g, "bed:G"], ["start:G", *EMPTY], ["start:B", *EMPTY]], turns=2)
+        self.assertEqual(cat(st, "R")[1:4], (0, 1, "W"))
+
+
+class Commands(unittest.TestCase):
+    def test_turn_command_fires_on_destroy(self):
+        board = [["start:R", L, g], [None, g, g], ["start:G", *EMPTY], ["start:B", *EMPTY]]
+        _, st, _ = run(board, {(0, 1, 0): "S"}, turns=2)
+        self.assertEqual(cat(st, "R")[1:5], (1, 1, "S", 250))
+
+    def test_command_fires_for_whichever_cat_destroys_the_floor(self):
+        # R takes the top floor; G later... simpler: plan on the BOTTOM floor fires for the second visitor
+        board = [["start:R", L, g], ["start:G", *EMPTY], ["start:B", *EMPTY]]
+        _, st, _ = run(board, {(0, 1, 1): "E"}, turns=5)  # R comes back W, destroys bottom, turned E again
+        self.assertEqual(cat(st, "R")[1:4], (0, 2, "E"))
+
+    def test_stomp_stays_and_takes_the_next_floor(self):
+        board = [["start:R", H, g], ["start:G", *EMPTY], ["start:B", *EMPTY]]
+        _, st, _ = run(board, {(0, 1, 0): "stomp"}, turns=2)
+        self.assertEqual(cat(st, "R")[1:3], (0, 1))
+        self.assertEqual(cat(st, "R")[4], 1000)
+        self.assertEqual(st[2][0], 0)
+        _, st, _ = run(board, {(0, 1, 0): "stomp"}, turns=3)
+        self.assertEqual(cat(st, "R")[1:4], (0, 2, "E"))
+
+    def test_powerup_adds_1000(self):
+        _, st, _ = run([["start:R", L, g], ["start:G", *EMPTY], ["start:B", *EMPTY]], {(0, 1, 0): "powerup"}, turns=1)
+        self.assertEqual(cat(st, "R")[4], 1250)
+
+    def test_powerup_on_plant_order_is_a_switch(self):
+        board = [["start:R", L, P], ["start:G", *EMPTY], ["start:B", *EMPTY]]
+        plan = {(0, 2, 0): "powerup"}
+        self.assertEqual(cat(run(board, plan, turns=2)[1], "R")[4], 1500)  # 250 x2 +1000
+        self.assertEqual(cat(run(board, plan, turns=2, powerup_first=True)[1], "R")[4], 2500)  # (250+1000) x2
+
+    def test_budget(self):
         with self.assertRaises(ValueError):
-            simulate({(r, c, 0): "stomp" for r in range(5) for c in range(1, 3)} | {(0, 1, 1): "stomp"})
-        g = Game(rules=Rules(budget=5))
-        self.assertIsNone(g.step(g.initial, lambda c, fid, m: "N" if c == "R" else None))
+            run([["start:R", g], ["start:G", g], ["start:B", g]], {(9, 9, i): "powerup" for i in range(7)})
 
-    def test_paid_command_applies_without_charge(self):
-        g = Game([["startR", "L", None], [None, "grass", None], IDLE_G, IDLE_B], Rules(budget=0))
-        s = g.step(g.initial, lambda c, fid, m: ("paid", "S") if c == "R" else None)
-        self.assertEqual((s[1][0][D_], s[4]), ("S", 0))
 
-    def test_bed_bonuses_by_arrival_order(self):
-        rows = [["startR", "bedR"], ["startG", "grass", "bedG"], ["startB", "grass", "grass", "bedB"]]
-        cats, _ = run(rows, 3)
-        self.assertEqual((cats["R"][P_], cats["G"][P_], cats["B"][P_]), (2000, 0, 0))
+class FightsAndBeds(unittest.TestCase):
+    def test_same_tile_higher_power_wins_loser_scores_zero(self):
+        # R (row 0) is sent S onto row 1 at the moment G arrives there
+        board = [["start:R", H, g], [None, g, g], ["start:G", L, g], ["start:B", *EMPTY]]
+        _, st, _ = run(board, {(0, 1, 0): "S", (2, 1, 0): "N"}, turns=2)
+        self.assertTrue(cat(st, "R")[6])
+        self.assertFalse(cat(st, "G")[6])
+        self.assertEqual(cat(st, "G")[4], 0)
 
-    def test_simultaneous_arrival_lower_score_enters_first(self):
-        rows = [["startR", "L", "bedR"], ["startG", "H", "bedG"]]
-        cats, _ = run(rows, 2)
-        self.assertEqual((cats["R"][P_], cats["G"][P_]), (2250, 1500))  # R 250 first (+2000), G 500 second (x3)
-
-    def test_fight_on_one_tile_higher_power_wins(self):
-        # R smashes H (500) and walks east; G bounces off the east edge and walks west; both reach c3 on turn 3.
-        cats, _ = run([["startR", "H", "grass", "grass", "grass", "startG"]], 3)
-        self.assertEqual((cats["G"][OUT], cats["R"][OUT]), ("out", ""))
-
-    def test_fight_tie_top_bed_wins(self):
-        cats, _ = run([["startR", "grass", "grass", "startG"]], 2)  # both 0 power meet at c2 on turn 2
-        self.assertEqual((cats["G"][OUT], cats["R"][OUT]), ("out", ""))
+    def test_tie_goes_to_topmost_bed(self):
+        board = [["start:R", L, g], [None, g, g], ["start:G", L, g], ["start:B", *EMPTY]]
+        _, st, _ = run(board, {(0, 1, 0): "S", (2, 1, 0): "N"}, turns=2)
+        self.assertTrue(cat(st, "R")[6])
+        self.assertFalse(cat(st, "G")[6])
 
     def test_head_on_swap_is_a_fight(self):
-        # Turn 1: R -> c1, G bounces at c2 (now facing west). Turn 2: they cross head-on.
-        cats, _ = run([["startR", "grass", "startG"]], 2)
-        self.assertEqual((cats["G"][OUT], cats["R"][OUT], cats["R"][C_]), ("out", "", 2))
+        # turn 1: R -> c1, G is blocked by the edge and turns W in place; turn 2: R -> c2 and G -> c1 cross head-on
+        _, st, _ = run([["start:R", g, "start:G"], ["start:B", *EMPTY]], turns=2, rebound="stay")
+        self.assertTrue(cat(st, "R")[6])  # tie at 0 power: R has the topmost bed
+        self.assertFalse(cat(st, "G")[6])
 
-    def test_alternative_absorb_adds_loser_power(self):
-        rows = [["startR", "H", "grass", "grass", "L", "startG"]]  # R 500 meets G 250 at c3 on turn 3
-        cats, _ = run(rows, 3, rules=Rules(fight_mode="absorb"))
-        self.assertEqual((cats["G"][OUT], cats["R"][P_]), ("out", 750))
+    def test_moving_into_a_stationary_cat_is_a_fight(self):
+        # G sits stuck in mud at r1c1 on turn 2; R is turned S by the command and walks onto it
+        board = [["start:R", H, g], ["start:G", MUD, g], ["start:B", *EMPTY]]
+        _, st, _ = run(board, {(0, 1, 0): "S"}, turns=2)
+        self.assertEqual(cat(st, "R")[1:3], (1, 1))
+        self.assertFalse(cat(st, "G")[6])
+
+    def test_bed_bonus_order_and_simultaneous_lower_first(self):
+        board = [["start:R", H, "bed:R"], ["start:G", L, "bed:G"], ["start:B", g, g, "bed:B"]]
+        score, st, _ = run(board, turns=4)
+        # turn 2: R (500) and G (250) arrive together: G first +2000, R second x3; turn 4: B (0) third x5
+        self.assertEqual(cat(st, "G")[4], 2250)
+        self.assertEqual(cat(st, "R")[4], 1500)
+        self.assertEqual(cat(st, "B")[4], 0)
+        self.assertEqual(score, 3750)
+
+    def test_cats_outside_beds_still_score_dead_ones_do_not(self):
+        score, _, _ = run([["start:R", H, g], ["start:G", H, g], ["start:B", H, g]], turns=3)
+        self.assertEqual(score, 1500)
+        board = [["start:R", H, g], [None, g, g], ["start:G", L, g], ["start:B", *EMPTY]]
+        score, _, _ = run(board, {(0, 1, 0): "S", (2, 1, 0): "N"}, turns=2)
+        self.assertEqual(score, 500)  # G (250) died in the fight
 
 
-class BoardTests(unittest.TestCase):
-    def test_baselines_without_commands(self):
-        self.assertEqual(simulate(board=BOARD_B)[0], 6250)
-        self.assertEqual(simulate(board=BOARD_A)[0], 6187.5)
+class RealBoards(unittest.TestCase):
+    def test_map1_no_commands(self):
+        score, st, _ = simulate(board=MAP1)
+        self.assertEqual([k[1:3] for k in st[1]], [(2, 3), (4, 3), (0, 3)])
+        self.assertEqual(score, 406.25 + 2500 + 3000)
 
-    def test_best_known_plan_reproduces_its_score(self):
-        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "best_plan.json")) as fh:
-            data = json.load(fh)
-        plan = {tuple(k): v for k, v in data["plan"]}
-        self.assertLessEqual(sum(COST[v] for v in plan.values()), 200)
-        self.assertEqual(simulate(plan)[0], data["score"])
+    def test_chi_plan_map2_fits_the_budget(self):
+        self.assertEqual(sum(COST[c] for c in CHI_PLAN_MAP2.values()), 110)
 
 
 if __name__ == "__main__":
