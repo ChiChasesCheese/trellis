@@ -20,20 +20,33 @@
 | SD05 | 疫苗资格与预约 | 资格规则可配置且可追溯；时段与剂量两种库存同时约束；开放日的瞬时洪峰 | [[sd05-vaccine-booking]] | [[solution-ticket-booking]]、[[solution-hotel-reservation]] |
 | SD06 | AI Agent 安全事件平台（1 TB/天） | 每天 1 TB 事件的流式摄入；实时规则与离线检测两条路；多租户隔离与敏感数据脱敏 | [[sd06-agent-security]] | [[solution-ad-click-aggregation]]、[[solution-metrics-monitoring]] |
 | SD07 | 大文件外部排序（200 GB 数据 / 8 GB 内存） | 内存放不下时怎么排序：分段排序再多路归并；多台机器怎么分工 | [[sd07-external-sort]] | — |
+| SD13 | 员工目录（DynamoDB 分区键） | 先列访问模式再定主键与 GSI；按名字前缀搜索交给索引服务；改名、调岗时的一致性 | [[sd13-employee-directory]] | [[solution-key-value-store]]、[[solution-typeahead]] |
 
-### AWS 数据服务题（在 `problems/` 里）
+### AWS 数据服务方向
 
-| 题 | 考什么 | 题解 | 先读的通用题解 |
+| # | 题 | 考什么 | 题解 | 先读的通用题解 |
+|---|---|---|---|---|
+| SD08 | 变更数据捕获复制管道 | 日志式捕获；至少一次加幂等；初始全量与增量衔接；顺序与重放 | [[sd08-cdc-replication-pipeline]] | [[solution-message-queue]] |
+| SD09 | 数据湖摄取与目录 | 摄取幂等；表格式；目录与治理 | [[sd09-data-lake-ingestion-catalog]] | [[solution-object-storage]]、[[solution-ad-click-aggregation]] |
+| SD10 | 托管数据库控制面 | 控制面与数据面分离；租约与 fencing；主从切换、备份与时间点恢复；多租户 | [[sd10-managed-db-control-plane]] | [[solution-job-scheduler]]、[[solution-key-value-store]] |
+| SD11 | 指标时序存储 | 降采样与保留分层；基数治理；百分位不能平均；告警路径与查询路径分离 | [[sd11-metrics-timeseries-store]] | [[solution-metrics-monitoring]] |
+| SD12 | S3 上的无服务器查询 | 分区裁剪；列存；S3 吞吐；无服务器多租户 | [[sd12-serverless-query-over-s3]] | [[solution-object-storage]] |
+
+### 扩展题（low priority）
+
+| # | 题 | 考什么 | 题解 |
 |---|---|---|---|
-| 托管数据库控制面 | 控制面与数据面分离；租约与 fencing；主从切换、备份与时间点恢复；多租户 | [[sd10-managed-db-control-plane]] | [[solution-job-scheduler]]、[[solution-key-value-store]] |
-| 变更数据捕获复制管道 | 日志式捕获；至少一次加幂等；初始全量与增量衔接；顺序与重放 | [[sd08-cdc-replication-pipeline]] | [[solution-message-queue]] |
-| 指标时序存储 | 降采样与保留分层；基数治理；百分位不能平均；告警路径与查询路径分离 | [[sd11-metrics-timeseries-store]] | [[solution-metrics-monitoring]] |
-| 数据湖摄取与目录 | 摄取幂等；表格式；目录与治理 | [[sd09-data-lake-ingestion-catalog]] | [[solution-object-storage]]、[[solution-ad-click-aggregation]] |
-| S3 上的无服务器查询 | 分区裁剪；列存；S3 吞吐；无服务器多租户 | [[sd12-serverless-query-over-s3]] | [[solution-object-storage]] |
+| SD14 | Kindle 阅读进度同步（low priority） | 离线写、多设备合并；「读得最远」与「最后一次」的冲突规则；幂等同步 | [[sd14-kindle-sync]] |
+| SD15 | 制品仓库（low priority） | 内容寻址存储；不可变版本；发布前扫描；CDN 读路径 | [[sd15-artifact-repository]] |
+| SD16 | Lambda 式代码执行（low priority） | worker 放置；冷热沙箱；并发上限；异步队列、重试与死信 | [[sd16-lambda-execution]] |
+| SD17 | 传感器与天气数据平台（low priority） | 海量小写入；时序降采样与小时聚合；按地理格子查询 | [[sd17-sensor-platform]] |
+| SD18 | 影视目录搜索与 CDC（low priority） | 数据库为准、CDC 驱动索引；重建索引用别名切换；新鲜度 | [[sd18-catalog-search-cdc]] |
+| SD19 | 设备管理平台（low priority） | 期望状态与上报状态；分波次下发与回滚；离线设备 | [[sd19-device-fleet]] |
+| SD20 | 数据库备份系统（low priority） | 全量 / 差异 / 日志备份与恢复链；RPO 与 RTO；验证恢复 | [[sd20-db-backup]] |
 
 ## 通用题解的练习顺序与追加练习点
 
-越贴近 AWS 数据服务的越靠前，前一道的机制是后一道的前置。读完通用题解后，做表里的追加练习，再进 `problems/`。
+越贴近 AWS 数据服务的越靠前，前一道的机制是后一道的前置。读完通用题解后，做表里的追加练习，再做 SD08–SD12。
 
 | 序 | 通用题解 | 对应的服务 | 追加练习 |
 |---|---|---|---|
@@ -58,12 +71,13 @@
 
 | 题 | 读哪里 |
 |---|---|
-| 制品仓库、Kindle 多设备同步、日志存储、员工目录（DynamoDB 分区键）、设备管理 / 配置同步、评论与评分 | [[hld_sketches]]（六个 25 分钟骨架） |
+| 制品仓库 · Kindle 多设备同步 · 员工目录 · 设备管理 · Lambda 式执行 | [[sd15-artifact-repository]] · [[sd14-kindle-sync]] · [[sd13-employee-directory]] · [[sd19-device-fleet]] · [[sd16-lambda-execution]] |
+| 日志存储、评论与评分 | [[hld_sketches]]（25 分钟骨架） |
 | 监控 / 指标 / 告警 | [[solution-metrics-monitoring]]、[[sd11-metrics-timeseries-store]] |
-| 主库加只读副本的故障切换 | [[sd10-managed-db-control-plane]] |
+| 主库加只读副本的故障切换、备份恢复 | [[sd10-managed-db-control-plane]]、[[sd20-db-backup]] |
 | S3 上的分析查询 API | [[sd12-serverless-query-over-s3]]、[[sd11-metrics-timeseries-store]] |
+| 搜索 + CDC（OpenSearch） | [[sd18-catalog-search-cdc]]、[[sd08-cdc-replication-pipeline]] |
 | 分布式限流器 | [[solution-rate-limiter]] |
-| Lambda 式代码执行 | [[solution-online-judge]]（沙箱、冷启动） |
 
 ## 怎么练
 
