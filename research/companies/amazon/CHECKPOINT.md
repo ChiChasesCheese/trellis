@@ -45,3 +45,12 @@ Chi 的要求：教科书模式；编码用 Python。
 在这里跑 `anki-push` 会把两个 note 类型的 CSS 从 3879 字符改回 1111 字符，A 档卡失去高亮。推送前先备份
 `modelStyling`/`modelTemplates`，推送后恢复，再同步一次 AnkiWeb；根治办法是把另一台机器的 build.py 与 leetcode-tops 域推上来。
 
+
+## P7 学习区净化与扩题（2026-10-17）
+
+- 学习区（vault）零出处：出处留档 `PROVENANCE.md`（清理前全文在 513b6233）；规则 `proposals/WRITING_RULES.md`，检查 `scripts/plain_style.py`。
+- 目录：公司文件夹只剩 README / LOOP_GUIDE / lp；系统设计 → `vault/interviews/core/system-design/amazon/`（sd01–sd20）；
+  coding → `vault/interviews/core/coding/amazon/`；过程文件 → 本目录；10/9 遗留 → `archive/`。
+- Anki：LLD deck 10 = 24 叶 187 卡；LeetCode Tops deck 22 = 14 卡、deck 23 = 79 卡；amazon-a 本月出现的 15 题 tag `amazon-seen-2026-10`。
+- 验收：`check_lld_problems.py --branch amazon --all` 24/24；`scripts/check_sd.py` 20/20；`run_all.py` ALL PASS；`check_wikilinks.py` 0。
+- 未动：`vault/interviews/core/leetcode/companies/amazon.md`（生成文件，本地有一份未提交的 9/26 版本）、`vault/interviews/core/leetcode/tops/`（未跟踪旧副本）。
