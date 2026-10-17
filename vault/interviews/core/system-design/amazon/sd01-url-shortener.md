@@ -1,5 +1,5 @@
 ---
-tags: [system-design, reported, amazon, url-shortener]
+tags: [system-design, amazon, url-shortener]
 ---
 # SD01 短链接服务（URL Shortener）
 
@@ -7,7 +7,7 @@ tags: [system-design, reported, amazon, url-shortener]
 
 短链接服务把一个很长的网址换成一个七八个字符的短网址，例如 `https://sho.rt/Ab3dE9x`。任何人点开短网址，浏览器都会被带到原来的长网址。它被用在短信、二维码、社交平台的字数限制和营销统计里。这个系统的写入很少、读取极多：每创建一条链接，平均会被点开上百次。难点因此集中在三处：编号永远不能重复，绝大多数点击必须在到达数据库之前就被挡掉，一个突然爆火的链接不能把某个分区压垮。
 
-面试官通常只说一句：设计一个 TinyURL（短链接服务）。你需要自己问出规模，给出创建与跳转两条路径，并在编号方案、缓存与热点、多区域上讲出取舍。下面的需求和数字是按 Amazon 常见的出法补全的假设，面试时以面试官当场给的数字为准。
+面试官通常只说一句：设计一个 TinyURL（短链接服务）。你需要自己问出规模，给出创建与跳转两条路径，并在编号方案、缓存与热点、多区域上讲出取舍。下面的需求和数字是练习用的假设，面试时以面试官当场给的数字为准。
 
 ## 澄清问题
 
@@ -325,18 +325,8 @@ flowchart TB
 
 </details>
 
-## 来源与延伸阅读
+## 延伸阅读
 
-**这个问题在哪里被问到**
-
-- 一亩三分地（1point3acres）帖 1193105，2026-10-14 发布，SDE II，2026-10-02 现场四轮，摘要为「task and course scheduling, URL shortener design, and Amazon Locker LLD」。楼主 2026-10-15 回复「都是 dry run，不用跑。System Design 连图都没画」。帖子正文被隐藏，所以只有题名可信，置信度高（仅题名）。「连图都没画」说明这一轮很可能被压成了口头讨论，所以上面的 45 分钟版要能不用白板讲完。https://www.1point3acres.com/bbs/thread-1193105-1-1.html
-- Hello Interview 社区题库的 Amazon 条目共 12 条（2022-09 至 2026-09，最近一条 2026-09-01，senior，美国）。2025-09-20 一条（mid，EMEA）写道：「Asked at Amazon. Exact same question. But I didn't had much time, since some portion of the interview was LP.」置信度中。https://www.hellointerview.com/community/questions?company=Amazon
-
-**哪些部分是补全的**：具体追问（是否要求自定义别名、是否要求点击分析、流量数字）没有任何一条报告给出。前面的需求与数字是按 Amazon 的常见出法重建的，面试时以面试官当场给的为准。
-
-**延伸阅读**
-
-- Hello Interview《Bitly》（Evan King，2026-02 更新，难度标「easy」，面向偏初级的读者）：https://www.hellointerview.com/learn/system-design/problem-breakdowns/bitly 。它的骨架是需求（创建、可选别名、可选过期、跳转）→ 非功能（唯一性、延迟小于 100 ms、99.99% 可用、10 亿条与 1 亿日活）→ 实体与 API → 单体到拆分的高层设计 → 深挖「短码如何生成并保证唯一」「如何扩展读」。编号上它比较长 URL 前缀、哈希截断、计数器加 base62 三种，推荐 Redis 计数器批量领号；读扩展上依次给出索引、内存缓存、CDN 与边缘。
-- 与它一致之处：骨架、读写 100:1 的判断、302 优先、批量领号加不相交号段、缓存与 CDN 分层。
-- 与它不同之处：（1）计数器放 DynamoDB 而不是 Redis，理由是异步复制下回退计数的风险，Amazon 面试官更爱听托管服务的保证；（2）补上它没展开的可逆置换防枚举；（3）补上多区域下别名的静默冲突，这是它单区域叙述里碰不到的问题；（4）把分析放回 CDN 实时日志而不是源站，因为 CDN 命中的请求源站看不到；（5）把下架延迟明确写成 `max-age` 的函数。它的页面把 staff 期待写在评语里（要求看穿教科书方案并讨论真实的生产问题），上文的「Staff 视角」一节就是在回答那一条。
-- 本库通用题解 [[solution-url-shortener]] 覆盖了短码生成三选一、NoSQL 分区键、读路径缓存与热键、分析管道、301/302 与别名并发；这里只写 Amazon 的追问方式与 AWS 组件的落点。限流细节见 [[solution-rate-limiter]]。题单总览见 [[sd-index]]。
+- 相邻题解：[[solution-url-shortener]]（短码生成三选一、NoSQL 分区键、读路径缓存与热键、分析管道、301/302 与别名并发）、[[solution-rate-limiter]]（限流细节）。
+- 同批题单：[[sd-index]]。
+- 教程：[短链接服务拆解](https://www.hellointerview.com/learn/system-design/problem-breakdowns/bitly)

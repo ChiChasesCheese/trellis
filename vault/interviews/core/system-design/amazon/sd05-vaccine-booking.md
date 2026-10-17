@@ -1,5 +1,5 @@
 ---
-tags: [system-design, reported, amazon, booking, eligibility-rules]
+tags: [system-design, amazon, booking, eligibility-rules]
 ---
 # SD05 疫苗资格与预约（Vaccine Eligibility & Booking）
 
@@ -357,22 +357,8 @@ TTL 删除是惰性的，可能延迟数小时到两天，期间名额一直被�
 
 </details>
 
-## 来源与延伸阅读
+## 延伸阅读
 
-> 来源：Hello Interview 社区题库 Amazon 条目，2026-09-10，senior：https://www.hellointerview.com/community/questions?company=Amazon ；对照的 Hello Interview 题解《Ticketmaster》：https://www.hellointerview.com/learn/system-design/problem-breakdowns/ticketmaster ；《Dealing with Contention》：https://www.hellointerview.com/learn/system-design/patterns/dealing-with-contention
-
-- 被报告的题面（一句）：「a vaccine distribution system that manages dynamic inventory replenishment and configurable eligibility rules, allowing eligible users to book vaccine appointments by location and date」，2026-09-10，senior，置信度 **中**；没有候选人笔记，只有这一句。
-- **（重建）**：每日预约量、站点数、规则复杂度、是否有二针、是否对接真实身份核验，报告里都没有。正文的数字和范围按「州级疫苗项目开放新一批人群」重建。
-
-**Hello Interview《Ticketmaster》的做法（转述）**：骨架是需求、实体、API、高层设计，再在深挖里处理订票过程中保留座位、极热门活动的虚拟排队和搜索。保留座位的主方案是带 TTL 的分布式锁，虚拟等候队列是热门活动的扩展；评论区有不少读者主张用数据库的乐观并发控制代替锁。《Dealing with Contention》一页系统比较了悲观锁、乐观并发、分布式锁和队列几种争用处理方式。
-
-**一致的地方**：先保证不双订，再谈体验；热门事件需要排队整形；读写分离。
-
-**不同的地方**：
-
-1. 正文不把分布式锁当作正确性的来源。库存在持久账本里，锁只会增加一个不可信的故障面；正确性来自数据库事务里的条件写入，占位的过期由工作流和对账保证，不由锁的 TTL 保证。
-2. 订票的座位是唯一对象，一个座位一个人；疫苗是两层库存（时段加剂量），稀缺的是剂量，所以「读路径先拒绝」和剂量子计数成为主要设计，而不是座位图。
-3. 资格规则引擎在订票里不存在，它是疫苗场景新增的主线：版本化、两次求值、可回放；Hello Interview 的这两页没有覆盖。
-4. 公平性在这里是硬需求（公共品），所以用随机化窗口代替先到先得；订票的虚拟队列默认先到先得。
-
-**本库**：通用的座位状态机、虚拟队列和 saga 在 [[solution-ticket-booking]]；按房型-夜的计数行与多晚预订的原子性在 [[solution-hotel-reservation]]，两层库存的写法与它的「区间行 vs 计数行」选择同构，可以对照阅读。
+- 相邻题解：[[solution-ticket-booking]]（座位状态机、虚拟队列、saga）、[[solution-hotel-reservation]]（按房型-夜的计数行、多晚预订的原子性）。
+- 同批题单：[[sd-index]]。
+- 教程：[票务预订拆解](https://www.hellointerview.com/learn/system-design/problem-breakdowns/ticketmaster)、[并发争用模式](https://www.hellointerview.com/learn/system-design/patterns/dealing-with-contention)

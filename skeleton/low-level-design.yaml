@@ -429,7 +429,7 @@ nodes:
     order: 10
     core: true
     title: "Amazon 专项（Amazon OOD）"
-    summary: "2026-09-16..10-16 一亩三分地与 Hello Interview 报告的 Amazon OOD 原题，从最小的数据结构型设计到并发执行器，由浅入深；叶子顺序与卡片 step 即学习顺序。来源与置信度见 Amazon kit 的 RECENT_amazon_2026-10。"
+    summary: "Amazon OOD 轮的题，从最小的数据结构型设计到并发执行器、内存数据库，由浅入深；叶子顺序与卡片 step 即学习顺序，标 low priority 的放在最后。"
     children:
       - id: amazon.amz-round
         title: "Amazon 的 LLD 轮怎么打（Amazon OOD Round）"
@@ -437,7 +437,7 @@ nodes:
         requires: [method.delivery, method.evaluation]
       - id: amazon.amz-closest-store
         title: "增删查最近值（Add / Remove / Closest）"
-        summary: "电面 OOD：维护一组数，支持插入、删除、查询离 target 最近的数；从排序列表到值域分桶。（重建）"
+        summary: "电面 OOD：维护一组数，支持插入、删除、查询离 target 最近的数；从排序列表到值域分桶。"
         requires: [python.data-model, oop.interfaces]
       - id: amazon.amz-train-fare
         title: "火车线路票价（Train Fare Calculator）"
@@ -447,6 +447,10 @@ nodes:
         title: "购物车折扣引擎（Checkout Price Engine）"
         summary: "折扣基类 isEligible / apply，百分比、满减、买 X 送 Y 叠加；钱用整数分；规则可插拔。"
         requires: [patterns.strategy, oop.values]
+      - id: amazon.amz-pizza-order
+        title: "披萨订单（Pizza Order）"
+        summary: "饼底、尺寸、配料自由组合并算总价：菜单是数据不是类，Builder 校验组合，复用折扣规则。"
+        requires: [patterns.creational, amazon.amz-discount-engine]
       - id: amazon.amz-linux-find
         title: "Linux find 命令 API（File Search API）"
         summary: "按大小、后缀、名字过滤文件，AND / OR 组合，新增条件只加一个类；符号链接环与惰性遍历。"
@@ -469,13 +473,57 @@ nodes:
         requires: [problems.machines.amazon-locker]
       - id: amazon.amz-robot-restaurant
         title: "机器人餐厅（Robot Restaurant）"
-        summary: "电面 OOD：点单、机器人分配、做菜与送餐状态机，机器人忙闲调度。（重建）"
+        summary: "电面 OOD：点单、机器人分配、做菜与送餐状态机，机器人忙闲调度。"
         requires: [patterns.state, patterns.strategy]
       - id: amazon.amz-file-watcher
         title: "文件监听器（File Watcher）"
-        summary: "监听目录的创建 / 修改 / 删除并回调：快照比对、去抖、递归目录、回调线程与关闭。（重建）"
+        summary: "监听目录的创建 / 修改 / 删除并回调：快照比对、去抖、递归目录、回调线程与关闭。"
         requires: [patterns.observer, concurrency.primitives]
       - id: amazon.amz-dag-runner
         title: "DAG 执行器与依赖安装（DAG Runner）"
         summary: "依赖安装顺序与环检测，Step Function 式 DAG 执行顺序的 code review 找 bug，再到并行执行与失败传播。"
         requires: [concurrency.patterns]
+      - id: amazon.amz-in-memory-db
+        title: "内存数据库（In-Memory Database）"
+        summary: "建表与增删改查，再到 WHERE / ORDER BY / JOIN、一个小 SQL 解析器、索引与事务：一道题走完数据库的骨架。"
+        requires: [structure.storage, patterns.structural]
+      - id: amazon.amz-aws-billing
+        title: "AWS 账单服务（AWS Billing Service）（low priority）"
+        summary: "按用量计费：阶梯价、免费额度、按服务汇总、用量记录去重，钱用整数分。"
+        requires: [patterns.strategy, oop.values]
+      - id: amazon.amz-occupancy-tracker
+        title: "办公室人数追踪（Occupancy Tracker）（low priority）"
+        summary: "刷卡进出事件，查询任意时刻楼里有多少人：事件溯源、前缀和加二分、同一模型的 SQL 写法。"
+        requires: [structure.storage]
+      - id: amazon.amz-rate-limiter
+        title: "限流器（Rate Limiter）（low priority）"
+        summary: "在题库限流器之上：Amazon 追问的窗口算法取舍、按用户隔离、分布式时的一致性与租约。"
+        requires: [problems.components.rate-limiter]
+      - id: amazon.amz-logger
+        title: "日志框架（Logger）（low priority）"
+        summary: "在题库日志框架之上：多种消息格式、按级别与目的地分发、慢写入不阻塞业务。"
+        requires: [problems.components.logger]
+      - id: amazon.amz-splitwise
+        title: "分账（Splitwise）（low priority）"
+        summary: "在题库分账之上：均分 / 按比例 / 按份额，零头怎么分，债务化简。"
+        requires: [problems.marketplaces.splitwise]
+      - id: amazon.amz-task-scheduler
+        title: "任务调度器（Task Scheduler）（low priority）"
+        summary: "在题库任务调度器之上：延时与周期任务、取消、线程与阻塞的追问。"
+        requires: [problems.components.task-scheduler]
+      - id: amazon.amz-playlist-dj
+        title: "播放列表与推荐（Playlist DJ）（low priority）"
+        summary: "混音播放列表加推荐服务：需求一次列十条时怎么拆类、怎么排优先级。"
+        requires: [problems.social.music-streaming]
+      - id: amazon.amz-wallet
+        title: "钱包与账户（Wallet / Bank Account）（low priority）"
+        summary: "存取款、转账、对账与税费：金额不可变、余额由流水推出、可扩展的费用规则。"
+        requires: [problems.marketplaces.digital-wallet]
+      - id: amazon.amz-dns-resolver
+        title: "DNS 解析器（DNS Resolver）（low priority）"
+        summary: "带 TTL 的缓存、上游健康检查与切换、读多写少的快速查询。"
+        requires: [problems.components.ttl-cache]
+      - id: amazon.amz-video-catalogue
+        title: "视频目录与续播（Video Catalogue）（low priority）"
+        summary: "影片目录、分类浏览、暂停时记录观看位置并跨设备续播。"
+        requires: [problems.social.music-streaming]

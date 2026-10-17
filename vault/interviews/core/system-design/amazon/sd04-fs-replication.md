@@ -335,22 +335,8 @@ stateDiagram-v2
 数据本来就在 S3，只需要对象级异步复制，不要求跨对象顺序、目录语义、块级差量和精细带宽控制时，用 CRR（需要时加 RTC 获得 15 分钟内复制的承诺和指标）。自建只在需要文件系统语义、块级差量或精细带宽与优先级控制时才值得。
 </details>
 
-## 来源与延伸阅读
+## 延伸阅读
 
-> 来源：Hello Interview 社区题目页 https://www.hellointerview.com/community/questions?company=Amazon （条目 `file-system-replication`，2026-10-01，mid-level）。对照页面：https://www.hellointerview.com/learn/system-design/problem-breakdowns/dropbox 、https://www.hellointerview.com/learn/system-design/patterns/large-blobs 、https://www.hellointerview.com/learn/system-design/deep-dives/change-data-capture 。
-
-- 被报告的题面（2026-10-01，mid，置信度中）：「1. Interviewer didn't care about how the data is uploaded. 2. Design only the replication part. How does data transfer from region 1 to region 2 efficiently?」
-- **（重建）**：除这两句，题目背景看不到。「文件系统」是什么（面向用户的网盘、内部分布式文件系统、还是对象存储）、规模、一致性要求，都是为了练习而做的假设。
-
-**Hello Interview 怎么做。** 这个题目没有同名的专题拆解页，但相邻的三页覆盖了大部分底层内容。《Dropbox》先讲客户端分块、指纹（fingerprint）、可续传上传和同步，其强项是把大文件拆成块、用块指纹判断「是否已存在」、用预签名链接让数据绕开应用服务器。《Handling Large Blobs》总结了大文件传输的通用模式：直传、分块、断点续传、完成通知。《Change Data Capture》讲怎样从数据库日志得到下游可消费的变更流，以及用事务性 outbox 把业务意图变成显式事件。
-
-**一致的地方。** 内容哈希识别块、块级去重、续传靠记录已完成的块、用 outbox 而不是用副作用推导事件。
-
-**不同的地方。**
-
-1. 它们的重点在客户端到服务端的上传路径；面试官明确说不关心上传，所以正文把重点放在服务端到服务端的传输：差量规划、探测、限速、检查点。
-2. 它们没有讨论「数据先于指针」与按文件并行、按前缀提交这类跨区域副本的可见性问题。
-3. 它们假设一个区域；正文把链路带宽当作约束，用数字（13.9 Gbps 峰值对 10 Gbps 专线；首次全量 92.6 天）推导出「只传差异」和「离线铺底」的必要性。
-4. 反熵与 GC 的复制水位是它们没有展开的部分，也是副本可信度的关键。
-
-**本库的通用部分。** 客户端同步、分块策略、冲突检测和游标式变更日志见 [[solution-file-sync]]；块存储的数据放置、副本与纠删码、垃圾回收见 [[solution-object-storage]]。正文只写跨区域复制的增量，不重复它们。
+- 相邻题解：[[solution-file-sync]]（分块、冲突检测、游标式变更日志）、[[solution-object-storage]]（数据放置、副本与纠删码、垃圾回收）。
+- 同批题单：[[sd-index]]。
+- 教程：[网盘拆解](https://www.hellointerview.com/learn/system-design/problem-breakdowns/dropbox)、[大文件模式](https://www.hellointerview.com/learn/system-design/patterns/large-blobs)、[变更数据捕获](https://www.hellointerview.com/learn/system-design/deep-dives/change-data-capture)

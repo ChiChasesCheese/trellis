@@ -466,13 +466,10 @@ if __name__ == "__main__":
 
 时间不够时的取舍：砍掉树状数组的完整实现，口述 `prefix` 与 `kth` 两个函数的作用和复杂度；砍掉 `k_closest`；保住第 1、2 关的完整代码和异常设计。
 
-## 来源与延伸
+## 延伸阅读
 
-- 题目出处：Amazon 2026-09 的电话面试，一亩三分地上的回帖片段（[thread-1189934](https://www.1point3acres.com/bbs/thread-1189934-1-1.html)，回帖日期 2026-10-04）。原帖正文需要积分才能看，只能读到片段，置信度低。片段只确定四件事：有 add、remove、找最近值三个操作，找最近值是「离 target 最近的数」，起初的做法是排序一次再找，后来给了值域约束（range constraint）。
-- 本页自己补充（推断，非报告原文）：具体 API、`Tie` 平局枚举、多重集合语义、值域大小，以及第 4 关的并发与 `k_closest`。若你能看到原帖全文，以原文的 API 为准，替换这些约定。
-- [Python 标准库 bisect](https://docs.python.org/3/library/bisect.html)：`bisect_left` 与 `bisect_right` 的差别、`insort` 的复杂度说明（比较 O(log n)，插入 O(n)）。`SortedListIndex` 就是它的直接应用，文档里还有「用 bisect 做按键查找」的食谱，可以补读。
-- [LeetCode 658 Find K Closest Elements](https://leetcode.com/problems/find-k-closest-elements/)：它是静态数组上的 k 个最近值，平局取较小的——默认平局规则沿用它。不同的是它的数组不会变，没有增删，也没有重复值的归并。
-- [Fenwick tree（Wikipedia）](https://en.wikipedia.org/wiki/Fenwick_tree)：树状数组的原始论文来源与下标运算 `i & -i` 的解释。树状数组在这里额外用来做「第 k 小」，Wikipedia 页面里没有展开这一点，可看 [cp-algorithms 的 Fenwick 条目](https://cp-algorithms.com/data_structures/fenwick.html) 里「在树上二分」一节。
-- [sortedcontainers](https://github.com/grantjenks/python-sortedcontainers)：Apache 2.0 的纯 Python 有序容器库，用「分块有序列表」做到实际很快的 `SortedList`。它不是标准库，面试里不能 import，但它的文档解释了为什么在 Python 里分块列表常常比平衡树快，可以支撑上文对方案 D 的判断。
-
-概念背景：[[python.data-model|数据模型与特殊方法（Data Model）]]（`__len__`、`__contains__` 为什么该是特殊方法）、[[oop.interfaces|接口与抽象基类]]（`Protocol` 与 `ABC` 的取舍）。
+- [Python 标准库 bisect](https://docs.python.org/3/library/bisect.html)：`bisect_left` 与 `bisect_right` 的差别、`insort` 的复杂度（比较 O(log n)，插入 O(n)）；文档里还有「用 bisect 做按键查找」的食谱。
+- [LeetCode 658 Find K Closest Elements](https://leetcode.com/problems/find-k-closest-elements/)：静态数组上的 k 个最近值，平局取较小的；默认平局规则与它一致。
+- [Fenwick tree（Wikipedia）](https://en.wikipedia.org/wiki/Fenwick_tree)：树状数组与下标运算 `i & -i`；「在树上二分」求第 k 小见 [cp-algorithms 的 Fenwick 条目](https://cp-algorithms.com/data_structures/fenwick.html)。
+- [sortedcontainers](https://github.com/grantjenks/python-sortedcontainers)：纯 Python 的分块有序列表，说明为什么它常常比平衡树快（面试里不能 import）。
+- 概念：[[python.data-model|数据模型与特殊方法（Data Model）]]、[[oop.interfaces|接口与抽象基类]]。

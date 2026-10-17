@@ -1,5 +1,5 @@
 ---
-tags: [system-design, reported, amazon, lockers]
+tags: [system-design, amazon, lockers]
 ---
 # SD02 Amazon Lockers 投递系统（Amazon Lockers Delivery）
 
@@ -7,7 +7,7 @@ tags: [system-design, reported, amazon, lockers]
 
 Amazon Locker 是放在便利店、地铁站、小区门口的智能快递柜。顾客在网上结账时选一个柜子作为收货地址，快递员把包裹放进柜子，系统给顾客发一个取件码，顾客随时去柜前输入取件码取走包裹；退货时方向相反。这个系统连接三类东西：电商的下单系统、承运商的快递员，以及分散在各地、靠移动网络联网的柜机。它的难点不在流量：全系统平均每秒只有几件包裹。难点在两件事上。第一，柜子的格口是有限的实物，两个订单不能被承诺到同一个最后的名额。第二，柜机会断网，而断网时顾客仍然站在柜前要取件。
 
-面试官的提法大致是：设计一个包裹投递系统，它与电商平台集成，让顾客在结账时选择柜子的位置，之后用验证码安全取件；还要覆盖退货。你需要覆盖从下单到取件的完整链条，并在容量预留、柜机离线、取件码安全这几处讲出取舍。下面的流量数字和是否要求离线取件，都是按常见出法补全的假设，面试时以面试官当场给的为准。
+面试官的提法大致是：设计一个包裹投递系统，它与电商平台集成，让顾客在结账时选择柜子的位置，之后用验证码安全取件；还要覆盖退货。你需要覆盖从下单到取件的完整链条，并在容量预留、柜机离线、取件码安全这几处讲出取舍。下面的流量数字和是否要求离线取件，都是练习用的假设，面试时以面试官当场给的为准。
 
 ## 澄清问题
 
@@ -355,21 +355,8 @@ stateDiagram-v2
 
 </details>
 
-## 来源与延伸阅读
+## 延伸阅读
 
-**这个问题在哪里被问到**
-
-- Hello Interview 社区题库的 Amazon 条目 `amazon-lockers-delivery`，共 14 条（2024-01 至 2026-09，最近一条 2026-09-10，senior）。题面摘要：「a package delivery system that integrates with e-commerce platforms, allowing customers to select locker locations during checkout and securely retrieve their packages using authentication codes.」置信度中。https://www.hellointerview.com/community/questions?company=Amazon
-- 2025-12-20 一条（senior，EMEA）：「design for drop and pickup for delivery and return of the item」；2025-01-10 一条：「Design from Point of Sale to Locker Delivery」。两条都强调从下单到取件的完整链条，并且包含退货，所以上文把退货放进了需求。
-- 一亩三分地（1point3acres）帖 1193105（2026-10-02 现场，SDE II）问的是同一主题的 LLD 版，不是分布式系统版。https://www.1point3acres.com/bbs/thread-1193105-1-1.html
-
-**哪些部分是补全的**：Hello Interview 没有保存名为 Amazon Lockers 的题解页面，上面只有社区条目公开的摘要。具体追问、流量数字、是否要求离线取件，都是按 Amazon 的常见出法重建的，以面试官当场给的为准。
-
-**延伸阅读**（Hello Interview 没有该系统的专题题解，下面是相邻的题解与模式，以及它们与上文的差异）
-
-- 《Ticketmaster》https://www.hellointerview.com/learn/system-design/problem-breakdowns/ticketmaster ：预留带时限、读多写少的可见性缓存、热门场次的排队。上文沿用「带时限的预留」；差异是名额可互换，所以用计数器而不是对个体加锁；它的等候室（virtual waiting queue）这里基本用不上，因为单站预留速率只有个位数每秒。
-- 《Notification System》https://www.hellointerview.com/learn/system-design/problem-breakdowns/notification-system ：先持久化再发送、优先级隔离、幂等。取件码通知适用，但量级小得多。通用做法见 [[solution-notification-system]]。
-- 模式《Multi-step Processes》https://www.hellointerview.com/learn/system-design/patterns/multi-step-processes ：编排与工作流引擎的取舍。这里选 Step Functions，因为有以天计的等待、超时和补偿；差异是它的叙述偏通用，上文强调设备事件才是工作流推进的信号。
-- 模式《Dealing with Contention》https://www.hellointerview.com/learn/system-design/patterns/dealing-with-contention ：对稀缺资源的原子更新、乐观并发与悲观锁的取舍。预留的桶更新就是它的「原子条件更新」，没有用锁。
-- 与它们都不同的部分：（1）设备是**有权威的边缘客户端**，需要离线能力与事件对账，这在以上几个页面里都不是主题；（2）取件码的熵与尝试限制是量化推导的；（3）预留是时间分桶的容量，而不是个体座位。
-- 本库的 LLD 题解 [[solution-amazon-locker]]（题库叶子 `amazon.amz-locker-onsite`）讲单机的类设计：格口分配、易混字符的处理、到期回收、逆向投件，以及「新尺寸不许动分配」的判分点。与之相邻的预订类题解见 [[solution-ticket-booking]]，限时抢购的最后一件库存争用见 [[solution-flash-sale]]。题单总览见 [[sd-index]]，同批的另一篇见 [[sd01-url-shortener]]。
+- 相邻题解：[[solution-amazon-locker]]（单机类设计：格口分配、易混字符、到期回收、逆向投件）、[[solution-ticket-booking]]（带时限的预订）、[[solution-flash-sale]]（最后一件库存的争用）、[[solution-notification-system]]（取件码通知）。
+- 同批题单：[[sd-index]]、[[sd01-url-shortener]]。
+- 教程：[票务预订拆解](https://www.hellointerview.com/learn/system-design/problem-breakdowns/ticketmaster)、[通知系统拆解](https://www.hellointerview.com/learn/system-design/problem-breakdowns/notification-system)、[多步流程模式](https://www.hellointerview.com/learn/system-design/patterns/multi-step-processes)、[并发争用模式](https://www.hellointerview.com/learn/system-design/patterns/dealing-with-contention)

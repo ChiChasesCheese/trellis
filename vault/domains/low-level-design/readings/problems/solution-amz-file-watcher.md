@@ -434,11 +434,10 @@ if __name__ == "__main__":
 
 时间不够时的取舍：先砍 `settle` 与 `DiskFileSystem` 的符号链接处理（口述）；再砍 `kinds` 过滤；保住 `diff`、`poll` 和回调异常隔离。
 
-## 来源与延伸
+## 延伸阅读
 
-- [一亩三分地 thread-1189999](https://www.1point3acres.com/bbs/thread-1189999-1-1.html)：2026-09-18 的 Amazon SDE II 电面报告，跟帖里只提到「设计 file watcher system」，正文被隐藏。除题名外，全部题面都是为练习补出的（reconstructed）：第 1 关由题名直接逼出，第 2、3、4 关（订阅与过滤、去抖与回调隔离、后台线程与停止）是推断。
-- [Python os.scandir](https://docs.python.org/3/library/os.html#os.scandir)：`DirEntry` 的 `is_dir(follow_symlinks=False)` 与缓存的 `stat()`；`DiskFileSystem` 据此遍历，并解释了为什么不跟随符号链接。
-- [Python threading.Event](https://docs.python.org/3/library/threading.html#event-objects)：`Event.wait(timeout)` 既是可中断的睡眠，也是停止信号；后台循环和测试里的同步都用它。
-- [Linux inotify(7)](https://man7.org/linux/man-pages/man7/inotify.7.html)：系统通知那条路的官方说明，包括队列溢出、改名事件（`IN_MOVED_FROM` / `IN_MOVED_TO`）等；与这里的轮询不同，它不需要扫描，但平台相关，所以这里只在扩展里提到。
-
-概念背景：[[patterns.observer|观察者与事件（Observer）]]（订阅者是函数、事件是只读的小数据）、[[concurrency.primitives|同步原语（threading）]]（`Lock` 与 `Event` 各管什么）。题库里相邻的两篇：[[solution-in-memory-file-system]]（把文件系统本身做成内存里的树；这里的假文件系统在测试里扮演类似角色，但只需要「列出文件和指纹」一个方法）；Amazon kit 里的 `vault/interviews/companies/amazon/lld/file_search.md` 讲了树遍历与可组合的过滤器，`include` 参数可以直接接它的过滤对象。
+- [Python os.scandir](https://docs.python.org/3/library/os.html#os.scandir)：`DirEntry` 的 `is_dir(follow_symlinks=False)` 与缓存的 `stat()`。
+- [Python threading.Event](https://docs.python.org/3/library/threading.html#event-objects)：`Event.wait(timeout)` 既是可中断的睡眠，也是停止信号。
+- [Linux inotify(7)](https://man7.org/linux/man-pages/man7/inotify.7.html)：系统通知那条路，包括队列溢出、改名事件（`IN_MOVED_FROM` / `IN_MOVED_TO`）。
+- 相关题解：[[solution-in-memory-file-system]]、[[solution-amz-linux-find]]（树遍历与可组合的过滤器）。
+- 概念：[[patterns.observer|观察者与事件（Observer）]]、[[concurrency.primitives|同步原语（threading）]]。

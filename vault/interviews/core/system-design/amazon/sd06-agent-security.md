@@ -1,5 +1,5 @@
 ---
-tags: [system-design, reported, amazon, streaming, security, multi-tenant]
+tags: [system-design, amazon, streaming, security, multi-tenant]
 ---
 # SD06 Agentic AI 安全事件平台，1 TB/天（AI Agent Security Telemetry）
 
@@ -345,24 +345,8 @@ SDK 层让最敏感字段不出客户网络，接入后脱敏阶段兜底新格�
 
 </details>
 
-## 来源与延伸阅读
+## 延伸阅读
 
-> 来源：一亩三分地（1point3acres）帖 1192714，2026-10-11 发布，L5，三轮各一小时的电话面，组是 AWS 下面做 Agentic AI 安全产品的团队（Austin）：https://www.1point3acres.com/bbs/thread-1192714-1-1.html ；对照的 Hello Interview 题解《Ad Click Aggregator》：https://www.hellointerview.com/learn/system-design/problem-breakdowns/ad-click-aggregator ；《Metrics Monitoring》：https://www.hellointerview.com/learn/system-design/problem-breakdowns/metrics-monitoring ；模式页《Scaling Writes》：https://www.hellointerview.com/learn/system-design/patterns/scaling-writes
-
-- 帖子摘要写「graph and topological-sort problems, AI agent security system design for 1 TB/day, and behavioral questions」，可见正文里有一句「我面的是这个是 Agentic AI 的 security product 组在 AWS 下面」。置信度 **中**：题名和 1 TB/天这个数字是明确的，题面的其余部分看不到。
-- 这个组本身就是做「给 AI 代理（agent）装上安全观测与策略」的产品，所以这道系统设计很可能就是他们的核心系统：采集代理的行为遥测（telemetry），检测违规，告警，支持事后调查。
-- **（重建）**：具体让你设计什么没有任何公开记录。下面的题面是重建的：「客户的 AI 代理会产生动作事件（提示词、工具调用、模型响应、访问的资源、身份），平台每天接收约 1 TB，要在分钟级检测策略违规（提示注入、越权调用工具、数据外泄），去重后告警，并允许安全分析师回溯调查。」事件大小、租户数、是否要求同步阻断都按下文的假设来，面试时以对方说的为准。
-
-
-**Hello Interview《Ad Click Aggregator》**把问题定性为「扩展写入」的典型：用 Kafka 或 Kinesis 缓冲，用 Flink 预聚合，按广告 ID 分区，热点广告通过给键加随机后缀分散，再加周期性的批处理对账，形成流加批的组合（它称为 Lambda 架构）。**《Metrics Monitoring》**则讲从采集代理、消息队列到时序库的写入路径，把告警做成「定期对存储发查询」而不是流计算，并把基数爆炸作为主要的扩展天花板。**《Scaling Writes》**一页给出缓冲、批处理、分片和选写优化存储这套工具箱。
-
-**一致的地方**：流是缓冲，不是存储；分区键决定热点；原始数据落湖，批层负责对账；告警评估可以建立在已有的存储上。
-
-**不同的地方**：
-
-1. 广告点击的聚合是**可交换的求和**，热点键加随机后缀即可，最后合并；安全检测要**按代理保序的序列状态**，随机后缀会破坏序列语义，所以我们的热点缓解是「在键里追加会话」并接受降级，而不是随机打散。
-2. Metrics Monitoring 倾向于「告警 = 定期查询」，因为 1 分钟延迟可以容忍；这里同样的思路适用于基线类检测（批），但序列规则必须在流里评估，否则要等一个查询周期才能发现，窗口内的突发已经完成了外泄。
-3. 广告点击的钱问题要求精确；安全告警更看重**召回**，宁可重复也不能漏，所以去重策略是弱的（指纹加时间桶），并且迟到数据的修正只升级不撤回。
-4. 多租户隔离与数据脱敏是这道系统设计特有的维度，两个 Hello Interview 页面基本没有涉及。
-
-**本库**：[[solution-ad-click-aggregation]] 覆盖事件时间与水位线、迟到数据和精确一次写入的通用知识，迟到处理直接建立在它之上，只写安全场景的差异；[[solution-metrics-monitoring]] 覆盖时序存储、基数与告警评估如何经受住它所报告的故障，对应「告警评估要在它所报告的故障中存活」这一点（金丝雀与管道静默故障）。读完这两篇再读正文，只需要补三件事：按代理保序的分区键、规则的双引擎编译、租户隔离与脱敏。
+- 相邻题解：[[solution-ad-click-aggregation]]（事件时间、水位线、迟到数据、精确一次写入）、[[solution-metrics-monitoring]]（时序存储、基数、告警评估）。
+- 同批题单：[[sd-index]]。
+- 教程：[广告点击聚合拆解](https://www.hellointerview.com/learn/system-design/problem-breakdowns/ad-click-aggregator)、[指标监控拆解](https://www.hellointerview.com/learn/system-design/problem-breakdowns/metrics-monitoring)、[扩展写入模式](https://www.hellointerview.com/learn/system-design/patterns/scaling-writes)

@@ -17,7 +17,8 @@ reported for Amazon on 1point3acres and Hello Interview between 2026-09-16 and 2
 2. **The prompt, in plain words, first.** `## 题目与澄清` opens by stating the problem the way an interviewer would
    pose it to you (no quotes, no source, no labels). Stage 1 of the drill and of `## 需求与分级` is the first ask the
    brief reports; later stages are its follow-ups, then yours. *Which* stages were reported and which are
-   reconstructed, with the URLs and dates, is said once, in `## 来源与延伸` (the last section).
+   reconstructed is never said on a learning page (WRITING_RULES §1). The article's last section is `## 延伸阅读`
+   (study links only); the gate checks `--branch amazon` against that.
 3. **The reader is a beginner on this problem** (Chi: "for beginner 并且逐步深入"). The article still meets the senior bar,
    but every term of art is explained the first time it appears, and `## 核心对象与职责` starts with a two-sentence plain
    description of the system before any class.
@@ -38,11 +39,9 @@ reported for Amazon on 1point3acres and Hello Interview between 2026-09-16 and 2
 
    Answers ≤ 220 Chinese characters plus at most one ≤ 15-line code block. Step 1–3 answers define every term they use.
    Write the order to `proposals/steps/low-level-design/<slug>.json` and import it (PROBLEM_AGENT.md §6).
-5. **Sources.** At least two readings: a pointer to the Amazon report (`src-1p3a-<slug>.md` or `src-hellointerview-<slug>.md`,
-   always `tags: [no-archive]`), plus one free source (docs.python.org, a permissively licensed repo). Hello Interview
-   breakdowns that Chi's membership unlocks are saved as plain text under
-   `/Users/chizhang/.claude/jobs/5ce355d9/tmp/1p3a/hi_lld/` — read them to calibrate the follow-up order and to say in
-   `## 来源与延伸` where you disagree; **never copy a sentence, diagram or line of code from them**.
+5. **No source readings.** Do not write `src-1p3a-*` / report pointer notes. A study pointer reading (docs.python.org,
+   a tutorial page) is optional. Hello Interview breakdowns saved under `/Users/chizhang/.claude/jobs/5ce355d9/tmp/1p3a/hi_lld/`
+   may be read to calibrate, never copied; a link to them may appear in 延伸阅读 with a neutral label.
 6. **Reuse what the repo already has.** Your task brief names kit files (`vault/interviews/companies/amazon/lld/…`) and
    bank problems this one stands on. Adapt our own code freely; link bank problems by wikilink
    (`[[solution-parking-lot]]`) instead of re-teaching them.
@@ -55,7 +54,7 @@ reported for Amazon on 1point3acres and Hello Interview between 2026-09-16 and 2
 - 「本题」「这道题」「上一张卡」on a card: name the system every time (「在 Amazon 火车票价设计里，…」).
 - Process talk in an article or card (「我验证过」「对拍 300 组通过」): show the concrete input and output instead.
 - Numbers typed from memory: every complexity bound, example output and size in prose is computed by running code.
-- An invented interviewer requirement presented as reported: the final source section lists which stages were reported and which were added.
+- Provenance on a learning page (report, site, date, 推断, 重建, confidence): delete it; the brief's facts are for you only.
 
 ## Report (≤ 12 lines)
 

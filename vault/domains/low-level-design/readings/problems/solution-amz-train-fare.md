@@ -442,12 +442,8 @@ if __name__ == "__main__":
 
 时间不够时的取舍：先砍 `PeakSurcharge` 与 `insert_after`（口述：中间插入要重排，O(n)）；再砍 `DailyCapLedger` 的清理逻辑（口述：按天累积需要过期）；保住 `Route` 与 `WeekendCap` 的完整代码。
 
-## 来源与延伸
+## 延伸阅读
 
-- 题目出处：Amazon SDE 现场面，2026-10-12，一亩三分地 [thread-1192827](https://www.1point3acres.com/bbs/thread-1192827-1-1.html)。可见部分给出线路 G→U→H→K→I、统一票价、`calculateFare(start, stop)`、动态加站、周末封顶；后半被隐藏。
-- 另一份独立报告：LeetCode Discuss [8500377](https://leetcode.com/discuss/post/8500377/)，2026-09，题面相同，称它「最后变成了 OOP／LLD 题」。只作旁证，不摘录。
-- 推断（页面自己补充，非报告原文）：封顶是单程还是每日累计、封顶数额、第 4 关的每日累计封顶、高峰加价、并发。置信度：前三关中，题面本身为中，其余为低。
-- [Python 标准库 datetime](https://docs.python.org/3/library/datetime.html#datetime.date.weekday)：`weekday()` 周一为 0、周日为 6，所以周末是 `>= 5`；也说明了无时区的「朴素时间」的含义——这里的 `when` 是线路所在地的本地时间。
-- [Prefix sum（Wikipedia）](https://en.wikipedia.org/wiki/Prefix_sum)：前缀和的定义，以及用它在 O(1) 内回答区间求和；这里把它用在「两站之间价格之和」上，并讨论插入的代价。
-
-概念背景：[[oop.values|值对象与不可变性（Value Objects）]]（`Money`、`Trip` 为什么是 frozen dataclass）、[[patterns.strategy|策略模式与可替换算法（Strategy）]]（`FareRule` 什么时候该是协议、什么时候一个函数就够）。本仓库的 Amazon kit 里也有一份地铁票价的变体写法，见 `vault/interviews/companies/amazon/lld/pricing_billing.md` 的第 4 节第 9 步，它把「按站数计费＋每日封顶」做成一个类；这里把线路、规则和记账拆成三块，好让每块的变化原因只有一个。
+- [Python 标准库 datetime](https://docs.python.org/3/library/datetime.html#datetime.date.weekday)：`weekday()` 周一为 0、周日为 6，所以周末是 `>= 5`；「朴素时间」的含义。
+- [Prefix sum（Wikipedia）](https://en.wikipedia.org/wiki/Prefix_sum)：前缀和与 O(1) 区间求和。
+- 概念：[[oop.values|值对象与不可变性（Value Objects）]]、[[patterns.strategy|策略模式与可替换算法（Strategy）]]。

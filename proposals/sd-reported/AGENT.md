@@ -1,6 +1,6 @@
 # Reported system-design write-ups — instructions for one agent
 
-Folder: `vault/interviews/core/system-design/` (index `sd-index.md`; gate `check_sd.py`). Each write-up is one file
+Folder: `vault/interviews/core/system-design/amazon/` (index `sd-index.md`; gate `python3 scripts/check_sd.py`). Each write-up is one file
 `sdNN-<slug>.md` for a system-design question that Amazon candidates reported between 2026-09-16 and 2026-10-16.
 Reader: Chi, payments data-infrastructure engineer (PayPal), Amazon onsite 2026-10-20/21, **prepared to the senior /
 staff bar** (Chi: 「不要调整 bar」). Repository root `/Users/chizhang/Code/trellis`. Do not run git; do not start agents;
@@ -48,9 +48,9 @@ touch only your own `sdNN-*.md` files.
 10. `## 60 分钟怎么分配` — minute table: what to draw/say, what to cut when short (Amazon rounds often spend 10–15
     minutes on LP first, so give the 45-minute version too).
 11. `## 自测` — 5 questions, answers in `<details>`.
-12. `## 来源与延伸阅读` — **last section, the only place for provenance**: where and when the question was reported
-    (URLs, dates, level, confidence), which parts of the prompt above are reconstructed, then further reading — the
-    Hello Interview page(s) with what they do and where this write-up differs, and the repo's general solution.
+12. `## 延伸阅读` — study links only: the repo's general solution as a wikilink, docs or tutorial pages with a neutral
+    label. **No provenance anywhere on the page** (WRITING_RULES §1): never where/when the question was reported, no
+    confidence, no 「（重建）」 — the brief's facts are for you only.
 
 Chinese prose, English terms in full-width parentheses on first use; ≥ 9,000 characters outside code. Diagrams: valid
 mermaid, `flowchart TB` only, ≤ 12 nodes and ≤ 16-char labels each — draw the write path and the read path as two
@@ -59,7 +59,7 @@ diagrams rather than one big one. No 「本题」「这道题」, no process tal
 
 ## Gate
 
-`python3 vault/interviews/core/system-design/check_sd.py sdNN` must print `ok`. Then re-read once as a skeptical
+`python3 scripts/check_sd.py sdNN` must print `ok`. Then re-read once as a skeptical
 staff interviewer: is every number derived, is each deep dive a real decision, would the design survive the first
 follow-up?
 
@@ -141,3 +141,57 @@ Per file: the gate line, prose characters (from the gate or `wc`), mermaid count
   machine sorts its range → concatenate; that is TeraSort / MapReduce shuffle), integer-specific tricks (counting /
   radix when the value range is bounded), failure and restart of a long merge. Include a short runnable Python sketch
   of the k-way merge in a code block (not counted as prose).
+
+
+## Batch 2 (2026-10-17) — files go in `vault/interviews/core/system-design/amazon/`
+
+Titles of low-priority write-ups end with `（low priority）` in the H1 (WRITING_RULES §8). Facts below are for you only.
+More detail for any of them: `grep -n "<keyword>" research/companies/amazon/catalog/raw/forums.md`.
+
+### SD13 `sd13-employee-directory.md` — 员工目录与 DynamoDB 分区键（Employee Directory） — recent, no label
+- Phone screen 2026-09: "Design an Employee Directory for Amazon ... Search by name/email/employee ID ... ~1M employees ...
+  Read-heavy"; follow-ups on the DynamoDB schema and partition key; what if a person changes name/team. Depth: access
+  patterns first → table + GSIs, hot keys, prefix search (name) via an index service, org-chart queries, cache, freshness.
+
+### SD14 `sd14-kindle-sync.md` — Kindle 阅读进度同步（Kindle Sync）（low priority）
+- Bar Raiser round L5 2026-07 and SDE II 2025-07: "Design Kindle reader" — offline, multi-device reading progress,
+  idempotent API, conflict resolution; download ebooks to devices. Depth: per-(user, book) position with vector of
+  device clocks vs LWW + furthest-read rule, offline queue + idempotent sync, annotations merge, DRM-light download/CDN.
+
+### SD15 `sd15-artifact-repository.md` — 制品仓库（Artifact Repository）（low priority）
+- AWS Dublin SDE2 2026-08: "Design Artifact Repository (like JFrog, adding an artifact and fetching an artifact)" —
+  probed scalability, metrics monitoring, reliability, extensibility (malicious artifact). Depth: content-addressed blobs
+  in S3 + metadata DB, immutable versions, upload sessions, scanning pipeline before publish, read path via CDN, quotas.
+
+### SD16 `sd16-lambda-execution.md` — Lambda 式代码执行（Serverless Code Execution）（low priority）
+- SDE II US 2025-09 and Hello Interview (3 reports): "Design AWS Lambda, especially focus on the Worker Nodes on
+  how/where the code will be executed", sync and async invocations. Depth: placement on worker fleet, warm/cold sandboxes
+  (microVM), concurrency limits per function, async queue + retries + DLQ, isolation/multi-tenancy, scaling the fleet.
+
+### SD17 `sd17-sensor-platform.md` — 传感器与天气数据平台（Sensor / Weather Platform）（low priority）
+- Hello Interview: weather system with thousands of sensors (4 reports, latest 2026-02), smart-city sensors computing
+  hourly averages (3), temperature sensors every 10 km² over 10M km² with real-time and historical views (2). Depth:
+  ingestion (IoT protocol, batching), time-series storage + downsampling/rollups, hourly aggregates (streaming windows),
+  spatial queries (geohash tiles), late/duplicate readings, sensor health.
+
+### SD18 `sd18-catalog-search-cdc.md` — 影视目录搜索与 CDC（Catalog Search with CDC）（low priority）
+- L5 2026-05: "Design Netflix" with "movie search using a reverse index db like OpenSearch and a CDC pipeline". Depth:
+  source of truth DB → CDC (DynamoDB Streams / Debezium) → indexer → OpenSearch; ordering and idempotent index updates,
+  backfill/reindex with aliases, search relevance basics, freshness SLO, failure of the indexer.
+
+### SD19 `sd19-device-fleet.md` — 设备管理平台（Device Fleet Management）（low priority）
+- AWS (security-flavoured) onsite 2026-07, HM round: "a system to manage thousands of devices". Depth: device registry,
+  desired vs reported state (shadow), config rollout in waves with health gates and rollback, command delivery to
+  offline devices, certificates/identity, fleet queries.
+
+### SD20 `sd20-db-backup.md` — 数据库备份系统（Backup: full / diff / log）（low priority）
+- India 2026-04: "Design backup system with three different backup types (full, diff, log)". Depth: full + differential
+  + log backups and the restore chain (PITR), scheduling and retention, storage in S3 with lifecycle, consistency of a
+  backup (snapshot vs WAL), verification by test restores, RPO/RTO numbers computed.
+
+## Batch 2b — the five AWS data-service designs already in the folder (`problems/*.md`)
+
+Convert each into the 12-section write-up format, keeping its content, as `sd08-cdc-replication-pipeline.md`,
+`sd09-data-lake-ingestion-catalog.md`, `sd10-managed-db-control-plane.md`, `sd11-metrics-timeseries-store.md`,
+`sd12-serverless-query-over-s3.md` (in `amazon/`, not `amazon/problems/`), then delete the old file by overwriting it
+with nothing and reporting it. No priority label (they target the AWS data-services team).

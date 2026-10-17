@@ -570,11 +570,9 @@ if __name__ == "__main__":
 
 时间不够时的取舍：先砍 `cancel_order` 与 `most_battery`（口述）；再砍事件日志；保住状态机和 `can_take`。
 
-## 来源与延伸
+## 延伸阅读
 
-- [一亩三分地 thread-1189999](https://www.1point3acres.com/bbs/thread-1189999-1-1.html)：2026-09-18 的 Amazon SDE II 电面报告，跟帖里只提到「设计机器人餐厅以及追问」，正文被隐藏。除题名外，全部题面（订单来源、状态、分配、电量）都是为练习补出的（reconstructed）：第 1 关由题名直接逼出，第 2 关的多机器人与分配策略、第 4 关的并发与取消是推断。
-- [一亩三分地 thread-1191952](https://www.1point3acres.com/bbs/thread-1191952-1-1.html)：2026-10-04 的帖子，Amazon Robotics 实习（面试在 2026-03），读者问「低于 50% 但没空 charger 怎么处理」。那是另一个团队的另一道题，这里只借它的问法做第 3 关的充电追问，阈值与规则是自己定的。
-- [Python 标准库 enum](https://docs.python.org/3/library/enum.html)：`Enum` 的成员比较用 `is`；两个状态枚举和事件枚举都据此写。
-- [Python 标准库 threading](https://docs.python.org/3/library/threading.html#lock-objects)：`Lock` 的语义；用它保护「读队首—选机器人—改状态」这个整体。
-
-概念背景：[[patterns.state|状态模式（State）]]（决策一：何时用枚举加转移表、何时升级成状态类）、[[patterns.strategy|策略模式与可替换算法（Strategy）]]（决策二：一等函数当策略）。题库里相邻的是 [[solution-restaurant]]（桌位、点单、后厨流水线的餐厅系统），那道题讲餐厅的业务流程和订单生命周期；这里把重点放在机器人这一个会被调度、会没电的资源上，两道题可以对照读：同样是「订单」，一个重点在流程，一个重点在资源调度。
+- [Python 标准库 enum](https://docs.python.org/3/library/enum.html)：`Enum` 成员比较用 `is`。
+- [Python 标准库 threading](https://docs.python.org/3/library/threading.html#lock-objects)：`Lock` 的语义。
+- 相关题解：[[solution-restaurant]]（桌位、点单、后厨流水线：重点在流程；这里的重点在会没电的机器人这一种资源调度）。
+- 概念：[[patterns.state|状态模式（State）]]、[[patterns.strategy|策略模式与可替换算法（Strategy）]]。

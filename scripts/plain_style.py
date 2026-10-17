@@ -1,6 +1,6 @@
 """Machine-checkable half of proposals/WRITING_RULES.md, shared by the content gates.
 
-    uv run python scripts/plain_style.py <file.md | cards.json> [...]
+    uv run python scripts/plain_style.py [--outline] <file.md | cards.json> [...]   # --outline: LP pages, bullets only
 
 `problems(text)` returns the defects of one learning page: any provenance or process words, third-person narration,
 and mermaid diagrams that will not fit Obsidian's reading column.
@@ -87,7 +87,21 @@ def problems(text: str, source_heading: str | None = None) -> list[str]:
     return out
 
 
+def outline_problems(text: str) -> list[str]:
+    """LP / behavioural pages are outlines: every non-empty line outside code is a heading, a list item, a table row,
+    a <details>/<summary> tag, or frontmatter. A paragraph is a defect."""
+    body = re.sub(r"^---\n.*?\n---\n", "", text, count=1, flags=re.S)
+    body = FENCE.sub("", body)
+    body = re.sub(r"<details>.*?</details>", "", body, flags=re.S)   # folded reference text is allowed
+    prose = [ln for ln in body.splitlines()
+             if ln.strip() and not re.match(r"\s*(#|[-*+] |\d+[.)] |\||<|>|\[\[)", ln)
+             and not re.fullmatch(r"\s*\*\*[^*].*\*\*\s*", ln)]          # a one-line bold headline is fine
+    return [f"outline page has paragraph lines (first: {prose[0][:40]!r})"] if prose else []
+
+
 def main(argv: list[str]) -> int:
+    outline = "--outline" in argv
+    argv = [a for a in argv if a != "--outline"]
     bad = 0
     for arg in argv:
         path = Path(arg)
@@ -99,7 +113,7 @@ def main(argv: list[str]) -> int:
                     print(f"FAIL {path.name}:{card.get('id')}" + "".join(f"\n       - {p}" for p in found))
         else:
             text = path.read_text(encoding="utf-8")
-            found = problems(text)
+            found = problems(text) + (outline_problems(text) if outline else [])
             if found:
                 bad += 1
                 print(f"FAIL {path}" + "".join(f"\n       - {p}" for p in found))

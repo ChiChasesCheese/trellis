@@ -413,10 +413,8 @@ if __name__ == "__main__":
 
 时间紧时砍的顺序：先砍找环（只抛 `CycleError` 不带环），再砍并行，最后才砍测试。
 
-## 来源与延伸
+## 延伸阅读
 
-- [Hello Interview 社区题库：Amazon 条目（package-installation-order、dag-execution-order）](https://www.hellointerview.com/community/questions?company=Amazon)：第 1 关来自 `package-installation-order`（「Given a dependency adjacency list to install packages, return the installation order or throw an exception if a cycle is found」，2026-10-01，中级岗位，3 份报告）；第 2 关的形态来自 `dag-execution-order`（代码评审，2026-09-20，要求找出并修好执行顺序代码里的 bug）。报告里没有出现那份有 bug 的代码，`buggy_runner.py` 的三个 bug 是推断出的典型形态；第 3 关的「结果传给下游」和第 4 关的线程池并行与失败传播同样是推断。它只有题面和摘要，没有标准答案；与它不同之处是把「报出环本身」当作第 1 关的要求，而不是可选项。
-- [Python 文档：graphlib.TopologicalSorter](https://docs.python.org/3/library/graphlib.html)：标准库自带拓扑排序，`prepare()` 会在有环时抛 `graphlib.CycleError`，`get_ready()` / `done()` 就是并行调度的接口。这里不直接用它，因为面试要你展示算法；但第 4 关的调度循环与它的用法同构，工作中应当优先用它。
-- [一亩三分地 thread-1192714](https://www.1point3acres.com/bbs/thread-1192714-1-1.html)：2026-10-11 的 L5 电话面报告，第一轮是 LC 210（课程表 II）的拓扑排序，说明这类题在电话面就会出现，不必等到 onsite。
-- 题库里有课程表（LC 207）的参考解，可对照：LC 207 只问「能不能排完」，这里要产出顺序并报出环。
+- [Python 文档：graphlib.TopologicalSorter](https://docs.python.org/3/library/graphlib.html)：标准库拓扑排序，`prepare()` 有环时抛 `graphlib.CycleError`，`get_ready()` / `done()` 是并行调度的接口；工作中优先用它。
+- [LeetCode 210 Course Schedule II](https://leetcode.com/problems/course-schedule-ii/) 与 [LeetCode 207 Course Schedule](https://leetcode.com/problems/course-schedule/)：拓扑排序的基本形态；207 只问能不能排完，这里要产出顺序并报出环。
 - 相关：[[solution-task-scheduler]]（调度与优先级）、[[solution-thread-pool]]（自己实现线程池）、[[concurrency.patterns|并发模式]]。

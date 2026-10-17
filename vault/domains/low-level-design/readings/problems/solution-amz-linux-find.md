@@ -449,11 +449,10 @@ if __name__ == "__main__":
 - **42–45 分钟：扩展。** 查询语言、并行遍历、索引。
 - **时间不够时先砍：** `scan_disk`、`Modified`、`prune`；保住 `Filter` 的组合和惰性遍历。
 
-## 来源与延伸
-- 题目来源：Hello Interview 社区题库 Amazon 条目「Design a Linux Find Command API」（共 11 份报告，最近一份 2026-10-01，中级岗位，美国）：https://www.hellointerview.com/community/questions?company=Amazon ——原文只有“按大小、格式、名字等条件跨目录搜索，如大于 5MB 的文件、所有 XML 文件；接口干净、可扩展”。一亩三分地题库里相邻的一行是「按大小和后缀搜索文件」（现场编码，4 份来源，2026-07-25 至 09-18，标签含 filesystem、oop-design、testing、cycle-detection）：https://www.1point3acres.com/
-- 哪些是报告的、哪些是补的：第 1 关（单个条件）来自报告；第 2 关 AND / OR / NOT 的追问顺序、第 4 关的符号链接环（依据是题库标签 cycle-detection）是推断（reconstructed）；面试官原话没有留下。
-- Hello Interview 的文件系统题解讲的是内存文件系统本身的创建、移动、重命名；这里是它的补集：树已经存在，重点放在“条件如何组合与扩展”。
-- POSIX `find` 规范：https://pubs.opengroup.org/onlinepubs/9699919799/utilities/find.html ——AND 隐含、`-o` 为 OR、`!` 为 NOT，以及短路求值的要求；这里的 `&`、`|`、`~` 与之对应。
-- Python 官方文档 `fnmatch`：https://docs.python.org/3/library/fnmatch.html ——`fnmatchcase` 区分大小写，我们用它实现 `NameGlob`。
-- 规约模式（Specification）原始论文：https://martinfowler.com/apsupp/spec.pdf ——Evans 与 Fowler 对可组合业务规则的描述；这里在 Python 里用运算符重载实现。
-- 题库里的 [[solution-in-memory-file-system]]：同一棵树的另一面。概念：[[patterns.structural|结构型模式（Structural）]]、[[oop.interfaces|接口与抽象基类]]。
+## 延伸阅读
+
+- [POSIX `find` 规范](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/find.html)：AND 隐含、`-o` 为 OR、`!` 为 NOT，以及短路求值；这里的 `&`、`|`、`~` 与之对应。
+- [Python 官方文档 `fnmatch`](https://docs.python.org/3/library/fnmatch.html)：`fnmatchcase` 区分大小写，结果不随操作系统变化；`*` 与 `?` 不特殊对待 `/`，所以只拿最后一段名字去匹配。
+- [规约模式（Specification）](https://martinfowler.com/apsupp/spec.pdf)：Evans 与 Fowler 对可组合业务规则的描述：每条规则只回答「这个对象满足吗」，用 and / or / not 组合成新规则。
+- 相关题解：[[solution-in-memory-file-system]]（同一棵树的另一面）。
+- 概念：[[patterns.structural|结构型模式（Structural）]]、[[oop.interfaces|接口与抽象基类]]。

@@ -4,12 +4,12 @@
 需求、容量估算、核心实体与 API、架构图、三到四个深挖、staff 层面的权衡与故障、面试官会追问什么、60 分钟怎么分配、
 自测。标准按 senior / staff 写：每个选择都说清楚「是什么逼出了它」和「它换来了什么、代价是什么」。
 
-和具体题目无关的通用知识（复制、分区、缓存、一致性……）在 [[System Design MOC|系统设计域]]，这里只放面试里真实出过的题。
+和具体题目无关的通用知识（复制、分区、缓存、一致性……）在 [[System Design MOC|系统设计域]]。方法与词汇先读
+[[00_how_to_run_the_round]] 和 [[00_ddia_refresh]]。
 
 ## 题单（按学习顺序）
 
-先做前两道：它们是 Amazon 系统设计轮里长期出现最多的两道题，而且一道考「读多写少的全局服务」，一道考「库存预留与
-状态流转」，覆盖了后面几道的大部分基本功。
+先做前两道：一道考「读多写少的全局服务」，一道考「库存预留与状态流转」，覆盖了后面几道的大部分基本功。
 
 | # | 题 | 考什么 | 题解 | 先读的通用题解 |
 |---|---|---|---|---|
@@ -21,20 +21,53 @@
 | SD06 | AI Agent 安全事件平台（1 TB/天） | 每天 1 TB 事件的流式摄入；实时规则与离线检测两条路；多租户隔离与敏感数据脱敏 | [[sd06-agent-security]] | [[solution-ad-click-aggregation]]、[[solution-metrics-monitoring]] |
 | SD07 | 大文件外部排序（200 GB 数据 / 8 GB 内存） | 内存放不下时怎么排序：分段排序再多路归并；多台机器怎么分工 | [[sd07-external-sort]] | — |
 
-## 怎么用
+### AWS 数据服务题（在 `problems/` 里）
 
-1. 先读表里「先读的通用题解」，再读这里的题解：这里假设你已经知道通用版本，重点讲每道题自己特有的难点和 senior 深挖。
-2. 读完一篇，合上它，照着末尾的「60 分钟怎么分配」计时口述一遍，再做「自测」（答案在折叠块里）。
-3. 维护者验收：`python3 vault/interviews/core/system-design/check_sd.py`（结构、图的尺寸、写作规则）。
+| 题 | 考什么 | 题解 | 先读的通用题解 |
+|---|---|---|---|
+| 托管数据库控制面 | 控制面与数据面分离；租约与 fencing；主从切换、备份与时间点恢复；多租户 | [[managed_db_control_plane]] | [[solution-job-scheduler]]、[[solution-key-value-store]] |
+| 变更数据捕获复制管道 | 日志式捕获；至少一次加幂等；初始全量与增量衔接；顺序与重放 | [[cdc_replication_pipeline]] | [[solution-message-queue]] |
+| 指标时序存储 | 降采样与保留分层；基数治理；百分位不能平均；告警路径与查询路径分离 | [[metrics_timeseries_store]] | [[solution-metrics-monitoring]] |
+| 数据湖摄取与目录 | 摄取幂等；表格式；目录与治理 | [[data_lake_ingestion_catalog]] | [[solution-object-storage]]、[[solution-ad-click-aggregation]] |
+| S3 上的无服务器查询 | 分区裁剪；列存；S3 吞吐；无服务器多租户 | [[serverless_query_over_s3]] | [[solution-object-storage]] |
 
-## 来源
+## 通用题解的练习顺序与追加练习点
 
-- 题目来自 2026-09-16..10-16 一亩三分地与 Hello Interview 上 Amazon 候选人的报告（不含 OA）；逐条记录见
-  `interviews/companies/amazon/catalog/raw/1p3a_2026-10-16.md` 与 `hellointerview_2026-10-16.md`。每篇题解的最后一节写明该题
-  的具体出处、日期、级别、置信度，以及题面里哪些是根据有限信息补全的。
-- 学习顺序依据：Hello Interview 上 Amazon Lockers 累计 14 条报告、URL Shortener 累计 12 条，是 Amazon 系统设计题里最常见的两道；
-  SD01 另有一亩三分地 2026-10-02 现场轮的报告。
-- 30 天窗口外但长期高频的 Amazon 系统设计题（本批未写，可先读通用题解）：实时协作文档 14 条（[[solution-google-docs]]）、
-  停车场管理 11 条、网约车 9 条（[[solution-ride-hailing]]）、大规模通知系统 7 条（[[solution-notification-system]]）。
-- 另有两条系统设计轮的报告内容被隐藏、看不到题目；一亩三分地的一篇整理帖提到 SDE-2 的 OA 里有 15–20 分钟的系统设计，属于 OA，不在这份题单里。
-- 与 Hello Interview 题解重合的题，沿用了它的分析骨架和关键取舍并在每篇末尾注明；它是付费内容，仓库公开，所以只链接、不摘录。
+越贴近 AWS 数据服务的越靠前，前一道的机制是后一道的前置。读完通用题解后，做表里的追加练习，再进 `problems/`。
+
+| 序 | 通用题解 | 对应的服务 | 追加练习 |
+|---|---|---|---|
+| 1 | [[solution-key-value-store]] | Dynamo / DynamoDB | 讲清无主复制（sloppy quorum、向量时钟）与「每分区一个 leader、跨 AZ 写 quorum」的差别；讲热分区的演进（突发容量、自适应容量、按消耗分裂）；画出一次 `PutItem` 的完整旅程 |
+| 2 | [[solution-object-storage]] | S3 | 11 个 9 的耐久度怎么来：纠删码、校验和、持续巡检；前缀速率上限与 503 Slow Down 的含义；条件写做 CAS |
+| 3 | [[solution-message-queue]] | SQS / Kinesis | 用每分片的写入上限估算分区数；积压、溢出队列、延迟队列、死信队列；公平：每客户分队列或 shuffle sharding |
+| 4 | [[solution-job-scheduler]] | EventBridge Scheduler / Step Functions | 「每个任务只被一个 worker 执行」讲成租约加 fencing token；多租户公平调度；固定节奏扫描（常量工作）；毒丸任务隔离到 shuffle shard |
+| 5 | [[solution-metrics-monitoring]] | CloudWatch | 保留分层与降采样；基数治理；告警评估路径与查询路径分离；接着做 [[metrics_timeseries_store]] |
+| 6 | [[solution-ad-click-aggregation]] | Kinesis + Flink + DynamoDB / S3 | 精确一次的边界；用条件写做去重键而不是相信队列；热门 key 加盐；批流对账 |
+| 7 | [[solution-distributed-cache]] | ElastiCache / DAX | 缓存的双峰行为：命中率很高，但冷启动时后端流量飙升；别让缓存隐藏本该承担的工作量；冷启动预热 |
+| 8 | [[solution-top-k]] | Kinesis Analytics / Redis | Count-Min Sketch 与 Space-Saving 的误差界；分片局部 top-k 再合并；与「可合并的分位数草图」同一个思想 |
+
+只剩一天：做 1（KV 存储）和 [[managed_db_control_plane]]，因为 Dynamo 式存储与「控制面 / 故障切换 / 多租户」是 AWS 数据服务的基础。
+
+其他值得各过 15 分钟（只看追问）的题解：[[solution-lock-service]]（leader election、fencing）、[[solution-unique-id-generator]]、
+[[solution-notification-system]]（扇出、去重、供应商故障切换）、[[solution-file-sync]]（内容寻址分块、元数据与数据分离）。
+长期常考但没有写成 Amazon 版的题，直接读通用题解：[[solution-google-docs]]、[[solution-ride-hailing]]、[[solution-notification-system]]、
+[[solution-news-feed]]、[[solution-hotel-reservation]]、[[solution-ticket-booking]]、[[solution-e-commerce]]、[[solution-video-streaming]]、
+[[solution-chat-messaging]]。
+
+## 题目对应到哪里
+
+| 题 | 读哪里 |
+|---|---|
+| 制品仓库、Kindle 多设备同步、日志存储、员工目录（DynamoDB 分区键）、设备管理 / 配置同步、评论与评分 | [[hld_sketches]]（六个 25 分钟骨架） |
+| 监控 / 指标 / 告警 | [[solution-metrics-monitoring]]、[[metrics_timeseries_store]] |
+| 主库加只读副本的故障切换 | [[managed_db_control_plane]] |
+| S3 上的分析查询 API | [[serverless_query_over_s3]]、[[metrics_timeseries_store]] |
+| 分布式限流器 | [[solution-rate-limiter]] |
+| Lambda 式代码执行 | [[solution-online-judge]]（沙箱、冷启动） |
+
+## 怎么练
+
+- 先读表里「先读的通用题解」，再读这里的题解：这里假设你已经知道通用版本，重点讲每道题自己特有的难点和 senior 深挖。
+- 读完一篇，合上它，照着末尾的「60 分钟怎么分配」计时口述一遍，再做「自测」（答案在折叠块里）。
+- 每次口述后对照自评：前 5 分钟写下非目标和数字化 SLO；估算后说出设计结论；API 有幂等令牌和分页；图里分控制面与数据面；
+  深挖讲到「为什么、替代、代价、数字」；说了 AZ 故障时容量够不够；运维至少讲两个（one-box、波次发布、bake、自动回滚、cell、shuffle sharding）；点名自己设计里最弱的一环。

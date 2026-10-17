@@ -1,47 +1,83 @@
 # S3 · ACH 费用 NULL 传播事故（最难的 bug · fail loudly）
 
-> 来源：`core/stories/S3 ACH 费用 NULL 传播事故.md`（status: verified）。
-> 主 LP：**Dive Deep · Ownership · Insist on the Highest Standards · Have Backbone**；副：Customer Obsession · Bias for Action · Earn Trust · Deliver Results。
-> 一句话：*"A health check I'd built paged us because fees were silently missing; I found a NULL-propagation bug in a function overload in minutes and then removed the whole class of bug."*
-
-## 1. 数字
-
-| 数字 | 口径 |
-|---|---|
-| ~196 商户 · ~$11.3M/天 GMV | 受影响范围（口播 "roughly two hundred merchants, on the order of ten million dollars a day"） |
-| ~99,700 笔 settled 费 + ~5,500 笔 discount 费缺失；累计 ~1.79M pending 行 | 缺失规模 |
-| 100% us_bank_account · 100% STANDARD_ACH | 切片结果 |
-| 起始 2026-07-15（standard-ACH 灰度 M2） | 事故在灰度阶段 |
-| 告警每日 13:30 CT | 检查调度 |
-| 根因定位："几分钟内" | 口播只说 a few minutes |
-| e2e 没抓到的 4 个原因 | postmortem |
-
-## 2. 60–90 秒口述提纲
-
 **A health check I built paged us because fees were silently missing — I found the cause in minutes, then removed the whole class of bug.**
 
-**S · Situation**
-- A daily **health check** I built — "every settled transaction has its **Braintree fee**" — paged the on-call.
+## 适用 LP
 
-**T · Task**
-- I wasn't the assignee; I **forwarded the page to myself** and owned the root cause, the postmortem and the hardening.
+- 主：**Dive Deep**、**Ownership**、**Insist on the Highest Standards**、**Have Backbone**
+- 副：Customer Obsession、Bias for Action、Earn Trust、Deliver Results
 
-**A · Action** (in the order it happened)
-1. **Sliced** the missing fees: 100% bank-account on the new **standard-ACH** path — ~**200 merchants**, ~**$10M a day**.
-2. **Traced one transaction**: sub-kind was **NULL**, and `'BT_' || NULL` is **NULL** — no category, no fee, **no error**.
-3. Found the **root cause**: two overloads of one function; the final `MERGE` called the one with **no bank-account branch**.
-4. **Pushed back** on adding ACH to the exclusion list — I put the **numbers** in writing.
-5. A teammate landed the **stopgap** first; I wrote the **postmortem** and did the structural fix.
-6. Fixed it for good: **one function**, a versioned migration **dropping** the old signature, an **e2e** test spanning promotion to fees.
+## 数字
 
-**R · Result**
-- Root cause in the thread within **minutes**; the **overload design removed entirely**.
-- New **e2e** test covers promotion through fee generation.
+- 受影响 **~196 商户**，**~$11.3M/天** GMV：说 "roughly two hundred merchants, on the order of ten million dollars a day"
+- 缺失 **~99,700** 笔 settled 费 + **~5,500** 笔 discount 费；累计 ~1.79M pending 行
+- 切片：**100%** us_bank_account，**100%** STANDARD_ACH
+- 事故发生在 standard-ACH **灰度**阶段（M2）；告警每日 **13:30 CT**
+- 根因定位只说 "a few minutes"
+- e2e 没抓到的 **4 个原因**
 
-**L · Learning / Mechanism**
-- An unmappable instrument must **fail loudly**, not emit nothing.
+## S / T / A / R / L
 
-<details><summary>逐字稿（参考，不背）</summary>
+### S
+- 我建的每日**健康检查** "every settled transaction has its Braintree fee" 报警 page 了 on-call
+
+### T
+- 我不是 assignee；把 page **转给自己**，负责**根因、postmortem 和加固**
+
+### A
+- **切片**：缺失的 100% 是新 **standard-ACH** 路径的银行账户交易，~**200 商户**、~**$10M/天**
+- **追一笔交易**：sub-kind 是 **NULL**，`'BT_' || NULL` 还是 **NULL**，无类别、无费用、**无报错**
+- **根因**：一个函数两个重载，最后的 `MERGE` 调了**没有银行账户分支**的那个
+- 有人提议把 ACH 加进检查的排除名单，我**顶回去**，把**数字写下来**
+- 队友先落了**止血**；我写 **postmortem** 并做结构性修复
+- 结构修复：**单函数**默认参数 + versioned migration **DROP** 旧签名 + 跨 promote 到 fee 的 **e2e** 测试
+
+### R
+- 根因在线程里**几分钟**内给出；**重载设计被整个移除**
+- 新 **e2e** 覆盖从 promotion 到 fee 生成
+
+### L
+- 无法映射的 instrument 必须 **fail loudly**，不能什么都不产出
+- NULL 传播是 SQL 属性，规则放在**接缝**
+
+## 追问与回答
+
+- **What did you decide vs. the team?**
+  - 判定**检查是对的**、费用真丢；**不加排除名单**；把数字写下来
+- **Which part was yours?**
+  - **根因**、**postmortem**、重载合并、legacy DROP；止血 PR 是队友的："I owned the RCA and the hardening; the stopgap landed first."
+- **Did you backfill?**
+  - 不说我 backfill 了；灰度阶段队友说大概不需要
+  - 方法论：**fix forward**，必要时 backfill；已被下游消费的错误状态要**更正分录**，不是回滚
+- **Why didn't tests catch it?**
+  - 只断言**路由**；fixture 用**卡 payload**；pending 行不断言 sub_kind；没有跨 promote→fee 的测试，已补 e2e
+- **How do you prevent the class of bug?**
+  - **Fail loudly**；修接缝不修调用点；**单函数默认参数**使新分支选不到不完整实现
+- **Why delete via versioned migration?**
+  - 删掉 `R__` repeatable 文件**不会删已部署对象**
+- **How did you rule out other causes?**
+  - 时序：每个 age 桶覆盖率都是 0%；stream 绕过：**30 of 30** 行到了 fee staging；对照组 fast ACH 有费用
+- **Impact on merchants / money actually lost?**
+  - 见待补
+
+## 换个 LP 讲
+
+- **Dive Deep**：切片 → 单笔 → 回溯 → 读两个重载；强调排除时序/stream 的证据
+- **Ownership**：不是 assignee，转给自己；止血之后继续 own postmortem、重载合并、DROP；别说止血 PR 是我的
+- **Insist on the Highest Standards**：止血只修一例，我要让这类 bug 不可能；单函数 + versioned DROP + e2e
+- **Have Backbone**：有人提议排除 ACH，我带着数字说不；只有顶住压力，没有 disagree-and-commit 后半
+- **Customer Obsession**：~200 个商户被静默地错误计费；fix forward 需要更正分录；没有客户反馈数据，别编
+- **Bias for Action**：转给自己，线程里几分钟给出答案；速度来自对 promote 链路的全局图景
+- **Earn Trust**：postmortem 写出我们自己的测试为什么没看见（4 个缺口）
+
+## 待补
+
+- 【待补：缺失费用最终是否 backfill、由谁、花了多久，对商户/收入的实际影响】
+- 【待补：提出排除 ACH 的人是什么角色（同级/资深/PM）、你的原话、最后谁拍板（要求「对更资深的人说不并给出数据」）】
+- 【待补：postmortem 在哪个会上读过、几个团队参加；其他团队后来有没有采用 e2e 模式或 fail-loudly 规则】
+- 【待补：升级句 "I removed the mechanism that allowed this bug class and wrote down why our tests couldn't see it." 对应的证据是否都能说】
+
+<details><summary>逐字稿</summary>
 
 > A daily health check I'd built — "every settled transaction has its Braintree fee" — paged the on-call. I forwarded the page to myself and had the root cause in the thread within a few minutes.
 >
@@ -50,98 +86,3 @@
 > There was pressure to add ACH to the check's exclusion list. I put the numbers in writing: the check was right and the fees were really missing. A teammate landed the stopgap first. I owned the root cause, the postmortem, and the hardening: one function with a defaulted parameter, a versioned migration that drops the old signature, and an end-to-end test that spans promotion through fee generation. The rule I pushed: an unmappable instrument must fail loudly, not emit nothing.
 
 </details>
-
-## 3. 2 分钟口述提纲
-
-**A health check I built paged us because fees were silently missing — I found the cause in minutes, then removed the whole class of bug.**
-
-**S · Situation**
-- At **1:30 pm Central** the check "every settled transaction has its Braintree fee" paged, during the **standard-ACH gray rollout**.
-
-**T · Task**
-- Not the assignee — I **forwarded the page to myself**; I owned the **RCA, postmortem and hardening**, not the stopgap.
-
-**A · Action** (in the order it happened)
-1. **Sliced** missing fees: 100% `us_bank_account`, 100% **standard ACH**, ~200 merchants, ~$10M a day.
-2. **One transaction**: `payment_instrument_sub_kind` was **NULL**; `'BT_' || NULL` is **NULL**, so no category and **no error**.
-3. **Ruled out** a timing lag (0% coverage at every age) and a stream bypass (**30 of 30** rows reached fee staging); the fast-ACH **control group** had fees.
-4. **Traced back**: a CTE used the two-argument overload correctly; the final `MERGE` used the **one-argument** overload and overwrote it with NULL.
-5. **Said no** to excluding ACH from the check — I wrote the numbers down and the check stayed.
-6. A teammate landed the **stopgap** first; I wrote the **postmortem**: four reasons e2e missed it — routing only, **card-payload fixture**, no sub-kind assert on pending rows, nothing spanning promote to fee.
-7. Then the structural fix: one function with a **defaulted parameter**, a versioned migration to **DROP** the old signature, no dynamic selection.
-
-**R · Result**
-- Scope: ~**196 merchants**, ~**$11.3M a day** GMV; ~**99,700** settled and ~**5,500** discount fees missing.
-- Whole **overload class** removed; **e2e** now spans promotion to fee calculation.
-- Method: **fix forward** with a backfill if needed, not a rollback.
-
-**L · Learning / Mechanism**
-- Silent NULL propagation is a **SQL property**, so the rule lives at the **seam**: unmappable instruments must **fail loudly**.
-- **What I'd do differently:** assert **fee generation** end to end, not just routing, before a gray rollout.
-
-<details><summary>逐字稿（参考，不背）</summary>
-
-> **Trigger.** At 1:30 pm Central the check "every settled transaction has its Braintree fee" paged. I wasn't the assignee; I forwarded it to myself.
->
-> **Scoping.** I sliced the missing fees: 100 percent were `us_bank_account`, 100 percent standard ACH, around two hundred merchants and ten million dollars a day. Then one transaction: `payment_instrument_sub_kind` was `NULL`. The fee code derives the category as `'BT_'` concatenated with the sub-kind, and `NULL` concatenation yields `NULL` in SQL. No category, no discount fee, no settled fee, and no error. I ruled out a timing lag with a time series — zero percent coverage at every age bucket — and ruled out a stream bypass because the promoted rows did reach fee staging, 30 of 30. A control group — fast ACH, where the field was populated — had fees.
->
-> **Root cause.** Walking back through the promote procedure: a CTE used the two-argument overload and got it right, then the final `MERGE` used the one-argument overload, whose `CASE` had no bank-account branch, and overwrote the field with `NULL`.
->
-> **Decisions.** First, don't suppress the check — someone suggested excluding ACH. I wrote the numbers down and kept it. Second, the postmortem listed four reasons our end-to-end tests missed it: they asserted routing but not fee generation; the fixture used a card payload so the field was never `NULL` in test; sub-kind wasn't asserted on pending rows; nothing spanned promotion to fee calculation. Third, after the stopgap a teammate landed, I did the structural fix: one function with a defaulted second parameter, a versioned migration to `DROP` the old signature — because deleting the file doesn't remove the deployed object — and I removed the dynamic selection of the implementation.
->
-> **Principle.** Silent `NULL` propagation is a property of SQL, so the fix is a rule at the seam: an unmappable instrument must fail loudly. If fees needed correcting, you fix forward with a backfill, not a rollback.
-
-</details>
-
-## 4. 适用 LP 与改角度
-
-| LP | 开场一句 | 重点讲 | 避免 |
-|---|---|---|---|
-| **Dive Deep** (P) | "The alert said fees were missing; the answer was in one function overload." | 切片 → 单笔 → 回溯 → 读两个重载；排除时序/stream 的证据 | — |
-| **Ownership** (P) | "I wasn't the assignee; I forwarded the page to myself and stayed with it through the postmortem and the structural fix." | 止血之后继续 own：postmortem、重载合并、DROP | 说成止血 PR 是我的 |
-| **Insist on the Highest Standards** (P) | "A stopgap fixes one case; I wanted the bug class impossible." | 单函数 + versioned DROP + e2e；fail loudly | — |
-| **Have Backbone** (P) | "There was a proposal to add ACH to the exclusion list. I said no, with the numbers." | 不压掉检查；把数字写下来 | 这是「顶住压力」，没有「disagree and commit」后半 |
-| **Customer Obsession** (S) | "Two hundred merchants weren't being charged correctly — silently." | 商户侧影响；fix forward 需要纠正分录 | 没有客户反馈数据，别编 |
-| **Bias for Action** (S) | "I forwarded the alert to myself and had the answer in the thread within minutes." | 速度来自对 promote 链路的全局图景 | — |
-| **Earn Trust** (S) | "The postmortem includes why our own tests missed it." | 四个 e2e 缺口，包括我自己的责任 | — |
-
-## 5. 追问（≥5）
-
-1. **What did you decide vs. the team?**
-   - 判定**检查是对的**、费用真丢。
-   - **不加排除名单**。
-   - 把**数字写下来**。
-2. **Which part was yours?**
-   - **根因**、**postmortem**、overload consolidation、legacy DROP。
-   - **止血 PR 是队友的**："I owned the RCA and the hardening; the stopgap landed first."
-3. **Backfill?**
-   - 灰度阶段队友原话「大概不需要 backfill」；**不说我 backfill 了**。
-   - 方法论：**fix forward** + backfill if needed。
-   - 计费里错误状态已被下游消费，要**更正分录**，不是回滚。
-4. **Why didn't tests catch it?**
-   - 只断言**路由**。
-   - fixture 用**卡 payload**。
-   - pending 行不断言 **sub_kind**。
-   - 没有跨 **promote→fee** 的测试；补了 e2e。
-5. **How do you prevent the class of bug?**
-   - **Fail loudly**。
-   - NULL 拼接是 SQL 语言属性，修**接缝**不修调用点。
-   - **单函数默认参数**使新分支选不到不完整实现。
-6. **Why delete via versioned migration?**
-   - 删掉 `R__` repeatable 文件**不会删已部署对象**。
-7. **How did you size the blast radius?**
-   - 起初的 blast-radius 估算属于另一份复盘 **S10**，**不要混**。
-8. **Impact on merchants / money actually lost?**
-   - 【待 Chi 补：缺失费用最终是否 backfill、对商户/收入的实际影响】
-
-## 6. 证据边界
-
-止血 PR 不是我的；事故发生在灰度（standard-ACH M2）；不说「我 backfill 了」。证据：Slack 事故线程 2026-07-29、复盘 2026-08-11；Confluence 3029344728、3052036330；PR #3390 / #3490。
-
-## 7. Senior 升级点（bar = senior）
-
-当前档位：**mechanism（fail loudly、versioned DROP、e2e）与 ownership beyond task 已到 senior**；**influence 部分是缺口**：「有人建议把 ACH 加入排除名单」是最好的 Backbone 素材，但对方是谁、你怎么说服的没有细节。
-- 【待 Chi 补：提出排除 ACH 的人是什么角色（同级/资深/PM）？你的原话是什么？最后谁拍板？（senior 档要求"对更资深的人说不并给出数据"）】
-- 【待 Chi 补：postmortem 在哪个会上读过？有几个团队参加？后来其他团队有没有采用你写的 e2e 模式或 fail-loudly 规则？】
-- 【待 Chi 补：灰度阶段缺费用的 ~$11.3M/天 GMV 最终是否补账、由谁、花了多久（Deliver Results 的结尾）】
-- 升级句：把 "I fixed an overload bug" 改成 "I removed the mechanism that allowed this bug class and wrote down why our tests couldn't see it."

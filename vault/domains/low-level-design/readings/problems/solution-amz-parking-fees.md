@@ -86,7 +86,7 @@ classDiagram
 
 图里省略了 `Adjustment` 的两个实现 `MemberDiscount` 与 `LostTicketPenalty`（都是无状态的 frozen dataclass）。
 
-所有权上，`FeeDesk` 拥有票的生命周期：入场时放进表里，结算时取走。`FeeEngine` 和 `Tariff` 没有生命周期，创建后不再变化，因此无需任何锁。这一点是整个设计的安全来源：**把有状态的部分压缩到一个类里，其余全部做成纯函数式的东西**，并发问题就只剩下一处需要回答。
+所有权上，`FeeDesk` 拥有票的生命周期：入场时放进表里，结算时取走。`FeeEngine` 和 `Tariff` 没有生命周期，创建后不再变化，因此无需任何锁。这一点是整个设计安全的根据：**把有状态的部分压缩到一个类里，其余全部做成纯函数式的东西**，并发问题就只剩下一处需要回答。
 
 ## 关键设计决策
 
@@ -555,13 +555,9 @@ if __name__ == "__main__":
 
 代码不会被运行，所以写完之后选一个具体的停留手工推演：19:30 入场、次日 08:30 出场，写出每一段的起止、单价和累加值，与 2700 分对一遍。时间不够时的取舍：先砍 `Adjustment` 的第二个实现和丢票（口述：同一个接缝，顺序是业务决定）；再砍封顶；保住切段循环和宽限期。
 
-## 来源与延伸
+## 延伸阅读
 
-- 题目来源：[Hello Interview 社区题库](https://www.hellointerview.com/community/questions?company=Amazon)（题目 `parking-lot-system`，Amazon 资深岗，亚太地区，2026-09-20 的报告）：原文只说重点在停车费计算、不同场景有不同逻辑，代码「syntactically correct, although it will not be executed」。需要登录，只链接不摘录。仓库的 Amazon kit 还记着三份相关的论坛报告（停车场加车型并追加五六条新需求、按车型找最佳车位、停车票据与收据），编号见 `vault/interviews/companies/amazon/lld/route.md`，共同的信号是停车场在 Amazon 考的是出场计费。
-- 哪些是报告的、哪些是补的：报告没有给出任何具体费率；四关分级、全部费率与时段、免费宽限期、每日封顶、会员折扣、丢票罚款、并发那一关都是推断，在这里是重建（reconstructed）的规则。
-- [Python 标准库 datetime](https://docs.python.org/3/library/datetime.html)：`weekday()` 周一为 0、周日为 6，所以工作日是 `< 5`；`datetime.combine` 把日期与时间拼成当天的某个边界。这里处理的是不带时区的本地时间。
-- [Hello Interview：停车场题解](https://www.hellointerview.com/learn/low-level-design/problem-breakdowns/parking-lot)：题库停车场的主要参考。它的计费是「所有车型同一个小时费率、按小时向上取整」，并明确说不要过度设计。这里不同意的只是前提：题目说重点在计费，面试官一旦说「不同场景不同逻辑」，价目表加切段就是正确的形状；而在没有这句话的版本里，一个函数就够。商业站点，只链接不摘录。
-- 题库已有的停车场题解 [[solution-parking-lot]]：车位分配、楼层、占用状态和阶梯计价（`TieredRate`）。它的阶梯计价是按总时长的边际分档，与这里按时间轴切段是两个正交的问题：一个按「停了多久」分档，一个按「什么时候停的」分段。
-- Amazon kit 的 `vault/interviews/companies/amazon/lld/pricing_billing.md`：同一个骨架的其他变体（地铁封顶、购物车折扣、AWS 账单），共同点是用整数分和一个按顺序应用的规则列表。
-
-概念背景：[[patterns.strategy|策略模式与可替换算法（Strategy）]]（什么时候需要策略接缝，什么时候是数据；决策二与决策四正是两个方向的例子）、[[problems.machines.parking-lot|停车场（Parking Lot）]]（这里站在它之上）。
+- [Python 标准库 datetime](https://docs.python.org/3/library/datetime.html)：`weekday()` 周一为 0、周日为 6，所以工作日是 `< 5`；`datetime.combine` 把日期与时间拼成当天的某个边界。
+- [停车场题解（低层设计教程）](https://www.hellointerview.com/learn/low-level-design/problem-breakdowns/parking-lot)：所有车型同一个小时费率、按小时向上取整的简化版本；与这里的价目表加切段对照。
+- 相关题解：[[solution-parking-lot]]（车位分配、楼层、占用状态和阶梯计价；它按「停了多久」分档，这里按「什么时候停的」分段）。
+- 概念：[[patterns.strategy|策略模式与可替换算法（Strategy）]]、[[problems.machines.parking-lot|停车场（Parking Lot）]]。

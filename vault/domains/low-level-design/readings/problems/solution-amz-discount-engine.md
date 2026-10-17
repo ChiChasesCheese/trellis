@@ -456,11 +456,8 @@ if __name__ == "__main__":
 - **42–45 分钟：说扩展。** 点名 `Scope`、`Stacking`、跨商品赠品要升到购物车级。
 - **时间不够时先砍：** `Stacking.BEST_ONLY`、`Receipt` 的标签、线程锁，保住 `is_eligible/apply` 主流程和整数分。
 
-## 来源与延伸
+## 延伸阅读
 
-- 题目出处：Amazon VO 一轮 OOD，一亩三分地 [thread-1191754](https://www.1point3acres.com/bbs/thread-1191754-1-1.html)（2026-10-02）：`isEligible` / `apply` 的基类要求、遍历每行的主流程、BUY_X_GET_Y 折成减免的描述来自这里。与它的差别：它的遍历是「每行 × 每个折扣」，这里把整车折扣拆成第二层，并让 `apply` 接收剩余价格，避免叠加时多减。
-- 旁证：一亩三分地 [thread-1190571](https://www.1point3acres.com/bbs/thread-1190571-1-1.html)（2026-09-23）只有「店面 OOD：模拟购物车」一句话，说明这类题在 Amazon 店面轮也会出现；另有一条欧洲区报告（2026-09）提到购物车价格计算器 API，追问全场折扣、满额翻倍、买三送一、热销商品折扣。
-- 推断（页面自己补充，非报告原文）：百分比折扣、满减两种折扣，叠加顺序与「只取最大」，门槛按折后小计判断，第 4 关的账单与并发，优惠券写法。置信度：来源只有片段，整体为中低。
-- Python 官方文档 `decimal`：https://docs.python.org/3/library/decimal.html ——精确的十进制算术与舍入模式；这里用它做“字符串 → 分”的单次转换，其余全部用整数。
-- 题库里相邻的 [[solution-online-shopping]]：它讲完整的下单流程（库存、支付、订单状态）；这里把定价抽出来单独做深。
+- [Python 官方文档 `decimal`](https://docs.python.org/3/library/decimal.html)：精确的十进制算术与舍入模式。
+- 相关题解：[[solution-online-shopping]]（完整的下单流程：库存、支付、订单状态）。
 - 概念：[[patterns.strategy|策略模式与可替换算法（Strategy）]]、[[oop.values|值对象与不可变性（Value Objects）]]。

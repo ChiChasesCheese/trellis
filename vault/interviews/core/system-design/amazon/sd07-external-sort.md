@@ -1,5 +1,5 @@
 ---
-tags: [system-design, reported, amazon, external-sort, batch, distributed]
+tags: [system-design, amazon, external-sort, batch, distributed]
 ---
 # SD07 大文件外部排序，200 GB / 8 GB 内存（External Sort）
 
@@ -440,20 +440,8 @@ flowchart TB
 
 </details>
 
-## 来源与延伸阅读
+## 延伸阅读
 
-> 来源：Hello Interview 社区题库 Amazon 条目，2026-09-10，mid：https://www.hellointerview.com/community/questions?company=Amazon ；正文用到的相关模式页（没有针对该问题的专页）：《Handling Large Blobs》https://www.hellointerview.com/learn/system-design/patterns/large-blobs 与《Scaling Writes》https://www.hellointerview.com/learn/system-design/patterns/scaling-writes
-
-- 报告原文（节选）：「you have files over 200gb which just contain numbers. these files can be present on multiple computers. Your server has a total disc memory = 500gb, and you have 8gb ram. How will you sort all the numbers? (you cant do any .sort() function …)」，2026-09-10，mid，置信度 **中**。候选人自己形容这轮是「LLD ish」：它名义上是系统设计，实际更像算法加存储层的设计，要求写得出可运行的核心逻辑。
-- Hello Interview 没有针对该问题的专页，所以没有现成骨架可以对照；正文按需求、容量、实体与接口、架构、深挖的顺序自己搭，并借用《Handling Large Blobs》里的分块与可恢复传输的思路。
-- **（重建）**：数字的类型（整数还是浮点、二进制还是文本）、值域、是否有重复、输出放在哪里、多台机器之间的网络带宽，原帖都没有说。下面按「64 位有符号整数、小端二进制、可有重复、输出一个有序文件」重建；面试时第一件事就是问清楚这几项。
-
-
-**Hello Interview 没有针对该问题的专页**，所以不存在需要对照的骨架。可以借用的模式有两个：
-
-- 《Handling Large Blobs》讲的是不要让应用服务器当数据的搬运工，用预签名链接让客户端直接和对象存储交互，大文件分块上传、带校验和、断点续传。正文借用的是**分块加校验和加断点续传**这套思路：运行文件的块、输出的分块上传、Manifest 的恢复，机制是同构的；不同之处在于外部排序里数据是我们自己的计算流水线中的产物，而不是用户上传的内容，因此不涉及预签名链接。
-- 《Scaling Writes》讲的是用批处理、缓冲、分片来承接高写入量。外部排序的第一阶段（大块顺序写运行）和第二阶段（异步写输出缓冲）就是缓冲加批处理；分布式版的范围划分就是按键分片。
-
-**本库**：没有对应的通用题解，最接近的是 [[solution-object-storage]] 里关于分块与完整性校验的部分和 [[solution-file-sync]] 里的分块传输，但它们讲的是对象的存取而不是计算。这篇的内容在本库里是独立的，主要的参考是 DDIA 第 3 章（LSM 树里的归并与压实）和第 10 章（批处理里的排序归并 shuffle）；它与 LSM 树的压实（compaction）、与 MapReduce 的 shuffle 阶段是同一个算法的不同场景，面试里点出这两个联系很加分。
-
-排序偏算法，不需要 AWS 服务也能答好；但在数据服务岗位的面试里，最后常会问「如果这个任务要每天跑，在 AWS 上怎么做」，所以要备好 EMR/Spark 的回答，见上面的成本一节。
+- 相邻题解：[[solution-object-storage]]（分块与完整性校验）、[[solution-file-sync]]（分块传输）。
+- 同批题单：[[sd-index]]。
+- 教程：[大文件模式](https://www.hellointerview.com/learn/system-design/patterns/large-blobs)、[扩展写入模式](https://www.hellointerview.com/learn/system-design/patterns/scaling-writes)

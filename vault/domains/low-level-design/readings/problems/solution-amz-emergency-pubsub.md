@@ -531,11 +531,9 @@ if __name__ == "__main__":
 
 时间不够时先砍：第 4 关的信箱（口头讲结构），其次是死信上限；绝对不砍：失败隔离的边界与持锁规则。
 
-## 来源与延伸
+## 延伸阅读
 
-- 题目来源：Hello Interview 社区题库的 Amazon 题目页：https://www.hellointerview.com/community/questions?company=Amazon ——题目原话（publish-subscribe-system，2026-10-01 中级报告）：应急响应系统里一些组件订阅应急事件、另一些发布，实现处理发布与订阅逻辑的类。页面只给出这一句话，没有解答；商业站点，只链接不引用。另一条更早的线索来自面试论坛一份 SDE II 的报告（事件转发框架）：要支持批量、考虑慢事件、失败的订阅者不能阻塞其他订阅者。
-- 哪些是报告的、哪些是补的：第 1 关与「失败隔离」「慢事件」来自报告；事件类型与严重度、按类型过滤、重试与死信、异步信箱与优先级是重建（reconstructed）的追问，没有可对照的完整解答。
-- Python 官方文档 `heapq`：https://docs.python.org/3/library/heapq.html ——优先队列的 `(优先级, 序号, 任务)` 写法和同级先进先出、避免比较任务对象的理由；文档没讲有界队列满了挤掉最不重要元素，这里用一次扫描加 `heapify` 实现并说明了代价。
-- Python 官方文档 `threading.Condition`：https://docs.python.org/3/library/threading.html#condition-objects ——`wait_for` 与 `notify_all` 的语义，信箱的"等事件"和 `flush` 的"等送完"都建立在它上面。
-- 题库里的相关题解：[[solution-pub-sub]]（通用的有界主题日志、游标、通配订阅、死信主题）。主要分歧：它选"拉"模型，订阅者各有游标，可以重放；这里选"推"加每人一个信箱，因为应急通知是"当下立刻要送到"，不需要重放，代价是不能回头读已经送过的事件。
+- [Python 官方文档 `heapq`](https://docs.python.org/3/library/heapq.html)：优先队列的 `(优先级, 序号, 任务)` 写法，同级先进先出，避免比较任务对象。
+- [Python 官方文档 `threading.Condition`](https://docs.python.org/3/library/threading.html#condition-objects)：`wait_for` 与 `notify_all` 的语义，信箱的「等事件」和 `flush` 的「等送完」都建立在它上面。
+- 相关题解：[[solution-pub-sub]]（拉模型：有界主题日志、游标、通配订阅、死信主题）。
 - 概念：[[patterns.observer|观察者与事件（Observer）]]。

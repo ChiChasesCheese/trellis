@@ -350,22 +350,8 @@ stateDiagram-v2
 TTL 删除是后台异步的，可能延迟到数小时甚至两天，不能用于需要及时释放库存的逻辑。应使用 `expires_at` 加按时间桶的索引清扫器，并用延迟队列或定时器主动释放，清扫器作兜底。
 </details>
 
-## 来源与延伸阅读
+## 延伸阅读
 
-> 来源：一亩三分地（1point3acres）题库条目 `distribution-center-stock-state-service`，onsite system design，2026-09-18，1 个来源，正文被锁；题库标签为 distributed-systems、data-modeling、ingestion、sharding、idempotency。相关旧条目：Hello Interview 社区 `warehouse-inventory-architecture`（2025-03）、1p3a 题库 `perishable-goods-tracking-system`（电面，2026-06-24）、`fulfillment-center-inventory-transfer`（onsite 编程，2026-07-22）。对照页面：https://www.hellointerview.com/learn/system-design/problem-breakdowns/gopuff 、https://www.hellointerview.com/learn/system-design/problem-breakdowns/flash-sale 、https://www.hellointerview.com/learn/system-design/deep-dives/change-data-capture 、https://www.hellointerview.com/community/questions?company=Amazon 。
-
-- 被报告的题面（题库行名，2026-09-18，级别未公开，置信度：题名与标签为中，其余为低）：「distribution center stock state service」。
-- **（重建）**：题干正文看不到。上文的题面由标签推断：「很多配送中心持续产生库存事件，要有一个服务接收这些事件，并能回答某个 SKU 在某个 DC 现在有多少、能卖多少、哪里能发货」。事件类型（收货、上架、拣货、调拨、盘点调整）、规模数字、一致性要求都是为了练习而设定的，面试时第一件事就是和面试官确认。
-
-**Hello Interview 怎么做。** 它的《Gopuff》题（本地配送服务）是同一类问题的入门版：需求是按地点汇总附近多个 DC 的库存并让下单不重复占用，骨架是需求、实体（区分商品与库存实例）、接口、高层、深挖。它的强项是：把下单放进单个 Postgres 事务里原子地检查库存、写订单和更新库存；读侧用只读副本、分区和缓存扩展；还讨论了按行驶时间而非直线距离选 DC。《Flash Sale》覆盖单热点库存的预留与排队。《Change Data Capture》讲的是日志式捕获与 outbox。
-
-**一致的地方。** 强一致只放在「占用库存」这一步；读侧用缓存或副本换速度；用 outbox 或日志而不是双写；热点要先量化再拆。
-
-**不同的地方。**
-
-1. 它面对的是「下单」，正文面对的是「摄入」：DC 的物理事件才是库存的来源，事件的幂等、有序和重放是主要问题，它没有展开。
-2. 它把库存当成单库里的状态，正文把状态当成账本的投影，所以多出重新计算、对账和盘点这一层。
-3. 它把读副本延迟当作不需要精确的小事；正文明确区分「物理在手」与「可承诺」，并用方向不对称解释哪种陈旧可以接受。
-4. 在选择上更强调成本：把账本放进事务的代价用数字写了出来。
-
-**本库的通用部分。** 电商核心流程里的库存预占、saga 与 outbox 见 [[solution-e-commerce]]；单热点的原子递减、令牌池和超卖/漏卖见 [[solution-flash-sale]]。正文只写 DC 摄入与库存状态的增量，不重复这两篇。
+- 相邻题解：[[solution-e-commerce]]（库存预占、saga、outbox）、[[solution-flash-sale]]（单热点原子递减、令牌池、超卖与漏卖）。
+- 同批题单：[[sd-index]]。
+- 教程：[本地配送服务拆解](https://www.hellointerview.com/learn/system-design/problem-breakdowns/gopuff)、[限时抢购拆解](https://www.hellointerview.com/learn/system-design/problem-breakdowns/flash-sale)、[变更数据捕获](https://www.hellointerview.com/learn/system-design/deep-dives/change-data-capture)

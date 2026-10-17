@@ -3,9 +3,9 @@ nodes: [amazon.amz-emergency-pubsub]
 url: https://www.hellointerview.com/community/questions?company=Amazon
 tags: [no-archive]
 ---
-# Hello Interview 社区题库：Amazon（题目 publish-subscribe-system）
+# 应急事件发布订阅：题目与要求
 
-值得读：2026-10-01 的中级报告，原话是：需要一个应急响应系统，一些组件订阅（监听）应急事件，另一些组件发布（通知）这些事件，请实现处理发布与订阅逻辑的类。公开可见的只有这一句，事件有哪些类型、严重度、是否异步、失败怎么办，报告都没有写。本题解把这些全部标为重建，并按 Amazon 另一份较早的报告（事件转发框架：批量、慢事件、失败不得阻塞其他订阅者）把「失败隔离」放在第 2 关。
+值得读：题面是应急响应系统里一些组件订阅事件、另一些组件发布事件，实现发布与订阅的类。读它是为了知道开场要补问的几件事：事件类型与严重度、同步还是异步、一个订阅者失败怎么办；其中「失败的订阅者不能阻塞其他订阅者」要放在最前面。
 
 %% trellis:begin %%
 ## Source

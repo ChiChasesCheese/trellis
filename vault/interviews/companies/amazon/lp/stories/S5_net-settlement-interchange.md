@@ -1,49 +1,90 @@
 # S5 · Net Settlement · interchange 数据源切换（技术决策 + 零回归迁移）
 
-> 来源：`core/stories/S5 Interchange 数据源切换.md`（status: **partial**）。
-> 主 LP：**Ownership · Deliver Results · Are Right, A Lot**；副：Dive Deep · Insist on the Highest Standards · Invent and Simplify · Bias for Action · Customer Obsession · Think Big · Frugality。
-> 一句话：*"I owned the fee side of a multi-quarter net-settlement program and switched the biggest fee source with a shadow comparison that used the production query itself."*
-
-## 1. 数字（区分项目级与我的）
-
-| 数字 | 口径 | 谁的 |
-|---|---|---|
-| >99.9% 字段一致 | discovery：FULL OUTER JOIN + EQUAL_NULL | 我 |
-| 0.07% 不匹配（单侧当日才有） | 时序，非冲突 | 我 |
-| 13,737,670 vs 13,768,430 → **+0.224%** | 切换前用生产查询 `count(*)` 跑当天全量 | 我 |
-| 影响面 | 两个可解释差异：`FEE_SEQUENCE_CODE`、`ALT_DISPUTE_ID` | 我 |
-| 任务窗口 `CRON 15 6-9 * * * America/Chicago` | 按 settle 视图实际就绪 [5:30, 8:15] EST 反推 | 我 |
-| $55B+ 增量 TPV · ~$450M/月 float · 2 年+ epic 链 | **项目级业务数字，不是我的管线产出** | 项目 |
-
-⚠️ 0.07% 与 0.224% 是**两个不同性质**的数字（字段一致率 vs 记录数差异），不要混用。
-⚠️ 简历写 "Spearheaded Braintree's net settlement project ... an estimated hundreds of millions in working-capital savings"；S5 证据边界：epic owner of record 不是我 → 口播用 "I own the fee side / the interchange track inside the net-settlement program"。简历 "hundreds of millions" 与项目级 ~$450M/月 float 的关系 【待 Chi 补：这个 estimated savings 是谁估的、怎么算的——BR 会问 baseline】。简历已于 2026-10-15 改为证据口径；投递版仍是旧数字，答法见 ../../README.md「面试前必须处理」。
-
-## 2. 60–90 秒口述提纲
-
 **I turned "will the numbers match?" from an opinion into a query, and shipped the switch dark.**
 
-**S · Situation**
-- **Net settlement** is a multi-quarter program; I own the **fee side** (not the epic owner of record).
-- Pass-through fees came from the acquirer's **transaction view**, which sometimes filled in **after the payout cutoff**.
+## 适用 LP
 
-**T · Task**
-- I **owned** moving the biggest category, **credit interchange**, to the earlier **settlement view**.
+- 主：**Ownership**、**Deliver Results**、**Are Right, A Lot**
+- 副：Dive Deep、Insist on the Highest Standards、Invent and Simplify、Bias for Action、Customer Obsession、Think Big、Frugality
 
-**A · Action** (in the order it happened)
-1. Weighed **two options**: a smarter dynamic fallback, or a **static split** by fee type behind a toggle.
-2. Chose the **static split** — the fallback had sticky state and three CTEs; a revenue-path source should be a **fact**.
-3. Ran a **discovery** comparison, full outer join field by field: **>99.9%** parity, every difference explained.
-4. Ran the **production query itself** as `count(*)` over a full day: ~**13.7M rows**, within **0.224%**.
-5. **Shipped it dark**: toggle off, then pre-prod, then production — **deploy and release are separate**.
+## 数字
 
-**R · Result**
-- A full day of **13.7M rows** verified within **0.224%** before production traffic moved.
-- The backfill SQL became the team's **CDC backfill template**.
+- **>99.9%** 字段一致（discovery：FULL OUTER JOIN + EQUAL_NULL）
+- **0.07%** 不匹配，都是单侧当日才有 = 时序，不是冲突
+- 切换前用生产查询 `count(*)` 跑一整天：**13,737,670 vs 13,768,430**，**+0.224%**（差 30,760 行）
+- 两个可解释差异：`FEE_SEQUENCE_CODE`、`ALT_DISPUTE_ID`
+- 任务窗口 `CRON 15 6-9 * * * America/Chicago`，按 settle 视图实际就绪 [5:30, 8:15] EST 反推
+- 0.07% 与 0.224% 是两种数字（字段一致率 vs 记录数差异），不要混用
+- 项目级数字，不是我的产出：**$55B+** 增量 TPV、**~$450M/月** float、2 年+ epic 链；口播用 "I own the fee side / the interchange track inside the net-settlement program"
+- 【待补：简历 "hundreds of millions in working-capital savings" 是谁估的、怎么算的，BR 会问 baseline；与项目级 ~$450M/月 float 的关系要说清】
 
-**L · Learning / Mechanism**
-- **Validation and production share the same SQL**, so I can't validate one thing and ship another.
+## S / T / A / R / L
 
-<details><summary>逐字稿（参考，不背）</summary>
+### S
+- **Net settlement** 是多季度项目；我 own **费用侧**（不是 epic owner of record）
+- 透传费用来自收单方的 **transaction view**，有时在**出款截止后**才填充
+
+### T
+- 我 **owner** 把最大类别 **credit interchange** 切到更早到达的 **settlement view**
+
+### A
+- 比较**两个方案**：更聪明的动态 fallback，或按费用类型的**静态拆分** + toggle
+- 选**静态拆分**：fallback 已有粘性状态和三个 CTE；收入路径的数据源应是**事实**
+- **Discovery**：全外连接逐字段比，**>99.9%** 一致，差异全部解释
+- 用**生产查询本身**做 `count(*)` 跑整天：~**13.7M 行**，差 **0.224%**
+- **暗发布**：toggle 默认关 → 预生产 → 生产；**deploy 和 release 分开**
+
+### R
+- 生产流量切换前，一整天 **13.7M 行**验证在 **0.224%** 以内
+- 回填 SQL 成了团队的 **CDC 回填模板**
+
+### L
+- **验证和生产用同一条 SQL**，不会验证 A 却发布 B
+- 收入路径的数据源是事实，不是运行时决定
+
+## 追问与回答
+
+- **What's the trade-off of the time window?**
+  - 同一记录**超过一个月**才重处理时绕开去重
+  - 可解释、**写在注释里**的风险；换**扫描量恒定**
+- **Why not dual-write?**
+  - 两个 task 被**同一 toggle 反向控制** = 互斥；没有显式互斥的 dual-write 就是重复收费
+- **What would have made you not switch?**
+  - 见待补
+- **How did you handle the 0.224% difference?**
+  - 是记录数差异，一侧多 **30,760 行**；构成见待补
+- **Postgres vs Snowflake?**
+  - 定价计划在 **Postgres**：OLTP、费率 system of record、唯一约束、header + N 行费用**原子写**
+  - **Snowflake** 做数十亿行聚合；应用层**幂等 upsert** 同步，冲突以 `FAILED_PRECONDITION` 暴露
+- **Who else was involved?**
+  - **定价服务**、**结算平台**、**出款服务**、**收单行**；对齐靠数据契约与信任
+- **Did the toggle ever get flipped back?**
+  - 一次 migration 里 **prod 关、preprod 开**；灰度执行细节无记录，不编
+
+## 换个 LP 讲
+
+- **Ownership**：费用侧最硬的一块；toggle 灰度；窗口化的 ON 风险写在注释里；别说「唯一 owner」
+- **Deliver Results**：数字链 99.9% / 0.224% / 13.7M；模板被复用；不说「零回归」「merchant by merchant」「两周」
+- **Are Right, A Lot**：先 discovery 再动手，用数据 disconfirm 自己；讲选 B 的理由
+- **Dive Deep**：0.07% 全是时序，0.224% 必须解释；两个可解释差异；别混用两个百分比
+- **Insist on the Highest Standards**："Deploy is not release."：toggle 默认关、预生产先放、互补 task 防双计
+- **Invent and Simplify**：用静态拆分替换有状态 fallback，去掉运行时判断
+- **Bias for Action**：暗发布 = 默认关 + 可回退，所以能在生产完全证明前行动；别夸大成「冒险」
+- **Customer Obsession**：费用赶不上净额窗口会影响商户出款金额；未验证的因果别说死
+- **Think Big**：这是一个涉及数百亿交易量项目的前置；别把 $55B 说成我的产出
+- **Frugality**：一个月窗口让扫描成本在只增不减的表上保持恒定（zone-map 剪枝）
+
+## 待补
+
+- 【待补：你事先设的「不切换」门槛是多少；没有预设门槛，如实说「我判断 0.224% 可接受」】
+- 【待补：这 0.224% 的构成，是否逐类解释】
+- 【待补：团队规模与你的 PR 数】
+- 【待补：选 B 而不是 A 时，评审人里有没有资深工程师倾向 A，你怎么说服的 / 被说服的（Have Backbone / Are Right A Lot 核心证据）】
+- 【待补：影子核对结果给谁看（定价服务/出款服务/收单行对接人），他们的反应，谁批准放开 toggle】
+- 【待补：CDC 回填模板被谁用过、用了几次】
+- 【待补：toggle 打开后至今的线上指标，有无回退/事故；没有就不说「零回归」】
+
+<details><summary>逐字稿</summary>
 
 > Our pass-through fees — interchange, scheme, chargeback — all came from the acquirer's transaction view, and that view sometimes wasn't populated until after the daily payout cutoff, so fees missed the net-settlement window. I owned switching the biggest category, credit interchange, to the settlement view, which arrives earlier.
 >
@@ -52,102 +93,3 @@
 > Before switching I ran a discovery comparison — a full outer join, field by field — with over ninety-nine point nine percent parity and every difference explained. Then I ran the production query itself as a `count(*)` over a full day: about 13.7 million rows, within 0.224 percent. Validation and production share the same SQL, so I can't validate one thing and ship another. I shipped it dark — toggle off, enabled in pre-prod, then production — because deploy and release are two separate steps. The backfill SQL became the team's template for CDC backfills.
 
 </details>
-
-## 3. 2 分钟口述提纲
-
-**I turned "will the numbers match?" from an opinion into a query, and shipped the switch dark.**
-
-**S · Situation**
-- Net settlement moves large merchants to a daily **net payout** from the acquirer: **T+X to T+1**, ~**$450M a month** of float — the **program** number, not mine.
-- Pass-through fees came from the transaction view, which sometimes filled in after the **payout cutoff**.
-
-**T · Task**
-- I **own the fee side**; I moved credit **interchange**, the biggest category, to the earlier settlement view.
-
-**A · Action** (in the order it happened)
-1. Chose a **static split** by fee type behind a **toggle** over a smarter fallback; accepted weeks of parallel running and more SQL.
-2. **Discovery**: full outer join with null-safe equality — **>99.9%** parity; **0.07%** mismatches were one-sided timing; two differences explained.
-3. **Built** the procedure: a `MERGE` on a synthetic **invoice-number key**, so hourly reruns can't double-bill.
-4. Added a **one-month window** on the merge for partition pruning; documented trade-off: reprocessing after a month **bypasses dedup**.
-5. Joined the **quality-gate status**, plus a feature gate and an **Amex exclusion**; the old task excludes interchange only when the toggle is on.
-6. **Pre-cutover**: ran the production query as `count(*)` over a full day — **13,737,670 vs 13,768,430**, **+0.224%**, judged acceptable.
-7. **Released**: toggle default off, pre-prod on, then production.
-
-**R · Result**
-- **>99.9%** field parity, **0.07%** timing-only mismatches, **+0.224%** row-count difference — three different numbers.
-- The backfill SQL became the team's **CDC template**.
-
-**L · Learning / Mechanism**
-- A revenue-path source of truth is a **fact**, not a runtime decision; the same SQL **validates and ships**.
-- **What I'd do differently:** 【待 Chi 补：What I'd do differently；以及事先设的"不切换"门槛——没有就如实说「我判断 0.224% 可接受」】
-
-<details><summary>逐字稿（参考，不背）</summary>
-
-> **Context.** Net settlement is a multi-quarter program to move large merchants to a daily net payout directly from the acquirer, which shortens payout from T+X to T+1 and frees around 450 million dollars a month of float. That's the program-level number — I'm not the epic's owner of record. I own the fee side of it.
->
-> **The problem.** Pass-through fees came from the acquirer's transaction view, which sometimes filled in after the payout cutoff. Credit interchange is the biggest category, so I owned moving it to the settlement view, which arrives earlier.
->
-> **The decision.** Option A: make the dynamic fallback smarter. Option B: split statically by fee type — interchange from settlement, everything else unchanged — behind a toggle. I chose B because the fallback had grown stateful and I wanted a revenue-path source of truth to be a fact. I accepted weeks of running two things in parallel and more SQL.
->
-> **Discovery.** A full outer join with null-safe equality across two normalized shapes, field by field. Over 99.9 percent parity; the 0.07 percent mismatches were all records present on one side only that day, which is timing, not conflict; two differences I could explain.
->
-> **Mechanics.** The procedure merges on a synthetic key from the invoice number so hourly reruns can't double-bill; the merge condition has a one-month window so it keeps partition pruning on an ever-growing staging table — the trade-off, which I documented, is that reprocessing a record more than a month later bypasses dedup; it joins the quality-gate status so we never read a settlement day that hasn't passed checks; and a feature gate plus an Amex exclusion. The old task excludes interchange only when the toggle is on, so the two can't double-count.
->
-> **Pre-cutover validation.** I took the production query that was about to ship, turned it into a `count(*)`, and ran a full day: 13,737,670 against 13,768,430, plus 0.224 percent, which I judged acceptable.
->
-> **Release.** Toggle default off, pre-prod on, then production. The backfill SQL became the team's CDC template.
-
-</details>
-
-## 4. 适用 LP 与改角度
-
-| LP | 开场一句 | 重点讲 | 避免 |
-|---|---|---|---|
-| **Ownership** (P) | "I own the fee side of net settlement — specifically the interchange track." | 费用侧最硬的一块；toggle 灰度；窗口化 ON 风险写在注释里 | 说成「唯一 owner」 |
-| **Deliver Results** (P) | "The switch was verified on a full day of 13.7M rows before any production traffic moved." | 数字链：99.9% / 0.224% / 13.7M；模板被复用 | 说「零回归」「merchant by merchant」「两周」——无证据 |
-| **Are Right, A Lot** (P) | "I tested the decision before betting a revenue path on it: field-level discovery, then the production query as count(*)." | 先 discovery 再动手；用数据 disconfirm 自己；选 B 的理由 | — |
-| **Dive Deep** (S) | "A 0.07 percent mismatch was all timing; a 0.224 percent difference had to be explained." | 两个数字性质不同；两个可解释差异 | 混用两个百分比 |
-| **Insist on the Highest Standards** (S) | "Deploy is not release." | toggle 默认关；预生产先放；互补 task 防双计 | — |
-| **Invent and Simplify** (S) | "I replaced a stateful fallback with a static split." | 去掉运行时判断，选事实 | — |
-| **Bias for Action** (S) | "I shipped it dark so I could move before it was fully proven in production." | 默认关 + 可回退 = reversible | 夸大成「冒险」 |
-| **Customer Obsession** (S) | "Fees that miss the payout cutoff come out of the merchant's net payout." | 费用赶不上净额窗口 = 对商户出款金额有影响 | 推断；未验证的因果别说死 |
-| **Think Big** (S) | "The change is a prerequisite for a program that moves tens of billions in volume." | 项目级背景 | 把 $55B 说成我的产出 |
-| **Frugality** (S) | "The one-month window keeps scan cost constant on a table that only grows." | zone-map 剪枝 | — |
-
-## 5. 追问（≥5）
-
-1. **Trade-off of the time window?**
-   - 同一记录超过**一个月**才重处理时绕开去重。
-   - 可解释、**写在注释里**的风险敞口。
-   - 换取**扫描量恒定**。
-2. **Why not dual-write?**
-   - 两个 task 被**同一 toggle 反向控制**，这就是**互斥**。
-   - 没有显式互斥的 dual-write 就是**重复收费**。
-3. **What would have made you not switch?**
-   - 【待 Chi 补：你事先设的"不切换"门槛是多少？若没有预设门槛，如实说「我判断 0.224% 可接受」】
-4. **How did you handle the 0.224% difference?**
-   - **记录数差异**；一侧比另一侧多 **30,760 行**（13,768,430 − 13,737,670，自行算）。
-   - 是否逐类解释：【待 Chi 补：这 0.224% 的构成】
-5. **Postgres vs Snowflake?**
-   - 定价计划在 **Postgres**：OLTP、费率 system of record、唯一约束、header + N 行费用**原子写**。
-   - **Snowflake** 做数十亿行聚合。
-   - 应用层**幂等 upsert** 同步，冲突以 `FAILED_PRECONDITION` 暴露。
-6. **Who else was involved?**
-   - **定价服务**、**结算平台**、**出款服务**和**收单行**；对齐靠数据契约与信任（Answers Q10）。
-   - 【待 Chi 补：团队规模与我的 PR 数】
-7. **Did the toggle ever get flipped back?**
-   - 证据：生产在一次 migration 里 **prod 关、preprod 开**。
-   - 灰度执行细节**无记录**，不编。
-
-## 6. 证据边界
-
-不说「唯一 owner」「merchant by merchant」「两周」「零回归」。PR #1615（+634）、#1939、#1833（CDC 回填模板）；Confluence 2698298357 / 2747965111 / 2747848324；Jira DTBTTFOUND-2461 / 2640。
-
-## 7. Senior 升级点（bar = senior）
-
-当前档位：**ambiguity、trade-off with data、mechanism（可复用模板）已到 senior**；**cross-team 对齐与"向 senior 干系人说服"的细节缺失**。
-- 【待 Chi 补：选 B 而不是 A 的时候，评审人里有没有资深工程师倾向 A？你怎么说服的 / 被说服的？（这是 Have Backbone / Are Right A Lot 的核心证据）】
-- 【待 Chi 补：影子核对结果是给谁看的（定价服务/出款服务/收单行对接人？）他们的反应是什么，谁批准放开 toggle？】
-- 【待 Chi 补：CDC 回填模板被谁用过、用了几次（"someone else used my template" = raising the bar）】
-- 【待 Chi 补：toggle 打开后至今的线上指标（有无回退/事故）——没有就不说 "零回归"】
-- 升级句：「I turned 'will the numbers match?' from an opinion into a query, and the method became the team's template.」

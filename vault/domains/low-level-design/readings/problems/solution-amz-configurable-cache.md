@@ -621,12 +621,9 @@ if __name__ == "__main__":
 
 时间不够时先砍：统计、TTL、`CacheConfig`；绝对不砍：策略与后端的拆分，以及失败顺序。
 
-## 来源与延伸
+## 延伸阅读
 
-- 题目来源：Hello Interview 社区题库的 Amazon 题目页：https://www.hellointerview.com/community/questions?company=Amazon ——题目原话（2026-09-20 中级与 2026-10-01 资深各一份报告）：设计一个可配置的缓存系统，支持可插拔的淘汰策略（如 LRU、LFU）和可互换的存储后端（如内存、文件系统、heap、stack）。页面只给出这一句话，没有解法；商业站点，只链接不引用。
-- 一亩三分地 2026-09-18 SDE II 电面报告：https://www.1point3acres.com/bbs/thread-1189999-1-1.html ——第一道题是 LRU 缓存，说明起点是 LRU，可配置是追问。正文需要积分，只依赖这一个事实。
-- 哪些是报告的、哪些是补的：报告里只有「淘汰策略可插拔」「存储后端可互换」两句话；过期时间（TTL）、统计、线程安全、配置对象、后端失败时怎么办，以及四关分级，是重建（reconstructed）的追问，读者若有原文，以原文为准。「heap、stack」两个词报告没有解释，按「存储介质」理解。
-- Python 官方文档 `collections.OrderedDict`：https://docs.python.org/3/library/collections.html#collections.OrderedDict ——`move_to_end` 与 `popitem(last=False)` 都是 O(1)，文档里有一个 LRU 范例；与它不同的是，这里把「顺序」和「值」拆开了，因为值可能在文件里。
-- Python 官方文档 `typing.Protocol`：https://docs.python.org/3/library/typing.html#typing.Protocol ——解释了为什么策略与后端的接口用结构化子类型而不是抽象基类。
-- 题库里的相关题解：[[solution-lru-cache]]（LRU/LFU 的链表与频率桶、装饰器式 TTL）、[[solution-ttl-cache]]（惰性与主动过期、单飞回源）。主要分歧：前者的 TTL 与线程安全是装饰器，这里把 TTL 放进 `Cache`（见决策四）；前者的策略自带值，这里只记 key。
+- [Python 官方文档 `collections.OrderedDict`](https://docs.python.org/3/library/collections.html#collections.OrderedDict)：`move_to_end` 与 `popitem(last=False)` 都是 O(1)，文档里有 LRU 范例。
+- [Python 官方文档 `typing.Protocol`](https://docs.python.org/3/library/typing.html#typing.Protocol)：结构化子类型，策略与后端的接口为什么不必用抽象基类。
+- 相关题解：[[solution-lru-cache]]（LRU/LFU 的链表与频率桶、装饰器式 TTL）、[[solution-ttl-cache]]（惰性与主动过期、单飞回源）。
 - 概念：[[patterns.strategy|策略模式与可替换算法（Strategy）]]、[[patterns.structural|结构型模式（Structural）]]。

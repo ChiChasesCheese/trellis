@@ -1,13 +1,15 @@
 """Push recent/cards/*.json into Anki as whole-problem recall cards, in file order.
 
-    uv run --with markdown --with pygments python vault/interviews/companies/amazon/recent/push_cards.py [--dry-run]
+    uv run --with markdown --with pygments python scripts/amazon_push_cards.py [--dry-run] [--set recent|patterns]
 
-Cards land in `LeetCode Tops::22 Amazon 近一月原题（2026-10）`, note type `Trellis QA` (the same front/back styling as the
+`--set recent` (default): research/companies/amazon/cards/coding.json → `LeetCode Tops::22 Amazon 近一月原题（2026-10）`.
+`--set patterns`: research/companies/amazon/cards/patterns_*.json → `LeetCode Tops::23 Amazon 模式强化（patterns）`.
+Note type `Trellis QA` (the same front/back styling as the
 `leetcode-tops::amazon-a` cards: title line + meta chip on the front, label chips and highlighted code on the back).
 A note is keyed by its `id::<id>` tag, so re-running updates fields instead of duplicating. New cards are positioned
 after every other new LeetCode Tops card, in the order the JSON lists them; answered cards are never moved. The deck
-uses the parent deck's options preset (never the shared Default one). The footer links the study note in Obsidian
-(vault `Trellis_`, addressed by note name) and the original report.
+uses the parent deck's options preset (never the shared Default one). The footer links only the study note in Obsidian
+(vault `Trellis_`, addressed by note name) — no provenance on a card (proposals/WRITING_RULES.md §11).
 """
 from __future__ import annotations
 
@@ -24,11 +26,15 @@ from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import PythonLexer
 
-HERE = Path(__file__).resolve().parent
+CARDS = Path(__file__).resolve().parents[1] / "research/companies/amazon/cards"
 PARENT = "LeetCode Tops"
-DECK = f"{PARENT}::22 Amazon 近一月原题（2026-10）"
-CRUMB = "Amazon 近一月原题（1p3a + Hello Interview，2026-09-16..10-16）"
-TAG_BRANCH = "leetcode-tops::amazon-recent-1m"
+SETS = {
+    "recent": (["coding.json"], f"{PARENT}::22 Amazon 近一月原题（2026-10）", "Amazon 近一月原题",
+               "leetcode-tops::amazon-recent-1m"),
+    "patterns": (["patterns_*.json"], f"{PARENT}::23 Amazon 模式强化（patterns）", "Amazon 模式强化",
+                 "leetcode-tops::amazon-patterns"),
+}
+DECK = CRUMB = TAG_BRANCH = ""
 VAULT = "Trellis_"
 MODEL = "Trellis QA"
 FENCE = re.compile(r"```python\n(.*?)```", re.S)
@@ -70,23 +76,23 @@ def back(card: dict) -> str:
     if card.get("note"):
         name = Path(card["note"]).stem
         links.append(f'<a href="obsidian://open?vault={quote(VAULT)}&file={quote(name)}">{html.escape(name)}</a>')
-    for s in card.get("sources", []):
-        links.append(f'<a href="{html.escape(s["url"])}" class="web">{html.escape(s["label"])} ↗</a>')
     footer = '<div class="sources">Go deeper: ' + " · ".join(links) + "</div>" if links else ""
     return render(card["answer_md"]) + footer
 
 
 def tags(card: dict) -> list[str]:
-    t = ["amazon", "recent", f"id::{card['id']}", f"{TAG_BRANCH}::{card['slug']}"]
-    t.append("reconstructed" if card.get("reconstructed") else "reported")
-    return t
+    return ["amazon", f"id::{card['id']}", f"{TAG_BRANCH}::{card['slug']}"]
 
 
 def main(argv: list[str]) -> int:
+    global DECK, CRUMB, TAG_BRANCH
     dry = "--dry-run" in argv
+    name = argv[argv.index("--set") + 1] if "--set" in argv else "recent"
+    patterns, DECK, CRUMB, TAG_BRANCH = SETS[name]
     cards = []
-    for f in sorted((HERE / "cards").glob("*.json")):
-        cards += json.loads(f.read_text(encoding="utf-8"))
+    for pattern in patterns:
+        for f in sorted(CARDS.glob(pattern)):
+            cards += json.loads(f.read_text(encoding="utf-8"))
     ids = [c["id"] for c in cards]
     if len(set(ids)) != len(ids):
         raise SystemExit("duplicate card ids")
