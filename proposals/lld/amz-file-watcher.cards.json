@@ -1,0 +1,74 @@
+[
+ {
+  "id": "amz-file-watcher-how-asked-and-three-questions",
+  "node": "amazon.amz-file-watcher",
+  "type": "qa",
+  "q": "Amazon 面试里「文件监听器（File Watcher）」是怎么问的？开场先问哪三个澄清问题？",
+  "a": "报告里只有题名：2026-09 一亩三分地的 SDE II 电面，三道题之一是「设计 file watcher system」，题面细节不可见，其余都是重建。三问：(1) 靠系统通知还是定期轮询——决定依赖与延迟，答案是轮询并把读文件系统藏在接口后；(2) 递归与否、是否过滤文件——两个参数；(3) 改名与写到一半的文件怎么报——轮询里改名是删除加新建，半截文件要去抖。",
+  "tags": []
+ },
+ {
+  "id": "amz-file-watcher-objects-and-their-jobs",
+  "node": "amazon.amz-file-watcher",
+  "type": "qa",
+  "q": "在 Amazon 文件监听器设计里，应有哪几个对象？各自只负责什么？",
+  "a": "`Stat`：文件指纹（mtime_ns、size）。`Event`：一次变化（种类 + 路径），订阅者靠它更新自己。`FileSystem`：协议，只有 `scan(root, recursive)` 一个方法，真实磁盘与测试假实现各一个。`diff`：纯函数，两张快照进、事件列表出。`Watcher`：持有已提交的快照、订阅表、后台线程，只有 `poll()` 推进。切分依据：读磁盘、比对、回调的变化原因不同。",
+  "tags": []
+ },
+ {
+  "id": "amz-file-watcher-stage1-poll-and-diff-in-code",
+  "node": "amazon.amz-file-watcher",
+  "type": "qa",
+  "q": "在 Amazon 文件监听器设计里，第 1 关的核心 `poll()` 怎么写？第一次调用该报什么？",
+  "a": "第一次只拍基线，不报事件；之后拍快照、与已提交的世界比对：\n```python\ndef poll(self) -> list[Event]:\n    raw = self._fs.scan(self._root, self._recursive)\n    with self._lock:\n        if self._committed is None:      # 第一次：只建基线\n            self._committed = raw\n            return []\n        events = diff(self._committed, raw)\n        self._committed = raw\n        targets = list(self._subs.values())\n    self._dispatch(events, targets)       # 回调在锁外\n    return events\n```\n监听开始前就存在的文件不算新建。",
+  "tags": []
+ },
+ {
+  "id": "amz-file-watcher-snapshot-diff-mtime-and-size",
+  "node": "amazon.amz-file-watcher",
+  "type": "qa",
+  "q": "在 Amazon 文件监听器设计里，快照 `路径 → (mtime_ns, size)` 怎么比出 CREATED、MODIFIED、DELETED？为什么指纹不能只有 mtime？",
+  "a": "新快照独有的路径是 CREATED，旧快照独有的是 DELETED，两边都有而指纹不同的是 MODIFIED。mtime 有时间粒度（有的文件系统是 1–2 秒），同一粒度内改两次，第二次 mtime 不变；加 size 后，mtime 同为 100、size 从 10 变 25 就能发现。剩余盲区：同一粒度内改成同样长度的内容，真实工具用 inode、ctime 或内容哈希补。",
+  "tags": []
+ },
+ {
+  "id": "amz-file-watcher-decision-polling-vs-os-notification",
+  "node": "amazon.amz-file-watcher",
+  "type": "qa",
+  "q": "在 Amazon 文件监听器设计里，用轮询比对快照还是用系统通知（inotify 等）？选了轮询之后怎样保留换实现的余地？",
+  "a": "系统通知延迟低、不耗 CPU，但各平台接口不同、标准库没有、不能在白板上手写；轮询只用标准库、行为一致，代价是延迟等于轮询间隔并要遍历目录。选轮询，同时把读文件系统藏在 `FileSystem.scan` 后面：以后挂上通知实现，比对、订阅、去抖都不动。",
+  "tags": []
+ },
+ {
+  "id": "amz-file-watcher-followup-debounce-by-stability",
+  "node": "amazon.amz-file-watcher",
+  "type": "qa",
+  "q": "在 Amazon 文件监听器设计里，编辑器保存大文件会连续写多次，怎样不用时钟去抖（debounce）？",
+  "a": "一个路径的新状态必须在连续两次轮询里相同才被采纳，否则沿用订阅者已知的旧状态，再正常比对。时间线：文件出现（大小 10）无事件；变成 500 无事件；仍是 500，报告一个 CREATED。连写 6 次只得到最后一个 MODIFIED；出现又消失的文件没有事件。轮询间隔本身就是安静窗口，不需要时钟。代价：事件晚一个间隔，持续被写的日志永远不报。",
+  "tags": []
+ },
+ {
+  "id": "amz-file-watcher-edge-callback-failure-isolation",
+  "node": "amazon.amz-file-watcher",
+  "type": "qa",
+  "q": "在 Amazon 文件监听器设计里，一个订阅者的回调抛异常、或在回调里订阅、取消订阅，会发生什么？怎么设计才不会出事？",
+  "a": "回调若在锁内调用，回调里再订阅就死锁（`Lock` 不可重入）。做法：锁内复制事件和订阅者列表，释放锁后再逐个调用；每个回调单独 `try/except`，异常记进有上限（如 100 条）的失败队列，其余订阅者和下一轮轮询照常。无上限的失败列表会随一个一直出错的订阅者无限增长。",
+  "tags": []
+ },
+ {
+  "id": "amz-file-watcher-concurrency-callback-thread-and-stop",
+  "node": "amazon.amz-file-watcher",
+  "type": "qa",
+  "q": "在 Amazon 文件监听器设计里，后台线程怎么停？慢回调和「在回调里调用 stop()」各有什么问题？",
+  "a": "循环是 `while not stopped: poll(); stopped.wait(interval)`，`threading.Event.wait` 既是可中断的睡眠也是停止信号；`stop()` 置位后 `join`。回调跑在轮询线程上，所以慢回调推迟下一轮扫描，要隔离就让回调只入 `queue.Queue`、另一线程消费。回调里调用 `stop()` 时，当前线程就是轮询线程，`join` 自己会抛 `RuntimeError`，所以先判断不是当前线程再 join。",
+  "tags": []
+ },
+ {
+  "id": "amz-file-watcher-common-mistake-sleep-tests-and-first-scan-events",
+  "node": "amazon.amz-file-watcher",
+  "type": "qa",
+  "q": "在 Amazon 文件监听器设计里，常见的两个错误是什么？一个出在测试，一个出在第一次扫描。",
+  "a": "测试：创建真实文件再 `time.sleep(1)` 后断言，慢且偶尔失败；改为注入假文件系统（测试直接写每个文件的 mtime 与 size）并显式调用 `poll()`，线程测试用 `Event` 等「回调被调用了」。第一次扫描：把目录里已有的文件全报成 CREATED，订阅者被淹没；应让第一次 `poll()` 只建基线，监听开始前就存在的文件不算新建。",
+  "tags": []
+ }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "id": "amz-parking-fees-how-asked-and-three-questions",
+    "node": "amazon.amz-parking-fees",
+    "type": "qa",
+    "q": "Amazon 面试里「停车场计费（Parking Lot Fees）」是怎么问的？开场先问哪三个澄清问题？",
+    "a": "Hello Interview 的社区报告（2026-09-20，资深岗）：停车场题的重点在计算停车费，不同场景有不同逻辑；代码要语法正确，但不会被运行。三问：(1) 不足一小时怎么收——整小时进位还是按分钟折算，免费宽限期是「全免」还是「扣掉」；(2) 费率随什么变——车型、时段、周末，决定要不要把停留切段；(3) 封顶按日历日还是入场起 24 小时，丢票怎么收。",
+    "tags": []
+  },
+  {
+    "id": "amz-parking-fees-objects-and-their-jobs",
+    "node": "amazon.amz-parking-fees",
+    "type": "qa",
+    "q": "在 Amazon 停车场计费设计里，应有哪几个对象？各自只负责什么？",
+    "a": "`Tariff`：纯数据的价目表（按车型的小时单价、每日封顶、宽限期），只回答「此刻单价多少、下次变价是何时」。`FeeEngine`：把一次停留切段并算钱，不持有票。`Adjustment`：出场后的会员折扣、丢票罚款等调整。`FeeDesk`：发票、凭票结算，唯一有状态的类。`Money`：整数分。切分依据：价目表、算法、票各自因不同原因而变。车位分配属于另一道题的停车场，这里不重做。",
+    "tags": []
+  },
+  {
+    "id": "amz-parking-fees-stage1-bill-by-segments",
+    "node": "amazon.amz-parking-fees",
+    "type": "qa",
+    "q": "在 Amazon 停车场计费设计里，第 1 关「按车型的小时费率算出场费」的核心循环怎么写？",
+    "a": "从入场时刻起，每次走到「下一个变价时刻」或出场时刻，把这一段的「分/小时 × 秒数」累加到所在日历日；最后每个日历日除以 3600 向上取整到分。小时费率是 400 分的小汽车，周五 10:00 到 12:00：400×7200÷3600 = 800 分。\n```python\nat = entered\nwhile at < exited:\n    end = min(tariff.next_change(at), exited)\n    span = int((end - at).total_seconds())\n    rate = tariff.rate_at(vehicle, at).cents\n    units[at.date()] = units.get(at.date(), 0) + rate * span\n    at = end\nraw = Money(-(-units[day] // 3600))  # 向上取整，每天一次\n```",
+    "tags": []
+  },
+  {
+    "id": "amz-parking-fees-stay-crossing-rate-boundary",
+    "node": "amazon.amz-parking-fees",
+    "type": "qa",
+    "q": "在 Amazon 停车场计费设计里，一辆小汽车周五 19:30 入场、周六 08:30 出场，工作日 08:00–20:00 是高峰（400 分/小时），其余及周末是非高峰（200 分/小时），怎么算？为什么要切段？",
+    "a": "沿 20:00 和午夜切三段。周五：19:30–20:00 高峰 30 分钟 = 200 分，20:00–24:00 非高峰 4 小时 = 800 分，当日 1000 分。周六整天非高峰：00:00–08:30 共 8.5 小时 = 1700 分。合计 2700 分（27.00）。若用入场时刻的单价乘总时长，会按高峰价收 13 小时，多收 2500 分。变价时刻只有午夜、高峰开始、高峰结束三类，所以 `next_change` 是三个候选取最小。",
+    "tags": []
+  },
+  {
+    "id": "amz-parking-fees-tariff-data-vs-scenario-classes",
+    "node": "amazon.amz-parking-fees",
+    "type": "qa",
+    "q": "在 Amazon 停车场计费设计里，「车型、时段、周末各有一套逻辑」应该写成一串 if、每个场景一个策略类，还是别的做法？",
+    "a": "两种直觉做法都有毛病：一串 if 每加一个场景就要改核心方法；每个场景一个策略类则无法组合，因为一次停留会同时跨过多个场景（夜间加周末）。选择：价目表是数据（`Tariff`），引擎按变价时刻切段，每段单价固定，场景再多也只是改数据或多一个变价时刻。只有出场后的调整（会员折扣、丢票罚款）才用 `Adjustment` 接缝，因为它们有两个真实实现且要按顺序叠加。",
+    "tags": []
+  },
+  {
+    "id": "amz-parking-fees-followup-daily-cap-per-calendar-day",
+    "node": "amazon.amz-parking-fees",
+    "type": "qa",
+    "q": "在 Amazon 停车场计费设计里，面试官追加「每辆车每天最多收一个封顶额」，改哪里？跨多天的停留怎么封？",
+    "a": "封顶放在 `Tariff.daily_cap`（按车型的数据），`FeeEngine` 在每个日历日结算时取 `min(当日应收, 封顶)`，切段循环一行不动。因为切段已经在午夜断开，所以天然按日历日封顶。例：摩托车封顶 1000 分，周四 08:00 到周六 08:00，三天各收 1000、1000、800，共 2800；若不分天、整体封一次顶则只收 1000。「入场起 24 小时」的封顶是另一种口径，要在澄清阶段问清。",
+    "tags": []
+  },
+  {
+    "id": "amz-parking-fees-lost-ticket-adjustment-order",
+    "node": "amazon.amz-parking-fees",
+    "type": "qa",
+    "q": "在 Amazon 停车场计费设计里，丢票出场怎么处理？它和会员折扣同时出现时，顺序为什么重要？",
+    "a": "丢票没有票号，用车牌从未结算的票里找到入场记录，照常计价，再加固定罚款（`LostTicketPenalty`），票同样关闭。调整按列表顺序应用：小汽车周五 10:00–12:00 应收 800 分，罚款 1500 分，会员 50% 折扣。先折扣后罚款：400 + 1500 = 1900；先罚款后折扣：(800 + 1500) 再减半 = 1150，罚款也被打了折。顺序由调用方显式给出，每一步在收据上留一行明细。",
+    "tags": []
+  },
+  {
+    "id": "amz-parking-fees-concurrency-two-exits-one-ticket",
+    "node": "amazon.amz-parking-fees",
+    "type": "qa",
+    "q": "在 Amazon 停车场计费设计里，两个出口同时扫同一张票，会出什么问题？怎么保证只收一次钱？",
+    "a": "问题是「查票存在」与「删除票」被拆成两步：两个线程都查到票在，各自算费并放行。GIL 只保证单条字节码原子，不保证这两步连在一起。做法：`FeeDesk` 用一把锁，在锁内用 `dict.pop` 一次性取走票，取不到的抛 `UnknownTicketError`；计价本身是纯计算，放在锁外。16 个线程同时出场同一张票，恰好 1 个拿到收据，15 个收到异常；已结算的票不再保留，所以票表不会无限增长。",
+    "tags": []
+  },
+  {
+    "id": "amz-parking-fees-common-mistake-rounding-per-segment",
+    "node": "amazon.amz-parking-fees",
+    "type": "qa",
+    "q": "在 Amazon 停车场计费设计里，候选人最常见的计费错误是什么？给出一个会暴露它的输入。",
+    "a": "每一段各自取整，而不是同一天累加后只取整一次。小汽车周五 19:59:59 入场、20:15:04 出场：高峰 1 秒、非高峰 904 秒，合计 (400×1 + 200×904)÷3600 = 50.2，向上取整是 51 分；每段各取整则 1 + 51 = 52 分，多收 1 分，段数越多错得越多。同类错误：用 float 存钱、在计费方法里直接 `datetime.now()`、封顶用入场时刻的单价乘总时长。",
+    "tags": []
+  }
+]

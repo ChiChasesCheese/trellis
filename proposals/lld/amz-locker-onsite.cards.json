@@ -1,0 +1,50 @@
+[
+  {
+    "id": "amz-locker-onsite-how-asked-and-clarify",
+    "node": "amazon.amz-locker-onsite",
+    "type": "qa",
+    "q": "Amazon 现场面里的快递柜（Amazon Locker）LLD 本月是怎么出现的？开场先问哪些澄清问题？",
+    "a": "一亩三分地一篇 SDE II 面经（2026-10-14 发布，现场四轮，10 月 2 日）把它列为 LLD 轮，细节被隐藏，说明代码是「干跑」（dry run）。另有 Hello Interview 的系统设计版：下单时选柜点，凭取件码取件。三问：(1) 柜格尺寸是固定档位还是以后会加；(2) 取件码多久过期、过期后包裹去哪；(3) 一个网点还是多个，是否多快递员并发。",
+    "tags": []
+  },
+  {
+    "id": "amz-locker-onsite-notepad-at-minute-20",
+    "node": "amazon.amz-locker-onsite",
+    "type": "qa",
+    "q": "在 Amazon 现场版快递柜里，写到第 20 分钟时，记事本（不运行的代码）上至少应有什么？",
+    "a": "三个数据类（尺寸、柜格、授权）加一个网点类，且 `deposit` 与 `collect` 的主路径写完整，失败路径用具名异常。时钟、有效期由构造函数传入，不在方法里取现在时间。\n```python\ndef deposit(self, pkg):\n    with self._lock:\n        fits = [l for l in self._free if l.size.holds(pkg.size)]\n        if not fits:\n            raise NoLockerAvailable(pkg.id)\n        locker = min(fits, key=lambda l: l.size.volume)\n        self._free.remove(locker)\n        code = self._new_code()\n        expires = self._clock() + self._ttl\n        self._grants[code] = Grant(locker, pkg, expires)\n        return code\n```",
+    "tags": []
+  },
+  {
+    "id": "amz-locker-onsite-followups-beyond-the-four-stages",
+    "node": "amazon.amz-locker-onsite",
+    "type": "qa",
+    "q": "在 Amazon 现场版快递柜里，除了「分配、取件码、过期」，面试官还会追加什么？各自改哪里、不改哪里？",
+    "a": "社区报告里出现的追加：多个网点、退货（release / return）、并发、持久化表。多网点：新增 `LockerNetwork`，按距离排序后选「装得下且有空位」的网点，单网点类不动。退货：授权加「用途」字段（取件／投件），分配逻辑不动。并发：一把锁罩住「选柜、占柜、发码」。持久化：柜格与授权各一张表，内存对象不变。",
+    "tags": []
+  },
+  {
+    "id": "amz-locker-onsite-dry-run-trace-one-package",
+    "node": "amazon.amz-locker-onsite",
+    "type": "qa",
+    "q": "在 Amazon 现场版快递柜里，代码不会被运行时，怎样用手工推演证明它是对的？给一个具体的推演。",
+    "a": "写完后选一个包裹逐行走一遍，每步写出空闲集合和码表。三个柜格 S、M、L 全空，投一个小包裹：三个柜格都装得下，取体积最小的 S，空闲变 {M, L}，码表 {AB12: S}。取件 AB12：码表变 {}，S 回到空闲 {S, M, L}。再取 AB12：码表里没有，抛 `UnknownCode`。再补一条过期路径：时钟越过期限后取件，抛 `ExpiredCode`。四个状态表写在记事本边上，就是证据。",
+    "tags": []
+  },
+  {
+    "id": "amz-locker-onsite-from-lld-to-system-design",
+    "node": "amazon.amz-locker-onsite",
+    "type": "qa",
+    "q": "在 Amazon 快递柜的系统设计版里（下单时选柜点、凭取件码取件），相比机器编码版多出了哪几件要回答的事？",
+    "a": "分配的时机前移：下单（checkout）时就要为包裹预留一个柜格，预留带有效期，没到货就到期释放。状态落到数据库：柜格表上用一条带条件的更新（状态为空闲才改为预留）占格，防止两个订单抢同一格。取件码要不可猜，且只存哈希。内存里的锁变成数据库行上的条件更新，过期扫描变成定时任务。类的职责划分仍可沿用。",
+    "tags": []
+  },
+  {
+    "id": "amz-locker-onsite-how-the-round-is-lost",
+    "node": "amazon.amz-locker-onsite",
+    "type": "qa",
+    "q": "在 Amazon 现场版快递柜里，这一轮最常见的丢分方式是什么？",
+    "a": "把时间花在附带的难点上：先写最近网点的地理算法或数据库表，单网点的主流程还没有写完整、没有手工推演过。另一个常见错误：把取件码当密码，按包裹计数错误次数；码是持有即凭证，只能按柜机限流。顺序应是：澄清、单网点主流程加失败路径、手工推演，然后才谈多网点、退货和持久化。",
+    "tags": []
+  }
+]
