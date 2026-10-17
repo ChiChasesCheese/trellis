@@ -82,8 +82,3 @@ def find_all_concatenated_words(words):
 <details><summary>答案</summary>第一段之后「至少两段」已经满足，剩余部分只关心能否切开，与段数无关。</details>
 3. 去掉 `dead` 会怎样？
 <details><summary>答案</summary>答案仍正确，但同一后缀被重复展开，最坏指数级。</details>
-
-## 来源
-- 1point3acres 帖子 1192241（L5 店面，2026-10-07）的站内摘要「a LeetCode 472 variant using Trie and DFS」：https://www.1point3acres.com/bbs/thread-1192241-1-1.html 。「变体」具体怎么变，帖子没写 **(reconstructed)**。
-- LC 官方 https://leetcode.com/problems/concatenated-words/ （约束取自该页）。
-- 代码：`../../coding/solutions/472_concatenated_words_trie.py`。已有 `../../coding/solutions/472_concatenated_words.py`（词集合 DP / 最短优先 Trie）。

@@ -86,10 +86,3 @@ BFS 未命中：O(V+E)；命中：O(1)；缓存内存 O(查询对数)，可以�
 <details><summary>答案</summary>否则不连通的查询每次都要完整 BFS 才能发现无解。</details>
 3. 缓存里 `1 / ans` 在什么条件下不能算？
 <details><summary>答案</summary>`ans == 0` 时除零；values 都大于 0 所以不会发生，代码仍做了保护。</details>
-
-## 来源
-- 1point3acres 帖子 1191084（L6 店面，2026-09-28）摘要「BQ + BFS coding + caching follow-up」：https://www.1point3acres.com/bbs/thread-1191084-1-1.html 。
-- 1p3a 题库条目 `evaluate-division-lc-399`（电话，2026-09-28）。
-- 缓存追问的具体内容被积分墙挡住，上文按「重复查询怎么加速、新增等式后缓存怎么办」来写 **(reconstructed)**。
-- LC 官方 https://leetcode.com/problems/evaluate-division/ （约束取自该页）。
-- 代码：`../../coding/solutions/399_evaluate_division_cached.py`（BFS 版 + 缓存）；已有 `../../coding/solutions/399_evaluate_division.py`（带权并查集）。

@@ -104,9 +104,3 @@ class Lifting:                                            # O(n log n) build, O(
 <details><summary>答案</summary>`a`：上爬 b 到与 a 同深度时 `a == b`，循环不执行直接返回。</details>
 3. 倍增表里根的祖先为什么指向自己？
 <details><summary>答案</summary>避免越界，让「提升超过根」的操作停在根上；比较时 `table[a] != table[b]` 对根自然相等。</details>
-
-## 来源
-- 1p3a 题库条目 `lowest-common-manager-org-chart`（电话/现场，3 个来源，2026-07-31 至 2026-10-01），条目名即「组织架构树 + 两名员工，找最低的共同上级」；题库正文被挡。
-- 1point3acres 帖子 1191548（L6 店面，2026-10-01）正文「coding 经典lc」：https://www.1point3acres.com/bbs/thread-1191548-1-1.html ，指 LC 235/236 一类的最近公共祖先。
-- 题面按「公司组织架构」版本写，树的形式（是否有父指针、是否二叉）未知 **(reconstructed)**。
-- 代码：`code/amz_lowest_common_manager.py`。

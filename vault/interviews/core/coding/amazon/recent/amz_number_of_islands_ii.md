@@ -130,9 +130,3 @@ class StreamIslands:
 <details><summary>答案</summary>后续行只能通过最新一行的格子接触到它；最新一行没有它的任何格子，就永远不会再连上。</details>
 4. U 形输入为什么会让「提前结算」出错？
 <details><summary>答案</summary>左右两条臂在中间几行互不相连，各自看起来像独立的岛，只有最后一行才把它们连起来；所以只能在「真的不在最新一行」时结算，不能在「暂时没连上」时结算。</details>
-
-## 来源
-- 1point3acres 帖子 1191823（NG onsite，2026-10-03）：https://www.1point3acres.com/bbs/thread-1191823-1-1.html 。主问题是 LC 200 一类的数岛屿，追问原文为「如果矩阵是流式一行一行进来的怎么办 union find嘛？」。正文被积分墙挡住。
-- 1p3a 题库条目 `number-of-islands-max-area-streaming`（3 个来源，最近 2026-10-03）。
-- LC 305 题面镜像 https://leetcode.ca/all/305.html （官方页为付费题，镜像给出 follow-up「O(k log mn)」）。数据范围没有取到，按「m·n 大到不能每次重扫」处理 **(reconstructed)**。
-- 已有 Anki 卡 `streaming-island-count`（只讲逐行流式）；这一讲把它和 305 连起来。代码：`../../coding/solutions/305_number_of_islands_ii.py`、`code/amz_streaming_islands.py`。

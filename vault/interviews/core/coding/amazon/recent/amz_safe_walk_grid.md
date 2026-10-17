@@ -65,9 +65,3 @@ m·n 个格子，每个最多入队 O(1) 次（常数 = 松弛成功次数，最
 <details><summary>答案</summary>每个不安全格扣 1 点，到终点时剩余血量为 health − cost，需要 ≥ 1，即 cost ≤ health − 1。</details>
 3. 起点是 1 时 `cost[0][0]` 该是多少？
 <details><summary>答案</summary>1，起点也扣血。</details>
-
-## 来源
-- Hello Interview 社区题目 `safe-walk-grid`，约 2026-10-01，中级 APAC：https://www.hellointerview.com/community/questions/safe-walk-grid ；公司页 https://www.hellointerview.com/community/questions?company=Amazon 。
-- 摘要：「Determine whether there's a 4-directional path from the top-left to bottom-right of an m×n binary grid ... so your health stays positive」。报告只有题目名，没有面试官的追问。
-- LC 官方 https://leetcode.com/problems/find-a-safe-walk-through-a-grid/ （约束取自该页）。官方样例 1 和样例 2 即上文两个示例。
-- 代码：`../../coding/solutions/3286_find_a_safe_walk_through_a_grid.py`。

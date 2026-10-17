@@ -4,283 +4,139 @@
   "slug": "number-of-islands-ii",
   "kind": "coding",
   "title": "数岛屿 II（Number of Islands II, LC 305）",
-  "meta": "Hard · Amazon 2026-10",
+  "meta": "Hard",
   "question_md": "`m × n` 的网格一开始全是水。依次给出 `positions`，每个 `[r, c]` 把该格变成陆地（可能重复）。每次变化后返回当前岛屿数（四连通）。\n\n数据范围不限定，按 `m·n` 很大、不能每次重扫整张图来处理。进阶：能否做到 O(k log mn)，k 为 positions 长度。\n\n例：`m=3, n=3, positions=[[0,0],[0,1],[1,2],[2,1]]` → `[1,1,2,3]`。",
   "answer_md": "思路｜并查集（Union-Find）：新格子先算一个新岛（+1），对每个已是陆地的邻居，代表元不同就合并，成功一次岛数 −1；重复添加直接返回当前岛数。字典只存陆地。\n\n```python\ndef num_islands_ii(m, n, positions):\n    parent = {}                                       # only land cells exist in the structure (sparse, O(#adds) memory)\n    size = {}\n\n    def find(x):\n        while parent[x] != x:\n            parent[x] = parent[parent[x]]\n            x = parent[x]\n        return x\n\n    islands, answer = 0, []\n    for r, c in positions:\n        cell = (r, c)\n        if cell in parent:                            # duplicate addLand: nothing changes\n            answer.append(islands)\n            continue\n        parent[cell], size[cell] = cell, 1\n        islands += 1                                  # a brand-new island ...\n        for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):\n            nb = (r + dr, c + dc)\n            if nb in parent:\n                ra, rb = find(cell), find(nb)\n                if ra != rb:                          # ... which every successful merge reduces by one\n                    if size[ra] < size[rb]:\n                        ra, rb = rb, ra\n                    parent[rb] = ra\n                    size[ra] += size[rb]\n                    islands -= 1\n        answer.append(islands)\n    return answer\n```\n\n复杂度｜每次 O(α)，总 O(k·α)，内存 O(k)。\n\n追问｜再加「删除陆地」怎么办？并查集不能拆分，离线倒放把删除变成添加，或线段树分治。",
-  "note": "interviews/companies/amazon/recent/coding/amz_number_of_islands_ii.md",
-  "sources": [
-   {
-    "label": "1p3a 1191823",
-    "url": "https://www.1point3acres.com/bbs/thread-1191823-1-1.html"
-   },
-   {
-    "label": "LC 305 镜像",
-    "url": "https://leetcode.ca/all/305.html"
-   }
-  ],
-  "reconstructed": true,
-  "confidence": "high"
+  "note": "interviews/core/coding/amazon/recent/amz_number_of_islands_ii.md"
  },
  {
   "id": "arm-streaming-islands-bridge",
   "slug": "streaming-islands-bridge",
   "kind": "coding",
   "title": "逐行流式矩阵的岛屿数与最大面积（Streaming islands）",
-  "meta": "Medium · Amazon 2026-10",
+  "meta": "Medium",
   "question_md": "矩阵一行一行地给你（每行 `n` 个 0/1），内存存不下整张图。读完所有行之后，返回岛屿数和最大岛屿面积（四连通）。数据范围不限定，只要求内存与行数无关。\n\n提示：这和「格子一个个变成陆地」的并查集是同一个工具，区别在于哪些信息可以丢掉。",
   "answer_md": "思路｜只保留上一行每格的标签。新格子只会和正上方、正左方连通：新建标签并用并查集合并。一个连通块若不再出现在最新一行，就不会再长大：结算岛数与面积，并从并查集删掉。内存 O(n)。\n\n```python\nclass StreamIslands:\n    def __init__(self, width):\n        self.n = width\n        self.prev = [0] * width                           # label of each cell in the previous row (0 = water)\n        self.parent, self.area = {}, {}                   # only components still touching the previous row live here\n        self.next_id = 1\n        self.closed = 0                                   # islands that can no longer grow\n        self.max_area = 0\n\n    def _find(self, x):\n        while self.parent[x] != x:\n            self.parent[x] = self.parent[self.parent[x]]\n            x = self.parent[x]\n        return x\n\n    def feed(self, row):\n        cur = [0] * self.n\n        for c, cell in enumerate(row):\n            if not cell:\n                continue\n            cur[c] = self.next_id\n            self.parent[self.next_id], self.area[self.next_id] = self.next_id, 1\n            self.next_id += 1\n            for other in (self.prev[c], cur[c - 1] if c else 0):   # neighbour above, neighbour on the left\n                if other:\n                    a, b = self._find(cur[c]), self._find(other)\n                    if a != b:\n                        self.parent[a] = b\n                        self.area[b] += self.area.pop(a)\n        alive = {self._find(x) for x in cur if x}\n        for root in [r for r in self.area if r not in alive]:     # touches no cell of this row: finished\n            self.closed += 1\n            self.max_area = max(self.max_area, self.area.pop(root))\n        self.parent = {x: self._find(x) for x in cur if x}        # forget old ids, keep this row's roots\n        for root in alive:\n            self.parent[root] = root\n        self.prev = cur\n\n    def result(self):                                     # (islands, largest area) of everything fed so far\n        live = list(self.area.values())\n        return self.closed + len(live), max([self.max_area] + live)\n```\n\n复杂度｜时间 O(行数·n·α)，内存 O(n)，与行数无关。\n\n追问｜U 形（两条竖臂最后一行才连通）为什么不能提前结算？因为标签仍然出现在最新一行，才算「还活着」。",
-  "note": "interviews/companies/amazon/recent/coding/amz_number_of_islands_ii.md",
-  "sources": [
-   {
-    "label": "1p3a 1191823",
-    "url": "https://www.1point3acres.com/bbs/thread-1191823-1-1.html"
-   }
-  ],
-  "reconstructed": true,
-  "confidence": "medium"
+  "note": "interviews/core/coding/amazon/recent/amz_number_of_islands_ii.md"
  },
  {
   "id": "arm-lc490",
   "slug": "the-maze",
   "kind": "coding",
   "title": "迷宫（The Maze, LC 490）",
-  "meta": "Medium · Amazon 2026-10",
+  "meta": "Medium",
   "question_md": "二维数组 `maze`，0 是空地，1 是墙，外圈视为墙。球从 `start` 出发，可上下左右滚动，**滚到撞墙才停**，停下后才能换方向。问球能否**停在** `destination`。\n\n范围：行列都不超过 100，至少有 2 个空格，起点终点都在空地且不重合。\n\n例：`maze=[[0,0,1,0,0],[0,0,0,0,0],[0,0,0,1,0],[1,1,0,1,1],[0,0,0,0,0]]`，`start=[0,4]`，`destination=[4,4]` → true；`destination=[3,2]` → false。",
   "answer_md": "思路｜BFS 的节点是「停点」：从一个停点向 4 个方向各滚到下一格是墙为止，得到新的停点。终点必须在出队时作为停点判断，滚动途中经过不算。\n\n```python\ndef has_path(maze, start, destination):\n    m, n = len(maze), len(maze[0])\n    seen = {tuple(start)}\n    queue = deque([tuple(start)])\n    while queue:\n        r, c = queue.popleft()\n        if [r, c] == list(destination):                  # must STOP here, not just pass through\n            return True\n        for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):\n            nr, nc = r, c\n            while 0 <= nr + dr < m and 0 <= nc + dc < n and maze[nr + dr][nc + dc] == 0:\n                nr, nc = nr + dr, nc + dc                # keep rolling until the next cell is wall / border\n            if (nr, nc) not in seen:\n                seen.add((nr, nc))\n                queue.append((nr, nc))\n    return False\n```\n\n复杂度｜停点至多 mn 个，每次滚动 O(max(m,n))，总 O(mn·(m+n))。\n\n追问｜如果每次滚动有代价（距离），改 Dijkstra：边权是滚过的格数。",
-  "note": "interviews/companies/amazon/recent/coding/amz_the_maze_directional.md",
-  "sources": [
-   {
-    "label": "1p3a 1190455",
-    "url": "https://www.1point3acres.com/bbs/thread-1190455-1-1.html"
-   },
-   {
-    "label": "LC 490 镜像",
-    "url": "https://leetcode.ca/all/490.html"
-   }
-  ],
-  "reconstructed": false,
-  "confidence": "medium"
+  "note": "interviews/core/coding/amazon/recent/amz_the_maze_directional.md"
  },
  {
   "id": "arm-directional-turn-variant",
   "slug": "directional-turn-grid",
   "kind": "coding",
   "title": "带方向约束的网格最短路（Directional-constraint BFS）",
-  "meta": "Medium · Amazon 2026-10",
+  "meta": "Medium",
   "question_md": "网格里 0 是空地、1 是墙。每一步走一格；新朝向只能是「保持原朝向」或「左转 90°」，不能右转、不能掉头；起点的初始朝向任选。求从起点到终点的最少步数，不可达返回 -1。数据范围不限定，要求 BFS 的状态数与 `m·n` 成正比。\n\n例：3×3，中间 (1,1) 是墙，`(2,0) → (2,2)` 的答案是 2。",
   "answer_md": "思路｜朝向进状态：(r, c, heading)，visited 也按三元组。转移只生成允许的朝向（直行、左转），不允许的根本不生成。第一次出队到终点的步数就是最短。\n\n```python\nHEADINGS = ((-1, 0), (0, 1), (1, 0), (0, -1))             # N E S W, so (h + 1) % 4 is a right turn and (h - 1) % 4 a left turn\n\ndef min_steps(grid, start, target):\n    m, n = len(grid), len(grid[0])\n    queue = deque((start[0], start[1], h, 0) for h in range(4))   # the first step may head anywhere\n    seen = {(start[0], start[1], h) for h in range(4)}\n    while queue:\n        r, c, h, d = queue.popleft()\n        if (r, c) == tuple(target):\n            return d\n        for nh in (h, (h - 1) % 4):                       # straight or left; right and reverse are simply not listed\n            nr, nc = r + HEADINGS[nh][0], c + HEADINGS[nh][1]\n            if 0 <= nr < m and 0 <= nc < n and grid[nr][nc] == 0 and (nr, nc, nh) not in seen:\n                seen.add((nr, nc, nh))\n                queue.append((nr, nc, nh, d + 1))\n    return -1\n```\n\n复杂度｜状态 4mn，每状态 ≤ 2 条边，O(mn)。\n\n追问｜加「最多转 K 次」：状态再加 turns，状态数乘 K+1；转弯有代价改 0-1 BFS 或 Dijkstra。",
-  "note": "interviews/companies/amazon/recent/coding/amz_the_maze_directional.md",
-  "sources": [
-   {
-    "label": "1p3a 1190455",
-    "url": "https://www.1point3acres.com/bbs/thread-1190455-1-1.html"
-   }
-  ],
-  "reconstructed": true,
-  "confidence": "low"
+  "note": "interviews/core/coding/amazon/recent/amz_the_maze_directional.md"
  },
  {
   "id": "arm-lc815",
   "slug": "bus-routes",
   "kind": "coding",
   "title": "公交路线（Bus Routes, LC 815）",
-  "meta": "Hard · Amazon 2026-10",
+  "meta": "Hard",
   "question_md": "`routes[i]` 是第 i 路公交循环经过的站点。从 `source` 出发，只能乘公交。返回到达 `target` 所需的最少乘车次数，不可达返回 -1。\n\n约束：`1 <= routes.length <= 500`，`1 <= routes[i].length <= 10^5`，`sum(routes[i].length) <= 10^5`，`routes[i]` 内元素互不相同，`0 <= routes[i][j], source, target < 10^6`。\n\n例：`routes=[[1,2,7],[3,6,7]], source=1, target=6` → 2。",
   "answer_md": "思路｜BFS 的节点是「路线」，因为同一路线上不用换乘（代价 0），上车一次才算 1。建倒排索引 stop → 经过它的路线；出队一条路线，展开它的站点，把站点上未访问的路线入队（次数 +1）。站点也要打 visited，保证每个站点只展开一次。\n\n```python\ndef num_buses_to_destination(routes, source, target):\n    if source == target:\n        return 0\n    stop_to_routes = {}\n    for i, route in enumerate(routes):\n        for stop in route:\n            stop_to_routes.setdefault(stop, []).append(i)\n    queue = deque((r, 1) for r in stop_to_routes.get(source, []))\n    seen_routes = {r for r, _ in queue}\n    seen_stops = {source}\n    while queue:\n        r, rides = queue.popleft()\n        for stop in routes[r]:\n            if stop == target:\n                return rides\n            if stop in seen_stops:                        # every route through this stop was queued already\n                continue\n            seen_stops.add(stop)\n            for nxt in stop_to_routes[stop]:\n                if nxt not in seen_routes:\n                    seen_routes.add(nxt)\n                    queue.append((nxt, rides + 1))\n    return -1\n```\n\n复杂度｜S = sum(len)，R = 路线数：O(S + R)。\n\n追问｜有班次时间表怎么办？边权变时间，换成 Dijkstra，状态扩展成 (站, 时间)。",
-  "note": "interviews/companies/amazon/recent/coding/amz_bus_routes.md",
-  "sources": [
-   {
-    "label": "Hello Interview bus-routes-815",
-    "url": "https://www.hellointerview.com/community/questions/bus-routes-815"
-   },
-   {
-    "label": "Hello Interview Amazon",
-    "url": "https://www.hellointerview.com/community/questions?company=Amazon"
-   }
-  ],
-  "reconstructed": false,
-  "confidence": "medium"
+  "note": "interviews/core/coding/amazon/recent/amz_bus_routes.md"
  },
  {
   "id": "arm-lc3286",
   "slug": "find-a-safe-walk-through-a-grid",
   "kind": "coding",
   "title": "安全路径（Find a Safe Walk Through a Grid, LC 3286）",
-  "meta": "Medium · Amazon 2026-10",
+  "meta": "Medium",
   "question_md": "`m × n` 的 0/1 网格，`grid[i][j] = 1` 的格子是不安全的，踩上去生命值 −1（起点也算）。从 `(0,0)` 四方向走到 `(m-1,n-1)`，到达时生命值必须 ≥ 1。给定初始 `health`，是否可能？\n\n约束：`1 <= m, n <= 50`，`2 <= m * n`，`1 <= health <= m + n`。\n\n例：`grid=[[0,1,0,0,0],[0,1,0,1,0],[0,0,0,1,0]], health=1` → true。",
   "answer_md": "思路｜等价于最小化路径上不安全格子数 c，判断 `c < health`。进入格子的代价是 0 或 1：0-1 BFS，双端队列，0 权边 `appendleft`，1 权边 `append`，松弛成功才入队。\n\n```python\ndef find_safe_walk(grid, health):\n    m, n = len(grid), len(grid[0])\n    INF = float(\"inf\")\n    cost = [[INF] * n for _ in range(m)]\n    cost[0][0] = grid[0][0]                               # the start cell also costs health if unsafe\n    dq = deque([(0, 0)])\n    while dq:\n        r, c = dq.popleft()\n        for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):\n            nr, nc = r + dr, c + dc\n            if 0 <= nr < m and 0 <= nc < n:\n                w = grid[nr][nc]\n                if cost[r][c] + w < cost[nr][nc]:\n                    cost[nr][nc] = cost[r][c] + w\n                    if w == 0:\n                        dq.appendleft((nr, nc))           # free edge: front of the deque keeps costs sorted\n                    else:\n                        dq.append((nr, nc))\n    return cost[m - 1][n - 1] < health                    # health must stay >= 1 on arrival\n```\n\n复杂度｜O(mn)，空间 O(mn)。\n\n追问｜格子有回血（−1 权）怎么办？负权，Dijkstra 与 0-1 BFS 都失效，改 Bellman-Ford 并检测负环。",
-  "note": "interviews/companies/amazon/recent/coding/amz_safe_walk_grid.md",
-  "sources": [
-   {
-    "label": "Hello Interview safe-walk-grid",
-    "url": "https://www.hellointerview.com/community/questions/safe-walk-grid"
-   },
-   {
-    "label": "Hello Interview Amazon",
-    "url": "https://www.hellointerview.com/community/questions?company=Amazon"
-   }
-  ],
-  "reconstructed": false,
-  "confidence": "medium"
+  "note": "interviews/core/coding/amazon/recent/amz_safe_walk_grid.md"
  },
  {
   "id": "arm-lc2365",
   "slug": "task-scheduler-ii",
   "kind": "coding",
   "title": "任务调度器 II（Task Scheduler II, LC 2365）",
-  "meta": "Medium · Amazon 2026-10",
+  "meta": "Medium",
   "question_md": "`tasks[i]` 是第 i 个任务的类型，必须**按顺序**完成。每天完成一个任务或休息。同一类型的两个任务之间必须至少间隔 `space` 天。返回完成全部任务的最少天数。\n\n约束：`1 <= tasks.length <= 10^5`，`1 <= tasks[i] <= 10^9`，`1 <= space <= tasks.length`。\n\n例：`tasks=[1,2,1,2,3,1], space=3` → 9。",
   "answer_md": "思路｜任务顺序固定，不需要模拟每一天。哈希表记每种类型上次执行的天；执行任务时当前天数至少 +1，且不早于 `last[t] + space + 1`，取最大值，休息天直接跳过。\n\n```python\ndef task_scheduler_ii(tasks, space):\n    last = {}                                             # task type -> day it last ran\n    day = 0\n    for t in tasks:\n        day += 1                                          # at least one day passes per task\n        if t in last:\n            day = max(day, last[t] + space + 1)           # need a gap of `space` days between equal types\n        last[t] = day\n    return day\n```\n\n复杂度｜O(n)，空间 O(不同类型数)。\n\n追问｜如果任务可以重排（LC 621）？贪心加最大频次公式，顺序固定与自由是本质区别。",
-  "note": "interviews/companies/amazon/recent/coding/amz_task_scheduler_ii.md",
-  "sources": [
-   {
-    "label": "Hello Interview task-scheduler-ii",
-    "url": "https://www.hellointerview.com/community/questions/task-scheduler-ii"
-   },
-   {
-    "label": "Hello Interview Amazon",
-    "url": "https://www.hellointerview.com/community/questions?company=Amazon"
-   }
-  ],
-  "reconstructed": false,
-  "confidence": "medium"
+  "note": "interviews/core/coding/amazon/recent/amz_task_scheduler_ii.md"
  },
  {
   "id": "arm-lc332",
   "slug": "reconstruct-itinerary",
   "kind": "coding",
   "title": "重新安排行程（Reconstruct Itinerary, LC 332）",
-  "meta": "Hard · Amazon 2026-10",
+  "meta": "Hard",
   "question_md": "给定机票列表 `tickets[i] = [from, to]`。所有行程从 `\"JFK\"` 出发，每张票恰好用一次。返回字典序最小的合法行程。保证至少有一个合法行程。\n\n约束：`1 <= tickets.length <= 300`，`from`、`to` 都是 3 个大写字母，`from != to`。\n\n例：`[[\"JFK\",\"SFO\"],[\"JFK\",\"ATL\"],[\"SFO\",\"ATL\"],[\"ATL\",\"JFK\"],[\"ATL\",\"SFO\"]]` → `[\"JFK\",\"ATL\",\"JFK\",\"SFO\",\"ATL\",\"SFO\"]`。",
   "answer_md": "思路｜每张票一次就是有向图的欧拉路径。Hierholzer：每个机场的出边按降序排，`pop()` 取最小；沿边一路走到死路，死路点必是行程的最后部分，弹栈记入答案；最后反转。用显式栈，迭代实现。\n\n```python\ndef find_itinerary(tickets):\n    graph = {}\n    for a, b in sorted(tickets, reverse=True):            # reverse-sorted so pop() yields the smallest destination\n        graph.setdefault(a, []).append(b)\n    stack, route = [\"JFK\"], []\n    while stack:\n        while graph.get(stack[-1]):                       # walk until stuck (this is the dead end)\n            stack.append(graph[stack[-1]].pop())\n        route.append(stack.pop())                         # a stuck airport is the LAST of what remains\n    return route[::-1]\n```\n\n复杂度｜排序 O(E log E)，遍历 O(E)。\n\n追问｜不保证有解怎么办？检查出入度条件，或最后检查 `len(route) == E + 1`。",
-  "note": "interviews/companies/amazon/recent/coding/amz_reconstruct_itinerary.md",
-  "sources": [
-   {
-    "label": "Hello Interview reconstruct-itinerary",
-    "url": "https://www.hellointerview.com/community/questions/reconstruct-itinerary"
-   },
-   {
-    "label": "Hello Interview Amazon",
-    "url": "https://www.hellointerview.com/community/questions?company=Amazon"
-   }
-  ],
-  "reconstructed": false,
-  "confidence": "high"
+  "note": "interviews/core/coding/amazon/recent/amz_reconstruct_itinerary.md"
  },
  {
   "id": "arm-lc45-path",
   "slug": "jump-game-ii-path",
   "kind": "coding",
   "title": "跳跃游戏 II，返回路径（Jump Game II with path）",
-  "meta": "Medium · Amazon 2026-10",
+  "meta": "Medium",
   "question_md": "`nums[i]` 是从下标 i 最多向前跳的步数。从下标 0 出发到最后一个下标，返回最少跳数；进阶：同时返回所经过的下标序列。\n\n约束：`1 <= nums.length <= 10^4`，`0 <= nums[i] <= 1000`，保证可以到达最后一个下标。\n\n例：`[2,3,1,1,4]` → 跳数 2，路径 `[0,1,4]`。",
   "answer_md": "思路｜贪心 = 隐式 BFS：扫描当前层，记录最远可达 `far` 以及取得它的下标 `best`。扫到层尾（`i == end`）必须再跳一次：跳数 +1，路径记入这层的 `best`，`end = far`。路径 = 各层 `best`，最后补终点下标。\n\n```python\ndef jump(nums):\n    jumps = end = far = 0\n    for i in range(len(nums) - 1):\n        far = max(far, i + nums[i])                       # farthest index reachable with jumps + 1\n        if i == end:                                      # left the current level: must take one more jump\n            jumps += 1\n            end = far\n    return jumps\n\ndef jump_path(nums):\n    n = len(nums)\n    path, end, far, best = [], 0, 0, 0                    # best = index that attains `far`\n    for i in range(n - 1):\n        if i + nums[i] > far:\n            far, best = i + nums[i], i\n        if i == end:\n            path.append(best)                             # the landing of this level = index reaching farthest\n            end = far\n    return path + [n - 1] if n > 1 else [0]\n```\n\n复杂度｜时间 O(n)，路径空间 O(跳数)。\n\n追问｜不保证可达怎么办？层尾时 `far <= i`，说明卡住，返回 -1。",
-  "note": "interviews/companies/amazon/recent/coding/amz_jump_game_ii_path.md",
-  "sources": [
-   {
-    "label": "Hello Interview leetcode-jump-game",
-    "url": "https://www.hellointerview.com/community/questions/leetcode-jump-game"
-   },
-   {
-    "label": "Hello Interview Amazon",
-    "url": "https://www.hellointerview.com/community/questions?company=Amazon"
-   }
-  ],
-  "reconstructed": true,
-  "confidence": "medium"
+  "note": "interviews/core/coding/amazon/recent/amz_jump_game_ii_path.md"
  },
  {
   "id": "arm-chess-king",
   "slug": "chess-min-moves-to-king",
   "kind": "coding",
   "title": "棋子最少步数吃掉国王（Min moves to capture the king）",
-  "meta": "Medium · Amazon 2026-10",
+  "meta": "Medium",
   "question_md": "一块 `n × n` 的棋盘，你有一枚棋子（马、国王或车），位置 `start`；对方 king 在 `king`，不动。己方其他棋子占据的格子 `blocked` 不能落脚，车不能穿过它们。求棋子走到 king 所在格（吃掉）的最少步数，不可达返回 -1。棋盘大小不限定，按单枚棋子的 BFS 状态数 `n²` 来分析。\n\n例：8×8 空盘，`(0,0) → (7,7)`：马 6 步，国王 7 步，车 2 步。",
   "answer_md": "思路｜状态是棋子位置，BFS 按层扩展。走法生成：马、国王用固定偏移，车沿方向滑动到边界或障碍前，途中每格都是落点。king 不放进 blocked：落到它身上就是吃掉，立即返回 `d + 1`。\n\n```python\nKNIGHT = ((1, 2), (2, 1), (-1, 2), (-2, 1), (1, -2), (2, -1), (-1, -2), (-2, -1))\nKING = ((1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1))\nROOK_DIRS = ((1, 0), (-1, 0), (0, 1), (0, -1))\n\ndef moves(kind, pos, n, blocked):\n    r, c = pos\n    if kind in (\"knight\", \"king\"):                        # jumpers: one fixed offset, land on any non-blocked square\n        for dr, dc in (KNIGHT if kind == \"knight\" else KING):\n            nr, nc = r + dr, c + dc\n            if 0 <= nr < n and 0 <= nc < n and (nr, nc) not in blocked:\n                yield nr, nc\n    else:                                                 # rook: slide until the board edge or a blocker\n        for dr, dc in ROOK_DIRS:\n            nr, nc = r + dr, c + dc\n            while 0 <= nr < n and 0 <= nc < n and (nr, nc) not in blocked:\n                yield nr, nc\n                nr, nc = nr + dr, nc + dc\n\ndef min_moves_to_capture(n, kind, start, king, blocked=frozenset()):\n    \"\"\"blocked = squares of own pieces. The king square is NOT blocked: landing on it is the capture.\"\"\"\n    blocked = set(blocked)\n    seen, queue = {start}, deque([(start, 0)])\n    while queue:\n        pos, d = queue.popleft()\n        for nxt in moves(kind, pos, n, blocked):\n            if nxt == king:\n                return d + 1\n            if nxt not in seen:\n                seen.add(nxt)\n                queue.append((nxt, d + 1))\n    return -1\n```\n\n复杂度｜状态 n²，每个状态 w 个走法：O(n²·w)。\n\n追问｜己方有 k 枚棋子、每回合动一枚：状态变成位置元组（状态压缩），O(k·w·(n²)^k)。",
-  "note": "interviews/companies/amazon/recent/coding/amz_chess_king_min_moves.md",
-  "sources": [
-   {
-    "label": "1p3a 1192241",
-    "url": "https://www.1point3acres.com/bbs/thread-1192241-1-1.html"
-   }
-  ],
-  "reconstructed": true,
-  "confidence": "low"
+  "note": "interviews/core/coding/amazon/recent/amz_chess_king_min_moves.md"
  },
  {
   "id": "arm-lowest-common-manager",
   "slug": "lowest-common-manager",
   "kind": "coding",
   "title": "组织架构最低共同上级（Lowest Common Manager）",
-  "meta": "Medium · Amazon 2026-10",
+  "meta": "Medium",
   "question_md": "给组织架构 `{经理: [直属下属]}` 和两名员工，返回他们最低的共同上级；一个人也算自己的上级；员工不在架构里返回 `None`。规模不限定，组织可能很深，所以不能用递归。\n\n例：`{ceo:[a,b], a:[c,d], b:[e], d:[f]}`：`f, c` → `a`；`f, e` → `ceo`；`a, f` → `a`。",
   "answer_md": "思路｜一次迭代遍历建 `parent` 与 `depth`。先把较深的人上爬到同一深度，再两人同时上爬，第一次相同的节点就是答案。\n\n```python\ndef build(reports):                                       # reports: {manager: [direct reports]}; returns parent, depth, root\n    parent, depth = {}, {}\n    boss = {r for rs in reports.values() for r in rs}\n    root = next(m for m in reports if m not in boss)\n    depth[root], parent[root] = 0, None\n    stack = [root]                                        # iterative: an org chart can be thousands of levels deep\n    while stack:\n        u = stack.pop()\n        for v in reports.get(u, []):\n            parent[v], depth[v] = u, depth[u] + 1\n            stack.append(v)\n    return parent, depth, root\n\ndef lowest_common_manager(parent, depth, a, b):\n    if a not in parent or b not in parent:\n        return None                                       # an employee who is not in the chart\n    while depth[a] > depth[b]:\n        a = parent[a]\n    while depth[b] > depth[a]:\n        b = parent[b]\n    while a != b:\n        a, b = parent[a], parent[b]\n    return a                                              # an employee can be their own lowest common manager\n```\n\n复杂度｜建表 O(n)，单次查询 O(深度)。\n\n追问｜大量查询：倍增表 `up[k][v]`，预处理 O(n log n)，每次查询 O(log n)；k 个员工：LCA 可结合，逐个折叠。",
-  "note": "interviews/companies/amazon/recent/coding/amz_lowest_common_manager.md",
-  "sources": [
-   {
-    "label": "1p3a 1191548",
-    "url": "https://www.1point3acres.com/bbs/thread-1191548-1-1.html"
-   }
-  ],
-  "reconstructed": true,
-  "confidence": "medium"
+  "note": "interviews/core/coding/amazon/recent/amz_lowest_common_manager.md"
  },
  {
   "id": "arm-lc399-cache",
   "slug": "evaluate-division-cache",
   "kind": "coding",
   "title": "除法求值的缓存追问（Evaluate Division with caching）",
-  "meta": "Medium · Amazon 2026-10",
+  "meta": "Medium",
   "question_md": "LC 399：方程 `Ai / Bi = values[i]`，查询 `Cj / Dj`，未知返回 -1.0（约束：`1 <= equations.length <= 20`，`0.0 < values[i] <= 20.0`，变量名由小写字母和数字组成，长度 1 到 5）。进阶：同一批方程会被反复查询，而且方程会在线新增。怎么加缓存，新增方程时缓存怎么处理？",
   "answer_md": "思路｜BFS 求值，结果缓存 `(x, y)`，反向 `(y, x)` 顺便存 `1/ans`。新增方程时：已知值保留（由旧方程推出，不会变）；缓存的 -1.0 要清掉（新方程可能把两个连通块接起来）。带权并查集本身就带路径压缩缓存，没有失效问题。\n\n```python\nclass Division:\n    def __init__(self):\n        self.graph = {}                                   # a -> [(b, a/b)]\n        self.cache = {}                                   # (x, y) -> x / y, or -1.0 for \"unknown\"\n        self.bfs_runs = 0\n\n    def add_equation(self, a, b, v):                      # a / b == v\n        self.graph.setdefault(a, []).append((b, v))\n        self.graph.setdefault(b, []).append((a, 1 / v))\n        # a found ratio is a consequence of old equations, so it stays true; only \"unknown\" can become known\n        self.cache = {k: r for k, r in self.cache.items() if r != -1.0}\n\n    def query(self, x, y):\n        if (x, y) in self.cache:\n            return self.cache[(x, y)]\n        ans = self._bfs(x, y)\n        self.cache[(x, y)] = ans\n        if ans != -1.0 and ans != 0:\n            self.cache[(y, x)] = 1 / ans                  # the reverse query is free\n        return ans\n```\n\n复杂度｜未命中 O(V+E)，命中 O(1)。\n\n追问｜缓存内存要限制：LRU，未知项的 TTL 设短；读多写少用写时复制加版本号。",
-  "note": "interviews/companies/amazon/recent/coding/amz_evaluate_division_cache.md",
-  "sources": [
-   {
-    "label": "1p3a 1191084",
-    "url": "https://www.1point3acres.com/bbs/thread-1191084-1-1.html"
-   }
-  ],
-  "reconstructed": true,
-  "confidence": "low"
+  "note": "interviews/core/coding/amazon/recent/amz_evaluate_division_cache.md"
  },
  {
   "id": "arm-lc472-trie",
   "slug": "concatenated-words-trie",
   "kind": "coding",
   "title": "连接词的 Trie + DFS（Concatenated Words, Trie + DFS）",
-  "meta": "Hard · Amazon 2026-10",
+  "meta": "Hard",
   "question_md": "给一个互不相同的单词列表，返回所有能由列表里**至少两个**较短单词拼成的单词（单词可重复使用）。\n\n约束：`1 <= words.length <= 10^4`，`1 <= words[i].length <= 30`，只含小写字母，`1 <= sum(words[i].length) <= 10^5`。\n\n例：`[\"cat\",\"cats\",\"catsdogcats\",\"dog\",\"dogcatsdog\",\"hippopotamuses\",\"rat\",\"ratcatdogcat\"]` → `[\"catsdogcats\",\"dogcatsdog\",\"ratcatdogcat\"]`。",
   "answer_md": "思路｜把所有单词建 Trie。对单词 w 从 i 出发沿 Trie 走，遇到词尾标记就在 j+1 处递归；第一段不能覆盖整个单词（`i > 0 or j + 1 < len(w)`）。失败的起点记入 `dead`，保证每个起点只展开一次。与词集合 DP 相比：Trie 一次走到底就得到所有候选终点，省去反复切片。\n\n```python\ndef find_all_concatenated_words(words):\n    root = {}\n    for w in words:\n        node = root\n        for ch in w:\n            node = node.setdefault(ch, {})\n        node[\"$\"] = True\n\n    def can_split(w, i, dead):                            # can w[i:] be cut into >= 1 dictionary words?\n        if i == len(w):\n            return True\n        if i in dead:\n            return False\n        node = root\n        for j in range(i, len(w)):\n            node = node.get(w[j])\n            if node is None:\n                break\n            if \"$\" in node and (i > 0 or j + 1 < len(w)):   # from 0 the piece must not be the whole word\n                if can_split(w, j + 1, dead):\n                    return True\n        dead.add(i)                                       # memo: failing suffixes are never retried\n        return False\n\n    return [w for w in words if w and can_split(w, 0, set())]\n```\n\n复杂度｜Σ O(L²)，L ≤ 30；Trie 空间 O(sum(len))。\n\n追问｜单词很长时递归会爆栈，`dead` 集合就是自底向上 DP 的记忆表，改迭代即可。",
-  "note": "interviews/companies/amazon/recent/coding/amz_concatenated_words_trie.md",
-  "sources": [
-   {
-    "label": "1p3a 1192241",
-    "url": "https://www.1point3acres.com/bbs/thread-1192241-1-1.html"
-   }
-  ],
-  "reconstructed": true,
-  "confidence": "medium"
+  "note": "interviews/core/coding/amazon/recent/amz_concatenated_words_trie.md"
  },
  {
   "id": "arm-rate-limiter",
   "slug": "sliding-window-rate-limiter",
   "kind": "coding",
   "title": "多粒度滑动窗口限流（Sliding-window rate limiter）",
-  "meta": "Medium · Amazon 2026-10",
+  "meta": "Medium",
   "question_md": "实现 `allow(request, now)`：每个 key 在任意 `window` 秒内至多放行 `limit` 个请求。扩展到多个粒度（IP、用户、experience）同时限制；被拒绝的请求不能占用任何粒度的额度。数据规模不限定，要求每个 key 的内存有上界。\n\n例：IP 限 2 次/10 秒，时间点 0、1、2、9、10、11 → 通过、通过、拒绝、拒绝、通过、通过。",
   "answer_md": "思路｜日志版：每个 key 一个队列，只存被接受的时间戳，≤ limit 个，先弹过期再判长度，精确。计数版：当前桶与上一桶两个整数，估计 `prev × (1 − 已走比例) + cur`，O(1) 内存、近似。多粒度：先对所有粒度 peek，全部通过再统一 record。\n\n```python\nclass SlidingWindowCounter:\n    \"\"\"Two fixed buckets blended: count = prev * (1 - elapsed/window) + cur. Memory: two integers per key.\"\"\"\n    def __init__(self, limit, window):\n        self.limit, self.window = limit, window\n        self.state = {}                                   # key -> [bucket_start, cur, prev]\n\n    def _roll(self, key, now):\n        start = now - now % self.window\n        s = self.state.setdefault(key, [start, 0, 0])\n        if start != s[0]:\n            s[2] = s[1] if start - s[0] == self.window else 0     # skipped a whole bucket => prev is empty\n            s[1], s[0] = 0, start\n        return s, (now - start) / self.window\n\n    def peek(self, key, now):\n        s, frac = self._roll(key, now)\n        return s[2] * (1 - frac) + s[1] < self.limit\n\n    def record(self, key, now):\n        self._roll(key, now)[0][1] += 1\n\nclass RateLimiter:\n    def __init__(self, rules, make=SlidingWindowLog):\n        self.rules = {name: make(limit, window) for name, (limit, window) in rules.items()}\n\n    def allow(self, request, now):\n        keys = [(name, request[name]) for name in self.rules if name in request]   # one key per granularity\n        if not all(self.rules[name].peek(k, now) for name, k in keys):\n            return False                                  # check ALL first: a rejected request must not use up any quota\n        for name, k in keys:\n            self.rules[name].record(k, now)\n        return True\n```\n\n复杂度｜日志版每次均摊 O(粒度数)，内存 O(活跃 key × limit)；计数版内存 O(活跃 key)。\n\n追问｜分布式：Redis sorted set 加 Lua 保证原子，或两个计数器加 TTL；热点 key 用本地令牌预取。",
-  "note": "interviews/companies/amazon/recent/coding/amz_sliding_window_rate_limiter.md",
-  "sources": [
-   {
-    "label": "Hello Interview sliding-window-rate-limiter",
-    "url": "https://www.hellointerview.com/community/questions/sliding-window-rate-limiter"
-   },
-   {
-    "label": "Hello Interview Amazon",
-    "url": "https://www.hellointerview.com/community/questions?company=Amazon"
-   }
-  ],
-  "reconstructed": true,
-  "confidence": "medium"
+  "note": "interviews/core/coding/amazon/recent/amz_sliding_window_rate_limiter.md"
  }
 ]

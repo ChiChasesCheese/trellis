@@ -70,8 +70,3 @@ def num_buses_to_destination(routes, source, target):
 <details><summary>答案</summary>结果仍然正确，但共用站点会被重复展开，最坏每个站点展开「经过它的路线数」次，时间退化。</details>
 3. `source == target` 为什么要单独处理？
 <details><summary>答案</summary>BFS 里次数从 1 起算（上了第一辆车），不特判会返回 1 或 -1。</details>
-
-## 来源
-- Hello Interview 社区题目 `bus-routes-815`，约 2026-09-20，中级 APAC：https://www.hellointerview.com/community/questions/bus-routes-815 ；公司页 https://www.hellointerview.com/community/questions?company=Amazon 。报告只记录了题目名「Leetcode 815. Bus Routes」，摘要为 find the minimum number of bus rides from source to target。
-- LC 官方 https://leetcode.com/problems/bus-routes/ （约束取自该页）。
-- 代码：`../../coding/solutions/815_bus_routes.py`。

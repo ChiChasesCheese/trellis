@@ -60,9 +60,3 @@ def find_itinerary(tickets):
 <details><summary>答案</summary>死路点先入 `route`，也就是路径的结尾先被记录，倒过来才是从起点开始。</details>
 3. 把 `while graph.get(stack[-1])` 改成 `if` 会怎样？
 <details><summary>答案</summary>每次循环只前进一步就弹栈，会把还有未用出边的点过早记入答案，路径错乱。</details>
-
-## 来源
-- Hello Interview 社区题目 `reconstruct-itinerary`，约 2026-09-20，中级：https://www.hellointerview.com/community/questions/reconstruct-itinerary ；公司页 https://www.hellointerview.com/community/questions?company=Amazon 。
-- 报告原文：「You are given a list of airline tickets where tickets[i] = [fromi, toi] represent the departure and the arrival airports of one flight. Reconstruct the itinerary in order and return it.」
-- LC 官方 https://leetcode.com/problems/reconstruct-itinerary/ （约束取自该页）。
-- 代码：`../../coding/solutions/332_reconstruct_itinerary.py`。

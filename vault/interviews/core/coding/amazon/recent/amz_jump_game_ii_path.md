@@ -63,9 +63,3 @@ def jump_path(nums):
 <details><summary>答案</summary>落脚点要使下一层覆盖范围最大；当前层最后一个下标不一定能跳得最远。</details>
 3. 路径里相邻两项 a、b 一定满足什么？
 <details><summary>答案</summary>`0 < b - a <= nums[a]`，代码测试里逐段断言了这一点。</details>
-
-## 来源
-- Hello Interview 社区题目 `leetcode-jump-game`，约 2026-09-10，Senior EMEA：https://www.hellointerview.com/community/questions/leetcode-jump-game ；公司页 https://www.hellointerview.com/community/questions?company=Amazon 。
-- 原话：「Jump game II but to return array of choices」。「choices」的含义没有展开，上文取「所经过的下标序列」**(reconstructed)**。
-- LC 官方 https://leetcode.com/problems/jump-game-ii/ （约束取自该页）。
-- 代码：`../../coding/solutions/45_jump_game_ii.py`。

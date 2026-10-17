@@ -54,9 +54,3 @@ def task_scheduler_ii(tasks, space):
 <details><summary>答案</summary>要求中间隔 `space` 天，所以两次相差 `space + 1`。</details>
 3. 最后一次任务完成日就是答案吗？
 <details><summary>答案</summary>是，最后一天做完最后一个任务，之后不再需要休息。</details>
-
-## 来源
-- Hello Interview 社区题目 `task-scheduler-ii`，约 2026-09-10，Staff：https://www.hellointerview.com/community/questions/task-scheduler-ii ；公司页 https://www.hellointerview.com/community/questions?company=Amazon 。
-- 摘要：「find the minimum total days (including required breaks) to finish all tasks while ensuring any two tasks of the same type are separated by at least space days」。报告只有题目名和级别，没有追问。
-- LC 官方 https://leetcode.com/problems/task-scheduler-ii/ （约束取自该页）。
-- 代码：`../../coding/solutions/2365_task_scheduler_ii.py`。与已有的 LC 621 Task Scheduler 不同：这里任务必须按给定顺序执行。

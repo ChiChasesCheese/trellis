@@ -1,6 +1,8 @@
 # 11 · 设计题：LRU / LFU / 随机集合 / 文件系统 / 迭代器（Design: caches, structures, iterators）
 
-> 本讲覆盖：LC 146 LRU Cache · 460 LFU Cache（Hard）· 380 Insert Delete GetRandom O(1) · 588 Design In-Memory File System（Hard）· 以及迭代器题 LC 341 Flatten Nested List Iterator（频率 28，附赠，覆盖「迭代器」）
+设计题考的是你能否为一个数据结构写出清晰的契约：有哪些操作、每个操作多快、每次操作之后哪些性质必须保持成立。LRU 和 LFU 用「哈希表 + 链表」让查找和排序同时做到 O(1)；随机集合用「数组 + 哈希表」让随机取值也是 O(1)；文件系统是一棵目录树；迭代器要实现 `__iter__` 和 `__next__`。写代码前先说出不变量，写完用断言检查它们。
+
+> 本讲覆盖：LC 146 LRU Cache · 460 LFU Cache（Hard）· 380 Insert Delete GetRandom O(1) · 588 Design In-Memory File System（Hard）· 以及迭代器题 LC 341 Flatten Nested List Iterator（附赠，覆盖「迭代器」）
 > 前置：第 01 讲（`dict`）、第 08 讲（链表指针）、Python 的 `class`。
 > 读完你应该能：(1) 用「哈希表 + 双向链表」做出 O(1) 的 get / put / 淘汰；(2) 为每个操作先写出**契约和不变量**再写代码；(3) 在 LRU 上回答并发、分布式、TTL、监控的资深追问。
 
@@ -22,7 +24,7 @@ LRU Cache：容量为 `capacity` 的缓存，`get(key)` 返回值（没有返回
 
 ### 1.3 慢在哪里 / 需要什么
 
-我们需要同时做到两件事：
+你需要同时做到两件事：
 - 按 key **O(1) 找到**条目 → 哈希表（`dict`）。
 - 按「使用时间」**O(1) 调整顺序、O(1) 删除最老的** → 需要一个能在 O(1) 删除**任意已知节点**、并在两端 O(1) 增删的结构 → **双向链表**（doubly linked list）：每个节点有 `prev` 和 `next`，知道节点就能直接把它摘下来，不用先找它的前驱。
 
@@ -211,7 +213,7 @@ def make(x):
     return NestedInteger([make(i) for i in x] if isinstance(x, list) else x)
 ```
 
-### 4.1 LC 146 · LRU Cache（Medium，频率 88）
+### 4.1 LC 146 · LRU Cache（Medium）
 
 ```python
 # solutions/146_lru_cache.py
@@ -275,7 +277,7 @@ class LRUCache:
 - **接口 / 契约**：`capacity <= 0`？值可以是 `None` 吗（那 `get` 返回 −1 就有歧义，更好的接口返回 `Optional` 或抛 `KeyError`）？`put` 是否返回被淘汰的条目（便于写回）？命中率等指标暴露在哪？
 - **测试**：与 `OrderedDict` 参考实现做随机对拍（文件里已有，100 组 × 60 步）；容量 1、重复 `put` 同一 key 不触发淘汰、`get` 之后淘汰顺序改变；并发压力测试检查 `size <= capacity` 与无死锁。
 
-### 4.2 LC 460 · LFU Cache（Hard，频率 62）
+### 4.2 LC 460 · LFU Cache（Hard）
 
 ```python
 # solutions/460_lfu_cache.py
@@ -331,10 +333,10 @@ class LFUCache:
 - **频率衰减**：纯 LFU 的问题是**缓存污染**——曾经很热但已经不再被访问的 key 次数很高，永远淘汰不掉。工程上用**次数老化**（周期性减半）或 TinyLFU / W-TinyLFU（用 Count-Min Sketch 近似计数，Caffeine 用）。
 - **并发**：同 LRU，访问会改多个结构，分片加锁；近似计数可以用无锁计数器。
 - **内存**：精确计数每个 key 一个整数 + 桶结构；近似计数用 sketch，内存固定。
-- **接口**：`capacity = 0` 时所有 `put` 都是空操作；`put` 已存在 key 是否算一次使用（本题算）；`get` 不存在的 key 不影响任何计数。
+- **接口**：`capacity = 0` 时所有 `put` 都是空操作；`put` 已存在 key 是否算一次使用（常见约定：算）；`get` 不存在的 key 不影响任何计数。
 - **测试**：与 O(n) 扫描最小 `(次数, 最近使用时间)` 的参考实现随机对拍（文件里已有）；并列次数、容量 0、容量 1、淘汰后重新插入的 key 次数从 1 开始。
 
-### 4.3 LC 380 · Insert Delete GetRandom O(1)（Medium，频率 62）
+### 4.3 LC 380 · Insert Delete GetRandom O(1)（Medium）
 
 ```python
 # solutions/380_insert_delete_getrandom_o1.py
@@ -378,7 +380,7 @@ class RandomizedSet:
 - **接口 / 契约**：`insert` / `remove` 返回是否改变了集合；空集合 `getRandom` 抛异常；随机数源可注入（便于测试）。
 - **测试**：不变量 `all(pos[items[i]] == i)`；删除最后一个元素和非最后元素两条路径；用固定种子做统计均匀性检验（文件里已有）。
 
-### 4.4 LC 588 · Design In-Memory File System（Hard，频率 38）
+### 4.4 LC 588 · Design In-Memory File System（Hard）
 
 ```python
 # solutions/588_design_in_memory_file_system.py
@@ -429,11 +431,11 @@ class FileSystem:
 - **规模 ×1000**：目录里有百万条目时每次 `ls` 排序太慢 → 用有序字典（`SortedDict` / 平衡树）或分页；文件内容反复追加，字符串拼接是 O(n²)，改用块列表（rope / chunk list）。
 - **持久化**：先写日志再改内存（WAL，write-ahead log），崩溃后重放；定期快照。
 - **并发**：目录级读写锁，操作跨多个目录时按固定顺序加锁避免死锁（mkdir -p 沿路径加锁）；或不可变节点 + 原子替换根（copy-on-write）。
-- **接口 / 契约**：路径规范化（`//`、结尾 `/`、`.`、`..`、符号链接）；`ls` 一个不存在的路径返回 `[]` 还是报错（本题 `[]`，真实系统应该报错）；往目录里写内容、把文件当目录用等非法操作的错误处理；权限。
+- **接口 / 契约**：路径规范化（`//`、结尾 `/`、`.`、`..`、符号链接）；`ls` 一个不存在的路径返回 `[]` 还是报错（LeetCode 约定返回 `[]`，真实系统应该报错）；往目录里写内容、把文件当目录用等非法操作的错误处理；权限。
 - **内存**：每个节点一个 `dict`，大量小文件时开销大 → 紧凑表示。
 - **测试**：根目录 `ls`、嵌套 `mkdir`、追加两次内容、`ls` 文件、不存在路径；路径规范化用例（`/a//b/`）。
 
-### 4.5 附赠：LC 341 · Flatten Nested List Iterator（Medium，频率 28）——迭代器类题的模板
+### 4.5 附赠：LC 341 · Flatten Nested List Iterator（Medium）——迭代器类题的模板
 
 ```python
 # solutions/341_flatten_nested_list_iterator.py

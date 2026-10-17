@@ -1,5 +1,7 @@
 # 09 · 二叉树与最近公共祖先（Trees & LCA）
 
+二叉树的每个子树本身还是一棵二叉树，所以树上的题几乎都能写成递归：先让左右子树各自返回答案，再在当前节点把两个答案合并。最近公共祖先（LCA）、最大路径和、序列化都是这个套路的变形。区别只在于：你要向父节点返回什么，和你要用来更新最终答案的是什么，常常不是同一个值。面试里递归深度、迭代写法和「节点不在树里」的边界一定会被追问。
+
 > 本讲覆盖：LC 236 Lowest Common Ancestor of a Binary Tree · 124 Binary Tree Maximum Path Sum（Hard）· 199 Binary Tree Right Side View · 297 Serialize and Deserialize Binary Tree（Hard）
 > 前置：递归（函数调用自己）、第 06 讲的 BFS / `deque`。树的概念从零讲。
 > 读完你应该能：(1) 用「相信子树，返回值 + 合并」的套路写任何后序 DFS；(2) 区分「返回给父节点的值」和「更新全局答案的值」；(3) 对每道题说出递归深度风险与迭代替代方案。
@@ -19,7 +21,7 @@ LC 236：找二叉树中两个节点 `p`、`q` 的最近公共祖先。最笨的
 
 ### 1.3 慢在哪里 / 能改进什么
 
-路径列表是**多余的信息**。我们真正需要的只是：「p 和 q 在哪个节点第一次**分到不同子树**」。
+路径列表是**多余的信息**。真正需要的只是：「p 和 q 在哪个节点第一次**分到不同子树**」。
 
 > 因果链：对每个节点问两个子树各自的问题——「你那边有 p 或 q 吗？」→ 如果左右两边**都说有**，当前节点就是分叉点，即 LCA → 一次后序 DFS（先问孩子，再合并）就够了，不需要路径。
 
@@ -190,7 +192,7 @@ node 3: left=5 right=None -> pass up 5
 
 ## 4. 题目
 
-### 4.1 LC 236 · Lowest Common Ancestor of a Binary Tree（Medium，频率 75）
+### 4.1 LC 236 · Lowest Common Ancestor of a Binary Tree（Medium）
 
 ```python
 # solutions/236_lowest_common_ancestor.py
@@ -218,7 +220,7 @@ def lowest_common_ancestor(root, p, q):
 - **接口 / 边界**：本实现**假设 p 和 q 都在树里**；如果其中一个不在，它会返回另一个，是错的。面试中要问清楚；不保证时，用两个布尔值在 DFS 里记录两者是否都找到。节点值是否唯一？`p == q`？p 是 q 的祖先（允许，节点是自己的祖先）？
 - **测试**：p 是 q 的祖先、p 与 q 分别在左右、同一子树深处、p == q、只有两个节点的树；与「路径比较」的暴力对拍。
 
-### 4.2 LC 124 · Binary Tree Maximum Path Sum（Hard，频率 62）
+### 4.2 LC 124 · Binary Tree Maximum Path Sum（Hard）
 
 ```python
 # solutions/124_binary_tree_maximum_path_sum.py
@@ -251,7 +253,7 @@ def max_path_sum(root):
 - **接口**：空树怎么办（返回 `-inf`、`None`，还是抛异常）？要不要返回路径本身（需要额外记录最佳拐点和两条延伸边）？节点值是整数还是浮点？
 - **测试**：全负、单节点、链状（skew）、根为负但两边为正、最优路径不经过根；与「枚举所有节点对的路径和」暴力对拍。
 
-### 4.3 LC 199 · Binary Tree Right Side View（Medium，频率 62）
+### 4.3 LC 199 · Binary Tree Right Side View（Medium）
 
 ```python
 # solutions/199_binary_tree_right_side_view.py
@@ -284,7 +286,7 @@ def right_side_view(root):
 - **接口**：左视图、顶视图（需要列号，LC 987）怎么推广？空树返回 `[]`；返回值还是节点？
 - **测试**：只有左孩子的深层（左子树更深时左边的节点也可见）、全右链、全左链、空树、单节点。
 
-### 4.4 LC 297 · Serialize and Deserialize Binary Tree（Hard，频率 62）
+### 4.4 LC 297 · Serialize and Deserialize Binary Tree（Hard）
 
 ```python
 # solutions/297_serialize_and_deserialize_binary_tree.py

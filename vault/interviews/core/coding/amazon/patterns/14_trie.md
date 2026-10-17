@@ -1,5 +1,7 @@
 # 14 · 字典树（Trie）：前缀的共享与剪枝
 
+字典树（Trie）把一组字符串按字符一层层放进一棵树，共享相同的前缀，所以「以某个前缀开头」的查询只需沿路径走 |前缀| 步。题目里出现前缀匹配、自动补全、通配符搜索，或者要在棋盘上同时找很多个单词时，先想 Trie。它会和回溯（Word Search II）、DP（Word Break、Concatenated Words）组合使用。要知道的代价是：Python 里一棵 dict 实现的 Trie 比一个 set 多占很多内存。
+
 > 本讲覆盖：LC 14 Longest Common Prefix · 139 Word Break · 1268 Search Suggestions System · 211 Design Add and Search Words Data Structure · 212 Word Search II（Hard）· 472 Concatenated Words（Hard）
 > 前置：第 01 讲（`dict`）、第 06 讲（DFS）、第 10 讲（DP 的"前 i 个字符能否切分"）、第 12 讲（回溯的 choose / un-choose）。第 11 讲的 LC 588 文件系统其实就是一棵"目录名组成的 trie"。
 > 读完你应该能：(1) 画出一棵 trie 并说明节点**就是**一个前缀；(2) 手写 `insert / search / starts_with / delete`；(3) 判断什么时候该用 trie、什么时候一个 `set` 或「排序 + 二分」就够了；(4) 把 trie 和回溯（212）、DP（139 / 472）、通配符 DFS（211）组合起来；(5) 回答 trie 的内存代价这个资深追问（Python 里它比你以为的贵得多，3 节有实测）。
@@ -245,7 +247,7 @@ import bisect
 from collections import defaultdict
 ```
 
-### 4.1 LC 14 · Longest Common Prefix（Easy，频率 75）
+### 4.1 LC 14 · Longest Common Prefix（Easy）
 
 ```python
 # solutions/14_longest_common_prefix.py
@@ -292,9 +294,9 @@ class PrefixTrie:                                # the same answer from a trie; 
 - **内存**：纵向扫描 O(1)；trie O(S)。
 - **并发**：结合律使得 reduce 可以并行（fork-join）。
 - **接口**：空列表返回 `""`；含空串返回 `""`；是否区分大小写；Unicode（按码点还是按字素簇）。
-- **测试**：单元素、全相同、没有公共前缀、一个串是另一个的前缀（`["ab","abc"]`）、空串；和暴力枚举所有前缀长度对拍（我们做了，同时检查 trie 版本）。
+- **测试**：单元素、全相同、没有公共前缀、一个串是另一个的前缀（`["ab","abc"]`）、空串；和暴力枚举所有前缀长度对拍（同时检查 trie 版本）。
 
-### 4.2 LC 139 · Word Break（Medium，频率 62）
+### 4.2 LC 139 · Word Break（Medium）
 
 ```python
 # solutions/139_word_break.py
@@ -336,7 +338,7 @@ def word_break(s, word_dict):
 - **接口**：只返回布尔值（139）还是所有切分方案（LC 140，输出可能指数级，需要记忆化 + 生成器）；空串返回 `True`；词典含空串会导致死循环风险——要么过滤掉，要么只在 `j >= i` 之后才标记。
 - **测试**：空串、词典为空、重叠词（`["a","aa","aaa"]` 对 `"aaaaaab"`）、必须选较短的词才能成功（`"cars"`, `["car","ca","rs"]`）；与"朴素递归"对拍（小输入）。
 
-### 4.3 LC 1268 · Search Suggestions System（Medium，频率 50）
+### 4.3 LC 1268 · Search Suggestions System（Medium）
 
 ```python
 # solutions/1268_search_suggestions_system.py
@@ -376,10 +378,10 @@ def suggested_products_bisect(products, search_word):          # no trie: sort o
 - **流式**：商品增删：trie 版本插入时只更新路径上节点的 top-3（需要保留每个节点更多候选，删除时才能补位）；真实系统是离线重建 + 增量合并，并且结果按**热度**而不是字典序排序（节点里存 top-k 热度，不是字典序）。
 - **内存**：每个节点存 3 个字符串引用（不是副本）；可以只存商品下标。
 - **并发**：只读查询无需锁；更新用"写时复制 + 原子切换根指针"（copy-on-write / RCU）。
-- **接口**：大小写、前导 / 尾随空格、重复商品（本实现不去重：`["a","a","a","a"]` 会返回重复项，LeetCode 保证商品互不相同，要先问）；`searchWord` 为空；返回的是新列表还是节点里列表的引用（我们 `[:]` 拷贝，避免调用方修改污染 trie）。
+- **接口**：大小写、前导 / 尾随空格、重复商品（这里的实现不去重：`["a","a","a","a"]` 会返回重复项，LeetCode 保证商品互不相同，要先问）；`searchWord` 为空；返回的是新列表还是节点里列表的引用（用 `[:]` 拷贝，避免调用方修改污染 trie）。
 - **测试**：和"每个前缀过滤再排序取前 3"的暴力解对拍；查询词完全不在词典里（全 `[]`）；前缀走出 trie 之后再也回不来；恰好 3 个 / 少于 3 个。
 
-### 4.4 LC 211 · Design Add and Search Words Data Structure（Medium，频率 38）
+### 4.4 LC 211 · Design Add and Search Words Data Structure（Medium）
 
 ```python
 # solutions/211_add_and_search_words.py
@@ -415,9 +417,9 @@ class WordDictionary:
 - **内存**：同 3 节：dict 节点昂贵；固定字母表用数组 / 压缩 trie。
 - **并发**：读多写少：读写锁，或写时复制；`add_word` 只会增加节点，不会删除，所以"读线程看到半建好的路径"最多是看不到刚加入的词，不会崩溃——但要在 Python 以外的语言里仔细处理内存可见性。
 - **接口**：模式里只有 `.` 一种通配符；是否支持 `*`（任意长度）——那就是正则匹配，需要 DP / 回溯（第 10 讲 LC 10）；模式含非小写字母时怎么办。
-- **测试**：和 `re.fullmatch` 对拍（我们做了）；空串模式；全是 `.`；长度不匹配（`"b."` 对 `"bad"`）。
+- **测试**：和 `re.fullmatch` 对拍；空串模式；全是 `.`；长度不匹配（`"b."` 对 `"bad"`）。
 
-### 4.5 LC 212 · Word Search II（Hard，频率 54）
+### 4.5 LC 212 · Word Search II（Hard）
 
 ```python
 # solutions/212_word_search_ii.py
@@ -464,9 +466,9 @@ def find_words(board, words):
 - **内存**：本实现**在搜索过程中修改了棋盘**（标记 `None`）并在返回时还原；也**消耗了 trie**（删节点、`pop` 标记）。如果 trie 要复用于下一次查询，必须在每次搜索前拷贝，或者不要做这两个优化——这是个契约问题，要说出来。
 - **并发**：不同起点格子可以并行，但每个线程需要自己的棋盘副本（原地标记不是线程安全的）和自己的 trie 副本（或者放弃"消耗式"优化，改成结果集合去重）。
 - **接口**：返回顺序不保证；`words` 中有重复词（报告一次）；单词长度超过棋盘格数（直接不可能）。
-- **测试**：必须有"调用前后棋盘不变"的断言；`words` 里的词互为前缀（`["a","ab","abc"]`）；同一个词出现多次；与"对每个词跑 79"的暴力解对拍（我们做了）。
+- **测试**：必须有"调用前后棋盘不变"的断言；`words` 里的词互为前缀（`["a","ab","abc"]`）；同一个词出现多次；与"对每个词跑 79"的暴力解对拍。
 
-### 4.6 LC 472 · Concatenated Words（Hard，频率 53）
+### 4.6 LC 472 · Concatenated Words（Hard）
 
 ```python
 # solutions/472_concatenated_words.py
@@ -514,7 +516,7 @@ def find_all_concatenated_words(words):
 - **内存**：冗余词不入 trie 节省了空间；dict 节点的内存代价见 3 节。
 - **并发**：按长度分层，层内并行，层间串行。
 - **接口**：空串要先过滤（否则 `"" + "" + …` 会让一切变成拼接词）；重复词（先去重）；一个词不能由**它自己**拼接而成（去重 + 严格短于）；返回顺序不保证。
-- **测试**：`["a","a"]` 不应报告 `a`；`["a","aa","aaa"]` 报告 `aa` 和 `aaa`；空串；与"集合 + 递归拆分，至少两段"的暴力解对拍（我们做了）。
+- **测试**：`["a","a"]` 不应报告 `a`；`["a","aa","aaa"]` 报告 `aa` 和 `aaa`；空串；与"集合 + 递归拆分，至少两段"的暴力解对拍。
 
 ## 5. 常见 bug
 

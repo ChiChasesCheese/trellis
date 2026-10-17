@@ -106,8 +106,3 @@ class RateLimiter:
 <details><summary>答案</summary>只记录被接受的请求，窗口内被接受的不会超过 limit，而过期的会被弹出。</details>
 4. 计数版相对日志版丢了什么？
 <details><summary>答案</summary>精确性：它假设上一桶请求均匀分布，估计会偏高或偏低；换来每 key 常数内存。</details>
-
-## 来源
-- Hello Interview 社区题目 `sliding-window-rate-limiter`，电话面，约 2026-10-01，中级 USA：https://www.hellointerview.com/community/questions/sliding-window-rate-limiter ；公司页 https://www.hellointerview.com/community/questions?company=Amazon 。该题另有两条 Amazon 报告（2026-08、2026-06，Senior）。
-- 题目描述：「Implement a rate limiter using a sliding window algorithm ... Extend the solution to support rate limiting at multiple granularities, including per IP address, per user, and per experience.」
-- 这是 coding 轮的题，不是 OOD。代码：`code/amz_rate_limiter.py`。

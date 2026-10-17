@@ -78,9 +78,3 @@ def min_steps(grid, start, target):
 <details><summary>答案</summary>先到的路径可能朝向不利（比如只能再向左转），后到的路径朝向有利却被丢弃，最短路可能被剪掉。</details>
 3. 变体中「右转和掉头不允许」，代码里为什么不用写 if 判断，只列 `(h, (h - 1) % 4)`？
 <details><summary>答案</summary>候选朝向本身就只有直行和左转两种，不允许的转移根本没有生成。</details>
-
-## 来源
-- 1point3acres 帖子 1190455（SDE II 店面，2026-09-16；发帖 2026-09-22）：https://www.1point3acres.com/bbs/thread-1190455-1-1.html 。摘要为 40 分钟的带移动约束 BFS，现场写了三维向量存储但写错、没留时间走查；回帖称接近 490 但带方向，另有回帖提到「不能回头不能左不能右转」。
-- LC 490 题面镜像 https://leetcode.ca/all/490.html （官方页为付费题）。
-- 方向约束变体的精确规则帖子没有写全，上文是按这些碎片重建的 **(reconstructed)**，不是原文。已有 Anki 卡 `forbidden-turn-grid`。
-- 代码：`../../coding/solutions/490_the_maze.py`、`code/amz_directional_grid.py`。
