@@ -65,7 +65,7 @@ def check(path: Path, names: set[str]) -> list[str]:
     if "classDiagram" not in body:
         out.append("no mermaid classDiagram")
     out += style_problems(body)
-    for link in WIKILINK.findall(text):
+    for link in WIKILINK.findall(re.sub(r"`[^`\n]*`", "", FENCE.sub("", text))):   # code is not a link
         if link.strip().rstrip("\\") not in names:
             out.append(f"dead wikilink [[{link}]]")
     return out
