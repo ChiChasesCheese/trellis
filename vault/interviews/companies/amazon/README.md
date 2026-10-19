@@ -13,13 +13,13 @@
 
 ## 每天练什么、在哪练
 
-| 轮 | Anki | Obsidian |
-|---|---|---|
-| OOD | `低层设计（LLD）::10 Amazon 专项`：按顺序学，标 low priority 的放最后 | 题解 `solution-amz-*`，分关练习 `design-amz-*` |
-| 编码 | `LeetCode Tops::20 Amazon 高频 A 档` → `::22 Amazon 近一月原题` → `::23 Amazon 模式强化`；最近考过的老题：`tag:amazon-seen-2026-10` | `interviews/core/coding/amazon/`：模式讲义 `patterns/`、近期题 `recent/` |
-| 系统设计 | — | [[sd-index]]（`interviews/core/system-design/amazon/`） |
-| LP | — | [[amazon/lp/question_bank\|LP 题库]] · [[story_matrix]] · `lp/stories/` · [[amazon/lp/drill\|每日演练]] |
-| GenAI | — | `lp/genai/` |
+| 轮     | Anki                                                                                                           | Obsidian                                                                                          |
+| ----- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| OOD   | `低层设计（LLD）::10 Amazon 专项`：按顺序学，标 low priority 的放最后                                                             | **先读 [[ood-index]]**：每题 20 分钟的文章 + Python 骨架；长版题解 `solution-amz-*` |
+| 编码    | `LeetCode Tops::20 Amazon 高频 A 档` → `::22 Amazon 近一月原题` → `::23 Amazon 模式强化`；最近考过的老题：`tag:amazon-seen-2026-10` | `interviews/core/coding/amazon/`：模式讲义 `patterns/`、近期题 `recent/`                                   |
+| 系统设计  | —                                                                                                              | [[sd-index]]（`interviews/core/system-design/amazon/`）                                             |
+| LP    | `Narrative Round::07 Amazon · LP 故事（STAR-L）`：先学 LP 映射，再按故事复习 | [[amazon/lp/question_bank\|LP 题库]] · [[story_matrix]] · `lp/stories/` · [[amazon/lp/drill\|每日演练]] |
+| GenAI | —                                                                                                              | `lp/genai/`                                                                                       |
 
 顺序建议：每天先做 OOD deck 的新卡，再复习编码，零碎时间读一篇系统设计；LP 故事每天口述两个。
 

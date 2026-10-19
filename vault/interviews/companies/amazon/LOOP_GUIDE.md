@@ -10,7 +10,7 @@ SDE · AWS Data Services，西雅图现场，10/20–21。每一轮约 1 小时�
 - 每位面试官问 2–3 道；Bar Raiser 那一轮可能整轮都是 LP，一题接一题追问
 - 最常被问：紧 deadline 交付 · 承担职责之外的事 · 和经理意见不合 · 收到负面反馈 · 深挖根因 · ownership · 最近学了什么 · **怎么用 GenAI**
 - 过线标准：一个故事 60–90 秒讲完；数字说得出口；说「我」做了什么；追问时能讲出取舍和机制
-- 去哪练：[[amazon/lp/question_bank|LP 题库]] → [[story_matrix]] → `lp/stories/` → [[amazon/lp/drill|每日演练]]
+- 去哪练：Anki `Narrative Round::07 Amazon · LP 故事（STAR-L）` → [[amazon/lp/question_bank|LP 题库]] → [[story_matrix]] → [[amazon/lp/drill|每日演练]]
 
 ### GenAI（常在 HM 那一轮）
 - 会问：你怎么用 GenAI · AI 出错（幻觉）时你怎么发现和处理 · 怎么验证 AI 写的代码 · 什么时候信它、什么时候不信
@@ -26,7 +26,7 @@ SDE · AWS Data Services，西雅图现场，10/20–21。每一轮约 1 小时�
 ### OOD / 低层设计（几乎必有一轮）
 - 形式：30–45 分钟写类、接口和核心方法，然后面试官一条一条加 5–6 条新需求
 - 过线标准：每条新需求「加一个类或改一行」就能接住；命名清楚；钱用整数分；时间从外部注入；说得出线程安全怎么做
-- 去哪练：Anki `低层设计（LLD）::10 Amazon 专项`，按卡片顺序；每题有题解 `solution-amz-*` 和分关练习 `design-amz-*`
+- 去哪练：**先读 [[ood-index]]**（每题 20 分钟，先读 [[ood00-round-framework]]）；Anki `低层设计（LLD）::10 Amazon 专项`，按卡片顺序
 
 ### 系统设计（按 senior 准备；AWS 的面试官可能临场把 OOD 换成系统设计）
 - 你简历里写到的东西（Kafka、Snowflake、复制、对账）会被深挖到内部机制
@@ -46,5 +46,5 @@ SDE · AWS Data Services，西雅图现场，10/20–21。每一轮约 1 小时�
 |---|---|---|---|
 | 10/17 | 补上面三个【待补】；按 [[story_matrix]] 练 6 条 | deck 22 新卡 + `tag:amazon-seen-2026-10` | deck 10 前 6 题 |
 | 10/18 | 练 6 条 + GenAI 四题；录音听一遍 | deck 23 前 8 个模式 | deck 10 后 6 题；读 [[00_ddia_refresh]] |
-| 10/19（飞西雅图） | 每条 LP 过一遍 60 秒版 | 只复习做错的卡 | [[sd01-url-shortener]]、[[sd02-amazon-lockers]] 各口述一遍 |
+| 10/19（飞西雅图） | Narrative deck 07 过一遍；每条 LP 60 秒版 | 只复习做错的卡 | 飞机上读 [[ood-index]] 第一张表（14 篇）；[[sd01-url-shortener]]、[[sd02-amazon-lockers]] 各口述一遍 |
 | 10/20 当天 | 早上把 5 个最常用故事各讲一遍 | 不碰新题 | 不碰新题 |

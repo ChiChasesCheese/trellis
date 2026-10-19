@@ -132,6 +132,8 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
   A reading with no `url:` and a real body is an *authored* article and needs no clipping — card footers open it directly.
 - Card agents miscompute, contradict their own assumptions and pass off secondhand numbers: the failure table and guards are in
   the `building-problem-banks` skill. Medium-hosted blogs, uber.com, dl.acm.org, w3.org and LeetCode Discuss refuse fetches (same skill).
+- `anki-push` can fail with 'Collection lifecycle operation is active' (it imports while its own AnkiWeb sync is still
+  running): sync, wait until AnkiConnect answers, `importPackage`, then `trellis --domain <d> anki-align`.
 - `anki-push` moves a domain's decks onto their own preset `Trellis · <title>` (cloned, deals new cards by position) and
   repositions only cards Anki still calls new. Never write to the shared `Default` preset or to a reviewed card's `due`.
 - A leaf is weak only on cards with a verdict (taken / slipped); young cards are not evidence, and a weak leaf whose grown
