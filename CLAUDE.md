@@ -134,6 +134,9 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
   the `building-problem-banks` skill. Medium-hosted blogs, uber.com, dl.acm.org, w3.org and LeetCode Discuss refuse fetches (same skill).
 - `anki-push` can fail with 'Collection lifecycle operation is active' (it imports while its own AnkiWeb sync is still
   running): sync, wait until AnkiConnect answers, `importPackage`, then `trellis --domain <d> anki-align`.
+- AnkiConnect (2026-10) refuses `setSpecificValueOfCard` on `due` ('Use native scheduling commands for protected state'), so
+  `anki-align` cannot reposition new cards, and `forgetCards` restores the *original* position. For still-new cards with no
+  reviews: `deleteNotes` then re-import the apkg — positions follow the package's Sequence order.
 - `anki-push` moves a domain's decks onto their own preset `Trellis · <title>` (cloned, deals new cards by position) and
   repositions only cards Anki still calls new. Never write to the shared `Default` preset or to a reviewed card's `due`.
 - A leaf is weak only on cards with a verdict (taken / slipped); young cards are not evidence, and a weak leaf whose grown
