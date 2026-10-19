@@ -15,7 +15,7 @@ from pathlib import Path
 # Provenance and process never appear on a learning page (Chi, 2026-10-17: 「完全不要提到来源；留档用你自己的 log」).
 # Regexes, so ordinary technical words (类型推断, 重建索引, 数据来源) are not false hits. URLs are stripped first, so a
 # study link to a tutorial page is fine; naming where a question was reported is not.
-PROVENANCE = [r"一亩三分地", r"1p3a", r"(?i)1point3acres", r"(?i)hello interview", r"面经", r"帖子", r"楼主", r"置信度",
+PROVENANCE = [r"一亩三分地", r"1p3a", r"(?i)1point3acres", r"(?i)hello interview", r"面经", r"楼主", r"置信度",
               r"（重建）", r"\(reconstructed\)", r"reconstructed", r"重建题", r"(?<!类型)推断", r"报告里", r"据报告",
               r"有人报告", r"被报告", r"候选人报告", r"抓取", r"原帖", r"来源[：:]", r"^## 来源", r"(?i)\bgit commit\b|\bcommit [0-9a-f]{7}",
               r"AGENT\.md", r"proposals/", r"台账", r"LEDGER", r"CHECKPOINT", r"子代理", r"编排者", r"门禁",
@@ -23,7 +23,7 @@ PROVENANCE = [r"一亩三分地", r"1p3a", r"(?i)1point3acres", r"(?i)hello inte
 # Narration about the text or its sources, never allowed. Regexes, so a compound word that merely contains the
 # phrase (工作者, 版本文件, 基本题型) is not a false hit.
 THIRD_PERSON = [r"本篇", r"(?<![版样根基资日脚剧成账])本文(?![件档本])", r"(?<![基课样])本题(?![型单库])", r"这道题",
-                r"(?<![工著劳创])作者", r"我们认为", r"候选人说", r"据报道", r"笔者"]
+                r"本文作者|作者认为|作者建议|笔者", r"我们认为", r"候选人说", r"据报道", r"笔者"]
 FENCE = re.compile(r"^```.*?^```", re.S | re.M)
 MERMAID = re.compile(r"^```mermaid\n(.*?)^```", re.S | re.M)
 NODE = re.compile(r"\b([A-Za-z_][\w]*)\s*(?:\[\[|\[\(|\(\(|\[|\(|\{\{|\{|>)(\"?)([^\]\)\}\n]*?)\2\s*(?:\]\]|\)\]|\)\)|\]|\)|\}\}|\})")
