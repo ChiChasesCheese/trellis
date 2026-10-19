@@ -1,0 +1,100 @@
+{
+  "code": "R1",
+  "full_zh": [
+    "背景：2026-06 起我在工作之外做了一个多市场量化研究平台，Python，约 66K 行、470+ 测试文件，覆盖美股、加密、A 股、外汇。",
+    "目标：新市场或新数据商只需要一个薄适配器，策略代码零改动，所以我只保留四个窄接口（数据源、因子、策略、broker）；第二个目标是抵抗过拟合，因为我不信任自己的回测。",
+    "我做了什么：任何策略都必须过两个独立关卡，先是 purged 交叉验证加 Deflated Sharpe 和 PBO，再是 NautilusTrader 的执行重放；340+ 次实验全部记入 append-only ledger，并按市场校准成本模型，这样能看到我试了多少想法，而不只是成功的那几个。",
+    "结果：一个中国小盘月度策略两关都过，扣 10 bps 成本后 excess Sharpe 1.39，并上线了带事前风控的 paper-trading；这是模拟盘，不是盈利证明。",
+    "为什么这样做：回测很容易自欺，所以用流程而不是直觉来反驳自己的想法，没通过两个独立关卡就不上线；账本让多重检验的代价可见。"
+  ],
+  "full_en": "Outside work, since June 2026, I built a multi-market quantitative research platform in Python, about sixty-six thousand lines and over four hundred and seventy test files, covering US equities, crypto, China A-shares and FX. The design goal was that adding a market or a data vendor should be a thin adapter with zero strategy-code changes, so I kept four narrow seams: data source, factor, strategy and broker. The part I'm most proud of is the discipline against overfitting. Every strategy has to pass a dual gate: purged cross-validation with Deflated Sharpe Ratio and probability of backtest overfitting, and then an execution replay on NautilusTrader. I've logged over three hundred and forty experiments to an append-only ledger, with per-market cost models, so I can see how many ideas I tried, not only the ones that worked. One China small-cap monthly strategy cleared both gates with an excess Sharpe of 1.39 after ten basis points of costs, and it now runs on a paper-trading loop with pre-trade risk checks. To be clear, that is paper trading, not proof of profit.",
+  "terms": {
+    "full": [
+      {"en": "thin adapter", "zh": "很薄的适配层，只做转换、不含业务逻辑", "example": "Adding a new data vendor is just a thin adapter, so the strategy code never changes."},
+      {"en": "guard against overfitting", "zh": "防范过拟合", "example": "The whole platform is built to guard against overfitting my own backtests."},
+      {"en": "clear a gate", "zh": "通过一道关卡", "example": "One China small-cap strategy cleared both gates after costs."}
+    ],
+    "hook": [
+      {"en": "narrow seam", "zh": "窄接口 / 窄的分层边界", "example": "I kept four narrow seams so a new market never touches strategy code."},
+      {"en": "append-only ledger", "zh": "只追加不覆盖的账本", "example": "Every experiment goes into an append-only ledger, so I can't quietly forget the failures."},
+      {"en": "net of costs", "zh": "扣除成本之后", "example": "The excess Sharpe of 1.39 is net of ten basis points of costs."}
+    ],
+    "starl": [
+      {"en": "design goal", "zh": "设计目标", "example": "My design goal was zero strategy-code changes when a market is added."},
+      {"en": "pre-trade risk check", "zh": "下单前的风控检查", "example": "The paper-trading loop runs pre-trade risk checks before every order."},
+      {"en": "independent check", "zh": "相互独立的校验", "example": "Nothing ships without two independent checks, not one."}
+    ],
+    "followups": [
+      {"en": "multiple-testing penalty", "zh": "多重检验带来的惩罚 / 修正", "example": "With three hundred and forty experiments, the Deflated Sharpe applies a multiple-testing penalty to the best one."},
+      {"en": "leakage", "zh": "信息泄漏（训练集看到了测试期信息）", "example": "Purging removes the overlap between train and test labels, which is where leakage hides."},
+      {"en": "bus factor", "zh": "关键人风险（只有一个人懂）", "example": "Being solo, the bus factor is one, so I leaned on tests and CI."}
+    ],
+    "relp": [
+      {"en": "disprove my own idea", "zh": "主动证伪自己的想法", "example": "I built a process whose job is to disprove my own strategy ideas."},
+      {"en": "raise the bar", "zh": "抬高标准", "example": "Requiring two independent gates raised the bar for anything going live."},
+      {"en": "first principles", "zh": "回到基本原理", "example": "I didn't trust my backtests, so I learned purged CV and Deflated Sharpe from first principles."}
+    ]
+  },
+  "senior": [
+    {
+      "q": "How would you know a strategy that passed both gates is not just a lucky survivor of 340 experiments?",
+      "why": "面试官在探：你是否真正理解多重检验，以及通过关卡不等于真的有效",
+      "framework": [
+        "先承认：试得越多，最好的那个越可能只是运气，所以 Deflated Sharpe 要按试验次数惩罚",
+        "再说账本的作用：试验总数是分母，必须诚实记录，否则修正没有意义",
+        "然后说外部证据：样本外和 paper-trading 的表现是否和回测一致",
+        "最后说态度：把 1.39 当作假设而不是盈利证明，持续监控偏差"
+      ],
+      "best_practice": "最大的统计陷阱是只看赢家。账本把所有试验都记下来，Deflated Sharpe 才能按真实的试验次数扣掉运气成分；再用 paper-trading 这种从未参与调参的数据做最终检验。这样结论的可信度来自流程，而不是某个漂亮的数字。",
+      "terms": [
+        {"en": "survivorship in your own research", "zh": "自己研究过程中的幸存者偏差", "example": "The ledger protects me from survivorship in my own research."},
+        {"en": "out-of-sample evidence", "zh": "样本外证据", "example": "Paper trading is the out-of-sample evidence the backtest could never give me."}
+      ]
+    },
+    {
+      "q": "If paper-trading results drift away from the backtest, how would you decide whether to stop the strategy?",
+      "why": "面试官在探：你有没有预先设定的停止规则，而不是事后凭感觉",
+      "framework": [
+        "事先定义可观测的偏差指标，例如成交价与回测假设的滑点差、实际成本对比 10 bps 假设",
+        "把偏差拆开：是成本模型偏了、数据延迟，还是策略本身失效",
+        "设阈值和动作：超过阈值就降仓或暂停，而不是等亏损来说服自己",
+        "复盘后更新成本模型或把想法写回账本"
+      ],
+      "best_practice": "上线前就写好停止规则，是为了避免人在亏损时找借口。把偏差拆成成本、执行、信号三类，才知道该修模型还是淘汰策略；结果回写账本，下一轮实验才有真实的成本基准。",
+      "terms": [
+        {"en": "kill criteria", "zh": "预先约定的终止条件", "example": "I would write kill criteria before the strategy goes live, not after."},
+        {"en": "attribute the drift", "zh": "把偏差归因到具体来源", "example": "First I would attribute the drift to costs, execution or signal."}
+      ]
+    },
+    {
+      "q": "Why did you make append-only the rule for the experiment ledger rather than a mutable table?",
+      "why": "面试官在探：你对数据完整性和事后可审计性的设计判断",
+      "framework": [
+        "先说问题：可覆盖的表会让失败的试验消失，过拟合的代价就看不见",
+        "再说取舍：追加式多占一点存储、查询稍麻烦，但换来完整历史",
+        "说明它如何支撑 Deflated Sharpe：试验次数必须是真实的",
+        "收尾：可审计性让别人也能复核结论"
+      ],
+      "best_practice": "如果能覆盖，人就会在无意间删掉不好看的记录，试验次数被低估，统计修正就失效。追加式用一点存储成本换来诚实的分母，这是用机制而不是自律来防止自欺。",
+      "terms": [
+        {"en": "audit trail", "zh": "可审计的历史轨迹", "example": "The append-only ledger gives me an audit trail of every idea I tried."},
+        {"en": "enforce by design", "zh": "靠设计强制保证，而不靠自觉", "example": "I enforce honesty by design: you can't edit a past experiment."}
+      ]
+    },
+    {
+      "q": "If a team of ten researchers started using this platform, what would break first and what would you change?",
+      "why": "面试官在探：你从个人项目走向团队平台的规模化思维",
+      "framework": [
+        "先找最先出问题的点：共享数据的一致性和账本的写入冲突、环境不可复现",
+        "再说约束：要有 point-in-time 数据的唯一来源和版本，实验要可复现",
+        "然后说治理：关卡要变成所有人都绕不开的流水线，而不是个人习惯",
+        "最后说文档和接口稳定性：窄接口让别人能自助接入"
+      ],
+      "best_practice": "单人项目靠自律，团队则必须靠机制。把关卡放进共享流水线、让数据版本固定且可复现，别人才无法绕过校验；窄接口降低接入成本，所以扩展性主要来自已有的分层，而不是重写。这只是我下一步会做的设计，目前它是个人项目。",
+      "terms": [
+        {"en": "single source of truth", "zh": "唯一可信的数据来源", "example": "With ten researchers I'd need a single source of truth for the data."},
+        {"en": "make the right thing the easy thing", "zh": "让正确的做法成为最省力的做法", "example": "I'd make the right thing the easy thing by putting the gates into the shared pipeline."}
+      ]
+    }
+  ]
+}

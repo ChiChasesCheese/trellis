@@ -1,0 +1,86 @@
+{
+  "code": "G4",
+  "full_zh": [
+    "背景：并行跑了几个月的代理之后，我需要一条比「感觉对」更好的规则。",
+    "目标：针对每个任务决定该信任输出到什么程度，并且写下来。",
+    "我做了什么：规则有两个输入，一是有没有 oracle（编译器、测试、可重跑的脚本），二是错了的代价有多大。有 oracle 且爆炸半径小，我信任并用机器验证，比如有绿测试保护的重构、脚手架、必须能编译的示例。",
+    "没有 oracle 时我不信任数字、关于外部系统的论断和二手信息；有个例子是代理把一个数字标成「官方披露」，实际只来自一个备考网站。代价高的代码，比如涉及钱的代码，无论如何我都读每一个 diff。盲区是「合理假设上的错误结论」，闸门只查形状，只有阅读才查实质，所以我先读代理自己列的「最不确定」清单。",
+    "结果与学到：缺陷在闸门或评审时暴露，而不是被读者发现；例如编译了所有教材示例后抓到了一个根本编译不过的 Java 例子。信任是模型周围验证机制的属性，不是模型本身的属性。"
+  ],
+  "full_en": "After months of running agents in parallel, I needed a rule better than it feels right. I wanted to decide per task how much to trust the output, and write it down. The rule has two inputs: is there an oracle, like a compiler, a test or a re-runnable script, and what does a wrong answer cost? With an oracle and a low blast radius, I trust and verify by machine: refactors under green tests, scaffolding, examples that must compile. With no oracle, I don't trust numbers, claims about external systems, or anything secondhand. For example, an agent labelled a figure officially disclosed, but it came from a single prep site. For high-cost code, like money code, I read every diff myself regardless. The blind spot is a wrong conclusion on a plausible assumption, because gates check shape and only reading checks substance, so I read the agent's own least-sure list first. As a result, defects surface at the gate or in review, not with the reader. For instance, a Java example that would not compile was caught when I compiled every textbook example. Trust is a property of the verification around the model, not of the model.",
+  "terms": {
+    "full": [
+      {"en": "blast radius", "zh": "出错时影响的范围", "example": "With a low blast radius and a green test, I trust the agent's refactor."},
+      {"en": "trust but verify", "zh": "信任但要验证", "example": "With an oracle in place, I trust but verify by machine."},
+      {"en": "secondhand", "zh": "二手的、非一手来源的", "example": "I don't trust anything secondhand without checking the source."}
+    ],
+    "starl": [
+      {"en": "decision framework", "zh": "决策框架", "example": "I wrote a two-input decision framework instead of going on gut feel."},
+      {"en": "write it down", "zh": "写下来固化", "example": "I wrote the rule down so it doesn't depend on my mood."},
+      {"en": "least-sure list", "zh": "最不确定清单", "example": "I read the agent's least-sure list before anything else."}
+    ],
+    "followups": [
+      {"en": "override", "zh": "否决、推翻（工具的建议）", "example": "I overrode the agent when a figure had no primary source."},
+      {"en": "single point of failure", "zh": "单点故障", "example": "If the test and the code share a blind spot, the oracle becomes a single point of failure."},
+      {"en": "least privilege", "zh": "最小权限", "example": "I keep agents on least privilege and they can't change their own permissions."}
+    ]
+  },
+  "senior": [
+    {
+      "q": "How would you build an oracle for a task that currently has none?",
+      "why": "面试官在探：你遇到没有验证手段的问题时，会不会主动造验证手段。",
+      "framework": [
+        "先问能否把问题拆出一个可验证的子问题，比如把数字变成可复算的脚本",
+        "再找独立路径：用另一种方法得到同一个答案做对拍",
+        "实在造不出来，就把任务降级为草稿，由我重写，或者交给人做"
+      ],
+      "best_practice": "没有 oracle 并不意味着只能盲信或放弃，往往可以造一个。造 oracle 的成本通常小于出错的代价，而且造好之后对未来的模型也有效。造不出来就诚实降级，比假装可信更稳妥。",
+      "terms": [
+        {"en": "independent path", "zh": "独立验证路径", "example": "I look for an independent path that reaches the same answer."},
+        {"en": "downgrade to a draft", "zh": "降级为草稿", "example": "Without an oracle, I downgrade the output to a draft and rewrite it."}
+      ]
+    },
+    {
+      "q": "What if the oracle itself is wrong, for example tests written by the same agent that wrote the code?",
+      "why": "面试官在探：你是否看到 oracle 的同源盲区。",
+      "framework": [
+        "先承认：测试和代码同源时会共享盲区，全绿不证明正确",
+        "再说对策：变异测试看测试能否抓住故意写错的版本",
+        "最后说独立路径对拍，以及关键部分由人写或人审测试"
+      ],
+      "best_practice": "oracle 也需要被检验。让测试和代码来自不同来源，或者用变异测试和独立实现对拍，才能打破同源盲区。这是我规则的已知失效点，主动说出来更可信。",
+      "terms": [
+        {"en": "common-mode failure", "zh": "同源故障", "example": "Tests from the same author as the code risk a common-mode failure."},
+        {"en": "cross-check", "zh": "交叉核对", "example": "I cross-check with an independent implementation."}
+      ]
+    },
+    {
+      "q": "How would you turn your personal trust rule into something a whole team follows?",
+      "why": "面试官在探：从个人经验到组织机制的能力。",
+      "framework": [
+        "先把规则压成一页表：oracle 有无、代价高低四个格子，各自怎么处理",
+        "再放进仓库里的模板和 CI，而不是口头传达",
+        "最后用评审中的真实案例做校准，定期复盘规则是否需要改"
+      ],
+      "best_practice": "规则被团队采用的关键是简单、可执行、有例子。把它放在日常必经的地方，比如 PR 模板和 CI，人们才会在不额外花力气的情况下遵守。定期用真实案例校准，规则才不会过时。",
+      "terms": [
+        {"en": "lightweight process", "zh": "轻量流程", "example": "I'd keep it a lightweight process, one table in the PR template."},
+        {"en": "calibrate", "zh": "校准", "example": "We calibrate the rule on real review cases."}
+      ]
+    },
+    {
+      "q": "Where would you draw the line on letting an agent act with higher autonomy, such as merging its own change?",
+      "why": "面试官在探：你对自主性、权限与风险的判断。",
+      "framework": [
+        "先说前提：改动小、有强 oracle、可一键回滚、爆炸半径有限",
+        "再说仍需保留的人工点：涉及钱、安全和权限的改动必须由人批准",
+        "最后说渐进放权：先在低风险区域试，用数据证明可靠后再扩大"
+      ],
+      "best_practice": "自主性应与可验证性和可回滚性成正比。高风险区域保留人工审批是对爆炸半径的管理，而不是对 AI 的不信任。渐进放权并用数据证明，比一次性开放更容易被组织接受。",
+      "terms": [
+        {"en": "reversible", "zh": "可回滚的、可撤销的", "example": "I'd grant autonomy only for changes that are cheap and reversible."},
+        {"en": "graduated autonomy", "zh": "逐级放权", "example": "I'd roll out graduated autonomy, starting in low-risk areas."}
+      ]
+    }
+  ]
+}

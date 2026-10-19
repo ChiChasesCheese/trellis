@@ -1,11 +1,13 @@
 ---
 id: nr-amz-s1-followups
-node: amazon.s1
+node: amazon.followups
 type: qa
-step: 3
+step: 1
 ---
 ## Q
-【Amex 结算管线（端到端 owner）】面试官会追问什么？每个怎么答？
+<p class="title">Amex 结算管线<span class="meta">03 追问</span></p>
+
+面试官会追问什么？每个怎么答？
 
 ## A
 - **What exactly was yours vs. the team's?**
@@ -28,3 +30,5 @@ step: 3
     - `AFTER` 只保证各跑过一次，不保证同一批；**FULL OUTER JOIN** 兜底，错位记一次错误，**下一轮自愈**
 - **Did you ever lose or double-count money?**
     - 不说 "no accidents"；设计目标是**坏了就记录**；「ACH 费用 NULL 事故」 的 ACH 事故在下游，我拥有那次 RCA
+
+<div class="sources"><b>表达 · business English</b><br>• <b><i>trade-off</i></b> — 取舍<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“The trade-off of staying inside Snowflake was weaker orchestration, which I covered with monitoring and alerts.”</span><br>• <b><i>self-heal</i></b> — 自愈（下一轮自动恢复）<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“A misaligned batch logs one error and self-heals on the next run.”</span><br>• <b><i>hardening</i></b> — 加固（针对故障补防护）<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“After each real failure I shipped a hardening PR, about a dozen in total.”</span></div>

@@ -1,11 +1,13 @@
 ---
 id: nr-amz-s5-followups
-node: amazon.s5
+node: amazon.followups
 type: qa
-step: 3
+step: 21
 ---
 ## Q
-【Net Settlement · interchange 数据源切换（技术决策 + 零回归迁移）】面试官会追问什么？每个怎么答？
+<p class="title">Net Settlement 数据源切换<span class="meta">03 追问</span></p>
+
+面试官会追问什么？每个怎么答？
 
 ## A
 - **What's the trade-off of the time window?**
@@ -24,3 +26,5 @@ step: 3
     - **定价服务**、**结算平台**、**出款服务**、**收单行**；对齐靠数据契约与信任
 - **Did the toggle ever get flipped back?**
     - 一次 migration 里 **prod 关、preprod 开**；灰度执行细节无记录，不编
+
+<div class="sources"><b>表达 · business English</b><br>• <b><i>mutually exclusive</i></b> — 互斥，同一时刻只有一边生效<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“The two tasks are mutually exclusive because one toggle controls them in opposite directions.”</span><br>• <b><i>bounded scan cost</i></b> — 扫描成本有上界<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“The one-month window gives us bounded scan cost on a table that only grows.”</span><br>• <b><i>documented risk</i></b> — 写明在文档或注释里的已知风险<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“Records reprocessed after a month bypass dedup, which is a documented risk we accepted.”</span></div>

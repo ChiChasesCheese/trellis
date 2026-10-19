@@ -1,11 +1,13 @@
 ---
 id: nr-amz-g3-starl
-node: amazon.g3
+node: amazon.outline
 type: qa
-step: 1
+step: 48
 ---
 ## Q
-【什么时候 GenAI 不必要，或者更慢】适用 LP、开场 hook 和 STAR-L 提纲
+<p class="title">GenAI 不必要的时候<span class="meta">02 提纲</span></p>
+
+适用 LP、开场 hook 和 STAR-L 提纲
 
 ## A
 - 主 LP：Frugality；备用：Dive Deep（用数据而非印象）、Bias for Action。
@@ -31,3 +33,5 @@ step: 1
 - **L · Learning / Mechanism**
     - Use a model where output is **open-ended and checkable**.
     - Where the answer is **deterministic**, write **ten lines of code**.
+
+<div class="sources"><b>表达 · business English</b><br>• <b><i>round trip</i></b> — 一来一回的往返<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“A one-line fix is not worth an agent round trip.”</span><br>• <b><i>right-size</i></b> — 按实际需要调整规模<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“I right-sized the work to two problems per agent.”</span><br>• <b><i>overhead</i></b> — 额外开销<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“Delegation has overhead in context and tokens.”</span></div>

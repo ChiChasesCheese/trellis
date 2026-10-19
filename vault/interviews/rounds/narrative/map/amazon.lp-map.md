@@ -1,8 +1,8 @@
 %% trellis:begin %%
-# LP → 先用哪个故事
+# 04 LP → 故事
 *Amazon · LP 故事（STAR-L）*
 
-LP → 先用哪个故事 的提纲与追问。
+04 LP → 故事
 
 ## Cards (16)
 1. [[nr-amz-lp01]]

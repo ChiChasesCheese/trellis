@@ -1,0 +1,192 @@
+{
+  "code": "S9",
+  "full_zh": [
+    "背景：一家大型 marketplace 商户报告约 400 万美元的 Amex 出款“不见了”，团队开了正式事故频道，指挥点名我是三位 fix owner 之一。因为钱是商户的，所以先要判断这是真违约还是预期内的延迟。",
+    "问题：一位资深同事对美国 aggregated-Amex 的 SLA 没有背景，直接让我来答。如果不先把这件事说清，大家会一直争“是不是违约”，真正的原因就没人去查。",
+    "我做了什么（SLA）：我说明 T+7 是我们内部管线的 SLA，而且我们只在 Amex 把钱结算到我们账户之后才出款。这样预期延迟和真实回归就分开了，违约之争随之结束，指挥才能去追真正的原因。",
+    "我做了什么（修法）：指挥追到 6 月 23 日为 EU 合规做的一次 effective-date 改动，把美国出款日推后了约一天。revert 最快，但会把 EU 合规改动一起撤掉，所以我主张在 table function 里加 region 条件，让 EU 和 US 语义相互独立。小组选了这个方案，由两位同事部署。",
+    "结果与学到：事故三天内关闭（07-06 到 07-09）。我的份额是 SLA 判定和修复方向，部署是同事做的。学到的是：多 owner 事故里，拿下自己是权威的那一块并直白地说清楚，并且争取稳健的修法而不是最快的。"
+  ],
+  "full_en": "A large marketplace merchant reported roughly four million dollars of Amex payouts missing, and a formal incident channel spun up. The incident commander named me one of three engineers who own the fix. I made two contributions. First, the SLA: a senior teammate said he didn't have context on US aggregated-Amex SLAs and deferred to me. I established that T+7 is our internal pipeline SLA and that we only disburse after Amex settles funds to us, which separated expected latency from the real regression and ended the argument about whether we had breached anything. Second, the regression: an effective-date change we made for EU compliance had shifted US disbursement dates by about a day. Reverting was the fast option, but I argued for the robust one, a region conditional in the table function so EU and US keep independent semantics. The group chose it, two teammates deployed it, and the incident closed in three days.",
+  "terms": {
+    "full": [
+      {
+        "en": "defer to someone",
+        "zh": "把判断交给更懂的人",
+        "example": "A senior teammate deferred to me on the US aggregated-Amex SLA."
+      },
+      {
+        "en": "separate signal from noise",
+        "zh": "把真信号和噪音分开",
+        "example": "Naming the T+7 SLA separated signal from noise: expected latency versus a real regression."
+      },
+      {
+        "en": "owner of the fix",
+        "zh": "修复的负责人",
+        "example": "The incident commander named me one of three owners of the fix."
+      }
+    ],
+    "hook": [
+      {
+        "en": "on the hook",
+        "zh": "要负责、跑不掉",
+        "example": "With four million dollars in question, the three of us were on the hook for the fix."
+      },
+      {
+        "en": "close out an incident",
+        "zh": "把事故收尾关闭",
+        "example": "We closed out the incident in three days."
+      },
+      {
+        "en": "rule out",
+        "zh": "排除",
+        "example": "Stating the SLA let us rule out a breach before digging for the real cause."
+      }
+    ],
+    "starl": [
+      {
+        "en": "draw the line",
+        "zh": "划清边界",
+        "example": "I drew the line between the internal pipeline SLA and Amex settlement timing."
+      },
+      {
+        "en": "take the call",
+        "zh": "拿主意、做判断",
+        "example": "On the SLA question I took the call because I was the one with the context."
+      },
+      {
+        "en": "robust over fast",
+        "zh": "宁稳不图快",
+        "example": "I argued for robust over fast: a region condition rather than a revert."
+      }
+    ],
+    "followups": [
+      {
+        "en": "scope of ownership",
+        "zh": "负责范围",
+        "example": "My scope of ownership was the SLA determination and the fix direction; two teammates deployed."
+      },
+      {
+        "en": "independent semantics",
+        "zh": "语义相互独立",
+        "example": "A region conditional keeps EU and US semantics independent."
+      },
+      {
+        "en": "trade-off",
+        "zh": "取舍",
+        "example": "The trade-off is an extra branch and its tests, in exchange for not undoing the EU compliance change."
+      }
+    ],
+    "relp": [
+      {
+        "en": "customer's expectation",
+        "zh": "客户的预期",
+        "example": "I started from the merchant's expectation and answered first whether the delay was real."
+      },
+      {
+        "en": "stay in my lane",
+        "zh": "不越界",
+        "example": "I stayed in my lane and spoke only to the part I could verify."
+      },
+      {
+        "en": "take the long view",
+        "zh": "着眼长远",
+        "example": "Choosing the conditional over a revert was taking the long view on the EU change."
+      }
+    ]
+  },
+  "senior": [
+    {
+      "q": "How would you communicate with the merchant while the incident was still open?",
+      "why": "面试官在探：你有没有把客户沟通放在事故处置的前面，而不只是修 bug。",
+      "framework": [
+        "先给商户一个诚实的状态：是预期延迟还是真问题，现在哪些已确认、哪些还没确认",
+        "给出下一次更新的时间，而不是等到修好才说话",
+        "说清楚影响金额和预计到账窗口，不夸大也不回避",
+        "沟通由事故指挥或客户侧负责人统一出口，我提供技术事实"
+      ],
+      "best_practice": "商户盯的是钱什么时候到，所以第一件事是让他知道这是延迟而不是丢失。先把事实边界说清，再约定更新节奏，商户的焦虑才会下降；统一出口则避免多个 owner 给出互相矛盾的说法。我会把自己能核对的部分（SLA、结算时序）提供给负责沟通的人，而不是自己越界对外承诺。",
+      "terms": [
+        {
+          "en": "single source of truth",
+          "zh": "唯一可信的信息源",
+          "example": "I'd keep one status page as the single source of truth for the merchant."
+        },
+        {
+          "en": "set expectations",
+          "zh": "管理预期",
+          "example": "The first update should set expectations on when the money lands."
+        }
+      ]
+    },
+    {
+      "q": "Why not revert the effective-date change, given that it was the fastest way to stop the bleeding?",
+      "why": "面试官在探：你怎么权衡速度、风险和长期正确性，而不是只追快。",
+      "framework": [
+        "先承认 revert 的优势：最快、改动面最小",
+        "再说它的代价：会把为 EU 合规做的改动一并撤掉，合规风险回来",
+        "region 条件让 EU 与 US 语义独立，修的是真正的原因",
+        "代价是 UDTF 里多一个分支和对应测试，我会明说并补上覆盖"
+      ],
+      "best_practice": "revert 把两个本来独立的需求绑在一起：撤销 US 的错误，同时撤销 EU 的合规。事故里的快路径如果制造新的合规风险，就不是真正的快。条件分支让每个区域有自己的语义，今后再改一边不会牵动另一边；代价是多一个分支，所以必须配测试，这是一个有意识的取舍。",
+      "terms": [
+        {
+          "en": "blast radius",
+          "zh": "影响范围",
+          "example": "A revert had a bigger blast radius because it also undid the EU compliance work."
+        },
+        {
+          "en": "decouple",
+          "zh": "解耦",
+          "example": "The region conditional decouples EU and US behavior."
+        }
+      ]
+    },
+    {
+      "q": "What would you put in place so that an effective-date change can't silently shift payout dates again?",
+      "why": "面试官在探：你能不能把一次事故变成系统性的预防，而不是只修这一个点。",
+      "framework": [
+        "改动层面：任何 effective-date 变更都要在每个受影响区域做测试，比较前后出款日",
+        "监控层面：对出款日与 SLA 的偏差设告警，在商户发现之前先发现",
+        "文档层面：把 T+7 内部 SLA 与上游到账的边界写进 runbook，下次不依赖某个人的记忆",
+        "流程层面：合规类改动评审时明确问一句“对其他区域的影响是什么”"
+      ],
+      "best_practice": "这次问题能拖到商户来报，说明改动没有按区域验证、也没有基于 SLA 的告警。预防要分层：测试在改动进入前挡住，告警在改动进入后兜底，文档把只存在于个别人脑中的 SLA 变成团队共识。这些是我会推动的下一步，需要和团队确认哪些已经落地。",
+      "terms": [
+        {
+          "en": "guardrail",
+          "zh": "护栏",
+          "example": "I'd add a guardrail that compares payout dates per region before any effective-date change ships."
+        },
+        {
+          "en": "detect before the customer does",
+          "zh": "赶在客户之前发现",
+          "example": "The goal is to detect it before the merchant does."
+        }
+      ]
+    },
+    {
+      "q": "You were the authority on the SLA, but a senior teammate was in the room. How do you handle that dynamic?",
+      "why": "面试官在探：你在比自己资深的人面前，怎么既表达权威又不越界。",
+      "framework": [
+        "只说自己有依据、可核对的部分，并给出依据",
+        "把边界讲清：哪些是内部管线 SLA，哪些取决于上游",
+        "对不是自己领域的部分主动承认并交给对的人",
+        "不挤进自己不负责的环节，比如部署"
+      ],
+      "best_practice": "资深同事主动 defer，说明团队认可你在这块的领域知识，这时候最重要的是准确而不是显得权威。把边界讲清，争论自然消失；而不越界（比如不去抢部署）让其他 owner 愿意继续把判断交给你。权威来自可核对的事实和清楚的范围。",
+      "terms": [
+        {
+          "en": "domain authority",
+          "zh": "某个领域的权威",
+          "example": "On US aggregated-Amex SLAs I was the domain authority in that channel."
+        },
+        {
+          "en": "speak to what you can verify",
+          "zh": "只讲自己能核实的",
+          "example": "I tried to speak only to what I could verify."
+        }
+      ]
+    }
+  ]
+}

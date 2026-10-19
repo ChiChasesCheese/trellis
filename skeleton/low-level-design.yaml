@@ -9,8 +9,8 @@ vault: domains/low-level-design
 study:
   order: core-first
   mix: new-first
-  new_per_day: 20
-  reviews_per_day: 100
+  new_per_day: 9999
+  reviews_per_day: 9999
 nodes:
   - id: method
     order: 1

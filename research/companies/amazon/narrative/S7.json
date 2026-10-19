@@ -1,0 +1,192 @@
+{
+ "code": "S7",
+ "full_zh": [
+  "背景：我们的集成测试对一个共享的 Snowflake schema 跑迁移，所以两个工程师，或者两个 AI 编码 agent 会话，在不同分支上就会撞 DDL。没有 ticket，也没有 owner，是我自己决定去解决这个摩擦。",
+  "V1：我先从共享的 PUBLIC schema 克隆槽位。后来发现 PUBLIC 的状态取决于谁最后跑了迁移，槽位不可复现，所以必须重写。",
+  "V2：我写了 3 篇 ADR，建一个独立的 MAIN schema，同步到生产实际部署的 commit。我查 GitHub Deployments API 而不是 release tag，因为 tag 可能打了却没部署。每个槽位是 MAIN 的零拷贝克隆，约 2 秒，因为拷的是微分区元数据，不是数据。会话借一个槽位，跑迁移和测试，用完丢弃。",
+  "边界：跨库 stream 会受克隆顺序影响，所以先克隆 replication DB 再克隆 app DB，并在交换之后自动扫描修复。",
+  "结果与学到：我可以在同一个仓库并行跑多个 Claude Code 会话而不冲突。这是个人仓库里的 23 次提交，不是团队官方工具链。我把自己看作一个 agent 团队的 tech lead，而且仍然拥有每一个 diff。"
+ ],
+ "full_en": "Nobody asked for this. Our integration tests run migrations against a shared Snowflake schema, so two engineers, or two AI coding-agent sessions, on different branches collide on DDL. I built a schema pool. Version one cloned from a shared schema whose state depended on who last ran a migration, so version two was a rewrite with three ADRs. In V2 a MAIN schema is synced to whatever commit is actually deployed to production; I query the GitHub Deployments API rather than trust the release tag, because a tag can be cut and never deployed. Each pool slot is a zero-copy clone of MAIN, about two seconds, because a clone copies micro-partition metadata, not data. A session borrows a slot, runs migrations and tests in isolation, and drops it. I also fixed real edge cases: cross-database streams break depending on clone order, so I clone the replication DB before the app DB and auto-detect the pattern after a swap. It's what lets me run several Claude Code sessions in parallel on the same repo. It lives in my own repo, not the team toolchain. I think of it as being the tech lead of a team of agents, and I still own every diff.",
+ "terms": {
+  "hook": [
+   {
+    "en": "zero-copy clone",
+    "zh": "零拷贝克隆，只复制元数据",
+    "example": "Each pool slot is a zero-copy clone, so it takes about two seconds."
+   },
+   {
+    "en": "collide on",
+    "zh": "在某处冲突",
+    "example": "Two agent sessions on different branches collide on DDL in the shared schema."
+   },
+   {
+    "en": "personal repo",
+    "zh": "个人仓库，非团队官方",
+    "example": "It's 23 commits in my personal repo, not the team's official toolchain."
+   }
+  ],
+  "starl": [
+   {
+    "en": "scratch an itch",
+    "zh": "解决自己遇到的小痛点",
+    "example": "I built the pool to scratch an itch nobody had assigned to me."
+   },
+   {
+    "en": "rewrite from first principles",
+    "zh": "回到基本原理重写",
+    "example": "V1 taught me that PUBLIC was non-deterministic, so I rewrote it from first principles."
+   },
+   {
+    "en": "deterministic",
+    "zh": "确定性的，同样输入同样结果",
+    "example": "Syncing MAIN to the deployed SHA made the slots deterministic."
+   }
+  ],
+  "followups": [
+   {
+    "en": "source of truth for what's deployed",
+    "zh": "“当前部署了什么”的权威来源",
+    "example": "The Deployments API is the source of truth for what's deployed, not a release tag."
+   },
+   {
+    "en": "gates and thresholds",
+    "zh": "关卡与阈值",
+    "example": "To trust AI code I look at the gates and thresholds, not lines of code."
+   },
+   {
+    "en": "own every diff",
+    "zh": "对每一处改动负责",
+    "example": "In money code I read and own every diff."
+   }
+  ],
+  "relp": [
+   {
+    "en": "unblock yourself",
+    "zh": "自己扫清障碍",
+    "example": "I unblocked myself and the agents by removing the shared-schema bottleneck."
+   },
+   {
+    "en": "tech lead of a team of agents",
+    "zh": "agent 团队的技术负责人",
+    "example": "I see myself as the tech lead of a team of agents."
+   },
+   {
+    "en": "low-cost experiment",
+    "zh": "低成本实验",
+    "example": "A clone costs metadata rather than storage, so it was a low-cost experiment to run."
+   }
+  ],
+  "full": [
+   {
+    "en": "developer velocity",
+    "zh": "开发效率",
+    "example": "The schema pool was a developer-velocity fix: tests stopped waiting on each other."
+   },
+   {
+    "en": "unblock the team",
+    "zh": "帮团队解除阻塞",
+    "example": "The schema pool unblocked parallel work instead of everyone sharing one schema."
+   },
+   {
+    "en": "self-serve",
+    "zh": "自助（不用找人审批）",
+    "example": "Engineers could self-serve an isolated schema in seconds."
+   }
+  ]
+ },
+ "senior": [
+  {
+   "q": "How would you measure whether the schema pool actually improved developer productivity?",
+   "why": "面试官在探：你能否把“感觉更好”变成可度量的结果。",
+   "framework": [
+    "先选指标：DDL 冲突次数、集成测试排队时间、因共享 schema 重跑的次数",
+    "取得基线：用工具之前的几周数据对比",
+    "同时看反向指标：同步失败率、槽位泄漏、克隆耗时",
+    "说明现状：目前缺少团队级采用数据，我下一步先补埋点"
+   ],
+   "best_practice": "工具价值要用前后对比来证明，只说“好用”不够。我诚实的位置是：它让我能并行跑多个会话，但没有团队级采用数据，所以下一步是先加最小埋点，再谈推广。反向指标同样重要，防止我自己看不见的维护成本。",
+   "terms": [
+    {
+     "en": "baseline",
+     "zh": "基线，改动前的参照数据",
+     "example": "I need a baseline of DDL collisions per week before claiming an improvement."
+    },
+    {
+     "en": "adoption metric",
+     "zh": "采用度指标",
+     "example": "I don't have a team-level adoption metric yet, so that's the first thing I'd add."
+    }
+   ]
+  },
+  {
+   "q": "What are the failure modes of a clone-based pool, and how would you keep it reliable as more people use it?",
+   "why": "面试官在探：你对共享基础设施的可靠性、泄漏和并发边界是否有思考。",
+   "framework": [
+    "先列失败模式：槽位泄漏、同步到一半失败、MAIN 与生产漂移、克隆顺序引发的 stream 失效",
+    "再说防护：借用设租期、超时自动回收、同步失败有 playbook",
+    "监控：槽位使用率、同步新鲜度、克隆耗时",
+    "容量：槽位数量与并发会话数的关系，以及耗尽时的退让策略"
+   ],
+   "best_practice": "共享工具的可靠性取决于怎么失败，而不是怎么成功。租期与自动回收防止泄漏，同步新鲜度监控防止测试在过期结构上通过，Sync Failure Playbook 让别人不依赖我也能恢复。这些是个人工具变成团队工具之前必须补的。",
+   "terms": [
+    {
+     "en": "blast radius",
+     "zh": "影响范围",
+     "example": "Isolated clones keep the blast radius of a bad migration to one session."
+    },
+    {
+     "en": "lease and reclaim",
+     "zh": "租借并回收",
+     "example": "I'd add a lease and reclaim so abandoned slots free themselves."
+    }
+   ]
+  },
+  {
+   "q": "How do you decide when a personal tool should become the team's official toolchain, and what would you need to change?",
+   "why": "面试官在探：你如何把个人创新推向组织采用，并承担责任。",
+   "framework": [
+    "先看证据：有多少人用、是否解决了真实的高频痛点",
+    "再补齐生产化条件：测试、文档、on-call 责任、凭证与权限",
+    "与平台或 owner 团队沟通，让他们接手而不是被动接受",
+    "给出退出方案：如果不被采用，如何保持个人仓库不影响他人"
+   ],
+   "best_practice": "个人工具缺的通常不是功能，而是责任归属。升级为官方工具链意味着有人长期维护、有 on-call、有权限审计，所以我会先拿采用数据去说服 owner，再决定是否交接。当前它是个人仓库，我会如实这样说，不说成团队标准。",
+   "terms": [
+    {
+     "en": "productionize",
+     "zh": "产品化、达到生产标准",
+     "example": "Before it becomes official I'd have to productionize it with tests and an owner."
+    },
+    {
+     "en": "operational ownership",
+     "zh": "运维责任归属",
+     "example": "The real question is who takes operational ownership once the team depends on it."
+    }
+   ]
+  },
+  {
+   "q": "You run several AI agents in parallel on one repo. How do you keep quality and safety under control?",
+   "why": "面试官在探：你对 AI 辅助开发的工程纪律，而不是只会用工具。",
+   "framework": [
+    "先说隔离：每个会话独立槽位、独立分支，互不影响",
+    "再说流程：和 agent 先做计划，每个阶段先写测试，再实现",
+    "质量关卡：CI 与监控的阈值，钱相关代码我逐个读 diff",
+    "最后说边界：权限最小化，危险操作需要人确认"
+   ],
+   "best_practice": "并行带来速度，也放大错误，所以隔离和关卡缺一不可。克隆让每个会话互不污染，TDD 和 CI 让错误尽早暴露，对钱相关代码人工读每个 diff，则把最贵的错误挡在人这一层。我看的是关卡和阈值，不是代码行数。",
+   "terms": [
+    {
+     "en": "guardrails",
+     "zh": "护栏，防止出错的限制",
+     "example": "Isolation and CI act as guardrails when several agents work in parallel."
+    },
+    {
+     "en": "human in the loop",
+     "zh": "关键环节有人参与",
+     "example": "For money code I keep a human in the loop and read every diff."
+    }
+   ]
+  }
+ ]
+}

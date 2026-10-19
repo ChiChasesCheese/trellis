@@ -1,11 +1,13 @@
 ---
 id: nr-amz-s10-followups
-node: amazon.s10
+node: amazon.followups
 type: qa
-step: 3
+step: 46
 ---
 ## Q
-【退款费 billing-terms 复盘（推翻自己的数字）】面试官会追问什么？每个怎么答？
+<p class="title">退款费 billing-terms 复盘<span class="meta">03 追问</span></p>
+
+面试官会追问什么？每个怎么答？
 
 ## A
 - **How did you discover the predicate was wrong?**
@@ -22,3 +24,5 @@ step: 3
     - 口径 **`SUM(ABS(amount))/100`**；SQL 附录在复盘文档里
 - **What changed in how you work?**
     - **每个结论一条可重跑查询**；爆炸半径谓词检查**时间有效性**
+
+<div class="sources"><b>表达 · business English</b><br>• <b><i>reproducible</i></b> — 可复现的<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“Every conclusion carries a reproducible query.”</span><br>• <b><i>time-validity</i></b> — 时间有效性<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“The predicate needs a time-validity check, not just the current state.”</span><br>• <b><i>systemic lag</i></b> — 系统性滞后<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“In a bulk rollout, the upstream lag could be systemic.”</span></div>

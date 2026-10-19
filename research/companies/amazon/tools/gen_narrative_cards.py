@@ -1,18 +1,33 @@
-"""Generate the Narrative Round `amazon` branch: one leaf per story (S/R/M/G) plus an LP map, cards from the LP outlines.
+"""Generate the Narrative Round `amazon` branch, studied in phases (Chi, 2026-10-19):
+
+    01 完整故事 → 02 提纲（STAR-L） → 03 追问（含 senior） → 04 LP → 故事 → 05 技术深挖
 
     python3 research/companies/amazon/tools/gen_narrative_cards.py
 
-Reads vault/interviews/companies/amazon/lp/{stories/*.md, genai/stories.md, story_matrix.md}; writes
-vault/interviews/rounds/narrative/cards/amazon/*.md (stepped QA cards, overwritten on every run) and the `amazon`
-branch of skeleton/narrative.yaml (replaced on every run). Cards are verbatim outline text, nothing invented.
+Inputs: the LP outlines (vault/interviews/companies/amazon/lp/{stories/*.md, genai/stories.md, story_matrix.md}) and the
+story material in research/companies/amazon/narrative/{<code>.json, lp_terms.json, tech.json}. Every card ends with a
+footer of business-English expressions (proposals/narrative/AMAZON_STORY_AGENT.md). Writes
+vault/interviews/rounds/narrative/cards/amazon/*.md (overwritten every run) and the `amazon` branch of
+skeleton/narrative.yaml (replaced every run). Card ids of earlier runs are kept so review history follows the card.
 """
+import html
+import json
 import re
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[4]
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[3]
 LP = ROOT / "vault/interviews/companies/amazon/lp"
+MAT = ROOT / "research/companies/amazon/narrative"
 OUT = ROOT / "vault/interviews/rounds/narrative/cards/amazon"
 SKEL = ROOT / "skeleton/narrative.yaml"
+# story names live in one place: name_stories.py
+NAMES = dict(re.findall(r'"(S1[01]|S[1-9]|M1|R[1-3]|G[1-4])": "([^"]+)"', (HERE / "name_stories.py").read_text(encoding="utf-8")))
+ORDER = ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "S10", "S11", "M1", "R1", "R2", "R3",
+         "G1", "G2", "G3", "G4"]
+PHASES = [("amazon.full", "01 完整故事（先过一遍）"), ("amazon.outline", "02 提纲（STAR-L）"),
+          ("amazon.followups", "03 追问（含 senior 追问）"), ("amazon.lp-map", "04 LP → 故事"),
+          ("amazon.tech", "05 技术深挖：Snowflake、数据管线与 AWS")]
 
 
 def sections(text: str) -> dict[str, str]:
@@ -20,90 +35,129 @@ def sections(text: str) -> dict[str, str]:
     return {parts[i].strip(): parts[i + 1].strip() for i in range(1, len(parts), 2)}
 
 
-def card(cid: str, node: str, step: int, q: str, a: str) -> str:
-    # Python-Markdown nests a list only at a 4-space indent; the outlines use 2
-    a = re.sub(r"^((?:  )+)(?=[-*] |\d+\. )", lambda m: "    " * (len(m.group(1)) // 2), a, flags=re.M)
-    return f"---\nid: {cid}\nnode: {node}\ntype: qa\nstep: {step}\n---\n## Q\n{q}\n\n## A\n{a.strip()}\n"
+def nest(md: str) -> str:
+    """Python-Markdown nests a list only at a 4-space indent; the outlines use 2."""
+    return re.sub(r"^((?:  )+)(?=[-*] |\d+\. )", lambda m: "    " * (len(m.group(1)) // 2), md, flags=re.M)
 
 
-def story_order(name: str) -> tuple:
-    m = re.match(r"([SRMG])(\d+)", name)
-    return ("SMRG".index(m.group(1)), int(m.group(2)))
+def label(name: str) -> str:
+    return f'<span class="label">{name}</span>'
 
 
-leaves: list[tuple[str, str]] = []   # (leaf id, title)
-files: dict[str, str] = {}
+def footer(terms: list[dict]) -> str:
+    if not terms:
+        return ""
+    rows = "".join(f"<br>• <b><i>{html.escape(t['en'])}</i></b> — {html.escape(t['zh'])}"
+                   f"<br>&nbsp;&nbsp;&nbsp;<span style=\"opacity:.85\">“{html.escape(t['example'])}”</span>"
+                   for t in terms)
+    return f'\n\n<div class="sources"><b>表达 · business English</b>{rows}</div>\n'
 
-# --- LP map leaf (first in study order)
-matrix = sections((LP / "story_matrix.md").read_text(encoding="utf-8"))
-table = matrix.get("每条 LP：先用哪个故事 / 备选", "")
-leaves.append(("amazon.lp-map", "LP → 先用哪个故事"))
-step = 0
-for row in re.findall(r"^\|\s*(\d+)\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|\s*$", table, re.M):
-    num, lp, first, alt = row
-    step += 1
-    files[f"nr-amz-lp{int(num):02d}.md"] = card(
-        f"nr-amz-lp{int(num):02d}", "amazon.lp-map", step,
-        f"Amazon LP「{lp}」：先用哪个故事？备选是什么？",
-        f"- 先用：**{first}**\n- 备选：{alt}\n- 讲之前先说一句这个 LP 在这里指什么，再进 S/T/A/R/L。")
 
-# --- S / R / M stories
-for p in sorted((LP / "stories").glob("*.md"), key=lambda p: story_order(p.stem)):
-    text = p.read_text(encoding="utf-8")
-    sid = p.stem.split("_")[0]
-    title = re.search(r"^# (.+)$", text, re.M).group(1).strip()
-    head = re.search(r"^\*\*(.+?)\*\*\s*$", text, re.M)
-    sec = sections(text)
-    leaf = f"amazon.{sid.lower()}"
-    leaves.append((leaf, title))
-    base = f"nr-amz-{sid.lower()}"
-    lp = sec.get("适用 LP", "")
-    nums = sec.get("数字", "")
-    files[f"{base}-hook.md"] = card(f"{base}-hook", leaf, 1,
-        f"【{title}】开场第一句是什么？适用哪些 LP？要报哪些数字？",
-        (f"**{head.group(1)}**\n\n" if head else "") + f"**适用 LP**\n\n{lp}\n\n**数字**\n\n{nums}")
-    star = sec.get("S / T / A / R / L", "")
-    star = re.sub(r"^### ([STARL])\s*$", r"**\1**\n", star, flags=re.M)
-    files[f"{base}-starl.md"] = card(f"{base}-starl", leaf, 2, f"【{title}】STAR-L 提纲（60–90 秒）", star)
-    if sec.get("追问与回答"):
-        files[f"{base}-followups.md"] = card(f"{base}-followups", leaf, 3,
-            f"【{title}】面试官会追问什么？每个怎么答？", sec["追问与回答"])
-    if sec.get("换个 LP 讲"):
-        files[f"{base}-relp.md"] = card(f"{base}-relp", leaf, 4,
-            f"【{title}】换成别的 LP 问时，强调哪一段？", sec["换个 LP 讲"])
+def front(title: str, meta: str, question: str) -> str:
+    return f'<p class="title">{html.escape(title)}<span class="meta">{html.escape(meta)}</span></p>\n\n{question}'
 
-# --- GenAI stories G1–G4
+
+def labelled(md: str) -> str:
+    """Lines starting with `名字｜` become label chips (tech.json convention)."""
+    return re.sub(r"^(\S{1,8})｜", lambda m: label(m.group(1)) + " ", md, flags=re.M)
+
+
+cards: dict[str, tuple[str, int, str, str]] = {}   # id -> (node, step, Q, A)
+step = {leaf: 0 for leaf, _ in PHASES}
+
+
+def add(cid: str, leaf: str, q: str, a: str) -> None:
+    step[leaf] += 1
+    cards[cid] = (leaf, step[leaf], q, a.strip())
+
+
+# --- load outlines and material
+story_text: dict[str, str] = {}
+for p in (LP / "stories").glob("*.md"):
+    story_text[p.stem.split("_")[0]] = p.read_text(encoding="utf-8")
 g = (LP / "genai/stories.md").read_text(encoding="utf-8")
 genai = [m for m in re.finditer(r"^## (.+?)\n(.*?)(?=^## |\Z)", g, re.S | re.M) if "S · Situation" in m.group(2)]
 for n, m in enumerate(genai, start=1):
-    gid, gtitle, body = f"G{n}", re.sub(r"^G\d · ", "", m.group(1).strip()), m.group(2)
-    leaf = f"amazon.{gid.lower()}"
-    title = gtitle
-    leaves.append((leaf, title))
-    main_part, _, follow = body.partition("\n- 追问：")
-    main_part = re.split(r"\n- 可选", main_part)[0]
-    files[f"nr-amz-{gid.lower()}-starl.md"] = card(f"nr-amz-{gid.lower()}-starl", leaf, 1,
-        f"【{title}】适用 LP、开场 hook 和 STAR-L 提纲", main_part)
-    if follow.strip():
-        follow = re.sub(r"^  ", "", follow, flags=re.M)
-        files[f"nr-amz-{gid.lower()}-followups.md"] = card(f"nr-amz-{gid.lower()}-followups", leaf, 2,
-            f"【{title}】面试官会追问什么？每个怎么答？", follow)
+    story_text[f"G{n}"] = m.group(2)
+mat = {c: json.loads((MAT / f"{c}.json").read_text(encoding="utf-8")) for c in ORDER if (MAT / f"{c}.json").exists()}
 
-# --- write cards (this folder is owned by the generator)
+
+def terms(code: str, kind: str) -> list[dict]:
+    return mat.get(code, {}).get("terms", {}).get(kind, [])
+
+
+# --- 01 完整故事
+for code in ORDER:
+    if code not in mat:
+        continue
+    m = mat[code]
+    body = (f"{label('前因后果')}\n\n" + "\n".join(f"- {b}" for b in m["full_zh"]) +
+            f"\n\n{label('英文口述（60–90 秒）')}\n\n{m['full_en']}" + footer(terms(code, "full")))
+    add(f"nr-amz-{code.lower()}-full", "amazon.full",
+        front(NAMES[code], "01 完整故事", "先在心里把前因后果过一遍，再用英文完整讲一遍。"), body)
+
+# --- 02 提纲
+for code in ORDER:
+    name, text, low = NAMES[code], story_text.get(code, ""), code.lower()
+    if code.startswith("G"):
+        main_part = re.split(r"\n- 可选", text.partition("\n- 追问：")[0])[0]
+        add(f"nr-amz-{low}-starl", "amazon.outline", front(name, "02 提纲", "适用 LP、开场 hook 和 STAR-L 提纲"),
+            nest(main_part) + footer(terms(code, "starl")))
+        continue
+    sec = sections(text)
+    head = re.search(r"^\*\*(.+?)\*\*\s*$", text, re.M)
+    add(f"nr-amz-{low}-hook", "amazon.outline", front(name, "02 提纲", "开场第一句是什么？适用哪些 LP？要报哪些数字？"),
+        (f"{label('开场')}\n\n**{head.group(1)}**\n\n" if head else "") +
+        f"{label('适用 LP')}\n\n{nest(sec.get('适用 LP', ''))}\n\n{label('数字')}\n\n{nest(sec.get('数字', ''))}" +
+        footer(terms(code, "hook")))
+    star = re.sub(r"^### ([STARL])\s*$", lambda mm: label(mm.group(1)) + "\n", sec.get("S / T / A / R / L", ""),
+                  flags=re.M)
+    add(f"nr-amz-{low}-starl", "amazon.outline", front(name, "02 提纲", "STAR-L 提纲（60–90 秒）"),
+        nest(star) + footer(terms(code, "starl")))
+    if sec.get("换个 LP 讲"):
+        add(f"nr-amz-{low}-relp", "amazon.outline", front(name, "02 提纲", "换成别的 LP 问时，强调哪一段？"),
+            nest(sec["换个 LP 讲"]) + footer(terms(code, "relp")))
+
+# --- 03 追问
+for code in ORDER:
+    name, text, low = NAMES[code], story_text.get(code, ""), code.lower()
+    follow = (re.sub(r"^  ", "", text.partition("\n- 追问：")[2], flags=re.M) if code.startswith("G")
+              else sections(text).get("追问与回答", ""))
+    if follow.strip():
+        add(f"nr-amz-{low}-followups", "amazon.followups", front(name, "03 追问", "面试官会追问什么？每个怎么答？"),
+            nest(follow) + footer(terms(code, "followups")))
+    for i, s in enumerate(mat.get(code, {}).get("senior", []), start=1):
+        body = (f"{label('面试官在探')} {s['why']}\n\n{label('回答框架')}\n\n" + "\n".join(f"- {b}" for b in s["framework"])
+                + f"\n\n{label('为什么这是最佳实践')}\n\n{s['best_practice']}" + footer(s.get("terms", [])))
+        add(f"nr-amz-{low}-senior-{i}", "amazon.followups", front(name, "03 senior 追问", f"*\"{s['q']}\"*"), body)
+
+# --- 04 LP → 故事
+lp_terms = json.loads((MAT / "lp_terms.json").read_text(encoding="utf-8")) if (MAT / "lp_terms.json").exists() else {}
+table = sections((LP / "story_matrix.md").read_text(encoding="utf-8")).get("每条 LP：先用哪个故事 / 备选", "")
+for num, lp, first, alt in re.findall(r"^\|\s*(\d+)\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|\s*$", table, re.M):
+    add(f"nr-amz-lp{int(num):02d}", "amazon.lp-map", front(lp, "04 LP → 故事", "先用哪个故事？备选是什么？"),
+        f"{label('先用')} **{first}**\n\n{label('备选')} {alt}\n\n"
+        f"{label('讲法')} 先用一句话说这个 LP 在这件事里指什么，再进 S/T/A/R/L。" + footer(lp_terms.get(lp, [])))
+
+# --- 05 技术深挖
+if (MAT / "tech.json").exists():
+    for t in json.loads((MAT / "tech.json").read_text(encoding="utf-8")):
+        add(f"nr-amz-tech-{t['id']}", "amazon.tech", front("技术深挖", "05 Snowflake · 数据 · AWS", t["q"]),
+            labelled(t["a"]) + footer(t.get("terms", [])))
+
+# --- write
 OUT.mkdir(parents=True, exist_ok=True)
 for old in OUT.glob("nr-amz-*.md"):
     old.unlink()
-for name, body in files.items():
-    (OUT / name).write_text(body, encoding="utf-8")
+for cid, (node, st, q, a) in cards.items():
+    (OUT / f"{cid}.md").write_text(f"---\nid: {cid}\nnode: {node}\ntype: qa\nstep: {st}\n---\n## Q\n{q}\n\n## A\n{a}\n",
+                                   encoding="utf-8")
 
-# --- skeleton branch
 branch = ["  - id: amazon", "    order: 7", '    title: "Amazon · LP 故事（STAR-L）"',
-          '    summary: "你自己的故事，按 LP 映射、STAR-L 提纲、追问与回答；先学 LP 映射，再按故事顺序复习。"',
-          "    children:"]
-for lid, title in leaves:
-    t = title.replace('"', "'")
-    branch += [f"      - id: {lid}", f'        title: "{t}"', f'        summary: "{t} 的提纲与追问。"']
+          '    summary: "你自己的故事：先完整过一遍，再背提纲，再练追问，最后记 LP 映射；附技术深挖。"', "    children:"]
+for leaf, title in PHASES:
+    branch += [f"      - id: {leaf}", f'        title: "{title}"', f'        summary: "{title}"']
 text = SKEL.read_text(encoding="utf-8")
 text = re.sub(r"\n  - id: amazon\n.*?(?=\n  - id: |\Z)", "", text, flags=re.S).rstrip("\n")
 SKEL.write_text(text + "\n\n" + "\n".join(branch) + "\n", encoding="utf-8")
-print(f"{len(leaves)} leaves, {len(files)} cards")
+print(f"{len(cards)} cards:", {leaf: step[leaf] for leaf, _ in PHASES})

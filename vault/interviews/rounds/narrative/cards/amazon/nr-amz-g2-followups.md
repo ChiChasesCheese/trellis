@@ -1,11 +1,13 @@
 ---
 id: nr-amz-g2-followups
-node: amazon.g2
+node: amazon.followups
 type: qa
-step: 2
+step: 81
 ---
 ## Q
-【让正确性不依赖 agent 的自述（senior 机制故事）】面试官会追问什么？每个怎么答？
+<p class="title">不依赖 agent 自述的正确性<span class="meta">03 追问</span></p>
+
+面试官会追问什么？每个怎么答？
 
 ## A
 - **Why a gate and not just careful reading?**
@@ -31,3 +33,7 @@ step: 2
 - **Would this work at Amazon scale?**
     - 原则可迁移：gate = CI；agent 自述 = PR 描述，不是证据；差分 / 变异测试 = 对测试的测试。
     - 【待补：PayPal 的对应物，如迁移里的 parity 测试，见 「AI-native 迁移」】
+
+
+
+<div class="sources"><b>表达 · business English</b><br>• <b><i>shape versus substance</i></b> — 形式与实质<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“The gate checks shape; only reading checks substance.”</span><br>• <b><i>test the tests</i></b> — 对测试本身做测试<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“Mutation lets me test the tests, not just the code.”</span><br>• <b><i>trade autonomy for auditability</i></b> — 用自主性换可审计<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“I traded agent autonomy for auditability.”</span></div>

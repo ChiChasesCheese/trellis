@@ -1,11 +1,13 @@
 ---
 id: nr-amz-s10-relp
-node: amazon.s10
+node: amazon.outline
 type: qa
-step: 4
+step: 30
 ---
 ## Q
-【退款费 billing-terms 复盘（推翻自己的数字）】换成别的 LP 问时，强调哪一段？
+<p class="title">退款费 billing-terms 复盘<span class="meta">02 提纲</span></p>
+
+换成别的 LP 问时，强调哪一段？
 
 ## A
 - **Earn Trust**：在任何人据此行动前公开撤回；两版查询并排；是我自己发现的，不要说成「被人抓到」
@@ -14,3 +16,5 @@ step: 4
 - **Insist on the Highest Standards**：一个修法覆盖下游和上游两个脆弱点：费用创建时重新解析生效计划
 - **Customer Obsession**：三十个商户按错误条款计费；商户侧影响与回填
 - **Ownership**：我 own 估算和根因，并跟到回填 PR（191,191 → 382,382）；不点名商户
+
+<div class="sources"><b>表达 · business English</b><br>• <b><i>hold myself to the bar</i></b> — 对自己严格<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“I held myself to the bar and treated my own query as a hypothesis to disprove.”</span><br>• <b><i>be transparent</i></b> — 保持透明<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“Being transparent about the retraction kept the remediation honest.”</span><br>• <b><i>follow through</i></b> — 跟到底<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“I followed through to the backfill rather than stopping at the estimate.”</span></div>

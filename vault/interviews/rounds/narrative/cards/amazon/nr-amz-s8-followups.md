@@ -1,11 +1,13 @@
 ---
 id: nr-amz-s8-followups
-node: amazon.s8
+node: amazon.followups
 type: qa
-step: 3
+step: 36
 ---
 ## Q
-【Terraform grant-ownership 7 分钟 RCA（压力下 debug · 主动指出下一个雷）】面试官会追问什么？每个怎么答？
+<p class="title">Terraform 7 分钟 RCA<span class="meta">03 追问</span></p>
+
+面试官会追问什么？每个怎么答？
 
 ## A
 - **How did you get to the root cause in 7 minutes?**
@@ -23,3 +25,5 @@ step: 3
     - 「修完这一次」和「消灭这一类」是**两件事**
 - **Terraform pitfalls?**
     - **重命名资源**默认删了重建（`moved` block / `state mv`）；危险变更**拆小、可重入**
+
+<div class="sources"><b>表达 · business English</b><br>• <b><i>re-entrant</i></b> — 可重入，中途失败后能安全重跑<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“Terraform has no transactions, so the fix has to be re-entrant.”</span><br>• <b><i>shift left</i></b> — 把检查前移到更早阶段<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“A policy check at plan time would shift left the detection of this class.”</span><br>• <b><i>dependent grant</i></b> — 依赖的授权<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“Before transferring ownership we have to revoke or account for each dependent grant.”</span></div>

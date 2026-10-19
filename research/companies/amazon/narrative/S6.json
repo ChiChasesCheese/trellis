@@ -1,0 +1,192 @@
+{
+ "code": "S6",
+ "full_zh": [
+  "背景：一个即将离职的实习生留下一个机器学习费用异常检测器，它只在 QA 环境跑过。顺着惯性，应该接着做下去。",
+  "判断：我没有接着做，而是写了一份 go/no-go 评估。我把 QA 和生产放在一起比：QA 只有 6 个合成商户、不到 10 亿行，生产是 18,140 个商户、约 15,000 种 plan 组合，峰值一天约 7.6 亿行。它的推理是逐行 numpy，在生产规模必然超时，而 QA 永远暴露不了这一点。",
+  "保全：我把“会随实习生离职消失的”和“可以从代码重建的”分开。代码、terraform、训练配方（固定 seed）都能重建，唯一不可再生的是分析师的 disposition 标注，所以我在他离开前把标注导出。",
+  "分阶段：Phase 1 只上确定性规则（金额等于费率乘数量加固定费），纯 SQL，Snowflake 本来就能处理几十亿行。Phase 2 是模型重训加推理重构，需要 2 到 3 个月，放在明确的 go/no-go gate 后面。同时冻结 Slack 告警和 CI/CD 工作，直到 gate 给出 go。",
+  "结果与学到：不可替代的标注保住了，便宜的防御层有了清晰路径，数字是我自己评估文档里的量级，我会如实说明还没在生产复核。我宁可停一个项目，也不上线一个凌晨 3 点呼叫团队的项目。"
+ ],
+ "full_en": "I inherited an ML fee-anomaly detector from an intern who was leaving. It had only ever run in QA, and the easy path was to keep building. Instead I wrote a go/no-go assessment. QA had six synthetic merchants and under a billion rows; production is about eighteen thousand merchants, around fifteen thousand plan combinations, and up to about 760 million rows on a peak day. The serving design was a per-row numpy forward pass, which would time out at that scale, and QA could never have shown it. I split the problem into what disappears when the intern leaves versus what's reproducible from code: only the analysts' labels were irreplaceable, so I got those exported before their last day. Then a phased plan. Phase one ships only the deterministic consistency rule as pure SQL, which Snowflake handles at billions of rows. Phase two, retraining and a new serving design, is two to three months and sits behind an explicit go/no-go gate. I froze the Slack alerting and CI/CD work until the gate says go. I'd rather stop a project than ship one that pages the team at 3 a.m. These numbers come from my own assessment and I haven't re-verified them in production.",
+ "terms": {
+  "hook": [
+   {
+    "en": "order of magnitude",
+    "zh": "数量级",
+    "example": "QA was under a billion rows and production is tens of billions, so we're off by an order of magnitude."
+   },
+   {
+    "en": "gap between QA and production",
+    "zh": "测试环境与生产环境的差距",
+    "example": "The gap between QA and production hid the timeout completely."
+   },
+   {
+    "en": "back-of-the-envelope",
+    "zh": "粗略估算",
+    "example": "My numbers are back-of-the-envelope figures from the assessment, not production-verified."
+   }
+  ],
+  "starl": [
+   {
+    "en": "go/no-go gate",
+    "zh": "放行或叫停的关卡",
+    "example": "I put Phase 2 behind an explicit go/no-go gate that my manager could audit."
+   },
+   {
+    "en": "phased rollout",
+    "zh": "分阶段推进",
+    "example": "A phased rollout let us ship the cheap SQL rule first and defer the ML work."
+   },
+   {
+    "en": "freeze the work",
+    "zh": "暂停相关工作",
+    "example": "I froze the Slack alerting work until the gate says go."
+   }
+  ],
+  "followups": [
+   {
+    "en": "ground truth",
+    "zh": "可信的真实标签",
+    "example": "We had no ground truth for precision, so a shadow run was the only honest test."
+   },
+   {
+    "en": "alert fatigue",
+    "zh": "告警疲劳",
+    "example": "At a 99.5 percent threshold we'd have produced millions of alerts a day, which is alert fatigue by design."
+   },
+   {
+    "en": "sunk cost",
+    "zh": "沉没成本",
+    "example": "I didn't rank priorities by sunk cost, I ranked them by risk-adjusted value."
+   }
+  ],
+  "relp": [
+   {
+    "en": "say no with evidence",
+    "zh": "用证据说不",
+    "example": "I said no with a written assessment rather than with opinion."
+   },
+   {
+    "en": "irreversible",
+    "zh": "不可逆的",
+    "example": "The analyst labels were the one irreversible loss, so exporting them was the urgent step."
+   },
+   {
+    "en": "paged at 3 a.m.",
+    "zh": "凌晨三点被呼叫",
+    "example": "I'd rather stop a project than ship one that gets the team paged at 3 a.m."
+   }
+  ],
+  "full": [
+   {
+    "en": "go/no-go call",
+    "zh": "上线与否的决定",
+    "example": "I made the go/no-go call on the detector with the precision numbers in front of me."
+   },
+   {
+    "en": "phase the rollout",
+    "zh": "分阶段上线",
+    "example": "I argued to phase the rollout instead of switching everything on at once."
+   },
+   {
+    "en": "precision over recall",
+    "zh": "宁可少报、不要误报",
+    "example": "For an alert people get paged on, I'd choose precision over recall."
+   }
+  ]
+ },
+ "senior": [
+  {
+   "q": "How would you prove the detector is precise enough before turning it on for real alerts?",
+   "why": "面试官在探：没有 ground truth 时你怎么设计可信的评估。",
+   "framework": [
+    "先说 shadow mode：只记录不告警，持续跑一段时间",
+    "让分析师对一个抽样的结果打标，建立精确率的估计",
+    "按商户和费用类型分层抽样，避免被前两个大商户主导",
+    "提前写下放行的精确率阈值和每日告警量上限"
+   ],
+   "best_practice": "异常检测没有现成标签，精确率只能靠人工标注的抽样来估。分层抽样是关键，因为 QA 里前两个商户占 97% 的行，不分层的话结论会被少数大户主导。阈值要在看数据之前定，否则是事后合理化。",
+   "terms": [
+    {
+     "en": "shadow mode",
+     "zh": "影子模式：只运行不生效",
+     "example": "I'd run the model in shadow mode and let analysts label a sample."
+    },
+    {
+     "en": "stratified sampling",
+     "zh": "分层抽样",
+     "example": "Stratified sampling matters because two merchants made up 97 percent of the QA rows."
+    }
+   ]
+  },
+  {
+   "q": "The team wanted to ship the detector as planned. How do you hold a no-go position without becoming the blocker?",
+   "why": "面试官在探：你在压力下坚持立场，同时保持合作与可逆性的方式。",
+   "framework": [
+    "把分歧变成可检验的事实：用文档写清风险、数字和假设",
+    "给出替代路径而不是只说不：Phase 1 马上就能交付价值",
+    "说明什么证据会让我改变结论，也就是 go 的条件",
+    "把决定交给能独立判断的人，保证过程可审计"
+   ],
+   "best_practice": "只说不会变成阻碍，给出能立刻交付的 Phase 1 加上明确的 go 条件，别人才能接受停下 Phase 2。写成文档而不是靠情绪，是为了让上级能独立判断；承认可能错，并写明什么证据会推翻我，也是 Have Backbone 的一部分。",
+   "terms": [
+    {
+     "en": "disagree with data",
+     "zh": "用数据表达不同意见",
+     "example": "I disagreed with data, a written assessment, not with a gut feeling."
+    },
+    {
+     "en": "exit criteria",
+     "zh": "退出或放行条件",
+     "example": "I wrote the exit criteria for Phase 2 so the decision wasn't open-ended."
+    }
+   ]
+  },
+  {
+   "q": "What would you do to make per-row inference work at 760 million rows a day if the business did want the model?",
+   "why": "面试官在探：你对规模化推理的工程思路，是否能从逐行改成批量化。",
+   "framework": [
+    "先把瓶颈定位清楚：逐行 Python 调用和数据搬运，而不是模型本身",
+    "把推理推到数据旁边：用 Snowflake 的向量化 UDF 或把模型计算改成 set-based",
+    "先用规则过滤出候选，只对少量候选跑模型",
+    "上线前用生产量级数据做压力测试，并设超时与降级"
+   ],
+   "best_practice": "逐行 numpy 的问题是调用开销和数据移动，不是算力不够。把计算放到数据所在的地方、先用便宜的规则缩小范围，就能把规模降几个数量级。这也是为什么 Phase 1 的纯 SQL 规则本身就能挡住大部分问题。",
+   "terms": [
+    {
+     "en": "set-based",
+     "zh": "基于集合的批量处理，而非逐行",
+     "example": "Moving from per-row to set-based processing is the first change I'd make."
+    },
+    {
+     "en": "push compute to the data",
+     "zh": "把计算推到数据所在之处",
+     "example": "I'd push compute to the data instead of pulling rows out to Python."
+    }
+   ]
+  },
+  {
+   "q": "What would you do differently, and how do you prevent handoffs like this from becoming a risk in the first place?",
+   "why": "面试官在探：你能否从一次个案抽出组织层面的机制。",
+   "framework": [
+    "承认问题：一个人带着关键标注和只在 QA 跑过的代码离开",
+    "提议实习项目的 exit checklist：标注导出、环境说明、生产准备度评估",
+    "要求任何 ML 项目在立项时写下生产规模假设",
+    "更早做评估，而不是在最后一周才发现"
+   ],
+   "best_practice": "这件事的根因是项目没有生产准备度的检查点，不是某个人的失误。把评估前移到立项时，并把不可再生的资产（标注）列进离职清单，才能让下一次不依赖我临时发现。下次我会更早发起评估，而不是等到离职前。",
+   "terms": [
+    {
+     "en": "handoff checklist",
+     "zh": "交接清单",
+     "example": "I'd add irreplaceable assets like labels to the handoff checklist."
+    },
+    {
+     "en": "production readiness review",
+     "zh": "生产准备度评审",
+     "example": "A production readiness review at kickoff would have surfaced the scale gap earlier."
+    }
+   ]
+  }
+ ]
+}

@@ -1,11 +1,13 @@
 ---
 id: nr-amz-g4-followups
-node: amazon.g4
+node: amazon.followups
 type: qa
-step: 2
+step: 91
 ---
 ## Q
-【什么时候信任 LLM：一条判定规则】面试官会追问什么？每个怎么答？
+<p class="title">什么时候信任 LLM<span class="meta">03 追问</span></p>
+
+面试官会追问什么？每个怎么答？
 
 ## A
 - **Tell me about a time you overrode the tool / didn't trust it.**
@@ -22,3 +24,7 @@ step: 2
     - 权限由我控制，agent 不能改自己的权限。
 - **Security?**
     - 公开仓库规则（不放招聘人员姓名、邮件内容）、爆炸半径 guard、最小权限；见 [[primer]] 安全一节。
+
+
+
+<div class="sources"><b>表达 · business English</b><br>• <b><i>override</i></b> — 否决、推翻（工具的建议）<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“I overrode the agent when a figure had no primary source.”</span><br>• <b><i>single point of failure</i></b> — 单点故障<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“If the test and the code share a blind spot, the oracle becomes a single point of failure.”</span><br>• <b><i>least privilege</i></b> — 最小权限<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“I keep agents on least privilege and they can&#x27;t change their own permissions.”</span></div>

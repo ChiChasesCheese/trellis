@@ -1,0 +1,100 @@
+{
+  "code": "R3",
+  "full_zh": [
+    "背景：我独自做了两个学习类产品，2024-03 的 iOS 闪卡 app Aiki，和 2025-06 的 Web 平台 AikiCard，后者把 EPUB 书变成交互式学习内容。",
+    "我的角色：设计、开发、发布和 App Store 审核都由我一个人负责，所以每个环节的好坏都归我。",
+    "Aiki 怎么做：用 OpenAI o3 生成内容和自适应学习路径，用 Core Data 加 CloudKit 做存储和同步，SwiftUI 做界面，StoreKit 做内购。",
+    "AikiCard 怎么做：用 React、Next.js、TypeScript，实现 SM-2 间隔重复、进度追踪和自适应复习调度，学习者不用自己决定复习什么；Vercel edge 缓存让全球访问更快。",
+    "结果：iOS app 在 App Store 保持 4.5 以上评分；用户数和具体的反馈驱动改动我没有记录，所以只讲产品本身。"
+  ],
+  "full_en": "I built two learning products on my own: Aiki, an iOS flashcard app from March 2024, and AikiCard, a web platform from June 2025 that turns EPUB books into interactive study material. I owned design, development, release and App Store review. On the iOS side I used OpenAI o3 for content generation and adaptive learning paths, Core Data with CloudKit for storage and sync, SwiftUI for the interface, and StoreKit for in-app purchases. On the web side I implemented SM-2 spaced repetition with progress tracking and adaptive review scheduling, so learners don't have to decide what to review, and Vercel edge caching for fast global access. The iOS app holds a 4.5-plus rating on the App Store.",
+  "terms": {
+    "full": [
+      {"en": "own it end to end", "zh": "从头到尾全权负责", "example": "I owned both products end to end, from design to App Store review."},
+      {"en": "ship to production", "zh": "真正发布上线", "example": "I shipped the iOS app through App Store review on my own."},
+      {"en": "adaptive scheduling", "zh": "自适应调度（按学习情况安排复习）", "example": "Adaptive scheduling means the learner doesn't have to decide what to review."}
+    ],
+    "hook": [
+      {"en": "spaced repetition", "zh": "间隔重复", "example": "AikiCard uses SM-2 spaced repetition to schedule reviews."},
+      {"en": "edge caching", "zh": "边缘缓存，就近提供内容", "example": "Vercel edge caching makes the web app fast for users around the world."},
+      {"en": "App Store rating", "zh": "App Store 评分", "example": "The iOS app holds a 4.5-plus App Store rating."}
+    ],
+    "starl": [
+      {"en": "sole owner", "zh": "唯一负责人", "example": "As the sole owner, I handled design, build, release and review."},
+      {"en": "in-app purchase", "zh": "应用内购买", "example": "I wired up in-app purchases with StoreKit."},
+      {"en": "cross-device sync", "zh": "跨设备同步", "example": "Core Data with CloudKit gives users cross-device sync."}
+    ],
+    "followups": [
+      {"en": "conflict resolution", "zh": "冲突解决（多端同时修改时）", "example": "I'd explain conflict resolution in CloudKit in my own words before claiming it."},
+      {"en": "cost and quality control", "zh": "成本与质量的控制", "example": "For o3, the question is how I keep cost and quality under control."},
+      {"en": "prioritize ruthlessly", "zh": "毫不留情地排优先级", "example": "As a solo builder I had to prioritize ruthlessly about what to build first."}
+    ],
+    "relp": [
+      {"en": "work backwards from the customer", "zh": "从客户需求倒推", "example": "I'd only call it customer obsession if I can show the change a user's feedback drove."},
+      {"en": "take ownership", "zh": "主动承担责任", "example": "I took ownership of every part, including the App Store review."},
+      {"en": "reduce friction", "zh": "减少使用阻力", "example": "Adaptive scheduling reduces friction because learners don't plan their own reviews."}
+    ]
+  },
+  "senior": [
+    {
+      "q": "What evidence do you have that users actually benefited, beyond a 4.5 rating?",
+      "why": "面试官在探：你是否能区分评分和真实学习效果，是否有诚实的证据意识",
+      "framework": [
+        "先承认评分只是满意度的粗信号，不等于学习效果",
+        "再说更好的指标：留存、复习完成率、记忆保持率（复习后的正确率）",
+        "然后说怎么收集：产品内埋点和用户访谈",
+        "最后诚实说明：我目前没有留存和用户数记录，这是我下次会先补的"
+      ],
+      "best_practice": "评分偏向愿意打分的人，不能说明学习是否有效。对学习产品更相关的是复习正确率和留存，它们才对应客户真正的目标。承认现在缺数据，并说明会先补哪些指标，比夸大评分更有说服力。",
+      "terms": [
+        {"en": "leading indicator", "zh": "先行指标", "example": "Review completion would be a leading indicator that learners are getting value."},
+        {"en": "self-selection bias", "zh": "自选择偏差", "example": "Ratings carry self-selection bias, since only some users choose to rate."}
+      ]
+    },
+    {
+      "q": "How do you control cost, quality and failure behavior when an LLM generates learning content?",
+      "why": "面试官在探：你对 LLM 产品化的成本、质量和降级思维",
+      "framework": [
+        "成本：缓存已生成内容，避免重复调用，并限制每用户调用量",
+        "质量：对输出做结构和事实校验，让用户能反馈错误内容",
+        "失败：模型不可用或超时时要有降级，不能阻塞学习流程",
+        "迭代：用反馈数据评估提示词改动，而不是凭感觉"
+      ],
+      "best_practice": "LLM 调用有单价且结果不稳定，所以要把生成结果当作可缓存的资产，并设置校验和回退路径。这样成本可预测，质量问题能被用户反馈回流。这是一个资深工程师会采取的做法；具体我当时的成本数字没有记录。",
+      "terms": [
+        {"en": "graceful degradation", "zh": "优雅降级", "example": "If the model is down, the app should degrade gracefully instead of blocking study."},
+        {"en": "feedback loop", "zh": "反馈回路", "example": "I'd add a feedback loop so users can flag bad generated content."}
+      ]
+    },
+    {
+      "q": "With Core Data and CloudKit, what happens when the same card is edited on two devices, and how do you design for it?",
+      "why": "面试官在探：你是否理解离线优先加同步系统里的一致性取舍",
+      "framework": [
+        "先说问题：两端离线修改同一数据，合并时会冲突",
+        "再说策略：按字段做最后写入胜出，或者对学习进度这类数据用合并而不是覆盖",
+        "然后说取舍：简单的策略可能丢掉一方修改，要看数据的价值",
+        "最后说验证：用多设备的测试场景覆盖冲突路径"
+      ],
+      "best_practice": "同步系统里冲突是常态而不是例外。选择什么合并策略取决于数据的价值：学习进度丢失会伤害用户信任，所以更值得做细粒度合并。我现在还需要用自己的话把这块讲清楚，这里是一个资深工程师会采用的思路。",
+      "terms": [
+        {"en": "last-writer-wins", "zh": "最后写入者胜出", "example": "Last-writer-wins is simple, but it can silently drop a user's progress."},
+        {"en": "eventual consistency", "zh": "最终一致性", "example": "Sync across devices is eventually consistent, so the design has to expect conflicts."}
+      ]
+    },
+    {
+      "q": "As a solo builder, how did you decide what to build first, and what would you do differently?",
+      "why": "面试官在探：你的优先级判断，以及对自己决策的复盘能力",
+      "framework": [
+        "先说排序标准：对学习者最核心的价值路径优先，比如能复习、能同步",
+        "再说放弃了什么：暂缓的功能和理由",
+        "然后复盘：如果重来，会更早收集用户数据来指导优先级",
+        "最后说方法：小步发布、让真实反馈决定下一步"
+      ],
+      "best_practice": "独自做产品时资源最稀缺的是时间，所以要先做最核心的价值路径，再用真实用户的反馈修正顺序。复盘时最诚实的结论是更早建立用户反馈渠道，这也是我目前缺少用户证据时最该补的一环。",
+      "terms": [
+        {"en": "critical path", "zh": "关键路径，最核心的价值链路", "example": "I built the critical path first: study, review and sync."},
+        {"en": "validate early", "zh": "尽早验证", "example": "Next time I'd validate early with real users before adding more features."}
+      ]
+    }
+  ]
+}

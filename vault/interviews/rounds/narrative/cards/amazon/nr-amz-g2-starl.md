@@ -1,11 +1,13 @@
 ---
 id: nr-amz-g2-starl
-node: amazon.g2
+node: amazon.outline
 type: qa
-step: 1
+step: 47
 ---
 ## Q
-【让正确性不依赖 agent 的自述（senior 机制故事）】适用 LP、开场 hook 和 STAR-L 提纲
+<p class="title">不依赖 agent 自述的正确性<span class="meta">02 提纲</span></p>
+
+适用 LP、开场 hook 和 STAR-L 提纲
 
 ## A
 - 主 LP：Insist on the Highest Standards；备用：Invent and Simplify（机制简单到一条命令）、Ownership、Are Right, A Lot。
@@ -31,3 +33,5 @@ step: 1
     - **Nine** drafts went back for rework.
 - **L · Learning / Mechanism**
     - Verification has to be a **mechanism, not a mood**.
+
+<div class="sources"><b>表达 · business English</b><br>• <b><i>single-threaded owner</i></b> — 单线负责人<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“Each agent is the single-threaded owner of one directory.”</span><br>• <b><i>acceptance criteria up front</i></b> — 事先定好验收标准<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“I wrote the acceptance criteria up front, before any content.”</span><br>• <b><i>tighten the bar</i></b> — 把标准提得更严<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“Each defect tightened the bar by becoming a new rule.”</span></div>

@@ -1,11 +1,13 @@
 ---
 id: nr-amz-g1-followups
-node: amazon.g1
+node: amazon.followups
 type: qa
-step: 2
+step: 76
 ---
 ## Q
-【一个自信的错数字】面试官会追问什么？每个怎么答？
+<p class="title">一个自信的错数字<span class="meta">03 追问</span></p>
+
+面试官会追问什么？每个怎么答？
 
 ## A
 - **How did you notice?**
@@ -25,3 +27,7 @@ step: 2
     - 【待补：是否有已进入 Anki 复习的卡片后来被纠错？没有就说没有】
 - **What would you do differently?**
     - 在 pilot 之前就把「数字必须脚本复算」写进指令。
+
+
+
+<div class="sources"><b>表达 · business English</b><br>• <b><i>confident wrong claim</i></b> — 说得笃定但其实错的论断<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“I&#x27;d call it a confident wrong claim rather than a hallucination, since it was an arithmetic error.”</span><br>• <b><i>raise the floor</i></b> — 抬高下限，让最差情况也不差<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“A better model raises the floor, but only a script gives me an oracle.”</span><br>• <b><i>bake it into the process</i></b> — 把做法固化进流程<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“Every defect I find gets baked into the instruction file as a rule.”</span></div>

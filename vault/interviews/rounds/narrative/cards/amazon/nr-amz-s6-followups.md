@@ -1,11 +1,13 @@
 ---
 id: nr-amz-s6-followups
-node: amazon.s6
+node: amazon.followups
 type: qa
-step: 3
+step: 26
 ---
 ## Q
-【Fee anomaly detector 的 go/no-go（判断力 · 说不 · 分阶段）】面试官会追问什么？每个怎么答？
+<p class="title">费用异常检测器 go/no-go<span class="meta">03 追问</span></p>
+
+面试官会追问什么？每个怎么答？
 
 ## A
 - **Who asked you to make this assessment?**
@@ -24,3 +26,5 @@ step: 3
     - 代码 / terraform / 训练配方（**固定 seed**）都可重建；唯一不可再生的是**标注**，已导出
 - **What did you give up?**
     - 我对一个看似快速的胜利说了**不**，推迟了可见产出
+
+<div class="sources"><b>表达 · business English</b><br>• <b><i>ground truth</i></b> — 可信的真实标签<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“We had no ground truth for precision, so a shadow run was the only honest test.”</span><br>• <b><i>alert fatigue</i></b> — 告警疲劳<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“At a 99.5 percent threshold we&#x27;d have produced millions of alerts a day, which is alert fatigue by design.”</span><br>• <b><i>sunk cost</i></b> — 沉没成本<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“I didn&#x27;t rank priorities by sunk cost, I ranked them by risk-adjusted value.”</span></div>

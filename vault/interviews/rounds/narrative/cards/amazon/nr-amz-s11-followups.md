@@ -1,11 +1,13 @@
 ---
 id: nr-amz-s11-followups
-node: amazon.s11
+node: amazon.followups
 type: qa
-step: 3
+step: 51
 ---
 ## Q
-【实习期：Kafka 事件流 · Spring · Spark（广度补充）】面试官会追问什么？每个怎么答？
+<p class="title">实习：Kafka 事件流<span class="meta">03 追问</span></p>
+
+面试官会追问什么？每个怎么答？
 
 ## A
 - **How do you not double-charge / not miss fees?**
@@ -24,3 +26,5 @@ step: 3
     - 短间隔 auto-commit 偏 **at-most-once**；真正的保护是**上游重试 + 对账 / 健康检查**
 - **What did the Spark validators check?**
     - **定价计划创建来源**和**结算数据合规**；结果发 **Slack**
+
+<div class="sources"><b>表达 · business English</b><br>• <b><i>dedup before insert</i></b> — 插入前先去重<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“The consumer does dedup before insert and relies on a unique constraint for races.”</span><br>• <b><i>capped by partitions</i></b> — 被 partition 数封顶<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“Parallelism is replicas times tasks, capped by partitions.”</span><br>• <b><i>defense in depth</i></b> — 多层防护<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“Idempotency has three layers, which is defense in depth.”</span></div>

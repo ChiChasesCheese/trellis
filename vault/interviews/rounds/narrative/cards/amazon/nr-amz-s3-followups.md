@@ -1,11 +1,13 @@
 ---
 id: nr-amz-s3-followups
-node: amazon.s3
+node: amazon.followups
 type: qa
-step: 3
+step: 11
 ---
 ## Q
-【ACH 费用 NULL 传播事故（最难的 bug · fail loudly）】面试官会追问什么？每个怎么答？
+<p class="title">ACH 费用 NULL 事故<span class="meta">03 追问</span></p>
+
+面试官会追问什么？每个怎么答？
 
 ## A
 - **What did you decide vs. the team?**
@@ -25,3 +27,5 @@ step: 3
     - 时序：每个 age 桶覆盖率都是 0%；stream 绕过：**30 of 30** 行到了 fee staging；对照组 fast ACH 有费用
 - **Impact on merchants / money actually lost?**
     - 见待补
+
+<div class="sources"><b>表达 · business English</b><br>• <b><i>stopgap</i></b> — 临时止血措施<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“A teammate landed the stopgap first, and I owned the root cause and the hardening.”</span><br>• <b><i>fix forward</i></b> — 向前修复（不回滚）<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“In billing I would fix forward, and issue a correcting entry if the wrong state was consumed.”</span><br>• <b><i>test gap</i></b> — 测试盲区<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“The postmortem listed four test gaps that explained why the end-to-end suite missed it.”</span></div>

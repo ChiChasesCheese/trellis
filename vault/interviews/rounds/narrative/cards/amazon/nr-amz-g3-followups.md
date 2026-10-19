@@ -1,11 +1,13 @@
 ---
 id: nr-amz-g3-followups
-node: amazon.g3
+node: amazon.followups
 type: qa
-step: 2
+step: 86
 ---
 ## Q
-【什么时候 GenAI 不必要，或者更慢】面试官会追问什么？每个怎么答？
+<p class="title">GenAI 不必要的时候<span class="meta">03 追问</span></p>
+
+面试官会追问什么？每个怎么答？
 
 ## A
 - **Give me a case where the AI was just wrong for the job.**
@@ -22,3 +24,7 @@ step: 2
     - 【待补：PayPal 里一个「脚本 / SQL 比 agent 好」的真实例子；没有就说上面这个】
 - **Isn't that anti-AI?**
     - 不是：把 AI 放在优势区，开放式、可验证；成本 / 延迟取舍见 [[primer]]。
+
+
+
+<div class="sources"><b>表达 · business English</b><br>• <b><i>play to its strengths</i></b> — 用在它擅长的地方<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“I play to the model&#x27;s strengths: open-ended, checkable output.”</span><br>• <b><i>default to the cheapest tool</i></b> — 默认先用最便宜的工具<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“I default to the cheapest tool that gives a verifiable answer.”</span><br>• <b><i>sweet spot</i></b> — 最佳平衡点<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“Two problems per agent was the sweet spot.”</span></div>

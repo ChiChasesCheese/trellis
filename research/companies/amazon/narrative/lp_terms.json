@@ -1,0 +1,82 @@
+{
+  "Customer Obsession": [
+    {"en": "work backwards from the customer", "zh": "从客户需求倒推方案", "example": "I started from what the merchant needed and worked backwards from the customer to the design."},
+    {"en": "customer pain point", "zh": "客户的痛点", "example": "The delayed payouts were the biggest customer pain point, so I fixed that first."},
+    {"en": "close the loop with the customer", "zh": "与客户闭环确认结果", "example": "I closed the loop with the customer to confirm the fix actually solved their problem."}
+  ],
+  "Ownership": [
+    {"en": "take end-to-end ownership", "zh": "端到端负责", "example": "I took end-to-end ownership of the pipeline, from design to on-call."},
+    {"en": "it wasn't my job, but it needed doing", "zh": "不是我的职责但必须有人做", "example": "It wasn't my job, but it needed doing, so I picked it up."},
+    {"en": "the buck stops with me", "zh": "最终责任在我", "example": "When the outage hit, the buck stopped with me."}
+  ],
+  "Invent and Simplify": [
+    {"en": "cut through the complexity", "zh": "化繁为简", "example": "I cut through the complexity by replacing three steps with one command."},
+    {"en": "remove moving parts", "zh": "减少活动部件", "example": "I removed moving parts so there was less that could break."},
+    {"en": "reinvent the approach", "zh": "重新设计做法", "example": "Rather than patch it, I reinvented the approach with a much simpler model."}
+  ],
+  "Are Right, A Lot": [
+    {"en": "sound judgment under ambiguity", "zh": "在模糊情况下做出可靠判断", "example": "I showed sound judgment under ambiguity by choosing the option with the reversible downside."},
+    {"en": "seek out disconfirming evidence", "zh": "主动找反面证据", "example": "I sought out disconfirming evidence before committing to the plan."},
+    {"en": "make a call with incomplete data", "zh": "在数据不全时做决定", "example": "I had to make a call with incomplete data and wrote down my assumptions."}
+  ],
+  "Learn and Be Curious": [
+    {"en": "get up to speed quickly", "zh": "快速上手", "example": "I got up to speed quickly on a stack I had never touched."},
+    {"en": "stretch outside my comfort zone", "zh": "走出舒适区", "example": "The project stretched me outside my comfort zone, which is why I took it."},
+    {"en": "go down the rabbit hole", "zh": "钻进细节深挖", "example": "I went down the rabbit hole on the protocol until I understood the failure."}
+  ],
+  "Hire and Develop the Best": [
+    {"en": "raise the bar", "zh": "抬高标准", "example": "I wanted every new hire to raise the bar for the team."},
+    {"en": "coach through the gap", "zh": "辅导补齐差距", "example": "I coached the new engineer through the gap in system design."},
+    {"en": "grow into the role", "zh": "成长到胜任该角色", "example": "I gave them stretch work so they could grow into the role."}
+  ],
+  "Insist on the Highest Standards": [
+    {"en": "hold a high bar", "zh": "坚持高标准", "example": "I held a high bar on tests even when the deadline was tight."},
+    {"en": "fix the class of problem", "zh": "解决这一类问题", "example": "I didn't just patch it, I fixed the class of problem."},
+    {"en": "not good enough yet", "zh": "还没到可以交付的水平", "example": "I told the team it was not good enough yet and showed the gap."}
+  ],
+  "Think Big": [
+    {"en": "bold direction", "zh": "大胆的方向", "example": "I proposed a bold direction: one platform for every research team."},
+    {"en": "think beyond the immediate problem", "zh": "不局限于眼前问题", "example": "I thought beyond the immediate problem and designed for ten times the load."},
+    {"en": "set an ambitious vision", "zh": "设定有野心的愿景", "example": "I set an ambitious vision and broke it into milestones."}
+  ],
+  "Bias for Action": [
+    {"en": "move fast on a reversible decision", "zh": "对可逆的决定快速行动", "example": "It was a two-way door, so I moved fast and adjusted later."},
+    {"en": "calculated risk", "zh": "经过计算的风险", "example": "I took a calculated risk and shipped behind a flag."},
+    {"en": "don't wait for perfect information", "zh": "不等信息完美", "example": "I didn't wait for perfect information because the cost of delay was higher."}
+  ],
+  "Frugality": [
+    {"en": "do more with less", "zh": "用更少资源做更多事", "example": "I did more with less by reusing the existing job instead of building a new service."},
+    {"en": "constraints breed resourcefulness", "zh": "约束催生巧思", "example": "Constraints breed resourcefulness, so I used a ten-line script."},
+    {"en": "avoid over-engineering", "zh": "避免过度设计", "example": "I avoided over-engineering and shipped the simplest thing that worked."}
+  ],
+  "Earn Trust": [
+    {"en": "be upfront about the mistake", "zh": "坦诚承认错误", "example": "I was upfront about the mistake in the postmortem."},
+    {"en": "build credibility", "zh": "建立可信度", "example": "I built credibility with the other team by sharing data early."},
+    {"en": "no surprises", "zh": "不让别人意外", "example": "I told my manager early so there would be no surprises."}
+  ],
+  "Dive Deep": [
+    {"en": "get into the weeds", "zh": "深入细节", "example": "I got into the weeds of the query plan to find the real cause."},
+    {"en": "trace it back to the root cause", "zh": "追溯到根因", "example": "I traced it back to the root cause instead of treating the symptom."},
+    {"en": "let the data speak", "zh": "让数据说话", "example": "I let the data speak and pulled the logs before forming a theory."}
+  ],
+  "Have Backbone; Disagree and Commit": [
+    {"en": "respectfully push back", "zh": "礼貌但坚定地提出异议", "example": "I respectfully pushed back on the timeline and brought numbers."},
+    {"en": "voice a dissenting view", "zh": "表达不同意见", "example": "I voiced a dissenting view in the review, then listened to the reasoning."},
+    {"en": "fully commit once decided", "zh": "决定后全力执行", "example": "Once the decision was made, I fully committed and helped it succeed."}
+  ],
+  "Deliver Results": [
+    {"en": "land the project", "zh": "把项目顺利落地", "example": "I landed the project two days ahead of the audit date."},
+    {"en": "hit the deadline despite setbacks", "zh": "遇到阻碍仍按期交付", "example": "I hit the deadline despite a late schema change."},
+    {"en": "move the needle", "zh": "产生实质性影响", "example": "The change moved the needle on settlement accuracy."}
+  ],
+  "Strive to be Earth's Best Employer": [
+    {"en": "psychological safety", "zh": "心理安全感", "example": "I worked to build psychological safety so juniors felt free to ask questions."},
+    {"en": "set people up for success", "zh": "为他人的成功铺好路", "example": "I wrote an onboarding doc to set new joiners up for success."},
+    {"en": "create an inclusive environment", "zh": "营造包容的环境", "example": "I tried to create an inclusive environment where every voice was heard in design reviews."}
+  ],
+  "Success and Scale Bring Broad Responsibility": [
+    {"en": "unintended consequences", "zh": "意料之外的后果", "example": "I considered unintended consequences before rolling the change out to all merchants."},
+    {"en": "leave it better than I found it", "zh": "让事物比我接手时更好", "example": "I wanted to leave the system better than I found it for the next team."},
+    {"en": "think about the downstream impact", "zh": "考虑下游影响", "example": "I thought about the downstream impact on finance and support teams."}
+  ]
+}

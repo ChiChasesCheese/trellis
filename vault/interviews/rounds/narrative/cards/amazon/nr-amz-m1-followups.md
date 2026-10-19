@@ -1,11 +1,13 @@
 ---
 id: nr-amz-m1-followups
-node: amazon.m1
+node: amazon.followups
 type: qa
-step: 3
+step: 56
 ---
 ## Q
-【Onboarding doc + 带新人 + 标准传播（Hire and Develop 的唯一素材）】面试官会追问什么？每个怎么答？
+<p class="title">新人 onboarding 与带教<span class="meta">03 追问</span></p>
+
+面试官会追问什么？每个怎么答？
 
 ## A
 - **How did you help him grow, concretely?**
@@ -22,3 +24,5 @@ step: 3
     - 见待补；没参与过就如实说「没有，我的影响是通过框架和文档」
 - **What if someone doesn't improve?**
     - 见待补
+
+<div class="sources"><b>表达 · business English</b><br>• <b><i>be upfront about the limits</i></b> — 坦白说明局限<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“I&#x27;m upfront about the limits: I can&#x27;t claim a code-review trail.”</span><br>• <b><i>seam</i></b> — 接缝、系统交界处<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“I review at the seam where events and keys cross from my platform to his.”</span><br>• <b><i>leverage</i></b> — 杠杆<br>&nbsp;&nbsp;&nbsp;<span style="opacity:.85">“My leverage is mechanisms like docs, a framework and ADRs.”</span></div>
