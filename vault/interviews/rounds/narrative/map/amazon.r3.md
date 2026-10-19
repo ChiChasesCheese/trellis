@@ -1,8 +1,8 @@
 %% trellis:begin %%
-# R3 · Aiki / AikiCard（个人消费者产品）
+# Aiki / AikiCard（个人消费者产品）
 *Amazon · LP 故事（STAR-L）*
 
-R3 · Aiki / AikiCard（个人消费者产品） 的提纲与追问。
+Aiki / AikiCard（个人消费者产品） 的提纲与追问。
 
 ## Cards (4)
 1. [[nr-amz-r3-hook]]

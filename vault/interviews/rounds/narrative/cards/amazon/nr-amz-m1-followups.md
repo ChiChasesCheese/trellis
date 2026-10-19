@@ -5,7 +5,7 @@ type: qa
 step: 3
 ---
 ## Q
-【M1 · Onboarding doc + 带新人 + 标准传播（Hire and Develop 的唯一素材）】面试官会追问什么？每个怎么答？
+【Onboarding doc + 带新人 + 标准传播（Hire and Develop 的唯一素材）】面试官会追问什么？每个怎么答？
 
 ## A
 - **How did you help him grow, concretely?**

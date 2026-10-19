@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-【S10 · 退款费 billing-terms 复盘（推翻自己的数字）】开场第一句是什么？适用哪些 LP？要报哪些数字？
+【退款费 billing-terms 复盘（推翻自己的数字）】开场第一句是什么？适用哪些 LP？要报哪些数字？
 
 ## A
 **My first blast-radius query said 196K rows; before anyone acted I found the predicate was wrong, retracted it myself, and the real number was 21,923.**

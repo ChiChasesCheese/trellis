@@ -61,26 +61,26 @@
 - **"How do you use GenAI?"**
   - 两层：日常（Claude Code / Codex / Cursor 并行；plan → TDD → CI 与监控 gate 决定；money code 逐 diff 读）+ 在此之上像带一队 agent（规则、命令形式的验收 gate、不接受 agent 自己说 "done"）。
   - 一个具体例子 + 结果。【待补：最近一次具体任务和结果】
-  - 故事：开场 20 秒 + G2。
+  - 故事：开场 20 秒 + 「不依赖 agent 自述的正确性」。
 - **"How do you verify?"**
   - oracle 阶梯：编译器 / 类型 → 测试 → 差分测试 → 已知值。
   - 再验证验证者：空模板必须红；变异体必须死。
   - 最后人读那些机器看不见的假设。
-  - 故事：G2。
+  - 故事：「不依赖 agent 自述的正确性」。
 - **"A time AI hallucinated"**
   - 事实 → 复算 → 修文章再修卡片 → 变成共享规则。
   - 主动区分：这是 confident wrong claim（数量级错），hallucination 的机制见 [[primer]]。
-  - 故事：G1。
+  - 故事：「一个自信的错数字」。
 - **"When do you trust an LLM?"**
   - 两个输入：有没有 oracle；错了代价多大。
   - 四象限：有 oracle + 低代价 → 信并机器验证；有 oracle + 高代价 → 仍读 diff；无 oracle → 不信，先造 oracle 或自己做。
-  - 故事：G4。
+  - 故事：「什么时候信任 LLM」。
 - **"Where was GenAI unnecessary?"**
   - 确定性问题（计数、覆盖率）→ 脚本；小修 → 就地改；委派形状 → 两题一个 agent、最多三个。
   - 原则：开放式且可验证的地方才用模型。
-  - 故事：G3。
+  - 故事：「GenAI 不必要的时候」。
 - **项目里的 GenAI（hallucination / 验证 / 输入安全 / prompt engineering）**
-  - 分别落到 G1 / G2 / [[primer]] 安全一节 / [[primer]] prompt 与 context 一节。
+  - 分别落到 「一个自信的错数字」 / 「不依赖 agent 自述的正确性」 / [[primer]] 安全一节 / [[primer]] prompt 与 context 一节。
 - **架构一个 AI 聊天机器人**
   - 需求澄清 → 客户端 → 网关 → 会话存储 → 检索（可选）→ 模型（流式）→ 过滤；延迟 = 首 token + 每 token；评测与监控。
   - 骨架见 [[primer]] 末节。
@@ -107,13 +107,13 @@
   - 不要说成「我一个人手写了所有东西」，也不要说成「AI 自己发现的」。
 - PayPal 日常工作的 AI 使用，只讲已有的事实：
   - 简历："AI-native development workflow (Claude Code for code review, test generation, and refactoring), ensuring behavioral parity through comprehensive testing"
-  - S7：Claude Code / Codex / Cursor 并行、schema pool、on-call copilot、plan with the agent → TDD every phase → CI + monitoring gates、money code 逐 diff 读
+  - 「schema pool」：Claude Code / Codex / Cursor 并行、schema pool、on-call copilot、plan with the agent → TDD every phase → CI + monitoring gates、money code 逐 diff 读
   - 迁移规模、parity 通过率、加速倍数、日常里 AI 出过的真实错：全部 【待补】（见 [[R2_ai-native-migration]]）
 - 保密：说 "a payments data platform"，不点名内部工具或数据。
 
 ## 备考动作
 
-- [ ] 把 G1–G4 各出声讲 2 遍，掐表 60–90 秒；填 【待补】。
+- [ ] 把 「一个自信的错数字」–「什么时候信任 LLM」 各出声讲 2 遍，掐表 60–90 秒；填 【待补】。
 - [ ] 读完 [[primer]] 并做完自测。
 - [ ] 用 [[question_bank]] 的要点各口述一遍。
 - [ ] 前一晚只过每题的一句话开场和 4 个故事的第一句；不加新内容。

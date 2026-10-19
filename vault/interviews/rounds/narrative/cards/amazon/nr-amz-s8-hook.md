@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-【S8 · Terraform grant-ownership 7 分钟 RCA（压力下 debug · 主动指出下一个雷）】开场第一句是什么？适用哪些 LP？要报哪些数字？
+【Terraform grant-ownership 7 分钟 RCA（压力下 debug · 主动指出下一个雷）】开场第一句是什么？适用哪些 LP？要报哪些数字？
 
 ## A
 **A release failed in QA; I was only cc'd, posted the root cause and fix seven minutes later, then scanned the whole repo and flagged the next two failures.**

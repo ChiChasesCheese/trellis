@@ -5,7 +5,7 @@ type: qa
 step: 2
 ---
 ## Q
-【S5 · Net Settlement · interchange 数据源切换（技术决策 + 零回归迁移）】STAR-L 提纲（60–90 秒）
+【Net Settlement · interchange 数据源切换（技术决策 + 零回归迁移）】STAR-L 提纲（60–90 秒）
 
 ## A
 **S**

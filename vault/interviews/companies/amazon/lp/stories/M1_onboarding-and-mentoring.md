@@ -1,4 +1,4 @@
-# M1 · Onboarding doc + 带新人 + 标准传播（Hire and Develop 的唯一素材）
+# Onboarding doc + 带新人 + 标准传播（Hire and Develop 的唯一素材）
 
 **I raise the bar by defining the contract first and reviewing designs by how downstream consumes them; I can't claim a code-review trail, so here is what I actually did.**
 

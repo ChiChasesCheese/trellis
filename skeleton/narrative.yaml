@@ -204,59 +204,59 @@ nodes:
         title: "LP → 先用哪个故事"
         summary: "LP → 先用哪个故事 的提纲与追问。"
       - id: amazon.s1
-        title: "S1 · Amex 结算管线（端到端 owner）"
-        summary: "S1 · Amex 结算管线（端到端 owner） 的提纲与追问。"
+        title: "Amex 结算管线（端到端 owner）"
+        summary: "Amex 结算管线（端到端 owner） 的提纲与追问。"
       - id: amazon.s2
-        title: "S2 · Quality-check 框架 + 商户级 ADR（平台化 / 自我纠错）"
-        summary: "S2 · Quality-check 框架 + 商户级 ADR（平台化 / 自我纠错） 的提纲与追问。"
+        title: "Quality-check 框架 + 商户级 ADR（平台化 / 自我纠错）"
+        summary: "Quality-check 框架 + 商户级 ADR（平台化 / 自我纠错） 的提纲与追问。"
       - id: amazon.s3
-        title: "S3 · ACH 费用 NULL 传播事故（最难的 bug · fail loudly）"
-        summary: "S3 · ACH 费用 NULL 传播事故（最难的 bug · fail loudly） 的提纲与追问。"
+        title: "ACH 费用 NULL 传播事故（最难的 bug · fail loudly）"
+        summary: "ACH 费用 NULL 传播事故（最难的 bug · fail loudly） 的提纲与追问。"
       - id: amazon.s4
-        title: "S4 · AU Amex 退款费（用一条查询结束 50 条回复）"
-        summary: "S4 · AU Amex 退款费（用一条查询结束 50 条回复） 的提纲与追问。"
+        title: "AU Amex 退款费（用一条查询结束 50 条回复）"
+        summary: "AU Amex 退款费（用一条查询结束 50 条回复） 的提纲与追问。"
       - id: amazon.s5
-        title: "S5 · Net Settlement · interchange 数据源切换（技术决策 + 零回归迁移）"
-        summary: "S5 · Net Settlement · interchange 数据源切换（技术决策 + 零回归迁移） 的提纲与追问。"
+        title: "Net Settlement · interchange 数据源切换（技术决策 + 零回归迁移）"
+        summary: "Net Settlement · interchange 数据源切换（技术决策 + 零回归迁移） 的提纲与追问。"
       - id: amazon.s6
-        title: "S6 · Fee anomaly detector 的 go/no-go（判断力 · 说不 · 分阶段）"
-        summary: "S6 · Fee anomaly detector 的 go/no-go（判断力 · 说不 · 分阶段） 的提纲与追问。"
+        title: "Fee anomaly detector 的 go/no-go（判断力 · 说不 · 分阶段）"
+        summary: "Fee anomaly detector 的 go/no-go（判断力 · 说不 · 分阶段） 的提纲与追问。"
       - id: amazon.s7
-        title: "S7 · schema pool（主动性 · 开发者效率 · AI fluency）"
-        summary: "S7 · schema pool（主动性 · 开发者效率 · AI fluency） 的提纲与追问。"
+        title: "schema pool（主动性 · 开发者效率 · AI fluency）"
+        summary: "schema pool（主动性 · 开发者效率 · AI fluency） 的提纲与追问。"
       - id: amazon.s8
-        title: "S8 · Terraform grant-ownership 7 分钟 RCA（压力下 debug · 主动指出下一个雷）"
-        summary: "S8 · Terraform grant-ownership 7 分钟 RCA（压力下 debug · 主动指出下一个雷） 的提纲与追问。"
+        title: "Terraform grant-ownership 7 分钟 RCA（压力下 debug · 主动指出下一个雷）"
+        summary: "Terraform grant-ownership 7 分钟 RCA（压力下 debug · 主动指出下一个雷） 的提纲与追问。"
       - id: amazon.s9
-        title: "S9 · Amex 出款延迟事故（事故指挥里的领域权威）"
-        summary: "S9 · Amex 出款延迟事故（事故指挥里的领域权威） 的提纲与追问。"
+        title: "Amex 出款延迟事故（事故指挥里的领域权威）"
+        summary: "Amex 出款延迟事故（事故指挥里的领域权威） 的提纲与追问。"
       - id: amazon.s10
-        title: "S10 · 退款费 billing-terms 复盘（推翻自己的数字）"
-        summary: "S10 · 退款费 billing-terms 复盘（推翻自己的数字） 的提纲与追问。"
+        title: "退款费 billing-terms 复盘（推翻自己的数字）"
+        summary: "退款费 billing-terms 复盘（推翻自己的数字） 的提纲与追问。"
       - id: amazon.s11
-        title: "S11 · 实习期：Kafka 事件流 · Spring · Spark（广度补充）"
-        summary: "S11 · 实习期：Kafka 事件流 · Spring · Spark（广度补充） 的提纲与追问。"
+        title: "实习期：Kafka 事件流 · Spring · Spark（广度补充）"
+        summary: "实习期：Kafka 事件流 · Spring · Spark（广度补充） 的提纲与追问。"
       - id: amazon.m1
-        title: "M1 · Onboarding doc + 带新人 + 标准传播（Hire and Develop 的唯一素材）"
-        summary: "M1 · Onboarding doc + 带新人 + 标准传播（Hire and Develop 的唯一素材） 的提纲与追问。"
+        title: "Onboarding doc + 带新人 + 标准传播（Hire and Develop 的唯一素材）"
+        summary: "Onboarding doc + 带新人 + 标准传播（Hire and Develop 的唯一素材） 的提纲与追问。"
       - id: amazon.r1
-        title: "R1 · Quant-Stroller（个人项目：反过拟合的研究平台）"
-        summary: "R1 · Quant-Stroller（个人项目：反过拟合的研究平台） 的提纲与追问。"
+        title: "Quant-Stroller（个人项目：反过拟合的研究平台）"
+        summary: "Quant-Stroller（个人项目：反过拟合的研究平台） 的提纲与追问。"
       - id: amazon.r2
-        title: "R2 · AI-native 迁移：Ruby/Kotlin → Snowflake/Java（Claude Code 工作流）"
-        summary: "R2 · AI-native 迁移：Ruby/Kotlin → Snowflake/Java（Claude Code 工作流） 的提纲与追问。"
+        title: "AI-native 迁移：Ruby/Kotlin → Snowflake/Java（Claude Code 工作流）"
+        summary: "AI-native 迁移：Ruby/Kotlin → Snowflake/Java（Claude Code 工作流） 的提纲与追问。"
       - id: amazon.r3
-        title: "R3 · Aiki / AikiCard（个人消费者产品）"
-        summary: "R3 · Aiki / AikiCard（个人消费者产品） 的提纲与追问。"
+        title: "Aiki / AikiCard（个人消费者产品）"
+        summary: "Aiki / AikiCard（个人消费者产品） 的提纲与追问。"
       - id: amazon.g1
-        title: "G1 · 一个自信的错数字"
-        summary: "G1 · 一个自信的错数字 的提纲与追问。"
+        title: "一个自信的错数字"
+        summary: "一个自信的错数字 的提纲与追问。"
       - id: amazon.g2
-        title: "G2 · 让正确性不依赖 agent 的自述（senior 机制故事）"
-        summary: "G2 · 让正确性不依赖 agent 的自述（senior 机制故事） 的提纲与追问。"
+        title: "让正确性不依赖 agent 的自述（senior 机制故事）"
+        summary: "让正确性不依赖 agent 的自述（senior 机制故事） 的提纲与追问。"
       - id: amazon.g3
-        title: "G3 · 什么时候 GenAI 不必要，或者更慢"
-        summary: "G3 · 什么时候 GenAI 不必要，或者更慢 的提纲与追问。"
+        title: "什么时候 GenAI 不必要，或者更慢"
+        summary: "什么时候 GenAI 不必要，或者更慢 的提纲与追问。"
       - id: amazon.g4
-        title: "G4 · 什么时候信任 LLM：一条判定规则"
-        summary: "G4 · 什么时候信任 LLM：一条判定规则 的提纲与追问。"
+        title: "什么时候信任 LLM：一条判定规则"
+        summary: "什么时候信任 LLM：一条判定规则 的提纲与追问。"

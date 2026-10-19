@@ -5,7 +5,7 @@ type: qa
 step: 2
 ---
 ## Q
-【S7 · schema pool（主动性 · 开发者效率 · AI fluency）】STAR-L 提纲（60–90 秒）
+【schema pool（主动性 · 开发者效率 · AI fluency）】STAR-L 提纲（60–90 秒）
 
 ## A
 **S**

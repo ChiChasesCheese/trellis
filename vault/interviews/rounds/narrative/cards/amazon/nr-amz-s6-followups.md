@@ -5,7 +5,7 @@ type: qa
 step: 3
 ---
 ## Q
-【S6 · Fee anomaly detector 的 go/no-go（判断力 · 说不 · 分阶段）】面试官会追问什么？每个怎么答？
+【Fee anomaly detector 的 go/no-go（判断力 · 说不 · 分阶段）】面试官会追问什么？每个怎么答？
 
 ## A
 - **Who asked you to make this assessment?**

@@ -5,7 +5,7 @@ type: qa
 step: 3
 ---
 ## Q
-【S5 · Net Settlement · interchange 数据源切换（技术决策 + 零回归迁移）】面试官会追问什么？每个怎么答？
+【Net Settlement · interchange 数据源切换（技术决策 + 零回归迁移）】面试官会追问什么？每个怎么答？
 
 ## A
 - **What's the trade-off of the time window?**

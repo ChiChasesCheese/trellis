@@ -1,4 +1,4 @@
-# S7 · schema pool（主动性 · 开发者效率 · AI fluency）
+# schema pool（主动性 · 开发者效率 · AI fluency）
 
 **Nobody assigned it: two engineers, or two AI agents, collided on shared-schema DDL, so I built a pool of two-second zero-copy clones.**
 

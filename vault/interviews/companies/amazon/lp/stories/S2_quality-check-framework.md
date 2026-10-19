@@ -1,4 +1,4 @@
-# S2 · Quality-check 框架 + 商户级 ADR（平台化 / 自我纠错）
+# Quality-check 框架 + 商户级 ADR（平台化 / 自我纠错）
 
 **I replaced hand-written validation tasks with a config-driven quality gate, then wrote the ADR that overturned the granularity of my own design.**
 
@@ -81,7 +81,7 @@
 - 【待补：除 Snowglobe 团队外有无其他团队接入】
 - 【待补：除你之外谁添加过 config 行、几次？("someone else added a check by inserting a row without asking me" 是核心证据)】
 - 【待补：ADR 主要评审是谁（职级、团队）、提了什么问题、你如何改了 ADR；是否有人最初反对「改自己刚铺开的框架」】
-- 【待补：评审里有没有一条没被采纳但你仍执行的意见（disagree-and-commit）；没有就用 S6/S3 做 Backbone】
+- 【待补：评审里有没有一条没被采纳但你仍执行的意见（disagree-and-commit）；没有就用 「费用异常检测器 go/no-go」/S3 做 Backbone】
 
 <details><summary>逐字稿</summary>
 

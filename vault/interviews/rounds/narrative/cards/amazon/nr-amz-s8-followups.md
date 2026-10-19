@@ -5,7 +5,7 @@ type: qa
 step: 3
 ---
 ## Q
-【S8 · Terraform grant-ownership 7 分钟 RCA（压力下 debug · 主动指出下一个雷）】面试官会追问什么？每个怎么答？
+【Terraform grant-ownership 7 分钟 RCA（压力下 debug · 主动指出下一个雷）】面试官会追问什么？每个怎么答？
 
 ## A
 - **How did you get to the root cause in 7 minutes?**

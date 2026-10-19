@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-【G2 · 让正确性不依赖 agent 的自述（senior 机制故事）】适用 LP、开场 hook 和 STAR-L 提纲
+【让正确性不依赖 agent 的自述（senior 机制故事）】适用 LP、开场 hook 和 STAR-L 提纲
 
 ## A
 - 主 LP：Insist on the Highest Standards；备用：Invent and Simplify（机制简单到一条命令）、Ownership、Are Right, A Lot。

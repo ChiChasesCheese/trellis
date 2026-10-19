@@ -1,8 +1,8 @@
 %% trellis:begin %%
-# S3 · ACH 费用 NULL 传播事故（最难的 bug · fail loudly）
+# ACH 费用 NULL 传播事故（最难的 bug · fail loudly）
 *Amazon · LP 故事（STAR-L）*
 
-S3 · ACH 费用 NULL 传播事故（最难的 bug · fail loudly） 的提纲与追问。
+ACH 费用 NULL 传播事故（最难的 bug · fail loudly） 的提纲与追问。
 
 ## Cards (4)
 1. [[nr-amz-s3-hook]]

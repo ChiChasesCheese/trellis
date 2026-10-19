@@ -5,7 +5,7 @@ type: qa
 step: 4
 ---
 ## Q
-【S8 · Terraform grant-ownership 7 分钟 RCA（压力下 debug · 主动指出下一个雷）】换成别的 LP 问时，强调哪一段？
+【Terraform grant-ownership 7 分钟 RCA（压力下 debug · 主动指出下一个雷）】换成别的 LP 问时，强调哪一段？
 
 ## A
 - **Bias for Action**：被 cc 不是被分配，七分钟后线程里就有根因和修法；强调问一句可否推 PR、同天三环境

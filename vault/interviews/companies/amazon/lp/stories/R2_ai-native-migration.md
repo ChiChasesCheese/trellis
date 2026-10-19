@@ -1,4 +1,4 @@
-# R2 · AI-native 迁移：Ruby/Kotlin → Snowflake/Java（Claude Code 工作流）
+# AI-native 迁移：Ruby/Kotlin → Snowflake/Java（Claude Code 工作流）
 
 **The agent proposes, tests decide: I migrated legacy Ruby and Kotlin logic to Snowflake and Java with Claude Code, and held it to behavioral parity.**
 

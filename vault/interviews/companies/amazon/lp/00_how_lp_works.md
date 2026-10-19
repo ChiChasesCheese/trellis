@@ -68,7 +68,7 @@ Amazon 的 16 条领导力准则（Leadership Principles，LP）同时是日常�
 
 ## 失败与错误的故事
 
-- 至少备 2 个有代价的失败或错误：S2（自己的设计缺陷）、S10（收回自己的数字）、S3（e2e 的缺口）。
+- 至少备 2 个有代价的失败或错误：「Quality-check 框架」（自己的设计缺陷）、「退款费 billing-terms 复盘」（收回自己的数字）、「ACH 费用 NULL 事故」（e2e 的缺口）。
 - 结构：主语是 you，不甩锅；讲你造成的部分；以机制化的改进收尾。
 - 不要以 "but it worked out" 收尾，它会抵消整个答案。
 - 冲突里用证据说服，不说「我对他错」；不把别人当反派。
@@ -84,7 +84,7 @@ Amazon 的 16 条领导力准则（Leadership Principles，LP）同时是日常�
   - Action 里加「我否决的备选」
   - Result 里加「机制：现在流程里多了什么」
   - 开场说清「为什么是我（没人派 / 跨团队）」
-- 示例（S4 AU 退款费）：
+- 示例（「澳洲 Amex 退款费」 AU 退款费）：
   - Junior："I found the config was `partial`, told the PM, a ticket was created." 任务驱动，一个行动者，无数字，无机制。
   - Senior："A PM's escalation had bounced across three teams for about fifty replies. I owned the answer though it wasn't my ticket. I counted refund-fee rows by country: over a million in the US, zero in Australia. The cause was configuration, and it predated our migration, so nobody had to defend a regression. I put the queries in the write-up so others could verify me; that ended the thread the same day and became a funded feature ticket. On a second fee kind I said 'not sure yet' and gave a verification plan."
   - 差异：Scope（三个团队、50 条回复）· Influence（无权威，用可重跑证据）· Data（百万行 vs 0）· Mechanism（可重跑查询 → 功能票）· Humility（not sure yet + 计划）。
@@ -92,7 +92,7 @@ Amazon 的 16 条领导力准则（Leadership Principles，LP）同时是日常�
 ## 没有故事的时候
 
 - 步骤按顺序：
-  - 停 3 秒，**换角度**：同一个故事换一个决定点开讲（S3 默认讲 Dive Deep；被问 Have Backbone 就从「有人建议把 ACH 加进排除名单，我坚持不压掉检查」开讲）。
+  - 停 3 秒，**换角度**：同一个故事换一个决定点开讲（「ACH 费用 NULL 事故」 默认讲 Dive Deep；被问 Have Backbone 就从「有人建议把 ACH 加进排除名单，我坚持不压掉检查」开讲）。
   - **缩小题目**：把规模调到你真有的规模（Think Big → 你把范围从「修这一个」放大到「改框架」的那一刻）。
   - **诚实坦白 + 最近的相邻经历**："I haven't been in exactly that situation — the closest I have is [X]. Can I tell you that one?" 说完就讲，不道歉三次。
   - 讲到一半发现偏题：land it and pivot，不要道歉重来。
@@ -117,19 +117,19 @@ Amazon 的 16 条领导力准则（Leadership Principles，LP）同时是日常�
 
 | # | LP | 一句话含义 | 面试官追问什么 | 你的故事 |
 |---|---|---|---|---|
-| 1 | Customer Obsession | 从客户的痛倒推，为客户信任付额外代价 | 谁是客户（商户或下游团队，先说清）；你为他牺牲了什么 | S4 / S9 |
-| 2 | Ownership | 没人派你也去做，做到长期不再出问题，从不说 "not my job" | 没有 ticket 的事；修一次还是修一类 | S1 / S7 / S3 |
-| 3 | Invent and Simplify | 造新东西，把复杂的变简单 | 简化的是机制还是代码；被否决的备选 | S2 / S7 |
-| 4 | Are Right, A Lot | 判断力 + 主动找反证（disconfirm） | 你怎么发现自己可能错；错了怎么办 | S5 / S10 / S2 |
-| 5 | Learn and Be Curious | 不断学习，并用上 | 学了什么、怎么学的、用在哪 | R2 / R1（需补）、S7 |
-| 6 | Hire and Develop the Best | 提高团队水平，带出下一批 leader | 带的人独立 own 了什么；你的机制 | M1（需补）、S2 |
-| 7 | Insist on the Highest Standards | 标准高于流程要求，问题修到不复发 | 根因 + 防复发机制 | S3 / S2 / S10 |
-| 8 | Think Big | 提出更大、有数据支撑的方向 | 方向的数据；有没有人跟着走 | S2 / S5 / R1 |
-| 9 | Bias for Action | 速度重要，可逆的决定先动，calculated risk | 可逆性分析；下行怎么兜 | S5 / S8 / S7 |
-| 10 | Frugality | 用更少做更多 | 具体资源数字（算力、行数、人周） | S2 / S7 / S1 |
-| 11 | Earn Trust | 倾听、坦率、公开自批 | 对资深者的坦率；别人如何独立验证你 | S10 / S4 / S3 |
-| 12 | Dive Deep | 下到细节，数字与直觉不符时追查 | 你下到哪一层（行、函数、查询） | S3 / S4 / S10 |
-| 13 | Have Backbone; Disagree and Commit | 不舒服也提异议，决定后全力执行 | 分歧对象的资历；你怎么 commit（目前缺） | S3 / S6 |
-| 14 | Deliver Results | 抓关键输入，障碍面前仍交付 | 数字、障碍、代价 | S1 / S5 / S8 |
-| 15 | Strive to be Earth's Best Employer | 让同事的环境更安全、更高效、更包容 | 具体机制（onboarding、文档） | M1（需补） |
-| 16 | Success and Scale Bring Broad Responsibility | 考虑行动的二阶影响，留下比发现时更好的东西 | 对用户、团队、社区的副作用 | S3 / S1 |
+| 1 | Customer Obsession | 从客户的痛倒推，为客户信任付额外代价 | 谁是客户（商户或下游团队，先说清）；你为他牺牲了什么 | 「澳洲 Amex 退款费」 / 「Amex 出款延迟事故」 |
+| 2 | Ownership | 没人派你也去做，做到长期不再出问题，从不说 "not my job" | 没有 ticket 的事；修一次还是修一类 | 「Amex 结算管线」 / 「schema pool」 / 「ACH 费用 NULL 事故」 |
+| 3 | Invent and Simplify | 造新东西，把复杂的变简单 | 简化的是机制还是代码；被否决的备选 | 「Quality-check 框架」 / 「schema pool」 |
+| 4 | Are Right, A Lot | 判断力 + 主动找反证（disconfirm） | 你怎么发现自己可能错；错了怎么办 | 「Net Settlement 数据源切换」 / 「退款费 billing-terms 复盘」 / 「Quality-check 框架」 |
+| 5 | Learn and Be Curious | 不断学习，并用上 | 学了什么、怎么学的、用在哪 | 「AI-native 迁移」 / 「Quant-Stroller 研究平台」（需补）、「schema pool」 |
+| 6 | Hire and Develop the Best | 提高团队水平，带出下一批 leader | 带的人独立 own 了什么；你的机制 | 「新人 onboarding 与带教」（需补）、「Quality-check 框架」 |
+| 7 | Insist on the Highest Standards | 标准高于流程要求，问题修到不复发 | 根因 + 防复发机制 | 「ACH 费用 NULL 事故」 / 「Quality-check 框架」 / 「退款费 billing-terms 复盘」 |
+| 8 | Think Big | 提出更大、有数据支撑的方向 | 方向的数据；有没有人跟着走 | 「Quality-check 框架」 / 「Net Settlement 数据源切换」 / 「Quant-Stroller 研究平台」 |
+| 9 | Bias for Action | 速度重要，可逆的决定先动，calculated risk | 可逆性分析；下行怎么兜 | 「Net Settlement 数据源切换」 / 「Terraform 7 分钟 RCA」 / 「schema pool」 |
+| 10 | Frugality | 用更少做更多 | 具体资源数字（算力、行数、人周） | 「Quality-check 框架」 / 「schema pool」 / 「Amex 结算管线」 |
+| 11 | Earn Trust | 倾听、坦率、公开自批 | 对资深者的坦率；别人如何独立验证你 | 「退款费 billing-terms 复盘」 / 「澳洲 Amex 退款费」 / 「ACH 费用 NULL 事故」 |
+| 12 | Dive Deep | 下到细节，数字与直觉不符时追查 | 你下到哪一层（行、函数、查询） | 「ACH 费用 NULL 事故」 / 「澳洲 Amex 退款费」 / 「退款费 billing-terms 复盘」 |
+| 13 | Have Backbone; Disagree and Commit | 不舒服也提异议，决定后全力执行 | 分歧对象的资历；你怎么 commit（目前缺） | 「ACH 费用 NULL 事故」 / 「费用异常检测器 go/no-go」 |
+| 14 | Deliver Results | 抓关键输入，障碍面前仍交付 | 数字、障碍、代价 | 「Amex 结算管线」 / 「Net Settlement 数据源切换」 / 「Terraform 7 分钟 RCA」 |
+| 15 | Strive to be Earth's Best Employer | 让同事的环境更安全、更高效、更包容 | 具体机制（onboarding、文档） | 「新人 onboarding 与带教」（需补） |
+| 16 | Success and Scale Bring Broad Responsibility | 考虑行动的二阶影响，留下比发现时更好的东西 | 对用户、团队、社区的副作用 | 「ACH 费用 NULL 事故」 / 「Amex 结算管线」 |

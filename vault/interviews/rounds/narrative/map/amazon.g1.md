@@ -1,8 +1,8 @@
 %% trellis:begin %%
-# G1 · 一个自信的错数字
+# 一个自信的错数字
 *Amazon · LP 故事（STAR-L）*
 
-G1 · 一个自信的错数字 的提纲与追问。
+一个自信的错数字 的提纲与追问。
 
 ## Cards (2)
 1. [[nr-amz-g1-starl]]

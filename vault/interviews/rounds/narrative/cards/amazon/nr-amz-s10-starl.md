@@ -5,7 +5,7 @@ type: qa
 step: 2
 ---
 ## Q
-【S10 · 退款费 billing-terms 复盘（推翻自己的数字）】STAR-L 提纲（60–90 秒）
+【退款费 billing-terms 复盘（推翻自己的数字）】STAR-L 提纲（60–90 秒）
 
 ## A
 **S**

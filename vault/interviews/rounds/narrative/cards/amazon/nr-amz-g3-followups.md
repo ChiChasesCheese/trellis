@@ -5,7 +5,7 @@ type: qa
 step: 2
 ---
 ## Q
-【G3 · 什么时候 GenAI 不必要，或者更慢】面试官会追问什么？每个怎么答？
+【什么时候 GenAI 不必要，或者更慢】面试官会追问什么？每个怎么答？
 
 ## A
 - **Give me a case where the AI was just wrong for the job.**

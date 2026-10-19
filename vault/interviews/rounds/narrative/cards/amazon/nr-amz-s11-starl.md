@@ -5,7 +5,7 @@ type: qa
 step: 2
 ---
 ## Q
-【S11 · 实习期：Kafka 事件流 · Spring · Spark（广度补充）】STAR-L 提纲（60–90 秒）
+【实习期：Kafka 事件流 · Spring · Spark（广度补充）】STAR-L 提纲（60–90 秒）
 
 ## A
 **S**

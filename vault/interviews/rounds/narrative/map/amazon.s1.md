@@ -1,8 +1,8 @@
 %% trellis:begin %%
-# S1 · Amex 结算管线（端到端 owner）
+# Amex 结算管线（端到端 owner）
 *Amazon · LP 故事（STAR-L）*
 
-S1 · Amex 结算管线（端到端 owner） 的提纲与追问。
+Amex 结算管线（端到端 owner） 的提纲与追问。
 
 ## Cards (4)
 1. [[nr-amz-s1-hook]]

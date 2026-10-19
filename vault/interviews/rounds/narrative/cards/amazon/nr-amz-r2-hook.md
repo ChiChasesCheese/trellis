@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-【R2 · AI-native 迁移：Ruby/Kotlin → Snowflake/Java（Claude Code 工作流）】开场第一句是什么？适用哪些 LP？要报哪些数字？
+【AI-native 迁移：Ruby/Kotlin → Snowflake/Java（Claude Code 工作流）】开场第一句是什么？适用哪些 LP？要报哪些数字？
 
 ## A
 **The agent proposes, tests decide: I migrated legacy Ruby and Kotlin logic to Snowflake and Java with Claude Code, and held it to behavioral parity.**

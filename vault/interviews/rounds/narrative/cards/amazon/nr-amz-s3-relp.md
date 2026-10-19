@@ -5,7 +5,7 @@ type: qa
 step: 4
 ---
 ## Q
-【S3 · ACH 费用 NULL 传播事故（最难的 bug · fail loudly）】换成别的 LP 问时，强调哪一段？
+【ACH 费用 NULL 传播事故（最难的 bug · fail loudly）】换成别的 LP 问时，强调哪一段？
 
 ## A
 - **Dive Deep**：切片 → 单笔 → 回溯 → 读两个重载；强调排除时序/stream 的证据

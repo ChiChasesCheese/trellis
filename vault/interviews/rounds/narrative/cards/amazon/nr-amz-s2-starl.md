@@ -5,7 +5,7 @@ type: qa
 step: 2
 ---
 ## Q
-【S2 · Quality-check 框架 + 商户级 ADR（平台化 / 自我纠错）】STAR-L 提纲（60–90 秒）
+【Quality-check 框架 + 商户级 ADR（平台化 / 自我纠错）】STAR-L 提纲（60–90 秒）
 
 ## A
 **S**

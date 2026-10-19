@@ -5,7 +5,7 @@ type: qa
 step: 4
 ---
 ## Q
-【S1 · Amex 结算管线（端到端 owner）】换成别的 LP 问时，强调哪一段？
+【Amex 结算管线（端到端 owner）】换成别的 LP 问时，强调哪一段？
 
 ## A
 - **Ownership**：stub → 设计 → 上线 → 18 个月 on-call；kill switch；EU 扩展不是别人派的；别说成「团队做的」

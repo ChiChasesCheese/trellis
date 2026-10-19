@@ -5,7 +5,7 @@ type: qa
 step: 3
 ---
 ## Q
-【S9 · Amex 出款延迟事故（事故指挥里的领域权威）】面试官会追问什么？每个怎么答？
+【Amex 出款延迟事故（事故指挥里的领域权威）】面试官会追问什么？每个怎么答？
 
 ## A
 - **What exactly did you do vs. the others?**

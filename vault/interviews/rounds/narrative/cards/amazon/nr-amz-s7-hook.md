@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-【S7 · schema pool（主动性 · 开发者效率 · AI fluency）】开场第一句是什么？适用哪些 LP？要报哪些数字？
+【schema pool（主动性 · 开发者效率 · AI fluency）】开场第一句是什么？适用哪些 LP？要报哪些数字？
 
 ## A
 **Nobody assigned it: two engineers, or two AI agents, collided on shared-schema DDL, so I built a pool of two-second zero-copy clones.**

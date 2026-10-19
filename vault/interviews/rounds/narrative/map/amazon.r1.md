@@ -1,8 +1,8 @@
 %% trellis:begin %%
-# R1 · Quant-Stroller（个人项目：反过拟合的研究平台）
+# Quant-Stroller（个人项目：反过拟合的研究平台）
 *Amazon · LP 故事（STAR-L）*
 
-R1 · Quant-Stroller（个人项目：反过拟合的研究平台） 的提纲与追问。
+Quant-Stroller（个人项目：反过拟合的研究平台） 的提纲与追问。
 
 ## Cards (4)
 1. [[nr-amz-r1-hook]]

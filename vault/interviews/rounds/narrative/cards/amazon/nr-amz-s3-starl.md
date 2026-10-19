@@ -5,7 +5,7 @@ type: qa
 step: 2
 ---
 ## Q
-【S3 · ACH 费用 NULL 传播事故（最难的 bug · fail loudly）】STAR-L 提纲（60–90 秒）
+【ACH 费用 NULL 传播事故（最难的 bug · fail loudly）】STAR-L 提纲（60–90 秒）
 
 ## A
 **S**

@@ -5,7 +5,7 @@ type: qa
 step: 3
 ---
 ## Q
-【S11 · 实习期：Kafka 事件流 · Spring · Spark（广度补充）】面试官会追问什么？每个怎么答？
+【实习期：Kafka 事件流 · Spring · Spark（广度补充）】面试官会追问什么？每个怎么答？
 
 ## A
 - **How do you not double-charge / not miss fees?**

@@ -5,7 +5,7 @@ type: qa
 step: 2
 ---
 ## Q
-【S6 · Fee anomaly detector 的 go/no-go（判断力 · 说不 · 分阶段）】STAR-L 提纲（60–90 秒）
+【Fee anomaly detector 的 go/no-go（判断力 · 说不 · 分阶段）】STAR-L 提纲（60–90 秒）
 
 ## A
 **S**

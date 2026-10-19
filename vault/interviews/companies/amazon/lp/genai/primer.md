@@ -1,6 +1,6 @@
 # GenAI 原理速查
 
-被追问到第三层时不露怯，需要知道这些：大语言模型（Large Language Model，LLM）怎么生成文本、为什么会一本正经地出错、怎么用测试和编译器当判定器、怎么放信息进上下文、agent 怎么调工具、怎么评测、怎么防注入和泄露、成本与延迟怎么算。下面每条是一个事实加一句为什么。示例数字都由脚本算过；价格和模型规格不凭记忆报，面试时说「按当时的价目表」。与故事的对应：§2 ↔ G1，§3 ↔ G2，§4–§5 ↔ G2 / G4，§6 ↔ G4，§7 ↔ G3。
+被追问到第三层时不露怯，需要知道这些：大语言模型（Large Language Model，LLM）怎么生成文本、为什么会一本正经地出错、怎么用测试和编译器当判定器、怎么放信息进上下文、agent 怎么调工具、怎么评测、怎么防注入和泄露、成本与延迟怎么算。下面每条是一个事实加一句为什么。示例数字都由脚本算过；价格和模型规格不凭记忆报，面试时说「按当时的价目表」。与故事的对应：§2 ↔ 「一个自信的错数字」，§3 ↔ 「不依赖 agent 自述的正确性」，§4–§5 ↔ 「不依赖 agent 自述的正确性」 / 「什么时候信任 LLM」，§6 ↔ 「什么时候信任 LLM」，§7 ↔ 「GenAI 不必要的时候」。
 
 ## §1 LLM 在干什么：预测下一个 token
 
@@ -37,7 +37,7 @@
   - 附和前提（sycophancy）→ 问中性问题；让它找反例
 - 数值例（示意）：键空间 \(N = 62^7\)（7 位 base62），n 个键至少一次碰撞概率 ≈ \(1 - e^{-n(n-1)/(2N)}\)：
   - n=10⁵ → 0.14%；n=10⁶ → 13.2%；n=10⁷ → 0.9999993（几乎必然）
-  - 数量级错 6 个量级就是 G1 的错误形态
+  - 数量级错 6 个量级就是 「一个自信的错数字」 的错误形态
   - 「至少一次碰撞」与「这次插入碰撞」是两个不同的概率
 - 缓解三层（说得出每层挡什么）：
   - 减少发生：给来源（检索 / RAG）、要求引用、给工具（计算器、代码执行）而不是心算、允许说「不知道」
@@ -186,7 +186,7 @@
 - 取舍框架：
   - 这一步有 oracle 吗？有 → 便宜地多生成多验证；没有 → 要贵的人工或贵模型
   - 用户在等吗？在 → 延迟优先（流式、小模型、缓存）；不在 → 吞吐 / 成本优先（批处理、异步）
-  - 确定性问题别用模型（G3）
+  - 确定性问题别用模型（「GenAI 不必要的时候」）
   - 并行只用于互相独立的任务，受上限和审查带宽限制；瓶颈常常是你的验收，不是生成
 
 自测：
@@ -209,10 +209,10 @@
 - **Where**：I use it for [planning, scaffolding, refactor, tests, review], not for [numbers, external facts, security decisions].
 - **Control**：plan → TDD → gates; I own every diff.
 - **Verify**：oracle ladder (compiler, tests, differential, known values), then test the tests (mutation, empty starter must fail).
-- **Evidence**：one concrete artifact (G1: 38% → certainty; G2: 11/11 mutants).
+- **Evidence**：one concrete artifact (「一个自信的错数字」: 38% → certainty; 「不依赖 agent 自述的正确性」: 11/11 mutants).
 - **Limits**：where it wasn't worth it (counts → script; one-line fixes in place) and what I'd add for production (evals, injection tests, monitoring).
 
 自测：
-- 60 秒回答 "How do you verify an AI-generated solution is correct?" → 第 3 点：oracle 阶梯，再验证验证者，再人读假设；落到 G2 的证据（空模板红、11/11 变异体、400 个随机图对拍零不一致）。
-- "Isn't that overkill for a side project?" → "It's cheap relative to the cost of a wrong number reaching a learner, and the same mechanisms — a gate that's a command, a rule per defect — are what I'd apply to production code; the rigor scales with the blast radius." 再补 G3：我也知道什么时候不用模型。
+- 60 秒回答 "How do you verify an AI-generated solution is correct?" → 第 3 点：oracle 阶梯，再验证验证者，再人读假设；落到 「不依赖 agent 自述的正确性」 的证据（空模板红、11/11 变异体、400 个随机图对拍零不一致）。
+- "Isn't that overkill for a side project?" → "It's cheap relative to the cost of a wrong number reaching a learner, and the same mechanisms — a gate that's a command, a rule per defect — are what I'd apply to production code; the rigor scales with the blast radius." 再补 「GenAI 不必要的时候」：我也知道什么时候不用模型。
 - 不确定某个细节（如某模型的上下文长度）？ → 直说 "I'd check the current docs for the exact number"，然后讲原理；不要凭记忆报数字。

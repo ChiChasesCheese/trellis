@@ -5,7 +5,7 @@ type: qa
 step: 3
 ---
 ## Q
-【S2 · Quality-check 框架 + 商户级 ADR（平台化 / 自我纠错）】面试官会追问什么？每个怎么答？
+【Quality-check 框架 + 商户级 ADR（平台化 / 自我纠错）】面试官会追问什么？每个怎么答？
 
 ## A
 - **Why dynamic SQL, isn't that risky?**

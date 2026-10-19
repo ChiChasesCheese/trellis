@@ -5,7 +5,7 @@ type: qa
 step: 2
 ---
 ## Q
-【M1 · Onboarding doc + 带新人 + 标准传播（Hire and Develop 的唯一素材）】STAR-L 提纲（60–90 秒）
+【Onboarding doc + 带新人 + 标准传播（Hire and Develop 的唯一素材）】STAR-L 提纲（60–90 秒）
 
 ## A
 **S**

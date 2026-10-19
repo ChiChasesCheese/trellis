@@ -1,4 +1,4 @@
-# S5 · Net Settlement · interchange 数据源切换（技术决策 + 零回归迁移）
+# Net Settlement · interchange 数据源切换（技术决策 + 零回归迁移）
 
 **I turned "will the numbers match?" from an opinion into a query, and shipped the switch dark.**
 

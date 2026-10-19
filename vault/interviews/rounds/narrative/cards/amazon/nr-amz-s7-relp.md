@@ -5,7 +5,7 @@ type: qa
 step: 4
 ---
 ## Q
-【S7 · schema pool（主动性 · 开发者效率 · AI fluency）】换成别的 LP 问时，强调哪一段？
+【schema pool（主动性 · 开发者效率 · AI fluency）】换成别的 LP 问时，强调哪一段？
 
 ## A
 - **Invent and Simplify**：两秒克隆取代「等共享 schema 轮到你」；MAIN 同步到部署 SHA；别说成团队标准

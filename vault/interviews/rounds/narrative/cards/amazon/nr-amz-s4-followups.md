@@ -5,7 +5,7 @@ type: qa
 step: 3
 ---
 ## Q
-【S4 · AU Amex 退款费（用一条查询结束 50 条回复）】面试官会追问什么？每个怎么答？
+【AU Amex 退款费（用一条查询结束 50 条回复）】面试官会追问什么？每个怎么答？
 
 ## A
 - **How did you know it wasn't a regression?**

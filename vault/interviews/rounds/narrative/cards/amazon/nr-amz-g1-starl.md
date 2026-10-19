@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-【G1 · 一个自信的错数字】适用 LP、开场 hook 和 STAR-L 提纲
+【一个自信的错数字】适用 LP、开场 hook 和 STAR-L 提纲
 
 ## A
 - 主 LP：Dive Deep；备用：Insist on the Highest Standards、Earn Trust（对读者负责）。

@@ -8,6 +8,6 @@ step: 15
 Amazon LP「Strive to be Earth's Best Employer」：先用哪个故事？备选是什么？
 
 ## A
-- 先用：**无主故事：M1 做薄支撑**
-- 备选：M1
+- 先用：**无主故事：「新人 onboarding 与带教」 做薄支撑**
+- 备选：「新人 onboarding 与带教」
 - 讲之前先说一句这个 LP 在这里指什么，再进 S/T/A/R/L。

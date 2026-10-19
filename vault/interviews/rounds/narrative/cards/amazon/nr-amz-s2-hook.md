@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-【S2 · Quality-check 框架 + 商户级 ADR（平台化 / 自我纠错）】开场第一句是什么？适用哪些 LP？要报哪些数字？
+【Quality-check 框架 + 商户级 ADR（平台化 / 自我纠错）】开场第一句是什么？适用哪些 LP？要报哪些数字？
 
 ## A
 **I replaced hand-written validation tasks with a config-driven quality gate, then wrote the ADR that overturned the granularity of my own design.**

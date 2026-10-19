@@ -5,15 +5,15 @@ type: qa
 step: 2
 ---
 ## Q
-【G4 · 什么时候信任 LLM：一条判定规则】面试官会追问什么？每个怎么答？
+【什么时候信任 LLM：一条判定规则】面试官会追问什么？每个怎么答？
 
 ## A
 - **Tell me about a time you overrode the tool / didn't trust it.**
-    - G1（38%）、编译失败的 Java 例子、Numba（行为已变）。
-    - 【待补：工作中一次你拒绝了 AI 建议的具体决定，见 R2】
+    - 「一个自信的错数字」（38%）、编译失败的 Java 例子、Numba（行为已变）。
+    - 【待补：工作中一次你拒绝了 AI 建议的具体决定，见 「AI-native 迁移」】
 - **How do you stop a teammate from over-trusting?**
     - 规则放进仓库而不是口头：gate、PR 模板、「AI 写的也要你能解释每一行」。
-    - 【待补：真实带教或 code review 里的做法，见 M1】
+    - 【待补：真实带教或 code review 里的做法，见 「新人 onboarding 与带教」】
 - **What's the failure of your rule?**
     - oracle 本身错（测试和代码同源盲区）→ 变异测试、独立路径对拍。
     - 以及「合理假设上的错误结论」gate 看不见。

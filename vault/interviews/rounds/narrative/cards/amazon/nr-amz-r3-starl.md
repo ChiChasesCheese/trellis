@@ -5,7 +5,7 @@ type: qa
 step: 2
 ---
 ## Q
-【R3 · Aiki / AikiCard（个人消费者产品）】STAR-L 提纲（60–90 秒）
+【Aiki / AikiCard（个人消费者产品）】STAR-L 提纲（60–90 秒）
 
 ## A
 **S**

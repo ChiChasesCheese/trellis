@@ -1,4 +1,4 @@
-# R1 · Quant-Stroller（个人项目：反过拟合的研究平台）
+# Quant-Stroller（个人项目：反过拟合的研究平台）
 
 **Outside work I built a research platform where no strategy goes live until it passes two independent gates, and I log every idea I tried, not just the ones that worked.**
 

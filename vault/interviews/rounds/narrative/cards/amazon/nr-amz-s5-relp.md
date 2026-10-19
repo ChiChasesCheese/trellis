@@ -5,7 +5,7 @@ type: qa
 step: 4
 ---
 ## Q
-【S5 · Net Settlement · interchange 数据源切换（技术决策 + 零回归迁移）】换成别的 LP 问时，强调哪一段？
+【Net Settlement · interchange 数据源切换（技术决策 + 零回归迁移）】换成别的 LP 问时，强调哪一段？
 
 ## A
 - **Ownership**：费用侧最硬的一块；toggle 灰度；窗口化的 ON 风险写在注释里；别说「唯一 owner」

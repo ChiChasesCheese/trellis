@@ -1,8 +1,8 @@
 %% trellis:begin %%
-# R2 · AI-native 迁移：Ruby/Kotlin → Snowflake/Java（Claude Code 工作流）
+# AI-native 迁移：Ruby/Kotlin → Snowflake/Java（Claude Code 工作流）
 *Amazon · LP 故事（STAR-L）*
 
-R2 · AI-native 迁移：Ruby/Kotlin → Snowflake/Java（Claude Code 工作流） 的提纲与追问。
+AI-native 迁移：Ruby/Kotlin → Snowflake/Java（Claude Code 工作流） 的提纲与追问。
 
 ## Cards (4)
 1. [[nr-amz-r2-hook]]

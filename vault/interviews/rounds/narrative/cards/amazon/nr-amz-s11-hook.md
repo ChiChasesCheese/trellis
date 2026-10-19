@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-【S11 · 实习期：Kafka 事件流 · Spring · Spark（广度补充）】开场第一句是什么？适用哪些 LP？要报哪些数字？
+【实习期：Kafka 事件流 · Spring · Spark（广度补充）】开场第一句是什么？适用哪些 LP？要报哪些数字？
 
 ## A
 **As an intern I extended the Kafka-to-Snowflake event path, and I made sure one bad message could never poison the pipeline.**

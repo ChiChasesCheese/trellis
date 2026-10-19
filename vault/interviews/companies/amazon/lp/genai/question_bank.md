@@ -1,6 +1,6 @@
 # GenAI 题库：原题 + 主题 + 变体
 
-- 故事：G1 错数字被抓 · G2 验证机制（senior）· G3 何时不用 / 更慢 · G4 信任判定规则；全文见 [[stories]]，开场 20 秒也在那里。
+- 故事：「一个自信的错数字」 错数字被抓 · 「不依赖 agent 自述的正确性」 验证机制（senior）· 「GenAI 不必要的时候」 何时不用 / 更慢 · 「什么时候信任 LLM」 信任判定规则；全文见 [[stories]]，开场 20 秒也在那里。
 - 要点用英文写（你要说出口的话），中文只做提示。
 - 【待补】= 只有你能提供的真实细节；没有就用已有证据，不编。
 - 被问到没有的经历：用「坦白 + 最近的相邻经历」，见文末。
@@ -8,7 +8,7 @@
 ## A. 原题
 
 ### A1. "How do you use GenAI?"
-- 框架：**开场 20 秒 + G2**
+- 框架：**开场 20 秒 + 「不依赖 agent 自述的正确性」**
   - Two layers: day to day I run Claude Code / Codex / Cursor in parallel — plan with the agent, TDD each phase, CI and monitoring gates decide; in money code I read every diff.
   - On top, I lead agents like a team: one directory each, at most three at a time, an acceptance gate that's a command, and I never accept "done" without re-running it.
   - Concrete: 49 system-design and 45 low-level-design problems built this way, every number re-derived by script. 【待补：一个最近的工作例子，一句话 + 结果】
@@ -25,20 +25,20 @@
 - 追问：
   - Which tools? → Claude Code、Codex、Cursor，各有 usage 上限。
   - What don't you use it for? → 数字、外部系统事实、没有 oracle 的东西。
-  - Show me a time it failed? → G1。
+  - Show me a time it failed? → 「一个自信的错数字」。
 
 ### A3. "How do you use LLMs during development?"
-- 框架：**开场 20 秒 + G4**
-  - Stage by stage: planning (ask it to challenge my design), implementation under TDD, review (a second pass for bugs), test generation, refactoring. Résumé line: Claude Code for code review, test generation and refactoring, behavioral parity through comprehensive tests (R2).
+- 框架：**开场 20 秒 + 「什么时候信任 LLM」**
+  - Stage by stage: planning (ask it to challenge my design), implementation under TDD, review (a second pass for bugs), test generation, refactoring. Résumé line: Claude Code for code review, test generation and refactoring, behavioral parity through comprehensive tests (「AI-native 迁移」).
   - Where I don't: numbers, claims about external systems, anything without an oracle.
   - Always mention the loop: generate cheaply, verify mechanically, own the diff.
 - 追问：
   - How does parity testing work in the migration? → 【待补】
   - What does the review pass catch? → 【待补：一个具体例子】
-  - How do you decide how much to trust it? → G4：oracle × 代价。
+  - How do you decide how much to trust it? → 「什么时候信任 LLM」：oracle × 代价。
 
 ### A4. "How do you use GenAI in your workflow ... how do you validate GenAI's output for correctness?"
-- 框架：**G2**
+- 框架：**「不依赖 agent 自述的正确性」**
   - Validation is a mechanism: an acceptance gate that's a command — reference solution passes, empty starter fails — plus re-deriving every number with a script.
   - The tests get tested too: mutation — a buggy variant that passed all 10 tests exposed a missing assertion; the suite now kills 11/11 mutants.
   - For plain engineering work: compiler and type checks first, then tests, then differential testing against an independent path. 【待补：parity 测试在迁移里具体怎么做】
@@ -48,7 +48,7 @@
   - Who reviews the reviewer? → 另一条独立路径得到同一答案：国际象棋 perft、双向 BFS 对拍普通 BFS。
 
 ### A5. "Can you tell me a time where AI hallucinated and how did you handle it?"
-- 框架：**G1**
+- 框架：**「一个自信的错数字」**
   - Agent wrote a hash-collision probability of 38%; recomputing by script gave certainty (exponent off by six orders of magnitude) — and it had already been copied into a flashcard.
   - Fixed the article, then the card; then made it a rule in the shared instructions: every number computed, an unverifiable number never goes into a card.
   - Name the definition honestly: confident, plausible, unsupported output. Lesson: confidence carries no information, arithmetic is cheap to check.
@@ -59,7 +59,7 @@
   - Did a wrong number reach a learner? → 在卡片发布前被抓到；【待补：是否有已进入 Anki 复习的卡片后来被纠错】
 
 ### A6. "How do you verify whether an AI-generated solution is correct?"
-- 框架：**G2**
+- 框架：**「不依赖 agent 自述的正确性」**
   - Ladder of oracles: compiler/types → tests → differential test against an independent implementation (BFS vs bidirectional BFS on 400 random graphs, zero disagreements) → known values (chess perft depth 4 = 197,281).
   - Then verify the verifier: empty starter must fail; mutants must die.
   - Last, a human read for what machines can't see — a plausible but wrong assumption (gates check shape, reading checks substance).
@@ -69,7 +69,7 @@
   - What did you give up? → 并行度（上限 3）、速度（每个返回都复核）、对 agent 自治的信任；换来可审计。
 
 ### A7. "When do you trust an LLM and when do you not?"
-- 框架：**G4**
+- 框架：**「什么时候信任 LLM」**
   - Two inputs: is there an oracle that can say it's wrong, and what does a wrong answer cost?
   - Oracle + low cost → trust and verify by machine (refactors under green tests, scaffolding). Oracle + high cost (money code) → I still read the diff.
   - No oracle → don't trust: numbers, secondhand sources, security-sensitive logic; build an oracle first or do it myself.
@@ -79,7 +79,7 @@
   - Would you let an agent run unsupervised? → 不：agent 提议，测试裁决，人读 diff；权限由我控制，agent 不能改自己的权限。
 
 ### A8. "Where have you used GenAI and later felt it was unnecessary?"
-- 框架：**G3**
+- 框架：**「GenAI 不必要的时候」**
   - Counting and coverage: deterministic, so a script is the oracle — hand counts were wrong twice, and became a rule.
   - Small fixes: an agent round trip is ~5–6 min and +40–60k tokens, so a one-line fix I make in place.
   - Delegation shape: one agent per problem wasted context; I moved to two per agent, three agents max. Principle: use a model where output is open-ended and checkable.
@@ -92,8 +92,8 @@
 ## B. 常见主题
 
 ### B1. 项目里的 GenAI：hallucination、验证、输入安全、prompt engineering
-- 框架：**G1 + G2 + [[primer]]**
-  - Hallucination → G1; verification → G2.
+- 框架：**「一个自信的错数字」 + 「不依赖 agent 自述的正确性」 + [[primer]]**
+  - Hallucination → 「一个自信的错数字」; verification → 「不依赖 agent 自述的正确性」.
   - Input security: untrusted text in the context window can carry instructions (prompt injection), so least privilege, no secrets in prompts, human approval for side effects.
   - A real guard I added: tests refuse the real Anki client, after a fixture deck once reached the live collection.
 - 追问：
@@ -102,7 +102,7 @@
   - Where does your data go? → 【待补：工作中的做法，只说你确知的】
 
 ### B2. "Why did you choose certain technologies / designs? Trade-offs?"
-- 框架：**G1 + G4**
+- 框架：**「一个自信的错数字」 + 「什么时候信任 LLM」**
   - Tie each tool choice to a constraint (cost, latency, data sensitivity).
   - Name what I gave up (parallelism cap 3, speed of review).
   - One rejected alternative per decision (self-report + spot check; agents reviewing agents).
@@ -112,7 +112,7 @@
   - What did it cost? → 一个问题 8–10 分钟 / 130–145k tokens。
 
 ### B3. 在线测评：用 AI 修有失败测试的仓库
-- 框架：**G2 / G4**
+- 框架：**「不依赖 agent 自述的正确性」 / 「什么时候信任 LLM」**
   - Read the failing tests first — they're the oracle.
   - Make the smallest change, rerun.
   - Don't accept a "fix" that edits the test to pass.
@@ -122,7 +122,7 @@
 
 ### B4. 一场 GenAI 讨论占整轮前 30 分钟或 15 分钟
 - 框架：**全部**
-  - 把 G1–G4 各留 90 秒，余下时间给追问。
+  - 把 「一个自信的错数字」–「什么时候信任 LLM」 各留 90 秒，余下时间给追问。
   - 先问面试官想听「用法」还是「验证」（控场）。
 - 追问：
   - 见各故事。
@@ -140,7 +140,7 @@
 ## C. 变体
 
 ### C1. "Walk me through your end-to-end workflow with an AI coding assistant on a feature."
-- 框架：**开场 + G4**
+- 框架：**开场 + 「什么时候信任 LLM」**
   - Plan first with the agent, in writing; I challenge it and fix the interface and tests before any implementation.
   - Implement phase by phase under TDD; CI and monitoring gates decide, not my impression of the diff.
   - Review: I read every diff for money code; I ask what an oracle can't see (assumptions); each defect becomes a rule.
@@ -150,17 +150,17 @@
   - How long does a phase take? → 【待补】
 
 ### C2. "Tell me about a time AI-generated code had a bug that reached review or production."
-- 框架：**G1（在审查前被拦下）+ 【待补】**
+- 框架：**「一个自信的错数字」（在审查前被拦下）+ 【待补】**
   - Honest framing: the defects were caught at the gate or review step — collision probability, a Java example that did not compile, a Numba claim — none reached a learner.
   - 【待补：PayPal 里有没有 AI 生成的代码在 review / CI 里被拦下的例子】
   - Finish with the mechanism: each defect became a rule.
 - 追问：
-  - Did anything reach production? → 如实：没有；最近的相邻经历是 G1。
+  - Did anything reach production? → 如实：没有；最近的相邻经历是 「一个自信的错数字」。
   - What did the Java example teach? → record 模式里不能写常量，要用 `when` 守卫；编译所有教材示例的 gate 抓到了它。
   - What about Numba? → 0.59 起 `@jit` 不再回退 object 模式，只有 `forceobj=True`；对照文档更正。
 
 ### C3. "How would you roll out coding agents to a team safely?"（senior）
-- 框架：**G2**
+- 框架：**「不依赖 agent 自述的正确性」**
   - Start with the gate, not the tool: a command that says whether a task is done, plus CI.
   - Rules in the repo, not in heads: ownership by directory, a cap on parallelism, "never accept done", every defect becomes an instruction-file rule.
   - Measure: cost per deliverable, rework rate (9 of 45 sent back), cycle time; and a boundary — what agents may not change (permissions, isolation settings).
@@ -170,7 +170,7 @@
   - Has anyone else adopted it? → 【待补：有人采用过就说，没有就别说】
 
 ### C4. "What would you never delegate to an LLM?"
-- 框架：**G4**
+- 框架：**「什么时候信任 LLM」**
   - Anything where a wrong answer is expensive and no oracle exists: money logic without parity tests, security decisions, data-retention and legal calls.
   - Deterministic computation: counts, coverage, arithmetic — use a script.
   - Accountability: the decision to ship. "I own every diff."
@@ -180,7 +180,7 @@
   - Who is accountable? → 我，无论谁写的。
 
 ### C5. "How do you protect sensitive data and defend against prompt injection when using AI tools?"
-- 框架：**G4（爆炸半径）+ [[primer]]**
+- 框架：**「什么时候信任 LLM」（爆炸半径）+ [[primer]]**
   - Data: no secrets or customer data in prompts; public-repo rules (no personal data, no recruiter names); know the tool's retention and training policy.
   - Injection: treat all retrieved or fetched text as untrusted input — it can contain instructions; least privilege for tool calls, human approval for side effects, no agent changing its own permissions.
   - Blast radius, a real example: tests used to be able to write to the live Anki collection, so the real client is now refused in the test config.
@@ -200,7 +200,7 @@
   - How do you decide to upgrade? → 用 eval。
 
 ### C7. "How would you evaluate an LLM feature before launch?"（senior）
-- 框架：**G2 + [[primer]] 评测一节**
+- 框架：**「不依赖 agent 自述的正确性」 + [[primer]] 评测一节**
   - Golden set from real inputs including adversarial cases; a metric per failure mode (correctness, groundedness, refusal, latency, cost).
   - Automatic checks where an oracle exists; human or LLM-judge only where not — calibrate the judge against humans (position and self-preference bias).
   - Regression gate in CI, plus online monitoring and a rollback path.
@@ -210,7 +210,7 @@
   - Offline vs online? → 离线防回归，在线看漂移、成本、延迟。
 
 ### C8. "A teammate keeps shipping AI-generated code they can't explain. What do you do?"（Hire and Develop / Earn Trust）
-- 框架：**G2 / G4 + M1**
+- 框架：**「不依赖 agent 自述的正确性」 / 「什么时候信任 LLM」 + 「新人 onboarding 与带教」**
   - Make the expectation explicit and private first: you own what you ship; if you can't explain a line, you can't merge it.
   - Change the system, not just the person: gates and review checklists that fail on missing tests or unexplained complexity.
   - Coach the habit: pair on one PR, show the "oracle first" loop. 【待补：真实带教例子】
@@ -220,7 +220,7 @@
   - What do you put in the repo? → 门槛：缺测试或无法解释的复杂度，检查失败。
 
 ### C9. "Tell me about a time you disagreed with an AI suggestion — or overrode it."
-- 框架：**G1 / G4**
+- 框架：**「一个自信的错数字」 / 「什么时候信任 LLM」**
   - The agent's number or example was confident and wrong; I trusted the recomputation, not the confidence.
   - State the decision and the rejected option: ship nothing unverified vs speed.
   - Result and mechanism: a rule so the next agent doesn't repeat it. 【待补：工作里一次真实的拒绝】
@@ -230,10 +230,10 @@
   - At work? → 【待补】
 
 ### C10. "What are the cost and latency trade-offs when you build with LLMs?"
-- 框架：**G3 + [[primer]] 成本一节**
+- 框架：**「GenAI 不必要的时候」 + [[primer]] 成本一节**
   - Cost drivers: tokens in and out, model tier, number of calls; from my own builds, ~130k tokens and ~12 min per problem-sized deliverable, whole bank ≈ 6–7M tokens; cheaper models for subagents, the expensive one for review and fallback.
   - Latency: time-to-first-token plus per-token time; reduce with streaming, shorter prompts, caching, parallel calls where independent.
-  - The cheapest call is the one you don't make: deterministic work goes to code (G3).
+  - The cheapest call is the one you don't make: deterministic work goes to code (「GenAI 不必要的时候」).
 - 追问：
   - Why do agent tasks cost more than steps × per-step? → 每步输入含此前全部历史，输入随步数累积。
   - Caching? → 稳定内容放前面；20k 前缀调 100 次，缓存读取价 0.1 倍时约省 89%（示意）。
@@ -241,11 +241,11 @@
 
 ## D. 完全没有经历时
 
-- "I haven't shipped an LLM feature to production users. What I have done is G1–G4: build and operate a multi-agent workflow with explicit verification, and I can describe how I'd extend those controls to a product feature — evals, injection tests, and monitoring."
+- "I haven't shipped an LLM feature to production users. What I have done is 「一个自信的错数字」–「什么时候信任 LLM」: build and operate a multi-agent workflow with explicit verification, and I can describe how I'd extend those controls to a product feature — evals, injection tests, and monitoring."
 
 ## 自测
 
-- 8 个原题里哪个最像 Dive Deep，哪个最像 Frugality？ → "time AI hallucinated"（A5 / G1）像 Dive Deep；"felt it was unnecessary"（A8 / G3）像 Frugality。
+- 8 个原题里哪个最像 Dive Deep，哪个最像 Frugality？ → "time AI hallucinated"（A5 / 「一个自信的错数字」）像 Dive Deep；"felt it was unnecessary"（A8 / 「GenAI 不必要的时候」）像 Frugality。
 - 被问 "How do you verify…" 先说什么？ → 先说 oracle 阶梯（编译器 / 类型 → 测试 → 差分 → 已知值），再说验证验证者（空模板红、变异体死），最后说人读什么；不要先说 "I read the code"。
 - 什么时候该说 "I haven't"？ → 被问到没有真实证据的场景（生产里 AI 代码引发事故、微调模型）；用「坦白 + 最近的相邻经历」，不编。
 

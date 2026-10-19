@@ -5,7 +5,7 @@ type: qa
 step: 4
 ---
 ## Q
-【R3 · Aiki / AikiCard（个人消费者产品）】换成别的 LP 问时，强调哪一段？
+【Aiki / AikiCard（个人消费者产品）】换成别的 LP 问时，强调哪一段？
 
 ## A
 - **Customer Obsession**：4.5+ 评分背后的具体改动；没有用户反馈就别说 obsession

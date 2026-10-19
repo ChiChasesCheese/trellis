@@ -5,7 +5,7 @@ type: qa
 step: 2
 ---
 ## Q
-【S1 · Amex 结算管线（端到端 owner）】STAR-L 提纲（60–90 秒）
+【Amex 结算管线（端到端 owner）】STAR-L 提纲（60–90 秒）
 
 ## A
 **S**

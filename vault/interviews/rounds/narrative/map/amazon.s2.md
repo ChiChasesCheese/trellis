@@ -1,8 +1,8 @@
 %% trellis:begin %%
-# S2 · Quality-check 框架 + 商户级 ADR（平台化 / 自我纠错）
+# Quality-check 框架 + 商户级 ADR（平台化 / 自我纠错）
 *Amazon · LP 故事（STAR-L）*
 
-S2 · Quality-check 框架 + 商户级 ADR（平台化 / 自我纠错） 的提纲与追问。
+Quality-check 框架 + 商户级 ADR（平台化 / 自我纠错） 的提纲与追问。
 
 ## Cards (4)
 1. [[nr-amz-s2-hook]]

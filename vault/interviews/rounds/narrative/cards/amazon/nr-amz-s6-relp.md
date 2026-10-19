@@ -5,7 +5,7 @@ type: qa
 step: 4
 ---
 ## Q
-【S6 · Fee anomaly detector 的 go/no-go（判断力 · 说不 · 分阶段）】换成别的 LP 问时，强调哪一段？
+【Fee anomaly detector 的 go/no-go（判断力 · 说不 · 分阶段）】换成别的 LP 问时，强调哪一段？
 
 ## A
 - **Are Right, A Lot**：生产前就用生产现实检验项目；强调 QA vs 生产量级、风险排序、制度化 gate；别把评估数字当已验证事实

@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-【G3 · 什么时候 GenAI 不必要，或者更慢】适用 LP、开场 hook 和 STAR-L 提纲
+【什么时候 GenAI 不必要，或者更慢】适用 LP、开场 hook 和 STAR-L 提纲
 
 ## A
 - 主 LP：Frugality；备用：Dive Deep（用数据而非印象）、Bias for Action。

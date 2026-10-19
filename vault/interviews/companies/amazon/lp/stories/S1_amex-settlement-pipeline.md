@@ -1,4 +1,4 @@
-# S1 · Amex 结算管线（端到端 owner）
+# Amex 结算管线（端到端 owner）
 
 **I inherited a one-table stub and ran the Amex settlement pipeline end to end for eighteen months.**
 
@@ -61,7 +61,7 @@
 - **How does the AFTER A,B dual-upstream task stay consistent?**
   - `AFTER` 只保证各跑过一次，不保证同一批；**FULL OUTER JOIN** 兜底，错位记一次错误，**下一轮自愈**
 - **Did you ever lose or double-count money?**
-  - 不说 "no accidents"；设计目标是**坏了就记录**；S3 的 ACH 事故在下游，我拥有那次 RCA
+  - 不说 "no accidents"；设计目标是**坏了就记录**；「ACH 费用 NULL 事故」 的 ACH 事故在下游，我拥有那次 RCA
 
 ## 换个 LP 讲
 

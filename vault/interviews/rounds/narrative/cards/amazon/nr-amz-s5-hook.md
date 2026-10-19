@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-【S5 · Net Settlement · interchange 数据源切换（技术决策 + 零回归迁移）】开场第一句是什么？适用哪些 LP？要报哪些数字？
+【Net Settlement · interchange 数据源切换（技术决策 + 零回归迁移）】开场第一句是什么？适用哪些 LP？要报哪些数字？
 
 ## A
 **I turned "will the numbers match?" from an opinion into a query, and shipped the switch dark.**

@@ -5,7 +5,7 @@ type: qa
 step: 3
 ---
 ## Q
-【R2 · AI-native 迁移：Ruby/Kotlin → Snowflake/Java（Claude Code 工作流）】面试官会追问什么？每个怎么答？
+【AI-native 迁移：Ruby/Kotlin → Snowflake/Java（Claude Code 工作流）】面试官会追问什么？每个怎么答？
 
 ## A
 - **How did you verify parity?**

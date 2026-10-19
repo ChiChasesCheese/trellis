@@ -5,7 +5,7 @@ type: qa
 step: 2
 ---
 ## Q
-【G2 · 让正确性不依赖 agent 的自述（senior 机制故事）】面试官会追问什么？每个怎么答？
+【让正确性不依赖 agent 的自述（senior 机制故事）】面试官会追问什么？每个怎么答？
 
 ## A
 - **Why a gate and not just careful reading?**
@@ -30,4 +30,4 @@ step: 2
     - 并行度（硬上限 3）、速度（每个返回都复核）、对 agent 自治的信任；换来可审计。
 - **Would this work at Amazon scale?**
     - 原则可迁移：gate = CI；agent 自述 = PR 描述，不是证据；差分 / 变异测试 = 对测试的测试。
-    - 【待补：PayPal 的对应物，如迁移里的 parity 测试，见 R2】
+    - 【待补：PayPal 的对应物，如迁移里的 parity 测试，见 「AI-native 迁移」】

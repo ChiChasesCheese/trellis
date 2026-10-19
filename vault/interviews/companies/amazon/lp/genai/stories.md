@@ -1,14 +1,14 @@
 # GenAI 故事库：4 个英文 STAR（每个 60–90 秒）
 
 - 口述时主语用 "I set up / I wrote the rule / my review step caught"；被追问时用你自己的真实回忆回答，不编没有的回忆。
-- 日常工作（PayPal）的 AI 使用只讲已有的话：简历一句、S7（[[S7_schema-pool]]）、[[R2_ai-native-migration]]；其余 【待补】。
+- 日常工作（PayPal）的 AI 使用只讲已有的话：简历一句、「schema pool」（[[S7_schema-pool]]）、[[R2_ai-native-migration]]；其余 【待补】。
 
 | # | 故事 | 回答的题 | 主 LP | 副 LP |
 |---|---|---|---|---|
-| G1 | 一个自信的错数字：碰撞概率 38% vs 必然 | a time AI hallucinated | Dive Deep | Highest Standards, Earn Trust |
-| G2 | 让正确性不依赖 agent 自述：验收命令 + 复算 + 变异测试（senior 机制故事） | how do you verify | Insist on the Highest Standards | Invent and Simplify, Ownership |
-| G3 | 什么时候 AI 不必要或更慢：计数用脚本、委派有成本 | where GenAI was unnecessary | Frugality | Dive Deep, Bias for Action |
-| G4 | 信任的判定规则：oracle × 爆炸半径 | when do you trust an LLM | Are Right, A Lot | Ownership, Learn and Be Curious |
+| 「一个自信的错数字」 | 一个自信的错数字：碰撞概率 38% vs 必然 | a time AI hallucinated | Dive Deep | Highest Standards, Earn Trust |
+| 「不依赖 agent 自述的正确性」 | 让正确性不依赖 agent 自述：验收命令 + 复算 + 变异测试（senior 机制故事） | how do you verify | Insist on the Highest Standards | Invent and Simplify, Ownership |
+| 「GenAI 不必要的时候」 | 什么时候 AI 不必要或更慢：计数用脚本、委派有成本 | where GenAI was unnecessary | Frugality | Dive Deep, Bias for Action |
+| 「什么时候信任 LLM」 | 信任的判定规则：oracle × 爆炸半径 | when do you trust an LLM | Are Right, A Lot | Ownership, Learn and Be Curious |
 
 ## 开场 20 秒（回答 "How do you use GenAI?"）
 
@@ -25,7 +25,7 @@
   - 【待补：一句具体的日常例子——最近一次用它做的任务和结果】
 - 边界：schema pool 与 on-call copilot 是个人仓库，相邻团队采用，不是团队官方工具链。
 
-## G1 · 一个自信的错数字
+## 一个自信的错数字
 
 - 主 LP：Dive Deep；备用：Insist on the Highest Standards、Earn Trust（对读者负责）。
 
@@ -69,7 +69,7 @@
   - **What would you do differently?**
     - 在 pilot 之前就把「数字必须脚本复算」写进指令。
 
-## G2 · 让正确性不依赖 agent 的自述（senior 机制故事）
+## 让正确性不依赖 agent 的自述（senior 机制故事）
 
 - 主 LP：Insist on the Highest Standards；备用：Invent and Simplify（机制简单到一条命令）、Ownership、Are Right, A Lot。
 
@@ -117,9 +117,9 @@
     - 并行度（硬上限 3）、速度（每个返回都复核）、对 agent 自治的信任；换来可审计。
   - **Would this work at Amazon scale?**
     - 原则可迁移：gate = CI；agent 自述 = PR 描述，不是证据；差分 / 变异测试 = 对测试的测试。
-    - 【待补：PayPal 的对应物，如迁移里的 parity 测试，见 R2】
+    - 【待补：PayPal 的对应物，如迁移里的 parity 测试，见 「AI-native 迁移」】
 
-## G3 · 什么时候 GenAI 不必要，或者更慢
+## 什么时候 GenAI 不必要，或者更慢
 
 - 主 LP：Frugality；备用：Dive Deep（用数据而非印象）、Bias for Action。
 - 诚实提示：「我最初想让 agent 做」这件事的回忆只有你能确认。
@@ -160,7 +160,7 @@
   - **Isn't that anti-AI?**
     - 不是：把 AI 放在优势区，开放式、可验证；成本 / 延迟取舍见 [[primer]]。
 
-## G4 · 什么时候信任 LLM：一条判定规则
+## 什么时候信任 LLM：一条判定规则
 
 - 主 LP：Are Right, A Lot（判断力 + 找反证）；备用：Ownership、Learn and Be Curious。
 
@@ -190,11 +190,11 @@
   - 无 oracle + 代价高 → 不信任：数字、外部系统事实、安全、权限、二手来源；先造 oracle，或自己做。
 - 追问：
   - **Tell me about a time you overrode the tool / didn't trust it.**
-    - G1（38%）、编译失败的 Java 例子、Numba（行为已变）。
-    - 【待补：工作中一次你拒绝了 AI 建议的具体决定，见 R2】
+    - 「一个自信的错数字」（38%）、编译失败的 Java 例子、Numba（行为已变）。
+    - 【待补：工作中一次你拒绝了 AI 建议的具体决定，见 「AI-native 迁移」】
   - **How do you stop a teammate from over-trusting?**
     - 规则放进仓库而不是口头：gate、PR 模板、「AI 写的也要你能解释每一行」。
-    - 【待补：真实带教或 code review 里的做法，见 M1】
+    - 【待补：真实带教或 code review 里的做法，见 「新人 onboarding 与带教」】
   - **What's the failure of your rule?**
     - oracle 本身错（测试和代码同源盲区）→ 变异测试、独立路径对拍。
     - 以及「合理假设上的错误结论」gate 看不见。
@@ -208,10 +208,10 @@
 
 | LP | 用哪个故事 | 开场一句 |
 |---|---|---|
-| Dive Deep | G1 | "I re-derived the number with a script instead of trusting how confident it sounded." |
-| Insist on the Highest Standards | G2 | "A green suite isn't proof, so I test the tests." |
-| Frugality | G3 | "Where the answer is deterministic, I write ten lines of code instead of prompting." |
-| Are Right, A Lot | G4 | "Trust depends on whether an oracle can say the output is wrong." |
-| Earn Trust | G1（对读者负责） | "I fixed the article first, then the card." |
-| Ownership | G2 / G4 | "I own every diff, whoever or whatever wrote it." |
-| Invent and Simplify | G2 | "One command decides whether a task is done." |
+| Dive Deep | 「一个自信的错数字」 | "I re-derived the number with a script instead of trusting how confident it sounded." |
+| Insist on the Highest Standards | 「不依赖 agent 自述的正确性」 | "A green suite isn't proof, so I test the tests." |
+| Frugality | 「GenAI 不必要的时候」 | "Where the answer is deterministic, I write ten lines of code instead of prompting." |
+| Are Right, A Lot | 「什么时候信任 LLM」 | "Trust depends on whether an oracle can say the output is wrong." |
+| Earn Trust | 「一个自信的错数字」（对读者负责） | "I fixed the article first, then the card." |
+| Ownership | 「不依赖 agent 自述的正确性」 / 「什么时候信任 LLM」 | "I own every diff, whoever or whatever wrote it." |
+| Invent and Simplify | 「不依赖 agent 自述的正确性」 | "One command decides whether a task is done." |

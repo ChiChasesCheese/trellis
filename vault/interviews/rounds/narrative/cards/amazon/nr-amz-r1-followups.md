@@ -5,7 +5,7 @@ type: qa
 step: 3
 ---
 ## Q
-【R1 · Quant-Stroller（个人项目：反过拟合的研究平台）】面试官会追问什么？每个怎么答？
+【Quant-Stroller（个人项目：反过拟合的研究平台）】面试官会追问什么？每个怎么答？
 
 ## A
 - **Why a purged CV?**

@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-【S3 · ACH 费用 NULL 传播事故（最难的 bug · fail loudly）】开场第一句是什么？适用哪些 LP？要报哪些数字？
+【ACH 费用 NULL 传播事故（最难的 bug · fail loudly）】开场第一句是什么？适用哪些 LP？要报哪些数字？
 
 ## A
 **A health check I built paged us because fees were silently missing — I found the cause in minutes, then removed the whole class of bug.**

@@ -5,7 +5,7 @@ type: qa
 step: 2
 ---
 ## Q
-【R1 · Quant-Stroller（个人项目：反过拟合的研究平台）】STAR-L 提纲（60–90 秒）
+【Quant-Stroller（个人项目：反过拟合的研究平台）】STAR-L 提纲（60–90 秒）
 
 ## A
 **S**

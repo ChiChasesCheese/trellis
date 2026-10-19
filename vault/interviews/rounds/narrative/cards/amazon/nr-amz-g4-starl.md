@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-【G4 · 什么时候信任 LLM：一条判定规则】适用 LP、开场 hook 和 STAR-L 提纲
+【什么时候信任 LLM：一条判定规则】适用 LP、开场 hook 和 STAR-L 提纲
 
 ## A
 - 主 LP：Are Right, A Lot（判断力 + 找反证）；备用：Ownership、Learn and Be Curious。

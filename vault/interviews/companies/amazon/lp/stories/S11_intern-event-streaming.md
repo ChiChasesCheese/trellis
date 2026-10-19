@@ -1,4 +1,4 @@
-# S11 · 实习期：Kafka 事件流 · Spring · Spark（广度补充）
+# 实习期：Kafka 事件流 · Spring · Spark（广度补充）
 
 **As an intern I extended the Kafka-to-Snowflake event path, and I made sure one bad message could never poison the pipeline.**
 

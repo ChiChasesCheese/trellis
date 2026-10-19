@@ -5,7 +5,7 @@ type: qa
 step: 4
 ---
 ## Q
-【S11 · 实习期：Kafka 事件流 · Spring · Spark（广度补充）】换成别的 LP 问时，强调哪一段？
+【实习期：Kafka 事件流 · Spring · Spark（广度补充）】换成别的 LP 问时，强调哪一段？
 
 ## A
 - **Learn and Be Curious**：坏消息返回 NULL 的 converter、并行度模型；别声称运维过 Kafka 集群 / K8s，只有部署形态经验

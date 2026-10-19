@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-【M1 · Onboarding doc + 带新人 + 标准传播（Hire and Develop 的唯一素材）】开场第一句是什么？适用哪些 LP？要报哪些数字？
+【Onboarding doc + 带新人 + 标准传播（Hire and Develop 的唯一素材）】开场第一句是什么？适用哪些 LP？要报哪些数字？
 
 ## A
 **I raise the bar by defining the contract first and reviewing designs by how downstream consumes them; I can't claim a code-review trail, so here is what I actually did.**

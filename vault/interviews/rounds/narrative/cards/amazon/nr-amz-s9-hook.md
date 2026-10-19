@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-【S9 · Amex 出款延迟事故（事故指挥里的领域权威）】开场第一句是什么？适用哪些 LP？要报哪些数字？
+【Amex 出款延迟事故（事故指挥里的领域权威）】开场第一句是什么？适用哪些 LP？要报哪些数字？
 
 ## A
 **A large marketplace merchant reported about four million dollars of Amex payouts "missing"; I was named one of three fix owners and separated expected latency from the real regression.**

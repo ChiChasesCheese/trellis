@@ -1,4 +1,4 @@
-# S4 · AU Amex 退款费（用一条查询结束 50 条回复）
+# AU Amex 退款费（用一条查询结束 50 条回复）
 
 **A product manager's escalation bounced through three teams for 50 replies; I ended it the same day with one query anyone could re-run.**
 

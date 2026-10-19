@@ -5,7 +5,7 @@ type: qa
 step: 3
 ---
 ## Q
-【S10 · 退款费 billing-terms 复盘（推翻自己的数字）】面试官会追问什么？每个怎么答？
+【退款费 billing-terms 复盘（推翻自己的数字）】面试官会追问什么？每个怎么答？
 
 ## A
 - **How did you discover the predicate was wrong?**

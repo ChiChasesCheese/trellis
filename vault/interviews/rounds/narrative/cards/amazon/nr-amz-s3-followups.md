@@ -5,7 +5,7 @@ type: qa
 step: 3
 ---
 ## Q
-【S3 · ACH 费用 NULL 传播事故（最难的 bug · fail loudly）】面试官会追问什么？每个怎么答？
+【ACH 费用 NULL 传播事故（最难的 bug · fail loudly）】面试官会追问什么？每个怎么答？
 
 ## A
 - **What did you decide vs. the team?**

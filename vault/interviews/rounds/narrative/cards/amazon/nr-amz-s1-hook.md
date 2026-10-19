@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-【S1 · Amex 结算管线（端到端 owner）】开场第一句是什么？适用哪些 LP？要报哪些数字？
+【Amex 结算管线（端到端 owner）】开场第一句是什么？适用哪些 LP？要报哪些数字？
 
 ## A
 **I inherited a one-table stub and ran the Amex settlement pipeline end to end for eighteen months.**

@@ -1,4 +1,4 @@
-# S9 · Amex 出款延迟事故（事故指挥里的领域权威）
+# Amex 出款延迟事故（事故指挥里的领域权威）
 
 **A large marketplace merchant reported about four million dollars of Amex payouts "missing"; I was named one of three fix owners and separated expected latency from the real regression.**
 

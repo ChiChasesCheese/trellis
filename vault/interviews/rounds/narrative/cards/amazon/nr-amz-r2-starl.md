@@ -5,7 +5,7 @@ type: qa
 step: 2
 ---
 ## Q
-【R2 · AI-native 迁移：Ruby/Kotlin → Snowflake/Java（Claude Code 工作流）】STAR-L 提纲（60–90 秒）
+【AI-native 迁移：Ruby/Kotlin → Snowflake/Java（Claude Code 工作流）】STAR-L 提纲（60–90 秒）
 
 ## A
 **S**

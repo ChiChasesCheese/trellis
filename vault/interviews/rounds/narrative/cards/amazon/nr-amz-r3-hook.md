@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-【R3 · Aiki / AikiCard（个人消费者产品）】开场第一句是什么？适用哪些 LP？要报哪些数字？
+【Aiki / AikiCard（个人消费者产品）】开场第一句是什么？适用哪些 LP？要报哪些数字？
 
 ## A
 **I built and shipped two learning products on my own; the iOS app holds a 4.5-plus App Store rating.**
@@ -14,7 +14,7 @@ step: 1
 
 - 主：**Customer Obsession**（仅在「用户可见产品」意义上）
 - 副：Ownership、Learn and Be Curious、Invent and Simplify、Deliver Results
-- 薄：只在被问 "customer" 且工作故事（S4/S9）已讲过时，作为第二个客户例子；不要让它成为 Customer Obsession 的主力
+- 薄：只在被问 "customer" 且工作故事（「澳洲 Amex 退款费」/S9）已讲过时，作为第二个客户例子；不要让它成为 Customer Obsession 的主力
 
 **数字**
 

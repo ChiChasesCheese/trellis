@@ -1,8 +1,8 @@
 %% trellis:begin %%
-# S6 · Fee anomaly detector 的 go/no-go（判断力 · 说不 · 分阶段）
+# Fee anomaly detector 的 go/no-go（判断力 · 说不 · 分阶段）
 *Amazon · LP 故事（STAR-L）*
 
-S6 · Fee anomaly detector 的 go/no-go（判断力 · 说不 · 分阶段） 的提纲与追问。
+Fee anomaly detector 的 go/no-go（判断力 · 说不 · 分阶段） 的提纲与追问。
 
 ## Cards (4)
 1. [[nr-amz-s6-hook]]

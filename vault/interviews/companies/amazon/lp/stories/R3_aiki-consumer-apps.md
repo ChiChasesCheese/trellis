@@ -1,4 +1,4 @@
-# R3 · Aiki / AikiCard（个人消费者产品）
+# Aiki / AikiCard（个人消费者产品）
 
 **I built and shipped two learning products on my own; the iOS app holds a 4.5-plus App Store rating.**
 
@@ -6,7 +6,7 @@
 
 - 主：**Customer Obsession**（仅在「用户可见产品」意义上）
 - 副：Ownership、Learn and Be Curious、Invent and Simplify、Deliver Results
-- 薄：只在被问 "customer" 且工作故事（S4/S9）已讲过时，作为第二个客户例子；不要让它成为 Customer Obsession 的主力
+- 薄：只在被问 "customer" 且工作故事（「澳洲 Amex 退款费」/S9）已讲过时，作为第二个客户例子；不要让它成为 Customer Obsession 的主力
 
 ## 数字
 
@@ -69,7 +69,7 @@
 - 【待补：一个取舍，例如本地存储 + CloudKit 同步】
 - 【待补：用自己的话讲 SM-2、CloudKit 冲突、o3 成本与质量控制】
 - 【待补：先做什么、为什么；What I'd do differently】
-- 【待补：补不出用户证据就放弃本故事，Customer Obsession 用 S4 / S9 / S3】
+- 【待补：补不出用户证据就放弃本故事，Customer Obsession 用 「澳洲 Amex 退款费」 / 「Amex 出款延迟事故」 / 「ACH 费用 NULL 事故」】
 
 <details><summary>逐字稿</summary>
 

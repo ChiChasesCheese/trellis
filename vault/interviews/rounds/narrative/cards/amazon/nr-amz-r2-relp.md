@@ -5,7 +5,7 @@ type: qa
 step: 4
 ---
 ## Q
-【R2 · AI-native 迁移：Ruby/Kotlin → Snowflake/Java（Claude Code 工作流）】换成别的 LP 问时，强调哪一段？
+【AI-native 迁移：Ruby/Kotlin → Snowflake/Java（Claude Code 工作流）】换成别的 LP 问时，强调哪一段？
 
 ## A
 - **Bias for Action**："AI let me move quickly, with tests deciding."：全面测试保 parity、每阶段 TDD；别说成「AI 做的」

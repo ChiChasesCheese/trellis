@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-【S4 · AU Amex 退款费（用一条查询结束 50 条回复）】开场第一句是什么？适用哪些 LP？要报哪些数字？
+【AU Amex 退款费（用一条查询结束 50 条回复）】开场第一句是什么？适用哪些 LP？要报哪些数字？
 
 ## A
 **A product manager's escalation bounced through three teams for 50 replies; I ended it the same day with one query anyone could re-run.**

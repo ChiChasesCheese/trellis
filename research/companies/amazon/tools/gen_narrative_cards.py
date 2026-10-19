@@ -74,10 +74,11 @@ for p in sorted((LP / "stories").glob("*.md"), key=lambda p: story_order(p.stem)
 
 # --- GenAI stories G1–G4
 g = (LP / "genai/stories.md").read_text(encoding="utf-8")
-for m in re.finditer(r"^## (G\d) · (.+?)\n(.*?)(?=^## |\Z)", g, re.S | re.M):
-    gid, gtitle, body = m.group(1), m.group(2).strip(), m.group(3)
+genai = [m for m in re.finditer(r"^## (.+?)\n(.*?)(?=^## |\Z)", g, re.S | re.M) if "S · Situation" in m.group(2)]
+for n, m in enumerate(genai, start=1):
+    gid, gtitle, body = f"G{n}", re.sub(r"^G\d · ", "", m.group(1).strip()), m.group(2)
     leaf = f"amazon.{gid.lower()}"
-    title = f"{gid} · {gtitle}"
+    title = gtitle
     leaves.append((leaf, title))
     main_part, _, follow = body.partition("\n- 追问：")
     main_part = re.split(r"\n- 可选", main_part)[0]

@@ -5,7 +5,7 @@ type: qa
 step: 2
 ---
 ## Q
-【S8 · Terraform grant-ownership 7 分钟 RCA（压力下 debug · 主动指出下一个雷）】STAR-L 提纲（60–90 秒）
+【Terraform grant-ownership 7 分钟 RCA（压力下 debug · 主动指出下一个雷）】STAR-L 提纲（60–90 秒）
 
 ## A
 **S**

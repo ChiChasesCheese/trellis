@@ -1,4 +1,4 @@
-# S8 · Terraform grant-ownership 7 分钟 RCA（压力下 debug · 主动指出下一个雷）
+# Terraform grant-ownership 7 分钟 RCA（压力下 debug · 主动指出下一个雷）
 
 **A release failed in QA; I was only cc'd, posted the root cause and fix seven minutes later, then scanned the whole repo and flagged the next two failures.**
 

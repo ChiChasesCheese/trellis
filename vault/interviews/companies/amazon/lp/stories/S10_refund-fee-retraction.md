@@ -1,4 +1,4 @@
-# S10 · 退款费 billing-terms 复盘（推翻自己的数字）
+# 退款费 billing-terms 复盘（推翻自己的数字）
 
 **My first blast-radius query said 196K rows; before anyone acted I found the predicate was wrong, retracted it myself, and the real number was 21,923.**
 

@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-【R1 · Quant-Stroller（个人项目：反过拟合的研究平台）】开场第一句是什么？适用哪些 LP？要报哪些数字？
+【Quant-Stroller（个人项目：反过拟合的研究平台）】开场第一句是什么？适用哪些 LP？要报哪些数字？
 
 ## A
 **Outside work I built a research platform where no strategy goes live until it passes two independent gates, and I log every idea I tried, not just the ones that worked.**

@@ -5,7 +5,7 @@ type: qa
 step: 3
 ---
 ## Q
-【S7 · schema pool（主动性 · 开发者效率 · AI fluency）】面试官会追问什么？每个怎么答？
+【schema pool（主动性 · 开发者效率 · AI fluency）】面试官会追问什么？每个怎么答？
 
 ## A
 - **Why GitHub Deployments API, not tags?**

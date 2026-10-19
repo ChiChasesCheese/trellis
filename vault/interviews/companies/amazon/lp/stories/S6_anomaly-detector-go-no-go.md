@@ -1,4 +1,4 @@
-# S6 · Fee anomaly detector 的 go/no-go（判断力 · 说不 · 分阶段）
+# Fee anomaly detector 的 go/no-go（判断力 · 说不 · 分阶段）
 
 **I inherited a departing intern's ML detector that had only run in QA, and instead of momentum I wrote a go/no-go that split it into a safe SQL phase and a gated ML phase.**
 

@@ -5,7 +5,7 @@ type: qa
 step: 4
 ---
 ## Q
-【S2 · Quality-check 框架 + 商户级 ADR（平台化 / 自我纠错）】换成别的 LP 问时，强调哪一段？
+【Quality-check 框架 + 商户级 ADR（平台化 / 自我纠错）】换成别的 LP 问时，强调哪一段？
 
 ## A
 - **Invent and Simplify**：加校验从 "write a task, review, deploy" 变成 "insert a row"；别把 ADR 状态说成已上线

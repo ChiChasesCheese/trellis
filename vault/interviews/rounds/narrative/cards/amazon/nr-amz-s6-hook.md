@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-【S6 · Fee anomaly detector 的 go/no-go（判断力 · 说不 · 分阶段）】开场第一句是什么？适用哪些 LP？要报哪些数字？
+【Fee anomaly detector 的 go/no-go（判断力 · 说不 · 分阶段）】开场第一句是什么？适用哪些 LP？要报哪些数字？
 
 ## A
 **I inherited a departing intern's ML detector that had only run in QA, and instead of momentum I wrote a go/no-go that split it into a safe SQL phase and a gated ML phase.**

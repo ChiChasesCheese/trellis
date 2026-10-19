@@ -5,7 +5,7 @@ type: qa
 step: 3
 ---
 ## Q
-【R3 · Aiki / AikiCard（个人消费者产品）】面试官会追问什么？每个怎么答？
+【Aiki / AikiCard（个人消费者产品）】面试官会追问什么？每个怎么答？
 
 ## A
 - **Who are your users and how many?**

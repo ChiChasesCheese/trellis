@@ -5,7 +5,7 @@ type: qa
 step: 4
 ---
 ## Q
-【M1 · Onboarding doc + 带新人 + 标准传播（Hire and Develop 的唯一素材）】换成别的 LP 问时，强调哪一段？
+【Onboarding doc + 带新人 + 标准传播（Hire and Develop 的唯一素材）】换成别的 LP 问时，强调哪一段？
 
 ## A
 - **Hire and Develop the Best**：契约先行、onboarding doc、接手实习生项目；别编 1:1、别编 PR review
