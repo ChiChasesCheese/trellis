@@ -14,7 +14,7 @@ loop/rounds/<轮次>/<id>/cpp/
   cases/*.in|out  main.cpp 的端到端样例
 ```
 
-目前有 C++ 版的：`oa01_job_chain`、`hc02_merge_k_streams`、`hc03_recursive_sum`、`hc04_queue_mean_snapshot`、`hc05_market_order_book`、`hc07_ticker_hash_map`。
+目前所有编码题都有 C++ 版：oa01、hc01–hc09、hc11、hc13。
 
 ## 命令（在 kit 根目录跑）
 

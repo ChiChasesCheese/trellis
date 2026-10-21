@@ -12,7 +12,7 @@
 | **背景问题**：怎么问 → 故事 → 题库 → 练习 | [behavioral/00_how_it_works.md](behavioral/00_how_it_works.md) · `behavioral/stories/` · [behavioral/question_bank.md](behavioral/question_bank.md) · [behavioral/drill.md](behavioral/drill.md) |
 | **C++ 课本**（16 课，从 Java 讲到 C++） | [study/20-cpp/README.md](study/20-cpp/README.md) |
 | **C++ 语言深度题**（44 题 + 速查表） | [kq_cpp_depth/questions.md](loop/rounds/01_video/kq_cpp_depth/questions.md) · [cheatsheet.md](loop/rounds/01_video/kq_cpp_depth/cheatsheet.md) |
-| **编码题**（Java 15 题，其中 6 题另有 C++ 版） | `loop/rounds/<轮次>/<题>/`；讲义在 `study/30-articles/`（`_cpp.md` 是 C++ 版） |
+| **编码题**（Java 15 题，其中 12 题另有 C++ 版） | `loop/rounds/<轮次>/<题>/`；讲义在 `study/30-articles/`（`_cpp.md` 是 C++ 版） |
 | Java 21 课本 / 基础课本 | [study/10-java21/README.md](study/10-java21/README.md) · [study/00-foundations/README.md](study/00-foundations/README.md) |
 | Java 语言深度题 | [kq_language_depth/questions.md](loop/rounds/01_video/kq_language_depth/questions.md) |
 | 公司是做什么的 / 简历对 JD / 反问 | [01-company-brief.md](01-company-brief.md) · [fit.md](fit.md) · [06-questions-to-ask.md](06-questions-to-ask.md) |
@@ -49,16 +49,16 @@ python3 tools/cpptest.py run   loop/rounds/01_video/hc03_recursive_sum --tag par
 | 题 | 内容 | C++ 版 |
 |---|---|---|
 | oa01 | Job chain 报表（你过了的 OA） | ✅ |
-| hc01 | 买卖股票 DP 家族 | — |
+| hc01 | 买卖股票 DP 家族 | ✅ |
 | hc02 | 合并 K 路有序流 → 多线程 | ✅ |
 | hc03 | 递归求和 → 溢出 / 栈深度 / 并行 | ✅ |
 | hc04 | 带快照的 queue mean → 单写多读 | ✅ |
 | hc05 | 订单簿 + 撮合 + 零分配 | ✅ |
-| hc06 | 32 位寄存器位运算 | — |
+| hc06 | 32 位寄存器位运算 | ✅ |
 | hc07 | ticker 哈希表优化 | ✅ |
-| hc08 | 订单序列 API（树状数组） | — |
-| hc09 | Top-K 成交额 | — |
-| hc11 | 订单区间最大重叠 | — |
-| hc13 | 固定大小内存池 | — |
+| hc08 | 订单序列 API（树状数组） | ✅ |
+| hc09 | Top-K 成交额 | ✅ |
+| hc11 | 订单区间最大重叠 | ✅ |
+| hc13 | 固定大小内存池 | ✅ |
 | ld01–ld03 | SPSC 通道 / 交易 OOD / 异步 TCP 通道 | — |
 | sd01–sd03 | 无用代码分析 / 定时任务调度 / 低延迟交易系统 | — |
