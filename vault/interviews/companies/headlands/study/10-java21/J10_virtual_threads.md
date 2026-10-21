@@ -143,7 +143,6 @@ try { return gateway.fetch(sym); } finally { inFlight.release(); }
 
 * **虚拟线程**（virtual thread）：一个普通 Java 对象（`java.lang.VirtualThread`），装着「一段可暂停的执行」。
 * **载体线程**（carrier thread）：真正的 OS 线程，数量很少，默认等于核数，属于一个专用 `ForkJoinPool`（调度器）。`J10Ex1` 的输出能直接看到：
-  从 `J10Ex1` 的输出里能直接看见这个关系：
 
 ```
   running in VirtualThread[#20,v-1]/runnable@ForkJoinPool-1-worker-1  isVirtual=true  daemon=true

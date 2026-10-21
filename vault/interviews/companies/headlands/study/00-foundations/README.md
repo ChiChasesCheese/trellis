@@ -40,7 +40,7 @@
 
 | 文件 | 对应章节 | 做什么 |
 |---|---|---|
-| [`ComplexityDemo.java`](examples/ComplexityDemo.java) | ① | 数比较次数、模拟扩容复制量（验证摊还）、`HashMap`/`TreeMap` 单次操作耗时、O(n²) 实测吞吐 |
+| [`ComplexityDemo.java`](examples/ComplexityDemo.java) | ① | 数比较次数、模拟扩容复制量（验证摊还）、`HashMap`/`TreeMap` 单次操作耗时、O(n²) 吞吐 |
 | [`HeapDemo.java`](examples/HeapDemo.java) | ② | 手写 int 小根堆并打印每次交换；建堆 vs 逐个插入的交换次数；`PriorityQueue` 各种坑的复现 |
 | [`TreeDemo.java`](examples/TreeDemo.java) | ③ | 普通 BST 的高度实验、40 行跳表、`TreeMap`/`ConcurrentSkipListMap` 导航 API |
 | [`CacheDemo.java`](examples/CacheDemo.java) | ④ | 6 组微基准：`long[]` vs `ArrayList<Long>`、步长、行/列优先、指针追逐延迟阶梯、分支预测、AoS vs SoA、伪共享 |

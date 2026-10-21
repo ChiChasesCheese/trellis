@@ -630,4 +630,4 @@ public class RangeSum {
 
 ---
 
-「延伸」下一章：CPU 缓存与局部性（`cpu_cache_locality.md`）。
+「延伸」下一章：CPU 缓存与局部性。

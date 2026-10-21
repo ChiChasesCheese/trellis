@@ -359,7 +359,7 @@ h = log n (根)     1 个           下沉最多 log n 步
 
 **对比**（`HeapDemo` A3，n = 10⁶ 个随机 int，数交换次数）：
 
-**实测对比**（`HeapDemo` A3，n = 10⁶ 个随机 int，数交换次数）：
+**对比**（`HeapDemo` A3，n = 10⁶ 个随机 int，数交换次数）：
 
 ```text
 heapify (sift-down from n/2-1): 744,070 swaps  (0.74 per element)
@@ -395,7 +395,7 @@ n x add (sift-up)             : 1,280,829 swaps  (1.28 per element)
 
 反直觉：**找最大的 k 个要用小根堆**——堆顶是「当前 k 个里最小的」，也就是「下一个被淘汰的候选」，新来者只要比它大就能挤掉它。
 
-### 6.2 K 路归并（hc02 的核心）
+### 6.2 K 路归并（合并多路有序流的核心）
 
 K 条已排序的流，堆里放 K 个元素（每条流当前的队头）。反复：`poll` 出最小的 → 输出 → 把这条流的下一个元素 `offer` 进去。每输出一个 O(log K)，总共 O(N log K)。
 
@@ -716,4 +716,4 @@ public class Q6 {
 
 ---
 
-「延伸」下一章：有序映射与树（`ordered_maps_trees.md`）。
+「延伸」下一章：有序映射与树（红黑树、跳表、`TreeMap`）。

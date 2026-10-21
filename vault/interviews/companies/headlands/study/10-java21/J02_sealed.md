@@ -322,8 +322,8 @@ sealed 管的是「**类型**有几种」，不管「对象的字段能不能改
 2. `final`：到此为止（最常见）；`sealed`：这一层还要继续分几种；`non-sealed`：特意在此处留扩展点。record 与 enum 语言规定隐式 `final`，不用写。
 3. 如果 `sealed class Option` 不是 `abstract`，`new Option()` 合法，所以 `Option` 本身是一个具体变体。
    `switch` 若只有 `case CallOption`、`case PutOption`，编译器报 `the switch expression does not cover all possible input values`，要么补 `case Option`，要么把 `Option` 改成 `abstract`。
-4. 证据一：class 文件有 `PermittedSubclasses` 属性，`javap -v` 能看到；反射 `Class.isSealed()` / `getPermittedSubclasses()` 返回真值。
-   证据二：绕过 javac，让一个不在名单里的子类被加载，JVM 抛 `IncompatibleClassChangeError: class Y cannot implement sealed interface S`。
+4. 一，class 文件有 `PermittedSubclasses` 属性，`javap -v` 能看到；反射 `Class.isSealed()` / `getPermittedSubclasses()` 返回真值。
+   二，绕过 javac，让一个不在名单里的子类被加载，JVM 抛 `IncompatibleClassChangeError: class Y cannot implement sealed interface S`。
 5. 需要让使用者（别的团队、插件、测试替身）自己提供实现的场合，比如 `Comparator`、`Runnable`、`Handler`；以及变体很多且经常新增时。sealed 适合「变体由你控制、几乎不变」的场合。
 
 </details>

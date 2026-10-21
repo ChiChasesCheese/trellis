@@ -2,7 +2,7 @@
 
 > 配套代码：[`examples/IpcDemo.java`](examples/IpcDemo.java)（系统调用开销、线程切换往返时间、内存映射文件、**一个跑在共享内存上的 SPSC 环形缓冲**，含跨两个 JVM 进程的版本）。
 > 前置：缓存一致性、伪共享（缓存一章）。
-> 本章默认讲 Linux 语义；实验机器是 macOS，实测数字可能与 Linux 不同的地方都会注明。
+> 本章默认讲 Linux 语义；实验机器是 macOS，实验数字可能与 Linux 不同的地方都会注明。
 > **运行方式**：`java` 要加 `--enable-preview --enable-native-access=ALL-UNNAMED`（`java.lang.foreign` 在 JDK 21 是预览 API，见 6.3）。
 
 ---
@@ -712,4 +712,4 @@ static boolean offerSpin(Ring ring, long v, int maxSpins) {
 
 ---
 
-「延伸」下一章：网络基础（`networking_basics.md`）。
+「延伸」下一章：网络基础。
