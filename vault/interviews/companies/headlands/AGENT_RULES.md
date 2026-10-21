@@ -16,7 +16,20 @@ Repo `/Users/chiserver/sessions/trellis`, branch `headlands-v2` (checked out; ne
   IPC/shared memory) now apply **as asked**, not only as Java translations.
 - The repo is public: never write names, email content, meeting or CoderPad links.
 
-## House rules (same as the Amazon kit)
+## CORE RULE (Chi, 2026-10-20) — overrides everything below
+
+「最核心的要求是 必须简洁 教程级别 不要引用源等无关内容 每个文章自包含全部信息」
+
+Every learner-facing file (lessons, lectures, stories, question banks, guides, README):
+- **Concise, tutorial level.** Teach the idea → show code → pitfalls → self-check. Cut everything that doesn't teach.
+- **No sources or meta**: no URLs, no 来源/证据/推断/(reconstructed)/置信度 labels, no forum ids, no commit hashes,
+  no "measured on this machine" provenance chatter, no mention of agents, gates or how the file was made.
+  (A number may appear; its provenance does not.)
+- **Self-contained**: each article contains every definition, code snippet and fact it needs. Do not write
+  "see C03" / "见 xxx.md" as a substitute for explaining; at most one optional 「延伸」 line at the end.
+- Evidence still matters — it lives only in `catalog/raw/` and agent-facing files, never in articles.
+
+## House rules (same as the Amazon kit, subject to the CORE RULE)
 
 - **Textbook mode** (`study/TEXTBOOK.md`): Chi says fundamentals are rusty — from zero, causes and effects, worked examples,
   self-checks with answers in `<details>`. Chinese with English terms in parentheses; anything Chi says aloud is English.
