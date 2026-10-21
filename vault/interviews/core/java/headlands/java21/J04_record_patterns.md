@@ -80,7 +80,7 @@ if (o instanceof Point(long x, long y)) {      // 子模式：long x, long y
 | 子模式 | 例子 | 含义 |
 |---|---|---|
 | 类型模式（带显式类型） | `Point(long x, long y)` | 组件的类型必须兼容，绑定到 `x` |
-| `var` 模式 | `Point(var x, var y)` | 类型由编译器推断为组件的声明类型 |
+| `var` 模式 | `Point(var x, var y)` | 类型由编译器推导为组件的声明类型 |
 | 嵌套的 record 模式 | `Value(Mean(var n, var d))` | 再拆一层 |
 | 零组件 record | `Empty()` | 括号里什么都没有 |
 

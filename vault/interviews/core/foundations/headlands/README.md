@@ -2,7 +2,7 @@
 
 > 每个概念回答四个问题：是什么 / 为什么需要 / 怎么工作 / Java 里怎么写；配 ASCII 图、手算例子、自测题（答案折叠在 `<details>` 里）。
 > 读者设定：会写基本 Java，数据结构、复杂度、操作系统、网络都从头讲。
-> 目标场景：Java Software Engineer，岗位强调 performance、Linux、networking、distributed storage；下一轮是一小时的技术视频面试。
+> 目标场景：Java Software Engineer，岗位强调 performance、Linux、networking、distributed storage；面试形式是一小时的技术视频面试。
 
 ## 阅读顺序
 

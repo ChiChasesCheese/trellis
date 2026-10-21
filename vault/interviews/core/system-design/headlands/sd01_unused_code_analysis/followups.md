@@ -10,7 +10,7 @@
 **思考**：这是静态分析的天花板问题。不要说「处理不了」，要说「分类、保守、记录 blocker、从失败中学习」。
 **要点**：
 1. 把动态入口**建模成规则化的根**：Spring 注解（`@Component`、`@Bean`、`@Scheduled`）、`META-INF/services`、`readObject/readResolve`、Jackson / Protobuf 反射字段、JNI 导出名。
-2. **字符串命中当弱根**：常量池 + 仓库文本文件里出现该类 FQN → 记为 blocker，降低置信度，不直接保活（避免过度保守）。
+2. **字符串命中当弱根**：常量池 + 仓库文本文件里出现该类 FQN → 记为 blocker，降低可信度，不直接保活（避免过度保守）。
 3. **输出里写 blocker**，让审阅者知道这条为什么是 MEDIUM。
 4. **闭环学习**：owner 拒绝某个候选并说"其实是被 X 机制用的"→ 新增一条根规则，下次所有同类自动受保护。
 5. 动态证据兜底（类是否在生产加载过）。
@@ -74,7 +74,7 @@
 
 ## F12 多语言（Java + C++ + Python + 脚本）怎么统一？
 
-**要点**：统一符号 ID 与图格式（Kythe / SCIP 的思想），各语言有自己的索引器；跨语言边：JNI（符号名规则）、IDL（protobuf / SBE）、脚本与配置（字符串命中）；C++ 免费证据：链接器 `--gc-sections --print-gc-sections`；Python 动态强，置信度整体降一级；覆盖率不够则不下结论。
+**要点**：统一符号 ID 与图格式（Kythe / SCIP 的思想），各语言有自己的索引器；跨语言边：JNI（符号名规则）、IDL（protobuf / SBE）、脚本与配置（字符串命中）；C++ 免费证据：链接器 `--gc-sections --print-gc-sections`；Python 动态强，可信度整体降一级；覆盖率不够则不下结论。
 **可以说**：「各语言一个索引器，一个图格式；跨语言边靠命名规则和 IDL，缺口 fail closed。」
 
 ## F13 多个构建配置（`#ifdef`、Maven profile、平台专用代码）？

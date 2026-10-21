@@ -45,7 +45,7 @@ static final class Fill {
 
 ### 样板为什么必须存在
 
-`private final` 字段保证值稳定；构造器一次设好所有字段；getter 让外部读到私有字段；默认 `equals` 是**引用比较**（内容相同也不等）；默认 `toString` 输出 `J01Old$Fill@1b6d3586`，看不出内容；`hashCode` 的坑见下。
+`private final` 字段保证值稳定；构造器一次设好所有字段；getter 让外部读到私有字段；默认 `equals` 是**引用比较**（内容相同也不等）；默认 `toString` 输出 `J01Old$Fill@1b6…86`，看不出内容；`hashCode` 的坑见下。
 
 最阴险的是 `equals`/`hashCode`。`J01Old.java` 里有个忘记重写它们的 `ForgetfulFill`：
 

@@ -143,7 +143,7 @@ interface Validator<T> {
 * **`comparingLong` vs `comparing`**：`comparing(Order::px)` 的键是 `Long` 装箱对象，每次比较两次装箱（小值有缓存，大值分配）；`comparingLong` 直接比 `long`，**热路径用基本类型版本**。
 * **default 方法的实现**：不是把代码复制到每个实现类。JVM 方法解析时按 2.5 的规则查找：先类层级，再接口；`invokeinterface` 调到实现类后，类里找不到就用接口的 default。
 * **排序算法**：对象数组/`List.sort` 用 **TimSort**，**稳定**（相等元素保持原相对顺序，例 1 第 7 行）；`Arrays.sort(int[])` 用 Dual-Pivot Quicksort，不稳定但对基本类型无所谓。TimSort 检测到违反契约会抛异常（不保证每次都检测到）。
-* **类型推断盲区**：`Comparator.comparing(p -> p.name()).reversed()`——lambda 参数 `p` 被推断成 `Object`，编译失败：
+* **类型推断盲区**：`Comparator.comparing(p -> p.name()).reversed()`——lambda 参数 `p` 被推导成 `Object`，编译失败：
 
 ```
 error: cannot find symbol

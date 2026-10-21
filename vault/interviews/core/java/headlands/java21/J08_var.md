@@ -97,10 +97,10 @@ static int b() { HashMap<String, List<Integer>> m = new HashMap<String, List<Int
 
 用 `javac -g` 编译后 `javap -c -l` 对比：14 条字节码指令**逐条相同**，`LocalVariableTable` 也相同（`m  Ljava/util/HashMap;`）。`var` 在 class 文件里不留痕迹，性能和调试器所见与手写类型一样；它也不会让代码变快变慢，纯粹是可读性问题。
 
-### 推断规则的几个细节
+### 推导规则的几个细节
 
 1. **字面量默认类型**：`var a = 18_950;` 是 `int`，`18_950L` 是 `long`，`1.5` 是 `double`，`'x'` 是 `char`。（`J08Ex2` 用 `getClass()` 看到的是装箱类型 `Integer Long Double Character`。）
-2. **推断的是「右边表达式的静态类型」，不是你心里想的类型**：`var list = new ArrayList<Fill>();` 是 `ArrayList<Fill>`，**不是** `List<Fill>`。想限制成接口（限制可调用方法、方便换实现）就显式写 `List<Fill> list = new ArrayList<>();`。
+2. **推导的是「右边表达式的静态类型」，不是你心里想的类型**：`var list = new ArrayList<Fill>();` 是 `ArrayList<Fill>`，**不是** `List<Fill>`。想限制成接口（限制可调用方法、方便换实现）就显式写 `List<Fill> list = new ArrayList<>();`。
 3. **diamond 与 `var` 同用会退化**：`var list = new ArrayList<>();` 右边无类型信息可推 `<>`，结果是 `ArrayList<Object>`（`J08Ex2` 里加 `"a"` 和 `1` 都不报错）。
 4. **非可表示类型（non-denotable type）**：匿名类、交叉类型这些**无法在源码里写出名字**的类型，`var` 能保留：
 
@@ -143,7 +143,7 @@ AAPL 125
 LINE1
 ```
 
-### 例 2：进阶——推断规则与陷阱
+### 例 2：进阶——推导规则与陷阱
 
 `examples/J08/J08Ex2.java`（节选）：
 
@@ -242,11 +242,11 @@ OpenJDK 风格指南的核心原则：**「读代码的人能不能只看这一�
 
 ### 5.5 不要为「少打几个字」破坏可读性
 
-IDE 能显示推断类型，但**代码评审、GitHub diff、日志片段**没有 IDE。代码是写给人读的。
+IDE 能显示推导类型，但**代码评审、GitHub diff、日志片段**没有 IDE。代码是写给人读的。
 
 ### 5.6 `var` 不提供目标类型
 
-`var x = someMethod();` 与 `Type x = someMethod();` 行为无差异，但 `var` **不会**像显式类型那样提供目标类型帮助推断：`List<String> l = Collections.emptyList();` 推出 `List<String>`，`var l = Collections.emptyList();` 得到 `List<Object>`。
+`var x = someMethod();` 与 `Type x = someMethod();` 行为无差异，但 `var` **不会**像显式类型那样提供目标类型帮助推导：`List<String> l = Collections.emptyList();` 推出 `List<String>`，`var l = Collections.emptyList();` 得到 `List<Object>`。
 
 ## 6. 真实代码里的 var
 
@@ -280,7 +280,7 @@ IDE 能显示推断类型，但**代码评审、GitHub diff、日志片段**没�
   var its = new ArrayList<Iterator<? extends T>>(lists.size());   // 泛型很长，var 省掉重复
   var snapshot = List.copyOf(sources);
   ```
-* record 模式里的 `case Ok(var chains)`、`case Push(var v)`：同一套推断机制，类型取自组件声明。
+* record 模式里的 `case Ok(var chains)`、`case Push(var v)`：同一套推导机制，类型取自组件声明。
 
 ---
 
@@ -298,7 +298,7 @@ IDE 能显示推断类型，但**代码评审、GitHub diff、日志片段**没�
 2. 编译错误 `incompatible types: possible lossy conversion from long to int`：`0` 是 `int` 字面量，`count` 就是 `int`。想要 `long` 写 `var count = 0L;` 或 `long count = 0;`。
 3. `ArrayList<Object>`，两个 `add` 都合法。通常不是想要的，应写 `new ArrayList<String>()` 或显式类型加 diamond。
 4. 不影响。`javap -c -l` 对比 `var` 与显式类型的两个方法：字节码和 `LocalVariableTable` 完全一致（§3）。
-5. `var total = 0; ... total += qty;`（`qty` 是 `long`）：`total` 是 `int`，溢出风险被推断悄悄隐藏，改 `long total = 0;`。再如 `var result = repo.find(id);` 读者看不出是 `Optional<Order>` 还是 `Order`——显式写类型，或把方法名改明确（`findOrder`）。
+5. `var total = 0; ... total += qty;`（`qty` 是 `long`）：`total` 是 `int`，溢出风险被推导悄悄隐藏，改 `long total = 0;`。再如 `var result = repo.find(id);` 读者看不出是 `Optional<Order>` 还是 `Order`——显式写类型，或把方法名改明确（`findOrder`）。
 
 </details>
 

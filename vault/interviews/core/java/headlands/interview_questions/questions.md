@@ -1043,7 +1043,7 @@ sum of 12,000,000: long[]    8 ms | Long[] (alloc order)    7 ms | Long[] (shuff
 ### Q24 · Besides GC, what else makes a JVM pause? What's a safepoint?
 
 - **难度**：★★★
-- **一句话答案**：**safepoint** 是所有 Java 线程都停在已知安全位置的时刻，JVM 在其中做 GC、去优化、类重定义、线程转储等操作；等所有线程到达的时间（time-to-safepoint）和 safepoint 里的工作都算暂停。GC 之外的抖动来源：页错误/内存回收、OS 调度与 CPU 争用（含 JIT 编译线程）、类加载、日志与 I/O。
+- **一句话答案**：**safepoint** 是所有 Java 线程都停在已知安全位置的时刻，JVM 在其中做 GC、去优化、类重定义、线程转储等操作；等所有线程到达的时间（time-to-safepoint）和 safepoint 里的工作都算暂停。GC 之外的抖动成因：页错误/内存回收、OS 调度与 CPU 争用（含 JIT 编译线程）、类加载、日志与 I/O。
 
 **展开**
 
@@ -1628,7 +1628,7 @@ K20Busy.lambda$main$1()                     1   2.63%
 
   它正确指出 CPU 热点是 `fib`（热线程）和 `Random.nextInt`（分配线程）。JFR 开销低到可以在生产常开。其它 `jfr view` 视图：`gc`、`allocation-by-site`、`contention-by-site`。
 * **第三方**：async-profiler（基于 `perf_events` + `AsyncGetCallTrace`，不受 safepoint 偏差影响）；VisualVM 等。
-* **线程转储本身会进 safepoint**（Q24），密集抓取会引入停顿。
+* **线程转储本身会进 safepoint**（Q24），密集地反复采集会引入停顿。
 
 **能说出口的 60 秒版本**
 

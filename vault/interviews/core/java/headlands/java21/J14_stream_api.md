@@ -140,14 +140,14 @@ Collectors.teeing(
 
 ### 3.1 编译器
 
-几乎什么都不做：都是库方法，无新语法。唯一麻烦是**类型推断**：`teeing` 和 `mapMulti` 泛型很深，推断失败报错很长。例如：
+几乎什么都不做：都是库方法，无新语法。唯一麻烦是**类型推断**：`teeing` 和 `mapMulti` 泛型很深，推导失败报错很长。例如：
 
 ```java
 Collectors.teeing(Collectors.minBy(Comparator.naturalOrder()),
                   Collectors.maxBy(Comparator.naturalOrder()), (lo, hi) -> ...)
 ```
 
-编译失败：`inference variable T#1 has incompatible upper bounds ...`。修复：`Comparator.<Long>naturalOrder()`。**经验：`teeing`/`mapMulti` 推断不动时，先给泛型方法加显式类型参数。**
+编译失败：`inference variable T#1 has incompatible upper bounds ...`。修复：`Comparator.<Long>naturalOrder()`。**经验：`teeing`/`mapMulti` 推导不动时，先给泛型方法加显式类型参数。**
 
 ### 3.2 JVM / 库的实现：一条逐元素下推的 Sink 链
 
