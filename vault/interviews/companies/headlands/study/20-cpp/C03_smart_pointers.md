@@ -51,6 +51,18 @@ struct Sq : Shape { double s; explicit Sq(double x) : s(x) {} double area() cons
 struct Circ : Shape { double r; explicit Circ(double x) : r(x) {} double area() const override { return 3.14159 * r * r; } };
 ```
 
+所有权的转移（`std::move` 之后 `a` 为空）：
+
+```cpp
+auto a = make_order(1);
+inspect(a.get());            // get() hands out the raw pointer; the unique_ptr keeps ownership
+inspect_ref(*a);
+// auto b = a;               // does not compile: copying would mean two owners
+auto b = std::move(a);       // ownership moves; a is now empty
+std::cout << "  a is " << (a ? "full" : "null") << ", b->id=" << b->id << "\n";
+consume(std::move(b));
+```
+
 输出：
 
 ```text
@@ -146,11 +158,11 @@ struct Session : std::enable_shared_from_this<Session> {       // hand out share
 
 ```text
 single thread:
-  raw pointer          : 1.23664 ns/op
-  shared_ptr const&    : 0.95724 ns/op
-  shared_ptr by value  : 2.93359 ns/op
+  raw pointer          : 0.882377 ns/op
+  shared_ptr const&    : 0.882196 ns/op
+  shared_ptr by value  : 3.07456 ns/op
 4 threads copying the SAME shared_ptr (one control block, contended atomic counter):
-  total wall 549.218 ms for 20000000 copies (109.844 ns per copy per thread)
+  total wall 501.093 ms for 20000000 copies (100.219 ns per copy per thread)
 (sink=80000000)
 ```
 

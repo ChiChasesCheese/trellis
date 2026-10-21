@@ -1,20 +1,20 @@
 $ c09_lifetime_ub
 =================================================================
-==54691==ERROR: AddressSanitizer: heap-use-after-free on address 0x602000000910 at pc 0x00010051cb40 bp 0x00016f8e2d00 sp 0x00016f8e2cf8
+==74525==ERROR: AddressSanitizer: heap-use-after-free on address 0x602000000910 at pc 0x000104a54b40 bp 0x00016b3aad20 sp 0x00016b3aad18
 READ of size 4 at 0x602000000910 thread T0
-    #0 0x00010051cb3c in main+0x174 (c09_lifetime_ub:arm64+0x100000b3c)
-    #1 0x000199c75154 in start+0x1a1c (dyld:arm64e.x1+0x30154)
+    #0 0x000104a54b3c  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c09_lifetime_ub:arm64+0x100000b3c)
+    #1 0x000199c75154  (/usr/lib/dyld:arm64e.x1+0x30154)
 
 0x602000000910 is located 0 bytes inside of 4-byte region [0x602000000910,0x602000000914)
 freed by thread T0 here:
-    #0 0x000100d78558 in _ZdlPv+0x74 (libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50558)
-    #1 0x00010051ca00 in main+0x38 (c09_lifetime_ub:arm64+0x100000a00)
-    #2 0x000199c75154 in start+0x1a1c (dyld:arm64e.x1+0x30154)
+    #0 0x00010533c558  (/Library/Developer/CommandLineTools/usr/lib/clang/21/lib/darwin/libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50558)
+    #1 0x000104a54a00  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c09_lifetime_ub:arm64+0x100000a00)
+    #2 0x000199c75154  (/usr/lib/dyld:arm64e.x1+0x30154)
 
 previously allocated by thread T0 here:
-    #0 0x000100d78150 in _Znwm+0x74 (libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50150)
-    #1 0x00010051c9ec in main+0x24 (c09_lifetime_ub:arm64+0x1000009ec)
-    #2 0x000199c75154 in start+0x1a1c (dyld:arm64e.x1+0x30154)
+    #0 0x00010533c150  (/Library/Developer/CommandLineTools/usr/lib/clang/21/lib/darwin/libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50150)
+    #1 0x000104a549ec  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c09_lifetime_ub:arm64+0x1000009ec)
+    #2 0x000199c75154  (/usr/lib/dyld:arm64e.x1+0x30154)
 
-SUMMARY: AddressSanitizer: heap-use-after-free (c09_lifetime_ub:arm64+0x100000b3c) in main+0x174
-after delete: 
+SUMMARY: AddressSanitizer: heap-use-after-free (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c09_lifetime_ub:arm64+0x100000b3c) 
+after delete: examples/build_all.sh: line 26: 74525 Abort trap: 6           perl -e 'alarm 120; exec "bash", "-c", $ARGV[0]' "$1"

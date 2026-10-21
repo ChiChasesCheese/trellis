@@ -1,25 +1,25 @@
 $ c05_invalidation_ub
 =================================================================
-==53618==ERROR: AddressSanitizer: heap-use-after-free on address 0x602000000910 at pc 0x000102800d30 bp 0x00016d5feb30 sp 0x00016d5feb28
+==73510==ERROR: AddressSanitizer: heap-use-after-free on address 0x602000000910 at pc 0x000104a24d30 bp 0x00016b3dab50 sp 0x00016b3dab48
 READ of size 4 at 0x602000000910 thread T0
-    #0 0x000102800d2c in main+0x474 (c05_invalidation_ub:arm64+0x100000d2c)
-    #1 0x000199c75154 in start+0x1a1c (dyld:arm64e.x1+0x30154)
+    #0 0x000104a24d2c  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c05_invalidation_ub:arm64+0x100000d2c)
+    #1 0x000199c75154  (/usr/lib/dyld:arm64e.x1+0x30154)
 
 0x602000000910 is located 0 bytes inside of 12-byte region [0x602000000910,0x60200000091c)
 freed by thread T0 here:
-    #0 0x00010319c558 in _ZdlPv+0x74 (libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50558)
-    #1 0x000102803538 in int* std::__1::vector<int, std::__1::allocator<int>>::__emplace_back_slow_path<int>(int&&)+0x270 (c05_invalidation_ub:arm64+0x100003538)
-    #2 0x0001028030b4 in int& std::__1::vector<int, std::__1::allocator<int>>::emplace_back<int>(int&&)::'lambda0'()::operator()() const+0x5c (c05_invalidation_ub:arm64+0x1000030b4)
-    #3 0x000102800ad8 in main+0x220 (c05_invalidation_ub:arm64+0x100000ad8)
-    #4 0x000199c75154 in start+0x1a1c (dyld:arm64e.x1+0x30154)
+    #0 0x0001053d4558  (/Library/Developer/CommandLineTools/usr/lib/clang/21/lib/darwin/libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50558)
+    #1 0x000104a27538  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c05_invalidation_ub:arm64+0x100003538)
+    #2 0x000104a270b4  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c05_invalidation_ub:arm64+0x1000030b4)
+    #3 0x000104a24ad8  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c05_invalidation_ub:arm64+0x100000ad8)
+    #4 0x000199c75154  (/usr/lib/dyld:arm64e.x1+0x30154)
 
 previously allocated by thread T0 here:
-    #0 0x00010319c150 in _Znwm+0x74 (libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50150)
-    #1 0x0001028010f4 in std::__1::vector<int, std::__1::allocator<int>>::__vallocate[abi:nqe220106](unsigned long)+0x44 (c05_invalidation_ub:arm64+0x1000010f4)
-    #2 0x000102800fa0 in void std::__1::vector<int, std::__1::allocator<int>>::__init_with_size[abi:nqe220106]<int const*, int const*>(int const*, int const*, unsigned long)+0xec (c05_invalidation_ub:arm64+0x100000fa0)
-    #3 0x0001028009e0 in main+0x128 (c05_invalidation_ub:arm64+0x1000009e0)
-    #4 0x000199c75154 in start+0x1a1c (dyld:arm64e.x1+0x30154)
+    #0 0x0001053d4150  (/Library/Developer/CommandLineTools/usr/lib/clang/21/lib/darwin/libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50150)
+    #1 0x000104a250f4  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c05_invalidation_ub:arm64+0x1000010f4)
+    #2 0x000104a24fa0  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c05_invalidation_ub:arm64+0x100000fa0)
+    #3 0x000104a249e0  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c05_invalidation_ub:arm64+0x1000009e0)
+    #4 0x000199c75154  (/usr/lib/dyld:arm64e.x1+0x30154)
 
-SUMMARY: AddressSanitizer: heap-use-after-free (c05_invalidation_ub:arm64+0x100000d2c) in main+0x474
+SUMMARY: AddressSanitizer: heap-use-after-free (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c05_invalidation_ub:arm64+0x100000d2c) 
 size=4
-
+examples/build_all.sh: line 26: 73510 Abort trap: 6           perl -e 'alarm 120; exec "bash", "-c", $ARGV[0]' "$1"

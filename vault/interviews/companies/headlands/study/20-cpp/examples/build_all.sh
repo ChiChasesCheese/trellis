@@ -21,6 +21,11 @@ HERE="$(cd "$(dirname "$0")" && pwd)"
 OUT="$HERE/out"; BINDIR="${TMPDIR:-/tmp}/cpp20_build"; PATTERN="${1:-}"
 mkdir -p "$OUT" "$BINDIR"
 CXX="${CXX:-clang++}"
+# The macOS symbolizer (atos) can hang inside sandboxes; frames then show raw addresses, the report lines are unchanged.
+export ASAN_OPTIONS="${ASAN_OPTIONS:-symbolize=0}" TSAN_OPTIONS="${TSAN_OPTIONS:-symbolize=0}"
+run_cmd() { # run a shell command with a 120 s limit
+  perl -e 'alarm 120; exec "bash", "-c", $ARGV[0]' "$1"
+}
 pass=0; fail=0; failed=""
 
 directive() { # file key default
@@ -61,7 +66,7 @@ for f in "$HERE"/C*/*.cpp; do
     export BIN="$bin"; rc_all=0
     while IFS= read -r cmd; do
       echo "\$ ${cmd//\$BIN/$name}" >>"$OUT/$name.txt"
-      (cd "$HERE/$(basename "$(dirname "$f")")" && eval "$cmd") >"$BINDIR/$name.run" 2>&1
+      (cd "$HERE/$(basename "$(dirname "$f")")" && run_cmd "$cmd") >"$BINDIR/$name.run" 2>&1
       rc=$?
       if [ "$expect" = run-fail ]; then scrub <"$BINDIR/$name.run" | cut_asan >>"$OUT/$name.txt"; else scrub <"$BINDIR/$name.run" >>"$OUT/$name.txt"; fi
       [ $rc -eq 0 ] || rc_all=$rc
@@ -74,12 +79,12 @@ EOR
   fi
   if [ $ok = 1 ] && [ "$san" = none ] && [ "$expect" = ok ]; then
     (cd "$HERE" && $CXX -std=$std -O2 -Wall -Wextra -fsanitize=address,undefined $extra "$f" -o "$bin.san") >/dev/null 2>&1 \
-      && (cd "$HERE/$(basename "$(dirname "$f")")" && BIN="$bin.san" QUICK=1 eval "${runs//\$BIN/$bin.san}") >/dev/null 2>&1 \
+      && (cd "$HERE/$(basename "$(dirname "$f")")" && export QUICK=1 && while IFS= read -r c; do BIN="$bin.san" run_cmd "$c" || exit 1; done <<<"$runs") >/dev/null 2>&1 \
       || { ok=0; why="sanitizer build/run of timing file failed"; }
   fi
   if [ $ok = 1 ] && [ "$(directive "$f" ALSO none)" = thread ]; then
     (cd "$HERE" && $CXX -std=$std -O1 -Wall -Wextra -fsanitize=thread $extra "$f" -o "$bin.tsan") >/dev/null 2>&1 \
-      && (cd "$HERE/$(basename "$(dirname "$f")")" && "$bin.tsan") >"$BINDIR/$name.tsan.run" 2>&1 \
+      && (cd "$HERE/$(basename "$(dirname "$f")")" && run_cmd "$bin.tsan") >"$BINDIR/$name.tsan.run" 2>&1 \
       && ! grep -q "WARNING: ThreadSanitizer" "$BINDIR/$name.tsan.run" \
       && { echo "(also run under ThreadSanitizer: no reports)" >>"$OUT/$name.txt"; } \
       || { ok=0; why="ThreadSanitizer build/run reported problems"; }

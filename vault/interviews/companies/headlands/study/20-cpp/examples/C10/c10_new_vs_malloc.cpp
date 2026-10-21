@@ -1,4 +1,4 @@
-// RUN: ASAN_OPTIONS=allocator_may_return_null=1 $BIN
+// RUN: ASAN_OPTIONS=allocator_may_return_null=1:symbolize=0 $BIN
 // C10: new/delete vs malloc/free. malloc hands out raw bytes; new = operator new (raw bytes) + constructor call.
 #include <cstdlib>
 #include <iostream>

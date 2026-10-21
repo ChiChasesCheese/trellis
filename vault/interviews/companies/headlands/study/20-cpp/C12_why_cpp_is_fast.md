@@ -30,7 +30,7 @@ C++ 的优势主要体现在**尾延迟、可预测性和对内存布局的控�
 
 ```text
 sums agree: 1
-sort 5000000 ints:  std::sort 76.7377 ms,  std::sort + lambda 206.752 ms,  qsort 289.1 ms (qsort/std::sort = 3.76739x)
+sort 5000000 ints:  std::sort 73.142 ms,  std::sort + lambda 200.241 ms,  qsort 272.006 ms (qsort/std::sort = 3.71887x)
 identical results: 1
 ```
 
@@ -59,15 +59,15 @@ struct Soa { std::vector<std::uint64_t> id; std::vector<std::int64_t> px; std::v
 ```text
 sizeof: Order=32 OrderBad=40 OrderPacked=32 (field order changes padding)
 notional sum (px*qty) over 4000000 orders, ns per order:
-  vector<Order>                 : 0.3314
-  vector<unique_ptr<Order>> shuf: 2.88323
-  struct of arrays (px, qty)    : 0.154479
-  sum of qty only, vector<Order>: 0.303479
-  sum of qty only, SoA          : 0.0803396
+  vector<Order>                 : 0.335117
+  vector<unique_ptr<Order>> shuf: 2.74401
+  struct of arrays (px, qty)    : 0.143546
+  sum of qty only, vector<Order>: 0.271306
+  sum of qty only, SoA          : 0.0716896
 (sink 0)
 ```
 
-读法：连续的 `vector<Order>` 比"指针数组（Java 风格，内存顺序被打乱）"快约 8 倍；SoA 只读需要的两列，再快一倍多；只汇总一列时 SoA 又快 4 倍以上（整条缓存行都是有用数据，还能向量化）。`Order` 32 字节，字段顺序不当的 `OrderBad` 变成 40 字节。
+读法：连续的 `vector<Order>` 比"指针数组（Java 风格，内存顺序被打乱）"快约 9 倍；SoA 只读需要的两列，再快一倍多；只汇总一列时 SoA 又快 3 倍（整条缓存行都是有用数据，还能向量化）。`Order` 32 字节，字段顺序不当的 `OrderBad` 变成 40 字节。
 
 ## 4. 机制三：模板与内联 → 编译期单态化
 
@@ -95,10 +95,10 @@ template <class S> double total_area(const std::vector<S>& v) { double t = 0; fo
 
 ```text
 sum of areas, 2000000 shapes:
-  virtual call, random mix   : 4.27186 ns/shape
-  std::variant + visit       : 3.89777 ns/shape
-  std::function per element  : 4.7915 ns/shape
-  template, one concrete type: 0.482917 ns/shape
+  virtual call, random mix   : 4.03997 ns/shape
+  std::variant + visit       : 3.69575 ns/shape
+  std::function per element  : 4.54953 ns/shape
+  template, one concrete type: 0.456456 ns/shape
 ```
 
 读法：目标不可预测的虚调用 / `variant` / `std::function` 都在 4 ns 左右；同类型数据用模板函数（静态分发，内联，向量化）只要不到 0.5 ns。结论：**热路径上用静态多态（模板、`variant`、按类型分组存放），把虚函数留给冷路径或确实需要运行期扩展的地方**。
@@ -117,8 +117,8 @@ sum of areas, 2000000 shapes:
 ```
 
 ```text
-  random data: 2.50036 ns/element (sum 7)
-  sorted data: 0.420543 ns/element (sum 7)
+  random data: 2.38572 ns/element (sum 7)
+  sorted data: 0.378108 ns/element (sum 7)
 ```
 
 随机数据每个元素约 6 倍慢，因为 `if` 一半对一半错、预测器失败。C++ 让你能控制数据顺序、用无分支写法、`alignas(64)` 对齐、预分配避免 `malloc`、`__builtin_prefetch`、SIMD 内建函数、线程绑核——这些在 JVM 之上要么不可能要么需要绕路。

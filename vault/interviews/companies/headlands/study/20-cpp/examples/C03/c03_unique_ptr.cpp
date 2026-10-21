@@ -46,6 +46,7 @@ struct Circ : Shape { double r; explicit Circ(double x) : r(x) {} double area() 
 
 int main() {
     std::cout << "[ownership]\n";
+    // [[snip:use]]
     auto a = make_order(1);
     inspect(a.get());            // get() hands out the raw pointer; the unique_ptr keeps ownership
     inspect_ref(*a);
@@ -53,6 +54,7 @@ int main() {
     auto b = std::move(a);       // ownership moves; a is now empty
     std::cout << "  a is " << (a ? "full" : "null") << ", b->id=" << b->id << "\n";
     consume(std::move(b));
+    // [[/snip]]
     std::cout << "[after consume]\n";
 
     std::cout << "[container of owners]\n";

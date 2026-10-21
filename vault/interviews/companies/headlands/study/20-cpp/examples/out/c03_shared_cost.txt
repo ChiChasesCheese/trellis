@@ -1,8 +1,8 @@
 $ c03_shared_cost
 single thread:
-  raw pointer          : 1.23664 ns/op
-  shared_ptr const&    : 0.95724 ns/op
-  shared_ptr by value  : 2.93359 ns/op
+  raw pointer          : 0.860954 ns/op
+  shared_ptr const&    : 0.838171 ns/op
+  shared_ptr by value  : 2.92747 ns/op
 4 threads copying the SAME shared_ptr (one control block, contended atomic counter):
-  total wall 549.218 ms for 20000000 copies (109.844 ns per copy per thread)
+  total wall 564.023 ms for 20000000 copies (112.805 ns per copy per thread)
 (sink=80000000)

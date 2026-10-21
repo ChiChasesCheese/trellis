@@ -100,7 +100,7 @@ int main(int argc, char**) {
 ERROR: AddressSanitizer: heap-buffer-overflow on address 0x… at pc 0x… bp 0x… sp 0x…
 READ of size 4 at 0x… thread T0
 0x… is located 0 bytes after 12-byte region [0x…,0x…)
-SUMMARY: AddressSanitizer: heap-buffer-overflow (c09_bounds_ub:arm64+0x…) in main+0x364
+SUMMARY: AddressSanitizer: heap-buffer-overflow (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c09_bounds_ub:arm64+0x…) 
 ```
 
 `v.at(i)` 越界抛 `std::out_of_range`，`v[i]` 不检查。
@@ -127,7 +127,7 @@ READ of size 4 at 0x… thread T0
 0x… is located 0 bytes inside of 4-byte region [0x…,0x…)
 freed by thread T0 here:
 previously allocated by thread T0 here:
-SUMMARY: AddressSanitizer: heap-use-after-free (c09_lifetime_ub:arm64+0x…) in main+0x174
+SUMMARY: AddressSanitizer: heap-use-after-free (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c09_lifetime_ub:arm64+0x…) 
 ```
 
 编译器对返回局部变量地址的 `dangling_local` 本身就给了警告：
@@ -160,8 +160,8 @@ int main() {
 ThreadSanitizer 报告：
 
 ```text
-WARNING: ThreadSanitizer: data race (pid=54615)
-SUMMARY: ThreadSanitizer: data race (c09_data_race_ub:arm64+0x…) in void* std::__1::__thread_proxy[abi:nqe220106]<std::__1::tuple<std::__1::unique_ptr<std::__1::__thread_struct, std::__1::default_delete<std::__1::__thread_struct>>, main::$_1>>(void*)+0x68
+WARNING: ThreadSanitizer: data race (pid=70575)
+SUMMARY: ThreadSanitizer: data race (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c09_data_race_ub:arm64+0x…) 
 ```
 
 修复：把计数器改成 `std::atomic<int>`，或用 `std::mutex` 保护。

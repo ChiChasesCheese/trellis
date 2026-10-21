@@ -106,7 +106,7 @@ spinlock-protected counter 200000
 
 ```text
 rounds: 200000
-memory_order_relaxed: r1==0 && r2==0 in 199802 rounds
+memory_order_relaxed: r1==0 && r2==0 in 199774 rounds
 memory_order_seq_cst: r1==0 && r2==0 in 0 rounds
 ```
 
@@ -168,9 +168,9 @@ struct Padded128 { alignas(128) std::atomic<long> a{0}; alignas(128) std::atomic
 ```text
 sizeof: Adjacent=16 Padded64=128 Padded128=256
 2 threads x 50000000 increments of their own counter:
-  adjacent (same line) : 594.561 ms
-  alignas(64) padding  : 74.094 ms
-  alignas(128) padding : 71.7744 ms
+  adjacent (same line) : 612.738 ms
+  alignas(64) padding  : 68.8275 ms
+  alignas(128) padding : 68.6776 ms
 ```
 
 相邻存放比各占一行慢了约 10 倍。修复：`alignas(64)`（或 `std::hardware_destructive_interference_size`）把被不同线程频繁写入的数据隔开；代价是内存浪费，所以只对热点变量使用。

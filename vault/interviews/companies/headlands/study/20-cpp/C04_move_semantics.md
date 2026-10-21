@@ -49,6 +49,18 @@ public:
 ```
 
 ```cpp
+Buffer a(1 << 20);
+Buffer b = a;                       // copy
+Buffer c = std::move(a);            // move: a is now empty
+std::cout << "  a.size()=" << a.size() << " c.size()=" << c.size() << "\n";
+std::vector<Buffer> v;
+v.reserve(3);
+v.push_back(Buffer(8));             // rvalue argument: moves
+v.push_back(b);                     // lvalue argument: copies
+v.push_back(std::move(b));          // explicit move
+```
+
+```cpp
 void moved_from_state() {
     std::string s(40, 'a');
     std::string t = std::move(s);                      // s is "valid but unspecified"

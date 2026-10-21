@@ -1,16 +1,16 @@
-$ ASAN_OPTIONS=alloc_dealloc_mismatch=1 c10_alloc_mismatch_ub
+$ ASAN_OPTIONS=alloc_dealloc_mismatch=1:symbolize=0 c10_alloc_mismatch_ub
 =================================================================
-==54991==ERROR: AddressSanitizer: alloc-dealloc-mismatch (operator new [] vs operator delete) on 0x603000000fd0
-    #0 0x000102d84558 in _ZdlPv+0x74 (libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50558)
-    #1 0x0001026488d4 in main+0x1c (c10_alloc_mismatch_ub:arm64+0x1000008d4)
-    #2 0x000199c75154 in start+0x1a1c (dyld:arm64e.x1+0x30154)
+==74813==ERROR: AddressSanitizer: alloc-dealloc-mismatch (operator new [] vs operator delete) on 0x603000000fd0
+    #0 0x0001059a4558  (/Library/Developer/CommandLineTools/usr/lib/clang/21/lib/darwin/libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50558)
+    #1 0x000104fb88d4  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c10_alloc_mismatch_ub:arm64+0x1000008d4)
+    #2 0x000199c75154  (/usr/lib/dyld:arm64e.x1+0x30154)
 
 0x603000000fd0 is located 0 bytes inside of 32-byte region [0x603000000fd0,0x603000000ff0)
 allocated by thread T0 here:
-    #0 0x000102d84268 in _Znam+0x74 (libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50268)
-    #1 0x0001026488c8 in main+0x10 (c10_alloc_mismatch_ub:arm64+0x1000008c8)
-    #2 0x000199c75154 in start+0x1a1c (dyld:arm64e.x1+0x30154)
+    #0 0x0001059a4268  (/Library/Developer/CommandLineTools/usr/lib/clang/21/lib/darwin/libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50268)
+    #1 0x000104fb88c8  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c10_alloc_mismatch_ub:arm64+0x1000008c8)
+    #2 0x000199c75154  (/usr/lib/dyld:arm64e.x1+0x30154)
 
-SUMMARY: AddressSanitizer: alloc-dealloc-mismatch (c10_alloc_mismatch_ub:arm64+0x1000008d4) in main+0x1c
-==54991==HINT: if you don't care about these errors you may set ASAN_OPTIONS=alloc_dealloc_mismatch=0
-
+SUMMARY: AddressSanitizer: alloc-dealloc-mismatch (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c10_alloc_mismatch_ub:arm64+0x1000008d4) 
+==74813==HINT: if you don't care about these errors you may set ASAN_OPTIONS=alloc_dealloc_mismatch=0
+examples/build_all.sh: line 26: 74813 Abort trap: 6           perl -e 'alarm 120; exec "bash", "-c", $ARGV[0]' "$1"

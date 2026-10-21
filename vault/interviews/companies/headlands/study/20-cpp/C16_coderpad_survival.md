@@ -171,17 +171,24 @@ C16/c16_bad_narrowing.cpp:5:11: note: insert an explicit cast to silence this is
 
 ### `sort` 一个 `list`
 
+（完整报错有几十行，这里只保留第一条 error 和提到你自己文件的行）
+
 ```text
 In file included from C16/c16_bad_sort_list.cpp:2:
-In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/algorithm:1875:
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__algorithm/make_heap.h:37:31: error: invalid operands to binary expression ('std::__list_iterator<int, void *>' and 'std::__list_iterator<int, void *>')
-   37 |   const __diff_t __n = __last - __first;
-      |                        ~~~~~~ ^ ~~~~~~~
-/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__algorithm/partial_sort.h:41:8: note: in instantiation of function template specialization 'std::__make_heap<std::_ClassicAlgPolicy, std::__less<void, void> &, std::__list_iterator<int, void *>>' requested here
-   41 |   std::__make_heap<_AlgPolicy>(__first, __middle, __comp);
+C16/c16_bad_sort_list.cpp:6:10: note: in instantiation of function template specialization 'std::sort<std::__list_iterator<int, void *>>' requested here
+In file included from C16/c16_bad_sort_list.cpp:2:
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__algorithm/partial_sort.h:43:85: error: invalid operands to binary expression ('std::__list_iterator<int, void *>' and 'std::__list_iterator<int, void *>')
+C16/c16_bad_sort_list.cpp:6:10: note: in instantiation of function template specialization 'std::sort<std::__list_iterator<int, void *>>' requested here
+In file included from C16/c16_bad_sort_list.cpp:2:
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__algorithm/sort_heap.h:39:37: error: invalid operands to binary expression ('std::__list_iterator<int, void *>' and 'std::__list_iterator<int, void *>')
+C16/c16_bad_sort_list.cpp:6:10: note: in instantiation of function template specialization 'std::sort<std::__list_iterator<int, void *>>' requested here
+In file included from C16/c16_bad_sort_list.cpp:2:
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__algorithm/sort.h:867:86: error: invalid operands to binary expression ('std::__list_iterator<int, void *>' and 'std::__list_iterator<int, void *>')
+C16/c16_bad_sort_list.cpp:6:10: note: in instantiation of function template specialization 'std::sort<std::__list_iterator<int, void *>>' requested here
 ```
 
-→ 错误来自标准库内部（`__last - __first`），但真正原因在最下面你自己的那一行：`list` 迭代器不支持随机访问，用 `l.sort()`。模板错误的读法：找出带你的文件名的那一行。
+→ 错误来自标准库内部（`__last - __first`），但真正原因在带你文件名的那一行（`requested here`）：`list` 迭代器不支持随机访问，用 `l.sort()`。模板错误的读法：找出带你的文件名的那一行。
 
 ## 4. 开着警告写
 

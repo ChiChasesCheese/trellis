@@ -1,6 +1,6 @@
 $ c10_arena_pool
 create and destroy 256 Orders per round, 200000 rounds
-  new / delete          : 6.81861 ns per create+destroy (sink 0)
-  fixed pool (free list): 1.77473 ns per create+destroy (sink 0)
-  bump arena + reset    : 0.767253 ns per create+destroy (sink 0)
-  pmr monotonic + vector: 2.09299 ns per create+destroy (sink 0)
+  new / delete          : 6.8951 ns per create+destroy (sink 0)
+  fixed pool (free list): 1.78117 ns per create+destroy (sink 0)
+  bump arena + reset    : 0.766585 ns per create+destroy (sink 0)
+  pmr monotonic + vector: 2.09894 ns per create+destroy (sink 0)

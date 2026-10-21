@@ -1,4 +1,4 @@
 $ c13_litmus
 rounds: 200000
-memory_order_relaxed: r1==0 && r2==0 in 199802 rounds
+memory_order_relaxed: r1==0 && r2==0 in 199812 rounds
 memory_order_seq_cst: r1==0 && r2==0 in 0 rounds

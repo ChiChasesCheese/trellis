@@ -103,7 +103,7 @@ int main(int argc, char**) {
 ERROR: AddressSanitizer: memcpy-param-overlap: memory ranges [0x…,0x…) and [0x…, 0x…) overlap
 Address 0x… is located in stack of thread T0 at offset 33 in frame
 Address 0x… is located in stack of thread T0 at offset 32 in frame
-SUMMARY: AddressSanitizer: memcpy-param-overlap (c11_overlap_ub:arm64+0x…) in main+0x114
+SUMMARY: AddressSanitizer: memcpy-param-overlap (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c11_overlap_ub:arm64+0x…) 
 ```
 
 **对非平凡类型 `memcpy`**：两个 `std::string` 现在指向同一个堆缓冲区，各自析构时都 `free`：
@@ -130,7 +130,7 @@ ERROR: AddressSanitizer: attempting double-free on 0x… in thread T0:
 0x… is located 0 bytes inside of 104-byte region [0x…,0x…)
 freed by thread T0 here:
 previously allocated by thread T0 here:
-SUMMARY: AddressSanitizer: double-free (c11_memcpy_string_ub:arm64+0x…) in std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>::__reset_internal_buffer[abi:nqe220106](std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>::__rep)+0x8c
+SUMMARY: AddressSanitizer: double-free (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c11_memcpy_string_ub:arm64+0x…) 
 ```
 
 ## 4. 编译器到底生成了什么
@@ -177,12 +177,12 @@ __Z12copy_fixed16PKiPi:
 
 ```text
 copy 64 MiB of int, GB/s (higher is better)
-  std::copy : 53.9588
-  memcpy    : 56.1074
-  memmove   : 56.2352
-  for loop  : 53.5432
-  vector=   : 56.9624
-  64-byte memcpy: 0.761825 ns each (total 0)
+  std::copy : 55.5897
+  memcpy    : 53.7785
+  memmove   : 52.8269
+  for loop  : 56.2757
+  vector=   : 54.9964
+  64-byte memcpy: 0.7623 ns each (total 0)
 ```
 
 `std::copy`、`memcpy`、`memmove`、手写循环、`vector` 赋值都落在同一个量级（受内存带宽限制）；小块（64 字节）拷贝只需不到 1 ns，因为是内联的向量搬运。差别在**正确性**而不是速度。

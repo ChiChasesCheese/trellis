@@ -112,7 +112,7 @@ int main() {
 ```text
 ERROR: AddressSanitizer: alloc-dealloc-mismatch (operator new [] vs operator delete) on 0x…
 0x… is located 0 bytes inside of 32-byte region [0x…,0x…)
-SUMMARY: AddressSanitizer: alloc-dealloc-mismatch (c10_alloc_mismatch_ub:arm64+0x…) in main+0x1c
+SUMMARY: AddressSanitizer: alloc-dealloc-mismatch (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c10_alloc_mismatch_ub:arm64+0x…) 
 ```
 
 ## 3. `operator new` 与构造的分离：placement new
@@ -242,10 +242,10 @@ public:
 
 ```text
 create and destroy 256 Orders per round, 200000 rounds
-  new / delete          : 6.81861 ns per create+destroy (sink 0)
-  fixed pool (free list): 1.77473 ns per create+destroy (sink 0)
-  bump arena + reset    : 0.767253 ns per create+destroy (sink 0)
-  pmr monotonic + vector: 2.09299 ns per create+destroy (sink 0)
+  new / delete          : 6.86952 ns per create+destroy (sink 0)
+  fixed pool (free list): 1.77755 ns per create+destroy (sink 0)
+  bump arena + reset    : 0.747983 ns per create+destroy (sink 0)
+  pmr monotonic + vector: 2.08991 ns per create+destroy (sink 0)
 ```
 
 读法：热缓存、单线程下 `new/delete` 已经只要几纳秒，池再快 3–4 倍，arena 最快（释放是 O(1) 的一次 `reset`）；真正的收益在**尾部延迟**（没有偶发的慢分配/系统调用）、**多线程无争用**和**缓存局部性**（对象紧挨着）。

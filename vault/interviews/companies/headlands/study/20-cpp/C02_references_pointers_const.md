@@ -166,7 +166,7 @@ READ of size 1 at 0x… thread T0
 0x… is located 0 bytes inside of 144-byte region [0x…,0x…)
 freed by thread T0 here:
 previously allocated by thread T0 here:
-SUMMARY: AddressSanitizer: heap-use-after-free (c02_dangling_view_ub:arm64+0x…) in main+0x204
+SUMMARY: AddressSanitizer: heap-use-after-free (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c02_dangling_view_ub:arm64+0x…) 
 ```
 
 规则：视图/引用可以当**参数**；当**成员变量或返回值**时，必须确保被引用对象活得更久。

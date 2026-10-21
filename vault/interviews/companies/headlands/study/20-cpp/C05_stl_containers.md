@@ -190,7 +190,7 @@ READ of size 4 at 0x… thread T0
 0x… is located 0 bytes inside of 12-byte region [0x…,0x…)
 freed by thread T0 here:
 previously allocated by thread T0 here:
-SUMMARY: AddressSanitizer: heap-use-after-free (c05_invalidation_ub:arm64+0x…) in main+0x474
+SUMMARY: AddressSanitizer: heap-use-after-free (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c05_invalidation_ub:arm64+0x…) 
 ```
 
 正确的"边遍历边删除"写法：用 `erase` 的返回值（指向下一个有效元素）：
@@ -331,12 +331,12 @@ l_shuffled.sort();                                     // ... then RELINKED in v
 
 ```text
 sum over 2000000 ints, ns per element
-  vector           : 0.0421834 ns/element (checksum 9999995000000)
-  deque            : 0.239563 ns/element (checksum 9999995000000)
-  list (alloc seq.): 0.781017 ns/element (checksum 9999995000000)
-  list (shuffled)  : 63.5815 ns/element (checksum 9999995000000)
-  set (RB-tree)    : 2.46063 ns/element (checksum 9999995000000)
-  unordered_map    : 0.897646 ns/element (checksum 9999995000000)
+  vector           : 0.0437708 ns/element (checksum 9999995000000)
+  deque            : 0.236321 ns/element (checksum 9999995000000)
+  list (alloc seq.): 0.864563 ns/element (checksum 9999995000000)
+  list (shuffled)  : 59.778 ns/element (checksum 9999995000000)
+  set (RB-tree)    : 2.53613 ns/element (checksum 9999995000000)
+  unordered_map    : 1.16318 ns/element (checksum 9999995000000)
 ```
 
 读法：`vector` 是连续内存，硬件预取器和 SIMD 都能发挥，每元素远低于 1 ns；节点按顺序分配的 `list`/`unordered_map` 尚可；**乱序的 `list` 每个元素一次缓存未命中**，慢两个数量级；`set` 居中。这就是"默认用 `vector`"的依据：同样的 O(n)，常数差 10–1000 倍。

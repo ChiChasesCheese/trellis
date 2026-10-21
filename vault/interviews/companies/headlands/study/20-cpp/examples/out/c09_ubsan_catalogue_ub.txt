@@ -5,8 +5,8 @@ C09/c09_ubsan_catalogue_ub.cpp:14:36: runtime error: division of -2147483648 by 
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior C09/c09_ubsan_catalogue_ub.cpp:14:36 
 C09/c09_ubsan_catalogue_ub.cpp:16:40: runtime error: division by zero
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior C09/c09_ubsan_catalogue_ub.cpp:16:40 
-C09/c09_ubsan_catalogue_ub.cpp:18:36: runtime error: load of misaligned address 0x00016ae5ac61 for type 'std::int64_t' (aka 'long long'), which requires 8 byte alignment
-0x00016ae5ac61: note: pointer points here
+C09/c09_ubsan_catalogue_ub.cpp:18:36: runtime error: load of misaligned address 0x00016f5b2c81 for type 'std::int64_t' (aka 'long long'), which requires 8 byte alignment
+0x00016f5b2c81: note: pointer points here
  00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 40 7c 99 01 00 00 00  01 00 00 00 00
               ^ 
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior C09/c09_ubsan_catalogue_ub.cpp:18:36 
@@ -20,27 +20,27 @@ C09/c09_ubsan_catalogue_ub.cpp:26:48: runtime error: load of null pointer of typ
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior C09/c09_ubsan_catalogue_ub.cpp:26:48 
 AddressSanitizer:DEADLYSIGNAL
 =================================================================
-==54925==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x000104fa4c00 bp 0x00016ae5ad10 sp 0x00016ae5ac40 T0)
-==54925==The signal is caused by a READ memory access.
-==54925==Hint: address points to the zero page.
-    #0 0x000104fa4c00 in main+0x348 (c09_ubsan_catalogue_ub:arm64+0x100000c00)
-    #1 0x000199c75154 in start+0x1a1c (dyld:arm64e.x1+0x30154)
+==74759==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x00010084cc00 bp 0x00016f5b2d30 sp 0x00016f5b2c60 T0)
+==74759==The signal is caused by a READ memory access.
+==74759==Hint: address points to the zero page.
+    #0 0x00010084cc00  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c09_ubsan_catalogue_ub:arm64+0x100000c00)
+    #1 0x000199c75154  (/usr/lib/dyld:arm64e.x1+0x30154)
 
-==54925==Register values:
- x[0] = 0x00000001ffd333d8   x[1] = 0x0000000000000103   x[2] = 0x0000000000000103   x[3] = 0x000000010c701e80  
+==74759==Register values:
+ x[0] = 0x00000001ffd333d8   x[1] = 0x0000000000000103   x[2] = 0x0000000000000103   x[3] = 0x0000000107e01e80  
  x[4] = 0x0000000063000000   x[5] = 0x0000000000000000   x[6] = 0x0000000000000000   x[7] = 0x0000000000000000  
- x[8] = 0x0000000000000000   x[9] = 0x00000001058ba838  x[10] = 0x000000000000003e  x[11] = 0x0000000000000000  
+ x[8] = 0x0000000000000000   x[9] = 0x0000000101232838  x[10] = 0x000000000000003e  x[11] = 0x0000000000000000  
 x[12] = 0x0000000000000000  x[13] = 0x00000000000000bc  x[14] = 0x00000000000000b8  x[15] = 0x0000000000000000  
-x[16] = 0x000000019a047944  x[17] = 0x0000000105815088  x[18] = 0x0000000000000000  x[19] = 0x000000016ae5ac80  
+x[16] = 0x000000019a047944  x[17] = 0x000000010118d088  x[18] = 0x0000000000000000  x[19] = 0x000000016f5b2ca0  
 x[20] = 0x0000000000000000  x[21] = 0x0000000000000000  x[22] = 0x00000001ffd333d8  x[23] = 0x00000001ffd333d8  
-x[24] = 0x000000016ae5ac40  x[25] = 0x0000008000020000  x[26] = 0x000000802d5eb588  x[27] = 0x000000000000ffff  
-x[28] = 0x0000000105238000     fp = 0x000000016ae5ad10     lr = 0x0000000104fa4ea0     sp = 0x000000016ae5ac40  
+x[24] = 0x000000016f5b2c60  x[25] = 0x0000008000020000  x[26] = 0x000000802ded658c  x[27] = 0x000000000000ffff  
+x[28] = 0x0000000100bb0000     fp = 0x000000016f5b2d30     lr = 0x000000010084cea0     sp = 0x000000016f5b2c60  
 AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV (c09_ubsan_catalogue_ub:arm64+0x100000c00) in main+0x348
+SUMMARY: AddressSanitizer: SEGV (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c09_ubsan_catalogue_ub:arm64+0x100000c00) 
 shift: 1
 division: -2147483648
 div by zero: 0
 misaligned: 0
 float->int: 2147483647
 invalid bool: 1
-null member access: 
+null member access: examples/build_all.sh: line 26: 74759 Abort trap: 6           perl -e 'alarm 120; exec "bash", "-c", $ARGV[0]' "$1"

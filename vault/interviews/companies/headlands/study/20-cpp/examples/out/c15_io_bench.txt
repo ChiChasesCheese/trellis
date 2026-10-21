@@ -1,20 +1,20 @@
 $ c15_io_bench gen
 generated 1000000 lines
 $ c15_io_bench cin_sync < /tmp/c15_nums.txt
-cin >> (synced)           563.3 ms
+cin >> (synced)           565.0 ms
 sum=500001066785
 $ c15_io_bench cin_nosync < /tmp/c15_nums.txt
-cin >> (no sync)          551.7 ms
+cin >> (no sync)          551.1 ms
 sum=500001066785
 $ c15_io_bench scanf < /tmp/c15_nums.txt
-scanf                      35.6 ms
+scanf                      36.5 ms
 sum=500001066785
 $ c15_io_bench fread < /tmp/c15_nums.txt
-fread + from_chars          7.6 ms
+fread + from_chars          7.8 ms
 sum=500001066785
 $ c15_io_bench parsers
-istringstream              39.3 ms
-stoi                        9.7 ms
-strtol                      6.0 ms
+istringstream              40.1 ms
+stoi                        9.6 ms
+strtol                      5.9 ms
 from_chars                  4.9 ms
 sum=2000004267140

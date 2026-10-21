@@ -126,17 +126,17 @@ bad lines: 1
 
 ```text
 generated 1000000 lines
-cin >> (synced)           563.3 ms
+cin >> (synced)           568.6 ms
 sum=500001066785
-cin >> (no sync)          551.7 ms
+cin >> (no sync)          541.9 ms
 sum=500001066785
-scanf                      35.6 ms
+scanf                      36.6 ms
 sum=500001066785
-fread + from_chars          7.6 ms
+fread + from_chars          7.4 ms
 sum=500001066785
-istringstream              39.3 ms
-stoi                        9.7 ms
-strtol                      6.0 ms
+istringstream              40.3 ms
+stoi                        9.6 ms
+strtol                      5.9 ms
 from_chars                  4.9 ms
 sum=2000004267140
 ```

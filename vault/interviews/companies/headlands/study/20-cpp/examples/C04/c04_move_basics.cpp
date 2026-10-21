@@ -67,6 +67,7 @@ void grow(const char* name) {
 
 int main() {
     std::cout << "[copy vs move]\n";
+    // [[snip:main]]
     Buffer a(1 << 20);
     Buffer b = a;                       // copy
     Buffer c = std::move(a);            // move: a is now empty
@@ -76,6 +77,7 @@ int main() {
     v.push_back(Buffer(8));             // rvalue argument: moves
     v.push_back(b);                     // lvalue argument: copies
     v.push_back(std::move(b));          // explicit move
+    // [[/snip]]
     std::cout << "[moved-from std::string]\n"; moved_from_state();
     std::cout << "[relocation on growth: c = copy, m = move]\n";
     grow<Loud>("noexcept move   ");
