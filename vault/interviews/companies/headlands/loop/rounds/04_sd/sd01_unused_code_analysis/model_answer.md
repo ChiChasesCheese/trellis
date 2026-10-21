@@ -1,8 +1,6 @@
 # sd01 · 参考答案：无用代码分析（senior 深度）
 
-> 读者设定：会写 Java，但编译器 / 静态分析 / 图算法需要从头讲。术语第一次出现写「中文（English）」。
-> 所有数字都带推导；**假设**一律标明。题面是 (reconstructed)，见 [prompt.md](prompt.md)。
-> 方法论总纲：[../00_how_to_run.md](../00_how_to_run.md)。
+> 读者设定：会写 Java，但编译器 / 静态分析 / 图算法需要从头讲。数字都带推导；**假设**一律标明。
 
 ---
 
@@ -27,7 +25,7 @@
 | **L2** | 开放世界未知 | `public` / `protected` 符号，快照里零引用，但可能被**快照之外**的消费者（外部二进制、另一个仓库、插件）使用 | 可达性 + 制品下载日志 / 依赖扫描 | 中 |
 | **L3** | 静态可达但动态冷 | 静态上有路径可达，但生产里长期（N 个月）从未执行 | 运行时数据（类加载日志、JFR、方法级覆盖率） | 高（可能是灾备、熔断、年度流程） |
 
-> 交易公司的特殊性（口述题评论：「HFT 公司很少删代码」[F-G3]）：**熔断、灾备切换、日终对账、监管报表**这类路径设计上就长期不执行，却必须在需要的那一天可用。L3 永远不应自动处理——这是 Chesterton's fence（不明白这道围栏为什么在这儿，就别拆它）。主动把这点说出来是 senior 信号。
+> 交易公司的特殊性（HFT 公司很少删代码）：**熔断、灾备切换、日终对账、监管报表**这类路径设计上就长期不执行，却必须在需要的那一天可用。L3 永远不应自动处理——这是 Chesterton's fence（不明白这道围栏为什么在这儿，就别拆它）。主动把这点说出来是 senior 信号。
 
 **为什么要做**（回答「值不值得」）：减少构建 / 测试时间和依赖面；减少搜索结果和阅读噪声（事故时误导排查）；降低安全暴露面（无用依赖里的漏洞）；让重构更便宜。**成本**：删错的代价（线上事故）远高于留着的代价——所以系统的设计目标是**高精度（precision）优先，召回（recall）其次**。
 
@@ -138,10 +136,10 @@
 ### 5.1 为什么在字节码上分析（Java 的选择）
 
 * **字节码里引用已经被编译器解析好了**：`invokevirtual com/hl/Order.price()J` 里直接写着 owner、name、descriptor。不需要自己做名字解析、重载决议、泛型擦除、import 处理——这些是源码分析的主要成本和出错点。
-* **成本低 ~100 倍**：读 `.class` 是线性扫描常量池和方法体（ASM 之类的库一核每秒处理数百 MB），不需要 javac 的类型归属。（量级估计，**未测**。）
+* **成本低 ~100 倍**：读 `.class` 是线性扫描常量池和方法体（ASM 之类的库一核每秒处理数百 MB），不需要 javac 的类型归属。（量级估计。）
 * **精确**：lambda 在字节码里是 `invokedynamic`，其引导方法（bootstrap method）参数里能读到真实的目标 `MethodHandle`，所以方法引用 / lambda 的边可以静态恢复。
 * **缺点**：没有源码位置 → 用调试信息（`SourceFile`、`LineNumberTable`）回映射；依赖构建产物（但 CI 本来就产出，且可以缓存）；泛型信息被擦除（对可达性影响很小）；Kotlin / Scala 等的合成方法需要过滤。
-* 对 C++：没有字节码，用 clang 索引；**链接器本身就是一个可达性分析器**：编译时 `-ffunction-sections -fdata-sections`，链接时 `-Wl,--gc-sections,--print-gc-sections`（GNU ld / gold / lld 均有对应选项）会列出被丢弃的函数段——免费的静态证据。（来源：https://sourceware.org/binutils/docs/ld/Options.html、https://llvm.googlesource.com/lld/+/refs/heads/master/test/ELF/gc-sections-print.s，2026-10-15 核对）
+* 对 C++：没有字节码，用 clang 索引；**链接器本身就是一个可达性分析器**：编译时 `-ffunction-sections -fdata-sections`，链接时 `-Wl,--gc-sections,--print-gc-sections`（GNU ld / gold / lld 均有对应选项）会列出被丢弃的函数段——免费的静态证据。
 
 ### 5.2 索引记录与符号 ID
 
@@ -158,7 +156,7 @@ strs : (file_or_class, literal)
 
 ```java
 // CSR（compressed sparse row）：offsets[v]..offsets[v+1] 是 v 的出边在 targets[] 里的区间。
-// 连续数组 + int 下标 = 对缓存友好的图；没有 Node/Edge 对象，没有 GC 压力（见 cpu_cache_locality §5）。
+// 连续数组 + int 下标 = 对缓存友好的图；没有 Node/Edge 对象，没有 GC 压力。
 final class SymbolGraph {
     final int[] offsets;      // 长度 V+1
     final int[] targets;      // 长度 E
@@ -226,7 +224,7 @@ suggested   : 软删除 PR #… (按簇一起删，含 3 个测试类)
 
 | 信号 | 怎么收 | 成本 | 能证明什么 | 不能证明什么 |
 |---|---|---|---|---|
-| **类是否被加载过** | JVM 的 `-Xlog:class+load`（或 JFR 的 ClassLoad 事件）（来源：https://docs.oracle.com/en/java/javase/21/docs/specs/man/java.html、https://github.com/openjdk/jdk/blob/master/src/jdk.jfr/share/conf/jfr/default.jfc，2026-10-15 核对）按 (服务, 版本) 去重上报 | 极低（每个 JVM 只在启动 / 首次加载时记一次） | 「类在 N 个月里从未被加载」→ 很强的负证据 | 类加载了不等于方法被调用 |
+| **类是否被加载过** | JVM 的 `-Xlog:class+load`（或 JFR 的 ClassLoad 事件）按 (服务, 版本) 去重上报 | 极低（每个 JVM 只在启动 / 首次加载时记一次） | 「类在 N 个月里从未被加载」→ 很强的负证据 | 类加载了不等于方法被调用 |
 | **方法是否被调用过** | Java agent / JaCoCo 一类的探针；抽样版用 JFR 执行采样 | 全量探针开销可观（热路径不可用）；采样会漏稀有路径 | 采样命中 = 肯定用过 | 采样没命中 ≠ 没用过（假阴性），**稀有路径正是风险所在** |
 | **日志 / 指标里出现过** | 日志里的类名 / 指标名 | 低 | 辅助 | 间接 |
 | **演练（game day）** | 定期演练熔断 / 灾备，演练期间开启探针 | 人力 | 给 L3 路径产生「被执行过」的证据 | |
@@ -271,7 +269,7 @@ suggested   : 软删除 PR #… (按簇一起删，含 3 个测试类)
 1. **回测（backtest）历史删除**：在 git 历史里找所有被人工标注为「remove unused / dead code」的提交。对每个这样的提交，在**它的父提交**上跑分析器：这些被人删掉的符号，被我们标为候选的比例 = 召回的下界估计；被我们标为「活」的 = 漏报，逐条分析原因（几乎都能找到一类缺失的模型）。
 2. **种子注入**：在快照里注入一批已知死代码（形状逼真：有测试、有死环、有包内引用），看检出率。
 3. **抽样人审**：随机抽 100 个 HIGH 候选让 owner 判断 → 精度估计，附置信区间（n = 100，p̂ = 0.98 时，标准误 ≈ √(0.98×0.02/100) ≈ 1.4%）。
-4. **对照现有工具**：IDE inspection / ProGuard 的 `-printusage` 报告（来源：https://www.guardsquare.com/manual/configuration/usage、https://docs.oracle.com/en/java/javase/21/docs/specs/man/javac.html，2026-10-15 核对）：交集与差集都值得看。
+4. **对照现有工具**：IDE inspection / ProGuard 的 `-printusage` 报告：交集与差集都值得看。
 5. **回归**：同一快照两次运行输出逐字节相同；改动分析器时对固定快照做 diff，所有变化必须有解释。
 
 ---
@@ -287,7 +285,7 @@ suggested   : 软删除 PR #… (按簇一起删，含 3 个测试类)
 **多语言边**（真实代码库的难点）：
 
 * JNI：Java `native` 方法 ↔ C++ 导出符号 `Java_pkg_Class_method`，按名字规则连边。
-* 协议 / IDL（protobuf、Thrift、SBE 模板（来源：https://github.com/aeron-io/simple-binary-encoding，2026-10-15 核对））：生成的类是「叶子」，但消息类型是否被用要看生成代码的引用，别把生成代码当死代码；从 IDL 文件出发建边。
+* 协议 / IDL（protobuf、Thrift、SBE 模板）：生成的类是「叶子」，但消息类型是否被用要看生成代码的引用，别把生成代码当死代码；从 IDL 文件出发建边。
 * 配置 / 脚本里的类名：§4 的字符串命中。
 * SQL / 动态查询里的表名列名：可选，低置信度。
 * **覆盖率阈值**：任何模块的索引覆盖率低于阈值（构建失败、缺文件），则**不对依赖它的符号做死判定**（fail closed）。
@@ -298,8 +296,8 @@ suggested   : 软删除 PR #… (按簇一起删，含 3 个测试类)
 
 ## 11. 与交易公司背景的连接（让答案「像是为这家公司写的」）
 
-* **Java 岗的职责**是研究平台、分布式存储、计算集群与监控 [O-C2]：这些系统里典型的死代码来源是「旧交易所适配器」「废弃的数据格式解析器」「做过的实验性回测策略」。证据卡里写上 owner = research-platform 这类团队，PR 才有人接。
-* 回测平台与实盘共用同一份解析 / 模拟代码（推断，见公司简报 §4.2）：删「回测专用」代码时，必须把**实盘二进制和回测二进制都当根**。
+* **Java 岗的职责**是研究平台、分布式存储、计算集群与监控：这些系统里典型的死代码来源是「旧交易所适配器」「废弃的数据格式解析器」「做过的实验性回测策略」。证据卡里写上 owner = research-platform 这类团队，PR 才有人接。
+* 回测平台与实盘常共用同一份解析 / 模拟代码：删「回测专用」代码时，必须把**实盘二进制和回测二进制都当根**。
 * 删除的价值主张要讲对：不是「代码更漂亮」，而是 **减小变更面（change surface）**——每次上线都是风险，死代码让每次改动的影响范围分析更难。
 
 ---
@@ -322,10 +320,4 @@ suggested   : 软删除 PR #… (按簇一起删，含 3 个测试类)
 
 「我把代码库当成一张符号图，用 RTA 在字节码上做可达性标记，根集合来自部署清单、框架模型、SPI、字符串命中和 owner 声明。输出是带见证和置信度的候选，分 L0–L3 四级。分布式只用在并行索引，图本身 80 MB，一台机器亚秒标记。动态证据（类加载日志）佐证静态结论，永不单独判死。删除走 owner PR + 软删除，指标是 revert 率；我用历史回测和种子注入估计召回。最大的风险是漏建模的动态入口和冷但必要的路径，所以 fail closed，并把冷路径用 `@KeepAlive` 和演练管起来。」
 
-## 14. 延伸阅读
-
-* Java 虚拟线程 / 并发无关；本题相关的 JVM 工具：`jdeps`（包依赖）、`jlink`（模块裁剪）、ProGuard / R8 的 shrinker 文档（`-keep` 规则与 `-printusage`）。
-* 调用图构造：Dean, Grove, Chambers, 「Optimization of Object-Oriented Programs Using Static Class Hierarchy Analysis」（ECOOP 1995，CHA）；Bacon & Sweeney, 「Fast Static Analysis of C++ Virtual Function Calls」（OOPSLA 1996，RTA）。
-* 代码索引的工业实践：Google Kythe；Sourcegraph 的 SCIP 格式，以及 LSP 生态的 LSIF 格式。（来源：https://kythe.io/docs/kythe-overview.html、https://github.com/sourcegraph/scip、https://microsoft.github.io/language-server-protocol/specifications/lsif/0.6.0/specification/，2026-10-15 核对）
-* 反例思维：Chesterton's fence。
-* 追问见 [followups.md](followups.md)；评分见 [rubric.md](rubric.md)。
+「延伸」调用图构造：CHA（类层次分析）与 RTA（快速类型分析）两篇经典论文；代码索引：Google Kythe、Sourcegraph SCIP；工具：`jdeps`、ProGuard / R8 的 `-keep` 与 `-printusage`。
