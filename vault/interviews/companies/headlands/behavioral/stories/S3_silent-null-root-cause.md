@@ -1,6 +1,6 @@
 # S3 · 没有报错的 bug（最难的 bug · 定位方法 · 为什么测试没抓到）
 
-用于：hardest bug / on-call / how do you test / 修一类问题。
+- 用于：hardest bug / on-call / how do you test / 修一类问题。
 
 **Hook：「My hardest bug threw no error: rows that should exist were simply missing.」**
 
@@ -37,7 +37,7 @@
 
 - **Four test gaps**: tests asserted **routing**, not the **fee**; the fixture was a **card payload**; pending rows never asserted the field; nothing spanned **promote → fee**.
 - **Hardening**: one function with a **defaulted parameter**; a **versioned `DROP`** of the old signature, because deleting the source file doesn't remove the deployed object.
-- **Different next time**: make the unmapped case an explicit **error** where the category is derived. 【待 Chi 补：实际落地的形式】
+- **Different next time**: make the unmapped case an explicit **error** where the category is derived. 【待补：实际落地的形式】
 
 ## 追问
 
@@ -55,6 +55,6 @@
 - 止血 PR 是我的；"I backfilled"；零影响（那是灰度期）。
 - 把 $10M 当成费用金额。
 
-## 待 Chi 补
+## 待补
 
-- 从告警到根因真实用了多久；"fail loudly"最终落地的形式。
+- 【待补：从告警到根因真实用了多久；"fail loudly"最终落地的形式】

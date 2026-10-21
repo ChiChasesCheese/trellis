@@ -1,6 +1,8 @@
 # q02 · Job Runner（Java 21，HackerRank，STDIN → STDOUT）
 
-题面原文：`../catalog/raw/hackerrank_job_runner_photos.md`。代码：`../java/src/main/java/headland/q02/`。
+Job Runner 读入一份 CSV，每行是一个 job：编号、运行秒数、下一个 job 的编号（0 表示链尾）。你要把这些 job 串成若干条链，按总时长降序打印一份报告，输入有任何问题就只打印 `Malformed Input`。考点是：输入校验要覆盖多少种坏数据、图的形状怎么判（环、汇合）、以及"全部算完再一次性输出"。
+
+代码在 `../java/src/main/java/headland/q02/`。
 
 ```bash
 cd vault/interviews/companies/headlands/mock_maven/java
@@ -10,14 +12,14 @@ python3 mutation_check.py q02                          # 17 个错误版本全�
 python3 mutation_check.py q02 Functional               # 函数式版本的 15 个错误版本全部被抓到
 ```
 
-## 1. 规则：题面写明的，和我们推断的
+## 1. 规则：题面明确的，和需要自己约定的
 
-**题面写明（high）**：CSV 从 STDIN 读入，第一行是表头；`next_job_id = 0` 表示链的结尾；输出按链的总时长**降序**排列；
+**题面明确**：CSV 从 STDIN 读入，第一行是表头；`next_job_id = 0` 表示链的结尾；输出按链的总时长**降序**排列；
 报告以 `-` 开头，每节以 `-` 结尾；时间格式 `HH:MM:SS`；输入有任何问题都要**正常退出**，并且只往 STDOUT 打印 `Malformed Input`。
 
-**从例子推出（high）**：平均时间是**截断**的（35 / 2 = 17.5 → `00:00:17`）；文件里行的顺序不等于链的顺序。
+**从例子可得**：平均时间是**截断**的（35 / 2 = 17.5 → `00:00:17`）；文件里行的顺序不等于链的顺序。
 
-**推断（inferred，真实隐藏测试可能不同）**：
+**题面没写清、需要自己约定的情况**（隐藏测试可能不同）：
 
 | 情况 | 判定 | 理由 |
 |---|---|---|
@@ -71,8 +73,7 @@ stdin 的每一行 ──parse──▶ Map<Long, Job> ──chains──▶ Lis
 环要有入口，入口那个 job 一定同时有环内和环外两个前驱。
 
 **"前驱 ≤ 1"这道检查还保证了循环一定会结束**。把它去掉以后，ρ 字形 `1→2→3→2` 里，1 没有前驱，会被当成起点，
-然后 `while (job.next() != 0)` 就沿着 2→3→2→3… **永远走下去**。这不是理论推演，是实际发生的：加上 ρ 字形测试后，
-第一次跑变异检查时整个构建卡死了，因为测试本身没有时间限制。现在测试工具 `Impl.stdoutOf` 把每次调用放到一个守护线程（daemon thread）里，
+然后 `while (job.next() != 0)` 就沿着 2→3→2→3… **永远走下去**。这不是理论推演：没有这道检查、测试又没有时间限制时，整个构建会卡死。所以测试工具 `Impl.stdoutOf` 把每次调用放到一个守护线程（daemon thread）里，
 最多只等 5 秒（`Thread.ofPlatform().daemon().unstarted(...)` 加上 `join(Duration)`，都是 Java 21 的 API），超时就判失败，
 报错信息是 "did not finish within 5 s: an infinite loop?"。
 **教训：只要测试可能触发死循环，就必须给测试加时间限制，否则一个错误版本会把整个流程卡住，而不是让一个测试失败。**
@@ -80,9 +81,9 @@ stdin 的每一行 ──parse──▶ Map<Long, Job> ──chains──▶ Lis
 **为什么不能只靠计数**：如果去掉"前驱 ≤ 1"这道检查，Y 字形会让共享的 job 被走两遍（多数），纯环会让环上的 job 一次都没走到（少数），
 两者正好抵消时总数还是对的。测试 "shared job balanced by a self loop" 构造的就是这种情况。
 
-**汇合判成 Malformed 是推断**：题面说一条链是"一个 job 序列"，next 是"在它之后运行的那个 job"。
-一次运行的 job 3 不可能同时排在两条不同的链之后，所以我们判为格式错误。另一种可能的解读是"输出两条共享尾部的链"，
-这种解读不太自然，我们没有采用。
+**汇合判成 Malformed 是一个约定**：题面说一条链是"一个 job 序列"，next 是"在它之后运行的那个 job"。
+一次运行的 job 3 不可能同时排在两条不同的链之后，所以判为格式错误。另一种可能的解读是"输出两条共享尾部的链"，
+这种解读不太自然，不采用。
 
 ## 3. 代码分块讲解
 
@@ -259,7 +260,7 @@ static String hhmmss(long seconds) {
   一次就挡住了字段数不对、末尾多逗号、空字段、正负号、空格和小数。注意不能用 `find()`：它只要求某一段子串匹配，
   `"1,2,3,4"` 里的 `"1,2,3"` 就能匹配上（错误版本 "find instead of matches" 挂 2 个测试）。
 - **用 `Optional` 代替在 lambda 里抛受检异常**：`toJob` 用 `Optional.empty()` 表示"这一行不合法"，流外面再用 `anyMatch(Optional::isEmpty)` 统一判断。
-  代价是丢掉了具体的出错原因；本题只要求打印 `Malformed Input`，所以这个代价可以接受。
+  代价是丢掉了具体的出错原因；这个程序只要求打印 `Malformed Input`，所以这个代价可以接受。
   如果需要保留原因，可以用 Java 21 的 sealed 结果类型：`sealed interface Row permits Parsed, Rejected`，再配合记录模式 `case Rejected(String line) -> ...`。
 - **用 `distinct().count()` 判断重复 id**，然后才 `toMap`。`toMap` 的第三个参数是合并函数，key 重复时调用；这里重复的情况已经被排除，所以随便返回哪个都行，并写了注释说明。
   如果不先检查，而是让 `toMap` 在 key 冲突时抛 `IllegalStateException`，就得去捕获一个很宽泛的运行时异常，容易把别的错误一起吞掉。

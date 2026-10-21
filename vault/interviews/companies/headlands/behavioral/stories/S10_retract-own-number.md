@@ -1,6 +1,6 @@
 # S10 · 公开撤回自己的数字（low ego · 测量要可复跑 · 读状态的时间点）
 
-用于：a mistake / low ego / data analysis / how do you know your number is right。
+- 用于：a mistake / low ego / data analysis / how do you know your number is right。
 
 **Hook：「I'd rather retract my own number in public than have a remediation sized off a bad predicate.」**
 
@@ -50,13 +50,13 @@
 - **Root cause in one sentence?** The path **copied the credit's historical schedule id** instead of **resolving at fee time**.
 - **Is the lag a race?** Same shape: two writers, and the **reader's time** decides the answer; fix by **resolving at the event's time**.
 - **How do others trust it?** Every claim has a **query**; the logic has **no country hard-coding**, so a "US special case" is ruled out first.
-- **What triggered the re-read?** 【待 Chi 补】
+- **What triggered the re-read?** 【待补：是什么让你重审了谓词】
 
 ## 别说
 
 - 商户名；"零回归"；9× 适用于金额（金额约 1.9×）。
 - 修复已上线（除非你确认）。
 
-## 待 Chi 补
+## 待补
 
-- 是什么让你重审谓词；修复是否已合入。
+- 【待补：是什么让你重审谓词；修复是否已合入】

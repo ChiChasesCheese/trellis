@@ -1,7 +1,7 @@
 # S6 · 逐行方案撑不住：上线前用规模估算叫停（性能 · 容量推理 · 独立判断）
 
-用于：a performance problem / a time you said no / how do you estimate / inherited project。
-**先说边界**：这是**上线前的容量推理，不是对运行中系统的剖析**。
+- 用于：a performance problem / a time you said no / how do you estimate / inherited project。
+- **先说边界**：这是**上线前的容量推理，不是对运行中系统的剖析**。
 
 **Hook：「Before writing serving code, I ask what the per-row cost times the peak row count is.」**
 
@@ -55,6 +55,6 @@
 - "I profiled it" / "I sped it up N×"。
 - 把 10 µs 当事实。点名实习生。
 
-## 待 Chi 补
+## 待补
 
-- Phase 1 是否上线、真实耗时；一个真实剖析故事（`templates.md` T2）。
+- 【待补：Phase 1 是否上线、真实耗时；一个真实剖析故事（`templates.md` T2）】

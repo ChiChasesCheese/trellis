@@ -1,6 +1,8 @@
 # q01 · FizzBuzz（Java 21，HackerRank 模板）
 
-题面原文：`../catalog/raw/hackerrank_fizzbuzz_photo.md`。代码：`../java/src/main/java/headland/q01/`。
+FizzBuzz 是最经典的热身题：从 1 数到 n，3 的倍数打印 Fizz，5 的倍数打印 Buzz，同时是 3 和 5 的倍数打印 FizzBuzz，其余打印数字本身。题目本身几乎没有算法，考的是你在 HackerRank 的 Java 模板里能不能不出错：模板怎么读、先判断哪个分支、输出怎么写才既对又快。判题只比对标准输出（STDOUT），多一个空格都会判错。
+
+代码在 `../java/src/main/java/headland/q01/`。
 
 ```bash
 cd vault/interviews/companies/headlands/mock_maven/java
@@ -22,7 +24,7 @@ python3 mutation_check.py q01                          # 7 个错误版本全部
 
 **必须先判断 15**：`if (i % 3 == 0)` 写在前面的话，15 会先命中 "Fizz"，后面的分支就走不到了。
 
-**输出方式**（同样输出 199,999 行到文件，本机实测）：
+**输出方式**（同样输出 199,999 行到文件，实测）：
 
 | 写法 | 用时 | 说明 |
 |---|---|---|
@@ -67,5 +69,4 @@ System.out.println(IntStream.rangeClosed(1, n)
 | 每行末尾多一个空格 | 12 | 比对是逐字的 |
 | 自己的 `PrintWriter` 没有 `flush()` | 12 | 什么都没输出 |
 
-**搭环境时的一个教训**：变异脚本的第一版把 "没有测试被选中"（`-Dtest` 写错了）也算成"抓到了"，7/7 全是假的。
-现在脚本要求先让参考解全绿，并且必须真的有测试失败才算抓到。和 Airbnb 那题一样：**测试全绿不能证明什么，要用故意写错的版本验证测试本身。**
+**怎么检验测试本身**：变异检查（mutation check）要先确认参考解全绿，再要求每个错误版本都真的让某个测试失败；"没有测试被选中"（比如 `-Dtest` 写错了）不算抓到。**测试全绿不能证明什么，要用故意写错的版本验证测试本身。**

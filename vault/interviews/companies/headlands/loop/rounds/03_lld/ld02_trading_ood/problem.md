@@ -14,7 +14,7 @@
 
 最少要先懂：
 
-* **record / sealed / 模式匹配 switch**：`record` 是不可变的值类型，`equals` / `hashCode` 自动生成，紧凑构造器里做校验；`sealed` 接口限定了所有实现类，于是对它做 `switch` 时编译器能检查是否穷尽。本题的事件类型是 sealed 层级，状态转移是穷尽的 `switch`；
+* **record / sealed / 模式匹配 switch**：`record` 是不可变的值类型，`equals` / `hashCode` 自动生成，紧凑构造器里做校验；`sealed` 接口限定了所有实现类，于是对它做 `switch` 时编译器能检查是否穷尽。这里的事件类型是 sealed 层级，状态转移是穷尽的 `switch`；
 * **整数算术与溢出**：价格和数量用整数（最小报价单位），乘法用 `Math.multiplyExact` / `addExact`，溢出时抛异常而不是静默回绕；
 * **事件溯源（event sourcing）**：状态不直接修改，只由一串事件按顺序推导出来；因此重放同一串事件必定得到同一状态；
 * 订单簿与撮合（可选背景）：订单簿按价格-时间优先排队，撮合产生成交（Fill）。
@@ -75,7 +75,7 @@ public record OrderView(Order order, OrderStatus status, long cumQty, long cumNo
   * 成交价不得越过限价：买单 `px > 限价` 非法，卖单 `px < 限价` 非法；等于限价、价格改善合法。
   * `cumNotional += qty * px`，溢出抛 `ArithmeticException`，**且订单状态不变**。
   * `cumQty == order.qty` ⟹ `FILLED`，否则 `PARTIALLY_FILLED`。
-* `Cancel` 是**撤单确认**（不是撤单请求）。`PENDING` 状态下收到 `Cancel` 非法（真实系统里这是个竞态，本题简化）。
+* `Cancel` 是**撤单确认**（不是撤单请求）。`PENDING` 状态下收到 `Cancel` 非法（真实系统里这是个竞态，这里简化）。
 * `Reject` 带原因字符串，存进 `rejectReason`。
 * **聚合量增量维护**：`openCount`、`openLeaves` 在每次状态变化时更新，**不要**在查询时扫描所有订单——风控每个订单都要调用它们。
 * `PENDING` 订单计入未完成（它已经发出去了，可能随时成交）。

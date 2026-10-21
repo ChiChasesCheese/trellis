@@ -1,6 +1,6 @@
 # S8 · 修一个，再扫整个仓库找下一个（好奇心 · 消灭一类问题 · 收窄自己说宽的话）
 
-用于：curiosity / debug under pressure / low ego / how do you prevent recurrence。
+- 用于：curiosity / debug under pressure / low ego / how do you prevent recurrence。
 
 **Hook：「I'd rather own 'here's the next one' than just the one that paged.」**
 
@@ -39,8 +39,8 @@
 
 ## 追问
 
-- **Why were future grants harmless?** They have **no existing dependents** to conflict with. 【待 Chi 补：你核实的依据】
-- **How did you scan?** 【待 Chi 补：方法（grep / 脚本 / state）】
+- **Why were future grants harmless?** They have **no existing dependents** to conflict with. 【待补：你核实的依据】
+- **How did you scan?** 【待补：方法（grep / 脚本 / state）】
 - **Most dangerous "harmless" Terraform operation?** **Renaming** a resource: default is **delete and recreate**; use a `moved` block or `state mv`.
 - **Why not fix the other module yourself?** Not my module, and they hadn't fired; **flag with evidence**, let the **owner** decide.
 
@@ -49,6 +49,6 @@
 - "the only resource in the repo missing it"；"我被指派调查"（我只是被 cc）。
 - 把 7 分钟当炫耀。
 
-## 待 Chi 补
+## 待补
 
-- 那两个资源后来有没有被修。
+- 【待补：那两个资源后来有没有被修】

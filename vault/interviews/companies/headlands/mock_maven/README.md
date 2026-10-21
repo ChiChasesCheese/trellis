@@ -1,20 +1,19 @@
-# Headland kit
+# Headland mock coding test（Java 21 + Maven）
 
-Started 2026-10-10 for a Headland mock coding test that Chi takes in **Java 21**. This is not yet a full kit: the
-GitHub-first survey, `catalog/CATALOG.md` ranking and loop guide from `building-company-interview-kits` have not been
-done. See `CHECKPOINT.md`.
+这是一套用 **Java 21** 做的 HackerRank 风格模拟题：每题是一个 Maven 小项目里的一个包，有你要写的 `Starter.java`、参考解 `Solution.java` 和 JUnit 5 测试。
+同一套测试通过 `impl` 系统属性选择实现，所以既能给参考解判分，也能给你自己的代码判分。
+每题配一篇中文讲义，逐题带写，并回顾用到的 Java 21 语法与最佳实践。
 
-| Path | What |
+| 路径 | 内容 |
 |---|---|
-| `catalog/raw/` | sources, verbatim, URL or photo + date |
-| `java/` | one Maven project (Java 21, JUnit 5) for every problem in this kit; one package per problem |
-| `study/` | 中文：逐题带写、Java 21 语法与最佳实践回顾 |
-| `java/mutation_check.py` | one-bug variants of a problem's `Solution.java`; every one must fail a test (`python3 mutation_check.py q01`) |
+| `java/` | 一个 Maven 项目（Java 21、JUnit 5），每题一个包 |
+| `study/` | 逐题带写、Java 21 语法与最佳实践回顾 |
+| `java/mutation_check.py` | 给 `Solution.java` 注入单个错误的变体，每个变体都必须让某个测试失败（`python3 mutation_check.py q01`） |
 
-| Problem | Package | Tests | Study |
+| 题 | 包 | 测试 | 讲义 |
 |---|---|---|---|
-| q01 FizzBuzz | `headland.q01` | `FizzBuzzTest` (12), 7/7 mutants killed | `study/q01_fizzbuzz.md` |
-| q02 Job Runner | `headland.q02` (`Solution` imperative, `Functional` streams throughout) | `JobRunnerTest` (42); mutants 17/17 and 15/15 | `study/q02_job_runner.md` |
+| q01 FizzBuzz | `headland.q01` | `FizzBuzzTest`（12 个测试） | `study/q01_fizzbuzz.md` |
+| q02 Job Runner | `headland.q02` (`Solution` imperative, `Functional` streams throughout) | `JobRunnerTest`（42 个测试） | `study/q02_job_runner.md` |
 
 ```bash
 cd vault/interviews/companies/headlands/mock_maven/java
@@ -23,7 +22,4 @@ mvn -q test -Dimpl=starter                    # your code
 mvn -q test -Dimpl=starter -Dtest='headland/q01/**'  # one problem
 ```
 
-Layout per problem `qNN_name` (package `headland.qNN`): the interface in `src/main/java/headland/qNN/`,
-`Starter.java` (yours) and `Solution.java` (reference) next to it, tests in `src/test/java/headland/qNN/`, one class per
-level. Tests pick the implementation from the `impl` system property, so the same suite grades both.
-`.java` files are invisible to Obsidian and ignored by `trellis` (it reads `*.md` only); `java/target/` is git-ignored.
+每题 `qNN_name` 对应包 `headland.qNN`：接口、`Starter.java`（你的）和 `Solution.java`（参考解）放在 `src/main/java/headland/qNN/`，测试在 `src/test/java/headland/qNN/`，每个难度层级一个测试类。

@@ -1,5 +1,7 @@
 # hc09 · Top Trade Events by Notional（按名义金额取 top-k 成交 / ticker）
 
+一天里交易所产生很多成交事件，每个事件的名义金额（notional）等于价格乘以数量。这个任务要你取名义金额最大的 k 个事件，再扩展到按 ticker 汇总、滑动窗口里的 top-k，以及多线程分块并行聚合。核心工具是大小为 k 的最小堆和有序集合，追问集中在 tie-break、溢出和多核结果是否一致。
+
 ## 读题前你需要知道
 
 * **堆（heap）与「大小为 k 的最小堆」**：为什么取最大的 k 个要用*最小*堆；
@@ -12,8 +14,8 @@
 一天里交易所产生了很多成交事件（trade event）。它们以三个**平行数组**（parallel arrays）给出：第 `i` 个事件是
 `(tickers[i], prices[i], volumes[i])`。一个事件的 **notional**（名义金额）= `price × volume`。
 
-* 价格用**整数 tick**（最小报价单位，比如 1 tick = 1 美分），数量用整数股数。所以 notional 是精确的 `long`，没有浮点误差。 真题的价格类型未知；
-  这里选整数，是因为「金额不能用 `double` 累加」是交易公司面试的老生常谈，而且后面的并行合并要靠整数加法的结合律。
+* 价格用**整数 tick**（最小报价单位，比如 1 tick = 1 美分），数量用整数股数。所以 notional 是精确的 `long`，没有浮点误差。
+  选整数，是因为「金额不能用 `double` 累加」是交易公司面试的老生常谈，而且后面的并行合并要靠整数加法的结合律。
 * 价格 ≥ 0，数量 ≥ 0。乘法和累加都用 `Math.xxxExact`：**溢出就抛 `ArithmeticException`**，绝不静默回绕成负数。
 
 ## Part 一览
@@ -55,7 +57,7 @@ topEvents(k=3) → [TSLA(i=5, 200000), AAPL(i=0, 180000), GOOG(i=3, 126000)]
 topEvents(k=4) → 第 4 名是 i=1 而不是 i=4：二者 notional 与 ticker 都相同（MSFT, 120000），下标小的在前
 ```
 
-## Part 2 · top-k ticker（方向有标题支持，细节）
+## Part 2 · top-k ticker
 
 `topTickers(tickers, prices, volumes, k)` → `List<TickerTotal>`：同一 ticker 的所有事件 notional 相加，取总额最大的 `k` 个；
 总额降序，相同按 ticker 升序。累加用 `Math::addExact`——**每个事件都不溢出，合起来也可能溢出**，要报。没出现过的 ticker 不存在；出现过但总额为 0 的 ticker 存在（排在最后）。

@@ -1,5 +1,7 @@
 # hc05 · Market Order Book（订单簿 + 限价撮合）
 
+订单簿是交易所用来存放所有尚未成交的买单和卖单的数据结构：买盘按价格从高到低、卖盘从低到高排列，同价位按先来后到排队。这个任务要你实现下单、撤单、改量和查最优价，再加上限价撮合——新订单来了，按价格-时间优先与对手盘成交。最后的追问落在性能上：怎么做到热路径不装箱、不为每次操作创建新对象。
+
 ## 读题前你需要知道
 
 * **订单簿（order book）**是什么、**买盘 / 卖盘 / 最优价 / 价位 / 价格-时间优先**各是什么意思；
@@ -109,7 +111,7 @@ REJECT id=9 reason=unknown id
 
 ## Part 3 · 批量限价撮合
 
-`BatchMatcher.run(long[][] rows)`：`rows[i] = {side, price, qty}`，`side`：`0 = BUY`，`1 = SELL`（，真题编码未知）；第 `i` 行订单的 `id = i + 1`。
+`BatchMatcher.run(long[][] rows)`：`rows[i] = {side, price, qty}`，`side`：`0 = BUY`，`1 = SELL`；第 `i` 行订单的 `id = i + 1`。
 按行序当作限价单依次撮合（直接复用 Part 2），返回
 
 ```
@@ -142,7 +144,7 @@ Summary(trades, filledQty, notional, bids, asks)
 
 ## 相关变体
 
-* 真题可能只有 `add / cancel / best` 而没有 modify；或者要求按「操作序列」输入、输出每步之后的 best bid/ask。
+* 变体可能只有 `add / cancel / best` 而没有 modify；或者要求按「操作序列」输入、输出每步之后的 best bid/ask。
 * 面试官常见追问：撤单怎么做到 O(1)？同价位怎么保证先来先成交？为什么用 `long` 不用 `double`？
 * C++ 版（Glassdoor）：`std::map<Price, std::list<Order>>` + `unordered_map<Id, list::iterator>`，和这里的 Java 版同构。
 

@@ -1,4 +1,6 @@
-# fit · Chi 的简历 vs Java Software Engineer JD（逐条）
+# fit · 你的简历 vs Java Software Engineer JD（逐条）
+
+这页把 Headlands Java 岗的职位描述（JD）拆成一条一条，逐条对照你的简历：哪些是你能直接讲 3 分钟的强项，哪些只有相邻经验，哪些是空白。每条都写了该怎么说，以及空白要补什么。读完你应该知道：面试里主动把话题引向哪里，哪里要诚实地划出边界。
 
 > 评级：**强** = 简历上有直接证据且能讲 3 分钟 · **部分** = 有相邻经验，但缺关键一层 · **缺口** = 没有证据，不要硬说，补课 + 诚实表述。
 > 诚实线：数字只说量级；不点同事和商户名；自己没做的不说自己做的。
@@ -10,7 +12,7 @@
 | Qualifications（9 条硬性 + 1 条 Plus） | 10 | 4 | 4 | 2 |
 | Day to Day（10 条，含"面试别人"） | 10 | 3 | 4 | 3 |
 
-**一句话画像**：Chi 的强项是**"正确性要求极高的数据管线 + 线上值守 + 事后定量复盘 + 测试纪律"**；弱项是**"机器和网络那一层"（Linux、网络、存储引擎、性能剖析、C++）**，而这恰好是 JD 后半的措辞。面试策略：把强项讲成 JD 前半的证据，把弱项讲成"我知道它在哪、读过什么、能推到哪一层"，不要装有。
+**一句话画像**：你的强项是**"正确性要求极高的数据管线 + 线上值守 + 事后定量复盘 + 测试纪律"**；弱项是**"机器和网络那一层"（Linux、网络、存储引擎、性能剖析、C++）**，而这恰好是 JD 后半的措辞。面试策略：把强项讲成 JD 前半的证据，把弱项讲成"我知道它在哪、读过什么、能推到哪一层"，不要装有。
 
 ---
 
@@ -22,7 +24,7 @@
 | Q2 | Well-versed in the fundamentals of software engineering | **部分** | PayPal 两年同一平台；Ruby/Kotlin→Java 迁移含"行为一致性测试"；Quant-Stroller 66K+ 行、470+ 测试文件、narrow seams | "My fundamentals are from owning one money pipeline end to end: idempotency, tests that span stages, migrations with parity checks." 薄的是**数据结构 / 算法 / OS 的口头深度**，不是工程习惯 | 数据结构与算法、复杂度、堆、有序结构、缓存、OS/IPC、网络六块基础 |
 | Q3 | Genuine interest in solving technical problems, along with a strong ability to implement solutions | **强** | Quant-Stroller（没人要求，为了搞懂回测能否撑过成本与样本外检验而自建）；schema pool（没人分配）；on-call 的 RCA | 讲 Quant-Stroller 的故事，和 Terraform RCA 后扫全仓库的故事 | — |
 | Q4 | Low ego, able to work both in a collaborative team setting and autonomously | **强** | 无简历句子，靠故事：公开撤回自己的数字；接受批评写 ADR；把 SLA 定论讲清让别人 defer，但不挤部署环节；修了就主动说"下一个雷" | "I'd rather retract my own number in public than have a remediation sized off a bad predicate." | — |
-| Q5 | Committed to designing and implementing fully automated, scalable, and maintainable solutions with extensive testing | **强** | 简历：Ruby/Kotlin→Snowflake/Java 迁移"comprehensive testing … behavioral parity"；Quant-Stroller 470+ 测试文件、自托管 CI、append-only experiment ledger、dual-gate；事后补"跨 promote→fee"的 e2e；配置驱动门禁 | 讲 ACH NULL 事故：重点是**测试为什么没抓到**的四个原因，和"补上跨阶段 e2e" | — |
+| Q5 | Committed to designing and implementing fully automated, scalable, and maintainable solutions with extensive testing | **强** | 简历：Ruby/Kotlin→Snowflake/Java 迁移"comprehensive testing … behavioral parity"；Quant-Stroller 470+ 测试文件、自托管 CI、append-only experiment ledger、dual-gate；事后补"跨 promote→fee"的 e2e；配置驱动的质量闸门 | 讲 ACH NULL 事故：重点是**测试为什么没抓到**的四个原因，和"补上跨阶段 e2e" | — |
 | Q6 | Comfortable operating at various levels of abstraction, from individual machines to large scale distributed systems | **部分** | 高层：Kafka、K8s（部署形态）、Snowflake、Spark。低层：讲得出零拷贝克隆为什么 2 秒（微分区元数据）、并行度 = replicas × tasks.max 受 partition 数限制；**简历没有单机层面（CPU、内存、磁盘、内核）的证据** | "Most of my work has been at the distributed-service and data-warehouse level. I've gone down a layer when it mattered — why a clone takes two seconds, why consumer parallelism is capped by partitions — and I'm deliberately learning the single-machine layer: caches, syscalls, the JVM." 不要说"all levels" | CPU 缓存局部性 → 进程/线程/IPC |
 | Q7 | Strong knowledge of the details of computing all throughout the technical stack | **缺口**（诚实） | 同上；简历没有 Linux、JVM 调优、网络栈的任何句子 | 不要说"strong"。说："I know the details where I've been burned — SQL NULL semantics, at-least-once delivery, Snowflake's storage model. Below the JVM I'm earlier in the curve, and here is what I've read." 然后让对方选一层，你推到最深处并说"我就知道到这里" | 语言深度题库的速度、分配、JIT/GC、Linux 工具四节；JIT/ZGC |
 | Q8 | Superior ability to write, refactor, and debug programs in Java | **部分** | 简历 skills 有 Java；PayPal 把 Ruby/Kotlin 迁到 **Java**（含 Claude Code 辅助重构 + 测试）；实习用 Kotlin / Spring Boot（跑在 JVM 上，但不等于 Java 语言功底）；HackerRank（Java）已通过 | "Day to day at PayPal I'm in Java and Snowflake; I've also written Kotlin/Spring. The Java OA passed. I've been drilling Java 21 for this loop." 说"superior"会被追问，靠编码题与语言深度题撑 | Java 21 特性（record、sealed、模式 switch、虚拟线程）；视频面编码题 |
@@ -57,7 +59,7 @@
 | 1 | **性能剖析 / 排查**（D3） | JD Day-to-day 第 3 条，面试评分点"性能直觉"（每个追问都是"能不能更快/更省"） | ① 编码题的 Part 2–4 练到口述；② 语言深度题库的速度、分配、JIT/GC 各答一遍；③ 填一个真实的性能排查案例 |
 | 2 | **单机层：缓存 / OS / Linux**（Q6、Q7） | 视频面追问"为什么这样更快"的终点 | 顺序：缓存局部性 → OS/进程/IPC → 网络 |
 | 3 | **网络**（Q9、D7） | JD 点名一条，视频面可能问并发 / non-blocking | 网络基础；多线程合并数据流题 |
-| 4 | **Java 语言细节**（Q8） | "Superior ability" + 面经里的挂法是"语言细节答不深" | JIT/GC、内存模型；Java 21 特性 |
+| 4 | **Java 语言细节**（Q8） | "Superior ability"；这类面试常见的挂法是"语言细节答不深" | JIT/GC、内存模型；Java 21 特性 |
 | 5 | **C++ / 交易**（Q10） | Plus 项，不是硬性；不主动提 | 只需能说出 spread、延迟、回测各是什么 |
 | 6 | **分布式存储设计**（D2） | 简历没有，面试官若问设计会用 JD 原词 | 不补深，诚实表达"使用者视角"，推到 Kafka/Snowflake 的存储模型 |
 

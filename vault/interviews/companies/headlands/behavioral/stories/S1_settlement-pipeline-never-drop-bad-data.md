@@ -1,6 +1,6 @@
 # S1 · 简历主线：结算管线"出错就记下来，绝不丢掉"（简历深挖 · 幂等 · 可观测）
 
-用于：walk me through your resume / biggest system / how do you know it's correct / what broke in production。
+- 用于：walk me through your resume / biggest system / how do you know it's correct / what broke in production。
 
 **Hook：「I built a settlement pipeline whose rule is: when data is wrong, record it, never drop it.」**
 
@@ -48,7 +48,7 @@
 - **No duplicate, no lost fee?** Every stage **idempotent**; rejects **kept**.
 - **Exactly-once?** No; at-least-once plus idempotent writes is **effectively once**.
 - **Two upstream tasks out of step?** `AFTER A, B` guarantees each ran, not on the **same batch**; mismatches go to the error log and **self-heal** next run.
-- **Stream staleness?** Silent if unconsumed. 【待 Chi 补：实际怎么监控】
+- **Stream staleness?** Silent if unconsumed. 【待补：实际怎么监控】
 - **Bottleneck?** I'd measure **time per stage** and **rows/second**; I have no published numbers.
 
 ## 别说
@@ -56,6 +56,6 @@
 - "top committer / 615 commits"；"no bugs"；"parsing UDTFs"（解析在 procedure 的 SUBSTRING 里）。
 - "I migrated Funding's Ruby scripts"；美元数。
 
-## 待 Chi 补
+## 待补
 
-- 第二个按这套模式接入的来源；设计评审里的反对意见；任何真实吞吐/耗时。
+- 【待补：第二个按这套模式接入的来源；设计评审里的反对意见；任何真实吞吐/耗时】

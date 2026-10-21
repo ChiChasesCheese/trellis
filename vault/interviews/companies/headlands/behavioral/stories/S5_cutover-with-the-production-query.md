@@ -1,6 +1,6 @@
 # S5 · 用生产查询本身做验证的数据源切换（测试 · 有界扫描 · 默认关的发布）
 
-用于：how do you test a risky change / a performance decision / ship fast safely / biggest system change。
+- 用于：how do you test a risky change / a performance decision / ship fast safely / biggest system change。
 
 **Hook：「I validated with the production query itself, so there was no gap between what I tested and what I shipped.」**
 
@@ -45,7 +45,7 @@
 
 - **Why not dual-write?** Two tasks gated in **opposite directions** by one toggle are the exclusion; dual-write without it **double-charges**.
 - **What does the window cost?** The one-month dedup blind spot above.
-- **How do you know pruning worked?** I'd read the **query profile** (partitions scanned vs total). 【待 Chi 补：是否真的看过；没有就说"I reasoned it from the clustering"】
+- **How do you know pruning worked?** I'd read the **query profile** (partitions scanned vs total). 【待补：是否真的看过；没有就说"I reasoned it from the clustering"】
 - **Settlement view late too?** The quality-status join returns **nothing**; fees **wait**, never read half-built.
 - **What can still go wrong?** Reprocessing past the window; one-sided same-day records must arrive later; the toggle gives a **fast off**.
 
@@ -55,6 +55,6 @@
 - $55B / $450M/月 是项目级数字，不是我的产出。
 - 窗口化"快了 N 倍"（没有测过）。
 
-## 待 Chi 补
+## 待补
 
-- 有无资深同事倾向 A；窗口化前后的 partitions scanned。
+- 【待补：有无资深同事倾向 A；窗口化前后的 partitions scanned】

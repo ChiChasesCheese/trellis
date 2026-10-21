@@ -1,6 +1,6 @@
 # S7 · 没人要的工具：schema pool，以及为什么克隆只要 2 秒（自主性 · 好奇心 · 确定性）
 
-用于：something you built unasked / curiosity about internals / a design you rewrote / how you use AI。
+- 用于：something you built unasked / curiosity about internals / a design you rewrote / how you use AI。
 
 **Hook：「Nobody assigned it: two engineers, or two AI agents, collided on shared-schema DDL, so I built a pool of two-second zero-copy clones.」**
 
@@ -46,8 +46,8 @@
 - **Why is a clone 2 seconds?** **Immutable micro-partitions + metadata pointers**; no data copied.
 - **What broke in V1?** Source state **history-dependent**.
 - **Cross-database streams?** Cloning the **app DB first** invalidates streams that depend on **replication** tables; fixed order, **replication first**.
-- **Two sessions grab the same slot?** 【待 Chi 补：真实的借用/归还机制】
-- **Session crashes holding a slot?** 【待 Chi 补：泄漏回收】
+- **Two sessions grab the same slot?** 【待补：真实的借用/归还机制】
+- **Session crashes holding a slot?** 【待补：泄漏回收】
 - **How do you trust AI-written code?** **Plan with the agent, TDD every phase, CI and monitoring gates**; watch **gates and thresholds**, not lines; in money code I **read every diff**.
 - **Why direct-push to main?** Personal repo; it doesn't touch team code.
 
@@ -56,6 +56,6 @@
 - "team standard"；schema pool 的团队使用者数（无记录）；"cheat" 这个词。
 - "For this interview I'm working without AI" 仅当你真的关掉 AI 练过。
 
-## 待 Chi 补
+## 待补
 
-- V1 用了多久；除你外有几个人用；DDL 冲突前后对比。
+- 【待补：V1 用了多久；除你外有几个人用；DDL 冲突前后对比】

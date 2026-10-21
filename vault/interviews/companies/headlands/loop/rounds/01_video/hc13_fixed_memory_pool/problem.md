@@ -3,7 +3,7 @@
 ## 背景
 
 低延迟系统（行情网关、撮合引擎）不希望在热路径上 `new`：每次 `new` 都在给垃圾回收器（GC）添工作，GC 的停顿会直接变成延迟毛刺。
-常见做法是启动时一次性准备好 `capacity` 个等大的块，运行时只在池里「借」和「还」。这道题就是写这个池。
+常见做法是启动时一次性准备好 `capacity` 个等大的块，运行时只在池里「借」和「还」。你要写的就是这个池。
 
 ## 读题前你需要知道
 
@@ -173,8 +173,8 @@ g.isLive(b);                 // true
 ## 相关变体
 
 * 把「编号」换成 `ByteBuffer` 切片（`ByteBuffer.slice()`）——Java 老办法，容量 `int`、无 `close`；
-* 块大小可变（slab / buddy allocator）——真题是等大小，这里不做；
-* "池里有 N 个对象，`acquire()` 阻塞等待、`release()` 唤醒"——`Semaphore` + 栈的阻塞版，注意它和本题的非阻塞语义不同；
+* 块大小可变（slab / buddy allocator）——这里的块都是等大小，不做；
+* "池里有 N 个对象，`acquire()` 阻塞等待、`release()` 唤醒"——`Semaphore` + 栈的阻塞版，注意它和这里的非阻塞语义不同；
 * C++ 版本里同题会追问 placement new / alignment / `std::pmr`。
 
 ## 考什么

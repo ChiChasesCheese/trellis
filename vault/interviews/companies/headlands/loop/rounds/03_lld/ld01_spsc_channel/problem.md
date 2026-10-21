@@ -169,7 +169,7 @@ ring.offer(new byte[20]);     // 到末尾只剩 16 < 24：先发布 16 字节�
 * C++ 版：`std::atomic<uint64_t>` + `memory_order_release/acquire`，`mmap`/`shm_open`；追问 `alignas(64)`、`std::hardware_destructive_interference_size`。
 * 多生产者：`tail` 变成 CAS 竞争，或每个生产者一个环（SPSC 的 N 个副本）——这时才需要 `compareAndSet`；
 * 消息带"所有权转移"：不拷贝，生产者写到环里预留的区域再"提交"（Aeron 的 `claim/commit`，Disruptor 的 `next()/publish()`）；
-* 通道要能跨崩溃恢复：消费者崩溃重启后从哪里继续？（把 `head` 放在文件里，本题已经做了，但"处理了一半的消息"需要幂等设计。）
+* 通道要能跨崩溃恢复：消费者崩溃重启后从哪里继续？（把 `head` 放在文件里，这里的实现已经做了，但"处理了一半的消息"需要幂等设计。）
 
 ## 考什么
 

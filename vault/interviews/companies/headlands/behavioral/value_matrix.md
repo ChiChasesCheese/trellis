@@ -1,10 +1,7 @@
 # 故事 × 价值 覆盖矩阵
 
-15 个故事（S1–S11 + R1–R3 + M1）× 15 个 Headlands 看重的价值。P = 可作主答案，S = 支撑/换角度，`*` = 有保留（见 caveat 表）。改映射改 `coverage.py` 里的 `MATRIX`，运行 `python3 behavioral/coverage.py`，把输出贴回下面。
-
-```text
-$ python3 behavioral/coverage.py
-```
+- 15 个故事（S1–S11 + R1–R3 + M1）× 15 个 Headlands 看重的价值。
+- **P** = 可作主答案；**S** = 支撑 / 换角度；`*` = 有保留（见 caveat 表）。
 
 | Story | 1 LOWEGO | 2 CURIOUS | 3 AUTON | 4 AUTOTEST | 5 PERF | 6 DSTORE | 7 LINUXNET | 8 BREADTH | 9 FASTITER | 10 MONITOR | 11 DATAANAL | 12 DEBUG | 13 XTEAM | 14 REVIEW | 15 LANG | P | S |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -26,7 +23,7 @@ $ python3 behavioral/coverage.py
 | **Primary count** | 3 | 3 | 4 | 5 | 1 | 1 | 0 | 2 | 2 | 2 | 3 | 2 | 2 | 1 | 0 | | |
 | **Secondary count** | 4 | 3 | 6 | 3 | 5 | 4 | 1 | 5 | 5 | 1 | 5 | 4 | 4 | 0 | 2 | | |
 
-`*` = caveat (see the caveat table).
+- `*` = caveat (see the caveat table).
 
 ### Per-value coverage (`solid P` = primary from employer work S1-S10 only)
 
@@ -92,7 +89,7 @@ $ python3 behavioral/coverage.py
 - S11: sole primary for V6 Distributed storage / compute farm
 - M1: sole primary for V14 Code review, mentoring
 
-Totals: 15 stories x 15 values; values with a clean employer-work primary: 10/15; values with any P: 13/15; values with zero story: 0
+- Totals: 15 stories x 15 values; values with a clean employer-work primary: 10/15; values with any P: 13/15; values with zero story: 0
 
 
 ## 缺口与怎么办
@@ -101,7 +98,7 @@ Totals: 15 stories x 15 values; values with a clean employer-work primary: 10/15
 |---|---|---|
 | **V5 性能** | 唯一主答案 S6 是上线前的容量推理；S5 窗口化 `ON` 是设计推理；**没有测量过的故事** | 先说 "capacity reasoning, not profiling"，讲 S6/S5，再讲你会怎么剖析，问对方当前瓶颈。补 `stories/templates.md` T2 |
 | **V6 分布式存储/计算** | 只有实习的消费侧（S11）和使用者视角（S1 streams、S7 不可变分区） | "I understand the model as a user; I haven't operated or designed one." |
-| **V7 Linux/网络** | 空白 | "Strongest as a user of Kafka/gRPC/Snowflake; I'd measure where the time goes first." 若有真实经验【待 Chi 补】 |
+| **V7 Linux/网络** | 空白 | "Strongest as a user of Kafka/gRPC/Snowflake; I'd measure where the time goes first." 若有真实经验：【待补：真实的 Linux / 网络经验，一句话】 |
 | **V8 各层都懂** | 只有 S3 是干净主答案（S7 是个人仓库） | 用 S3 的"SQL 语义 → 函数重载 → MERGE"逐层下潜 |
 | **V14 code review/带人** | 只有 M1，且无评审记录 | 只说契约/架构层面的评审；"I read every diff"；补 T3 |
 | **V15 Java/C++ 语言深度** | 没有故事，靠语言题和诚实线 | 见题库 Q8、Q9、Q12 |

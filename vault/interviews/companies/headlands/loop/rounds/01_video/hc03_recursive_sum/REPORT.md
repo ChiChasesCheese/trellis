@@ -83,7 +83,7 @@
 
 * 只在小 n 上测、从没碰过 `StackOverflowError`；`catch (StackOverflowError)` 把它吞成 0。
 * `n*(n+1)/2` 先乘后除；对 `Long.MAX_VALUE` 附近的 n 返回负数。
-* 区间 `a > b` 返回 0 还是抛异常（本题：抛 IAE）；`a == b`；`a` 为负数时用 `n*(n+1)/2` 套用。
+* 区间 `a > b` 返回 0 还是抛异常（这里的约定：抛 IAE）；`a == b`；`a` 为负数时用 `n*(n+1)/2` 套用。
 * `MIN..MAX`：count 溢出但和装得下——只会在 `multiplyExact` 失败就报 Overflow 的实现上挂。
 * 并行：每块各自 `addExact` 再合并（`MAX×2000 + MIN×2000` 每块里溢出，总和 −2000 装得下）；`threshold` 写成 0 造成无限递归；块数 > 元素数时 `from > to`。
 * 虚拟线程版里把 `InterruptedException` 吞掉。
@@ -116,7 +116,7 @@
 
 ## 面试官可能的追问
 
-1. **「为什么 Java 不做 TCO？Scala/Kotlin 怎么做到的？」**——JVM 没有尾调用指令，栈帧对异常轨迹 / `StackWalker` / 调试器可见；Scala `@tailrec`、Kotlin `tailrec` 在编译期把**自递归**改写成循环；互递归仍会爆栈，要 trampoline（Scala `TailCalls`、本题 `Trampoline`）。
+1. **「为什么 Java 不做 TCO？Scala/Kotlin 怎么做到的？」**——JVM 没有尾调用指令，栈帧对异常轨迹 / `StackWalker` / 调试器可见；Scala `@tailrec`、Kotlin `tailrec` 在编译期把**自递归**改写成循环；互递归仍会爆栈，要 trampoline（Scala `TailCalls`、这里的 `Trampoline`）。
 2. **「你怎么知道会在多深爆栈？」**——量不出常数：阈值 ≈ 栈大小 / 帧大小，受 JIT 层级影响（1 MiB 栈：冷 17 258 → 热 57 996）；要么 `Thread(null, r, name, stackSize)` 给大栈，要么改成迭代 / trampoline；`-Xss` 影响所有线程，代价是内存。
 3. **「溢出时返回什么？为什么不抛异常？」**——溢出是**业务可预期**的结果，用 sealed `Overflow(exact)` 让调用方在编译期被迫处理，并带精确值方便降级；`ArithmeticException` 留在实现内部，在公共边界转成值。热路径上抛异常很贵，但这里只抛一次。
 4. **「`n*(n+1)/2` 对 `n = 2³²−1` 会怎样？」**——乘积 2⁶⁴−2³² 在 long 里回绕成 −2³²，除 2 得 −2³¹，静默错误；解法：先把偶数那个除 2，再 `multiplyExact`；中间量溢出时退到 `BigInteger`。

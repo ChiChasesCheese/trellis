@@ -1,6 +1,6 @@
-# 三个待 Chi 本人填写的模板
+# 三个待补模板
 
-只填真的；填不出来的格子，面试里就不讲。
+- 只填真的；填不出来的格子，面试里就不讲。
 
 ## T1 · Quant-Stroller 的空白
 
@@ -15,14 +15,15 @@
 
 ## T2 · 一次真实的性能排查（最大的单项缺口）
 
-S6 是上线前的容量推理，S5 的窗口化 `ON` 是设计推理，都不能冒充剖析。候选素材（只填真的）：
+- S6 是上线前的容量推理，S5 的窗口化 `ON` 是设计推理，都不能冒充剖析。
+- 候选素材（只填真的）：
 
-- Snowflake / PostgreSQL 里读 query profile 或 `EXPLAIN` 并改写查询；
-- S5 窗口化 `ON` 的 partitions scanned 前后对比；
-- Quant-Stroller 里某次面板/因子计算从太慢变可用；
-- 实习期 Spark 作业或 Kafka 消费者吞吐调优。
+  - Snowflake / PostgreSQL 里读 query profile 或 `EXPLAIN` 并改写查询；
+  - S5 窗口化 `ON` 的 partitions scanned 前后对比；
+  - Quant-Stroller 里某次面板/因子计算从太慢变可用；
+  - 实习期 Spark 作业或 Kafka 消费者吞吐调优。
 
-**Hook：【待 Chi 补：一句话，带一个数字】**
+**Hook：【待补：一句话，带一个数字】**
 
 | | 提示 | 你的答案 |
 |---|---|---|
@@ -33,7 +34,7 @@ S6 是上线前的容量推理，S5 的窗口化 `ON` 是设计推理，都不�
 | 修复与对比 | 改了什么？前后各多少？有回归测试吗？ | |
 | 下一步 | 还要更快，先看哪里？为什么那样会更快？ | |
 
-没填之前的答法：先说 "my clearest example is capacity reasoning, not profiling"，讲 S6，再讲你会怎么剖析。
+- 没填之前的答法：先说 "my clearest example is capacity reasoning, not profiling"，讲 S6，再讲你会怎么剖析。
 
 ## T3 · 一次真实的 code review
 
@@ -44,4 +45,4 @@ S6 是上线前的容量推理，S5 的窗口化 `ON` 是设计推理，都不�
 | 对方反应 | 怎么回应？最后怎么定？ | |
 | 你被评审 | 别人评审你、你改了设计的例子 | |
 
-没有就不讲。可以说的一句：**"I read every diff, including the AI's, in money code."**
+- 没有就不讲。可以说的一句：**"I read every diff, including the AI's, in money code."**

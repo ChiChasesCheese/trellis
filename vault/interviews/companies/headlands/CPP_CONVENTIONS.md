@@ -23,7 +23,6 @@ python3 tools/cpptest.py start  loop/rounds/01_video/hc03_recursive_sum         
 python3 tools/cpptest.py run    loop/rounds/01_video/hc03_recursive_sum --tag part1  # 默认 --impl work
 python3 tools/cpptest.py run    loop/rounds/01_video/hc03_recursive_sum --impl reference --exclude-tag perf -q
 python3 tools/cpptest.py main   loop/rounds/00_oa/oa01_job_chain --impl reference < input.txt
-python3 tools/cpptest.py verify "loop/rounds/*/*"   # 验收：reference 全绿，starter 编译且至少一个测试红
 ```
 
 ## 编译参数
