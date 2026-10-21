@@ -3,18 +3,14 @@
 > **唯一目的：让下一个会话在零上下文的情况下接着干。** 权威顺序：git 历史 > 本文件 > `LEDGER.md`。
 > 分支 `headlands-kit`。编排：主会话，子代理 `sonnet` 并行 ≤ 3，一任务一验收一 commit。方法论 `.claude/skills/building-company-interview-kits/`，形状照抄 `companies/millennium/`。
 
-## 一句话现状（2026-10-20，v2）
+## 一句话现状（2026-10-21，v3）
 
-电面 **2026-10-26 12:00 PT**（Teams + CoderPad；C++ 或 Java 由面试官定；禁止 AI）。v2 按 Amazon kit 架构重建：
-`behavioral/`（背景问题层）、`study/20-cpp/`（C++ 课本 16 课）、6 道题的 C++ 版（`tools/cpptest.py`）、`kq_cpp_depth/`（44 题 + 速查表）、
-新 README / LOOP_GUIDE；全部学习文章按 CORE RULE（简洁、无出处、自包含）清理。规则在 `AGENT_RULES.md`。
-
-验收（2026-10-20 全部通过）：`jtest.py verify` 15/15 · `cpptest.py verify` 6/6 · Java 21 示例 javac OK · C++ 课本 73/73 · 基础课本 44 代码块 · `mock_maven` mvn test OK。
-
-## 下一步
-
-1. Chi：README「面试前必须处理」三项；按 LOOP_GUIDE 的 6 天表练（关掉 AI）。
-2. 可选：hc01/hc06/hc08/hc09/hc11/hc13 的 C++ 版；Amazon kit 按 CORE RULE 清理（等 Chi 说）。
+电面 2026-10-26 12:00 PT（Teams + CoderPad；C++ 或 Java 由面试官定；禁止 AI）。
+- 布局按 CLAUDE.md「学习区 vs 研究区」：学习页在 `vault/interviews/companies/headlands/`（README、LOOP_GUIDE、behavioral、题、讲义、mock_maven、练题脚本 jtest/cpptest），
+  通用课本在 `vault/interviews/core/{java,cpp,foundations,system-design}/headlands/`，过程材料在本目录。
+- 12 道编码题都有 C++ 版；全部学习页过 `scripts/plain_style.py`（behavioral 用 `--outline`）。
+- 验收（10/21 全绿）：jtest 15/15 · cpptest 12/12 · C++ 课本 73/73 · 基础课本 44 · mock_maven mvn OK · 学习页 0 死链。
+- 未加（low priority）标签：等 Chi 确认（Headlands 面经稀疏，按规则会把几乎全部电面题标低优先）。
 
 ## 阶段与状态
 
