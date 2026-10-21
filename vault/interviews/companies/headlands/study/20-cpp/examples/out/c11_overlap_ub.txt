@@ -1,24 +1,24 @@
 $ c11_overlap_ub
 =================================================================
-==75305==ERROR: AddressSanitizer: memcpy-param-overlap: memory ranges [0x00016bb3ecc1,0x00016bb3ecc9) and [0x00016bb3ecc0, 0x00016bb3ecc8) overlap
-    #0 0x0001049b00e0  (/Library/Developer/CommandLineTools/usr/lib/clang/21/lib/darwin/libclang_rt.asan_osx_dynamic.dylib:arm64e+0x900e0)
-    #1 0x00010495eb7c  (/Library/Developer/CommandLineTools/usr/lib/clang/21/lib/darwin/libclang_rt.asan_osx_dynamic.dylib:arm64e+0x3eb7c)
-    #2 0x0001042c09cc  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c11_overlap_ub:arm64+0x1000009cc)
+==99082==ERROR: AddressSanitizer: memcpy-param-overlap: memory ranges [0x00016fb8ecc1,0x00016fb8ecc9) and [0x00016fb8ecc0, 0x00016fb8ecc8) overlap
+    #0 0x000100c500e0  (/Library/Developer/CommandLineTools/usr/lib/clang/21/lib/darwin/libclang_rt.asan_osx_dynamic.dylib:arm64e+0x900e0)
+    #1 0x000100bfeb7c  (/Library/Developer/CommandLineTools/usr/lib/clang/21/lib/darwin/libclang_rt.asan_osx_dynamic.dylib:arm64e+0x3eb7c)
+    #2 0x0001002709cc  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c11_overlap_ub:arm64+0x1000009cc)
     #3 0x000199c75154  (/usr/lib/dyld:arm64e.x1+0x30154)
 
-Address 0x00016bb3ecc1 is located in stack of thread T0 at offset 33 in frame
-    #0 0x0001042c08c4  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c11_overlap_ub:arm64+0x1000008c4)
+Address 0x00016fb8ecc1 is located in stack of thread T0 at offset 33 in frame
+    #0 0x0001002708c4  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c11_overlap_ub:arm64+0x1000008c4)
 
   This frame has 1 object(s):
     [32, 48) 'buf' <== Memory access at offset 33 is inside this variable
 HINT: this may be a false positive if your program uses some custom stack unwind mechanism, swapcontext or vfork
       (longjmp and C++ exceptions *are* supported)
-Address 0x00016bb3ecc0 is located in stack of thread T0 at offset 32 in frame
-    #0 0x0001042c08c4  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c11_overlap_ub:arm64+0x1000008c4)
+Address 0x00016fb8ecc0 is located in stack of thread T0 at offset 32 in frame
+    #0 0x0001002708c4  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c11_overlap_ub:arm64+0x1000008c4)
 
   This frame has 1 object(s):
     [32, 48) 'buf' <== Memory access at offset 32 is inside this variable
 HINT: this may be a false positive if your program uses some custom stack unwind mechanism, swapcontext or vfork
       (longjmp and C++ exceptions *are* supported)
 SUMMARY: AddressSanitizer: memcpy-param-overlap (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c11_overlap_ub:arm64+0x1000009cc) 
-examples/build_all.sh: line 26: 75305 Abort trap: 6           perl -e 'alarm 120; exec "bash", "-c", $ARGV[0]' "$1"
+study/20-cpp/examples/build_all.sh: line 26: 99082 Abort trap: 6           perl -e 'alarm 120; exec "bash", "-c", $ARGV[0]' "$1"

@@ -1,6 +1,6 @@
 $ ASAN_OPTIONS=allocator_may_return_null=1:symbolize=0 c10_new_vs_malloc
-==74979==WARNING: AddressSanitizer failed to allocate 0x7fffffffffffffff bytes
-==74979==WARNING: AddressSanitizer failed to allocate 0x7fffffffffffffff bytes
+==98759==WARNING: AddressSanitizer failed to allocate 0x7fffffffffffffff bytes
+==98759==WARNING: AddressSanitizer failed to allocate 0x7fffffffffffffff bytes
 [malloc]
   malloc returned non-null, no ctor message above
 [new / delete]

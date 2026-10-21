@@ -1,8 +1,8 @@
 $ c05_layout_bench
 sum over 2000000 ints, ns per element
-  vector           : 0.0430334 ns/element (checksum 9999995000000)
-  deque            : 0.236925 ns/element (checksum 9999995000000)
-  list (alloc seq.): 0.884729 ns/element (checksum 9999995000000)
-  list (shuffled)  : 59.2888 ns/element (checksum 9999995000000)
-  set (RB-tree)    : 2.57133 ns/element (checksum 9999995000000)
-  unordered_map    : 1.43524 ns/element (checksum 9999995000000)
+  vector           : 0.0489333 ns/element (checksum 9999995000000)
+  deque            : 0.234013 ns/element (checksum 9999995000000)
+  list (alloc seq.): 0.855738 ns/element (checksum 9999995000000)
+  list (shuffled)  : 60.0152 ns/element (checksum 9999995000000)
+  set (RB-tree)    : 2.55603 ns/element (checksum 9999995000000)
+  unordered_map    : 1.39817 ns/element (checksum 9999995000000)

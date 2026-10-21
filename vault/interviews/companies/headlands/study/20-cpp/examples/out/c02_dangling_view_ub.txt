@@ -1,25 +1,25 @@
 $ c02_dangling_view_ub
 =================================================================
-==73009==ERROR: AddressSanitizer: heap-use-after-free on address 0x60d000000040 at pc 0x0001008a4e18 bp 0x00016f55ac30 sp 0x00016f55ac28
+==96782==ERROR: AddressSanitizer: heap-use-after-free on address 0x60d000000040 at pc 0x0001002d0e18 bp 0x00016fb2ec30 sp 0x00016fb2ec28
 READ of size 1 at 0x60d000000040 thread T0
-    #0 0x0001008a4e14  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c02_dangling_view_ub:arm64+0x100000e14)
+    #0 0x0001002d0e14  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c02_dangling_view_ub:arm64+0x100000e14)
     #1 0x000199c75154  (/usr/lib/dyld:arm64e.x1+0x30154)
 
 0x60d000000040 is located 0 bytes inside of 144-byte region [0x60d000000040,0x60d0000000d0)
 freed by thread T0 here:
-    #0 0x00010120c558  (/Library/Developer/CommandLineTools/usr/lib/clang/21/lib/darwin/libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50558)
-    #1 0x0001008a5570  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c02_dangling_view_ub:arm64+0x100001570)
-    #2 0x0001008a4cf4  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c02_dangling_view_ub:arm64+0x100000cf4)
+    #0 0x000100b80558  (/Library/Developer/CommandLineTools/usr/lib/clang/21/lib/darwin/libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50558)
+    #1 0x0001002d1570  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c02_dangling_view_ub:arm64+0x100001570)
+    #2 0x0001002d0cf4  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c02_dangling_view_ub:arm64+0x100000cf4)
     #3 0x000199c75154  (/usr/lib/dyld:arm64e.x1+0x30154)
 
 previously allocated by thread T0 here:
-    #0 0x00010120c150  (/Library/Developer/CommandLineTools/usr/lib/clang/21/lib/darwin/libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50150)
+    #0 0x000100b80150  (/Library/Developer/CommandLineTools/usr/lib/clang/21/lib/darwin/libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50150)
     #1 0x000199f51058  (/usr/lib/libc++.1.dylib:arm64e.x1+0x4058)
     #2 0x000199f4ff78  (/usr/lib/libc++.1.dylib:arm64e.x1+0x2f78)
-    #3 0x0001008a4a90  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c02_dangling_view_ub:arm64+0x100000a90)
-    #4 0x0001008a4cd0  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c02_dangling_view_ub:arm64+0x100000cd0)
+    #3 0x0001002d0a90  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c02_dangling_view_ub:arm64+0x100000a90)
+    #4 0x0001002d0cd0  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c02_dangling_view_ub:arm64+0x100000cd0)
     #5 0x000199c75154  (/usr/lib/dyld:arm64e.x1+0x30154)
 
 SUMMARY: AddressSanitizer: heap-use-after-free (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c02_dangling_view_ub:arm64+0x100000e14) 
 110
-examples/build_all.sh: line 26: 73009 Abort trap: 6           perl -e 'alarm 120; exec "bash", "-c", $ARGV[0]' "$1"
+study/20-cpp/examples/build_all.sh: line 26: 96782 Abort trap: 6           perl -e 'alarm 120; exec "bash", "-c", $ARGV[0]' "$1"

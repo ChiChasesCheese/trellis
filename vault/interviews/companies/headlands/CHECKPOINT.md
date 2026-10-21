@@ -3,11 +3,18 @@
 > **唯一目的：让下一个会话在零上下文的情况下接着干。** 权威顺序：git 历史 > 本文件 > `LEDGER.md`。
 > 分支 `headlands-kit`。编排：主会话，子代理 `sonnet` 并行 ≤ 3，一任务一验收一 commit。方法论 `.claude/skills/building-company-interview-kits/`，形状照抄 `companies/millennium/`。
 
-## 一句话现状（2026-10-14）
+## 一句话现状（2026-10-20，v2）
 
-Chi 投 Headlands Technologies **Software Engineer（Java）**，通过 HackerRank「Headlands Tech Coding Test - Java」，被邀约 **一小时技术视频面（phone screen）**；先签 NDA，再提交多个工作日可用时段。
+电面 **2026-10-26 12:00 PT**（Teams + CoderPad；C++ 或 Java 由面试官定；禁止 AI）。v2 按 Amazon kit 架构重建：
+`behavioral/`（背景问题层）、`study/20-cpp/`（C++ 课本 16 课）、6 道题的 C++ 版（`tools/cpptest.py`）、`kq_cpp_depth/`（44 题 + 速查表）、
+新 README / LOOP_GUIDE；全部学习文章按 CORE RULE（简洁、无出处、自包含）清理。规则在 `AGENT_RULES.md`。
 
-Chi 的要求（2026-10-14）：**Java 21 + 新特性，越多越好；教科书模式**（`study/TEXTBOOK.md`）。题集规范是 Java 版 `CONVENTIONS.md`，运行/验收用 `tools/jtest.py`。
+验收（2026-10-20 全部通过）：`jtest.py verify` 15/15 · `cpptest.py verify` 6/6 · Java 21 示例 javac OK · C++ 课本 73/73 · 基础课本 44 代码块 · `mock_maven` mvn test OK。
+
+## 下一步
+
+1. Chi：README「面试前必须处理」三项；按 LOOP_GUIDE 的 6 天表练（关掉 AI）。
+2. 可选：hc01/hc06/hc08/hc09/hc11/hc13 的 C++ 版；Amazon kit 按 CORE RULE 清理（等 Chi 说）。
 
 ## 阶段与状态
 
