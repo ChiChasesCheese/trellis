@@ -1,103 +1,71 @@
-# Headlands 面试流程指南（SWE · Java，**电面可能要求 C++**）
+# Headlands 电面指南
 
-> 每条结论后面的 `[x]` 指向 `catalog/raw/` 里的行：`F-A1` = forums.md §1.1 A1，`F-B1` = Blind，`F-G2` = Glassdoor，`F-W1` = WSO，
-> `O-D1` = official_and_process.md §D1，`O-C2` = Java JD，`O-G` = 文化表，`G-3.1` = github_repos.md FastPrep 清单。
-> `推断` = 本 kit 的判断，没有来源原话。题目排序见 `catalog/PARETO.md`（cut line 第 22 行）。
+## 这一场
 
-## 0. 全流程
+- **时间**：2026-10-26（周一）12:00 PT，Microsoft Teams 视频，CoderPad 现场写代码。
+- **时长**：排了 1 小时，一般用不满。
+- **内容**：技术问题 + 背景问题 + 现场编码。面你的是一位工程师，以后可能就是你的同事。
+- **语言**：他们大部分工作用 **C++**，用什么语言由面试官决定。**C++ 和 Java 都要能写**；如果面试官没指定，先问一句「C++ or Java?」。
+- **禁止 AI 工具**，被怀疑用了就直接拒。练习时也要关掉补全，按 CoderPad 的条件来：单文件，自己写 `main` 和测试，不查资料。
+- Teams 的聊天框他们不看，有问题直接说出来。
 
-| 阶段 | 形式 | Chi 的状态 | 证据 |
-|---|---|---|---|
-| 投递 | Greenhouse | ✅ 2026-09-29 | — |
-| HackerRank | 1 题，100–120 分钟，job chain CSV | ✅ 2026-10-10 通过（Java 版） | F-Q8，Chi 亲历 |
-| NDA | e-sign | ✅ 2026-10-15 签完 | Chi 亲历 |
-| **技术视频面** | **2026-10-26（周一）12:00 PT，Microsoft Teams + CoderPad；排了 1 小时，「多数不会用满」** | **下一步** | 邀约邮件（Chi 亲历）；F-B1, F-G2, F-G3, O-C2 |
-| 第二次电话面 | 有时有 | ? | F-A7, F-A11, F-B3 |
-| Onsite / final | 3 小时（2 技术 + 1 行为，WSO 2025）到 6+ 轮（1p3a 2024），博客称 "10+ interviews" | ? | F-W1, F-A10, github_repos.md 54skyxenon 博客 |
-| 节奏 | 官方：全程 2–3 周；电面后 36 小时内出结果 | — | O-D1, F-B1 |
+## 面试通常怎么走
 
-## 1. 技术视频面（1 小时）
+1. **2–5 分钟**：寒暄，自我介绍（准备一个 60 秒版本）。
+2. **10–15 分钟**：背景问题。围绕简历深挖，常问：最难的 bug、做过的性能优化、你怎么做测试、为什么想来做交易。
+3. **30–40 分钟**：编码。通常是**一道基础题，面试官一路加追问**：先写对，再问能不能更快、溢出了怎么办、多线程下怎么办。
+4. **穿插**：语言深度问题。比如为什么 C++ 快、C++11/14/17/20 各加了什么、智能指针、`malloc` 和 `new` 的区别、`std::copy` 和 `memcpy` 的区别、进程间通信。
+5. **最后 5 分钟**：你提问。
 
-### 招聘方邮件里写明的（2026-10-16 / 10-19，一手）
+## 他们看重什么
 
-* 「a technical video call, including both **technical and background questions**, as well as **live coding**」，用 **CoderPad**。
-* 「We do most of our work in **C++**, so if you need to do any brushing up then that might help. The language preference is often up to the **discretion of the interviewer**.」→ **C++ 和 Java 都要能写**：C++ 课本 `study/20-cpp/`，C++ 版题集见各题的 `cpp/` 目录（`CPP_CONVENTIONS.md`）。
-* 「all interviews must be completed **without the assistance of AI tools**」→ 平时练习也要关掉补全、不查 AI，按 CoderPad 的条件练：单文件、自己写 `main` 和测试。
-* Teams 自带聊天，但他们说**不会用聊天**，有问题直接说出口。
-* 背景问题（background questions）的准备：`behavioral/`。
-
-### 形式（面经）
-
-* 一位工程师（也可能是 researcher），Zoom，共享编辑器 [F-G2, F-B1, O-C2]。
-* 典型结构是**一道基础题，面试官不断加追问**，而不是多道互不相关的题 [F-B1：「started with summing natural numbers without the formula, then added optimization variants」]；也有两问结构（queue + get_mean → 带快照）[F-A1]。
-* 「这家公司保持了 OA 的风格，题目长 + 难」[F-A2]；「面试官反应很快，喜欢讨论 C++ 相关的技术知识」[F-A1]。
-
-### 考什么（按 PARETO 排序的电面题）
-
-| 优先级 | 题（kit id） | 为什么 |
-|---|---|---|
-| 1 | hc01 买卖股票 DP 家族 | 4 个独立来源，最近 2025-12 [F-A3, F-A16, F-W1] |
-| 2 | hc02 合并 K 路有序 → 多线程无阻塞合并数据流 | 3 个来源 [F-A6, F-A7, G-3.1] |
-| 3 | hc03 递归求和 + 溢出 / 栈深 / 尾递归 | 4 个来源，典型「越挖越深」热身 [F-A14, F-A17, F-B1, G-3.1] |
-| 4 | hc04 Queue mean + snapshot | 最新（2026-03）[F-A1, G-3.1] |
-| 5 | hc05 订单簿 / 撮合 | 2026-02、2026-06 [F-G2, G-3.1] |
-| 6 | hc06 32 位寄存器位运算 | 2025-11，「debugging and bitwise operations in a code framework」[F-A2, G-3.1] |
-| 7 | hc07 股票代码 hash map 优化 | [F-B1, F-A17] |
-| 8 | hc08 订单序列 API（Put/Delete + 前缀查询） | [F-A9, G-3.1] |
-| 9 | 语言深度 kq02–kq06（C++ 报告 → Java 对应） | 「为什么 C++ 快」「C++ 版本差异」「smart pointers」[F-A13, F-W2, F-A8] |
-
-### 评分（推断，来源是 JD 与官方视频）
-
-* **代码质量**：「clean, well structured, 容易 maintain」[F-A13]；JD「fully automated, scalable, and maintainable solutions with extensive testing」[O-C2]。→ 先说测试用例，再写代码；命名、拆函数、不变量写在类型里（record 紧凑构造器）。
-* **性能直觉**：每个追问都是「能不能更快 / 更省」[F-B1]；JD「Address performance limitations … Linux」[O-C2]。→ 每写完一版主动说复杂度、分配、装箱、缓存局部性，然后问「要不要我优化 X」。
-* **系统细节的好奇心**：「curious why it was slow」「knowledgeable about a lot of different areas」[O-G]。→ 追问到 JVM（JIT、GC、逃逸分析、内存模型）时别回避，说清楚自己知道到哪一层。
-* **低自我、能交流**：「Low ego」[O-C2]；面试官会打断讨论 [F-A1]。
-
-### 常见挂法（来源里的原话）
-
-| 挂法 | 证据 | 对策 |
-|---|---|---|
-| 花太多时间修编译错误 | 「花了很多时间修 compile error」[F-A7] | 在 Java 21 里练到手熟：`jtest.py` 每题先跑空壳，熟悉 record / switch 模式的语法细节 |
-| 语言细节答不深 | 「c++/Python 的区别，会问得比较详细」[F-A8]；「招 c++ linguist」[F-A2] | 做 kq 题库（Java 内存模型、GC、JIT、`volatile`/`VarHandle`、虚拟线程 pinning） |
-| 没准备、状态差 | [F-A8] | 面前一天只复习，不刷新题 |
-| 基础题答完不会往下挖 | 「optimization variants」[F-B1] | 每道 hc 题的 Part 2–4 就是追问；REPORT「面试官可能的追问」逐条口述一遍 |
-
-### 准备动作（按顺序）
-
-1. 把 cut line 以上的电面题按 PARETO 顺序过一遍：`jtest.py start` → 45 分钟内写完 Part 1–2 → 对照 REPORT 的追问口头答。
-2. 每道题的 Java 21 特性表读一遍，至少能说出「为什么用 sealed + 模式 switch 而不是 visitor / instanceof 链」。
-3. kq 语言深度题：把 C++ 问法翻成 Java 问法各准备 2 分钟答案（「为什么 Java 能接近 C++ 的速度？什么时候不能？」）。
-4. 准备 2 个故事：一次性能排查（从现象到根因）、一次推动自动化/测试（对应 JD）。
-5. 反问（`06-questions-to-ask.md`，待写）。
-
-## 2. Onsite（设计层已展开；轮次结构仍低置信，过了电面再细化）
-
-* 「algorithms, OS concepts, concurrency, and open-ended systems questions」[F-G2]；「dp on trees」[F-G2]。
-* 3 小时 final：2 技术 + 1 行为 [F-W1]；或 6 轮 + 加面 [F-A10]。
-* 系统设计：Unused-code analysis、future-time job scheduler、low-latency trading system [CATALOG C]——三题都只有 1–2 个来源，sd02 / sd03 只有标题 + 一句摘要且标注两家公司（Keychain / Optiver 共享），**题面是 (reconstructed)**。
-* 低层设计（LLD）：共享内存 SPSC 通道 [ld01]、交易相关 OOD [ld02，33 分钟电面里的一道简单题]、异步 TCP 消息通道 [ld03] [CATALOG B]。
-
-### 2.1 设计层材料（全部按 senior 门槛准备）
-
-| 先读 | 内容 |
+| 看什么 | 怎么表现出来 |
 |---|---|
-| [loop/rounds/04_sd/00_how_to_run.md](rounds/04_sd/00_how_to_run.md) | 交易公司的设计轮 vs 大厂：µs 延迟预算、决定性、单机性能、内核旁路、行情组播、风控、日志重放、co-location；从零估算 |
+| 代码干净、好维护 | 先说测试用例，再写代码；函数拆小，名字起清楚；不变量写进类型里 |
+| 性能直觉 | 每写完一版，主动说复杂度、内存分配、缓存局部性，然后问「要不要我优化这里」 |
+| 对底层好奇 | 被追问到 JIT、GC、内存模型、CPU 缓存时别回避；说清楚自己知道到哪一层，不知道就直说 |
+| 低自我、好沟通 | 被打断时顺着讨论，别辩解；边写边说你的思路 |
 
-| id | 题 | 参考答案 / 追问 / 评分 | 动手配套 |
+## 常见挂法
+
+| 挂法 | 对策 |
+|---|---|
+| 花很多时间修编译错误 | C++ 和 Java 都练到手熟；在 CoderPad 里先写一个能跑起来的最小 `main` |
+| 语言细节答得浅 | 过一遍 C++ 语言深度题库和速查表 |
+| 基础题写完了，追问接不住 | 每道题的 Part 2–4 就是追问，练的时候连着做 |
+| 背景问题讲成流水账 | 按提纲讲：一句开场 → 3 个关键决定 → 一个数字结果 → 留下了什么机制 |
+
+## 优先练哪些题（按出现频率）
+
+| 顺序 | 题 | 典型追问 |
+|---|---|---|
+| 1 | hc03 递归求和 | 溢出 → 栈深度 → 尾递归 → 并行 |
+| 2 | hc04 带快照的 queue mean | O(1) 精确均值 → 快照 → 单写多读 |
+| 3 | hc01 买卖股票 DP | 一次交易 → 不限次数 → 最多 k 次 → 冷冻期 / 手续费 |
+| 4 | hc02 合并 K 路有序流 | 堆 → 惰性迭代 → 多线程无阻塞 |
+| 5 | hc05 订单簿 | 下单 / 撤单 / 最优价 → 撮合 → 零分配 |
+| 6 | hc07 ticker 哈希表 | 开放寻址 → 把 ticker 压进 64 位整数 → 完美哈希 |
+| 7 | hc06 寄存器位运算、hc08 订单序列 API | — |
+| 8 | oa01 job chain | 你过了的那道 OA，面试官可能问你当时怎么写的 |
+
+## 6 天安排
+
+| 天 | 编码 | C++ | 背景问题 |
 |---|---|---|---|
-| sd01 | 无用代码分析 [F-G3：首轮视频口述题] | [prompt](rounds/04_sd/sd01_unused_code_analysis/prompt.md) · [model_answer](rounds/04_sd/sd01_unused_code_analysis/model_answer.md) · [followups](rounds/04_sd/sd01_unused_code_analysis/followups.md) · [rubric](rounds/04_sd/sd01_unused_code_analysis/rubric.md) | — |
-| sd02 | 未来时刻任务调度器 | [prompt](rounds/04_sd/sd02_future_job_scheduler/prompt.md) · [model_answer](rounds/04_sd/sd02_future_job_scheduler/model_answer.md) · [followups](rounds/04_sd/sd02_future_job_scheduler/followups.md) · [rubric](rounds/04_sd/sd02_future_job_scheduler/rubric.md) | ld02 Part 4（journal + 重放）的方法 |
-| sd03 | 低延迟电子交易系统 | [prompt](rounds/04_sd/sd03_low_latency_trading_system/prompt.md) · [model_answer](rounds/04_sd/sd03_low_latency_trading_system/model_answer.md) · [followups](rounds/04_sd/sd03_low_latency_trading_system/followups.md) · [rubric](rounds/04_sd/sd03_low_latency_trading_system/rubric.md) | [ld01](rounds/03_lld/ld01_spsc_channel/problem.md) · [ld02](rounds/03_lld/ld02_trading_ood/problem.md) · [ld03](rounds/03_lld/ld03_async_tcp_channel/problem.md) · [hc05](rounds/01_video/hc05_market_order_book/problem.md) |
+| 10/21 | hc03（用 C++ 写一遍） | C++ 课本 C01–C04 | 补「为什么做交易 / 为什么离开 / 写过多少 C++」 |
+| 10/22 | hc04（C++） | C05–C08 | 练 TMAY 和 S3、S10 |
+| 10/23 | hc01、hc02 | C09–C12 + 语言深度题库前半 | 练 S1、S5、S6 |
+| 10/24 | hc05、hc07 | C13–C16 + 题库后半 | 练剩下的故事 |
+| 10/25 | 模拟一场：随便挑一题，45 分钟，关掉 AI，按 CoderPad 的条件 | 速查表 | 反问清单 |
+| 10/26 | 只复习，不碰新题 | 速查表 | 60 秒 TMAY 过一遍 |
 
-| id | LLD 题 | 题面 | 讲义 |
-|---|---|---|---|
-| ld01 | 共享内存 SPSC 通道 | [problem](rounds/03_lld/ld01_spsc_channel/problem.md) | [ld01](../study/30-articles/ld01_spsc_channel.md) |
-| ld02 | 交易相关 OOD（订单状态机 / 仓位 PnL / 风控 / 事件溯源） | [problem](rounds/03_lld/ld02_trading_ood/problem.md) | [ld02](../study/30-articles/ld02_trading_ood.md) |
-| ld03 | 异步 TCP 消息通道（成帧 / 背压 / 半关闭 / 重连） | [problem](rounds/03_lld/ld03_async_tcp_channel/problem.md) | [ld03](../study/30-articles/ld03_async_tcp_channel.md) |
+## 面试当天
 
-### 2.2 设计轮的评分（推断，来源是 JD 与官方视频）
+- 提前 10 分钟进 Teams，测好麦克风和屏幕共享；CoderPad 页面提前打开。
+- 写代码前先复述题目，问清输入范围、空输入怎么处理、要不要处理非法输入。
+- 先写能跑的版本，再优化；每一步都说出来。
+- 卡住了就把你在想什么说出来，面试官会给提示。
 
-* **「knowledgeable about a lot of different areas」[O-G]**：设计题会一层层往下追（JVM → OS → CPU → 网卡）；准备「是什么 → 为什么 → 怎么验证」三层回答。
-* **「Comfortable operating at various levels of abstraction, from individual machines to large scale distributed systems」[O-C2]**：既要会算一台机器够不够，也要会讲分片与复制；先算数，再选架构。
-* **「fully automated, scalable, and maintainable solutions with extensive testing」[O-C2]**：每个方案都主动说怎么测（确定性重放、虚拟时钟、故障注入）。
-* 面试官是将来的同事并写评价 [O-C2]：主动攻击自己的设计、每 10 分钟确认方向。
+## Onsite（过了电面再看）
+
+一般是若干轮编码，加上操作系统、并发、开放式系统设计题，再加一轮行为面。设计题和 LLD 题的完整材料在 `rounds/04_sd/` 和 `rounds/03_lld/`。
