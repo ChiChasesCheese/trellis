@@ -4,7 +4,9 @@
 
 ---
 
-## 1. 这道题在问什么
+## 1. 问题是什么
+
+把 k 个各自已经排好序的序列合并成一个有序序列，再逐步加条件：序列变成可能无限、会阻塞的数据流，要用多个线程去读，内存必须有界，某条流出错还要有明确的处理方式。核心工具是一个**最小堆**（min-heap，永远能 O(log k) 取出当前最小元素的结构），堆里只放每条序列的队首。下面先看最基础的版本。
 
 **Part 1**：给 `k` 个各自**升序**的序列，合并成一个升序序列。
 
@@ -37,7 +39,7 @@
 
 **注意**：不要用 `a - b < 0` 判断大小，`Long.MIN_VALUE - 1` 会溢出成大正数，判断反了。永远用 `compareTo` 或 `Long.compare`。
 
-**稳定**（stable）：两个元素"相等"（`compareTo == 0`）但不是同一个东西（如同龄的两人），稳定的合并让它们**保持原来的相对顺序**。本题规定：相等时**序列编号小的在前**，同序列内保持原顺序。这样输出**确定**，才能写可验证的期望。
+**稳定**（stable）：两个元素"相等"（`compareTo == 0`）但不是同一个东西（如同龄的两人），稳定的合并让它们**保持原来的相对顺序**。这里规定：相等时**序列编号小的在前**，同序列内保持原顺序。这样输出**确定**，才能写可验证的期望。
 
 **泛型签名** `<T extends Comparable<? super T>>`：`T` 须能和"T 或其父类"比较。`Dog extends Animal`、`Animal implements Comparable<Animal>` 时，`Dog` 不是 `Comparable<Dog>` 却能和 `Animal` 比，`? super T` 让它也能用（`Collections.sort` 同写法）。
 
@@ -108,7 +110,7 @@ Java 没有"强行杀线程"（`Thread.stop` 已废弃）。标准取消是**中
 
 ### 2.6 虚拟线程（virtual thread，JDK 21）
 
-平台线程一对一对应操作系统线程，很重（MB 级栈，几千个就吃力）。虚拟线程由 JVM 调度，极轻，可开几十万个，跑在少量"载体线程"上。本题"每流一个线程、写普通阻塞代码"，平台线程 k = 10000 就崩了；虚拟线程阻塞在 `take()`/`put()`/网络 I/O 时让出载体线程。
+平台线程一对一对应操作系统线程，很重（MB 级栈，几千个就吃力）。虚拟线程由 JVM 调度，极轻，可开几十万个，跑在少量"载体线程"上。这里"每流一个线程、写普通阻塞代码"，平台线程 k = 10000 就崩了；虚拟线程阻塞在 `take()`/`put()`/网络 I/O 时让出载体线程。
 
 ```java
 Thread t = Thread.ofVirtual().name("merge-producer-0").start(() -> { ... });
@@ -476,7 +478,7 @@ try (var scope = new StructuredTaskScope.ShutdownOnFailure("merge-all", Thread.o
 * 共享队列会被快流占满，合并器要等的慢流元素放不进去，死锁/饥饿（步骤 6）。
 
 **Q7：失败的流怎么处理？**
-* fail-fast（本题：抛 `MergeException` 并取消其他）；或 skip-and-continue（视为结束并记录错误）。这是产品决策，要问清楚。
+* fail-fast（这里：抛 `MergeException` 并取消其他）；或 skip-and-continue（视为结束并记录错误）。这是产品决策，要问清楚。
 
 **Q8：用线程池不行吗？为什么 `StructuredTaskScope`？**
 * 线程池 + `Future` 不自动取消兄弟，离开作用域线程可能仍在跑；虚拟线程 + 结构化并发代码是直线的。
@@ -543,4 +545,6 @@ Iterator<Integer> doubled(Iterator<Integer> it) {
 
 ---
 
-「延伸」Goetz 等《Java Concurrency in Practice》第 5 章（阻塞队列与生产者-消费者）、第 7 章（取消与关闭）。
+## 延伸阅读
+
+* Goetz 等《Java Concurrency in Practice》第 5 章（阻塞队列与生产者-消费者）、第 7 章（取消与关闭）。

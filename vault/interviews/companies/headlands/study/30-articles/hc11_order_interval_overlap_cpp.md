@@ -855,4 +855,6 @@ private:
 8. 如果先改树、再发现第二个端点未知，调用虽然抛了异常，树却已经被改过；先把两个端点都校验完，失败的调用就不会留下任何痕迹。
 </details>
 
-延伸：LeetCode 253（Meeting Rooms II）是 Part 1 的原型；731 / 732（My Calendar II / III）是 Part 3 / 4 的原型。
+## 延伸阅读
+
+* LeetCode 253（Meeting Rooms II）是 Part 1 的原型；731 / 732（My Calendar II / III）是 Part 3 / 4 的原型。

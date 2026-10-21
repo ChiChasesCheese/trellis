@@ -656,7 +656,7 @@ struct ThreadGroup {
 };
 ```
 
-`ThreadGroup` 是本题的 RAII 核心：析构时**先请求停止，再 join 每个线程**（`std::jthread` 的析构函数 join）。成员的声明顺序就是销毁顺序的逆序——`threads` 声明在 `stop` 之后，所以先 join、后销毁 `stop`；它又必须声明在它所引用的队列和 source **之后**，这样线程先结束，被引用的东西后销毁。
+`ThreadGroup` 是这里的 RAII 核心：析构时**先请求停止，再 join 每个线程**（`std::jthread` 的析构函数 join）。成员的声明顺序就是销毁顺序的逆序——`threads` 声明在 `stop` 之后，所以先 join、后销毁 `stop`；它又必须声明在它所引用的队列和 source **之后**，这样线程先结束，被引用的东西后销毁。
 
 ### 4.5 合并核心
 
@@ -892,7 +892,7 @@ std::vector<T> merge_all(std::vector<BlockingSource<T>> sources, int capacity, L
 
 **Q6. 一个 source 永远不返回会怎样？** `close()` / 析构会一直等它。要有界就必须让 source 自己支持超时或取消；真实系统里还会在 source 外面套一层超时，超时算作 `Failed`。
 
-**Q7. 每个 source 一个线程，source 有一万个怎么办？** OS 线程太贵：改成线程池 + 非阻塞 I/O（`epoll`/`kqueue`），或者限制"同时在读的 source 数 m"（有界并发）；本题的 `capacity` 是每条流的预读深度，不是并发数。
+**Q7. 每个 source 一个线程，source 有一万个怎么办？** OS 线程太贵：改成线程池 + 非阻塞 I/O（`epoll`/`kqueue`），或者限制"同时在读的 source 数 m"（有界并发）；这里的 `capacity` 是每条流的预读深度，不是并发数。
 
 **Q8. 怎么测试并发代码？** 多次重复 + 随机让出（`yield`）打乱交错 + 与顺序实现对拍；用 ThreadSanitizer（`-fsanitize=thread`）找数据竞争；用看门狗线程把死锁变成失败。
 

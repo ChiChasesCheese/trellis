@@ -4,7 +4,7 @@
 
 ---
 
-## 1. 这道题在问什么
+## 1. 问题是什么
 
 「写一个函数，用**递归**求 1 + 2 + … + n。」一分钟写完，但这是个**脚手架**：面试官会不停问「那如果……呢？」，每个“如果”试探一个层面：
 
@@ -20,7 +20,7 @@
 
 n = 4：`sum(4) = 4 + (3 + (2 + (1 + sum(0))))`，`sum(0) = 0`（“出口”），回头加：`1`、`3`、`6`、`10`。
 
-本题返回类型不是裸 `long`，而是 `SumResult`：`Ok(value)`（装得下）或 `Overflow(exact)`（装不下），原因见第 4 节。
+这里返回类型不是裸 `long`，而是 `SumResult`：`Ok(value)`（装得下）或 `Overflow(exact)`（装不下），原因见第 4 节。
 
 ---
 
@@ -104,7 +104,7 @@ Thread t = new Thread(null, runnable, "name", 64L * 1024 * 1024);   // 第四个
 
 `Integer.MAX_VALUE + 1 == Integer.MIN_VALUE`。**Java 整数加法不抛异常**——答案错了程序照常运行，最危险。
 
-**对本题**：和约 n²/2 增长。`int` 在 **n = 65 536** 就装不下：1+…+65 535 = 2 147 450 880，再加 65 536 得 2 147 516 416，绕回 **−2 147 450 880**。`long` 在 **n = 2³² = 4 294 967 296** 装不下。
+**放到这里**：和约 n²/2 增长。`int` 在 **n = 65 536** 就装不下：1+…+65 535 = 2 147 450 880，再加 65 536 得 2 147 516 416，绕回 **−2 147 450 880**。`long` 在 **n = 2³² = 4 294 967 296** 装不下。
 
 “精确”运算在溢出时抛 `ArithmeticException`：
 
@@ -144,7 +144,7 @@ trampoline： run 循环                                   栈永远只有 run �
    cur = cur.next()   返回 Done(结果)     → 循环结束，返回结果
 ```
 
-本题写法（用 sealed 接口表达“二选一”）：
+这里的写法（用 sealed 接口表达“二选一”）：
 
 ```java
 sealed interface Trampoline<T> permits Done, More {}
@@ -176,7 +176,7 @@ x.longValueExact();               // 装不下就抛 ArithmeticException
 
 JVM 先**解释**执行字节码；方法被频繁调用（“热点”）后，JIT 编译器（HotSpot 的 C1、C2）编译成机器码。**内联**（inlining）把被调方法代码**直接贴到调用处**，省掉压栈、跳转、返回，并让编译器优化更大范围。
 
-**对本题**：循环能被大幅优化（展开、去重复检查）；**递归只能内联一两层**（`MaxRecursiveInlineLevel=1`），每层仍是真函数调用（`-XX:+PrintInlining` 输出 `recursive inlining too deep`）。副作用：同一递归方法**解释执行**时的栈帧比**编译后**大几倍，“能递归多深”不是常数。
+**放到这里**：循环能被大幅优化（展开、去重复检查）；**递归只能内联一两层**（`MaxRecursiveInlineLevel=1`），每层仍是真函数调用（`-XX:+PrintInlining` 输出 `recursive inlining too deep`）。副作用：同一递归方法**解释执行**时的栈帧比**编译后**大几倍，“能递归多深”不是常数。
 
 ### 2.9 线程、并行、ForkJoin、虚拟线程（步骤 7、8 用到）
 
@@ -576,7 +576,7 @@ String text = switch (r) {
 1. **`catch (StackOverflowError e) { return 0; }`**——把“栈不够”伪装成合法答案。应让调用方知道，或从根本避免（迭代 / trampoline）。
 2. **`n * (n + 1) / 2` 就是正确的 O(1) 解**——n 到 40 亿量级静默出负数。先除偶数，再 `multiplyExact`，BigInteger 兜底。
 3. **中间量溢出就报 Overflow**——`MIN..MAX` 的和是 `Long.MIN_VALUE`，装得下。用 BigInteger 复核。
-4. **`a > b` 时返回 0**——可以是约定但必须明确；本题抛 `IllegalArgumentException`。面试先问清楚。
+4. **`a > b` 时返回 0**——可以是约定但必须明确；这里抛 `IllegalArgumentException`。面试先问清楚。
 5. **并行每块各自 `addExact` 再合并**——顺序相关（Q5）。例：`MAX × 2000 + MIN × 2000` 每块内溢出，总和 −2000 装得下。
 6. **虚拟线程是更快的线程，到处用**——只对阻塞 I/O 有利（步骤 8）。
 7. **`threshold` 写 0 或 1 都行**——`threshold = 0` 时长度 1 的任务也要拆，`mid == from`，无限递归。
@@ -639,4 +639,6 @@ static long sumTo(long n) {
 
 ---
 
-「延伸」SICP 第 1.2.1 节（线性递归与迭代）。
+## 延伸阅读
+
+* SICP 第 1.2.1 节（线性递归与迭代）。

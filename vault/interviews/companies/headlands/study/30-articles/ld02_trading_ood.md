@@ -1,10 +1,10 @@
 # ld02 · 交易相关的 OOD：订单状态机、仓位盈亏、交易前风控、事件溯源 —— 讲义
 
-> 读者：只会基本 Java（类、方法、循环、`ArrayList` / `HashMap`），不懂交易，也没学过状态机和事件溯源。本篇覆盖这类题最可能的四个形态；真面试先问清楚题目。
+> 读者：只会基本 Java（类、方法、循环、`ArrayList` / `HashMap`），不懂交易，也没学过状态机和事件溯源。覆盖这类题最可能的四个形态；真面试先问清楚题目。
 
 ---
 
-## 1. 这道题在问什么
+## 1. 问题是什么
 
 ### 1.1 用大白话
 
@@ -70,7 +70,7 @@
 **平仓用哪个开仓价？——FIFO 与平均成本**。分两次买入 10 股@100、10 股@110，再卖 15 股@120，已实现盈亏：
 
 ```text
-FIFO（先进先出）：先平先买的。10×(120−100) + 5×(120−110) = 200 + 50 = 250        ← 本题用这个
+FIFO（先进先出）：先平先买的。10×(120−100) + 5×(120−110) = 200 + 50 = 250        ← 这里用这个
 平均成本：平均开仓价 = (1000+1100)/20 = 105，15×(120−105) = 225                   （剩下 5 股的成本仍按 105）
 ```
 
@@ -84,7 +84,7 @@ FIFO（先进先出）：先平先买的。10×(120−100) + 5×(120−110) = 20
 
 不显式写表，状态散落在一堆 `if` 里：订单已 `FILLED` 又收到 `Fill`（重复投递或 bug），代码悄悄把已成交数量加第二遍，仓位翻倍；已 `CANCELED` 却又被成交。状态机让每种"不可能的事"都有明确的、会被测试抓到的结果。
 
-本题的状态转移（实际 FIX 协议状态更多，这里是教学版）：
+这里的状态转移（实际 FIX 协议状态更多，这里是教学版）：
 
 ```text
           Ack              Fill(部分)             Fill(吃满)
@@ -123,7 +123,7 @@ System.out.println(Math.addExact(big, 1));      // 抛 ArithmeticException，看
 
 订单发出前必须通过的一组规则：出了交易所错单就是真金白银，所以在自己系统里先拦。著名事故都缺少或绕过了这类检查（如 2012 年 Knight Capital 软件事故，45 分钟亏损约 4.4 亿美元）；美国 SEC 市场准入规则（Rule 15c3-5）要求预交易风控。
 
-**本题七条规则**（按声明顺序检查，报告第一条违反的）：
+**这里的七条规则**（按声明顺序检查，报告第一条违反的）：
 
 | 规则 | 防什么 | 例子（限额：数量 1000，名义 100 万，仓位 5000，未完成 3 张，价格带 5%） |
 |---|---|---|
@@ -153,7 +153,7 @@ System.out.println(Math.addExact(big, 1));      // 抛 ArithmeticException，看
 
 这一切成立的前提是 `f` **决定性**：同样输入永远同样输出。破坏者：
 
-| 破坏者 | 例子 | 本题办法 |
+| 破坏者 | 例子 | 这里的办法 |
 |---|---|---|
 | 读时钟 | `System.currentTimeMillis()` | 状态机不读时钟（时间戳作为事件字段） |
 | 遍历顺序 | 遍历 `HashMap` 决定先处理谁 | 输出前排序（`open()` 按 id 排序），检查顺序写死 |
@@ -538,9 +538,9 @@ PositionBook.onFill: 3,000,000 fills in 103.3 ms => 29.03 M fills/s（含 "S"+i 
 
 ## 6. Java 21 特性小课
 
-| 特性 | 旧写法（Java 8 风格） | 新写法（本题） | 编译器多做了什么 / 什么时候别用 |
+| 特性 | 旧写法（Java 8 风格） | 新写法 | 编译器多做了什么 / 什么时候别用 |
 |---|---|---|---|
-| **`record` + 紧凑构造器** | 15 行：私有 final 字段、构造器、getter、`equals`、`hashCode`、`toString` | `record Order(long id, String symbol, ...) { Order { 校验 } }` | 生成全部样板，字段不可变。不用于需继承或可变处；`byte[]` 字段的 `equals` 是引用比较（本题无数组字段） |
+| **`record` + 紧凑构造器** | 15 行：私有 final 字段、构造器、getter、`equals`、`hashCode`、`toString` | `record Order(long id, String symbol, ...) { Order { 校验 } }` | 生成全部样板，字段不可变。不用于需继承或可变处；`byte[]` 字段的 `equals` 是引用比较（这里无数组字段） |
 | **`sealed interface ... permits`** | `interface ExecEvent {}` + 约定「只有这四个实现」 | `sealed interface ExecEvent permits Ack, Fill, Cancel, Reject` | 编译器知道所有子类型，`switch` 才能查穷尽。不用于需外部扩展的 SPI |
 | **`switch` 模式匹配** | `if (e instanceof Ack) {...} else if ...` 加强转，漏一个运行时才发现 | `switch (event) { case ExecEvent.Ack a -> ...; case ExecEvent.Fill f -> ...; ... }` | sealed 类型不需 `default`；少写 `case` 编译报错。加 `default` 反会掩盖「新增事件类型忘了处理」 |
 | **record 模式** | `if (e instanceof Fill) { Fill f = (Fill) e; long q = f.qty(); ... }` | `x instanceof ExecEvent.Fill(var orderId, var execId, var qty, var px)` | 解构嵌套 record；不能写常量，要用 `when` 守卫 |
@@ -567,7 +567,7 @@ PositionBook.onFill: 3,000,000 fills in 103.3 ms => 29.03 M fills/s（含 "S"+i 
 
 ### Q4：撤单请求和撤单确认的区别？
 
-先有"撤单请求"（我们发出），再有"撤单确认"（交易所回）。中间状态 `PENDING_CANCEL`：订单仍可能被成交（请求和成交在途中交叉）。本题 `Cancel` 只表示**确认**。若加 `PENDING_CANCEL`：`WORKING/PARTIALLY_FILLED --请求--> PENDING_CANCEL`，`--Fill--> 仍可成交`，`--确认--> CANCELED`，`--撤单拒绝--> 回到原状态`。最坏情况仓位在此期间**仍要计入**该订单剩余数量（撤单是个竞态，不是一个瞬间）。
+先有"撤单请求"（我们发出），再有"撤单确认"（交易所回）。中间状态 `PENDING_CANCEL`：订单仍可能被成交（请求和成交在途中交叉）。这里 `Cancel` 只表示**确认**。若加 `PENDING_CANCEL`：`WORKING/PARTIALLY_FILLED --请求--> PENDING_CANCEL`，`--Fill--> 仍可成交`，`--确认--> CANCELED`，`--撤单拒绝--> 回到原状态`。最坏情况仓位在此期间**仍要计入**该订单剩余数量（撤单是个竞态，不是一个瞬间）。
 
 ### Q5：为什么 `PENDING` 订单也算未完成？
 
@@ -649,4 +649,6 @@ journal 追加写文件；定期快照（序列化当前状态，记下日志位
 
 ---
 
-「延伸」Martin Fowler「Event Sourcing」。
+## 延伸阅读
+
+* Martin Fowler「Event Sourcing」。

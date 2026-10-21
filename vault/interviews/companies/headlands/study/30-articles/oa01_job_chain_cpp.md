@@ -341,7 +341,7 @@ int main() {
 
 输出：`stoi("12abc")` 是 `12`，`stoi(" 7")` 是 `7`，`stoi("+5")` 是 `5`；而 `strict_int` 对 `"12abc"`、`" 7"`、`"+5"`、越界数、空串都返回 `false`。`atoi` 连错误都不报告；`strtol` 要手工看 `endptr` 和 `errno`。
 
-2. **`std::isspace(char)` 是未定义行为。** 参数必须在 `unsigned char` 范围内或为 `EOF`；`char` 在 ARM / x86 上通常有符号，字节 `0xE9`（UTF-8 的一部分）会变成负数。要么先转 `unsigned char`（如上面的 `safe:` 一行），要么像本题这样自己写 `is_space`（只认 ASCII 空白）。
+2. **`std::isspace(char)` 是未定义行为。** 参数必须在 `unsigned char` 范围内或为 `EOF`；`char` 在 ARM / x86 上通常有符号，字节 `0xE9`（UTF-8 的一部分）会变成负数。要么先转 `unsigned char`（如上面的 `safe:` 一行），要么像这里这样自己写 `is_space`（只认 ASCII 空白）。
 
 3. **有符号整数溢出是未定义行为。** `total += runtime` 在两个 `LLONG_MAX` 相加时，编译器可以假设它不会发生——可能回绕，也可能把后面的判断整个优化掉。用 UBSan（`-fsanitize=undefined`）能抓到。无符号溢出是定义良好的回绕，所以"想要回绕"时用无符号类型。检查加法的三种正确写法：
 
@@ -380,7 +380,7 @@ int main() {
 }
 ```
 
-4. **`vector<bool>` 不是 `vector` of `bool`。** 它是按位压缩的特化，`operator[]` 返回代理对象，不能取地址。需要一排标志位时用 `vector<char>`（本题的 `has_predecessor`）。
+4. **`vector<bool>` 不是 `vector` of `bool`。** 它是按位压缩的特化，`operator[]` 返回代理对象，不能取地址。需要一排标志位时用 `vector<char>`（这里的 `has_predecessor`）。
 
 5. **比较器必须是严格弱序。** `a.total >= b.total` 这种带 `=` 的比较器会让 `std::sort` 越界读（UB）。正确写法：
 
@@ -404,7 +404,7 @@ int main() {
 
 6. **不要递归地沿链走。** 一条链可以有一百万个 job，递归每层一个栈帧，默认 8 MiB 的栈撑不住。循环版 O(1) 栈。
 
-7. **`unordered_map::operator[]` 会插入。** 只想查就用 `find`；想"没有才插入"用 `emplace(...).second`（本题用来查重复 id）。
+7. **`unordered_map::operator[]` 会插入。** 只想查就用 `find`；想"没有才插入"用 `emplace(...).second`（这里用来查重复 id）。
 
 8. **输入的边角。** Windows 换行 `\r\n`（所以 `trim` 要吃掉 `\r`）；最后一行没有换行；完全空的输入（输出一个 `-`，因为没有任何链）；行内含 `\0`。
 
@@ -420,7 +420,7 @@ int main() {
 解析可以流式做（逐行 `getline`），但拼链要知道全部 job 才能判断悬空、多前驱、环，所以 job 本身要存；省掉的只是原始字符串。
 
 **Q4. `string_view` 什么时候会悬空？**
-`std::string_view v = make_string();`（指向临时对象）；把 view 存进长寿命容器而底层字符串先析构；`string` 被修改后重新分配。本题的 view 都只在 `parse` 内部使用，底层是调用者持有的 `lines`。
+`std::string_view v = make_string();`（指向临时对象）；把 view 存进长寿命容器而底层字符串先析构；`string` 被修改后重新分配。这里的 view 都只在 `parse` 内部使用，底层是调用者持有的 `lines`。
 
 **Q5. `unordered_map` 的最坏情况？**
 所有 key 落进同一个桶时退化为 O(n)。对 `int` 的标准库哈希是恒等映射，对抗性输入可以构造冲突；比赛里常用自定义哈希（splitmix64）。面试里说出"期望 O(1)、最坏 O(n)、可以换排序 + 二分得到确定的 O(n log n)"即可。
@@ -430,7 +430,7 @@ int main() {
 
 ## 7. 自测
 
-1. `std::stoi("12abc")` 返回什么？为什么本题不能用它？
+1. `std::stoi("12abc")` 返回什么？为什么这里不能用它？
 2. `chains()` 已经被 `parse()` 校验过的数据喂过，为什么还要在里面再调一次 `validate`？
 3. 两个 `runtime = LLONG_MAX` 的 job 在一条链上，`total += runtime` 会发生什么？应该怎么写？
 4. 比较器写成 `return a.total >= b.total;` 有什么问题？
@@ -439,9 +439,9 @@ int main() {
 
 <details><summary>答案</summary>
 
-1. `12`。它在第一个非法字符处静默停止；本题要求整行必须合法，`"12abc"` 应该被拒绝。用 `from_chars` 并检查结束指针。
+1. `12`。它在第一个非法字符处静默停止；这里要求整行必须合法，`"12abc"` 应该被拒绝。用 `from_chars` 并检查结束指针。
 2. `Job` 是聚合体，别的调用者可以直接构造 `Job{0, 5, 0}` 传给 `chains()`；不能假设数据一定经过了 `parse`。
-3. 有符号溢出是 UB：UBSan 报错，优化后的代码可能回绕成负数。用 `__builtin_add_overflow` 检测，然后按需求处理（本题判为 Malformed）。
+3. 有符号溢出是 UB：UBSan 报错，优化后的代码可能回绕成负数。用 `__builtin_add_overflow` 检测，然后按需求处理（这里判为 Malformed）。
 4. 不满足严格弱序（相等的元素 `comp(a,a)` 返回 true），`std::sort` 可能越界访问，是 UB。要写 `>`。
 5. 只有一行 `-`（没有任何链，报告仍然格式良好）。
 6. `vector<bool>` 是位压缩的代理容器：访问慢、不能取元素地址、不是线程安全的"相邻元素独立"；用一个字节存一个标志更简单。

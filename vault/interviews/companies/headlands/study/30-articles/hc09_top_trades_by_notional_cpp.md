@@ -616,7 +616,7 @@ Q 40 → []
 
 ### 4.1 为什么只用 `priority_queue` 不行
 
-一个 ticker 的总额会**变大**（新成交）也会**变小**（旧成交过期），即「修改任意一个元素的键」。`std::priority_queue` 只能看堆顶、弹堆顶，找不到也改不了中间的元素。解法有两种：**懒删除**（lazy deletion，旧条目留在堆里，弹出时发现过期/不一致再丢；空间会涨）；或者用一个**有序容器**——`std::set`，键 `(总额降序, ticker 升序)`，「删旧键、插新键」各 `O(log m)`，取前 k 名是顺序遍历 `O(log m + k)`。本题用后者。
+一个 ticker 的总额会**变大**（新成交）也会**变小**（旧成交过期），即「修改任意一个元素的键」。`std::priority_queue` 只能看堆顶、弹堆顶，找不到也改不了中间的元素。解法有两种：**懒删除**（lazy deletion，旧条目留在堆里，弹出时发现过期/不一致再丢；空间会涨）；或者用一个**有序容器**——`std::set`，键 `(总额降序, ticker 升序)`，「删旧键、插新键」各 `O(log m)`，取前 k 名是顺序遍历 `O(log m + k)`。这里用后者。
 
 三个结构配合：
 
@@ -1185,4 +1185,4 @@ inline std::vector<TickerTotal> top_tickers_parallel(Strings t, Longs p, Longs v
 8. 所有 notional 非负，部分和单调不减：若任意一块或任意一次合并溢出，则真实总和 > `LLONG_MAX`，顺序实现也会溢出；反之总和不超过 `LLONG_MAX` 时，所有部分和都不超过。
 </details>
 
-延伸：在 `ParallelNotional` 的基础上加每线程缓存（thread-local 聚合 + 批量合并）并量一量吞吐。
+**练习**：在 `ParallelNotional` 的基础上加每线程缓存（thread-local 聚合 + 批量合并）并量一量吞吐。

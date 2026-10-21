@@ -51,7 +51,7 @@ POPCOUNT
 整题的难点是「32 个二进制位在语言里怎么存」。
 
 * **补码（two's complement）**：`int` 把最高位当符号位，`0xFFFFFFFF` 作为 `int` 是 −1。32 个 bit 完全一样，只是**怎么解释**不同。
-* **逻辑右移 vs 算术右移**：无符号类型右移补 0（逻辑，logical）；有符号类型右移补符号位（算术，arithmetic），`0xF0000000 >> 4` 得到 `0xFF000000`。本题要逻辑移位。
+* **逻辑右移 vs 算术右移**：无符号类型右移补 0（逻辑，logical）；有符号类型右移补符号位（算术，arithmetic），`0xF0000000 >> 4` 得到 `0xFF000000`。这里要逻辑移位。
 * **UB（未定义行为）清单**，位运算题的每一条都是潜在的 bug：
 
 | 写法 | 结果 |
@@ -796,7 +796,7 @@ int main() {
 
 **Q5. 怎么让 `ROL` 编译成一条指令？** `std::rotl` 在 x86 / ARM 上就是一条旋转指令。手写时用无 UB 的惯用形式 `(x << (s & 31)) | (x >> (-s & 31))`，主流编译器能把它识别成旋转指令，`s == 0` 时也没有 UB。
 
-**Q6. `std::variant` 的 `visit` 开销多大？** 对备选类型很少、`visit` 内联的情况，编译器生成按下标的跳转表；开销接近一次 `switch`。本题的 `Instr = variant<Update, Query>` 是嵌套的，要分发两次（先选 `Update` / `Query`，再选具体类型）。
+**Q6. `std::variant` 的 `visit` 开销多大？** 对备选类型很少、`visit` 内联的情况，编译器生成按下标的跳转表；开销接近一次 `switch`。这里的 `Instr = variant<Update, Query>` 是嵌套的，要分发两次（先选 `Update` / `Query`，再选具体类型）。
 
 **Q7. 位板（bitboard）/ 位集（bitset）？** 同一套技巧：`std::bitset<N>`、`uint64_t` 位板（棋盘 64 格）、`countr_zero` + `m &= m - 1` 遍历所有 1 的位。
 

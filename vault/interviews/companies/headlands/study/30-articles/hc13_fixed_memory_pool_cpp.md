@@ -947,9 +947,9 @@ private:
 
 **Q4. 每线程缓存（per-thread cache）是什么？** 每个线程从全局池一次批量取 N 个块放在自己的本地列表，分配/释放先走本地（无原子操作、无争用），本地空了/满了再批量和全局池交换。吞吐能翻几十倍；丢掉的保证：块被「困」在某个线程的缓存里，其它线程可能看到池「满」而实际有空闲；`available()` 更不精确；线程退出要归还；公平性/LIFO 顺序不再成立。
 
-**Q5. Treiber 栈的内存回收？** 本题的槽位在固定数组里，永不释放，所以没有「释放内存后还有人读」的问题（那是通用无锁结构要用 hazard pointer / epoch / RCU 解决的）；tag 只处理 ABA。
+**Q5. Treiber 栈的内存回收？** 这里的槽位在固定数组里，永不释放，所以没有「释放内存后还有人读」的问题（那是通用无锁结构要用 hazard pointer / epoch / RCU 解决的）；tag 只处理 ABA。
 
-**Q6. lock-free 和 wait-free 的区别？** lock-free：系统整体总有线程在前进，单个线程可能饿死；wait-free：每个线程在有限步内完成。本题的 CAS 重试循环是 lock-free。
+**Q6. lock-free 和 wait-free 的区别？** lock-free：系统整体总有线程在前进，单个线程可能饿死；wait-free：每个线程在有限步内完成。这里的 CAS 重试循环是 lock-free。
 
 **Q7. `compare_exchange_weak` 和 `strong`？** weak 可能无竞争也失败，必须放循环里，某些架构上更快；strong 只在真的不相等时失败。
 
@@ -980,4 +980,4 @@ private:
 9. 先对槽位版本号做 `compare_exchange_strong(g → g+1)`：只有一个线程从 `g` 推到 `g+1`，另一个看到版本号已不是 `g` → `DoubleFree`；成功者再把槽位压回链表，所以槽位只入链表一次。
 </details>
 
-延伸：把 `ConcurrentPool` 改成每线程缓存 + 批量补货，量一量吞吐，再说清楚丢掉了哪些保证。
+**练习**：把 `ConcurrentPool` 改成每线程缓存 + 批量补货，量一量吞吐，再说清楚丢掉了哪些保证。

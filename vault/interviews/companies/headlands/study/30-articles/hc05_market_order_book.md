@@ -1,10 +1,10 @@
 # hc05 · Market Order Book（订单簿 + 撮合 + 低分配版本）—— 讲义
 
-> 读者：只会基本 Java（类、方法、循环、`ArrayList` / `HashMap`）。本篇覆盖订单簿与批量限价撮合。
+> 读者：只会基本 Java（类、方法、循环、`ArrayList` / `HashMap`）。覆盖订单簿与批量限价撮合。
 
 ---
 
-## 1. 这道题在问什么
+## 1. 问题是什么
 
 ### 1.1 订单簿是什么
 
@@ -62,7 +62,7 @@
 
 ### 2.2 复杂度：O(1)、O(log n)、O(n)
 
-O(1) 常数（数组按下标取、哈希查 key 平均）；O(n) 线性；O(log n) 每步规模减半，n = 100 万只约 20 步。本题所有"改进"都是把 O(n) 变 O(log n) 或 O(1)。例：100 万订单每秒 100 万次撤单，O(n) 要 10^12 次操作（CPU 一秒约 10^9 次，要 1000 秒），O(log n) 约 2×10^7，O(1) 毫秒级。
+O(1) 常数（数组按下标取、哈希查 key 平均）；O(n) 线性；O(log n) 每步规模减半，n = 100 万只约 20 步。这里所有"改进"都是把 O(n) 变 O(log n) 或 O(1)。例：100 万订单每秒 100 万次撤单，O(n) 要 10^12 次操作（CPU 一秒约 10^9 次，要 1000 秒），O(log n) 约 2×10^7，O(1) 毫秒级。
 
 ### 2.3 二叉搜索树、红黑树与 `TreeMap`
 
@@ -123,7 +123,7 @@ byId.remove(7L);
 
 ### 2.6 Sequenced Collections（Java 21）
 
-Java 21 给"有顺序的集合"统一加了 `SequencedCollection / SequencedSet / SequencedMap`：`getFirst()` / `getLast()` / `reversed()`；Map 有 `firstEntry()` / `lastEntry()` / `pollFirstEntry()` / `putFirst()` / `putLast()`。此前取"最后一个"无统一方式（`List` 用 `get(size() - 1)`，`LinkedHashSet` 要遍历到底，`Deque` 用 `getLast()`）。本题 `TreeMap` 和 `LinkedHashMap` 都是 `SequencedMap`，价位表和价位内队列都声明成 `SequencedMap<Long, ...>`。
+Java 21 给"有顺序的集合"统一加了 `SequencedCollection / SequencedSet / SequencedMap`：`getFirst()` / `getLast()` / `reversed()`；Map 有 `firstEntry()` / `lastEntry()` / `pollFirstEntry()` / `putFirst()` / `putLast()`。此前取"最后一个"无统一方式（`List` 用 `get(size() - 1)`，`LinkedHashSet` 要遍历到底，`Deque` 用 `getLast()`）。这里 `TreeMap` 和 `LinkedHashMap` 都是 `SequencedMap`，价位表和价位内队列都声明成 `SequencedMap<Long, ...>`。
 
 ```java
 SequencedMap<Long, Node> fifo = new LinkedHashMap<>();
@@ -517,4 +517,6 @@ static long spread(OrderBook b) {
 
 ---
 
-「延伸」CLRS《算法导论》「红黑树」一章。
+## 延伸阅读
+
+* CLRS《算法导论》「红黑树」一章。

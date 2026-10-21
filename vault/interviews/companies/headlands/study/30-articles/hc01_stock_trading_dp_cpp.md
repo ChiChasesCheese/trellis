@@ -578,7 +578,7 @@ inline long long replay(const Rules& rules, Prices p, const std::vector<Trade>& 
 | 点 | Java | C++20 |
 |---|---|---|
 | 输入 | `long[]`（可为 `null` → `NullPointerException`） | `std::span<const long long>`（不可能为 null，不拷贝，不修改） |
-| 溢出 | `Math.addExact` 抛 `ArithmeticException` | 有符号溢出是 UB；用 `__builtin_add_overflow`，或像本题一样从上界保证不会溢出 |
+| 溢出 | `Math.addExact` 抛 `ArithmeticException` | 有符号溢出是 UB；用 `__builtin_add_overflow`，或像这里一样从上界保证不会溢出 |
 | `k + 1` | 溢出回绕成负数 → `NegativeArraySizeException` | UB（编译器可以假设它不发生）；先 `k >= n/2` 分流 |
 | 大小 | `int length`（有符号） | `size_t`（无符号）：`size() - 1` 回绕；格子数用 `long long` |
 | 不确定的结果 | 抛异常 | `std::optional`（`try_plan`），输入非法才抛 |
@@ -612,7 +612,7 @@ inline long long replay(const Rules& rules, Prices p, const std::vector<Trade>& 
 
 **Q5. 多只股票共享本金？** 已经是背包 / 带约束的优化，不是同一个问题。
 
-**Q6. 怎么证明你的 DP 对？** 写一个枚举所有（买 < 卖 < 买 < 卖……）序列的朴素解当标准答案，随机小输入对拍（本题的测试就是这么做的）；再加性质检查：k 增大利润单调不降、`Rules` 取极端值时退化成前面的 Part。
+**Q6. 怎么证明你的 DP 对？** 写一个枚举所有（买 < 卖 < 买 < 卖……）序列的朴素解当标准答案，随机小输入对拍（这里的测试就是这么做的）；再加性质检查：k 增大利润单调不降、`Rules` 取极端值时退化成前面的 Part。
 
 **Q7. `plan` 和 `max_profit` 为什么分开？** 只要数字就别付 O(n · k) 字节的决策表；`try_plan` 在格子数超限时返回 `nullopt` 让调用者决定退化策略。
 
