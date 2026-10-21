@@ -1,0 +1,13 @@
+$ c10_placement_new
+[slot]
+  construct 1
+  AAPL
+  destroy 1
+  construct 2
+[uninitialized_* algorithms and construct_at]
+  construct 10
+  construct 11
+  destroy 11
+  destroy 10
+  alignof(Order)=8 sizeof(Order)=32
+  destroy 2

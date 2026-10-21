@@ -1,0 +1,15 @@
+$ c03_shared_weak
+sizeof(shared_ptr<Payload>)=16 (object pointer + control-block pointer)
+[allocations]
+  shared_ptr(new T):  2 allocations
+  make_shared<T>():   1 allocation
+  make_unique<T>():   1 allocation, no control block
+[counts]
+  use_count=1 weak expired=0
+  use_count=2
+  lock() ok: quote
+  after reset: expired=1, lock() null=1
+[cycles]
+  cycle with shared_ptr both ways: alive after scope = 2 (leaked)
+  with weak_ptr back-pointer: newly leaked = 0
+[enable_shared_from_this] use_count=1 before, same object: 1

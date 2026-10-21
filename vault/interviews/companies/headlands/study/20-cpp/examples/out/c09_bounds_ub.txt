@@ -1,0 +1,18 @@
+$ c09_bounds_ub
+=================================================================
+==54561==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60200000091c at pc 0x0001026e0c20 bp 0x00016d71ebf0 sp 0x00016d71ebe8
+READ of size 4 at 0x60200000091c thread T0
+    #0 0x0001026e0c1c in main+0x364 (c09_bounds_ub:arm64+0x100000c1c)
+    #1 0x000199c75154 in start+0x1a1c (dyld:arm64e.x1+0x30154)
+
+0x60200000091c is located 0 bytes after 12-byte region [0x602000000910,0x60200000091c)
+allocated by thread T0 here:
+    #0 0x000103074150 in _Znwm+0x74 (libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50150)
+    #1 0x0001026e12f4 in std::__1::vector<int, std::__1::allocator<int>>::__vallocate[abi:nqe220106](unsigned long)+0x44 (c09_bounds_ub:arm64+0x1000012f4)
+    #2 0x0001026e11a0 in void std::__1::vector<int, std::__1::allocator<int>>::__init_with_size[abi:nqe220106]<int const*, int const*>(int const*, int const*, unsigned long)+0xec (c09_bounds_ub:arm64+0x1000011a0)
+    #3 0x0001026e09d8 in main+0x120 (c09_bounds_ub:arm64+0x1000009d8)
+    #4 0x000199c75154 in start+0x1a1c (dyld:arm64e.x1+0x30154)
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow (c09_bounds_ub:arm64+0x100000c1c) in main+0x364
+at(5) threw: vector
+v[3] = 

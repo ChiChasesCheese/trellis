@@ -1,0 +1,4 @@
+$ c06_accumulate_ub
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__numeric/accumulate.h:30:32: runtime error: signed integer overflow: 2000000000 + 1000000000 cannot be represented in type 'int'
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__numeric/accumulate.h:30:32 
+sum with int init: 1410065408  (signed overflow = undefined behaviour)

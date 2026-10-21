@@ -1,0 +1,8 @@
+$ c01_value_vs_ref
+a.x=1 b.x=99
+a.x=7 (changed through r)
+sizeof(Point)=8
+&v[1] - &v[0] = 8 bytes
+&v[2] - &v[1] = 8 bytes
+&v[3] - &v[2] = 8 bytes
+AAPL vs MSFT; sizeof(Order)=40

@@ -1,0 +1,3 @@
+$ c12_branches
+  random data: 2.50036 ns/element (sum 7)
+  sorted data: 0.420543 ns/element (sum 7)

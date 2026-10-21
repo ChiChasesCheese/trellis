@@ -1,0 +1,22 @@
+C07/c07_concept_bad.cpp:13:12: error: no matching function for call to 'twice'
+   13 |     return twice(std::string("oops")).size();      // std::string is not Numeric
+      |            ^~~~~
+C07/c07_concept_bad.cpp:10:3: note: candidate template ignored: constraints not satisfied [with T = std::string]
+   10 | T twice(T x) { return x + x; }
+      |   ^
+C07/c07_concept_bad.cpp:9:11: note: because 'std::string' does not satisfy 'Numeric'
+    9 | template <Numeric T>
+      |           ^
+C07/c07_concept_bad.cpp:7:19: note: because 'std::string' does not satisfy 'integral'
+    7 | concept Numeric = std::integral<T> || std::floating_point<T>;
+      |                   ^
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__concepts/arithmetic.h:28:20: note: because 'is_integral_v<std::string>' evaluated to false
+   28 | concept integral = is_integral_v<_Tp>;
+      |                    ^
+C07/c07_concept_bad.cpp:7:39: note: and 'std::string' does not satisfy 'floating_point'
+    7 | concept Numeric = std::integral<T> || std::floating_point<T>;
+      |                                       ^
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__concepts/arithmetic.h:37:26: note: because 'is_floating_point_v<std::string>' evaluated to false
+   37 | concept floating_point = is_floating_point_v<_Tp>;
+      |                          ^
+1 error generated.

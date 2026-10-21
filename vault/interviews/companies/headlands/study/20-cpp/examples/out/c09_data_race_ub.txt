@@ -1,0 +1,24 @@
+$ c09_data_race_ub
+==================
+WARNING: ThreadSanitizer: data race (pid=54615)
+  Write of size 4 at 0x000100810000 by thread T2:
+    #0 void* std::__1::__thread_proxy[abi:nqe220106]<std::__1::tuple<std::__1::unique_ptr<std::__1::__thread_struct, std::__1::default_delete<std::__1::__thread_struct>>, main::$_1>>(void*) <null> (c09_data_race_ub:arm64+0x100000afc)
+
+  Previous write of size 4 at 0x000100810000 by thread T1:
+    #0 void* std::__1::__thread_proxy[abi:nqe220106]<std::__1::tuple<std::__1::unique_ptr<std::__1::__thread_struct, std::__1::default_delete<std::__1::__thread_struct>>, main::$_0>>(void*) <null> (c09_data_race_ub:arm64+0x100000950)
+
+  Location is global 'counter' at 0x000100810000 (c09_data_race_ub+0x100008000)
+
+  Thread T2 (tid=5185551, running) created by main thread at:
+    #0 pthread_create <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x33bac)
+    #1 main <null> (c09_data_race_ub:arm64+0x1000007a8)
+
+  Thread T1 (tid=5185549, finished) created by main thread at:
+    #0 pthread_create <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x33bac)
+    #1 main <null> (c09_data_race_ub:arm64+0x100000748)
+
+SUMMARY: ThreadSanitizer: data race (c09_data_race_ub:arm64+0x100000afc) in void* std::__1::__thread_proxy[abi:nqe220106]<std::__1::tuple<std::__1::unique_ptr<std::__1::__thread_struct, std::__1::default_delete<std::__1::__thread_struct>>, main::$_1>>(void*)+0x68
+==================
+counter = 200000 (expected 200000)
+ThreadSanitizer: reported 1 warnings
+

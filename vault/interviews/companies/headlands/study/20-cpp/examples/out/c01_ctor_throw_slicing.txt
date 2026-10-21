@@ -1,0 +1,11 @@
+$ c01_ctor_throw_slicing
+[constructor throws]
+  Part a built
+  Part b built
+  Machine body starts
+  Part b destroyed
+  Part a destroyed
+  caught: constructor failed
+[slicing]
+  by_value: animal, by_ref: dog
+  through base pointer: dog

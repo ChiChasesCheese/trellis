@@ -1,0 +1,24 @@
+$ c11_memcpy_string_ub
+=================================================================
+==55422==ERROR: AddressSanitizer: attempting double-free on 0x60b000000040 in thread T0:
+    #0 0x000101018558 in _ZdlPv+0x74 (libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50558)
+    #1 0x00010074d928 in std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>::__reset_internal_buffer[abi:nqe220106](std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>::__rep)+0x8c (c11_memcpy_string_ub:arm64+0x100001928)
+    #2 0x00010074cb0c in main+0x254 (c11_memcpy_string_ub:arm64+0x100000b0c)
+    #3 0x000199c75154 in start+0x1a1c (dyld:arm64e.x1+0x30154)
+
+0x60b000000040 is located 0 bytes inside of 104-byte region [0x60b000000040,0x60b0000000a8)
+freed by thread T0 here:
+    #0 0x000101018558 in _ZdlPv+0x74 (libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50558)
+    #1 0x00010074d928 in std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>::__reset_internal_buffer[abi:nqe220106](std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>::__rep)+0x8c (c11_memcpy_string_ub:arm64+0x100001928)
+    #2 0x00010074caf0 in main+0x238 (c11_memcpy_string_ub:arm64+0x100000af0)
+    #3 0x000199c75154 in start+0x1a1c (dyld:arm64e.x1+0x30154)
+
+previously allocated by thread T0 here:
+    #0 0x000101018150 in _Znwm+0x74 (libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50150)
+    #1 0x00010074cef4 in std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>::__init_internal_buffer[abi:nqe220106](unsigned long)+0xac (c11_memcpy_string_ub:arm64+0x100000ef4)
+    #2 0x00010074c98c in main+0xd4 (c11_memcpy_string_ub:arm64+0x10000098c)
+    #3 0x000199c75154 in start+0x1a1c (dyld:arm64e.x1+0x30154)
+
+SUMMARY: AddressSanitizer: double-free (c11_memcpy_string_ub:arm64+0x100001928) in std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>::__reset_internal_buffer[abi:nqe220106](std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>::__rep)+0x8c
+copy sees 100 chars
+
