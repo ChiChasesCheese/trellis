@@ -1,0 +1,83 @@
+[
+  {
+    "id": "amz-pizza-order-how-it-is-asked",
+    "node": "amazon.amz-pizza-order",
+    "type": "qa",
+    "q": "披萨订单（Pizza Order）要你设计什么？开场先问哪三个澄清问题？",
+    "a": "要设计一个披萨店的点单系统：顾客自选尺寸、饼底（crust）和若干配料（toppings），系统算出一份的价格；一张订单有多份，再套上优惠，给出总价。\n\n三个问题：\n1. 配料价格和尺寸有关吗、能加双份吗？有关，价格就要存成「尺寸 × 配料」的表；双份则 `topping` 要带份量。\n2. 有没有不允许的组合（某饼底只能做大号、两种配料互斥）？有，就要一个统一的校验点，规则放进菜单数据。\n3. 优惠只看一份，还是也看整单？有整单的，优惠就要分行级和整单两层。",
+    "tags": [],
+    "step": 1
+  },
+  {
+    "id": "amz-pizza-order-objects-and-jobs",
+    "node": "amazon.amz-pizza-order",
+    "type": "qa",
+    "q": "在披萨订单设计里需要哪几个核心类？各自只负责什么？",
+    "a": "系统读顾客的选择和店里的优惠规则，产出一份校验过的披萨和一张订单账单。\n\n- `Menu`：纯数据，尺寸、饼底、配料的价格、互斥表和配料上限。\n- `PizzaBuilder`：分步收集选择，`build()` 时一次性校验，保证产出的每份披萨都合法。\n- `Pizza`：不可变值对象，带构建时定格的单价；配料排序后，同样的披萨相等。\n- `Order`：容器，同样的披萨合并成一行，对外只给快照。\n- `LineRule` / `OrderRule` / `PriceEngine`：只看一行的优惠、看整单的优惠，以及遍历、钳位、记账的引擎。",
+    "tags": [],
+    "step": 2
+  },
+  {
+    "id": "amz-pizza-order-stage1-build-and-validate",
+    "node": "amazon.amz-pizza-order",
+    "type": "qa",
+    "q": "在披萨订单里，`PizzaBuilder.build()` 的校验和定价主流程怎么写？",
+    "a": "先逐项校验（尺寸 → 饼底及其适用尺寸 → 配料去重、数量、存在、互斥），任何一步失败就抛带原因的异常，全部通过才定价并返回不可变的 `Pizza`。\n\n```python\ndef build(self) -> Pizza:\n    m, size = self._menu, self._size\n    if size not in m.base:\n        raise InvalidChoiceError(f\"未知尺寸: {size!r}\")\n    spec = m.crusts.get(self._crust)\n    if spec is None or (spec.sizes and size not in spec.sizes):\n        raise InvalidChoiceError(f\"{size} 号做不了 {self._crust}\")\n    tops = tuple(sorted(self._toppings))\n    if len(set(tops)) != len(tops) or len(tops) > m.max_toppings:\n        raise InvalidChoiceError(\"配料重复或超限\")\n    for t in tops:\n        if t not in m.toppings or m.toppings[t].excludes & set(tops):\n            raise InvalidChoiceError(f\"配料不合法: {t}\")\n    return Pizza(size, self._crust, tops, m.price(size, self._crust, tops))\n```",
+    "tags": [],
+    "step": 3
+  },
+  {
+    "id": "amz-pizza-order-menu-as-data-price-by-size",
+    "node": "amazon.amz-pizza-order",
+    "type": "qa",
+    "q": "在披萨订单里，配料价格随尺寸变，怎么存才能做到「新增一种配料只加一行数据」？举一个输入和输出。",
+    "a": "每种配料存一张「尺寸 → 价格（分）」的小表，价格 = 基础价 + 饼底加价 + 该尺寸下每种配料的价，全是字典查找，每份披萨 O(配料数)。\n\n```python\ntoppings[\"pepperoni\"] = ToppingSpec({\"S\": 150, \"M\": 200, \"L\": 250})\n# 大号厚饼底 + pepperoni + mushroom：\n# 1200 + 100 + 250 + 150 = 1700 分\n```\n同样的 pepperoni 放在小号是 150，所以价格不能是「每种配料一个数字」。",
+    "tags": [],
+    "step": 4
+  },
+  {
+    "id": "amz-pizza-order-decorator-vs-menu-data",
+    "node": "amazon.amz-pizza-order",
+    "type": "qa",
+    "q": "在披萨订单里，用装饰器（每种配料一个类）还是用菜单数据？各自的代价是什么，怎么选？",
+    "a": "选项一，装饰器：`Pepperoni(pizza).cost()` 在内层价格上加钱。价格写死在类里；配料价随尺寸变时，类数是「配料 × 尺寸」；互斥和上限这类跨配料规则无处可放；装饰器链也不可哈希，订单没法合并相同披萨。\n\n选项二，菜单是数据：新增配料加一行，跨配料规则集中在 `Menu` 和 `build()`。代价是以后若有配料的计价逻辑真的不同（按重量），数据表达不了。\n\n选数据：所有配料的行为只有「按尺寸查价」一种，变的只是参数。装饰器适合行为各异的叠加，这里不需要。",
+    "tags": [],
+    "step": 5
+  },
+  {
+    "id": "amz-pizza-order-followup-discount-layers",
+    "node": "amazon.amz-pizza-order",
+    "type": "qa",
+    "q": "在披萨订单里，面试官加「小号九折」和「三份里最便宜的一份免费」两条优惠，要改哪些类、不改哪些类？",
+    "a": "只新增规则类，不改 `Pizza`、`Order`、`PriceEngine`。\n\n- 「小号九折」只看一份：`LineRule` 子类，`is_eligible` 判断尺寸，`apply` 在剩余价格上按基点算一次，半进位。\n- 「三份里最便宜的免费」要看整单：`OrderRule` 子类，读行级折扣之后的各行结果。\n\n```python\nengine = PriceEngine(\n    [PercentOff(\"小号九折\", \"10\", frozenset({\"S\"}))],\n    [CheapestFreePerN(\"买二送一\", 3)],\n)\n```\n引擎先逐行跑行级规则，再用折后结果跑整单规则。",
+    "tags": [],
+    "step": 6
+  },
+  {
+    "id": "amz-pizza-order-cheapest-free-uses-discounted-price",
+    "node": "amazon.amz-pizza-order",
+    "type": "qa",
+    "q": "在披萨订单里，「每 2 份最便宜的一份免费」如果按原价免，会出什么错？给一个具体输入并说明修复。",
+    "a": "小号 800 分、中号 1000 分，小号先半价成 400 分。按原价免掉小号，减免是 800，总价 = 400 + 1000 − 800 = 600 分：这份小号只值 400，却被免掉 800，顾客多得 400。\n\n修复：整单规则读行级折扣之后的每份均价（`final_cents // qty`），免的是 400，总价 1000 分。\n\n```python\nprices = sorted((r.final_cents // r.line.qty\n                 for r in results for _ in range(r.line.qty)),\n                reverse=True)\nfree = sum(prices[n - 1::n])   # 每满 n 份，组内最便宜的一份\n```",
+    "tags": [],
+    "step": 7
+  },
+  {
+    "id": "amz-pizza-order-concurrency-order-lock",
+    "node": "amazon.amz-pizza-order",
+    "type": "qa",
+    "q": "在披萨订单里，多个线程同时往同一张订单加披萨、同时算价，什么会出错？怎么保证？",
+    "a": "出错的是合并数量的读–改–写：两个线程都读到旧数量 1，各自写回 2，丢了一份。GIL 只保证单个字节码原子，`get` 和写回之间可以切换线程。\n\n办法：`Order` 用一把 `Lock` 包住读–改–写，`lines` 在锁内复制成元组再返回；`PriceEngine` 只含不可变元组，`price` 是纯函数，可以共享，不用锁。\n\n```python\ndef add(self, pizza, qty=1):\n    with self._lock:\n        self._lines[pizza] = self._lines.get(pizza, 0) + qty\n```\n结算时先取一次 `order.lines` 快照，之后只用快照。",
+    "tags": [],
+    "step": 8
+  },
+  {
+    "id": "amz-pizza-order-unsorted-toppings-mistake",
+    "node": "amazon.amz-pizza-order",
+    "type": "qa",
+    "q": "在披萨订单里，配料不排序会出什么错？给一个具体输入，并说明修复。",
+    "a": "「橄榄 + 蘑菇」和「蘑菇 + 橄榄」是同一款披萨，但配料元组不同，不相等、哈希也不同：订单里占两行，每行数量 1。规则「同款买一送一」要求一行数量至少 2，所以不触发，顾客该免一份却没免。\n\n修复：`build()` 里 `tuple(sorted(...))`，同样的搭配得到同一个 `Pizza`，订单合并成一行数量 2，买一送一免掉一份。去重也要在这里做，重复的配料直接报 `InvalidChoiceError`。",
+    "tags": [],
+    "step": 9
+  }
+]

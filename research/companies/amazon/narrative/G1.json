@@ -1,0 +1,86 @@
+{
+  "code": "G1",
+  "full_zh": [
+    "背景：我在做一个系统设计学习题库，约 50 道题，由 Claude Code subagent起草。读者会把里面的数字背下来，所以一个错数字就是一个已经交付的缺陷。",
+    "我的角色：正确性由我负责。代理负责起草，我负责保证错的东西不会流出去。",
+    "触发：第一道试点题的文章里写了哈希碰撞概率 38%。我没有因为它说得很笃定就接受，而是用一行脚本复算，结果是必然碰撞，指数差了六个数量级。",
+    "我做了什么：这个错数字已经进了一张闪卡，所以我先改文章再改卡片。然后我不把它当成一个孤立的 bug，而是在共享的代理指令里写了规则：每个数字都要计算，不能凭记忆；没法验证的数字不进卡片。后来另一篇文章算术都对，但用了两个互相矛盾的假设（峰值比 1,560 倍），我又加了一条：假设之间必须一致。",
+    "结果与学到：49 道题全部通过验收，两道因为设计实质问题重做，四条教训写进了指令文件。模型的笃定程度说明不了任何事，算术很便宜，所以交给机器检查。"
+  ],
+  "full_en": "I'm building a system-design study bank, about fifty problems drafted by Claude Code subagents. A learner memorizes those numbers, so a wrong one is a shipped defect, and I own correctness: the agent drafts, I make sure nothing wrong gets through. On the first pilot problem, the article stated a hash-collision probability of 38 percent. It sounded confident, but I re-derived it with a one-line script, and the real answer was certainty. The exponent was off by six orders of magnitude. The wrong figure was already in a flashcard, so I fixed the article first, then the card. Then I stopped treating it as one bug and wrote a rule into the shared agent instructions: every number is computed, never recalled, and a number you couldn't verify never goes into a card. Later, a second article had correct arithmetic on two contradicting assumptions, a 1,560x peak ratio, so I added a rule that assumptions must agree with each other. All 49 problems passed the gate, two were redone for design substance, and four lessons now live in the instruction file. The takeaway: a model's confidence tells you nothing, and arithmetic is cheap, so check it by machine.",
+  "terms": {
+    "full": [
+      {"en": "shipped defect", "zh": "已经交付到用户手里的缺陷", "example": "Learners memorize these numbers, so a wrong one is a shipped defect."},
+      {"en": "own correctness end to end", "zh": "对正确性端到端负责", "example": "The agent drafts, but I own correctness end to end."},
+      {"en": "off by orders of magnitude", "zh": "差了好几个数量级", "example": "The article's collision figure was off by six orders of magnitude."}
+    ],
+    "starl": [
+      {"en": "sanity-check", "zh": "快速核对是否合理", "example": "I sanity-checked the 38 percent with a one-line script before it reached anyone."},
+      {"en": "root cause, not symptom", "zh": "修根因而不是修表象", "example": "I fixed the root cause by writing a rule, not just the one wrong figure."},
+      {"en": "close the loop", "zh": "把事情闭环", "example": "I fixed the article, then the card, to close the loop for the reader."}
+    ],
+    "followups": [
+      {"en": "confident wrong claim", "zh": "说得笃定但其实错的论断", "example": "I'd call it a confident wrong claim rather than a hallucination, since it was an arithmetic error."},
+      {"en": "raise the floor", "zh": "抬高下限，让最差情况也不差", "example": "A better model raises the floor, but only a script gives me an oracle."},
+      {"en": "bake it into the process", "zh": "把做法固化进流程", "example": "Every defect I find gets baked into the instruction file as a rule."}
+    ]
+  },
+  "senior": [
+    {
+      "q": "How do you know the rule actually prevents the next wrong number, rather than just feeling thorough?",
+      "why": "面试官在探：你有没有衡量规则有效性，而不是只靠感觉。",
+      "framework": [
+        "先说可观测的信号：之后每一批题的验收里，被复算抓到的错数字数量有没有下降",
+        "再说对照：把规则写进指令之前和之后，同类缺陷的出现频率对比",
+        "最后说残余风险：规则管得住算术，管不住合理假设上的错误结论，那一类仍靠人读"
+      ],
+      "best_practice": "规则只有在能被观察到起效时才算机制。算术类缺陷可以被机器复算抓到，所以能直接数；而假设矛盾这类缺陷机器看不见，需要明确承认它仍依赖人读。把能量化和不能量化的部分分开说，面试官更信任你的判断。",
+      "terms": [
+        {"en": "leading indicator", "zh": "先行指标", "example": "Defects caught at the gate are a leading indicator that the rule is working."},
+        {"en": "residual risk", "zh": "残余风险", "example": "The residual risk is a wrong conclusion built on a plausible assumption."}
+      ]
+    },
+    {
+      "q": "If this were a customer-facing product with millions of readers, what would you change?",
+      "why": "面试官在探：你能否把个人规模的做法扩展到生产规模。",
+      "framework": [
+        "先说把复算脚本放进 CI，不通过就不能发布",
+        "再说抽样加分级：高影响内容（数字、安全）强制校验，低影响内容抽检",
+        "最后说发布后的反馈通道：读者纠错入口，并把每次纠错变成新规则"
+      ],
+      "best_practice": "规模变大后，靠人记得去复算不可行，必须变成发布前的自动闸门。同时发布后也要有纠错通道，因为任何闸门都有盲区。事前预防加事后反馈，才是完整的闭环。",
+      "terms": [
+        {"en": "release gate", "zh": "发布闸门", "example": "I'd make the recompute script a release gate in CI."},
+        {"en": "feedback loop", "zh": "反馈回路", "example": "Reader corrections would feed back into new rules."}
+      ]
+    },
+    {
+      "q": "The 1,560x ratio case passed your arithmetic check. Why did it still need a new rule?",
+      "why": "面试官在探：你是否理解检查只覆盖它设计要覆盖的那一层。",
+      "framework": [
+        "先说每一步算术都对，复算脚本只验证单个数字，验证不了数字之间的一致性",
+        "再说错误出在两个相互矛盾的假设上，是结构性问题而不是计算问题",
+        "最后说所以新增一条规则：假设之间必须互相一致，并在 review 时专门核对"
+      ],
+      "best_practice": "单点检查通过不代表整体正确。检查的粒度决定它能发现什么：数字级检查发现不了假设级矛盾。发现盲区后补一条针对性规则，而不是假设旧检查已经够用。",
+      "terms": [
+        {"en": "blind spot", "zh": "盲区", "example": "A per-number check has a blind spot for contradicting assumptions."},
+        {"en": "internal consistency", "zh": "内部一致性", "example": "I added a rule that assumptions must hold internal consistency."}
+      ]
+    },
+    {
+      "q": "How would you explain the trade-off of this extra verification to a stakeholder who wants to move faster?",
+      "why": "面试官在探：你能否用成本和风险的语言说服管理层，而不是只讲原则。",
+      "framework": [
+        "先量化检查成本：一行脚本和几分钟，对比一次错误流出后的修复和信誉成本",
+        "再按风险分级：对读者会背下来的数字严格检查，对一般描述放宽",
+        "最后给出可选方案：先对高影响项上闸门，其余逐步加，而不是一刀切"
+      ],
+      "best_practice": "和想加快速度的人沟通，要把验证放在成本收益里讲：检查很便宜，错误流出很贵。同时给出分级方案，让对方看到你不是在拖慢进度，而是在把力气花在最值得的地方。",
+      "terms": [
+        {"en": "cost of a miss", "zh": "漏掉一个错误的代价", "example": "The cost of a miss is a learner memorizing a wrong number."},
+        {"en": "risk-based approach", "zh": "按风险分级的做法", "example": "I'd take a risk-based approach and gate the high-impact items first."}
+      ]
+    }
+  ]
+}

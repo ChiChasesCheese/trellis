@@ -1,0 +1,13 @@
+{
+  "amazon.amz-pizza-order": [
+    "amz-pizza-order-how-it-is-asked",
+    "amz-pizza-order-objects-and-jobs",
+    "amz-pizza-order-stage1-build-and-validate",
+    "amz-pizza-order-menu-as-data-price-by-size",
+    "amz-pizza-order-decorator-vs-menu-data",
+    "amz-pizza-order-followup-discount-layers",
+    "amz-pizza-order-cheapest-free-uses-discounted-price",
+    "amz-pizza-order-concurrency-order-lock",
+    "amz-pizza-order-unsorted-toppings-mistake"
+  ]
+}

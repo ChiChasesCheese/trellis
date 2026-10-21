@@ -4,7 +4,11 @@
 
 令牌桶、滑动窗口的类设计，可注入时钟，按用户隔离与线程安全。
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/low-level-design/map/patterns.strategy|策略模式与可替换算法（Strategy）]], [[domains/low-level-design/map/concurrency.primitives|同步原语（threading）]]
+
+**Unlocks:** [[domains/low-level-design/map/amazon.amz-rate-limiter|限流器（Rate Limiter）（low priority）]]
 
 ## Readings
 - [[solution-rate-limiter|设计题解：限流器（Rate Limiter）]]

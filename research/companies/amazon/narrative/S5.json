@@ -1,0 +1,192 @@
+{
+ "code": "S5",
+ "full_zh": [
+  "背景：Net Settlement 是多季度项目，我负责其中的费用侧。透传费用（interchange、scheme、chargeback）都来自收单方的 transaction view，而这个视图有时在当天出款截止之后才填好，所以费用赶不上净额结算窗口。",
+  "决定：我负责把最大的一类，信用卡 interchange，切到更早到达的 settlement view。有两条路：把现有的“哪个视图有数就用哪个”fallback 做得更聪明，或者按费用类型静态拆分并用 toggle 控制。我选了静态拆分，因为 fallback 已经长出粘性状态和三个 CTE，而收入路径上的数据源应该是事实，不是运行时的判断。",
+  "验证：先做 discovery，用 FULL OUTER JOIN 加 EQUAL_NULL 逐字段比对，一致率超过 99.9%，0.07% 的不匹配全是只在一侧当天才有的记录（时序问题），两个差异（FEE_SEQUENCE_CODE、ALT_DISPUTE_ID）都能解释。然后把即将上线的生产查询本身改成 count(*) 跑一整天，约 1373 万行，差 0.224%（多 30,760 行）。因为验证和生产用同一条 SQL，所以不会验证的是 A、发布的是 B。",
+  "发布：toggle 默认关，先在预生产打开，再到生产，deploy 和 release 分成两步。旧 task 在 toggle 打开时显式排除 interchange，两个 task 互补，不会重复计费。",
+  "结果与学到：切换前一整天 1373 万行的验证在 0.224% 以内；回填 SQL 成了团队做 CDC 回填的模板。收入路径的数据源要是事实；验证和上线用同一条 SQL。"
+ ],
+ "full_en": "Our pass-through fees, interchange, scheme, chargeback, all came from the acquirer's transaction view, and that view sometimes wasn't populated until after the daily payout cutoff, so fees missed the net-settlement window. I owned switching the biggest category, credit interchange, to the settlement view, which arrives earlier. I had two options: make the existing fallback smarter, or split statically by fee type behind a feature toggle. I chose the static split, because the fallback had already grown sticky state and three CTEs, and in a revenue path I want the source of truth to be a fact, not a runtime decision. Before switching I ran a discovery comparison, a full outer join field by field, with over ninety-nine point nine percent parity and every difference explained. Then I ran the production query itself as a count(*) over a full day: about 13.7 million rows, within 0.224 percent. Validation and production share the same SQL, so I can't validate one thing and ship another. I shipped it dark, toggle off, enabled in pre-prod, then production, because deploy and release are two separate steps. The backfill SQL became the team's template for CDC backfills.",
+ "terms": {
+  "hook": [
+   {
+    "en": "source of truth",
+    "zh": "权威数据源",
+    "example": "In a revenue path I want the source of truth to be a fact, not a runtime decision."
+   },
+   {
+    "en": "parity",
+    "zh": "两边数据一致的程度",
+    "example": "The two views showed over 99.9 percent field-level parity."
+   },
+   {
+    "en": "within tolerance",
+    "zh": "在可接受误差范围内",
+    "example": "A full day of production traffic came back within tolerance, about 0.224 percent apart."
+   }
+  ],
+  "starl": [
+   {
+    "en": "ship it dark",
+    "zh": "先暗发布：代码上线但功能默认关",
+    "example": "I shipped it dark, with the toggle off, and enabled it in pre-prod first."
+   },
+   {
+    "en": "deploy is not release",
+    "zh": "部署不等于放量：上线代码和打开功能是两步",
+    "example": "Deploy is not release, so we could roll back by flipping a toggle."
+   },
+   {
+    "en": "static split",
+    "zh": "静态拆分，职责在设计时就固定",
+    "example": "I chose a static split by fee type over a smarter runtime fallback."
+   }
+  ],
+  "followups": [
+   {
+    "en": "mutually exclusive",
+    "zh": "互斥，同一时刻只有一边生效",
+    "example": "The two tasks are mutually exclusive because one toggle controls them in opposite directions."
+   },
+   {
+    "en": "bounded scan cost",
+    "zh": "扫描成本有上界",
+    "example": "The one-month window gives us bounded scan cost on a table that only grows."
+   },
+   {
+    "en": "documented risk",
+    "zh": "写明在文档或注释里的已知风险",
+    "example": "Records reprocessed after a month bypass dedup, which is a documented risk we accepted."
+   }
+  ],
+  "relp": [
+   {
+    "en": "disconfirm yourself",
+    "zh": "主动找证据推翻自己的判断",
+    "example": "I ran the full outer join to try to disconfirm my own assumption that the views matched."
+   },
+   {
+    "en": "reversible",
+    "zh": "可回退的",
+    "example": "Because the toggle made the change reversible, I could act before production was fully proven."
+   },
+   {
+    "en": "reusable template",
+    "zh": "可复用的模板",
+    "example": "The backfill SQL became a reusable template for the team's CDC backfills."
+   }
+  ],
+  "full": [
+   {
+    "en": "cut over",
+    "zh": "切换（到新系统 / 新数据源）",
+    "example": "We only cut over once the new source matched the old one."
+   },
+   {
+    "en": "parallel run",
+    "zh": "新旧并行跑、逐项对比",
+    "example": "Comparing old and new outputs side by side is how you earn a zero-regression cutover."
+   },
+   {
+    "en": "zero-regression migration",
+    "zh": "零回归迁移",
+    "example": "The bar was a zero-regression migration: every fee had to match."
+   }
+  ]
+ },
+ "senior": [
+  {
+   "q": "How did you decide that 0.224 percent was acceptable, and what would have made you hold the switch?",
+   "why": "面试官在探：你上线前有没有预先定义“通过/不通过”的标准，而不是看到数字再合理化。",
+   "framework": [
+    "先说差异的性质：是记录数差异，不是金额或字段冲突，并且可以拆解归类",
+    "再说门槛应该在跑之前定：按类别解释全部差异，任何解释不了的差异就是 no-go",
+    "说明我当时的判断是 0.224% 可接受，没有预设的数字门槛，下次会先写下来",
+    "最后说放量也留了退路：toggle 默认关，可以随时回退"
+   ],
+   "best_practice": "好的验证是先写下通过标准再看数据，这样结论不会被结果牵着走。我的做法是把差异拆成可解释的类别；如果有无法解释的残差，我会不放量。事后诚实说明当时没有预设阈值，反而比编一个阈值更可信，而且能顺势讲出下次的改进：先写门槛，再跑查询。",
+   "terms": [
+    {
+     "en": "go/no-go criteria",
+     "zh": "放行/不放行的判定标准",
+     "example": "Next time I would write the go/no-go criteria down before running the comparison."
+    },
+    {
+     "en": "unexplained residual",
+     "zh": "无法解释的残差",
+     "example": "Any unexplained residual in the difference would have been a reason to hold the switch."
+    }
+   ]
+  },
+  {
+   "q": "How would you know in production that the switch is actually working, after the toggle is on?",
+   "why": "面试官在探：你上线后有没有持续的观测与告警，而不是上线即结束。",
+   "framework": [
+    "先说业务信号：费用在净额窗口之前到齐的比例，以及出款金额是否按预期",
+    "再说数据信号：两个视图的行数差、迟到记录数、合成键重复数",
+    "对照基线：切换前后同一时间窗口的对比",
+    "最后说回退触发条件：超过阈值就关掉 toggle"
+   ],
+   "best_practice": "切换的目的是让费用赶上窗口，所以最直接的验证是到齐率，而不是行数。再加上重复键检测，防止互斥假设失效造成双计。有了预先定义的触发条件，toggle 才真正等于安全网，而不只是开关。",
+   "terms": [
+    {
+     "en": "leading indicator",
+     "zh": "先行指标，问题爆发前就会变化",
+     "example": "The share of fees landing before the cutoff is the leading indicator that the switch works."
+    },
+    {
+     "en": "rollback trigger",
+     "zh": "触发回退的条件",
+     "example": "I would define a rollback trigger, such as duplicate keys above zero, before flipping the toggle."
+    }
+   ]
+  },
+  {
+   "q": "Why a static split instead of improving the dynamic fallback, and when would the dynamic one have been the right call?",
+   "why": "面试官在探：你做技术取舍时能不能说清条件，而不是只讲结论。",
+   "framework": [
+    "先说收入路径要求可预测：同一输入永远走同一来源，出错时能一眼看出是哪边",
+    "再说 fallback 的代价：粘性状态、三个 CTE，调试要还原运行时当时选了哪个视图",
+    "承认动态方案适合的场景：来源真的不稳定且没有谁更权威",
+    "最后说我怎么确认两个来源可互换：用 discovery 的数据说话"
+   ],
+   "best_practice": "静态拆分把复杂度从运行时挪到设计时：设计时的决定可以评审、可以测试，运行时的决定只能事后复盘。只有当两个来源都不权威、且延迟不可预测时动态选择才值得，而这里 settlement view 更早到达且数据一致，就没有理由保留动态逻辑。",
+   "terms": [
+    {
+     "en": "move complexity to design time",
+     "zh": "把复杂度从运行时挪到设计时",
+     "example": "The static split moves complexity to design time, where it can be reviewed and tested."
+    },
+    {
+     "en": "debuggability",
+     "zh": "可调试性",
+     "example": "Debuggability mattered, because with a sticky fallback you had to reconstruct which view it picked."
+    }
+   ]
+  },
+  {
+   "q": "How would you take this approach from one fee type to every fee type and to other teams' pipelines?",
+   "why": "面试官在探：你能否把一次性的成功做成可复制的机制，影响团队。",
+   "framework": [
+    "先把做法抽象成模板：discovery 比对、生产查询当验证、toggle 默认关、逐环境放开",
+    "把模板落成文档和脚本，让别人不需要我也能跑",
+    "用同一套检查清单去评审其他费用类型的切换",
+    "衡量推广效果：几个团队用了、验证耗时是否下降"
+   ],
+   "best_practice": "一次成功只证明我会做，模板化之后才证明方法有效。回填 SQL 已经被团队当成 CDC 回填模板，这是个好起点；下一步是把验证步骤和放行标准一起写成清单，这样每一类费用的切换都有同样的质量底线，而不依赖某个人。",
+   "terms": [
+    {
+     "en": "playbook",
+     "zh": "标准操作手册",
+     "example": "I would turn the discovery, shadow check and dark launch into a playbook other fee types can follow."
+    },
+    {
+     "en": "raise the bar",
+     "zh": "抬高团队的标准",
+     "example": "Writing down the go/no-go criteria raises the bar for every later migration."
+    }
+   ]
+  }
+ ]
+}

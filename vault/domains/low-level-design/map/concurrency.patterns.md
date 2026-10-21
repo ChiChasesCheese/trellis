@@ -4,15 +4,18 @@
 
 生产者-消费者、有界阻塞队列、线程池与 `concurrent.futures`、读写锁、安全的惰性初始化。
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/low-level-design/map/concurrency.primitives|同步原语（threading）]]
 
-**Unlocks:** [[domains/low-level-design/map/problems.components.pub-sub|发布订阅与事件总线（Pub-Sub）]], [[domains/low-level-design/map/problems.components.task-scheduler|任务调度器（Task Scheduler）]], [[domains/low-level-design/map/problems.components.thread-pool|线程池（Thread Pool）]]
+**Unlocks:** [[domains/low-level-design/map/problems.components.pub-sub|发布订阅与事件总线（Pub-Sub）]], [[domains/low-level-design/map/problems.components.task-scheduler|任务调度器（Task Scheduler）]], [[domains/low-level-design/map/problems.components.thread-pool|线程池（Thread Pool）]], [[domains/low-level-design/map/amazon.amz-dag-runner|DAG 执行器与依赖安装（DAG Runner）]]
 
 ## Readings
 - [[java-concurrency-in-practice|Java Concurrency in Practice (Goetz et al.)]]
 - [[ostep-semaphores|Semaphores (OSTEP, Arpaci-Dusseau — free chapter)]]
 
 ## Drills
+- [[design-amz-dag-runner|Drill：DAG 执行器与依赖安装（DAG Runner）]]
 - [[design-pub-sub|Drill：发布订阅与事件总线（Pub-Sub）]]
 - [[design-task-scheduler|Drill：任务调度器（Task Scheduler）]]
 - [[design-thread-pool|Drill：线程池（Thread Pool）]]

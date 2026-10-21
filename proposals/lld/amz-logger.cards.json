@@ -1,0 +1,50 @@
+[
+  {
+    "id": "amz-logger-what-and-three-questions",
+    "node": "amazon.amz-logger",
+    "type": "qa",
+    "q": "日志框架（Logger）要你设计什么？开场先问哪三个澄清问题？",
+    "a": "日志框架让业务代码调用 `logger.info(msg)`，由框架决定这条日志要不要记、长什么样、写到哪里。三问：(1) 输出到几个目的地（控制台、文件、多个同时）——决定要不要 Handler 列表；(2) 要不要按级别过滤、按模块名分层——决定 Logger 是否带名字和门槛级别；(3) 格式固定还是可换（文本、JSON）——决定格式化要不要独立成类。",
+    "tags": []
+  },
+  {
+    "id": "amz-logger-objects-and-jobs",
+    "node": "amazon.amz-logger",
+    "type": "qa",
+    "q": "在日志框架设计里应该有哪几个对象？各自只负责一件什么事？",
+    "a": "`LogRecord`：一条日志的数据（时间、级别、名字、消息），不可变。`Logger`：按名字存在，持有门槛级别和 Handler 列表，负责「要不要记」。`Formatter`：`record → 字符串`，只负责排版。`Handler`：持有一个 Formatter，负责「写到哪」（控制台、文件）。切分依据：记什么、怎么排版、写到哪，三件事各自独立变化。",
+    "tags": []
+  },
+  {
+    "id": "amz-logger-logger-log-flow",
+    "node": "amazon.amz-logger",
+    "type": "qa",
+    "q": "在日志框架设计里，`Logger.log` 的主流程怎么写？级别过滤发生在哪几处？",
+    "a": "过滤两次：Logger 先按自己的门槛丢掉低级别日志（此时连 `LogRecord` 都不创建，省开销）；通过后交给每个 Handler，Handler 再按自己的门槛过滤——这样控制台只看 WARN 以上、文件记 DEBUG 以上。时钟注入，便于测试。\n```python\nclass Logger:\n    def log(self, level, msg):\n        if level < self.level:\n            return\n        record = LogRecord(self.clock(), level, self.name, msg)\n        for h in self.handlers:\n            if level >= h.level:\n                h.emit(h.formatter.format(record))\n```",
+    "tags": []
+  },
+  {
+    "id": "amz-logger-formatter-handler-split",
+    "node": "amazon.amz-logger",
+    "type": "qa",
+    "q": "在日志框架设计里，为什么排版（Formatter）和输出（Handler）要拆开，而不是每个 Handler 自己排版？",
+    "a": "有 M 种格式（文本、JSON、带颜色）和 N 个目的地（控制台、文件、网络）时，合在一起要写 M×N 个子类；拆开只要 M+N 个，且任意组合。新增 JSON 格式只写一个 `JsonFormatter`，控制台和文件的 Handler 一行不改；这是用组合代替继承的典型取舍。",
+    "tags": []
+  },
+  {
+    "id": "amz-logger-slow-sink-async-queue",
+    "node": "amazon.amz-logger",
+    "type": "qa",
+    "q": "在日志框架设计里，磁盘或网络写得慢时，怎样不拖慢业务线程？队列满了怎么办？",
+    "a": "做一个 `AsyncHandler` 包住真正的 Handler：业务线程只把 record 放进有界队列（`queue.Queue(maxsize=N)`），后台线程取出来写。队列满的三种策略：丢新日志并计数（默认，业务优先）、丢最旧、阻塞调用方（审计日志不能丢时用）。无界队列会在下游卡住时把内存吃光。关闭时先排空队列再退出线程。\n```python\nclass AsyncHandler:\n    def __init__(self, inner, maxsize=1000):\n        self.inner, self.dropped = inner, 0\n        self._q = queue.Queue(maxsize)\n\n    def handle(self, record):\n        try:\n            self._q.put_nowait(record)\n        except queue.Full:\n            self.dropped += 1\n```",
+    "tags": []
+  },
+  {
+    "id": "amz-logger-parse-log-lines",
+    "node": "amazon.amz-logger",
+    "type": "qa",
+    "q": "在日志框架设计里，追加需求「把日志行解析回 `LogRecord`，且支持多种格式」，怎么设计？",
+    "a": "解析是 Formatter 的逆，单独做一个 `parse(line)`，不塞进 Formatter。多格式：按「以 `{` 开头先试 JSON，否则试文本正则」的顺序逐个尝试；新增格式只在列表里加一个解析函数。解析不了的行返回 `None` 让调用方计数，不抛异常——日志文件里总有被截断的行。\n```python\nLINE = re.compile(r\"(\\S+) (\\w+) ([\\w.]+): (.*)\")\n\ndef parse(line):\n    if line.startswith(\"{\"):\n        d = json.loads(line)\n        return LogRecord(d[\"ts\"], Level[d[\"level\"]], d[\"name\"], d[\"msg\"])\n    m = LINE.fullmatch(line)\n    if m is None:\n        return None\n    return LogRecord(m[1], Level[m[2]], m[3], m[4])\n```",
+    "tags": []
+  }
+]

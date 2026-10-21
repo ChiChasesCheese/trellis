@@ -4,7 +4,11 @@
 
 按包裹尺寸分配柜格、取件码与过期回收。
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/low-level-design/map/structure.storage|内存持久化（In-Memory Persistence）]]
+
+**Unlocks:** [[domains/low-level-design/map/amazon.amz-locker-onsite|Amazon 现场版快递柜（Amazon Locker, onsite）]]
 
 ## Readings
 - [[solution-amazon-locker|设计题解：快递柜（Amazon Locker）]]

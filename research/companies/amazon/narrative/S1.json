@@ -1,0 +1,98 @@
+{
+  "code": "S1",
+  "full_zh": [
+    "背景：Braintree 的费用平台跑在 Snowflake 上。Visa 和 Mastercard 能从收单方拿到近实时视图，但 Amex 是闭环网络，每天只丢一个定宽文件过来，所以文件确认结算之前，Amex 交易不能入账。因为这个限制，Amex 必须单独做一条管线。",
+    "问题：我接手时只有前任留下的一张表的 stub。我是这条管线从设计文档到生产的 owner，输出要喂给费用计算和出款，所以它一旦出错就会直接影响钱，必须从设计上就假定会出错。",
+    "我做了什么：每种记录类型一条 append-only stream，共六条，各有独立 offset，这样互相不阻塞；每个阶段用复合键 MERGE，这样重发文件或重跑任务都不会重复计数；两个校验函数把所有对不上的记录写进 error log 而不是丢掉；再用一个 feature flag 当 kill switch，一条 UPDATE 就能停，不用发版。",
+    "结果：我一直在 on-call，真实故障出现后又补了十几个加固 PR。前六个月处理了约 2200 万笔 Amex 交易，在生产跑了 18 个月，管线本身也是我任期内最大的 PR，约 1800 行。",
+    "为什么这样做 / 学到：钱的管线不可能假设不出错，所以我选择让它坏的时候留下记录而不是悄悄丢数据，这是我最自豪的设计。"
+  ],
+  "full_en": "The project I'm proudest of is the American Express settlement pipeline on our Snowflake-based fee platform at Braintree. Amex is a closed-loop network: instead of near-real-time views from our acquirer, it sends one fixed-width reconciliation file a day, so we can't book an Amex transaction until that file confirms it settled. I inherited a stub with a single table and owned the pipeline from the design doc through eighteen months of production. I made three design calls. First, six append-only streams, one per record type, so each has its own offset and none blocks the others. Second, a composite-key MERGE at every stage, so a re-delivered file or a re-run task can't double-count. Third, two validation functions that send every mismatch to an error log instead of dropping it, plus a single feature flag that doubles as a kill switch, so I could stop it with one UPDATE and no deploy. Because I was on-call for it, I shipped about a dozen hardening PRs after real failures. It processed about twenty-two million Amex transactions in its first six months, and it's the largest change I've merged, around 1,800 lines. The part I'm proudest of: when it breaks, it records the problem instead of losing data.",
+  "terms": {
+    "full": [
+      {"en": "own something end to end", "zh": "从头到尾全权负责", "example": "I owned the Amex pipeline end to end, from the design doc through eighteen months of production."},
+      {"en": "closed-loop", "zh": "闭环（网络自己同时是发卡方和收单方）", "example": "Amex is a closed-loop network, so we only learn a transaction settled when its daily file arrives."},
+      {"en": "never silently drop", "zh": "绝不悄悄丢数据", "example": "My rule was that the pipeline never silently drops a record; every mismatch goes to an error log."}
+    ],
+    "hook": [
+      {"en": "on the order of", "zh": "大约、量级是", "example": "The pipeline handled on the order of twenty-two million Amex transactions in the first six months."},
+      {"en": "in production for", "zh": "在生产上跑了多久", "example": "It has been in production for eighteen months and I was on-call the whole time."},
+      {"en": "ballpark", "zh": "大致的数字", "example": "I only give the ballpark: about a dozen hardening PRs and one 1,800-line PR."}
+    ],
+    "starl": [
+      {"en": "idempotent", "zh": "幂等（重复执行结果不变）", "example": "The composite-key MERGE makes every stage idempotent, so a re-delivered file can't double-count."},
+      {"en": "kill switch", "zh": "紧急停止开关", "example": "One feature flag doubles as a kill switch: a single UPDATE stops the pipeline without a deploy."},
+      {"en": "fail safe", "zh": "出错时落在安全状态", "example": "I designed it to fail safe: bad rows land in an error log instead of vanishing."}
+    ],
+    "followups": [
+      {"en": "trade-off", "zh": "取舍", "example": "The trade-off of staying inside Snowflake was weaker orchestration, which I covered with monitoring and alerts."},
+      {"en": "self-heal", "zh": "自愈（下一轮自动恢复）", "example": "A misaligned batch logs one error and self-heals on the next run."},
+      {"en": "hardening", "zh": "加固（针对故障补防护）", "example": "After each real failure I shipped a hardening PR, about a dozen in total."}
+    ],
+    "relp": [
+      {"en": "take end-to-end ownership", "zh": "承担端到端责任", "example": "Nobody assigned the EU extension to me; I took end-to-end ownership of it."},
+      {"en": "raise the bar", "zh": "抬高标准", "example": "Three layers of correctness checks raised the bar for what we call a settled fee."},
+      {"en": "trace it to the root", "zh": "追到根因", "example": "I traced the late-file problem to the root by reading the load history instead of a dashboard."}
+    ]
+  },
+  "senior": [
+    {
+      "q": "How would you know the pipeline is correct in production, beyond the tests?",
+      "why": "面试官在探：你有没有把正确性做成持续运行的信号，而不只是上线前的测试。",
+      "framework": [
+        "先说分层：行级（坏字段不炸整批）、批级（每笔结算交易都有费用）、对账级（费用总额对 Amex 自己发的汇总记录）",
+        "再说失败时的动作：对账不一致就停 task 并 page on-call，而不是继续往下游放",
+        "最后说监控：Streamlit 任务监控加 Datadog 告警，让不一致能被人看见"
+      ],
+      "best_practice": "单靠上线前测试证明不了生产里的数据是对的，因为输入是对方每天发来的文件，随时会变。把校验放在数据流里、并且对账不一致时主动停下来，错误就不会扩散到出款。分层则让你一眼知道是哪一层出了问题，缺哪层补哪层。",
+      "terms": [
+        {"en": "defense in depth", "zh": "纵深防御（多层校验互相兜底）", "example": "Row, batch and reconciliation checks gave us defense in depth on fee correctness."},
+        {"en": "reconcile against the source of truth", "zh": "对照权威数据源做对账", "example": "We reconcile fee totals against the summary record Amex itself sends."}
+      ]
+    },
+    {
+      "q": "How would you make adding a seventh record type cheap?",
+      "why": "面试官在探：你是否能看出自己设计里的重复，并给出可扩展的方案。",
+      "framework": [
+        "先承认现状：六个 procedure 把同一份偏移表重复了六次",
+        "再说改法：偏移配置表加一个通用的定宽解析，新增记录类型就是加一行配置",
+        "最后说验证：用同一批历史文件跑新旧解析，结果逐行对得上才切换"
+      ],
+      "best_practice": "重复的偏移表意味着每加一种记录就要复制一个 procedure，出错面也跟着翻倍。把差异收敛成数据（配置行），通用逻辑只维护一份，扩展成本和风险都会下降。后来我在 quality-check 框架里正是用了这个模式。切换前用历史文件做新旧比对，是为了让重构本身不引入新的钱的错误。",
+      "terms": [
+        {"en": "config-driven", "zh": "配置驱动", "example": "Next time I would make the parser config-driven so a new record type is one row."},
+        {"en": "regression-test against history", "zh": "用历史数据做回归比对", "example": "Before switching I would regression-test the generic parser against historical files."}
+      ]
+    },
+    {
+      "q": "What is the blast radius if this pipeline produces a wrong fee, and how do you contain it?",
+      "why": "面试官在探：你对出错影响面的意识，以及止损手段是否事先设计好。",
+      "framework": [
+        "先说影响链：费用计算的输出会喂给出款，所以错误会变成真实的钱",
+        "再说止损：feature flag 一条 UPDATE 就能急停，不需要发版",
+        "再说留痕：不匹配进 error log，所以能知道受影响范围并更正",
+        "最后说事后：已经被下游消费的错误要走更正分录，而不是悄悄改回去"
+      ],
+      "best_practice": "止损手段必须在出事之前就存在：急停要快（不依赖发版），范围要可知（error log 留痕）。下游已经消费的错误状态不能回滚，只能用更正记录补上，这样账目才有可追溯的历史。",
+      "terms": [
+        {"en": "blast radius", "zh": "爆炸半径（出错的影响范围）", "example": "The kill switch let me shrink the blast radius to minutes, not a release cycle."},
+        {"en": "correcting entry", "zh": "更正分录", "example": "For fees already consumed downstream, we issue a correcting entry rather than rewriting history."}
+      ]
+    },
+    {
+      "q": "How would you hand this pipeline to another team so it does not depend on you?",
+      "why": "面试官在探：你能不能让自己建的东西脱离个人，变成团队可运维的资产。",
+      "framework": [
+        "先说文档：设计文档、runbook，区分哪些告警是下一轮会自愈的噪音",
+        "再说可观测：监控页和告警让别人不用读代码也能判断状态",
+        "再说演练：让别人在我旁观下处理一次真实告警",
+        "最后说验证：看别人能否在不问我的情况下接入或排查"
+      ],
+      "best_practice": "一条管线只有在别人不问你也能运维和扩展时才算交付完成。runbook 把你脑子里的经验固化下来，监控让状态可见，演练则检验这两样是否真的管用。这样 on-call 才不会永远只有一个人。",
+      "terms": [
+        {"en": "bus factor", "zh": "巴士系数（多少人离开会让项目停摆）", "example": "I would raise the bus factor by getting a teammate to handle a real alert from my runbook."},
+        {"en": "runbook", "zh": "运维手册", "example": "The runbook separates noisy errors that self-heal from the ones that need a human."}
+      ]
+    }
+  ]
+}

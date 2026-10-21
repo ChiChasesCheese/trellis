@@ -6,12 +6,13 @@
 
 **Core** — part of the first pass through this subject.
 
-**Unlocks:** [[domains/low-level-design/map/python.dataclasses-enums|dataclass 与 Enum]], [[domains/low-level-design/map/problems.components.lru-cache|LRU / LFU 缓存]]
+**Unlocks:** [[domains/low-level-design/map/python.dataclasses-enums|dataclass 与 Enum]], [[domains/low-level-design/map/problems.components.lru-cache|LRU / LFU 缓存]], [[domains/low-level-design/map/amazon.amz-closest-store|增删查最近值（Add / Remove / Closest）]]
 
 ## Readings
 - [[pydocs-data-model|3. Data model]]
 
 ## Drills
+- [[design-amz-closest-store|Drill：增删查最近值（Add / Remove / Closest）]]
 - [[design-lru-cache|Drill：LRU / LFU 缓存]]
 
 ## Cards (6)

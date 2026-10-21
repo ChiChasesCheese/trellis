@@ -22,6 +22,10 @@ domain: narrative
 title: Narrative Round
 lang: en
 vault: interviews/rounds/narrative
+# Amazon onsite 10/20: no daily caps — every card can be learned today (Chi, 2026-10-19)
+study:
+  new_per_day: 9999
+  reviews_per_day: 9999
 nodes:
   - id: round
     order: 1
@@ -194,3 +198,24 @@ nodes:
         title: Deadlines and Declining Well
         summary: Exploding offers, extension requests, and saying no in a way that leaves the door open two years from now.
         requires: [offer.the-ask]
+
+  - id: amazon
+    order: 7
+    title: "Amazon · LP 故事（STAR-L）"
+    summary: "你自己的故事：先完整过一遍，再背提纲，再练追问，最后记 LP 映射；附技术深挖。"
+    children:
+      - id: amazon.full
+        title: "01 完整故事（先过一遍）"
+        summary: "01 完整故事（先过一遍）"
+      - id: amazon.outline
+        title: "02 提纲（STAR-L）"
+        summary: "02 提纲（STAR-L）"
+      - id: amazon.followups
+        title: "03 追问（含 senior 追问）"
+        summary: "03 追问（含 senior 追问）"
+      - id: amazon.lp-map
+        title: "04 LP → 故事"
+        summary: "04 LP → 故事"
+      - id: amazon.tech
+        title: "05 技术深挖：Snowflake、数据管线与 AWS"
+        summary: "05 技术深挖：Snowflake、数据管线与 AWS"

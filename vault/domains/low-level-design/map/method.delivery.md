@@ -6,6 +6,8 @@
 
 **Core** — part of the first pass through this subject.
 
+**Unlocks:** [[domains/low-level-design/map/amazon.amz-round|Amazon 的 LLD 轮怎么打（Amazon OOD Round）]]
+
 ## Readings
 - [[awesome-low-level-design|awesome-low-level-design (ashishps1)]]
 - [[hellointerview-delivery|The Low Level Design Delivery Framework (Hello Interview)]]

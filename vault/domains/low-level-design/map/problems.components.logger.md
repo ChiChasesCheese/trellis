@@ -4,7 +4,11 @@
 
 级别过滤、多输出目的地、格式化器，异步写入与线程安全。
 
+**Core** — part of the first pass through this subject.
+
 **Requires:** [[domains/low-level-design/map/patterns.observer|观察者与事件（Observer）]], [[domains/low-level-design/map/patterns.structural|结构型模式（Structural）]]
+
+**Unlocks:** [[domains/low-level-design/map/amazon.amz-logger|日志框架（Logger）（low priority）]]
 
 ## Readings
 - [[solution-logger|设计题解：日志框架（Logging Framework）]]

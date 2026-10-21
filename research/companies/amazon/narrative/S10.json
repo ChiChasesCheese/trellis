@@ -1,0 +1,192 @@
+{
+  "code": "S10",
+  "full_zh": [
+    "背景：一家大型电商商户切到 net settlement 后，部分退款费仍带着旧的 monthly billing terms。我 own 爆炸半径的估算和根因，补救范围必须按正确的数字来定。",
+    "问题：我写的第一版查询给出约 196K 行、61 个商户、约 11,123 美元。但在任何人据此行动之前，我重读自己的谓词，发现它没有检查新的定价计划在费用创建时是否已经存在。很多计划是几个月后才回填的，写入当时其实是对的。",
+    "我做了什么：我加上 ps_curr.created_at <= bf.created_at 重跑，真实范围是 21,923 行、10,330 个 credits、30 个商户、5,854.52 美元。根因是退款费路径复制了 credit 的历史 pricing_schedule_id，而没有在费用创建时重新解析生效计划。顺带发现上游一个脆弱点：计划在交易流给当天 credit 盖章之后 1 小时 32 分才写入。",
+    "结果：范围从 200K 行、60 个商户缩到约 22K 行、30 个商户、不到 6,000 美元。一个修法（费用创建时解析生效计划）同时覆盖下游和上游两个脆弱点。",
+    "为什么这样做 / 学到：错的数字一旦进入补救计划，代价比公开撤回大得多，所以我宁可自己公开撤回。此后每个结论都配一条可重跑的查询，爆炸半径谓词必须检查时间有效性。"
+  ],
+  "full_en": "After a large e-commerce merchant moved to net settlement, some refund fees came out tagged with the old monthly billing terms. My first blast-radius query said about two hundred thousand fee rows across sixty merchants. Before anyone acted on it, I re-examined the predicate and found it was wrong: it didn't check that the new pricing schedule existed at the time the fee was created. Many of those rows had schedules backfilled months later and were correct when written. Adding that condition took the real scope to about twenty-two thousand rows, thirty merchants, under six thousand dollars. The root cause was that the refund-fee path copied the credit's historical pricing-schedule ID instead of resolving the effective schedule at fee-creation time. Along the way I found a second, upstream fragility: a schedule written to the database an hour and a half after the transaction stream had already stamped that day's credits. One fix covers both. I'd rather retract my own number in public than have a remediation sized off a bad predicate.",
+  "terms": {
+    "full": [
+      {
+        "en": "retract a number",
+        "zh": "撤回自己报出的数字",
+        "example": "I retracted my own number before anyone built a plan on it."
+      },
+      {
+        "en": "size the blast radius",
+        "zh": "估算影响范围",
+        "example": "I was asked to size the blast radius of the bad billing terms."
+      },
+      {
+        "en": "root cause",
+        "zh": "根本原因",
+        "example": "The root cause was copying the credit's historical schedule ID."
+      }
+    ],
+    "hook": [
+      {
+        "en": "an order of magnitude off",
+        "zh": "差了一个数量级",
+        "example": "My first number was nearly an order of magnitude off: 196K rows versus about 22K."
+      },
+      {
+        "en": "sanity-check",
+        "zh": "复核常理",
+        "example": "I sanity-checked the predicate before sharing the result widely."
+      },
+      {
+        "en": "tighten the scope",
+        "zh": "收窄范围",
+        "example": "Adding one condition tightened the scope from sixty merchants to thirty."
+      }
+    ],
+    "starl": [
+      {
+        "en": "own up to a mistake",
+        "zh": "主动承认错误",
+        "example": "I owned up to the mistake in public instead of letting the number stand."
+      },
+      {
+        "en": "rerun the numbers",
+        "zh": "重新跑数",
+        "example": "I reran the numbers with a time-validity condition."
+      },
+      {
+        "en": "close both gaps",
+        "zh": "把两个缺口一起补上",
+        "example": "One fix at fee creation closes both gaps."
+      }
+    ],
+    "followups": [
+      {
+        "en": "reproducible",
+        "zh": "可复现的",
+        "example": "Every conclusion carries a reproducible query."
+      },
+      {
+        "en": "time-validity",
+        "zh": "时间有效性",
+        "example": "The predicate needs a time-validity check, not just the current state."
+      },
+      {
+        "en": "systemic lag",
+        "zh": "系统性滞后",
+        "example": "In a bulk rollout, the upstream lag could be systemic."
+      }
+    ],
+    "relp": [
+      {
+        "en": "hold myself to the bar",
+        "zh": "对自己严格",
+        "example": "I held myself to the bar and treated my own query as a hypothesis to disprove."
+      },
+      {
+        "en": "be transparent",
+        "zh": "保持透明",
+        "example": "Being transparent about the retraction kept the remediation honest."
+      },
+      {
+        "en": "follow through",
+        "zh": "跟到底",
+        "example": "I followed through to the backfill rather than stopping at the estimate."
+      }
+    ]
+  },
+  "senior": [
+    {
+      "q": "How did you first realize the predicate was wrong, and how would you build that check into the process?",
+      "why": "面试官在探：你的自我纠错是偶然还是有方法，能不能变成团队习惯。",
+      "framework": [
+        "触发点：数字看起来偏大，于是回头逐个条件问“这个条件在行创建那一刻成立吗”",
+        "具体检查：抽样几行，看计划是什么时候写入的",
+        "制度化：爆炸半径查询必须带时间有效性条件，并附一条可重跑的 SQL",
+        "让另一个人独立复核同一个谓词"
+      ],
+      "best_practice": "估算类数字最容易错在“现在的状态”被误当成“当时的状态”。把谓词当作要证伪的假设，抽样核对时间线，就能抓住这类错误。把它写成模板或检查清单，才能让这个纠错不依赖某个人的警觉。具体我当时如何触发、是否已有清单，需要以实际情况为准。",
+      "terms": [
+        {
+          "en": "treat it as a hypothesis",
+          "zh": "当作待证伪的假设",
+          "example": "I treated my own query as a hypothesis to disprove."
+        },
+        {
+          "en": "point-in-time correctness",
+          "zh": "按时间点的正确性",
+          "example": "The fix was about point-in-time correctness, not current state."
+        }
+      ]
+    },
+    {
+      "q": "If a stakeholder had already acted on the 196K number, what would you do?",
+      "why": "面试官在探：当错误已经扩散时，你如何止损并保持信任。",
+      "framework": [
+        "第一时间公开说明：旧数字作废，新数字是什么，差在哪个条件",
+        "两版查询并排给出，让别人能自己核对",
+        "找出已经基于旧数字做的决定，逐个撤回或调整",
+        "之后补一个复核步骤，避免再次发生"
+      ],
+      "best_practice": "信任不会因为犯错而丢，但会因为隐瞒或拖延而丢。越早、越具体地更正，已经发生的动作越容易回退。把两版查询并排，别人才能判断你这次是否可信，这比一句“抱歉”有用得多。这是我会采取的做法，实际情况是在任何人行动之前我已经更正。",
+      "terms": [
+        {
+          "en": "walk it back",
+          "zh": "收回、撤销",
+          "example": "If anyone had acted, I'd help walk it back immediately."
+        },
+        {
+          "en": "show your work",
+          "zh": "把推导过程摆出来",
+          "example": "I'd show my work with both queries side by side."
+        }
+      ]
+    },
+    {
+      "q": "Why is fixing it at fee-creation time better than patching the data after the fact?",
+      "why": "面试官在探：你对修“症状”和修“机制”的区分。",
+      "framework": [
+        "回填只能修已有的坏行，不阻止新的坏行产生",
+        "根因是复制了历史计划 ID，应在费用创建时解析生效计划",
+        "这样同时消除上游计划写入滞后带来的风险",
+        "回填仍然需要做，但作为一次性的清理，而不是长期方案"
+      ],
+      "best_practice": "只做数据修补，相当于每次都在清理下游；在创建时解析生效计划，是让错误无法产生。两个脆弱点（复制历史 ID、上游滞后）的共同点是“用了过期的计划”，所以一个动作能同时覆盖。回填是治已发生的，创建时解析是防未发生的，两者缺一不可。",
+      "terms": [
+        {
+          "en": "fix the mechanism, not the symptom",
+          "zh": "修机制而不是症状",
+          "example": "I wanted to fix the mechanism, not just the symptom."
+        },
+        {
+          "en": "make the failure impossible",
+          "zh": "让错误无法发生",
+          "example": "Resolving at fee creation makes this failure impossible."
+        }
+      ]
+    },
+    {
+      "q": "How do you decide how much verification is enough for a sizing number that others will act on?",
+      "why": "面试官在探：你如何在速度与严谨之间取舍，对决策型数字的标准是什么。",
+      "framework": [
+        "看这个数字会驱动什么动作：回填、通知商户、金额调整都不可逆或成本高",
+        "至少做一次抽样核对和一次独立视角的谓词复查",
+        "每个结论配一条可重跑的查询，读者可以自己验证",
+        "说明口径，比如金额口径是 SUM(ABS(amount))/100"
+      ],
+      "best_practice": "核对的力度应与数字驱动的动作的成本成正比：只是讨论用的粗估可以快，而决定补救范围的数字必须可审计。写明口径并附上可重跑的查询，读的人才能区分“我信你”和“我验证过”，这也让纠错更便宜。",
+      "terms": [
+        {
+          "en": "auditable",
+          "zh": "可审计的",
+          "example": "Anything that drives remediation has to be auditable."
+        },
+        {
+          "en": "proportionate rigor",
+          "zh": "与风险相称的严谨",
+          "example": "I try to apply proportionate rigor to numbers others will act on."
+        }
+      ]
+    }
+  ]
+}

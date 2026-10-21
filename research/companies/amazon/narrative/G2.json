@@ -1,0 +1,86 @@
+{
+  "code": "G2",
+  "full_zh": [
+    "背景：我用并行的 Claude Code subagent做了约 100 份面试准备材料：49 道系统设计题和 45 道低层设计题。一个给自己打分的模型每次都会说「完成了」。",
+    "目标：让正确性不取决于代理自己怎么说，并且在代理数量增加时不需要我把所有东西重读一遍。",
+    "我否决了什么：我否决了「自述加抽查」，也否决了「代理互相审查」，因为有个代理自己又拉起了审查代理，破了我的并发上限，于是「不许再启动别的代理」成了规则。每个代理只负责一个目录，同时最多三个。",
+    "我做了什么：先于任何内容写好验收命令，参考解必须通过，空模板必须失败。每次返回后我自己重跑验收、重算每个数字、先读代理列出的最弱论断，每个缺陷都变成一条规则。后来为了测试这些测试，我用了变异：一道题里拼接 key 的 bug 通过了全部 10 个测试，我补上了缺失的断言，现在测试套件能杀掉 11 个手写变异中的 11 个。",
+    "结果与学到：45 道低层设计题全部通过，约 900 个测试，九份草稿返工。验证必须是机制，而不是一种心情。"
+  ],
+  "full_en": "I produced about a hundred interview-prep artifacts, 49 system-design and 45 low-level-design problems, using parallel Claude Code subagents. A model that grades its own work says done every time, so I had to make correctness independent of the agent's word, and make it scale without me re-reading everything. I rejected self-reports plus a spot check. One agent owns one directory, three at a time. I wrote the acceptance gate as a command before any content: the reference solution must pass and the empty starter must fail. I also rejected agents reviewing agents, because one spawned a reviewer and broke my cap, so never start another agent became a rule. After each return I re-run the gate myself, re-derive every number, and read the agent's weakest-claims list, and every defect becomes a rule. Later, to test the tests, I used mutation: on one kata, a concatenated-key bug passed all ten tests. I added the missing assertion, and the suite now kills 11 of 11 hand-written mutants. All 45 low-level-design problems and about 900 tests passed, and nine drafts went back for rework. Verification has to be a mechanism, not a mood.",
+  "terms": {
+    "full": [
+      {"en": "independent of the agent's word", "zh": "不依赖代理自己的说法", "example": "I made correctness independent of the agent's word."},
+      {"en": "mechanism, not a mood", "zh": "是机制而不是感觉", "example": "Verification has to be a mechanism, not a mood."},
+      {"en": "scale without re-reading", "zh": "扩展规模而不用重读全部", "example": "The design had to scale without me re-reading everything."}
+    ],
+    "starl": [
+      {"en": "single-threaded owner", "zh": "单线负责人", "example": "Each agent is the single-threaded owner of one directory."},
+      {"en": "acceptance criteria up front", "zh": "事先定好验收标准", "example": "I wrote the acceptance criteria up front, before any content."},
+      {"en": "tighten the bar", "zh": "把标准提得更严", "example": "Each defect tightened the bar by becoming a new rule."}
+    ],
+    "followups": [
+      {"en": "shape versus substance", "zh": "形式与实质", "example": "The gate checks shape; only reading checks substance."},
+      {"en": "test the tests", "zh": "对测试本身做测试", "example": "Mutation lets me test the tests, not just the code."},
+      {"en": "trade autonomy for auditability", "zh": "用自主性换可审计", "example": "I traded agent autonomy for auditability."}
+    ]
+  },
+  "senior": [
+    {
+      "q": "What stops the gate itself from becoming the thing agents optimize for, instead of real quality?",
+      "why": "面试官在探：你是否意识到指标会被优化而偏离目标（Goodhart 问题）。",
+      "framework": [
+        "先承认风险：代理会为了通过验收而写出刚好满足格式的内容",
+        "再说对策：验收只管形状，实质由我读，并且我先读代理自己列的最弱论断",
+        "最后说独立路径：用第二条不同方法得到同一个答案来交叉验证"
+      ],
+      "best_practice": "任何自动检查都只覆盖它被设计覆盖的维度，被优化的对象最终会钻空子。所以闸门要和人工审读、独立路径对拍配合使用，闸门管便宜的、人管贵的。",
+      "terms": [
+        {"en": "game the metric", "zh": "钻指标的空子", "example": "Agents can game the metric, so the gate is never the whole review."},
+        {"en": "defense in depth", "zh": "纵深防御", "example": "I use defense in depth: gate, reading and independent paths."}
+      ]
+    },
+    {
+      "q": "How would you decide how many mutants are enough, and when to stop?",
+      "why": "面试官在探：你对测试充分性有没有成本意识，而不是追求数字。",
+      "framework": [
+        "先说变异应由真实风险驱动：从最容易写错的逻辑和历史上出过错的地方入手",
+        "再说停止条件：新增变异不再暴露新的测试缺口，边际收益下降",
+        "最后说成本：自动化变异工具能规模化，手写变异适合关键路径"
+      ],
+      "best_practice": "变异得分是手段，不是目标。把力气放在高风险逻辑上，看到边际收益下降就停，这样既抓到真缺口又不把时间耗在凑数上。",
+      "terms": [
+        {"en": "diminishing returns", "zh": "边际收益递减", "example": "I stop when new mutants show diminishing returns."},
+        {"en": "risk-driven", "zh": "由风险驱动", "example": "I keep mutation risk-driven and focus on the logic that breaks most easily."}
+      ]
+    },
+    {
+      "q": "How would you apply this at the scale of a hundred engineers, not one person plus agents?",
+      "why": "面试官在探：你能否把个人机制转成组织机制。",
+      "framework": [
+        "先说映射关系：验收命令对应 CI，代理自述对应 PR 描述，二者都不是证据",
+        "再说把规则放进共享仓库和模板，而不是靠口头传达",
+        "最后说推广方式：先在一个团队试点，用缺陷数据说话，再扩展"
+      ],
+      "best_practice": "个人做法要变成组织做法，关键是把判断标准固化在工具和模板里，让新人不需要靠经验就能遵守。先试点、拿数据，再推广，比一次性强推更容易让人接受。",
+      "terms": [
+        {"en": "paved road", "zh": "官方铺好的标准路径", "example": "I'd put the gate on a paved road so teams get it by default."},
+        {"en": "pilot with data", "zh": "用数据支撑的试点", "example": "I'd start with a pilot with data before scaling."}
+      ]
+    },
+    {
+      "q": "What did the hard cap of three agents cost you, and when would you lift it?",
+      "why": "面试官在探：你对取舍的两面都清楚，且知道何时调整。",
+      "framework": [
+        "先说代价：并行度降低，整体速度变慢",
+        "再说收益：我每次返回都能复核，质量可审计，不会堆积未审的产出",
+        "最后说放开条件：当验收自动化到不需要我读就能放行大部分内容时，上限可以提高"
+      ],
+      "best_practice": "并发上限的本质是人的复核带宽。瓶颈在审查而不在生成，所以只有当审查能力被自动化放大，才有理由提高上限。",
+      "terms": [
+        {"en": "review bandwidth", "zh": "审查带宽", "example": "The cap reflects my review bandwidth, not the agents' speed."},
+        {"en": "bottleneck", "zh": "瓶颈", "example": "The bottleneck is review, not generation."}
+      ]
+    }
+  ]
+}

@@ -8,6 +8,8 @@
 
 **Requires:** [[domains/low-level-design/map/patterns.strategy|策略模式与可替换算法（Strategy）]]
 
+**Unlocks:** [[domains/low-level-design/map/amazon.amz-splitwise|分账（Splitwise）（low priority）]]
+
 ## Readings
 - [[solution-splitwise|设计题解：分账（Splitwise）]]
 - [[src-abhaypaswan-splitwise|lld-python — splitwise]]

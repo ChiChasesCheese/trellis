@@ -1,0 +1,192 @@
+{
+  "code": "M1",
+  "full_zh": [
+    "背景：费用平台的领域知识集中在我一个人身上，是单点。同时，团队里一位新工程师的三块工作都要接入我 own 的平台：防止对已迁移商户重复计费的 exclusion service、出款服务到定价服务的 journaling-schedule gRPC 同步、scheme fee 估算 ML。",
+    "目标：让平台不靠我在场也能用，让新人能上手、他的工作对我的领域保持正确，让团队没有我也能处理 fee-calc 事故。",
+    "我做了什么（文档和契约）：2024 年写了团队 onboarding doc，至今维护；对新人前置定义边界，比如哪些商户在什么记账状态下算已迁移，以及下游需要的 schema 和一致性；评审他的设计时，我问的是同一批上游事件在我这边怎么被消费。",
+    "我做了什么（机制）：事故里做他可以依赖的 fee-calc 权威；建 quality-check 框架，让标准成为最容易走的路，而不是靠我逐个 review；还接手并重新 scope 了一个实习生的 ML 项目。",
+    "结果与学到：quality-check 框架铺开了 8 次，标准因此传播。我不能声称有 code-review 记录，所以我的杠杆是契约先行，加上文档、框架和 ADR 这些机制，而不是我个人在场。"
+  ],
+  "full_en": "I wrote the team's onboarding doc in 2024 and I still maintain it. I also mentor a newer engineer on the team, and his three pieces of work, an exclusion service that prevents double-billing merchants who've migrated, a gRPC sync of payout journaling schedules into the pricing service, and an ML estimator for scheme fees, all plug into the fee platform I own. I can't claim a code-review trail, so here's what I did: I defined the boundaries up front, which merchants count as migrated in which accounting state and what schema and consistency the downstream needs, and I reviewed his designs by asking how the same upstream events would be consumed on my side. In incidents, I was the fee-calc authority he could depend on. And I built the quality-check framework, now rolled out eight times, so that standards spread by being the easiest path rather than through my reviews.",
+  "terms": {
+    "full": [
+      {
+        "en": "single point of failure",
+        "zh": "单点故障（知识集中在一人）",
+        "example": "Fee-platform knowledge sat with me, which made me a single point of failure."
+      },
+      {
+        "en": "ramp up",
+        "zh": "上手、进入状态",
+        "example": "The onboarding doc helps a new engineer ramp up without me in the room."
+      },
+      {
+        "en": "contract first",
+        "zh": "契约先行",
+        "example": "I go contract first: boundaries and schema before any design review."
+      }
+    ],
+    "hook": [
+      {
+        "en": "scale yourself",
+        "zh": "放大自己的影响力",
+        "example": "I scaled myself through a doc and a framework rather than reviews."
+      },
+      {
+        "en": "bus factor",
+        "zh": "巴士系数（关键人缺席的风险）",
+        "example": "The doc raised our bus factor on the fee platform."
+      },
+      {
+        "en": "institutional knowledge",
+        "zh": "沉淀在组织里的知识",
+        "example": "I turned institutional knowledge into a doc that outlives me."
+      }
+    ],
+    "starl": [
+      {
+        "en": "spell out the boundaries",
+        "zh": "把边界讲明白",
+        "example": "I spelled out the boundaries before he started designing."
+      },
+      {
+        "en": "downstream consumer",
+        "zh": "下游消费方",
+        "example": "I reviewed his designs by how the downstream consumer reads the events."
+      },
+      {
+        "en": "make the right thing the easy thing",
+        "zh": "让正确的做法最省力",
+        "example": "The framework makes the right thing the easy thing."
+      }
+    ],
+    "followups": [
+      {
+        "en": "be upfront about the limits",
+        "zh": "坦白说明局限",
+        "example": "I'm upfront about the limits: I can't claim a code-review trail."
+      },
+      {
+        "en": "seam",
+        "zh": "接缝、系统交界处",
+        "example": "I review at the seam where events and keys cross from my platform to his."
+      },
+      {
+        "en": "leverage",
+        "zh": "杠杆",
+        "example": "My leverage is mechanisms like docs, a framework and ADRs."
+      }
+    ],
+    "relp": [
+      {
+        "en": "raise the bar",
+        "zh": "抬高标准",
+        "example": "The framework raises the bar by making standards the default."
+      },
+      {
+        "en": "be someone they can depend on",
+        "zh": "做别人能依赖的人",
+        "example": "In incidents I was someone he could depend on."
+      },
+      {
+        "en": "leave it better than you found it",
+        "zh": "让它比你接手时更好",
+        "example": "I try to leave the team better than I found it."
+      }
+    ]
+  },
+  "senior": [
+    {
+      "q": "How do you give a new engineer difficult feedback on a design that plugs into your platform?",
+      "why": "面试官在探：你给反馈的方法，既保标准又保关系。",
+      "framework": [
+        "先讲契约和下游约束，而不是品评个人：边界、键语义、重试行为",
+        "用具体场景提问，例如同一事件被重复投递时会怎样",
+        "区分必须改的（正确性）与可以讨论的（偏好）",
+        "给出理由并留出对方反驳的空间，必要时改变自己的想法"
+      ],
+      "best_practice": "用下游如何消费作为评审的锚点，反馈就是关于系统事实的，而不是关于人的判断，对方更容易接受也更容易学会这种思考方式。把必须改和可商量分开，避免所有意见都被当作命令。我在这个故事里没有可举证的具体反馈场景，这里说的是我会采用的方法。",
+      "terms": [
+        {
+          "en": "critique the work, not the person",
+          "zh": "对事不对人",
+          "example": "I critique the design, not the person, anchored on how events are consumed."
+        },
+        {
+          "en": "non-negotiable",
+          "zh": "没有商量余地的底线",
+          "example": "Correctness at the seam is non-negotiable; style is up for discussion."
+        }
+      ]
+    },
+    {
+      "q": "How do you know the onboarding doc and framework actually work, rather than just existing?",
+      "why": "面试官在探：你如何衡量“带人”和“传播标准”的真实效果。",
+      "framework": [
+        "看新人独立上手所需时间，以及他还需要问我哪些问题",
+        "看事故里是否有人不经我也能处理 fee-calc 问题",
+        "看框架是否被其他场景采用（目前铺开 8 次）",
+        "收集使用者反馈，发现文档里缺的部分并补上"
+      ],
+      "best_practice": "文档和框架只有被使用才算有效，所以要看行为变化：新人少问了什么、事故里谁在处理。这些可观测的信号比“我写了文档”更有说服力。当前我能确切说的是框架铺开了 8 次，文档的受益人数和新人独立 own 的内容我还没有确切数字，需要补上再讲。",
+      "terms": [
+        {
+          "en": "adoption",
+          "zh": "采用度",
+          "example": "Adoption is the real test, and the framework has been rolled out eight times."
+        },
+        {
+          "en": "leading indicator",
+          "zh": "先行指标",
+          "example": "How many questions he still needs to ask me is a leading indicator."
+        }
+      ]
+    },
+    {
+      "q": "What would you do if the engineer you're mentoring wasn't improving?",
+      "why": "面试官在探：你对表现不佳的人的处理，是否有结构和同理心。",
+      "framework": [
+        "先搞清原因：目标不清、上下文缺失还是能力差距",
+        "把期望和边界写清楚，给更小、更具体的任务与更密的反馈",
+        "与经理同步，让支持有组织层面的跟进",
+        "给出明确的时间点复查，而不是无限期拖着"
+      ],
+      "best_practice": "多数“不进步”源于期望不清或上下文缺失，所以先诊断再下结论。把期望写成可检查的东西，反馈才能具体。拖延对双方都不公平，所以要有复查节点，并让经理参与。我没有处理过这种情况，这是我会采取的做法。",
+      "terms": [
+        {
+          "en": "set clear expectations",
+          "zh": "设定清晰的期望",
+          "example": "I'd start by setting clear expectations in writing."
+        },
+        {
+          "en": "loop in the manager",
+          "zh": "让经理参与进来",
+          "example": "I'd loop in his manager early so support is not just from me."
+        }
+      ]
+    },
+    {
+      "q": "You're the fee-calc authority today. How do you make sure the team can handle fee-calc incidents without you?",
+      "why": "面试官在探：你有没有把个人权威转化为团队能力，避免成为单点。",
+      "framework": [
+        "把判断依据写下来：onboarding doc 与 runbook 里写清楚常见故障的排查路径",
+        "用 quality-check 框架让异常自动暴露，而不是靠某个人发现",
+        "让别人轮流主导事故，我在旁边提供背景",
+        "用 ADR 记录关键决定的原因，不依赖记忆"
+      ],
+      "best_practice": "成为权威是起点，目标是让权威变成可复制的机制，否则我自己就是风险。写下来、自动化、轮换这三步，分别降低对记忆、对警觉、对个人的依赖。这也是我主张用文档、框架和 ADR 作为杠杆的原因。目前团队独立处理的程度需要如实评估，我不会夸大。",
+      "terms": [
+        {
+          "en": "runbook",
+          "zh": "运维手册",
+          "example": "I'd capture the common fee-calc failure paths in a runbook."
+        },
+        {
+          "en": "rotate the lead",
+          "zh": "轮换事故主导人",
+          "example": "I'd rotate the incident lead so others build the muscle."
+        }
+      ]
+    }
+  ]
+}

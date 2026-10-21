@@ -1,0 +1,100 @@
+{
+  "code": "R2",
+  "full_zh": [
+    "背景：从 2025-02 起，我在 PayPal 费用平台，要把 legacy 的 Ruby 和 Kotlin 业务逻辑迁到 Snowflake 和 Java。",
+    "目标：迁移后行为必须和旧系统一致（behavioral parity），同时我想用 AI-native 的工作流更快交付，而不是把 AI 当自动补全。",
+    "我做了什么：用 Claude Code 做 code review、测试生成和重构；规则是先和 agent 一起规划每个阶段，每个阶段做 TDD，再让 CI 和监控 gate 抓回归。因为这是 money code，每个 diff 我自己读。",
+    "结果：通过全面的测试达到了 behavioral parity，交付也更快了；具体倍数和规模我没有精确数字，不夸大。",
+    "为什么这样做：agent 只负责提议，测试负责裁决，人负责读 diff；信任的是 gate 和阈值，而不是代码行数。"
+  ],
+  "full_en": "Since February 2025 at PayPal, I migrated legacy Ruby and Kotlin business logic into Snowflake and Java, and I did it with an AI-native workflow rather than treating AI as autocomplete. The rule I worked by: the agent proposes, tests decide. I used Claude Code for code review, test generation and refactoring, and I ensured behavioral parity through comprehensive testing. My general rule with agents is to plan each phase with them, do TDD for every phase, and let CI and monitoring gates catch regressions. I focus on gates and thresholds, not lines of code. And because this is money code, I read every diff myself.",
+  "terms": {
+    "full": [
+      {"en": "behavioral parity", "zh": "新旧系统行为完全一致", "example": "The bar for the migration was behavioral parity, not code that merely looked right."},
+      {"en": "AI-native workflow", "zh": "以 AI 为核心环节设计的工作流", "example": "I used an AI-native workflow, with the agent in planning, tests and refactoring."},
+      {"en": "money code", "zh": "直接处理资金的代码，容错极低", "example": "Because it's money code, I read every diff myself."}
+    ],
+    "hook": [
+      {"en": "legacy logic", "zh": "遗留系统中的业务逻辑", "example": "The legacy logic lived in Ruby and Kotlin and had to land in Snowflake and Java."},
+      {"en": "the agent proposes, tests decide", "zh": "agent 提议、测试裁决", "example": "My rule was that the agent proposes and tests decide."},
+      {"en": "gates and thresholds", "zh": "关卡与阈值（可量化的放行标准）", "example": "I trust gates and thresholds, not lines of code."}
+    ],
+    "starl": [
+      {"en": "plan with the agent", "zh": "先和 agent 一起做规划", "example": "I plan each phase with the agent before any code is written."},
+      {"en": "catch regressions", "zh": "抓住回归问题", "example": "CI and monitoring gates catch regressions before they reach production."},
+      {"en": "phase by phase", "zh": "分阶段推进", "example": "I migrated phase by phase, with TDD in every phase."}
+    ],
+    "followups": [
+      {"en": "shadow run", "zh": "影子运行：新旧并行跑、只比对不生效", "example": "A shadow run would let me compare old and new outputs without affecting payments."},
+      {"en": "pin down existing behavior", "zh": "用测试固定住现有行为", "example": "I'd pin down existing behavior with tests before changing anything."},
+      {"en": "human in the loop", "zh": "关键环节由人把关", "example": "I would never run this unsupervised; a human stays in the loop on every diff."}
+    ],
+    "relp": [
+      {"en": "move fast without breaking things", "zh": "快速推进但不出事故", "example": "AI let me move fast, and the tests kept me from breaking things."},
+      {"en": "know the limits of a tool", "zh": "清楚工具的能力边界", "example": "I learned where the agent can be trusted and where it can't."},
+      {"en": "hold the bar", "zh": "守住标准不降", "example": "I held the bar at behavioral parity even under time pressure."}
+    ]
+  },
+  "senior": [
+    {
+      "q": "How did you establish that the Snowflake and Java version really behaved like the Ruby and Kotlin version?",
+      "why": "面试官在探：你对 parity 的验证方法是否系统，而不只是看起来对",
+      "framework": [
+        "先说基线：先用测试把旧系统的现有行为固定下来，作为可执行的规格",
+        "再说对照：新旧实现用同一批输入对比输出，尤其是边界和金额舍入",
+        "然后说差异处理：每个差异要么是旧系统 bug 要么是迁移错误，必须有人裁决",
+        "最后说上线保护：影子运行或灰度，加上监控阈值"
+      ],
+      "best_practice": "旧代码往往藏着没有文档的行为，只有先把它变成测试，parity 才有可衡量的定义。新旧同输入对拍能把差异暴露出来，再逐个裁决，避免把 bug 也迁过去。这是我会采用的验证路径，具体通过率没有精确数字，所以不夸大。",
+      "terms": [
+        {"en": "executable spec", "zh": "可执行的规格（测试即规格）", "example": "The tests are the executable spec of what the legacy code actually does."},
+        {"en": "differential testing", "zh": "差分测试，新旧同输入比输出", "example": "Differential testing on the same inputs shows exactly where the two versions diverge."}
+      ]
+    },
+    {
+      "q": "What is the failure mode of AI-generated tests, and how do you defend against it?",
+      "why": "面试官在探：你是否意识到让 AI 同时写代码和测试会产生相关性错误",
+      "framework": [
+        "先点出风险：同一个模型写代码和测试，会共享同样的误解，测试只是在复述实现",
+        "再说防御：测试的期望值来源于旧系统的真实行为或业务规则，而不是新代码",
+        "然后说人的角色：money code 我读每个 diff，并重点看断言是否有意义",
+        "最后说信号：看覆盖的边界与变异后是否还能发现错误"
+      ],
+      "best_practice": "测试只有在独立于实现时才有价值。把期望值锚定在旧系统的真实输出和业务规则上，再由人审阅断言，才能防止 agent 写出永远通过的测试。这是 agent 提议、测试裁决能成立的前提。",
+      "terms": [
+        {"en": "tautological test", "zh": "同义反复的测试，永远通过", "example": "The risk is a tautological test that just restates the implementation."},
+        {"en": "correlated errors", "zh": "相关性错误，同源误解一起出错", "example": "If one model writes both code and tests, you get correlated errors."}
+      ]
+    },
+    {
+      "q": "How would you measure whether the AI-native workflow actually made the migration faster and not just busier?",
+      "why": "面试官在探：你是否会用基线量化效率，而不是凭感觉说更快",
+      "framework": [
+        "先要基线：没有迁移前的估计或同类任务的历史周期，就谈不上加速",
+        "再选指标：交付周期、回归缺陷数、返工比例，而不是代码行数",
+        "然后对照：比较有 agent 和无 agent 的相似模块",
+        "最后诚实说明：我目前没有精确倍数，只能给可数的事实"
+      ],
+      "best_practice": "AI 会让产出变多，但多不等于快。用交付周期和回归缺陷这类结果指标，并有可比的基线，才能判断是否真的受益。承认没有精确倍数，比编一个数字更有可信度。",
+      "terms": [
+        {"en": "baseline", "zh": "对照基线", "example": "Without a baseline estimate, I can't honestly claim a speedup multiple."},
+        {"en": "vanity metric", "zh": "看着好看但没意义的指标", "example": "Lines of code generated is a vanity metric; cycle time and regressions are what matter."}
+      ]
+    },
+    {
+      "q": "How would you make this workflow safe for a whole team to adopt, not just for you?",
+      "why": "面试官在探：你能否把个人习惯变成团队可复用的机制",
+      "framework": [
+        "先写下规则：规划、TDD、CI 和监控 gate 的流程成文",
+        "再放进工具链：gate 做成强制检查，而不是靠自觉",
+        "然后设定人工审查的范围：哪些路径必须逐 diff 读，比如资金相关",
+        "最后收集反馈：定期复盘 agent 出错的案例并更新规则"
+      ],
+      "best_practice": "个人纪律无法规模化，机制可以。把 gate 放进 CI，团队里每个人即使经验不同也会走同一道校验；明确哪些代码必须人读，限定 agent 的爆炸半径。这是我下一步会推进的做法，目前团队里已被采用的是 schema pool 与 on-call copilot。",
+      "terms": [
+        {"en": "blast radius", "zh": "出错时的影响范围", "example": "Requiring human review on money paths keeps the blast radius of agent mistakes small."},
+        {"en": "guardrails", "zh": "护栏，防止出错的强制约束", "example": "I'd encode the rules as CI guardrails so nobody has to remember them."}
+      ]
+    }
+  ]
+}

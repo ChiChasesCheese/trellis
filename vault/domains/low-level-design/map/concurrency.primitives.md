@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/low-level-design/map/concurrency.model|线程、GIL 与内存模型]]
 
-**Unlocks:** [[domains/low-level-design/map/concurrency.hazards|死锁及其亲戚]], [[domains/low-level-design/map/concurrency.patterns|并发模式]], [[domains/low-level-design/map/problems.machines.coffee-machine|咖啡机（Coffee Machine）]], [[domains/low-level-design/map/problems.booking.movie-booking|电影订票（BookMyShow）]], [[domains/low-level-design/map/problems.marketplaces.online-auction|在线拍卖（Online Auction）]], [[domains/low-level-design/map/problems.components.rate-limiter|限流器（Rate Limiter）]], [[domains/low-level-design/map/problems.components.bounded-blocking-queue|有界阻塞队列（Bounded Blocking Queue）]]
+**Unlocks:** [[domains/low-level-design/map/concurrency.hazards|死锁及其亲戚]], [[domains/low-level-design/map/concurrency.patterns|并发模式]], [[domains/low-level-design/map/problems.machines.coffee-machine|咖啡机（Coffee Machine）]], [[domains/low-level-design/map/problems.booking.movie-booking|电影订票（BookMyShow）]], [[domains/low-level-design/map/problems.marketplaces.online-auction|在线拍卖（Online Auction）]], [[domains/low-level-design/map/problems.components.rate-limiter|限流器（Rate Limiter）]], [[domains/low-level-design/map/problems.components.bounded-blocking-queue|有界阻塞队列（Bounded Blocking Queue）]], [[domains/low-level-design/map/amazon.amz-file-watcher|文件监听器（File Watcher）]]
 
 ## Readings
 - [[java-concurrency-in-practice|Java Concurrency in Practice (Goetz et al.)]]
@@ -16,6 +16,7 @@
 - [[preshing-lock-free|An Introduction to Lock-Free Programming (Jeff Preshing)]]
 
 ## Drills
+- [[design-amz-file-watcher|Drill：文件监听器（File Watcher）]]
 - [[design-atm|Drill：ATM 取款机（ATM）]]
 - [[design-bounded-blocking-queue|Drill：有界阻塞队列（Bounded Blocking Queue）]]
 - [[design-coffee-machine|Drill：咖啡机（Coffee Machine）]]

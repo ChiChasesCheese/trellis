@@ -1,0 +1,50 @@
+[
+  {
+    "id": "amz-task-scheduler-what-and-three-questions",
+    "node": "amazon.amz-task-scheduler",
+    "type": "qa",
+    "q": "任务调度器（Task Scheduler）要你设计什么？开场先问哪三个澄清问题？",
+    "a": "调度器接收「在某个时刻执行这个函数」的请求，到点就执行。三问：(1) 只有一次性的延迟任务，还是也有周期任务——决定任务执行完要不要重新入队；(2) 任务在哪个线程执行、是否允许并行——决定要不要线程池；(3) 要不要取消、任务抛异常怎么处理——决定任务要有 id 和状态。",
+    "tags": []
+  },
+  {
+    "id": "amz-task-scheduler-objects-and-jobs",
+    "node": "amazon.amz-task-scheduler",
+    "type": "qa",
+    "q": "在任务调度器设计里应该有哪几个对象？各自只负责一件什么事？",
+    "a": "`Task`：函数、到期时间、周期（可为空）、是否已取消。`Scheduler`：持有按到期时间排序的最小堆，一把锁加一个条件变量（condition variable，让线程睡到「有新任务或到点」才醒）。`Worker` 线程池：真正执行任务。返回给调用方的是任务 id，用于取消。切分依据：「何时执行」和「在哪执行」分属两个角色。",
+    "tags": []
+  },
+  {
+    "id": "amz-task-scheduler-heap-and-condition-variable",
+    "node": "amazon.amz-task-scheduler",
+    "type": "qa",
+    "q": "在任务调度器设计里，调度线程怎么知道睡多久？为什么不用 `while True: sleep(0.01)` 轮询？",
+    "a": "堆顶就是最早到期的任务：到期了就弹出交给线程池，没到期就 `wait(剩余时间)`；堆空了就无限 `wait`。新任务比堆顶更早时要 `notify` 唤醒调度线程重新算。轮询要么白烧 CPU，要么最多晚 10 毫秒。堆元素用 `(due, seq, task)`，序号 `seq` 避免到期时间相同时去比较任务对象。\n```python\ndef _loop(self):\n    with self._cv:\n        while not self._closed:\n            if not self._heap:\n                self._cv.wait()\n                continue\n            due, _, task = self._heap[0]\n            delay = due - self._clock()\n            if delay > 0:\n                self._cv.wait(delay)\n            else:\n                heapq.heappop(self._heap)\n                self._pool.submit(task.run)\n```",
+    "tags": []
+  },
+  {
+    "id": "amz-task-scheduler-delayed-vs-periodic",
+    "node": "amazon.amz-task-scheduler",
+    "type": "qa",
+    "q": "在任务调度器设计里，周期任务怎么实现？「固定频率」和「固定间隔」有什么区别？",
+    "a": "周期任务不需要新结构：执行完后算下一次到期时间，再入堆。固定频率（fixed rate）：`due += period`，每 5 秒一次，任务耗时 3 秒，仍是 0、5、10 秒开始；任务耗时超过周期会连续追赶。固定间隔（fixed delay）：`due = 完成时间 + period`，两次之间总隔 5 秒，不会追赶。默认选固定间隔，因为不会堆积。\n```python\ndef run(self):\n    try:\n        self.fn()\n    finally:\n        if self.period and not self.cancelled:\n            self.due = self.sched.clock() + self.period\n            self.sched.add(self)\n```",
+    "tags": []
+  },
+  {
+    "id": "amz-task-scheduler-cancel-lazy-deletion",
+    "node": "amazon.amz-task-scheduler",
+    "type": "qa",
+    "q": "在任务调度器设计里，取消一个还在堆里的任务，为什么用惰性删除而不是直接从堆里删？",
+    "a": "堆中间删一个元素是 O(n)（要先找到再重建）。惰性删除：只把 `task.cancelled = True`，调度线程弹到它时直接跳过，取消是 O(1)。代价：堆里留着垃圾，所以另外维护「待执行数」，垃圾超过一半时 `heapify` 重建一次。已经开始运行的任务取消不了，`cancel` 要返回 False 告诉调用方。",
+    "tags": []
+  },
+  {
+    "id": "amz-task-scheduler-worker-pool-and-blocking",
+    "node": "amazon.amz-task-scheduler",
+    "type": "qa",
+    "q": "在任务调度器设计里，如果某个任务阻塞了 10 秒（比如等网络），后面的任务会怎样？怎么改？",
+    "a": "调度线程自己执行任务时，一个阻塞任务会让所有后续任务全部延后。改法：调度线程只负责到点分发，任务交给有界线程池执行。池大小怎么定：CPU 密集型约等于核数，IO 密集型可以更多；池满时选排队（队列要有界）或拒绝。任务里的异常必须在 worker 内捕获并记录，否则线程死掉，池越用越小。关闭时区分「等已排队的任务跑完」和「立即停止」。",
+    "tags": []
+  }
+]

@@ -1,0 +1,192 @@
+{
+ "code": "S8",
+ "full_zh": [
+  "背景：我们 Snowflake 基础设施仓库的一次发布在 QA 失败了：对一个数据库的 GRANT OWNERSHIP 被拒绝，因为一个 reviewer 角色已经持有依赖它的 USAGE 授权。被分配去调查的是别人，我只是被 cc。",
+  "行动：我读了错误信息，对上我熟悉的授权结构，7 分钟后贴出根因：ownership 资源没设 outbound_privileges，所以 Terraform 想转移所有权却没有先撤销依赖授权。我同时贴了一行修法 outbound_privileges = \"REVOKE\"，以及对相邻模块的核查。",
+  "推进：我问了一句能不能直接推，PR 合入后，QA、预生产、生产在同一个下午都部署完了。",
+  "事后：火灭了之后我扫了整个仓库。79 个 ownership 资源里有 42 个缺这个参数，多数是无害的 future_* 授权，但另一个模块 scheme_fees 里有 2 个和出事的形状完全一样、还没触发的资源，我把它们标了出来。",
+  "学到：修这一个和消灭这一类是两件事。我宁可负责“这是下一个”，也不只管已经响了的那一个。"
+ ],
+ "full_en": "A release of our Snowflake infrastructure repo failed in QA. GRANT OWNERSHIP on a database was rejected because a reviewer role already held a dependent USAGE grant. Someone else was assigned to investigate; I was cc'd. Seven minutes later I'd posted the root cause: the ownership resource didn't set outbound_privileges, so Terraform tried to transfer ownership without revoking dependents. I posted the one-line fix, outbound_privileges equals REVOKE, and a check of the neighboring modules. I asked whether I could push, the PR went in, and QA, pre-prod and prod deployed that afternoon. The part I care about is what came after. I scanned the whole repo: out of seventy-nine ownership resources, forty-two lack the parameter. Most are future grants where it's harmless, but two in another module are the exact same shape as the one that broke, and haven't fired yet. I flagged them. I'd rather own here's the next one than only the one that paged.",
+ "terms": {
+  "hook": [
+   {
+    "en": "root cause",
+    "zh": "根本原因",
+    "example": "Seven minutes in, I'd posted the root cause in the thread."
+   },
+   {
+    "en": "cc'd",
+    "zh": "被抄送（没有被分配）",
+    "example": "I was only cc'd, but the release was blocked, so I looked anyway."
+   },
+   {
+    "en": "same shape",
+    "zh": "形态完全相同",
+    "example": "Two resources in another module were the same shape as the one that broke."
+   }
+  ],
+  "starl": [
+   {
+    "en": "unblock the release",
+    "zh": "让发布不再被卡住",
+    "example": "I posted the fix quickly to unblock the release."
+   },
+   {
+    "en": "ask for permission to push",
+    "zh": "先问可否直接推送",
+    "example": "I asked for permission to push, and the PR went in."
+   },
+   {
+    "en": "sweep the repo",
+    "zh": "全仓库扫一遍",
+    "example": "After the fix I swept the repo for the same omission."
+   }
+  ],
+  "followups": [
+   {
+    "en": "re-entrant",
+    "zh": "可重入，中途失败后能安全重跑",
+    "example": "Terraform has no transactions, so the fix has to be re-entrant."
+   },
+   {
+    "en": "shift left",
+    "zh": "把检查前移到更早阶段",
+    "example": "A policy check at plan time would shift left the detection of this class."
+   },
+   {
+    "en": "dependent grant",
+    "zh": "依赖的授权",
+    "example": "Before transferring ownership we have to revoke or account for each dependent grant."
+   }
+  ],
+  "relp": [
+   {
+    "en": "fix the class, not the instance",
+    "zh": "解决一类问题，而非单个实例",
+    "example": "I wanted to fix the class, not just the instance that paged."
+   },
+   {
+    "en": "flag it early",
+    "zh": "尽早提醒",
+    "example": "I flagged the two risky resources early instead of waiting for them to break."
+   },
+   {
+    "en": "own the follow-up",
+    "zh": "负责后续跟进",
+    "example": "I own the follow-up, so I'd open a ticket and push the module owner."
+   }
+  ],
+  "full": [
+   {
+    "en": "root-cause under pressure",
+    "zh": "压力下定位根因",
+    "example": "I root-caused the grant failure under pressure in about seven minutes."
+   },
+   {
+    "en": "the next landmine",
+    "zh": "下一个隐患",
+    "example": "After the fix I flagged the next landmine before it went off."
+   },
+   {
+    "en": "time-box",
+    "zh": "给排查限定时间",
+    "example": "Under pressure, time-box each hypothesis so you don't tunnel on one."
+   }
+  ]
+ },
+ "senior": [
+  {
+   "q": "How would you prevent this entire class of failure instead of fixing resources one at a time?",
+   "why": "面试官在探：你能否把一次事故变成系统性的预防机制。",
+   "framework": [
+    "先说检测前移：在 plan 阶段用 policy-as-code 或 lint 检查 ownership 资源是否设置了 outbound_privileges",
+    "把它接进 CI，让缺参数的 PR 无法合入",
+    "给模块加默认值或封装，让正确做法成为默认",
+    "说明现状：这个检查尚未落地，我会提议并推动"
+   ],
+   "best_practice": "逐个修只能赶上已知的情况，机制才能挡住未来的。越早发现越便宜：plan 阶段的检查比 QA 发布失败便宜得多。我要诚实说明目前只是标出了风险，检查还没落地，下一步是把它写成 CI 规则。",
+   "terms": [
+    {
+     "en": "policy as code",
+     "zh": "把规则写成可执行代码",
+     "example": "I'd encode the rule as policy as code and run it at plan time."
+    },
+    {
+     "en": "make the right thing the default",
+     "zh": "让正确做法成为默认",
+     "example": "Wrapping the resource in a module would make the right thing the default."
+    }
+   ]
+  },
+  {
+   "q": "Why REVOKE and not COPY, and how did you make sure revoking the reviewer's USAGE wouldn't break something else?",
+   "why": "面试官在探：你对修复的副作用与影响面是否想清楚。",
+   "framework": [
+    "先说两个选项的语义：COPY 把授权复制给新所有者，REVOKE 直接撤销",
+    "核查谁依赖被撤销的授权：查看该角色的下游使用",
+    "先在 QA 验证，再逐环境放行，保持修复可重入",
+    "说明事实：当时我是对照邻近模块的做法选择的，没有做更深的权衡，下次会写下来"
+   ],
+   "best_practice": "一行修复的风险常常在影响面。REVOKE 会撤销别人的访问，所以必须确认没人依赖；COPY 则会让授权扩散。最稳妥的是先在 QA 观察，再往上放。我会如实说当时的依据，并说明下次会把权衡写进 PR 描述。",
+   "terms": [
+    {
+     "en": "downstream impact",
+     "zh": "对下游的影响",
+     "example": "REVOKE has a bigger downstream impact than COPY, so I wanted QA to prove it first."
+    },
+    {
+     "en": "side effect",
+     "zh": "副作用",
+     "example": "I checked for side effects on the reviewer role before relying on the fix."
+    }
+   ]
+  },
+  {
+   "q": "You found two risky resources and flagged them. What happens next, and how do you get someone to actually fix them?",
+   "why": "面试官在探：你对“发现问题之后”的推动与影响力。",
+   "framework": [
+    "先把风险写清楚：位置、触发条件、预计影响",
+    "开 ticket 并指定 owner，附上修法 PR 或最小改动",
+    "按风险排优先级：这两个形状相同、一旦触发就会卡发布",
+    "跟进到关闭，并复盘是否需要把检查加进 CI"
+   ],
+   "best_practice": "标出风险只是第一步，没有 owner 的风险等于没人负责。把修法做得足够容易合入，别人才愿意接。我要诚实说明目前是标出未修，所以下一步是开 ticket、找到模块 owner 并推动合入。",
+   "terms": [
+    {
+     "en": "drive to closure",
+     "zh": "推动到彻底完成",
+     "example": "I'd drive the two flagged resources to closure with a ticket and an owner."
+    },
+    {
+     "en": "make it easy to say yes",
+     "zh": "让别人容易同意",
+     "example": "I'd attach a ready-made PR to make it easy to say yes."
+    }
+   ]
+  },
+  {
+   "q": "How do you stay effective debugging under pressure, and how do you share that speed with the rest of the team?",
+   "why": "面试官在探：你的快是不是可复制的方法，而非个人英雄主义。",
+   "framework": [
+    "先说方法：读错误信息、对照已知结构、缩小范围、给出可验证的假设",
+    "说明“快”来自对整个仓库授权结构的全局图景",
+    "沟通透明：在线程里写根因、修法、核查范围，让别人能复核",
+    "把图景分享出去：写 runbook 或做简短分享，让别人也能这么快"
+   ],
+   "best_practice": "压力下的速度来自平时积累的结构化认知，加上清晰的沟通。把根因、修法和核查范围都贴在线程里，别人才能复核并信任，这也是 Earn Trust。把这份认知沉淀成 runbook，下一次就不依赖我一个人。",
+   "terms": [
+    {
+     "en": "mental model",
+     "zh": "心智模型，对系统的整体理解",
+     "example": "I had a mental model of the repo's grant structure, which is why I was fast."
+    },
+    {
+     "en": "runbook",
+     "zh": "运维手册",
+     "example": "I'd write a runbook so the next person can diagnose this in minutes too."
+    }
+   ]
+  }
+ ]
+}

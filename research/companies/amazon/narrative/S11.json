@@ -1,0 +1,192 @@
+{
+  "code": "S11",
+  "full_zh": [
+    "背景：2024 年夏天我在费用平台团队实习，负责事件流这一侧。结算交易会把 protobuf 事件发到 Kafka，定价服务批量消费、幂等入账、算出费用，再发费用事件给出款。",
+    "任务：扩展线上 Kafka 到 Snowflake 的 CDC 路径，另外有两个小件：一个审计日志模块和一个 EOD 校验器。",
+    "我做了什么（摄取）：把 Kafka Connect sink 扩展到 Snowflake（Snowpipe Streaming）；写了自定义 protobuf converter，遇到坏消息返回 null 记录，这样一条坏消息不会让整个 task 死掉；加了 CDC 过滤，只放行白名单表并丢弃 delete。",
+    "我做了什么（另两件）：写了 Spring Boot + JPA 的审计日志模块，用动态 criteria 查询；写了 Spark 校验器，用 Airflow 调度，在每天结束时检查定价计划的创建来源。",
+    "结果与学到：一个夏天交付三件东西。学到两点：at-least-once 加幂等消费者就等于实际上的恰好一次；一条坏消息不能毒死管线，这和我后来在 Amex 管线里用的 record, never drop 是同一个直觉。没有业务数字可报。"
+  ],
+  "full_en": "As an intern I worked on the event-streaming side of the fee platform. A settled transaction publishes a protobuf event to Kafka; the pricing service consumes it in batches, books it idempotently, with dedup before insert and a unique constraint as the backstop, computes the fee and publishes a fee event for payouts. My pieces: I extended the Kafka Connect sink into Snowflake with Snowpipe Streaming, a custom protobuf converter that returns a null record on a poison message instead of killing the task, and a CDC filter that whitelists tables and drops deletes. I wrote a Spring Boot and JPA audit-log module with dynamic criteria queries, and Spark validators scheduled by Airflow that check pricing-schedule provenance at end of day. What I took from it: at-least-once delivery plus an idempotent consumer is effectively once, and one bad message must never poison a pipeline.",
+  "terms": {
+    "full": [
+      {
+        "en": "effectively once",
+        "zh": "实际效果上的恰好一次",
+        "example": "At-least-once delivery plus an idempotent consumer gives you effectively once."
+      },
+      {
+        "en": "poison message",
+        "zh": "毒消息（会反复卡死消费的坏消息）",
+        "example": "My converter returns a null record on a poison message instead of killing the task."
+      },
+      {
+        "en": "backstop",
+        "zh": "兜底机制",
+        "example": "The unique constraint is the backstop for concurrent inserts."
+      }
+    ],
+    "hook": [
+      {
+        "en": "deliverable",
+        "zh": "交付物",
+        "example": "I shipped three deliverables in one summer."
+      },
+      {
+        "en": "end to end",
+        "zh": "端到端",
+        "example": "I touched the path end to end, from the Kafka event to the Snowflake table."
+      },
+      {
+        "en": "breadth",
+        "zh": "技术广度",
+        "example": "This story is about breadth: streaming, a Spring service and batch validation."
+      }
+    ],
+    "starl": [
+      {
+        "en": "fail gracefully",
+        "zh": "优雅地失败",
+        "example": "The converter fails gracefully on a bad message."
+      },
+      {
+        "en": "whitelist",
+        "zh": "白名单",
+        "example": "The CDC filter whitelists tables and drops deletes."
+      },
+      {
+        "en": "end-of-day check",
+        "zh": "每日收盘后的校验",
+        "example": "The Spark validator is an end-of-day check on pricing-schedule provenance."
+      }
+    ],
+    "followups": [
+      {
+        "en": "dedup before insert",
+        "zh": "插入前先去重",
+        "example": "The consumer does dedup before insert and relies on a unique constraint for races."
+      },
+      {
+        "en": "capped by partitions",
+        "zh": "被 partition 数封顶",
+        "example": "Parallelism is replicas times tasks, capped by partitions."
+      },
+      {
+        "en": "defense in depth",
+        "zh": "多层防护",
+        "example": "Idempotency has three layers, which is defense in depth."
+      }
+    ],
+    "relp": [
+      {
+        "en": "ramp up quickly",
+        "zh": "快速上手",
+        "example": "I had to ramp up quickly on Connect and Snowpipe Streaming."
+      },
+      {
+        "en": "raise the bar",
+        "zh": "抬高标准",
+        "example": "Not letting one bad message poison the pipeline is how I raise the bar."
+      },
+      {
+        "en": "dig into the details",
+        "zh": "深入细节",
+        "example": "I dug into the details of how a protobuf message becomes table columns."
+      }
+    ]
+  },
+  "senior": [
+    {
+      "q": "How do you make sure one bad message can't poison the pipeline without silently losing data?",
+      "why": "面试官在探：你对“容错”与“不丢数据”之间张力的理解。",
+      "framework": [
+        "converter 对坏消息返回 null 记录，task 继续跑，管线不被卡住",
+        "但不能静默吞掉：要有可观测的信号，比如计数和告警",
+        "被跳过的消息要有地方可追溯，能事后查看和重放",
+        "原则是记录它，而不是丢掉它"
+      ],
+      "best_practice": "只让 task 不死是不够的，因为静默跳过会把一个明显的故障变成隐蔽的数据缺失。正确的做法是把失败变成可见：计数、告警、可追溯。这样既保住吞吐，又不丢信息。这个直觉后来在 Amex 管线里变成 record, never drop。具体死信队列或告警在实习里的落地程度，以实际为准。",
+      "terms": [
+        {
+          "en": "fail loudly",
+          "zh": "出错时要响亮地报",
+          "example": "A skipped message should fail loudly in the metrics, not silently."
+        },
+        {
+          "en": "dead-letter queue",
+          "zh": "死信队列",
+          "example": "I'd route skipped messages to a dead-letter queue so they can be replayed."
+        }
+      ]
+    },
+    {
+      "q": "At-least-once plus an idempotent consumer: where can that still break?",
+      "why": "面试官在探：你对幂等边界的理解，而不是背口号。",
+      "framework": [
+        "幂等要有稳定的业务键，键不稳定就去不了重",
+        "批内去重加数据库唯一约束，处理并发竞态",
+        "有副作用的下游（比如发出的费用事件）也要考虑重复",
+        "自动提交加短间隔偏 at-most-once，真正的防丢靠上游重试和对账"
+      ],
+      "best_practice": "幂等不是一个开关，而是每个有副作用的步骤都要回答“重复执行会怎样”。唯一约束是最后一道防线，捕获冲突后跳过；对账则在管线之外发现漏掉的数据。口号“实际上恰好一次”的前提是这些环节都成立，所以我会按环节逐个核对，而不是只相信一个机制。",
+      "terms": [
+        {
+          "en": "idempotency key",
+          "zh": "幂等键",
+          "example": "Dedup only works if the idempotency key is stable."
+        },
+        {
+          "en": "reconciliation",
+          "zh": "对账",
+          "example": "Reconciliation catches what the pipeline itself can't."
+        }
+      ]
+    },
+    {
+      "q": "How would you scale this ingestion path 10x, and what would you check first?",
+      "why": "面试官在探：你对并行度模型和瓶颈的判断顺序。",
+      "framework": [
+        "先看 partition 数，因为并行度被它封顶",
+        "然后看 replicas 乘以 tasks.max 是否用满了 partition",
+        "再看下游 Snowflake 摄取、转换开销（converter）和消息大小",
+        "最后看 lag 与重试，确认扩容后没有把问题搬到别处"
+      ],
+      "best_practice": "并行度模型是 replicas 乘以 tasks.max，上限是 partition 数，所以加机器不会越过这个上限；先查上限，才不会白扩容。扩容之后要看 lag 和错误率是否真的下降。需要增加 partition 时还要考虑键的顺序语义，这是以后会权衡的点，我自己并没有运维过集群。",
+      "terms": [
+        {
+          "en": "bottleneck",
+          "zh": "瓶颈",
+          "example": "The first thing I'd check is whether partitions are the bottleneck."
+        },
+        {
+          "en": "consumer lag",
+          "zh": "消费滞后",
+          "example": "I'd watch consumer lag to confirm the scale-up actually helped."
+        }
+      ]
+    },
+    {
+      "q": "Looking back at your internship work, what would you do differently?",
+      "why": "面试官在探：你的复盘能力和对质量的自我要求。",
+      "framework": [
+        "承认当时没有量化结果：没有记录处理量或校验器发现的问题数",
+        "下次先定义成功指标，再动手",
+        "给坏消息处理和校验器加可观测性，让价值看得见",
+        "更早把用法和边界写成文档，方便别人接手"
+      ],
+      "best_practice": "这个故事缺的是数字，所以最诚实的改进是在开始时就定义怎么衡量价值：处理了多少事件、抓到多少问题。能量化的工作更容易说服别人，也更容易被持续维护。这是我下次会做的事，而不是已经做过的事。",
+      "terms": [
+        {
+          "en": "define success up front",
+          "zh": "事先定义成功标准",
+          "example": "Next time I'd define success up front and instrument it."
+        },
+        {
+          "en": "make the value visible",
+          "zh": "让价值可见",
+          "example": "I'd make the value visible with a simple dashboard."
+        }
+      ]
+    }
+  ]
+}

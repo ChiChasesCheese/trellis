@@ -1,0 +1,398 @@
+[
+ {
+  "id": "amp-09-signals",
+  "slug": "signals",
+  "title": "二叉树：什么题该想到树递归？",
+  "meta": "模式",
+  "question_md": "什么样的题该想到「后序 DFS：让左右子树各自返回答案，再在当前节点合并」？给出 3–4 个信号，每个配一道例题。",
+  "answer_md": "思路｜四个信号：\n1. 问「两个节点第一次汇合在哪」：LC 236 Lowest Common Ancestor，左右子树都找到目标的节点就是答案。\n2. 问「最大路径和 / 直径」，路径可以在某个节点拐弯：LC 124 Binary Tree Maximum Path Sum、LC 543 Diameter of Binary Tree。\n3. 问「每一层的某个值」：LC 199 Binary Tree Right Side View，用 BFS 冻结层大小，或先右后左的 DFS。\n4. 要把树存成字符串再还原：LC 297 Serialize and Deserialize Binary Tree，前序遍历加显式空标记。\n\n模板｜`solve(node)`：空节点返回基准值；先递归左右；只在当前节点做一次合并。关键一问：返回给父节点的是什么，用来更新答案的又是什么。\n\n追问｜两件事常常不是同一个值：LC 124 返回「单边最大下行和」，答案却是「左 + 根 + 右」的折线。",
+  "note": "interviews/core/coding/amazon/patterns/09_trees_lca.md"
+ },
+ {
+  "id": "amp-09-template",
+  "slug": "template",
+  "title": "二叉树：返回一个值、同时更新另一个值的模板",
+  "meta": "模式",
+  "question_md": "写出树递归的模板：向父节点返回「单边深度」，同时用 `l + r` 更新全局答案（以二叉树直径为例），并说明每个变量的含义。",
+  "answer_md": "模板｜\n\n```python\ndef diameter(root):\n    best = 0\n    def depth(node):\n        nonlocal best\n        if not node:\n            return 0\n        l, r = depth(node.left), depth(node.right)\n        best = max(best, l + r)           # the longest path that bends at this node\n        return 1 + max(l, r)              # what the parent may extend: one side only\n    depth(root)\n    return best\n```\n\n思路｜`depth(node)` 返回从当前节点往下的最大深度，父节点只能延伸一边，所以返回 `1 + max(l, r)`；`best` 记录在当前节点拐弯的最长路径 `l + r`，这是答案。`nonlocal best` 让内层函数能改外层变量。空节点是基准情形，返回 0。\n\n复杂度｜时间 O(n)，空间 O(h)（递归栈，h 为树高）。链状树时 h = n，Python 默认递归深度 1000，要改成迭代。",
+  "note": "interviews/core/coding/amazon/patterns/09_trees_lca.md"
+ },
+ {
+  "id": "amp-09-pitfall",
+  "slug": "pitfall",
+  "title": "二叉树：最大路径和的初值陷阱",
+  "meta": "模式",
+  "question_md": "LC 124 Binary Tree Maximum Path Sum 的 `best` 初值写成 0，会在什么输入上出错？给出输入，以及错误和正确的输出。",
+  "answer_md": "易错｜路径至少包含一个节点，所以全是负数时答案是最大的那个负数。用 `0` 做初值，答案不可能小于 0。\n\n输入 `root = [-3]`：初值 0 返回 `0`，正确答案是 `-3`。输入 `root = [-2, -1]`（根 -2，左孩子 -1）：初值 0 返回 `0`，正确答案是 `-1`。\n\n思路｜`best = float(\"-inf\")`。同时保留 `max(gain(child), 0)`：负的分支可以不走，但节点本身不能不选。\n\n追问｜另一个常见错误：BFS 分层时用 `while queue:` 而不是 `for _ in range(len(queue))`，会把刚入队的下一层混进当前层。",
+  "note": "interviews/core/coding/amazon/patterns/09_trees_lca.md"
+ },
+ {
+  "id": "amp-09-followups",
+  "slug": "followups",
+  "title": "二叉树：LCA 的常见追问",
+  "meta": "模式",
+  "question_md": "LC 236 写完以后，面试官常问哪 3 个追问？各用一句话回答。",
+  "answer_md": "追问｜1. 树深到 10⁶，递归会爆栈怎么办？先 DFS/BFS 建 `parent` 字典，沿 `p` 的祖先链打标记，再从 `q` 往上走，遇到的第一个已标记节点就是 LCA。\n\n追问｜2. 同一棵树上有 10⁶ 次查询？预处理：欧拉序加稀疏表，O(n log n) 预处理、O(1) 查询；或倍增（binary lifting），O(log n) 查询。\n\n追问｜3. `p` 或 `q` 不一定在树里？标准写法会返回另一个节点，是错的；改成在 DFS 里用两个布尔值记录两者是否都找到，都找到才返回结果。\n\n易错｜比较节点要用 `is`（对象身份），不要用值相等，因为节点值可能重复。",
+  "note": "interviews/core/coding/amazon/patterns/09_trees_lca.md"
+ },
+ {
+  "id": "amp-09-lc297-serialize-tree",
+  "slug": "lc297-serialize-tree",
+  "title": "二叉树序列化与反序列化（Serialize and Deserialize Binary Tree, LC 297）",
+  "meta": "Hard",
+  "question_md": "设计一对函数：`serialize(root)` 把二叉树变成字符串，`deserialize(data)` 把字符串还原成原来的树。格式不限，只要保证往返之后树完全一样。\n\n约束：节点数在 `[0, 10^4]`，`-1000 <= Node.val <= 1000`。\n\n例：`root = [1,2,3,null,null,4,5]` 序列化再反序列化后仍是 `[1,2,3,null,null,4,5]`；`root = []` 仍是 `[]`。",
+  "answer_md": "思路｜前序遍历（根、左、右），空节点写成显式标记 `#`，用逗号连接。只有前序、不带空标记，形状不唯一：`[1,2]` 与 `[1,null,2]` 的前序都是 `1,2`。反序列化按同样的前序顺序消费 token：遇到 `#` 返回空，否则建节点并递归建左右子树。\n\n```python\ndef serialize(root):\n    out = []\n\n    def walk(node):\n        if not node:\n            out.append(\"#\")                   # explicit null marker makes the shape unambiguous\n            return\n        out.append(str(node.val))\n        walk(node.left)\n        walk(node.right)\n\n    walk(root)\n    return \",\".join(out)\n```\n\n```python\ndef deserialize(data):\n    tokens = iter(data.split(\",\"))\n\n    def build():\n        tok = next(tokens)                    # consume in the same preorder we wrote\n        if tok == \"#\":\n            return None\n        node = TreeNode(int(tok))\n        node.left = build()\n        node.right = build()\n        return node\n\n    return build()\n```\n\n复杂度｜时间 O(n)，空间 O(n)。递归深度等于树高，链状树要改成显式栈。\n\n易错｜忘记空标记；节点值是字符串时分隔符冲突，需要转义或长度前缀。\n\n追问｜树很大怎么办？用二进制格式（varint 加位图表示空指针）并压缩，反序列化边读边解析，不要先 `split` 成整个列表。核心不变量是 `deserialize(serialize(t)) == t`，用随机树做往返测试。",
+  "note": "interviews/core/coding/amazon/patterns/09_trees_lca.md"
+ },
+ {
+  "id": "amp-10-signals",
+  "slug": "signals",
+  "title": "动态规划：什么题该想到 DP？",
+  "meta": "模式",
+  "question_md": "什么样的题该想到动态规划？给出 3–4 个信号，每个配一道例题。",
+  "answer_md": "思路｜四个信号：\n1. 求「最多 / 最少 / 方案数」，而且当前的选择会影响后面的选择，贪心找得到反例：LC 322 Coin Change（硬币 `[1,3,4]`）。\n2. 输入是一个序列，答案可以用「以第 i 个结尾」或「前 i 个」的子问题拼出来：LC 53 Maximum Subarray、LC 70 Climbing Stairs。\n3. 输入是两个序列，状态是两个前缀长度 `dp[i][j]`：LC 10 Regular Expression Matching、最长公共子序列。\n4. 问题在一个区间 `[l, r]` 里，枚举最后一步做什么：LC 312 Burst Balloons。\n\n模板｜五步：状态、转移、初值、顺序、答案。先写暴力递归，加缓存变成记忆化，再改成自底向上的表格，最后压缩成只留下一步会读的几格。",
+  "note": "interviews/core/coding/amazon/patterns/10_dp_1d_2d.md"
+ },
+ {
+  "id": "amp-10-template",
+  "slug": "template",
+  "title": "动态规划：二维前缀模板",
+  "meta": "模式",
+  "question_md": "写出二维 DP 模板（以最长公共子序列为例），并说明 `dp[i][j]` 的含义和第 0 行、第 0 列为什么存在。",
+  "answer_md": "模板｜\n\n```python\ndef lcs(a, b):\n    dp = [[0] * (len(b) + 1) for _ in range(len(a) + 1)]   # dp[i][j]: LCS of a[:i], b[:j]; row/col 0 = empty prefix\n    for i in range(1, len(a) + 1):\n        for j in range(1, len(b) + 1):\n            if a[i - 1] == b[j - 1]:\n                dp[i][j] = dp[i - 1][j - 1] + 1\n            else:\n                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])\n    return dp[-1][-1]\n```\n\n思路｜`dp[i][j]` 是 `a[:i]` 与 `b[:j]` 的最长公共子序列长度。第 0 行和第 0 列代表空串，值为 0，这就是初值，所以表比字符串多一行一列。字符相等就各退一步加 1，不等就各退一步取较大。顺序是 `i`、`j` 从小到大，答案是 `dp[-1][-1]`。\n\n复杂度｜时间 O(len(a) · len(b))，空间同阶；转移只读上一行和当前行，可以压缩成两行。",
+  "note": "interviews/core/coding/amazon/patterns/10_dp_1d_2d.md"
+ },
+ {
+  "id": "amp-10-pitfall",
+  "slug": "pitfall",
+  "title": "动态规划：硬币问题不能用贪心",
+  "meta": "模式",
+  "question_md": "LC 322 Coin Change：为什么「每次取最大面值」是错的？给出一个输入，以及贪心和 DP 的输出。",
+  "answer_md": "易错｜贪心只在面值体系规范时才对。输入 `coins = [1,3,4]`，`amount = 6`：\n\n- 贪心：4，再 1，再 1，共 3 枚。\n- DP：3 + 3，共 2 枚，正确答案是 `2`。\n\n思路｜`dp[a]` 是凑出金额 `a` 的最少硬币数，初值 `dp[0] = 0`，不可达用 `inf`；转移 `dp[a] = min(dp[a - c] + 1)`。贪心的反例要在面试里主动说出，用来解释为什么必须 DP。\n\n追问｜另一处易错：状态定义含糊。写 `dp[i]` 之前先说清它是「以 i 结尾」还是「前 i 个」；全负数组的最大子数组，初值写 0 会错。",
+  "note": "interviews/core/coding/amazon/patterns/10_dp_1d_2d.md"
+ },
+ {
+  "id": "amp-10-followups",
+  "slug": "followups",
+  "title": "动态规划：常见追问",
+  "meta": "模式",
+  "question_md": "DP 题写完以后，面试官常问哪 3 个追问？各用一句话回答。",
+  "answer_md": "追问｜1. 空间能不能更小？转移只读 `dp[i-1]`、`dp[i-2]` 就只留两个变量；二维表只读上一行就留两行（滚动数组）。\n\n追问｜2. 递归写法会不会爆栈？n 到 10⁵ 的链式依赖会 `RecursionError`，改成自底向上；记忆化的参数必须可哈希，传 `list` 要转成 `tuple`。\n\n追问｜3. 要的不只是最优值，还要方案？记录每个状态的前驱（或最优的那一步选择），最后从答案状态回溯。\n\n易错｜遍历顺序：依赖的格子还没算就会读到旧值；LC 518 里硬币在外层还是金额在外层，决定算组合还是排列。",
+  "note": "interviews/core/coding/amazon/patterns/10_dp_1d_2d.md"
+ },
+ {
+  "id": "amp-10-lc10-regex",
+  "slug": "lc10-regex",
+  "title": "正则表达式匹配（Regular Expression Matching, LC 10）",
+  "meta": "Hard",
+  "question_md": "给定字符串 `s` 和模式 `p`，实现支持 `.` 和 `*` 的正则匹配：`.` 匹配任意单个字符，`*` 匹配零个或多个它前面的那个元素。匹配必须覆盖整个 `s`，不是部分匹配。\n\n约束：`1 <= s.length <= 20`，`1 <= p.length <= 20`；`s` 只含小写字母，`p` 只含小写字母、`.`、`*`；每个 `*` 前面保证有合法字符。\n\n例：`s = \"aa\", p = \"a\"` 为 `false`；`s = \"aa\", p = \"a*\"` 为 `true`；`s = \"ab\", p = \".*\"` 为 `true`。",
+  "answer_md": "思路｜二维 DP：`dp[i][j]` 表示 `s[:i]` 与 `p[:j]` 是否匹配。`p[j-1]` 是 `*` 时有两种选择：用零次前一个字符，即 `dp[i][j-2]`；或前一个字符能匹配 `s[i-1]` 时再多吃一个，即 `dp[i-1][j]`。否则当 `p[j-1]` 等于 `s[i-1]` 或是 `.` 时，`dp[i][j] = dp[i-1][j-1]`。空串能匹配 `a*b*` 这样的前缀，所以第 0 行要初始化。\n\n```python\ndef is_match(s, p):\n    m, n = len(s), len(p)\n    dp = [[False] * (n + 1) for _ in range(m + 1)]     # dp[i][j]: s[:i] matches p[:j]\n    dp[0][0] = True\n    for j in range(2, n + 1):                          # empty s can match \"a*b*\" style prefixes\n        if p[j - 1] == \"*\":\n            dp[0][j] = dp[0][j - 2]\n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            if p[j - 1] == \"*\":\n                dp[i][j] = dp[i][j - 2]                # zero copies of the char before '*'\n                if p[j - 2] in (s[i - 1], \".\"):\n                    dp[i][j] = dp[i][j] or dp[i - 1][j]     # one more copy absorbs s[i-1]\n            elif p[j - 1] in (s[i - 1], \".\"):\n                dp[i][j] = dp[i - 1][j - 1]\n    return dp[m][n]\n```\n\n复杂度｜时间 O(m · n)，空间 O(m · n)。\n\n易错｜`*` 的「零次」要跳过两个字符的模式（`j-2`）；第 0 行没初始化，`s = \"\"` 配 `p = \"a*\"` 会错。\n\n追问｜文本很长、模式很短怎么办？用 NFA 模拟（Thompson 构造），维护当前状态集合，时间 O(|text| · |pattern|)，空间 O(|pattern|)，天然流式。回溯式引擎在 `(a*)*b` 这类模式上会指数爆炸（ReDoS），RE2 之类的引擎保证线性时间。",
+  "note": "interviews/core/coding/amazon/patterns/10_dp_1d_2d.md"
+ },
+ {
+  "id": "amp-10-lc312-burst-balloons",
+  "slug": "lc312-burst-balloons",
+  "title": "戳气球（Burst Balloons, LC 312）",
+  "meta": "Hard",
+  "question_md": "有 `n` 个气球，编号 `0` 到 `n - 1`，每个气球上有数字，存在数组 `nums` 里。戳破第 `i` 个气球得到 `nums[i - 1] * nums[i] * nums[i + 1]` 枚硬币；越界的一侧当作一个数字为 1 的气球。求戳破所有气球最多能得到多少硬币。\n\n约束：`n == nums.length`，`1 <= n <= 300`，`0 <= nums[i] <= 100`。\n\n例：`nums = [3,1,5,8]` 返回 `167`；`nums = [1,5]` 返回 `10`。",
+  "answer_md": "思路｜区间 DP。不要枚举「第一个戳谁」：戳掉一个后相邻关系变了，子问题不再独立。改成枚举区间里「最后一个戳破的」`k`：此时 `k` 的左右邻居一定是区间端点 `l` 和 `r`，左右两段互不影响。两端补虚拟气球 1。`dp[l][r]` 是戳光开区间 `(l, r)` 内所有气球的最大硬币数。\n\n```python\ndef max_coins(nums):\n    a = [1] + nums + [1]                      # virtual balloons at both ends\n    n = len(a)\n    dp = [[0] * n for _ in range(n)]          # dp[l][r]: best coins bursting everything strictly between l and r\n    for length in range(2, n):                # widen the open interval (l, r)\n        for l in range(n - length):\n            r = l + length\n            for k in range(l + 1, r):         # k is the LAST one burst: its neighbours are l and r\n                dp[l][r] = max(dp[l][r], dp[l][k] + a[l] * a[k] * a[r] + dp[k][r])\n    return dp[0][n - 1]\n```\n\n复杂度｜时间 O(n³)，空间 O(n²)；n = 300 时约 4.5×10⁶ 次内层循环，可行。\n\n易错｜忘记两端补 1；区间长度要从小到大枚举，保证 `dp[l][k]` 和 `dp[k][r]` 已算好。\n\n追问｜能降复杂度吗？一般不能，O(n³) 是标准答案；可以说明为什么「最后一个」让子问题独立，这是面试官想听的。",
+  "note": "interviews/core/coding/amazon/patterns/10_dp_1d_2d.md"
+ },
+ {
+  "id": "amp-11-signals",
+  "slug": "signals",
+  "title": "设计题：什么题该想到「哈希表 + 另一个结构」？",
+  "meta": "模式",
+  "question_md": "什么样的题该想到哈希表配合链表 / 数组 / 树的组合设计？给出 3–4 个信号，每个配一道例题。",
+  "answer_md": "思路｜四个信号：\n1. 要求 get / put 都是 O(1)，还要按「最久未使用」淘汰：LC 146 LRU Cache，哈希表指向双向链表节点。\n2. 要求按使用频率淘汰，同频率里再按时间：LC 460 LFU Cache，key 到节点加「频率到有序字典」。\n3. 要求插入、删除、等概率随机取都是 O(1)：LC 380 Insert Delete GetRandom O(1)，数组加哈希表。\n4. 输入是路径或层级，操作是创建、列出、读写：LC 588 Design In-Memory File System，一棵目录树；要求惰性展平嵌套列表：LC 341 Flatten Nested List Iterator，用栈。\n\n模板｜先写出契约：有哪些操作、各自多快、每次操作之后哪些性质必须成立（不变量），再写代码，用断言检查不变量。",
+  "note": "interviews/core/coding/amazon/patterns/11_design_lru_lfu_iterators.md"
+ },
+ {
+  "id": "amp-11-template",
+  "slug": "template",
+  "title": "设计题：10 行 LRU 模板",
+  "meta": "模式",
+  "question_md": "写出用 `OrderedDict` 实现的 LRU Cache，并说明每个调用为什么这样用。",
+  "answer_md": "模板｜\n\n```python\nclass LRUWithOrderedDict:\n    def __init__(self, capacity):\n        self.cap, self.d = capacity, OrderedDict()\n\n    def get(self, key):\n        if key not in self.d:\n            return -1\n        self.d.move_to_end(key)                 # most recent goes to the END\n        return self.d[key]\n\n    def put(self, key, value):\n        self.d[key] = value\n        self.d.move_to_end(key)\n        if len(self.d) > self.cap:\n            self.d.popitem(last=False)          # evict from the FRONT = least recent\n```\n\n思路｜`OrderedDict` 本身就是哈希表加双向链表。`move_to_end(key)` 把条目移到末尾（最近使用），`popitem(last=False)` 弹出最前面的（最久未使用）。面试时先说这个版本，表明你知道标准库；被要求手写时，再用哈希表加双向链表加哨兵节点实现，节点里要存 key，否则淘汰时不知道从字典里删哪个。\n\n复杂度｜`get` 和 `put` 都是 O(1)，空间 O(capacity)。",
+  "note": "interviews/core/coding/amazon/patterns/11_design_lru_lfu_iterators.md"
+ },
+ {
+  "id": "amp-11-pitfall",
+  "slug": "pitfall",
+  "title": "设计题：Insert Delete GetRandom 的删除顺序",
+  "meta": "模式",
+  "question_md": "LC 380 的 `remove(val)` 用「和最后一个元素交换再弹出」，把 `del pos[val]` 写在更新 `pos[last]` 之前，会在什么输入上出错？给出操作序列和输出。",
+  "answer_md": "易错｜当 `val` 恰好是数组最后一个元素时，`last == val`。错误顺序先 `del pos[val]`，再 `pos[last] = idx`，把刚删的键又写回去，字典里留下一个指向空位的脏条目。\n\n操作序列 `insert(5)`，`remove(5)`，`insert(5)`：\n\n- 错误顺序：`remove` 返回 `True`，数组变成 `[]`，但 `pos = {5: 0}`；第二次 `insert(5)` 返回 `False`（以为已存在），数组仍是 `[]`。\n- 正确顺序：第二次 `insert(5)` 返回 `True`，数组是 `[5]`。\n\n思路｜正确顺序是：取 `idx = pos[val]`，`arr[idx] = last`，`pos[last] = idx`，`arr.pop()`，最后 `del pos[val]`。\n\n追问｜同类错误：LRU 里 `put` 已存在的 key 当作新插入，会触发多余淘汰；LFU 里新插入时忘记把 `min_freq` 重置为 1。",
+  "note": "interviews/core/coding/amazon/patterns/11_design_lru_lfu_iterators.md"
+ },
+ {
+  "id": "amp-11-followups",
+  "slug": "followups",
+  "title": "设计题：LRU 的常见追问",
+  "meta": "模式",
+  "question_md": "LRU Cache 写完以后，面试官常问哪 3 个追问？各用一句话回答。",
+  "answer_md": "追问｜1. 多线程怎么办？最简单是整把锁；读多写多时分片（按 key 哈希到多个小 LRU，各自加锁）；注意 `get` 也会修改顺序，所以读也要写锁。\n\n追问｜2. 要支持 TTL（过期时间）？节点里存过期时间，`get` 时惰性检查并删除，再用一个按过期时间排序的最小堆做周期清理。\n\n追问｜3. 缓存放不下一台机器？按 key 做一致性哈希分到多台，每台各自维护 LRU；热点 key 复制到多个节点。\n\n易错｜没有哨兵节点会到处是 `if node.prev is None` 的特判，头尾最容易漏。",
+  "note": "interviews/core/coding/amazon/patterns/11_design_lru_lfu_iterators.md"
+ },
+ {
+  "id": "amp-11-lc588-file-system",
+  "slug": "lc588-file-system",
+  "title": "设计内存文件系统（Design In-Memory File System, LC 588）",
+  "meta": "Hard",
+  "question_md": "设计一个内存文件系统，实现 `FileSystem` 类：\n- `FileSystem()` 初始化。\n- `ls(path)`：若 `path` 是文件路径，返回只含该文件名的列表；若是目录路径，返回该目录下所有文件和目录的名字。结果按字典序排列。\n- `mkdir(path)`：按路径创建新目录，路径不存在；沿途不存在的中间目录也要创建。\n- `addContentToFile(filePath, content)`：文件不存在则创建并写入；已存在则把内容追加在原内容后面。\n- `readContentFromFile(filePath)`：返回文件内容。\n\n约束：`1 <= path.length, filePath.length <= 100`；路径是以 `/` 开头的绝对路径，除 `\"/\"` 外不以 `/` 结尾；目录名和文件名只含小写字母，同一目录下不重名；所有操作的参数合法，不会访问不存在的东西；`filePath` 的父目录一定存在；`1 <= content.length <= 50`；`ls`、`mkdir`、`addContentToFile`、`readContentFromFile` 总共最多调用 300 次。\n\n例：`ls(\"/\")` 返回 `[]`；`mkdir(\"/a/b/c\")`；`addContentToFile(\"/a/b/c/d\", \"hello\")`；`ls(\"/\")` 返回 `[\"a\"]`；`readContentFromFile(\"/a/b/c/d\")` 返回 `\"hello\"`。",
+  "answer_md": "思路｜一棵目录树：每个节点有 `children` 字典（名字到子节点）和 `content`（目录为 `None`，文件为字符串，空文件是 `\"\"`）。把路径按 `/` 切开，从根逐段往下走；`mkdir` 和写文件时缺的节点就创建。`ls` 遇到文件返回文件名自己，遇到目录返回排序后的孩子名。\n\n```python\nclass _Dir:\n    def __init__(self):\n        self.children = {}          # name -> _Dir\n        self.content = None         # None for a directory, str for a file\n```\n\n```python\nclass FileSystem:\n    def __init__(self):\n        self.root = _Dir()\n\n    def _walk(self, path, create=False):\n        node = self.root\n        for part in [p for p in path.split(\"/\") if p]:\n            if part not in node.children:\n                if not create:\n                    return None\n                node.children[part] = _Dir()\n            node = node.children[part]\n        return node\n\n    def ls(self, path):\n        node = self._walk(path)\n        if node is None:\n            return []\n        if node.content is not None:                       # a file lists as itself\n            return [path.rstrip(\"/\").split(\"/\")[-1]]\n        return sorted(node.children)\n```\n\n复杂度｜路径深度 d：`mkdir`、读写 O(d)；`ls` 目录为 O(k log k)，k 为孩子数。\n\n易错｜`\"\"` 是文件而 `None` 是目录，别用 `if node.content` 判断；`ls(\"/\")` 的路径切分要去掉空段。\n\n追问｜路径规范化（`//`、`.`、`..`、结尾 `/`、符号链接）怎么处理？先把路径规范化成段列表再走。不存在的路径返回 `[]` 还是报错？真实系统应该报错。",
+  "note": "interviews/core/coding/amazon/patterns/11_design_lru_lfu_iterators.md"
+ },
+ {
+  "id": "amp-11-lc341-nested-iterator",
+  "slug": "lc341-nested-iterator",
+  "title": "展平嵌套列表迭代器（Flatten Nested List Iterator, LC 341）",
+  "meta": "Medium",
+  "question_md": "给定一个嵌套整数列表 `nestedList`，每个元素要么是整数，要么是一个其元素也可能是整数或其他列表的列表。实现迭代器把它展平：\n- `NestedIterator(nestedList)` 初始化迭代器。\n- `next()` 返回下一个整数。\n- `hasNext()` 还有整数时返回 `true`，否则 `false`。\n\n测试方式：反复调用 `next()` 直到 `hasNext()` 为假，收集到的列表必须等于展平后的结果。\n\n约束：`1 <= nestedList.length <= 500`；嵌套列表中的整数取值在 `[-10^6, 10^6]`。\n\n例：`[[1,1],2,[1,1]]` 得 `[1,1,2,1,1]`；`[1,[4,[6]]]` 得 `[1,4,6]`。",
+  "answer_md": "思路｜惰性展平：用栈存待处理元素，栈顶是下一个要看的。`has_next` 里循环：栈顶是整数就返回真；是列表就弹出，把它的元素倒序压回栈。这样只在需要时才展开，不必一次性展平整个结构。`next` 先调用 `has_next`，保证没有先调 `has_next` 也安全。\n\n```python\nclass NestedIterator:\n    def __init__(self, nested_list):\n        self.stack = list(reversed(nested_list))      # top of stack = next item to look at\n\n    def has_next(self):\n        while self.stack:                             # unwrap lists lazily until an integer is on top\n            top = self.stack[-1]\n            if top.isInteger():\n                return True\n            self.stack.pop()\n            self.stack.extend(reversed(top.getList()))\n        return False\n\n    def next(self):\n        if not self.has_next():                       # next() must be safe without a prior has_next()\n            raise StopIteration\n        return self.stack.pop().getInteger()\n```\n\n复杂度｜`next` 和 `has_next` 摊还 O(1)；空间 O(嵌套深度加当前层宽度)。\n\n易错｜`has_next` 有副作用但要保持幂等；压栈要倒序，才能让第一个元素在栈顶；空列表（`[[], 1]`）要在循环里被弹掉。\n\n追问｜为什么不一次性展平成列表？数据很大或只取前几个时，预先展平浪费内存和时间；惰性展平按需。",
+  "note": "interviews/core/coding/amazon/patterns/11_design_lru_lfu_iterators.md"
+ },
+ {
+  "id": "amp-12-signals",
+  "slug": "signals",
+  "title": "回溯：什么题该想到回溯？",
+  "meta": "模式",
+  "question_md": "什么样的题该想到回溯（选择、递归、撤销）？给出 3–4 个信号，每个配一道例题。",
+  "answer_md": "思路｜四个信号：\n1. 要「列出所有」满足条件的方案，输出本身就是指数级：LC 78 Subsets、LC 22 Generate Parentheses。\n2. 要在约束下「摆放」，每放一个就产生新的冲突：LC 51 N-Queens、LC 37 Sudoku Solver。\n3. 要在网格或字符串里「找一条路径是否存在」，走过的格子不能再用：LC 79 Word Search。\n4. 每一位有若干种选择，逐位展开：LC 17 Letter Combinations of a Phone Number。\n\n模板｜画成决策树：每一层是一个选择，每个叶子是一个完整方案。写法是 choose、explore、un-choose；剪枝要在递归之前做。",
+  "note": "interviews/core/coding/amazon/patterns/12_backtracking.md"
+ },
+ {
+  "id": "amp-12-template",
+  "slug": "template",
+  "title": "回溯：组合总和模板",
+  "meta": "模式",
+  "question_md": "写出回溯模板（以 LC 39 Combination Sum 为例，元素可重复使用），并解释 `break`、`go(i, ...)`、`path[:]` 各自的作用。",
+  "answer_md": "模板｜\n\n```python\ndef combination_sum(candidates, target):\n    candidates = sorted(candidates)\n    out, path = [], []\n\n    def go(start, remain):\n        if remain == 0:\n            out.append(path[:])\n            return\n        for i in range(start, len(candidates)):\n            if candidates[i] > remain:\n                break                        # sorted: every later candidate is too big as well\n            path.append(candidates[i])\n            go(i, remain - candidates[i])    # i, not i + 1: the same element may be used again\n            path.pop()\n\n    go(0, target)\n    return out\n```\n\n思路｜`candidates` 先排序，当前数超过 `remain` 时后面的更大，直接 `break` 整个循环，比 `continue` 更强。`go(i, ...)` 传 `i` 表示下一层还能选同一个元素；下一层只从 `i` 开始，所以不会出现 `[3,2,2]`，不会产生重复组合。改成 `i + 1` 就是每个数只能用一次。`path[:]` 是拷贝：记录答案时现场状态还会继续变。\n\n复杂度｜指数级，取决于剪枝；空间 O(递归深度)。",
+  "note": "interviews/core/coding/amazon/patterns/12_backtracking.md"
+ },
+ {
+  "id": "amp-12-pitfall",
+  "slug": "pitfall",
+  "title": "回溯：记录答案时忘了拷贝",
+  "meta": "模式",
+  "question_md": "回溯里 `out.append(path)` 和 `out.append(path[:])` 有什么区别？用 LC 78 Subsets 的 `nums = [1,2]` 给出两种写法的输出。",
+  "answer_md": "易错｜`path` 是同一个列表对象，后续的 `append` 和 `pop` 一直在改它。`out.append(path)` 存的是引用，递归结束时 `path` 已被撤销回空列表。\n\n`nums = [1,2]` 的输出：\n\n- `out.append(path)`：`[[], [], [], []]`，四个元素都指向同一个空列表。\n- `out.append(path[:])`：`[[], [1], [1, 2], [2]]`。\n\n思路｜检查方法：每个 `apply` 下面必须有对应的 `undo`；记录答案时拷贝当前状态。\n\n追问｜另一处易错：去重条件写成 `i > 0`。正确的是 `i > start`：跳过的是同一层里重复的值，不是整个数组里重复的值，否则 `[1,2,2]` 会丢掉 `[2,2]`。",
+  "note": "interviews/core/coding/amazon/patterns/12_backtracking.md"
+ },
+ {
+  "id": "amp-12-followups",
+  "slug": "followups",
+  "title": "回溯：常见追问",
+  "meta": "模式",
+  "question_md": "回溯题写完以后，面试官常问哪 3 个追问？各用一句话回答。",
+  "answer_md": "追问｜1. 输入有重复元素怎么办？先排序，同一层里 `i > start and nums[i] == nums[i-1]` 就跳过，进入下一层后仍可再选同一个值的下一个副本。\n\n追问｜2. 输出本身是指数级，内存放不下怎么办？改成生成器（`yield`），一个一个产出；或者让调用方传回调函数，不在内存里积累。\n\n追问｜3. 剪枝剪的是什么？先过滤再递归才叫剪枝。LC 22 里只在左括号数小于 n 时放左括号、右括号数小于左括号数时放右括号；先递归到叶子再检查只是慢一点的暴力枚举。\n\n易错｜空输入的约定不同：`subsets([]) == [[]]`，`generate_parenthesis(0) == [\"\"]`，`letter_combinations(\"\") == []`。",
+  "note": "interviews/core/coding/amazon/patterns/12_backtracking.md"
+ },
+ {
+  "id": "amp-13-signals",
+  "slug": "signals",
+  "title": "贪心：什么题该想到贪心？",
+  "meta": "模式",
+  "question_md": "什么样的题该想到贪心？给出 3–4 个信号，每个配一道例题。",
+  "answer_md": "思路｜四个信号：\n1. 区间里「最多保留 / 最少删除」：LC 435 Non-overlapping Intervals，按右端点排序后扫描。\n2. 一遍扫描维护一个运行中的最优量，例如最远可达位置：LC 55 Jump Game。\n3. 总量守恒，局部为负就重置起点：LC 134 Gas Station。\n4. 决定可以后悔，用堆撤销之前最差的一个选择：LC 871 Minimum Number of Refueling Stops。\n\n模板｜写代码前先用一句话说出交换论证：把最优解里的一步换成你的选择，结果不会变差。说不出论证就先找反例，硬币 `[1,3,4]` 凑 6 是教科书反例，那时换 DP。",
+  "note": "interviews/core/coding/amazon/patterns/13_greedy.md"
+ },
+ {
+  "id": "amp-13-template",
+  "slug": "template",
+  "title": "贪心：按右端点排序再扫描",
+  "meta": "模式",
+  "question_md": "写出区间调度的贪心模板（最多选出多少个互不重叠的区间），并解释为什么按右端点排序。",
+  "answer_md": "模板｜\n\n```python\ndef max_non_overlapping(intervals):\n    count, last_end = 0, float(\"-inf\")\n    for start, end in sorted(intervals, key=lambda iv: iv[1]):    # earliest finish first\n        if start >= last_end:                                     # touching ([1,2], [2,3]) is allowed\n            count += 1\n            last_end = end\n```\n\n思路｜结束得越早，留给后面的空间越大，所以按右端点（结束时间）排序，依次选能接上的。按左端点排序会在 `[1,100]`、`[2,3]`、`[4,5]` 上选错：先选了 `[1,100]`，只能得 1，而最优是 2。`start >= last_end` 里的 `>=` 表示首尾相接（`[1,2]` 与 `[2,3]`）不算重叠，这是契约，写代码前要和面试官确认。\n\n复杂度｜时间 O(n log n)（排序），空间 O(1)。\n\n追问｜另两种骨架：运行中的最优值（Jump Game 的 `farthest`），带后悔药的堆（Course Schedule III：先全接受，超出截止日就丢掉时长最长的一门）。",
+  "note": "interviews/core/coding/amazon/patterns/13_greedy.md"
+ },
+ {
+  "id": "amp-13-pitfall",
+  "slug": "pitfall",
+  "title": "贪心：Gas Station 漏了总量判断",
+  "meta": "模式",
+  "question_md": "LC 134 Gas Station 只做「局部为负就重置起点」，不先判断总油量是否够，会在什么输入上出错？给出输入以及错误和正确的输出。",
+  "answer_md": "易错｜只看局部重置，到末尾会返回一个看似有效的起点，但总油量不够时任何起点都走不完一圈。\n\n输入 `gas = [2,3,4]`，`cost = [3,4,3]`：总油量 9，总消耗 10。\n\n- 漏了总量判断：返回 `2`。\n- 先判断 `sum(gas) < sum(cost)` 返回 `-1`：正确答案 `-1`。\n\n思路｜在 `i` 处油量变负，说明 `[start, i]` 里任何起点都会卡住，起点移到 `i + 1` 并清零油箱；总量够用时，最后留下的候选必然成立。\n\n追问｜Largest Number 的比较器也常错：`cmp_to_key` 要返回负、零、正的整数，不能返回布尔值；全零的输入要特判成 `\"0\"`。",
+  "note": "interviews/core/coding/amazon/patterns/13_greedy.md"
+ },
+ {
+  "id": "amp-13-followups",
+  "slug": "followups",
+  "title": "贪心：常见追问",
+  "meta": "模式",
+  "question_md": "贪心题写完以后，面试官常问哪 3 个追问？各用一句话回答。",
+  "answer_md": "追问｜1. 你怎么知道这个贪心是对的？交换论证：假设最优解 `OPT` 没做你的选择，把 `OPT` 的某一步换成你的选择，结果不会变差，所以存在包含你选择的最优解。\n\n追问｜2. 举一个贪心失败的例子？硬币 `[1,3,4]` 凑 6，贪心 3 枚，最优 2 枚，要换 DP。\n\n追问｜3. 怎么在没有证明时增加信心？写一个暴力解（枚举所有子集或排列），在小范围随机输入上与贪心对拍，覆盖相等值、空输入和边界。\n\n易错｜区间排序的键要用右端点；`>` 和 `>=` 决定首尾相接算不算冲突，先问清。",
+  "note": "interviews/core/coding/amazon/patterns/13_greedy.md"
+ },
+ {
+  "id": "amp-13-lc134-gas-station",
+  "slug": "lc134-gas-station",
+  "title": "加油站（Gas Station, LC 134）",
+  "meta": "Medium",
+  "question_md": "环形路线上有 `n` 个加油站，第 `i` 个加油站有 `gas[i]` 升汽油。你的油箱容量无限，从第 `i` 个加油站开往第 `i + 1` 个加油站要消耗 `cost[i]` 升汽油。你从其中一个加油站出发，开始时油箱为空。\n\n给定两个整数数组 `gas` 和 `cost`，如果可以按顺时针方向绕环路行驶一周，返回出发时加油站的编号，否则返回 `-1`。如果存在解，保证它是唯一的。\n\n约束：`n == gas.length == cost.length`，`1 <= n <= 10^5`，`0 <= gas[i], cost[i] <= 10^4`，输入保证答案唯一。\n\n例：`gas = [1,2,3,4,5]`，`cost = [3,4,5,1,2]` 返回 `3`；`gas = [2,3,4]`，`cost = [3,4,3]` 返回 `-1`。",
+  "answer_md": "思路｜两个事实：总油量小于总消耗时无解；若从 `start` 出发在 `i` 处油量变负，则 `[start, i]` 内任何一个起点都会在 `i` 之前或之处卡住，所以把起点直接移到 `i + 1`。一遍扫描，油量变负就重置。总量够时，最后留下的起点必然可行。\n\n```python\ndef can_complete_circuit(gas, cost):\n    if sum(gas) < sum(cost):\n        return -1                              # not enough fuel in total: impossible from anywhere\n    start = tank = 0\n    for i in range(len(gas)):\n        tank += gas[i] - cost[i]\n        if tank < 0:                           # stuck at i: every start in [start, i] would be stuck too\n            start, tank = i + 1, 0\n    return start                               # the total is >= 0, so the last surviving candidate works\n```\n\n复杂度｜时间 O(n)，空间 O(1)。\n\n易错｜漏掉总量判断；油量恰好为 0 仍然可以继续走，判断条件是 `tank < 0`。\n\n追问｜为什么 `[start, i]` 内的起点都可以排除？从 `start` 到 `i` 之前每个前缀和都不小于 0，所以从其中任一站出发，到 `i` 时的油量不会比从 `start` 出发时更多，而后者已经是负的。",
+  "note": "interviews/core/coding/amazon/patterns/13_greedy.md"
+ },
+ {
+  "id": "amp-13-lc871-refueling",
+  "slug": "lc871-refueling",
+  "title": "最低加油次数（Minimum Number of Refueling Stops, LC 871）",
+  "meta": "Hard",
+  "question_md": "汽车从起点出发驶向目的地，目的地在起点以东 `target` 英里。沿途有加油站，`stations[i] = [position_i, fuel_i]` 表示第 `i` 个加油站在起点以东 `position_i` 英里处，有 `fuel_i` 升汽油。汽车的油箱无限大，开始时有 `startFuel` 升汽油，每行驶一英里消耗一升。到达加油站时可以停下，把站里的汽油全部加进油箱。\n\n返回到达目的地的最少加油次数，到不了返回 `-1`。到达加油站时油量为 0 仍然可以加油；到达目的地时油量为 0 也算到达。\n\n约束：`1 <= target, startFuel <= 10^9`，`0 <= stations.length <= 500`，`1 <= position_i < position_{i+1} < target`，`1 <= fuel_i < 10^9`。\n\n例：`target = 100, startFuel = 10, stations = [[10,60],[20,30],[30,30],[60,40]]` 返回 `2`；`target = 100, startFuel = 1, stations = [[10,100]]` 返回 `-1`。",
+  "answer_md": "思路｜后悔药贪心：不必决定「在哪站加油」，开过的站都先记下来（最大堆存油量）。只有当现有油不够到下一个目标时，才回头「补加」油量最大的那一站，次数加 1。这样每次加油都是被迫的，次数最少。`reach` 是目前油量能到达的最远位置。\n\n```python\ndef min_refuel_stops(target, start_fuel, stations):\n    heap = []                                    # max-heap (negated) of fuel at stations we already drove past\n    stops, i = 0, 0\n    reach = start_fuel                           # farthest position we can reach with the fuel we have taken so far\n    while reach < target:\n        while i < len(stations) and stations[i][0] <= reach:\n            heapq.heappush(heap, -stations[i][1])    # we COULD have stopped here: remember it\n            i += 1\n        if not heap:\n            return -1                            # stuck: nothing passed can extend the range\n        reach += -heapq.heappop(heap)            # greedy: the largest tank gives the farthest range\n        stops += 1\n    return stops\n```\n\n复杂度｜时间 O(n log n)，空间 O(n)，n 是加油站数。\n\n易错｜`heapq` 是最小堆，存负数；站点位置 `<= reach` 才算可达（等于也可达）；弹出堆时 `reach` 增加的是油量，不是位置差。\n\n追问｜DP 做法？`dp[k]` 是加 `k` 次油最远能到的位置，O(n²)。堆法更优，也更直观地体现了「后悔」。",
+  "note": "interviews/core/coding/amazon/patterns/13_greedy.md"
+ },
+ {
+  "id": "amp-14-signals",
+  "slug": "signals",
+  "title": "字典树：什么题该想到 Trie？",
+  "meta": "模式",
+  "question_md": "什么样的题该想到字典树（Trie）？给出 3–4 个信号，每个配一道例题。",
+  "answer_md": "思路｜四个信号：\n1. 反复问「以这个前缀开头的词有哪些」，自动补全：LC 1268 Search Suggestions System。\n2. 查询里带通配符 `.`，要对所有孩子递归：LC 211 Design Add and Search Words Data Structure。\n3. 在棋盘上同时找很多个单词，希望共享前缀、一次 DFS 服务所有词：LC 212 Word Search II。\n4. 切分字符串，要快速判断从某位置起有哪些词典词能接上：LC 472 Concatenated Words、LC 139 Word Break。\n\n模板｜节点就是一个前缀；孩子用字典存，结尾用一个不会出现在输入里的标记键。只问「是否存在某个词」时 `set` 就够，Trie 的价值在前缀与剪枝。",
+  "note": "interviews/core/coding/amazon/patterns/14_trie.md"
+ },
+ {
+  "id": "amp-14-template",
+  "slug": "template",
+  "title": "字典树：插入与查找模板",
+  "meta": "模式",
+  "question_md": "写出 Trie 的 `insert`、`_find`、`search`（字典实现），并说明 `search` 和只查前缀的 `starts_with` 的唯一区别。",
+  "answer_md": "模板｜\n\n```python\nclass Trie:\n    END = \"$\"                                   # a key that can never be a lowercase letter\n\n    def __init__(self):\n        self.root = {}\n\n    def insert(self, word):\n        node = self.root\n        for ch in word:\n            node = node.setdefault(ch, {})      # follow the edge, creating the child on demand\n        node[self.END] = True\n\n    def _find(self, prefix):                    # the node reached by `prefix`, or None\n        node = self.root\n        for ch in prefix:\n            node = node.get(ch)\n            if node is None:\n                return None\n        return node\n\n    def search(self, word):\n        node = self._find(word)\n        return node is not None and self.END in node          # a prefix alone is NOT a word\n```\n\n思路｜`setdefault(ch, {})` 一行同时完成「有则取、无则建」。`_find` 返回节点而不是布尔值，`search` 与 `starts_with` 的唯一区别是最后看不看结尾标记 `END`：`search` 要求 `END in node`，`starts_with` 只写成 `return self._find(prefix) is not None`。\n\n复杂度｜`insert`、`search`、`starts_with` 都是 O(|词|)，与词典大小无关。空间最坏 O(所有词的总字符数)。",
+  "note": "interviews/core/coding/amazon/patterns/14_trie.md"
+ },
+ {
+  "id": "amp-14-pitfall",
+  "slug": "pitfall",
+  "title": "字典树：search 忘了检查结尾标记",
+  "meta": "模式",
+  "question_md": "Trie 的 `search` 写成「路径存在就返回真」，会在什么输入上出错？给出输入以及错误和正确的输出。",
+  "answer_md": "易错｜前缀的路径存在，但它不一定是一个词。\n\n先 `insert(\"car\")`，再 `search(\"ca\")`：\n\n- 只检查路径：返回 `True`。\n- 同时检查结尾标记：返回 `False`，正确。\n\n思路｜`search` 必须 `node is not None and END in node`。\n\n追问｜同类错误：结尾标记的键和真实字符冲突。LC 211 遍历孩子时要跳过标记键，否则会把 `\"$\"` 当成一个字符去递归。另一个：`[{}] * 26` 创建的 26 个节点指向同一个字典，要用列表推导式。",
+  "note": "interviews/core/coding/amazon/patterns/14_trie.md"
+ },
+ {
+  "id": "amp-14-followups",
+  "slug": "followups",
+  "title": "字典树：常见追问",
+  "meta": "模式",
+  "question_md": "Trie 题写完以后，面试官常问哪 3 个追问？各用一句话回答。",
+  "answer_md": "追问｜1. 内存？Python 里字典实现的 Trie 比同样词集合的 `set` 贵得多，每个节点是一个字典；可以用压缩 Trie（合并只有一个孩子的链）或按需改用排序加二分。\n\n追问｜2. 怎么删除一个词？沿路径把节点存下来，删掉结尾标记后自底向上，节点变空（没有孩子也没有标记）就从父节点里删掉，遇到仍有用的节点就停。\n\n追问｜3. 字符流边来边判断？维护当前所有活跃的 Trie 节点集合，每来一个字符就推进每个节点（Aho–Corasick 的思想）。\n\n易错｜LC 212 找到词后要 `pop` 掉标记，否则重复报告；DFS 返回时要还原棋盘。",
+  "note": "interviews/core/coding/amazon/patterns/14_trie.md"
+ },
+ {
+  "id": "amp-14-lc211-add-search-words",
+  "slug": "lc211-add-search-words",
+  "title": "添加与搜索单词（Design Add and Search Words Data Structure, LC 211）",
+  "meta": "Medium",
+  "question_md": "设计一个数据结构，支持添加新单词和判断一个字符串是否匹配之前添加的某个单词。实现 `WordDictionary` 类：\n- `WordDictionary()` 初始化对象。\n- `addWord(word)` 把 `word` 添加到数据结构中，之后可以对它进行匹配。\n- `search(word)` 如果数据结构中存在字符串与 `word` 匹配则返回 `true`，否则 `false`。`word` 中可能包含 `.`，`.` 可以匹配任意一个字母。\n\n约束：`1 <= word.length <= 25`；`addWord` 的 `word` 只含小写字母；`search` 的 `word` 含 `.` 或小写字母；`search` 的 `word` 中最多有 2 个 `.`；`addWord` 和 `search` 总共最多调用 10⁴ 次。\n\n例：依次添加 `bad`、`dad`、`mad`；`search(\"pad\")` 为 `false`，`search(\"bad\")` 为 `true`，`search(\".ad\")` 为 `true`，`search(\"b..\")` 为 `true`。",
+  "answer_md": "思路｜把所有词建成 Trie。`search` 用 DFS：遇到普通字符就沿该孩子走，遇到 `.` 就对所有真实孩子递归，任何一条成功就为真；走完整个模式后看当前节点有没有结尾标记。\n\n```python\nclass WordDictionary:\n    def __init__(self):\n        self.root = {}\n\n    def add_word(self, word):\n        node = self.root\n        for ch in word:\n            node = node.setdefault(ch, {})\n        node[\"$\"] = True\n\n    def search(self, pattern):\n        def dfs(node, i):\n            if i == len(pattern):\n                return \"$\" in node\n            ch = pattern[i]\n            if ch == \".\":                              # wildcard: try every real child (skip the \"$\" marker)\n                return any(dfs(child, i + 1) for key, child in node.items() if key != \"$\")\n            return ch in node and dfs(node[ch], i + 1)\n        return dfs(self.root, 0)\n```\n\n复杂度｜`addWord` O(L)；`search` 最坏 O(26^d · L)，d 是 `.` 的个数（这里最多 2），所以实际约 O(L)。\n\n易错｜`.` 遍历孩子时要跳过结尾标记键 `\"$\"`；走完模式后要检查 `\"$\" in node`，不能只看路径存在。\n\n追问｜`.` 很多怎么办？先按长度分桶，只在同长度的词里搜；或者每个节点缓存「子树最大剩余长度」来剪枝。",
+  "note": "interviews/core/coding/amazon/patterns/14_trie.md"
+ },
+ {
+  "id": "amp-15-signals",
+  "slug": "signals",
+  "title": "并查集：什么题该想到 Union-Find？",
+  "meta": "模式",
+  "question_md": "什么样的题该想到并查集？给出 3–4 个信号，每个配一道例题。",
+  "answer_md": "思路｜四个信号：\n1. 边或关系一条条在线加入，随时问「是否连通 / 有几块」：LC 547 Number of Provinces。\n2. 要把「同一个东西」的多条记录合并成组：LC 721 Accounts Merge，共享邮箱就是同一个人。\n3. 格子一个个变成陆地，每次操作后报岛数：LC 305 Number of Islands II。\n4. 节点之间带比值或距离关系：LC 399 Evaluate Division，带权并查集。\n\n模板｜`find` 加路径压缩，`union` 按大小合并两个根，并返回是否真的合并了。需要路径、距离、删除或有向边时，不要用并查集。",
+  "note": "interviews/core/coding/amazon/patterns/15_union_find.md"
+ },
+ {
+  "id": "amp-15-template",
+  "slug": "template",
+  "title": "并查集：路径减半与按大小合并",
+  "meta": "模式",
+  "question_md": "写出并查集的 `find` 和 `union`（路径减半加按大小合并），并说明 `union` 为什么要先 `find` 两个参数、为什么返回布尔值。",
+  "answer_md": "模板｜\n\n```python\nclass DisjointSet:\n    def __init__(self, n):\n        self.parent = list(range(n))\n        self.size = [1] * n\n        self.components = n\n\n    def find(self, x):\n        while self.parent[x] != x:\n            self.parent[x] = self.parent[self.parent[x]]     # path halving: skip to the grandparent\n            x = self.parent[x]\n        return x\n\n    def union(self, a, b):\n        ra, rb = self.find(a), self.find(b)                  # always work on ROOTS, never on a and b themselves\n        if ra == rb:\n            return False\n        if self.size[ra] < self.size[rb]:\n            ra, rb = rb, ra\n        self.parent[rb] = ra                                 # small tree under the big tree's root\n        self.size[ra] += self.size[rb]\n        self.components -= 1\n        return True\n```\n\n思路｜开始时每个点自成一个集合，自己是自己的根。`find` 里的 `parent[x] = parent[parent[x]]` 把 `x` 接到祖父上，是循环写法，没有递归深度问题。`union` 合并的是两个根，不是 `a`、`b` 本身。返回 `False` 表示两点已连通：环检测（LC 684）和统计连通块都依赖它，每次成功合并 `components -= 1`。\n\n复杂度｜每次操作均摊 O(α(n))，对任何现实的 n 可视为常数；空间 O(n)。",
+  "note": "interviews/core/coding/amazon/patterns/15_union_find.md"
+ },
+ {
+  "id": "amp-15-pitfall",
+  "slug": "pitfall",
+  "title": "并查集：合并时没有用根",
+  "meta": "模式",
+  "question_md": "并查集的 `union(a, b)` 直接写 `parent[a] = b`，会在什么输入上出错？给出操作序列以及错误和正确的结果。",
+  "answer_md": "易错｜`a` 不一定是根。直接改 `parent[a]` 会把 `a` 原来所在集合的其他成员甩在外面。\n\n4 个点，依次 `union(0,1)`，`union(2,3)`，`union(0,2)`，然后问 `1` 和 `2` 是否连通：\n\n- `parent[a] = b`：`union(0,2)` 把 `parent[0]` 改成 2，`1` 仍指向旧的根 `1`，`find(1) = 1`，`find(2) = 3`，返回 `False`。\n- 先 `find` 再合并根：返回 `True`（0-1、0-2 已连在一起），正确。\n\n思路｜永远 `ra, rb = find(a), find(b)`，再 `parent[ra] = rb`。`size` 只在根上有意义，合并后只更新新根的 `size`。\n\n追问｜分组时直接读 `parent[i]` 也不对：没压缩过时它不是根，必须 `find(i)`（LC 721）。",
+  "note": "interviews/core/coding/amazon/patterns/15_union_find.md"
+ },
+ {
+  "id": "amp-15-followups",
+  "slug": "followups",
+  "title": "并查集：常见追问",
+  "meta": "模式",
+  "question_md": "并查集题写完以后，面试官常问哪 3 个追问？各用一句话回答。",
+  "answer_md": "追问｜1. 能支持删除吗？不能。若删除可以离线，就把操作倒放，把删除变成合并。\n\n追问｜2. 多线程并发读怎么办？`find` 会做路径压缩，也会写 `parent`，只读也要加锁，或者先冻结（把所有节点压到根）再并发读。\n\n追问｜3. 什么时候用 BFS / DFS 而不是并查集？静态图、只需要一次性回答连通性、或者需要路径、距离、层数、有向边时。并查集适合边在线加入、随时问连通、维护块大小和块个数、Kruskal。\n\n易错｜递归版 `find` 在长链上会爆栈，用循环。",
+  "note": "interviews/core/coding/amazon/patterns/15_union_find.md"
+ },
+ {
+  "id": "amp-15-lc721-accounts-merge",
+  "slug": "lc721-accounts-merge",
+  "title": "账户合并（Accounts Merge, LC 721）",
+  "meta": "Medium",
+  "question_md": "给定一个账户列表 `accounts`，其中 `accounts[i]` 是字符串列表，第一个元素 `accounts[i][0]` 是名字，其余元素是该账户的邮箱。要合并这些账户：只要两个账户有公共邮箱，它们一定属于同一个人。注意即使两个账户名字相同，也可能属于不同的人；但同一个人的所有账户名字一定相同。一个人可以有任意多个账户。\n\n合并后按如下格式返回：每个账户的第一个元素是名字，其余是按字符 ASCII 顺序排列的邮箱。账户本身可以按任意顺序返回。\n\n约束：`1 <= accounts.length <= 1000`，`2 <= accounts[i].length <= 10`，`1 <= accounts[i][j].length <= 30`，`accounts[i][0]` 只含英文字母，`accounts[i][j]`（`j > 0`）是合法邮箱。\n\n例：`[[\"John\",\"johnsmith@mail.com\",\"john_newyork@mail.com\"],[\"John\",\"johnsmith@mail.com\",\"john00@mail.com\"],[\"Mary\",\"mary@mail.com\"],[\"John\",\"johnnybravo@mail.com\"]]` 得到 `[[\"John\",\"john00@mail.com\",\"john_newyork@mail.com\",\"johnsmith@mail.com\"],[\"Mary\",\"mary@mail.com\"],[\"John\",\"johnnybravo@mail.com\"]]`。",
+  "answer_md": "思路｜对账户下标做并查集。遍历每个账户的每个邮箱：用字典 `owner` 记录邮箱第一次出现在哪个账户；再次出现就把当前账户与那个账户合并。最后按根把邮箱分组，每组排序，名字取根账户的名字。\n\n```python\ndef accounts_merge(accounts):\n    parent = list(range(len(accounts)))\n\n    def find(x):\n        while parent[x] != x:\n            parent[x] = parent[parent[x]]\n            x = parent[x]\n        return x\n\n    owner = {}                                         # email -> index of the first account that listed it\n    for i, acc in enumerate(accounts):\n        for email in acc[1:]:\n            if email in owner:\n                parent[find(i)] = find(owner[email])   # same email => same person\n            else:\n                owner[email] = i\n    groups = defaultdict(set)\n    for email, i in owner.items():\n        groups[find(i)].add(email)\n    return [[accounts[root][0]] + sorted(emails) for root, emails in groups.items()]\n```\n\n复杂度｜设邮箱总数 E：并查集操作 O(E · α)，排序 O(E log E)，空间 O(E)。\n\n易错｜分组时必须用 `find(i)`，不能读 `parent[i]`；同名不同人不能按名字合并，只能按邮箱。\n\n追问｜账户在线到达怎么办？维护 `owner` 与并查集，新账户的每个邮箱查 `owner`，命中就合并；成员列表按根维护，或查询时再生成。",
+  "note": "interviews/core/coding/amazon/patterns/15_union_find.md"
+ },
+ {
+  "id": "amp-16-signals",
+  "slug": "signals",
+  "title": "矩阵与模拟：这类题考什么？",
+  "meta": "模式",
+  "question_md": "什么样的题属于「矩阵与模拟」？给出 3–4 个信号，每个配一道例题，并说明这类题评的是什么。",
+  "answer_md": "思路｜四个信号：\n1. 按固定顺序遍历格子（螺旋、对角线）：LC 54 Spiral Matrix。\n2. 要原地变换：LC 48 Rotate Image，转置后翻转每一行。\n3. 要把额外状态编码进已有数据以省空间：LC 73 Set Matrix Zeroes，用首行首列做标记。\n4. 按规则逐步推演或排版：LC 68 Text Justification、LC 348 Design Tic-Tac-Toe、LC 36 Valid Sudoku。\n\n模板｜这类题不问有没有更快的算法，评的是写得对不对、边界想得周不周：先决定遍历方式（方向数组加转向，或四条收缩的边界），再列出单行、单列、非方阵、空这些边界用例；需要原地修改时，留意先读后写的顺序。",
+  "note": "interviews/core/coding/amazon/patterns/16_matrix_simulation.md"
+ },
+ {
+  "id": "amp-16-template",
+  "slug": "template",
+  "title": "矩阵：方向数组与右转",
+  "meta": "模式",
+  "question_md": "写出用方向数组遍历螺旋矩阵的模板，并解释方向的顺序、`seen` 的建法和终止条件。",
+  "answer_md": "模板｜\n\n```python\nDIRS4 = ((0, 1), (1, 0), (0, -1), (-1, 0))        # right, down, left, up: clockwise order\n\ndef spiral_cells(rows, cols):\n    seen = [[False] * cols for _ in range(rows)]  # NOT [[False] * cols] * rows: that aliases one row\n    r = c = d = 0\n    for _ in range(rows * cols):\n        yield r, c\n        seen[r][c] = True\n        nr, nc = r + DIRS4[d][0], c + DIRS4[d][1]\n        if not (0 <= nr < rows and 0 <= nc < cols) or seen[nr][nc]:\n            d = (d + 1) % 4                       # blocked: turn right\n            nr, nc = r + DIRS4[d][0], c + DIRS4[d][1]\n        r, c = nr, nc\n```\n\n思路｜`DIRS4` 按顺时针排列（右、下、左、上），所以右转就是 `(d + 1) % 4`。撞墙或碰到走过的格子，合并成一处判断，转向后再走一步。`seen` 要用推导式建，每行是独立的列表。终止用计数 `range(rows * cols)`，不用「是否还有未访问格子」，避免死循环。\n\n复杂度｜时间 O(R · C)，空间 O(R · C)（`seen`）；用四条收缩的边界可以降到 O(1) 额外空间。",
+  "note": "interviews/core/coding/amazon/patterns/16_matrix_simulation.md"
+ },
+ {
+  "id": "amp-16-pitfall",
+  "slug": "pitfall",
+  "title": "矩阵：`[[0] * c] * r` 的别名陷阱",
+  "meta": "模式",
+  "question_md": "用 `[[0] * 3] * 2` 建 2×3 的矩阵，再执行 `m[0][0] = 1`，会得到什么？正确的建法和输出是什么？",
+  "answer_md": "易错｜`[[0] * 3] * 2` 复制的是同一个列表的引用，两行是同一个对象。\n\n- `m = [[0] * 3] * 2; m[0][0] = 1`：`m` 是 `[[1, 0, 0], [1, 0, 0]]`，第 1 行也被改了。\n- `m = [[0] * 3 for _ in range(2)]; m[0][0] = 1`：`m` 是 `[[1, 0, 0], [0, 0, 0]]`，正确。\n\n思路｜每一行都要新建。其他固定的边界清单：`len(matrix)` 是行数、`len(matrix[0])` 才是列数（非方阵一测就暴露）；`[]` 和 `[[]]` 要先判断；`+=` 反复拼接大字符串是 O(n²)，收集成列表再 `join`。\n\n追问｜旋转的下标公式：顺时针转一次，`(i, j)` 到 `(j, n-1-i)`；连续旋转四次必须回到原样，这是不依赖对照解的性质测试。",
+  "note": "interviews/core/coding/amazon/patterns/16_matrix_simulation.md"
+ },
+ {
+  "id": "amp-16-followups",
+  "slug": "followups",
+  "title": "矩阵：常见追问",
+  "meta": "模式",
+  "question_md": "矩阵与模拟题写完以后，面试官常问哪 3 个追问？各用一句话回答。",
+  "answer_md": "追问｜1. Rotate Image 能不能原地？转置（只交换 `j` 从 `i + 1` 开始的格子，否则每对交换两次等于没转），再翻转每一行是顺时针；翻转行的顺序（上下翻）再转置是逆时针。\n\n追问｜2. Set Matrix Zeroes 怎么做到 O(1) 额外空间？用首行首列做标记，先用两个布尔量记下它们原本是否有 0，最后才处理首行首列，否则被标记写出的 0 会被误认成原始的 0，整张表被清零。\n\n追问｜3. Tic-Tac-Toe 怎么让每次 `move` 是 O(1)？每行、每列、两条对角线各一个计数器，玩家 1 加 1、玩家 2 减 1，某个计数的绝对值等于 n 就获胜；只检查这次落子所在的行、列，以及它所在的对角线。\n\n易错｜数独宫编号是 `r // 3 * 3 + c // 3`。",
+  "note": "interviews/core/coding/amazon/patterns/16_matrix_simulation.md"
+ },
+ {
+  "id": "amp-16-lc73-set-matrix-zeroes",
+  "slug": "lc73-set-matrix-zeroes",
+  "title": "矩阵置零（Set Matrix Zeroes, LC 73）",
+  "meta": "Medium",
+  "question_md": "给定一个 `m x n` 的整数矩阵 `matrix`，如果一个元素为 0，则把它所在的整行和整列都设为 0。必须原地完成。\n\n约束：`m == matrix.length`，`n == matrix[0].length`，`1 <= m, n <= 200`，`-2^31 <= matrix[i][j] <= 2^31 - 1`。\n\n进阶：用 O(mn) 额外空间的解法很差；用 O(m + n) 空间的解法有改进但仍不是最好；你能想出常数空间的解法吗？\n\n例：`[[1,1,1],[1,0,1],[1,1,1]]` 得 `[[1,0,1],[0,0,0],[1,0,1]]`；`[[0,1,2,0],[3,4,5,2],[1,3,1,5]]` 得 `[[0,0,0,0],[0,4,5,0],[0,3,1,0]]`。",
+  "answer_md": "思路｜用首行和首列当「这一列 / 这一行要清零」的标记：先用两个布尔量记下首行首列自己原本有没有 0；再扫描内部，遇到 0 就把它所在行的首列、所在列的首行置 0；然后按标记清零内部；最后才根据那两个布尔量处理首行和首列。顺序不能错，标记被提前清掉就丢了信息。\n\n```python\ndef set_zeroes(matrix):\n    rows, cols = len(matrix), len(matrix[0])\n    first_row_zero = any(matrix[0][c] == 0 for c in range(cols))      # these two flags remember the markers' own state\n    first_col_zero = any(matrix[r][0] == 0 for r in range(rows))\n    for r in range(1, rows):\n        for c in range(1, cols):\n            if matrix[r][c] == 0:\n                matrix[r][0] = matrix[0][c] = 0                       # mark row r and column c\n    for r in range(1, rows):\n        for c in range(1, cols):\n            if matrix[r][0] == 0 or matrix[0][c] == 0:\n                matrix[r][c] = 0\n    if first_row_zero:                                                # LAST: the markers were still needed above\n        for c in range(cols):\n            matrix[0][c] = 0\n    if first_col_zero:\n        for r in range(rows):\n            matrix[r][0] = 0\n```\n\n复杂度｜时间 O(m · n)，额外空间 O(1)。\n\n易错｜首行首列必须最后处理；标记写出的 0 不是新的 0，不要拿它当原始 0 再扩散一次。\n\n追问｜先说 O(m + n) 的集合版（记下有 0 的行和列），再优化到常数空间；对拍时用集合版做对照解。",
+  "note": "interviews/core/coding/amazon/patterns/16_matrix_simulation.md"
+ },
+ {
+  "id": "amp-16-lc348-tic-tac-toe",
+  "slug": "lc348-tic-tac-toe",
+  "title": "井字棋设计（Design Tic-Tac-Toe, LC 348）",
+  "meta": "Medium",
+  "question_md": "假设 `n x n` 棋盘上两名玩家下井字棋，规则如下：落子保证合法且落在空格上；一旦有人获胜，不再允许落子；某位玩家在同一行、同一列或同一条对角线上放满 `n` 个自己的标记就获胜。\n\n实现 `TicTacToe` 类：\n- `TicTacToe(n)` 用棋盘大小 `n` 初始化。\n- `move(row, col, player)` 编号为 `player` 的玩家在 `(row, col)` 落子，保证合法，两位玩家轮流落子。落子后没有赢家返回 `0`，玩家 1 获胜返回 `1`，玩家 2 获胜返回 `2`。\n\n约束：`2 <= n <= 100`；`player` 是 1 或 2；`0 <= row, col < n`；每次调用的 `(row, col)` 各不相同；`move` 最多调用 `n^2` 次。\n\n进阶：每次 `move` 能否优于 O(n²)？\n\n例：`n = 3`，依次落子 `(0,0,1)`、`(0,2,2)`、`(2,2,1)`、`(1,1,2)`、`(2,0,1)`、`(1,0,2)`、`(2,1,1)`，前六步都返回 `0`，最后一步玩家 1 占满第 3 行，返回 `1`。",
+  "answer_md": "思路｜不用存整个棋盘，只存计数：每行、每列、主对角线、副对角线各一个计数器。玩家 1 加 1，玩家 2 减 1；某个计数的绝对值等于 `n`，说明这一条线被同一个玩家占满。只更新这次落子涉及的行、列，以及它是否在对角线上（`row == col` 为主对角线，`row + col == n - 1` 为副对角线）。\n\n```python\nclass TicTacToe:\n    def __init__(self, n):\n        self.n = n\n        self.rows = [0] * n\n        self.cols = [0] * n\n        self.diag = 0                                   # cells with row == col\n        self.anti = 0                                   # cells with row + col == n - 1\n\n    def move(self, row, col, player):\n        \"\"\"Returns the winning player (1 or 2) if this move completes a line, else 0. Assumes a legal move.\"\"\"\n        delta = 1 if player == 1 else -1                # a full line of one player has |count| == n\n        n = self.n\n        self.rows[row] += delta\n        self.cols[col] += delta\n        won = abs(self.rows[row]) == n or abs(self.cols[col]) == n\n        if row == col:\n            self.diag += delta\n            won = won or abs(self.diag) == n            # look at a diagonal only if THIS move is on it\n        if row + col == n - 1:\n            self.anti += delta\n            won = won or abs(self.anti) == n\n        return player if won else 0\n```\n\n复杂度｜`move` 时间 O(1)，空间 O(n)。\n\n易错｜只在落子确实在对角线上时才检查对角线计数；每次都检查两条对角线，会在对角线已被占满之后把其他位置的落子误判为获胜。\n\n追问｜非法落子（已占用、不是该玩家回合、游戏已结束）要校验并拒绝，需要保存棋盘或占用位图；悔棋 `undo` 就是反向计数，需要保存历史；返回值可以用状态枚举（进行中、平局、胜者）。",
+  "note": "interviews/core/coding/amazon/patterns/16_matrix_simulation.md"
+ },
+ {
+  "id": "amp-16-lc68-text-justification",
+  "slug": "lc68-text-justification",
+  "title": "文本左右对齐（Text Justification, LC 68）",
+  "meta": "Hard",
+  "question_md": "给定单词数组 `words` 和宽度 `maxWidth`，排版成每行恰好 `maxWidth` 个字符且左右两端对齐的文本。\n\n用贪心法放单词：每行尽可能多放。必要时用空格 `' '` 填充，使每行恰好 `maxWidth` 个字符。单词间的额外空格要尽量均匀分配；若空格数不能被间隙数整除，左边的间隙分到更多空格。最后一行左对齐，单词之间不额外加空格。\n\n说明：单词是只含非空格字符的字符序列；每个单词长度大于 0 且不超过 `maxWidth`；`words` 至少有一个单词。\n\n约束：`1 <= words.length <= 300`，`1 <= words[i].length <= 20`，`words[i]` 只含英文字母和符号，`1 <= maxWidth <= 100`。\n\n例：`words = [\"This\",\"is\",\"an\",\"example\",\"of\",\"text\",\"justification.\"]`，`maxWidth = 16`，结果是 `[\"This    is    an\",\"example  of text\",\"justification.  \"]`。只有一个单词的行也要左对齐。",
+  "answer_md": "思路｜两步。第一步贪心决定每行放哪些单词：当前行已用长度（字母加单个空格）再加一个空格和下一个单词不超过 `maxWidth` 就继续放。第二步分配空格：最后一行或只有一个单词的行左对齐，右侧补空格；其他行，空格总数 `slack` 除以间隙数 `gaps`，商是每个间隙的基础空格，余数 `extra` 让最左边的 `extra` 个间隙各多一个。\n\n```python\ndef full_justify(words, max_width):\n    lines, i, n = [], 0, len(words)\n    while i < n:\n        j, used = i, len(words[i])                     # words[i..j] fit; `used` counts letters plus single spaces\n        while j + 1 < n and used + 1 + len(words[j + 1]) <= max_width:\n            j += 1\n            used += 1 + len(words[j])\n        group = words[i:j + 1]\n        if j == n - 1 or len(group) == 1:              # last line, or a line that has no gap to stretch\n            line = \" \".join(group)\n            line += \" \" * (max_width - len(line))\n        else:\n            slack = max_width - sum(len(w) for w in group)\n            gaps = len(group) - 1\n            each, extra = divmod(slack, gaps)          # the LEFTMOST `extra` gaps get one more space\n            line = \"\".join(w + \" \" * (each + (1 if k < extra else 0)) for k, w in enumerate(group[:-1])) + group[-1]\n        lines.append(line)\n        i = j + 1\n    return lines\n```\n\n复杂度｜时间 O(所有单词总长度)，空间 O(输出大小)。\n\n易错｜宽度判断是 `used + 1 + len(word) <= width`，别少算空格；只有一个单词的行 `gaps = 0`，除零，必须走左对齐分支；最后一行不能被拉伸。\n\n追问｜怎么测？写一个性质检查器：单词顺序不变、每行恰好 `width` 个字符、每行都是贪心最大（下一个词确实放不下）、空隙差不超过 1 且左大右小、末行和单词行左对齐，对随机输入验证。",
+  "note": "interviews/core/coding/amazon/patterns/16_matrix_simulation.md"
+ }
+]

@@ -4,6 +4,10 @@
 
 工厂方法、抽象工厂、建造者、原型、单例——以及 Python 里模块、类方法和关键字参数如何取代其中大半。
 
+**Core** — part of the first pass through this subject.
+
+**Unlocks:** [[domains/low-level-design/map/amazon.amz-pizza-order|披萨订单（Pizza Order）]]
+
 ## Readings
 - [[python-patterns-factory-method|The Factory Method Pattern]]
 - [[python-patterns-singleton|The Singleton Pattern]]
@@ -12,6 +16,9 @@
 
 ## Cases
 - [[qs-sealed-constructor-as-unforgeable-permission|Sealed constructors: when holding the object is the proof]] — `quant-stroller`
+
+## Drills
+- [[design-amz-pizza-order|Drill：披萨订单（Pizza Order）]]
 
 ## Cards (6)
 1. [[patterns-creational-cues]]

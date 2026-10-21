@@ -45,6 +45,12 @@
     - [[interviews/rounds/narrative/map/offer.anatomy|Anatomy of a Senior Package]]
     - [[interviews/rounds/narrative/map/offer.the-ask|Making One Specific Ask]]
     - [[interviews/rounds/narrative/map/offer.closing|Deadlines and Declining Well]]
+- [[interviews/rounds/narrative/map/amazon|Amazon · LP 故事（STAR-L）]]
+    - [[interviews/rounds/narrative/map/amazon.full|01 完整故事（先过一遍）]]
+    - [[interviews/rounds/narrative/map/amazon.outline|02 提纲（STAR-L）]]
+    - [[interviews/rounds/narrative/map/amazon.followups|03 追问（含 senior 追问）]]
+    - [[interviews/rounds/narrative/map/amazon.lp-map|04 LP → 故事]]
+    - [[interviews/rounds/narrative/map/amazon.tech|05 技术深挖：Snowflake、数据管线与 AWS]]
 %% trellis:end %%
 
 ## Notes

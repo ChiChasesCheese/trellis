@@ -1,0 +1,100 @@
+{
+  "code": "S4",
+  "full_zh": [
+    "背景：一位 PM 通过正式 help 流程升级：澳洲商户看不到 Amex 退款费。这个问题在三个团队之间弹了约 50 条回复，最后作为熟悉该领域的人被路由到我。",
+    "问题：线程里大家在争是谁的问题，没人拿出一份所有人都能核对的证据。我 own 的是答案，不是工单。",
+    "我做了什么：我不查组织架构，直接拉数据。六个月内按国家统计退款费行数：美国约 108 万行、英国 294 行、澳洲 0 行，涉及约 150 个澳洲商户。根因在配置：所有澳洲商户的 fee_refund_policy 都是 partial，而退款费逻辑只在 full 时触发。我还证明了这早于平台迁移，不是我们引入的回归。",
+    "结果：我把结论连同原始查询写出来，让 PM 和另一个团队自己复跑，线程当天结束，并转成一张正式的功能票，要在 Snowglobe 里建 REFUND_FEE 计算管线。线程里还冒出第二个不相关的费用种类，我如实说 not sure yet，给出分层假设，资深同事确认了。",
+    "为什么这样做 / 学到：当分歧其实来自知识不对称，就给所有人同一份证据，不争归属。宁可说 not sure yet 并给出计划，也不乱猜。"
+  ],
+  "full_en": "A product manager escalated through our formal help process: Australian merchants weren't seeing Amex refund fees. It bounced across three teams for about fifty replies before it was routed to me as the person who knows that domain. I pulled the data instead of the org chart. Over six months there were more than a million refund-fee rows in the US and zero in Australia, across about a hundred and fifty merchants. The root cause was configuration, not code: every Australian merchant's pricing schedule had the refund policy set to partial, and the refund-fee logic only fires on full. I also showed it predated our platform migration, so it wasn't a regression we introduced. I wrote it up with the exact query so the PM and the other team could re-run it themselves. It ended the thread the same day and became a tracked feature to build the refund-fee pipeline properly. In the same thread a second, unrelated fee kind came up; I said I wasn't sure, laid out a layered hypothesis, and a senior engineer confirmed it. I'd rather say 'not sure yet' with a plan than guess.",
+  "terms": {
+    "full": [
+      {"en": "get routed to someone", "zh": "被转到某人手上", "example": "The thread was routed to me as the person who knows that domain."},
+      {"en": "cut through the noise", "zh": "穿透噪音抓住关键", "example": "One query cut through fifty replies of noise and put everyone on the same facts."},
+      {"en": "predates the migration", "zh": "早于这次迁移就存在", "example": "I showed the behavior predates the migration, so it wasn't a regression we introduced."}
+    ],
+    "hook": [
+      {"en": "a million rows versus zero", "zh": "上百万行对零行（反差本身就是证据）", "example": "More than a million refund-fee rows in the US versus zero in Australia made the gap undeniable."},
+      {"en": "bounced around", "zh": "被踢来踢去", "example": "The thread bounced around three teams for about fifty replies."},
+      {"en": "same day", "zh": "当天", "example": "Sharing the query ended the thread the same day."}
+    ],
+    "starl": [
+      {"en": "pull the data", "zh": "拉数据看事实", "example": "I pulled the data by country instead of arguing about whose code it was."},
+      {"en": "reproducible", "zh": "可复现的", "example": "I attached the exact query so the finding was reproducible by anyone."},
+      {"en": "configuration, not code", "zh": "问题在配置而非代码", "example": "The root cause was configuration, not code: the refund policy was partial."}
+    ],
+    "followups": [
+      {"en": "layered hypothesis", "zh": "分层假设（逐层列出可能原因及验证方式）", "example": "For the second fee kind I offered a layered hypothesis and how to verify each layer."},
+      {"en": "not sure yet", "zh": "目前还不确定", "example": "I'd rather say not sure yet with a plan than guess."},
+      {"en": "regression", "zh": "回归（以前没问题，改动后才出错）", "example": "I proved it was not a regression, because the payout service never issued those fees."}
+    ],
+    "relp": [
+      {"en": "single-threaded owner of the answer", "zh": "对答案全权负责的单一责任人", "example": "It wasn't my ticket, but I became the single-threaded owner of the answer."},
+      {"en": "earn trust with transparency", "zh": "靠透明赢得信任", "example": "I earned trust with transparency by giving the other team the raw query."},
+      {"en": "work backwards from the customer", "zh": "从客户倒推", "example": "I worked backwards from the Australian merchants, who were missing fees they should receive."}
+    ]
+  },
+  "senior": [
+    {
+      "q": "How would you tell the merchants and the PM what to expect while the feature is being built?",
+      "why": "面试官在探：你在给出根因之后，有没有照顾到客户的实际等待与预期管理。",
+      "framework": [
+        "先说结论：这是配置与功能缺失，不是临时故障，不会自己恢复",
+        "再说时间：功能票的 owner 和排期要明确，没有排期就如实说没有",
+        "再说过渡：有没有手工修复或临时补偿，没有就说明没有",
+        "最后说沟通节奏：有进展就同步，没进展也定期告知"
+      ],
+      "best_practice": "客户最怕的是不知道结果，所以先说清是什么问题、是否会自己好、什么时候有下一步。没有补偿就如实说没有，比含糊其辞更能保住信任。我这里没有补偿数字，所以说的是方法而不是承诺。",
+      "terms": [
+        {"en": "set expectations", "zh": "管理预期", "example": "I would set expectations that this is a missing feature, not a transient failure."},
+        {"en": "close the loop", "zh": "给出闭环（告知结果）", "example": "I would close the loop with the PM once the feature ticket has an owner and a date."}
+      ]
+    },
+    {
+      "q": "How would you size the money that Australian merchants did not receive?",
+      "why": "面试官在探：你能否把一个配置问题换算成业务影响，帮助排优先级。",
+      "framework": [
+        "先取量：澳洲 non-agg Amex 销售笔数约 288 万，涉及退款的子集",
+        "再取费率：用美国同类退款费的平均值作参照，并说明这是估算",
+        "再给区间：给一个范围，而不是单点数字，标出假设",
+        "最后用途：给功能票排优先级，不当作账面金额"
+      ],
+      "best_practice": "估算金额的目的是让 owner 能排优先级，所以给出范围和假设比给一个看起来精确的数字更诚实。我手上没有这个金额，所以我会把它标成待估算，而不是编一个数。",
+      "terms": [
+        {"en": "back-of-the-envelope", "zh": "粗略估算", "example": "I would do a back-of-the-envelope estimate using US refund-fee rates as a reference."},
+        {"en": "state the assumptions", "zh": "说明假设", "example": "I would state the assumptions so the range can be challenged."}
+      ]
+    },
+    {
+      "q": "How would you make sure the next cross-team escalation of this kind does not take fifty replies?",
+      "why": "面试官在探：你能否把一次救火变成可自助的机制。",
+      "framework": [
+        "先说沉淀：把按国家和配置拉数的查询保存成可复用的看板或 runbook",
+        "再说入口：帮助流程里加一条先自查的清单，附上这类查询",
+        "再说路由：把有领域知识的人更早地挂进线程",
+        "最后说衡量：看同类升级的回复数和解决时长是否下降"
+      ],
+      "best_practice": "一次靠个人解决的问题，只有变成别人也能自助的东西才真正解决了。把查询存下来、前移到入口，是为了让下一次不需要等到第 50 条回复。用回复数和解决时长衡量，能说明改进是否有效。",
+      "terms": [
+        {"en": "self-serve", "zh": "自助", "example": "I would make the country-level query self-serve so the next PM can check it alone."},
+        {"en": "shift left", "zh": "把检查前移", "example": "I would shift the check left into the help form instead of waiting for a fifty-reply thread."}
+      ]
+    },
+    {
+      "q": "What would you do if the data had contradicted your guess, and a senior stakeholder insisted on the original theory?",
+      "why": "面试官在探：证据与权威冲突时，你是否仍然以证据为准，同时保持尊重。",
+      "framework": [
+        "先说立场：结论由查询给出，不由我给出，数据不支持我就改结论",
+        "再说沟通：把查询和结果原样给对方，请对方指出查询哪里不对",
+        "再说升级：如果仍有分歧，约一次短会一起过查询，而不是在线程里继续争",
+        "最后说态度：对事不对人，也不拿对方的职级当论据"
+      ],
+      "best_practice": "让证据而不是职级决定结论，需要双方都能复核同一份查询。请对方挑查询的错，把争论变成技术问题，既尊重对方，又不放弃事实。如果真是我错了，立刻改，这样别人才会信任我下次的数据。",
+      "terms": [
+        {"en": "let the data decide", "zh": "让数据说话", "example": "If the data contradicted my guess, I would let the data decide and change my conclusion."},
+        {"en": "disagree respectfully", "zh": "有礼貌地表达异议", "example": "I would disagree respectfully by asking the stakeholder to find the flaw in the query."}
+      ]
+    }
+  ]
+}
