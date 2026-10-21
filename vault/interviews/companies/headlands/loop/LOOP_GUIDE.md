@@ -1,4 +1,4 @@
-# Headlands 面试流程指南（SWE · Java）
+# Headlands 面试流程指南（SWE · Java，**电面可能要求 C++**）
 
 > 每条结论后面的 `[x]` 指向 `catalog/raw/` 里的行：`F-A1` = forums.md §1.1 A1，`F-B1` = Blind，`F-G2` = Glassdoor，`F-W1` = WSO，
 > `O-D1` = official_and_process.md §D1，`O-C2` = Java JD，`O-G` = 文化表，`G-3.1` = github_repos.md FastPrep 清单。
@@ -10,15 +10,23 @@
 |---|---|---|---|
 | 投递 | Greenhouse | ✅ 2026-09-29 | — |
 | HackerRank | 1 题，100–120 分钟，job chain CSV | ✅ 2026-10-10 通过（Java 版） | F-Q8，Chi 亲历 |
-| NDA | e-sign | 待签 | Chi 亲历 |
-| **技术视频面** | **1 小时，与一位工程师一对一（Zoom）** | **下一步** | F-B1, F-G2, F-G3, O-C2 |
+| NDA | e-sign | ✅ 2026-10-15 签完 | Chi 亲历 |
+| **技术视频面** | **2026-10-26（周一）12:00 PT，Microsoft Teams + CoderPad；排了 1 小时，「多数不会用满」** | **下一步** | 邀约邮件（Chi 亲历）；F-B1, F-G2, F-G3, O-C2 |
 | 第二次电话面 | 有时有 | ? | F-A7, F-A11, F-B3 |
 | Onsite / final | 3 小时（2 技术 + 1 行为，WSO 2025）到 6+ 轮（1p3a 2024），博客称 "10+ interviews" | ? | F-W1, F-A10, github_repos.md 54skyxenon 博客 |
 | 节奏 | 官方：全程 2–3 周；电面后 36 小时内出结果 | — | O-D1, F-B1 |
 
 ## 1. 技术视频面（1 小时）
 
-### 形式
+### 招聘方邮件里写明的（2026-10-16 / 10-19，一手）
+
+* 「a technical video call, including both **technical and background questions**, as well as **live coding**」，用 **CoderPad**。
+* 「We do most of our work in **C++**, so if you need to do any brushing up then that might help. The language preference is often up to the **discretion of the interviewer**.」→ **C++ 和 Java 都要能写**：C++ 课本 `study/20-cpp/`，C++ 版题集见各题的 `cpp/` 目录（`CPP_CONVENTIONS.md`）。
+* 「all interviews must be completed **without the assistance of AI tools**」→ 平时练习也要关掉补全、不查 AI，按 CoderPad 的条件练：单文件、自己写 `main` 和测试。
+* Teams 自带聊天，但他们说**不会用聊天**，有问题直接说出口。
+* 背景问题（background questions）的准备：`behavioral/`。
+
+### 形式（面经）
 
 * 一位工程师（也可能是 researcher），Zoom，共享编辑器 [F-G2, F-B1, O-C2]。
 * 典型结构是**一道基础题，面试官不断加追问**，而不是多道互不相关的题 [F-B1：「started with summing natural numbers without the formula, then added optimization variants」]；也有两问结构（queue + get_mean → 带快照）[F-A1]。
