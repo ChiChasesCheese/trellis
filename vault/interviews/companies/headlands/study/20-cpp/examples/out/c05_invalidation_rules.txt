@@ -1,0 +1,9 @@
+$ c05_invalidation_rules
+vector push_back at full capacity     : first element kept its address? false
+vector push_back with spare capacity  : first element kept its address? true
+deque push_back x1000                 : first element kept its address? true  (iterators ARE invalidated, references are not)
+list push_back x1000                  : first element kept its address? true
+map insert x1000                      : first element kept its address? true
+unordered_map insert x1000 (rehash)   : first element kept its address? true  (bucket_count 2 -> 1597, iterators invalidated by rehash, references not)
+vector erase loop, odds left: 1 3 5
+map erase loop, keys left: 1=10 3=30

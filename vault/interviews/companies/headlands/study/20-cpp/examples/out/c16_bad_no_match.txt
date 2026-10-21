@@ -1,0 +1,7 @@
+C16/c16_bad_no_match.cpp:7:12: error: no matching function for call to 'add'
+    7 |     return add(v, 2);                                  // vector<int> is not an int
+      |            ^~~
+C16/c16_bad_no_match.cpp:4:5: note: candidate function not viable: no known conversion from 'std::vector<int>' to 'int' for 1st argument
+    4 | int add(int a, int b) { return a + b; }
+      |     ^   ~~~~~
+1 error generated.

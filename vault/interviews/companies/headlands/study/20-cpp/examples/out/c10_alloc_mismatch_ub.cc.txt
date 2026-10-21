@@ -1,0 +1,8 @@
+C10/c10_alloc_mismatch_ub.cpp:9:5: warning: 'delete' applied to a pointer that was allocated with 'new[]'; did you mean 'delete[]'? [-Wmismatched-new-delete]
+    9 |     delete a;                       // should be delete[] : ASan "alloc-dealloc-mismatch"
+      |     ^
+      |           []
+C10/c10_alloc_mismatch_ub.cpp:8:14: note: allocated with 'new[]' here
+    8 |     int* a = new int[8];
+      |              ^
+1 warning generated.

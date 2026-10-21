@@ -1,0 +1,8 @@
+C16/c16_bad_narrowing.cpp:5:11: error: non-constant-expression cannot be narrowed from type 'long' to 'int' in initializer list [-Wc++11-narrowing]
+    5 |     int x{big};                                        // brace initialisation forbids narrowing conversions
+      |           ^~~
+C16/c16_bad_narrowing.cpp:5:11: note: insert an explicit cast to silence this issue
+    5 |     int x{big};                                        // brace initialisation forbids narrowing conversions
+      |           ^~~
+      |           static_cast<int>( )
+1 error generated.

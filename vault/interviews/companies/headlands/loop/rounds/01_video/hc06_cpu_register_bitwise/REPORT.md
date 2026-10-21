@@ -1,14 +1,9 @@
-# hc06 · REPORT
+# hc06 · 思路与追问
 
 ## 概要
 
-FastPrep 把「CPU Register Bitwise Operations」标为 Headlands 电面题（2025-11-11），1p3a 同日的帖子说第一轮电面是 C++、题目又长又难、内容是
-「在给定代码框架里 debug + 位运算」。我们拿到的只有这一句，所以按「一个无符号 32 位寄存器 + 一串操作」重建。
+题型是「在给定代码框架里 debug + 位运算」，这里按「一个无符号 32 位寄存器 + 一串操作」来练。
 对 Java 候选人，这道题几乎全部是**有符号 / 无符号陷阱**：Java 没有 `uint32_t`。
-
-## 来源与置信度
-
-见 `problem.md`。题目名与一句话描述有证据（中）；指令集、输入输出格式、移位 ≥ 32 的语义、`compress/expand` 扩展、`int[]` 性能版本都是 **(reconstructed)**。
 
 ## 逐 Part 思路 + 面试官在探什么
 
@@ -16,7 +11,7 @@ FastPrep 把「CPU Register Bitwise Operations」标为 Headlands 电面题（20
 
 * `Instr` → `Update` / `Query` 两层 sealed；每条指令一个 record，位号 / 位数的范围检查放在紧凑构造器里（非法指令构造不出来）。
 * `apply(int reg, Update u)` 是一个**没有 `default` 的 switch 表达式**；新增指令时编译器逼你补分支。
-* 语义决定（写进 problem.md，面试时要主动和面试官确认）：`SHL/SHR n ≥ 32` 得 0；`ROL/ROR` 位数 mod 32；`SHR` 逻辑右移。
+* 语义决定（题面里已规定；面试时要主动和面试官确认）：`SHL/SHR n ≥ 32` 得 0；`ROL/ROR` 位数 mod 32；`SHR` 逻辑右移。
 * **探针**：(1) 你选的模型能不能让“非法状态构造不出来”；(2) `reg << 32` 在 Java 里等于 `reg`（位数只取低 5 位）——你有没有想到；
   (3) `>>` 与 `>>>` 的区别——寄存器最高位为 1 时前者补 1。
 
@@ -29,16 +24,16 @@ FastPrep 把「CPU Register Bitwise Operations」标为 Headlands 电面题（20
 
 ### Part 3 · 扩展指令
 
-* `Integer.compress(x, mask)`：把 x 中 mask 为 1 的那些位**按顺序收拢到低位**；`expand` 是反操作：`expand(compress(x, m), m) == x & m`。（JDK 19+；x86 的 BMI2 上可编译为 `PEXT/PDEP` 一条指令，其他平台走软件实现，本机未测其速度。）
+* `Integer.compress(x, mask)`：把 x 中 mask 为 1 的那些位**按顺序收拢到低位**；`expand` 是反操作：`expand(compress(x, m), m) == x & m`。（JDK 19+；x86 的 BMI2 上可编译为 `PEXT/PDEP` 一条指令，其他平台走软件实现。）
 * `reverse`（位翻转）、`reverseBytes`（字节序）、`numberOfTrailingZeros/LeadingZeros`（对 0 返回 32）、`bitCount`（`POPCNT` intrinsic）。
-* 手算例（测试 `extendedProgramEndToEnd`）：`0x12345678` → BSWAP → `0x78563412`（末尾 0 个数：低字节 `0x12 = 0001 0010`，所以 CTZ=1）→ `COMPRESS 0x0F0F0F0F`（每字节取低半字节：`2,4,6,8`）→ `0x8642` → REVERSE → `0x42610000`（CLZ=1）。
+* 手算例：`0x12345678` → BSWAP → `0x78563412`（末尾 0 个数：低字节 `0x12 = 0001 0010`，所以 CTZ=1）→ `COMPRESS 0x0F0F0F0F`（每字节取低半字节：`2,4,6,8`）→ `0x8642` → REVERSE → `0x42610000`（CLZ=1）。
 * **探针**：你知不知道标准库已经有这些（不要手写循环）；`Integer.numberOfTrailingZeros(0)` 的约定；`compress/expand` 的语义你能不能用例子讲清楚。
 
 ### Part 4 · 性能：解码一次，`int[]`，无分支
 
 * `compile`：`List<Instr>` → 两个平行的 `int[]`（操作码、操作数）；`NOT`、`SET/CLEAR/TOGGLE` 折叠为 `XOR/OR/AND`（指令种类从 18 种降到 14 个操作码）；移位位数 clamp 到 `[0,32]`、旋转位数 `& 31`。
 * `execute`：一个循环 + `switch (ops[pc])`（`tableswitch`），不创建对象。移位无分支：`(int)(Integer.toUnsignedLong(reg) << a)`，`a` 已 clamp 到 32，`<< 32` 在 long 里不会被 mod，强转 `(int)` 后恰好为 0——省掉了 `if (n >= 32)`。
-* **实测（本机，200 万条指令，5 轮预热后取稳定值）**：
+* **量级参考（200 万条指令，预热后取稳定值）**：
 
   | 程序形态 | `run`（对象 + 模式匹配） | `execute`（`int[]`） | `compile` |
   |---|---|---|---|
@@ -51,7 +46,7 @@ FastPrep 把「CPU Register Bitwise Operations」标为 Headlands 电面题（20
   真正消除分发开销要换算法（把相邻的 `AND/OR/XOR/NOT/SET/CLEAR/TOGGLE` 融合成 `r = (r & a) ^ x` 一条；或者把整个程序翻译成 JVM 字节码/方法句柄）。
 * **探针**：为什么解码一次（解析、类型分派、对象分配都挪出热循环）；`int[]` 对缓存友好在哪（连续、预取）；你会不会诚实地说“分支预测”才是剩下的瓶颈。
 
-## 隐藏测试会打的坑（也是“在代码框架里 debug”最可能的 bug 清单）(reconstructed)
+## 隐藏测试会打的坑（也是“在代码框架里 debug”最可能的 bug 清单）
 
 * `>>` 代替 `>>>`：`0xF0000000 >> 4` 得 `0xFF000000`。
 * `1 << 31` 是负数；`(1 << b)` 当 `long` 用时先溢出成 `int`（要 `1L << b`）。
@@ -65,31 +60,23 @@ FastPrep 把「CPU Register Bitwise Operations」标为 Headlands 电面题（20
 * `bitCount/ctz/clz` 在 0 上的约定。
 * `ROL 36` 与 `ROL 4` 必须相同。
 
-## 复杂度 + 实测时间
+## 复杂度
 
 解析 O(L)（L = 总字符数），执行 O(m)（m = 指令数），每条指令 O(1)；`compile` O(m) 额外空间 8m 字节。
-整个 `reference` 套件（71 个测试，含参数化展开，`perf` 为 200 万条随机指令、20 趟 `execute`）在本机运行约 0.7 s。
-
-## 测试清单
-
-`python3 tools/jtest.py run loop/rounds/01_video/hc06_cpu_register_bitwise --impl reference`：共 **71** 个测试（含参数化展开）。
-按 tag（脚本计数）：part1 = 32 · part2 = 29 · part3 = 6 · part4 = 4；另 edge = 52 · fmt = 6 · perf = 1 · conc = 0（本题没有并发部分）。
-`part1` 里有一个用 `long` 写的独立 oracle（2 000 轮 × 20 步随机指令）与 `int` 实现逐步对拍。
-
 ## Java 21 特性
 
-| id | 用在哪 | 比旧写法好在哪 |
+| 特性 | 用在哪 | 比旧写法好在哪 |
 |---|---|---|
-| J01 record（含紧凑构造器校验） | 全部指令、`Run`、`Compiled`；`SetBit { checkBit(bit); }` | 非法指令构造不出来；`equals` 白送，测试直接比较 `parseLine("AND 0xFF")` 与 `new And(0xFF)` |
-| J02 sealed（两层） | `Instr permits Update, Query`；`Update permits …15 个` | 指令集封闭，加指令时所有 switch 编译报错；旧写法是 enum + 一堆可空字段或 `Object` |
-| J03 + J04 模式匹配 switch + record 解构 | `apply`：`case And(var m) -> reg & m`；`run`：`case Update u -> … case Query q -> …` | 一次性判类型 + 取字段，无 `instanceof`/强转/`default` |
-| J05 switch 表达式 | `apply`、`query`、`parseLine` | 每个分支是表达式，没有 fallthrough，也没有忘记 `break` 的 bug |
-| J13 未命名模式 `_`（预览） | `case Not _ ->`、`case Popcount _ ->` | 声明“不需要这个绑定” |
-| J15 位运算与数学小工具 | `Integer.compress/expand/rotateLeft/reverse/reverseBytes/bitCount`、`HexFormat`、`Integer.toUnsignedString/toUnsignedLong`、`Math.clamp(long,int,int)`（21）、`StringBuilder.repeat`（21） | 标准库一行代替手写循环，且是 JIT intrinsic；`clamp` 代替 `Math.min(Math.max(..))` |
-| J14 Stream | `Arrays.stream(out).boxed().toList()` | 不可变列表一行 |
-| J07 文本块 | 测试里的多行程序 | 输入原样可读 |
-| J09 Sequenced Collections | `solve` 里 `body.getFirst()` | 代替 `get(0)` |
-| J08 `var` | record 模式里的 `case And(var m)` | 类型由 record 组件决定，不必重复写 |
+| record（含紧凑构造器校验） | 全部指令、`Run`、`Compiled`；`SetBit { checkBit(bit); }` | 非法指令构造不出来；`equals` 白送，测试直接比较 `parseLine("AND 0xFF")` 与 `new And(0xFF)` |
+| sealed（两层） | `Instr permits Update, Query`；`Update permits …15 个` | 指令集封闭，加指令时所有 switch 编译报错；旧写法是 enum + 一堆可空字段或 `Object` |
+| 模式匹配 switch + record 解构 | `apply`：`case And(var m) -> reg & m`；`run`：`case Update u -> … case Query q -> …` | 一次性判类型 + 取字段，无 `instanceof`/强转/`default` |
+| switch 表达式 | `apply`、`query`、`parseLine` | 每个分支是表达式，没有 fallthrough，也没有忘记 `break` 的 bug |
+| 未命名模式 `_`（预览） | `case Not _ ->`、`case Popcount _ ->` | 声明“不需要这个绑定” |
+| 位运算与数学小工具 | `Integer.compress/expand/rotateLeft/reverse/reverseBytes/bitCount`、`HexFormat`、`Integer.toUnsignedString/toUnsignedLong`、`Math.clamp(long,int,int)`（21）、`StringBuilder.repeat`（21） | 标准库一行代替手写循环，且是 JIT intrinsic；`clamp` 代替 `Math.min(Math.max(..))` |
+| Stream | `Arrays.stream(out).boxed().toList()` | 不可变列表一行 |
+| 文本块 | 测试里的多行程序 | 输入原样可读 |
+| Sequenced Collections | `solve` 里 `body.getFirst()` | 代替 `get(0)` |
+| `var` | record 模式里的 `case And(var m)` | 类型由 record 组件决定，不必重复写 |
 
 ## 面试官可能的追问
 

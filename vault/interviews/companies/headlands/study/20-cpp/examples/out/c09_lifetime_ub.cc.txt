@@ -1,0 +1,4 @@
+C09/c09_lifetime_ub.cpp:5:44: warning: address of stack memory associated with local variable 'x' returned [-Wreturn-stack-address]
+    5 | int* dangling_local() { int x = 7; return &x; }          // clang warns here (-Wreturn-stack-address)
+      |                                            ^
+1 warning generated.

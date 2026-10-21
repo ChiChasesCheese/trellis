@@ -1,0 +1,11 @@
+$ c04_rule_of_zero_forwarding
+moved Account holds secret=7, source secret is null
+alice alice n.size() after move: 0
+emplace with constructor arguments:
+  Trade built in place
+push_back(Trade(...)) temporary:
+  Trade built in place
+  Trade move
+emplace_back(Trade(...)) still builds a temporary first:
+  Trade built in place
+  Trade move

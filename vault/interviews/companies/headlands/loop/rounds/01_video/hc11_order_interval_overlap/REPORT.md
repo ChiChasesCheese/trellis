@@ -1,12 +1,8 @@
-# hc11 · REPORT
+# hc11 · 思路与追问
 
 ## 概要
 
-1p3a 2025-06 技术电面：「订单区间最大重叠 + 按买卖方处理撤单」。Part 1 是 LeetCode 253 的核心，考 tie 规则（同一时刻先结束后开始）；后面考你能不能把撤单翻译成「改区间」、在线维护，以及能否从零推出线段树和坐标压缩。讲义：`study/30-articles/hc11_order_interval_overlap.md`。
-
-## 来源与置信度
-
-见 problem.md §来源。置信度中：1p3a 1134455 一条，只有摘要一句话（QuantVault 标题同源，不计）。「最大重叠」「按买卖方撤单」的方向来自证据；半开区间约定、撤单 = 截短区间、Part 3 在线版、Part 4 坐标压缩全部 (reconstructed)；拿到原帖全文后以全文为准。
+题型：「订单区间最大重叠 + 按买卖方处理撤单」。Part 1 是 LeetCode 253 的核心，考 tie 规则（同一时刻先结束后开始）；后面考你能不能把撤单翻译成「改区间」、在线维护，以及能否从零推出线段树和坐标压缩。
 
 ## 逐 Part 思路
 
@@ -19,32 +15,27 @@
 
 事件只按时间排序（同一时刻 +1 / -1 的顺序不定，`[1,3)` + `[3,5)` 会得出 2）；闭区间和半开区间混淆；以为 all = buy + sell；在线版每次 place 后就更新最大值；撤单时忘了撤掉 `expiries` 里原来的结束时间（之后到期又减一次）；`expiries` 计数减到 0 不删键；撤单时间 ≥ 计划结束仍算生效；先改状态后校验；`(lo+hi)/2` 溢出、`end-start` 溢出；线段树漏了 `+add[node]`；把 `[s, e)` 映射成 `idx(s)..idx(e)`；坐标不去重；对输入数组原地排序。
 
-## 复杂度 + 实测时间
+## 复杂度
 
-本机 12 核、JDK 21。
+12 核。量级参考：
 
 * Part 1 O(n log n)：1e6 个区间约 80 ms。
 * Part 2 O(n log n)：50 万 Place + 25 万 Cancel 约 85–125 ms。
 * Part 3 每个事件 O(log n)：60 万 place + 20 万 cancel 约 305–320 ms。
 * Part 4 构造 O(m log m)、每次操作 O(log m)：30 万个 1e18 量级的区间建索引约 100 ms，10 万次 `maxIn` 约 27 ms；同样的数据扫描线只要 21 ms（只求全局最大时扫描线更好）。
-* perf 预算 2 s。
-
-## 测试清单
-
-73 个：part1 19、part2 18、part3 17、part4 19；edge 27、perf 4、fmt 1、conc 0。part3 对随机事件流的每个前缀都用 Part 2 的 `analyze` 对拍。
 
 ## Java 21 特性
 
-| id | 用在哪 |
+| 特性 | 用在哪 |
 |---|---|
-| J01 record | `Peak` / `Place` / `Cancel` / `Report` / `Order`，紧凑构造器做校验 |
-| J02 sealed | `OrderEvent` |
-| J03 + J04 | `analyze` / `apply` 里的 switch 模式匹配 + record 模式 |
-| J05 | switch 表达式 + `yield`（Lane 选择、apply） |
-| J09 | TreeMap 的 `firstEntry` / `pollFirstEntry` / `floorEntry`（SequencedMap） |
-| J08 | `var` |
-| J07 | 文本块（测试脚本） |
-| J13 | 未命名模式 `_`（测试，预览） |
+| record | `Peak` / `Place` / `Cancel` / `Report` / `Order`，紧凑构造器做校验 |
+| sealed | `OrderEvent` |
+| 模式匹配 switch + record 模式 | `analyze` / `apply` 里的 switch |
+| switch 表达式 + `yield` | Lane 选择、apply |
+| Sequenced Collections | TreeMap 的 `firstEntry` / `pollFirstEntry` / `floorEntry`（SequencedMap） |
+| `var` | 局部变量 |
+| 文本块 | 多行输入脚本 |
+| 未命名模式 `_`（预览） | 不需要的绑定 |
 
 ## 面试官可能的追问
 

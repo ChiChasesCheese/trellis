@@ -1,9 +1,4 @@
-# hc05 · Market Order Book（FastPrep「Market Order Book」+ 并入 hc14「Limit Order Matching」）
-
-> 阶段：电面（FastPrep 标 Phone Screen，lastSeen 2026-06-25）· 置信度：**中**（FastPrep 1 + Glassdoor Amsterdam 2026-02 1，共 2 个独立来源）
-> 证据只有两句话：FastPrep 题面第一句 "Implement a finite in-memory order book for one instrument. Process the operations in o…"（被截断），
-> Glassdoor 的 "making market order book in c++"；hc14 只有 "Process the finite orders batch in arrival order. Every row is [side,price,quantity]…"。
-> **所以本题的操作集合、事件格式、校验规则、Part 的划分全部是 (reconstructed)**——按「一小时电面里面试官会怎么一路追问」推出来的。真题的细节以你实际看到的为准。
+# hc05 · Market Order Book（订单簿 + 限价撮合）
 
 ## 读题前你需要知道
 
@@ -11,7 +6,6 @@
 * **红黑树（TreeMap）**为什么能在 O(log n) 里取到「最小的价格」，**LinkedHashMap** 为什么能同时做到 O(1) 按 id 删除又保持先后顺序；
 * 为什么性能题里「装箱（boxing）」和「每次操作 new 一个对象」会成为问题。
 
-这些都在讲义里从零讲：`study/30-articles/hc05_market_order_book.md`（先读第 1–2 节再动手）。
 
 ## 背景
 
@@ -27,7 +21,7 @@
 |---|---|---|
 | 1 | `OrderBook.add / cancel / modify / bestBid / bestAsk / depth / find / queue / size` | 只维护，**不撮合**：挂单、撤单、改量、查最优价、查 N 档深度、同价位 FIFO |
 | 2 | `OrderBook.execute(Command)` → `List<Event>`，`parse` / `render` / `replay` | 价格-时间优先撮合：限价单、市价单、撤单、改量，产出 sealed 事件流 |
-| 3 | `BatchMatcher.run(long[][] rows)` → `Summary` | hc14：一批 `[side, price, qty]` 按到达顺序撮合，汇总成交、成交量、名义金额、剩余盘口 |
+| 3 | `BatchMatcher.run(long[][] rows)` → `Summary` | 一批 `[side, price, qty]` 按到达顺序撮合，汇总成交、成交量、名义金额、剩余盘口 |
 | 4 | `TickBook`（`limit` / `cancel` / `bestBid` / `bestAsk` / `qtyAt`） | 性能追问：价格用 `long` tick、不装箱、O(1) 按 id 撤单、稳态零分配 |
 
 `Side`、`Level`、`Order`、`Command`（`Limit` / `Market` / `Cancel` / `Modify`）、`Event`（`Trade` / `Rested` / `Cancelled` / `Modified` / `Rejected`）、
@@ -40,7 +34,7 @@
   `side == null` → NPE。`add` **不撮合**：买 105 的单可以和卖 100 的单同时躺在簿上（簿可以是「交叉」的）。
 * `cancel(id)` → 撤掉返回 `true`，不存在返回 `false`。撤掉之后这个 `id` 可以再用。
 * `modify(id, newQty)`：只改数量。`newQty ≤ 0` → `IAE`（**即使 id 未知**，先报参数错）；未知 id → `false`。
-  **减量保持队列位置；增量丢失时间优先（移到该价位的队尾）；等量什么都不变。** (reconstructed：真实交易所通用规则，真题未必这么说)
+  **减量保持队列位置；增量丢失时间优先（移到该价位的队尾）；等量什么都不变。**
 * `bestBid()` / `bestAsk()` → `OptionalLong`；空盘口为 `empty`。
 * `depth(side, n)` → 最优的 `n` 档 `List<Level>`，`Level(price, totalQty, orderCount)`。买盘价格降序、卖盘升序；`n` 大于档数则返回全部；`n < 0` → `IAE`。
 * `find(id)` → `Optional<Order>`（当前剩余量）；`queue(side, price)` → 该价位的订单 id，队头在前；`size()` → 簿上订单总数。
@@ -113,9 +107,9 @@ REJECT id=9 reason=unknown id
 手算：订单 4 买 101 × 6，吃掉最低价 101 档的队头：先 1 号（5），再 2 号（1）；5 号买 103 × 10，先吃 2 号剩下的 2，再吃 102 的 3 号 4 张，剩 4 张挂在 103；
 6 号市价卖 5，只有 5 号的 4 张可吃，剩 1 作废；3 号早被吃光，所以 `CANCEL 3` 被拒。
 
-## Part 3 · 批量限价撮合（hc14）
+## Part 3 · 批量限价撮合
 
-`BatchMatcher.run(long[][] rows)`：`rows[i] = {side, price, qty}`，`side`：`0 = BUY`，`1 = SELL`（**(reconstructed)**，真题编码未知）；第 `i` 行订单的 `id = i + 1`。
+`BatchMatcher.run(long[][] rows)`：`rows[i] = {side, price, qty}`，`side`：`0 = BUY`，`1 = SELL`（，真题编码未知）；第 `i` 行订单的 `id = i + 1`。
 按行序当作限价单依次撮合（直接复用 Part 2），返回
 
 ```
@@ -146,16 +140,11 @@ Summary(trades, filledQty, notional, bids, asks)
 空盘口；同价 FIFO；部分成交的 maker 留在队头；成交价取 maker 价；`add` 不撮合；增量 modify 丢优先级、减量不丢；已成交 / 已撤的 id 可复用；
 `qty = 0` / 负数 / `price = 0`；同价位总量到 `Long.MAX_VALUE` 的边界；市价单遇空盘；撤单后最优价要跳到下一档（跨很多空档）；池满。
 
-## 野外变体
+## 相关变体
 
 * 真题可能只有 `add / cancel / best` 而没有 modify；或者要求按「操作序列」输入、输出每步之后的 best bid/ask。
-* 面试官常见追问：撤单怎么做到 O(1)？同价位怎么保证先来先成交？为什么用 `long` 不用 `double`？（见 REPORT 追问）
+* 面试官常见追问：撤单怎么做到 O(1)？同价位怎么保证先来先成交？为什么用 `long` 不用 `double`？
 * C++ 版（Glassdoor）：`std::map<Price, std::list<Order>>` + `unordered_map<Id, list::iterator>`，和这里的 Java 版同构。
-
-## 来源
-
-`catalog/raw/github_repos.md` §3.1.A（Market Order Book · Limit Order Matching）；`catalog/raw/forums.md` G2（Glassdoor Amsterdam 2026-02）。
-FastPrep 页面：https://www.fastprep.io/problems/headlands-market-order-book · https://www.fastprep.io/problems/headlands-limit-order-matching
 
 ## 考什么
 

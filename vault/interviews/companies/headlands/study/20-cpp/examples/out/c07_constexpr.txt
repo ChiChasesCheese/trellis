@@ -1,0 +1,5 @@
+$ c07_constexpr
+fib(50)=12586269025 (also usable with run-time n: fib(10)=55)
+squares[7]=49 primes below 1000: 168
+consteval gave 42, constinit counter 101
+runtime_n=0 fib=0

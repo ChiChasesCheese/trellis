@@ -1,0 +1,8 @@
+$ c11_bench_copy
+copy 64 MiB of int, GB/s (higher is better)
+  std::copy : 47.2212
+  memcpy    : 46.3048
+  memmove   : 51.0085
+  for loop  : 54.8429
+  vector=   : 57.4003
+  64-byte memcpy: 0.767842 ns each (total 0)

@@ -1,0 +1,6 @@
+$ c14_thread_basics
+  total after thread with std::ref: 5
+  parallel_sum(1..1000) = 500500
+  caught from worker: worker failed
+  thread_local results: 1 2 3, main's copy: 0
+  hardware_concurrency >= 1: 1

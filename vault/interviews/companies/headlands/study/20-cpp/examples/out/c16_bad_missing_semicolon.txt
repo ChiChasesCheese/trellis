@@ -1,0 +1,5 @@
+C16/c16_bad_missing_semicolon.cpp:3:27: error: expected ';' after struct
+    3 | struct Point { int x, y; }                             // missing ';' after the class definition
+      |                           ^
+      |                           ;
+1 error generated.

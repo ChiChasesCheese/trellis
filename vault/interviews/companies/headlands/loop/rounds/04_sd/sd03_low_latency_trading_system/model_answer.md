@@ -1,7 +1,6 @@
 # sd03 · 参考答案：低延迟电子交易系统（senior 深度）
 
-> 读者设定：会写 Java，但网络栈、CPU 缓存、Java 内存模型、交易所协议要从头讲。题面是 (reconstructed)，见 [prompt.md](prompt.md)。
-> 所有数字带推导；**假设值**标明；"未实测"的量级判断也标明。总纲：[../00_how_to_run.md](../00_how_to_run.md)（延迟阶梯、估算方法、Java 纪律表在那里，这里不重复，只引用）。
+> 读者设定：会写 Java，但网络栈、CPU 缓存、Java 内存模型、交易所协议要从头讲。数字带推导；**假设值**标明。
 > 关于 Java：热路径用 Java 是题目设定；§12 给出诚实的上限和更合理的 Java 落点。
 
 ---
@@ -23,13 +22,19 @@
 | 项 | 取值 |
 |---|---|
 | tick-to-trade（软件部分） | p99 ≤ 10 µs，p99.99 ≤ 50 µs（假设，用来演示拆预算） |
-| 品种 / 行情 | 5,000 个品种，聚合峰值 1M msg/s，平均消息 40 B（假设；ITCH 类 Add Order 约 36 B）（来源：https://www.nasdaqtrader.com/content/technicalsupport/specifications/dataproducts/NQTVITCHspecification.pdf，2026-10-15 核对） |
+| 品种 / 行情 | 5,000 个品种，聚合峰值 1M msg/s，平均消息 40 B（假设；ITCH 类 Add Order 约 36 B） |
 | 场所 | 3 个，行情走 UDP 组播（A/B 双路），订单走 TCP 二进制会话 |
 | 订单 | 限价单、撤单、改单；策略峰值 5×10⁴ 意图/s（撤改单占多数，通识） |
 | 错误优先级 | 错单 ≫ 丢行情 ≫ 延迟变差 ≫ 停摆 |
 | 恢复 | 秒级；恢复期间不报价 |
 
-不变量 I1–I5 见 prompt。每个设计选择都回头对照它们。
+不变量（每个设计选择都回头对照）：
+
+* **I1 决定性**：同一输入序列 ⟹ 逐位相同的输出。
+* **I2 单写者**：每个可变状态恰有一个写线程。
+* **I3 fail closed**：任何无法确认状态的情形（行情缺口、会话不明、对账差异、日志写不动）⟹ 停止对该范围发新单。
+* **I4 不重复发单**：任一时刻只有一个实例有权发送某账户 / 会话的订单。
+* **I5 仓位 = 成交之和**：内部仓位始终能由成交回报序列重新推出，并与交易所 / 清算对账一致。
 
 ---
 
@@ -101,7 +106,7 @@ t=0     包到达网卡，硬件打时间戳                                    
 +0.3    风控闸门                                                       ~0.3 µs
 +0.5    编码 + 交给 Gateway 环                                         ~0.5 µs
 +0.7    Gateway 轮询环、写网卡（旁路发送）                              ~0.7 µs
-≈ 6 µs  合计；留约 4 µs 给抖动                                          （见 00_how_to_run §4）
+≈ 6 µs  合计；留约 4 µs 给抖动
 ```
 
 ---
@@ -110,14 +115,14 @@ t=0     包到达网卡，硬件打时间戳                                    
 
 ### 4.1 单写者与 run-to-completion
 
-* **一个品种的所有状态（订单簿、策略状态、该品种的订单与仓位）属于恰好一个分片线程**。其他线程只能向它的 SPSC 环投递不可变事件。无锁、无 CAS、无竞争——单写者原则（[00 §5.1](../00_how_to_run.md)，实现见 [ld01](../../03_lld/ld01_spsc_channel/problem.md)）。
+* **一个品种的所有状态（订单簿、策略状态、该品种的订单与仓位）属于恰好一个分片线程**。其他线程只能向它的 SPSC 环投递不可变事件。无锁、无 CAS、无竞争——单写者原则。
 * **run-to-completion**：一个线程做完整条路径。线程交接的价格：生产者写环 + 消费者读环 = 至少一次跨核缓存行传递（~50–100 ns）加唤醒。路径上有 3 次交接就是 ~0.3 µs，占 10 µs 预算的 3%，而且每次交接都带来排队抖动。所以**热路径不拆线程**，流水线（拆线程）只用于**I/O 与持久化**这类本来就要换线程的地方。
 * 吞吐上限：一个分片线程每条消息 ~1 µs → ~10⁶ msg/s/核。聚合 10⁶ msg/s 分到 k 个分片（按品种哈希或按流动性均衡），每个分片只拿 1/k。**扩展靠分片**，不靠加锁。
 
 ### 4.2 SPSC 环（Disruptor 思想）
 
-* 序号只增不减，`index = seq & mask`；生产者 `setRelease(tail)`，消费者 `getAcquire(tail)`；cached index 减少对方缓存行读取；头尾字段之间填充 128 字节防伪共享。完整推导见 [ld01 讲义](../../../../study/30-articles/ld01_spsc_channel.md)。
-* **批处理的自平衡**：消费者落后时，一次取走环中全部已发布的事件逐条处理——积压越多，每条摊到的同步开销越小。这是 Disruptor 比"一条一唤醒"的队列在突发下稳定的原因。（来源：https://lmax-exchange.github.io/disruptor/disruptor.html，2026-10-15 核对）
+* 序号只增不减，`index = seq & mask`；生产者 `setRelease(tail)`，消费者 `getAcquire(tail)`；cached index 减少对方缓存行读取；头尾字段之间填充 128 字节防伪共享。
+* **批处理的自平衡**：消费者落后时，一次取走环中全部已发布的事件逐条处理——积压越多，每条摊到的同步开销越小。这是 Disruptor 比"一条一唤醒"的队列在突发下稳定的原因。
 * **环满怎么办**（背压策略因通道而异）：
   * 行情 → 分片：**不能丢也不能阻塞 Feed Handler**。环要足够大（按"最大突发 × 最大消费者停顿"算），仍然满了 ⟹ 视为严重故障：对该分片触发熔断（fail closed），并告警。
   * 热线程 → 监控：**有损**（环满就丢指标），永不阻塞热线程。
@@ -125,7 +130,7 @@ t=0     包到达网卡，硬件打时间戳                                    
 
 ### 4.3 核心绑定与操作系统配置
 
-* 每个热线程独占一个物理核（避开 SMT 兄弟线程），用 `isolcpus`/`nohz_full` 隔离，`taskset` 或库绑定；中断（`irqbalance` 关闭）引到别的核；NUMA：网卡所在 NUMA 节点上的核 + 本地内存；`performance` 调频策略；大页（hugepages）；关闭 swap。（见 [00 §4](../00_how_to_run.md)。）
+* 每个热线程独占一个物理核（避开 SMT 兄弟线程），用 `isolcpus`/`nohz_full` 隔离，`taskset` 或库绑定；中断（`irqbalance` 关闭）引到别的核；NUMA：网卡所在 NUMA 节点上的核 + 本地内存；`performance` 调频策略；大页（hugepages）；关闭 swap。
 * 一台 16 核主机的示例分配：核 0 Feed Handler；核 1–8 分片线程；核 9 Order Gateway；核 10 Journaler；核 11 监控；核 12–15 操作系统与其他。
 
 ### 4.4 忙等（busy-spin）
@@ -138,17 +143,17 @@ t=0     包到达网卡，硬件打时间戳                                    
 
 ### 5.1 组播与 A/B 仲裁
 
-* 交易所用 UDP 组播同时发给所有订阅者；**A/B 两路冗余**（不同交换机 / 路径），每条消息有**序号**。Feed Handler 对两路同时收，**先到者胜**，用"已见序号"的环形位图去重——任一路丢包不影响（见 [networking_basics §6](../../../../study/00-foundations/networking_basics.md) 的序号 + 缺口检测）。
+* 交易所用 UDP 组播同时发给所有订阅者；**A/B 两路冗余**（不同交换机 / 路径），每条消息有**序号**。Feed Handler 对两路同时收，**先到者胜**，用"已见序号"的环形位图去重——任一路丢包不影响。
 * **缺口（gap）处理**：两路都没有序号 n：
   1. 标记所有受影响的品种为 **STALE**（簿不可信）；
-  2. 请求重传（交易所通常提供重传 / 快照通道，传输方式因交易所而异：Nasdaq MoldUDP64 是向重传服务器发单播 UDP 请求包，CME MDP 3.0 是 TCP replay + 快照回环）（来源：https://www.nasdaqtrader.com/content/technicalsupport/specifications/dataproducts/moldudp64.pdf、https://cmegroupclientsite.atlassian.net/wiki/x/QQdGGw，2026-10-15 核对）或拉取快照 + 之后的增量重新对齐（"快照 + 增量"协议）；
+  2. 请求重传（交易所通常提供重传 / 快照通道，传输方式因交易所而异：Nasdaq MoldUDP64 是向重传服务器发单播 UDP 请求包，CME MDP 3.0 是 TCP replay + 快照回环）或拉取快照 + 之后的增量重新对齐（"快照 + 增量"协议）；
   3. 重新对齐前：**策略不得对 STALE 品种发新单**（fail closed）；已有挂单按策略配置决定是否撤单。
 * **乱序**：UDP 可能乱序；对少量乱序用小窗口缓冲重排，窗口超时仍缺 ⟹ 当作缺口。
 
 ### 5.2 解码与订单簿（零分配）
 
-* 解码：**flyweight**——一个预分配的"视图"对象指向缓冲区中的偏移量，字段读取是 `buffer.getLong(offset + FIELD_OFFSET)`，不拷贝、不创建对象。缓冲区是堆外/直接内存（`MemorySegment` 或 `ByteBuffer.allocateDirect`，[J17](../../../../study/10-java21/J17_ffm_api.md)）。二进制协议用固定布局（SBE 一类的模板化编码思想）。（来源：https://github.com/aeron-io/simple-binary-encoding，2026-10-15 核对）
-* 订单簿数据结构（对照 [hc05](../../01_video/hc05_market_order_book/problem.md) 的 TickBook）：
+* 解码：**flyweight**——一个预分配的"视图"对象指向缓冲区中的偏移量，字段读取是 `buffer.getLong(offset + FIELD_OFFSET)`，不拷贝、不创建对象。缓冲区是堆外/直接内存（`MemorySegment` 或 `ByteBuffer.allocateDirect`）。二进制协议用固定布局（SBE 一类的模板化编码思想）。
+* 订单簿数据结构：
   * 价位：围绕当前价的**连续数组**，下标 = (价格 − 基准价) / tick；数量用 `long[]`；最优价用游标维护（只在最优档清空时向外扫）。O(1) 更新，顺序访问，缓存友好。比 `TreeMap` 少一次对象指针追逐，少全部分配。
   * 订单 ID → 订单位置：开放寻址的 `long → int` 哈希表（原语集合，无装箱）。
   * 价位的订单队列：用预分配的数组 + 整数链表（free list），而不是 `LinkedList<Order>`。
@@ -171,7 +176,7 @@ interface Strategy {
 * `Clock` 来自**事件里的时间戳**（硬件时间戳），而不是 `System.nanoTime()`。这样回放时得到相同的时间，决定性才成立。
 * `IntentSink` 写入预分配的意图缓冲，不创建对象。
 * **多个输入源的顺序**：分片线程会从多条环（行情环、回报环、命令环）取事件。顺序由"线程消费的实际顺序"决定，是非决定性的来源之一。解决：**日志记录的是消费顺序**（线程在处理前把每个事件 + 其消费序号写进日志环），回放按日志顺序喂入——而不是各输入源自己的顺序。
-* 决定性杀手清单与对策（[00 §5.2](../00_how_to_run.md)）：读墙上时钟、`HashMap` 遍历顺序、浮点、`Random` 无种子、依赖线程调度、依赖内存地址（`identityHashCode`）。
+* 决定性杀手清单：读墙上时钟、`HashMap` 遍历顺序、浮点、`Random` 无种子、依赖线程调度、依赖内存地址（`identityHashCode`）。
 
 ---
 
@@ -191,8 +196,8 @@ interface Strategy {
 | 未完成订单数 / 下单速率 | 计数器 / 令牌桶（按策略、场所、品种） | 交易所也有消息速率上限 |
 | 自成交预防 | 同一策略对同一品种的买卖单价格交叉时拒绝 | 避免与自己成交 |
 
-* 可运行的缩小版：**[ld02 Part 3](../../03_lld/ld02_trading_ood/problem.md)**（`RiskEngine`：声明顺序即检查顺序、整数价格带、最坏情况仓位、fail closed）。
-* **O(1) 的关键**：聚合量（品种级未完成数量、账户级未完成订单数）在**每次订单状态变化时增量维护**，而不是检查时扫描所有订单（ld02 `OrderManager.openLeaves`）。
+* 实现要点：声明顺序即检查顺序、整数价格带、最坏情况仓位、fail closed。
+* **O(1) 的关键**：聚合量（品种级未完成数量、账户级未完成订单数）在**每次订单状态变化时增量维护**，而不是检查时扫描所有订单。
 * **独立于策略**：策略代码出 bug 不应能绕过它。同进程内用类型隔离（策略拿不到可变的风控状态，只能提交意图）；更强的隔离见下。
 
 ### 7.2 熔断（kill switch）：三层纵深防御
@@ -203,23 +208,23 @@ interface Strategy {
  层 3：交易所/清算行侧  断线即撤(cancel-on-disconnect)、交易所提供的整体撤单(mass cancel)、券商/清算行的信用额度与风控工具
 ```
 
-* 为什么要三层：层 1 的 bug 可能与策略 bug 同源（同进程、同内存）；层 2 隔离故障，但自己的状态可能滞后；层 3 是最后一道，不依赖我们的任何代码。监管上要求券商/市场准入者对订单设置自己直接且排他控制的预交易风控（美国 SEC 15c3-5 市场准入规则，通识；细节以法规为准），这也是层 2 存在的理由。（来源：https://www.ecfr.gov/current/title-17/section-240.15c3-5，2026-10-15 核对）
+* 为什么要三层：层 1 的 bug 可能与策略 bug 同源（同进程、同内存）；层 2 隔离故障，但自己的状态可能滞后；层 3 是最后一道，不依赖我们的任何代码。监管上要求券商/市场准入者对订单设置自己直接且排他控制的预交易风控（美国 SEC 15c3-5 市场准入规则，通识；细节以法规为准），这也是层 2 存在的理由。
 * 熔断后：**撤销所有未完成订单**、禁止新单、保持行情与状态接收（以便恢复），需要人工确认才能恢复。
 
 ### 7.3 订单管理（OMS）与状态
 
-* 每张订单一个状态机：`PENDING → WORKING → PARTIALLY_FILLED → FILLED / CANCELED / REJECTED`（[ld02 Part 1](../../03_lld/ld02_trading_ood/problem.md)）。关键细节：
+* 每张订单一个状态机：`PENDING → WORKING → PARTIALLY_FILLED → FILLED / CANCELED / REJECTED`。关键细节：
   * **PENDING 也算"已在市场里"**——发出去、回报没回来，风险上必须按可能已成交处理（最坏情况仓位包含它）。
   * 回报可能**重复**（at-least-once）：以 `execId` 去重；终态订单收到旧回报只是重复，不是错误。
   * 回报可能**乱序或缺失**（会话重连后补发）：以交易所的会话序号 / 执行序号判断；对不上则进入"未知状态"（见 §9）。
   * 成交价必须满足限价约束，超量成交为非法转移——**非法转移不改状态，报警**。
-* 仓位 = 成交回报的函数（[ld02 Part 2](../../03_lld/ld02_trading_ood/problem.md)，FIFO 配对、整数）。
+* 仓位 = 成交回报的函数（FIFO 配对、整数）。
 * 客户端订单 id（ClOrdID）必须**全局唯一且单调**（含会话 id + 序号），重启后继续递增；否则交易所会把重启后的新单当作重复而拒绝，或更糟地——把旧单当作新单。
 
 ### 7.4 订单网关（Order Gateway）
 
 * 每个场所一个线程，管理一条 TCP 会话：登录（logon）、心跳、**会话序号**（每条消息递增；断线重连后协商从哪一条继续）、限速（令牌桶，交易所有消息速率上限）、编码/发送、接收回报并路由回对应分片。
-* TCP 要点：`TCP_NODELAY`（关 Nagle，[networking_basics §5](../../../../study/00-foundations/networking_basics.md)）；应用层成帧（长度前缀，部分读 / 部分写）；发送缓冲区满时的背压；断线重连与指数退避。**这一整套的缩小版实现是 [ld03](../../03_lld/ld03_async_tcp_channel/problem.md)**（`TcpMessageChannel` + `ReconnectingClient`，含"断线期间进入有界 pending，重连后按序发出；已交给旧连接的字节可能丢失"的诚实语义）。
+* TCP 要点：`TCP_NODELAY`（关 Nagle）；应用层成帧（长度前缀，部分读 / 部分写）；发送缓冲区满时的背压；断线重连与指数退避。断线期间的消息进入有界 pending 队列，重连后按序发出；已交给旧连接的字节可能丢失——要诚实说明这一点。
 * **断线即撤（cancel-on-disconnect）**：登录时请求交易所在会话断开时自动撤销该会话的所有订单。这是网关进程崩溃 / 网络断开时的安全网，防止"我们已经看不见的订单继续挂在市场里"。
 * 热路径上的网关为什么单独一个线程：网卡发送 / TCP 状态机需要独占处理；与分片之间用 SPSC 环交接（~0.1 µs），这是唯一必须的交接。
 
@@ -236,7 +241,7 @@ interface Strategy {
 | 策略内部状态（信号、库存目标…） | **本地** | 日志是唯一来源：重放得到相同策略状态 |
 | 订单簿 | 交易所 | 可从快照 + 增量重建（日志用于复盘/回测） |
 
-> 对照：**交易所自己的撮合引擎**必须"输入先落日志再处理"，否则崩溃会丢一条已改变簿的事件，副本重放得到不同状态（trellis 卡片 `problems-stock-exchange-journal-before-match-replay-recovery`）。**我们是客户端**：订单真相在交易所，所以热路径**不必等日志落盘**，但必须保证"日志环不能丢"（§4.2）并在恢复时与交易所对账。能说清这个区别，是对"journal-before-process"原则的理解而不是背诵。
+> 对照：**交易所自己的撮合引擎**必须"输入先落日志再处理"，否则崩溃会丢一条已改变簿的事件，副本重放得到不同状态。**我们是客户端**：订单真相在交易所，所以热路径**不必等日志落盘**，但必须保证"日志环不能丢"（§4.2）并在恢复时与交易所对账。能说清这个区别，是对"journal-before-process"原则的理解而不是背诵。
 
 ### 8.2 日志怎么写（热路径不等 fsync）
 
@@ -253,7 +258,7 @@ Journaler 线程：环 ──追加──▶ mmap 文件(页缓存) ──异步
 | 机器掉电 / 内核崩溃 | 未刷盘的页缓存丢失 | 需要 fsync，或已复制到另一台机器 |
 | 机房级故障 | 本机全部丢失 | 需要跨机房异步复制（延迟大，不进热路径）；恢复靠交易所 + 清算对账 |
 
-* 概念对应物：Chronicle Queue（基于内存映射文件的堆外持久化队列）、Aeron Archive（录制 / 重放）、Aeron Cluster（Raft 复制状态机）。面试时说"思想相同"，不要承诺 API 细节。（来源：https://github.com/aeron-io/aeron、https://github.com/OpenHFT/Chronicle-Queue，2026-10-15 核对）
+* 概念对应物：Chronicle Queue（基于内存映射文件的堆外持久化队列）、Aeron Archive（录制 / 重放）、Aeron Cluster（Raft 复制状态机）。面试时说"思想相同"，不要承诺 API 细节。
 * **日志格式**：定长头（序号、事件类型、硬件时间戳、长度）+ 二进制载荷；只追加；按大小/时间切段；段头带校验。
 
 ### 8.3 恢复流程
@@ -278,7 +283,7 @@ Journaler 线程：环 ──追加──▶ mmap 文件(页缓存) ──异步
 * **实时**：独立的 **drop copy** 会话——交易所把我们账户的所有成交/订单回报副本从另一条通道发给对账器，与内部 OMS 状态逐条比对。独立性是价值所在：它不经过我们的订单网关，不会与网关同时出错。
 * **日终**：与清算行/经纪商的头寸、成交单对账。
 * **差异（break）处理**：任何差异 ⟹ 立即对该策略/品种 fail closed（撤单 + 停新单）→ 告警 → 人工/自动查因（常见：漏回报、重复回报、取消竞态、修正成交 trade bust）→ 修复事件记入日志（保持"仓位 = 事件函数"）。
-* 对账器本身也是"研究平台"的一部分：回放同一天的行情与订单，用**同一份状态机代码**产生"模拟的应得结果"，与生产对比——这正是 JD 里 "simulation vs production reconciliation" 的底层逻辑（推断，见 [公司简报 §4.1](../../../../01-company-brief.md) 的组件表 [O-B2 #5]）。
+* 对账器本身也是"研究平台"的一部分：回放同一天的行情与订单，用**同一份状态机代码**产生"模拟的应得结果"，与生产对比——这正是「模拟 vs 生产对账」的底层逻辑。
 
 ---
 
@@ -312,24 +317,24 @@ Journaler 线程：环 ──追加──▶ mmap 文件(页缓存) ──异步
 
 ## 12. Java 的纪律与诚实的上限
 
-纪律表见 [00 §5.4](../00_how_to_run.md)。这里把它们落到本系统：
+Java 热路径纪律落到本系统：
 
 | 议题 | 做法 |
 |---|---|
-| **GC** | 稳态零分配：消息用预分配环/缓冲，事件用可复用的 flyweight，意图/订单用对象池或结构体数组，集合用原语版本（`long → int` 哈希表、`int[]` 链表）。验证：开 `-Xlog:gc` / JFR，**交易时段内 GC 次数应为 0**。备选：ZGC（亚毫秒停顿，[J19](../../../../study/10-java21/J19_runtime_zgc_jit.md)）——有读屏障与并发线程开销，对 µs 级预算仍可能过大；或"一天分配一次的大堆 + 夜里重启"。 |
+| **GC** | 稳态零分配：消息用预分配环/缓冲，事件用可复用的 flyweight，意图/订单用对象池或结构体数组，集合用原语版本（`long → int` 哈希表、`int[]` 链表）。验证：开 `-Xlog:gc` / JFR，**交易时段内 GC 次数应为 0**。备选：ZGC（亚毫秒停顿）——有读屏障与并发线程开销，对 µs 级预算仍可能过大；或"一天分配一次的大堆 + 夜里重启"。 |
 | **JIT** | 开盘前用合成 / 回放流量预热到编译稳定（C2 编译完成）；热路径调用点保持单态（同一接口调用点不要见到多种实现类，否则内联失效）；避免热方法里抛异常、使用大型 `switch` 导致的方法过大（> 8000 字节码不被 JIT 编译：`-XX:-DontCompileHugeMethods` 知识点）；监控 `-XX:+PrintCompilation`/JFR 里的 deopt。 |
 | **safepoint** | 任何需要 safepoint 的操作会停住所有线程：避免热路径里没有 safepoint 轮询的超长计数循环；避免触发 safepoint 的诊断/JMX/JFR 重配置；用 `-Xlog:safepoint` 检查。 |
-| **内存布局** | 数据放 `long[]`/`int[]`/堆外；整数下标代替引用；热字段紧凑；避免对象头与指针追逐（[cpu_cache_locality §5](../../../../study/00-foundations/cpu_cache_locality.md)）。 |
-| **并发** | 单写者 + SPSC 环 + `VarHandle` acquire/release；热路径无 `synchronized`、无 `ReentrantLock`、无 `ConcurrentHashMap`（[J16](../../../../study/10-java21/J16_concurrency_primitives.md)）。 |
-| **线程** | 平台线程，OS 绑核，忙等；**虚拟线程不进热路径**，用于外围（对账查询、重连管理、批处理）（[J10](../../../../study/10-java21/J10_virtual_threads.md)）。 |
+| **内存布局** | 数据放 `long[]`/`int[]`/堆外；整数下标代替引用；热字段紧凑；避免对象头与指针追逐。 |
+| **并发** | 单写者 + SPSC 环 + `VarHandle` acquire/release；热路径无 `synchronized`、无 `ReentrantLock`、无 `ConcurrentHashMap`。 |
+| **线程** | 平台线程，OS 绑核，忙等；**虚拟线程不进热路径**，用于外围（对账查询、重连管理、批处理）。 |
 | **字符串 / 装箱 / 流** | 热路径禁用：品种用 `int`，价格用 `long`，日志用预格式化的二进制，延迟日志异步写。 |
-| **网络** | 对 Java 而言内核旁路通常通过"对 socket 透明的用户态栈"（如 Onload 类产品，`LD_PRELOAD`）（来源：https://github.com/Xilinx-CNS/onload/blob/master/scripts/onload、https://blog.cloudflare.com/kernel-bypass，2026-10-15 核对）或 JNI/FFM 调用本地库；NIO `Selector` 是普通内核栈下的折中（[networking_basics §8](../../../../study/00-foundations/networking_basics.md)）。 |
+| **网络** | 对 Java 而言内核旁路通常通过"对 socket 透明的用户态栈"（如 Onload 类产品，`LD_PRELOAD`）或 JNI/FFM 调用本地库；NIO `Selector` 是普通内核栈下的折中。 |
 
 **诚实的上限**（面试里主动说）：
 
-* 规范写出来的 Java 热路径通常能做到**个位数到几十 µs** 的 tick-to-trade；要进入亚微秒，通常是 C++ 或 FPGA 的领地（**这是行业经验判断，本 kit 未实测**）。
-* 因此更合理的分工是：**C++/FPGA 做最短的报价–撤单环；Java 做策略编排、风控监控、对账、研究回放、日志基础设施**。这与 JD 对 Java 岗的描述（研究平台 / 存储 / 监控）一致 [O-C2]，也与同期 C++ 岗要求 exchange connectivity、lock-free、profiling 的分工一致 [O-C3]。
-* 即使是 Java 不在最短路径上的岗位，**懂这些原理**也是被考的内容：JD 要求 "strong knowledge of the details of computing all throughout the technical stack" [O-C2]。
+* 规范写出来的 Java 热路径通常能做到**个位数到几十 µs** 的 tick-to-trade；要进入亚微秒，通常是 C++ 或 FPGA 的领地（行业经验判断）。
+* 因此更合理的分工是：**C++/FPGA 做最短的报价–撤单环；Java 做策略编排、风控监控、对账、研究回放、日志基础设施**。这与 Java 岗偏研究平台 / 存储 / 监控、C++ 岗偏 exchange connectivity、lock-free、profiling 的分工一致。
+* 即使是 Java 不在最短路径上的岗位，**懂这些原理**也是被考的内容：面试官看重对计算机整条技术栈细节的掌握。
 
 ---
 
@@ -350,7 +355,6 @@ Journaler 线程：环 ──追加──▶ mmap 文件(页缓存) ──异步
 * **差分测试**：同一输入下"热路径实现"与"朴素参考实现"（研究平台用的版本）的订单输出必须一致。
 * **故障注入（chaos）**：杀进程于随机点 → 快照 + 重放 → 状态逐位相同；日志磁盘满；网关会话断开 + 重连；时钟跳变。
 * **灰度**：新版本先只交易一个品种、极小限额、纸上（paper）模式，再放量；熔断开关演练（game day）。
-* **缩小版练习**：[ld02](../../03_lld/ld02_trading_ood/problem.md) 的随机事件流 + replay 相等测试；[ld03](../../03_lld/ld03_async_tcp_channel/problem.md) 的最小缓冲区压力测试；[ld01](../../03_lld/ld01_spsc_channel/problem.md) 的跨进程环。
 
 ---
 
@@ -372,12 +376,4 @@ Journaler 线程：环 ──追加──▶ mmap 文件(页缓存) ──异步
 
 「1M msg/s 的峰值意味着每条消息 1 µs、约十次缓存未命中，所以热路径不能有 GC、锁、系统调用和线程交接。我按品种分片，每片一个绑核的忙等线程，run-to-completion：解码、簿更新、策略、内联 O(1) 风控、编码。状态在内存，输入事件带序号进日志，状态机是纯函数，所以崩溃后重放、事后复盘、研究回测用的是同一份代码。订单真相在交易所，所以恢复时必须对账，网关用 cancel-on-disconnect 作安全网。风控三层——进程内、独立进程、交易所侧——任何不确定一律 fail closed。主备不双发。Java 的纪律是稳态零分配、预热、堆外和数组、单写者；我也会承认亚微秒是 C++ 的领地，Java 更适合放在编排、监控、对账和回放上。」
 
-## 17. 延伸阅读
-
-* LMAX Architecture（Martin Fowler, 2011）与 LMAX Disruptor 技术论文——环形缓冲区、单写者、业务逻辑处理器。（来源：https://martinfowler.com/articles/lmax.html、https://lmax-exchange.github.io/disruptor/disruptor.html，2026-10-15 核对）
-* Martin Thompson 的 Mechanical Sympathy 博客系列——缓存行、伪共享、写合并。
-* Aeron、Chronicle Queue、SBE（Real Logic）文档——概念对应物。（来源：https://github.com/aeron-io/aeron、https://github.com/OpenHFT/Chronicle-Queue、https://github.com/aeron-io/simple-binary-encoding，2026-10-15 核对）
-* SEC Rule 15c3-5 原文（市场准入规则）——预交易风控的法规背景。（来源：https://www.ecfr.gov/current/title-17/section-240.15c3-5，2026-10-15 核对）
-* DDIA 第 11 章（流处理与日志）、第 8 章（时钟与暂停）。
-* trellis：[design-stock-exchange](../../../../../../../domains/system-design/drills/problems/design-stock-exchange.md)（交易所一侧）；卡片 `problems-stock-exchange-single-thread-vs-multithread-locking` · `problems-stock-exchange-order-book-price-bucket-linked-list` · `problems-stock-exchange-sequencer-down-halt-not-degrade`（fail closed 的同一思想）。
-* 本 kit：[00_how_to_run](../00_how_to_run.md) · [followups](followups.md) · [rubric](rubric.md)。
+「延伸」LMAX Architecture（Martin Fowler, 2011）与 Disruptor 论文；Martin Thompson 的 Mechanical Sympathy 系列；Aeron、Chronicle Queue、SBE 文档；SEC Rule 15c3-5 原文；《DDIA》第 8、11 章。

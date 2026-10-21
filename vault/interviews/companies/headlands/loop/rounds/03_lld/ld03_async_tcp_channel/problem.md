@@ -1,12 +1,5 @@
 # ld03 · 异步 TCP 消息通道（Asynchronous TCP Message Channel）
 
-> 阶段：低层设计 / LLD（FastPrep 标 Low-level design，无阶段标签，lastSeen 2023-03-09；归 onsite 为**推断**）· 置信度：**中**（1 个来源，只有标题 + 一句摘要）
-> 来源：FastPrep「Asynchronous TCP Message Channel」（`catalog/raw/github_repos.md` §3.1.D，https://www.fastprep.io/low-level-design/asynchronous-tcp-message-channel ）；CATALOG Table B `ld03`。
-> 1p3a 974931（同日 2023-03-09，第一轮电面，摘要 "C++ versions, IPC methods, classic buy stock algorithm problem"）**可能**相关（IPC 方法），但时间巧合不是证据，**不计入** #refs。
-> **题面只有一句话**（英文，被截断）：「bounded message API over one TCP session, with local circular buffers, partial-I/O framing…」
-> 能确定的：**一条 TCP 会话**、**有界的消息 API**、**本地环形缓冲区**、**部分 I/O（partial read/write）时的成帧**。
-> 下面的四个 Part、API 形状、背压语义、半关闭与重连规则都是 **(reconstructed)**。与 ld01（共享内存 SPSC 通道）是姊妹题：同样是"有界通道"，这里的介质是网络，难点换成**字节流没有消息边界**、**部分读写**、**背压穿过内核**、**断线**。
-
 ## 背景
 
 行情进程和策略进程在两台机器上，或者订单网关连接交易所——数据通过一条 TCP 连接流动。TCP 提供**可靠的有序字节流**，不是消息流：
@@ -20,12 +13,13 @@
 
 ## 读题前你需要知道
 
-讲义 `study/30-articles/ld03_async_tcp_channel.md`（从零讲：套接字与 TCP 字节流、为什么要成帧、非阻塞 I/O 与 `Selector`、`ByteBuffer`、环形缓冲区、背压怎么穿过内核、半关闭与 RST、重连与指数退避、虚拟线程替代方案）。最少要先懂：
+最少要先懂：
 
-* **TCP / 套接字 / Nagle / `TCP_NODELAY`**：`study/00-foundations/networking_basics.md` §1–§5；
-* **NIO `Selector` 与 `ByteBuffer`**：同文件 §8；**虚拟线程 + 阻塞 I/O**：同文件 §9、`study/10-java21/J10_virtual_threads.md`；
-* **环形缓冲区**：`study/30-articles/ld01_spsc_channel.md` §2.3；
-* `record`：`study/10-java21/J01_record.md`；并发原语：`J16_concurrency_primitives.md`。
+* **TCP / 套接字 / Nagle / `TCP_NODELAY`**：套接字是内核给进程的网络端点；TCP 在两端之间提供可靠、有序的字节流。Nagle 算法会把小包攒起来再发以省带宽，代价是延迟；低延迟场景开 `TCP_NODELAY` 关掉它；
+* **NIO `Selector` 与 `ByteBuffer`**：非阻塞 `SocketChannel` 的读写立刻返回（可能读 / 写 0 字节或一部分）；`Selector` 让一个线程等待多个通道的"可读 / 可写"就绪事件，用兴趣集（interest ops）声明关心哪些事件。`ByteBuffer` 带 `position` / `limit`，写完要 `flip()` 才能读；
+* **虚拟线程 + 阻塞 I/O**：另一种写法——每个连接两条虚拟线程，直接用阻塞读写，代码更直，不需要 `Selector`；
+* **环形缓冲区**：固定容量（2 的幂）的字节数组，`head` / `tail` 计数只增不减，下标 = 计数 `& mask`，写到末尾回绕时分两段拷贝；
+* `record`：不可变值类型，自动生成 `equals` / `hashCode`；并发原语：`ReentrantLock` / `Condition`、`volatile` 等。
 
 ## 概述
 
@@ -36,11 +30,11 @@
 | 3 | （同上，行为） | 背压与有界性：接收方不读时 `offer` 返回 `false`；入站环满时停止读 socket；最小缓冲区压力测试 | 暂停读之后谁来恢复；`poll` 要唤醒 I/O 线程；容量恰好 `maxFrame + 4` 不死锁 |
 | 4 | `Backoff`、`ReconnectingClient` | 指数退避；断线自动重连；断线期间有界的 pending 队列 | "已交给旧连接的消息会丢"的诚实语义；退避重置；close 时停止重连 |
 
-所有类在默认包。starter 里已给出 `ChannelConfig` 与 `FrameException`（与 reference 相同）；其余类的方法体是 `throw new UnsupportedOperationException("TODO")`。
+所有类在默认包。starter 里已给出 `ChannelConfig` 与 `FrameException`；其余类的方法体是 `throw new UnsupportedOperationException("TODO")`。
 
 ## 共同约定
 
-* **帧格式 (reconstructed)**：`[len:int32 大端][payload:len 字节]`。`len` 的合法范围 `[0, maxFrame]`；空负载合法。
+* **帧格式**：`[len:int32 大端][payload:len 字节]`。`len` 的合法范围 `[0, maxFrame]`；空负载合法。
 * `ChannelConfig(maxFrame, outCapacity, inCapacity)`：字节数；`outCapacity`、`inCapacity` 必须 `>= maxFrame + 4`（否则一条最大的消息永远凑不齐 / 放不进），紧凑构造器校验。
 * 所有测试在 `127.0.0.1` + 内核分配的临时端口上跑。不允许依赖 `Thread.sleep` 的时序来判断**正确性**（只允许用截止时间的轮询等待"最终发生"的事件）。
 * 消息是不可变的 `byte[]`；通道不复制调用方之后修改的内容之外的东西——`offer` 返回前已经把字节拷进出站环。
@@ -100,9 +94,9 @@ public final class MessageServer implements AutoCloseable {
 }
 ```
 
-### 语义 (reconstructed)
+### 语义
 
-* **一个 I/O 线程 + 一个 `Selector`**（题目要求 NIO；虚拟线程 + 阻塞 I/O 是备选，讲义有对比）。应用线程只和两个有界缓冲区打交道，**系统调用都在 I/O 线程里**，且不持有锁。
+* **一个 I/O 线程 + 一个 `Selector`**（题目要求 NIO；虚拟线程 + 阻塞 I/O 是备选）。应用线程只和两个有界缓冲区打交道，**系统调用都在 I/O 线程里**，且不持有锁。
 * `offer`：消息超过 `maxFrame` → `IllegalArgumentException`；通道已 `close` / 已 `finishSending` / 已失败 → `IllegalStateException`（与"暂时满了"的 `false` 区分）；放得下 → 编码进出站环并返回 `true`（保证按序写进 socket，除非连接失败）。
 * **部分写**：`write` 只写了一部分时，剩余数据必须保留（连同位置），等下一次 `OP_WRITE`。出站环是 `ByteRing`，经一个中转缓冲区进入 socket。
 * **部分读**：读到的字节喂给 `FrameDecoder`；`poll` 只在凑齐一整帧时返回。
@@ -110,7 +104,7 @@ public final class MessageServer implements AutoCloseable {
 * **EOF（对端关闭）≠ 本端关闭**：`isPeerClosed()` 变 `true`，之后仍可 `poll` 剩余消息、仍可 `offer`（半关闭）。`isDrained()` = 不会再有新消息且缓冲区里没有完整消息。**EOF 恰好落在一帧中间** ⟹ 流被截断：`failure()` 是 `EOFException`，通道关闭，但之前收齐的完整帧仍可取。
 * `finishSending()`：之后 `offer` 抛 `IllegalStateException`；已接受的消息刷完后 `shutdownOutput()`（发 FIN）；当本端已发 FIN **且**对端也关闭，通道自动关闭（`failure()` 为 `null`）。
 * `close()`：立刻关闭，未发送的数据丢弃；唤醒所有阻塞在 `poll(timeout)` / `offer(msg, timeout)` / `awaitClosed` 的线程。
-* `TCP_NODELAY` 必须开（见 networking_basics §5）。
+* `TCP_NODELAY` 必须开（关闭 Nagle，小消息不被延迟合并）。
 
 ## Part 3 · 背压与有界性
 
@@ -137,7 +131,7 @@ public final class ReconnectingClient implements AutoCloseable {
 }
 ```
 
-### 语义 (reconstructed)
+### 语义
 
 * 后台一个线程（本参考用虚拟线程）：连接 → 成功后把 `pending` 里的消息按序搬进当前通道 → 通道断开（`!isOpen()` 或 `isPeerClosed()`）⟹ 丢掉旧通道 ⟹ 退避后重连。连接失败 ⟹ `failedAttempts++`，按 `Backoff` 等待再试；连接成功 ⟹ `backoff.reset()`。
 * `offer` 永远先进 `pending`（保证顺序），`pending` 有界：已编码字节（`4 + len` 之和）不得超过 `cfg.outCapacity()`，放不下返回 `false`。断线期间 `offer` 仍然成功（直到装满）。
@@ -179,15 +173,15 @@ d.hasTruncatedTail();                                   // true
 | 通道 I/O | 空消息、最大消息、几 MB 大消息（部分写）、1 万条按序、双向同时 5,000 条、裸 socket 逐字节发送、一次写入"两条半" |
 | 错误 | 非法帧头 ⟹ `FrameException` + 通道失败 + 之前的消息仍可取；对端在帧中间关闭 ⟹ `EOFException`；`close` 后 `offer` 抛异常；`close` 唤醒阻塞的 `poll(30_000)` |
 | 半关闭 | `finishSending` 后 `offer` 抛；对端先收齐全部再看到 EOF；对端仍能回话；双方 `finishSending` ⟹ 两端关闭且 `failure() == null` |
-| 背压 | 接收方不读 ⟹ `offer` 最终返回 `false` 且有界；开始读后全部按序到达、数量相等；带超时的 `offer` 在对端读之后成功；最小缓冲区 2 万条；自旋的非阻塞 `poll()` 也能恢复暂停的读（变异检查：去掉 `poll()` 里的唤醒，这个测试 20 s 超时失败） |
+| 背压 | 接收方不读 ⟹ `offer` 最终返回 `false` 且有界；开始读后全部按序到达、数量相等；带超时的 `offer` 在对端读之后成功；最小缓冲区 2 万条；自旋的非阻塞 `poll()` 也能恢复暂停的读 |
 | 重连 | 服务端踢掉连接 ⟹ 自动重连并继续收发；服务端整个下线 ⟹ 断线期间 `offer` 成功、重新上线（同一端口）后按序全部到达；`pending` 有界（10 条 × 50 字节 = 500）；`close` 后不再重连；失败几次后成功，再被踢，重连应当从最短退避开始 |
 | 退避 | `100,200,400,800,1000,1000…`；`reset`；`Long.MAX_VALUE` 上限不溢出；`multiplier = 1`；全抖动在 `[0, 当前上限]`；非法参数 |
-| 性能 | 100 万条 32 字节经环 + 解码器 < 2 s；20 万条经回环 < 5 s（本机实测远低于 1 s，见讲义 §5） |
+| 性能 | 100 万条 32 字节经环 + 解码器 < 2 s；20 万条经回环 < 5 s（实际远低于 1 s） |
 
-## 野外变体
+## 相关变体
 
-* **虚拟线程 + 阻塞 I/O 版本**：每个连接两条虚拟线程（读、写），阻塞 `SocketChannel` 读写 + 有界 `ArrayBlockingQueue`；代码更直，延迟略高；讲义 §6 有对比。
-* **多路复用的服务端**：一个 `Selector` 管 N 个连接（回显服务器见 networking_basics §8.5）。
+* **虚拟线程 + 阻塞 I/O 版本**：每个连接两条虚拟线程（读、写），阻塞 `SocketChannel` 读写 + 有界 `ArrayBlockingQueue`；代码更直，延迟略高。
+* **多路复用的服务端**：一个 `Selector` 管 N 个连接（例如回显服务器）。
 * **应用层确认 + 序号 + 重放**：给每条消息一个序号，对端周期性确认；断线重连时从对端的"已收到序号"继续——at-least-once，加去重得到 effectively-once。
 * **心跳 / 空闲超时**：检测"半开连接"（对端机器掉电，TCP 不会通知）。
 * **压缩 / 批量**：多条小消息合并成一次 `write`（Nagle 的应用层版本，延迟 vs 吞吐）。
@@ -195,14 +189,10 @@ d.hasTruncatedTail();                                   // true
 * **零拷贝**：`FileChannel.transferTo`、直接缓冲区、`MemorySegment`。
 * C++ 版：`epoll` + 环形缓冲 + `recv/send` 返回 `EAGAIN`；追问边缘触发 vs 水平触发。
 
-## 来源与置信度
-
-`catalog/raw/github_repos.md` §3.1.D（FastPrep "Asynchronous TCP Message Channel"，Low-level design，Mar 09, 2023，摘要 "bounded message API over one TCP session, with local circular buffers, partial-I/O framing…"）· `catalog/raw/forums.md` A16（1p3a 974931，同日，**不计**）。置信度：**中**，仅标题 + 摘要；Part 划分、帧格式、背压 / 半关闭 / 重连语义全部是 **(reconstructed)**。
-
 ## 考什么
 
 1. **TCP 是字节流**：消息边界必须自己带；部分读 / 部分写是常态而不是异常。
 2. **有界 = 每一层都有上限**，满了向上游说"满了"，且这条信息一路传到对端（背压穿过内核）。
 3. **`Selector` 的纪律**：谁修改兴趣集、怎么唤醒、"就绪不等于完成"；暂停读之后谁来恢复。
 4. **正确的失败语义**：EOF 在帧中间、非法帧头、半关闭、断线时哪些数据可能丢——说出来比假装不丢更重要。
-5. **并发正确性的测试方法**：截止时间轮询而非 `sleep`；确定性消息（序号可校验）；最小缓冲区压力；变异检查。
+5. **并发正确性的测试方法**：截止时间轮询而非 `sleep`；确定性消息（序号可校验）；最小缓冲区压力。

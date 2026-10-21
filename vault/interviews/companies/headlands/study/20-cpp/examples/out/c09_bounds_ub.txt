@@ -1,0 +1,18 @@
+$ c09_bounds_ub
+=================================================================
+==98203==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60200000091c at pc 0x0001009dcc20 bp 0x00016f422c10 sp 0x00016f422c08
+READ of size 4 at 0x60200000091c thread T0
+    #0 0x0001009dcc1c  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c09_bounds_ub:arm64+0x100000c1c)
+    #1 0x000199c75154  (/usr/lib/dyld:arm64e.x1+0x30154)
+
+0x60200000091c is located 0 bytes after 12-byte region [0x602000000910,0x60200000091c)
+allocated by thread T0 here:
+    #0 0x0001011b4150  (/Library/Developer/CommandLineTools/usr/lib/clang/21/lib/darwin/libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50150)
+    #1 0x0001009dd2f4  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c09_bounds_ub:arm64+0x1000012f4)
+    #2 0x0001009dd1a0  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c09_bounds_ub:arm64+0x1000011a0)
+    #3 0x0001009dc9d8  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c09_bounds_ub:arm64+0x1000009d8)
+    #4 0x000199c75154  (/usr/lib/dyld:arm64e.x1+0x30154)
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c09_bounds_ub:arm64+0x100000c1c) 
+at(5) threw: vector
+v[3] = study/20-cpp/examples/build_all.sh: line 26: 98203 Abort trap: 6           perl -e 'alarm 120; exec "bash", "-c", $ARGV[0]' "$1"

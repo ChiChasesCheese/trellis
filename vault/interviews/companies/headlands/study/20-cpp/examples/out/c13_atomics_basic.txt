@@ -1,0 +1,5 @@
+$ c13_atomics_basic
+atomic counter 400000, mutex counter 400000 (both exact)
+max via CAS loop: 3999
+is_lock_free: atomic<bool> true, atomic<uint64_t> true, atomic<64-byte struct> false (falls back to a hidden lock)
+sizeof(atomic<long>)=8
