@@ -1,16 +1,13 @@
 # J03 · `switch` 模式匹配：按「类型」分派，编译器检查你有没有漏
 
-> 版本：Java 21 正式（JEP 441）。之前经历了 Java 17（JEP 406）、18（420）、19（427）、20（433）四轮预览。
-> 本课所有可运行代码在 `study/10-java21/examples/J03/`。
-> 前置知识：J01（`record`）、J02（`sealed`）。本课是 sealed 的兑现：J02 里「把有几种写进类型」，这里是「让 switch 利用这件事」。
-> 官方出处：JEP 441 Pattern Matching for switch — https://openjdk.org/jeps/441 ；语言规范 §14.11 — https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html#jls-14.11
+> 版本：Java 21 正式（17–20 为预览）。可运行代码：`examples/J03/`。
+> 前置：J01（`record`）、J02（`sealed`）。J02 把「有几种」写进类型，本课让 `switch` 利用它。
 
 ---
 
 ## 1. 先看痛点：Java 8 的 switch 只会看「值」，不会看「类型」
 
-Java 8 的 `switch` 只能对 `int`、`char`、枚举、`String` 这几类**常量**做分支。想按**类型**分派，只能写 `instanceof` 链
-（完整代码：`examples/J03/J03Old.java`）：
+Java 8 的 `switch` 只能对 `int`、`char`、枚举、`String` 这类**常量**分支。想按**类型**分派只能写 `instanceof` 链（`examples/J03/J03Old.java`）：
 
 ```java
 static double area(Shape s) {
@@ -25,15 +22,15 @@ static double area(Shape s) {
 }
 ```
 
-痛点逐个列出：
+痛点：
 
-1. **判断 + 强转是两步**，类型写两遍（`instanceof Circle` 和 `(Circle) s`），改一个忘改另一个就是 `ClassCastException`。（J06 的 `instanceof` 模式专门解决这一点。）
-2. **if-else 链没有「一共几种」的概念**。漏一种，编译器不报；最后的 `throw` 只能在运行时才发现问题。
-3. **老 `switch` 遇到 `null` 一定抛 `NullPointerException`**（`J03Old.main` 里实测），没有办法在 `switch` 里优雅地处理 `null`。
-4. **老 `switch` 带 `:` 的写法会 fall-through**（忘了 `break` 就继续执行下一个分支），J05 会专门讲。
-5. 想对某个类型再加一个条件（"是 `Limit` 并且 `price <= 0`"），只能在分支里再嵌一层 `if`，原来的平铺结构就乱了。
+1. **判断 + 强转是两步**，类型写两遍，改一个忘另一个就是 `ClassCastException`。
+2. **if-else 链不知道「一共几种」**：漏一种编译器不报，末尾的 `throw` 只能运行时才暴露。
+3. **老 `switch` 遇 `null` 必抛 `NullPointerException`**，没法优雅处理。
+4. **带 `:` 的老写法会 fall-through**（忘 `break` 就执行下一分支）。
+5. 想对某类型再加条件（"是 `Limit` 且 `price <= 0`"）只能在分支里嵌 `if`，平铺结构乱了。
 
-模式匹配 `switch` 把这五点一起解决：**直接写类型，自动转型，可以处理 null，可以加条件，漏了就编译报错。**
+模式匹配 `switch` 一次解决：**直接写类型、自动转型、可处理 null、可加条件、漏了就编译报错。**
 
 ---
 
@@ -53,12 +50,10 @@ static String describe(Object o) {
 }
 ```
 
-* `case Integer i` 的意思：**如果 `o` 是 `Integer`，就把它绑定到新变量 `i`（类型是 `Integer`），执行这个分支**。
-  `Integer i` 这个整体叫**类型模式**（type pattern），`i` 叫**绑定变量**（binding variable）。
-* 绑定变量只在**它那个分支里**可见。不同分支可以重名。
-* `switch (o)` 里的 `o` 叫**选择器**（selector）。在 Java 21，用了模式的 switch，选择器必须是**引用类型**
-  （对 `int`/`long` 等基本类型直接用模式是不行的；基本类型的模式在后续版本的预览里才出现）。
-* 分支之间是**从上到下依次尝试，第一个匹配的生效**。
+* `case Integer i`：**若 `o` 是 `Integer`，就绑定到新变量 `i`（类型 `Integer`）并执行该分支**。`Integer i` 叫**类型模式**（type pattern），`i` 叫**绑定变量**（binding variable）。
+* 绑定变量只在**本分支**可见，不同分支可重名。
+* `switch (o)` 的 `o` 叫**选择器**（selector）。Java 21 里用模式的 switch，选择器必须是**引用类型**。
+* 分支**从上到下依次尝试，第一个匹配的生效**。
 
 ### 2.2 处理 `null`
 
@@ -70,9 +65,8 @@ return switch (o) {
 };
 ```
 
-* **没有写 `case null` 时，选择器是 `null` 就抛 `NullPointerException`**——和旧行为一致，不破坏兼容。
-* 写了 `case null` 就由你处理。
-* 可以和 `default` 合并：`case null, default -> "other/null"`。
+* 没写 `case null`，选择器为 `null` 就抛 `NullPointerException`（兼容旧行为）。
+* 写了 `case null` 由你处理；可与 `default` 合并：`case null, default -> "other/null"`。
 
 ### 2.3 守卫：`when`
 
@@ -85,22 +79,18 @@ return switch (o) {
 };
 ```
 
-`when` 后面跟一个布尔表达式，叫**守卫**（guard）。分支匹配 = 类型匹配 **并且** 守卫为真。
-守卫为假时，继续往下试后面的分支（包括同一个类型的下一个分支）。
-
-守卫里可以使用刚绑定的变量（`i < 0`）。
+`when` 后跟布尔表达式，叫**守卫**（guard）。分支匹配 = 类型匹配 **并且** 守卫为真；守卫为假则继续试后面的分支（含同类型的下一个）。守卫里可用刚绑定的变量（`i < 0`）。
 
 ### 2.4 顺序很重要：支配（dominance）
 
-因为是从上到下第一个匹配生效，**范围大的分支不能写在范围小的分支前面**——否则后面的永远走不到。
-编译器会直接拒绝这种代码（实测）：
+从上到下第一个匹配生效，所以**范围大的分支不能写在范围小的前面**，否则后者永远走不到。编译器直接拒绝：
 
 ```java
 case Object x -> "obj";
 case String s -> "str";       // error: this case label is dominated by a preceding case label
 ```
 
-规则：如果标签 A 能匹配的值**包含**标签 B 能匹配的所有值（A 是 B 的父类型，且 A 没有守卫），则 A **支配**（dominates）B，B 必须写在 A 前面。常见情形：
+规则：标签 A 能匹配的值**包含**标签 B 的全部（A 是 B 的父类型且 A 无守卫），则 A **支配**（dominates）B，B 必须写在 A 前面：
 
 | 写法 | 结果 |
 |---|---|
@@ -110,7 +100,7 @@ case String s -> "str";       // error: this case label is dominated by a preced
 | `default` 写在模式分支前面 | 编译错误：`default` 之后的模式分支被支配 |
 | `case Object x` 和 `default` 同时有 | 编译错误：`switch has both an unconditional pattern and a default label` |
 
-写顺序的口诀：**先具体、后一般；带守卫的在前、不带的在后；`default`/兜底在最后。**
+口诀：**先具体、后一般；带守卫在前、不带在后；`default` 最后。**
 
 ### 2.5 穷尽性（exhaustiveness）——这一节最重要
 
@@ -120,17 +110,16 @@ case String s -> "str";       // error: this case label is dominated by a preced
 error: the switch expression does not cover all possible input values
 ```
 
-**用了模式或 `case null` 的 switch 语句**也必须穷尽（实测：`error: the switch statement does not cover all possible input values`）。
-只有「老式」的 switch 语句（对 `int`/`String`/`enum` 的常量分支，没有模式没有 null）才可以不穷尽——兼容旧代码。
+**用了模式或 `case null` 的 switch 语句**也必须穷尽（`the switch statement does not cover all possible input values`）。只有「老式」switch 语句（`int`/`String`/`enum` 常量分支，无模式无 null）可以不穷尽。
 
-什么算「覆盖了所有可能值」？一组 case 对类型 `T` 是穷尽的，如果满足以下任意一条（JLS §14.11.1.1 的简化）：
+一组 case 对类型 `T` 穷尽，当且仅当满足任一条：
 
-1. 有一个**无条件**的模式（类型是 `T` 或 `T` 的父类型、没有守卫）或者有 `default`；
-2. `T` 是 **sealed 接口 / 抽象 sealed 类**，且**每一个**许可子类型都被这组 case 覆盖（递归，子类型自己是 sealed 的就继续往下展开）；
-3. `T` 是 enum，且每个枚举常量都有 `case`；
-4. （record 模式的情形见 J04。）
+1. 有**无条件**模式（类型是 `T` 或其父类型，无守卫）或有 `default`；
+2. `T` 是 **sealed 接口 / 抽象 sealed 类**，且**每个**许可子类型都被覆盖（子类型自己 sealed 就递归展开）；
+3. `T` 是 enum 且每个常量都有 `case`；
+4. （record 模式的情形见 J04 的嵌套展开。）
 
-带守卫的分支**不算**覆盖（守卫可能为假）。所以：
+带守卫的分支**不算**覆盖：
 
 ```java
 case String s when s.length() > 3 -> "long";
@@ -140,7 +129,7 @@ case Integer i -> "int";
 
 ### 2.6 enum 常量作为 case 标签，和 sealed 配合
 
-Java 21 允许用**限定名**写 enum 常量当 case，即使选择器是 sealed 接口而不是那个 enum：
+Java 21 允许用**限定名**写 enum 常量当 case，即使选择器是包含它的 sealed 接口：
 
 ```java
 sealed interface Signal permits Level, Tick {}
@@ -155,19 +144,19 @@ switch (s) {
 }
 ```
 
-只要列全 `LOW/MID/HIGH` 三个常量，`Level` 就算被覆盖。（`J03Ex2.java`）
+列全 `LOW/MID/HIGH` 三个常量，`Level` 就算被覆盖（`J03Ex2.java`）。
 
 ### 2.7 箭头 `->` vs 冒号 `:`
 
-模式标签用 `case X x ->` 最自然。也可以用 `case X x:`（经典风格），但：
-* 不允许 fall-through 进入模式标签（实测错误：`illegal fall-through to a pattern`）——因为绑定变量在 fall-through 时没有值。
-* 一个 `case` 标签里不能同时放多个会绑定变量的模式（实测：`case String a, Integer b` 报 `illegal fall-through from a pattern`）。Java 21 预览里的 `case A _, B _`（未命名模式，J13）可以。
+模式标签最自然的是 `case X x ->`。用经典 `case X x:` 也行，但：
+* 不允许 fall-through 进入模式标签（`illegal fall-through to a pattern`），因为绑定变量那时没有值。
+* 一个 `case` 里不能放多个会绑定变量的模式（`case String a, Integer b` 报错）。
 
 ---
 
 ## 3. 编译器和 JVM 到底做了什么
 
-用 `javap -c` 看 J02Ex1 里那个只有两个分支的 `show(Result r)`（实测输出，略有删减）：
+用 `javap -c` 看 `show(Result r)`（两个分支，略有删减）：
 
 ```
  0: aload_0
@@ -186,14 +175,12 @@ switch (s) {
 71: aload_1; checkcast J02Ex1$Err; ... 分支 1 的代码
 ```
 
-分步骤解释：
+逐步解释：
 
-1. **`invokedynamic typeSwitch`**：和 J01 里 record 的 `equals` 同一种机制（`invokedynamic`，第一次执行时调用引导方法生成实际逻辑）。
-   这里的引导方法是 `java.lang.runtime.SwitchBootstraps.typeSwitch`，它的静态参数是**标签列表**（这里是 `Ok.class`、`Err.class`）。
-   调用时传入 `(选择器, 起始下标)`，返回「第一个匹配的标签的下标」；都不匹配返回标签个数；选择器为 `null` 返回 `-1`。
-2. **返回值上再做一个普通的 `lookupswitch` / `tableswitch`** 跳到对应分支。分支里先 `checkcast` 转型再使用——就是你在 Java 8 里手写的那个强转，现在由编译器生成，并且保证和判断是同一个类型。
-3. **没写 `case null`** 时编译器在最前面插一个 `Objects.requireNonNull(selector)`；写了 `case null` 则让 `typeSwitch` 返回的 `-1` 直接跳到你的分支（`J03Ex2.sizeBucket` 的字节码里有 `-1: 142`）。
-4. **守卫失败时怎么「继续往下试」**：看 `sizeBucket` 里 `case Integer i when i < 0` 的字节码：
+1. **`invokedynamic typeSwitch`**：与 record 的 `equals` 同一机制（第一次执行时调用引导方法生成逻辑）。引导方法是 `java.lang.runtime.SwitchBootstraps.typeSwitch`，静态参数是**标签列表**（`Ok.class`、`Err.class`）。调用时传 `(选择器, 起始下标)`，返回「第一个匹配标签的下标」；都不匹配返回标签个数；`null` 返回 `-1`。
+2. 返回值上再做普通 `lookupswitch`/`tableswitch` 跳到分支，分支里先 `checkcast`——就是你在 Java 8 手写的强转，现在由编译器生成并保证与判断同一类型。
+3. **没写 `case null`** 时编译器在最前插 `Objects.requireNonNull(selector)`；写了则让 `-1` 直接跳到你的分支。
+4. **守卫失败怎么「继续往下试」**：看 `case Integer i when i < 0` 的字节码：
 
    ```
    48: aload_1; checkcast Integer; astore_3
@@ -202,9 +189,8 @@ switch (s) {
    62: goto 4                                             // 回到第 4 行，重新调用 typeSwitch，从标签 1 开始再试
    ```
 
-   所以 `typeSwitch` 的第二个参数就是这个「重启下标」。这是整个设计里最巧妙的地方：**类型匹配交给 `typeSwitch`，守卫是普通字节码，二者通过重启下标衔接。**
-5. **`default -> throw new MatchException(null, null)`**：对 sealed 层级且没有写 `default` 的 switch，编译器仍然生成一个 `default` 目标，里面抛 `MatchException`。
-   正常情况永远走不到；只有当层级在**编译之后**被改过（新增了子类但没重新编译这个 switch）才会到。我做了实验：
+   `typeSwitch` 的第二个参数就是「重启下标」。**类型匹配交给 `typeSwitch`，守卫是普通字节码，二者靠重启下标衔接。**
+5. **`default -> throw new MatchException(null, null)`**：sealed 层级的 switch 即使没写 `default`，编译器也生成一个抛 `MatchException` 的 default 目标。正常走不到；只有层级在**编译之后**被改过才会到：
 
    ```
    先编译 sealed interface S permits X, Y 和 switch (s) { case X x -> 1; case Y y -> 2; }
@@ -212,20 +198,14 @@ switch (s) {
    运行 f(new Z())  ->  java.lang.MatchException
    ```
 
-   同样的，对 enum 的 switch 表达式（没有 `default`），在编译后枚举多出新常量，运行时也是 `MatchException`（J05）。
-   **这就是「不要给 sealed 的 switch 写 `default`」的原因**：写了 `default`，新增变体时编译器不再报错，会悄悄落入 default。
-6. **性能**：`typeSwitch` 在 JDK 21 里的实现是按顺序依次检查标签（`isInstance`），不是哈希表；对只有几个分支的 switch 完全不是问题。
-   如果在热路径上有几十个分支，要实测（实现细节随版本改进，不要当规范依赖）。
+   同理，enum 的 switch 表达式在编译后枚举多出新常量，运行时也是 `MatchException`。**这就是「sealed 的 switch 不要写 `default`」的原因**：写了，新增变体时编译器不再报错，会悄悄落入 default。
+6. **性能**：JDK 21 的 `typeSwitch` 按顺序依次 `isInstance` 检查标签，不是哈希表；几个分支毫无问题，热路径上几十个分支要实测（实现细节随版本改进，别当规范依赖）。
 
 ### javac 怎么证明「穷尽」
 
-编译器在类型检查阶段，把所有无守卫的 `case` 模式收集起来，对选择器类型做**递归覆盖检查**：
+编译器把所有无守卫的 `case` 模式收集起来，对选择器类型做**递归覆盖检查**：`Result`（sealed）展开成 `Ok`、`Err`（读 `PermittedSubclasses`）；每个子类型在 case 里有无守卫的类型模式就算覆盖，子类型自己 sealed 就再展开；全覆盖即穷尽，否则报 `does not cover all possible input values`。
 
-* `Result`（sealed）→ 展开成 `Ok`、`Err`（读的是 J02 讲的 `PermittedSubclasses`）；
-* 每个子类型在 case 里能找到无守卫的类型模式吗？找到就覆盖；该子类型自己又是 sealed 就再展开；
-* 全部覆盖 → 穷尽，没有 `default` 也可以；否则报 `does not cover all possible input values`。
-
-整个检查是**编译期**做的，不产生任何运行时代价；运行时只多一个永远走不到的 `MatchException` 分支。
+检查全在**编译期**，运行时只多一个永远走不到的 `MatchException` 分支。
 
 ---
 
@@ -248,7 +228,7 @@ static String describe(Object o) {
 }
 ```
 
-输入 `{null, 41, 7L, "hello", new int[]{1,2,3}, 3.14}`，实测输出：
+输入 `{null, 41, 7L, "hello", new int[]{1,2,3}, 3.14}` 的输出：
 
 ```
 null!
@@ -277,7 +257,7 @@ static String classify(Signal s) {
 }
 ```
 
-输入 `MID, Tick(1,0), Tick(200000,5), Tick(100,3)`，实测输出：
+输入 `MID, Tick(1,0), Tick(200000,5), Tick(100,3)` 的输出：
 
 ```
 mid level
@@ -286,7 +266,7 @@ expensive tick
 tick 100x3
 ```
 
-注意最后一个 `case Tick t` **没有守卫**——它既是兜底，也是让编译器相信 `Tick` 被完整覆盖的那一行（带守卫的两行不算覆盖）。
+最后一个 `case Tick t` **没有守卫**——既是兜底，也是让编译器相信 `Tick` 被完整覆盖的那一行。
 
 ### 例 3：贴近真实——订单校验
 
@@ -309,13 +289,9 @@ static String validate(Command cmd, Set<Long> knownIds) {
 }
 ```
 
-这是 `OrderBook.validate` 的简化版。它的好处：
+这是订单簿校验的简化版。好处：校验顺序就是代码顺序（id → price → quantity → 状态）；将来新增 `Modify` 命令，switch 立刻编译失败；没有 `instanceof`/强转/嵌套 `if`。
 
-1. 校验顺序就是代码顺序（题面规定 id → price → quantity → 状态），一眼能对照。
-2. 将来新增 `Modify` 命令，这个 switch 立刻编译失败，不会漏掉对新命令的校验。
-3. 没有 `instanceof`/强转，没有嵌套 `if`。
-
-实测输出（`knownIds = {1, 2}`）：
+输出（`knownIds = {1, 2}`）：
 
 ```
 Limit[id=0, side=BUY, price=100, qty=5] -> INVALID_ID
@@ -342,46 +318,43 @@ return switch (event) {
 };
 ```
 
-只在**真的想把剩下的都当一类处理**时才写 `default`。本 kit 的约定：sealed 层级的 switch 不写 `default`。
+只在**真想把剩下的都当一类**时才写 `default`；sealed 层级的 switch 一般不写。
 
 ### 5.2 守卫里的副作用
 
-守卫在「类型匹配之后」才求值，且**每次尝试都求值一次**。别在守卫里做有副作用的事（修改变量、读流、计数），否则顺序一变行为就变了。守卫里能引用的外部局部变量必须是 `final` 或事实上的 final（有效不可变，effectively final），否则报 `local variables referenced from a guard must be final or effectively final`（实测）。
+守卫在类型匹配之后求值，**每次尝试都求一次**。别在守卫里做副作用（改变量、读流、计数），否则顺序一变行为就变。守卫引用的外部局部变量必须 effectively final，否则报 `local variables referenced from a guard must be final or effectively final`。
 
 ### 5.3 `null` 与 `default` 不是一回事
 
-`default` **不处理 `null`**。没写 `case null`，`null` 一进来就是 NPE，不会落进 `default`。要同时处理就写 `case null, default`。
+`default` **不处理 `null`**：没写 `case null`，`null` 直接 NPE，不会落进 `default`。要同时处理写 `case null, default`。
 
 ### 5.4 绑定变量不能与外层局部变量同名
 
-`String s = ...; switch (o) { case String s -> ... }` 编译错误（变量已定义）。给模式变量起不同的名字。
+`String s = ...; switch (o) { case String s -> ... }` 编译错误（变量已定义），换个名字。
 
 ### 5.5 选择器必须是引用类型（Java 21）
 
-对 `int` 选择器用 `case Integer i` 之类的模式在 21 里不可用（实测：`pattern of type Integer is not applicable at int`）。需要时先装箱成 `Integer`/`Object`，或者用传统的常量标签。
+对 `int` 选择器用 `case Integer i` 在 21 里不可用（`pattern of type Integer is not applicable at int`）。先装箱成 `Integer`/`Object`，或用传统常量标签。
 
 ### 5.6 泛型擦除
 
-`case List<String> l` 对 `Object` 选择器会因为擦除（erasure）而无法在运行时检查 `<String>`，编译器拒绝（实测：`Object cannot be safely cast to List<String>`）。
-选择器本身是 sealed 泛型类型（比如 `Poll<T>`）时，`case Ready<T> r` 是可以的，因为类型参数能由选择器推出。
+`case List<String> l` 对 `Object` 选择器因擦除（erasure）无法运行时检查 `<String>`，编译器拒绝。选择器本身是 sealed 泛型类型（如 `Poll<T>`）时 `case Ready<T> r` 可以，因为类型参数能由选择器推出。
 
 ### 5.7 新增变体 ≠ 向后兼容
 
-前面第 3 节第 5 点：不重新编译的旧 switch 会抛 `MatchException`。公共库里 sealed 层级加成员要当作破坏性变更。
+第 3 节第 5 点：不重编译的旧 switch 会抛 `MatchException`。公共库的 sealed 层级加成员是破坏性变更。
 
 ### 5.8 不适合的场景
 
-* 变体 > 20 种且在热路径上：先实测（见第 3 节第 6 点）；这时用「虚方法调用」（每个 record 实现 `apply()`）可能更快，也更符合开闭原则。
-* 分派逻辑属于对象自己、会被很多地方复用：把它写成接口方法，而不是在外面反复 switch。
-* 只有一个条件：`if (o instanceof Foo f && ...)` 更直接（J06）。
+* 变体 > 20 种且在热路径：先实测；虚方法（每个 record 实现 `apply()`）可能更快，也更符合开闭原则。
+* 分派逻辑属于对象自己、多处复用：写成接口方法，别在外面反复 switch。
+* 只有一个条件：`if (o instanceof Foo f && ...)` 更直接。
 
 ---
 
-## 6. 在本 kit 哪里用到
+## 6. 真实代码里的 switch
 
-所有路径相对 `loop/rounds/`。
-
-* **`01_video/hc05_market_order_book/reference/OrderBook.java`** —— 用 `when` 守卫写校验顺序（就是上面例 3 的原型）：
+* **`OrderBook`** —— `when` 守卫写校验顺序（例 3 的原型）：
   ```java
   private String validate(Command cmd) {
       return switch (cmd) {
@@ -392,23 +365,20 @@ return switch (event) {
       };
   }
   ```
-  注释写着：「从上到下第一个匹配的分支生效，所以『更具体的错误』写在前面；最后两行没有守卫，让编译器检查 sealed 层级被穷尽了」。
-  （`case Limit _, Market _` 用了未命名模式 `_`，是 Java 21 的**预览**特性，见 J13。）
-  `execute(Command)` 是同一个文件里的另一个 switch：`case Limit(var id, var side, var px, var q) -> {...}`（J04）。
-* **`00_oa/oa01_job_chain/reference/JobChains.java`** —— `render(Outcome)`：
+  从上到下第一个匹配生效，所以「更具体的错误」写前面；最后几行无守卫，让编译器验证 sealed 层级被穷尽。`case Cancel _, Modify _` 用了未命名模式 `_`（Java 21 的**预览**特性：不需要变量名时用 `_` 占位）。
+* **`JobChains`** —— `render(Outcome)`：
   ```java
   return switch (outcome) {
       case Malformed _ -> List.of("Malformed Input");
       case Ok(var chains) -> { ... yield lines; }
   };
   ```
-* **`01_video/hc04_queue_mean_snapshot/reference/QueueEvents.java`** —— `run(...)` 里 `switch (e)` 处理 `Push/Pop/Query/Correct` 四种事件（作为 switch **语句**，没有 `default`，同样要穷尽）；`render(Answer)` 有一条带守卫的 record 模式：
+* **`QueueEvents`** —— `switch (e)` 处理四种事件（作为 switch **语句**，无 `default`，同样要穷尽）；`render(Answer)` 有带守卫的 record 模式：
   ```java
   case Value(QueueMean.Mean(var n, var d)) when d == 1 -> n.toString();
   case Value(QueueMean.Mean(var n, var d)) -> n + "/" + d;
   ```
-* **`01_video/hc06_cpu_register_bitwise/reference/RegisterSim.java`** —— `apply(int reg, Update u)` 对 15 种指令的 switch，没有 `default`。
-* **`01_video/hc02_merge_k_streams/reference/ConcurrentMerge.java`** —— `switch (m)` 处理队列里的 `Item/End/Failed` 三种消息。
+* **`RegisterSim`** —— 对 15 种指令的 switch，无 `default`；**`ConcurrentMerge`** —— `switch (m)` 处理 `Item/End/Failed` 三种消息。
 
 ---
 
@@ -422,27 +392,19 @@ return switch (event) {
        default -> "d";
    };
    ```
-2. `switch (o)` 里 `o == null`，下列三种写法分别发生什么？(a) 没有 `case null` 也没有 `default`；(b) 有 `default` 但没有 `case null`；(c) 有 `case null, default`。
+2. `switch (o)` 里 `o == null`，分别发生什么？(a) 无 `case null` 无 `default`；(b) 有 `default` 无 `case null`；(c) 有 `case null, default`。
 3. 对 `sealed interface Shape permits Circle, Square, Tri`，只写 `case Circle`、`case Square when x > 0`、`case Tri`，switch 表达式能编译吗？
 4. 写了 sealed 层级的 switch 后，团队新增了一个 record 实现。如果 switch 末尾有 `default`，会发生什么？如果没有呢？
 5. `invokedynamic typeSwitch` 的返回值是什么？守卫失败时字节码怎么「继续往下试」？
 
 <details><summary>答案</summary>
 
-1. `case String s` 那一行：`CharSequence` 是 `String` 的父类型，且没有守卫，它支配了后面的 `String`，报 `this case label is dominated by a preceding case label`。要先写 `String` 再写 `CharSequence`。
+1. `case String s`：`CharSequence` 是 `String` 的父类型且无守卫，支配了后面的 `String`（`this case label is dominated by a preceding case label`）。要先写 `String` 再写 `CharSequence`。
 2. (a) NPE；(b) 也是 NPE（`default` 不处理 `null`）；(c) 进入 `case null, default` 分支，不抛异常。
-3. 不能。`case Square when x > 0` 带守卫，不算覆盖 `Square`（守卫为假时没有人处理），报 `does not cover all possible input values`。要再加一行无守卫的 `case Square` 或者 `default`。
-4. 有 `default`：编译通过，新类型悄悄落入 `default`，没人提醒你要不要特殊处理；没有 `default`：编译失败，逼你补分支（如果没有重新编译这个 switch 而直接运行旧 class，则运行时抛 `MatchException`）。
-5. 返回第一个匹配的标签的下标（不匹配返回标签数、`null` 返回 `-1`）。字节码随后用 `lookupswitch`/`tableswitch` 跳转。守卫为假时，字节码把一个局部变量（重启下标）设为「当前下标 + 1」，`goto` 回到调用 `typeSwitch` 的位置，从下一个标签重新匹配。
+3. 不能。`case Square when x > 0` 带守卫不算覆盖 `Square`，报 `does not cover all possible input values`。再加一行无守卫的 `case Square` 或 `default`。
+4. 有 `default`：编译通过，新类型悄悄落入 `default`；没有：编译失败，逼你补分支（若直接跑没重编译的旧 class，则运行时抛 `MatchException`）。
+5. 返回第一个匹配标签的下标（不匹配返回标签数、`null` 返回 `-1`），随后 `lookupswitch`/`tableswitch` 跳转。守卫为假时，字节码把「重启下标」设为当前下标 + 1，`goto` 回 `typeSwitch` 调用处，从下一标签重新匹配。
 
 </details>
 
----
-
-## 8. 延伸阅读
-
-* JEP 441 Pattern Matching for switch — https://openjdk.org/jeps/441 —— 读 Description，特别是 "Dominance of case labels" 和 "Exhaustiveness of switch expressions and statements" 两节，规则都在那里。
-* JLS §14.11 The switch Statement — https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html#jls-14.11 —— 穷尽性的精确定义在 §14.11.1.1。
-* `SwitchBootstraps` Javadoc — https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/runtime/SwitchBootstraps.html —— `typeSwitch` 的契约（参数、返回值的含义）。
-* `MatchException` Javadoc — https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/MatchException.html —— 为什么、何时抛。
-* 下一课：J04 record 模式——在 `case` 里直接拆开 record 的字段。
+「延伸」J04 record 模式：在 `case` 里直接拆开 record 的字段。

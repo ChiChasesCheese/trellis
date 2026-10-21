@@ -207,6 +207,7 @@ TEST(reinserting_a_deleted_key_reuses_the_tombstone, "part1,edge") {
     CHECK_EQ(m.capacity(), cap, "remove + put of the same key must not grow the table");
     CHECK_EQ(m.size(), 5u);
     CHECK_EQ(m.get("Q3"), std::optional<long long>(99999));
+    CHECK_EQ(m.tombstones(), 0u, "re-using a tombstone must take it off the count");
 }
 
 TEST(tombstone_churn_does_not_bloat_the_table_or_loop_forever, "part1,edge") {
@@ -491,6 +492,23 @@ TEST(long_map_tombstone_churn_stays_bounded, "part2,edge") {
     }
     CHECK_EQ(m.size(), 10u);
     CHECK_LE(m.capacity(), 1024u);
+}
+
+TEST(long_map_reuses_tombstones_and_counts_them_correctly, "part2,edge") {
+    LongTickerMap m;
+    for (Key key = 100; key < 105; ++key) m.put(key, 1);
+    const std::size_t cap = m.capacity();
+    CHECK(m.remove(103));
+    CHECK_EQ(m.tombstones(), 1u);
+    CHECK(m.put(103, 7));
+    CHECK_EQ(m.tombstones(), 0u);
+    for (int round = 0; round < 50000; ++round) {
+        m.remove(103);
+        m.put(103, round);
+    }
+    CHECK_EQ(m.capacity(), cap);
+    CHECK_EQ(m.size(), 5u);
+    CHECK_EQ(m.tombstones(), 0u);
 }
 
 TEST(long_map_deleting_in_the_middle_of_a_chain_keeps_the_rest, "part2,edge") {

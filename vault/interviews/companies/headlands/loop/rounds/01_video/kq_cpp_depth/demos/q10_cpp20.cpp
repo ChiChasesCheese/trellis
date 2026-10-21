@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <bit>
 #include <compare>
+#include <format>
 #include <concepts>
 #include <cstdio>
 #include <ranges>
@@ -37,5 +38,6 @@ int main() {
     std::printf("after erase_if: %zu elements\n", v.size());
     std::printf("popcount(255)=%d countl_zero(1u)=%d bit_ceil(100)=%u rotl(0x80000001u,1)=0x%x\n",
                 std::popcount(255u), std::countl_zero(1u), std::bit_ceil(100u), std::rotl(0x80000001u, 1));
+    std::printf("%s\n", std::format("format: {:>6} | {:08b} | {:.2f}", "px", 37u, 3.14159).c_str());
     std::jthread t([] { std::printf("jthread joins automatically\n"); });
 }

@@ -19,7 +19,11 @@ SAN="-fsanitize=address,undefined"
 # demos that need special handling in the sanitizer pass
 SKIP='q03_|q07_|q25_err_|_bad$|_warn$|_error$|_hardening$|q42_loop'     # multi-file, per-standard, expected-to-fail, python
 EXTRA_STD_q10_cpp23="-std=c++23"
-export ASAN_OPTIONS=allocator_may_return_null=1     # q12 asks malloc for an impossible size on purpose
+# NOSYM=1 turns off sanitizer symbolization (the macOS symbolizer, atos, can block on machines without Developer Mode)
+SYM=${NOSYM:+:symbolize=0}
+export ASAN_OPTIONS="allocator_may_return_null=1$SYM"   # q12 asks malloc for an impossible size on purpose
+export TSAN_OPTIONS="${SYM#:}"
+export UBSAN_OPTIONS="${SYM#:}"
 
 limit() { perl -e 'alarm 120; exec @ARGV' "$@"; }          # no `timeout` on macOS: kill anything that hangs
 pass=0; fail=0
@@ -46,8 +50,7 @@ plain() {   # plain -O2 build and run (timings are only meaningful without sanit
 section() { printf '\n\n######## %s\n' "$*"; }
 
 section "Q01 / Q04: std::sort vs qsort, -O0 vs -O2"
-$CXX $STD -O0 q01_sort_vs_qsort.cpp -o "$OUT/q01_O0" && echo "-O0:" && "$OUT/q01_O0"
-echo "-O2:"; plain q01_sort_vs_qsort
+plain q01_sort_vs_qsort
 
 section "Q02: contiguous vs boxed"
 plain q02_contiguous
@@ -104,7 +107,7 @@ $CXX $STD -O2 -S q15_copy_vs_memcpy.cpp -o "$OUT/q15.s"
 echo "std::copy of int[] compiles to: $(body "$OUT/q15.s" copy_ints | grep -E '^\s+bl\s' | tr -s ' \t' ' ')"
 plain q16_layout
 echo '$ ASAN_OPTIONS=alloc_dealloc_mismatch=1 (new[] / delete)'
-$CXX $STD -w -g $SAN q12_mismatch_bad.cpp -o "$OUT/q12_bad" && cap env ASAN_OPTIONS=alloc_dealloc_mismatch=1 "$OUT/q12_bad"; head -3 "$OUT/cap.txt"
+$CXX $STD -w -g $SAN q12_mismatch_bad.cpp -o "$OUT/q12_bad" && cap env ASAN_OPTIONS="alloc_dealloc_mismatch=1$SYM" "$OUT/q12_bad"; head -3 "$OUT/cap.txt"
 
 section "Q17 - Q19: containers"
 plain q17_vector
@@ -133,7 +136,8 @@ echo "--- q24_tsan_race_bad (ThreadSanitizer)"; $CXX $STD -g -fsanitize=thread q
 echo "--- clean programs under TSan"
 for n in q28_mutex_cv q29_atomics; do $CXX $STD -O1 -g -fsanitize=thread "$n.cpp" -o "$OUT/$n.tsan" && { cap "$OUT/$n.tsan"; echo "$n: TSan warnings = $(grep -c 'WARNING: ThreadSanitizer' "$OUT/cap.txt")"; }; done
 
-section "Q25: compile errors (first lines of each)"
+section "Q25: compile errors (first lines of each), then the fixed file"
+plain q25_fixed
 for n in missing_include const narrowing no_match typename semicolon return; do
   echo "--- q25_err_$n.cpp"; $CXX $STD $WARN -c "q25_err_$n.cpp" -o /dev/null 2>&1 | grep -E 'error|warning' | grep -v '^In file' | head -4
 done
@@ -149,6 +153,8 @@ $CXX $STD -g -O0 -D_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_DEBUG q27_harde
 section "Q28 - Q31: concurrency"
 plain q28_mutex_cv
 plain q29_atomics
+$CXX $STD -O2 -S q29_atomics.cpp -o "$OUT/q29.s"
+echo "fetch_add code on this CPU:  seq_cst -> $(body "$OUT/q29.s" bump_seq_cst | grep -oE '(ldadd|ldaddal|lock xadd)[a-z]*' | head -1) | relaxed -> $(body "$OUT/q29.s" bump_relaxed | grep -oE '(ldadd|ldaddal|lock xadd)[a-z]*' | head -1)"
 plain q30_volatile_race
 plain q31_false_sharing
 
@@ -168,7 +174,7 @@ section "Q40 - Q44: Java / Python / live coding"
 plain q40_java_idioms
 plain q41_value_semantics
 echo '$ ASan with detect_stack_use_after_return=1 on q41_dangling_bad.cpp'
-$CXX $STD -w -g -fsanitize=address q41_dangling_bad.cpp -o "$OUT/dang" && { cap env ASAN_OPTIONS=detect_stack_use_after_return=1 "$OUT/dang"; head -2 "$OUT/cap.txt"; }
+$CXX $STD -w -g -fsanitize=address q41_dangling_bad.cpp -o "$OUT/dang" && { cap env ASAN_OPTIONS="detect_stack_use_after_return=1$SYM" "$OUT/dang"; head -2 "$OUT/cap.txt"; }
 plain q42_python_vs_cpp
 if command -v python3 >/dev/null; then python3 q42_loop.py; fi
 plain q44_live_skeleton

@@ -29,6 +29,12 @@ int main() {
     show("std::erase_if:", c);
     std::printf("erase_if removed %zu\n", n);
 
+    auto d = base;                                           // order does not matter: swap with the last element, pop it
+    for (std::size_t i = 0; i < d.size();) {
+        if (d[i] % 2 == 0) { d[i] = d.back(); d.pop_back(); } else ++i;
+    }
+    show("swap-and-pop:", d);
+
     std::map<int, int> m{{1, 1}, {2, 2}, {3, 3}, {4, 4}};
     for (auto it = m.begin(); it != m.end();) {
         if (it->first % 2 == 0) it = m.erase(it); else ++it;   // node containers: only the erased iterator dies

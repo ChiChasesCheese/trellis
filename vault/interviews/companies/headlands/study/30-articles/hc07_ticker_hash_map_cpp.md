@@ -86,6 +86,8 @@ int main() {
 
 ### 2.3 代码
 
+头文件和公共工具：`Key` 是 `uint64_t`；`EMPTY` 和 `TOMB` 是两个保留值；`add_checked` 做带溢出检查的加法；`capacity_for` 算 2 的幂容量。
+
 ```cpp
 #include <algorithm>
 #include <bit>
@@ -105,6 +107,28 @@ int main() {
 #include <vector>
 namespace tickers {
 ```
+
+```cpp
+using Key = std::uint64_t;
+inline constexpr Key EMPTY = 0;        // a never-used slot
+inline constexpr Key TOMB = ~Key{0};   // a deleted slot; every real key lies strictly between EMPTY and TOMB
+inline constexpr std::uint64_t GOLDEN = 0x9E3779B97F4A7C15ull;  // 2^64 / golden ratio, odd
+
+/// a + b, or std::overflow_error.  Signed overflow is undefined behaviour, so the builtin does the check.
+inline long long add_checked(long long a, long long b) {
+    long long r;
+    if (__builtin_add_overflow(a, b, &r)) throw std::overflow_error("add overflows long long");
+    return r;
+}
+
+/// Smallest power of two >= max(8, entries * load_inverse); std::length_error when that is absurdly large.
+inline std::size_t capacity_for(std::size_t entries, std::size_t load_inverse, std::size_t limit) {
+    if (entries > limit / load_inverse) throw std::length_error("table too large");
+    return std::bit_ceil(std::max<std::size_t>(8, entries * load_inverse));
+}
+```
+
+`BasicTickerMap<Hash>` 把哈希函数做成模板参数（默认 `std::hash<std::string_view>`），`TickerMap` 是它的默认实例化。
 
 ```cpp
 /// Open addressing + linear probing over one std::vector<Slot>.  A slot is Empty (never used: a probe stops here),
@@ -176,7 +200,7 @@ public:
 要点：
 
 * `add_checked`：`__builtin_add_overflow` 检查溢出。**有符号溢出在 C++ 里是 UB**，不能写 `a + b < a` 之类事后检查；先算（并检查），后写，溢出时表保持原样。
-* `Slot` 里的 key 是 `std::string`。**短字符串优化**（SSO）：不超过 15 个字符的 `std::string` 把字符存在对象内部，不分配堆内存——股票代码（≤ 8 个字符）插入时零分配；参数用 `std::string_view`，查找时也不会为了比较而构造临时 `std::string`：
+* `Slot` 里的 key 是 `std::string`。**短字符串优化**（SSO）：短的 `std::string`（libstdc++ 不超过 15 个字符，libc++ 不超过 22 个）把字符存在对象内部，不分配堆内存——股票代码（≤ 8 个字符）插入时零分配；参数用 `std::string_view`，查找时也不会为了比较而构造临时 `std::string`：
 
 ```cpp
 // Short std::strings live inside the string object (small-string optimisation): no heap allocation.
@@ -225,7 +249,7 @@ int main() {
 private:
     enum class State : std::uint8_t { Empty, Full, Tomb };
     struct Slot {
-        std::string key;  // <= 15 chars live inside the string object (small-string optimisation): no allocation
+        std::string key;  // a short key (<= 15 chars everywhere) lives inside the string object (small-string optimisation): no allocation
         long long value = 0;
         State state = State::Empty;
     };
@@ -390,7 +414,7 @@ inline std::string unpack(Key key) {
 }
 ```
 
-* **`char` 可能是有符号的。** UTF-8 的字节 `0xC3` 作为 `char` 是负数，`c < 'A'` 为真。所以先转 `unsigned char` 再比较。
+* **`char` 可能是有符号的。** UTF-8 的字节 `0xC3` 作为 `char` 是 −61：只检查上界的写法（`c - 'A' <= 25`）会放过它，`std::isalpha(c)` / `std::toupper(c)` 传负数是 UB。所以先转 `unsigned char`，再比较范围。
 * **先转宽再移位**：`static_cast<Key>(c - 'A' + 1) << 35`。`(c - 'A' + 1) << 35` 是 `int` 移位，移位量超过 31 是 UB。
 * **`std::string_view` 里可以有 `'\0'`**：`std::string_view("AB\0CD", 5)` 是 5 个字节，其中一个是 NUL → 非法；而 `std::string_view("AB\0CD")` 从字符串字面量构造，长度是 2，得到 `"AB"`。
 * `parse` 把「非法」当成返回值（`std::variant<Ticker, Invalid>`）：行情流里非法输入是常态，不该靠异常；`pack` 才抛。`parse`、`pack` 都是 `constexpr`，可以在编译期求值：
@@ -443,7 +467,7 @@ inline Key pack_wire(std::span<const std::byte> buf, std::size_t off) {
 }  // namespace codec
 ```
 
-行情报文里的代码字段是 8 个字节、右侧补空格（`"AAPL    "`）。字母 `0x41..0x5A` 的低 5 位恰好是 1..26，空格 `0x20` 的低 5 位恰好是 0——和编码天然吻合，所以每个字节取低 5 位并排放好就是结果（x86 的 BMI2 有一条 `pext` 指令可以一次完成这件事）。三个陷阱：
+行情报文里的代码字段是 8 个字节、右侧补空格（`"AAPL    "`）。字母 `0x41..0x5A` 的低 5 位恰好是 1..26，空格 `0x20` 的低 5 位恰好是 0——和编码天然吻合，所以每个字节取低 5 位并排放好就是结果（x86 的 BMI2 有一条 `pext` 指令可以一次完成这件事）。三个陷阱（第一个在 `parse` 里同样要防）：
 
 ```cpp
 // Three traps when reading a fixed-width field from a byte buffer.
@@ -454,10 +478,12 @@ inline Key pack_wire(std::span<const std::byte> buf, std::size_t off) {
 #include <iostream>
 
 int main() {
-    // 1. plain `char` is signed here: a UTF-8 byte compares as a NEGATIVE number and slips through a range check
+    // 1. plain `char` is signed on x86 and Apple arm64: the UTF-8 byte 0xC3 is -61.  A check that only looks at the
+    //    upper bound lets it through, and std::isalpha / std::toupper on a negative value are undefined behaviour.
     const char e_acute = static_cast<char>(0xC3);
-    std::cout << "(char)0xC3 < 'A'            : " << std::boolalpha << (e_acute < 'A') << "   (true: negative)\n";
-    std::cout << "(unsigned char)0xC3 > 'Z'   : " << (static_cast<unsigned char>(e_acute) > 'Z') << "\n";
+    std::cout << "(char)0xC3 - 'A' = " << (e_acute - 'A') << ", so `c - 'A' <= 25` is " << std::boolalpha << (e_acute - 'A' <= 25) << "   (accepted!)\n";
+    const unsigned char as_unsigned = static_cast<unsigned char>(e_acute);
+    std::cout << "(unsigned char)0xC3 = " << static_cast<int>(as_unsigned) << ", so `c > 'Z'` is " << (as_unsigned > 'Z') << "   (rejected)\n";
 
     // 2. `off + 8 > size` wraps around for a huge offset; `off > size - 8` (after size >= 8) does not
     const std::size_t size = 8, off = static_cast<std::size_t>(-1) - 3;
@@ -980,6 +1006,7 @@ private:
 #include <algorithm>
 #include <chrono>
 #include <cstdint>
+#include <iomanip>
 #include <iostream>
 #include <random>
 #include <string>
@@ -1032,24 +1059,40 @@ int main() {
         for (std::size_t i = 0; i < universe_size; ++i) { stl[names[i]] = 0; strmap.put(names[i], 0); longmap.put(keys[i], 0); }
 
         std::cout << universe_size << " tickers, " << kOps << " updates per round\n";
-        auto report = [](const char* what, double ns) { std::cout << "  " << what << ns << " ns/op\n"; };
-        report("std::unordered_map<string>  ", best_ns_per_op(kOps, [&] { for (std::size_t i = 0; i < kOps; ++i) stl.find(names[picks[i & mask]])->second += 1; }));
-        report("TickerMap (string_view)     ", best_ns_per_op(kOps, [&] { for (std::size_t i = 0; i < kOps; ++i) strmap.add(names[picks[i & mask]], 1); }));
-        report("LongTickerMap (packed key)  ", best_ns_per_op(kOps, [&] { for (std::size_t i = 0; i < kOps; ++i) longmap.add(keys[picks[i & mask]], 1); }));
-        report("FrozenTickerMap::add(key)   ", best_ns_per_op(kOps, [&] { for (std::size_t i = 0; i < kOps; ++i) frozen.add(keys[picks[i & mask]], 1); }));
-        report("FrozenTickerMap::add_at(idx)", best_ns_per_op(kOps, [&] { for (std::size_t i = 0; i < kOps; ++i) frozen.add_at(index[picks[i & mask]], 1); }));
+        auto report = [](const char* what, double ns) { std::cout << "  " << std::left << std::setw(30) << what << std::right << std::fixed << std::setprecision(1) << std::setw(6) << ns << " ns/op\n"; };
+        report("std::unordered_map<string>", best_ns_per_op(kOps, [&] { for (std::size_t i = 0; i < kOps; ++i) stl.find(names[picks[i & mask]])->second += 1; }));
+        report("TickerMap (string_view)", best_ns_per_op(kOps, [&] { for (std::size_t i = 0; i < kOps; ++i) strmap.add(names[picks[i & mask]], 1); }));
+        report("LongTickerMap (packed key)", best_ns_per_op(kOps, [&] { for (std::size_t i = 0; i < kOps; ++i) longmap.add(keys[picks[i & mask]], 1); }));
+        report("FrozenTickerMap::add(key)", best_ns_per_op(kOps, [&] { for (std::size_t i = 0; i < kOps; ++i) frozen.add(keys[picks[i & mask]], 1); }));
+        report("FrozenTickerMap::add_at(index)", best_ns_per_op(kOps, [&] { for (std::size_t i = 0; i < kOps; ++i) frozen.add_at(index[picks[i & mask]], 1); }));
     }
 }
 ```
 
-{{BENCH}}
+结果（均匀随机访问，每轮 2000 万次更新，ns/op）：
+
+| 实现 | 8,000 个代码 | 2,000,000 个代码 |
+|---|---|---|
+| `std::unordered_map<std::string, long long>` | 14.3 | 66.8 |
+| `TickerMap`（字符串 key，扁平开放寻址） | 14.4 | 42.2 |
+| `LongTickerMap`（打包成 `uint64_t`） | 4.2 | 11.9 |
+| `FrozenTickerMap::add(key)`（完美哈希） | 2.6 | 17.0 |
+| `FrozenTickerMap::add_at(index)`（缓存下标） | 0.9 | 2.1 |
+
+怎么读：
+
+* **打包成整数是实打实的胜利**：8,000 个代码时约快 3 倍，200 万个时约快 5.6 倍（表大了，缓存未命中占主导，扁平的 16 字节槽位和不比较字符串的优势更明显）。
+* **只把节点式换成扁平数组、key 仍是字符串**（`TickerMap`）：小表上和 `unordered_map` 一样快（SSO 字符串比较很便宜），大表上快约 1.6 倍。
+* **完美哈希的单次 `add(key)` 没有稳定地比调好的开放寻址快**：小表上更快，200 万个 key 时反而更慢（一次更新要访问三块内存：`disp_`、`keys_`、`values_`；开放寻址只访问一个 16 字节的槽位）。它真正的收益是：最坏情况确定、内存紧凑（每个条目约 17 字节，没有空槽）、**可以缓存下标**——`add_at` 不做任何哈希。
+* **没有测**：多线程、偏斜访问（热门代码占大头）、真实行情分布、尾延迟、其他 CPU / 编译器、预热之前的冷启动。这些结论不能外推到它们。
+
 
 ## 7. 和 Java 版的区别
 
 | 点 | Java | C++20 |
 |---|---|---|
 | key 类型 | `String` / `long`（有符号，`> 0` 才合法） | `std::string_view` / `uint64_t`（`0` 空、`~0` 墓碑；`-1` 的隐式转换是陷阱） |
-| 链地址的代价 | `HashMap` 每条目一个对象 + 装箱 | `unordered_map` 每条目一个节点；`std::string` ≤ 15 字符有 SSO，**不分配**，所以「装箱」不是主要问题，指针追逐才是 |
+| 链地址的代价 | `HashMap` 每条目一个对象 + 装箱 | `unordered_map` 每条目一个节点；短 `std::string`（≤ 15 个字符）有 SSO，**不分配**，所以「装箱」不是主要问题，指针追逐才是 |
 | 溢出 | `Math.addExact` | `__builtin_add_overflow`（有符号溢出是 UB，不能事后检查） |
 | 位运算 | `Long.compress`、`Integer.numberOfTrailingZeros` | `std::countr_zero`、`std::bit_ceil`（`<bit>`），x86 上 `pext`；字节序用 `std::endian` |
 | 字节缓冲 | `VarHandle` 读 `byte[]` | `memcpy` 进 `uint64_t` + `bswap` |
@@ -1063,7 +1106,7 @@ int main() {
 1. 下标用 `hash & mask`（`std::hash<整数>` 是恒等函数；打包 key 的低位全是 0）。
 2. 删除时把格子置空，断掉探测链；遇到墓碑就插入，造成重复 key；装载因子不算墓碑，导致没有空格而死循环。
 3. 用 `(c - 'A' + 1) << 35`：`int` 移位。
-4. `char` 有符号：`c < 'A' || c > 'Z'` 对 `0xC3` 判断错。
+4. `char` 有符号：只检查上界的范围判断会放过 `0xC3`；`isalpha` / `toupper` 传负数是 UB。
 5. `std::string_view` 里有 `'\0'`，或者用 `const char*` 构造导致截断。
 6. `off + 8 > size` 回绕。
 7. `put(-1, v)`：`-1` 变成 `0xFFFF…`，正好是墓碑标记。
@@ -1092,7 +1135,7 @@ int main() {
 
 **Q8. key 不止 8 个字符 / 含 `.` 和数字？** 扩字符集（6 比特 × 10 个字母 = 60 比特）、128 位 key（两个 `uint64_t`）、或字符串哈希（FNV-1a / xxHash）+ 字节比较；热路径避免 `std::string` 的构造。
 
-**Q9. `std::string` 的 SSO 对你有什么影响？** ≤ 15 字符不分配，所以股票代码作 key 时 `unordered_map<string, …>` 的节点是一次分配而不是两次；但 `string` 对象本身 32 字节，比较要先比长度再 `memcmp`。
+**Q9. `std::string` 的 SSO 对你有什么影响？** 短字符串不分配，所以股票代码作 key 时 `unordered_map<string, …>` 的节点是一次分配而不是两次；但 `string` 对象本身有 24～32 字节，比较要先比长度再 `memcmp`。
 
 **Q10. 对齐有什么用？** 一个 16 字节的槽位不会跨缓存行，一次探测只触碰一条缓存行；64 字节对齐 + 4 槽/行时尤其明显。多线程时，把**不同线程写的数据**放到不同的缓存行，避免 false sharing。
 

@@ -1,5 +1,6 @@
 // Forwarding references and perfect forwarding; emplace vs push.
 #include <cstdio>
+#include <memory>
 #include <string>
 #include <utility>
 #include <vector>
@@ -21,6 +22,9 @@ static void report(const char* t) {
     std::printf("%-26s ctor=%d copy=%d move=%d\n", t, Order::ctor, Order::copy, Order::move);
     Order::ctor = Order::copy = Order::move = 0;
 }
+template <class T, class... A>                                         // the core of make_unique
+std::unique_ptr<T> make(A&&... a) { return std::unique_ptr<T>(new T(std::forward<A>(a)...)); }
+
 int main() {
     std::string s = "AAPL";
     std::printf("wrong(lvalue):\n"); wrong(s);
@@ -31,4 +35,6 @@ int main() {
     std::vector<Order> v; v.reserve(4);
     v.push_back(Order("MSFT", 1));    report("push_back(Order(...))");
     v.emplace_back("MSFT", 1);        report("emplace_back(args...)");
+    auto o = make<Order>("NVDA", 5);  report("make<Order>(args...)");
+    std::printf("made %s x%d\n", o->sym.c_str(), o->qty);
 }

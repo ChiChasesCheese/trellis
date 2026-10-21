@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <chrono>
 #include <cstdint>
+#include <iomanip>
 #include <iostream>
 #include <random>
 #include <string>
@@ -55,11 +56,11 @@ int main() {
         for (std::size_t i = 0; i < universe_size; ++i) { stl[names[i]] = 0; strmap.put(names[i], 0); longmap.put(keys[i], 0); }
 
         std::cout << universe_size << " tickers, " << kOps << " updates per round\n";
-        auto report = [](const char* what, double ns) { std::cout << "  " << what << ns << " ns/op\n"; };
-        report("std::unordered_map<string>  ", best_ns_per_op(kOps, [&] { for (std::size_t i = 0; i < kOps; ++i) stl.find(names[picks[i & mask]])->second += 1; }));
-        report("TickerMap (string_view)     ", best_ns_per_op(kOps, [&] { for (std::size_t i = 0; i < kOps; ++i) strmap.add(names[picks[i & mask]], 1); }));
-        report("LongTickerMap (packed key)  ", best_ns_per_op(kOps, [&] { for (std::size_t i = 0; i < kOps; ++i) longmap.add(keys[picks[i & mask]], 1); }));
-        report("FrozenTickerMap::add(key)   ", best_ns_per_op(kOps, [&] { for (std::size_t i = 0; i < kOps; ++i) frozen.add(keys[picks[i & mask]], 1); }));
-        report("FrozenTickerMap::add_at(idx)", best_ns_per_op(kOps, [&] { for (std::size_t i = 0; i < kOps; ++i) frozen.add_at(index[picks[i & mask]], 1); }));
+        auto report = [](const char* what, double ns) { std::cout << "  " << std::left << std::setw(30) << what << std::right << std::fixed << std::setprecision(1) << std::setw(6) << ns << " ns/op\n"; };
+        report("std::unordered_map<string>", best_ns_per_op(kOps, [&] { for (std::size_t i = 0; i < kOps; ++i) stl.find(names[picks[i & mask]])->second += 1; }));
+        report("TickerMap (string_view)", best_ns_per_op(kOps, [&] { for (std::size_t i = 0; i < kOps; ++i) strmap.add(names[picks[i & mask]], 1); }));
+        report("LongTickerMap (packed key)", best_ns_per_op(kOps, [&] { for (std::size_t i = 0; i < kOps; ++i) longmap.add(keys[picks[i & mask]], 1); }));
+        report("FrozenTickerMap::add(key)", best_ns_per_op(kOps, [&] { for (std::size_t i = 0; i < kOps; ++i) frozen.add(keys[picks[i & mask]], 1); }));
+        report("FrozenTickerMap::add_at(index)", best_ns_per_op(kOps, [&] { for (std::size_t i = 0; i < kOps; ++i) frozen.add_at(index[picks[i & mask]], 1); }));
     }
 }

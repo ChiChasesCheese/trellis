@@ -6,10 +6,12 @@
 #include <iostream>
 
 int main() {
-    // 1. plain `char` is signed here: a UTF-8 byte compares as a NEGATIVE number and slips through a range check
+    // 1. plain `char` is signed on x86 and Apple arm64: the UTF-8 byte 0xC3 is -61.  A check that only looks at the
+    //    upper bound lets it through, and std::isalpha / std::toupper on a negative value are undefined behaviour.
     const char e_acute = static_cast<char>(0xC3);
-    std::cout << "(char)0xC3 < 'A'            : " << std::boolalpha << (e_acute < 'A') << "   (true: negative)\n";
-    std::cout << "(unsigned char)0xC3 > 'Z'   : " << (static_cast<unsigned char>(e_acute) > 'Z') << "\n";
+    std::cout << "(char)0xC3 - 'A' = " << (e_acute - 'A') << ", so `c - 'A' <= 25` is " << std::boolalpha << (e_acute - 'A' <= 25) << "   (accepted!)\n";
+    const unsigned char as_unsigned = static_cast<unsigned char>(e_acute);
+    std::cout << "(unsigned char)0xC3 = " << static_cast<int>(as_unsigned) << ", so `c > 'Z'` is " << (as_unsigned > 'Z') << "   (rejected)\n";
 
     // 2. `off + 8 > size` wraps around for a huge offset; `off > size - 8` (after size >= 8) does not
     const std::size_t size = 8, off = static_cast<std::size_t>(-1) - 3;

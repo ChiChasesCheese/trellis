@@ -1,10 +1,9 @@
 # J16 · 并发原语：Java 内存模型、`volatile`、CAS、`VarHandle`、`LongAdder`、`ConcurrentSkipListMap`、`ReentrantLock`
 
-> 版本：`ReentrantLock` 5 · `AtomicLong` 5 · `ConcurrentSkipListMap` 6 · `LongAdder` 8 · **`VarHandle` 9（JEP 193）**。全部是正式特性。
-> 与 JDK 21 相关的两条：虚拟线程下 `synchronized` 会 **pin**、`ReentrantLock` 不会（J10）；JDK 24 的 JEP 491 去掉了 `synchronized` 的 pinning。
-> 本课代码在 `study/10-java21/examples/J16/`。**所有输出是在本机（Apple Silicon，arm64，12 核，JDK 21.0.12）实跑的**；性能数字是粗糙计时，只看趋势，不是基准测试。
-> 前置知识：会写 `Thread`、`synchronized`、`AtomicInteger` 的基本用法。内存模型、CPU 缓存、CAS 这些第 1 节从零讲。这是全 kit 里最重要也最难的一课，慢慢读。
-> 官方出处：JLS §17「Threads and Locks」— https://docs.oracle.com/javase/specs/jls/se21/html/jls-17.html ；JEP 193 Variable Handles — https://openjdk.org/jeps/193
+> 版本：`ReentrantLock` 5 · `AtomicLong` 5 · `ConcurrentSkipListMap` 6 · `LongAdder` 8 · **`VarHandle` 9**。全部正式特性。
+> 与 JDK 21 相关：虚拟线程下 `synchronized` 会 **pin**、`ReentrantLock` 不会（J10）；JDK 24 去掉了 `synchronized` 的 pinning。
+> 可运行代码：`examples/J16/`。性能数字是粗糙计时（Apple Silicon arm64，12 核），只看趋势，不是基准。
+> 前置：会写 `Thread`、`synchronized`、`AtomicInteger`。内存模型、CPU 缓存、CAS 第 1 节从零讲。这是全 kit 最重要也最难的一课，慢慢读。
 
 ---
 
@@ -12,7 +11,7 @@
 
 ### 1.1 三个问题：原子性、可见性、有序性
 
-线程 A 写一个变量，线程 B 读它。你会觉得「A 写完 B 就能看到」。**不是。** 有三类彼此独立的问题：
+线程 A 写一个变量，线程 B 读它——你以为「A 写完 B 就能看到」。**不是。** 有三类彼此独立的问题：
 
 | 问题 | 一句话 | 例子 |
 |---|---|---|
@@ -22,7 +21,7 @@
 
 ### 1.2 从零讲：CPU 为什么会让你「看不到」
 
-先看一台机器是怎么读写内存的（简化）：
+一台机器读写内存的方式（简化）：
 
 ```
   核 0                       核 1
@@ -34,13 +33,13 @@
         └──────── 共享的 L2/L3 缓存 / 内存 ────────┘
 ```
 
-* 内存比 CPU 慢上百倍，所以每个核有**私有缓存**。缓存之间用**缓存一致性协议**（比如 MESI）保证最终大家看到同一份数据，但不是瞬时的。
-* **写缓冲**（store buffer）：核执行 `x = 1` 时，不等这次写真正落到缓存，先把值丢进写缓冲就继续往下执行。别的核要等它**排空**后才看得到。
-* 所以：核 0 先写 `x` 后读 `y`，核 1 先写 `y` 后读 `x`——两个核的「读」都可能发生在对方的「写」变得可见之前。两个都读到 0。这在每个线程自己看来完全合理，在全局看来违反直觉。
+* 内存比 CPU 慢上百倍，所以每个核有**私有缓存**；**缓存一致性协议**（如 MESI）保证最终大家看到同一份数据，但不是瞬时的。
+* **写缓冲**（store buffer）：核执行 `x = 1` 时不等写落到缓存，先丢进写缓冲继续往下执行，别的核要等它**排空**才看得到。
+* 所以：核 0 先写 `x` 后读 `y`，核 1 先写 `y` 后读 `x`——两个「读」都可能发生在对方的「写」可见之前，两个都读到 0。每个线程自己看合理，全局看违反直觉。
 
-**编译器也会动你的代码**：JIT 看到 `while (!stop) n++;`，发现循环里没人写 `stop`，就把 `stop` 读到寄存器里**只读一次**（循环不变量外提，loop-invariant hoisting）。对单线程这是完全正确的优化。
+**编译器也会动你的代码**：JIT 看到 `while (!stop) n++;` 发现循环里没人写 `stop`，就把 `stop` 读到寄存器里**只读一次**（循环不变量外提，loop-invariant hoisting）。单线程下这是完全正确的优化。
 
-### 1.3 实测一：可见性（`examples/J16/J16Ex1Visibility.java`）
+### 1.3 实验一：可见性（`examples/J16/J16Ex1Visibility.java`）
 
 ```java
 static boolean plainStop;
@@ -48,7 +47,7 @@ static volatile boolean volatileStop;
 static long spinPlain() { long n = 0; while (!plainStop) n++; return n; }
 ```
 
-主线程 sleep 300ms 让 reader 被 JIT 编译，然后设置 stop = true，`join(1000)`：
+主线程 sleep 300ms 让 reader 被 JIT 编译，然后设 stop = true，`join(1000)`：
 
 ```
 $ java --enable-preview J16Ex1Visibility
@@ -61,30 +60,30 @@ volatile: 已正常结束
 ```
 
 * 普通字段版：reader 永远停不下来。
-* 加了 `-Xint`（只解释执行）它又「正常」了——**同一份代码，行为取决于 JIT 是否编译了它**。这正是并发 bug 最阴险的地方：开发机上、单元测试里、低负载下全是对的，上线跑热了才出问题。
+* 加 `-Xint`（只解释执行）又「正常」了——**同一份代码，行为取决于 JIT 是否编译了它**。这是并发 bug 最阴险处：开发机、单元测试、低负载下全对，上线跑热才出问题。
 
-### 1.4 实测二：重排序（`J16Ex2Reorder.java`）
+### 1.4 实验二：重排序（`J16Ex2Reorder.java`）
 
 ```
 线程 1: x = 1; r1 = y;        线程 2: y = 1; r2 = x;
 ```
 
-按「一句一句按顺序执行」的直觉，r1、r2 不可能同时为 0。实测 100 万次（两次运行，数字会变）：
+按「逐句顺序执行」的直觉 r1、r2 不可能同时为 0。100 万次（两次运行，数字会变）：
 
 ```
 普通字段  ，1000000 次中 (r1,r2)=(0,0) 出现 977579 次    (另一次运行: 990150 次)
 volatile  ，1000000 次中 (r1,r2)=(0,0) 出现 0 次
 ```
 
-几乎每一次都出现「不可能」的结果（本机是 arm64，内存模型比 x86 更弱，所以更夸张；x86 上这个实验同样能复现，只是概率低一些）。把变量改成 `volatile` 后一次都没有。
+几乎每次都出现「不可能」的结果（arm64 内存模型比 x86 弱所以更夸张，x86 上同样能复现，概率低些）。改成 `volatile` 后一次都没有。
 
 ### 1.5 Java 内存模型（JMM）：规则怎么写才能说清「什么时候能看到」
 
-上面这些乱象需要一套**规则**：什么情况下，线程 B 一定能看到线程 A 的写入。这套规则叫 **Java 内存模型**（Java Memory Model，JMM，JLS §17.4）。核心概念只有一个：
+需要一套**规则**说明什么情况下线程 B 一定看到线程 A 的写入，这就是 **Java 内存模型**（JMM）。核心概念只有一个：
 
-> **先行发生**（happens-before，记作 HB）：如果操作 X HB 操作 Y，那么 X 的结果对 Y **可见**，并且 X 不会被重排到 Y 之后。
+> **先行发生**（happens-before，HB）：X HB Y ⇒ X 的结果对 Y **可见**，且 X 不会被重排到 Y 之后。
 
-JMM 规定的 HB 来源（背下来，面试常问）：
+JMM 规定的 HB 规则（面试常问，背下来）：
 
 1. **程序顺序**：同一个线程里，前面的操作 HB 后面的操作。
 2. **监视器锁**：对同一把锁，`unlock` HB 之后对它的 `lock`。（`synchronized` 退出 → 进入）
@@ -94,8 +93,7 @@ JMM 规定的 HB 来源（背下来，面试常问）：
 6. **传递性**：X HB Y 且 Y HB Z ⇒ X HB Z。
 7. **final 字段**：构造器正常结束后，`final` 字段的值对任何拿到该对象引用的线程可见（安全发布，freeze）。
 
-**数据竞争（data race）**：两个线程访问同一个变量，至少一个是写，而且它们之间**没有 HB 关系**。有数据竞争的程序，JMM 几乎不保证什么（除了「不会凭空造出值」）。
-你的目标就是：**每一对「写—读」之间，都能找到一条 HB 链**。
+**数据竞争（data race）**：两个线程访问同一变量、至少一个是写、且它们之间**没有 HB 关系**。有数据竞争的程序 JMM 几乎不保证什么（只保证「不凭空造值」）。目标：**每一对「写—读」之间都能找到一条 HB 链**。
 
 ---
 
@@ -107,18 +105,18 @@ JMM 规定的 HB 来源（背下来，面试常问）：
 static volatile boolean stop;
 ```
 
-* 保证 1：**可见性**。写入立刻对后续的读可见。
-* 保证 2：**有序性**。volatile 写之前的所有操作，不会被重排到它之后；volatile 读之后的所有操作，不会被重排到它之前（规则 3 + 传递性：这就是「用 volatile 标志位发布数据」成立的原因）。
-* **不保证原子性**：`volatile int count; count++;` 仍是「读-加-写」三步，两个线程会丢更新。`volatile` 只修饰单次读或单次写。
-* 对 `long`/`double`：JLS 保证 volatile 的 64 位读写是原子的（非 volatile 的 64 位在 32 位 JVM 上理论上可以被拆成两半）。
+* 保证 1：**可见性**：写入对后续的读可见。
+* 保证 2：**有序性**：volatile 写之前的操作不会被重排到它之后；volatile 读之后的操作不会被重排到它之前（规则 3 + 传递性——「用 volatile 标志位发布数据」成立的原因）。
+* **不保证原子性**：`volatile int count; count++;` 仍是「读-加-写」三步，会丢更新。`volatile` 只修饰单次读或单次写。
+* `long`/`double`：JLS 保证 volatile 的 64 位读写原子（非 volatile 的 64 位在 32 位 JVM 上理论上可拆成两半）。
 
 ### 2.2 `synchronized`
 
-互斥（同一时刻只有一个线程进入）+ HB（规则 2）。进入块 = 获取 monitor，退出 = 释放（包括异常退出）。粗但安全。JDK 21 的两个注意：虚拟线程里持锁阻塞会 pin（J10 §5.1）。
+互斥（同一时刻只有一个线程进入）+ HB（规则 2）。进入 = 获取 monitor，退出（含异常退出）= 释放。粗但安全。JDK 21 注意：虚拟线程里持锁阻塞会 pin（J10）。
 
 ### 2.3 原子类与 CAS
 
-**CAS**（compare-and-swap，比较并交换）：一个由 CPU 提供的**原子指令**，语义：
+**CAS**（compare-and-swap）：CPU 提供的**原子指令**：
 
 ```
 compareAndSet(addr, expected, new):
@@ -126,27 +124,25 @@ compareAndSet(addr, expected, new):
     else return false;                     // 整个过程不可分割
 ```
 
-x86 上是 `lock cmpxchg`；ARM 上是一对 `ldxr/stxr`（LL/SC）或 ARMv8.1 的 `cas` 指令。`AtomicLong.incrementAndGet()` 等价于一个 **CAS 循环**：
+x86 上是 `lock cmpxchg`；ARM 上是 `ldxr/stxr`（LL/SC）或 ARMv8.1 的 `cas`。`AtomicLong.incrementAndGet()` 等价于一个 **CAS 循环**：
 
 ```java
 long prev;
 do { prev = value.get(); } while (!value.compareAndSet(prev, prev + 1));   // 失败说明别人改过，重读重试
 ```
 
-好处：**无锁**（lock-free）——没有线程会因为别的线程被挂起而被阻塞；任何时刻总有某个线程成功。代价：竞争激烈时大量重试（见 2.5）。
+好处：**无锁**（lock-free）——没有线程会因别的线程被挂起而阻塞，任一时刻总有某个线程成功。代价：竞争激烈时大量重试（2.5）。
 
-**ABA 问题**：CAS 只比较「值是否还是我读到的那个」，不管中间有没有变过。线程 1 读到 `A`，被暂停；线程 2 把 `A` 改成 `B` 再改回 `A`；线程 1 恢复，CAS 一比：还是 `A`，成功——但世界其实已经变了。
-无锁栈是教科书例子（例 4 实测）。对策：给值加**版本号**（`AtomicStampedReference`：引用 + `int` 戳，CAS 同时比较两者；`AtomicMarkableReference` 是布尔标记版）。
-在有 GC 的 Java 里，纯"对象引用"的 ABA 少得多（旧对象还被引用着就不会被回收再分配到同一地址），但**节点复用/对象池**、**计数器回绕**、**把值当作状态机的状态**时仍然会遇到。
+**ABA 问题**：CAS 只比较「值是否还是我读到的」，不管中间变没变过。线程 1 读到 `A` 被暂停；线程 2 把 `A` 改 `B` 再改回 `A`；线程 1 恢复，CAS 一比还是 `A`，成功——但世界已经变了。无锁栈是教科书例子（例 4）。对策：给值加**版本号**（`AtomicStampedReference`：引用 + `int` 戳，CAS 同时比较两者；`AtomicMarkableReference` 是布尔标记版）。有 GC 的 Java 里纯"对象引用"的 ABA 少得多（旧对象还被引用就不会被回收再分配到同一地址），但**节点复用/对象池**、**计数器回绕**、**把值当状态机状态**时仍会遇到。
 
 ### 2.4 `VarHandle`（Java 9）：「对一个变量做各种力度的原子/有序访问」
 
 **为什么要有它**：
 
-* Java 5–8 想对一个**普通字段**做 CAS，只能用 `AtomicIntegerFieldUpdater`（反射，慢，限制多）或 `sun.misc.Unsafe`（私有 API，不安全，JDK 在收紧）。
-* `volatile` 太"重"：每次读写都是最强的顺序保证（顺序一致，Sequentially Consistent）。很多无锁结构其实只需要更弱、更便宜的保证。
+* Java 5–8 对**普通字段**做 CAS 只能用 `AtomicIntegerFieldUpdater`（反射，慢，限制多）或 `sun.misc.Unsafe`（私有 API，JDK 在收紧）。
+* `volatile` 太"重"：每次读写都是最强的顺序一致（Sequentially Consistent）保证，很多无锁结构只需要更弱更便宜的保证。
 
-`VarHandle` 把「变量」抽象成一个句柄，提供**不同强度的访问模式**：
+`VarHandle` 把「变量」抽象成句柄，提供**不同强度的访问模式**：
 
 | 模式（方法名前缀） | 保证 | 典型用途 |
 |---|---|---|
@@ -156,11 +152,11 @@ do { prev = value.get(); } while (!value.compareAndSet(prev, prev + 1));   // �
 | **volatile**：`getVolatile` / `setVolatile` | 完整的 `volatile` 语义（顺序一致） | 同 `volatile` 字段 |
 | **CAS 家族**：`compareAndSet`、`compareAndExchange`、`weakCompareAndSet*`、`getAndAdd`、`getAndSet`、`getAndBitwiseOr`... | 原子读-改-写 | 无锁更新 |
 
-**release / acquire 在说什么**（面试高频）：
+**release / acquire**（面试高频）：
 
-* `setRelease(x)`：**之前**的所有读写，**不会被重排到这次写之后**。 像一道"向上"的单向门：前面的东西不能溜到后面。
-* `getAcquire()`：**之后**的所有读写，**不会被重排到这次读之前**。 "向下"的单向门：后面的东西不能溜到前面。
-* 当 B 的 `getAcquire` 读到了 A 的 `setRelease` 写的值时，A 在 release 之前写的一切，B 在 acquire 之后都能看到。 这就是「发布—订阅」。
+* `setRelease(x)`：**之前**的所有读写不会被重排到这次写之后——"向上"的单向门。
+* `getAcquire()`：**之后**的所有读写不会被重排到这次读之前——"向下"的单向门。
+* B 的 `getAcquire` 读到 A 的 `setRelease` 写的值时，A 在 release 之前写的一切，B 在 acquire 之后都能看到——这就是「发布—订阅」。
 
 ```java
 // 写者                                 // 读者
@@ -169,9 +165,7 @@ READY.setRelease(this, 1);                 use(price, qty);   // 一定看到 p 
                                        }
 ```
 
-为什么不直接用 `volatile`？**因为 volatile 多做了一件事：禁止「写之后的读」被重排到写之前（StoreLoad）**。这恰恰是上面 §1.4 写缓冲导致的那种重排，要禁止它，CPU 必须**排空写缓冲**——在 x86 上要加一条 `lock`/`mfence` 类的全栅栏，代价约十几到几十个周期。
-release/acquire 不禁止 StoreLoad，所以在 x86 上 release 写和 acquire 读**就是普通的 mov 指令**（x86 本来就不重排 Load-Load / Store-Store / Load-Store），只对编译器起约束作用，没有 CPU 栅栏开销。
-（注：在 AArch64 上，HotSpot 把 volatile 和 acquire/release 都编成 `ldar`/`stlr`，两者可能编成相同的指令，差别没有 x86 上明显——这条是我对实现的理解，没有逐条反汇编验证，不要在面试里说得太绝对。）
+为什么不直接用 `volatile`？**因为 volatile 多禁止了「写之后的读」被重排到写之前（StoreLoad）**——正是 1.4 写缓冲造成的那种重排。禁止它 CPU 必须**排空写缓冲**，x86 上要一条 `lock`/`mfence` 类全栅栏，约十几到几十个周期。release/acquire 不禁止 StoreLoad，所以 x86 上 release 写和 acquire 读**就是普通 mov**（x86 本就不重排 Load-Load / Store-Store / Load-Store），只约束编译器，没有 CPU 栅栏开销。（AArch64 上 HotSpot 把 volatile 和 acquire/release 都编成 `ldar`/`stlr`，差别没 x86 明显，别说得太绝对。）
 
 **用法**：
 
@@ -184,14 +178,14 @@ int v = (int) READY.getAcquire(this);                  // 返回 Object 多态�
 READY.compareAndSet(this, 0, 1);
 ```
 
-* 另外两种工厂：`MethodHandles.arrayElementVarHandle(long[].class)`（数组元素）、`MethodHandles.byteArrayViewVarHandle(long[].class, ByteOrder.BIG_ENDIAN)`（把 `byte[]` 当成 `long` 序列读，`TickerCodec` 在用）。
-* 访问方法是"签名多态"的（`Object... args` 但编译器按实际参数类型生成调用），返回值需要手动 cast。
+* 另外两种工厂：`MethodHandles.arrayElementVarHandle(long[].class)`（数组元素）、`MethodHandles.byteArrayViewVarHandle(long[].class, ByteOrder.BIG_ENDIAN)`（把 `byte[]` 当 `long` 序列读，`TickerCodec` 在用）。
+* 访问方法是"签名多态"的（`Object... args`，编译器按实际参数类型生成调用），返回值需手动 cast。
 
 ### 2.5 `LongAdder` 对 `AtomicLong`：竞争下的计数
 
-`AtomicLong.incrementAndGet()` 是对**同一个内存位置**的 CAS 循环。8 个线程同时来，每一轮只有 1 个成功，其余失败重试，而且**每次失败都会让该缓存行在各核之间来回迁移**（见 2.7）。线程越多越慢。
+`AtomicLong.incrementAndGet()` 是对**同一内存位置**的 CAS 循环：8 个线程同时来，每轮只有 1 个成功，其余重试，且**每次失败都让该缓存行在核间来回迁移**（2.7）。线程越多越慢。
 
-`LongAdder`（Java 8）：把一个计数器拆成 **一个 `base` + 一个 `Cell[]` 数组**。
+`LongAdder`（Java 8）把计数器拆成 **一个 `base` + 一个 `Cell[]` 数组**。
 
 ```
 低竞争：  所有线程 CAS 同一个 base（和 AtomicLong 一样快）
@@ -199,7 +193,7 @@ READY.compareAndSet(this, 0, 1);
 读取：    sum() = base + Σ cells[i]    （不是原子快照：并发更新时可能得到一个"介于前后"的值）
 ```
 
-每个 `Cell` 用 `@Contended` 做了缓存行填充，避免 Cell 之间互相伪共享。
+每个 `Cell` 用 `@Contended` 填充缓存行，避免 Cell 间伪共享。
 
 选型：
 
@@ -212,20 +206,19 @@ READY.compareAndSet(this, 0, 1);
 
 ### 2.6 `ConcurrentSkipListMap`：并发的有序 Map
 
-* **跳表**（skip list）：在一条有序链表之上再叠几层"快车道"链表，每层是下一层的随机抽样。查找从最高层出发，能跳过大段，期望 `O(log n)`。它比平衡树的好处是：**插入/删除只改局部指针，容易做成无锁（CAS）**，所以并发版本不需要全局锁。
-* `ConcurrentSkipListMap` 是基于跳表的线程安全 `NavigableMap`：有序、`firstEntry/lastEntry/pollFirstEntry/ceilingEntry/headMap/tailMap`……（Java 21 起 `NavigableMap` 继承 `SequencedMap`，见 J09）。
+* **跳表**（skip list）：在有序链表之上叠几层"快车道"链表，每层是下一层的随机抽样，查找从最高层出发跳过大段，期望 `O(log n)`。比平衡树的好处：**插入/删除只改局部指针，容易做成无锁（CAS）**，并发版本不需全局锁。
+* `ConcurrentSkipListMap` 是基于跳表的线程安全 `NavigableMap`：有序，`firstEntry/lastEntry/pollFirstEntry/ceilingEntry/headMap/tailMap`……（Java 21 起 `NavigableMap` 继承 `SequencedMap`）。
 * 对比：
   * `TreeMap`：有序，**不是线程安全**，多线程要自己加锁；
   * `ConcurrentHashMap`：线程安全，**无序**；
   * `Collections.synchronizedSortedMap(new TreeMap<>())`：一把大锁，竞争大时瓶颈。
-* 限制：迭代器是**弱一致**的（反映创建时刻之后的某些修改，不抛 `ConcurrentModificationException`）；`size()` 是 `O(n)`（要遍历）；key/value 不能为 `null`；`merge`、`compute*` 是原子的。
+* 限制：迭代器**弱一致**（反映创建后的某些修改，不抛 `ConcurrentModificationException`）；`size()` 是 `O(n)`；key/value 不能为 `null`；`merge`、`compute*` 原子。
 
-订单簿的天然选择：key = 价格，要按价格有序取最优档，多线程挂单。
+订单簿的天然选择：key = 价格，按价格有序取最优档，多线程挂单。
 
 ### 2.7 伪共享（false sharing）
 
-CPU 缓存按**缓存行**（cache line，x86 常见 64 字节，Apple M 系列是 128 字节）为单位搬运和保持一致。如果线程 A 只改变量 `a`，线程 B 只改变量 `b`，
-而 `a`、`b` 恰好在**同一条缓存行**里：A 写一次，该行在 B 的核里被置为无效；B 写一次，又让 A 的核里的失效。 两个互不相干的变量在硬件层面却在**抢同一块东西**，这叫伪共享。 解决：让它们相隔至少一条缓存行（**填充**，padding），JDK 内部用 `@jdk.internal.vm.annotation.Contended`（用户类需要 `-XX:-RestrictContended`）。
+CPU 缓存按**缓存行**（x86 常见 64 字节，Apple M 系列 128 字节）搬运和保持一致。线程 A 只改 `a`、线程 B 只改 `b`，而 `a`、`b` 恰在**同一缓存行**：A 写一次，该行在 B 的核里失效；B 写一次，又让 A 的失效。两个互不相干的变量在硬件层面**抢同一块东西**，这叫伪共享。解决：让它们相隔至少一条缓存行（**填充**，padding），JDK 内部用 `@jdk.internal.vm.annotation.Contended`（用户类需 `-XX:-RestrictContended`）。
 
 ### 2.8 `ReentrantLock`
 
@@ -240,20 +233,20 @@ CPU 缓存按**缓存行**（cache line，x86 常见 64 字节，Apple M 系列�
 | 多个条件队列 | `lock.newCondition()`（`synchronized` 只有一个 `wait/notify`） |
 | 非块结构（在不同方法里加/解锁） | `lock()` / `unlock()` 分开调用 |
 
-**铁律：`unlock()` 必须在 `finally` 里**，否则异常路径会永远占着锁。**可重入**（reentrant）：同一线程可以重复获取，用计数记录次数，`unlock` 同样次数才真正释放。
+**铁律：`unlock()` 必须在 `finally` 里**，否则异常路径永远占着锁。**可重入**（reentrant）：同一线程可重复获取，计数记录，`unlock` 同样次数才真正释放。
 
-虚拟线程方面：`ReentrantLock` 基于 `LockSupport.park`，阻塞时虚拟线程可卸载，**不会 pin**；JDK 21 的 `synchronized` 会（J10 §5.1）。JDK 24 起（JEP 491）`synchronized` 也不再 pin，那时就只按功能需求选锁。
+虚拟线程：`ReentrantLock` 基于 `LockSupport.park`，阻塞时可卸载，**不 pin**；JDK 21 的 `synchronized` 会。JDK 24 起 `synchronized` 也不 pin，那时只按功能选锁。
 
 ---
 
 ## 3. 编译器和 JVM 到底做了什么
 
-1. **javac 几乎不重排**，重排主要发生在 **JIT（C2）** 和 **CPU**。`volatile` 字段的读写在字节码里只是带 `ACC_VOLATILE` 标志的 `getfield/putfield`；真正的约束由 JIT 在生成机器码时落实。
-2. **JIT 在实现 HB 时：** 它在 volatile 读写的前后**插入内存屏障**（memory barrier）指令，并禁止编译器自己做跨越屏障的重排和缓存。 §1.3 里 JIT 把 `stop` 提出循环，正是因为它是普通字段，没有任何屏障阻止。
-3. **x86 与 ARM 的差别：** x86 是相对强的内存模型（TSO），只允许 StoreLoad 重排；volatile 写要补一个 StoreLoad 栅栏。 ARM 的模型更弱，允许四种重排，所以没加保护的代码在 ARM 上更容易现形（§1.4 的 98% 就是这么来的）。**在 x86 开发机上"测不出来"的 bug，部署到 ARM（Graviton、Apple Silicon）服务器可能当场爆。**
-4. **CAS 是 intrinsic**：`compareAndSet` 被 C2 直接编译成 CPU 的原子指令，不是调用。
-5. **`VarHandle` 必须 `static final`** ：只有当 JIT 知道这个 `VarHandle` 是常量时，才能把整个访问内联成一条机器指令；存在普通字段或局部变量里，会走较慢的通用路径。 这是用 `VarHandle` 时最容易被忽略的性能前提。
-6. **`synchronized`** 在 HotSpot 里先是轻量级锁（CAS 在对象头上），竞争时膨胀成重量级 monitor（阻塞线程要走内核）。
+1. **javac 几乎不重排**，重排主要在 **JIT（C2）** 和 **CPU**。`volatile` 字段读写在字节码里只是带 `ACC_VOLATILE` 的 `getfield/putfield`，真正约束由 JIT 生成机器码时落实。
+2. **JIT 实现 HB**：在 volatile 读写前后**插入内存屏障**，并禁止编译器跨屏障重排和缓存。1.3 中 JIT 把 `stop` 提出循环，正因它是普通字段，没有屏障阻止。
+3. **x86 与 ARM**：x86 是较强的内存模型（TSO），只允许 StoreLoad 重排，volatile 写补一个 StoreLoad 栅栏；ARM 更弱，允许四种重排，没保护的代码更容易现形（1.4 的 98% 就是这么来的）。**x86 开发机"测不出来"的 bug，部署到 ARM（Graviton、Apple Silicon）服务器可能当场爆。**
+4. **CAS 是 intrinsic**：`compareAndSet` 被 C2 直接编译成 CPU 原子指令。
+5. **`VarHandle` 必须 `static final`**：JIT 知道它是常量才能把整个访问内联成一条机器指令；放普通字段或局部变量会走较慢的通用路径——最容易被忽略的性能前提。
+6. **`synchronized`** 在 HotSpot 先是轻量级锁（对象头上 CAS），竞争时膨胀成重量级 monitor（阻塞线程要走内核）。
 
 ---
 
@@ -261,11 +254,11 @@ CPU 缓存按**缓存行**（cache line，x86 常见 64 字节，Apple M 系列�
 
 ### 例 1（最简单）：可见性与重排序
 
-见 1.3、1.4 的实测输出。结论：**`volatile` 修复可见性，也禁止了那种 StoreLoad 重排**。
+见 1.3、1.4。结论：**`volatile` 修复可见性，也禁止了那种 StoreLoad 重排**。
 
 ### 例 2：计数器——四种写法对比（`J16Ex3Counters.java`）
 
-`int++` 不保护 / `synchronized` / `AtomicLong` / `LongAdder`，每个线程加 200 万次。实测（单位 ms；粗糙计时）：
+`int++` 不保护 / `synchronized` / `AtomicLong` / `LongAdder`，每线程加 200 万次（ms，粗糙计时）：
 
 ```
 threads  int++(丢更新)             synchronized           AtomicLong             LongAdder
@@ -280,13 +273,13 @@ threads  int++(丢更新)             synchronized           AtomicLong         
 
 读法：
 
-* `int++` 最快，但**值错得离谱**（期望 400 万，得到 209 万）——丢更新（原子性）。 它快还因为 JIT 把循环优化得很极端。 **不正确的快没有意义**。
-* 单线程时全部差不多；线程一多，`synchronized` 掉到数百 ms（锁竞争 + 线程阻塞/唤醒），`AtomicLong` 其次（CAS 重试 + 缓存行抖动），`LongAdder` **几乎不随线程数增长**（各线程写自己的 Cell）。
-* 8 线程时 `LongAdder` 约比 `AtomicLong` 快 10 倍以上，比 `synchronized` 快 60 倍以上（本机本次数字；趋势才是重点）。
+* `int++` 最快，但**值错得离谱**（期望 400 万，得 209 万）——丢更新（原子性）。**不正确的快没有意义**。
+* 单线程时差不多；线程一多，`synchronized` 掉到数百 ms（锁竞争 + 阻塞/唤醒），`AtomicLong` 其次（CAS 重试 + 缓存行抖动），`LongAdder` **几乎不随线程数增长**（各线程写自己的 Cell）。
+* 8 线程时 `LongAdder` 比 `AtomicLong` 快 10 倍以上，比 `synchronized` 快 60 倍以上（趋势才是重点）。
 
 ### 例 3（贴近真实）：无锁单生产者单消费者队列（`J16Ex4VarHandle.java`）
 
-行情线程（生产者）把消息放进环形队列，策略线程（消费者）取。**只有一个生产者、一个消费者**，所以 `head`（只有消费者写）和 `tail`（只有生产者写）各有唯一写者，不需要 CAS，只要 release/acquire：
+行情线程（生产者）把消息放进环形队列，策略线程（消费者）取。**只有一个生产者一个消费者**，`head`（只有消费者写）和 `tail`（只有生产者写）各有唯一写者，不需 CAS，只要 release/acquire：
 
 ```java
 boolean offer(long v) {                          // 生产者
@@ -307,18 +300,18 @@ long poll() {                                    // 消费者
 }
 ```
 
-实测：
+输出：
 
 ```
 场景 A 读到 price=18950 qty=100
 场景 B SPSC: 和=12500002500000 期望=12500002500000 一致=true，约 163 ms（无锁，只用 release/acquire）
 ```
 
-500 万个数，校验和精确一致。这种结构就是 LMAX Disruptor 的核心思想。
+500 万个数，校验和精确一致。这就是 LMAX Disruptor 的核心思想。
 
 ### 例 4：CAS 循环与 ABA（`J16Ex5Cas.java`）
 
-确定性复现：初始栈 `A→B→C`；线程 1 读到 `top=A`、`next=B` 后暂停；线程 2 弹出 A、弹出 B、再把 A 压回；线程 1 恢复做 `CAS(top, A, B)`。
+确定性复现：初始栈 `A→B→C`；线程 1 读到 `top=A`、`next=B` 后暂停；线程 2 弹出 A、弹出 B、再把 A 压回；线程 1 恢复做 `CAS(top, A, B)`：
 
 ```
 正确结果应是 [C ]：A、B 都被弹走过，线程 2 把 A 压回，线程 1 再把 A 弹掉，只剩 C
@@ -326,11 +319,11 @@ long poll() {                                    // 消费者
 加版本号 最终栈 = [C ]
 ```
 
-朴素版里 CAS 成功了（`top` 确实还是 A），但 B 早就不该在栈里——这就是 ABA。`AtomicStampedReference` 版本里，线程 2 的每次改动都让戳 +1，线程 1 的 CAS 因戳不同而失败，重读后得到正确结果。
+朴素版里 CAS 成功了（`top` 确实还是 A），但 B 早不该在栈里——这就是 ABA。`AtomicStampedReference` 版里线程 2 每次改动戳 +1，线程 1 的 CAS 因戳不同失败，重读后得到正确结果。
 
 ### 例 5：并发有序 Map（`J16Ex6Skip.java`）
 
-4 个线程各 5 万次随机挂单到 `ConcurrentSkipListMap<Long, Long>`（价格 18950–19049），用 `merge(price, 1L, Long::sum)` 原子地累加该价位数量：
+4 个线程各 5 万次随机挂单到 `ConcurrentSkipListMap<Long, Long>`（价格 18950–19049），用 `merge(price, 1L, Long::sum)` 原子累加该价位数量：
 
 ```
 价位数 = 100, 总量 = 200000 (期望 200000)
@@ -340,7 +333,7 @@ long poll() {                                    // 消费者
 pollFirstEntry(原子取走最优价位) = 18950=1988，之后最优 = 18951
 ```
 
-总量守恒；`firstEntry` 就是最优价；`pollFirstEntry` 一步原子地"取走并删除"最优档。
+总量守恒；`firstEntry` 即最优价；`pollFirstEntry` 一步原子"取走并删除"最优档。
 
 ### 例 6：`ReentrantLock` + `Condition` 与 `tryLock`（`J16Ex7Lock.java`）
 
@@ -360,11 +353,11 @@ void put(T x) throws InterruptedException {
 主线程 isHeldByCurrentThread = true, holdCount = 1
 ```
 
-生产者消费者跑在**虚拟线程**上，`await()` 时被卸载，不占载体（J10）。`tryLock(超时)` 是避免死锁的常用办法：拿不到就退让。
+生产者消费者跑在**虚拟线程**上，`await()` 时被卸载，不占载体。`tryLock(超时)` 是避免死锁的常用办法：拿不到就退让。
 
 ### 例 7：伪共享（`J16Ex8FalseSharing.java`）
 
-两个线程各改 `AtomicLongArray` 的一个元素：下标 (0,1) 相邻（8 字节，同一缓存行）vs (0,32) 相距 256 字节。每个线程 5000 万次：
+两个线程各改 `AtomicLongArray` 的一个元素：下标 (0,1) 相邻（同一缓存行）vs (0,32) 相距 256 字节，每线程 5000 万次：
 
 ```
 第 1 轮：相邻(下标 0,1) 270 ms  vs  分开(下标 0,32) 161 ms
@@ -372,30 +365,30 @@ void put(T x) throws InterruptedException {
 第 3 轮：相邻(下标 0,1) 149 ms  vs  分开(下标 0,32) 115 ms
 ```
 
-相邻的更慢，三轮方向一致，幅度波动（本机有别的负载）。逻辑上两个线程毫无关系，纯因为共享缓存行变慢。
+相邻的更慢，三轮方向一致，幅度波动（机器有别的负载）。逻辑上两线程毫无关系，纯因共享缓存行变慢。
 
 ---
 
 ## 5. 坑与限制
 
-1. **`volatile` 不是原子的**：`volatile long n; n++` 照样丢更新。需要原子复合操作用 `AtomicLong`/`LongAdder`/锁。
-2. **`volatile` 数组**：`volatile int[] a` 只让**引用**可见，元素读写不是 volatile。 要元素级用 `AtomicIntegerArray` 或 `MethodHandles.arrayElementVarHandle`。
-3. **双重检查锁（DCL）必须 `volatile`**：`if (inst == null) synchronized (...) { if (inst == null) inst = new X(); }` 里 `inst` 若不是 volatile，另一个线程可能看到"引用已非 null，但对象还没构造完"（构造与赋值被重排）。
-4. **`LongAdder.sum()` 不是快照**：别拿它做"达到阈值就触发"的精确判断；也不要拿它发序号。
-5. **CAS 循环里别做有副作用的事**：失败会重试，副作用会重复执行。
-6. **ABA**：见 2.3 与例 4。 `compareAndSet` 比较的是引用/值，不是"没人动过"。
-7. **`VarHandle` 要 `static final`**，且访问方法需要强转；错误的类型会在**运行时**才抛 `WrongMethodTypeException`/`ClassCastException`。
-8. **`ReentrantLock` 忘记 `unlock`**：永远在 `try { ... } finally { lock.unlock(); }`；`lock()` 要放在 `try` **外面**（否则 `lock()` 自己失败时 `finally` 会错误解锁）。
-9. **伪共享**：只在高频写、多线程、相邻变量的场景才显现；不要预先到处加填充。 先用 profiler 确认。
-10. **`ConcurrentSkipListMap.size()` 是 O(n)**；弱一致迭代器；key/value 不允许 `null`。
-11. **用 `ReentrantLock` 换 `synchronized` 不是"总是更好"**：JDK 24 起 `synchronized` 在虚拟线程里不再 pin（JEP 491），简单互斥用 `synchronized` 代码更短、不会漏 `unlock`。
-12. **"在我机器上没问题"不构成证据**：x86 比 ARM 宽容；JIT 未编译比已编译宽容；低负载比高负载宽容。 用 `jcstress`（OpenJDK 的并发压力测试工具）才算验证。
+1. **`volatile` 不是原子的**：`volatile long n; n++` 照样丢更新；需原子复合操作用 `AtomicLong`/`LongAdder`/锁。
+2. **`volatile` 数组**：`volatile int[] a` 只让**引用**可见，元素读写不是 volatile；元素级用 `AtomicIntegerArray` 或 `MethodHandles.arrayElementVarHandle`。
+3. **双重检查锁（DCL）必须 `volatile`**：`if (inst == null) synchronized (...) { if (inst == null) inst = new X(); }` 里 `inst` 非 volatile，另一线程可能看到"引用非 null 但对象还没构造完"（构造与赋值被重排）。
+4. **`LongAdder.sum()` 不是快照**：别拿它做"达到阈值就触发"的精确判断，也别拿它发序号。
+5. **CAS 循环里别做副作用**：失败会重试，副作用重复执行。
+6. **ABA**：`compareAndSet` 比较的是引用/值，不是"没人动过"（2.3、例 4）。
+7. **`VarHandle` 要 `static final`**，访问方法需强转；错误类型在**运行时**才抛 `WrongMethodTypeException`/`ClassCastException`。
+8. **`ReentrantLock` 忘记 `unlock`**：永远 `try { ... } finally { lock.unlock(); }`；`lock()` 放 `try` **外面**（否则 `lock()` 自己失败时 `finally` 会错误解锁）。
+9. **伪共享**：只在高频写、多线程、相邻变量时显现；先用 profiler 确认，别预先到处填充。
+10. **`ConcurrentSkipListMap.size()` 是 O(n)**；弱一致迭代器；key/value 不许 `null`。
+11. **`ReentrantLock` 换 `synchronized` 不是"总是更好"**：JDK 24 起 `synchronized` 在虚拟线程里不再 pin，简单互斥用 `synchronized` 更短且不会漏 `unlock`。
+12. **"在我机器上没问题"不是证据**：x86 比 ARM 宽容；JIT 未编译比已编译宽容；低负载比高负载宽容。用 `jcstress`（OpenJDK 并发压力测试工具）才算验证。
 
 ---
 
-## 6. 在本 kit 哪里用到
+## 6. 真实代码里的并发原语
 
-**`loop/rounds/01_video/hc04_queue_mean_snapshot/reference/SharedMean.java`**（单写者、多读者的队列均值）——本课 2.4 的完整真实例子：
+**`SharedMean`**（单写者、多读者的队列均值）——2.4 的完整真实例子：
 
 ```java
 private static final VarHandle PUBLISHED;
@@ -420,13 +413,14 @@ private void claimWriter() {
 }
 ```
 
-逐点对照：
-* **`static final VarHandle`**（2.4、坑 7）。
-* **发布一个不可变快照** `Stat(seq, size, sum)`：写者 `setRelease` 发布，读者 `getAcquire` 读一次引用——读到的一定是某个真实时刻的一致快照，**读者不会读到"新 sum + 旧 size"这种撕裂值**（类注释里的原话）。这是不可变对象 + release/acquire 的标准配方：对象构造时的所有字段写入，在 `setRelease` 之前，对 `getAcquire` 之后的读可见。
-* **`OWNER.compareAndSet(this, null, me)`**：第一个写者用 CAS 抢占"唯一写者"身份，其他线程再写会抛 `IllegalStateException`。 这是 CAS 做"一次性占位"的用法（2.3）。
-* 为什么不用 `volatile Stat published`？可以，更简单；用 release/acquire 是为了演示更弱的内存序足够（单写者不需要读-改-写的原子性，只需要发布顺序）。
+对照：
 
-**`loop/rounds/01_video/hc07_ticker_hash_map/reference/TickerCodec.java:24, 78-97`**：
+* **`static final VarHandle`**（2.4、坑 7）。
+* **发布不可变快照** `Stat(seq, size, sum)`：写者 `setRelease`，读者 `getAcquire` 读一次引用——读到的一定是某个真实时刻的一致快照，**不会读到"新 sum + 旧 size"这种撕裂值**。这是不可变对象 + release/acquire 的标准配方：对象构造时的所有字段写入都在 `setRelease` 之前，对 `getAcquire` 之后的读可见。
+* **`OWNER.compareAndSet(this, null, me)`**：第一个写者用 CAS 抢占"唯一写者"身份，其他线程再写抛 `IllegalStateException`——CAS 做"一次性占位"（2.3）。
+* 为什么不用 `volatile Stat published`？可以，更简单；用 release/acquire 是为演示更弱的内存序足够（单写者不需读-改-写原子性，只需发布顺序）。
+
+**`TickerCodec`**：
 
 ```java
 private static final VarHandle BE_LONG = MethodHandles.byteArrayViewVarHandle(long[].class, ByteOrder.BIG_ENDIAN);
@@ -434,50 +428,40 @@ private static final VarHandle BE_LONG = MethodHandles.byteArrayViewVarHandle(lo
 long word = (long) BE_LONG.get(buf, off);     // 一次读出 8 字节，大端
 ```
 
-2.4 的 `byteArrayViewVarHandle`：把 `byte[]` 当 `long` 序列读，不用逐字节拼。 这里用的是 plain `get`，没有并发语义，仅仅为了"一次读 8 字节"。
+2.4 的 `byteArrayViewVarHandle`：把 `byte[]` 当 `long` 序列读，不必逐字节拼。这里是 plain `get`，无并发语义，只为"一次读 8 字节"。
 
-**`loop/rounds/01_video/hc02_merge_k_streams/reference/ConcurrentMerge.java`**：
-* `private final AtomicBoolean closed = new AtomicBoolean();` 与 `close()` 里的 `if (!closed.compareAndSet(false, true)) return;`（第 109、167 行）：CAS 实现**幂等关闭**，保证多个线程同时调 `close()` 时只有一个真正执行——2.3 的一次性开关。
-* 数据通道用 `ArrayBlockingQueue`（内部是 `ReentrantLock` + `Condition`，就是 2.8 例 6 的结构），所以生产者阻塞在 `put` 时虚拟线程可以卸载（J10）。
+**`ConcurrentMerge`**：
+* `private final AtomicBoolean closed = new AtomicBoolean();` 与 `close()` 里的 `if (!closed.compareAndSet(false, true)) return;`：CAS 实现**幂等关闭**，多线程同时调 `close()` 只有一个真正执行（2.3 的一次性开关）。
+* 数据通道用 `ArrayBlockingQueue`（内部 `ReentrantLock` + `Condition`，即 2.8/例 6 的结构），生产者阻塞在 `put` 时虚拟线程可卸载。
 
-**`loop/rounds/01_video/hc05_market_order_book/reference/OrderBook.java:88`**：`SequencedMap<Long, PriceLevel> bids = new java.util.TreeMap<>(Comparator.reverseOrder());`——订单簿的价位表。
-当前设计是**单线程撮合**（Disruptor 式：一个线程独占订单簿，别的线程通过队列投递命令）所以用普通 `TreeMap`，不需要 `ConcurrentSkipListMap`。 如果面试官问"多线程共享这个簿怎么办"：
-先说"单写线程 + 队列"，再说"必须共享就换 `ConcurrentSkipListMap`，但 `PriceLevel` 里的 FIFO 和 `total` 的复合更新还需要锁或不可变替换"。
+**`OrderBook`**：`SequencedMap<Long, PriceLevel> bids = new java.util.TreeMap<>(Comparator.reverseOrder());`——订单簿价位表。当前设计是**单线程撮合**（Disruptor 式：一个线程独占订单簿，别的线程通过队列投递命令），所以用普通 `TreeMap`。面试官问"多线程共享这个簿怎么办"：先说"单写线程 + 队列"，再说"必须共享就换 `ConcurrentSkipListMap`，但 `PriceLevel` 里 FIFO 和 `total` 的复合更新还需要锁或不可变替换"。
 
-kit 的 `reference/*.java` 里**没有**使用 `LongAdder`、`ConcurrentSkipListMap`、`ReentrantLock`、`synchronized`、`volatile`（对这些词的搜索无命中）。 它们作为概念课出现在这里，是因为面试会问。
+参考实现里没有用 `LongAdder`、`ConcurrentSkipListMap`、`ReentrantLock`、`synchronized`、`volatile`；它们作为概念课出现，是因为面试会问。
 
 ---
 
 ## 7. 自测题
 
-1. 说出 JMM 的至少 5 条 happens-before 规则。 为什么 `volatile` 标志位能用来发布数据？
-2. `volatile int count; void inc() { count++; }` 为什么仍然是错的？应该怎么改？ 
-3. 解释 release/acquire，并说明为什么 SPSC 队列里 `tail` 用 `setRelease` 写、`getAcquire` 读就够了，不需要 `volatile`。
-4. 什么是 ABA？举一个无锁栈的例子，并说出两种对策。
-5. `LongAdder` 为什么在高竞争下比 `AtomicLong` 快？它的代价是什么？什么时候不能用它？
+1. 说出 JMM 的至少 5 条 happens-before 规则。为什么 `volatile` 标志位能发布数据？
+2. `volatile int count; void inc() { count++; }` 为什么仍然错？怎么改？
+3. 解释 release/acquire，并说明为什么 SPSC 队列里 `tail` 用 `setRelease` 写、`getAcquire` 读就够了，不需 `volatile`。
+4. 什么是 ABA？举一个无锁栈的例子，说出两种对策。
+5. `LongAdder` 为什么在高竞争下比 `AtomicLong` 快？代价是什么？什么时候不能用？
 6. 什么是伪共享？怎么检测、怎么避免？
 7. （面试表述）「JDK 21 里为什么在虚拟线程中要用 `ReentrantLock` 而不是 `synchronized`？」
 
 <details><summary>答案</summary>
 
-1. 程序顺序；监视器锁（unlock HB 后续 lock）；volatile（写 HB 后续读）；线程启动（start HB 线程内操作）；线程终止（线程内操作 HB join 返回）；传递性；final 字段冻结。volatile 写之前的所有操作 HB 它之后的读（程序顺序 + volatile 规则 + 传递性），所以先写数据再写标志，读者读到标志后一定看到数据。
-2. `count++` 是读-加-写三步，volatile 只保证单次读写的可见性，不保证复合操作原子；两个线程会读到同一个旧值各写回一次，丢一次更新。改为 `AtomicInteger.incrementAndGet()`、`LongAdder.increment()` 或加锁。
-3. release 写保证此前的写（含槽位数据）不会被重排到它之后；acquire 读保证此后的读不会被重排到它之前；消费者 acquire 读到新 tail，就一定能看到生产者在 release 前写进槽位的数据。队列的正确性不需要"写之后的读不能越过写"（StoreLoad）这条额外保证，所以不用付 volatile 的全栅栏代价（x86 上尤其明显）。
-4. CAS 只比较值，线程 1 读到 A 被暂停，线程 2 把 A→B→A，线程 1 的 CAS 仍成功，但中间状态已变（例 4 中朴素版栈把已弹出的 B 重新挂回栈顶）。对策：带版本号的 `AtomicStampedReference`/`AtomicMarkableReference`；不复用节点（依赖 GC 保证旧引用不会指向新对象）；用锁。
-5. 它把热点拆成 base + 多个 Cell，高竞争时不同线程更新不同 Cell（且 Cell 填充过，避免伪共享），避免了同一内存位置上的 CAS 重试和缓存行抖动。代价：`sum()` 要遍历且不是原子快照，占更多内存；不能用于需要精确当前值参与决策的场合（序号分配、限额的 CAS 检查）。
-6. 两个互不相关的变量在同一缓存行，不同核写它们会不断使对方的缓存行失效。检测：性能剖析看缓存未命中/`perf c2c`，或像例 7 做对照实验。避免：填充或拆分到不同缓存行（`@Contended`、手动 padding），或让每线程用自己的状态再合并（LongAdder 的思路）。
-7. JDK 21 里虚拟线程在 `synchronized` 内阻塞会 pin 住载体线程（无法卸载），载体数量有限，可能耗尽吞吐；`ReentrantLock` 基于 `LockSupport.park`，阻塞时可以卸载。JDK 24（JEP 491）修复了 `synchronized` 的 pinning，之后这一理由不再成立。
+1. 程序顺序；监视器锁（unlock HB 后续 lock）；volatile（写 HB 后续读）；线程启动；线程终止；传递性；final 字段冻结。volatile 写之前的操作 HB 它之后的读（程序顺序 + volatile 规则 + 传递性），所以先写数据再写标志，读者读到标志后一定看到数据。
+2. `count++` 是读-加-写三步，volatile 只保证单次读写可见，不保证复合操作原子；两线程读到同一旧值各写回一次，丢一次更新。改 `AtomicInteger.incrementAndGet()`、`LongAdder.increment()` 或加锁。
+3. release 写保证此前的写（含槽位数据）不被重排到它之后；acquire 读保证此后的读不被重排到它之前；消费者 acquire 读到新 tail，就一定看到生产者在 release 前写进槽位的数据。队列正确性不需要"写之后的读不能越过写"（StoreLoad），所以不付 volatile 全栅栏的代价（x86 上尤其明显）。
+4. CAS 只比较值：线程 1 读到 A 被暂停，线程 2 把 A→B→A，线程 1 的 CAS 仍成功但中间状态已变（例 4 朴素版栈把已弹出的 B 重新挂回栈顶）。对策：带版本号的 `AtomicStampedReference`/`AtomicMarkableReference`；不复用节点（靠 GC 保证旧引用不指向新对象）；用锁。
+5. 热点拆成 base + 多个 Cell，高竞争时不同线程更新不同 Cell（且 Cell 填充过，避免伪共享），避免同一内存位置的 CAS 重试和缓存行抖动。代价：`sum()` 要遍历且不是原子快照，占更多内存；不能用于需要精确当前值参与决策的场合（序号分配、限额 CAS 检查）。
+6. 两个互不相关的变量在同一缓存行，不同核写它们会不断使对方缓存行失效。检测：性能剖析看缓存未命中/`perf c2c`，或像例 7 做对照实验。避免：填充或拆到不同缓存行（`@Contended`、手动 padding），或每线程用自己的状态再合并（LongAdder 思路）。
+7. JDK 21 里虚拟线程在 `synchronized` 内阻塞会 pin 住载体线程（无法卸载），载体有限，可能耗尽吞吐；`ReentrantLock` 基于 `LockSupport.park`，阻塞时可卸载。JDK 24 修复了 `synchronized` 的 pinning，之后这一理由不再成立。
 
 </details>
 
 ---
 
-## 8. 延伸阅读
-
-* JLS §17 Threads and Locks — https://docs.oracle.com/javase/specs/jls/se21/html/jls-17.html —— 17.4 内存模型，17.4.5 happens-before 的原文定义。
-* Doug Lea, *The JSR-133 Cookbook for Compiler Writers* — http://gee.cs.oswego.edu/dl/jmm/cookbook.html —— 每种屏障在每种架构上怎么实现，写给编译器作者，但表格直接回答"volatile 在 x86/ARM 上是什么指令"。
-* Aleksey Shipilëv, *Java Memory Model Pragmatics* — https://shipilev.net/blog/2014/jmm-pragmatics/ —— 最好的 JMM 实用讲解，含重排序实验。
-* JEP 193 Variable Handles — https://openjdk.org/jeps/193 —— `VarHandle` 的动机与访问模式。
-* `java.lang.invoke.VarHandle` Javadoc — https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/invoke/VarHandle.html —— 访问模式的精确语义（"Access modes"一节）。
-* `java.util.concurrent.atomic.LongAdder` Javadoc — https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/atomic/LongAdder.html —— 官方对 `AtomicLong` 与 `LongAdder` 取舍的说明。
-* JEP 491 Synchronize Virtual Threads without Pinning — https://openjdk.org/jeps/491 —— `synchronized` 在虚拟线程下的后续变化。
+「延伸」J17 FFM API：堆外内存与原生调用。

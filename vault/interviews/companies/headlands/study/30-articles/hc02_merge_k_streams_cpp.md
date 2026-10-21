@@ -501,7 +501,7 @@ struct overloaded : Ts... {
 
 * `MergeException` 保存失败流的编号和原始异常（`std::exception_ptr`），`what()` 里带上原因的文字。
 * `BlockingSource` 比 `Source` 多一个 `std::stop_token`：约定是**收到停止请求后尽快返回 `std::nullopt`**。
-* `overloaded` 是 `std::visit` 的惯用工具：把几个 lambda 合成一个函数对象。
+* `overloaded` 是 `std::visit` 的惯用工具：把几个 lambda 合成一个函数对象。它和下面的队列、消息、生产者、线程组、合并核心都在 `namespace detail` 里（到 `ConcurrentMerge` 之前结束）：这是实现细节，不是接口。
 
 ```cpp
 /// Bounded blocking queue.  Every blocking call also wakes up when the stop token fires (condition_variable_any).
@@ -898,7 +898,7 @@ std::vector<T> merge_all(std::vector<BlockingSource<T>> sources, int capacity, L
 
 **Q9. `try_next()` 能不能"忙等"？** 能，但会烧 CPU；合并器里更好的做法是 `next()` 在缺队首的流上阻塞。需要和别的事件一起等时，给每条队列加回调或用 `eventfd`/管道通知。
 
-**Q10. `Merger` 能不能支持只可移动的元素？** 现在不能（`prev_` 需要拷贝）。想支持就把顺序检查改成"比较器每次拿到的是新旧两个元素的引用"，让 source 自己负责顺序，或者只保留需要的键。
+**Q10. `Merger` 能不能支持只可移动的元素？** 现在不能：`prev_` 要保留上一个元素做顺序检查，所以要拷贝。想支持，就让比较器只看一个可拷贝的「键」（`prev_` 里只存键），或者把顺序检查交给 source 自己。
 
 ## 9. 自测
 

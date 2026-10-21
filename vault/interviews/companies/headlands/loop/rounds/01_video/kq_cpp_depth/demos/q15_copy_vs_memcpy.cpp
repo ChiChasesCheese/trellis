@@ -1,5 +1,7 @@
 // std::copy vs memcpy vs memmove.
 #include <algorithm>
+#include <bit>
+#include <cstdint>
 #include <cstdio>
 #include <cstring>
 #include <string>
@@ -17,6 +19,7 @@ static_assert(!std::is_trivially_copyable_v<SelfRef>);
 struct Pod { int a; double b; };
 static_assert(std::is_trivially_copyable_v<int> && std::is_trivially_copyable_v<Pod>);
 static_assert(!std::is_trivially_copyable_v<std::string>);
+static_assert(!std::is_trivially_copyable_v<std::pair<int, int>>);   // user-provided assignment operators
 
 int copy_ints(const int* src, int* dst, std::size_t n) { std::copy(src, src + n, dst); return 0; }
 
@@ -39,6 +42,10 @@ int main() {
     std::vector<std::string> src{"alpha", std::string(40, 'b')}, dst(2);
     std::copy(src.begin(), src.end(), dst.begin());           // copy-assigns each element
     std::printf("std::copy on strings: %s %zu\n", dst[0].c_str(), dst[1].size());
+
+    float f = 1.0f;
+    std::uint32_t bits = std::bit_cast<std::uint32_t>(f);     // type punning without UB (memcpy under the hood)
+    std::printf("bit_cast<uint32_t>(1.0f) = 0x%08X\n", bits);
 
     int s[4] = {9, 8, 7, 6}, t[4];
     copy_ints(s, t, 4);

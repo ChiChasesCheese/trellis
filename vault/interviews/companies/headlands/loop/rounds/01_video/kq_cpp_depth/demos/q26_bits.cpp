@@ -13,6 +13,9 @@ constexpr std::uint32_t rol(std::uint32_t r, unsigned n)        { n &= 31; retur
 constexpr bool is_pow2(std::uint32_t x)                          { return x && !(x & (x - 1)); }
 constexpr std::uint32_t lowest_set(std::uint32_t x)              { return x & (~x + 1); }              // same as x & -x
 
+constexpr int popcount_kernighan(std::uint32_t x)                { int c = 0; while (x) { x &= x - 1; ++c; } return c; }   // clears the lowest set bit each step
+constexpr std::uint32_t field(std::uint32_t r, unsigned lo, unsigned width) { return (r >> lo) & ((std::uint32_t{1} << width) - 1); }
+
 static void show(const char* what, std::uint32_t v) {
     std::printf("%-22s 0x%08X  %s  (%u)\n", what, v, std::bitset<32>(v).to_string().c_str(), v);
 }
@@ -30,6 +33,8 @@ int main() {
     show("not", ~r);
     std::printf("test_bit(r,5)=%d popcount=%d ctz=%d clz=%d is_pow2(64)=%d is_pow2(96)=%d lowest_set(0xF0)=0x%X\n",
                 test_bit(r, 5), std::popcount(r), std::countr_zero(r), std::countl_zero(r), is_pow2(64), is_pow2(96), lowest_set(0xF0));
+
+    std::printf("kernighan popcount(0xF0F0)=%d  field(0xABCD, lo=4, width=8)=0x%X\n", popcount_kernighan(0xF0F0u), field(0xABCDu, 4, 8));
 
     // Pitfalls
     std::uint8_t b = 0x0F;

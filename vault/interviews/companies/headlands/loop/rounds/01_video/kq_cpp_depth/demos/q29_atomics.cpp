@@ -7,6 +7,9 @@
 
 struct Msg { int a, b; };
 
+void bump_seq_cst(std::atomic<long>& x) { x.fetch_add(1, std::memory_order_seq_cst); }   // compare the generated code (-S)
+void bump_relaxed(std::atomic<long>& x) { x.fetch_add(1, std::memory_order_relaxed); }
+
 template <class F> double ms(F&& f) {
     auto t0 = std::chrono::steady_clock::now(); f();
     return std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - t0).count();
@@ -44,8 +47,8 @@ int main() {
     std::printf("release/acquire handoff: %d bad reads in 20000 rounds\n", bad);
 
     std::atomic<long> seq{0}, rel{0};
-    double t_seq = ms([&] { for (int i = 0; i < 20'000'000; ++i) seq.fetch_add(1, std::memory_order_seq_cst); });
-    double t_rel = ms([&] { for (int i = 0; i < 20'000'000; ++i) rel.fetch_add(1, std::memory_order_relaxed); });
+    double t_seq = ms([&] { for (int i = 0; i < 20'000'000; ++i) bump_seq_cst(seq); });
+    double t_rel = ms([&] { for (int i = 0; i < 20'000'000; ++i) bump_relaxed(rel); });
     std::printf("uncontended fetch_add x20M: seq_cst %.0f ms, relaxed %.0f ms\n", t_seq, t_rel);
     std::printf("atomic<long> lock-free: %d, atomic<Msg> lock-free: %d\n", std::atomic<long>::is_always_lock_free, std::atomic<Msg>::is_always_lock_free);
 }

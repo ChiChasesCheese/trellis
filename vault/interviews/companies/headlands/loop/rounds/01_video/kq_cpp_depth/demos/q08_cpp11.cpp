@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include <thread>
+#include <type_traits>
 #include <utility>
 #include <vector>
 
@@ -41,4 +42,14 @@ int main() {
     t.join();
     std::printf("thread wrote %d\n", counter);
     log_all("vals", 1, 2.5, 3L);
+
+    std::vector<int> brace{3, 4};                            // braces prefer the initializer_list constructor: {3, 4}
+    std::vector<int> paren(3, 4);                            // parentheses: three elements, each 4
+    std::printf("vector<int>{3,4} has %zu elements; vector<int>(3,4) has %zu\n", brace.size(), paren.size());
+    int x = 1;
+    const int& rx = x;
+    auto copy = rx;                                          // auto drops const and the reference: a plain int copy
+    static_assert(std::is_same<decltype(copy), int>::value, "auto strips const&");
+    copy = 2;
+    std::printf("auto copy changed to %d, original still %d\n", copy, x);
 }
