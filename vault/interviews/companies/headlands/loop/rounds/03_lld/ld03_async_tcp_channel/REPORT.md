@@ -1,8 +1,8 @@
-# ld03 · REPORT
+# ld03 · 思路与追问
 
 ## 概要
 
-「异步 TCP 消息通道」出自 FastPrep 的 Low-level design 题（2023-03-09），摘要为「bounded message API over one TCP session, with local circular buffers, partial-I/O framing…」。
+「异步 TCP 消息通道」是一道 low-level design 题：在一条 TCP 连接上做有界的消息 API，带本地环形缓冲区和处理部分读写的成帧。
 
 面试官想看五点：
 1. 知道 TCP 是字节流，消息边界要自己加，部分读、部分写是常态；
@@ -10,14 +10,6 @@
 3. `Selector` 的使用纪律：兴趣集怎么设、何时唤醒、「就绪」不等于「完成」，以及暂停读之后由谁来恢复；
 4. 失败语义说清楚：EOF 出现在帧中间、半关闭、重连后哪些数据可能丢；
 5. 怎么把并发 I/O 代码测得稳定。
-
-讲义：`study/30-articles/ld03_async_tcp_channel.md`。
-
-## 来源与置信度
-
-置信度：中。只有 FastPrep 一个来源，而且只有标题和摘要。1p3a 974931（同一天，内容是 C++ 版本差异和 IPC 方法）可能相关，不计入 #refs。
-
-(reconstructed)：四个 Part 的划分、帧格式（4 字节大端长度前缀）、`offer` / `poll` 的语义、出站和入站的背压规则、`finishSending`（半关闭）规则、重连时 pending 的语义，以及「已交给旧连接的消息可能丢失」。能确定的只有：一条 TCP 会话、有界的消息 API、本地环形缓冲区、处理部分 I/O 的分帧。
 
 ## 逐 Part 思路
 
@@ -48,7 +40,7 @@
 * 以为一次 `read` 就是一条消息。实际可能读到半个帧头，也可能一次读到「两条半」。
 * 忽略 `write` 的返回值，导致几 MB 的大消息在部分写时丢掉尾巴。
 * `OP_WRITE` 一直开着，CPU 空转；读到 `readyOps` 的旧值。
-* 暂停读之后没人唤醒，通道永久卡住。变异检查时去掉 `poll()` 里的 `wakeup`，自旋 `poll()` 的测试会 20 秒超时失败，信息是「stalled after 3 messages」。
+* 暂停读之后没人唤醒，通道永久卡住。例如去掉 `poll()` 里的 `wakeup`，自旋 `poll()` 的消费者就会永远停在几条消息之后。
 * 容量小于 `maxFrame + 4` 导致死锁；非法长度要等 `len` 字节凑齐才报错；帧头是 `0x7FFFFFFF` 时触发巨大的内存分配。
 * 把 EOF 一律当成正常结束，吞掉半条消息；`close` 时接收缓冲区里还有数据，会发出 RST。
 * `offer` 满了抛异常而不是返回 false；或者反过来，通道已关闭时也只返回 false。
@@ -56,15 +48,13 @@
 * 重连：断线期间 `offer` 直接失败；pending 不设上限；`close` 之后还在重连；连接还没稳定就重置了退避；上限设为 `Long.MAX_VALUE` 时乘法溢出。
 * 压力测试中 `offer` 返回 false 可能只是 I/O 线程还没来得及腾出空间，必须等 200 ms 仍然放不下，才算真的堵死。
 
-## 复杂度 + 实测时间
+## 复杂度
 
 - `ByteRing` 读写的代价与拷贝的字节数成正比；`FrameDecoder.next` 是 O(1) 加一次拷贝。
 - `offer` / `poll` 持锁期间只做内存拷贝；每条消息经历两次拷贝（进环、出环）和一次中转缓冲。
 - 内存：出站环 + 入站环 + 2 × 16 KB 中转缓冲，不随消息数量增长。
 
-实测：全套 49 个测试约 4–5.6 s；在 12 个进程占满 CPU 的情况下也全部通过。
-
-`ChannelBench`（本机回环，负载 32 字节，各跑 3 次）：
+基准（回环，负载 32 字节，各跑 3 次）：
 
 | 项目 | 结果 |
 |---|---|
@@ -77,49 +67,21 @@
 怎么读这些数字：
 
 - 本通道比裸 socket 多出的约 24 µs，来自应用线程和 I/O 线程之间的两次交接。这正是热路径要在一个线程里一口气处理完（run-to-completion）的原因。
-- 请求 `SO_*BUF = 4096`，在这台 macOS 上读回来的实际值是发送 65,328 B、接收约 0.5 MB，所以真正的缓冲主要在内核里。
+- 请求 `SO_*BUF = 4096`，在 macOS 上读回来的实际值是发送 65,328 B、接收约 0.5 MB，所以真正的缓冲主要在内核里。
 - 把出站环加大 60 KB，多接受了约 1,700 条（约 60 KB），和预期一致。
-- 把接收端的入站环加大，却没有多接受消息：读回的内核接收缓冲区同时缩小了约 57 KB（约 465 KB 对约 523 KB）。原因没有查清。
-- 以上往返和背压数字只在 macOS 回环上测过，没有在 Linux 上验证。
-
-## 测试清单（脚本数）
-
-共 49 个，0 失败：part1 21、part2 13、part3 5、part4 10；edge 29、perf 2、conc 4、io 23。
-
-- **FramingTest**（part1，21 个）：
-  - 字节环：基本读写、回绕、部分写、部分读、`writeAll` 的原子性、`peekInt` 的大端与符号位、出错时不改状态、和 `ArrayDeque` 随机对照。
-  - `FrameCodec`：帧头字节、空负载、放不下时不留半个帧头、超过 `maxFrame`。
-  - `FrameDecoder`：整帧、在每个可能的位置切开、逐字节输入、恰好 `maxFrame`、有界 `feed` 和恢复、非法帧头及其粘性失败、`hasFrame` 和截断的尾巴、随机切块。
-  - 100 万条消息走一遍字节环 + 解码器的 perf 测试。
-- **TcpMessageChannelTest**（part2 13 个 + part3 5 个）：
-  - 功能：请求应答；空消息、最大消息、几 MB 的消息；1 万条按序到达；双向同时各发 5000 条；用裸 socket 逐字节发送、一次发「两条半」；非法帧头；帧中间 EOF；`finishSending` 半关闭直到双方都关闭；突然 `close`；`close` 能唤醒阻塞中的 `poll`；20 万条回环 perf。
-  - 背压：对端不读时 `offer` 最终返回 false，且事后不丢消息；阻塞 `offer` 能等到空间；最小缓冲区下传 2 万条；自旋的非阻塞 `poll` 能恢复被暂停的读；慢读者。
-- **ReconnectTest**（part4，10 个）：
-  - `Backoff` 5 个：退避序列、`reset`、上限为 `Long.MAX_VALUE` 时不溢出、全抖动的取值范围、非法参数。
-  - `ReconnectingClient` 5 个：服务端踢掉连接后重连并继续收发；服务端整个下线、再在同一端口重新上线后，消息全部按序到达；pending 有上限；`close` 之后不再重连；连接成功后退避被重置。
-
-变异检查（每次只改 reference 的一处）：
-
-| 变异 | 结果 |
-|---|---|
-| 删掉 `poll()` 里的唤醒 | 自旋 `poll` 的测试 20 秒超时失败 |
-| 删掉 `poll(timeout)` 里的唤醒 | 多个测试失败 |
-| 删掉 `offer` 在环从空变非空时的唤醒 | 5 个测试失败 |
-| 非法帧头只校验 `len < 0` | 2 个测试失败 |
-| 环回绕段的起点算错 | 12 个测试失败 |
-| `Backoff` 的乘法不防溢出 | 1 个测试失败 |
-| `selectedKeys().remove(key)` 改成 `clear()` | 测试仍全部通过——这是等价变异，不是漏测 |
+- 把接收端的入站环加大，却没有多接受消息：读回的内核接收缓冲区同时缩小了约 57 KB（约 465 KB 对约 523 KB）。原因不明。
+- 以上往返和背压数字来自 macOS 回环，Linux 上会不同。
 
 ## Java 21 特性
 
-| id | 用在哪 | 比旧写法好在哪 |
+| 特性 | 用在哪 | 比旧写法好在哪 |
 |---|---|---|
-| J10 虚拟线程 | `ReconnectingClient` 的管理线程：`Thread.ofVirtual().name(…).start(…)`，里面是「连接 → 等待 → 退避」的直线式阻塞代码 | 不用写回调链，阻塞时也不占平台线程。热路径上的 I/O 线程仍然用平台线程 |
-| J16 `ReentrantLock` / `Condition` | 通道和客户端的全部共享状态 | 支持多个条件、可以带超时等待（`awaitNanos`）；在虚拟线程里不会钉住载体线程（`synchronized` 会） |
-| J01 record | `ChannelConfig` 的紧凑构造器做校验（容量 ≥ `maxFrame + 4`） | 非法配置根本造不出来 |
+| 虚拟线程 | `ReconnectingClient` 的管理线程：`Thread.ofVirtual().name(…).start(…)`，里面是「连接 → 等待 → 退避」的直线式阻塞代码 | 不用写回调链，阻塞时也不占平台线程。热路径上的 I/O 线程仍然用平台线程 |
+| `ReentrantLock` / `Condition` | 通道和客户端的全部共享状态 | 支持多个条件、可以带超时等待（`awaitNanos`）；在虚拟线程里不会钉住载体线程（`synchronized` 会） |
+| record | `ChannelConfig` 的紧凑构造器做校验（容量 ≥ `maxFrame + 4`） | 非法配置根本造不出来 |
 | `RandomGenerator`（Java 17） | `Backoff.next(rng)` 里的 `rng.nextLong(cap + 1)` | 统一的随机数接口，有 `long` 范围的方法；测试里传一个带种子的 `Random`，结果就是确定的 |
 | try-with-resources / `AutoCloseable` | 测试和 bench 里的通道、服务器 | 按相反顺序关闭；`close` 可重复调用 |
-| J08 var | 测试里的 `var p = pair(CFG)` | 右边已经写明类型时不用再写一遍 |
+| var | 测试里的 `var p = pair(CFG)` | 右边已经写明类型时不用再写一遍 |
 | `Objects.checkFromIndexSize` | `ByteRing.writeAll` | 抛标准的 IOOBE，而且 `off + len` 不会溢出 |
 
 ## 面试官可能的追问

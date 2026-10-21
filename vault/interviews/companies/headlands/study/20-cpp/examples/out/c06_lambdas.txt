@@ -1,0 +1,9 @@
+$ c06_lambdas
+  by value 10, by reference 20
+  outer counter still 0, lambda's copy is at 3
+  moved-in capture: 10, owned is null
+  3 3.75 ab
+  10! = 3628800
+  IIFE 42
+  sizeof: empty lambda 1, [a,b] 8, [vector] 24, std::function 32
+  returned counter: 3

@@ -1,0 +1,6 @@
+$ c08_cxx23_peek
+  ok 100
+  error: bad qty: abc
+  deducing this: 5, ranges::to size 4
+  1^2=1  2^2=4  3^2=9  4^2=16
+  (if consteval compiles)

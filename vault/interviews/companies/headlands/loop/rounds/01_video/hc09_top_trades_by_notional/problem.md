@@ -1,10 +1,4 @@
-# hc09 · Top Trade Events by Notional（FastPrep「Top Trade Events by Notional」/ QuantVault「Top K Tickers by Notional」）
-
-> 阶段：电面（FastPrep 标 Phone Screen，lastSeen 2024-05-26；1p3a 技术电面 C++ / Python 对比）· 置信度：**中**（2 个独立来源：FastPrep 1 + 1p3a 1068621 的摘要「a trading events coding challenge」）
-> 证据只有一句话：FastPrep 题面第一句 "You are given parallel arrays tickers, prices and volumes describing trade e…"（被截断），加上 QuantVault 的标题 "Top K Tickers by Notional"（站方改写，不算独立来源）。
-> **所以：Part 1「平行数组 tickers / prices / volumes，按 price × volume 取最大的若干事件」来自证据；价格用整数 tick、溢出检查、完整 tie-break、
-> Part 2（按 ticker 聚合）、Part 3（滑动窗口流式）、Part 4（并行分块聚合）都是 (reconstructed)**——按「一小时电面里面试官会怎么一路追问」推出来的。
-> Part 2 的方向有标题「Top K **Tickers** by Notional」支持；Part 3 / 4 是性能 / 并发追问，没有任何直接证据。
+# hc09 · Top Trade Events by Notional（按名义金额取 top-k 成交 / ticker）
 
 ## 读题前你需要知道
 
@@ -13,16 +7,12 @@
 * **整数溢出**和 `Math.multiplyExact`；
 * **并行聚合**：为什么「各算各的、最后合并」不需要锁，以及 `parallel()` 流 / ForkJoin / `StructuredTaskScope` 各自是什么。
 
-这些全部在讲义 [[hc09_top_trades_by_notional]]（`study/30-articles/hc09_top_trades_by_notional.md`）里从零讲，
-并且从最笨的「全部排序」开始推导。基础课：[[heap_priority_queue]]、[[ordered_maps_trees]]、[[complexity]]、[[cpu_cache_locality]]。
-建议：先读讲义第 1–3 节，自己写 Part 1，再读第 4 节。
-
 ## 背景
 
 一天里交易所产生了很多成交事件（trade event）。它们以三个**平行数组**（parallel arrays）给出：第 `i` 个事件是
 `(tickers[i], prices[i], volumes[i])`。一个事件的 **notional**（名义金额）= `price × volume`。
 
-* 价格用**整数 tick**（最小报价单位，比如 1 tick = 1 美分），数量用整数股数。所以 notional 是精确的 `long`，没有浮点误差。 **(reconstructed)** 真题的价格类型未知；
+* 价格用**整数 tick**（最小报价单位，比如 1 tick = 1 美分），数量用整数股数。所以 notional 是精确的 `long`，没有浮点误差。 真题的价格类型未知；
   这里选整数，是因为「金额不能用 `double` 累加」是交易公司面试的老生常谈，而且后面的并行合并要靠整数加法的结合律。
 * 价格 ≥ 0，数量 ≥ 0。乘法和累加都用 `Math.xxxExact`：**溢出就抛 `ArithmeticException`**，绝不静默回绕成负数。
 
@@ -37,7 +27,7 @@
 
 record / sealed 类型 `Trade`、`TickerTotal`、`Summary`、`SlidingTopK.Feed`（`Fill` / `Tick` / `Ask`）、`Answer` 在 starter 里已给出，签名以 starter 为准，这里只写语义。
 
-## Part 1 · top-k 事件（高置信的核心 + 其余 (reconstructed)）
+## Part 1 · top-k 事件
 
 `topEvents(String[] tickers, long[] prices, long[] volumes, int k)` → `List<Trade>`，按下面的顺序排列，最多 `k` 个：
 
@@ -65,7 +55,7 @@ topEvents(k=3) → [TSLA(i=5, 200000), AAPL(i=0, 180000), GOOG(i=3, 126000)]
 topEvents(k=4) → 第 4 名是 i=1 而不是 i=4：二者 notional 与 ticker 都相同（MSFT, 120000），下标小的在前
 ```
 
-## Part 2 · top-k ticker（方向有标题支持，细节 (reconstructed)）
+## Part 2 · top-k ticker（方向有标题支持，细节）
 
 `topTickers(tickers, prices, volumes, k)` → `List<TickerTotal>`：同一 ticker 的所有事件 notional 相加，取总额最大的 `k` 个；
 总额降序，相同按 ticker 升序。累加用 `Math::addExact`——**每个事件都不溢出，合起来也可能溢出**，要报。没出现过的 ticker 不存在；出现过但总额为 0 的 ticker 存在（排在最后）。
@@ -83,7 +73,7 @@ topTickers(k=2) → [AAPL 270500, MSFT 240000]      （TSLA 200000, GOOG 126000 
 
 注意**最大的事件（TSLA）不属于最大的 ticker（AAPL）**——两个问题的答案不同，别混。
 
-## Part 3 · 流式：滑动窗口 top-k ticker（(reconstructed)）
+## Part 3 · 流式：滑动窗口 top-k ticker
 
 成交事件按时间顺序一个个到达，面试官问：「如果数据是实时流，只关心最近 W 个时间单位内的成交，随时要能报出当前 top-k ticker，怎么做？」
 
@@ -100,7 +90,7 @@ topTickers(k=2) → [AAPL 270500, MSFT 240000]      （TSLA 200000, GOOG 126000 
 * **窗口语义**：`now - time < window` 的成交是活的，`now - time >= window` 过期。也就是活跃区间 `(now - window, now]`，**恰好差 `window` 就过期**。
 * 时间 ≥ 0；`window ≥ 1`；`k ≥ 0`。`add` 里总额溢出 → `ArithmeticException`，**ticker 的状态保持原样**（原子性）。
 * 复杂度要求：每个事件 O(log m) 摊还（m = 窗口内不同 ticker 数），查询 O(log m + k)。
-* 追问核心：**为什么只用 `PriorityQueue` 不行？**（见讲义第 4 节）
+* 追问核心：**为什么只用 `PriorityQueue` 不行？**
 
 ### 样例（窗口 W = 10，k = 2）
 
@@ -114,7 +104,7 @@ Q 15 → [TSLA 100]              MSFT(t=3)、AAPL(t=5) 都过期（15-5=10>=10�
 Q 40 → []
 ```
 
-## Part 4 · 并行分块聚合（(reconstructed)）
+## Part 4 · 并行分块聚合
 
 「数据有两千万条，单线程太慢了，怎么用多核？」——切成块，每块各自聚合成 `Map<String, Long>`，最后合并。
 
@@ -131,7 +121,7 @@ Q 40 → []
 * 校验与异常和顺序版一致：负数 → IAE，null → NPE，溢出 → `ArithmeticException`（来自单个事件、某一块的部分和、**或者合并两块时**——这三种都要报）。
   总额恰好等于 `Long.MAX_VALUE` 必须通过；比它大 1 必须报，不论怎么分块。
 * 并发要求：多个线程同时调用同一个方法（读同一份数组）互不干扰；一个调用失败不影响别的调用。
-* 追问核心：**合并为什么是对的？** 为什么价格用整数而不是 `double`？溢出的行为为什么与分块方式无关？（讲义第 4–5 节）
+* 追问核心：**合并为什么是对的？** 为什么价格用整数而不是 `double`？溢出的行为为什么与分块方式无关？
 
 ## 边界清单（隐藏测试会打的）
 
@@ -145,18 +135,12 @@ Q 40 → []
 | 窗口 | 恰好 `window` 的边界；同一时间戳多笔；ticker 因过期被别人反超；总额溢出后状态不变 |
 | 并行 | 块数多于事件数；块边界把同一 ticker 的两笔分开使得合并才溢出；打乱事件顺序结果不变 |
 
-## 野外变体
+## 相关变体
 
-* 浮点价格（`double`）：notional 用 `BigDecimal` 或先转整数 tick，避免累加误差。FastPrep 的类型未知。
+* 浮点价格（`double`）：notional 用 `BigDecimal` 或先转整数 tick，避免累加误差。
 * 「按成交量排序」「按 VWAP（成交量加权均价）排序」：VWAP = Σ(price×volume) / Σvolume，要小心整除与分母 0。
 * top-k 在**每个 ticker 内部**（每只股票的前 k 笔最大成交）：`groupingBy` + 每组一个堆。
 * 数据放不进内存：外部归并 / 分片按 ticker 哈希，每片各自 top-k，最后 k 路归并（接 hc02）。
-
-## 来源
-
-`catalog/raw/github_repos.md`（FastPrep "Top Trade Events by Notional"，Phone Screen，May 26 2024，https://www.fastprep.io/problems/headlands-top-trade-events-by-notional ）；
-`catalog/raw/forums.md` A8（1p3a 1068621，2024-05-26，「smart pointers, a trading events coding challenge」，次日被拒）· X1（QuantVault 标题 "Top K Tickers by Notional (2024-05)"，不独立）；
-`catalog/CATALOG.md` 行 hc09。
 
 ## 考什么
 

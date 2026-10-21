@@ -1,17 +1,9 @@
 # hc03 · 递归求和 1..n（面试官一路追问）
 
-> 阶段：电面 / 一小时视频第一题 · 置信度：**高**（CATALOG hc03：#refs = 4——FastPrep 1 + 1p3a 2 + Blind 1；其中 1p3a 1009358 与 FastPrep 同日，可能同源）
-> 公开信息只有**标题 + 首句 + 追问关键词**：Blind 2024-08「先要求不用公式求 1..n 之和（summing natural numbers without the formula），然后加优化追问」；
-> FastPrep *Checked Recursive Sum*：「Given a nonnegative integer n, compute the sum of every integer from 1 through n. T…」（被截断）；
-> 1p3a：「Given n, write a function sum up 1 to n recursively? Follow-ups: [隐藏]」[S] handling overflows, recursion optimizations, tail recursion（另一帖：tail recursion）。
-> **下面的 4 个 Part 的顺序、签名、`Width`/`Overflow` 的设计、区间与并行部分都是 (reconstructed)**——证据只给到「递归 → 溢出 → 栈 → 尾递归/优化」这条主线。
-> Part 3 的区间 / 负数 / BigInteger 与 Part 4 的并行求和是我按「面试官还会往哪推」补的 (reconstructed)，不是任何一份报告里写明的。
-
 ## 读题前你需要知道
 
 本题把几个“看起来是语言细节、其实是 JVM / 计算机原理”的概念串在一起：**调用栈与栈帧**（递归为什么会爆栈）、**补码与整数溢出**（`int`/`long` 为什么会“绕回去”）、
 **尾调用与 trampoline**（为什么 Java 不能把递归自动变循环）、**线程与并行**（`ForkJoin`、虚拟线程各适合什么）。
-这些概念在讲义 [`study/30-articles/hc03_recursive_sum.md`](../../../../study/30-articles/hc03_recursive_sum.md) 第 2 节里从零讲起（配栈帧图和补码图）；
 你只需要会写基本的 Java（类、方法、递归、循环、数组）。
 
 ## 背景
@@ -38,7 +30,7 @@ public enum Width { INT, LONG }   // 累加器位宽；INT 让溢出在 n = 6553
 | `Width.add(long, long)` · `static BigInteger exactTo(long)` | 检查加法（INT 位宽额外 `Math.toIntExact`）· 精确值 |
 
 * `INT`：`n = 65535` → `Ok(2147450880)`；`n = 65536` → `Overflow(2147516416)`。
-* 测试在 512 MiB 栈的线程里跑 `n = 65536`——实测默认 1 MiB 栈上 `sumToRecursive(65536)` 先抛 `StackOverflowError`（`n = 40000` 还行），
+* 测试在 512 MiB 栈的线程里跑 `n = 65536`——默认 1 MiB 栈上 `sumToRecursive(65536)` 先抛 `StackOverflowError`（`n = 40000` 还行），
   **栈比 int 先“溢出”**，这是 Part 2 的伏笔。
 
 ## Part 2 · 栈深：为什么没有 TCO，怎么办
@@ -65,7 +57,7 @@ public enum Width { INT, LONG }   // 累加器位宽；INT 让溢出在 n = 6553
 要点：`(a+b)` 与 `(b-a+1)` **奇偶相反**，把偶的那个先除 2 再 `multiplyExact`；`a+b`、`b-a+1` 自己也可能溢出，
 但**中间量溢出 ≠ 结果溢出**（`rangeSum(Long.MIN_VALUE, Long.MAX_VALUE)` 是 `Ok(Long.MIN_VALUE)`），所以快路径失败后退到 BigInteger 再判断是否装得下。
 
-## Part 4 · 并行求和（对象：`long[] data`）(reconstructed)
+## Part 4 · 并行求和（对象：`long[] data`）
 
 | 签名 | 内容 |
 |---|---|
@@ -86,16 +78,12 @@ public enum Width { INT, LONG }   // 累加器位宽；INT 让溢出在 n = 6553
 * 数组：空、单元素、块数 > 元素数、`threshold = 1`、块内溢出但总和不溢出（`MAX × 2000 + MIN × 2000`）
 * 栈：512 KiB / 64 MiB 的线程栈；100 万层 `More` 链；200 万层互递归
 
-## 野外变体
+## 相关变体
 
 * 「不用公式」→「那现在用公式」→「n 很大怎么办」：Part 1 → Part 3。
 * 「改成 `int`」「改成 `double`」（浮点累加不满足结合律，并行结果会抖）。
 * 「求 1..n 的平方和 / 立方和」：闭式 `n(n+1)(2n+1)/6` 需要先除 2 再除 3，数值顺序同样重要。
 * C++ 版的对应问题：`-O2` 会不会把尾递归变成循环（会，Java 不会）。
-
-## 来源
-
-`catalog/raw/forums.md` Q1 / A14 / A17 / A20 / B1 · `catalog/raw/github_repos.md`（FastPrep "Checked Recursive Sum"）· `catalog/CATALOG.md` hc03。
 
 ## 考什么
 

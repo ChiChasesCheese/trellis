@@ -1,0 +1,7 @@
+C16/c16_bad_const.cpp:5:30: error: 'this' argument to member function 'inc' has type 'const Counter', but function is not marked const
+    5 | void use(const Counter& c) { c.inc(); }                // calling a non-const member on a const reference
+      |                              ^
+C16/c16_bad_const.cpp:4:34: note: 'inc' declared here
+    4 | struct Counter { int n = 0; void inc() { ++n; } };
+      |                                  ^
+1 error generated.

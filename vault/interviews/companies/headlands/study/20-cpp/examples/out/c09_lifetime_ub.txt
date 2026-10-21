@@ -1,0 +1,20 @@
+$ c09_lifetime_ub
+=================================================================
+==98313==ERROR: AddressSanitizer: heap-use-after-free on address 0x602000000910 at pc 0x000102b74b40 bp 0x00016d28ad20 sp 0x00016d28ad18
+READ of size 4 at 0x602000000910 thread T0
+    #0 0x000102b74b3c  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c09_lifetime_ub:arm64+0x100000b3c)
+    #1 0x000199c75154  (/usr/lib/dyld:arm64e.x1+0x30154)
+
+0x602000000910 is located 0 bytes inside of 4-byte region [0x602000000910,0x602000000914)
+freed by thread T0 here:
+    #0 0x000103544558  (/Library/Developer/CommandLineTools/usr/lib/clang/21/lib/darwin/libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50558)
+    #1 0x000102b74a00  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c09_lifetime_ub:arm64+0x100000a00)
+    #2 0x000199c75154  (/usr/lib/dyld:arm64e.x1+0x30154)
+
+previously allocated by thread T0 here:
+    #0 0x000103544150  (/Library/Developer/CommandLineTools/usr/lib/clang/21/lib/darwin/libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50150)
+    #1 0x000102b749ec  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c09_lifetime_ub:arm64+0x1000009ec)
+    #2 0x000199c75154  (/usr/lib/dyld:arm64e.x1+0x30154)
+
+SUMMARY: AddressSanitizer: heap-use-after-free (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c09_lifetime_ub:arm64+0x100000b3c) 
+after delete: study/20-cpp/examples/build_all.sh: line 26: 98313 Abort trap: 6           perl -e 'alarm 120; exec "bash", "-c", $ARGV[0]' "$1"

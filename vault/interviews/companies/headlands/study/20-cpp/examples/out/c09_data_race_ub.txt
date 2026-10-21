@@ -1,0 +1,26 @@
+$ c09_data_race_ub
+==================
+WARNING: ThreadSanitizer: data race (pid=98258)
+  Write of size 4 at 0x000104f38000 by thread T2:
+    #0 <null> <null> (c09_data_race_ub:arm64+0x100000afc)
+    #1 <null> <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x33b18)
+
+  Previous write of size 4 at 0x000104f38000 by thread T1:
+    #0 <null> <null> (c09_data_race_ub:arm64+0x100000950)
+    #1 <null> <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x33b18)
+
+  Thread T2 (tid=6230241, running) created by main thread at:
+    #0 <null> <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x33bac)
+    #1 <null> <null> (c09_data_race_ub:arm64+0x1000007a8)
+    #2 <null> <null> (dyld:arm64e.x1+0x30154)
+
+  Thread T1 (tid=6230240, finished) created by main thread at:
+    #0 <null> <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x33bac)
+    #1 <null> <null> (c09_data_race_ub:arm64+0x100000748)
+    #2 <null> <null> (dyld:arm64e.x1+0x30154)
+
+SUMMARY: ThreadSanitizer: data race (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c09_data_race_ub:arm64+0x100000afc) 
+==================
+counter = 200000 (expected 200000)
+ThreadSanitizer: reported 1 warnings
+study/20-cpp/examples/build_all.sh: line 26: 98258 Abort trap: 6           perl -e 'alarm 120; exec "bash", "-c", $ARGV[0]' "$1"

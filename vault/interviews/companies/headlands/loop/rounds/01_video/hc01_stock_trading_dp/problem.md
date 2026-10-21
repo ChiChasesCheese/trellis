@@ -1,11 +1,5 @@
 # hc01 · Best Time to Buy and Sell Stock 家族（动态规划 / 状态机）
 
-> 阶段：电面（FastPrep 标 Phone Screen & Onsite；1p3a 两个技术电面；WSO 3 小时 final）· 置信度：**高**（4 个独立来源：FastPrep 1 + 1p3a 2025-12 + 1p3a 2023-03 + WSO 2025-03）
-> 证据原文：1p3a 2025-12 技术电面「thoroughly review all stock trading related LeetCode problems … **DP-based coding question requiring detailed state tracking**」（正文被作者隐藏）；
-> WSO 2025-03「Leetcode hard, **best time to buy and sell stock**」；1p3a 2023-03 第一轮电面「classic buy stock algorithm problem **with follow-up**」；FastPrep 两个标题只有 LC 121 / 122 的第一句话。
-> **所以 Part 1、Part 2 是 LeetCode 原题（121 / 122）；Part 3（最多 k 次，LC 188）和 Part 4（冷却 309 / 手续费 714 / 还原交易）是按「LeetCode hard + detailed state tracking」推出来的 (reconstructed)；
-> `Rules` / `Plan` / `replay` 这套 API、价格上界 `MAX_PRICE`、`plan` 的格子数上限全部是 (reconstructed) 的工程化外壳，真题不会这样问。**
-
 ## 读题前你需要知道
 
 * **动态规划（dynamic programming, DP）**到底是什么：「状态」(state) 是什么、「转移」(transition) 是什么、为什么只记「每个状态下的最优值」就够了；
@@ -13,7 +7,6 @@
 * **滚动数组**（rolling array）为什么能把 O(n·k) 的表压成 O(k)，以及它的更新顺序为什么不能乱；
 * 为什么要「回溯」(backtracking) 才能还原出具体交易。
 
-这些都在讲义里从零讲：`study/30-articles/hc01_stock_trading_dp.md`（先读第 1–4 节再动手；Chi 的基础比较弱，这篇讲义的目标是「读完能自己重新推出 188 题」）。
 
 ## 背景
 
@@ -39,7 +32,7 @@
 * `maxProfitBrute`：试遍所有 (买入日 i, 卖出日 j>i)，取 `prices[j] - prices[i]` 的最大值，至少是 0（可以一笔都不做）。O(n²)，用来给后面的解法当「标准答案」。
 * `maxProfitOnce`：O(n) 时间，O(1) 空间。
 * 输入校验（**所有 Part 共用**）：`prices == null` → `NullPointerException`；长度 > `MAX_DAYS`（2²²）或任何价格不在 `[0, MAX_PRICE]`（`MAX_PRICE = 2⁴⁰`）→ `IllegalArgumentException`。
-  为什么有上界：这样利润最多 2²¹ × 2⁴⁰ = 2⁶¹，`long` 里永远不会溢出，内循环里不需要 `addExact`。(reconstructed：真题不会给上界，但会问「溢出怎么办」，见 REPORT 追问)
+  为什么有上界：这样利润最多 2²¹ × 2⁴⁰ = 2⁶¹，`long` 里永远不会溢出，内循环里不需要 `addExact`。
 * 样例：`[7,1,5,3,6,4]` → 5（第 1 天买，第 4 天卖）；`[7,6,4,3,1]` → 0。
 
 ## Part 2 · 次数不限
@@ -96,19 +89,13 @@
 手续费 ≥ 任何价差（一笔都不做）、手续费 == 价差（净利润 0 也不做）；冷却下 `[1,2,1,2]`（不能第 1 天卖、第 2 天买）；
 价格 0 与 `MAX_PRICE`；用 `int` 累加利润溢出；`plan` 里买入日必须 < 卖出日、交易不重叠、冷却间隔；`replay` 的各种非法方案。
 
-## 野外变体
+## 相关变体
 
 * LC 123（正好 k=2）、LC 188（任意 k）、LC 309（冷却）、LC 714（手续费），以及把它们拼在一起的「冷却 + 手续费 + 最多 k 笔」（Part 4 的 `Rules` 就是这个组合）；
 * 「你只给我利润不够，把买卖日期也给出来」→ 回溯（Part 4 的 `plan`）；
 * 「价格是流式输入，不能存下来」→ 只要利润的话滚动数组本来就是一遍扫描；要还原则需要记录候选买入点；
 * 「多只股票、共享本金」→ 已经不是同一个问题（背包 / 带约束优化）；
 * 「滑点 / 买卖价差（bid-ask spread）：买用 ask、卖用 bid」→ 把每天的价格拆成两个数组，状态机不变。
-
-## 来源
-
-`catalog/CATALOG.md` hc01 行；`catalog/raw/forums.md` A3（1p3a 2025-12，https://www.1point3acres.com/interview/thread/1156658 ）· A16（1p3a 2023-03，https://www.1point3acres.com/interview/thread/974931 ）· W1（WSO 2025-03，https://www.wallstreetoasis.com/company/headlands-technologies-llc/interview ）；
-`catalog/raw/github_repos.md` §3.1.A / §3.1.C（FastPrep：https://www.fastprep.io/problems/headlands-best-time-to-buy-and-sell-stock · https://www.fastprep.io/problems/headlands-best-time-to-buy-and-sell-stock-ii ）。
-LeetCode 原题：121 / 122 / 123 / 188 / 309 / 714（题面在 leetcode.com，这里不转载）。
 
 ## 考什么
 

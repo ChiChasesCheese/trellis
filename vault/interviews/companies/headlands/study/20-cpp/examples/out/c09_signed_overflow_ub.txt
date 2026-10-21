@@ -1,0 +1,5 @@
+$ c09_signed_overflow_ub
+C09/c09_signed_overflow_ub.cpp:11:15: runtime error: signed integer overflow: 2147483647 + 1 cannot be represented in type 'int'
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior C09/c09_signed_overflow_ub.cpp:11:15 
+unsigned UINT32_MAX + 1 = 0 (defined: wraps to 0)
+signed INT_MAX + 1 = -2147483648 (whatever the compiler happened to emit)

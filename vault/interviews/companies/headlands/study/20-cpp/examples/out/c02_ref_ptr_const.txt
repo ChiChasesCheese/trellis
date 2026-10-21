@@ -1,0 +1,10 @@
+$ c02_ref_ptr_const
+after by_value  data[0]=1
+after by_ref    data[0]=42
+after by_ptr    data[0]=43
+  size=1000
+sizeof(Big)=24 sizeof(Big*)=8
+  *p1=2 *p2=5 *p3=5
+  get=1 reads=1
+  a=2 b=2 (r still names a)
+  2  4  6  (scratch=1200)

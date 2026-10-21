@@ -1,9 +1,4 @@
-# hc08 · Order Sequence API（FastPrep「Order Sequence Prefix Counts and Quantities」/ 1p3a「4 个 API」）
-
-> 阶段：电面（FastPrep 标 Phone Screen，lastSeen 2024-05-10；1p3a 帖 1066045 同日，技术电面）· 置信度：**高**（2 个独立来源，一个有可读题面）
-> 证据：1p3a 摘要 "You have to implement 4 APIs, to place orders - Put(unique_id, quantity) -> put the order in a sequence - Delete(unique_id, quantity) -> delete an existing…"，
-> 标签 "API design and memory management"；FastPrep 第一句 "Maintain an insertion-ordered sequence of active orders. Each…"；QuantVault 标题 "Order Management API with Sublinear Queries"（不计入来源）。
-> **只有 Put / Delete 的名字和「前缀 count / quantity」「亚线性」这几个词是有证据的。第 4 个 API 是什么、Delete 的 quantity 是什么含义、"memory management" 指什么，全部是 (reconstructed)。**
+# hc08 · Order Sequence API（订单序列的前缀 count / quantity 查询）
 
 ## 读题前你需要知道
 
@@ -11,14 +6,13 @@
 * **树状数组（Fenwick tree / BIT）**——一个用 `i & -i` 就能在 O(log n) 里做「改一个数、求前缀和」的数组；
 * 为什么「删除只留洞、下标只增不减」会让内存无限涨，以及怎么**压缩（compaction）**。
 
-讲义从零推导（含 lowbit 的逐步图解）：`study/30-articles/hc08_order_sequence_api.md`。
 
 ## 背景
 
 交易系统里有一串**活跃订单**，按**到达（插入）顺序**排好。你要实现几个 API：往末尾放订单、删订单，
 以及问「从序列头数到订单 X，一共有几张订单 / 总共多少数量」。订单数很大、查询很多，所以查询不能是 O(n)。
 
-## 语义 (reconstructed)
+## 语义
 
 * 订单由 `unique_id`（任意 `long`，同时只能有一张同 id 的活跃订单）和 `quantity`（正整数）组成。
 * `put(id, qty)`：放到序列**末尾**。`qty ≤ 0` → `IllegalArgumentException("invalid quantity")`；id 已活跃 → `IAE("duplicate id")`；
@@ -124,16 +118,11 @@ AT 2
 空序列上的所有查询；重复 id；`qty ≤ 0`；删除超过剩余；已删除的 id 再查询；id 为 0 / 负数 / `Long.MIN_VALUE`；总量到 `Long.MAX_VALUE` 的边界；
 Fenwick 的边界（大小不是 2 的幂、只剩头 / 只剩尾）；洞全堆在序列前面（永远删最老的）；容量 1 / 4 这种极小空间下的压缩。
 
-## 野外变体
+## 相关变体
 
 * 真题可能要求 4 个 API 是 `put / delete / count(id) / quantity(id)`，没有 `idAt`；或把前缀改成「后缀」/「某个价格区间」。
 * "memory management" 可能指：删除后内存要能回收（本题 Part 3），也可能指订单对象池（见 hc05 Part 4 的思路）。
-* 并发追问：多个线程同时 put / query 怎么办？（读写锁、分片、或单线程 + 队列；见 REPORT。）
-
-## 来源
-
-`catalog/raw/forums.md` A9（1p3a 1066045，2024-05-10；Telegram 镜像 https://t.me/s/usinterview/18290）· X1（QuantVault 标题，不计）；
-`catalog/raw/github_repos.md` §3.1.A（FastPrep）：https://www.fastprep.io/problems/headlands-order-sequence-prefix-aggregates
+* 并发追问：多个线程同时 put / query 怎么办？（读写锁、分片、或单线程 + 队列。）
 
 ## 考什么
 

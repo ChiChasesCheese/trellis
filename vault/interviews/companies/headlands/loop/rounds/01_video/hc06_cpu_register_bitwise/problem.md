@@ -1,25 +1,16 @@
 # hc06 · CPU 寄存器位运算（一个无符号 32 位寄存器 + 一串操作）
 
-> 阶段：电面（FastPrep 标 Phone Screen，lastSeen 2025-11-11；1p3a 帖第一轮技术电面，C++，「题目长 + 难」）· 置信度：**中**（#refs = 2：FastPrep 1 + 1p3a 1154043 1）
-> 公开信息只有：FastPrep *CPU Register Bitwise Operations*「Simulate one unsigned 32-bit register. You receive its initial nonneg…」（被截断）；
-> 1p3a 摘要「debugging and bitwise operations with C++ in a code framework」（在给定的代码框架里 debug + 位运算，正文被锁）。
-> **以下全部是 (reconstructed)**：指令集（AND/OR/XOR/NOT/SHL/SHR/ROL/ROR/SET/CLEAR/TOGGLE/POPCOUNT）、文本输入格式、输出格式、
-> 移位 ≥ 32 的语义、Part 3 的 `Integer.compress/expand` 扩展、Part 4 的性能版本。原题是 C++（无符号类型 `uint32_t`）；
-> Java 对应是：寄存器用 `int` 存 32 位，按无符号解释（`>>>`、`Integer.toUnsignedLong`、`Integer.toUnsignedString`）——这一条是 CATALOG 的推断。
-> 「在代码框架里 debug」没有细节；`REPORT.md` 的「隐藏测试会打的坑」列了一份「框架里最常见的位运算 bug」清单当作替代练习。
-
 ## 读题前你需要知道
 
 本题的全部难点来自「32 个二进制位在 Java 里是怎么存的」：补码（two's complement）、有符号与无符号的区别、`<<` `>>` `>>>` 的差别、
-掩码（mask）怎么用。如果这些词还陌生，先读讲义 [`study/30-articles/hc06_cpu_register_bitwise.md`](../../../../study/30-articles/hc06_cpu_register_bitwise.md)
-第 2 节（从零讲起，配位图）。你只需要会写基本的 Java（类、方法、循环、`List`）。
+掩码（mask）怎么用。你只需要会写基本的 Java（类、方法、循环、`List`）。
 
 ## 背景
 
 一个 CPU 寄存器就是 32 个开关（bit）。你拿到它的初值和一串指令，依次执行，最后输出寄存器的值，以及指令里要求输出的计数。
 面试官看的是：你有没有把「Java 的 int 是有符号的」这件事处理干净——每一个 `>>`、`<<`、转十进制、转 long 都是潜在的 bug。
 
-## 输入（stdin / `solve(List<String>)`）(reconstructed)
+## 输入（stdin / `solve(List<String>)`）
 
 ```
 0xF0          ← 第 1 个有效行：初值（十进制 / 0x 十六进制 / 0b 二进制），范围 0..4294967295
@@ -77,15 +68,11 @@ POPCOUNT
 * `CTZ` / `CLZ` / `POPCOUNT` 在 0 与 −1 上；`COMPRESS 0` / `COMPRESS 0xFFFFFFFF`
 * 空程序；只有注释；多余空白
 
-## 野外变体
+## 相关变体
 
 * 同一个模拟器，要求对 `uint64_t` 寄存器再做一遍（`long` + `Long.toUnsignedString` + `Long.compareUnsigned`）。
 * 「这段代码有 bug，找出来」：典型的有 `>>` 代替 `>>>`、`1 << 31` 当正数、`(int)` 与 `long` 混用、`Integer.parseInt("FFFFFFFF", 16)`。
 * 位集（bitset）、位板（bitboard）、flag 枚举——同一套技巧换个包装。
-
-## 来源
-
-`catalog/raw/github_repos.md`（FastPrep "CPU Register Bitwise Operations"）· `catalog/raw/forums.md` A2（1p3a 1154043）· `catalog/CATALOG.md` hc06。
 
 ## 考什么
 

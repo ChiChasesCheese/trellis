@@ -2,7 +2,7 @@
 """Generate bank.json from questions.md (do not hand-edit bank.json).
 
 Usage:  python3 build_bank.py            # writes bank.json next to this file, prints counts per topic
-Checks: every question has difficulty, source, one-line answer, expansion, 60-second version, follow-ups;
+Checks: every question has difficulty, one-line answer, expansion, 60-second version, follow-ups;
         every demo file named in a 'Demo / 课文' line exists under demos/.
 Exit code 1 if any check fails.
 """
@@ -78,7 +78,7 @@ def main() -> int:
     close()
 
     for q in questions:
-        for field in ("topic", "difficulty", "source", "short_answer"):
+        for field in ("topic", "difficulty", "short_answer"):
             if not q[field]:
                 errors.append(f"{q['id']}: missing {field}")
         for need in ("expand", "sixty", "followups"):

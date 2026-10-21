@@ -1,0 +1,10 @@
+$ c16_pitfalls
+30 20 10 
+empty.size() - 1 = 18446744073709551615; as int: -1
+mid = 2050000000
+7/2 = 3, 7.0/2 = 3.5, -7/2 = -3, -7%3 = -1 (C++ truncates toward zero; % keeps the dividend's sign)
+cents/100 = 19, cents/100.0 = 19.99
+digit 7, 'a'+1 = 98 (an int!), static_cast<char>('a'+1) = b, s + 'c' = abc
+m["x"] == 0, but size is now 1 (operator[] inserted)
+count() does not insert: 0, size 1
+vector(3,7).size()=3 vector{3,7}.size()=2 zero=0 uninit=5

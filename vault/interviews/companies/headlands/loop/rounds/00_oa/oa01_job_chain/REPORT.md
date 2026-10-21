@@ -1,13 +1,8 @@
-# oa01 · REPORT
+# oa01 · 思路与追问
 
 ## 概要
 
-Headlands 的 HackerRank 六年没换题。Chi 已经用 Java 过了这一关，这里重做一遍是为了：(1) 把 Java 21 的数据建模特性练熟；
-(2) 电面可能从 OA 延伸追问（「你的解法怎么处理环？百万行多快？」）。
-
-## 来源与置信度
-
-见 `problem.md` §来源。题面已有原文（Chi 截图抄录）；只有同总时长的 tie-break 是 (inferred)。
+这道题的目的：(1) 练熟 Java 21 的数据建模特性；(2) 电面可能从 OA 延伸追问（「你的解法怎么处理环？百万行多快？」）。
 
 ## 逐 Part 思路
 
@@ -17,33 +12,29 @@ Headlands 的 HackerRank 六年没换题。Chi 已经用 Java 过了这一关，
 
 ## 隐藏测试会打的坑
 
-* 分钟忘记 `% 60`（公开 C++ 题解就有这个 bug）。
+* 分钟忘记 `% 60`。
 * `int` 累加时长溢出：两个 2e9 秒的 job。
 * 「好链 + 独立环」：只从链尾往回走的解法查不出这个环。
 * 输入乱序：链头可能在最后一行。
 * 表头缺失或多余空行。
 
-## 复杂度 + 实测
+## 复杂度
 
-O(n) 时间、O(n) 空间。100 万行（平均链长 100、行序打乱）在 M 系列 Mac 上整题 < 1 s（`perf` 测试，预算 2 s）。
-
-## 测试清单
-
-运行 `python3 tools/jtest.py run loop/rounds/00_oa/oa01_job_chain --impl reference`：25 个测试（含参数化展开）。
+O(n) 时间、O(n) 空间。100 万行（平均链长 100、行序打乱）整题 < 1 s。
 
 ## Java 21 特性
 
-| id | 用在哪 | 比旧写法好在哪 |
+| 特性 | 用在哪 | 比旧写法好在哪 |
 |---|---|---|
-| J01 record + 紧凑构造器 | `Job`、`Chain` | 不变量写在类型里，非法对象构造不出来；`equals/hashCode` 白送，测试直接比 `List<Chain>` |
-| J02 sealed | `Outcome permits Ok, Malformed` | 结果类型封闭，新增一种结果时所有 switch 编译报错 |
-| J03 + J04 模式匹配 switch + record 解构 | `render`：`case Ok(var chains) -> …` | 代替 `instanceof` + 强转；穷尽性由编译器检查，不需要 `default` |
-| J13 未命名模式 `_`（预览） | `case Malformed _ ->` | 明说「不需要这个绑定」 |
-| J05 switch 表达式 + `yield` | `render` 的块分支 | 表达式化，没有 fallthrough |
-| J07 文本块 | 测试的输入与期望输出 | 多行字符串原样可读 |
-| J09 Sequenced Collections | 测试里 `getFirst()` | 代替 `get(0)`，`List`/`Deque`/`LinkedHashSet` 统一 |
-| J15 `Math.addExact` · `String.formatted` | 累加时长、`hhmmss` | 溢出直接抛而不是静默变负 |
-| J18 `Comparator` 组合子 | `comparingLong(...).reversed().thenComparingInt(...)` | tie-break 一眼可读 |
+| record + 紧凑构造器 | `Job`、`Chain` | 不变量写在类型里，非法对象构造不出来；`equals/hashCode` 白送，测试直接比 `List<Chain>` |
+| sealed | `Outcome permits Ok, Malformed` | 结果类型封闭，新增一种结果时所有 switch 编译报错 |
+| 模式匹配 switch + record 解构 | `render`：`case Ok(var chains) -> …` | 代替 `instanceof` + 强转；穷尽性由编译器检查，不需要 `default` |
+| 未命名模式 `_`（预览） | `case Malformed _ ->` | 明说「不需要这个绑定」 |
+| switch 表达式 + `yield` | `render` 的块分支 | 表达式化，没有 fallthrough |
+| 文本块 | 测试的输入与期望输出 | 多行字符串原样可读 |
+| Sequenced Collections | 测试里 `getFirst()` | 代替 `get(0)`，`List`/`Deque`/`LinkedHashSet` 统一 |
+| `Math.addExact` · `String.formatted` | 累加时长、`hhmmss` | 溢出直接抛而不是静默变负 |
+| `Comparator` 组合子 | `comparingLong(...).reversed().thenComparingInt(...)` | tie-break 一眼可读 |
 
 ## 面试官可能的追问
 

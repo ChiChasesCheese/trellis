@@ -1,0 +1,5 @@
+$ c09_overflow_optimizer
+naive signed check on INT_MAX : false   (the overflow happened, the check says no)
+boundary check on INT_MAX     : true
+unsigned check on UINT32_MAX  : true
+__builtin_add_overflow(INT_MAX,1): true (wrapped result -2147483648)

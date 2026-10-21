@@ -1,80 +1,64 @@
-# Headlands Technologies · Software Engineer（Java）—— 从这里开始
+# Headlands · Software Engineer —— 从这里开始
 
-> 现状（2026-10-14）：HackerRank（job chain，Java）已过 → 下一轮是**一小时技术视频面**（一位工程师，一道基础题被一路追问）。
-> 本 kit 的目标有两个，按 Chi 的原话排序：**顺便学东西，越多越好**；其次是把这一轮面好。所以全部材料是**教科书模式**（`study/TEXTBOOK.md`）。
+**下一轮**：技术视频面，**2026-10-26（周一）12:00 PT**，Teams + CoderPad。内容是技术问题、背景问题加现场编码，一般用不满一小时。
+**语言**：他们主要用 C++，由面试官决定，所以 **C++ 和 Java 都要能写**。
+**禁止 AI 工具**：练习时也要关掉补全，按考场条件练。
 
 ## 地图
 
 | 想做什么 | 去哪 |
 |---|---|
-| 了解这一轮怎么面、考什么、怎么挂 | [loop/LOOP_GUIDE.md](loop/LOOP_GUIDE.md) |
-| 看所有题的优先级（谁被问得最多、最近） | [catalog/PARETO.md](catalog/PARETO.md)（cut line 第 22 行）· [catalog/CATALOG.md](catalog/CATALOG.md) |
-| 补基础（复杂度、堆、树、CPU 缓存、操作系统、网络） | [study/00-foundations/README.md](study/00-foundations/README.md) |
-| 学 Java 21 新特性（J01–J19） | [study/10-java21/README.md](study/10-java21/README.md) |
-| 读某道题的讲义 | `study/30-articles/<id>_*.md` |
-| 动手做题 | `loop/rounds/<轮次>/<id>_*/`，命令见下 |
-| 语言深度口头题（C++ 面经翻成 Java 问法，45 题） | [loop/rounds/01_video/kq_language_depth/questions.md](loop/rounds/01_video/kq_language_depth/questions.md) |
-| 公司是做什么的（从零讲自营交易） | [01-company-brief.md](01-company-brief.md) |
-| 简历 vs JD、故事、反问 | [fit.md](fit.md) · [stories.md](stories.md)（有待填模板）· [06-questions-to-ask.md](06-questions-to-ask.md) |
-| 证据原文（每条都有 URL + 日期） | `catalog/raw/` |
-| 另一套 Maven 版模拟题（q01 FizzBuzz、q02 Job Runner 原题截图抄录 + 变异检查） | [mock_maven/README.md](mock_maven/README.md)（`cd mock_maven/java && mvn -q test`） |
-| 进度 / 已验收 | [CHECKPOINT.md](CHECKPOINT.md) · [LEDGER.md](LEDGER.md) |
+| 这一场怎么走、看重什么、6 天怎么排 | [loop/LOOP_GUIDE.md](loop/LOOP_GUIDE.md) |
+| **背景问题**：怎么问 → 故事 → 题库 → 练习 | [behavioral/00_how_it_works.md](behavioral/00_how_it_works.md) · `behavioral/stories/` · [behavioral/question_bank.md](behavioral/question_bank.md) · [behavioral/drill.md](behavioral/drill.md) |
+| **C++ 课本**（16 课，从 Java 讲到 C++） | [study/20-cpp/README.md](study/20-cpp/README.md) |
+| **C++ 语言深度题**（44 题 + 速查表） | [kq_cpp_depth/questions.md](loop/rounds/01_video/kq_cpp_depth/questions.md) · [cheatsheet.md](loop/rounds/01_video/kq_cpp_depth/cheatsheet.md) |
+| **编码题**（Java 15 题，其中 6 题另有 C++ 版） | `loop/rounds/<轮次>/<题>/`；讲义在 `study/30-articles/`（`_cpp.md` 是 C++ 版） |
+| Java 21 课本 / 基础课本 | [study/10-java21/README.md](study/10-java21/README.md) · [study/00-foundations/README.md](study/00-foundations/README.md) |
+| Java 语言深度题 | [kq_language_depth/questions.md](loop/rounds/01_video/kq_language_depth/questions.md) |
+| 公司是做什么的 / 简历对 JD / 反问 | [01-company-brief.md](01-company-brief.md) · [fit.md](fit.md) · [06-questions-to-ask.md](06-questions-to-ask.md) |
+| Onsite：设计题和 LLD | [loop/rounds/04_sd/00_how_to_run.md](loop/rounds/04_sd/00_how_to_run.md) · `loop/rounds/03_lld/` |
 
-## 建议学习路径
+## 面试前必须处理
 
-基础很薄的话，按这个顺序走；每一站都是「先读讲义 → 再动手 → 最后口头答追问」。
+1. **背景问题里只有你能填的空**（`behavioral/question_bank.md`）：
+   - 写过多少 C++，用一句话说清，诚实；
+   - 为什么想做交易；
+   - 为什么离开 PayPal；
+   - 愿意去哪个办公室、工作许可的状态；
+   - 面试时间线怎么回答。
+2. **一个真实的性能排查故事**：你测量过一个运行中的系统、找到瓶颈、并且改快了。这类题交易公司必问，现在故事库里还没有。有的话填进 `behavioral/stories/templates.md`。
+3. **两个数字别说错**：
+   - S2 坏商户的比例是约 **0.14%**（35,000 个里有 50 个），不是 4%；
+   - S10 前后两次估算，行数差约 **9 倍**、金额差约 **1.9 倍**、商户数差约 **2 倍**，不是「10 倍」。
 
-| 站 | 读 | 做 | 为什么排在这 |
-|---|---|---|---|
-| 0 | `study/10-java21/` 的 J08 → J05 → J07 → J06 → J01 → J02 → J03 → J04 | — | 后面每道题都用 record / sealed / 模式匹配，先把语法读顺 |
-| 1 | 讲义 oa01 + 基础 complexity | `oa01_job_chain` | 你做过的题，最好上手；样板讲义 |
-| 2 | 讲义 hc03 | `hc03_recursive_sum` | **电面最典型的热身题**：一道简单题被追问到溢出、栈、尾递归、并行 |
-| 3 | 基础 heap_priority_queue → 讲义 hc02 | `hc02_merge_k_streams` Part 1–2 | 堆是后面好几题的工具 |
-| 4 | 讲义 hc01 | `hc01_stock_trading_dp` | 面经出现最多的电面题；顺便学会动态规划 |
-| 5 | 基础 ordered_maps_trees → 讲义 hc05 | `hc05_market_order_book` Part 1–2 | 订单簿 = 有序 map + 队列，交易公司最爱 |
-| 6 | 讲义 hc04 | `hc04_queue_mean_snapshot` Part 1–2 | 最新的电面题（2026-03） |
-| 7 | 讲义 hc07 + 基础 cpu_cache_locality | `hc07_ticker_hash_map` Part 1–2 | Blind 原题；从零写哈希表 |
-| 8 | 讲义 hc06、hc08 | 两题 Part 1–2 | 位运算；树状数组 |
-| 9 | J10 → J16 → J11 → J12 + 基础 os_processes_threads_ipc | hc02 / hc04 的并发 Part | 并发是追问的终点，放在最后一起啃 |
-| 10 | J17 → J19 + 基础 networking_basics | hc07 / hc05 的性能 Part；`kq_language_depth` | 低延迟 Java、堆外内存、GC/JIT：和 JD 最贴的部分 |
-
-面试前一天：只读 `LOOP_GUIDE.md` 和每题 `REPORT.md` 的「面试官可能的追问」，不碰新题。
-
-## 做题命令（在本目录跑）
+## 做题命令（在本目录下运行）
 
 ```bash
-python3 tools/jtest.py start loop/rounds/01_video/hc03_recursive_sum              # starter/ → work/
-python3 tools/jtest.py run   loop/rounds/01_video/hc03_recursive_sum --tag part1  # 只跑 Part 1
-python3 tools/jtest.py run   loop/rounds/01_video/hc03_recursive_sum --impl reference
-python3 tools/jtest.py verify "loop/rounds/*/*"                                   # 全部题的验收门
+# Java
+python3 tools/jtest.py start loop/rounds/01_video/hc03_recursive_sum
+python3 tools/jtest.py run   loop/rounds/01_video/hc03_recursive_sum --tag part1
+# C++
+python3 tools/cpptest.py start loop/rounds/01_video/hc03_recursive_sum
+python3 tools/cpptest.py run   loop/rounds/01_video/hc03_recursive_sum --tag part1
 ```
 
-JDK：`brew install openjdk@21`（已装）。想在终端直接用 `java`：`export PATH=/opt/homebrew/opt/openjdk@21/bin:$PATH`。
+`start` 把空壳复制成你的工作副本（Java 是 `work/`，C++ 是 `cpp/work.hpp`）。写完用 `run` 跑测试，加 `--impl reference` 跑参考解。
 
 ## 题目一览
 
-| id | 题 | 轮次 | 讲义 |
-|---|---|---|---|
-| oa01 | Job chain 报表（HackerRank 原题） | OA | ✅ |
-| hc01 | 买卖股票 DP 家族 | 电面 | ✅ |
-| hc02 | 合并 K 路有序 → 多线程合并数据流 | 电面 | ✅ |
-| hc03 | 递归求和 → 溢出 / 栈 / trampoline / 并行 | 电面 | ✅ |
-| hc04 | Queue mean + 修正快照 + 单写多读 | 电面 | ✅ |
-| hc05 | 订单簿 + 撮合（含 hc14）+ 零分配版 | 电面 | ✅ |
-| hc06 | 32 位寄存器位运算解释器 | 电面 | ✅ |
-| hc07 | 股票代码 hash map 优化 | 电面 | ✅ |
-| hc08 | 订单序列 API（树状数组） | 电面 | ✅ |
-| hc09 | Top-K 成交额（含滑动窗口、并行聚合） | 电面 | ✅ |
-| hc11 | 订单区间最大重叠 + 撤单（扫描线、线段树） | 电面 | ✅ |
-| hc13 | 固定大小内存池（FFM、无锁） | 电面 | ✅ |
-| ld01 | 共享内存 SPSC 通道（跨进程） | LLD | ✅ |
-| ld02 | 交易相关 OOD：订单状态机 · 仓位 PnL · 交易前风控 · 事件溯源重放 | LLD | ✅ |
-| ld03 | 异步 TCP 消息通道：成帧 · 部分 I/O · 背压 · 半关闭 · 重连 | LLD | ✅ |
-| sd01 | 无用代码分析（符号图 + 可达性 + 证据 + 安全删除） | 系统设计（onsite） | [model_answer](loop/rounds/04_sd/sd01_unused_code_analysis/model_answer.md) |
-| sd02 | 未来时刻任务调度器（WAL + 分层时间轮 + 有界延迟） | 系统设计（onsite） | [model_answer](loop/rounds/04_sd/sd02_future_job_scheduler/model_answer.md) |
-| sd03 | 低延迟电子交易系统（行情 → 风控 → 路由 → 对账） | 系统设计（onsite） | [model_answer](loop/rounds/04_sd/sd03_low_latency_trading_system/model_answer.md) |
-| kq | 语言深度 45 题 | 电面口头 | — |
-
-系统设计轮（sd01–sd03）每题四个文件：`prompt.md` · `model_answer.md` · `followups.md` · `rubric.md`，总体方法见 [loop/rounds/04_sd/00_how_to_run.md](loop/rounds/04_sd/00_how_to_run.md)（和大厂设计轮的区别、µs 延迟预算、从零估算）。ld02 / ld03 讲义：`study/30-articles/ld02_trading_ood.md`、`ld03_async_tcp_channel.md`。
-
-**注意**：除了 oa01，大部分题网上只有题目名和一句话，Part 的具体规则是 kit 补全的，题面里标了 **(reconstructed)**。真面试时以面试官为准——先问清规则再写，本身就是加分项。
+| 题 | 内容 | C++ 版 |
+|---|---|---|
+| oa01 | Job chain 报表（你过了的 OA） | ✅ |
+| hc01 | 买卖股票 DP 家族 | — |
+| hc02 | 合并 K 路有序流 → 多线程 | ✅ |
+| hc03 | 递归求和 → 溢出 / 栈深度 / 并行 | ✅ |
+| hc04 | 带快照的 queue mean → 单写多读 | ✅ |
+| hc05 | 订单簿 + 撮合 + 零分配 | ✅ |
+| hc06 | 32 位寄存器位运算 | — |
+| hc07 | ticker 哈希表优化 | ✅ |
+| hc08 | 订单序列 API（树状数组） | — |
+| hc09 | Top-K 成交额 | — |
+| hc11 | 订单区间最大重叠 | — |
+| hc13 | 固定大小内存池 | — |
+| ld01–ld03 | SPSC 通道 / 交易 OOD / 异步 TCP 通道 | — |
+| sd01–sd03 | 无用代码分析 / 定时任务调度 / 低延迟交易系统 | — |
