@@ -1,0 +1,18 @@
+$ ASAN_OPTIONS=allocator_may_return_null=1:symbolize=0 c10_new_vs_malloc
+==69527==WARNING: AddressSanitizer failed to allocate 0x7fffffffffffffff bytes
+==69527==WARNING: AddressSanitizer failed to allocate 0x7fffffffffffffff bytes
+[malloc]
+  malloc returned non-null, no ctor message above
+[new / delete]
+  Widget ctor
+  name length 35
+  Widget dtor
+[new[] / delete[]]
+  Widget ctor
+  Widget ctor
+  Widget dtor
+  Widget dtor
+[failure behaviour]
+  malloc(8 EiB) -> NULL (you must check)
+  new char[8 EiB] -> threw std::bad_alloc
+  new(std::nothrow) -> nullptr

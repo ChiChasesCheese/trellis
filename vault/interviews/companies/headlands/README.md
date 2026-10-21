@@ -10,13 +10,13 @@
 |---|---|
 | 这一场怎么走、看重什么、6 天怎么排 | [loop/LOOP_GUIDE.md](loop/LOOP_GUIDE.md) |
 | **背景问题**：怎么问 → 故事 → 题库 → 练习 | [behavioral/00_how_it_works.md](behavioral/00_how_it_works.md) · `behavioral/stories/` · [behavioral/question_bank.md](behavioral/question_bank.md) · [behavioral/drill.md](behavioral/drill.md) |
-| **C++ 课本**（16 课，从 Java 讲到 C++） | [study/20-cpp/README.md](study/20-cpp/README.md) |
-| **C++ 语言深度题**（44 题 + 速查表） | [kq_cpp_depth/questions.md](loop/rounds/01_video/kq_cpp_depth/questions.md) · [cheatsheet.md](loop/rounds/01_video/kq_cpp_depth/cheatsheet.md) |
+| **C++ 课本**（16 课，从 Java 讲到 C++） | [core/cpp/headlands/lessons](../../core/cpp/headlands/lessons/README.md) |
+| **C++ 语言深度题**（44 题 + 速查表） | [questions.md](../../core/cpp/headlands/interview_questions/questions.md) · [cheatsheet.md](../../core/cpp/headlands/interview_questions/cheatsheet.md) |
 | **编码题**（Java 15 题，其中 12 题另有 C++ 版） | `loop/rounds/<轮次>/<题>/`；讲义在 `study/30-articles/`（`_cpp.md` 是 C++ 版） |
-| Java 21 课本 / 基础课本 | [study/10-java21/README.md](study/10-java21/README.md) · [study/00-foundations/README.md](study/00-foundations/README.md) |
-| Java 语言深度题 | [kq_language_depth/questions.md](loop/rounds/01_video/kq_language_depth/questions.md) |
+| Java 21 课本 / 基础课本 | [core/java/headlands/java21](../../core/java/headlands/java21/README.md) · [core/foundations/headlands](../../core/foundations/headlands/README.md) |
+| Java 语言深度题 | [questions.md](../../core/java/headlands/interview_questions/questions.md) |
 | 公司是做什么的 / 简历对 JD / 反问 | [01-company-brief.md](01-company-brief.md) · [fit.md](fit.md) · [06-questions-to-ask.md](06-questions-to-ask.md) |
-| Onsite：设计题和 LLD | [loop/rounds/04_sd/00_how_to_run.md](loop/rounds/04_sd/00_how_to_run.md) · `loop/rounds/03_lld/` |
+| Onsite：设计题和 LLD | [core/system-design/headlands](../../core/system-design/headlands/00_how_to_run.md) · `loop/rounds/03_lld/` |
 
 ## 面试前必须处理
 

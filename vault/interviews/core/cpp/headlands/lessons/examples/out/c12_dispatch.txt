@@ -1,0 +1,6 @@
+$ c12_dispatch
+sum of areas, 2000000 shapes:
+  virtual call, random mix   : 4.01064 ns/shape
+  std::variant + visit       : 3.69722 ns/shape
+  std::function per element  : 4.55651 ns/shape
+  template, one concrete type: 0.457215 ns/shape

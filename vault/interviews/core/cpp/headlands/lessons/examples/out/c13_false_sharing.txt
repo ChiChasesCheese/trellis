@@ -1,0 +1,6 @@
+$ c13_false_sharing
+sizeof: Adjacent=16 Padded64=128 Padded128=256
+2 threads x 50000000 increments of their own counter:
+  adjacent (same line) : 644.846 ms
+  alignas(64) padding  : 68.4745 ms
+  alignas(128) padding : 68.722 ms

@@ -1,0 +1,16 @@
+$ ASAN_OPTIONS=alloc_dealloc_mismatch=1:symbolize=0 c10_alloc_mismatch_ub
+=================================================================
+==69351==ERROR: AddressSanitizer: alloc-dealloc-mismatch (operator new [] vs operator delete) on 0x603000000fd0
+    #0 0x000102858558  (/Library/Developer/CommandLineTools/usr/lib/clang/21/lib/darwin/libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50558)
+    #1 0x0001020788d4  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c10_alloc_mismatch_ub:arm64+0x1000008d4)
+    #2 0x000199c75154  (/usr/lib/dyld:arm64e.x1+0x30154)
+
+0x603000000fd0 is located 0 bytes inside of 32-byte region [0x603000000fd0,0x603000000ff0)
+allocated by thread T0 here:
+    #0 0x000102858268  (/Library/Developer/CommandLineTools/usr/lib/clang/21/lib/darwin/libclang_rt.asan_osx_dynamic.dylib:arm64e+0x50268)
+    #1 0x0001020788c8  (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c10_alloc_mismatch_ub:arm64+0x1000008c8)
+    #2 0x000199c75154  (/usr/lib/dyld:arm64e.x1+0x30154)
+
+SUMMARY: AddressSanitizer: alloc-dealloc-mismatch (/private/var/folders/6q/njtg5ly535s06nbkc4z54r2r0000gn/T/cpp20_build/c10_alloc_mismatch_ub:arm64+0x1000008d4) 
+==69351==HINT: if you don't care about these errors you may set ASAN_OPTIONS=alloc_dealloc_mismatch=0
+cpp/headlands/lessons/examples/build_all.sh: line 26: 69351 Abort trap: 6           perl -e 'alarm 120; exec "bash", "-c", $ARGV[0]' "$1"
