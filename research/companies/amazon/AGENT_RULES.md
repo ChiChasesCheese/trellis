@@ -19,6 +19,18 @@ Context (fixed by the orchestrator, first-hand):
   layer is prepared to the senior (SDE II/III) bar: senior-scope LP stories, coding with senior follow-ups, full
   data-intensive system design and LLD. Never write "SDE I doesn't need X" as a reason to skip X.
 
+## CORE RULE (Chi, 2026-10-20) — overrides everything below
+
+「最核心的要求是 必须简洁 教程级别 不要引用源等无关内容 每个文章自包含全部信息」
+
+Every learner-facing file (lessons, lectures, stories, question banks, guides, README):
+- **Concise, tutorial level.** Teach the idea → show code → pitfalls → self-check. Cut everything that doesn't teach.
+- **No sources or meta**: no URLs, no 来源/证据/推断/(reconstructed)/置信度 labels, no forum ids (LC1234567, RD…, JC-…),
+  no commit hashes, no "measured on this machine" provenance chatter, no mention of agents, gates or how the file was made.
+- **Self-contained**: each article contains every definition, code snippet and fact it needs; no "see xxx.md" in place
+  of explaining; at most one optional 「延伸」 line at the end.
+- Evidence lives only in `catalog/raw/` and agent-facing files (AGENT_RULES, CHECKPOINT, *_TASK.md).
+
 Rules:
 1. You own only the files/dirs named in your task. Do not commit. Do not spawn agents.
 2. Resume rule: if your outputs exist, read them and only add what is missing.
