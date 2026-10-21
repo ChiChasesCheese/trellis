@@ -1,8 +1,6 @@
 # hc05 · Market Order Book（订单簿 + 撮合 + 低分配版本）—— 讲义
 
-> 题面：`loop/rounds/01_video/hc05_market_order_book/problem.md` · 速查：同目录 `REPORT.md` · 代码：同目录 `reference/`（`OrderBook` · `BatchMatcher` · `TickBook`）
-> 写法说明见 `study/TEXTBOOK.md`。读者设定：只会基本 Java（类、方法、循环、`ArrayList` / `HashMap` 的基本用法）。
-> 本讲义覆盖 hc05（订单簿）与并入的 hc14（批量限价撮合）。**题面的细节大部分是 (reconstructed)**：证据只有题目标题和第一句话。
+> 读者：只会基本 Java（类、方法、循环、`ArrayList` / `HashMap`）。本篇覆盖订单簿与批量限价撮合。
 
 ---
 
@@ -48,10 +46,10 @@
 
 1. **维护**一个这样的簿：挂单、撤单、改量、问最优价、问前 N 档的深度。（此时先不撮合。）
 2. **撮合**：新单进来，按价格-时间优先去吃对面的单，吃不完的挂簿；用一组"事件"（成交了、挂簿了、被撤了……）描述发生了什么。
-3. （hc14）一批 `[side, price, qty]` 的订单按到达顺序处理，汇总结果。
+3. 一批 `[side, price, qty]` 的订单按到达顺序处理，汇总结果。
 4. **性能追问**：「每秒几百万条命令，GC 很忙，怎么办？」
 
-面试里这几步是**一路追问**出来的：先让你把基础版写对，再不断加要求。所以讲义也这样走：先做最笨的，再一步步改。
+面试里这几步是**一路追问**出来的：先让你把基础版写对，再不断加要求。所以下面也这样走：先做最笨的，再一步步改。
 
 ---
 
@@ -189,7 +187,7 @@ fifo.pollFirstEntry();             // 队头出队
 对交易系统来说，一次几毫秒的暂停就是"延迟毛刺"。另外对象散落在内存各处，CPU 读它要"追指针"，缓存命中率低。
 所以低延迟系统追求**热路径上零分配**：处理一条命令不 `new` 任何东西。
 
-**我们实测的数字**（`ThreadMXBean.getThreadAllocatedBytes`，同一串随机命令）：Part 2 的 `OrderBook` 每条命令平均分配约 **420 字节**（20 万条命令共约 84 MB）；
+**实际的数字**（同一串随机命令）：Part 2 的 `OrderBook` 每条命令平均分配约 **420 字节**（20 万条命令共约 84 MB）；
 Part 4 的 `TickBook` 处理 60 万条命令分配 **0 字节**。
 
 ### 2.8 Part 4 要用的"数组式"技巧
@@ -313,7 +311,7 @@ record Trade(long takerId, long makerId, Side takerSide, long price, long qty) i
 
 ### 第 9 步：热路径零分配（Part 4：`TickBook`）
 
-**发现问题**：第 8 步之后的 `OrderBook`：每张订单一个 `Node`、每个价位一个 `PriceLevel` + `LinkedHashMap`（里面每项又是一个 entry 对象）、key 装箱成 `Long`、每条命令返回一个 `ArrayList<Event>`。实测约 420 字节 / 命令。
+**发现问题**：第 8 步之后的 `OrderBook`：每张订单一个 `Node`、每个价位一个 `PriceLevel` + `LinkedHashMap`（里面每项又是一个 entry 对象）、key 装箱成 `Long`、每条命令返回一个 `ArrayList<Event>`。实际约 420 字节 / 命令。
 **想法**：把"对象图"换成"几个预分配好的数组"，整个簿在构造时一次性分配，之后处理命令只读写数组。逐个替换：
 
 | 原来 | 换成 | 为什么可以 |
@@ -328,12 +326,12 @@ record Trade(long takerId, long makerId, Side takerSide, long price, long qty) i
 
 **代价**（面试一定要讲）：
 * 价格带固定（`maxTicks`），超出的拒绝；订单数上限固定（`capacity`），满了返回 `FULL`。——这是"有界内存"的取舍。
-* 代码更长、更容易出 bug（手写哈希删除、链表摘除）。所以我们**用 Part 2 的 `OrderBook` 当真值做对拍测试**。
+* 代码更长、更容易出 bug（手写哈希删除、链表摘除）。所以要**用 Part 2 的 `OrderBook` 当真值做对拍测试**。
 **新复杂度**：`limit` O(成交笔数)；`cancel` O(1)；最优价被吃光 / 撤光后找下一档：位图扫描，最坏 O(maxTicks / 64)，实际常数很小。
 
 ---
 
-## 5. 逐段讲参考解
+## 5. 逐段讲解法
 
 ### 5.1 数据成员
 
@@ -363,7 +361,7 @@ byId.put(id, node);
 
 ### 5.3 `modify`
 
-增量分支先 `addExact` 算新总量，再改 `n.qty`、`level.total`，最后 `putLast` 移到队尾；减量分支只改数字。注意 `newQty <= 0` 的检查放在"找 id"之前，所以对未知 id 也先报参数错（测试 `modifyRejectsNonPositiveQuantity` 锁定了这点）。
+增量分支先 `addExact` 算新总量，再改 `n.qty`、`level.total`，最后 `putLast` 移到队尾；减量分支只改数字。注意 `newQty <= 0` 的检查放在"找 id"之前，所以对未知 id 也先报参数错。
 
 ### 5.4 撮合循环 `sweep`
 
@@ -406,7 +404,7 @@ return switch (cmd) {
 
 **为什么 `ownLevelWouldOverflow` 在撮合之前**：限价单最后可能挂簿。若撮合完才发现挂不进去（总量溢出），成交事件已经发出，收不回。所以先做保守检查，宁可误拒也不做半件事。
 
-### 5.6 `BatchMatcher`（hc14）
+### 5.6 `BatchMatcher`
 
 校验整张表 → 转成 `Limit` 命令 → 复用 `OrderBook.executeAll` → 从事件流里挑出 `Trade`。
 
@@ -451,16 +449,16 @@ bestAsk = atOrAbove(bits[1], p + 1);   // 卖盘：找 ≥ p+1 的最低非空�
 
 ## 6. Java 21 特性小课
 
-> 完整课本见 `study/10-java21/`（J01–J19 各一篇，由其他任务产出）；这里只讲本题用到的部分。
+> 这里只讲本题用到的部分。
 
-### J01 `record`（含紧凑构造器）
+### `record`（含紧凑构造器）
 
 旧写法：一个 `Trade` 类要手写字段、构造器、getter、`equals`、`hashCode`、`toString`，40 行。
-新写法：`record Trade(long takerId, long makerId, Side takerSide, long price, long qty) implements Event {}` 一行，且 `equals` 按字段比较——测试里可以直接 `assertEquals(List.of(new Trade(...)), events)`。
+新写法：`record Trade(long takerId, long makerId, Side takerSide, long price, long qty) implements Event {}` 一行，且 `equals` 按字段比较——可以直接用 `equals` 比较事件列表。
 紧凑构造器：`record Order(...) { Order { if (qty <= 0) throw ...; } }`，字段赋值由编译器在你的代码之后自动补上，所以"非法的订单根本构造不出来"。
 **不该用**：需要可变状态的（`Node` 的 `qty` 会变，所以 `Node` 是普通类）。
 
-### J02 + J03 + J04 `sealed` + `switch` 模式匹配 + record 解构
+### `sealed` + `switch` 模式匹配 + record 解构
 
 旧写法：
 
@@ -485,38 +483,38 @@ case Trade(var taker, var maker, var side, var px, var q) -> "TRADE taker=%d ...
 * `when` 守卫：`case Limit l when l.price() <= 0 -> ...`。
 **坑**：加了 `default` 就丧失穷尽检查——sealed switch 里不要写 `default`。守卫分支的顺序有意义（第一个匹配的生效），不加守卫的"兜底"分支必须写在后面，否则编译器报"被支配"（dominated）。
 
-### J05 `switch` 表达式 + `yield`
+### `switch` 表达式 + `yield`
 
 旧写法：`switch` 语句里每个 case 要 `break`，忘了就 fallthrough（穿透到下一个 case）。
 新写法：`case X -> 值;` 无穿透；需要多行时用块 `{ ...; yield 值; }`。`execute` 里每个 case 是个块，最后 `yield events`。
 
-### J06 `instanceof` 模式
+### `instanceof` 模式
 
 旧：`if (e instanceof Trade) { Trade t = (Trade) e; ... }`。新：`if (e instanceof Trade t) { ... }`——判断和强转一步，`t` 只在条件为真的范围内可见。
 
-### J09 Sequenced Collections
+### Sequenced Collections
 
 见 2.6。旧写法取队头：`map.entrySet().iterator().next()`（又长又容易忘了判空）；新写法 `map.firstEntry()`。
 `LinkedHashMap.putLast` 对已有 key 的"移到队尾"语义，在 Java 21 之前要 `remove` 再 `put` 两步。
 
-### J13 未命名模式 `_`（Java 21 预览，需要 `--enable-preview`）
+### 未命名模式 `_`（Java 21 预览，需要 `--enable-preview`）
 
 `case Limit _, Market _ -> ...`：不需要绑定变量时写 `_`，明确告诉读者"我不关心里面是什么"，还允许在一个 case 里写多个模式。
-**限制**：Java 21 里是预览特性（JDK 22 正式）；本 kit 的编译参数已开 `--enable-preview`。
+**限制**：Java 21 里是预览特性（JDK 22 正式）；编译运行需要 `--enable-preview`。
 
-### J14 `Stream.mapMulti` / `toList()`
+### `Stream.mapMulti` / `toList()`
 
 旧：`.filter(e -> e instanceof Trade).map(e -> (Trade) e).collect(Collectors.toList())`。新：`mapMulti` 一步，`toList()` 返回不可变列表。
 **什么时候不该用**：简单的 filter+map 用 filter+map 更好读；`mapMulti` 适合"每个元素产出少量结果、不想创建中间 Stream"的场景。
 
-### J15 `Math.addExact` / `multiplyExact` / `String.formatted`
+### `Math.addExact` / `multiplyExact` / `String.formatted`
 
 旧：`a + b` 溢出静默回绕；要检查得手写 `if (a > Long.MAX_VALUE - b)`。新：`addExact` 溢出时抛 `ArithmeticException`。
 `"…%d".formatted(x)` 代替 `String.format("…%d", x)`，少一个参数位置的跳转。
 
-### J07 文本块（测试里）、J08 `var`、J18 `Comparator.reverseOrder()` / `Objects.requireNonNull`
+### 文本块、`var`、`Comparator.reverseOrder()` / `Objects.requireNonNull`
 
-文本块 `"""` 让多行脚本样例原样出现在测试里（不用 `"…\n" + "…\n"`）；`var` 只在右边类型显然时用（`var events = new ArrayList<Event>()`）；`Comparator.reverseOrder()` 让买盘"最小的 key = 最高价"。
+文本块 `"""` 让多行脚本样例原样出现在代码里（不用 `"…\n" + "…\n"`）；`var` 只在右边类型显然时用（`var events = new ArrayList<Event>()`）；`Comparator.reverseOrder()` 让买盘"最小的 key = 最高价"。
 
 ---
 
@@ -551,22 +549,22 @@ O(log L)，L 是价位数：`byId.get` O(1)，找价位 `TreeMap.get` O(log L)�
 订单簿的撮合有严格的顺序依赖，锁的粒度很难细分。常见做法：**单线程撮合引擎**（一个品种一个线程），所有命令通过队列（如 LMAX Disruptor 的 ring buffer）串行送进来——没有锁、可重现、延迟稳定；横向扩展靠"按品种分片"。不要给订单簿的每个方法加 `synchronized`——撮合仍然要整体串行，锁只会增加开销。
 
 **Q9. 怎么测试撮合正确？**
-(1) 手算样例；(2) 不变量：簿永远不交叉（best bid < best ask）、数量守恒（提交量 = 2 × 成交量 + 剩余挂单 + 被撤量）；(3) 对拍：快版本和慢但明显正确的版本喂同一串随机命令，逐步比较。本题的测试三种都有。
+(1) 手算样例；(2) 不变量：簿永远不交叉（best bid < best ask）、数量守恒（提交量 = 2 × 成交量 + 剩余挂单 + 被撤量）；(3) 对拍：快版本和慢但明显正确的版本喂同一串随机命令，逐步比较。三种都值得做。
 
 ---
 
 ## 8. 常见误区
 
-1. **`add` 就撮合。** Part 1 的 `add` 是"只挂不撮"，两张交叉的单可以同时在簿上；撮合是 `execute(Limit)` 的事。混在一起会让 Part 1 的深度测试（故意挂出交叉的簿）失败。
-2. **成交价取 taker 的限价。** 买 110 的单吃卖 101 的单，成交价是 101（maker 价），不是 110。测试 `samePriceFifoAndTradeAtMakerPrice` 就打这个。
+1. **`add` 就撮合。** Part 1 的 `add` 是"只挂不撮"，两张交叉的单可以同时在簿上；撮合是 `execute(Limit)` 的事。混在一起会让 Part 1 的深度查询（故意挂出交叉的簿）出错。
+2. **成交价取 taker 的限价。** 买 110 的单吃卖 101 的单，成交价是 101（maker 价），不是 110。
 3. **部分成交的 maker 被放到队尾。** 它应该留在队头，只是数量减少。放到队尾等于让它插队的反面。
 4. **增量 modify 保留了位置。** 加量必须重新排队，否则可以先挂小单占队头再偷偷加量。
 5. **价位空了不删。** 空的 `PriceLevel` 留在 `TreeMap` 里，`firstEntry()` 会返回一个空价位当作"最优价"。撤单、成交吃光都要检查"队空就删价位"。
 6. **先改后查溢出。** `total += qty` 溢出回绕成负数，簿悄悄坏掉；要先 `addExact` 再改。
 7. **`double` 价格 / `int` 数量。** `int` 在大单累加时溢出；`double` 比较相等不可靠。
-8. **`Long` 用 `==` 比较。** 装箱对象比较的是引用；缓存范围（-128..127）之内碰巧相等、之外不等——典型的"测试里过、线上错"。用 `equals` 或者保持基本类型。
-9. **（Part 4）开放寻址删除直接置 0。** 会断掉探测链。测试 `idTableSurvivesHeavyChurn` 用大量增删验证回移删除。
-10. **（Part 4）最优价被吃光后忘了更新。** 位图和 `bestBid` / `bestAsk` 必须在"价位变空"和"新价位出现"两处都维护。测试 `cancelFindsNextBestAcrossEmptyWords` 跨过一万多个空价位。
+8. **`Long` 用 `==` 比较。** 装箱对象比较的是引用；缓存范围（-128..127）之内碰巧相等、之外不等——典型的"小数据里过、线上错"。用 `equals` 或者保持基本类型。
+9. **（Part 4）开放寻址删除直接置 0。** 会断掉探测链，要用回移删除。
+10. **（Part 4）最优价被吃光后忘了更新。** 位图和 `bestBid` / `bestAsk` 必须在"价位变空"和"新价位出现"两处都维护。最优价被吃光后，要能跨过一万多个空价位找到下一档。
 
 ---
 
@@ -618,10 +616,4 @@ static long spread(OrderBook b) {
 
 ---
 
-## 10. 延伸阅读
-
-* Cormen 等《算法导论》（CLRS）第 13 章「红黑树」——为什么旋转 + 染色能保证高度 O(log n)。想知道 `TreeMap` 为什么快就读这一章的引言和性质部分。
-* Java SE 21 API：`java.util.TreeMap`、`java.util.LinkedHashMap`、`java.util.SequencedMap` 的 Javadoc——`firstEntry / pollFirstEntry / putLast` 的精确语义（尤其"已存在的 key 会移到末尾"）。
-* JEP 431: Sequenced Collections；JEP 409: Sealed Classes；JEP 440: Record Patterns；JEP 441: Pattern Matching for switch；JEP 443: Unnamed Patterns and Variables (Preview)——每个特性的动机与规则以 JEP 原文为准。
-* Joshua Bloch《Effective Java》第 3 版 Item 61「Prefer primitive types to boxed primitives」——装箱的三个坑（`==`、空指针、性能）。
-* Java SE 21 API：`java.lang.Math.addExact / multiplyExact`、`java.lang.management.ThreadMXBean`（`com.sun.management.ThreadMXBean.getThreadAllocatedBytes`，本题的分配测试用它）。
+「延伸」CLRS《算法导论》「红黑树」一章。

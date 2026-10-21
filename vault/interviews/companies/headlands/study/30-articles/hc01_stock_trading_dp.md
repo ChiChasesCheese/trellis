@@ -1,9 +1,6 @@
 # hc01 · 买卖股票家族（动态规划）—— 讲义
 
-> 题面：`loop/rounds/01_video/hc01_stock_trading_dp/problem.md` · 速查：同目录 `REPORT.md` · 代码：同目录 `reference/StockTrading.java`
-> 写法说明见 `study/TEXTBOOK.md`；样板见 `oa01_job_chain.md`。
-> 这篇讲义有一个特别的任务：**从零讲清楚动态规划**。Chi 说基础弱，所以这里不假设你见过「DP 表」「状态转移方程」这些词。
-> 读完的检验标准：合上讲义，自己把 LeetCode 188（最多 k 次交易）重新推出来。
+> 读者：会写基本 Java，不需要见过「DP 表」「状态转移方程」。读完的检验标准：合上讲义，自己把「最多 k 次交易」重新推出来。
 
 ---
 
@@ -41,7 +38,7 @@
 
 ### 2.1 复杂度：这题为什么不能暴力
 
-沿用 `oa01_job_chain.md` 2.3 节的约定：n 是天数，`O(n)` 表示步数和 n 成正比，`O(n²)` 表示每一天都和每一天比一次。
+n 是天数。`O(n)`（读作「大 O n」）表示步数和 n 成正比，`O(n²)` 表示每一天都和每一天比一次，步数和 n² 成正比。
 n = 10 万时 `O(n)` 约 10 万步，`O(n²)` 约 100 亿步（几十秒以上）。面试官说「数据很大」，就是在告诉你 `O(n²)` 过不了。
 
 ### 2.2 动态规划（dynamic programming, DP）—— 从一个和股票无关的例子讲起
@@ -186,7 +183,7 @@ for (int i = 2; i <= n; i++) { long c = a + b; a = b; b = c; }
 
 **加上「最多 k 次」（Part 3）**：给每个状态再加一个下标 j = 「到目前为止用了几次买入」。每次买入 j 加 1。图的形状不变，只是复制成 k+1 层，买入的箭头从第 j−1 层指向第 j 层。
 
-**Java 里怎么写**：用 `enum` 表示状态，每个箭头一个方法（这就是 reference 里的 `State`，第 5 节会读它）：
+**Java 里怎么写**：用 `enum` 表示状态，每个箭头一个方法（第 5 节会读它）：
 
 ```java
 public enum State {
@@ -225,14 +222,14 @@ DP 表算完，你只知道「最多赚多少」，不知道「怎么赚的」�
 ### 2.6 哨兵值（sentinel）、溢出与「从源头消灭」
 
 * **哨兵值**：有些状态一开始**不可能到达**（还没买过，不可能 HOLD）。我们给它一个「极小的数」，意思是「这条路走不通」，这样 `max` 会自动忽略它。
-  代码里是 `NEG = Long.MIN_VALUE / 4`。为什么除以 4？如果直接用 `Long.MIN_VALUE`，对它做 `- price` 就**下溢**绕回成一个巨大的正数（见 `oa01_job_chain.md` 2.7 节），反而成了「最优」。除以 4 留足余量。
+  代码里是 `NEG = Long.MIN_VALUE / 4`。为什么除以 4？如果直接用 `Long.MIN_VALUE`，对它做 `- price` 就**下溢**绕回成一个巨大的正数（整数溢出：`long` 超出最小值会从最大值那头重新开始），反而成了「最优」。除以 4 留足余量。
 * **溢出**：`long` 最大约 9.2 × 10¹⁸。如果价格和天数都不设上界，利润可能溢出。本题的做法是在入口处规定 `0 ≤ price ≤ 2⁴⁰`、`n ≤ 2²²`，于是利润 ≤ 2²¹ × 2⁴⁰ = 2⁶¹ < 2⁶³，整个 DP 里**任何中间值都不可能溢出**，内循环里就不用到处写 `Math.addExact`。
   这叫「从源头消灭」：检查一次入口，比在热路径里检查一百万次便宜；而且「接受或拒绝」比「静默回绕」安全。
 
 ### 2.7 `enum`、`record`、`sealed` 的最小介绍
 
 * `enum`：一个只有固定几个取值的类型（`FREE`/`HOLD`/`COOL`）。比起用 `int` 常量（0/1/2），它不会被传进一个「3」，而且能带方法。
-* `record`：不可变的数据类（`Trade(buyDay, sellDay)`）。细节见 `oa01_job_chain.md` 第 6 节。
+* `record`：不可变的数据类（`Trade(buyDay, sellDay)`），自动生成构造器、访问器、`equals`、`hashCode`、`toString`。
 * `sealed` 接口：规定「只有这几种实现」，配合 `switch` 让编译器检查你有没有处理全。第 6 节讲。
 
 ---
@@ -250,14 +247,14 @@ for (int i = 0; i < n; i++)
 
 * 对不对：对。每一对都试了。
 * 复杂度：约 n²/2 对，`O(n²)`。
-* **具体在哪个输入上慢**：n = 10 万的随机价格表，约 50 亿次比较，要几十秒。本机实测（`reference` 里的 `maxProfitBrute`）：
+* **具体在哪个输入上慢**：n = 10 万的随机价格表，约 50 亿次比较，要几十秒。暴力版实际耗时：
   3 万天 **186 ms**；对照 O(n) 的 `maxProfitOnce`：3 万天 **0.018 ms**（预热后取 7 次最好值）。
-  按 n² 外推，100 万天的暴力要 3 分钟以上（外推值，不是实测）。
+  按 n² 外推，100 万天的暴力要 3 分钟以上（外推值）。
 
 ### 3.2 如果有「最多 k 次」，暴力更惨
 
 暴力要枚举「所有互不重叠的 (买, 卖) 区间的集合」。n 天里选 2k 个分割点，方案数是组合数 C(n, 2k)，n=1000、k=10 就是天文数字。
-所以到 Part 3，**必须**用 DP，暴力连用来对拍的价值都只剩 n ≤ 10 的小数据（测试里就是这样做的：用暴力枚举当「标准答案」去对拍 DP）。
+所以到 Part 3，**必须**用 DP，暴力连用来对拍的价值都只剩 n ≤ 10 的小数据（用暴力枚举当「标准答案」去对拍 DP）。
 
 ---
 
@@ -389,7 +386,7 @@ for (int j = k; j >= 1; j--) {                              // j 从大到小
 ```
 
 若写成 j 从小到大：处理 j 时，`free[j-1]` 已经被今天更新过，等于允许「同一天先卖、再用卖出的钱买入」，违反「一天一个动作」。
-**有意思的是，对 Part 3 这个具体公式，两种顺序的答案其实一样**（我用 n ≤ 5、价格 0..3 的全部输入验证过）：同一天按同一个价格「卖了又买」，现金一分不变，
+**有意思的是，对 Part 3 这个具体公式，两种顺序的答案其实一样**（对 n ≤ 5、价格 0..3 的全部输入逐一验证过）：同一天按同一个价格「卖了又买」，现金一分不变，
 所以多出来的那条路径不会产生更好的值。但这是「碰巧」：它依赖「同一天买卖价格相同、没有手续费、没有冷却」。
 一旦加上冷却（下面 Part 4），读了「今天已更新的 free」去买入就会得到错误答案（见 Part 4 的例子）。**所以养成习惯：每个转移只用「昨天的值」，写法上要么 j 倒序，要么先把旧值存进局部变量。**
 
@@ -400,7 +397,7 @@ for (int j = k; j >= 1; j--) {                              // j 从大到小
 if (k >= n / 2) return maxProfitUnlimited(prices);
 ```
 
-**新复杂度**：时间 `O(n · min(k, n/2))`，空间 `O(min(k, n/2))`。n = 20 万、k = 50 实测 3.6 ms（预热后）。
+**新复杂度**：时间 `O(n · min(k, n/2))`，空间 `O(min(k, n/2))`。n = 20 万、k = 50 约 3.6 ms（预热后）。
 
 ### Part 4：冷却、手续费、还原交易
 
@@ -462,9 +459,9 @@ free'[j] = max(free[j], cool[j])            // 休息；或冷却结束（昨天
 第 0 天，HOLD, bit0=1 →  这天买入            记 Trade(0,1)，状态 → FREE   ← 回到起点 FREE，一致
 ```
 
-倒着得到的是 `[Trade(3,4), Trade(0,1)]`，反转后 `[Trade(0,1), Trade(3,4)]` ✓（这正是测试里的期望）。
+倒着得到的是 `[Trade(3,4), Trade(0,1)]`，反转后 `[Trade(0,1), Trade(3,4)]` ✓。
 
-**回溯的自检**：走到起点时状态必须是 `FREE`（初始状态）。如果不是，说明决策记录写错了。reference 里用 `AssertionError` 把这个检查留了下来。
+**回溯的自检**：走到起点时状态必须是 `FREE`（初始状态）。如果不是，说明决策记录写错了。代码里用 `AssertionError` 把这个检查留了下来。
 
 **更强的自检——`replay`**：不要只信 DP 给出的数字。再写一个**独立的检查器**，把方案逐天回放一遍：按状态机一天天走（有动作按动作，没动作就休息），非法就报错，最后算利润。
 `plan(...).profit()` 必须等于 `replay(...)` 的结果。这是「验证」与「计算」分开的好习惯：DP 的错误和检查器的错误很难恰好抵消。
@@ -473,7 +470,7 @@ free'[j] = max(free[j], cool[j])            // 休息；或冷却结束（昨天
 
 ---
 
-## 5. 逐段讲参考解
+## 5. 逐段讲解法
 
 ### 5.1 数据类型
 
@@ -548,7 +545,7 @@ return free[k];
 
 * `new long[k + 1]` 默认全 0 → `free` 的初值正好是 0，不用填。
 * `hold[j] + p`：`hold[j]` 可能是 `NEG`（`Long.MIN_VALUE/4`），加一个不超过 2⁴⁰ 的 p 仍然是极负数，`max` 会忽略它，且不会溢出。
-* 内层循环里没有任何分配，也没有分支预测不友好的跳转，所以 20 万天 × 50 的实测只要几毫秒。
+* 内层循环里没有任何分配，也没有分支预测不友好的跳转，所以 20 万天 × 50 只要几毫秒。
 
 ### 5.5 Part 4 的引擎 `run`
 
@@ -652,7 +649,7 @@ state = switch (moves.get(day)) {
 
 ## 6. Java 21 特性小课
 
-### 6.1 `enum` + `switch` 表达式（J05）
+### 6.1 `enum` + `switch` 表达式
 
 旧写法（Java 7）：
 
@@ -666,7 +663,7 @@ switch (state) {
 新写法：箭头 `->`，没有 fallthrough；`switch` 可以**直接产生值**；对 enum 的 `switch` 表达式要求覆盖所有取值，漏一个**编译失败**。块分支里用 `yield 值` 返回。
 `State` 里 `this == COOL ? FREE : this` 是更小的写法；复杂一点的转移用 `switch` 表达式更清楚。
 
-### 6.2 `sealed` 接口 + record（J02）+ 模式匹配 `switch`（J03）+ record 模式（J04）
+### 6.2 `sealed` 接口 + record + 模式匹配 `switch` + record 模式
 
 ```java
 public sealed interface Move permits Buy, Sell {}
@@ -677,13 +674,12 @@ public record Sell(int day) implements Move {}
 `sealed` 告诉编译器：`Move` 只有 `Buy` 和 `Sell` 两种。所以 `switch (move) { case Buy(var d) -> ...; case Sell(var d) -> ...; }` 不需要 `default`：
 编译器知道已经覆盖全部。以后新增 `Rest`，所有没处理它的 `switch` 立刻编译失败——这是「让编译器帮你找遗漏」。
 
-`case null`（J03 的一部分）：Java 21 允许 `switch` 里直接写 `case null ->`，不再需要先 `if (x == null)`。
+`case null`：Java 21 允许 `switch` 里直接写 `case null ->`，不再需要先 `if (x == null)`。
 
 什么时候**不该**用：枚举值只有几个、没有各自的数据时，用 `enum` 就够了（如 `State`）；`sealed` + `record` 适合「每种情形带不同的数据」（买带日期、卖带日期、将来可能有的取消带原因……）。
 
-详细课本：`study/10-java21/J02_sealed.md`、`J03_pattern_switch.md`、`J04_record_patterns.md`（待写）。
 
-### 6.3 Sequenced Collections（J09）
+### 6.3 Sequenced Collections
 
 旧写法：要倒着遍历一个 `List`，要么 `Collections.reverse(list)`（修改原列表）要么写倒着的下标循环。
 
@@ -694,7 +690,7 @@ for (Trade t : reversed.reversed()) { ... }
 Java 21 的 `List.reversed()` 返回一个**倒序视图**（不拷贝、不修改原列表）。同一批新方法还有 `getFirst()` / `getLast()` / `addFirst()`……统一定义在 `SequencedCollection` 接口上，`List`、`Deque`、`LinkedHashSet` 都实现了它。
 旧代码里 `list.get(list.size() - 1)` 取最后一个，现在是 `list.getLast()`，空列表会抛 `NoSuchElementException` 而不是下标越界。
 
-### 6.4 `record` 的紧凑构造器与「不可变拷贝」（J01）
+### 6.4 `record` 的紧凑构造器与「不可变拷贝」
 
 `Plan` 里：
 
@@ -705,7 +701,7 @@ public Plan { trades = List.copyOf(trades); }
 紧凑构造器的参数就是 record 的组件，你可以在字段赋值**之前**重新给参数赋值。这里把调用者传进来的列表换成不可变拷贝：以后外部再改原列表，`Plan` 不受影响。
 这叫**防御性拷贝**（defensive copy）。没有它，`record` 虽然字段是 `final`，里面的列表却仍可被外部修改，「不可变」就是假的。
 
-### 6.5 数学小工具（J15）与 `var`（J08）
+### 6.5 数学小工具与 `var`
 
 `Math.addExact` / `Math.subtractExact`：溢出时抛 `ArithmeticException`，而不是静默绕回。`replay` 里用它们是因为 `replay` 的输入（任意 `Trade` 列表）不如 DP 的内循环可控。
 `var`：只在右边一眼看得出类型时用（`var reversed = new ArrayList<Trade>()`）。
@@ -777,7 +773,7 @@ public Plan { trades = List.copyOf(trades); }
 2. 每层有 FREE、HOLD、COOL 三个圈。FREE→HOLD（买入，现金 −p，j 层 +1）；HOLD→COOL（卖出，现金 +p −fee）；COOL→FREE（被迫休息，现金不变）；FREE→FREE、HOLD→HOLD（休息，现金不变）。j=0 层没有 FREE→HOLD 的箭头指向自己，买入的箭头从 j=0 的 FREE 指向 j=1 的 HOLD。
 3. 最优是：价格 1 买、价格 5 卖（赚 4）；价格 2 买、价格 9 卖（赚 7）；合计 11。`free[2] = 11`。（另一种分法 1→9 一笔赚 8，再加不了第二笔，不如两笔。）
 4. 纯 Part 3 里答案不变：从小到大时 `hold[j]` 会用到今天已更新的 `free[j-1]`，相当于同一天「卖出再买入」，但价格相同、无手续费，现金不变，不产生更优值。
-   加上冷却后会变：`hold` 读到了包含「昨天卖出、今天冷却结束」的钱，等于冷却期内买入（本讲义 Part 4 的例子：`[1,2,3,0,2]` 得到 4 而不是 3）。结论：每个转移只用昨天的值。
+   加上冷却后会变：`hold` 读到了包含「昨天卖出、今天冷却结束」的钱，等于冷却期内买入（Part 4 的例子：`[1,2,3,0,2]` 得到 4 而不是 3）。结论：每个转移只用昨天的值。
 5. 把 `sell = oldHold + p - fee` 改成 `sell = oldHold + p`，把 `buy = free[src] - p` 改成 `buy = free[src] - p - fee`。结果相同：每笔**完成**的交易恰好扣一次，而最终答案只看 `free` / `cool`（还持有的股票不计入），所以没有区别；`plan` 里每笔的净利润公式也不变。
 6. 不限次数 + 冷却：`free' = max(free, cool)`；`hold' = max(hold, free - p)`；`cool' = hold + p`（都用昨天的值，所以先存旧值再更新）。答案 `max(free, cool)`。这就是 LC 309 的标准 O(1) 空间解。
 
@@ -785,10 +781,4 @@ public Plan { trades = List.copyOf(trades); }
 
 ---
 
-## 10. 延伸阅读
-
-* Cormen 等《算法导论》第 14 章（第 4 版，原第 15 章）「动态规划」—— 从「钢条切割」讲起，把「最优子结构」「重叠子问题」讲得最清楚，读前两节就够。
-* Skiena《算法设计手册》第 10 章 动态规划 —— 习题多，尤其「状态定义」的练习。
-* LeetCode 188 官方题解 https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/ ——本题的原型；注意看它是怎么用「买入 / 卖出」两个数组定义状态的（和这里一致）。
-* JEP 395 Records / JEP 409 Sealed Classes / JEP 441 Pattern Matching for switch / JEP 431 Sequenced Collections（openjdk.org/jeps/）—— 本题用到的语言特性的设计文档。
-* `java.lang.Math` Javadoc（`addExact`、`subtractExact`、`clamp`）—— 溢出检测的标准做法。
+「延伸」CLRS《算法导论》「动态规划」一章（钢条切割）。

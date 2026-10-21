@@ -1,11 +1,4 @@
-# hc07 · 股票代码哈希表（Blind「design an optimized hash map for stock tickers」）
-
-> 阶段：电面（Blind：1 小时 Zoom 的第二题；1p3a 技术电面）· 置信度：**中**（2 个独立来源：Blind 2024-08 + 1p3a 2022-11）
-> 证据原文只有两句：Blind 2024-08「A second question covered **optimizing a C++ unordered_map for stock tickers**」（评论者转述，非逐字；另有搜索摘要称追问 hash 冲突和内存开销）；
-> 1p3a 2022-11「tail recursion and **ticker hashing techniques**」。没有任何一方给出题面、接口或数据规模。
-> **所以本题的接口（`TickerMap` / `TickerCodec` / `LongTickerMap` / `SymbolIndex` / `FrozenTickerMap` / `OffHeapTickerMap`）、
-> 「ticker ≤ 8 个大写字母」的编码、四个 Part 的划分、全部数字约束都是 (reconstructed)**——按「一小时电面里面试官会怎么一路追问一个哈希表」推出来的。
-> 原题是 C++ `unordered_map`，这里的 Java 对应物是 `HashMap<String, Long>`（推断）。真题的细节以你实际看到的为准。
+# hc07 · 股票代码哈希表（design an optimized hash map for stock tickers）
 
 ## 读题前你需要知道
 
@@ -15,7 +8,6 @@
 * Java 的 `HashMap<String, Long>` 每个条目背后有多少个对象、**装箱**（boxing）是什么；
 * **完美哈希**（perfect hashing）：key 集合固定时，能不能做到「零冲突」。
 
-这些都在讲义里从零讲：`study/30-articles/hc07_ticker_hash_map.md`（先读第 1–2 节再动手）。
 
 ## 背景
 
@@ -32,7 +24,7 @@ Java 里最直接的写法是 `HashMap<String, Long>`。面试官会让你先自
 | 1 | `TickerMap`（key = `String`，value = `long`） | 手写开放寻址 + 线性探测哈希表：put / get / add / remove，墓碑，resize |
 | 2 | `TickerCodec` + `LongTickerMap` | 利用「≤ 8 个大写字母」把代码**打包进一个 `long`**，key 变成原始类型，不分配、不装箱；报文字段直接解析 |
 | 3 | `SymbolIndex` + `FrozenTickerMap` | 开盘前就知道全部代码 → **最小完美哈希**，零冲突，value 放进长度恰好 n 的数组 |
-| 4 | `OffHeapTickerMap` + `Bench`（只在 reference/ 里） | 堆外定长表（FFM `Arena`），缓存行对齐；**自己测量**：布局、负载、装箱、缓存 |
+| 4 | `OffHeapTickerMap` + `Bench` | 堆外定长表（FFM `Arena`），缓存行对齐；**自己测量**：布局、负载、装箱、缓存 |
 
 所有 value 都是 `long`（比如累计成交量）。签名以 starter 为准，这里只写语义。
 
@@ -81,7 +73,7 @@ key 是打包好的 `long`（**必须 > 0**，否则 `IllegalArgumentException`�
 
 * **稳态下 `add` / `get` 零分配**（测试用 `ThreadMXBean.getThreadAllocatedBytes` 检查：预热后 160 万次 `add` 分配 < 256 KB；对照 `HashMap<String,Long>.merge` 要分配 > 8 MB）。
 * **哈希函数不能写成 `key & mask`**：打包后短代码的低位全是补的 0，几乎所有 key 会落到同一格。测试用全部 17576 个三字母代码检查最长探测距离 ≤ 64。
-* 提示（reconstructed 的优化，不是必须）：把 key 和 value 放进同一个 `long[]`（交错布局），一次缓存行就拿到两样。
+* 提示：把 key 和 value 放进同一个 `long[]`（交错布局），一次缓存行就拿到两样。
 
 ## Part 3 · 完美哈希：`SymbolIndex` + `FrozenTickerMap`
 
@@ -103,9 +95,8 @@ key 是打包好的 `long`（**必须 > 0**，否则 `IllegalArgumentException`�
   固定容量：槽位数 = 不小于 `2·maxEntries` 的 2 的幂；`maxEntries` 个 key 放满之后，再插入**新** key → `IllegalStateException`，已有 key 仍可更新。没有 `remove`、没有 `resize`。
   `size()` · `capacity()` · `maxEntries()` · `containsKey` · `get(k, ifAbsent)` · `put(k, v)` → `boolean` · `add(k, delta)` → `long` · `close()`（可重复调用；之后任何访问 → `IllegalStateException`）。
   `key ≤ 0` → `IllegalArgumentException`；`maxEntries ∉ [1, 2²⁸]` → `IllegalArgumentException`。必须能从**别的线程**访问（所以用 `Arena.ofShared()`）。
-* `Bench`（只在 `reference/` 里，不是 starter 的一部分）：把同一串更新（8,000 个 ticker 和 2,000,000 个 ticker；均匀访问和偏斜访问）喂给 `HashMap<String,Long>` / `TickerMap` / `LongTickerMap` / 分离布局的对照实现 / `OffHeapTickerMap` / `FrozenTickerMap`（查表 / 缓存下标），打印 ns/op 和每条记录的字节数。
-  运行：`python3 tools/jtest.py main loop/rounds/01_video/hc07_ticker_hash_map --impl reference --cls Bench`。
-  结果与解读写在 `REPORT.md` 和讲义第 4 节；**面试里被问「你怎么知道更快」时，要能说出怎么测、测到了什么、哪些结论没有测。**
+* `Bench`：把同一串更新（8,000 个 ticker 和 2,000,000 个 ticker；均匀访问和偏斜访问）喂给 `HashMap<String,Long>` / `TickerMap` / `LongTickerMap` / 分离布局的对照实现 / `OffHeapTickerMap` / `FrozenTickerMap`（查表 / 缓存下标），打印 ns/op 和每条记录的字节数。
+  **面试里被问「你怎么知道更快」时，要能说出怎么测、测到了什么、哪些结论没有测。**
 
 ## 边界清单（隐藏测试多半打这些）
 
@@ -114,16 +105,12 @@ key 是打包好的 `long`（**必须 > 0**，否则 `IllegalArgumentException`�
 打包：1 个字符 / 8 个字符 / 9 个字符 / 小写 / 数字 / 全角字母；报文字段里的前导空格 / 中间空格 / 全空格 / `\0`；
 完美哈希：0、1、2 个 key；全部 17576 个三字母代码（结构化输入）；集合外的 key；重复 key。
 
-## 野外变体
+## 相关变体
 
 * C++ 版：`std::unordered_map` 的链地址法（每个桶一个链表，节点单独分配）→ 追问冲突与内存开销 → 换成开放寻址 / `flat_hash_map`（和 Part 1、2 同构）；
 * 「key 不止 8 个字符怎么办？」→ 128 位 key（两个 `long`）、或者 FNV / xxHash 之类的字符串哈希 + 字节比较；
-* 「多线程更新同一张表怎么办？」→ 分片（每个线程一张表，最后合并）、`LongAdder`、或者无锁的原子 CAS；本题不含，讲义第 7 节有答案要点；
+* 「多线程更新同一张表怎么办？」→ 分片（每个线程一张表，最后合并）、`LongAdder`、或者无锁的原子 CAS；本题不含；
 * 「你怎么证明你的哈希函数好？」→ 看最长探测距离、平均探测次数、用真实数据（而非随机数据）测。
-
-## 来源
-
-`catalog/CATALOG.md` hc07 行；`catalog/raw/forums.md` B1（Blind 2024-08，https://www.teamblind.com/post/headlands-technologies-research-developer-interview-process-pcb637t7 ）· A17（1p3a 2022-11，https://www.1point3acres.com/interview/thread/944714 ）· Q2；`catalog/raw/official_and_process.md` §D2。
 
 ## 考什么
 

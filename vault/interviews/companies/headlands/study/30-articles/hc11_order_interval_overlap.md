@@ -1,9 +1,6 @@
 # hc11 讲义 · 订单区间最大重叠：从「逐个时刻数」到扫描线、在线差分、坐标压缩与线段树
 
-> 配套题集：[problem.md](../../loop/rounds/01_video/hc11_order_interval_overlap/problem.md) · [REPORT.md](../../loop/rounds/01_video/hc11_order_interval_overlap/REPORT.md) · 参考解 `loop/rounds/01_video/hc11_order_interval_overlap/reference/`
-> 读者设定：会写基本 Java（类、方法、循环、`ArrayList` / `HashMap`），没学过扫描线、差分数组、线段树、坐标压缩。每个概念从零讲；已有基础课的概念只写一句话加链接。
-> 标 **(reconstructed)** 的是我补出来的，不是原题（证据只有一句话：「processing order intervals to find maximum overlaps and handling order cancellations by buy/sell sides」，见 problem.md）。
-> 基础课：[复杂度](../00-foundations/complexity.md) · [有序 Map / 红黑树](../00-foundations/ordered_maps_trees.md) · [堆与 PriorityQueue](../00-foundations/heap_priority_queue.md)（用来对比：为什么这里不需要堆）
+> 读者：会写基本 Java（类、方法、循环、`ArrayList` / `HashMap`），没学过扫描线、差分数组、线段树、坐标压缩；每个概念从零讲。
 
 ---
 
@@ -57,6 +54,8 @@ Cancel(2, 6)   Cancel(4, 5)
 ---
 
 ## 2. 前置知识
+
+> 复杂度记号速记：`O(n)` 表示步数随输入规模 n 线性增长；`O(log n)` 表示 n 翻倍只多一步（二分查找、平衡树、堆）；`O(n²)` 表示每一对元素都要处理一次；`O(1)` 表示与 n 无关。
 
 ### 2.1 半开区间 `[start, end)`
 
@@ -122,7 +121,7 @@ Part 3 的在线版和 Part 4 的线段树，都是在「差分数组」这个�
 
 ### 2.5 有序 Map：`TreeMap`
 
-**是什么**：按键排好序的 `Map`（底层红黑树），`put / get / remove` 都是 O(log n)，并且支持「最小键」`firstEntry()`、「删除并返回最小」`pollFirstEntry()`、「≤ x 的最大键」`floorEntry(x)` 等。原理见 [有序 Map / 红黑树](../00-foundations/ordered_maps_trees.md)；Java 21 起这些两端操作被统一进 `SequencedMap`（[J09](../10-java21/J09_sequenced_collections.md)）。
+**是什么**：按键排好序的 `Map`（底层红黑树），`put / get / remove` 都是 O(log n)，并且支持「最小键」`firstEntry()`、「删除并返回最小」`pollFirstEntry()`、「≤ x 的最大键」`floorEntry(x)` 等。红黑树是自平衡二叉搜索树，旋转和染色保证树高 O(log n)；Java 21 起这些两端操作被统一进 `SequencedMap`。
 
 **为什么需要它**：Part 3 要维护「未来哪些时刻会有订单结束」，必须能按时间顺序取最早的那个——正是 `firstEntry / pollFirstEntry`。回答「t 时刻有几张」要找「不晚于 t 的最近一次变化」——正是 `floorEntry(t)`。
 
@@ -136,7 +135,7 @@ var f = history.floorEntry(7L);                   // ≤ 7 的最大键对应的
 
 ### 2.6 sealed 事件与模式匹配
 
-`OrderEvent` 是 `sealed interface ... permits Place, Cancel`：只有「下单」和「撤单」两种事件。`switch (e) { case Place p -> …; case Cancel(var id, var time) -> … }` 编译器检查穷尽性。详见 [J02](../10-java21/J02_sealed.md)、[J03](../10-java21/J03_pattern_switch.md)、[J04](../10-java21/J04_record_patterns.md)；hc09 讲义第 5.4 节有同款用法。
+`OrderEvent` 是 `sealed interface ... permits Place, Cancel`：只有「下单」和「撤单」两种事件。`switch (e) { case Place p -> …; case Cancel(var id, var time) -> … }` 编译器检查穷尽性。
 
 ### 2.7 线段树（segment tree）与懒标记——从零推出来
 
@@ -232,7 +231,7 @@ m = 4 个格子（下标 0..3），结点编号从 1 开始，结点 i 的孩子
 ### 2.9 溢出：只比较，不运算
 
 时间戳可能接近 `Long.MAX_VALUE`。`end - start`、`(lo + hi) / 2` 这类运算会溢出成负数。本题的原则：**时间只比较，不做运算**。线段树里下标是 `int`（压缩后的小整数），用 `(nl + nr) >>> 1` 取中点（无符号右移，即使下标很大也不会变负）。
-溢出的基础见 [hc09 讲义 2.3 节](hc09_top_trades_by_notional.md) 和 [J15](../10-java21/J15_math_string_utils.md)。
+背景：`long` 的范围是 −2⁶³ … 2⁶³−1，超出会静默回绕成相反符号的数；`Math.addExact` / `multiplyExact` 则在溢出时抛 `ArithmeticException`。
 
 ---
 
@@ -250,7 +249,7 @@ for (long t = 0; t <= maxEnd; t++) {
 ```
 
 * 复杂度 O(T·n)，T 是时间轴长度。**T 是时间戳的数值范围，不是订单数！** 纳秒时间戳 T ≈ 10¹⁸，永远跑不完。
-* 它仍然有用：测试里的 `brute` 就是它，只用小坐标做**对拍**。
+* 它仍然有用：只用小坐标做**对拍**（拿它的答案核对快解法）。
 
 ### 3.2 只检查开始时刻
 
@@ -268,7 +267,7 @@ O(n²)。n = 10⁶ 时 10¹²，几小时。比 3.1 好（和时间戳范围无�
 
 ### 3.3 Part 3/4 的笨办法
 
-* 在线版：每来一个事件，把到目前为止的全部订单重新交给 Part 2 的 `analyze`，O(n) 到 O(n log n) 一次，总 O(n² log n)。它仍然有用——**测试里用它对每个前缀对拍在线版**（`everyPrefixAgreesWithTheBatchSolution`）。
+* 在线版：每来一个事件，把到目前为止的全部订单重新交给 Part 2 的 `analyze`，O(n) 到 O(n log n) 一次，总 O(n² log n)。它仍然有用——**可以用它对每个前缀对拍在线版**。
 * 大坐标：逐个时刻数不可行（T 太大）；在 n 个订单上每次查询线性扫描，q 次查询 O(q·n)。
 
 ---
@@ -398,7 +397,7 @@ return live > committedMax ? new Peak(live, lastTick) : new Peak(committedMax, c
 | cancel 4 @5 | 同时间戳；live--，撤掉 {12} | 4 | {6,8,9,10 各 1} | (4, 4) | **(4, 4)** |
 | cancel 2 @6 | 封账：live=4 不 > 4；折叠 6：live=3；撤 2：live--，撤掉 {8} | 2 | {9:1, 10:1} | (4, 4) | (4, 4) |
 
-第 5 行 `peak()` 是 (5,5)，第 6 行同一时间戳撤单后变成 (4,4)——这正是「追溯修正」，也和 Part 2 批量版对同一批订单的答案一致（BUY 车道 (3,5)、SELL 车道 (2,4) 同理）。**测试对每个前缀都用 Part 2 的批量版对拍**，因为批量版对「已到事件」的答案在后续没有新订单的情况下就是在线版的答案。
+第 5 行 `peak()` 是 (5,5)，第 6 行同一时间戳撤单后变成 (4,4)——这正是「追溯修正」，也和 Part 2 批量版对同一批订单的答案一致（BUY 车道 (3,5)、SELL 车道 (2,4) 同理）。**可以对每个前缀都用 Part 2 的批量版对拍**，因为批量版对「已到事件」的答案在后续没有新订单的情况下就是在线版的答案。
 
 **回答 `liveAt(t)`**：`history.floorEntry(t)`——不晚于 t 的最近一次变化点，它的值就是 t 时刻的活跃数（阶梯函数在变化点之间是常数）；没有这样的变化点 → 0。O(log n)。
 
@@ -409,7 +408,7 @@ return live > committedMax ? new Peak(live, lastTick) : new Peak(committedMax, c
 
 ### 4.4 Part 4：坐标压缩 + 线段树
 
-**为什么扫描线不够**：Part 1 的扫描线答「全局最大」是最优的（我的实测：30 万个 10¹⁸ 量级区间，扫描线 21 ms，建线段树索引 100 ms）。线段树值得用的场景是：
+**为什么扫描线不够**：Part 1 的扫描线答「全局最大」是最优的（30 万个 10¹⁸ 量级区间，扫描线 21 ms，建线段树索引 100 ms）。线段树值得用的场景是：
 1. **更新顺序任意**（订单可以先撤后加；`add` 与 `remove` 交错）——扫描线必须一次性读完；
 2. **区间查询**：问「[from, to) 内的最大重叠」，扫描线每次都要重做；线段树每次 O(log n)。
 
@@ -441,7 +440,7 @@ public void add(long start, long end) {
 
 ---
 
-## 5. 逐段讲参考解
+## 5. 逐段讲解法
 
 ### 5.1 数据类型（`OrderIntervals.java`）
 
@@ -482,8 +481,8 @@ static Peak peakOf(long[] starts, long[] ends, int n, boolean inclusive) {
 ```
 
 * `Arrays.sort(a, 0, n)`：只排前 n 个，因为数组可能比有效数据长（`sweep` 里分配了 `intervals.length`，空区间被跳过后 `n` 更小）。
-* 两个数组各自排序，是**原地**修改——所以 `sweep` 里的数组是**拷贝**出来的，调用者的 `long[][]` 不会被动（测试 `unsortedInputAndInputIsNotModified`）。
-* 只比较、不运算：`ends[j] <= s`，时间接近 `Long.MAX_VALUE` 也安全（测试 `hugeCoordinatesNeverOverflow`）。
+* 两个数组各自排序，是**原地**修改——所以 `sweep` 里的数组是**拷贝**出来的，调用者的 `long[][]` 不会被动。
+* 只比较、不运算：`ends[j] <= s`，时间接近 `Long.MAX_VALUE` 也安全。
 
 ### 5.3 `analyze`
 
@@ -540,7 +539,7 @@ public boolean cancel(long id, long time) {
 }
 ```
 
-* **校验在改状态之前完成**：未知 id、时间倒退都先抛，之后才 `advanceTo`；失败的调用不改变任何状态（测试 `outOfOrderAndInvalidArguments`）。
+* **校验在改状态之前完成**：未知 id、时间倒退都先抛，之后才 `advanceTo`；失败的调用不改变任何状态。
 * `Order` 是 record（不可变），撤单用「新 record 替换旧的」：既避免可变状态，又让第二次撤单自动返回 `false`（`end == 第一次撤单时间 <= 新时间`）。
 * `lane.cancel(end)` 里 `expiries.compute(end, (k, c) -> c == 1 ? null : c - 1)`：计数减 1，减到 0 返回 `null` 删除这个键（避免 `TreeMap` 里留下计数 0 的垃圾键，否则 `firstEntry` 会反复折叠 0）。
 
@@ -577,7 +576,7 @@ private int rangeMax(int node, int nl, int nr, int l, int r) {
 ```
 
 * 参数 `(node, nl, nr)` 表示「当前结点管下标区间 [nl, nr]」；`(l, r)` 是操作区间。
-* `rangeMax` 最后的 `+ add[node]` 是整个设计的**关键一行**：删掉它，整体平移的标记就丢了（我试过删：15 个测试失败）。同样，`rangeAdd` 末尾 `mx[node] = add[node] + …` 里的 `add[node]` 也不能少（删掉后 16 个测试失败）。
+* `rangeMax` 最后的 `+ add[node]` 是整个设计的**关键一行**：删掉它，整体平移的标记就丢了。同样，`rangeAdd` 末尾 `mx[node] = add[node] + …` 里的 `add[node]` 也不能少。
 * 递归深度 ≤ ⌈log₂ size⌉ ≈ 20，不会栈溢出。
 
 ```java
@@ -591,12 +590,12 @@ private int lowerBound(long x) { int i = Arrays.binarySearch(coords, x); return 
 
 ## 6. Java 21 特性小课
 
-### record 与紧凑构造器（J01）
+### record 与紧凑构造器
 
 `Peak`、`Place`、`Cancel`、`Report`、`Order` 都是 record。旧写法：`final class` + 私有字段 + 构造器 + getter + `equals/hashCode/toString`。
-本题的好处：测试里 `assertEquals(new Peak(3, 5), r.buy())` 直接按字段比较；`Place` 的紧凑构造器让「`end < start` 的订单」构造不出来。**不该用**：`Lane`（要频繁修改字段）就是普通 `final class`。详见 [J01](../10-java21/J01_record.md)。
+本题的好处：`new Peak(3, 5)` 这样的值可以直接按字段比较；`Place` 的紧凑构造器让「`end < start` 的订单」构造不出来。**不该用**：`Lane`（要频繁修改字段）就是普通 `final class`。
 
-### sealed + 模式匹配 switch + 记录模式（J02 / J03 / J04）
+### sealed + 模式匹配 switch + 记录模式
 
 `OrderEvent permits Place, Cancel`：
 
@@ -613,23 +612,23 @@ switch (e) {
 }
 ```
 
-编译器能证明穷尽，所以新增事件类型时所有 `switch` 编译失败，不会漏处理。详见 [J02](../10-java21/J02_sealed.md)、[J03](../10-java21/J03_pattern_switch.md)、[J04](../10-java21/J04_record_patterns.md)。
+编译器能证明穷尽，所以新增事件类型时所有 `switch` 编译失败，不会漏处理。
 
-### switch 表达式与 `yield`（J05）
+### switch 表达式与 `yield`
 
-`Lane lane = switch (p.side()) { case BUY -> buy; case SELL -> sell; };`：表达式、无穿透、对枚举穷尽。块分支里用 `yield true;` 返回值。旧写法需要先声明 `Lane lane;` 再在每个 `case` 里赋值加 `break`，忘 `break` 就会穿透。详见 [J05](../10-java21/J05_switch_expressions.md)。
+`Lane lane = switch (p.side()) { case BUY -> buy; case SELL -> sell; };`：表达式、无穿透、对枚举穷尽。块分支里用 `yield true;` 返回值。旧写法需要先声明 `Lane lane;` 再在每个 `case` 里赋值加 `break`，忘 `break` 就会穿透。
 
-### Sequenced Collections：`TreeMap` 的两端操作（J09）
+### Sequenced Collections：`TreeMap` 的两端操作
 
-`firstEntry()`、`pollFirstEntry()`、`floorEntry()`：有序 Map 的统一两端接口（Java 21 起 `NavigableMap` 同时是 `SequencedMap`）。在线版用它们实现「到期折叠」。详见 [J09](../10-java21/J09_sequenced_collections.md)。
+`firstEntry()`、`pollFirstEntry()`、`floorEntry()`：有序 Map 的统一两端接口（Java 21 起 `NavigableMap` 同时是 `SequencedMap`）。在线版用它们实现「到期折叠」。
 
-### 文本块（J07）与 `var`（J08）
+### 文本块与 `var`
 
-测试里用文本块写订单脚本（`textBlockScriptDrivesTheSameSample`），比一串字符串拼接可读；`var` 只用在类型显然的局部变量（`var o = new OnlineOverlap();`）。详见 [J07](../10-java21/J07_text_blocks.md)、[J08](../10-java21/J08_var.md)。
+用文本块写多行订单脚本，比一串字符串拼接可读；`var` 只用在类型显然的局部变量（`var o = new OnlineOverlap();`）。
 
-### 未命名模式 `_`（J13，预览）
+### 未命名模式 `_`（预览）
 
-测试里 `e instanceof OrderIntervals.Place(var id, _, var s, var en)` 用 `_` 表示「这个字段不需要」。需要 `--enable-preview`。详见 [J13](../10-java21/J13_unnamed_variables.md)。
+`e instanceof OrderIntervals.Place(var id, _, var s, var en)` 用 `_` 表示「这个字段不需要」。需要 `--enable-preview`。
 
 ---
 
@@ -660,7 +659,7 @@ switch (e) {
 * 答：见 4.3 节：`live` 减去 `expiries` 中键 ≤ t 的总和。TreeMap 遍历是 O(k)。要 O(log n)：离线压缩坐标 + Fenwick / 线段树；在线未知坐标 → 需要带子树和的平衡树（自写或 `ConcurrentSkipListMap` 做不到前缀和）。注意它只是**预测**：之后可能有撤单让结果变小，所以业务上要标明「不含未来撤单」。
 
 **问：什么时候该用线段树，而不是扫描线？**
-* 答：扫描线适合「一次性读完，求全局最大」，比线段树快（实测同样 30 万个区间，21 ms 对 100 ms）。线段树适合：更新顺序任意、增删交错、区间查询（`maxIn`）、需要在线反复查询。
+* 答：扫描线适合「一次性读完，求全局最大」，比线段树快（同样 30 万个区间，21 ms 对 100 ms）。线段树适合：更新顺序任意、增删交错、区间查询（`maxIn`）、需要在线反复查询。
 * 说出口：「只要全局最大，我用扫描线；需要增删交错或区间查询才上线段树，并先做坐标压缩。」
 
 **问：线段树的懒标记为什么不用下推？什么时候必须下推？**
@@ -717,12 +716,4 @@ switch (e) {
 
 ---
 
-## 10. 延伸阅读
-
-* *Introduction to Algorithms*（CLRS）第 14 章 Augmenting Data Structures · 区间树（Interval Trees）—— 区间问题的经典结构，对比线段树的取舍。
-* Sedgewick《算法》第 2 章 排序 · 第 3.3 节 平衡查找树 —— `TreeMap` 背后的数据结构。
-* LeetCode 253 *Meeting Rooms II*、731 *My Calendar II*、732 *My Calendar III* —— 本题 Part 1 / 3 / 4 的原型，建议先自己写再对照。
-* `java.util.TreeMap` / `NavigableMap` Javadoc — https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/NavigableMap.html —— `floorEntry` / `pollFirstEntry` 的精确语义。
-* `java.util.Arrays.binarySearch` Javadoc —— 没找到时返回 `-(insertion point) - 1` 的约定。
-* JEP 441: Pattern Matching for switch — https://openjdk.org/jeps/441 —— sealed 穷尽性与记录模式。
-* Bloch, *Extra, Extra – Read All About It: Nearly All Binary Searches and Mergesorts are Broken*（2006）—— `(lo + hi) / 2` 溢出的著名案例。
+「延伸」LeetCode 253 / 731 / 732（区间重叠家族）。

@@ -1,10 +1,5 @@
 # ld02 · 交易相关的 OOD（订单状态机 · 仓位 PnL · 交易前风控 · 事件溯源与重放）
 
-> 阶段：1p3a 技术电面（Junior Engineer，33 分钟 = 简历 + 行为题 + **一道不是很难的 OOD，trading 相关**，该帖作者被拒）· 置信度：**中**（1 个来源，只有摘要，没有题面）
-> **题面完全没有**。能确定的只有：(1) 面向对象设计（OOD）；(2) 与交易相关；(3) "不是很难"；(4) 在一次 33 分钟的电话面里和简历、行为题一起出现，所以**实际编码时间大约 15–20 分钟**。
-> 下面的四个 Part、API 形状、状态转移表、风控规则、journal/replay 都是 **(reconstructed)**——是本 kit 为了覆盖"交易相关 OOD"最可能出现的几种形态而设计的。真面试以面试官为准：**先问清题目再动手**。
-> 与同类题的关系：forums Q3「订单 / 交易事件处理」家族——A9「Put/Delete(unique_id, quantity) 等 4 个 API」、A8「trading events coding challenge」、A5「订单区间重叠 + 按买卖方处理撤单」（`catalog/raw/forums.md`）。本题是这个家族里偏**建模**（而不是偏算法）的一支。
-
 ## 背景
 
 交易系统里最基础的三个对象，几乎任何"交易相关 OOD"都绕不开：
@@ -13,15 +8,16 @@
 2. **仓位（Position）与盈亏（PnL）**：成交（Fill）改变仓位；平仓时实现盈亏；翻转（从多头直接卖到空头）是经典的 off-by-one 陷阱。
 3. **风险检查（Risk Check）**：订单发出去之前必须过一组规则。规则会变、会增加，所以要**可组合**；任何无法判断的情形都要**拒绝**（fail closed）。
 
-第四个 Part 把它们装配成一个**事件溯源**的 `TradingDesk`：所有状态变化都来自一串输入事件；把这串事件重放一遍，必须得到逐位相同的状态。这是交易系统里崩溃恢复、复盘、回测共用的基础（见 `loop/rounds/04_sd/00_how_to_run.md` §5.2 与 sd03）。
+第四个 Part 把它们装配成一个**事件溯源**的 `TradingDesk`：所有状态变化都来自一串输入事件；把这串事件重放一遍，必须得到逐位相同的状态。这是交易系统里崩溃恢复、复盘、回测共用的基础。
 
 ## 读题前你需要知道
 
-讲义 `study/30-articles/ld02_trading_ood.md`（从零讲：什么是订单 / 成交 / 仓位 / 盈亏、状态机怎么建模、FIFO 与平均成本、风控为什么这样写、事件溯源）。最少要先懂：
+最少要先懂：
 
-* **record / sealed / 模式匹配 switch**：`study/10-java21/J01_record.md`、`J02_sealed.md`、`J03_pattern_switch.md`、`J04_record_patterns.md`——本题的事件类型是 sealed 层级，状态转移是穷尽的 `switch`；
-* **整数算术与溢出**：`study/10-java21/J15_math_string_utils.md`（`Math.multiplyExact` 等）；
-* 订单簿与撮合的背景（可选）：`study/30-articles/hc05_market_order_book.md`。
+* **record / sealed / 模式匹配 switch**：`record` 是不可变的值类型，`equals` / `hashCode` 自动生成，紧凑构造器里做校验；`sealed` 接口限定了所有实现类，于是对它做 `switch` 时编译器能检查是否穷尽。本题的事件类型是 sealed 层级，状态转移是穷尽的 `switch`；
+* **整数算术与溢出**：价格和数量用整数（最小报价单位），乘法用 `Math.multiplyExact` / `addExact`，溢出时抛异常而不是静默回绕；
+* **事件溯源（event sourcing）**：状态不直接修改，只由一串事件按顺序推导出来；因此重放同一串事件必定得到同一状态；
+* 订单簿与撮合（可选背景）：订单簿按价格-时间优先排队，撮合产生成交（Fill）。
 
 ## 概述
 
@@ -32,7 +28,7 @@
 | 3 | `RiskEngine` (`RiskLimits`, `RiskResult`, `RiskReason`) | 交易前风控：数量 / 名义金额 / 价格带 / 未完成订单数 / **最坏情况仓位**，熔断开关 | 检查顺序即确定性；整数价格带；fail closed；最坏情况含未完成订单 |
 | 4 | `TradingDesk` | 把 1–3 装配起来；输入先进 journal 再处理；`replay` | 决定性；异常输入也进 journal；重放时吞掉同样的异常 |
 
-所有类在默认包。以下类型 starter 里**已给出**（和 reference 完全一样）：`Side`、`OrderStatus`、`Order`、`OrderView`、`IllegalTransitionException`、`ExecEvent`（sealed）、`DeskEvent`（sealed）、`RiskLimits`、`RiskReason`、`RiskResult`。你要写的是 `OrderManager`、`PositionBook`（+ `Position.unrealizedPnl`）、`RiskEngine`、`TradingDesk`。
+所有类在默认包。以下类型 starter 里**已给出**：`Side`、`OrderStatus`、`Order`、`OrderView`、`IllegalTransitionException`、`ExecEvent`（sealed）、`DeskEvent`（sealed）、`RiskLimits`、`RiskReason`、`RiskResult`。你要写的是 `OrderManager`、`PositionBook`（+ `Position.unrealizedPnl`）、`RiskEngine`、`TradingDesk`。
 
 ## 共同约定
 
@@ -60,7 +56,7 @@ public record OrderView(Order order, OrderStatus status, long cumQty, long cumNo
 }
 ```
 
-### 状态转移表 (reconstructed)
+### 状态转移表
 
 | 当前状态 | `Ack` | `Fill` | `Cancel` | `Reject` |
 |---|---|---|---|---|
@@ -100,7 +96,7 @@ public final class PositionBook {
 }
 ```
 
-### 规则：FIFO 配对 (reconstructed)
+### 规则：FIFO 配对
 
 * 维护每个标的的一队**未平仓 lot**（`qty`, `px`），队内所有 lot 方向相同。
 * 新成交与当前方向**相同**（或当前为 flat）⟹ 追加一个 lot。
@@ -138,7 +134,7 @@ public final class RiskEngine {
 }
 ```
 
-### 规则 (reconstructed)
+### 规则
 
 **检查顺序 = `RiskReason` 的声明顺序**，报告**第一条**违反的。同时违反多条时结果必须确定（回放要得到同一个原因）。
 
@@ -212,7 +208,7 @@ var copy = TradingDesk.replay(limits, desk.journal());
 | desk | 风控拒绝的单仍登记为 `REJECTED`；单笔恰好顶格的单不被误拒（不把自己算两遍）；非法事件抛出但仍在 journal；重放等于原状态（25 个随机种子 × 600 步）；journal 不可变 |
 | 性能 | 30 万笔成交 < 2 s；5 万订单 × 4 事件 + 重放 < 3 s |
 
-## 野外变体
+## 相关变体
 
 * **订单簿 + 撮合**（把交易所一侧也建模）：`hc05`。
 * **平均成本法**而不是 FIFO：`openCost / netQty` 要取整，PnL 出现舍入——面试时要主动问"用哪种成本法、舍入规则是什么"。
@@ -221,10 +217,6 @@ var copy = TradingDesk.replay(limits, desk.journal());
 * **订单改单（replace）**：新数量 / 新价格，保持 / 丢失时间优先级。
 * **策略与风控的接口**：把 `RiskCheck` 做成可组合的责任链（`List<RiskCheck>`），并讨论顺序依赖与短路。
 * **并发**：多线程提交订单 ⟹ 加锁（粗粒度）还是单写者 + 队列？（这是 sd03 的核心：单写者。）
-
-## 来源与置信度
-
-`catalog/raw/forums.md` A4（1p3a 1136321，2025-07-09，Junior Engineer，技术电面：「问了33分钟简历和bq然后一道不是很难的ood，trading相关直接挂」；摘要 "an easy trading-related OOD question"，摘要 / 中）· `catalog/raw/official_and_process.md` §D4 #16（同一帖）· 相关家族：`forums.md` A8、A9、A5、G2（「making market order book in c++」）。**没有任何来源给出题面**；Part 划分、状态转移表、FIFO 规则、风控规则、journal/replay 全部是 **(reconstructed)**。
 
 ## 考什么
 

@@ -1,8 +1,6 @@
 # hc08 · Order Sequence API（Put / Delete + 亚线性前缀查询）—— 讲义
 
-> 题面：`loop/rounds/01_video/hc08_order_sequence_api/problem.md` · 速查：同目录 `REPORT.md` · 代码：同目录 `reference/OrderSequence.java`
-> 写法说明见 `study/TEXTBOOK.md`。读者设定：只会基本 Java（类、方法、循环、`ArrayList` / `HashMap` 的基本用法）。
-> 题面只有 Put / Delete 的名字和「前缀 count / quantity」「亚线性」几个词有证据，其余 **(reconstructed)**。
+> 读者：只会基本 Java（类、方法、循环、`ArrayList` / `HashMap`）。
 
 ---
 
@@ -41,6 +39,8 @@ idAt(2)       = 30
 ---
 
 ## 2. 前置知识
+
+> 复杂度记号速记：`O(n)` 表示步数随输入规模 n 线性增长；`O(log n)` 表示 n 翻倍只多一步（二分查找、平衡树、堆）；`O(n²)` 表示每一对元素都要处理一次；`O(1)` 表示与 n 无关。
 
 ### 2.1 前缀和（prefix sum）
 
@@ -181,7 +181,7 @@ pos = 0, rem = 4
 
 ### 2.5 哈希表：id → 下标
 
-**是什么 / 为什么**：`countUpTo(id)` 拿到的是订单 id（可以是任意 `long`），要先换算成它的"插入下标"，用 `HashMap<Long, Integer>`，平均 O(1)。（装箱的代价见 hc05 讲义 2.7，这里的 `HashMap<Long,Integer>` 是可以接受的简化。）
+**是什么 / 为什么**：`countUpTo(id)` 拿到的是订单 id（可以是任意 `long`），要先换算成它的"插入下标"，用 `HashMap<Long, Integer>`，平均 O(1)。（装箱 = 把基本类型 `long` 包成 `Long` 对象，每个多占约 24 字节并多一次指针跳转，性能敏感的热路径要避免；这里的 `HashMap<Long,Integer>` 是可以接受的简化。）
 
 ### 2.6 摊还分析（amortized analysis）
 
@@ -199,7 +199,7 @@ pos = 0, rem = 4
 
 ### 2.8 Java 21 的新东西（本题用到）
 
-* `record`、`sealed`、`switch` 模式匹配：见 hc05 讲义第 6 节；
+* `record`、`sealed`、`switch` 模式匹配：第 6 节讲；
 * `SequencedCollection`：`entries()` 返回的 `List` 可以直接 `getFirst()` / `getLast()` / `reversed()`；
 * `Math.addExact`：溢出时抛异常。
 
@@ -219,7 +219,7 @@ long idAt(int k)              { return list.get(k - 1)[0]; }                    
 
 **正确、又短**，Part 1 就该先写出这个（它还可以当之后"对拍"的参照）。
 
-**慢在哪**：每个操作 O(n)。实测（本机）：5 万张订单、5 万次随机 `qtyUpTo`，朴素扫描需要约 **1.9 秒**；规模扩大 10 倍（50 万 / 50 万），时间大约是 100 倍 ≈ **190 秒**。同样的 50 万 + 50 万，树状数组版本约 **60 毫秒**。
+**慢在哪**：每个操作 O(n)。5 万张订单、5 万次随机 `qtyUpTo`，朴素扫描需要约 **1.9 秒**；规模扩大 10 倍（50 万 / 50 万），时间大约是 100 倍 ≈ **190 秒**。同样的 50 万 + 50 万，树状数组版本约 **60 毫秒**。
 所以题目说"sublinear"——它在等你拿出 O(log n) 的方案。
 
 ---
@@ -281,15 +281,15 @@ for (int i = 1; i <= newCap; i++) {
 
 为什么对：`tree[p]` 管的区间 = 它自己那一格 + 若干个"孩子"区间，孩子正是满足 `j + lowbit(j) = p` 的那些 j；从小到大处理，保证 `tree[i]` 加到父节点时它已经收齐了自己的孩子。
 
-**实测**：活跃订单 ≤ 1000，200 万次 put + 删除最老的循环：容量稳定在 **2048**（1000 + 500 + 1 = 1501 → 向上取 2 的幂 2048），共压缩 **1914** 次，总耗时约 150 ms。如果不压缩，数组要 200 万+，且是活跃量的 2000 倍。
+**数据**：活跃订单 ≤ 1000，200 万次 put + 删除最老的循环：容量稳定在 **2048**（1000 + 500 + 1 = 1501 → 向上取 2 的幂 2048），共压缩 **1914** 次，总耗时约 150 ms。如果不压缩，数组要 200 万+，且是活跃量的 2000 倍。
 
 ### 第 6 步：把"语义"包成一层命令接口
 
-`parse` / `apply` / `render` / `replay`：文本命令 → sealed `Op` → sealed `Result` → 文本。目的是让样例能用脚本写，方便测试，并练习 sealed + 模式匹配。业务错误统一转成 `Err(message)`。
+`parse` / `apply` / `render` / `replay`：文本命令 → sealed `Op` → sealed `Result` → 文本。目的是让样例能用脚本写，方便验证，并练习 sealed + 模式匹配。业务错误统一转成 `Err(message)`。
 
 ---
 
-## 5. 逐段讲参考解
+## 5. 逐段讲解法
 
 ### 5.1 状态
 
@@ -343,7 +343,7 @@ return idByIdx[pos + 1];
 ### 5.5 `compact`
 
 先保存旧数组引用，`allocate(newCap)` 换新数组，然后顺序扫旧数组把活跃订单搬到 1..m（顺序不变 → 插入顺序不变），同时更新 `indexOf` 里的下标（`put` 对已存在 key 只是替换 value，遍历期间不会出结构修改问题）；最后线性建树。`compactions++` 供测试观察。
-**测试保证了"压缩不改变任何可观察行为"**：`differentialWithTinyCapacityAndPartialDeletes` 从容量 4 起步，6 万步随机操作，每步都和朴素模型比对。
+**压缩不能改变任何可观察行为**：验证办法是从容量 4 起步，做 6 万步随机操作，每步都和朴素模型比对。
 
 ### 5.6 文本接口
 
@@ -353,11 +353,11 @@ return idByIdx[pos + 1];
 
 ## 6. Java 21 特性小课
 
-### J01 `record`
+### `record`
 
-旧：`Entry` 要手写类 + `equals/hashCode/toString`。新：`record Entry(long id, long qty) {}`。测试里 `assertEquals(List.of(new Entry(1,10), ...), s.entries())` 能直接比较，就是因为 record 的 `equals` 按字段比。
+旧：`Entry` 要手写类 + `equals/hashCode/toString`。新：`record Entry(long id, long qty) {}`。`s.entries()` 的结果能直接和 `List.of(new Entry(1,10), ...)` 比较，就是因为 record 的 `equals` 按字段比。
 
-### J02 + J03 + J04 `sealed` + `switch` 模式匹配 + record 解构
+### `sealed` + `switch` 模式匹配 + record 解构
 
 ```java
 return switch (op) {
@@ -368,23 +368,23 @@ return switch (op) {
 ```
 旧写法是一串 `if (op instanceof Put) { Put p = (Put) op; ...}`；新增一种命令时，旧写法编译通过但运行时落入 else；新写法编译器因"switch 未穷尽"报错。
 
-### J05 `switch` 表达式与 `yield`
+### `switch` 表达式与 `yield`
 
 `parse` 里每个 case 有多行（先 `args(t, 3)` 检查参数个数，再 `yield new Put(...)`）。旧写法需要 `break` 和一个临时变量。
 
-### J09 Sequenced Collections
+### Sequenced Collections
 
 `s.entries().getFirst()`、`.getLast()`、`.reversed()`：旧写法 `list.get(list.size() - 1)`；对空列表，新的 `getFirst()` 抛 `NoSuchElementException`（比 `get(0)` 的 `IndexOutOfBounds` 语义更清楚）。
 
-### J13 未命名模式 `_`（预览）
+### 未命名模式 `_`（预览）
 
 `case Ok _ -> "OK"`：`Ok` 没有字段可绑，写 `_` 表示"我不关心"。Java 21 需要 `--enable-preview`。
 
-### J14 `Stream.toList()`、`IntStream`
+### `Stream.toList()`、`IntStream`
 
 `entries()`：`IntStream.range(1, nextIndex).filter(i -> qtyByIdx[i] > 0).mapToObj(i -> new Entry(...)).toList()`。旧写法是 for 循环 + 手建 `ArrayList`；`toList()` 返回**不可变**列表，调用方改不了内部状态的快照。**不该用**：热路径上（流有开销）；`entries()` 只用于调试和测试。
 
-### J15 `Math.addExact`、`Math.clamp`（未用）
+### `Math.addExact`、`Math.clamp`（未用）
 
 `addExact` 守住 `totalQty` 不溢出。
 
@@ -401,7 +401,7 @@ return switch (op) {
 可以用"前缀和数组"让查询 O(1)，但每次修改要 O(n) 更新后面所有前缀和；除非订单只增不删且从不修改（那么 `P(i)` 在 put 时一次性算好）。因为有 delete，必须在查询和更新间折中，Fenwick 把两个都压到 O(log n)。
 
 **Q3. 删除之后下标越来越大，内存怎么办？**
-Part 3：写满时压缩，按原顺序重新编号，新容量 ≥ 1.5m+1 的 2 的幂。摊还 O(1)；容量跟活跃量走（实测 1000 个活跃订单，处理 200 万个订单，容量稳定 2048）。
+Part 3：写满时压缩，按原顺序重新编号，新容量 ≥ 1.5m+1 的 2 的幂。摊还 O(1)；容量跟活跃量走（1000 个活跃订单，处理 200 万个订单，容量稳定 2048）。
 追问 "为什么是 1.5 而不是 1.0"：1.0 时压缩完马上写满，每次 put 都压缩，退化成 O(n)；留出 ≥ 1/3 的空位才有摊还 O(1)。
 
 **Q4. 压缩期间会不会有一次 put 特别慢？**
@@ -425,12 +425,12 @@ Part 3：写满时压缩，按原顺序重新编号，新容量 ≥ 1.5m+1 的 2
 
 ## 8. 常见误区
 
-1. **下标从 0 开始。** Fenwick 的 `i & -i` 对 0 恒为 0，`for (; i > 0; i -= i & -i)` 和 `for (; i <= n; i += i & -i)` 在 i = 0 时一个不进循环、一个死循环。数组下标要 1 起（测试里的 `everySmallSizeEveryPrefix` 覆盖 1..70 张订单）。
+1. **下标从 0 开始。** Fenwick 的 `i & -i` 对 0 恒为 0，`for (; i > 0; i -= i & -i)` 和 `for (; i <= n; i += i & -i)` 在 i = 0 时一个不进循环、一个死循环。数组下标要 1 起（对 1..70 张订单的每个前缀都验证一遍可以抓到它）。
 2. **删除后把后面的订单往前挪。** 会改变所有后续订单的下标、破坏 `indexOf`。正确是留洞。
 3. **`cnt` 和 `sum` 混用一棵树。** 部分删除时订单还活着（count 不变）而数量减少，需要两棵独立的树。
-4. **部分删除也 `addCnt(i, -1)`。** 订单数就错了（测试 `partialDeleteKeepsPositionAndCount`）。
+4. **部分删除也 `addCnt(i, -1)`。** 订单数就错了。
 5. **压缩后忘了更新 `indexOf`。** 所有后续查询指向旧下标，悄悄返回错数。
-6. **先改后检查溢出。** `totalQty` 溢出抛异常时，Fenwick 已经被改了一半。所有检查要放在最前面（测试 `totalQuantityOverflowIsRejected` 检查"抛异常后状态不变"）。
+6. **先改后检查溢出。** `totalQty` 溢出抛异常时，Fenwick 已经被改了一半。所有检查要放在最前面。
 7. **压缩容量取"刚好 m+1"。** 压缩完马上写满，每次 put 都压缩。要留余量。
 8. **`idAt` 在 `capacity` 不是 2 的幂时直接套二分下降。** 步长序列对不齐，会越界或取错。
 9. **重复 id 当作更新。** 题面里 id 同时只能有一张活跃订单；重复 `put` 抛异常，删光后同一个 id 可以再 `put`，并且排到**最后**。
@@ -476,10 +476,4 @@ long delete(long id, long qty) {
 
 ---
 
-## 10. 延伸阅读
-
-* Peter M. Fenwick, "A New Data Structure for Cumulative Frequency Tables", *Software: Practice and Experience* 24(3), 1994——树状数组的原论文，短，值得一读它的动机（压缩算术编码里的累计频率表）。
-* Cormen 等《算法导论》第 17 章「摊还分析」（聚合法 / 核算法 / 势能法）——Part 3 压缩的摊还证明所依据的方法。
-* Java SE 21 API：`java.util.SequencedCollection`、`java.lang.Math.addExact`、`java.util.stream.Stream.toList`。
-* JEP 431（Sequenced Collections）、JEP 441（Pattern Matching for switch）、JEP 440（Record Patterns）、JEP 443（Unnamed Patterns and Variables, Preview）。
-* Joshua Bloch《Effective Java》第 3 版 Item 76「Strive for failure atomicity」——"失败时对象保持原样"的原则，对应 `put` 里"先检查再修改"。
+「延伸」CLRS《算法导论》「摊还分析」一章。

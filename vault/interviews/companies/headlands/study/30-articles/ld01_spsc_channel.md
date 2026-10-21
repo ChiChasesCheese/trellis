@@ -1,8 +1,6 @@
 # ld01 · 共享内存 SPSC 消息通道 —— 讲义
 
-> 题面：`loop/rounds/03_lld/ld01_spsc_channel/problem.md` · 速查：同目录 `REPORT.md` · 代码：同目录 `reference/`（`LongRing` `SpscLongRing` `MessageRing` `SharedChannel`）
-> 实验代码：`study/30-articles/examples/ld01/FalseSharingBench.java`（单独量伪共享）、`SpscBench.java`（SPSC 五种写法）。本文的"实测"来自这两个程序和测试套件在本机（Apple M 系列，12 核，JDK 21.0.12）的运行。
-> 写法说明见 `study/TEXTBOOK.md`。这一篇要从"进程是什么、共享内存是什么"讲起。
+> 读者：会写基本 Java。本篇从「进程是什么、共享内存是什么」讲起。
 
 ---
 
@@ -38,8 +36,6 @@
 
 ### 四个 Part 怎么递进
 
-(后三步是我们的 **(reconstructed)** 推断，不是证据)
-
 1. **Part 1**：单线程的环形缓冲区，`long` 元素。满 / 空怎么区分？为什么容量要是 2 的幂？
 2. **Part 2**：两个**线程**共享它。不加锁怎么保证正确？（内存序，`setRelease`/`getAcquire`。）怎么让它更快？（cached index、填充防伪共享。）怎么**证明**更快？（测量。）
 3. **Part 3**：消息变长了：长度前缀、对齐、回绕时一条记录放不下怎么办？
@@ -49,9 +45,11 @@
 
 ## 2. 前置知识
 
+> 复杂度记号速记：`O(n)` 表示步数随输入规模 n 线性增长；`O(log n)` 表示 n 翻倍只多一步（二分查找、平衡树、堆）；`O(n²)` 表示每一对元素都要处理一次；`O(1)` 表示与 n 无关。
+
 ### 2.1 进程、线程与进程间通信
 
-`study/00-foundations/os_processes_threads_ipc.md` 有完整讲解；这里只列本题需要的结论：
+本题需要的结论：
 
 * **线程**共享同一个进程的内存：线程 A 写一个字段，线程 B 能直接读到（要注意"可见性"，见 2.5）。
 * **进程**之间默认**隔离**：每个进程有自己的**虚拟地址空间**，进程 A 的地址 `0x1000` 和进程 B 的地址 `0x1000` 通常指向完全不同的物理内存。进程 A 想给 B 传数据，必须通过操作系统提供的**进程间通信**（IPC）：管道（pipe）、套接字（socket）、消息队列、**共享内存**。
@@ -74,7 +72,7 @@
                                      磁盘文件
 ```
 
-A 写一个字节，B 立刻能读到（CPU 缓存一致性保证，见 2.6），中间没有任何系统调用。文件在这里只是"双方约定的会合点"；也可以用 `/dev/shm`、`shm_open`。用文件的好处：跨平台、测试容易清理、**进程崩溃后数据还在**。
+A 写一个字节，B 立刻能读到（CPU 缓存一致性保证，见 2.6），中间没有任何系统调用。文件在这里只是"双方约定的会合点"；也可以用 `/dev/shm`、`shm_open`。用文件的好处：跨平台、容易清理、**进程崩溃后数据还在**。
 
 **注意**：第一次访问某一页时会触发**缺页**（page fault），由内核分配或读入物理页——这是一次性的成本，热路径上稳定后不再发生。
 
@@ -88,7 +86,7 @@ try (FileChannel ch = FileChannel.open(file, CREATE, READ, WRITE);
 }   // arena.close() = 取消映射（munmap）；文件还在磁盘上
 ```
 
-老办法 `FileChannel.map(...)` 返回 `MappedByteBuffer`：大小限于 2 GiB（`int` 索引）、没有确定性的取消映射。详见 `study/10-java21/J17_ffm_api.md`。
+老办法 `FileChannel.map(...)` 返回 `MappedByteBuffer`：大小限于 2 GiB（`int` 索引）、没有确定性的取消映射。Java 21 的 FFM API（预览）改用 `MemorySegment` + `Arena`：长度是 `long`、生命周期由 `Arena` 确定性地关闭。
 
 ### 2.3 环形缓冲区（ring buffer）从零讲
 
@@ -150,7 +148,7 @@ Java 里：`buf[(int) (count & mask)]`。检查 2 的幂：`Integer.bitCount(cap
 
 ### 2.5 内存序：为什么"先写数据再改 tail"还不够
 
-`study/10-java21/J16_concurrency_primitives.md` §1 详细讲了原因，这里只写本题的推论。
+原因：编译器和 CPU 为了速度会重排互不依赖的读写，而且每个核心有自己的缓存，别的核心观察到写入的顺序不一定等于程序里的顺序。
 
 现代 CPU 和编译器为了快，会**重排**没有依赖关系的读写；每个核心有**写缓冲**（store buffer），写操作先进缓冲、之后才对别的核心可见；而且别的核心看到这些写的**顺序**不一定和程序顺序相同。生产者的两行：
 
@@ -159,9 +157,9 @@ buf[i] = v;            // ① 写数据
 tail = t + 1;          // ② 发布
 ```
 
-在"弱内存序"的 CPU（ARM，包括 Apple M 系列）上，其他核心可能**先看到 ② 再看到 ①**：消费者看到 `tail` 变了，去读 `buf[i]`，读到的却是旧数据。**我们在本机实测过**：把 `SpscLongRing` 里的 `TAIL.setRelease(this, t + 1)` 换成普通写 `tail = t + 1`，`SpscLongRingTest` 立刻大面积变红（"first mismatch at seq 369 / 7477 / 13918 / 154157" 之类，消费者读到了上一圈残留的值）。x86 的内存序更强，同样的代码常常"碰巧"是对的——**在 x86 上测试通过不代表对**。
+在"弱内存序"的 CPU（ARM，包括 Apple M 系列）上，其他核心可能**先看到 ② 再看到 ①**：消费者看到 `tail` 变了，去读 `buf[i]`，读到的却是旧数据。实测：把 `TAIL.setRelease(this, t + 1)` 换成普通写 `tail = t + 1`，在 Apple M 上马上就能看到大量错误（比如第 369、7477、13918 条消息对不上，消费者读到了上一圈残留的值）。x86 的内存序更强，同样的代码常常"碰巧"是对的——**在 x86 上测试通过不代表对**。
 
-解决：用 **release / acquire** 配对（J16 §2.4）：
+解决：用 **release / acquire** 配对：
 
 * `setRelease(x, v)`：**在它之前的**所有读写，不会被重排到它之后。一道向上的单向门。
 * `getAcquire(x)`：**在它之后的**所有读写，不会被重排到它之前。一道向下的单向门。
@@ -176,7 +174,7 @@ tail = t + 1;          // ② 发布
 
 反方向同样需要：消费者读完 `buf[i]` 之后才能 `HEAD.setRelease(h + 1)`，生产者 `HEAD.getAcquire` 看到新 `head` 后才敢覆盖这个槽位——否则生产者可能在消费者读完之前就写进去（"消费者读到的是新值"，丢了一条消息）。
 
-**为什么不直接用 `volatile`**：`volatile` 提供更强的"顺序一致"，多付出一次禁止"写后读"重排的代价（x86 上要 `lock` 前缀指令或 `mfence`）；release/acquire 在 x86 上就是普通 `mov`（x86 本来就不重排 Load-Load / Store-Store），只对编译器起约束作用，没有额外的 CPU 栅栏。见 J16 §2.4。
+**为什么不直接用 `volatile`**：`volatile` 提供更强的"顺序一致"，多付出一次禁止"写后读"重排的代价（x86 上要 `lock` 前缀指令或 `mfence`）；release/acquire 在 x86 上就是普通 `mov`（x86 本来就不重排 Load-Load / Store-Store），只对编译器起约束作用，没有额外的 CPU 栅栏。
 
 **跨进程怎么办？** Java 内存模型（JMM）的规范讨论的是同一个程序内的线程。两个**进程**共享同一块物理内存时，硬件的缓存一致性和内存序规则同样适用，`VarHandle.setRelease`/`getAcquire` 编译出来的是同样的屏障指令，无论目标是堆上的数组还是映射的文件。所以"先写数据再 release 发布 tail，对方 acquire 读 tail 再读数据"的协议跨进程同样成立。但这是**基于硬件与 JIT 实现**的推理，不是 JMM 的形式化保证——面试时可以这样说，不要说得太绝对。
 
@@ -184,7 +182,7 @@ tail = t + 1;          // ② 发布
 
 #### 缓存一致性（一段话）
 
-每个 CPU 核心有自己的缓存，数据按**缓存行**（cache line，x86 常见 64 字节，Apple M 系列 128 字节）为单位搬运。多核要保持一致，协议（MESI 一类）规定：某个核心要**写**一条缓存行时，必须先让别的核心里的副本**失效**；别的核心再读它，就要重新从写者那里取。这个"跨核搬运"一次大约几十纳秒——比一次普通运算慢两个数量级。详见 `study/00-foundations/cpu_cache_locality.md`。
+每个 CPU 核心有自己的缓存，数据按**缓存行**（cache line，x86 常见 64 字节，Apple M 系列 128 字节）为单位搬运。多核要保持一致，协议（MESI 一类）规定：某个核心要**写**一条缓存行时，必须先让别的核心里的副本**失效**；别的核心再读它，就要重新从写者那里取。这个"跨核搬运"一次大约几十纳秒——比一次普通运算慢两个数量级。
 
 #### 伪共享（false sharing）
 
@@ -243,10 +241,10 @@ capacity = 64，tail 在 48，要写一条 24 字节的记录，到末尾只剩 
 挑战：
 
 1. **找到 `java`**：`ProcessHandle.current().info().command()` 给出当前 JVM 的可执行文件路径（`Optional<String>`，取不到就用 `java.home/bin/java`）。
-2. **类路径**：子进程要能找到被测类。`System.getProperty("java.class.path")` 是当前 JVM 的类路径。**但**用 JUnit console 的 `--class-path` 参数跑测试时，`java.class.path` 只有 JUnit 的 jar（被测类由另一个类加载器从 `--class-path` 目录加载）。所以还要加上被测类实际所在的位置：`SharedChannel.class.getProtectionDomain().getCodeSource().getLocation()`。两者取并集、去重。
+2. **类路径**：子进程要能找到被测类。`System.getProperty("java.class.path")` 是当前 JVM 的类路径。**但**当测试运行器用自己的类加载器从别的目录加载被测类时（例如 JUnit console 的 `--class-path` 参数），`java.class.path` 里只有运行器自己的 jar。所以还要加上被测类实际所在的位置：`SharedChannel.class.getProtectionDomain().getCodeSource().getLocation()`。两者取并集、去重。
 3. **预览特性**：FFM 在 JDK 21 是预览，子进程要 `--enable-preview`。
 4. **不挂死**：任何一端出错，另一端的自旋循环会永远转下去。所以每个自旋循环都带**截止时间**（`System.nanoTime()` 比较，每 1024 圈检查一次），父进程 `waitFor(超时)`，超时就 `destroyForcibly()`。**测试不能依赖 `Thread.sleep` 来对时序**。
-5. **能抓到"丢 / 重 / 乱序"**：每条消息的长度和内容完全由序号决定（`Msgs.make(seq)`：splitmix64 哈希出长度 8..56 和内容，前 8 字节是序号）。收的人只靠"我期待第 `seq` 条"就能校验，不需要额外信息。丢一条 → 序号对不上；重复 → 对不上；乱序 → 对不上；截断 / 损坏 → 内容对不上。最后还要验证"恰好 count 条且 isDrained"，抓多发。
+5. **能抓到"丢 / 重 / 乱序"**：每条消息的长度和内容完全由序号决定（用 splitmix64 这类小哈希从序号算出长度 8..56 和内容，前 8 字节是序号）。收的人只靠"我期待第 `seq` 条"就能校验，不需要额外信息。丢一条 → 序号对不上；重复 → 对不上；乱序 → 对不上；截断 / 损坏 → 内容对不上。最后还要验证"恰好 count 条且 isDrained"，抓多发。
 
 ---
 
@@ -260,7 +258,7 @@ capacity = 64，tail 在 48，要写一条 24 字节的记录，到末尾只剩 
 
 **最笨 4**：环形缓冲区，下标 `head`/`tail` 取模存，空一个槽位或另存 `size`。可以工作，但 `%` 慢、浪费槽位 / `size` 被两个线程改。
 
-**最笨 5**：环形缓冲区，`head`/`tail` 都是 `volatile`，每次 `offer`/`poll` 都读对方的 `volatile`。正确，但慢：每次读对方变量都是一次跨核搬运，`volatile` 写在 x86 上还要全栅栏。本机实测约 **31–49 M 条/秒**（见 §4.2）——对大多数程序已经够快，但与优化版相比有差距，并且更重要的是：它仍然不能跨进程。
+**最笨 5**：环形缓冲区，`head`/`tail` 都是 `volatile`，每次 `offer`/`poll` 都读对方的 `volatile`。正确，但慢：每次读对方变量都是一次跨核搬运，`volatile` 写在 x86 上还要全栅栏。实际约 **31–49 M 条/秒**（见 §4.2）——对大多数程序已经够快，但与优化版相比有差距，并且更重要的是：它仍然不能跨进程。
 
 ---
 
@@ -291,15 +289,15 @@ public boolean offer(long value) {
 
 **步骤 1：什么都不加会怎样？** 让 `LongRing` 直接被两个线程用，`head`/`tail` 是普通字段。两种失败：(a) **可见性**：消费者的循环 `while (isEmpty())` 里，JIT 可以把对普通字段 `tail` 的读提到循环外（"反正没人在这个线程里改它"），永远读不到新值——死循环；(b) **顺序**：§2.5 的 ①②重排。
 
-**步骤 2：`volatile`**。`head`、`tail` 声明成 `volatile`：可见性和顺序都对了（`SpscBench` 的 A 版）。
+**步骤 2：`volatile`**。`head`、`tail` 声明成 `volatile`：可见性和顺序都对了（A 版）。
 
-**步骤 3：release / acquire**。用 `VarHandle` 的 `setRelease`/`getAcquire` 代替 `volatile`（B 版）。在 x86 上这是真正的省（省掉全栅栏）；据 J16 的说明，HotSpot 在 AArch64 上把两者都编成 `ldar`/`stlr`，差别应该很小（我们没有反汇编验证）。
+**步骤 3：release / acquire**。用 `VarHandle` 的 `setRelease`/`getAcquire` 代替 `volatile`（B 版）。在 x86 上这是真正的省（省掉全栅栏）；HotSpot 在 AArch64 上把两者都编成 `ldar`/`stlr`，差别应该很小（没有反汇编验证）。
 
 **步骤 4：cached index**（§2.6）。D 版：A/B 的每次 `offer`/`poll` 都读对方的变量，D 只在"旧值看起来满 / 空"时才读。
 
-**步骤 5：填充**。C 版 = B + 填充；E 版 = D + 填充（就是参考解 `SpscLongRing` 的写法）。
+**步骤 5：填充**。C 版 = B + 填充；E 版 = D + 填充（就是 `SpscLongRing` 的写法）。
 
-**五种写法的实测**（`SpscBench`：每种传 5000 万个 `long`，容量 1024；单位百万条/秒；下表是 6 次独立运行，每次五种各取 5 轮里最好的一轮，再对 6 次运行取中位数）：
+**五种写法的数据**（每种传 5000 万个 `long`，容量 1024；单位百万条/秒；下表是 6 次独立运行，每次五种各取 5 轮里最好的一轮，再对 6 次运行取中位数）：
 
 | 写法 | 中位数 | 6 次运行的范围 |
 |---|---|---|
@@ -312,10 +310,10 @@ public boolean offer(long value) {
 怎么读：
 
 * **E 的中位数最高**（44 对 34 – 38），但范围（31 – 48）和 A、B 大面积重叠——收益存在，**不显著**。
-* C（只填充、不缓存）的结果很稳、也最低（27 – 30）。我们**没有深究**为什么；一个猜测是：不缓存时每条消息仍然要读一次对方的行，而填充把"顺手带过来"的同行数据也拿走了。这只是猜测，不要在面试里当结论说。
+* C（只填充、不缓存）的结果很稳、也最低（27 – 30）。原因没有深究；一个猜测是：不缓存时每条消息仍然要读一次对方的行，而填充把"顺手带过来"的同行数据也拿走了。这只是猜测，不要在面试里当结论说。
 * **范围很宽**是这台机器的特点：Apple M 系列有性能核（P）和能效核（E），macOS 不允许把线程固定到核心，调度器会在运行中把生产者和消费者放到不同核心簇。碰巧在同一簇上时跨核搬运很快，落在不同簇上就慢。**做微基准时，说清"测的是什么、噪声多大、取的是中位数还是最大值"，比报一个最大值诚实得多。**
 
-> 所以填充的效果要**单独**量：`FalseSharingBench`。两个线程各自对"自己的计数器"做 2 亿次 `setOpaque` 自增，互不相干：
+> 所以填充的效果要**单独**量：两个线程各自对"自己的计数器"做 2 亿次 `setOpaque` 自增，互不相干：
 >
 > | 布局 | 6 轮（ms，排序后） | 中位数 |
 > |---|---|---|
@@ -324,9 +322,9 @@ public boolean offer(long value) {
 > | （第二次运行）相邻 | 831, 834, 1698, 1817, 1844, 1867 | 1757 |
 > | （第二次运行）分开 | 798, 802, 893, 942, 965, 1084 | 917 |
 >
-> **相邻的慢约 2 倍**（两次运行都是）；而且相邻那一行呈**双峰**：前两轮 ~820（两个线程碰巧在同一个核心簇上，缓存行在簇内共享）、后四轮 ~1800（落在不同簇上，必须跨簇搬运）。分开的一直很快。这才是伪共享的干净证据。
+> **相邻的慢约 2 倍**（两次运行都是）；而且相邻那一行呈**双峰**：前两轮 ~820（两个线程碰巧在同一个核心簇上，缓存行在簇内共享）、后四轮 ~1800（落在不同簇上，必须跨簇搬运）。分开的一直很快。这才是伪共享的干净证明。
 
-**所以填充为什么还要在 SPSC 里做**：它在这台机器上的收益被噪声盖住，但 (a) 伪共享的代价是真实且大的（上表）；(b) 对象的字段布局取决于你写了什么字段、JVM 怎么排，不做填充就**无法控制**它们是否同行；(c) 在 x86 的服务器上（64 字节缓存行，核心间延迟更稳定）这类优化的收益通常更明显。面试时的说法：「我会填充，因为代价小、风险大；我用 `FalseSharingBench` 这样的单变量实验验证过它的真实性，而且我知道我测到的 SPSC 吞吐差异在这台机器上淹没在噪声里。」
+**所以填充为什么还要在 SPSC 里做**：它在这台机器上的收益被噪声盖住，但 (a) 伪共享的代价是真实且大的（上表）；(b) 对象的字段布局取决于你写了什么字段、JVM 怎么排，不做填充就**无法控制**它们是否同行；(c) 在 x86 的服务器上（64 字节缓存行，核心间延迟更稳定）这类优化的收益通常更明显。面试时的说法：「我会填充，因为代价小、风险大；我用单变量实验验证过它的真实性，而且我知道我测到的 SPSC 吞吐差异在这台机器上淹没在噪声里。」
 
 **Java 里怎么做填充**：Java 没有 `alignas`。常用办法是**继承链 + 填充 `long`**。JVM 总是把父类的字段排在子类字段之前，且不会跨类重排字段，所以：
 
@@ -358,20 +356,20 @@ offer(msg):
     写 PAD（如果需要）；写记录；发布 tail
 ```
 
-**这个版本会死锁**（我们是在设计时推演出来的，没有真的实现它）。看这个状态：环是空的（消费者把所有消息都读完了，`head == tail`），但 `tail` 恰好停在偏移 8（`toEnd = 56`），生产者想发一条 `maxPayload` 的大消息（记录 64 字节）：
+**这个版本会死锁**（这是在设计时推演出来的）。看这个状态：环是空的（消费者把所有消息都读完了，`head == tail`），但 `tail` 恰好停在偏移 8（`toEnd = 56`），生产者想发一条 `maxPayload` 的大消息（记录 64 字节）：
 
 * 需要 PAD 56 字节 + 记录 64 字节 = 120 > 64（容量）→ 永远 `false`；
 * 消费者没东西可读，`head` 不会前进，空间永远不会多出来。
 
 生产者和消费者互相等：**死锁（活性丧失）**。
 
-> 这个性质有一个容易写错的镜像：我们给它写测试时，第一版 `anEmptyRingAcceptsAMaxSizeMessageFromEveryPosition` 假设"空环上连续两次 `offer` 就放得进"，在参考解上红了。原因：参考解确实单独发布了 PAD，但 PAD 占着的字节要等**消费者越过它**（`poll` 返回 `null`）才释放，只调 `offer` 不调 `poll` 当然放不进。测试改成 `offer → poll → offer` 才是正确的活性性质：它要求**两边同时**做对——(1) 生产者单独发布 PAD；(2) 消费者越过 PAD。
+> 这个性质有一个容易写错的镜像：假设"空环上连续两次 `offer` 就放得进"是错的。原因：生产者确实单独发布了 PAD，但 PAD 占着的字节要等**消费者越过它**（`poll` 返回 `null`）才释放，只调 `offer` 不调 `poll` 当然放不进。正确的活性性质是 `offer → poll → offer`：它要求**两边同时**做对——(1) 生产者单独发布 PAD；(2) 消费者越过 PAD。
 
 **修复**：PAD **单独发布**。需要 PAD 时，只要有 `toEnd` 字节的空位，就写 PAD、`tail += toEnd`、release 发布，哪怕随后真记录挤不进去（`offer` 返回 `false`）。下一步消费者 `poll` 读到 PAD 就跳到开头，`head` 前进，环重新是"空且 `tail` 在偏移 0"——此时任何 ≤ `maxPayload` 的消息都放得进。代价：`offer` 返回 `false` 时 `tail` 可能已经变了（对消息序列没有影响，但 `bytesPending` 会包含 PAD 字节）。
 
 #### 步骤 3：drained
 
-§2.8。`finish()`：`closed = 1`（release）。`isDrained()`：先 acquire 读 `closed`，再 acquire 读 `tail`，比较 `head`。边界：末尾可能残留一条 PAD（`offer` 发布了 PAD 但真记录没放进，随后 `finish`）——此时 `head != tail`，`isDrained()` 为 `false`；消费者再 `poll` 一次越过 PAD（返回 `null`），之后 `isDrained()` 为 `true`。测试 `trailingPadIsConsumedBeforeDrained` 锁住这一点，所以消费者标准写法是：
+§2.8。`finish()`：`closed = 1`（release）。`isDrained()`：先 acquire 读 `closed`，再 acquire 读 `tail`，比较 `head`。边界：末尾可能残留一条 PAD（`offer` 发布了 PAD 但真记录没放进，随后 `finish`）——此时 `head != tail`，`isDrained()` 为 `false`；消费者再 `poll` 一次越过 PAD（返回 `null`），之后 `isDrained()` 为 `true`。所以消费者标准写法是：
 
 ```java
 while (!ring.isDrained()) {
@@ -386,15 +384,15 @@ while (!ring.isDrained()) {
 **发现问题**：`MessageRing` 建在一个 `MemorySegment` 上，在同一个 JVM 里它可以是 `Arena.allocate` 出来的内存。要给另一个**进程**用，这块内存必须是两个进程都能映射的东西。
 **想法**：用内存映射文件（§2.2）。`FileChannel.map(READ_WRITE, 0, size, arena)` 直接返回 `MemorySegment`——`MessageRing` 一行不用改。
 **要补的东西**：
-* **自描述的头部**：`open` 的一方不知道容量，头部要写 `capacity`、`version`、`magic`。`magic` **最后写**（release），读的一方先 acquire 读 `magic`，对了才信任别的字段——和 `tail` 的"先写数据后发布"是同一个协议。这样，对着一个全零 / 随机内容 / 太小的文件 `open` 会得到明确的 `IllegalStateException`，而不是读到垃圾（测试 `openRejectsFilesThatAreNotChannels`）。
+* **自描述的头部**：`open` 的一方不知道容量，头部要写 `capacity`、`version`、`magic`。`magic` **最后写**（release），读的一方先 acquire 读 `magic`，对了才信任别的字段——和 `tail` 的"先写数据后发布"是同一个协议。这样，对着一个全零 / 随机内容 / 太小的文件 `open` 会得到明确的 `IllegalStateException`，而不是读到垃圾。
 * **头部各字段分开缓存行**：`head` 在偏移 128，`tail` 在 256，数据从 512 开始（§4.2 步骤 5 的同一个原因）。
-* **创建的顺序**：`create` 必须在对方 `open` 之前完成。这是约定，测试保证了顺序：先 `create` 再启动子进程。
+* **创建的顺序**：`create` 必须在对方 `open` 之前完成。这是约定：先 `create`，再启动对方进程。
 
-**实测**：`SharedChannelTest` 三个跨进程用例各启动一个子 JVM，合计约 0.35 s（实测 170 / 150 / 34 ms）。更大的负载：父进程发 500 万条消息（平均约 32 字节，共约 160 MB）、子进程收，从启动子进程到收完约 **190 ms**，即 **约 2600 万条/秒**（含子 JVM 启动；每条消息两端各分配一个 `byte[]`）。单进程内两线程 1000 万条 `long`（`SpscLongRing`）约 180 ms，约 5500 万条/秒。
+**数据**：跨进程用例各启动一个子 JVM，每个约 30–170 ms。更大的负载：父进程发 500 万条消息（平均约 32 字节，共约 160 MB）、子进程收，从启动子进程到收完约 **190 ms**，即 **约 2600 万条/秒**（含子 JVM 启动；每条消息两端各分配一个 `byte[]`）。单进程内两线程 1000 万条 `long`（`SpscLongRing`）约 180 ms，约 5500 万条/秒。
 
 ---
 
-## 5. 逐段讲参考解
+## 5. 逐段讲解法
 
 ### 5.1 `LongRing`（Part 1）
 
@@ -448,9 +446,9 @@ public long poll() {
 
 对称。⑤ 的 release 保证 ④ 的读发生在生产者看到新 `head` 之前。
 
-`size()` 用 `Math.clamp(t - h, 0, buf.length)`（J15，Java 21）夹到 `[0, capacity]`：先读 `head` 再读 `tail`，期间两者都可能前进，差值理论上可能略超出范围，夹一下就保证对任何线程都是合法值。
+`size()` 用 `Math.clamp(t - h, 0, buf.length)`（Java 21）夹到 `[0, capacity]`：先读 `head` 再读 `tail`，期间两者都可能前进，差值理论上可能略超出范围，夹一下就保证对任何线程都是合法值。
 
-字段布局见 §4.2 的继承链。`VarHandle` 通过 `MethodHandles.lookup().findVarHandle(ConsumerFields.class, "head", long.class)` 取得——对**非 `volatile` 的普通字段**做 release/acquire 访问，这是 `VarHandle` 相对于 `volatile` 字段的好处（J16 §2.4）。
+字段布局见 §4.2 的继承链。`VarHandle` 通过 `MethodHandles.lookup().findVarHandle(ConsumerFields.class, "head", long.class)` 取得——对**非 `volatile` 的普通字段**做 release/acquire 访问，这是 `VarHandle` 相对于 `volatile` 字段的好处。
 
 ### 5.3 `MessageRing`（Part 3）
 
@@ -535,7 +533,7 @@ public boolean isDrained() {
 
 先 `closed` 后 `tail`（§2.8）。
 
-`LONG` 是 `MethodHandles.memorySegmentViewVarHandle(ValueLayout.JAVA_LONG)`，坐标 `(MemorySegment, long 字节偏移)`。**注意**：JDK 21 里 `ValueLayout.JAVA_LONG.varHandle()` 只有 `(MemorySegment)` 一个坐标，没有偏移；JDK 22 才改成 `(MemorySegment, long)`（J17 §5.1）。堆上的 `byte[]` 段做 8 字节对齐的原子访问会抛 `IllegalArgumentException: Misaligned access`（我们试过）——所以环必须建在原生 / 映射内存上。
+`LONG` 是 `MethodHandles.memorySegmentViewVarHandle(ValueLayout.JAVA_LONG)`，坐标 `(MemorySegment, long 字节偏移)`。**注意**：JDK 21 里 `ValueLayout.JAVA_LONG.varHandle()` 只有 `(MemorySegment)` 一个坐标，没有偏移；JDK 22 才改成 `(MemorySegment, long)`。堆上的 `byte[]` 段做 8 字节对齐的原子访问会抛 `IllegalArgumentException: Misaligned access`（我们试过）——所以环必须建在原生 / 映射内存上。
 
 ### 5.4 `SharedChannel`（Part 4）
 
@@ -553,7 +551,7 @@ public static SharedChannel create(Path file, int capacity) throws IOException {
 }
 ```
 
-* `MessageRing.segmentBytes(capacity)` 在 `FileChannel.open` **之前**调用，而且它自己会校验容量（非法 → `IllegalArgumentException`）。这个顺序是有意的：如果先 `open(…, TRUNCATE_EXISTING)` 再让 `init` 去校验，对一个**已有的文件**调用 `create(file, 100)` 会先把它截断成空文件、再抛异常——调用方丢了数据。测试 `createRejectsBadCapacityWithoutTouchingFiles…` 专门锁住"非法容量不留下文件、不截断已有文件"。
+* `MessageRing.segmentBytes(capacity)` 在 `FileChannel.open` **之前**调用，而且它自己会校验容量（非法 → `IllegalArgumentException`）。这个顺序是有意的：如果先 `open(…, TRUNCATE_EXISTING)` 再让 `init` 去校验，对一个**已有的文件**调用 `create(file, 100)` 会先把它截断成空文件、再抛异常——调用方丢了数据。
 * `try-with-resources` 关掉的是 `FileChannel`，**映射仍然有效**直到 `arena.close()`。
 * 失败路径关闭 `arena`，不泄漏映射。
 
@@ -571,12 +569,12 @@ public static SharedChannel open(Path file) throws IOException {
 
 `attach` 校验 `magic`/`version`/容量/尺寸，不合法抛 `IllegalStateException`。
 
-### 5.5 测试怎么写（`SpscChild`、`Msgs`、`SharedChannelTest`）
+### 5.5 跨进程测试怎么写
 
-* `Msgs.make(seq)`：splitmix64（一个很小的、质量不错的 64 位哈希）把 `seq` 变成伪随机数 `m`；长度 `8 + (m >>> 1) % 49`（8..56）；前 8 字节是 `seq`（大端）；其余字节由 `m` 派生。`Msgs.check(got, seq)` 返回 `null`（对）或错误描述（丢 / 重 / 乱序 / 损坏）。
-* `SpscChild.main(args)`：`switch (mode)` 表达式（J05）选 `consume` / `produce`，成功打印 `OK <count>`，失败打印 `FAIL …` 退出码 1。`consume` / `produce` 是 `public static`，父进程测试直接复用，保证两端对"正确"的定义一致。
-* `SharedChannelTest.spawn`：`ProcessHandle.current().info().command()` 找 `java`；`classPath()` 取 `java.class.path` ∪ `SpscChild` / `SharedChannel` / `MessageRing` 的 `getCodeSource().getLocation()`；`--enable-preview -XX:+UseSerialGC`（SerialGC 让子 JVM 启动更快、线程更少）。
-* `assertChildOk`：`waitFor(CHILD_TIMEOUT + 2s)`，超时 `fail`；`finally` 里 `destroyForcibly()` 保证不留下孤儿进程。
+* **确定性消息**：splitmix64（一个很小的、质量不错的 64 位哈希）把序号 `seq` 变成伪随机数 `m`；长度 `8 + (m >>> 1) % 49`（8..56）；前 8 字节是 `seq`（大端）；其余字节由 `m` 派生。收的一端用同样的函数校验，返回 `null`（对）或错误描述（丢 / 重 / 乱序 / 损坏）。
+* **子进程入口**：`switch (mode)` 表达式选 `consume` / `produce`，成功打印 `OK <count>`，失败打印 `FAIL …` 并以退出码 1 结束。生产 / 消费逻辑写成 `public static` 方法，父进程做进程内测试时直接复用，保证两端对"正确"的定义一致。
+* **启动子进程**：用 `ProcessHandle.current().info().command()` 找 `java`；类路径取 `java.class.path` 再并上被测类的 `getCodeSource().getLocation()`；加 `--enable-preview -XX:+UseSerialGC`（SerialGC 让子 JVM 启动更快、线程更少）。
+* **不留孤儿**：`waitFor(超时)`，超时就判失败；`finally` 里 `destroyForcibly()`，保证不留下孤儿进程。
 
 ---
 
@@ -584,12 +582,12 @@ public static SharedChannel open(Path file) throws IOException {
 
 | id | 用在哪 | 老写法 | 新写法 / 为什么 |
 |---|---|---|---|
-| J16 `VarHandle` | `SpscLongRing` 的 `HEAD`/`TAIL`（`findVarHandle` + `setRelease`/`getAcquire`）；`MessageRing` 的 `memorySegmentViewVarHandle` | 全部 `volatile`（强度过剩）或 `AtomicLong`（每个计数一个对象，且 `AtomicLong` 在对象头之外还占空间，不好控制布局）或 `sun.misc.Unsafe`（私有 API） | 对**普通字段**选访问强度；release/acquire 恰好是 SPSC 需要的；字段布局完全由自己控制，填充才有意义。详见 `J16_concurrency_primitives.md` §2.4 |
-| J17 FFM | `MessageRing` 建在 `MemorySegment` 上；`SharedChannel` 用 `FileChannel.map(mode, off, size, Arena)` | `MappedByteBuffer`：`int` 索引（≤ 2 GiB）、无确定性取消映射、`ByteBuffer` 的原子访问要 `Unsafe` | `long` 大小、`Arena.close()` 确定性取消映射、`VarHandle` 原子访问映射内存。JDK 21 预览，22 转正。详见 `J17_ffm_api.md` |
-| J15 `Math.clamp`（Java 21） | `SpscLongRing.size()`、`MessageRing.bytesPending()`：`Math.clamp(t - h, 0, capacity)` | `Math.max(0, Math.min(x, capacity))`（嵌套两层，顺序易写反） | 一个方法；语义是"夹到 `[min, max]`"；`long` 值夹到 `int` 范围时返回 `int` 的重载（`clamp(long, int, int)`）省掉强转。详见 `J15_math_string_utils.md` |
-| J18 接口 `default` 方法 | `LongQueue.isFull()`：`default boolean isFull() { return size() == capacity(); }` | 抽象基类（占用唯一的继承名额——而 `SpscLongRing` 的继承链已经被填充用掉了！） | 接口给默认实现，实现类可以覆盖（`SpscLongRing.isFull` 覆盖成只读 `tail` 与 `head`，不依赖近似的 `size()`）。这是个**实际的**理由：填充用的继承链占掉了 `extends`，所以公共行为只能放接口。详见 `J18_comparators_interfaces.md` |
-| J05 switch 表达式 | `SpscChild.main`：`String err = switch (mode) { case "consume" -> …; case "produce" -> …; default -> … };` | `if / else if` 链 + 临时变量 | 每个分支产生值，`default` 必须有（字符串 switch 不能穷尽）。详见 `J05_switch_expressions.md` |
-| J08 `var` | 测试里的 `var ring = MessageRing.init(...)`、`var producer = new Thread(...)` | 重复写类型 | 右边已经写了类型。详见 `J08_var.md` |
+| `VarHandle` | `SpscLongRing` 的 `HEAD`/`TAIL`（`findVarHandle` + `setRelease`/`getAcquire`）；`MessageRing` 的 `memorySegmentViewVarHandle` | 全部 `volatile`（强度过剩）或 `AtomicLong`（每个计数一个对象，且 `AtomicLong` 在对象头之外还占空间，不好控制布局）或 `sun.misc.Unsafe`（私有 API） | 对**普通字段**选访问强度；release/acquire 恰好是 SPSC 需要的；字段布局完全由自己控制，填充才有意义。 §2.4 |
+| FFM | `MessageRing` 建在 `MemorySegment` 上；`SharedChannel` 用 `FileChannel.map(mode, off, size, Arena)` | `MappedByteBuffer`：`int` 索引（≤ 2 GiB）、无确定性取消映射、`ByteBuffer` 的原子访问要 `Unsafe` | `long` 大小、`Arena.close()` 确定性取消映射、`VarHandle` 原子访问映射内存。JDK 21 预览，22 转正。 |
+| `Math.clamp`（Java 21） | `SpscLongRing.size()`、`MessageRing.bytesPending()`：`Math.clamp(t - h, 0, capacity)` | `Math.max(0, Math.min(x, capacity))`（嵌套两层，顺序易写反） | 一个方法；语义是"夹到 `[min, max]`"；`long` 值夹到 `int` 范围时返回 `int` 的重载（`clamp(long, int, int)`）省掉强转。 |
+| 接口 `default` 方法 | `LongQueue.isFull()`：`default boolean isFull() { return size() == capacity(); }` | 抽象基类（占用唯一的继承名额——而 `SpscLongRing` 的继承链已经被填充用掉了！） | 接口给默认实现，实现类可以覆盖（`SpscLongRing.isFull` 覆盖成只读 `tail` 与 `head`，不依赖近似的 `size()`）。这是个**实际的**理由：填充用的继承链占掉了 `extends`，所以公共行为只能放接口。 |
+| switch 表达式 | 子进程入口 `main`：`String err = switch (mode) { case "consume" -> …; case "produce" -> …; default -> … };` | `if / else if` 链 + 临时变量 | 每个分支产生值，`default` 必须有（字符串 switch 不能穷尽）。 |
+| `var` | `var ring = MessageRing.init(...)`、`var producer = new Thread(...)` | 重复写类型 | 右边已经写了类型。 |
 
 **特别说明**：`LongQueue.isFull()` 的 default 是个很好的"为什么不用抽象基类"的例子——这类设计题常被问到。
 
@@ -613,13 +611,13 @@ public static SharedChannel open(Path file) throws IOException {
 
 ### 追问 4：release/acquire 具体保护了什么？去掉会怎样？
 
-**思考过程**：画 ①②③④ 四步图；说清楚每一对配对保护什么；说出本机实测。
-**答案要点**：生产者的 `setRelease(tail)` 保证数据写入先于 tail 可见；消费者的 `getAcquire(tail)` 保证读数据晚于读 tail；`head` 方向保护"读完才归还槽位"。去掉（改普通写）：弱内存序 CPU 上消费者读到旧值——本机（Apple M）实测：`SpscLongRingTest` 的多个用例大面积变红，first mismatch 出现在第几百到十几万条之间；x86 上常常碰巧是对的。
-**一段话**：「release 保证我在它之前写的数据，别人 acquire 看到这次发布之后一定看得到。去掉它，在 ARM 上我实测消费者会读到上一圈留下的旧值。」
+**思考过程**：画 ①②③④ 四步图；说清楚每一对配对保护什么；说出你观察到的现象。
+**答案要点**：生产者的 `setRelease(tail)` 保证数据写入先于 tail 可见；消费者的 `getAcquire(tail)` 保证读数据晚于读 tail；`head` 方向保护"读完才归还槽位"。去掉（改普通写）：弱内存序 CPU 上消费者读到旧值——在 Apple M 上很快就能看到大量错误（第几百到十几万条消息之间就出现对不上的）；x86 上常常碰巧是对的。
+**一段话**：「release 保证我在它之前写的数据，别人 acquire 看到这次发布之后一定看得到。去掉它，在 ARM 上消费者会读到上一圈留下的旧值。」
 
 ### 追问 5：什么是伪共享？怎么证明它存在？
 
-**答案要点**：两个线程写同一缓存行里的不同变量，行在两个核心间来回失效；证明：单变量实验（`FalseSharingBench`），只改变两个计数器的距离，其他全不变；本机相邻比分开慢约 2 倍，且相邻的结果呈双峰（取决于两个线程是否在同一核心簇）。注意：在 SPSC 吞吐上的收益被噪声掩盖——要说诚实的结论。
+**答案要点**：两个线程写同一缓存行里的不同变量，行在两个核心间来回失效；证明：单变量实验，只改变两个计数器的距离，其他全不变；相邻比分开慢约 2 倍，且相邻的结果呈双峰（取决于两个线程是否在同一核心簇）。注意：在 SPSC 吞吐上的收益被噪声掩盖——要说诚实的结论。
 
 ### 追问 6：cached index 为什么是安全的？
 
@@ -654,9 +652,9 @@ public static SharedChannel open(Path file) throws IOException {
 
 ## 8. 常见误区
 
-### 误区 1：以为 x86 上测试通过就代表内存序对
+### 误区 1：以为 x86 上跑通就代表内存序对
 
-x86 不重排 Store-Store，所以把 `setRelease` 写成普通写，在 x86 上常常"碰巧"正确，在 ARM（含 Apple M 系列、很多云服务器）上就错。**正确**：按 release/acquire 的语义写，并在弱内存序机器上测试。来自 §2.5 的实测。
+x86 不重排 Store-Store，所以把 `setRelease` 写成普通写，在 x86 上常常"碰巧"正确，在 ARM（含 Apple M 系列、很多云服务器）上就错。**正确**：按 release/acquire 的语义写，并在弱内存序机器上测试。（见 §2.5 的实验。）
 
 ### 误区 2：`head == tail` 就是空
 
@@ -664,7 +662,7 @@ x86 不重排 Store-Store，所以把 `setRelease` 写成普通写，在 x86 上
 
 ### 误区 3：把 PAD + 记录当作一个整体判断能不能放进去
 
-空环上会死锁（§4.3）。**正确**：PAD 单独发布。来自测试 `padIsPublishedEvenIfTheRecordDoesNotFit` 和 `anEmptyRingAcceptsAMaxSizeMessageFromEveryPosition`。
+空环上会死锁（§4.3）。**正确**：PAD 单独发布。
 
 ### 误区 4：先读 tail 再读 closed
 
@@ -672,7 +670,7 @@ x86 不重排 Store-Store，所以把 `setRelease` 写成普通写，在 x86 上
 
 ### 误区 5：只传 `java.class.path` 给子进程
 
-用 JUnit console 的 `--class-path` 运行时，子进程找不到被测类（`ClassNotFoundException`）。**正确**：加上被测类的 `getCodeSource().getLocation()`。
+当测试运行器用自己的类加载器加载被测类时，子进程找不到被测类（`ClassNotFoundException`）。**正确**：加上被测类的 `getCodeSource().getLocation()`。
 
 ### 误区 6：用 `Thread.sleep` 等对方
 
@@ -694,7 +692,7 @@ x86 不重排 Store-Store，所以把 `setRelease` 写成普通写，在 x86 上
 2. 解释为什么 `SpscLongRing.offer` 里可以用 `cachedHead` 判断"有空位"，而不会错误地覆盖未读的数据。
 3. 把 `MessageRing.offer` 里的 `LONG.setRelease(seg, OFF_TAIL, t + rec)` 换成普通写，会出什么 bug？在什么机器上更容易暴露？
 4. 容量 64 的 `MessageRing`，环是空的，`head = tail = 8`。要发一条 60 字节的消息（`maxPayload` 恰好，记录 64 字节）。逐步写出 `offer`、`poll`、`offer` 三次调用的返回值和每次之后 `bytesPending()` 的值，并说明为什么第一次 `offer` 返回的是那个值。
-5. 编程题：不看参考解，写出 `isDrained()` 的正确实现，并说明为什么读两个变量的顺序不能反。
+5. 编程题：不看答案，写出 `isDrained()` 的正确实现，并说明为什么读两个变量的顺序不能反。
 
 <details><summary>答案</summary>
 
@@ -714,14 +712,4 @@ x86 不重排 Store-Store，所以把 `setRelease` 写成普通写，在 x86 上
 
 ---
 
-## 10. 延伸阅读
-
-* M. Thompson, D. Farley, M. Barker, P. Gee, A. Stewart, *Disruptor: High performance alternative to bounded queues for exchanging data between concurrent threads*, LMAX, 2011 —— 单写者原则、环形缓冲区、缓存行填充的工业来源。
-* L. Lamport, *Specifying Concurrent Program Modules*, ACM TOPLAS 5(2), 1983 —— 里面有单生产者单消费者环形缓冲区的正确性证明，说明这类队列可以不用互斥。
-* Linux 内核文档 `Documentation/core-api/circular-buffers.rst`（Howells & McKenney）—— 内核里生产者 / 消费者环形缓冲区和内存屏障的权威讲解，对应本讲义 §2.5。
-* Agrona `OneToOneRingBuffer` / Aeron 日志缓冲区文档 —— 变长消息 + PAD 记录 + 对齐的实际工程实现，对应 §2.7。
-* U. Drepper, *What Every Programmer Should Know About Memory* —— 缓存行、一致性协议、伪共享的深入讲解（第 3、6 章）。
-* JEP 442 *Foreign Function & Memory API (Third Preview)* https://openjdk.org/jeps/442 —— `FileChannel.map(…, Arena)`、`MemorySegment`、`VarHandle` 访问；JDK 22 正式版 JEP 454。
-* `java.lang.invoke.VarHandle` Javadoc —— plain / opaque / acquire-release / volatile 的权威定义。
-* `mmap(2)` 手册页（POSIX）—— `MAP_SHARED` 的语义，对应 §2.2。
-* 同 kit：`study/10-java21/J16_concurrency_primitives.md`、`study/10-java21/J17_ffm_api.md`、`study/00-foundations/cpu_cache_locality.md`、`study/00-foundations/os_processes_threads_ipc.md`。
+「延伸」LMAX Disruptor 技术论文（单写者原则、环形缓冲区、缓存行填充）。

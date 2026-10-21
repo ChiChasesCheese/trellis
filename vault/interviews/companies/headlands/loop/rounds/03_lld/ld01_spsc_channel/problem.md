@@ -1,10 +1,5 @@
 # ld01 · 共享内存 SPSC 消息通道（Shared-Memory Single-Writer Single-Reader Channel）
 
-> 阶段：低层设计 / LLD（FastPrep 标 Low-level design，2023-08-24；1p3a 1011799 同日、摘要含 "shared memory, system design"，按日期 + 主题合并）· 置信度：**中**（2 个来源，均只有标题 + 第一句 / 摘要）
-> **题面只有一句话**：「bounded shared-memory message channel between two processes, with safe record ownership, FIFO delivery and explicit full, empty and drained…」（后半句被截断）。
-> 能确定的：**两个进程**、**有界**、**共享内存**、**消息**、**FIFO**、**记录所有权**安全、**full / empty / drained** 三种状态要明确。
-> 下面的四个 Part、API 形状、内存布局、回绕处理、跨进程测试方法都是 **(reconstructed)**。
-
 ## 背景
 
 行情进程把一条条消息交给策略进程，要求：只有一个写者、一个读者；有界（满了要告诉写者，不能无限涨）；不丢、不重、不乱序；
@@ -13,13 +8,13 @@
 
 ## 读题前你需要知道
 
-讲义 `study/30-articles/ld01_spsc_channel.md`（从零讲：进程与线程、共享内存与 mmap、环形缓冲区、内存序、缓存一致性与伪共享、变长消息的回绕、进程间测试怎么写）。最少要先懂：
+最少要先懂：
 
-* **进程 vs 线程、进程间通信（IPC）**：`study/00-foundations/os_processes_threads_ipc.md`；
-* **环形缓冲区**：head / tail 两个只增不减的计数、`& mask`、满 / 空怎么区分（讲义 §2.3）；
-* **release / acquire**：`study/10-java21/J16_concurrency_primitives.md` §2.4；
-* **缓存行与伪共享**：`study/00-foundations/cpu_cache_locality.md`；
-* **FFM `MemorySegment`**：`study/10-java21/J17_ffm_api.md`。
+* **进程 vs 线程、进程间通信（IPC）**：线程共享同一地址空间；进程各有独立地址空间，要通信得借助内核提供的机制。共享内存（把同一个文件 / 内存区域映射进两个进程，`mmap`）是最快的一种，因为热路径上没有系统调用和拷贝；
+* **环形缓冲区**：固定容量 `capacity`（2 的幂）的数组，`head`（读计数）和 `tail`（写计数）都只增不减，下标 = 计数 `& (capacity-1)`；`tail - head == 0` 为空，`== capacity` 为满，这样空和满是两个不同的差值，不用空一格；
+* **release / acquire**：写者先写数据，再用 release 写发布 `tail`；读者用 acquire 读 `tail`，之后读到的数据一定是写者在 release 之前写好的。弱内存序的 CPU（ARM / Apple M）上没有这对屏障，读者可能看到新 `tail` 却读到旧数据；
+* **缓存行与伪共享**：CPU 以 64 / 128 字节的缓存行为单位搬运数据。两个线程分别写同一缓存行里的不同变量时，这一行在两核之间来回失效，互相拖慢（伪共享）；解法是把它们隔开至少一条缓存行；
+* **FFM `MemorySegment`**：Java 的堆外内存视图，可由 `FileChannel.map` 得到，用 `VarHandle` 按偏移量做带内存序的读写。
 
 ## 概述
 
@@ -69,9 +64,9 @@ public final class SpscLongRing implements LongQueue {
 * **正确性**：恰好一个生产者线程 + 一个消费者线程，按序、恰好一次。**不许用锁、不许用 CAS**（`tail` 只有生产者写、`head` 只有消费者写，每个变量只有一个写者）。用 `VarHandle` 的 `setRelease` 发布下标、`getAcquire` 读对方的下标：
   先写数据再 release 发布 `tail`；消费者 acquire 读 `tail` 之后才读数据；读完数据再 release 发布 `head`。
 * **cached index**：生产者缓存对方的 `head`，只有"按旧值看是满的"才去读真正的 `head`；消费者缓存 `tail`，同理。
-* **填充**：生产者写的字段与消费者写的字段相隔至少一条缓存行（Apple M 系列 128 字节）。Java 里常用继承链 + 填充 `long` 的办法（讲义 §4.2）。
-* **测量**（不是测试里的断言，是你应该会做的事）：`study/30-articles/examples/ld01/FalseSharingBench.java`（单独量伪共享）和 `SpscBench.java`（五种写法的 SPSC 吞吐）。讲义 §4.2 有本机的数字和诚实的解读。
-* 不得有"消费者读到上一轮留下的旧值"（测试 `consumerNeverSeesStaleSlot`；把 `setRelease` 改成普通写，在 ARM 上这个测试立刻红）。
+* **填充**：生产者写的字段与消费者写的字段相隔至少一条缓存行（Apple M 系列 128 字节）。Java 里常用继承链 + 填充 `long` 的办法：把生产者字段、消费者字段分别放在不同的父类里，父类之间插入若干个填充用的 `long` 字段。
+* **测量**（不是断言，是你应该会做的事）：单独量伪共享（两个线程各自自增相邻 / 相隔一条缓存行的计数器），再比较 SPSC 的几种写法（volatile、acquire/release、加填充、加 cached index）的吞吐。
+* 不得有"消费者读到上一轮留下的旧值"（把 `setRelease` 改成普通写，在 ARM 上会立刻出错）。
 
 ## Part 3 · `MessageRing`（变长消息 + 回绕）
 
@@ -88,7 +83,7 @@ public final class MessageRing {
 }
 ```
 
-### 布局 (reconstructed)
+### 布局
 
 ```
 偏移    0  magic     long   0x5350534352494E47 ("SPSCRING")，最后用 release 写
@@ -129,13 +124,12 @@ public final class SharedChannel implements AutoCloseable {
 * `create`：新建 / 覆盖文件，大小 `MessageRing.segmentBytes(capacity)`；`FileChannel.map(READ_WRITE, 0, size, arena)` 得到 `MemorySegment`（`Arena.ofShared()`）；`MessageRing.init`。`capacity` 非法 → `IllegalArgumentException`，且**不要动文件**。
 * `open`：映射已有文件并 `attach`；文件不存在 → `NoSuchFileException`；文件太小 / 全零 / 随机内容 → `IllegalStateException`。
 * `close` 之后 `send`/`receive` 抛 `IllegalStateException`；文件留在磁盘上。关闭后重新 `open`，积压的消息还在（数据在文件里）。
-* **跨进程测试怎么做**（`test/SharedChannelTest.java` + `test/SpscChild.java`）：
+* **跨进程测试怎么做**（父进程 + 子进程）：
   * 找 `java`：`ProcessHandle.current().info().command()`，取不到退回 `System.getProperty("java.home")/bin/java`；
-  * 类路径：`System.getProperty("java.class.path")` **加上**被测类和 `SpscChild` 所在的目录（`getProtectionDomain().getCodeSource().getLocation()`）。用 JUnit console 的 `--class-path` 跑时，`java.class.path` 只有 junit 的 jar，被测类在另一个类加载器里，光传 `java.class.path` 子进程找不到 `SharedChannel`；
+  * 类路径：`System.getProperty("java.class.path")` **加上**被测类和子进程入口类所在的目录（`getProtectionDomain().getCodeSource().getLocation()`）。用 JUnit console 的 `--class-path` 跑时，`java.class.path` 只有 junit 的 jar，被测类在另一个类加载器里，光传 `java.class.path` 子进程找不到 `SharedChannel`；
   * 必须传 `--enable-preview`（FFM 在 JDK 21 是预览）；
   * 子进程成功时打印 `OK <count>` 并以 0 退出，失败打印 `FAIL <原因>` 以 1 退出；父进程用 `waitFor(超时)`，超时 `destroyForcibly()`；两端的自旋循环都带截止时间——**任何一端挂死都不能让整个测试挂死**；
   * 三个用例：父生产→子消费；子生产→父消费；父先写完并 `close`，子之后才启动再读（证明数据在文件里）。每条消息的长度和内容由序号决定（`Msgs.make(seq)`），收的人不需要额外信息就能校验"是不是第 seq 条"——丢、重、乱序、截断都会被抓到。
-  * 整个 `SharedChannelTest` 约 0.3 s（三个子进程各 20–170 ms），远低于 10 s 上限。
 
 ## 样例
 
@@ -170,18 +164,12 @@ ring.offer(new byte[20]);     // 到末尾只剩 16 < 24：先发布 16 字节�
 | 进程 | 文件不存在 / 太小 / 全零 / 随机内容；`close` 后访问；`close` 后重开仍有积压；子进程崩溃 / 超时不挂死 |
 | 性能 | 单线程 1000 万次 `offer+poll` < 2 s；两线程 1000 万条 `long` < 2 s；200 万条变长消息 < 2–3 s |
 
-## 野外变体
+## 相关变体
 
 * C++ 版：`std::atomic<uint64_t>` + `memory_order_release/acquire`，`mmap`/`shm_open`；追问 `alignas(64)`、`std::hardware_destructive_interference_size`。
 * 多生产者：`tail` 变成 CAS 竞争，或每个生产者一个环（SPSC 的 N 个副本）——这时才需要 `compareAndSet`；
 * 消息带"所有权转移"：不拷贝，生产者写到环里预留的区域再"提交"（Aeron 的 `claim/commit`，Disruptor 的 `next()/publish()`）；
 * 通道要能跨崩溃恢复：消费者崩溃重启后从哪里继续？（把 `head` 放在文件里，本题已经做了，但"处理了一半的消息"需要幂等设计。）
-
-## 来源
-
-`catalog/raw/github_repos.md` §3.1.D（FastPrep "Shared-Memory Single-Writer Single-Reader Channel"，Low-level design，2023-08-24，https://www.fastprep.io/low-level-design/shared-memory-spsc-channel ）；
-`catalog/raw/forums.md` A13（1p3a 1011799，2023-08-24，摘要 "language features, shared memory, system design"）；
-`catalog/raw/github_repos.md` #8（ankitkushawaha1000/HFT，生成式、很低置信："Implement a lock-free ring buffer in C++"、`memory_order_acquire/release`——只当方向性弱信号，不计 #refs）。
 
 ## 考什么
 

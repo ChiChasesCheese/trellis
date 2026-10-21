@@ -1,8 +1,8 @@
-# ld02 · REPORT
+# ld02 · 思路与追问
 
 ## 概要
 
-「交易相关的 OOD」出自 1p3a 一帖的摘要（Junior Engineer 电话面，33 分钟里含简历和 BQ，最后一道不太难的交易相关 OOD，结果被拒）。原题题面没有公开。本 kit 把它补全成四个 Part：订单状态机、仓位盈亏、交易前风控、事件溯源重放。
+「交易相关的 OOD」是电面里常见的一道不太难的设计题。这里补全成四个 Part：订单状态机、仓位盈亏、交易前风控、事件溯源重放。
 
 面试官想看五点：
 1. 用类型表达不变量（record 紧凑构造器、sealed 事件、枚举状态）；
@@ -10,16 +10,6 @@
 3. 价格和数量用整数，有溢出意识；
 4. 失败时默认拒绝（fail closed）；
 5. 结果确定，可以重放。
-
-讲义：`study/30-articles/ld02_trading_ood.md`。
-
-## 来源与置信度
-
-置信度：中。只有 1 个来源：`catalog/raw/forums.md` A4，即 1p3a 1136321（2025-07-09），只有摘要；`official_and_process.md` §D4 #16 是同一帖。
-
-相关题族（不计入 #refs）：A9（Put/Delete API）、A8（交易事件编码题）、A5、G2。
-
-(reconstructed)：四个 Part 的划分、状态转移表、FIFO 配对、七条风控规则及其检查顺序、`TradingDesk` 的 journal / replay 语义。能确定的只有：这是一道 OOD，和交易相关，难度不高，实际写代码的时间约 15–20 分钟。
 
 ## 逐 Part 思路
 
@@ -55,7 +45,7 @@
 * `journal()` 直接返回内部 list；`replay` 不吞异常；`PENDING` 订单没计入未完成。
 * 聚合量在某个终态路径上漏了更新。这种 bug 只有用「随机事件流 + 逐单重算」做对照才能抓到。
 
-## 复杂度 + 实测时间
+## 复杂度
 
 - 每个事件 O(1)。
 - `PositionBook.onFill` 摊还 O(1)：每个 lot 只入队一次、出队一次。
@@ -63,9 +53,7 @@
 - 风控 `check` 是 O(1)，加上 `netQty` 的那次 lot 遍历。
 - `open()` / `all()` 要排序，O(n log n)，只用于查询。
 
-实测：全套 56 个测试约 0.2 s。
-
-`DeskBench`（JIT 预热后取 5 次中位数）：
+基准（JIT 预热后取 5 次中位数）：
 
 | 项目 | 规模 | 耗时 | 速率 |
 |---|---|---|---|
@@ -73,39 +61,20 @@
 | 重放 | 40 万事件 | 17.1 ms | 23.4 M 事件/s（43 ns/事件） |
 | `PositionBook.onFill` | 300 万次成交 | 103 ms | 29 M 次/s（含 `"S"+i` 的字符串分配） |
 
-这些是平均吞吐的量级，不包括 GC 造成的尾延迟。reference 用了 `HashMap<Long,…>`、装箱和 record 分配，没有做零分配优化。
-
-## 测试清单（脚本数）
-
-共 56 个，0 失败：part1 15、part2 11、part3 17、part4 13；edge 23、perf 2；没有 conc / io。
-
-- **OrderManagerTest**（15）：全部合法与非法转移、去重、超量、限价约束、聚合量、溢出、随机事件流对照。
-- **PositionBookTest**（11）：FIFO、空头镜像、翻转、恰好平仓、多标的、未实现盈亏、溢出时不留半个状态、与逐手模型对照（2000 笔）、30 万笔 perf。
-- **RiskEngineTest**（17）：每条规则在 `==` 和 `+1` 处的边界、整数价格带、多空两侧的最坏情况仓位、熔断、检查顺序、`check` 不改状态、限额参数校验。
-- **TradingDeskTest**（13）：完整生命周期、拒绝的订单也登记、不把自己算两遍、halt / resume、重复 id、重复 Fill、非法事件仍进 journal、journal 不可变、replay 结果相等、replay 吞异常、25 个随机种子 × 600 步、5 万订单 × 4 事件 + 重放 perf。
-
-变异检查（每次只改 reference 的一处，测试都变红）：
-
-| 变异 | 结果 |
-|---|---|
-| 去掉 `execId` 去重 | 2 个测试失败 |
-| 名义金额 `>` 改成 `>=` | 1 个测试失败 |
-| 空头仓位限额放宽 1 | 1 个测试失败 |
-| `b.dir * qty` 改成 `qty` | 3 个测试失败 |
-| 风控检查移到登记之后 | 1 个测试失败 |
+这些是平均吞吐的量级，不包括 GC 造成的尾延迟。这里的实现用了 `HashMap<Long,…>`、装箱和 record 分配，没有做零分配优化。
 
 ## Java 21 特性
 
-| id | 用在哪 | 比旧写法好在哪 |
+| 特性 | 用在哪 | 比旧写法好在哪 |
 |---|---|---|
-| J01 record | `Order`、`ExecEvent.*`、`DeskEvent.*`、`Position`、`OrderView`、`RiskLimits` 的紧凑构造器校验 | 非法对象根本造不出来；自带结构相等，测试可以直接比较两个 desk 的状态 |
-| J02 sealed | `ExecEvent`、`DeskEvent`、`RiskResult` | 编译器知道全部子类型，新增事件类型没处理就编译不过 |
-| J03 switch 模式匹配 | `OrderManager.apply`、`TradingDesk.handle` | 不需要 `default` 和强制转换，穷尽性由编译器检查 |
-| J04 record 模式 | `case DeskEvent.SetReferencePrice(var symbol, var px)`、`x instanceof ExecEvent.Fill(var orderId, …)`、`r instanceof RiskResult.Rejected(var reason)` | 一步解构，不用一串 getter |
-| J05 switch 表达式 + yield | `apply` 的每个分支 `yield true` | 没有 fall-through，每个分支都必须给出值 |
-| J15 Math.*Exact | 名义金额、盈亏、累计成交额 | 溢出直接抛异常，不会悄悄绕回 |
-| J14 Stream.toList() | `OrderManager.open()` | 返回不可变列表 |
-| J18 / 集合工厂 | `List.copyOf(journal)` | 防御性的不可变拷贝 |
+| record | `Order`、`ExecEvent.*`、`DeskEvent.*`、`Position`、`OrderView`、`RiskLimits` 的紧凑构造器校验 | 非法对象根本造不出来；自带结构相等，测试可以直接比较两个 desk 的状态 |
+| sealed | `ExecEvent`、`DeskEvent`、`RiskResult` | 编译器知道全部子类型，新增事件类型没处理就编译不过 |
+| switch 模式匹配 | `OrderManager.apply`、`TradingDesk.handle` | 不需要 `default` 和强制转换，穷尽性由编译器检查 |
+| record 模式 | `case DeskEvent.SetReferencePrice(var symbol, var px)`、`x instanceof ExecEvent.Fill(var orderId, …)`、`r instanceof RiskResult.Rejected(var reason)` | 一步解构，不用一串 getter |
+| switch 表达式 + yield | `apply` 的每个分支 `yield true` | 没有 fall-through，每个分支都必须给出值 |
+| Math.*Exact | 名义金额、盈亏、累计成交额 | 溢出直接抛异常，不会悄悄绕回 |
+| Stream.toList() | `OrderManager.open()` | 返回不可变列表 |
+| / 集合工厂 | `List.copyOf(journal)` | 防御性的不可变拷贝 |
 
 ## 面试官可能的追问
 

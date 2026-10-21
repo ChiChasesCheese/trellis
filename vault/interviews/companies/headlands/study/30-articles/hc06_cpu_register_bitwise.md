@@ -1,9 +1,6 @@
 # hc06 · CPU 寄存器位运算 —— 讲义
 
-> 题面：`loop/rounds/01_video/hc06_cpu_register_bitwise/problem.md` · 速查：同目录 `REPORT.md` · 代码：同目录 `reference/RegisterSim.java`
-> 写法说明见 `study/TEXTBOOK.md`。读者设定：会写基本 Java，不懂二进制也没关系——第 2 节从“什么是 bit”讲起。
-> 证据说明：公开信息只有题目名「CPU Register Bitwise Operations」和一句“模拟一个无符号 32 位寄存器，给定初值”；
-> 指令集、输入输出格式、扩展指令、性能版本都是 **(reconstructed)**。
+> 读者：会写基本 Java，不懂二进制也没关系——第 2 节从「什么是 bit」讲起。
 
 ---
 
@@ -49,6 +46,8 @@ POPCOUNT    4 个 1                          → 输出 4
 ---
 
 ## 2. 前置知识
+
+> 复杂度记号速记：`O(n)` 表示步数随输入规模 n 线性增长；`O(log n)` 表示 n 翻倍只多一步（二分查找、平衡树、堆）；`O(n²)` 表示每一对元素都要处理一次；`O(1)` 表示与 n 无关。
 
 ### 2.1 二进制、bit、字节、十六进制
 
@@ -255,7 +254,7 @@ ROR 4：最低的 4 位 1000 绕到最高位
 ### 2.10 本题用到的 Java 语法速览
 
 `record`、`sealed interface … permits`、`switch` 对 sealed 类型的模式匹配（`case And(var m) -> …`，无需 `default`）、`switch` 表达式、文本块、`HexFormat`。
-细节见第 6 节与 `study/10-java21/` 中对应的 J01–J05、J07、J15 篇。
+细节见第 6 节。
 
 ---
 
@@ -370,7 +369,7 @@ System.out.println(reg);
   ```
 
   `Integer.toUnsignedLong(reg)` 把 32 位零扩展到 64 位；`long` 的移位位数最多 63，所以 `<< 32` 真的移 32 位：原来的 32 个 bit 全推到高半部分，`(int)` 强转只留低 32 位，结果 0。右移 32 同理。不需要 `if (n >= 32)`。
-* **实测**（本机，200 万条指令，预热后）：
+* **数据**（200 万条指令，预热后）：
 
   | 程序形态 | `run`（对象 + 模式匹配） | `execute`（`int[]`） |
   |---|---|---|
@@ -384,7 +383,7 @@ System.out.println(reg);
 
 ---
 
-## 5. 逐段讲参考解
+## 5. 逐段讲解法
 
 ### 5.1 指令层次
 
@@ -532,38 +531,38 @@ for (int pc = 0; pc < ops.length; pc++) {
 
 ## 6. Java 21 特性小课
 
-### J01 record + 紧凑构造器
+### record + 紧凑构造器
 
 旧写法：为每条指令写一个带 `equals/hashCode/toString` 的 final 类，字段校验写在构造器里。新写法：`record SetBit(int bit) { SetBit { checkBit(bit); } }`。
-测试里 `assertEquals(new And(0xFF), RegisterSim.parseLine("AND 0xFF"))` 直接比较，靠的是 record 自动生成的 `equals`。
+`parseLine("AND 0xFF")` 的结果可以直接和 `new And(0xFF)` 比较，靠的是 record 自动生成的 `equals`。
 **不该用**：要继承其他类、需要可变字段时。
 
-### J02 sealed
+### sealed
 
 旧写法：`enum Op { AND, OR, … }` 加一堆可空字段（`Integer mask; Integer count;`），或 `interface Instr` 配 `instanceof` 链加最后一个 `else throw`。
 新写法：`sealed interface … permits …`。编译器知道所有实现；写 `switch` 时漏一种就编译失败。
 
-### J03 + J04 switch 模式匹配 + record 解构
+### switch 模式匹配 + record 解构
 
 `case And(var m) -> reg & m;`：一次完成“是不是 And”“取出 mask”。无需强转，无需 `default`。
 **不该用**：`default` 兜底（会让编译器不再提醒你漏了新指令）。
 
-### J05 switch 表达式
+### switch 表达式
 
 `return switch (u) { case … -> …; };` 每个分支是值，没有 `break`，不会 fallthrough。旧写法每个 `case` 要 `break`，忘一个就串到下一个。
 
-### J13 未命名模式 `_`（预览）
+### 未命名模式 `_`（预览）
 
-`case Not _ ->`、`case Popcount _ ->`：这些 record 没有需要的字段，用 `_` 说明“不绑定”。需要 `--enable-preview`（`jtest.py` 已加）。
+`case Not _ ->`、`case Popcount _ ->`：这些 record 没有需要的字段，用 `_` 说明“不绑定”。需要 `--enable-preview`。
 
-### J15 位运算与数学小工具
+### 位运算与数学小工具
 
 `Integer.compress/expand`（Java 19）、`rotateLeft`、`reverse`、`reverseBytes`、`bitCount`、`HexFormat`（Java 17）、`Integer.toUnsignedString`、`Math.clamp(long,int,int)`（Java 21）、`StringBuilder.repeat`（Java 21）。
 旧写法都要手写循环或位技巧，容易出错且无法用到 CPU 的专用指令。
 
-### J14 Stream / J07 文本块 / J09 Sequenced Collections
+### Stream / 文本块 / Sequenced Collections
 
-`Arrays.stream(out).boxed().toList()`；测试里用文本块写多行程序；`solve` 里用 `body.getFirst()` 代替 `body.get(0)`。
+`Arrays.stream(out).boxed().toList()`；用文本块写多行程序；`solve` 里用 `body.getFirst()` 代替 `body.get(0)`。
 
 ---
 
@@ -590,7 +589,7 @@ for (int pc = 0; pc < ops.length; pc++) {
 
 **Q5：性能还能怎么优化？**
 
-* 答案要点：解码一次到 `int[]`（已做）；融合相邻的纯位运算为 `(r & a) ^ x`；常量折叠；生成字节码消除分发；批量不同初值可用向量化；诚实指出间接跳转 + 分支预测是随机程序上的剩余瓶颈（本机实测 1.5× vs 9×）。
+* 答案要点：解码一次到 `int[]`（已做）；融合相邻的纯位运算为 `(r & a) ^ x`；常量折叠；生成字节码消除分发；批量不同初值可用向量化；诚实指出间接跳转 + 分支预测是随机程序上的剩余瓶颈（实际 1.5× vs 9×）。
 
 **Q6：寄存器改成 64 位 / 可变位宽？**
 
@@ -598,21 +597,21 @@ for (int pc = 0; pc < ops.length; pc++) {
 
 **Q7：这个模拟器怎么测试？**
 
-* 答案要点：每条指令的真值表；边界（0、全 1、最高位、位 0 / 位 31）；性质测试（`expand(compress(x,m),m) == x & m`、`reverse(reverse(x)) == x`、`parseValue(hex(x)) == unsigned(x)`）；用 `long` 写一份独立的参照实现随机对拍（本题 `matchesALongBasedOracle`）；编译版与解释版逐程序比较。
+* 答案要点：每条指令的真值表；边界（0、全 1、最高位、位 0 / 位 31）；性质测试（`expand(compress(x,m),m) == x & m`、`reverse(reverse(x)) == x`、`parseValue(hex(x)) == unsigned(x)`）；用 `long` 写一份独立的参照实现随机对拍；编译版与解释版逐程序比较。
 
 ---
 
 ## 8. 常见误区
 
-1. **`>>` 代替 `>>>`**——`0xF0000000 >> 4` 得 `0xFF000000`，高位被补了 1。寄存器该用 `>>>`（测试 `shiftsAreLogicalAndDropBits`）。
-2. **`Integer.parseInt("FFFFFFFF", 16)`**——抛 `NumberFormatException`；`4294967295` 同样。要用 `Long.parseLong` 再 `(int)`（测试 `maskOperandsAreUnsigned32Bit`）。
-3. **`reg << n` 当 `n ≥ 32`**——Java 位数 mod 32，`SHL 32` 保持原值；`SHL 33` 变成 `SHL 1`（测试 `shiftsOf32OrMoreClearTheRegister`）。
+1. **`>>` 代替 `>>>`**——`0xF0000000 >> 4` 得 `0xFF000000`，高位被补了 1。寄存器该用 `>>>`。
+2. **`Integer.parseInt("FFFFFFFF", 16)`**——抛 `NumberFormatException`；`4294967295` 同样。要用 `Long.parseLong` 再 `(int)`。
+3. **`reg << n` 当 `n ≥ 32`**——Java 位数 mod 32，`SHL 32` 保持原值；`SHL 33` 变成 `SHL 1`。
 4. **`(long) reg` 想转无符号**——符号扩展，`-1` 变 `-1L`。正确是 `Integer.toUnsignedLong(reg)` 或 `reg & 0xFFFFFFFFL`。
-5. **`1 << b` 里 `b` 可以是 32**——`1 << 32 == 1`，悄悄操作了第 0 位。记录构造器里要校验 `0..31`（测试 `recordsGuardTheirOwnInvariants`）。
-6. **输出用 `Integer.toString`**——`0xFFFFFFFF` 打印 `-1`（测试 `unsignedInterpretation`）。
-7. **`Long.decode("010")`**——前导 0 当八进制，得到 8（测试 `parseValueBases`）。
-8. **`ROL 36` 不等于 `ROL 4`**——手写旋转没有对 32 取模（测试 `rotationsWrapAroundAndTakeModulo32`）。
-9. **`numberOfTrailingZeros(0)` 当成 −1 或抛异常**——它返回 32（测试 `countingQueries`）。
+5. **`1 << b` 里 `b` 可以是 32**——`1 << 32 == 1`，悄悄操作了第 0 位。记录构造器里要校验 `0..31`。
+6. **输出用 `Integer.toString`**——`0xFFFFFFFF` 打印 `-1`。
+7. **`Long.decode("010")`**——前导 0 当八进制，得到 8。
+8. **`ROL 36` 不等于 `ROL 4`**——手写旋转没有对 32 取模。
+9. **`numberOfTrailingZeros(0)` 当成 −1 或抛异常**——它返回 32。
 
 ---
 
@@ -660,21 +659,13 @@ static boolean isPowerOfTwo(int x) {
 加一层 `Operand`（`Reg(int index)` 或 `Imm(int value)`）；寄存器文件用 `int[8]`。性能版本里 `args` 变成两个数组（目标寄存器编号 + 操作数 / 源寄存器编号），热循环 `regs[dst] = regs[dst] & (isImm ? imm : regs[src])`：把“立即数还是寄存器”也在解码时分成不同的操作码，避免循环里再判断。
 </details>
 
-**题 6（实验）**：用 `jtest.py` 把参考实现的 `Shr` 分支从 `reg >>> n` 改成 `reg >> n`，预测哪个测试会失败。
+**题 6（实验）**：把 `SHR` 的实现从 `reg >>> n` 改成 `reg >> n`，预测哪些输入会出错。
 
 <details><summary>答案</summary>
 
-`shiftsAreLogicalAndDropBits`（`0x80000000 >>> 31` 变成 `-1`），并且 `matchesALongBasedOracle`、`compiledAgreesWithInterpreterOnSmallPrograms`（解释版与编译版出现差异）也会失败。
+凡是最高位为 1 的寄存器右移都会错：`0x80000000 >>> 31` 应得 1，却变成 `-1`（高位被补 1）。拿 `long` 写的独立参照实现随机对拍，或把解释版与编译版逐程序比较，也会立刻发现差异。
 </details>
 
 ---
 
-## 10. 延伸阅读
-
-* Henry S. Warren, *Hacker's Delight*（第 2 版）第 2 章（基本位运算技巧）与第 5 章（计数 1 位）：popcount、`x & (x-1)`、旋转、翻转的经典来源。
-* Bryant & O'Hallaron, *Computer Systems: A Programmer's Perspective*（CSAPP）第 2 章 2.1–2.3：信息的表示——补码、有符号 / 无符号转换、移位、整数运算，配大量例子。
-* Java 语言规范 JLS §15.19「Shift Operators」：确认“位数只取低 5 位（int）/ 低 6 位（long）”。
-* `java.lang.Integer` 的 Javadoc：`compress`、`expand`、`rotateLeft`、`reverse`、`reverseBytes`、`bitCount`、`toUnsignedString`、`compareUnsigned` 的精确定义。
-* `java.util.HexFormat` 的 Javadoc：`toHexDigits` 的位数与大小写规则。
-* JEP 441（switch 模式匹配）、JEP 440（record 模式）、JEP 409（sealed）：本题的数据建模语言基础。
-* Hennessy & Patterson, *Computer Architecture: A Quantitative Approach*，流水线与分支预测章节：为什么随机分支很贵。
+「延伸」Warren《Hacker's Delight》第 2、5 章（位运算技巧、计数 1 位）。

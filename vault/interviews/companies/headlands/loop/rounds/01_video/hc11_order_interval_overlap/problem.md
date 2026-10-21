@@ -1,10 +1,4 @@
-# hc11 · 订单区间最大重叠 + 按买 / 卖方撤单（1p3a 2025-06 / QuantVault「Maximum Concurrent Orders in an Interval」）
-
-> 阶段：电面（1p3a 先过 OA，再技术电面；帖子标题含「挂经」= 没过）· 置信度：**中**（1 个一手来源：1p3a 1134455，2025-06-24；QuantVault 标题 "Maximum Concurrent Orders in an Interval (2025-06)" 同源，不计；FastPrep 无对应条目）
-> 证据只有帖子摘要的一句话：「processing order intervals to find maximum overlaps and handling order cancellations by buy/sell sides」，以及「先是过了一个 OA……面试小哥还是很 nice 的」。
-> **所以：Part 1「订单区间求最大重叠」和 Part 2「按买 / 卖方向处理撤单」的方向来自证据；**
-> **区间半开约定、撤单的精确语义（截短区间）、Part 3 在线版、Part 4 坐标压缩，全部是 (reconstructed)**。
-> 原帖全文要登录才能看（`catalog/raw/forums.md` 待办里列了），拿到全文后以全文为准修改这里。
+# hc11 · 订单区间最大重叠 + 按买 / 卖方撤单
 
 ## 读题前你需要知道
 
@@ -12,10 +6,6 @@
 * **差分数组（difference array）**与前缀和；**有序 Map**（`TreeMap`）；
 * **线段树（segment tree）**与**懒标记（lazy propagation）**，以及**坐标压缩（coordinate compression）**；
 * **半开区间** `[start, end)` 的好处。
-
-讲义 [[hc11_order_interval_overlap]]（`study/30-articles/hc11_order_interval_overlap.md`）从零讲，并且从最笨的「逐个时刻数」开始推导，
-线段树从「为什么需要它」开始自己推出来。基础课：[[ordered_maps_trees]]、[[complexity]]、[[heap_priority_queue]]（对比：为什么这里用不上堆）。
-建议：先读讲义第 1–3 节，自己写 Part 1，再读第 4 节。
 
 ## 背景
 
@@ -34,7 +24,7 @@
 
 `Side`、`Peak`、`OrderEvent`（`Place` / `Cancel`）、`Report` 在 starter 里已给出，签名以 starter 为准，这里只写语义。
 
-## Part 1 · 最大重叠（方向高置信，细节 (reconstructed)）
+## Part 1 · 最大重叠
 
 `maxOverlap(long[][] intervals)` → `int`：每行 `{start, end}`，返回任意时刻同时活着的订单数的最大值。`peak(...)` → `Peak(count, time)`，`time` 是**最早**达到最大值的时刻。
 
@@ -53,7 +43,7 @@
 []                           → 0，Peak(0, 0)
 ```
 
-## Part 2 · 买 / 卖方向 + 撤单（方向有证据，语义 (reconstructed)）
+## Part 2 · 买 / 卖方向 + 撤单
 
 输入是一串 `OrderEvent`（顺序**无所谓**）：
 
@@ -80,7 +70,7 @@ all  = Peak(4, 4)    t=4：1、2、3、4；t=5：1、2、3、5 也是 4，取最
 （去掉两个 Cancel：all = Peak(5, 5)）
 ```
 
-## Part 3 · 在线版（(reconstructed)）
+## Part 3 · 在线版
 
 「订单和撤单是一个个实时到的，不能先攒起来再排序。每来一个事件都要能马上回答：到现在为止最大重叠是多少？t 时刻有几张单活着？」
 
@@ -99,9 +89,9 @@ all  = Peak(4, 4)    t=4：1、2、3、4；t=5：1、2、3、5 也是 4，取最
   不能被瞬时的 2 污染。所以最大值要等时间戳「过去」之后才算数，当前时间戳用当前值参与比较。
 * 在线答案必须与「把已到事件交给 Part 2 的 `analyze`」**逐前缀完全一致**（测试会对每个前缀对拍）。
 * 每个事件 O(log n)。80 万事件 < 2 s。
-* 追问：`t > now` 的预测查询为什么贵？怎么办？（讲义第 4–5 节）
+* 追问：`t > now` 的预测查询为什么贵？怎么办？
 
-## Part 4 · 大坐标：坐标压缩 + 线段树（(reconstructed)）
+## Part 4 · 大坐标：坐标压缩 + 线段树
 
 「时间戳是纳秒，范围 10^18，数组开不出来；而且订单可能以任意顺序加入和撤销，还要问『某个时间段内的最大重叠』。」
 
@@ -118,7 +108,7 @@ all  = Peak(4, 4)    t=4：1、2、3、4；t=5：1、2、3、5 也是 4，取最
 * 实现要求：坐标压缩（端点排序去重，二分查找下标）+ 区间加 / 区间最大值的线段树（懒标记）。每次操作 O(log n)。
 * 坐标接近 `Long.MAX_VALUE` 不能溢出（二分、比较都不做减法）。
 * 30 万个 10^18 量级的区间 + 10 万次 `maxIn` 查询 < 2 s。
-* 追问核心：**如果只要全局最大，为什么扫描线更好？线段树什么时候才值得？**（讲义第 5–6 节）
+* 追问核心：**如果只要全局最大，为什么扫描线更好？线段树什么时候才值得？**
 
 ## 边界清单（隐藏测试会打的）
 
@@ -132,17 +122,12 @@ all  = Peak(4, 4)    t=4：1、2、3、4；t=5：1、2、3、5 也是 4，取最
 | 大数 | `Long.MAX_VALUE` 附近的 start / end；`end - start` 溢出 |
 | 线段树 | 范围伸出所有端点之外；`to` 不含；单个端点；`remove` 之后回到原状 |
 
-## 野外变体
+## 相关变体
 
 * LeetCode 253 Meeting Rooms II（最少会议室 = 最大重叠）、LeetCode 731 / 732 My Calendar II / III（在线加区间，问 k 重预订）——Part 3 / 4 的原型。
 * 「每个订单有数量」：把 `+1 / -1` 换成 `+qty / -qty`，求同时在簿的最大总量。
 * 「同一方向内的重叠」vs「买卖对冲」：买方在簿量 − 卖方在簿量的最大绝对值，需要带符号的差分。
 * 区间含端点（闭区间）、或者时间是浮点——先问清楚约定。
-
-## 来源
-
-`catalog/raw/forums.md` A5（1p3a 1134455，2025-06-24，「processing order intervals to find maximum overlaps and handling order cancellations by buy/sell sides」，标题「店面挂经」）· X1（QuantVault "Maximum Concurrent Orders in an Interval (2025-06)"，同源不计）；
-`catalog/CATALOG.md` 行 hc11；`catalog/raw/official_and_process.md` D3 #17。
 
 ## 考什么
 

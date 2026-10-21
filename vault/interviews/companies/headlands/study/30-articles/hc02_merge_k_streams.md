@@ -1,14 +1,12 @@
 # hc02 讲义 · 合并 K 个有序序列：从"全部排序"到"多线程、永不卡死"
 
-> 配套题集：[problem.md](../../loop/rounds/01_video/hc02_merge_k_streams/problem.md) · [REPORT.md](../../loop/rounds/01_video/hc02_merge_k_streams/REPORT.md) · 参考解 `loop/rounds/01_video/hc02_merge_k_streams/reference/`
-> 读者设定：会写基本 Java（类、方法、循环、`ArrayList`/`HashMap`），没学过堆、迭代器协议、阻塞队列、线程中断、虚拟线程。每个概念从零讲。
-> 标 **(reconstructed)** 的是我根据题目标题补出来的，不是原题（证据只有标题和第一句话）。
+> 读者：会写基本 Java（类、方法、循环、`ArrayList`/`HashMap`），没学过堆、迭代器协议、阻塞队列、线程中断、虚拟线程；每个概念从零讲。
 
 ---
 
 ## 1. 这道题在问什么
 
-**Part 1（证据：「Given sequences, an array of integer sequences, merge all their entries into one…」）**：
+**Part 1**：
 
 给你 `k` 个序列，每个序列自己是**升序**排好的。把所有元素合并成一个升序序列。
 
@@ -22,7 +20,7 @@
 手算：每个序列只有"当前最前面还没用的元素"（队首）有资格成为下一个输出。三个队首是 1、2、3，最小的 1 就是输出的第一个；A 的队首变成 4；
 现在队首是 4、2、3，最小的 2；B 的队首变成 5……如此重复。这个"每次从 k 个候选里挑最小的"的动作，就是整题的核心。
 
-**后续追问（证据：「merge multiple data streams，包括 multithreaded non-blocking follow-up」「bounded overlapping background reads」）**：
+**后续追问**（合并多路数据流，带多线程、非阻塞、有界并发的 follow-up）：
 
 * 序列不是 `List`，而是**数据流**（stream）：可能很大、可能无限、可能从网络慢慢来，不能一次读完。
 * 多线程：每个流由一个线程负责读取（因为读流可能阻塞），合并器怎么和它们配合？
@@ -30,11 +28,13 @@
 * 有界：不能为了追求速度，把无限多的数据缓存在内存里。
 * 失败：一个流出错了怎么办？
 
-本讲义按这个顺序，从最笨的办法出发，一步步推出最终的解。
+下面按这个顺序，从最笨的办法出发，一步步推出最终的解。
 
 ---
 
 ## 2. 前置知识
+
+> 复杂度记号速记：`O(n)` 表示步数随输入规模 n 线性增长；`O(log n)` 表示 n 翻倍只多一步（二分查找、平衡树、堆）；`O(n²)` 表示每一对元素都要处理一次；`O(1)` 表示与 n 无关。
 
 ### 2.1 比较、`Comparable` 与"稳定"
 
@@ -43,7 +43,7 @@
 **为什么要注意**：不要用 `a - b < 0` 判断大小。`Long.MIN_VALUE - 1` 会溢出变成很大的正数，判断反了。永远用 `compareTo` 或 `Long.compare`。
 
 **稳定**（stable）：如果两个元素"相等"（`compareTo == 0`）但其实不是同一个东西（比如按年龄排序时两个人同龄），稳定的合并保证它们**保持原来的相对顺序**。
-对合并 k 个序列，我们规定：相等时**序列编号小的在前**，同一序列内部保持原来的顺序。这样输出是**确定**的——不管你用什么算法实现都得到同一个答案，测试才写得出来。
+对合并 k 个序列，我们规定：相等时**序列编号小的在前**，同一序列内部保持原来的顺序。这样输出是**确定**的——不管你用什么算法实现都得到同一个答案，才能写出可验证的期望。
 
 **泛型签名** `<T extends Comparable<? super T>>`：`T` 必须能和"T 或 T 的父类"比较。为什么是 `? super T`：如果 `class Dog extends Animal`，而 `Animal implements Comparable<Animal>`，
 那 `Dog` 不是 `Comparable<Dog>`，但它可以和 `Animal` 比较。`? super T` 让这种类型也能用。你背下这个写法即可（JDK 的 `Collections.sort` 也是这么写的）。
@@ -145,10 +145,10 @@ Thread t = Thread.ofVirtual().name("merge-producer-0").start(() -> { ... });
 
 **坑**：纯自旋（`while (!flag) {}`）不会让出载体线程；`synchronized` 块里阻塞在 JDK 21 会"钉住"载体线程——所以要阻塞的地方用 `ReentrantLock` 或 `java.util.concurrent` 里的类（`ArrayBlockingQueue` 内部用 `ReentrantLock`）。
 
-### 2.7 happens-before（一句话 + 链接）
+### 2.7 happens-before
 
 阻塞队列保证：一个线程在 `put(x)` **之前**做的所有写入，另一个线程 `take()` 到 `x` **之后**都看得见。你不必额外加锁来传递对象。
-内存可见性的完整讲解见 [hc04 讲义 §2.8](hc04_queue_mean_snapshot.md)。
+背景：CPU 缓存和编译器重排使得一个线程的写入不一定立刻被另一个线程看见。Java 内存模型用 **happens-before** 规定哪些写入保证可见：释放一把锁 happens-before 之后对同一把锁的获取；对 `volatile` 变量的写 happens-before 之后对它的读；`Thread.start()`、`join()`、并发队列的 `put`/`take` 也建立这种关系。
 
 ### 2.8 `sealed` 消息类型
 
@@ -199,7 +199,7 @@ return all;
 * 只想要合并后的**前 10 个**，却要排完全部；
 * 稳定性要自己保证——`Collections.sort` 是稳定的，所以这里其实是满足的，别白扔掉这个优点。
 
-**但是，诚实地说**：本机实测（k = 1000 条，每条 1000 个 `int`，N = 10⁶）这个笨办法只要约 **50 ms**，比下面的堆合并还快一倍——
+**但是，诚实地说**：实测（k = 1000 条，每条 1000 个 `int`，N = 10⁶）这个笨办法只要约 **50 ms**，比下面的堆合并还快一倍——
 因为 `Collections.sort` 用的 TimSort 会识别"已经有序的一段"（run）然后归并它们，实际上做的就是 k 路归并。
 所以：**在内存里的 `List`，别为了炫技放弃它**。堆的价值在于惰性/流式/只取前 m 个/常数额外空间/能并发。面试里这样说会让面试官觉得你有判断力。
 
@@ -214,7 +214,7 @@ return acc;
 `mergeTwo(a, b)` 用两个下标各指向 a、b 的当前位置，谁小取谁，`O(|a| + |b|)`。
 
 **对吗**：对。**复杂度**：第 i 次合并要拷贝前面已经合并好的 `acc`，长度大约 `i · (N/k)`。总共 `Σ i·N/k ≈ N·k/2`，即 `O(N·k)`。
-**在哪个输入上慢**：k = 1000，N = 10⁶ 实测 **约 1230 ms**，是堆版本的 11 倍；k 再大就更糟（k = 10⁴ 时每个元素平均被拷贝 5000 次）。
+**在哪个输入上慢**：k = 1000，N = 10⁶ 时 **约 1230 ms**，是堆版本的 11 倍；k 再大就更糟（k = 10⁴ 时每个元素平均被拷贝 5000 次）。
 问题的根源：`acc` 越来越大，却每次都要整个拷贝一遍。
 
 ---
@@ -251,7 +251,7 @@ return acc;
 
 **发现问题**：`PriorityQueue<Head<Long>>` 每个元素一个 `Long` 对象，堆里是指针，比较时要跳到各处读数据（缓存未命中）。
 **想法**：数据已经在 `long[][]` 里了。堆里只放 `int` 序列号，比较时直接读 `arrays[s][pos[s]]`。自己写堆（数组 + 上浮/下沉）。
-**为什么能解决**：没有分配对象，数据按顺序读（CPU 预取友好）。本机 **约 65 ms**（对比装箱版约 110 ms）。
+**为什么能解决**：没有分配对象，数据按顺序读（CPU 预取友好）。**约 65 ms**（对比装箱版约 110 ms）。
 **代价**：代码长、容易写错下沉逻辑；面试里要先写简单版，被追问性能再写这个。
 
 ### 步骤 4：惰性（Part 2）
@@ -264,7 +264,7 @@ return acc;
 4. 下一次 `hasNext()/next()` 开始时先给 `lastEmitted` 补位，再看堆。
 
 **为什么这样设计**：2.3 节讲过：慢 source 的下一个元素不该拖慢当前能返回的结果。
-**可验证的性质**（测试里就是这样断言的）：消费 n 个元素后，所有 source 的 `next()` 总调用次数 ≤ k + n − 1。
+**可验证的性质**：消费 n 个元素后，所有 source 的 `next()` 总调用次数 ≤ k + n − 1。
 **无限序列**：两个无限序列取前 10 个，只需要读约 11 个元素（k + 10 − 1）。
 
 **`Stream` 版**：`StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator, ORDERED), false)` 把迭代器包成 `Stream`，再 `onClose` 关闭所有输入。
@@ -331,9 +331,7 @@ try {
 
 ---
 
-## 5. 逐段讲参考解
-
-文件在 `loop/rounds/01_video/hc02_merge_k_streams/reference/`。
+## 5. 逐段讲解法
 
 ### 5.1 `MergeK.mergeIterators`
 
@@ -510,26 +508,26 @@ try (var scope = new StructuredTaskScope.ShutdownOnFailure("merge-all", Thread.o
 
 ## 6. Java 21 特性小课
 
-### J01 `record` / J02 `sealed` / J03 模式匹配 `switch` / J04 record 模式
+### `record` / `sealed` / 模式匹配 `switch` / record 模式
 `Poll`、`Msg` 都是 sealed + record。`case Failed<T>(var cause) ->` 一次拆开。旧写法是类 + `instanceof` + 强转 + `getCause()`，漏掉一种情况时没有任何提示。
-`case Ready<T>(var v, _)` 里的 `_` 表示"这个字段我不关心"（J13，预览）。
+`case Ready<T>(var v, _)` 里的 `_` 表示"这个字段我不关心"（预览）。
 
-### J06 `instanceof` 模式
+### `instanceof` 模式
 旧：`if (e instanceof MergeException) { MergeException me = (MergeException) e; … }`。新：`e instanceof MergeException me ? me : …`，判断和绑定在一起，且 `me` 只在为真的分支里可见。
 
-### J10 虚拟线程
-见 2.6。**什么时候不该用**：CPU 密集型任务（它们不会阻塞，虚拟线程没有好处）；需要线程局部大对象的场景。
+### 虚拟线程
+（见 2.6）**什么时候不该用**：CPU 密集型任务（它们不会阻塞，虚拟线程没有好处）；需要线程局部大对象的场景。
 
-### J11 `StructuredTaskScope`（预览）
-见 2.9。编译运行需要 `--enable-preview`；API 在 JDK 21 到 25 之间还在变，生产代码要等正式版。
+### `StructuredTaskScope`（预览）
+（见 2.9）编译运行需要 `--enable-preview`；API 在 JDK 21 到 25 之间还在变，生产代码要等正式版。
 
-### J13 `_` 未命名模式/变量（预览）
+### `_` 未命名模式/变量（预览）
 `catch (InterruptedException _)`、`case End<T> _`。表明这个绑定故意不用。
 
-### J14 Stream
+### Stream
 `StreamSupport.stream(spliterator, false)` 把迭代器变成 `Stream`；`.onClose(Runnable)` 注册关闭回调，`try-with-resources` 会触发；`Stream.iterate(seed, f)` 做无限序列；`stream.toList()`（Java 16）返回不可修改列表。
 
-### J18 `Comparator` 组合子
+### `Comparator` 组合子
 `Comparator.<Head<T>, T>comparing(h -> h.value).thenComparingInt(h -> h.stream)`：先比值再比编号。旧写法要手写 `compare` 方法里的 `if (c != 0) return c;`。
 （`<Head<T>, T>` 是显式给泛型参数，因为 lambda 的参数类型推不出来。）
 
@@ -575,39 +573,32 @@ try (var scope = new StructuredTaskScope.ShutdownOnFailure("merge-all", Thread.o
 
 1. **用 `a - b` 比较。**
    * 错在哪：`Long.MAX_VALUE - (-1)` 溢出成负数，比较方向反了。
-   * 对应测试：`extremesDoNotOverflowComparisons`。
    * 正确：`Long.compare` / `compareTo`。
 
 2. **堆里只按值比较，不带序列号。**
    * 错在哪：相等值的出堆顺序由堆内部状态决定，不稳定、不确定。
-   * 对应测试：`equalElementsComeOutInStreamOrder`、并发测试里的 tie 检查。
 
 3. **构造时或刚输出完就去取下一个元素。**
    * 错在哪：多读了不需要的元素；遇到慢/无限 source 可能卡死。
-   * 对应测试：`constructionPullsNothingAndPullsAreMinimal`、`totalPullsNeverExceedKPlusConsumed`。
 
 4. **有流没数据时输出别的流的元素。**
    * 错在哪：见 4 节步骤 5，顺序错。
-   * 对应测试：`tryNextIsPendingUntilEveryLiveStreamHasAHead`。
 
 5. **无界队列。**
    * 错在哪：消费者慢时内存无限增长。
-   * 对应测试：`backpressureBoundsReadAhead`（精确断言 `capacity + 1`）。
 
 6. **所有流共用一个队列。**
    * 错在哪：快流占满队列，慢流的元素放不进去，合并器永远等它的队首。
 
 7. **生产者异常后没有终止标记。**
    * 错在哪：消费者永远 `take()`。
-   * 对应测试：`failingSourceSurfacesAsMergeExceptionAfterItsEarlierItems`。
 
 8. **`catch (InterruptedException e) {}` 吞掉中断。**
    * 错在哪：取消信号丢失，线程继续跑，`close()` 等不到它。
-   * 对应测试：`closeInterruptsBlockedProducersAndIsIdempotent`、`oneFailingProducerCancelsTheOthers`。
 
-9. **写测试时依赖 `Thread.sleep` 判断"现在应该是 Pending"。**
+9. **用 `Thread.sleep` 判断"现在应该是 Pending"。**
    * 错在哪：睡多久都不保证生产者线程已经跑过。
-   * 正确：让慢 source 由测试控制（`Gated`）——只要它没给数据，`Pending` 就是确定的结果；要等到某个事件时用 `CountDownLatch`、或在 `assertTimeoutPreemptively` 里 `yield` 轮询。
+   * 正确：让慢 source 由你控制（比如一个需要手动放行的 source）——只要它没给数据，`Pending` 就是确定的结果；要等到某个事件时用 `CountDownLatch`、或在 `assertTimeoutPreemptively` 里 `yield` 轮询。
 
 ---
 
@@ -654,11 +645,4 @@ Iterator<Integer> doubled(Iterator<Integer> it) {
 
 ---
 
-## 10. 延伸阅读
-
-* Cormen 等，*Introduction to Algorithms*（CLRS）第 6 章 Heapsort / 优先队列，以及习题 6.5-9（合并 k 个有序列表）——堆与 k 路归并的标准出处。
-* Knuth, *The Art of Computer Programming* Vol. 3 §5.4.1——败者树（tournament tree）与外排序的多路归并。
-* `java.util.PriorityQueue`、`java.util.concurrent.ArrayBlockingQueue`、`java.util.concurrent.StructuredTaskScope` 的 Javadoc。
-* JEP 444（Virtual Threads）、JEP 453（Structured Concurrency，JDK 21 预览）——设计动机与使用约束（尤其是 pinning 一节）。
-* Goetz 等，*Java Concurrency in Practice* 第 5 章（阻塞队列与生产者-消费者）和第 7 章（取消与关闭、中断策略）。
-* Tim Peters 的 `listsort.txt`（CPython 源码里的 TimSort 说明，Java 的 TimSort 同源）——解释为什么"拼接再排序"对分段有序的输入这么快。
+「延伸」Goetz 等《Java Concurrency in Practice》第 5 章（阻塞队列与生产者-消费者）、第 7 章（取消与关闭）。

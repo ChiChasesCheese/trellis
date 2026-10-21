@@ -1,9 +1,6 @@
 # ld02 · 交易相关的 OOD：订单状态机、仓位盈亏、交易前风控、事件溯源 —— 讲义
 
-> 题面：`loop/rounds/03_lld/ld02_trading_ood/problem.md` · 代码：同目录 `reference/`（`OrderManager` `PositionBook` `RiskEngine` `TradingDesk` 与若干数据类型）· 测试：`test/`（56 个）
-> 实验代码：`study/30-articles/examples/ld02/DeskBench.java`（事件处理速度）。本文的"实测"来自它和测试套件在本机（Apple M 系列，12 核，JDK 21.0.12）的运行。
-> 写法说明见 `study/TEXTBOOK.md`。读者设定：只会基本 Java（类、方法、循环、`ArrayList` / `HashMap` 的基本用法），不懂交易，也没学过状态机和事件溯源。
-> **题面是 (reconstructed)**：证据只有「1p3a 一帖摘要：33 分钟电话面里一道不是很难的、与交易相关的 OOD」。本讲义覆盖这类题最可能出现的四个形态。真面试先问清楚题目。
+> 读者：只会基本 Java（类、方法、循环、`ArrayList` / `HashMap`），不懂交易，也没学过状态机和事件溯源。本篇覆盖这类题最可能出现的四个形态；真面试先问清楚题目。
 
 ---
 
@@ -46,7 +43,6 @@
 ⑥ 下单 #3：买 5,000 股 → 风控：5,000 > 1,000 → 拒绝 QTY_LIMIT；订单 #3 状态 REJECTED
 ```
 
-对应测试 `TradingDeskTest.fullLifecycleUpdatesOrderAndPosition`（那里的数字略有不同，逻辑一样）。
 
 ### 1.3 四个 Part 怎么递进
 
@@ -58,6 +54,8 @@
 ---
 
 ## 2. 前置知识
+
+> 复杂度记号速记：`O(n)` 表示步数随输入规模 n 线性增长；`O(log n)` 表示 n 翻倍只多一步（二分查找、平衡树、堆）；`O(n²)` 表示每一对元素都要处理一次；`O(1)` 表示与 n 无关。
 
 ### 2.1 订单、成交、仓位、盈亏
 
@@ -142,7 +140,7 @@ System.out.println(big + 1);                    // -9223372036854775808，回绕
 System.out.println(Math.addExact(big, 1));      // 抛 ArithmeticException，看得见的失败
 ```
 
-风控里这特别危险：一张名义金额溢出成负数的订单，会"小于上限"而被放行。所以用 `Math.multiplyExact` / `addExact`，溢出抛异常（在风控里把溢出当作"拒绝"）。参见 `study/10-java21/J15_math_string_utils.md`。
+风控里这特别危险：一张名义金额溢出成负数的订单，会"小于上限"而被放行。所以用 `Math.multiplyExact` / `addExact`，溢出抛异常（在风控里把溢出当作"拒绝"）。
 
 ### 2.4 交易前风控（pre-trade risk check）
 
@@ -193,13 +191,16 @@ System.out.println(Math.addExact(big, 1));      // 抛 ArithmeticException，看
 | 随机数 | 无种子的 `Random` | 不用 |
 | 多线程竞态 | 两个线程的交错顺序每次不同 | 单线程使用（单写者），线程交错的顺序要记进日志 |
 
-**"先记日志，后处理"（journal before process）**：每个输入事件先追加到日志，再去改内存状态。这样内存里任何一个状态改变，都有日志里的一条事件对应。反过来先改状态再记日志，崩在中间就丢了一条事件。（参见 trellis 卡片 `problems-stock-exchange-journal-before-match-replay-recovery` 对撮合引擎的讲解；本题的 `TradingDesk` 是它的缩小版。注意区分：交易所自己必须先落盘再处理；我们作为交易所的客户，订单的真相在交易所，所以日志主要用于重建和复盘，见 sd03。）
+**"先记日志，后处理"（journal before process）**：每个输入事件先追加到日志，再去改内存状态。这样内存里任何一个状态改变，都有日志里的一条事件对应。反过来先改状态再记日志，崩在中间就丢了一条事件。（撮合引擎也是这样做的；本题的 `TradingDesk` 是它的缩小版。注意区分：交易所自己必须先落盘再处理；我们作为交易所的客户，订单的真相在交易所，所以日志主要用于重建和复盘。）
 
 **异常输入怎么办**：一个非法输入（比如对不存在的订单发 `Ack`）——它已经在日志里了（因为先记日志），处理时抛异常，**状态没有改变**。重放时这个输入又会抛同样的异常——重放必须像第一次一样**吞掉**它，否则一个坏输入会让整个恢复失败。这依赖于"先验证、后修改"：抛异常的路径不改任何状态。
 
-### 2.6 Java 21 语法前置（只列链接）
+### 2.6 Java 21 语法前置
 
-* `record`（含紧凑构造器）：[J01](../10-java21/J01_record.md)；`sealed`：[J02](../10-java21/J02_sealed.md)；模式匹配 `switch`：[J03](../10-java21/J03_pattern_switch.md)；record 模式：[J04](../10-java21/J04_record_patterns.md)；`switch` 表达式 + `yield`：[J05](../10-java21/J05_switch_expressions.md)。
+* `record`（含紧凑构造器）：不可变值类型，自动生成构造器、访问器、`equals` / `hashCode` / `toString`；紧凑构造器里写校验。
+* `sealed`：限定一个接口只能有哪几种实现，让 `switch` 可以被编译器检查是否穷尽。
+* 模式匹配 `switch` 与 record 模式：`switch (e) { case Fill(var id, var qty) -> … }` 一步完成类型判断和字段解构。
+* `switch` 表达式 + `yield`：`switch` 可以直接产生值，分支没有 fallthrough；多行分支用 `yield` 返回值。
 
 ---
 
@@ -227,7 +228,7 @@ boolean riskOk(Order o) {
 }
 ```
 
-**它在哪些输入上错 / 慢**（每一条都对应一个隐藏测试）：
+**它在哪些输入上错 / 慢**：
 
 | 输入 | 暴露的问题 |
 |---|---|
@@ -276,14 +277,14 @@ public record Order(long id, String symbol, Side side, long qty, long px) {
 **问题**：交易所/网关的回报是 **at-least-once**（至少一次）投递：同一笔成交可能到两次。
 **想法**：每笔成交有全局唯一的 `execId`，记在 `Set` 里；见过的直接返回 `false`。
 **为什么放在状态检查之前**：订单已 `FILLED` 后，旧回报重放过来——如果先检查状态，它会被当作"终态后又来 Fill"的**非法转移**而抛异常；但它其实只是一条重复消息，应该安静地忽略。
-**一个细节**：只有**验证通过之后**才把 `execId` 记进 `Set`。超量成交的 `Fill` 被拒绝了，它的 `execId` 就不能算"已处理"——否则之后用合法数量重发会被当成重复而吞掉（测试 `overfillRejectedAndNotRecorded`）。
+**一个细节**：只有**验证通过之后**才把 `execId` 记进 `Set`。超量成交的 `Fill` 被拒绝了，它的 `execId` 就不能算"已处理"——否则之后用合法数量重发会被当成重复而吞掉。
 
 ### 步骤 4：风控要的聚合量，增量维护
 
 **问题**：风控每个订单都要问"这个标的未完成的买单总量"和"一共几张未完成订单"。扫描所有订单是 O(n)。
 **想法**：把这两个量作为状态的一部分，在**每次状态变化**时同步更新：
 `submit` +qty；`Fill` −成交量；`Cancel`/`Reject` −剩余量；到达终态时 `openCount--`。
-**为什么有效**：查询变成 O(1) 的 map 查找。代价：**所有会改变订单的地方都要记得更新**——漏一处聚合量就漂移。所以测试里有一个随机事件流的对照测试（每隔一阵用"逐单重算"校验聚合量，`randomEventsKeepAggregatesConsistent`）。
+**为什么有效**：查询变成 O(1) 的 map 查找。代价：**所有会改变订单的地方都要记得更新**——漏一处聚合量就漂移。所以要用随机事件流做对照校验（每隔一阵用"逐单重算"检查聚合量是否一致）。
 **新复杂度**：每次事件 O(1)；风控查询 O(1)。
 
 ### 步骤 5：仓位用 FIFO lot 队列
@@ -308,7 +309,7 @@ public record Order(long id, String symbol, Side side, long qty, long px) {
 
 **问题**：怎么证明状态可恢复？
 **想法**：定义 `DeskEvent`（`Submit`、`SetReferencePrice`、`Halt`、`Resume` 以及 `ExecEvent`）作为**全部输入**；每个变更方法先 `journal.add(event)`，再 `handle(event)`；`replay` 对新 desk 重复 `handle`。
-**为什么有效**：输出（风控结论、被拒订单、仓位）全部是输入的函数，不在日志里；重放时会重新算出来——如果两次不相等，就是有非决定性的东西混进来了（测试 `replayEqualsOriginalOnRandomEventStreams`：25 个随机种子 × 600 步）。
+**为什么有效**：输出（风控结论、被拒订单、仓位）全部是输入的函数，不在日志里；重放时会重新算出来——如果两次不相等，就是有非决定性的东西混进来了。
 
 ### 步骤 9：重放吞掉同样的异常
 
@@ -318,7 +319,7 @@ public record Order(long id, String symbol, Side side, long qty, long px) {
 
 ---
 
-## 5. 逐段讲参考解
+## 5. 逐段讲解法
 
 ### 5.1 数据类型和状态机（`Order`、`ExecEvent`、`OrderManager.apply`）
 
@@ -506,7 +507,7 @@ public sealed interface ExecEvent extends DeskEvent permits ExecEvent.Ack, ExecE
 * 价格带：`Math.abs(o.px() - ref) * 10_000` 与 `ref * limits.priceBandBps()` 比较，两边都是 `multiplyExact`。
 * `try { ... } catch (ArithmeticException overflow) { return reject(NOTIONAL_LIMIT); }`：名义金额或价格带的乘法溢出，一律拒绝。
 * 最坏情况仓位：`orders.openLeaves(...)` 是 O(1)（§4 步骤 4），`positions.netQty` 遍历该标的的 lot（通常很短；若成为瓶颈，可以在 `Book` 里缓存 `netQty`）。
-* `check` 不改任何状态：这让风控可以在"登记订单之前"调用，也让它可以单独测试。
+* `check` 不改任何状态：这让风控可以在"登记订单之前"调用，也让它可以单独验证。
 
 ### 5.4 装配与重放（`TradingDesk`）
 
@@ -575,13 +576,13 @@ public sealed interface ExecEvent extends DeskEvent permits ExecEvent.Ack, ExecE
 ```
 
 * `handle` 是**唯一**修改状态的地方，`submit/onExec/...` 只是"先记日志、再调 handle"的薄包装；`replay` 也调同一个 `handle`——所以实时路径和恢复路径用的是同一份代码，不可能出现"重放逻辑和实时逻辑悄悄分叉"。
-* `case DeskEvent.SetReferencePrice(var symbol, var px) -> ...`：record 模式把字段直接解构出来（J04）。
+* `case DeskEvent.SetReferencePrice(var symbol, var px) -> ...`：record 模式把字段直接解构出来。
 * `handleSubmit`：先检查重复 id；再 `risk.check`（**在登记之前**）；再登记；被拒则立即应用一条 `Reject`——这条内部 `Reject` 不进 journal（它是**输出**，重放时会由同样的风控重新产生）。
 * `handleExec`：`orders.apply` 返回 `true`（不是重复）并且是 `Fill` 才更新仓位。`x instanceof ExecEvent.Fill(var orderId, var ignoredExecId, var qty, var px)` 是 record 模式的 `instanceof` 形式。
 
-### 5.5 本机实测
+### 5.5 数据
 
-`study/30-articles/examples/ld02/DeskBench.java`（JIT 预热后取 5 次中位数）：
+事件处理速度（JIT 预热后取 5 次中位数）：
 
 ```text
 live  : 400,000 events in 17.7 ms (median of 5) => 22.63 M events/s, 44 ns/event
@@ -591,8 +592,8 @@ PositionBook.onFill: 3,000,000 fills in 103.3 ms => 29.03 M fills/s（含 "S"+i 
 
 怎么读这些数字：
 
-* 这是**吞吐的量级**，不是延迟指标：测的是平均值，不含 GC 停顿的尾部；reference 为清晰用了 `HashMap<Long, …>`、装箱、record 分配，没有为零分配优化。
-* 想要在 sd03 那样的 µs 级热路径上用，需要：`long → int` 原语哈希表、预分配的订单槽位、不为每个事件创建 record。见 `loop/rounds/04_sd/sd03_low_latency_trading_system/model_answer.md` §5.2、§12。
+* 这是**吞吐的量级**，不是延迟指标：测的是平均值，不含 GC 停顿的尾部；这里的实现为清晰用了 `HashMap<Long, …>`、装箱、record 分配，没有为零分配优化。
+* 想要用在 µs 级的热路径上，需要：`long → int` 原语哈希表、预分配的订单槽位、不为每个事件创建 record。
 * 重放速度与实时速度几乎一样——因为它们是同一份 `handle`；重放比实时快的部分只在于不用等输入。
 
 ---
@@ -601,15 +602,15 @@ PositionBook.onFill: 3,000,000 fills in 103.3 ms => 29.03 M fills/s（含 "S"+i 
 
 | 特性 | 旧写法（Java 8 风格） | 新写法（本题） | 编译器多做了什么 / 什么时候别用 |
 |---|---|---|---|
-| **`record` + 紧凑构造器**（[J01](../10-java21/J01_record.md)） | 15 行：私有 final 字段、构造器、getter、`equals`、`hashCode`、`toString` | `record Order(long id, String symbol, ...) { Order { 校验 } }` | 编译器生成全部样板，字段不可变。不要用在需要继承或可变的地方。`record` 的 `equals` 对 `byte[]` 字段是引用比较——本题没有数组字段 |
-| **`sealed interface ... permits`**（[J02](../10-java21/J02_sealed.md)） | `interface ExecEvent {}` + 约定「只有这四个实现」 | `sealed interface ExecEvent permits Ack, Fill, Cancel, Reject` | 编译器知道所有子类型，`switch` 才能检查穷尽。不要用在需要外部扩展的 SPI 上 |
-| **`switch` 模式匹配**（[J03](../10-java21/J03_pattern_switch.md)） | `if (e instanceof Ack) {...} else if (e instanceof Fill) {...}` 加强制转换，漏一个分支运行时才发现 | `switch (event) { case ExecEvent.Ack a -> ...; case ExecEvent.Fill f -> ...; ... }` | 对 sealed 类型不需要 `default`；少写一个 `case` 编译报错。若加了 `default`，反而会掩盖「新增事件类型忘了处理」 |
-| **record 模式**（[J04](../10-java21/J04_record_patterns.md)） | `if (e instanceof Fill) { Fill f = (Fill) e; long q = f.qty(); ... }` | `x instanceof ExecEvent.Fill(var orderId, var execId, var qty, var px)`；`case DeskEvent.SetReferencePrice(var symbol, var px) -> ...` | 解构嵌套的 record；record 模式里不能写常量，要用 `when` 守卫 |
-| **`switch` 表达式 + `yield`**（[J05](../10-java21/J05_switch_expressions.md)） | 先声明 `boolean result;` 再在每个 `case` 里赋值，别忘了 `break` | `return switch (event) { case ... -> { ...; yield true; } }` | 没有 fall-through；每个分支必须产出值，漏了编译报错 |
-| **`Math.multiplyExact` / `addExact`**（[J15](../10-java21/J15_math_string_utils.md)） | `long r = a * b;`（溢出默默回绕）或手写 `if (a != 0 && r / a != b)` | `Math.multiplyExact(px, qty)` 溢出抛 `ArithmeticException` | 比手写检查短；热路径上有少量开销（JIT 会做内联成溢出标志检查）。「用异常表示拒绝」要像本题一样，在不应改变状态的地方捕获 |
-| **`Stream.toList()`**（[J14](../10-java21/J14_stream_api.md)） | `.collect(Collectors.toList())`（可变，类型不保证） | `.sorted(...).toList()`（不可变） | 返回不可修改的列表；若要 `null` 元素也允许 |
+| **`record` + 紧凑构造器** | 15 行：私有 final 字段、构造器、getter、`equals`、`hashCode`、`toString` | `record Order(long id, String symbol, ...) { Order { 校验 } }` | 编译器生成全部样板，字段不可变。不要用在需要继承或可变的地方。`record` 的 `equals` 对 `byte[]` 字段是引用比较——本题没有数组字段 |
+| **`sealed interface ... permits`** | `interface ExecEvent {}` + 约定「只有这四个实现」 | `sealed interface ExecEvent permits Ack, Fill, Cancel, Reject` | 编译器知道所有子类型，`switch` 才能检查穷尽。不要用在需要外部扩展的 SPI 上 |
+| **`switch` 模式匹配** | `if (e instanceof Ack) {...} else if (e instanceof Fill) {...}` 加强制转换，漏一个分支运行时才发现 | `switch (event) { case ExecEvent.Ack a -> ...; case ExecEvent.Fill f -> ...; ... }` | 对 sealed 类型不需要 `default`；少写一个 `case` 编译报错。若加了 `default`，反而会掩盖「新增事件类型忘了处理」 |
+| **record 模式** | `if (e instanceof Fill) { Fill f = (Fill) e; long q = f.qty(); ... }` | `x instanceof ExecEvent.Fill(var orderId, var execId, var qty, var px)`；`case DeskEvent.SetReferencePrice(var symbol, var px) -> ...` | 解构嵌套的 record；record 模式里不能写常量，要用 `when` 守卫 |
+| **`switch` 表达式 + `yield`** | 先声明 `boolean result;` 再在每个 `case` 里赋值，别忘了 `break` | `return switch (event) { case ... -> { ...; yield true; } }` | 没有 fall-through；每个分支必须产出值，漏了编译报错 |
+| **`Math.multiplyExact` / `addExact`** | `long r = a * b;`（溢出默默回绕）或手写 `if (a != 0 && r / a != b)` | `Math.multiplyExact(px, qty)` 溢出抛 `ArithmeticException` | 比手写检查短；热路径上有少量开销（JIT 会做内联成溢出标志检查）。「用异常表示拒绝」要像本题一样，在不应改变状态的地方捕获 |
+| **`Stream.toList()`** | `.collect(Collectors.toList())`（可变，类型不保证） | `.sorted(...).toList()`（不可变） | 返回不可修改的列表；若要 `null` 元素也允许 |
 | **`List.copyOf`** | `Collections.unmodifiableList(new ArrayList<>(x))` | `List.copyOf(journal)` | 防御性拷贝，返回不可变；元素不能为 `null` |
-| **`var`**（[J08](../10-java21/J08_var.md)） | `RiskResult r = ...` / `DeskEvent.Halt e = new DeskEvent.Halt();` | `var e = new DeskEvent.Halt();` | 只在右边已写出类型时使用 |
+| **`var`** | `RiskResult r = ...` / `DeskEvent.Halt e = new DeskEvent.Halt();` | `var e = new DeskEvent.Halt();` | 只在右边已写出类型时使用 |
 
 ---
 
@@ -618,7 +619,7 @@ PositionBook.onFill: 3,000,000 fills in 103.3 ms => 29.03 M fills/s（含 "S"+i 
 ### Q1：新增一条风控规则（比如「单标的每秒最多 N 笔」），要改哪里？
 
 **思考**：设计的扩展点在哪？现在是 `check` 里一串 `if`。
-**答案要点**：reference 为了清晰和可审计用顺序 `if`（检查顺序 = 枚举声明顺序）。扩展有两条路：①直接加一个 `RiskReason` + 一个 `if`（编译器通过 `switch` 穷尽性提醒处理新原因的地方）；②重构为 `List<RiskCheck>`（责任链），每条规则实现 `Optional<RiskReason> check(ctx)`，按固定顺序执行。后者利于测试和组合，代价是多一层间接和虚调用——**热路径**上我会保持前者（内联、可预测）。速率限制需要时间：**时间必须作为事件进来**（`Tick` 事件），不能在检查里读时钟，否则破坏决定性。
+**答案要点**：这里的实现为了清晰和可审计用顺序 `if`（检查顺序 = 枚举声明顺序）。扩展有两条路：①直接加一个 `RiskReason` + 一个 `if`（编译器通过 `switch` 穷尽性提醒处理新原因的地方）；②重构为 `List<RiskCheck>`（责任链），每条规则实现 `Optional<RiskReason> check(ctx)`，按固定顺序执行。后者利于测试和组合，代价是多一层间接和虚调用——**热路径**上我会保持前者（内联、可预测）。速率限制需要时间：**时间必须作为事件进来**（`Tick` 事件），不能在检查里读时钟，否则破坏决定性。
 **可以说**：「新规则要加在枚举里固定的位置；时间依赖的规则，时间要作为输入事件传进来。」
 
 ### Q2：多个线程同时提交订单怎么办？
@@ -648,38 +649,38 @@ PositionBook.onFill: 3,000,000 fills in 103.3 ms => 29.03 M fills/s（含 "S"+i 
 
 ### Q7：怎么把状态持久化，重启后恢复？
 
-**答案要点**：落地 journal（追加写文件）；定期快照（把当前状态序列化，记下日志位置）；恢复 = 读快照 + 重放其后的日志。快照必须与日志位置原子对应。日志格式：定长头 + 二进制载荷、校验和、按大小切段。注意恢复后要对账交易所（订单真相在交易所），见 sd03 §8。
+**答案要点**：落地 journal（追加写文件）；定期快照（把当前状态序列化，记下日志位置）；恢复 = 读快照 + 重放其后的日志。快照必须与日志位置原子对应。日志格式：定长头 + 二进制载荷、校验和、按大小切段。注意恢复后要对账交易所（订单真相在交易所）。
 **可以说**：「快照加日志尾，恢复时间由日志尾的长度决定，所以快照要定期。」
 
 ### Q8：重放结果与线上不一致，怎么排查？
 
 **答案要点**：二分日志：重放前 k 条，比较状态摘要（哈希）与线上同一位置的摘要，找到第一个分叉的事件；常见原因：读了时钟 / 随机数 / `HashMap` 遍历顺序 / 浮点 / 外部可变状态 / 线程。预防：线上周期性记录状态摘要进日志；发布前用生产日志做重放回归。
-**可以说**：「决定性要用测试守护，不是靠自觉。」
+**可以说**：「决定性要靠自动化校验（重放比对）守护，不是靠自觉。」
 
 ### Q9：性能：每秒 100 万个事件，这个实现够吗？
 
-**答案要点**：本机实测约 2,200 万事件/s（平均，JIT 预热后），平均吞吐够；但 µs 级尾延迟不够：每个事件分配 record、`HashMap<Long,…>` 装箱、`ArrayList` 增长都会产生垃圾，导致 GC 停顿。改进：原语哈希表（`long→int`）、订单槽位预分配 + 空闲链表、journal 用预分配的环/mmap 而不是 `ArrayList<DeskEvent>`、事件用 flyweight 视图。
+**答案要点**：约 2,200 万事件/s（平均，JIT 预热后），平均吞吐够；但 µs 级尾延迟不够：每个事件分配 record、`HashMap<Long,…>` 装箱、`ArrayList` 增长都会产生垃圾，导致 GC 停顿。改进：原语哈希表（`long→int`）、订单槽位预分配 + 空闲链表、journal 用预分配的环/mmap 而不是 `ArrayList<DeskEvent>`、事件用 flyweight 视图。
 **可以说**：「吞吐够，尾延迟要看分配；先测量再优化。」
 
 ### Q10：`record` 的 `equals` 让两个 desk 的状态可以直接比较，这有什么风险？
 
-**答案要点**：record 的 `equals` 逐字段比较，对嵌套 record 递归，OK；但包含 `double`（NaN）或数组会有陷阱；`OrderView` 里是 `long`/`String`/枚举，安全。测试里 `assertEquals(a.allOrders(), b.allOrders())` 就依赖它。若字段是可变集合，比较的是当时内容。
+**答案要点**：record 的 `equals` 逐字段比较，对嵌套 record 递归，OK；但包含 `double`（NaN）或数组会有陷阱；`OrderView` 里是 `long`/`String`/枚举，安全。比较两个 desk 的 `allOrders()` 是否相等就依赖它。若字段是可变集合，比较的是当时内容。
 **可以说**：「record 相等是结构相等；要留意含数组和浮点的字段。」
 
 ---
 
 ## 8. 常见误区
 
-1. **先登记订单再做风控检查**。→ 错：订单把自己算进「未完成数量」，恰好顶格的订单被误拒。→ 正确：`check` 在 `submit` 之前（测试 `orderDoesNotCountItselfAgainstPositionLimit`）。
-2. **重复回报按状态检查**。→ 订单已 `FILLED` 后的旧回报被当作非法转移抛异常，或更糟——被当成新的成交把仓位翻倍。→ 正确：去重在状态检查之前（测试 `duplicateFillIsIdempotent`）。
-3. **边验证边修改**。→ 超量成交先把 `cumQty` 加了再发现超量，抛异常时状态已被破坏；`execId` 先记进了 Set，之后合法重发被吞。→ 正确：所有检查在修改之前（测试 `overfillRejectedAndNotRecorded`）。
-4. **用 `double` 或 `int`**。→ `int` 的 `qty × px` 在 21 亿就溢出；`double` 累加有误差。→ `long` + `multiplyExact`（测试 `notionalOverflowIsRejectedNotWrapped`）。
-5. **翻转时只改方向、不算盈亏**。→ 多头 10 股，卖 25 股：要先平 10 股实现盈亏，再以成交价开 15 股空头（测试 `flipThroughZeroOpensOppositeLotAtFillPrice`）。
-6. **风控只看净仓，不看挂单**。→ 净仓 2,500 + 挂单买 2,000，再买 501，看起来 3,001 没超，其实最坏 5,001（测试 `positionLimitCountsOpenOrdersWorstCase`）。
-7. **价格带用除法 / 浮点**。→ 边界（恰好 5%）因舍入被误拒或误放；参考价小（3）时「5% = 0.15」整除出 0（测试 `priceBandUsesIntegerArithmeticNoRounding`）。
-8. **缺参考价就放行**。→ 无法判断就放行，是 fail open；正确是拒绝（测试 `missingReferencePriceFailsClosed`）。
-9. **replay 里不吞异常**。→ 第一次抛过异常的输入，重放时同样抛，导致恢复失败（测试 `replaySwallowsInputsThatFailedTheFirstTime`）。
-10. **`journal()` 返回内部 list**。→ 调用方可以篡改日志；正确：`List.copyOf`（测试 `journalIsAnImmutableCopyInInputOrder`）。
+1. **先登记订单再做风控检查**。→ 错：订单把自己算进「未完成数量」，恰好顶格的订单被误拒。→ 正确：`check` 在 `submit` 之前。
+2. **重复回报按状态检查**。→ 订单已 `FILLED` 后的旧回报被当作非法转移抛异常，或更糟——被当成新的成交把仓位翻倍。→ 正确：去重在状态检查之前。
+3. **边验证边修改**。→ 超量成交先把 `cumQty` 加了再发现超量，抛异常时状态已被破坏；`execId` 先记进了 Set，之后合法重发被吞。→ 正确：所有检查在修改之前。
+4. **用 `double` 或 `int`**。→ `int` 的 `qty × px` 在 21 亿就溢出；`double` 累加有误差。→ `long` + `multiplyExact`。
+5. **翻转时只改方向、不算盈亏**。→ 多头 10 股，卖 25 股：要先平 10 股实现盈亏，再以成交价开 15 股空头。
+6. **风控只看净仓，不看挂单**。→ 净仓 2,500 + 挂单买 2,000，再买 501，看起来 3,001 没超，其实最坏 5,001。
+7. **价格带用除法 / 浮点**。→ 边界（恰好 5%）因舍入被误拒或误放；参考价小（3）时「5% = 0.15」整除出 0。
+8. **缺参考价就放行**。→ 无法判断就放行，是 fail open；正确是拒绝。
+9. **replay 里不吞异常**。→ 第一次抛过异常的输入，重放时同样抛，导致恢复失败。
+10. **`journal()` 返回内部 list**。→ 调用方可以篡改日志；正确：`List.copyOf`。
 
 ---
 
@@ -722,13 +723,4 @@ PositionBook.onFill: 3,000,000 fills in 103.3 ms => 29.03 M fills/s（含 "S"+i 
 
 ---
 
-## 10. 延伸阅读
-
-* FIX 协议规范（FIX Trading Community）的 *Order State Change Matrices*——真实世界的订单状态机，比本题的教学版多 `PENDING_CANCEL`、`PENDING_REPLACE`、`SUSPENDED` 等状态。
-* Martin Fowler, 「Event Sourcing」（martinfowler.com）——事件溯源的定义与权衡。
-* Martin Fowler, 「The LMAX Architecture」（2011）——单线程业务逻辑 + 事件日志 + 重放的工业实例。
-* JEP 395（records）、JEP 409（sealed classes）、JEP 441（switch 模式匹配）、JEP 440（record 模式）——本题用到的语言特性的权威说明。
-* `java.lang.Math` Javadoc 中的 `multiplyExact` / `addExact`——溢出检测。
-* SEC Rule 15c3-5（市场准入规则）——预交易风险控制的法规背景。
-* DDIA（Kleppmann）第 11 章「流处理」中关于事件日志与状态派生的部分。
-* 本 kit：`loop/rounds/04_sd/sd03_low_latency_trading_system/model_answer.md`（把本题放进完整交易系统）、`study/30-articles/hc05_market_order_book.md`（交易所一侧的订单簿）、`study/30-articles/ld01_spsc_channel.md`（单写者通道）。
+「延伸」Martin Fowler「Event Sourcing」。

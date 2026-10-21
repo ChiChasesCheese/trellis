@@ -1,12 +1,8 @@
-# hc09 · REPORT
+# hc09 · 思路与追问
 
 ## 概要
 
-电面里「订单簿 / 交易事件处理」最集中（forums Q3，5 条）。hc09 最容易开口：十分钟写完 Part 1；真正考的是追问——tie-break 写没写全、溢出、流式（堆为什么不够）、多核结果一致。讲义：`study/30-articles/hc09_top_trades_by_notional.md`。
-
-## 来源与置信度
-
-见 problem.md §来源。整体「中」：FastPrep 1 + 1p3a 1，均只有一句话。Part 1 核心（平行数组 + price×volume 取最大）来自证据；QuantVault 标题 "Top K Tickers by Notional" 支持 Part 2 方向；整数 tick、全序 tie-break、溢出语义、Part 3、Part 4 全部 (reconstructed)。
+电面里「订单簿 / 交易事件处理」一类最集中。这题最容易开口：十分钟写完 Part 1；真正考的是追问——tie-break 写没写全、溢出、流式（堆为什么不够）、多核结果一致。
 
 ## 逐 Part 思路
 
@@ -19,35 +15,30 @@
 
 tie-break 只写 notional；快速拒绝写成 `<=`；`p*v` 不检查（`MAX*2` 绕回 -2；3037000499² 不溢出、3037000500² 必须报错）；只对进堆的事件做校验；`reversed()` 位置放错；聚合溢出（两个 `MAX/2+1`）；零 notional 的 ticker 丢失；窗口边界差一；总额溢出后状态损坏；`TreeSet` 比较器只看总额，吞掉同额 ticker；先改 total 后删旧键；combiner 方向反了；supplier 共享同一个 Map；`n*c` 溢出 int；合并时才溢出；失败后不取消其余块。
 
-## 复杂度 + 实测时间
+## 复杂度
 
-本机 12 核、JDK 21、ZGC，噪声大，只看数量级。
+12 核，噪声大，只看数量级。
 
 * Part 1，n=1e6、k=100、随机：堆 O(n log k) 2–14 ms；排序基线约 220 ms；k=1000、严格递增（每个都进堆）约 120 ms。
 * Part 2，n=1e6、m=1e5、k=50：HashMap + 堆 41–58 ms；Stream 82–103 ms。
 * Part 3，1e6 笔成交 + 1e4 次查询，窗口 5000，m=2000：约 430–480 ms。
 * Part 4，2e6 事件 / 5e4 ticker：顺序约 45 ms，各并行变体 20–110 ms（几乎没有加速）；2e7 / 200 ticker：顺序 210–330 ms，parallel 流 75–110 ms，共享 Map 300–350 ms；2e7 / 2e6 ticker：顺序 2.4–4.2 s，共享 Map 0.8–0.9 s 最快（合并成了瓶颈）。
-* perf 预算 2 s。
-
-## 测试清单
-
-135 个（`jtest.py run --impl reference`）：part1 24、part2 15、part3 20、part4 76；edge 43、fmt 1、perf 8、conc 41（`@RepeatedTest(20)` × 2：8 线程门闩并发调用 4 种实现；好坏调用混跑互不污染；外加取消的 smoke 测试）。
 
 ## Java 21 特性
 
-| id | 用在哪 |
+| 特性 | 用在哪 |
 |---|---|
-| J01 record + 紧凑构造器 | `Trade` 构造器里 `multiplyExact`，保证 `notional()` 不溢出 |
-| J02 sealed | `Feed` |
-| J03 + J04 | replay 里的 switch 模式匹配 + record 模式 + `when` 守卫 |
-| J08 | `var` |
-| J09 | `reversed()` / `peekFirst` / `removeFirst` / `getFirst` / `getLast` |
-| J14 | `groupingBy` + `reducing`、`teeing`、`toList` |
-| J15 | `multiplyExact` / `addExact`、`formatted` |
-| J18 | `Comparator` 组合子 |
-| J10 / J11 | 虚拟线程、`StructuredTaskScope`（预览） |
-| J16 | `ConcurrentHashMap.merge`、`CountDownLatch` |
-| J07 | 文本块（测试脚本） |
+| record + 紧凑构造器 | `Trade` 构造器里 `multiplyExact`，保证 `notional()` 不溢出 |
+| sealed | `Feed` |
+| 模式匹配 switch + record 模式 + `when` 守卫 | replay |
+| `var` | 局部变量 |
+| Sequenced Collections | `reversed()` / `peekFirst` / `removeFirst` / `getFirst` / `getLast` |
+| Stream API | `groupingBy` + `reducing`、`teeing`、`toList` |
+| 数学工具 | `multiplyExact` / `addExact`、`formatted` |
+| Comparator 组合子 | 多级 tie-break 排序 |
+| 虚拟线程 / `StructuredTaskScope`（预览） | 并行分块聚合 |
+| 并发工具 | `ConcurrentHashMap.merge`、`CountDownLatch` |
+| 文本块 | 多行输入脚本 |
 
 ## 面试官可能的追问
 

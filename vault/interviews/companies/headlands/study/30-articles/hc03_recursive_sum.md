@@ -1,9 +1,6 @@
 # hc03 · 递归求 1..n 之和 —— 讲义
 
-> 题面：`loop/rounds/01_video/hc03_recursive_sum/problem.md` · 速查：同目录 `REPORT.md` · 代码：同目录 `reference/RecursiveSum.java`
-> 写法说明见 `study/TEXTBOOK.md`。读者设定：会写基本 Java（类、方法、循环、递归、数组），其余从零讲。
-> 证据说明：公开信息只有「先不用公式求 1..n 之和，面试官不断加优化追问」「溢出 / 递归优化 / 尾递归」这几个关键词。
-> 区间、BigInteger、并行、虚拟线程这几部分是 **(reconstructed)**：按「面试官还会往哪推」补的。
+> 读者：会写基本 Java（类、方法、循环、递归、数组），其余从零讲。
 
 ---
 
@@ -32,6 +29,8 @@ n = 4：`sum(4) = 4 + sum(3) = 4 + (3 + sum(2)) = 4 + (3 + (2 + sum(1))) = 4 + (
 ---
 
 ## 2. 前置知识
+
+> 复杂度记号速记：`O(n)` 表示步数随输入规模 n 线性增长；`O(log n)` 表示 n 翻倍只多一步（二分查找、平衡树、堆）；`O(n²)` 表示每一对元素都要处理一次；`O(1)` 表示与 n 无关。
 
 ### 2.1 递归（recursion）
 
@@ -78,7 +77,7 @@ sum(2) 返回 3  → sum(3) 里 3 + 3 = 6，返回 6 → 弹出
 
 栈满了会怎样：JVM 抛出 `StackOverflowError`（注意是 `Error` 不是 `Exception`：它表示 JVM 自身的资源耗尽，不是你的业务逻辑错）。
 默认每个线程栈约 1 MiB（`-Xss` 可改，创建线程时也可以单独指定）。粗略估计：1 MiB ÷ 每帧几十字节 → 一万到几万层。
-本机实测见第 4 节。
+第 4 节会给出具体数字。
 
 **Java 里怎么写**：栈帧是 JVM 自动管理的，你写不出来也不用写。你能控制的是：给新线程指定栈大小
 
@@ -177,7 +176,7 @@ record Done<T>(T value) implements Trampoline<T> {}                       // 算
 record More<T>(Supplier<Trampoline<T>> next) implements Trampoline<T> {}  // 还有下一步（Supplier = 一个“稍后再算”的函数）
 ```
 
-代价：每一步在堆上分配一个 `More` 对象和一个 lambda，比普通循环慢（实测见第 4 节）。**trampoline 解决“不爆栈”，不解决“更快”。**
+代价：每一步在堆上分配一个 `More` 对象和一个 lambda，比普通循环慢（数字见第 4 节）。**trampoline 解决“不爆栈”，不解决“更快”。**
 
 ### 2.6 求和公式与奇偶（closed form）
 
@@ -212,13 +211,13 @@ x.longValueExact();               // 装不下就抛 ArithmeticException
 
 **为什么对本题重要**：循环能被编译器大幅优化（展开、去掉重复检查）；**递归只能内联一两层**（HotSpot 默认 `MaxRecursiveInlineLevel=1`），所以递归版每一层仍然是真正的函数调用。
 
-本机实测：`-XX:+PrintInlining` 对递归方法输出 `recursive inlining too deep`（见第 4 节）。
+`-XX:+PrintInlining` 对递归方法输出 `recursive inlining too deep`（见第 4 节）。
 副作用：同一个递归方法在**解释执行**时的栈帧比**编译后**大几倍，所以“能递归多深”不是常数。
 
 ### 2.9 线程、并行、ForkJoin、虚拟线程（第 4 步 7、8 用到）
 
 **线程**（thread）：程序里一条独立的执行流。**平台线程**（platform thread）就是操作系统线程，创建和切换较贵，数量有限（几千个）。
-**CPU 核**：真正同时执行代码的硬件单元。本机有 12 个。线程数多于核数时，OS 轮流让线程用核（时间片）。
+**CPU 核**：真正同时执行代码的硬件单元。例如一台 12 核的机器有 12 个。线程数多于核数时，OS 轮流让线程用核（时间片）。
 
 **并行**（parallelism）：多个任务**真的同时**在不同核上跑，目的是更快算完。**并发**（concurrency）：多个任务**交替**推进（比如等 I/O 时让别的任务用 CPU），目的是同时处理很多事，不一定更快。
 
@@ -230,14 +229,14 @@ x.longValueExact();               // 装不下就抛 ArithmeticException
 只有当虚拟线程**阻塞**（等网络、等锁、`sleep`）时才会被摘下来（unmount），让载体线程去跑别的虚拟线程。
 **所以：虚拟线程让“大量在等待的任务”很便宜，但不增加计算能力**；一个只做计算、从不阻塞的虚拟线程会一直霸占载体线程，没有时间片抢占。
 
-**内存带宽**：对 `long[]` 求和，每个元素只做一次加法，瓶颈是把数据从内存读进 CPU 的速度（内存带宽），而不是加法。所以核再多，加速也有上限。本机 5000 万个 long = 400 MB，顺序求和 17 ms ≈ 23 GB/s，并行只能再快 4–5 倍。
+**内存带宽**：对 `long[]` 求和，每个元素只做一次加法，瓶颈是把数据从内存读进 CPU 的速度（内存带宽），而不是加法。所以核再多，加速也有上限。5000 万个 long = 400 MB，顺序求和 17 ms ≈ 23 GB/s，并行只能再快 4–5 倍。
 
 ### 2.10 本题用到的 Java 21 语法速览
 
 * `record`：自动生成构造器、访问器、`equals/hashCode/toString` 的不可变数据类。
 * `sealed interface X permits A, B`：规定 `X` 只能有 `A`、`B` 两种实现，编译器据此检查 `switch` 是否覆盖了所有情况。
 * 模式匹配 `switch`：`switch (x) { case A(var f) -> …; case B b -> … }`，一步判断类型并取出字段。
-* 细节见第 6 节与 `study/10-java21/` 中对应的 J01–J05 篇。
+* 细节见第 6 节。
 
 ---
 
@@ -253,7 +252,7 @@ static int sum(int n) {
 * **复杂度**：时间 O(n)（n 次调用，每次一个加法）；栈空间 O(n)（n+1 个栈帧同时存在）。这里 n 是输入的整数本身，不是输入的“长度”。
 * **它具体在哪个输入上错 / 慢**：
   1. `sum(65536)`：结果应该是 2 147 516 416，但 `int` 装不下，**静默**变成 −2 147 450 880。程序不报错，答案是错的。
-  2. 就算改成 `long`，`sum(1_000_000)` 在默认栈上抛 `StackOverflowError`。本机实测：默认 1 MiB 栈，`sumToRecursive(65536)` 就会爆栈（`40000` 还行）——**栈比 `int` 先出问题**。
+  2. 就算改成 `long`，`sum(1_000_000)` 在默认栈上抛 `StackOverflowError`。实际上，默认 1 MiB 栈下 `sumToRecursive(65536)` 就会爆栈（`40000` 还行）——**栈比 `int` 先出问题**。
   3. 对 `long` 溢出的 n = 4 294 967 296，需要 43 亿次递归，栈永远撑不到那里，递归版**根本测不出 long 溢出**。
 
 这三条就是后面所有改进的动力。
@@ -277,14 +276,14 @@ static int sum(int n) {
   ```
 
   调用方用 `switch` 处理，**编译器强制它处理 `Overflow`**。`ArithmeticException` 只在实现内部用，在公共入口转换成值。
-* **为了测试得动**：加一个 `Width { INT, LONG }` 枚举，让累加器可以是 `int` 宽度。这样 `INT` 在 n = 65 536 就溢出，不需要 43 亿次递归。
+* **为了便于验证**：加一个 `Width { INT, LONG }` 枚举，让累加器可以是 `int` 宽度。这样 `INT` 在 n = 65 536 就溢出，不需要 43 亿次递归。
 * **新复杂度**：不变，时间 O(n)，栈 O(n)。
 
 ### 步骤 2：测量栈深——`StackOverflowError` 发生在多深？
 
 * **发现问题**：“n = 100 万会怎样”要用数据回答，而不是猜。
 * **想法**：新开一个线程，指定栈大小，递归到爆为止，数递归了多少层（`measureDepth`）。
-* **本机实测**（M 系列，JDK 21.0.12）：
+* **阈值数据**：
 
   | 线程栈 | 冷启动第一次 | 预热之后 |
   |---|---|---|
@@ -293,7 +292,7 @@ static int sum(int n) {
   | 8 MiB | — | 516 748 |
   | 64 MiB | — | 4 186 764 |
 
-  结论：①大致与栈大小成正比；②**同一个 JVM 里，预热前后能差 3–4 倍**，因为解释执行的栈帧比 JIT 编译后的大；③不能依赖某个固定数字，所以测试只断言“64 MiB 的深度 > 4 × 512 KiB 的深度”。
+  结论：①大致与栈大小成正比；②**同一个 JVM 里，预热前后能差 3–4 倍**，因为解释执行的栈帧比 JIT 编译后的大；③不能依赖某个固定数字，只能说“栈越大深度越大”这类关系。
 * **新问题**：我们只是量出了界限，还没解决它。
 
 ### 步骤 3：最简单的解决方案——改成循环
@@ -306,8 +305,8 @@ static int sum(int n) {
   for (long i = 1; i <= n; i++) acc = w.add(acc, i);
   ```
 
-* **新复杂度**：时间 O(n)，栈 O(1)。本机 `n = 3×10⁸` 只需约 77 ms。
-* **为什么比递归快这么多**：实测 `n = 10 000` 重复 20 000 次（2×10⁸ 步），递归约 570–650 ms（≈ 3 ns/步），循环约 50 ms（≈ 0.25 ns/步）。
+* **新复杂度**：时间 O(n)，栈 O(1)。`n = 3×10⁸` 只需约 77 ms。
+* **为什么比递归快这么多**：`n = 10 000` 重复 20 000 次（2×10⁸ 步），递归约 570–650 ms（≈ 3 ns/步），循环约 50 ms（≈ 0.25 ns/步）。
   原因：递归每一步是真正的函数调用（压栈帧、栈检查、返回），JIT 只能内联一层（`-XX:+PrintInlining` 显示 `recursive inlining too deep`）；
   循环则能被展开，`addExact` 变成一条加法加溢出检查。
 
@@ -333,8 +332,8 @@ static int sum(int n) {
 
   注意：`w.add(acc, n)` 写在 **lambda 里面**，所以它是在 `run` 的循环里被执行的，而不是在 `step` 的帧里叠起来。
 * **为什么这样能解决问题**：每个 `step` 调用立刻返回（帧立刻弹出），栈深度恒为 1–2。
-* **新复杂度**：时间 O(n)，栈 O(1)，堆上每步一个短命对象（GC 压力 O(n) 但活跃对象 O(1)）。本机 `n = 5×10⁶` 约 14 ms；每步约 2.5 ns（比循环慢 10 倍，和递归同量级）。
-* **互递归**：`isEven(n) = n == 0 ? true : isOdd(n-1)`，`isOdd(n) = n == 0 ? false : isEven(n-1)`。这种“A 调 B、B 调 A”连 Scala `@tailrec` 都不处理，trampoline 可以：把两个函数都写成返回 `Trampoline<Boolean>` 的形式即可。测试在 512 KiB 栈上跑到 n = 200 万。
+* **新复杂度**：时间 O(n)，栈 O(1)，堆上每步一个短命对象（GC 压力 O(n) 但活跃对象 O(1)）。`n = 5×10⁶` 约 14 ms；每步约 2.5 ns（比循环慢 10 倍，和递归同量级）。
+* **互递归**：`isEven(n) = n == 0 ? true : isOdd(n-1)`，`isOdd(n) = n == 0 ? false : isEven(n-1)`。这种“A 调 B、B 调 A”连 Scala `@tailrec` 都不处理，trampoline 可以：把两个函数都写成返回 `Trampoline<Boolean>` 的形式即可。在 512 KiB 的栈上也能跑到 n = 200 万。
 
 ### 步骤 5：闭式公式
 
@@ -355,7 +354,7 @@ static int sum(int n) {
 
 ### 步骤 7：数组并行求和，但“求和顺序”会影响溢出判断
 
-* **新场景 (reconstructed)**：不是 1..n，而是一个 `long[]` 里 5000 万个数求和。单线程要扫完全部元素，想用多核。
+* **新场景**：不是 1..n，而是一个 `long[]` 里 5000 万个数求和。单线程要扫完全部元素，想用多核。
 * **想法**：把数组切块，每块算部分和，再合并（ForkJoin：`fork` 左半、自己算右半、`join`）。
 * **陷阱**：如果每块用 `Math.addExact` 累加，再用 `addExact` 合并，那么结果**依赖顺序**。例：`[MAX, 1, -1]`：真实和是 `MAX`，装得下；
   但从左到右加，`MAX + 1` 就抛异常。并行时每块边界是任意的，同一份数据换个切法，会时而抛时而不抛。
@@ -367,7 +366,7 @@ static int sum(int n) {
 ### 步骤 8：虚拟线程——为什么不适合 CPU 密集
 
 * **发现问题**：Java 21 有虚拟线程，“每块开一个虚拟线程”看起来很现代。
-* **实测**（本机 12 核，5000 万 long）：
+* **数据**（12 核，5000 万 long）：
 
   | 实现 | 时间 |
   |---|---|
@@ -385,9 +384,9 @@ static int sum(int n) {
 
 ---
 
-## 5. 逐段讲参考解
+## 5. 逐段讲解法
 
-下面按 `reference/RecursiveSum.java` 的顺序，贴关键片段并解释。
+下面按解法的顺序，贴关键片段并解释。
 
 ### 5.1 结果类型与位宽
 
@@ -549,9 +548,9 @@ public static SumResult sumVirtual(long[] data, int chunks) {
 
 ## 6. Java 21 特性小课
 
-> 每个特性在 `study/10-java21/` 里有独立课本（id 见括号）；这里只讲本题怎么用、与旧写法的对比。
+> 这里只讲本题怎么用这些特性、与旧写法的对比。
 
-### J01 record（+ J02 sealed）
+### record 与 sealed
 
 旧写法（Java 8）：
 
@@ -567,11 +566,11 @@ public final class Ok implements SumResult {
 ```
 
 新写法：`public record Ok(long value) implements SumResult {}`。编译器生成构造器、访问器、`equals/hashCode/toString`，字段 `final`。
-测试里能直接 `assertEquals(new Ok(55), result)`。**不该用**：需要可变状态、需要继承时。
+结果可以直接用 `equals` 比较，如 `new Ok(55)`。**不该用**：需要可变状态、需要继承时。
 
 `sealed interface SumResult permits Ok, Overflow`：旧写法里“结果有两种”只能靠约定（注释、`instanceof` 链加 `else throw`）。现在编译器知道只有这两种。
 
-### J03 + J04 模式匹配 switch 与 record 解构
+### 模式匹配 switch 与 record 解构
 
 旧写法：
 
@@ -593,29 +592,29 @@ String text = switch (r) {
 编译器做了：检查所有 `permits` 的类型都被覆盖（**穷尽性**）；一步完成类型判断 + 取字段。加一种新结果类型而没改 `switch`，**编译失败**，而不是运行时才崩。
 **不该用 `default`** 来偷懒：`default` 会让编译器不再提醒你漏了新变体。
 
-### J05 switch 表达式
+### switch 表达式
 
 `Width.add` 里 `return switch (this) { case INT -> …; case LONG -> …; };`：每个分支是一个值，没有 `break`，不会 fallthrough；枚举的所有常量必须覆盖。
 
-### J10 虚拟线程 + J11 StructuredTaskScope（预览）
+### 虚拟线程 + StructuredTaskScope（预览）
 
-见 5.6 与步骤 8。注意：`StructuredTaskScope` 在 Java 21 是**预览特性**，编译和运行都要 `--enable-preview`（本 kit 的 `jtest.py` 已经加了）。
+见 5.6 与步骤 8。注意：`StructuredTaskScope` 在 Java 21 是**预览特性**，编译和运行都要 `--enable-preview`。
 **不该用虚拟线程的地方**：CPU 密集计算、持有 `synchronized` 的长时间代码（Java 21 里会钉住载体线程）。
 
-### J13 未命名变量 `_`（预览）
+### 未命名变量 `_`（预览）
 
 `catch (StackOverflowError _)`：声明“我知道有个异常对象，但我不用它”。旧写法 `catch (StackOverflowError e)` 里 `e` 未使用，IDE 会警告。
 
-### J14 Stream API
+### Stream API
 
 `IntStream.range(0, chunks).parallel().mapToObj(i -> sumChunk(...)).reduce(Wide.ZERO, Wide::merge)`：对“块下标”并行，而不是对 5000 万个装箱的 `Long`。
 `Stream.toList()`（Java 16）返回不可变列表，代替 `collect(Collectors.toList())`。
 
-### J15 数学小工具
+### 数学小工具
 
 `Math.addExact / subtractExact / multiplyExact / toIntExact`、`Math.ceilDiv`（向上取整除法，代替 `(a + b - 1) / b` 的二次溢出风险）、`Long.compareUnsigned`。
 
-### J19 JIT 基础（口头）
+### JIT 基础（口头）
 
 见 2.8 与步骤 3。能说出“为什么递归比循环慢”“为什么栈深不稳定”，就够了。
 
@@ -632,7 +631,7 @@ String text = switch (r) {
 **Q2：你怎么知道会在多深爆栈？**
 
 * 思考过程：这是个“要不要诚实说不确定”的问题。能量出来，但不是常数。
-* 答案要点：深度 ≈ 栈大小 ÷ 每帧大小；本机 1 MiB 栈冷启动 17 258 层，预热后 57 996 层；受 JIT（解释帧大、编译帧小）、局部变量个数、`-Xss` 影响。
+* 答案要点：深度 ≈ 栈大小 ÷ 每帧大小；1 MiB 栈冷启动 17 258 层，预热后 57 996 层；受 JIT（解释帧大、编译帧小）、局部变量个数、`-Xss` 影响。
 * 可以说出口的话：“大约每 MiB 栈几万层，但随 JIT 状态变化 3–4 倍，我不会依赖它。要深递归我就用迭代，或给线程指定大栈，或者 trampoline。”
 
 **Q3：溢出时你返回什么？为什么不抛异常？**
@@ -652,7 +651,7 @@ String text = switch (r) {
 
 **Q6：为什么不用虚拟线程做并行求和？**
 
-* 答案要点：虚拟线程跑在数量 = 核数的载体线程上；不抢占，不增加并行度；实测载体线程限制为 1 个时 12 个虚拟线程 = 顺序；百万个虚拟线程慢 50 倍。CPU 密集用 ForkJoin / parallel stream；I/O 密集才用虚拟线程。
+* 答案要点：虚拟线程跑在数量 = 核数的载体线程上；不抢占，不增加并行度；载体线程限制为 1 个时 12 个虚拟线程 = 顺序；百万个虚拟线程慢 50 倍。CPU 密集用 ForkJoin / parallel stream；I/O 密集才用虚拟线程。
 
 **Q7：浮点数求和能并行吗？**
 
@@ -663,10 +662,10 @@ String text = switch (r) {
 ## 8. 常见误区
 
 1. **“`catch (StackOverflowError e) { return 0; }`”**——很多人想“让它别崩”。错在：把“栈不够”伪装成合法答案，答案是错的。栈溢出应当让调用方知道，或者从根本上避免（迭代 / trampoline）。
-2. **“`n * (n + 1) / 2` 就是正确的 O(1) 解”**——n 在 40 亿量级就会静默出负数（测试 `divideBeforeMultiply`）。正确：先除偶数，再 `multiplyExact`，再用 BigInteger 兜底。
-3. **“中间量溢出就报 Overflow”**——`MIN..MAX` 的和是 `Long.MIN_VALUE`，装得下（测试 `intermediateOverflowIsNotResultOverflow`）。要用 BigInteger 复核，而不是看到异常就下结论。
-4. **“`a > b` 时返回 0”**——可能是合理的约定，但必须明确；本题约定抛 `IllegalArgumentException`（reconstructed）。面试时要先问清楚。
-5. **“并行就是每块各自 `addExact` 再合并”**——顺序相关，见 Q5（测试 `parallelOverflowIsDecidedByTheTrueTotal`：`MAX × 2000 + MIN × 2000` 每块内溢出，总和 −2000 装得下）。
+2. **“`n * (n + 1) / 2` 就是正确的 O(1) 解”**——n 在 40 亿量级就会静默出负数。正确：先除偶数，再 `multiplyExact`，再用 BigInteger 兜底。
+3. **“中间量溢出就报 Overflow”**——`MIN..MAX` 的和是 `Long.MIN_VALUE`，装得下。要用 BigInteger 复核，而不是看到异常就下结论。
+4. **“`a > b` 时返回 0”**——可能是合理的约定，但必须明确；本题约定抛 `IllegalArgumentException`。面试时要先问清楚。
+5. **“并行就是每块各自 `addExact` 再合并”**——顺序相关，见 Q5（例：`MAX × 2000 + MIN × 2000` 每块内溢出，总和 −2000 装得下）。
 6. **“虚拟线程是更快的线程，所以到处用”**——只对阻塞 I/O 有利，CPU 密集无益（步骤 8）。
 7. **“`threshold` 写 0 或 1 都行”**——`threshold = 0` 时区间长度 1 的任务也要继续拆，`mid == from`，无限递归。
 8. **“trampoline 能让程序变快”**——不能，每步多一次堆分配（约 2.5 ns/步，比循环慢 10 倍），它只解决栈深。
@@ -718,26 +717,16 @@ static long sumTo(long n) {
 
 <details><summary>答案</summary>
 
-块数过多：任务创建、调度、合并的开销超过每块的计算量（本机虚拟线程 100 万块 190–204 ms，比 12 块慢 50 倍）。块数为 1：没有并行，等同于顺序。合适的块数 ≈ 核数的几倍（让负载均衡又不过度拆分），ForkJoin 里用 `threshold`（本机 10⁵ 个元素）控制。
+块数过多：任务创建、调度、合并的开销超过每块的计算量（虚拟线程 100 万块 190–204 ms，比 12 块慢 50 倍）。块数为 1：没有并行，等同于顺序。合适的块数 ≈ 核数的几倍（让负载均衡又不过度拆分），ForkJoin 里用 `threshold`（10⁵ 个元素）控制。
 </details>
 
 **题 6（实验）**：在你自己的机器上运行 `measureDepth(512 * 1024)` 两次（先冷启动、再预热 30 次之后），预测会看到什么？
 
 <details><summary>答案</summary>
 
-预热后的深度会比第一次大几倍（本机 6 161 → 25 228），因为 JIT 编译后的栈帧比解释执行的小。
+预热后的深度会比第一次大几倍（6 161 → 25 228），因为 JIT 编译后的栈帧比解释执行的小。
 </details>
 
 ---
 
-## 10. 延伸阅读
-
-* 《Structure and Interpretation of Computer Programs》第 1.2.1 节（线性递归与迭代）：为什么“递归的过程”和“递归的写法”是两回事，讲尾递归的经典来源。
-* Java 语言规范（JLS）§4.2.2 / §15.18.2：整数运算与溢出规则——确认“Java 整数加法回绕且不抛异常”。
-* Java 虚拟机规范（JVMS）§2.5.2「Java Virtual Machine Stacks」与 §6.3：栈、栈帧、`StackOverflowError` 的官方定义。
-* `java.lang.Math` 的 Javadoc（`addExact`、`multiplyExact`、`ceilDiv`、`clamp`）：每个方法的溢出语义。
-* `java.util.concurrent.ForkJoinPool` / `RecursiveTask` 的 Javadoc：“工作窃取”与阈值选择的官方指导。
-* JEP 444（Virtual Threads）：虚拟线程的动机、调度与“不适合 CPU 密集”的官方说明。
-* JEP 453（Structured Concurrency, Preview）：`StructuredTaskScope` 的设计。
-* JEP 441（Pattern Matching for switch）、JEP 440（Record Patterns）、JEP 409（Sealed Classes）：本题数据建模的语言基础。
-* Kotlin 文档「Tail recursive functions」：同一个问题在另一个 JVM 语言里怎么由编译器解决。
+「延伸」SICP 第 1.2.1 节（线性递归与迭代）。

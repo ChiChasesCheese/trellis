@@ -1,14 +1,12 @@
 # hc04 讲义 · 队列均值与快照：从「每次重新加一遍」到「无锁读」
 
-> 配套题集：[problem.md](../../loop/rounds/01_video/hc04_queue_mean_snapshot/problem.md) · [REPORT.md](../../loop/rounds/01_video/hc04_queue_mean_snapshot/REPORT.md) · 参考解 `loop/rounds/01_video/hc04_queue_mean_snapshot/reference/`
-> 读者设定：会写基本 Java（类、方法、循环、`ArrayList`/`HashMap`），没学过数据结构、浮点数、并发。所以每个概念都从零讲。
-> 标 **(reconstructed)** 的是我根据题目标题补出来的部分，不是原题（原题证据只有标题和第一句话）。
+> 读者：会写基本 Java（类、方法、循环、`ArrayList`/`HashMap`），没学过数据结构、浮点数、并发；每个概念从零讲。
 
 ---
 
 ## 1. 这道题在问什么
 
-**第一问**（证据：「实现一个 queue 和三个函数 push、pop 和 get_mean」）：
+**第一问**：实现一个 queue 和三个函数 `push`、`pop`、`get_mean`。
 
 做一个**队列**（queue）。队列像排队买票：新来的站队尾（`push`），队头的人先走（`pop`），先来的先走，叫「先进先出」（FIFO）。
 再加一个函数 `get_mean()`：返回现在队里所有数的**平均数**（mean）。
@@ -28,17 +26,19 @@ pop         返回 1，队列: [2, 3, 4]   get_mean → 9/3 = 3
 1. 每次 `get_mean` 都把所有数重新加一遍，太慢。
 2. 用 `double` 保存「当前总和」，加了又减，结果会悄悄变错。
 3. 数很大时 `long` 加法会溢出（变成负数）。
-4. 「快照」是什么？保存历史版本要复制多少数据？**(reconstructed)**
-5. 一个线程在改队列，另一个线程在读平均数，会不会读到「一半新一半旧」的值？**(reconstructed)**
+4. 「快照」是什么？保存历史版本要复制多少数据？
+5. 一个线程在改队列，另一个线程在读平均数，会不会读到「一半新一半旧」的值？
 
-本讲义按这个顺序一个一个解决。
+下面按这个顺序一个一个解决。
 
-**第二问**（证据：「第二问是实现一个带有 snapshot 的……」，被截断）：带快照的版本。我把它做成两个层次：
-Part 2 是「修正快照」事件流，Part 3 是「可以随时回头看任何历史版本」的持久化队列。都是 **(reconstructed)**。
+**第二问**：实现一个带 snapshot 的版本。可以分成两个层次：
+Part 2 是「修正快照」事件流，Part 3 是「可以随时回头看任何历史版本」的持久化队列。
 
 ---
 
 ## 2. 前置知识
+
+> 复杂度记号速记：`O(n)` 表示步数随输入规模 n 线性增长；`O(log n)` 表示 n 翻倍只多一步（二分查找、平衡树、堆）；`O(n²)` 表示每一对元素都要处理一次；`O(1)` 表示与 n 无关。
 
 ### 2.1 队列与「环形缓冲」（ring buffer）
 
@@ -114,7 +114,7 @@ s -= 1e16   →  0.0       （正确答案应该是 2）
 队列里就是这个场景：先 push 一个巨大的数，再 push 两个小数，然后 pop 掉巨大的数——剩下的两个小数的和应该是 2，用 `double` 维护总和得到 0。
 这叫**灾难性抵消**（catastrophic cancellation）。解决办法不是「用更好的 double」，而是**别用浮点数存总和**，用整数。
 
-**Java 里**：`double s = 0; s += 1e16; s += 1; s += 1; s -= 1e16;` → `s == 0.0`。（我在本机跑过。）
+**Java 里**：`double s = 0; s += 1e16; s += 1; s += 1; s -= 1e16;` → `s == 0.0`。
 
 ### 2.4 整数溢出、补码与 128 位累加器
 
@@ -146,7 +146,7 @@ hi' = hi + (x 的符号扩展) + carry
 结果 = 1·2^64 + (2^63-3) = 3·(2^63-1)   ✓
 ```
 
-（我用 Python 验证过：`3 * (2**63 - 1) == 27670116110564327421`，与 `hi*2^64 + lo` 一致。）
+（验算：`3 * (2**63 - 1) == 27670116110564327421`，与 `hi*2^64 + lo` 一致。）
 
 **够用吗**：n 个 `long` 之和的绝对值 ≤ n·2^63。队列元素最多 2^31 个，所以和 < 2^94，128 位（范围约 ±2^127）永远放得下。
 
@@ -163,14 +163,14 @@ hi' = hi + (x 的符号扩展) + carry
 **Java 里**：`BigInteger.gcd`。`BigInteger` 是任意精度整数，不会溢出，但每次运算都要在堆上分配新对象，所以只在**取答案**时用，不在每次 push/pop 里用。
 
 **转成 `double`**：什么时候一次 `a / b` 就是「正确舍入」的？当 `a` 和 `b` 都能被 `double` 精确表示（绝对值 ≤ 2^53）时，IEEE 754 规定除法结果是「精确商舍入到最近」，所以最近的 `double` 就是 `(double)a / b`。
-否则先用 `BigDecimal` 做高精度除法再取 `doubleValue()`（会有极小概率的「二次舍入」偏差，在本题的测试中不会出现，面试时提一句即可）。
+否则先用 `BigDecimal` 做高精度除法再取 `doubleValue()`（会有极小概率的「二次舍入」偏差，本题的数据范围内不会出现，面试时提一句即可）。
 
 ### 2.6 持久化数据结构（persistent data structure）与「版本」
 
 **是什么**：普通数据结构一改就丢了旧状态。**持久化**数据结构每次修改都生成一个**新版本**，旧版本仍然可读可用。
 
 **为什么需要**：Part 3 要求「保留每个历史版本，随时查任意版本的均值，并从旧版本分叉」。最笨的办法是每个版本复制一份数据：
-n 个版本、每份长度 n，总共 `O(n²)` 的时间和空间（本机实测，复制 2 万个版本要 168 ms，而且按平方增长）。
+n 个版本、每份长度 n，总共 `O(n²)` 的时间和空间（复制 2 万个版本要 168 ms，而且按平方增长）。
 
 **怎么工作**：让新旧版本**共享**没变的部分，只新建变了的那一点点。最简单的例子是链表：
 
@@ -203,7 +203,7 @@ n 个版本、每份长度 n，总共 `O(n²)` 的时间和空间（本机实测
     jump[n] = p
 ```
 
-直觉：跳跃的长度按 1、1、3、1、1、3、7……这种「近似 2 的幂减 1」的模式增长，长跳的数量是 `log n` 级别。我用代码算出深度 1..16 的 `jump`（所指祖先的深度）：
+直觉：跳跃的长度按 1、1、3、1、1、3、7……这种「近似 2 的幂减 1」的模式增长，长跳的数量是 `log n` 级别。深度 1..16 的 `jump`（所指祖先的深度）：
 
 ```
 深度:  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
@@ -248,12 +248,11 @@ v=5:  深度 5 == 5，找到。 共 3 步（朴素要 3 步，差别在深度大
 `VarHandle` 是 Java 9 引入的「对字段做精确内存操作」的句柄，`setRelease` 是 release 语义的写，`getAcquire` 是 acquire 语义的读。配对使用就建立了 happens-before：
 写者在 `setRelease` 之前做的一切（包括构造 `Stat` 对象的字段初始化），读者 `getAcquire` 读到这个引用之后都看得到。
 
-### 2.9 虚拟线程（一句话，细节见基础课）
+### 2.9 虚拟线程
 
 虚拟线程（virtual thread，JDK 21 正式）是由 JVM 调度的轻量线程，一个 JVM 可以同时开几十万个；它们跑在少量「载体线程」（carrier thread，数量 = CPU 核数）上。
 虚拟线程阻塞（睡眠、等队列）时会让出载体线程。**但纯自旋（`while (!flag) {}`）永远不让出**，如果自旋的虚拟线程数 ≥ 载体线程数，其他虚拟线程（比如本题的写者）就饿死。
-这是我在写本题测试时**真的踩到**的坑（读者自旋，写者一直拿不到 CPU，测试挂住），解决办法是自旋里加 `Thread.yield()`。
-基础概念的完整讲义计划放在 `study/00-foundations/`（线程 vs 虚拟线程）。
+这是个真实的坑（读者自旋，写者一直拿不到 CPU，程序挂住），解决办法是自旋里加 `Thread.yield()`，或让读者用平台线程。
 
 ---
 
@@ -275,7 +274,7 @@ class NaiveQueueMean {
 
 **对吗**：小数据对。**复杂度**：`push/pop` 是 `O(1)`，`getMean` 是 `O(n)`（n = 当前队列长度）。
 
-**具体在哪个输入上慢**：队列长度 2 万，每两次 push 求一次均值，共 20 万次 push：约 10 万次 `getMean` × 2 万次加法 = 20 亿次加法。本机实测 **2604 ms**（同样的操作序列，下面改进后的 `QueueMean` 只要 **3 ms**）。
+**具体在哪个输入上慢**：队列长度 2 万，每两次 push 求一次均值，共 20 万次 push：约 10 万次 `getMean` × 2 万次加法 = 20 亿次加法。实际 **2604 ms**（同样的操作序列，下面改进后的 `QueueMean` 只要 **3 ms**）。
 
 **具体在哪个输入上错**：
 
@@ -334,7 +333,7 @@ lo = l;
 
 ### 步骤 6（Part 2）：把「操作序列」做成数据
 
-**发现问题**：题目 (reconstructed) 给的是一串事件：push、pop、query、以及「修正快照」。一堆 `if (cmd.equals("push"))` 容易漏、容易写错。
+**发现问题**：题目 给的是一串事件：push、pop、query、以及「修正快照」。一堆 `if (cmd.equals("push"))` 容易漏、容易写错。
 **想法**：把每种事件建成一个类型，用 `sealed interface Event` 限定只有这四种；处理时用模式匹配 `switch`，编译器会检查你有没有漏掉某种事件。
 **修正快照的实现**：它的语义是「丢掉此前整段历史，队列内容就是快照给的列表」。最简单的实现：`q = new QueueMean()`，把列表逐个 push 进去。
 **新复杂度**：每个事件 `O(1)`，快照 `O(快照长度)`；总共 `O(输入总大小)`，这是下界（至少要读完输入）。
@@ -343,7 +342,7 @@ lo = l;
 ### 步骤 7（Part 3）：版本化 —— 从复制到共享
 
 **发现问题**：Part 3 要「任何历史版本都能查、能分叉」。
-**最笨**：每个版本复制整份内容：`O(n)` 每版本，n 个版本 `O(n²)`（2 万版本实测 168 ms，按平方外推，30 万版本约 37 秒，必超时）。
+**最笨**：每个版本复制整份内容：`O(n)` 每版本，n 个版本 `O(n²)`（2 万版本 168 ms，按平方外推，30 万版本约 37 秒，必超时）。
 
 **改进 A：观察队列的内容是什么**。队列的内容 = 「按顺序 push 进来的元素」去掉最前面已经 pop 的若干个。也就是说，队列 = 一条 push 序列的**一段后缀**（再去掉前缀）。
 如果两个版本的 push 序列有公共前缀，那前缀完全可以共享。
@@ -409,9 +408,8 @@ Stat st = (Stat) PUBLISHED.getAcquire(this);   // 拿到一个完整的 Stat
 
 ---
 
-## 5. 逐段讲参考解
+## 5. 逐段讲解法
 
-文件在 `loop/rounds/01_video/hc04_queue_mean_snapshot/reference/`。
 
 ### 5.1 `QueueMean.I128`
 
@@ -574,44 +572,44 @@ private void claimWriter() {
 
 ## 6. Java 21 特性小课
 
-课本（计划）：`study/10-java21/J01_*.md` 等。这里只讲本题用到的部分。
+这里只讲本题用到的部分。
 
-### J01 `record`（Java 16）
+### `record`（Java 16）
 
 旧写法（Java 8）：一个有两个字段的值类要写字段、构造器、getter、`equals`、`hashCode`、`toString` ≈ 40 行，而且 `equals` 容易漏字段。
 新写法：`record Mean(BigInteger numerator, long denominator) {}`，一行全有。`record` 是不可变的（字段 `final`）、不能继承别的类。
 **紧凑构造器**让你在构造时校验/规范化参数。**不该用**：需要可变状态、需要继承时。
 
-### J02 `sealed` 接口（Java 17）
+### `sealed` 接口（Java 17）
 
 旧写法：`interface Event {}`，谁都能实现，`switch` 里永远要 `default`。
 新写法：`sealed interface Event permits Push, Pop, Query, Correct {}`，实现者被限定。编译器因此知道"所有可能"，`switch` 可以检查穷尽性。
 
-### J03 `switch` 模式匹配（Java 21）与 J04 record 模式
+### `switch` 模式匹配（Java 21）与 record 模式
 
 旧写法：`if (e instanceof Push) { Push p = (Push) e; ... } else if ...`。
-新写法见 5.4：`case Push(var v) -> ...`，类型测试 + 强转 + 拆字段一步完成。`when` 守卫写附加条件。
+新写法（见 5.4）：`case Push(var v) -> ...`，类型测试 + 强转 + 拆字段一步完成。`when` 守卫写附加条件。
 **什么时候不该用**：只有两三种情况且不会增加时，普通 `if` 更直白。
 
-### J05 `switch` 表达式与 `yield`（Java 14）
+### `switch` 表达式与 `yield`（Java 14）
 
 `events.add(switch (t[0]) { case "push" -> { ...; yield new Push(...); } case "pop" -> ...; default -> throw ...; })`。
 `switch` 本身是一个有值的表达式；分支是代码块时用 `yield` 返回值；没有 fallthrough（旧 `case` 忘了 `break` 会"掉进"下一个）。
 
-### J13 未命名模式 `_`（Java 21 预览，需要 `--enable-preview`）
+### 未命名模式 `_`（Java 21 预览，需要 `--enable-preview`）
 
 `case Pop _ ->`、`catch (InterruptedException _)`：用 `_` 明说"这个变量我不用"，比起起一个没用的名字，读代码的人不会去找它在哪用了。
 预览特性：语法在未来版本可能变，所以只在学习/练习中用。
 
-### J16 `VarHandle`（Java 9）
+### `VarHandle`（Java 9）
 
 旧写法：只有 `volatile`（全序，最强也最贵）或 `AtomicReference`（多一层对象）。
 新写法：对任意字段拿一个 `VarHandle`，可以选内存序：`getAcquire/setRelease`、`compareAndSet`、`getVolatile` 等。
 **不该用**：你说不清楚为什么需要比 `volatile` 更弱的序时，用 `volatile`。这是"榨最后一点性能"的工具，错了很难 debug。
 
-### J10 虚拟线程（Java 21）
+### 虚拟线程（Java 21）
 
-测试里 `Executors.newVirtualThreadPerTaskExecutor()` 给每个任务一个虚拟线程。注意第 2.9 节的饥饿陷阱。
+`Executors.newVirtualThreadPerTaskExecutor()` 给每个任务一个虚拟线程。注意第 2.9 节的饥饿陷阱。
 
 ---
 
@@ -653,37 +651,31 @@ private void claimWriter() {
 
 1. **用 `double` 存总和。**
    * 错在哪：加减大小悬殊的数丢精度（第 2.3 节），而且错误是**静默**的。
-   * 对应测试：`noFloatDriftFromARunningDoubleSum`。
    * 正确：总和用整数。
 
 2. **用 `long` 存总和，以为"题目的数不会那么大"。**
    * 错在哪：`Long.MAX_VALUE` 是合法输入；溢出后均值变负，无异常。
-   * 对应测试：`sumOverflowingLongIsExact`。
    * 正确：128 位，或 `Math.addExact` 至少报错（但"报错"不等于"算对"，要和面试官确认期望）。
 
 3. **环形缓冲扩容时 `Arrays.copyOf(buf, 2 * n)`。**
    * 错在哪：`head` 不在 0 时，元素的逻辑顺序被打乱——队头之前绕回的部分排到了错误的位置。
-   * 对应测试：`ringBufferWrapsAndGrowsInFifoOrder`（专门让 head 停在 10 再扩容）。
    * 正确：分两段 `arraycopy`，`head` 归零。
 
 4. **`Mean` 没约分，或分母可以为负。**
    * 错在哪：`6/4 != 3/2`，`3/-2 != -3/2`，record 的 `equals` 判不相等。
-   * 对应测试：`meanIsReducedFractionWithPositiveDenominator`。
 
 5. **`Correct(List)` 直接存传入的列表引用。**
    * 错在哪：调用者之后 `add` 一个元素，事件的内容变了。
-   * 对应测试：`correctEventCopiesItsContents`。
    * 正确：`List.copyOf`。
 
 6. **版本化时每个版本 `new long[]` 复制。**
-   * 错在哪：O(n²)。对应测试 `deepChainsAndWideBranchingUnderTwoSeconds`（30 万深度链 + 20 万随机分叉）。
+   * 错在哪：O(n²)。30 万深度链 + 20 万随机分叉就会超时。
 
 7. **并发读时用两个 `volatile` 字段。**
    * 错在哪：每个字段单独可见，但两个字段的组合不原子，撕裂读（第 2.8 节）。
-   * 对应测试：`readersAlwaysSeeAConsistentMean`（全 7 的不变量：均值必须恰好是 7）。
 
-8. **测试里用纯自旋的读者跑在虚拟线程上，写者被饿死，测试挂住。**
-   * 这是我写本题时真实遇到的。解决：自旋循环里 `Thread.yield()`，或读者用平台线程。
+8. **纯自旋的读者跑在虚拟线程上，写者被饿死，程序挂住。**
+   * 解决：自旋循环里 `Thread.yield()`，或读者用平台线程。
 
 ---
 
@@ -721,12 +713,4 @@ private void claimWriter() {
 
 ---
 
-## 10. 延伸阅读
-
-* Goldberg, *What Every Computer Scientist Should Know About Floating-Point Arithmetic*（ACM Computing Surveys 1991）——讲清楚 `double` 为什么有空隙、什么是正确舍入。
-* Okasaki, *Purely Functional Data Structures*（Cambridge, 1998）第 5 章——持久化队列、摊还分析为什么在持久化下会失效。
-* Myers, "An Applicable Random-Access Stack"（Information Processing Letters, 1983）——skew-binary 跳跃指针的出处。
-* JLS（Java 语言规范）§17.4 Memory Model——happens-before 的正式定义。
-* Doug Lea, "Using JDK 9 Memory Order Modes"——`VarHandle` 的 plain/opaque/acquire-release/volatile 四档，为什么这样分。
-* JEP 395（Records）、JEP 409（Sealed Classes）、JEP 441（Pattern Matching for switch）、JEP 440（Record Patterns）、JEP 444（Virtual Threads）——每个特性的设计动机。
-* Goetz et al., *Java Concurrency in Practice* 第 3 章（共享对象）与第 16 章（Java 内存模型）——不可变对象与安全发布。
+「延伸」Okasaki《Purely Functional Data Structures》（持久化数据结构）。

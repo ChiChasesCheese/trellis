@@ -1,9 +1,6 @@
 # hc09 讲义 · Top Trade Events by Notional：从「全部排序」到「滑动窗口」再到「多核并行聚合」
 
-> 配套题集：[problem.md](../../loop/rounds/01_video/hc09_top_trades_by_notional/problem.md) · [REPORT.md](../../loop/rounds/01_video/hc09_top_trades_by_notional/REPORT.md) · 参考解 `loop/rounds/01_video/hc09_top_trades_by_notional/reference/`
-> 读者设定：会写基本 Java（类、方法、循环、`ArrayList` / `HashMap`），没学过堆、有序集合、整数溢出、线程与并行。每个概念从零讲；已有基础课的概念只写一句话加链接。
-> 标 **(reconstructed)** 的是我根据题目标题补出来的，不是原题（证据只有标题和第一句话，见 problem.md）。
-> 基础课（本讲义不重复讲，需要时跳过去）：[复杂度](../00-foundations/complexity.md) · [堆与 PriorityQueue](../00-foundations/heap_priority_queue.md) · [有序 Map / 红黑树](../00-foundations/ordered_maps_trees.md) · [CPU 缓存与局部性](../00-foundations/cpu_cache_locality.md)
+> 读者：会写基本 Java（类、方法、循环、`ArrayList` / `HashMap`），没学过堆、有序集合、整数溢出、线程与并行；每个概念从零讲。
 
 ---
 
@@ -33,7 +30,7 @@ notional 180000 120000  90500 126000 120000 200000     ← 价格 × 数量
 ```
 
 * **Part 1，k = 3**：把 notional 从大到小排：TSLA 200000（下标 5）、AAPL 180000（下标 0）、GOOG 126000（下标 3）、MSFT 120000（下标 1 和 4）、AAPL 90500（下标 2）。取前 3 个：下标 5, 0, 3。
-* **k = 4** 呢？第 4 名是 MSFT 120000——但下标 1 和下标 4 的事件 notional 一样、ticker 也一样，选哪个？题目规定：再按下标升序，所以选**下标 1**。**没有这条规定，答案就不唯一**，测试就没法写。这叫 tie-break（打破平局）。
+* **k = 4** 呢？第 4 名是 MSFT 120000——但下标 1 和下标 4 的事件 notional 一样、ticker 也一样，选哪个？题目规定：再按下标升序，所以选**下标 1**。**没有这条规定，答案就不唯一**，结果无法验证。这叫 tie-break（打破平局）。
 * **Part 2，k = 2**：AAPL = 180000 + 90500 = 270500；MSFT = 120000 + 120000 = 240000；TSLA = 200000；GOOG = 126000。前 2 名：AAPL、MSFT。
   注意：**最大的单个事件是 TSLA，最大的 ticker 却是 AAPL**。两个问题的答案不一样。
 
@@ -41,13 +38,15 @@ notional 180000 120000  90500 126000 120000 200000     ← 价格 × 数量
 
 ## 2. 前置知识
 
+> 复杂度记号速记：`O(n)` 表示步数随输入规模 n 线性增长；`O(log n)` 表示 n 翻倍只多一步（二分查找、平衡树、堆）；`O(n²)` 表示每一对元素都要处理一次；`O(1)` 表示与 n 无关。
+
 ### 2.1 平行数组（parallel arrays）
 
 **是什么**：用几个**等长**的数组表示一批记录，第 `i` 条记录是 `a[i]`、`b[i]`、`c[i]` 三个数组各取第 `i` 个。
 
 **为什么用它（以及为什么面试官喜欢给这种格式）**：不用建「事件对象」，`prices` 和 `volumes` 是 `long[]`，在内存里是一整块连续的数字。
 扫一遍 `prices` 和 `volumes`，CPU 缓存（cache）能一口气预取很多个，速度很快——这叫**局部性**（locality）；对比 `List<Trade>` 里每个对象散落在堆的各处，要一个个「追指针」。
-详细见 [CPU 缓存与局部性](../00-foundations/cpu_cache_locality.md) 第 5–6 节（`long[]` 对 `ArrayList<Long>`、AoS 对 SoA；平行数组就是 SoA，Structure of Arrays）。
+对比：`ArrayList<Long>` 的每个元素是指向堆上 `Long` 对象的指针（AoS，Array of Structures：每条记录一个对象）；平行数组是 SoA（Structure of Arrays：每个字段一个数组），数值连续存放，缓存友好。
 注意 `String[] tickers` 例外：它是一个**指针数组**，每个元素指向一个 `String` 对象，所以按 ticker 聚合时仍然要追指针。
 
 **怎么写**：
@@ -75,10 +74,10 @@ a + (b + c)   // 0.6
 
 金额累加差一点点没关系？不行：
 * 两个「应该相等」的 notional 比较时，浮点误差会把 tie（平局）变成「谁大谁小」，**tie-break 规则就失效了**；
-* Part 4 把数据分块并行累加，每块的和再合并——**合并顺序取决于线程调度**，浮点结果每次运行都可能不同，测试永远不稳定；
+* Part 4 把数据分块并行累加，每块的和再合并——**合并顺序取决于线程调度**，浮点结果每次运行都可能不同，无法稳定复现；
 * 整数加法满足**结合律**（`(a+b)+c == a+(b+c)`）和**交换律**，所以怎么分块、按什么顺序合并，结果都一样。这是 Part 4 能正确的根本原因。
 
-**怎么写**：价格、数量都用 `long`。真题的价格类型未知，这是 **(reconstructed)** 的选择；金融公司的惯例是「钱用整数最小单位，或者 `BigDecimal`」。
+**怎么写**：价格、数量都用 `long`。真题的价格类型未知，这是 的选择；金融公司的惯例是「钱用整数最小单位，或者 `BigDecimal`」。
 
 ### 2.3 整数溢出与 `Math.multiplyExact`
 
@@ -92,9 +91,9 @@ long z = Math.multiplyExact(x, 2L);   // 抛 ArithmeticException("long overflow"
 
 **为什么本题要管**：price × volume 看起来不大，但「价格是 `long`」就意味着有人会传大数。一个绕回成负数的 notional，会让一笔天价成交在排名里排到最后——**静默地给错答案**，在金融系统里比崩溃危险得多。所以：乘法用 `multiplyExact`，累加用 `addExact`，溢出就抛异常。
 
-**一个有用的边界**：`Long.MAX_VALUE` 的平方根向下取整是 **3037000499**。所以 `3037000499 × 3037000499 = 9223372030926249001` 不溢出，`3037000500 × 3037000500 = 9223372037000250000` 就溢出了（比 `Long.MAX_VALUE = 9223372036854775807` 大）。测试里专门用了这两个数。
+**一个有用的边界**：`Long.MAX_VALUE` 的平方根向下取整是 **3037000499**。所以 `3037000499 × 3037000499 = 9223372030926249001` 不溢出，`3037000500 × 3037000500 = 9223372037000250000` 就溢出了（比 `Long.MAX_VALUE = 9223372036854775807` 大）。测溢出边界时就用这两个数。
 
-**怎么工作**（直觉）：`multiplyExact(x, y)` 先算 64 位乘积，再检查「用高 64 位 / 除法回验」确认没有丢位，丢了就抛。HotSpot 把它当作**内联函数**（intrinsic）处理，JIT 编译后通常就是一条乘法加一次溢出检查，几乎没有额外成本。详见 [J15 数学与字符串小工具](../10-java21/J15_math_string_utils.md)。
+**怎么工作**（直觉）：`multiplyExact(x, y)` 先算 64 位乘积，再检查「用高 64 位 / 除法回验」确认没有丢位，丢了就抛。HotSpot 把它当作**内联函数**（intrinsic）处理，JIT 编译后通常就是一条乘法加一次溢出检查，几乎没有额外成本。 数学与字符串小工具。
 
 ### 2.4 top-k 与「大小为 k 的最小堆」
 
@@ -120,9 +119,9 @@ long z = Math.multiplyExact(x, 2L);   // 抛 ArithmeticException("long overflow"
 结果（从大到小）: 9, 8, 7
 ```
 
-每个元素最多一次插入 + 一次删除最小，都是 O(log k)，总共 **O(n log k)** 时间、**O(k)** 额外空间。k = 100、n = 10⁶ 时，log k 约 7，比排序的 log n 约 20 小得多；更重要的是，**如果输入是随机顺序，绝大多数元素连堆都进不去**，只花一次比较（见 3.1 节与 4.1 节的实测）。
+每个元素最多一次插入 + 一次删除最小，都是 O(log k)，总共 **O(n log k)** 时间、**O(k)** 额外空间。k = 100、n = 10⁶ 时，log k 约 7，比排序的 log n 约 20 小得多；更重要的是，**如果输入是随机顺序，绝大多数元素连堆都进不去**，只花一次比较（见 3.1 节与 4.1 节的数据）。
 
-堆本身怎么实现（数组、上浮 sift-up、下沉 sift-down）不在这里重讲，见 [堆与 PriorityQueue](../00-foundations/heap_priority_queue.md) 第 2–4 节。Java 里就是 `PriorityQueue`：
+堆是用数组存的完全二叉树，最小堆要求每个父节点 ≤ 子节点，所以最小值永远在堆顶（数组下标 0），读取是 O(1)。插入时放到数组末尾再**上浮**（sift-up：和父节点比较，更小就交换）；删除最小时把末尾元素换到堆顶再**下沉**（sift-down：和较小的子节点比较，更大就交换）。两者最多走树高 log₂ n 层，所以都是 O(log n)。Java 里就是 `PriorityQueue`：
 
 ```java
 var heap = new PriorityQueue<Integer>();   // 默认最小堆
@@ -138,7 +137,7 @@ new PriorityQueue<>(cmp);   // 自定义顺序：cmp 认为「小」的在堆顶
 
 **为什么本题的关键是「写全」**：排序规则如果只写「notional 大的在前」，那么两个 notional 相同的事件**谁在前是未定义的**——取决于堆内部的实现细节、输入顺序。后果：
 * `topEvents(k=4)` 的第 4 名可能是下标 1，也可能是下标 4，不同实现、不同 JDK 版本可能不同；
-* 单元测试写不出稳定的期望值；
+* 写不出稳定的期望值；
 * Part 4 并行后，不同线程调度下平局的结果会变——**不可复现的 bug 最难查**。
 
 **怎么办**：把比较器写成**全序**（total order）：任意两个不同事件，比较结果一定不是 0。本题的规则链是：
@@ -177,11 +176,11 @@ map.put(key, old == null ? v : old + v);     // 两次哈希查找，还要手�
 map.merge(ticker, notional, Math::addExact);   // Math::addExact 溢出时抛异常
 ```
 
-哈希表本身（桶、冲突、扩容）的原理见 [hc07 讲义](hc07_ticker_hash_map.md)。
+哈希表的原理：用哈希函数把 key 映射成数组下标（桶）；两个 key 落到同一个桶叫冲突，桶内用链表（或树）串起来；元素太多时扩容并重新哈希，保持平均每桶元素很少，所以 `merge`/`get`/`put` 平均 O(1)。
 
 ### 2.7 有序集合 `TreeSet`：能「删掉任意一个、再放回去」的有序结构
 
-**是什么**：`TreeSet<E>` 把元素按比较器排好序存放（底层是红黑树，一种自平衡的二叉搜索树），支持 `add`、`remove`、`first`、按顺序遍历，**每个操作 O(log m)**，m 是元素个数。原理见 [有序 Map / 红黑树](../00-foundations/ordered_maps_trees.md) 第 2–4 节。
+**是什么**：`TreeSet<E>` 把元素按比较器排好序存放（底层是红黑树，一种自平衡的二叉搜索树），支持 `add`、`remove`、`first`、按顺序遍历，**每个操作 O(log m)**，m 是元素个数。红黑树是自平衡二叉搜索树：每次插入 / 删除后通过旋转和染色保证树高不超过 2·log₂(m+1)，所以增删查都是 O(log m)。
 
 **为什么需要它（本题 Part 3 的核心）**：堆只能高效地取最小；而 Part 3 里一个 ticker 的总额会**变大**（来了新成交）也会**变小**（旧成交过期），也就是要「找到这个 ticker 在结构里的位置，改它的键」。
 `PriorityQueue.remove(Object)` 要先线性扫描找到元素，O(m)。`TreeSet` 能 O(log m) 删掉任意一个元素：
@@ -203,7 +202,7 @@ set.stream().limit(k).toList();             // 按顺序取前 k 个
 
 **为什么能高效**：事件**按时间顺序到达**，所以先到的先过期（先进先出，FIFO）——过期只发生在队列的最前面，永远不用到中间去找。用一个 `ArrayDeque`：队尾 `addLast` 新事件，队头 `peekFirst` 看最老的，过期就 `removeFirst`。
 每个事件**进一次、出一次**，所以过期的总代价是 O(n)，摊还（amortized）到每个事件 O(1) 次出队（每次出队还要付 TreeSet 的 O(log m)）。
-摊还分析见 [复杂度](../00-foundations/complexity.md) 第 6 节。
+**摊还分析**（amortized）：看一长串操作的总代价再平均，而不是只盯最坏的一次。每个事件最多入队一次、出队一次，n 个事件的总出队次数 ≤ n，平均每个事件 O(1) 次出队。
 
 ### 2.9 并行：线程、数据竞争、结合律、ForkJoin、虚拟线程
 
@@ -245,9 +244,8 @@ set.stream().limit(k).toList();             // 按顺序取前 k 个
 `parallel()` 流底层用的就是 `ForkJoinPool.commonPool()`——**整个 JVM 共用的一个线程池**。
 
 **虚拟线程（virtual thread）与结构化并发**：Java 21 的轻量线程，几乎可以一个任务一个线程；`StructuredTaskScope` 保证「在这个 try 块里 fork 出来的所有线程，离开 try 块时一定都结束了」，并且一个失败可以取消其余的。
-这两个概念在 [J10 虚拟线程](../10-java21/J10_virtual_threads.md) 和 [J11 结构化并发](../10-java21/J11_structured_concurrency.md) 里从零讲过，这里只用。
 
-**Amdahl 定律**（别被名字吓到）：程序里**必须串行**的部分决定了并行的加速上限。本题里，「把各块的结果合并」是串行的，数据读取受内存带宽限制——所以并行不一定快（5.4 节有实测）。
+**Amdahl 定律**（别被名字吓到）：程序里**必须串行**的部分决定了并行的加速上限。本题里，「把各块的结果合并」是串行的，数据读取受内存带宽限制——所以并行不一定快（5.6 节有数据）。
 
 ---
 
@@ -263,8 +261,8 @@ return all.subList(0, Math.min(k, n));
 ```
 
 * 时间 O(n log n)，空间 O(n)（n 个 `Trade` 对象，每个约 32 字节，加上 `ArrayList` 的指针数组）。
-* 正确，而且是最好的**对拍基线**（测试里 `topEventsSorted` 就是它）。
-* **具体慢在哪**：n = 10⁶、k = 100 时，要创建 100 万个对象、做 100 万 × 20 次比较，而我们只要 100 个。本机实测：
+* 正确，而且是最好的**对拍基线**。
+* **具体慢在哪**：n = 10⁶、k = 100 时，要创建 100 万个对象、做 100 万 × 20 次比较，而我们只要 100 个。数据：
 
 | n = 10⁶，k = 100，5000 个 ticker，随机顺序 | 时间 |
 |---|---|
@@ -279,7 +277,7 @@ return all.subList(0, Math.min(k, n));
 ### 3.3 Part 3：每次查询都重新算
 
 窗口里的成交是活的，每次问 top-k：把所有「活着的」成交重新聚合一遍，再选 top-k。每次查询 O(窗口大小)。窗口里有 10⁵ 笔成交、每秒查询 1000 次，就是 10⁸ 次操作 / 秒。
-这个方案**很有用**：它是测试里的对拍基线（`randomAgainstRecomputeFromScratch`）。
+这个方案**很有用**：它是最好的对拍基线：每次从头重算，结果一定对。
 
 ### 3.4 Part 4：一个线程算完
 
@@ -302,14 +300,14 @@ return all.subList(0, Math.min(k, n));
 * 发现：随机顺序下，堆满了之后，几乎每个新元素都不如堆顶——但我们还是为它 `new` 了一个 `Trade` 对象再去比较。
 * 想法：notional 是一个 `long`，**先拿 long 和堆顶的 notional 比**，严格小就直接 `continue`，连对象都不建。只有 notional ≥ 堆顶（可能进入或平局）才建对象走完整比较。
 * 为什么正确：`BEST_FIRST` 的第一条就是 notional 降序，notional 严格小于堆顶的元素一定排在堆顶后面，进不了前 k。
-* 效果：随机输入下**零分配**，主循环变成「两次数组读取 + 一次乘法 + 一次比较」。这也是 [CPU 缓存与局部性](../00-foundations/cpu_cache_locality.md) 里「顺序扫描 `long[]`」的受益场景。
-* 最坏情况：notional 严格递增的输入，每个元素都会进堆，退化到真正的 O(n log k)：n = 10⁶、k = 1000 实测约 120 ms（随机顺序同样规模只要几毫秒）。
+* 效果：随机输入下**零分配**，主循环变成「两次数组读取 + 一次乘法 + 一次比较」。这也是「顺序扫描连续的 `long[]`」对缓存友好的典型受益场景。
+* 最坏情况：notional 严格递增的输入，每个元素都会进堆，退化到真正的 O(n log k)：n = 10⁶、k = 1000 约 120 ms（随机顺序同样规模只要几毫秒）。
 
 **第 3 步：全序 tie-break**
 * 发现：堆里元素 notional 相同时，到底谁留下？
 * 想法：比较器写满三级（notional、ticker、index）；`topEvents` 里「新元素比堆顶好」用的是 `BEST_FIRST.compare(t, heap.peek()) < 0`，平局由 ticker、index 裁决。
 * 注意：这里 index 是**全局唯一**的，所以比较器永远不会返回 0，结果唯一。
-* 一个容易写错的地方：快速拒绝用的是 `notional < 堆顶 notional`（**严格小于**）。写成 `<=` 会把「notional 相同但 ticker 更小」的更好事件也拒掉（下标 1 对下标 4 的样例会错）。测试里的 `tieOnNotionalFallsBackToTickerAscending` 抓这个。
+* 一个容易写错的地方：快速拒绝用的是 `notional < 堆顶 notional`（**严格小于**）。写成 `<=` 会把「notional 相同但 ticker 更小」的更好事件也拒掉（下标 1 对下标 4 的样例会错）。
 
 **第 4 步：溢出与输入检查**
 * 发现：`prices[i] * volumes[i]` 可能溢出；数组可能长度不等、有 null、有负数。
@@ -332,7 +330,7 @@ O(n) 期望时间（哈希表平均 O(1)）。`addExact` 保证「每个事件�
 
 **第 2 步：对 m 个不同 ticker 取 top-k**
 * 两个选择：(a) 全部排序 `O(m log m)`；(b) 大小为 k 的最小堆 `O(m log k)`。
-* m = 10⁵、k = 50 时，(b) 稍快。实测（本机，n = 10⁶、m = 10⁵）：堆版约 41–58 ms，Stream 版（排序）约 82–103 ms。两者都在预算内；选哪个取决于你想强调什么：堆版展示「k 很小时不排序全部」，Stream 版展示「写得短」。
+* m = 10⁵、k = 50 时，(b) 稍快。数据（n = 10⁶、m = 10⁵）：堆版约 41–58 ms，Stream 版（排序）约 82–103 ms。两者都够快；选哪个取决于你想强调什么：堆版展示「k 很小时不排序全部」，Stream 版展示「写得短」。
 * `topOf(Map, k)` 抽成独立方法：Part 4 合并完分块结果后直接复用。
 
 **第 3 步：Stream 版和 `teeing`**
@@ -346,7 +344,7 @@ Collectors.teeing(
     Collectors.minBy(BEST_FIRST),
     Summary::new)
 ```
-`teeing` 把同一个流同时喂给两个收集器，最后用第三个参数把两个结果合成一个。老写法要遍历两次，或者手写一个可变的累加器类。详见 [J14](../10-java21/J14_stream_api.md)。
+`teeing` 把同一个流同时喂给两个收集器，最后用第三个参数把两个结果合成一个。老写法要遍历两次，或者手写一个可变的累加器类。
 Stream 版的代价：`IntStream.boxed()` 把每个 `int` 装箱成 `Integer`，`groupingBy` 里还有额外的中间容器——这是它比手写循环慢的原因。
 
 ### 4.3 Part 3（流式 + 过期）
@@ -435,11 +433,11 @@ TreeSet<TickerTotal> ranking   所有活跃 ticker，按 (总额 降序, ticker 
 
 * 一块里出了异常（溢出、负数）：`totalsScoped` 的 `ShutdownOnFailure` 会让 scope 关闭并**中断**其余子线程。中断是**协作式**的——线程只是被设置了「中断标志」，不会被强行停止。所以 `accumulate` 里每 4096 个事件检查一次 `Thread.currentThread().isInterrupted()`，被中断就抛 `CancellationException`。
   没有这个检查，其余块会老老实实算完才返回，取消形同虚设。
-* 异常要**原样**抛给调用者：测试 `assertThrows(ArithmeticException.class, …)` 对每种实现都成立。`throwIfFailed(e -> e instanceof RuntimeException re ? re : new IllegalStateException(e))` 做的就是「如果是运行时异常就原样抛，否则包一层」。
+* 异常要**原样**抛给调用者：对每种实现，调用者都应收到同一个 `ArithmeticException`。`throwIfFailed(e -> e instanceof RuntimeException re ? re : new IllegalStateException(e))` 做的就是「如果是运行时异常就原样抛，否则包一层」。
 
 ---
 
-## 5. 逐段讲参考解
+## 5. 逐段讲解法
 
 ### 5.1 数据类型与比较器（`TopTrades.java`）
 
@@ -456,7 +454,7 @@ public record Trade(int index, String ticker, long price, long volume) {
 }
 ```
 
-* `record`：不可变数据类，自动生成 `equals / hashCode / toString`，测试里可以直接 `assertEquals(List.of(trade(5), trade(0)), top)`。
+* `record`：不可变数据类，自动生成 `equals / hashCode / toString`，可以直接比较两个列表。
 * **紧凑构造器**（`public Trade { ... }`，没有参数列表）：在字段赋值之前运行，所有校验放这里——非法的 `Trade` 构造不出来。
 * 构造器里调用 `multiplyExact` 但**丢弃结果**：目的就是「提前证明不溢出」，使 `notional()` 里的普通乘法是安全的。这是一个小技巧：*把检查移到对象创建时，后面所有使用都不用再担心*。
 
@@ -467,7 +465,7 @@ public static final Comparator<Trade> BEST_FIRST =
                 .thenComparingInt(Trade::index);
 ```
 
-读法：先按 `notional` 比较 → `reversed()` 反过来（大的在前）→ 平局按 `ticker` → 再平局按 `index`。`public static final`：Part 3 的 `TreeSet`、测试都复用 `BEST_TICKER_FIRST`。
+读法：先按 `notional` 比较 → `reversed()` 反过来（大的在前）→ 平局按 `ticker` → 再平局按 `index`。`public static final`：Part 3 的 `TreeSet` 也复用 `BEST_TICKER_FIRST`。
 
 ### 5.2 `topEvents`
 
@@ -495,7 +493,7 @@ return List.copyOf(worstFirst.reversed());
 * `k == 0` 时仍然要走一遍 `notionalAt`（做校验），但不碰堆。
 * `BEST_FIRST.compare(t, heap.peek()) < 0`：compare 为负表示 t 排在堆顶前面，也就是「更好」。
 * 为什么不用 `heap.add(t); if (heap.size() > k) heap.poll();`？也对，而且更短，但无条件 `add` 然后再 `poll` 每个元素要做两次堆操作；上面的写法只在真的会改变堆时才操作。
-* `worstFirst.reversed()` 是 `ArrayList` 的**视图**（Java 21），`List.copyOf` 把它变成独立的不可变副本，调用者拿到后不能 `add`（测试 `returnedListIsImmutable`）。
+* `worstFirst.reversed()` 是 `ArrayList` 的**视图**（Java 21），`List.copyOf` 把它变成独立的不可变副本，调用者拿到后不能 `add`。
 
 ### 5.3 `topTickers` 与 `topOf`
 
@@ -533,7 +531,7 @@ public void add(Fill f) {
 }
 ```
 
-* **操作顺序**是正确性的一部分：`ranking.remove` 必须在 `acc.total` 改成新值**之前**，否则用新值去找旧键，红黑树里找不到（按比较器，这是另一个位置），旧键残留，`ranking` 里同一个 ticker 出现两次。测试 `totalOverflowInsideTheWindowIsAtomicAndRecoversAfterExpiry` 用「失败后 `ranking` 里只有一个 A」捕捉这类状态损坏。
+* **操作顺序**是正确性的一部分：`ranking.remove` 必须在 `acc.total` 改成新值**之前**，否则用新值去找旧键，红黑树里找不到（按比较器，这是另一个位置），旧键残留，`ranking` 里同一个 ticker 出现两次。
 * 为什么 `Acc` 是可变类、而不是 `record`：每个活跃成交都要更新它，建新 record 会产生大量垃圾。可变状态局限在 `SlidingTopK` 内部、`private static final class`，不外泄。
 
 ```java
@@ -548,7 +546,7 @@ while ((f = live.peekFirst()) != null && now - f.time() >= window) {
 }
 ```
 
-* `peekFirst` / `removeFirst`：Sequenced Collections 的统一命名（`ArrayDeque` 原来就有，Java 21 起接口统一，见 [J09](../10-java21/J09_sequenced_collections.md)）。
+* `peekFirst` / `removeFirst`：Sequenced Collections 的统一命名（`ArrayDeque` 原来就有，Java 21 起接口统一）。
 * `acc.total -= f.notional()`：减法不会溢出（`total` 是若干个非负数之和，减去其中一个）。
 
 ```java
@@ -578,7 +576,7 @@ return IntStream.range(0, n).parallel().collect(
 ```
 
 * 三个参数的含义是 `collect` 的**契约**：supplier 每次产生**新的、互不共享的**容器；accumulator 只改传给它的容器；combiner 把第二个容器并进**第一个**。
-* **最常见的 bug**：combiner 写反成 `left.forEach(... right.merge ...)`。`BiConsumer` 没有返回值，框架认为结果在第一个参数里——写反了结果就丢了 left 的内容。测试 `shuffleAndChunkingNeverChangeTheAnswer` 会抓到。
+* **最常见的 bug**：combiner 写反成 `left.forEach(... right.merge ...)`。`BiConsumer` 没有返回值，框架认为结果在第一个参数里——写反了结果就丢了 left 的内容。
 * 另一个 bug：supplier 写成 `() -> sharedMap`（所有线程共享一个 Map）——就回到了数据竞争。
 
 **ForkJoin 版：**
@@ -619,7 +617,7 @@ try (var scope = new StructuredTaskScope.ShutdownOnFailure("totals", Thread.ofVi
 * `scope.fork(callable)` 在一个新虚拟线程里跑任务，返回 `Subtask`（一个「承诺」）。
 * `scope.join()`：等所有子任务结束**或者**有一个失败（`ShutdownOnFailure` 在第一个失败后自动关闭 scope、中断其余）。
 * `scope.throwIfFailed(...)`：如果有失败就抛。**不调用它**，失败的子任务的异常会被悄悄忽略，后面 `subtask.get()` 会抛 `IllegalStateException`（因为状态不是 SUCCESS）。
-* `boundary(n, chunks, c)` = `(int) ((long) n * c / chunks)`：`n * c` 在 `n = 2×10⁹`、`c = 4` 时超过 `int` 范围，必须先转 `long`。块 c 是 `[boundary(c), boundary(c+1))`，相邻块首尾相接，不重叠、不遗漏（测试 `chunkBoundariesCoverEveryIndexExactlyOnce`）。
+* `boundary(n, chunks, c)` = `(int) ((long) n * c / chunks)`：`n * c` 在 `n = 2×10⁹`、`c = 4` 时超过 `int` 范围，必须先转 `long`。块 c 是 `[boundary(c), boundary(c+1))`，相邻块首尾相接，不重叠、不遗漏。
 * **预览 API**：`StructuredTaskScope` 在 Java 21 是预览特性（JEP 453），必须 `--enable-preview` 编译和运行；后续版本 API 有不兼容改动。口头说明这一点。
 
 **共享 Map 版（对照组）：**
@@ -632,7 +630,7 @@ shared.merge(tickers[i], notionalAt(...), Math::addExact);   // ConcurrentHashMa
 
 ---
 
-### 5.6 实测：并行到底快不快（本机 12 核，JDK 21，Generational ZGC，噪声较大，仅看数量级）
+### 5.6 数据：并行到底快不快（12 核，JDK 21，Generational ZGC，噪声较大，仅看数量级）
 
 | 场景 | 顺序 | `parallel()` 流 | ForkJoin | `Scoped` | 共享 Map |
 |---|---|---|---|---|---|
@@ -651,41 +649,41 @@ shared.merge(tickers[i], notionalAt(...), Math::addExact);   // ConcurrentHashMa
 
 ## 6. Java 21 特性小课
 
-### record 与紧凑构造器（J01）
+### record 与紧凑构造器
 
 旧写法（Java 8）：`final` 类 + 私有 final 字段 + 构造器校验 + getter + 手写 `equals/hashCode/toString`，约 40 行。
 新写法一行 `record Trade(int index, String ticker, long price, long volume)`，加紧凑构造器放校验。本题里 `Trade`、`TickerTotal`、`Summary`、`Fill`、`Tick`、`Ask`、`Answer` 都是 record。
-**什么时候不该用**：需要可变字段（比如 `Acc`，每次成交都要改它）、或需要继承别的类时。详见 [J01](../10-java21/J01_record.md)。
+**什么时候不该用**：需要可变字段（比如 `Acc`，每次成交都要改它）、或需要继承别的类时。
 
-### sealed 接口 + 模式匹配 switch + 记录模式（J02 / J03 / J04）
+### sealed 接口 + 模式匹配 switch + 记录模式
 
 `Feed permits Fill, Tick, Ask`。旧写法是 `if (f instanceof Fill) { Fill x = (Fill) f; ... } else if ... else throw new IllegalStateException()`——强转、重复、编译器不检查是否漏了某种情况。
-新写法 `switch (f) { case Fill fill -> ...; case Tick(var t) -> ...; case Ask(var t) -> ... }`：编译器检查穷尽性，`case Tick(var t)` 同时完成类型判断和字段解构，`when` 守卫写附加条件。详见 [J02](../10-java21/J02_sealed.md)、[J03](../10-java21/J03_pattern_switch.md)、[J04](../10-java21/J04_record_patterns.md)。
+新写法 `switch (f) { case Fill fill -> ...; case Tick(var t) -> ...; case Ask(var t) -> ... }`：编译器检查穷尽性，`case Tick(var t)` 同时完成类型判断和字段解构，`when` 守卫写附加条件。
 
-### Sequenced Collections（J09）
+### Sequenced Collections
 
-`worstFirst.reversed()` 取倒序视图；`ArrayDeque.peekFirst / removeFirst / addLast`；测试里用 `getFirst() / getLast()` 取列表两端。旧写法 `list.get(list.size() - 1)`、`Collections.reverse(copy)` 要么啰嗦要么要复制。注意 `reversed()` 是**视图**，改原列表它也跟着变；要独立副本就 `List.copyOf`。详见 [J09](../10-java21/J09_sequenced_collections.md)。
+`worstFirst.reversed()` 取倒序视图；`ArrayDeque.peekFirst / removeFirst / addLast`；用 `getFirst() / getLast()` 取列表两端。旧写法 `list.get(list.size() - 1)`、`Collections.reverse(copy)` 要么啰嗦要么要复制。注意 `reversed()` 是**视图**，改原列表它也跟着变；要独立副本就 `List.copyOf`。
 
-### Stream 新工具：`toList()` 与 `Collectors.teeing`（J14）
+### Stream 新工具：`toList()` 与 `Collectors.teeing`
 
 `stream.toList()`（Java 16）返回不可变列表，比 `collect(Collectors.toList())` 短、且明确不可变。`teeing`（Java 12）一趟遍历喂给两个收集器。
-**什么时候不该用**：热路径上的简单聚合手写循环更快（`IntStream.boxed()` 装箱）；`teeing` 的两个收集器如果有顺序依赖就别用。详见 [J14](../10-java21/J14_stream_api.md)。
+**什么时候不该用**：热路径上的简单聚合手写循环更快（`IntStream.boxed()` 装箱）；`teeing` 的两个收集器如果有顺序依赖就别用。
 
-### 精确算术（J15）
+### 精确算术
 
-`Math.multiplyExact / addExact`（Java 8 引入，JDK 21 里已成惯用）：溢出就抛，不静默回绕。旧写法是 `long r = a * b; if (a != 0 && r / a != b) throw ...`，要多一次除法还容易写错。详见 [J15](../10-java21/J15_math_string_utils.md)。
+`Math.multiplyExact / addExact`（Java 8 引入，JDK 21 里已成惯用）：溢出就抛，不静默回绕。旧写法是 `long r = a * b; if (a != 0 && r / a != b) throw ...`，要多一次除法还容易写错。
 
-### Comparator 组合子（J18）
+### Comparator 组合子
 
-`comparingLong(...).reversed().thenComparing(...).thenComparingInt(...)`：一条链写出全序，对照 Java 7 的匿名内部类 `compare` 里一串 `if`。详见 [J18](../10-java21/J18_comparators_interfaces.md)。
+`comparingLong(...).reversed().thenComparing(...).thenComparingInt(...)`：一条链写出全序，对照 Java 7 的匿名内部类 `compare` 里一串 `if`。
 
-### 虚拟线程与结构化并发（J10 / J11，预览）
+### 虚拟线程与结构化并发（预览）
 
-`Thread.ofVirtual().factory()` + `StructuredTaskScope.ShutdownOnFailure`：旧写法 `ExecutorService` + `Future` 列表，一个失败其余不会取消，忘了 `shutdown` 线程泄漏；新写法生命周期绑定到 try 块。**不该用**：CPU 密集的分块任务其实用虚拟线程并不比平台线程快（虚拟线程擅长的是**阻塞 I/O**），这里选它是为了展示结构化并发的取消语义。详见 [J10](../10-java21/J10_virtual_threads.md)、[J11](../10-java21/J11_structured_concurrency.md)。
+`Thread.ofVirtual().factory()` + `StructuredTaskScope.ShutdownOnFailure`：旧写法 `ExecutorService` + `Future` 列表，一个失败其余不会取消，忘了 `shutdown` 线程泄漏；新写法生命周期绑定到 try 块。**不该用**：CPU 密集的分块任务其实用虚拟线程并不比平台线程快（虚拟线程擅长的是**阻塞 I/O**），这里选它是为了展示结构化并发的取消语义。
 
-### 并发原语：`ConcurrentHashMap.merge`（J16）
+### 并发原语：`ConcurrentHashMap.merge`
 
-共享 Map 对照组用到的原子 `merge`。详见 [J16](../10-java21/J16_concurrency_primitives.md)。
+共享 Map 对照组用到的原子 `merge`。
 
 ---
 
@@ -697,7 +695,7 @@ shared.merge(tickers[i], notionalAt(...), Math::addExact);   // ConcurrentHashMa
 * 说出口：「最大的 k 个用最小堆，堆顶是守门员；新来的比守门员强才能进来。时间 O(n log k)，空间 O(k)，还可以流式处理。」
 
 **问：如果 n 很大、k 很小，还能更快吗？**
-* 答：随机顺序下，堆满之后期望只有 O(k log(n/k)) 个元素能进堆——绝大多数元素一次 `long` 比较就被拒绝，实际接近 O(n)。可以用快速拒绝去掉分配。再快就是 quickselect（期望 O(n) 选出第 k 大，但需要把数据放进可修改的数组，不能流式）或并行分块各自 top-k 再合并（top-k 的合并是对的：全局 top-k 一定在各块 top-k 的并集里）。
+* 答：随机顺序下，堆满之后期望只有 O(k log(n/k)) 个元素能进堆——绝大多数元素一次 `long` 比较就被拒绝，实际上接近 O(n)。可以用快速拒绝去掉分配。再快就是 quickselect（期望 O(n) 选出第 k 大，但需要把数据放进可修改的数组，不能流式）或并行分块各自 top-k 再合并（top-k 的合并是对的：全局 top-k 一定在各块 top-k 的并集里）。
 * 说出口：「堆满后一次 long 比较拒绝，零分配；要更快就分块并行，各块 top-k，再对 C·k 个候选取 top-k。」
 
 **问：notional 溢出怎么办？为什么不用 `double` / `BigInteger`？**
@@ -709,7 +707,7 @@ shared.merge(tickers[i], notionalAt(...), Math::addExact);   // ConcurrentHashMa
 * 说出口：「堆只能高效取堆顶；这里一个 ticker 的总额既涨又跌，要改任意元素的键，所以用 `TreeSet`：删旧键、插新键各 O(log m)，top-k 直接顺序读前 k 个。」
 
 **问：窗口很大、不同 ticker 非常多，`TreeSet` 常数太大怎么办？**
-* 答：几个方向：(1) k 很小时可以只维护「候选集」（top-k 以及一个缓冲区），用堆加惰性删除；(2) 总额用 `long[]` 按 ticker 编号存（先把 ticker 映射成 int），`TreeSet` 里放 `long` 编码（总额高位 + 编号低位）减少对象；(3) 分片：按 ticker 哈希到 S 个分片，每片一个 `TreeSet`，`top()` 做 S 路的 k 路归并（接 hc02）。
+* 答：几个方向：(1) k 很小时可以只维护「候选集」（top-k 以及一个缓冲区），用堆加惰性删除；(2) 总额用 `long[]` 按 ticker 编号存（先把 ticker 映射成 int），`TreeSet` 里放 `long` 编码（总额高位 + 编号低位）减少对象；(3) 分片：按 ticker 哈希到 S 个分片，每片一个 `TreeSet`，`top()` 做 S 路的 k 路归并（即把 S 个有序序列归并成一个有序序列）。
 * 说出口：「先量。如果确实是瓶颈：把 ticker 映射成整数、结构放进原始类型数组，或者按 ticker 分片后做 k 路归并。」
 
 **问：Part 4，`parallel()` 流为什么有时候更慢？**
@@ -717,7 +715,7 @@ shared.merge(tickers[i], notionalAt(...), Math::addExact);   // ConcurrentHashMa
 * 说出口：「并行流不是免费的午餐。我会先测顺序版，然后在真实数据上测各种分块；key 很多时合并成了瓶颈，考虑按 key 分区或共享并发 map。」
 
 **问：怎么保证并行结果和顺序版完全一样？**
-* 答：三点：整数加法的结合律/交换律；每块私有的 `Map` + 只读的输入；排序的 tie-break 是全序（top-k 的结果不依赖遍历顺序）。测试做法：随机打乱事件顺序、变化块数，断言 `Map.equals`；`@RepeatedTest(20)` 加起跑门闩（`CountDownLatch`）让多个线程同时调用。
+* 答：三点：整数加法的结合律/交换律；每块私有的 `Map` + 只读的输入；排序的 tie-break 是全序（top-k 的结果不依赖遍历顺序）。验证做法：随机打乱事件顺序、变化块数，断言结果 `Map.equals`；重复多轮，并用起跑门闩（`CountDownLatch`）让多个线程同时开始。
 
 **问：一块失败了，其余怎么办？线程会不会泄漏？**
 * 答：`StructuredTaskScope.ShutdownOnFailure`：第一个失败后关闭 scope、中断其余；try 块结束前所有子线程一定结束。中断是协作式的，所以计算循环里要定期检查 `isInterrupted()`。如果用 `ExecutorService` + `Future.get()`，一个失败不会取消其他，要手动 `cancel(true)`，且要保证 `shutdown`。
@@ -751,7 +749,7 @@ shared.merge(tickers[i], notionalAt(...), Math::addExact);   // ConcurrentHashMa
 ## 9. 自测题
 
 1. `k = 3`，流 `[4, 8, 1, 9, 2, 7]`，用「大小为 3 的最小堆」手工走一遍，写出每一步堆的内容。
-2. 为什么 `BEST_FIRST` 的第三级用 `index` 一定能分出胜负？如果去掉第三级，什么测试会变得不稳定？
+2. 为什么 `BEST_FIRST` 的第三级用 `index` 一定能分出胜负？如果去掉第三级，什么会变得不稳定？
 3. 窗口 `W = 10`，一笔成交在 `t = 100`，在 `now = 109` 和 `now = 110` 时它是否还活着？
 4. `Long.MAX_VALUE / 2 + 1` 同一个 ticker 出现两次，用 `Math::addExact` 聚合会怎样？如果分到两块里各算一次再合并呢？
 5. （小编程）写一个 `Comparator<TickerTotal>`：总额降序，总额相同按 ticker 升序，不用 `reversed()`。
@@ -760,7 +758,7 @@ shared.merge(tickers[i], notionalAt(...), Math::addExact);   // ConcurrentHashMa
 <details><summary>答案</summary>
 
 1. `[4]` → `[4,8]` → `[1,4,8]`（满，守门员 1）→ 9 > 1：`[4,8,9]` → 2 < 4：不变 → 7 > 4：`[7,8,9]`。结果从大到小 9, 8, 7。
-2. `index` 是数组下标，全局唯一，任何两个不同事件的 `index` 不同。去掉后「notional 与 ticker 都相同」的事件顺序由堆的内部实现决定（比如样例的下标 1 与 4），`tieOnNotionalAndTickerFallsBackToIndex` 之类的测试会因 JDK 版本、输入顺序而不稳定。
+2. `index` 是数组下标，全局唯一，任何两个不同事件的 `index` 不同。去掉后「notional 与 ticker 都相同」的事件顺序由堆的内部实现决定（比如样例的下标 1 与 4），结果会因 JDK 版本、输入顺序而不稳定。
 3. `now = 109`：`109 - 100 = 9 < 10`，活着；`now = 110`：`110 - 100 = 10 >= 10`，过期。
 4. 顺序聚合：第二次 `addExact` 抛 `ArithmeticException`。分到两块：每块的部分和 `MAX/2+1` 不溢出，**合并时**才溢出——`mergeInto` 里的 `merge(…, Math::addExact)` 抛出。结果一致：都抛。
 5. `(a, b) -> { int c = Long.compare(b.notional(), a.notional()); return c != 0 ? c : a.ticker().compareTo(b.ticker()); }`。注意 `Long.compare(b, a)` 而不是 `b - a`（后者在极端值会溢出）。
@@ -770,13 +768,4 @@ shared.merge(tickers[i], notionalAt(...), Math::addExact);   // ConcurrentHashMa
 
 ---
 
-## 10. 延伸阅读
-
-* `java.util.PriorityQueue` Javadoc — https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/PriorityQueue.html —— 注意文档里「实现是优先队列堆，`remove(Object)` 线性」的说明，正好解释 Part 3 为什么不用它。
-* `Math.multiplyExact` / `addExact` Javadoc — https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Math.html —— 溢出语义的权威说明。
-* `java.util.concurrent.ForkJoinPool` / `RecursiveTask` Javadoc — https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/RecursiveTask.html —— 类注释里有「求和」示例，对照本讲义的 `Sum`。
-* JEP 453: Structured Concurrency (Preview) — https://openjdk.org/jeps/453 —— 为什么需要「线程像代码块一样有边界」。
-* JEP 441: Pattern Matching for switch — https://openjdk.org/jeps/441 —— 守卫、支配（dominance）与穷尽性规则。
-* 《算法》（Sedgewick）第 2.4 节 优先队列 —— 堆与 top-k 的经典讲解。
-* Goetz 等，《Java Concurrency in Practice》第 5、6、8 章 —— 并发容器、任务切分与线程池的权威教材。
-* Amdahl 1967 原论文 *Validity of the single processor approach to achieving large scale computing capabilities* —— 串行部分如何限制加速比。
+「延伸」Sedgewick《算法》第 2.4 节「优先队列」。

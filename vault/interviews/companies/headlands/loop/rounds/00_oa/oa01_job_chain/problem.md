@@ -1,7 +1,5 @@
-# oa01 · Job Chain 报表（HackerRank「Headlands Tech Coding Test」）
+# oa01 · Job Chain 报表（OA，1 题，100–120 分钟）
 
-> 阶段：OA（HackerRank，1 题，100–120 分钟）· 置信度：**高**（≥ 8 个独立来源 2020–2026-08；Chi 2026-10 亲历 Java 版，确认是这道题）
-> 原题题面已由 Chi 的 HackerRank 截图逐字抄录：`../../../mock_maven/catalog/raw/hackerrank_job_runner_photos.md`（2026-10-10）。降序排序、平均值截断取整、非法输入 **exit zero** 都以原文为准；只有「总时长相同时的 tie-break」原文没说，是 (inferred)。
 
 ## 背景
 
@@ -41,8 +39,8 @@ average_job_time: 00:00:35
 
 * 每条链一段，段前段后都有 `-`。
 * 时长格式 `hh:mm:ss`，小时至少两位、不截断（`100:00:00`）。
-* `average_job_time` = 总时长 / job 数，整秒**截断**（原题样例：35 s / 2 = 17.5 → `00:00:17`）。
-* 链按 `job_chain_runtime` **降序**（原文）；相同时按 `start_job` 升序 (inferred)。
+* `average_job_time` = 总时长 / job 数，整秒**截断**（例：35 s / 2 = 17.5 → `00:00:17`）。
+* 链按 `job_chain_runtime` **降序**；相同时按 `start_job` 升序。
 
 ## Part
 
@@ -65,17 +63,6 @@ average_job_time: 00:00:35
 | 悬空 `next_job_id` | 指向不存在的 job |
 | 多前驱（两个 job 指向同一个） | `1,10,3` + `2,10,3` |
 | 环（含「好链 + 独立环」） | `2,10,3` + `3,10,2` |
-
-## 野外变体
-
-* 2024-11：同一数据，要求并查集 + 异常处理（1p3a 1095582）。
-* 2025-10：「disaster recovery」，输入处理更重（1p3a 1152383）。
-* 两年前版本：带时间戳 + Kahn 拓扑排序（QuantVault 转述，低）。
-
-## 来源
-
-`catalog/raw/forums.md` Q8 / W3 / W4 / T1 / O1 / O12 / O15 / O16；`catalog/raw/github_repos.md`（FastPrep "Job Runner Chain Reports"）；
-C++ 题解 https://gist.github.com/tobyjbanks/d9c3b05c26f0dc55df309a96c800a19b （注意它的分钟没有 `% 60`）。
 
 ## 考什么
 

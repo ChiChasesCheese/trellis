@@ -1,9 +1,6 @@
 # ld03 · 异步 TCP 消息通道：成帧、部分 I/O、背压、半关闭、重连 —— 讲义
 
-> 题面：`loop/rounds/03_lld/ld03_async_tcp_channel/problem.md` · 代码：同目录 `reference/`（`ByteRing` `FrameCodec` `FrameDecoder` `TcpMessageChannel` `MessageServer` `Backoff` `ReconnectingClient`）· 测试：`test/`（49 个）
-> 实验代码：`study/30-articles/examples/ld03/ChannelBench.java`（吞吐、往返延迟、背压）。本文的"实测"来自它和测试套件在本机（Apple M 系列，12 核，macOS，JDK 21.0.12）的运行。**全部在回环接口（127.0.0.1）上，测的是软件和内核开销，不是网线。**
-> 写法说明见 `study/TEXTBOOK.md`。读者设定：只会基本 Java，没学过网络编程、NIO、背压。前置基础课：`study/00-foundations/networking_basics.md`（TCP / Nagle / `Selector` / 虚拟线程），本篇不重复它的内容，只在需要处链接。
-> **题面是 (reconstructed)**：证据只有 FastPrep 的一句话摘要「bounded message API over one TCP session, with local circular buffers, partial-I/O framing…」。
+> 读者：只会基本 Java，没学过网络编程、NIO、背压；TCP、Nagle、`Selector`、虚拟线程在正文里用到时现讲。本篇的所有数字都来自回环接口（127.0.0.1），反映的是软件和内核开销，不是网线。
 
 ---
 
@@ -64,12 +61,14 @@ offer #2 → 环 72 > 64 放不下 → false    ← 调用方知道"满了"，�
 
 1. `ByteRing` + `FrameCodec` + `FrameDecoder`：纯内存，没有网络。环形缓冲区；4 字节长度前缀；增量解码器。
 2. `TcpMessageChannel` / `MessageServer`：一个 `Selector` I/O 线程，部分读写，EOF，半关闭。
-3. 背压与有界性：入站环满了停止读；最小缓冲区的压力测试。
+3. 背压与有界性：入站环满了停止读；用最小缓冲区做压力测试。
 4. `Backoff` + `ReconnectingClient`：指数退避，断线重连，断线期间的有界 pending。
 
 ---
 
 ## 2. 前置知识
+
+> 复杂度记号速记：`O(n)` 表示步数随输入规模 n 线性增长；`O(log n)` 表示 n 翻倍只多一步（二分查找、平衡树、堆）；`O(n²)` 表示每一对元素都要处理一次；`O(1)` 表示与 n 无关。
 
 ### 2.1 TCP 是字节流，不是消息流
 
@@ -85,7 +84,7 @@ TCP 在线上的分段:      [AAAABB]  [BBBB]  [CC]        ← 由 MSS、拥塞�
 接收方的 read 调用:    [AAAABBBBBBCC] 一次读完    或   [AAAAB] [BBBBB] [BCC]    ← 同样不是你决定
 ```
 
-**Java 里怎么写**：见 §5。基础讲解见 `networking_basics.md` §2、§8.4（"TCP 是字节流：必须自己做帧"）。
+**Java 里怎么写**：见 §5。
 
 ### 2.2 成帧（framing）：自己给消息加边界
 
@@ -105,7 +104,7 @@ TCP 在线上的分段:      [AAAABB]  [BBBB]  [CC]        ← 由 MSS、拥塞�
 
 ### 2.3 阻塞 vs 非阻塞 I/O、`Selector`
 
-（完整讲解在 `networking_basics.md` §8；这里只列本题用到的规则。）
+（这里只列本题用到的规则。）
 
 * **非阻塞**：`read` 没数据时立刻返回 0（不睡眠）；`write` 发送缓冲区满时返回 0 或只写一部分。
 * **`Selector`**：一个线程"同时盯着"很多套接字，问内核"哪些就绪了"。`select()` 睡眠直到有套接字就绪、或别的线程调用了 `selector.wakeup()`。
@@ -117,13 +116,13 @@ TCP 在线上的分段:      [AAAABB]  [BBBB]  [CC]        ← 由 MSS、拥塞�
 
 ### 2.4 `ByteBuffer` 的三个游标
 
-`position`（下一个要读/写的位置）、`limit`（可操作区域末端）、`capacity`。写完之后要 `flip()` 才能读；读完要 `clear()` 或 `compact()` 才能再写。详见 `networking_basics.md` §8.3。本题的 `ByteRing.write(ByteBuffer src)` 从 `src.position` 开始读 `n` 个字节并前进 `position`；`read(ByteBuffer dst)` 反过来。
+`position`（下一个要读/写的位置）、`limit`（可操作区域末端）、`capacity`。写完之后要 `flip()` 才能读；读完要 `clear()` 或 `compact()` 才能再写。本题的 `ByteRing.write(ByteBuffer src)` 从 `src.position` 开始读 `n` 个字节并前进 `position`；`read(ByteBuffer dst)` 反过来。
 
 `allocateDirect`：直接缓冲区在 JVM 堆外，`SocketChannel` 读写时可以少一次拷贝；本实现的两个 16 KB 中转缓冲区（`rbuf`、`wbuf`）用它。
 
 ### 2.5 环形缓冲区（字节版）
 
-（完整讲解在 `study/30-articles/ld01_spsc_channel.md` §2.3。）本题的 `ByteRing` 是单线程字节环，容量任意正整数（所以用 `%` 而不是 `& mask`）。两个变量：`head`（下一个要读的位置）和 `size`（当前字节数）；写入位置 = `(head + size) % capacity`。回绕时一次拷贝拆成两段。
+环形缓冲区：固定容量的数组，读写位置到达末尾时绕回开头，这样反复使用同一块内存。本题的 `ByteRing` 是单线程字节环，容量任意正整数（所以用 `%` 而不是 `& mask`）。两个变量：`head`（下一个要读的位置）和 `size`（当前字节数）；写入位置 = `(head + size) % capacity`。回绕时一次拷贝拆成两段。
 
 ```text
 容量 8，head=6，size=4（占用下标 6,7,0,1）：  [ 2 3 . . . . 0 1 ]    写入位置 (6+4)%8 = 2
@@ -155,7 +154,7 @@ TCP 在线上的分段:      [AAAABB]  [BBBB]  [CC]        ← 由 MSS、拥塞�
 
 ### 2.8 锁与条件变量（一段话版）
 
-多个线程共享缓冲区，用一把 `ReentrantLock` 保护；"等一个条件成立"用 `Condition`：`while (!条件) cond.await(); ` ——必须是 `while` 不是 `if`（可能被虚假唤醒或条件又被别人改了）；改变条件的线程 `signalAll()`。**临界区里只做内存拷贝，不做系统调用**（系统调用可能睡很久，持锁睡会让所有人等）。详见 `study/10-java21/J16_concurrency_primitives.md`。为什么用 `ReentrantLock` 而不是 `synchronized`：在 JDK 21 的虚拟线程上，`synchronized` 里阻塞会**钉住**（pin）载体线程；`ReentrantLock` 不会（J10）。本实现的 I/O 线程是平台线程，但 `ReconnectingClient` 的管理线程是虚拟线程，所以统一用 `ReentrantLock`。
+多个线程共享缓冲区，用一把 `ReentrantLock` 保护；"等一个条件成立"用 `Condition`：`while (!条件) cond.await(); ` ——必须是 `while` 不是 `if`（可能被虚假唤醒或条件又被别人改了）；改变条件的线程 `signalAll()`。**临界区里只做内存拷贝，不做系统调用**（系统调用可能睡很久，持锁睡会让所有人等）。。为什么用 `ReentrantLock` 而不是 `synchronized`：在 JDK 21 的虚拟线程上，`synchronized` 里阻塞会**钉住**（pin）载体线程；`ReentrantLock` 不会。本实现的 I/O 线程是平台线程，但 `ReconnectingClient` 的管理线程是虚拟线程，所以统一用 `ReentrantLock`。
 
 ### 2.9 重连与指数退避
 
@@ -190,7 +189,7 @@ out.write(message);                                 // 假设"写出去了"
 | 发 2 条消息，对方一次 `read` 收到 2 条粘在一起 | 被当成 1 条（粘包） |
 | 一条 2,000 字节的消息，`buf` 只有 1,024 | 被切成两条（拆包） |
 | 对方慢，我方一直发 | `LinkedBlockingQueue` 无界，内存无限涨；`OutputStream.write` 在内核缓冲区满时**阻塞**调用线程，没有"满了"的概念 |
-| 1 万个连接 | 1 万个线程，每个栈 1 MB，上下文切换；`networking_basics.md` §8.1 的 C10K 问题 |
+| 1 万个连接 | 1 万个线程，每个栈 1 MB，上下文切换（经典的 C10K 问题：一万个并发连接） |
 | 连接断开 | 线程默默退出，上层不知道；没有重连 |
 | 对端关闭一半 | `read` 返回 -1 就退出，不区分"正常结束"和"消息中间被截断" |
 | 恶意长度 | 如果你用 `readInt()` 后 `new byte[len]`，一个 4 字节包就能让你 OOM |
@@ -205,7 +204,7 @@ out.write(message);                                 // 假设"写出去了"
 
 ### 步骤 2：增量解码器
 
-**想法**：解码器是一个有状态的对象，`feed(bytes)` 喂任意长度的字节，`next()` 吐出完整的消息，不够就返回 `null`。状态 = 已收到但没凑成消息的字节，放在一个缓冲区里。测试：把一个流在**每一个**可能的切分点切开，结果必须相同（`decoderHandlesEverySplitPointOfAStream`）；逐字节喂（`decoderByteAtATime`）；随机切块（`decoderRandomChunkingRoundTrip`）。
+**想法**：解码器是一个有状态的对象，`feed(bytes)` 喂任意长度的字节，`next()` 吐出完整的消息，不够就返回 `null`。状态 = 已收到但没凑成消息的字节，放在一个缓冲区里。验证办法：把一个流在**每一个**可能的切分点切开，结果必须相同；逐字节喂；随机切块。
 
 ### 步骤 3：缓冲区有界 → 环形缓冲区
 
@@ -232,13 +231,13 @@ OP_WRITE ⇐ 还没发 FIN 且 (wbuf 里还有数据 或 出站环非空)
 
 ### 步骤 7：入站背压——满了就不读，`poll` 负责叫醒
 
-**问题**：入站环满了还读，读出来的字节没地方放。**想法**：入站环满 ⟹ 兴趣集里去掉 `OP_READ`（内核缓冲区会填满，TCP 窗口缩到 0，对端被拖慢）；`poll` 取走一条后（腾出了空间）**必须 `wakeup()`**，I/O 线程才会重算兴趣集，重新打开 `OP_READ`。**这是个很容易漏的 bug**：漏了唤醒，I/O 线程睡在 `select()` 上、兴趣集是 0，不会醒，通道从此"卡住"（本 kit 的变异检查：删掉 `poll()` 里的 `wakeup`，测试 `spinningNonBlockingPollResumesAPausedReader` 在 20 秒后以「stalled after 3 messages」失败）。优化：用一个 `readPaused` 标志，只有"确实暂停了读"时才唤醒，省掉每次 `poll` 的 `wakeup` 系统调用。
+**问题**：入站环满了还读，读出来的字节没地方放。**想法**：入站环满 ⟹ 兴趣集里去掉 `OP_READ`（内核缓冲区会填满，TCP 窗口缩到 0，对端被拖慢）；`poll` 取走一条后（腾出了空间）**必须 `wakeup()`**，I/O 线程才会重算兴趣集，重新打开 `OP_READ`。**这是个很容易漏的 bug**：漏了唤醒，I/O 线程睡在 `select()` 上、兴趣集是 0，不会醒，通道从此"卡住"（自旋调用 `poll()` 的消费者会永远停在几条消息之后）。优化：用一个 `readPaused` 标志，只有"确实暂停了读"时才唤醒，省掉每次 `poll` 的 `wakeup` 系统调用。
 
 ### 步骤 8：EOF、截断与半关闭
 
 * `read` 返回 -1：设 `peerClosed = true`（不再监听读）。此时如果缓冲区里有一截**不完整的帧**（`hasTruncatedTail()`）⟹ 错误（`EOFException`），通道关闭，但之前收齐的完整消息仍可 `poll`。
 * `finishSending()`：状态变 `FINISHING`（之后 `offer` 抛异常）；I/O 线程等出站环和 `wbuf` 都空了，再 `shutdownOutput()` 发 FIN。本端已发 FIN 且对端也已 EOF ⟹ 通道自动关闭。
-* 为什么不在 EOF 时立刻 `close`：对端可能只是 `finishSending`（半关闭），我们这边还有话要说（测试 `finishSendingFlushesThenPeerSeesDrained` 里服务端收完以后还回了 "bye"）。
+* 为什么不在 EOF 时立刻 `close`：对端可能只是 `finishSending`（半关闭），我们这边还有话要说。
 
 ### 步骤 9：并发设计——一把锁，系统调用在锁外
 
@@ -250,7 +249,7 @@ OP_WRITE ⇐ 还没发 FIN 且 (wbuf 里还有数据 或 出站环非空)
 
 ---
 
-## 5. 逐段讲参考解
+## 5. 逐段讲解法
 
 ### 5.1 `ByteRing`：回绕时拆成两段
 
@@ -483,7 +482,7 @@ OP_WRITE ⇐ 还没发 FIN 且 (wbuf 里还有数据 或 出站环非空)
     }
 ```
 
-* `current > maxMs / multiplier ? maxMs : min(maxMs, current * multiplier)`：先用除法判断乘法会不会超过上限，**避免 `current * multiplier` 溢出**（`maxMs` 可以是 `Long.MAX_VALUE`，测试 `backoffCapsExactlyAndNeverOverflows`）。
+* `current > maxMs / multiplier ? maxMs : min(maxMs, current * multiplier)`：先用除法判断乘法会不会超过上限，**避免 `current * multiplier` 溢出**（`maxMs` 可以是 `Long.MAX_VALUE`）。
 
 ```java
     private void run() {
@@ -553,9 +552,9 @@ OP_WRITE ⇐ 还没发 FIN 且 (wbuf 里还有数据 或 出站环非空)
 * 通道断开的判断：`!ch.isOpen() || ch.isPeerClosed()`——对端 EOF 就当作断线（应用协议里没有半关闭）。
 * `abandonedBytes += ch.unsentBytes()`：通道里还没写进 socket 的字节，丢了。
 
-### 5.7 本机实测
+### 5.7 数据
 
-`study/30-articles/examples/ld03/ChannelBench.java`（3 次运行）：
+基准（3 次运行）：
 
 ```text
 throughput: 2,000,000 msgs x 32 B（含 4 B 头）, 中位数 86–114 ms      => 17.5 – 23.3 M msg/s（约 630–840 MB/s）
@@ -568,9 +567,9 @@ backpressure: rings 64 KB/64 KB -> sender accepted ~18,200 msgs (~656 KB) before
 怎么读这些数字（诚实版）：
 
 * **吞吐**（回环、32 字节、一个发送线程 + 一个接收线程）：每秒千万级条数，瓶颈是批量系统调用和两个线程的交接，不是协议。真实网络上吞吐受网卡和 RTT 限制。
-* **往返延迟：我们的通道 p50 36 µs，裸阻塞 socket 乒乓 p50 12 µs。** 多出来的约 24 µs 就是**线程交接**的代价：一次往返里，应用线程 → I/O 线程（`wakeup` 一次系统调用 + 线程被唤醒）、I/O 线程 → 应用线程（`signalAll` + `unpark`）各发生两次。**这正是 sd03 里"热路径 run-to-completion、不要线程交接"的原因**，也是低延迟系统常常让应用线程自己轮询网卡的原因。这套通道为**吞吐和易用**设计，不是为 µs 级往返。（数字是这台 macOS 笔记本的回环，Linux 服务器上会不同；量级关系未在 Linux 上验证。）
-* **背压**：请求 `SO_SNDBUF`/`SO_RCVBUF` = 4096，在这台 macOS 上读回来是发送 65,328 字节、接收约 0.5 MB（内核自行放大），所以**真正的缓冲主要在内核里**：发送端在被堵住之前能灌进 ~590–660 KB。把**出站环**从 4 KB 加到 64 KB，多接受约 1,700 条（≈ 60 KB，和预期一致）；但把**接收端入站环**加大**没有**多接受任何消息——读回的内核接收缓冲区同时变小了约 57 KB（约 465 KB 对约 523 KB）。我没有进一步解释这个现象。**教训：多层缓冲相加，总量由最大的那层（这里是内核）决定；想让背压早点生效，要有意地设小内核缓冲区（在 Linux 上手动设置 `SO_RCVBUF`/`SO_SNDBUF` 会关闭该套接字的自动调优，见 `man 7 tcp`；本机未验证）。**
-* **接收方事后收到的条数 = 发送方接受的条数**（"equal: true"）：没丢、没重——这是测试断言的核心。
+* **往返延迟：我们的通道 p50 36 µs，裸阻塞 socket 乒乓 p50 12 µs。** 多出来的约 24 µs 就是**线程交接**的代价：一次往返里，应用线程 → I/O 线程（`wakeup` 一次系统调用 + 线程被唤醒）、I/O 线程 → 应用线程（`signalAll` + `unpark`）各发生两次。**这正是低延迟系统里"热路径 run-to-completion（在一个线程里一口气处理完）、不要线程交接"的原因**，也是低延迟系统常常让应用线程自己轮询网卡的原因。这套通道为**吞吐和易用**设计，不是为 µs 级往返。（数字是这台 macOS 笔记本的回环，Linux 服务器上会不同；量级关系未在 Linux 上验证。）
+* **背压**：请求 `SO_SNDBUF`/`SO_RCVBUF` = 4096，在 macOS 上读回来是发送 65,328 字节、接收约 0.5 MB（内核自行放大），所以**真正的缓冲主要在内核里**：发送端在被堵住之前能灌进 ~590–660 KB。把**出站环**从 4 KB 加到 64 KB，多接受约 1,700 条（≈ 60 KB，和预期一致）；但把**接收端入站环**加大**没有**多接受任何消息——读回的内核接收缓冲区同时变小了约 57 KB（约 465 KB 对约 523 KB）。这个现象原因不明。**教训：多层缓冲相加，总量由最大的那层（这里是内核）决定；想让背压早点生效，要有意地设小内核缓冲区（在 Linux 上手动设置 `SO_RCVBUF`/`SO_SNDBUF` 会关闭该套接字的自动调优，见 `man 7 tcp`）。**
+* **接收方事后收到的条数 = 发送方接受的条数**（"equal: true"）：没丢、没重——这是验证的核心。
 
 ---
 
@@ -578,12 +577,12 @@ backpressure: rings 64 KB/64 KB -> sender accepted ~18,200 msgs (~656 KB) before
 
 | 特性 | 旧写法（Java 8 风格） | 新写法（本题） | 编译器 / 运行时多做了什么；什么时候别用 |
 |---|---|---|---|
-| **虚拟线程**（[J10](../10-java21/J10_virtual_threads.md)） | `new Thread(this::run)` + 线程池管理；或回调式的 `CompletableFuture` 链来写"连接-等待-重试" | `Thread.ofVirtual().name("reconnecting-client-" + addr).start(this::run)`，里面写直线的阻塞代码 | 虚拟线程在阻塞 I/O / `Condition.await` 时卸载，不占平台线程。适合"很多个大部分时间在等"的任务（重连管理）。**不适合**热路径（调度开销和不确定性）；`synchronized` 里阻塞会钉住载体线程，所以用 `ReentrantLock` |
-| **`ReentrantLock` + `Condition`**（[J16](../10-java21/J16_concurrency_primitives.md)） | `synchronized` + `wait()/notifyAll()` | `lock.lock(); try {...} finally {lock.unlock();}`；`Condition.awaitNanos` | 可有多个条件、可超时、虚拟线程友好；代价是必须手写 `try/finally` |
-| **`record ChannelConfig`**（[J01](../10-java21/J01_record.md)） | 带 getter 的不可变类 + 构造器校验 | `record ChannelConfig(int maxFrame, int outCapacity, int inCapacity) { 紧凑构造器校验 }` | 配置对象天然适合 record；`static ChannelConfig of(int maxFrame)` 是工厂方法 |
-| **`RandomGenerator`**（Java 17，`java.util.random`） | `Random rnd; rnd.nextInt(...)`（没有 `long` 范围版本，常写 `(long)(rnd.nextDouble()*bound)` 有偏差） | `rng.nextLong(cap + 1)`：在 `[0, cap]` 内均匀取 `long` | 接口统一了 `Random`、`SplittableRandom`、`ThreadLocalRandom`；测试里传带种子的 `Random` 就确定了 |
+| **虚拟线程** | `new Thread(this::run)` + 线程池管理；或回调式的 `CompletableFuture` 链来写"连接-等待-重试" | `Thread.ofVirtual().name("reconnecting-client-" + addr).start(this::run)`，里面写直线的阻塞代码 | 虚拟线程在阻塞 I/O / `Condition.await` 时卸载，不占平台线程。适合"很多个大部分时间在等"的任务（重连管理）。**不适合**热路径（调度开销和不确定性）；`synchronized` 里阻塞会钉住载体线程，所以用 `ReentrantLock` |
+| **`ReentrantLock` + `Condition`** | `synchronized` + `wait()/notifyAll()` | `lock.lock(); try {...} finally {lock.unlock();}`；`Condition.awaitNanos` | 可有多个条件、可超时、虚拟线程友好；代价是必须手写 `try/finally` |
+| **`record ChannelConfig`** | 带 getter 的不可变类 + 构造器校验 | `record ChannelConfig(int maxFrame, int outCapacity, int inCapacity) { 紧凑构造器校验 }` | 配置对象天然适合 record；`static ChannelConfig of(int maxFrame)` 是工厂方法 |
+| **`RandomGenerator`**（Java 17，`java.util.random`） | `Random rnd; rnd.nextInt(...)`（没有 `long` 范围版本，常写 `(long)(rnd.nextDouble()*bound)` 有偏差） | `rng.nextLong(cap + 1)`：在 `[0, cap]` 内均匀取 `long` | 接口统一了 `Random`、`SplittableRandom`、`ThreadLocalRandom`；传带种子的 `Random` 就确定了 |
 | **try-with-resources + `AutoCloseable`** | 手写 `finally` 关闭 | `try (var srv = new MessageServer(...); var c = TcpMessageChannel.connect(...))` | 反向关闭、抑制异常；`close()` 要幂等 |
-| **`var`**（[J08](../10-java21/J08_var.md)） | `MessageServer srv = new MessageServer(...)` | 测试里 `var p = pair(CFG);` | 右边已写类型时 |
+| **`var`** | `MessageServer srv = new MessageServer(...)` | `var p = pair(CFG);` | 右边已写类型时 |
 | **`Objects.checkFromIndexSize`** | 手写 `off < 0 \|\| len < 0 \|\| off + len > arr.length` | `Objects.checkFromIndexSize(off, len, src.length)` | 抛标准的 `IndexOutOfBoundsException`，并正确处理 `off + len` 溢出 |
 
 ### 虚拟线程版本的备选设计（题面的"备选"）
@@ -608,7 +607,7 @@ Thread.ofVirtual().start(() -> {                 // 写线程
 
 * **优点**：没有 `Selector`、没有兴趣集、没有 `wbuf`、没有 `wakeup`；部分读 / 部分写由阻塞 API 内部循环处理；背压由有界阻塞队列自然提供。**代码量约为 NIO 版的三分之一**。
 * **缺点**：每个连接两条线程（虚拟线程便宜，但调度仍有开销和抖动）；`offer` 的"满了返回 false"要靠 `outbox.offer(m)`（`ArrayBlockingQueue` 的非阻塞版本）按**消息数**而不是**字节数**限界；难以精细控制延迟。
-* **怎么选**：`networking_basics.md` §9.4。连接数很大、对延迟不极端的服务 → 虚拟线程；需要把 CPU 绑核、批处理、极低延迟 → `Selector` 或更底层（内核旁路）。
+* **怎么选**：连接数很大、对延迟不极端的服务 → 虚拟线程；需要把 CPU 绑核、批处理、极低延迟 → `Selector` 或更底层（内核旁路）。
 
 ---
 
@@ -622,7 +621,7 @@ Thread.ofVirtual().start(() -> {                 // 写线程
 
 ### Q2：怎么做到无锁？
 
-**答案要点**：应用线程 ↔ I/O 线程之间是单生产者-单消费者：出站环（应用写、I/O 读）和入站环（I/O 写、应用读）都可以做成 ld01 的 SPSC 环（`setRelease`/`getAcquire`，无 CAS）。但本实现还有：`close`/`finishSending` 状态、阻塞 `poll(timeout)` 的等待（需要 park/unpark 或条件变量）。无锁版本把"等待"换成忙等或 `LockSupport.park`。何时值得：每秒千万级条数且 CPU 争用可测量时；这里的临界区只是几十字节拷贝，锁不是瓶颈（瓶颈是 `wakeup` 与线程交接，见 §5.7）。
+**答案要点**：应用线程 ↔ I/O 线程之间是单生产者-单消费者：出站环（应用写、I/O 读）和入站环（I/O 写、应用读）都可以做成单生产者-单消费者（SPSC）的无锁环（`setRelease`/`getAcquire`，无 CAS）。但本实现还有：`close`/`finishSending` 状态、阻塞 `poll(timeout)` 的等待（需要 park/unpark 或条件变量）。无锁版本把"等待"换成忙等或 `LockSupport.park`。何时值得：每秒千万级条数且 CPU 争用可测量时；这里的临界区只是几十字节拷贝，锁不是瓶颈（瓶颈是 `wakeup` 与线程交接，见 §5.7）。
 **可以说**：「先测量；这里的开销在线程交接，不在锁。」
 
 ### Q3：对端掉电了（没有 FIN、没有 RST），我怎么知道？
@@ -637,7 +636,7 @@ Thread.ofVirtual().start(() -> {                 // 写线程
 
 ### Q5：Nagle 和 `TCP_NODELAY`？
 
-**答案要点**：Nagle 算法把小写合并，等 ACK 或凑够一个段再发，节省包数；与对端的**延迟确认**相撞会产生约 40 ms 停顿（写-写-读模式）。消息通道必须 `TCP_NODELAY`。我们自己已经在应用层批量（出站环 + 一次 `write` 多条），所以不需要 Nagle 替我们合并。详见 `networking_basics.md` §5。
+**答案要点**：Nagle 算法把小写合并，等 ACK 或凑够一个段再发，节省包数；与对端的**延迟确认**相撞会产生约 40 ms 停顿（写-写-读模式）。消息通道必须 `TCP_NODELAY`。我们自己已经在应用层批量（出站环 + 一次 `write` 多条），所以不需要 Nagle 替我们合并。
 **可以说**：「我自己做批处理，所以关掉 Nagle。」
 
 ### Q6：如果应用一直不调用 `poll()` 会怎样？
@@ -652,7 +651,7 @@ Thread.ofVirtual().start(() -> {                 // 写线程
 
 ### Q8：为什么容量必须 ≥ `maxFrame + 4`？
 
-**答案要点**：入站环必须能装下一条最大的完整消息；否则环里是半条消息、已经满了，无法继续读也凑不齐——死锁（测试 `minimalBuffersStillDeliverEverythingInOrder` 用恰好等于的最小容量验证）。出站同理：不满足则最大消息永远 `offer` 失败。
+**答案要点**：入站环必须能装下一条最大的完整消息；否则环里是半条消息、已经满了，无法继续读也凑不齐——死锁。出站同理：不满足则最大消息永远 `offer` 失败。
 **可以说**：「容量要大于最大的原子单位。」
 
 ### Q9：边缘触发和水平触发（epoll）？
@@ -669,17 +668,17 @@ Thread.ofVirtual().start(() -> {                 // 写线程
 
 ## 8. 常见误区
 
-1. **以为一次 `read` = 一条消息**。→ 粘包/拆包。→ 长度前缀 + 增量解码器；测试在每个切分点切开（`decoderHandlesEverySplitPointOfAStream`）。
-2. **忽略 `write` 的返回值 / 写了一部分就当写完**。→ 丢数据，且只在慢网络、大消息时偶发。→ 保留 `wbuf` 与位置，等 `OP_WRITE`（测试 `largeWriteIsSplitAcrossPartialWritesAndStaysIntact`，几 MB 的消息）。
+1. **以为一次 `read` = 一条消息**。→ 粘包/拆包。→ 长度前缀 + 增量解码器；验证时要在每个切分点切开。
+2. **忽略 `write` 的返回值 / 写了一部分就当写完**。→ 丢数据，且只在慢网络、大消息时偶发。→ 保留 `wbuf` 与位置，等 `OP_WRITE`。
 3. **`OP_WRITE` 一直开着**。→ `select()` 立刻返回，CPU 100%。→ 只在有数据要写时开。
 4. **入站不限界 / 满了还读**。→ OOM；或读出来的字节没处放。→ 入站环 + 满了关闭 `OP_READ`。
-5. **暂停读之后没人叫醒**。→ 通道永久卡住（偶发、依赖时序）。→ `poll` 腾出空间后 `wakeup`。**两个 `poll` 版本都要**（测试里分别有阻塞版和自旋版）。
+5. **暂停读之后没人叫醒**。→ 通道永久卡住（偶发、依赖时序）。→ `poll` 腾出空间后 `wakeup`。**两个 `poll` 版本都要**（阻塞版和自旋版各验证一遍）。
 6. **忘了 `selectedKeys` 的语义**：不清除 / 读旧的 `readyOps`。→ 重复处理或误处理。→ `if (selectedKeys().remove(key))`。
 7. **容量刚好小于最大帧 + 头**。→ 死锁。→ 构造器校验 `>= maxFrame + 4`。
 8. **长度字段不校验**。→ 恶意 4 字节让你分配 2 GB。→ 看到头就校验，粘性失败。
 9. **EOF 一律当正常结束**。→ 帧中间的 EOF 被当作"对端优雅关闭"，吞掉了半条消息。→ `hasTruncatedTail()` ⟹ `EOFException`。
 10. **关闭时不管接收缓冲区里的数据**。→ `close()` 时内核发 RST，对端丢掉还没读走的数据。→ 优雅关闭：`shutdownOutput` → 等对端 EOF → `close`。
-11. **测试里用 `Thread.sleep(100)` 判断"应该已经到了"**。→ 慢机器上偶发失败。→ 带截止时间的轮询（`Await.until`），失败信息写清楚在等什么。
+11. **用 `Thread.sleep(100)` 判断"应该已经到了"**。→ 慢机器上偶发失败。→ 带截止时间的轮询，失败信息写清楚在等什么。
 12. **重连后假设消息不丢**。→ 见 Q4。
 
 ---
@@ -733,13 +732,4 @@ while (true) {
 
 ---
 
-## 10. 延伸阅读
-
-* W. Richard Stevens, *UNIX Network Programming, Vol. 1* —— 套接字、非阻塞 I/O、`select`/`poll`、半关闭与 `SO_LINGER` 的权威讲解。
-* RFC 9293（TCP，2022 年对 RFC 793 的更新）、RFC 896（Nagle）、RFC 1122 §4.2.3.2（延迟确认）。
-* `java.nio.channels.Selector` / `SelectionKey` / `SocketChannel` 的 Javadoc —— `wakeup()` 的粘性语义、`selectedKeys` 与 `readyOps` 的更新规则、`shutdownOutput`。
-* Netty 的 `LengthFieldBasedFrameDecoder` 与 `ByteToMessageDecoder`（文档与源码）—— 工业级的"增量成帧 + 累积缓冲区 + 背压（auto-read 开关、水位线）"实现，对照本题的最小版本读。
-* JEP 444（虚拟线程）与 JDK 21 的 `Thread.ofVirtual()` Javadoc；Ron Pressler 的相关文章 —— 为什么阻塞式写法重新可行。
-* Marc Brooker, 「Exponential Backoff And Jitter」（AWS Architecture Blog）—— 几种抖动策略的模拟比较。
-* Michael Nygard, *Release It!* —— 超时、断路器、舱壁、退避：连接管理的稳定性模式。
-* 本 kit：`study/30-articles/ld01_spsc_channel.md`（共享内存 SPSC 环）、`study/00-foundations/networking_basics.md`（TCP / `Selector` / 虚拟线程）、`loop/rounds/04_sd/sd03_low_latency_trading_system/model_answer.md` §7.4（订单网关：会话序号、心跳、cancel-on-disconnect）。
+「延伸」Stevens《UNIX Network Programming, Vol. 1》。

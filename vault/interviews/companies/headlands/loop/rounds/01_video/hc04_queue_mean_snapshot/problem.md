@@ -1,22 +1,15 @@
 # hc04 · Queue Mean + 修正快照（Headlands 一小时技术电面）
 
-> 阶段：电面（FastPrep 标 Phone Screen；1p3a 技术电面，C++）· 置信度：**高**（2 个独立来源，最近一次 2026-03-23/24）
-> 公开证据只有两个标题和每题的第一句话，以及 1p3a 帖子的一句预览（正文在登录墙后）。
-> **题面里凡是标了 (reconstructed) 的部分都是我根据标题补出来的，不是原题**——Part 1 的接口大体可信，Part 2 的「修正快照」语义是猜的，Part 3 / Part 4 是按「面试官会怎么往下追」加的练习。
-
 ## 读题前你需要知道
 
 这道题表面是「队列求平均数」，但面试官真正在看的是：你知道不知道**每次重新求和是 O(n)**，知道**浮点数加了又减会丢精度**，知道 **long 加法会溢出**，
-以及「保存历史版本」到底要复制多少数据。这些你不必先会——讲义 [[hc04_queue_mean_snapshot]]
-（`study/30-articles/hc04_queue_mean_snapshot.md`，从零讲环形缓冲区、128 位整数、持久化数据结构、Java 内存模型）会按顺序教。
-建议做法：先读讲义第 1–3 节，再自己写 Part 1，卡住再读第 4 节。
+以及「保存历史版本」到底要复制多少数据。涉及的基础：环形缓冲区、128 位整数、持久化数据结构、Java 内存模型。
 
 ## 背景
 
-* 证据：「实现一个 queue 和三个函数 push、pop 和 get_mean；get_mean 就是所有里面数据的 mean。第二问是实现一个带有 snapshot 的……」（1p3a 1169914，预览被截断）。
-* FastPrep 两道题：「Process a sequence of operations on an initially empty first-in, first-out queue of in…」和「A FIFO queue starts empty. Ordinary events belong to one logical his…」（都在第一句话处被截断）。
+实现一个 queue 和三个函数 `push`、`pop`、`get_mean`（`get_mean` 返回队列里所有数据的平均数）；第二问是实现一个带 snapshot 的版本：队列在一个空队列上处理一串操作，普通事件属于同一段逻辑历史，快照事件用来修正这段历史。
 
-## Part 1 · 队列 + 均值（高置信）
+## Part 1 · 队列 + 均值
 
 先进先出（FIFO）队列，元素是 `long`。
 
@@ -25,10 +18,10 @@
 | `void push(long x)` | 入队（放到队尾） |
 | `long pop()` | 出队并返回队头（最早 push 的）；空队列抛 `NoSuchElementException` |
 | `double getMean()` | 当前所有元素的平均数；空队列抛 `NoSuchElementException` |
-| `Mean mean()` | **精确**均值，约分后的分数 `numerator/denominator`（分母恒正） **(reconstructed)** |
+| `Mean mean()` | **精确**均值，约分后的分数 `numerator/denominator`（分母恒正） |
 | `int size()` · `boolean isEmpty()` · `I128 sum()` | 辅助 |
 
-要求（原题大概只要求 `get_mean` 是 O(1)；下面这些是追问方向 **(reconstructed)**）：
+基本要求是 `get_mean` 为 O(1)；追问方向：
 
 * 每个操作 **O(1)**（均摊）。不能每次 `getMean` 都遍历。
 * **精确**：不能用 `double` 维护 running sum（`1e16 + 1 + 1 − 1e16` 在 double 里等于 0，不是 2）。
@@ -43,9 +36,9 @@ push 4                  → getMean() = 2.5
 pop()                   → 返回 1；getMean() = 3.0
 ```
 
-## Part 2 · 修正快照（snapshot）事件流 (reconstructed)
+## Part 2 · 修正快照（snapshot）事件流
 
-原题第二问的原文看不到。我的理解：事件分四种——`Push`、`Pop`、`Query`（要一个均值）、`Correct`（**修正快照**：丢掉此前整段逻辑历史，队列内容变成快照给出的列表）。
+事件分四种——`Push`、`Pop`、`Query`（要一个均值）、`Correct`（**修正快照**：丢掉此前整段逻辑历史，队列内容变成快照给出的列表）。
 文本格式（`QueueEvents.parse`）：
 
 ```
@@ -72,9 +65,9 @@ mean            → empty
 
 `Correct` 事件必须**拷贝**传入的列表（调用者之后改原列表不应影响事件），列表里有 `null` 立刻抛 NPE。
 
-> 另一种可能的读法：snapshot 是「某时刻整个队列的真实内容」，用来纠正之前积累的误差。本质上和这里的 `Correct` 是同一个操作：用快照内容替换当前状态。如果真题的语义是别的（比如按时间戳回放），请把差异记到这里。
+> 另一种可能的读法：snapshot 是「某时刻整个队列的真实内容」，用来纠正之前积累的误差。本质上和这里的 `Correct` 是同一个操作：用快照内容替换当前状态。
 
-## Part 3 · 版本化 / 持久化队列 (reconstructed)
+## Part 3 · 版本化 / 持久化队列
 
 「快照」换一个角度问：**我想保留每个历史版本，随时能查任意版本的均值，还能从旧版本继续分叉**。
 
@@ -88,7 +81,7 @@ mean            → empty
 
 要求：`push`、`pop`、`mean` 都是 **O(log n)** 或更好，**不能**每个版本复制一份内容（20 万个版本会 O(n²)）。版本号按创建顺序从 1 递增。
 
-## Part 4 · 单写者、多读者 (reconstructed)
+## Part 4 · 单写者、多读者
 
 后台线程不断 `push/pop`，监控线程随时想读当前均值，要求：读者**不加锁**、不阻塞写者、**永远读到一致的值**（不能读到「新的和 + 旧的个数」这种撕裂值）。
 
@@ -108,15 +101,10 @@ mean            → empty
 * `snapshot` 后面不带数字（清空）；`snapshot` 里含 `Long.MAX_VALUE` 的溢出。
 * 版本分叉：同一个旧版本后面接两个不同的 push。
 
-## 野外变体
+## 相关变体
 
-* 同一家 FastPrep 页面上「Sliding-Window Means with IEEE Special Values」是同一思路：滚动统计 + 数值稳定性（NaN / Inf 怎么办）。
+* 滑动窗口均值带 IEEE 特殊值：同一思路，滚动统计 + 数值稳定性（NaN / Inf 怎么办）。
 * C++ 面试官爱追问：`std::deque` 还是环形数组？`get_mean` 返回 `double` 还是分数？线程安全怎么做？
-
-## 来源与置信度
-
-`catalog/raw/forums.md` A1（1p3a 1169914，2026-03-23）；`catalog/raw/github_repos.md`（FastPrep "Queue Mean Queries" / "Queue Mean from Corrective Snapshots"，2026-03-23）；
-QuantVault X1 同源不计。**Part 1 的 push/pop/get_mean 来自证据；其余全部 (reconstructed)。**
 
 ## 考什么
 

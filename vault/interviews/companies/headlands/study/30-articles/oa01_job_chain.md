@@ -1,7 +1,6 @@
 # oa01 · Job Chain 报表 —— 讲义
 
-> 题面：`loop/rounds/00_oa/oa01_job_chain/problem.md` · 速查：同目录 `REPORT.md` · 代码：同目录 `reference/JobChains.java`
-> 写法说明见 `study/TEXTBOOK.md`。这一篇是全 kit 讲义的样板，所以每一步都写得特别细。
+> 读者：会写基本 Java（类、方法、循环、集合），其余从零讲。
 
 ---
 
@@ -35,7 +34,7 @@
 * 任务 5 → 结束。一个任务，200 秒。
 
 105 秒 = 1 分 45 秒，写成 `00:01:45`；200 秒 = 3 分 20 秒，写成 `00:03:20`。
-按总时长从长到短排：先报任务 5 那条，再报任务 1 那条。这就是 `problem.md` 里的样例输出。
+按总时长从长到短排：先报任务 5 那条，再报任务 1 那条。这就是样例输出。
 
 ---
 
@@ -46,7 +45,7 @@
 **是什么**：一串元素，每个元素记着「下一个是谁」。本题里每一行就是一个元素，`next_job_id` 就是那根「指针」。
 
 **为什么需要这个概念**：一旦看出「这是若干条链表」，题目就从「处理一堆 CSV」变成「在链表上走路」，思路清楚得多。
-WSO 上 2020 年的考生原话就是：「detect if the input data is an union of single linked list」——判断输入是不是**若干条单链表拼在一起**。
+题目的本质就是判断输入是不是**若干条单链表拼在一起**（detect if the input data is a union of single linked lists）。
 
 **它怎么工作**：
 
@@ -89,7 +88,7 @@ byId.containsKey(7);        // 有没有
 byId.putIfAbsent(1, job);   // 只有不存在时才存；返回旧值（存在时）或 null
 ```
 
-我们的参考解用的是 `LinkedHashMap`：它是 `HashMap` 再加一条「按插入顺序」串起来的链，遍历时顺序和插入顺序一致。
+这里用的是 `LinkedHashMap`：它是 `HashMap` 再加一条「按插入顺序」串起来的链，遍历时顺序和插入顺序一致。
 用它是为了输出**确定**（同一份输入每次跑结果顺序都一样），方便调试。
 
 ### 2.3 时间复杂度（Big-O）——只需要知道这么多
@@ -103,7 +102,6 @@ byId.putIfAbsent(1, job);   // 只有不存在时才存；返回旧值（存在�
 | O(n²) | 每行都和每行比一次 | 1 万亿（跑不完） |
 
 **为什么需要它**：面试官问「百万行多快？」时，要能说出「O(n)，因为每行只进哈希表一次、只被走过一次」。
-（更完整的讲解会放在 `study/00-foundations/complexity.md`。）
 
 ### 2.4 入度（in-degree）：一个能把「环」和「分叉」一网打尽的概念
 
@@ -151,7 +149,7 @@ byId.putIfAbsent(1, job);   // 只有不存在时才存；返回旧值（存在�
 ```
 
 **为什么分钟要 `% 60`**：`7265 / 60 = 121` 是「总共多少分钟」，其中 120 分钟已经算进了 2 小时，只剩 1 分钟要显示。
-网上公开的那份 C++ 题解就**漏了这个 `% 60`**，7200 秒会输出 `02:120:00`。隐藏测试很可能专门测这个。
+常见错误就是**漏了这个 `% 60`**，7200 秒会输出 `02:120:00`。这是最容易被边界用例抓到的地方。
 
 **Java 里怎么写**：`"%02d:%02d:%02d".formatted(h, m, s)` —— `%02d` 的意思是「整数，至少两位，不够前面补 0」。
 
@@ -213,13 +211,13 @@ Math.addExact(a, a);      // 抛 ArithmeticException：明确告诉你溢出了
 
 **第 5 步：排序和输出**
 * 链的条数 k ≤ n，排序 O(k log k)。
-* 排序规则：总时长降序，相同时按头编号升序（降序是原题原文；同总时长时按头编号升序是原题没说的 (inferred) 选择——写清楚 tie-break 是好习惯）。
+* 排序规则：总时长降序，相同时按头编号升序（总时长相同时按头编号升序：题面没规定时自己选一个并写清楚 tie-break 是好习惯）。
 
 总复杂度 O(n + k log k)，内存 O(n)。
 
 ---
 
-## 5. 逐段讲参考解
+## 5. 逐段讲解法
 
 ### 5.1 用 record 表示一行
 
@@ -350,7 +348,7 @@ public final class Job {
 ```
 
 新写法一行。更重要的是**意图**：record 告诉读代码的人「这是纯数据，不可变，两个字段相同的对象就是相等的」。
-测试里可以直接 `assertEquals(List.of(new Chain(5, 5, 1, 200)), chains)`，因为 `equals` 是按字段比的。
+`List.of(new Chain(5, 5, 1, 200))` 这样的值可以直接比较，因为 `equals` 是按字段比的。
 
 **什么时候不该用**：需要可变字段、需要继承别的类（record 隐式继承 `java.lang.Record`，不能再 `extends`）、或者字段很多且大部分可选时。
 
@@ -373,7 +371,6 @@ if (outcome instanceof Ok) {
 新写法让编译器参与：类型判断、取字段、穷尽检查都由它保证。这种「一个封闭的类型族 + 按类型分派」的组合，
 在别的语言里叫**代数数据类型**（algebraic data type），是 Java 21 最重要的建模工具。后面订单簿那题会用它表示「下单 / 撤单 / 成交」事件。
 
-详细课本：`study/10-java21/J02_sealed.md`、`J03_pattern_switch.md`、`J04_record_patterns.md`（待写）。
 
 ---
 
@@ -381,7 +378,7 @@ if (outcome instanceof Ok) {
 
 **问：百万行要多久？瓶颈在哪？**
 * 思考：每行进哈希表一次、被走一次 → O(n)。常数上的瓶颈是什么？是正则解析和 `Integer` 装箱。
-* 答：O(n)。实测 100 万行整题不到 1 秒。如果要再快：手写解析代替正则（逐字符读数字）；用原始类型数组代替 `HashMap<Integer, …>`，避免装箱。
+* 答：O(n)。100 万行整题不到 1 秒。如果要再快：手写解析代替正则（逐字符读数字）；用原始类型数组代替 `HashMap<Integer, …>`，避免装箱。
 * 说出口：「线性的。真要压常数，第一刀是解析，第二刀是去掉 Integer 装箱，比如编号范围已知时用 int 数组当表。」
 
 **问：文件 10 GB 放不进内存？**
@@ -431,10 +428,4 @@ if (outcome instanceof Ok) {
 
 ---
 
-## 10. 延伸阅读
-
-* JEP 395 Records — https://openjdk.org/jeps/395 —— record 的设计动机，读「Goals」和「Non-Goals」两节就够了。
-* JEP 409 Sealed Classes — https://openjdk.org/jeps/409 —— 为什么需要「封闭的继承」。
-* JEP 441 Pattern Matching for switch — https://openjdk.org/jeps/441 —— 穷尽性检查的规则。
-* `java.util.HashMap` Javadoc — https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/HashMap.html —— 第二段讲了容量与装载因子（load factor）。
-* 《算法》（Sedgewick）第 3.4 节 散列表 —— 哈希表最好的入门教材。
+「延伸」Sedgewick《算法》第 3.4 节「散列表」。

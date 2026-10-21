@@ -1,15 +1,10 @@
-# hc04 · REPORT
+# hc04 · 思路与追问
 
 ## 概要
 
-Headlands 的电话/视频面常见「流式数据结构」一族（forums.md Q5：队列均值 + 快照、合并多路数据流）。这道题第一问几分钟就能写完，
+面试里常见「流式数据结构」一族（队列均值 + 快照、合并多路数据流）。这道题第一问几分钟就能写完，
 面试官其实是在看你**接下来 50 分钟**会不会主动想到：O(1) 均值、浮点漂移、溢出、空队列、快照是拷贝还是共享、多线程读。
-本题集把这条追问链练成四个 Part。配套讲义：`study/30-articles/hc04_queue_mean_snapshot.md`（教科书式，从零讲起）。
-
-## 来源与置信度
-
-见 `problem.md` §来源。整体置信度「高」（2 个独立来源），但**证据只有标题 + 第一句话 + 一句被截断的预览**：
-Part 1 的 `push/pop/get_mean` 来自证据；精确分数、`I128`、`Correct` 的语义、文本格式、Part 3、Part 4 全是 **(reconstructed)**。
+本题集把这条追问链练成四个 Part。
 
 ## 逐 Part 思路
 
@@ -34,7 +29,7 @@ Part 1 的 `push/pop/get_mean` 来自证据；精确分数、`I128`、`Correct` 
 * 版本化：每个版本复制一份数组（`m = 20,000` 个版本就要 168 ms，按 O(n²) 增长，30 万版本直接超时）。
 * 并发：读者分两次读 `sum` 和 `size`；或者用 `volatile` 两个字段——都会读到撕裂值。
 
-## 复杂度 + 实测时间
+## 复杂度
 
 | 操作 | 时间 | 备注 |
 |---|---|---|
@@ -43,36 +38,24 @@ Part 1 的 `push/pop/get_mean` 来自证据；精确分数、`I128`、`Correct` 
 | `VersionedQueue.push/mean/size` | O(1)，`pop` O(log n) | 每节点 4 个原始数组槽 + 每版本 4 个 |
 | `SharedMean.read` | O(1)，无锁 | 写者每次分配一个 `Stat`（32 字节左右） |
 
-实测（本机 M 系列 Mac，JDK 21，ZGC；`tools/jtest.py run … --tag perf` 三个 perf 测试合计 255 ms，预算各 2 s）：
+量级参考：
 
 * 100 万次随机 push/pop + 每 8 次一个 `getMean`：远低于 2 s。
-* 20 万次 push（队列长度保持在 2 万以内）、每两次 push 求一次均值：朴素「每次遍历求和」2604 ms，`QueueMean` 3 ms（`/tmp` 里的一次性基准，非测试的一部分）。
+* 20 万次 push（队列长度保持在 2 万以内）、每两次 push 求一次均值：朴素「每次遍历求和」2604 ms，`QueueMean` 3 ms。
 * 2 万个版本：每版本复制数组 168 ms，`VersionedQueue` 1 ms。
-
-## 测试清单
-
-`python3 tools/jtest.py run loop/rounds/01_video/hc04_queue_mean_snapshot --impl reference`：**61 个测试**（含参数化与 `@RepeatedTest` 展开）。
-
-| Part | 数量 | 说明 |
-|---|---|---|
-| part1 | 10 | 样例、空队列、约分、零与负数、float 漂移、溢出、最近 double、环形缓冲、BigInteger 随机对拍、perf |
-| part2 | 18 | 文本样例逐字、快照替换历史、空快照、防御性拷贝、解析错误 9 种（参数化）、渲染、perf |
-| part3 | 6 | 旧版本可用与分叉、correct、非法版本、溢出、与「复制模型」随机对拍 6000 步、perf |
-| part4 | 27 | 单线程行为、第二写者被拒、`@RepeatedTest(25)` 的并发一致性 |
-| 标签 | edge 26 · fmt 2 · perf 3 · conc 25 | |
 
 ## Java 21 特性
 
-| id | 用在哪 | 比旧写法好在哪 |
+| 特性 | 用在哪 | 比旧写法好在哪 |
 |---|---|---|
-| J01 record | `Mean`（紧凑构造器里约分）、`I128`、`Push/Pop/Query/Correct`、`Stat` | 值对象 + `equals` 自带，测试直接比较 `Mean`；约分写在构造器，保证全程只有规范形式 |
-| J02 sealed | `Event`、`Answer` | 事件种类封闭；加一种事件，所有 `switch` 编译报错，不会漏处理 |
-| J03 switch 模式匹配 | `QueueEvents.run` | 不用 `instanceof` 链 + 强转，也不用 visitor |
-| J04 record 模式 | `render`：`case Value(QueueMean.Mean(var n, var d)) when d == 1` | 一行拆开两层嵌套 + `when` 守卫 |
-| J05 switch 表达式 + `yield` | `parse` | 每个命令有自己的块，没有 fallthrough |
-| J13 未命名模式 `_`（预览） | `case Pop _`、`catch (InterruptedException _)` | 明说「这个绑定不用」 |
-| J16 `VarHandle` | `SharedMean` 的 `setRelease/getAcquire/compareAndSet` | 比 `volatile` 更精确：只要「发布」语义，不要 `volatile` 写的全序开销；也比 `synchronized` 不 pin 虚拟线程 |
-| J10 虚拟线程 | 测试里 `Executors.newVirtualThreadPerTaskExecutor()`、`Thread.ofVirtual()` | 起 5 个读/写线程几乎免费；注意：纯自旋的虚拟线程会饿死别人，所以读者循环里有 `Thread.yield()` |
+| record | `Mean`（紧凑构造器里约分）、`I128`、`Push/Pop/Query/Correct`、`Stat` | 值对象 + `equals` 自带，测试直接比较 `Mean`；约分写在构造器，保证全程只有规范形式 |
+| sealed | `Event`、`Answer` | 事件种类封闭；加一种事件，所有 `switch` 编译报错，不会漏处理 |
+| switch 模式匹配 | `QueueEvents.run` | 不用 `instanceof` 链 + 强转，也不用 visitor |
+| record 模式 | `render`：`case Value(QueueMean.Mean(var n, var d)) when d == 1` | 一行拆开两层嵌套 + `when` 守卫 |
+| switch 表达式 + `yield` | `parse` | 每个命令有自己的块，没有 fallthrough |
+| 未命名模式 `_`（预览） | `case Pop _`、`catch (InterruptedException _)` | 明说「这个绑定不用」 |
+| `VarHandle` | `SharedMean` 的 `setRelease/getAcquire/compareAndSet` | 比 `volatile` 更精确：只要「发布」语义，不要 `volatile` 写的全序开销；也比 `synchronized` 不 pin 虚拟线程 |
+| 虚拟线程 | 测试里 `Executors.newVirtualThreadPerTaskExecutor()`、`Thread.ofVirtual()` | 起 5 个读/写线程几乎免费；注意：纯自旋的虚拟线程会饿死别人，所以读者循环里有 `Thread.yield()` |
 
 ## 面试官可能的追问
 

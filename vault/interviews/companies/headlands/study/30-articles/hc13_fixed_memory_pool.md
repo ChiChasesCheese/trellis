@@ -1,8 +1,6 @@
 # hc13 · 定长内存池 —— 讲义
 
-> 题面：`loop/rounds/01_video/hc13_fixed_memory_pool/problem.md` · 速查：同目录 `REPORT.md` · 代码：同目录 `reference/`（`IndexPool` `GenPool` `OffHeapOrderPool` `ConcurrentPool`）
-> 实验代码：`study/30-articles/examples/hc13/PoolWhy.java`（为什么池化）、`ContentionBench.java`（并发池的三种写法）。本文所有"实测"都来自这两个程序在本机（Apple M 系列，12 核，JDK 21.0.12）的运行。
-> 写法说明见 `study/TEXTBOOK.md`。这一篇要从最根本的问题讲起：**Java 有垃圾回收器，为什么还有人要自己管内存？**
+> 读者：会写基本 Java。本篇从最根本的问题讲起：**Java 有垃圾回收器，为什么还有人要自己管内存？**
 
 ---
 
@@ -12,11 +10,9 @@
 
 最直白的写法：来一条消息，`new Order(...)`；处理完，不管它，垃圾回收器（GC）会收拾。
 
-面试题问的是另一种写法：**启动时就准备好固定数量（`capacity` 个）的、一样大的"格子"，运行时只"借"和"还"，不再 `new`**。这个装格子的东西叫**内存池**（memory pool）。题面原文只有一句：
+面试题问的是另一种写法：**启动时就准备好固定数量（`capacity` 个）的、一样大的"格子"，运行时只"借"和"还"，不再 `new`**。这个装格子的东西叫**内存池**（memory pool）。
 
-> Implement a pool containing `capacity` equal-size blocks. Blocks are represented by…（后半句被截断了）
-
-我们能确定的是：池里有 `capacity` 个等大的块；块用某种"编号"表示；要能分配、归还、校验。剩下的（返回值约定、四个 Part）都是我们按"一小时电面会怎么递进"补出来的。
+题意：实现一个包含 `capacity` 个等大块的池；块用某种"编号"表示；要能分配、归还、校验。返回值约定和后面的四个 Part，是按"一小时电面会怎么递进"来设计的。
 
 ### 手算一遍
 
@@ -34,7 +30,7 @@ allocate()      没有空闲块       → 返回 -1    （池满不是错误，�
 
 ### 四个 Part 怎么递进
 
-面试官不会一上来就问并发。一小时里他会这样一步一步加难度（后三步是我们的 **(reconstructed)** 推断，不是证据）：
+面试官不会一上来就问并发。一小时里他会这样一步一步加难度：
 
 1. **Part 1**：块用 `int` 编号。借、还都要 O(1)。"如果我还了同一个块两次呢？还了一个根本不存在的编号呢？"
 2. **Part 2**：他问："A 还了块 7，B 借到了块 7，A 手里还有个旧的 7，又还了一次，B 的块就被偷偷还掉了。怎么防？" → 编号里带"版本号"。
@@ -44,6 +40,8 @@ allocate()      没有空闲块       → 返回 -1    （池满不是错误，�
 ---
 
 ## 2. 前置知识
+
+> 复杂度记号速记：`O(n)` 表示步数随输入规模 n 线性增长；`O(log n)` 表示 n 翻倍只多一步（二分查找、平衡树、堆）；`O(n²)` 表示每一对元素都要处理一次；`O(1)` 表示与 n 无关。
 
 ### 2.1 为什么 Java 程序要"池化"？（先回答最根本的问题）
 
@@ -62,7 +60,7 @@ GC 的基本工作（以最经典的"标记—清除"思路为例）：
 
 很多人以为 `new` 很慢。在 HotSpot 里，每个线程拥有一小块自己专用的堆（**TLAB**，Thread-Local Allocation Buffer）。`new` 一个对象就是把 TLAB 里的"下一个空位指针"往后推一个对象的大小——叫**指针碰撞**（bump the pointer），几条机器指令，不需要锁。我们的 `Order`（一个头 + `long id, long px, int qty, int side`）大约 **40 字节**（对象头 12 字节 + 24 字节字段，凑成 8 的倍数）。
 
-所以池化**不是**为了让分配本身更快（本讲义后面的实测会显示：池的借还并不比 `new` 快多少）。
+所以池化**不是**为了让分配本身更快（后面的数据会显示：池的借还并不比 `new` 快多少）。
 
 #### 2.1.3 真正的代价在回收
 
@@ -83,7 +81,7 @@ GC 的基本工作（以最经典的"标记—清除"思路为例）：
 
 低延迟系统（撮合、做市）看的是**尾延迟**（tail latency）：不是"平均每条消息 2 微秒"，而是"最慢的那 0.01% 是多少"。一次 5 毫秒的 GC 暂停，对平均值没影响，但对尾延迟是灾难。
 
-#### 2.1.4 实测：`PoolWhy.java`
+#### 2.1.4 数据：池化到底换来什么
 
 场景：窗口里始终有 100 万条在飞的订单，每来一条新消息就顶掉最旧的一条，共 3000 万条消息，`-Xmx256m`。A 组每条 `new Order`；B 组用 `OffHeapOrderPool` 复用堆外槽位（`put(h, id, px, qty, side)` 直接写字段，零分配）。第 3 轮结果（前两轮是预热，同一个 JVM 里依次跑）：
 
@@ -93,17 +91,16 @@ GC 的基本工作（以最经典的"标记—清除"思路为例）：
 | G1 | 堆外池 | 536 ms | 0 次 / 0 ms | 0.02 ms | 0 个 |
 | Parallel | 堆上 `new` | 674 ms | 39 次 / 205 ms | 22.14 ms | 39 个 |
 | Parallel | 堆外池 | 536 ms | 0 次 / 0 ms | 0.02 ms | 0 个 |
-| 分代 ZGC（`-XX:+UseZGC -XX:+ZGenerational`，kit 的默认） | 堆上 `new` | 598 ms | 82 次 / 455 ms（并发线程的时间，不是暂停） | 0.10 ms | 0 个 |
+| 分代 ZGC（`-XX:+UseZGC -XX:+ZGenerational`） | 堆上 `new` | 598 ms | 82 次 / 455 ms（并发线程的时间，不是暂停） | 0.10 ms | 0 个 |
 | 分代 ZGC | 堆外池 | 588 ms | 0 次 / 0 ms | 0.04 ms | 0 个 |
 
-怎么读这张表（这是本讲义最重要的一张表，请逐行看）：
+怎么读这张表（这是最重要的一张表，请逐行看）：
 
 1. **吞吐几乎没差别**（500–800 ms，噪声就有 ±30%，不同轮之间互相超过）。`new` 本来就便宜，池的借还还要多几次内存读写。**别因为"快"去池化。**
 2. **尾延迟差几个数量级**：G1 / Parallel 下，`new` 版里有几十个操作被 GC 暂停卡到 1 ms 以上，最慢 4–22 ms；池版最慢 0.02 ms。这就是低延迟系统愿意付出复杂度的原因。
-3. **分代 ZGC 把暂停压到了亚毫秒**（0.10 ms），所以在 ZGC 下这个理由大大变弱——代价是 GC 线程在后台吃掉 CPU（455 ms 的累计并发耗时，几乎和应用本身一样多）。池化和选 GC 是同一个问题的两种解法（`study/10-java21/J19_runtime_zgc_jit.md`）。
+3. **分代 ZGC 把暂停压到了亚毫秒**（0.10 ms），所以在 ZGC 下这个理由大大变弱——代价是 GC 线程在后台吃掉 CPU（455 ms 的累计并发耗时，几乎和应用本身一样多）。池化和选 GC 是同一个问题的两种解法。
 4. 还有一个没在表里的事实：池版的 GC 次数是 0，意味着应用线程和 GC 线程不再抢 CPU、不再抢内存带宽。
 
-> 复现：`javac --release 21 --enable-preview -d /tmp/hc13 loop/rounds/01_video/hc13_fixed_memory_pool/reference/*.java study/30-articles/examples/hc13/PoolWhy.java`，再 `java --enable-preview -Xmx256m -XX:+UseG1GC -cp /tmp/hc13 PoolWhy`（把 `UseG1GC` 换成 `UseParallelGC`、`UseZGC -XX:+ZGenerational` 看其他行）。数字会变，趋势不会。
 
 #### 2.1.5 池化的代价（面试官最爱追问的另一半）
 
@@ -111,7 +108,7 @@ GC 的基本工作（以最经典的"标记—清除"思路为例）：
 * **数据泄漏**：上一个主人的数据留在块里，下一个主人能读到。所以 `allocate()` 要清零。
 * **在堆上池化对象的陷阱**：池里的对象长期存活 → 被晋升到老年代；之后你每次往老对象里写一个新对象的引用，GC 要通过"写屏障"（write barrier）记下来。池化**堆上的、含引用字段的对象**可能让 GC 更累，不是更轻松。这也是本题的块最终是**堆外、纯数值字段**的原因：GC 完全看不见。
 * **现代 JIT 的逃逸分析**（escape analysis）：如果对象没有逃出方法，JIT 可以不分配它（标量替换）。池化会让对象"逃逸"（存进池里），反而失去这个优化。
-* **先量，再池化**：用 `-Xlog:gc`、JFR（`jdk.GarbageCollection`、`jdk.ObjectAllocationSample`）确认 GC 是瓶颈再动手。J17 §5.8 说的是同一件事。
+* **先量，再池化**：用 `-Xlog:gc`、JFR（`jdk.GarbageCollection`、`jdk.ObjectAllocationSample`）确认 GC 是瓶颈再动手。
 
 ### 2.2 空闲链表（free list）
 
@@ -183,24 +180,24 @@ handle 要在方法间传、当 map 的 key、存进别的结构，最好是**�
        generation = (int) (handle >>> 32);   // 无符号右移 32 位再取低 32 位
 ```
 
-最容易犯的错：**符号扩展**（sign extension）。`index` 是 `int`，转成 `long` 时，如果它是负的（最高位 1），Java 会把高 32 位全填成 1，把 generation 污染成 `0xFFFFFFFF`。`& 0xFFFFFFFFL` 先把它当**无符号**数看待，高 32 位清零，才安全。测试 `handlePackingRoundTrips` 专门用 `Integer.MAX_VALUE` 做下标、`-1` 做版本号来抓这个 bug。
+最容易犯的错：**符号扩展**（sign extension）。`index` 是 `int`，转成 `long` 时，如果它是负的（最高位 1），Java 会把高 32 位全填成 1，把 generation 污染成 `0xFFFFFFFF`。`& 0xFFFFFFFFL` 先把它当**无符号**数看待，高 32 位清零，才安全。
 
-版本号是 `int`，会溢出回绕（`0xFFFFFFFF + 1 = 0`）。因为 2^32 是偶数，回绕后奇偶性不变，所以"偶空闲/奇在用"的约定在回绕处依然成立（测试 `generationWrapsAroundCorrectly`）。真正的风险是：同一个槽位被借还 2^31 次之后，一个极老的 handle 可能"撞上"当前版本。实际可以忽略；若不能忽略，退役这个槽位（永远不再借出）。
+版本号是 `int`，会溢出回绕（`0xFFFFFFFF + 1 = 0`）。因为 2^32 是偶数，回绕后奇偶性不变，所以"偶空闲/奇在用"的约定在回绕处依然成立。真正的风险是：同一个槽位被借还 2^31 次之后，一个极老的 handle 可能"撞上"当前版本。实际可以忽略；若不能忽略，退役这个槽位（永远不再借出）。
 
-### 2.5 堆外内存与 FFM（一句话 + 链接）
+### 2.5 堆外内存与 FFM
 
-`study/10-java21/J17_ffm_api.md` 已经完整讲过 `Arena` / `MemorySegment` / `MemoryLayout`，这里只列本题用到的：
+Java 21 的外部内存 API（FFM，Foreign Function & Memory，预览）允许在 GC 管不到的地方分配和访问内存。本题用到的几个部件：
 
-* **`Arena.ofShared()`**：负责一块内存的生命周期，`close()` 时整块归还；`ofShared` 允许别的线程访问（JUnit 的 `assertTimeoutPreemptively` 会换线程）。
+* **`Arena.ofShared()`**：负责一块内存的生命周期，`close()` 时整块归还；`ofShared` 允许别的线程访问（`ofConfined` 的内存只允许创建它的线程访问）。
 * **`arena.allocate(bytes, 对齐)`**：分配并**清零**。
 * **`MemoryLayout.structLayout(...)`**：像 C 的 `struct`，声明每个字段的类型和名字；`byteSize()` 给总大小。
 * **`layout.varHandle(sequenceElement(), groupElement("px"))`**：得到一个 `VarHandle`，调用 `PX.get(segment, i)` / `PX.set(segment, i, v)` 读写第 `i` 个槽位的 `px` 字段。偏移由 JDK 算，不写魔法数字。
 
-为什么槽位大小选 **32 字节**：头 8 字节（`gen:int` + `next:int`）+ 载荷 24 字节（`id:long, px:long, qty:int, side:int`）。32 字节是 2 的幂，一条 64 字节的缓存行正好放 2 个槽位，不会有一个槽位横跨两条缓存行（`study/00-foundations/cpu_cache_locality.md`）。
+为什么槽位大小选 **32 字节**：头 8 字节（`gen:int` + `next:int`）+ 载荷 24 字节（`id:long, px:long, qty:int, side:int`）。32 字节是 2 的幂，一条 64 字节的缓存行正好放 2 个槽位，不会有一个槽位横跨两条缓存行（CPU 以缓存行为单位搬运数据，槽位横跨两行就要搬两次）。
 
 ### 2.6 并发：竞争、CAS 与"无锁"
 
-先读 `study/10-java21/J16_concurrency_primitives.md` §1（原子性、可见性、有序性）和 §2.3（CAS）、§2.4（`VarHandle`）。这里只补本题特有的部分。
+并发正确性要同时考虑三件事：**原子性**（一个操作要么全做完、要么没做，别的线程看不到中间状态）、**可见性**（一个线程的写入何时能被别的线程看到）、**有序性**（编译器和 CPU 可能重排指令）。`VarHandle` 是 Java 9 起提供的、对字段做精确内存操作（带指定内存序的读写、CAS）的句柄。
 
 **竞争条件**（race condition）：两个线程都执行"读 head → 改 head"，交错执行就会丢更新。
 
@@ -238,7 +235,7 @@ pop():    loop { t = top;  if t == null return empty;  n = t.below;  if CAS(top,
                      栈变成: B → ???    B 被装回空闲链表，可是线程 2 还在用 B。
 ```
 
-CAS 成功了（值确实还是 A），但"A"已经不是原来那个"A"——它的 `below` 变了。结果：线程 1 和线程 2 对 B 同时拥有所有权。这是并发池最经典的 bug（J16 例 4 有可运行的版本）。
+CAS 成功了（值确实还是 A），但"A"已经不是原来那个"A"——它的 `below` 变了。结果：线程 1 和线程 2 对 B 同时拥有所有权。这是并发池最经典的 bug。
 
 **解法：带 tag 的头指针**（tagged pointer / versioned head）。让 `head` 不只存"栈顶编号"，还存一个**计数器**，每次成功 push/pop 都 +1：
 
@@ -259,7 +256,7 @@ tag 也会回绕（32 位 = 42 亿次操作）：要让 ABA 重现，线程 1 �
 
 **办法**：每个线程在自己手里先攒一小批槽位。借的时候先从自己的小仓库拿，空了才去共享池里**一次拿一批**；还的时候先放进自己的小仓库，满了才**一次还一批**回共享池。共享的 `head` 只在"补货 / 退货"时碰一次，而不是每次借还都碰。
 
-这个思路无处不在：JVM 自己的 TLAB 就是每线程的分配缓存；tcmalloc 的 thread cache、jemalloc 的 tcache、Solaris slab 分配器的 magazine（Bonwick 2001）都是它。§4.4 有实测。
+这个思路无处不在：JVM 自己的 TLAB 就是每线程的分配缓存；tcmalloc 的 thread cache、jemalloc 的 tcache、Solaris slab 分配器的 magazine（Bonwick 2001）都是它。§4.4 有数据。
 
 ---
 
@@ -286,7 +283,7 @@ class NaivePool {
 }
 ```
 
-它是对的：重复归还、越界都能检测。**错在哪里**：`allocate()` 是 O(`capacity`)。**具体慢在**：池接近满、空位散落在数组中间的时候，每次要扫过前面所有被借走的块才能找到空位。注意这个缺陷很容易被"随机借还"的测试漏掉——如果池里平均只有几百块在用，前几百个格子之后就是空位，扫描很快（（我们实测 300 万次 50/50 随机借还，这个版本 125 ms 就跑完了，看起来没问题！））。所以 `IndexPoolTest.nearFullChurnIsFast` 专门把池填满、再 150 万次"换掉随机一块"：`capacity = 65536` 时，朴素版实测每步约 3.9 微秒，150 万步约 6 秒，超过 2 秒预算（测试红）；链表版同样的负载约 11 毫秒。**教训：测性能要测最坏的形状，不是测"平均看起来随机"的形状。**
+它是对的：重复归还、越界都能检测。**错在哪里**：`allocate()` 是 O(`capacity`)。**具体慢在**：池接近满、空位散落在数组中间的时候，每次要扫过前面所有被借走的块才能找到空位。注意这个缺陷很容易被"随机借还"的测试漏掉——如果池里平均只有几百块在用，前几百个格子之后就是空位，扫描很快（（我们实际 300 万次 50/50 随机借还，这个版本 125 ms 就跑完了，看起来没问题！））。所以 `IndexPoolTest.nearFullChurnIsFast` 专门把池填满、再 150 万次"换掉随机一块"：`capacity = 65536` 时，朴素版实际每步约 3.9 微秒，150 万步约 6 秒，超过 2 秒预算（测试红）；链表版同样的负载约 11 毫秒。**教训：测性能要测最坏的形状，不是测"平均看起来随机"的形状。**
 
 另一个常见的"第二笨"写法是 `ArrayDeque<Integer>` 当空闲栈：O(1)，但每个 `Integer` 是个装箱对象（`Integer` 缓存只管 -128..127），借还一次就 `new` 一个对象——**池子本身在制造垃圾**，违背了初衷。
 
@@ -308,7 +305,7 @@ class NaivePool {
 
 ### 4.2 Part 2：从下标到带版本号的 handle
 
-**发现问题**：Part 1 无法区分"我手里的 7"和"别人现在手里的 7"（§2.3 的第三种错误；测试 `staleIndexCannotBeToldApartFromTheNewOwner` 把这个缺陷固化成一个用例）。
+**发现问题**：Part 1 无法区分"我手里的 7"和"别人现在手里的 7"（§2.3 的第三种错误）。
 **想法**：让 handle 里带版本号（§2.4）。
 **为什么能解决**：每次借还让槽位版本号变化；旧 handle 的版本号一定不等于槽位当前版本号。
 **代码变化**：多一个 `int[] gens`；`allocate` 里 `gens[i]++`（偶→奇），返回 `handle(i, gens[i])`；`free` 里先拆出 `(index, g)`，校验后 `gens[i] = g + 1`（奇→偶）。
@@ -328,9 +325,9 @@ class NaivePool {
 **为什么能解决**：堆外内存对 GC 不可见（§2.1.1）；连续布局对 CPU 缓存友好。
 **代码变化**：`gens` 和 `next` 不再是两个 `int[]`，而是**槽位头部的两个字段**（`gen:int`, `next:int`），后面紧跟载荷（`id, px, qty, side`）。一个 32 字节的 `StructLayout`，`SequenceLayout` 重复 `capacity` 次，一次 `arena.allocate(...)` 拿到。
 **要小心的新问题**：
-* **清零**：`allocate` 必须把载荷清零，否则上一个主人的数据漏给下一个（测试 `reusedRecordIsZeroed`）。`Arena.allocate` 只在第一次分配时清零，**复用**的槽位没人帮你清。
+* **清零**：`allocate` 必须把载荷清零，否则上一个主人的数据漏给下一个。`Arena.allocate` 只在第一次分配时清零，**复用**的槽位没人帮你清。
 * **生命周期**：`close()` 之后所有访问由 `Arena` 自带检查抛 `IllegalStateException`（不是崩进程）；重复 `close()` 会让 `Arena.close()` 抛异常，所以先判 `arena.scope().isAlive()`。
-* **API 设计**：如果只提供 `put(h, Order)` / `Order get(h)`，调用方每次都 `new Order`，等于把池子省下的分配又补了回去。所以多给 `put(h, id, px, qty, side)` 和 `px(h)` / `qty(h)`——**零分配的热路径接口**。`get(h)` 仍提供，但它会 `new`，文档里写明"不在热路径上用"。这就是 1p3a 摘要里那句 "API design and memory management" 的意思：**API 的形状决定调用方能不能写出零分配的代码**。
+* **API 设计**：如果只提供 `put(h, Order)` / `Order get(h)`，调用方每次都 `new Order`，等于把池子省下的分配又补了回去。所以多给 `put(h, id, px, qty, side)` 和 `px(h)` / `qty(h)`——**零分配的热路径接口**。`get(h)` 仍提供，但它会 `new`，文档里写明"不在热路径上用"。这说明 API 设计和内存管理是一回事：**API 的形状决定调用方能不能写出零分配的代码**。
 
 **新复杂度**：O(1)；`capacity × 32` 字节，一次分配（`byteSize()` 是 `long`，可以超过 2 GiB，`ByteBuffer` 做不到）。
 
@@ -346,7 +343,7 @@ class LockedPool {
 }
 ```
 
-正确、简单、面试里应当**先说出这个**。`ReentrantLock` 而不是 `synchronized`：虚拟线程下 JDK 21 的 `synchronized` 会钉住（pin）载体线程（J16）。问题只是：所有线程排队过同一把锁。
+正确、简单、面试里应当**先说出这个**。`ReentrantLock` 而不是 `synchronized`：虚拟线程下 JDK 21 的 `synchronized` 会钉住（pin）载体线程。问题只是：所有线程排队过同一把锁。
 
 #### 步骤 B：想去掉锁——朴素 Treiber 栈（有 bug）
 
@@ -355,14 +352,14 @@ class LockedPool {
 #### 步骤 C：加 tag 的 head
 
 `head` 变成 `long`：高 32 位 tag，低 32 位编号（§2.7）。代码变化：每次 CAS 的新值是 `pack(tag + 1, 新栈顶)`。
-**用我们自己的测试验证这个修复**：把 `ConcurrentPool` 里两处 `tagOf(h) + 1` 改成 `tagOf(h)`（去掉 tag），重跑 `ConcurrentPoolTest`：`exclusiveOwnershipUnderContention` 20 轮里有 7 轮红（报"丢了槽位"，即空闲链表被弄坏），`manyVirtualThreads` 也红（违例约 42 万次）。改回来全绿。这不是证明，但说明测试确实抓得到这个 bug。
+**验证这个修复**：如果把两处 `tagOf(h) + 1` 改成 `tagOf(h)`（去掉 tag），在多线程争用的压力测试里，20 轮就有 7 轮出现"丢了槽位"（空闲链表被弄坏）；加回 tag 后全部通过。这不是证明，但说明压力测试确实抓得到这个 bug。
 
 #### 步骤 D：并发 double-free
 
 单线程的 `free` 是"检查版本 → 改版本 → 压栈"三步。两个线程同时 `free` 同一个 handle，都通过了检查，都压栈 → 同一个槽位进了空闲链表两次 → 之后同一块借给两个人。
 **想法**：把"检查 + 改版本"合成**一次 CAS**：`CAS(gens[i], g, g + 1)`。成功的线程拥有"归还这个槽位"的权利，失败的线程看到版本已经变了 → `DOUBLE_FREE`。
 **为什么偶/奇约定在这里派上用场**：版本号本身就是状态（奇=在用），CAS 一次完成"状态检查 + 状态切换"，不需要另一个"allocated"标志位和对它的第二次原子操作。
-**同样用测试验证**：把这个 CAS 换成"先读后写"，`racingDoubleFreeHasExactlyOneWinner` 全面红（实测 `FREED` 次数 2110 > 2000，多归还了）。
+**同样可以验证**：把这个 CAS 换成"先读后写"，并发 double-free 的压力测试就会全面失败（成功归还的次数 2110 > 2000，多归还了）。
 
 #### 步骤 E：内存序——每一处该用什么
 
@@ -373,19 +370,19 @@ class LockedPool {
 | `next[i]` 读写 | `getOpaque` / `setOpaque` | 读到旧值没关系——那样 `head` 的 tag 已经变了，CAS 会失败；只需要"不撕裂、不被编译器缓存" |
 | `gens[i]` 的 CAS（free） | `compareAndSet` | 并发 double-free 的仲裁点 |
 | `gens[i]` 在 allocate 里的写 | `setRelease` | 弹出成功后槽位归本线程所有；发布版本号给之后的 `isLive` |
-| `inUse` 计数器 | `LongAdder` | 纯统计，不参与正确性；分散热点（J16 §2.5） |
+| `inUse` 计数器 | `LongAdder` | 纯统计，不参与正确性；分散热点 |
 
 这里体现的思想："**读到过期数据没关系，只要最后用 CAS 校验**"。这是写无锁算法最常用的省力办法，但只在"CAS 的对象能反映过期"时成立（所以 tag 不能省）。
 
-#### 步骤 F：每线程缓存（口头题，有实测）
+#### 步骤 F：每线程缓存（口头题，有数据）
 
-`ContentionBench.java`：65536 个槽位，T 个线程各做 400 万次借还（每批借 16 个再还 16 个），单位百万次操作/秒（alloc 和 free 各算一次）。三种写法：
+基准：65536 个槽位，T 个线程各做 400 万次借还（每批借 16 个再还 16 个），单位百万次操作/秒（alloc 和 free 各算一次）。三种写法：
 
 * `locked`：`ReentrantLock` 包住 `GenPool`；
 * `treiber`：我们的 `ConcurrentPool`；
 * `cached`：每线程一个 64 格的小仓库，空了从 `ConcurrentPool` 批量借 32 个，满了批量还 32 个。
 
-实测（本机，两次运行；`locked` 在 2 线程时两次分别是 25 和 7——这种波动是真实的，锁的争用结果不稳定）：
+数据（两次运行；`locked` 在 2 线程时两次分别是 25 和 7——这种波动是真实的，锁的争用结果不稳定）：
 
 | 线程数 | locked | treiber | cached |
 |---|---|---|---|
@@ -406,7 +403,7 @@ class LockedPool {
 
 ---
 
-## 5. 逐段讲参考解
+## 5. 逐段讲解法
 
 ### 5.1 `IndexPool`（Part 1）
 
@@ -460,7 +457,7 @@ public void freeOrThrow(int block) {
 }
 ```
 
-J05 switch 表达式：三个分支各产生一个值（要么 `null` 要么异常对象）。漏写 `INVALID` 编译器直接报错（对 `enum` 的穷尽性检查）。这是为什么 `FreeResult` 用 `enum` 而不是 `int` 常量：新增一种结果时，所有 `switch` 都会编译失败，不会悄悄漏处理。
+switch 表达式：三个分支各产生一个值（要么 `null` 要么异常对象）。漏写 `INVALID` 编译器直接报错（对 `enum` 的穷尽性检查）。这是为什么 `FreeResult` 用 `enum` 而不是 `int` 常量：新增一种结果时，所有 `switch` 都会编译失败，不会悄悄漏处理。
 
 ### 5.2 `GenPool`（Part 2）
 
@@ -497,7 +494,7 @@ public FreeResult free(long handle) {
 }
 ```
 
-* `index < 0`：低 32 位当 `int` 是负数（比如 `0x0000_0001_8000_0000`）——必须检查，否则 `gens[index]` 抛异常。测试 `invalidHandles` 里有这个用例。
+* `index < 0`：低 32 位当 `int` 是负数（比如 `0x0000_0001_8000_0000`）——必须检查，否则 `gens[index]` 抛异常。
 * `(g & 1) == 0`：偶数版本号 = 从没发过 → `INVALID`。
 * 这里不再需要 `ALLOCATED` 哨兵：版本号的奇偶就是状态。`next[]` 只在空闲链表里有意义。
 
@@ -546,7 +543,7 @@ public void put(long handle, Order order) {
 }
 ```
 
-J04 record 模式：一行把 `Order` 拆成四个局部变量，再调用零分配的四参数版本。`order` 为 `null` 时 `switch` 抛 `NullPointerException`——测试 `rejectsBadCapacity` 里验证了。
+record 模式：一行把 `Order` 拆成四个局部变量，再调用零分配的四参数版本。`order` 为 `null` 时 `switch` 抛 `NullPointerException`。
 
 ```java
 public void close() { if (arena.scope().isAlive()) arena.close(); }
@@ -606,7 +603,7 @@ public FreeResult free(long handle) {
 
 先 CAS 版本号（§4.4 步骤 D）。**赢了这次 CAS 的线程独占"把槽位压回栈"的权利**，之后的压栈循环只会和别的线程的 push / pop 竞争 `head`，不会和"另一个想压同一个槽位的线程"竞争。压栈：把当前 `head` 的栈顶写进 `next[index]`，再 CAS `head` 指向 `index`，tag + 1。
 
-`available()`：`capacity - inUse.sum()`。`LongAdder.sum()` 在并发更新时是近似值，静止后精确（和测试里"所有线程静止后必须精确"的约定吻合）。
+`available()`：`capacity - inUse.sum()`。`LongAdder.sum()` 在并发更新时是近似值，静止后精确。
 
 ---
 
@@ -616,15 +613,15 @@ public FreeResult free(long handle) {
 
 | id | 用在哪 | 老写法 | 新写法 / 为什么 |
 |---|---|---|---|
-| J01 `record` | `Order(long id, long px, int qty, int side)` + `Order.ZERO` | 一个类 + 4 个字段 + 构造器 + 访问器 + `equals`/`hashCode`/`toString`（约 30 行，容易漏改） | 一行；`equals` 逐字段比较，所以测试可以直接 `assertEquals(new Order(1,2,3,4), pool.get(h))`。详见 `J01_record.md` |
-| J04 record 模式 | `put(long, Order)` 里 `case Order(long id, long px, int qty, int side) ->` | `long id = o.id(); long px = o.px(); ...` 四行 | 一次解构；编译器检查 record 的组件个数与类型。**不该用**的场合：只用一个字段时，直接 `o.px()` 更清楚。详见 `J04_record_patterns.md` |
-| J05 switch 表达式 | `freeOrThrow`：`RuntimeException failure = switch (free(block)) {...}` | `switch` 语句 + 每个分支赋值 + `break`（漏 `break` 就 fall through） | 每个分支是一个值；对 `enum` **穷尽性检查**，新加一个 `FreeResult` 值，这里编译不过。详见 `J05_switch_expressions.md` |
-| J08 `var` | 测试里的 `var pool = new IndexPool(3)` | `IndexPool pool = new IndexPool(3)` | 右边已经写了类型；**不该用**：右边看不出类型时（如 `var x = foo()`）。详见 `J08_var.md` |
-| J10 虚拟线程 | `ConcurrentPoolTest.manyVirtualThreads`：`Executors.newVirtualThreadPerTaskExecutor()` | 线程池大小要调参，2000 个平台线程会吃掉大量内存 | 2000 个任务就开 2000 个虚拟线程，几乎没成本；自旋型任务**不该**用虚拟线程（会占住载体线程）。这里的任务是短小的借还、不阻塞。详见 `J10_virtual_threads.md` |
-| J16 `VarHandle` / `LongAdder` | `ConcurrentPool` 的 `HEAD`、`NEXTS`、`GENS`，`inUse` | `AtomicReferenceFieldUpdater` / `Unsafe` / 每个槽位一个 `AtomicInteger`（`capacity` 个对象） | `arrayElementVarHandle(int[].class)` 对普通 `int[]` 的元素做 CAS / opaque / release，不需要为每个槽位建一个原子对象；`findVarHandle` 对普通 `long` 字段做 CAS。详见 `J16_concurrency_primitives.md` |
-| J17 FFM | `OffHeapOrderPool` 的 `Arena` / `MemorySegment` / `StructLayout` / `SequenceLayout` | `ByteBuffer.allocateDirect`（容量 `int`、无确定性释放、偏移全靠手算） | 容量 `long`、`close()` 确定性释放、字段按名字访问。**JDK 21 是预览特性**（`--enable-preview`），JDK 22 起转正，`allocateUtf8String` 等名字会变。详见 `J17_ffm_api.md` |
+| `record` | `Order(long id, long px, int qty, int side)` + `Order.ZERO` | 一个类 + 4 个字段 + 构造器 + 访问器 + `equals`/`hashCode`/`toString`（约 30 行，容易漏改） | 一行；`equals` 逐字段比较，所以可以直接比较 `new Order(1,2,3,4)` 和 `pool.get(h)`。 |
+| record 模式 | `put(long, Order)` 里 `case Order(long id, long px, int qty, int side) ->` | `long id = o.id(); long px = o.px(); ...` 四行 | 一次解构；编译器检查 record 的组件个数与类型。**不该用**的场合：只用一个字段时，直接 `o.px()` 更清楚。 |
+| switch 表达式 | `freeOrThrow`：`RuntimeException failure = switch (free(block)) {...}` | `switch` 语句 + 每个分支赋值 + `break`（漏 `break` 就 fall through） | 每个分支是一个值；对 `enum` **穷尽性检查**，新加一个 `FreeResult` 值，这里编译不过。 |
+| `var` | `var pool = new IndexPool(3)` | `IndexPool pool = new IndexPool(3)` | 右边已经写了类型；**不该用**：右边看不出类型时（如 `var x = foo()`）。 |
+| 虚拟线程 | `Executors.newVirtualThreadPerTaskExecutor()` 开 2000 个并发任务 | 线程池大小要调参，2000 个平台线程会吃掉大量内存 | 2000 个任务就开 2000 个虚拟线程，几乎没成本；自旋型任务**不该**用虚拟线程（会占住载体线程）。这里的任务是短小的借还、不阻塞。 |
+| `VarHandle` / `LongAdder` | `ConcurrentPool` 的 `HEAD`、`NEXTS`、`GENS`，`inUse` | `AtomicReferenceFieldUpdater` / `Unsafe` / 每个槽位一个 `AtomicInteger`（`capacity` 个对象） | `arrayElementVarHandle(int[].class)` 对普通 `int[]` 的元素做 CAS / opaque / release，不需要为每个槽位建一个原子对象；`findVarHandle` 对普通 `long` 字段做 CAS。 |
+| FFM | `OffHeapOrderPool` 的 `Arena` / `MemorySegment` / `StructLayout` / `SequenceLayout` | `ByteBuffer.allocateDirect`（容量 `int`、无确定性释放、偏移全靠手算） | 容量 `long`、`close()` 确定性释放、字段按名字访问。**JDK 21 是预览特性**（`--enable-preview`），JDK 22 起转正，`allocateUtf8String` 等名字会变。 |
 
-本题的位运算打包（`& 0xFFFFFFFFL`、`>>>`）属于基础，不在特性矩阵里；`Math.addExact` / `Math.clamp` 等小工具见 `J15_math_string_utils.md`（本题没有用到）。
+本题的位运算打包（`& 0xFFFFFFFFL`、`>>>`）属于基础，不在特性矩阵里；`Math.addExact` / `Math.clamp` 等小工具本题没有用到。
 
 ---
 
@@ -668,7 +665,7 @@ public FreeResult free(long handle) {
 
 ### 追问 7：无锁一定比锁快吗？
 
-**思考过程**：用实测说话：§4.4 的表。
+**思考过程**：用数据说话：§4.4 的表。
 **答案要点**：不一定；争用高时 Treiber 栈每次 CAS 失败都有缓存行搬运；无锁的价值是进度保证（不会被挂起的线程卡住）；真正提升吞吐的是减少对共享状态的访问（每线程缓存）。
 **一段话**：「我测过：8 个线程抢同一个 Treiber 栈，吞吐比一把 ReentrantLock 还低很多；加每线程缓存、批量补货之后快了几十倍。所以无锁的价值主要是进度保证，不是吞吐，吞吐靠降低争用。」
 
@@ -697,7 +694,7 @@ public FreeResult free(long handle) {
 long handle = ((long) generation << 32) | index;       // index 是 int
 ```
 
-`index` 非负时没问题，但 `index` 是 `int`，一旦为负（比如测试里的 `0x8000_0000`），`(long) index` 的高 32 位全是 1，把整个 `generation` 位 OR 成 `0xFFFFFFFF`。**正确**：`| (index & 0xFFFFFFFFL)`。来自测试 `handlePackingRoundTrips`。
+`index` 非负时没问题，但 `index` 是 `int`，一旦为负（比如 `0x8000_0000`），`(long) index` 的高 32 位全是 1，把整个 `generation` 位 OR 成 `0xFFFFFFFF`。**正确**：`| (index & 0xFFFFFFFFL)`。
 
 ### 误区 2：重复归还只"忽略"，不检查
 
@@ -705,7 +702,7 @@ long handle = ((long) generation << 32) | index;       // index 是 int
 void free(int b) { next[b] = head; head = b; }       // 没检查
 ```
 
-连续 `free(3)` 两次，`next[3] = 3`（自己指向自己），之后 `allocate` 永远返回 3。**正确**：先看 `next[b] == ALLOCATED`。来自测试 `doubleFreeDoesNotCorruptTheFreeList`。
+连续 `free(3)` 两次，`next[3] = 3`（自己指向自己），之后 `allocate` 永远返回 3。**正确**：先看 `next[b] == ALLOCATED`。
 
 ### 误区 3：以为 `volatile` 能修好 ABA
 
@@ -717,15 +714,15 @@ void free(int b) { next[b] = head; head = b; }       // 没检查
 if (gens[i] == g) { gens[i] = g + 1; push(i); }       // 两步，之间可以被别的线程插入
 ```
 
-并发下两个线程都通过 `if`。**正确**：`CAS(gens[i], g, g+1)` 把检查和修改合成一次。来自测试 `racingDoubleFreeHasExactlyOneWinner`。
+并发下两个线程都通过 `if`。**正确**：`CAS(gens[i], g, g+1)` 把检查和修改合成一次。
 
 ### 误区 5：复用槽位忘了清零
 
-`allocate()` 返回的记录里还留着上一个主人的 `px`、`qty`。这既是 bug 来源（"我没写 qty，为什么不是 0"）也是信息泄漏。**正确**：`allocate` 里写零（或约定调用方必须写全）。来自测试 `reusedRecordIsZeroed`。
+`allocate()` 返回的记录里还留着上一个主人的 `px`、`qty`。这既是 bug 来源（"我没写 qty，为什么不是 0"）也是信息泄漏。**正确**：`allocate` 里写零（或约定调用方必须写全）。
 
-### 误区 6：在 JUnit 里用 `Arena.ofConfined()`
+### 误区 6：池要被多个线程用，却用 `Arena.ofConfined()`
 
-JUnit 的 `assertTimeoutPreemptively` 会在另一个线程里运行测试体，`ofConfined` 的 segment 被别的线程访问抛 `WrongThreadException`。**正确**：`ofShared()`。来自 `J17_ffm_api.md` §5.4。
+`ofConfined` 的 segment 只允许创建它的线程访问，别的线程访问会抛 `WrongThreadException`（带超时的测试框架常把测试体放到另一个线程里运行，同样会触发）。**正确**：`ofShared()`。
 
 ### 误区 7：把 `available()` 当并发中的精确值
 
@@ -762,13 +759,4 @@ JUnit 的 `assertTimeoutPreemptively` 会在另一个线程里运行测试体，
 
 ---
 
-## 10. 延伸阅读
-
-* R. K. Treiber, *Systems Programming: Coping with Parallelism*, IBM Almaden Research Center, RJ 5118, 1986 —— Treiber 栈的原始出处。
-* M. Herlihy, N. Shavit, *The Art of Multiprocessor Programming*, 第 10 章（队列与 ABA 问题）、第 11 章（并发栈与 elimination）—— ABA 与 tagged pointer 的标准讲法。
-* J. Bonwick, *The Slab Allocator: An Object-Caching Kernel Memory Allocator*, USENIX Summer 1994；以及 Bonwick & Adams, *Magazines and Vmem*, USENIX 2001 —— 对象缓存、每 CPU 缓存（magazine）的出处，本题 §2.8 的思想来源。
-* JEP 442 *Foreign Function & Memory API (Third Preview)* https://openjdk.org/jeps/442 —— 本题堆外版本用到的 API，JDK 21 版。
-* `java.lang.invoke.VarHandle` Javadoc —— 访问模式（plain / opaque / acquire-release / volatile）的权威定义。
-* JEP 439 *Generational ZGC* https://openjdk.org/jeps/439 —— 解释 §2.1.4 里分代 ZGC 一行为什么没有毫秒级暂停。
-* J. Gosling 等，*The Java Language Specification*，§17.4 Memory Model —— happens-before 的正式定义（读懂 §4.4 步骤 E 的根据）。
-* 同 kit：`study/10-java21/J16_concurrency_primitives.md`（原子性 / 可见性 / CAS / `VarHandle` / 伪共享）、`study/10-java21/J17_ffm_api.md`、`study/10-java21/J19_runtime_zgc_jit.md`、`study/00-foundations/cpu_cache_locality.md`。
+「延伸」Herlihy & Shavit《The Art of Multiprocessor Programming》（Treiber 栈与 ABA）。

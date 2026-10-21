@@ -1,15 +1,9 @@
-# hc02 · REPORT
+# hc02 · 思路与追问
 
 ## 概要
 
-"合并 k 个有序序列"在 Headlands 电面里出现 3 次（2024-06、2024-10 两次），每次都带"流式"和"多线程 non-blocking"的追问（C++）。
+"合并 k 个有序序列"通常带"流式"和"多线程 non-blocking"的追问。
 Part 1 是 LeetCode 23 的变体（几分钟）；面试官真正想看的是你能不能把它推到 **惰性迭代器**、**生产者-消费者 + 有界队列**、**永不无限阻塞**、**失败传播/取消**。
-配套讲义：`study/30-articles/hc02_merge_k_streams.md`（教科书式，从最笨的解法开始推导）。
-
-## 来源与置信度
-
-见 `problem.md` §来源。整体「高」，但只有标题 + 第一句话。**Part 1 来自证据；Part 2（惰性、稳定）、Part 3（Pending/Ready/Done、终止标记、背压）、Part 4（StructuredTaskScope）的接口与语义都是 (reconstructed)**，
-方向由 "multithreaded non-blocking follow-up" 和 LLD 标题 "bounded overlapping background reads" 支持。
 
 ## 逐 Part 思路
 
@@ -35,7 +29,7 @@ Part 1 是 LeetCode 23 的变体（几分钟）；面试官真正想看的是你
 * 吞掉 `InterruptedException`（`catch` 后不 `return` / 不恢复中断标志）→ 取消失效。
 * `mergeAll` 里用普通线程池 + `Future.get()`：一个失败不会取消其他，测试里的"永远阻塞的 source"会让方法挂住。
 
-## 复杂度 + 实测时间
+## 复杂度
 
 | 方案 | 时间 | 额外空间 |
 |---|---|---|
@@ -44,7 +38,7 @@ Part 1 是 LeetCode 23 的变体（几分钟）；面试官真正想看的是你
 | 堆合并 | `O(N log k)` | 输出 + `O(k)` |
 | 堆合并（惰性迭代器） | 同上，但可以只取前 m 个：`O(k + m log k)` | `O(k)` |
 
-实测（本机 M 系列 Mac，JDK 21；k = 1000，每条 1000 个 `int`，N = 10^6；一次性基准，非测试的一部分）：
+量级参考（k = 1000，每条 1000 个 `int`，N = 10^6）：
 
 * 拼接 + `Collections.sort`：约 **50 ms**（意外地最快——`Collections.sort` 用的 TimSort 会识别已有序的"段"并归并它们）。
 * 两两顺序合并：约 **1230 ms**。
@@ -52,33 +46,20 @@ Part 1 是 LeetCode 23 的变体（几分钟）；面试官真正想看的是你
 * `MergeK.mergeLongs`（`long[]`，无装箱）：约 **65 ms**。
 
 结论（面试里要诚实说）：**内存里的 List 用拼接 + 排序在 Java 里很难被打败**；堆合并的价值是 (1) 流式/惰性——输入放不进内存或是无限的，(2) 只要前 m 个，(3) 额外空间 `O(k)`，(4) 可以并发地边产生边合并。
-`tools/jtest.py run … --tag perf`：4 个 perf 测试合计约 682 ms（各自预算 2 s）。
-
-## 测试清单
-
-`python3 tools/jtest.py run loop/rounds/01_video/hc02_merge_k_streams --impl reference`：**82 个测试**（含 `@RepeatedTest` 展开）。
-
-| Part | 数量 | 说明 |
-|---|---|---|
-| part1 | 9 | 样例、退化形状、极值比较、稳定性、乱序定位、null、不改输入、300 轮随机对拍、perf |
-| part2 | 10 | 构造不取数 + 取数最少、总取数上界、无限序列、idempotent、tie、惰性乱序、null、Stream 惰性/关闭、对拍、perf |
-| part3 | 34 | 阻塞合并、边界、`Pending` 语义、stream 编号、背压、失败传播与取消、乱序、close、`@RepeatedTest(25)` 随机交错、perf |
-| part4 | 29 | `mergeAll` 结果、失败取消兄弟、乱序、`@RepeatedTest(25)` 随机交错、perf |
-| 标签 | edge 21 · fmt 0（本题没有文本输出）· perf 4 · conc 50 | |
 
 ## Java 21 特性
 
-| id | 用在哪 | 比旧写法好在哪 |
+| 特性 | 用在哪 | 比旧写法好在哪 |
 |---|---|---|
-| J01 record | `Ready/Pending/Done`、`Item/End/Failed`、测试里的 `Rec` | 消息类型一行一个，`equals/toString` 免费 |
-| J02 sealed | `Poll`、`Msg` | 合并器的结果和队列消息是封闭集合；漏处理任何一种编译就报错 |
-| J03 + J04 模式匹配 switch + record 模式 | `Combiner.poll`：`case Failed<T>(var cause) -> …`；`mergeAll`：`case Ready<T>(var v, _)` | 不用 `instanceof` 链和强转；穷尽检查保证终止标记不会被漏掉 |
-| J06 `instanceof` 模式 | `mergeAll`：`e instanceof MergeException me ? me : new MergeException(-1, e)` | 判断 + 绑定一步完成 |
-| J10 虚拟线程 | 每个 source 一个 `Thread.ofVirtual()` 生产者 | source 阻塞在 I/O 时不占 OS 线程；开 k 个很便宜。对比平台线程池要为"最坏阻塞数"定池大小 |
-| J11 `StructuredTaskScope`（预览） | `mergeAll` | 子线程生命周期绑定在 `try` 块；一个失败自动取消其余；不会泄漏线程 |
-| J13 未命名变量 `_`（预览） | `catch (InterruptedException _)`、`case End<T> _` | 明说"不用" |
-| J14 Stream API | `mergeStreams`（`StreamSupport` + `onClose`）；测试里 `Stream.iterate`、`toList()` | 惰性管道，`Stream.iterate` 造无限序列 |
-| J18 `Comparator` 组合子 | 堆的比较器 `comparing(h -> h.value).thenComparingInt(h -> h.stream)` | tie-break 写成链，一眼看出"先值后序列号" |
+| record | `Ready/Pending/Done`、`Item/End/Failed`、测试里的 `Rec` | 消息类型一行一个，`equals/toString` 免费 |
+| sealed | `Poll`、`Msg` | 合并器的结果和队列消息是封闭集合；漏处理任何一种编译就报错 |
+| 模式匹配 switch + record 模式 | `Combiner.poll`：`case Failed<T>(var cause) -> …`；`mergeAll`：`case Ready<T>(var v, _)` | 不用 `instanceof` 链和强转；穷尽检查保证终止标记不会被漏掉 |
+| `instanceof` 模式 | `mergeAll`：`e instanceof MergeException me ? me : new MergeException(-1, e)` | 判断 + 绑定一步完成 |
+| 虚拟线程 | 每个 source 一个 `Thread.ofVirtual()` 生产者 | source 阻塞在 I/O 时不占 OS 线程；开 k 个很便宜。对比平台线程池要为"最坏阻塞数"定池大小 |
+| `StructuredTaskScope`（预览） | `mergeAll` | 子线程生命周期绑定在 `try` 块；一个失败自动取消其余；不会泄漏线程 |
+| 未命名变量 `_`（预览） | `catch (InterruptedException _)`、`case End<T> _` | 明说"不用" |
+| Stream API | `mergeStreams`（`StreamSupport` + `onClose`）；测试里 `Stream.iterate`、`toList()` | 惰性管道，`Stream.iterate` 造无限序列 |
+| `Comparator` 组合子 | 堆的比较器 `comparing(h -> h.value).thenComparingInt(h -> h.stream)` | tie-break 写成链，一眼看出"先值后序列号" |
 
 ## 面试官可能的追问
 
