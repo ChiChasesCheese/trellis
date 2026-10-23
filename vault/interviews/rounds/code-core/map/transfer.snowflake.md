@@ -11,5 +11,5 @@ A HackerRank OA of two to three LeetCode-grade problems, then phone coding with 
 
 <!-- company-kit-links -->
 - [[interviews/companies/snowflake/CONTENTS|Snowflake 全书目录]]：9 轮 → 技能 → 87 题，按 28 法则排序
-- 入口 [[interviews/companies/snowflake/00-README|Snowflake kit 总索引]]；原理知识见 [[Snowflake 原理 MOC]]
+- 入口 [[interviews/companies/snowflake/README|Snowflake kit 总索引]]；原理知识见 [[Snowflake 原理 MOC]]
 - 各轮用到的通用能力：[[interviews/companies/snowflake/study/10-rounds/02-oa|OA]] · [[interviews/companies/snowflake/study/10-rounds/03-phone-coding|电面 coding]] · [[interviews/companies/snowflake/study/10-rounds/04-ood|OOD]]

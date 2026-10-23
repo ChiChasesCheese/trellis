@@ -9,7 +9,7 @@ tags:
 
 # Playbook · AI 语音筛选（HackerRank Chakra 及同类）
 
-> 通用打法，与公司无关。证据来自 `../../companies/snowflake/raw/chakra.md`（官方 KB / 打分博客 / release notes = high；聚合站 = medium）。公司特定剧本见各公司目录 `03-*-playbook.md`。
+> 通用打法，与公司无关。证据来自 `research/companies/snowflake/raw/chakra.md`（官方 KB / 打分博客 / release notes = high；聚合站 = medium）。公司特定剧本见各公司目录 `03-*-playbook.md`。
 > 适用：Chakra（HackerRank）、以及任何「无真人、按 rubric 打分、追问自适应」的语音筛。
 
 ## 0. 这轮到底是什么
