@@ -1,0 +1,578 @@
+# HFT / low-latency trading systems: the engineering of the live trading path, from how markets work to the
+# machine under the code. Authored from the field (ADR 0002) — the outlines surveyed are listed in
+# vault/domains/hft/BUILD.md. Study order is top to bottom; `requires` only points backwards.
+# Strategy research, backtest validity and portfolio construction live in `quant-infra`; asset classes in `markets`.
+domain: hft
+title: HFT 低延迟交易系统
+lang: zh
+vault: domains/hft
+study:
+  order: core-first
+  mix: new-first
+  new_per_day: 25
+  reviews_per_day: 150
+nodes:
+- id: overview
+  order: 1
+  core: true
+  title: 全景：高频交易是什么
+  summary: 高频交易（HFT）靠什么赚钱、为什么速度决定盈亏、这个行业由哪些公司和岗位组成，以及它是怎么一步步演化成今天的军备竞赛的。
+  children:
+  - id: overview.what-is-hft
+    title: 高频交易（HFT）的定义与特征
+    summary: 自动化、持仓时间极短、日内平仓、订单撤单比高、利润来自海量小额交易，以及它和"量化""算法交易"的区别。
+  - id: overview.strategies
+    title: 三类主要策略：做市、套利、短期方向
+    summary: 做市（market making）赚价差、套利（arbitrage）赚同一资产在不同地方的价差、短期方向（directional / taking）赚几毫秒到几秒的价格预测，各自对延迟的依赖不同。
+  - id: overview.why-speed
+    title: 为什么速度决定盈亏
+    summary: 报价被更快对手"吃掉"（picked off）、排队位置、抢先成交——慢一步的三种代价，以及"快"是相对竞争对手而言的。
+    requires: [overview.strategies]
+  - id: overview.economics
+    title: HFT 的盈利结构
+    summary: 每股零点几美分的利润、极高的 Sharpe、有限的容量（capacity），以及成本端：交易所费用、托管、线路、人才。
+    requires: [overview.strategies]
+  - id: overview.firms-roles
+    title: 行业版图与岗位
+    summary: 自营公司（prop firm）、做市商、对冲基金的区别；quant researcher、quant trader、software engineer、SRE 各做什么；代表公司。
+  - id: overview.history
+    title: 演化史：从交易大厅到微波塔
+    summary: 电子化交易、Reg NMS（2005）带来的碎片化、2010 闪崩（flash crash）、微波线路、利润率下降与行业集中。
+
+- id: microstructure
+  order: 2
+  title: 市场微观结构
+  summary: 订单、订单簿和撮合规则怎么运作，价差从哪里来，做市商面对的逆向选择风险——HFT 所有决策的经济学基础。
+  children:
+  - id: microstructure.participants
+    core: true
+    title: 市场参与者：谁在交易、为什么交易
+    summary: 知情交易者（informed）、不知情交易者（uninformed / noise）、做市商（dealer）；流动性提供者（maker）与流动性拿取者（taker）。
+  - id: microstructure.order-types
+    core: true
+    title: 订单类型与有效期（TIF）
+    summary: 限价单（limit）、市价单（market）、IOC、FOK、post-only、隐藏单与冰山单（iceberg）、挂钩单（pegged），以及 DAY / GTC 等有效期。
+  - id: microstructure.lob
+    core: true
+    title: 限价订单簿（limit order book）
+    summary: bid / ask、最优价（top of book）、价差、深度；L1 / L2 / L3 三种行情粒度分别给你什么。
+    requires: [microstructure.order-types]
+  - id: microstructure.matching
+    core: true
+    title: 撮合规则：价格-时间优先、pro-rata 与集合竞价
+    summary: 连续竞价下的价格优先 + 时间优先（FIFO）、部分期货的按比例分配（pro-rata）、开盘与收盘的集合竞价（auction）。
+    requires: [microstructure.lob]
+  - id: microstructure.spread
+    title: 价差从哪里来
+    summary: 价差的三个组成部分——订单处理成本、库存风险（inventory risk）、逆向选择成本——以及什么让价差变宽或变窄。
+    requires: [microstructure.lob, microstructure.participants]
+  - id: microstructure.adverse-selection
+    title: 逆向选择与有毒订单流（toxic flow）
+    summary: 为什么和知情交易者成交会亏钱，如何用 markout（成交后 N 秒的价格变化）衡量订单流的"毒性"。
+    requires: [microstructure.spread]
+  - id: microstructure.queue-position
+    title: 排队位置的价值
+    summary: 在价格-时间优先市场里，排在队首的挂单更可能成交、且成交时更不容易被逆向选择；为什么大家抢着先挂单。
+    requires: [microstructure.matching]
+  - id: microstructure.fees-tick-size
+    title: 费率与最小报价单位（tick size）
+    summary: maker-taker 收费 / 返佣（rebate）、反向费率交易所（inverted venue）、tick size 如何决定价差下限和排队长度。
+    requires: [microstructure.lob]
+  - id: microstructure.fair-value
+    title: 公允价格：mid、microprice 与订单簿不平衡
+    summary: 中间价（mid）、按挂单量加权的 microprice、订单簿不平衡（order book imbalance）作为最简单的短期预测信号。
+    requires: [microstructure.lob]
+  - id: microstructure.market-making-pnl
+    title: 做市商的盈亏分解
+    summary: 价差收益（spread capture）减去逆向选择损失、库存风险和费用；做市商如何通过报价倾斜（skew）管理库存。
+    requires: [microstructure.adverse-selection, microstructure.fair-value]
+
+- id: market-structure
+  order: 3
+  title: 市场结构与监管
+  summary: 美国股票和期货市场的实际形态：多交易所、NBBO、行情源、托管、熔断，以及约束 HFT 的监管规则。
+  children:
+  - id: market-structure.fragmentation
+    title: 市场碎片化：交易所、暗池与批发商
+    summary: 美股十几家交易所 + 暗池（dark pool / ATS）+ 散户订单批发商（wholesaler / PFOF），同一只股票同时在很多地方交易。
+    requires: [microstructure.lob]
+  - id: market-structure.reg-nms
+    title: Reg NMS：NBBO、订单保护与 ISO
+    summary: 全国最优买卖价（NBBO）、禁止穿价成交的订单保护规则（order protection rule）、跨市场扫单单（ISO）、访问费上限。
+    requires: [market-structure.fragmentation]
+  - id: market-structure.sip-direct
+    title: SIP 与交易所直连行情
+    summary: 汇总行情（SIP）比直连行情（direct feed）慢在哪里，以及"看到的 NBBO 不是同一个 NBBO"带来的延迟套利。
+    requires: [market-structure.reg-nms]
+  - id: market-structure.colocation
+    title: 主机托管（colocation）与 cross-connect
+    summary: 把服务器放进交易所机房、等长线缆（equalized cabling）、按机柜和带宽收费；地理位置为什么是延迟的第一项。
+  - id: market-structure.futures
+    title: 期货市场与跨市场关系
+    summary: CME Globex、期货合约规格、期货领先现货（ES 与 SPY）、芝加哥与新泽西两地数据中心之间的价格传导。
+  - id: market-structure.halts
+    title: 熔断、LULD 与交易暂停
+    summary: 个股涨跌幅限制（LULD）、市场整体熔断（MWCB）、交易暂停（halt）对系统的要求：策略必须识别并停止报价。
+    requires: [market-structure.reg-nms]
+  - id: market-structure.rules
+    title: 约束 HFT 的监管规则
+    summary: 市场准入规则 SEC 15c3-5（下单前风控）、禁止 spoofing / layering、合并审计追踪（CAT）与时钟同步要求。
+    requires: [market-structure.fragmentation]
+
+- id: protocols
+  order: 4
+  title: 交易所协议：行情与下单
+  summary: 行情和订单在网线上长什么样：二进制编码、FIX、Nasdaq ITCH / OUCH、MoldUDP64、丢包恢复、SBE，以及 feed handler 的职责。
+  children:
+  - id: protocols.binary-encoding
+    title: 二进制定长编码、字节序与定点价格
+    summary: 为什么交易所用定长二进制而不是文本，大端 / 小端（endianness），价格为什么用整数（定点数）而不是浮点数。
+  - id: protocols.fix
+    title: FIX 协议：会话层与应用层
+    summary: tag=value 文本格式、登录 / 心跳 / 序列号 / 重发的会话层、NewOrderSingle 与 ExecutionReport 的应用层；为什么 HFT 在快路径上不用它。
+    requires: [protocols.binary-encoding]
+  - id: protocols.itch-model
+    title: ITCH 行情模型：逐笔订单（order-by-order）
+    summary: 交易所把每一笔挂单、成交、撤单都作为一条消息发出，接收方自己重建订单簿；这和只发聚合档位的行情有什么不同。
+    requires: [microstructure.lob]
+  - id: protocols.itch-messages
+    title: ITCH 5.0 关键消息与字段
+    summary: Add Order、Order Executed、Order Cancel、Order Delete、Order Replace、Trade、System Event；stock locate、纳秒时间戳、4 位小数价格。
+    requires: [protocols.itch-model, protocols.binary-encoding]
+  - id: protocols.ouch
+    title: OUCH 下单协议
+    summary: Nasdaq 的二进制下单协议：Enter / Replace / Cancel Order 与 Accepted / Executed / Canceled 回报，用 order token 跟踪订单。
+    requires: [protocols.binary-encoding]
+  - id: protocols.moldudp64
+    title: MoldUDP64：给 UDP 行情加上序列号
+    summary: 会话（session）、序列号（sequence number）、消息计数、心跳包；接收方靠序列号发现丢包。
+    requires: [protocols.itch-model]
+  - id: protocols.gap-recovery
+    title: 丢包恢复：A/B 线仲裁、重传与快照
+    summary: 同一行情在 A、B 两条组播线上各发一遍取先到者（arbitration），缺口（gap）向重传服务器请求，或用快照（snapshot）+ 增量追上。
+    requires: [protocols.moldudp64]
+  - id: protocols.sbe-mdp3
+    title: SBE 与 CME MDP 3.0
+    summary: Simple Binary Encoding 的 schema 驱动、定长字段、可原地读取的设计，以及 CME 行情协议 MDP 3.0 如何使用它。
+    requires: [protocols.binary-encoding]
+  - id: protocols.feed-handler
+    title: feed handler 的职责
+    summary: 收包、仲裁、检测缺口、解码、归一化（normalize）成内部格式、维护订单簿、发布给策略——每一步的延迟和正确性要求。
+    requires: [protocols.gap-recovery, protocols.itch-messages]
+
+- id: orderbook
+  order: 5
+  title: 订单簿与撮合引擎的实现
+  summary: 用什么数据结构在纳秒级完成挂单、撤单、成交，以及怎样从逐笔行情重建订单簿并保证它正确。
+  children:
+  - id: orderbook.requirements
+    title: 订单簿要支持的操作与复杂度
+    summary: 新增、撤单、改单、成交、查询最优价；操作频率分布（撤单远多于成交）决定了哪些操作必须 O(1)。
+    requires: [protocols.itch-model]
+  - id: orderbook.price-levels
+    title: 价格档位怎么存：数组、有序树与排序 vector
+    summary: 以价格为下标的数组、红黑树（std::map / TreeMap）、按价格排序的小 vector 各自的复杂度和缓存表现；为什么"大 O 好"不等于快。
+    requires: [orderbook.requirements]
+  - id: orderbook.order-index
+    title: 订单索引与侵入式链表
+    summary: 用哈希表按 order id 找订单，同价位订单用侵入式双向链表（intrusive list）保持时间顺序，实现 O(1) 撤单。
+    requires: [orderbook.requirements]
+  - id: orderbook.matching-engine
+    title: 撮合引擎的实现
+    summary: 新订单进来时与对手方逐档撮合、部分成交、剩余挂入订单簿；生成成交回报的顺序。
+    requires: [orderbook.price-levels, orderbook.order-index, microstructure.matching]
+  - id: orderbook.building
+    title: 从逐笔行情重建订单簿
+    summary: 用 ITCH 消息维护 L3（每笔订单）订单簿，再聚合出 L2（每档总量）；处理改单、部分成交与订单删除。
+    requires: [orderbook.price-levels, orderbook.order-index, protocols.itch-messages]
+  - id: orderbook.memory-layout
+    title: 订单簿的内存布局：预分配与对象池
+    summary: 启动时预分配订单对象池，热路径不调用 malloc；数据紧凑放置以命中缓存。
+    requires: [orderbook.price-levels]
+  - id: orderbook.testing
+    title: 订单簿的正确性：不变量与回放测试
+    summary: 买一必须低于卖一、数量非负、序列号连续等不变量；用历史行情回放对比参考实现。
+    requires: [orderbook.building]
+
+- id: architecture
+  order: 6
+  core: true
+  title: tick-to-trade 系统架构
+  summary: 一套交易系统由哪些组件组成、行情如何在几微秒内变成订单、为什么用单线程事件循环，以及风控、订单状态、回放如何嵌进去。
+  children:
+  - id: architecture.pipeline
+    title: 交易系统的组件流水线
+    summary: feed handler → 订单簿 → 策略 → 风控 → 下单网关（order gateway），以及旁路的 OMS、持仓、日志、监控。
+    requires: [protocols.feed-handler]
+  - id: architecture.tick-to-trade
+    title: tick-to-trade 延迟与预算
+    summary: 从行情包到达网卡到订单包离开网卡的时间（wire-to-wire），各环节的典型预算，以及软件 / FPGA 系统的量级。
+    requires: [architecture.pipeline, overview.why-speed]
+  - id: architecture.event-loop
+    title: 单线程事件循环与忙轮询（busy-spin）
+    summary: 一个线程在一个独占核上死循环轮询网卡和队列，不睡眠、不加锁；为什么这比多线程 + 锁更快更稳定。
+    requires: [architecture.pipeline]
+  - id: architecture.hot-cold-path
+    title: 快路径与慢路径分离
+    summary: 把日志、监控、持久化、配置变更从热路径（hot path）挪出去，交给别的线程异步处理。
+    requires: [architecture.event-loop]
+  - id: architecture.threading
+    title: 线程模型：一核一线程与 SPSC 队列
+    summary: 每个线程绑一个核、线程之间只用单生产者单消费者（SPSC）队列传消息、不共享可写状态。
+    requires: [architecture.event-loop]
+  - id: architecture.sequencer-journal
+    title: 定序器、日志与确定性回放
+    summary: 所有输入先经过定序器（sequencer）编号并写入日志（journal），业务逻辑是纯函数式的状态机，因此可以确定性回放（deterministic replay）。
+    requires: [architecture.event-loop]
+  - id: architecture.pre-trade-risk
+    title: 内联的下单前风控
+    summary: 价格合理性（fat finger）、单笔数量、持仓上限、下单速率、自成交防范；这些检查必须在几十纳秒内完成。
+    requires: [architecture.pipeline, market-structure.rules]
+  - id: architecture.order-state
+    title: 订单状态机与在途订单
+    summary: 新建、已确认、部分成交、撤单中、已撤、已成交；在途（in-flight）订单与"撤单途中被成交"的竞态。
+    requires: [protocols.ouch]
+  - id: architecture.position-pnl
+    title: 实时持仓与盈亏
+    summary: 由成交回报实时更新持仓、均价、已实现 / 未实现盈亏；为什么持仓要用交易所回报而不是自己的下单记录。
+    requires: [architecture.order-state]
+  - id: architecture.simulation
+    title: 回放与交易所模拟器
+    summary: 用历史行情驱动同一套生产代码，交易所模拟器模拟排队与延迟；回测结果和实盘差异的来源。
+    requires: [architecture.sequencer-journal]
+  - id: architecture.daily-ops
+    title: 交易系统的一天
+    summary: 开盘前加载参考数据和参数、预热（warm-up）、开盘集合竞价、盘中监控、收盘对账、盘后数据归档。
+
+- id: machine
+  order: 7
+  title: 硬件：CPU 与内存
+  summary: 低延迟代码的物理基础——存储层级的延迟数字、缓存行、核间一致性、TLB、NUMA、流水线、分支预测和内存序。
+  children:
+  - id: machine.memory-hierarchy
+    core: true
+    title: 存储层级与延迟数字
+    summary: 寄存器、L1 / L2 / L3 缓存、DRAM 的容量与访问延迟（约 1 ns、4 ns、10–40 ns、80–100 ns），以及为什么"访问内存"是低延迟的头号敌人。
+  - id: machine.cache-lines
+    title: 缓存行、局部性与预取
+    summary: 64 字节缓存行、空间局部性与时间局部性、硬件预取器（prefetcher）喜欢顺序访问、指针追逐（pointer chasing）为什么慢。
+    requires: [machine.memory-hierarchy]
+  - id: machine.coherence
+    title: 缓存一致性（MESI）与核间通信成本
+    summary: 多核各有私有缓存，MESI 协议保证一致；一个核写、另一个核读时缓存行要在核之间搬运，代价几十纳秒。
+    requires: [machine.cache-lines]
+  - id: machine.false-sharing
+    title: 伪共享（false sharing）
+    summary: 两个线程写不同变量，但变量在同一缓存行，导致缓存行来回弹跳；用填充（padding）和对齐解决。
+    requires: [machine.coherence]
+  - id: machine.tlb-hugepages
+    title: 虚拟内存、TLB 与大页（huge pages）
+    summary: 虚拟地址到物理地址的翻译、TLB 缓存翻译结果、TLB miss 引发页表遍历；2 MB / 1 GB 大页如何减少 miss。
+    requires: [machine.memory-hierarchy]
+  - id: machine.numa
+    title: NUMA：本地内存与远端内存
+    summary: 多路服务器每个 CPU 插槽有自己的内存，访问另一插槽的内存更慢；把线程和它的内存放在同一个 NUMA 节点。
+    requires: [machine.memory-hierarchy]
+  - id: machine.pipeline-ooo
+    title: 流水线、超标量与乱序执行
+    summary: CPU 把指令拆成多级流水、每周期发射多条、在依赖允许时乱序执行；指令级并行（ILP）与依赖链。
+  - id: machine.branch-prediction
+    title: 分支预测与无分支（branchless）代码
+    summary: CPU 猜分支方向提前执行，猜错要清空流水线（约 15–20 个周期）；可预测的分支几乎免费，随机分支很贵。
+    requires: [machine.pipeline-ooo]
+  - id: machine.memory-ordering
+    title: 内存序、x86 TSO 与原子操作的成本
+    summary: 编译器和 CPU 都会重排内存访问；x86 的 TSO 只允许"写后读"重排；屏障（fence）与带 lock 前缀的原子指令的代价。
+    requires: [machine.coherence, machine.pipeline-ooo]
+  - id: machine.simd
+    title: SIMD 向量指令
+    summary: 一条指令同时处理多个数据（SSE / AVX2 / AVX-512），适合批量比较、解析和数值计算；自动向量化的条件。
+    requires: [machine.pipeline-ooo]
+  - id: machine.power-smt
+    title: 频率、节能状态与超线程对抖动的影响
+    summary: 睿频（turbo）、C-state 深度睡眠唤醒、P-state 降频、超线程（SMT）共享核心资源，都会让延迟不稳定；交易服务器通常关掉它们。
+    requires: [machine.pipeline-ooo]
+
+- id: os-network
+  order: 8
+  title: 操作系统与网络
+  summary: 让操作系统别打扰交易线程（绑核、隔离、中断、缺页、抖动），以及从网卡、交换机到跨城线路的网络延迟。
+  children:
+  - id: os-network.cpu-isolation
+    title: 绑核与 CPU 隔离
+    summary: 线程亲和性（affinity）、isolcpus、nohz_full、rcu_nocbs；让交易线程独占一个核，调度器和内核任务不来打扰。
+    requires: [architecture.threading]
+  - id: os-network.interrupts
+    title: 中断与 IRQ 亲和性
+    summary: 网卡和其他设备的中断会打断正在运行的线程；把中断绑到非交易核，关掉 irqbalance。
+    requires: [os-network.cpu-isolation]
+  - id: os-network.syscalls
+    title: 系统调用与上下文切换的成本
+    summary: 一次系统调用从用户态进内核态再返回，一次上下文切换还要换掉缓存和 TLB 的热数据；为什么热路径上一个都不要。
+  - id: os-network.page-faults
+    title: 缺页、mlock 与预触内存
+    summary: 第一次访问的页会触发缺页中断；启动时预触（pre-fault）所有内存并用 mlock 锁住，避免交易时缺页或被换出。
+    requires: [machine.tlb-hugepages]
+  - id: os-network.jitter
+    title: 抖动（jitter）的来源
+    summary: 调度器 tick、SMI（系统管理中断）、透明大页（THP）整理、内核后台线程、频率变化——尾延迟的常见元凶清单。
+    requires: [os-network.cpu-isolation, os-network.interrupts]
+  - id: os-network.kernel-stack
+    title: 内核网络栈的代价
+    summary: 一个包从网卡到应用要经过中断、协议栈、socket 缓冲、系统调用和内存拷贝，总共几微秒。
+    requires: [os-network.syscalls]
+  - id: os-network.kernel-bypass
+    title: 内核旁路（kernel bypass）
+    summary: 应用直接读写网卡的收发队列：Solarflare / AMD OpenOnload 与 ef_vi、DPDK、RDMA；延迟降到 1 微秒左右，代价是复杂度。
+    requires: [os-network.kernel-stack]
+  - id: os-network.tcp-udp
+    title: TCP 与 UDP 组播在交易中的分工
+    summary: 行情用 UDP 组播（一对多、无重传）、下单用 TCP（可靠、有序）；Nagle 算法与 TCP_NODELAY、延迟确认。
+    requires: [os-network.kernel-stack]
+  - id: os-network.nic-switch
+    title: 网卡与交换机
+    summary: 硬件时间戳、中断合并（interrupt coalescing）、直通转发（cut-through）交换机与 L1 交换机，各自的延迟量级。
+  - id: os-network.wan
+    title: 跨城线路：光纤、微波与光速
+    summary: 光在光纤里只有真空光速的约 2/3；芝加哥—新泽西微波约 4 ms、光纤约 6.5–7 ms；天气对微波的影响。
+  - id: os-network.time-sync
+    title: 时间同步：PTP、GPS 与 NTP
+    summary: 为什么交易系统需要亚微秒级统一时钟（测延迟、监管审计），PTP 的工作原理，GPS 授时与 NTP 的精度差别。
+    requires: [os-network.nic-switch]
+
+- id: cpp
+  order: 9
+  title: 低延迟 C++
+  summary: HFT 交易热路径的主力语言，以及让 C++ 代码稳定跑在纳秒级的惯用法：不分配、静态分派、缓存友好容器、原子操作与无锁队列。
+  children:
+  - id: cpp.why-cpp
+    title: 为什么交易热路径用 C++
+    summary: 零成本抽象、手动控制内存布局和生命周期、没有 GC 停顿、编译器优化成熟；代价是复杂度和未定义行为。
+  - id: cpp.no-alloc
+    title: 热路径不分配内存：对象池与 arena
+    summary: malloc / new 的成本和不确定性；启动时预分配、对象池（pool）、arena 分配器、std::pmr。
+    requires: [orderbook.memory-layout]
+  - id: cpp.static-dispatch
+    title: 静态分派：模板、CRTP 与虚函数的代价
+    summary: 虚函数调用要查虚表、难以内联、可能分支预测失败；用模板和 CRTP 在编译期确定调用目标。
+    requires: [machine.branch-prediction]
+  - id: cpp.compile-time
+    title: 编译期计算：constexpr 与查表
+    summary: 把能在编译期算的东西（查找表、配置分支）提前算好，运行时只剩一次内存读取。
+  - id: cpp.containers
+    title: 容器选择：vector、扁平哈希表
+    summary: std::vector 胜过 std::list 和 std::map 的原因、开放寻址哈希表（flat / open addressing）对比 std::unordered_map 的链地址法。
+    requires: [machine.cache-lines]
+  - id: cpp.compiler
+    title: 让编译器帮你：内联、[[likely]]、PGO 与看汇编
+    summary: inline 与 always_inline、[[likely]] / [[unlikely]]、按性能剖析优化（PGO）、链接时优化（LTO），以及用 Compiler Explorer 看生成的汇编。
+    requires: [machine.branch-prediction]
+  - id: cpp.atomics
+    title: std::atomic 与 memory_order
+    summary: relaxed、acquire、release、seq_cst 各保证什么，在 x86 上分别编译成什么指令，以及什么时候用哪个。
+    requires: [machine.memory-ordering]
+  - id: cpp.spsc-seqlock
+    title: SPSC 环形队列与 seqlock
+    summary: 单生产者单消费者环形缓冲区（ring buffer）只靠两个原子下标就能无锁工作；seqlock 让一个写者、多个读者无锁共享一份数据。
+    requires: [cpp.atomics, machine.false-sharing]
+  - id: cpp.warm-cache
+    title: 让热路径保持"热"
+    summary: 大部分时间不下单，下单代码和数据会被挤出缓存；定期用不真正发送的假订单走一遍热路径（cache warming）。
+    requires: [machine.cache-lines, architecture.hot-cold-path]
+  - id: cpp.errors-logging
+    title: 异常、错误处理与日志离开热路径
+    summary: 零成本异常在抛出时很贵；热路径用返回值或直接不出错；日志只把原始数据写进队列，由另一线程格式化。
+    requires: [architecture.hot-cold-path]
+
+- id: java
+  order: 10
+  core: true
+  title: 低延迟 Java
+  summary: JVM 怎样执行和回收、怎样写出不产生垃圾的 Java，以及 Disruptor、Agrona、Aeron、Chronicle 这些让 Java 做到微秒级的工具。
+  children:
+  - id: java.jit
+    title: JIT、分层编译、预热与去优化
+    summary: 解释执行 → C1 → C2 的分层编译（tiered compilation）、基于运行统计的激进优化、预热（warm-up）为什么必要、去优化（deoptimization）何时发生。
+  - id: java.gc
+    title: 垃圾回收与停顿
+    summary: 分代假设、年轻代回收、stop-the-world 停顿、分配速率（allocation rate）决定回收频率；为什么低延迟系统最怕 GC。
+  - id: java.gc-choices
+    title: 收集器选择：G1、ZGC、Shenandoah、Epsilon 与 Azul
+    summary: G1 的可预测停顿目标、ZGC 与 Shenandoah 的并发回收（停顿亚毫秒）、Epsilon 不回收、Azul Prime 的 C4；吞吐与延迟的取舍。
+    requires: [java.gc]
+  - id: java.garbage-free
+    title: 零垃圾（garbage-free）编码
+    summary: 稳态下不分配：对象复用与池化、primitive 代替包装类、避免自动装箱 / 迭代器 / lambda 捕获 / 字符串拼接，以及如何验证分配为零。
+    requires: [java.gc]
+  - id: java.object-layout
+    title: 对象布局与机械同理心（mechanical sympathy）
+    summary: 对象头、引用即指针、对象数组是指针数组；primitive 数组与"数组的结构"（structure of arrays）对缓存友好；JOL 查看布局。
+    requires: [machine.cache-lines]
+  - id: java.off-heap
+    title: 堆外内存：DirectByteBuffer、Unsafe、FFM API 与 mmap
+    summary: 把数据放在 GC 管不到的内存里：直接缓冲区、sun.misc.Unsafe、Java 22 正式发布的 Foreign Function & Memory API、内存映射文件。
+    requires: [java.garbage-free]
+  - id: java.flyweight-sbe
+    title: flyweight 编解码与 SBE
+    summary: 不创建消息对象，而是用一个可复用的 flyweight 直接在字节缓冲区上按偏移量读写字段；SBE 生成的 Java 编解码器就是这样。
+    requires: [java.off-heap, protocols.sbe-mdp3]
+  - id: java.memory-model
+    title: Java 内存模型、volatile 与 VarHandle
+    summary: happens-before、volatile 的可见性与顺序保证、VarHandle 的 plain / opaque / acquire-release / volatile 四种访问模式，以及 lazySet（setRelease）为什么便宜。
+    requires: [machine.memory-ordering]
+  - id: java.disruptor
+    title: LMAX Disruptor
+    summary: 预分配的环形缓冲区 + 序列号（sequence）+ 等待策略（wait strategy），无锁、无垃圾、批处理；LMAX 交易所用它在单线程上处理每秒数百万事件。
+    requires: [java.memory-model, machine.false-sharing, architecture.sequencer-journal]
+  - id: java.agrona-aeron
+    title: Agrona 与 Aeron
+    summary: Agrona 提供无垃圾集合、堆外缓冲区和环形缓冲区；Aeron 是基于 UDP / IPC 的低延迟消息传输，带 Archive（录制回放）和 Cluster（Raft 复制状态机）。
+    requires: [java.off-heap, java.disruptor]
+  - id: java.chronicle
+    title: Chronicle Queue 与 Chronicle Map
+    summary: 基于内存映射文件的持久化队列：写入即落盘、跨进程共享、可回放；Chronicle Map 是堆外的键值存储。
+    requires: [java.off-heap]
+  - id: java.safepoints
+    title: safepoint 与 GC 之外的 JVM 停顿
+    summary: JVM 需要所有线程停在安全点（safepoint）才能做某些操作；到达安全点的时间（time to safepoint）、去优化、类加载等隐藏停顿。
+    requires: [java.gc, java.jit]
+  - id: java.tuning
+    title: 低延迟 JVM 调优
+    summary: 固定堆大小、-XX:+AlwaysPreTouch、大页、线程绑核（Java Thread Affinity 库）、关闭偏向锁等历史选项、用 JFR 观察。
+    requires: [java.gc-choices, os-network.cpu-isolation, machine.tlb-hugepages]
+  - id: java.modern
+    title: 现代 Java 特性与低延迟
+    summary: records、sealed 与模式匹配让代码更清楚；虚拟线程适合 I/O 并发而不是热路径；Vector API 与 Valhalla 值类型对数值和内存布局的意义。
+    requires: [java.off-heap, java.object-layout]
+
+- id: measurement
+  order: 11
+  title: 测量与性能分析
+  summary: 延迟怎么测才不骗自己：分布与百分位、HdrHistogram、coordinated omission、时间戳、微基准和剖析工具。
+  children:
+  - id: measurement.distributions
+    title: 延迟是一个分布：百分位与尾部
+    summary: 平均值掩盖问题，要看 p50 / p99 / p99.9 / max；尾延迟在交易中最重要，因为行情最忙时正是赚钱时。
+  - id: measurement.histograms
+    title: HdrHistogram
+    summary: 固定内存、按有效数字精度分桶、记录一次只要几纳秒的直方图；如何合并、如何读它的百分位输出。
+    requires: [measurement.distributions]
+  - id: measurement.coordinated-omission
+    title: coordinated omission（协同遗漏）
+    summary: 测试工具在系统卡住时也停下来不发请求，于是最慢的那段时间几乎没被记录；按计划发送时间计算延迟来修正。
+    requires: [measurement.distributions]
+  - id: measurement.timestamps
+    title: 取时间戳：rdtsc、clock_gettime 与网络抓包
+    summary: 读 TSC 计数器只需约 20 个周期、clock_gettime 走 vDSO 约 20–30 ns；用交换机镜像和抓包设备测真正的 wire-to-wire。
+    requires: [os-network.time-sync]
+  - id: measurement.benchmarking
+    title: 微基准测试的陷阱：JMH 与 Google Benchmark
+    summary: 死代码消除、常量折叠、预热不足、缓存过热让结果失真；JMH 和 Google Benchmark 如何防这些坑。
+    requires: [java.jit]
+  - id: measurement.profiling
+    title: 剖析工具：perf、火焰图、硬件计数器、JFR 与 async-profiler
+    summary: 采样剖析与火焰图找热点、PMU 硬件计数器看缓存 miss 和分支预测失败、JFR 与 async-profiler 看 JVM 内部。
+    requires: [machine.branch-prediction]
+  - id: measurement.budget-method
+    title: 延迟预算与排查方法
+    summary: 把 tick-to-trade 拆成环节逐一打点，先测量再优化，每次只改一处并对比分布；USE 方法检查资源。
+    requires: [architecture.tick-to-trade, measurement.distributions]
+
+- id: reliability
+  order: 12
+  title: 风险、可靠性与运维
+  summary: 交易系统出错的代价按秒计算：Knight Capital 的教训、kill switch、主备切换、上线测试和实时监控。
+  children:
+  - id: reliability.knight-capital
+    title: 2012 年 Knight Capital 事故
+    summary: 一次部署漏了一台服务器、复用的旧标志位唤醒了废弃代码，45 分钟亏损约 4.4 亿美元；它暴露的部署、开关和监控问题。
+  - id: reliability.kill-switch
+    title: kill switch 与 drop copy
+    summary: 一键撤销所有订单并停止交易的开关、交易所侧的风控限额、drop copy（交易所发来的独立成交副本）用于独立核对。
+    requires: [architecture.pre-trade-risk]
+  - id: reliability.failover
+    title: 主备切换与状态恢复
+    summary: 热备（hot standby）、从日志回放恢复状态、交易所会话的序列号恢复；切换时最危险的是重复下单。
+    requires: [architecture.sequencer-journal]
+  - id: reliability.deploy-testing
+    title: 上线与测试：交易所认证、灰度与配置管理
+    summary: 交易所的一致性认证测试、模拟环境、按品种灰度上线、版本与配置一起回滚。
+    requires: [reliability.knight-capital]
+  - id: reliability.monitoring
+    title: 实时监控与对账
+    summary: 盯持仓、盈亏、订单速率、延迟分布、行情缺口；盘中和盘后把内部记录与交易所 / 清算记录对账。
+    requires: [architecture.position-pnl]
+
+- id: fpga
+  order: 13
+  title: FPGA 与硬件加速
+  summary: 当软件的几微秒还不够时：FPGA 能在几十到几百纳秒内完成行情解码和触发下单，以及它的开发代价。
+  children:
+  - id: fpga.basics
+    title: FPGA 是什么，为什么更快、更稳定
+    summary: 可编程逻辑电路，数据按时钟周期流过硬件流水线，没有操作系统、缓存 miss 和分支预测，延迟确定。
+  - id: fpga.trading-uses
+    title: FPGA 在交易系统中的用法
+    summary: 行情解码与过滤、订单簿、预先计算好的触发条件（软件定参数、硬件按条件发单）、风控检查；混合架构里软件与硬件的分工。
+    requires: [fpga.basics, architecture.pipeline]
+  - id: fpga.dev-tradeoffs
+    title: FPGA 的开发流程与取舍
+    summary: Verilog / VHDL 与高层次综合（HLS）、时序收敛、编译几个小时、调试困难；ASIC 更快但不可改。
+    requires: [fpga.basics]
+
+- id: research-infra
+  order: 14
+  title: 研究与数据基础设施
+  summary: 交易系统之外的另一半工程：抓取并存储所有行情、列式时序数据库、分布式回测集群，以及研究代码到生产代码的路径。
+  children:
+  - id: research-infra.tick-capture
+    title: 行情抓取与存储规模
+    summary: 在网卡上抓下所有原始包（pcap）并加硬件时间戳，每天 TB 级；原始包为什么比解码后的数据更值得保存。
+    requires: [protocols.feed-handler]
+  - id: research-infra.time-series-db
+    title: 时序与列式存储：kdb+/q、ClickHouse、Parquet 与 Arrow
+    summary: 列式存储为什么适合行情分析、kdb+/q 在金融业的地位、开源替代 ClickHouse，以及 Parquet（文件格式）与 Arrow（内存格式）。
+    requires: [research-infra.tick-capture]
+  - id: research-infra.compute-farm
+    title: 分布式回测与计算集群
+    summary: 把成千上万个回测和参数扫描分发到集群：任务调度、数据本地性、结果汇总；吞吐优先而不是延迟优先。
+    requires: [research-infra.time-series-db]
+  - id: research-infra.research-to-prod
+    title: 从研究代码到生产代码
+    summary: Python 做研究原型、C++ / Java 实现生产；同一份信号代码同时用于回测和实盘以避免"研究和实盘不一致"。
+    requires: [research-infra.compute-farm]
+
+- id: java-at-hft
+  order: 15
+  core: true
+  title: 为什么 HFT 公司招 Java 工程师
+  summary: Java 在 Headlands 这类交易公司里做什么、为什么选它、和 C++ 怎么分工、能做到多快，以及面试时可以讲的观点。
+  children:
+  - id: java-at-hft.where-java
+    title: Java 在交易公司里用在哪里
+    summary: 研究平台、分布式存储、计算集群、监控与告警、内部工具、风控与订单管理，以及部分对延迟要求不到个位数微秒的交易路径。
+    requires: [java.gc]
+  - id: java-at-hft.why-java
+    title: 为什么选 Java：生产力、安全与生态
+    summary: 内存安全、快速开发、成熟的并发库和工具、JIT 在长时间运行后接近 C++、招聘池大；它在什么情况下够快。
+    requires: [java.jit, java.gc]
+  - id: java-at-hft.java-vs-cpp
+    title: Java 与 C++ 的分工
+    summary: 纳秒级热路径和 FPGA 周边用 C++，吞吐型和复杂业务逻辑用 Java；决定分工的是延迟预算、开发速度和团队。
+    requires: [java-at-hft.why-java, cpp.why-cpp]
+  - id: java-at-hft.how-fast
+    title: Java 能做到多快：真实案例
+    summary: LMAX 交易所、Aeron、Chronicle 用户的微秒级系统；做到这一点的前提是零垃圾、预热、绑核和堆外内存。
+    requires: [java.disruptor, java.garbage-free]
+  - id: java-at-hft.interop
+    title: Java 与 C++ 系统的协作
+    summary: 共享的消息 schema（SBE）、共享内存队列、JNI 与 FFM API 调用本地代码；跨语言系统的边界放在哪里。
+    requires: [java.off-heap, java-at-hft.java-vs-cpp]
+  - id: java-at-hft.talking-points
+    title: 面试谈资：Java 工程师在交易公司的价值
+    summary: 用三到五个观点讲清你理解 Java 在这里的角色：吞吐与延迟的取舍、基础设施即竞争力、可靠性优先、测量驱动优化，以及要问面试官的问题。
+    requires: [java-at-hft.where-java, java-at-hft.java-vs-cpp]
+  - id: java-at-hft.career-ai
+    title: 2026 年 AI 趋势下这门手艺的价值
+    summary: AI 写代码越来越强时，低延迟系统里哪些能力仍然稀缺：理解硬件、测量与调试、正确性与风险意识、对业务的判断。
+    requires: [java-at-hft.talking-points]
