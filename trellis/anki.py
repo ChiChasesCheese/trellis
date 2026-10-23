@@ -36,9 +36,9 @@ class AnkiConnectError(RuntimeError):
     pass
 
 
-# Anki answers this while a sync it was asked for is still running in the
+# Anki answers these while a sync it was asked for is still running in the
 # background: `sync` returns before it finishes, so the next call races it.
-BUSY = "Collection lifecycle operation is active"
+BUSY = ("Collection lifecycle operation is active", "A collection operation is active")
 
 
 def invoke(action: str, url: str = DEFAULT_URL, retries: int = 30, wait: float = 2.0,
@@ -48,7 +48,7 @@ def invoke(action: str, url: str = DEFAULT_URL, retries: int = 30, wait: float =
         try:
             return _invoke_once(action, url, **params)
         except AnkiConnectError as exc:
-            if BUSY not in str(exc):
+            if not any(b in str(exc) for b in BUSY):
                 raise
             time.sleep(wait)
     return _invoke_once(action, url, **params)

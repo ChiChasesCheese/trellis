@@ -145,7 +145,7 @@ def test_deck_names_are_escaped_inside_a_quoted_search():
 
 def test_invoke_waits_out_a_collection_busy_syncing(monkeypatch):
     import trellis.anki as anki
-    answers = [anki.AnkiConnectError(anki.BUSY), anki.AnkiConnectError(anki.BUSY), 42]
+    answers = [anki.AnkiConnectError(anki.BUSY[0]), anki.AnkiConnectError(anki.BUSY[1]), 42]
 
     def once(action, url, **params):
         a = answers.pop(0)
