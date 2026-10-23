@@ -19,20 +19,19 @@
 
 簿上现有（价格单位 tick，当作元）：
 
-```
-        卖盘 (asks)，价格从低到高，越靠上越"好"
-        价位 101:  [#1 数量5] → [#2 数量3]     ← 同价位按"先来后到"排队，#1 先到
-        价位 102:  [#3 数量4]
-  ------------------------------------------   ← 中间的缝隙叫 spread
-        买盘 (bids)：空
-```
+卖盘（asks）：价格从低到高，越靠上越"好"。同价位按"先来后到"排队，队首先到。
+
+| 价位 | 队列（队首在左） |
+|---|---|
+| 101 | `[#1 数量5]` → `[#2 数量3]`（#1 先到） |
+| 102 | `[#3 数量4]` |
+
+买卖盘之间的缝隙叫 spread。买盘（bids）：空。
 
 新单 **#4，买，限价 101，数量 6**：对面最便宜的 101 档 ≤ 限价，可成交；同价位先到先成交 → 先和 #1 成交 5 个（成交价取 **#1 的价 101**），再和 #2 成交 1 个；#4 全部成交不挂簿。簿变成：
 
-```
-        价位 101:  [#2 数量2]         ← #2 被吃掉 1 个，还剩 2 个，仍然排在队头
-        价位 102:  [#3 数量4]
-```
+* 价位 101：`[#2 数量2]`，#2 被吃掉 1 个，还剩 2 个，仍然排在队头。
+* 价位 102：`[#3 数量4]`。
 
 「**价格优先、同价按时间先后**」叫**价格-时间优先**（price-time priority），几乎所有交易所都用。
 
@@ -112,12 +111,13 @@ byId.remove(7L);
 
 同价位先来先成交（FIFO），每个价位内部有个"队伍"。`ArrayDeque<Node>` 入队尾、出队头 O(1)，但撤单者可能在队伍中间，`remove(obj)` 要从头找 O(队伍长度)（排 10 万张单时扫 10 万次）。**更好**：`LinkedHashMap<Long, Node>`，"哈希表 + 双向链表"的合体：
 
-```
-哈希表（按 key 找，O(1)）:        双向链表（记录插入顺序）:
-  id=7  ──────────────────┐        head ⇄ [#7] ⇄ [#3] ⇄ [#9] ⇄ tail
-  id=3  ───────────┐      │              ▲      ▲      ▲
-  id=9  ────┐      │      │              └──────┴──────┘  哈希表里每一项同时挂在链表上
-```
+哈希表按 key 找，O(1)；双向链表记录插入顺序：`head ⇄ [#7] ⇄ [#3] ⇄ [#9] ⇄ tail`。哈希表里每一项同时挂在链表上：
+
+| 哈希表 key | 指向链表节点 | 前一个 | 后一个 |
+|---|---|---|---|
+| id=7 | `#7` | head | `#3` |
+| id=3 | `#3` | `#7` | `#9` |
+| id=9 | `#9` | `#3` | tail |
 
 按 id 找节点 O(1)（哈希表），摘节点只改前后邻居指针 O(1)（双向链表），遍历按插入顺序、队头 = 最先插入的。所以它**既是 Map 又是队列**：`remove(id)`、`firstEntry()`、`pollFirstEntry()`、`putLast(k, v)` 都是 O(1)。
 
@@ -214,18 +214,16 @@ class PriceLevel { ArrayDeque<Node> fifo = new ArrayDeque<>(); long total; }
 
 ### 第 7 步：撮合循环
 
-```
-left = 新单数量
-while left > 0:
-    top = 对面 TreeMap.firstEntry()          // 对面最优价那一档
-    if top 不存在 或 不交叉: break            // 买：top.price <= 我的限价；卖：top.price >= 我的限价
-    maker = top 的队头订单
-    fill = min(left, maker.qty)
-    产生 Trade(taker, maker, price = maker 的价, fill)
-    left -= fill;  maker.qty -= fill;  level.total -= fill
-    if maker.qty == 0: 队头出队（pollFirstEntry）；若队空 → 对面 TreeMap 也 pollFirstEntry
-剩 left > 0 时：限价单挂簿，市价单作废
-```
+1. `left = 新单数量`。
+2. 当 `left > 0` 时循环：
+   * `top = 对面 TreeMap.firstEntry()`，即对面最优价那一档。
+   * 如果 `top` 不存在，或不交叉，就 `break`。买单交叉条件是 `top.price <= 我的限价`；卖单是 `top.price >= 我的限价`。
+   * `maker = top 的队头订单`。
+   * `fill = min(left, maker.qty)`。
+   * 产生 `Trade(taker, maker, price = maker 的价, fill)`。
+   * `left -= fill`；`maker.qty -= fill`；`level.total -= fill`。
+   * 如果 `maker.qty == 0`：队头出队（`pollFirstEntry`）；若队空，对面 TreeMap 也 `pollFirstEntry`。
+3. 循环结束后若 `left > 0`：限价单挂簿，市价单作废。
 
 每轮要么吃光 maker（被移除）要么吃光新单（循环结束），必然终止；每轮取当前最优的一张单，满足价格-时间优先。每个成交 O(1)，每吃光一档 O(log L)。
 

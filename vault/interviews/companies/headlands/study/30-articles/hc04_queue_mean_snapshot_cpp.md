@@ -428,9 +428,9 @@ inline std::vector<std::string> solve(const std::vector<std::string>& lines) {
 * `pop`：队头是这条路径上深度 `head_depth + 1` 的祖先——要一个 **level ancestor** 查询。逐个往上爬是 O(n)，太慢。
 * **skew-binary jump pointer**：每个节点多存一个 `jump` 指针。规则：设 `p` 是父节点，`j = jump[p]`；如果 `depth[p] - depth[j] == depth[j] - depth[jump[j]]`，新节点的 `jump = jump[j]`，否则 `jump = p`。一条链上各深度的 `jump` 指向（深度 → 它跳到的深度）：
 
-```
-深度: 1→0  2→1  3→0  4→3  5→4  6→3  7→0  8→7 ...
-```
+| 深度 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | ... |
+|---|---|---|---|---|---|---|---|---|---|
+| 跳到深度 | 0 | 1 | 0 | 3 | 4 | 3 | 0 | 7 | ... |
 
   查深度 `d` 的祖先：从 `v` 出发，若 `jump[v]` 的深度 ≥ `d` 就跳过去，否则走父节点——O(log n) 步，每个节点只多一个 `int`（对比二进制倍增需要 `n log n` 的表）。例：从深度 6 找深度 2：`jump(6)=3 ≥ 2` → 到 3；`jump(3)=0 < 2` → 走父节点到 2。
 

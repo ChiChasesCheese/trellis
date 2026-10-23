@@ -13,10 +13,10 @@
 | 3 | 现实里 source 是会阻塞的 client：每个 source 一个生产者线程 + 一个有界队列；`try_next()` 立刻返回，`next()` 阻塞；`close()`；source 出错要传播 |
 | 4 | 一次性合并并返回全部结果；任何一个 source 失败 → 取消其余 → 抛异常；离开函数时所有线程都已结束 |
 
-```
-[[1,4,7],[2,5,8],[3,6,9]]  →  [1,2,3,4,5,6,7,8,9]
-[[1,4,5],[1,3,4],[2,6]]    →  [1,1,2,3,4,4,5,6]
-```
+| 输入 | 输出 |
+|---|---|
+| `[[1,4,7],[2,5,8],[3,6,9]]` | `[1,2,3,4,5,6,7,8,9]` |
+| `[[1,4,5],[1,3,4],[2,6]]` | `[1,1,2,3,4,4,5,6]` |
 
 ## 2. Part 1：堆合并
 
@@ -439,11 +439,15 @@ source A 已经有 5，source B 还没数据。B 稍后可能给出 1：现在�
 
 ### 4.2 结构
 
+```mermaid
+flowchart TB
+  S0["source 0"] --> P0["producer 0"] --> Q0["queue 0"] --> C["Combiner"]
+  S1["source 1"] --> P1["producer 1"] --> Q1["queue 1"] --> C
+  S2["source 2"] --> P2["producer 2"] --> Q2["queue 2"] --> C
+  C --> N["try_next / next"]
 ```
-source 0 ──▶ [producer 0 jthread] ──▶ bounded queue 0 ─┐
-source 1 ──▶ [producer 1 jthread] ──▶ bounded queue 1 ─┼──▶ Combiner ──▶ try_next() / next()
-source 2 ──▶ [producer 2 jthread] ──▶ bounded queue 2 ─┘
-```
+
+每个 producer 是一个 `jthread`；每个 queue 是有界队列（bounded queue）；`Combiner` 之后由调用方用 `try_next()` / `next()` 取数据。
 
 * **有界队列 = 背压（backpressure）**：消费者不取，队列满了生产者就阻塞在 `push` 上；内存有界，每个 source 最多被读出 `capacity + 1` 个元素（队列里 `capacity` 个，加生产者手里正拿着的 1 个）。
 * **终止标记**：每个生产者结束时一定留下 `End` 或 `Failed`。合并器永远不会无限等一个已经死掉的生产者。

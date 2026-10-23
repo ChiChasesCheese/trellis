@@ -15,16 +15,18 @@
 
 排序规则（Part 1）：notional **大**的在前；notional 相同，ticker 字典序**升序**；再相同，下标升序。三条合起来是**全序**（total order），结果唯一、可复现。
 
-```
-tickers = [AAPL, MSFT, AAPL, GOOG, MSFT, TSLA]
-prices  = [18000, 40000, 18100, 14000, 40000, 25000]
-volumes = [   10,     3,     5,     9,     3,     8]
-notional=  180000 120000  90500 126000 120000 200000
+| 下标 | ticker | price | volume | notional |
+|---|---|---|---|---|
+| 0 | AAPL | 18000 | 10 | 180000 |
+| 1 | MSFT | 40000 | 3 | 120000 |
+| 2 | AAPL | 18100 | 5 | 90500 |
+| 3 | GOOG | 14000 | 9 | 126000 |
+| 4 | MSFT | 40000 | 3 | 120000 |
+| 5 | TSLA | 25000 | 8 | 200000 |
 
-top 3 事件 → [TSLA(i=5, 200000), AAPL(i=0, 180000), GOOG(i=3, 126000)]
-top 4 事件 → 第 4 名是 i=1 不是 i=4：notional 与 ticker 都相同（MSFT, 120000），下标小的在前
-top 2 ticker → [AAPL 270500, MSFT 240000]     （TSLA 200000、GOOG 126000 落选）
-```
+* top 3 事件：`[TSLA(i=5, 200000), AAPL(i=0, 180000), GOOG(i=3, 126000)]`
+* top 4 事件：第 4 名是 i=1 不是 i=4：notional 与 ticker 都相同（MSFT, 120000），下标小的在前。
+* top 2 ticker：`[AAPL 270500, MSFT 240000]`（TSLA 200000、GOOG 126000 落选）。
 
 注意：最大的**事件**（TSLA）不属于最大的 **ticker**（AAPL）。两个问题，两个答案。
 
@@ -603,16 +605,25 @@ inline Summary summarize(Strings tickers, Longs prices, Longs volumes) {
 
 成交按时间顺序到达，只关心最近 `window` 个时间单位：`now - time < window` 的成交是活的，**恰好差 `window` 就过期**，活跃区间是 `(now - window, now]`。
 
-```
-窗口 W = 10，k = 2
-F 1 AAPL 100 2     F 3 MSFT 50 10     F 5 AAPL 100 3     Q 5
-F 12 TSLA 10 10    Q 12               Q 15               Q 40
+窗口 W = 10，k = 2，输入：
 
-Q 5  → [AAPL 500, MSFT 500]    并列按 ticker 升序
-Q 12 → [MSFT 500, AAPL 300]    t=1 的 AAPL 200 已过期（12-1=11 >= 10）
-Q 15 → [TSLA 100]              MSFT(t=3)、AAPL(t=5) 都过期（15-5=10 >= 10，边界算过期）
-Q 40 → []
 ```
+F 1 AAPL 100 2
+F 3 MSFT 50 10
+F 5 AAPL 100 3
+Q 5
+F 12 TSLA 10 10
+Q 12
+Q 15
+Q 40
+```
+
+| 查询 | 输出 | 说明 |
+|---|---|---|
+| `Q 5` | `[AAPL 500, MSFT 500]` | 并列按 ticker 升序 |
+| `Q 12` | `[MSFT 500, AAPL 300]` | t=1 的 AAPL 200 已过期（12-1=11 >= 10） |
+| `Q 15` | `[TSLA 100]` | MSFT(t=3)、AAPL(t=5) 都过期（15-5=10 >= 10，边界算过期） |
+| `Q 40` | `[]` | |
 
 ### 4.1 为什么只用 `priority_queue` 不行
 

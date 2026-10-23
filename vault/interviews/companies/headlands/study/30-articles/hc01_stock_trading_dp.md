@@ -134,13 +134,12 @@ DP 的全部「形状」：找出**小问题**（「第 i 项」）→ 写出小
 
 **一次交易（Part 1/2）**——两个状态：
 
-```
-              休息                      休息
-            ┌──────┐                  ┌──────┐
-            ▼      │                  ▼      │
-          [ FREE ] ───── 买入 ─────▶ [ HOLD ] 
-            ▲                          │
-            └─────────── 卖出 ─────────┘
+```mermaid
+flowchart TB
+  F["FREE"] -->|买入| H["HOLD"]
+  H -->|卖出| F
+  F -->|休息| F
+  H -->|休息| H
 ```
 
 * `FREE`：手里**没有**股票（可买）。
@@ -149,15 +148,13 @@ DP 的全部「形状」：找出**小问题**（「第 i 项」）→ 写出小
 
 **加冷却（Part 4）**——多一个状态 `COOL`（今天刚卖出，明天只能休息）：
 
-```
-            休息                    休息
-          ┌──────┐               ┌──────┐
-          ▼      │               ▼      │
-        [ FREE ] ──── 买入 ───▶ [ HOLD ]
-          ▲                        │
-          │                       卖出
-          │                        ▼
-          └──── 休息（被迫）──── [ COOL ]
+```mermaid
+flowchart TB
+  F["FREE"] -->|买入| H["HOLD"]
+  H -->|卖出| C["COOL"]
+  C -->|休息（被迫）| F
+  F -->|休息| F
+  H -->|休息| H
 ```
 
 **加「最多 k 次」（Part 3）**：每个状态加下标 j = 「已用几次买入」。图复制成 k+1 层，买入箭头从第 j−1 层指向第 j 层。
@@ -343,11 +340,9 @@ if (k >= n / 2) return maxProfitUnlimited(prices);
 
 卖出后下一天不能买。「今天是不是刚卖出」影响明天能否买，按 2.2 的标准它必须是状态。新增 `COOL`（2.3 节第二张图）：
 
-```
-hold'[j] = max(hold[j],  free[j-1] - p)    // 买入只能从 FREE 来（不能从 COOL 买！）
-cool'[j] = hold[j] + p - fee                // 今天卖出 → 进入 COOL
-free'[j] = max(free[j], cool[j])            // 休息；或冷却结束（昨天卖的，今天自动变回 FREE）
-```
+- `hold'[j] = max(hold[j], free[j-1] - p)`：买入只能从 FREE 来（不能从 COOL 买！）
+- `cool'[j] = hold[j] + p - fee`：今天卖出，进入 COOL。
+- `free'[j] = max(free[j], cool[j])`：休息；或冷却结束（昨天卖的，今天自动变回 FREE）。
 
 无冷却时卖出直接回 FREE：`free'[j] = max(free[j], hold[j] + p - fee)`。
 
@@ -378,14 +373,17 @@ free'[j] = max(free[j], cool[j])            // 休息；或冷却结束（昨天
 
 `[1, 2, 3, 0, 2]`（冷却，不限次数）正向每天的 bits（bit1 在左）依次：`01`、`00`、`10`、`11`、`00`。倒着走：
 
-```
-终点：cool=3 > free=2  →  状态 COOL
-第 4 天，COOL        →  这天卖出            记 sell=4，状态 → HOLD
-第 3 天，HOLD, bit0=1 →  这天买入            记 Trade(3,4)，状态 → FREE
-第 2 天，FREE, bit1=1 →  冷却在这天结束      状态 → COOL
-第 1 天，COOL        →  这天卖出            记 sell=1，状态 → HOLD
-第 0 天，HOLD, bit0=1 →  这天买入            记 Trade(0,1)，状态 → FREE   ← 回到起点 FREE，一致
-```
+终点：cool=3 > free=2，所以终点状态是 COOL。
+
+| 天 | 当前状态 | bit | 动作 | 记录 | 之后状态 |
+|---|---|---|---|---|---|
+| 第 4 天 | COOL | | 这天卖出 | sell=4 | HOLD |
+| 第 3 天 | HOLD | bit0=1 | 这天买入 | Trade(3,4) | FREE |
+| 第 2 天 | FREE | bit1=1 | 冷却在这天结束 | | COOL |
+| 第 1 天 | COOL | | 这天卖出 | sell=1 | HOLD |
+| 第 0 天 | HOLD | bit0=1 | 这天买入 | Trade(0,1) | FREE |
+
+最后回到起点 FREE，一致。
 
 倒着得到 `[Trade(3,4), Trade(0,1)]`，反转为 `[Trade(0,1), Trade(3,4)]` ✓。
 

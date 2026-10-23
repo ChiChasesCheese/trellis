@@ -111,17 +111,17 @@ pool free / allocate:     23.4967 ms
 
 块用 `int` 编号 `0..capacity-1` 表示。不另开一个链表结点，而是用一个 `vector<uint32_t> next_`：
 
-```
-next_[i] = 链表里 i 后面的那个空闲块     （块 i 空闲时；链表末尾是 kEnd）
-next_[i] = kAllocated                    （块 i 正在使用时）
-head_    = 第一个空闲块                  （没有空闲块时是 kEnd）
+* `next_[i]` = 链表里 i 后面的那个空闲块（块 i 空闲时；链表末尾是 `kEnd`）。
+* `next_[i]` = `kAllocated`（块 i 正在使用时）。
+* `head_` = 第一个空闲块（没有空闲块时是 `kEnd`）。
 
-容量 4，刚创建：  head_=0   next_ = [1, 2, 3, END]
-allocate() → 0：  head_=1   next_ = [ALLOC, 2, 3, END]
-allocate() → 1：  head_=2   next_ = [ALLOC, ALLOC, 3, END]
-free(0)：         head_=0   next_ = [2, ALLOC, 3, END]       0 插在链头，指向 2
-allocate() → 0    （LIFO：刚还的先出来）
-```
+| 操作 | `head_` | `next_` | 备注 |
+|---|---|---|---|
+| 容量 4，刚创建 | 0 | `[1, 2, 3, END]` | |
+| `allocate()` → 0 | 1 | `[ALLOC, 2, 3, END]` | |
+| `allocate()` → 1 | 2 | `[ALLOC, ALLOC, 3, END]` | |
+| `free(0)` | 0 | `[2, ALLOC, 3, END]` | 0 插在链头，指向 2 |
+| `allocate()` → 0 | | | LIFO：刚还的先出来 |
 
 为什么一个数组同时当「链表指针」和「是否在用」：空闲的块不需要保存别的数据，在用的块不需要链表指针，两个状态互斥。省内存，也少一次缓存未命中。`kAllocated = 0xFFFFFFFE` 不可能是合法下标（容量 ≤ 2^28）。
 
@@ -407,14 +407,14 @@ Java 版用 FFM 的 `Arena` / `MemorySegment` 在堆外（GC 看不到）分配�
 
 每个槽位是 32 字节：
 
-```
-偏移  0  gen   uint32   版本号（偶数空闲 / 奇数在用，同 GenPool）
-偏移  4  next  uint32   空闲链表的下一个槽位（只在空闲时有意义）
-偏移  8  id    int64  ┐
-偏移 16  px    int64  │ Order 的四个字段（只在使用时有意义；allocate 时清零）
-偏移 24  qty   int32  │
-偏移 28  side  int32  ┘
-```
+| 偏移 | 字段 | 类型 | 说明 |
+|---|---|---|---|
+| 0 | `gen` | uint32 | 版本号（偶数空闲 / 奇数在用，同 GenPool） |
+| 4 | `next` | uint32 | 空闲链表的下一个槽位（只在空闲时有意义） |
+| 8 | `id` | int64 | `Order` 的四个字段（只在使用时有意义；`allocate` 时清零） |
+| 16 | `px` | int64 | 同上 |
+| 24 | `qty` | int32 | 同上 |
+| 28 | `side` | int32 | 同上 |
 
 * 把 `gen` 和 `next` 也放进槽位：空闲链表和版本号跟着数据走，没有第二个数组。
 * `struct alignas(32) Slot`：每条记录 32 字节对齐，arena 起点 64 字节对齐 → **一条缓存行恰好放两条记录，没有记录跨缓存行**。
@@ -656,9 +656,19 @@ private:
 
 **CAS（compare-and-swap）**：`compare_exchange(expected, desired)` 原子地做「如果 `head == expected` 就把 `head` 改成 `desired` 并返回 `true`；否则把当前值写回 `expected`、返回 `false`」。于是：
 
-```
-pop():   loop { h = head;  i = idx(h);  if (i == EMPTY) return NONE;  n = next[i];  if (CAS(head, h → n)) return i; }
-push(i): loop { h = head;  next[i] = idx(h);                           if (CAS(head, h → i)) return;        }
+```cpp
+pop():
+  loop {
+    h = head;  i = idx(h);
+    if (i == EMPTY) return NONE;
+    n = next[i];
+    if (CAS(head, h -> n)) return i;
+  }
+push(i):
+  loop {
+    h = head;  next[i] = idx(h);
+    if (CAS(head, h -> i)) return;
+  }
 ```
 
 失败说明别的线程动了 head，重新读、重试。没有锁：一个线程被挂起不会拖住别人——这是 **lock-free**（系统整体总有线程在前进）；不是 wait-free（单个线程可能一直失败重试）。

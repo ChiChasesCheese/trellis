@@ -26,20 +26,20 @@
 
 样例（先手算再看代码）：
 
-```
-LIMIT 1 SELL 101 5          REST id=1 side=SELL px=101 qty=5
-LIMIT 2 SELL 101 3          REST id=2 side=SELL px=101 qty=3
-LIMIT 3 SELL 102 4          REST id=3 side=SELL px=102 qty=4
-LIMIT 4 BUY 101 6           TRADE taker=4 maker=1 side=BUY px=101 qty=5     ← 先吃 1 号（先到）
-                            TRADE taker=4 maker=2 side=BUY px=101 qty=1     ← 再吃 2 号的 1 张
-limit 5 buy 103 10          TRADE taker=5 maker=2 side=BUY px=101 qty=2     ← 2 号剩 2 张
-                            TRADE taker=5 maker=3 side=BUY px=102 qty=4     ← 价格更高的 102 档
-                            REST id=5 side=BUY px=103 qty=4                 ← 10 − 2 − 4 = 4 张挂簿
-MARKET 6 SELL 5             TRADE taker=6 maker=5 side=SELL px=103 qty=4    ← 成交价取 maker 的 103
-                            CANCEL id=6 remaining=1                         ← 市价单吃不完的部分作废
-CANCEL 3                    REJECT id=3 reason=unknown id                   ← 3 号早被吃光了
-MODIFY 9 1                  REJECT id=9 reason=unknown id
-```
+| 输入 | 输出 | 说明 |
+|---|---|---|
+| `LIMIT 1 SELL 101 5` | `REST id=1 side=SELL px=101 qty=5` | |
+| `LIMIT 2 SELL 101 3` | `REST id=2 side=SELL px=101 qty=3` | |
+| `LIMIT 3 SELL 102 4` | `REST id=3 side=SELL px=102 qty=4` | |
+| `LIMIT 4 BUY 101 6` | `TRADE taker=4 maker=1 side=BUY px=101 qty=5` | 先吃 1 号（先到） |
+| | `TRADE taker=4 maker=2 side=BUY px=101 qty=1` | 再吃 2 号的 1 张 |
+| `limit 5 buy 103 10` | `TRADE taker=5 maker=2 side=BUY px=101 qty=2` | 2 号剩 2 张 |
+| | `TRADE taker=5 maker=3 side=BUY px=102 qty=4` | 价格更高的 102 档 |
+| | `REST id=5 side=BUY px=103 qty=4` | 10 − 2 − 4 = 4 张挂簿 |
+| `MARKET 6 SELL 5` | `TRADE taker=6 maker=5 side=SELL px=103 qty=4` | 成交价取 maker 的 103 |
+| | `CANCEL id=6 remaining=1` | 市价单吃不完的部分作废 |
+| `CANCEL 3` | `REJECT id=3 reason=unknown id` | 3 号早被吃光了 |
+| `MODIFY 9 1` | `REJECT id=9 reason=unknown id` | |
 
 ## 2. 数据结构选型
 
@@ -51,12 +51,14 @@ MODIFY 9 1                  REJECT id=9 reason=unknown id
 | 同价位按到达顺序排队，撤单要从**队伍中间**拿掉，还要 O(1) | **`std::list<订单>`** + 保存的迭代器 | 队尾插入、任意位置删除、移到队尾，都是 O(1) |
 | 撤单 / 改量只给 `id`，不给价格 | **`std::unordered_map<id, Locator>`** | O(1) 平均；`Locator` 里存着价位和订单节点的迭代器 |
 
-```
-asks_ (map, 价格升序)         bids_ (map, 价格升序；最优 = 最后一个)
-  101 ─▶ [#1(5)] ─ [#2(3)]      99 ─▶ [#7(2)]
-  102 ─▶ [#3(4)]               100 ─▶ [#6(1)] ─ [#9(8)]
-                              by_id_:  1 ─▶ {Sell, 指向 101 价位, 指向 #1 节点}  …
-```
+| 容器 | 价位 | 队列（队首在左） |
+|---|---|---|
+| `asks_`（map，价格升序） | 101 | `[#1(5)]`、`[#2(3)]` |
+| | 102 | `[#3(4)]` |
+| `bids_`（map，价格升序；最优 = 最后一个） | 99 | `[#7(2)]` |
+| | 100 | `[#6(1)]`、`[#9(8)]` |
+
+`by_id_`：`1` → `{Sell, 指向 101 价位, 指向 #1 节点}` ……
 
 **为什么可以保存迭代器**：`std::map` 和 `std::list` 是**节点式**容器，插入或删除**别的**元素不会使已有元素的迭代器失效（只有被删的元素本身的迭代器失效）；`std::list::splice` 能把节点原地接到另一个位置，迭代器依然有效。`std::vector` 做不到：增长时可能把所有元素搬走。
 
@@ -1086,18 +1088,21 @@ private:
 
 回移删除（`erase_id`）：删掉位置 `i` 的 key 之后，往后看同一簇里的每个 key `j`：只有当它的家**不在**环形区间 `(洞, j]` 里时，才能搬进洞（搬过去之后它仍然在「家 → 实际位置」的探测路径上）。例（容量 8）：a、b 的家都是 2，c 的家是 3，依次插入后：
 
-```
-slot:   2   3   4   5
-key:    a   b   c   .
+| slot | 2 | 3 | 4 | 5 |
+|---|---|---|---|---|
+| key | a | b | c | 空 |
 
 删除 a，洞在 2：
-  b 在 3，家 2，不在 (2,3] 里 → b 搬进洞，洞移到 3
-  c 在 4，家 3，不在 (3,4] 里 → c 搬进洞，洞移到 4
-  slot 5 是空格 → 结束，把洞（4）置空
-结果:   b   c   .
 
-如果 c 的家就是 4（本来就在家里）：家 4 在 (3,4] 里 → 不能搬，否则 c 会跑到家的前面，从 4 出发永远找不到它。
-```
+1. b 在 3，家 2，不在 (2,3] 里，b 搬进洞，洞移到 3。
+2. c 在 4，家 3，不在 (3,4] 里，c 搬进洞，洞移到 4。
+3. slot 5 是空格，结束，把洞（4）置空。
+
+| slot | 2 | 3 | 4 | 5 |
+|---|---|---|---|---|
+| 结果 | b | c | 空 | 空 |
+
+如果 c 的家就是 4（本来就在家里）：家 4 在 (3,4] 里，不能搬，否则 c 会跑到家的前面，从 4 出发永远找不到它。
 
 （直接把 slot 2 置空，`b` 和 `c` 就都查不到了。）
 

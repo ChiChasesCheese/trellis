@@ -6,21 +6,35 @@
 
 调度系统的日志是一份 CSV，每行一个 job：`job_id, runtime_in_seconds, next_job_id`。`next_job_id = 0` 表示链尾。job 首尾相接成 **chain**，要求为每条链输出一段统计，链按总时长**降序**排列。输入有任何不对就只输出 `Malformed Input`，并且**进程退出码为 0**。
 
+输入：
+
 ```
-#job_id,runtime_in_seconds,next_job_id        -
-1,60,23                                       start_job: 1
-2,23,3                  ──────────►           last_job: 23
-3,12,0                                        number_of_jobs: 2
-23,30,0                                       job_chain_runtime: 00:01:30
-                                              average_job_time: 00:00:45
-                                              -
-                                              start_job: 2
-                                              last_job: 3
-                                              number_of_jobs: 2
-                                              job_chain_runtime: 00:00:35
-                                              average_job_time: 00:00:17      ← 35/2 = 17.5，截断
-                                              -
+#job_id,runtime_in_seconds,next_job_id
+1,60,23
+2,23,3
+3,12,0
+23,30,0
 ```
+
+输出：
+
+```
+-
+start_job: 1
+last_job: 23
+number_of_jobs: 2
+job_chain_runtime: 00:01:30
+average_job_time: 00:00:45
+-
+start_job: 2
+last_job: 3
+number_of_jobs: 2
+job_chain_runtime: 00:00:35
+average_job_time: 00:00:17
+-
+```
+
+第二条链的 `average_job_time`：35/2 = 17.5，截断为 17。
 
 细节：第一行表头以 `#` 开头，空行忽略，逗号两边可以有空格；时长格式 `hh:mm:ss`，小时至少两位、不回绕（`100:00:00`）；平均值**截断**取整；总时长相同时按 `start_job` 升序（题面没说，自己定并说出来）。
 
@@ -28,11 +42,16 @@
 
 ## 2. 思路：五步流水线
 
+```mermaid
+flowchart TB
+  L1["lines"] -->|parse| J["vector Job"]
+  J -->|chains| C["vector Chain"]
+  C -->|render| L2["lines"]
 ```
-lines ──parse──► vector<Job> ──chains──► vector<Chain> ──render──► lines
-         ▲ 单行规则              ▲ 跨行规则 + 排序
-         └──────── 任何一步发现问题 → throw MalformedInput → analyze() 捕获 → "Malformed Input"
-```
+
+* `parse`：单行规则。
+* `chains`：跨行规则 + 排序。
+* 任何一步发现问题：`throw MalformedInput`，`analyze()` 捕获，输出 `"Malformed Input"`。
 
 校验清单（面试时先口头列出来，面试官会很满意）：
 

@@ -15,13 +15,14 @@
 
 ### 手算一遍
 
-```
-下标      0      1      2      3      4      5
-ticker  AAPL   MSFT   AAPL   GOOG   MSFT   TSLA
-price  18000  40000  18100  14000  40000  25000
-volume    10      3      5      9      3      8
-notional 180000 120000  90500 126000 120000 200000     ← 价格 × 数量
-```
+| 下标 | ticker | price | volume | notional（价格 × 数量） |
+|---|---|---|---|---|
+| 0 | AAPL | 18000 | 10 | 180000 |
+| 1 | MSFT | 40000 | 3 | 120000 |
+| 2 | AAPL | 18100 | 5 | 90500 |
+| 3 | GOOG | 14000 | 9 | 126000 |
+| 4 | MSFT | 40000 | 3 | 120000 |
+| 5 | TSLA | 25000 | 8 | 200000 |
 
 * **Part 1，k = 3**：notional 从大到小：TSLA 200000（下标 5）、AAPL 180000（0）、GOOG 126000（3）、MSFT 120000（1 和 4）、AAPL 90500（2）。前 3 个：下标 5, 0, 3。
 * **k = 4**：第 4 名 MSFT 120000，但下标 1 和 4 的 notional、ticker 都一样，规定再按下标升序，选**下标 1**。**没有这条规定答案就不唯一**——tie-break（打破平局）。
@@ -164,12 +165,12 @@ set.stream().limit(k).toList();             // 按顺序取前 k 个
 
 **数据竞争（data race）**：两线程同时读写同一变量，至少一个在写，又无同步。典型「丢失更新」：
 
-```
-线程 A: 读 total (=10)            线程 B: 读 total (=10)
-线程 A: 算 10 + 5 = 15            线程 B: 算 10 + 7 = 17
-线程 A: 写 total = 15
-                                  线程 B: 写 total = 17      ← A 的更新丢了，应该是 22
-```
+| 步骤 | 线程 A | 线程 B |
+|---|---|---|
+| 1 | 读 `total`（= 10） | 读 `total`（= 10） |
+| 2 | 算 10 + 5 = 15 | 算 10 + 7 = 17 |
+| 3 | 写 `total = 15` | |
+| 4 | | 写 `total = 17`：A 的更新丢了，应该是 22 |
 
 `HashMap` 非线程安全，两线程同时 `put` 可能丢数据甚至损坏内部结构。三类办法：**加锁 / 并发容器**（`ConcurrentHashMap`，正确但线程互相等、扩展性差）；**不共享**（每线程用**私有**结构最后合并——Part 4 主方案，无竞争无需锁）；**不可变数据**（都只读同一份输入）。
 
@@ -290,12 +291,11 @@ Collectors.teeing(
 
 **第 2 步：数据结构设计**
 
-```
-ArrayDeque<Fill> live          按时间顺序的活跃成交（队头最老）
-HashMap<String, Acc> totals    ticker → (窗口内总额, 窗口内活跃成交笔数)
-TreeSet<TickerTotal> ranking   所有活跃 ticker，按 (总额 降序, ticker 升序)
-                               —— 与 totals 保持一一对应
-```
+| 结构 | 含义 |
+|---|---|
+| `ArrayDeque<Fill> live` | 按时间顺序的活跃成交（队头最老） |
+| `HashMap<String, Acc> totals` | ticker → (窗口内总额, 窗口内活跃成交笔数) |
+| `TreeSet<TickerTotal> ranking` | 所有活跃 ticker，按 (总额 降序, ticker 升序)；与 `totals` 保持一一对应 |
 
 * `Acc.count`（活跃笔数）：总额可能为 0（价格或数量为 0），不能用「总额 == 0」判断「还有没有活跃成交」；count 减到 0 才从两张表里删掉。
 
@@ -316,16 +316,23 @@ TreeSet<TickerTotal> ranking   所有活跃 ticker，按 (总额 降序, ticker 
 
 **第 1 步：切块、各算各的、最后合并**
 
+```mermaid
+flowchart TB
+  E["事件 0 到 n-1"] --> C0["chunk 0"]
+  E --> C1["chunk 1"]
+  E --> C2["chunk 2"]
+  E --> C3["chunk C-1"]
+  C0 --> M0["私有 Map"]
+  C1 --> M1["私有 Map"]
+  C2 --> M2["私有 Map"]
+  C3 --> M3["私有 Map"]
+  M0 --> G["合并（串行）"]
+  M1 --> G
+  M2 --> G
+  M3 --> G
 ```
-          事件 0 ........................... n-1
- 切块:    [chunk 0][chunk 1][chunk 2]  ...  [chunk C-1]
-              |        |        |                |
-           私有 Map  私有 Map  私有 Map  ...   私有 Map     ← 各线程只写自己的
-              \        |       /                 /
-               ──────  合并（串行）  ──────────────
-                           ↓
-                   Map<String, Long>
-```
+
+事件切成 C 块；各线程只写自己的私有 Map；最后串行合并成 `Map<String, Long>`。
 
 **合并为什么对**（面试官想听的三点）：
 
