@@ -25,19 +25,13 @@ are committed and pushed by the Git plugin every 10 min (vault folder only).
   (`core/踩过的坑.md`, `abnormal/study/20-cards/claude_prompts.md`; the repo is public).
 - Obsidian CLI is on (`obsidian help`; `obsidian sync:status`).
 
-## Left for Chi (needs a login or a click on the mini's screen)
+## Left for Chi
 
-Done: trust vault, Sync login + connect. Still open:
-
-1. ~~**Trust the vault** (Screen Sharing to chi-mini): Obsidian shows "Restricted mode" → *Turn on community plugins* /
-   *Trust author and enable plugins*. The status bar then shows the Git plugin.
-2. **Obsidian Sync**: Settings → Sync → log in → create a remote vault (e.g. `trellis`) and connect this vault to it.
-   Under *Selective sync* turn on *Appearance settings*, *CSS snippets* and *Community plugin list* if you want the
-   snippet on the phone too. Exclude nothing else.
-3. **Phone / MacBook**: in Obsidian → *Open vault from Obsidian Sync* → `trellis`. On the phone also check Settings →
-   Appearance → CSS snippets → `no-wrap-code` is on.
-4. **Start at login** on chi-mini: System Settings → General → Login Items → `+` → Obsidian (the mini must stay logged in
+1. **Start at login** on chi-mini: System Settings → General → Login Items → `+` → Obsidian (the mini must stay logged in
    for the Git plugin to run).
+2. **Phone**: Settings → Appearance → CSS snippets → check `no-wrap-code` is on (it arrives through Sync).
+3. **MacBook**: if it also runs the Git plugin on a Sync-connected checkout, set its auto commit to 0 — chi-mini is the only
+   machine that commits Sync edits. Push `skeleton/leetcode-tops.yaml`, `scripts/leetcode_tops/` and the tops cards from there.
 
 ## Another machine with a git checkout
 
