@@ -63,6 +63,13 @@ and its card footer link goes straight to the footage, marked ▶ so you know
 what a tap will do. A subject learned by watching is now as well-served as
 one learned by reading.
 
+## Repository map
+
+- [docs/README.md](docs/README.md): how-to guides, reference (CLI, checks), architecture and the decision records (ADRs).
+- [AGENTS.md](AGENTS.md): where every top-level directory belongs, the checks that must pass, and the rules for agents
+  (`CLAUDE.md` only imports it).
+- `vault/` is the learning area opened in Obsidian; `research/` holds how it was made (ADR 0011).
+
 ## Why a skeleton
 
 Every existing markdown→Anki tool treats cards as a flat bag. Trellis inverts
