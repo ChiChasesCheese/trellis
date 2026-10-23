@@ -1,0 +1,344 @@
+# Headlands Technologies (SWE, Java) interview kit as one deck: every learning page of the kit distilled into cards,
+# one leaf per lecture, question-bank section, problem or story. Source map: research/companies/headlands/deck/plan.json.
+domain: headlands
+title: Headlands
+lang: zh
+vault: interviews/companies/headlands/deck
+study:
+  order: core-first
+  mix: new-first
+  new_per_day: 60
+  reviews_per_day: 300
+nodes:
+- id: company
+  order: 1
+  title: 公司、岗位与面试流程
+  summary: Headlands 是什么公司、怎么赚钱、Java 岗做什么、你和岗位的匹配点、面试怎么进行、要问面试官什么。
+  core: true
+  children:
+  - id: company.business
+    title: Headlands 怎么赚钱
+    summary: 自营交易公司与对冲基金、券商的区别；做市、套利、主动吃单；为什么延迟就是风险。
+  - id: company.java-role
+    title: Java 团队做什么、文化与薪资
+    summary: 研究平台、分布式存储、计算集群、监控与系统网络延迟；公司文化；Chicago 基础薪资；不知道的事别装知道。
+  - id: company.fit
+    title: 你和岗位的匹配与缺口
+    summary: 职位要求逐条对照你的经历、缺口优先级、可复用的一句话总结。
+  - id: company.loop
+    title: 面试流程与准备方法
+    summary: 电话面的形式（Teams + CoderPad、背景问题 + 现场编程）、每轮考什么、怎么用这套资料练。
+  - id: company.questions-to-ask
+    title: 要问面试官的问题
+    summary: 按面试官类型准备的问题，以及每个问题想听出什么。
+- id: java21
+  order: 2
+  title: Java 21 讲义（J01–J19）
+  summary: Java 21 的语言特性与运行时：record、sealed、模式匹配、虚拟线程、结构化并发、FFM、并发原语、ZGC 与 JIT。
+  core: true
+  children:
+  - id: java21.j01-record
+    title: J01 record
+    summary: J01 record：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java21.j02-sealed
+    title: J02 sealed 类与接口
+    summary: J02 sealed 类与接口：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java21.j03-pattern-switch
+    title: J03 switch 模式匹配
+    summary: J03 switch 模式匹配：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java21.j04-record-patterns
+    title: J04 record 模式
+    summary: J04 record 模式：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java21.j05-switch-expressions
+    title: J05 switch 表达式
+    summary: J05 switch 表达式：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java21.j06-instanceof-pattern
+    title: J06 instanceof 模式匹配
+    summary: J06 instanceof 模式匹配：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java21.j07-text-blocks
+    title: J07 文本块
+    summary: J07 文本块：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java21.j08-var
+    title: J08 var 局部变量类型推断
+    summary: J08 var 局部变量类型推断：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java21.j09-sequenced-collections
+    title: J09 SequencedCollection
+    summary: J09 SequencedCollection：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java21.j10-virtual-threads
+    title: J10 虚拟线程
+    summary: J10 虚拟线程：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java21.j11-structured-concurrency
+    title: J11 结构化并发
+    summary: J11 结构化并发：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java21.j12-scoped-values
+    title: J12 ScopedValue
+    summary: J12 ScopedValue：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java21.j13-unnamed-variables
+    title: J13 未命名变量与模式
+    summary: J13 未命名变量与模式：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java21.j14-stream-api
+    title: J14 Stream API
+    summary: J14 Stream API：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java21.j15-math-string-utils
+    title: J15 Math 与 String 工具方法
+    summary: J15 Math 与 String 工具方法：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java21.j16-concurrency-primitives
+    title: J16 并发原语
+    summary: J16 并发原语：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java21.j17-ffm-api
+    title: J17 FFM API
+    summary: J17 FFM API：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java21.j18-comparators-interfaces
+    title: J18 Comparator 与接口特性
+    summary: J18 Comparator 与接口特性：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java21.j19-runtime-zgc-jit
+    title: J19 运行时：ZGC 与 JIT
+    summary: J19 运行时：ZGC 与 JIT：讲义中的全部关键概念、机制、数字、对比与易错点。
+- id: java-questions
+  order: 3
+  title: Java 技术面试题库
+  summary: Java 电话面最常被问的技术问题：性能、版本、语言对比、内存、JIT/GC、并发、OS、IPC、网络、存储。
+  core: true
+  children:
+  - id: java-questions.a-speed
+    title: A 速度与延迟：为什么快、什么时候不够快
+    summary: A 速度与延迟：为什么快、什么时候不够快：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java-questions.b-versions
+    title: B 版本差异
+    summary: B 版本差异：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java-questions.c-languages
+    title: C 语言对比与所有权
+    summary: C 语言对比与所有权：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java-questions.d-memory
+    title: D 分配与内存
+    summary: D 分配与内存：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java-questions.e-jit-gc
+    title: E JIT 与 GC
+    summary: E JIT 与 GC：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java-questions.f-concurrency
+    title: F 并发与内存模型
+    summary: F 并发与内存模型：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java-questions.g-os
+    title: G 操作系统与 Linux 性能工具
+    summary: G 操作系统与 Linux 性能工具：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java-questions.h-ipc
+    title: H 进程间通信
+    summary: H 进程间通信：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java-questions.i-network
+    title: I 网络
+    summary: I 网络：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java-questions.j-storage
+    title: J 存储
+    summary: J 存储：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: java-questions.rubric
+    title: 面试官怎么评分
+    summary: 每类问题的好答案与差答案长什么样。
+- id: problems
+  order: 4
+  title: 编程题：思路、复杂度与易错点
+  summary: 每道练习题的题意、核心思路、数据结构选择、复杂度、Java 与 C++ 写法差异、易错点和追问。
+  core: true
+  children:
+  - id: problems.oa01-job-chain
+    title: OA01 任务链（job chain）
+    summary: OA01 任务链（job chain）：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: problems.hc01-stock-trading-dp
+    title: HC01 股票交易 DP
+    summary: HC01 股票交易 DP：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: problems.hc02-merge-k-streams
+    title: HC02 合并 K 路有序流
+    summary: HC02 合并 K 路有序流：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: problems.hc03-recursive-sum
+    title: HC03 递归求和
+    summary: HC03 递归求和：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: problems.hc04-queue-mean-snapshot
+    title: HC04 队列均值与快照
+    summary: HC04 队列均值与快照：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: problems.hc05-market-order-book
+    title: HC05 订单簿
+    summary: HC05 订单簿：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: problems.hc06-cpu-register-bitwise
+    title: HC06 CPU 寄存器与位运算
+    summary: HC06 CPU 寄存器与位运算：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: problems.hc07-ticker-hash-map
+    title: HC07 股票代码哈希表
+    summary: HC07 股票代码哈希表：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: problems.hc08-order-sequence-api
+    title: HC08 订单序列 API
+    summary: HC08 订单序列 API：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: problems.hc09-top-trades-by-notional
+    title: HC09 按成交额取 Top K
+    summary: HC09 按成交额取 Top K：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: problems.hc11-order-interval-overlap
+    title: HC11 订单区间重叠
+    summary: HC11 订单区间重叠：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: problems.hc13-fixed-memory-pool
+    title: HC13 定长内存池
+    summary: HC13 定长内存池：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: problems.ld01-spsc-channel
+    title: LD01 SPSC 通道
+    summary: LD01 SPSC 通道：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: problems.ld02-trading-ood
+    title: LD02 交易系统面向对象设计
+    summary: LD02 交易系统面向对象设计：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: problems.ld03-async-tcp-channel
+    title: LD03 异步 TCP 通道
+    summary: LD03 异步 TCP 通道：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: problems.mm01-fizzbuzz
+    title: 模拟题 FizzBuzz
+    summary: 模拟题 FizzBuzz：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: problems.mm02-job-runner
+    title: 模拟题 Job Runner
+    summary: 模拟题 Job Runner：讲义中的全部关键概念、机制、数字、对比与易错点。
+- id: foundations
+  order: 5
+  title: 计算机基础
+  summary: 复杂度、CPU 缓存与局部性、堆与优先队列、网络、有序映射与树、进程线程与 IPC。
+  core: true
+  children:
+  - id: foundations.complexity
+    title: 复杂度分析
+    summary: 复杂度分析：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: foundations.cpu-cache-locality
+    title: CPU 缓存与局部性
+    summary: CPU 缓存与局部性：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: foundations.heap-priority-queue
+    title: 堆与优先队列
+    summary: 堆与优先队列：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: foundations.networking-basics
+    title: 网络基础
+    summary: 网络基础：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: foundations.ordered-maps-trees
+    title: 有序映射与树
+    summary: 有序映射与树：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: foundations.os-processes-threads-ipc
+    title: 进程、线程与 IPC
+    summary: 进程、线程与 IPC：讲义中的全部关键概念、机制、数字、对比与易错点。
+- id: system-design
+  order: 6
+  title: 系统设计
+  summary: 系统设计面试的流程与三道题：未使用代码分析、定时任务调度器、低延迟交易系统。
+  children:
+  - id: system-design.how-to-run
+    title: 系统设计面试怎么进行
+    summary: 系统设计面试怎么进行：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: system-design.sd01-unused-code
+    title: SD01 未使用代码分析
+    summary: SD01 未使用代码分析：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: system-design.sd02-job-scheduler
+    title: SD02 未来任务调度器
+    summary: SD02 未来任务调度器：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: system-design.sd03-low-latency-trading
+    title: SD03 低延迟交易系统
+    summary: SD03 低延迟交易系统：讲义中的全部关键概念、机制、数字、对比与易错点。
+- id: cpp-lessons
+  order: 7
+  title: C++ 讲义（C01–C16）
+  summary: C++ 从值与生命周期、指针引用、智能指针、移动语义，到 STL、模板、UB、内存分配、原子操作、线程和 CoderPad 现场技巧。
+  children:
+  - id: cpp-lessons.c01-value-lifetime-raii
+    title: C01 值、生命周期与 RAII
+    summary: C01 值、生命周期与 RAII：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-lessons.c02-references-pointers-const
+    title: C02 引用、指针与 const
+    summary: C02 引用、指针与 const：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-lessons.c03-smart-pointers
+    title: C03 智能指针
+    summary: C03 智能指针：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-lessons.c04-move-semantics
+    title: C04 移动语义
+    summary: C04 移动语义：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-lessons.c05-stl-containers
+    title: C05 STL 容器
+    summary: C05 STL 容器：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-lessons.c06-algorithms-lambdas-ranges
+    title: C06 算法、lambda 与 ranges
+    summary: C06 算法、lambda 与 ranges：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-lessons.c07-templates-constexpr-concepts
+    title: C07 模板、constexpr 与 concepts
+    summary: C07 模板、constexpr 与 concepts：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-lessons.c08-cxx-standards-tour
+    title: C08 C++11/14/17/20 一览
+    summary: C08 C++11/14/17/20 一览：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-lessons.c09-ub-sanitizers
+    title: C09 未定义行为与 sanitizer
+    summary: C09 未定义行为与 sanitizer：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-lessons.c10-new-malloc-allocators
+    title: C10 new、malloc 与分配器
+    summary: C10 new、malloc 与分配器：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-lessons.c11-copy-vs-memcpy
+    title: C11 拷贝与 memcpy
+    summary: C11 拷贝与 memcpy：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-lessons.c12-why-cpp-is-fast
+    title: C12 C++ 为什么快
+    summary: C12 C++ 为什么快：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-lessons.c13-memory-model-atomics
+    title: C13 内存模型与原子操作
+    summary: C13 内存模型与原子操作：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-lessons.c14-threads-mutex-cv
+    title: C14 线程、mutex、条件变量与 jthread
+    summary: C14 线程、mutex、条件变量与 jthread：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-lessons.c15-io-performance
+    title: C15 I/O 与编程轮的性能
+    summary: C15 I/O 与编程轮的性能：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-lessons.c16-coderpad-survival
+    title: C16 CoderPad 现场生存
+    summary: C16 CoderPad 现场生存：讲义中的全部关键概念、机制、数字、对比与易错点。
+- id: cpp-questions
+  order: 8
+  title: C++ 技术面试题库
+  summary: C++ 面试高频问题：编译模型、标准版本、内存所有权、容器、模板、UB、并发、OS、低延迟惯用法、跨语言对比。
+  children:
+  - id: cpp-questions.a-why-fast
+    title: A 为什么快：编译模型与性能
+    summary: A 为什么快：编译模型与性能：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-questions.b-standards
+    title: B 标准版本
+    summary: B 标准版本：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-questions.c-memory-ownership
+    title: C 内存与所有权
+    summary: C 内存与所有权：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-questions.d-containers
+    title: D 容器与迭代器失效
+    summary: D 容器与迭代器失效：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-questions.e-templates
+    title: E 模板
+    summary: E 模板：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-questions.f-ub-debug
+    title: F 未定义行为、sanitizer、编译错误、位运算、debug
+    summary: F 未定义行为、sanitizer、编译错误、位运算、debug：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-questions.g-concurrency
+    title: G 并发与内存模型
+    summary: G 并发与内存模型：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-questions.h-os
+    title: H 操作系统、IPC 与 Linux
+    summary: H 操作系统、IPC 与 Linux：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-questions.i-low-latency
+    title: I 低延迟惯用法
+    summary: I 低延迟惯用法：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-questions.j-cross-language
+    title: J Java ↔ C++，C++ ↔ Python
+    summary: J Java ↔ C++，C++ ↔ Python：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-questions.k-experience
+    title: K 诚实地谈经验与 CoderPad 现场
+    summary: K 诚实地谈经验与 CoderPad 现场：讲义中的全部关键概念、机制、数字、对比与易错点。
+  - id: cpp-questions.cheatsheet
+    title: C++ 速查表
+    summary: C++ 速查表：讲义中的全部关键概念、机制、数字、对比与易错点。
+- id: behavioral
+  order: 9
+  title: 背景问题与故事
+  summary: 背景问题怎么答、每个故事的要点与关键数字、问题与故事的对应关系。
+  children:
+  - id: behavioral.method
+    title: 背景问题的答法
+    summary: 回答结构、时长、怎么练。
+  - id: behavioral.value-matrix
+    title: 价值观与故事对照表
+    summary: 公司看重的品质分别用哪个故事证明。
+  - id: behavioral.question-bank
+    title: 背景问题题库（36 题）
+    summary: 每道问题用哪个故事、讲哪几个要点、可能的追问。
+  - id: behavioral.stories
+    title: 八个故事
+    summary: R1、S1、S3、S5、S6、S7、S8、S10：每个故事的一句话标题、S/T/A/R/L 要点和关键数字。

@@ -1,0 +1,629 @@
+{
+ "company.business": {
+  "sources": [
+   "vault/interviews/companies/headlands/01-company-brief.md"
+  ],
+  "min_cards": 10
+ },
+ "company.java-role": {
+  "sources": [
+   "vault/interviews/companies/headlands/01-company-brief.md"
+  ],
+  "min_cards": 8
+ },
+ "company.fit": {
+  "sources": [
+   "vault/interviews/companies/headlands/fit.md"
+  ],
+  "min_cards": 10
+ },
+ "company.loop": {
+  "sources": [
+   "vault/interviews/companies/headlands/README.md",
+   "vault/interviews/companies/headlands/loop/LOOP_GUIDE.md",
+   "vault/interviews/companies/headlands/mock_maven/README.md"
+  ],
+  "min_cards": 6
+ },
+ "company.questions-to-ask": {
+  "sources": [
+   "vault/interviews/companies/headlands/06-questions-to-ask.md"
+  ],
+  "min_cards": 6
+ },
+ "java21.j01-record": {
+  "sources": [
+   "vault/interviews/core/java/headlands/java21/J01_record.md"
+  ],
+  "min_cards": 10
+ },
+ "java21.j02-sealed": {
+  "sources": [
+   "vault/interviews/core/java/headlands/java21/J02_sealed.md"
+  ],
+  "min_cards": 8
+ },
+ "java21.j03-pattern-switch": {
+  "sources": [
+   "vault/interviews/core/java/headlands/java21/J03_pattern_switch.md"
+  ],
+  "min_cards": 9
+ },
+ "java21.j04-record-patterns": {
+  "sources": [
+   "vault/interviews/core/java/headlands/java21/J04_record_patterns.md"
+  ],
+  "min_cards": 8
+ },
+ "java21.j05-switch-expressions": {
+  "sources": [
+   "vault/interviews/core/java/headlands/java21/J05_switch_expressions.md"
+  ],
+  "min_cards": 8
+ },
+ "java21.j06-instanceof-pattern": {
+  "sources": [
+   "vault/interviews/core/java/headlands/java21/J06_instanceof_pattern.md"
+  ],
+  "min_cards": 7
+ },
+ "java21.j07-text-blocks": {
+  "sources": [
+   "vault/interviews/core/java/headlands/java21/J07_text_blocks.md"
+  ],
+  "min_cards": 6
+ },
+ "java21.j08-var": {
+  "sources": [
+   "vault/interviews/core/java/headlands/java21/J08_var.md"
+  ],
+  "min_cards": 7
+ },
+ "java21.j09-sequenced-collections": {
+  "sources": [
+   "vault/interviews/core/java/headlands/java21/J09_sequenced_collections.md"
+  ],
+  "min_cards": 9
+ },
+ "java21.j10-virtual-threads": {
+  "sources": [
+   "vault/interviews/core/java/headlands/java21/J10_virtual_threads.md"
+  ],
+  "min_cards": 11
+ },
+ "java21.j11-structured-concurrency": {
+  "sources": [
+   "vault/interviews/core/java/headlands/java21/J11_structured_concurrency.md"
+  ],
+  "min_cards": 9
+ },
+ "java21.j12-scoped-values": {
+  "sources": [
+   "vault/interviews/core/java/headlands/java21/J12_scoped_values.md"
+  ],
+  "min_cards": 7
+ },
+ "java21.j13-unnamed-variables": {
+  "sources": [
+   "vault/interviews/core/java/headlands/java21/J13_unnamed_variables.md"
+  ],
+  "min_cards": 6
+ },
+ "java21.j14-stream-api": {
+  "sources": [
+   "vault/interviews/core/java/headlands/java21/J14_stream_api.md"
+  ],
+  "min_cards": 8
+ },
+ "java21.j15-math-string-utils": {
+  "sources": [
+   "vault/interviews/core/java/headlands/java21/J15_math_string_utils.md"
+  ],
+  "min_cards": 8
+ },
+ "java21.j16-concurrency-primitives": {
+  "sources": [
+   "vault/interviews/core/java/headlands/java21/J16_concurrency_primitives.md"
+  ],
+  "min_cards": 14
+ },
+ "java21.j17-ffm-api": {
+  "sources": [
+   "vault/interviews/core/java/headlands/java21/J17_ffm_api.md"
+  ],
+  "min_cards": 9
+ },
+ "java21.j18-comparators-interfaces": {
+  "sources": [
+   "vault/interviews/core/java/headlands/java21/J18_comparators_interfaces.md"
+  ],
+  "min_cards": 9
+ },
+ "java21.j19-runtime-zgc-jit": {
+  "sources": [
+   "vault/interviews/core/java/headlands/java21/J19_runtime_zgc_jit.md"
+  ],
+  "min_cards": 13
+ },
+ "java-questions.a-speed": {
+  "sources": [
+   "vault/interviews/core/java/headlands/interview_questions/questions.md#[A]"
+  ],
+  "min_cards": 8
+ },
+ "java-questions.b-versions": {
+  "sources": [
+   "vault/interviews/core/java/headlands/interview_questions/questions.md#[B]"
+  ],
+  "min_cards": 5
+ },
+ "java-questions.c-languages": {
+  "sources": [
+   "vault/interviews/core/java/headlands/interview_questions/questions.md#[C]"
+  ],
+  "min_cards": 8
+ },
+ "java-questions.d-memory": {
+  "sources": [
+   "vault/interviews/core/java/headlands/interview_questions/questions.md#[D]"
+  ],
+  "min_cards": 14
+ },
+ "java-questions.e-jit-gc": {
+  "sources": [
+   "vault/interviews/core/java/headlands/interview_questions/questions.md#[E]"
+  ],
+  "min_cards": 14
+ },
+ "java-questions.f-concurrency": {
+  "sources": [
+   "vault/interviews/core/java/headlands/interview_questions/questions.md#[F]"
+  ],
+  "min_cards": 18
+ },
+ "java-questions.g-os": {
+  "sources": [
+   "vault/interviews/core/java/headlands/interview_questions/questions.md#[G]"
+  ],
+  "min_cards": 8
+ },
+ "java-questions.h-ipc": {
+  "sources": [
+   "vault/interviews/core/java/headlands/interview_questions/questions.md#[H]"
+  ],
+  "min_cards": 4
+ },
+ "java-questions.i-network": {
+  "sources": [
+   "vault/interviews/core/java/headlands/interview_questions/questions.md#[I]"
+  ],
+  "min_cards": 6
+ },
+ "java-questions.j-storage": {
+  "sources": [
+   "vault/interviews/core/java/headlands/interview_questions/questions.md#[J]"
+  ],
+  "min_cards": 6
+ },
+ "java-questions.rubric": {
+  "sources": [
+   "vault/interviews/core/java/headlands/interview_questions/rubric.md"
+  ],
+  "min_cards": 5
+ },
+ "problems.oa01-job-chain": {
+  "sources": [
+   "vault/interviews/companies/headlands/loop/rounds/00_oa/oa01_job_chain/problem.md",
+   "vault/interviews/companies/headlands/loop/rounds/00_oa/oa01_job_chain/REPORT.md",
+   "vault/interviews/companies/headlands/study/30-articles/oa01_job_chain.md",
+   "vault/interviews/companies/headlands/study/30-articles/oa01_job_chain_cpp.md"
+  ],
+  "min_cards": 8
+ },
+ "problems.hc01-stock-trading-dp": {
+  "sources": [
+   "vault/interviews/companies/headlands/loop/rounds/01_video/hc01_stock_trading_dp/problem.md",
+   "vault/interviews/companies/headlands/loop/rounds/01_video/hc01_stock_trading_dp/REPORT.md",
+   "vault/interviews/companies/headlands/study/30-articles/hc01_stock_trading_dp.md",
+   "vault/interviews/companies/headlands/study/30-articles/hc01_stock_trading_dp_cpp.md"
+  ],
+  "min_cards": 9
+ },
+ "problems.hc02-merge-k-streams": {
+  "sources": [
+   "vault/interviews/companies/headlands/loop/rounds/01_video/hc02_merge_k_streams/problem.md",
+   "vault/interviews/companies/headlands/loop/rounds/01_video/hc02_merge_k_streams/REPORT.md",
+   "vault/interviews/companies/headlands/study/30-articles/hc02_merge_k_streams.md",
+   "vault/interviews/companies/headlands/study/30-articles/hc02_merge_k_streams_cpp.md"
+  ],
+  "min_cards": 9
+ },
+ "problems.hc03-recursive-sum": {
+  "sources": [
+   "vault/interviews/companies/headlands/loop/rounds/01_video/hc03_recursive_sum/problem.md",
+   "vault/interviews/companies/headlands/loop/rounds/01_video/hc03_recursive_sum/REPORT.md",
+   "vault/interviews/companies/headlands/study/30-articles/hc03_recursive_sum.md",
+   "vault/interviews/companies/headlands/study/30-articles/hc03_recursive_sum_cpp.md"
+  ],
+  "min_cards": 9
+ },
+ "problems.hc04-queue-mean-snapshot": {
+  "sources": [
+   "vault/interviews/companies/headlands/loop/rounds/01_video/hc04_queue_mean_snapshot/problem.md",
+   "vault/interviews/companies/headlands/loop/rounds/01_video/hc04_queue_mean_snapshot/REPORT.md",
+   "vault/interviews/companies/headlands/study/30-articles/hc04_queue_mean_snapshot.md",
+   "vault/interviews/companies/headlands/study/30-articles/hc04_queue_mean_snapshot_cpp.md"
+  ],
+  "min_cards": 9
+ },
+ "problems.hc05-market-order-book": {
+  "sources": [
+   "vault/interviews/companies/headlands/loop/rounds/01_video/hc05_market_order_book/problem.md",
+   "vault/interviews/companies/headlands/loop/rounds/01_video/hc05_market_order_book/REPORT.md",
+   "vault/interviews/companies/headlands/study/30-articles/hc05_market_order_book.md",
+   "vault/interviews/companies/headlands/study/30-articles/hc05_market_order_book_cpp.md"
+  ],
+  "min_cards": 10
+ },
+ "problems.hc06-cpu-register-bitwise": {
+  "sources": [
+   "vault/interviews/companies/headlands/loop/rounds/01_video/hc06_cpu_register_bitwise/problem.md",
+   "vault/interviews/companies/headlands/loop/rounds/01_video/hc06_cpu_register_bitwise/REPORT.md",
+   "vault/interviews/companies/headlands/study/30-articles/hc06_cpu_register_bitwise.md",
+   "vault/interviews/companies/headlands/study/30-articles/hc06_cpu_register_bitwise_cpp.md"
+  ],
+  "min_cards": 9
+ },
+ "problems.hc07-ticker-hash-map": {
+  "sources": [
+   "vault/interviews/companies/headlands/loop/rounds/01_video/hc07_ticker_hash_map/problem.md",
+   "vault/interviews/companies/headlands/loop/rounds/01_video/hc07_ticker_hash_map/REPORT.md",
+   "vault/interviews/companies/headlands/study/30-articles/hc07_ticker_hash_map.md",
+   "vault/interviews/companies/headlands/study/30-articles/hc07_ticker_hash_map_cpp.md"
+  ],
+  "min_cards": 10
+ },
+ "problems.hc08-order-sequence-api": {
+  "sources": [
+   "vault/interviews/companies/headlands/loop/rounds/01_video/hc08_order_sequence_api/problem.md",
+   "vault/interviews/companies/headlands/loop/rounds/01_video/hc08_order_sequence_api/REPORT.md",
+   "vault/interviews/companies/headlands/study/30-articles/hc08_order_sequence_api.md",
+   "vault/interviews/companies/headlands/study/30-articles/hc08_order_sequence_api_cpp.md"
+  ],
+  "min_cards": 8
+ },
+ "problems.hc09-top-trades-by-notional": {
+  "sources": [
+   "vault/interviews/companies/headlands/loop/rounds/01_video/hc09_top_trades_by_notional/problem.md",
+   "vault/interviews/companies/headlands/loop/rounds/01_video/hc09_top_trades_by_notional/REPORT.md",
+   "vault/interviews/companies/headlands/study/30-articles/hc09_top_trades_by_notional.md",
+   "vault/interviews/companies/headlands/study/30-articles/hc09_top_trades_by_notional_cpp.md"
+  ],
+  "min_cards": 9
+ },
+ "problems.hc11-order-interval-overlap": {
+  "sources": [
+   "vault/interviews/companies/headlands/loop/rounds/01_video/hc11_order_interval_overlap/problem.md",
+   "vault/interviews/companies/headlands/loop/rounds/01_video/hc11_order_interval_overlap/REPORT.md",
+   "vault/interviews/companies/headlands/study/30-articles/hc11_order_interval_overlap.md",
+   "vault/interviews/companies/headlands/study/30-articles/hc11_order_interval_overlap_cpp.md"
+  ],
+  "min_cards": 9
+ },
+ "problems.hc13-fixed-memory-pool": {
+  "sources": [
+   "vault/interviews/companies/headlands/loop/rounds/01_video/hc13_fixed_memory_pool/problem.md",
+   "vault/interviews/companies/headlands/loop/rounds/01_video/hc13_fixed_memory_pool/REPORT.md",
+   "vault/interviews/companies/headlands/study/30-articles/hc13_fixed_memory_pool.md",
+   "vault/interviews/companies/headlands/study/30-articles/hc13_fixed_memory_pool_cpp.md"
+  ],
+  "min_cards": 10
+ },
+ "problems.ld01-spsc-channel": {
+  "sources": [
+   "vault/interviews/companies/headlands/loop/rounds/03_lld/ld01_spsc_channel/problem.md",
+   "vault/interviews/companies/headlands/loop/rounds/03_lld/ld01_spsc_channel/REPORT.md",
+   "vault/interviews/companies/headlands/study/30-articles/ld01_spsc_channel.md"
+  ],
+  "min_cards": 10
+ },
+ "problems.ld02-trading-ood": {
+  "sources": [
+   "vault/interviews/companies/headlands/loop/rounds/03_lld/ld02_trading_ood/problem.md",
+   "vault/interviews/companies/headlands/loop/rounds/03_lld/ld02_trading_ood/REPORT.md",
+   "vault/interviews/companies/headlands/study/30-articles/ld02_trading_ood.md"
+  ],
+  "min_cards": 10
+ },
+ "problems.ld03-async-tcp-channel": {
+  "sources": [
+   "vault/interviews/companies/headlands/loop/rounds/03_lld/ld03_async_tcp_channel/problem.md",
+   "vault/interviews/companies/headlands/loop/rounds/03_lld/ld03_async_tcp_channel/REPORT.md",
+   "vault/interviews/companies/headlands/study/30-articles/ld03_async_tcp_channel.md"
+  ],
+  "min_cards": 10
+ },
+ "problems.mm01-fizzbuzz": {
+  "sources": [
+   "vault/interviews/companies/headlands/mock_maven/study/q01_fizzbuzz.md"
+  ],
+  "min_cards": 4
+ },
+ "problems.mm02-job-runner": {
+  "sources": [
+   "vault/interviews/companies/headlands/mock_maven/study/q02_job_runner.md"
+  ],
+  "min_cards": 8
+ },
+ "foundations.complexity": {
+  "sources": [
+   "vault/interviews/core/foundations/headlands/complexity.md"
+  ],
+  "min_cards": 12
+ },
+ "foundations.cpu-cache-locality": {
+  "sources": [
+   "vault/interviews/core/foundations/headlands/cpu_cache_locality.md"
+  ],
+  "min_cards": 13
+ },
+ "foundations.heap-priority-queue": {
+  "sources": [
+   "vault/interviews/core/foundations/headlands/heap_priority_queue.md"
+  ],
+  "min_cards": 12
+ },
+ "foundations.networking-basics": {
+  "sources": [
+   "vault/interviews/core/foundations/headlands/networking_basics.md"
+  ],
+  "min_cards": 16
+ },
+ "foundations.ordered-maps-trees": {
+  "sources": [
+   "vault/interviews/core/foundations/headlands/ordered_maps_trees.md"
+  ],
+  "min_cards": 12
+ },
+ "foundations.os-processes-threads-ipc": {
+  "sources": [
+   "vault/interviews/core/foundations/headlands/os_processes_threads_ipc.md"
+  ],
+  "min_cards": 15
+ },
+ "system-design.how-to-run": {
+  "sources": [
+   "vault/interviews/core/system-design/headlands/00_how_to_run.md"
+  ],
+  "min_cards": 8
+ },
+ "system-design.sd01-unused-code": {
+  "sources": [
+   "vault/interviews/core/system-design/headlands/sd01_unused_code_analysis/prompt.md",
+   "vault/interviews/core/system-design/headlands/sd01_unused_code_analysis/model_answer.md",
+   "vault/interviews/core/system-design/headlands/sd01_unused_code_analysis/followups.md",
+   "vault/interviews/core/system-design/headlands/sd01_unused_code_analysis/rubric.md"
+  ],
+  "min_cards": 12
+ },
+ "system-design.sd02-job-scheduler": {
+  "sources": [
+   "vault/interviews/core/system-design/headlands/sd02_future_job_scheduler/prompt.md",
+   "vault/interviews/core/system-design/headlands/sd02_future_job_scheduler/model_answer.md",
+   "vault/interviews/core/system-design/headlands/sd02_future_job_scheduler/followups.md",
+   "vault/interviews/core/system-design/headlands/sd02_future_job_scheduler/rubric.md"
+  ],
+  "min_cards": 12
+ },
+ "system-design.sd03-low-latency-trading": {
+  "sources": [
+   "vault/interviews/core/system-design/headlands/sd03_low_latency_trading_system/prompt.md",
+   "vault/interviews/core/system-design/headlands/sd03_low_latency_trading_system/model_answer.md",
+   "vault/interviews/core/system-design/headlands/sd03_low_latency_trading_system/followups.md",
+   "vault/interviews/core/system-design/headlands/sd03_low_latency_trading_system/rubric.md"
+  ],
+  "min_cards": 13
+ },
+ "cpp-lessons.c01-value-lifetime-raii": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/lessons/C01_value_lifetime_raii.md"
+  ],
+  "min_cards": 8
+ },
+ "cpp-lessons.c02-references-pointers-const": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/lessons/C02_references_pointers_const.md"
+  ],
+  "min_cards": 6
+ },
+ "cpp-lessons.c03-smart-pointers": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/lessons/C03_smart_pointers.md"
+  ],
+  "min_cards": 8
+ },
+ "cpp-lessons.c04-move-semantics": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/lessons/C04_move_semantics.md"
+  ],
+  "min_cards": 8
+ },
+ "cpp-lessons.c05-stl-containers": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/lessons/C05_stl_containers.md"
+  ],
+  "min_cards": 11
+ },
+ "cpp-lessons.c06-algorithms-lambdas-ranges": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/lessons/C06_algorithms_lambdas_ranges.md"
+  ],
+  "min_cards": 9
+ },
+ "cpp-lessons.c07-templates-constexpr-concepts": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/lessons/C07_templates_constexpr_concepts.md"
+  ],
+  "min_cards": 7
+ },
+ "cpp-lessons.c08-cxx-standards-tour": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/lessons/C08_cxx11_14_17_20_tour.md"
+  ],
+  "min_cards": 9
+ },
+ "cpp-lessons.c09-ub-sanitizers": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/lessons/C09_undefined_behaviour_sanitizers.md"
+  ],
+  "min_cards": 8
+ },
+ "cpp-lessons.c10-new-malloc-allocators": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/lessons/C10_new_malloc_allocators.md"
+  ],
+  "min_cards": 8
+ },
+ "cpp-lessons.c11-copy-vs-memcpy": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/lessons/C11_copy_vs_memcpy.md"
+  ],
+  "min_cards": 7
+ },
+ "cpp-lessons.c12-why-cpp-is-fast": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/lessons/C12_why_cpp_is_fast.md"
+  ],
+  "min_cards": 7
+ },
+ "cpp-lessons.c13-memory-model-atomics": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/lessons/C13_memory_model_atomics.md"
+  ],
+  "min_cards": 8
+ },
+ "cpp-lessons.c14-threads-mutex-cv": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/lessons/C14_threads_mutex_cv_jthread.md"
+  ],
+  "min_cards": 7
+ },
+ "cpp-lessons.c15-io-performance": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/lessons/C15_io_performance_coding_rounds.md"
+  ],
+  "min_cards": 6
+ },
+ "cpp-lessons.c16-coderpad-survival": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/lessons/C16_coderpad_survival.md",
+   "vault/interviews/companies/headlands/CPP_CONVENTIONS.md"
+  ],
+  "min_cards": 9
+ },
+ "cpp-questions.a-why-fast": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/interview_questions/questions.md#[A]"
+  ],
+  "min_cards": 12
+ },
+ "cpp-questions.b-standards": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/interview_questions/questions.md#[B]"
+  ],
+  "min_cards": 8
+ },
+ "cpp-questions.c-memory-ownership": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/interview_questions/questions.md#[C]"
+  ],
+  "min_cards": 12
+ },
+ "cpp-questions.d-containers": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/interview_questions/questions.md#[D]"
+  ],
+  "min_cards": 6
+ },
+ "cpp-questions.e-templates": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/interview_questions/questions.md#[E]"
+  ],
+  "min_cards": 6
+ },
+ "cpp-questions.f-ub-debug": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/interview_questions/questions.md#[F]"
+  ],
+  "min_cards": 10
+ },
+ "cpp-questions.g-concurrency": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/interview_questions/questions.md#[G]"
+  ],
+  "min_cards": 8
+ },
+ "cpp-questions.h-os": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/interview_questions/questions.md#[H]"
+  ],
+  "min_cards": 8
+ },
+ "cpp-questions.i-low-latency": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/interview_questions/questions.md#[I]"
+  ],
+  "min_cards": 8
+ },
+ "cpp-questions.j-cross-language": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/interview_questions/questions.md#[J]"
+  ],
+  "min_cards": 6
+ },
+ "cpp-questions.k-experience": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/interview_questions/questions.md#[K]"
+  ],
+  "min_cards": 4
+ },
+ "cpp-questions.cheatsheet": {
+  "sources": [
+   "vault/interviews/core/cpp/headlands/interview_questions/cheatsheet.md"
+  ],
+  "min_cards": 6
+ },
+ "behavioral.method": {
+  "sources": [
+   "vault/interviews/companies/headlands/behavioral/00_how_it_works.md",
+   "vault/interviews/companies/headlands/behavioral/drill.md",
+   "vault/interviews/companies/headlands/behavioral/stories/templates.md"
+  ],
+  "min_cards": 6
+ },
+ "behavioral.value-matrix": {
+  "sources": [
+   "vault/interviews/companies/headlands/behavioral/value_matrix.md"
+  ],
+  "min_cards": 5
+ },
+ "behavioral.question-bank": {
+  "sources": [
+   "vault/interviews/companies/headlands/behavioral/question_bank.md"
+  ],
+  "min_cards": 36
+ },
+ "behavioral.stories": {
+  "sources": [
+   "vault/interviews/companies/headlands/behavioral/stories/R1_quant-stroller-research-platform.md",
+   "vault/interviews/companies/headlands/behavioral/stories/S1_settlement-pipeline-never-drop-bad-data.md",
+   "vault/interviews/companies/headlands/behavioral/stories/S3_silent-null-root-cause.md",
+   "vault/interviews/companies/headlands/behavioral/stories/S5_cutover-with-the-production-query.md",
+   "vault/interviews/companies/headlands/behavioral/stories/S6_per-row-cost-times-peak-rows.md",
+   "vault/interviews/companies/headlands/behavioral/stories/S7_schema-pool-and-why-a-clone-is-fast.md",
+   "vault/interviews/companies/headlands/behavioral/stories/S8_fix-one-then-scan-the-repo.md",
+   "vault/interviews/companies/headlands/behavioral/stories/S10_retract-own-number.md"
+  ],
+  "min_cards": 16
+ }
+}
