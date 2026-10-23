@@ -2,7 +2,7 @@
 # 取时间戳：rdtsc、clock_gettime 与网络抓包
 *测量与性能分析*
 
-读 TSC 计数器只需约 20 个周期、clock_gettime 走 vDSO 约 20–30 ns；用交换机镜像和抓包设备测真正的 wire-to-wire。
+读 TSC 计数器只需约 20 个周期、clock_gettime 走 vDSO 约 20–30 ns；用交换机镜像和抓包（packet capture）设备测真正的 wire-to-wire。
 
 **Requires:** [[domains/hft/map/os-network.time-sync|时间同步：PTP、GPS 与 NTP]]
 

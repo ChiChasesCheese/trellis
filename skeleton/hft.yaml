@@ -463,7 +463,7 @@ nodes:
     requires: [measurement.distributions]
   - id: measurement.timestamps
     title: 取时间戳：rdtsc、clock_gettime 与网络抓包
-    summary: 读 TSC 计数器只需约 20 个周期、clock_gettime 走 vDSO 约 20–30 ns；用交换机镜像和抓包设备测真正的 wire-to-wire。
+    summary: 读 TSC 计数器只需约 20 个周期、clock_gettime 走 vDSO 约 20–30 ns；用交换机镜像和抓包（packet capture）设备测真正的 wire-to-wire。
     requires: [os-network.time-sync]
   - id: measurement.benchmarking
     title: 微基准测试的陷阱：JMH 与 Google Benchmark
@@ -523,11 +523,11 @@ nodes:
 - id: research-infra
   order: 14
   title: 研究与数据基础设施
-  summary: 交易系统之外的另一半工程：抓取并存储所有行情、列式时序数据库、分布式回测集群，以及研究代码到生产代码的路径。
+  summary: 交易系统之外的另一半工程：录制并存储所有行情、列式时序数据库、分布式回测集群，以及研究代码到生产代码的路径。
   children:
   - id: research-infra.tick-capture
-    title: 行情抓取与存储规模
-    summary: 在网卡上抓下所有原始包（pcap）并加硬件时间戳，每天 TB 级；原始包为什么比解码后的数据更值得保存。
+    title: 行情录制与存储规模
+    summary: 在网卡上录下所有原始包（pcap）并加硬件时间戳，每天 TB 级；原始包为什么比解码后的数据更值得保存。
     requires: [protocols.feed-handler]
   - id: research-infra.time-series-db
     title: 时序与列式存储：kdb+/q、ClickHouse、Parquet 与 Arrow

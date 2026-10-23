@@ -126,7 +126,7 @@
     - [[domains/hft/map/fpga.trading-uses|FPGA 在交易系统中的用法]]
     - [[domains/hft/map/fpga.dev-tradeoffs|FPGA 的开发流程与取舍]]
 - [[domains/hft/map/research-infra|研究与数据基础设施]]
-    - [[domains/hft/map/research-infra.tick-capture|行情抓取与存储规模]]
+    - [[domains/hft/map/research-infra.tick-capture|行情录制与存储规模]]
     - [[domains/hft/map/research-infra.time-series-db|时序与列式存储：kdb+/q、ClickHouse、Parquet 与 Arrow]]
     - [[domains/hft/map/research-infra.compute-farm|分布式回测与计算集群]]
     - [[domains/hft/map/research-infra.research-to-prod|从研究代码到生产代码]]

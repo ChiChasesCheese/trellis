@@ -4,7 +4,7 @@
 
 列式存储为什么适合行情分析、kdb+/q 在金融业的地位、开源替代 ClickHouse，以及 Parquet（文件格式）与 Arrow（内存格式）。
 
-**Requires:** [[domains/hft/map/research-infra.tick-capture|行情抓取与存储规模]]
+**Requires:** [[domains/hft/map/research-infra.tick-capture|行情录制与存储规模]]
 
 **Unlocks:** [[domains/hft/map/research-infra.compute-farm|分布式回测与计算集群]]
 

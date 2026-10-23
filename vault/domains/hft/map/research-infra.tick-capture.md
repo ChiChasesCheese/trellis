@@ -1,8 +1,8 @@
 %% trellis:begin %%
-# 行情抓取与存储规模
+# 行情录制与存储规模
 *研究与数据基础设施*
 
-在网卡上抓下所有原始包（pcap）并加硬件时间戳，每天 TB 级；原始包为什么比解码后的数据更值得保存。
+在网卡上录下所有原始包（pcap）并加硬件时间戳，每天 TB 级；原始包为什么比解码后的数据更值得保存。
 
 **Requires:** [[domains/hft/map/protocols.feed-handler|feed handler 的职责]]
 

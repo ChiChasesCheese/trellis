@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/hft/map/protocols.gap-recovery|丢包恢复：A/B 线仲裁、重传与快照]], [[domains/hft/map/protocols.itch-messages|ITCH 5.0 关键消息与字段]]
 
-**Unlocks:** [[domains/hft/map/architecture.pipeline|交易系统的组件流水线]], [[domains/hft/map/research-infra.tick-capture|行情抓取与存储规模]]
+**Unlocks:** [[domains/hft/map/architecture.pipeline|交易系统的组件流水线]], [[domains/hft/map/research-infra.tick-capture|行情录制与存储规模]]
 
 ## Drills
 - [[protocols-itch-gap-drift|练习：开盘后订单簿悄悄跑偏，找出原因]]
