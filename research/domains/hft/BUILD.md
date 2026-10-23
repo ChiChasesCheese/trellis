@@ -55,13 +55,59 @@ Not ingested in the first pass: the books are commercial, the talks are video, a
 PDFs. Cards are written grounded in the authors' knowledge and checked in step 5. Next pass: declare `drepper-memory`,
 `lmax-disruptor`, `nasdaq-itch5` as `free-online` corpora and digest them against their leaves.
 
+## Step 5 — claims the card agents were least sure of
+
+Checked by the orchestrator against what is publicly documented; ✓ = holds as written, ✎ = card edited.
+
+| Card | Claim | Verdict |
+|---|---|---|
+| hft-fees-tick-size-maker-taker | access fee cap $0.003 | ✎ added the 2024 SEC amendment lowering it to $0.001 for most stocks |
+| hft-java-at-hft-where-java-where | Headlands Java roles; tick data "数百 GB" | ✎ worded as the job description; "数百 GB 到 TB 级" |
+| hft-reliability-knight-capital-* | 7 of 8 servers, 45 min, ~$440M, repurposed flag, 97 warning emails, rollback widened the damage, GETCO merger | ✓ |
+| hft-economics-sharpe | Virtu 1 losing day in ~1238 | ✓ (2014 S-1) |
+| hft-history-flash-crash | Dow ~9%, $4.1B E-mini sale, 1¢ / $100,000 prints, LULD after | ✓ |
+| hft-history-electronification, hft-fees-tick-size-tick-change | Reg ATS 1998, decimalization 2001 from 1/16, tick pilot 2016–2018 | ✓ |
+| hft-fees-tick-size-inverted | BX and BYX inverted | ✓ |
+| hft-java-gc-choices-gen-zgc | ZGenerational in 21, default in 23, non-generational removed in 24 | ✓ (JEP 439 / 474 / 490) |
+| hft-java-safepoints-hidden-pauses, hft-java-tuning-legacy-flags | biased locking off in 15, removed in 18 | ✓ |
+| hft-java-modern-upgrade | Leyden AOT cache from JDK 24 | ✓ (JEP 483) |
+| hft-java-disruptor-vs-abq, hft-java-at-hft-how-fast-lmax | ABQ tens of µs vs Disruptor tens of ns; LMAX ~6M orders/s | ✓ |
+| hft-java-agrona-aeron-backpressure | offer() codes −1…−5 | ✓ |
+| hft-java-safepoints-ttsp | counted loops without poll; loop strip mining | ✓ (JDK 10) |
+| hft-architecture-pre-trade-risk-three-layers | 15c3-5 "direct and exclusive control" | ✓ |
+| hft-os-network-time-sync-why-needed | MiFID II: HFT within 100 µs of UTC, 1 µs granularity | ✓ (RTS 25) |
+| hft-machine-simd-wide-vector-side-effects | wide-vector warm-up, AVX-512 down-clocking on Skylake-X | ✓ |
+| hft-os-network-nic-switch-layer1-switch | L1 switch ~5 ns, cut-through switch hundreds of ns | ✓ |
+| hft-os-network-kernel-bypass-options | Solarflare now AMD (via Xilinx) | ✓ |
+| hft-os-network-wan-chicago-nj | ~1200 km, microwave ~4 ms, fibre ~6.5–7 ms one way | ✓ |
+| group D magnitudes (C6 exit, NUMA remote, STLB size, lock cost, vDSO, coalescing, HZ) | typical figures | ✓ as magnitudes |
+| group E (exception cost, seq_cst store as xchg, C2 threshold ~10k, JFR ~1%, nanoTime → CLOCK_MONOTONIC, ClickHouse ASOF JOIN) | typical figures | ✓ |
+| group E arithmetic (coordinated omission p99 ≈ 0.9 s, 0.99^10, 694 days, 800 s per TB, 2.9 TB/day) | re-derived | ✓ |
+| magnitudes (tick-to-trade software µs / FPGA ns, sleep-wake µs, shared memory vs loopback TCP, failover heartbeats, colo fees) | rough orders of magnitude, worded with 约 / 量级 | ✓ as magnitudes |
+
 ## Ledger
 
 | Date | Step | Result | Evidence |
 |---|---|---|---|
 | 2026-10-23 | 1 survey | 15 sources, 3 official specs | table above |
 | 2026-10-23 | 2 skeleton | 137 nodes / 122 leaves, 0 errors | `uv run trellis --domain hft validate` |
+| 2026-10-23 | 6 readings | 69 readings, 95/122 leaves (78%) | `vault/domains/hft/readings/` |
+| 2026-10-23 | 4 cards, groups A C F | 254 cards (overview, microstructure, architecture, reliability, java, java-at-hft) | commit b7893c7f |
+| 2026-10-23 | 4 cards, groups D E | 89 + 96 cards (machine, os-network, cpp, measurement, fpga, research-infra) | commits 45c8622c, 0e6ca0d7 |
+| 2026-10-23 | 4 cards, group B | 92 cards (market-structure, protocols, orderbook); dedupe scan: no duplicates, two intro-vs-deep pairs kept | commit 2b42d399 |
+| 2026-10-23 | 7 drills | 15 drills, one per branch, grading points wikilinked to cards | commit 63e7392b |
+| 2026-10-23 | 6 clip | 62 clipped, 7 index pages skipped (aeron-docs, arrow-overview, hdrhistogram, kernel-irq-affinity, kx-q-learn, sbe-wiki, shipilev-jvm-anatomy); PDFs stay local (gitignored) | `trellis --domain hft clip` |
+| 2026-10-23 | 8 ship | build 531 notes / 122 decks; anki-push published; Anki shows 531 cards | `trellis --domain hft anki-push` |
+
+## State (2026-10-23)
+
+`stats`: 531 cards, 69 readings, 15 drills, link coverage 78%, readable sources 92/122 leaves; `validate` 0 errors,
+1 warning (30 leaves without an archived readable source); `steps` 122/122 leaves ordered.
 
 ## Next action
 
-Step 4: cards by six agent groups (`research/domains/hft/card_prompt.md`).
+1. Step 6: a readable source for the 30 leaves the warning lists (mostly orderbook, cpp, java-at-hft, architecture):
+   replace the 7 skipped index pages with article-level pages, or write vault articles (readings with no `url:`).
+2. Step 3: ingest `drepper-memory`, `lmax-disruptor`, `nasdaq-itch5` as free-online corpora and digest them against
+   their leaves to put a source behind the grown cards.
+3. The loop: after Chi reviews, `trellis pull` → `trellis brief` → `trellis grow --next`.

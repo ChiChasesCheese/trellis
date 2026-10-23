@@ -364,8 +364,8 @@ nodes:
     summary: std::vector 胜过 std::list 和 std::map 的原因、开放寻址哈希表（flat / open addressing）对比 std::unordered_map 的链地址法。
     requires: [machine.cache-lines]
   - id: cpp.compiler
-    title: 让编译器帮你：内联、[[likely]]、PGO 与看汇编
-    summary: inline 与 always_inline、[[likely]] / [[unlikely]]、按性能剖析优化（PGO）、链接时优化（LTO），以及用 Compiler Explorer 看生成的汇编。
+    title: 让编译器帮你：内联、likely 提示、PGO 与看汇编
+    summary: inline 与 always_inline、`[[likely]]` / `[[unlikely]]` 属性、按性能剖析优化（PGO）、链接时优化（LTO），以及用 Compiler Explorer 看生成的汇编。
     requires: [machine.branch-prediction]
   - id: cpp.atomics
     title: std::atomic 与 memory_order
@@ -376,7 +376,7 @@ nodes:
     summary: 单生产者单消费者环形缓冲区（ring buffer）只靠两个原子下标就能无锁工作；seqlock 让一个写者、多个读者无锁共享一份数据。
     requires: [cpp.atomics, machine.false-sharing]
   - id: cpp.warm-cache
-    title: 让热路径保持"热"
+    title: 缓存预热：让热路径保持热
     summary: 大部分时间不下单，下单代码和数据会被挤出缓存；定期用不真正发送的假订单走一遍热路径（cache warming）。
     requires: [machine.cache-lines, architecture.hot-cold-path]
   - id: cpp.errors-logging
