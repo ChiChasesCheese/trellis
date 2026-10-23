@@ -192,7 +192,7 @@ def direct_room(self, a: str, b: str) -> Room:
 `send_message`、`history`、`mark_read` 对一个私聊房间和一个群聊房间调用的是完全相同的代码路径
 ——这是"一个模型服务两种场景"最直接的证明：如果需要专门为私聊写一条分支，那就说明模型没选对。
 
-同一条判断也适用于"要不要引入一个显式的 Mediator 类"：[[abhaypaswan 的实现|lld-python]]把
+同一条判断也适用于"要不要引入一个显式的 Mediator 类"：[[src-abhaypaswan-chat-room-clip|lld-python]]把
 "房间路由消息、成员互不持有引用"这件事包成一个具名的中介者对象。这个原则本身是对的——本设计
 同样让 `RoomDirectory`、`MessageStore`、`PresenceService` 互不持有引用——但当参与协调的类只有
 三个、边界已经清清楚楚时，再包一层"中介者"对象只是给 `ChatService.send_message` 这个编排方法

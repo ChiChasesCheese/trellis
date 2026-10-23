@@ -231,8 +231,8 @@ Distributed Transactions]] 里已有的结论——"内部系统里参与者是�
 是同一个约束的两种表现。
 
 **更长的编排工作流（转账之外还有通知、积分、审计等非事务性副作用）**：这些步骤根本不是
-支持 ACID 的资源，2PC/TCC 都不适用，只能用 **saga**——[[distributed.transactions.
-distributed|Distributed Transactions]] 已有的结论"saga 放弃隔离性，中间状态可见，需要
+支持 ACID 的资源，2PC/TCC 都不适用，只能用 **saga**——[[distributed.transactions.distributed|Distributed Transactions]]
+ 已有的结论"saga 放弃隔离性，中间状态可见，需要
 语义锁"同样适用；本设计把它限定在转账**之外**的副作用编排上，核心的资金移动本身不使用
 saga，因为 saga 天生允许"钱已经扣了、还没到账"这一中间态被外部读到，这违反本题「需求」
 第 1 条。
