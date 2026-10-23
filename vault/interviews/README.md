@@ -1,61 +1,65 @@
-# interviews/ — 面试的完整文件夹
+# interviews/ —— 面试的完整文件夹
 
-> 原 `Quick_Check/`（Stripe OA 起家）于 2026-09-13 重构为此目录。Trellis 的 `stripe` domain（`skeleton/stripe.yaml` + `vault/interviews/companies/stripe/deck/`）仍是 Stripe OA 的卡片面；这里是它背后的**原始研究、题库、演练、故事库与简历**——不进 Anki，按公司整体消费。
+这里只放你要读、要练的东西：每家公司的备考入口、各轮的练习题、故事库和简历。查来源、打分排序、跑验证的材料不在这里，在仓库的 `research/companies/<公司>/`。打开一家公司的文件夹，先读它的 `README.md`。
 
-## 目录约定：company → phase，外加一个 core
+## 目录
 
 ```
 interviews/
-  README.md                 本文件：方法论 + 约定 + 新公司接入流程
-  core/                     核心能力：与公司无关，跨公司持续打磨（越用越厚）
-    resume/                 resume.tex（唯一源）+ 投递 PDF + CHANGELOG
-    stories/                S1…S11 一故事一文件（aliases 可 [[S1]] 引用）；Core.md 是 MOC；Answers.md 是 Q1–Q24
-    answers/                逐题行为面答案手册 dim1–dim6（技术深度 / 影响 / 领导力 / 带教 / HR）
-    playbooks/              按轮次的通用打法：AI 语音筛选 / recruiter / HM / 电面 / onsite …
-  rounds/                   与公司无关的轮次能力，都是 trellis 领域（有 skeleton、进 Anki）
-    code-core/              编码轮通用能力：读题、解析、建模、金额、时间、输出、算法、验证；transfer.<公司> 叶子接各家 kit
-    leetcode/               LeetCode 题型卡组（adopted）
-    narrative/              讲自己的那一轮（narrative round）
-  companies/                每家公司一个自包含 kit（题库 + 测试 + 演练器 + 研究 + 学习面）
-    stripe/                 = github.com/ChiChasesCheese/stripeoa 全量镜像：problems/（每题唯一题面）· loop/rounds/ · catalog/ · study/ · tools/；deck/ = trellis 领域 stripe 的卡片与地图
-    snowflake/              同一骨架：dossier（00–07）+ 全轮次 kit，入口 CONTENTS.md
-  _template/company/        新公司 dossier 骨架，cp -r 即可开工
+  README.md            本文件
+  core/                跨公司通用，越用越厚
+    resume/            简历源文件、投递 PDF、修改记录
+    stories/           S1…S11，一个故事一个文件；Core.md 是目录页
+    Answers.md         行为面标准答案 Q1–Q24
+    playbooks/         按轮次的通用打法
+    coding/ system-design/ low-level-design/ cpp/ java/ foundations/
+                       通用专题，按公司分子目录：core/<专题>/<公司>/
+    leetcode/          LeetCode 公司题单工具和各公司映射
+  rounds/              与公司无关的轮次能力（有卡片，进 Anki）
+    code-core/ leetcode/ narrative/
+  companies/<公司>/    一家公司一个文件夹，只放学习页和练习代码
+  _template/company/   新公司的骨架
 ```
 
-**为什么是 company → phase 而不是 phase → company**：临考前一家公司的材料是被整体消费的（今晚只看 snowflake/），而不是横向比较各家的电面；跨公司复用的东西（故事、答案、简历、轮次打法）全部下沉到 `core/`，公司目录里只留「这家公司特有的」——流程证据、题库、fit 话术、反问。两者用相对链接互指，不复制。
+公司文件夹里只留这家公司特有的内容：入口 `README.md`、`LOOP_GUIDE.md`、LP 和行为面页面、只有这家公司才考的轮次，以及练习用的题目文件夹。系统设计、低层设计、编码套路和语言课程是通用专题，放到 `core/<专题>/<公司>/` 或对应的卡片领域分支，公司入口页用链接指过去。
 
-## 跑一个 kit
+文件夹里不放来源、目录表、验证脚本。这些在 `research/companies/<公司>/`，其中的 `README.md` 说明里面有什么、学习页在哪。
+
+## 跑练习
+
+只用公司入口页告诉你的命令，在该公司文件夹里运行。常见的几种：
 
 ```bash
-cd vault/interviews/companies/stripe
-python3 drill.py list / start q01 / test q01 / ref q01 / status      # OA 60 分钟演练
-python3 loop/mock.py list / start ps01 / test ps01 / bq hm -n 3        # OA 之后各轮
+cd vault/interviews/companies/<公司>
+python3 drill.py list / start q01 / test q01 / ref q01 / status    # 限时编码演练
+python3 loop/mock.py list / start ps01 / test ps01 / bq hm -n 3    # 其他轮次的模拟
 uv run --project ../../../.. --with pytest python -m pytest problems -q -m "not perf"
-python3 loop/tree/check_tree.py --strict                                 # 知识树 ↔ 目录一致
-python3 tools/summary.py --run                                           # 重建 TEST_SUMMARY
 ```
 
-`.py` 文件对 Obsidian 不可见、对 trellis 无影响（它只读 `*.md`）；仓库根的 `pytest` 只跑 `tests/`。每个公司 kit 自带 `CONVENTIONS.md`（题目目录结构与测试要求）。
+`.py` 文件在 Obsidian 里看不到，也不影响卡片；仓库根目录的 `pytest` 只跑 `tests/`。
 
-## 方法论（Stripe 尽调沉淀下来的六步，Snowflake 沿用）
+## 备考方法
 
-1. **raw/ 先行**：把论坛 / 题库 / 官方页 / 邮件原文按来源分文件存进 `companies/<co>/raw/`，每条带 URL + 日期。不整理，只收集。
-2. **CATALOG / process**：从 raw 汇总成一张表——轮次、时长、形式、通过线、挂点；题目按 `#refs`（独立来源数）和置信度（high / medium / low）排序。**每个结论都能回溯到 raw 里的一条**。
-3. **fit 话术**：Why <company> / 自我介绍 / 对业务的理解——从 [[Core]] 取材，只写这家公司特有的桥接点。
-4. **答案库**：把这家公司会问的题映射到 [[Answers]] 的既有答案（不重写），只补公司特定题和价值观映射。
-5. **演练**：可计时的 mock（Stripe 是 `loop/mock.py`；非编码轮是题库 + 计时口述）。
-6. **回写 core**：面完把新故事 / 新答案 / 新教训写回 `core/`，公司目录保持只读归档。
+1. **GitHub 先行**：先看别人整理过的这家公司的题单和面试记录，再去论坛和聚合站。
+2. **建题目目录**：一行一个题目，写清轮次、考几次、最近一次是什么时候。按「轮次 × 次数 × 新近度」排序，前 20% 的题要覆盖大约 80% 的出现次数，并写下这条分界线。
+3. **每一轮写一份打法**：形式、考什么、通过线、常见失败点、准备动作。
+4. **fit 话术**：Why 这家公司、自我介绍、对业务的理解。从 [[Core]] 取材，只写这家公司特有的衔接点。
+5. **答案库**：把这家公司会问的题对应到 [[Answers]] 里已有的答案，只补公司特有的题和价值观。
+6. **演练**：编码轮用限时练习代码，非编码轮用题库加计时口述。
+7. **回写 core**：面完，把新故事、新答案和新教训写回 `core/`。
 
-## 新公司接入
+写学习页要遵守仓库的写作规则，用 `python3 scripts/plain_style.py <页面>` 检查（LP 页加 `--outline`）；文字图用 `python3 scripts/phone_diagrams.py <页面或目录>` 检查是否能在手机上读；失效链接用 `python3 scripts/check_wikilinks.py`。
+
+## 新公司
 
 ```bash
-cp -r vault/interviews/_template/company vault/interviews/companies/<company>
+cp -r vault/interviews/_template/company vault/interviews/companies/<公司>
+mkdir -p research/companies/<公司>/catalog/raw
 ```
 
-然后按 `_template/company/00-README.md` 里的清单填。第一天只需要 `01-company-brief.md` + `02-process.md` + `raw/`；答案库和 mock 在拿到具体轮次邀请后再写。
+然后按 `_template/company/README.md` 的清单填。第一天只需要 `01-company-brief.md` 和 `02-process.md`；答案库和模拟在拿到具体轮次邀请后再写。
 
-## 与 Trellis 其它部分的关系
+## 和卡片的关系
 
-- `vault/interviews/companies/stripe/deck/`（domain）里的 40 张卡片是从 `companies/stripe/study/` 提炼出来的**可复习面**；这里的东西不建卡。
-- `code-core` domain 的 `transfer.*` 分支是「新公司的一轮面试 = 一个叶子」的接口；公司目录里的具体题目留在这里，通用规律升到那里。
-- `skeleton/stripe.yaml` 头部注释指向 `companies/stripe/`。
+- 公司文件夹里的内容按公司整体阅读，不逐条建卡；要进 Anki 的部分放在对应的卡片领域（例如低层设计的 `amazon` 分支）。
+- `code-core` 领域的 `transfer.*` 分支是「新公司的一轮编码面试 = 一个叶子」的接口：公司的具体题目留在公司文件夹，通用规律升到那里。

@@ -1,4 +1,4 @@
-"""Acceptance gate for the reported system-design write-ups in this folder.
+"""Acceptance gate for the reported system-design write-ups under vault/interviews/core/system-design/.
 
     python3 scripts/check_sd.py                 # every sdNN-*.md under vault/interviews/core/system-design/
     python3 scripts/check_sd.py sd01            # one

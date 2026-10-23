@@ -32,7 +32,7 @@ Chi 的要求：教科书模式；编码用 Python。
 |---|---|---|---|
 | OOD 12 叶 | LLD 域 `amazon` 分支 → Anki `低层设计（LLD）::10 Amazon 专项` | `uv run python scripts/check_lld_problems.py --branch amazon --all` | ✅ 12/12，103 张带 step 的卡已推送（2026-10-16） |
 | Coding 12 题 | `recent/coding/`、`coding/solutions/` → Anki `LeetCode Tops::22 Amazon 近一月原题` | `python3 -I coding/run_all.py`；`recent/push_cards.py` | ✅ 12 题 14 张卡已推送；A 档本月出现过的 15 题打了 tag `amazon-seen-2026-10` |
-| SD 7 题 | `interviews/core/system-design/` | `python3 vault/interviews/core/system-design/check_sd.py` | ✅ 7/7 |
+| SD 7 题 | `interviews/core/system-design/` | `python3 scripts/check_sd.py` | ✅ 7/7 |
 
 2026-10-16 晚：Chi 要求「出处放页面末尾、说人话、教科书、前因后果、自包含、不用第三人称」与「mermaid 不要被截断」。
 全部产出按 `proposals/WRITING_RULES.md` 重写，`scripts/plain_style.py` 进了两道门禁；30 张 SD 图与 12 张 LLD 图用 mermaid-cli 实际渲染过；

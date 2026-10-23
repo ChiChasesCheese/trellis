@@ -36,7 +36,7 @@ wikilink target. Do not shorten content to pass a length check; the gates' minim
 
 - LLD leaf: `uv run python scripts/check_lld_problems.py --branch amazon <leaf id>` → `ok` (includes the style check),
   and `uv run trellis --domain low-level-design validate` shows no error naming your files.
-- SD write-up: `python3 vault/interviews/core/system-design/check_sd.py <sdNN>` → `ok`.
+- SD write-up: `python3 scripts/check_sd.py <sdNN>` → `ok`.
 - Coding notes / cards: `python3 scripts/plain_style.py <notes...> <cards.json>` → `ok`; every `.py` still runs.
 
 Touch only the files your task names. Do not run git; do not start agents. Report ≤ 8 lines: gate lines, and anything you
