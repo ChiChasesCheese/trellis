@@ -2,7 +2,7 @@
 
 - **Format:** CodeSignal Industry Coding Framework (ICF/ICA), same template as q01: one project, 4 levels unlocked in
   sequence, Python 3 + `unittest`, 10 tests in Level 1; the page says 3 s / 6g, but every test carries `@timeout(0.4)`.
-- **Source:** phone photos of a CodeSignal screen → `../../catalog/raw/codesignal_banking_system_photos.md`.
+- **Source:** phone photos of a CodeSignal screen → `../../../../../../research/companies/airbnb/catalog/raw/codesignal_banking_system_photos.md`.
   Level 1 is verbatim (high confidence). Levels 2–4: the one-line summaries are verbatim; methods and semantics are
   **(reconstructed)** from GitHub versions of the same problem (medium/low confidence).
 - **Company:** Airbnb per Chi; the photos name no company.
@@ -16,7 +16,6 @@
 | `solution_level1.py` … `solution_level4.py` | the standard answer after each level; each is the previous one plus the smallest change |
 | `solution.py` | reference solution (= `solution_level4.py`) |
 | `tests/test_level_{1..4}.py` | 43 `unittest` cases (L1 10, L2 8, L3 13 incl. 3 copied from the real file, L4 12); `IMPL=starter` runs them against your file |
-| `mutation_check.py` | 17 one-bug mutants of `solution.py`; every one must fail a test |
 | `run_single_test.sh` | `bash run_single_test.sh case_03` |
 
 ## Requirements (verbatim)

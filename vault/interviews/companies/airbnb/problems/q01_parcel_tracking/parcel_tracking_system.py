@@ -1,7 +1,7 @@
 """The locked interface, as CodeSignal ships it.
 
 Levels 1, 3 and 4 are transcribed from the assessment photos. Level 2's names and docstrings are confirmed by the
-real interface text Chi pasted from a mock run (see ../../catalog/raw/codesignal_parcel_tracking_photos.md).
+real interface text Chi pasted from a mock run (see ../../../../../../research/companies/airbnb/catalog/raw/codesignal_parcel_tracking_photos.md).
 """
 from abc import ABC
 

@@ -118,7 +118,7 @@ assert actual == expected, f"\n got: {actual!r}\nwant: {expected!r}"
 ```
 
 不会失败的测试等于没写。这个仓库里所有 53 套测试都做过这个检查
-（`reports/OVERALL_REPORT.md` §6："Every suite was confirmed to FAIL against the empty starter"）。
+（"Every suite was confirmed to FAIL against the empty starter"）。
 
 ---
 

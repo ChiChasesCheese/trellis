@@ -1,8 +1,7 @@
 # loop/ — Stripe 面试 Loop 演练套件
 
 OA 之后全部轮次（recruiter → HM → 电面 → onsite：bug squash / integration / coding / system
-design → behavioral）的离线 mock 面试环境。技术轮沿用根目录 OA 套件的约定（见
-`../CONVENTIONS.md`：`partN()` + `main()`、pytest markers、根 `../conftest.py` 的 `impl` /
+design → behavioral）的离线 mock 面试环境。技术轮沿用根目录 OA 套件的约定（`partN()` + `main()`、pytest markers、根 `../conftest.py` 的 `impl` /
 `run_script` fixture）；`loop/mock.py` 是入口，用法对齐根目录的 `../drill.py`。
 
 ## 目录一览
@@ -17,7 +16,6 @@ loop/rounds/07_system_design/sdNN_slug/              prompt.md rubric.md model_a
 loop/mockserver/                                     stdlib http.server：maps / payments
 loop/work/<id>/                                      bug squash 工作区（已 gitignore，会被清空重建）
 loop/study/                                          前置课 + 每轮准备材料 + 速记卡片
-loop/CATALOG.md · loop/tree/                         题库总表、知识树（校验脚本）
 ```
 
 ## `mock.py` 用法速查

@@ -10,7 +10,7 @@ modelling, not algorithms.
 
 | Part | Confidence | Source |
 |---|---|---|
-| Format (4 levels, 25 tests with 10 in Level 1, 90 min, `@timeout(0.4)` per test, Python unittest) | high | photos → `../../catalog/raw/codesignal_parcel_tracking_photos.md` |
+| Format (4 levels, 25 tests with 10 in Level 1, 90 min, `@timeout(0.4)` per test, Python unittest) | high | photos → `../../../../../../research/companies/airbnb/catalog/raw/codesignal_parcel_tracking_photos.md` |
 | Level 1 spec + example + test cases 01–04 | high | photos, verbatim |
 | Level 2–4 one-line summaries | high | photos, verbatim |
 | Level 3 full spec + 2 examples | high | photos (third batch), verbatim |

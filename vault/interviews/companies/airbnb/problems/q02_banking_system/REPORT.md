@@ -11,7 +11,7 @@ tests state modelling under changing requirements; the new parts are a **deferre
 
 | Part | Confidence | Source |
 |---|---|---|
-| Format (10 tests in L1, `@timeout(0.4)`, Python unittest, sandbox rules) | high | photos → `../../catalog/raw/codesignal_banking_system_photos.md` |
+| Format (10 tests in L1, `@timeout(0.4)`, Python unittest, sandbox rules) | high | photos → `../../../../../../research/companies/airbnb/catalog/raw/codesignal_banking_system_photos.md` |
 | Level 1 spec, interface, example, test cases 01–03 (03 cut off after 4 lines) | high | photos, verbatim |
 | Level 2–4 one-line summaries | high | photos, verbatim |
 | L2 `top_activity`, L3 `transfer`/`accept_transfer` + 24 h expiry, L4 `merge_accounts`/`get_balance` | medium | FazeelUsmani/Industry-Problems (titles match the photos one-to-one) |

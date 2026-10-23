@@ -182,7 +182,7 @@ descendant"` 边。输出 `n` 行，每行该角色的有效权限（逗号分�
 - Part4 的反向查询结构**重建自** Stripe 镜像里同族 RBAC 真题（1point3acres 镜像页保留了完整
   四段式目录：`Phase 1: Direct Role Lookup` / `Phase 2: Adding Inheritance` / `Phase 3: Finding
   Users with Access` / `Phase 4: Filtering Users by Role`，正文未公开，仅目录标题可信）——
-  `../../stripe/HANDOFF.md` §3 P1、`../../stripe/loop/rounds/03_phone_screen/ps10_rbac_role_resolver/`
+  `research/companies/stripe/HANDOFF.md` §3 P1、`vault/interviews/companies/stripe/loop/rounds/03_phone_screen/ps10_rbac_role_resolver/`
   （格式参考，Snowflake 版本按本题自己的 DAG/角色语境重新设计，不是照搬 Stripe 的账户树）
 - `catalog/raw/coding_phone_onsite.md` #8–#12、`catalog/CATALOG.md` Table A pc01 行；置信度
   **MED-HIGH**：5 条来源（fastprep ×3、prachub ×2）在"DAG 上的 allow/deny 继承 + deny 覆盖"这一

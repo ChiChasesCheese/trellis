@@ -134,7 +134,7 @@ self.tracker.set_tag('sender_name', 'parcel6', 'error')   # 参数故意反过�
 
 ## Level 3：时间来了，做第一次重构
 
-> 题面已有真实截图（`../catalog/raw/codesignal_parcel_tracking_photos.md` 第三批），下面是按真实签名写的。
+> 题面已有真实截图（`../../../../../research/companies/airbnb/catalog/raw/codesignal_parcel_tracking_photos.md` 第三批），下面是按真实签名写的。
 > 我最初按同构原题补全的版本错了两处：带 TTL 的方法叫 **`set_tag_with_hold`**，不叫 `set_tag_at_with_ttl`；
 > **`ttl == 0` 表示永不过期**，不是立即过期。其余（方法名、`"tag(value)"` 格式、按 tag 字典序、右端点开区间）都对上了。
 
@@ -243,7 +243,7 @@ value 变成 `tags[tag][0]`。结构完全没变，**这就是 Level 1/2 不超�
 
 ## Level 4：checkpoint / restore_checkpoint，只加不改
 
-> 题面已有真实截图（`../catalog/raw/codesignal_parcel_tracking_photos.md` 第五批）。和我最初补全的版本相比，只有方法名不同：
+> 题面已有真实截图（`../../../../../research/companies/airbnb/catalog/raw/codesignal_parcel_tracking_photos.md` 第五批）。和我最初补全的版本相比，只有方法名不同：
 > 真实的是 **`restore_checkpoint`**，不是 `restore`。过期时间公式 `original_expiration + (timestamp - checkpoint_timestamp)`
 > 和我补全的 `timestamp + (original_expiration - checkpoint_timestamp)` 代数上等价。
 

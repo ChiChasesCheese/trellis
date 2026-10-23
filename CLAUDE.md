@@ -77,7 +77,7 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
    regenerates the test summary; `tools/refresh_check.py` re-verifies sources.
 7. Reconstructed parts are labelled **(reconstructed)** in `problem.md`; AI content farms
    (lodely, vervecopilot) are never cited; a single fetch failure never condemns a site —
-   record which path failed (see `companies/stripe/HANDOFF.md` §2 for the reachability table).
+   record which path failed (see `research/companies/stripe/HANDOFF.md` §2 for the reachability table).
 
 ## Orchestration rules for multi-agent work in this repo
 

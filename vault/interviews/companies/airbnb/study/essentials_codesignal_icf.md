@@ -106,7 +106,7 @@ restore 时再换算成 `new_expires_at = restore_ts + remaining`。
 
 ## 6. 同族题（骨架一样，换皮而已）
 
-只有 In-Memory Database 这一行查过来源（见 `catalog/raw/in_memory_db_isomorph.md`）。
+只有 In-Memory Database 这一行查过来源（见 `../../../../../research/companies/airbnb/catalog/raw/in_memory_db_isomorph.md`）。
 Bank System 和 Cloud Storage 两行是按网上流传版本凭记忆写的，**本 repo 没有核实过**，做之前先查原题。
 
 | 题 | L3 的"时间"是什么 | L4 的"历史"是什么 |

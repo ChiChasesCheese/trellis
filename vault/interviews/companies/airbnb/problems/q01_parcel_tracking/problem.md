@@ -2,9 +2,9 @@
 
 - **Format:** CodeSignal Industry Coding Framework (ICF/ICA): one project, 4 levels unlocked in sequence, 90 minutes,
   25 unit tests (10 of them Level 1), Python 3 + `unittest`; the page says 3 s, but every test carries `@timeout(0.4)`.
-- **Source:** phone photos of a live assessment → `../../catalog/raw/codesignal_parcel_tracking_photos.md`.
+- **Source:** phone photos of a live assessment → `../../../../../../research/companies/airbnb/catalog/raw/codesignal_parcel_tracking_photos.md`.
   Levels 1, 3 and 4 are verbatim (high confidence); Level 2's names and format are confirmed by the real interface
-  docstrings. Earlier reconstructions came from the isomorphic "In-Memory Database" problem → `../../catalog/raw/in_memory_db_isomorph.md` (medium confidence).
+  docstrings. Earlier reconstructions came from the isomorphic "In-Memory Database" problem → `../../../../../../research/companies/airbnb/catalog/raw/in_memory_db_isomorph.md` (medium confidence).
 - **Company:** Airbnb per Chi; the photos name no company. FastPrep lists the isomorph as an Airbnb OA.
 
 ## Files

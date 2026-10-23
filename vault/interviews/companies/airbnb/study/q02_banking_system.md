@@ -8,11 +8,10 @@ cd vault/interviews/companies/airbnb/problems/q02_banking_system
 IMPL=starter python3 -m unittest tests.test_level_1      # 只跑 Level 1
 IMPL=starter bash run_single_test.sh case_05              # 只跑一个测试
 python3 -m unittest discover -s tests -p "test_*.py"      # 参考解：43/43
-python3 mutation_check.py                                 # 16 个错误版本全部被测试抓到
 ```
 
 > **可信度**：Level 1 是照片原文。Level 2–4 只有一行概要是原文，方法名和语义是**重建的（reconstructed）**，
-> 来自 GitHub 上同一道题的版本（来源见 `../catalog/raw/codesignal_banking_system_photos.md`）。考试时以解锁后的题面为准，思路不变。
+> 来自 GitHub 上同一道题的版本（来源见 `../../../../../research/companies/airbnb/catalog/raw/codesignal_banking_system_photos.md`）。考试时以解锁后的题面为准，思路不变。
 
 ## 第 0 步：读 4 行概要，只用来选数据结构
 
@@ -58,7 +57,7 @@ class BankingSystemImpl(BankingSystem):
 - **余额为 0 是合法结果。** 不要写 `if balance:`，否则扣到 0 会被当成失败。判断失败只看 `is None`。
 - **`timestamp` 在 Level 1 用不上**，照签名留着就行。
 
-### 常见错法对照（用 `mutation_check.py` 实际跑过）
+### 常见错法对照
 
 | 错法 | 挂在哪些测试 | 错在哪里 |
 |---|---|---|
@@ -148,7 +147,7 @@ DAY_MS = 24 * 60 * 60 * 1000
 
 ## Level 4：唯一的写入口 + 历史 + 二分查找
 
-> 真题题面已拍到（`../catalog/raw/codesignal_banking_system_photos.md`）。和我最初重建不同的一条：**别人转给 id2 的挂起转账不转给 id1**，
+> 真题题面已拍到（`../../../../../research/companies/airbnb/catalog/raw/codesignal_banking_system_photos.md`）。和我最初重建不同的一条：**别人转给 id2 的挂起转账不转给 id1**，
 > 它保持原样、永远无法被接受（id2 重新开户也不行）、到期后自然退回转出方。实现：把它的 target 设成 `None`。
 
 Level 4 要回答"某个时刻的余额是多少"，所以**每一次余额变化都要留下记录**。最稳的做法是先重构一次：

@@ -1,7 +1,7 @@
 """The locked interface, as CodeSignal ships it.
 
 Level 1 is transcribed from the assessment photos. Levels 2-4 are (reconstructed) from GitHub versions of the same
-problem, see ../../catalog/raw/codesignal_banking_system_photos.md. Names may differ in the real test; semantics transfer.
+problem, see ../../../../../../research/companies/airbnb/catalog/raw/codesignal_banking_system_photos.md. Names may differ in the real test; semantics transfer.
 """
 from abc import ABC
 

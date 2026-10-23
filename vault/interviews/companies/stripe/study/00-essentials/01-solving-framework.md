@@ -85,7 +85,7 @@ def render(result):  # 结果 → 输出行。所有格式化只在这里。
 - 下一个 part 通常只改 `compute`，`parse`/`render` 原样复用。
 - 格式只在 `render` 里出现一次 → 改一次全对；散落在 8 个 `print` 里 → 改一次漏三处。
 
-对应 `problems/` 里的公开 API 约定（见 `CONVENTIONS.md`）：
+对应 `problems/` 里的公开 API 约定：
 每个 part 一个纯函数 `part1(lines) -> list[str]`，加一个 `main(stdin, stdout)` 负责 dispatch。
 **后面的 part 直接调用前面的 part**，这是设计意图，不是偷懒。
 
