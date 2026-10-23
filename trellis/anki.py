@@ -18,6 +18,7 @@ then sync to AnkiWeb so mobile picks it up.
 from __future__ import annotations
 
 import json
+import time
 import urllib.request
 from pathlib import Path
 from typing import Callable
@@ -35,7 +36,25 @@ class AnkiConnectError(RuntimeError):
     pass
 
 
-def invoke(action: str, url: str = DEFAULT_URL, **params) -> object:
+# Anki answers this while a sync it was asked for is still running in the
+# background: `sync` returns before it finishes, so the next call races it.
+BUSY = "Collection lifecycle operation is active"
+
+
+def invoke(action: str, url: str = DEFAULT_URL, retries: int = 30, wait: float = 2.0,
+           **params) -> object:
+    """One AnkiConnect call; waits out a collection that is busy syncing."""
+    for _ in range(retries):
+        try:
+            return _invoke_once(action, url, **params)
+        except AnkiConnectError as exc:
+            if BUSY not in str(exc):
+                raise
+            time.sleep(wait)
+    return _invoke_once(action, url, **params)
+
+
+def _invoke_once(action: str, url: str = DEFAULT_URL, **params) -> object:
     payload = json.dumps({"action": action, "version": 6, "params": params}).encode()
     req = urllib.request.Request(
         url, data=payload, headers={"Content-Type": "application/json"}
@@ -53,6 +72,12 @@ def invoke(action: str, url: str = DEFAULT_URL, **params) -> object:
     return data["result"]
 
 
+def _quoted(name: str) -> str:
+    """A deck name safe inside a quoted Anki search: its own quotes,
+    backslashes and wildcards (`*`, `_`) are escaped."""
+    return "".join("\\" + ch if ch in '\\"*_' else ch for ch in name)
+
+
 def align(skeleton: Skeleton, call: Callable = invoke, url: str = DEFAULT_URL) -> dict:
     """Move mis-decked cards and drop empty stale decks. Returns
     {'moved': int, 'deleted': [names]}."""
@@ -64,7 +89,7 @@ def align(skeleton: Skeleton, call: Callable = invoke, url: str = DEFAULT_URL) -
         # to exactly the deck of the node its own tag names. An adopted
         # note was authored by another tool and stays in the deck that
         # tool put it in.
-        query = f'tag:{tag} -tag:{tag}::* -tag:{ADOPTED_TAG} -deck:"{deck}"'
+        query = f'tag:{tag} -tag:{tag}::* -tag:{ADOPTED_TAG} -deck:"{_quoted(deck)}"'
         card_ids = call("findCards", url, query=query)
         if card_ids:
             call("createDeck", url, deck=deck)
@@ -77,7 +102,7 @@ def align(skeleton: Skeleton, call: Callable = invoke, url: str = DEFAULT_URL) -
         if name == root or name.startswith(root + "::"):
             # deck:X matches subdecks too, so empty means the whole
             # subtree is empty and safe to delete
-            if not call("findCards", url, query=f'deck:"{name}"'):
+            if not call("findCards", url, query=f'deck:"{_quoted(name)}"'):
                 stale.append(name)
     if stale:
         call("deleteDecks", url, decks=stale, cardsToo=True)

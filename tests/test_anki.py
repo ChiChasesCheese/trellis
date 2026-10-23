@@ -135,3 +135,24 @@ def test_push_builds_the_package_instead_of_trusting_dist(tmp_path, monkeypatch)
 
     assert cli.main(["--root", str(tmp_path), "anki-push"]) == 0
     assert order == ["build", "push"]
+
+
+def test_deck_names_are_escaped_inside_a_quoted_search():
+    from trellis.anki import _quoted
+    assert _quoted('keep it "hot"') == 'keep it \\"hot\\"'
+    assert _quoted("a_b*c") == "a\\_b\\*c"
+
+
+def test_invoke_waits_out_a_collection_busy_syncing(monkeypatch):
+    import trellis.anki as anki
+    answers = [anki.AnkiConnectError(anki.BUSY), anki.AnkiConnectError(anki.BUSY), 42]
+
+    def once(action, url, **params):
+        a = answers.pop(0)
+        if isinstance(a, Exception):
+            raise a
+        return a
+
+    monkeypatch.setattr(anki, "_invoke_once", once)
+    monkeypatch.setattr(anki.time, "sleep", lambda s: None)
+    assert anki.invoke("importPackage", path="x.apkg") == 42
