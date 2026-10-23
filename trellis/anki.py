@@ -36,6 +36,17 @@ class AnkiConnectError(RuntimeError):
     pass
 
 
+class PositionsLocked(AnkiConnectError):
+    """This AnkiConnect refuses to write a card's `due` (newer releases keep
+    scheduling state behind native commands, and none of them repositions a
+    new card). New cards then stay in the order they were imported."""
+
+    def __init__(self, count: int):
+        super().__init__(f"{count} new card(s) left in import order: this AnkiConnect "
+                         "cannot write new-card positions")
+        self.count = count
+
+
 # Anki answers these while a sync it was asked for is still running in the
 # background: `sync` returns before it finishes, so the next call races it.
 BUSY = ("Collection lifecycle operation is active", "A collection operation is active")
@@ -223,6 +234,8 @@ def sequence_new(skeleton: Skeleton, ordered: list[str], call: Callable = invoke
              "params": {"card": cid, "keys": ["due"], "newValues": [position]}}
             for cid, position in moves[start:start + BATCH]])
         failed = [r for r in results if r != [True]]
+        if failed and "native scheduling" in str(failed[0]):
+            raise PositionsLocked(len(moves) - start)
         if failed:
             raise AnkiConnectError(f"could not reposition {len(failed)} card(s): {failed[0]}")
     return len(moves)
@@ -303,7 +316,10 @@ def push(
     # never seen took the number. Converge the rest, then make sure the decks
     # deal by that number at all (ADR 0010).
     if ordered is not None:
-        steps.append(f"sequenced {sequence_new(skeleton, ordered, call=call, url=url)} new card(s)")
+        try:
+            steps.append(f"sequenced {sequence_new(skeleton, ordered, call=call, url=url)} new card(s)")
+        except PositionsLocked as exc:
+            steps.append(str(exc))
         steps.append(apply_study(skeleton, skeleton.study, call=call, url=url))
 
     call("sync", url)

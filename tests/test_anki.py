@@ -156,3 +156,29 @@ def test_invoke_waits_out_a_collection_busy_syncing(monkeypatch):
     monkeypatch.setattr(anki, "_invoke_once", once)
     monkeypatch.setattr(anki.time, "sleep", lambda s: None)
     assert anki.invoke("importPackage", path="x.apkg") == 42
+
+
+def test_push_carries_on_when_positions_cannot_be_written(tmp_path):
+    from trellis.anki import PositionsLocked, push
+    from trellis.skeleton import load_skeleton
+    import trellis.anki as anki
+    sk = tmp_path / "s.yaml"
+    sk.write_text("domain: d\ntitle: D\nnodes:\n- id: a\n  title: A\n  summary: s\n")
+    skeleton = load_skeleton(sk)
+    calls = []
+
+    def call(action, url=None, **params):
+        calls.append(action)
+        return [] if action in ("findCards", "deckNames") else None
+
+    def locked(*a, **k):
+        raise PositionsLocked(3)
+
+    original = anki.sequence_new
+    anki.sequence_new = locked
+    try:
+        result = push(skeleton, tmp_path / "d.apkg", call=call, ordered=["x"])
+    finally:
+        anki.sequence_new = original
+    assert calls[-1] == "sync"
+    assert any("import order" in s for s in result["steps"])

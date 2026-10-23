@@ -354,14 +354,17 @@ def cmd_anki_push(args, project: Project) -> int:
 def cmd_anki_align(args, project: Project) -> int:
     """Converge the collection on the vault without importing anything:
     decks, then the Sequence, then the options that deal by it."""
-    from .anki import AnkiConnectError, align, apply_study, sequence_new
+    from .anki import AnkiConnectError, PositionsLocked, align, apply_study, sequence_new
     call = _anki_client(args.anki_url)
     study = project.skeleton.study
     try:
         result = align(project.skeleton, call=call)
-        moved = sequence_new(project.skeleton,
-                             [c.id for c in sequence(project.skeleton, project.cards, study.order)],
-                             call=call)
+        try:
+            moved = sequence_new(project.skeleton,
+                                 [c.id for c in sequence(project.skeleton, project.cards, study.order)],
+                                 call=call)
+        except PositionsLocked as exc:
+            moved = f"0 ({exc})"
         options = apply_study(project.skeleton, study, call=call)
     except AnkiConnectError as exc:
         _fail(str(exc))
