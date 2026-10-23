@@ -213,7 +213,7 @@ int main() {
 }
 ```
 
-```text
+```console
 C07/c07_concept_bad.cpp:13:12: error: no matching function for call to 'twice'
    13 |     return twice(std::string("oops")).size();      // std::string is not Numeric
       |            ^~~~~

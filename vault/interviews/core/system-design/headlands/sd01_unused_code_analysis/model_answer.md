@@ -33,18 +33,20 @@
 
 ## 2. 把问题变成图问题：垃圾回收的类比
 
-```text
-        根 (roots)                       符号图 (symbol graph)
-   ┌──────────────────┐
-   │ main()           │───────▶ Order ──▶ RiskCheck ──▶ PositionBook
-   │ @Scheduled       │            │
-   │ ServiceLoader    │            └──▶ LegacyPricer ──▶ OldCurve      ← 没有任何根能到达这一簇
-   │ 导出的公共 API   │
-   │ 配置里的类名     │            OldCurve ◀──▶ OldCurveHelper      ← 互相引用的"死环"（grep 找不到，标记法找得到）
-   └──────────────────┘
-
-   mark：从根出发沿边标记所有可达符号 ────▶ 未被标记的 = 候选（sweep 的"候选"，不是直接删）
+```mermaid
+flowchart TB
+    R["根 roots"] --> O["Order"]
+    O --> RC["RiskCheck"]
+    RC --> PB["PositionBook"]
+    LP["LegacyPricer"] --> OC["OldCurve"]
+    OC <--> OH["OldCurveHelper"]
 ```
+
+* 根（roots）：`main()`、`@Scheduled`、`ServiceLoader`、导出的公共 API、配置里的类名。
+* 符号图（symbol graph）：`Order → RiskCheck → PositionBook` 从根可达。
+* `LegacyPricer → OldCurve` 这一簇：没有任何根能到达。
+* `OldCurve ↔ OldCurveHelper` 互相引用，是「死环」：`grep` 找不到，标记法找得到。
+* mark：从根出发沿边标记所有可达符号；未被标记的 = 候选（sweep 的「候选」，不是直接删）。
 
 * **节点**：类、方法（含签名）、字段、枚举常量、资源文件、配置项、构建目标（target）。
 * **边**：调用、继承 / 实现、`new`、字段读 / 写、方法引用 / lambda、注解、`String` 常量命中类名（弱边）。
@@ -59,14 +61,14 @@
 
 假设（**假设值**，面试时说「我先按这个数量级算，您有真实数字我再改」）：
 
-```text
-代码量               2×10^7 行（20M LOC）；方案对 10^8 行同样成立（下面给出）
-方法 ≈ LOC/10        2×10^6
-类   ≈ LOC/100       2×10^5
-字段 ≈ LOC/20        10^6
-符号总数 V           ≈ 3.2×10^6
-每个方法平均 8 条引用，每个类 2 条继承/实现边 → 边数 E ≈ 2×10^6×8 + 2×10^5×2 ≈ 1.6×10^7
-```
+| 量 | 估算 |
+|---|---|
+| 代码量 | 2×10^7 行（20M LOC）；方案对 10^8 行同样成立（下面给出） |
+| 方法 ≈ LOC/10 | 2×10^6 |
+| 类 ≈ LOC/100 | 2×10^5 |
+| 字段 ≈ LOC/20 | 10^6 |
+| 符号总数 V | ≈ 3.2×10^6 |
+| 边数 E | 每个方法平均 8 条引用，每个类 2 条继承/实现边：E ≈ 2×10^6×8 + 2×10^5×2 ≈ 1.6×10^7 |
 
 | 阶段 | 计算 | 结果 | 结论 |
 |---|---|---|---|
@@ -84,21 +86,15 @@
 
 根集合错一个，要么大量误报（把活代码判死，危险），要么大量漏报（死代码因为被假根保护而躲过）。
 
-```text
-┌────────────────────────── 根的来源 ───────────────────────────────┐
-│ A. 已部署二进制的入口  main()                                       │
-│    └ 权威来源：部署清单 / 启动脚本 / systemd unit / crontab，而不是 "所有含 main 的类"│
-│ B. 框架入口：@Scheduled、@Subscribe、Servlet、@Bean/@Component（Spring）、 │
-│    JAX-RS 资源、Kafka 监听器 —— 用"框架模型"规则把注解映射为根            │
-│ C. 反射 / SPI / 序列化：                                             │
-│    ServiceLoader 的 META-INF/services、Class.forName("literal")、       │
-│    readObject/readResolve、Jackson/Protobuf 的反射字段、JNI 导出符号     │
-│ D. 导出的公共 API（库的对外契约）—— L2，标"开放世界"                    │
-│ E. 配置里的类名：YAML/JSON/properties/XML 中出现的 FQN 字符串             │
-│ F. 测试：单独作为一类根（测试作根 vs 不作根，各跑一次 → "仅测试使用"）    │
-│ G. 显式保留：@KeepAlive("disaster-recovery") / 允许名单（owner 声明）     │
-└────────────────────────────────────────────────────────────────────┘
-```
+| 根的类别 | 内容 |
+|---|---|
+| A. 已部署二进制的入口 | `main()`。权威依据：部署清单 / 启动脚本 / systemd unit / crontab，而不是「所有含 main 的类」 |
+| B. 框架入口 | `@Scheduled`、`@Subscribe`、Servlet、`@Bean`/`@Component`（Spring）、JAX-RS 资源、Kafka 监听器。用「框架模型」规则把注解映射为根 |
+| C. 反射 / SPI / 序列化 | `ServiceLoader` 的 `META-INF/services`、`Class.forName("literal")`、`readObject`/`readResolve`、Jackson/Protobuf 的反射字段、JNI 导出符号 |
+| D. 导出的公共 API | 库的对外契约。L2，标「开放世界」 |
+| E. 配置里的类名 | YAML/JSON/properties/XML 中出现的 FQN 字符串 |
+| F. 测试 | 单独作为一类根（测试作根 vs 不作根，各跑一次，得到「仅测试使用」） |
+| G. 显式保留 | `@KeepAlive("disaster-recovery")` / 允许名单（owner 声明） |
 
 **字符串命中（弱根）**：索引时把字节码常量池里的所有字符串常量，以及仓库里所有文本文件（配置、脚本、文档）里形如 FQN 的 token 全部收集起来，和符号表做匹配。命中 → 把该符号标为「弱根」：它不会因此直接保活，但**降低可信度**并作为 blocker 写进证据。这就是 ProGuard / R8（Android 与 Java 的 tree-shaking 工具）的 `-keep` 规则思想：保守地保护动态使用的东西。
 
@@ -108,30 +104,28 @@
 
 ## 5. 流水线总览
 
-```text
-                    固定快照 (git sha S + 构建产物)
-                                │
-        ┌───────────────────────┴────────────────────────┐
-        ▼                                                ▼
- ① 索引 (并行, 按构建目标分片)                    ③ 动态证据 (可选, 持续收集)
-   Java: 读 .class 字节码 (ASM)                    · 类加载日志 -Xlog:class+load
-   + 调试信息 → 回映射到源码行                      · JFR / 方法级覆盖 agent (抽样)
-   C++: clang 索引 + 链接器 --gc-sections 报告      · 按 (服务, 版本) 聚合，保留 90 天
-   Python/脚本: 轻量解析 + 低可信度
-        │ 输出: defs(symbol, kind, file, line, owner)
-        │       refs(src, dst, kind)   strings(file, literal)
-        ▼
- ② 汇总 (shuffle by symbol id)  ──▶  CSR 图 + 符号表 + 字符串表
-        │
-        ▼
- ④ 标记 (单机, 亚秒–数秒)  roots = A ∪ B ∪ C ∪ E(弱) ∪ G
-        │      RTA 虚调用解析、lambda/方法引用边
-        ▼
- ⑤ 分级与见证 (L0/L1/L2/L3 + blockers + 证据)
-        │
-        ▼
- ⑥ 报告 + 按 owner 拆 PR（机器人） ──▶ 人审 ──▶ 软删除 ──▶ 真删 ──▶ 回路指标
+```mermaid
+flowchart TB
+    S["固定快照"] --> I["① 索引"]
+    S --> D["③ 动态证据"]
+    I --> A["② 汇总"]
+    A --> M["④ 标记"]
+    M --> G["⑤ 分级与见证"]
+    D --> G
+    G --> P["⑥ 报告与 PR"]
 ```
+
+* 固定快照：git sha S + 构建产物。
+* ① 索引（并行，按构建目标分片）：
+  * Java：读 `.class` 字节码（ASM）+ 调试信息，回映射到源码行。
+  * C++：clang 索引 + 链接器 `--gc-sections` 报告。
+  * Python/脚本：轻量解析，低可信度。
+  * 输出：`defs(symbol, kind, file, line, owner)`、`refs(src, dst, kind)`、`strings(file, literal)`。
+* ② 汇总（按 symbol id shuffle）：得到 CSR 图 + 符号表 + 字符串表。
+* ③ 动态证据（可选，持续收集）：类加载日志 `-Xlog:class+load`；JFR / 方法级覆盖 agent（抽样）；按（服务，版本）聚合，保留 90 天。
+* ④ 标记（单机，亚秒到数秒）：`roots = A ∪ B ∪ C ∪ E(弱) ∪ G`；RTA 虚调用解析、lambda/方法引用边。
+* ⑤ 分级与见证：L0/L1/L2/L3 + blockers + 证据。
+* ⑥ 报告 + 按 owner 拆 PR（机器人）→ 人审 → 软删除 → 真删 → 回路指标。
 
 ### 5.1 为什么在字节码上分析（Java 的选择）
 
@@ -237,21 +231,24 @@ suggested   : 软删除 PR #… (按簇一起删，含 3 个测试类)
 
 ## 8. 从候选到安全删除（流程设计）
 
-```text
-候选 ─▶ 分簇 ─▶ 按 owner(CODEOWNERS) 分配 ─▶ 机器人开 PR（≤500 LOC，一个簇一个 PR）
-                                                     │
-                                  CI：全量构建 + 测试 + 再跑一遍可达性（删后图不应出现新的"未解析引用"）
-                                                     │
-                      ┌──────────────────────────────┴──────────────┐
-                      ▼                                             ▼
-              软删除（默认，对 L2/L3）                         直接删除（仅 L0/L1 HIGH）
-        @Deprecated(forRemoval=true) +                            │
-        被调用时打一条日志/指标，观察 N 个发布周期                 │
-                      │ 无调用                                      │
-                      └──────────────▶ 真删 ◀───────────────────────┘
-                                         │
-                       回滚路径：一个 revert；PR 里附"如何恢复"
+```mermaid
+flowchart TB
+    C["候选"] --> K["分簇"]
+    K --> A["按 owner 分配"]
+    A --> PR["机器人开 PR"]
+    PR --> CI["CI 全量检查"]
+    CI --> S["软删除"]
+    CI --> D["直接删除"]
+    S -->|"无调用"| T["真删"]
+    D --> T
 ```
+
+* 分配：按 CODEOWNERS 找 owner。
+* 机器人开 PR：≤ 500 LOC，一个簇一个 PR。
+* CI：全量构建 + 测试 + 再跑一遍可达性（删后图不应出现新的「未解析引用」）。
+* 软删除（默认，对 L2/L3）：`@Deprecated(forRemoval=true)` + 被调用时打一条日志/指标，观察 N 个发布周期；无调用则真删。
+* 直接删除：仅 L0/L1 HIGH。
+* 回滚路径：一个 revert；PR 里附「如何恢复」。
 
 **回路指标**（也是系统自身的 KPI）：
 

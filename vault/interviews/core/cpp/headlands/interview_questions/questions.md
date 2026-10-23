@@ -118,11 +118,15 @@ Java 的 `ArrayList<Order>` 就是后一种。遍历前者是顺序读，后者�
 
 **展开**
 
+```mermaid
+flowchart TB
+    M["main.cpp"] -->|"预处理+编译"| MO["main.o"]
+    L["lib.cpp"] -->|"预处理+编译"| LO["lib.o"]
+    MO -->|"link"| A["a.out"]
+    LO -->|"link"| A
 ```
-main.cpp ──┐                       ┌─> main.o ──┐
- +headers  │ preprocess + compile  │            ├─ link ─> a.out
-lib.cpp  ──┘  (each .cpp alone)    └─> lib.o  ──┘
-```
+
+`main.cpp` 带着它的头文件（headers）。每个 `.cpp` 单独预处理 + 编译，互不影响；最后一起链接成 `a.out`。
 
 - **头文件**是文本复制粘贴：`#include <iostream>` 展开后：
 
@@ -198,14 +202,15 @@ gauss(n) at -O2:  subs / b.lt / sub / mul / umulh / extr / add / ret      (没�
 
 **展开**
 
-```
-Shape* p = new Sq(3);              vtable for Sq
-                                   +-------------------+
- object:  [ vptr ][ s=3 ]  ------> | &Sq::area         |
-                                   | &Sq::~Sq          |
-                                   +-------------------+
- p->area():   load vptr;  load slot 0;  call indirect
-```
+`Shape* p = new Sq(3);`
+
+* 对象：`[ vptr ][ s=3 ]`，`vptr` 指向 `Sq` 的 vtable。
+* `p->area()`：load vptr；load slot 0；call indirect。
+
+| vtable for Sq 的槽 | 内容 |
+|---|---|
+| slot 0 | `&Sq::area` |
+| slot 1 | `&Sq::~Sq` |
 
 热路径上的成本主要有三个：**不能内联**（编译器不知道具体类型）；**对象更大**；**混合类型时间接跳转预测失败**。下面 400 万个对象，5 遍求面积：
 
@@ -741,10 +746,10 @@ rehash happened: buckets 2 -> 1597; reference still valid: 100
 
 100 万个随机 key 的建表和查询（`-O2`，Apple Silicon，量级参考）：
 
-```
-build  1M: std::map 159 ms | unordered_map 26 ms | sorted vector 45 ms
-lookup 1M: std::map 146 ms | unordered_map 13 ms | sorted vector 45 ms
-```
+| 1M 个 key | `std::map` | `unordered_map` | sorted vector |
+|---|---|---|---|
+| build | 159 ms | 26 ms | 45 ms |
+| lookup | 146 ms | 13 ms | 45 ms |
 
 **60 秒口述**
 
@@ -1224,11 +1229,22 @@ while (cur < v && !maxv.compare_exchange_weak(cur, v, std::memory_order_relaxed)
 
 **发布数据的 release/acquire**：
 
+```mermaid
+%%{init: {'sequence': {'actorMargin': 16, 'width': 104, 'messageMargin': 28}}}%%
+sequenceDiagram
+    autonumber
+    participant P as 生产者
+    participant C as 消费者
+    P->>P: 写 payload
+    P->>C: ready.store(release)
+    C->>C: 自旋 load(acquire)
+    C->>C: use(payload)
 ```
-   生产者                                消费者
-   payload = {round, round*2};           while (!ready.load(acquire)) {}
-   ready.store(true, release);   ----->  use(payload);      // 一定能看到 payload 的新值
-```
+
+1. 生产者：`payload = {round, round*2};`
+2. 生产者：`ready.store(true, release);`
+3. 消费者：`while (!ready.load(acquire)) {}`
+4. 消费者：`use(payload);`，一定能看到 payload 的新值。
 
 为什么需要它：CPU 和编译器都会**重排**内存操作。没有 release/acquire，消费者可能看到 `ready == true` 但 `payload` 还是旧值。x86 的硬件顺序较强（几乎只重排 store→load），弱序的 ARM 上不加正确的序更容易暴露问题——所以"在 x86 上测过"不能证明内存序正确。
 
@@ -1645,11 +1661,12 @@ branchless, random    :    5.8 ms       <- 没有分支可猜错
 
 100 万次调用，其中 1% 失败：
 
-```
-1M calls, 1% fail: return code 1.2 ms | optional 1.4 ms | exceptions 36.4 ms
-failures seen: 10000 10000 10000
-1M calls, almost never failing, exceptions: 1.0 ms (failures 0) - the no-throw path is nearly free
-```
+| 1M calls, 1% fail | return code | optional | exceptions |
+|---|---|---|---|
+| 耗时 | 1.2 ms | 1.4 ms | 36.4 ms |
+
+* `failures seen: 10000 10000 10000`
+* `1M calls, almost never failing, exceptions: 1.0 ms (failures 0)`：不抛时 no-throw 路径几乎免费。
 
 1 万次抛出让整个循环花了约 36 ms，即每次抛出约 **3–4 微秒**，整个循环比返回码慢约 30 倍；但从不抛时，带 `try` 的路径和返回码一样快。
 

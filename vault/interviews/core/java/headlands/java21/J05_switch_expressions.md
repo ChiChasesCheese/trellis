@@ -303,10 +303,14 @@ SAT 0
 42
 rejected: empty
 rejected: not positive: -3
-one | two or three | many         <- 冒号形式 + yield
-1.0 2.5 3.0                       <- int / double / long 分支混合，结果提升为 double
-level is high                     <- switch 表达式拼进字符串
+one | two or three | many
+1.0 2.5 3.0
+level is high
 ```
+
+* `one | two or three | many`：冒号形式 + yield。
+* `1.0 2.5 3.0`：int / double / long 分支混合，结果提升为 double。
+* `level is high`：switch 表达式拼进字符串。
 
 ### 例 3：贴近真实——命令解析、枚举方法、手续费
 

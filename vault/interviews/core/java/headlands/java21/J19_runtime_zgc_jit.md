@@ -268,10 +268,7 @@ Gen ZGC:  GC: ZGC Minor Cycles(6295次) ZGC Minor Pauses(18902次) ZGC Major Cyc
 * **测试运行命令**：`java --enable-preview -XX:+UseZGC -XX:+ZGenerational ...`，所以参考解都跑在 Generational ZGC 上——也是 JDK 21 必须写两个标志的活例子。
 * **`TickBook`**（热路径版订单簿）头部注释：
 
-```
-// 为什么需要这一版：Part 2 的 OrderBook 每个订单是一个 Node 对象 + TreeMap/HashMap 的装箱 Long key + 每次调用的 Event 列表，
-// 实测每个操作约 400 字节垃圾（见 REPORT）；垃圾多 → GC 停顿 → 尾延迟抖动。低延迟系统要的是「稳态零分配」：
-```
+> 为什么需要这一版：Part 2 的 OrderBook 每个订单是一个 Node 对象 + TreeMap/HashMap 的装箱 Long key + 每次调用的 Event 列表，实测每个操作约 400 字节垃圾（见 REPORT）；垃圾多 → GC 停顿 → 尾延迟抖动。低延迟系统要的是「稳态零分配」：
 
   这就是 1.3 "避开 GC 的土办法"的落地：价格是有界范围内的 `long` tick，用数组/位图索引，不装箱。面试被问"这个订单簿怎么降低 GC 压力"，答 `TickBook` 的设计：primitive 数组 + 开放寻址 + 预分配。
 * **`LongTickerMap`** 头部："没有 Long 装箱 —— `add()` 在稳态下一个字节都不分配"，与基于 `HashMap<String, Long>` 的朴素 `TickerMap` 对照。

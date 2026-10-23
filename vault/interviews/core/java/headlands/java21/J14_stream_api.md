@@ -11,10 +11,11 @@
 
 **流**（Stream）不是集合。集合（`List`、`Map`）**存**数据；流是**对数据做的一条流水线**：
 
-```
- 来源 source        中间操作 intermediate        终止操作 terminal
- list.stream() ──▶ filter ──▶ map ──▶ sorted ──▶ collect / count / findFirst / toList
-```
+| 阶段 | 做什么 | 例子 |
+|---|---|---|
+| 来源（source） | 产生流 | `list.stream()` |
+| 中间操作（intermediate） | 一步步加工，可以接很多个 | `filter` → `map` → `sorted` |
+| 终止操作（terminal） | 拉动整条流水线，产出结果 | `collect` / `count` / `findFirst` / `toList` |
 
 三个必须记住的性质：
 

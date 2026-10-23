@@ -90,56 +90,59 @@
 
 ### 4.1 总图
 
-```text
-                       ┌──────────── API / 网关（无状态）────────────┐
- schedule/cancel/get ─▶│ 校验、幂等(客户端 job id)、路由 shard = hash(jobId) % N │
-                       └───────────────┬─────────────────────────────┘
-                                       ▼
-        ┌────────────────────── 分片 s（一个 leader + 2 个 follower）──────────────────────┐
-        │                                                                                │
-        │  命令入口 ──▶ [MPSC 队列] ──▶ 【单写线程】 ◀── 时钟 tick                         │
-        │                                │  ① 追加到 WAL（group commit，复制到 follower） │
-        │                                │  ② 修改内存状态（job 表 + 时间轮）              │
-        │                                ▼                                               │
-        │   job 表(open addressing: id→slot)    分层时间轮(近期 ≤10 分钟)                  │
-        │   long[] fireAt  int[] state          ┌ L0 10ms × 256 ┐                         │
-        │   int[] next/prev  long[] payloadOff  │ L1 2.56s × 64 │ …… 溢出到更高层          │
-        │                                       └───────────────┘                         │
-        │   远期桶（磁盘，按小时分段的有序文件）──▶ 距离到期 <10 分钟时装载进时间轮         │
-        │                                                                                │
-        │  到期批 ──▶ 分发器（异步，限速/按租户公平）──▶ 队列/回调 ──▶ 下游                │
-        │                  │ 成功后回写单写线程：追加 Fired(jobId, epoch) 记录              │
-        └────────────────────────────────────────────────────────────────────────────────┘
-                快照（每 N 分钟，或日志段滚动时）+ WAL ⇒ 崩溃恢复 / follower 追赶
+```mermaid
+flowchart TB
+    C["调用方"] -->|"命令"| API["API/网关(无状态)"]
+    API -->|"路由到分片"| Q["MPSC 队列"]
+    T["时钟 tick"] --> W["单写线程"]
+    Q --> W
+    W --> WAL["WAL"]
+    W --> JT["job 表"]
+    W --> TW["分层时间轮"]
+    FAR["远期桶(磁盘)"] -->|"不足 10 分钟"| TW
+    TW -->|"到期批"| D["分发器(异步)"]
+    D --> DS["队列/回调"]
+    D -->|"回写 Fired"| W
 ```
+
+* API / 网关（无状态）：`schedule` / `cancel` / `get`；校验、幂等（客户端 job id）、路由 shard = `hash(jobId) % N`。
+* 分片 s：一个 leader + 2 个 follower。
+* 单写线程依次做两件事：① 追加到 WAL（group commit，复制到 follower）；② 修改内存状态（job 表 + 时间轮）。
+* job 表（open addressing：id → slot）：`long[] fireAt`、`int[] state`、`int[] next/prev`、`long[] payloadOff`。
+* 分层时间轮（近期 ≤ 10 分钟）：L0 10 ms × 256，L1 2.56 s × 64，……溢出到更高层。
+* 远期桶：磁盘上按小时分段的有序文件；距离到期 < 10 分钟时装载进时间轮。
+* 分发器：异步，限速、按租户公平；把到期批交给队列/回调，再到下游。成功后回写单写线程：追加 `Fired(jobId, epoch)` 记录。
+* 快照（每 N 分钟，或日志段滚动时）+ WAL ⇒ 崩溃恢复 / follower 追赶。
 
 ### 4.2 状态机
 
-```text
-                 schedule
-   (不存在) ───────────────▶ SCHEDULED ──── cancel ───▶ CANCELLED (终态)
-                                │
-                     到期，单写线程把它移出时间轮
-                                ▼
-                            DISPATCHING ──(下游确认交付)──▶ FIRED (终态)
-                                │
-                                └─(交付失败，退避重试)─▶ 回到时间轮：nextAttemptAt = now + backoff(attempt)
-                                      └─(超过上限)───▶ DEAD (死信，告警)
+```mermaid
+flowchart TB
+    N["(不存在)"] -->|"schedule"| S["SCHEDULED"]
+    S -->|"cancel"| CA["CANCELLED 终态"]
+    S -->|"到期出轮"| DI["DISPATCHING"]
+    DI -->|"下游确认交付"| F["FIRED 终态"]
+    DI -->|"交付失败，退避"| S
+    DI -->|"超过上限"| DE["DEAD 死信"]
 ```
+
+* 到期：单写线程把它移出时间轮。
+* 交付失败、退避重试：回到时间轮，`nextAttemptAt = now + backoff(attempt)`。
+* 超过重试上限：进入 DEAD（死信），告警。
 
 * **重试 = 再调度**：失败重试复用同一个时间轮——不需要第二套机制。
 * **取消竞态**：`cancel` 与"到期出轮"都由**同一个单写线程**串行处理，所以不存在数据竞争，只有**业务竞态**：若 cancel 先到 → CANCELLED，任务从轮中摘除（O(1)，job 表记录了它在哪个 slot 的哪个链表）；若到期先发生 → 任务已是 DISPATCHING，cancel 返回 `TOO_LATE`。这种"以串行顺序定义语义"的做法，在单写者设计里是免费的。
 
 ### 4.3 日志记录（决定性状态机）
 
-```text
-Scheduled(jobId, fireAt, payloadRef, tenant, epoch)
-Cancelled(jobId)
-Dispatched(jobId, attempt, epoch)     ← 不是必须；见 §7 崩溃窗口讨论
-Fired(jobId, epoch)                   ← 下游确认交付后写
-Retry(jobId, attempt, nextAt)
-Dead(jobId)
-```
+| 记录 | 备注 |
+|---|---|
+| `Scheduled(jobId, fireAt, payloadRef, tenant, epoch)` | |
+| `Cancelled(jobId)` | |
+| `Dispatched(jobId, attempt, epoch)` | 不是必须；见 §7 崩溃窗口讨论 |
+| `Fired(jobId, epoch)` | 下游确认交付后写 |
+| `Retry(jobId, attempt, nextAt)` | |
+| `Dead(jobId)` | |
 
 状态机是这些记录的**纯函数**：`f(state, record) → state'`。重放同一份日志得到相同状态（事件溯源的标准套路）。注意：**"现在是几点"不是状态机的输入**，而是单独的 `Tick(now)` 命令，它也可以被记录或在测试里被注入（§11）。
 
@@ -150,13 +153,17 @@ Dead(jobId)
 **时间轮**（Varghese & Lauck, 1987）：把时间切成 tick，用一个环形数组，每个槽（slot）挂一条链表，放"在这个 tick 到期的定时器"。
 
 ```text
- 当前 tick 指针 →
- ┌───┬───┬───┬───┬───┬───┬───┬───┐   插入：slot = (fireTick) mod wheelSize   → O(1)
- │ 0 │ 1 │ 2 │ 3 │ 4 │ 5 │ 6 │ 7 │   到期：指针扫过一个槽，整条链表一次性取出      → O(到期数)
- └─┬─┴───┴─┬─┴───┴───┴───┴───┴───┘   删除（取消）：双向链表摘除                      → O(1)
-   ▼       ▼
-  J7      J3→J9
+ tick pointer
+ +---+---+---+---+---+---+---+---+
+ | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+ +---+---+---+---+---+---+---+---+
+   v       v
+  J7     J3->J9
 ```
+
+* 插入：slot = `(fireTick) mod wheelSize`，O(1)。
+* 到期：指针扫过一个槽，整条链表一次性取出，O(到期数)。
+* 删除（取消）：双向链表摘除，O(1)。
 
 一层轮覆盖的时间范围 = tick × 槽数。要覆盖到一年，就要**分层**：低层转一圈，高层前进一格，高层槽里的定时器"降级"（cascade）到低层重新插入。
 
@@ -199,11 +206,9 @@ final class JobTable {
 
 ## 5. 远期任务：分层存储
 
-```text
- 远期桶（磁盘）：按"小时"分段的有序文件，段内按 fireAt 排序；段由日志 compaction 生成
-   ┌ 2026-10-16T09 ┐ ┌ 2026-10-16T10 ┐ ┌ 2026-10-16T11 ┐ …   每段 ≈ 1157 × 3600 ≈ 4.2×10^6 条（平均）
- 装载器：每分钟检查，把"落入未来 10 分钟窗口"的任务批量读入时间轮
-```
+* 远期桶（磁盘）：按「小时」分段的有序文件，段内按 fireAt 排序；段由日志 compaction 生成。
+* 段的例子：`2026-10-16T09`、`2026-10-16T10`、`2026-10-16T11` ……，每段 ≈ 1157 × 3600 ≈ 4.2×10^6 条（平均）。
+* 装载器：每分钟检查，把「落入未来 10 分钟窗口」的任务批量读入时间轮。
 
 * 创建一个远期任务：追加 WAL → 放进"远期索引"（内存里只保留 id→段位置，或让 `JobTable` 的 `state=FAR` 的条目只占那 40 B）。
 * 为什么按小时分段而不是一个大 B-tree：任务的生命周期是"插入 → 等待 → 一次性读出 → 删除"。按时间分段后，**删除 = 丢掉整个文件**（一次 `unlink`），避免 B-tree 的页分裂和碎片，也避免 LSM 的墓碑堆积和 compaction 写放大。取消的任务用内存里的位图标记，装载时跳过，段在"完全过期"后整体删除。
@@ -215,14 +220,11 @@ final class JobTable {
 
 ### 6.1 写路径（为什么 "返回成功 ⟹ 持久"）
 
-```text
- schedule(job)
-   │ ① 路由到分片 leader
-   │ ② 单写线程把 Scheduled 记录追加到 WAL 缓冲
-   │ ③ group commit：一个刷盘周期内的所有记录一起 fsync，并并行发送给 2 个 follower
-   │ ④ 收到 ≥1 个 follower 的持久化确认（"2 份副本"）→ 回复调用方成功
-   │ ⑤ 之后才修改内存（job 表 + 时间轮）
-```
+1. 路由到分片 leader。
+2. 单写线程把 `Scheduled` 记录追加到 WAL 缓冲。
+3. group commit：一个刷盘周期内的所有记录一起 fsync，并并行发送给 2 个 follower。
+4. 收到 ≥ 1 个 follower 的持久化确认（「2 份副本」），回复调用方成功。
+5. 之后才修改内存（job 表 + 时间轮）。
 
 * 为什么先日志后内存：若先改内存、日志落盘前崩溃，调用方没收到成功、内存也丢了——是安全的；反过来**已经回复成功但日志没落盘**才是危险的。我们的顺序保证"回复成功 ⟹ 日志在 ≥2 处"。
 * **group commit**：单次 fsync 在 NVMe 上的耗时从几十 µs 到 ms 不等（取决于设备）。2 万条/s 的峰值若每条一次 fsync 会压垮设备，所以把"上一次 fsync 期间到达的所有记录"凑成一批再刷——吞吐随负载自适应，延迟只增加一个 fsync 周期。
@@ -236,10 +238,15 @@ final class JobTable {
 
 ### 6.3 "至少一次"从哪来：崩溃窗口
 
-```text
- 单写线程：到期 → 状态=DISPATCHING → 异步交付 → (下游确认) → 追加 Fired
-                                          ▲ 崩溃发生在这里？
+```mermaid
+flowchart TB
+    A["到期"] --> B["状态=DISPATCHING"]
+    B --> C["异步交付"]
+    C --> D["下游确认"]
+    D -->|"崩溃发生在这里？"| E["追加 Fired"]
 ```
+
+以上都由单写线程完成。
 
 * 在 "交付成功" 与 "Fired 写入日志" 之间崩溃：恢复后日志里没有 Fired，任务仍是 SCHEDULED/DISPATCHING，所以**会再交付一次**。这就是 at-least-once。
 * 反过来如果先写 `Fired` 再交付：崩溃会**丢**触发——违反 I4。所以顺序必须是"交付成功后再记 Fired"。
@@ -249,13 +256,26 @@ final class JobTable {
 
 ## 7. 故障切换、租约与 fencing
 
-```text
- 时间 ────────────────────────────────────────────────────────────────▶
- leader A(epoch 7)：正常 ── 发生 30 s 的 GC/虚拟机暂停 ─────────────── 醒来，仍以为自己是 leader
- 协调服务：              租约过期 → 选出 B，epoch 8
- leader B(epoch 8)：                      开始分发、写日志
- A 醒来后继续分发 / 写日志  ← 危险：两个"leader"
+```mermaid
+%%{init: {'sequence': {'actorMargin': 16, 'width': 104, 'messageMargin': 28}}}%%
+sequenceDiagram
+    autonumber
+    participant A as leader A
+    participant Z as 协调服务
+    participant B as leader B
+    A->>A: 正常 (epoch 7)
+    A->>A: GC 暂停 30 秒
+    Z->>B: 租约过期，选 B
+    B->>B: epoch 8，开始分发
+    A->>A: 醒来，仍自认 leader
+    Note over A,B: 危险：两个 leader
 ```
+
+1. leader A（epoch 7）正常工作。
+2. A 发生 30 s 的 GC / 虚拟机暂停。
+3. 协调服务：租约过期，选出 B，epoch 8。
+4. leader B（epoch 8）开始分发、写日志。
+5. A 醒来，仍以为自己是 leader，继续分发 / 写日志。**危险**：此时有两个「leader」。
 
 对策（叠加使用）：
 

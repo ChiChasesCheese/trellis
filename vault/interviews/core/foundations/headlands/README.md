@@ -6,10 +6,13 @@
 
 ## 阅读顺序
 
-```text
-① complexity ──▶ ② heap_priority_queue ──▶ ③ ordered_maps_trees
-       │
-       └──────▶ ④ cpu_cache_locality ──▶ ⑤ os_processes_threads_ipc ──▶ ⑥ networking_basics
+```mermaid
+flowchart TB
+    A["① 复杂度"] --> B["② 堆与优先队列"]
+    B --> C["③ 有序映射与树"]
+    A --> D["④ CPU 缓存"]
+    D --> E["⑤ 进程线程 IPC"]
+    E --> F["⑥ 网络基础"]
 ```
 
 | 顺序 | 章节 | 一句话 | 前置 | 建议用时 |

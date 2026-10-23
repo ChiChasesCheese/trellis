@@ -180,17 +180,23 @@ true               <- json == old
 
 `examples/J07/J07Ex2.java` 输出：
 
-```
-6 3                                            <- "x   \ny" 长 6；文本块里行尾空格被删，只剩 "x\ny" 长 3
-[x   |y]                                       <- \s 保住了 3 个行尾空格
-SELECT symbol, SUM(qty) FROM fills WHERE side = 'BUY'      <- 3 行拼成 1 行
+```console
+6 3
+[x   |y]
+SELECT symbol, SUM(qty) FROM fills WHERE side = 'BUY'
 tab:	here
 quotes: """three"""
 backslash: \
-a|  b|c                                        <- "   a\n     b\n   c".stripIndent()
+a|  b|c
 symbol=AAPL qty=100
-true                                           <- "a\\tb".translateEscapes().equals("a\tb")
+true
 ```
+
+* `6 3`：`"x   \ny"` 长 6；文本块里行尾空格被删，只剩 `"x\ny"` 长 3。
+* `[x   |y]`：`\s` 保住了 3 个行尾空格。
+* `SELECT ...`：3 行拼成 1 行。
+* `a|  b|c`：`"   a\n     b\n   c".stripIndent()` 的结果。
+* `true`：`"a\\tb".translateEscapes().equals("a\tb")`。
 
 第一行有个值得注意的细节：` `（Unicode 转义的空格）在**编译的最早阶段**，早于词法分析，就被换成一个真实的空格字符。所以它和手敲在行尾的空格没有区别，会被当作行尾空白删掉。
 要保住行尾空格，用 `\s`（文本块的转义，在去除空白**之后**才处理）。

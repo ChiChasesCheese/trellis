@@ -173,15 +173,19 @@ static int sumUntilNonInt(List<Object> xs) {
 
 输出：
 
-```
+```console
 nonempty string x | no | no
 string x | not a nonempty string | not a nonempty string
-6                           <- sumUntilNonInt(List.of(1, 2, 3, "stop", 4)) = 1+2+3
+6
 list of 2 | not a list
-arraylist 1 | other list    <- generic2(new ArrayList<>(...)) / generic2(List.of("a"))
+arraylist 1 | other list
 ABC
-string a | null!            <- Java 21 允许 s instanceof String t；null 时为 false
+string a | null!
 ```
+
+* `6`：`sumUntilNonInt(List.of(1, 2, 3, "stop", 4))` = 1+2+3。
+* `arraylist 1 | other list`：`generic2(new ArrayList<>(...))` / `generic2(List.of("a"))`。
+* `string a | null!`：Java 21 允许 `s instanceof String t`；`null` 时为 false。
 
 ### 例 3：贴近真实——`equals`、弱类型配置、事件过滤
 

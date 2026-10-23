@@ -88,9 +88,9 @@ static final class Node {
 
 BST 所有操作是 O(**树高**)，不是 O(log n)，树高取决于**插入顺序**：
 
-```text
 依次插入 1, 2, 3, 4, 5：
 
+```text
   1
    \
     2
@@ -99,8 +99,10 @@ BST 所有操作是 O(**树高**)，不是 O(log n)，树高取决于**插入顺
        \
         4
          \
-          5          树高 = 5 = n，查找一次要走 n 步 → 退化成链表
+          5
 ```
+
+树高 = 5 = n，查找一次要走 n 步 → 退化成链表。
 
 实验（`TreeDemo` 第 1 部分，n = 5000 个不同 key）：
 
@@ -198,15 +200,13 @@ random inserts: height 28  (log2(5000) = 12.3)
 
 2-3 树每个节点有 1 或 2 个 key（2 或 3 个孩子），**所有叶子同深度**。
 
-```text
 2-3 树的插入：往一个已有 2 个 key 的节点里再塞一个，变成 3 个 key，就「分裂」：
 把中间的 key 推到父亲里。分裂一路向上，只有根分裂时整棵树才长高一层。
 所以整棵树永远是「完美平衡」的。
 
-    [10 | 20]              插入 15 →    [10 | 15 | 20] 过满，分裂 →      [15]
-                                                                         /    \
-                                                                      [10]    [20]
-```
+1. 起点：一个节点 `[10 | 20]`。
+2. 插入 15：节点变成 `[10 | 15 | 20]`，过满。
+3. 分裂：中间的 15 推上去成为新的根 `[15]`，左孩子 `[10]`，右孩子 `[20]`。
 
 红黑树是把「2-3 树里的一个 3-节点」用「一条红色的边把两个二叉节点粘在一起」表示。红边 = 「这两个 key 在同一个 2-3 节点里」；规则 4（不连续红）= 一个 2-3 节点至多 2 个 key；规则 5（黑高度相同）= 所有叶子同深。这样「旋转 + 重染色」就是 2-3 树的「分裂/合并」。
 
@@ -235,29 +235,25 @@ William Pugh 1990 年提出跳表：**用抛硬币代替复杂的平衡规则**�
 
 普通有序链表查找要一个个走，O(n)：
 
-```text
-第 0 层 (全部)   head → 1 → 3 → 5 → 7 → 9 → 11 → 13 → 15 → NIL
-```
+第 0 层（全部）：`head → 1 → 3 → 5 → 7 → 9 → 11 → 13 → 15 → NIL`
 
 加一层「快车道」：每隔一个节点提一层，快车道上的节点指向快车道上的下一个，再来一层更快的……
 
-```text
-第 3 层         head ───────────────────────────────→ 11 ───────────→ NIL
-第 2 层         head ──────────→ 5 ─────────────────→ 11 ───────────→ NIL
-第 1 层         head ──→ 3 ────→ 5 ────→ 9 ─────────→ 11 ──→ 15 ───→ NIL
-第 0 层         head → 1 → 3 → 5 → 7 → 9 → 11 → 13 → 15 → NIL
-```
+| 层 | 从 head 往右依次经过 |
+|---|---|
+| 第 3 层 | head → 11 → NIL |
+| 第 2 层 | head → 5 → 11 → NIL |
+| 第 1 层 | head → 3 → 5 → 9 → 11 → 15 → NIL |
+| 第 0 层 | head → 1 → 3 → 5 → 7 → 9 → 11 → 13 → 15 → NIL |
 
 **查找 13**：从最高层的 head 出发。
 
-```text
-层 3: head → 11（11 < 13，前进）→ NIL（超过了），下降一层，停在 11
-层 2: 从 11 往右：NIL，下降
-层 1: 从 11 往右：15 > 13，不前进，下降
-层 0: 从 11 往右：13 = 13，找到。
+1. 层 3：head → 11（11 < 13，前进）→ NIL（超过了），下降一层，停在 11。
+2. 层 2：从 11 往右：NIL，下降。
+3. 层 1：从 11 往右：15 > 13，不前进，下降。
+4. 层 0：从 11 往右：13 = 13，找到。
 
-路径: head →(层3) 11 →(层1下降,层0) 13   只经过了 3 个节点，而不是 7 个
-```
+路径：head →（层 3）11 →（层 1 下降，层 0）13，只经过了 3 个节点，而不是 7 个。
 
 规则：**每层都「能往右走就往右，会超过就下降」**，像坐高铁换乘慢车。
 
@@ -360,16 +356,13 @@ public class MiniSkipList {
 
 ### 6.1 它们的类型层次
 
-```text
-Map
- └─ SequencedMap   (Java 21)
-     └─ SortedMap           firstKey, lastKey, headMap, tailMap, subMap, comparator
-         └─ NavigableMap    lowerKey/floorKey/ceilingKey/higherKey, firstEntry, pollFirstEntry,
-             │              descendingMap, 带 inclusive 参数的 headMap/tailMap/subMap
-             ├─ TreeMap                       红黑树，非线程安全
-             └─ ConcurrentNavigableMap
-                 └─ ConcurrentSkipListMap     跳表，线程安全
-```
+* `Map`
+  * `SequencedMap`（Java 21）
+    * `SortedMap`：`firstKey`、`lastKey`、`headMap`、`tailMap`、`subMap`、`comparator`
+      * `NavigableMap`：`lowerKey`/`floorKey`/`ceilingKey`/`higherKey`、`firstEntry`、`pollFirstEntry`、`descendingMap`、带 inclusive 参数的 `headMap`/`tailMap`/`subMap`
+        * `TreeMap`：红黑树，非线程安全
+        * `ConcurrentNavigableMap`
+          * `ConcurrentSkipListMap`：跳表，线程安全
 
 声明变量写 `NavigableMap<K, V>`（要导航方法）或 `SequencedMap`（只用首尾）而不是具体类，方便换实现。
 

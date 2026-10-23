@@ -30,22 +30,17 @@ Java 21 加了 `SequencedCollection`、`SequencedSet`、`SequencedMap` 三个接
 
 ### 2.1 新的类型层级
 
-```
-Collection
- └─ SequencedCollection                 (新)  addFirst addLast getFirst getLast removeFirst removeLast reversed
-     ├─ List                            ← 现在是 SequencedCollection
-     ├─ Deque                           ← 现在是 SequencedCollection
-     └─ SequencedSet                    (新)  = Set + SequencedCollection
-         ├─ LinkedHashSet
-         └─ SortedSet → NavigableSet → TreeSet
-
-Map
- └─ SequencedMap                        (新)  firstEntry lastEntry pollFirstEntry pollLastEntry
-     │                                        putFirst putLast reversed
-     │                                        sequencedKeySet sequencedValues sequencedEntrySet
-     ├─ LinkedHashMap
-     └─ SortedMap → NavigableMap → TreeMap
-```
+* `Collection`
+  * `SequencedCollection`（新）：`addFirst` `addLast` `getFirst` `getLast` `removeFirst` `removeLast` `reversed`
+    * `List`：现在是 `SequencedCollection`
+    * `Deque`：现在是 `SequencedCollection`
+    * `SequencedSet`（新）= `Set` + `SequencedCollection`
+      * `LinkedHashSet`
+      * `SortedSet` → `NavigableSet` → `TreeSet`
+* `Map`
+  * `SequencedMap`（新）：`firstEntry` `lastEntry` `pollFirstEntry` `pollLastEntry` `putFirst` `putLast` `reversed` `sequencedKeySet` `sequencedValues` `sequencedEntrySet`
+    * `LinkedHashMap`
+    * `SortedMap` → `NavigableMap` → `TreeMap`
 
 这个层级是把**已有的接口和类接上去**，不需要改已有代码：`ArrayList` 自动就是 `SequencedCollection`，`TreeMap` 自动就是 `SequencedMap`。
 

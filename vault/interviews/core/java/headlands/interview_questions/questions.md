@@ -46,12 +46,18 @@ C++ 的答案：**1、3 交给编译器在编译期（AOT, ahead-of-time）解�
 
 Java 的路线不同：
 
+```mermaid
+flowchart TB
+    S["Foo.java"] -->|"javac"| B["Foo.class 字节码"]
+    B -->|"JVM"| I["解释器 tier0"]
+    I -->|"热了"| C1["C1 tier1-3"]
+    C1 -->|"更热"| C2["C2 tier4"]
+    P["运行时 profile"] -.-> C2
 ```
- Foo.java --javac--> Foo.class(字节码) --JVM--> 解释器(tier0) --热了--> C1(tier1-3, 快速编译, 带 profiling)
-                                                          --更热--> C2(tier4, 激进优化)
-                                                                         ^
-                       运行时 profile: 这个调用点实际只见过 1 种类型 / 这个分支 99.9% 不走
-```
+
+* C1（tier1-3）：快速编译，带 profiling。
+* C2（tier4）：激进优化。
+* 运行时 profile 的例子：这个调用点实际只见过 1 种类型；这个分支 99.9% 不走。
 
 * **JIT 的优势是信息**：C++ 编译器不知道某个接口调用点运行时是哪个实现类；HotSpot 看到"这个调用点只见过 `Sq`"，就直接内联 `Sq.area`（并留一个陷阱防止猜错，见 Q21）。这是自动、在线的 profile-guided optimization。
 * **逃逸分析**（Q20）：证明对象不会跑出方法，就不分配，字段拆成寄存器。同一段代码，开逃逸分析稳态分配 **0 字节**、约 48 ms；`-XX:-DoEscapeAnalysis` 关掉后分配 **4,800,000,000 字节**、约 386 ms（慢 8 倍）。
@@ -432,11 +438,10 @@ Math.addExact -> integer overflow          <- 想要检查就用 *Exact 方法
 
 **展开**
 
-```
- C++:  vector<int>  --编译-->  专门为 int 生成的代码, 元素就是 4 字节连续排列
- Java: List<Integer> --javac--> List (元素类型 Object)
-                                  [ref][ref][ref]...  每个 ref -> 一个 Integer 对象 (16 字节, 在堆上)
-```
+| 语言 | 源码 | 编译后 |
+|---|---|---|
+| C++ | `vector<int>` | 编译后专门为 `int` 生成的代码，元素就是 4 字节连续排列 |
+| Java | `List<Integer>` | javac 擦除成 `List`（元素类型 `Object`）：`[ref][ref][ref]...`，每个 ref 指向一个 `Integer` 对象（16 字节，在堆上） |
 
 后果：
 
@@ -533,13 +538,22 @@ Java：
 输出：
 
 ```
-overlap copy (src=0,dst=2,len=4): [1, 2, 1, 2, 3, 4]       <- [1..6] 向后移 2 位, 结果正确(memmove 语义)
+overlap copy (src=0,dst=2,len=4): [1, 2, 1, 2, 3, 4]
 ArrayStoreException: arraycopy: element type mismatch: ... destination array, java.lang.String
 bounds: arraycopy: last destination index 9 out of bounds for int[6]
-64MB:  arraycopy 4 ms | for-loop 5 ms | Arrays.copyOf 11 ms     <- 第 1 轮(预热期)
-64MB:  arraycopy 1 ms | for-loop 1 ms | Arrays.copyOf  3 ms     <- 稳态: 循环被 C2 优化到和 arraycopy 一样
 16-long arraycopy + store + load: ~1.7 ns/iter
 ```
+
+* `overlap copy`：`[1..6]` 向后移 2 位，结果正确（`memmove` 语义）。
+
+64MB 拷贝：
+
+| 轮次 | arraycopy | for-loop | Arrays.copyOf |
+|---|---|---|---|
+| 第 1 轮（预热期） | 4 ms | 5 ms | 11 ms |
+| 稳态 | 1 ms | 1 ms | 3 ms |
+
+稳态时循环被 C2 优化到和 `arraycopy` 一样快。
 
 稳态下手写循环和 `arraycopy` 一样快——C2 能把简单拷贝循环识别并替换成同样的拷贝（据计时判断，未看汇编）；但预热期（解释器里）循环慢得多，所以**一般仍用 `arraycopy`**：意图清晰、预热期也快、检查齐全。`Arrays.copyOf` 慢是因为多了分配 + 清零。
 
@@ -732,18 +746,25 @@ struct Order size=24 alignment=8
 
 **展开**
 
-```
-  寄存器 ~0.3 ns | L1 ~1 ns (32-64KB) | L2 ~4 ns | L3 ~15 ns | 内存 ~80-100 ns   (量级, 因机器而异)
-  long[]:   [v0][v1][v2][v3][v4][v5][v6][v7] <- 一条 64B 缓存行 = 8 个 long, 顺序读几乎全命中 + 预取
-  Long[]:   [ref][ref][ref]...  每个 ref -> 堆上随机位置的 Long (16B)   <- 打乱后每次访问 ~ 一次 miss
-```
+| 寄存器 | L1 | L2 | L3 | 内存 |
+|---|---|---|---|---|
+| ~0.3 ns | ~1 ns（32-64KB） | ~4 ns | ~15 ns | ~80-100 ns |
+
+以上是量级，因机器而异。
+
+| 数组 | 内存里的样子 | 访问 |
+|---|---|---|
+| `long[]` | `[v0][v1][v2][v3][v4][v5][v6][v7]`：一条 64B 缓存行 = 8 个 long | 顺序读几乎全命中 + 预取 |
+| `Long[]` | `[ref][ref][ref]...`，每个 ref 指向堆上随机位置的 `Long`（16B） | 打乱后每次访问约一次 miss |
 
 1200 万个元素，稳态：
 
-```
-sum of 12,000,000: long[]    2 ms | Long[] (alloc order)    3 ms | Long[] (shuffled)   34 ms
-sum of 12,000,000: long[]    8 ms | Long[] (alloc order)    7 ms | Long[] (shuffled)   29 ms
-```
+`sum of 12,000,000`，单位 ms：
+
+| 运行 | `long[]` | `Long[]`（分配顺序） | `Long[]`（打乱） |
+|---|---|---|---|
+| 第 1 次 | 2 | 3 | 34 |
+| 第 2 次 | 8 | 7 | 29 |
 
 `Long[]` 按**分配顺序**遍历时对象本来就连续放（TLAB 指针碰撞），所以接近 `long[]`；**打乱引用顺序后慢约 10 倍**。这解释了为什么 Java 的 `HashMap`/`LinkedList`/`TreeMap` 在大数据量下比 C++ 同类慢——节点散落在堆里；GC 压缩/复制后对象邻近关系也可能变化（对遍历有利或不利，不要承诺）。
 
@@ -779,11 +800,15 @@ sum of 12,000,000: long[]    8 ms | Long[] (alloc order)    7 ms | Long[] (shuff
 
 **展开**
 
+```mermaid
+flowchart TB
+    B["字节码"] -->|"计数器超阈值"| Q["编译队列"]
+    Q -->|"后台线程"| C1["C1 代码 带 profile"]
+    C1 -->|"更热"| C2["C2 代码"]
+    C2 -.->|"去优化 deopt"| B
 ```
-  字节码 --(调用/回边计数器超阈值)--> 编译队列 --后台线程--> C1 代码(带 profile) --更热--> C2 代码
-     ^                                                                                    |
-     |                    去优化(deopt): 推测失败, 回到解释器/C1 重新 profile <-------------+
-```
+
+去优化（deopt）：推测失败，回到解释器 / C1 重新 profile。
 
 * 为什么分层：C2 编译慢但产出快，C1 编译快产出一般；分层让你**先快速变快，再慢慢变极快**。
 * 默认阈值（运行时会按编译队列长度动态缩放）：`Tier3CompileThreshold=2000`、`Tier4InvocationThreshold=5000`、`Tier4CompileThreshold=15000`、`TieredStopAtLevel=4`。
@@ -828,11 +853,11 @@ sum of 12,000,000: long[]    8 ms | Long[] (alloc order)    7 ms | Long[] (shuff
 
 稳态耗时：
 
-```
-1 type  (Sq)            0.27–0.38 ns/call
-2 types (Sq,Tri)        0.34–0.36 ns/call
-3 types (Sq,Tri,Cir)    0.9 → 1.35 ns/call    <- 约 4 倍, 因为 megamorphic 不再内联
-```
+| 类型数 | 耗时 | 说明 |
+|---|---|---|
+| 1 type（Sq） | 0.27–0.38 ns/call | |
+| 2 types（Sq, Tri） | 0.34–0.36 ns/call | |
+| 3 types（Sq, Tri, Cir） | 0.9 → 1.35 ns/call | 约 4 倍，因为 megamorphic 不再内联 |
 
 `-XX:+UnlockDiagnosticVMOptions -XX:+PrintInlining` 的输出（去重后）：
 
@@ -1047,11 +1072,27 @@ sum of 12,000,000: long[]    8 ms | Long[] (alloc order)    7 ms | Long[] (shuff
 
 **展开**
 
+```mermaid
+%%{init: {'sequence': {'actorMargin': 16, 'width': 104, 'messageMargin': 28}}}%%
+sequenceDiagram
+    autonumber
+    participant A as 线程A
+    participant B as 线程B
+    participant V as VM 线程
+    V->>A: 请求 safepoint
+    V->>B: 请求 safepoint
+    A->>A: 到达检查点，停
+    B->>B: 长计数循环无检查点
+    B->>V: 迟迟才到达
+    V->>V: 执行操作
+    V->>B: 释放
+    V->>A: 释放
 ```
-  线程A: ...运行........ 到达 safepoint 检查点 -> 停
-  线程B: ...运行.......................... (一个很长的计数循环没有检查点) -> 迟迟不停
-  VM 线程: 请求 safepoint --等待所有线程到达(time-to-safepoint)--> 执行操作 --> 释放
-```
+
+1. VM 线程请求 safepoint，等待所有线程到达（time-to-safepoint）。
+2. 线程 A 运行一阵后到达 safepoint 检查点，停下。
+3. 线程 B 的一个很长的计数循环没有检查点，迟迟不停。
+4. 全部到达后，VM 线程执行操作，再释放所有线程。
 
 * `-Xlog:safepoint`，G1 的 young GC 作为 safepoint 操作的日志行：
 
@@ -1139,9 +1180,9 @@ happens-before 的主要规则（JLS §17.4.5）：
 
 4 个线程各 `++` 100 万次：
 
-```
-expected 4,000,000 | volatile++ 684,857 | synchronized 4,000,000 | AtomicInteger 4,000,000
-```
+| expected | `volatile++` | `synchronized` | `AtomicInteger` |
+|---|---|---|---|
+| 4,000,000 | 684,857 | 4,000,000 | 4,000,000 |
 
 另一次运行得到 2,148,166：**每次不同但都远小于 4,000,000**，正是数据竞争的特征。丢了几十万到三百多万次更新。过程：
 
@@ -1187,11 +1228,11 @@ volatile 适用：**一个线程写、其它线程读的状态标志**（`runnin
 
 每个线程 500 万次受保护的 `++`（粗糙计时）：
 
-```
-threads=1  synchronized  13 ms | ReentrantLock  16 ms | AtomicLong   6 ms | LongAdder  12 ms
-threads=4  synchronized 115 ms | ReentrantLock 131 ms | AtomicLong 195 ms | LongAdder  13 ms
-threads=8  synchronized 228 ms | ReentrantLock 236 ms | AtomicLong 320 ms | LongAdder  17 ms
-```
+| 线程数 | synchronized | ReentrantLock | AtomicLong | LongAdder |
+|---|---|---|---|---|
+| 1 | 13 ms | 16 ms | 6 ms | 12 ms |
+| 4 | 115 ms | 131 ms | 195 ms | 13 ms |
+| 8 | 228 ms | 236 ms | 320 ms | 17 ms |
 
 两种锁**同一数量级**；不要说"ReentrantLock 比 synchronized 快"（Java 6 之后基本拉平）。偏向锁已移除（Q06）。
 
@@ -1233,9 +1274,9 @@ sleep outside synchronized:  348 ms   <- 睡眠时虚拟线程让出载体, 近�
 
 8 线程竞争一个计数器，各 500 万次：
 
-```
-synchronized 228 ms | ReentrantLock 236 ms | AtomicLong 320 ms | LongAdder 17 ms
-```
+| synchronized | ReentrantLock | AtomicLong | LongAdder |
+|---|---|---|---|
+| 228 ms | 236 ms | 320 ms | 17 ms |
 
 * **低竞争（1 线程）**：`AtomicLong` 最快（6 ms vs 13 ms）。
 * **高竞争**：`AtomicLong` 比 `synchronized` 还慢——所有核反复争抢同一个缓存行，CAS 失败重试，每次重试都浪费一次缓存行传输；锁则让线程排队/睡眠，避免空转。
@@ -1353,11 +1394,12 @@ check-then-act race: if(!containsKey) put  vs  putIfAbsent -> 1 (returned existi
 
 **展开**
 
-```
- 平台线程:  1 : 1 对应 OS 线程   (栈 ~1MB 虚拟地址, 创建/切换要进内核, 数千个就吃力)
- 虚拟线程:  M : N              (栈是堆上的可增长对象, 阻塞时被"卸载", 载体线程去跑别的虚拟线程)
-   VT1 --run--> [carrier-1]       VT1 在 sleep -> 卸载; carrier-1 继续跑 VT2
-```
+| 线程 | 对应关系 |
+|---|---|
+| 平台线程 | 1 : 1 对应 OS 线程（栈 ~1MB 虚拟地址，创建/切换要进内核，数千个就吃力） |
+| 虚拟线程 | M : N（栈是堆上的可增长对象，阻塞时被「卸载」，载体线程去跑别的虚拟线程） |
+
+例子：VT1 在 `carrier-1` 上运行；VT1 在 `sleep` 时被卸载，`carrier-1` 继续跑 VT2。
 
 12 核机器上的结果：
 
@@ -1465,12 +1507,10 @@ class Holder { static final Foo INSTANCE = new Foo(); }
 
 **展开**
 
-```
- 进程 A: [代码|数据|堆|栈]  进程 B: [代码|数据|堆|栈]     <- 各自的虚拟地址空间, 隔离
- 线程:   进程内共享 代码|数据|堆, 各有独立栈 + 寄存器
- 切换:   保存 A 的寄存器 -> 调度器选 B -> 恢复 B 的寄存器 (进程间: 还要切换页表, TLB 部分失效)
- Java:   Thread = 1:1 OS 线程 (pthread);  虚拟线程 = JVM 在用户态切换栈 (Q31)
-```
+* 进程 A 和进程 B：各自有 `[代码|数据|堆|栈]`，各自的虚拟地址空间，互相隔离。
+* 线程：进程内共享代码、数据、堆，各有独立栈 + 寄存器。
+* 切换：保存 A 的寄存器 → 调度器选 B → 恢复 B 的寄存器（进程间：还要切换页表，TLB 部分失效）。
+* Java：Thread = 1:1 OS 线程（pthread）；虚拟线程 = JVM 在用户态切换栈（Q31）。
 
 * **直接成本**：内核态切换指令序列，量级 1–几微秒（常见经验数字）。**间接成本**：被换走线程的 L1/L2 缓存和分支预测状态被冲掉，回来后要重新热身——这是"线程数远多于核数反而更慢"的原因，也是低延迟系统"一线程一核、不让出"的原因。
 * **线程栈**：默认 `ThreadStackSize` 在 Linux x86_64 是 1024 KB（macOS arm64 是 2048 KB）。栈是虚拟内存预留，按需提交。
@@ -1498,11 +1538,9 @@ class Holder { static final Foo INSTANCE = new Foo(); }
 
 **展开**
 
-```
- 虚拟地址 --页表(MMU/TLB)--> 物理页
-   未映射/换出 -> page fault -> 内核: 分配并清零一页(匿名页) 或 从磁盘读入(文件页) -> 继续
- 文件读写: 应用 buffer <-> page cache <-> 磁盘     (写: 先写 page cache, 稍后回写; fsync 强制落盘, Q43)
-```
+* 虚拟地址 → 页表（MMU/TLB）→ 物理页。
+* 未映射/换出 → page fault → 内核：分配并清零一页（匿名页）或从磁盘读入（文件页）→ 继续。
+* 文件读写：应用 buffer ↔ page cache ↔ 磁盘（写：先写 page cache，稍后回写；`fsync` 强制落盘，Q43）。
 
 `NativeMemoryTracking`（`-Xmx256m`，一个会分配垃圾的 JVM）：
 
@@ -1693,11 +1731,18 @@ shared mmap, spin on volatile seq      0.15 us per round trip
 
 **展开**
 
-```
-  mapped file:  [ head(8B) | pad..(64B 对齐, 防伪共享) | tail(8B) | pad.. | ring data ... ]
-  生产者: 写数据到 slot[tail % N]  --然后-->  setRelease(tail, tail+1)        (发布)
-  消费者: 读 getAcquire(tail) > head  -->  读 slot[head % N]  -->  setRelease(head, head+1)
-```
+mapped file 的布局：
+
+| 从文件开头起的顺序 | 内容 |
+|---|---|
+| 1 | head（8B） |
+| 2 | pad（64B 对齐，防伪共享） |
+| 3 | tail（8B） |
+| 4 | pad |
+| 5 | ring data ... |
+
+* 生产者：写数据到 `slot[tail % N]`，然后 `setRelease(tail, tail+1)`（发布）。
+* 消费者：读 `getAcquire(tail) > head`，再读 `slot[head % N]`，然后 `setRelease(head, head+1)`。
 
 最简版本的 mmap 往返只有一个字：父写序号 `i` 到偏移 0，子看到后把 `i` 回写到偏移 64，父自旋读偏移 64。关键代码：
 
@@ -1739,13 +1784,12 @@ while ((long) LONGS.getVolatile(mb, 64) != i) Thread.onSpinWait();   // 等回�
 
 **展开**
 
-```
- 握手:  C --SYN--> S ; C <--SYN+ACK-- S ; C --ACK--> S       (1 RTT 后才能发数据; 连接复用/长连接避免这个成本)
- Nagle:   有未确认数据时, 小于 MSS 的新数据先缓存, 等 ACK 或凑满再发
- 延迟ACK: 接收方收到数据不立刻 ACK, 等最多 ~40ms (Linux 常见) 看有没有数据可以捎带
- 叠加:    发送方 write(header 4B); write(body 4B)   -> 第二个小包被 Nagle 扣住等 header 的 ACK
-          接收方等第二块数据才处理/回包 -> 不回数据 -> 延迟 ACK 等到超时才确认 -> 约 40ms 的卡顿
-```
+* 握手：C → S：SYN；S → C：SYN+ACK；C → S：ACK（1 RTT 后才能发数据；连接复用/长连接避免这个成本）。
+* Nagle：有未确认数据时，小于 MSS 的新数据先缓存，等 ACK 或凑满再发。
+* 延迟 ACK：接收方收到数据不立刻 ACK，等最多 ~40ms（Linux 常见）看有没有数据可以捎带。
+* 叠加：
+  * 发送方 `write(header 4B); write(body 4B)`，第二个小包被 Nagle 扣住，等 header 的 ACK。
+  * 接收方等第二块数据才处理/回包，不回数据，延迟 ACK 等到超时才确认，约 40ms 的卡顿。
 
 Java：`socket.setTcpNoDelay(true)` / NIO `StandardSocketOptions.TCP_NODELAY`。**更好的做法是一次 `write` 发完整条消息**（或 gather write），不依赖关掉 Nagle。
 
@@ -1822,9 +1866,9 @@ for each ready key: acceptable -> accept + register(OP_READ)
 
 延迟预算（量级，一般认识）：
 
-```
- 同机 共享内存 ~0.1–1 us  |  同机 loopback TCP ~10 us (约 12 us)  |  同机房 网络一跳 ~10–100 us  |  跨城市 ~ms
-```
+| 同机共享内存 | 同机 loopback TCP | 同机房网络一跳 | 跨城市 |
+|---|---|---|---|
+| ~0.1–1 us | ~10 us（约 12 us） | ~10–100 us | ~ms |
 
 可操作的清单（按收益大致排序，具体要测）：
 
@@ -1858,11 +1902,14 @@ for each ready key: acceptable -> accept + register(OP_READ)
 
 **展开**
 
+```mermaid
+flowchart TB
+    A["应用"] -->|"write()"| P["page cache 内存"]
+    P -->|"内核稍后回写"| D["磁盘/SSD"]
 ```
- 应用 --write()--> page cache (内存, 标记 dirty) --(内核稍后回写)--> 磁盘/SSD
-                     ^ 读也先查这里 (命中很快)
- force()/fsync: 等 dirty 页 + 元数据真正写到设备并确认  <- 这一步才耐久
-```
+
+* `write()` 后数据在 page cache 里，标记 dirty；读也先查这里（命中很快）。
+* `force()`/`fsync`：等 dirty 页 + 元数据真正写到设备并确认，这一步才耐久。
 
 2000 条 4 KB 记录，`FileChannel.write`（`force(false)` 只刷数据不刷元数据，对应 `fdatasync`）：
 
