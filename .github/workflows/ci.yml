@@ -165,7 +165,8 @@ jobs:
           if command -v clang++ >/dev/null; then echo "CXX=clang++" >> "$GITHUB_ENV"; else echo "CXX=g++" >> "$GITHUB_ENV"; fi
           # AddressSanitizer aborts on the runners' default ASLR entropy (kernel >= 6.x); this is the documented workaround.
           sudo sysctl -w vm.mmap_rnd_bits=28
-      - run: python3 -B scripts/kit_suites.py --co "${{ matrix.co }}"
+      # --ci leaves out the `perf` tests: their fixed wall-clock budgets are tuned for a desktop, not a shared runner.
+      - run: python3 -B scripts/kit_suites.py --co "${{ matrix.co }}" --ci
 
   mermaid:
     needs: changes

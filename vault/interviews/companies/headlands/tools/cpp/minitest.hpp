@@ -18,6 +18,22 @@
 // body is a failure (that is how the starter's `throw std::logic_error("TODO")` turns the suite red).
 #pragma once
 
+// clang -fsanitize=undefined lowers a checked signed __int128 multiplication to compiler-rt's __muloti4, which libgcc (the
+// default runtime on Linux, clang or g++) does not have: the link fails.  Provide it (only when the runtime lacks it, an
+// archive member is never pulled in over a definition in the executable).
+#if defined(__clang__) && defined(__linux__) && defined(__SIZEOF_INT128__)
+extern "C" __int128 __muloti4(__int128 a, __int128 b, int* overflow) {
+    using U = unsigned __int128;
+    const U ua = a < 0 ? U(0) - U(a) : U(a);
+    const U ub = b < 0 ? U(0) - U(b) : U(b);
+    const bool negative = (a < 0) != (b < 0);
+    const U product = ua * ub;  // unsigned: wraps, never UB
+    const U limit = U(1) << 127;  // |INT128_MIN|
+    *overflow = (ua != 0 && ub > ~U(0) / ua) || (negative ? product > limit : product >= limit);
+    return static_cast<__int128>(negative ? U(0) - product : product);
+}
+#endif
+
 #include <cerrno>
 #include <chrono>
 #include <cmath>

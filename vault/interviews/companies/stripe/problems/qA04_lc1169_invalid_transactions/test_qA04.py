@@ -77,6 +77,7 @@ def test_random_against_brute_force(impl):
 
 @pytest.mark.part1
 @pytest.mark.edge
+@pytest.mark.perf
 def test_dense_same_minute_group_is_not_quadratic(impl):
     # 20,000 transactions, one name, one minute, two cities: all invalid; O(n^2) pair scan would stall
     txs = [f"a,5,1,{'x' if i % 2 else 'y'}" for i in range(20_000)] + ["a,5,1,x"] * 0

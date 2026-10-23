@@ -3,7 +3,8 @@
 
   python3 tools/cpptest.py run   <题目目录> [--impl reference|starter|work] [--tag part1] [--exclude-tag perf] [-q]
   python3 tools/cpptest.py start <题目目录>        # 把 cpp/starter.hpp 复制到 cpp/work.hpp（已存在就不动）
-  python3 tools/cpptest.py verify "<glob>"         # 验收：reference 编译(-Werror)且全绿，starter 编译且至少一个测试红
+  python3 tools/cpptest.py verify "<glob>" [--exclude-tag perf]   # 验收：reference 编译(-Werror)且全绿，starter 编译且至少一个测试红
+                                                   #（--exclude-tag perf：reference 不跑限时测试，CI 的共享 runner 上用）
   python3 tools/cpptest.py main  <题目目录> [--impl …] < input.txt   # 跑 cpp/main.cpp（stdin → stdout）
 
 布局：<题目目录>/cpp/{reference.hpp, starter.hpp, [work.hpp], test.cpp, [main.cpp], [cases/*.in|*.out]}。
@@ -32,6 +33,8 @@ HARNESS_DIR = KIT / "tools" / "cpp"
 CXX = os.environ.get("CXX") or next((c for c in ("clang++", "g++", "c++") if shutil.which(c)), "clang++")
 BASE = ["-std=c++20", "-O2", "-Wall", "-Wextra"]
 SAN = ["-fsanitize=address,undefined", "-fno-sanitize-recover=undefined", "-fno-omit-frame-pointer", "-g"]
+# Linux: a 16-byte or non-constant-folded std::atomic call goes to libatomic (macOS has it in libc++). Always last on the link line.
+LIBS = ["-latomic"] if sys.platform.startswith("linux") else []
 SUMMARY = re.compile(r"SUMMARY total=(\d+) passed=(\d+) failed=(\d+) checks=(\d+)")
 
 
@@ -53,7 +56,8 @@ def impl_header(problem: Path, impl: str) -> Path:
 
 def compile_cpp(src: Path, header: Path, out: Path, *, sanitize: bool, werror: bool) -> subprocess.CompletedProcess:
     cmd = [CXX, *BASE, *(SAN if sanitize else []), *(["-Werror"] if werror else []),
-           f'-DIMPL_HEADER="{header}"', "-I", str(HARNESS_DIR), "-I", str(src.parent), str(src), "-o", str(out)]
+           f'-DIMPL_HEADER="{header}"', "-I", str(HARNESS_DIR), "-I", str(src.parent), str(src), "-o", str(out),
+           *LIBS]
     return subprocess.run(cmd, capture_output=True, text=True)
 
 
@@ -173,7 +177,7 @@ def parse_summary(text: str) -> tuple[int, int, int] | None:
     return total, passed, total - passed
 
 
-def verify_one(problem: Path) -> tuple[bool, str]:
+def verify_one(problem: Path, excludes: list[str] | None = None) -> tuple[bool, str]:
     notes: list[str] = []
     ok = True
     with tempfile.TemporaryDirectory() as t:
@@ -181,10 +185,10 @@ def verify_one(problem: Path) -> tuple[bool, str]:
         ref_dir, st_dir = tmp / "ref", tmp / "st"
         ref_dir.mkdir(), st_dir.mkdir()
         # --- reference: compiles with -Werror, everything green
-        ref = Built(problem, "reference", ref_dir, werror=True, want_fast=True)
+        ref = Built(problem, "reference", ref_dir, werror=True, want_fast="perf" not in (excludes or []))
         if not ref.ok():
             return False, "reference 编译失败:\n" + ref.errors()
-        rc, out = execute(ref, None, None, True, capture=True)
+        rc, out = execute(ref, None, excludes, True, capture=True)
         s = parse_summary(out)
         if rc != 0 or s is None:
             ok = False
@@ -233,7 +237,7 @@ def cmd_verify(a) -> int:
         sys.exit(f"没有匹配 {a.glob!r} 且带 cpp/test.cpp 的目录")
     bad = 0
     for d in dirs:
-        ok, msg = verify_one(d.resolve())
+        ok, msg = verify_one(d.resolve(), a.exclude_tag)
         bad += not ok
         try:
             shown = d.resolve().relative_to(Path.cwd())
@@ -262,6 +266,7 @@ def main() -> int:
     m.set_defaults(f=cmd_main)
     v = sub.add_parser("verify")
     v.add_argument("glob")
+    v.add_argument("--exclude-tag", action="append")
     v.set_defaults(f=cmd_verify)
     a = ap.parse_args()
     return a.f(a)

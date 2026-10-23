@@ -291,7 +291,7 @@ TEST(corner_grid_has_no_signed_overflow_and_matches_the_oracle, "part3,edge,cpp"
 // ================================================ Part 4: parallel sum over contiguous data
 
 namespace {
-std::vector<long long> random_data(std::size_t n, long long bound) {
+std::vector<long long> make_random_data(std::size_t n, long long bound) {
     std::mt19937_64 rnd(0);
     std::uniform_int_distribution<long long> dist(-bound, bound - 1);
     std::vector<long long> d(n);
@@ -336,7 +336,7 @@ TEST(checked_sum_depends_on_the_true_total_not_the_order, "part4,edge") {
 }
 
 TEST(parallel_implementations_match_sequential, "part4") {
-    auto data = random_data(100'003, 1'000'000);
+    auto data = make_random_data(100'003, 1'000'000);
     SumResult expected = ok(plain_sum(data));
     CHECK_EQ(checked_sum(data), expected);
     for (auto& [name, impl] : parallel_impls()) CHECK_EQ(impl(data), expected, name);
@@ -368,7 +368,7 @@ TEST(parallel_overflow_is_decided_by_the_true_total, "part4,edge") {
 }
 
 TEST(concurrent_callers_all_get_the_same_answer, "part4,conc") {
-    auto data = random_data(200'001, 1LL << 40);
+    auto data = make_random_data(200'001, 1LL << 40);
     SumResult expected = ok(plain_sum(data));
     constexpr int callers = 6;
     for (int round = 0; round < 8; ++round) {
@@ -391,7 +391,7 @@ TEST(concurrent_callers_all_get_the_same_answer, "part4,conc") {
 }
 
 TEST(perf_ten_million_elements, "part4,perf") {
-    auto data = random_data(10'000'000, 1LL << 30);
+    auto data = make_random_data(10'000'000, 1LL << 30);
     SumResult expected = ok(plain_sum(data));
     CHECK_WITHIN_MS(2000, CHECK_EQ(checked_sum(data), expected); CHECK_EQ(parallel_sum_fork_join(data, 100'000), expected);
                     CHECK_EQ(parallel_sum_async(data), expected););
@@ -402,7 +402,7 @@ TEST(perf_ten_million_elements, "part4,perf") {
 
 TEST(span_views_cover_subranges_arrays_and_vectors, "part4,edge,cpp") {
     // span is pointer + length: no copy, any contiguous storage, sub-ranges starting at odd addresses.
-    auto data = random_data(10'001, 1000);
+    auto data = make_random_data(10'001, 1000);
     std::span<const long long> all(data);
     for (std::size_t from : {0u, 1u, 3u, 5'000u, 10'000u}) {
         auto view = all.subspan(from);

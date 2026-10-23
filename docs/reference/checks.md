@@ -18,7 +18,7 @@ repo root. Use `uv run python` where the script imports `trellis`, plain `python
 | `scripts/lld_embed_code.py` | article code blocks (`%% code:begin file [Symbol] %%`) equal the tested file | `uv run python scripts/lld_embed_code.py [--check] <slug> ...` | without `--check` it rewrites; `--check` exits 1 if stale |
 | `scripts/changed_learning_pages.py` | lists the changed vault pages (not `*/clippings/*`, not the generated `Brief.md`, `Codebases/`, `Corpora/`), split into LP-style (`*/lp/**`, `*/behavioral/**`, `core/stories/**`) and the rest; `--check` runs `plain_style.py` (`--outline` on LP pages) and `phone_diagrams.py` on them only | `python3 scripts/changed_learning_pages.py [--base REF] [--check] [--lp \| --rest] [--files F ...]` | `--base REF` diffs `REF...HEAD`; no `--base` = working tree vs HEAD. Old style debt in pages you did not touch never fails |
 | `scripts/check_mermaid.py` | every ```` ```mermaid ```` block on the changed `.md` pages renders with `@mermaid-js/mermaid-cli` (pinned in the script, `$MERMAID_CLI_VERSION` overrides) | `python3 scripts/check_mermaid.py [--base REF] [--list] [page.md ...]` | needs Node + network (headless Chrome) |
-| `scripts/kit_suites.py` | every interview kit's practice suites in one table; exits 1 on any unexpected result | `python3 scripts/kit_suites.py [--co <co> ...] [--list] [--skip-missing]` | see "Kit suites" below |
+| `scripts/kit_suites.py` | every interview kit's practice suites in one table; exits 1 on any unexpected result | `python3 scripts/kit_suites.py [--co <co> ...] [--list] [--skip-missing] [--ci]` | see "Kit suites" below |
 | `scripts/check_links.py` | every reading / drill URL answers (network) | `python3 scripts/check_links.py` | manual, not in CI |
 
 ## Helpers that are not gates
@@ -33,6 +33,12 @@ to `traces/`), `amazon_push_cards.py [--dry-run] [--set recent|patterns]`, `obsi
 A company kit carries its own `pytest.ini`; run it inside the kit: `cd vault/interviews/companies/<co> && python3 -m pytest
 problems -q`. Root `pytest` is scoped to `tests/`. `scripts/kit_suites.py` runs them all the way CI does (pytest through
 `uv run --project <repo> --with pytest`, `UV_FROZEN=1` so uv.lock stays untouched); `--list` prints the commands.
+
+`--ci` (what the `kits` job passes) leaves the wall-clock tests out: pytest `-m "not perf"` on the green suites, `--exclude-tag perf` on the
+headlands `jtest.py` / `cpptest.py` reference runs. Their budgets (mostly `< 2 s`, 100+ test files read `r.seconds` or `elapsed` directly) are
+fixed numbers measured on a fast desktop; a shared GitHub runner is 2-4x slower and noisy, so they failed without the code being wrong
+(stripe q22, snowflake q03 / q23 / pc22, headlands hc11). A plain run, which is what you do locally, keeps every strict budget. The red
+suite (`expect_failed`) is never filtered. Every test that asserts on wall-clock time must carry `@pytest.mark.perf` (C++ / Java: the `perf` tag).
 
 | Kit | Suites (`--co <co>`) | Expected |
 |---|---|---|
@@ -57,7 +63,7 @@ Whole run: about 4 minutes (headlands ~2 of them).
 | `changes` | `dorny/paths-filter`: which kits, vault pages, `.md` files changed | always |
 | `wikilinks` | `python3 -B scripts/check_wikilinks.py` | always |
 | `learning-pages` | `changed_learning_pages.py --base <PR base or previous tip> --check` (`fetch-depth: 0`) | `vault/**/*.md` changed |
-| `kits` | matrix over the kits whose folder changed: `kit_suites.py --co <co>` (headlands installs JDK 21 and sets `CXX`) | a kit folder, `trellis/**`, `pyproject.toml`, `uv.lock`, `kit_suites.py` or `ci.yml` changed |
+| `kits` | matrix over the kits whose folder changed: `kit_suites.py --co <co> --ci` (headlands installs JDK 21 and sets `CXX`) | a kit folder, `trellis/**`, `pyproject.toml`, `uv.lock`, `kit_suites.py` or `ci.yml` changed |
 | `mermaid` | `check_mermaid.py --base ...` | any `.md` changed |
 
 Bump a pinned action: `gh api repos/<owner>/<repo>/releases/latest --jq .tag_name`, then `gh api repos/<owner>/<repo>/git/ref/tags/<tag> --jq .object.sha`

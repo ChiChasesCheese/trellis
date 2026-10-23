@@ -3,7 +3,7 @@
 
   python3 tools/jtest.py run   <题目目录> [--impl reference|starter|work] [--tag part1] [--exclude-tag perf]
   python3 tools/jtest.py start <题目目录>        # 把 starter/ 复制到 work/（已存在就不动），之后在 work/ 里写
-  python3 tools/jtest.py verify "<glob>"         # 验收：reference 全绿，starter 能编译且至少一个测试红
+  python3 tools/jtest.py verify "<glob>" [--exclude-tag perf]   # 验收：reference 全绿，starter 能编译且至少一个测试红（--exclude-tag：reference 不跑该标签，CI 用）
   python3 tools/jtest.py main  <题目目录> [--impl …] < input.txt   # 跑 Main（stdin → stdout）
 
 题目目录布局见 CONVENTIONS.md：starter/ reference/ [work/] 放同名类，test/ 放 JUnit 5 测试，
@@ -108,7 +108,7 @@ def cmd_verify(a) -> int:
         sys.exit(f"没有匹配 {a.glob!r} 且带 test/ 的目录")
     bad = 0
     for d in dirs:
-        ref = run_tests(d, "reference", [], [], quiet=True)
+        ref = run_tests(d, "reference", [], a.exclude_tag or [], quiet=True)
         with tempfile.TemporaryDirectory() as tmp:
             starter_compiles = compile_dir(d, "starter", Path(tmp)).returncode == 0
         st = run_tests(d, "starter", [], [], quiet=True) if starter_compiles else 2
@@ -128,7 +128,7 @@ def main() -> int:
     s = sub.add_parser("start"); s.add_argument("dir"); s.set_defaults(f=cmd_start)
     m = sub.add_parser("main"); m.add_argument("dir"); m.add_argument("--impl", default="work")
     m.add_argument("--cls", default="Main"); m.set_defaults(f=cmd_main)
-    v = sub.add_parser("verify"); v.add_argument("glob"); v.set_defaults(f=cmd_verify)
+    v = sub.add_parser("verify"); v.add_argument("glob"); v.add_argument("--exclude-tag", action="append"); v.set_defaults(f=cmd_verify)
     a = ap.parse_args()
     return a.f(a)
 

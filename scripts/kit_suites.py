@@ -4,11 +4,17 @@
     python3 scripts/kit_suites.py --list                 # table of every kit's suites and their commands
     python3 scripts/kit_suites.py --co stripe [--list]   # one kit (repeatable; default: all kits)
     python3 scripts/kit_suites.py --co headlands --skip-missing   # skip suites whose tool (mvn, a C++ compiler) is absent
+    python3 scripts/kit_suites.py --co stripe --ci       # what CI runs: wall-clock `perf` tests are deselected
 
 Exit 0 only when every suite behaves as expected. A suite is one of
   green    exit code 0 (reference solutions, acceptance gates);
   red      learner exercises that are red on purpose: the pytest `failed` count must equal the known number
            and nothing may error (Stripe `loop/study` + `loop/rounds/04_bug_squash`: 82).
+
+`--ci` leaves out the `perf` tests (pytest `-m "not perf"`, jtest/cpptest `--exclude-tag perf` on the reference run).
+Their budgets are fixed wall-clock seconds measured on a fast desktop; a shared GitHub runner is 2-4x slower and noisy, so
+they would fail without the code being wrong. Run them locally (no flag). Correctness tests are unaffected, and the red
+suite (expect_failed) is never filtered: its failure count is part of its contract.
 
 pytest runs through `uv run --project <repo> --with pytest` (the kits import `trellis.kit`), the same way
 locally and in CI. `UV_FROZEN=1` keeps uv from rewriting uv.lock.
@@ -50,8 +56,11 @@ class Suite:
         return f"cd {self.cwd.relative_to(REPO)} && {cmd}" + (f"   # expects exactly {self.expect_failed} red" if self.expect_failed else "")
 
 
-def pytest(kit: str, name: str, cwd: Path, *args: str, expect_failed: int | None = None, env: dict | None = None) -> Suite:
-    return Suite(kit, name, [*UV_PYTEST, *args, *PYTEST_FLAGS], cwd, expect_failed, ("uv",), env or {})
+def pytest(kit: str, name: str, cwd: Path, *args: str, expect_failed: int | None = None, env: dict | None = None,
+           ci: bool = False) -> Suite:
+    """`ci`: deselect the wall-clock `perf` tests (green suites only; a red suite's failure count must stay exact)."""
+    perf = ["-m", "not perf"] if ci and expect_failed is None else []
+    return Suite(kit, name, [*UV_PYTEST, *args, *perf, *PYTEST_FLAGS], cwd, expect_failed, ("uv",), env or {})
 
 
 def unittest_dirs(kit: str, root: Path, pattern: str) -> list[Suite]:
@@ -63,8 +72,9 @@ def unittest_dirs(kit: str, root: Path, pattern: str) -> list[Suite]:
     return out
 
 
-def build() -> dict[str, list[Suite]]:
+def build(ci: bool = False) -> dict[str, list[Suite]]:
     c = COMPANIES
+    no_perf = ["--exclude-tag", "perf"] if ci else []
     kits: dict[str, list[Suite]] = {}
 
     kits["amazon"] = [Suite("amazon", "coding solutions + lecture blocks (run_all.py)",
@@ -73,24 +83,24 @@ def build() -> dict[str, list[Suite]]:
     h = c / "headlands"
     kits["headlands"] = [
         Suite("headlands", "Java 21 problems: jtest verify (reference green, starter red)",
-              [PY, "-B", "tools/jtest.py", "verify", "loop/rounds/*/*"], h, needs=("javac", "mvn")),
+              [PY, "-B", "tools/jtest.py", "verify", "loop/rounds/*/*", *no_perf], h, needs=("javac", "mvn")),
         Suite("headlands", "C++20 problems: cpptest verify (-Werror, ASan+UBSan)",
-              [PY, "-B", "tools/cpptest.py", "verify", "loop/rounds/*/*"], h, needs=("c++",)),
+              [PY, "-B", "tools/cpptest.py", "verify", "loop/rounds/*/*", *no_perf], h, needs=("c++",)),
         Suite("headlands", "mock_maven (JUnit 5, reference solutions): mvn test",
               ["mvn", "-q", "-B", "test"], h / "mock_maven" / "java", needs=("mvn",)),
     ]
 
     s = c / "stripe"
     kits["stripe"] = [
-        pytest("stripe", "OA problems", s, "problems"),
+        pytest("stripe", "OA problems", s, "problems", ci=ci),
         pytest("stripe", "loop rounds (all green except the learner exercises)", s, "loop",
-               "--ignore=loop/study", "--ignore=loop/rounds/04_bug_squash"),
+               "--ignore=loop/study", "--ignore=loop/rounds/04_bug_squash", ci=ci),
         pytest("stripe", "loop/study exercises + bug-squash starters: red on purpose", s,
                "loop/study", "loop/rounds/04_bug_squash", expect_failed=82),
     ]
 
-    kits["snowflake"] = [pytest("snowflake", "problems + loop rounds", c / "snowflake", "problems", "loop")]
-    kits["millennium"] = [pytest("millennium", "loop/rounds (pytest.ini testpaths)", c / "millennium")]
+    kits["snowflake"] = [pytest("snowflake", "problems + loop rounds", c / "snowflake", "problems", "loop", ci=ci)]
+    kits["millennium"] = [pytest("millennium", "loop/rounds (pytest.ini testpaths)", c / "millennium", ci=ci)]
     kits["airbnb"] = unittest_dirs("airbnb", c / "airbnb" / "problems", "q*")
     kits["roblox"] = unittest_dirs("roblox", c / "roblox" / "games", "*")
 
@@ -101,7 +111,7 @@ def build() -> dict[str, list[Suite]]:
         Suite("abnormal", "code review cr*: verify_suites",
               [*UV_TRELLIS, "kit", "verify_suites", "--co", "abnormal", "loop/rounds/03_code_review/cr*"], REPO, needs=("uv",)),
         pytest("abnormal", "incident ic* + legacy coding pc*", a,
-               "loop/rounds/02_incident_sd", "loop/rounds/06_legacy_coding"),
+               "loop/rounds/02_incident_sd", "loop/rounds/06_legacy_coding", ci=ci),
     ]
     return kits
 
@@ -149,11 +159,13 @@ def run_suite(su: Suite, skip_missing: bool) -> tuple[str, str, float]:
 
 
 def main(argv: list[str]) -> int:
-    kits = build()
+    ci = "--ci" in argv
+    kits = build(ci)
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--co", action="append", choices=sorted(kits), help="kit to run (repeatable; default: all)")
     ap.add_argument("--list", action="store_true", help="print the suites and their commands, run nothing")
     ap.add_argument("--skip-missing", action="store_true", help="skip suites whose tool is not installed instead of failing")
+    ap.add_argument("--ci", action="store_true", help="deselect the wall-clock `perf` tests (slow shared runners); CI passes this")
     a = ap.parse_args(argv)
     chosen = a.co or sorted(kits)
     suites = [su for co in chosen for su in kits[co]]

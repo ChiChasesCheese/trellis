@@ -524,7 +524,7 @@ TEST(stale_and_invalid_handles_are_rejected, "part3,edge") {
     CHECK_THROWS_AS(p.get(a), StateError);  // the old handle cannot read the new owner's data
     CHECK_EQ(p.free(a), DOUBLE_FREE);
     CHECK_EQ(p.get(b), (Order{2, 2, 2, 2}));
-    for (std::uint64_t bad : {ArenaOrderPool::NONE, 0ull, 1ull, 0x1'0000'0063ull}) {
+    for (std::uint64_t bad : {ArenaOrderPool::NONE, std::uint64_t{0}, std::uint64_t{1}, std::uint64_t{0x1'0000'0063}}) {
         CHECK_EQ(p.free(bad), INVALID);
         CHECK_THROWS_AS(p.get(bad), StateError);
     }
@@ -652,6 +652,7 @@ TEST(get_returns_a_copy, "part3,edge,cpp") {
     p.put(h, Order{1, 2, 3, 4});
     Order copy = p.get(h);
     copy.px = 999;
+    CHECK_EQ(copy.px, 999LL);
     CHECK_EQ(p.px(h), 2LL);
 }
 

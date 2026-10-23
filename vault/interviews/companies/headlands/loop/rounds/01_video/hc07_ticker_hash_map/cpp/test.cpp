@@ -22,6 +22,10 @@ using namespace tickers;
 namespace {
 std::atomic<std::size_t> g_news{0};
 }
+#if defined(__GNUC__) && !defined(__clang__)
+// g++ 13 inlines libstdc++'s allocator and then pairs its `operator new` call with this malloc/free replacement.
+#pragma GCC diagnostic ignored "-Wmismatched-new-delete"
+#endif
 void* operator new(std::size_t n) {
     g_news.fetch_add(1, std::memory_order_relaxed);
     if (void* p = std::malloc(n ? n : 1)) return p;
@@ -679,7 +683,7 @@ TEST(keys_outside_the_universe_are_recognised, "part3") {
         ++tested;
     }
     CHECK_GT(tested, 50000);
-    for (Key odd : {Key{0}, TOMB, Key{1}, 1ull << 63}) CHECK_EQ(idx.index_of(odd), -1);
+    for (Key odd : {Key{0}, TOMB, Key{1}, Key{1} << 63}) CHECK_EQ(idx.index_of(odd), -1);
 }
 
 TEST(dense_structured_universe, "part3,edge") {
