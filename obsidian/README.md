@@ -12,9 +12,24 @@ are committed and pushed by the Git plugin every 10 min (vault folder only).
   (pull on start and every 5 min, commit+push every 10 min, rebase, vault folder only), the `no-wrap-code` CSS snippet
   enabled (code blocks scroll sideways instead of wrapping), the vault registered with the app, Obsidian started.
 
+## State (2026-10-23)
+
+- Remote vault **`Trellis_`** (the one the phone already used), device name `chi-mini`, conflict action *merge*.
+  Selective sync: appearance + CSS snippets on (the phone gets `no-wrap-code`), community plugins off (only chi-mini runs Git).
+- First connect pulled 81 pre-restructure copies (old `headlands/study/…`, `04_sd`, `catalog` paths) — deleted on chi-mini,
+  so Sync removed them everywhere. Before connecting another git checkout to a Sync vault, pause the Git plugin's
+  auto commit (`autoSaveInterval` 0), let Sync finish, compare `git status` with `main`, clean up, then turn it back on.
+- Kept out of git through `~/Code/trellis/.git/info/exclude` (they still sync privately):
+  `vault/interviews/core/leetcode/tops/` (2216 cards whose `skeleton/leetcode-tops.yaml` and `scripts/leetcode_tops/`
+  exist only on another machine — commit all three together from there), and two personal notes
+  (`core/踩过的坑.md`, `abnormal/study/20-cards/claude_prompts.md`; the repo is public).
+- Obsidian CLI is on (`obsidian help`; `obsidian sync:status`).
+
 ## Left for Chi (needs a login or a click on the mini's screen)
 
-1. **Trust the vault** (Screen Sharing to chi-mini): Obsidian shows "Restricted mode" → *Turn on community plugins* /
+Done: trust vault, Sync login + connect. Still open:
+
+1. ~~**Trust the vault** (Screen Sharing to chi-mini): Obsidian shows "Restricted mode" → *Turn on community plugins* /
    *Trust author and enable plugins*. The status bar then shows the Git plugin.
 2. **Obsidian Sync**: Settings → Sync → log in → create a remote vault (e.g. `trellis`) and connect this vault to it.
    Under *Selective sync* turn on *Appearance settings*, *CSS snippets* and *Community plugin list* if you want the
