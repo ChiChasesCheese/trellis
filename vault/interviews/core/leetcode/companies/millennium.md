@@ -2,7 +2,7 @@
 
 `python3 lc_company.py Millennium`（2026-09-21）→ **两个数据源都没有 Millennium 目录**（liquidslr / snehasishroy 的 LeetCode Premium 公司标签镜像里不存在），即 LeetCode 官方标签下 Millennium 题量不足以成目录。**没有可蒸馏的 LC 题单。**
 
-一手 / 聚合站报道过的 LC 原题（来源在 `../../../companies/millennium/catalog/raw/coding_first_round.md`）：
+一手 / 聚合站报道过的 LC 原题（来源在 `research/companies/millennium/catalog/raw/coding_first_round.md`）：
 
 | LC | 题 | 来源 | kit |
 |---|---|---|---|

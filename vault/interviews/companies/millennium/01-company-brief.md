@@ -1,6 +1,6 @@
 # 01 · 公司与项目简报（Millennium · LEaD Program · Miami）
 
-> 全部数字与引语的出处在 `catalog/raw/official_lead.md`；未标来源的句子是推断并已注明。
+> 全部数字与引语的出处在 `research/companies/millennium/catalog/raw/official_lead.md`；未标来源的句子是推断并已注明。
 
 ## 1. Millennium 是什么（60 s 口径）
 

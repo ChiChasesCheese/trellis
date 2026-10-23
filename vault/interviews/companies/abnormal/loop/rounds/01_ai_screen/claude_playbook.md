@@ -1,6 +1,6 @@
 # Claude Code 心法与技法 · Abnormal AI Technical Screen
 
-> 范围：60 min · 网页 VS Code + 预装 Claude Code（门户原文，`../../../catalog/raw/inbox.md`）· 已有 Python 代码库 · 一个模糊 ticket。
+> 范围：60 min · 网页 VS Code + 预装 Claude Code（门户原文，`research/companies/abnormal/catalog/raw/inbox.md`）· 已有 Python 代码库 · 一个模糊 ticket。
 > 节奏与英文口播模板：`playbook.md`。范式与反范式（38 场会话提炼）：`prompt_patterns.md`。快捷键：`shortcuts.md`。一周计划：`WEEK_PLAN.md`。每题逐场脚本：`cb0*/walkthrough.md`（引用本文的 T 编号）。
 > 来源：Hello Interview《Learn AI Coding》30 页 + 38 场带评级会话（本机 `sources/local/hellointerview-ai-coding/`，不入库）；`~/.agents/skills/*`（Matt Pocock）；superpowers、agent-skills（addy）插件。
 > 当天环境是干净的：没有你的 skills。技法 = skill 的核心规则 → 手敲提示词；说法 = "Normally I'd run my X skill for this; here I'll type the rule."
@@ -160,4 +160,4 @@ printf '%s\n' '{' '  "language": "English",' '  "permissions": { "defaultMode": 
 CLAUDE_CONFIG_DIR=~/.claude-interview claude    # 第一次要登录；没有 skills / 插件 / 全局 CLAUDE.md = 当天的环境
 ```
 
-每场严格 60 分钟、录屏，顺序按 `../../../catalog/PARETO.md`：`start cb01 real`（报道过的原题，就是 t2）→ `cb01 t1` → `cb02 t1`（Insider Risk）→ `cb03 t1` → `cb01 t3` → `cb02 t3` → `cb03 t2` → `cb02 t2` → `cb03 t3`。前两场各做两遍，第二遍换一种设计。做完 `check` → `reveal`，对照 `cb0*/walkthrough.md` 复盘。复盘只记三件事：沉默超过 60 秒的段、T 编号漏掉的、点了名却没交付的。
+每场严格 60 分钟、录屏，顺序按 `research/companies/abnormal/catalog/PARETO.md`：`start cb01 real`（报道过的原题，就是 t2）→ `cb01 t1` → `cb02 t1`（Insider Risk）→ `cb03 t1` → `cb01 t3` → `cb02 t3` → `cb03 t2` → `cb02 t2` → `cb03 t3`。前两场各做两遍，第二遍换一种设计。做完 `check` → `reveal`，对照 `cb0*/walkthrough.md` 复盘。复盘只记三件事：沉默超过 60 秒的段、T 编号漏掉的、点了名却没交付的。

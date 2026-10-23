@@ -1,6 +1,6 @@
 # 03 · 回复 recruiter（排期 + 两个问题）—— 草稿，Chi 自己发
 
-> 邀约原文见 `catalog/raw/inbox.md` §2。先在 eightfold 链接里选时间（建议 3–4 天后的上午，美东），再回这封。不问薪资。
+> 邀约原文见 `research/companies/millennium/catalog/raw/inbox.md` §2。先在 eightfold 链接里选时间（建议 3–4 天后的上午，美东），再回这封。不问薪资。
 
 **Subject:** Re: Chi, let's schedule your first-round interview
 

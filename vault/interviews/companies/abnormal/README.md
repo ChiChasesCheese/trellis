@@ -34,7 +34,7 @@ python3 loop/ai_screen.py check cb01 t1 <目录>       # 隐藏验收（core/str
 python3 loop/ai_screen.py reveal cb01 t1            # 面试官笔记：澄清问答、隐藏期望、追问、打分信号
 ```
 
-顺序（`catalog/PARETO.md`）：**cb01 t1 → cb01 t2**（报道原题形态，各两遍）→ cb02 t1 → cb03 t1 → cb01 t3 → cb02 t3 → cb03 t2 → cb02 t2 → cb03 t3。
+顺序（`research/companies/abnormal/catalog/PARETO.md`）：**cb01 t1 → cb01 t2**（报道原题形态，各两遍）→ cb02 t1 → cb03 t1 → cb01 t3 → cb02 t3 → cb03 t2 → cb02 t2 → cb03 t3。
 
 | 代码库 | 领域 | 为什么练它 |
 |---|---|---|
@@ -56,18 +56,14 @@ python3 loop/ai_screen.py reveal cb01 t1            # 面试官笔记：澄清�
 
 | 路径 | 是什么 |
 |---|---|
-| `catalog/raw/` | 证据：`inbox.md`（门户官方原文）· `official.md`（官网/JD/产品/工程博客，O-n）· `ai_screen_format.md`（VP of AI 博客、同类面试，F-n）· `process_and_rounds.md` · `questions_reported.md`（Q-n）· `github_repos.md`（GitHub 优先：无 Abnormal 题库） |
-| `catalog/CATALOG.md` → `RANK.md` → `PARETO.md` | 题族总表 → 打分 → cut line（`tools/pareto.py`） |
+| `research/companies/abnormal/` | 证据（`catalog/raw/`）· 题目总表与 28 法则排序（`catalog/CATALOG.md` → `RANK.md` → `PARETO.md`）· 知识树 `tools/tree/interview-loop.yaml`（生成 `CONTENTS.md`）· 覆盖率 `reports/COVERAGE.md` · 构建进度、账本、子代理指令、建题与统计脚本 | — |
 | `loop/LOOP_GUIDE.md` | 每轮打法 + 五天表 |
 | `loop/rounds/01_ai_screen/` | playbook + 3 个练习代码库（starter/solution/acceptance/interviewer/walkthrough/REPORT） |
 | `loop/rounds/02_incident_sd/` · `03_code_review/` · `06_legacy_coding/` | incident 演练 · system design · code review · 旧流程去重题 |
-| `loop/rounds/04_manager_deep_dive/` · `05_team_values/` | 题库（bank.json 由 `tools/make_banks.py` 从 questions.md 生成） |
+| `loop/rounds/04_manager_deep_dive/` · `05_team_values/` | 题库（bank.json 由 `research/companies/abnormal/tools/make_banks.py` 从 questions.md 生成） |
 | `loop/ai_screen.py` · `loop/mock.py` | 代码库练习 runner · 其它轮 runner |
-| `loop/tree/interview-loop.yaml` | 知识树（`check_tree.py --strict`）；`CONTENTS.md` 由它生成 |
 | `study/` | 精要 · 速记卡 · 题解 |
 | `01-company-brief.md` · `02-process.md` · `fit.md` · `06-questions-to-ask.md` | 简报 · 流程与矛盾（含面完回写表）· Why Abnormal（英文）· 反问 |
-| `reports/COVERAGE.md` | 覆盖率（`tools/coverage.py`），注明分母 |
-| `CHECKPOINT.md` · `LEDGER.md` · `tasks/` | 构建进度、账本、子代理指令 |
 
 ## 与 core 的关系
 

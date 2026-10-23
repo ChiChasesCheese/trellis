@@ -1,6 +1,6 @@
 # LOOP GUIDE · Abnormal AI · SWE II – Insider Risk（Identity Security）
 
-> 每轮：形式 · 评什么 · 通过线 · 挂点 · 备考动作。每条主张后的括号是证据编号：`inbox`（门户官方原文）· `O-n`（`catalog/raw/official.md`）· `F-n`（`catalog/raw/ai_screen_format.md`）· `Q-n`（`catalog/raw/questions_reported.md`）· `#xxxx`（LeetCode Discuss topicId，`catalog/raw/process_and_rounds.md`）。
+> 每轮：形式 · 评什么 · 通过线 · 挂点 · 备考动作。每条主张后的括号是证据编号：`inbox`（门户官方原文）· `O-n`（`research/companies/abnormal/catalog/raw/official.md`）· `F-n`（`research/companies/abnormal/catalog/raw/ai_screen_format.md`）· `Q-n`（`research/companies/abnormal/catalog/raw/questions_reported.md`）· `#xxxx`（LeetCode Discuss topicId，`research/companies/abnormal/catalog/raw/process_and_rounds.md`）。
 > **[推断]** 标记的是从证据推出、没有原话的结论。
 
 ## 0. 全景（2026 年的新流程）
@@ -12,7 +12,7 @@
 | 3 | **Skills Assessment** | **AI Technical Screen**：60 min，已有 Python 代码库 + Claude Code，探索 ~10 → 模糊 feature ~35 → walkthrough + 反问（inbox）；报道过的代码库 = security-events 管线（#8335187） | **下一轮（排期中）** |
 | 4 | Team Interviews（"cross-functional … values fit, how you collaborate"） | SWE II 2026-09（#8496901）：**Incident + System Design** · **Code Review + System Extensions** · **Manager/Behavioral** · 可能追加 **Technical Deep Dive**；Glassdoor 2026-04："Assignment review · System design & Incident handling · Code review & fix implementation with AI · Engineering manager"；F-13："system-design and incident-management-style conversation plus a PR or code-review discussion where I could use AI agents throughout" | 未知；门户会更新（inbox："It'll update as you move through each stage"） |
 
-**Glassdoor 全量（2026-10-09，`catalog/raw/glassdoor_2026-10-09.md`）补充**：AI coding 轮之后报告为 "technical deep dive"（105890472，2026-10-08）；incident 轮是 on-call 模拟（103339969、104329591）；后续轮次普遍允许用 AI（104329591、103476901）；现场 AI 轮代码库名 "Sentinal"、题 "implement a rule engine"（104787687）；复盘问 "Explain the architecture of the codebase, explain the feature which I have added and how will you make sure it works"（104679337）。
+**Glassdoor 全量（2026-10-09，`research/companies/abnormal/catalog/raw/glassdoor_2026-10-09.md`）补充**：AI coding 轮之后报告为 "technical deep dive"（105890472，2026-10-08）；incident 轮是 on-call 模拟（103339969、104329591）；后续轮次普遍允许用 AI（104329591、103476901）；现场 AI 轮代码库名 "Sentinal"、题 "implement a rule engine"（104787687）；复盘问 "Explain the architecture of the codebase, explain the feature which I have added and how will you make sure it works"（104679337）。
 
 **贯穿全程的评分词**：Judgment · Agency（inbox）；VOICE 价值观——Velocity · Ownership · Intellectual honesty · Customer obsession · Excellence（O-10）；"how you maximize your output with AI, and your willingness to own outcomes without waiting for permission"（O-14）。唯一一份详细挂掉原因："lacked sufficient **judgment** in a few areas"（#8496901 deep dive）。
 
@@ -24,7 +24,7 @@
 - **评什么**（inbox 原文）：Judgment（评估方案、拆里程碑、判断什么契合现有系统）· Agency（做决定、说假设、自测、保持推进）· "ship a working v1 that fits the system" · "notice existing abstractions and patterns" · "think about the user" · 对 AI 的 ownership（"explain it, evaluate it, and decide whether it belongs"）。
 - **通过线** [推断，来自 inbox + #8335187 反例]：35 分钟内一个**通过真实入口能演示**的 v1，复用了已有扩展点，说出了假设与 known gaps，加了测试；扩展讨论能给出不止一种方案并讲清取舍。
 - **挂点**：① 不推进——#8335187 候选人 20 分钟在口头讲 decorator pattern，没有 v1，最后让 Claude 全写（自评 No）；② 照抄 AI——"AI will produce working code. That's not enough"（inbox），F-15 Meta："you can be marked down if you use it as a crutch"；③ 平行造轮子 / 改 legacy（"design slop… rearchitects things instead of following conventions"，F-2）；④ 只有单测没有证据（F-3）；⑤ 沉默或念代码（inbox："Synthesize your observations rather than narrating them"）。
-- **备考动作**：`loop/rounds/01_ai_screen/playbook.md`（逐分钟、提示词、口播）→ `python3 loop/ai_screen.py start cb01 t1` 起，按 `catalog/PARETO.md` 顺序做 9 张 ticket，每次 `check` + `reveal` + 复盘表。**cb01 t1、t2 是报道原题形态，各做两遍。**
+- **备考动作**：`loop/rounds/01_ai_screen/playbook.md`（逐分钟、提示词、口播）→ `python3 loop/ai_screen.py start cb01 t1` 起，按 `research/companies/abnormal/catalog/PARETO.md` 顺序做 9 张 ticket，每次 `check` + `reveal` + 复盘表。**cb01 t1、t2 是报道原题形态，各做两遍。**
 
 ## 2. Incident + System Design（onsite）
 

@@ -23,7 +23,7 @@ tags:
 
 ```
 00 Recruiter / 邮件 ─┐
-01 R1 45 min ────────┼─ catalog/（证据）→ loop/LOOP_GUIDE.md（每轮打法）→ loop/rounds/（题 + 测试 + 参考解 + 题库）
+01 R1 45 min ────────┼─ research/companies/millennium/catalog/（证据）→ loop/LOOP_GUIDE.md（每轮打法）→ loop/rounds/（题 + 测试 + 参考解 + 题库）
 02 Python 内功 ──────┤                                                     ↓
 03 项目深挖 ─────────┤                          study/30-articles/（每题一篇题解，先做后读）· study/20-cards/（速记卡）
 04 系统/数据设计 ────┤                                                     ↓
@@ -35,7 +35,7 @@ tags:
 | 你现在在 | 先读 | 再练 | 命令 |
 |---|---|---|---|
 | **回复邀约**（当前） | `03-reply-email.md` · `02-process.md` | — | eightfold 选 3–4 天后的时间 |
-| **R1 45 min** | `loop/rounds/01_first_round/playbook.md`（逐分钟 + 英文口播）· `01-company-brief.md` · `fit.md` | `catalog/PARETO.md` 顺序：pc02 → pc03 → pc09 → pc10 → pc01 → pc05 → pc06 → pc07 → pc04 → pc08；口头题 `02_python_internals` | `python3 loop/mock.py start pc02 -m 30` · `bq py -n 5 -m 2` |
+| **R1 45 min** | `loop/rounds/01_first_round/playbook.md`（逐分钟 + 英文口播）· `01-company-brief.md` · `fit.md` | `research/companies/millennium/catalog/PARETO.md` 顺序：pc02 → pc03 → pc09 → pc10 → pc01 → pc05 → pc06 → pc07 → pc04 → pc08；口头题 `02_python_internals` | `python3 loop/mock.py start pc02 -m 30` · `bq py -n 5 -m 2` |
 | 项目深挖 | `loop/rounds/03_project_deep_dive/questions.md` · [[S1]] [[S5]] | 14 题 | `python3 loop/mock.py bq exp -n 4 -m 3` |
 | R2+ HM / BQ | `loop/rounds/05_hm_behavioral/{questions,stories}.md` · `06-questions-to-ask.md` | 12 题 | `python3 loop/mock.py bq hm -n 5 -m 3` |
 | R2+ 设计（若有） | `loop/rounds/04_system_design/sd01_market_data_service/` | prompt → rubric 自评 | `python3 loop/mock.py start sd01 -m 45` |
@@ -46,18 +46,14 @@ tags:
 
 | 路径 | 是什么 | 规模 |
 |---|---|---|
-| `catalog/raw/` | 原始证据：`inbox.md`（邀约事实）· `official_lead.md`（官方 LEaD / JD / Miami 组织 / 官方面试建议 / 薪酬）· `github_repos.md`（GitHub 优先：LC 标签源无 Millennium）· `coding_first_round.md`（编码题证据）· `process_and_rounds.md`（流程、矛盾）· `interviewer.md` · `sources_index.md`（可达性台账） | 7 |
-| `catalog/CATALOG.md` → `RANK.md` → `PARETO.md` | 题目总表（A 编码 · B 设计 · C 口头 · D 题库 · E 不入库）；**cut line = 第 9 行 / 15 行**（`tools/pareto.py --focus 第一轮`） | 15 行 |
+| `research/companies/millennium/` | 证据（`catalog/raw/`）· 题目总表与 28 法则排序（`catalog/CATALOG.md` → `RANK.md` → `PARETO.md`）· 知识树 `tools/tree/interview-loop.yaml`（生成 `CONTENTS.md`）· 覆盖率 `reports/COVERAGE.md` · 构建进度、账本、子代理指令、建题与统计脚本 | — |
 | `loop/LOOP_GUIDE.md` | 每一轮：形式 · 评什么 · 通过线 · 挂点 · 备考动作 + 三天冲刺 | 6 轮 |
 | `loop/rounds/01_first_round/` | R1 题集（`problem.md` + starter + solution + tests + REPORT）+ `playbook.md` | 10 题 |
 | `loop/rounds/02_python_internals/` | Python / Java 内功口头题 + bank.json | 40 题 |
 | `loop/rounds/00_recruiter/` `03_project_deep_dive/` `05_hm_behavioral/` | bank.json + questions（+ stories 映射） | 8 · 14 · 12 |
 | `loop/rounds/04_system_design/` | sd01 行情/价格数据服务：prompt · rubric · model_answer · followups | 1 |
 | `study/30-articles/` · `study/20-cards/` | 每题一篇题解 · 速记卡（Python 内功 20 · 金融词汇 18） | 10 · 2 |
-| `loop/tree/interview-loop.yaml` | 知识树（`check_tree.py --strict`）；`CONTENTS.md` 由它生成 | 6 轮 14 技能 |
-| `reports/COVERAGE.md` | 已建题对公开流出题的覆盖（`tools/coverage.py`） | — |
 | `01-company-brief.md` · `02-process.md` · `fit.md` · `06-questions-to-ask.md` · `03-reply-email.md` | 公司/项目简报 · 流程与矛盾 · Why Millennium/LEaD（英文口播）· 反问 · 回信草稿 | — |
-| `CHECKPOINT.md` · `LEDGER.md` · `tasks/` | 构建进度与账本（换会话从这里接手）· 子代理指令 | — |
 
 ## 与 core 的关系
 
@@ -73,4 +69,4 @@ tags:
 
 ## 面完回写
 
-实际被问的题 + 追问 → `02-process.md` 亲历表；新题进 `catalog/raw/coding_first_round.md` 与 `RANK.md`，挂进 `loop/tree/`，重跑 `tools/pareto.py` · `tools/coverage.py` · `tools/contents.py`；答不上的 → [[Core]]。
+实际被问的题 + 追问 → `02-process.md` 亲历表；新题进 `research/companies/millennium/catalog/raw/coding_first_round.md` 与 `RANK.md`，挂进 `research/companies/millennium/tools/tree/`，重跑 `research/companies/millennium/tools/` 下的 `pareto.py` · `coverage.py` · `contents.py`；答不上的 → [[Core]]。

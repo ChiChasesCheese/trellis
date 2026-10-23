@@ -1,6 +1,6 @@
 # 公司简报 · Abnormal AI（原 Abnormal Security）
 
-> 全部来自 `catalog/raw/official.md`（O-n，官方原文，2026-10-06 访问）；融资数字是 2024 年的第三方报道，标注了。
+> 全部来自 `research/companies/abnormal/catalog/raw/official.md`（O-n，官方原文，2026-10-06 访问）；融资数字是 2024 年的第三方报道，标注了。
 
 ## 一句话
 

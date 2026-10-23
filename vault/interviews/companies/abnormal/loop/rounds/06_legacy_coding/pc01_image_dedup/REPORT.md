@@ -11,7 +11,7 @@ Part 3 `plan_deletions`（保留策略、默认 dry-run）**(reconstructed)** �
 中。1point3acres 1059585 / 1072363 / 1074077 / 1137132（2024-04 → 2025-07）四帖互相印证，一手原话覆盖
 "内存有限 / hashing / collision / `os.walk` 提示 / 给定 `_calculate_hash` 会碰撞 / 最后问 system design /
 文件系统里很多照片怎么删重复"；PracHub 2025-07 两个标题只作旁证。给定哈希的具体弱法、Part 3、Part 4、
-所有 worked examples 与测试规模为重建（已在 `problem.md` 标注）。条目：`catalog/raw/questions_reported.md` Q16。
+所有 worked examples 与测试规模为重建（已在 `problem.md` 标注）。条目：`research/companies/abnormal/catalog/raw/questions_reported.md` Q16。
 
 ## Approach by part
 1. `os.walk(followlinks=False)`，符号链接用 `os.path.islink` 先排除；`size -> [paths]` 分桶，单元素桶
@@ -41,7 +41,7 @@ O(k·B_bucket)，k 为桶内等价类数。`python3` 实测（本机）：2 万�
 
 ## Test inventory
 34 test functions（`grep -c "def test"` = 34）；
-`python3 tools/verify_suites.py . "loop/rounds/06_legacy_coding/pc01*"` → `solution: 33 passed, 1 skipped`
+`python3 research/companies/abnormal/tools/verify_suites.py . "loop/rounds/06_legacy_coding/pc01*"` → `solution: 33 passed, 1 skipped`
 （跳过的是依赖 `chmod 000` 的用例，root 下权限不生效；同一场景由"读时抛 `PermissionError`"的用例覆盖）；
 `IMPL=starter` → `27 failed, 6 passed, 1 skipped`（通过的 6 个都是"期望结果本来就是空列表"的断言：无重复返回 `[]`、碰撞不产生假组、空输入、给定哈希确实碰撞、
 恒空输出的 io；空桩在这些上等价于正确答案，属弱断言的已知边界，不影响"大面积红"的口径）。按 marker（`grep -c "mark.<m>"`）：part1 10 · part2 8 ·

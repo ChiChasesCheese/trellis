@@ -17,7 +17,7 @@
 
 ## 验收清单
 
-- [x] `python3 tools/verify_suites.py . "loop/rounds/03_code_review/cr01*"` 打印 `OK  cr01_alert_fanout`：solution 上 acceptance 24/24；starter 上 `-m core` 8 个全红；starter、solution 自带测试全绿。
+- [x] `python3 research/companies/abnormal/tools/verify_suites.py . "loop/rounds/03_code_review/cr01*"` 打印 `OK  cr01_alert_fanout`：solution 上 acceptance 24/24；starter 上 `-m core` 8 个全红；starter、solution 自带测试全绿。
 - [x] 每个 P0 至少一个测试（CR-01 2 · CR-02 1 · CR-03 3 · CR-04 2）；P1 全部有测试（CR-05 2 · CR-06 1 · CR-07 1 · CR-08 3 · CR-09 1）；P2 中 CR-10/11/12 有测试，CR-13 以 solution 的 `tests/test_failure_paths.py` 体现。
 - [x] 测试只经过包的公共入口（`Worker.run_once` / `process_message`、`Queue`、`ConfigStore`、`*Sender`）；starter 上的热循环用 `BaseException` 的 `Stop` 打断，保证红而不挂。
 - [x] 全是文档网段/域名（`hooks.example.com`、`example.com`），无网络。

@@ -115,7 +115,7 @@ Part 1 每行 `<a> <b>`；Part 2 每行 `<ADD|SUB> <a> <b>`；Part 3 每行 `<a>
 
 - **HIGH（一手）** 1point3acres thread-1090775："C++ Developer 电面 45 min：15 min 背景 +
   30 min large integer addition as strings，面试官反馈很少"——原题即 Part 1（无符号十进制字符串
-  加法）。`../../catalog/raw/coding_first_round.md`（若尚未落盘，以本文件 `tasks/AGENT_PROBLEMS.md`
+  加法）。`research/companies/millennium/catalog/raw/coding_first_round.md`（若尚未落盘，以本文件 `research/companies/millennium/tasks/AGENT_PROBLEMS.md`
   §2 pc04 行为准）。
 - Part 2（带符号加减）与 Part 3（乘法 + 任意进制）为本题按"大整数字符串运算"题族在 45 分钟编码
   轮里常见的递进结构补齐，标注为 **(reconstructed)**：一手报道只提到"加法"，没有说明面试是否

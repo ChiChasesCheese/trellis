@@ -1,6 +1,6 @@
 # R1 Playbook · 45 min · Webex + HackerRank · 面试官 = 一位 Millennium SWE
 
-> 依据：`catalog/raw/inbox.md`（邀约原文）· `catalog/raw/coding_first_round.md` §5（题型权重）· `catalog/raw/process_and_rounds.md` §3（评什么）。一手同形态 = **15 min 背景 + 30 min 一题**（1p3a 1090775）。面试官几乎不给反馈、少一个括号没 debug 时间就挂——**自己推进、自己验证**。
+> 依据：`research/companies/millennium/catalog/raw/inbox.md`（邀约原文）· `research/companies/millennium/catalog/raw/coding_first_round.md` §5（题型权重）· `research/companies/millennium/catalog/raw/process_and_rounds.md` §3（评什么）。一手同形态 = **15 min 背景 + 30 min 一题**（1p3a 1090775）。面试官几乎不给反馈、少一个括号没 debug 时间就挂——**自己推进、自己验证**。
 > 练：`python3 loop/mock.py start pc02 -m 30`（30 min 计时，只做一题）；口头题 `python3 loop/mock.py bq py -n 5 -m 2`。
 
 ## 0. 前 24 小时清单

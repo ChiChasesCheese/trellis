@@ -1,6 +1,6 @@
 # Millennium LEaD 面试 Loop 指南（每一轮：形式 · 评什么 · 通过线 · 挂点 · 备考动作）
 
-> 证据在 `../catalog/raw/`（每条可回溯）；题目主键 `../catalog/CATALOG.md`；练习目录 `rounds/`；演练器 `mock.py`。全书目录 `../CONTENTS.md`。
+> 证据在 `research/companies/millennium/catalog/raw/`（每条可回溯）；题目主键 `research/companies/millennium/catalog/CATALOG.md`；练习目录 `rounds/`；演练器 `mock.py`。全书目录 `../CONTENTS.md`。
 > 读者：1.5 YOE 后端 + 自建量化研究平台；目标 = LEaD Program（Miami，12–18 个月轮岗）。**结论先行，细节靠证据。**
 
 ## 0. 总图
@@ -29,7 +29,7 @@
 - **评什么**：一题写对 + 讲清 + 自测；项目讲到第三层；Python 内功口答。
 - **通过线（推断）**：题目主线在 30 min 内跑通样例 + 至少一个 follow-up 讲清；无明显基础错误。
 - **挂点**：括号/缩进错误没自查；只会 pandas 不会纯 Python；说不清 GIL/asyncio；项目讲成流水账；$600B 之类不诚实数字。
-- **备考动作**：`rounds/01_first_round/playbook.md`（逐分钟）；题库按 `../catalog/PARETO.md` 顺序：pc02 → pc03 → pc09 → pc10 → pc01 → pc05 → pc06 → pc07 → pc04 → pc08；每题 30 min 计时只做 Part 1–2；口头题 `mock.py bq py -n 5 -m 2` 每天 10 题；卡片 `../study/20-cards/`。
+- **备考动作**：`rounds/01_first_round/playbook.md`（逐分钟）；题库按 `research/companies/millennium/catalog/PARETO.md` 顺序：pc02 → pc03 → pc09 → pc10 → pc01 → pc05 → pc06 → pc07 → pc04 → pc08；每题 30 min 计时只做 Part 1–2；口头题 `mock.py bq py -n 5 -m 2` 每天 10 题；卡片 `../study/20-cards/`。
 - **练习**：`python3 loop/mock.py start pc02 -m 30` · `test pc02` · `ref pc02` · `status`。
 
 ## 2. 项目深挖（R1 前 15 min；后续轮可能整轮）
@@ -69,4 +69,4 @@
 
 ## 7. 面完回写
 
-实际被问的题 + 追问 → `../02-process.md` 亲历表；新题进 `../catalog/raw/coding_first_round.md` 与 `RANK.md`，挂进 `tree/`，重跑 `tools/pareto.py` · `tools/coverage.py` · `tools/contents.py`；答不上的 → [[Core]]。
+实际被问的题 + 追问 → `../02-process.md` 亲历表；新题进 `research/companies/millennium/catalog/raw/coding_first_round.md` 与 `RANK.md`，挂进 `tree/`，重跑 `research/companies/millennium/tools/pareto.py` · `research/companies/millennium/tools/coverage.py` · `research/companies/millennium/tools/contents.py`；答不上的 → [[Core]]。

@@ -1,6 +1,6 @@
 # ic02 · 参考答案（portal-api 5xx + p99）
 
-> 场景与全部数字均为 **(reconstructed)**：面经原话只有 "I was given access to an AWS environment and had to investigate an incident"（#8496901 Round 3），系统、根因、时间线是按 `tasks/AGENT_ONSITE.md` §3.B 构造的离线快照。
+> 场景与全部数字均为 **(reconstructed)**：面经原话只有 "I was given access to an AWS environment and had to investigate an incident"（#8496901 Round 3），系统、根因、时间线是按 `research/companies/abnormal/tasks/AGENT_ONSITE.md` §3.B 构造的离线快照。
 > 每条证据块的第一行是可原样运行的命令（在本目录），其后是输出里的原文行（`…` 表示省略）。`tests/test_ic02_model_answer.py` 逐块重跑并比对。
 
 ## 1. 一句话结论

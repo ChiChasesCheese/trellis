@@ -175,7 +175,7 @@ LINK f/l.jpg a/x.jpg   FILE a/x.jpg cat 300        IMG b <...>
 
 中（四帖独立描述同一类题，2024-04 至 2025-07；是否同一人未知）。Part 1/2 的结构与追问链是一手原话；
 `_calculate_hash` 的具体弱法、Part 3、Part 4 与全部测试规模均为重建。
-证据：`../../../../catalog/raw/questions_reported.md` Q16。
+证据：`research/companies/abnormal/catalog/raw/questions_reported.md` Q16。
 
 ## 这题考什么
 

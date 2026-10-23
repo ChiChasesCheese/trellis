@@ -15,7 +15,7 @@
 |---|---|---|---|---|---|
 | AI screen | | | | | |
 
-回写之后：新事实进 `catalog/raw/inbox.md`；若代码库与 cb01 不同，把形态写进 `catalog/CATALOG.md` 新行，重跑 `tools/pareto.py` · `tools/coverage.py` · `tools/contents.py`。
+回写之后：新事实进 `research/companies/abnormal/catalog/raw/inbox.md`；若代码库与 cb01 不同，把形态写进 `research/companies/abnormal/catalog/CATALOG.md` 新行，重跑 `research/companies/abnormal/tools/pareto.py` · `research/companies/abnormal/tools/coverage.py` · `research/companies/abnormal/tools/contents.py`。
 
 ## 2. 2026 年 SWE II 的预期 onsite（面经，不是官方）
 
@@ -36,4 +36,4 @@
 
 ## 4. 旧流程（2024 – 2025，仅作背景）
 
-"一共 4 轮"：① 图片去重（20 min 讨论 + 30 min 写）② manager chat ③ code review（预发 link）+ system design ④ coding + past project deep dive（自己 present 一个 problem domain）。每轮"一半讨论一半做题"。详见 `catalog/raw/process_and_rounds.md` §2。
+"一共 4 轮"：① 图片去重（20 min 讨论 + 30 min 写）② manager chat ③ code review（预发 link）+ system design ④ coding + past project deep dive（自己 present 一个 problem domain）。每轮"一半讨论一半做题"。详见 `research/companies/abnormal/catalog/raw/process_and_rounds.md` §2。

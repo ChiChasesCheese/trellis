@@ -1,6 +1,6 @@
 # 速记卡 · Python 运行时与数据处理（PracHub 报告过的 3 道概念题）
 
-> 来源：`../../catalog/raw/ai_round_sweep_2026-10-07.md` S-7（PracHub 题库 `question-reported-*`，无日期，[中]）。每题：结论 · 机制 · 怎么查 · 怎么改 · 追问。
+> 来源：`research/companies/abnormal/catalog/raw/ai_round_sweep_2026-10-07.md` S-7（PracHub 题库 `question-reported-*`，无日期，[中]）。每题：结论 · 机制 · 怎么查 · 怎么改 · 追问。
 
 ## 1. GIL 对多线程数据摄入的影响，怎么绕开
 

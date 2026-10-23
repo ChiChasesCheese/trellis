@@ -1,7 +1,7 @@
 # interviewer.md · cb06_filevault（面试官视角）
 
 > 本文件包含答案：只在做完某张 ticket 之后再看那一节（`python3 loop/ai_screen.py reveal cb06 tN`）。
-> 题型依据：Abnormal 的真实 take-home（"File Vault"：去重 + 搜索过滤 + 配额/统计 + metrics，要求录屏讲 Gen-AI 用法；`catalog/raw/ai_round_sweep_2026-10-07.md` S-1）。原题是 Django/DRF，这里用标准库重造同形代码库，并把"并发正确性"做成可验收的难点。
+> 题型依据：Abnormal 的真实 take-home（"File Vault"：去重 + 搜索过滤 + 配额/统计 + metrics，要求录屏讲 Gen-AI 用法；`research/companies/abnormal/catalog/raw/ai_round_sweep_2026-10-07.md` S-1）。原题是 Django/DRF，这里用标准库重造同形代码库，并把"并发正确性"做成可验收的难点。
 > 面试官开场原话（英文）："This is FileVault, our file-storage service. Pick up this ticket. You can use Claude Code. I'll answer questions, but I won't tell you how to build it."
 > 评分原话（官方）：Judgment — "evaluate approaches, scope work into milestones, and decide what fits the existing system"；Agency — "make decisions, state assumptions, test your own work, keep momentum"。
 

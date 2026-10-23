@@ -1,7 +1,7 @@
 # 练习总表 · 按可信度排序
 
 > 排序只看一件事：**这道题和真实面试一致的把握有多大**。同档内按"离下一轮（AI Technical Screen）多近"排。
-> 证据编号：`Q-n` = `catalog/raw/questions_reported.md` · `GD-<id>` = `catalog/raw/glassdoor_2026-10-09.md` 的 review id · `S-n` = `catalog/raw/ai_round_sweep_2026-10-07.md` · `LC #` = LeetCode Discuss 帖号。
+> 证据编号：`Q-n` = `research/companies/abnormal/catalog/raw/questions_reported.md` · `GD-<id>` = `research/companies/abnormal/catalog/raw/glassdoor_2026-10-09.md` 的 review id · `S-n` = `research/companies/abnormal/catalog/raw/ai_round_sweep_2026-10-07.md` · `LC #` = LeetCode Discuss 帖号。
 > 入口：AI screen 题 `python3 loop/ai_screen.py start <cb> <t>`；其他轮 `python3 loop/mock.py start <id>`（都在 kit 根目录跑）。每道 AI screen 题的逐场脚本在 `loop/rounds/01_ai_screen/<cb>/walkthrough.md`。
 
 ## A · 一手原题 / 原代码库形态（HIGH）

@@ -1,6 +1,6 @@
 # study/30-articles — 每题一篇中文题解
 
-> **先做题再读**：题解是验收用的，不是读着爽的。格式见 `_TEMPLATE.md`；每篇的代码骨架与该题 `solution.py` 一致（简化，不矛盾）。本表由 `tools/articles_readme.py` 生成，勿手改。
+> **先做题再读**：题解是验收用的，不是读着爽的。格式见 `_TEMPLATE.md`；每篇的代码骨架与该题 `solution.py` 一致（简化，不矛盾）。本表由 `research/companies/abnormal/tools/articles_readme.py` 生成，勿手改。
 
 | 文章 | 题目目录 | 轮次 | 最值得带走的一个模式 |
 |---|---|---|---|

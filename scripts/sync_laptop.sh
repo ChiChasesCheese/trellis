@@ -45,5 +45,5 @@ else
 fi
 
 echo
-echo "done. Obsidian: open $ROOT/vault as the vault. Millennium kit: vault/interviews/companies/millennium/00-README.md"
+echo "done. Obsidian: open $ROOT/vault as the vault. Millennium kit: vault/interviews/companies/millennium/README.md"
 echo "      practice: cd vault/interviews/companies/millennium && python3 loop/mock.py start pc02 -m 30"

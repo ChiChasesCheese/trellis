@@ -4,7 +4,7 @@
 
 ## Summary
 
-`filevault`：多用户文件存储服务（`X-User-Id` → 用户；JSON/base64 上传 → `FileService` → sqlite 元数据 + `BlobStore` 字节），照 Abnormal 真实 take-home "File Vault"（`../../../catalog/raw/ai_round_sweep_2026-10-07.md`：去重 + 搜索过滤 + 配额/统计 + metrics + GenAI 录屏）的形态原创，用标准库重造并把**并发正确性**做成可验收的难点。t1 去重（含上传/删除并发）· t2 搜索与过滤 · t3 配额 + 统计 + 限流。`walkthrough.md` 末尾有 5 分钟"讲你怎么用 AI"的录屏提纲。
+`filevault`：多用户文件存储服务（`X-User-Id` → 用户；JSON/base64 上传 → `FileService` → sqlite 元数据 + `BlobStore` 字节），照 Abnormal 真实 take-home "File Vault"（`research/companies/abnormal/catalog/raw/ai_round_sweep_2026-10-07.md`：去重 + 搜索过滤 + 配额/统计 + metrics + GenAI 录屏）的形态原创，用标准库重造并把**并发正确性**做成可验收的难点。t1 去重（含上传/删除并发）· t2 搜索与过滤 · t3 配额 + 统计 + 限流。`walkthrough.md` 末尾有 5 分钟"讲你怎么用 AI"的录屏提纲。
 
 ## 代码库地图（`starter/`）
 

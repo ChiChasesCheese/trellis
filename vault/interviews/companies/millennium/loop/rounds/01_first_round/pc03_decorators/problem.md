@@ -155,8 +155,8 @@ TIMED 4                                   CALL 3
   decorator 是考察点之一。
 - **MED** 聚合站（TechPrep / InterviewQuery）把 "decorators, generators, context managers" 列为
   同一组 Python 内功考点，未标出具体轮次。
-- `../../catalog/raw/coding_first_round.md`（若尚未落盘，以本文件所属的
-  `tasks/AGENT_PROBLEMS.md` §2 pc03 行为准）。
+- `research/companies/millennium/catalog/raw/coding_first_round.md`（若尚未落盘，以本文件所属的
+  `research/companies/millennium/tasks/AGENT_PROBLEMS.md` §2 pc03 行为准）。
 - 以上来源均只给出"考装饰器"这一事实，没有给出完整题面；三个 Part 的具体规则、API 形状与全部
   worked examples 均为 **(reconstructed)**，按"裸装饰器 → 带参数装饰器 → 带状态类装饰器"这条
   业界最常见的装饰器递进结构设计。

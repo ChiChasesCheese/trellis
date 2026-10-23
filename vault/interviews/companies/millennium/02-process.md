@@ -1,6 +1,6 @@
 # 02 · Millennium LEaD 面试流程（2026-09）
 
-> 逐条证据与置信度在 `catalog/raw/process_and_rounds.md`（LEaD 专属 L1–L6）与 `catalog/raw/coding_first_round.md`。**high** = 一手 / 官方；**medium** = 一手但只读到摘要，或标了日期的聚合站；**low** = SEO。
+> 逐条证据与置信度在 `research/companies/millennium/catalog/raw/process_and_rounds.md`（LEaD 专属 L1–L6）与 `research/companies/millennium/catalog/raw/coding_first_round.md`。**high** = 一手 / 官方；**medium** = 一手但只读到摘要，或标了日期的聚合站；**low** = SEO。
 
 ## 0. 总图（LEaD，推断自 L1 + L2 + 通用流程）
 
@@ -23,7 +23,7 @@
 
 ## 1. R1（当前）：45 min · Webex + HackerRank
 
-- **形式**：一位 SWE（Microsoft 背景，见 `catalog/raw/interviewer.md`）；HackerRank 面试环境（可跑代码；产品自带 AI 助手且**面试官能看到你和 AI 的交互**——默认不用 AI，除非对方明说）。
+- **形式**：一位 SWE（Microsoft 背景，见 `research/companies/millennium/catalog/raw/interviewer.md`）；HackerRank 面试环境（可跑代码；产品自带 AI 助手且**面试官能看到你和 AI 的交互**——默认不用 AI，除非对方明说）。
 - **内容（证据权重顺序）**：① 一道实用编码题（分组聚合 / 分页拉取 / 装饰器 / 数据结构设计 / 大数字符串）② 或一道 LC medium（双指针 / 前缀和 / 图 BFS）③ 穿插 Python 内功口头题 ④ 前 15 min 简历与项目 ⑤ SQL 小题概率低。
 - **评什么**：官方 "talk through code live"、fundamentals、abstract reasoning、ownership；一手："working and optimized"、自己走样例、复杂度。
 - **打法**：`loop/rounds/01_first_round/playbook.md`（逐分钟）。

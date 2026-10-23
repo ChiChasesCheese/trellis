@@ -17,7 +17,7 @@
 
 **面试环境说明**：Millennium 的 System Design 题在候选人报告里集中出现在**后期轮次**——onsite/final 阶段是 3–4 小时 back-to-back、约 5 位面试官（coding、SD、项目深挖、behavioral 各一场，每场约 45 min），或者像一手案例那样是"5 轮技术电面"里的一轮（R5，45–60 min，时长口径两种都有报告）。白板工具未证实——LEaD 目前确认的是 R1 用 Webex + HackerRank，但 HackerRank 面向 live coding，SD 轮是否复用同一工具、还是口头 + 共享白板，没有一手报告点名；按"口头描述 + 简单手绘框图"准备即可。面试官风格：官方明确"talk through code live"和"how to know what's true in an unfamiliar system"这类考点，一手报告里也有"面试官几乎不给反馈"的案例——预期是自己主动推进设计、主动提出规模假设，不能指望被追问式引导。
 
-**题目原始报告与来源**（置信度综合见下；company-wide catalog `catalog/CATALOG.md` `sd01` 行）：
+**题目原始报告与来源**（置信度综合见下；company-wide catalog `research/companies/millennium/catalog/CATALOG.md` `sd01` 行）：
 
 - **"price data design problem"** —— LeetCode Discuss 7423863（2025-12-19，Quant Developer – Python，5 轮技术流程的 R5，重开的技术轮）：一手报告只给出题名，没有还原具体接口和约束，本文件的接口、数据模型和 failure mode 是围绕题名做的合理展开，标 **(reconstructed)**。**置信度：高**（一手、可读全文，但内容单薄）。
 - TechPrep 2026 Millennium 指南列出的 SD 题型池——"research data pipelines"、"real-time risk monitors"、"signal evaluation systems"——这三个题型都指向"给交易/风控系统喂数据"这一类设计，和"price data design problem"同源，互相印证这是一个题族而非孤例。**置信度：低-中**（聚合站转述，不可读全文）。

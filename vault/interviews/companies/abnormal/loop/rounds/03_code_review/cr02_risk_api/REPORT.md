@@ -19,7 +19,7 @@
 
 ## 验收
 
-编排者 gate（`tools/verify_suites.py`，2026-10-07）：acceptance/solution 24 passed · starter `-m core` 9 failed（0 passed）· starter 自带 17 passed · solution 自带 20 passed → **OK**。
+编排者 gate（`research/companies/abnormal/tools/verify_suites.py`，2026-10-07）：acceptance/solution 24 passed · starter `-m core` 9 failed（0 passed）· starter 自带 17 passed · solution 自带 20 passed → **OK**。
 
 ## 每个 P0 的"为什么是 P0"
 

@@ -1,6 +1,6 @@
 # 速记卡 · 安全领域词汇（20 张；面试里自然说出口即可，不背定义）
 
-> 依据：Abnormal 产品页与 JD（`catalog/raw/official.md` O-1、O-4、O-5）+ 行业通用术语。英文是面试里用的说法。
+> 依据：Abnormal 产品页与 JD（`research/companies/abnormal/catalog/raw/official.md` O-1、O-4、O-5）+ 行业通用术语。英文是面试里用的说法。
 
 1. **BEC (Business Email Compromise)**：冒充高管/供应商骗转账或礼品卡；无恶意链接/附件，靠**行为异常**（新发件人、display name 冒充、reply-to 不同）识别。Abnormal 起家的问题。
 2. **VEC (Vendor Email Compromise)**：供应商真实邮箱被盗后发假发票——发件人"可信"，所以 allowlist 不能压过内容/行为信号。

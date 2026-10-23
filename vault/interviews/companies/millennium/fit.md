@@ -1,6 +1,6 @@
 # fit · Why Millennium / Why LEaD / Why leave（English scripts）
 
-> 数字与引语来自 `01-company-brief.md` 与 `catalog/raw/official_lead.md`。不说 $600B；不报薪资数字。
+> 数字与引语来自 `01-company-brief.md` 与 `research/companies/millennium/catalog/raw/official_lead.md`。不说 $600B；不报薪资数字。
 
 ## 1. Why Millennium?（45 s）
 
