@@ -39,7 +39,7 @@ Rules that are not derivable from the code:
   interview or study material into `~/Documents/Chi` or any other vault; never copy across vaults.
 - `vault/` is an Obsidian vault: `.py` files inside company kits are invisible to Obsidian and
   harmless to `trellis` (it only reads `*.md`). Root `pytest` is scoped to `tests/` via
-  `pyproject.toml`; run a kit's suite from inside its folder (`cd vault/interviews/companies/stripe && python3 -m pytest problems -q`).
+  `pyproject.toml`; run a kit's suite with `scripts/kit_suites.py --co <co>` or from inside its folder (`cd vault/interviews/companies/stripe && python3 -m pytest problems -q`).
 - `core/resume/resume.tex` is the only resume source. Company folders link to `core/`, never copy it.
 - **Chi reviews in Chinese.** Every learner-facing text (skeleton titles, readings, cards, drills,
   study articles) is Chinese, technical terms in English in parentheses. A skeleton without `lang`
@@ -60,7 +60,13 @@ python3 scripts/check_ood.py                        # Amazon OOD write-ups
 uv run python scripts/check_design_problems.py --all    # system-design problem bank
 uv run python scripts/check_lld_problems.py --all       # LLD problem bank (--branch amazon for the company branch)
 uv run python scripts/check_lld_concepts.py --all       # LLD concept layer
+python3 -B scripts/kit_suites.py --co <co>              # a kit's practice suites (--list: commands; no --co: all kits, ~4 min); `just kits`
+python3 -B scripts/changed_learning_pages.py --base origin/main --check   # style checks on changed pages only (CI does this); `just style`
+python3 -B scripts/check_mermaid.py --base origin/main  # changed pages' mermaid blocks render (needs Node)
 ```
+
+`just test | kits | style | all` wrap these. CI (`.github/workflows/ci.yml`) runs the cheap checks always and the kit, style and
+mermaid jobs only for what changed; `.pre-commit-config.yaml` is opt-in (`pre-commit install`, Chi's call).
 
 New content follows ADR 0012 (names and layout). Cross-check the layout with `docs/explanation/architecture.md`.
 

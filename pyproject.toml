@@ -41,3 +41,8 @@ trellis = ["workbench.html"]
 # Only the trellis package tests. The interview kits under vault/interviews/companies/*
 # carry their own pytest.ini and are run from inside each company folder.
 testpaths = ["tests"]
+
+[tool.ruff.lint]
+# Bug-class rules only (syntax errors, undefined names, bad comparisons): the codebase has style debt on purpose,
+# and the pre-commit hook lints only files you touch. Widen this list as the debt is paid.
+select = ["E9", "F63", "F7", "F82"]

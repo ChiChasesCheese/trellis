@@ -3,19 +3,189 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# Every third-party action is pinned to a full commit SHA (the comment names the release it is).
+#   dorny/paths-filter    ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d  v4.0.3
+#   actions/checkout      3d3c42e5aac5ba805825da76410c181273ba90b1  v7.0.1
+#   actions/setup-python  6d4fd22b20465ccc0f7354476588e8df7c9ca0e0  v7.1.0
+#   actions/setup-java    b843ebf9b913146b38da2eaa7aeddf76074ae1ad  v6.1.0
+#   actions/setup-node    949feb2413d6458794dcd2491c4babbbce0c15c1  v7.1.0
+#   astral-sh/setup-uv    07a047e608db84b3d8c06cd9a7c7dcc9c355c18e  v10.3.2
+#   actions/upload-artifact cf430e030ddbb5b0abf93d22962f4752f3646cd9  v7.0.2
+
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.12"
       - run: pip install -e .[dev]
       - run: trellis --all validate
       - run: pytest -q
       - run: trellis --all build
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: anki-decks
           path: dist/*.apkg
+
+  # Which parts of the repo this change touches; the jobs below run only for those.
+  changes:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read   # paths-filter lists a pull request's files through the API
+    outputs:
+      kits: ${{ steps.matrix.outputs.kits }}
+      vault_md: ${{ steps.pages.outputs.vault_md }}
+      md: ${{ steps.pages.outputs.md }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # Filter names here are the kit names `scripts/kit_suites.py --co` accepts; `common` and `runtime` only hold
+      # the shared path lists (YAML anchors) and are dropped from the matrix below.
+      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
+        id: kits
+        with:
+          filters: |
+            common: &common
+              - 'scripts/kit_suites.py'
+              - '.github/workflows/ci.yml'
+            runtime: &runtime
+              - *common
+              - 'trellis/**'
+              - 'pyproject.toml'
+              - 'uv.lock'
+            amazon:
+              - *common
+              - 'vault/interviews/core/coding/amazon/**'
+              - 'vault/interviews/companies/amazon/**'
+            headlands:
+              - *common
+              - 'vault/interviews/companies/headlands/**'
+            airbnb:
+              - *common
+              - 'vault/interviews/companies/airbnb/**'
+            roblox:
+              - *common
+              - 'vault/interviews/companies/roblox/**'
+            stripe:
+              - *runtime
+              - 'vault/interviews/companies/stripe/**'
+            snowflake:
+              - *runtime
+              - 'vault/interviews/companies/snowflake/**'
+            millennium:
+              - *runtime
+              - 'vault/interviews/companies/millennium/**'
+            abnormal:
+              - *runtime
+              - 'vault/interviews/companies/abnormal/**'
+      - name: Matrix of the kits that changed
+        id: matrix
+        env:
+          MATCHED: ${{ steps.kits.outputs.changes }}
+        run: |
+          echo "kits=$(jq -c 'map(select(. != "common" and . != "runtime"))' <<<"$MATCHED")" >> "$GITHUB_OUTPUT"
+      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
+        id: pages
+        with:
+          filters: |
+            vault_md:
+              - 'vault/**/*.md'
+              - 'scripts/plain_style.py'
+              - 'scripts/phone_diagrams.py'
+              - 'scripts/changed_learning_pages.py'
+            md:
+              - '**/*.md'
+              - 'scripts/check_mermaid.py'
+
+  wikilinks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+      - run: python3 -B scripts/check_wikilinks.py
+
+  learning-pages:
+    needs: changes
+    if: needs.changes.outputs.vault_md == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+      - name: Style checks on the changed pages only
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE_REF: ${{ github.base_ref }}
+          BEFORE: ${{ github.event.before }}
+        run: |
+          # Pull request: the target branch. Push: the previous tip (the script falls back to origin/main
+          # for a new branch or a force-push, where that sha does not exist).
+          if [ "$EVENT" = pull_request ]; then base="origin/$BASE_REF"; else base="$BEFORE"; fi
+          python3 -B scripts/changed_learning_pages.py --base "$base" --check
+
+  kits:
+    needs: changes
+    if: needs.changes.outputs.kits != '[]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        co: ${{ fromJSON(needs.changes.outputs.kits) }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
+      - name: JDK 21 (headlands Java problems and mock_maven)
+        if: matrix.co == 'headlands'
+        uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
+        with:
+          distribution: temurin
+          java-version: "21"
+      - name: C++20 compiler (headlands)
+        if: matrix.co == 'headlands'
+        run: |
+          # tools/cpptest.py compiles with $CXX; the kit's reference compiler is clang++, g++ 13 is the fallback.
+          if command -v clang++ >/dev/null; then echo "CXX=clang++" >> "$GITHUB_ENV"; else echo "CXX=g++" >> "$GITHUB_ENV"; fi
+          # AddressSanitizer aborts on the runners' default ASLR entropy (kernel >= 6.x); this is the documented workaround.
+          sudo sysctl -w vm.mmap_rnd_bits=28
+      - run: python3 -B scripts/kit_suites.py --co "${{ matrix.co }}"
+
+  mermaid:
+    needs: changes
+    if: needs.changes.outputs.md == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "22"
+      - name: Render the mermaid diagrams on the changed pages
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE_REF: ${{ github.base_ref }}
+          BEFORE: ${{ github.event.before }}
+        run: |
+          if [ "$EVENT" = pull_request ]; then base="origin/$BASE_REF"; else base="$BEFORE"; fi
+          python3 -B scripts/check_mermaid.py --base "$base"

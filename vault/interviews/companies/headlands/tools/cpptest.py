@@ -28,7 +28,8 @@ from pathlib import Path
 
 KIT = Path(__file__).resolve().parent.parent
 HARNESS_DIR = KIT / "tools" / "cpp"
-CXX = os.environ.get("CXX", "clang++")
+# $CXX wins; otherwise the first of clang++ / g++ / c++ on PATH (CI images differ), clang++ as the final default.
+CXX = os.environ.get("CXX") or next((c for c in ("clang++", "g++", "c++") if shutil.which(c)), "clang++")
 BASE = ["-std=c++20", "-O2", "-Wall", "-Wextra"]
 SAN = ["-fsanitize=address,undefined", "-fno-sanitize-recover=undefined", "-fno-omit-frame-pointer", "-g"]
 SUMMARY = re.compile(r"SUMMARY total=(\d+) passed=(\d+) failed=(\d+) checks=(\d+)")
