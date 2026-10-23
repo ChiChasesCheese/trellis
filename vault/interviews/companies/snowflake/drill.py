@@ -7,7 +7,7 @@
   python drill.py test q01 [-k part1]  # run the test-suite against YOUR problems/q01/starter.py
   python drill.py ref q01              # run the test-suite against the reference solution.py
   python drill.py time q01             # how much of the 60 minutes is left
-  python drill.py status [--all]       # progress board across every problem (see tools/progress.py)
+  python drill.py status [--all]       # progress board across every problem (see trellis/kit/progress.py)
 """
 from __future__ import annotations
 
@@ -24,7 +24,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 PROBLEMS = ROOT / "problems"
 sys.path.insert(0, str(ROOT))
-from tools import progress  # noqa: E402  (needs ROOT on sys.path first)
+from trellis.kit import progress  # noqa: E402  (shared runtime; run under `uv run --project <repo root>`)
+
+progress.configure(ROOT)
 
 
 def _dir(q: str) -> Path:
@@ -76,7 +78,7 @@ def _pytest(d: Path, which: str, extra: list[str], record: bool = False, k: str 
         env["PYTHONPATH"] = os.pathsep.join(x for x in (str(ROOT), env.get("PYTHONPATH", "")) if x)
         out = Path(tempfile.mkdtemp(prefix="drill_progress_")) / "summary.json"
         env["DRILL_PROGRESS_OUT"] = str(out)
-        cmd += ["-p", "tools.pytest_progress"]
+        cmd += ["-p", "trellis.kit.pytest_progress"]
     rc = subprocess.call([*cmd, *extra], cwd=str(ROOT), env=env)
     if record:
         _log(d, which, rc, out, k)

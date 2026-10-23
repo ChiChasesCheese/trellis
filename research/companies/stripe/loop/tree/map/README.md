@@ -1,7 +1,7 @@
 # 题图（交互式 map）生成器
 
 ```
-python3 loop/tree/map/build_map.py > /tmp/map_data.json
+uv run --project <repo root> python3 research/companies/stripe/loop/tree/map/build_map.py > /tmp/map_data.json
 python3 - <<'PY'
 from pathlib import Path
 t = Path("loop/tree/map/template.html").read_text()

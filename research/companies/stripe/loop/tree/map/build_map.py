@@ -3,9 +3,11 @@ import re
 import sys
 from pathlib import Path
 
-W = Path(__file__).resolve().parents[2]  # loop/
-sys.path.insert(0, str(W / "tree"))
-from check_tree import parse, resolve  # noqa: E402
+from trellis.kit import resolve_kit  # noqa: E402  (run with `uv run --project <repo root> python3 ...`)
+from trellis.kit.check_tree import parse, resolve  # noqa: E402
+
+W = Path(__file__).resolve().parents[2]  # research/companies/stripe/loop/
+KIT = resolve_kit("stripe")
 
 rounds, prereq = parse((W / "tree/interview-loop.yaml").read_text())
 yaml = (W / "tree/interview-loop.yaml").read_text().splitlines()
@@ -121,7 +123,7 @@ for r in rounds:
         }
     )
 for pid, p in probs.items():
-    p["built"] = resolve(pid) is not None
+    p["built"] = resolve(KIT, pid) is not None
     p["round"] = next((r["id"] for r in out_rounds for s in r["skills"] if pid in s["problems"]), "")
     p["skills"] = [s["id"] for r in out_rounds for s in r["skills"] if pid in s["problems"]]
     cores = sorted(

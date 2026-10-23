@@ -8,4 +8,4 @@ python3 drill.py start q02 -m 40
 python3 drill.py test q02
 ```
 
-每轮准备见 `../../../study/10-rounds/02-oa.md`。这个目录只是为了让 `loop/tree/check_tree.py` 的轮次目录检查成立。
+每轮准备见 `../../../study/10-rounds/02-oa.md`。这个目录只是为了让 `trellis kit check_tree` 的轮次目录检查成立。

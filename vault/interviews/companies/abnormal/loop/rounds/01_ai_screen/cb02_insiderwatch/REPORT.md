@@ -52,7 +52,7 @@
 
 - 只经由 CLI 子进程（JSON 输出）测试，不依赖内部名字。ticket 点名的接口：`alerts --user/--json`；`cases [--user] [--json]`（键 `id`/`user`/`status`/`severity`/`alerts`）、`cases close <id>`；数据源名 `gdrive`。
 - 负例（bob / dave 不该报）先断言 carol / erin 被抓到，所以在 starter 上也是红的。
-- 编排者 gate（`research/companies/abnormal/tools/verify_suites.py`，2026-10-06）：acceptance/solution 31 passed · starter core 19 failed · starter 自带 53 passed · solution 自带 71 passed → **OK**。
+- 编排者 gate（`trellis kit verify_suites`，2026-10-06）：acceptance/solution 31 passed · starter core 19 failed · starter 自带 53 passed · solution 自带 71 passed → **OK**。
 
 ## 已知的弱点（练习时心里有数）
 

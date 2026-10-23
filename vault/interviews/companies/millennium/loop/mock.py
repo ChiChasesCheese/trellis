@@ -7,7 +7,7 @@
   python3 loop/mock.py test <id> [-k EXPR]      # run tests against YOUR starter (or work copy)
   python3 loop/mock.py ref <id> [-k EXPR]       # run tests against the reference solution
   python3 loop/mock.py time <id>                # how much of the round's minutes are left
-  python3 loop/mock.py status [--all]           # progress board across every round (see tools/progress.py)
+  python3 loop/mock.py status [--all]           # progress board across every round (see trellis/kit/progress.py)
   python3 loop/mock.py serve <id> [--port N]    # start the mockserver an integration round needs
   python3 loop/mock.py bq [round] [-n N] [-m MIN] [--seed S]
                                                  # draw N random non-coding questions and time them
@@ -34,7 +34,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from tools import progress  # noqa: E402  (needs ROOT on sys.path first)
+from trellis.kit import progress  # noqa: E402  (shared runtime; run under `uv run --project <repo root>`)
+
+progress.configure(ROOT)
 
 LOOP = ROOT / "loop"
 ROUNDS = LOOP / "rounds"
@@ -213,7 +215,7 @@ def _pytest(d: Path, which: str, extra: list[str], record_id: str | None = None,
         env["PYTHONPATH"] = os.pathsep.join(x for x in (str(ROOT), env.get("PYTHONPATH", "")) if x)
         out = Path(tempfile.mkdtemp(prefix="mock_progress_")) / "summary.json"
         env["DRILL_PROGRESS_OUT"] = str(out)
-        cmd += ["-p", "tools.pytest_progress"]
+        cmd += ["-p", "trellis.kit.pytest_progress"]
     rc = subprocess.call([*cmd, *extra], cwd=str(ROOT), env=env)
     if record_id:
         _log(record_id, which, rc, out, k)
@@ -271,7 +273,7 @@ def cmd_test(a):
                 "-p",
                 "no:cacheprovider",
                 "-p",
-                "tools.pytest_progress",
+                "trellis.kit.pytest_progress",
                 "--no-header",
                 "-rN",
                 *extra,

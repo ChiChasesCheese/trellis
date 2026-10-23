@@ -5,5 +5,5 @@ How the kit in `vault/interviews/companies/millennium/` was made. Learning pages
 - `catalog/`: `CATALOG.md` (problem table), `RANK.md` / `PARETO.md` (28 rule, cut line), `raw/` (one file per source, GitHub first).
 - `reports/COVERAGE.md`: coverage of reported problems.
 - `CHECKPOINT.md`, `LEDGER.md`, `CONVENTIONS.md`, `tasks/AGENT_PROBLEMS.md`: build state and agent rules.
-- `tools/`: pareto, coverage, summary, contents (writes the vault's `CONTENTS.md`), articles_readme, verify_suites, `tree/` (`check_tree.py` + `interview-loop.yaml`). Their relative paths still assume the old in-kit layout; adjust before running.
-- The vault keeps `tools/progress.py` and `tools/pytest_progress.py` because `loop/mock.py` imports them.
+- `tree/interview-loop.yaml`: the round/skill/problem tree. The authoring tools are the shared `trellis kit` commands (`trellis/kit/`), run from the repo root: `trellis kit pareto|coverage|summary|contents|articles_readme|verify_suites|check_tree --co millennium` (`--kit` / `--research` override the two directories; `trellis kit <tool> --help`).
+- `loop/mock.py` imports the practice runtime from `trellis.kit` (`progress`, `pytest_progress`); run it with `uv run --project <repo root> python loop/mock.py …`.

@@ -1,8 +1,8 @@
 # 目录 — 按轮次读，按分数练
 
-> 由 `python3 research/companies/abnormal/tools/contents.py` 从 `research/companies/abnormal/tools/tree/interview-loop.yaml` + `research/companies/abnormal/catalog/RANK.md` 生成，**勿手改**。
+> 由 `trellis kit contents` 从 `interview-loop.yaml` + `catalog/RANK.md` 生成，**勿手改**。
 > 每个技能下的题按 28 法则分数（#refs × 时效 × 轮次权重）降序；**★ = cut line 以内**（累计 80% 流出次数）。
-> 每题：题集目录（题面 + 测试 + 参考解）→ 题解文章（先做后读）。练习代码库（cb）用 `python3 loop/ai_screen.py start <cb> <t>`；Abnormal 在 LeetCode 公司标签源里没有题单（`research/companies/abnormal/catalog/raw/github_repos.md`）。
+> 每题：题集目录（题面 + 测试 + 参考解）→ 题解文章（先做后读）。练习代码库（cb）用 `python3 loop/ai_screen.py start <cb> <t>`；Abnormal 在 LeetCode 公司标签源里没有题单（`catalog/raw/github_repos.md`）。
 
 ## 01_ai_screen · AI Technical Screen · 60 min · 已有 Python 代码库 + Claude Code（探索 10 / 模糊 feature 35 / walkthrough 15）
 

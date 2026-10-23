@@ -103,8 +103,9 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
    `bank.json` + `questions.md` + `rubric.md` + `stories.md`; system design is
    `prompt.md` + `rubric.md` + `model_answer.md` + `followups.md`.
 5. `study/` is Chinese: essentials (transferable), per-round prep, one article per problem.
-6. Runners: `drill.py` (OA) and `loop/mock.py` (all other rounds); `tools/summary.py --run`
-   regenerates the test summary; `tools/refresh_check.py` re-verifies sources.
+6. Runners: `drill.py` (OA) and `loop/mock.py` (all other rounds), started with `uv run --project <repo> python …`
+   (they import `trellis.kit`); `trellis kit summary --co <co> --run` regenerates the test summary;
+   `trellis kit refresh_check --co <co>` re-verifies sources. Authoring tools are shared in `trellis/kit/`, never copied into a kit.
 7. Reconstructed parts are labelled **(reconstructed)** in `problem.md`; AI content farms
    (lodely, vervecopilot) are never cited; a single fetch failure never condemns a site —
    record which path failed (see `research/companies/stripe/HANDOFF.md` §2 for the reachability table).
@@ -134,8 +135,8 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
   context and returns in ~5 min). Every defect found becomes a rule in the group's instruction file.
 - Keep exactly three agents running: when one returns, review, commit, launch the next. Two sibling deliverables per
   agent is the sweet spot (~250k tokens, ~20 min); budget ~130k tokens and ~12 min per problem-sized deliverable.
-- Never accept a subagent's "done": re-run `tools/verify_suites.py` (reference green **and** empty
-  starter red) and `check_tree.py --strict` yourself. A 429 usage-limit death leaves partial files —
+- Never accept a subagent's "done": re-run `trellis kit verify_suites --co <co> "<glob>"` (reference green **and** empty
+  starter red) and `trellis kit check_tree --co <co> --strict` yourself. A 429 usage-limit death leaves partial files —
   salvage and finish them, don't respawn from scratch.
 
 ## Gotchas
@@ -144,8 +145,8 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
   `$CLAUDE_JOB_DIR/tmp/*.py` with Write, then run `python3 <script>`.
 - Plain `python3` has no pytest: `uv run --project <worktree> --with pytest python -m pytest ...`; `git checkout uv.lock` if uv touches it.
 - macOS `sed -i ''`; relative links from `loop/rounds/<round>/<id>/` to the kit root are `../../../`.
-- Counts in prose (cut line, coverage, "N problems") come from a script (`tools/pareto.py`,
-  `tools/coverage.py`, `summary.py`), never from memory — hand counts were wrong twice.
+- Counts in prose (cut line, coverage, "N problems") come from a script (`trellis kit pareto|coverage|summary`),
+  never from memory — hand counts were wrong twice.
 - Paywalled aggregators (trueinterview) still expose intro + part outline via WebFetch: enough to
   rebuild the problem, labelled **(reconstructed)**.
 - `uv run trellis --all anki-push` needs desktop Anki running (AnkiConnect on :8765). Company kits are
@@ -178,10 +179,10 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
 uv run trellis --all validate                  # 0 errors is the bar
 uv run --with pytest python -m pytest -q       # trellis tests (tests/ only)
 cd vault/interviews/companies/stripe && python3 -m pytest problems -q   # a kit's suite
-python3 tools/verify_suites.py . "problems/q1*"   # kit acceptance gate (run inside the kit)
-python3 tools/coverage.py                          # sighting-weighted coverage → reports/COVERAGE.md
+uv run trellis kit verify_suites --co stripe "problems/q1*"   # kit acceptance gate
+uv run trellis kit coverage --co snowflake                   # sighting-weighted coverage → research/companies/<co>/reports/
 python3 vault/interviews/core/leetcode/lc_company.py Snowflake   # LeetCode company-tag list
-python3 tools/contents.py                          # regenerate a kit's CONTENTS.md (inside the kit)
+uv run trellis kit contents --co snowflake         # regenerate a kit's CONTENTS.md
 
 # study domain (skill building-study-domains)
 uv run --extra clip trellis ingest <corpus>        # fetch + archive a corpus

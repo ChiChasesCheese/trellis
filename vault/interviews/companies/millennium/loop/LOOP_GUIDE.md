@@ -69,4 +69,4 @@
 
 ## 7. 面完回写
 
-实际被问的题 + 追问 → `../02-process.md` 亲历表；新题进 `research/companies/millennium/catalog/raw/coding_first_round.md` 与 `RANK.md`，挂进 `tree/`，重跑 `research/companies/millennium/tools/pareto.py` · `research/companies/millennium/tools/coverage.py` · `research/companies/millennium/tools/contents.py`；答不上的 → [[Core]]。
+实际被问的题 + 追问 → `../02-process.md` 亲历表；新题进 `research/companies/millennium/catalog/raw/coding_first_round.md` 与 `RANK.md`，挂进 `tree/`，重跑 `trellis kit pareto` · `trellis kit coverage` · `trellis kit contents`；答不上的 → [[Core]]。

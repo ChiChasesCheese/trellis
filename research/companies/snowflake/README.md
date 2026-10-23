@@ -6,5 +6,5 @@ How the kit in `vault/interviews/companies/snowflake/` was made. Learning pages 
 - `raw/`: earlier company/process/Chakra/email research notes (separate from `catalog/raw/`).
 - `reports/`: `COVERAGE.md`, `TEST_SUMMARY.md`. `skills_matrix.md`: skill / JD / problem map.
 - `CHECKPOINT.md`, `LEDGER.md`, `CONVENTIONS.md`, `tasks/plan.md`: build state and rules.
-- `tools/`: pareto, coverage, summary, contents (writes the vault's `CONTENTS.md`), harvest, mirror, refresh_check, verify_suites, build_report_html, `tree/` (`check_tree.py` + `interview-loop.yaml`), `build_ai_screen_bank.py`, `lint.sh`. Their relative paths still assume the old in-kit layout; adjust before running.
-- The vault keeps `tools/progress.py` and `tools/pytest_progress.py` because `drill.py` and `loop/mock.py` import them.
+- `tree/interview-loop.yaml`: the round/skill/problem tree. `tools/`: `build_ai_screen_bank.py` and `lint.sh` (Snowflake-only). The other authoring tools are the shared `trellis kit` commands, run from the repo root: `trellis kit pareto|coverage|summary|contents|harvest|mirror|refresh_check|verify_suites|check_tree --co snowflake`.
+- `drill.py` and `loop/mock.py` import the practice runtime from `trellis.kit`; run them with `uv run --project <repo root> python drill.py …`.

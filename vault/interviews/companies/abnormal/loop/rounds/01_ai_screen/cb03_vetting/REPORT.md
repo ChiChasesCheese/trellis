@@ -38,7 +38,7 @@
 | 合计 | 18 | 6 | 10 |
 
 只经由 `vetting.cli.main(["--db", …, "ingest", …])`、`create_app(db)` + `TestClient` 与 `/reviews` 端点测试；t2 读 starter 自带的 `fixtures/workday/`。
-编排者 gate（`research/companies/abnormal/tools/verify_suites.py`，2026-10-06）：acceptance/solution 34 passed · starter core 18 failed（0 passed）· starter 自带 52 passed · solution 自带 64 passed → **OK**。
+编排者 gate（`trellis kit verify_suites`，2026-10-06）：acceptance/solution 34 passed · starter core 18 failed（0 passed）· starter 自带 52 passed · solution 自带 64 passed → **OK**。
 
 ## 已知弱点
 

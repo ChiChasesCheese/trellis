@@ -15,7 +15,7 @@
 |---|---|---|---|---|---|
 | AI screen | | | | | |
 
-回写之后：新事实进 `research/companies/abnormal/catalog/raw/inbox.md`；若代码库与 cb01 不同，把形态写进 `research/companies/abnormal/catalog/CATALOG.md` 新行，重跑 `research/companies/abnormal/tools/pareto.py` · `research/companies/abnormal/tools/coverage.py` · `research/companies/abnormal/tools/contents.py`。
+回写之后：新事实进 `research/companies/abnormal/catalog/raw/inbox.md`；若代码库与 cb01 不同，把形态写进 `research/companies/abnormal/catalog/CATALOG.md` 新行，重跑 `trellis kit pareto` · `trellis kit coverage` · `trellis kit contents`。
 
 ## 2. 2026 年 SWE II 的预期 onsite（面经，不是官方）
 

@@ -1,6 +1,6 @@
 # 目录 — 按轮次读，按分数练
 
-> 由 `python3 tools/contents.py` 从 `loop/tree/interview-loop.yaml` + `catalog/RANK.md` 生成，**勿手改**。
+> 由 `trellis kit contents` 从 `interview-loop.yaml` + `catalog/RANK.md` 生成，**勿手改**。
 > 每个技能下的题按 28 法则分数（#refs × 时效 × 轮次权重）降序；**★ = cut line 以内**（累计 80% 流出次数）。
 > 每题：题集目录（题面 + 测试 + 参考解）→ 题解文章（先做后读）。LeetCode 原题的公司标签全表见 `../../core/leetcode/companies/snowflake.md`。
 

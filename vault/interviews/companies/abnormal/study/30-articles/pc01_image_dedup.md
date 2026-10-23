@@ -89,4 +89,4 @@ groups = sorted((sorted(g) for g in groups), key=lambda g: g[0])
 ## 8. 同族题 / 延伸
 - 同一个"代价递增过滤"模式：`../../../snowflake/` 里的去重 / 分组聚合题；`../../millennium/study/30-articles/` 里的流式分组聚合题（只写目录，具体 ID 以目录为准）。
 - 近似重复（Part 4）：aHash → dHash → pHash；大规模用 BK-tree 或分段倒排索引。
-- 练习命令：`python3 loop/mock.py start pc01`；验收：`python3 research/companies/abnormal/tools/verify_suites.py . "loop/rounds/06_legacy_coding/pc01*"`。
+- 练习命令：`python3 loop/mock.py start pc01`；验收：`trellis kit verify_suites --co abnormal "loop/rounds/06_legacy_coding/pc01*"`。

@@ -39,7 +39,7 @@ python3 loop/mock.py bq ai -n 5                 # 随机抽 5 题（q / principl
 python3 loop/mock.py bq ai -n 8 --seed 7 -m 2   # 固定种子、每题 2 分钟
 python3 loop/rounds/00_ai_screen/build_bank.py  # questions.md 改了之后重新生成 bank.json
 python3 loop/rounds/00_ai_screen/build_bank.py --check   # 校验 bank.json 没过期
-python3 loop/tree/check_tree.py --strict        # 知识树：本轮 skill → problems: [ai]
+trellis kit check_tree --co snowflake --strict   # 知识树：本轮 skill → problems: [ai]
 ```
 
 ## 故事 ↔ 题的映射（一屏）

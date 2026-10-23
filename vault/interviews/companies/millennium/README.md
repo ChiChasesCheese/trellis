@@ -46,7 +46,7 @@ tags:
 
 | 路径 | 是什么 | 规模 |
 |---|---|---|
-| `research/companies/millennium/` | 证据（`catalog/raw/`）· 题目总表与 28 法则排序（`catalog/CATALOG.md` → `RANK.md` → `PARETO.md`）· 知识树 `tools/tree/interview-loop.yaml`（生成 `CONTENTS.md`）· 覆盖率 `reports/COVERAGE.md` · 构建进度、账本、子代理指令、建题与统计脚本 | — |
+| `research/companies/millennium/` | 证据（`catalog/raw/`）· 题目总表与 28 法则排序（`catalog/CATALOG.md` → `RANK.md` → `PARETO.md`）· 知识树 `tree/interview-loop.yaml`（生成 `CONTENTS.md`）· 覆盖率 `reports/COVERAGE.md` · 构建进度、账本、子代理指令、建题与统计脚本 | — |
 | `loop/LOOP_GUIDE.md` | 每一轮：形式 · 评什么 · 通过线 · 挂点 · 备考动作 + 三天冲刺 | 6 轮 |
 | `loop/rounds/01_first_round/` | R1 题集（`problem.md` + starter + solution + tests + REPORT）+ `playbook.md` | 10 题 |
 | `loop/rounds/02_python_internals/` | Python / Java 内功口头题 + bank.json | 40 题 |
@@ -69,4 +69,4 @@ tags:
 
 ## 面完回写
 
-实际被问的题 + 追问 → `02-process.md` 亲历表；新题进 `research/companies/millennium/catalog/raw/coding_first_round.md` 与 `RANK.md`，挂进 `research/companies/millennium/tools/tree/`，重跑 `research/companies/millennium/tools/` 下的 `pareto.py` · `coverage.py` · `contents.py`；答不上的 → [[Core]]。
+实际被问的题 + 追问 → `02-process.md` 亲历表；新题进 `research/companies/millennium/catalog/raw/coding_first_round.md` 与 `RANK.md`，挂进 `research/companies/millennium/tree/`，重跑 `trellis kit pareto` · `coverage` · `contents`（`--co millennium`）；答不上的 → [[Core]]。

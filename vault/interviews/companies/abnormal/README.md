@@ -56,7 +56,7 @@ python3 loop/ai_screen.py reveal cb01 t1            # 面试官笔记：澄清�
 
 | 路径 | 是什么 |
 |---|---|
-| `research/companies/abnormal/` | 证据（`catalog/raw/`）· 题目总表与 28 法则排序（`catalog/CATALOG.md` → `RANK.md` → `PARETO.md`）· 知识树 `tools/tree/interview-loop.yaml`（生成 `CONTENTS.md`）· 覆盖率 `reports/COVERAGE.md` · 构建进度、账本、子代理指令、建题与统计脚本 | — |
+| `research/companies/abnormal/` | 证据（`catalog/raw/`）· 题目总表与 28 法则排序（`catalog/CATALOG.md` → `RANK.md` → `PARETO.md`）· 知识树 `tree/interview-loop.yaml`（生成 `CONTENTS.md`）· 覆盖率 `reports/COVERAGE.md` · 构建进度、账本、子代理指令、建题与统计脚本 | — |
 | `loop/LOOP_GUIDE.md` | 每轮打法 + 五天表 |
 | `loop/rounds/01_ai_screen/` | playbook + 3 个练习代码库（starter/solution/acceptance/interviewer/walkthrough/REPORT） |
 | `loop/rounds/02_incident_sd/` · `03_code_review/` · `06_legacy_coding/` | incident 演练 · system design · code review · 旧流程去重题 |

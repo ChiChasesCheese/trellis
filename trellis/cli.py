@@ -836,10 +836,17 @@ def cmd_serve(args) -> int:
     return 0
 
 
+def cmd_kit(args) -> int:
+    """`trellis kit <tool> --co <name>`: the shared interview-kit tools (trellis/kit/)."""
+    from .kit import cli as kit_cli
+    return kit_cli.run(args)
+
+
 CROSS_DOMAIN = {
     "ingest": cmd_ingest, "seed": cmd_seed, "triage": cmd_triage,
     "accept": cmd_accept, "digest": cmd_digest, "grow": cmd_grow,
     "brief": cmd_brief, "adopt": cmd_adopt, "feed": cmd_feed, "serve": cmd_serve,
+    "kit": cmd_kit,
 }
 
 def cmd_steps(args, project: Project) -> int:
@@ -1093,6 +1100,8 @@ def main(argv: list[str] | None = None) -> int:
              "importing the new .apkg; needs desktop Anki + AnkiConnect)",
     )
     p_align.add_argument("--anki-url", default="http://127.0.0.1:8765")
+    from .kit import cli as kit_cli
+    kit_cli.add_parser(sub, parents=[after_command])
 
     args = parser.parse_args(argv)
     if args.all and args.command in SINGLE_DOMAIN_ONLY:

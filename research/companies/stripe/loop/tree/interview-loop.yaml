@@ -1,5 +1,5 @@
 # Stripe 面试 Loop 知识树（受限 YAML：2 空格缩进、`key: value`、`- item`、行内列表 `[a, b]`）
-# 校验：python3 loop/tree/check_tree.py [--strict]
+# 校验：trellis kit check_tree --co <co> [--strict]
 # 节点：round → skill → problems（rounds ID）→ study（loop/ 下相对路径）
 version: 1
 prereq:
