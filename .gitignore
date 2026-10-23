@@ -5,11 +5,10 @@ target/
 dist/
 .pytest_cache/
 .obsidian/
-# Clipped article copies ARE committed: this repo is private and personal,
-# and a git clone is how the archive reaches the phone. They remain other
-# people's writing — do not make this repository public again without
-# removing them (`git rm -r --cached vault/*/clippings` and restoring this
-# ignore rule).
+# The repository is public. Clipped article text (vault/**/clippings/*.md) is committed by choice;
+# clipped PDFs are not: they stay in the vault on Chi's devices through Obsidian Sync (private) and
+# render there via the `![[name.pdf]]` embed; `trellis clip` re-fetches them from the source URL.
+vault/**/clippings/*.pdf
 .trellis/
 
 # Browser-automation scratch output (screenshots, page snapshots) — never source
