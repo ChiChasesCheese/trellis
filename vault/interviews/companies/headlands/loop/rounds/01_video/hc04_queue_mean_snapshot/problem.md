@@ -30,11 +30,11 @@
 
 ### 样例
 
-```
-push 1, push 2, push 3  → getMean() = 2.0
-push 4                  → getMean() = 2.5
-pop()                   → 返回 1；getMean() = 3.0
-```
+| 操作 | 结果 |
+|---|---|
+| `push 1`、`push 2`、`push 3` | `getMean() = 2.0` |
+| `push 4` | `getMean() = 2.5` |
+| `pop()` | 返回 1；`getMean() = 3.0` |
 
 ## Part 2 · 修正快照（snapshot）事件流
 

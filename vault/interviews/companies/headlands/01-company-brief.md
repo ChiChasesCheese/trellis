@@ -90,15 +90,26 @@
 
 ### 4.1 一笔交易背后的系统
 
-```
- 【实盘链路：必须极快】
- 交易所 ──▶ market data parser ──▶ strategy ──▶ order gateway ──▶ 交易所
- 【配套】monitoring GUI · drop copy(交易所回传的成交副本) · market data capture(行情落盘)
+**实盘链路：必须极快**
 
- 【离线：不极快，但极大】
- 参数优化 · production reconciliation(对账：实盘 vs 模拟是否一致) · backtesting simulator(回测) · 画图
- 其中 tick 数据"可达每天数百 GB"
+```mermaid
+flowchart TB
+  A[交易所] --> B[行情 parser]
+  B --> C[strategy]
+  C --> D[order gateway]
+  D --> E[交易所]
 ```
+
+- `行情 parser` 即 market data parser。
+- 配套：monitoring GUI；drop copy（交易所回传的成交副本）；market data capture（行情落盘）。
+
+**离线：不极快，但极大**
+
+- 参数优化。
+- production reconciliation（对账：实盘 vs 模拟是否一致）。
+- backtesting simulator（回测）。
+- 画图。
+- 其中 tick 数据"可达每天数百 GB"。
 
 Java 岗大概率在**下面的"离线 + 配套"那一半**。
 

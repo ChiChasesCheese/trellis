@@ -61,9 +61,12 @@
 
 **文本接口**（`parse` / `render` / `replay`，方便写样例）：
 
-```
-LIMIT id BUY|SELL price qty     MARKET id BUY|SELL qty     CANCEL id     MODIFY id newQty
-```
+| 命令 | 格式 |
+|---|---|
+| 限价单 | `LIMIT id BUY\|SELL price qty` |
+| 市价单 | `MARKET id BUY\|SELL qty` |
+| 撤单 | `CANCEL id` |
+| 改量 | `MODIFY id newQty` |
 
 大小写不敏感、空白任意；`replay` 跳过空行和 `#` 开头的行，格式错抛 `IAE`，信息以 `line N` 开头（N 从 1 起）。事件渲染：
 

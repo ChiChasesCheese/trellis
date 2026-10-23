@@ -36,3 +36,10 @@ scripts) lives outside the vault, in `research/companies/<co>/` or `proposals/`.
     Placeholders Chi must fill stay as 【待补：…】 bullets (they are action items).
 11. **Cards.** Front asks something answerable from understanding; no provenance anywhere on the card, including the
     footer (the footer only links the study note in Obsidian). A meta chip says at most difficulty and a priority label.
+12. **Diagrams must survive a phone** (Chi, 2026-10-22: wrapped ASCII art was unreadable in Obsidian on iPhone).
+    A text diagram in a fenced block is at most **40 display columns** (CJK counts 2) and has **no CJK characters on a
+    line that draws** (CJK glyphs are not exactly two cells wide, so box edges drift) — put labels in a legend list or
+    table under the diagram. Prefer, in order: a table, a short numbered list, a mermaid diagram within rule 9's limits,
+    and only then narrow ASCII. Checked by `scripts/phone_diagrams.py`. Program output blocks are not diagrams; the
+    vault's `no-wrap-code` CSS snippet makes them scroll sideways instead of wrapping.
+

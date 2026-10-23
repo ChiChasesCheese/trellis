@@ -47,15 +47,17 @@ record / sealed 类型 `Trade`、`TickerTotal`、`Summary`、`SlidingTopK.Feed`�
 
 ### 样例
 
-```
-tickers = [AAPL, MSFT, AAPL, GOOG, MSFT, TSLA]
-prices  = [18000, 40000, 18100, 14000, 40000, 25000]
-volumes = [   10,     3,     5,     9,     3,     8]
-notional=  180000 120000  90500 126000 120000 200000
+| i | ticker | price | volume | notional |
+|---|---|---|---|---|
+| 0 | AAPL | 18000 | 10 | 180000 |
+| 1 | MSFT | 40000 | 3 | 120000 |
+| 2 | AAPL | 18100 | 5 | 90500 |
+| 3 | GOOG | 14000 | 9 | 126000 |
+| 4 | MSFT | 40000 | 3 | 120000 |
+| 5 | TSLA | 25000 | 8 | 200000 |
 
-topEvents(k=3) → [TSLA(i=5, 200000), AAPL(i=0, 180000), GOOG(i=3, 126000)]
-topEvents(k=4) → 第 4 名是 i=1 而不是 i=4：二者 notional 与 ticker 都相同（MSFT, 120000），下标小的在前
-```
+* `topEvents(k=3)` 返回 `[TSLA(i=5, 200000), AAPL(i=0, 180000), GOOG(i=3, 126000)]`。
+* `topEvents(k=4)`：第 4 名是 i=1 而不是 i=4——二者 notional 与 ticker 都相同（MSFT, 120000），下标小的在前。
 
 ## Part 2 · top-k ticker
 
@@ -69,9 +71,7 @@ topEvents(k=4) → 第 4 名是 i=1 而不是 i=4：二者 notional 与 ticker �
 | `topTickersStream` | `Collectors.groupingBy` + `reducing(addExact)` + `sorted().limit(k).toList()`，更短但整体排序 O(m log m) |
 | `summarize` | `Collectors.teeing`：一趟遍历同时算「总额」和「最大事件」，合成 `Summary(grandTotal, Optional<Trade> largest)` |
 
-```
-topTickers(k=2) → [AAPL 270500, MSFT 240000]      （TSLA 200000, GOOG 126000 落选）
-```
+* `topTickers(k=2)` 返回 `[AAPL 270500, MSFT 240000]`（TSLA 200000、GOOG 126000 落选）。
 
 注意**最大的事件（TSLA）不属于最大的 ticker（AAPL）**——两个问题的答案不同，别混。
 
@@ -96,15 +96,25 @@ topTickers(k=2) → [AAPL 270500, MSFT 240000]      （TSLA 200000, GOOG 126000 
 
 ### 样例（窗口 W = 10，k = 2）
 
-```
-F 1 AAPL 100 2     F 3 MSFT 50 10     F 5 AAPL 100 3     Q 5
-F 12 TSLA 10 10    Q 12               Q 15               Q 40
+输入（`F` 是成交，`Q` 是查询）：
 
-Q 5  → [AAPL 500, MSFT 500]    并列按 ticker 升序
-Q 12 → [MSFT 500, AAPL 300]    t=1 的 AAPL 200 已过期（12-1=11>=10）
-Q 15 → [TSLA 100]              MSFT(t=3)、AAPL(t=5) 都过期（15-5=10>=10，边界算过期）
-Q 40 → []
 ```
+F 1 AAPL 100 2
+F 3 MSFT 50 10
+F 5 AAPL 100 3
+Q 5
+F 12 TSLA 10 10
+Q 12
+Q 15
+Q 40
+```
+
+| 查询 | 结果 | 说明 |
+|---|---|---|
+| `Q 5` | `[AAPL 500, MSFT 500]` | 并列按 ticker 升序 |
+| `Q 12` | `[MSFT 500, AAPL 300]` | t=1 的 AAPL 200 已过期（12-1=11>=10） |
+| `Q 15` | `[TSLA 100]` | MSFT(t=3)、AAPL(t=5) 都过期（15-5=10>=10，边界算过期） |
+| `Q 40` | `[]` | 全部过期 |
 
 ## Part 4 · 并行分块聚合
 

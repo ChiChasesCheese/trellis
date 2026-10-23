@@ -1,0 +1,15 @@
+{
+  "commitMessage": "vault: edits from Obsidian ({{hostname}}) {{date}}",
+  "autoCommitMessage": "vault: edits from Obsidian ({{hostname}}) {{date}}",
+  "autoSaveInterval": 10,
+  "autoPushInterval": 0,
+  "autoPullInterval": 5,
+  "autoPullOnBoot": true,
+  "syncMethod": "rebase",
+  "pullBeforePush": true,
+  "limitToVault": true,
+  "disablePopups": true,
+  "disablePopupsForNoChanges": true,
+  "showErrorNotices": true,
+  "showStatusBar": true
+}

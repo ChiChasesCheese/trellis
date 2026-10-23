@@ -38,11 +38,20 @@ python3 mutation_check.py q02 Functional               # 函数式版本的 15 �
 
 ## 2. 设计：先全部解析、全部校验，最后一次性输出
 
+```mermaid
+flowchart TB
+  A[stdin 每一行] -->|parse| B[Job 表]
+  B -->|chains| C[已排序的链]
+  C -->|render| D[String]
+  D --> E[只 print 一次]
+  A -.->|格式错误| X[格式错误异常]
+  B -.->|格式错误| X
+  X --> F[输出 Malformed]
 ```
-stdin 的每一行 ──parse──▶ Map<Long, Job> ──chains──▶ List<Chain>（已排序） ──render──▶ String ──▶ 只 print 一次
-                  │                         │
-                  └───── MalformedInputException ───▶ "Malformed Input\n"
-```
+
+- 节点对应的类型：`Job 表` 是 `Map<Long, Job>`；`已排序的链` 是 `List<Chain>`；`格式错误异常` 是 `MalformedInputException`；`输出 Malformed` 是输出 `"Malformed Input\n"`。
+- 实线是正常路径：每个箭头上的词就是方法名（`parse`、`chains`、`render`），最后只 print 一次。
+- 虚线是错误路径：`parse` 和 `chains` 任何一步抛 `MalformedInputException`，直接输出 `"Malformed Input\n"`。
 
 **最重要的一条**：报告没有全部算完之前，**一个字都不能打印**。如果边读边打印，读到第 100 行才发现格式错误时，前面的内容已经输出了，
 这时 STDOUT 里就不只有 `Malformed Input`（错误版本 "partial report before the error" 挂了 6 个测试）。

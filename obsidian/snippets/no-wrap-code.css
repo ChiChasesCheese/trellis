@@ -1,0 +1,14 @@
+/* Code blocks scroll sideways instead of wrapping, so diagrams and program output keep their columns on a phone. */
+.markdown-rendered pre,
+.markdown-rendered pre code {
+  white-space: pre !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+}
+.markdown-rendered pre {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock {
+  white-space: pre !important;
+}
