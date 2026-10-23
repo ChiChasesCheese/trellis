@@ -1,4 +1,0 @@
-C16/c16_bad_missing_include.cpp:6:23: error: no member named 'accumulate' in namespace 'std'
-    6 |     std::cout << std::accumulate(v.begin(), v.end(), 0) << "\n";   // <numeric> not included
-      |                       ^~~~~~~~~~
-1 error generated.

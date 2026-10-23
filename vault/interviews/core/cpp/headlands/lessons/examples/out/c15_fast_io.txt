@@ -1,6 +1,0 @@
-$ c15_fast_io < orders.txt
-skipped: BAD LINE
-AAPL      65    34715.00
-MSFT     -50    20512.50
-NVDA      10     9001.00
-bad lines: 1

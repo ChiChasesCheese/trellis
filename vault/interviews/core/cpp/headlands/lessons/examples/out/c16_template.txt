@@ -1,2 +1,0 @@
-$ c16_template
-all tests passed

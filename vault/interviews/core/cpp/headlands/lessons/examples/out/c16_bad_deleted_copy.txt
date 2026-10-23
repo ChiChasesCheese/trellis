@@ -1,7 +1,0 @@
-C16/c16_bad_deleted_copy.cpp:6:26: error: call to implicitly-deleted copy constructor of 'std::unique_ptr<int>'
-    6 |     std::unique_ptr<int> b = a;                        // copying a unique_ptr: the copy constructor is deleted
-      |                          ^   ~
-/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__memory/unique_ptr.h:209:55: note: copy constructor is implicitly deleted because 'unique_ptr<int>' has a user-declared move constructor
-  209 |   _LIBCPP_HIDE_FROM_ABI _LIBCPP_CONSTEXPR_SINCE_CXX23 unique_ptr(unique_ptr&& __u) _NOEXCEPT
-      |                                                       ^
-1 error generated.

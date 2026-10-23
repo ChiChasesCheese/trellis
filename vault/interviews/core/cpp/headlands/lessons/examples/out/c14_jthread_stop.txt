@@ -1,4 +1,0 @@
-$ c14_jthread_stop
-worker stopped cleanly, ticked at least once: 1
-blocked waiter released by stop request: 1
-latch released; max concurrent inside semaphore section: 2 (limit 2)

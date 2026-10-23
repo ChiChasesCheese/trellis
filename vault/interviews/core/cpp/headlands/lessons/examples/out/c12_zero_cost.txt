@@ -1,4 +1,0 @@
-$ c12_zero_cost
-sums agree: 1
-sort 5000000 ints:  std::sort 81.9 ms,  std::sort + lambda 201.774 ms,  qsort 272.036 ms (qsort/std::sort = 3.32156x)
-identical results: 1

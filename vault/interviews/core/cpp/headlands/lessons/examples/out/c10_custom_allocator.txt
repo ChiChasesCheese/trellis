@@ -1,5 +1,0 @@
-$ c10_custom_allocator
-vector of 1000 push_backs: 11 allocations, 8188 bytes requested in total
-after destruction: allocs=11 frees=11
-list of 1000 push_backs  : 1000 allocations (one per node), 24000 bytes
-vector with reserve(1000): 1 allocation

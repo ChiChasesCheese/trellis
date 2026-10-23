@@ -1,5 +1,0 @@
-$ c02_views
-4 2
-first token: BUY (3 chars, no allocation)
-21 60 12
-sizeof(string_view)=16 sizeof(span<int>)=16 (a pointer and a length)

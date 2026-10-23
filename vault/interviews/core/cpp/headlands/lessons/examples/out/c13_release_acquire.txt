@@ -1,3 +1,0 @@
-$ c13_release_acquire
-consumer saw 1,2
-spinlock-protected counter 200000

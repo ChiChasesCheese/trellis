@@ -1,8 +1,0 @@
-$ c06_ranges
-  squares of the first three evens: 4 16 36
-  sum of multiples of 3 up to 1,000,000: 166666833333
-  by qty: NVDA MSFT AAPL; AAPL at index 2
-  max qty: AAPL
-  find on a temporary returns ranges::dangling (use of it will not compile)
-  split: [AAPL] [MSFT] [NVDA]
-  reversed keys: 10 9 8

@@ -1,7 +1,0 @@
-$ c01_raii_guard
-error: cannot open /definitely/not/here
-  file closed
-length = 11
-  rollback (guard fired)
-  committed, guard dismissed
-counter = 1

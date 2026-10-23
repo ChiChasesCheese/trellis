@@ -1,9 +1,0 @@
-$ c12_layout_cache
-sizeof: Order=32 OrderBad=40 OrderPacked=32 (field order changes padding)
-notional sum (px*qty) over 4000000 orders, ns per order:
-  vector<Order>                 : 0.319217
-  vector<unique_ptr<Order>> shuf: 2.84027
-  struct of arrays (px, qty)    : 0.146479
-  sum of qty only, vector<Order>: 0.308856
-  sum of qty only, SoA          : 0.0921938
-(sink 0)

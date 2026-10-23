@@ -1,4 +1,0 @@
-$ c08_cxx14
-  gen 12 3, init-capture 10
-  mask=170 big=1000000000 s=abcdef kPi<float>=3.14159
-  exchange: old size 3, new size 1, add 5

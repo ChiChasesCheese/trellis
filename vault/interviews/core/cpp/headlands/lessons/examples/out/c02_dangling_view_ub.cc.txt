@@ -1,4 +1,0 @@
-C02/c02_dangling_view_ub.cpp:10:27: warning: object backing the pointer will be destroyed at the end of the full-expression [-Wdangling-gsl]
-   10 |     std::string_view sv = make_name();   // the temporary std::string dies at the ';' -> sv dangles
-      |                           ^~~~~~~~~~~
-1 warning generated.

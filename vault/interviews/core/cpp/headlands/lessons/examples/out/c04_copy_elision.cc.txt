@@ -1,7 +1,0 @@
-C04/c04_copy_elision.cpp:25:57: warning: moving a local object in a return statement prevents copy elision [-Wpessimizing-move]
-   25 | Heavy make_pessimized() { Heavy h("pessimized"); return std::move(h); }   // BAD: blocks NRVO, forces a move
-      |                                                         ^
-C04/c04_copy_elision.cpp:25:57: note: remove std::move call here
-   25 | Heavy make_pessimized() { Heavy h("pessimized"); return std::move(h); }   // BAD: blocks NRVO, forces a move
-      |                                                         ^~~~~~~~~~ ~
-1 warning generated.

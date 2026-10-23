@@ -1,0 +1,12 @@
+# One line ending everywhere: the vault is edited on macOS, iOS and by agents.
+* text=auto eol=lf
+*.pdf binary
+*.png binary
+*.jpg binary
+*.apkg binary
+# Generated indexes and data: collapsed in GitHub diffs
+**/CONTENTS.md linguist-generated=true
+**/bank.json linguist-generated=true
+pipeline/state/** linguist-generated=true
+# Test inputs that must keep their exact bytes (CRLF fixtures)
+**/cases/** -text

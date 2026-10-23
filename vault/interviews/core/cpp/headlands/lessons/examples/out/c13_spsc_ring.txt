@@ -1,3 +1,0 @@
-$ c13_spsc_ring
-transferred 2000000 items in order, sum 1999999000000 (expected 1999999000000)
-(also run under ThreadSanitizer: no reports)

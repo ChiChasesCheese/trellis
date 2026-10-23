@@ -1,4 +1,0 @@
-$ c14_mutex_cv
-consumed 1000 items, sum 500500
-balances 1000 + 1000 = 2000
-final price 199

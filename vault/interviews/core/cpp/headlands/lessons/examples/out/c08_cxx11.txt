@@ -1,8 +1,0 @@
-$ c08_cxx11
-  n=48 lam(1)=49 p is null
-  moved ptr 5, shared shared use_count 1
-  m[b]=2 arr[2]=9 tuple 1x
-  threads: atomic=4000 guarded=4000
-  chrono ok: 1
-  override: 2 sum: 6 literal: 5000 side: 1 raw: C:\no\escape
-  alias template size 2
