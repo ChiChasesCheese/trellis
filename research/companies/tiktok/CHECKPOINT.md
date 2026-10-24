@@ -11,11 +11,10 @@
 
 ## Queue (≤ 3 agents at a time, sonnet; relaunch on opus if sonnet is limited)
 
-1. pl C++: `research/domains/pl/prompt_CPP.md`, `prompt_T1.md`, `prompt_T2.md`
-2. LeetCode cards: `agents/prompt_L1.md` … `L12` (all a/b leaves without a whole card)
-3. After research: `catalog/CATALOG.md` (one row per problem family, refs, recency) → new problems / TikTok variants
-   into the decks; kit pages in `vault/interviews/companies/tiktok/` (README, LOOP_GUIDE, company brief, behavioural)
-   and system design in `vault/interviews/core/system-design/tiktok/`
-4. Obsidian: `vault/interviews/core/leetcode/tiktok/README.md` problem index linking each whole-answer card;
-   pattern and Python handbooks
-5. Build + anki-push `tiktok-lc`, `tiktok-lc-drill`, `pl`
+Running 2026-10-24 ~02:00: L1, L10, L11. Research (EN, CN) and the catalog are done and committed.
+
+1. Kit pages: `agents/prompt_K1.md` (company, loop, behavioural), `K2a` + `K2b` (eight system designs), `K3` (八股)
+2. LeetCode cards: `agents/prompt_L2.md` … `L9`, `L12` (file split cards per group after review)
+3. Obsidian: `vault/interviews/core/leetcode/tiktok/README.md` problem index linking each whole-answer card
+4. Build + anki-push `tiktok-lc`, `tiktok-lc-drill`, `pl` (pl push pending: AnkiConnect not responding since ~01:40;
+   after it, delete the empty old root deck 编程语言原理：Go · Java · Rust · Python if it remains)
