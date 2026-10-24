@@ -8,6 +8,9 @@
 
 **Unlocks:** [[domains/pl/map/runtime.startup-footprint|启动时间与内存占用]], [[domains/pl/map/runtime.performance-model|性能模型：慢在哪里]], [[domains/pl/map/engineering.benchmarking|基准测试]], [[domains/pl/map/signatures.java|Java 的独到之处]]
 
+## Drills
+- [[runtime-first-call-and-debug-build|练习：刚发布的 Java 实例前几个请求特别慢，而 Rust 版本比 Java 还慢]]
+
 ## Cards (10)
 1. [[pl-rt-jit-principle]]
 2. [[pl-rt-jit-found-basics]]

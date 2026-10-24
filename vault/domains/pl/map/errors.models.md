@@ -8,6 +8,9 @@
 
 **Unlocks:** [[domains/pl/map/errors.exceptions|异常：Java 与 Python]], [[domains/pl/map/errors.error-values|错误值：Go]], [[domains/pl/map/errors.result-type|Result 与 ? 运算符：Rust]], [[domains/pl/map/engineering.api-design|地道的 API 设计]]
 
+## Drills
+- [[errors-failure-that-looks-like-success|练习：错误悄悄消失的四种方式]]
+
 ## Cards (11)
 1. [[pl-errors-models-principle]]
 2. [[pl-errors-models-foundation-exceptions]]

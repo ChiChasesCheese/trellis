@@ -8,6 +8,9 @@
 
 **Unlocks:** [[domains/pl/map/metaprogramming.annotations-decorators|注解与装饰器]], [[domains/pl/map/metaprogramming.dynamic-features|运行时动态特性（Python）]]
 
+## Drills
+- [[metaprogramming-silent-metadata|练习：元数据写错了，谁会告诉你]]
+
 ## Cards (11)
 1. [[pl-meta-reflection-principle]]
 2. [[pl-meta-reflection-intro-java]]

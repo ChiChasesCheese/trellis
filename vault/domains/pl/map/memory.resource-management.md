@@ -8,6 +8,9 @@
 
 **Requires:** [[domains/pl/map/memory.manual-raii|手动管理与 RAII]]
 
+## Drills
+- [[errors-failure-that-looks-like-success|练习：错误悄悄消失的四种方式]]
+
 ## Cards (10)
 1. [[pl-memory-resource-management-principle]]
 2. [[pl-memory-resource-management-foundation-java]]

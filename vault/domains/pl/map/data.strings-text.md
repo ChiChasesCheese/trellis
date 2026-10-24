@@ -6,6 +6,9 @@ Java UTF-16 + 代理对（以及紧凑字符串）、Go 字符串是 UTF-8 字�
 
 **Requires:** [[domains/pl/map/memory.value-reference-semantics|值语义与引用语义]]
 
+## Drills
+- [[data-nickname-length-limit|练习：昵称限制「最多 6 个字符」，四个服务四种判断]]
+
 ## Cards (11)
 1. [[pl-data-strings-principle]]
 2. [[pl-data-strings-intro-unicode]]

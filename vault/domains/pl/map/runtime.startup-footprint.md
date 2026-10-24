@@ -8,6 +8,9 @@ Go/Rust 静态二进制毫秒启动、JVM 启动与预热、GraalVM 原生镜像
 
 **Unlocks:** [[domains/pl/map/runtime.deployment|构建产物与部署]]
 
+## Drills
+- [[runtime-first-call-and-debug-build|练习：刚发布的 Java 实例前几个请求特别慢，而 Rust 版本比 Java 还慢]]
+
 ## Cards (10)
 1. [[pl-rt-startup-principle]]
 2. [[pl-rt-startup-found-jvm]]

@@ -8,6 +8,9 @@ Rust macro_rules! 与过程宏（derive）、C 预处理宏的问题、卫生宏
 
 **Unlocks:** [[domains/pl/map/metaprogramming.code-generation|代码生成]]
 
+## Drills
+- [[metaprogramming-silent-metadata|练习：元数据写错了，谁会告诉你]]
+
 ## Cards (11)
 1. [[pl-meta-macros-principle]]
 2. [[pl-meta-macros-intro-c-preprocessor]]

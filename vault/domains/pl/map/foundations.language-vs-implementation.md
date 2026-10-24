@@ -8,6 +8,9 @@
 
 **Requires:** [[domains/pl/map/foundations.execution-models|执行模型：AOT 编译、字节码 + 虚拟机 + JIT、解释执行]]
 
+## Drills
+- [[foundations-identity-vs-equality|练习：同一个「相等」问题，四门语言四种答案]]
+
 ## Cards (9)
 1. [[pl-foundations-language-vs-implementation-principle]]
 2. [[pl-foundations-language-vs-implementation-found-refcount]]

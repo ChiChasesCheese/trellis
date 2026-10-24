@@ -8,6 +8,9 @@
 
 **Unlocks:** [[domains/pl/map/engineering.profiling|性能剖析]]
 
+## Drills
+- [[runtime-first-call-and-debug-build|练习：刚发布的 Java 实例前几个请求特别慢，而 Rust 版本比 Java 还慢]]
+
 ## Cards (10)
 1. [[pl-rt-perf-principle]]
 2. [[pl-rt-perf-found-cache]]

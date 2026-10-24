@@ -10,6 +10,9 @@ struct/record 是积类型，enum/sealed 是和类型；Rust enum、Java sealed 
 
 **Unlocks:** [[domains/pl/map/abstraction.pattern-matching|模式匹配]], [[domains/pl/map/errors.result-type|Result 与 ? 运算符：Rust]]
 
+## Drills
+- [[trends-add-a-variant|练习：给枚举加一个新变体，谁会告诉你漏改了地方]]
+
 ## Cards (11)
 1. [[pl-types-algebraic-data-types-principle]]
 2. [[pl-types-algebraic-data-types-found-rust-enum-data]]

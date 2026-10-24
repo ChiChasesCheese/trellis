@@ -10,6 +10,9 @@
 
 **Unlocks:** [[domains/pl/map/ecosystem.compatibility|兼容性与语言演进]]
 
+## Drills
+- [[foundations-identity-vs-equality|练习：同一个「相等」问题，四门语言四种答案]]
+
 ## Cards (9)
 1. [[pl-foundations-tradeoff-axes-principle]]
 2. [[pl-foundations-tradeoff-axes-found-bounds-unsafe]]

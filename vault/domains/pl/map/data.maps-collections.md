@@ -6,6 +6,9 @@
 
 **Requires:** [[domains/pl/map/data.arrays-slices|数组、切片与动态数组]], [[domains/pl/map/abstraction.equality-hashing|相等、比较与哈希]]
 
+## Drills
+- [[data-nickname-length-limit|练习：昵称限制「最多 6 个字符」，四个服务四种判断]]
+
 ## Cards (11)
 1. [[pl-data-maps-principle]]
 2. [[pl-data-maps-intro-hash-table]]

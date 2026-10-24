@@ -8,6 +8,9 @@ Go 数组 vs 切片（共享底层数组、append 扩容的别名陷阱）、Jav
 
 **Unlocks:** [[domains/pl/map/data.maps-collections|映射与集合库]]
 
+## Drills
+- [[data-nickname-length-limit|练习：昵称限制「最多 6 个字符」，四个服务四种判断]]
+
 ## Cards (11)
 1. [[pl-data-arrays-principle]]
 2. [[pl-data-arrays-intro-dynamic-array]]

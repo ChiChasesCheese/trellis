@@ -10,6 +10,9 @@
 
 **Unlocks:** [[domains/pl/map/errors.panics|panic 与不可恢复错误]], [[domains/pl/map/errors.cost|错误处理的性能代价]], [[domains/pl/map/trends.effects|效应系统与代数效应]]
 
+## Drills
+- [[errors-failure-that-looks-like-success|练习：错误悄悄消失的四种方式]]
+
 ## Cards (10)
 1. [[pl-errors-exceptions-principle]]
 2. [[pl-errors-exceptions-foundation-checked]]

@@ -8,6 +8,9 @@
 
 **Unlocks:** [[domains/pl/map/data.maps-collections|映射与集合库]]
 
+## Drills
+- [[abstraction-mutable-key-lookup|练习：缓存明明有这个键，却总是未命中]]
+
 ## Cards (10)
 1. [[pl-abstraction-equality-hashing-principle]]
 2. [[pl-abstraction-equality-hashing-foundation-java-equals-hashcode]]

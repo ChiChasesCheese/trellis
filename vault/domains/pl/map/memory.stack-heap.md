@@ -8,6 +8,9 @@
 
 **Unlocks:** [[domains/pl/map/memory.value-reference-semantics|值语义与引用语义]], [[domains/pl/map/memory.manual-raii|手动管理与 RAII]], [[domains/pl/map/memory.escape-analysis|逃逸分析]]
 
+## Drills
+- [[memory-who-allocates|练习：这段代码在堆上分配了多少次]]
+
 ## Cards (10)
 1. [[pl-memory-stack-heap-principle]]
 2. [[pl-memory-stack-heap-foundation-stack-frame]]

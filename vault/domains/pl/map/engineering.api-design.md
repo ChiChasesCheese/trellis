@@ -6,6 +6,9 @@
 
 **Requires:** [[domains/pl/map/errors.models|错误处理的几种模型]], [[domains/pl/map/memory.ownership-borrowing|所有权与借用（Rust）]]
 
+## Drills
+- [[engineering-design-a-client-api|练习：把一个六参数的客户端构造函数改成各语言地道的 API]]
+
 ## Cards (11)
 1. [[pl-eng-apidesign-principle]]
 2. [[pl-eng-apidesign-found-go-options]]

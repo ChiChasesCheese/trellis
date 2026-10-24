@@ -6,6 +6,9 @@
 
 **Requires:** [[domains/pl/map/memory.memory-safety|内存安全]]
 
+## Drills
+- [[trends-add-a-variant|练习：给枚举加一个新变体，谁会告诉你漏改了地方]]
+
 ## Cards (10)
 1. [[pl-trends-safety-principle]]
 2. [[pl-trends-safety-intro-bug-classes]]

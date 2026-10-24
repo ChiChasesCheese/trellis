@@ -8,6 +8,9 @@
 
 **Requires:** [[domains/pl/map/types.strong-weak|强类型与弱类型：隐式转换]]
 
+## Drills
+- [[types-billing-counter-overflow|练习：计费计数器溢出时，四门语言各发生什么]]
+
 ## Cards (10)
 1. [[pl-types-type-conversions-principle]]
 2. [[pl-types-type-conversions-found-go-assertion]]

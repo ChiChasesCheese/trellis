@@ -6,6 +6,9 @@ Java 加入 record/sealed/模式匹配/var，Go 加入泛型与迭代器，Pytho
 
 **Requires:** [[domains/pl/map/abstraction.pattern-matching|模式匹配]], [[domains/pl/map/abstraction.generics|泛型：参数多态]]
 
+## Drills
+- [[trends-add-a-variant|练习：给枚举加一个新变体，谁会告诉你漏改了地方]]
+
 ## Cards (9)
 1. [[pl-trends-convergence-principle]]
 2. [[pl-trends-convergence-intro-java]]

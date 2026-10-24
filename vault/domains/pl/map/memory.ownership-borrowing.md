@@ -10,6 +10,9 @@
 
 **Unlocks:** [[domains/pl/map/memory.lifetimes|生命周期（Rust）]], [[domains/pl/map/memory.memory-safety|内存安全]], [[domains/pl/map/concurrency.data-race-freedom|数据竞争的预防]], [[domains/pl/map/engineering.api-design|地道的 API 设计]], [[domains/pl/map/signatures.rust|Rust 的独到之处]]
 
+## Drills
+- [[abstraction-mutable-key-lookup|练习：缓存明明有这个键，却总是未命中]]
+
 ## Cards (9)
 1. [[pl-memory-ownership-borrowing-principle]]
 2. [[pl-memory-ownership-borrowing-foundation-ownership]]

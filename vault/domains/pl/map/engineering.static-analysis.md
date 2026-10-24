@@ -6,6 +6,9 @@
 
 **Requires:** [[domains/pl/map/engineering.testing|测试方法]]
 
+## Drills
+- [[engineering-design-a-client-api|练习：把一个六参数的客户端构造函数改成各语言地道的 API]]
+
 ## Cards (8)
 1. [[pl-static-principle]]
 2. [[pl-static-found-go-vet]]

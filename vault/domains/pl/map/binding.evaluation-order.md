@@ -8,6 +8,9 @@
 
 **Requires:** [[domains/pl/map/binding.evaluation-strategy|求值策略：严格、惰性与短路]]
 
+## Drills
+- [[binding-who-changed-my-list|练习：函数里改了参数，调用者看到什么]]
+
 ## Cards (9)
 1. [[pl-binding-evaluation-order-principle]]
 2. [[pl-binding-evaluation-order-foundation-java]]

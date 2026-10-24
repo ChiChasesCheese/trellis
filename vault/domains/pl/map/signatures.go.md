@@ -8,6 +8,9 @@ goroutine + channel、隐式接口、极简语法与快速编译、gofmt、defer
 
 **Unlocks:** [[domains/pl/map/signatures.gotchas|每门语言的经典陷阱]]
 
+## Drills
+- [[signatures-choose-and-defend|练习：为行情平台选语言，并向质疑你的同事辩护]]
+
 ## Cards (10)
 1. [[pl-sig-go-principle]]
 2. [[pl-sig-go-intro-goroutine-channel]]

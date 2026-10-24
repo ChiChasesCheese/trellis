@@ -10,6 +10,9 @@ error 接口、if err != nil、错误包装（%w、errors.Is/As）、哨兵错�
 
 **Unlocks:** [[domains/pl/map/errors.panics|panic 与不可恢复错误]]
 
+## Drills
+- [[errors-failure-that-looks-like-success|练习：错误悄悄消失的四种方式]]
+
 ## Cards (8)
 1. [[pl-errors-error-values-principle]]
 2. [[pl-errors-error-values-foundation-sentinel-custom]]

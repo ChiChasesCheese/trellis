@@ -6,6 +6,9 @@ Python dunder 方法、Rust 用 trait（Add、Index、Deref）重载、Java 与 
 
 **Requires:** [[domains/pl/map/abstraction.interfaces-traits|接口与 trait]]
 
+## Drills
+- [[abstraction-mutable-key-lookup|练习：缓存明明有这个键，却总是未命中]]
+
 ## Cards (9)
 1. [[pl-abstraction-operator-overloading-principle]]
 2. [[pl-abstraction-operator-overloading-foundation-python-dunder]]

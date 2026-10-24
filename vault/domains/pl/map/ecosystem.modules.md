@@ -6,6 +6,9 @@ Go package 与 module、Java package 与 JPMS 模块、Rust crate 与 mod 树、
 
 **Unlocks:** [[domains/pl/map/ecosystem.package-managers|包管理与依赖解析]], [[domains/pl/map/ecosystem.tooling|官方工具链：格式化、静态检查与测试]]
 
+## Drills
+- [[ecosystem-cycles-and-silent-upgrades|练习：模块互相依赖，以及升级后「编译通过、行为不同」]]
+
 ## Cards (11)
 1. [[pl-eco-modules-principle]]
 2. [[pl-eco-modules-intro-go]]

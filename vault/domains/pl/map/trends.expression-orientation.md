@@ -6,6 +6,9 @@
 
 **Requires:** [[domains/pl/map/abstraction.pattern-matching|模式匹配]]
 
+## Drills
+- [[trends-add-a-variant|练习：给枚举加一个新变体，谁会告诉你漏改了地方]]
+
 ## Cards (10)
 1. [[pl-trends-expr-principle]]
 2. [[pl-trends-expr-intro-rust]]

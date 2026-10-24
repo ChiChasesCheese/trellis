@@ -8,6 +8,9 @@ Java 注解 + 注解处理器/反射（Spring、Lombok）、Python 装饰器（�
 
 **Unlocks:** [[domains/pl/map/metaprogramming.code-generation|代码生成]], [[domains/pl/map/data.serialization|序列化]]
 
+## Drills
+- [[metaprogramming-silent-metadata|练习：元数据写错了，谁会告诉你]]
+
 ## Cards (11)
 1. [[pl-meta-annotations-principle]]
 2. [[pl-meta-annotations-intro-java]]

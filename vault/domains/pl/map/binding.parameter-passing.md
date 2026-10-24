@@ -10,6 +10,9 @@
 
 **Unlocks:** [[domains/pl/map/binding.evaluation-strategy|求值策略：严格、惰性与短路]], [[domains/pl/map/binding.calling-convention|函数调用在机器层面：栈帧与调用约定]]
 
+## Drills
+- [[binding-who-changed-my-list|练习：函数里改了参数，调用者看到什么]]
+
 ## Cards (10)
 1. [[pl-binding-parameter-passing-principle]]
 2. [[pl-binding-parameter-passing-foundation-java-value]]

@@ -8,6 +8,9 @@
 
 **Unlocks:** [[domains/pl/map/signatures.gotchas|每门语言的经典陷阱]]
 
+## Drills
+- [[signatures-choose-and-defend|练习：为行情平台选语言，并向质疑你的同事辩护]]
+
 ## Cards (10)
 1. [[pl-sig-rust-principle]]
 2. [[pl-sig-rust-intro-ownership-borrowing]]

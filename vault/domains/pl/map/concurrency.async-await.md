@@ -10,6 +10,9 @@
 
 **Unlocks:** [[domains/pl/map/concurrency.io-models|I/O 模型：阻塞、多路复用与完成通知]], [[domains/pl/map/concurrency.structured-concurrency|结构化并发]]
 
+## Drills
+- [[concurrency-health-check-stalls|练习：每次生成月度报表，健康检查的 p99 就跳到 250 毫秒]]
+
 ## Cards (9)
 1. [[pl-conc-async-await-principle]]
 2. [[pl-conc-async-await-found-asyncio]]

@@ -8,6 +8,9 @@ Go 的 nil 接口不等于 nil 与切片别名、Java 的 Integer 缓存与 ==�
 
 **Unlocks:** [[domains/pl/map/signatures.choosing|怎样为一个项目选语言]]
 
+## Drills
+- [[signatures-choose-and-defend|练习：为行情平台选语言，并向质疑你的同事辩护]]
+
 ## Cards (8)
 1. [[pl-sig-gotchas-principle]]
 2. [[pl-sig-gotchas-intro-go]]

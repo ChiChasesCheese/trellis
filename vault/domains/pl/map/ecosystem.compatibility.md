@@ -6,6 +6,9 @@ Java 极度向后兼容、Go 1 兼容承诺与 GODEBUG、Rust edition 机制、P
 
 **Requires:** [[domains/pl/map/foundations.tradeoff-axes|语言设计的几条根本权衡轴]]
 
+## Drills
+- [[ecosystem-cycles-and-silent-upgrades|练习：模块互相依赖，以及升级后「编译通过、行为不同」]]
+
 ## Cards (11)
 1. [[pl-eco-compat-principle]]
 2. [[pl-eco-compat-intro-java]]

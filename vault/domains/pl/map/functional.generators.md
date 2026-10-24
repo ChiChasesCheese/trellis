@@ -6,6 +6,9 @@ Python yield 生成器与 send、Go iter.Seq/Pull、Java 没有生成器的替�
 
 **Requires:** [[domains/pl/map/functional.iterators-laziness|迭代器与惰性求值]]
 
+## Drills
+- [[functional-capture-and-reuse|练习：循环里创建的闭包捕获了什么，迭代器能不能用第二遍]]
+
 ## Cards (10)
 1. [[pl-functional-generators-principle]]
 2. [[pl-functional-generators-foundation-python-yield]]

@@ -6,6 +6,9 @@
 
 **Requires:** [[domains/pl/map/binding.names-scope|名字与作用域]], [[domains/pl/map/functional.first-class-functions|一等函数与 lambda]], [[domains/pl/map/memory.value-reference-semantics|值语义与引用语义]]
 
+## Drills
+- [[functional-capture-and-reuse|练习：循环里创建的闭包捕获了什么，迭代器能不能用第二遍]]
+
 ## Cards (11)
 1. [[pl-functional-closures-principle]]
 2. [[pl-functional-closures-foundation-java-effectively-final]]

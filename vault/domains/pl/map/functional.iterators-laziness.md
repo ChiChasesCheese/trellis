@@ -8,6 +8,9 @@ Rust Iterator 适配器（零成本）、Java Stream（惰性 + 终端操作）�
 
 **Unlocks:** [[domains/pl/map/functional.generators|生成器与协程]]
 
+## Drills
+- [[functional-capture-and-reuse|练习：循环里创建的闭包捕获了什么，迭代器能不能用第二遍]]
+
 ## Cards (11)
 1. [[pl-functional-iterators-laziness-principle]]
 2. [[pl-functional-iterators-laziness-foundation-python-iterator-protocol]]

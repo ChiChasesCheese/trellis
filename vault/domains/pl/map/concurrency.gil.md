@@ -8,6 +8,9 @@
 
 **Requires:** [[domains/pl/map/concurrency.os-threads|操作系统线程（1:1 模型）]], [[domains/pl/map/memory.reference-counting|引用计数]]
 
+## Drills
+- [[concurrency-health-check-stalls|练习：每次生成月度报表，健康检查的 p99 就跳到 250 毫秒]]
+
 ## Cards (11)
 1. [[pl-conc-gil-principle]]
 2. [[pl-conc-gil-found-refcount]]

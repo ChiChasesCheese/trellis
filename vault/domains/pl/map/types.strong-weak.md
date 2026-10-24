@@ -10,6 +10,9 @@
 
 **Unlocks:** [[domains/pl/map/types.numbers|数值类型与整数溢出]], [[domains/pl/map/types.type-conversions|类型转换与类型断言]]
 
+## Drills
+- [[types-billing-counter-overflow|练习：计费计数器溢出时，四门语言各发生什么]]
+
 ## Cards (9)
 1. [[pl-types-strong-weak-principle]]
 2. [[pl-types-strong-weak-found-implicit-conversion]]

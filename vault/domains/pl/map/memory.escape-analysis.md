@@ -8,6 +8,9 @@
 
 **Requires:** [[domains/pl/map/memory.stack-heap|栈与堆]], [[domains/pl/map/memory.tracing-gc|追踪式垃圾回收]]
 
+## Drills
+- [[memory-who-allocates|练习：这段代码在堆上分配了多少次]]
+
 ## Cards (9)
 1. [[pl-memory-escape-analysis-principle]]
 2. [[pl-memory-escape-analysis-foundation-go]]
