@@ -32,3 +32,14 @@ local toolchains (Go 1.27, Rust 1.99, Java 25, Python 3.14).
 | Date | Step | Result |
 |---|---|---|
 | 2026-10-23 | 2 skeleton | 107 nodes / 94 leaves, 0 errors |
+| 2026-10-23 | 4 cards | Chi redirected twice mid-run: senior framing (reasoning, trade-offs, best practice; no syntax tours), then foundation cards introducing every feature from zero; groups revised accordingly |
+| 2026-10-23 | 5 review | agents' least-sure claims checked; fixed: Go Green Tea collector (verified in Go 1.27 source), CPython 3.14 tail-call interpreter gain worded as single-digit percent; Go 1.27 generic methods found by compiling |
+| 2026-10-23 | 8 ship | 944 cards, 94/94 leaves ordered, validate 0 errors; anki-push published (944 in Anki) |
+
+## Next action
+
+Chi's gap review (2026-10-23), proposed and awaiting a go: new branches "names, binding and evaluation" (scope,
+binding time, parameter passing, evaluation strategy and order) and "engineering: measure and verify" (profilers,
+benchmarks, fuzzing, property tests, sanitizers, Miri, race detector); extend runtime (syntax and parsing, linking and
+ABI, optimisations), concurrency (I/O models: readiness vs completion, netpoller, NIO, mio, asyncio), types (soundness,
+HKT, type classes vs traits, associated types, affine/linear types, effects); one drill per branch.
