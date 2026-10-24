@@ -2,7 +2,7 @@
 id: pl-memory-value-reference-semantics-pitfall-alias
 node: memory.value-reference-semantics
 type: qa
-step: 6
+step: 10
 ---
 ## Q
 Python 的 `[[0]*3]*3` 和默认参数 `acc=[]`、Go 的 `append` 到子 slice，这些「别名意外修改」的坑是怎么发生的？

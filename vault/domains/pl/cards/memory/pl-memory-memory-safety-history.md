@@ -2,7 +2,7 @@
 id: pl-memory-memory-safety-history
 node: memory.memory-safety
 type: qa
-step: 7
+step: 9
 ---
 ## Q
 为什么这些年内存安全被提升为工业界的头等大事？语言和行业都做了什么回应？

@@ -2,7 +2,7 @@
 id: pl-memory-memory-layout-rust-control
 node: memory.memory-layout
 type: qa
-step: 4
+step: 6
 ---
 ## Q
 Go、Rust 与 Java 在「谁掌控内存布局」上有什么根本区别？Rust 的哪些设计让它能做到零开销抽象？

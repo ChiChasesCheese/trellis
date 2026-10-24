@@ -2,7 +2,7 @@
 id: pl-memory-ownership-borrowing-history
 node: memory.ownership-borrowing
 type: qa
-step: 7
+step: 9
 ---
 ## Q
 所有权与借用这套思想从哪里来，Rust 之后其他语言怎样吸收它？

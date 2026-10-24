@@ -2,7 +2,7 @@
 id: pl-memory-reference-counting-rc-vs-arc
 node: memory.reference-counting
 type: qa
-step: 4
+step: 6
 ---
 ## Q
 Rust 为什么要把引用计数分成 `Rc` 和 `Arc` 两个类型？把 `Rc` 发给另一个线程会怎样？

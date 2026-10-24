@@ -2,7 +2,7 @@
 id: pl-memory-escape-analysis-go-visible
 node: memory.escape-analysis
 type: qa
-step: 4
+step: 6
 ---
 ## Q
 Go 和 Java 的逃逸分析在设计哲学上有什么对比？为什么 Go 里「减少逃逸」成了常规调优手段？

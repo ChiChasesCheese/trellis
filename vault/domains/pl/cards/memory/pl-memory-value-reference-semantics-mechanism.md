@@ -2,7 +2,7 @@
 id: pl-memory-value-reference-semantics-mechanism
 node: memory.value-reference-semantics
 type: qa
-step: 2
+step: 6
 ---
 ## Q
 传参在底层是怎么发生的？为什么说 Java 和 Python 永远是「按值传递」，却能在函数里改掉调用者的对象？

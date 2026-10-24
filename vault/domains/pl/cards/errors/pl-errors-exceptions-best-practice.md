@@ -2,7 +2,7 @@
 id: pl-errors-exceptions-best-practice
 node: errors.exceptions
 type: qa
-step: 5
+step: 8
 ---
 ## Q
 在 Java 和 Python 里使用异常的最佳实践是什么？为什么？

@@ -2,7 +2,7 @@
 id: pl-memory-tracing-gc-table
 node: memory.tracing-gc
 type: qa
-step: 3
+step: 7
 ---
 ## Q
 Go、Java、Rust、Python 在回收内存的方式上各选了什么？换来什么，代价是什么？

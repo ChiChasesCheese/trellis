@@ -2,7 +2,7 @@
 id: pl-memory-stack-heap-pitfall-overflow
 node: memory.stack-heap
 type: qa
-step: 6
+step: 9
 ---
 ## Q
 在 Rust 里把一个 64 MB 的数组直接写成局部变量会发生什么？怎样改？

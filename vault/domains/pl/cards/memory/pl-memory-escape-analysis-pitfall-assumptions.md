@@ -2,7 +2,7 @@
 id: pl-memory-escape-analysis-pitfall-assumptions
 node: memory.escape-analysis
 type: qa
-step: 6
+step: 8
 ---
 ## Q
 关于逃逸分析，哪些常见假设是错的？为什么「用指针更省」在 Go 里经常适得其反？

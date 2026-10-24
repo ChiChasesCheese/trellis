@@ -2,7 +2,7 @@
 id: pl-errors-error-values-best-practice
 node: errors.error-values
 type: qa
-step: 5
+step: 6
 ---
 ## Q
 Go 里处理错误的最佳实践是什么？包装、哨兵、自定义类型各在什么时候用？

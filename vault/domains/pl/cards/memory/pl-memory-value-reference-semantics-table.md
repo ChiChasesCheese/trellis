@@ -2,7 +2,7 @@
 id: pl-memory-value-reference-semantics-table
 node: memory.value-reference-semantics
 type: qa
-step: 3
+step: 7
 ---
 ## Q
 Go、Java、Rust、Python 在赋值与传参的语义上各自选了哪一点？换来什么，代价是什么？
@@ -12,7 +12,7 @@ Go、Java、Rust、Python 在赋值与传参的语义上各自选了哪一点？
 |---|---|---|---|
 | Go | 结构体、数组是值；指针、slice、map 是引用 | 共享显式（要共享就取指针），小结构体无堆分配 | slice 是「值里藏着引用」，共享底层数组容易被忽略 |
 | Java | 基本类型是值，对象是引用 | 对象传递便宜，统一用 GC 管理 | 别名无处不在；防御性拷贝、不可变类成了惯用法 |
-| Rust | 默认移动，原变量作废；`Copy` 才复制 | 无隐式深拷贝、无可写别名、无需 GC | 要习惯把值交出去，共享必须显式借用或 `Rc` |
+| Rust | 默认移动，原变量作废；`Copy` 才复制 | 无隐式深拷贝、无可写别名、无需 GC | 要习惯把值交出去，共享必须显式借用或 `Rc`（引用计数的共享指针） |
 | Python | 一切皆对象，赋值只是绑定名字 | 语义极简，参数传递零复制 | 可变对象的别名问题最普遍，要靠约定和 `deepcopy` |
 
 模式：默认行为越「安全」，显式写出来的就越是共享。Go 与 Rust 默认不共享，共享要写指针或借用；Java 与 Python 默认共享，复制要写 `clone` 或 `deepcopy`。各自的哲学一致：Go 要「看代码就知道谁在改什么」，Rust 要「编译器证明没有冲突」，Java 与 Python 要「写起来少废话」。

@@ -2,7 +2,7 @@
 id: pl-memory-resource-management-philosophy
 node: memory.resource-management
 type: qa
-step: 4
+step: 7
 ---
 ## Q
 Rust 把资源绑定在类型上，Go 却用函数级的 `defer`。这两种做法分别反映了什么设计哲学？

@@ -2,7 +2,7 @@
 id: pl-memory-value-reference-semantics-rust-move
 node: memory.value-reference-semantics
 type: qa
-step: 4
+step: 8
 ---
 ## Q
 Rust 的移动语义（move semantics）和 Java、Python 的引用赋值相比，独特在哪里？它换来了什么？

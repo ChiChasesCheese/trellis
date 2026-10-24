@@ -2,7 +2,7 @@
 id: pl-errors-models-philosophy
 node: errors.models
 type: qa
-step: 4
+step: 8
 ---
 ## Q
 Go 的「错误是值」、Python 的 EAFP、Rust 的「让非法状态无法表示」，各自体现了什么样的语言哲学？

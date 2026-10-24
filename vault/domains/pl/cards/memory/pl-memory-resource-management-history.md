@@ -2,7 +2,7 @@
 id: pl-memory-resource-management-history
 node: memory.resource-management
 type: qa
-step: 7
+step: 10
 ---
 ## Q
 各语言的资源管理机制是怎样一步步出现的？这说明了什么趋势？

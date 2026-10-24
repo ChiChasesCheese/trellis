@@ -2,7 +2,7 @@
 id: pl-errors-exceptions-history
 node: errors.exceptions
 type: qa
-step: 7
+step: 10
 ---
 ## Q
 异常机制从诞生到今天经历了哪些调整？

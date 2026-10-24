@@ -2,7 +2,7 @@
 id: pl-memory-memory-layout-table
 node: memory.memory-layout
 type: qa
-step: 3
+step: 5
 ---
 ## Q
 Go、Java、Rust、Python 的内存布局选择有什么不同？换来什么，代价是什么？

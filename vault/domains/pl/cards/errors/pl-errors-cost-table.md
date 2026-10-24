@@ -2,7 +2,7 @@
 id: pl-errors-cost-table
 node: errors.cost
 type: qa
-step: 3
+step: 5
 ---
 ## Q
 Go、Java、Rust、Python 的错误处理在正常路径和失败路径上各花多少？

@@ -2,7 +2,7 @@
 id: pl-memory-reference-counting-mechanism
 node: memory.reference-counting
 type: qa
-step: 2
+step: 4
 ---
 ## Q
 CPython 的引用计数在底层怎么工作？循环垃圾检测器又是怎么找出孤立的环的？

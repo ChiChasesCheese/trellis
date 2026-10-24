@@ -2,7 +2,7 @@
 id: pl-memory-ownership-borrowing-pitfall-checker
 node: memory.ownership-borrowing
 type: qa
-step: 6
+step: 8
 ---
 ## Q
 借用检查器最常见的两个「我明明没错」的拦截是什么？分别怎么改？
@@ -44,4 +44,4 @@ println!("{:?}", v);   // [3, 2, 3]
 1. 缩短借用的存活范围，先用完再修改。
 2. 复制出小值（`Copy` 类型），而不是持有引用。
 3. 用索引代替引用保存「位置」，需要时再访问。
-4. 必要时 `Rc<RefCell<T>>` 或 `unsafe`，但这是最后手段。
+4. 必要时 `Rc<RefCell<T>>`（多所有者加运行期借用检查的组合） 或 `unsafe`，但这是最后手段。

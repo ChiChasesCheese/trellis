@@ -2,7 +2,7 @@
 id: pl-errors-result-type-mechanism
 node: errors.result-type
 type: qa
-step: 2
+step: 5
 ---
 ## Q
 `Result<T, E>` 在内存里是什么样？`?` 运算符展开成什么，错误类型转换发生在哪里？

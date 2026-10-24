@@ -2,7 +2,7 @@
 id: pl-errors-result-type-table
 node: errors.result-type
 type: qa
-step: 3
+step: 6
 ---
 ## Q
 「值可能缺失或操作可能失败」这件事，Go、Java、Rust、Python 各用什么表达？强制性、组合性和成本有什么差别？

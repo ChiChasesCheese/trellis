@@ -2,7 +2,7 @@
 id: pl-memory-tracing-gc-best-practice
 node: memory.tracing-gc
 type: qa
-step: 5
+step: 9
 ---
 ## Q
 在 Java 和 Go 的生产系统里，调 GC 的最佳实践是什么？为什么「减少分配」通常比「调参数」更有效？

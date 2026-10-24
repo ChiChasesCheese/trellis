@@ -2,7 +2,7 @@
 id: pl-errors-result-type-philosophy
 node: errors.result-type
 type: qa
-step: 4
+step: 7
 ---
 ## Q
 Rust 为什么既有 `Result`，又用 `thiserror` 与 `anyhow` 两套工具？这反映了怎样的设计哲学？

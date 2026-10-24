@@ -2,7 +2,7 @@
 id: pl-memory-stack-heap-history
 node: memory.stack-heap
 type: qa
-step: 7
+step: 10
 ---
 ## Q
 从 C 到 Java、Go、Rust，「值放栈还是放堆」这个问题的答案是怎么演变的？

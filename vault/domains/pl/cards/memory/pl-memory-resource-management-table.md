@@ -2,7 +2,7 @@
 id: pl-memory-resource-management-table
 node: memory.resource-management
 type: qa
-step: 3
+step: 6
 ---
 ## Q
 Go、Java、Rust、Python 各用什么机制管理非内存资源？换来什么，代价是什么？

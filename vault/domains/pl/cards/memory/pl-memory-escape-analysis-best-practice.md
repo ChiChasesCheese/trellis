@@ -2,7 +2,7 @@
 id: pl-memory-escape-analysis-best-practice
 node: memory.escape-analysis
 type: qa
-step: 5
+step: 7
 ---
 ## Q
 依赖逃逸分析的语言（Go、Java）里，写热点代码的最佳实践是什么？为什么「验证」比「相信」更重要？
@@ -18,7 +18,7 @@ step: 5
 
 **Java**
 1. 写正常的小对象、不可变值对象代码，JIT 通常会处理好，不要为了迎合逃逸分析而扭曲代码或手工池化。
-2. 但不要凭信念：用 JMH 做基准，配合 `-Xlog:gc` 或 JFR 的分配事件，确认优化真的发生。
+2. 但不要凭信念：用 JMH（Java 的微基准测试框架）做基准，配合 `-Xlog:gc` 或 JFR 的分配事件，确认优化真的发生。
 3. 保持热点方法小而可内联，这是标量替换生效的前提。
 4. 考虑 JIT 预热：基准与压测都要先热身。
 

@@ -2,7 +2,7 @@
 id: pl-memory-manual-raii-mechanism
 node: memory.manual-raii
 type: qa
-step: 2
+step: 5
 ---
 ## Q
 RAII 在编译后是怎么工作的？析构（drop）的调用顺序由什么规则决定？

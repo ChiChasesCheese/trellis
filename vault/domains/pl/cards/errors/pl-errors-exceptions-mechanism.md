@@ -2,7 +2,7 @@
 id: pl-errors-exceptions-mechanism
 node: errors.exceptions
 type: qa
-step: 2
+step: 5
 ---
 ## Q
 抛出异常时运行时做了什么？栈展开、`finally` 与异常链在行为上是怎样的？

@@ -1,0 +1,21 @@
+---
+id: pl-memory-memory-layout-foundation-headers-boxing
+node: memory.memory-layout
+type: qa
+step: 3
+---
+## Q
+Java 的对象头（object header）和装箱（boxing）是什么？Python 的整数为什么是对象？它们让内存占用膨胀多少？
+
+## A
+在 Java 里，每个堆上的对象前面都有一段**对象头**，保存运行时需要的元数据：一个标记字（锁状态、GC 年龄、哈希值）加一个指向类信息的指针。64 位 HotSpot 默认下对象头是 12 字节，对象整体再向上对齐到 8 字节。所以：
+- 只含一个 `int` 的对象：12 + 4 = 16 字节；
+- 含两个 `int` 的对象：12 + 8 = 20，补到 24 字节。
+
+**装箱**（boxing）：Java 的集合（如 `List<Integer>`）只能存对象，不能存基本类型 `int`，所以放进去时自动把 `int` 包成一个 `Integer` 对象，取出时再拆开。一个 `Integer` 是 16 字节的堆对象，外加集合里 4 字节的引用。本机实测，一百万个数：`int[]` 约 4 MB，`Integer[]` 约 20 MB，膨胀 5 倍。
+
+**Python**：整数本身就是堆上的对象，带有引用计数、类型指针和数值，`sys.getsizeof(1)` 为 28 字节；列表存的是指向这些对象的 8 字节指针。一百万个整数的 `list` 约 36 MB（8 MB 指针加 28 MB 对象），而 `array.array('i')` 像 C 数组一样直接存 4 字节整数，约 4 MB。
+
+**Go 与 Rust**：结构体和数组里的字段直接内联，没有对象头。`[]int` 就是 8 字节一个整数的连续内存，`Vec<i32>` 每个元素 4 字节。
+
+要记住的一个事实：Java 和 Python 的“一切皆对象”换来了统一的模型，代价是每个小值多出对象头与指针间接；Go、Rust 默认没有这笔开销。

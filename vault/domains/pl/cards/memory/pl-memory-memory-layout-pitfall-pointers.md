@@ -2,7 +2,7 @@
 id: pl-memory-memory-layout-pitfall-pointers
 node: memory.memory-layout
 type: qa
-step: 6
+step: 8
 ---
 ## Q
 「元素指针的切片」和「元素值的切片」的遍历速度为什么能差一个数量级？

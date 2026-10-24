@@ -2,7 +2,7 @@
 id: pl-errors-error-values-pitfall-typed-nil
 node: errors.error-values
 type: qa
-step: 6
+step: 7
 ---
 ## Q
 Go 里一个返回 `error` 的函数明明返回了 nil 指针，为什么 `err != nil` 却是真？

@@ -2,7 +2,7 @@
 id: pl-errors-panics-pitfall-goroutine
 node: errors.panics
 type: qa
-step: 6
+step: 8
 ---
 ## Q
 Go 里在 `main` 中写了 `defer recover()`，为什么另一个 goroutine 的 panic 还是让整个程序退出？

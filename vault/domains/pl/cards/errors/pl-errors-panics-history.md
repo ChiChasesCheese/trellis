@@ -2,7 +2,7 @@
 id: pl-errors-panics-history
 node: errors.panics
 type: qa
-step: 7
+step: 9
 ---
 ## Q
 「不可恢复错误」这个概念是怎么形成的，近年的趋势是什么？
@@ -19,4 +19,4 @@ step: 7
 趋势：
 - **panic 越来越不可捕获**：Swift、Zig 的做法是直接终止，不提供 `recover`。Go 的 `recover` 被官方文档反复强调要谨慎使用。
 - **崩溃时的诊断更重要**：栈追踪、core dump、结构化崩溃日志，以及 Rust 里 `RUST_BACKTRACE` 之类的开关，都是为了让「快速失败」能被分析。
-- **隔离粒度变细**：线程级（Rust）、任务级（Tokio）、actor 级（Akka、Erlang）的隔离，让一个 bug 影响的范围尽量小。
+- **隔离粒度变细**：线程级（Rust）、任务级（Rust 异步运行时 Tokio 的任务）、actor 级（Akka、Erlang）的隔离，让一个 bug 影响的范围尽量小。

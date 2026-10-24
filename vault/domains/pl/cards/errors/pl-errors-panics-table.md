@@ -2,7 +2,7 @@
 id: pl-errors-panics-table
 node: errors.panics
 type: qa
-step: 3
+step: 5
 ---
 ## Q
 Go、Java、Rust、Python 各自如何表示和处理「不可恢复」的错误？取舍是什么？

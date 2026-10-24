@@ -2,7 +2,7 @@
 id: pl-errors-models-pitfall-ignored
 node: errors.models
 type: qa
-step: 6
+step: 10
 ---
 ## Q
 「忽略一个会失败的调用」在 Go、Rust、Java、Python 里分别会发生什么？为什么这是各模型的核心差别？

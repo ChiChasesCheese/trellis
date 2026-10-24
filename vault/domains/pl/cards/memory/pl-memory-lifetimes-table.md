@@ -2,7 +2,7 @@
 id: pl-memory-lifetimes-table
 node: memory.lifetimes
 type: qa
-step: 3
+step: 5
 ---
 ## Q
 「引用不能比被引用的值活得更久」这件事，Go、Java、Rust、Python 各自在哪个阶段、用什么保证？换来什么，代价是什么？

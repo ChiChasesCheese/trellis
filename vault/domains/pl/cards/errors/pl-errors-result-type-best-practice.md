@@ -2,7 +2,7 @@
 id: pl-errors-result-type-best-practice
 node: errors.result-type
 type: qa
-step: 5
+step: 8
 ---
 ## Q
 Rust 里使用 `Result` 和 `Option` 的最佳实践是什么？

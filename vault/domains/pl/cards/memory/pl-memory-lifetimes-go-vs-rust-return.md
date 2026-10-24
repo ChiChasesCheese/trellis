@@ -2,7 +2,7 @@
 id: pl-memory-lifetimes-go-vs-rust-return
 node: memory.lifetimes
 type: qa
-step: 4
+step: 6
 ---
 ## Q
 同样是「返回局部变量的地址」，Go 能直接写、C 是错误、Rust 编译不过，三者的区别说明了什么？

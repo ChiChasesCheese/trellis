@@ -2,7 +2,7 @@
 id: pl-memory-escape-analysis-table
 node: memory.escape-analysis
 type: qa
-step: 3
+step: 5
 ---
 ## Q
 Go、Java、Rust、Python 对「对象放栈还是放堆」的自动优化各做到什么程度？换来什么，代价是什么？

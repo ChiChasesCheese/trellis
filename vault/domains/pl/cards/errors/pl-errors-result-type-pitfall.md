@@ -2,7 +2,7 @@
 id: pl-errors-result-type-pitfall
 node: errors.result-type
 type: qa
-step: 6
+step: 9
 ---
 ## Q
 Rust 的 `?` 和 `main` 返回 `Result` 有什么容易踩的坑？

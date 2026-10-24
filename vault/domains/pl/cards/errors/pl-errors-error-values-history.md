@@ -2,7 +2,7 @@
 id: pl-errors-error-values-history
 node: errors.error-values
 type: qa
-step: 7
+step: 8
 ---
 ## Q
 Go 的错误处理从 1.0 到今天有哪些演进，为什么语法一直没变？

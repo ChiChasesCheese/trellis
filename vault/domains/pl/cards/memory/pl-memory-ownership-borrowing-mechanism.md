@@ -2,7 +2,7 @@
 id: pl-memory-ownership-borrowing-mechanism
 node: memory.ownership-borrowing
 type: qa
-step: 2
+step: 4
 ---
 ## Q
 借用检查器（borrow checker）是怎么工作的？一个借用的有效范围到哪里为止？

@@ -2,7 +2,7 @@
 id: pl-memory-reference-counting-history
 node: memory.reference-counting
 type: qa
-step: 7
+step: 9
 ---
 ## Q
 引用计数从最早的提出到今天的 Swift ARC、Python 的新变化，经历了怎样的路线？

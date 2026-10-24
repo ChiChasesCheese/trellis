@@ -2,7 +2,7 @@
 id: pl-errors-result-type-history
 node: errors.result-type
 type: qa
-step: 7
+step: 10
 ---
 ## Q
 `Option`/`Result` 这类类型从哪里来，现在在哪些语言里扩散？

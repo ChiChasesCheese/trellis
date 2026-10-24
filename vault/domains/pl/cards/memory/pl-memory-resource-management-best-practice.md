@@ -2,7 +2,7 @@
 id: pl-memory-resource-management-best-practice
 node: memory.resource-management
 type: qa
-step: 5
+step: 8
 ---
 ## Q
 管理文件、锁、连接的最佳实践是什么？四种语言各自要注意什么？

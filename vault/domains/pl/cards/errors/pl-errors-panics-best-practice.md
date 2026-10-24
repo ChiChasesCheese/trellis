@@ -2,7 +2,7 @@
 id: pl-errors-panics-best-practice
 node: errors.panics
 type: qa
-step: 5
+step: 7
 ---
 ## Q
 什么时候该 panic，什么时候不该？各语言里的最佳实践是什么？

@@ -2,7 +2,7 @@
 id: pl-memory-stack-heap-mechanism
 node: memory.stack-heap
 type: qa
-step: 2
+step: 5
 ---
 ## Q
 函数调用时栈帧（stack frame）是怎么分配和释放的？为什么栈分配比堆分配便宜得多？

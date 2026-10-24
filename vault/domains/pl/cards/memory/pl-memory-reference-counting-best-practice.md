@@ -2,7 +2,7 @@
 id: pl-memory-reference-counting-best-practice
 node: memory.reference-counting
 type: qa
-step: 5
+step: 7
 ---
 ## Q
 使用引用计数时的最佳实践是什么？在 Rust 和 Python 里各自怎么避免循环与多余开销？

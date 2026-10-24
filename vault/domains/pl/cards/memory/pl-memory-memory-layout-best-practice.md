@@ -2,7 +2,7 @@
 id: pl-memory-memory-layout-best-practice
 node: memory.memory-layout
 type: qa
-step: 5
+step: 7
 ---
 ## Q
 为性能敏感的代码设计数据布局时，各语言的最佳实践是什么？

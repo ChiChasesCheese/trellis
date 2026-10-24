@@ -2,7 +2,7 @@
 id: pl-memory-resource-management-pitfall-finalizer
 node: memory.resource-management
 type: qa
-step: 6
+step: 9
 ---
 ## Q
 为什么不能靠终结器（finalizer）来释放资源？Go 和 Java 里这个陷阱具体是什么样？

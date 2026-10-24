@@ -2,7 +2,7 @@
 id: pl-errors-cost-best-practice
 node: errors.cost
 type: qa
-step: 5
+step: 7
 ---
 ## Q
 考虑错误处理的性能时，各语言的工程师应该遵循哪些做法？
@@ -28,6 +28,6 @@ step: 5
 1. `Result` 本身很便宜；真正的成本在错误类型：避免在热路径上构造带 `String` 的错误，用枚举变体承载数据。
 2. 需要栈追踪的库（`anyhow`）只在需要时才捕获 backtrace。
 
-**共同**：用基准或 profile 验证，比如 Java 用 JMH、Go 用 `testing.B`。成本差异常常是数量级，容易测出来。
+**共同**：用基准或 profile 验证，比如 Java 用基准框架 JMH、Go 用 `testing.B`。成本差异常常是数量级，容易测出来。
 
 什么时候违反：不在热路径上的代码，请按清晰度选择机制，不必为纳秒级差异扭曲设计。

@@ -2,7 +2,7 @@
 id: pl-memory-escape-analysis-history
 node: memory.escape-analysis
 type: qa
-step: 7
+step: 9
 ---
 ## Q
 逃逸分析是什么时候出现的，Java 和 Go 各自怎样采用，下一步往哪里发展？

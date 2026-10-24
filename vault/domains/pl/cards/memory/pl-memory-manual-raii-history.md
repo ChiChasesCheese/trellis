@@ -2,7 +2,7 @@
 id: pl-memory-manual-raii-history
 node: memory.manual-raii
 type: qa
-step: 7
+step: 10
 ---
 ## Q
 RAII 从 C 的手动管理发展到现代语言，经历了怎样的路线？为什么后来的语言多数没有走 RAII 这条路？

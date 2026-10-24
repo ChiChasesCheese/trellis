@@ -2,7 +2,7 @@
 id: pl-errors-cost-mechanism
 node: errors.cost
 type: qa
-step: 2
+step: 4
 ---
 ## Q
 零成本异常模型是怎么做到「不抛不花钱」的？抛出时的时间花在哪里？

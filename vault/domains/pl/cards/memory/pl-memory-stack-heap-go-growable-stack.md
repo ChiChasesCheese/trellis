@@ -2,7 +2,7 @@
 id: pl-memory-stack-heap-go-growable-stack
 node: memory.stack-heap
 type: qa
-step: 4
+step: 7
 ---
 ## Q
 同样做 1000 万层递归，Go、Java、Python 的结果为什么差这么大？Go 的栈有什么独特设计？

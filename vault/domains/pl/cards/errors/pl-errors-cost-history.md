@@ -2,7 +2,7 @@
 id: pl-errors-cost-history
 node: errors.cost
 type: qa
-step: 7
+step: 9
 ---
 ## Q
 异常的实现方式是怎么演变的？今天关于成本的争论还在往哪里走？

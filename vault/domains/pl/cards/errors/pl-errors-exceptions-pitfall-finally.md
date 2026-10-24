@@ -2,7 +2,7 @@
 id: pl-errors-exceptions-pitfall-finally
 node: errors.exceptions
 type: qa
-step: 6
+step: 9
 ---
 ## Q
 `finally` 里写了 `return`，或者 Python 里 `except` 得太宽，会怎样悄悄吞掉错误？

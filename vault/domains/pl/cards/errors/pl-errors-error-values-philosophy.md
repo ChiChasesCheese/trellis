@@ -2,7 +2,7 @@
 id: pl-errors-error-values-philosophy
 node: errors.error-values
 type: qa
-step: 4
+step: 5
 ---
 ## Q
 Go 社区说「不要只是检查错误，要优雅地处理它们」，这反映了 Go 错误处理背后怎样的哲学？

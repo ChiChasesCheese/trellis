@@ -2,7 +2,7 @@
 id: pl-memory-reference-counting-table
 node: memory.reference-counting
 type: qa
-step: 3
+step: 5
 ---
 ## Q
 引用计数在 Go、Java、Rust、Python 里分别处于什么位置？为什么各自这样选？

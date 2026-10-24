@@ -2,7 +2,7 @@
 id: pl-memory-memory-safety-pitfall-race
 node: memory.memory-safety
 type: qa
-step: 6
+step: 8
 ---
 ## Q
 有 GC 的 Go 为什么仍然可能出现内存安全问题？怎么用工具发现数据竞争？

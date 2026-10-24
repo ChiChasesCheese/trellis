@@ -2,7 +2,7 @@
 id: pl-memory-lifetimes-history
 node: memory.lifetimes
 type: qa
-step: 7
+step: 9
 ---
 ## Q
 生命周期这个想法的学术来源是什么？Rust 的实现经历了哪些改进，别的语言有没有类似物？

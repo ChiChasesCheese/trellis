@@ -2,7 +2,7 @@
 id: pl-memory-memory-safety-table
 node: memory.memory-safety
 type: qa
-step: 3
+step: 5
 ---
 ## Q
 Go、Java、Rust、Python 靠什么保证内存安全？各自留下了什么缺口，代价是什么？

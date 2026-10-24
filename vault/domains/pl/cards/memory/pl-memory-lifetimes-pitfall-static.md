@@ -2,7 +2,7 @@
 id: pl-memory-lifetimes-pitfall-static
 node: memory.lifetimes
 type: qa
-step: 6
+step: 8
 ---
 ## Q
 Rust 的 `'static` 是什么意思？为什么说它不等于「永远活着」，常见的误用是什么？
@@ -32,4 +32,4 @@ error[E0597]: `s` does not live long enough
 1. 编译器抱怨生命周期，就把所有地方都改成 `'static`，或者用 `Box::leak` 糊弄。泄漏换来了编译通过，内存却再也回不来。
 2. 把「值是 `'static` 约束」理解成「值永不被释放」：`String` 照样会 `drop`。
 
-正确的思路：先问数据归谁。需要跨线程或存很久，就交出所有权（克隆、`Arc`），而不是延长借用。
+正确的思路：先问数据归谁。需要跨线程或存很久，就交出所有权（克隆，或用 `Arc` 这类引用计数共享指针），而不是延长借用。

@@ -2,7 +2,7 @@
 id: pl-memory-ownership-borrowing-table
 node: memory.ownership-borrowing
 type: qa
-step: 3
+step: 5
 ---
 ## Q
 「遍历时修改集合」这类别名加修改的问题，Go、Java、Rust、Python 各选了什么处理点？换来什么，代价是什么？

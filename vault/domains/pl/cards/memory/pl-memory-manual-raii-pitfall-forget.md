@@ -2,7 +2,7 @@
 id: pl-memory-manual-raii-pitfall-forget
 node: memory.manual-raii
 type: qa
-step: 6
+step: 9
 ---
 ## Q
 RAII 能保证资源一定被释放吗？Rust 里有哪些情况下 `Drop` 不会运行？
@@ -11,7 +11,7 @@ RAII 能保证资源一定被释放吗？Rust 里有哪些情况下 `Drop` 不�
 不能。RAII 保证的是「值被销毁时一定运行析构」，而不是「值一定会被销毁」。在 Rust 里，以下情况 `Drop` 不运行：
 
 1. 显式调用 `std::mem::forget(x)`，它是安全函数。
-2. 引用计数循环：两个 `Rc` 互相持有，计数永远不归零。
+2. 引用计数循环：两个 `Rc`（引用计数的共享指针） 互相持有，计数永远不归零。
 3. 进程以 `abort` 结束，或 `panic = "abort"` 配置下发生 panic，不展开栈。
 4. `std::process::exit` 直接结束进程，不会运行剩余局部变量的析构。
 

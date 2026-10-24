@@ -2,7 +2,7 @@
 id: pl-memory-lifetimes-mechanism
 node: memory.lifetimes
 type: qa
-step: 2
+step: 4
 ---
 ## Q
 Rust 的生命周期标注 `'a` 到底标注了什么？编译器怎样用它检查调用？

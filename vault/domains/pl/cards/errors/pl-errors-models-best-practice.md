@@ -2,7 +2,7 @@
 id: pl-errors-models-best-practice
 node: errors.models
 type: qa
-step: 5
+step: 9
 ---
 ## Q
 不论用哪种语言，设计错误处理时有经验的工程师遵循哪些共同原则？
@@ -16,6 +16,6 @@ step: 5
 6. **让错误可分类**：调用者需要决定重试还是放弃，所以错误要有可以判断的种类（类型、哨兵值、枚举变体），而不是只能比较字符串。
 7. **不要用错误处理来控制正常流程**：高频的「失败」（缓存未命中、迭代结束）应当用返回值表示，而不是异常。
 
-各语言落地：Go 用 `fmt.Errorf("...: %w", err)` 加 `errors.Is/As`；Java 用有层次的自定义异常加 cause 链；Rust 库用 `thiserror` 枚举、应用用 `anyhow` 加 `context`；Python 用 `raise X from e`。
+各语言落地：Go 用 `fmt.Errorf("...: %w", err)` 包装错误并保留原错误，再用 `errors.Is/As` 判断种类；Java 用有层次的自定义异常加 cause（原因）链；Rust 库自己定义错误枚举、应用层用能装任何错误的类型并逐层加说明；Python 用 `raise X from e` 保留原因。
 
 什么时候违反：脚本和一次性工具里，让它直接崩溃并打印栈追踪往往就是最好的错误处理。

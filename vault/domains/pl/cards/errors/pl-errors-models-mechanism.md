@@ -2,7 +2,7 @@
 id: pl-errors-models-mechanism
 node: errors.models
 type: qa
-step: 2
+step: 6
 ---
 ## Q
 异常、错误值和 `Result` 在运行时分别是怎么传播失败的？一次从 `h` 到 `f` 的传播会发生什么？

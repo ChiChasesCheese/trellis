@@ -2,7 +2,7 @@
 id: pl-errors-cost-philosophy
 node: errors.cost
 type: qa
-step: 4
+step: 6
 ---
 ## Q
 C++ 常说「不要为不用的东西付费」，这条原则怎样塑造了零成本异常？Rust 和 Go 的选择为什么不同？

@@ -2,7 +2,7 @@
 id: pl-errors-cost-pitfall-trace
 node: errors.cost
 type: qa
-step: 6
+step: 8
 ---
 ## Q
 Java 里把异常当作「找不到」的信号，在高并发下会怎样？为什么栈越深越糟？

@@ -2,7 +2,7 @@
 id: pl-memory-escape-analysis-mechanism
 node: memory.escape-analysis
 type: qa
-step: 2
+step: 4
 ---
 ## Q
 编译器具体根据什么判断对象逃逸？栈分配和 Java 的标量替换（scalar replacement）各是怎么实现的？

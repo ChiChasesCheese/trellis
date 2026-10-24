@@ -2,7 +2,7 @@
 id: pl-memory-manual-raii-best-practice
 node: memory.manual-raii
 type: qa
-step: 5
+step: 8
 ---
 ## Q
 RAII 与手动管理的最佳实践是什么？Rust、C++ 与 Go、Java、Python 里各自怎么写才安全？

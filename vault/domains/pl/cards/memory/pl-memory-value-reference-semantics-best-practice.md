@@ -2,7 +2,7 @@
 id: pl-memory-value-reference-semantics-best-practice
 node: memory.value-reference-semantics
 type: qa
-step: 5
+step: 9
 ---
 ## Q
 面对别名（多个名字指向同一个可变对象）的风险，Go、Java、Rust、Python 里有经验的工程师分别怎么做？

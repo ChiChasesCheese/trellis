@@ -2,7 +2,7 @@
 id: pl-memory-value-reference-semantics-history
 node: memory.value-reference-semantics
 type: qa
-step: 7
+step: 11
 ---
 ## Q
 值语义与引用语义的取舍，在近二十年的语言演进里朝哪个方向移动？

@@ -2,7 +2,7 @@
 id: pl-memory-memory-safety-best-practice
 node: memory.memory-safety
 type: qa
-step: 5
+step: 7
 ---
 ## Q
 在工程实践里，怎样最大化内存安全？各语言的有经验团队分别做什么？

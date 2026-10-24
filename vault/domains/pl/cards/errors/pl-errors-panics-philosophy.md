@@ -2,7 +2,7 @@
 id: pl-errors-panics-philosophy
 node: errors.panics
 type: qa
-step: 4
+step: 6
 ---
 ## Q
 Go 为什么说 `panic` 不是异常，Rust 为什么把 panic 与 `Result` 严格分开？「让它崩溃」又是什么思路？

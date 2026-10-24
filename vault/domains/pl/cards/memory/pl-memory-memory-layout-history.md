@@ -2,7 +2,7 @@
 id: pl-memory-memory-layout-history
 node: memory.memory-layout
 type: qa
-step: 7
+step: 9
 ---
 ## Q
 为什么近年各语言都在想办法压缩对象开销？Java 做了哪些具体改动？

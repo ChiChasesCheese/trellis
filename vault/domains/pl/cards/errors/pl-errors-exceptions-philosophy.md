@@ -2,7 +2,7 @@
 id: pl-errors-exceptions-philosophy
 node: errors.exceptions
 type: qa
-step: 4
+step: 7
 ---
 ## Q
 Java 为什么设计受检异常，后来为什么被广泛认为是失败的？Python 的 EAFP 又基于什么理由？

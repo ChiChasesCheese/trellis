@@ -2,7 +2,7 @@
 id: pl-memory-memory-safety-rust-unsafe
 node: memory.memory-safety
 type: qa
-step: 4
+step: 6
 ---
 ## Q
 Rust 的 `unsafe` 块能做什么，不能做什么？它和别的语言的逃生口相比独特在哪里？

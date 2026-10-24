@@ -2,7 +2,7 @@
 id: pl-memory-reference-counting-pitfall-refcell
 node: memory.reference-counting
 type: qa
-step: 6
+step: 8
 ---
 ## Q
 Rust 里 `Rc<RefCell<T>>` 的组合有什么陷阱？它把哪部分检查从编译期推迟到了运行期？

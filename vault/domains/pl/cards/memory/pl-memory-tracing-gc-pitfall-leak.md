@@ -2,7 +2,7 @@
 id: pl-memory-tracing-gc-pitfall-leak
 node: memory.tracing-gc
 type: qa
-step: 6
+step: 10
 ---
 ## Q
 有 GC 的语言还会内存泄漏吗？为什么，该怎么排查？
