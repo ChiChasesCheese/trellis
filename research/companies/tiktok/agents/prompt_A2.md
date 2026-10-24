@@ -29,7 +29,23 @@ statement point to which technique, and how to get from brute force to the optim
 (the standard library used well, with the reason each idiom is better). Chinese prose, English terms in parentheses,
 code identifiers in backticks, code comments in Chinese.
 
-## 3. Problem leaves: 4 cards each (5 for Hard)
+## 3a. Problem leaves: first, ONE whole-answer card (the source of truth)
+
+Chi (2026-10-24): the deck splits in two. Deck **整题答案** has exactly one card per problem — a thorough best-practice
+answer he goes through first. Deck **拆分背诵** holds the split cards of 3b, for warm-up before interviews. You write
+both kinds in the same folder; the orchestrator files the split ones into their deck.
+
+The whole card: id `tlc-<slug>-0-whole`, file `tlc-<slug>-0-whole.md`, **no `step:` line**. Copy the pilot
+`tlc-longest-substring-without-repeating-characters-0-whole.md` exactly in shape:
+- Front: header line, the full statement in Chinese with all constraints and 1–2 examples, then「给出完整的最优解答：识别、推导、
+  代码、复杂度、易错点、追问。」
+- Back: **一句话** (the whole idea in one sentence) · **识别** (the signals) · **推导** (brute force → waste → insight →
+  optimum, one paragraph) · the full solution in one ```python block · **运行** (real outputs) · **复杂度** · **易错点**
+  (2–3 bullets, with a concrete wrong output where possible) · **追问** (2–3 bullets, one line each) · **同模式**.
+- It may be long (a word-count warning on `-0-whole` cards is expected and fine); it must still be self-contained.
+- The whole card and the split cards must agree (same code, same complexity, same counterexample).
+
+## 3b. Problem leaves: then the split cards — 4 each (5 for Hard)
 
 | step | file suffix | front | back |
 |---|---|---|---|
@@ -67,7 +83,7 @@ Card id: `tlc-<slug>-<suffix>`; `node: <leaf id>`; `type: qa`; `step: <n>`. Fron
 1. `uv run python research/companies/tiktok/tools/gate_cards.py <your files>` — 0 problems.
 2. `uv run python scripts/plain_style.py <your files>` — ok.
 3. `uv run trellis --domain tiktok-lc validate` — 0 errors; no `not_self_contained` / `leans_on_source` on your cards.
-   A long-answer warning (> 250 words) is acceptable only on `-2-code` cards; split any other card.
+   A long-answer warning (> 250 words) is acceptable only on `-0-whole` and `-2-code` cards; split any other card.
 4. `git checkout uv.lock` if changed.
 
 ## 6. Reply (≤ 12 lines)
