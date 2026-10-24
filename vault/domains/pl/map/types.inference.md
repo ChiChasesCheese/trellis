@@ -2,7 +2,7 @@
 # 类型推断
 *类型系统*
 
-局部推断（Java var、Go :=）与基于约束的全局推断（Rust 接近 Hindley-Milner）；推断的边界在哪里。
+局部推导（Java var、Go :=）与基于约束的全局推导（Rust 接近 Hindley-Milner）；推导的边界在哪里。
 
 **Core** — part of the first pass through this subject.
 

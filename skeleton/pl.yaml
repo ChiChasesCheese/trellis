@@ -46,7 +46,7 @@ nodes:
 - id: types
   order: 2
   title: 类型系统
-  summary: 类型是对值的分类和约束：什么时候检查、检查多严格、按名字还是按结构匹配、能推断多少、怎样表示“没有值”与“几种之一”。
+  summary: 类型是对值的分类和约束：什么时候检查、检查多严格、按名字还是按结构匹配、能推导多少、怎样表示“没有值”与“几种之一”。
   core: true
   children:
   - id: types.static-dynamic
@@ -64,7 +64,7 @@ nodes:
     - types.static-dynamic
   - id: types.inference
     title: 类型推断
-    summary: 局部推断（Java var、Go :=）与基于约束的全局推断（Rust 接近 Hindley-Milner）；推断的边界在哪里。
+    summary: 局部推导（Java var、Go :=）与基于约束的全局推导（Rust 接近 Hindley-Milner）；推导的边界在哪里。
     requires:
     - types.static-dynamic
   - id: types.numbers
