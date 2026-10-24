@@ -51,7 +51,7 @@ def problems(path: Path) -> list[str]:
 
 
 def main(argv: list[str]) -> int:
-    files = [Path(a) for a in argv] or sorted([*CARDS.rglob("*.md"), *DRILL.rglob("*.md")])
+    files = [Path(a).resolve() for a in argv] or sorted([*CARDS.rglob("*.md"), *DRILL.rglob("*.md")])
     bad = 0
     for f in files:
         for p in problems(f):
