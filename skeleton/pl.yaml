@@ -13,9 +13,9 @@ study:
 nodes:
 - id: foundations
   order: 1
+  core: true
   title: 语言的基本坐标
   summary: 编程范式、执行模型、设计哲学与谱系：先建立一张能放下所有语言的坐标系，再看 Go、Java、Rust、Python 各落在哪里。
-  core: true
   children:
   - id: foundations.paradigms
     title: 编程范式：命令式、面向对象、函数式、声明式
@@ -43,11 +43,45 @@ nodes:
     summary: 安全 vs 控制、表达力 vs 简单、编译期检查 vs 运行期灵活、性能 vs 开发速度、向后兼容 vs 演进。
     requires:
     - foundations.design-philosophy
-- id: types
+- id: binding
   order: 2
+  core: true
+  title: 名字、绑定与求值
+  summary: 名字指向什么、在哪里可见、什么时候确定；参数怎样传递、表达式按什么顺序和策略求值；函数调用在机器层面发生了什么。
+  children:
+  - id: binding.names-scope
+    title: 名字与作用域
+    summary: 词法作用域与动态作用域、块作用域、Python 的 LEGB 规则、Go 的 := 遮蔽陷阱、Rust 把遮蔽当作特性；作用域决定了闭包能捕获什么。
+  - id: binding.binding-time
+    title: 绑定时机：编译期到运行期
+    summary: 名字、类型、地址、方法实现分别在编译、链接、加载还是运行时确定；早绑定换来性能与检查，晚绑定换来灵活（Python 的一切都在运行时查）。
+    requires:
+    - binding.names-scope
+  - id: binding.parameter-passing
+    title: 参数传递：传值、传引用与传共享
+    summary: 传值、传引用、传共享（call by sharing）的区别；为什么说 Java 只有传值、Go 传切片头和 map 头、Rust 移动或借用、Python 传对象引用。
+    requires:
+    - binding.names-scope
+  - id: binding.evaluation-strategy
+    title: 求值策略：严格、惰性与短路
+    summary: 严格求值与惰性求值（Haskell 对比）、按需求值、短路运算；四门语言都是严格求值，惰性靠迭代器、生成器、Supplier、闭包显式表达。
+    requires:
+    - binding.parameter-passing
+  - id: binding.evaluation-order
+    title: 求值顺序与副作用
+    summary: 参数和操作数按什么顺序求值：Java 保证从左到右、Go 规定函数调用与通信的顺序、Rust 从左到右、C/C++ 未规定；顺序不确定时副作用如何变成 bug。
+    requires:
+    - binding.evaluation-strategy
+  - id: binding.calling-convention
+    title: 函数调用在机器层面：栈帧与调用约定
+    summary: 调用时发生了什么：返回地址、栈帧、寄存器传参、调用者与被调者保存寄存器；Go 1.17 改用寄存器 ABI、栈增长、内联为什么能消掉这些开销。
+    requires:
+    - binding.parameter-passing
+- id: types
+  order: 3
+  core: true
   title: 类型系统
   summary: 类型是对值的分类和约束：什么时候检查、检查多严格、按名字还是按结构匹配、能推导多少、怎样表示“没有值”与“几种之一”。
-  core: true
   children:
   - id: types.static-dynamic
     title: 静态类型与动态类型
@@ -88,13 +122,18 @@ nodes:
     requires:
     - types.static-dynamic
     - types.nominal-structural
+  - id: types.soundness
+    title: 类型系统的可靠性（soundness）
+    summary: “类型检查通过就不会出现类型错误”的承诺：Java 数组协变与 ArrayStoreException、未检查转换与堆污染、TypeScript 有意不可靠、Python 注解不保证运行时、Rust 的 unsafe 边界。
+    requires:
+    - types.gradual-typing
   - id: types.type-conversions
     title: 类型转换与类型断言
     summary: 显式转换、向下转型（Java cast）、类型断言（Go x.(T)）、From/Into（Rust）、Python 构造函数转换；失败时分别发生什么。
     requires:
     - types.strong-weak
 - id: abstraction
-  order: 3
+  order: 4
   title: 抽象、多态与泛型
   summary: 怎样复用代码与描述“同一类东西”：类与继承、接口与 trait、动态与静态分派、组合、泛型的三种实现方式、可见性与模式匹配。
   children:
@@ -139,6 +178,16 @@ nodes:
     summary: Java 通配符 ? extends / ? super（PECS）、Rust trait bound 与 where 子句、Go 类型集合约束；协变、逆变、不变。
     requires:
     - abstraction.generics
+  - id: abstraction.typeclasses
+    title: 类型类、trait 与关联类型
+    summary: Haskell 类型类与 Rust trait 的渊源、一致性（coherence）与孤儿规则、关联类型与泛型参数的区别、为什么 Java 接口和 Go 接口做不到“为已有类型追加能力”。
+    requires:
+    - abstraction.bounds-variance
+  - id: abstraction.higher-kinded
+    title: 高阶类型（HKT）与抽象的上限
+    summary: 对“容器类型本身”泛化（Functor、Monad）需要什么；Java、Go、Rust 都没有高阶类型，Rust 用 GAT 部分弥补；表达力与复杂度的取舍。
+    requires:
+    - abstraction.typeclasses
   - id: abstraction.encapsulation
     title: 封装与可见性
     summary: Java 访问修饰符与模块、Go 首字母大小写导出、Rust pub/pub(crate)、Python 下划线约定与名字改写。
@@ -161,10 +210,10 @@ nodes:
     requires:
     - abstraction.interfaces-traits
 - id: memory
-  order: 4
+  order: 5
+  core: true
   title: 内存管理
   summary: 值放在哪里、谁负责释放、什么时候释放：栈与堆、值语义与引用语义、追踪式 GC、引用计数、所有权与借用、内存安全。
-  core: true
   children:
   - id: memory.stack-heap
     title: 栈与堆
@@ -200,6 +249,11 @@ nodes:
     summary: 引用不能活得比被引用的值更久；生命周期标注、省略规则、'static；与 GC 语言为什么不需要它。
     requires:
     - memory.ownership-borrowing
+  - id: memory.substructural-types
+    title: 仿射类型与线性类型
+    summary: 所有权的理论名字：仿射类型（最多用一次）与线性类型（恰好用一次）；Rust 的移动语义、#[must_use]、其他语言的线性类型；它们能在编译期表达的资源协议。
+    requires:
+    - memory.lifetimes
   - id: memory.escape-analysis
     title: 逃逸分析
     summary: 编译器判断对象是否会离开函数，决定栈分配还是堆分配：Go 编译期逃逸分析、Java JIT 的标量替换。
@@ -223,10 +277,10 @@ nodes:
     requires:
     - memory.manual-raii
 - id: errors
-  order: 5
+  order: 6
+  core: true
   title: 错误处理
   summary: 错误是异常、返回值还是类型：异常的传播与代价、Go 的错误值、Rust 的 Result 与 ? 运算符、panic 与不可恢复错误。
-  core: true
   children:
   - id: errors.models
     title: 错误处理的几种模型
@@ -260,10 +314,10 @@ nodes:
     - errors.exceptions
     - errors.result-type
 - id: concurrency
-  order: 6
+  order: 7
+  core: true
   title: 并发与并行
   summary: 线程、协程、async/await、通道与锁、内存模型、数据竞争、GIL 与结构化并发：同一个问题，四种回答。
-  core: true
   children:
   - id: concurrency.concepts
     title: 并发与并行、进程与线程
@@ -282,6 +336,17 @@ nodes:
     title: async/await 与函数着色
     summary: 基于事件循环与 Future 的协作式并发：Python asyncio、Rust 的惰性 Future + 执行器（tokio）；“函数着色”问题与虚拟线程的对比。
     requires:
+    - concurrency.green-threads
+  - id: concurrency.io-models
+    title: I/O 模型：阻塞、多路复用与完成通知
+    summary: 阻塞 I/O、非阻塞 I/O、就绪通知（select/epoll/kqueue）与完成通知（io_uring/IOCP）；C10K 问题；为什么“一个连接一个线程”在高并发下撑不住。
+    requires:
+    - concurrency.async-await
+  - id: concurrency.io-runtimes
+    title: 各运行时怎样接入 I/O
+    summary: Go netpoller 把阻塞调用变成调度点、Java NIO 与虚拟线程的挂起、Rust tokio/mio 的 reactor、Python asyncio 的 selector 事件循环；同一套 epoll，四种包装。
+    requires:
+    - concurrency.io-models
     - concurrency.green-threads
   - id: concurrency.channels-csp
     title: 通道与 CSP
@@ -322,7 +387,7 @@ nodes:
     requires:
     - concurrency.os-threads
 - id: functional
-  order: 7
+  order: 8
   title: 函数式特性
   summary: 函数作为值、闭包的捕获语义、不可变性、迭代器与惰性求值、生成器：函数式思想怎样进入了主流语言。
   children:
@@ -333,6 +398,7 @@ nodes:
     title: 闭包与捕获语义
     summary: 捕获的是值还是变量：Java 要求 effectively final、Go 按引用捕获（1.22 修复循环变量）、Rust Fn/FnMut/FnOnce 与 move、Python 晚绑定陷阱。
     requires:
+    - binding.names-scope
     - functional.first-class-functions
     - memory.value-reference-semantics
   - id: functional.immutability
@@ -356,7 +422,7 @@ nodes:
     requires:
     - functional.first-class-functions
 - id: runtime
-  order: 8
+  order: 9
   title: 编译、运行时与性能
   summary: 代码怎样被编译、优化和执行：编译流水线、JIT、CPython 解释器、零成本抽象、启动时间、部署形态、FFI 与性能模型。
   children:
@@ -365,6 +431,21 @@ nodes:
     summary: 词法、语法、AST、类型检查、中间表示、优化、代码生成；Rust 借 LLVM、Go 自研后端追求编译速度。
     requires:
     - foundations.execution-models
+  - id: runtime.syntax-parsing
+    title: 语法与解析
+    summary: 文法、优先级与结合性、递归下降与 Pratt 解析；语法设计的取舍：Go 的自动分号、Python 的缩进、Rust 的 turbofish 消歧、Java 的泛型尖括号问题。
+    requires:
+    - runtime.compiler-pipeline
+  - id: runtime.optimizations
+    title: 编译器优化
+    summary: SSA、内联、常量传播、死代码消除、循环优化、去虚化、自动向量化；AOT 编译器与 JIT 各自能做哪些优化、为什么内联是“优化之母”。
+    requires:
+    - runtime.compiler-pipeline
+  - id: runtime.linking-abi
+    title: 链接、加载与 ABI
+    summary: 静态链接与动态链接、符号与重定位、动态库加载；ABI 稳定性：C ABI 是通用语、Rust 没有稳定 ABI、Swift 有；Go 自带链接器与 cgo 的影响。
+    requires:
+    - runtime.optimizations
   - id: runtime.jit
     title: JIT 编译
     summary: 运行时根据 profile 编译热点：HotSpot 分层编译、去优化、PyPy 追踪 JIT、CPython 3.13 实验性 JIT；JIT 与 AOT 各自的上限。
@@ -404,7 +485,7 @@ nodes:
     - runtime.cpython-internals
     - memory.memory-layout
 - id: metaprogramming
-  order: 9
+  order: 10
   title: 元编程
   summary: 程序操作程序：反射、宏、注解与装饰器、代码生成、运行时动态特性。
   children:
@@ -435,7 +516,7 @@ nodes:
     requires:
     - metaprogramming.reflection
 - id: data
-  order: 10
+  order: 11
   title: 字符串与数据表示
   summary: 文本的编码、集合与切片、序列化：同样的数据在四门语言里怎样表示、有哪些陷阱。
   children:
@@ -461,7 +542,7 @@ nodes:
     requires:
     - metaprogramming.annotations-decorators
 - id: ecosystem
-  order: 11
+  order: 12
   title: 模块、包与工具链
   summary: 代码怎样组织、依赖怎样解析、项目怎样构建测试：模块系统、包管理器、构建工具、兼容性策略。
   children:
@@ -483,8 +564,60 @@ nodes:
     summary: Java 极度向后兼容、Go 1 兼容承诺与 GODEBUG、Rust edition 机制、Python 2 → 3 的断裂；语言怎样在不破坏旧代码的前提下演进。
     requires:
     - foundations.tradeoff-axes
+- id: engineering
+  order: 13
+  title: 工程实践：测量与验证
+  summary: 资深工程师靠工具验证判断：性能剖析、基准测试、内存分析、测试方法、模糊测试、动态与静态检查、调试与可观测，以及各语言地道的 API 设计。
+  children:
+  - id: engineering.profiling
+    title: 性能剖析
+    summary: 采样与插桩、火焰图怎么读；Go pprof、Java JFR 与 async-profiler、Rust 用 perf 与 cargo-flamegraph、Python 的 cProfile 与 py-spy；先测量再优化。
+    requires:
+    - runtime.performance-model
+  - id: engineering.benchmarking
+    title: 基准测试
+    summary: 微基准的陷阱（死代码消除、预热、常量折叠、测量噪声）；JMH、Rust criterion、go test -bench、pyperf 各自怎样防坑；怎样报告结果。
+    requires:
+    - runtime.jit
+    - engineering.profiling
+  - id: engineering.memory-analysis
+    title: 内存与分配分析
+    summary: GC 语言里的“内存泄漏”是什么（意外的可达性）；堆剖析、分配剖析、堆转储；Go 的 heap profile、Java 的 heap dump 与 JFR 分配事件、Python 的 tracemalloc、Rust 的 dhat。
+    requires:
+    - engineering.profiling
+    - memory.tracing-gc
+  - id: engineering.testing
+    title: 测试方法
+    summary: 单元与集成测试、Go 的表驱动测试、属性测试（proptest、Hypothesis、jqwik）、快照测试；测试金字塔与四门语言测试文化的差异。
+  - id: engineering.fuzzing
+    title: 模糊测试
+    summary: 覆盖率引导的模糊测试原理；Go 内置 fuzz、cargo-fuzz/libFuzzer、Java Jazzer、Python Atheris；它最擅长找哪类 bug。
+    requires:
+    - engineering.testing
+  - id: engineering.dynamic-checkers
+    title: 动态检查器
+    summary: ASan、TSan、UBSan 的原理与开销；Go race detector、Rust 的 Miri、Java 的 jcstress；为什么它们能发现静态类型系统发现不了的问题。
+    requires:
+    - memory.memory-safety
+    - concurrency.data-race-freedom
+  - id: engineering.static-analysis
+    title: 静态分析与代码检查
+    summary: 编译器警告、linter 与类型检查器的分工；go vet 与 staticcheck、clippy、Error Prone 与 SpotBugs、ruff 与 mypy；规则的误报与价值。
+    requires:
+    - engineering.testing
+  - id: engineering.debugging
+    title: 调试与可观测
+    summary: 调试器（Delve、IDE 调试 JVM、lldb/gdb 调 Rust、pdb）、线程转储与堆转储、core dump、结构化日志与分布式追踪；线上问题怎样定位。
+    requires:
+    - engineering.profiling
+  - id: engineering.api-design
+    title: 地道的 API 设计
+    summary: 同一个库接口在四门语言里怎样设计才地道：错误类型、所有权与借用出现在签名里、Go 函数式选项与 Java builder、上下文传递（Go context、Java ScopedValue、Python contextvars）。
+    requires:
+    - errors.models
+    - memory.ownership-borrowing
 - id: trends
-  order: 12
+  order: 14
   title: 现代语言的发展趋势
   summary: 主流语言正在互相借鉴：模式匹配、记录类型、泛型、类型注解、轻量线程、值类型、内存安全；趋势背后的原因。
   children:
@@ -514,13 +647,19 @@ nodes:
     summary: 从线程 + 锁，到 async/await，再到虚拟线程与结构化并发；各条路线的取舍与当前共识。
     requires:
     - concurrency.structured-concurrency
+  - id: trends.effects
+    title: 效应系统与代数效应
+    summary: 把“这个函数会抛异常 / 做 I/O / 挂起”写进类型：Java 受检异常是早期的效应系统、async 着色也是一种效应；OCaml 5、Koka 的代数效应怎样统一异常、生成器与异步。
+    requires:
+    - trends.concurrency-evolution
+    - errors.exceptions
   - id: trends.other-languages
     title: 其他主流语言的独到之处
     summary: C++、C#、Kotlin、Swift、TypeScript、Zig、Haskell/OCaml 各自的一条核心思想，以及它们影响了谁。
     requires:
     - foundations.lineage
 - id: signatures
-  order: 13
+  order: 15
   title: 各语言的独到之处与陷阱
   summary: 把前面所有比较收拢到每门语言身上：它最独特的设计、最适合的场景、最常见的陷阱，以及怎样在项目里选语言。
   children:
