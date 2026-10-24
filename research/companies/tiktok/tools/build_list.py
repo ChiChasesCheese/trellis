@@ -6,9 +6,10 @@
 Reads vault/interviews/core/leetcode/companies/{tiktok,bytedance}.md (made by lc_company.py), unions them, keeps
 tier A (seen in the last 6 months, or frequency >= 70) and tier B (frequency >= 50) of either company, drops SQL
 problems, and orders by the higher of the two frequencies. China-side ByteDance interviews draw on a different pool, so
-the CodeTop list for 字节跳动 (reports from Chinese forums, with a count and a last-seen date) is unioned in: a problem
-counted there joins tier C when it is not already in A or B (CN rule: >= 50 reports or seen in the last 30 days, or
->= 20 reports or seen in the last 3 months). Facts go to research/companies/tiktok/index.json
+the CodeTop list for 字节跳动 (reports from Chinese forums, with a count and a last-seen date) is unioned in, one list for
+learning: CN tier A = >= 50 reports or seen in the last 30 days, B = >= 20 reports or seen in the last 3 months; a
+problem takes the better of its US and CN tiers. Order inside a tier: the higher of the US frequency (0-100) and the CN
+report count as a percentile of the CodeTop list (0-100). Facts go to research/companies/tiktok/index.json
 (committed); problem statements from leetcode.cn go to sources/local/tiktok-lc/<slug>.txt (gitignored: the repo is
 public and the statements are LeetCode's text).
 """
@@ -183,12 +184,20 @@ def main(argv: list[str]) -> int:
         if p["slug"] in cn:
             c = cn[p["slug"]]
             p["companies"]["bytedance_cn"] = {"reports": c["reports"], "last_seen": c["last_seen"], "tier": c["cn_tier"]}
+    ranked = sorted(c["reports"] for c in cn.values())
+    def pct(n: int) -> int:
+        return round(100 * sum(r <= n for r in ranked) / len(ranked))
+    for p in keep:
+        c = p["companies"].get("bytedance_cn")
+        if c:
+            p["tier"] = min(p["tier"], c["tier"])
+            p["freq"] = max(p["freq"], pct(c["reports"]))
     for slug, c in cn.items():
         if slug in have:
             continue
         keep.append({"id": int(c["fid"]) if c["fid"].isdigit() else 0, "fid": c["fid"], "title": c["title_zh"],
-                     "title_zh": c["title_zh"], "slug": slug, "difficulty": c["difficulty"], "freq": c["reports"],
-                     "recent": False, "window": "", "tags": [], "tier": "C", "kind": c["kind"],
+                     "title_zh": c["title_zh"], "slug": slug, "difficulty": c["difficulty"], "freq": pct(c["reports"]),
+                     "recent": False, "window": "", "tags": [], "tier": c["cn_tier"], "kind": c["kind"],
                      "companies": {"bytedance_cn": {"reports": c["reports"], "last_seen": c["last_seen"],
                                                     "tier": c["cn_tier"]}}})
         if c["kind"] == "supplement" and "--no-fetch" not in argv:
@@ -210,9 +219,14 @@ def main(argv: list[str]) -> int:
                     p["slug"], {}).get("title_zh", "")
             p["statement_chars"] = len((STATEMENTS / f"{p['slug']}.txt").read_text(encoding="utf-8"))
             print(f"{i:3d} {p['tier']} {p['freq']:3d} {p['slug']} ({p['statement_chars']} chars)", flush=True)
+    previous = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
+    for p in keep:  # facts gathered by an earlier fetch survive a --no-fetch run
+        for key in ("title_zh", "statement_chars", "statement_source"):
+            if not p.get(key) and previous.get(p["slug"], {}).get(key):
+                p[key] = previous[p["slug"]][key]
     OUT.write_text(json.dumps({p["slug"]: p for p in keep}, ensure_ascii=False, indent=1), encoding="utf-8")
-    tiers = {k: sum(p["tier"] == k for p in keep) for k in "ABC"}
-    print(f"{len(keep)} problems (A {tiers['A']} / B {tiers['B']} / C {tiers['C']}) -> {OUT.relative_to(ROOT)}")
+    tiers = {k: sum(p["tier"] == k for p in keep) for k in "AB"}
+    print(f"{len(keep)} problems (A {tiers['A']} / B {tiers['B']}) -> {OUT.relative_to(ROOT)}")
     return 0
 
 

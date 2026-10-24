@@ -2,7 +2,7 @@
 
 ## State (2026-10-24)
 
-- LeetCode list: 278 problems in `index.json` (A 72 / B 122 US lists; C 84 China-side CodeTop). Skeletons
+- LeetCode list: 278 problems in `index.json` (A 111 / B 167; US TikTok + ByteDance lists unioned with China-side CodeTop 字节跳动). Skeletons
   `tiktok-lc` (deck LeetCode Tops::24, whole answers + Python toolkit + patterns) and `tiktok-lc-drill` (::25, split
   cards). Statements in gitignored `sources/local/tiktok-lc/`; four 补充题 have none (restated from knowledge).
 - Cards done and committed: pilot LC 3, A1 (23), A2 (23). Split cards are filed into the drill deck by the orchestrator
@@ -12,7 +12,7 @@
 ## Queue (≤ 3 agents at a time, sonnet; relaunch on opus if sonnet is limited)
 
 1. pl C++: `research/domains/pl/prompt_CPP.md`, `prompt_T1.md`, `prompt_T2.md`
-2. LeetCode cards: `agents/prompt_A3.md`, `B1`–`B5`, `C1`–`C4`
+2. LeetCode cards: `agents/prompt_L1.md` … `L9` (all a/b leaves without a whole card)
 3. After research: `catalog/CATALOG.md` (one row per problem family, refs, recency) → new problems / TikTok variants
    into the decks; kit pages in `vault/interviews/companies/tiktok/` (README, LOOP_GUIDE, company brief, behavioural)
    and system design in `vault/interviews/core/system-design/tiktok/`

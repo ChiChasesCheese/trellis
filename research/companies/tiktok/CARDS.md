@@ -90,3 +90,10 @@ Card id: `tlc-<slug>-<suffix>`; `node: <leaf id>`; `type: qa`; `step: <n>`. Fron
 
 Cards per leaf range, gate results, how many solutions were checked against a brute force, any statement file that
 looked truncated or wrong, and up to 6 claims you are least sure of.
+
+## China-side problems (剑指 Offer, 补充题)
+
+Some leaves come from China-side ByteDance interviews. Use the statement file. Four `补充题` (`codetop-supp-1`, `-2`,
+`-9`, `-23`) have **no statement file**: restate the classic problem precisely from knowledge (排序奇升偶降链表, 圆环回原点
+问题, 36 进制加法, 检测循环依赖), choose sensible constraints, and list those leaves in your reply. Header line for those:
+`**补充题 n 中文名**｜难度 · 字节高频`; for 剑指 Offer: `**剑指 Offer n 中文名**｜难度 · 字节高频`.

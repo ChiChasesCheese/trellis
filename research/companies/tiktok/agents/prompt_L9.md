@@ -1,9 +1,9 @@
-# Card agent — TikTok / ByteDance top-frequency LeetCode deck (`tiktok-lc`), group A3
+# Card agent — TikTok / ByteDance top-frequency LeetCode deck (`tiktok-lc`), group L9
 
 Repo `/Users/chiserver/sessions/trellis`, branch `main`. Never switch branches, never commit, never spawn agents, never
-edit files you do not own. Scratch work goes in `/tmp/tlc_A3/`, never in the repo.
+edit files you do not own. Scratch work goes in `/tmp/tlc_L9/`, never in the repo.
 
-**You own these leaves** (write their cards, nothing else): `a.block-placement-queries`, `a.single-threaded-cpu`, `a.rotate-image`, `a.find-first-and-last-position-of-element-in-sorted-array`, `a.minimum-size-subarray-sum`, `a.subarray-sums-divisible-by-k`, `a.longest-valid-parentheses`, `a.jump-game`, `a.subsets`, `a.gas-station`, `a.intersection-of-two-linked-lists`, `a.single-element-in-a-sorted-array`, `a.cheapest-flights-within-k-stops`, `a.longest-mountain-in-array`, `a.count-number-of-nice-subarrays`, `a.product-of-the-last-k-numbers`, `a.longest-substring-with-at-most-k-distinct-characters`, `a.all-oone-data-structure`, `a.all-nodes-distance-k-in-binary-tree`, `a.path-sum-iii`, `a.serialize-and-deserialize-n-ary-tree`, `a.find-all-anagrams-in-a-string`, `a.fruit-into-baskets`, `a.partition-array-for-maximum-sum`, `a.robot-bounded-in-circle`
+**You own these leaves** (write their cards, nothing else): `b.max-consecutive-ones-iii`, `b.wildcard-matching`, `b.add-two-numbers-ii`, `b.shortest-subarray-with-sum-at-least-k`, `b.letter-combinations-of-a-phone-number`, `b.interleaving-string`, `b.max-submatrix-lcci`, `b.remove-duplicates-from-sorted-array-ii`, `b.convert-sorted-array-to-binary-search-tree`, `b.24-game`, `b.number-of-atoms`, `b.longest-duplicate-substring`, `b.minimum-number-of-arrows-to-burst-balloons`, `b.additive-number`, `b.binary-tree-level-order-traversal-ii`, `b.distinct-subsequences`, `b.last-stone-weight-ii`, `b.number-of-submatrices-that-sum-to-target`, `b.shortest-path-with-alternating-colors`, `b.xun-bao`, `b.longest-repeating-substring`, `b.maximum-of-absolute-value-expression`, `b.day-of-the-week`
 
 Cards go to `vault/interviews/core/leetcode/tiktok/cards/<branch>/` where `<branch>` is the part of the leaf id before
 the dot (`a`, `b`, `python`, `patterns`). File name = card id + `.md`.
@@ -64,7 +64,7 @@ Card id: `tlc-<slug>-<suffix>`; `node: <leaf id>`; `type: qa`; `step: <n>`. Fron
 - Idiomatic and advanced where it helps: `collections` (`Counter`, `defaultdict`, `deque`), `heapq`, `bisect`,
   `itertools` (`accumulate`, `pairwise`, `groupby`), `functools.cache`, `enumerate`/`zip`, unpacking, walrus when it reads
   better. Never a one-liner that hides the technique the interview tests (e.g. `bin(int(a,2)+int(b,2))` for add-binary).
-- **Run every solution** in `/tmp/tlc_A3/`: on the statement's examples, on edge cases, and **against a brute force
+- **Run every solution** in `/tmp/tlc_L9/`: on the statement's examples, on edge cases, and **against a brute force
   on ≥ 300 random small inputs** whenever a brute force is writable. Test the upper constraint once for recursion depth
   (`RecursionError` at depth > 1000 means: rewrite iteratively or justify). The outputs on the card are the real ones.
 - Never write the verification process on a card (no "对拍", "随机测试"); the card states facts and outputs.
@@ -90,3 +90,10 @@ Card id: `tlc-<slug>-<suffix>`; `node: <leaf id>`; `type: qa`; `step: <n>`. Fron
 
 Cards per leaf range, gate results, how many solutions were checked against a brute force, any statement file that
 looked truncated or wrong, and up to 6 claims you are least sure of.
+
+## China-side problems (剑指 Offer, 补充题)
+
+Some leaves come from China-side ByteDance interviews. Use the statement file. Four `补充题` (`codetop-supp-1`, `-2`,
+`-9`, `-23`) have **no statement file**: restate the classic problem precisely from knowledge (排序奇升偶降链表, 圆环回原点
+问题, 36 进制加法, 检测循环依赖), choose sensible constraints, and list those leaves in your reply. Header line for those:
+`**补充题 n 中文名**｜难度 · 字节高频`; for 剑指 Offer: `**剑指 Offer n 中文名**｜难度 · 字节高频`.

@@ -1,9 +1,9 @@
-# Card agent — TikTok / ByteDance top-frequency LeetCode deck (`tiktok-lc`), group A1
+# Card agent — TikTok / ByteDance top-frequency LeetCode deck (`tiktok-lc`), group L5
 
 Repo `/Users/chiserver/sessions/trellis`, branch `main`. Never switch branches, never commit, never spawn agents, never
-edit files you do not own. Scratch work goes in `/tmp/tlc_A1/`, never in the repo.
+edit files you do not own. Scratch work goes in `/tmp/tlc_L5/`, never in the repo.
 
-**You own these leaves** (write their cards, nothing else): `a.lru-cache`, `a.number-of-islands`, `a.trapping-rain-water`, `a.merge-intervals`, `a.course-schedule`, `a.course-schedule-ii`, `a.meeting-rooms-ii`, `a.longest-increasing-subsequence`, `a.remove-duplicate-letters`, `a.number-of-distinct-islands`, `a.smallest-subsequence-of-distinct-characters`, `a.first-day-where-you-have-been-in-all-the-rooms`, `a.subarray-with-elements-greater-than-varying-threshold`, `a.text-justification`, `a.longest-palindromic-substring`, `a.3sum`, `a.search-in-rotated-sorted-array`, `a.combination-sum`, `a.n-queens`, `a.spiral-matrix`, `a.sqrtx`, `a.minimum-window-substring`, `a.word-search`
+**You own these leaves** (write their cards, nothing else): `b.closest-prime-numbers-in-range`, `b.find-the-score-of-all-prefixes-of-an-array`, `b.count-complete-subarrays-in-an-array`, `b.minimum-moves-to-pick-k-ones`, `b.minimum-operations-to-make-character-frequencies-equal`, `b.minimum-cost-good-caption`, `b.lexicographically-smallest-generated-string`, `b.word-break`, `b.minimum-path-sum`, `b.path-sum-ii`, `b.min-stack`, `b.search-a-2d-matrix-ii`, `b.remove-zero-sum-consecutive-nodes-from-linked-list`, `b.lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof`, `b.container-with-most-water`, `b.design-add-and-search-words-data-structure`, `b.k-th-smallest-in-lexicographical-order`, `b.alien-dictionary`, `b.evaluate-division`, `b.remove-k-digits`, `b.diameter-of-binary-tree`, `b.brightest-position-on-street`, `b.codetop-supp-2`, `b.unique-paths`, `b.longest-common-prefix`, `b.3sum-closest`
 
 Cards go to `vault/interviews/core/leetcode/tiktok/cards/<branch>/` where `<branch>` is the part of the leaf id before
 the dot (`a`, `b`, `python`, `patterns`). File name = card id + `.md`.
@@ -64,7 +64,7 @@ Card id: `tlc-<slug>-<suffix>`; `node: <leaf id>`; `type: qa`; `step: <n>`. Fron
 - Idiomatic and advanced where it helps: `collections` (`Counter`, `defaultdict`, `deque`), `heapq`, `bisect`,
   `itertools` (`accumulate`, `pairwise`, `groupby`), `functools.cache`, `enumerate`/`zip`, unpacking, walrus when it reads
   better. Never a one-liner that hides the technique the interview tests (e.g. `bin(int(a,2)+int(b,2))` for add-binary).
-- **Run every solution** in `/tmp/tlc_A1/`: on the statement's examples, on edge cases, and **against a brute force
+- **Run every solution** in `/tmp/tlc_L5/`: on the statement's examples, on edge cases, and **against a brute force
   on ≥ 300 random small inputs** whenever a brute force is writable. Test the upper constraint once for recursion depth
   (`RecursionError` at depth > 1000 means: rewrite iteratively or justify). The outputs on the card are the real ones.
 - Never write the verification process on a card (no "对拍", "随机测试"); the card states facts and outputs.
@@ -90,3 +90,10 @@ Card id: `tlc-<slug>-<suffix>`; `node: <leaf id>`; `type: qa`; `step: <n>`. Fron
 
 Cards per leaf range, gate results, how many solutions were checked against a brute force, any statement file that
 looked truncated or wrong, and up to 6 claims you are least sure of.
+
+## China-side problems (剑指 Offer, 补充题)
+
+Some leaves come from China-side ByteDance interviews. Use the statement file. Four `补充题` (`codetop-supp-1`, `-2`,
+`-9`, `-23`) have **no statement file**: restate the classic problem precisely from knowledge (排序奇升偶降链表, 圆环回原点
+问题, 36 进制加法, 检测循环依赖), choose sensible constraints, and list those leaves in your reply. Header line for those:
+`**补充题 n 中文名**｜难度 · 字节高频`; for 剑指 Offer: `**剑指 Offer n 中文名**｜难度 · 字节高频`.

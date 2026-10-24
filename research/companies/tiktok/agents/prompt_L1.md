@@ -1,9 +1,9 @@
-# Card agent — TikTok / ByteDance top-frequency LeetCode deck (`tiktok-lc`), group C1
+# Card agent — TikTok / ByteDance top-frequency LeetCode deck (`tiktok-lc`), group L1
 
 Repo `/Users/chiserver/sessions/trellis`, branch `main`. Never switch branches, never commit, never spawn agents, never
-edit files you do not own. Scratch work goes in `/tmp/tlc_C1/`, never in the repo.
+edit files you do not own. Scratch work goes in `/tmp/tlc_L1/`, never in the repo.
 
-**You own these leaves** (write their cards, nothing else): `c.merge-sorted-array`, `c.binary-tree-level-order-traversal`, `c.merge-two-sorted-lists`, `c.linked-list-cycle`, `c.first-missing-positive`, `c.median-of-two-sorted-arrays`, `c.codetop-supp-4`, `c.symmetric-tree`, `c.sum-root-to-leaf-numbers`, `c.implement-queue-using-stacks`, `c.remove-nth-node-from-end-of-list`, `c.remove-duplicates-from-sorted-list-ii`, `c.shu-de-zi-jie-gou-lcof`, `c.path-sum`, `c.implement-rand10-using-rand7`, `c.validate-binary-search-tree`, `c.codetop-supp-1`, `c.binary-tree-inorder-traversal`, `c.search-a-2d-matrix-ii`, `c.path-sum-ii`, `c.min-stack`
+**You own these leaves** (write their cards, nothing else): `a.binary-tree-zigzag-level-order-traversal`, `a.lowest-common-ancestor-of-a-binary-tree`, `a.permutations`, `a.maximum-subarray`, `a.merge-k-sorted-lists`, `a.intersection-of-two-linked-lists`, `a.next-permutation`, `a.valid-parentheses`, `a.merge-sorted-array`, `a.reorder-list`, `a.block-placement-queries`, `a.binary-tree-level-order-traversal`, `a.edit-distance`, `a.add-strings`, `a.merge-two-sorted-lists`, `a.linked-list-cycle`, `a.reverse-linked-list-ii`, `a.first-missing-positive`, `a.compare-version-numbers`, `a.longest-valid-parentheses`, `a.sort-list`, `a.median-of-two-sorted-arrays`, `a.generate-parentheses`, `a.codetop-supp-4`, `a.restore-ip-addresses`, `a.symmetric-tree`
 
 Cards go to `vault/interviews/core/leetcode/tiktok/cards/<branch>/` where `<branch>` is the part of the leaf id before
 the dot (`a`, `b`, `python`, `patterns`). File name = card id + `.md`.
@@ -64,7 +64,7 @@ Card id: `tlc-<slug>-<suffix>`; `node: <leaf id>`; `type: qa`; `step: <n>`. Fron
 - Idiomatic and advanced where it helps: `collections` (`Counter`, `defaultdict`, `deque`), `heapq`, `bisect`,
   `itertools` (`accumulate`, `pairwise`, `groupby`), `functools.cache`, `enumerate`/`zip`, unpacking, walrus when it reads
   better. Never a one-liner that hides the technique the interview tests (e.g. `bin(int(a,2)+int(b,2))` for add-binary).
-- **Run every solution** in `/tmp/tlc_C1/`: on the statement's examples, on edge cases, and **against a brute force
+- **Run every solution** in `/tmp/tlc_L1/`: on the statement's examples, on edge cases, and **against a brute force
   on ≥ 300 random small inputs** whenever a brute force is writable. Test the upper constraint once for recursion depth
   (`RecursionError` at depth > 1000 means: rewrite iteratively or justify). The outputs on the card are the real ones.
 - Never write the verification process on a card (no "对拍", "随机测试"); the card states facts and outputs.
@@ -91,10 +91,9 @@ Card id: `tlc-<slug>-<suffix>`; `node: <leaf id>`; `type: qa`; `step: <n>`. Fron
 Cards per leaf range, gate results, how many solutions were checked against a brute force, any statement file that
 looked truncated or wrong, and up to 6 claims you are least sure of.
 
+## China-side problems (剑指 Offer, 补充题)
 
-## C tier notes
-
-These problems come from China-side ByteDance interviews. `剑指 Offer` and `补充题` leaves: use the statement file; four
-`补充题` (`codetop-supp-1`, `-2`, `-9`, `-23`) have **no statement file** — restate the classic problem precisely from
-knowledge (排序奇升偶降链表, 圆环回原点问题, 36 进制加法, 检测循环依赖), choose sensible constraints, and list those leaves in
-your reply so the orchestrator records it. Header line: `**补充题 n 中文名**｜难度 · 国内字节高频` or `**LC n 中文名**｜… · 国内字节高频`.
+Some leaves come from China-side ByteDance interviews. Use the statement file. Four `补充题` (`codetop-supp-1`, `-2`,
+`-9`, `-23`) have **no statement file**: restate the classic problem precisely from knowledge (排序奇升偶降链表, 圆环回原点
+问题, 36 进制加法, 检测循环依赖), choose sensible constraints, and list those leaves in your reply. Header line for those:
+`**补充题 n 中文名**｜难度 · 字节高频`; for 剑指 Offer: `**剑指 Offer n 中文名**｜难度 · 字节高频`.

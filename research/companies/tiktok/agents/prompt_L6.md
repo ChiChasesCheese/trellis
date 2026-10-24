@@ -1,9 +1,9 @@
-# Card agent — TikTok / ByteDance top-frequency LeetCode deck (`tiktok-lc`), group B4
+# Card agent — TikTok / ByteDance top-frequency LeetCode deck (`tiktok-lc`), group L6
 
 Repo `/Users/chiserver/sessions/trellis`, branch `main`. Never switch branches, never commit, never spawn agents, never
-edit files you do not own. Scratch work goes in `/tmp/tlc_B4/`, never in the repo.
+edit files you do not own. Scratch work goes in `/tmp/tlc_L6/`, never in the repo.
 
-**You own these leaves** (write their cards, nothing else): `b.sort-list`, `b.find-minimum-in-rotated-sorted-array`, `b.sliding-window-maximum`, `b.meeting-rooms`, `b.move-zeroes`, `b.walls-and-gates`, `b.binary-tree-longest-consecutive-sequence`, `b.remove-invalid-parentheses`, `b.shortest-distance-from-all-buildings`, `b.water-and-jug-problem`, `b.kth-smallest-element-in-a-sorted-matrix`, `b.longest-substring-with-at-least-k-repeating-characters`, `b.remove-k-digits`, `b.frog-jump`, `b.trapping-rain-water-ii`, `b.partition-equal-subset-sum`, `b.pacific-atlantic-water-flow`, `b.longest-repeating-character-replacement`, `b.convert-binary-search-tree-to-sorted-doubly-linked-list`, `b.find-all-duplicates-in-an-array`, `b.delete-node-in-a-bst`, `b.matchsticks-to-square`, `b.random-pick-with-weight`, `b.shortest-unsorted-continuous-subarray`, `b.design-in-memory-file-system`
+**You own these leaves** (write their cards, nothing else): `b.jump-game-ii`, `b.permutations-ii`, `b.group-anagrams`, `b.combinations`, `b.largest-rectangle-in-histogram`, `b.clone-graph`, `b.find-minimum-in-rotated-sorted-array`, `b.largest-number`, `b.meeting-rooms`, `b.move-zeroes`, `b.walls-and-gates`, `b.binary-tree-longest-consecutive-sequence`, `b.remove-invalid-parentheses`, `b.shortest-distance-from-all-buildings`, `b.water-and-jug-problem`, `b.kth-smallest-element-in-a-sorted-matrix`, `b.longest-substring-with-at-least-k-repeating-characters`, `b.frog-jump`, `b.trapping-rain-water-ii`, `b.partition-equal-subset-sum`, `b.pacific-atlantic-water-flow`, `b.longest-repeating-character-replacement`, `b.convert-binary-search-tree-to-sorted-doubly-linked-list`, `b.find-all-duplicates-in-an-array`, `b.delete-node-in-a-bst`, `b.matchsticks-to-square`
 
 Cards go to `vault/interviews/core/leetcode/tiktok/cards/<branch>/` where `<branch>` is the part of the leaf id before
 the dot (`a`, `b`, `python`, `patterns`). File name = card id + `.md`.
@@ -64,7 +64,7 @@ Card id: `tlc-<slug>-<suffix>`; `node: <leaf id>`; `type: qa`; `step: <n>`. Fron
 - Idiomatic and advanced where it helps: `collections` (`Counter`, `defaultdict`, `deque`), `heapq`, `bisect`,
   `itertools` (`accumulate`, `pairwise`, `groupby`), `functools.cache`, `enumerate`/`zip`, unpacking, walrus when it reads
   better. Never a one-liner that hides the technique the interview tests (e.g. `bin(int(a,2)+int(b,2))` for add-binary).
-- **Run every solution** in `/tmp/tlc_B4/`: on the statement's examples, on edge cases, and **against a brute force
+- **Run every solution** in `/tmp/tlc_L6/`: on the statement's examples, on edge cases, and **against a brute force
   on ≥ 300 random small inputs** whenever a brute force is writable. Test the upper constraint once for recursion depth
   (`RecursionError` at depth > 1000 means: rewrite iteratively or justify). The outputs on the card are the real ones.
 - Never write the verification process on a card (no "对拍", "随机测试"); the card states facts and outputs.
@@ -90,3 +90,10 @@ Card id: `tlc-<slug>-<suffix>`; `node: <leaf id>`; `type: qa`; `step: <n>`. Fron
 
 Cards per leaf range, gate results, how many solutions were checked against a brute force, any statement file that
 looked truncated or wrong, and up to 6 claims you are least sure of.
+
+## China-side problems (剑指 Offer, 补充题)
+
+Some leaves come from China-side ByteDance interviews. Use the statement file. Four `补充题` (`codetop-supp-1`, `-2`,
+`-9`, `-23`) have **no statement file**: restate the classic problem precisely from knowledge (排序奇升偶降链表, 圆环回原点
+问题, 36 进制加法, 检测循环依赖), choose sensible constraints, and list those leaves in your reply. Header line for those:
+`**补充题 n 中文名**｜难度 · 字节高频`; for 剑指 Offer: `**剑指 Offer n 中文名**｜难度 · 字节高频`.
