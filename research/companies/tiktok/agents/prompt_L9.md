@@ -104,3 +104,5 @@ Write each problem's `-0-whole` card into `vault/interviews/core/leetcode/tiktok
 (`-1-signal` … `-5-alt`) **directly into `vault/interviews/core/leetcode/tiktok-drill/cards/<branch>/`** (the drill
 deck). Run the gate's `validate` for both domains: `trellis --domain tiktok-lc validate` and
 `trellis --domain tiktok-lc-drill validate`.
+
+- Never move, rename or delete files that are not your own leaves' cards: match your exact slugs, never a wildcard over a whole folder (other agents write in the same folders at the same time).
