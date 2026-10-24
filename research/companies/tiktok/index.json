@@ -1,0 +1,4742 @@
+{
+ "lru-cache": {
+  "id": 146,
+  "title": "LRU Cache",
+  "slug": "lru-cache",
+  "difficulty": "Medium",
+  "freq": 100,
+  "recent": true,
+  "tags": [
+   "Hash Table",
+   "Linked List",
+   "Design",
+   "Doubly-Linked List"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 100,
+    "recent": true,
+    "tier": "A"
+   },
+   "bytedance": {
+    "freq": 100,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "LRU 缓存",
+  "statement_chars": 1008
+ },
+ "number-of-islands": {
+  "id": 200,
+  "title": "Number of Islands",
+  "slug": "number-of-islands",
+  "difficulty": "Medium",
+  "freq": 100,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Union-Find",
+   "Matrix"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 100,
+    "recent": true,
+    "tier": "A"
+   },
+   "bytedance": {
+    "freq": 87,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "岛屿数量",
+  "statement_chars": 459
+ },
+ "longest-substring-without-repeating-characters": {
+  "id": 3,
+  "title": "Longest Substring Without Repeating Characters",
+  "slug": "longest-substring-without-repeating-characters",
+  "difficulty": "Medium",
+  "freq": 88,
+  "recent": false,
+  "tags": [
+   "Hash Table",
+   "String",
+   "Sliding Window"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 88,
+    "recent": false,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "无重复字符的最长子串",
+  "statement_chars": 356
+ },
+ "trapping-rain-water": {
+  "id": 42,
+  "title": "Trapping Rain Water",
+  "slug": "trapping-rain-water",
+  "difficulty": "Hard",
+  "freq": 88,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Two Pointers",
+   "Dynamic Programming",
+   "Stack",
+   "Monotonic Stack"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 88,
+    "recent": false,
+    "tier": "A"
+   },
+   "bytedance": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "A",
+  "title_zh": "接雨水",
+  "statement_chars": 293
+ },
+ "merge-intervals": {
+  "id": 56,
+  "title": "Merge Intervals",
+  "slug": "merge-intervals",
+  "difficulty": "Medium",
+  "freq": 88,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Sorting",
+   "Quicksort"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 88,
+    "recent": true,
+    "tier": "A"
+   },
+   "bytedance": {
+    "freq": 75,
+    "recent": false,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "合并区间",
+  "statement_chars": 482
+ },
+ "course-schedule": {
+  "id": 207,
+  "title": "Course Schedule",
+  "slug": "course-schedule",
+  "difficulty": "Medium",
+  "freq": 88,
+  "recent": true,
+  "tags": [
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Graph Theory",
+   "Topological Sort",
+   "Directed Acyclic Graph"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 88,
+    "recent": true,
+    "tier": "A"
+   },
+   "bytedance": {
+    "freq": 75,
+    "recent": false,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "课程表",
+  "statement_chars": 645
+ },
+ "course-schedule-ii": {
+  "id": 210,
+  "title": "Course Schedule II",
+  "slug": "course-schedule-ii",
+  "difficulty": "Medium",
+  "freq": 88,
+  "recent": false,
+  "tags": [
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Graph Theory",
+   "Topological Sort"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 88,
+    "recent": false,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "课程表 II",
+  "statement_chars": 787
+ },
+ "meeting-rooms-ii": {
+  "id": 253,
+  "title": "Meeting Rooms II",
+  "slug": "meeting-rooms-ii",
+  "difficulty": "Medium",
+  "freq": 88,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Two Pointers",
+   "Greedy",
+   "Sorting",
+   "Heap (Priority Queue)",
+   "Prefix Sum"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 88,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "会议室 II",
+  "statement_chars": 258
+ },
+ "longest-increasing-subsequence": {
+  "id": 300,
+  "title": "Longest Increasing Subsequence",
+  "slug": "longest-increasing-subsequence",
+  "difficulty": "Medium",
+  "freq": 88,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Binary Search",
+   "Dynamic Programming",
+   "Longest Increasing Subsequence"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 88,
+    "recent": false,
+    "tier": "A"
+   },
+   "bytedance": {
+    "freq": 62,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "最长递增子序列",
+  "statement_chars": 375
+ },
+ "remove-duplicate-letters": {
+  "id": 316,
+  "title": "Remove Duplicate Letters",
+  "slug": "remove-duplicate-letters",
+  "difficulty": "Medium",
+  "freq": 88,
+  "recent": true,
+  "tags": [
+   "String",
+   "Stack",
+   "Greedy",
+   "Monotonic Stack"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 58,
+    "recent": true,
+    "tier": "A"
+   },
+   "bytedance": {
+    "freq": 88,
+    "recent": false,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "去除重复字母",
+  "statement_chars": 279
+ },
+ "number-of-distinct-islands": {
+  "id": 694,
+  "title": "Number of Distinct Islands",
+  "slug": "number-of-distinct-islands",
+  "difficulty": "Medium",
+  "freq": 88,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Hash Table",
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Union-Find",
+   "Sorting",
+   "Matrix",
+   "Hash Function"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 88,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "不同岛屿的数量",
+  "statement_chars": 378
+ },
+ "smallest-subsequence-of-distinct-characters": {
+  "id": 1081,
+  "title": "Smallest Subsequence of Distinct Characters",
+  "slug": "smallest-subsequence-of-distinct-characters",
+  "difficulty": "Medium",
+  "freq": 88,
+  "recent": false,
+  "tags": [
+   "String",
+   "Stack",
+   "Greedy",
+   "Monotonic Stack"
+  ],
+  "companies": {
+   "bytedance": {
+    "freq": 88,
+    "recent": false,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "不同字符的最小子序列",
+  "statement_chars": 230
+ },
+ "first-day-where-you-have-been-in-all-the-rooms": {
+  "id": 1997,
+  "title": "First Day Where You Have Been in All the Rooms",
+  "slug": "first-day-where-you-have-been-in-all-the-rooms",
+  "difficulty": "Medium",
+  "freq": 88,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Dynamic Programming"
+  ],
+  "companies": {
+   "bytedance": {
+    "freq": 88,
+    "recent": false,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "访问完所有房间的第一天",
+  "statement_chars": 887
+ },
+ "subarray-with-elements-greater-than-varying-threshold": {
+  "id": 2334,
+  "title": "Subarray With Elements Greater Than Varying Threshold",
+  "slug": "subarray-with-elements-greater-than-varying-threshold",
+  "difficulty": "Hard",
+  "freq": 88,
+  "recent": false,
+  "tags": [],
+  "companies": {
+   "tiktok": {
+    "freq": 88,
+    "recent": false,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "元素值大于变化阈值的子数组",
+  "statement_chars": 535
+ },
+ "text-justification": {
+  "id": 68,
+  "title": "Text Justification",
+  "slug": "text-justification",
+  "difficulty": "Hard",
+  "freq": 81,
+  "recent": true,
+  "tags": [
+   "Array",
+   "String",
+   "Simulation"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 81,
+    "recent": true,
+    "tier": "A"
+   },
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "A",
+  "title_zh": "文本左右对齐",
+  "statement_chars": 1243
+ },
+ "longest-palindromic-substring": {
+  "id": 5,
+  "title": "Longest Palindromic Substring",
+  "slug": "longest-palindromic-substring",
+  "difficulty": "Medium",
+  "freq": 75,
+  "recent": false,
+  "tags": [
+   "Two Pointers",
+   "String",
+   "Dynamic Programming",
+   "Manacher"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 75,
+    "recent": false,
+    "tier": "A"
+   },
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "A",
+  "title_zh": "最长回文子串",
+  "statement_chars": 161
+ },
+ "3sum": {
+  "id": 15,
+  "title": "3Sum",
+  "slug": "3sum",
+  "difficulty": "Medium",
+  "freq": 75,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Two Pointers",
+   "Sorting"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 75,
+    "recent": false,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "三数之和",
+  "statement_chars": 602
+ },
+ "search-in-rotated-sorted-array": {
+  "id": 33,
+  "title": "Search in Rotated Sorted Array",
+  "slug": "search-in-rotated-sorted-array",
+  "difficulty": "Medium",
+  "freq": 75,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Binary Search"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 75,
+    "recent": true,
+    "tier": "A"
+   },
+   "bytedance": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "A",
+  "title_zh": "搜索旋转排序数组",
+  "statement_chars": 625
+ },
+ "combination-sum": {
+  "id": 39,
+  "title": "Combination Sum",
+  "slug": "combination-sum",
+  "difficulty": "Medium",
+  "freq": 75,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Backtracking"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   },
+   "bytedance": {
+    "freq": 75,
+    "recent": false,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "组合总和",
+  "statement_chars": 587
+ },
+ "n-queens": {
+  "id": 51,
+  "title": "N-Queens",
+  "slug": "n-queens",
+  "difficulty": "Hard",
+  "freq": 75,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Backtracking",
+   "Algorithm X"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 75,
+    "recent": false,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "N 皇后",
+  "statement_chars": 339
+ },
+ "spiral-matrix": {
+  "id": 54,
+  "title": "Spiral Matrix",
+  "slug": "spiral-matrix",
+  "difficulty": "Medium",
+  "freq": 75,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Matrix",
+   "Simulation"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 75,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "螺旋矩阵",
+  "statement_chars": 309
+ },
+ "sqrtx": {
+  "id": 69,
+  "title": "Sqrt(x)",
+  "slug": "sqrtx",
+  "difficulty": "Easy",
+  "freq": 75,
+  "recent": false,
+  "tags": [
+   "Math",
+   "Binary Search",
+   "Newton's Method"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 75,
+    "recent": false,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "x 的平方根 ",
+  "statement_chars": 236
+ },
+ "minimum-window-substring": {
+  "id": 76,
+  "title": "Minimum Window Substring",
+  "slug": "minimum-window-substring",
+  "difficulty": "Hard",
+  "freq": 75,
+  "recent": false,
+  "tags": [
+   "Hash Table",
+   "String",
+   "Sliding Window"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 75,
+    "recent": false,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "最小覆盖子串",
+  "statement_chars": 458
+ },
+ "word-search": {
+  "id": 79,
+  "title": "Word Search",
+  "slug": "word-search",
+  "difficulty": "Medium",
+  "freq": 75,
+  "recent": true,
+  "tags": [
+   "Array",
+   "String",
+   "Backtracking",
+   "Depth-First Search",
+   "Matrix"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 75,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "单词搜索",
+  "statement_chars": 621
+ },
+ "maximal-square": {
+  "id": 221,
+  "title": "Maximal Square",
+  "slug": "maximal-square",
+  "difficulty": "Medium",
+  "freq": 75,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Dynamic Programming",
+   "Matrix"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 38,
+    "recent": false,
+    "tier": "C"
+   },
+   "bytedance": {
+    "freq": 75,
+    "recent": false,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "最大正方形",
+  "statement_chars": 346
+ },
+ "basic-calculator-ii": {
+  "id": 227,
+  "title": "Basic Calculator II",
+  "slug": "basic-calculator-ii",
+  "difficulty": "Medium",
+  "freq": 75,
+  "recent": true,
+  "tags": [
+   "Math",
+   "String",
+   "Stack"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 66,
+    "recent": true,
+    "tier": "A"
+   },
+   "bytedance": {
+    "freq": 75,
+    "recent": false,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "基本计算器 II",
+  "statement_chars": 394
+ },
+ "coin-change": {
+  "id": 322,
+  "title": "Coin Change",
+  "slug": "coin-change",
+  "difficulty": "Medium",
+  "freq": 75,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Dynamic Programming",
+   "Breadth-First Search",
+   "Knapsack Problem",
+   "Complete Knapsack"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 75,
+    "recent": false,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "零钱兑换",
+  "statement_chars": 353
+ },
+ "top-k-frequent-elements": {
+  "id": 347,
+  "title": "Top K Frequent Elements",
+  "slug": "top-k-frequent-elements",
+  "difficulty": "Medium",
+  "freq": 75,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Hash Table",
+   "Divide and Conquer",
+   "Sorting",
+   "Heap (Priority Queue)",
+   "Bucket Sort",
+   "Counting",
+   "Quickselect"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 75,
+    "recent": true,
+    "tier": "A"
+   },
+   "bytedance": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "A",
+  "title_zh": "前 K 个高频元素",
+  "statement_chars": 383
+ },
+ "decode-string": {
+  "id": 394,
+  "title": "Decode String",
+  "slug": "decode-string",
+  "difficulty": "Medium",
+  "freq": 75,
+  "recent": true,
+  "tags": [
+   "String",
+   "Stack",
+   "Recursion"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 75,
+    "recent": true,
+    "tier": "A"
+   },
+   "bytedance": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "A",
+  "title_zh": "字符串解码",
+  "statement_chars": 512
+ },
+ "subarray-sum-equals-k": {
+  "id": 560,
+  "title": "Subarray Sum Equals K",
+  "slug": "subarray-sum-equals-k",
+  "difficulty": "Medium",
+  "freq": 75,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Hash Table",
+   "Prefix Sum"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 75,
+    "recent": true,
+    "tier": "A"
+   },
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "A",
+  "title_zh": "和为 K 的子数组",
+  "statement_chars": 235
+ },
+ "making-a-large-island": {
+  "id": 827,
+  "title": "Making A Large Island",
+  "slug": "making-a-large-island",
+  "difficulty": "Hard",
+  "freq": 75,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Union-Find",
+   "Matrix"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 75,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "最大人工岛",
+  "statement_chars": 397
+ },
+ "shortest-bridge": {
+  "id": 934,
+  "title": "Shortest Bridge",
+  "slug": "shortest-bridge",
+  "difficulty": "Medium",
+  "freq": 75,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Matrix"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 56,
+    "recent": false,
+    "tier": "B"
+   },
+   "bytedance": {
+    "freq": 75,
+    "recent": false,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "最短的桥",
+  "statement_chars": 427
+ },
+ "minimum-swaps-to-group-all-1s-together": {
+  "id": 1151,
+  "title": "Minimum Swaps to Group All 1's Together",
+  "slug": "minimum-swaps-to-group-all-1s-together",
+  "difficulty": "Medium",
+  "freq": 75,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Sliding Window"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 75,
+    "recent": false,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "最少交换次数来组合所有的 1",
+  "statement_chars": 529
+ },
+ "two-sum": {
+  "id": 1,
+  "title": "Two Sum",
+  "slug": "two-sum",
+  "difficulty": "Easy",
+  "freq": 66,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Hash Table"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 66,
+    "recent": true,
+    "tier": "A"
+   },
+   "bytedance": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "A",
+  "title_zh": "两数之和",
+  "statement_chars": 449
+ },
+ "best-time-to-buy-and-sell-stock": {
+  "id": 121,
+  "title": "Best Time to Buy and Sell Stock",
+  "slug": "best-time-to-buy-and-sell-stock",
+  "difficulty": "Easy",
+  "freq": 63,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Dynamic Programming"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 63,
+    "recent": true,
+    "tier": "A"
+   },
+   "bytedance": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "A",
+  "title_zh": "买卖股票的最佳时机",
+  "statement_chars": 433
+ },
+ "kth-largest-element-in-an-array": {
+  "id": 215,
+  "title": "Kth Largest Element in an Array",
+  "slug": "kth-largest-element-in-an-array",
+  "difficulty": "Medium",
+  "freq": 63,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Divide and Conquer",
+   "Sorting",
+   "Heap (Priority Queue)",
+   "Quickselect"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 63,
+    "recent": true,
+    "tier": "A"
+   },
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "A",
+  "title_zh": "数组中的第K个最大元素",
+  "statement_chars": 265
+ },
+ "multiply-strings": {
+  "id": 43,
+  "title": "Multiply Strings",
+  "slug": "multiply-strings",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": true,
+  "tags": [
+   "Math",
+   "String",
+   "Simulation"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": true,
+    "tier": "A"
+   },
+   "bytedance": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "A",
+  "title_zh": "字符串相乘",
+  "statement_chars": 304
+ },
+ "binary-tree-maximum-path-sum": {
+  "id": 124,
+  "title": "Binary Tree Maximum Path Sum",
+  "slug": "binary-tree-maximum-path-sum",
+  "difficulty": "Hard",
+  "freq": 62,
+  "recent": true,
+  "tags": [
+   "Dynamic Programming",
+   "Tree",
+   "Depth-First Search",
+   "Binary Tree",
+   "DP on Trees"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "二叉树中的最大路径和",
+  "statement_chars": 367
+ },
+ "binary-tree-right-side-view": {
+  "id": 199,
+  "title": "Binary Tree Right Side View",
+  "slug": "binary-tree-right-side-view",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": true,
+  "tags": [
+   "Tree",
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Binary Tree"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "二叉树的右视图",
+  "statement_chars": 304
+ },
+ "reverse-linked-list": {
+  "id": 206,
+  "title": "Reverse Linked List",
+  "slug": "reverse-linked-list",
+  "difficulty": "Easy",
+  "freq": 62,
+  "recent": true,
+  "tags": [
+   "Linked List",
+   "Recursion"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "反转链表",
+  "statement_chars": 242
+ },
+ "basic-calculator": {
+  "id": 224,
+  "title": "Basic Calculator",
+  "slug": "basic-calculator",
+  "difficulty": "Hard",
+  "freq": 62,
+  "recent": true,
+  "tags": [
+   "Math",
+   "String",
+   "Stack",
+   "Recursion"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": true,
+    "tier": "A"
+   },
+   "bytedance": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "A",
+  "title_zh": "基本计算器",
+  "statement_chars": 397
+ },
+ "find-median-from-data-stream": {
+  "id": 295,
+  "title": "Find Median from Data Stream",
+  "slug": "find-median-from-data-stream",
+  "difficulty": "Hard",
+  "freq": 62,
+  "recent": true,
+  "tags": [
+   "Two Pointers",
+   "Design",
+   "Sorting",
+   "Heap (Priority Queue)",
+   "Data Stream"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "数据流的中位数",
+  "statement_chars": 826
+ },
+ "serialize-and-deserialize-binary-tree": {
+  "id": 297,
+  "title": "Serialize and Deserialize Binary Tree",
+  "slug": "serialize-and-deserialize-binary-tree",
+  "difficulty": "Hard",
+  "freq": 62,
+  "recent": true,
+  "tags": [
+   "String",
+   "Tree",
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Design",
+   "Binary Tree"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "二叉树的序列化与反序列化",
+  "statement_chars": 483
+ },
+ "design-hashmap": {
+  "id": 706,
+  "title": "Design HashMap",
+  "slug": "design-hashmap",
+  "difficulty": "Easy",
+  "freq": 62,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Hash Table",
+   "Linked List",
+   "Design",
+   "Hash Function"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "设计哈希映射",
+  "statement_chars": 1050
+ },
+ "reverse-nodes-in-k-group": {
+  "id": 25,
+  "title": "Reverse Nodes in k-Group",
+  "slug": "reverse-nodes-in-k-group",
+  "difficulty": "Hard",
+  "freq": 58,
+  "recent": true,
+  "tags": [
+   "Linked List",
+   "Recursion"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 58,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "K 个一组翻转链表",
+  "statement_chars": 345
+ },
+ "rotate-array": {
+  "id": 189,
+  "title": "Rotate Array",
+  "slug": "rotate-array",
+  "difficulty": "Medium",
+  "freq": 56,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Math",
+   "Two Pointers"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 56,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "轮转数组",
+  "statement_chars": 467
+ },
+ "possible-bipartition": {
+  "id": 886,
+  "title": "Possible Bipartition",
+  "slug": "possible-bipartition",
+  "difficulty": "Medium",
+  "freq": 56,
+  "recent": true,
+  "tags": [
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Union-Find",
+   "Graph Theory",
+   "Graph Coloring",
+   "Bipartite Graph"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 56,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "可能的二分法",
+  "statement_chars": 542
+ },
+ "find-first-and-last-position-of-element-in-sorted-array": {
+  "id": 34,
+  "title": "Find First and Last Position of Element in Sorted Array",
+  "slug": "find-first-and-last-position-of-element-in-sorted-array",
+  "difficulty": "Medium",
+  "freq": 53,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Binary Search"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 53,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "在排序数组中查找元素的第一个和最后一个位置",
+  "statement_chars": 392
+ },
+ "minimum-size-subarray-sum": {
+  "id": 209,
+  "title": "Minimum Size Subarray Sum",
+  "slug": "minimum-size-subarray-sum",
+  "difficulty": "Medium",
+  "freq": 53,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Binary Search",
+   "Sliding Window",
+   "Prefix Sum"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 53,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "长度最小的子数组",
+  "statement_chars": 456
+ },
+ "subarray-sums-divisible-by-k": {
+  "id": 974,
+  "title": "Subarray Sums Divisible by K",
+  "slug": "subarray-sums-divisible-by-k",
+  "difficulty": "Medium",
+  "freq": 53,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Hash Table",
+   "Prefix Sum"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 53,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "和可被 K 整除的子数组",
+  "statement_chars": 347
+ },
+ "longest-valid-parentheses": {
+  "id": 32,
+  "title": "Longest Valid Parentheses",
+  "slug": "longest-valid-parentheses",
+  "difficulty": "Hard",
+  "freq": 50,
+  "recent": true,
+  "tags": [
+   "String",
+   "Dynamic Programming",
+   "Stack",
+   "Bracket Sequences"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "最长有效括号",
+  "statement_chars": 273
+ },
+ "jump-game": {
+  "id": 55,
+  "title": "Jump Game",
+  "slug": "jump-game",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Dynamic Programming",
+   "Greedy"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": true,
+    "tier": "A"
+   },
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "A",
+  "title_zh": "跳跃游戏",
+  "statement_chars": 348
+ },
+ "subsets": {
+  "id": 78,
+  "title": "Subsets",
+  "slug": "subsets",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Backtracking",
+   "Bit Manipulation"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": true,
+    "tier": "A"
+   },
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "A",
+  "title_zh": "子集",
+  "statement_chars": 261
+ },
+ "gas-station": {
+  "id": 134,
+  "title": "Gas Station",
+  "slug": "gas-station",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Greedy"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "加油站",
+  "statement_chars": 876
+ },
+ "intersection-of-two-linked-lists": {
+  "id": 160,
+  "title": "Intersection of Two Linked Lists",
+  "slug": "intersection-of-two-linked-lists",
+  "difficulty": "Easy",
+  "freq": 50,
+  "recent": true,
+  "tags": [
+   "Hash Table",
+   "Linked List",
+   "Two Pointers"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "相交链表",
+  "statement_chars": 1541
+ },
+ "single-element-in-a-sorted-array": {
+  "id": 540,
+  "title": "Single Element in a Sorted Array",
+  "slug": "single-element-in-a-sorted-array",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Binary Search"
+  ],
+  "companies": {
+   "bytedance": {
+    "freq": 50,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "有序数组中的单一元素",
+  "statement_chars": 255
+ },
+ "cheapest-flights-within-k-stops": {
+  "id": 787,
+  "title": "Cheapest Flights Within K Stops",
+  "slug": "cheapest-flights-within-k-stops",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": true,
+  "tags": [
+   "Dynamic Programming",
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Graph Theory",
+   "Heap (Priority Queue)",
+   "Shortest Path"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "K 站中转内最便宜的航班",
+  "statement_chars": 943
+ },
+ "longest-mountain-in-array": {
+  "id": 845,
+  "title": "Longest Mountain in Array",
+  "slug": "longest-mountain-in-array",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Two Pointers",
+   "Dynamic Programming",
+   "Enumeration"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "数组中的最长山脉",
+  "statement_chars": 452
+ },
+ "count-number-of-nice-subarrays": {
+  "id": 1248,
+  "title": "Count Number of Nice Subarrays",
+  "slug": "count-number-of-nice-subarrays",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Hash Table",
+   "Math",
+   "Sliding Window",
+   "Prefix Sum"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "统计「优美子数组」",
+  "statement_chars": 373
+ },
+ "product-of-the-last-k-numbers": {
+  "id": 1352,
+  "title": "Product of the Last K Numbers",
+  "slug": "product-of-the-last-k-numbers",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Math",
+   "Design",
+   "Data Stream",
+   "Prefix Sum"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 38,
+    "recent": true,
+    "tier": "A"
+   },
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "A",
+  "title_zh": "最后 K 个数的乘积",
+  "statement_chars": 1254
+ },
+ "longest-substring-with-at-most-k-distinct-characters": {
+  "id": 340,
+  "title": "Longest Substring with At Most K Distinct Characters",
+  "slug": "longest-substring-with-at-most-k-distinct-characters",
+  "difficulty": "Medium",
+  "freq": 46,
+  "recent": true,
+  "tags": [
+   "Hash Table",
+   "String",
+   "Sliding Window"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 46,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "至多包含 K 个不同字符的最长子串",
+  "statement_chars": 234
+ },
+ "all-oone-data-structure": {
+  "id": 432,
+  "title": "All O`one Data Structure",
+  "slug": "all-oone-data-structure",
+  "difficulty": "Hard",
+  "freq": 46,
+  "recent": true,
+  "tags": [
+   "Hash Table",
+   "Linked List",
+   "Design",
+   "Doubly-Linked List"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 46,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "全 O(1) 的数据结构",
+  "statement_chars": 958
+ },
+ "all-nodes-distance-k-in-binary-tree": {
+  "id": 863,
+  "title": "All Nodes Distance K in Binary Tree",
+  "slug": "all-nodes-distance-k-in-binary-tree",
+  "difficulty": "Medium",
+  "freq": 46,
+  "recent": true,
+  "tags": [
+   "Hash Table",
+   "Tree",
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Binary Tree"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 46,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "二叉树中所有距离为 K 的结点",
+  "statement_chars": 377
+ },
+ "path-sum-iii": {
+  "id": 437,
+  "title": "Path Sum III",
+  "slug": "path-sum-iii",
+  "difficulty": "Medium",
+  "freq": 41,
+  "recent": true,
+  "tags": [
+   "Tree",
+   "Depth-First Search",
+   "Binary Tree"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 41,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "路径总和 III",
+  "statement_chars": 388
+ },
+ "serialize-and-deserialize-n-ary-tree": {
+  "id": 428,
+  "title": "Serialize and Deserialize N-ary Tree",
+  "slug": "serialize-and-deserialize-n-ary-tree",
+  "difficulty": "Hard",
+  "freq": 38,
+  "recent": true,
+  "tags": [
+   "String",
+   "Tree",
+   "Depth-First Search",
+   "Breadth-First Search"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 38,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "序列化和反序列化 N 叉树",
+  "statement_chars": 889
+ },
+ "find-all-anagrams-in-a-string": {
+  "id": 438,
+  "title": "Find All Anagrams in a String",
+  "slug": "find-all-anagrams-in-a-string",
+  "difficulty": "Medium",
+  "freq": 38,
+  "recent": true,
+  "tags": [
+   "Hash Table",
+   "String",
+   "Sliding Window"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 38,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "找到字符串中所有字母异位词",
+  "statement_chars": 402
+ },
+ "fruit-into-baskets": {
+  "id": 904,
+  "title": "Fruit Into Baskets",
+  "slug": "fruit-into-baskets",
+  "difficulty": "Medium",
+  "freq": 38,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Hash Table",
+   "Sliding Window"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 38,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "水果成篮",
+  "statement_chars": 711
+ },
+ "partition-array-for-maximum-sum": {
+  "id": 1043,
+  "title": "Partition Array for Maximum Sum",
+  "slug": "partition-array-for-maximum-sum",
+  "difficulty": "Medium",
+  "freq": 38,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Dynamic Programming"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 38,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "分隔数组以得到最大和",
+  "statement_chars": 370
+ },
+ "robot-bounded-in-circle": {
+  "id": 1041,
+  "title": "Robot Bounded In Circle",
+  "slug": "robot-bounded-in-circle",
+  "difficulty": "Medium",
+  "freq": 26,
+  "recent": true,
+  "tags": [
+   "Math",
+   "String",
+   "Simulation"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 26,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "tier": "A",
+  "title_zh": "困于环中的机器人",
+  "statement_chars": 1087
+ },
+ "house-robber": {
+  "id": 198,
+  "title": "House Robber",
+  "slug": "house-robber",
+  "difficulty": "Medium",
+  "freq": 68,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Dynamic Programming"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 68,
+    "recent": false,
+    "tier": "B"
+   },
+   "bytedance": {
+    "freq": 66,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "打家劫舍",
+  "statement_chars": 428
+ },
+ "maximum-swap": {
+  "id": 670,
+  "title": "Maximum Swap",
+  "slug": "maximum-swap",
+  "difficulty": "Medium",
+  "freq": 68,
+  "recent": false,
+  "tags": [
+   "Math",
+   "Greedy"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 68,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "最大交换",
+  "statement_chars": 145
+ },
+ "snapshot-array": {
+  "id": 1146,
+  "title": "Snapshot Array",
+  "slug": "snapshot-array",
+  "difficulty": "Medium",
+  "freq": 68,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Hash Table",
+   "Binary Search",
+   "Design",
+   "Persistent Data Structure"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 68,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "快照数组",
+  "statement_chars": 783
+ },
+ "longest-happy-string": {
+  "id": 1405,
+  "title": "Longest Happy String",
+  "slug": "longest-happy-string",
+  "difficulty": "Medium",
+  "freq": 68,
+  "recent": false,
+  "tags": [
+   "String",
+   "Greedy",
+   "Heap (Priority Queue)"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 68,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "最长快乐字符串",
+  "statement_chars": 444
+ },
+ "word-ladder": {
+  "id": 127,
+  "title": "Word Ladder",
+  "slug": "word-ladder",
+  "difficulty": "Hard",
+  "freq": 66,
+  "recent": false,
+  "tags": [
+   "Hash Table",
+   "String",
+   "Breadth-First Search",
+   "Bidirectional Search"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   },
+   "bytedance": {
+    "freq": 66,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "单词接龙",
+  "statement_chars": 842
+ },
+ "longest-consecutive-sequence": {
+  "id": 128,
+  "title": "Longest Consecutive Sequence",
+  "slug": "longest-consecutive-sequence",
+  "difficulty": "Medium",
+  "freq": 66,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Hash Table",
+   "Union-Find"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 66,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "最长连续序列",
+  "statement_chars": 300
+ },
+ "basic-calculator-iii": {
+  "id": 772,
+  "title": "Basic Calculator III",
+  "slug": "basic-calculator-iii",
+  "difficulty": "Hard",
+  "freq": 66,
+  "recent": false,
+  "tags": [
+   "Math",
+   "String",
+   "Stack",
+   "Recursion"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 66,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "基本计算器 III",
+  "statement_chars": 349
+ },
+ "design-memory-allocator": {
+  "id": 2502,
+  "title": "Design Memory Allocator",
+  "slug": "design-memory-allocator",
+  "difficulty": "Medium",
+  "freq": 66,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Hash Table",
+   "Design",
+   "Simulation"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 46,
+    "recent": false,
+    "tier": "C"
+   },
+   "bytedance": {
+    "freq": 66,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "设计内存分配器",
+  "statement_chars": 1634
+ },
+ "valid-parenthesis-string": {
+  "id": 678,
+  "title": "Valid Parenthesis String",
+  "slug": "valid-parenthesis-string",
+  "difficulty": "Medium",
+  "freq": 65,
+  "recent": false,
+  "tags": [
+   "String",
+   "Dynamic Programming",
+   "Stack",
+   "Greedy",
+   "Bracket Sequences"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 65,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "有效的括号字符串",
+  "statement_chars": 367
+ },
+ "generate-parentheses": {
+  "id": 22,
+  "title": "Generate Parentheses",
+  "slug": "generate-parentheses",
+  "difficulty": "Medium",
+  "freq": 63,
+  "recent": false,
+  "tags": [
+   "String",
+   "Dynamic Programming",
+   "Backtracking",
+   "Bracket Sequences"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 63,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "括号生成",
+  "statement_chars": 167
+ },
+ "merge-k-sorted-lists": {
+  "id": 23,
+  "title": "Merge k Sorted Lists",
+  "slug": "merge-k-sorted-lists",
+  "difficulty": "Hard",
+  "freq": 63,
+  "recent": false,
+  "tags": [
+   "Linked List",
+   "Divide and Conquer",
+   "Heap (Priority Queue)",
+   "Merge Sort",
+   "Tournament Sort"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 63,
+    "recent": false,
+    "tier": "B"
+   },
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "合并 K 个升序链表",
+  "statement_chars": 416
+ },
+ "daily-temperatures": {
+  "id": 739,
+  "title": "Daily Temperatures",
+  "slug": "daily-temperatures",
+  "difficulty": "Medium",
+  "freq": 63,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Stack",
+   "Monotonic Stack"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 63,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "每日温度",
+  "statement_chars": 368
+ },
+ "add-two-numbers": {
+  "id": 2,
+  "title": "Add Two Numbers",
+  "slug": "add-two-numbers",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": false,
+  "tags": [],
+  "companies": {
+   "tiktok": {
+    "freq": 25,
+    "recent": false,
+    "tier": "C"
+   },
+   "bytedance": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "两数相加",
+  "statement_chars": 374
+ },
+ "regular-expression-matching": {
+  "id": 10,
+  "title": "Regular Expression Matching",
+  "slug": "regular-expression-matching",
+  "difficulty": "Hard",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "String",
+   "Dynamic Programming",
+   "Recursion"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 53,
+    "recent": false,
+    "tier": "B"
+   },
+   "bytedance": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "正则表达式匹配",
+  "statement_chars": 498
+ },
+ "valid-parentheses": {
+  "id": 20,
+  "title": "Valid Parentheses",
+  "slug": "valid-parentheses",
+  "difficulty": "Easy",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "String",
+   "Stack",
+   "Bracket Sequences"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   },
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "有效的括号",
+  "statement_chars": 335
+ },
+ "combination-sum-ii": {
+  "id": 40,
+  "title": "Combination Sum II",
+  "slug": "combination-sum-ii",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Backtracking"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 38,
+    "recent": false,
+    "tier": "C"
+   },
+   "bytedance": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "组合总和 II",
+  "statement_chars": 383
+ },
+ "maximum-subarray": {
+  "id": 53,
+  "title": "Maximum Subarray",
+  "slug": "maximum-subarray",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Divide and Conquer",
+   "Dynamic Programming"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   },
+   "bytedance": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "最大子数组和",
+  "statement_chars": 325
+ },
+ "climbing-stairs": {
+  "id": 70,
+  "title": "Climbing Stairs",
+  "slug": "climbing-stairs",
+  "difficulty": "Easy",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Math",
+   "Dynamic Programming",
+   "Memoization"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   },
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "爬楼梯",
+  "statement_chars": 228
+ },
+ "simplify-path": {
+  "id": 71,
+  "title": "Simplify Path",
+  "slug": "simplify-path",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "String",
+   "Stack"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "简化路径",
+  "statement_chars": 858
+ },
+ "edit-distance": {
+  "id": 72,
+  "title": "Edit Distance",
+  "slug": "edit-distance",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "String",
+   "Dynamic Programming"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "编辑距离",
+  "statement_chars": 541
+ },
+ "sort-colors": {
+  "id": 75,
+  "title": "Sort Colors",
+  "slug": "sort-colors",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Two Pointers",
+   "Sorting",
+   "Quicksort",
+   "Bubble Sort"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "颜色分类",
+  "statement_chars": 432
+ },
+ "restore-ip-addresses": {
+  "id": 93,
+  "title": "Restore IP Addresses",
+  "slug": "restore-ip-addresses",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "String",
+   "Backtracking"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   },
+   "bytedance": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "复原 IP 地址",
+  "statement_chars": 517
+ },
+ "construct-binary-tree-from-preorder-and-inorder-traversal": {
+  "id": 105,
+  "title": "Construct Binary Tree from Preorder and Inorder Traversal",
+  "slug": "construct-binary-tree-from-preorder-and-inorder-traversal",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Hash Table",
+   "Divide and Conquer",
+   "Tree",
+   "Binary Tree"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "从前序与中序遍历序列构造二叉树",
+  "statement_chars": 455
+ },
+ "word-break-ii": {
+  "id": 140,
+  "title": "Word Break II",
+  "slug": "word-break-ii",
+  "difficulty": "Hard",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Hash Table",
+   "String",
+   "Dynamic Programming",
+   "Backtracking",
+   "Trie",
+   "Memoization"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "单词拆分 II",
+  "statement_chars": 633
+ },
+ "reorder-list": {
+  "id": 143,
+  "title": "Reorder List",
+  "slug": "reorder-list",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Linked List",
+   "Two Pointers",
+   "Stack",
+   "Recursion"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "重排链表",
+  "statement_chars": 291
+ },
+ "word-search-ii": {
+  "id": 212,
+  "title": "Word Search II",
+  "slug": "word-search-ii",
+  "difficulty": "Hard",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Array",
+   "String",
+   "Backtracking",
+   "Trie",
+   "Matrix"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "单词搜索 II",
+  "statement_chars": 551
+ },
+ "longest-increasing-path-in-a-matrix": {
+  "id": 329,
+  "title": "Longest Increasing Path in a Matrix",
+  "slug": "longest-increasing-path-in-a-matrix",
+  "difficulty": "Hard",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Dynamic Programming",
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Graph Theory",
+   "Topological Sort",
+   "Memoization",
+   "Matrix",
+   "Directed Acyclic Graph"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "矩阵中的最长递增路径",
+  "statement_chars": 410
+ },
+ "insert-delete-getrandom-o1": {
+  "id": 380,
+  "title": "Insert Delete GetRandom O(1)",
+  "slug": "insert-delete-getrandom-o1",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Hash Table",
+   "Math",
+   "Design",
+   "Randomized"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   },
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "O(1) 时间插入、删除和获取随机元素",
+  "statement_chars": 1075
+ },
+ "add-strings": {
+  "id": 415,
+  "title": "Add Strings",
+  "slug": "add-strings",
+  "difficulty": "Easy",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Math",
+   "String",
+   "Simulation"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "字符串相加",
+  "statement_chars": 338
+ },
+ "maximum-width-of-binary-tree": {
+  "id": 662,
+  "title": "Maximum Width of Binary Tree",
+  "slug": "maximum-width-of-binary-tree",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Tree",
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Binary Tree"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 38,
+    "recent": false,
+    "tier": "C"
+   },
+   "bytedance": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "二叉树最大宽度",
+  "statement_chars": 498
+ },
+ "max-area-of-island": {
+  "id": 695,
+  "title": "Max Area of Island",
+  "slug": "max-area-of-island",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Union-Find",
+   "Matrix"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "岛屿的最大面积",
+  "statement_chars": 603
+ },
+ "accounts-merge": {
+  "id": 721,
+  "title": "Accounts Merge",
+  "slug": "accounts-merge",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Hash Table",
+   "String",
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Union-Find",
+   "Sorting"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 38,
+    "recent": false,
+    "tier": "C"
+   },
+   "bytedance": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "账户合并",
+  "statement_chars": 1598
+ },
+ "bus-routes": {
+  "id": 815,
+  "title": "Bus Routes",
+  "slug": "bus-routes",
+  "difficulty": "Hard",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Hash Table",
+   "Breadth-First Search"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "公交路线",
+  "statement_chars": 643
+ },
+ "rotting-oranges": {
+  "id": 994,
+  "title": "Rotting Oranges",
+  "slug": "rotting-oranges",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Breadth-First Search",
+   "Matrix"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   },
+   "bytedance": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "腐烂的橘子",
+  "statement_chars": 464
+ },
+ "longest-common-subsequence": {
+  "id": 1143,
+  "title": "Longest Common Subsequence",
+  "slug": "longest-common-subsequence",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "String",
+   "Dynamic Programming",
+   "Longest Common Subsequence"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 38,
+    "recent": false,
+    "tier": "C"
+   },
+   "bytedance": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "最长公共子序列",
+  "statement_chars": 524
+ },
+ "shortest-path-in-a-grid-with-obstacles-elimination": {
+  "id": 1293,
+  "title": "Shortest Path in a Grid with Obstacles Elimination",
+  "slug": "shortest-path-in-a-grid-with-obstacles-elimination",
+  "difficulty": "Hard",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Breadth-First Search",
+   "Matrix"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "网格中的最短路径",
+  "statement_chars": 569
+ },
+ "maximum-value-at-a-given-index-in-a-bounded-array": {
+  "id": 1802,
+  "title": "Maximum Value at a Given Index in a Bounded Array",
+  "slug": "maximum-value-at-a-given-index-in-a-bounded-array",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Math",
+   "Binary Search",
+   "Greedy"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "有界数组中指定下标处的最大值",
+  "statement_chars": 494
+ },
+ "incremental-memory-leak": {
+  "id": 1860,
+  "title": "Incremental Memory Leak",
+  "slug": "incremental-memory-leak",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Math",
+   "Simulation"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "增长的内存泄露",
+  "statement_chars": 847
+ },
+ "count-the-hidden-sequences": {
+  "id": 2145,
+  "title": "Count the Hidden Sequences",
+  "slug": "count-the-hidden-sequences",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Prefix Sum"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "统计隐藏数组数目",
+  "statement_chars": 986
+ },
+ "meeting-rooms-iii": {
+  "id": 2402,
+  "title": "Meeting Rooms III",
+  "slug": "meeting-rooms-iii",
+  "difficulty": "Hard",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Hash Table",
+   "Sorting",
+   "Heap (Priority Queue)",
+   "Simulation"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "会议室 III",
+  "statement_chars": 1235
+ },
+ "length-of-the-longest-alphabetical-continuous-substring": {
+  "id": 2414,
+  "title": "Length of the Longest Alphabetical Continuous Substring",
+  "slug": "length-of-the-longest-alphabetical-continuous-substring",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "String"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "最长的字母序连续子字符串的长度",
+  "statement_chars": 371
+ },
+ "most-popular-video-creator": {
+  "id": 2456,
+  "title": "Most Popular Video Creator",
+  "slug": "most-popular-video-creator",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Hash Table",
+   "String",
+   "Sorting",
+   "Heap (Priority Queue)"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "最流行的视频创作者",
+  "statement_chars": 1071
+ },
+ "closest-prime-numbers-in-range": {
+  "id": 2523,
+  "title": "Closest Prime Numbers in Range",
+  "slug": "closest-prime-numbers-in-range",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Math",
+   "Number Theory",
+   "Primality Test",
+   "Sieve Theory",
+   "Prime Number Sieve"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "范围内最接近的两个质数",
+  "statement_chars": 500
+ },
+ "find-the-score-of-all-prefixes-of-an-array": {
+  "id": 2640,
+  "title": "Find the Score of All Prefixes of an Array",
+  "slug": "find-the-score-of-all-prefixes-of-an-array",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Prefix Sum"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "一个数组所有前缀的分数",
+  "statement_chars": 912
+ },
+ "count-complete-subarrays-in-an-array": {
+  "id": 2799,
+  "title": "Count Complete Subarrays in an Array",
+  "slug": "count-complete-subarrays-in-an-array",
+  "difficulty": "Medium",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Hash Table",
+   "Sliding Window"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "统计完全子数组的数目",
+  "statement_chars": 355
+ },
+ "minimum-moves-to-pick-k-ones": {
+  "id": 3086,
+  "title": "Minimum Moves to Pick K Ones",
+  "slug": "minimum-moves-to-pick-k-ones",
+  "difficulty": "Hard",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Greedy",
+   "Sliding Window",
+   "Prefix Sum"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "拾起 K 个 1 需要的最少行动次数",
+  "statement_chars": 1780
+ },
+ "minimum-operations-to-make-character-frequencies-equal": {
+  "id": 3389,
+  "title": "Minimum Operations to Make Character Frequencies Equal",
+  "slug": "minimum-operations-to-make-character-frequencies-equal",
+  "difficulty": "Hard",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Hash Table",
+   "String",
+   "Dynamic Programming",
+   "Counting",
+   "Enumeration"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "使字符频率相等的最少操作次数",
+  "statement_chars": 423
+ },
+ "minimum-cost-good-caption": {
+  "id": 3441,
+  "title": "Minimum Cost Good Caption",
+  "slug": "minimum-cost-good-caption",
+  "difficulty": "Hard",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "String",
+   "Dynamic Programming"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "变成好标题的最少代价",
+  "statement_chars": 1148
+ },
+ "lexicographically-smallest-generated-string": {
+  "id": 3474,
+  "title": "Lexicographically Smallest Generated String",
+  "slug": "lexicographically-smallest-generated-string",
+  "difficulty": "Hard",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "String",
+   "Greedy",
+   "String Matching"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "字典序最小的生成字符串",
+  "statement_chars": 1091
+ },
+ "remove-zero-sum-consecutive-nodes-from-linked-list": {
+  "id": 1171,
+  "title": "Remove Zero Sum Consecutive Nodes from Linked List",
+  "slug": "remove-zero-sum-consecutive-nodes-from-linked-list",
+  "difficulty": "Medium",
+  "freq": 59,
+  "recent": false,
+  "tags": [
+   "Hash Table",
+   "Linked List"
+  ],
+  "companies": {
+   "bytedance": {
+    "freq": 59,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "从链表中删去总和值为零的连续节点",
+  "statement_chars": 371
+ },
+ "container-with-most-water": {
+  "id": 11,
+  "title": "Container With Most Water",
+  "slug": "container-with-most-water",
+  "difficulty": "Medium",
+  "freq": 56,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Two Pointers",
+   "Greedy"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 56,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "盛最多水的容器",
+  "statement_chars": 346
+ },
+ "word-break": {
+  "id": 139,
+  "title": "Word Break",
+  "slug": "word-break",
+  "difficulty": "Medium",
+  "freq": 56,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Hash Table",
+   "String",
+   "Dynamic Programming",
+   "Trie",
+   "Memoization",
+   "Brute-Force Search"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 56,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "单词拆分",
+  "statement_chars": 614
+ },
+ "design-add-and-search-words-data-structure": {
+  "id": 211,
+  "title": "Design Add and Search Words Data Structure",
+  "slug": "design-add-and-search-words-data-structure",
+  "difficulty": "Medium",
+  "freq": 56,
+  "recent": false,
+  "tags": [
+   "String",
+   "Depth-First Search",
+   "Design",
+   "Trie"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 56,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "添加与搜索单词 - 数据结构设计",
+  "statement_chars": 895
+ },
+ "find-peak-element": {
+  "id": 162,
+  "title": "Find Peak Element",
+  "slug": "find-peak-element",
+  "difficulty": "Medium",
+  "freq": 53,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Binary Search"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 53,
+    "recent": false,
+    "tier": "B"
+   },
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "寻找峰值",
+  "statement_chars": 413
+ },
+ "compare-version-numbers": {
+  "id": 165,
+  "title": "Compare Version Numbers",
+  "slug": "compare-version-numbers",
+  "difficulty": "Medium",
+  "freq": 53,
+  "recent": false,
+  "tags": [
+   "Two Pointers",
+   "String"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 53,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "比较版本号",
+  "statement_chars": 723
+ },
+ "lowest-common-ancestor-of-a-binary-tree": {
+  "id": 236,
+  "title": "Lowest Common Ancestor of a Binary Tree",
+  "slug": "lowest-common-ancestor-of-a-binary-tree",
+  "difficulty": "Medium",
+  "freq": 53,
+  "recent": false,
+  "tags": [
+   "Tree",
+   "Depth-First Search",
+   "Binary Tree",
+   "Binary Lifting",
+   "Lowest Common Ancestor"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 53,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "二叉树的最近公共祖先",
+  "statement_chars": 497
+ },
+ "alien-dictionary": {
+  "id": 269,
+  "title": "Alien Dictionary",
+  "slug": "alien-dictionary",
+  "difficulty": "Hard",
+  "freq": 53,
+  "recent": false,
+  "tags": [
+   "Array",
+   "String",
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Graph Theory",
+   "Topological Sort",
+   "Directed Acyclic Graph"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 53,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "火星词典",
+  "statement_chars": 447
+ },
+ "evaluate-division": {
+  "id": 399,
+  "title": "Evaluate Division",
+  "slug": "evaluate-division",
+  "difficulty": "Medium",
+  "freq": 53,
+  "recent": false,
+  "tags": [
+   "Array",
+   "String",
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Union-Find",
+   "Graph Theory",
+   "Shortest Path",
+   "Bellman–Ford Algorithm",
+   "Floyd–Warshall Algorithm"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 53,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "除法求值",
+  "statement_chars": 1307
+ },
+ "brightest-position-on-street": {
+  "id": 2021,
+  "title": "Brightest Position on Street",
+  "slug": "brightest-position-on-street",
+  "difficulty": "Medium",
+  "freq": 53,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Sorting",
+   "Prefix Sum",
+   "Ordered Set"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 53,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "街上最亮的位置",
+  "statement_chars": 641
+ },
+ "longest-common-prefix": {
+  "id": 14,
+  "title": "Longest Common Prefix",
+  "slug": "longest-common-prefix",
+  "difficulty": "Easy",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "String",
+   "Trie"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "最长公共前缀",
+  "statement_chars": 254
+ },
+ "3sum-closest": {
+  "id": 16,
+  "title": "3Sum Closest",
+  "slug": "3sum-closest",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Two Pointers",
+   "Sorting"
+  ],
+  "companies": {
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "最接近的三数之和",
+  "statement_chars": 370
+ },
+ "next-permutation": {
+  "id": 31,
+  "title": "Next Permutation",
+  "slug": "next-permutation",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "下一个排列",
+  "statement_chars": 612
+ },
+ "jump-game-ii": {
+  "id": 45,
+  "title": "Jump Game II",
+  "slug": "jump-game-ii",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Dynamic Programming",
+   "Greedy"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "跳跃游戏 II",
+  "statement_chars": 403
+ },
+ "permutations": {
+  "id": 46,
+  "title": "Permutations",
+  "slug": "permutations",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Backtracking"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "全排列",
+  "statement_chars": 278
+ },
+ "permutations-ii": {
+  "id": 47,
+  "title": "Permutations II",
+  "slug": "permutations-ii",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Backtracking",
+   "Sorting"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "全排列 II",
+  "statement_chars": 237
+ },
+ "group-anagrams": {
+  "id": 49,
+  "title": "Group Anagrams",
+  "slug": "group-anagrams",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Hash Table",
+   "String",
+   "Sorting"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "字母异位词分组",
+  "statement_chars": 446
+ },
+ "unique-paths": {
+  "id": 62,
+  "title": "Unique Paths",
+  "slug": "unique-paths",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Math",
+   "Dynamic Programming",
+   "Combinatorics"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 26,
+    "recent": false,
+    "tier": "C"
+   },
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "不同路径",
+  "statement_chars": 369
+ },
+ "minimum-path-sum": {
+  "id": 64,
+  "title": "Minimum Path Sum",
+  "slug": "minimum-path-sum",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Dynamic Programming",
+   "Matrix"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "最小路径和",
+  "statement_chars": 291
+ },
+ "combinations": {
+  "id": 77,
+  "title": "Combinations",
+  "slug": "combinations",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "组合",
+  "statement_chars": 217
+ },
+ "largest-rectangle-in-histogram": {
+  "id": 84,
+  "title": "Largest Rectangle in Histogram",
+  "slug": "largest-rectangle-in-histogram",
+  "difficulty": "Hard",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Stack",
+   "Monotonic Stack",
+   "Range Minimum/Maximum Query"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "柱状图中最大的矩形",
+  "statement_chars": 234
+ },
+ "reverse-linked-list-ii": {
+  "id": 92,
+  "title": "Reverse Linked List II",
+  "slug": "reverse-linked-list-ii",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Linked List"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 38,
+    "recent": false,
+    "tier": "C"
+   },
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "反转链表 II",
+  "statement_chars": 326
+ },
+ "binary-tree-zigzag-level-order-traversal": {
+  "id": 103,
+  "title": "Binary Tree Zigzag Level Order Traversal",
+  "slug": "binary-tree-zigzag-level-order-traversal",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Tree",
+   "Breadth-First Search",
+   "Binary Tree"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   },
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "二叉树的锯齿形层序遍历",
+  "statement_chars": 255
+ },
+ "best-time-to-buy-and-sell-stock-ii": {
+  "id": 122,
+  "title": "Best Time to Buy and Sell Stock II",
+  "slug": "best-time-to-buy-and-sell-stock-ii",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Dynamic Programming",
+   "Greedy"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "买卖股票的最佳时机 II",
+  "statement_chars": 620
+ },
+ "clone-graph": {
+  "id": 133,
+  "title": "Clone Graph",
+  "slug": "clone-graph",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Hash Table",
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Graph Theory"
+  ],
+  "companies": {
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "克隆图",
+  "statement_chars": 792
+ },
+ "linked-list-cycle-ii": {
+  "id": 142,
+  "title": "Linked List Cycle II",
+  "slug": "linked-list-cycle-ii",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Hash Table",
+   "Linked List",
+   "Two Pointers",
+   "Floyd's Cycle Finding Algorithm"
+  ],
+  "companies": {
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "环形链表 II",
+  "statement_chars": 540
+ },
+ "sort-list": {
+  "id": 148,
+  "title": "Sort List",
+  "slug": "sort-list",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Linked List",
+   "Two Pointers",
+   "Divide and Conquer",
+   "Sorting",
+   "Merge Sort"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 38,
+    "recent": false,
+    "tier": "C"
+   },
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "排序链表",
+  "statement_chars": 271
+ },
+ "find-minimum-in-rotated-sorted-array": {
+  "id": 153,
+  "title": "Find Minimum in Rotated Sorted Array",
+  "slug": "find-minimum-in-rotated-sorted-array",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Binary Search"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "寻找旋转排序数组中的最小值",
+  "statement_chars": 700
+ },
+ "sliding-window-maximum": {
+  "id": 239,
+  "title": "Sliding Window Maximum",
+  "slug": "sliding-window-maximum",
+  "difficulty": "Hard",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Queue",
+   "Sliding Window",
+   "Heap (Priority Queue)",
+   "Monotonic Queue",
+   "Range Minimum/Maximum Query"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   },
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "滑动窗口最大值",
+  "statement_chars": 554
+ },
+ "meeting-rooms": {
+  "id": 252,
+  "title": "Meeting Rooms",
+  "slug": "meeting-rooms",
+  "difficulty": "Easy",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Sorting",
+   "Quicksort"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "会议室",
+  "statement_chars": 355
+ },
+ "move-zeroes": {
+  "id": 283,
+  "title": "Move Zeroes",
+  "slug": "move-zeroes",
+  "difficulty": "Easy",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Two Pointers"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "移动零",
+  "statement_chars": 249
+ },
+ "walls-and-gates": {
+  "id": 286,
+  "title": "Walls and Gates",
+  "slug": "walls-and-gates",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Breadth-First Search",
+   "Matrix"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "墙与门",
+  "statement_chars": 620
+ },
+ "binary-tree-longest-consecutive-sequence": {
+  "id": 298,
+  "title": "Binary Tree Longest Consecutive Sequence",
+  "slug": "binary-tree-longest-consecutive-sequence",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Tree",
+   "Depth-First Search",
+   "Binary Tree",
+   "DP on Trees"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "二叉树最长连续序列",
+  "statement_chars": 376
+ },
+ "remove-invalid-parentheses": {
+  "id": 301,
+  "title": "Remove Invalid Parentheses",
+  "slug": "remove-invalid-parentheses",
+  "difficulty": "Hard",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "String",
+   "Backtracking",
+   "Breadth-First Search"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "删除无效的括号",
+  "statement_chars": 277
+ },
+ "shortest-distance-from-all-buildings": {
+  "id": 317,
+  "title": "Shortest Distance from All Buildings",
+  "slug": "shortest-distance-from-all-buildings",
+  "difficulty": "Hard",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Breadth-First Search",
+   "Matrix"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 41,
+    "recent": false,
+    "tier": "C"
+   },
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "离建筑物最近的距离",
+  "statement_chars": 559
+ },
+ "water-and-jug-problem": {
+  "id": 365,
+  "title": "Water and Jug Problem",
+  "slug": "water-and-jug-problem",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Math",
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Bézout's Lemma",
+   "Euclidean Algorithm",
+   "Greatest Common Divisor",
+   "Extended Euclidean Algorithm"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "水壶问题",
+  "statement_chars": 597
+ },
+ "kth-smallest-element-in-a-sorted-matrix": {
+  "id": 378,
+  "title": "Kth Smallest Element in a Sorted Matrix",
+  "slug": "kth-smallest-element-in-a-sorted-matrix",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Binary Search",
+   "Sorting",
+   "Heap (Priority Queue)",
+   "Matrix"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "有序矩阵中第 K 小的元素",
+  "statement_chars": 550
+ },
+ "longest-substring-with-at-least-k-repeating-characters": {
+  "id": 395,
+  "title": "Longest Substring with At Least K Repeating Characters",
+  "slug": "longest-substring-with-at-least-k-repeating-characters",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Hash Table",
+   "String",
+   "Divide and Conquer",
+   "Sliding Window"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "至少有 K 个重复字符的最长子串",
+  "statement_chars": 306
+ },
+ "remove-k-digits": {
+  "id": 402,
+  "title": "Remove K Digits",
+  "slug": "remove-k-digits",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "String",
+   "Stack",
+   "Greedy",
+   "Monotonic Stack"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 41,
+    "recent": false,
+    "tier": "C"
+   },
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "移掉 K 位数字",
+  "statement_chars": 387
+ },
+ "frog-jump": {
+  "id": 403,
+  "title": "Frog Jump",
+  "slug": "frog-jump",
+  "difficulty": "Hard",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Dynamic Programming"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "青蛙过河",
+  "statement_chars": 662
+ },
+ "trapping-rain-water-ii": {
+  "id": 407,
+  "title": "Trapping Rain Water II",
+  "slug": "trapping-rain-water-ii",
+  "difficulty": "Hard",
+  "freq": 50,
+  "recent": false,
+  "tags": [],
+  "companies": {
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "接雨水 II",
+  "statement_chars": 382
+ },
+ "partition-equal-subset-sum": {
+  "id": 416,
+  "title": "Partition Equal Subset Sum",
+  "slug": "partition-equal-subset-sum",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Dynamic Programming",
+   "Knapsack Problem",
+   "0-1 Knapsack"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "分割等和子集",
+  "statement_chars": 246
+ },
+ "pacific-atlantic-water-flow": {
+  "id": 417,
+  "title": "Pacific Atlantic Water Flow",
+  "slug": "pacific-atlantic-water-flow",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Matrix"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "太平洋大西洋水流问题",
+  "statement_chars": 632
+ },
+ "longest-repeating-character-replacement": {
+  "id": 424,
+  "title": "Longest Repeating Character Replacement",
+  "slug": "longest-repeating-character-replacement",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Hash Table",
+   "String",
+   "Sliding Window"
+  ],
+  "companies": {
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "替换后的最长重复字符",
+  "statement_chars": 344
+ },
+ "convert-binary-search-tree-to-sorted-doubly-linked-list": {
+  "id": 426,
+  "title": "Convert Binary Search Tree to Sorted Doubly Linked List",
+  "slug": "convert-binary-search-tree-to-sorted-doubly-linked-list",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Linked List",
+   "Stack",
+   "Tree",
+   "Depth-First Search",
+   "Binary Search Tree",
+   "Binary Tree",
+   "Doubly-Linked List"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "将二叉搜索树转化为排序的双向链表",
+  "statement_chars": 382
+ },
+ "find-all-duplicates-in-an-array": {
+  "id": 442,
+  "title": "Find All Duplicates in an Array",
+  "slug": "find-all-duplicates-in-an-array",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "数组中重复的数据",
+  "statement_chars": 343
+ },
+ "delete-node-in-a-bst": {
+  "id": 450,
+  "title": "Delete Node in a BST",
+  "slug": "delete-node-in-a-bst",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Tree",
+   "Binary Search Tree",
+   "Binary Tree"
+  ],
+  "companies": {
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "删除二叉搜索树中的节点",
+  "statement_chars": 583
+ },
+ "matchsticks-to-square": {
+  "id": 473,
+  "title": "Matchsticks to Square",
+  "slug": "matchsticks-to-square",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Dynamic Programming",
+   "Backtracking",
+   "Bit Manipulation",
+   "Bitmask"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "火柴拼正方形",
+  "statement_chars": 367
+ },
+ "random-pick-with-weight": {
+  "id": 528,
+  "title": "Random Pick with Weight",
+  "slug": "random-pick-with-weight",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Math",
+   "Binary Search",
+   "Prefix Sum",
+   "Randomized"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "按权重随机选择",
+  "statement_chars": 1007
+ },
+ "shortest-unsorted-continuous-subarray": {
+  "id": 581,
+  "title": "Shortest Unsorted Continuous Subarray",
+  "slug": "shortest-unsorted-continuous-subarray",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Two Pointers",
+   "Stack",
+   "Greedy",
+   "Sorting",
+   "Monotonic Stack"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "最短无序连续子数组",
+  "statement_chars": 336
+ },
+ "design-in-memory-file-system": {
+  "id": 588,
+  "title": "Design In-Memory File System",
+  "slug": "design-in-memory-file-system",
+  "difficulty": "Hard",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Hash Table",
+   "String",
+   "Design",
+   "Trie",
+   "Sorting"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "设计内存文件系统",
+  "statement_chars": 1321
+ },
+ "asteroid-collision": {
+  "id": 735,
+  "title": "Asteroid Collision",
+  "slug": "asteroid-collision",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Stack",
+   "Simulation"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "小行星碰撞",
+  "statement_chars": 663
+ },
+ "reorganize-string": {
+  "id": 767,
+  "title": "Reorganize String",
+  "slug": "reorganize-string",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "重构字符串",
+  "statement_chars": 183
+ },
+ "score-of-parentheses": {
+  "id": 856,
+  "title": "Score of Parentheses",
+  "slug": "score-of-parentheses",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "String",
+   "Stack",
+   "Bracket Sequences"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "括号的分数",
+  "statement_chars": 269
+ },
+ "koko-eating-bananas": {
+  "id": 875,
+  "title": "Koko Eating Bananas",
+  "slug": "koko-eating-bananas",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Binary Search"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "爱吃香蕉的珂珂",
+  "statement_chars": 447
+ },
+ "super-egg-drop": {
+  "id": 887,
+  "title": "Super Egg Drop",
+  "slug": "super-egg-drop",
+  "difficulty": "Hard",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Math",
+   "Binary Search",
+   "Dynamic Programming"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "鸡蛋掉落",
+  "statement_chars": 504
+ },
+ "numbers-at-most-n-given-digit-set": {
+  "id": 902,
+  "title": "Numbers At Most N Given Digit Set",
+  "slug": "numbers-at-most-n-given-digit-set",
+  "difficulty": "Hard",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Math",
+   "String",
+   "Binary Search",
+   "Dynamic Programming"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "最大为 N 的数字组合",
+  "statement_chars": 667
+ },
+ "minimize-malware-spread": {
+  "id": 924,
+  "title": "Minimize Malware Spread",
+  "slug": "minimize-malware-spread",
+  "difficulty": "Hard",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Hash Table",
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Union-Find",
+   "Graph Theory"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "尽量减少恶意软件的传播",
+  "statement_chars": 783
+ },
+ "minimum-area-rectangle": {
+  "id": 939,
+  "title": "Minimum Area Rectangle",
+  "slug": "minimum-area-rectangle",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [],
+  "companies": {
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "最小面积矩形",
+  "statement_chars": 332
+ },
+ "capacity-to-ship-packages-within-d-days": {
+  "id": 1011,
+  "title": "Capacity To Ship Packages Within D Days",
+  "slug": "capacity-to-ship-packages-within-d-days",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "在 D 天内送达包裹的能力",
+  "statement_chars": 679
+ },
+ "greatest-common-divisor-of-strings": {
+  "id": 1071,
+  "title": "Greatest Common Divisor of Strings",
+  "slug": "greatest-common-divisor-of-strings",
+  "difficulty": "Easy",
+  "freq": 50,
+  "recent": false,
+  "tags": [],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "字符串的最大公因子",
+  "statement_chars": 416
+ },
+ "remove-all-adjacent-duplicates-in-string-ii": {
+  "id": 1209,
+  "title": "Remove All Adjacent Duplicates in String II",
+  "slug": "remove-all-adjacent-duplicates-in-string-ii",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "String",
+   "Stack"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "删除字符串中的所有相邻重复项 II",
+  "statement_chars": 436
+ },
+ "minimum-remove-to-make-valid-parentheses": {
+  "id": 1249,
+  "title": "Minimum Remove to Make Valid Parentheses",
+  "slug": "minimum-remove-to-make-valid-parentheses",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "String",
+   "Stack"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "移除无效的括号",
+  "statement_chars": 462
+ },
+ "course-schedule-iv": {
+  "id": 1462,
+  "title": "Course Schedule IV",
+  "slug": "course-schedule-iv",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Graph Theory",
+   "Topological Sort"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "课程表 IV",
+  "statement_chars": 1054
+ },
+ "reorder-routes-to-make-all-paths-lead-to-the-city-zero": {
+  "id": 1466,
+  "title": "Reorder Routes to Make All Paths Lead to the City Zero",
+  "slug": "reorder-routes-to-make-all-paths-lead-to-the-city-zero",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Graph Theory"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "重新规划路线",
+  "statement_chars": 715
+ },
+ "number-of-good-leaf-nodes-pairs": {
+  "id": 1530,
+  "title": "Number of Good Leaf Nodes Pairs",
+  "slug": "number-of-good-leaf-nodes-pairs",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Tree",
+   "Depth-First Search",
+   "Binary Tree",
+   "DP on Trees"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   },
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "好叶子节点对的数量",
+  "statement_chars": 622
+ },
+ "kth-missing-positive-number": {
+  "id": 1539,
+  "title": "Kth Missing Positive Number",
+  "slug": "kth-missing-positive-number",
+  "difficulty": "Easy",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Binary Search"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "第 k 个缺失的正整数",
+  "statement_chars": 410
+ },
+ "min-cost-to-connect-all-points": {
+  "id": 1584,
+  "title": "Min Cost to Connect All Points",
+  "slug": "min-cost-to-connect-all-points",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Union-Find",
+   "Graph Theory",
+   "Minimum Spanning Tree",
+   "Prim's Algorithm",
+   "Kruskal's Algorithm",
+   "Borůvka's Algorithm"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "连接所有点的最小费用",
+  "statement_chars": 607
+ },
+ "minimum-swaps-to-group-all-1s-together-ii": {
+  "id": 2134,
+  "title": "Minimum Swaps to Group All 1's Together II",
+  "slug": "minimum-swaps-to-group-all-1s-together-ii",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [],
+  "companies": {
+   "tiktok": {
+    "freq": 25,
+    "recent": false,
+    "tier": "C"
+   },
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "最少交换次数来组合所有的 1 II",
+  "statement_chars": 654
+ },
+ "split-message-based-on-limit": {
+  "id": 2468,
+  "title": "Split Message Based on Limit",
+  "slug": "split-message-based-on-limit",
+  "difficulty": "Hard",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "String",
+   "Enumeration"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "根据限制分割消息",
+  "statement_chars": 929
+ },
+ "minimum-moves-to-spread-stones-over-grid": {
+  "id": 2850,
+  "title": "Minimum Moves to Spread Stones Over Grid",
+  "slug": "minimum-moves-to-spread-stones-over-grid",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Dynamic Programming",
+   "Backtracking",
+   "Bit Manipulation",
+   "Matrix",
+   "Bitmask"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "将石头分散到网格图的最少移动次数",
+  "statement_chars": 703
+ },
+ "find-the-length-of-the-longest-common-prefix": {
+  "id": 3043,
+  "title": "Find the Length of the Longest Common Prefix",
+  "slug": "find-the-length-of-the-longest-common-prefix",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   },
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "最长公共前缀的长度",
+  "statement_chars": 694
+ },
+ "minimum-operations-to-write-the-letter-y-on-a-grid": {
+  "id": 3071,
+  "title": "Minimum Operations to Write the Letter Y on a Grid",
+  "slug": "minimum-operations-to-write-the-letter-y-on-a-grid",
+  "difficulty": "Medium",
+  "freq": 50,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Hash Table",
+   "Matrix",
+   "Counting"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "tier": "B",
+  "title_zh": "在矩阵上写出字母 Y 所需的最少操作次数",
+  "statement_chars": 782
+ }
+}
