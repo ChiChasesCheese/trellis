@@ -5,7 +5,10 @@
 
 Reads vault/interviews/core/leetcode/companies/{tiktok,bytedance}.md (made by lc_company.py), unions them, keeps
 tier A (seen in the last 6 months, or frequency >= 70) and tier B (frequency >= 50) of either company, drops SQL
-problems, and orders by the higher of the two frequencies. Facts go to research/companies/tiktok/index.json
+problems, and orders by the higher of the two frequencies. China-side ByteDance interviews draw on a different pool, so
+the CodeTop list for 字节跳动 (reports from Chinese forums, with a count and a last-seen date) is unioned in: a problem
+counted there joins tier C when it is not already in A or B (CN rule: >= 50 reports or seen in the last 30 days, or
+>= 20 reports or seen in the last 3 months). Facts go to research/companies/tiktok/index.json
 (committed); problem statements from leetcode.cn go to sources/local/tiktok-lc/<slug>.txt (gitignored: the repo is
 public and the statements are LeetCode's text).
 """
@@ -111,6 +114,42 @@ def windows() -> dict[str, dict]:
     return seen
 
 
+CODETOP = "https://codetop.cc/api/questions/?page={page}&search=&ordering=-frequency&company=1"  # 1 = 字节跳动
+
+
+def codetop(today: str) -> dict[str, dict]:
+    """slug -> CodeTop facts for the problems that pass the CN rule. Non-LeetCode extras (补充题) get a
+    `codetop-supp-<n>` slug and carry CodeTop's own statement."""
+    from datetime import date, timedelta
+    t = date.fromisoformat(today)
+    d30, d90 = str(t - timedelta(days=30)), str(t - timedelta(days=90))
+    rows, page = [], 1
+    while True:
+        with urllib.request.urlopen(CODETOP.format(page=page), timeout=30) as r:
+            data = json.loads(r.read())
+        rows += data["list"]
+        if not data["list"] or len(rows) >= data["count"]:
+            break
+        page += 1
+        time.sleep(0.3)
+    out = {}
+    for x in rows:
+        seen = x["time"][:10]
+        cn_tier = "A" if x["value"] >= 50 or seen >= d30 else ("B" if x["value"] >= 20 or seen >= d90 else "")
+        if not cn_tier:
+            continue
+        lc = x["leetcode"]
+        fid = str(lc["frontend_question_id"])
+        if fid.startswith("补充题"):
+            slug, kind = f"codetop-supp-{fid.removeprefix('补充题').strip()}", "supplement"
+        else:
+            slug, kind = lc["slug_title"], ("leetcode" if fid.isdigit() else "lcof")
+        out[slug] = {"fid": fid, "title_zh": lc["title"], "difficulty": {1: "Easy", 2: "Medium", 3: "Hard"}.get(
+            lc.get("level"), ""), "reports": x["value"], "last_seen": seen, "cn_tier": cn_tier, "kind": kind,
+            "content": lc.get("content") or ""}
+    return out
+
+
 def main(argv: list[str]) -> int:
     t, b = table("tiktok"), table("bytedance")
     merged: dict[str, dict] = {}
@@ -137,6 +176,24 @@ def main(argv: list[str]) -> int:
             and "Database" not in p["tags"]]
     for p in keep:
         p["tier"] = "A" if p["window"] else min(c["tier"] for c in p["companies"].values())
+    from datetime import date
+    cn = codetop(str(date.today()))
+    have = {p["slug"] for p in keep}
+    for p in keep:
+        if p["slug"] in cn:
+            c = cn[p["slug"]]
+            p["companies"]["bytedance_cn"] = {"reports": c["reports"], "last_seen": c["last_seen"], "tier": c["cn_tier"]}
+    for slug, c in cn.items():
+        if slug in have:
+            continue
+        keep.append({"id": int(c["fid"]) if c["fid"].isdigit() else 0, "fid": c["fid"], "title": c["title_zh"],
+                     "title_zh": c["title_zh"], "slug": slug, "difficulty": c["difficulty"], "freq": c["reports"],
+                     "recent": False, "window": "", "tags": [], "tier": "C", "kind": c["kind"],
+                     "companies": {"bytedance_cn": {"reports": c["reports"], "last_seen": c["last_seen"],
+                                                    "tier": c["cn_tier"]}}})
+        if c["kind"] == "supplement" and "--no-fetch" not in argv:
+            STATEMENTS.mkdir(parents=True, exist_ok=True)
+            (STATEMENTS / f"{slug}.txt").write_text(to_text(c["content"]), encoding="utf-8")
     keep.sort(key=lambda p: (p["tier"], -p["freq"], p["id"]))
     if "--no-fetch" not in argv:
         STATEMENTS.mkdir(parents=True, exist_ok=True)
@@ -147,14 +204,15 @@ def main(argv: list[str]) -> int:
                 text = to_text(q.get("translatedContent") or q.get("content") or "") or doocs(p["id"])
                 dest.write_text(text, encoding="utf-8")
                 time.sleep(0.4)
-                p["title_zh"] = q.get("translatedTitle") or ""
+                p["title_zh"] = q.get("translatedTitle") or p.get("title_zh", "")
             else:
-                p["title_zh"] = (json.loads(OUT.read_text()) if OUT.exists() else {}).get(p["slug"], {}).get("title_zh", "")
+                p["title_zh"] = p.get("title_zh") or (json.loads(OUT.read_text()) if OUT.exists() else {}).get(
+                    p["slug"], {}).get("title_zh", "")
             p["statement_chars"] = len((STATEMENTS / f"{p['slug']}.txt").read_text(encoding="utf-8"))
             print(f"{i:3d} {p['tier']} {p['freq']:3d} {p['slug']} ({p['statement_chars']} chars)", flush=True)
     OUT.write_text(json.dumps({p["slug"]: p for p in keep}, ensure_ascii=False, indent=1), encoding="utf-8")
-    tiers = {k: sum(p["tier"] == k for p in keep) for k in "AB"}
-    print(f"{len(keep)} problems (A {tiers['A']} / B {tiers['B']}) -> {OUT.relative_to(ROOT)}")
+    tiers = {k: sum(p["tier"] == k for p in keep) for k in "ABC"}
+    print(f"{len(keep)} problems (A {tiers['A']} / B {tiers['B']} / C {tiers['C']}) -> {OUT.relative_to(ROOT)}")
     return 0
 
 

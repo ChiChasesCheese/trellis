@@ -52,13 +52,22 @@ PATTERNS = [
 
 def leaf_title(p):
     zh = p.get("title_zh") or ""
+    if p.get("kind") == "supplement":
+        return f"{p['fid']} {zh}（非 LeetCode 原题）"
+    if p.get("kind") == "lcof":
+        return f"{p['fid']} {zh}"
     return f"LC {p['id']} {zh}（{p['title']}）" if zh and zh != p["title"] else f"LC {p['id']} {p['title']}"
 
 
 def leaf_summary(p):
-    who = "、".join(f"{'TikTok' if c == 'tiktok' else '字节'} {v['freq']}" for c, v in p["companies"].items())
+    cn = p["companies"].get("bytedance_cn")
+    cn_txt = f"国内字节面经 {cn['reports']} 次、最近 {cn['last_seen']}" if cn else ""
+    if p["tier"] == "C":
+        return f"{p['difficulty'] or '—'}；{cn_txt}。"
+    who = "、".join(f"{'TikTok' if c == 'tiktok' else '字节'} {v['freq']}" for c, v in p["companies"].items() if c != "bytedance_cn")
     recent = {"30d": "；近 30 天出现", "3m": "；近 3 个月出现", "6m": "；近 6 个月出现"}.get(p.get("window", ""), "")
-    return f"{p['difficulty']}；频率 {who}{recent}；{', '.join(p['tags'][:5])}。"
+    cn_part = f"；{cn_txt}" if cn else ""
+    return f"{p['difficulty']}；频率 {who}{recent}{cn_part}；{', '.join(p['tags'][:5])}。"
 
 
 def branch(i, bid, title, summary, leaves, core):
@@ -79,6 +88,8 @@ nodes = [
         [{"id": f"a.{p['slug']}", "title": leaf_title(p), "summary": leaf_summary(p)} for p in problems if p["tier"] == "A"], True),
  branch(4, "b", "B 档：频率 ≥ 50", "次高频的题，按频率降序。",
         [{"id": f"b.{p['slug']}", "title": leaf_title(p), "summary": leaf_summary(p)} for p in problems if p["tier"] == "B"], False),
+ branch(5, "c", "C 档：国内字节高频（不在 A / B 档）", "国内字节面经里被报告 ≥ 50 次或近 30 天出现，或 ≥ 20 次或近 3 个月出现的题，按报告次数降序。",
+        [{"id": f"c.{p['slug']}", "title": leaf_title(p), "summary": leaf_summary(p)} for p in problems if p["tier"] == "C"], False),
 ]
 sk = {"domain": "tiktok-lc", "title": "TikTok 字节高频 LeetCode · 整题答案",
       "deck": "LeetCode Tops::24 TikTok 字节高频 · 整题答案（whole answers）",
