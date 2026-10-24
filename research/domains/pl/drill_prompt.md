@@ -23,7 +23,7 @@ tags: [drill]
 - <2–4 bullets: what to produce>
 
 **评分要点**
-- <5–8 bullets; each ends with 1–3 wikilinks to the card ids that hold the answer, e.g. ([[hft-java-gc-choices-gen-zgc]])>
+- <5–8 bullets; each ends with 1–3 wikilinks to the card ids that hold the answer, e.g. ([[pl-memory-escape-analysis-best-practice]])>
 
 **练习记录**
 - [ ] 第 1 次（日期、用时、自评）：
