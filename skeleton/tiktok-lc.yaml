@@ -130,10 +130,10 @@ nodes:
   children:
   - id: a.lru-cache
     title: LC 146 LRU 缓存（LRU Cache）
-    summary: Medium；频率 TikTok 100、字节 100；近半年出现过；Hash Table, Linked List, Design, Doubly-Linked List。
+    summary: Medium；频率 TikTok 100、字节 100；近 30 天出现；Hash Table, Linked List, Design, Doubly-Linked List。
   - id: a.number-of-islands
     title: LC 200 岛屿数量（Number of Islands）
-    summary: Medium；频率 TikTok 100、字节 87；近半年出现过；Array, Depth-First Search, Breadth-First Search, Union-Find, Matrix。
+    summary: Medium；频率 TikTok 100、字节 87；近 30 天出现；Array, Depth-First Search, Breadth-First Search, Union-Find, Matrix。
   - id: a.longest-substring-without-repeating-characters
     title: LC 3 无重复字符的最长子串（Longest Substring Without Repeating Characters）
     summary: Medium；频率 TikTok 88；Hash Table, String, Sliding Window。
@@ -142,25 +142,25 @@ nodes:
     summary: Hard；频率 TikTok 88、字节 62；Array, Two Pointers, Dynamic Programming, Stack, Monotonic Stack。
   - id: a.merge-intervals
     title: LC 56 合并区间（Merge Intervals）
-    summary: Medium；频率 TikTok 88、字节 75；近半年出现过；Array, Sorting, Quicksort。
+    summary: Medium；频率 TikTok 88、字节 75；近 3 个月出现；Array, Sorting, Quicksort。
   - id: a.course-schedule
     title: LC 207 课程表（Course Schedule）
-    summary: Medium；频率 TikTok 88、字节 75；近半年出现过；Depth-First Search, Breadth-First Search, Graph Theory, Topological Sort, Directed Acyclic Graph。
+    summary: Medium；频率 TikTok 88、字节 75；近 30 天出现；Depth-First Search, Breadth-First Search, Graph Theory, Topological Sort, Directed Acyclic Graph。
   - id: a.course-schedule-ii
     title: LC 210 课程表 II（Course Schedule II）
     summary: Medium；频率 TikTok 88；Depth-First Search, Breadth-First Search, Graph Theory, Topological Sort。
   - id: a.meeting-rooms-ii
     title: LC 253 会议室 II（Meeting Rooms II）
-    summary: Medium；频率 TikTok 88；近半年出现过；Array, Two Pointers, Greedy, Sorting, Heap (Priority Queue)。
+    summary: Medium；频率 TikTok 88；近 3 个月出现；Array, Two Pointers, Greedy, Sorting, Heap (Priority Queue)。
   - id: a.longest-increasing-subsequence
     title: LC 300 最长递增子序列（Longest Increasing Subsequence）
-    summary: Medium；频率 TikTok 88、字节 62；近半年出现过；Array, Binary Search, Dynamic Programming, Longest Increasing Subsequence。
+    summary: Medium；频率 TikTok 88、字节 62；近 6 个月出现；Array, Binary Search, Dynamic Programming, Longest Increasing Subsequence。
   - id: a.remove-duplicate-letters
     title: LC 316 去除重复字母（Remove Duplicate Letters）
-    summary: Medium；频率 TikTok 58、字节 88；近半年出现过；String, Stack, Greedy, Monotonic Stack。
+    summary: Medium；频率 TikTok 58、字节 88；近 3 个月出现；String, Stack, Greedy, Monotonic Stack。
   - id: a.number-of-distinct-islands
     title: LC 694 不同岛屿的数量（Number of Distinct Islands）
-    summary: Medium；频率 TikTok 88；近半年出现过；Array, Hash Table, Depth-First Search, Breadth-First Search, Union-Find。
+    summary: Medium；频率 TikTok 88；近 30 天出现；Array, Hash Table, Depth-First Search, Breadth-First Search, Union-Find。
   - id: a.smallest-subsequence-of-distinct-characters
     title: LC 1081 不同字符的最小子序列（Smallest Subsequence of Distinct Characters）
     summary: Medium；频率 字节 88；String, Stack, Greedy, Monotonic Stack。
@@ -170,9 +170,12 @@ nodes:
   - id: a.subarray-with-elements-greater-than-varying-threshold
     title: LC 2334 元素值大于变化阈值的子数组（Subarray With Elements Greater Than Varying Threshold）
     summary: Hard；频率 TikTok 88；。
+  - id: a.block-placement-queries
+    title: LC 3161 物块放置查询（Block Placement Queries）
+    summary: Hard；频率 TikTok 88；近 3 个月出现；Binary Indexed Tree, Segment Tree, Array, Binary Search, Ordered Set。
   - id: a.text-justification
     title: LC 68 文本左右对齐（Text Justification）
-    summary: Hard；频率 TikTok 81、字节 50；近半年出现过；Array, String, Simulation。
+    summary: Hard；频率 TikTok 81、字节 50；近 6 个月出现；Array, String, Simulation。
   - id: a.longest-palindromic-substring
     title: LC 5 最长回文子串（Longest Palindromic Substring）
     summary: Medium；频率 TikTok 75、字节 50；Two Pointers, String, Dynamic Programming, Manacher。
@@ -181,7 +184,7 @@ nodes:
     summary: Medium；频率 TikTok 75；Array, Two Pointers, Sorting。
   - id: a.search-in-rotated-sorted-array
     title: LC 33 搜索旋转排序数组（Search in Rotated Sorted Array）
-    summary: Medium；频率 TikTok 75、字节 62；近半年出现过；Array, Binary Search。
+    summary: Medium；频率 TikTok 75、字节 62；近 6 个月出现；Array, Binary Search。
   - id: a.combination-sum
     title: LC 39 组合总和（Combination Sum）
     summary: Medium；频率 TikTok 50、字节 75；Array, Backtracking。
@@ -190,7 +193,7 @@ nodes:
     summary: Hard；频率 TikTok 75；Array, Backtracking, Algorithm X。
   - id: a.spiral-matrix
     title: LC 54 螺旋矩阵（Spiral Matrix）
-    summary: Medium；频率 TikTok 75；近半年出现过；Array, Matrix, Simulation。
+    summary: Medium；频率 TikTok 75；近 3 个月出现；Array, Matrix, Simulation。
   - id: a.sqrtx
     title: LC 69 x 的平方根 （Sqrt(x)）
     summary: Easy；频率 TikTok 75；Math, Binary Search, Newton's Method。
@@ -199,142 +202,148 @@ nodes:
     summary: Hard；频率 TikTok 75；Hash Table, String, Sliding Window。
   - id: a.word-search
     title: LC 79 单词搜索（Word Search）
-    summary: Medium；频率 TikTok 75；近半年出现过；Array, String, Backtracking, Depth-First Search, Matrix。
+    summary: Medium；频率 TikTok 75；近 6 个月出现；Array, String, Backtracking, Depth-First Search, Matrix。
   - id: a.maximal-square
     title: LC 221 最大正方形（Maximal Square）
     summary: Medium；频率 TikTok 38、字节 75；Array, Dynamic Programming, Matrix。
   - id: a.basic-calculator-ii
     title: LC 227 基本计算器 II（Basic Calculator II）
-    summary: Medium；频率 TikTok 66、字节 75；近半年出现过；Math, String, Stack。
+    summary: Medium；频率 TikTok 66、字节 75；近 3 个月出现；Math, String, Stack。
   - id: a.coin-change
     title: LC 322 零钱兑换（Coin Change）
     summary: Medium；频率 TikTok 75；Array, Dynamic Programming, Breadth-First Search, Knapsack Problem, Complete Knapsack。
   - id: a.top-k-frequent-elements
     title: LC 347 前 K 个高频元素（Top K Frequent Elements）
-    summary: Medium；频率 TikTok 75、字节 62；近半年出现过；Array, Hash Table, Divide and Conquer, Sorting, Heap (Priority Queue)。
+    summary: Medium；频率 TikTok 75、字节 62；近 6 个月出现；Array, Hash Table, Divide and Conquer, Sorting, Heap (Priority Queue)。
   - id: a.decode-string
     title: LC 394 字符串解码（Decode String）
-    summary: Medium；频率 TikTok 75、字节 62；近半年出现过；String, Stack, Recursion。
+    summary: Medium；频率 TikTok 75、字节 62；近 3 个月出现；String, Stack, Recursion。
   - id: a.subarray-sum-equals-k
     title: LC 560 和为 K 的子数组（Subarray Sum Equals K）
-    summary: Medium；频率 TikTok 75、字节 50；近半年出现过；Array, Hash Table, Prefix Sum。
+    summary: Medium；频率 TikTok 75、字节 50；近 6 个月出现；Array, Hash Table, Prefix Sum。
   - id: a.making-a-large-island
     title: LC 827 最大人工岛（Making A Large Island）
-    summary: Hard；频率 TikTok 75；近半年出现过；Array, Depth-First Search, Breadth-First Search, Union-Find, Matrix。
+    summary: Hard；频率 TikTok 75；近 30 天出现；Array, Depth-First Search, Breadth-First Search, Union-Find, Matrix。
   - id: a.shortest-bridge
     title: LC 934 最短的桥（Shortest Bridge）
     summary: Medium；频率 TikTok 56、字节 75；Array, Depth-First Search, Breadth-First Search, Matrix。
   - id: a.minimum-swaps-to-group-all-1s-together
     title: LC 1151 最少交换次数来组合所有的 1（Minimum Swaps to Group All 1's Together）
     summary: Medium；频率 TikTok 75；Array, Sliding Window。
+  - id: a.single-threaded-cpu
+    title: LC 1834 单线程 CPU（Single-Threaded CPU）
+    summary: Medium；频率 TikTok 69；近 3 个月出现；Array, Sorting, Heap (Priority Queue)。
   - id: a.two-sum
     title: LC 1 两数之和（Two Sum）
-    summary: Easy；频率 TikTok 66、字节 62；近半年出现过；Array, Hash Table。
+    summary: Easy；频率 TikTok 66、字节 62；近 3 个月出现；Array, Hash Table。
   - id: a.best-time-to-buy-and-sell-stock
     title: LC 121 买卖股票的最佳时机（Best Time to Buy and Sell Stock）
-    summary: Easy；频率 TikTok 63、字节 62；近半年出现过；Array, Dynamic Programming。
+    summary: Easy；频率 TikTok 63、字节 62；近 6 个月出现；Array, Dynamic Programming。
   - id: a.kth-largest-element-in-an-array
     title: LC 215 数组中的第K个最大元素（Kth Largest Element in an Array）
-    summary: Medium；频率 TikTok 63、字节 50；近半年出现过；Array, Divide and Conquer, Sorting, Heap (Priority Queue), Quickselect。
+    summary: Medium；频率 TikTok 63、字节 50；近 6 个月出现；Array, Divide and Conquer, Sorting, Heap (Priority Queue), Quickselect。
   - id: a.multiply-strings
     title: LC 43 字符串相乘（Multiply Strings）
-    summary: Medium；频率 TikTok 50、字节 62；近半年出现过；Math, String, Simulation。
+    summary: Medium；频率 TikTok 50、字节 62；近 6 个月出现；Math, String, Simulation。
   - id: a.binary-tree-maximum-path-sum
     title: LC 124 二叉树中的最大路径和（Binary Tree Maximum Path Sum）
-    summary: Hard；频率 TikTok 62；近半年出现过；Dynamic Programming, Tree, Depth-First Search, Binary Tree, DP on Trees。
+    summary: Hard；频率 TikTok 62；近 6 个月出现；Dynamic Programming, Tree, Depth-First Search, Binary Tree, DP on Trees。
   - id: a.binary-tree-right-side-view
     title: LC 199 二叉树的右视图（Binary Tree Right Side View）
-    summary: Medium；频率 TikTok 62；近半年出现过；Tree, Depth-First Search, Breadth-First Search, Binary Tree。
+    summary: Medium；频率 TikTok 62；近 6 个月出现；Tree, Depth-First Search, Breadth-First Search, Binary Tree。
   - id: a.reverse-linked-list
     title: LC 206 反转链表（Reverse Linked List）
-    summary: Easy；频率 TikTok 62；近半年出现过；Linked List, Recursion。
+    summary: Easy；频率 TikTok 62；近 6 个月出现；Linked List, Recursion。
   - id: a.basic-calculator
     title: LC 224 基本计算器（Basic Calculator）
-    summary: Hard；频率 TikTok 62、字节 62；近半年出现过；Math, String, Stack, Recursion。
+    summary: Hard；频率 TikTok 62、字节 62；近 6 个月出现；Math, String, Stack, Recursion。
   - id: a.find-median-from-data-stream
     title: LC 295 数据流的中位数（Find Median from Data Stream）
-    summary: Hard；频率 TikTok 62；近半年出现过；Two Pointers, Design, Sorting, Heap (Priority Queue), Data Stream。
+    summary: Hard；频率 TikTok 62；近 3 个月出现；Two Pointers, Design, Sorting, Heap (Priority Queue), Data Stream。
   - id: a.serialize-and-deserialize-binary-tree
     title: LC 297 二叉树的序列化与反序列化（Serialize and Deserialize Binary Tree）
-    summary: Hard；频率 TikTok 62；近半年出现过；String, Tree, Depth-First Search, Breadth-First Search, Design。
+    summary: Hard；频率 TikTok 62；近 6 个月出现；String, Tree, Depth-First Search, Breadth-First Search, Design。
   - id: a.design-hashmap
     title: LC 706 设计哈希映射（Design HashMap）
-    summary: Easy；频率 TikTok 62；近半年出现过；Array, Hash Table, Linked List, Design, Hash Function。
+    summary: Easy；频率 TikTok 62；近 6 个月出现；Array, Hash Table, Linked List, Design, Hash Function。
   - id: a.reverse-nodes-in-k-group
     title: LC 25 K 个一组翻转链表（Reverse Nodes in k-Group）
-    summary: Hard；频率 TikTok 58；近半年出现过；Linked List, Recursion。
+    summary: Hard；频率 TikTok 58；近 30 天出现；Linked List, Recursion。
   - id: a.rotate-array
     title: LC 189 轮转数组（Rotate Array）
-    summary: Medium；频率 TikTok 56；近半年出现过；Array, Math, Two Pointers。
+    summary: Medium；频率 TikTok 56；近 3 个月出现；Array, Math, Two Pointers。
   - id: a.possible-bipartition
     title: LC 886 可能的二分法（Possible Bipartition）
-    summary: Medium；频率 TikTok 56；近半年出现过；Depth-First Search, Breadth-First Search, Union-Find, Graph Theory, Graph Coloring。
+    summary: Medium；频率 TikTok 56；近 3 个月出现；Depth-First Search, Breadth-First Search, Union-Find, Graph Theory, Graph Coloring。
   - id: a.find-first-and-last-position-of-element-in-sorted-array
     title: LC 34 在排序数组中查找元素的第一个和最后一个位置（Find First and Last Position of Element in Sorted Array）
-    summary: Medium；频率 TikTok 53；近半年出现过；Array, Binary Search。
+    summary: Medium；频率 TikTok 53；近 3 个月出现；Array, Binary Search。
   - id: a.minimum-size-subarray-sum
     title: LC 209 长度最小的子数组（Minimum Size Subarray Sum）
-    summary: Medium；频率 TikTok 53；近半年出现过；Array, Binary Search, Sliding Window, Prefix Sum。
+    summary: Medium；频率 TikTok 53；近 6 个月出现；Array, Binary Search, Sliding Window, Prefix Sum。
   - id: a.subarray-sums-divisible-by-k
     title: LC 974 和可被 K 整除的子数组（Subarray Sums Divisible by K）
-    summary: Medium；频率 TikTok 53；近半年出现过；Array, Hash Table, Prefix Sum。
+    summary: Medium；频率 TikTok 53；近 6 个月出现；Array, Hash Table, Prefix Sum。
   - id: a.longest-valid-parentheses
     title: LC 32 最长有效括号（Longest Valid Parentheses）
-    summary: Hard；频率 TikTok 50；近半年出现过；String, Dynamic Programming, Stack, Bracket Sequences。
+    summary: Hard；频率 TikTok 50；近 6 个月出现；String, Dynamic Programming, Stack, Bracket Sequences。
   - id: a.jump-game
     title: LC 55 跳跃游戏（Jump Game）
-    summary: Medium；频率 TikTok 50、字节 50；近半年出现过；Array, Dynamic Programming, Greedy。
+    summary: Medium；频率 TikTok 50、字节 50；近 6 个月出现；Array, Dynamic Programming, Greedy。
   - id: a.subsets
     title: LC 78 子集（Subsets）
-    summary: Medium；频率 TikTok 50、字节 50；近半年出现过；Array, Backtracking, Bit Manipulation。
+    summary: Medium；频率 TikTok 50、字节 50；近 6 个月出现；Array, Backtracking, Bit Manipulation。
   - id: a.gas-station
     title: LC 134 加油站（Gas Station）
-    summary: Medium；频率 TikTok 50；近半年出现过；Array, Greedy。
+    summary: Medium；频率 TikTok 50；近 3 个月出现；Array, Greedy。
   - id: a.intersection-of-two-linked-lists
     title: LC 160 相交链表（Intersection of Two Linked Lists）
-    summary: Easy；频率 TikTok 50；近半年出现过；Hash Table, Linked List, Two Pointers。
+    summary: Easy；频率 TikTok 50；近 6 个月出现；Hash Table, Linked List, Two Pointers。
   - id: a.single-element-in-a-sorted-array
     title: LC 540 有序数组中的单一元素（Single Element in a Sorted Array）
-    summary: Medium；频率 字节 50；近半年出现过；Array, Binary Search。
+    summary: Medium；频率 字节 50；近 6 个月出现；Array, Binary Search。
   - id: a.cheapest-flights-within-k-stops
     title: LC 787 K 站中转内最便宜的航班（Cheapest Flights Within K Stops）
-    summary: Medium；频率 TikTok 50；近半年出现过；Dynamic Programming, Depth-First Search, Breadth-First Search, Graph Theory, Heap (Priority Queue)。
+    summary: Medium；频率 TikTok 50；近 30 天出现；Dynamic Programming, Depth-First Search, Breadth-First Search, Graph Theory, Heap (Priority Queue)。
   - id: a.longest-mountain-in-array
     title: LC 845 数组中的最长山脉（Longest Mountain in Array）
-    summary: Medium；频率 TikTok 50；近半年出现过；Array, Two Pointers, Dynamic Programming, Enumeration。
+    summary: Medium；频率 TikTok 50；近 3 个月出现；Array, Two Pointers, Dynamic Programming, Enumeration。
   - id: a.count-number-of-nice-subarrays
     title: LC 1248 统计「优美子数组」（Count Number of Nice Subarrays）
-    summary: Medium；频率 TikTok 50；近半年出现过；Array, Hash Table, Math, Sliding Window, Prefix Sum。
+    summary: Medium；频率 TikTok 50；近 30 天出现；Array, Hash Table, Math, Sliding Window, Prefix Sum。
   - id: a.product-of-the-last-k-numbers
     title: LC 1352 最后 K 个数的乘积（Product of the Last K Numbers）
-    summary: Medium；频率 TikTok 38、字节 50；近半年出现过；Array, Math, Design, Data Stream, Prefix Sum。
+    summary: Medium；频率 TikTok 38、字节 50；近 6 个月出现；Array, Math, Design, Data Stream, Prefix Sum。
   - id: a.longest-substring-with-at-most-k-distinct-characters
     title: LC 340 至多包含 K 个不同字符的最长子串（Longest Substring with At Most K Distinct Characters）
-    summary: Medium；频率 TikTok 46；近半年出现过；Hash Table, String, Sliding Window。
+    summary: Medium；频率 TikTok 46；近 3 个月出现；Hash Table, String, Sliding Window。
   - id: a.all-oone-data-structure
     title: LC 432 全 O(1) 的数据结构（All O`one Data Structure）
-    summary: Hard；频率 TikTok 46；近半年出现过；Hash Table, Linked List, Design, Doubly-Linked List。
+    summary: Hard；频率 TikTok 46；近 3 个月出现；Hash Table, Linked List, Design, Doubly-Linked List。
   - id: a.all-nodes-distance-k-in-binary-tree
     title: LC 863 二叉树中所有距离为 K 的结点（All Nodes Distance K in Binary Tree）
-    summary: Medium；频率 TikTok 46；近半年出现过；Hash Table, Tree, Depth-First Search, Breadth-First Search, Binary Tree。
+    summary: Medium；频率 TikTok 46；近 30 天出现；Hash Table, Tree, Depth-First Search, Breadth-First Search, Binary Tree。
   - id: a.path-sum-iii
     title: LC 437 路径总和 III（Path Sum III）
-    summary: Medium；频率 TikTok 41；近半年出现过；Tree, Depth-First Search, Binary Tree。
+    summary: Medium；频率 TikTok 41；近 30 天出现；Tree, Depth-First Search, Binary Tree。
+  - id: a.rotate-image
+    title: LC 48 旋转图像（Rotate Image）
+    summary: Medium；频率 TikTok 38；近 6 个月出现；Array, Math, Matrix。
   - id: a.serialize-and-deserialize-n-ary-tree
     title: LC 428 序列化和反序列化 N 叉树（Serialize and Deserialize N-ary Tree）
-    summary: Hard；频率 TikTok 38；近半年出现过；String, Tree, Depth-First Search, Breadth-First Search。
+    summary: Hard；频率 TikTok 38；近 3 个月出现；String, Tree, Depth-First Search, Breadth-First Search。
   - id: a.find-all-anagrams-in-a-string
     title: LC 438 找到字符串中所有字母异位词（Find All Anagrams in a String）
-    summary: Medium；频率 TikTok 38；近半年出现过；Hash Table, String, Sliding Window。
+    summary: Medium；频率 TikTok 38；近 6 个月出现；Hash Table, String, Sliding Window。
   - id: a.fruit-into-baskets
     title: LC 904 水果成篮（Fruit Into Baskets）
-    summary: Medium；频率 TikTok 38；近半年出现过；Array, Hash Table, Sliding Window。
+    summary: Medium；频率 TikTok 38；近 3 个月出现；Array, Hash Table, Sliding Window。
   - id: a.partition-array-for-maximum-sum
     title: LC 1043 分隔数组以得到最大和（Partition Array for Maximum Sum）
-    summary: Medium；频率 TikTok 38；近半年出现过；Array, Dynamic Programming。
+    summary: Medium；频率 TikTok 38；近 3 个月出现；Array, Dynamic Programming。
   - id: a.robot-bounded-in-circle
     title: LC 1041 困于环中的机器人（Robot Bounded In Circle）
-    summary: Medium；频率 TikTok 26；近半年出现过；Math, String, Simulation。
+    summary: Medium；频率 TikTok 26；近 6 个月出现；Math, String, Simulation。
 - id: b
   order: 4
   title: B 档：频率 ≥ 50

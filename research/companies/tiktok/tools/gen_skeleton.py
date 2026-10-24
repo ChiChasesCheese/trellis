@@ -57,7 +57,7 @@ def leaf_title(p):
 
 def leaf_summary(p):
     who = "、".join(f"{'TikTok' if c == 'tiktok' else '字节'} {v['freq']}" for c, v in p["companies"].items())
-    recent = "；近半年出现过" if p["recent"] else ""
+    recent = {"30d": "；近 30 天出现", "3m": "；近 3 个月出现", "6m": "；近 6 个月出现"}.get(p.get("window", ""), "")
     return f"{p['difficulty']}；频率 {who}{recent}；{', '.join(p['tags'][:5])}。"
 
 

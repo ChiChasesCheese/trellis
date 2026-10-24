@@ -25,7 +25,11 @@ OUT = ROOT / "research/companies/tiktok/index.json"
 STATEMENTS = ROOT / "sources/local/tiktok-lc"
 ROW = re.compile(r"^\| (\d+) \| \[(.+)\]\(https://leetcode\.com/problems/([^/]+)/\) \| (\w+) \| (\d+) \| (✓?) \| (✓?) \| (.*?) \|")
 QUERY = ("query q($s:String!){question(titleSlug:$s){questionFrontendId translatedTitle title difficulty "
-         "translatedContent content}}")
+         "translatedContent content categoryTitle topicTags{name}}}")
+# Recent windows, newest first: (label, primary-repo file, secondary-repo file)
+WINDOWS = [("30d", "1. Thirty Days", "thirty-days"), ("3m", "2. Three Months", "three-months"),
+           ("6m", "3. Six Months", "six-months")]
+DIRS = {"tiktok": ("TikTok", "tiktok"), "bytedance": ("ByteDance", "bytedance")}
 
 
 def table(company: str) -> dict[str, dict]:
@@ -77,6 +81,36 @@ def doocs(pid: int) -> str:
     return to_text(m.group(1) if m else "")
 
 
+def gh_csv(repo: str, path: str) -> list[dict]:
+    import base64
+    import csv
+    import io
+    import subprocess
+    out = subprocess.run(["gh", "api", f"repos/{repo}/contents/{path}"], capture_output=True, text=True)
+    if out.returncode:
+        return []
+    return list(csv.DictReader(io.StringIO(base64.b64decode(json.loads(out.stdout)["content"]).decode())))
+
+
+def windows() -> dict[str, dict]:
+    """slug -> {"window": newest window it appears in, "freq": best frequency seen there}. The company tables only
+    list problems from each repo's all-time file, so a problem seen only recently is missing there."""
+    seen: dict[str, dict] = {}
+    for label, pfile, sfile in reversed(WINDOWS):  # oldest first, so newer windows overwrite
+        for pdir, sdir in DIRS.values():
+            rows = [(r.get("Link", ""), r.get("Frequency", "0")) for r in
+                    gh_csv("liquidslr/leetcode-company-wise-problems", f"{pdir}/{pfile}.csv")]
+            rows += [(r.get("URL", ""), r.get("Frequency %", "0").rstrip("%")) for r in
+                     gh_csv("snehasishroy/leetcode-companywise-interview-questions", f"{sdir}/{sfile}.csv")]
+            for url, freq in rows:
+                m = re.search(r"/problems/([^/]+)", url or "")
+                if m:
+                    slug = m.group(1)
+                    prev = seen.get(slug, {})
+                    seen[slug] = {"window": label, "freq": max(float(freq or 0), prev.get("freq", 0.0))}
+    return seen
+
+
 def main(argv: list[str]) -> int:
     t, b = table("tiktok"), table("bytedance")
     merged: dict[str, dict] = {}
@@ -86,10 +120,23 @@ def main(argv: list[str]) -> int:
             q["companies"][company] = {"freq": p["freq"], "recent": p["recent"], "tier": tier(p)}
             q["freq"] = max(q["freq"], p["freq"])
             q["recent"] = q["recent"] or p["recent"]
+    recent = windows()
+    for slug, w in recent.items():
+        if slug not in merged:  # seen recently but absent from the all-time tables
+            q = fetch(slug)
+            if not q or q.get("categoryTitle") == "Database":
+                continue
+            merged[slug] = {"id": int(q["questionFrontendId"]), "title": q["title"], "slug": slug,
+                            "difficulty": q["difficulty"], "freq": int(w["freq"]), "recent": True,
+                            "tags": [t["name"] for t in q.get("topicTags") or []],
+                            "companies": {"tiktok": {"freq": int(w["freq"]), "recent": True, "tier": "A"}}}
+    for slug, p in merged.items():
+        p["window"] = recent.get(slug, {}).get("window", "")
     keep = [p for p in merged.values()
-            if min(c["tier"] for c in p["companies"].values()) in "AB" and "Database" not in p["tags"]]
+            if (p["window"] or min(c["tier"] for c in p["companies"].values()) in "AB")
+            and "Database" not in p["tags"]]
     for p in keep:
-        p["tier"] = min(c["tier"] for c in p["companies"].values())
+        p["tier"] = "A" if p["window"] else min(c["tier"] for c in p["companies"].values())
     keep.sort(key=lambda p: (p["tier"], -p["freq"], p["id"]))
     if "--no-fetch" not in argv:
         STATEMENTS.mkdir(parents=True, exist_ok=True)
