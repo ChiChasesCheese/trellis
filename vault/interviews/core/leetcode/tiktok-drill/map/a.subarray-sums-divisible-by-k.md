@@ -5,6 +5,12 @@
 Medium；频率 TikTok 53；近 6 个月出现；国内字节面经 9 次、最近 2026-08-27；Array, Hash Table, Prefix Sum。
 
 **Core** — part of the first pass through this subject.
+
+## Cards (4)
+1. [[tlc-subarray-sums-divisible-by-k-1-signal]]
+2. [[tlc-subarray-sums-divisible-by-k-2-code]]
+3. [[tlc-subarray-sums-divisible-by-k-3-why]]
+4. [[tlc-subarray-sums-divisible-by-k-4-followup]]
 %% trellis:end %%
 
 ## Notes

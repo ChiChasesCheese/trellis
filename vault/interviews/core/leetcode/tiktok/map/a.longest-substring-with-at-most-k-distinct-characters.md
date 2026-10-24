@@ -5,6 +5,9 @@
 Medium；频率 TikTok 46；近 3 个月出现；Hash Table, String, Sliding Window。
 
 **Core** — part of the first pass through this subject.
+
+## Cards (1)
+1. [[tlc-longest-substring-with-at-most-k-distinct-characters-0-whole]]
 %% trellis:end %%
 
 ## Notes

@@ -5,6 +5,9 @@
 Medium；频率 TikTok 38；近 6 个月出现；Hash Table, String, Sliding Window。
 
 **Core** — part of the first pass through this subject.
+
+## Cards (1)
+1. [[tlc-find-all-anagrams-in-a-string-0-whole]]
 %% trellis:end %%
 
 ## Notes

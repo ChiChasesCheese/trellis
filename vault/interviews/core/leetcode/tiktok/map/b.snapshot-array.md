@@ -3,6 +3,9 @@
 *B 档：次高频*
 
 Medium；频率 TikTok 68；Array, Hash Table, Binary Search, Design, Persistent Data Structure。
+
+## Cards (1)
+1. [[tlc-snapshot-array-0-whole]]
 %% trellis:end %%
 
 ## Notes

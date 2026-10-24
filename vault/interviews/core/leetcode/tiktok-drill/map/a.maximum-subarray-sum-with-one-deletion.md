@@ -5,6 +5,12 @@
 Medium；国内字节面经 2 次、最近 2026-10-08。
 
 **Core** — part of the first pass through this subject.
+
+## Cards (4)
+1. [[tlc-maximum-subarray-sum-with-one-deletion-1-signal]]
+2. [[tlc-maximum-subarray-sum-with-one-deletion-2-code]]
+3. [[tlc-maximum-subarray-sum-with-one-deletion-3-why]]
+4. [[tlc-maximum-subarray-sum-with-one-deletion-4-followup]]
 %% trellis:end %%
 
 ## Notes

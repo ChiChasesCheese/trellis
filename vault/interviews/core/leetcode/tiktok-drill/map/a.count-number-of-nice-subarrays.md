@@ -5,6 +5,12 @@
 Medium；频率 TikTok 50；近 30 天出现；Array, Hash Table, Math, Sliding Window, Prefix Sum。
 
 **Core** — part of the first pass through this subject.
+
+## Cards (4)
+1. [[tlc-count-number-of-nice-subarrays-1-signal]]
+2. [[tlc-count-number-of-nice-subarrays-2-code]]
+3. [[tlc-count-number-of-nice-subarrays-3-why]]
+4. [[tlc-count-number-of-nice-subarrays-4-followup]]
 %% trellis:end %%
 
 ## Notes

@@ -5,6 +5,9 @@
 Medium；频率 TikTok 53；近 3 个月出现；国内字节面经 24 次、最近 2026-03-30；Array, Binary Search。
 
 **Core** — part of the first pass through this subject.
+
+## Cards (1)
+1. [[tlc-find-first-and-last-position-of-element-in-sorted-array-0-whole]]
 %% trellis:end %%
 
 ## Notes

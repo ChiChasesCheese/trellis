@@ -5,6 +5,12 @@
 Easy；国内字节面经 25 次、最近 2026-10-09。
 
 **Core** — part of the first pass through this subject.
+
+## Cards (4)
+1. [[tlc-yong-liang-ge-zhan-shi-xian-dui-lie-lcof-1-signal]]
+2. [[tlc-yong-liang-ge-zhan-shi-xian-dui-lie-lcof-2-code]]
+3. [[tlc-yong-liang-ge-zhan-shi-xian-dui-lie-lcof-3-why]]
+4. [[tlc-yong-liang-ge-zhan-shi-xian-dui-lie-lcof-4-followup]]
 %% trellis:end %%
 
 ## Notes

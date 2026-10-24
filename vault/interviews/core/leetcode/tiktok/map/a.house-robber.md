@@ -5,6 +5,9 @@
 Medium；频率 TikTok 68、字节 66；国内字节面经 38 次、最近 2026-10-17；Array, Dynamic Programming。
 
 **Core** — part of the first pass through this subject.
+
+## Cards (1)
+1. [[tlc-house-robber-0-whole]]
 %% trellis:end %%
 
 ## Notes

@@ -3,6 +3,12 @@
 *B 档：次高频*
 
 Medium；频率 TikTok 53、字节 50；国内字节面经 49 次、最近 2026-04-19；Array, Binary Search。
+
+## Cards (4)
+1. [[tlc-find-peak-element-1-signal]]
+2. [[tlc-find-peak-element-2-code]]
+3. [[tlc-find-peak-element-3-why]]
+4. [[tlc-find-peak-element-4-followup]]
 %% trellis:end %%
 
 ## Notes

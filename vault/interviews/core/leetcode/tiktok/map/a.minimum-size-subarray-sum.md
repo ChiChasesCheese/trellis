@@ -5,6 +5,9 @@
 Medium；频率 TikTok 53；近 6 个月出现；国内字节面经 51 次、最近 2026-07-24；Array, Binary Search, Sliding Window, Prefix Sum。
 
 **Core** — part of the first pass through this subject.
+
+## Cards (1)
+1. [[tlc-minimum-size-subarray-sum-0-whole]]
 %% trellis:end %%
 
 ## Notes

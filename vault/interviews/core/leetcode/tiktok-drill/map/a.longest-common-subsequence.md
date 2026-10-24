@@ -5,6 +5,12 @@
 Medium；频率 TikTok 38、字节 62；国内字节面经 60 次、最近 2026-06-04；String, Dynamic Programming, Longest Common Subsequence。
 
 **Core** — part of the first pass through this subject.
+
+## Cards (4)
+1. [[tlc-longest-common-subsequence-1-signal]]
+2. [[tlc-longest-common-subsequence-2-code]]
+3. [[tlc-longest-common-subsequence-3-why]]
+4. [[tlc-longest-common-subsequence-4-followup]]
 %% trellis:end %%
 
 ## Notes

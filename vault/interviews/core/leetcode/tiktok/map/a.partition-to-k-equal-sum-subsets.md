@@ -5,6 +5,9 @@
 Medium；国内字节面经 6 次、最近 2026-10-07。
 
 **Core** — part of the first pass through this subject.
+
+## Cards (1)
+1. [[tlc-partition-to-k-equal-sum-subsets-0-whole]]
 %% trellis:end %%
 
 ## Notes

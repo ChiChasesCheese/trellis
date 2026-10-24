@@ -95,6 +95,10 @@ TikTok 和字节（美国与国内）面试里最常出现的编程题，按学�
 | [[tlc-remove-nth-node-from-end-of-list-0-whole\|LC 19 删除链表的倒数第N个节点]] | Medium | — |
 | [[tlc-minimum-size-subarray-sum-0-whole\|LC 209 长度最小的子数组（Minimum Size Subarray Sum）]] | Medium | 数组、二分、滑动窗口、前缀和 |
 | [[tlc-multiply-strings-0-whole\|LC 43 字符串相乘（Multiply Strings）]] | Medium | 数学、字符串、模拟 |
+| [[tlc-subsets-0-whole\|LC 78 子集（Subsets）]] | Medium | 数组、回溯、位运算 |
+| [[tlc-single-threaded-cpu-0-whole\|LC 1834 单线程 CPU（Single-Threaded CPU）]] | Medium | 数组、排序、堆 |
+| [[tlc-house-robber-0-whole\|LC 198 打家劫舍（House Robber）]] | Medium | 数组、动态规划 |
+| [[tlc-shu-de-zi-jie-gou-lcof-0-whole\|剑指 Offer 26 树的子结构]] | Medium | — |
 | [[tlc-basic-calculator-0-whole\|LC 224 基本计算器（Basic Calculator）]] | Hard | 数学、字符串、栈、递归 |
 | [[tlc-find-median-from-data-stream-0-whole\|LC 295 数据流的中位数（Find Median from Data Stream）]] | Hard | 双指针、设计、排序、堆 |
 | [[tlc-serialize-and-deserialize-binary-tree-0-whole\|LC 297 二叉树的序列化与反序列化（Serialize and Deserialize Binary Tree）]] | Hard | 字符串、树、DFS、BFS、设计 |
@@ -119,8 +123,13 @@ TikTok 和字节（美国与国内）面试里最常出现的编程题，按学�
 | [[tlc-flip-string-to-monotone-increasing-0-whole\|LC 926 将字符串翻转到单调递增（Flip String to Monotone Increasing）]] | — | — |
 | [[tlc-create-binary-tree-from-descriptions-0-whole\|LC 2196 根据描述创建二叉树（Create Binary Tree From Descriptions）]] | — | — |
 | [[tlc-longest-common-suffix-queries-0-whole\|LC 3093 最长公共后缀查询（Longest Common Suffix Queries）]] | — | — |
+| [[tlc-maximum-product-subarray-0-whole\|LC 152 乘积最大子数组]] | Medium | — |
 | [[tlc-rotate-array-0-whole\|LC 189 轮转数组（Rotate Array）]] | Medium | 数组、数学、双指针 |
 | [[tlc-possible-bipartition-0-whole\|LC 886 可能的二分法（Possible Bipartition）]] | Medium | DFS、BFS、并查集、图 |
+| [[tlc-rotate-image-0-whole\|LC 48 旋转图像（Rotate Image）]] | Medium | 数组、数学、矩阵 |
+| [[tlc-codetop-supp-23-0-whole\|补充题23 检测循环依赖]] | Medium | — |
+| [[tlc-find-first-and-last-position-of-element-in-sorted-array-0-whole\|LC 34 在排序数组中查找元素的第一个和最后一个位置（Find First and Last Position of Element in Sorted Array）]] | Medium | 数组、二分 |
+| [[tlc-subarray-sums-divisible-by-k-0-whole\|LC 974 和可被 K 整除的子数组（Subarray Sums Divisible by K）]] | Medium | 数组、哈希、前缀和 |
 | [[tlc-tt-spiral-matrix-constant-space-0-whole\|螺旋矩阵：O(1) 额外空间且不修改输入]] | — | — |
 | [[tlc-tt-seller-task-scheduler-0-whole\|卖家任务调度器（轮转 + VIP + 优先级）]] | — | — |
 | [[tlc-tt-removable-timestamp-task-scheduler-0-whole\|可删除任务的时间戳调度器（popTask）]] | — | — |
@@ -136,16 +145,59 @@ TikTok 和字节（美国与国内）面试里最常出现的编程题，按学�
 | [[tlc-tt-percentile-finder-0-whole\|PercentileFinder：实时维护数字并返回第 p 百分位]] | — | — |
 | [[tlc-tt-weighted-sampler-dynamic-update-0-whole\|按权重采样器（支持动态修改权重）]] | — | — |
 | [[tlc-tt-ip-range-to-cidr-0-whole\|IP 区间转最少 CIDR 列表]] | — | — |
+| [[tlc-jump-game-0-whole\|LC 55 跳跃游戏（Jump Game）]] | Medium | 数组、动态规划、贪心 |
+| [[tlc-gas-station-0-whole\|LC 134 加油站（Gas Station）]] | Medium | 数组、贪心 |
+| [[tlc-single-element-in-a-sorted-array-0-whole\|LC 540 有序数组中的单一元素（Single Element in a Sorted Array）]] | Medium | 数组、二分 |
+| [[tlc-cheapest-flights-within-k-stops-0-whole\|LC 787 K 站中转内最便宜的航班（Cheapest Flights Within K Stops）]] | Medium | 动态规划、DFS、BFS、图、堆 |
+| [[tlc-longest-mountain-in-array-0-whole\|LC 845 数组中的最长山脉（Longest Mountain in Array）]] | Medium | 数组、双指针、动态规划 |
+| [[tlc-count-number-of-nice-subarrays-0-whole\|LC 1248 统计「优美子数组」（Count Number of Nice Subarrays）]] | Medium | 数组、哈希、数学、滑动窗口、前缀和 |
+| [[tlc-product-of-the-last-k-numbers-0-whole\|LC 1352 最后 K 个数的乘积（Product of the Last K Numbers）]] | Medium | 数组、数学、设计、前缀和 |
+| [[tlc-balanced-binary-tree-0-whole\|LC 110 平衡二叉树]] | Easy | — |
+| [[tlc-longest-substring-with-at-most-k-distinct-characters-0-whole\|LC 340 至多包含 K 个不同字符的最长子串（Longest Substring with At Most K Distinct Characters）]] | Medium | 哈希、字符串、滑动窗口 |
+| [[tlc-all-oone-data-structure-0-whole\|LC 432 全 O(1) 的数据结构（All O`one Data Structure）]] | Hard | 哈希、链表、设计 |
 | [[tlc-all-nodes-distance-k-in-binary-tree-0-whole\|LC 863 二叉树中所有距离为 K 的结点（All Nodes Distance K in Binary Tree）]] | Medium | 哈希、树、DFS、BFS |
 | [[tlc-path-sum-iii-0-whole\|LC 437 路径总和 III（Path Sum III）]] | Medium | 树、DFS |
 | [[tlc-yong-liang-ge-zhan-shi-xian-dui-lie-lcof-0-whole\|剑指 Offer 09 用两个栈实现队列]] | Easy | — |
 | [[tlc-serialize-and-deserialize-n-ary-tree-0-whole\|LC 428 序列化和反序列化 N 叉树（Serialize and Deserialize N-ary Tree）]] | Hard | 字符串、树、DFS、BFS |
 | [[tlc-find-all-anagrams-in-a-string-0-whole\|LC 438 找到字符串中所有字母异位词（Find All Anagrams in a String）]] | Medium | 哈希、字符串、滑动窗口 |
+| [[tlc-fruit-into-baskets-0-whole\|LC 904 水果成篮（Fruit Into Baskets）]] | Medium | 数组、哈希、滑动窗口 |
+| [[tlc-partition-array-for-maximum-sum-0-whole\|LC 1043 分隔数组以得到最大和（Partition Array for Maximum Sum）]] | Medium | 数组、动态规划 |
+| [[tlc-implement-trie-prefix-tree-0-whole\|LC 208 实现 Trie (前缀树)]] | Medium | — |
+| [[tlc-robot-bounded-in-circle-0-whole\|LC 1041 困于环中的机器人（Robot Bounded In Circle）]] | Medium | 数学、字符串、模拟 |
+| [[tlc-partition-to-k-equal-sum-subsets-0-whole\|LC 698 划分为k个相等的子集]] | Medium | — |
+| [[tlc-maximum-subarray-sum-with-one-deletion-0-whole\|LC 1186 删除一次得到子数组最大和]] | Medium | — |
+| [[tlc-find-the-most-competitive-subsequence-0-whole\|LC 1673 找出最具竞争力的子序列]] | Medium | — |
 
 ## B 档：次高频
 
 | 题 | 难度 | 主要考点 |
 |---|---|---|
+| [[tlc-add-two-numbers-0-whole\|LC 2 两数相加（Add Two Numbers）]] | Medium | — |
+| [[tlc-remove-duplicates-from-sorted-list-ii-0-whole\|LC 82 删除排序链表中的重复元素 II]] | Medium | — |
+| [[tlc-linked-list-cycle-ii-0-whole\|LC 142 环形链表 II（Linked List Cycle II）]] | Medium | 哈希、链表、双指针 |
+| [[tlc-find-peak-element-0-whole\|LC 162 寻找峰值（Find Peak Element）]] | Medium | 数组、二分 |
+| [[tlc-maximum-swap-0-whole\|LC 670 最大交换（Maximum Swap）]] | Medium | 数学、贪心 |
+| [[tlc-snapshot-array-0-whole\|LC 1146 快照数组（Snapshot Array）]] | Medium | 数组、哈希、二分、设计 |
+| [[tlc-longest-happy-string-0-whole\|LC 1405 最长快乐字符串（Longest Happy String）]] | Medium | 字符串、贪心、堆 |
+| [[tlc-best-time-to-buy-and-sell-stock-ii-0-whole\|LC 122 买卖股票的最佳时机 II（Best Time to Buy and Sell Stock II）]] | Medium | 数组、动态规划、贪心 |
+| [[tlc-word-ladder-0-whole\|LC 127 单词接龙（Word Ladder）]] | Hard | 哈希、字符串、BFS |
+| [[tlc-longest-consecutive-sequence-0-whole\|LC 128 最长连续序列（Longest Consecutive Sequence）]] | Medium | 数组、哈希、并查集 |
+| [[tlc-basic-calculator-iii-0-whole\|LC 772 基本计算器 III（Basic Calculator III）]] | Hard | 数学、字符串、栈、递归 |
+| [[tlc-design-memory-allocator-0-whole\|LC 2502 设计内存分配器（Design Memory Allocator）]] | Medium | 数组、哈希、设计、模拟 |
+| [[tlc-path-sum-0-whole\|LC 112 路径总和]] | Easy | — |
+| [[tlc-sliding-window-maximum-0-whole\|LC 239 滑动窗口最大值（Sliding Window Maximum）]] | Hard | 数组、滑动窗口、堆 |
+| [[tlc-implement-rand10-using-rand7-0-whole\|LC 470 用 Rand7() 实现 Rand10()]] | Medium | — |
+| [[tlc-valid-parenthesis-string-0-whole\|LC 678 有效的括号字符串（Valid Parenthesis String）]] | Medium | 字符串、动态规划、栈、贪心 |
+| [[tlc-validate-binary-search-tree-0-whole\|LC 98 验证二叉搜索树]] | Medium | — |
+| [[tlc-max-area-of-island-0-whole\|LC 695 岛屿的最大面积（Max Area of Island）]] | Medium | 数组、DFS、BFS、并查集、矩阵 |
+| [[tlc-daily-temperatures-0-whole\|LC 739 每日温度（Daily Temperatures）]] | Medium | 数组、栈、单调栈 |
+| [[tlc-codetop-supp-1-0-whole\|补充题1 排序奇升偶降链表]] | Medium | — |
+| [[tlc-regular-expression-matching-0-whole\|LC 10 正则表达式匹配（Regular Expression Matching）]] | Hard | 字符串、动态规划、递归 |
+| [[tlc-combination-sum-ii-0-whole\|LC 40 组合总和 II（Combination Sum II）]] | Medium | 数组、回溯 |
+| [[tlc-climbing-stairs-0-whole\|LC 70 爬楼梯（Climbing Stairs）]] | Easy | 数学、动态规划 |
+| [[tlc-simplify-path-0-whole\|LC 71 简化路径（Simplify Path）]] | Medium | 字符串、栈 |
+| [[tlc-sort-colors-0-whole\|LC 75 颜色分类（Sort Colors）]] | Medium | 数组、双指针、排序 |
+| [[tlc-binary-tree-inorder-traversal-0-whole\|LC 94 二叉树的中序遍历]] | Easy | — |
 | [[tlc-permutation-sequence-0-whole\|LC 60 排列序列（Permutation Sequence）]] | — | — |
 | [[tlc-set-matrix-zeroes-0-whole\|LC 73 矩阵置零（Set Matrix Zeroes）]] | — | — |
 | [[tlc-subsets-ii-0-whole\|LC 90 子集 II（Subsets II）]] | — | — |

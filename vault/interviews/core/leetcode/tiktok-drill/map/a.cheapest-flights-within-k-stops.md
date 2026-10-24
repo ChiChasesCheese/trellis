@@ -5,6 +5,12 @@
 Medium；频率 TikTok 50；近 30 天出现；Dynamic Programming, Depth-First Search, Breadth-First Search, Graph Theory, Heap (Priority Queue)。
 
 **Core** — part of the first pass through this subject.
+
+## Cards (4)
+1. [[tlc-cheapest-flights-within-k-stops-1-signal]]
+2. [[tlc-cheapest-flights-within-k-stops-2-code]]
+3. [[tlc-cheapest-flights-within-k-stops-3-why]]
+4. [[tlc-cheapest-flights-within-k-stops-4-followup]]
 %% trellis:end %%
 
 ## Notes

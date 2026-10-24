@@ -5,6 +5,9 @@
 Medium；国内字节面经 40 次、最近 2026-09-28。
 
 **Core** — part of the first pass through this subject.
+
+## Cards (1)
+1. [[tlc-maximum-product-subarray-0-whole]]
 %% trellis:end %%
 
 ## Notes

@@ -5,6 +5,9 @@
 Medium；频率 TikTok 38；近 3 个月出现；Array, Hash Table, Sliding Window。
 
 **Core** — part of the first pass through this subject.
+
+## Cards (1)
+1. [[tlc-fruit-into-baskets-0-whole]]
 %% trellis:end %%
 
 ## Notes

@@ -5,6 +5,9 @@
 Medium；频率 TikTok 38；近 3 个月出现；Array, Dynamic Programming。
 
 **Core** — part of the first pass through this subject.
+
+## Cards (1)
+1. [[tlc-partition-array-for-maximum-sum-0-whole]]
 %% trellis:end %%
 
 ## Notes
