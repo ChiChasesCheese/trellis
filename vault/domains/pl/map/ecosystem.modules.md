@@ -4,7 +4,7 @@
 
 Go package 与 module、Java package 与 JPMS 模块、Rust crate 与 mod 树、Python 模块/包与导入系统（sys.path、循环导入）。
 
-**Unlocks:** [[domains/pl/map/ecosystem.package-managers|包管理与依赖解析]], [[domains/pl/map/ecosystem.tooling|官方工具链：格式化、静态检查与测试]]
+**Unlocks:** [[domains/pl/map/ecosystem.package-managers|包管理与依赖解析]], [[domains/pl/map/ecosystem.tooling|官方工具链：格式化、静态检查与测试]], [[domains/pl/map/cpp.build-modules|头文件、ODR、模块与构建生态]]
 
 ## Drills
 - [[ecosystem-cycles-and-silent-upgrades|练习：模块互相依赖，以及升级后「编译通过、行为不同」]]

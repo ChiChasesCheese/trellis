@@ -4,7 +4,7 @@
 
 Go 的 nil 接口不等于 nil 与切片别名、Java 的 Integer 缓存与 ==、Rust 与借用检查器的拉锯、Python 可变默认参数与晚绑定闭包。
 
-**Requires:** [[domains/pl/map/signatures.go|Go 的独到之处]], [[domains/pl/map/signatures.java|Java 的独到之处]], [[domains/pl/map/signatures.rust|Rust 的独到之处]], [[domains/pl/map/signatures.python|Python 的独到之处]]
+**Requires:** [[domains/pl/map/signatures.cpp|C++ 的独到之处]], [[domains/pl/map/signatures.go|Go 的独到之处]], [[domains/pl/map/signatures.java|Java 的独到之处]], [[domains/pl/map/signatures.python|Python 的独到之处]], [[domains/pl/map/signatures.rust|Rust 的独到之处]]
 
 **Unlocks:** [[domains/pl/map/signatures.choosing|怎样为一个项目选语言]]
 

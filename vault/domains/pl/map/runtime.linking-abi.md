@@ -6,6 +6,8 @@
 
 **Requires:** [[domains/pl/map/runtime.optimizations|编译器优化]]
 
+**Unlocks:** [[domains/pl/map/cpp.build-modules|头文件、ODR、模块与构建生态]]
+
 ## Cards (9)
 1. [[pl-rt-linking-principle]]
 2. [[pl-rt-linking-found-symbols]]

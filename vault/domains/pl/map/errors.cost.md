@@ -8,6 +8,8 @@
 
 **Requires:** [[domains/pl/map/errors.exceptions|异常：Java 与 Python]], [[domains/pl/map/errors.result-type|Result 与 ? 运算符：Rust]]
 
+**Unlocks:** [[domains/pl/map/cpp.errors|错误处理：异常、错误码与 std::expected]]
+
 ## Cards (9)
 1. [[pl-errors-cost-principle]]
 2. [[pl-errors-cost-foundation-unwinding]]

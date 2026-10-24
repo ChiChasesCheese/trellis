@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/pl/map/memory.stack-heap|栈与堆]]
 
-**Unlocks:** [[domains/pl/map/memory.ownership-borrowing|所有权与借用（Rust）]], [[domains/pl/map/memory.memory-layout|内存布局与对象开销]], [[domains/pl/map/functional.closures|闭包与捕获语义]], [[domains/pl/map/data.strings-text|字符串与文本编码]], [[domains/pl/map/data.arrays-slices|数组、切片与动态数组]]
+**Unlocks:** [[domains/pl/map/memory.ownership-borrowing|所有权与借用（Rust）]], [[domains/pl/map/memory.memory-layout|内存布局与对象开销]], [[domains/pl/map/functional.closures|闭包与捕获语义]], [[domains/pl/map/data.strings-text|字符串与文本编码]], [[domains/pl/map/data.arrays-slices|数组、切片与动态数组]], [[domains/pl/map/cpp.value-categories|值类别、移动语义与拷贝省略]]
 
 ## Drills
 - [[memory-who-allocates|练习：这段代码在堆上分配了多少次]]

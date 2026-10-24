@@ -8,7 +8,7 @@ C 的 malloc/free、C++/Rust 的 RAII（离开作用域自动释放）、它解�
 
 **Requires:** [[domains/pl/map/memory.stack-heap|栈与堆]]
 
-**Unlocks:** [[domains/pl/map/memory.tracing-gc|追踪式垃圾回收]], [[domains/pl/map/memory.reference-counting|引用计数]], [[domains/pl/map/memory.ownership-borrowing|所有权与借用（Rust）]], [[domains/pl/map/memory.resource-management|非内存资源的管理]]
+**Unlocks:** [[domains/pl/map/memory.tracing-gc|追踪式垃圾回收]], [[domains/pl/map/memory.reference-counting|引用计数]], [[domains/pl/map/memory.ownership-borrowing|所有权与借用（Rust）]], [[domains/pl/map/memory.resource-management|非内存资源的管理]], [[domains/pl/map/cpp.raii-ownership|RAII、零/三/五法则与智能指针]]
 
 ## Cards (10)
 1. [[pl-memory-manual-raii-principle]]

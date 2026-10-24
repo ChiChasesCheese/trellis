@@ -8,6 +8,7 @@
 - [[domains/pl/map/signatures.java|Java 的独到之处]]
 - [[domains/pl/map/signatures.rust|Rust 的独到之处]]
 - [[domains/pl/map/signatures.python|Python 的独到之处]]
+- [[domains/pl/map/signatures.cpp|C++ 的独到之处]]
 - [[domains/pl/map/signatures.gotchas|每门语言的经典陷阱]]
 - [[domains/pl/map/signatures.choosing|怎样为一个项目选语言]]
 %% trellis:end %%

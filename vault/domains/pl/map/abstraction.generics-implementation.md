@@ -6,7 +6,7 @@ Java 类型擦除、Rust 单态化（monomorphization）、Go GC shape stencilin
 
 **Requires:** [[domains/pl/map/abstraction.generics|泛型：参数多态]], [[domains/pl/map/abstraction.dispatch|方法分派：静态与动态]]
 
-**Unlocks:** [[domains/pl/map/runtime.zero-cost-abstractions|零成本抽象]]
+**Unlocks:** [[domains/pl/map/runtime.zero-cost-abstractions|零成本抽象]], [[domains/pl/map/cpp.templates-concepts|模板、concepts 与静态多态]]
 
 ## Cards (9)
 1. [[pl-abstraction-generics-implementation-principle]]

@@ -8,7 +8,7 @@ Go 追求简单与工程规模、Java 追求可移植与向后兼容、Rust 追�
 
 **Requires:** [[domains/pl/map/foundations.paradigms|编程范式：命令式、面向对象、函数式、声明式]]
 
-**Unlocks:** [[domains/pl/map/foundations.lineage|语言谱系：特性从哪里来]], [[domains/pl/map/foundations.tradeoff-axes|语言设计的几条根本权衡轴]]
+**Unlocks:** [[domains/pl/map/foundations.lineage|语言谱系：特性从哪里来]], [[domains/pl/map/foundations.tradeoff-axes|语言设计的几条根本权衡轴]], [[domains/pl/map/cpp.philosophy|C++ 的设计哲学与演进]]
 
 ## Drills
 - [[foundations-identity-vs-equality|练习：同一个「相等」问题，四门语言四种答案]]

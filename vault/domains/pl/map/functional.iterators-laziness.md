@@ -6,7 +6,7 @@ Rust Iterator 适配器（零成本）、Java Stream（惰性 + 终端操作）�
 
 **Requires:** [[domains/pl/map/functional.first-class-functions|一等函数与 lambda]]
 
-**Unlocks:** [[domains/pl/map/functional.generators|生成器与协程]]
+**Unlocks:** [[domains/pl/map/functional.generators|生成器与协程]], [[domains/pl/map/cpp.stl-ranges|标准库、迭代器失效与 ranges]]
 
 ## Drills
 - [[functional-capture-and-reuse|练习：循环里创建的闭包捕获了什么，迭代器能不能用第二遍]]

@@ -6,6 +6,8 @@
 
 **Requires:** [[domains/pl/map/memory.memory-safety|内存安全]]
 
+**Unlocks:** [[domains/pl/map/cpp.safety|内存安全之争与 C++ 的回应]]
+
 ## Drills
 - [[trends-add-a-variant|练习：给枚举加一个新变体，谁会告诉你漏改了地方]]
 

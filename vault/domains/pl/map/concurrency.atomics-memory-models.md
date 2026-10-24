@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/pl/map/concurrency.locks-shared-memory|锁与共享内存]]
 
-**Unlocks:** [[domains/pl/map/concurrency.data-race-freedom|数据竞争的预防]]
+**Unlocks:** [[domains/pl/map/concurrency.data-race-freedom|数据竞争的预防]], [[domains/pl/map/cpp.concurrency|并发：线程、原子与内存序、协程]]
 
 ## Cards (10)
 1. [[pl-conc-memmodel-principle]]

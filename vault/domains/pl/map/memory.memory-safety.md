@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/pl/map/memory.ownership-borrowing|所有权与借用（Rust）]], [[domains/pl/map/memory.tracing-gc|追踪式垃圾回收]]
 
-**Unlocks:** [[domains/pl/map/engineering.dynamic-checkers|动态检查器]], [[domains/pl/map/trends.safety-push|内存安全运动]]
+**Unlocks:** [[domains/pl/map/engineering.dynamic-checkers|动态检查器]], [[domains/pl/map/trends.safety-push|内存安全运动]], [[domains/pl/map/cpp.undefined-behavior|未定义行为与优化器]]
 
 ## Cards (9)
 1. [[pl-memory-memory-safety-principle]]
