@@ -30,6 +30,7 @@ FAIL	vt [build failed]
 **其他语言的同类落差**：
 - **Java**：`javac` 默认不开大部分 lint，`Integer` 用 `==` 比较（超出缓存范围的两个 `1000` 不相等）编译不报警，需要 Error Prone 或 `-Xlint` 之类。
 - **Rust**：编译通过，但 `clippy` 能抓出大量惯用法问题与潜在 panic；不在 CI 里运行就等于没有。
+- **C++**：落差最大。`int x; std::printf("%d\n", x);` 读未初始化变量，直接编译没有任何警告；加 `-Wall -Wextra` 才报 `variable 'x' is uninitialized when used here [-Wuninitialized]`，而且只是警告，要 `-Werror` 才失败。数组越界这类问题，编译器也只在能静态看出时才提醒，其余要靠 sanitizer 在运行期抓。
 - **Python**：解释器对未使用的导入、裸 `except`、可变默认参数全部沉默，只有 `ruff` 会报告（它的 `B006` 抓到 `def add(x, items=[])`，运行时该函数连续调用会得到 `[1, 2] [1, 2]` 这种共享状态结果）。
 
 **防线**：把检查命令写进 CI 的必经步骤（`go vet ./...`、`cargo clippy -- -D warnings`、`ruff check`、`mvn verify`），并确认 CI 的命令和本地一致；出现“本地通过 CI 失败”或相反时，第一件事是核对两边的工具版本与命令。

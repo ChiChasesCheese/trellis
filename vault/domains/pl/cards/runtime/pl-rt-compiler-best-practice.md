@@ -18,6 +18,8 @@ step: 8
 5. CI 里缓存 `target/` 与依赖（`sccache`、`Swatinem/rust-cache`），并使用更快的链接器（`lld`、`mold`）。
 6. 发布用 `--release`；需要时再调 LTO（链接期优化，跨 crate 内联）与 `codegen-units=1`，换更小更快的二进制，代价是更慢的构建。
 
+**C++**：慢在头文件重复解析和模板实例化，而不是优化。用 ccache（按编译输入缓存目标文件）加并行的 Ninja；头文件里只放声明、用前置声明（forward declaration）减少 `#include`；大模板移到 `.cpp` 里显式实例化；预编译头和 C++20 模块进一步削减；用 Clang 的 `-ftime-trace` 找最慢的头文件和模板。
+
 **Go**：构建本来就快，关键是别破坏缓存：保持稳定的包边界，构建缓存放进 CI；用 `go build -race` 之类只在需要时。
 
 **Java**：用 Gradle / Maven 的增量编译与构建缓存；注解处理器会拖慢编译，要审视它的必要性。

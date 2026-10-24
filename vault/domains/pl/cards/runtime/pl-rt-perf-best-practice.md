@@ -17,6 +17,7 @@ step: 8
 **各语言常见高回报点**：
 - **Java**：去掉热路径的装箱（用原始类型数组、原始类型流，本机实测 `int[]` 对洗牌后的 `ArrayList<Integer>` 快约 15 倍）；减少短命对象与分配；用 JMH 验证，注意预热；检查 GC 日志与堆大小。
 - **Go**：减少堆分配（预分配切片容量、复用缓冲区 `sync.Pool`、避免热路径上的接口装箱）；看逃逸分析输出；热路径避免锁争用；`GOGC`/`GOMEMLIMIT` 调整内存与 GC 的取舍。
+- **C++**：确认是 `-O2` 构建；`std::vector` 连续存储替换 `std::list` 和指针树，`reserve` 预留容量；热路径避免虚函数、`std::function`、`shared_ptr`，并按值移动（`std::move`）代替拷贝；用 `perf` 或 Instruments 看缓存缺失，不要凭感觉改。
 - **Rust**：保证 `--release`；避免不必要的 `clone`；热路径避免 `Box<dyn Trait>`；利用迭代器让编译器向量化；必要时再看 SIMD、`unsafe`。
 - **Python**：换算法与数据结构；用内置函数与推导式；向量化库（NumPy、Polars）；函数内局部变量；`multiprocessing` 或 C/Rust 扩展处理 CPU 密集。
 

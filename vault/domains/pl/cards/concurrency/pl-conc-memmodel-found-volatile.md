@@ -31,3 +31,5 @@ ready = true;       // volatile write publishes everything before it
 输出：`data = 42`。推理：`data = 42` 在同一线程内 happens-before `ready = true`；`ready = true`（volatile 写）happens-before 读线程里读到 `true` 的那次 volatile 读；读之后的 `println` 在读线程内。沿传递性，读线程一定看到 `data == 42`。如果 `ready` 不是 `volatile`，读线程可能永远看不到 `true`，或者看到 `true` 却读到 `data` 的旧值 0。
 
 边界：`volatile` 只保证可见性和有序性，**不保证复合操作的原子性**：`counter++` 对 volatile 字段仍然是三步（读、加、写），多个线程同时做仍会丢更新，需要锁或原子类。
+
+**别把它带进 C++**：C++ 的 `volatile` 只是告诉编译器“每次访问都真的读写内存，不要省略”，不建立 happens-before，也不保证原子，跨线程共享标志必须用 `std::atomic`（C++ 的原子类型）。同一个关键字，在两门语言里含义相差很大。

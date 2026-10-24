@@ -5,7 +5,7 @@ type: qa
 step: 10
 ---
 ## Q
-资深工程师怎样在 Go、Java、Rust、Python 里处理内存布局？通用规则是什么，何时才值得动手优化？
+资深工程师怎样在 Go、Java、Rust、Python、C++ 里处理内存布局？通用规则是什么，何时才值得动手优化？
 
 ## A
 **通用规则**：
@@ -19,6 +19,7 @@ step: 10
 - **Go**：用 `[]T` 而不是 `[]*T`，除非需要共享；字段按大小降序排列减少填充，用 `fieldalignment` 工具检查；热点结构体控制在一两条缓存行内；避免接口装箱。
 - **Java**：热路径上用原始数组（`int[]`、`double[]`）或 SoA；避免 `List<Integer>`，用 `IntStream` 或第三方原始类型集合；多用 `record` 作为数据载体，但要知道它仍是堆对象；关注 Valhalla 的进展，新特性稳定之前不要依赖。
 - **Rust**：默认布局即可；`Vec<T>` 优先于 `Vec<Box<T>>`；需要固定布局（FFI、网络格式）才用 `#[repr(C)]` 或 `#[repr(packed)]`；用 `size_of` 做编译期断言保护关键结构体大小。
+- **C++**：容器里放值，不放智能指针（`vector<T>` 优于 `vector<unique_ptr<T>>`），多态才用指针；热循环用结构数组（SoA，把各字段拆成各自的连续数组）；字段按大小降序排列减少填充，用 `static_assert(sizeof(T) == N)` 保护关键结构体；注意按值传基类会发生对象切片。
 - **Python**：大量同构数据用 NumPy、`array`、Arrow 或 Polars；自己的类大量实例化时用 `__slots__` 或 `dataclass(slots=True)`；不要在热循环里创建临时对象。
 
 **何时值得**：数据量以百万计、热循环、延迟敏感的路径；服务内存紧张到影响成本；与 C 或二进制协议互通。

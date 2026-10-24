@@ -5,17 +5,17 @@ type: qa
 step: 1
 ---
 ## Q
-同一个库接口（比如一个带超时、重试的客户端）为什么在 Go、Java、Rust、Python 里要设计成完全不同的样子才算“地道”（idiomatic）？设计 API 时要在哪些轴上取舍？
+同一个库接口（比如一个带超时、重试的客户端）为什么在 Go、Java、Rust、Python、C++ 里要设计成完全不同的样子才算“地道”（idiomatic）？设计 API 时要在哪些轴上取舍？
 
 ## A
 API 是库和调用者之间的合同。合同里有几类约束：**哪些参数必填、哪些可选且有默认值、会出什么错、谁拥有传进来的数据、能不能取消、将来怎样加字段而不破坏旧调用者**。每门语言能表达这些约束的工具不同，所以最佳设计不同：
 
 | 要表达的约束 | 语言能提供的工具 |
 |---|---|
-| 可选参数、默认值 | Python 有默认值与关键字参数；Java、Go、Rust 都没有，得用构建器、函数式选项、结构体更新语法 |
-| 出错 | Go 的 `error` 返回值；Java 的异常；Rust 的 `Result`；Python 的异常 |
-| 所有权、可变性 | Rust 在签名里写出；其他语言靠约定和文档 |
-| 取消、截止时间 | Go 的 `context`；Java 的中断与 `ScopedValue`；Python 的 `contextvars`/`asyncio.timeout`；Rust 的丢弃 `Future` |
+| 可选参数、默认值 | Python 有默认值与关键字参数；C++ 有默认实参但不能按名字传（C++20 的指定初始化近似）；Java、Go、Rust 都没有，得用构建器、函数式选项、结构体更新语法 |
+| 出错 | Go 的 `error` 返回值；Java 的异常；Rust 的 `Result`；Python 的异常；C++ 的异常或返回码，C++23 另有 `std::expected` |
+| 所有权、可变性 | Rust 在签名里写出并由编译器检查；C++ 能在签名里写（`unique_ptr`、`const&`）但无人检查；其他语言靠约定和文档 |
+| 取消、截止时间 | Go 的 `context`；Java 的中断与 `ScopedValue`；Python 的 `contextvars`/`asyncio.timeout`；Rust 的丢弃 `Future`；C++ 的 `std::stop_token` |
 
 **设计空间**：每个约束可以放在**类型/签名里**（编译器强制）、**运行时检查里**（出错时抛异常）、**命名与文档约定里**（靠人遵守）。越往编译期放，越难误用，但签名越复杂、学习曲线越陡。
 

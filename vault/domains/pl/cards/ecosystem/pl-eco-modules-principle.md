@@ -14,13 +14,13 @@ step: 1
 3. **编译单位**：一次编译处理多少代码？改一个文件要重编多少？
 4. **发布单位**：一份可被别人依赖和版本化的东西叫什么？
 
-四门语言用不同的概念组合回答这四个问题：
+五门语言用不同的概念组合回答这四个问题：
 
-| 问题 | Go | Java | Rust | Python |
-|---|---|---|---|---|
-| 命名空间 | package | package | module（mod） | module / package |
-| 编译单位 | package | 类（文件） | crate | 无（运行时导入） |
-| 发布单位 | module | JAR / JPMS 模块 | crate | distribution（wheel） |
+| 问题 | Go | Java | Rust | Python | C++ |
+|---|---|---|---|---|---|
+| 命名空间 | package | package | module（mod） | module / package | namespace |
+| 编译单位 | package | 类（文件） | crate | 无（运行时导入） | 翻译单元（.cpp 加其 `#include` 的头文本） |
+| 发布单位 | module | JAR / JPMS 模块 | crate | distribution（wheel） | 无统一概念（库文件加头文件） |
 
 **取舍轴**：
 - **边界的强度**：可见性是靠编译器强制，还是靠命名约定？

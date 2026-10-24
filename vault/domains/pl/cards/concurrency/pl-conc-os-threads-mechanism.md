@@ -5,10 +5,10 @@ type: qa
 step: 5
 ---
 ## Q
-在 Java、Rust、Python 里调用 `thread.start()` / `thread::spawn` 时，底层发生了什么？启动一个线程大约要花多久？
+在 Java、Rust、Python、C++ 里调用 `thread.start()` / `thread::spawn` / `std::thread` 时，底层发生了什么？启动一个线程大约要花多久？
 
 ## A
-三者做的事情基本相同：
+它们做的事情基本相同（C++ 的 `std::thread` 直接包装 `pthread_create`）：
 1. 运行时向 OS 要一个线程：在 macOS 和 Linux 上是 `pthread_create`，内核创建一个新的调度实体。
 2. OS 为它预留一段栈的虚拟地址（Rust 默认 2 MiB，Java 在 macOS 上 2 MB、Linux x64 上 1 MB）。物理页在第一次访问时才分配。
 3. 新线程在自己的栈上运行传入的函数；函数返回，线程退出，栈归还。
@@ -21,6 +21,7 @@ step: 5
 | Java 平台线程 | 约 32 微秒 |
 | Rust `thread::spawn` | 约 15 微秒 |
 | Python `threading.Thread` | 约 19 微秒 |
+| C++ `std::thread`（`-O2`） | 约 10 微秒（三次测量 10 到 14） |
 | Go goroutine（对照） | 约 0.3 微秒 |
 
 线程创建在十微秒量级，比一次函数调用贵上千倍。所以每次请求都新建一个线程的做法不适合高频场景，要用线程池（thread pool）：预先创建固定数量的线程，反复接任务。

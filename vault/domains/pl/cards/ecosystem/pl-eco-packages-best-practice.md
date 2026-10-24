@@ -5,7 +5,7 @@ type: qa
 step: 10
 ---
 ## Q
-资深工程师怎样管理依赖？通用规则是什么，Go、Java、Rust、Python 各自怎么做，何时破例？
+资深工程师怎样管理依赖？通用规则是什么，Go、Java、Rust、Python、C++ 各自怎么做，何时破例？
 
 ## A
 **通用规则**：
@@ -19,6 +19,7 @@ step: 10
 - **Go**：`go.mod` 和 `go.sum` 都提交；`go mod tidy` 保持整洁；用 `go list -m -u all` 查可升级项，`govulncheck ./...` 查漏洞；大公司用 `GOPROXY` 搭内部代理。
 - **Java**：Maven 用 `dependencyManagement` 或 BOM（物料清单，统一版本表）集中管理版本；pom 里写明确版本，不用范围；用 `mvn dependency:tree` 和 enforcer 的收敛规则抓冲突；Gradle 开 dependency locking。
 - **Rust**：应用提交 `Cargo.lock`；用 `cargo audit`/`cargo deny` 检查漏洞和许可证；审慎打开 features，`cargo tree -d` 找重复版本；二进制发布前 `cargo build --locked`。
+- **C++**：选一个包管理器并全项目统一（vcpkg 用 manifest 加 baseline 固定版本，Conan 用锁文件）；把编译器版本和标准库、`-std` 当作依赖的一部分固定；依赖尽量少、尽量头文件库或能源码构建的；用 `ldd`/`otool -L` 检查最终二进制到底链接了哪些动态库。
 - **Python**：用 `uv` 或 `poetry` 生成锁文件，`uv sync --frozen` 在 CI 里安装；不要往全局 Python `pip install`，每个项目一个虚拟环境；`pip-audit` 检查漏洞；库的约束写成下限加主版本上限，不要写死 `==`。
 
 **何时破例**：库的开发者要在 CI 里同时测试依赖的最低版本和最新版本，来检验约束写得对不对（Go 的 MVS 天然测最低版，其他语言需要刻意做）。

@@ -9,7 +9,7 @@ step: 9
 
 ## A
 **读写代码时**：
-1. 把格式交给工具，不在评审里争论：Go 的 `gofmt`、Rust 的 `rustfmt`、Java 的 google-java-format、Python 的 `black`/`ruff format`，并在 CI 里检查。
+1. 把格式交给工具，不在评审里争论：Go 的 `gofmt`、Rust 的 `rustfmt`、C++ 的 `clang-format`、Java 的 google-java-format、Python 的 `black`/`ruff format`，并在 CI 里检查。
 2. 混用位运算、比较、逻辑运算时一律加括号。优先级表是最容易让人记错的东西，括号的成本为零。
 3. 不炫耀语法技巧（链式比较的嵌套、一行嵌套三层推导式）；语法糖的价值是消除噪声，不是压缩行数。
 

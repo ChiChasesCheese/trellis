@@ -17,6 +17,7 @@ step: 11
 - Python：3.11（2022）把 Trio 的思路带入标准库 `asyncio.TaskGroup`，同时引入 `ExceptionGroup` 和 `except*`；
 - Rust：`std::thread::scope` 在 1.63（2022）稳定，起源于 crossbeam 的 scoped threads；tokio 提供 `JoinSet`；
 - Go：`errgroup` 是库约定，语言本身没有计划改变 `go` 语句。
+- C++：C++20 的 `std::jthread` 把 `join` 放进析构函数（作用域即生命周期），并带 `stop_token` 协作取消；任务组留给库和 C++26 的 `std::execution`（发送者/接收者异步框架）。
 
 **趋势**：
 1. 与轻量并发（虚拟线程、协程）配套：任务变便宜之后，“管理它们的生命周期”成为主要问题，结构化并发是答案。

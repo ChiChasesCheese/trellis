@@ -33,3 +33,14 @@ fn make(flag: bool, k: i32) -> Box<dyn Fn(i32) -> i32> {
 一个容易让人困惑的细节：**没有捕获**的闭包可以自动转成 `fn` 指针，所以 `if flag { |x| x + 1 } else { |x| x * 2 }` 这种不捕获变量的写法其实能通过编译，只要加上 `move` 捕获了变量就不行。这让同样的代码因为是否捕获而时过时不过。
 
 对比 Java：同样的需求在 Java 里没有这个问题，两个 lambda 都是 `Function<Integer, Integer>` 的实例，随意返回。这是 Rust 的静态性与 Java 的运行期统一性的直接体现。
+
+C++ 有完全同构的陷阱：
+
+```cpp
+auto make(bool flag, int k) {
+    if (flag) return [k](int x) { return x + k; };
+    else      return [k](int x) { return x * k; };
+}
+```
+
+`clang++ -std=c++23 -Wall -Wextra` 报错：`error: 'auto' in return type deduced as '(lambda at …)' here but deduced as '(lambda at …)' in earlier return statement`。修法等价于 `Box<dyn Fn>`：返回 `std::function<int(int)>`（类型擦除的包装器，付一次间接调用，闭包较大时还有堆分配）。

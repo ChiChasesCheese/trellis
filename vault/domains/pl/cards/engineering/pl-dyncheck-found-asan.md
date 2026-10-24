@@ -36,4 +36,4 @@ allocated by thread T0 here:
 
 **开销**：官方给出的量级是运行变慢约 2 倍，内存占用增加两三倍。
 
-**在四门语言里的位置**：Go 的 `-asan` 构建选项只对 `cgo` 里的 C 代码有意义；Rust 的稳定版没有 sanitizer，要用 nightly 的 `-Zsanitizer=address`；Java 和 Python 的内存由运行时管理，ASan 只用于它们的本地扩展（JNI、C 扩展）。所以 ASan 在这些语言里的价值，集中在 `unsafe` 和跨语言边界。
+**在各语言里的位置**：ASan 的原生舞台是 C 和 C++（`clang++ -fsanitize=address`），换成 `std::vector` 扩容后读旧引用，报告是 `heap-use-after-free`，格式相同；Go 的 `-asan` 构建选项只对 `cgo` 里的 C 代码有意义；Rust 的稳定版没有 sanitizer，要用 nightly 的 `-Zsanitizer=address`；Java 和 Python 的内存由运行时管理，ASan 只用于它们的本地扩展（JNI、C 扩展）。所以 ASan 在这些语言里的价值，集中在 `unsafe` 和跨语言边界。

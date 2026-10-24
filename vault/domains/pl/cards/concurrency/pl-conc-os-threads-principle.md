@@ -16,4 +16,4 @@ step: 1
 
 1:1 最常见，是因为实现最简单：创建线程就是调用一次 `pthread_create`，调度、多核、阻塞系统调用、抢占（preemption，内核按时间片强行换下占 CPU 的线程）全都免费得到，还能让线程使用原生库和调试器。代价是每个线程成本较高：内核结构、固定大小的栈、微秒级的切换，所以数量上限是几千到几万。
 
-Java 平台线程、Rust `std::thread`、Python `threading` 都是 1:1 的 OS 线程；Go 的 goroutine 与 Java 21 的虚拟线程属于 M:N。
+Java 平台线程、Rust `std::thread`、C++ `std::thread`、Python `threading` 都是 1:1 的 OS 线程；Go 的 goroutine 与 Java 21 的虚拟线程属于 M:N。

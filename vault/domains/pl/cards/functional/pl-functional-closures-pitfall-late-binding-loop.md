@@ -35,3 +35,15 @@ for i := 0; i < 3; i++ {
 Go 1.22 把语义改成**每次迭代一个新变量**，而且改动由 `go.mod` 里的 `go` 版本决定：旧模块保持旧行为，新模块得到新行为。这是语言为了纠正一个被证明几乎总是出错的设计，付出了破坏兼容的风险，换来大量 bug 的消失。
 
 诊断信号：回调里读到的总是最后一个值；日志里同一个 ID 重复出现。修法：Python 用默认参数、`partial`，Go 在旧版本里写 `i := i` 或把 `i` 作为参数传入。Java 和 Rust 不会有这个问题：前者复制值，后者要么 `move` 要么借用检查失败。
+
+C++ 没有晚绑定，因为捕获方式是显式的；但它有对偶的陷阱：`[&]` 捕获的是引用，闭包活得比变量久就悬空，而且编译器不报：
+
+```cpp
+std::function<int()> make() {
+    int n = 42;
+    return [&] { return n; };   // [&]: capture n by reference
+}                               // n is destroyed here
+// main: std::printf("%d\n", make()());
+```
+
+`clang++ -std=c++23 -Wall -Wextra` 零警告，运行输出 `42`（读到了已经失效的栈内存，碰巧还没被覆盖）。加 `-fsanitize=address` 并设 `ASAN_OPTIONS=detect_stack_use_after_return=1` 才报：`ERROR: AddressSanitizer: stack-use-after-return`。修法：会逃出作用域的闭包写 `[n]` 拷贝，或 `[n = std::move(x)]` 搬入。

@@ -25,6 +25,6 @@ synchronized (lock) { items.add(42); lock.notify(); }
 ```
 输出：`got 42`。
 
-四种语言的对应物：Java `Object.wait/notify` 或 `Condition`；Go `sync.Cond`（`Wait`/`Signal`/`Broadcast`）；Rust `Condvar`（`wait_while`、`notify_one`）；Python `threading.Condition`（`wait`、`notify`）。它们总是和一把互斥锁配对使用，**检查条件必须在持锁时进行**。
+各语言的对应物：Java `Object.wait/notify` 或 `Condition`；Go `sync.Cond`（`Wait`/`Signal`/`Broadcast`）；Rust `Condvar`（`wait_while`、`notify_one`）；C++ `std::condition_variable`（`wait`、`notify_one`）；Python `threading.Condition`（`wait`、`notify`）。它们总是和一把互斥锁配对使用，**检查条件必须在持锁时进行**。
 
 重要的写法规则：等待写在循环里 `while (条件不成立) wait()`，不能用 `if`。原因是醒来不等于条件成立（虚假唤醒；或被别的线程抢先取走了数据）。

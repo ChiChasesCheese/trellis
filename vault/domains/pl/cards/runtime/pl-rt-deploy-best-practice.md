@@ -19,6 +19,8 @@ step: 8
 
 **Rust**：用 `cargo build --release`；需要静态链接时选 `x86_64-unknown-linux-musl`，注意 musl 的内存分配器性能比 glibc 慢，必要时换 `jemalloc`/`mimalloc`；用 `cargo-chef` 之类缓存依赖层。
 
+**C++**：在与目标相同（或更老）的发行版基础镜像里构建，避免 glibc 版本比目标高；要最小镜像就 `-static-libstdc++ -static-libgcc`，或整个静态链接到 musl；依赖用 vcpkg 或 Conan 锁版本并固定编译器版本；发布 `-O2` 并保留符号文件用于崩溃分析。
+
 **Java**：用 JRE 精简镜像或 `jlink` 做最小运行时；分层 JAR 让依赖层缓存；设好 `MaxRAMPercentage`；需要极速启动的服务评估原生镜像和 AOT 缓存。固定 JDK 的小版本。
 
 **Python**：

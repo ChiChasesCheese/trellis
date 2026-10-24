@@ -5,7 +5,7 @@ type: qa
 step: 10
 ---
 ## Q
-资深工程师怎样使用数组、切片和动态数组？通用规则是什么，Go、Java、Rust、Python 各自的具体做法，何时破例？
+资深工程师怎样使用数组、切片和动态数组？通用规则是什么，Go、Java、Rust、Python、C++ 各自的具体做法，何时破例？
 
 ## A
 **通用规则**：
@@ -18,6 +18,7 @@ step: 10
 - **Go**：`make([]T, 0, n)` 预分配；函数返回子切片给外部持有前，用 `slices.Clone` 或三下标切片 `s[a:b:b]` 切断共享；对外 API 返回副本，文档写明是否会修改入参；追加永远 `s = append(s, ...)`。
 - **Java**：`new ArrayList<>(n)` 预分配；热路径用原始数组 `int[]`，不用 `List<Integer>`；对外返回 `List.copyOf` 或 `Collections.unmodifiableList`，避免内部列表泄漏。
 - **Rust**：参数写 `&[T]` 而非 `&Vec<T>`；`Vec::with_capacity(n)` 预分配；让编译器告诉你哪里有别名冲突，而不是用 `clone()` 绕过。
+- **C++**：默认 `std::vector`，`reserve(n)` 预分配；函数参数写 `std::span<const T>` 而非 `const std::vector<T>&`；热路径外用 `.at()`（越界抛异常）或打开标准库的加固模式（hardened mode，给 `[]` 加边界检查），不要裸 `[]`；别在持有指向元素的引用或迭代器时 `push_back`，用 ASan 兜底。
 - **Python**：大批量数值用 `array`、NumPy，而不是 `list`；构造用列表推导；避免在头部 `insert(0, x)`，需要队列就用 `collections.deque`；复制嵌套结构时用 `copy.deepcopy` 或重新构造。
 
 **何时破例**：数据量很小（几十个元素）时，这些优化都不重要，写清楚比快更要紧；原型阶段先写对，再用性能分析工具找热点。

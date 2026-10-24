@@ -5,7 +5,7 @@ type: qa
 step: 10
 ---
 ## Q
-资深工程师怎样做序列化？通用规则是什么，Go、Java、Rust、Python 里各自要注意什么，何时破例？
+资深工程师怎样做序列化？通用规则是什么，Go、Java、Rust、Python、C++ 里各自要注意什么，何时破例？
 
 ## A
 **通用规则**：
@@ -18,6 +18,7 @@ step: 10
 按语言：
 - **Go**：关键输入用 `DisallowUnknownFields()` 加校验函数；大整数不要解码进 `any`，用具体结构体或 `UseNumber()`；敏感字段打 `json:"-"`；`time.Time` 默认是 RFC 3339。
 - **Java**：不用内建 `Serializable` 传输数据；若必须读取，配置 `ObjectInputFilter` 白名单；Jackson 里关闭默认类型推断（default typing），多态用显式的 `@JsonTypeInfo` 加子类型白名单；关掉 `FAIL_ON_UNKNOWN_PROPERTIES` 要有意识地决定。
+- **C++**：越过信任边界的数据用 Protocol Buffers 或成熟的 JSON 库，不手写二进制解析；若必须手写，每个长度字段先校验上限再分配，用 `std::span`/边界检查读取，并对解析器做模糊测试；不要把结构体按内存布局直接 `fwrite`/`memcpy` 出去再读回（填充、字节序、版本都会让它在另一端失效）。
 - **Rust**：serde 用 `deny_unknown_fields` 视接口策略而定；用枚举表达变体；版本演进用 `#[serde(default)]`。
 - **Python**：外部数据用 `json` 加 `pydantic` 或 `dataclass` 校验；永远不要 `pickle.loads` 不可信数据；需要存模型文件时用 `safetensors` 这类只存张量的格式，或对 pickle 做签名校验。
 

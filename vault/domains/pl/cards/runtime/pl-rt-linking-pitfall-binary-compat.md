@@ -28,6 +28,7 @@ Java 语言规范里的二进制兼容性规则列出了哪些改动二进制兼
 其他语言的类似情形：
 - **Rust**：同一个依赖的两个不兼容版本可以共存（符号被版本哈希区分），换来的是类型不兼容的编译错误，而不是运行时错误。
 - **Go**：模块用语义化导入路径（`/v2`），不兼容版本被当作不同的包。
+- **C++**：缺符号在静态链接时就是链接错误（`undefined reference`），比 Java 早；动态库版本不符则在加载期报 `version 'GLIBCXX_3.4.29' not found`。最阴险的是 ODR 违规（同一个名字在不同编译单元里有不同定义，标准规定为未定义行为）：链接器通常不报错，运行时才出怪事。
 - **Python**：只有一个版本能被导入，`ImportError`/`AttributeError` 在使用时才抛出。
 
 做法：发布库用 `japicmp`/`revapi` 检查二进制兼容性；应用用依赖锁定与 `mvn dependency:tree`、`enforcer` 规则找出同一依赖的多个版本；发现 `NoSuchMethodError`，先查哪个 jar 实际被加载（`-verbose:class`）。

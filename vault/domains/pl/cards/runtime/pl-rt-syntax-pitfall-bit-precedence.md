@@ -5,12 +5,13 @@ type: qa
 step: 10
 ---
 ## Q
-`x & mask == 0` 这一行在 C、Java、Go、Rust、Python 里分别会怎样？优先级表的差异怎么变成线上 bug？
+`x & mask == 0` 这一行在 C、C++、Java、Go、Rust、Python 里分别会怎样？优先级表的差异怎么变成线上 bug？
 
 ## A
 想判断“`x` 的某个位是否为 0”，直觉写法是 `x & mask == 0`。`x = 10`（二进制 1010）、`mask = 4`（0100），期望结果为真（该位确实是 0）。
 
 - **C**：`==` 比 `&` 优先级高，解析成 `x & (mask == 0)`，即 `10 & 0`，结果 `0`（假）。实测 `printf("%d %d\n", x & mask == 0, (x & mask) == 0)` 输出 `0 1`，两种读法结果相反，而且**能编译、跑得通**，编译器最多给一条 `-Wparentheses` 警告。
+- **C++**：与 C 相同。实测同样的 `printf` 输出 `0 1`，能编译、能运行；`bool` 会提升为 `int`，所以类型检查不拦。Clang 在 `-Wall` 下有 `-Wparentheses` 警告，但不是错误。
 - **Java**：沿用了 C 的优先级，解析成 `x & (mask == 0)`，但 `int & boolean` 没有定义，所以直接编译失败：
 ```
 error: bad operand types for binary operator '&'

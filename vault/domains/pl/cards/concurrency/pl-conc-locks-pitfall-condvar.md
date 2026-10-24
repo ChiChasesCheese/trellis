@@ -24,6 +24,7 @@ Go 的 `sync.Cond`、Python 的 `Condition` 写法同形（`for cond.Wait()`、`
 语言的应对反映了各自的哲学：
 - Java、Go、Python 把循环交给程序员，文档里反复强调；写成 `if` 的 bug 平时能跑，只在高并发下偶发。
 - Rust 的 `Condvar::wait_while(guard, |v| v.is_empty())` 把循环和谓词封装在库里，调用者不可能写成 `if`；Python 有 `wait_for(predicate)` 同理。
+- C++ 两种都给：`cv.wait(lock)` 是裸等待，要自己套 `while`；`cv.wait(lock, pred)` 内部替你循环。两个重载并存，用哪个全凭程序员自觉，所以 C++ 代码规范通常要求只用带谓词的那个。
 
 最佳实践：
 - 通知方先在锁内修改状态，再 `notify`；等待方在锁内检查状态。

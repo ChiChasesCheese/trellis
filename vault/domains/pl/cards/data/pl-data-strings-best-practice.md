@@ -5,7 +5,7 @@ type: qa
 step: 10
 ---
 ## Q
-资深工程师在处理文本时遵守哪些规则？Java、Go、Rust、Python 里分别怎样落实，何时可以破例？
+资深工程师在处理文本时遵守哪些规则？Java、Go、Rust、Python、C++ 里分别怎样落实，何时可以破例？
 
 ## A
 **通用规则**：
@@ -18,6 +18,7 @@ step: 10
 - **Java**：不要用 `charAt`/`substring` 处理用户文本；需要码点用 `codePoints()`；显示截断用 `java.text.BreakIterator`。读写文件始终显式指定 `StandardCharsets.UTF_8`，不依赖平台默认（JDK 18 起默认才变成 UTF-8）。
 - **Go**：边界处用 `utf8.ValidString` 检查来自外部的数据；遍历字符用 `range`；不要写 `s[:n]` 截断用户文本，先按 `rune` 或字形簇找位置。
 - **Rust**：入口处 `String::from_utf8` 处理错误；`from_utf8_lossy` 仅用于日志；路径和系统字符串用 `Path`/`OsStr`，不要强转成 `String`。
+- **C++**：全程 `std::string` 存 UTF-8，边界处约定编码；不要用 `wchar_t`（宽度因平台而异）和 `std::wstring`；`size()` 当字节数用；处理字符、规范化、字形簇交给 ICU 或 Boost.Locale；传参用 `std::string_view`，但别让它活得比底层字符串久。
 - **Python**：显式 `open(..., encoding="utf-8")`；用 `unicodedata.normalize("NFC", s)`；`str` 和 `bytes` 不混用。
 
 **何时破例**：纯 ASCII 的协议（HTTP 方法名、十六进制）直接用字节，更快；明确只处理英文标识符的内部工具可以不管字形簇。

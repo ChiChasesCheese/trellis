@@ -5,7 +5,7 @@ type: qa
 step: 8
 ---
 ## Q
-在服务端部署中，资深工程师在这四门语言里怎样选择链接方式并管理 ABI 边界？
+在服务端部署中，资深工程师在这五门语言里怎样选择链接方式并管理 ABI 边界？
 
 ## A
 **服务端的默认**：静态链接加容器镜像。容器已经提供了“一个环境一个版本”的隔离，动态链接“共享库”的好处（全机一次打补丁）在容器时代已经被“重新构建镜像”取代，而静态链接的确定性很有价值。
@@ -18,6 +18,11 @@ step: 8
 - 服务可选 `x86_64-unknown-linux-musl` 做完全静态；性能敏感时注意 musl 的分配器比 glibc 慢，通常换成 jemalloc 或 mimalloc。
 - 发布 profile：`lto = "thin"`、`codegen-units = 1`、`strip = true`；链接慢就换 `mold`。
 - 对外的边界一律是 C ABI：`#[repr(C)]` + `extern "C"` + `cbindgen` 生成头文件；不要假设 Rust 类型布局稳定。
+
+**C++**：
+- 自己的代码静态链接，系统 C 库保持动态；需要完全静态时选 musl 目标，或 `-static-libstdc++ -static-libgcc` 去掉对目标机 C++ 运行库版本的依赖。
+- 对外的边界一律是 `extern "C"`（加不透明句柄），不要在共享库边界上传 `std::string`、`std::vector` 或抛异常；隐藏符号 `-fvisibility=hidden`，只导出必要接口。
+- 整个依赖树用同一编译器、同一标准库、同一 `-std`、同一 `-D_GLIBCXX_USE_CXX11_ABI` 选项构建，否则会遇到链接期或运行期的 ABI 不匹配。
 
 **Java**：
 - 库作者遵守二进制兼容性：不删除、不改签名已发布的公共方法；需要改就加新方法并标 `@Deprecated`。用 `japicmp` 或 `revapi` 在 CI 里检查。

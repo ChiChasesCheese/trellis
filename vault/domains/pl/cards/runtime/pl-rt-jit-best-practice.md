@@ -22,6 +22,6 @@ step: 8
 - 追求性能：优先换算法和向量化库；纯 Python 的热循环确实能用 PyPy 提速，前提是依赖都兼容。
 - CPython 自带的 JIT 当前是实验性的，除非有实测收益不要开。
 
-**Go / Rust**：没有 JIT，不存在预热；若要“根据运行时数据优化”，用 PGO（Go 的 profile-guided optimization、Rust 的 `-C profile-use`），用生产 profile 喂给编译器。
+**Go / Rust / C++**：没有 JIT，不存在预热；若要“根据运行时数据优化”，用 PGO（Go 的 profile-guided optimization、Rust 的 `-C profile-use`、Clang/GCC 的 `-fprofile-use`），用生产 profile 喂给编译器。
 
 什么时候打破：延迟极其敏感的系统可以主动预热并固定编译，或选 AOT 语言来避开抖动。

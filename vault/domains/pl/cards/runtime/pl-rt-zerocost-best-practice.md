@@ -15,6 +15,11 @@ step: 8
 - 热路径避免 `Box<dyn Trait>`、每次循环里 `collect()` 再迭代、不必要的 `clone()`；接口边界、插件、异构集合才用 `dyn`。
 - 泛型膨胀（体积、编译时间）可以用“泛型外壳 + 非泛型内核”的写法缓解：把函数体抽成接收 `&dyn` 或具体类型的内部函数。
 
+**C++**：
+- 热路径优先 STL 算法（`std::accumulate`、`std::transform_reduce`）和模板参数传入的 lambda，它们能被内联和向量化；ranges 视图用之前先和手写循环对比，不要假定等速。
+- 避开热循环里的虚函数、`std::function`（每次间接调用，可能还有堆分配）和 `shared_ptr`（原子引用计数）；用 `std::vector` 的连续存储，提前 `reserve`。
+- 模板膨胀用显式实例化和 `extern template` 控制；用 `-O2` 构建后测，调试构建的数字没有意义。
+
 **Java**：
 - 热路径用原始类型流（`IntStream`、`LongStream`）与原始类型数组，避免 `Stream<Integer>`、`List<Integer>` 的装箱。
 - 保持调用点单态或双态，小方法让 JIT 内联；不要靠直觉，用 JMH 与 JFR（Allocation profiling）验证。

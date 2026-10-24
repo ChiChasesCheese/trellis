@@ -19,7 +19,7 @@ step: 1
 **设计空间**（怎么跨）：
 - 编译期绑定的“胶水代码”（Java JNI、Python C API、Go cgo）：每次调用经过一层生成的转接；
 - 运行期动态绑定（Python `ctypes`、Java FFM API）：描述函数签名后直接调用，不用写 C 胶水；
-- 同一 ABI 零胶水（Rust `extern "C"`）：Rust 本身可以按 C ABI 布局，调用几乎等于普通调用；
+- 同一 ABI 零胶水（Rust 与 C++ 的 `extern "C"`）：本身可以按 C ABI 布局，调用几乎等于普通调用；C++ 自己的 ABI（名字重整、类布局、异常）不跨编译器稳定，所以对外边界也要收窄成 C；
 - 避开 FFI：用进程间通信（gRPC、管道）或 WebAssembly 模块。
 
 核心权衡：**易用性、安全性、性能**三者不可兼得，下面各语言选的位置不同。

@@ -5,7 +5,7 @@ type: qa
 step: 8
 ---
 ## Q
-怎样系统地防御语言的经典陷阱？资深工程师在 Go、Java、Rust、Python 里各启用哪些工具和约定？
+怎样系统地防御语言的经典陷阱？资深工程师在 Go、Java、Rust、Python、C++ 里各启用哪些工具和约定？
 
 ## A
 **通用方法**：陷阱不要靠记忆防御，要靠**自动化**：
@@ -19,6 +19,7 @@ step: 8
 - **Go**：`go vet ./...` 与 `staticcheck`（含 nil 接口、循环变量、printf 格式、复制锁）；`go test -race`；返回 `error` 的函数无错误时直接 `return nil`；用切片后需要独立副本时 `slices.Clone`；初始化 map 后再写。
 - **Java**：Error Prone 与 SpotBugs（抓 `Integer ==`、忽略返回值、字符串比较）；IDE 检查；对象比较一律 `equals`；金额用 `BigDecimal`；用 `Math.addExact` 做关键计算；集合操作留意 `remove` 的重载。
 - **Rust**：`cargo clippy -- -D warnings`；发布构建在关键服务开启 `overflow-checks`；`unwrap` 只用于不可能失败处；反向引用用 `Weak`；遇到借用冲突先改数据布局，再考虑 `RefCell`。
+- **C++**：`-Wall -Wextra -Werror` 加 clang-tidy；测试和 CI 里跑 ASan、UBSan，涉及线程再跑 TSan；变量声明时就初始化（`int x{}`），用 `.at()` 或标准库加固模式替代裸 `[]`，用 `std::span`、`unique_ptr` 代替裸指针加长度；`[[nodiscard]]` 标记不该被忽略的返回值；不要依赖有符号溢出或未对齐访问这类“在我的机器上能跑”的行为。
 - **Python**：`ruff`（B006 可变默认参数、B023 循环里的闭包、E722 裸 except）；`mypy`/`pyright`；默认值用 `None`；遍历时不要修改被遍历的集合；浮点比较用 `math.isclose`，金额用 `Decimal`。
 
 **团队层面**：
