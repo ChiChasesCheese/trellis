@@ -1,0 +1,10 @@
+%% trellis:begin %%
+# LC 1186 删除一次得到子数组最大和
+*A 档：最高频*
+
+Medium；国内字节面经 2 次、最近 2026-10-08。
+
+**Core** — part of the first pass through this subject.
+%% trellis:end %%
+
+## Notes

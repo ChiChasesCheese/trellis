@@ -1,0 +1,17 @@
+%% trellis:begin %%
+# 网格最小代价路径（障碍 / 加油站 / 油量 K）
+*A 档：最高频*
+
+TikTok 变体题；面经报告 2 次、最近 2026-04-09。
+
+**Core** — part of the first pass through this subject.
+
+## Cards (5)
+1. [[tlc-tt-grid-min-cost-fuel-recharge-1-signal]]
+2. [[tlc-tt-grid-min-cost-fuel-recharge-2-code]]
+3. [[tlc-tt-grid-min-cost-fuel-recharge-3-why]]
+4. [[tlc-tt-grid-min-cost-fuel-recharge-4-followup]]
+5. [[tlc-tt-grid-min-cost-fuel-recharge-5-alt]]
+%% trellis:end %%
+
+## Notes

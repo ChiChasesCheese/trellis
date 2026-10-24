@@ -1,0 +1,10 @@
+%% trellis:begin %%
+# LC 1248 统计「优美子数组」（Count Number of Nice Subarrays）
+*A 档：最高频*
+
+Medium；频率 TikTok 50；近 30 天出现；Array, Hash Table, Math, Sliding Window, Prefix Sum。
+
+**Core** — part of the first pass through this subject.
+%% trellis:end %%
+
+## Notes

@@ -1,0 +1,8 @@
+%% trellis:begin %%
+# LC 1146 快照数组（Snapshot Array）
+*B 档：次高频*
+
+Medium；频率 TikTok 68；Array, Hash Table, Binary Search, Design, Persistent Data Structure。
+%% trellis:end %%
+
+## Notes

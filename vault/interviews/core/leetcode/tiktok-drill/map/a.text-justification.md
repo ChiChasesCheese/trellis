@@ -1,0 +1,17 @@
+%% trellis:begin %%
+# LC 68 文本左右对齐（Text Justification）
+*A 档：最高频*
+
+Hard；频率 TikTok 81、字节 50；近 6 个月出现；Array, String, Simulation。
+
+**Core** — part of the first pass through this subject.
+
+## Cards (5)
+1. [[tlc-text-justification-1-signal]]
+2. [[tlc-text-justification-2-code]]
+3. [[tlc-text-justification-3-why]]
+4. [[tlc-text-justification-4-followup]]
+5. [[tlc-text-justification-5-alt]]
+%% trellis:end %%
+
+## Notes

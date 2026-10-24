@@ -1,0 +1,16 @@
+%% trellis:begin %%
+# LC 886 可能的二分法（Possible Bipartition）
+*A 档：最高频*
+
+Medium；频率 TikTok 56；近 3 个月出现；Depth-First Search, Breadth-First Search, Union-Find, Graph Theory, Graph Coloring。
+
+**Core** — part of the first pass through this subject.
+
+## Cards (4)
+1. [[tlc-possible-bipartition-1-signal]]
+2. [[tlc-possible-bipartition-2-code]]
+3. [[tlc-possible-bipartition-3-why]]
+4. [[tlc-possible-bipartition-4-followup]]
+%% trellis:end %%
+
+## Notes

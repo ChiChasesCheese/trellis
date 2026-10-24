@@ -1,0 +1,13 @@
+%% trellis:begin %%
+# 带 TTL 的 LRU 缓存（含 LFU / 加权 / 线程安全追问）
+*A 档：最高频*
+
+TikTok 变体题；面经报告 12 次、最近 2026-10。
+
+**Core** — part of the first pass through this subject.
+
+## Cards (1)
+1. [[tlc-tt-lru-cache-ttl-0-whole]]
+%% trellis:end %%
+
+## Notes

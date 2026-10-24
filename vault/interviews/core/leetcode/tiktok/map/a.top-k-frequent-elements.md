@@ -1,0 +1,13 @@
+%% trellis:begin %%
+# LC 347 前 K 个高频元素（Top K Frequent Elements）
+*A 档：最高频*
+
+Medium；频率 TikTok 75、字节 62；近 6 个月出现；国内字节面经 17 次、最近 2026-09-22；Array, Hash Table, Divide and Conquer, Sorting, Heap (Priority Queue)。
+
+**Core** — part of the first pass through this subject.
+
+## Cards (1)
+1. [[tlc-top-k-frequent-elements-0-whole]]
+%% trellis:end %%
+
+## Notes
