@@ -10,7 +10,7 @@ agent instructions: `CLAUDE.md` just imports it (`@AGENTS.md`). Contributor docs
 | Path | What |
 |---|---|
 | `vault/` | the Obsidian vault, **learning area only**: what Chi studies or practises with, nothing about how it was made (ADR 0011) |
-| `vault/domains/<subject>/` | subject domains: system-design, low-level-design, kafka, snowflake, cdn-content, quant-infra, markets, hft, basketball |
+| `vault/domains/<subject>/` | subject domains: system-design, low-level-design, kafka, snowflake, cdn-content, quant-infra, markets, hft, pl, basketball |
 | `vault/interviews/core/` | company-agnostic interview material: resume, stories, answers, playbooks, `leetcode/` company tag lists |
 | `vault/interviews/rounds/<round>/` | round-skill domains: `code-core` (coding round, `transfer.<co>` leaves), `leetcode`, `narrative` |
 | `vault/interviews/companies/<co>/` | one self-contained kit per company; entry is `README.md`; `stripe/` mirrors `stripeoa` (the reference methodology) with its trellis deck in `deck/` |
