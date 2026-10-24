@@ -115,8 +115,11 @@ def align(skeleton: Skeleton, call: Callable = invoke, url: str = DEFAULT_URL) -
             # subtree is empty and safe to delete
             if not call("findCards", url, query=f'deck:"{_quoted(name)}"'):
                 stale.append(name)
-    if stale:
-        call("deleteDecks", url, decks=stale, cardsToo=True)
+    # Deleting a deck deletes its subdecks, so asking for a stale parent and
+    # its stale child in one call fails on the child: send only the topmost.
+    top = [n for n in stale if not any(n.startswith(o + "::") for o in stale)]
+    if top:
+        call("deleteDecks", url, decks=top, cardsToo=True)
     return {"moved": moved, "deleted": stale}
 
 

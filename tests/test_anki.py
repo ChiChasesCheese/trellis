@@ -182,3 +182,24 @@ def test_push_carries_on_when_positions_cannot_be_written(tmp_path):
         anki.sequence_new = original
     assert calls[-1] == "sync"
     assert any("import order" in s for s in result["steps"])
+
+
+def test_align_deletes_only_the_topmost_stale_decks(tmp_path):
+    from trellis.anki import align
+    from trellis.skeleton import load_skeleton
+    sk = tmp_path / "s.yaml"
+    sk.write_text("domain: d\ntitle: D\nnodes:\n- id: a\n  title: A\n  summary: s\n")
+    deleted = []
+
+    def call(action, url=None, **params):
+        if action == "deckNames":
+            return ["D", "D::01 A", "D::02 Old", "D::02 Old::Leaf"]
+        if action == "deleteDecks":
+            deleted.extend(params["decks"])
+        if action == "findCards" and params.get("query") in ('deck:"D"', 'deck:"D::01 A"'):
+            return [1]
+        return []
+
+    result = align(load_skeleton(sk), call=call)
+    assert deleted == ["D::02 Old"]
+    assert set(result["deleted"]) >= {"D::02 Old", "D::02 Old::Leaf"}
