@@ -9,12 +9,17 @@
   (`tools/file_split.py`, or by group as in the A1/A2 commits).
 - Running: P (python + patterns), research EN, research CN.
 
-## Queue (≤ 3 agents at a time, sonnet; relaunch on opus if sonnet is limited)
+## Queue (paused 2026-10-24 ~14:00 to save usage; resume here)
 
-Running 2026-10-24 ~02:00: L1, L10, L11. Research (EN, CN) and the catalog are done and committed.
+Done and committed: research (EN, CN), catalog + additions, kit pages (README, LOOP_GUIDE, brief, behavioural, 8 system
+designs, fundamentals), Python toolkit + patterns, card groups A1, A2, P, L1, L2, L3, L4, L10, L11. Both decks pushed to
+Anki after L3. `pl` (five languages, 1312 cards) pushed.
 
-1. Kit pages: `agents/prompt_K1.md` (company, loop, behavioural), `K2a` + `K2b` (eight system designs), `K3` (八股)
-2. LeetCode cards: `agents/prompt_L2.md` … `L9`, `L12` (file split cards per group after review)
-3. Obsidian: `vault/interviews/core/leetcode/tiktok/README.md` problem index linking each whole-answer card
-4. Build + anki-push `tiktok-lc`, `tiktok-lc-drill`, `pl` (pl push pending: AnkiConnect not responding since ~01:40;
-   after it, delete the empty old root deck 编程语言原理：Go · Java · Rust · Python if it remains)
+Running when paused: L5, L6, L7 — let them finish, then for each: `tools/file_group.py <G>` → gate → commit; then
+`tools/gen_index.py`, sync + anki-push `tiktok-lc` and `tiktok-lc-drill`, commit maps.
+
+Not started: `agents/prompt_L8.md`, `L9`, `L12` (~80 problems). Launch ≤ 3 at a time, sonnet. Card agents write split
+cards straight into `tiktok-drill/cards/<branch>/`.
+
+At the very end: if no tiktok card has been reviewed in Anki, delete both decks' notes and re-import so every card sits
+in heat order (AnkiConnect cannot reposition new cards).
