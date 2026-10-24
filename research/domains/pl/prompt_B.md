@@ -29,19 +29,31 @@ philosophy of the language that produced it, what each choice buys and costs, an
 engineer follows (and why). Code appears only to demonstrate a behaviour, a cost or a pitfall — never to show what the
 syntax looks like.
 
-## 3. Cards per leaf: 6–8, in this order (`step`)
+**But assume no prior exposure to any language-specific feature** (Chi, 2026-10-23: 「讲并发 gc 之类的时候 应该先有足够卡片
+讲基本内容 假设我之前没接触过这部分特性 这才是自包含 不能假设我用过了解过全部特性 in some specific lang」). Senior means
+"skip beginner syntax and give the reasoning", not "already knows goroutines, the borrow checker, the JMM or asyncio".
+Before a leaf compares anything, it must **introduce each feature it names** — goroutine, virtual thread, `async`/Future,
+channel, ownership, lifetime, G1/ZGC, reference counting, GIL, sealed types, trait objects, … — as if Chi has never met
+it: what it is, the mental model, how it behaves in one small concrete scenario, and the one fact everything else
+depends on. One foundation card per feature (or per language when the four solutions differ), placed right after the
+problem/principle card. A comparison card may only use terms some earlier card of the same leaf, or of a leaf this one
+`requires`, has introduced.
+
+## 3. Cards per leaf: 7–11, in this order (`step`)
 
 1. **Problem and principle**: what problem the concept solves and the underlying idea; the design space (the 2–4
    possible approaches) and the axis they trade along.
-2. **Mechanism**: how it works underneath (memory, compiler, runtime) — just enough to reason about cost and behaviour,
+2. **Foundations** (as many as the leaf needs, usually 2–4): one card per language-specific feature the leaf relies
+   on, introduced from zero — what it is, the mental model, a tiny concrete scenario and what happens.
+3. **Mechanism**: how it works underneath (memory, compiler, runtime) — just enough to reason about cost and behaviour,
    with a number or a small trace.
-3. **Trade-off comparison**: one row per language (Go, Java, Rust, Python): which point in the design space it chose,
+4. **Trade-off comparison**: one row per language (Go, Java, Rust, Python): which point in the design space it chose,
    what that buys, what it costs. ≤ 5 rows, then 2–4 sentences on the logic behind the pattern (why each language's
    philosophy led it there).
-4. **Philosophy / uniqueness**: what one language's choice reveals about its values, or the sharpest contrast pair.
-5. **Best practice**: what a senior engineer does in each language and why (the rule, the reason, when to break it).
-6. **Pitfall / cost**: the failure mode in production, with the minimal code that shows it and its real output.
-7. Optional: **evolution** — why the feature changed or spread, and where it is heading.
+5. **Philosophy / uniqueness**: what one language's choice reveals about its values, or the sharpest contrast pair.
+6. **Best practice**: what a senior engineer does in each language and why (the rule, the reason, when to break it).
+7. **Pitfall / cost**: the failure mode in production, with the minimal code that shows it and its real output.
+8. Optional: **evolution** — why the feature changed or spread, and where it is heading.
 
 Code: only where it demonstrates behaviour or cost; ≤ 12 lines per block, at most two languages per card.
 
@@ -85,7 +97,7 @@ step: <n>
    your cards.
 2. `uv run python scripts/plain_style.py vault/domains/pl/cards/<branch>/*.md` for each branch — ok.
 3. `uv run python scripts/phone_diagrams.py vault/domains/pl/cards/<branch>/*.md` — ok.
-4. `uv run trellis --domain pl stats` — every leaf you own has 6–8 cards.
+4. `uv run trellis --domain pl stats` — every leaf you own has 7–11 cards.
 5. `git checkout uv.lock` if changed.
 
 ## 7. Reply (≤ 12 lines)
