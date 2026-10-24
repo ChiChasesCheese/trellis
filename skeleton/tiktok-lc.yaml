@@ -128,6 +128,18 @@ nodes:
   summary: TikTok、字节（美国与国内）最高频的题：近半年出现、频率 ≥ 70，或国内面经 ≥ 50 次 / 近 30 天出现；按热度降序。
   core: true
   children:
+  - id: a.tt-lru-cache-ttl
+    title: 带 TTL 的 LRU 缓存（含 LFU / 加权 / 线程安全追问）
+    summary: TikTok 变体题；面经报告 12 次、最近 2026-10。
+  - id: a.tt-rate-limiter-implementation
+    title: 手写限流器（滑动窗口 / 令牌桶）
+    summary: TikTok 变体题；面经报告 10 次、最近 2026-08。
+  - id: a.tt-islands-follow-ups
+    title: 岛屿数量及其追问集合
+    summary: TikTok 变体题；面经报告 8 次、最近 2026-07-08。
+  - id: a.tt-basic-calculator-ladder
+    title: 计算器梯度题（无括号 -> 括号与一元负号，先校验再求值）
+    summary: TikTok 变体题；面经报告 6 次、最近 2026-06-24。
   - id: a.longest-substring-without-repeating-characters
     title: LC 3 无重复字符的最长子串（Longest Substring Without Repeating Characters）
     summary: Medium；频率 TikTok 88；国内字节面经 697 次、最近 2026-10-14；Hash Table, String, Sliding Window。
@@ -179,6 +191,12 @@ nodes:
   - id: a.maximum-subarray
     title: LC 53 最大子数组和（Maximum Subarray）
     summary: Medium；频率 TikTok 50、字节 62；国内字节面经 118 次、最近 2026-09-15；Array, Divide and Conquer, Dynamic Programming。
+  - id: a.tt-largest-number-below-n-from-digits
+    title: 用给定数字组成小于 N 的最大数
+    summary: TikTok 变体题；面经报告 5 次、最近 2026-10-15。
+  - id: a.tt-reverse-k-group-variants
+    title: K 个一组翻转链表的变体（尾部、从尾部起、偶数长度组）
+    summary: TikTok 变体题；面经报告 5 次、最近 2026-09-15。
   - id: a.merge-k-sorted-lists
     title: LC 23 合并 K 个升序链表（Merge k Sorted Lists）
     summary: Hard；频率 TikTok 63、字节 50；国内字节面经 114 次、最近 2026-10-19；Linked List, Divide and Conquer, Heap (Priority Queue), Merge Sort, Tournament Sort。
@@ -266,12 +284,36 @@ nodes:
   - id: a.maximal-square
     title: LC 221 最大正方形（Maximal Square）
     summary: Medium；频率 TikTok 38、字节 75；国内字节面经 71 次、最近 2026-04-17；Array, Dynamic Programming, Matrix。
+  - id: a.tt-deep-merge-nested-json
+    title: 合并两个嵌套 JSON
+    summary: TikTok 变体题；面经报告 4 次、最近 2026-10-15。
   - id: a.longest-valid-parentheses
     title: LC 32 最长有效括号（Longest Valid Parentheses）
     summary: Hard；频率 TikTok 50；近 6 个月出现；国内字节面经 70 次、最近 2026-09-02；String, Dynamic Programming, Stack, Bracket Sequences。
+  - id: a.search-insert-position
+    title: LC 35 搜索插入位置（Search Insert Position）
+    summary: LeetCode 原题；面经报告 2 次、最近 2026-02-18。
+  - id: a.palindrome-partitioning
+    title: LC 131 分割回文串（Palindrome Partitioning）
+    summary: LeetCode 原题；面经报告 2 次、最近 2026-07。
   - id: a.sort-list
     title: LC 148 排序链表（Sort List）
     summary: Medium；频率 TikTok 38、字节 50；国内字节面经 70 次、最近 2026-09-27；Linked List, Two Pointers, Divide and Conquer, Sorting, Merge Sort。
+  - id: a.design-tic-tac-toe
+    title: LC 348 设计井字棋（Design Tic-Tac-Toe）
+    summary: LeetCode 原题；面经报告 2 次、最近 2026-10-13。
+  - id: a.design-circular-queue
+    title: LC 622 设计循环队列（Design Circular Queue）
+    summary: LeetCode 原题；面经报告 2 次、最近 2026-07-06。
+  - id: a.transpose-matrix
+    title: LC 867 转置矩阵（Transpose Matrix）
+    summary: LeetCode 原题；面经报告 2 次、最近 2026-10。
+  - id: a.reverse-nodes-in-even-length-groups
+    title: LC 2074 反转偶数长度组的节点（Reverse Nodes in Even Length Groups）
+    summary: LeetCode 原题；面经报告 2 次、最近 2025-12-23。
+  - id: a.make-costs-of-paths-equal-in-a-binary-tree
+    title: LC 2673 使二叉树所有路径值相等的最小代价（Make Costs of Paths Equal in a Binary Tree）
+    summary: LeetCode 原题；面经报告 2 次、最近 2026-07-15。
   - id: a.median-of-two-sorted-arrays
     title: LC 4 寻找两个正序数组的中位数
     summary: Hard；国内字节面经 69 次、最近 2026-08-10。
@@ -341,6 +383,9 @@ nodes:
   - id: a.implement-queue-using-stacks
     title: LC 232 用栈实现队列
     summary: Easy；国内字节面经 52 次、最近 2026-03-01。
+  - id: a.tt-course-schedule-output-path
+    title: 课程表：输出可行学习路径 / 最短路径
+    summary: TikTok 变体题；面经报告 3 次、最近 2026-08-15。
   - id: a.remove-nth-node-from-end-of-list
     title: LC 19 删除链表的倒数第N个节点
     summary: Medium；国内字节面经 51 次、最近 2026-09-14。
@@ -374,6 +419,66 @@ nodes:
   - id: a.design-hashmap
     title: LC 706 设计哈希映射（Design HashMap）
     summary: Easy；频率 TikTok 62；近 6 个月出现；Array, Hash Table, Linked List, Design, Hash Function。
+  - id: a.tt-currency-conversion-queries
+    title: 汇率换算查询（多跳 / 无解返回 -1）
+    summary: TikTok 变体题；面经报告 2 次、最近 2026-10-15。
+  - id: a.tt-kv-store-snapshot-restore
+    title: 内存 KV 存储：快照与恢复（序列化）
+    summary: TikTok 变体题；面经报告 2 次、最近 2026-10-15。
+  - id: a.tt-ring-walk-count
+    title: 环上走 n 步回到起点的方案数
+    summary: TikTok 变体题；面经报告 2 次、最近 2026-09-15。
+  - id: a.tt-delete-window-balance-even-odd
+    title: 删除长度 k 的窗口使奇偶下标和相等
+    summary: TikTok 变体题；面经报告 2 次、最近 2026-09-11。
+  - id: a.tt-contiguous-memory-allocator
+    title: 连续内存分配器（first-fit、拆分与合并）
+    summary: TikTok 变体题；面经报告 2 次、最近 2026-06-11。
+  - id: a.tt-path-sum-n-ary-prefix-sum
+    title: N 叉树路径和计数（暴力被拒，要前缀和）
+    summary: TikTok 变体题；面经报告 2 次、最近 2026-05-30。
+  - id: a.tt-water-jug-shortest-operations
+    title: 水壶问题：输出最短操作序列
+    summary: TikTok 变体题；面经报告 2 次、最近 2026-05-08。
+  - id: a.tt-grid-min-cost-fuel-recharge
+    title: 网格最小代价路径（障碍 / 加油站 / 油量 K）
+    summary: TikTok 变体题；面经报告 2 次、最近 2026-04-09。
+  - id: a.tt-fixed-array-deque-o1
+    title: 定长数组实现双端队列 / 列表（全部操作 O(1)）
+    summary: TikTok 变体题；面经报告 2 次、最近 2026-03-25。
+  - id: a.tt-max-path-sum-with-path
+    title: 二叉树最大路径和并还原 / 打印路径
+    summary: TikTok 变体题；面经报告 2 次、最近 2026-02-18。
+  - id: a.tt-valid-parenthesis-string-print-all
+    title: 含星号的有效括号 + 输出所有合法字符串
+    summary: TikTok 变体题；面经报告 2 次、最近 2026-02-18。
+  - id: a.surrounded-regions
+    title: LC 130 被围绕的区域（Surrounded Regions）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-09。
+  - id: a.best-time-to-buy-and-sell-stock-iv
+    title: LC 188 买卖股票的最佳时机 IV（Best Time to Buy and Sell Stock IV）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-09。
+  - id: a.flatten-a-multilevel-doubly-linked-list
+    title: LC 430 扁平化多级双向链表（Flatten a Multilevel Doubly Linked List）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-07-18。
+  - id: a.non-overlapping-intervals
+    title: LC 435 无重叠区间（Non-overlapping Intervals）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-09-02。
+  - id: a.target-sum
+    title: LC 494 目标和（Target Sum）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-09。
+  - id: a.stickers-to-spell-word
+    title: LC 691 贴纸拼词（Stickers to Spell Word）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-08-17。
+  - id: a.flip-string-to-monotone-increasing
+    title: LC 926 将字符串翻转到单调递增（Flip String to Monotone Increasing）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-10。
+  - id: a.create-binary-tree-from-descriptions
+    title: LC 2196 根据描述创建二叉树（Create Binary Tree From Descriptions）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-08-17。
+  - id: a.longest-common-suffix-queries
+    title: LC 3093 最长公共后缀查询（Longest Common Suffix Queries）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-07-02。
   - id: a.maximum-product-subarray
     title: LC 152 乘积最大子数组
     summary: Medium；国内字节面经 40 次、最近 2026-09-28。
@@ -395,6 +500,51 @@ nodes:
   - id: a.subarray-sums-divisible-by-k
     title: LC 974 和可被 K 整除的子数组（Subarray Sums Divisible by K）
     summary: Medium；频率 TikTok 53；近 6 个月出现；国内字节面经 9 次、最近 2026-08-27；Array, Hash Table, Prefix Sum。
+  - id: a.tt-spiral-matrix-constant-space
+    title: 螺旋矩阵：O(1) 额外空间且不修改输入
+    summary: TikTok 变体题；面经报告 1 次、最近 2026-09-28。
+  - id: a.tt-seller-task-scheduler
+    title: 卖家任务调度器（轮转 + VIP + 优先级）
+    summary: TikTok 变体题；面经报告 1 次、最近 2026-09-02。
+  - id: a.tt-removable-timestamp-task-scheduler
+    title: 可删除任务的时间戳调度器（popTask）
+    summary: TikTok 变体题；面经报告 1 次、最近 2026-08-20。
+  - id: a.tt-pythagorean-triple-in-array
+    title: 整数数组中的勾股三元组
+    summary: TikTok 变体题；面经报告 1 次、最近 2026-08-17。
+  - id: a.tt-nested-comment-tree
+    title: 由扁平记录构建嵌套评论树
+    summary: TikTok 变体题；面经报告 1 次、最近 2026-08-13。
+  - id: a.tt-ai-assisted-order-validator
+    title: AI 辅助编码：OrderValidator（规则 DAG）
+    summary: TikTok 变体题；面经报告 1 次、最近 2026-08-06。
+  - id: a.tt-flatten-multilevel-list-skip-empty
+    title: 展平多级链表（值为空的嵌套节点要排除）
+    summary: TikTok 变体题；面经报告 1 次、最近 2026-07-18。
+  - id: a.tt-sorted-array-more-than-n-over-3
+    title: 有序数组中出现次数超过 n/3 的数
+    summary: TikTok 变体题；面经报告 1 次、最近 2026-06-27。
+  - id: a.tt-login-count-per-user-per-day
+    title: 日志流中统计每个用户每天登录次数
+    summary: TikTok 变体题；面经报告 1 次、最近 2026-02-24。
+  - id: a.tt-subarray-max-min-plus-max
+    title: 长度至少为 2 的子数组，最大化 min + max
+    summary: TikTok 变体题；面经报告 1 次、最近 2025-11-26。
+  - id: a.tt-inorder-string-iterator
+    title: 二叉树中序字符迭代器
+    summary: TikTok 变体题；面经报告 1 次、最近 2025-10-31。
+  - id: a.tt-chat-message-window-merge
+    title: 聊天消息窗口合并（get_chat_messages）
+    summary: TikTok 变体题；面经报告 1 次、最近 2025-10-21。
+  - id: a.tt-percentile-finder
+    title: PercentileFinder：实时维护数字并返回第 p 百分位
+    summary: TikTok 变体题；面经报告 1 次、最近 2025-10-21。
+  - id: a.tt-weighted-sampler-dynamic-update
+    title: 按权重采样器（支持动态修改权重）
+    summary: TikTok 变体题；面经报告 1 次、最近 2025-10-16。
+  - id: a.tt-ip-range-to-cidr
+    title: IP 区间转最少 CIDR 列表
+    summary: TikTok 变体题；面经报告 1 次、最近 2025-10-14。
   - id: a.jump-game
     title: LC 55 跳跃游戏（Jump Game）
     summary: Medium；频率 TikTok 50、字节 50；近 6 个月出现；国内字节面经 28 次、最近 2026-04-18；Array, Dynamic Programming, Greedy。
@@ -610,18 +760,120 @@ nodes:
   - id: b.word-break
     title: LC 139 单词拆分（Word Break）
     summary: Medium；频率 TikTok 56；国内字节面经 44 次、最近 2026-08-27；Array, Hash Table, String, Dynamic Programming, Trie。
+  - id: b.permutation-sequence
+    title: LC 60 排列序列（Permutation Sequence）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-04。
   - id: b.minimum-path-sum
     title: LC 64 最小路径和（Minimum Path Sum）
     summary: Medium；频率 TikTok 50；国内字节面经 42 次、最近 2026-08-16；Array, Dynamic Programming, Matrix。
+  - id: b.set-matrix-zeroes
+    title: LC 73 矩阵置零（Set Matrix Zeroes）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-04。
+  - id: b.subsets-ii
+    title: LC 90 子集 II（Subsets II）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-02-21。
   - id: b.path-sum-ii
     title: LC 113 路径总和 II
     summary: Medium；国内字节面经 42 次、最近 2026-07-24。
+  - id: b.populating-next-right-pointers-in-each-node
+    title: LC 116 填充每个节点的下一个右侧节点指针（Populating Next Right Pointers in Each Node）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-01-06。
+  - id: b.word-ladder-ii
+    title: LC 126 单词接龙 II（Word Ladder II）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-04-12。
+  - id: b.find-minimum-in-rotated-sorted-array-ii
+    title: LC 154 寻找旋转排序数组中的最小值 II（Find Minimum in Rotated Sorted Array II）
+    summary: LeetCode 原题；面经报告 1 次、最近 2025-10-15。
   - id: b.min-stack
     title: LC 155 最小栈
     summary: Easy；国内字节面经 42 次、最近 2026-04-13。
+  - id: b.missing-ranges
+    title: LC 163 缺失的区间（Missing Ranges）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-04-02。
+  - id: b.summary-ranges
+    title: LC 228 汇总区间（Summary Ranges）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-04-02。
+  - id: b.product-of-array-except-self
+    title: LC 238 除了自身以外数组的乘积（Product of Array Except Self）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-06。
   - id: b.search-a-2d-matrix-ii
     title: LC 240 搜索二维矩阵 II
     summary: Medium；国内字节面经 43 次、最近 2026-02-23。
+  - id: b.number-of-connected-components-in-an-undirected-graph
+    title: LC 323 无向图中连通分量的数目（Number of Connected Components in an Undirected Graph）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-03-10。
+  - id: b.house-robber-iii
+    title: LC 337 打家劫舍 III（House Robber III）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-01-03。
+  - id: b.nested-list-weight-sum
+    title: LC 339 嵌套列表加权和（Nested List Weight Sum）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-02-27。
+  - id: b.mini-parser
+    title: LC 385 迷你语法分析器（Mini Parser）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-02-27。
+  - id: b.most-frequent-subtree-sum
+    title: LC 508 出现次数最多的子树元素和（Most Frequent Subtree Sum）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-04-11。
+  - id: b.permutation-in-string
+    title: LC 567 字符串的排列（Permutation in String）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-04。
+  - id: b.beautiful-arrangement-ii
+    title: LC 667 优美的排列 II（Beautiful Arrangement II）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-04。
+  - id: b.number-of-distinct-islands-ii
+    title: LC 711 不同岛屿的数量 II（Number of Distinct Islands II）
+    summary: LeetCode 原题；面经报告 1 次、最近 2025-11-19。
+  - id: b.min-cost-climbing-stairs
+    title: LC 746 使用最小花费爬楼梯（Min Cost Climbing Stairs）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-01-28。
+  - id: b.ip-to-cidr
+    title: LC 751 IP 到 CIDR（IP to CIDR）
+    summary: LeetCode 原题；面经报告 1 次、最近 2025-10-14。
+  - id: b.swim-in-rising-water
+    title: LC 778 水位上升的泳池中游泳（Swim in Rising Water）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-04-01。
+  - id: b.minimum-add-to-make-parentheses-valid
+    title: LC 921 使括号有效的最少添加（Minimum Add to Make Parentheses Valid）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-04-19。
+  - id: b.binary-tree-cameras
+    title: LC 968 监控二叉树（Binary Tree Cameras）
+    summary: LeetCode 原题；面经报告 1 次、最近 2025-10-09。
+  - id: b.time-based-key-value-store
+    title: LC 981 基于时间的键值存储（Time Based Key-Value Store）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-03-20。
+  - id: b.vertical-order-traversal-of-a-binary-tree
+    title: LC 987 二叉树的垂序遍历（Vertical Order Traversal of a Binary Tree）
+    summary: LeetCode 原题；面经报告 1 次、最近 2025-10-20。
+  - id: b.longest-string-chain
+    title: LC 1048 最长字符串链（Longest String Chain）
+    summary: LeetCode 原题；面经报告 1 次、最近 2025-12-13。
+  - id: b.maximum-length-of-a-concatenated-string-with-unique-characters
+    title: LC 1239 串联字符串的最大长度（Maximum Length of a Concatenated String with Unique Characters）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-06-28。
+  - id: b.minimum-swaps-to-make-strings-equal
+    title: LC 1247 交换字符使得字符串相同（Minimum Swaps to Make Strings Equal）
+    summary: LeetCode 原题；面经报告 1 次、最近 2025-11-20。
+  - id: b.number-of-days-between-two-dates
+    title: LC 1360 日期之间隔几天（Number of Days Between Two Dates）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-02-21。
+  - id: b.kth-smallest-subarray-sum
+    title: LC 1918 第 K 小的子数组和（Kth Smallest Subarray Sum）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-01-08。
+  - id: b.parallel-courses-iii
+    title: LC 2050 并行课程 III（Parallel Courses III）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-06-15。
+  - id: b.successful-pairs-of-spells-and-potions
+    title: LC 2300 咒语和药水的成功对数（Successful Pairs of Spells and Potions）
+    summary: LeetCode 原题；面经报告 1 次、最近 2025-12-13。
+  - id: b.amount-of-time-for-binary-tree-to-be-infected
+    title: LC 2385 感染二叉树需要的总时间（Amount of Time for Binary Tree to Be Infected）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-01-29。
+  - id: b.count-of-interesting-subarrays
+    title: LC 2845 统计趣味子数组的数目（Count of Interesting Subarrays）
+    summary: LeetCode 原题；面经报告 1 次、最近 2026-06-18。
+  - id: b.maximize-amount-after-two-days-of-conversions
+    title: LC 3387 两天自由外汇交易后的最大货币数（Maximize Amount After Two Days of Conversions）
+    summary: LeetCode 原题；面经报告 1 次、最近 日期不明。
   - id: b.remove-zero-sum-consecutive-nodes-from-linked-list
     title: LC 1171 从链表中删去总和值为零的连续节点（Remove Zero Sum Consecutive Nodes from Linked List）
     summary: Medium；频率 字节 59；Hash Table, Linked List。

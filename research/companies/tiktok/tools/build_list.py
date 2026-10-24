@@ -8,7 +8,10 @@ tier A (seen in the last 6 months, or frequency >= 70) and tier B (frequency >= 
 problems, and orders by the higher of the two frequencies. China-side ByteDance interviews draw on a different pool, so
 the CodeTop list for 字节跳动 (reports from Chinese forums, with a count and a last-seen date) is unioned in, one list for
 learning: CN tier A = >= 50 reports or seen in the last 30 days, B = >= 20 reports or seen in the last 3 months; a
-problem takes the better of its US and CN tiers. Order inside a tier: the higher of the US frequency (0-100) and the CN
+problem takes the better of its US and CN tiers. Finally `catalog/additions.json` (interview reports collected for the
+kit) adds LeetCode originals reported in the window and TikTok-specific variants (custom problems or changed
+LeetCode problems, with statements reconstructed from the reports): tier A when reported in the last 3 months, seen
+twice or more, or a variant; tier B otherwise. Order inside a tier: the higher of the US frequency (0-100) and the CN
 report count as a percentile of the CodeTop list (0-100). Facts go to research/companies/tiktok/index.json
 (committed); problem statements from leetcode.cn go to sources/local/tiktok-lc/<slug>.txt (gitignored: the repo is
 public and the statements are LeetCode's text).
@@ -177,7 +180,7 @@ def main(argv: list[str]) -> int:
             and "Database" not in p["tags"]]
     for p in keep:
         p["tier"] = "A" if p["window"] else min(c["tier"] for c in p["companies"].values())
-    from datetime import date
+    from datetime import date, timedelta
     cn = codetop(str(date.today()))
     have = {p["slug"] for p in keep}
     for p in keep:
@@ -203,6 +206,27 @@ def main(argv: list[str]) -> int:
         if c["kind"] == "supplement" and "--no-fetch" not in argv:
             STATEMENTS.mkdir(parents=True, exist_ok=True)
             (STATEMENTS / f"{slug}.txt").write_text(to_text(c["content"]), encoding="utf-8")
+    additions = json.loads((ROOT / "research/companies/tiktok/catalog/additions.json").read_text(encoding="utf-8"))
+    have = {p["slug"] for p in keep}
+    recent3 = str(date.today() - timedelta(days=92))[:7]
+    for a in additions["leetcode"]:
+        if a["slug"] in have:
+            continue
+        refs = int(a.get("refs") or 1)
+        seen = a.get("last_seen") or ""
+        keep.append({"id": int(a["id"]), "title": a["title"], "title_zh": a.get("title_zh", ""), "slug": a["slug"],
+                     "difficulty": "", "freq": min(100, 40 + 20 * refs), "recent": bool(seen), "window": "",
+                     "tags": [], "tier": "A" if refs >= 2 or seen >= recent3 else "B", "kind": "leetcode",
+                     "companies": {"reports": {"refs": refs, "last_seen": seen}}})
+    for v in additions["variants"]:
+        slug = f"tt-{v['key']}"
+        refs = int(str(v.get("refs") or 1).split()[0])
+        keep.append({"id": 0, "title": v["title_en"], "title_zh": v["title_zh"], "slug": slug, "difficulty": "",
+                     "freq": min(100, 40 + 10 * refs), "recent": True, "window": "", "tags": [], "tier": "A",
+                     "kind": "variant", "companies": {"reports": {"refs": refs, "last_seen": v.get("last_seen", "")}}})
+        STATEMENTS.mkdir(parents=True, exist_ok=True)
+        note = f"\n\n（据面经重建；推断的部分：{v['note']}）" if v.get("note") else ""
+        (STATEMENTS / f"{slug}.txt").write_text(v["statement"] + note, encoding="utf-8")
     keep.sort(key=lambda p: (p["tier"], -p["freq"], p["id"]))
     if "--no-fetch" not in argv:
         STATEMENTS.mkdir(parents=True, exist_ok=True)

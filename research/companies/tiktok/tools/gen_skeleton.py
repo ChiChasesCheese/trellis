@@ -52,6 +52,8 @@ PATTERNS = [
 
 def leaf_title(p):
     zh = p.get("title_zh") or ""
+    if p.get("kind") == "variant":
+        return zh
     if p.get("kind") == "supplement":
         return f"{p['fid']} {zh}"
     if p.get("kind") == "lcof":
@@ -60,11 +62,15 @@ def leaf_title(p):
 
 
 def leaf_summary(p):
+    rep = p["companies"].get("reports")
+    if rep:
+        kind = "TikTok 变体题" if p.get("kind") == "variant" else "LeetCode 原题"
+        return f"{kind}；面经报告 {rep['refs']} 次、最近 {rep['last_seen'] or '日期不明'}。"
     cn = p["companies"].get("bytedance_cn")
     cn_txt = f"国内字节面经 {cn['reports']} 次、最近 {cn['last_seen']}" if cn else ""
     if "tiktok" not in p["companies"] and "bytedance" not in p["companies"]:
         return f"{p['difficulty'] or '—'}；{cn_txt}。"
-    who = "、".join(f"{'TikTok' if c == 'tiktok' else '字节'} {v['freq']}" for c, v in p["companies"].items() if c != "bytedance_cn")
+    who = "、".join(f"{'TikTok' if c == 'tiktok' else '字节'} {v['freq']}" for c, v in p["companies"].items() if c in ("tiktok", "bytedance"))
     recent = {"30d": "；近 30 天出现", "3m": "；近 3 个月出现", "6m": "；近 6 个月出现"}.get(p.get("window", ""), "")
     cn_part = f"；{cn_txt}" if cn else ""
     return f"{p['difficulty']}；频率 {who}{recent}{cn_part}；{', '.join(p['tags'][:5])}。"

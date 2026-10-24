@@ -97,3 +97,12 @@ Some leaves come from China-side ByteDance interviews. Use the statement file. F
 `-9`, `-23`) have **no statement file**: restate the classic problem precisely from knowledge (排序奇升偶降链表, 圆环回原点
 问题, 36 进制加法, 检测循环依赖), choose sensible constraints, and list those leaves in your reply. Header line for those:
 `**补充题 n 中文名**｜难度 · 字节高频`; for 剑指 Offer: `**剑指 Offer n 中文名**｜难度 · 字节高频`.
+
+## TikTok variants (`tt-*` leaves) and newly reported LeetCode problems
+
+`tt-*` leaves are TikTok-specific problems reconstructed from interview reports; their statement file ends with a note
+on which parts were inferred — use it to choose sensible constraints, but **never put provenance or "reconstructed"
+on a card**: the card states the problem as the problem. Header line `**中文题名**｜难度 · TikTok 高频` (pick the
+difficulty yourself). Design-style variants (LRU with TTL, KV store with snapshot, scheduler …) get a class with type
+hints; verify them with your own unit tests and a randomized comparison against a naive reference implementation
+(≥ 300 random operation sequences). Their follow-up card covers the follow-ups listed in the statement file.
