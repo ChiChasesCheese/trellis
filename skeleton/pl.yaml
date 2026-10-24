@@ -1,8 +1,8 @@
-# Programming languages from first principles, compared across Go, Java, Rust and Python: each leaf is one language
-# concept (type systems, memory, errors, concurrency, abstraction ...) seen through all four, with examples.
+# Programming languages from first principles, compared across Go, Java, Rust, Python and C++: each leaf is one language
+# concept (type systems, memory, errors, concurrency, abstraction ...) seen through all five, with examples.
 # Cards first; the build record is research/domains/pl/BUILD.md.
 domain: pl
-title: 编程语言原理：Go · Java · Rust · Python
+title: 编程语言原理：Go · Java · Rust · Python · C++
 lang: zh
 vault: domains/pl
 study:
@@ -658,8 +658,81 @@ nodes:
     summary: C++、C#、Kotlin、Swift、TypeScript、Zig、Haskell/OCaml 各自的一条核心思想，以及它们影响了谁。
     requires:
     - foundations.lineage
-- id: signatures
+- id: cpp
   order: 15
+  title: 现代 C++：特性、取舍与最佳实践
+  summary: C++ 的设计哲学和它独有的机制：零开销抽象、值类别与移动、RAII 与所有权、未定义行为、模板与 concepts、编译期计算、错误处理、并发与协程、标准库与 ranges、构建与模块、内存安全之争，以及现代 C++ 的写法清单。
+  children:
+  - id: cpp.philosophy
+    title: C++ 的设计哲学与演进
+    summary: 零开销原则（不用的不付钱，用了的手写也不会更快）、与 C 兼容的包袱、三年一版的标准节奏（C++11 到 C++26）、为什么 C++ 选择把复杂度交给程序员。
+    requires:
+    - foundations.design-philosophy
+  - id: cpp.value-categories
+    title: 值类别、移动语义与拷贝省略
+    summary: 左值、将亡值、纯右值；右值引用与 std::move 只是类型转换；完美转发；C++17 的强制拷贝省略；移动后对象的状态。
+    requires:
+    - memory.value-reference-semantics
+  - id: cpp.raii-ownership
+    title: RAII、零/三/五法则与智能指针
+    summary: 析构函数保证释放、rule of zero / three / five、unique_ptr、shared_ptr 的引用计数与控制块、weak_ptr 打破循环；在接口签名里表达所有权。
+    requires:
+    - memory.manual-raii
+    - cpp.value-categories
+  - id: cpp.undefined-behavior
+    title: 未定义行为与优化器
+    summary: 什么是 UB、编译器为什么能利用 UB 做优化（有符号溢出、空指针、越界、数据竞争）、实现定义与未指定行为的区别、怎样用 sanitizer 和 -fwrapv 等手段兜住。
+    requires:
+    - memory.memory-safety
+  - id: cpp.templates-concepts
+    title: 模板、concepts 与静态多态
+    summary: 函数与类模板的实例化、SFINAE 到 C++20 concepts、CRTP、模板与虚函数的取舍、模板带来的编译时间与代码膨胀。
+    requires:
+    - abstraction.generics-implementation
+    - cpp.philosophy
+  - id: cpp.compile-time
+    title: 编译期计算：constexpr、consteval 与 if constexpr
+    summary: 从模板元编程到 constexpr 函数、consteval 与 constinit、if constexpr 的分支裁剪、编译期能做与不能做的事。
+    requires:
+    - cpp.templates-concepts
+  - id: cpp.errors
+    title: 错误处理：异常、错误码与 std::expected
+    summary: 异常的零成本模型与抛出代价、noexcept 对移动和优化的影响、异常安全的三个级别、C++23 std::expected、为什么很多低延迟与游戏代码禁用异常。
+    requires:
+    - errors.cost
+    - cpp.raii-ownership
+  - id: cpp.concurrency
+    title: 并发：线程、原子与内存序、协程
+    summary: std::thread 与 jthread、mutex 与 scoped_lock、std::atomic 与六种 memory_order、C++20 协程是无栈协程且需要库支持、与 Rust/Go/Java 模型的对照。
+    requires:
+    - concurrency.atomics-memory-models
+    - cpp.raii-ownership
+  - id: cpp.stl-ranges
+    title: 标准库、迭代器失效与 ranges
+    summary: 容器的内存布局与迭代器失效规则、算法与迭代器的分离、C++20 ranges 与惰性 views、string_view 与 span 的悬垂陷阱。
+    requires:
+    - cpp.value-categories
+    - functional.iterators-laziness
+  - id: cpp.build-modules
+    title: 头文件、ODR、模块与构建生态
+    summary: 预处理器包含模型、单一定义规则（ODR）、C++20 模块、CMake、vcpkg/Conan，以及为什么 C++ 没有统一的包管理器。
+    requires:
+    - ecosystem.modules
+    - runtime.linking-abi
+  - id: cpp.safety
+    title: 内存安全之争与 C++ 的回应
+    summary: C++ 的内存安全问题有多大、Core Guidelines 与 GSL、hardened 标准库、profiles 提案、与 Rust 的取舍；什么场景仍然选 C++。
+    requires:
+    - cpp.undefined-behavior
+    - trends.safety-push
+  - id: cpp.modern-practice
+    title: 现代 C++ 写法清单
+    summary: auto 与统一初始化、enum class、override/final、nullptr、structured bindings、optional/variant、string_view、[[nodiscard]]、范围 for；每条为什么比老写法好。
+    requires:
+    - cpp.raii-ownership
+    - cpp.stl-ranges
+- id: signatures
+  order: 16
   title: 各语言的独到之处与陷阱
   summary: 把前面所有比较收拢到每门语言身上：它最独特的设计、最适合的场景、最常见的陷阱，以及怎样在项目里选语言。
   children:
@@ -687,14 +760,20 @@ nodes:
     requires:
     - runtime.cpython-internals
     - metaprogramming.dynamic-features
+  - id: signatures.cpp
+    title: C++ 的独到之处
+    summary: 零开销抽象、确定性析构与 RAII、模板与编译期计算、对硬件的直接控制、最大的系统软件生态；适合游戏、交易、浏览器、数据库与基础设施。
+    requires:
+    - cpp.modern-practice
   - id: signatures.gotchas
     title: 每门语言的经典陷阱
     summary: Go 的 nil 接口不等于 nil 与切片别名、Java 的 Integer 缓存与 ==、Rust 与借用检查器的拉锯、Python 可变默认参数与晚绑定闭包。
     requires:
+    - signatures.cpp
     - signatures.go
     - signatures.java
-    - signatures.rust
     - signatures.python
+    - signatures.rust
   - id: signatures.choosing
     title: 怎样为一个项目选语言
     summary: 按延迟与吞吐、团队、生态、部署、正确性要求做决策；同一个系统里多语言并存的常见分工。
