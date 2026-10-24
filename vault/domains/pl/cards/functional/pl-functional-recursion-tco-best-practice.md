@@ -1,0 +1,19 @@
+---
+id: pl-functional-recursion-tco-best-practice
+node: functional.recursion-tco
+type: qa
+step: 10
+---
+## Q
+资深工程师在各语言里怎样处理递归？什么时候必须改成迭代？
+
+## A
+判断依据：**递归深度由谁决定**。深度由数据结构的固定性质决定（平衡二叉树的深度是 log n、固定深度的语法树）：放心用递归。深度由**外部输入**决定（用户上传的 JSON、任意深度的目录树、链表、不平衡的树、图遍历）：当作潜在的攻击面，要么限制深度，要么改成迭代。
+
+- **所有语言**：对"深度可能很大"的递归，改用显式栈（`Vec`、`ArrayDeque`、`list`）加 `while` 循环；这样深度只受内存限制，而不是栈限制；尾递归的循环直接写 `while`。
+- **Python**：不要靠调高 `setrecursionlimit` 来修复，除非你清楚路径里没有 C 代码；遍历大树用生成器 + 显式栈；记忆化递归（`functools.cache`）在深度大时同样会触顶，改成自底向上的循环 DP。
+- **Java**：递归深度超过几千层的算法一律改迭代；确实需要时，给专门的线程开大栈（`new Thread(null, r, "name", size)`）；解析外部输入的递归下降解析器要设最大嵌套深度。
+- **Rust**：深递归任务放进 `std::thread::Builder::new().stack_size(...)` 的线程；不依赖 release 下的 LLVM 改写；`debug` 与 `release` 下都要测。
+- **Go**：栈增长使深递归一般不成问题，但 `fatal error: stack overflow` 无法恢复，对外部输入仍要限制深度。
+
+一句话：函数式的优雅递归在工程里服务于"结构天然递归且深度有界"的场景；一旦深度不可控，就换成循环。
