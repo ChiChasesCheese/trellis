@@ -1,0 +1,20 @@
+---
+id: pl-trends-conc-table
+node: trends.concurrency-evolution
+type: qa
+step: 7
+---
+## Q
+比较 Go、Java、Rust、Python 在并发模型上的选择：各自站在演进线的哪一点，买到什么，付出什么？
+
+## A
+| 语言 | 主要模型 | 买到 | 付出 |
+|---|---|---|---|
+| Go | goroutine 加通道，运行时调度，`context` 取消，`errgroup` | 写同步代码就有高并发，无染色 | 取消靠约定，没有语言强制的结构化；共享内存仍有数据竞争 |
+| Java | 平台线程加锁，Java 21 虚拟线程，结构化并发预览中 | 保留数百万行现有同步代码；生态成熟 | 新旧模型并存（线程池、`CompletableFuture`、虚拟线程）；钉住问题；结构化并发尚未稳定 |
+| Rust | 系统线程加 `async/await`（需运行时库），`Send`/`Sync` 保证无数据竞争 | 零成本抽象，编译期消除数据竞争 | async 生态分裂（tokio 为主），生命周期复杂，染色 |
+| Python | `threading`（受 GIL 限制）、`asyncio`、`multiprocessing`，`TaskGroup`（3.11） | 异步 I/O 单线程就能高并发；生态丰富 | 染色；GIL 让线程无法并行计算；阻塞库与异步库不兼容 |
+
+**逻辑**：并发模型是语言“出生年代和核心约束”的产物。Go 在多核与云服务兴起时诞生，把并发做进语言和运行时，goroutine 加通道是设计中心。Java 诞生在线程时代，生态建立在线程之上，所以演进方向是“**保持编程模型，替换底层实现**”（虚拟线程）。Rust 要零成本、无运行时，所以 async 是库加编译器状态机，把运行时选择留给用户。Python 的 GIL 与动态性让线程无法并行，I/O 并发只能走 asyncio，由此染色是不可避免的。
+
+**一个共同的判断**：对 I/O 密集的服务，共识已是“用轻量并发单位，写直线代码”。Go 与 Java 用轻量线程达到，Python 与 Rust 用 async/await 达到。区别只在是否带来染色。
