@@ -2,7 +2,7 @@
 id: pl-foundations-design-philosophy-best-practice
 node: foundations.design-philosophy
 type: qa
-step: 5
+step: 8
 ---
 ## Q
 为什么资深工程师强调「按语言的习惯写代码」，而不是把熟悉语言的写法搬过去？四门语言各自的习惯是什么？
@@ -14,7 +14,7 @@ step: 5
 
 - Go：函数尽量小，接口要小，由使用方定义；组合代替继承；错误显式处理；并发用 goroutine 加 channel 而不是锁的大网。理由是工程规模下的可读性，宁可重复几行也别引入抽象。
 - Java：面向接口编程，依赖注入，不可变对象用 `record`；不要为追时髦重写稳定的旧代码。理由是长寿命系统的可维护性和向后兼容。
-- Rust：让类型表达不变量（`Option`、`Result`、新类型包装），把可能出错的状态做成编译期不可表示；先尝试借用，再 `clone`，最后才 `unsafe`。理由是把运行期的错误前移到编译期。
+- Rust：让类型表达不变量（`Option` 表示有值或没有，`Result` 表示成功或失败，新类型包装），把可能出错的状态做成编译期不可表示；先尝试借用，再 `clone`，最后才 `unsafe`。理由是把运行期的错误前移到编译期。
 - Python：EAFP（先做，出错再处理）和鸭子类型，用推导式、生成器、`with`；不要把 Java 的多层类层次搬过来。理由是可读性和开发速度。
 
 典型的反面例子：用 Python 写 Java 风格的 `Factory` 和 `Manager` 类；用 Go 写异常风格的 `panic/recover` 控制流；用 Rust 全程 `.clone()` 躲开借用检查器，一路 `unwrap()`。

@@ -2,7 +2,7 @@
 id: pl-foundations-design-philosophy-table
 node: foundations.design-philosophy
 type: qa
-step: 3
+step: 6
 ---
 ## Q
 Go、Java、Rust、Python 各自的首要设计目标、为此做的关键决定、付出的代价分别是什么？

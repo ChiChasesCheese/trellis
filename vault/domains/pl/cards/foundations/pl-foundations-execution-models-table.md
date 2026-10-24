@@ -2,7 +2,7 @@
 id: pl-foundations-execution-models-table
 node: foundations.execution-models
 type: qa
-step: 3
+step: 7
 ---
 ## Q
 Go、Java、Rust、Python 各选了哪种执行模型？它们换来什么，又付出什么？

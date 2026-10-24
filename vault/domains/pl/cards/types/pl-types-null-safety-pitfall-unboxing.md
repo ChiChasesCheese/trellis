@@ -2,7 +2,7 @@
 id: pl-types-null-safety-pitfall-unboxing
 node: types.null-safety
 type: qa
-step: 6
+step: 10
 ---
 ## Q
 Java 里 `int x = map.get("k");` 为什么会抛 `NullPointerException`？Go 里写 `nil` map 会怎样？

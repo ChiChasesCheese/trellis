@@ -2,7 +2,7 @@
 id: pl-foundations-tradeoff-axes-unique-rust-both
 node: foundations.tradeoff-axes
 type: qa
-step: 4
+step: 7
 ---
 ## Q
 Rust 怎样同时拿到「内存安全」和「接近 C 的控制」？它把「放弃检查」的权利放在哪里？

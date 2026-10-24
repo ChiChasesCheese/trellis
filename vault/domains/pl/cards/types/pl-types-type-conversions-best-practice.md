@@ -2,7 +2,7 @@
 id: pl-types-type-conversions-best-practice
 node: types.type-conversions
 type: qa
-step: 5
+step: 8
 ---
 ## Q
 写代码时，资深工程师怎样处理类型转换，才能让转换失败不变成线上问题？

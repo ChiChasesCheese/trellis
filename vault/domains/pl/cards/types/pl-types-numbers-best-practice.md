@@ -2,7 +2,7 @@
 id: pl-types-numbers-best-practice
 node: types.numbers
 type: qa
-step: 5
+step: 8
 ---
 ## Q
 处理金额、计数、时间戳、哈希这类数值时，资深工程师在 Go、Java、Rust、Python 里各怎么做才不会被溢出和精度坑到？

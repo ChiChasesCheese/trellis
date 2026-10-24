@@ -2,7 +2,7 @@
 id: pl-foundations-design-philosophy-unique-zen
 node: foundations.design-philosophy
 type: qa
-step: 4
+step: 7
 ---
 ## Q
 Python 在语言里怎样直接写下了它的设计哲学？哪几条原则最能解释 Python 的日常写法？

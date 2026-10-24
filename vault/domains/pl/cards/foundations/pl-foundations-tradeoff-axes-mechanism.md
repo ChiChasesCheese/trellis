@@ -2,7 +2,7 @@
 id: pl-foundations-tradeoff-axes-mechanism
 node: foundations.tradeoff-axes
 type: qa
-step: 2
+step: 5
 ---
 ## Q
 「安全与控制」这条轴在机器层面怎样体现？数组下标访问 `a[i]` 在 C 和在有边界检查的语言里分别做什么？

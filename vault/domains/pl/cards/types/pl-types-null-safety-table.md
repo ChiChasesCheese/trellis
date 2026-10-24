@@ -2,7 +2,7 @@
 id: pl-types-null-safety-table
 node: types.null-safety
 type: qa
-step: 3
+step: 7
 ---
 ## Q
 Go、Java、Rust、Python 各怎样表示「没有值」？换来什么，付出什么？
@@ -10,7 +10,7 @@ Go、Java、Rust、Python 各怎样表示「没有值」？换来什么，付出
 ## A
 | 语言 | 选择 | 换来 | 代价 |
 |---|---|---|---|
-| Go | `nil` 适用于指针、切片、map、接口、函数、通道；加上「零值可用」的设计 | 很多 `nil` 无害（`nil` 切片可 `append`），不必处处构造对象 | 解引用 `nil` 指针 panic；`nil` map 写入 panic；类型化 `nil` 放进接口后不等于 `nil` |
+| Go | `nil` 适用于指针、切片、map、接口、函数；加上「零值可用」的设计 | 很多 `nil` 无害（`nil` 切片可 `append`），不必处处构造对象 | 解引用 `nil` 指针 panic；`nil` map 写入 panic；类型化 `nil` 放进接口后不等于 `nil` |
 | Java | 每个引用都可能是 `null`；`Optional<T>` 只作为返回值的约定 | 简单，与历史代码兼容 | `NullPointerException` 是最常见的运行时异常；`Optional` 本身也可以是 `null` |
 | Rust | 安全代码里没有 `null`，缺失用 `Option<T>` | 编译器强制处理缺失；指针类 `Option` 零开销 | 到处是 `match`、`?`、`unwrap` 的仪式；与 C 交互时要手工转换 |
 | Python | `None` 是一个单例对象，任何变量都可以指向它 | 一致，`is None` 判断简单 | `AttributeError: 'NoneType' ...` 晚暴露；没写 `return` 的函数隐式返回 `None` |

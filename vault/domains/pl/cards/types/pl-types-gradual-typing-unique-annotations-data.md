@@ -2,7 +2,7 @@
 id: pl-types-gradual-typing-unique-annotations-data
 node: types.gradual-typing
 type: qa
-step: 4
+step: 7
 ---
 ## Q
 Python 的类型提示明明运行时不校验，为什么 `dataclass`、`pydantic`、FastAPI 这样的库反而能大量利用它？这说明 Python 怎样看待类型？

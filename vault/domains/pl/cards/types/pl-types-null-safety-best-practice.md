@@ -2,7 +2,7 @@
 id: pl-types-null-safety-best-practice
 node: types.null-safety
 type: qa
-step: 5
+step: 9
 ---
 ## Q
 在有 `null` 的语言里，资深工程师用哪些规则把空值的风险控制住？Rust 里又怎样避免滥用 `unwrap`？

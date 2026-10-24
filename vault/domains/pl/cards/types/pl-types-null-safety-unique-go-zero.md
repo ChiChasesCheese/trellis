@@ -2,7 +2,7 @@
 id: pl-types-null-safety-unique-go-zero
 node: types.null-safety
 type: qa
-step: 4
+step: 8
 ---
 ## Q
 Go 的「零值可用」是怎样减少对空值检查的需要的？它和 Rust 的 `Option` 哲学有什么根本区别？

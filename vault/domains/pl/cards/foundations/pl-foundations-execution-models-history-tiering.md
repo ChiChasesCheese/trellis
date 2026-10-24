@@ -2,7 +2,7 @@
 id: pl-foundations-execution-models-history-tiering
 node: foundations.execution-models
 type: qa
-step: 7
+step: 11
 ---
 ## Q
 执行模型的三条路线在历史上是怎样发展的？今天四门语言的实现为什么都在向「分层执行」靠拢？
@@ -13,7 +13,7 @@ step: 7
 趋势：每一条路线都在补自己的短板。
 
 - 解释型的 CPython：3.11 起加入自适应特化解释器（反复执行的字节码被替换成针对具体类型的快速版本），3.13 加入实验性的 JIT。
-- 字节码型的 Java：用 GraalVM 原生镜像（native image）提前编译，换启动速度和内存占用。
-- 提前编译型的 Go：1.21 起支持用运行 profile 指导优化（PGO），把运行时信息带回构建期。
+- 字节码型的 Java：用 GraalVM 的原生镜像（native image）功能，把 Java 程序提前编译成不依赖 JVM 的可执行文件，换启动速度和内存占用。
+- 提前编译型的 Go：1.21 起支持用运行时采集的 profile 指导优化（PGO，profile-guided optimization），把运行时信息带回构建期。
 
 所以三条路线的边界在模糊：好的实现都是「先便宜地跑起来，再对热点投入更多优化」的分层结构。区别只在分层发生在运行时（JIT）还是构建时（PGO、AOT）。

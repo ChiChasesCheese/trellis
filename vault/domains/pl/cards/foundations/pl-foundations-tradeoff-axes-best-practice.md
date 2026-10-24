@@ -2,7 +2,7 @@
 id: pl-foundations-tradeoff-axes-best-practice
 node: foundations.tradeoff-axes
 type: qa
-step: 5
+step: 8
 ---
 ## Q
 做技术选型时，资深工程师怎样用权衡轴思考，而不是「哪个语言最好」？

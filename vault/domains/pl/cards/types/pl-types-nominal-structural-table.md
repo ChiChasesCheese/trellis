@@ -2,7 +2,7 @@
 id: pl-types-nominal-structural-table
 node: types.nominal-structural
 type: qa
-step: 3
+step: 7
 ---
 ## Q
 Go、Java、Rust、Python 判定「类型满足接口」的方式各是什么？换来什么，付出什么？

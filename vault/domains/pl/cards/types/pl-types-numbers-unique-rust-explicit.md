@@ -2,7 +2,7 @@
 id: pl-types-numbers-unique-rust-explicit
 node: types.numbers
 type: qa
-step: 4
+step: 7
 ---
 ## Q
 Rust 为什么给整数提供 `checked_`、`wrapping_`、`saturating_`、`overflowing_` 四套运算？这体现了什么设计哲学，和 Python 的做法有什么对比？

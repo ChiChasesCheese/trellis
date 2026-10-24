@@ -2,7 +2,7 @@
 id: pl-foundations-lineage-mechanism
 node: foundations.lineage
 type: qa
-step: 2
+step: 4
 ---
 ## Q
 一个特性是怎样跨越几十年从研究语言进入 Go、Java、Rust 的？以「代数数据类型加模式匹配」和「通道」为例写出传播路径。
@@ -13,7 +13,7 @@ step: 2
 代数数据类型（algebraic data type）加模式匹配（pattern matching）：
 
 1. 1970 年代：ML 语言引入「几种形态之一」的数据类型和按形态分支的 `match`。
-2. 1990 年：Haskell 继承并加入类型类。
+2. 1990 年：Haskell 继承并加入类型类（type class，一组类型都支持的操作，是 Rust 的 trait 的原型）。
 3. 2015 年：Rust 1.0 把它们变成 `enum` 与 `match`，`Option` 和 `Result` 靠它实现。
 4. 2021 到 2023 年：Java 16 的 `record`、Java 17 的 `sealed` 类，以及 Java 21 的 switch 模式匹配和 record 模式，把同一思想补进 Java。
 

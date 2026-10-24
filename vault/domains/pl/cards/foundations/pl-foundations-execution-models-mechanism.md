@@ -2,7 +2,7 @@
 id: pl-foundations-execution-models-mechanism
 node: foundations.execution-models
 type: qa
-step: 2
+step: 6
 ---
 ## Q
 解释器、JVM 的 JIT 和提前编译在运行时各做什么？为什么 Java 的热点代码能比纯解释快一个数量级？

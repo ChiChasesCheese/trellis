@@ -2,7 +2,7 @@
 id: pl-types-strong-weak-mechanism
 node: types.strong-weak
 type: qa
-step: 2
+step: 4
 ---
 ## Q
 Java 的数值运算是怎样做隐式转换的？为什么「加宽」转换也可能丢失精度，用 `int` 转 `float` 举例说明。

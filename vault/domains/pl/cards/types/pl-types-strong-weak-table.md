@@ -2,7 +2,7 @@
 id: pl-types-strong-weak-table
 node: types.strong-weak
 type: qa
-step: 3
+step: 5
 ---
 ## Q
 Go、Java、Rust、Python 对隐式类型转换各是什么态度？换来什么，付出什么？

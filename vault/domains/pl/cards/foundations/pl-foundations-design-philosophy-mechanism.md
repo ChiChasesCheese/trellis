@@ -2,7 +2,7 @@
 id: pl-foundations-design-philosophy-mechanism
 node: foundations.design-philosophy
 type: qa
-step: 2
+step: 5
 ---
 ## Q
 设计目标怎样一步步变成具体的语法和编译器行为？以 Go 追求「大团队、大代码库可读」为例，写出这条因果链。

@@ -2,7 +2,7 @@
 id: pl-foundations-language-vs-implementation-best-practice
 node: foundations.language-vs-implementation
 type: qa
-step: 5
+step: 7
 ---
 ## Q
 为了不被语言实现的细节绑架，资深工程师在工程上怎么做？每门语言怎样固定自己依赖的实现和版本？

@@ -2,7 +2,7 @@
 id: pl-types-numbers-pitfall-rust-profile
 node: types.numbers
 type: qa
-step: 6
+step: 9
 ---
 ## Q
 同一段 Rust 代码在 debug 和 release 构建下，整数溢出的行为为什么不同？这在线上会造成什么问题？

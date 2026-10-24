@@ -2,13 +2,13 @@
 id: pl-types-inference-unique-rust-return-polymorphism
 node: types.inference
 type: qa
-step: 4
+step: 7
 ---
 ## Q
 Rust 里同一个方法 `parse()` 为什么能根据你想要的类型返回不同的结果？这种「按返回类型选择实现」的能力 Java、Go、Python 有吗？
 
 ## A
-Rust 的 `"42".parse()` 本身是泛型方法 `parse::<F>()`，其中 `F` 是要解析成的类型，只要实现了 `FromStr` trait 就行。编译器通过返回值被赋给什么类型来决定 `F`：
+Rust 的 `"42".parse()` 本身是泛型方法 `parse::<F>()`，其中 `F` 是要解析成的类型，只要实现了 `FromStr` trait（trait 是一组方法签名，类似接口）就行。编译器通过返回值被赋给什么类型来决定 `F`：
 
 ```rust
 let n: u64 = "42".parse().unwrap();     // F = u64

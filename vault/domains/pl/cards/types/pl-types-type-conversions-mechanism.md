@@ -2,7 +2,7 @@
 id: pl-types-type-conversions-mechanism
 node: types.type-conversions
 type: qa
-step: 2
+step: 5
 ---
 ## Q
 有损数值转换和向下转型在底层各是怎么做的？为什么 300 转成 `uint8` 是 44，而 `(byte) 200` 是 -56？

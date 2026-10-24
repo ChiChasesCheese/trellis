@@ -2,7 +2,7 @@
 id: pl-foundations-language-vs-implementation-pitfall-is-int
 node: foundations.language-vs-implementation
 type: qa
-step: 6
+step: 8
 ---
 ## Q
 为什么在 CPython 里 `int("256") is int("256")` 是 `True`，而 `int("257") is int("257")` 是 `False`？这个结果能依赖吗？

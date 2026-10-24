@@ -2,7 +2,7 @@
 id: pl-types-inference-pitfall-var-diamond
 node: types.inference
 type: qa
-step: 6
+step: 9
 ---
 ## Q
 Java 里 `var list = new ArrayList<>();` 类型推断出的是什么类型？Go 里 `y := 1 / 2` 得到什么？这两个例子说明类型推断有什么陷阱？

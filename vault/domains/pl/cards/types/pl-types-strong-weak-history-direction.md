@@ -2,7 +2,7 @@
 id: pl-types-strong-weak-history-direction
 node: types.strong-weak
 type: qa
-step: 7
+step: 9
 ---
 ## Q
 隐式转换的态度在语言设计史上是怎么变的？为什么新语言越来越少用隐式转换？

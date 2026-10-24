@@ -2,7 +2,7 @@
 id: pl-foundations-lineage-history-births
 node: foundations.lineage
 type: qa
-step: 7
+step: 9
 ---
 ## Q
 Python、Java、Go、Rust 各自诞生时面对的环境和痛点是什么？时间线是怎样的？

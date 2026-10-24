@@ -2,7 +2,7 @@
 id: pl-types-algebraic-data-types-best-practice
 node: types.algebraic-data-types
 type: qa
-step: 5
+step: 9
 ---
 ## Q
 建模「几种状态之一」的数据时，资深工程师用什么规则？在 Rust、Java、Python、Go 里分别怎样落地？

@@ -2,7 +2,7 @@
 id: pl-foundations-execution-models-pitfall-python-compile
 node: foundations.execution-models
 type: qa
-step: 6
+step: 10
 ---
 ## Q
 Python 会先把源码编译成字节码再执行，为什么函数里引用了不存在的变量，加载文件时却不报错？

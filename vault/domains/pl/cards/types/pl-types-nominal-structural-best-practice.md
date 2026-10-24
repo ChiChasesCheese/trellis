@@ -2,7 +2,7 @@
 id: pl-types-nominal-structural-best-practice
 node: types.nominal-structural
 type: qa
-step: 5
+step: 9
 ---
 ## Q
 设计接口或 trait 时，资深工程师遵循哪些规则？Go、Java、Rust、Python 各自的做法是什么？

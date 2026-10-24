@@ -2,7 +2,7 @@
 id: pl-types-inference-best-practice
 node: types.inference
 type: qa
-step: 5
+step: 8
 ---
 ## Q
 什么时候该依赖类型推断省略类型，什么时候必须写出来？Java、Go、Rust、Python 各有什么经验规则？

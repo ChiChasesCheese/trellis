@@ -2,7 +2,7 @@
 id: pl-types-static-dynamic-history-trend
 node: types.static-dynamic
 type: qa
-step: 7
+step: 10
 ---
 ## Q
 静态类型和动态类型之争是怎样演变的？今天的语言为什么都在往中间靠？

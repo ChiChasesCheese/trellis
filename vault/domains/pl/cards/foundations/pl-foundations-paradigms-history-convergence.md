@@ -2,7 +2,7 @@
 id: pl-foundations-paradigms-history-convergence
 node: foundations.paradigms
 type: qa
-step: 7
+step: 11
 ---
 ## Q
 命令式、函数式、面向对象、声明式这几种范式各自出现在什么年代？为什么今天的主流语言都变成了多范式？

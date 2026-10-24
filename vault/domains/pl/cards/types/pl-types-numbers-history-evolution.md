@@ -2,7 +2,7 @@
 id: pl-types-numbers-history-evolution
 node: types.numbers
 type: qa
-step: 7
+step: 10
 ---
 ## Q
 语言对整数溢出和浮点数的处理是怎样演变的？今天的趋势是更安全还是更快？

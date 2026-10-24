@@ -2,7 +2,7 @@
 id: pl-types-gradual-typing-pitfall-any
 node: types.gradual-typing
 type: qa
-step: 6
+step: 9
 ---
 ## Q
 为什么说 `Any` 会在类型检查里「传染」？用 `json.loads` 举一个生产里常见的失败。

@@ -2,7 +2,7 @@
 id: pl-types-gradual-typing-mechanism
 node: types.gradual-typing
 type: qa
-step: 2
+step: 5
 ---
 ## Q
 Python 的类型提示在运行时到底是什么？解释器和类型检查器分别怎样对待它们？

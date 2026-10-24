@@ -2,7 +2,7 @@
 id: pl-foundations-lineage-best-practice
 node: foundations.lineage
 type: qa
-step: 5
+step: 7
 ---
 ## Q
 一个会 Java 或 Python 的工程师学 Go 和 Rust 时，怎样利用谱系知识快速迁移？哪些经验可以带过去，哪些必须丢掉？
@@ -12,7 +12,7 @@ step: 5
 
 可以直接迁移的：
 
-- 概念层面：Java 的接口对应 Go 的接口和 Rust 的 trait，`Optional` 对应 Rust 的 `Option`，Python 的生成器对应 Go 1.23 的 `iter.Seq` 和 Rust 的迭代器。
+- 概念层面：Java 的接口对应 Go 的接口和 Rust 的 trait，Java 的 `Optional`（可能没有值的容器）对应 Rust 的 `Option`，Python 的生成器对应 Go 1.23 的 `iter.Seq` 和 Rust 的迭代器。
 - 设计原则：依赖抽象、组合优于继承、不可变优先，这些在四门语言里都成立，只是实现手段不同。
 
 必须丢掉的（假朋友）：

@@ -2,7 +2,7 @@
 id: pl-types-gradual-typing-best-practice
 node: types.gradual-typing
 type: qa
-step: 5
+step: 8
 ---
 ## Q
 在一个已有的 Python 代码库里，资深工程师怎样逐步引入类型提示并让它真正有效？

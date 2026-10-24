@@ -2,7 +2,7 @@
 id: pl-types-static-dynamic-unique-java-two-types
 node: types.static-dynamic
 type: qa
-step: 4
+step: 7
 ---
 ## Q
 Java 里 `Object o = "hi";` 之后为什么 `o.length()` 编译不过，尽管 `o` 运行时确实是一个字符串？
@@ -26,4 +26,4 @@ Ob.java:5: error: cannot find symbol
 
 编译器只相信静态类型 `Object`，而 `Object` 没有 `length()`。要调用，必须向下转型 `((String) o).length()`，转型会在运行时再核对一次。
 
-这是 Java 独有的双层结构：编译期按声明类型检查，运行期按真实类型分派方法（所以 `o.toString()` 会执行 `String` 的版本）。Python 只有动态类型，没有这种区分；Go 的普通变量只有静态类型，接口变量才同时有静态的接口类型和动态的具体类型，行为与 Java 接近；Rust 默认只有静态类型，用 `dyn Trait` 才引入运行时类型。
+这是 Java 独有的双层结构：编译期按声明类型检查，运行期按真实类型分派方法（所以 `o.toString()` 会执行 `String` 的版本）。Python 只有动态类型，没有这种区分；Go 的普通变量只有静态类型，接口变量才同时有静态的接口类型和动态的具体类型，行为与 Java 接近；Rust 默认只有静态类型，用 `dyn Trait`（trait 对象，运行时才确定具体类型）才引入运行时类型。

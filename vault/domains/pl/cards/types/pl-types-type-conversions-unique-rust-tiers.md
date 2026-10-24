@@ -2,7 +2,7 @@
 id: pl-types-type-conversions-unique-rust-tiers
 node: types.type-conversions
 type: qa
-step: 4
+step: 7
 ---
 ## Q
 Rust 为什么把转换分成 `as`、`From` 和 `TryFrom` 三档？这说明它怎样看待「失败」？

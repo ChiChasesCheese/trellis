@@ -2,7 +2,7 @@
 id: pl-foundations-tradeoff-axes-table
 node: foundations.tradeoff-axes
 type: qa
-step: 3
+step: 6
 ---
 ## Q
 Go、Java、Rust、Python 在五条根本权衡轴（安全与控制、表达力与简单、检查时机、性能与开发速度、兼容与演进）上各站在哪里？换来什么，付出什么？

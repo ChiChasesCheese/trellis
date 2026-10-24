@@ -2,7 +2,7 @@
 id: pl-types-inference-table
 node: types.inference
 type: qa
-step: 3
+step: 6
 ---
 ## Q
 Go、Java、Rust、Python 在类型推断上各选了多强？换来什么，付出什么？

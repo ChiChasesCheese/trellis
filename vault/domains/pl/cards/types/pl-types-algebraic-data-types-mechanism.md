@@ -2,7 +2,7 @@
 id: pl-types-algebraic-data-types-mechanism
 node: types.algebraic-data-types
 type: qa
-step: 2
+step: 6
 ---
 ## Q
 和类型在内存里是怎么存的？编译器是怎么做到「检查你处理了所有变体」的？

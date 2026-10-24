@@ -2,7 +2,7 @@
 id: pl-types-strong-weak-best-practice
 node: types.strong-weak
 type: qa
-step: 5
+step: 7
 ---
 ## Q
 在有隐式转换或缩窄转换的语言里，资深工程师怎样避免转换造成的数据错误？

@@ -2,7 +2,7 @@
 id: pl-types-static-dynamic-best-practice
 node: types.static-dynamic
 type: qa
-step: 5
+step: 8
 ---
 ## Q
 在静态类型语言里，怎样让类型系统真正替你挡 bug？在 Python 里，怎样补上动态类型缺失的检查？

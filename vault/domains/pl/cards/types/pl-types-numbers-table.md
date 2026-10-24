@@ -2,7 +2,7 @@
 id: pl-types-numbers-table
 node: types.numbers
 type: qa
-step: 3
+step: 6
 ---
 ## Q
 Go、Java、Rust、Python 整数溢出时的行为各是什么？它们换来什么，又付出什么？

@@ -2,7 +2,7 @@
 id: pl-types-nominal-structural-unique-go-reader
 node: types.nominal-structural
 type: qa
-step: 4
+step: 8
 ---
 ## Q
 Go 的隐式接口为什么说「接口由使用方定义」？标准库的 `io.Reader` 怎样让从未听说过它的类型也能参与？

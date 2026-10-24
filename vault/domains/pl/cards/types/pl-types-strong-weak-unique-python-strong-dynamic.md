@@ -2,7 +2,7 @@
 id: pl-types-strong-weak-unique-python-strong-dynamic
 node: types.strong-weak
 type: qa
-step: 4
+step: 6
 ---
 ## Q
 Python 是动态类型，为什么仍然被叫做强类型？拿它和 JavaScript 对比，同样的 `"1" + 1` 各得到什么？

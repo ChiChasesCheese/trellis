@@ -2,7 +2,7 @@
 id: pl-types-inference-mechanism
 node: types.inference
 type: qa
-step: 2
+step: 5
 ---
 ## Q
 Rust 编译器是怎样根据后面的使用反推出 `let mut v = Vec::new();` 的元素类型的？为什么 Go 和 Java 做不到？

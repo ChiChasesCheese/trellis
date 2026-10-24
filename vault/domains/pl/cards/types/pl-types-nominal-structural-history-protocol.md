@@ -2,7 +2,7 @@
 id: pl-types-nominal-structural-history-protocol
 node: types.nominal-structural
 type: qa
-step: 7
+step: 11
 ---
 ## Q
 名义类型和结构类型的取舍在语言史上是怎样演变的？Python 为什么在 3.8 加了 `Protocol`？

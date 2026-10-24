@@ -2,7 +2,7 @@
 id: pl-foundations-language-vs-implementation-table
 node: foundations.language-vs-implementation
 type: qa
-step: 3
+step: 5
 ---
 ## Q
 Go、Java、Rust、Python 各自怎样定义「语言是什么」？这种定义方式换来什么，又付出什么？

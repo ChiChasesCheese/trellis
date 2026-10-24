@@ -2,7 +2,7 @@
 id: pl-foundations-language-vs-implementation-unique-java-tck
 node: foundations.language-vs-implementation
 type: qa
-step: 4
+step: 6
 ---
 ## Q
 Java 为什么能同时拥有多个互相兼容的虚拟机实现（HotSpot、OpenJ9、GraalVM），而 Python 和 Rust 做不到同样程度？

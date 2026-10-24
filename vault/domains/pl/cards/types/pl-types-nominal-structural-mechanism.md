@@ -2,7 +2,7 @@
 id: pl-types-nominal-structural-mechanism
 node: types.nominal-structural
 type: qa
-step: 2
+step: 6
 ---
 ## Q
 编译器内部是怎样判断「类型 T 满足接口 I」的？名义和结构两种检查分别比对什么？

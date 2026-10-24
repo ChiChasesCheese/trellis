@@ -2,7 +2,7 @@
 id: pl-types-type-conversions-history-evolution
 node: types.type-conversions
 type: qa
-step: 7
+step: 10
 ---
 ## Q
 类型转换的设计是怎样演变的？为什么新语言越来越倾向于让转换的失败可见？

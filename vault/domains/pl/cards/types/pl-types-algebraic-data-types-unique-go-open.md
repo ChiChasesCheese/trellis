@@ -2,7 +2,7 @@
 id: pl-types-algebraic-data-types-unique-go-open
 node: types.algebraic-data-types
 type: qa
-step: 4
+step: 8
 ---
 ## Q
 Go 为什么至今没有和类型？用 type switch 模拟时，漏掉一种类型会发生什么？

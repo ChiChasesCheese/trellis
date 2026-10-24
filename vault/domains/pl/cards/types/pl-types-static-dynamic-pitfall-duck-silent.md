@@ -2,7 +2,7 @@
 id: pl-types-static-dynamic-pitfall-duck-silent
 node: types.static-dynamic
 type: qa
-step: 6
+step: 9
 ---
 ## Q
 动态类型最危险的不是报 `TypeError`，而是什么？请用 Python 的 `x + x` 举例。

@@ -2,7 +2,7 @@
 id: pl-foundations-execution-models-unique-jit
 node: foundations.execution-models
 type: qa
-step: 4
+step: 8
 ---
 ## Q
 Java 的「编译」为什么分成 `javac` 和 JVM 两个阶段？这和 Go、Rust 的一次性编译相比，给 Java 带来了什么独有的能力？

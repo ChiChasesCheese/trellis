@@ -2,7 +2,7 @@
 id: pl-foundations-design-philosophy-pitfall-go-boilerplate
 node: foundations.design-philosophy
 type: qa
-step: 6
+step: 9
 ---
 ## Q
 Go 追求「简单、显式」的代价在代码里是什么样子？这个代价说明了什么一般规律？

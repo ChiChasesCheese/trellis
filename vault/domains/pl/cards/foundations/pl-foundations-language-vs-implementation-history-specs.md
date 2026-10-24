@@ -2,7 +2,7 @@
 id: pl-foundations-language-vs-implementation-history-specs
 node: foundations.language-vs-implementation
 type: qa
-step: 7
+step: 9
 ---
 ## Q
 Java、Go、Rust、Python 的规范和替代实现是怎样发展起来的？今天的趋势是什么？

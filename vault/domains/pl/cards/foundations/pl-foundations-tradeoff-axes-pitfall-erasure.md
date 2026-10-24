@@ -2,7 +2,7 @@
 id: pl-foundations-tradeoff-axes-pitfall-erasure
 node: foundations.tradeoff-axes
 type: qa
-step: 6
+step: 9
 ---
 ## Q
 Java 为了「向后兼容」付出的代价能举一个具体例子吗？为什么 `List<String>` 和 `List<Integer>` 在运行时是同一个类？

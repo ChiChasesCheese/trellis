@@ -2,7 +2,7 @@
 id: pl-foundations-paradigms-mechanism
 node: foundations.paradigms
 type: qa
-step: 2
+step: 6
 ---
 ## Q
 对「1 到 10 里偶数的平方和」这个任务，命令式和函数式写法在底层执行时有什么区别？面向对象和声明式又在底层是什么？

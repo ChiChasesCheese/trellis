@@ -2,7 +2,7 @@
 id: pl-types-strong-weak-pitfall-java-promotion
 node: types.strong-weak
 type: qa
-step: 6
+step: 8
 ---
 ## Q
 Java 里 `'a' + 1` 为什么是 98 而不是 `'b'`？`short s = 1; s = s + 1;` 为什么编译不过而 `s += 1` 却可以？

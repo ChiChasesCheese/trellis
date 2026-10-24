@@ -2,7 +2,7 @@
 id: pl-foundations-paradigms-pitfall-sort-none
 node: foundations.paradigms
 type: qa
-step: 6
+step: 10
 ---
 ## Q
 Python 里 `x = lst.sort()` 为什么得到 `None`？这反映了多范式语言的哪个坑？

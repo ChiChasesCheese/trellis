@@ -2,7 +2,7 @@
 id: pl-foundations-lineage-pitfall-division
 node: foundations.lineage
 type: qa
-step: 6
+step: 8
 ---
 ## Q
 `-7 / 2` 和 `-7 % 3` 在 Java、Go、Rust、Python 里各得到什么？这和谱系有什么关系？

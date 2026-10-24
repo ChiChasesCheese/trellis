@@ -2,7 +2,7 @@
 id: pl-foundations-paradigms-unique-methods-anywhere
 node: foundations.paradigms
 type: qa
-step: 4
+step: 8
 ---
 ## Q
 「方法属于类」这个面向对象的默认假设，在 Go 和 Rust 里是怎样被打破的？Java 和 Python 为什么做不到？

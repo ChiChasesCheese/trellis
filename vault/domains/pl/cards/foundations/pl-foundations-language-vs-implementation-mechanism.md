@@ -2,7 +2,7 @@
 id: pl-foundations-language-vs-implementation-mechanism
 node: foundations.language-vs-implementation
 type: qa
-step: 2
+step: 4
 ---
 ## Q
 怎样判断某个行为是「语言特性」还是「实现细节」？CPython 的引用计数导致的哪种行为就属于实现细节？

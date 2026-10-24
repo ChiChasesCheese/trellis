@@ -2,7 +2,7 @@
 id: pl-types-type-conversions-pitfall-silent-narrowing
 node: types.type-conversions
 type: qa
-step: 6
+step: 9
 ---
 ## Q
 数值强制转换在 Java 和 Go 里悄悄出错的典型例子是什么？向下转型失败时又是什么现象？

@@ -2,7 +2,7 @@
 id: pl-types-numbers-mechanism
 node: types.numbers
 type: qa
-step: 2
+step: 5
 ---
 ## Q
 补码整数的回绕和 IEEE 754 双精度浮点数的精度极限，在位级别分别是怎么发生的？

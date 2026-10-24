@@ -2,7 +2,7 @@
 id: pl-types-null-safety-history-evolution
 node: types.null-safety
 type: qa
-step: 7
+step: 11
 ---
 ## Q
 空值的设计是怎样演变的？今天的主流语言为什么都在给类型系统加上「可空」的区分？

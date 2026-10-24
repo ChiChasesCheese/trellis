@@ -2,7 +2,7 @@
 id: pl-types-null-safety-mechanism
 node: types.null-safety
 type: qa
-step: 2
+step: 6
 ---
 ## Q
 空指针异常在机器层面是怎么发生的？Rust 的 `Option<Box<T>>` 为什么不比普通指针占更多空间？

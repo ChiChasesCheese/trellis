@@ -2,7 +2,7 @@
 id: pl-types-algebraic-data-types-history-evolution
 node: types.algebraic-data-types
 type: qa
-step: 7
+step: 11
 ---
 ## Q
 和类型是怎样从函数式语言进入主流语言的？为什么 2020 年代的语言几乎都在补这个特性？

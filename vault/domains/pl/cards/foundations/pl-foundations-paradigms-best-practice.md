@@ -2,7 +2,7 @@
 id: pl-foundations-paradigms-best-practice
 node: foundations.paradigms
 type: qa
-step: 5
+step: 9
 ---
 ## Q
 多范式语言里，资深工程师怎样决定一段代码用命令式、函数式还是面向对象的写法？每门语言各有什么经验规则？

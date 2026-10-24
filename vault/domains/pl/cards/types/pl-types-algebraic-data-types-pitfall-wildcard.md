@@ -2,7 +2,7 @@
 id: pl-types-algebraic-data-types-pitfall-wildcard
 node: types.algebraic-data-types
 type: qa
-step: 6
+step: 10
 ---
 ## Q
 在 Rust 的 `match` 里写了 `_ =>` 通配分支，后来给 `enum` 新增变体时会发生什么？

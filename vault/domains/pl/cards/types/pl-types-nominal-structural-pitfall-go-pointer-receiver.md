@@ -2,7 +2,7 @@
 id: pl-types-nominal-structural-pitfall-go-pointer-receiver
 node: types.nominal-structural
 type: qa
-step: 6
+step: 10
 ---
 ## Q
 Go 的隐式接口有什么典型的坑？为什么方法定义在指针上时，值类型不满足接口，该怎么提前发现？

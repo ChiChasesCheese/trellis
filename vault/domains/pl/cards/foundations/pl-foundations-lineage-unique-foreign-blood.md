@@ -2,7 +2,7 @@
 id: pl-foundations-lineage-unique-foreign-blood
 node: foundations.lineage
 type: qa
-step: 4
+step: 6
 ---
 ## Q
 Go 和 Rust 都是针对 C++ 的不满而诞生的，为什么它们的做法恰好相反？

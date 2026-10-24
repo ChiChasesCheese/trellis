@@ -2,7 +2,7 @@
 id: pl-types-inference-history-hm
 node: types.inference
 type: qa
-step: 7
+step: 10
 ---
 ## Q
 类型推断是怎样从学术研究进入主流语言的？Go、Java 为什么只采用了它的弱化版本？
