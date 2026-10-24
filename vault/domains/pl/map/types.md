@@ -12,6 +12,7 @@
 - [[domains/pl/map/types.null-safety|空值与空安全]]
 - [[domains/pl/map/types.algebraic-data-types|代数数据类型：积类型与和类型]]
 - [[domains/pl/map/types.gradual-typing|渐进类型：Python 类型注解]]
+- [[domains/pl/map/types.soundness|类型系统的可靠性（soundness）]]
 - [[domains/pl/map/types.type-conversions|类型转换与类型断言]]
 %% trellis:end %%
 

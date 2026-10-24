@@ -6,7 +6,7 @@
 
 **Requires:** [[domains/pl/map/foundations.execution-models|执行模型：AOT 编译、字节码 + 虚拟机 + JIT、解释执行]]
 
-**Unlocks:** [[domains/pl/map/runtime.jit|JIT 编译]], [[domains/pl/map/runtime.cpython-internals|CPython 解释器]], [[domains/pl/map/runtime.zero-cost-abstractions|零成本抽象]], [[domains/pl/map/runtime.ffi|跨语言调用（FFI）]], [[domains/pl/map/metaprogramming.macros|宏]]
+**Unlocks:** [[domains/pl/map/runtime.syntax-parsing|语法与解析]], [[domains/pl/map/runtime.optimizations|编译器优化]], [[domains/pl/map/runtime.jit|JIT 编译]], [[domains/pl/map/runtime.cpython-internals|CPython 解释器]], [[domains/pl/map/runtime.zero-cost-abstractions|零成本抽象]], [[domains/pl/map/runtime.ffi|跨语言调用（FFI）]], [[domains/pl/map/metaprogramming.macros|宏]]
 
 ## Cards (10)
 1. [[pl-rt-compiler-principle]]

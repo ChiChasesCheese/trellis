@@ -11,6 +11,7 @@
 - [[domains/pl/map/memory.reference-counting|引用计数]]
 - [[domains/pl/map/memory.ownership-borrowing|所有权与借用（Rust）]]
 - [[domains/pl/map/memory.lifetimes|生命周期（Rust）]]
+- [[domains/pl/map/memory.substructural-types|仿射类型与线性类型]]
 - [[domains/pl/map/memory.escape-analysis|逃逸分析]]
 - [[domains/pl/map/memory.memory-layout|内存布局与对象开销]]
 - [[domains/pl/map/memory.memory-safety|内存安全]]

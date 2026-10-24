@@ -4,7 +4,7 @@
 
 捕获的是值还是变量：Java 要求 effectively final、Go 按引用捕获（1.22 修复循环变量）、Rust Fn/FnMut/FnOnce 与 move、Python 晚绑定陷阱。
 
-**Requires:** [[domains/pl/map/functional.first-class-functions|一等函数与 lambda]], [[domains/pl/map/memory.value-reference-semantics|值语义与引用语义]]
+**Requires:** [[domains/pl/map/binding.names-scope|名字与作用域]], [[domains/pl/map/functional.first-class-functions|一等函数与 lambda]], [[domains/pl/map/memory.value-reference-semantics|值语义与引用语义]]
 
 ## Cards (11)
 1. [[pl-functional-closures-principle]]

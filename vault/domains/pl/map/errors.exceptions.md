@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/pl/map/errors.models|错误处理的几种模型]]
 
-**Unlocks:** [[domains/pl/map/errors.panics|panic 与不可恢复错误]], [[domains/pl/map/errors.cost|错误处理的性能代价]]
+**Unlocks:** [[domains/pl/map/errors.panics|panic 与不可恢复错误]], [[domains/pl/map/errors.cost|错误处理的性能代价]], [[domains/pl/map/trends.effects|效应系统与代数效应]]
 
 ## Cards (10)
 1. [[pl-errors-exceptions-principle]]

@@ -6,6 +6,8 @@
 
 **Requires:** [[domains/pl/map/concurrency.structured-concurrency|结构化并发]]
 
+**Unlocks:** [[domains/pl/map/trends.effects|效应系统与代数效应]]
+
 ## Cards (11)
 1. [[pl-trends-conc-principle]]
 2. [[pl-trends-conc-intro-os-threads]]

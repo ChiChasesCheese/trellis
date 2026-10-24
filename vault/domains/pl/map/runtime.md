@@ -5,6 +5,9 @@
 
 ## Topics
 - [[domains/pl/map/runtime.compiler-pipeline|编译流水线]]
+- [[domains/pl/map/runtime.syntax-parsing|语法与解析]]
+- [[domains/pl/map/runtime.optimizations|编译器优化]]
+- [[domains/pl/map/runtime.linking-abi|链接、加载与 ABI]]
 - [[domains/pl/map/runtime.jit|JIT 编译]]
 - [[domains/pl/map/runtime.cpython-internals|CPython 解释器]]
 - [[domains/pl/map/runtime.zero-cost-abstractions|零成本抽象]]

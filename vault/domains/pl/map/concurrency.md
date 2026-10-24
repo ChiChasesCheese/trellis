@@ -8,6 +8,8 @@
 - [[domains/pl/map/concurrency.os-threads|操作系统线程（1:1 模型）]]
 - [[domains/pl/map/concurrency.green-threads|用户态线程：goroutine 与虚拟线程]]
 - [[domains/pl/map/concurrency.async-await|async/await 与函数着色]]
+- [[domains/pl/map/concurrency.io-models|I/O 模型：阻塞、多路复用与完成通知]]
+- [[domains/pl/map/concurrency.io-runtimes|各运行时怎样接入 I/O]]
 - [[domains/pl/map/concurrency.channels-csp|通道与 CSP]]
 - [[domains/pl/map/concurrency.locks-shared-memory|锁与共享内存]]
 - [[domains/pl/map/concurrency.atomics-memory-models|原子操作与内存模型]]

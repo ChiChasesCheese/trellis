@@ -8,7 +8,7 @@ M:N 调度：Go 的 GMP 调度器与可增长栈、Java 21 虚拟线程；为什
 
 **Requires:** [[domains/pl/map/concurrency.os-threads|操作系统线程（1:1 模型）]]
 
-**Unlocks:** [[domains/pl/map/concurrency.async-await|async/await 与函数着色]], [[domains/pl/map/concurrency.channels-csp|通道与 CSP]], [[domains/pl/map/concurrency.structured-concurrency|结构化并发]], [[domains/pl/map/signatures.go|Go 的独到之处]]
+**Unlocks:** [[domains/pl/map/concurrency.async-await|async/await 与函数着色]], [[domains/pl/map/concurrency.io-runtimes|各运行时怎样接入 I/O]], [[domains/pl/map/concurrency.channels-csp|通道与 CSP]], [[domains/pl/map/concurrency.structured-concurrency|结构化并发]], [[domains/pl/map/signatures.go|Go 的独到之处]]
 
 ## Cards (10)
 1. [[pl-conc-green-threads-principle]]

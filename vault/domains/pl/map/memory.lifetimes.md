@@ -8,6 +8,8 @@
 
 **Requires:** [[domains/pl/map/memory.ownership-borrowing|所有权与借用（Rust）]]
 
+**Unlocks:** [[domains/pl/map/memory.substructural-types|仿射类型与线性类型]]
+
 ## Cards (9)
 1. [[pl-memory-lifetimes-principle]]
 2. [[pl-memory-lifetimes-foundation-dangling]]

@@ -12,6 +12,8 @@
 - [[domains/pl/map/abstraction.generics|泛型：参数多态]]
 - [[domains/pl/map/abstraction.generics-implementation|泛型的实现：擦除、单态化与字典]]
 - [[domains/pl/map/abstraction.bounds-variance|约束与型变]]
+- [[domains/pl/map/abstraction.typeclasses|类型类、trait 与关联类型]]
+- [[domains/pl/map/abstraction.higher-kinded|高阶类型（HKT）与抽象的上限]]
 - [[domains/pl/map/abstraction.encapsulation|封装与可见性]]
 - [[domains/pl/map/abstraction.operator-overloading|运算符重载与特殊方法]]
 - [[domains/pl/map/abstraction.pattern-matching|模式匹配]]

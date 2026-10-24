@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/pl/map/memory.manual-raii|手动管理与 RAII]]
 
-**Unlocks:** [[domains/pl/map/memory.escape-analysis|逃逸分析]], [[domains/pl/map/memory.memory-safety|内存安全]], [[domains/pl/map/signatures.java|Java 的独到之处]]
+**Unlocks:** [[domains/pl/map/memory.escape-analysis|逃逸分析]], [[domains/pl/map/memory.memory-safety|内存安全]], [[domains/pl/map/engineering.memory-analysis|内存与分配分析]], [[domains/pl/map/signatures.java|Java 的独到之处]]
 
 ## Cards (11)
 1. [[pl-memory-tracing-gc-principle]]

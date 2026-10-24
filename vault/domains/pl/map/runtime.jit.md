@@ -6,7 +6,7 @@
 
 **Requires:** [[domains/pl/map/runtime.compiler-pipeline|编译流水线]]
 
-**Unlocks:** [[domains/pl/map/runtime.startup-footprint|启动时间与内存占用]], [[domains/pl/map/runtime.performance-model|性能模型：慢在哪里]], [[domains/pl/map/signatures.java|Java 的独到之处]]
+**Unlocks:** [[domains/pl/map/runtime.startup-footprint|启动时间与内存占用]], [[domains/pl/map/runtime.performance-model|性能模型：慢在哪里]], [[domains/pl/map/engineering.benchmarking|基准测试]], [[domains/pl/map/signatures.java|Java 的独到之处]]
 
 ## Cards (10)
 1. [[pl-rt-jit-principle]]

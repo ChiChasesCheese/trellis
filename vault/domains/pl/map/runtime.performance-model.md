@@ -6,6 +6,8 @@
 
 **Requires:** [[domains/pl/map/runtime.jit|JIT 编译]], [[domains/pl/map/runtime.cpython-internals|CPython 解释器]], [[domains/pl/map/memory.memory-layout|内存布局与对象开销]]
 
+**Unlocks:** [[domains/pl/map/engineering.profiling|性能剖析]]
+
 ## Cards (10)
 1. [[pl-rt-perf-principle]]
 2. [[pl-rt-perf-found-cache]]

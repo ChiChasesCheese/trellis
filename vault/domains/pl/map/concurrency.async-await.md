@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/pl/map/concurrency.green-threads|用户态线程：goroutine 与虚拟线程]]
 
-**Unlocks:** [[domains/pl/map/concurrency.structured-concurrency|结构化并发]]
+**Unlocks:** [[domains/pl/map/concurrency.io-models|I/O 模型：阻塞、多路复用与完成通知]], [[domains/pl/map/concurrency.structured-concurrency|结构化并发]]
 
 ## Cards (9)
 1. [[pl-conc-async-await-principle]]

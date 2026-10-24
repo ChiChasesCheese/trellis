@@ -8,6 +8,8 @@
 
 **Requires:** [[domains/pl/map/types.static-dynamic|静态类型与动态类型]], [[domains/pl/map/types.nominal-structural|名义类型与结构类型]]
 
+**Unlocks:** [[domains/pl/map/types.soundness|类型系统的可靠性（soundness）]]
+
 ## Cards (10)
 1. [[pl-types-gradual-typing-principle]]
 2. [[pl-types-gradual-typing-found-typing-basics]]

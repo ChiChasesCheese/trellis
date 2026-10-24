@@ -9,6 +9,7 @@
 - [[domains/pl/map/trends.expression-orientation|表达式化]]
 - [[domains/pl/map/trends.value-types|值类型与数据导向]]
 - [[domains/pl/map/trends.concurrency-evolution|并发模型的演进]]
+- [[domains/pl/map/trends.effects|效应系统与代数效应]]
 - [[domains/pl/map/trends.other-languages|其他主流语言的独到之处]]
 %% trellis:end %%
 

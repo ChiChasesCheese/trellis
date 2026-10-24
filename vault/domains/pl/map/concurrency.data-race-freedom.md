@@ -8,7 +8,7 @@ Rust 用 Send/Sync 在编译期禁止数据竞争、Go 的 race detector、Java 
 
 **Requires:** [[domains/pl/map/concurrency.atomics-memory-models|原子操作与内存模型]], [[domains/pl/map/memory.ownership-borrowing|所有权与借用（Rust）]]
 
-**Unlocks:** [[domains/pl/map/signatures.rust|Rust 的独到之处]]
+**Unlocks:** [[domains/pl/map/engineering.dynamic-checkers|动态检查器]], [[domains/pl/map/signatures.rust|Rust 的独到之处]]
 
 ## Cards (10)
 1. [[pl-conc-datarace-principle]]

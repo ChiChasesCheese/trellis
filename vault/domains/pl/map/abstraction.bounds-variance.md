@@ -6,6 +6,8 @@ Java 通配符 ? extends / ? super（PECS）、Rust trait bound 与 where 子句
 
 **Requires:** [[domains/pl/map/abstraction.generics|泛型：参数多态]]
 
+**Unlocks:** [[domains/pl/map/abstraction.typeclasses|类型类、trait 与关联类型]]
+
 ## Cards (10)
 1. [[pl-abstraction-bounds-variance-principle]]
 2. [[pl-abstraction-bounds-variance-foundation-variance-basics]]
