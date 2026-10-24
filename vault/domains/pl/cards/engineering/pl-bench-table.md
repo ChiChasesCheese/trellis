@@ -1,0 +1,18 @@
+---
+id: pl-bench-table
+node: engineering.benchmarking
+type: qa
+step: 6
+---
+## Q
+Go、Java、Rust、Python 在防基准陷阱上各用什么工具？换来什么，代价是什么？
+
+## A
+| 语言 | 工具与防坑方式 | 换来 | 代价 |
+|---|---|---|---|
+| Go | 标准库 `testing.B`；`b.Loop` 防止被删除；用 `benchstat` 做统计 | 零依赖，基准与测试同处，`-benchmem` 直接给分配次数 | 常量折叠和内联删除仍要自己小心；噪声靠 `-count` 加 `benchstat` 处理 |
+| Java | JMH：预热、多次 fork、`Blackhole`、`@State` | 对 JIT 的陷阱几乎全套防护 | 笨重（注解处理、独立构建）、慢；结果仍绑定 JVM 版本与参数 |
+| Rust | `std::hint::black_box` 加 criterion 的统计 | 在优化构建下测，统计严谨 | 优化器激进，要手动包 `black_box`；标准库自带的 `#[bench]` 仍是不稳定特性 |
+| Python | `timeit`、`pyperf`：多进程、重复、报告离散度 | 没有「编译器删代码」问题 | 解释器开销大，噪声来源多（频率、哈希随机化、GC） |
+
+**规律**：运行时越动态，基准越需要框架。Java 的速度是 JIT 根据运行中观察到的行为推出来的，同一份代码没有唯一的「速度」，所以 JMH 要把预热状态、进程隔离都管起来。Go 与 Rust 的机器码在编译期就定了，同一个二进制每次运行都一样，基准工具只需要重复运行加防删除，这也是 Go 把基准做成标准库一部分、Rust 把统计交给社区 crate 的原因。Python 没有编译器和 JIT 的干扰，剩下的问题是系统噪声，所以工具的重点是多进程和统计。
