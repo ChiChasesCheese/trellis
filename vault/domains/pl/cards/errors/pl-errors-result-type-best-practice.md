@@ -17,4 +17,5 @@ Rust 里使用 `Result` 和 `Option` 的最佳实践是什么？
 7. **区分「预期的失败」与「bug」**：前者返回 `Err`，后者（违反不变量）用 `panic!`/`assert!`/`expect`。
 8. **`#[must_use]` 与 lint**：保持 `unused_must_use` 警告开启，CI 里用 `-D warnings`，不丢弃结果。
 
+在 C++ 里的对应做法：返回 `std::expected`（C++23，装着值或错误的结果类型）的函数一律标 `[[nodiscard]]`（丢弃返回值时警告）；取值前先检查 `has_value()`，或用 `value_or`、`transform`、`and_then` 组合，不要直接写 `*r`（失败时是未定义行为，标准不规定后果）；错误类型用枚举或带数据的结构，不用 `std::string`（同样无法被程序区分）。
 什么时候违反：快速的 CLI 或脚本里，直接用 `anyhow` 和 `?` 一路到 `main`，足够好。

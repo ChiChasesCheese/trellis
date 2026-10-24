@@ -28,4 +28,4 @@ error[E0284]: type annotations needed
 
 此时必须写成 `let n = "42".parse::<u64>()`（turbofish 语法）或者给变量加标注。
 
-Java 做不到：方法重载只看参数类型，不看返回值，所以 `Integer.parseInt`、`Double.parseDouble` 各写一个名字；Go 也靠不同函数名（`strconv.Atoi`、`ParseFloat`）；Python 靠 `int(s)`、`float(s)` 选不同的类型构造函数。Rust 这种能力来自「类型推断加 trait」的组合，代价是出错时的类型推断报错有时令人困惑。
+C++ 也不能按返回类型选重载（唯一的例外是转换运算符，如 `operator int()`，由使用处的目标类型触发）；Java 做不到：方法重载只看参数类型，不看返回值，所以 `Integer.parseInt`、`Double.parseDouble` 各写一个名字；Go 也靠不同函数名（`strconv.Atoi`、`ParseFloat`）；Python 靠 `int(s)`、`float(s)` 选不同的类型构造函数。Rust 这种能力来自「类型推断加 trait」的组合，代价是出错时的类型推断报错有时令人困惑。

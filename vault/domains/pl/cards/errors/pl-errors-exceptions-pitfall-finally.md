@@ -38,6 +38,13 @@ except Exception:      # swallows every bug, including typos
 
 这会把 `NameError`、`TypeError` 这类程序错误一并吞掉，程序带着错误状态继续运行。更糟的是裸 `except:`，它还拦住了 `Ctrl+C`（`KeyboardInterrupt`）和 `sys.exit()`（`SystemExit`），进程无法被正常终止。
 
+**C++：析构函数在展开途中再抛异常。**
+```cpp
+struct Bad { ~Bad() noexcept(false) { throw std::runtime_error("from dtor"); } };
+try { Bad b; throw std::runtime_error("original"); }
+catch (const std::exception& e) { std::println("caught {}", e.what()); }
+```
+本机运行不会打印 `caught`，进程直接终止（退出码 134），消息是 `terminating due to uncaught exception of type std::runtime_error: from dtor`：一个异常正在传播时，展开途中的析构函数又抛出第二个，C++ 无法同时处理两个，调用 `std::terminate`（直接终止进程的标准函数）。所以析构函数默认是 `noexcept`（声明不抛异常），需要失败信息的清理要写成显式的 `close()`。
 **共同点**：异常机制把错误路径藏了起来，所以一旦在路径上有人把它吞掉，没有人会知道。防护措施：
 - linter 开启 `bare-except`、`broad-except`、`finally-return` 之类的规则；
 - 捕获后至少记录一次日志，或重新抛出；

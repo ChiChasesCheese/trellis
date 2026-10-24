@@ -37,4 +37,5 @@ BenchmarkPointers  8601992 ns/op      (about 8.6 ms)
 踩坑场景：
 - Java 里用 `List<Integer>` 或 `List<Point>` 做大批量计算，对象散落在堆中；换成 `int[]` 或者结构数组（把各字段拆成各自的数组，SoA，structure of arrays）可以显著加速。
 - Python 里对大量数字做循环，每个都是堆对象；NumPy 在连续数组上批量运算。
+- C++ 里同样的坑是 `std::vector<T*>`、`std::list` 和 `std::map`（每个节点单独分配）：能用 `std::vector<T>` 就别用它们。
 - 在 Go、Rust 里不要无谓地使用 `[]*T`，除非元素确实需要共享或大到复制不划算。

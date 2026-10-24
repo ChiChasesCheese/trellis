@@ -5,7 +5,7 @@ type: qa
 step: 9
 ---
 ## Q
-在有 `null` 的语言里，资深工程师用哪些规则把空值的风险控制住？Rust 里又怎样避免滥用 `unwrap`？
+在有 `null` 的语言里（Java、Go、Python、C++），资深工程师用哪些规则把空值的风险控制住？Rust 里又怎样避免滥用 `unwrap`？
 
 ## A
 通用原则：让「可能缺失」在类型或契约里可见，让「不可能缺失」在构造时就保证。
@@ -13,6 +13,7 @@ step: 9
 - 集合返回空集合，不返回 `null`。调用方遍历就行，不用先判断。
 - Java：只在返回值里用 `Optional`，不要用于字段、参数或集合元素；公共方法入口用 `Objects.requireNonNull` 尽早失败；给字段和参数加 `@Nullable`/`@NonNull` 注解，并用 NullAway、Checker Framework 等静态分析在编译时检查。
 - Go：构造函数保证返回的对象字段已初始化；返回 `(T, bool)` 或 `(T, error)`，不要用 `nil` 指针表示「没找到」；写 map 之前确认已经 `make`。
+- C++：参数「一定有」就传引用，别传指针；「可能没有」的返回值用 `std::optional`，用 `value_or` 或先判断 `has_value()` 再取值，不要写 `*o` 或 `o->`（对空 `optional` 是未定义行为，即标准不规定后果，实测不报错）；需要所有权的可空对象用 `unique_ptr`（独占所有权的智能指针），非拥有的观察者指针要在文档里写明可否为空。
 - Python：缺失的值在类型提示里写 `str | None`，用 `mypy` 检查。类型检查器会强制你先判断：
 
 ```python

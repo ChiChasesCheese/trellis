@@ -21,7 +21,7 @@ except ValueError as e:
     print("bad:", e)                 # bad: invalid literal for int() ... '12x'
 ```
 
-`parse` 里没有任何错误处理代码，错误直接跳到了调用者的 `except`。Java 的写法等价：`try { Integer.parseInt("12x"); } catch (NumberFormatException e) { ... }`。
+`parse` 里没有任何错误处理代码，错误直接跳到了调用者的 `except`。Java 的写法等价：`try { Integer.parseInt("12x"); } catch (NumberFormatException e) { ... }`；C++ 写作 `try { std::stoi(s); } catch (const std::invalid_argument& e) { ... }`，可以抛出任何类型的值，惯例是继承 `std::exception`。
 
 栈追踪（stack trace）是异常对象创建时记录的调用路径（哪个文件、哪一行调用了哪个函数），是调试的主要依据。
 

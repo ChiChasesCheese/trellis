@@ -12,6 +12,7 @@ step: 8
 
 - 外部输入一律解析并校验：字符串转数字用能报告失败的 API（Java 的 `parseInt` 要捕获异常，Go 的 `strconv` 检查 `err`，Rust 的 `parse` 处理 `Result`，Python 的 `int()` 包在 `try/except ValueError`），然后检查范围，不要假设合法。
 - 缩窄转换用会报错的版本：Rust 用 `try_from`，Java 用 `Math.toIntExact`；Go 手写范围检查再转换。只在位操作、哈希、协议编码里有意使用截断，并写明意图。
+- C++：永远用具名转换（`static_cast`、`dynamic_cast`），不写 `(T)x`；对多态类的向下转型用 `dynamic_cast` 指针版并检查 `nullptr`；解析优先 `std::from_chars`（返回错误码和第一个未解析字符的位置），`std::stoi` 要自己核对是否读完整个字符串。
 - 向下转型前先判断类型：
   - Java 16 起用模式匹配 `if (o instanceof String s)`，判断和转型一步完成，不会遗漏检查。
   - Go 一律用逗号 ok 形式 `v, ok := x.(T)`，只有在你能证明类型正确时才用会 panic 的形式。

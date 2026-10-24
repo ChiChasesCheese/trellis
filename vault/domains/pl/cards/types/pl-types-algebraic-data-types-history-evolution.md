@@ -14,6 +14,7 @@ step: 11
 
 - Scala（2004）的 `case class` 和 `sealed`，让 JVM 上有了和类型。
 - Rust（2015）把 `enum` 加 `match` 作为系统语言的一等特性，`Option`、`Result` 全部建立在它上面。
+- C++17（2017）用标准库补上 `std::variant`（带标签联合体），没有新语法，也没有 `match`；到 C++23 为止标准里仍没有模式匹配，只能靠 `std::visit`（按 `variant` 当前变体分派的函数）。
 - Swift（2014）和 Kotlin（`sealed class`，2016）把它带给移动开发。
 - TypeScript 的可辨识联合（discriminated union）。
 - Java 在 16 到 21 之间补齐三件事：`record`（积类型）、`sealed`（封闭变体集）、`switch` 的模式匹配（穷尽分支）。

@@ -28,6 +28,7 @@ fn main() {
 
 对比其他语言：
 
+- **C++**：`[[nodiscard]]`（C++17）与 `#[must_use]` 同构：返回值被丢弃时编译器警告，也可以标在类型上；同样只是警告，用 `(void)` 强制转换即可显式放过。
 - **Go**：函数可以直接忽略返回的 `error`，编译器不管；靠 `errcheck`、`golangci-lint` 之类外部工具补。
 - **Java**：有 `@CheckReturnValue`（Error Prone 等工具识别），不是语言规则；资源靠 `try-with-resources` 约定，编译器不强制你写。
 - **Python**：忘记关闭文件，最多在开发模式下得到 `ResourceWarning`（`python -X dev`），而且是运行时、垃圾回收时才发现。

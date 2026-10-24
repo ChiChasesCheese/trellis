@@ -23,6 +23,7 @@ match x {
 1. **早返回**：失败时当前函数立刻返回，成功时表达式的值就是 `v`，所以一连串可能失败的步骤可以写成直线代码。
 2. **`From::from(e)` 做错误类型转换**：被调用函数的错误类型（比如 `ParseIntError`）如果实现了 `From<ParseIntError> for MyError`，`?` 会自动把它转换成当前函数声明的错误类型。这样不同来源的错误能汇聚到一个统一的错误类型上，无需手写转换。
 
+C++ 的 `std::expected<T, E>` 是同样的带标签联合体，没有 niche 优化，也没有 `?`：早返回要手写，写成 `if (!r) return std::unexpected(r.error());`；`sizeof(std::expected<int, int>)` 本机是 8 字节。
 `?` 也适用于 `Option`，但不能混用：在返回 `Option` 的函数里对 `Result` 用 `?` 是编译错误，编译器提示可以用 `.ok()?` 显式丢弃错误信息。
 
 成本：成功路径没有分配，也没有栈展开；失败路径同样只是一次返回。栈追踪不会自动产生（`anyhow` 等库在需要时才捕获 backtrace）。

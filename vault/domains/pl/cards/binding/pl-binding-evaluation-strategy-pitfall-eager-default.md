@@ -5,7 +5,7 @@ type: qa
 step: 10
 ---
 ## Q
-`Optional.orElse(load())` 和 Rust 的 `unwrap_or(d())` 为什么会在根本用不上缺省值时仍然执行昂贵的计算？
+`Optional.orElse(load())`、Rust 的 `unwrap_or(d())` 和 C++ 的 `value_or(load())` 为什么会在根本用不上缺省值时仍然执行昂贵的计算？
 
 ## A
 因为参数默认**严格求值**：写在括号里的表达式在调用之前就已经执行了，与被调用的函数是否使用它无关。看上去是「缺省值」，实际是一次必定发生的计算。
@@ -29,6 +29,13 @@ o.unwrap_or(d());        // prints "default computed", returns 1
 o.unwrap_or_else(d);     // prints nothing, returns 1
 ```
 
+C++ 的 `std::optional` 也是这样（`or_else` 是 C++23 才补上的延迟版本）：
+```cpp
+std::optional<int> o = 1;
+o.value_or(load());                                // prints "loading default"
+o.or_else([] { return std::optional<int>(load()); }); // prints nothing
+```
+本机 `clang++ -std=c++23` 运行：`value_or` 那行打印了 `loading default`，`or_else` 那行没有。
 Python 的日志有同样的坑，只是形式不同：`logging.debug(f"v={obj}")` 的 f-string 在调用 `debug` 之前就格式化了，即使日志级别是 WARNING、这条日志根本不会输出，`obj.__str__` 也照样执行（实测会打印一次 `formatted`）；而 `logging.debug("v=%s", obj)` 把格式化推迟到确认要输出时，什么也不执行。
 
 后果：吞吐和延迟被「不会用到的缺省值」拖累；更糟的是缺省值有副作用时（写日志、发请求、创建连接）会产生莫名其妙的行为，比如缓存命中却仍然查了一次数据库。

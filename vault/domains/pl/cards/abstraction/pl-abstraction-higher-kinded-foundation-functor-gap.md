@@ -5,7 +5,7 @@ type: qa
 step: 3
 ---
 ## Q
-Functor 和 Monad 是什么？为什么 Rust、Java、Go、Python 都写不出 `Functor<F>` 这样的接口，试着写会得到什么错误？
+Functor 和 Monad 是什么？为什么 Rust、Java、Go、Python 都写不出 `Functor<F>` 这样的接口，试着写会得到什么错误？C++ 的做法又有什么不同？
 
 ## A
 **Functor**（函子）是一个很小的约定：一种容器 `F`，提供 `map`，能把函数作用到里面的每个值上，**不改变容器的形状**：`F<A>` 经 `A -> B` 得到 `F<B>`。`Option`、`Vec`、`Result`、`Future` 都满足。
@@ -39,4 +39,11 @@ Go 的泛型声明 `Functor[F[_] any]` 得到 `undefined array length _ or missi
 
 这不是偶然的疏忽：Java、Go 的泛型在设计时就把类型参数的种类固定为 `*`，要支持 HKT，类型检查、推导、擦除、单态化全都要改。
 
+C++ 是例外：模板模板参数允许类型参数本身是还缺实参的模板，所以直接写得出来：
+```cpp
+template <template <class...> class F>        // F: vector, optional, ... (a type constructor)
+auto label(const F<int>& c) { return fmap(c, [](int n) { return n * 10; }); }
+// fmap is written once per container; label(std::optional<int>{3}) gives optional{30}
+```
+本机编译运行：`label` 对 `std::optional<int>` 和 `std::vector<int>` 都成立（分别得 `30` 和长度为 2 的向量）。代价是 `F` 没有契约，没有 `Functor` 这样的东西能声明；`fmap` 缺了某个容器的重载，错误只在实例化时才出现。
 后果：`Optional.map`、`Stream.map`、`CompletableFuture.thenApply` 做的是同一件事，名字甚至不同，库作者无法为它们提供共同的接口，使用者也无法写出对它们通用的函数。

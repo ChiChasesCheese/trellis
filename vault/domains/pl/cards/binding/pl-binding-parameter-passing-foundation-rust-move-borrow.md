@@ -29,7 +29,7 @@ swap(&mut a, &mut b);               // a=2 b=1: a working swap
 take(v);                            // v is moved; using v afterwards is a compile error
 ```
 
-注意 `swap(&mut a, &mut b)` 真的交换了调用者的两个变量：在四门语言里，只有 Rust 的 `&mut`（和 Go 的指针）能让函数改变调用者的**局部变量**，而且 Rust 的版本由编译器保证没有别名、没有悬空。
+注意 `swap(&mut a, &mut b)` 真的交换了调用者的两个变量：在五门语言里，只有 Rust 的 `&mut`、Go 的指针和 C++ 的引用（`T&`）、指针能让函数改变调用者的**局部变量**，而且只有 Rust 的版本由编译器保证没有别名、没有悬空。
 
 和 Java、Python 的差别：它们把「共享可变的对象」当默认，Rust 把它变成需要显式申请的特例；代价是调用者要多写 `&`、`&mut`，签名要想清楚所有权。
 

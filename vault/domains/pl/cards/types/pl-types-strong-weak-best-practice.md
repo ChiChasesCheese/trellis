@@ -28,6 +28,7 @@ let b = i32::try_from(big);  // Err(TryFromIntError(PosOverflow))
 
 - 实际输出就是注释中的值：强制转换得到 `-1294967296`，检查型 API 立刻失败。让失败在转换的那一行出现，而不是几个函数后变成一个奇怪的负数。
 - 在 Rust 里启用 `clippy::cast_possible_truncation` 一类的 lint，让 `as` 的有损用法在评审前就被标出。
+- C++：单参数构造函数一律写 `explicit`（禁止它参与隐式转换，除非确实需要）；初始化数值用花括号 `int x{y}`，缩窄会编译失败；编译时打开 `-Wconversion -Wsign-compare`（隐式转换与有无符号比较警告）；转换用 `static_cast`，不用 `(T)x`；不要混用有符号和无符号做比较。
 - 钱和数量不用浮点：Java 用 `BigDecimal` 或以分为单位的 `long`，Python 用 `Decimal`。
 - 字符串拼接别依赖隐式转换：Java 的 `"x" + a + b` 受求值顺序影响，用 `String.format` 或模板更稳。
 

@@ -18,4 +18,11 @@ step: 6
 
 四个数依次是 `Box<i32>`、`Option<Box<i32>>`、`i32`、`Option<i32>` 的字节数（`std::mem::size_of`）。`Option<Box<i32>>` 和 `Box<i32>` 同样是 8 字节，没有任何额外开销。也就是说，Rust 的做法在机器码层面和 C 的「检查指针是否为 0」一样，只是检查被编译器强制了，类型系统保证不会忘记。
 
+C++ 的 `std::optional` 也是带标记的联合体，但没有这个空指针优化：
+```cpp
+sizeof(std::unique_ptr<int>);                 // 8
+sizeof(std::optional<std::unique_ptr<int>>);  // 16
+sizeof(int);  sizeof(std::optional<int>);     // 4, 8
+```
+本机实测依次是 `8 16 4 8`：指针类的 `optional` 比裸指针大一倍，因为标记位无处可藏，加对齐后多出 8 字节。要想不多占空间，C++ 的做法是继续用可为空的指针。
 Go 的另一半设计：很多 `nil` 是可用的。`nil` 切片长度为 0 且能 `append`，从 `nil` map 读取返回零值，只有写入才 panic。这是「零值可用」哲学让 `nil` 在多数场景里无害。

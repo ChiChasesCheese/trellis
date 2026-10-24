@@ -5,9 +5,10 @@ type: qa
 step: 9
 ---
 ## Q
-Java、Go、Rust、Python 的规范和替代实现是怎样发展起来的？今天的趋势是什么？
+C++、Java、Go、Rust、Python 的规范和替代实现是怎样发展起来的？今天的趋势是什么？
 
 ## A
+- C++：1985 年前后只有 Stroustrup 自己写的 Cfront（把 C++ 翻译成 C 的编译器）一个实现，他 1985 年出版的 C++ 语言专著就是事实标准；多家编译器出现后，1998 年发布第一版 ISO 标准（C++98），2011 年起每三年一版。多实现从一开始就是常态，规范因此是「合同」，但实现落地总比标准慢。
 - Java：1996 年随 JDK 1.0 发布语言规范（JLS）和虚拟机规范（JVMS）。早期 Sun 的实现是唯一选择；2006 到 2007 年 Sun 将 JDK 开源，形成 OpenJDK，从此 HotSpot 之外有了 OpenJ9、GraalVM 等实现。
 - Go：2009 年发布时就同时带有 `gc` 和 gccgo 两个编译器，规范因此写得很精确，必须让两个实现表现一致。
 - Python：长期只有 CPython；PyPy 在 2000 年代后期成熟，目标是用 JIT 提速；MicroPython 面向单片机，GraalPy 面向 GraalVM。语言变更走 PEP（Python Enhancement Proposal）流程。

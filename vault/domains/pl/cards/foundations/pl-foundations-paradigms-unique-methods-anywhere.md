@@ -27,4 +27,5 @@ impl Double for i32 { fn double(&self) -> i32 { self * 2 } }
 
 Java 做不到，因为方法必须写在类的内部，而 `int` 不是类；Python 的内置 `int` 虽是对象，但是不可变类型，写 `int.double = lambda self: self * 2` 会报 `TypeError: cannot set 'double' attribute of immutable type 'int'`。
 
+C++ 介于两者之间：方法同样必须写在类里面，内置的 `int` 加不了方法，但行为可以是类外的自由函数（`double_it(21)`），标准库的算法几乎全是这种写法，所以数据和行为是松耦合的，只是语法上不能写成 `21.double()`。
 结论：Go 和 Rust 把「数据」和「行为」解耦了，方法只是语法糖，其本质是第一个参数叫 `self` 的函数。Java 和 Python 的对象模型把行为绑在类身上，所以想扩展内置类型只能包装或继承。

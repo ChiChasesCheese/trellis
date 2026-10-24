@@ -37,3 +37,4 @@ error[E0004]: non-exhaustive patterns: `&Shape::Tri(_, _, _)` not covered
 - 自己拥有的 `enum` 避免通配，必要时逐个列出变体，哪怕分支体相同（用 `A | B => ...`）。
 - 对外部库的 `#[non_exhaustive]` 枚举，通配分支是必须的，此时在通配分支里写日志或返回错误，而不是静默返回默认值。
 - Java 的 `default` 分支同理：对 `sealed` 类型写了 `default`，等于关掉了穷尽检查。
+- C++ 里通配有两种形态：`std::visit`（按 `std::variant` 当前变体分派的函数）的访问者里放一个 `[](auto&&)` 的泛型 lambda，对 `switch` 枚举写 `default:`（后者会让编译器的 `-Wswitch`，即枚举 `switch` 漏分支警告，失效）。两者都让新增变体静默落入默认分支。

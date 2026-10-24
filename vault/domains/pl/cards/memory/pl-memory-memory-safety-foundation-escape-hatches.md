@@ -15,6 +15,7 @@ step: 3
 - **Java**：JNI（Java Native Interface，调用本地 C 代码）、`sun.misc.Unsafe`，以及较新的 FFM API（外部函数与内存访问）。
 - **Python**：`ctypes`（把任意地址当指针用）和 C 扩展。例如 `ctypes.string_at(0)` 读地址 0，进程直接被 SIGSEGV 终止（本机退出码 139），没有 `IndexError`，也来不及 `try/except`。
 
+C++ 是反例：它没有「安全部分」与逃生口的分界，整个语言都等价于 `unsafe`。Core Guidelines 和 GSL（Guidelines Support Library，提供 `span`、`not_null` 等带检查的类型）试图划出一个安全子集，但这个边界是约定，不是编译器强制的。
 设计原则是**缩小信任的范围**：只有这些带标记的区域需要审查，并且要把它们封装成对外安全的接口（例如 `Vec::push` 内部有 `unsafe`，对外是安全函数）。
 
 要记住的一个事实：“内存安全语言”的准确含义是只用语言的安全部分写出的代码不会出现内存错误；`unsafe`、FFI、C 扩展里的 bug 仍然能打穿整个程序。

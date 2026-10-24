@@ -25,4 +25,4 @@ CPU 只会顺序执行指令，没有「函数」这个概念。一次调用要�
 - **保存寄存器的责任归谁**：调用者保存还是被调用者保存，这是一个平衡调用者和被调用者负担的选择。
 - **栈由谁增长**：固定大小的栈还是可增长的栈（Go 的协程栈）。
 
-每个平台一套标准（x86-64 Linux/macOS 的 System V ABI、ARM64 的 AAPCS64、Windows 自己的约定）。Rust 的默认调用约定刻意不做稳定承诺，标 `extern "C"` 的函数才遵守平台 C ABI；Java 和 Python 的虚拟机另有自己的帧布局。
+每个平台一套标准（x86-64 Linux/macOS 的 System V ABI、ARM64 的 AAPCS64、Windows 自己的约定）。Rust 的默认调用约定刻意不做稳定承诺，标 `extern "C"` 的函数才遵守平台 C ABI；C++ 没有语言级的 ABI，由平台约定（类布局、虚表、名字修饰：把类型信息编码进符号名），GCC、Clang 遵守 Itanium C++ ABI，MSVC 另有一套，三者的 `extern "C"` 函数则都按平台 C ABI，所以跨语言接口一律写成 C；Java 和 Python 的虚拟机另有自己的帧布局。

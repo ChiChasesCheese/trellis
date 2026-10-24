@@ -5,7 +5,7 @@ type: qa
 step: 4
 ---
 ## Q
-静态类型语言怎样「退出」类型检查？Go 的 `any`、Java 的原始类型（raw type）和 Rust 的 `dyn Any` 各是什么？
+静态类型语言怎样「退出」类型检查？Go 的 `any`、Java 的原始类型（raw type）、Rust 的 `dyn Any` 和 C++ 的 `void*`、`std::any` 各是什么？
 
 ## A
 即使是整体静态的语言，也提供让某个值暂时脱离静态检查的逃生口，换取灵活性：
@@ -31,4 +31,5 @@ String s = typed.get(1);        // 运行时才抛 ClassCastException
 
 - Rust 的 `Box<dyn Any>`：装任何类型的值，用 `downcast_ref::<T>()` 询问它是不是 `T`，返回 `Option`：`Some(5)` 或 `None`。比 Go 和 Java 更谨慎，询问失败得到 `None`，不会崩溃。
 
+- C++ 有两层。`void*` 是丢掉全部类型信息的指针，可以和任何指针互转，转回时编译器完全信任你（从 C 继承来，用在与 C 库的回调参数里）；`std::any`（C++17）是类型安全的版本，`std::any_cast<int>(a)` 在内容不是 `int` 时抛出 `std::bad_any_cast`，和 Go 的类型断言接近。
 共同点：逃生口是例外，用在序列化、插件、与旧代码互通的边界；把它们和 Python 的 `Any` 比较，区别在于静态语言里逃生口是少数地方，整个程序默认受检查。

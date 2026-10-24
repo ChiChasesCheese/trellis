@@ -27,4 +27,5 @@ Caused by: java.io.FileNotFoundException: cfg.yml
 
 Python 对应 `raise RuntimeError("startup failed") from e`，之后可通过 `e.__cause__` 取到原因；不写 `from` 时，Python 也会自动保存上下文（`__context__`）。
 
+C++ 的做法是同一模板的原型，细节略有不同：展开分两阶段，先沿栈向上找到会接住的 `catch`，再回头逐帧展开并运行局部对象的析构函数；异常对象不带栈追踪；任何类型都可以被抛出（惯例是继承 `std::exception`）。
 **零成本模型**：不抛异常时，`try` 不执行任何指令，因为异常表是静态的。Java 如此，CPython 3.11 起也采用这种零成本的 `try`。抛出时才付出创建对象、填栈追踪、查表的代价，所以异常是「正常路径免费，失败路径昂贵」。

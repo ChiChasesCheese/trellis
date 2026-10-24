@@ -37,4 +37,4 @@ error[E0107]: missing generics for struct `Vec`
 
 和函数的类比很准确：普通函数对值抽象，泛型对类型抽象，HKT 对类型构造器抽象。每向上一层，抽象更彻底，语言实现和类型检查的难度也上一个台阶（需要对种类做推导和检查，类型之间的相等判断也复杂得多）。
 
-在 Java、Go、Python 里，类型构造器（`List`、`Optional`、`list`）也存在，只是没有一种写法能把它们作为参数传给泛型。
+在 Java、Go、Python 里，类型构造器（`List`、`Optional`、`list`）也存在，只是没有一种写法能把它们作为参数传给泛型。C++ 有这种写法：模板模板参数 `template <template <class> class F>`，`F` 就是 `vector` 或 `optional` 本身。

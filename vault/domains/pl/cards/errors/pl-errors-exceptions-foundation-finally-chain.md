@@ -27,6 +27,7 @@ Caused by: java.io.FileNotFoundException: cfg.yml
 
 上半段说明应用层发生了什么，下半段（`Caused by`）是根因。没有带 cause，原因就丢了。
 
+C++ 没有 `finally`：清理放在局部对象的析构函数里，展开途中自动运行（RAII）；原因链用 `std::throw_with_nested` 把当前异常嵌进新异常，捕获后再用 `std::rethrow_if_nested` 逐层取出。
 异常对象创建时会记录栈追踪：要遍历调用栈的每一帧，所以抛出一次的代价与栈深度成正比。
 
 要记住的一个事实：`finally` 保证清理，cause 链保证根因不丢；两者都依赖你正确使用，不是自动发生的。

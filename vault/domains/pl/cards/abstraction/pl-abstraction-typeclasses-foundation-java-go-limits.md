@@ -23,7 +23,7 @@ func (x int) Describe() string { return "int" }
 
 能给 `int` 补方法的只有 `int` 所在的包（语言本身）。绕过办法与 Java 类似：自定义类型包装（`type MyInt int`，转换后才有方法）、函数参数、`switch x.(type)`。
 
-对比 Rust：`impl Describe for i32` 直接合法，没有包装，没有额外分配，泛型函数也能表达 `T: Describe`。
+对比 C++：给 `int` 加行为同样不用包装，写一个重载 `describe(int)` 或特化 `std::formatter<MyType>` 即可，由编译器按重载决议选择，不需要类型作者配合，也没有额外分配。对比 Rust：`impl Describe for i32` 直接合法，没有包装，没有额外分配，泛型函数也能表达 `T: Describe`。
 
 背后的原因不同：
 

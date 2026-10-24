@@ -13,6 +13,7 @@ step: 9
 - **Rust**：对自己拥有的 `enum` 把每个变体写全；对第三方库里标了 `#[non_exhaustive]` 的 enum，必须有通配符，这是它的设计目的。想要「新增变体时编译失败」又需要简洁时，可以对不关心的变体写成显式列表，而不是 `_`。
 - **Java**：对 `sealed` 层级的 `switch` 不写 `default`；有了 `default`，新增子类型不会触发编译错误。把「可能新增」的类型用 `sealed` 声明，是在把演进成本显式化。
 - **Python**：`match` 的 `case _` 应该写成 `assert_never(x)`（`typing` 模块，3.11 起），让类型检查器对联合类型和 `Enum` 做穷尽性检查；单纯 `case _: pass` 是无声的洞。
+- **C++**：封闭集合用 `std::variant`（C++17 的带标签联合体）加 `std::visit`（按当前变体分派的函数），访问者不写接收任意类型的泛型 lambda 当通配；对枚举的 `switch` 不写 `default:` 并打开 `-Wswitch`（或 `-Werror=switch`），让漏掉的枚举值变成编译错误。
 - **Go**：type switch 必须有 `default`，在其中返回错误或 panic，而不是静默返回零值；考虑用接口加方法替代。
 
 其他实践：守卫不要写太复杂，复杂条件提到函数里命名；顺序敏感的分支（特例在前，通用在后），Java 编译器会拒绝「被前面分支完全覆盖的」分支，Rust 会警告 `unreachable pattern`。

@@ -19,6 +19,6 @@ v := []int{1, 2, 3}
 fmt.Println(v[5])   // panic: runtime error: index out of range [5] with length 3
 ```
 
-Go 进程因此以状态码 2 退出，Rust 以 101 退出（本机实测）。Java 和 Python 没有独立的 panic：未捕获的异常终止线程，严重的问题放在 `Error` 子类（Java）或 `BaseException` 子类（Python）里。
+Go 进程因此以状态码 2 退出，Rust 以 101 退出（本机实测）。C++ 没有叫 panic 的机制，对应物是 `assert`（条件不满足就调用 `abort`，但定义了 `NDEBUG`（发布构建常用的宏）的构建里会被编译掉）和 `std::terminate`（未捕获的异常、从声明不抛异常的 `noexcept` 函数抛出时调用，本机退出码 134）。Java 和 Python 没有独立的 panic：未捕获的异常终止线程，严重的问题放在 `Error` 子类（Java）或 `BaseException` 子类（Python）里。
 
 要记住的一个事实：panic 表示“这是 bug，不是错误”；常规的失败不应该用它。

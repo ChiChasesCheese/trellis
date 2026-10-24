@@ -5,7 +5,7 @@ type: qa
 step: 9
 ---
 ## Q
-建模「几种状态之一」的数据时，资深工程师用什么规则？在 Rust、Java、Python、Go 里分别怎样落地？
+建模「几种状态之一」的数据时，资深工程师用什么规则？在 Rust、Java、Python、Go、C++ 里分别怎样落地？
 
 ## A
 核心规则：用和类型表达状态，让非法组合无法构造；用不带通配分支的穷尽匹配处理，让新增变体时编译器带你找到所有要改的地方。
@@ -20,6 +20,7 @@ case _ as unreachable: assert_never(unreachable)
 # mypy: Argument 1 to "assert_never" has incompatible type "Tri"; expected "Never"
 ```
 
+- C++：用 `std::variant`（C++17 的带标签联合体）加 `std::visit`（按当前变体分派的函数），访问者不要写接收任意类型的泛型 lambda `[](auto&&)` 当通配（它会吞掉新增的变体，等于 Rust 的 `_ =>`）；不用裸 `union`，也不用「枚举标签加字段」的手写版本。
 - Go：把接口定义为只有未导出方法的「密封接口」限制实现者，配合 `exhaustive` linter；简单场景直接用结构体加枚举常量，并写单元测试覆盖每个值。
 
 何时可以破例：变体集合本来就应该开放（插件系统、用户可扩展的处理器），就用接口，不用封闭的 `enum`；这时用测试和注册表来保证完整，而不是穷尽检查。

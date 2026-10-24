@@ -11,7 +11,7 @@ step: 10
 1. **函数式语言（1970 到 1990 年代）**：ML 系的语言（SML、OCaml）有代数数据类型和模式匹配；Haskell 的 `Maybe` 与 `Either` 把「可能缺失」「可能失败」做成标准类型，并配有 monad（do 记法）串联计算。Rust 的 `?` 可以看作 do 记法在错误场景的一个特化。
 2. **Rust（2015 年 1.0）**：把它们带入系统编程。早期靠 `try!` 宏，1.13（2016）引入 `?`，大幅降低了冗长。
 3. **Swift（2014）**：`Optional` 与 `throws`；`throws` 编译成返回值，并要求调用处写 `try`。
-4. **Java 8（2014）**：`Optional<T>`，但定位仅是返回值。
+4. **Java 8（2014）**：`Optional<T>`，但定位仅是返回值。C++17（2017）加入 `std::optional`，C++23（2023）加入 `std::expected<T, E>`（装着值或错误的结果类型），后者的前身是 LLVM 的 `Expected`、Boost.Outcome 等库；都是库类型，没有 `?` 这样的语法。
 5. **Kotlin**：可空类型 `T?` 在类型系统里区分是否可空，另有标准库的 `Result`。
 6. **TypeScript、C#**：可空引用类型的静态检查；社区库提供 `Result`。
 7. **Zig**：错误联合类型 `!T` 与 `try`。

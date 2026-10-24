@@ -5,7 +5,7 @@ type: qa
 step: 8
 ---
 ## Q
-`NaN` 在 Java、Python、Rust 里的相等行为为什么各不相同？这说明了各语言怎样权衡标准与实用？
+`NaN` 在 Java、Python、Rust、C++ 里的相等行为为什么各不相同？这说明了各语言怎样权衡标准与实用？
 
 ## A
 IEEE 754 规定 `NaN != NaN`，包括与自己比较。这违反自反性，而哈希表、`List.contains`、排序都假设相等是等价关系。语言各自做了折中。
@@ -34,4 +34,5 @@ len({nan, nan})             # 1；len({float("nan"), float("nan")}) 是 2
 
 **Rust**：干脆拒绝让 `f64` 实现 `Eq`，`HashMap<f64, _>` 编译失败，需要时用 `ordered-float` 之类的包装类型。
 
-三种选择：Java 牺牲 `equals` 与 IEEE 的一致，换集合可用；Python 用同一性短路，造成「看起来矛盾」的结果；Rust 把问题挡在类型层，要求你明确表态。哲学上，Rust 倾向于**不让错误发生**，Java 倾向于**让常见用法可用**，Python 倾向于**实用、先快后修补**。
+**C++**：完全不处理。`==` 遵守 IEEE，容器不拦：`std::unordered_set<double>{NAN, NAN}` 本机实测 `size()` 是 2，两个 `NaN` 各占一个位置，永远查不到；`std::set<double>` 放入 `NaN` 则违反排序容器要求的严格弱序，是未定义行为（标准不规定后果）。
+三种选择（外加 C++ 的不管）：Java 牺牲 `equals` 与 IEEE 的一致，换集合可用；Python 用同一性短路，造成「看起来矛盾」的结果；Rust 把问题挡在类型层，要求你明确表态。哲学上，Rust 倾向于**不让错误发生**，Java 倾向于**让常见用法可用**，Python 倾向于**实用、先快后修补**。

@@ -32,4 +32,10 @@ for i := 0; i < 3; i++ {
 
 Java 出不了这个问题：经典 `for (int i…; i++)` 的 `i` 会被修改，不是 effectively final，lambda 一引用编译器就报错，逼你先复制到一个新变量。Rust 的闭包默认借用循环变量，把闭包存到循环之外时变量已经销毁，编译失败，必须 `move` 把值复制进闭包。
 
+C++ 把选择权交给你，写在捕获列表里。按值捕获 `[i]` 在创建那一刻复制，行为像 Go 1.22：
+```cpp
+for (int i = 0; i < 3; ++i) fs.push_back([i] { return i; });   // prints: 0 1 2
+for (int i = 0; i < 3; ++i) fs.push_back([&i] { return i; });  // dangling after the loop
+```
+第一种本机输出 `0 1 2`。第二种捕获的是循环变量本身，循环结束后它已销毁，调用时是未定义行为；`-fsanitize=address`（内存错误检测器）实测报 `stack-use-after-scope`（访问已离开作用域的栈变量），没有检查器时可能悄悄返回垃圾值。
 对比可见：语言要么让规则更不容易出错（Go 改语义、Java 禁止、Rust 借用检查），要么靠约定（Python）。Python 的对策是推导式里用默认参数，或用 `functools.partial` 提前绑定。

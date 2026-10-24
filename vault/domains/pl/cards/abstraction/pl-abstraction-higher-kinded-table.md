@@ -5,17 +5,18 @@ type: qa
 step: 6
 ---
 ## Q
-Go、Java、Rust、Python 在对「容器」做抽象这件事上各有什么办法？它们怎样处理 `map`、`flatMap` 这类跨容器相同的形状？
+C++、Go、Java、Rust、Python 在对「容器」做抽象这件事上各有什么办法？它们怎样处理 `map`、`flatMap` 这类跨容器相同的形状？
 
 ## A
 | 语言 | 有 HKT 吗 | 容器上的 `map` 怎么来 | 替代办法 |
 |---|---|---|---|
+| C++ | 有，以模板模板参数的形式（`template <template <class...> class F>`，F 代表 `vector`、`optional` 这类还缺类型实参的模板） | 各容器各写一个 `map`；通用写法靠模板模板参数或迭代器算法（`std::transform`；`std::ranges` 是 C++20 的惰性算法库） | 没有契约：不检查 F 是否真是个「函子」，用错在实例化时才报错 |
 | Go | 没有 | 各自写：切片没有 `map`，用 `for` 循环；泛型函数 `Map[T, U]` 只能针对切片 | 迭代器 `iter.Seq`、`for range` |
 | Java | 没有 | `Optional.map`、`Stream.map`、`CompletableFuture.thenApply` 各自独立 | `Stream` 作为统一的序列抽象 |
 | Rust | 没有；GAT 可编码 | `Option::map`、`Result::map`、`Iterator::map` 各自独立 | `Iterator` trait 统一序列，`?` 统一错误传播 |
 | Python | 没有（类型检查器表达不了） | 内建 `map()` 只认迭代器，其他类型各自的方法 | 鸭子类型，运行时不需要抽象 |
 
-共同点：**没有任何一门语言让你写出对「任意容器」成立的 `map`**。各库在需要时重复同一个形状，形状靠命名习惯维持（`map`、`flat_map`/`flatMap`/`and_then`、`filter`），而不是靠类型。
+共同点：**没有任何一门语言让你写出带契约检查的、对「任意容器」成立的 `map`**。C++ 的模板模板参数是唯一的例外：它能写出对 `vector`、`optional` 都成立的 `label`，但它是靠实例化时的结构匹配（鸭子类型），语言没有 `Functor` 这样的契约可以声明。各库在需要时重复同一个形状，形状靠命名习惯维持（`map`、`flat_map`/`flatMap`/`and_then`、`filter`），而不是靠类型。
 
 规律：**对类型构造器抽象的需求，被「主要的几个容器 + 语法糖」满足了。**
 

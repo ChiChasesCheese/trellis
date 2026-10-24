@@ -41,6 +41,7 @@ Error: ParseIntError { kind: InvalidDigit }
 
 用 `Box<dyn Error>` 擦除了具体类型，之后调用者只能通过 `downcast_ref` 恢复，容易失败。
 
+C++ 的 `std::expected`（C++23，装着值或错误的结果类型）有相反方向的坑：取值运算符 `*r` 不检查状态，对失败的 `expected` 取值是未定义行为，而不是 panic 或抛出；要检查就写 `r.value()`（失败时抛 `bad_expected_access`）或先判断 `r.has_value()`。
 **坑三：习惯性 `unwrap`**，把本该由类型保证的安全变回运行时 panic。
 
 **坑四：错误类型膨胀**。每个函数一个错误枚举，或把所有变体放进一个巨大的枚举，都难以维护。经验：按模块或按调用者需要的区分来划分错误类型。

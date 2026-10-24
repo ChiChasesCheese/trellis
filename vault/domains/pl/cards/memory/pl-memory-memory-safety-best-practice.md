@@ -15,7 +15,7 @@ step: 7
 3. **用工具兜底**：
    - Go：测试与 CI 一律带 `-race`；
    - Rust：对 `unsafe` 代码跑 Miri；
-   - C/C++：AddressSanitizer、UndefinedBehaviorSanitizer，加模糊测试（fuzzing）；
+   - C/C++：AddressSanitizer、UndefinedBehaviorSanitizer、ThreadSanitizer，加模糊测试（fuzzing）；C++ 还要容器访问用 `at()`（带检查的访问）或打开标准库加固模式（运行时边界检查），用 `std::span`、`std::string_view`（带长度的数组与字符串视图）带上长度，用 `unique_ptr`（独占所有权的智能指针）代替裸 `new`；
    - 所有语言：对处理外部输入的解析器做模糊测试。
 4. **并发代码要有专门的策略**：Go 用 channel 转移所有权、锁保护的数据与锁放在同一个结构体里并注明；Java 优先使用不可变对象和 `java.util.concurrent`；Rust 让 `Send`/`Sync` 替你检查。
 5. **限制输入**：显式检查长度与范围，即使语言已有边界检查。越界 panic 虽然不会被利用，却是拒绝服务（DoS）的入口。

@@ -29,4 +29,5 @@ java.lang.OutOfMemoryError: Java heap space after 61 entries
 
 多次 GC 之后堆仍然装不下，说明这些对象全是可达的，GC 无能为力。
 
+没有 GC 的语言会泄漏得更直接：C++ 里 `new` 之后忘了 `delete`、两个 `shared_ptr` 互相持有，对象都不可达也不会被回收，因为没有回收器去找它们。
 排查思路：看 GC 日志里「回收后占用」是否逐轮上升；Java 用堆转储（heap dump）加 Eclipse MAT 之类的工具找「支配树」里最大的持有者；Go 用 `pprof` 的 heap 与 goroutine profile。修复通常是给缓存加容量上限（LRU）、用 `WeakReference`、或显式取消注册。

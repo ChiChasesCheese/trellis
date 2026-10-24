@@ -35,6 +35,7 @@ let count = Arc::new(Mutex::new(0));
 对比：
 - Go：只有约定，并发读写同一个变量不会被编译器拒绝，靠 `go run -race` 在运行时检测。
 - Java：`synchronized` 与 `volatile` 要自己写对，忘了加锁照样编译。
+- C++：`std::mutex` 与它保护的数据是两个独立的对象，忘了加锁照样编译；数据竞争还是未定义行为，不仅是读到旧值。靠 ThreadSanitizer 和纪律。
 - Rust 用 `Send`（可以把值移动到另一个线程）与 `Sync`（可以在线程间共享引用）两个标记 trait（不含方法、只做标签的约定）描述「可跨线程移动/共享」，编译器按它们检查。
 
 这是 Rust 独有的：数据竞争在安全代码中不可能出现。死锁和逻辑上的竞态（race condition）仍然可能。

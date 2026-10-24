@@ -26,6 +26,6 @@ Python 的字节码也基于栈（`LOAD_FAST`、`CALL`）。每次调用创建�
 
 关键差异：
 
-1. **谁管栈**：Rust、Go 是原生栈，由 CPU 的栈指针和 ABI 管理；Java、Python 是虚拟机栈，由运行时管理。
+1. **谁管栈**：C++、Rust、Go 是原生栈，由 CPU 的栈指针和 ABI 管理；Java、Python 是虚拟机栈，由运行时管理。
 2. **栈大小的上限**：JVM 线程栈由 `-Xss` 设定（几百 KB 到几 MB）；Python 另设一个递归深度上限 `sys.getrecursionlimit()`，默认 1000。
 3. **能否被观察**：虚拟机栈帧里的信息是结构化的，所以异常堆栈、调试器、`sys._getframe` 能直接读，原生栈需要调试符号。

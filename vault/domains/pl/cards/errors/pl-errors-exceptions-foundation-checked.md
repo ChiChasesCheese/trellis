@@ -22,6 +22,6 @@ error: unreported exception IOException; must be caught or declared to be thrown
 
 设计意图：外部世界不可靠，I/O 失败是调用者必须面对的，所以把它写进签名，让编译器保证没人漏掉；而空指针之类是 bug，不该强迫每个调用点处理。
 
-Python、C#、Kotlin 的异常全部是非受检的：不在签名里声明，编译器也不检查。
+Python、C#、Kotlin 的异常全部是非受检的：不在签名里声明，编译器也不检查。C++ 也走过类似的路：旧标准的异常规约 `void f() throw(IOError)` 在运行时才检查，且违反时会终止程序，既没有编译期保证又有运行成本，于是 C++11 弃用、C++17 删除（现代 C++ 只剩 `noexcept` 一个布尔声明）。
 
 要记住的一个事实：Java 的受检异常是在语言里强制“失败要在签名中可见”的尝试，其他主流语言基本没有跟进。

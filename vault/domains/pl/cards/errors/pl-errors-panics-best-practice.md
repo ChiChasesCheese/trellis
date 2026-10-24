@@ -20,6 +20,7 @@ step: 7
 **各语言的做法**
 - **Go**：库返回 `error`；`panic` 留给不可能发生的情形。服务框架在 goroutine 入口处 `defer recover`，记录日志与栈并转成错误响应，防止一个请求拖垮整个进程。自己启动的 goroutine 要带上这层保护，因为 `recover` 管不到别的 goroutine。
 - **Rust**：用 `expect("...")` 记录假设；`unwrap()` 留给测试和原型。需要进程恢复能力的服务，把请求处理放进独立的线程或任务，用 `catch_unwind` 或运行时（如 tokio）的任务边界隔离 panic。需要最小体积或避免展开时设 `panic = "abort"`，同时接受不运行 `Drop`。
+- **C++**：不变量用 `assert`，但要知道发布构建（定义了 `NDEBUG` 这个宏）会把它整个删掉，所以对「线上也必须成立」的条件，自己写 `if (!cond) std::abort();` 或日志加 `std::terminate`（终止进程的标准函数）；不要捕获 `catch (...)` 后继续运行；开 sanitizer（运行时错误检测器）让越界等未定义行为（标准不规定后果的错误）在测试里显形。
 - **Java**：不要捕获 `Error`；`catch (Throwable)` 只用于最外层记录日志然后退出。
 - **Python**：不要裸 `except`；捕获 `Exception`，让 `KeyboardInterrupt` 与 `SystemExit` 通过。
 

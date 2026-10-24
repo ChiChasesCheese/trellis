@@ -26,4 +26,10 @@ error: incompatible types: possible lossy conversion from int to short
 
 原因：`s + 1` 里 `s` 先被提升成 `int`，结果是 `int`；把 `int` 赋回 `short` 是缩窄转换，Java 要求显式写 `(short)`。但复合赋值 `s += 1` 在语言规范里等价于 `s = (short) (s + 1)`，它自带一个隐式的强制转换，所以通过编译。这个转换如果溢出了，会静默截断：`short s = 32767; s += 1;` 得到 -32768。
 
+C++ 的对应陷阱出在有符号与无符号混合：编译器把有符号数静默转成无符号再比较。
+```cpp
+int a = -1; unsigned b = 1;
+std::println("{}", a < b);   // false
+```
+本机输出 `false`：`-1` 被转成 4294967295。clang 要开 `-Wextra` 才会给出 `-Wsign-compare` 警告，默认没有。
 教训：复合赋值运算符在 Java 里是一个隐式转换的暗门，同样的表达式写成 `s = s + 1` 和 `s += 1` 并不等价。Go 和 Rust 里没有这个暗门，类型不同的运算一律要求显式转换。

@@ -11,6 +11,7 @@ step: 11
 1965 年 ALGOL W 引入空引用，之后的 C、C++、Java、C# 都继承了它。2009 年 Hoare 公开反思，这之后新一代语言几乎一致地把缺失放进类型：
 
 - Rust（2015）：`Option<T>`，安全代码里没有 `null`。
+- C++（2017）：库类型 `std::optional`（可能没有值的容器类型），语言本身保留空指针；C++ 的第一道防线是「引用不能为空」（1980 年代就有），标准不强制检查，也没有向 `Option` 那样让编译器逼你处理。
 - Swift（2014）：`Optional`，语法上写成 `String?`，必须显式解包。
 - Kotlin（2016）：类型分为 `String` 和 `String?`，编译器追踪流程中的空检查。
 - TypeScript：打开 `strictNullChecks` 后 `null` 和 `undefined` 不能赋给普通类型。

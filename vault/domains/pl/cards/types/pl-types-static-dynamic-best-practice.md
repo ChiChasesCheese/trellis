@@ -19,6 +19,12 @@ fn cancel(order: OrderId) { /* ... */ }
 // cancel(UserId(7)) 编译失败：expected `OrderId`, found `UserId`
 ```
 
+- C++ 的陷阱：`using UserId = std::uint64_t;` 只是别名，不是新类型，`UserId` 与 `OrderId` 仍然可以互相传。要真正区分，必须包成结构体：
+```cpp
+using UserId = std::uint64_t;  using OrderId = std::uint64_t;   // aliases: cancel(UserId{7}) compiles
+struct UserId2 { std::uint64_t v; };  struct OrderId2 { std::uint64_t v; };
+// cancel2(UserId2{7}) -> error: no matching function for call to 'cancel2'
+```
 - 避开类型系统的逃生口：Java 的 `Object` 和原始类型 `List`，Go 的 `any`（即 `interface{}`），都会把检查推回运行期，只在边界（序列化、插件）使用。
 - Python：给公共接口加类型提示，在 CI 里跑 `mypy` 或 `pyright`，新代码启用严格模式。`NewType` 能得到同样的区分，但只对检查器有效：
 

@@ -17,4 +17,4 @@ step: 1
 - 函数式（functional）：程序是表达式求值，函数本身是值，尽量不修改已有数据，而是产生新值。
 - 声明式（declarative）：只描述想要的结果，由引擎决定怎么算。SQL 和正则表达式是典型。
 
-四者不互斥。Go、Java、Rust、Python 都是多范式（multi-paradigm）语言，内核都是命令式，区别只在默认鼓励哪一种：Java 默认推你写类，Rust 和 Python 容易写出函数式风格，Go 刻意保持朴素的过程式加方法。
+四者不互斥。C++、Go、Java、Rust、Python 都是多范式（multi-paradigm）语言，内核都是命令式，区别只在默认鼓励哪一种：C++ 哪一种都不默认，由团队选子集，Java 默认推你写类，Rust 和 Python 容易写出函数式风格，Go 刻意保持朴素的过程式加方法。

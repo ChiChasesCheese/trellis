@@ -27,6 +27,13 @@ println!("{} {}",
 
 输出 `8 16`：引用体积翻倍，每次调用多一次间接跳转，而且编译器看不到被调用的函数，内联不了。
 
+C++ 的两个选项与此一一对应：模板对应泛型的单态化，`virtual` 函数对应 `dyn Trait`。区别在虚表指针放在哪里：Rust 把它放在引用上（胖指针），C++ 把它藏在对象里面（每个对象多一个隐藏指针）。
+```cpp
+struct Plain { int x; };
+struct Virt  { int x; virtual int f() const { return x; } };
+// sizeof(Plain) = 4, sizeof(Virt) = 16   (8-byte vptr + 4 + padding)
+```
+本机实测输出 `4 16`：同样一个 `int` 字段，有虚函数的对象大了三倍，多出来的是虚表指针和对齐填充，所以含虚函数的类不能再按 4 字节摆在数组里。
 Java 的做法是默认走「运行时查表」：普通方法调用（`invokevirtual`、`invokeinterface`）都按对象的真实类型找实现，只有 `private`、`static`、`final` 方法能在编译时定死。Go 的接口调用同样按「类型指针 + 函数表」查，具体类型的调用则是直接调用。
 
 结论：同一语义可以用不同绑定时机实现，性能与灵活性的天平由程序员在类型层面选择（Rust、Go），或由运行时事后修正（Java）。

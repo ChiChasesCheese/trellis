@@ -33,4 +33,4 @@ System.out.println(m.get(k) + " " + m.get(new Key(1)) + " " + m.size());
 防御：
 - 键用不可变类型（`String`、`record`、`List.copyOf` 的结果）。
 - 实体类的 `equals`/`hashCode` 基于不变的业务 ID，不基于会被修改的字段，也不要基于数据库生成、保存前为 `null` 的主键。
-- Rust 和 Python 在语言层给了保护（所有权、不可哈希的可变内置类型）；Java 需要你自己守住这条纪律，代码审查时看到 `Map<某个可变类, ...>` 就应该追问。
+- Rust、Python 和 C++ 在语言层给了保护（所有权、不可哈希的可变内置类型、容器里 `const` 的键）；Java 需要你自己守住这条纪律，代码审查时看到 `Map<某个可变类, ...>` 就应该追问。

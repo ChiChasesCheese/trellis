@@ -31,7 +31,7 @@ g.read();                        // IOException: Stream Closed
 | 相关（relevant） | 只拿掉丢弃 | 至少一次 | 不会被遗忘，但可以被复制 |
 | 无限制（ordinary） | 不限制 | 任意次 | 无 |
 
-Go、Java、Python 的类型系统都是「无限制」那一行：变量可以随便复制引用、随便不用。资源安全靠约定（`defer`、`try-with-resources`、`with`）。
+Go、Java、Python 的类型系统都是「无限制」那一行：变量可以随便复制引用、随便不用。资源安全靠约定（`defer`、`try-with-resources`、`with`）。C++ 大体也在这一行，但允许类型选择性禁用复制（`unique_ptr` 只能移动），所以对这类类型接近仿射；它的资源安全靠 RAII（对象析构时自动释放资源）。
 
 **Rust 的所有权系统本质上是仿射类型**：非 `Copy` 的值只能被「移动」一次，移动后原变量失效，所以不会有两个所有者；但值可以不被使用，离开作用域时自动销毁（`Drop`），所以不是线性的。
 
