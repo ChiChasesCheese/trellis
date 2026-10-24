@@ -1,0 +1,563 @@
+# Programming languages from first principles, compared across Go, Java, Rust and Python: each leaf is one language
+# concept (type systems, memory, errors, concurrency, abstraction ...) seen through all four, with examples.
+# Cards first; the build record is research/domains/pl/BUILD.md.
+domain: pl
+title: 编程语言原理：Go · Java · Rust · Python
+lang: zh
+vault: domains/pl
+study:
+  order: core-first
+  mix: new-first
+  new_per_day: 25
+  reviews_per_day: 150
+nodes:
+- id: foundations
+  order: 1
+  title: 语言的基本坐标
+  summary: 编程范式、执行模型、设计哲学与谱系：先建立一张能放下所有语言的坐标系，再看 Go、Java、Rust、Python 各落在哪里。
+  core: true
+  children:
+  - id: foundations.paradigms
+    title: 编程范式：命令式、面向对象、函数式、声明式
+    summary: 范式是组织程序的思维方式；现代语言几乎都是多范式，区别在于默认鼓励哪一种。
+  - id: foundations.execution-models
+    title: 执行模型：AOT 编译、字节码 + 虚拟机 + JIT、解释执行
+    summary: 源代码怎样变成 CPU 执行的指令：Go/Rust 提前编译成机器码，Java 编译成字节码在 JVM 上解释 + JIT，CPython 编译成字节码再解释。
+  - id: foundations.language-vs-implementation
+    title: 语言规范与实现
+    summary: 同一门语言可以有多个实现（CPython/PyPy、HotSpot/GraalVM、gc/gccgo、rustc），很多“语言特性”其实是实现特性。
+    requires:
+    - foundations.execution-models
+  - id: foundations.design-philosophy
+    title: 四门语言的设计目标与取舍
+    summary: Go 追求简单与工程规模、Java 追求可移植与向后兼容、Rust 追求无 GC 的安全与零成本抽象、Python 追求可读与开发效率；每个目标都要付出代价。
+    requires:
+    - foundations.paradigms
+  - id: foundations.lineage
+    title: 语言谱系：特性从哪里来
+    summary: C → C++ → Java；ML/Haskell → Rust 的类型系统；CSP、Oberon → Go；ABC → Python；理解谱系就理解了特性为什么长这样。
+    requires:
+    - foundations.design-philosophy
+  - id: foundations.tradeoff-axes
+    title: 语言设计的几条根本权衡轴
+    summary: 安全 vs 控制、表达力 vs 简单、编译期检查 vs 运行期灵活、性能 vs 开发速度、向后兼容 vs 演进。
+    requires:
+    - foundations.design-philosophy
+- id: types
+  order: 2
+  title: 类型系统
+  summary: 类型是对值的分类和约束：什么时候检查、检查多严格、按名字还是按结构匹配、能推断多少、怎样表示“没有值”与“几种之一”。
+  core: true
+  children:
+  - id: types.static-dynamic
+    title: 静态类型与动态类型
+    summary: 类型检查发生在编译期还是运行期；Go/Java/Rust 静态，Python 动态；各自换来什么、失去什么。
+  - id: types.strong-weak
+    title: 强类型与弱类型：隐式转换
+    summary: “强弱”指隐式转换的多少：Python 动态但强，C 静态但弱；四门语言在数值转换、字符串拼接上的行为对比。
+    requires:
+    - types.static-dynamic
+  - id: types.nominal-structural
+    title: 名义类型与结构类型
+    summary: 按声明的名字匹配（Java、Rust）还是按拥有的方法/形状匹配（Go 接口、Python 鸭子类型与 Protocol）。
+    requires:
+    - types.static-dynamic
+  - id: types.inference
+    title: 类型推断
+    summary: 局部推断（Java var、Go :=）与基于约束的全局推断（Rust 接近 Hindley-Milner）；推断的边界在哪里。
+    requires:
+    - types.static-dynamic
+  - id: types.numbers
+    title: 数值类型与整数溢出
+    summary: 整数宽度、有无符号、溢出语义（Java/Go 回绕、Rust debug panic release 回绕、Python 任意精度）、浮点 IEEE 754 与精度陷阱。
+    requires:
+    - types.strong-weak
+  - id: types.null-safety
+    title: 空值与空安全
+    summary: “十亿美元错误”：Java null、Go nil、Python None 与 Rust Option 的对比；Optional 与可空类型的不同解法。
+    requires:
+    - types.static-dynamic
+  - id: types.algebraic-data-types
+    title: 代数数据类型：积类型与和类型
+    summary: struct/record 是积类型，enum/sealed 是和类型；Rust enum、Java sealed + record、Python Union + dataclass，以及 Go 为什么没有。
+    requires:
+    - types.null-safety
+  - id: types.gradual-typing
+    title: 渐进类型：Python 类型注解
+    summary: 类型注解在运行时不检查，由 mypy/pyright 静态检查；Any、Protocol、TypeVar 与它们带来的好处和局限。
+    requires:
+    - types.static-dynamic
+    - types.nominal-structural
+  - id: types.type-conversions
+    title: 类型转换与类型断言
+    summary: 显式转换、向下转型（Java cast）、类型断言（Go x.(T)）、From/Into（Rust）、Python 构造函数转换；失败时分别发生什么。
+    requires:
+    - types.strong-weak
+- id: abstraction
+  order: 3
+  title: 抽象、多态与泛型
+  summary: 怎样复用代码与描述“同一类东西”：类与继承、接口与 trait、动态与静态分派、组合、泛型的三种实现方式、可见性与模式匹配。
+  children:
+  - id: abstraction.polymorphism-kinds
+    title: 多态的三种形式
+    summary: 子类型多态、参数多态（泛型）、特设多态（重载/trait 实现）；四门语言分别支持哪几种。
+    requires:
+    - types.nominal-structural
+  - id: abstraction.classes-inheritance
+    title: 类与继承
+    summary: Java 单继承 + 接口、Python 多继承与 MRO（C3 线性化）、Go 与 Rust 干脆没有实现继承；继承的脆弱基类问题。
+    requires:
+    - abstraction.polymorphism-kinds
+  - id: abstraction.interfaces-traits
+    title: 接口与 trait
+    summary: Java 接口（含 default 方法）、Go 隐式接口、Rust trait（可为外部类型实现、孤儿规则）、Python ABC 与 Protocol 的对比。
+    requires:
+    - abstraction.polymorphism-kinds
+  - id: abstraction.dispatch
+    title: 方法分派：静态与动态
+    summary: 编译期确定调用目标 vs 运行期查表：C++/Java 虚表、Go itab、Rust dyn Trait 胖指针、Python 字典查找；JIT 的内联缓存。
+    requires:
+    - abstraction.interfaces-traits
+  - id: abstraction.composition-embedding
+    title: 组合优于继承：嵌入与委托
+    summary: Go 结构体嵌入的“提升”、Rust 组合 + trait、Java 委托；为什么新语言放弃了实现继承。
+    requires:
+    - abstraction.classes-inheritance
+  - id: abstraction.generics
+    title: 泛型：参数多态
+    summary: 为什么需要泛型、四门语言的泛型语法与能力对比（Go 1.18 才加入、Python 只在类型检查层）。
+    requires:
+    - abstraction.interfaces-traits
+  - id: abstraction.generics-implementation
+    title: 泛型的实现：擦除、单态化与字典
+    summary: Java 类型擦除、Rust 单态化（monomorphization）、Go GC shape stenciling + 字典、C# 具化泛型；各自的代码体积、性能与运行时信息代价。
+    requires:
+    - abstraction.generics
+    - abstraction.dispatch
+  - id: abstraction.bounds-variance
+    title: 约束与型变
+    summary: Java 通配符 ? extends / ? super（PECS）、Rust trait bound 与 where 子句、Go 类型集合约束；协变、逆变、不变。
+    requires:
+    - abstraction.generics
+  - id: abstraction.encapsulation
+    title: 封装与可见性
+    summary: Java 访问修饰符与模块、Go 首字母大小写导出、Rust pub/pub(crate)、Python 下划线约定与名字改写。
+    requires:
+    - abstraction.classes-inheritance
+  - id: abstraction.operator-overloading
+    title: 运算符重载与特殊方法
+    summary: Python dunder 方法、Rust 用 trait（Add、Index、Deref）重载、Java 与 Go 不支持；重载的好处与滥用。
+    requires:
+    - abstraction.interfaces-traits
+  - id: abstraction.pattern-matching
+    title: 模式匹配
+    summary: Rust match 的穷尽检查与解构、Java switch 模式与 record 模式、Python 结构化 match、Go type switch；模式匹配为什么和代数数据类型是一对。
+    requires:
+    - types.algebraic-data-types
+    - abstraction.dispatch
+  - id: abstraction.equality-hashing
+    title: 相等、比较与哈希
+    summary: 引用相等 vs 值相等：Java == 与 equals/hashCode 契约、Go comparable 与 == 规则、Rust PartialEq/Eq/Hash/Ord、Python __eq__/__hash__。
+    requires:
+    - abstraction.interfaces-traits
+- id: memory
+  order: 4
+  title: 内存管理
+  summary: 值放在哪里、谁负责释放、什么时候释放：栈与堆、值语义与引用语义、追踪式 GC、引用计数、所有权与借用、内存安全。
+  core: true
+  children:
+  - id: memory.stack-heap
+    title: 栈与堆
+    summary: 栈分配快且自动回收、堆分配灵活但要管理；每门语言什么东西放在栈上、什么放在堆上。
+  - id: memory.value-reference-semantics
+    title: 值语义与引用语义
+    summary: 赋值和传参是复制值还是复制引用：Java 基本类型 vs 对象、Go 值与指针、Rust 移动语义、Python 一切皆对象引用。
+    requires:
+    - memory.stack-heap
+  - id: memory.manual-raii
+    title: 手动管理与 RAII
+    summary: C 的 malloc/free、C++/Rust 的 RAII（离开作用域自动释放）、它解决与留下的问题。
+    requires:
+    - memory.stack-heap
+  - id: memory.tracing-gc
+    title: 追踪式垃圾回收
+    summary: 可达性、标记-清除、复制与整理、分代假设、并发与增量回收、写屏障；Java（G1/ZGC）与 Go（并发三色、非分代、非移动）的不同选择。
+    requires:
+    - memory.manual-raii
+  - id: memory.reference-counting
+    title: 引用计数
+    summary: 计数归零即释放、循环引用问题；CPython 引用计数 + 循环检测、Rust Rc/Arc 与 Weak、Swift ARC；与追踪式 GC 的对比。
+    requires:
+    - memory.manual-raii
+  - id: memory.ownership-borrowing
+    title: 所有权与借用（Rust）
+    summary: 每个值一个所有者、移动、不可变借用与可变借用互斥、借用检查器；它在编译期消除了哪几类 bug。
+    requires:
+    - memory.manual-raii
+    - memory.value-reference-semantics
+  - id: memory.lifetimes
+    title: 生命周期（Rust）
+    summary: 引用不能活得比被引用的值更久；生命周期标注、省略规则、'static；与 GC 语言为什么不需要它。
+    requires:
+    - memory.ownership-borrowing
+  - id: memory.escape-analysis
+    title: 逃逸分析
+    summary: 编译器判断对象是否会离开函数，决定栈分配还是堆分配：Go 编译期逃逸分析、Java JIT 的标量替换。
+    requires:
+    - memory.stack-heap
+    - memory.tracing-gc
+  - id: memory.memory-layout
+    title: 内存布局与对象开销
+    summary: 对象头、指针间接、字段内联：Java 对象头与装箱、Python 对象开销、Go/Rust 结构体按值内联；缓存友好性与 Valhalla 值类型。
+    requires:
+    - memory.value-reference-semantics
+  - id: memory.memory-safety
+    title: 内存安全
+    summary: 悬空指针、越界、释放后使用、数据竞争；哪些语言保证内存安全、靠什么保证（GC、边界检查、借用检查）、unsafe 的位置。
+    requires:
+    - memory.ownership-borrowing
+    - memory.tracing-gc
+  - id: memory.resource-management
+    title: 非内存资源的管理
+    summary: 文件、锁、连接：Rust Drop、Java try-with-resources、Go defer、Python with；GC 语言为什么不能靠 finalizer。
+    requires:
+    - memory.manual-raii
+- id: errors
+  order: 5
+  title: 错误处理
+  summary: 错误是异常、返回值还是类型：异常的传播与代价、Go 的错误值、Rust 的 Result 与 ? 运算符、panic 与不可恢复错误。
+  core: true
+  children:
+  - id: errors.models
+    title: 错误处理的几种模型
+    summary: 异常、错误码/错误值、Result/Option 类型、panic；它们在可见性、强制处理、性能上的差别。
+  - id: errors.exceptions
+    title: 异常：Java 与 Python
+    summary: 抛出与栈展开、Java 受检与非受检异常之争、Python 的 EAFP 风格、异常链与 finally。
+    requires:
+    - errors.models
+  - id: errors.error-values
+    title: 错误值：Go
+    summary: error 接口、if err != nil、错误包装（%w、errors.Is/As）、哨兵错误与自定义错误类型；Go 为什么不用异常。
+    requires:
+    - errors.models
+  - id: errors.result-type
+    title: Result 与 ? 运算符：Rust
+    summary: Result<T, E>、Option<T>、? 早返回与 From 转换、thiserror/anyhow 的分工；类型系统强制你处理错误。
+    requires:
+    - errors.models
+    - types.algebraic-data-types
+  - id: errors.panics
+    title: panic 与不可恢复错误
+    summary: Go panic/recover、Rust panic（展开或中止）、Java Error、Python 的 SystemExit；什么时候该 panic。
+    requires:
+    - errors.exceptions
+    - errors.error-values
+  - id: errors.cost
+    title: 错误处理的性能代价
+    summary: 零成本异常模型（不抛不花钱、抛出很贵）、栈追踪的代价、返回值检查的分支成本。
+    requires:
+    - errors.exceptions
+    - errors.result-type
+- id: concurrency
+  order: 6
+  title: 并发与并行
+  summary: 线程、协程、async/await、通道与锁、内存模型、数据竞争、GIL 与结构化并发：同一个问题，四种回答。
+  core: true
+  children:
+  - id: concurrency.concepts
+    title: 并发与并行、进程与线程
+    summary: 并发是结构、并行是执行；进程、线程、协程的区别；CPU 密集与 I/O 密集任务的不同需求。
+  - id: concurrency.os-threads
+    title: 操作系统线程（1:1 模型）
+    summary: Java 平台线程、Rust std::thread、Python threading 都是 OS 线程；线程的内存与切换成本。
+    requires:
+    - concurrency.concepts
+  - id: concurrency.green-threads
+    title: 用户态线程：goroutine 与虚拟线程
+    summary: M:N 调度：Go 的 GMP 调度器与可增长栈、Java 21 虚拟线程；为什么能开几十万个、阻塞调用怎么处理。
+    requires:
+    - concurrency.os-threads
+  - id: concurrency.async-await
+    title: async/await 与函数着色
+    summary: 基于事件循环与 Future 的协作式并发：Python asyncio、Rust 的惰性 Future + 执行器（tokio）；“函数着色”问题与虚拟线程的对比。
+    requires:
+    - concurrency.green-threads
+  - id: concurrency.channels-csp
+    title: 通道与 CSP
+    summary: “通过通信来共享内存”：Go channel 与 select、Rust mpsc/crossbeam、Java BlockingQueue；有缓冲与无缓冲。
+    requires:
+    - concurrency.green-threads
+  - id: concurrency.locks-shared-memory
+    title: 锁与共享内存
+    summary: 互斥锁、读写锁、条件变量；Java synchronized 与 ReentrantLock、Go sync.Mutex、Rust Mutex<T> 拥有数据、Python Lock。
+    requires:
+    - concurrency.os-threads
+  - id: concurrency.atomics-memory-models
+    title: 原子操作与内存模型
+    summary: 为什么需要内存模型；Java JMM 的 happens-before、Go 内存模型、Rust/C++ 的 Ordering；volatile 与 Atomic。
+    requires:
+    - concurrency.locks-shared-memory
+  - id: concurrency.data-race-freedom
+    title: 数据竞争的预防
+    summary: Rust 用 Send/Sync 在编译期禁止数据竞争、Go 的 race detector、Java 靠纪律与工具、Python GIL 带来的错觉。
+    requires:
+    - concurrency.atomics-memory-models
+    - memory.ownership-borrowing
+  - id: concurrency.gil
+    title: Python GIL 与自由线程
+    summary: 全局解释器锁为什么存在（引用计数）、对 CPU 密集代码的影响、multiprocessing 绕开它、3.13 起的实验性 free-threaded 构建。
+    requires:
+    - concurrency.os-threads
+    - memory.reference-counting
+  - id: concurrency.structured-concurrency
+    title: 结构化并发
+    summary: 子任务的生命周期绑定在作用域里：Java StructuredTaskScope、Python TaskGroup、Go errgroup、Rust thread::scope 与 JoinSet。
+    requires:
+    - concurrency.green-threads
+    - concurrency.async-await
+  - id: concurrency.parallelism
+    title: 数据并行
+    summary: 把一份计算分给多个核：Java 并行流与 ForkJoin、Rust rayon、Go 手动分片 + WaitGroup、Python multiprocessing/NumPy 释放 GIL。
+    requires:
+    - concurrency.os-threads
+- id: functional
+  order: 7
+  title: 函数式特性
+  summary: 函数作为值、闭包的捕获语义、不可变性、迭代器与惰性求值、生成器：函数式思想怎样进入了主流语言。
+  children:
+  - id: functional.first-class-functions
+    title: 一等函数与 lambda
+    summary: 函数可以赋值、传参、返回：Java 函数式接口 + lambda、Go 函数值、Rust 闭包与 fn 指针、Python lambda 的限制。
+  - id: functional.closures
+    title: 闭包与捕获语义
+    summary: 捕获的是值还是变量：Java 要求 effectively final、Go 按引用捕获（1.22 修复循环变量）、Rust Fn/FnMut/FnOnce 与 move、Python 晚绑定陷阱。
+    requires:
+    - functional.first-class-functions
+    - memory.value-reference-semantics
+  - id: functional.immutability
+    title: 不可变性
+    summary: Rust 默认不可变（let mut）、Java final 与 record、Go 只有 const、Python tuple/frozenset/frozen dataclass；不可变对并发与推理的好处。
+    requires:
+    - functional.first-class-functions
+  - id: functional.iterators-laziness
+    title: 迭代器与惰性求值
+    summary: Rust Iterator 适配器（零成本）、Java Stream（惰性 + 终端操作）、Python 迭代器协议、Go 1.23 range-over-func。
+    requires:
+    - functional.first-class-functions
+  - id: functional.generators
+    title: 生成器与协程
+    summary: Python yield 生成器与 send、Go iter.Seq/Pull、Java 没有生成器的替代方案、Rust gen 块（未稳定）；生成器与协程的关系。
+    requires:
+    - functional.iterators-laziness
+  - id: functional.recursion-tco
+    title: 递归与尾调用
+    summary: 四门语言都不保证尾调用优化；递归深度限制（Python 1000、JVM 栈大小、Go 栈可增长）；何时改写成循环。
+    requires:
+    - functional.first-class-functions
+- id: runtime
+  order: 8
+  title: 编译、运行时与性能
+  summary: 代码怎样被编译、优化和执行：编译流水线、JIT、CPython 解释器、零成本抽象、启动时间、部署形态、FFI 与性能模型。
+  children:
+  - id: runtime.compiler-pipeline
+    title: 编译流水线
+    summary: 词法、语法、AST、类型检查、中间表示、优化、代码生成；Rust 借 LLVM、Go 自研后端追求编译速度。
+    requires:
+    - foundations.execution-models
+  - id: runtime.jit
+    title: JIT 编译
+    summary: 运行时根据 profile 编译热点：HotSpot 分层编译、去优化、PyPy 追踪 JIT、CPython 3.13 实验性 JIT；JIT 与 AOT 各自的上限。
+    requires:
+    - runtime.compiler-pipeline
+  - id: runtime.cpython-internals
+    title: CPython 解释器
+    summary: 字节码、求值循环、自适应特化解释器（3.11）、为什么 Python 慢、C 扩展为什么快。
+    requires:
+    - runtime.compiler-pipeline
+  - id: runtime.zero-cost-abstractions
+    title: 零成本抽象
+    summary: “你不用的不付钱，你用的手写也不会更好”：Rust 迭代器与泛型的单态化 + 内联；Java 与 Go 的抽象代价在哪里。
+    requires:
+    - runtime.compiler-pipeline
+    - abstraction.generics-implementation
+  - id: runtime.startup-footprint
+    title: 启动时间与内存占用
+    summary: Go/Rust 静态二进制毫秒启动、JVM 启动与预热、GraalVM 原生镜像与 CDS、Python 导入开销；对 CLI、Serverless、容器的影响。
+    requires:
+    - runtime.jit
+  - id: runtime.deployment
+    title: 构建产物与部署
+    summary: Go/Rust 单个静态二进制、Java JAR + JVM、Python 源码 + 解释器 + 依赖；交叉编译与容器镜像大小。
+    requires:
+    - runtime.startup-footprint
+  - id: runtime.ffi
+    title: 跨语言调用（FFI）
+    summary: Java JNI 与 FFM API、Go cgo 的代价、Rust extern "C" 与 bindgen、Python C API / ctypes / PyO3；为什么跨边界调用贵。
+    requires:
+    - runtime.compiler-pipeline
+  - id: runtime.performance-model
+    title: 性能模型：慢在哪里
+    summary: 同一段代码在四门语言里的典型速度量级，以及差距来自哪里：解释开销、装箱与指针追逐、GC、边界检查、动态分派。
+    requires:
+    - runtime.jit
+    - runtime.cpython-internals
+    - memory.memory-layout
+- id: metaprogramming
+  order: 9
+  title: 元编程
+  summary: 程序操作程序：反射、宏、注解与装饰器、代码生成、运行时动态特性。
+  children:
+  - id: metaprogramming.reflection
+    title: 反射与内省
+    summary: 运行时查看和调用类型信息：Java 反射、Go reflect 包、Python 内省（dir、getattr、inspect）、Rust 没有运行时反射；反射的性能与安全代价。
+    requires:
+    - types.static-dynamic
+  - id: metaprogramming.macros
+    title: 宏
+    summary: Rust macro_rules! 与过程宏（derive）、C 预处理宏的问题、卫生宏；Go、Java、Python 为什么没有宏。
+    requires:
+    - runtime.compiler-pipeline
+  - id: metaprogramming.annotations-decorators
+    title: 注解与装饰器
+    summary: Java 注解 + 注解处理器/反射（Spring、Lombok）、Python 装饰器（高阶函数语法糖）、Rust 属性、Go struct tag。
+    requires:
+    - metaprogramming.reflection
+  - id: metaprogramming.code-generation
+    title: 代码生成
+    summary: go generate、Java 注解处理器、Rust build.rs 与过程宏、Python 元类与 dataclass 生成方法；生成在编译期还是运行期。
+    requires:
+    - metaprogramming.macros
+    - metaprogramming.annotations-decorators
+  - id: metaprogramming.dynamic-features
+    title: 运行时动态特性（Python）
+    summary: 猴子补丁、__getattr__、描述符、元类、eval/exec；动态带来的灵活与对工具、性能的代价。
+    requires:
+    - metaprogramming.reflection
+- id: data
+  order: 10
+  title: 字符串与数据表示
+  summary: 文本的编码、集合与切片、序列化：同样的数据在四门语言里怎样表示、有哪些陷阱。
+  children:
+  - id: data.strings-text
+    title: 字符串与文本编码
+    summary: Java UTF-16 + 代理对（以及紧凑字符串）、Go 字符串是 UTF-8 字节与 rune、Rust String/&str 保证合法 UTF-8 且不能按下标取字符、Python str 是码点序列；不可变性与拼接。
+    requires:
+    - memory.value-reference-semantics
+  - id: data.arrays-slices
+    title: 数组、切片与动态数组
+    summary: Go 数组 vs 切片（共享底层数组、append 扩容的别名陷阱）、Java 数组与 ArrayList、Rust [T; N]/&[T]/Vec<T>、Python list；扩容策略。
+    requires:
+    - memory.value-reference-semantics
+  - id: data.maps-collections
+    title: 映射与集合库
+    summary: 哈希表实现差异（开放寻址 vs 链表、Go map 随机迭代顺序、Python dict 保持插入顺序）、有序映射、集合库的广度。
+    requires:
+    - data.arrays-slices
+    - abstraction.equality-hashing
+  - id: data.serialization
+    title: 序列化
+    summary: Rust serde 的 derive、Go encoding/json + struct tag + 反射、Java Jackson 与内置序列化的安全问题、Python json/pickle（pickle 的安全风险）。
+    requires:
+    - metaprogramming.annotations-decorators
+- id: ecosystem
+  order: 11
+  title: 模块、包与工具链
+  summary: 代码怎样组织、依赖怎样解析、项目怎样构建测试：模块系统、包管理器、构建工具、兼容性策略。
+  children:
+  - id: ecosystem.modules
+    title: 模块与命名空间
+    summary: Go package 与 module、Java package 与 JPMS 模块、Rust crate 与 mod 树、Python 模块/包与导入系统（sys.path、循环导入）。
+  - id: ecosystem.package-managers
+    title: 包管理与依赖解析
+    summary: go mod 的最小版本选择（MVS）、Maven/Gradle 的最近优先、cargo 的语义化版本 + Cargo.lock、pip/uv 的解析器与虚拟环境；菱形依赖怎么处理。
+    requires:
+    - ecosystem.modules
+  - id: ecosystem.tooling
+    title: 官方工具链：格式化、静态检查与测试
+    summary: gofmt 与 go vet、rustfmt 与 clippy、Java 的 JUnit 与多家工具、Python 的 ruff/black/pytest；“一种官方风格”对团队的价值。
+    requires:
+    - ecosystem.modules
+  - id: ecosystem.compatibility
+    title: 兼容性与语言演进
+    summary: Java 极度向后兼容、Go 1 兼容承诺与 GODEBUG、Rust edition 机制、Python 2 → 3 的断裂；语言怎样在不破坏旧代码的前提下演进。
+    requires:
+    - foundations.tradeoff-axes
+- id: trends
+  order: 12
+  title: 现代语言的发展趋势
+  summary: 主流语言正在互相借鉴：模式匹配、记录类型、泛型、类型注解、轻量线程、值类型、内存安全；趋势背后的原因。
+  children:
+  - id: trends.convergence
+    title: 特性趋同
+    summary: Java 加入 record/sealed/模式匹配/var，Go 加入泛型与迭代器，Python 加入类型注解与 match；各语言在向什么收敛、为什么。
+    requires:
+    - abstraction.pattern-matching
+    - abstraction.generics
+  - id: trends.safety-push
+    title: 内存安全运动
+    summary: 内存安全漏洞占比、Rust 进入 Linux 内核与 Android、政府机构的内存安全建议、C++ 的回应（profiles、加固）。
+    requires:
+    - memory.memory-safety
+  - id: trends.expression-orientation
+    title: 表达式化
+    summary: 一切皆表达式（Rust 的 if/match/块）、Java switch 表达式、Python 条件表达式与海象运算符；为什么表达式比语句更好组合。
+    requires:
+    - abstraction.pattern-matching
+  - id: trends.value-types
+    title: 值类型与数据导向
+    summary: Java Valhalla 值类、Go/Rust 结构体天然是值、数据导向设计；为什么硬件趋势让内存布局越来越重要。
+    requires:
+    - memory.memory-layout
+  - id: trends.concurrency-evolution
+    title: 并发模型的演进
+    summary: 从线程 + 锁，到 async/await，再到虚拟线程与结构化并发；各条路线的取舍与当前共识。
+    requires:
+    - concurrency.structured-concurrency
+  - id: trends.other-languages
+    title: 其他主流语言的独到之处
+    summary: C++、C#、Kotlin、Swift、TypeScript、Zig、Haskell/OCaml 各自的一条核心思想，以及它们影响了谁。
+    requires:
+    - foundations.lineage
+- id: signatures
+  order: 13
+  title: 各语言的独到之处与陷阱
+  summary: 把前面所有比较收拢到每门语言身上：它最独特的设计、最适合的场景、最常见的陷阱，以及怎样在项目里选语言。
+  children:
+  - id: signatures.go
+    title: Go 的独到之处
+    summary: goroutine + channel、隐式接口、极简语法与快速编译、gofmt、defer、单一静态二进制；适合云原生服务与工具。
+    requires:
+    - concurrency.green-threads
+    - types.nominal-structural
+  - id: signatures.java
+    title: Java 的独到之处
+    summary: JVM 与 JIT、世界级 GC、强大的向后兼容、巨大的生态、虚拟线程；适合大型后端与长期维护的系统。
+    requires:
+    - runtime.jit
+    - memory.tracing-gc
+  - id: signatures.rust
+    title: Rust 的独到之处
+    summary: 所有权与借用、无 GC 的内存安全、零成本抽象、trait 系统、无畏并发、cargo；适合系统编程与性能关键组件。
+    requires:
+    - memory.ownership-borrowing
+    - concurrency.data-race-freedom
+  - id: signatures.python
+    title: Python 的独到之处
+    summary: 动态、可读、电池齐全、C 扩展生态（NumPy、PyTorch）、胶水语言；适合数据、科研、脚本与原型。
+    requires:
+    - runtime.cpython-internals
+    - metaprogramming.dynamic-features
+  - id: signatures.gotchas
+    title: 每门语言的经典陷阱
+    summary: Go 的 nil 接口不等于 nil 与切片别名、Java 的 Integer 缓存与 ==、Rust 与借用检查器的拉锯、Python 可变默认参数与晚绑定闭包。
+    requires:
+    - signatures.go
+    - signatures.java
+    - signatures.rust
+    - signatures.python
+  - id: signatures.choosing
+    title: 怎样为一个项目选语言
+    summary: 按延迟与吞吐、团队、生态、部署、正确性要求做决策；同一个系统里多语言并存的常见分工。
+    requires:
+    - signatures.gotchas
