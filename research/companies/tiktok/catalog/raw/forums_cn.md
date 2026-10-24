@@ -1,0 +1,555 @@
+# Chinese forums — Nowcoder (牛客) mirror and direct posts, CSDN / 掘金 / 知乎 status
+
+Collected 2026-10-24. Window 2025-10 to 2026-10-24. All reports here are **China** (字节跳动 / 抖音 / 飞书 / TikTok-shop and TikTok-international teams hiring in Beijing, Shanghai, Hangzhou, Shenzhen, Singapore teams via Chinese campus), unless the row says US. They show the same problem style as the US loops (resume deep dive, LeetCode hot-100 style coding, 八股, design prompts) but have more 八股 and more "场景题", and many are 校招 / intern (Java, Go) rather than senior.
+
+## 0. Reach and counts
+
+- Nowcoder: `POST https://gw-c.nowcoder.com/api/sparta/pc/search` (no login) listed 465 distinct posts for 11 queries (TikTok 后端 面经, 字节 后端 面经, 字节跳动 社招 后端, 字节 系统设计 面经, ...), 345 mention 字节 / TikTok / 抖音 inside the window; post bodies fetched from `https://www.nowcoder.com/feed/main/detail/<uuid>` or `/discuss/<id>` (state JSON in the page). About one third of the posts are screenshots (empty body text).
+- The GitHub mirror `wearzdk/interview-experience` holds the text of 289 ByteDance-related Nowcoder / Maimai posts for 2026-01 .. 2026-10 (see `aggregators_cn.md` section 2). The catalogue in section 3 below is built from it: 213 backend / full-stack / agent-dev reports of which 171 name an algorithm or a design prompt. Date precision is the month.
+- CSDN / 掘金 / 知乎 / 脉脉 / 小红书: WebSearch (two queries, Chinese and mixed) returned only 1point3acres tag pages and jiangren.com.au process pages; no 2026 report found there. Record: reachable by neither fetch nor search in this session; Maimai appears only through the mirror; the one Xiaohongshu note found is cited through job-compass (`xmc27l`). Not collected: confidence 0 for these platforms.
+- Content-farm warning: many Nowcoder posts from late 2026 are AI-polished ("参考解析", "思路参考", "含完整答案", "押题", emoji numbering). Posts of this kind are marked conf=low below; problem lists themselves usually come from a real candidate.
+
+## 1. Nowcoder posts read in full (TikTok / senior / US-adjacent first)
+
+Format: date | URL | role / level | round | content | conf.
+
+- 2026-10-20 | https://www.nowcoder.com/feed/main/detail/9d12c2c364474cfab591630570aa2ca1 (id 2929684) | TikTok backend intern | R2, 55 min, fail | 20 questions: hardest backend project; why microservices; failure anywhere in Nginx -> Gateway -> service -> Redis -> MySQL; QPS 10k -> 100k limit and degrade; Sentinel limiting algorithms; retry design on timeout, why not infinite; sync vs MQ; RabbitMQ no-loss at producer / broker / consumer, ack-then-crash and idempotency; Redis lock with Lua, TTL, holder exceeds TTL; ACID in InnoDB; MVCC and ReadView; RR current-read phantoms; slow-query triage; JVM regions; frequent full GC; **design a high-concurrency live-room comment system**; **implement an LRU cache**. conf medium.
+- 2026-10-13 | https://www.nowcoder.com/feed/main/detail/cacc7228647242eea82c4591d0518efa (id 2925500) | 字节 backend intern, TikTok international live base business | R1, 1 h | architecture along the request path; why 12 microservices; OpenFeign + Dubbo together; **flash-sale** (Redis stock deducted then order creation fails); RabbitMQ reliability and backlog; 10x traffic; thread pool; volatile; ConcurrentHashMap; Redis speed; cache penetration / breakdown / avalanche; B+ tree, clustered index, covering index; SQL 20 ms -> 2 s; **design a TikTok live-room like system**; coding **LC 152 Maximum Product Subarray** and **LC 200 Number of Islands**. conf medium.
+- 2026-09-28 | https://www.nowcoder.com/feed/main/detail/aa974a1093fc4f97ac8f0692bffa27a5 (id 2918696) | 国际化广告 CRM and trading platform backend | R1, 1 h | event dispatch implementation and Kafka event dispatch; concurrency; idempotency; DB consistency and locks (optimistic / pessimistic); CAP; Redis lock principle; isolation levels; LangGraph checkpoints in Redis, key design, when to persist, QPS; coding **LRU** and "why no expiry?", "how to handle a large number of expiring keys". conf medium.
+- 2026-09-14 | https://www.nowcoder.com/feed/main/detail/c3ac6a9d6e884e758cce9a7f66814560 (id 2910016) | TikTok-Shop backend (秋招) | R2 | business value / evaluation of a streamer-recommendation feature; agent platform; **how to evaluate a Q&A agent, build an eval set**; 100万 users flash-sale without oversell; Redis then what; cache penetration; Bloom filter; coding: a ring of 10 points 0-9, start at 0, count the ways to return to 0 after N steps. conf medium.
+- 2026-09-08 | https://www.nowcoder.com/feed/main/detail/7d69dfb74b0e4d90a3231a0283f8233f (id 2905763) | TikTok-Shop backend | R1, 1 h | internship, vibe-coding share, agent knowledge base, eval; coding: multiply two numeric strings (LC 43). conf medium.
+- 2026-09-10 | https://www.nowcoder.com/discuss/927660076272291840 | TikTok backend intern (agent-leaning JD) | R1, 1 h, passed within one hour | project: super-long video handling, dedup of similar imports, eval metrics, why Celery, task dispatch, worker crash, retry limit; 八股: virtual memory, page fault, bubble sort proof; coding: output the first 10,000 primes (sieve). conf high.
+- 2026-04-14 | https://www.nowcoder.com/feed/main/detail/a0b4057bbf0543f8afa65d9de0114ecd (id 2830757) | TikTok backend (AI-research flavour) | R2 | expression-tree implementation with add / sub / mul / div / power / factorial, "can they be merged"; transformer vs LSTM, traffic analysis, A2A and MCP protocols, trusted agent communication, HTTPS, OAuth. conf medium.
+- 2026-04-07 | https://www.nowcoder.com/feed/main/detail/1db526a9945d488382c2d41fcc824bc4 (id 2829767) | TikTok backend | R1 | internship log optimisation (P99 / P50, async log write completion, power loss); file write / read path; coding **LC 73 Set Matrix Zeroes**. conf medium.
+- 2026-04-13 | https://www.nowcoder.com/feed/main/detail/357e4ee0dce94aca9daea2a8a2ad31af (id 2834024) and 2026-09-17 id 2912729 (identical text, 中国交易与广告) | backend | R1 | streaming chat, why RabbitMQ for chat persistence, table design, B+ tree non-leaf nodes, isolation levels, phantom read example, gap locks, composite index (user_id, status, created_at); coding **LC 200** + optimisation idea. conf medium.
+- 2025-10-16 | https://www.nowcoder.com/feed/main/detail/a9335171ddcf4963b23dee7589c8d494 (id 2717683) | TikTok backend intern | R1 | JWT risks, TLS handshake, SQL injection at API layer, TCP vs UDP for TikTok features, slow video loading in a region, HTTP 1/2/3, protocol for million-viewer live (WebSocket / RTMP / QUIC); coding: find first character satisfying a rule. conf medium (pre-window by days).
+- 2025-10-12 | https://www.nowcoder.com/feed/main/detail/ac610f9de4664fb3aa8fb66e88c2d5a0 (id 2713354) | TikTok backend (LLM-leaning) | - | coding **LC 1143** and "longest substring"; 八股 on sqrt(d_k), DPO loss, PPO critic, multi-head attention, clustering. conf low.
+- 2025-10-13 | https://www.nowcoder.com/discuss/807594637094318080 | 字节社招, internet-finance credit backend (Go) | R1, 15 min | project difficulties, order timeout handling, preventing duplicate MQ consumption. conf medium (senior-ish, light).
+- 2026-04-15 | https://www.nowcoder.com/discuss/874305509954764800 | "抖音亿级评论系统" | claimed 2026-04 二面 / 三面 question | **design Douyin's comment system**: single video with millions of comments, hot ranking with time ordering, P99 < 100 ms; the poster's answer: shard by video_id, hot_score = log10(2*likes + replies) + decay, Redis ZSET, local cache TTL 10 s, MQ-based recomputation, cursor paging instead of LIMIT offset. The post is a 押题 / content-farm style article with a "命中率 85%" prediction. conf low.
+- 2026-08-24 / 2026-08-24 | https://www.nowcoder.com/discuss/920379874269794304 and https://www.nowcoder.com/discuss/921465359255752704 | 3-year-experience Java 社招 offers after 4 rounds | problems listed in `aggregators_cn.md` section 2. Template style (conf low).
+
+## 2. Frequency table (Chinese ByteDance backend reports, window 2026-01 .. 2026-10, from the mirror; counts = number of reports among the 213 with that item in the problem list; one candidate often reports several)
+
+Coding / hand-written: LRU (18), longest substring without repeating characters (15), island count and variants (8 with 岛屿 plus LC 130, 694-style), binary-tree level / zigzag order (8), rate limiter by token bucket or sliding window (10, usually asked as "hand-write" or as principle), reverse nodes in k-group (6), stock buy-sell family (6), longest palindrome substring (6), Top K / kth largest (6), reverse linked list (4), LCA (3), subtree check (3), 3Sum (2), longest increasing subsequence (2), trapping rain water (1), merge K lists (2 in the mirror, 1 in the PDF compilation), merge intervals (3), basic calculator (LC 224 once, LC 227 in mirrors), Multiply Strings / big-number multiplication (LC 43 in job-compass NG-1, TikTok-Shop R1, PDF TT-026 / 081; hex big-number multiply in 2 mirror reports), next permutation (1, Nowcoder 2912483), Trie (3), Course Schedule path variant (1), singleflight (1), KV serializer (US).
+
+System design / scenario prompts, counts across the 213: Redis distributed lock (35 mentions: set-nx + Lua, watchdog, RedLock, ZooKeeper, MySQL-only lock, lock on failover), flash sale / seckill (15; with "oversell", "one order per user", Lua), live like / comment / barrage (9 plus 3 TikTok-labelled), short link (4), red packet (2: `bytedance-backend-third-round-2916924` "抢红包系统设计", mirror 18 "设计一个抢红包系统"), IM / chat (2 for 10M DAU, plus 500-person group notification in PDF), Feed with big-V (1), follow / fan system at hundred-million scale (2), leaderboard on ZSET (4), ticketing "100k people for 1000 seats with priority to long-distance riders" (1), idempotency and distributed transactions (TCC, SAGA, local message table; 6), deep paging (3), hot-key / big-key (4), global ID (3), file storage with no loss (2), agent-specific designs (memory, context compression, harness, sub-agent depth limits, evaluation; dozens).
+
+Senior-level prompts (3+ years, 社招) seen: distributed cache with range queries; Redis-based distributed rate limiter; IM for 10M DAU; flash sale; short link; e-commerce big-promotion platform for 100M traffic; full-link load-test platform; serverless function platform with millions of concurrent calls; multi-model inference platform; AIGC content moderation; payment system QPS estimation ("日交易额多少, QPS 多少, 怎么估算"); "线上事故 / P0 incident"; "QPS 暴涨 10 倍 how do you diagnose and scale".
+
+## 3. Per-report catalogue from the mirror (backend / full-stack / agent-dev; only reports that name an algorithm or a design prompt)
+
+Format: date (month) | position | round | result | title | Nowcoder URL (if the mirror records one) | mirror URL | confidence, then the algorithm items and the design / scenario items as they appear in the problem list. conf=low means the post carries the AI-rewrite template or "含完整答案"; the rest conf=medium (poster's own list, AI-written analysis ignored).
+
+- 2026-05 | AI算法工程师 | 二面 | 凉经 | 字节后端二面 | (no source URL) | mirror https://mj.mianlingai.com/interview/ai-2849957 | conf=medium
+  - algo: 30面的，五一后问hr进展，结果是挂了。这次被狠狠拷打了而且手撕完全做不出来，不知道是交叉面还是更高职级的面 ; 手撕1：十六进制转换 ; 手撕2：手写一个限流器。这里我说了一下我可以使用滑动窗口来写，面试官问我知不知道令牌桶，我吟唱了一下令牌桶八股，他让我用令牌桶做，我说我不会写令牌桶代码，他非得让我用令牌桶😠后续也是没撕出来，面试官让回去好好看看令牌桶算法的代码
+  - design/scenario: -
+- 2026-06 | AI算法工程师 | 一面 | OC | 小红书PE后端二面 | (no source URL) | mirror https://mj.mianlingai.com/interview/ai-2860170 | conf=medium
+  - algo: 算法：求一个数组中除了自己其余所有数的乘积（好简单的题，边界条件没处理好写了25分钟😭） ; 觉得我有哪些可以提升的？（AI Coding 需要看看；Agent 开发要多去了解业界的方案，多思考；多刷算法题
+  - design/scenario: -
+- 2026-06 | AI算法工程师 | 一面 | OC | 字节后端一面 嗯问八股 有没有大佬评估下难度 | (no source URL) | mirror https://mj.mianlingai.com/interview/ai-2865975 | conf=medium
+  - algo: -
+  - design/scenario: 如果让你设计消息分片的哈希映射规则，你会怎么设计？ ; 两条完全一样的重复消息同时分发到两台Pod，业务不允许重复消费，你会怎么设计代码保证幂等？ ; 你方案里用到Redis分布式锁，锁的过期时间设置多久？1万QPS场景下该如何设计这把锁？
+- 2026-03 | 后端开发 | 一面 | 挂 | 字节跳动后端开发一面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/byte-backend-first-round-2808700 | conf=medium
+  - algo: 【算法题】：无重复字符的最长子串
+  - design/scenario: **三次握手四次挥手**：三次握手确保双方收发能力正常；四次挥手是因为TCP是全双工的，关闭连接需双方各自确认，TIME_WAIT状态是为了保证最后一个ACK到达并处理旧连接数据包。
+- 2026-09 | 广告平台 | 二面 |  | 字节广告平台二面面经 | https://www.nowcoder.com/discuss/927161142194049024 | mirror https://mj.mianlingai.com/interview/byte-dance-ad-platform-927161142194049024 | conf=medium
+  - algo: -
+  - design/scenario: 在海量流量和百万级广告量场景下，如何设计内存占用小、查询效率高的数据结构或架构，避免用户频繁刷到看过的广告？
+- 2026-03 | 后端开发工程师 | 一面 |  | 字节跳动暑期后端开发一面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/byte-dance-backend-first-round-2815079 | conf=medium
+  - algo: SQL 手撕：有一张成绩表（包含字段：学生姓名、课程名、分数），请查出所有选修课程分数都大于80分的学生姓名。 ; 手撕：实现一个栈，包含最基本的 push、pop、top 方法，要求这三个方法的时间复杂度都是 O(1)；同时包含一个获取当前栈中最大元素的方法 getMax，时间复杂度也严格要求为 O(1)。
+  - design/scenario: 场景题：如果把所有用户的下单ID存入一个优惠券的 Set 中，会导致“大Key”问题。大Key会给系统性能带来什么影响？如何解决或规避大Key问题？
+- 2026-09 | 广告后端 | 一面 |  | 字节跳动 广告后端 一面：RPM/TPM、Agent 记忆与括号生成 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-advertising-backend-2929192 | conf=medium
+  - algo: 代码题：LeetCode 22《括号生成》，先说解题思路。
+  - design/scenario: -
+- 2026-10 | Agent 算法 | 一面、二面 |  | 字节跳动 Agent 算法 一面二面：RAG、记忆分层与上下文压缩 | https://www.nowcoder.com/discuss/941992971027636224 | mirror https://mj.mianlingai.com/interview/bytedance-agent-algorithm-941992971027636224 | conf=medium
+  - algo: -
+  - design/scenario: 让 AI 参与性能测试时，你怎样设计 Prompt 和验证方案？
+- 2026-09 | Agent开发 | 一面 |  | 字节 Agent 开发后端日常实习一面：RAG 检索与评测深挖 | https://www.nowcoder.com/discuss/932295617999622144 | mirror https://mj.mianlingai.com/interview/bytedance-agent-dev-first-round-932295617999622144 | conf=medium
+  - algo: 手撕算法：一道偏简单的贪心题。
+  - design/scenario: -
+- 2026-10 | Agent 开发 | None |  | 字节跳动 Agent 开发面试：Harness 设计、上下文管理与长任务排查 | https://www.nowcoder.com/discuss/938913714646929408 | mirror https://mj.mianlingai.com/interview/bytedance-agent-development-938913714646929408 | conf=medium
+  - algo: 手撕
+  - design/scenario: 你们 Agent 项目的整体架构是怎么设计的？ ; 工具调用参数错误、超时、重试怎么设计？
+- 2026-10 | Agent 研发 | 一面 |  | 10.13 字节跳动 Agent 研发一面：SSE 取舍、编排范式与长期记忆 | https://www.nowcoder.com/feed/main/detail/0b91e9f5fbba4af4865c6fadc9a790e8 | mirror https://mj.mianlingai.com/interview/bytedance-agent-development-first-round-2925904 | conf=medium
+  - algo: 手撕 LRU。
+  - design/scenario: 实习经历的后端架构是如何设计的？状态机是如何设计的？ ; 如何确保数据库与缓存的一致性？读写操作如何设计？
+- 2026-10 | Agent 开发 | 一面 |  | 字节跳动 Agent 开发一面：Harness 没答上来，居然还能过？ | https://www.nowcoder.com/discuss/938539037059567616 | mirror https://mj.mianlingai.com/interview/bytedance-agent-development-first-round-938539037059567616 | conf=medium
+  - algo: 手撕：合并嵌套 JSON。给定两个嵌套结构 JSON，实现合并函数；规则是字典递归合并相同 key、仅在一个字典中的 key 直接保留、列表拼接。
+  - design/scenario: 你们 Agent 项目的整体架构是怎么设计的？ ; 工具调用参数错误、超时、重试怎么设计？
+- 2026-10 | Agent开发 | 一面 |  | 字节跳动 AI Agent 开发一面：90 分钟共享屏幕看代码 | https://www.nowcoder.com/discuss/939623386806751232 | mirror https://mj.mianlingai.com/interview/bytedance-agent-development-first-round-939623386806751232 | conf=medium
+  - algo: 手撕：给定两个嵌套结构的 JSON 数据，实现合并函数。规则是键值对递归合并相同 key，仅在一个字典中的 key 直接保留，列表拼接。追问：如果 Key 冲突且类型不同怎么办？如果嵌套深度超过 1 万层怎么办？
+  - design/scenario: 你怎么保证 Agent 生成代码的安全性？有没有在沙箱里执行？沙箱怎么设计的？ ; 如果 Agent 有 100 个工具，接口数量太多，你怎么管理？工具注册中心怎么设计的？ ; 如果这个 Agent 要支持每天 10 万次请求，平均每个任务调用 5 个工具，每次工具调用 200ms，大模型推理 800ms，你需要多少并发资源？怎么设计调度？
+- 2026-09 | Agent应用开发 | 一面 | 已挂 | 字节Agent一面凉经：手撕买卖股票与Redis令牌桶 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-agent-first-round-2913828 | conf=medium
+  - algo: 手撕：买卖股票的最佳时机（力扣原题）。第一问没有交易次数上限；第二问最多交易两次；第三问最多交易 n 次。前两问写实现，第三问说思路。
+  - design/scenario: -
+- 2026-10 | Agent开发实习生 | 一面 | 通过 | 字节跳动 Agent 开发日常实习一面面经 | https://www.nowcoder.com/feed/main/detail/0ee160a2d38f4b5daaf1965cf975a8f0 | mirror https://mj.mianlingai.com/interview/bytedance-agent-first-round-2929450 | conf=medium
+  - algo: 手撕：删除链表倒数第 N 个节点（ACM 模式）。
+  - design/scenario: -
+- 2026-09 | Agent 开发工程师 | 一面 |  | 字节一面 Agent 岗：ReAct、幂等与上下文压缩连环追问 | https://www.nowcoder.com/discuss/931893943342465024 | mirror https://mj.mianlingai.com/interview/bytedance-agent-first-round-931893943342465024 | conf=medium
+  - algo: 手撕：合并嵌套 JSON。给定两个嵌套结构的 JSON 数据，实现合并函数；规则是相同 key 递归合并、仅在一个字典中的 key 直接保留、列表拼接；要求处理 key 冲突且类型不同的情况，写出完整代码并分析时间复杂度。
+  - design/scenario: 幂等怎么设计？幂等 key 怎么生成？为什么不让大模型自己生成 key？ ; 如果模型输出 JSON 格式不稳定，怎么校验？Schema 怎么设计？
+- 2026-09 | Agent 开发 | 一面+二面 |  | 字节跳动广告 Agent 一二面：skill 平台与秒杀设计 | https://www.nowcoder.com/discuss/930870582843805696 | mirror https://mj.mianlingai.com/interview/bytedance-agent-first-second-round-930870582843805696 | conf=medium
+  - algo: 算法题：找出最长的回文串 ; （二面）算法题：给定一组个位数集 {2,4,9} 和一个 int 数字 num，找到可以用集合组成的比 num 小的最大数字
+  - design/scenario: 设计题：如何设计一个内部 skill 平台，包含 skill 的上传、下载、发布；本地 runtime 的设计 ; （二面）设计题：设计营销会场秒杀系统
+- 2026-10 | Agent 全栈开发 | 一面 |  | 字节 Agent 全栈一面：动态 UI 渲染、MCP 与 Skill 治理 | https://www.nowcoder.com/feed/main/detail/3d554c6d99e74b93a673fa9c39e9d113 | mirror https://mj.mianlingai.com/interview/bytedance-agent-fullstack-first-round-3d554c6d99e74b93a673fa9c39e9d113 | conf=medium
+  - algo: -
+  - design/scenario: 组件是动态生成的，动态生成时怎么绑定某一个按钮去请求后端的哪个接口？这个方案是怎么设计的？
+- 2026-10 | Agent 开发 | 一面+二面+三面 | 三面后无 HC | 字节 Agent 全三轮面经：重构、上下文压缩与 Computer Use | https://www.nowcoder.com/feed/main/detail/b4fb3bee56134c3d9bcde6a3166a1711 | mirror https://mj.mianlingai.com/interview/bytedance-agent-three-rounds-2928138 | conf=medium
+  - algo: 算法：判断 a 树是不是 b 树的子结构。 ; 算法：用 random5 实现 random7。 ; 算法：将一组正整数重新排列，拼接成最大的整数（LeetCode 179）。
+  - design/scenario: -
+- 2026-10 | AI Agent开发 | 二面 |  | 字节跳动 AI Agent 开发二面面经 | https://www.nowcoder.com/discuss/938174888861253632 | mirror https://mj.mianlingai.com/interview/bytedance-ai-agent-938174888861253632 | conf=medium
+  - algo: 手撕 ; 【手撕】给一串工具调用的日志，统计每个工具的成功率，并找出失败次数最多的那个工具名。要求时间复杂度尽量低。
+  - design/scenario: 给对话 Agent 加长期记忆，你打算怎么设计存储和读取？
+- 2026-10 | AI Agent开发 | 面试合集 |  | 字节面经-字节跳动AI Agent开发岗面经-08 | https://www.nowcoder.com/discuss/940040254214389760 | mirror https://mj.mianlingai.com/interview/bytedance-ai-agent-940040254214389760 | conf=medium
+  - algo: 算法题：有效的括号，先讲解思路，再实现代码。 ; 手撕算法：一道偏简单的贪心题。 ; 手撕二叉树的右视图。 ; 手撕前缀树。
+  - design/scenario: 当前 Agent 在本地运行，如果迁移到云端或服务器，整体架构应该如何设计？
+- 2026-10 | AI Agent开发 | 面试合集 |  | 字节跳动 AI Agent 开发面经合集：动态 UI 渲染、MCP 与 Skill 设计 | https://www.nowcoder.com/discuss/940390952902914048 | mirror https://mj.mianlingai.com/interview/bytedance-ai-agent-development-07-940390952902914048 | conf=medium
+  - algo: 手撕：求字符串 s 到其子序列 t 的实现（删除操作）种类数量，提示用动态规划做。
+  - design/scenario: 这个 DDS 是怎么设计的？ ; 我是想了解这个事情，你这个方案是怎么设计的？
+- 2026-10 | AI Agent 开发 | 一面 |  | 字节跳动 AI Agent 开发一面：RAG 排查、Tool 编排与后端基础 | https://www.nowcoder.com/feed/main/detail/9cd459d87a754e07a490ba7f1c03b495 | mirror https://mj.mianlingai.com/interview/bytedance-ai-agent-development-first-round-2927700 | conf=medium
+  - algo: 算法题：二叉树的层序遍历，请讲解思路并手写代码。
+  - design/scenario: 如果一个 Agent 需要调用多个 Tool，你会怎么设计？
+- 2026-10 | AI Agent 开发（质量方向） | 一面 |  | 字节 AI Agent 开发（质量方向）一面：LLM Judge 与手撕接雨水 | https://www.nowcoder.com/feed/main/detail/57326acc86fb4f72a21d09e1410e5121 | mirror https://mj.mianlingai.com/interview/bytedance-ai-agent-first-round-2925994 | conf=medium
+  - algo: 手撕：接雨水。
+  - design/scenario: -
+- 2026-09 | Agent开发 | 一面 |  | 字节AI Agent开发一面：三层编排、上下文隔离与GRPO | https://www.nowcoder.com/discuss/932407145864130560 | mirror https://mj.mianlingai.com/interview/bytedance-ai-agent-first-round-932407145864130560 | conf=medium
+  - algo: 手撕：把两个多层嵌套的 JSON 做深度合并，key 冲突且类型不同怎么办？
+  - design/scenario: -
+- 2026-10 | AI Agent全栈开发 | 一面 |  | 字节跳动 AI Agent 全栈开发面经 | https://www.nowcoder.com/feed/main/detail/88e22e99028942bcbac1ed57395f2e60 | mirror https://mj.mianlingai.com/interview/bytedance-ai-agent-fullstack-2929568 | conf=medium
+  - algo: 手撕：使用快慢指针判断链表是否有环。 ; 手撕：设计带有统一过期时长 TTL 的 LRU Cache。
+  - design/scenario: 如果想解决 Hooks 无法在循环和条件分支中使用的问题，应该如何设计？
+- 2026-10 | AI 应用开发 | 一面 |  | 字节 AI 应用开发一面：Spring 代理、反射可见性与幻读 | https://www.nowcoder.com/feed/main/detail/f6c15b4049da496a8214a1234a2045ed | mirror https://mj.mianlingai.com/interview/bytedance-ai-application-2930609 | conf=medium
+  - algo: 编程题：将二进制字符串变为单调递增所需的最小翻转次数，先讲解题思路。
+  - design/scenario: -
+- 2026-10 | AI 应用开发 | 二面 |  | 字节 AI 应用开发二面：Plan+Execute、显存与三数之和 | https://www.nowcoder.com/feed/main/detail/c1fbd2d203714b129e4e09736be5006a | mirror https://mj.mianlingai.com/interview/bytedance-ai-application-2930690 | conf=medium
+  - algo: 手撕：三数之和。
+  - design/scenario: -
+- 2026-09 | AI应用工程师 | 一面 |  | 字节 AI 应用工程师一面：数据分析 Agent 设计与 Go 并发 | https://www.nowcoder.com/discuss/933023499399024640 | mirror https://mj.mianlingai.com/interview/bytedance-ai-application-engineer-933023499399024640 | conf=medium
+  - algo: -
+  - design/scenario: 假设让你做一个数据分析 Agent，老板经常问"为什么今天这个数据异常 / 标高了"，你会怎么设计？ ; Memory 你会怎么设计？ ; 需要几个 Agent？架构怎么设计？
+- 2026-10 | AI应用开发实习 | 一面 |  | 字节跳动 AI应用开发实习 一面：Agent Loop 的失败恢复与长期记忆 | https://www.nowcoder.com/discuss/942482966234648576 | mirror https://mj.mianlingai.com/interview/bytedance-ai-application-intern-942482966234648576 | conf=medium
+  - algo: -
+  - design/scenario: 如果长期记忆已经有上百万条，召回链路你会怎么设计？
+- 2026-09 | AI后端开发 | 二面 |  | 字节 AI 后端秋招二面：Redis、RAG 与预约系统设计 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-ai-backend-2913011 | conf=medium
+  - algo: -
+  - design/scenario: 大规模直播开播预约功能应如何设计？ ; 配置变更追溯方案如何设计和实现？
+- 2026-04 | AI 后端开发 | 一面 |  | 字节跳动 AI 后端开发日常实习一面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-ai-backend-first-round-2827960 | conf=medium
+  - algo: 手撕代码：返回最长回文子串
+  - design/scenario: -
+- 2026-04 | AI后端暑期实习 | 一面 |  | 字节跳动 AI后端暑期实习一面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-ai-backend-first-round-2830306 | conf=medium
+  - algo: 算法题：打家劫舍变种。
+  - design/scenario: -
+- 2026-04 | AI后端开发 | 一面 |  | 字节TikTok AI后端开发一面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-ai-backend-first-round-2830567 | conf=medium
+  - algo: 手撕代码：LC 224. 基本计算器 (Hard) ; **LC 224基本计算器**：经典栈应用题。核心思路是利用栈保存括号优先级，通过符号位（+/-）处理数字，遇到左括号递归处理或入栈，遇到右括号出栈计算结果。
+  - design/scenario: -
+- 2026-04 | AI后端开发 | 一面 |  | 字节跳动AI后端开发日常实习一面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-ai-backend-first-round-2833665 | conf=medium
+  - algo: 三、手撕代码 ; - LeetCode 667：优美的排列Ⅱ
+  - design/scenario: - 结合业务讲讲秒杀功能实现。
+- 2026-04 | AI后端开发 | 一面 |  | 字节跳动AI后端开发春招一面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-ai-backend-interview-1-2827917 | conf=medium
+  - algo: 手撕算法：二叉树路径和
+  - design/scenario: -
+- 2026-09 | AI应用开发 | 笔试 |  | AI Coding 笔试拿 offer 的三个心法 | https://www.nowcoder.com/discuss/931251527124021248 | mirror https://mj.mianlingai.com/interview/bytedance-ai-coding-written-test-tips-931251527124021248 | conf=medium
+  - algo: 技巧二：让 AI 自测，你当裁判**。写完代码后让 AI 自己生成测试用例和边界 case，你的角色从「写代码」变成「review 代码」——判断逻辑是否合理、有没有遗漏边界情况。这一招在面试里特别好用，因为面试官真正想看的是你的思考过程，而不是手撕代码的速度
+  - design/scenario: -
+- 2026-10 | AI 全栈开发 | 二面 |  | 字节跳动 AI 全栈二面：AQS 原理、MySQL 索引选择与 Agent 设计 | https://www.nowcoder.com/discuss/938145178114592768 | mirror https://mj.mianlingai.com/interview/bytedance-ai-full-stack-second-round-938145178114592768 | conf=medium
+  - algo: 手撕：给定一棵二叉树，返回它的之字形层序遍历结果（第一层从左到右，下一层从右到左，交替进行），并说明思路、构造测试用例验证结果。
+  - design/scenario: **架构与系统设计**
+- 2026-09 | AI全栈开发 | 一面 |  | 字节中交广 AI 全栈开发一面：AI Pipeline、Doris 优化与实时轮播场景 | https://www.nowcoder.com/discuss/932587389027962880 | mirror https://mj.mianlingai.com/interview/bytedance-ai-fullstack-932587389027962880 | conf=medium
+  - algo: 手撕：一道两张表的 SQL，讲一下你的思路；如果要给这两张表加索引，你会怎么设计？
+  - design/scenario: 场景题：现在有一个场景，对几十亿的数据进行筛选过滤，加了索引之后效果还是不好，这个时候你会怎么优化这条链路？（底表可能上千亿，加索引查出来还有几亿条） ; 场景题：医院排队取药屏上会轮播患者名字。现在要做一个 PC 页面实现类似的轮播通知，信息是用户维度的、不同用户之间隔离。后端通过实时数仓的 MQ 每秒推送消息，后端消费后给到前端，前端轮播展示最近 20 条。让你设计实现，你会怎么考虑？
+- 2026-10 | AI 全栈 | 二面 | 挂 | 字节 AI 全栈二面：八股一点都不问，全程项目 + AI 工具 | https://www.nowcoder.com/discuss/938540581574164480 | mirror https://mj.mianlingai.com/interview/bytedance-ai-fullstack-938540581574164480 | conf=medium
+  - algo: 手撕：反转链表。追问：线程池怎么配置？从技术层面讲，不要从业务层面讲。
+  - design/scenario: 你这个 Agent 平台怎么用？API 调用还是 IM 接入？ ; 系统设计：智能文档审阅 Agent，风险标注、修改建议怎么做？ ; 工具调用链路怎么设计？
+- 2026-10 | AI 全栈开发 | 一面 |  | 字节 AI 全栈一面：Agent 资金流转、幂等与消息队列 ACK | https://www.nowcoder.com/discuss/942897472391684096 | mirror https://mj.mianlingai.com/interview/bytedance-ai-fullstack-942897472391684096 | conf=medium
+  - algo: 手撕：数组中出现概率最大的前 k 个值。
+  - design/scenario: 场景题：Agent 里的资金流转怎么设计？ ; 幂等键是怎么设计的？ ; Redis 的 key 是怎么设计的？ ; 场景题：多级缓存、缓存一致性、并发冲突。
+- 2026-10 | AI 全栈（业务中台） | 一面 |  | 字节业务中台 AI 全栈实习一面：Agent 八股、网络优化与 LRU 手撕 | https://www.nowcoder.com/feed/main/detail/6ac5ba31705a4b64a407b087f39d5447 | mirror https://mj.mianlingai.com/interview/bytedance-ai-fullstack-first-round-2925092 | conf=medium
+  - algo: 手撕：经典 LRU 缓存（5–7 分钟）
+  - design/scenario: -
+- 2026-10 | AI 全栈开发 | 一面 |  | 字节跳动 AI全栈开发 一面 | https://www.nowcoder.com/feed/main/detail/44fe5b6c59ad45fb86c2ace9472085a2 | mirror https://mj.mianlingai.com/interview/bytedance-ai-fullstack-first-round-2925463 | conf=medium
+  - algo: 手撕 ; 手撕：求字符串 s 到其子序列 t 的实现（删除操作）种类数量，提示用动态规划。
+  - design/scenario: 这个 DDS 是怎么设计的？
+- 2026-10 | AI 全栈开发（实习） | 一面 |  | 字节跳动 AI 全栈实习一面（中国交易与广告）：多 Agent 编排与 Redis 定位 | https://www.nowcoder.com/feed/main/detail/27b05099955e43d5a6a66013a2dea2c6 | mirror https://mj.mianlingai.com/interview/bytedance-ai-fullstack-intern-first-round-2926169 | conf=medium
+  - algo: 手撕：合并重复区间。
+  - design/scenario: -
+- 2026-06 | AI平台后端 | 三轮技术面+HR面 | OC | 字节跳动 AI 平台社招三轮技术面面经 | https://www.nowcoder.com/discuss/924248590447280128 | mirror https://mj.mianlingai.com/interview/bytedance-ai-platform-924248590447280128 | conf=low
+  - algo: 4️⃣ 手撕：实现一个支持动态批处理的请求队列（伪代码即可）
+  - design/scenario: 1️⃣ 系统设计：设计一个支持多模型混合部署的AI推理平台 ; 1️⃣ 系统设计：设计一个AIGC内容审核系统
+- 2026-09 | 未透露 | 一面 | 已挂 | 字节秋招一面：全程聊实习经历，面完很快收到感谢信 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-autumn-first-round-2916894 | conf=medium
+  - algo: 全程围绕实习经历展开追问（本场没有八股，也没有手撕环节）。
+  - design/scenario: -
+- 2026-08 | Java后端开发工程师 | None |  | 字节 8.19 后端开发秋招一面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-2893528 | conf=medium
+  - algo: -
+  - design/scenario: 问了我cr agent怎么设计的，然后出现问题怎么收敛的，我这个怎么保证断点可续的，我统统回答了出来，因为这个东西我自己设计的
+- 2026-08 | Java后端开发工程师 | None |  | 字节跳动 后端开发 日常实习一面 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-2896479 | conf=medium
+  - algo: -
+  - design/scenario: 秒杀模块，Lua脚本实现秒杀一人一单原理？
+- 2026-09 | 后端开发 | 一面 |  | 字节跳动后端开发一面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-2900376 | conf=medium
+  - algo: -
+  - design/scenario: 如何设计十万人抢一千个座位且优先分配给长途乘客的购票系统？
+- 2026-08 | 后端开发 | 一面 |  | 字节交易后端一面：流式 Top K 与懒加载单例 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-2912481 | conf=medium
+  - algo: -
+  - design/scenario: 项目里的提示词是怎样设计出来的？ ; 数据持续到达时，怎样设计一个维护状态的 Top K 接口？
+- 2026-09 | 后端开发 | 一面 |  | 字节跳动后端一面面经（Agent 与 MCP 方向） | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-2915895 | conf=medium
+  - algo: 手撕（共 20 分钟）
+  - design/scenario: -
+- 2026-09 | 后端开发 | 一面 |  | 字节跳动后端一面：Agent 项目、代码审查与客服系统设计 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-2916619 | conf=medium
+  - algo: 算法题：岛屿数量。
+  - design/scenario: -
+- 2026-09 | 后端研发工程师 | 一面 |  | 字节跳动 后端研发工程师一面面经：事件分发、幂等、一致性与 Redis | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-2918696 | conf=medium
+  - algo: 算法：
+  - design/scenario: Redis key 怎么设计的？
+- 2026-09 | 后端开发 | 一面 |  | 字节业务中台一面：八股盛宴，从线程池参数到 Redis 底层 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-2918983 | conf=medium
+  - algo: 手撕：前 K 个高频元素
+  - design/scenario: -
+- 2026-10 | 后端开发工程师 | 一面 |  | 字节后端一面凉经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-2920943 | conf=medium
+  - algo: 手撕算法：力扣 253 会议室 II。
+  - design/scenario: 设计一个通用的熔断 / 降级策略：什么时候继续重试，什么时候快速失败？
+- 2026-10 | 后端开发 | 三面 |  | 字节跳动社招后端三面：链表倒数第 K 个节点与项目深挖 | https://www.nowcoder.com/feed/main/detail/42958ed0ee4443c2aec8e5018c75bbcc | mirror https://mj.mianlingai.com/interview/bytedance-backend-2929706 | conf=medium
+  - algo: 算法题：返回链表的倒数第 K 个节点。
+  - design/scenario: -
+- 2026-10 | 后端开发 | 一面 |  | 字节后端一面：布隆过滤器、幂等设计、Redis 持久化与 RAG 评估 | https://www.nowcoder.com/feed/main/detail/0dbcd0be172642ac8053d2045743878c | mirror https://mj.mianlingai.com/interview/bytedance-backend-2931375 | conf=medium
+  - algo: -
+  - design/scenario: AI 调用很慢，应该如何设计线程池？
+- 2026-09 | 后端开发 | 二面 |  | 字节后端二面：Agent 优化、ReAct 伪代码与四道手撕 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-2nd-2922272 | conf=medium
+  - algo: 手撕四题 ; 手撕 ReAct 伪代码，并讲清思路 ; 手撕：找到第 n 个素数
+  - design/scenario: -
+- 2026-08 | Java后端开发工程师 | None |  | 字节 后端开发 中国交易与广告 秋招 一面 1h23min | https://www.nowcoder.com/discuss/920033557844688896 | mirror https://mj.mianlingai.com/interview/bytedance-backend-920033557844688896 | conf=medium
+  - algo: 脑筋急转弯: 9个球有一个有重量缺陷(偏重或偏轻)如何在三次称量中找出存在问题的算法题:1: m的n次方计算 要求o(logn)时间复杂度2:找出循环链表的入口 空间复杂度o(
+  - design/scenario: 场景题: 数据库召回场景下，广告尤其是属性特别多，甚至成百上千万量级。我用什么数据结构可以做到快速召回符合要求的广告。比如not in(a,b,c)in(d,e
+- 2026-08 | Java后端开发工程师 | None |  | 字节面经-字节跳动后端开发岗面经-02 | https://www.nowcoder.com/discuss/922661003731406848 | mirror https://mj.mianlingai.com/interview/bytedance-backend-922661003731406848 | conf=medium
+  - algo: 手撕：寻找数组第k大元素
+  - design/scenario: 这些系统设计都是你独立完成的吗？
+- 2026-08 | Java后端开发工程师 | None |  | 字节面经-字节跳动后端开发岗面经-03 | https://www.nowcoder.com/discuss/922661579517108224 | mirror https://mj.mianlingai.com/interview/bytedance-backend-922661579517108224 | conf=medium
+  - algo: 手撕：最长无重复子串，要求输出所有不重复的最长子串和最大长度（a 了） ; 手撕LRU，限时20分钟完成
+  - design/scenario: 【场景题】短链接系统设计：如果让你设计一个短链接系统，用户可以输入长链接生成短链接，别人访问短链接后跳转到原长链接，你会如何设计整体流程？ ; sharpa robtics一面：拷打场景题主要是关于最终一致性的，订单服务和库存服务怎么保持最终一致性？ ; 场景题：如果把所有用户的下单ID存入一个优惠券的 Set 中，会导致“大Key”问题。大Key会给系统性能带来什么影响？ ; 请给我介绍一下deepagents的设计的框架，也可以在白板上面画一下他的大概架构图，作为一个系统设计。那最近的agent swarm有了解么，是什么呢？
+- 2026-08 | Java后端开发工程师 | None |  | 字节面经-字节跳动后端开发岗面经-04 | https://www.nowcoder.com/discuss/922662144535994368 | mirror https://mj.mianlingai.com/interview/bytedance-backend-922662144535994368 | conf=medium
+  - algo: 主要拷打项目设计和相关场景题，没怎么问实习，八股问了一点点，没有手撕环节，不知道能不能过 ; 手撕：给出两个二叉树A,B，判断B是否是A的子结构，规定空节点不是任何树的子结构
+  - design/scenario: DSL是怎么设计的? ; 系统设计：设计一个秒杀系统，流量估算，Redis方案，数据库怎么处理超卖。
+- 2026-08 | Java后端开发工程师 | None |  | 字节面经-字节跳动后端开发岗面经-05 | https://www.nowcoder.com/discuss/922662654697537536 | mirror https://mj.mianlingai.com/interview/bytedance-backend-922662654697537536 | conf=medium
+  - algo: 手撕，没什么好说的，秒了。。最后纠结了一会输出，发现我写的是对的。
+  - design/scenario: 那针对用户查询自己名下所有设备的全量查询场景，如果用Redis缓存解决，缓存该怎么设计？
+- 2026-08 | Java后端开发工程师 | None |  | 字节面经-字节跳动后端开发岗面经-06 | https://www.nowcoder.com/discuss/922663186854092800 | mirror https://mj.mianlingai.com/interview/bytedance-backend-922663186854092800 | conf=medium
+  - algo: 手撕：寻找数组第k大元素 ; 手撕：股票买卖，只买卖一次和买卖多次 ; 手撕 一个环有10个点0-9，0开始出发，每步顺时针或逆时针走一个点，求经过n步回到0点有多少种不同走法
+  - design/scenario: 请给我介绍一下deepagents的设计的框架，也可以在白板上面画一下他的大概架构图，作为一个系统设计。那最近的agent swarm有了解么，是什么呢？ ; 场景题：如果要你运用skills运用到你的项目当中，你需要怎么设计，请给我设计一下？
+- 2026-08 | Java后端开发工程师 | None |  | 字节面经-字节跳动后端开发岗面经-07 | https://www.nowcoder.com/discuss/922663816993705984 | mirror https://mj.mianlingai.com/interview/bytedance-backend-922663816993705984 | conf=medium
+  - algo: 手撕一道回溯，给出一串数字，输出九键可能对应的所有字符串集合，注意path的传递 ; 手撕：输出字符串能组成的所有的IP地址
+  - design/scenario: -
+- 2026-08 | Java后端开发工程师 | None |  | 字节面经-字节跳动后端开发岗面经-09 | https://www.nowcoder.com/discuss/922664997551869952 | mirror https://mj.mianlingai.com/interview/bytedance-backend-922664997551869952 | conf=medium
+  - algo: 手撕：单例模式、中缀转后缀 ; 手撕 给一个字符串有012？
+  - design/scenario: 如何设计一个秒杀从多个维度说 ; 如果要实现一个基于粉丝量的商户排行榜要怎么实现？
+- 2026-08 | Java后端开发工程师 | None |  | 字节面经-字节跳动后端开发岗面经-10 | https://www.nowcoder.com/discuss/922665564550467584 | mirror https://mj.mianlingai.com/interview/bytedance-backend-922665564550467584 | conf=medium
+  - algo: 手撕: 求一个字符串中不含有重复字符的最长子串的长度 ; 手撕：一道递归题
+  - design/scenario: 规则树，责任链怎么设计的，规则树有哪些规则节点，怎么流转的？ ; 场景题:抖音直播间弹幕每秒百万级，如何设计一个高可用的弹幕推送系统?
+- 2026-08 | Java后端开发工程师 | None |  | 字节面经-字节跳动后端开发岗面经-11 | https://www.nowcoder.com/discuss/922666956514131968 | mirror https://mj.mianlingai.com/interview/bytedance-backend-922666956514131968 | conf=medium
+  - algo: 比较印象深刻的手撕：把出现的字符串组a替换为字符串组b？ ; 手撕，写一个程序判断是否为合法的ipv4地址 ; 手撕：很简单的双指针、生成在圆内均匀分布的点
+  - design/scenario: 给了一个场景，就是设计一个全自动化的agent进行AI漫剧创作，你会怎么设计？ ; 失败次数频率怎么设计呢？
+- 2026-08 | Java后端开发工程师 | None |  | 字节面经-字节跳动后端开发岗面经-12 | https://www.nowcoder.com/discuss/922828057570709504 | mirror https://mj.mianlingai.com/interview/bytedance-backend-922828057570709504 | conf=medium
+  - algo: 手撕：合并两个有序数组 ; 手撕：无重复字符最长子串； ; 手撕二叉树之字型层序遍历 ; 手撕题:有效的字母异位词easy
+  - design/scenario: 如何设计方案防止 APP 被抓包和破解？
+- 2026-09 | 后端开发 | None |  | 字节后端面经：异步任务恢复、规则系统与文件存储 | https://www.nowcoder.com/discuss/930295844157292544 | mirror https://mj.mianlingai.com/interview/bytedance-backend-930295844157292544 | conf=medium
+  - algo: -
+  - design/scenario: 项目使用哪些效果指标，如何设计评估并提供数据支撑？ ; 重试机制如何设计，怎样限制次数并避免无限重试？ ; 当前发票校验规则怎样设计，规则从几十条增长到数千条甚至上万条时怎样调整架构？ ; 高可用分布式文件存储怎样设计，哈希路由与主从异步备份在极端故障下有什么数据风险？
+- 2026-09 | 后端开发 | None |  | 字节后端面经：广告去重、知识图谱发布与 Saga 补偿 | https://www.nowcoder.com/discuss/930296009521889280 | mirror https://mj.mianlingai.com/interview/bytedance-backend-930296009521889280 | conf=medium
+  - algo: -
+  - design/scenario: 为什么还需要 Redis 锁，怎样设计获取与释放时机？
+- 2026-09 | 后端开发 | None |  | 字节后端面经：亿级关注系统、外部排序与 Redis 热点 | https://www.nowcoder.com/discuss/930296131064430592 | mirror https://mj.mianlingai.com/interview/bytedance-backend-930296131064430592 | conf=medium
+  - algo: -
+  - design/scenario: 亿级数据的关注系统怎样设计存储、分库分表和访问性能？ ; 如何设计令牌桶限流器？ ; Redis Key 应该怎样设计，Redis 速度快的原因是什么？ ; Redis 分布式锁怎样设计，发生故障切换时怎样考虑安全性？
+- 2026-10 | 后端开发 | 面试合集 |  | 字节面经-字节跳动后端开发岗面经-18 | https://www.nowcoder.com/discuss/940039518206414848 | mirror https://mj.mianlingai.com/interview/bytedance-backend-940039518206414848 | conf=medium
+  - algo: 算法：矩阵转置 ; 岛屿数量（LeetCode 200） ; 手撕：超运算 ; 手撕：k 个一组的链表反转
+  - design/scenario: 数据库表是怎么设计的？ ; 设计一个抢红包系统
+- 2026-10 | 后端开发 | 面试合集 |  | 字节面经-字节跳动后端开发岗面经-19 | https://www.nowcoder.com/discuss/940040388780232704 | mirror https://mj.mianlingai.com/interview/bytedance-backend-940040388780232704 | conf=medium
+  - algo: 岛屿数量算法题。
+  - design/scenario: -
+- 2026-10 | 后端开发 | 面试合集 |  | 字节面经-字节跳动后端开发岗面经-17 | https://www.nowcoder.com/discuss/940040633475928064 | mirror https://mj.mianlingai.com/interview/bytedance-backend-940040633475928064 | conf=medium
+  - algo: 算法题：LeetCode 152 乘积最大子数组 ; LeetCode 200：岛屿数量。 ; 手撕：力扣 3 无重复字符的最长字串 ; 手撕：最长有效连续括号子串
+  - design/scenario: 请介绍一下项目中的秒杀系统。 ; 请设计一个 TikTok 直播间点赞系统。 ; 场景题：在浏览器里输入百度的域名，然后在百度搜索框输入关键词进行搜索，到最后页面显示，中间经过了哪些？ ; 服务本身可能会承受很多很多流量，比如说秒杀一个商品它有 10 个库存，现在来了 1 万 QPS，你这个怎么保证你这服务的稳定性？
+- 2026-04 | 后端AI开发 | 一面 |  | 字节跳动后端AI开发日常实习一面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-ai-1st-2834013 | conf=medium
+  - algo: 算法题：Java原生数组实现栈，实现常用操作
+  - design/scenario: -
+- 2026-04 | 后端AI开发 | 一面 |  | 字节跳动暑期后端AI开发一面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-ai-1st-2845440 | conf=medium
+  - algo: 四、手撕 ; 1 编程题：输入int64，计算不大于该数的欧美数字格式逗号总数
+  - design/scenario: -
+- 2026-04 | 后端AI开发 | 二面 |  | 字节跳动后端AI开发日常实习二面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-ai-dev-round2-2833812 | conf=medium
+  - algo: 手撕：从尾节点开始，K个一组反转链表
+  - design/scenario: （2）CPU缓存是怎么设计的？有几层缓存？
+- 2026-09 | 后端开发工程师（AI 大模型开发平台） | 一面 |  | 字节 260901 一面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-ai-platform-2920851 | conf=medium
+  - algo: 手撕：实现一个类，支持 insert(word) 插入单词、search(word) 判断完整单词是否存在、startsWith(prefix) 判断是否存在指定前缀。 ; 手撕：输入为两个升序数组，输出合并后的降序数组，要求 O(n)。
+  - design/scenario: -
+- 2026-10 | 后端开发工程师 | 一面 |  | 字节跳动后端（中国交易与广告）一面：并发幂等与 TCP 四次挥手 | https://www.nowcoder.com/feed/main/detail/67eb951172c5407290d37294f62723d5 | mirror https://mj.mianlingai.com/interview/bytedance-backend-china-transaction-ads-2926142 | conf=medium
+  - algo: 算法：数组中的数能构成的比 n 小的最大数。
+  - design/scenario: -
+- 2026-04 | 后端开发 | None |  | 字节跳动后端开发面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-development-2839456 | conf=medium
+  - algo: 三、编程题
+  - design/scenario: -
+- 2026-03 | 后端开发 | 一面 |  | 字节跳动后端开发社招一面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-first-round-2812342 | conf=medium
+  - algo: 手撕代码：最长公共子串（要求动态规划优化）。
+  - design/scenario: -
+- 2026-10 | 后端开发（Go） | 一面 |  | 字节中国交易与广告后端一面：GMP、Go GC与Redis集群 | https://www.nowcoder.com/feed/main/detail/fc9cd2f4ef8e44dd865510bb447d1122 | mirror https://mj.mianlingai.com/interview/bytedance-backend-first-round-2923244 | conf=medium
+  - algo: 手撕一道 Hot 100 里的算法题。
+  - design/scenario: -
+- 2026-10 | 后端开发 | 一面 |  | 字节跳动抖音架构后端一面（10.13） | https://www.nowcoder.com/feed/main/detail/c687af27a503401888e6b41c0f5ece93 | mirror https://mj.mianlingai.com/interview/bytedance-backend-first-round-2925493 | conf=medium
+  - algo: 手撕：力扣 3 无重复字符的最长子串。
+  - design/scenario: 场景题：在浏览器里输入百度的域名，然后在百度搜索框输入关键词进行搜索，到最后页面显示，中间经过了哪些环节？
+- 2026-10 | 后端开发实习 | 一面 |  | 字节跳动后端开发实习生一面（TikTok 国际直播基础业务） | https://www.nowcoder.com/feed/main/detail/cacc7228647242eea82c4591d0518efa | mirror https://mj.mianlingai.com/interview/bytedance-backend-first-round-2925500 | conf=medium
+  - algo: 手撕：LeetCode 152 乘积最大子数组。 ; 手撕：LeetCode 200 岛屿数量。
+  - design/scenario: 请介绍一下项目中的秒杀系统。 ; 请设计一个 TikTok 直播间点赞系统。
+- 2026-10 | 后端开发工程师 | 一面 | 挂 | 字节云后端一面：实习与 Agent 评测，收尾问时序数据库和 metrics | https://www.nowcoder.com/feed/main/detail/9c6d12409b4649d2a5e311b1cd898dea | mirror https://mj.mianlingai.com/interview/bytedance-backend-first-round-2928722 | conf=medium
+  - algo: -
+  - design/scenario: metrics 监控体系怎么设计？哪些指标值得采集？
+- 2026-10 | 后端开发 | 一面 |  | 字节后端一面：RAG 召回、MySQL 慢查询与秒杀库存一致性 | https://www.nowcoder.com/discuss/939524387030437888 | mirror https://mj.mianlingai.com/interview/bytedance-backend-first-round-939524387030437888 | conf=medium
+  - algo: 手撕：最长有效连续括号子串。
+  - design/scenario: 服务本身可能会承受很多很多流量，比如秒杀一个商品它有 10 个库存，现在来了 1 万 QPS，你怎么保证服务的稳定性？
+- 2026-10 | 后端开发 | 一面 | 已挂 | 字节跳动后端一面面经（含 RedLock 与手撕） | https://www.nowcoder.com/discuss/940208627883761664 | mirror https://mj.mianlingai.com/interview/bytedance-backend-first-round-940208627883761664 | conf=medium
+  - algo: 手撕：给定一个数组 A 和一个数 n，求能用 A 中数组成的不大于 n 的最大数。
+  - design/scenario: 关于 agent 的场景题深挖。
+- 2026-03 | 后端开发实习生 | 一面 |  | 字节跳动后端暑期实习一面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-intern-1st-2814882 | conf=medium
+  - algo: 算法题：用栈实现队列。
+  - design/scenario: -
+- 2026-10 | 后端开发实习 | 一面 |  | 字节 GMPT 后端日常实习一面：HashMap、Kafka 与缓存一致性 | https://www.nowcoder.com/feed/main/detail/e16471db2fb044a587d358dd071a6f90 | mirror https://mj.mianlingai.com/interview/bytedance-backend-intern-2930628 | conf=medium
+  - algo: 算法题：把一个数字转成字符串（要考虑正负号和小数点）。
+  - design/scenario: -
+- 2026-06 | 后端开发实习生 | 一面 |  | 字节跳动后端开发实习生一面面经 | https://www.nowcoder.com/discuss/898590325818650624 | mirror https://mj.mianlingai.com/interview/bytedance-backend-intern-898590325818650624 | conf=medium
+  - algo: 算法题：最长上升子序列
+  - design/scenario: 场景题：一个接口很多用户访问超时，但内存和 CPU 都正常，该如何排查？ ; 设计一个自动化测试工具来测试信息流的上下滑动、画面正常性、视频不重复及个性化推荐
+- 2026-10 | 后端开发（实习） | 一面 |  | 字节后端实习一面：恶意充值 Agent 与线程池拆分的连环追问 | https://www.nowcoder.com/feed/main/detail/1cf76a70672a4b7f86db1ec773189121 | mirror https://mj.mianlingai.com/interview/bytedance-backend-intern-first-round-2926339 | conf=medium
+  - algo: 算法：
+  - design/scenario: -
+- 2026-10 | 后端开发实习生（集团信息系统） | 一面 |  | 字节集团信息系统后端实习一面：Plan-Execute-Replan、SSE 与 RAG 切块 | https://www.nowcoder.com/feed/main/detail/00e3488329c041c5a5a357c14ce138b4 | mirror https://mj.mianlingai.com/interview/bytedance-backend-intern-group-information-system-first-round-00e3488329c041c5a5a357c14ce138b4 | conf=medium
+  - algo: 手撕
+  - design/scenario: -
+- 2026-03 | 后端开发实习生 | 一面 |  | 字节跳动暑期后端一面（移动OS部门） | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-intern-round1-2823443 | conf=medium
+  - algo: 算法题：** [LeetCode 131] 分割回文串（回溯）
+  - design/scenario: - zset 为什么可以做排行榜？ ; - **问题根因**：`LIMIT 100000, 10` 会扫描并丢弃前 10 万行，效率极低。 ; SELECT * FROM t JOIN (SELECT id FROM t ORDER BY id LIMIT 100000,10) tmp USING(id); ; - **方案2 - 游标分页**：记录上一页最后一条的 id，用 `WHERE id > last_id LIMIT 10`，适合顺序翻页。
+- 2026-04 | 后端实习生 | 一面 |  | 字节跳动后端实习一面 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-intern-round1-2826230 | conf=medium
+  - algo: ### 算法手撕
+  - design/scenario: -
+- 2026-03 | 后端开发实习生（大模型安全方向） | 二面 |  | 字节跳动后端（大模型安全）实习二面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-intern-round2-2823289 | conf=medium
+  - algo: ### 算法题 ; **改版压缩字符串**（非 LeetCode 原题）：给定一个带有括号和数字的字符串，数字表示括号内内容的重复次数，要求先将字符串完全展开，再重新压缩为不含括号的压缩字符串格式。
+  - design/scenario: - **优化方向**：EXPLAIN 分析执行计划，针对性建立复合索引；避免在索引列上使用函数或隐式类型转换；大表分页用游标替代 LIMIT offset；读写分离与分库分表；开启慢查询日志定位问题 SQL。
+- 2026-03 | 后端开发实习生 | 二面 | 未通过 | 字节跳动暑期实习后端开发二面凉经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-intern-round2-2824606 | conf=medium
+  - algo: 算法手撕 ; 算法手撕
+  - design/scenario: - 如何设计一个给账户充值或扣款的接口？请考虑得详细一些（涉及幂等性设计）
+- 2026-06 | 后端开发实习生 | 二面 |  | 字节跳动后端开发实习生二面面经 | https://www.nowcoder.com/discuss/898592450359349248 | mirror https://mj.mianlingai.com/interview/bytedance-backend-intern-round2-898592450359349248 | conf=medium
+  - algo: 手撕：用 SQL 打印菱形图案
+  - design/scenario: -
+- 2026-03 | 后端开发 | 一面 | 挂 | 字节跳动后端一面凉经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-interview-1-2808700 | conf=medium
+  - algo: 手撕代码：无重复字符的最长子串
+  - design/scenario: -
+- 2026-04 | 后端开发 | 一面 |  | 字节跳动后端开发一面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-interview-1-2831303 | conf=medium
+  - algo: 算法题：Java 原生数组实现栈，实现常用操作。
+  - design/scenario: -
+- 2026-04 | 后端开发 | 一面 |  | 4.13 字节跳动国际支付一面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-interview-1-2833873 | conf=medium
+  - algo: 3. 算法题 ; - LeetCode 567：字符串的排列（滑动窗口）。
+  - design/scenario: -
+- 2026-04 | 后端开发（用户增长） | 一面 | 挂 | 字节跳动后端开发一面面经（用户增长） | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-interview-1-2841798 | conf=medium
+  - algo: 手撕代码：字符串中的最长不重复子串长度（ACM模式）。
+  - design/scenario: SQL场景题：联合索引的优化，如何通过调整索引顺序提升查询性能。
+- 2026-04 | 后端开发 | 一面 |  | 字节跳动后端一面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-interview-1-2844959 | conf=medium
+  - algo: #### 三、 算法手撕
+  - design/scenario: -
+- 2026-04 | 后端开发 | 一面 |  | 字节跳动后端开发一面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-interview-1-2845363 | conf=medium
+  - algo: 算法题 ; - 力扣 200. 岛屿数量
+  - design/scenario: -
+- 2026-05 | 后端开发工程师 | 一面 |  | 字节跳动 中国交易与广告后端一面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-interview-1-2847755 | conf=medium
+  - algo: 5. 手撕算法 ; - LeetCode 437：二叉树路径总和。
+  - design/scenario: -
+- 2026-04 | 后端开发（AI方向） | 二面 |  | 字节跳动2027届实习后端AI开发二面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-interview-2-2843870 | conf=medium
+  - algo: 算法题（面试官现场要求）
+  - design/scenario: -
+- 2026-03 | 后端开发工程师 | 一面、二面、HR面 | 已Offer | 字节跳动后端推荐架构面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-interview-2812231 | conf=medium
+  - algo: 手撕：之字形打印二叉树。 ; 手撕：无序数组频率统计(O(n)/O(1))、旋转有序数组找最小值、10个100G日志文件求Top 100 Query(分治/Hash映射)。
+  - design/scenario: 项目相关：秒杀场景下库存扣减与一人一单原子性、Lua脚本实现分布式一致性原理、限流与熔断机制、向量检索索引库(HNSW vs IVF)构建。
+- 2026-03 | 后台开发 | 二面 |  | 字节跳动后台开发二面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-interview-round2-2815363 | conf=medium
+  - algo: 算法题：路径总和III
+  - design/scenario: 场景题：业务场景分析，涉及接口设计及处理链路分析
+- 2026-04 | 后端开发 | 一面 |  | 字节跳动后端一面：MySQL、Java多线程与Spring循环依赖 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-round1-2826107 | conf=medium
+  - algo: ### 算法：打家劫舍变种 ; 经典打家劫舍（LeetCode 198）核心是 DP：`dp[i] = max(dp[i-1], dp[i-2] + nums[i])`。 ; 变种常见形式：环形（LC 213，拆成两段分别DP取最大）、树形（LC 337，树形DP）、带冷冻期等。
+  - design/scenario: -
+- 2026-10 | 后端开发 | 二面 |  | 字节跳动后端开发（中国交易与广告）二面面经 | https://www.nowcoder.com/feed/main/detail/fa2f72d801044dc0b15750bc67a94197 | mirror https://mj.mianlingai.com/interview/bytedance-backend-second-round-2929548 | conf=medium
+  - algo: 算法：输出所有最长回文子串。 ; 算法：高并发数百万访问，统计输出访问次数前十的 IP 地址。
+  - design/scenario: 如何设计一个会议纪要 Agent？
+- 2026-09 | 后端开发 | 三面 |  | 字节后端秋招三面：抢红包系统设计与超运算手撕 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-backend-third-round-2916924 | conf=medium
+  - algo: 手撕：超运算。
+  - design/scenario: 设计一个抢红包系统。
+- 2026-10 | 后端开发 | 一面 |  | 字节跳动业务中台后端一面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-business-middle-platform-first-round-2922504 | conf=medium
+  - algo: 手撕：单词接龙。
+  - design/scenario: -
+- 2026-05 | 后端开发工程师（中国广告） | 一面 |  | 字节跳动中国广告后端一面面经 | https://www.nowcoder.com/discuss/884557598727380992 | mirror https://mj.mianlingai.com/interview/bytedance-china-ads-backend-884557598727380992 | conf=medium
+  - algo: 算法：求最长递增子序列，要求复杂度 O(n log n)
+  - design/scenario: -
+- 2026-09 | Agent 全栈开发 | 一面、二面 |  | 字节数据中台 Agent 全栈面经：一面二面与手撕题 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-data-agent-fullstack-2914727 | conf=medium
+  - algo: 手撕：二叉树的右视图。 ; 手撕：前缀树。
+  - design/scenario: -
+- 2026-10 | 数据开发与数据分析 | 面试合集 |  | 字节面经-字节跳动数据开发与数据分析岗面经-04 | https://www.nowcoder.com/discuss/940040764464037888 | mirror https://mj.mianlingai.com/interview/bytedance-data-development-940040764464037888 | conf=medium
+  - algo: -
+  - design/scenario: 现在 Milvus 里有一千亿个向量，你怎么设计索引？ ; 设计一个 10 个 Redis 机器构成的集群，内部存的是普通的 K-V，K 是 UID，V 是一个二进制文件，要求考虑单点故障、负载均衡等，要实现高可用、低延迟。
+- 2026-09 | Agent 开发工程师 | 一面二面三面 |  | 字节跳动抖音电商 Agent 开发一/二/三面 | https://www.nowcoder.com/discuss/937314680270311424 | mirror https://mj.mianlingai.com/interview/bytedance-douyin-ecommerce-agent-937314680270311424 | conf=medium
+  - algo: 算法题：实现「最短无序连续子数组」——给定一个无序数组，找到最短的连续覆盖区间，对区间内的元素递增排序，使得数组整体递增。
+  - design/scenario: MySQL 索引通常是什么结构？InnoDB 中应该怎样设计索引？ ; 给定一个订单表和高频查询，这个表和查询的索引应该怎样设计？ ; 查询包含 ORDER BY created_at 时，联合索引应该怎样设计？一定要写 DESC 吗？ ; 使用 LIMIT offset, size 扫描百万或上亿行数据有什么性能问题？怎样用游标分页优化深分页？游标为什么要包含唯一键？
+- 2026-09 | 后端开发（日常实习） | 一面 |  | 字节跳动 抖音电商 后端日常实习一面面经 | https://www.nowcoder.com/discuss/931568372028829696 | mirror https://mj.mianlingai.com/interview/bytedance-douyin-ecommerce-backend-intern-931568372028829696 | conf=medium
+  - algo: 五、手撕算法 ; 二叉树右视图（LeetCode 199）：给一棵二叉树，假设站在树的右侧，要求按照从上到下的顺序输出能够看到的节点。需要 ACM 模式：定义 TreeNode、写函数、构造测试 case、本地运行验证。
+  - design/scenario: -
+- 2026-09 | 软件开发 | 一面 |  | 字节飞连一面：p90 与 p99 指标口径、操作系统八股与 DFS 路径追问 | https://www.nowcoder.com/discuss/934865450729472000 | mirror https://mj.mianlingai.com/interview/bytedance-feilian-first-round-934865450729472000 | conf=medium
+  - algo: 算法：力扣 130 被围绕的区域
+  - design/scenario: 什么时候会出现 TIME_WAIT 情况，还有端口耗尽的情况？
+- 2026-04 | 飞书AI后端开发实习生 | 一面 | 挂 | 字节飞书AI后端开发暑期实习一面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-feishu-ai-backend-intern-round1-2826388 | conf=medium
+  - algo: -
+  - design/scenario: MSL 是什么？为什么在 TIME_WAIT 状态要等待 2MSL？ ; - TIME_WAIT 等待 2MSL 的目的：① 确保最后一个 ACK 能到达对端，若丢失可重传；② 让网络中残留的旧报文全部消亡，避免影响新连接。 ; - 热帖排行：用 **ZSet**，score 为热度分（点赞数+阅读数加权），`ZREVRANGE` 取 Top N。
+- 2026-10 | AI全栈开发（飞书） | 一面 |  | 字节飞书 AI全栈开发 一面：二级缓存冷启动与 2000ms 慢接口 | https://www.nowcoder.com/discuss/942507302752428032 | mirror https://mj.mianlingai.com/interview/bytedance-feishu-ai-fullstack-942507302752428032 | conf=medium
+  - algo: 算法手写题（手撕 LRU 缓存）
+  - design/scenario: -
+- 2026-07 | Java后端开发实习生 | 一面 |  | 杭州飞书字节日常实习后端一面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-feishu-java-backend-intern-2871942 | conf=medium
+  - algo: 算法题：分割回文子串
+  - design/scenario: -
+- 2026-10 | 后端开发 | 一面 |  | 字节一面记录：全程深挖 Agent 项目与图判圈手撕 | https://www.nowcoder.com/feed/main/detail/309b593e512c48f48aa2098f3b4770e6 | mirror https://mj.mianlingai.com/interview/bytedance-first-round-2924911 | conf=medium
+  - algo: 手撕：图的判圈
+  - design/scenario: -
+- 2026-08 | 全栈开发工程师 | None |  | 8.20字节秋招 全栈一面 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-fullstack-2893686 | conf=medium
+  - algo: 算法：leetcode3无重复字符的最长字串
+  - design/scenario: -
+- 2026-10 | 全栈开发 | 一面 |  | 字节跳动全栈一面面经：项目追问、AI 工具与消息可靠下发 | https://www.nowcoder.com/feed/main/detail/17726814a74b4c5c97c4c87f5eb49283 | mirror https://mj.mianlingai.com/interview/bytedance-fullstack-2925747 | conf=medium
+  - algo: 手撕：合并两个有序数组为一个有序数组，不能用内置排序。
+  - design/scenario: 假设用户发信息时网络断了，要设计一套系统保证信息不丢失、网络恢复后能去重下发，怎么设计？
+- 2026-10 | 全栈开发 | 一至四面 |  | 字节全栈一至四面面经 | https://www.nowcoder.com/feed/main/detail/d8822fc2b4ae4b2fbdb03c95fa2a427d | mirror https://mj.mianlingai.com/interview/bytedance-fullstack-2927986 | conf=medium
+  - algo: -
+  - design/scenario: 如何设计 Feed 流？大 V 场景会遇到什么问题？ ; 用户下单后规定时间内未支付，如何设计订单自动取消？
+- 2026-09 | 全栈开发工程师 | 一面 |  | 字节全栈一面：并发调度器与 Vue 响应式原理 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-fullstack-first-round-2914598 | conf=medium
+  - algo: 算法：JS 实现一个带并发限制的异步调度器 Scheduler，保证同时运行的任务最多有两个，完善代码中的 Scheduler 类，使给定程序能正确输出。
+  - design/scenario: -
+- 2026-09 | 全栈开发 | 一面 |  | 字节全栈一面面经：RAG 链路与线程池连环追问 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-fullstack-first-round-2917490 | conf=medium
+  - algo: 手撕算法：目标和。
+  - design/scenario: -
+- 2026-10 | 全栈开发 | 二面 |  | 字节全栈二面：SSE、知识图谱与多 Agent 编排 | https://www.nowcoder.com/feed/main/detail/3cac2a5686f5478f849d7e64a5a2e124 | mirror https://mj.mianlingai.com/interview/bytedance-fullstack-second-round-2927793 | conf=medium
+  - algo: 手撕：非 Hot100 中等题。
+  - design/scenario: 如果把传统电商从搜索商品到下单的全流程改造成通过与 Agent 交互完成，你会怎样设计整体架构？
+- 2026-09 | 后端开发实习 | 一二面 | 挂 | 字节国际化广告后端实习一二面凉经：Coding Agent 与 RabbitMQ | https://www.nowcoder.com/discuss/933056720308305920 | mirror https://mj.mianlingai.com/interview/bytedance-global-ads-backend-intern-933056720308305920 | conf=medium
+  - algo: 算法：K 个一组反转链表的变种题（不足 k 个也要反转）。 ; 算法：十六进制大数相乘。
+  - design/scenario: RabbitMQ 的生产消费模型是怎样的？消费失败了怎么办？有死信队列之类的设计吗？这是 RabbitMQ 自带的死信队列吗？死信队列最多能接受多少条消息、有上限吗？如果需要重试的消息超过了死信队列的最大容量，应该怎么设计？
+- 2026-09 | 后端开发 | 一面 |  | 字节跳动 GMPT 后端日常实习一面 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-gmpt-backend-first-round-2914869 | conf=medium
+  - algo: 手撕：实现字符串转浮点，例如 `"123.456"` 输出 `123.456`，不需要考虑浮点精度缺失。
+  - design/scenario: -
+- 2026-04 | Golang开发工程师 | 一面 | 挂 | 字节飞书Golang开发一面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-golang-first-round-2838226 | conf=medium
+  - algo: 三、算法手撕 ; - LeetCode 300. 最长递增子序列（非动态规划法，10分钟完成）。
+  - design/scenario: -
+- 2026-08 | Java后端开发工程师 | None |  | 字节一面（凉经） | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-interview-2881196 | conf=medium
+  - algo: 一个索引创建题，一个sql查询题的返回结果（这里都出了点小问题），一个手撕没在力扣100见过好难没写出来。 ; 半个小时后约二面，hr说我面评上说沟通，基础都挺不错，手撕没写出来要多准备一下这个。哎，我已经能够想象二面手撕会怎么狠狠惩罚我了，放过我吧放过我吧放过我吧，我可以不要工资我可以不要心脏我可以做牛做马。。。。。
+  - design/scenario: -
+- 2026-08 | Java后端开发工程师 | None |  | 字节一面凉面 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-interview-2889950 | conf=medium
+  - algo: 算法题给的最小栈我还脑子一空忘了辅助栈了
+  - design/scenario: -
+- 2026-03 | Java后端开发工程师 | None |  | 字节跳动-国际支付 暑期实习 面经 | https://www.nowcoder.com/discuss/908737508467277824 | mirror https://mj.mianlingai.com/interview/bytedance-interview-908737508467277824 | conf=medium
+  - algo: -
+  - design/scenario: 这个线程是怎么提起来的？是有什么单独的服务吗？会不会挂掉？如果挂掉之后，解封会不会失败？这块怎么设计？ ; 兜底机制是怎么出现的？怎么设计的？ ; 来个系统设计题吧，设计一个短链接，请你讲一下要考虑的点？ ; 你可以这样去想，首先你想一想这样一个短链接的服务，他需要具备什么功能？你再去想，要实现这个功能，需要什么样的技术能力？如果你自己想不出来需要具备什么功能，我可以把功能告诉你。然后基于我说的功能，再去想这个系统应该如何实现？这个可以吗？
+- 2026-08 | Java后端开发工程师 | None |  | 分享｜3年经验跳槽字节，三面挂了一次，四面终于OC | https://www.nowcoder.com/discuss/920379874269794304 | mirror https://mj.mianlingai.com/interview/bytedance-interview-920379874269794304 | conf=low
+  - algo: 3️⃣ 手撕：设计一个支持高性能读写、支持范围查询的分布式缓存系统 ; 3️⃣ 手撕：基于Redis实现分布式限流，支持滑动窗口和令牌桶
+  - design/scenario: 刷系统设计题：社招不考LRU了，考的是"设计一个秒杀系统""设计一个短链服务" ; 1️⃣ 系统设计：设计一个支持千万DAU的即时通讯系统 ; 1️⃣ 场景题：如果线上突然QPS暴涨10倍，你怎么快速排查和扩容？
+- 2026-08 | Java后端开发工程师 | None |  | 分享｜3年经验面字节，二面挂了，四面终于OC | https://www.nowcoder.com/discuss/921465359255752704 | mirror https://mj.mianlingai.com/interview/bytedance-interview-921465359255752704 | conf=low
+  - algo: 4️⃣ 手撕：实现一个支持过期时间的本地缓存 ; 4️⃣ 手撕：实现一个支持分布式限流的方案
+  - design/scenario: 1️⃣ 系统设计：设计一个支持千万DAU的IM系统 ; 刷系统设计题：社招不考LRU了，考的是“设计一个IM系统”“设计一个秒杀系统” ; 1️⃣ 系统设计：设计一个秒杀系统
+- 2026-08 | 全栈开发工程师 | None |  | 字节AI全栈开发实习（小荷健康）一面｜项目深挖+JS+Java+算法 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-java-2881039 | conf=medium
+  - algo: 项目深挖 + Web 基础 + JavaScript + 工程实现 + 一道算法题
+  - design/scenario: -
+- 2026-09 | Java后端 | 三面 |  | 字节跳动 抖音电商 Java后端 日常实习面经（三面 + HR） | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-java-2915254 | conf=medium
+  - algo: 场景编程题：知识库文档多路结果合并。 ; 算法题：LC 打家劫舍。
+  - design/scenario: 决策机制具体是怎么设计的？ ; 优惠券管理系统主要做了什么？核心业务是什么？是不是优惠券秒杀场景？用户抢的券本身是否有价格？ ; 优惠券秒杀完整链路是怎么实现的？Redis Lua 如何校验库存和用户领取次数？Redis 如何预扣库存？用户券如何缓存和过期？ ; 优惠券查询出现热点 Key 怎么处理？某个热门商家被大量用户查询怎么办？某张秒杀券一百万用户同时访问怎么办？
+- 2026-09 | Java后端 | 多轮技术面 |  | 字节Java后端高阶面试复盘 | https://www.nowcoder.com/discuss/927996835648503808 | mirror https://mj.mianlingai.com/interview/bytedance-java-backend-927996835648503808 | conf=medium
+  - algo: -
+  - design/scenario: 如何设计支持亿级流量的电商大促系统？ ; 如何设计全链路压测平台？
+- 2026-09 | Java后端开发 | 一面 | OC | 字节跳动3年经验Java社招面经：一面六方向深挖三面OC | https://www.nowcoder.com/discuss/931517876673007616 | mirror https://mj.mianlingai.com/interview/bytedance-java-backend-931517876673007616 | conf=medium
+  - algo: -
+  - design/scenario: 系统设计：设计一个支持亿级流量的电商大促系统。 ; 系统设计：设计一个全链路压测平台。
+- 2026-09 | Java后端 | 多轮面试合集 |  | 字节 5 年 Java 社招面经：虚拟线程与 GraalVM 深挖 | https://www.nowcoder.com/discuss/934417678071058432 | mirror https://mj.mianlingai.com/interview/bytedance-java-backend-934417678071058432 | conf=medium
+  - algo: -
+  - design/scenario: 系统设计：设计一个支持百万级并发的 Serverless 函数平台
+- 2026-04 | Java后端开发工程师 | 二面 | 通过 | 字节跳动中国交易与广告二面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-java-backend-interview-2-2840893 | conf=medium
+  - algo: **手撕算法**：LeetCode 不同路径 (Unique Paths)。
+  - design/scenario: -
+- 2026-04 | Java后端开发 | 一面+二面+三面+HR面 | Offer | 字节跳动后端开发面经（已获Offer） | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-java-backend-interview-2830536 | conf=medium
+  - algo: 手撕：LCR 194 二叉树的最近公共祖先。 ; 手撕：LCR 023 相交链表。 ; 手撕：LCR 095 最长公共子序列（变种：输出序列）。
+  - design/scenario: 订单系统设计：索引设计、分库分表方案、慢查询优化、Explain分析。
+- 2026-04 | Java后端（用户增长） | 一面 | 凉经 | 字节跳动抖音生活服务Java后端一面凉经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-java-backend-round1-2826851 | conf=medium
+  - algo: ### 五、算法题 ; - LeetCode Hard 60. 排列序列 ; ### LeetCode 60. 排列序列
+  - design/scenario: - 积分排行榜是整个站点所有用户积分排名吗？ ; - 排行榜是一个 key，集群怎么分？ ; ### Redis ZSet 做排行榜 & 集群分片问题 ; ZSet（有序集合）天然支持排行榜，底层跳表+哈希，O(log N) 插入/查询。
+- 2026-10 | Java 后端 | 一面 |  | 字节跳动 Java 后端 社招一面：ThreadLocal、锁与找重复数 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-java-social-2929220 | conf=medium
+  - algo: 算法：找重复数。
+  - design/scenario: -
+- 2026-09 | AI应用开发（剪映） | 一面 |  | 字节剪映 AI 应用开发一面：Agent 工程四十五问 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-jianying-ai-application-first-round-2916909 | conf=medium
+  - algo: 算法题：20. 有效的括号，先讲解思路，再实现代码。
+  - design/scenario: 当前 Agent 在本地运行，如果迁移到云端或服务器，整体架构应该如何设计？可以分成哪些层？还需要补充什么？
+- 2026-10 | 后端开发 | 一面 |  | 字节即梦后端实习一面面经 | https://www.nowcoder.com/feed/main/detail/ccd6ea94a9ee4c7a9b9e5f77fe3492b1 | mirror https://mj.mianlingai.com/interview/bytedance-jimeng-backend-intern-first-round-2926461 | conf=medium
+  - algo: -
+  - design/scenario: 场景题：你是一个股票交易推荐 Agent，现在有 8000 token；突然来了 20000 token 的数据，分别是长期背景、市场与大众情绪、最近高频交易的数据，都是 JSON 格式，请问有什么方法去处理？要求写代码。
+- 2026-09 | 算法工程师 | 笔试 |  | 字节/美团 AI Coding 笔试：5 类必考题型与刷题重点 | https://www.nowcoder.com/discuss/931584533160312832 | mirror https://mj.mianlingai.com/interview/bytedance-meituan-ai-coding-bishi-931584533160312832 | conf=medium
+  - algo: -
+  - design/scenario: 从百万级 embedding 向量中快速找到与目标向量最相似的一个，该怎么设计？社交网络里判断两个用户是否属于同一兴趣社区、对搜索词做相似度聚类，分别该用什么数据结构与算法？ ; 设计一个低延迟、高可用的智能客服意图识别接口，并给出未识别意图的兜底策略。 ; 设计一个批量推理服务：请求队列管理、超时控制与结果缓存。
+- 2026-09 | AI 应用开发 | 笔试 |  | 字节、美团、B站 AI Coding 笔试五大题型拆解 | https://www.nowcoder.com/discuss/931251871019200512 | mirror https://mj.mianlingai.com/interview/bytedance-meituan-ai-coding-written-test-931251871019200512 | conf=medium
+  - algo: -
+  - design/scenario: 设计一个多 Agent 协作系统，能自动完成「调研 → 写报告 → 审核 → 发布」的完整流程 ; 设计一个支持 10 万并发用户的 AI 客服系统架构
+- 2026-09 | 后台开发 | 多轮面试合集 |  | 字节跳动 Pangle 后台开发一二面：C++ 基础、MVCC 与合并 K 个有序链表 | https://www.nowcoder.com/discuss/934756038690033664 | mirror https://mj.mianlingai.com/interview/bytedance-pangle-backend-first-second-round-934756038690033664 | conf=medium
+  - algo: 算法：多个有序链表合并（IDE 里用不了 priority_queue，只能自己手写堆）
+  - design/scenario: -
+- 2026-10 | SLAM 算法 | 一面 | 凉经 | 字节跳动 PICO 一面：非线性优化求浮点数平方根 | https://www.nowcoder.com/feed/main/detail/3260e4c62b3c46fb89896f0371856f1d | mirror https://mj.mianlingai.com/interview/bytedance-pico-slam-first-round-2926970 | conf=medium
+  - algo: 手撕代码：使用非线性优化求浮点数的平方根（非力扣题，说是看候选人有非线性优化的背景）。
+  - design/scenario: -
+- 2026-07 | 后端开发工程师 | 三面 | 凉经 | 字节跳动后端开发三面凉经 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-python-java-round3-2871454 | conf=medium
+  - algo: 算法题：统计日志出现次数，要求时间复杂度 O(n)（候选人只写出了 O(n²) 方案）
+  - design/scenario: -
+- 2026-09 | 搜广推引擎架构工程师 | 一面 |  | 字节跳动搜广推引擎架构一面面经 | https://www.nowcoder.com/discuss/935858952644939776 | mirror https://mj.mianlingai.com/interview/bytedance-search-rec-engine-935858952644939776 | conf=medium
+  - algo: 手撕：给定一个网格，从左上角走到右下角，每次只能向右或向下移动，返回路径数字之和的最小值。
+  - design/scenario: 如果 Agent 必须输出指定格式，例如 JSON，应该怎样设计，保证输出符合要求？ ; 现在有大量用户及订单，要按用户当天的购买数量、金额等计算价值分，评分方法简单但可能变化；需要生成每天的 Top K 日榜并向用户展示。你会怎么设计？
+- 2026-09 | 大数据开发 | 二面 |  | 字节跳动离线数据架构二面：千亿向量索引与Flink State治理 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-second-round-2916483 | conf=medium
+  - algo: 写个算法：二叉树层序遍历。 ; 手撕进阶：二叉树不可能永远存 int，如果我们需要二叉树里能存多种类型，要怎么做？
+  - design/scenario: 现在 Milvus 里有一千亿个向量，你怎么设计索引？ ; 设计一个由 10 台 Redis 机器构成的集群，内部存的是普通 K-V，K 是 UID，V 是一个二进制文件，要求考虑单点故障、负载均衡，实现高可用、低延迟。
+- 2026-09 | 软件开发 | 三面 |  | 字节跳动 软件开发三面凉经：项目难点连环追问与 Kafka、ES 深挖 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-software-development-third-round-2918654 | conf=medium
+  - algo: 算法题：矩阵转置
+  - design/scenario: -
+- 2026-10 | 后端开发 | 一面 | 一面已过 | 字节 TAC 后端一面：分布式锁与直播点赞排行设计 | https://www.nowcoder.com/feed/main/detail/18c57693dd4c4f5f98628b460ddb9dc0 | mirror https://mj.mianlingai.com/interview/bytedance-tac-backend-first-round-2926839 | conf=medium
+  - algo: 手撕：链表中离最后一个节点距离为 n 的节点。
+  - design/scenario: 场景题：抖音直播点赞，统计排行榜 Top100 用户，接口和数据结构如何设计，才能保证高并发和实时性？
+- 2026-10 | TikTok后端开发实习生 | 二面 | 凉经 | 字节跳动 TikTok 后端开发实习生二面面经 | https://www.nowcoder.com/feed/main/detail/9d12c2c364474cfab591630570aa2ca1 | mirror https://mj.mianlingai.com/interview/bytedance-tiktok-backend-intern-second-round-2929684 | conf=medium
+  - algo: 手撕：设计并实现一个满足 LRU 缓存约束的数据结构。
+  - design/scenario: 如果一个服务调用另一个服务超时，重试机制应该怎么设计？为什么不能无限重试？ ; 如果让你设计一个高并发直播间评论系统，你会怎么设计？
+- 2026-09 | 后端开发 | 一面 |  | 字节跳动交易与广告后端一面：B+ 树与幻读连环追问 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-trade-ads-backend-first-round-2917267 | conf=medium
+  - algo: 算法题：岛屿数量（LeetCode 200）。
+  - design/scenario: 数据库表是怎么设计的？第二张表（会话表）的一条记录代表什么？涉及哪些字段？
+- 2026-10 | Agent开发 | 一面 |  | 字节跳动火山引擎 Agent 开发秋招一面 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-volcano-engine-agent-autumn-first-round-2923108 | conf=medium
+  - algo: 算法题：LRU 缓存（LeetCode Hot 100）。
+  - design/scenario: 场景题：设计一个简单的异步系统（不使用 MQ 等中间件），实现数据的存取，说明从发起请求到数据存储和获取的全过程如何设计。 ; POST 接口本身不幂等，如果业务需要幂等处理，怎么设计接口？
+- 2026-10 | Agent开发 | 二面 |  | 字节跳动火山引擎 Agent 开发秋招二面 | (no source URL) | mirror https://mj.mianlingai.com/interview/bytedance-volcano-engine-agent-autumn-second-round-2923110 | conf=medium
+  - algo: 算法题：最长回文子串（LeetCode Hot 100）。最开始给的是一道字符串处理题，候选人主动提出不熟悉后换成了这道。
+  - design/scenario: 场景题：有两台机器，一个客户端和一个服务端，各自配有默认网关。从执行 `curl` 开始，请求如何从客户端到达服务端、再从服务端返回？请描述完整流程。
+- 2026-10 | 后端开发 | 一面 |  | 懂车帝后端开发一面：秒杀系统设计与 Agent 上下文管理 | https://www.nowcoder.com/feed/main/detail/f091d216802a4264a677c65982fb751a | mirror https://mj.mianlingai.com/interview/dongchedi-backend-first-round-2927211 | conf=medium
+  - algo: -
+  - design/scenario: **场景题** ; 设计一个秒杀系统，要求防止超卖，并且在倒计时结束时才允许用户进行秒杀，详细说明关键架构设计。 ; 业务系统里的分布式锁如何设计的？作用是什么？ ; 异步转存如何设计的？有没有做安全检查？
+- 2026-10 | 软件工程师 | 一面 |  | 多益网络软件工程师一面：C++ 多态、递归与 AI 幻觉治理 | https://www.nowcoder.com/feed/main/detail/bd420d8c2e0545748a42c16ad4d05e13 | mirror https://mj.mianlingai.com/interview/duoyi-network-software-engineer-2930969 | conf=medium
+  - algo: 编程题：给输入一个正整数 1-9，输出这个数字之前包括这个数字的全部排列。
+  - design/scenario: -
+- 2026-06 | 软件开发实习生 | 一面 | OC | 字节云一面 项目拷打(已OC) | (no source URL) | mirror https://mj.mianlingai.com/interview/interview-2866278 | conf=medium
+  - algo: 算法题：三数之和
+  - design/scenario: -
+- 2026-05 | Java开发工程师 | 一面 | OC | 暑期结束了............（帮选offer） | (no source URL) | mirror https://mj.mianlingai.com/interview/java-2848794 | conf=medium
+  - algo: 小红书Agent岗4.1，一个小时（庆幸手撕刚复习撕出来了）还以为有机会，泡了一周挂[牛泪] ; 字节RAG4.13一个半小时，手撕（LRU）核心代码写出来了，输入输出没搞出来，挂
+  - design/scenario: -
+- 2026-05 | Java开发工程师 | 一面 | OC | 暑期就这样草率结束了 | (no source URL) | mirror https://mj.mianlingai.com/interview/java-2850050 | conf=medium
+  - algo: 算法：数据流等概率获取一个数（蓄水池抽样），没做出来 ; 反问让给学习建议，多练习算法题 ; 算法题，下一个更大的整数
+  - design/scenario: -
+- 2026-06 | Java开发工程师 | 一面 | OC | 我的求职总结｜致那个一边崩溃一边投简历的自己——0 Offer 到大厂 Offer 的成长记录 | (no source URL) | mirror https://mj.mianlingai.com/interview/java-2859436 | conf=medium
+  - algo: 三道算法题。 ; 平时刷LeetCode感觉还行。 ; 刷LeetCode ; 打开LeetCode就烦。
+  - design/scenario: -
+- 2026-06 | Java开发工程师 | 一面 | 凉经 | Java后端面试记录2 | (no source URL) | mirror https://mj.mianlingai.com/interview/java-2860766 | conf=medium
+  - algo: -
+  - design/scenario: 感觉现在都不怎么拷打八股，全是场景题。 ; sharpa robtics一面：拷打场景题主要是关于最终一致性的，订单服务和库存服务怎么保持最终一致性。我回答出来分布式事物（细节答不出来，完全没了解过这个，只知道概念），消息队列，对账等。最后一个智力题还没答出来，感觉要挂。 ; 小红书：昨天上午和HR沟通了一下，当天晚上十一点直接给我打电话，问了一个场景题和八卦，答出来了。然后直接说订HR面，然则今天还没收到HR面的通知。不知道是不是在逗我。
+- 2026-09 | 后端开发工程师 | None |  | 多公司后端与全栈面经合集：字节、百度、美团、B站、米哈游 | https://www.nowcoder.com/discuss/932058602422956032 | mirror https://mj.mianlingai.com/interview/multi-company-backend-fullstack-932058602422956032 | conf=medium
+  - algo: 手撕：二分查找。 ; 手撕：链表反转。你刚才这段链表反转代码有什么问题？ ; 平时刷算法题和做项目分别使用什么语言？为什么项目更倾向使用 Go？ ; 算法题：小于 n 的最大数。
+  - design/scenario: 如果让你设计短链接系统，你会怎么做？短链接和长链接应该是什么关系？ ; TCP 的超时重传和滑动窗口机制是什么？TIME_WAIT 状态有什么作用？ ; 场景题：几十 TB 数据的用户 id，内存只有 4G，如何找出出现频率最高的 Top 10 id？ ; AI 方面问了 RAG 相关内容；场景题：点杀黑产灰产、秒杀。
+- 2026-04 | AI后台开发 | 二面 |  | TikTok AI后台开发二面 | (no source URL) | mirror https://mj.mianlingai.com/interview/tiktok-ai-backend-second-round-2825446 | conf=medium
+  - algo: ### 三、手撕代码 ; 手撕 `sqrt` —— 要求使用牛顿迭代法实现 ; 手撕 —— 一个人开枪 10 次，总共打了 80 环，问有多少种可能（每次 0~10 环）
+  - design/scenario: -
+- 2026-09 | 后端开发 | 二面 |  | TikTok后端开发二面面经 | (no source URL) | mirror https://mj.mianlingai.com/interview/tiktok-backend-2905920 | conf=medium
+  - algo: -
+  - design/scenario: 发票校验规则扩展到数千条时如何设计，才能快速迭代并隔离变化？ ; 如何设计高可用的分布式文件存储系统，保障极端场景下文件不丢失？ ; 如果支持 human-in-the-loop，checkpoint 和 resume 应如何设计？
+- 2026-09 | Agent基础设施 | 多轮面试合集 |  | 秋招面经合集：智元机器人觅蜂与字节 Agent 基础设施方向 | (no source URL) | mirror https://mj.mianlingai.com/interview/zhiyuan-bytedance-agent-infra-2918979 | conf=medium
+  - algo: 算法：合并区间 ; 算法：查询 IP 归属哪个城市
+  - design/scenario: -
