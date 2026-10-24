@@ -727,7 +727,7 @@ nodes:
     - trends.safety-push
   - id: cpp.modern-practice
     title: 现代 C++ 写法清单
-    summary: auto 与统一初始化、enum class、override/final、nullptr、structured bindings、optional/variant、string_view、[[nodiscard]]、范围 for；每条为什么比老写法好。
+    summary: auto 与统一初始化、enum class、override/final、nullptr、structured bindings、optional/variant、string_view、`[[nodiscard]]`、范围 for；每条为什么比老写法好。
     requires:
     - cpp.raii-ownership
     - cpp.stl-ranges

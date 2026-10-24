@@ -2,7 +2,7 @@
 # 现代 C++ 写法清单
 *现代 C++：特性、取舍与最佳实践*
 
-auto 与统一初始化、enum class、override/final、nullptr、structured bindings、optional/variant、string_view、[[nodiscard]]、范围 for；每条为什么比老写法好。
+auto 与统一初始化、enum class、override/final、nullptr、structured bindings、optional/variant、string_view、`[[nodiscard]]`、范围 for；每条为什么比老写法好。
 
 **Requires:** [[domains/pl/map/cpp.raii-ownership|RAII、零/三/五法则与智能指针]], [[domains/pl/map/cpp.stl-ranges|标准库、迭代器失效与 ranges]]
 

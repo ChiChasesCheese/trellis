@@ -2,7 +2,7 @@
 # LC 316 去除重复字母（Remove Duplicate Letters）
 *A 档：最高频*
 
-Medium；频率 TikTok 58、字节 88；近 3 个月出现；国内字节面经 7 次、最近 2026-08-04；String, Stack, Greedy, Monotonic Stack。
+Medium；频率 TikTok 58、字节 88；近 3 个月出现；国内字节被问 7 次、最近 2026-08-04；String, Stack, Greedy, Monotonic Stack。
 
 **Core** — part of the first pass through this subject.
 

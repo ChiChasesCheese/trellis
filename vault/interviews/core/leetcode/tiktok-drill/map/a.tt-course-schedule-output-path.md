@@ -2,7 +2,7 @@
 # 课程表：输出可行学习路径 / 最短路径
 *A 档：最高频*
 
-TikTok 变体题；面经报告 3 次、最近 2026-08-15。
+TikTok 变体题；近一年被问 3 次、最近 2026-08-15。
 
 **Core** — part of the first pass through this subject.
 

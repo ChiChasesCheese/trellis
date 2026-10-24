@@ -2,7 +2,7 @@
 # LC 695 岛屿的最大面积（Max Area of Island）
 *B 档：次高频*
 
-Medium；频率 TikTok 62；国内字节面经 46 次、最近 2026-04-20；Array, Depth-First Search, Breadth-First Search, Union-Find, Matrix。
+Medium；频率 TikTok 62；国内字节被问 46 次、最近 2026-04-20；Array, Depth-First Search, Breadth-First Search, Union-Find, Matrix。
 
 ## Cards (4)
 1. [[tlc-max-area-of-island-1-signal]]

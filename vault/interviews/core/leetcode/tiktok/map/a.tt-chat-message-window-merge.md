@@ -2,7 +2,7 @@
 # 聊天消息窗口合并（get_chat_messages）
 *A 档：最高频*
 
-TikTok 变体题；面经报告 1 次、最近 2025-10-21。
+TikTok 变体题；近一年被问 1 次、最近 2025-10-21。
 
 **Core** — part of the first pass through this subject.
 

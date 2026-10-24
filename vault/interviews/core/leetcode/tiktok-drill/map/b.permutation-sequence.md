@@ -2,7 +2,7 @@
 # LC 60 排列序列（Permutation Sequence）
 *B 档：次高频*
 
-LeetCode 原题；面经报告 1 次、最近 2026-04。
+LeetCode 原题；近一年被问 1 次、最近 2026-04。
 
 ## Cards (5)
 1. [[tlc-permutation-sequence-1-signal]]

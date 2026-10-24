@@ -2,7 +2,7 @@
 # LC 199 二叉树的右视图（Binary Tree Right Side View）
 *A 档：最高频*
 
-Medium；频率 TikTok 62；近 6 个月出现；国内字节面经 90 次、最近 2026-05-07；Tree, Depth-First Search, Breadth-First Search, Binary Tree。
+Medium；频率 TikTok 62；近 6 个月出现；国内字节被问 90 次、最近 2026-05-07；Tree, Depth-First Search, Breadth-First Search, Binary Tree。
 
 **Core** — part of the first pass through this subject.
 

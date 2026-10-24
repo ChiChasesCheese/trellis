@@ -2,7 +2,7 @@
 # LC 116 填充每个节点的下一个右侧节点指针（Populating Next Right Pointers in Each Node）
 *B 档：次高频*
 
-LeetCode 原题；面经报告 1 次、最近 2026-01-06。
+LeetCode 原题；近一年被问 1 次、最近 2026-01-06。
 
 ## Cards (4)
 1. [[tlc-populating-next-right-pointers-in-each-node-1-signal]]

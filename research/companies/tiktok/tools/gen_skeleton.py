@@ -65,9 +65,9 @@ def leaf_summary(p):
     rep = p["companies"].get("reports")
     if rep:
         kind = "TikTok 变体题" if p.get("kind") == "variant" else "LeetCode 原题"
-        return f"{kind}；面经报告 {rep['refs']} 次、最近 {rep['last_seen'] or '日期不明'}。"
+        return f"{kind}；近一年被问 {rep['refs']} 次、最近 {rep['last_seen'] or '日期不明'}。"
     cn = p["companies"].get("bytedance_cn")
-    cn_txt = f"国内字节面经 {cn['reports']} 次、最近 {cn['last_seen']}" if cn else ""
+    cn_txt = f"国内字节被问 {cn['reports']} 次、最近 {cn['last_seen']}" if cn else ""
     if "tiktok" not in p["companies"] and "bytedance" not in p["companies"]:
         return f"{p['difficulty'] or '—'}；{cn_txt}。"
     who = "、".join(f"{'TikTok' if c == 'tiktok' else '字节'} {v['freq']}" for c, v in p["companies"].items() if c in ("tiktok", "bytedance"))
@@ -90,9 +90,9 @@ nodes = [
         [{"id": f"python.{a}", "title": t, "summary": s} for a, t, s in PYTHON], True),
  branch(2, "patterns", "模式识别", "从题面信号到解法模式：每个模式的触发信号、Python 模板、正确性来源、常见变形与陷阱。",
         [{"id": f"patterns.{a}", "title": t, "summary": s} for a, t, s in PATTERNS], True),
- branch(3, "a", "A 档：最高频", "TikTok、字节（美国与国内）最高频的题：近半年出现、频率 ≥ 70，或国内面经 ≥ 50 次 / 近 30 天出现；按热度降序。",
+ branch(3, "a", "A 档：最高频", "TikTok、字节（美国与国内）最高频的题：近半年出现、频率 ≥ 70，或国内被问 ≥ 50 次 / 近 30 天出现；按热度降序。",
         [{"id": f"a.{p['slug']}", "title": leaf_title(p), "summary": leaf_summary(p)} for p in problems if p["tier"] == "A"], True),
- branch(4, "b", "B 档：次高频", "频率 ≥ 50，或国内面经 ≥ 20 次 / 近 3 个月出现；按热度降序。",
+ branch(4, "b", "B 档：次高频", "频率 ≥ 50，或国内被问 ≥ 20 次 / 近 3 个月出现；按热度降序。",
         [{"id": f"b.{p['slug']}", "title": leaf_title(p), "summary": leaf_summary(p)} for p in problems if p["tier"] == "B"], False),
 ]
 sk = {"domain": "tiktok-lc", "title": "TikTok 字节高频 LeetCode · 整题答案",

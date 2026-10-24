@@ -2,7 +2,7 @@
 # LC 560 和为 K 的子数组（Subarray Sum Equals K）
 *A 档：最高频*
 
-Medium；频率 TikTok 75、字节 50；近 6 个月出现；国内字节面经 29 次、最近 2026-10-08；Array, Hash Table, Prefix Sum。
+Medium；频率 TikTok 75、字节 50；近 6 个月出现；国内字节被问 29 次、最近 2026-10-08；Array, Hash Table, Prefix Sum。
 
 **Core** — part of the first pass through this subject.
 

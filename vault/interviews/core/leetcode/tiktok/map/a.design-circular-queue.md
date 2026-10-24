@@ -2,7 +2,7 @@
 # LC 622 设计循环队列（Design Circular Queue）
 *A 档：最高频*
 
-LeetCode 原题；面经报告 2 次、最近 2026-07-06。
+LeetCode 原题；近一年被问 2 次、最近 2026-07-06。
 
 **Core** — part of the first pass through this subject.
 

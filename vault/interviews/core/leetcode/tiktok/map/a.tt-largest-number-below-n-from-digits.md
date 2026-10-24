@@ -2,7 +2,7 @@
 # 用给定数字组成小于 N 的最大数
 *A 档：最高频*
 
-TikTok 变体题；面经报告 5 次、最近 2026-10-15。
+TikTok 变体题；近一年被问 5 次、最近 2026-10-15。
 
 **Core** — part of the first pass through this subject.
 

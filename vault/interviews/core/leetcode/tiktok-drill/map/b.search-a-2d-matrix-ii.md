@@ -2,7 +2,7 @@
 # LC 240 搜索二维矩阵 II
 *B 档：次高频*
 
-Medium；国内字节面经 43 次、最近 2026-02-23。
+Medium；国内字节被问 43 次、最近 2026-02-23。
 
 ## Cards (4)
 1. [[tlc-search-a-2d-matrix-ii-1-signal]]

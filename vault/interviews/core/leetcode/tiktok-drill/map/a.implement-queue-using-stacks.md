@@ -2,7 +2,7 @@
 # LC 232 用栈实现队列
 *A 档：最高频*
 
-Easy；国内字节面经 52 次、最近 2026-03-01。
+Easy；国内字节被问 52 次、最近 2026-03-01。
 
 **Core** — part of the first pass through this subject.
 

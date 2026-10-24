@@ -2,7 +2,7 @@
 # LC 148 排序链表（Sort List）
 *A 档：最高频*
 
-Medium；频率 TikTok 38、字节 50；国内字节面经 70 次、最近 2026-09-27；Linked List, Two Pointers, Divide and Conquer, Sorting, Merge Sort。
+Medium；频率 TikTok 38、字节 50；国内字节被问 70 次、最近 2026-09-27；Linked List, Two Pointers, Divide and Conquer, Sorting, Merge Sort。
 
 **Core** — part of the first pass through this subject.
 

@@ -2,7 +2,7 @@
 # LC 90 子集 II（Subsets II）
 *B 档：次高频*
 
-LeetCode 原题；面经报告 1 次、最近 2026-02-21。
+LeetCode 原题；近一年被问 1 次、最近 2026-02-21。
 
 ## Cards (4)
 1. [[tlc-subsets-ii-1-signal]]

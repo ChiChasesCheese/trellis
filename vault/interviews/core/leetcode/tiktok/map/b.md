@@ -1,7 +1,7 @@
 %% trellis:begin %%
 # B 档：次高频
 
-频率 ≥ 50，或国内面经 ≥ 20 次 / 近 3 个月出现；按热度降序。
+频率 ≥ 50，或国内被问 ≥ 20 次 / 近 3 个月出现；按热度降序。
 
 ## Topics
 - [[interviews/core/leetcode/tiktok/map/b.add-two-numbers|LC 2 两数相加（Add Two Numbers）]]

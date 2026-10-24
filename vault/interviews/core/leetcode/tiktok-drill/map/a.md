@@ -1,7 +1,7 @@
 %% trellis:begin %%
 # A 档：最高频
 
-TikTok、字节（美国与国内）最高频的题：近半年出现、频率 ≥ 70，或国内面经 ≥ 50 次 / 近 30 天出现；按热度降序。
+TikTok、字节（美国与国内）最高频的题：近半年出现、频率 ≥ 70，或国内被问 ≥ 50 次 / 近 30 天出现；按热度降序。
 
 ## Topics
 - [[interviews/core/leetcode/tiktok-drill/map/a.tt-lru-cache-ttl|带 TTL 的 LRU 缓存（含 LFU / 加权 / 线程安全追问）]]

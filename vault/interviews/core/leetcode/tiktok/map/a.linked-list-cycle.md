@@ -2,7 +2,7 @@
 # LC 141 环形链表
 *A 档：最高频*
 
-Easy；国内字节面经 84 次、最近 2026-09-28。
+Easy；国内字节被问 84 次、最近 2026-09-28。
 
 **Core** — part of the first pass through this subject.
 

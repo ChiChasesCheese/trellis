@@ -2,7 +2,7 @@
 # LC 23 合并 K 个升序链表（Merge k Sorted Lists）
 *A 档：最高频*
 
-Hard；频率 TikTok 63、字节 50；国内字节面经 114 次、最近 2026-10-19；Linked List, Divide and Conquer, Heap (Priority Queue), Merge Sort, Tournament Sort。
+Hard；频率 TikTok 63、字节 50；国内字节被问 114 次、最近 2026-10-19；Linked List, Divide and Conquer, Heap (Priority Queue), Merge Sort, Tournament Sort。
 
 **Core** — part of the first pass through this subject.
 

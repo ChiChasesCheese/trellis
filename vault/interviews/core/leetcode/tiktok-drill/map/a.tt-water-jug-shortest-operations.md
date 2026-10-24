@@ -2,7 +2,7 @@
 # 水壶问题：输出最短操作序列
 *A 档：最高频*
 
-TikTok 变体题；面经报告 2 次、最近 2026-05-08。
+TikTok 变体题；近一年被问 2 次、最近 2026-05-08。
 
 **Core** — part of the first pass through this subject.
 
