@@ -3,6 +3,12 @@
 *B 档：次高频*
 
 Medium；频率 TikTok 50；Array, Binary Search。
+
+## Cards (4)
+1. [[tlc-koko-eating-bananas-1-signal]]
+2. [[tlc-koko-eating-bananas-2-code]]
+3. [[tlc-koko-eating-bananas-3-why]]
+4. [[tlc-koko-eating-bananas-4-followup]]
 %% trellis:end %%
 
 ## Notes

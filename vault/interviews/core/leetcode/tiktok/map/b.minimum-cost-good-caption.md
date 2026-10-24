@@ -3,6 +3,9 @@
 *B 档：次高频*
 
 Hard；频率 TikTok 62；String, Dynamic Programming。
+
+## Cards (1)
+1. [[tlc-minimum-cost-good-caption-0-whole]]
 %% trellis:end %%
 
 ## Notes

@@ -3,6 +3,12 @@
 *B 档：次高频*
 
 Medium；频率 TikTok 50；Tree, Depth-First Search, Binary Tree, DP on Trees。
+
+## Cards (4)
+1. [[tlc-binary-tree-longest-consecutive-sequence-1-signal]]
+2. [[tlc-binary-tree-longest-consecutive-sequence-2-code]]
+3. [[tlc-binary-tree-longest-consecutive-sequence-3-why]]
+4. [[tlc-binary-tree-longest-consecutive-sequence-4-followup]]
 %% trellis:end %%
 
 ## Notes

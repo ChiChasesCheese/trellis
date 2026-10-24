@@ -3,6 +3,12 @@
 *B 档：次高频*
 
 Easy；国内字节面经 40 次、最近 2026-08-04。
+
+## Cards (4)
+1. [[tlc-lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof-1-signal]]
+2. [[tlc-lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof-2-code]]
+3. [[tlc-lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof-3-why]]
+4. [[tlc-lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof-4-followup]]
 %% trellis:end %%
 
 ## Notes

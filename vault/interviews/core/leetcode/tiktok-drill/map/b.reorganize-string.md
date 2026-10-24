@@ -3,6 +3,12 @@
 *B 档：次高频*
 
 Medium；频率 TikTok 50；。
+
+## Cards (4)
+1. [[tlc-reorganize-string-1-signal]]
+2. [[tlc-reorganize-string-2-code]]
+3. [[tlc-reorganize-string-3-why]]
+4. [[tlc-reorganize-string-4-followup]]
 %% trellis:end %%
 
 ## Notes

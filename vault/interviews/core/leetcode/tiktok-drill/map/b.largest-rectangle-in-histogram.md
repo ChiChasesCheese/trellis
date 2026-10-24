@@ -3,6 +3,13 @@
 *B 档：次高频*
 
 Hard；频率 TikTok 50；Array, Stack, Monotonic Stack, Range Minimum/Maximum Query。
+
+## Cards (5)
+1. [[tlc-largest-rectangle-in-histogram-1-signal]]
+2. [[tlc-largest-rectangle-in-histogram-2-code]]
+3. [[tlc-largest-rectangle-in-histogram-3-why]]
+4. [[tlc-largest-rectangle-in-histogram-4-followup]]
+5. [[tlc-largest-rectangle-in-histogram-5-alt]]
 %% trellis:end %%
 
 ## Notes

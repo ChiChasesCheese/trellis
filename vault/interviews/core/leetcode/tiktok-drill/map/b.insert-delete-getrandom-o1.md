@@ -3,6 +3,12 @@
 *B 档：次高频*
 
 Medium；频率 TikTok 62、字节 50；Array, Hash Table, Math, Design, Randomized。
+
+## Cards (4)
+1. [[tlc-insert-delete-getrandom-o1-1-signal]]
+2. [[tlc-insert-delete-getrandom-o1-2-code]]
+3. [[tlc-insert-delete-getrandom-o1-3-why]]
+4. [[tlc-insert-delete-getrandom-o1-4-followup]]
 %% trellis:end %%
 
 ## Notes

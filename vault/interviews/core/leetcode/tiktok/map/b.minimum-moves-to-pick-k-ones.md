@@ -3,6 +3,9 @@
 *B 档：次高频*
 
 Hard；频率 TikTok 62；Array, Greedy, Sliding Window, Prefix Sum。
+
+## Cards (1)
+1. [[tlc-minimum-moves-to-pick-k-ones-0-whole]]
 %% trellis:end %%
 
 ## Notes

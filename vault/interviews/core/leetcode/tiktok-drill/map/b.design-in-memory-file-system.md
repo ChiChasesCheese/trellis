@@ -3,6 +3,13 @@
 *B 档：次高频*
 
 Hard；频率 TikTok 50；Hash Table, String, Design, Trie, Sorting。
+
+## Cards (5)
+1. [[tlc-design-in-memory-file-system-1-signal]]
+2. [[tlc-design-in-memory-file-system-2-code]]
+3. [[tlc-design-in-memory-file-system-3-why]]
+4. [[tlc-design-in-memory-file-system-4-followup]]
+5. [[tlc-design-in-memory-file-system-5-alt]]
 %% trellis:end %%
 
 ## Notes

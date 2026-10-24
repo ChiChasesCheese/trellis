@@ -3,6 +3,9 @@
 *B 档：次高频*
 
 Medium；频率 TikTok 62；String。
+
+## Cards (1)
+1. [[tlc-length-of-the-longest-alphabetical-continuous-substring-0-whole]]
 %% trellis:end %%
 
 ## Notes

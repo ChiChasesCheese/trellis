@@ -3,6 +3,9 @@
 *B 档：次高频*
 
 Medium；频率 TikTok 62；Math, Binary Search, Greedy。
+
+## Cards (1)
+1. [[tlc-maximum-value-at-a-given-index-in-a-bounded-array-0-whole]]
 %% trellis:end %%
 
 ## Notes

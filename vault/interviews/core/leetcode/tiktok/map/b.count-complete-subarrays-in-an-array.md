@@ -3,6 +3,9 @@
 *B 档：次高频*
 
 Medium；频率 TikTok 62；Array, Hash Table, Sliding Window。
+
+## Cards (1)
+1. [[tlc-count-complete-subarrays-in-an-array-0-whole]]
 %% trellis:end %%
 
 ## Notes

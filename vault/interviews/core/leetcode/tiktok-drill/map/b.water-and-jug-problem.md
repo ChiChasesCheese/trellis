@@ -3,6 +3,12 @@
 *B 档：次高频*
 
 Medium；频率 TikTok 50；Math, Depth-First Search, Breadth-First Search, Bézout's Lemma, Euclidean Algorithm。
+
+## Cards (4)
+1. [[tlc-water-and-jug-problem-1-signal]]
+2. [[tlc-water-and-jug-problem-2-code]]
+3. [[tlc-water-and-jug-problem-3-why]]
+4. [[tlc-water-and-jug-problem-4-followup]]
 %% trellis:end %%
 
 ## Notes

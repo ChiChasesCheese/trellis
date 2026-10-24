@@ -3,6 +3,9 @@
 *B 档：次高频*
 
 Medium；频率 TikTok 56；String, Depth-First Search, Design, Trie。
+
+## Cards (1)
+1. [[tlc-design-add-and-search-words-data-structure-0-whole]]
 %% trellis:end %%
 
 ## Notes

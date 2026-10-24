@@ -3,6 +3,12 @@
 *B 档：次高频*
 
 Medium；频率 TikTok 50；Array, Dynamic Programming, Backtracking, Bit Manipulation, Bitmask。
+
+## Cards (4)
+1. [[tlc-matchsticks-to-square-1-signal]]
+2. [[tlc-matchsticks-to-square-2-code]]
+3. [[tlc-matchsticks-to-square-3-why]]
+4. [[tlc-matchsticks-to-square-4-followup]]
 %% trellis:end %%
 
 ## Notes

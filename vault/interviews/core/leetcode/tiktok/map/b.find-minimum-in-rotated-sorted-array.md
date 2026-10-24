@@ -3,6 +3,9 @@
 *B 档：次高频*
 
 Medium；频率 TikTok 50；Array, Binary Search。
+
+## Cards (1)
+1. [[tlc-find-minimum-in-rotated-sorted-array-0-whole]]
 %% trellis:end %%
 
 ## Notes

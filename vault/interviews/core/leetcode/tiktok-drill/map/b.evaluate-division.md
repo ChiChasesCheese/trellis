@@ -3,6 +3,12 @@
 *B 档：次高频*
 
 Medium；频率 TikTok 53；Array, String, Depth-First Search, Breadth-First Search, Union-Find。
+
+## Cards (4)
+1. [[tlc-evaluate-division-1-signal]]
+2. [[tlc-evaluate-division-2-code]]
+3. [[tlc-evaluate-division-3-why]]
+4. [[tlc-evaluate-division-4-followup]]
 %% trellis:end %%
 
 ## Notes

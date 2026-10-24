@@ -3,6 +3,9 @@
 *B 档：次高频*
 
 Hard；频率 TikTok 62；国内字节面经 29 次、最近 2026-04-23；Array, Dynamic Programming, Depth-First Search, Breadth-First Search, Graph Theory。
+
+## Cards (1)
+1. [[tlc-longest-increasing-path-in-a-matrix-0-whole]]
 %% trellis:end %%
 
 ## Notes

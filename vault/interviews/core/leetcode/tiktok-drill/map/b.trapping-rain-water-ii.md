@@ -3,6 +3,13 @@
 *B 档：次高频*
 
 Hard；频率 字节 50；。
+
+## Cards (5)
+1. [[tlc-trapping-rain-water-ii-1-signal]]
+2. [[tlc-trapping-rain-water-ii-2-code]]
+3. [[tlc-trapping-rain-water-ii-3-why]]
+4. [[tlc-trapping-rain-water-ii-4-followup]]
+5. [[tlc-trapping-rain-water-ii-5-alt]]
 %% trellis:end %%
 
 ## Notes
