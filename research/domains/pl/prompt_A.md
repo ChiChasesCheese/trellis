@@ -23,18 +23,27 @@ is unique to each — plus how the features map onto the modern evolution of lan
 **cards may be long and should carry examples**. Breadth and structure matter: each leaf is one concept seen through all
 four languages (other languages such as C, C++, C#, Kotlin, Swift, TypeScript, Haskell only as contrast when it helps).
 
+**Audience: a senior engineer** (Chi, 2026-10-23: 「不要着重罗列语法，把我当做 Sr eng，更多关注逻辑 哲学 取舍 最佳实践」).
+Do not tour syntax or list API names. Every card answers a *why* or a *when*: the reasoning behind a design, the
+philosophy of the language that produced it, what each choice buys and costs, and the best practice an experienced
+engineer follows (and why). Code appears only to demonstrate a behaviour, a cost or a pitfall — never to show what the
+syntax looks like.
+
 ## 3. Cards per leaf: 6–8, in this order (`step`)
 
-1. **Principle**: what the concept is and why languages need it; the problem it solves; the design space (the 2–4
-   possible approaches) — no language yet, or only as a one-line pointer.
-2. **Mechanism**: how it works underneath (memory, compiler, runtime), with a number or a small trace.
-3. **Comparison table**: one row per language (Go, Java, Rust, Python), columns chosen for the leaf (approach, syntax
-   sketch, guarantee, cost). ≤ 5 rows, short cells, then 2–4 sentences on the pattern the table shows.
-4. **Examples**: 1–3 cards with code. One card shows the same task in **at most two** languages side by side (fenced
-   blocks, each ≤ 12 lines), so a leaf usually has two example cards covering all four. Say what the output is.
-5. **Uniqueness / contrast**: what one language does that the others cannot, or the sharpest contrast pair.
-6. **Pitfall / cost**: the classic bug or the price paid, with a code line that shows it.
-7. Optional: **history or trend** — where the feature came from and where it is going.
+1. **Problem and principle**: what problem the concept solves and the underlying idea; the design space (the 2–4
+   possible approaches) and the axis they trade along.
+2. **Mechanism**: how it works underneath (memory, compiler, runtime) — just enough to reason about cost and behaviour,
+   with a number or a small trace.
+3. **Trade-off comparison**: one row per language (Go, Java, Rust, Python): which point in the design space it chose,
+   what that buys, what it costs. ≤ 5 rows, then 2–4 sentences on the logic behind the pattern (why each language's
+   philosophy led it there).
+4. **Philosophy / uniqueness**: what one language's choice reveals about its values, or the sharpest contrast pair.
+5. **Best practice**: what a senior engineer does in each language and why (the rule, the reason, when to break it).
+6. **Pitfall / cost**: the failure mode in production, with the minimal code that shows it and its real output.
+7. Optional: **evolution** — why the feature changed or spread, and where it is heading.
+
+Code: only where it demonstrates behaviour or cost; ≤ 12 lines per block, at most two languages per card.
 
 ## 4. Card format
 
