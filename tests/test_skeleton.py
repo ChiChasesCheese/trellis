@@ -141,3 +141,14 @@ def test_a_domain_named_after_the_subcommand_still_wins(tmp_path):
 
     assert main(["--domain", "alpha", "validate", "--domain", "beta",
                  "--root", str(tmp_path)]) == 0
+
+
+def test_deck_files_a_domain_under_an_existing_deck(tmp_path):
+    from trellis.skeleton import load_skeleton
+    p = tmp_path / "s.yaml"
+    p.write_text("domain: d\ntitle: TikTok Top\ndeck: LeetCode Tops::24 TikTok\n"
+                 "nodes:\n- id: a\n  title: A\n  summary: s\n  children:\n"
+                 "  - id: a.x\n    title: X\n    summary: s\n")
+    sk = load_skeleton(p)
+    assert sk.title == "TikTok Top"
+    assert sk.deck_name(sk.by_id["a.x"]) == "LeetCode Tops::24 TikTok::01 A::X"

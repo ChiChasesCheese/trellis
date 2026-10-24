@@ -127,6 +127,15 @@ class Skeleton:
     # default is the domain slug itself.
     folder: str = ""
     study: Study = field(default_factory=Study)
+    # The Anki deck this domain's decks hang under, when it is not a deck of
+    # its own: `deck: LeetCode Tops::24 TikTok` files a company list as one
+    # more branch of an existing deck, while `title` stays a plain note name
+    # (a `::` in it would end up in the MOC's file name).
+    deck: str = ""
+
+    @property
+    def root_deck(self) -> str:
+        return self.deck or self.title
 
     def __post_init__(self) -> None:
         if not self.folder:
@@ -154,7 +163,7 @@ class Skeleton:
         Top-level branches carry a 1-based ordinal so Anki's alphabetical
         deck list follows study order.
         """
-        parts = [self.title]
+        parts = [self.root_deck]
         for n in node.path():
             if n.parent is None:
                 # explicit order pins the deck name across future branch
@@ -254,8 +263,13 @@ def load_skeleton(path: str | Path) -> Skeleton:
                       "vault/, e.g. domains/kafka)")
         folder = domain
 
+    deck = data.get("deck", "") or ""
+    if not isinstance(deck, str) or deck != deck.strip() or deck.endswith("::"):
+        errors.append(f"invalid deck: {deck!r} (want an Anki deck path such as 'Parent::Child')")
+        deck = ""
+
     skeleton = Skeleton(domain=domain, title=title.strip(), roots=roots, by_id={},
-                        lang=lang, folder=folder,
+                        lang=lang, folder=folder, deck=deck,
                         study=_parse_study(data.get("study"), errors))
     for node in skeleton.walk():
         if node.id in skeleton.by_id:

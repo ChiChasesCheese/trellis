@@ -107,7 +107,7 @@ def align(skeleton: Skeleton, call: Callable = invoke, url: str = DEFAULT_URL) -
             call("changeDeck", url, cards=card_ids, deck=deck)
             moved += len(card_ids)
 
-    root = skeleton.title
+    root = skeleton.root_deck
     stale = []
     for name in call("deckNames", url):
         if name == root or name.startswith(root + "::"):
@@ -255,7 +255,7 @@ def apply_study(skeleton: Skeleton, study: Study, call: Callable = invoke,
     timers — comes along unchanged; and the preset it was cloned from, which
     the rest of the collection usually shares, is never written to.
     """
-    root = skeleton.title
+    root = skeleton.root_deck
     decks = [d for d in call("deckNames", url) if d == root or d.startswith(root + "::")]
     if not decks:
         return "no decks yet"
