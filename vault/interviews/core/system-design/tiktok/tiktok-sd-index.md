@@ -21,7 +21,7 @@ TikTok 的设计轮和别家有一个明显的不同：题目常常是团队真�
 | SD04 | 秒杀与抢票（Flash Sale） | 突发流量怎么在边缘消化；库存不超卖；Redis 与数据库谁是真相 | 无状态抽签准入把 50 万请求/s 压到 2,000 次预占；Redis Lua 做闸门、数据库条件更新做真相；占位释放幂等、过期用有序集合清扫 | [[sd04-flash-sale]] | [[solution-flash-sale]]、[[solution-ticket-booking]] |
 | SD05 | 直播间评论、点赞与弹幕（Live Comments） | 房间内扇出；顺序与重放对齐视频时间线；断线重连 | 按房间分区的有序日志；热门房间的合并与采样；重连时按游标补发 | [[sd05-live-comments-likes]] | [[solution-live-comments]] |
 | SD06 | 分布式任务调度器（low priority） | 每个（任务，触发时刻）至多执行一次；调度器多副本同时看到到期任务；失败通知 | 租约加 fencing token；持久化的时间槽；重试与至多一次的共存、停机后补跑 | [[sd06-job-scheduler]] | [[solution-job-scheduler]] |
-| SD07 | 内容审核（Content Moderation） | 机器学习打分加规则加人工复核加申诉；近实时 SLA；审计 | 规则不重新发布就能更新；处置动作幂等；审计记录模型版本、分数、命中规则 | [[sd07-content-moderation]] | [[solution-notification-system]] |
+| SD07 | 内容审核（Content Moderation）（low priority） | 机器学习打分加规则加人工复核加申诉；近实时 SLA；审计 | 规则不重新发布就能更新；处置动作幂等；审计记录模型版本、分数、命中规则 | [[sd07-content-moderation]] | [[solution-notification-system]] |
 | SD08 | 指标聚合器（Metrics Aggregator） | 客户端库计数；时间桶汇总；热键；重试下的重复；基数治理 | 客户端预聚合加幂等批次号；按时间桶滚动汇总；基数上限与降级 | [[sd08-metrics-aggregator]] | [[solution-metrics-monitoring]] |
 
 ## 贯穿所有题的五个问题
