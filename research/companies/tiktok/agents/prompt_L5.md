@@ -97,3 +97,10 @@ Some leaves come from China-side ByteDance interviews. Use the statement file. F
 `-9`, `-23`) have **no statement file**: restate the classic problem precisely from knowledge (排序奇升偶降链表, 圆环回原点
 问题, 36 进制加法, 检测循环依赖), choose sensible constraints, and list those leaves in your reply. Header line for those:
 `**补充题 n 中文名**｜难度 · 字节高频`; for 剑指 Offer: `**剑指 Offer n 中文名**｜难度 · 字节高频`.
+
+## Where split cards go (updated 2026-10-24)
+
+Write each problem's `-0-whole` card into `vault/interviews/core/leetcode/tiktok/cards/<branch>/` and its split cards
+(`-1-signal` … `-5-alt`) **directly into `vault/interviews/core/leetcode/tiktok-drill/cards/<branch>/`** (the drill
+deck). Run the gate's `validate` for both domains: `trellis --domain tiktok-lc validate` and
+`trellis --domain tiktok-lc-drill validate`.

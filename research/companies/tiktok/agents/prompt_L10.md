@@ -106,3 +106,10 @@ on a card**: the card states the problem as the problem. Header line `**中文�
 difficulty yourself). Design-style variants (LRU with TTL, KV store with snapshot, scheduler …) get a class with type
 hints; verify them with your own unit tests and a randomized comparison against a naive reference implementation
 (≥ 300 random operation sequences). Their follow-up card covers the follow-ups listed in the statement file.
+
+## Where split cards go (updated 2026-10-24)
+
+Write each problem's `-0-whole` card into `vault/interviews/core/leetcode/tiktok/cards/<branch>/` and its split cards
+(`-1-signal` … `-5-alt`) **directly into `vault/interviews/core/leetcode/tiktok-drill/cards/<branch>/`** (the drill
+deck). Run the gate's `validate` for both domains: `trellis --domain tiktok-lc validate` and
+`trellis --domain tiktok-lc-drill validate`.
