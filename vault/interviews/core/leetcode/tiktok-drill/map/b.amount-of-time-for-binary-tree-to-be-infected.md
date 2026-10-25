@@ -3,6 +3,12 @@
 *B 档：次高频*
 
 LeetCode 原题；近一年被问 1 次、最近 2026-01-29。
+
+## Cards (4)
+1. [[tlc-amount-of-time-for-binary-tree-to-be-infected-1-signal]]
+2. [[tlc-amount-of-time-for-binary-tree-to-be-infected-2-code]]
+3. [[tlc-amount-of-time-for-binary-tree-to-be-infected-3-why]]
+4. [[tlc-amount-of-time-for-binary-tree-to-be-infected-4-followup]]
 %% trellis:end %%
 
 ## Notes

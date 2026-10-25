@@ -9,17 +9,11 @@
   (`tools/file_split.py`, or by group as in the A1/A2 commits).
 - Running: P (python + patterns), research EN, research CN.
 
-## Queue (paused 2026-10-24 ~15:00 at the usage limit; resume here)
+## Done (2026-10-24 ~19:00)
 
-Done and committed: research (EN, CN), catalog + additions, kit pages (README, LOOP_GUIDE, brief, behavioural, 8 system
-designs, fundamentals), Obsidian problem index, Python toolkit + patterns, card groups A1, A2, P, L1–L4, L6, L10, L11,
-and the completed problems of L5 and L7 (36). 269 of 362 problems have cards. Both decks pushed to Anki at that state
-(deck 24: 518 cards, deck 25: 1131). `pl` (five languages, 1312 cards) pushed.
+All 362 problems have a whole-answer card (deck 24, plus Python toolkit and patterns: 611 cards) and split cards (deck 25:
+1522 cards). Deck 25 was re-imported fresh (no reviews) so it sits in heat order; deck 24 had reviews, so the last ~108
+new cards sit after the earlier ones. Kit pages, system design, fundamentals and the Obsidian index are complete.
 
-Remaining (~93 problems):
-- L5 and L7: their unfinished leaves (agents died at the usage limit). Relaunch `agents/prompt_L5.md` and `prompt_L7.md`
-  — the resume rule skips leaves that already have cards. Two half-written problems (`codetop-supp-2`,
-  `longest-common-prefix`) were set aside in `~/.local/state/trellis-backup/tiktok-partial-1792876631/`; just rewrite them.
-- Not started: `agents/prompt_L8.md`, `L9`, `L12`.
-- Per finished group: `tools/file_group.py <G>` → gate → commit; then `tools/gen_index.py`, sync + anki-push both decks.
-- At the very end: if no tiktok card has been reviewed, delete both decks' notes and re-import for heat order.
+Possible next steps (not requested): `/catalog refresh` when new reports appear (re-run `tools/build_list.py`,
+`gen_skeleton.py`, new card group for new leaves); readings for the decks are deliberately absent (cards-first).

@@ -3,6 +3,9 @@
 *B 档：次高频*
 
 Hard；国内字节被问 15 次、最近 2026-09-03。
+
+## Cards (1)
+1. [[tlc-shortest-subarray-with-sum-at-least-k-0-whole]]
 %% trellis:end %%
 
 ## Notes

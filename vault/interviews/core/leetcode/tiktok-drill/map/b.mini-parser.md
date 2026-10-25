@@ -3,6 +3,12 @@
 *B 档：次高频*
 
 LeetCode 原题；近一年被问 1 次、最近 2026-02-27。
+
+## Cards (4)
+1. [[tlc-mini-parser-1-signal]]
+2. [[tlc-mini-parser-2-code]]
+3. [[tlc-mini-parser-3-why]]
+4. [[tlc-mini-parser-4-followup]]
 %% trellis:end %%
 
 ## Notes

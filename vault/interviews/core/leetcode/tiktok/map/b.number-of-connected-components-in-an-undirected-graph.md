@@ -3,6 +3,9 @@
 *B 档：次高频*
 
 LeetCode 原题；近一年被问 1 次、最近 2026-03-10。
+
+## Cards (1)
+1. [[tlc-number-of-connected-components-in-an-undirected-graph-0-whole]]
 %% trellis:end %%
 
 ## Notes

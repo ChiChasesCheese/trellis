@@ -3,6 +3,9 @@
 *B 档：次高频*
 
 Medium；频率 TikTok 50；String, Stack。
+
+## Cards (1)
+1. [[tlc-remove-all-adjacent-duplicates-in-string-ii-0-whole]]
 %% trellis:end %%
 
 ## Notes

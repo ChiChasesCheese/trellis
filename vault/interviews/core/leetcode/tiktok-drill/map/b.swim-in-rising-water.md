@@ -3,6 +3,13 @@
 *B 档：次高频*
 
 LeetCode 原题；近一年被问 1 次、最近 2026-04-01。
+
+## Cards (5)
+1. [[tlc-swim-in-rising-water-1-signal]]
+2. [[tlc-swim-in-rising-water-2-code]]
+3. [[tlc-swim-in-rising-water-3-why]]
+4. [[tlc-swim-in-rising-water-4-followup]]
+5. [[tlc-swim-in-rising-water-5-alt]]
 %% trellis:end %%
 
 ## Notes

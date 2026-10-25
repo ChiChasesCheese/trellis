@@ -3,6 +3,9 @@
 *B 档：次高频*
 
 Medium；频率 TikTok 25、字节 50；。
+
+## Cards (1)
+1. [[tlc-minimum-swaps-to-group-all-1s-together-ii-0-whole]]
 %% trellis:end %%
 
 ## Notes

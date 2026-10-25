@@ -3,6 +3,9 @@
 *B 档：次高频*
 
 Easy；频率 TikTok 50；国内字节被问 24 次、最近 2026-01-16；Array, String, Trie。
+
+## Cards (1)
+1. [[tlc-longest-common-prefix-0-whole]]
 %% trellis:end %%
 
 ## Notes

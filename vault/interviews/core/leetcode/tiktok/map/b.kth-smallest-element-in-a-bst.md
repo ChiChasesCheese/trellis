@@ -3,6 +3,9 @@
 *B 档：次高频*
 
 Medium；国内字节被问 23 次、最近 2024-04-10。
+
+## Cards (1)
+1. [[tlc-kth-smallest-element-in-a-bst-0-whole]]
 %% trellis:end %%
 
 ## Notes

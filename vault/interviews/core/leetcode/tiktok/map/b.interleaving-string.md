@@ -3,6 +3,9 @@
 *B 档：次高频*
 
 Medium；国内字节被问 11 次、最近 2026-09-20。
+
+## Cards (1)
+1. [[tlc-interleaving-string-0-whole]]
 %% trellis:end %%
 
 ## Notes

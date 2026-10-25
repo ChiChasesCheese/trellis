@@ -3,6 +3,12 @@
 *B 档：次高频*
 
 Medium；频率 TikTok 50；Array, Union-Find, Graph Theory, Minimum Spanning Tree, Prim's Algorithm。
+
+## Cards (4)
+1. [[tlc-min-cost-to-connect-all-points-1-signal]]
+2. [[tlc-min-cost-to-connect-all-points-2-code]]
+3. [[tlc-min-cost-to-connect-all-points-3-why]]
+4. [[tlc-min-cost-to-connect-all-points-4-followup]]
 %% trellis:end %%
 
 ## Notes

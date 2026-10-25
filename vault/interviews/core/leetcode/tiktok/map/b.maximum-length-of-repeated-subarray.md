@@ -3,6 +3,9 @@
 *B 档：次高频*
 
 Medium；国内字节被问 26 次、最近 2026-09-11。
+
+## Cards (1)
+1. [[tlc-maximum-length-of-repeated-subarray-0-whole]]
 %% trellis:end %%
 
 ## Notes

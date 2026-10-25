@@ -3,6 +3,12 @@
 *B 档：次高频*
 
 LeetCode 原题；近一年被问 1 次、最近 2026-04-19。
+
+## Cards (4)
+1. [[tlc-minimum-add-to-make-parentheses-valid-1-signal]]
+2. [[tlc-minimum-add-to-make-parentheses-valid-2-code]]
+3. [[tlc-minimum-add-to-make-parentheses-valid-3-why]]
+4. [[tlc-minimum-add-to-make-parentheses-valid-4-followup]]
 %% trellis:end %%
 
 ## Notes

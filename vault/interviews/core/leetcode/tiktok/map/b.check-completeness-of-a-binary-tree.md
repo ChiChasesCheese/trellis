@@ -3,6 +3,9 @@
 *B 档：次高频*
 
 Medium；国内字节被问 30 次、最近 2025-11-06。
+
+## Cards (1)
+1. [[tlc-check-completeness-of-a-binary-tree-0-whole]]
 %% trellis:end %%
 
 ## Notes

@@ -3,6 +3,9 @@
 *B 档：次高频*
 
 Medium；频率 TikTok 50；Array, Hash Table, Matrix, Counting。
+
+## Cards (1)
+1. [[tlc-minimum-operations-to-write-the-letter-y-on-a-grid-0-whole]]
 %% trellis:end %%
 
 ## Notes
