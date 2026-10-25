@@ -3,12 +3,14 @@ with the commands to start and test each, in interview order. Re-run after addin
 
     uv run python research/companies/headlands/tools/gen_practice.py
 """
-import re
+import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[4]
 KIT = ROOT / "vault/interviews/companies/headlands"
 ROUNDS = [("00_oa", "OA 原题"), ("01_video", "视频面编码题"), ("03_lld", "设计与并发（LLD）")]
+
+TRACKED = set(subprocess.run(["git", "ls-files", str(KIT)], capture_output=True, text=True, cwd=ROOT).stdout.split())
 
 lines = [
     "# 07 · Java 和 C++ 各写一遍：练习清单",
@@ -41,13 +43,13 @@ for folder, title in ROUNDS:
     rows = []
     for d in sorted(p for p in base.iterdir() if p.is_dir()):
         prob = d / "problem.md"
-        if not prob.exists():
-            continue
+        if not prob.exists() or str(prob.relative_to(ROOT)) not in TRACKED:
+            continue  # only problems already committed: the page must not link work in progress
         head = prob.read_text(encoding="utf-8").splitlines()[0].lstrip("# ").strip()
         rel = d.relative_to(KIT)
         has_cpp = (d / "cpp" / "starter.hpp").exists()
         art = KIT / "study/30-articles" / f"{d.name}.md"
-        link = f"[[{d.name}\\|讲义]]" if art.exists() else "—"
+        link = f"[[{d.name}\\|讲义]]" if str(art.relative_to(ROOT)) in TRACKED else "—"
         cpp_cell = "☐" if has_cpp else "（暂无 C++ 版）"
         rows.append(f"| {head} | ☐ | {cpp_cell} | {link} | `{rel}` |")
         total += 1
