@@ -38,6 +38,8 @@ python3 tools/cpptest.py run   <题目目录> --tag part1
 | hc09 · Top Trade Events by Notional（按名义金额取 top-k 成交 / ticker） | ☐ | ☐ | [[hc09_top_trades_by_notional\|讲义]] | `loop/rounds/01_video/hc09_top_trades_by_notional` |
 | hc11 · 订单区间最大重叠 + 按买 / 卖方撤单 | ☐ | ☐ | [[hc11_order_interval_overlap\|讲义]] | `loop/rounds/01_video/hc11_order_interval_overlap` |
 | hc13 · 定长内存池（Fixed-Size Memory Pool） | ☐ | ☐ | [[hc13_fixed_memory_pool\|讲义]] | `loop/rounds/01_video/hc13_fixed_memory_pool` |
+| hc14 · Trade Log → VWAP（成交日志、滑动窗口 VWAP 与 top-k） | ☐ | ☐ | [[hc14_vwap_trade_log\|讲义]] | `loop/rounds/01_video/hc14_vwap_trade_log` |
+| hc15 · Streaming Median（成交价的流式中位数与百分位） | ☐ | ☐ | — | `loop/rounds/01_video/hc15_streaming_median` |
 | hc16 · Tree DP on a Desk Hierarchy（交易台层级树上的 DP） | ☐ | ☐ | [[hc16_tree_dp\|讲义]] | `loop/rounds/01_video/hc16_tree_dp` |
 
 ## 设计与并发（LLD）
@@ -46,7 +48,7 @@ python3 tools/cpptest.py run   <题目目录> --tag part1
 |---|---|---|---|---|
 | ld01 · 共享内存 SPSC 消息通道（Shared-Memory Single-Writer Single-Reader Channel） | ☐ | ☐ | [[ld01_spsc_channel\|讲义]] | `loop/rounds/03_lld/ld01_spsc_channel` |
 | ld02 · 交易相关的 OOD（订单状态机 · 仓位 PnL · 交易前风控 · 事件溯源与重放） | ☐ | ☐ | [[ld02_trading_ood\|讲义]] | `loop/rounds/03_lld/ld02_trading_ood` |
-| ld03 · 异步 TCP 消息通道（Asynchronous TCP Message Channel） | ☐ | （暂无 C++ 版） | [[ld03_async_tcp_channel\|讲义]] | `loop/rounds/03_lld/ld03_async_tcp_channel` |
+| ld03 · 异步 TCP 消息通道（Asynchronous TCP Message Channel） | ☐ | ☐ | [[ld03_async_tcp_channel\|讲义]] | `loop/rounds/03_lld/ld03_async_tcp_channel` |
 
 ## 模拟题（Java / Maven）
 
