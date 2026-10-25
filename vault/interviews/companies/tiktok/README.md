@@ -16,7 +16,7 @@ TikTok（和母公司 ByteDance）对有经验的后端工程师，用的是一�
 | 轮 | Anki | Obsidian |
 |---|---|---|
 | 编码 | `LeetCode Tops::24 TikTok 字节高频 · 整题答案`：先读，从 **模式识别** 和 **Python 工具箱** 两个分支开始；再做 `::25 TikTok 字节高频 · 拆分背诵` | [[interviews/core/leetcode/tiktok/map/patterns]] · [[interviews/core/leetcode/tiktok/map/python]] |
-| 系统设计 | — | [[tiktok-sd-index]]：先练支付系统 |
+| 系统设计 | `支付系统核心`：支付岗必刷，先刷账务与正确性工程两个分支 | [[tiktok-sd-index]]：先练支付系统，再练 SD09 钱包与账本、SD10 打款、SD11 对账、SD12 支付路由 |
 | 后端基础（八股） | — | [[tiktok-fundamentals]] |
 | 行为与项目深挖 | — | `behavioral/`：[[behavioral/00_how_it_works]] → [[behavioral/question_bank]] → [[behavioral/deep_dive]] → [[behavioral/bytestyle]] |
 | 公司与反问 | — | [[01-company-brief]] · [[06-questions-to-ask]] |
