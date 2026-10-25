@@ -20,13 +20,13 @@ public record Overflow(BigInteger exact) implements SumResult {}   // 带数学�
 public enum Width { INT, LONG }   // 累加器位宽；INT 让溢出在 n = 65536 就发生
 ```
 
-所有「溢出」的语义统一：**数学上的真实和放不进该位宽 ⇒ `Overflow(exact)`**，`exact` 是精确值；绝不返回回绕后的错误数。
+所有「溢出」的语义统一：**数学上的真实和放不进该位宽 ⇒** `Overflow(exact)`，`exact` 是精确值；绝不返回回绕后的错误数。
 
 ## Part 1 · 朴素递归 + checked overflow
 
 | 签名                                                        | 内容                                                                                                                                                                      |
 | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `static SumResult sumToRecursive(long n, Width w)`          | `sum(n) = n + sum(n-1)`；`n < 0` → `IllegalArgumentException`；加法用 `Math.addExact`，`ArithmeticException` 转成 `Overflow(exactTo(n))`；**`StackOverflowError` 不要吞** |
+| `static SumResult sumToRecursive(long n, Width w)`          | `sum(n) = n + sum(n-1)`；`n < 0` → `IllegalArgumentException`；加法用 `Math.addExact`，`ArithmeticException` 转成 `Overflow(exactTo(n))`；`StackOverflowError` **不要吞** |
 | `Width.add(long, long)` · `static BigInteger exactTo(long)` | 检查加法（INT 位宽额外 `Math.toIntExact`）· 精确值                                                                                                                        |
 
 - `INT`：`n = 65535` → `Ok(2147450880)`；`n = 65536` → `Overflow(2147516416)`。
@@ -62,7 +62,7 @@ public enum Width { INT, LONG }   // 累加器位宽；INT 让溢出在 n = 6553
 | 签名                                                          | 内容                                                                                   |
 | ------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
 | `record Wide(long hi, long lo)`                               | 128 位补码累加器：`plus(long)` · `merge(Wide)` · `fitsLong()` · `toBigInteger()`       |
-| `static SumResult checkedSum(long[])`                         | 顺序基线；**只有真实总和放不进 long 才 `Overflow`**（`[MAX, 1, -1]` 是 `Ok(MAX)`）     |
+| `static SumResult checkedSum(long[])`                         | 顺序基线；**只有真实总和放不进 long 才** `Overflow`（`[MAX, 1, -1]` 是 `Ok(MAX)`）     |
 | `static SumResult parallelSumForkJoin(long[], int threshold)` | `RecursiveTask`，≤ threshold 直接算，否则 fork 左 / 算右 / join；`threshold < 1` → IAE |
 | `static SumResult parallelSumStream(long[])`                  | 按块下标并行的 parallel stream                                                         |
 | `static SumResult sumVirtual(long[], int chunks)`             | 每块一个虚拟线程（`StructuredTaskScope`，预览 API）；`chunks < 1` → IAE                |
