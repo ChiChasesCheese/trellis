@@ -182,6 +182,10 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: "22"
+      - name: Install the headless Chrome that mermaid-cli's puppeteer expects
+        run: |
+          v=$(grep -oE 'MERMAID_CLI_VERSION", "[^"]+"' scripts/check_mermaid.py | grep -oE '[0-9][0-9.]+')
+          npx -y -p "@mermaid-js/mermaid-cli@${MERMAID_CLI_VERSION:-$v}" puppeteer browsers install chrome-headless-shell
       - name: Render the mermaid diagrams on the changed pages
         env:
           EVENT: ${{ github.event_name }}
