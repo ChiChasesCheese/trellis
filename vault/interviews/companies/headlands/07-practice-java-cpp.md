@@ -14,7 +14,8 @@ python3 tools/cpptest.py run   <题目目录> --tag part1
 ```
 
 - **限时**：Part 1 约 15 分钟，Part 1 + 2 约 35 分钟；超时就停，读讲义，第二天重写。
-- **C++ 那一遍**：先过一遍 [[CPP_CONVENTIONS]] 和 C++ 讲义 C16（CoderPad 现场），注意整数溢出、迭代器失效、`const&` 传参。
+- **C++ 那一遍**：先过一遍 [[CPP_CONVENTIONS]] 和 C++ 讲义 C16（CoderPad 现场），注意整数溢出、迭代器失效、`const&` 传参。题面看 `<题目目录>/cpp/problem.md`（C++ 签名和 C++ 专属边界），写完对照 `<题目目录>/cpp/REPORT.md`（思路与追问）。
+- **在 Cursor 里写**：`python3 tools/ide.py <题目目录>`，然后 Reload Window。Java 能跳转、补全、看报错（一次只激活一道题），C++ 由 clangd 提供同样的功能。换题或跑完 `jtest.py start` 之后要再跑一次。模拟时把 Cursor Tab 关掉。
 - **两遍之间**：不要看 Java 的代码写 C++；先想清楚两种语言里各自地道的数据结构（`TreeMap` 对 `std::map`，`ArrayDeque` 对 `std::deque`）。
 
 ## OA 原题

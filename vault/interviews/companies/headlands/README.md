@@ -48,6 +48,8 @@ python3 tools/cpptest.py run   loop/rounds/01_video/hc03_recursive_sum --tag par
 
 `start` 把空壳复制成你的工作副本（Java 是 `work/`，C++ 是 `cpp/work.hpp`）。写完用 `run` 跑测试，加 `--impl reference` 跑参考解。
 
+C++ 的题面和思路是每道题的 `cpp/problem.md`、`cpp/REPORT.md`。在 Cursor 里写之前先跑 `python3 tools/ide.py <题目目录>`，再 Reload Window，Java 和 C++ 就都能补全和报错了。
+
 ## 题目一览
 
 | 题 | 内容 | C++ 版 |
