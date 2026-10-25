@@ -1,0 +1,267 @@
+# Payments from first principles for a backend engineer interviewing with ByteDance Global Payment: roles and money flow,
+# card lifecycle, ledgers, correctness, reconciliation, cross-border, payouts, risk and compliance, platform architecture.
+domain: payments
+title: 支付系统核心
+lang: zh
+vault: domains/payments
+study:
+  order: core-first
+  mix: new-first
+  new_per_day: 30
+  reviews_per_day: 200
+nodes:
+- id: landscape
+  order: 1
+  core: true
+  title: 支付生态与角色
+  summary: 钱和信息分别怎么流动：持卡人、商户、收单行、发卡行、卡组织、支付服务商（PSP）、支付机构；卡支付与替代支付方式；TikTok 与字节的支付场景。
+  children:
+  - id: landscape.parties
+    title: 支付链路上的角色
+    summary: 持卡人、商户、收单行（acquirer）、发卡行（issuer）、卡组织（Visa / Mastercard）、PSP、支付网关、处理器、支付便利商（PayFac）各做什么、各赚什么钱。
+  - id: landscape.money-vs-info
+    title: 信息流与资金流
+    summary: 一笔卡支付里授权消息实时走、资金隔一两天才动；为什么「支付成功」不等于「钱到账」。
+    requires:
+    - landscape.parties
+  - id: landscape.methods
+    title: 支付方式全景
+    summary: 银行卡、电子钱包（Apple Pay / PayPal）、银行转账（ACH / SEPA / 实时支付）、本地支付方式、先买后付（BNPL）；各自的确认时延、退款方式与风险。
+    requires:
+    - landscape.parties
+  - id: landscape.business-scenarios
+    title: 互联网平台的支付场景
+    summary: 虚拟币充值（TikTok 金币）、广告主付款、电商结算（TikTok Shop）、创作者与卖家打款、订阅；每种场景的资金方向与难点。
+    requires:
+    - landscape.methods
+- id: card-lifecycle
+  order: 2
+  core: true
+  title: 卡支付生命周期
+  summary: 一笔卡交易从授权到结算：授权、请款、清算、结算、退款与撤销、交换费与定价、3DS 与强客户认证、令牌化。
+  children:
+  - id: card-lifecycle.authorization
+    title: 授权（authorization）
+    summary: 授权请求怎么从商户走到发卡行、响应码、额度冻结（auth hold）、预授权与追加授权、授权过期。
+    requires:
+    - landscape.money-vs-info
+  - id: card-lifecycle.capture-clearing-settlement
+    title: 请款、清算与结算
+    summary: capture 把授权变成扣款；清算交换交易明细、结算真正划拨资金；T+1 / T+2 的由来。
+    requires:
+    - card-lifecycle.authorization
+  - id: card-lifecycle.refunds-voids
+    title: 撤销、退款与部分退款
+    summary: 授权后未请款用 void、请款后用 refund；部分退款、多次退款、退款失败；为什么退款也要幂等。
+    requires:
+    - card-lifecycle.capture-clearing-settlement
+  - id: card-lifecycle.fees
+    title: 交换费、卡组织费与商户定价
+    summary: interchange 由谁收、为什么因卡种和场景不同；scheme fee；商户扣率（MDR）、IC++ 与混合定价。
+    requires:
+    - card-lifecycle.capture-clearing-settlement
+  - id: card-lifecycle.3ds-sca
+    title: 3DS 与强客户认证
+    summary: 3-D Secure 的流程、责任转移（liability shift）、欧洲 PSD2 的强客户认证（SCA）与豁免；摩擦与转化率的取舍。
+    requires:
+    - card-lifecycle.authorization
+  - id: card-lifecycle.tokenization
+    title: 令牌化与卡数据安全
+    summary: PSP 金库令牌、卡组织网络令牌（network token）、为什么令牌化能缩小 PCI 范围、提高授权率。
+    requires:
+    - card-lifecycle.authorization
+- id: ledger
+  order: 3
+  core: true
+  title: 账务与资金
+  summary: 支付系统的「真相」：复式记账账本、账户与分录、余额与冻结、不可变与冲正、多币种账务。
+  children:
+  - id: ledger.double-entry
+    title: 复式记账
+    summary: 每笔资金变动都是一借一贷、借贷相等；为什么支付系统必须用复式账本而不是改余额字段。
+  - id: ledger.accounts-postings
+    title: 账户、凭证与分录的数据模型
+    summary: 账户（account）、交易（transaction / journal）、分录（posting / entry）三层模型；用户余额、商户应付、平台收入、在途资金这些账户怎么设计。
+    requires:
+    - ledger.double-entry
+  - id: ledger.balances-holds
+    title: 余额、可用余额与冻结
+    summary: 账面余额与可用余额、冻结（hold）与解冻；余额是算出来的还是存下来的；高并发扣减时的热点账户。
+    requires:
+    - ledger.accounts-postings
+  - id: ledger.immutability
+    title: 不可变账本与冲正
+    summary: 账本只追加不修改；改错用冲正分录（reversal）；审计与时间点查询（as-of）。
+    requires:
+    - ledger.accounts-postings
+  - id: ledger.multi-currency-ledger
+    title: 多币种账务
+    summary: 每个币种分开记账、换汇产生的分录、汇兑损益；为什么不能把不同币种相加。
+    requires:
+    - ledger.accounts-postings
+- id: correctness
+  order: 4
+  core: true
+  title: 正确性工程
+  summary: 钱不能多也不能少：金额表示、幂等、状态机、未知结果、分布式事务、回调与事件的去重和顺序。
+  children:
+  - id: correctness.money-representation
+    title: 金额怎么表示
+    summary: 最小货币单位整数（minor units）、不同币种的小数位、Decimal 与浮点、舍入规则（银行家舍入）与分摊误差。
+  - id: correctness.idempotency
+    title: 幂等与幂等键
+    summary: 客户端生成幂等键、服务端「同键同结果」的存储与过期、并发同键请求、跨服务传递；和数据库唯一约束的关系。
+  - id: correctness.state-machines
+    title: 支付状态机
+    summary: 支付单、退款单、打款单的状态与合法转移；只能单调前进；终态；用条件更新防止并发乱序。
+    requires:
+    - correctness.idempotency
+  - id: correctness.unknown-outcomes
+    title: 超时与未知结果
+    summary: 调用 PSP 超时时钱到底扣了没有：查询补偿、对账兜底、绝不盲目重试扣款；「待处理一小时」怎么处理。
+    requires:
+    - correctness.state-machines
+  - id: correctness.distributed-transactions
+    title: 跨服务一致性：outbox、SAGA 与 TCC
+    summary: 本地事务加 outbox 发事件、SAGA 的补偿、TCC 的预留与确认；支付场景里各自适用在哪里。
+    requires:
+    - correctness.state-machines
+  - id: correctness.webhooks-events
+    title: 回调与事件：去重、乱序与重放
+    summary: PSP webhook 的签名校验、至少一次送达下的去重、乱序到达的处理、事件溯源与重放。
+    requires:
+    - correctness.idempotency
+- id: reconciliation
+  order: 5
+  title: 对账、结算与资金管理
+  summary: 确认每一分钱都对得上：内部与渠道对账、结算文件、匹配算法、差错处理、资金在途与头寸。
+  children:
+  - id: reconciliation.why-reconcile
+    title: 为什么必须对账
+    summary: 系统之间的记录天然会不一致：超时、漏回调、渠道调账、手续费差异；对账是最后一道防线。
+    requires:
+    - correctness.unknown-outcomes
+  - id: reconciliation.three-way
+    title: 三方对账：内部、渠道、银行
+    summary: 内部账本对 PSP 交易报告、PSP 结算对银行入账；每一层发现什么问题。
+    requires:
+    - reconciliation.why-reconcile
+    - ledger.accounts-postings
+  - id: reconciliation.matching
+    title: 对账匹配与差错处理
+    summary: 按单号精确匹配、模糊匹配、一对多与多对一；长款、短款、状态不一致；差错单的处理流程与自动化。
+    requires:
+    - reconciliation.three-way
+  - id: reconciliation.settlement-cash
+    title: 结算周期与资金头寸
+    summary: T+N 结算、在途资金、预付与保证金、渠道资金池；为什么资金管理影响产品体验。
+    requires:
+    - reconciliation.three-way
+- id: cross-border
+  order: 6
+  title: 跨境与换汇
+  summary: 汇率从哪来、什么时候锁、怎么加价；多币种定价与结算；汇率风险。
+  children:
+  - id: cross-border.fx-rates
+    title: 汇率来源与报价锁定
+    summary: 汇率提供方、中间价与买卖价、报价的有效期（quote lock）、加价（markup）。
+    requires:
+    - ledger.multi-currency-ledger
+  - id: cross-border.multi-currency-pricing
+    title: 多币种定价与结算币种
+    summary: 展示币种、扣款币种、结算币种的区别；动态货币转换（DCC）；本地收单的好处。
+    requires:
+    - cross-border.fx-rates
+  - id: cross-border.fx-risk
+    title: 汇率风险与对冲
+    summary: 收款与付款时间差带来的汇率风险、头寸管理；平台为什么要集中换汇。
+    requires:
+    - cross-border.multi-currency-pricing
+- id: payouts
+  order: 7
+  title: 打款与资金分发
+  summary: 把钱付出去：创作者与卖家打款、收款人开户与 KYC、打款渠道、批处理、失败与退票、分账。
+  children:
+  - id: payouts.payout-flow
+    title: 打款流程
+    summary: 余额计算、可提现金额、打款单、提交渠道、到账确认；拉模式（用户提现）与推模式（定期结算）。
+    requires:
+    - ledger.balances-holds
+    - correctness.state-machines
+  - id: payouts.rails
+    title: 打款渠道
+    summary: ACH、电汇、实时支付（RTP / FedNow）、SEPA、本地钱包；到账时间、费用、可撤回性。
+    requires:
+    - payouts.payout-flow
+  - id: payouts.failures-returns
+    title: 打款失败、退票与重试
+    summary: 账户信息错误、退票（return）几天后才回来、重复打款的风险；为什么打款比收款更怕重复。
+    requires:
+    - payouts.rails
+    - correctness.unknown-outcomes
+  - id: payouts.marketplace-split
+    title: 平台分账与资金托管
+    summary: 交易款拆分给卖家、平台佣金、延迟结算与保证金（reserve）；平台为什么要避免「二清」式持有资金。
+    requires:
+    - payouts.payout-flow
+- id: risk-compliance
+  order: 8
+  title: 风控与合规
+  summary: 交易风控与欺诈、拒付与争议、反洗钱与制裁筛查、PCI DSS、数据驻留。
+  children:
+  - id: risk-compliance.fraud
+    title: 交易欺诈与风控
+    summary: 规则引擎、速度检查（velocity）、设备指纹、机器学习评分；误拒与漏放的取舍；风控放在同步还是异步路径。
+    requires:
+    - card-lifecycle.authorization
+  - id: risk-compliance.chargebacks
+    title: 拒付与争议处理
+    summary: 持卡人发起争议、拒付原因码、商户举证（representment）、时间窗口；拒付率过高的后果。
+    requires:
+    - card-lifecycle.refunds-voids
+  - id: risk-compliance.aml-kyc
+    title: 反洗钱、KYC 与制裁筛查
+    summary: 客户身份识别、交易监控与可疑报告、制裁名单筛查；为什么打款和虚拟币是重点。
+    requires:
+    - landscape.business-scenarios
+  - id: risk-compliance.pci-data
+    title: PCI DSS 与支付数据安全
+    summary: 卡数据的存储范围、范围缩减（令牌化、托管页面）、密钥管理、日志脱敏；数据驻留要求。
+    requires:
+    - card-lifecycle.tokenization
+- id: platform
+  order: 9
+  title: 支付平台架构
+  summary: 把以上拼成一个平台：支付网关与路由、多渠道容灾、支付方式管理、订阅计费、可用性、可观测性与测试。
+  children:
+  - id: platform.gateway-orchestration
+    title: 支付网关与编排
+    summary: 统一下单接口、渠道适配层、支付编排（orchestration）；新增一个渠道要改哪些地方。
+    requires:
+    - correctness.state-machines
+  - id: platform.routing-failover
+    title: 渠道路由与容灾
+    summary: 按成本、成功率、币种、卡 BIN 选渠道；智能路由；渠道故障时切换且不重复扣款。
+    requires:
+    - platform.gateway-orchestration
+    - correctness.unknown-outcomes
+  - id: platform.subscriptions
+    title: 订阅与周期计费
+    summary: 账单周期、续费重试（dunning）、升降级按比例计费、卡过期更新（account updater）。
+    requires:
+    - platform.gateway-orchestration
+  - id: platform.availability
+    title: 支付系统的高可用
+    summary: 核心链路与非核心链路分离、降级、异步化、限流；为什么支付宁可慢也不能错。
+    requires:
+    - platform.routing-failover
+  - id: platform.observability
+    title: 支付指标与可观测性
+    summary: 支付成功率、授权率、各渠道耗时、对账差错率；按渠道和错误码拆分的告警；资金异常监控。
+    requires:
+    - platform.availability
+  - id: platform.testing
+    title: 支付系统怎么测试
+    summary: 渠道沙箱、录制回放、影子流量、资金类改动的灰度与对账验证；为什么支付测试要覆盖未知结果。
+    requires:
+    - platform.observability
