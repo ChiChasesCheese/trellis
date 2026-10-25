@@ -23,6 +23,10 @@ TikTok 的设计轮和别家有一个明显的不同：题目常常是团队真�
 | SD06 | 分布式任务调度器（low priority） | 每个（任务，触发时刻）至多执行一次；调度器多副本同时看到到期任务；失败通知 | 租约加 fencing token；持久化的时间槽；重试与至多一次的共存、停机后补跑 | [[sd06-job-scheduler]] | [[solution-job-scheduler]] |
 | SD07 | 内容审核（Content Moderation）（low priority） | 机器学习打分加规则加人工复核加申诉；近实时 SLA；审计 | 规则不重新发布就能更新；处置动作幂等；审计记录模型版本、分数、命中规则 | [[sd07-content-moderation]] | [[solution-notification-system]] |
 | SD08 | 指标聚合器（Metrics Aggregator） | 客户端库计数；时间桶汇总；热键；重试下的重复；基数治理 | 客户端预聚合加幂等批次号；按时间桶滚动汇总；基数上限与降级 | [[sd08-metrics-aggregator]] | [[solution-metrics-monitoring]] |
+| SD09 | 金币钱包与复式账本（Coin Wallet and Double-Entry Ledger） | 充值通知重复只入账一次；热点账户每秒几万次写；余额冻结；怎么证明账没被改 | 永久去重键加同事务；金币是独立币种，清算账户加按片存放的系统账户；热点账户只追加分录、读快照加增量；封块哈希链加守恒不变量 | [[sd09-wallet-ledger]] | [[solution-digital-wallet]]、[[sd02-live-gift-coin-settlement]] |
+| SD10 | 创作者与卖家打款（Creator and Seller Payouts） | 余额到可提现到打款单到通道；绝不重复付；KYC 拦截；批处理；几天后才到的退回 | 余额分四层并按批次带释放时间；六层防线加「超时是 unknown 不是 failed」；合规三次检查失败关闭；批次键唯一可重跑；退回进暂挂账户 | [[sd10-creator-payouts]] | [[solution-payment-system]]、[[sd01-payment-system]] |
+| SD11 | 三方对账系统（Three-Way Reconciliation） | 内部账本对 PSP 报告对银行流水；匹配；差异工作流；T+1 时限 | 分层匹配规则、每行只匹配一次、靠批次号不做子集和；差异分类加案例聚合加只追加的调整分录；各 PSP 独立完成；应收账户清零作为检验 | [[sd11-reconciliation-system]] | [[solution-payment-system]]、[[sd01-payment-system]] |
+| SD12 | 多 PSP 支付编排与智能路由（Payment Orchestration and Routing） | 按成本、授权率、币种路由；一家挂了怎么切不双扣；支付方式与令牌管理 | 先过滤再评分再探索，授权率权重高于成本；有定论才切换，超时先查询加部分唯一索引；网络令牌加映射表；规则是版本化数据，模拟加灰度加回滚 | [[sd12-payment-routing]] | [[solution-payment-system]]、[[sd01-payment-system]] |
 
 ## 贯穿所有题的五个问题
 
