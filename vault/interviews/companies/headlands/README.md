@@ -16,7 +16,7 @@
 | **背景问题**：怎么问 → 故事 → 题库 → 练习 | [behavioral/00_how_it_works.md](behavioral/00_how_it_works.md) · `behavioral/stories/` · [behavioral/question_bank.md](behavioral/question_bank.md) · [behavioral/drill.md](behavioral/drill.md) |
 | **C++ 课本**（16 课，从 Java 讲到 C++） | [core/cpp/headlands/lessons](../../core/cpp/headlands/lessons/README.md) |
 | **C++ 语言深度题**（44 题 + 速查表） | [questions.md](../../core/cpp/headlands/interview_questions/questions.md) · [cheatsheet.md](../../core/cpp/headlands/interview_questions/cheatsheet.md) |
-| **编码题**（24 题，每题 40 分钟，Java 和 C++ 各写一遍） | 练习清单 [[07-practice-java-cpp]]：按频率排好，每题一个 `problem.md`（动手）和一个 `solution.md`（下手的第一步、原理、两种语言的代码、追问答案）；一页速览 [[08-solutions-digest]] |
+| **编码题**（25 题，每题 40 分钟，Java 和 C++ 各写一遍） | 练习清单 [[07-practice-java-cpp]]：按频率排好，每题一个 `problem.md`（动手）和一个 `solution.md`（下手的第一步、原理、两种语言的代码、追问答案）；一页速览 [[08-solutions-digest]] |
 | Java 21 课本 / 基础课本 | [core/java/headlands/java21](../../core/java/headlands/java21/README.md) · [core/foundations/headlands](../../core/foundations/headlands/README.md) |
 | Java 语言深度题 | [questions.md](../../core/java/headlands/interview_questions/questions.md) |
 | 公司是做什么的 / 简历对 JD / 反问 | [01-company-brief.md](01-company-brief.md) · [fit.md](fit.md) · [06-questions-to-ask.md](06-questions-to-ask.md) |
