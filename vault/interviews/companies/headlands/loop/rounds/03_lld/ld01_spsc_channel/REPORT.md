@@ -30,14 +30,14 @@ SPSC 五种写法（6 次运行中位数，M 条/秒）：volatile 38、acq/rel 
 
 ## Java 21 特性
 
-| 特性 | 用在哪 | 比旧写法好在哪 |
-|---|---|---|
-| VarHandle | SpscLongRing 的 HEAD / TAIL（普通字段 + setRelease / getAcquire）；MessageRing 的 memorySegmentViewVarHandle | 按需选访问强度，不必全 volatile；字段布局自己控制（填充才有意义） |
-| FFM | MessageRing 建在 MemorySegment 上；SharedChannel 用 `FileChannel.map(mode, off, size, Arena)` | long 大小、Arena.close() 确定性取消映射；MappedByteBuffer 是 int 索引且无法确定性 unmap |
-| Math.clamp | SpscLongRing.size()、MessageRing.bytesPending() | 一个方法代替 `Math.max(0, Math.min(x, cap))` |
-| 接口 default 方法 | LongQueue.isFull()（SpscLongRing 覆盖它） | 实现类的继承链已被填充用掉，公共行为只能放接口 |
-| switch 表达式 | 子进程入口 `main`：`String err = switch (mode) {…}` | 每个分支产生值，无 fall through |
-| var | `var ring = MessageRing.init(…)`、`var producer = new Thread(…)` | 右边已写类型时不重复 |
+| 特性            | 用在哪                                                                                                 | 比旧写法好在哪                                                             |
+| ------------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| VarHandle     | SpscLongRing 的 HEAD / TAIL（普通字段 + setRelease / getAcquire）；MessageRing 的 memorySegmentViewVarHandle | 按需选访问强度，不必全 volatile；字段布局自己控制（填充才有意义）                               |
+| FFM           | MessageRing 建在 MemorySegment 上；SharedChannel 用 `FileChannel.map(mode, off, size, Arena)`            | long 大小、Arena.close() 确定性取消映射；MappedByteBuffer 是 int 索引且无法确定性 unmap |
+| Math.clamp    | SpscLongRing.size()、MessageRing.bytesPending()                                                      | 一个方法代替 `Math.max(0, Math.min(x, cap))`                              |
+| 接口 default 方法 | LongQueue.isFull()（SpscLongRing 覆盖它）                                                                | 实现类的继承链已被填充用掉，公共行为只能放接口                                             |
+| switch 表达式    | 子进程入口 `main`：`String err = switch (mode) {…}`                                                       | 每个分支产生值，无 fall through                                              |
+| var           | `var ring = MessageRing.init(…)`、`var producer = new Thread(…)`                                     | 右边已写类型时不重复                                                          |
 
 ## 面试官可能的追问
 
