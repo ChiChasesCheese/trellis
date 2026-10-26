@@ -1,32 +1,31 @@
 # 最后一天：照着做就行
 
-明天只做一件事：跟着答案把原理弄懂，能讲出来。不写全量代码、不做选择题，按下面的顺序往下走；每一块写了要打开什么、做什么、做到什么程度就停。时间不够就从后往前砍，前三块保住。周一 12:00 PT 面试（Teams + CoderPad，语言由面试官定，Java 或 C++）。
+明天只做一件事：把高频题的 Part 1–2 写顺，把 Part 3 的追问讲顺。每道题都是 40 分钟的面试篇幅，按下面的顺序往下走；每一块写了要打开什么、做什么、做到什么程度就停。时间不够就从后往前砍，前三块保住。周一 12:00 PT 面试（Teams + CoderPad，语言由面试官定，Java 或 C++）。
 
 ## 总览
 
 | 块   | 时长     | 做什么                      | 打开                                                     |        |
 | --- | ------ | ------------------------ | ------------------------------------------------------ | ------ |
-| 1   | 2.5 h  | 编码题前 9 道：读速读，再看参考解       | [[interviews/companies/headlands/08-solutions-digest]] | 18 题速读 |
+| 1   | 2.5 h  | 高频 8 题：写 Part 1–2，讲 Part 3    | [[interviews/companies/headlands/07-practice-java-cpp]] | 练习清单 |
 | 2   | 1 h    | C++ 现场生存：语法、容器、常见坑       | C16 · 速查表                                              |        |
 | 3   | 1 h    | Java 深度题：快在哪、JIT / GC、并发 | Java 题库 A、E、F                                          |        |
-| 4   | 1.5 h  | 编码题后 9 道：只读速读            | [[interviews/companies/headlands/08-solutions-digest]] | 18 题速读 |
+| 4   | 1.5 h  | 其余题：只读一页速览和解法             | [[interviews/companies/headlands/08-solutions-digest]] | 一页速览 |
 | 5   | 1 h    | 背景问题：填空、口述两个故事           | 题库 · 故事                                                |        |
 | 6   | 30 min | 晚上：公司一页纸、反问、周一清单         | 简报 · 反问                                                |        |
 
 中间每块之间休息 10 分钟。Anki 只在零碎时间刷：`Headlands::03 Java 技术面试题库`、`::08 C++ 技术面试题库`。
 
-## 块 1 · 编码题前 9 道（2.5 h）
+## 块 1 · 高频 8 题（2.5 h）
 
-打开 [[interviews/companies/headlands/08-solutions-digest|18 题速读]]，按顺序读：hc05 订单簿 → hc14 VWAP → hc15 流式中位数 → hc16 树形 DP → hc07 哈希表 →
-hc02 合并 K 路流 → hc04 队列均值快照 → hc09 成交额 Top-K → oa01 任务链。
+打开 [[interviews/companies/headlands/07-practice-java-cpp|练习清单]]，按「电面高频」的顺序：hc03 递归求和 → hc07 股票代码哈希表 → hc01 买卖股票 → hc04 队列均值 → hc05 订单簿 → hc02 合并 K 路 → hc10 Top-K 频率 → hc06 寄存器。
 
-每道题约 15 分钟：
+每道题约 18 分钟：
 
-1. 读速读那一节（5 分钟）：题意、核心思路、数据结构为什么这样选。
-2. 打开该题的 Java 参考解 `loop/rounds/<轮次>/<题>/reference/`，对着「核心思路」找到对应的几行（5 分钟）。
-3. 合上，口头说一遍：「这题我先……因为……复杂度……追问时……」（5 分钟）。说不顺就回到讲义里那一段。
+1. 读 `problem.md`，然后限时写 Part 1（8 分钟）：`python3 tools/jtest.py start <题目目录>`，写完 `run --tag part1`。
+2. 打开 `solution.md`，对照 Part 1 和 Part 2 的代码，看自己差在哪（5 分钟）。
+3. 合上，把 Part 3 的追问大声答一遍（5 分钟）：「我先……因为……复杂度……如果追问……」。
 
-想动手时只写 Part 1：`python3 tools/jtest.py start <题目目录>` 然后 `python3 tools/jtest.py run <题目目录> --tag part1`。
+hc03 和 hc07 用 C++ 再写一遍 Part 1：它们是同一场面试里出现的两道题，面试官最可能要 C++。
 
 ## 块 2 · C++ 现场生存（1 h）
 
@@ -48,12 +47,11 @@ hc02 合并 K 路流 → hc04 队列均值快照 → hc09 成交额 Top-K → oa
 
 每节读完，挑一题大声说一遍英文 60 秒版本。
 
-## 块 4 · 编码题后 9 道（1.5 h）
+## 块 4 · 其余题（1.5 h）
 
-继续 [[interviews/companies/headlands/08-solutions-digest|18 题速读]]：hc01 股票交易 DP → hc03 递归求和 → hc08 订单序列 API → hc11 区间重叠 → hc06 寄存器位运算 →
-hc13 定长内存池 → ld01 SPSC 通道 → ld02 交易系统 OOD → ld03 异步 TCP 通道。
+打开 [[interviews/companies/headlands/08-solutions-digest|一页速览]]，每道题读一行，能说出「先写什么、为什么、复杂度多少」就过；说不出来的，打开该题的 `solution.md` 读「开场 3 分钟」和 Part 1（每题 5–10 分钟）。顺序：hc08 → hc09 → hc13 → hc11 → hc15 → hc16 → hc17 → hc21 → oa01（准备 2 分钟讲你的 OA 解法）。
 
-这一块只读速读，每题 10 分钟；LLD 三题重点看「数据结构」和「追问」，它们最可能以聊天的形式出现。
+时间还有富余，再看 LLD 三题（ld01 SPSC 通道、ld02 交易 OOD、ld03 异步 TCP 通道）的「数据结构」和「追问」，它们最可能以聊天的形式出现。
 
 ## 块 5 · 背景问题（1 h）
 
