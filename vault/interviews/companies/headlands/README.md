@@ -16,7 +16,7 @@
 | **背景问题**：怎么问 → 故事 → 题库 → 练习 | [behavioral/00_how_it_works.md](behavioral/00_how_it_works.md) · `behavioral/stories/` · [behavioral/question_bank.md](behavioral/question_bank.md) · [behavioral/drill.md](behavioral/drill.md) |
 | **C++ 课本**（16 课，从 Java 讲到 C++） | [core/cpp/headlands/lessons](../../core/cpp/headlands/lessons/README.md) |
 | **C++ 语言深度题**（44 题 + 速查表） | [questions.md](../../core/cpp/headlands/interview_questions/questions.md) · [cheatsheet.md](../../core/cpp/headlands/interview_questions/cheatsheet.md) |
-| **编码题**（18 题，Java 和 C++ 各写一遍） | 练习清单 [[07-practice-java-cpp]]：每道题两个勾选框和命令；题在 `loop/rounds/<轮次>/<题>/`，讲义在 `study/30-articles/`（`_cpp.md` 是 C++ 版） |
+| **编码题**（21 题，每题 40 分钟，Java 和 C++ 各写一遍） | 练习清单 [[07-practice-java-cpp]]：按频率排好，每题一个 `problem.md`（动手）和一个 `solution.md`（下手的第一步、原理、两种语言的代码、追问答案）；一页速览 [[08-solutions-digest]] |
 | Java 21 课本 / 基础课本 | [core/java/headlands/java21](../../core/java/headlands/java21/README.md) · [core/foundations/headlands](../../core/foundations/headlands/README.md) |
 | Java 语言深度题 | [questions.md](../../core/java/headlands/interview_questions/questions.md) |
 | 公司是做什么的 / 简历对 JD / 反问 | [01-company-brief.md](01-company-brief.md) · [fit.md](fit.md) · [06-questions-to-ask.md](06-questions-to-ask.md) |
@@ -48,23 +48,30 @@ python3 tools/cpptest.py run   loop/rounds/01_video/hc03_recursive_sum --tag par
 
 `start` 把空壳复制成你的工作副本（Java 是 `work/`，C++ 是 `cpp/work.hpp`）。写完用 `run` 跑测试，加 `--impl reference` 跑参考解。
 
-C++ 的题面和思路是每道题的 `cpp/problem.md`、`cpp/REPORT.md`。在 Cursor 里写之前先跑 `python3 tools/ide.py <题目目录>`，再 Reload Window，Java 和 C++ 就都能补全和报错了。
+每道题的 `problem.md` 同时给出 Java 和 C++ 的签名，`solution.md` 里两种语言的代码都有。在 Cursor 里写之前先跑 `python3 tools/ide.py <题目目录>`，再 Reload Window，Java 和 C++ 就都能补全、报错和保存时格式化。
 
 ## 题目一览
 
-| 题 | 内容 | C++ 版 |
+| 题 | 内容 | 轮次 |
 |---|---|---|
-| oa01 | Job chain 报表（你过了的 OA） | ✅ |
-| hc01 | 买卖股票 DP 家族 | ✅ |
-| hc02 | 合并 K 路有序流 → 多线程 | ✅ |
-| hc03 | 递归求和 → 溢出 / 栈深度 / 并行 | ✅ |
-| hc04 | 带快照的 queue mean → 单写多读 | ✅ |
-| hc05 | 订单簿 + 撮合 + 零分配 | ✅ |
-| hc06 | 32 位寄存器位运算 | ✅ |
-| hc07 | ticker 哈希表优化 | ✅ |
-| hc08 | 订单序列 API（树状数组） | ✅ |
-| hc09 | Top-K 成交额 | ✅ |
-| hc11 | 订单区间最大重叠 | ✅ |
-| hc13 | 固定大小内存池 | ✅ |
-| ld01–ld03 | SPSC 通道 / 交易 OOD / 异步 TCP 通道 | — |
-| sd01–sd03 | 无用代码分析 / 定时任务调度 / 低延迟交易系统 | — |
+| hc03 | 递归求和 → 溢出 / 栈深 / 公式 | 电面（高频） |
+| hc07 | 股票代码打包成整数 → 开放寻址哈希表 | 电面（高频） |
+| hc01 | 买卖股票：一次 / 不限次数 / 最多 k 次 | 电面（高频） |
+| hc04 | 队列均值 → 快照修正 | 电面（高频） |
+| hc05 | 订单簿 → 限价撮合 | 电面（高频） |
+| hc02 | 合并 K 个有序序列 → 惰性迭代器 | 电面（高频） |
+| hc10 | 出现次数最多的 k 个数 | 电面（高频） |
+| hc06 | 32 位寄存器位运算 | 电面（高频） |
+| hc08 | 订单序列前缀查询 → 树状数组 | 电面 |
+| hc09 | 按成交额取 Top-K | 电面 |
+| hc13 | 定长内存池 → 带代数的句柄 | 电面 |
+| hc11 | 订单区间最大重叠 → 分买卖 + 撤单 | 电面 |
+| hc15 | 带批量加法的栈 → 懒标记 | 电面 |
+| hc16 | 游程编码解码 → 分块流式 | 电面 |
+| hc17 | 带 `*` 的模式匹配 | 电面 |
+| hc21 | 平方根：牛顿法 → 整数平方根 | 电面（申请时的 √42 题） |
+| hc19 · hc20 | 不相邻取数 · 合并区间 | onsite |
+| hc12 · hc18 | 触发订单过滤 · 由快照算净持仓 | onsite |
+| oa01 · oa03 | Job chain 报表（你过了的 OA） · as-of join | OA |
+| ld01–ld03 | SPSC 通道 / 交易 OOD / 异步 TCP 通道 | onsite 设计轮 |
+| sd01–sd03 | 无用代码分析 / 定时任务调度 / 低延迟交易系统 | onsite 设计轮 |
