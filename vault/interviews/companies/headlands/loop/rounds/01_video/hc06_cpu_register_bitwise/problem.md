@@ -1,83 +1,65 @@
-# hc06 · CPU 寄存器位运算（一个无符号 32 位寄存器 + 一串操作）
+# hc06 · CPU 寄存器位运算
 
-## 读题前你需要知道
+一个 CPU 寄存器就是 32 个开关（bit）。你拿到它的初值和一串指令（与、或、异或、取反、移位……），依次执行，输出最后的值。代码本身很短，分数在细节上：Java 没有无符号 `int`，移位 32 位及以上在 Java 和 C++ 里都不是你想的那样，循环移位的位数为 0 时容易写出未定义行为。题目是一个函数 `solve(lines) → 输出行`，Java 和 C++ 的签名都在下面，选面试官要的那种语言。
 
-全部难点来自「32 个二进制位在 Java 里是怎么存的」：补码（two's complement）、有符号与无符号的区别、`<<` `>>` `>>>` 的差别、
-掩码（mask）怎么用。你只需要会写基本的 Java（类、方法、循环、`List`）。
+## 面试官会怎么说
 
-## 背景
+> "You have a 32-bit unsigned register. Read its initial value, then apply a list of operations: AND, OR, XOR, NOT, shift left, shift right. Print the final value. If the input is malformed, print 'Malformed Input'."
+> 接着会问："What happens if you shift by 32?" "Now add rotate left and right." "Print it in hex and in binary." "What if the register were 64 bits?"
 
-一个 CPU 寄存器就是 32 个开关（bit）。你拿到它的初值和一串指令，依次执行，最后输出寄存器的值，以及指令里要求输出的计数。
-面试官看的是：你有没有把「Java 的 int 是有符号的」这件事处理干净——每一个 `>>`、`<<`、转十进制、转 long 都是潜在的 bug。
+## 40 分钟怎么分
 
-## 输入（stdin / `solve(List<String>)`）
+| 时间 | 做什么 |
+|---|---|
+| 0–3 分钟 | 复述题目，问清：数是十进制吗？指令大小写？移位位数超过 31 怎么算？ |
+| 3–15 分钟 | **Part 1**：与、或、异或、取反、移位，十进制输出 |
+| 15–30 分钟 | **Part 2**：循环移位，输出格式 |
+| 30–40 分钟 | **Part 3**：口头追问，不写代码 |
 
+## Part 1 · 六条指令（约 12 分钟）
+
+| 语言 | 签名 |
+|---|---|
+| Java | `static List<String> solve(List<String> lines)` |
+| C++ | `std::vector<std::string> solve(const std::vector<std::string>& lines)` |
+
+- 第一行是寄存器初值，十进制，范围 `0..4294967295`。之后每行一条指令，指令名全大写，用空格隔开参数：`AND x` · `OR x` · `XOR x` · `NOT`（没有参数）· `SHL k` · `SHR k`。
+- `x` 和 `k` 都是十进制，范围 `0..4294967295`。`SHL` / `SHR` 是逻辑移位（补 0）；`k >= 32` 时结果是 0。
+- 返回一行：终值的十进制。例子：`["240", "AND 60", "SHL 4", "OR 15"]` → `["783"]`（`240 & 60 = 48`，`48 << 4 = 768`，`768 | 15 = 783`）。
+- 任何错误（空输入、初值或参数不是十进制数或超出范围、未知指令、参数个数不对、小写指令名、空行）→ 只返回 `["Malformed Input"]`。
+
+## Part 2 · 循环移位和输出格式（约 15 分钟）
+
+函数不变，增加两件事：
+
+- `ROL k` · `ROR k`：循环左移 / 右移，被挤出去的位从另一头绕回来；位数对 32 取模，所以 `ROL 0`、`ROL 32` 都不改变寄存器，`ROL 36` 等于 `ROL 4`。例子：`0x12345678`（305419896）`ROL 4` 得 `0x23456781`（591751041）；`0x80000001`（2147483649）`ROL 1` 得 3。
+- 最后一行可以是输出格式 `DEC` / `HEX` / `BIN`（不写就是 `DEC`）。`HEX` 输出 `0x` 加 8 位大写十六进制，如 `0x000000FF`；`BIN` 输出 32 位二进制，如 `00000000000000000000000000000101`。格式只能出现在最后一行，写在中间算未知指令。
+
+## Part 3 · 口头追问（不写代码，答案在 solution.md）
+
+1. Java 没有无符号 `int`，你怎么表示这个寄存器？
+2. 为什么 `SHL 32` 要单独处理？
+3. `>>` 和 `>>>` 有什么区别？这里该用哪个？
+4. 循环移位怎么写才不会出错？`ROL 0` 为什么是陷阱？
+5. 如果寄存器是 64 位，哪些地方要改？
+6. 为什么不能用 `Integer.parseInt` 解析操作数？
+
+## 边界
+
+- 寄存器最高位为 1（`NOT` 之后、`4294967295`）时的 `SHR`、输出
+- `SHL 0` / `SHL 31` / `SHL 32` / `SHR 33` / `SHL 4294967295`
+- `ROL 0` / `ROL 32` / `ROL 36`
+- 初值 `0`、`4294967295`、`4294967296`（非法）、`-1`、`+5`（非法）
+- `AND 4294967295`（`Integer.parseInt` 会抛异常）
+- 空输入、空行、`NOT 2`、`AND` 缺参数、小写指令名
+
+## 怎么跑
+
+在 kit 根目录（`interviews/companies/headlands/`）下：
+
+```bash
+python3 tools/jtest.py start   loop/rounds/01_video/hc06_cpu_register_bitwise       # Java：starter/ → work/
+python3 tools/jtest.py run     loop/rounds/01_video/hc06_cpu_register_bitwise --tag part1
+python3 tools/cpptest.py start loop/rounds/01_video/hc06_cpu_register_bitwise       # C++：cpp/starter.hpp → cpp/work.hpp
+python3 tools/cpptest.py run   loop/rounds/01_video/hc06_cpu_register_bitwise --tag part1
 ```
-0xF0
-AND 0x3C
-SHL 4
-OR 0x0F
-POPCOUNT
-NOT
-SHR 28
-POPCOUNT
-```
-
-* 第 1 个有效行（`0xF0`）：初值（十进制 / 0x 十六进制 / 0b 二进制），范围 0..4294967295。
-* 其余每行一条指令（`AND 0x3C` 起），助记符不分大小写；空行与 `#` 开头的行忽略。
-
-| 指令 | 语义（`r` = 当前寄存器） | Part |
-|---|---|---|
-| `AND m` · `OR m` · `XOR m` | `r op m`（m 是 0..2³²−1 的无符号数） | 1 |
-| `NOT` | 所有位取反 | 1 |
-| `SHL n` · `SHR n` | 逻辑左移 / 逻辑右移（补 0）；**n ≥ 32 → 结果 0** | 1 |
-| `ROL n` · `ROR n` | 循环左移 / 右移；位数 mod 32 | 1 |
-| `SET b` · `CLEAR b` · `TOGGLE b` | 第 b 位（0 = 最低位）置 1 / 清 0 / 翻转；b ∈ 0..31 | 1 |
-| `POPCOUNT` | **输出** r 里 1 的个数（不改 r） | 1 |
-| `COMPRESS m` · `EXPAND m` | `Integer.compress/expand(r, m)`：把 m 为 1 的那些位收拢到低位 / 散开 | 3 |
-| `REVERSE` · `BSWAP` | 32 位整体翻转 / 字节序翻转 | 3 |
-| `CTZ` · `CLZ` | **输出** 末尾 0 的个数 / 前导 0 的个数（r = 0 时都是 32） | 3 |
-
-## 输出
-
-每条「输出型」指令（POPCOUNT / CTZ / CLZ）在程序运行到它时输出一行十进制；最后一行是终值的三种视图，空格分隔：
-
-```
-6
-4
-0x0000000F 15 00000000000000000000000000001111
-```
-
-即 `0x` + 8 位大写十六进制，无符号十进制，32 位二进制（全部补零）。输入有任何问题（格式、范围、未知指令、位号越界）→ 只输出 `Malformed Input`。
-
-## Part
-
-| Part | 签名（`RegisterSim`） | 内容 |
-|---|---|---|
-| 1 | `Instr parseLine(String)` · `List<Instr> parseProgram(List<String>)` · `int apply(int, Update)` · `int query(int, Query)` · `Run run(long, List<Instr>)` · `long parseValue(String)` | 解析成 sealed 指令层次（records），用模式匹配 switch 执行 |
-| 2 | `long unsigned(int)` · `String dec/hex/bin/describe(int)` · `List<String> solve(List<String>)` | 无符号语义、输出格式、整题 |
-| 3 | `apply`/`query`/`parseLine` 增加 `COMPRESS EXPAND REVERSE BSWAP CTZ CLZ` | 扩展指令（`Integer.compress/expand/reverse/…`） |
-| 4 | `Compiled compile(List<Instr>)` · `Run execute(Compiled, long)` | 解码一次到 `int[]`，热循环不分配、移位无分支；结果必须与 `run` 完全相同 |
-
-指令层次（`Instr` sealed → `Update` / `Query` 两个 sealed 子接口）和全部 record 已在 starter 里给出，记录的紧凑构造器负责校验位号 / 位数。
-
-## 边界清单
-
-* 寄存器含最高位（`0x80000000`，在 `int` 里是负数）时的 `SHR`、`dec`、`unsigned`、比较
-* `SHL 32` / `SHR 32` / `SHL 33`：Java 的 `<<` 只取位数的低 5 位，`x << 32 == x`
-* `ROL 32`、`ROL 36`、`ROL 0`；`SET 31` / `CLEAR 31` / `TOGGLE 31`；位号 32 与 −1
-* 初值 `0`、`4294967295`、`4294967296`（非法）、`-1`（非法）；十进制 `010` 是 10 不是八进制；`0x` 单独出现
-* `AND 0xFFFFFFFF`（`Integer.parseInt("FFFFFFFF", 16)` 会抛异常，要用 `long`）
-* `CTZ` / `CLZ` / `POPCOUNT` 在 0 与 −1 上；`COMPRESS 0` / `COMPRESS 0xFFFFFFFF`
-* 空程序；只有注释；多余空白
-
-## 相关变体
-
-* 同一个模拟器，要求对 `uint64_t` 寄存器再做一遍（`long` + `Long.toUnsignedString` + `Long.compareUnsigned`）。
-* 「这段代码有 bug，找出来」：典型的有 `>>` 代替 `>>>`、`1 << 31` 当正数、`(int)` 与 `long` 混用、`Integer.parseInt("FFFFFFFF", 16)`。
-* 位集（bitset）、位板（bitboard）、flag 枚举——同一套技巧换个包装。
-
-## 考什么
-
-细心。位运算本身一行就写完；评分点是**每一处有符号 / 无符号、移位位数、数字解析的坑你有没有提前想到**，以及 Part 4 里你能不能说清楚
-「为什么解码一次到 int[] 更快、哪里还会慢（分支预测）」。

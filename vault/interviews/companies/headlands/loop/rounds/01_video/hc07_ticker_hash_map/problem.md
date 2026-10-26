@@ -1,129 +1,68 @@
-# hc07 · 股票代码哈希表（design an optimized hash map for stock tickers）
+# hc07 · 股票代码哈希表
 
-股票代码（ticker）是至多 8 个大写字母的短字符串，交易系统要拿它反复查表。这个任务从最普通的 `HashMap<String, Long>` 出发，一步步把它优化成更小更快的表：自己写开放寻址哈希表、把代码打包进一个 `long`、用完美哈希消灭冲突，最后谈堆外内存和怎么测量。key 的结构特殊，这个特点就是优化的突破口。
+行情系统每秒要按股票代码（ticker）查几百万次表，最直接的写法是 `unordered_map<string, long>`。面试官让你把它优化一下。突破口在 key 上：ticker 最多 8 个大写字母，正好能塞进一个 64 位整数，key 就从「堆上的字符串」变成「寄存器里的一个数」。Part 1 先把 ticker 打包成整数，Part 2 再写一个以这个整数为 key 的小哈希表。其余的优化（删除、完美哈希、缓存行）都是口头追问。Java 和 C++ 的签名都在下面，选面试官要的那种语言。
 
-## 读题前你需要知道
+## 面试官会怎么说
 
-* **哈希表**是怎么做到「几乎 O(1) 查找」的：哈希函数（hash function）、冲突（collision）、链地址法（chaining）vs 开放寻址（open addressing）、装载因子（load factor）、为什么要 resize；
-* 线性探测下**删除为什么要留墓碑**（tombstone）；
-* **CPU 缓存行**（cache line）和**指针追逐**（pointer chasing）：为什么「把数据排紧」比「少做几次运算」更重要；
-* Java 的 `HashMap<String, Long>` 每个条目背后有多少个对象、**装箱**（boxing）是什么；
-* **完美哈希**（perfect hashing）：key 集合固定时，能不能做到「零冲突」。
+> "We look up stock tickers in an unordered_map millions of times a second. How would you optimize it?"
+> 接着会问："Why is a string key slow?" "How would you pack a ticker into an integer?" "Now write the hash table yourself." "How do you delete?" "What if the ticker set is known in advance?"
 
+## 40 分钟怎么分
 
-## 背景
-
-行情系统里到处是「按股票代码（ticker）累加/查找」：每个 ticker 的累计成交量、最新价、持仓……每秒几百万次。
-Java 里最直接的写法是 `HashMap<String, Long>`。面试官会让你先自己写一个哈希表（证明你懂原理），然后问：**如果 key 是股票代码，你还能做得更好吗？**
-
-股票代码的结构很特别：**至多 8 个大写 ASCII 字母**（`AAPL`、`MSFT`、`BRKB`；真实的 `BRK.B` 这类带点的不在讨论范围）。
-这个结构就是优化的突破口。
-
-## Part 一览
-
-| Part | 入口 | 内容 |
-|---|---|---|
-| 1 | `TickerMap`（key = `String`，value = `long`） | 手写开放寻址 + 线性探测哈希表：put / get / add / remove，墓碑，resize |
-| 2 | `TickerCodec` + `LongTickerMap` | 利用「≤ 8 个大写字母」把代码**打包进一个 `long`**，key 变成原始类型，不分配、不装箱；报文字段直接解析 |
-| 3 | `SymbolIndex` + `FrozenTickerMap` | 开盘前就知道全部代码 → **最小完美哈希**，零冲突，value 放进长度恰好 n 的数组 |
-| 4 | `OffHeapTickerMap` + `Bench` | 堆外定长表（FFM `Arena`），缓存行对齐；**自己测量**：布局、负载、装箱、缓存 |
-
-所有 value 都是 `long`（比如累计成交量）。签名以 starter 为准，这里只写语义。
-
-## Part 1 · 手写哈希表 `TickerMap`
-
-不许用 `HashMap` / `Map` 做存储。
-
-| 方法 | 语义 |
+| 时间 | 做什么 |
 |---|---|
-| `TickerMap()` · `TickerMap(int expectedSize)` | `expectedSize < 0` → `IllegalArgumentException`；预留容量，放 `expectedSize` 条不需要 resize |
-| `size()` · `capacity()` · `tombstones()` | 活条目数 · 格子总数 · 墓碑数（诊断用） |
-| `containsKey(k)` · `get(k)` → `OptionalLong` | 不存在 `empty`；value 为 0 也是存在 |
-| `put(k, v)` → `OptionalLong` | 返回旧值（没有则 `empty`） |
-| `add(k, delta)` → `long` | `value += delta`，不存在当作 0，返回新值；溢出 `ArithmeticException` 且表不变 |
-| `remove(k)` → `OptionalLong` | 返回被删的值 |
-| `forEach(ObjLongConsumer<String>)` | 每个活条目恰好访问一次 |
-| `maxProbeLength()` | 所有活 key 里离自己「家」最远的距离（0 = 都在家）；聚集越严重越大 |
+| 0–3 分钟 | 复述题目，问清：ticker 是不是只有 A–Z、最长几个字符？value 是什么类型？需不需要删除？ |
+| 3–13 分钟 | **Part 1**：ticker 打包成 64 位整数，`encode` / `decode` |
+| 13–30 分钟 | **Part 2**：开放寻址哈希表，`put` / `get` |
+| 30–40 分钟 | **Part 3**：口头追问，不写代码 |
 
-* `key == null` → `NullPointerException`；空字符串 `""` 是普通 key。
-* 要求：开放寻址 + 线性探测；**（占用 + 墓碑）/ 容量 ≤ 3/4** 在任何操作之后都成立；删除用墓碑，resize 时清掉墓碑；
-  反复「插入新 key、删旧 key」时容量不能无限增长，也不能死循环（表里必须始终留有空格）。
-* 陷阱：1024 个 `hashCode()` **完全相同**的字符串（`"Aa"` 和 `"BB"` 的 hashCode 相等，拼起来仍相等）必须仍然正确（慢一点没关系）。
+## Part 1 · 把 ticker 打包进一个 64 位整数（约 10 分钟）
 
-## Part 2 · 打包进一个 `long`：`TickerCodec` + `LongTickerMap`
-
-### 编码（测试会检查具体的值）
-
-`'A'..'Z'` → `1..26`，每个字符 **5 比特**；第 i 个字符（i 从 0 起）放在第 `[35−5i, 39−5i]` 比特；不足 8 个字符的尾部补 0。结果总是 `> 0` 且 `< 2⁴⁰`。
-
-`"AAPL"` 的编码：
-
-| i | 字符 | 值 | 5 比特 | 比特位置 |
-|---|---|---|---|---|
-| 0 | A | 1 | `00001` | 35–39 |
-| 1 | A | 1 | `00001` | 30–34 |
-| 2 | P | 16 | `10000` | 25–29 |
-| 3 | L | 12 | `01100` | 20–24 |
-| 4–7 | （补 0） | 0 | `00000` | 0–19 |
-
-整个值 = `(1<<35) | (1<<30) | (16<<25) | (12<<20)`。
-
-| 方法 | 语义 |
+| 语言 | 签名 |
 |---|---|
-| `parse(CharSequence)` → `Parsed` | `sealed Parsed permits Ticker(long key), Invalid(String reason)`；null / 空 / 超过 8 个字符 / 含非 A–Z 字符 → `Invalid` |
-| `pack(CharSequence)` → `long` | 同 `parse`，非法时抛 `IllegalArgumentException` |
-| `isValidKey(long)` · `unpack(long)` → `String` | `unpack` 对非法 key（≤ 0、≥ 2⁴⁰、字段 > 26、第一个 0 字段之后又有字符）抛 `IllegalArgumentException` |
-| `packWire(byte[] buf, int off)` → `long` | 行情报文里的代码字段：**8 个字节，大写字母 + 右侧补空格**，如 `"AAPL    "`。非法（全空格、前导空格、中间空格、小写、非字母）→ `IllegalArgumentException`；`off+8 > buf.length` 或 `off < 0` → `IndexOutOfBoundsException` |
+| Java | `static long encode(String ticker)` · `static String decode(long key)` |
+| C++ | `std::uint64_t encode(const std::string&)` · `std::string decode(std::uint64_t)` |
 
-### `LongTickerMap`
+- 每个字符占一个字节，第一个字符在最高位。`"AAPL"` 打包成 `0x4141504C`（十进制 1094799436），`"A"` 是 65。
+- `encode`：长度不是 1..8，或含 A–Z 以外的字符，Java 抛 `IllegalArgumentException`，C++ 抛 `std::invalid_argument`。
+- `decode` 是 `encode` 的逆运算。不是合法打包值的（0、负数、含非 A–Z 的字节、字节中间有 0）同样抛异常。
+- 不同的 ticker 打包结果不同：`"A"` 和 `"AA"` 不会撞，因为 `A` 的字节不是 0。合法的 key 一定 `> 0`，所以 0 可以留作「空格」标记。
 
-key 是打包好的 `long`（**必须 > 0**，否则 `IllegalArgumentException`），value 是 `long`。开放寻址 + 线性探测 + 墓碑，装载因子 ≤ 3/4。
+## Part 2 · 开放寻址哈希表（约 17 分钟）
 
-`size()` · `capacity()` · `tombstones()` · `containsKey(k)` · `get(k, ifAbsent)` → `long` · `put(k, v)` → `boolean`（`true` = 新 key）· `add(k, delta)` → `long`（溢出 `ArithmeticException` 且不改值）· `remove(k)` → `boolean` · `forEach(LongLongConsumer)` · `maxProbeLength()`。
+| 语言 | 签名 |
+|---|---|
+| Java | `void put(long key, long value)` · `OptionalLong get(long key)` · `int size()` · `int capacity()` |
+| C++ | `void put(std::uint64_t, std::int64_t)` · `std::optional<std::int64_t> get(std::uint64_t) const` · `size()` · `capacity()` |
 
-* **稳态下 `add` / `get` 零分配**（测试用 `ThreadMXBean.getThreadAllocatedBytes` 检查：预热后 160 万次 `add` 分配 < 256 KB；对照 `HashMap<String,Long>.merge` 要分配 > 8 MB）。
-* **哈希函数不能写成 `key & mask`**：打包后短代码的低位全是补的 0，几乎所有 key 会落到同一格。测试用全部 17576 个三字母代码检查最长探测距离 ≤ 64。
-* 提示：把 key 和 value 放进同一个 `long[]`（交错布局），一次缓存行就拿到两样。
+- 不许用 `HashMap` / `unordered_map`。两个数组（key、value）加开放寻址、线性探测（linear probing）：冲突就看下一格。
+- 容量是 2 的幂，初始 16。放入新 key 之前，如果放完会超过 3/4 的装载因子（load factor），先把容量翻倍并重新插入所有 key。任何时刻 `size * 4 <= capacity * 3`。
+- `put` 写入或覆盖，key 必须 `> 0`，否则抛 `IllegalArgumentException` / `std::invalid_argument`。`get` 找不到返回 `empty` / `nullopt`；value 为 0 也算存在。
+- 哈希函数不能写成 `key & (capacity - 1)`：打包后低位几乎全相同，会全部挤到少数几格。测试里 3000 个低 32 位全为 0 的 key 检查这一点。
+- 没有删除。
 
-## Part 3 · 完美哈希：`SymbolIndex` + `FrozenTickerMap`
+## Part 3 · 口头追问（不写代码，答案在 solution.md）
 
-场景：开盘前就知道今天会出现的全部代码（比如 8000 个）。
+1. 为什么整数 key 比字符串 key 快？
+2. 要支持删除怎么办？为什么不能直接把格子清空？
+3. 为什么装载因子取 3/4，不让表装满？
+4. 开盘前就知道全部 ticker，还能怎么优化？
+5. 缓存行（cache line）对这张表的布局有什么影响？
+6. `std::hash<uint64_t>` 在常见实现里是恒等函数，这意味着什么？
 
-* `SymbolIndex.build(long[] universe)`：universe 里每个 key `> 0` 且互不相同（否则 `IllegalArgumentException`；空集合合法）。
-  `indexOf(key)`：集合内的 key **一一映射到 `0..n−1`**（最小完美哈希），集合外的 key（包括 ≤ 0）返回 `−1`；`keyAt(index)` 是反函数；`size()`。
-  必须在 100,000 个 key 上 2 秒内建好；2,000,000 个 key 也能建（参考解约 0.5 秒）。
-* `FrozenTickerMap(Collection<String> universe)`：代码按 `TickerCodec` 格式，有非法或重复 → `IllegalArgumentException`。所有 value 初始为 0（**在 universe 里但还没写过 = 0，不是 absent**）。
-  `size()` · `indexOf(key)` · `containsKey` · `get(key, ifAbsent)` · `put(key, v)` → `boolean`（不在 universe 里返回 `false`）·
-  `add(key, delta)` → `long`（不在 universe 里抛 `IllegalArgumentException`；溢出 `ArithmeticException` 且不改值）·
-  **`addAt(int index, long delta)` / `getAt(int)` / `keyAt(int)`**：行情订阅时把代码解析成下标缓存起来，之后每条消息直接用下标。
-* 热路径零分配；2000 万次 `add` < 2 秒。
-* 提示：hash-and-displace（CHD 的简化）；**别忘了在 `indexOf` 里比较 `keys[slot] == key`**——完美哈希只保证集合内的 key 不冲突，集合外的 key 也会被映射到某个格子。
+## 边界
 
-## Part 4 · 堆外与测量：`OffHeapTickerMap` + `Bench`
+- ticker：1 个字符、8 个字符、9 个字符、空串、小写、含空格或点。
+- key：0、负数、`ZZZZZZZZ`（最大的合法 key）。
+- 表：value 为 0 和负数、覆盖同一个 key、增长到 20000 个 key、低位全相同的 key。
 
-* `OffHeapTickerMap(int maxEntries)`（`AutoCloseable`）：用 FFM 的 `Arena` / `MemorySegment` 在堆外分配一整块，**64 字节对齐**，每个槽位 16 字节 `[key:8][value:8]`，`key == 0` 表示空格。
-  固定容量：槽位数 = 不小于 `2·maxEntries` 的 2 的幂；`maxEntries` 个 key 放满之后，再插入**新** key → `IllegalStateException`，已有 key 仍可更新。没有 `remove`、没有 `resize`。
-  `size()` · `capacity()` · `maxEntries()` · `containsKey` · `get(k, ifAbsent)` · `put(k, v)` → `boolean` · `add(k, delta)` → `long` · `close()`（可重复调用；之后任何访问 → `IllegalStateException`）。
-  `key ≤ 0` → `IllegalArgumentException`；`maxEntries ∉ [1, 2²⁸]` → `IllegalArgumentException`。必须能从**别的线程**访问（所以用 `Arena.ofShared()`）。
-* `Bench`：把同一串更新（8,000 个 ticker 和 2,000,000 个 ticker；均匀访问和偏斜访问）喂给 `HashMap<String,Long>` / `TickerMap` / `LongTickerMap` / 分离布局的对照实现 / `OffHeapTickerMap` / `FrozenTickerMap`（查表 / 缓存下标），打印 ns/op 和每条记录的字节数。
-  **面试里被问「你怎么知道更快」时，要能说出怎么测、测到了什么、哪些结论没有测。**
+## 怎么跑
 
-## 边界清单（隐藏测试多半打这些）
+在 kit 根目录（`interviews/companies/headlands/`）下：
 
-空表、`""` 作 key、value 为 0 / 负数 / `Long.MIN_VALUE`；`null` key；同一 `hashCode` 的一大批字符串；删除探测链的**中间**和**头部**之后查后面的 key；删除后重新插入同一个 key（复用墓碑）；
-一直插入新 key + 删除旧 key（墓碑清理）；resize 之后所有 key 仍在；`add` 溢出且不改值；`Long.MAX_VALUE` 作 key；
-打包：1 个字符 / 8 个字符 / 9 个字符 / 小写 / 数字 / 全角字母；报文字段里的前导空格 / 中间空格 / 全空格 / `\0`；
-完美哈希：0、1、2 个 key；全部 17576 个三字母代码（结构化输入）；集合外的 key；重复 key。
-
-## 相关变体
-
-* C++ 版：`std::unordered_map` 的链地址法（每个桶一个链表，节点单独分配）→ 追问冲突与内存开销 → 换成开放寻址 / `flat_hash_map`（和 Part 1、2 同构）；
-* 「key 不止 8 个字符怎么办？」→ 128 位 key（两个 `long`）、或者 FNV / xxHash 之类的字符串哈希 + 字节比较；
-* 「多线程更新同一张表怎么办？」→ 分片（每个线程一张表，最后合并）、`LongAdder`、或者无锁的原子 CAS；这里不含；
-* 「你怎么证明你的哈希函数好？」→ 看最长探测距离、平均探测次数、用真实数据（而非随机数据）测。
-
-## 考什么
-
-不是背 `HashMap` 的源码，而是**从原理出发的工程判断**：能不能把冲突处理、装载因子、删除、扩容讲清楚并写对；
-能不能指出通用方案的代价（装箱、指针追逐、每个条目几十字节）；能不能利用输入的结构（≤ 8 个大写字母 → 一个 `long`）；
-知道「key 集合固定」是一个可以再榨一次的条件（完美哈希）；以及最重要的——**说出自己怎么测量，而不是凭感觉**。
+```bash
+python3 tools/jtest.py start   loop/rounds/01_video/hc07_ticker_hash_map       # Java：starter/ → work/
+python3 tools/jtest.py run     loop/rounds/01_video/hc07_ticker_hash_map --tag part1
+python3 tools/cpptest.py start loop/rounds/01_video/hc07_ticker_hash_map       # C++：cpp/starter.hpp → cpp/work.hpp
+python3 tools/cpptest.py run   loop/rounds/01_video/hc07_ticker_hash_map --tag part1
+```
