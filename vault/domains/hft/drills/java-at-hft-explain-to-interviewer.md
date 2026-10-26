@@ -21,7 +21,7 @@ tags: [drill]
 - 边界：用三个问题判断（10 微秒以内且尾部要稳 → C++；逻辑复杂变化快 → Java；深度依赖内核旁路或 FPGA 厂商接口 → C++）；跨语言边界要粗、只传扁平字节，一批消息放在同一块堆外内存里传地址和长度，用共享 schema 生成两边的编解码 ([[hft-java-at-hft-java-vs-cpp-decision]], [[hft-java-at-hft-interop-boundary]], [[hft-java-at-hft-interop-schema]])
 - AI 的问题用三句话：承认它能写样板和第一版，区分它不知道你的机器和负载、错误只在尾部显现，举一个你亲手用测量发现问题的真实例子（例如 `getThreadAllocatedBytes` 发现某写法每次调用分配 32 字节）；AI 生成的 Stream、`Optional`、`HashMap<Long, ...>` 每秒 100 万次、每次 400 字节就是 400 MB/s 垃圾；反问要具体，别一上来问薪资 ([[hft-java-at-hft-career-ai-interview]], [[hft-java-at-hft-career-ai-hot-path-review]], [[hft-java-at-hft-talking-points-questions]])
 
-**相关练习**：[[headlands/fit]]（简历逐条对职位描述）、[[headlands/01-company-brief]]（公司与岗位）、[[headlands/06-questions-to-ask]]（反问清单）、[[headlands/loop/LOOP_GUIDE]]（整场怎么走）、[[hc13_fixed_memory_pool]]（Java 里手管内存）、[[ld01_spsc_channel]]（共享内存单生产者单消费者通道）。
+**相关练习**：[[headlands/fit]]（简历逐条对职位描述）、[[headlands/01-company-brief]]（公司与岗位）、[[headlands/06-questions-to-ask]]（反问清单）、[[headlands/loop/LOOP_GUIDE]]（整场怎么走）、[[interviews/companies/headlands/loop/rounds/01_video/hc13_fixed_memory_pool/solution|hc13 定长内存池]]（Java 里手管内存）、[[ld01_spsc_channel]]（共享内存单生产者单消费者通道）。
 
 **练习记录**
 - [ ] 第 1 次（日期、用时、自评）：

@@ -22,7 +22,7 @@ tags: [drill]
 - 扩容和 rehash 是一次性的大操作：100 万个元素、每个 16 字节，搬一次约 16 MB、可到毫秒，旧指针全部失效；做法是启动时按峰值预留、负载保持在 50% 以下、运行中永不扩容 ([[hft-cpp-containers-rehash-spike]])
 - 对象池加预触碰消除分配的不确定性；池会耗尽，要事先定好策略（拒绝、标记不可用或重启），并监控使用率 ([[hft-memory-layout-pool]], [[hft-memory-layout-exhaustion]])；不变量至少含：无负数量、价位总量等于订单之和、没有空价位、索引与簿一致 ([[hft-testing-invariants]])
 
-**相关练习**：[[hc05_market_order_book]]（写订单簿与批量撮合）、[[hc13_fixed_memory_pool]]（定长内存池）。
+**相关练习**：[[interviews/companies/headlands/loop/rounds/01_video/hc05_market_order_book/solution|hc05 订单簿]]（写订单簿与批量撮合）、[[interviews/companies/headlands/loop/rounds/01_video/hc13_fixed_memory_pool/solution|hc13 定长内存池]]（定长内存池）。
 
 **练习记录**
 - [ ] 第 1 次（日期、用时、自评）：
