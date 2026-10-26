@@ -24,40 +24,160 @@ from .sequence import CORE_FIRST, CORE_TAG, core_leaves, sequence
 from .skeleton import Skeleton
 from .traces import ID_TAG_PREFIX
 
-_MD = markdown.Markdown(extensions=["fenced_code", "tables", "sane_lists"])
+_MD = markdown.Markdown(
+    extensions=["fenced_code", "tables", "sane_lists", "codehilite"],
+    extension_configs={"codehilite": {"css_class": "hl", "guess_lang": False}},
+)
+
+_LIST_ITEM = re.compile(r"^\s*(?:[-*+]|\d+\.)\s")
+_TITLE = re.compile(r"^<p><strong>(.+?)</strong>[｜|]\s*(.+?)</p>", re.S)
+# A short bold lead such as **思路。** opens a section: render it as a label chip.
+_LABEL = re.compile(r"<p><strong>([^<]{1,12}?)[。:：]</strong>\s*")
+
+
+def _blank_before_lists(text: str) -> str:
+    """Markdown needs a blank line before a list; cards often put one right under a bold lead line."""
+    out: list[str] = []
+    fenced = False
+    for line in text.split("\n"):
+        if line.lstrip().startswith("```"):
+            fenced = not fenced
+        if (not fenced and _LIST_ITEM.match(line) and out and out[-1].strip()
+                and not _LIST_ITEM.match(out[-1]) and not out[-1].startswith((" ", "\t"))):
+            out.append("")
+        out.append(line)
+    return "\n".join(out)
 
 CSS = """
+:root {
+  --ink: #1a1a1a; --dim: #6b7280; --paper: #fbfbfb;
+  --accent: #3b6fd4; --rule: rgba(140, 140, 140, 0.28);
+  --chip: rgba(59, 111, 212, 0.10);
+  --codebg: #f6f8fa; --codeline: #e3e6ea;
+}
+.night_mode {
+  --ink: #e6e6e6; --dim: #9aa2ad; --paper: #1e1e1e;
+  --accent: #7aa2f7; --rule: rgba(160, 160, 160, 0.24);
+  --chip: rgba(122, 162, 247, 0.16);
+  --codebg: #161b22; --codeline: #30363d;
+}
 .card {
-  font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
-  font-size: 19px;
-  line-height: 1.5;
-  color: #1a1a1a;
-  background: #fbfbfb;
+  font-family: -apple-system, "Segoe UI", Roboto, "PingFang SC",
+               "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--paper);
   text-align: left;
   max-width: 620px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 20px 18px 28px;
+  overflow-wrap: break-word;
 }
-.night_mode .card { color: #e8e8e8; background: #1e1e1e; }
-code, pre {
-  font-family: "SF Mono", Menlo, Consolas, monospace;
-  font-size: 0.88em;
-  background: rgba(140, 140, 140, 0.15);
+.card p { margin: 0 0 0.85em; }
+
+/* ---- front: breadcrumb, title line, problem statement ---- */
+.crumb {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--dim);
+  margin-bottom: 14px;
+}
+p.title {
+  font-size: 1.06em;
+  font-weight: 650;
+  line-height: 1.45;
+  margin-bottom: 0.7em;
+}
+p.title .meta {
+  display: block;
+  font-size: 0.74em;
+  font-weight: 500;
+  color: var(--dim);
+  letter-spacing: 0.02em;
+  margin-top: 3px;
+}
+
+/* ---- back: one labelled block per section ---- */
+.label {
+  display: inline-block;
+  font-size: 0.72em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  background: var(--chip);
   border-radius: 4px;
+  padding: 2px 7px;
+  margin-right: 8px;
+  vertical-align: 0.1em;
 }
-code { padding: 1px 5px; }
-pre { padding: 10px 12px; overflow-x: auto; }
-pre code { background: none; padding: 0; }
-hr#answer { border: none; border-top: 2px solid #7aa2f7; margin: 16px 0; }
-.crumb { font-size: 13px; color: #888; margin-bottom: 12px; }
-table { border-collapse: collapse; }
-td, th { border: 1px solid #999; padding: 4px 10px; }
-.cloze { font-weight: 600; color: #4576f5; }
-.ref { color: #7aa2f7; font-style: italic; }
-.sources { margin-top: 18px; padding-top: 8px; border-top: 1px solid rgba(140,140,140,0.3);
-           font-size: 14px; color: #888; }
-.sources a { color: #7aa2f7; text-decoration: none; }
-.sources a.web { color: #9aa; font-size: 12px; }
+hr#answer { border: none; border-top: 2px solid var(--accent); margin: 18px 0 16px; }
+
+/* ---- code ---- */
+code, pre, .hl { font-family: "SF Mono", Menlo, Consolas, monospace; }
+code {
+  font-size: 0.86em;
+  background: var(--chip);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+.hl {
+  background: var(--codebg);
+  border: 1px solid var(--codeline);
+  border-radius: 8px;
+  margin: 0 0 1em;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.hl pre, pre {
+  margin: 0;
+  padding: 12px 14px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  tab-size: 4;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+pre code, .hl code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+  white-space: pre;
+}
+.hl .c, .hl .c1, .hl .cm, .hl .ch { color: #6a9955; font-style: italic; }
+.hl .k, .hl .kn, .hl .kc, .hl .kd, .hl .ow, .hl .kr { color: #a626a4; }
+.hl .nf, .hl .fm { color: #4078f2; }
+.hl .nc, .hl .nn { color: #c18401; }
+.hl .nb, .hl .bp { color: #0184bc; }
+.hl .s, .hl .s1, .hl .s2, .hl .sa, .hl .se, .hl .sd { color: #50a14f; }
+.hl .mi, .hl .mf, .hl .il { color: #b76b01; }
+.hl .o, .hl .p { color: inherit; }
+.night_mode .hl .c, .night_mode .hl .c1, .night_mode .hl .cm { color: #7c9f6a; }
+.night_mode .hl .k, .night_mode .hl .kn, .night_mode .hl .kc,
+.night_mode .hl .kd, .night_mode .hl .ow, .night_mode .hl .kr { color: #c792ea; }
+.night_mode .hl .nf, .night_mode .hl .fm { color: #82aaff; }
+.night_mode .hl .nc, .night_mode .hl .nn { color: #ffcb6b; }
+.night_mode .hl .nb, .night_mode .hl .bp { color: #89ddff; }
+.night_mode .hl .s, .night_mode .hl .s1, .night_mode .hl .s2,
+.night_mode .hl .sa, .night_mode .hl .se, .night_mode .hl .sd { color: #c3e88d; }
+.night_mode .hl .mi, .night_mode .hl .mf, .night_mode .hl .il { color: #f78c6c; }
+
+/* ---- the rest ---- */
+table { border-collapse: collapse; margin: 0 0 1em; font-size: 0.92em; }
+td, th { border: 1px solid var(--rule); padding: 5px 10px; }
+.cloze { font-weight: 650; color: var(--accent); }
+.ref { color: var(--accent); font-style: italic; }
+.sources {
+  margin-top: 22px; padding-top: 10px; border-top: 1px solid var(--rule);
+  font-size: 13px; color: var(--dim);
+}
+.sources a { color: var(--accent); text-decoration: none; }
+.sources a.web { color: var(--dim); font-size: 12px; }
+
+@media (max-width: 500px) {
+  .card { font-size: 17px; padding: 16px 14px 24px; }
+  .hl pre, pre { font-size: 13px; padding: 10px 12px; }
+}
 """
 
 
@@ -73,7 +193,9 @@ def _html(text: str) -> str:
     # display text as a styled reference instead.
     text = _WIKILINK_RE.sub(lambda m: f'<span class="ref">{m.group(2) or m.group(1)}</span>', text)
     _MD.reset()
-    return _MD.convert(text)
+    html = _MD.convert(_blank_before_lists(text))
+    html = _TITLE.sub(lambda m: f'<p class="title">{m.group(1)}<span class="meta">{m.group(2)}</span></p>', html, count=1)
+    return _LABEL.sub(lambda m: f'<p><span class="label">{m.group(1)}</span>', html)
 
 
 def _qa_model() -> genanki.Model:
