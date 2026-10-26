@@ -16,7 +16,7 @@
 | **背景问题**：怎么问 → 故事 → 题库 → 练习 | [behavioral/00_how_it_works.md](behavioral/00_how_it_works.md) · `behavioral/stories/` · [behavioral/question_bank.md](behavioral/question_bank.md) · [behavioral/drill.md](behavioral/drill.md) |
 | **C++ 课本**（16 课，从 Java 讲到 C++） | [core/cpp/headlands/lessons](../../core/cpp/headlands/lessons/README.md) |
 | **C++ 语言深度题**（44 题 + 速查表） | [questions.md](../../core/cpp/headlands/interview_questions/questions.md) · [cheatsheet.md](../../core/cpp/headlands/interview_questions/cheatsheet.md) |
-| **编码题**（21 题，每题 40 分钟，Java 和 C++ 各写一遍） | 练习清单 [[07-practice-java-cpp]]：按频率排好，每题一个 `problem.md`（动手）和一个 `solution.md`（下手的第一步、原理、两种语言的代码、追问答案）；一页速览 [[08-solutions-digest]] |
+| **编码题**（24 题，每题 40 分钟，Java 和 C++ 各写一遍） | 练习清单 [[07-practice-java-cpp]]：按频率排好，每题一个 `problem.md`（动手）和一个 `solution.md`（下手的第一步、原理、两种语言的代码、追问答案）；一页速览 [[08-solutions-digest]] |
 | Java 21 课本 / 基础课本 | [core/java/headlands/java21](../../core/java/headlands/java21/README.md) · [core/foundations/headlands](../../core/foundations/headlands/README.md) |
 | Java 语言深度题 | [questions.md](../../core/java/headlands/interview_questions/questions.md) |
 | 公司是做什么的 / 简历对 JD / 反问 | [01-company-brief.md](01-company-brief.md) · [fit.md](fit.md) · [06-questions-to-ask.md](06-questions-to-ask.md) |
@@ -66,8 +66,11 @@ python3 tools/cpptest.py run   loop/rounds/01_video/hc03_recursive_sum --tag par
 | hc09 | 按成交额取 Top-K | 电面 |
 | hc13 | 定长内存池 → 带代数的句柄 | 电面 |
 | hc11 | 订单区间最大重叠 → 分买卖 + 撤单 | 电面 |
-| hc15 | 带批量加法的栈 → 懒标记 | 电面 |
-| hc16 | 游程编码解码 → 分块流式 | 电面 |
+| hc14 | 成交日志 → VWAP → 滑动时间窗口 | 电面（交易场景） |
+| hc15 | 流式中位数 → 滑动窗口中位数 | 电面（交易场景） |
+| hc16 | 交易台层级上的树形 DP | 电面（交易场景） |
+| hc22 | 带批量加法的栈 → 懒标记 | 电面 |
+| hc23 | 游程编码解码 → 分块流式 | 电面 |
 | hc17 | 带 `*` 的模式匹配 | 电面 |
 | hc21 | 平方根：牛顿法 → 整数平方根 | 电面（申请时的 √42 题） |
 | hc19 · hc20 | 不相邻取数 · 合并区间 | onsite |

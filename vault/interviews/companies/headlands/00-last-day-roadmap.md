@@ -49,7 +49,7 @@ hc03 和 hc07 用 C++ 再写一遍 Part 1：它们是同一场面试里出现的
 
 ## 块 4 · 其余题（1.5 h）
 
-打开 [[interviews/companies/headlands/08-solutions-digest|一页速览]]，每道题读一行，能说出「先写什么、为什么、复杂度多少」就过；说不出来的，打开该题的 `solution.md` 读「开场 3 分钟」和 Part 1（每题 5–10 分钟）。顺序：hc08 → hc09 → hc13 → hc11 → hc15 → hc16 → hc17 → hc21 → oa01（准备 2 分钟讲你的 OA 解法）。
+打开 [[interviews/companies/headlands/08-solutions-digest|一页速览]]，每道题读一行，能说出「先写什么、为什么、复杂度多少」就过；说不出来的，打开该题的 `solution.md` 读「开场 3 分钟」和 Part 1（每题 5–10 分钟）。顺序：hc08 → hc09 → hc13 → hc11 → hc14 → hc15 → hc16 → hc22 → hc23 → hc17 → hc21 → oa01（准备 2 分钟讲你的 OA 解法）。
 
 时间还有富余，再看 LLD 三题（ld01 SPSC 通道、ld02 交易 OOD、ld03 异步 TCP 通道）的「数据结构」和「追问」，它们最可能以聊天的形式出现。
 

@@ -39,8 +39,11 @@ python3 tools/ide.py <题目目录>               # 换题后跑一次，再在 
 | hc09 · 按成交额取 Top-K（事件 → 代码汇总） | ☐ | ☐ | [题面](loop/rounds/01_video/hc09_top_trades_by_notional/problem.md) · [解法](loop/rounds/01_video/hc09_top_trades_by_notional/solution.md) | `loop/rounds/01_video/hc09_top_trades_by_notional` |
 | hc13 · 定长内存池（空闲链表 → 带代数的句柄） | ☐ | ☐ | [题面](loop/rounds/01_video/hc13_fixed_memory_pool/problem.md) · [解法](loop/rounds/01_video/hc13_fixed_memory_pool/solution.md) | `loop/rounds/01_video/hc13_fixed_memory_pool` |
 | hc11 · 订单区间最大重叠（扫描线 → 分买卖 + 撤单） | ☐ | ☐ | [题面](loop/rounds/01_video/hc11_order_interval_overlap/problem.md) · [解法](loop/rounds/01_video/hc11_order_interval_overlap/solution.md) | `loop/rounds/01_video/hc11_order_interval_overlap` |
-| hc15 · 带批量加法的栈（O(k) → 懒标记 O(1)） | ☐ | ☐ | [题面](loop/rounds/01_video/hc15_custom_stack/problem.md) · [解法](loop/rounds/01_video/hc15_custom_stack/solution.md) | `loop/rounds/01_video/hc15_custom_stack` |
-| hc16 · 游程编码解码（整串 → 分块流式） | ☐ | ☐ | [题面](loop/rounds/01_video/hc16_rle_decode/problem.md) · [解法](loop/rounds/01_video/hc16_rle_decode/solution.md) | `loop/rounds/01_video/hc16_rle_decode` |
+| hc14 · 成交日志 → VWAP（汇总 → 滑动时间窗口） | ☐ | ☐ | [题面](loop/rounds/01_video/hc14_vwap_trade_log/problem.md) · [解法](loop/rounds/01_video/hc14_vwap_trade_log/solution.md) | `loop/rounds/01_video/hc14_vwap_trade_log` |
+| hc15 · 成交价的流式中位数（两个堆 → 滑动窗口） | ☐ | ☐ | [题面](loop/rounds/01_video/hc15_streaming_median/problem.md) · [解法](loop/rounds/01_video/hc15_streaming_median/solution.md) | `loop/rounds/01_video/hc15_streaming_median` |
+| hc16 · 交易台层级上的树形 DP | ☐ | ☐ | [题面](loop/rounds/01_video/hc16_tree_dp/problem.md) · [解法](loop/rounds/01_video/hc16_tree_dp/solution.md) | `loop/rounds/01_video/hc16_tree_dp` |
+| hc22 · 带批量加法的栈（O(k) → 懒标记 O(1)） | ☐ | ☐ | [题面](loop/rounds/01_video/hc22_custom_stack/problem.md) · [解法](loop/rounds/01_video/hc22_custom_stack/solution.md) | `loop/rounds/01_video/hc22_custom_stack` |
+| hc23 · 游程编码解码（整串 → 分块流式） | ☐ | ☐ | [题面](loop/rounds/01_video/hc23_rle_decode/problem.md) · [解法](loop/rounds/01_video/hc23_rle_decode/solution.md) | `loop/rounds/01_video/hc23_rle_decode` |
 | hc17 · 带 `*` 的模式匹配（DP → 贪心双指针） | ☐ | ☐ | [题面](loop/rounds/01_video/hc17_text_pattern_stars/problem.md) · [解法](loop/rounds/01_video/hc17_text_pattern_stars/solution.md) | `loop/rounds/01_video/hc17_text_pattern_stars` |
 | hc21 · 平方根（牛顿法 → 整数平方根） | ☐ | ☐ | [题面](loop/rounds/01_video/hc21_square_root/problem.md) · [解法](loop/rounds/01_video/hc21_square_root/solution.md) | `loop/rounds/01_video/hc21_square_root` |
 

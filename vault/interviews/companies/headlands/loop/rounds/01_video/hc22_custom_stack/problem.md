@@ -1,4 +1,4 @@
-# hc15 · 带批量加法的栈
+# hc22 · 带批量加法的栈
 
 面试官让你实现一个容量固定的栈，除了 push 和 pop，还有一个「给栈底的 k 个元素都加上同一个数」的操作。第一版直接用数组，加法循环 k 次就行；真正的考点是追问「加法能不能 O(1)」，答案是懒标记（lazy propagation）。后面的口头追问会问到溢出、区间加法的一般做法和线程安全。Java 和 C++ 的签名都在下面，选面试官要的那种语言。
 
@@ -56,8 +56,8 @@
 在 kit 根目录（`interviews/companies/headlands/`）下：
 
 ```bash
-python3 tools/jtest.py start   loop/rounds/01_video/hc15_custom_stack       # Java：starter/ → work/
-python3 tools/jtest.py run     loop/rounds/01_video/hc15_custom_stack --tag part1
-python3 tools/cpptest.py start loop/rounds/01_video/hc15_custom_stack       # C++：cpp/starter.hpp → cpp/work.hpp
-python3 tools/cpptest.py run   loop/rounds/01_video/hc15_custom_stack --tag part1
+python3 tools/jtest.py start   loop/rounds/01_video/hc22_custom_stack       # Java：starter/ → work/
+python3 tools/jtest.py run     loop/rounds/01_video/hc22_custom_stack --tag part1
+python3 tools/cpptest.py start loop/rounds/01_video/hc22_custom_stack       # C++：cpp/starter.hpp → cpp/work.hpp
+python3 tools/cpptest.py run   loop/rounds/01_video/hc22_custom_stack --tag part1
 ```

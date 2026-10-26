@@ -1,4 +1,4 @@
-# hc16 · 行程长度解码
+# hc23 · 行程长度解码
 
 面试官给你一串行程长度编码（run-length encoding）的字符串，每条记录是「一个正的十进制数 count，后面跟一个字符」，让你还原成原文。第一版是一个一次扫描的函数，难点在 count 可能有多位、输入可能非法。追问是把它改成流式：输入分块到达，一条记录的 count 可能正好被切在两块中间。Java 和 C++ 的签名都在下面，选面试官要的那种语言。
 
@@ -68,8 +68,8 @@
 在 kit 根目录（`interviews/companies/headlands/`）下：
 
 ```bash
-python3 tools/jtest.py start   loop/rounds/01_video/hc16_rle_decode       # Java：starter/ → work/
-python3 tools/jtest.py run     loop/rounds/01_video/hc16_rle_decode --tag part1
-python3 tools/cpptest.py start loop/rounds/01_video/hc16_rle_decode       # C++：cpp/starter.hpp → cpp/work.hpp
-python3 tools/cpptest.py run   loop/rounds/01_video/hc16_rle_decode --tag part1
+python3 tools/jtest.py start   loop/rounds/01_video/hc23_rle_decode       # Java：starter/ → work/
+python3 tools/jtest.py run     loop/rounds/01_video/hc23_rle_decode --tag part1
+python3 tools/cpptest.py start loop/rounds/01_video/hc23_rle_decode       # C++：cpp/starter.hpp → cpp/work.hpp
+python3 tools/cpptest.py run   loop/rounds/01_video/hc23_rle_decode --tag part1
 ```
