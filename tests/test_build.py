@@ -10,3 +10,10 @@ def test_card_html_lists_labels_title_and_highlighting():
     assert 'class="hl"' in a and 'class="k"' in a          # pygments highlighted the code
     plain = _html("**冻结是一条带状态的记录**，不是分录。")
     assert "label" not in plain                            # only a short lead ending in 。/： is a label
+
+
+def test_full_width_semicolons_break_lines_outside_code():
+    from trellis.build import _html
+    a = _html("**复杂度。** 窗口：`O(1)`；令牌桶：`O(1)；x`。")
+    assert "窗口：<code>O(1)</code>；<br>令牌桶" in a
+    assert "<code>O(1)；x</code>" in a                      # inside code untouched

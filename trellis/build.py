@@ -35,6 +35,15 @@ _TITLE = re.compile(r"^<p><strong>(.+?)</strong>[｜|]\s*(.+?)</p>", re.S)
 _LABEL = re.compile(r"<p><strong>([^<]{1,12}?)[。:：]</strong>\s*")
 
 
+_CODE_OR_TAG = re.compile(r"(<pre>.*?</pre>|<code>.*?</code>|<[^>]+>)", re.S)
+
+
+def _break_semicolons(html: str) -> str:
+    """A full-width semicolon separates clauses that read better one per line; code is left alone."""
+    parts = _CODE_OR_TAG.split(html)
+    return "".join(p if i % 2 else p.replace("；", "；<br>") for i, p in enumerate(parts))
+
+
 def _blank_before_lists(text: str) -> str:
     """Markdown needs a blank line before a list; cards often put one right under a bold lead line."""
     out: list[str] = []
@@ -195,7 +204,8 @@ def _html(text: str) -> str:
     _MD.reset()
     html = _MD.convert(_blank_before_lists(text))
     html = _TITLE.sub(lambda m: f'<p class="title">{m.group(1)}<span class="meta">{m.group(2)}</span></p>', html, count=1)
-    return _LABEL.sub(lambda m: f'<p><span class="label">{m.group(1)}</span>', html)
+    html = _LABEL.sub(lambda m: f'<p><span class="label">{m.group(1)}</span>', html)
+    return _break_semicolons(html)
 
 
 def _qa_model() -> genanki.Model:
