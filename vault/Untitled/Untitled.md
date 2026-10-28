@@ -28,3 +28,5 @@ Thanks for reading all of this.
   
 
 Chi
+
+![[Pasted image 20261028145913.png]]
