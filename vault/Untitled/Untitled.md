@@ -15,11 +15,12 @@ I really like this team. The data plane problems, the scale, the senior engineer
 
   
 
-The one thing I'd like to ask is whether I could be assessed for SDE II. I'm happy to do a system design round or whatever else the team needs to make that call. I'm asking because I know myself: if I come in at SDE I, starting over on same level and landing below where I am today, it would sit in the back of my mind, and I'd much rather put all of my energy into the work than into second-guessing the move. If the level can come back as SDE II, I'm ready to sign and commit for the long term. I hope that makes sense from where you sit.
+The one thing I'd like to ask is whether I could be assessed for SDE II. I'm happy to do a system design round or whatever else the team needs to make that call. I'm asking because I know that: if I come in at SDE I land below where I am today, it would sit in the back of my mind, and I'd much rather put all of my energy into the work than into second-guessing the move. If the level can come back as SDE II, I'm ready to sign and commit for the long term. I hope that makes sense from where you sit, and I hope to contribute to the team in the long term, that's the best scenario for me, and for team.
+I just started looking for opportunities recently, several interviews for companies like tiktok and stripe is ongoing, if you gotta wait for compete offer to make decisions, I hope maybe we can defer the decision date a bit later.
 
   
 
-Aakriti, I'd love a short call this week if you're open to it. Rumjhum, would it be possible to hold the offer deadline while this is being looked at?
+Aakriti, thanks again for your  I'd love a short call this week if you're open to it. Rumjhum, would it be possible to hold the offer deadline while this is being looked at?
 
   
 
