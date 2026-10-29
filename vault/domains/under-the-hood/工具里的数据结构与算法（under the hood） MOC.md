@@ -73,6 +73,23 @@
     - [[domains/under-the-hood/map/devtools.regex|正则引擎：回溯与自动机]]
     - [[domains/under-the-hood/map/devtools.editor-buffers|编辑器与浏览器：缓冲区和撤销]]
     - [[domains/under-the-hood/map/devtools.compression|压缩：LZ77 滑动窗口 + 哈夫曼]]
+- [[domains/under-the-hood/map/ai|AI 工程里的数据结构与算法]]
+    - [[domains/under-the-hood/map/ai.tokenizer|分词器：BPE 的贪心合并与 Unigram 的动态规划]]
+    - [[domains/under-the-hood/map/ai.sampling|采样：top-k 与 top-p]]
+    - [[domains/under-the-hood/map/ai.paged-kv|vLLM 的 PagedAttention：KV 缓存分页]]
+    - [[domains/under-the-hood/map/ai.prefix-cache|前缀缓存：基数树与按块哈希]]
+    - [[domains/under-the-hood/map/ai.vector-search|向量检索：HNSW 与 IVF]]
+    - [[domains/under-the-hood/map/ai.dedup|训练数据去重：MinHash、LSH 与并查集]]
+    - [[domains/under-the-hood/map/ai.autograd|自动求导：计算图上的拓扑排序]]
+- [[domains/under-the-hood/map/gaps|考点补全：后端系统里的算法]]
+    - [[domains/under-the-hood/map/gaps.prefix-sum|前缀和与差分：监控计数器与 rate()]]
+    - [[domains/under-the-hood/map/gaps.intervals|区间：PostgreSQL 防止重复预订]]
+    - [[domains/under-the-hood/map/gaps.shortest-path|最短路：路由器用 Dijkstra 算转发表]]
+    - [[domains/under-the-hood/map/gaps.bfs|BFS 按层扩展：爬虫与级联删除]]
+    - [[domains/under-the-hood/map/gaps.union-find|并查集：查询优化器的等价类与类型推导]]
+    - [[domains/under-the-hood/map/gaps.dp-join-order|动态规划：数据库怎样选多表连接顺序]]
+    - [[domains/under-the-hood/map/gaps.tree-dfs|树的递归：du 与嵌套数据]]
+    - [[domains/under-the-hood/map/gaps.heuristics|背包这类问题在生产里为什么用贪心]]
 %% trellis:end %%
 
 ## Notes

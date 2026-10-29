@@ -251,3 +251,58 @@ nodes:
   - id: devtools.compression
     title: 压缩：LZ77 滑动窗口 + 哈夫曼
     summary: gzip / zlib 的 DEFLATE 在 32 KB 窗口里找重复串再做哈夫曼编码；zstd 和 LZ4 在速度与压缩率之间的取舍。
+- id: ai
+  order: 10
+  title: AI 工程里的数据结构与算法
+  summary: 大模型训练与推理系统里天天用到的结构：分词、采样、KV 缓存分页、前缀缓存、向量检索、数据去重、自动求导。
+  children:
+  - id: ai.tokenizer
+    title: 分词器：BPE 的贪心合并与 Unigram 的动态规划
+    summary: 文本怎样切成 token：BPE（tiktoken 等）反复把优先级最高的相邻一对并成一个（tiktoken 里 token 的编号就是合并优先级）；SentencePiece 的 Unigram 用 Viterbi（动态规划）在所有切法里挑概率最大的，和单词拆分是同一个 DP。
+  - id: ai.sampling
+    title: 采样：top-k 与 top-p
+    summary: 模型每步给出整个词表的概率，怎样挑下一个 token：top-k 只取最大的 k 个（部分排序或找阈值，不必全排序）；top-p 先按概率排序，再累加到 p 为止（排序 + 前缀和）；温度怎样改变分布。
+  - id: ai.paged-kv
+    title: vLLM 的 PagedAttention：KV 缓存分页
+    summary: 推理时每个请求的 KV 缓存越长越大，连续分配会浪费和碎片化；vLLM 把它切成固定大小的块，用块表映射逻辑块到物理块，空闲块放进空闲列表，共享前缀用引用计数和写时复制：就是操作系统的分页。
+  - id: ai.prefix-cache
+    title: 前缀缓存：基数树与按块哈希
+    summary: 很多请求共享同一段系统提示词：SGLang 的 RadixAttention 把缓存过的 token 序列存进基数树，按 LRU 淘汰叶子；vLLM 的自动前缀缓存给每个满块算一个连同前缀的哈希，用哈希表查找。
+  - id: ai.vector-search
+    title: 向量检索：HNSW 与 IVF
+    summary: 在百万个向量里找最相近的几个：暴力比较太慢；HNSW 是分层的近邻图（上层稀疏、下层稠密，像跳表），从顶层贪心往下走，用堆维护候选；IVF 先聚类，只查最近的几个桶。
+  - id: ai.dedup
+    title: 训练数据去重：MinHash、LSH 与并查集
+    summary: 几十亿篇文档里找近似重复：两两比较不可能；MinHash 把文档压成一串签名，LSH 把签名分段放进桶里，同桶才比较，最后用并查集把重复对连成簇、每簇只留一篇。
+  - id: ai.autograd
+    title: 自动求导：计算图上的拓扑排序
+    summary: PyTorch 前向时记下计算图，backward 从损失出发按拓扑逆序把梯度传回每个参数；一个张量被用了多次时梯度要累加；为什么要先数清依赖再执行。
+- id: gaps
+  order: 11
+  title: 考点补全：后端系统里的算法
+  summary: 前面没覆盖到的高频考点在后端系统里的真实用法：前缀和、区间、最短路、BFS、并查集、动态规划、树的递归，以及背包这类问题在生产里为什么改用贪心。
+  children:
+  - id: gaps.prefix-sum
+    title: 前缀和与差分：监控计数器与 rate()
+    summary: Prometheus 的计数器只增不减，本质是前缀和；rate() 和 increase() 用两点之差算一段时间的增量，还要处理进程重启后计数归零；Kafka 的消费延迟也是两个累计值相减。
+  - id: gaps.intervals
+    title: 区间：PostgreSQL 防止重复预订
+    summary: 会议室、酒店预订要保证时间段不重叠：PostgreSQL 的范围类型加排他约束（EXCLUDE … WITH &&），由 GiST 索引在插入时检查重叠；和合并区间、会议室问题的关系。
+  - id: gaps.shortest-path
+    title: 最短路：路由器用 Dijkstra 算转发表
+    summary: OSPF / IS-IS 让每台路由器都拿到整张网络拓扑，各自用 Dijkstra 算出到每个网段的最短路径树，再写进转发表；链路变化时重新计算。
+  - id: gaps.bfs
+    title: BFS 按层扩展：爬虫与级联删除
+    summary: 爬虫先抓近的页面还是先钻深：Scrapy 默认按深度优先，改成先进先出队列就是广度优先；Kubernetes 删除一个对象时按属主关系找出所有依赖对象。
+  - id: gaps.union-find
+    title: 并查集：查询优化器的等价类与类型推导
+    summary: a = b、b = c 推出 a = c：PostgreSQL 规划器把相等的列归到同一个等价类，用来推导更多过滤条件和连接方式；Rust 编译器用并查集做类型变量的合一。
+  - id: gaps.dp-join-order
+    title: 动态规划：数据库怎样选多表连接顺序
+    summary: n 张表的连接顺序有指数种：PostgreSQL 按子集大小逐层 DP，先算两表组合的最优，再在此基础上算三表……；表数超过阈值改用遗传算法（GEQO）。
+  - id: gaps.tree-dfs
+    title: 树的递归：du 与嵌套数据
+    summary: du 统计目录大小就是后序遍历：先算完子目录再加到父目录；解析和处理嵌套 JSON 也是同一个递归；递归太深时为什么要改成显式栈。
+  - id: gaps.heuristics
+    title: 背包这类问题在生产里为什么用贪心
+    summary: 把容器装进机器、把请求塞进一批推理，本质都是装箱或背包问题，规模大了精确求解太慢；Kubernetes 调度器给节点打分取最高，vLLM 按 token 预算逐个放入请求：用简单贪心换速度。
