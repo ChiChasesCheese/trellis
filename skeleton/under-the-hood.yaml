@@ -306,3 +306,57 @@ nodes:
   - id: gaps.heuristics
     title: 背包这类问题在生产里为什么用贪心
     summary: 把容器装进机器、把请求塞进一批推理，本质都是装箱或背包问题，规模大了精确求解太慢；Kubernetes 调度器给节点打分取最高，vLLM 按 token 预算逐个放入请求：用简单贪心换速度。
+- id: compose
+  order: 12
+  title: 数据结构组合：开源框架里的类设计
+  summary: 类设计题考的是怎样把几种数据结构拼成一个类、让每个操作都够快、几份结构始终一致：先学六种组合骨架，再看 Spring、Caffeine、Java 线程池、Kubernetes、Go、HikariCP、ORM、Disruptor 怎样用它们。
+  core: true
+  children:
+  - id: compose.patterns
+    title: 组合模式总览：设计题的六种骨架
+    summary: 类设计题很少考新算法，考的是把几种结构拼起来、让每个操作都够快：哈希表 + 链表、哈希表 + 带下标的堆、两张互相指的表、队列 + 去重集合、分级的几张表、环形数组 + 序号；每种骨架对应哪些设计题、哪些开源组件。
+  - id: compose.spring-three-level-cache
+    title: Spring 单例 Bean 的三级缓存：为什么是三层
+    summary: 单例 Bean 互相依赖时怎样不死循环：成品表、半成品表、工厂表三张 Map 加一个“正在创建”集合；为什么两层不够（AOP 代理要延迟到真的被引用时才生成）；Spring Boot 2.6 起默认禁止循环依赖。
+  - id: compose.spring-bean-registry
+    title: Spring 的 Bean 注册表：Map + 列表与双向依赖表
+    summary: 按名字查定义要快、遍历要保持注册顺序：一张 Map 加一个名字列表；谁依赖谁存成两张方向相反的 Map；关闭容器时按创建顺序倒着销毁，销毁每个 Bean 之前先销毁依赖它的 Bean。
+  - id: compose.interceptor-chain
+    title: 拦截器链与 Filter 链：列表 + 游标
+    summary: Spring AOP 的拦截器链、Servlet 的 FilterChain、Web 框架的中间件：一个有序列表加一个当前下标，每一环决定是否调用下一环；为什么调用下一环之后的代码会倒序执行（洋葱模型）。
+  - id: compose.caffeine
+    title: Caffeine 缓存：哈希表 + 访问队列 + 频率草图 + 时间轮
+    summary: 比 LRU 命中率更高的 W-TinyLFU：一个并发哈希表存数据，几条按访问顺序排的双向队列决定淘汰谁，一个计数草图估算访问频率决定新数据能否挤进来，按条目设置的过期时间用时间轮管理，读写先记进缓冲区再批量处理。
+  - id: compose.indexed-heap
+    title: 可删除、可改优先级的堆：堆 + 下标
+    summary: 定时任务要能取消、优先级要能改：普通堆删中间元素要 O(n) 找位置；每个元素记住自己在堆数组里的下标（Java DelayedWorkQueue 的 heapIndex、Go container/heap 文档里的 index 字段），删和改都是 O(log n)。
+  - id: compose.thread-pool
+    title: Java 线程池：一个原子整数、一个任务队列、一组工人
+    summary: ThreadPoolExecutor 用一个 AtomicInteger 同时存运行状态和线程数；提交任务时先加核心线程、再进队列、再加到最大线程、最后拒绝；工人集合用锁保护。
+  - id: compose.k8s-workqueue
+    title: Kubernetes workqueue：队列 + 待处理集合 + 处理中集合
+    summary: 控制器的工作队列保证同一个 key 不重复排队、也不会被两个工人同时处理：一个先进先出队列、一个 dirty 集合、一个 processing 集合怎样配合；处理中又被改动的 key 怎样处理完再重新入队。
+  - id: compose.k8s-indexer
+    title: client-go 的 Indexer：主存储 + 二级索引
+    summary: 本地缓存除了按 key 查，还要按命名空间、按标签查：一张主表加若干张“索引名 → 索引值 → key 集合”的二级索引，每次增删改都要同步更新所有索引。
+  - id: compose.go-sync-map
+    title: Go 的 sync.Map：只读表 + 脏表，以及 1.24 起的并发哈希字典树
+    summary: 读多写少时怎样让读完全不加锁：旧实现（1.25 及以前的默认）用一张原子读取的只读表、一张加锁的脏表，读不到时去脏表找并累计未命中，次数够了就把脏表整体提升为只读表；Go 1.24 起默认改成并发哈希字典树（HashTrieMap）。
+  - id: compose.singleflight
+    title: singleflight：合并同时到来的重复请求
+    summary: 缓存失效的一瞬间成百上千个请求同时去查数据库：用一张“正在进行的调用”表，同一个 key 只真正执行一次，其他请求等这次的结果；缓存击穿的标准解法。
+  - id: compose.connection-pool
+    title: 连接池：HikariCP 的 ConcurrentBag
+    summary: 借还连接要快、线程之间少抢：每个线程先看自己用过的连接（线程本地列表），再看共享列表，都没有就在交接队列上等别人归还；连接的状态用 CAS 切换。
+  - id: compose.event-bus
+    title: 事件总线：事件类型 → 订阅者集合
+    summary: Guava EventBus 注册时按事件类型建一张“类型 → 订阅者集合”的表、订阅者集合用写时复制；Spring 存一个监听器总集合，再按（事件类型，来源类型）缓存查找结果，有变动就清空缓存。
+  - id: compose.http-router
+    title: HTTP 路由表：每个方法一棵基数树
+    summary: 按 URL 找处理函数：逐条正则匹配太慢；httprouter / Gin 给每个 HTTP 方法建一棵基数树，路径参数（/user/:id）是特殊节点，查找基本只和路径长度有关，不随路由条数增长。
+  - id: compose.orm-session
+    title: ORM 的 Session：身份映射 + 工作单元
+    summary: SQLAlchemy / Hibernate 的会话：一张“(类, 主键) → 对象”的身份映射保证同一行只有一个对象；SQLAlchemy 用 new、dirty、deleted 三个集合记下改动（Hibernate 用动作队列），flush 时按依赖顺序一次性写回数据库。
+  - id: compose.ring-buffer
+    title: LMAX Disruptor：环形数组 + 序号
+    summary: 高性能的生产者-消费者队列：长度为 2 的幂的环形数组，生产者和消费者用只增不减的序号推进，下标用位与取模；预先分配、对缓存友好，单生产者时可以完全不加锁。
