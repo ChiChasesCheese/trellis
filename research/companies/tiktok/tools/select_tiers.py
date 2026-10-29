@@ -10,8 +10,8 @@ Called by build_list.py too. Three signals, each turned into a share of its own 
 - US lists (0.4): TikTok + ByteDance company-tag frequency (0-100) from lc_company.py, full weight in the 30-day and
   3-month windows, 0.8 in the 6-month window, 0.5 otherwise.
 
-Tier A = the problems Chi pinned (`catalog/pinned.json`, on top of TARGET), everything seen in the last 30 days in any source, then the top three problems of every pattern (so tier A
-teaches every technique), then the highest scores until A holds TARGET problems. A family counts as covered when any of
+Tier A = the problems Chi pinned (`catalog/pinned.json`, on top of TARGET), everything seen in the past year in any source (reports, CodeTop, the US 30-day / 3-month / 6-month lists), then the top three problems of every pattern (so tier A
+teaches every technique), then the TARGET highest scores (all of them, whatever else is already in). A family counts as covered when any of
 its problems is in tier A; the report states how much of each signal tier A covers.
 """
 from __future__ import annotations
@@ -123,7 +123,7 @@ def pattern_map() -> dict[int, set[str]]:
 def assign(index: dict[str, dict], today: date | None = None) -> dict:
     """Set p["tier"], p["score"] and p["a_reason"] on every problem of `index`; return the coverage report."""
     today = today or date.today()
-    cut30 = today - timedelta(days=30)
+    cut30 = today - timedelta(days=365)  # Chi (2026-10-29): everything seen in the past year goes to tier A
     by_id: dict[int, list[str]] = {}
     for slug, p in index.items():
         if p.get("id"):
@@ -167,19 +167,19 @@ def assign(index: dict[str, dict], today: date | None = None) -> dict:
             a[s] = "pinned"
     for fam, slugs, _ in members:  # 1. seen in the last 30 days
         if fam["recent"] and slugs:
-            a.setdefault(max(slugs, key=lambda s: index[s]["score"]), "30d")
+            a.setdefault(max(slugs, key=lambda s: index[s]["score"]), "1y")
             for s in slugs:  # the TikTok version is what was actually asked
                 if s.startswith("tt-"):
-                    a.setdefault(s, "30d")
+                    a.setdefault(s, "1y")
     for f in sorted(CAT.glob("refresh-*.json")):  # every problem a recent report names, follow-ups included
         for row in json.loads(f.read_text(encoding="utf-8")).get("sightings", []):
             if not row.get("scope", "").startswith("out") and day(row.get("date", "")) >= cut30:
                 for n in row.get("lc") or []:
                     for s in by_id.get(int(n), []):
-                        a.setdefault(s, "30d")
-    for s in index:
-        if s in ct_recent or s in us_recent:
-            a.setdefault(s, "30d")
+                        a.setdefault(s, "1y")
+    for s, p in index.items():
+        if s in ct_recent or s in us_recent or p.get("window") in ("30d", "3m", "6m"):
+            a.setdefault(s, "1y")
     pats = pattern_map()  # 2. every pattern gets its best problems
     for pat in sorted({x for v in pats.values() for x in v}):
         cands = sorted((s for s, p in index.items() if pat in pats.get(p.get("id") or -1, set())),
@@ -191,10 +191,7 @@ def assign(index: dict[str, dict], today: date | None = None) -> dict:
             if s not in a:
                 a[s] = f"pattern:{pat}"
                 have += 1
-    extra = sum(1 for v in a.values() if v == "pinned")  # pinned problems come on top of TARGET, never in place of one
-    for s in sorted(index, key=lambda s: -index[s]["score"]):  # 3. highest scores
-        if len(a) >= TARGET + extra:
-            break
+    for s in sorted(index, key=lambda s: -index[s]["score"])[:TARGET]:  # 3. the TARGET highest scores, always
         a.setdefault(s, "score")
     for s, p in index.items():
         p["tier"] = "A" if s in a else "B"
@@ -205,7 +202,7 @@ def assign(index: dict[str, dict], today: date | None = None) -> dict:
     covered = [(f, m) for f, slugs, m in members if any(s in a for s in slugs)]
     return {
         "a": len(a), "b": len(index) - len(a), "reasons": {k: sum(1 for v in a.values() if v.startswith(k))
-                                                           for k in ("pinned", "30d", "pattern", "score")},
+                                                           for k in ("pinned", "1y", "pattern", "score")},
         "reports_weighted": round(100 * sum(m for _, m in covered) / tot["reports"], 1),
         "reports_raw": round(100 * sum(f["refs"] for f, _ in covered) / sum(f["refs"] for f in fams), 1),
         "reports_reachable": round(100 * sum(f["refs"] for f, s, _ in members if s) / sum(f["refs"] for f in fams), 1),

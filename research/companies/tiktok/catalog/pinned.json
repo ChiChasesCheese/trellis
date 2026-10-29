@@ -2,7 +2,9 @@
  "A": [
   "validate-binary-search-tree",
   "recover-binary-search-tree",
-  "kth-smallest-element-in-a-bst"
+  "kth-smallest-element-in-a-bst",
+  "generate-parentheses",
+  "tt-spiral-matrix-constant-space"
  ],
- "why": "Chi's picks (2026-10-29): the BST in-order family behind his LC 98 cards (98 validate, 99 recover two swapped nodes, 230 k-th smallest)"
+ "why": "Chi's picks (2026-10-29): the BST in-order family behind his LC 98 cards (98 validate, 99 recover two swapped nodes, 230 k-th smallest); LC 22 generate parentheses (Catalan) and the spiral-matrix variant (Chi, 2026-10-29)"
 }

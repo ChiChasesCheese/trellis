@@ -118,6 +118,7 @@ def windows() -> dict[str, dict]:
     return seen
 
 
+SQL_SLUGS = {"average-time-of-process-per-machine"}  # Database problems listed by CodeTop; the deck has no SQL
 CODETOP = "https://codetop.cc/api/questions/?page={page}&search=&ordering=-frequency&company=1"  # 1 = 字节跳动
 
 
@@ -126,7 +127,7 @@ def codetop(today: str) -> dict[str, dict]:
     `codetop-supp-<n>` slug and carry CodeTop's own statement."""
     from datetime import date, timedelta
     t = date.fromisoformat(today)
-    d30, d90 = str(t - timedelta(days=30)), str(t - timedelta(days=90))
+    d30, d90, d365 = str(t - timedelta(days=30)), str(t - timedelta(days=90)), str(t - timedelta(days=365))
     rows, page = [], 1
     while True:
         with urllib.request.urlopen(CODETOP.format(page=page), timeout=30) as r:
@@ -143,8 +144,9 @@ def codetop(today: str) -> dict[str, dict]:
     out = {}
     for x in rows:
         seen = x["time"][:10]
-        cn_tier = "A" if x["value"] >= 50 or seen >= d30 else ("B" if x["value"] >= 20 or seen >= d90 else "")
-        if not cn_tier:
+        # Chi (2026-10-29): anything asked in the past year belongs in the deck; select_tiers.py decides the tier
+        cn_tier = "A" if x["value"] >= 50 or seen >= d30 else ("B" if x["value"] >= 20 or seen >= d365 else "")
+        if not cn_tier or x["leetcode"]["slug_title"] in SQL_SLUGS:
             continue
         lc = x["leetcode"]
         fid = str(lc["frontend_question_id"])
@@ -234,7 +236,7 @@ def main(argv: list[str]) -> int:
     previous = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
     have = {p["slug"] for p in keep}
     for slug, p in previous.items():  # a problem with cards never leaves the deck, even when it ages out of the lists
-        if slug not in have:
+        if slug not in have and slug not in SQL_SLUGS:
             keep.append({**p, "retained": True})
     import select_tiers
     select_tiers.assign({p["slug"]: p for p in keep})

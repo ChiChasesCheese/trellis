@@ -1,8 +1,8 @@
 %% trellis:begin %%
-# LC 204 计数质数（Count Primes）
+# LC 204 计数质数
 *A 档：最高频*
 
-LeetCode 原题；近一年被问 2 次、最近 2026-09。
+Easy；国内字节被问 6 次、最近 2026-03-11。
 
 **Core** — part of the first pass through this subject.
 

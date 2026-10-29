@@ -2,7 +2,7 @@
 # LC 153 寻找旋转排序数组中的最小值（Find Minimum in Rotated Sorted Array）
 *A 档：最高频*
 
-Medium；频率 TikTok 50；Array, Binary Search。
+Medium；频率 TikTok 50；国内字节被问 17 次、最近 2026-04-16；Array, Binary Search。
 
 **Core** — part of the first pass through this subject.
 

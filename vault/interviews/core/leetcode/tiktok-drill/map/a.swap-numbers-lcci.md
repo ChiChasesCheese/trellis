@@ -1,0 +1,10 @@
+%% trellis:begin %%
+# 面试题 16.01 交换数字
+*A 档：最高频*
+
+Medium；国内字节被问 1 次、最近 2025-12-19。
+
+**Core** — part of the first pass through this subject.
+%% trellis:end %%
+
+## Notes

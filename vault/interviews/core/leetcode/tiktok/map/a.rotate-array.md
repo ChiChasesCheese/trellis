@@ -2,7 +2,7 @@
 # LC 189 轮转数组（Rotate Array）
 *A 档：最高频*
 
-Medium；频率 TikTok 56；近 3 个月出现；Array, Math, Two Pointers。
+Medium；频率 TikTok 56；近 3 个月出现；国内字节被问 13 次、最近 2026-05-16；Array, Math, Two Pointers。
 
 **Core** — part of the first pass through this subject.
 

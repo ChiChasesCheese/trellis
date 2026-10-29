@@ -1,0 +1,27 @@
+---
+id: tlc-count-of-interesting-subarrays-1-signal
+node: a.count-of-interesting-subarrays
+type: qa
+step: 1
+---
+## Q
+**LC 2845 统计趣味子数组的数目**｜Medium · TikTok 高频
+
+给整数数组 `nums` 和整数 `modulo`、`k`。子数组 `nums[l..r]` 中满足 `nums[i] % modulo == k` 的元素个数记为 `cnt`，若 `cnt % modulo == k`，该子数组就是趣味子数组。返回趣味子数组的数目。`1 <= nums.length <= 10^5`，`1 <= nums[i] <= 10^9`，`1 <= modulo <= 10^9`，`0 <= k < modulo`。例：`nums = [3,2,4]`，`modulo = 2`，`k = 1` → `3`。
+
+题面里哪些信号指向哪个模式？从暴力解怎样一步步推到最优解？
+
+## A
+**信号 → 模式。**
+- 「统计满足条件的子数组个数」→ **前缀和 + 哈希表**：子数组的某个量 = 两个前缀之差。
+- 条件是计数的**同余** → 前缀和只需要保留对 `modulo` 的余数，哈希表里存余数出现的次数。
+- 「`nums[i] % modulo == k`」只是一个标记 → 先转成 `0 / 1` 序列，`cnt` 就是 `0 / 1` 的前缀和之差。
+- `n = 10^5` → 暴力 `O(n^2)` 不行；条件对窗口不单调，滑动窗口不适用。
+
+**推导链。**
+1. 暴力：枚举 `l`、`r`，累计 `cnt`，`O(n^2)`。
+2. 转换：设 `pre[i]` 是前 `i` 个元素里被标记的个数，子数组 `(l, r]` 的 `cnt = pre[r] - pre[l]`。
+3. 条件 `(pre[r] - pre[l]) % modulo == k` 等价于 `pre[l] % modulo == (pre[r] - k) % modulo`。
+4. 扫描 `r` 时，哈希表里存着所有 `l < r`（含空前缀）的前缀余数的个数，直接查 `(pre[r] - k) % modulo` 的个数并累加，`O(n)`。
+
+**同模式的题**：LC 560 和为 K 的子数组、LC 974 和可被 K 整除的子数组、LC 523 连续的子数组和、LC 1248 统计「优美子数组」。

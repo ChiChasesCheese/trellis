@@ -2,7 +2,7 @@
 # LC 84 柱状图中最大的矩形（Largest Rectangle in Histogram）
 *A 档：最高频*
 
-Hard；频率 TikTok 50；Array, Stack, Monotonic Stack, Range Minimum/Maximum Query。
+Hard；频率 TikTok 50；国内字节被问 12 次、最近 2026-03-01；Array, Stack, Monotonic Stack, Range Minimum/Maximum Query。
 
 **Core** — part of the first pass through this subject.
 

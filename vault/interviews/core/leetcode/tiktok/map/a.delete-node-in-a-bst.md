@@ -2,7 +2,7 @@
 # LC 450 删除二叉搜索树中的节点（Delete Node in a BST）
 *A 档：最高频*
 
-Medium；频率 字节 50；Tree, Binary Search Tree, Binary Tree。
+Medium；频率 字节 50；国内字节被问 5 次、最近 2026-03-11；Tree, Binary Search Tree, Binary Tree。
 
 **Core** — part of the first pass through this subject.
 

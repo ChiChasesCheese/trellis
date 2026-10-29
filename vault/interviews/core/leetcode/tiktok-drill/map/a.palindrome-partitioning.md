@@ -1,0 +1,16 @@
+%% trellis:begin %%
+# LC 131 分割回文串（Palindrome Partitioning）
+*A 档：最高频*
+
+LeetCode 原题；近一年被问 2 次、最近 2026-07。
+
+**Core** — part of the first pass through this subject.
+
+## Cards (4)
+1. [[tlc-palindrome-partitioning-1-signal]]
+2. [[tlc-palindrome-partitioning-2-code]]
+3. [[tlc-palindrome-partitioning-3-why]]
+4. [[tlc-palindrome-partitioning-4-followup]]
+%% trellis:end %%
+
+## Notes

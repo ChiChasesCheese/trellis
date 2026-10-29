@@ -2,7 +2,7 @@
 # LC 134 加油站（Gas Station）
 *A 档：最高频*
 
-Medium；频率 TikTok 50；近 3 个月出现；Array, Greedy。
+Medium；频率 TikTok 50；近 3 个月出现；国内字节被问 10 次、最近 2026-04-23；Array, Greedy。
 
 **Core** — part of the first pass through this subject.
 

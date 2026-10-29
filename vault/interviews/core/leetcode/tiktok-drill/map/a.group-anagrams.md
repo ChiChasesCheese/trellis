@@ -2,7 +2,7 @@
 # LC 49 字母异位词分组（Group Anagrams）
 *A 档：最高频*
 
-Medium；频率 TikTok 50；Array, Hash Table, String, Sorting。
+Medium；频率 TikTok 50；国内字节被问 9 次、最近 2026-06-05；Array, Hash Table, String, Sorting。
 
 **Core** — part of the first pass through this subject.
 
