@@ -35,7 +35,11 @@ _TITLE = re.compile(r"^<p><strong>(.+?)</strong>[｜|]\s*(.+?)</p>", re.S)
 _LABEL = re.compile(r"<p><strong>([^<]{1,12}?)[。:：]</strong>\s*")
 
 
-_CODE_OR_TAG = re.compile(r"(<pre>.*?</pre>|<code>.*?</code>|<[^>]+>)", re.S)
+_CODE_OR_TAG = re.compile(r"(<pre>.*?</pre>|<code>.*?</code>|<svg.*?</svg>|<[^>]+>)", re.S)
+# A fenced ```svg block is a diagram: it goes into the card as inline SVG, so it can use the theme's colours.
+_SVG_FENCE = re.compile(r"^```svg[ \t]*\n(.*?)^```[ \t]*$", re.S | re.M)
+# **例题：** opens a worked problem at the end of an answer; it is folded so the card stays short.
+_EXAMPLE = re.compile(r'<p><span class="label">例题</span>(.*?)</p>(.*)\Z', re.S)
 
 
 def _break_semicolons(html: str) -> str:
@@ -183,6 +187,14 @@ td, th { border: 1px solid var(--rule); padding: 5px 10px; }
 .sources a { color: var(--accent); text-decoration: none; }
 .sources a.web { color: var(--dim); font-size: 12px; }
 
+.fig { margin: 12px 0; text-align: center; }
+.fig svg { max-width: 100%; height: auto; color: var(--ink); }
+details.example { margin-top: 18px; padding-top: 10px; border-top: 1px solid var(--rule); }
+details.example > summary { cursor: pointer; list-style: none; color: var(--accent); }
+details.example > summary::-webkit-details-marker { display: none; }
+details.example > summary::after { content: " ▸"; color: var(--dim); }
+details.example[open] > summary::after { content: " ▾"; }
+
 @media (max-width: 500px) {
   .card { font-size: 17px; padding: 16px 14px 24px; }
   .hl pre, pre { font-size: 13px; padding: 10px 12px; }
@@ -201,10 +213,20 @@ def _html(text: str) -> str:
     # Obsidian wikilinks have nowhere to point inside Anki; render the
     # display text as a styled reference instead.
     text = _WIKILINK_RE.sub(lambda m: f'<span class="ref">{m.group(2) or m.group(1)}</span>', text)
+    svgs: list[str] = []
+
+    def _stash(m: re.Match) -> str:
+        svgs.append(m.group(1).strip())
+        return f"\n\nTRELLISSVG{len(svgs) - 1}\n\n"
+    text = _SVG_FENCE.sub(_stash, text)
     _MD.reset()
     html = _MD.convert(_blank_before_lists(text))
+    for i, svg in enumerate(svgs):
+        html = html.replace(f"<p>TRELLISSVG{i}</p>", f'<div class="fig">{svg}</div>')
     html = _TITLE.sub(lambda m: f'<p class="title">{m.group(1)}<span class="meta">{m.group(2)}</span></p>', html, count=1)
     html = _LABEL.sub(lambda m: f'<p><span class="label">{m.group(1)}</span>', html)
+    html = _EXAMPLE.sub(lambda m: f'<details class="example"><summary><span class="label">例题</span>{m.group(1)}'
+                                  f'</summary>{m.group(2)}</details>', html)
     return _break_semicolons(html)
 
 

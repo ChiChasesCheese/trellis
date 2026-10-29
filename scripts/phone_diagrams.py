@@ -10,7 +10,7 @@ draws (CJK glyphs are not exactly two cells wide, so box edges stop lining up). 
 import glob, os, re, sys, unicodedata
 
 CODE = {'python', 'py', 'java', 'cpp', 'c++', 'c', 'bash', 'sh', 'sql', 'json', 'yaml', 'go', 'rust', 'kotlin',
-        'javascript', 'js', 'ts', 'typescript', 'mermaid', 'diff', 'toml', 'xml', 'html', 'css', 'console', 'asm'}
+        'javascript', 'js', 'ts', 'typescript', 'mermaid', 'svg', 'diff', 'toml', 'xml', 'html', 'css', 'console', 'asm'}
 DRAW = re.compile(r'[─│┌┐└┘├┤┬┴┼═║╔╗╚╝▶◀▲▼←→↑↓┃━]|\+-{2,}|-{2,}>|<-{2,}|\|.*\|')
 MAX = 40
 
