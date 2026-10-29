@@ -26,22 +26,25 @@ def longest_common_subsequence(text1: str, text2: str) -> int:
 
 def min_distance(word1: str, word2: str) -> int:
     m, n = len(word1), len(word2)
-    dp = list(range(n + 1))                # 第 0 行：word1 为空，需要 j 次插入
+    # dp[i][j]：word1 的前 i 个字符变成 word2 的前 j 个字符的最少操作数
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(m + 1):
+        dp[i][0] = i                       # 基础列：word2 为空，删掉 i 个字符
+    for j in range(n + 1):
+        dp[0][j] = j                       # 基础行：word1 为空，插入 j 个字符
     for i in range(1, m + 1):
-        prev_diag, dp[0] = dp[0], i        # prev_diag 保存左上角 dp[i-1][j-1]
         for j in range(1, n + 1):
-            tmp = dp[j]
             if word1[i - 1] == word2[j - 1]:
-                dp[j] = prev_diag
+                dp[i][j] = dp[i - 1][j - 1]            # 末尾相同：不用操作
             else:
-                dp[j] = 1 + min(dp[j], dp[j - 1], prev_diag)   # 删除 / 插入 / 替换
-            prev_diag = tmp
-    return dp[n]
+                dp[i][j] = 1 + min(dp[i - 1][j],       # 删除 word1 的末尾
+                                   dp[i][j - 1],       # 在 word1 末尾插入
+                                   dp[i - 1][j - 1])   # 替换
+    return dp[m][n]
 ```
 
 运行：`longest_common_subsequence("abcde", "ace")` → `3`，`("abc", "def")` → `0`；`min_distance("horse", "ros")` → `3`，`("intention", "execution")` → `5`，`("", "a")` → `1`。
 
-- LCS 时间 `O(mn)`，空间 `O(mn)`（要还原子序列需要整张表），只要长度可压成两行 `O(min(m, n))`。
+- LCS 时间 `O(mn)`，空间 `O(mn)`；要还原子序列需要整张表，从 `dp[m][n]` 往回走。空间可以压到 O(n)：见 Python 工具箱「DP 降维」。
 - 编辑距离三个操作对应三个方向：`dp[i-1][j]` 删除 `word1` 的末尾，`dp[i][j-1]` 在 `word1` 末尾插入，`dp[i-1][j-1]` 替换。
 - 编辑距离的第 0 行 / 第 0 列：一个串为空，另一个串长度即是代价。
-- 一维压缩时，左上角值会被覆盖，要用 `prev_diag` 暂存。

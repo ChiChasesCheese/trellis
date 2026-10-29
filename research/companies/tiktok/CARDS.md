@@ -115,3 +115,19 @@ deck). Run the gate's `validate` for both domains: `trellis --domain tiktok-lc v
 `trellis --domain tiktok-lc-drill validate`.
 
 - Never move, rename or delete files that are not your own leaves' cards: match your exact slugs, never a wildcard over a whole folder (other agents write in the same folders at the same time).
+
+## Main problem first (2026-10-28)
+
+When a statement has a main task and a follow-up (追问), the whole card and the `-2-code` card solve the **main task**;
+the follow-up's technique goes into **追问** / the `-4-followup` card (idea first, code after). Never promote a
+follow-up into the main requirement: a card that opens with a Fenwick tree for what is LC 528 plus a discussion
+follow-up teaches the wrong priorities.
+
+## 2-D DP: full table, no rolling (Chi, 2026-10-28)
+
+For any DP whose natural state has two indices (grid, two strings, interval, knapsack item × capacity, including
+0-1 / complete knapsack counting such as LC 416, 494, 518), the main solution on the whole card and the `-2-code` card
+uses the **full 2-D table** (`dp = [[0] * (n + 1) for _ in range(m + 1)]`), never a rolling array, a single reused row
+or a 1-D reduction. Space reduction appears only as one line in 追问 / the `-4-followup` card:「空间可以压到 O(n)：见
+Python 工具箱「DP 降维」」, without code. The technique itself lives in leaf `python.dp-space-compression`. 1-D DP
+(state `dp[i]`) is unaffected.

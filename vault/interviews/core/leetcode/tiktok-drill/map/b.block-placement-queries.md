@@ -1,0 +1,15 @@
+%% trellis:begin %%
+# LC 3161 物块放置查询（Block Placement Queries）
+*B 档：次高频*
+
+Hard；频率 TikTok 88；近 3 个月出现；Binary Indexed Tree, Segment Tree, Array, Binary Search, Ordered Set。
+
+## Cards (5)
+1. [[tlc-block-placement-queries-1-signal]]
+2. [[tlc-block-placement-queries-2-code]]
+3. [[tlc-block-placement-queries-3-why]]
+4. [[tlc-block-placement-queries-4-followup]]
+5. [[tlc-block-placement-queries-5-alt]]
+%% trellis:end %%
+
+## Notes

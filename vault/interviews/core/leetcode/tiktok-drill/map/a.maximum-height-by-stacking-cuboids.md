@@ -1,0 +1,17 @@
+%% trellis:begin %%
+# LC 1691 堆叠长方体的最大高度（Maximum Height by Stacking Cuboids）
+*A 档：最高频*
+
+LeetCode 原题；近一年被问 2 次、最近 2026-10-23。
+
+**Core** — part of the first pass through this subject.
+
+## Cards (5)
+1. [[tlc-maximum-height-by-stacking-cuboids-1-signal]]
+2. [[tlc-maximum-height-by-stacking-cuboids-2-code]]
+3. [[tlc-maximum-height-by-stacking-cuboids-3-why]]
+4. [[tlc-maximum-height-by-stacking-cuboids-4-followup]]
+5. [[tlc-maximum-height-by-stacking-cuboids-5-alt]]
+%% trellis:end %%
+
+## Notes

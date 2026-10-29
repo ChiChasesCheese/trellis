@@ -19,6 +19,7 @@ PYTHON = [
  ("idioms", "地道的 Python 写法", "解包与交换、enumerate/zip、推导式与生成器表达式、海象运算符、切片与反转、sorted 的 key 与稳定性、字符串 join、any/all、divmod、math.inf 与哨兵值。"),
  ("pitfalls", "Python 刷题的性能与正确性陷阱", "递归深度上限（sys.setrecursionlimit 与改迭代）、[[0]*n]*m 的别名、可变默认参数、list.pop(0)、字符串反复拼接、浮点比较、整数除法与负数取整、大输入下的常数。"),
  ("recursion-memo", "递归、记忆化与迭代改写", "@cache 记忆化搜索的写法与内存、cache_clear、把递归 DFS 改写成显式栈、nonlocal 与闭包、生成器递归。"),
+ ("dp-space-compression", "DP 降维：滚动数组与空间压缩", "题目卡片里的二维 DP 一律用完整的二维表；这里集中学怎样把它压成一维：依赖方向决定能否降维、两行滚动、单行原地、0-1 背包倒序与完全背包正序、左上角依赖要多存一个变量、什么时候不该降维。"),
  ("classes-design", "设计题的 Python 写法", "类设计题（LRU、迭代器、数据流）里的 __init__ 组织、dataclass、__slots__、__lt__ 让对象进堆、OrderedDict 实现 LRU、类型注解让代码更清楚。"),
 ]
 PATTERNS = [
@@ -90,9 +91,9 @@ nodes = [
         [{"id": f"python.{a}", "title": t, "summary": s} for a, t, s in PYTHON], True),
  branch(2, "patterns", "模式识别", "从题面信号到解法模式：每个模式的触发信号、Python 模板、正确性来源、常见变形与陷阱。",
         [{"id": f"patterns.{a}", "title": t, "summary": s} for a, t, s in PATTERNS], True),
- branch(3, "a", "A 档：最高频", "TikTok、字节（美国与国内）最高频的题：近半年出现、频率 ≥ 70，或国内被问 ≥ 50 次 / 近 30 天出现；按热度降序。",
+ branch(3, "a", "A 档：最高频", "先学这一档：约 200 道，覆盖 TikTok、字节（美国与国内）近一年真实面试出题的八成以上；近 30 天出现过的题全部在内，每个解题模式至少 3 道；按热度降序。",
         [{"id": f"a.{p['slug']}", "title": leaf_title(p), "summary": leaf_summary(p)} for p in problems if p["tier"] == "A"], True),
- branch(4, "b", "B 档：次高频", "频率 ≥ 50，或国内被问 ≥ 20 次 / 近 3 个月出现；按热度降序。",
+ branch(4, "b", "B 档：次高频", "其余高频题：出现次数较少或时间较早，学完 A 档再学；按热度降序。",
         [{"id": f"b.{p['slug']}", "title": leaf_title(p), "summary": leaf_summary(p)} for p in problems if p["tier"] == "B"], False),
 ]
 sk = {"domain": "tiktok-lc", "title": "TikTok 字节高频 LeetCode · 整题答案",

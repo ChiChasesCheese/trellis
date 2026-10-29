@@ -10,36 +10,26 @@ step: 2
 `nums` 只含正整数（`1 <= len <= 200`，`1 <= nums[i] <= 100`），判断能否分成两个和相等的子集。
 
 ## A
-**思路。** 总和奇数直接 `False`。否则判断能否凑出 `total // 2`。用位集：`bits` 的第 `i` 位表示「存在子集和为 `i`」，初始只有第 `0` 位（空集）。对每个数 `x`，`bits << x` 表示每个已有和都加上 `x`，与原 `bits` 取或表示选或不选。最后看第 `total // 2` 位。
+**思路。** 总和奇数直接 `False`。否则判断能否凑出 `total // 2`。`dp[i][j]` 表示只用前 `i` 个数能否凑出和 `j`；基础行 `dp[0][0] = True`（一个数都不选，只能凑出 `0`）。第 `i` 个数 `x`：不选，`dp[i][j]` 继承 `dp[i-1][j]`；选，要求 `j >= x` 且 `dp[i-1][j-x]` 为真。最后看 `dp[n][total // 2]`。
 
 ```python
 def can_partition(nums: list[int]) -> bool:
     total = sum(nums)
     if total % 2:
         return False                           # 总和是奇数，不可能平分
-    bits = 1                                   # 第 i 位为 1 表示「存在子集和恰好为 i」
-    for x in nums:
-        bits |= bits << x                      # 每个数选或不选；右边的 bits 是旧值，所以每个数只用一次
-    return bool(bits >> (total // 2) & 1)
+    n, half = len(nums), total // 2
+    # dp[i][j]：只用前 i 个数，能否凑出和恰好为 j
+    dp = [[False] * (half + 1) for _ in range(n + 1)]
+    dp[0][0] = True                            # 基础行：一个数都不选，只能凑出 0
+    for i in range(1, n + 1):
+        x = nums[i - 1]
+        for j in range(half + 1):
+            dp[i][j] = dp[i - 1][j] or (j >= x and dp[i - 1][j - x])   # 不选第 i 个 / 选第 i 个
+    return dp[n][half]                         # 答案格：用全部 n 个数，凑出 half
 ```
 
-常规数组写法（逐项可读，位集写法的对照）：
+运行：`[1,5,11,5]` → `True`，`[1,2,3,5]` → `False`，`[1]` → `False`，`[2,2]` → `True`，`[100] * 200` → `True`，`[99] * 199 + [100]` → `False`；随机 `200` 个 `1..100` 的数约 `0.02` 秒。
 
-```python
-def can_partition_dp(nums: list[int]) -> bool:
-    total = sum(nums)
-    if total % 2:
-        return False
-    half = total // 2
-    dp = [True] + [False] * half               # dp[j]：是否存在子集和为 j
-    for x in nums:
-        for j in range(half, x - 1, -1):       # 倒着更新，保证每个数只用一次
-            dp[j] = dp[j] or dp[j - x]
-    return dp[half]
-```
+**复杂度。** 时间 `O(n · S)`，`S` 是总和；空间 `O(n · S)`，整张表。
 
-运行：`[1,5,11,5]` → `True`，`[1,2,3,5]` → `False`，`[1]` → `False`，`[2,2]` → `True`，`[100] * 200` → `True`，`[99] * 199 + [100]` → `False`；两种写法结果一致，位集版对 `200` 个数不到 `0.001` 秒，数组版约 `0.01` 秒。
-
-**复杂度。** 位集版：时间 `O(n · S / w)`，`w` 是机器字长，空间 `O(S)` 位；数组版：时间 `O(n · S)`，空间 `O(S)`。
-
-**写法要点。** Python 的 `int` 是任意精度，可以直接当位集，`bits << x` 与 `|=` 都是按字并行的；`bits >> k & 1` 的优先级是先移位再与 `1` 相与；数组版 `range(half, x - 1, -1)` 倒序保证 0/1 语义；位集版天然是 0/1（右边的 `bits` 是旧值），没有倒序的陷阱。
+**写法要点。** `[[False] * (half + 1) for _ in range(n + 1)]` 每行是独立的列表，多出的第 `0` 行是基础行；第 `i` 行对应 `nums[i - 1]`，所以先取 `x = nums[i - 1]`；`dp[i - 1][j] or (j >= x and dp[i - 1][j - x])` 用短路表达「不选 / 选」，`j >= x and` 放前面，避免 `j - x` 变成负下标而悄悄回绕；两个转移都读上一行 `dp[i - 1]`，所以每个数只用一次；`total % 2` 判断放在建表之前，省掉整张表。

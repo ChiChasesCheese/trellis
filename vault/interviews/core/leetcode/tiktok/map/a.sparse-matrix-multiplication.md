@@ -1,0 +1,13 @@
+%% trellis:begin %%
+# LC 311 稀疏矩阵的乘法（Sparse Matrix Multiplication）
+*A 档：最高频*
+
+LeetCode 原题；近一年被问 1 次、最近 2026-10-27。
+
+**Core** — part of the first pass through this subject.
+
+## Cards (1)
+1. [[tlc-sparse-matrix-multiplication-0-whole]]
+%% trellis:end %%
+
+## Notes

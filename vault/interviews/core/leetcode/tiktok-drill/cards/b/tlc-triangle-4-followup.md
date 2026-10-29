@@ -7,29 +7,43 @@ step: 4
 ## Q
 **LC 120 三角形最小路径和**｜追问
 
-面试官接着问：（1）要输出最小路径本身？（2）不允许额外空间，直接改输入呢？（3）自顶向下的写法怎么处理两端？
+面试官接着问：（1）要输出最小路径本身？（2）题面进阶要求额外空间只有 `O(n)` 呢？（3）自顶向下的写法怎么处理两端？
 
 ## A
-1. **输出路径**：自底向上时记下每个格子"向下走哪一列"，最后从顶端沿记录走一遍。
+1. **输出路径**：整张 `dp` 表已经在手，从顶点 `(0, 0)` 出发，每步走到 `dp` 更小的那个后继，不需要额外记录"向下走哪一列"。
 
 ```python
 def minimum_total_path(triangle: list[list[int]]) -> tuple[int, list[int]]:
-    dp = triangle[-1][:]
-    choice: list[list[int]] = []                   # choice[k][j]：从上数第 k 行第 j 个，下一步去下一行的哪一列
-    for row in reversed(triangle[:-1]):
-        nxt = [j if dp[j] <= dp[j + 1] else j + 1 for j in range(len(row))]
-        dp = [v + dp[c] for v, c in zip(row, nxt)]
-        choice.append(nxt)
-    choice.reverse()                               # 变成自顶向下的顺序
+    n = len(triangle)
+    dp = [[0] * (i + 1) for i in range(n)]
+    dp[n - 1] = triangle[n - 1][:]
+    for i in range(n - 2, -1, -1):
+        for j in range(i + 1):
+            dp[i][j] = triangle[i][j] + min(dp[i + 1][j], dp[i + 1][j + 1])
     j, path = 0, [triangle[0][0]]
-    for k, nxt in enumerate(choice):
-        j = nxt[j]
-        path.append(triangle[k + 1][j])
-    return dp[0], path
+    for i in range(1, n):                          # 从顶点往下，每步去 dp 更小的后继
+        if dp[i][j + 1] < dp[i][j]:
+            j += 1
+        path.append(triangle[i][j])
+    return dp[0][0], path
 ```
 
 `[[2],[3,4],[6,5,7],[4,1,8,3]]` → `(11, [2, 3, 5, 1])`。
-2. **就地修改**：从倒数第二行起，`triangle[i][j] += min(triangle[i + 1][j], triangle[i + 1][j + 1])`，最后 `triangle[0][0]` 是答案，空间 `O(1)`，代价是破坏输入；面试里要先问"能不能改输入"。如果只想省掉每轮新建列表，可以拷贝最后一行成 `dp`，每行内部从左到右更新 `dp[j] = v + min(dp[j], dp[j + 1])`，方向不能反。
-3. **自顶向下**：`dp[j] = triangle[i][j] + min(上一行的 dp[j - 1], dp[j])`，其中 `j = 0` 只有 `dp[j]`、`j = i` 只有 `dp[j - 1]`，用 `inf` 垫在两端避免特判；最后取最后一行的最小值。需要新建列表（或倒序更新）避免读到刚写的值。
+2. **额外空间 `O(n)`（题面进阶）**：空间可以压到 O(n)：见 Python 工具箱「DP 降维」。面试里先写上面的完整二维表，再说压缩。
+3. **自顶向下**：`dp[i][j]` 改成"从顶点走到 `(i, j)` 的最小路径和"，`dp[i][j] = triangle[i][j] + min(dp[i-1][j-1], dp[i-1][j])`。每行两端只有一个前驱，每行左右各垫一格 `inf` 就不需要特判；最后取最后一行的最小值。
 
-**Python 提醒**：`dp[-1]` 在 Python 里是最后一个元素而不是越界，自顶向下写 `dp[j - 1]` 时 `j = 0` 会悄悄读到末尾；用 `float("inf")` 垫两端比依赖下标回绕可靠。`itertools.pairwise` 需要 Python 3.10 及以上，早期版本用 `zip(dp, dp[1:])`。
+```python
+def minimum_total_top_down(triangle: list[list[int]]) -> int:
+    inf = float("inf")
+    n = len(triangle)
+    dp = [[inf] * (i + 3) for i in range(n)]       # 第 i 行的真实格子在下标 1..i+1，两端是 inf
+    dp[0][1] = triangle[0][0]
+    for i in range(1, n):
+        for j in range(1, i + 2):
+            dp[i][j] = triangle[i][j - 1] + min(dp[i - 1][j - 1], dp[i - 1][j])
+    return int(min(dp[n - 1]))
+```
+
+`[[2],[3,4],[6,5,7],[4,1,8,3]]` → `11`，`[[-10]]` → `-10`。
+
+**Python 提醒**：`dp[-1]` 在 Python 里是最后一个元素而不是越界，自顶向下写 `dp[i][j - 1]` 时 `j = 0` 会悄悄读到末尾；用 `float("inf")` 垫两端比依赖下标回绕可靠。建二维表用 `[[0] * (i + 1) for i in range(n)]`，写成 `[[0] * 3] * 3` 三行会是同一个列表。

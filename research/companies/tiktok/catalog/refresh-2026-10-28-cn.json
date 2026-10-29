@@ -1,0 +1,466 @@
+{
+ "collected": "2026-10-28",
+ "half": "cn",
+ "sightings": [
+  {
+   "date": "2026-10-19",
+   "region": "CN",
+   "source": "NC 2928733",
+   "url": "https://www.nowcoder.com/feed/main/detail/5eaf1ca6d057469a8d1df64beaa0ec00",
+   "role": "Feishu infra internal transfer (frontend/infra)",
+   "round": "P",
+   "family": "Lowest Common Ancestor of a Binary Tree",
+   "lc": [
+    236,
+    1676
+   ],
+   "custom": null,
+   "note": "Given an AST and a set of nodes, find the nearest common ancestor of the whole set so that re-rendering it re-renders all targets (multi-node LCA); also a streaming-render design discussion.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-10-19",
+   "region": "CN",
+   "source": "NC 2928955",
+   "url": "https://www.nowcoder.com/feed/main/detail/b1c21204dc174dab82206bb3a2f94902",
+   "role": "recommendation-algorithm intern",
+   "round": "?",
+   "family": null,
+   "lc": [
+    221
+   ],
+   "custom": null,
+   "note": "Maximal Square, ACM stdin/stdout mode; post dated 10-19, interview on 10-12.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-10-19",
+   "region": "CN",
+   "source": "NC 2928955",
+   "url": "https://www.nowcoder.com/feed/main/detail/b1c21204dc174dab82206bb3a2f94902",
+   "role": "recommendation-algorithm intern",
+   "round": "?",
+   "family": "Subarray Sum Equals K",
+   "lc": [
+    560
+   ],
+   "custom": null,
+   "note": "Named as a LeetCode original 'subarray with sum k' but described as a sliding-window O(n^2)->O(n) optimisation (the description fits a non-negative array, not LC560 itself); same interview as the Maximal Square row.",
+   "conf": "low"
+  },
+  {
+   "date": "2026-10-20",
+   "region": "CN",
+   "source": "NC 942006786846883840",
+   "url": "https://www.nowcoder.com/discuss/942006786846883840",
+   "role": "LLM algorithm (Beijing), 3rd round",
+   "round": "O",
+   "family": null,
+   "lc": [
+    136,
+    260
+   ],
+   "custom": null,
+   "note": "Find the single unpaired value in an array of 2n+1 (LC136), upgraded to 2n+2 with two unpaired values (LC260). Post dated 10-20, interview 10-19; AI-polished serial-style post.",
+   "conf": "low"
+  },
+  {
+   "date": "2026-10-20",
+   "region": "CN",
+   "source": "NC 942006786846883840",
+   "url": "https://www.nowcoder.com/discuss/942006786846883840",
+   "role": "LLM algorithm (Beijing), 3rd round",
+   "round": "O",
+   "family": null,
+   "lc": [
+    1691
+   ],
+   "custom": null,
+   "note": "3D box stacking: upper box strictly smaller in length and width than the one below; maximise stack height (cuboid stacking, no rotation stated in this post).",
+   "conf": "low"
+  },
+  {
+   "date": "2026-10-23",
+   "region": "CN",
+   "source": "NC 2931321",
+   "url": "https://www.nowcoder.com/feed/main/detail/94d852ace37f4bbe85219d48ad3384ab",
+   "role": "LLM algorithm (Beijing), 3rd round",
+   "round": "O",
+   "family": null,
+   "lc": [
+    1691
+   ],
+   "custom": null,
+   "note": "Box stacking with rotation allowed, strictly smaller upper face; 21 minutes of the round; DP O(n^2) then CDQ/Fenwick optimisation discussed. Interview 10-22. Same author voice and same problem as the 10-20 post, possibly a recycled story.",
+   "conf": "low"
+  },
+  {
+   "date": "2026-10-18",
+   "region": "CN",
+   "source": "NC 2927335",
+   "url": "https://www.nowcoder.com/feed/main/detail/bee63e7d2e4a4c5da8b2a7aa643d0961",
+   "role": "international commercial-safety frontend",
+   "round": "P",
+   "family": "Merge Sorted Arrays",
+   "lc": [
+    88
+   ],
+   "custom": null,
+   "note": "One of three opening algorithm questions of the first round.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-10-18",
+   "region": "CN",
+   "source": "NC 2927335",
+   "url": "https://www.nowcoder.com/feed/main/detail/bee63e7d2e4a4c5da8b2a7aa643d0961",
+   "role": "international commercial-safety frontend",
+   "round": "P",
+   "family": "Add two signed numeric strings",
+   "lc": [
+    415
+   ],
+   "custom": null,
+   "note": "Big-number addition, one of three opening questions; the candidate could not finish the common ones.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-10-18",
+   "region": "CN",
+   "source": "NC 2927335",
+   "url": "https://www.nowcoder.com/feed/main/detail/bee63e7d2e4a4c5da8b2a7aa643d0961",
+   "role": "international commercial-safety frontend",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "JavaScript: predict the output order of a snippet mixing promises and the event loop.",
+   "note": "Output-order question rather than an implementation task.",
+   "conf": "medium",
+   "scope": "out: ML / JavaScript knowledge question, not an algorithm-coding problem for the LeetCode deck"
+  },
+  {
+   "date": "2026-10-24",
+   "region": "CN",
+   "source": "NC 2931498",
+   "url": "https://www.nowcoder.com/feed/main/detail/079275e17dc84e7aa328648693322425",
+   "role": "backend intern, international ads CRM and trading platform",
+   "round": "P",
+   "family": "Reverse Linked List",
+   "lc": [
+    206
+   ],
+   "custom": null,
+   "note": "Reverse 12345 into 54321, ACM mode; same round had an unspecified SQL query and an order-timeout-cancel scenario question.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-10-26",
+   "region": "CN",
+   "source": "NC 2931390",
+   "url": "https://www.nowcoder.com/feed/main/detail/8352902d1fe04b559be1e7ea9a1243f7",
+   "role": "developer-infra internal transfer (frontend infra)",
+   "round": "P",
+   "family": "Concurrency-limited async task scheduler (JS)",
+   "lc": [],
+   "custom": "async runLimited(tasks, limit): run task functions with at most limit in flight, refill immediately, keep input order, return fulfilled/rejected records, validate limit with RangeError.",
+   "note": "Fully specified promise-pool; sync throws and async rejects both captured; each task called exactly once.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-10-27",
+   "region": "CN",
+   "source": "NC 2933490",
+   "url": "https://www.nowcoder.com/feed/main/detail/6925dfb9ec844f03957cb54981057cea",
+   "role": "backend (knowledge-base agent project)",
+   "round": "P",
+   "family": "Reverse Nodes in k-Group (+ variants)",
+   "lc": [
+    25
+   ],
+   "custom": null,
+   "note": "Plain LC25 as the closing hand-coding question after an agent-project and MySQL/OS discussion.",
+   "conf": "high"
+  },
+  {
+   "date": "2026-10-27",
+   "region": "CN",
+   "source": "NC 2933509",
+   "url": "https://www.nowcoder.com/feed/main/detail/a9f41530aac74df8a5fae3657525de81",
+   "role": "client intern, photo-editing AI app",
+   "round": "P",
+   "family": "Minimum Path Sum",
+   "lc": [
+    64
+   ],
+   "custom": null,
+   "note": "Listed as 'shortest path sum' (grid path sum); the candidate says the code passed but the round failed.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-10-28",
+   "region": "CN",
+   "source": "NC 2933631",
+   "url": "https://www.nowcoder.com/feed/main/detail/567a2f5f180d422a9e5c5aef5cbae192",
+   "role": "Android client intern, video-editing app",
+   "round": "P",
+   "family": "Reverse Linked List",
+   "lc": [
+    206
+   ],
+   "custom": null,
+   "note": "Reverse a linked list, solved in about 3 minutes; the same round had a long LRU-cache design discussion (no code).",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-10-28",
+   "region": "CN",
+   "source": "NC 2933704",
+   "url": "https://www.nowcoder.com/feed/main/detail/ff05ed13b87143febb4801e6b776f42b",
+   "role": "search/ads/recommendation algorithm, 2nd round (interviewer in San Jose)",
+   "round": "O",
+   "family": "MinStack / MaxStack (+ streaming median)",
+   "lc": [
+    155
+   ],
+   "custom": null,
+   "note": "Could not write MinStack in the second round; the candidate says design problems are not safe to skip.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-10-28",
+   "region": "CN",
+   "source": "NC 2933704",
+   "url": "https://www.nowcoder.com/feed/main/detail/ff05ed13b87143febb4801e6b776f42b",
+   "role": "search/ads/recommendation algorithm, 1st round",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "Hand-write the AUC metric computation.",
+   "note": "First-round hand-coding item (logistic-regression basics followed).",
+   "conf": "medium",
+   "scope": "out: ML / JavaScript knowledge question, not an algorithm-coding problem for the LeetCode deck"
+  },
+  {
+   "date": "2026-10-28",
+   "region": "CN",
+   "source": "NC 2933956",
+   "url": "https://www.nowcoder.com/feed/main/detail/0fcc42da3b12418d9fb40b27f76893de",
+   "role": "LLM algorithm intern",
+   "round": "P",
+   "family": "Trapping Rain Water",
+   "lc": [
+    407
+   ],
+   "custom": null,
+   "note": "2D trapping rain water (heap/BFS), post says 'hot100-level 2D rain water'; a duplicate post 2933957 is the same interview.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-10-28",
+   "region": "CN",
+   "source": "NC 2933956",
+   "url": "https://www.nowcoder.com/feed/main/detail/0fcc42da3b12418d9fb40b27f76893de",
+   "role": "LLM algorithm intern",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "Hand-write multi-head attention (MHA) after explaining QKV computation.",
+   "note": "Duplicate post 2933957 is the same interview.",
+   "conf": "medium",
+   "scope": "out: ML / JavaScript knowledge question, not an algorithm-coding problem for the LeetCode deck"
+  },
+  {
+   "date": "2026-10-27",
+   "region": "CN",
+   "source": "NC 2933119",
+   "url": "https://www.nowcoder.com/feed/main/detail/f80f421b5bcf4dc08cc51e99f129c3ce",
+   "role": "search/ads/recommendation infra, data org",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "Hand-write attention given already projected Q, K, V: matrix products and softmax, any language, naive or optimised.",
+   "note": "One of five interviews in a multi-company roundup; the ByteDance round also discussed an unnamed LeetCode problem with a hardware-aware speed-up (prefetching), not identifiable.",
+   "conf": "medium",
+   "scope": "out: ML / JavaScript knowledge question, not an algorithm-coding problem for the LeetCode deck"
+  },
+  {
+   "date": "2026-10-18",
+   "region": "CN",
+   "source": "NC 2928138",
+   "url": "https://www.nowcoder.com/feed/main/detail/b4fb3bee56134c3d9bcde6a3166a1711",
+   "role": "Agent development, three rounds",
+   "round": "?",
+   "family": null,
+   "lc": [
+    179
+   ],
+   "custom": null,
+   "note": "Arrange non-negative integers into the largest concatenated number. Listed in raw/forums_cn.md on 2026-10-24 but not in CATALOG sec 1 (the report's Subtree row is there).",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-10-18",
+   "region": "CN",
+   "source": "NC 2928138",
+   "url": "https://www.nowcoder.com/feed/main/detail/b4fb3bee56134c3d9bcde6a3166a1711",
+   "role": "Agent development, three rounds",
+   "round": "?",
+   "family": null,
+   "lc": [
+    470
+   ],
+   "custom": null,
+   "note": "Implement random7 using a random5 generator (LC470 with 5 and 7). Listed in raw/forums_cn.md but not in CATALOG sec 1.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-10-22",
+   "region": "CN",
+   "source": "NC 2930628",
+   "url": "https://www.nowcoder.com/feed/main/detail/e16471db2fb044a587d358dd071a6f90",
+   "role": "backend intern, GMPT",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "Convert a number to its string form by hand, handling sign and decimal point (integers first, then decimals); stated as original, not LeetCode.",
+   "note": "Listed in raw/forums_cn.md but not in CATALOG sec 1.",
+   "conf": "medium"
+  }
+ ],
+ "bank_changes": [
+  {
+   "slug": "reverse-linked-list",
+   "n_before": 5,
+   "n_now": 7,
+   "last_before": "2026-10",
+   "last_now": "2026-10-28"
+  },
+  {
+   "slug": "reverse-nodes-in-k-group",
+   "n_before": 13,
+   "n_now": 14,
+   "last_before": "2026-10",
+   "last_now": "2026-10-27"
+  },
+  {
+   "slug": "minimum-path-sum",
+   "n_before": 1,
+   "n_now": 2,
+   "last_before": "2026-09",
+   "last_now": "2026-10-27"
+  },
+  {
+   "slug": "min-stack",
+   "n_before": 5,
+   "n_now": 6,
+   "last_before": "2026-08",
+   "last_now": "2026-10-28"
+  },
+  {
+   "slug": "merge-sorted-array",
+   "n_before": 3,
+   "n_now": 4,
+   "last_before": "2026-10",
+   "last_now": "2026-10-18"
+  },
+  {
+   "slug": "lowest-common-ancestor-of-a-binary-tree",
+   "n_before": 5,
+   "n_now": 6,
+   "last_before": "2026-04-25",
+   "last_now": "2026-10-19"
+  },
+  {
+   "slug": "subarray-sum-equals-k",
+   "n_before": 2,
+   "n_now": 3,
+   "last_before": "2026-07-29",
+   "last_now": "2026-10-19"
+  },
+  {
+   "slug": "trapping-rain-water",
+   "n_before": 2,
+   "n_now": 3,
+   "last_before": "2026-10",
+   "last_now": "2026-10-28"
+  },
+  {
+   "slug": "add-strings",
+   "n_before": 1,
+   "n_now": 2,
+   "last_before": "2026-08-11",
+   "last_now": "2026-10-18"
+  },
+  {
+   "slug": "tt-concurrency-limited-async-scheduler",
+   "n_before": 1,
+   "n_now": 2,
+   "last_before": "2026-09",
+   "last_now": "2026-10-26"
+  },
+  {
+   "slug": "maximal-square",
+   "n_before": 0,
+   "n_now": 1,
+   "last_before": null,
+   "last_now": "2026-10-19"
+  },
+  {
+   "slug": "single-number-iii",
+   "n_before": 0,
+   "n_now": 1,
+   "last_before": null,
+   "last_now": "2026-10-20"
+  },
+  {
+   "slug": "maximum-height-by-stacking-cuboids",
+   "n_before": 0,
+   "n_now": 2,
+   "last_before": null,
+   "last_now": "2026-10-23"
+  },
+  {
+   "slug": "largest-number",
+   "n_before": 0,
+   "n_now": 1,
+   "last_before": null,
+   "last_now": "2026-10-18"
+  },
+  {
+   "slug": "implement-rand10-using-rand7",
+   "n_before": 0,
+   "n_now": 1,
+   "last_before": null,
+   "last_now": "2026-10-18"
+  },
+  {
+   "slug": "tt-promise-event-loop-output",
+   "n_before": 0,
+   "n_now": 1,
+   "last_before": null,
+   "last_now": "2026-10-18"
+  },
+  {
+   "slug": "tt-handwrite-attention",
+   "n_before": 0,
+   "n_now": 2,
+   "last_before": null,
+   "last_now": "2026-10-28"
+  },
+  {
+   "slug": "tt-handwrite-auc",
+   "n_before": 0,
+   "n_now": 1,
+   "last_before": null,
+   "last_now": "2026-10-28"
+  },
+  {
+   "slug": "tt-number-to-string",
+   "n_before": 0,
+   "n_now": 1,
+   "last_before": null,
+   "last_now": "2026-10-22"
+  }
+ ],
+ "skipped": "Reached: Nowcoder search API (30+37 queries, up to 7 pages each, sorted by create time; posts dated 2026-10-16 .. 2026-10-29 CST), post bodies via /feed/main/detail/<uuid> and /discuss/<id> (13 of ~190 fetches failed or were screenshots; their search snippets held no coding item); wearzdk/interview-experience (shallow clone, 360 files added since 2026-10-23, 23 ByteDance/TikTok-related, all cross-checked against the Nowcoder ids); atomeocean/job-compass and emmazhang-ai-sde/shuyangzhang-leetcode-notes (no new TikTok/ByteDance record after 2026-10-24: the PDF compilation ends 2026-08-12 and job-compass tiktok/bytedance pages are unchanged). Dropped as unidentifiable: 'non-hot100 algorithm' (NC 2933568), 'backtracking + pruning' (2933618), unnamed hand-coding in 2932420, the LeetCode discussion in 2933119, a summary post listing 'reverse list / Top-K / largest number below N' (2933044, aggregate, no first-hand report). Dropped as not ByteDance: LC131 and the interval-splitting and twin-prime problems in 2933119, and the LC-less items of other companies in the same pages. Dropped as duplicates or farm re-posts: a WeThinkIn-style article (NC 942760487782043648, interview of 2026-09-16, subtree check already in the catalog), 2933957 (= 2933956), 2933512 (= 2933510, no coding), 2928996 (= 2928948, no coding). Posts already in CATALOG by id with a hand-coding item (2927700, 2929450, 2929568, 2929548, 2930609, 2930690, 942897472391684096, 2925463, 2929706, 2925092 LRU) were not re-listed; only the secondary problems of 2928138 and 2930628 that raw/forums_cn.md recorded but CATALOG sec 1 lacks are listed (rows 20-22, flagged in note). Dates use the post date (CST); interview dates are given in notes where stated. bank_changes use the CATALOG sec 1 #refs and last-seen values (not the index.json CodeTop counts); new-family slugs are proposed names. Browser not used; 1point3acres/other English sources are the EN half's job."
+}

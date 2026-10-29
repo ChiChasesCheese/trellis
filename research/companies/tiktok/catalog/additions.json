@@ -1,8 +1,8 @@
 {
- "generated": "2026-10-24",
+ "generated": "2026-10-28",
  "window": [
   "2025-10-01",
-  "2026-10-24"
+  "2026-10-28"
  ],
  "method": "refs are independent reports after merging the same event across TrueInterview, 1P3A (threads and bank), the PDF compilation and PracHub (same family, within 7 days, different source); Chinese posts counted once per post; see CATALOG.md section 0",
  "leetcode": [
@@ -504,6 +504,66 @@
    "why": "Maximize Amount After Two Days of Conversions: named in the ombharatiya FAANG-Coding-Interview-Questions list (commit 2026-10-09, derivative of TrueInterview data) as TikTok \"currency exchange\"; the sighting has no date, so it is not strictly inside the window; low confidence",
    "title": "Maximize Amount After Two Days of Conversions",
    "title_zh": "两天自由外汇交易后的最大货币数",
+   "premium": false
+  },
+  {
+   "slug": "sparse-matrix-multiplication",
+   "id": 311,
+   "refs": 1,
+   "last_seen": "2026-10-27",
+   "why": "Sparse Matrix Multiplication: 1 report (US 1), phone screen. e.g. 1P3A 1194680",
+   "title": "Sparse Matrix Multiplication",
+   "title_zh": "稀疏矩阵的乘法",
+   "premium": true
+  },
+  {
+   "slug": "single-number",
+   "id": 136,
+   "refs": 1,
+   "last_seen": "2026-10-20",
+   "why": "Single Number then Single Number III as the follow-up: 1 report (CN 1). e.g. NC 942006786846883840",
+   "title": "Single Number",
+   "title_zh": "只出现一次的数字",
+   "premium": false
+  },
+  {
+   "slug": "single-number-iii",
+   "id": 260,
+   "refs": 1,
+   "last_seen": "2026-10-20",
+   "why": "follow-up of Single Number in the same report (CN 1). e.g. NC 942006786846883840",
+   "title": "Single Number III",
+   "title_zh": "只出现一次的数字 III",
+   "premium": false
+  },
+  {
+   "slug": "maximum-height-by-stacking-cuboids",
+   "id": 1691,
+   "refs": 2,
+   "last_seen": "2026-10-23",
+   "why": "cuboid / box stacking, strictly smaller upper face, rotation allowed in one: 2 reports (CN 2, possibly one author). e.g. NC 942006786846883840, NC 2931321",
+   "title": "Maximum Height by Stacking Cuboids",
+   "title_zh": "堆叠长方体的最大高度",
+   "premium": false
+  },
+  {
+   "slug": "count-primes",
+   "id": 204,
+   "refs": 2,
+   "last_seen": "2026-09",
+   "why": "print the first 10,000 primes / the n-th prime (sieve): 2 reports (CN 2). e.g. NC 927660076272291840, NC 2922272",
+   "title": "Count Primes",
+   "title_zh": "计数质数",
+   "premium": false
+  },
+  {
+   "slug": "shortest-path-in-binary-matrix",
+   "id": 1091,
+   "refs": 2,
+   "last_seen": "2026-01-03",
+   "why": "BFS maze / map shortest path with the path printed: 2 reports (US 2). e.g. TT-064, TT-103",
+   "title": "Shortest Path in Binary Matrix",
+   "title_zh": "二进制矩阵中的最短路径",
    "premium": false
   }
  ],
@@ -1095,6 +1155,97 @@
    "refs_note": null,
    "sources": [
     "TT-096"
+   ]
+  },
+  {
+   "key": "array-min-heap",
+   "title_zh": "用数组手写最小堆（并用它按先修关系排课）",
+   "title_en": "Binary min-heap on an array (then order courses with it)",
+   "refs": 2,
+   "last_seen": "2026-10-04",
+   "regions": {
+    "US": 2
+   },
+   "statement": "不用 heapq，用 Python 列表实现一个最小堆类 `MinHeap`：`push(x)`、`pop() -> 最小值`、`peek()`、`__len__`，以及从列表线性建堆 `heapify`。要求 push / pop 为 O(log n)，建堆 O(n)。\n追问：用你的堆实现课程表的拓扑排序，有多门课可选时总是先上编号最小的课（输出字典序最小的上课顺序；有环返回空列表）。n <= 10^5，先修关系条数 <= 10^5。",
+   "note": "Inferred: the method names and the exact course-ordering rule (lexicographically smallest order is the common TikTok version of this follow-up).",
+   "sources": [
+    "PracHub 2026-10-04",
+    "TT-083"
+   ]
+  },
+  {
+   "key": "hyper-operation",
+   "title_zh": "手写超运算（加、乘、幂、迭代幂次……）",
+   "title_en": "Hyper-operation (addition, multiplication, power, tetration ...)",
+   "refs": 1,
+   "last_seen": "2026-10",
+   "regions": {
+    "CN": 1
+   },
+   "statement": "实现超运算 `hyper(n, a, b)`（a、b、n 为非负整数）：n = 0 时为后继 b + 1；n = 1 为加法 a + b；n = 2 为乘法 a * b；n = 3 为幂 a ** b；n >= 4 时按定义递推：hyper(n, a, 0) = 1（n >= 3），hyper(n, a, b) = hyper(n - 1, a, hyper(n, a, b - 1))。只允许在 n = 0 用 +1，其余层都要由下一层构造出来。给出递归写法，再讨论递归深度、结果规模（例如 hyper(4, 2, 4) = 65536，hyper(4, 2, 5) 有 19729 位）和怎样改成迭代。",
+   "note": "Inferred: the report only names the task (手撕超运算); the definition is the standard hyperoperation sequence and the base cases are chosen here.",
+   "sources": [
+    "NC 2916924"
+   ]
+  },
+  {
+   "key": "tool-call-success-rate",
+   "title_zh": "工具调用日志：每个工具的成功率与失败最多的工具",
+   "title_en": "Tool-call log: success rate per tool and the most-failing tool",
+   "refs": 1,
+   "last_seen": "2026-10",
+   "regions": {
+    "CN": 1
+   },
+   "statement": "给定一串工具调用日志，每条是一行字符串 `\"<timestamp> <tool_name> <status>\"`，status 为 SUCCESS 或 FAIL（日志可能有空行或格式错误的行，要跳过）。返回：每个工具的成功率（成功次数 / 总调用次数，保留 4 位小数），以及失败次数最多的工具名（并列取字典序最小；没有失败返回空字符串）。日志行数 n <= 10^6，要求一次遍历、O(n) 时间。追问：日志是流式到达、需要随时查询；只看最近 1 小时的成功率。",
+   "note": "Inferred: the line format, tie-breaking, the malformed-line rule and the follow-ups.",
+   "sources": [
+    "NC 938174888861253632"
+   ]
+  },
+  {
+   "key": "fish-decaying-ponds",
+   "title_zh": "鱼塘捕鱼：产量递减时的最大收获",
+   "title_en": "Maximize fish from decaying ponds",
+   "refs": 1,
+   "last_seen": "2026-10-09",
+   "regions": {
+    "US": 1
+   },
+   "statement": "有 n 个鱼塘，第 i 个鱼塘第一次捕鱼能捞到 fish[i] 条，之后每捕一次，这个鱼塘下一次的收获减少 decay[i] 条（不会低于 0）。你一共有 t 个时间单位，每个时间单位选一个鱼塘捕一次。求最多能捞到多少条鱼。1 <= n <= 10^5，0 <= fish[i], decay[i] <= 10^9，1 <= t <= 10^9。例：fish = [10, 6]，decay = [4, 1]，t = 3：先捞鱼塘 0 得 10，再捞鱼塘 0 得 6 或鱼塘 1 得 6，再捞剩下那个最大的，共 22。",
+   "note": "Inferred: the whole statement. The report gives only the title and the tags greedy / heap / sorting / math; this is the standard decaying-yield version (each pond's yields form a non-increasing sequence). Large t needs the binary search on the threshold.",
+   "sources": [
+    "1P3A bank maximize-fish-from-decaying-ponds"
+   ]
+  },
+  {
+   "key": "concurrency-limited-runner",
+   "title_zh": "限制并发数的异步任务执行器",
+   "title_en": "Concurrency-limited async task runner",
+   "refs": 2,
+   "last_seen": "2026-10-26",
+   "regions": {
+    "CN": 2
+   },
+   "statement": "实现 `async def run_limited(tasks, limit)`：`tasks` 是一组无参的异步函数（调用后返回协程），同一时刻最多有 `limit` 个在执行，一个结束立刻补上下一个；每个任务恰好被调用一次。返回与输入顺序一致的结果列表，每项是 `(\"fulfilled\", value)` 或 `(\"rejected\", exception)`：任务抛出的异常（包括调用时同步抛出的）都要被捕获记录，不能让整体失败。limit 不是正整数时抛 ValueError。追问：不用 Semaphore 怎么写；加单任务超时；任务可以中途取消。",
+   "note": "Inferred: the Python translation (the reports use JavaScript promises, Promise.allSettled style results, RangeError).",
+   "sources": [
+    "NC 2931390"
+   ]
+  },
+  {
+   "key": "number-to-string",
+   "title_zh": "手写数字转字符串（含符号与小数）",
+   "title_en": "Number to string by hand (sign and decimals)",
+   "refs": 1,
+   "last_seen": "2026-10-22",
+   "regions": {
+    "CN": 1
+   },
+   "statement": "不使用 str、repr、format、f-string，把一个数转成十进制字符串。第一步：64 位有符号整数 n（-2^63 <= n < 2^63），注意 0 和负数。第二步：给定一个整数部分与小数部分分开表示的十进制数 `(sign, int_digits_value, frac_value, frac_len)`，例如 -12.050 表示为 (-1, 12, 50, 3)，输出 \"-12.05\"（去掉小数末尾的 0，小数部分全为 0 时不输出小数点）。追问：直接给一个浮点数，保留 k 位小数四舍五入，为什么不能用 x * 10**k 再取整。",
+   "note": "Inferred: the input representation for decimals and the trailing-zero rule; the report says integers first, then decimals, sign included, original problem.",
+   "sources": [
+    "NC 2930628"
    ]
   }
  ],

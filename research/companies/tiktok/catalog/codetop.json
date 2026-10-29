@@ -1,0 +1,5243 @@
+{
+"fetched": "2026-10-28",
+"rows": [
+{
+"fid": "3",
+"slug": "longest-substring-without-repeating-characters",
+"reports": 698,
+"last_seen": "2026-10-26"
+},
+{
+"fid": "146",
+"slug": "lru-cache",
+"reports": 367,
+"last_seen": "2026-09-06"
+},
+{
+"fid": "25",
+"slug": "reverse-nodes-in-k-group",
+"reports": 305,
+"last_seen": "2026-10-15"
+},
+{
+"fid": "206",
+"slug": "reverse-linked-list",
+"reports": 243,
+"last_seen": "2026-09-20"
+},
+{
+"fid": "215",
+"slug": "kth-largest-element-in-an-array",
+"reports": 206,
+"last_seen": "2026-10-26"
+},
+{
+"fid": "200",
+"slug": "number-of-islands",
+"reports": 192,
+"last_seen": "2026-10-07"
+},
+{
+"fid": "103",
+"slug": "binary-tree-zigzag-level-order-traversal",
+"reports": 189,
+"last_seen": "2026-09-15"
+},
+{
+"fid": "15",
+"slug": "3sum",
+"reports": 188,
+"last_seen": "2026-10-26"
+},
+{
+"fid": "33",
+"slug": "search-in-rotated-sorted-array",
+"reports": 162,
+"last_seen": "2026-10-15"
+},
+{
+"fid": "121",
+"slug": "best-time-to-buy-and-sell-stock",
+"reports": 148,
+"last_seen": "2026-04-29"
+},
+{
+"fid": "5",
+"slug": "longest-palindromic-substring",
+"reports": 139,
+"last_seen": "2026-10-19"
+},
+{
+"fid": "54",
+"slug": "spiral-matrix",
+"reports": 139,
+"last_seen": "2026-10-14"
+},
+{
+"fid": "236",
+"slug": "lowest-common-ancestor-of-a-binary-tree",
+"reports": 134,
+"last_seen": "2026-10-15"
+},
+{
+"fid": "42",
+"slug": "trapping-rain-water",
+"reports": 130,
+"last_seen": "2026-08-05"
+},
+{
+"fid": "1",
+"slug": "two-sum",
+"reports": 127,
+"last_seen": "2026-09-07"
+},
+{
+"fid": "46",
+"slug": "permutations",
+"reports": 124,
+"last_seen": "2026-08-31"
+},
+{
+"fid": "53",
+"slug": "maximum-subarray",
+"reports": 119,
+"last_seen": "2026-10-14"
+},
+{
+"fid": "160",
+"slug": "intersection-of-two-linked-lists",
+"reports": 116,
+"last_seen": "2026-09-17"
+},
+{
+"fid": "23",
+"slug": "merge-k-sorted-lists",
+"reports": 114,
+"last_seen": "2026-10-19"
+},
+{
+"fid": "300",
+"slug": "longest-increasing-subsequence",
+"reports": 109,
+"last_seen": "2026-09-16"
+},
+{
+"fid": "31",
+"slug": "next-permutation",
+"reports": 103,
+"last_seen": "2026-03-27"
+},
+{
+"fid": "88",
+"slug": "merge-sorted-array",
+"reports": 97,
+"last_seen": "2026-10-08"
+},
+{
+"fid": "20",
+"slug": "valid-parentheses",
+"reports": 91,
+"last_seen": "2026-09-28"
+},
+{
+"fid": "143",
+"slug": "reorder-list",
+"reports": 91,
+"last_seen": "2026-05-14"
+},
+{
+"fid": "199",
+"slug": "binary-tree-right-side-view",
+"reports": 90,
+"last_seen": "2026-05-07"
+},
+{
+"fid": "102",
+"slug": "binary-tree-level-order-traversal",
+"reports": 88,
+"last_seen": "2026-08-20"
+},
+{
+"fid": "72",
+"slug": "edit-distance",
+"reports": 87,
+"last_seen": "2026-10-09"
+},
+{
+"fid": "415",
+"slug": "add-strings",
+"reports": 86,
+"last_seen": "2026-09-02"
+},
+{
+"fid": "21",
+"slug": "merge-two-sorted-lists",
+"reports": 84,
+"last_seen": "2026-10-09"
+},
+{
+"fid": "141",
+"slug": "linked-list-cycle",
+"reports": 84,
+"last_seen": "2026-09-28"
+},
+{
+"fid": "56",
+"slug": "merge-intervals",
+"reports": 81,
+"last_seen": "2026-10-13"
+},
+{
+"fid": "92",
+"slug": "reverse-linked-list-ii",
+"reports": 80,
+"last_seen": "2026-05-12"
+},
+{
+"fid": "124",
+"slug": "binary-tree-maximum-path-sum",
+"reports": 79,
+"last_seen": "2026-10-13"
+},
+{
+"fid": "41",
+"slug": "first-missing-positive",
+"reports": 74,
+"last_seen": "2026-06-16"
+},
+{
+"fid": "165",
+"slug": "compare-version-numbers",
+"reports": 71,
+"last_seen": "2026-04-22"
+},
+{
+"fid": "221",
+"slug": "maximal-square",
+"reports": 71,
+"last_seen": "2026-04-17"
+},
+{
+"fid": "148",
+"slug": "sort-list",
+"reports": 70,
+"last_seen": "2026-09-27"
+},
+{
+"fid": "32",
+"slug": "longest-valid-parentheses",
+"reports": 70,
+"last_seen": "2026-09-02"
+},
+{
+"fid": "69",
+"slug": "sqrtx",
+"reports": 69,
+"last_seen": "2026-08-25"
+},
+{
+"fid": "4",
+"slug": "median-of-two-sorted-arrays",
+"reports": 69,
+"last_seen": "2026-08-10"
+},
+{
+"fid": "22",
+"slug": "generate-parentheses",
+"reports": 67,
+"last_seen": "2026-09-06"
+},
+{
+"fid": "补充题4",
+"slug": "sort-an-array",
+"reports": 65,
+"last_seen": "2026-06-01"
+},
+{
+"fid": "93",
+"slug": "restore-ip-addresses",
+"reports": 63,
+"last_seen": "2026-09-06"
+},
+{
+"fid": "101",
+"slug": "symmetric-tree",
+"reports": 63,
+"last_seen": "2026-03-29"
+},
+{
+"fid": "105",
+"slug": "construct-binary-tree-from-preorder-and-inorder-traversal",
+"reports": 62,
+"last_seen": "2026-06-29"
+},
+{
+"fid": "1143",
+"slug": "longest-common-subsequence",
+"reports": 61,
+"last_seen": "2026-10-25"
+},
+{
+"fid": "322",
+"slug": "coin-change",
+"reports": 59,
+"last_seen": "2026-04-15"
+},
+{
+"fid": "129",
+"slug": "sum-root-to-leaf-numbers",
+"reports": 59,
+"last_seen": "2026-04-09"
+},
+{
+"fid": "394",
+"slug": "decode-string",
+"reports": 58,
+"last_seen": "2026-08-20"
+},
+{
+"fid": "39",
+"slug": "combination-sum",
+"reports": 56,
+"last_seen": "2026-05-23"
+},
+{
+"fid": "662",
+"slug": "maximum-width-of-binary-tree",
+"reports": 54,
+"last_seen": "2026-07-17"
+},
+{
+"fid": "76",
+"slug": "minimum-window-substring",
+"reports": 53,
+"last_seen": "2026-08-30"
+},
+{
+"fid": "232",
+"slug": "implement-queue-using-stacks",
+"reports": 52,
+"last_seen": "2026-03-01"
+},
+{
+"fid": "19",
+"slug": "remove-nth-node-from-end-of-list",
+"reports": 51,
+"last_seen": "2026-09-14"
+},
+{
+"fid": "209",
+"slug": "minimum-size-subarray-sum",
+"reports": 51,
+"last_seen": "2026-07-24"
+},
+{
+"fid": "82",
+"slug": "remove-duplicates-from-sorted-list-ii",
+"reports": 49,
+"last_seen": "2026-08-05"
+},
+{
+"fid": "43",
+"slug": "multiply-strings",
+"reports": 49,
+"last_seen": "2026-05-22"
+},
+{
+"fid": "142",
+"slug": "linked-list-cycle-ii",
+"reports": 49,
+"last_seen": "2026-05-08"
+},
+{
+"fid": "162",
+"slug": "find-peak-element",
+"reports": 49,
+"last_seen": "2026-04-19"
+},
+{
+"fid": "78",
+"slug": "subsets",
+"reports": 49,
+"last_seen": "2026-03-18"
+},
+{
+"fid": "2",
+"slug": "add-two-numbers",
+"reports": 49,
+"last_seen": "2026-03-17"
+},
+{
+"fid": "剑指 Offer 26",
+"slug": "shu-de-zi-jie-gou-lcof",
+"reports": 48,
+"last_seen": "2026-10-27"
+},
+{
+"fid": "122",
+"slug": "best-time-to-buy-and-sell-stock-ii",
+"reports": 48,
+"last_seen": "2026-05-12"
+},
+{
+"fid": "695",
+"slug": "max-area-of-island",
+"reports": 47,
+"last_seen": "2026-10-26"
+},
+{
+"fid": "470",
+"slug": "implement-rand10-using-rand7",
+"reports": 47,
+"last_seen": "2026-09-20"
+},
+{
+"fid": "239",
+"slug": "sliding-window-maximum",
+"reports": 47,
+"last_seen": "2026-05-18"
+},
+{
+"fid": "112",
+"slug": "path-sum",
+"reports": 47,
+"last_seen": "2026-04-14"
+},
+{
+"fid": "98",
+"slug": "validate-binary-search-tree",
+"reports": 46,
+"last_seen": "2026-04-20"
+},
+{
+"fid": "补充题1",
+"slug": "https://mp.weixin.qq.com/s/0WVa2wIAeG0nYnVndZiEXQ",
+"reports": 45,
+"last_seen": "2026-03-04"
+},
+{
+"fid": "94",
+"slug": "binary-tree-inorder-traversal",
+"reports": 45,
+"last_seen": "2025-05-26"
+},
+{
+"fid": "139",
+"slug": "word-break",
+"reports": 44,
+"last_seen": "2026-08-27"
+},
+{
+"fid": "240",
+"slug": "search-a-2d-matrix-ii",
+"reports": 43,
+"last_seen": "2026-02-23"
+},
+{
+"fid": "128",
+"slug": "longest-consecutive-sequence",
+"reports": 42,
+"last_seen": "2026-09-23"
+},
+{
+"fid": "64",
+"slug": "minimum-path-sum",
+"reports": 42,
+"last_seen": "2026-08-16"
+},
+{
+"fid": "113",
+"slug": "path-sum-ii",
+"reports": 42,
+"last_seen": "2026-07-24"
+},
+{
+"fid": "155",
+"slug": "min-stack",
+"reports": 42,
+"last_seen": "2026-04-13"
+},
+{
+"fid": "79",
+"slug": "word-search",
+"reports": 41,
+"last_seen": "2026-06-03"
+},
+{
+"fid": "440",
+"slug": "k-th-smallest-in-lexicographical-order",
+"reports": 40,
+"last_seen": "2026-10-28"
+},
+{
+"fid": "152",
+"slug": "maximum-product-subarray",
+"reports": 40,
+"last_seen": "2026-09-28"
+},
+{
+"fid": "70",
+"slug": "climbing-stairs",
+"reports": 40,
+"last_seen": "2026-09-19"
+},
+{
+"fid": "剑指 Offer 22",
+"slug": "lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof",
+"reports": 40,
+"last_seen": "2026-08-04"
+},
+{
+"fid": "198",
+"slug": "house-robber",
+"reports": 38,
+"last_seen": "2026-10-17"
+},
+{
+"fid": "48",
+"slug": "rotate-image",
+"reports": 37,
+"last_seen": "2025-03-10"
+},
+{
+"fid": "补充题23",
+"slug": "https://mp.weixin.qq.com/s/pCRscwKqQdYYN7M1Sia7xA",
+"reports": 36,
+"last_seen": "2026-10-11"
+},
+{
+"fid": "543",
+"slug": "diameter-of-binary-tree",
+"reports": 36,
+"last_seen": "2026-08-03"
+},
+{
+"fid": "402",
+"slug": "remove-k-digits",
+"reports": 36,
+"last_seen": "2025-09-24"
+},
+{
+"fid": "207",
+"slug": "course-schedule",
+"reports": 35,
+"last_seen": "2026-09-16"
+},
+{
+"fid": "62",
+"slug": "unique-paths",
+"reports": 35,
+"last_seen": "2026-05-06"
+},
+{
+"fid": "补充题2",
+"slug": "https://mp.weixin.qq.com/s/NZPaFsFrTybO3K3s7p7EVg",
+"reports": 35,
+"last_seen": "2025-08-18"
+},
+{
+"fid": "179",
+"slug": "largest-number",
+"reports": 32,
+"last_seen": "2026-09-23"
+},
+{
+"fid": "24",
+"slug": "swap-nodes-in-pairs",
+"reports": 31,
+"last_seen": "2026-04-16"
+},
+{
+"fid": "958",
+"slug": "check-completeness-of-a-binary-tree",
+"reports": 30,
+"last_seen": "2025-11-06"
+},
+{
+"fid": "560",
+"slug": "subarray-sum-equals-k",
+"reports": 29,
+"last_seen": "2026-10-08"
+},
+{
+"fid": "110",
+"slug": "balanced-binary-tree",
+"reports": 29,
+"last_seen": "2026-09-24"
+},
+{
+"fid": "104",
+"slug": "maximum-depth-of-binary-tree",
+"reports": 29,
+"last_seen": "2026-09-13"
+},
+{
+"fid": "151",
+"slug": "reverse-words-in-a-string",
+"reports": 29,
+"last_seen": "2026-09-06"
+},
+{
+"fid": "329",
+"slug": "longest-increasing-path-in-a-matrix",
+"reports": 29,
+"last_seen": "2026-04-23"
+},
+{
+"fid": "8",
+"slug": "string-to-integer-atoi",
+"reports": 29,
+"last_seen": "2025-09-08"
+},
+{
+"fid": "55",
+"slug": "jump-game",
+"reports": 28,
+"last_seen": "2026-04-18"
+},
+{
+"fid": "135",
+"slug": "candy",
+"reports": 28,
+"last_seen": "2026-03-26"
+},
+{
+"fid": "224",
+"slug": "basic-calculator",
+"reports": 28,
+"last_seen": "2025-12-24"
+},
+{
+"fid": "138",
+"slug": "copy-list-with-random-pointer",
+"reports": 27,
+"last_seen": "2026-09-06"
+},
+{
+"fid": "718",
+"slug": "maximum-length-of-repeated-subarray",
+"reports": 26,
+"last_seen": "2026-09-11"
+},
+{
+"fid": "234",
+"slug": "palindrome-linked-list",
+"reports": 26,
+"last_seen": "2026-09-09"
+},
+{
+"fid": "114",
+"slug": "flatten-binary-tree-to-linked-list",
+"reports": 26,
+"last_seen": "2026-06-14"
+},
+{
+"fid": "11",
+"slug": "container-with-most-water",
+"reports": 26,
+"last_seen": "2026-05-06"
+},
+{
+"fid": "226",
+"slug": "invert-binary-tree",
+"reports": 26,
+"last_seen": "2026-03-29"
+},
+{
+"fid": "518",
+"slug": "coin-change-ii",
+"reports": 26,
+"last_seen": "2025-12-16"
+},
+{
+"fid": "40",
+"slug": "combination-sum-ii",
+"reports": 26,
+"last_seen": "2025-12-09"
+},
+{
+"fid": "739",
+"slug": "daily-temperatures",
+"reports": 26,
+"last_seen": "2025-09-19"
+},
+{
+"fid": "704",
+"slug": "binary-search",
+"reports": 26,
+"last_seen": "2025-02-13"
+},
+{
+"fid": "剑指 Offer 09",
+"slug": "yong-liang-ge-zhan-shi-xian-dui-lie-lcof",
+"reports": 25,
+"last_seen": "2026-10-09"
+},
+{
+"fid": "297",
+"slug": "serialize-and-deserialize-binary-tree",
+"reports": 25,
+"last_seen": "2024-12-19"
+},
+{
+"fid": "572",
+"slug": "subtree-of-another-tree",
+"reports": 24,
+"last_seen": "2026-04-14"
+},
+{
+"fid": "34",
+"slug": "find-first-and-last-position-of-element-in-sorted-array",
+"reports": 24,
+"last_seen": "2026-03-30"
+},
+{
+"fid": "14",
+"slug": "longest-common-prefix",
+"reports": 24,
+"last_seen": "2026-01-16"
+},
+{
+"fid": "补充题9",
+"slug": "https://mp.weixin.qq.com/s/XcKQwnwCh5nZsz-DLHJwzQ",
+"reports": 24,
+"last_seen": "2025-04-08"
+},
+{
+"fid": "剑指 Offer 51",
+"slug": "shu-zu-zhong-de-ni-xu-dui-lcof",
+"reports": 23,
+"last_seen": "2026-08-10"
+},
+{
+"fid": "16",
+"slug": "3sum-closest",
+"reports": 23,
+"last_seen": "2026-05-06"
+},
+{
+"fid": "230",
+"slug": "kth-smallest-element-in-a-bst",
+"reports": 23,
+"last_seen": "2024-04-10"
+},
+{
+"fid": "283",
+"slug": "move-zeroes",
+"reports": 22,
+"last_seen": "2026-01-16"
+},
+{
+"fid": "83",
+"slug": "remove-duplicates-from-sorted-list",
+"reports": 22,
+"last_seen": "2025-07-31"
+},
+{
+"fid": "460",
+"slug": "lfu-cache",
+"reports": 21,
+"last_seen": "2026-06-20"
+},
+{
+"fid": "123",
+"slug": "best-time-to-buy-and-sell-stock-iii",
+"reports": 21,
+"last_seen": "2026-06-03"
+},
+{
+"fid": "498",
+"slug": "diagonal-traverse",
+"reports": 21,
+"last_seen": "2026-04-20"
+},
+{
+"fid": "169",
+"slug": "majority-element",
+"reports": 21,
+"last_seen": "2022-03-24"
+},
+{
+"fid": "91",
+"slug": "decode-ways",
+"reports": 20,
+"last_seen": "2026-09-21"
+},
+{
+"fid": "74",
+"slug": "search-a-2d-matrix",
+"reports": 20,
+"last_seen": "2026-05-22"
+},
+{
+"fid": "96",
+"slug": "unique-binary-search-trees",
+"reports": 20,
+"last_seen": "2026-04-19"
+},
+{
+"fid": "45",
+"slug": "jump-game-ii",
+"reports": 20,
+"last_seen": "2026-03-06"
+},
+{
+"fid": "227",
+"slug": "basic-calculator-ii",
+"reports": 20,
+"last_seen": "2025-11-23"
+},
+{
+"fid": "47",
+"slug": "permutations-ii",
+"reports": 20,
+"last_seen": "2025-10-20"
+},
+{
+"fid": "12",
+"slug": "integer-to-roman",
+"reports": 19,
+"last_seen": "2026-07-08"
+},
+{
+"fid": "61",
+"slug": "rotate-list",
+"reports": 19,
+"last_seen": "2026-04-20"
+},
+{
+"fid": "887",
+"slug": "super-egg-drop",
+"reports": 19,
+"last_seen": "2026-03-30"
+},
+{
+"fid": "补充题6",
+"slug": "sort-an-array",
+"reports": 19,
+"last_seen": "2026-03-24"
+},
+{
+"fid": "10",
+"slug": "regular-expression-matching",
+"reports": 19,
+"last_seen": "2025-08-26"
+},
+{
+"fid": "208",
+"slug": "implement-trie-prefix-tree",
+"reports": 18,
+"last_seen": "2026-10-12"
+},
+{
+"fid": "295",
+"slug": "find-median-from-data-stream",
+"reports": 18,
+"last_seen": "2026-09-14"
+},
+{
+"fid": "120",
+"slug": "triangle",
+"reports": 18,
+"last_seen": "2026-08-03"
+},
+{
+"fid": "279",
+"slug": "perfect-squares",
+"reports": 18,
+"last_seen": "2026-03-20"
+},
+{
+"fid": "剑指 Offer 36",
+"slug": "er-cha-sou-suo-shu-yu-shuang-xiang-lian-biao-lcof",
+"reports": 18,
+"last_seen": "2024-08-29"
+},
+{
+"fid": "347",
+"slug": "top-k-frequent-elements",
+"reports": 17,
+"last_seen": "2026-09-22"
+},
+{
+"fid": "1004",
+"slug": "max-consecutive-ones-iii",
+"reports": 17,
+"last_seen": "2026-08-17"
+},
+{
+"fid": "287",
+"slug": "find-the-duplicate-number",
+"reports": 17,
+"last_seen": "2026-08-03"
+},
+{
+"fid": "153",
+"slug": "find-minimum-in-rotated-sorted-array",
+"reports": 17,
+"last_seen": "2026-04-16"
+},
+{
+"fid": "85",
+"slug": "maximal-rectangle",
+"reports": 17,
+"last_seen": "2026-03-25"
+},
+{
+"fid": "75",
+"slug": "sort-colors",
+"reports": 17,
+"last_seen": "2025-11-09"
+},
+{
+"fid": "763",
+"slug": "partition-labels",
+"reports": 17,
+"last_seen": "2025-10-17"
+},
+{
+"fid": "468",
+"slug": "validate-ip-address",
+"reports": 17,
+"last_seen": "2025-08-22"
+},
+{
+"fid": "556",
+"slug": "next-greater-element-iii",
+"reports": 17,
+"last_seen": "2025-03-03"
+},
+{
+"fid": "395",
+"slug": "longest-substring-with-at-least-k-repeating-characters",
+"reports": 16,
+"last_seen": "2026-09-08"
+},
+{
+"fid": "253",
+"slug": "meeting-rooms-ii",
+"reports": 16,
+"last_seen": "2026-09-08"
+},
+{
+"fid": "902",
+"slug": "numbers-at-most-n-given-digit-set",
+"reports": 16,
+"last_seen": "2026-09-08"
+},
+{
+"fid": "400",
+"slug": "nth-digit",
+"reports": 16,
+"last_seen": "2025-10-20"
+},
+{
+"fid": "59",
+"slug": "spiral-matrix-ii",
+"reports": 16,
+"last_seen": "2024-08-21"
+},
+{
+"fid": "144",
+"slug": "binary-tree-preorder-traversal",
+"reports": 16,
+"last_seen": "2024-08-12"
+},
+{
+"fid": "445",
+"slug": "add-two-numbers-ii",
+"reports": 15,
+"last_seen": "2026-09-22"
+},
+{
+"fid": "862",
+"slug": "shortest-subarray-with-sum-at-least-k",
+"reports": 15,
+"last_seen": "2026-09-03"
+},
+{
+"fid": "44",
+"slug": "wildcard-matching",
+"reports": 15,
+"last_seen": "2026-08-11"
+},
+{
+"fid": "50",
+"slug": "powx-n",
+"reports": 15,
+"last_seen": "2026-03-24"
+},
+{
+"fid": "380",
+"slug": "insert-delete-getrandom-o1",
+"reports": 15,
+"last_seen": "2026-03-11"
+},
+{
+"fid": "670",
+"slug": "maximum-swap",
+"reports": 15,
+"last_seen": "2026-01-01"
+},
+{
+"fid": "17",
+"slug": "letter-combinations-of-a-phone-number",
+"reports": 14,
+"last_seen": "2026-09-17"
+},
+{
+"fid": "51",
+"slug": "n-queens",
+"reports": 14,
+"last_seen": "2026-08-10"
+},
+{
+"fid": "213",
+"slug": "house-robber-ii",
+"reports": 14,
+"last_seen": "2026-07-21"
+},
+{
+"fid": "18",
+"slug": "4sum",
+"reports": 14,
+"last_seen": "2026-06-17"
+},
+{
+"fid": "125",
+"slug": "valid-palindrome",
+"reports": 14,
+"last_seen": "2026-04-25"
+},
+{
+"fid": "188",
+"slug": "best-time-to-buy-and-sell-stock-iv",
+"reports": 14,
+"last_seen": "2025-10-22"
+},
+{
+"fid": "225",
+"slug": "implement-stack-using-queues",
+"reports": 14,
+"last_seen": "2025-06-11"
+},
+{
+"fid": "71",
+"slug": "simplify-path",
+"reports": 14,
+"last_seen": "2025-01-14"
+},
+{
+"fid": "剑指 Offer 62",
+"slug": "yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof",
+"reports": 14,
+"last_seen": "2023-11-24"
+},
+{
+"fid": "210",
+"slug": "course-schedule-ii",
+"reports": 13,
+"last_seen": "2026-09-15"
+},
+{
+"fid": "189",
+"slug": "rotate-array",
+"reports": 13,
+"last_seen": "2026-05-16"
+},
+{
+"fid": "673",
+"slug": "number-of-longest-increasing-subsequence",
+"reports": 13,
+"last_seen": "2026-04-09"
+},
+{
+"fid": "611",
+"slug": "valid-triangle-number",
+"reports": 13,
+"last_seen": "2025-07-15"
+},
+{
+"fid": "剑指 Offer 21",
+"slug": "diao-zheng-shu-zu-shun-xu-shi-qi-shu-wei-yu-ou-shu-qian-mian-lcof",
+"reports": 13,
+"last_seen": "2022-09-26"
+},
+{
+"fid": "97",
+"slug": "interleaving-string",
+"reports": 12,
+"last_seen": "2026-10-28"
+},
+{
+"fid": "378",
+"slug": "kth-smallest-element-in-a-sorted-matrix",
+"reports": 12,
+"last_seen": "2026-09-23"
+},
+{
+"fid": "528",
+"slug": "random-pick-with-weight",
+"reports": 12,
+"last_seen": "2026-09-19"
+},
+{
+"fid": "84",
+"slug": "largest-rectangle-in-histogram",
+"reports": 12,
+"last_seen": "2026-03-01"
+},
+{
+"fid": "340",
+"slug": "longest-substring-with-at-most-k-distinct-characters",
+"reports": 12,
+"last_seen": "2026-01-22"
+},
+{
+"fid": "剑指 Offer 34",
+"slug": "er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof",
+"reports": 12,
+"last_seen": "2025-08-27"
+},
+{
+"fid": "301",
+"slug": "remove-invalid-parentheses",
+"reports": 12,
+"last_seen": "2025-05-16"
+},
+{
+"fid": "补充题14",
+"slug": null,
+"reports": 12,
+"last_seen": "2024-07-01"
+},
+{
+"fid": "剑指 Offer 54",
+"slug": "er-cha-sou-suo-shu-de-di-kda-jie-dian-lcof",
+"reports": 12,
+"last_seen": "2024-01-15"
+},
+{
+"fid": "剑指 Offer 04",
+"slug": "er-wei-shu-zu-zhong-de-cha-zhao-lcof",
+"reports": 12,
+"last_seen": "2023-05-24"
+},
+{
+"fid": "剑指 Offer 27",
+"slug": "er-cha-shu-de-jing-xiang-lcof",
+"reports": 12,
+"last_seen": "2022-04-19"
+},
+{
+"fid": "416",
+"slug": "partition-equal-subset-sum",
+"reports": 11,
+"last_seen": "2026-07-14"
+},
+{
+"fid": "680",
+"slug": "valid-palindrome-ii",
+"reports": 11,
+"last_seen": "2026-04-15"
+},
+{
+"fid": "977",
+"slug": "squares-of-a-sorted-array",
+"reports": 11,
+"last_seen": "2026-01-18"
+},
+{
+"fid": "334",
+"slug": "increasing-triplet-subsequence",
+"reports": 11,
+"last_seen": "2025-09-10"
+},
+{
+"fid": "328",
+"slug": "odd-even-linked-list",
+"reports": 11,
+"last_seen": "2025-07-29"
+},
+{
+"fid": "26",
+"slug": "remove-duplicates-from-sorted-array",
+"reports": 11,
+"last_seen": "2025-07-16"
+},
+{
+"fid": "567",
+"slug": "permutation-in-string",
+"reports": 11,
+"last_seen": "2025-02-24"
+},
+{
+"fid": "154",
+"slug": "find-minimum-in-rotated-sorted-array-ii",
+"reports": 11,
+"last_seen": "2024-09-20"
+},
+{
+"fid": "7",
+"slug": "reverse-integer",
+"reports": 11,
+"last_seen": "2024-08-23"
+},
+{
+"fid": "443",
+"slug": "string-compression",
+"reports": 11,
+"last_seen": "2024-05-12"
+},
+{
+"fid": "145",
+"slug": "binary-tree-postorder-traversal",
+"reports": 11,
+"last_seen": "2024-03-15"
+},
+{
+"fid": "426",
+"slug": "convert-binary-search-tree-to-sorted-doubly-linked-list",
+"reports": 11,
+"last_seen": "2024-01-16"
+},
+{
+"fid": "1047",
+"slug": "remove-all-adjacent-duplicates-in-string",
+"reports": 11,
+"last_seen": "2023-08-04"
+},
+{
+"fid": "剑指 Offer 07",
+"slug": "zhong-jian-er-cha-shu-lcof",
+"reports": 11,
+"last_seen": "2023-05-10"
+},
+{
+"fid": "剑指 Offer 42",
+"slug": "lian-xu-zi-shu-zu-de-zui-da-he-lcof",
+"reports": 11,
+"last_seen": "2023-01-05"
+},
+{
+"fid": "134",
+"slug": "gas-station",
+"reports": 10,
+"last_seen": "2026-04-23"
+},
+{
+"fid": "13",
+"slug": "roman-to-integer",
+"reports": 10,
+"last_seen": "2025-09-25"
+},
+{
+"fid": "863",
+"slug": "all-nodes-distance-k-in-binary-tree",
+"reports": 10,
+"last_seen": "2025-09-17"
+},
+{
+"fid": "补充题5",
+"slug": "sort-an-array",
+"reports": 10,
+"last_seen": "2025-09-03"
+},
+{
+"fid": "264",
+"slug": "ugly-number-ii",
+"reports": 10,
+"last_seen": "2025-05-06"
+},
+{
+"fid": "503",
+"slug": "next-greater-element-ii",
+"reports": 10,
+"last_seen": "2024-06-23"
+},
+{
+"fid": "剑指 Offer 03",
+"slug": "shu-zu-zhong-zhong-fu-de-shu-zi-lcof",
+"reports": 10,
+"last_seen": "2023-11-19"
+},
+{
+"fid": "剑指 Offer 61",
+"slug": "bu-ke-pai-zhong-de-shun-zi-lcof",
+"reports": 10,
+"last_seen": "2022-11-29"
+},
+{
+"fid": "剑指 Offer 38",
+"slug": "zi-fu-chuan-de-pai-lie-lcof",
+"reports": 10,
+"last_seen": "2022-06-07"
+},
+{
+"fid": "974",
+"slug": "subarray-sums-divisible-by-k",
+"reports": 9,
+"last_seen": "2026-08-27"
+},
+{
+"fid": "49",
+"slug": "group-anagrams",
+"reports": 9,
+"last_seen": "2026-06-05"
+},
+{
+"fid": "343",
+"slug": "integer-break",
+"reports": 9,
+"last_seen": "2026-06-04"
+},
+{
+"fid": "525",
+"slug": "contiguous-array",
+"reports": 9,
+"last_seen": "2026-05-06"
+},
+{
+"fid": "剑指 Offer 10- II",
+"slug": "qing-wa-tiao-tai-jie-wen-ti-lcof",
+"reports": 9,
+"last_seen": "2026-04-12"
+},
+{
+"fid": "516",
+"slug": "longest-palindromic-subsequence",
+"reports": 9,
+"last_seen": "2026-04-06"
+},
+{
+"fid": "63",
+"slug": "unique-paths-ii",
+"reports": 9,
+"last_seen": "2026-03-31"
+},
+{
+"fid": "6",
+"slug": "zigzag-conversion",
+"reports": 9,
+"last_seen": "2025-10-13"
+},
+{
+"fid": "166",
+"slug": "fraction-to-recurring-decimal",
+"reports": 9,
+"last_seen": "2025-09-24"
+},
+{
+"fid": "159",
+"slug": "longest-substring-with-at-most-two-distinct-characters",
+"reports": 9,
+"last_seen": "2024-09-04"
+},
+{
+"fid": "剑指 Offer 11",
+"slug": "xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof",
+"reports": 9,
+"last_seen": "2024-09-01"
+},
+{
+"fid": "剑指 Offer 29",
+"slug": "shun-shi-zhen-da-yin-ju-zhen-lcof",
+"reports": 9,
+"last_seen": "2022-09-13"
+},
+{
+"fid": "509",
+"slug": "fibonacci-number",
+"reports": 9,
+"last_seen": "2022-03-23"
+},
+{
+"fid": "136",
+"slug": "single-number",
+"reports": 9,
+"last_seen": "2021-12-15"
+},
+{
+"fid": "726",
+"slug": "number-of-atoms",
+"reports": 8,
+"last_seen": "2026-09-21"
+},
+{
+"fid": "108",
+"slug": "convert-sorted-array-to-binary-search-tree",
+"reports": 8,
+"last_seen": "2026-09-09"
+},
+{
+"fid": "679",
+"slug": "24-game",
+"reports": 8,
+"last_seen": "2026-09-08"
+},
+{
+"fid": "80",
+"slug": "remove-duplicates-from-sorted-array-ii",
+"reports": 8,
+"last_seen": "2026-09-04"
+},
+{
+"fid": "面试题 17.24",
+"slug": "max-submatrix-lcci",
+"reports": 8,
+"last_seen": "2026-09-02"
+},
+{
+"fid": "1044",
+"slug": "longest-duplicate-substring",
+"reports": 8,
+"last_seen": "2026-09-02"
+},
+{
+"fid": "647",
+"slug": "palindromic-substrings",
+"reports": 8,
+"last_seen": "2026-03-03"
+},
+{
+"fid": "164",
+"slug": "maximum-gap",
+"reports": 8,
+"last_seen": "2026-01-29"
+},
+{
+"fid": "86",
+"slug": "partition-list",
+"reports": 8,
+"last_seen": "2025-12-21"
+},
+{
+"fid": "111",
+"slug": "minimum-depth-of-binary-tree",
+"reports": 8,
+"last_seen": "2025-12-02"
+},
+{
+"fid": "678",
+"slug": "valid-parenthesis-string",
+"reports": 8,
+"last_seen": "2025-11-10"
+},
+{
+"fid": "191",
+"slug": "number-of-1-bits",
+"reports": 8,
+"last_seen": "2025-10-09"
+},
+{
+"fid": "68",
+"slug": "text-justification",
+"reports": 8,
+"last_seen": "2025-07-22"
+},
+{
+"fid": "剑指 Offer 45",
+"slug": "ba-shu-zu-pai-cheng-zui-xiao-de-shu-lcof",
+"reports": 8,
+"last_seen": "2025-03-24"
+},
+{
+"fid": "456",
+"slug": "132-pattern",
+"reports": 8,
+"last_seen": "2024-10-25"
+},
+{
+"fid": "438",
+"slug": "find-all-anagrams-in-a-string",
+"reports": 8,
+"last_seen": "2024-07-09"
+},
+{
+"fid": "1312",
+"slug": "minimum-insertion-steps-to-make-a-string-palindrome",
+"reports": 8,
+"last_seen": "2024-05-28"
+},
+{
+"fid": "剑指 Offer 35",
+"slug": "fu-za-lian-biao-de-fu-zhi-lcof",
+"reports": 8,
+"last_seen": "2023-03-02"
+},
+{
+"fid": "剑指 Offer 46",
+"slug": "ba-shu-zi-fan-yi-cheng-zi-fu-chuan-lcof",
+"reports": 8,
+"last_seen": "2022-04-07"
+},
+{
+"fid": "30",
+"slug": "substring-with-concatenation-of-all-words",
+"reports": 7,
+"last_seen": "2026-10-24"
+},
+{
+"fid": "437",
+"slug": "path-sum-iii",
+"reports": 7,
+"last_seen": "2026-10-07"
+},
+{
+"fid": "452",
+"slug": "minimum-number-of-arrows-to-burst-balloons",
+"reports": 7,
+"last_seen": "2026-09-02"
+},
+{
+"fid": "316",
+"slug": "remove-duplicate-letters",
+"reports": 7,
+"last_seen": "2026-08-04"
+},
+{
+"fid": "384",
+"slug": "shuffle-an-array",
+"reports": 7,
+"last_seen": "2026-06-19"
+},
+{
+"fid": "523",
+"slug": "continuous-subarray-sum",
+"reports": 7,
+"last_seen": "2026-04-08"
+},
+{
+"fid": "235",
+"slug": "lowest-common-ancestor-of-a-binary-search-tree",
+"reports": 7,
+"last_seen": "2026-03-19"
+},
+{
+"fid": "772",
+"slug": "basic-calculator-iii",
+"reports": 7,
+"last_seen": "2026-03-10"
+},
+{
+"fid": "617",
+"slug": "merge-two-binary-trees",
+"reports": 7,
+"last_seen": "2025-10-29"
+},
+{
+"fid": "60",
+"slug": "permutation-sequence",
+"reports": 7,
+"last_seen": "2025-06-11"
+},
+{
+"fid": "674",
+"slug": "longest-continuous-increasing-subsequence",
+"reports": 7,
+"last_seen": "2025-03-30"
+},
+{
+"fid": "剑指 Offer 32 - III",
+"slug": "cong-shang-dao-xia-da-yin-er-cha-shu-iii-lcof",
+"reports": 7,
+"last_seen": "2024-12-06"
+},
+{
+"fid": "344",
+"slug": "reverse-string",
+"reports": 7,
+"last_seen": "2024-11-07"
+},
+{
+"fid": "补充题7",
+"slug": "https://mp.weixin.qq.com/s/FQma0bdAWbzLMmCKhZRk7w",
+"reports": 7,
+"last_seen": "2024-09-04"
+},
+{
+"fid": "130",
+"slug": "surrounded-regions",
+"reports": 7,
+"last_seen": "2024-09-02"
+},
+{
+"fid": "435",
+"slug": "non-overlapping-intervals",
+"reports": 7,
+"last_seen": "2024-03-17"
+},
+{
+"fid": "面试题 10.03",
+"slug": "search-rotate-array-lcci",
+"reports": 7,
+"last_seen": "2024-03-11"
+},
+{
+"fid": "剑指 Offer 48",
+"slug": "zui-chang-bu-han-zhong-fu-zi-fu-de-zi-zi-fu-chuan-lcof",
+"reports": 7,
+"last_seen": "2023-03-09"
+},
+{
+"fid": "面试题 02.05",
+"slug": "sum-lists-lcci",
+"reports": 7,
+"last_seen": "2022-09-29"
+},
+{
+"fid": "429",
+"slug": "n-ary-tree-level-order-traversal",
+"reports": 7,
+"last_seen": "2022-09-13"
+},
+{
+"fid": "716",
+"slug": "max-stack",
+"reports": 7,
+"last_seen": "2022-08-24"
+},
+{
+"fid": "260",
+"slug": "single-number-iii",
+"reports": 7,
+"last_seen": "2022-08-08"
+},
+{
+"fid": "剑指 Offer 53 - I",
+"slug": "zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof",
+"reports": 7,
+"last_seen": "2022-08-07"
+},
+{
+"fid": "剑指 Offer 10- I",
+"slug": "fei-bo-na-qi-shu-lie-lcof",
+"reports": 7,
+"last_seen": "2022-07-20"
+},
+{
+"fid": "257",
+"slug": "binary-tree-paths",
+"reports": 7,
+"last_seen": "2022-05-30"
+},
+{
+"fid": "剑指 Offer 33",
+"slug": "er-cha-sou-suo-shu-de-hou-xu-bian-li-xu-lie-lcof",
+"reports": 7,
+"last_seen": "2022-05-28"
+},
+{
+"fid": "698",
+"slug": "partition-to-k-equal-sum-subsets",
+"reports": 6,
+"last_seen": "2026-10-07"
+},
+{
+"fid": "306",
+"slug": "additive-number",
+"reports": 6,
+"last_seen": "2026-09-03"
+},
+{
+"fid": "127",
+"slug": "word-ladder",
+"reports": 6,
+"last_seen": "2026-08-04"
+},
+{
+"fid": "581",
+"slug": "shortest-unsorted-continuous-subarray",
+"reports": 6,
+"last_seen": "2026-08-03"
+},
+{
+"fid": "442",
+"slug": "find-all-duplicates-in-an-array",
+"reports": 6,
+"last_seen": "2026-08-03"
+},
+{
+"fid": "494",
+"slug": "target-sum",
+"reports": 6,
+"last_seen": "2026-07-09"
+},
+{
+"fid": "99",
+"slug": "recover-binary-search-tree",
+"reports": 6,
+"last_seen": "2026-06-02"
+},
+{
+"fid": "321",
+"slug": "create-maximum-number",
+"reports": 6,
+"last_seen": "2026-05-21"
+},
+{
+"fid": "242",
+"slug": "valid-anagram",
+"reports": 6,
+"last_seen": "2026-04-16"
+},
+{
+"fid": "140",
+"slug": "word-break-ii",
+"reports": 6,
+"last_seen": "2026-04-01"
+},
+{
+"fid": "204",
+"slug": "count-primes",
+"reports": 6,
+"last_seen": "2026-03-11"
+},
+{
+"fid": "238",
+"slug": "product-of-array-except-self",
+"reports": 6,
+"last_seen": "2026-03-09"
+},
+{
+"fid": "486",
+"slug": "predict-the-winner",
+"reports": 6,
+"last_seen": "2026-01-26"
+},
+{
+"fid": "722",
+"slug": "remove-comments",
+"reports": 6,
+"last_seen": "2025-05-26"
+},
+{
+"fid": "补充题17",
+"slug": null,
+"reports": 6,
+"last_seen": "2025-05-22"
+},
+{
+"fid": "202",
+"slug": "happy-number",
+"reports": 6,
+"last_seen": "2025-05-21"
+},
+{
+"fid": "1556",
+"slug": "thousand-separator",
+"reports": 6,
+"last_seen": "2025-03-16"
+},
+{
+"fid": "167",
+"slug": "two-sum-ii-input-array-is-sorted",
+"reports": 6,
+"last_seen": "2024-12-05"
+},
+{
+"fid": "面试题 08.06",
+"slug": "hanota-lcci",
+"reports": 6,
+"last_seen": "2024-09-12"
+},
+{
+"fid": "889",
+"slug": "construct-binary-tree-from-preorder-and-postorder-traversal",
+"reports": 6,
+"last_seen": "2024-09-12"
+},
+{
+"fid": "1658",
+"slug": "minimum-operations-to-reduce-x-to-zero",
+"reports": 6,
+"last_seen": "2024-04-18"
+},
+{
+"fid": "131",
+"slug": "palindrome-partitioning",
+"reports": 6,
+"last_seen": "2024-03-03"
+},
+{
+"fid": "剑指 Offer 12",
+"slug": "ju-zhen-zhong-de-lu-jing-lcof",
+"reports": 6,
+"last_seen": "2023-11-23"
+},
+{
+"fid": "946",
+"slug": "validate-stack-sequences",
+"reports": 6,
+"last_seen": "2023-11-08"
+},
+{
+"fid": "剑指 Offer 40",
+"slug": "zui-xiao-de-kge-shu-lcof",
+"reports": 6,
+"last_seen": "2023-09-13"
+},
+{
+"fid": "786",
+"slug": "k-th-smallest-prime-fraction",
+"reports": 6,
+"last_seen": "2023-08-16"
+},
+{
+"fid": "895",
+"slug": "maximum-frequency-stack",
+"reports": 6,
+"last_seen": "2023-06-17"
+},
+{
+"fid": "77",
+"slug": "combinations",
+"reports": 6,
+"last_seen": "2023-06-04"
+},
+{
+"fid": "149",
+"slug": "max-points-on-a-line",
+"reports": 6,
+"last_seen": "2022-08-12"
+},
+{
+"fid": "剑指 Offer 39",
+"slug": "shu-zu-zhong-chu-xian-ci-shu-chao-guo-yi-ban-de-shu-zi-lcof",
+"reports": 6,
+"last_seen": "2022-07-19"
+},
+{
+"fid": "面试题 08.12",
+"slug": "eight-queens-lcci",
+"reports": 6,
+"last_seen": "2022-04-12"
+},
+{
+"fid": "421",
+"slug": "maximum-xor-of-two-numbers-in-an-array",
+"reports": 6,
+"last_seen": "2021-08-15"
+},
+{
+"fid": "补充题3",
+"slug": "https://mp.weixin.qq.com/s/UFv7pt_djjZoK_gzUBrRXA",
+"reports": 6,
+"last_seen": "2021-03-30"
+},
+{
+"fid": "115",
+"slug": "distinct-subsequences",
+"reports": 5,
+"last_seen": "2026-09-23"
+},
+{
+"fid": "767",
+"slug": "reorganize-string",
+"reports": 5,
+"last_seen": "2026-05-20"
+},
+{
+"fid": "150",
+"slug": "evaluate-reverse-polish-notation",
+"reports": 5,
+"last_seen": "2026-05-19"
+},
+{
+"fid": "450",
+"slug": "delete-node-in-a-bst",
+"reports": 5,
+"last_seen": "2026-03-11"
+},
+{
+"fid": "1262",
+"slug": "greatest-sum-divisible-by-three",
+"reports": 5,
+"last_seen": "2026-03-09"
+},
+{
+"fid": "976",
+"slug": "largest-perimeter-triangle",
+"reports": 5,
+"last_seen": "2025-12-19"
+},
+{
+"fid": "331",
+"slug": "verify-preorder-serialization-of-a-binary-tree",
+"reports": 5,
+"last_seen": "2025-09-29"
+},
+{
+"fid": "658",
+"slug": "find-k-closest-elements",
+"reports": 5,
+"last_seen": "2025-09-22"
+},
+{
+"fid": "632",
+"slug": "smallest-range-covering-elements-from-k-lists",
+"reports": 5,
+"last_seen": "2025-07-02"
+},
+{
+"fid": "410",
+"slug": "split-array-largest-sum",
+"reports": 5,
+"last_seen": "2025-06-05"
+},
+{
+"fid": "29",
+"slug": "divide-two-integers",
+"reports": 5,
+"last_seen": "2025-04-11"
+},
+{
+"fid": "1293",
+"slug": "shortest-path-in-a-grid-with-obstacles-elimination",
+"reports": 5,
+"last_seen": "2024-11-18"
+},
+{
+"fid": "315",
+"slug": "count-of-smaller-numbers-after-self",
+"reports": 5,
+"last_seen": "2024-09-29"
+},
+{
+"fid": "补充题11",
+"slug": null,
+"reports": 5,
+"last_seen": "2024-09-04"
+},
+{
+"fid": "67",
+"slug": "add-binary",
+"reports": 5,
+"last_seen": "2024-08-09"
+},
+{
+"fid": "面试题 02.02",
+"slug": "kth-node-from-end-of-list-lcci",
+"reports": 5,
+"last_seen": "2024-05-30"
+},
+{
+"fid": "559",
+"slug": "maximum-depth-of-n-ary-tree",
+"reports": 5,
+"last_seen": "2024-05-21"
+},
+{
+"fid": "109",
+"slug": "convert-sorted-list-to-binary-search-tree",
+"reports": 5,
+"last_seen": "2023-11-29"
+},
+{
+"fid": "459",
+"slug": "repeated-substring-pattern",
+"reports": 5,
+"last_seen": "2023-11-12"
+},
+{
+"fid": "106",
+"slug": "construct-binary-tree-from-inorder-and-postorder-traversal",
+"reports": 5,
+"last_seen": "2023-08-27"
+},
+{
+"fid": "28",
+"slug": "implement-strstr",
+"reports": 5,
+"last_seen": "2023-08-07"
+},
+{
+"fid": "349",
+"slug": "intersection-of-two-arrays",
+"reports": 5,
+"last_seen": "2022-11-15"
+},
+{
+"fid": "875",
+"slug": "koko-eating-bananas",
+"reports": 5,
+"last_seen": "2022-09-16"
+},
+{
+"fid": "557",
+"slug": "reverse-words-in-a-string-iii",
+"reports": 5,
+"last_seen": "2022-07-11"
+},
+{
+"fid": "836",
+"slug": "rectangle-overlap",
+"reports": 5,
+"last_seen": "2022-07-07"
+},
+{
+"fid": "1031",
+"slug": "maximum-sum-of-two-non-overlapping-subarrays",
+"reports": 5,
+"last_seen": "2022-05-08"
+},
+{
+"fid": "100",
+"slug": "same-tree",
+"reports": 5,
+"last_seen": "2022-04-15"
+},
+{
+"fid": "168",
+"slug": "excel-sheet-column-title",
+"reports": 5,
+"last_seen": "2021-12-06"
+},
+{
+"fid": "剑指 Offer 52",
+"slug": "liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof",
+"reports": 5,
+"last_seen": "2021-07-21"
+},
+{
+"fid": "107",
+"slug": "binary-tree-level-order-traversal-ii",
+"reports": 4,
+"last_seen": "2026-08-06"
+},
+{
+"fid": "423",
+"slug": "reconstruct-original-digits-from-english",
+"reports": 4,
+"last_seen": "2026-05-12"
+},
+{
+"fid": "905",
+"slug": "sort-array-by-parity",
+"reports": 4,
+"last_seen": "2026-03-02"
+},
+{
+"fid": "补充题13",
+"slug": null,
+"reports": 4,
+"last_seen": "2026-02-27"
+},
+{
+"fid": "剑指 Offer 60",
+"slug": "nge-tou-zi-de-dian-shu-lcof",
+"reports": 4,
+"last_seen": "2026-01-14"
+},
+{
+"fid": "90",
+"slug": "subsets-ii",
+"reports": 4,
+"last_seen": "2026-01-13"
+},
+{
+"fid": "738",
+"slug": "monotone-increasing-digits",
+"reports": 4,
+"last_seen": "2025-10-21"
+},
+{
+"fid": "补充题20",
+"slug": null,
+"reports": 4,
+"last_seen": "2025-03-18"
+},
+{
+"fid": "983",
+"slug": "minimum-cost-for-tickets",
+"reports": 4,
+"last_seen": "2024-12-13"
+},
+{
+"fid": "907",
+"slug": "sum-of-subarray-minimums",
+"reports": 4,
+"last_seen": "2024-09-18"
+},
+{
+"fid": "1171",
+"slug": "remove-zero-sum-consecutive-nodes-from-linked-list",
+"reports": 4,
+"last_seen": "2024-09-10"
+},
+{
+"fid": "面试题 16.25",
+"slug": "lru-cache-lcci",
+"reports": 4,
+"last_seen": "2024-05-27"
+},
+{
+"fid": "1280",
+"slug": "students-and-examinations",
+"reports": 4,
+"last_seen": "2024-03-27"
+},
+{
+"fid": "967",
+"slug": "numbers-with-same-consecutive-differences",
+"reports": 4,
+"last_seen": "2024-03-04"
+},
+{
+"fid": "365",
+"slug": "water-and-jug-problem",
+"reports": 4,
+"last_seen": "2024-02-28"
+},
+{
+"fid": "1024",
+"slug": "video-stitching",
+"reports": 4,
+"last_seen": "2024-01-29"
+},
+{
+"fid": "27",
+"slug": "remove-element",
+"reports": 4,
+"last_seen": "2023-11-20"
+},
+{
+"fid": "222",
+"slug": "count-complete-tree-nodes",
+"reports": 4,
+"last_seen": "2023-07-27"
+},
+{
+"fid": "454",
+"slug": "4sum-ii",
+"reports": 4,
+"last_seen": "2023-02-15"
+},
+{
+"fid": "剑指 Offer 63",
+"slug": "gu-piao-de-zui-da-li-run-lcof",
+"reports": 4,
+"last_seen": "2022-11-01"
+},
+{
+"fid": "9",
+"slug": "palindrome-number",
+"reports": 4,
+"last_seen": "2022-10-09"
+},
+{
+"fid": "214",
+"slug": "shortest-palindrome",
+"reports": 4,
+"last_seen": "2022-09-21"
+},
+{
+"fid": "354",
+"slug": "russian-doll-envelopes",
+"reports": 4,
+"last_seen": "2022-08-28"
+},
+{
+"fid": "381",
+"slug": "insert-delete-getrandom-o1-duplicates-allowed",
+"reports": 4,
+"last_seen": "2022-07-31"
+},
+{
+"fid": "剑指 Offer 14- I",
+"slug": "jian-sheng-zi-lcof",
+"reports": 4,
+"last_seen": "2022-07-31"
+},
+{
+"fid": "1424",
+"slug": "diagonal-traverse-ii",
+"reports": 4,
+"last_seen": "2022-05-23"
+},
+{
+"fid": "剑指 Offer 50",
+"slug": "di-yi-ge-zhi-chu-xian-yi-ci-de-zi-fu-lcof",
+"reports": 4,
+"last_seen": "2022-05-11"
+},
+{
+"fid": "面试题 17.14",
+"slug": "smallest-k-lcci",
+"reports": 4,
+"last_seen": "2022-05-10"
+},
+{
+"fid": "1438",
+"slug": "longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit",
+"reports": 4,
+"last_seen": "2022-05-05"
+},
+{
+"fid": "剑指 Offer 24",
+"slug": "fan-zhuan-lian-biao-lcof",
+"reports": 4,
+"last_seen": "2022-04-29"
+},
+{
+"fid": "剑指 Offer 59 - II",
+"slug": "dui-lie-de-zui-da-zhi-lcof",
+"reports": 4,
+"last_seen": "2022-03-29"
+},
+{
+"fid": "171",
+"slug": "excel-sheet-column-number",
+"reports": 4,
+"last_seen": "2022-01-30"
+},
+{
+"fid": "404",
+"slug": "sum-of-left-leaves",
+"reports": 4,
+"last_seen": "2022-01-05"
+},
+{
+"fid": "1353",
+"slug": "maximum-number-of-events-that-can-be-attended",
+"reports": 4,
+"last_seen": "2021-07-28"
+},
+{
+"fid": "1095",
+"slug": "find-in-mountain-array",
+"reports": 4,
+"last_seen": "2021-04-14"
+},
+{
+"fid": "1129",
+"slug": "shortest-path-with-alternating-colors",
+"reports": 3,
+"last_seen": "2026-09-21"
+},
+{
+"fid": "1074",
+"slug": "number-of-submatrices-that-sum-to-target",
+"reports": 3,
+"last_seen": "2026-09-19"
+},
+{
+"fid": "1049",
+"slug": "last-stone-weight-ii",
+"reports": 3,
+"last_seen": "2026-09-06"
+},
+{
+"fid": "273",
+"slug": "integer-to-english-words",
+"reports": 3,
+"last_seen": "2026-07-02"
+},
+{
+"fid": "781",
+"slug": "rabbits-in-forest",
+"reports": 3,
+"last_seen": "2026-06-05"
+},
+{
+"fid": "386",
+"slug": "lexicographical-numbers",
+"reports": 3,
+"last_seen": "2026-05-10"
+},
+{
+"fid": "845",
+"slug": "longest-mountain-in-array",
+"reports": 3,
+"last_seen": "2026-05-10"
+},
+{
+"fid": "81",
+"slug": "search-in-rotated-sorted-array-ii",
+"reports": 3,
+"last_seen": "2026-04-16"
+},
+{
+"fid": "1493",
+"slug": "longest-subarray-of-1s-after-deleting-one-element",
+"reports": 3,
+"last_seen": "2026-03-30"
+},
+{
+"fid": "409",
+"slug": "longest-palindrome",
+"reports": 3,
+"last_seen": "2026-01-15"
+},
+{
+"fid": "714",
+"slug": "best-time-to-buy-and-sell-stock-with-transaction-fee",
+"reports": 3,
+"last_seen": "2026-01-04"
+},
+{
+"fid": "剑指 Offer 43",
+"slug": "1nzheng-shu-zhong-1chu-xian-de-ci-shu-lcof",
+"reports": 3,
+"last_seen": "2025-07-29"
+},
+{
+"fid": "949",
+"slug": "largest-time-for-given-digits",
+"reports": 3,
+"last_seen": "2025-07-01"
+},
+{
+"fid": "36",
+"slug": "valid-sudoku",
+"reports": 3,
+"last_seen": "2025-04-30"
+},
+{
+"fid": "399",
+"slug": "evaluate-division",
+"reports": 3,
+"last_seen": "2025-04-21"
+},
+{
+"fid": "918",
+"slug": "maximum-sum-circular-subarray",
+"reports": 3,
+"last_seen": "2025-04-02"
+},
+{
+"fid": "829",
+"slug": "consecutive-numbers-sum",
+"reports": 3,
+"last_seen": "2025-03-31"
+},
+{
+"fid": "1115",
+"slug": "print-foobar-alternately",
+"reports": 3,
+"last_seen": "2025-02-23"
+},
+{
+"fid": "987",
+"slug": "vertical-order-traversal-of-a-binary-tree",
+"reports": 3,
+"last_seen": "2024-09-25"
+},
+{
+"fid": "547",
+"slug": "number-of-provinces",
+"reports": 3,
+"last_seen": "2024-09-23"
+},
+{
+"fid": "1209",
+"slug": "remove-all-adjacent-duplicates-in-string-ii",
+"reports": 3,
+"last_seen": "2024-09-13"
+},
+{
+"fid": "382",
+"slug": "linked-list-random-node",
+"reports": 3,
+"last_seen": "2024-08-21"
+},
+{
+"fid": "490",
+"slug": "the-maze",
+"reports": 3,
+"last_seen": "2024-05-22"
+},
+{
+"fid": "剑指 Offer 31",
+"slug": "zhan-de-ya-ru-dan-chu-xu-lie-lcof",
+"reports": 3,
+"last_seen": "2024-04-28"
+},
+{
+"fid": "1206",
+"slug": "design-skiplist",
+"reports": 3,
+"last_seen": "2024-04-10"
+},
+{
+"fid": "473",
+"slug": "matchsticks-to-square",
+"reports": 3,
+"last_seen": "2024-04-09"
+},
+{
+"fid": "697",
+"slug": "degree-of-an-array",
+"reports": 3,
+"last_seen": "2024-01-14"
+},
+{
+"fid": "119",
+"slug": "pascals-triangle-ii",
+"reports": 3,
+"last_seen": "2024-01-06"
+},
+{
+"fid": "1410",
+"slug": "html-entity-parser",
+"reports": 3,
+"last_seen": "2023-12-07"
+},
+{
+"fid": "350",
+"slug": "intersection-of-two-arrays-ii",
+"reports": 3,
+"last_seen": "2023-11-05"
+},
+{
+"fid": "1490",
+"slug": "clone-n-ary-tree",
+"reports": 3,
+"last_seen": "2023-09-12"
+},
+{
+"fid": "面试题 01.06",
+"slug": "compress-string-lcci",
+"reports": 3,
+"last_seen": "2023-08-28"
+},
+{
+"fid": "1444",
+"slug": "number-of-ways-of-cutting-a-pizza",
+"reports": 3,
+"last_seen": "2023-08-21"
+},
+{
+"fid": "701",
+"slug": "insert-into-a-binary-search-tree",
+"reports": 3,
+"last_seen": "2023-06-25"
+},
+{
+"fid": "703",
+"slug": "kth-largest-element-in-a-stream",
+"reports": 3,
+"last_seen": "2023-06-05"
+},
+{
+"fid": "223",
+"slug": "rectangle-area",
+"reports": 3,
+"last_seen": "2023-04-26"
+},
+{
+"fid": "303",
+"slug": "range-sum-query-immutable",
+"reports": 3,
+"last_seen": "2023-04-19"
+},
+{
+"fid": "1011",
+"slug": "capacity-to-ship-packages-within-d-days",
+"reports": 3,
+"last_seen": "2023-02-28"
+},
+{
+"fid": "325",
+"slug": "maximum-size-subarray-sum-equals-k",
+"reports": 3,
+"last_seen": "2022-11-24"
+},
+{
+"fid": "剑指 Offer 59 - I",
+"slug": "hua-dong-chuang-kou-de-zui-da-zhi-lcof",
+"reports": 3,
+"last_seen": "2022-11-01"
+},
+{
+"fid": "706",
+"slug": "design-hashmap",
+"reports": 3,
+"last_seen": "2022-09-03"
+},
+{
+"fid": "面试题 08.05",
+"slug": "recursive-mulitply-lcci",
+"reports": 3,
+"last_seen": "2022-08-11"
+},
+{
+"fid": "面试题 08.11",
+"slug": "coin-lcci",
+"reports": 3,
+"last_seen": "2022-08-10"
+},
+{
+"fid": "面试题 01.07",
+"slug": "rotate-matrix-lcci",
+"reports": 3,
+"last_seen": "2022-08-05"
+},
+{
+"fid": "377",
+"slug": "combination-sum-iv",
+"reports": 3,
+"last_seen": "2022-08-03"
+},
+{
+"fid": "915",
+"slug": "partition-array-into-disjoint-intervals",
+"reports": 3,
+"last_seen": "2022-08-02"
+},
+{
+"fid": "241",
+"slug": "different-ways-to-add-parentheses",
+"reports": 3,
+"last_seen": "2022-07-28"
+},
+{
+"fid": "面试题 16.16",
+"slug": "sub-sort-lcci",
+"reports": 3,
+"last_seen": "2022-07-24"
+},
+{
+"fid": "1109",
+"slug": "corporate-flight-bookings",
+"reports": 3,
+"last_seen": "2022-07-22"
+},
+{
+"fid": "785",
+"slug": "is-graph-bipartite",
+"reports": 3,
+"last_seen": "2022-07-17"
+},
+{
+"fid": "407",
+"slug": "trapping-rain-water-ii",
+"reports": 3,
+"last_seen": "2022-07-16"
+},
+{
+"fid": "922",
+"slug": "sort-array-by-parity-ii",
+"reports": 3,
+"last_seen": "2022-07-10"
+},
+{
+"fid": "147",
+"slug": "insertion-sort-list",
+"reports": 3,
+"last_seen": "2022-05-23"
+},
+{
+"fid": "172",
+"slug": "factorial-trailing-zeroes",
+"reports": 3,
+"last_seen": "2022-05-04"
+},
+{
+"fid": "337",
+"slug": "house-robber-iii",
+"reports": 3,
+"last_seen": "2022-04-17"
+},
+{
+"fid": "剑指 Offer 17",
+"slug": "da-yin-cong-1dao-zui-da-de-nwei-shu-lcof",
+"reports": 3,
+"last_seen": "2022-04-11"
+},
+{
+"fid": "37",
+"slug": "sudoku-solver",
+"reports": 3,
+"last_seen": "2022-04-06"
+},
+{
+"fid": "807",
+"slug": "max-increase-to-keep-city-skyline",
+"reports": 3,
+"last_seen": "2022-03-21"
+},
+{
+"fid": "252",
+"slug": "meeting-rooms",
+"reports": 3,
+"last_seen": "2022-03-09"
+},
+{
+"fid": "补充题10",
+"slug": "https://mp.weixin.qq.com/s/ub9GpTBjDF55hZld3V2rEA",
+"reports": 3,
+"last_seen": "2022-01-24"
+},
+{
+"fid": "564",
+"slug": "find-the-closest-palindrome",
+"reports": 3,
+"last_seen": "2021-11-21"
+},
+{
+"fid": "405",
+"slug": "convert-a-number-to-hexadecimal",
+"reports": 3,
+"last_seen": "2021-08-04"
+},
+{
+"fid": "剑指 Offer 19",
+"slug": "zheng-ze-biao-da-shi-pi-pei-lcof",
+"reports": 3,
+"last_seen": "2021-07-22"
+},
+{
+"fid": "1673",
+"slug": "find-the-most-competitive-subsequence",
+"reports": 2,
+"last_seen": "2026-10-12"
+},
+{
+"fid": "1186",
+"slug": "maximum-subarray-sum-with-one-deletion",
+"reports": 2,
+"last_seen": "2026-10-08"
+},
+{
+"fid": "424",
+"slug": "longest-repeating-character-replacement",
+"reports": 2,
+"last_seen": "2026-09-20"
+},
+{
+"fid": "LCP 13",
+"slug": "xun-bao",
+"reports": 2,
+"last_seen": "2026-08-01"
+},
+{
+"fid": "515",
+"slug": "find-largest-value-in-each-tree-row",
+"reports": 2,
+"last_seen": "2026-06-21"
+},
+{
+"fid": "87",
+"slug": "scramble-string",
+"reports": 2,
+"last_seen": "2026-05-29"
+},
+{
+"fid": "783",
+"slug": "minimum-distance-between-bst-nodes",
+"reports": 2,
+"last_seen": "2026-05-26"
+},
+{
+"fid": "1099",
+"slug": "two-sum-less-than-k",
+"reports": 2,
+"last_seen": "2026-05-14"
+},
+{
+"fid": "853",
+"slug": "car-fleet",
+"reports": 2,
+"last_seen": "2026-04-24"
+},
+{
+"fid": "542",
+"slug": "01-matrix",
+"reports": 2,
+"last_seen": "2026-04-14"
+},
+{
+"fid": "1288",
+"slug": "remove-covered-intervals",
+"reports": 2,
+"last_seen": "2026-04-13"
+},
+{
+"fid": "1381",
+"slug": "design-a-stack-with-increment-operation",
+"reports": 2,
+"last_seen": "2026-04-10"
+},
+{
+"fid": "540",
+"slug": "single-element-in-a-sorted-array",
+"reports": 2,
+"last_seen": "2026-04-09"
+},
+{
+"fid": "940",
+"slug": "distinct-subsequences-ii",
+"reports": 2,
+"last_seen": "2026-04-02"
+},
+{
+"fid": "881",
+"slug": "boats-to-save-people",
+"reports": 2,
+"last_seen": "2026-03-27"
+},
+{
+"fid": "480",
+"slug": "sliding-window-median",
+"reports": 2,
+"last_seen": "2026-03-26"
+},
+{
+"fid": "721",
+"slug": "accounts-merge",
+"reports": 2,
+"last_seen": "2026-03-18"
+},
+{
+"fid": "455",
+"slug": "assign-cookies",
+"reports": 2,
+"last_seen": "2026-03-16"
+},
+{
+"fid": "784",
+"slug": "letter-case-permutation",
+"reports": 2,
+"last_seen": "2026-03-14"
+},
+{
+"fid": "667",
+"slug": "beautiful-arrangement-ii",
+"reports": 2,
+"last_seen": "2026-03-14"
+},
+{
+"fid": "面试题 08.13",
+"slug": "pile-box-lcci",
+"reports": 2,
+"last_seen": "2026-03-11"
+},
+{
+"fid": "1339",
+"slug": "maximum-product-of-splitted-binary-tree",
+"reports": 2,
+"last_seen": "2026-03-10"
+},
+{
+"fid": "874",
+"slug": "walking-robot-simulation",
+"reports": 2,
+"last_seen": "2026-03-07"
+},
+{
+"fid": "263",
+"slug": "ugly-number",
+"reports": 2,
+"last_seen": "2026-02-05"
+},
+{
+"fid": "1249",
+"slug": "minimum-remove-to-make-valid-parentheses",
+"reports": 2,
+"last_seen": "2026-02-04"
+},
+{
+"fid": "1669",
+"slug": "merge-in-between-linked-lists",
+"reports": 2,
+"last_seen": "2026-02-02"
+},
+{
+"fid": "414",
+"slug": "third-maximum-number",
+"reports": 2,
+"last_seen": "2026-01-20"
+},
+{
+"fid": "1073",
+"slug": "adding-two-negabinary-numbers",
+"reports": 2,
+"last_seen": "2026-01-12"
+},
+{
+"fid": "719",
+"slug": "find-k-th-smallest-pair-distance",
+"reports": 2,
+"last_seen": "2025-11-18"
+},
+{
+"fid": "187",
+"slug": "repeated-dna-sequences",
+"reports": 2,
+"last_seen": "2025-11-01"
+},
+{
+"fid": "补充题22",
+"slug": "https://mp.weixin.qq.com/s/UWCuEtNS2kuAuDY-eIbghg",
+"reports": 2,
+"last_seen": "2025-10-22"
+},
+{
+"fid": "1019",
+"slug": "next-greater-node-in-linked-list",
+"reports": 2,
+"last_seen": "2025-10-21"
+},
+{
+"fid": "910",
+"slug": "smallest-range-ii",
+"reports": 2,
+"last_seen": "2025-10-13"
+},
+{
+"fid": "312",
+"slug": "burst-balloons",
+"reports": 2,
+"last_seen": "2025-09-29"
+},
+{
+"fid": "233",
+"slug": "number-of-digit-one",
+"reports": 2,
+"last_seen": "2025-09-29"
+},
+{
+"fid": "856",
+"slug": "score-of-parentheses",
+"reports": 2,
+"last_seen": "2025-09-18"
+},
+{
+"fid": "496",
+"slug": "next-greater-element-i",
+"reports": 2,
+"last_seen": "2025-09-16"
+},
+{
+"fid": "1277",
+"slug": "count-square-submatrices-with-all-ones",
+"reports": 2,
+"last_seen": "2025-09-15"
+},
+{
+"fid": "313",
+"slug": "super-ugly-number",
+"reports": 2,
+"last_seen": "2025-09-02"
+},
+{
+"fid": "35",
+"slug": "search-insert-position",
+"reports": 2,
+"last_seen": "2025-07-24"
+},
+{
+"fid": "769",
+"slug": "max-chunks-to-make-sorted",
+"reports": 2,
+"last_seen": "2025-07-07"
+},
+{
+"fid": "面试题 02.07",
+"slug": "intersection-of-two-linked-lists-lcci",
+"reports": 2,
+"last_seen": "2025-07-02"
+},
+{
+"fid": "1539",
+"slug": "kth-missing-positive-number",
+"reports": 2,
+"last_seen": "2025-05-07"
+},
+{
+"fid": "814",
+"slug": "binary-tree-pruning",
+"reports": 2,
+"last_seen": "2025-04-20"
+},
+{
+"fid": "629",
+"slug": "k-inverse-pairs-array",
+"reports": 2,
+"last_seen": "2025-04-17"
+},
+{
+"fid": "面试题 16.06",
+"slug": "smallest-difference-lcci",
+"reports": 2,
+"last_seen": "2025-04-13"
+},
+{
+"fid": "256",
+"slug": "paint-house",
+"reports": 2,
+"last_seen": "2025-04-01"
+},
+{
+"fid": "1263",
+"slug": "minimum-moves-to-move-a-box-to-their-target-location",
+"reports": 2,
+"last_seen": "2025-03-17"
+},
+{
+"fid": "298",
+"slug": "binary-tree-longest-consecutive-sequence",
+"reports": 2,
+"last_seen": "2025-03-13"
+},
+{
+"fid": "583",
+"slug": "delete-operation-for-two-strings",
+"reports": 2,
+"last_seen": "2025-03-04"
+},
+{
+"fid": "877",
+"slug": "stone-game",
+"reports": 2,
+"last_seen": "2025-01-31"
+},
+{
+"fid": "373",
+"slug": "find-k-pairs-with-smallest-sums",
+"reports": 2,
+"last_seen": "2024-12-13"
+},
+{
+"fid": "792",
+"slug": "number-of-matching-subsequences",
+"reports": 2,
+"last_seen": "2024-10-27"
+},
+{
+"fid": "631",
+"slug": "design-excel-sum-formula",
+"reports": 2,
+"last_seen": "2024-06-18"
+},
+{
+"fid": "795",
+"slug": "number-of-subarrays-with-bounded-maximum",
+"reports": 2,
+"last_seen": "2024-05-10"
+},
+{
+"fid": "474",
+"slug": "ones-and-zeroes",
+"reports": 2,
+"last_seen": "2024-04-27"
+},
+{
+"fid": "589",
+"slug": "n-ary-tree-preorder-traversal",
+"reports": 2,
+"last_seen": "2024-04-02"
+},
+{
+"fid": "796",
+"slug": "rotate-string",
+"reports": 2,
+"last_seen": "2024-03-28"
+},
+{
+"fid": "184",
+"slug": "department-highest-salary",
+"reports": 2,
+"last_seen": "2024-03-10"
+},
+{
+"fid": "216",
+"slug": "combination-sum-iii",
+"reports": 2,
+"last_seen": "2024-03-08"
+},
+{
+"fid": "269",
+"slug": "alien-dictionary",
+"reports": 2,
+"last_seen": "2024-03-04"
+},
+{
+"fid": "1000",
+"slug": "minimum-cost-to-merge-stones",
+"reports": 2,
+"last_seen": "2024-01-20"
+},
+{
+"fid": "338",
+"slug": "counting-bits",
+"reports": 2,
+"last_seen": "2024-01-10"
+},
+{
+"fid": "538",
+"slug": "convert-bst-to-greater-tree",
+"reports": 2,
+"last_seen": "2024-01-10"
+},
+{
+"fid": "面试题 17.18",
+"slug": "shortest-supersequence-lcci",
+"reports": 2,
+"last_seen": "2024-01-08"
+},
+{
+"fid": "461",
+"slug": "hamming-distance",
+"reports": 2,
+"last_seen": "2023-12-09"
+},
+{
+"fid": "876",
+"slug": "middle-of-the-linked-list",
+"reports": 2,
+"last_seen": "2023-11-27"
+},
+{
+"fid": "277",
+"slug": "find-the-celebrity",
+"reports": 2,
+"last_seen": "2023-11-20"
+},
+{
+"fid": "1267",
+"slug": "count-servers-that-communicate",
+"reports": 2,
+"last_seen": "2023-08-25"
+},
+{
+"fid": "38",
+"slug": "count-and-say",
+"reports": 2,
+"last_seen": "2023-07-26"
+},
+{
+"fid": "面试题 01.01",
+"slug": "is-unique-lcci",
+"reports": 2,
+"last_seen": "2023-07-20"
+},
+{
+"fid": "剑指 Offer 32 - II",
+"slug": "cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof",
+"reports": 2,
+"last_seen": "2023-06-08"
+},
+{
+"fid": "870",
+"slug": "advantage-shuffle",
+"reports": 2,
+"last_seen": "2023-05-31"
+},
+{
+"fid": "969",
+"slug": "pancake-sorting",
+"reports": 2,
+"last_seen": "2023-05-18"
+},
+{
+"fid": "1268",
+"slug": "search-suggestions-system",
+"reports": 2,
+"last_seen": "2023-03-09"
+},
+{
+"fid": "984",
+"slug": "string-without-aaa-or-bbb",
+"reports": 2,
+"last_seen": "2023-02-17"
+},
+{
+"fid": "332",
+"slug": "reconstruct-itinerary",
+"reports": 2,
+"last_seen": "2023-02-01"
+},
+{
+"fid": "393",
+"slug": "utf-8-validation",
+"reports": 2,
+"last_seen": "2022-11-28"
+},
+{
+"fid": "1013",
+"slug": "partition-array-into-three-parts-with-equal-sum",
+"reports": 2,
+"last_seen": "2022-11-28"
+},
+{
+"fid": "341",
+"slug": "flatten-nested-list-iterator",
+"reports": 2,
+"last_seen": "2022-10-17"
+},
+{
+"fid": "420",
+"slug": "strong-password-checker",
+"reports": 2,
+"last_seen": "2022-10-17"
+},
+{
+"fid": "剑指 Offer 68 - II",
+"slug": "er-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof",
+"reports": 2,
+"last_seen": "2022-09-25"
+},
+{
+"fid": "211",
+"slug": "design-add-and-search-words-data-structure",
+"reports": 2,
+"last_seen": "2022-09-21"
+},
+{
+"fid": "986",
+"slug": "interval-list-intersections",
+"reports": 2,
+"last_seen": "2022-09-14"
+},
+{
+"fid": "432",
+"slug": "all-oone-data-structure",
+"reports": 2,
+"last_seen": "2022-08-23"
+},
+{
+"fid": "补充题21",
+"slug": "https://mp.weixin.qq.com/s/RtAoA1hdf0h1PaVxRj_fzA",
+"reports": 2,
+"last_seen": "2022-08-15"
+},
+{
+"fid": "1505",
+"slug": "minimum-possible-integer-after-at-most-k-adjacent-swaps-on-digits",
+"reports": 2,
+"last_seen": "2022-08-02"
+},
+{
+"fid": "513",
+"slug": "find-bottom-left-tree-value",
+"reports": 2,
+"last_seen": "2022-07-31"
+},
+{
+"fid": "593",
+"slug": "valid-square",
+"reports": 2,
+"last_seen": "2022-07-29"
+},
+{
+"fid": "968",
+"slug": "binary-tree-cameras",
+"reports": 2,
+"last_seen": "2022-07-18"
+},
+{
+"fid": "694",
+"slug": "number-of-distinct-islands",
+"reports": 2,
+"last_seen": "2022-07-18"
+},
+{
+"fid": "501",
+"slug": "find-mode-in-binary-search-tree",
+"reports": 2,
+"last_seen": "2022-07-16"
+},
+{
+"fid": "剑指 Offer 14- II",
+"slug": "jian-sheng-zi-ii-lcof",
+"reports": 2,
+"last_seen": "2022-06-15"
+},
+{
+"fid": "1002",
+"slug": "find-common-characters",
+"reports": 2,
+"last_seen": "2022-05-26"
+},
+{
+"fid": "994",
+"slug": "rotting-oranges",
+"reports": 2,
+"last_seen": "2022-05-03"
+},
+{
+"fid": "524",
+"slug": "longest-word-in-dictionary-through-deleting",
+"reports": 2,
+"last_seen": "2022-04-28"
+},
+{
+"fid": "剑指 Offer 68 - I",
+"slug": "er-cha-sou-suo-shu-de-zui-jin-gong-gong-zu-xian-lcof",
+"reports": 2,
+"last_seen": "2022-04-19"
+},
+{
+"fid": "463",
+"slug": "island-perimeter",
+"reports": 2,
+"last_seen": "2022-04-12"
+},
+{
+"fid": "面试题 17.05",
+"slug": "find-longest-subarray-lcci",
+"reports": 2,
+"last_seen": "2022-04-05"
+},
+{
+"fid": "剑指 Offer 55 - II",
+"slug": "ping-heng-er-cha-shu-lcof",
+"reports": 2,
+"last_seen": "2022-03-29"
+},
+{
+"fid": "304",
+"slug": "range-sum-query-2d-immutable",
+"reports": 2,
+"last_seen": "2022-03-28"
+},
+{
+"fid": "1227",
+"slug": "airplane-seat-assignment-probability",
+"reports": 2,
+"last_seen": "2022-03-24"
+},
+{
+"fid": "912",
+"slug": "sort-an-array",
+"reports": 2,
+"last_seen": "2022-03-13"
+},
+{
+"fid": "669",
+"slug": "trim-a-binary-search-tree",
+"reports": 2,
+"last_seen": "2022-03-09"
+},
+{
+"fid": "653",
+"slug": "two-sum-iv-input-is-a-bst",
+"reports": 2,
+"last_seen": "2022-03-08"
+},
+{
+"fid": "622",
+"slug": "design-circular-queue",
+"reports": 2,
+"last_seen": "2022-03-07"
+},
+{
+"fid": "剑指 Offer 57 - II",
+"slug": "he-wei-sde-lian-xu-zheng-shu-xu-lie-lcof",
+"reports": 2,
+"last_seen": "2022-02-22"
+},
+{
+"fid": "剑指 Offer 47",
+"slug": "li-wu-de-zui-da-jie-zhi-lcof",
+"reports": 2,
+"last_seen": "2022-02-18"
+},
+{
+"fid": "310",
+"slug": "minimum-height-trees",
+"reports": 2,
+"last_seen": "2022-02-14"
+},
+{
+"fid": "剑指 Offer 44",
+"slug": "shu-zi-xu-lie-zhong-mou-yi-wei-de-shu-zi-lcof",
+"reports": 2,
+"last_seen": "2022-01-14"
+},
+{
+"fid": "342",
+"slug": "power-of-four",
+"reports": 2,
+"last_seen": "2022-01-12"
+},
+{
+"fid": "73",
+"slug": "set-matrix-zeroes",
+"reports": 2,
+"last_seen": "2022-01-05"
+},
+{
+"fid": "231",
+"slug": "power-of-two",
+"reports": 2,
+"last_seen": "2021-10-11"
+},
+{
+"fid": "1139",
+"slug": "largest-1-bordered-square",
+"reports": 2,
+"last_seen": "2021-09-13"
+},
+{
+"fid": "1302",
+"slug": "deepest-leaves-sum",
+"reports": 2,
+"last_seen": "2021-09-09"
+},
+{
+"fid": "951",
+"slug": "flip-equivalent-binary-trees",
+"reports": 2,
+"last_seen": "2021-09-04"
+},
+{
+"fid": "117",
+"slug": "populating-next-right-pointers-in-each-node-ii",
+"reports": 2,
+"last_seen": "2021-08-21"
+},
+{
+"fid": "剑指 Offer 41",
+"slug": "shu-ju-liu-zhong-de-zhong-wei-shu-lcof",
+"reports": 2,
+"last_seen": "2021-08-19"
+},
+{
+"fid": "补充题18",
+"slug": null,
+"reports": 2,
+"last_seen": "2021-08-13"
+},
+{
+"fid": "990",
+"slug": "satisfiability-of-equality-equations",
+"reports": 2,
+"last_seen": "2021-08-13"
+},
+{
+"fid": "面试题 08.02",
+"slug": "robot-in-a-grid-lcci",
+"reports": 2,
+"last_seen": "2021-08-10"
+},
+{
+"fid": "133",
+"slug": "clone-graph",
+"reports": 2,
+"last_seen": "2021-08-08"
+},
+{
+"fid": "842",
+"slug": "split-array-into-fibonacci-sequence",
+"reports": 2,
+"last_seen": "2021-08-04"
+},
+{
+"fid": "530",
+"slug": "minimum-absolute-difference-in-bst",
+"reports": 2,
+"last_seen": "2021-04-23"
+},
+{
+"fid": "1254",
+"slug": "number-of-closed-islands",
+"reports": 2,
+"last_seen": "2021-03-23"
+},
+{
+"fid": "668",
+"slug": "kth-smallest-number-in-multiplication-table",
+"reports": 2,
+"last_seen": "2020-11-09"
+},
+{
+"fid": "补充题24",
+"slug": "https://mp.weixin.qq.com/s/g_AqwsSEUwlRSevnStPkEA",
+"reports": 2,
+"last_seen": "2020-10-16"
+},
+{
+"fid": "268",
+"slug": "missing-number",
+"reports": 2,
+"last_seen": "2020-10-13"
+},
+{
+"fid": "1363",
+"slug": "largest-multiple-of-three",
+"reports": 2,
+"last_seen": "2020-10-06"
+},
+{
+"fid": "398",
+"slug": "random-pick-index",
+"reports": 2,
+"last_seen": "2020-08-26"
+},
+{
+"fid": "1201",
+"slug": "ugly-number-iii",
+"reports": 2,
+"last_seen": "2020-07-03"
+},
+{
+"fid": "190",
+"slug": "reverse-bits",
+"reports": 2,
+"last_seen": "2020-06-30"
+},
+{
+"fid": "1185",
+"slug": "day-of-the-week",
+"reports": 1,
+"last_seen": "2026-09-19"
+},
+{
+"fid": "1131",
+"slug": "maximum-of-absolute-value-expression",
+"reports": 1,
+"last_seen": "2026-09-04"
+},
+{
+"fid": "827",
+"slug": "making-a-large-island",
+"reports": 1,
+"last_seen": "2026-09-02"
+},
+{
+"fid": "1062",
+"slug": "longest-repeating-substring",
+"reports": 1,
+"last_seen": "2026-08-05"
+},
+{
+"fid": "692",
+"slug": "top-k-frequent-words",
+"reports": 1,
+"last_seen": "2026-07-22"
+},
+{
+"fid": "1477",
+"slug": "find-two-non-overlapping-sub-arrays-each-with-target-sum",
+"reports": 1,
+"last_seen": "2026-07-15"
+},
+{
+"fid": "1330",
+"slug": "reverse-subarray-to-maximize-array-value",
+"reports": 1,
+"last_seen": "2026-07-02"
+},
+{
+"fid": "面试题 16.07",
+"slug": "maximum-lcci",
+"reports": 1,
+"last_seen": "2026-06-08"
+},
+{
+"fid": "1235",
+"slug": "maximum-profit-in-job-scheduling",
+"reports": 1,
+"last_seen": "2026-05-23"
+},
+{
+"fid": "793",
+"slug": "preimage-size-of-factorial-zeroes-function",
+"reports": 1,
+"last_seen": "2026-05-07"
+},
+{
+"fid": "1674",
+"slug": "minimum-moves-to-make-array-complementary",
+"reports": 1,
+"last_seen": "2026-04-30"
+},
+{
+"fid": "517",
+"slug": "super-washing-machines",
+"reports": 1,
+"last_seen": "2026-04-26"
+},
+{
+"fid": "561",
+"slug": "array-partition-i",
+"reports": 1,
+"last_seen": "2026-04-15"
+},
+{
+"fid": "499",
+"slug": "the-maze-iii",
+"reports": 1,
+"last_seen": "2026-04-14"
+},
+{
+"fid": "1661",
+"slug": "average-time-of-process-per-machine",
+"reports": 1,
+"last_seen": "2026-04-10"
+},
+{
+"fid": "888",
+"slug": "fair-candy-swap",
+"reports": 1,
+"last_seen": "2026-04-04"
+},
+{
+"fid": "1123",
+"slug": "lowest-common-ancestor-of-deepest-leaves",
+"reports": 1,
+"last_seen": "2026-03-31"
+},
+{
+"fid": "237",
+"slug": "delete-node-in-a-linked-list",
+"reports": 1,
+"last_seen": "2026-03-23"
+},
+{
+"fid": "LCP 09",
+"slug": "zui-xiao-tiao-yue-ci-shu",
+"reports": 1,
+"last_seen": "2026-01-29"
+},
+{
+"fid": "95",
+"slug": "unique-binary-search-trees-ii",
+"reports": 1,
+"last_seen": "2026-01-15"
+},
+{
+"fid": "1162",
+"slug": "as-far-from-land-as-possible",
+"reports": 1,
+"last_seen": "2025-12-24"
+},
+{
+"fid": "229",
+"slug": "majority-element-ii",
+"reports": 1,
+"last_seen": "2025-12-22"
+},
+{
+"fid": "面试题 16.01",
+"slug": "swap-numbers-lcci",
+"reports": 1,
+"last_seen": "2025-12-19"
+},
+{
+"fid": "369",
+"slug": "plus-one-linked-list",
+"reports": 1,
+"last_seen": "2025-11-12"
+},
+{
+"fid": "1091",
+"slug": "shortest-path-in-binary-matrix",
+"reports": 1,
+"last_seen": "2025-11-02"
+},
+{
+"fid": "65",
+"slug": "valid-number",
+"reports": 1,
+"last_seen": "2025-10-23"
+},
+{
+"fid": "925",
+"slug": "long-pressed-name",
+"reports": 1,
+"last_seen": "2025-10-13"
+},
+{
+"fid": "1668",
+"slug": "maximum-repeating-substring",
+"reports": 1,
+"last_seen": "2025-10-11"
+},
+{
+"fid": "1027",
+"slug": "longest-arithmetic-subsequence",
+"reports": 1,
+"last_seen": "2025-09-16"
+},
+{
+"fid": "1594",
+"slug": "maximum-non-negative-product-in-a-matrix",
+"reports": 1,
+"last_seen": "2025-07-24"
+},
+{
+"fid": "621",
+"slug": "task-scheduler",
+"reports": 1,
+"last_seen": "2025-06-16"
+},
+{
+"fid": "568",
+"slug": "maximum-vacation-days",
+"reports": 1,
+"last_seen": "2025-06-14"
+},
+{
+"fid": "275",
+"slug": "h-index-ii",
+"reports": 1,
+"last_seen": "2025-06-09"
+},
+{
+"fid": "1298",
+"slug": "maximum-candies-you-can-get-from-boxes",
+"reports": 1,
+"last_seen": "2025-06-05"
+},
+{
+"fid": "1026",
+"slug": "maximum-difference-between-node-and-ancestor",
+"reports": 1,
+"last_seen": "2025-05-16"
+},
+{
+"fid": "剑指 Offer 49",
+"slug": "chou-shu-lcof",
+"reports": 1,
+"last_seen": "2025-05-06"
+},
+{
+"fid": "58",
+"slug": "length-of-last-word",
+"reports": 1,
+"last_seen": "2025-04-14"
+},
+{
+"fid": "1034",
+"slug": "coloring-a-border",
+"reports": 1,
+"last_seen": "2025-04-13"
+},
+{
+"fid": "606",
+"slug": "construct-string-from-binary-tree",
+"reports": 1,
+"last_seen": "2025-04-07"
+},
+{
+"fid": "471",
+"slug": "encode-string-with-shortest-length",
+"reports": 1,
+"last_seen": "2025-04-05"
+},
+{
+"fid": "610",
+"slug": "triangle-judgement",
+"reports": 1,
+"last_seen": "2025-03-16"
+},
+{
+"fid": "813",
+"slug": "largest-sum-of-averages",
+"reports": 1,
+"last_seen": "2025-03-05"
+},
+{
+"fid": "920",
+"slug": "number-of-music-playlists",
+"reports": 1,
+"last_seen": "2025-02-22"
+},
+{
+"fid": "1093",
+"slug": "statistics-from-a-large-sample",
+"reports": 1,
+"last_seen": "2025-02-14"
+},
+{
+"fid": "1644",
+"slug": "lowest-common-ancestor-of-a-binary-tree-ii",
+"reports": 1,
+"last_seen": "2024-11-13"
+},
+{
+"fid": "1650",
+"slug": "lowest-common-ancestor-of-a-binary-tree-iii",
+"reports": 1,
+"last_seen": "2024-11-13"
+},
+{
+"fid": "1676",
+"slug": "lowest-common-ancestor-of-a-binary-tree-iv",
+"reports": 1,
+"last_seen": "2024-11-13"
+},
+{
+"fid": "1417",
+"slug": "reformat-the-string",
+"reports": 1,
+"last_seen": "2024-10-13"
+},
+{
+"fid": "417",
+"slug": "pacific-atlantic-water-flow",
+"reports": 1,
+"last_seen": "2024-09-09"
+},
+{
+"fid": "132",
+"slug": "palindrome-partitioning-ii",
+"reports": 1,
+"last_seen": "2024-08-05"
+},
+{
+"fid": "1553",
+"slug": "minimum-number-of-days-to-eat-n-oranges",
+"reports": 1,
+"last_seen": "2024-07-23"
+},
+{
+"fid": "904",
+"slug": "fruit-into-baskets",
+"reports": 1,
+"last_seen": "2024-07-23"
+},
+{
+"fid": "1118",
+"slug": "number-of-days-in-a-month",
+"reports": 1,
+"last_seen": "2024-07-18"
+},
+{
+"fid": "面试题 02.08",
+"slug": "linked-list-cycle-lcci",
+"reports": 1,
+"last_seen": "2024-07-17"
+},
+{
+"fid": "1106",
+"slug": "parsing-a-boolean-expression",
+"reports": 1,
+"last_seen": "2024-07-10"
+},
+{
+"fid": "205",
+"slug": "isomorphic-strings",
+"reports": 1,
+"last_seen": "2024-07-10"
+},
+{
+"fid": "1408",
+"slug": "string-matching-in-an-array",
+"reports": 1,
+"last_seen": "2024-06-06"
+},
+{
+"fid": "388",
+"slug": "longest-absolute-file-path",
+"reports": 1,
+"last_seen": "2024-05-29"
+},
+{
+"fid": "311",
+"slug": "sparse-matrix-multiplication",
+"reports": 1,
+"last_seen": "2024-04-05"
+},
+{
+"fid": "886",
+"slug": "possible-bipartition",
+"reports": 1,
+"last_seen": "2024-03-26"
+},
+{
+"fid": "157",
+"slug": "read-n-characters-given-read4",
+"reports": 1,
+"last_seen": "2024-03-16"
+},
+{
+"fid": "326",
+"slug": "power-of-three",
+"reports": 1,
+"last_seen": "2024-03-04"
+},
+{
+"fid": "246",
+"slug": "strobogrammatic-number",
+"reports": 1,
+"last_seen": "2024-01-17"
+},
+{
+"fid": "630",
+"slug": "course-schedule-iii",
+"reports": 1,
+"last_seen": "2024-01-08"
+},
+{
+"fid": "1041",
+"slug": "robot-bounded-in-circle",
+"reports": 1,
+"last_seen": "2024-01-08"
+},
+{
+"fid": "1126",
+"slug": "active-businesses",
+"reports": 1,
+"last_seen": "2024-01-06"
+},
+{
+"fid": "1485",
+"slug": "group-sold-products-by-the-date",
+"reports": 1,
+"last_seen": "2024-01-03"
+},
+{
+"fid": "751",
+"slug": "ip-to-cidr",
+"reports": 1,
+"last_seen": "2023-12-16"
+},
+{
+"fid": "1482",
+"slug": "minimum-number-of-days-to-make-m-bouquets",
+"reports": 1,
+"last_seen": "2023-11-24"
+},
+{
+"fid": "732",
+"slug": "my-calendar-iii",
+"reports": 1,
+"last_seen": "2023-11-20"
+},
+{
+"fid": "274",
+"slug": "h-index",
+"reports": 1,
+"last_seen": "2023-11-20"
+},
+{
+"fid": "1250",
+"slug": "check-if-it-is-a-good-array",
+"reports": 1,
+"last_seen": "2023-10-29"
+},
+{
+"fid": "286",
+"slug": "walls-and-gates",
+"reports": 1,
+"last_seen": "2023-10-28"
+},
+{
+"fid": "812",
+"slug": "largest-triangle-area",
+"reports": 1,
+"last_seen": "2023-10-26"
+},
+{
+"fid": "1358",
+"slug": "number-of-substrings-containing-all-three-characters",
+"reports": 1,
+"last_seen": "2023-10-23"
+},
+{
+"fid": "1640",
+"slug": "check-array-formation-through-concatenation",
+"reports": 1,
+"last_seen": "2023-10-15"
+},
+{
+"fid": "1325",
+"slug": "delete-leaves-with-a-given-value",
+"reports": 1,
+"last_seen": "2023-09-21"
+},
+{
+"fid": "118",
+"slug": "pascals-triangle",
+"reports": 1,
+"last_seen": "2023-09-15"
+},
+{
+"fid": "746",
+"slug": "min-cost-climbing-stairs",
+"reports": 1,
+"last_seen": "2023-09-14"
+},
+{
+"fid": "1177",
+"slug": "can-make-palindrome-from-substring",
+"reports": 1,
+"last_seen": "2023-08-19"
+},
+{
+"fid": "1035",
+"slug": "uncrossed-lines",
+"reports": 1,
+"last_seen": "2023-08-14"
+},
+{
+"fid": "805",
+"slug": "split-array-with-same-average",
+"reports": 1,
+"last_seen": "2023-07-28"
+},
+{
+"fid": "剑指 Offer 67",
+"slug": "ba-zi-fu-chuan-zhuan-huan-cheng-zheng-shu-lcof",
+"reports": 1,
+"last_seen": "2023-06-12"
+},
+{
+"fid": "1170",
+"slug": "compare-strings-by-frequency-of-the-smallest-character",
+"reports": 1,
+"last_seen": "2023-06-10"
+},
+{
+"fid": "1648",
+"slug": "sell-diminishing-valued-colored-balls",
+"reports": 1,
+"last_seen": "2023-05-07"
+},
+{
+"fid": "1010",
+"slug": "pairs-of-songs-with-total-durations-divisible-by-60",
+"reports": 1,
+"last_seen": "2023-05-07"
+},
+{
+"fid": "1105",
+"slug": "filling-bookcase-shelves",
+"reports": 1,
+"last_seen": "2023-05-07"
+},
+{
+"fid": "1103",
+"slug": "distribute-candies-to-people",
+"reports": 1,
+"last_seen": "2023-05-06"
+},
+{
+"fid": "1551",
+"slug": "minimum-operations-to-make-array-equal",
+"reports": 1,
+"last_seen": "2023-04-28"
+},
+{
+"fid": "453",
+"slug": "minimum-moves-to-equal-array-elements",
+"reports": 1,
+"last_seen": "2023-04-28"
+},
+{
+"fid": "462",
+"slug": "minimum-moves-to-equal-array-elements-ii",
+"reports": 1,
+"last_seen": "2023-04-28"
+},
+{
+"fid": "944",
+"slug": "delete-columns-to-make-sorted",
+"reports": 1,
+"last_seen": "2023-04-28"
+},
+{
+"fid": "960",
+"slug": "delete-columns-to-make-sorted-iii",
+"reports": 1,
+"last_seen": "2023-04-28"
+},
+{
+"fid": "1319",
+"slug": "number-of-operations-to-make-network-connected",
+"reports": 1,
+"last_seen": "2023-04-23"
+},
+{
+"fid": "644",
+"slug": "maximum-average-subarray-ii",
+"reports": 1,
+"last_seen": "2023-04-13"
+},
+{
+"fid": "1178",
+"slug": "number-of-valid-words-for-each-puzzle",
+"reports": 1,
+"last_seen": "2023-04-13"
+},
+{
+"fid": "1423",
+"slug": "maximum-points-you-can-obtain-from-cards",
+"reports": 1,
+"last_seen": "2023-04-13"
+},
+{
+"fid": "1614",
+"slug": "maximum-nesting-depth-of-the-parentheses",
+"reports": 1,
+"last_seen": "2023-04-10"
+},
+{
+"fid": "1046",
+"slug": "last-stone-weight",
+"reports": 1,
+"last_seen": "2023-04-05"
+},
+{
+"fid": "1449",
+"slug": "form-largest-integer-with-digits-that-add-up-to-target",
+"reports": 1,
+"last_seen": "2023-04-01"
+},
+{
+"fid": "1631",
+"slug": "path-with-minimum-effort",
+"reports": 1,
+"last_seen": "2023-03-27"
+},
+{
+"fid": "1334",
+"slug": "find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance",
+"reports": 1,
+"last_seen": "2023-03-27"
+},
+{
+"fid": "841",
+"slug": "keys-and-rooms",
+"reports": 1,
+"last_seen": "2023-03-25"
+},
+{
+"fid": "992",
+"slug": "subarrays-with-k-different-integers",
+"reports": 1,
+"last_seen": "2023-03-20"
+},
+{
+"fid": "面试题 01.09",
+"slug": "string-rotation-lcci",
+"reports": 1,
+"last_seen": "2023-02-24"
+},
+{
+"fid": "353",
+"slug": "design-snake-game",
+"reports": 1,
+"last_seen": "2023-02-22"
+},
+{
+"fid": "645",
+"slug": "set-mismatch",
+"reports": 1,
+"last_seen": "2023-02-13"
+},
+{
+"fid": "502",
+"slug": "ipo",
+"reports": 1,
+"last_seen": "2023-02-03"
+},
+{
+"fid": "1345",
+"slug": "jump-game-iv",
+"reports": 1,
+"last_seen": "2022-12-26"
+},
+{
+"fid": "852",
+"slug": "peak-index-in-a-mountain-array",
+"reports": 1,
+"last_seen": "2022-12-15"
+},
+{
+"fid": "1204",
+"slug": "last-person-to-fit-in-the-elevator",
+"reports": 1,
+"last_seen": "2022-11-30"
+},
+{
+"fid": "面试题 10.01",
+"slug": "sorted-merge-lcci",
+"reports": 1,
+"last_seen": "2022-11-17"
+},
+{
+"fid": "1375",
+"slug": "bulb-switcher-iii",
+"reports": 1,
+"last_seen": "2022-11-10"
+},
+{
+"fid": "217",
+"slug": "contains-duplicate",
+"reports": 1,
+"last_seen": "2022-11-03"
+},
+{
+"fid": "1483",
+"slug": "kth-ancestor-of-a-tree-node",
+"reports": 1,
+"last_seen": "2022-10-31"
+},
+{
+"fid": "754",
+"slug": "reach-a-number",
+"reports": 1,
+"last_seen": "2022-10-24"
+},
+{
+"fid": "444",
+"slug": "sequence-reconstruction",
+"reports": 1,
+"last_seen": "2022-10-07"
+},
+{
+"fid": "684",
+"slug": "redundant-connection",
+"reports": 1,
+"last_seen": "2022-10-07"
+},
+{
+"fid": "839",
+"slug": "similar-string-groups",
+"reports": 1,
+"last_seen": "2022-10-07"
+},
+{
+"fid": "873",
+"slug": "length-of-longest-fibonacci-subsequence",
+"reports": 1,
+"last_seen": "2022-10-06"
+},
+{
+"fid": "926",
+"slug": "flip-string-to-monotone-increasing",
+"reports": 1,
+"last_seen": "2022-10-03"
+},
+{
+"fid": "1005",
+"slug": "maximize-sum-of-array-after-k-negations",
+"reports": 1,
+"last_seen": "2022-09-29"
+},
+{
+"fid": "676",
+"slug": "implement-magic-dictionary",
+"reports": 1,
+"last_seen": "2022-09-21"
+},
+{
+"fid": "705",
+"slug": "design-hashset",
+"reports": 1,
+"last_seen": "2022-09-18"
+},
+{
+"fid": "729",
+"slug": "my-calendar-i",
+"reports": 1,
+"last_seen": "2022-09-14"
+},
+{
+"fid": "757",
+"slug": "set-intersection-size-at-least-two",
+"reports": 1,
+"last_seen": "2022-08-31"
+},
+{
+"fid": "1390",
+"slug": "four-divisors",
+"reports": 1,
+"last_seen": "2022-08-29"
+},
+{
+"fid": "1230",
+"slug": "toss-strange-coins",
+"reports": 1,
+"last_seen": "2022-08-23"
+},
+{
+"fid": "1212",
+"slug": "team-scores-in-football-tournament",
+"reports": 1,
+"last_seen": "2022-08-23"
+},
+{
+"fid": "276",
+"slug": "paint-fence",
+"reports": 1,
+"last_seen": "2022-08-16"
+},
+{
+"fid": "1654",
+"slug": "minimum-jumps-to-reach-home",
+"reports": 1,
+"last_seen": "2022-08-11"
+},
+{
+"fid": "1245",
+"slug": "tree-diameter",
+"reports": 1,
+"last_seen": "2022-08-07"
+},
+{
+"fid": "174",
+"slug": "dungeon-game",
+"reports": 1,
+"last_seen": "2022-08-04"
+},
+{
+"fid": "1151",
+"slug": "minimum-swaps-to-group-all-1s-together",
+"reports": 1,
+"last_seen": "2022-07-28"
+},
+{
+"fid": "430",
+"slug": "flatten-a-multilevel-doubly-linked-list",
+"reports": 1,
+"last_seen": "2022-07-27"
+},
+{
+"fid": "466",
+"slug": "count-the-repetitions",
+"reports": 1,
+"last_seen": "2022-07-25"
+},
+{
+"fid": "791",
+"slug": "custom-sort-string",
+"reports": 1,
+"last_seen": "2022-07-20"
+},
+{
+"fid": "1462",
+"slug": "course-schedule-iv",
+"reports": 1,
+"last_seen": "2022-07-16"
+},
+{
+"fid": "LCP 07",
+"slug": "chuan-di-xin-xi",
+"reports": 1,
+"last_seen": "2022-07-12"
+},
+{
+"fid": "860",
+"slug": "lemonade-change",
+"reports": 1,
+"last_seen": "2022-07-05"
+},
+{
+"fid": "212",
+"slug": "word-search-ii",
+"reports": 1,
+"last_seen": "2022-06-29"
+},
+{
+"fid": "652",
+"slug": "find-duplicate-subtrees",
+"reports": 1,
+"last_seen": "2022-05-30"
+},
+{
+"fid": "945",
+"slug": "minimum-increment-to-make-array-unique",
+"reports": 1,
+"last_seen": "2022-05-20"
+},
+{
+"fid": "57",
+"slug": "insert-interval",
+"reports": 1,
+"last_seen": "2022-05-19"
+},
+{
+"fid": "1523",
+"slug": "count-odd-numbers-in-an-interval-range",
+"reports": 1,
+"last_seen": "2022-05-11"
+},
+{
+"fid": "1110",
+"slug": "delete-nodes-and-return-forest",
+"reports": 1,
+"last_seen": "2022-05-10"
+},
+{
+"fid": "剑指 Offer 20",
+"slug": "biao-shi-shu-zhi-de-zi-fu-chuan-lcof",
+"reports": 1,
+"last_seen": "2022-04-28"
+},
+{
+"fid": "740",
+"slug": "delete-and-earn",
+"reports": 1,
+"last_seen": "2022-04-24"
+},
+{
+"fid": "396",
+"slug": "rotate-function",
+"reports": 1,
+"last_seen": "2022-04-22"
+},
+{
+"fid": "补充题19",
+"slug": "https://mp.weixin.qq.com/s/UK7ilkFeEDQeVWvLDHbuKA",
+"reports": 1,
+"last_seen": "2022-04-21"
+},
+{
+"fid": "779",
+"slug": "k-th-symbol-in-grammar",
+"reports": 1,
+"last_seen": "2022-04-19"
+},
+{
+"fid": "面试题 03.02",
+"slug": "min-stack-lcci",
+"reports": 1,
+"last_seen": "2022-04-19"
+},
+{
+"fid": "面试题 01.03",
+"slug": "string-to-url-lcci",
+"reports": 1,
+"last_seen": "2022-04-18"
+},
+{
+"fid": "244",
+"slug": "shortest-word-distance-ii",
+"reports": 1,
+"last_seen": "2022-04-17"
+},
+{
+"fid": "385",
+"slug": "mini-parser",
+"reports": 1,
+"last_seen": "2022-04-15"
+},
+{
+"fid": "801",
+"slug": "minimum-swaps-to-make-sequences-increasing",
+"reports": 1,
+"last_seen": "2022-04-14"
+},
+{
+"fid": "1368",
+"slug": "minimum-cost-to-make-at-least-one-valid-path-in-a-grid",
+"reports": 1,
+"last_seen": "2022-04-14"
+},
+{
+"fid": "357",
+"slug": "count-numbers-with-unique-digits",
+"reports": 1,
+"last_seen": "2022-04-11"
+},
+{
+"fid": "1259",
+"slug": "handshakes-that-dont-cross",
+"reports": 1,
+"last_seen": "2022-04-10"
+},
+{
+"fid": "539",
+"slug": "minimum-time-difference",
+"reports": 1,
+"last_seen": "2022-04-08"
+},
+{
+"fid": "656",
+"slug": "coin-path",
+"reports": 1,
+"last_seen": "2022-04-07"
+},
+{
+"fid": "878",
+"slug": "nth-magical-number",
+"reports": 1,
+"last_seen": "2022-04-03"
+},
+{
+"fid": "1261",
+"slug": "find-elements-in-a-contaminated-binary-tree",
+"reports": 1,
+"last_seen": "2022-04-03"
+},
+{
+"fid": "面试题 04.02",
+"slug": "minimum-height-tree-lcci",
+"reports": 1,
+"last_seen": "2022-04-01"
+},
+{
+"fid": "917",
+"slug": "reverse-only-letters",
+"reports": 1,
+"last_seen": "2022-04-01"
+},
+{
+"fid": "剑指 Offer 32 - I",
+"slug": "cong-shang-dao-xia-da-yin-er-cha-shu-lcof",
+"reports": 1,
+"last_seen": "2022-04-01"
+},
+{
+"fid": "1373",
+"slug": "maximum-sum-bst-in-binary-tree",
+"reports": 1,
+"last_seen": "2022-03-29"
+},
+{
+"fid": "799",
+"slug": "champagne-tower",
+"reports": 1,
+"last_seen": "2022-03-28"
+},
+{
+"fid": "451",
+"slug": "sort-characters-by-frequency",
+"reports": 1,
+"last_seen": "2022-03-27"
+},
+{
+"fid": "441",
+"slug": "arranging-coins",
+"reports": 1,
+"last_seen": "2022-03-19"
+},
+{
+"fid": "1094",
+"slug": "car-pooling",
+"reports": 1,
+"last_seen": "2022-03-16"
+},
+{
+"fid": "843",
+"slug": "guess-the-word",
+"reports": 1,
+"last_seen": "2022-03-11"
+},
+{
+"fid": "1685",
+"slug": "sum-of-absolute-differences-in-a-sorted-array",
+"reports": 1,
+"last_seen": "2022-03-10"
+},
+{
+"fid": "1155",
+"slug": "number-of-dice-rolls-with-target-sum",
+"reports": 1,
+"last_seen": "2022-03-07"
+},
+{
+"fid": "360",
+"slug": "sort-transformed-array",
+"reports": 1,
+"last_seen": "2022-03-07"
+},
+{
+"fid": "507",
+"slug": "perfect-number",
+"reports": 1,
+"last_seen": "2022-03-06"
+},
+{
+"fid": "1058",
+"slug": "minimize-rounding-error-to-meet-target",
+"reports": 1,
+"last_seen": "2022-03-03"
+},
+{
+"fid": "735",
+"slug": "asteroid-collision",
+"reports": 1,
+"last_seen": "2022-03-03"
+},
+{
+"fid": "773",
+"slug": "sliding-puzzle",
+"reports": 1,
+"last_seen": "2022-03-03"
+},
+{
+"fid": "954",
+"slug": "array-of-doubled-pairs",
+"reports": 1,
+"last_seen": "2022-03-01"
+},
+{
+"fid": "1218",
+"slug": "longest-arithmetic-subsequence-of-given-difference",
+"reports": 1,
+"last_seen": "2022-02-28"
+},
+{
+"fid": "196",
+"slug": "delete-duplicate-emails",
+"reports": 1,
+"last_seen": "2022-02-23"
+},
+{
+"fid": "390",
+"slug": "elimination-game",
+"reports": 1,
+"last_seen": "2022-02-23"
+},
+{
+"fid": "434",
+"slug": "number-of-segments-in-a-string",
+"reports": 1,
+"last_seen": "2022-02-23"
+},
+{
+"fid": "575",
+"slug": "distribute-candies",
+"reports": 1,
+"last_seen": "2022-02-23"
+},
+{
+"fid": "733",
+"slug": "flood-fill",
+"reports": 1,
+"last_seen": "2022-02-23"
+},
+{
+"fid": "197",
+"slug": "rising-temperature",
+"reports": 1,
+"last_seen": "2022-02-22"
+},
+{
+"fid": "178",
+"slug": "rank-scores",
+"reports": 1,
+"last_seen": "2022-02-20"
+},
+{
+"fid": "383",
+"slug": "ransom-note",
+"reports": 1,
+"last_seen": "2022-02-19"
+},
+{
+"fid": "292",
+"slug": "nim-game",
+"reports": 1,
+"last_seen": "2022-02-18"
+},
+{
+"fid": "177",
+"slug": "nth-highest-salary",
+"reports": 1,
+"last_seen": "2022-02-11"
+},
+{
+"fid": "剑指 Offer 06",
+"slug": "cong-wei-dao-tou-da-yin-lian-biao-lcof",
+"reports": 1,
+"last_seen": "2022-02-11"
+},
+{
+"fid": "180",
+"slug": "consecutive-numbers",
+"reports": 1,
+"last_seen": "2022-02-11"
+},
+{
+"fid": "181",
+"slug": "employees-earning-more-than-their-managers",
+"reports": 1,
+"last_seen": "2022-02-11"
+},
+{
+"fid": "605",
+"slug": "can-place-flowers",
+"reports": 1,
+"last_seen": "2022-01-28"
+},
+{
+"fid": "1480",
+"slug": "running-sum-of-1d-array",
+"reports": 1,
+"last_seen": "2022-01-28"
+},
+{
+"fid": "938",
+"slug": "range-sum-of-bst",
+"reports": 1,
+"last_seen": "2022-01-25"
+},
+{
+"fid": "707",
+"slug": "design-linked-list",
+"reports": 1,
+"last_seen": "2022-01-11"
+},
+{
+"fid": "290",
+"slug": "word-pattern",
+"reports": 1,
+"last_seen": "2022-01-04"
+},
+{
+"fid": "345",
+"slug": "reverse-vowels-of-a-string",
+"reports": 1,
+"last_seen": "2022-01-04"
+},
+{
+"fid": "880",
+"slug": "decoded-string-at-index",
+"reports": 1,
+"last_seen": "2022-01-02"
+},
+{
+"fid": "472",
+"slug": "concatenated-words",
+"reports": 1,
+"last_seen": "2022-01-01"
+},
+{
+"fid": "989",
+"slug": "add-to-array-form-of-integer",
+"reports": 1,
+"last_seen": "2021-12-29"
+},
+{
+"fid": "389",
+"slug": "find-the-difference",
+"reports": 1,
+"last_seen": "2021-12-29"
+},
+{
+"fid": "面试题 01.05",
+"slug": "one-away-lcci",
+"reports": 1,
+"last_seen": "2021-12-22"
+},
+{
+"fid": "201",
+"slug": "bitwise-and-of-numbers-range",
+"reports": 1,
+"last_seen": "2021-12-17"
+},
+{
+"fid": "743",
+"slug": "network-delay-time",
+"reports": 1,
+"last_seen": "2021-12-08"
+},
+{
+"fid": "930",
+"slug": "binary-subarrays-with-sum",
+"reports": 1,
+"last_seen": "2021-12-07"
+},
+{
+"fid": "700",
+"slug": "search-in-a-binary-search-tree",
+"reports": 1,
+"last_seen": "2021-11-21"
+},
+{
+"fid": "66",
+"slug": "plus-one",
+"reports": 1,
+"last_seen": "2021-11-02"
+},
+{
+"fid": "1665",
+"slug": "minimum-initial-energy-to-finish-tasks",
+"reports": 1,
+"last_seen": "2021-10-22"
+},
+{
+"fid": "1524",
+"slug": "number-of-sub-arrays-with-odd-sum",
+"reports": 1,
+"last_seen": "2021-10-13"
+},
+{
+"fid": "834",
+"slug": "sum-of-distances-in-tree",
+"reports": 1,
+"last_seen": "2021-10-09"
+},
+{
+"fid": "677",
+"slug": "map-sum-pairs",
+"reports": 1,
+"last_seen": "2021-09-28"
+},
+{
+"fid": "1361",
+"slug": "validate-binary-tree-nodes",
+"reports": 1,
+"last_seen": "2021-09-28"
+},
+{
+"fid": "剑指 Offer 30",
+"slug": "bao-han-minhan-shu-de-zhan-lcof",
+"reports": 1,
+"last_seen": "2021-09-26"
+},
+{
+"fid": "剑指 Offer 65",
+"slug": "bu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof",
+"reports": 1,
+"last_seen": "2021-09-23"
+},
+{
+"fid": "1104",
+"slug": "path-in-zigzag-labelled-binary-tree",
+"reports": 1,
+"last_seen": "2021-09-14"
+},
+{
+"fid": "770",
+"slug": "basic-calculator-iv",
+"reports": 1,
+"last_seen": "2021-09-07"
+},
+{
+"fid": "1504",
+"slug": "count-submatrices-with-all-ones",
+"reports": 1,
+"last_seen": "2021-09-04"
+},
+{
+"fid": "696",
+"slug": "count-binary-substrings",
+"reports": 1,
+"last_seen": "2021-09-02"
+},
+{
+"fid": "1647",
+"slug": "minimum-deletions-to-make-character-frequencies-unique",
+"reports": 1,
+"last_seen": "2021-09-01"
+},
+{
+"fid": "218",
+"slug": "the-skyline-problem",
+"reports": 1,
+"last_seen": "2021-08-30"
+},
+{
+"fid": "1232",
+"slug": "check-if-it-is-a-straight-line",
+"reports": 1,
+"last_seen": "2021-08-26"
+},
+{
+"fid": "628",
+"slug": "maximum-product-of-three-numbers",
+"reports": 1,
+"last_seen": "2021-08-24"
+},
+{
+"fid": "752",
+"slug": "open-the-lock",
+"reports": 1,
+"last_seen": "2021-08-23"
+},
+{
+"fid": "剑指 Offer 58 - I",
+"slug": "fan-zhuan-dan-ci-shun-xu-lcof",
+"reports": 1,
+"last_seen": "2021-08-17"
+},
+{
+"fid": "面试题 16.26",
+"slug": "calculator-lcci",
+"reports": 1,
+"last_seen": "2021-08-16"
+},
+{
+"fid": "879",
+"slug": "profitable-schemes",
+"reports": 1,
+"last_seen": "2021-08-13"
+},
+{
+"fid": "428",
+"slug": "serialize-and-deserialize-n-ary-tree",
+"reports": 1,
+"last_seen": "2021-08-10"
+},
+{
+"fid": "505",
+"slug": "the-maze-ii",
+"reports": 1,
+"last_seen": "2021-08-10"
+},
+{
+"fid": "116",
+"slug": "populating-next-right-pointers-in-each-node",
+"reports": 1,
+"last_seen": "2021-08-09"
+},
+{
+"fid": "932",
+"slug": "beautiful-array",
+"reports": 1,
+"last_seen": "2021-08-08"
+},
+{
+"fid": "1195",
+"slug": "fizz-buzz-multithreaded",
+"reports": 1,
+"last_seen": "2021-08-07"
+},
+{
+"fid": "689",
+"slug": "maximum-sum-of-3-non-overlapping-subarrays",
+"reports": 1,
+"last_seen": "2021-08-06"
+},
+{
+"fid": "1367",
+"slug": "linked-list-in-binary-tree",
+"reports": 1,
+"last_seen": "2021-08-06"
+},
+{
+"fid": "1456",
+"slug": "maximum-number-of-vowels-in-a-substring-of-given-length",
+"reports": 1,
+"last_seen": "2021-08-05"
+},
+{
+"fid": "1114",
+"slug": "print-in-order",
+"reports": 1,
+"last_seen": "2021-08-03"
+},
+{
+"fid": "777",
+"slug": "swap-adjacent-in-lr-string",
+"reports": 1,
+"last_seen": "2021-08-03"
+},
+{
+"fid": "931",
+"slug": "minimum-falling-path-sum",
+"reports": 1,
+"last_seen": "2021-08-02"
+},
+{
+"fid": "458",
+"slug": "poor-pigs",
+"reports": 1,
+"last_seen": "2021-08-01"
+},
+{
+"fid": "1059",
+"slug": "all-paths-from-source-lead-to-destination",
+"reports": 1,
+"last_seen": "2021-07-31"
+},
+{
+"fid": "594",
+"slug": "longest-harmonious-subsequence",
+"reports": 1,
+"last_seen": "2021-07-31"
+},
+{
+"fid": "1135",
+"slug": "connecting-cities-with-minimum-cost",
+"reports": 1,
+"last_seen": "2021-07-27"
+},
+{
+"fid": "646",
+"slug": "maximum-length-of-pair-chain",
+"reports": 1,
+"last_seen": "2021-07-24"
+},
+{
+"fid": "324",
+"slug": "wiggle-sort-ii",
+"reports": 1,
+"last_seen": "2021-07-19"
+},
+{
+"fid": "854",
+"slug": "k-similar-strings",
+"reports": 1,
+"last_seen": "2021-07-19"
+},
+{
+"fid": "265",
+"slug": "paint-house-ii",
+"reports": 1,
+"last_seen": "2021-07-18"
+},
+{
+"fid": "剑指 Offer 66",
+"slug": "gou-jian-cheng-ji-shu-zu-lcof",
+"reports": 1,
+"last_seen": "2021-07-17"
+},
+{
+"fid": "219",
+"slug": "contains-duplicate-ii",
+"reports": 1,
+"last_seen": "2021-07-17"
+},
+{
+"fid": "736",
+"slug": "parse-lisp-expression",
+"reports": 1,
+"last_seen": "2021-07-15"
+},
+{
+"fid": "1190",
+"slug": "reverse-substrings-between-each-pair-of-parentheses",
+"reports": 1,
+"last_seen": "2021-07-15"
+},
+{
+"fid": "745",
+"slug": "prefix-and-suffix-search",
+"reports": 1,
+"last_seen": "2021-07-15"
+},
+{
+"fid": "137",
+"slug": "single-number-ii",
+"reports": 1,
+"last_seen": "2021-07-14"
+},
+{
+"fid": "1328",
+"slug": "break-a-palindrome",
+"reports": 1,
+"last_seen": "2021-07-12"
+},
+{
+"fid": "897",
+"slug": "increasing-order-search-tree",
+"reports": 1,
+"last_seen": "2021-07-10"
+},
+{
+"fid": "861",
+"slug": "score-after-flipping-matrix",
+"reports": 1,
+"last_seen": "2021-06-25"
+},
+{
+"fid": "补充题8",
+"slug": "https://mp.weixin.qq.com/s/rMsbcUf9ZPhvfRoyZGW6HA",
+"reports": 1,
+"last_seen": "2021-06-18"
+},
+{
+"fid": "941",
+"slug": "valid-mountain-array",
+"reports": 1,
+"last_seen": "2021-06-09"
+},
+{
+"fid": "1675",
+"slug": "minimize-deviation-in-array",
+"reports": 1,
+"last_seen": "2021-05-31"
+},
+{
+"fid": "999",
+"slug": "available-captures-for-rook",
+"reports": 1,
+"last_seen": "2021-05-27"
+},
+{
+"fid": "633",
+"slug": "sum-of-square-numbers",
+"reports": 1,
+"last_seen": "2021-05-27"
+},
+{
+"fid": "950",
+"slug": "reveal-cards-in-increasing-order",
+"reports": 1,
+"last_seen": "2021-05-18"
+},
+{
+"fid": "面试题 02.01",
+"slug": "remove-duplicate-node-lcci",
+"reports": 1,
+"last_seen": "2021-05-17"
+},
+{
+"fid": "570",
+"slug": "managers-with-at-least-5-direct-reports",
+"reports": 1,
+"last_seen": "2021-05-11"
+},
+{
+"fid": "355",
+"slug": "design-twitter",
+"reports": 1,
+"last_seen": "2021-05-11"
+},
+{
+"fid": "1475",
+"slug": "final-prices-with-a-special-discount-in-a-shop",
+"reports": 1,
+"last_seen": "2021-05-05"
+},
+{
+"fid": "351",
+"slug": "android-unlock-patterns",
+"reports": 1,
+"last_seen": "2021-04-28"
+},
+{
+"fid": "1356",
+"slug": "sort-integers-by-the-number-of-1-bits",
+"reports": 1,
+"last_seen": "2021-04-26"
+},
+{
+"fid": "1574",
+"slug": "shortest-subarray-to-be-removed-to-make-array-sorted",
+"reports": 1,
+"last_seen": "2021-04-20"
+},
+{
+"fid": "927",
+"slug": "three-equal-parts",
+"reports": 1,
+"last_seen": "2021-04-16"
+},
+{
+"fid": "1405",
+"slug": "longest-happy-string",
+"reports": 1,
+"last_seen": "2021-04-14"
+},
+{
+"fid": "848",
+"slug": "shifting-letters",
+"reports": 1,
+"last_seen": "2021-04-10"
+},
+{
+"fid": "剑指 Offer 28",
+"slug": "dui-cheng-de-er-cha-shu-lcof",
+"reports": 1,
+"last_seen": "2021-04-08"
+},
+{
+"fid": "面试题 03.03",
+"slug": "stack-of-plates-lcci",
+"reports": 1,
+"last_seen": "2021-04-08"
+},
+{
+"fid": "LCP 04",
+"slug": "broken-board-dominoes",
+"reports": 1,
+"last_seen": "2021-04-02"
+},
+{
+"fid": "871",
+"slug": "minimum-number-of-refueling-stops",
+"reports": 1,
+"last_seen": "2021-04-02"
+},
+{
+"fid": "剑指 Offer 56 - I",
+"slug": "shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof",
+"reports": 1,
+"last_seen": "2021-03-29"
+},
+{
+"fid": "765",
+"slug": "couples-holding-hands",
+"reports": 1,
+"last_seen": "2021-03-25"
+},
+{
+"fid": "397",
+"slug": "integer-replacement",
+"reports": 1,
+"last_seen": "2021-03-24"
+},
+{
+"fid": "1107",
+"slug": "new-users-daily-count",
+"reports": 1,
+"last_seen": "2021-03-21"
+},
+{
+"fid": "1420",
+"slug": "build-array-where-you-can-find-the-maximum-exactly-k-comparisons",
+"reports": 1,
+"last_seen": "2021-03-18"
+},
+{
+"fid": "717",
+"slug": "1-bit-and-2-bit-characters",
+"reports": 1,
+"last_seen": "2021-03-17"
+},
+{
+"fid": "剑指 Offer 55 - I",
+"slug": "er-cha-shu-de-shen-du-lcof",
+"reports": 1,
+"last_seen": "2021-03-16"
+},
+{
+"fid": "403",
+"slug": "frog-jump",
+"reports": 1,
+"last_seen": "2021-03-14"
+},
+{
+"fid": "361",
+"slug": "bomb-enemy",
+"reports": 1,
+"last_seen": "2021-03-11"
+},
+{
+"fid": "448",
+"slug": "find-all-numbers-disappeared-in-an-array",
+"reports": 1,
+"last_seen": "2021-03-10"
+},
+{
+"fid": "1172",
+"slug": "dinner-plate-stacks",
+"reports": 1,
+"last_seen": "2021-03-08"
+},
+{
+"fid": "609",
+"slug": "find-duplicate-file-in-system",
+"reports": 1,
+"last_seen": "2021-02-19"
+},
+{
+"fid": "剑指 Offer 05",
+"slug": "ti-huan-kong-ge-lcof",
+"reports": 1,
+"last_seen": "2021-01-24"
+},
+{
+"fid": "582",
+"slug": "kill-process",
+"reports": 1,
+"last_seen": "2021-01-21"
+},
+{
+"fid": "面试题 17.21",
+"slug": "volume-of-histogram-lcci",
+"reports": 1,
+"last_seen": "2020-12-31"
+},
+{
+"fid": "面试题 16.03",
+"slug": "intersection-lcci",
+"reports": 1,
+"last_seen": "2020-11-18"
+},
+{
+"fid": "1498",
+"slug": "number-of-subsequences-that-satisfy-the-given-sum-condition",
+"reports": 1,
+"last_seen": "2020-10-09"
+},
+{
+"fid": "376",
+"slug": "wiggle-subsequence",
+"reports": 1,
+"last_seen": "2020-09-30"
+},
+{
+"fid": "485",
+"slug": "max-consecutive-ones",
+"reports": 1,
+"last_seen": "2020-09-14"
+},
+{
+"fid": "剑指 Offer 58 - II",
+"slug": "zuo-xuan-zhuan-zi-fu-chuan-lcof",
+"reports": 1,
+"last_seen": "2020-09-07"
+},
+{
+"fid": "剑指 Offer 25",
+"slug": "he-bing-liang-ge-pai-xu-de-lian-biao-lcof",
+"reports": 1,
+"last_seen": "2020-09-03"
+},
+{
+"fid": "1233",
+"slug": "remove-sub-folders-from-the-filesystem",
+"reports": 1,
+"last_seen": "2020-08-27"
+},
+{
+"fid": "173",
+"slug": "binary-search-tree-iterator",
+"reports": 1,
+"last_seen": "2020-08-20"
+},
+{
+"fid": "637",
+"slug": "average-of-levels-in-binary-tree",
+"reports": 1,
+"last_seen": "2020-08-11"
+},
+{
+"fid": "剑指 Offer 18",
+"slug": "shan-chu-lian-biao-de-jie-dian-lcof",
+"reports": 1,
+"last_seen": "2020-08-07"
+},
+{
+"fid": "剑指 Offer 56 - II",
+"slug": "shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof",
+"reports": 1,
+"last_seen": "2020-07-28"
+},
+{
+"fid": "剑指 Offer 53 - II",
+"slug": "que-shi-de-shu-zi-lcof",
+"reports": 1,
+"last_seen": "2020-07-18"
+},
+{
+"fid": "255",
+"slug": "verify-preorder-sequence-in-binary-search-tree",
+"reports": 1,
+"last_seen": "2020-07-10"
+},
+{
+"fid": "1156",
+"slug": "swap-for-longest-repeated-character-substring",
+"reports": 1,
+"last_seen": "2020-07-10"
+},
+{
+"fid": "449",
+"slug": "serialize-and-deserialize-bst",
+"reports": 1,
+"last_seen": "2020-07-09"
+},
+{
+"fid": "1147",
+"slug": "longest-chunked-palindrome-decomposition",
+"reports": 1,
+"last_seen": "2020-07-07"
+},
+{
+"fid": "636",
+"slug": "exclusive-time-of-functions",
+"reports": 1,
+"last_seen": "2020-06-30"
+},
+{
+"fid": "1299",
+"slug": "replace-elements-with-greatest-element-on-right-side",
+"reports": 1,
+"last_seen": "2020-06-30"
+}
+]
+}

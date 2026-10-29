@@ -1,0 +1,11 @@
+%% trellis:begin %%
+# 水壶问题：输出最短操作序列
+*B 档：次高频*
+
+TikTok 变体题；近一年被问 2 次、最近 2026-05-08。
+
+## Cards (1)
+1. [[tlc-tt-water-jug-shortest-operations-0-whole]]
+%% trellis:end %%
+
+## Notes

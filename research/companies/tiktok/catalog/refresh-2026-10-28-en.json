@@ -1,0 +1,67 @@
+{
+ "collected": "2026-10-28",
+ "half": "en",
+ "sightings": [
+  {
+   "date": "2026-10-25",
+   "region": "US",
+   "source": "1P3A 1194453",
+   "url": "https://www.1point3acres.com/bbs/thread-1194453-1-1.html",
+   "role": "new grad SWE (TikTok Search, San Jose)",
+   "round": "P",
+   "family": "Word Ladder with shortest path output",
+   "lc": [
+    127
+   ],
+   "custom": null,
+   "note": "first coding phone screen; plain Word Ladder (shortest transformation length), one-letter-difference edges; no path output mentioned",
+   "conf": "high"
+  },
+  {
+   "date": "2026-10-26",
+   "region": "US",
+   "source": "1P3A 1194556",
+   "url": "https://www.1point3acres.com/bbs/thread-1194556-1-1.html",
+   "role": "SWE (North America)",
+   "round": "P",
+   "family": "Sliding Window Maximum",
+   "lc": [
+    239
+   ],
+   "custom": null,
+   "note": "video interview with project discussion plus coding; rejected without explanation; body hidden, problem named only in the 1P3A experience summary (interview/thread/1194556)",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-10-27",
+   "region": "US",
+   "source": "1P3A 1194680",
+   "url": "https://www.1point3acres.com/bbs/thread-1194680-1-1.html",
+   "role": "SWE",
+   "round": "P",
+   "family": null,
+   "lc": [
+    311
+   ],
+   "custom": null,
+   "note": "phone screen: resume review plus a sparse matrix multiplication task (LC 311, premium); body hidden, problem named only in the 1P3A experience summary (interview/thread/1194680)",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-10-20",
+   "region": "US",
+   "source": "1P3A 1193792",
+   "url": "https://www.1point3acres.com/bbs/thread-1193792-1-1.html",
+   "role": "research scientist intern (ML)",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "hand-write multi-head attention in PyTorch with implementation follow-ups (ML coding, not LeetCode)",
+   "note": "interview itself was about 2026-03/04, post dated 2026-10-20; round 2 was an unnamed LeetCode medium (dropped)",
+   "conf": "low",
+   "scope": "out: ML / JavaScript knowledge question, not an algorithm-coding problem for the LeetCode deck"
+  }
+ ],
+ "bank_changes": [],
+ "skipped": "1P3A bank: the in-page trpc fetch (getQbankCompany) was denied by the tool permission classifier, so I did not call it; instead I read the rendered page https://www.1point3acres.com/interview/problems/company/ByteDance (79 questions, 'last updated 1d'): the multiset of per-record n values is identical to raw/1p3a.md section 1 (79 records, sum n = 238) and only the two records already last-asked 2026-10-15 show a last-asked date, so no bank increases are detectable, but slugs/last dates for other records are not shown on that page (bank_changes therefore empty, medium certainty). 1P3A forum tag pages 1-2 read; threads dated >= 2026-10-17 with a visible or summarised problem: 1194453, 1194556, 1194680, 1193792 (1193703 and 1193669 already in CATALOG); hidden/unnamed or non-coding: 1194630 (TT Infra, 'graph problems' only), 1193633/1193634 (PhD intern, unnamed coding), 1194475 and 1193534 (DS, SQL/A-B), 1194261, 1193260, 1193623, 1192965, 1193678, 1193271 (no problem). TrueInterview mirror: commits through 2026-10-29 read via gh api (cloning was denied), data/questions.jsonl has 350 ByteDance records, newest sighting date still 2026-10-05, nothing new >= 2026-10-17. Reddit via Arctic Shift (leetcode, cscareerquestions, csMajors, developersIndia, ExperiencedDevs; tiktok/bytedance in title and selftext, after 2026-10-15): only career-advice posts (intern HR round, PERM, intern life), no named problems; r/leetcode returned zero posts matching in the window. LeetCode Discuss GraphQL: newest TikTok posts 8572114 (10-14) and 8563517 (10-09), both before the window and already known; nothing new. PracHub bytedance company page: newest dated item 2026-10-10; Hello Interview TikTok page: unchanged (5 visible reports, latest Late September 2026). Blind/Glassdoor not in scope."
+}

@@ -136,6 +136,10 @@ def codetop(today: str) -> dict[str, dict]:
             break
         page += 1
         time.sleep(0.3)
+    snap = [{"fid": str(x["leetcode"]["frontend_question_id"]), "slug": x["leetcode"]["slug_title"],
+             "reports": x["value"], "last_seen": x["time"][:10]} for x in rows]
+    (ROOT / "research/companies/tiktok/catalog/codetop.json").write_text(
+        json.dumps({"fetched": today, "rows": snap}, ensure_ascii=False, indent=0), encoding="utf-8")
     out = {}
     for x in rows:
         seen = x["time"][:10]
@@ -227,7 +231,14 @@ def main(argv: list[str]) -> int:
         STATEMENTS.mkdir(parents=True, exist_ok=True)
         note = f"\n\n（据面经重建；推断的部分：{v['note']}）" if v.get("note") else ""
         (STATEMENTS / f"{slug}.txt").write_text(v["statement"] + note, encoding="utf-8")
-    keep.sort(key=lambda p: (p["tier"], -p["freq"], p["id"]))
+    previous = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
+    have = {p["slug"] for p in keep}
+    for slug, p in previous.items():  # a problem with cards never leaves the deck, even when it ages out of the lists
+        if slug not in have:
+            keep.append({**p, "retained": True})
+    import select_tiers
+    select_tiers.assign({p["slug"]: p for p in keep})
+    keep.sort(key=lambda p: (p["tier"], -p.get("score", 0), p["id"]))
     if "--no-fetch" not in argv:
         STATEMENTS.mkdir(parents=True, exist_ok=True)
         for i, p in enumerate(keep, 1):
@@ -243,7 +254,6 @@ def main(argv: list[str]) -> int:
                     p["slug"], {}).get("title_zh", "")
             p["statement_chars"] = len((STATEMENTS / f"{p['slug']}.txt").read_text(encoding="utf-8"))
             print(f"{i:3d} {p['tier']} {p['freq']:3d} {p['slug']} ({p['statement_chars']} chars)", flush=True)
-    previous = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
     for p in keep:  # facts gathered by an earlier fetch survive a --no-fetch run
         for key in ("title_zh", "statement_chars", "statement_source"):
             if not p.get(key) and previous.get(p["slug"], {}).get(key):

@@ -1,0 +1,13 @@
+%% trellis:begin %%
+# LC 139 单词拆分（Word Break）
+*A 档：最高频*
+
+Medium；频率 TikTok 56；国内字节被问 44 次、最近 2026-08-27；Array, Hash Table, String, Dynamic Programming, Trie。
+
+**Core** — part of the first pass through this subject.
+
+## Cards (1)
+1. [[tlc-word-break-0-whole]]
+%% trellis:end %%
+
+## Notes
