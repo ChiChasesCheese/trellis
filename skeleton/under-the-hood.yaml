@@ -3,6 +3,7 @@
 # A light companion to the LeetCode decks: each card ties one real implementation to the LeetCode pattern it uses.
 domain: under-the-hood
 title: 工具里的数据结构与算法（under the hood）
+deck: LeetCode Tops::26 工具里的数据结构与算法（under the hood）
 lang: zh
 vault: domains/under-the-hood
 study:
