@@ -5,6 +5,9 @@
 Medium；国内字节被问 1 次、最近 2025-12-19。
 
 **Core** — part of the first pass through this subject.
+
+## Cards (1)
+1. [[tlc-swap-numbers-lcci-0-whole]]
 %% trellis:end %%
 
 ## Notes

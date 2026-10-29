@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 432 全 O(1) 的数据结构**｜Hard · TikTok 高频
+**LC 432 全 O(1) 的数据结构**｜Hard · LC TikTok 热度 46/100（近 3 个月） · CodeTop 国内累计 2 次 · 最近 2022-08-23（CodeTop）
 
 设计类 `AllOne`，存储字符串计数：`inc(key)` 计数加 `1`（不存在则以 `1` 插入），`dec(key)` 计数减 `1`（减到 `0` 就删除，调用时 `key` 一定存在），`getMaxKey()` / `getMinKey()` 返回任意一个计数最大 / 最小的字符串，没有元素返回 `""`。每个操作要求平均 `O(1)`。`1 <= key.length <= 10`，`key` 由小写字母组成，最多调用 `5 * 10^4` 次。例：`inc("hello")` 两次、`inc("leet")` 一次后，`getMaxKey()` 得 `"hello"`，`getMinKey()` 得 `"leet"`。
 

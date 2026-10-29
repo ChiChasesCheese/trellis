@@ -4,7 +4,7 @@ node: a.number-of-submatrices-that-sum-to-target
 type: qa
 ---
 ## Q
-**LC 1074 元素和为目标值的子矩阵数量**｜Hard · 字节 高频
+**LC 1074 元素和为目标值的子矩阵数量**｜Hard · CodeTop 国内累计 3 次 · 最近 2026-09-19（CodeTop）
 
 给一个矩阵 `matrix` 和目标值 `target`，返回元素总和等于 `target` 的**非空子矩阵**的数量。子矩阵由 `(x1, y1, x2, y2)` 决定，包含所有满足 `x1 <= x <= x2`、`y1 <= y <= y2` 的单元 `matrix[x][y]`；只要有一个坐标不同就算不同的子矩阵。`1 <= matrix.length, matrix[0].length <= 100`，`-1000 <= matrix[i][j] <= 1000`，`-10^8 <= target <= 10^8`。例：`matrix = [[0,1,0],[1,1,1],[0,1,0]], target = 0` → `4`（四个只含 `0` 的 `1x1` 子矩阵）；`matrix = [[1,-1],[-1,1]], target = 0` → `5`；`matrix = [[904]], target = 0` → `0`。
 

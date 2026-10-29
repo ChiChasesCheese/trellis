@@ -4,7 +4,7 @@ node: a.cheapest-flights-within-k-stops
 type: qa
 ---
 ## Q
-**LC 787 K 站中转内最便宜的航班**｜Medium · TikTok 高频
+**LC 787 K 站中转内最便宜的航班**｜Medium · LC TikTok 热度 50/100（近 30 天）
 
 有 `n` 个城市通过一些航班连接。给数组 `flights`，`flights[i] = [from_i, to_i, price_i]` 表示从城市 `from_i` 到 `to_i` 的航班，价格 `price_i`。给定出发城市 `src`、目的地 `dst` 和整数 `k`，找出一条**最多经过 `k` 站中转**的路线，使从 `src` 到 `dst` 的价格最便宜，返回该价格；不存在则返回 `-1`。`2 <= n <= 100`，`0 <= flights.length <= n * (n - 1) / 2`，`0 <= from_i, to_i < n`，`from_i != to_i`，`1 <= price_i <= 10^4`，航班没有重复，没有自环，`0 <= src, dst, k < n`，`src != dst`。例：`n = 4`，`flights = [[0,1,100],[1,2,100],[2,0,100],[1,3,600],[2,3,200]]`，`src = 0`，`dst = 3`，`k = 1` → `700`（`0 → 1 → 3`；`0 → 1 → 2 → 3` 更便宜但中转了 2 站，无效）；`n = 3`，`flights = [[0,1,100],[1,2,100],[0,2,500]]`，`src = 0`，`dst = 2`，`k = 1` → `200`，`k = 0` → `500`。
 

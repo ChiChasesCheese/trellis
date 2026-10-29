@@ -9,7 +9,7 @@ vault: domains/under-the-hood
 study:
   order: core-first
   mix: new-first
-  new_per_day: 15
+  new_per_day: 10
   reviews_per_day: 100
 nodes:
 - id: python

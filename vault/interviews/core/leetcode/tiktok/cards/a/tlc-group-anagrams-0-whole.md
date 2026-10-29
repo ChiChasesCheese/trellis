@@ -4,7 +4,7 @@ node: a.group-anagrams
 type: qa
 ---
 ## Q
-**LC 49 字母异位词分组**｜Medium · TikTok 高频
+**LC 49 字母异位词分组**｜Medium · LC TikTok 热度 50/100 · 近一年被问：美国 3 次、国内 0 次 · CodeTop 国内累计 9 次 · 最近 2026-06-05（CodeTop）
 
 给一个字符串数组 `strs`，把**字母异位词**（anagram，字母相同、顺序不同的词）分到同一组，按任意顺序返回。`1 <= strs.length <= 10^4`，`0 <= strs[i].length <= 100`，`strs[i]` 只含小写字母。例：`["eat","tea","tan","ate","nat","bat"]` → `[["bat"],["nat","tan"],["ate","eat","tea"]]`；`[""]` → `[[""]]`。
 

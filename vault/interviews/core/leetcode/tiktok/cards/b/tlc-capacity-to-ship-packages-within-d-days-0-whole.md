@@ -4,7 +4,7 @@ node: b.capacity-to-ship-packages-within-d-days
 type: qa
 ---
 ## Q
-**LC 1011 在 D 天内送达包裹的能力**｜Medium · TikTok 高频
+**LC 1011 在 D 天内送达包裹的能力**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 3 次 · 最近 2023-02-28（CodeTop）
 
 传送带上的包裹必须在 `days` 天内从一个港口运送到另一个港口。第 `i` 个包裹重 `weights[i]`。每天按给出的顺序往船上装包裹，装载的总重量不能超过船的最大载重。返回能在 `days` 天内送达所有包裹的船的**最低**载重。`1 <= days <= weights.length <= 5 * 10^4`，`1 <= weights[i] <= 500`。例：`weights = [1,2,3,4,5,6,7,8,9,10]`，`days = 5` → `15`；`weights = [3,2,2,4,1,4]`，`days = 3` → `6`；`weights = [1,2,3,1,1]`，`days = 4` → `3`。必须按顺序装，不能调换包裹位置。
 

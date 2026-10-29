@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**连续内存分配器**｜Medium · TikTok 高频
+**连续内存分配器**｜Medium · 近一年被问：美国 2 次、国内 0 次 · 最近 2026-06-11（面试记录）
 
 实现管理连续地址空间 `[0, capacity)` 的分配器：`alloc(size)` 用 first-fit（最左能放下的空闲块）分配，返回起始地址，`size` 为 `0`、负数或大于 `capacity` 抛 `ValueError`，放不下返回 `-1`；`free(addr)` 释放该次分配，并与相邻空闲块合并，对已释放或从未分配的地址抛 `ValueError`。可选 `alignment`：地址必须是它的倍数。`1 <= capacity <= 10^9`，最多 `10^5` 次操作。例：`capacity = 10`，`alloc(3)`、`alloc(4)`、`alloc(2)` → `0, 3, 7`，`alloc(2)` → `-1`。
 

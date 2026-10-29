@@ -4,7 +4,7 @@ node: a.maximum-length-of-a-concatenated-string-with-unique-characters
 type: qa
 ---
 ## Q
-**LC 1239 串联字符串的最大长度**｜Medium · TikTok 高频
+**LC 1239 串联字符串的最大长度**｜Medium · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-06-28（面试记录）
 
 给字符串数组 `arr`。从中选出若干个字符串（保持原有顺序）连接成字符串 `s`，要求 `s` 中**所有字母各不相同**。返回所有可行的 `s` 中最长的长度（什么都不选时 `s` 为空串，长度 `0`）。`1 <= arr.length <= 16`，`1 <= arr[i].length <= 26`，`arr[i]` 只含小写字母。例：`["un","iq","ue"]` → `4`（`"uniq"` 或 `"ique"`）；`["cha","r","act","ers"]` → `6`（`"chaers"` 或 `"acters"`）；`["abcdefghijklmnopqrstuvwxyz"]` → `26`。
 

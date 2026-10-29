@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**手写最小堆**｜Medium · TikTok 高频
+**手写最小堆**｜Medium · 近一年被问：美国 2 次、国内 0 次 · 最近 2026-10-04（面试记录）
 
 不用 `heapq`，用 Python 列表实现最小堆类 `MinHeap`：`push(x)`、`pop()`（返回并删除最小值）、`peek()`、`__len__`，以及从一个列表线性建堆的 `heapify`。`push` / `pop` 要 `O(log n)`，建堆要 `O(n)`；空堆 `pop` / `peek` 抛 `IndexError`；元素个数至多 `10^5`。例：用 `[5, 3, 8, 1, 9, 2]` 建堆后连续 `pop` 依次得到 `1, 2, 3, 5, 8, 9`。
 

@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 815 公交路线**｜Hard · TikTok 高频
+**LC 815 公交路线**｜Hard · LC TikTok 热度 62/100
 
 `routes[i]` 是第 `i` 辆公交车循环行驶经过的车站序列。从车站 `source` 出发（一开始不在车上），只能乘公交，要到车站 `target`，求最少乘坐的公交车数量，到不了返回 `-1`。`1 <= routes.length <= 500`，`1 <= routes[i].length <= 10^5`，同一条线路里车站互不相同，`sum(routes[i].length) <= 10^5`，车站编号与 `source`、`target` 都在 `[0, 10^6)`。例：`[[1,2,7],[3,6,7]]`，`1 -> 6` → `2`。
 

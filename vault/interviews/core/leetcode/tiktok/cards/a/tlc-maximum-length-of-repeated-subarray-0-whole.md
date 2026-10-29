@@ -4,7 +4,7 @@ node: a.maximum-length-of-repeated-subarray
 type: qa
 ---
 ## Q
-**LC 718 最长重复子数组**｜Medium · 字节高频
+**LC 718 最长重复子数组**｜Medium · CodeTop 国内累计 26 次 · 最近 2026-09-11（CodeTop）
 
 给两个整数数组 `nums1` 和 `nums2`，返回两个数组中**公共的、长度最长的子数组**（必须连续）的长度。`1 <= nums1.length, nums2.length <= 1000`，`0 <= nums1[i], nums2[i] <= 100`。例：`nums1 = [1,2,3,2,1]`、`nums2 = [3,2,1,4,7]` → `3`（公共子数组 `[3,2,1]`）；`nums1 = nums2 = [0,0,0,0,0]` → `5`。
 

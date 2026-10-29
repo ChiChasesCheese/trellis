@@ -4,7 +4,7 @@ node: a.lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof
 type: qa
 ---
 ## Q
-**剑指 Offer 22 链表中倒数第k个节点**｜Easy · 字节高频
+**剑指 Offer 22 链表中倒数第k个节点**｜Easy · CodeTop 国内累计 40 次 · 最近 2026-08-04（CodeTop）
 
 给定头节点为 `head` 的单链表，记录一系列训练项目编号，请查找并返回倒数第 `cnt` 个训练项目编号对应的节点。`1 <= head.length <= 100`，`0 <= head[i] <= 100`，`1 <= cnt <= head.length`。例：`head = [2,4,7,8], cnt = 1` → 返回值为 `8` 的节点（从它开始的链表是 `[8]`）。
 

@@ -5,6 +5,12 @@
 Easy；国内字节被问 1 次、最近 2026-03-23。
 
 **Core** — part of the first pass through this subject.
+
+## Cards (4)
+1. [[tlc-delete-node-in-a-linked-list-1-signal]]
+2. [[tlc-delete-node-in-a-linked-list-2-code]]
+3. [[tlc-delete-node-in-a-linked-list-3-why]]
+4. [[tlc-delete-node-in-a-linked-list-4-followup]]
 %% trellis:end %%
 
 ## Notes

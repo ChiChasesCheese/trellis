@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 1146 快照数组**｜Medium · TikTok 高频
+**LC 1146 快照数组**｜Medium · LC TikTok 热度 68/100
 
 实现支持快照的数组 `SnapshotArray`：`SnapshotArray(length)` 初始化长度为 `length` 的数组，所有元素初始为 `0`；`set(index, val)` 把下标 `index` 处设为 `val`；`snap()` 给当前数组拍快照，返回快照号 `snap_id`（等于 `snap()` 的总调用次数减一）；`get(index, snap_id)` 返回拍下编号为 `snap_id` 的那次快照时，下标 `index` 处的值。
 

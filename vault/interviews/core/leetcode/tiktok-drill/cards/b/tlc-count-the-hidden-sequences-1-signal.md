@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 2145 统计隐藏数组数目**｜Medium · TikTok 高频
+**LC 2145 统计隐藏数组数目**｜Medium · LC TikTok 热度 62/100
 
 长度为 `n` 的 `differences` 是隐藏数组 `hidden`（长度 `n + 1`）的相邻差：`differences[i] = hidden[i + 1] - hidden[i]`。`hidden` 的所有元素都在 `[lower, upper]` 内。返回满足条件的 `hidden` 的个数。`1 <= n <= 10^5`，`-10^5 <= differences[i] <= 10^5`，`-10^5 <= lower <= upper <= 10^5`。例：`[1,-3,4]`，`[1,6]` → `2`。
 

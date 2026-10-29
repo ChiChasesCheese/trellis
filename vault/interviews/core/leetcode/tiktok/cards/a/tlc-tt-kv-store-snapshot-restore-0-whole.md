@@ -4,7 +4,7 @@ node: a.tt-kv-store-snapshot-restore
 type: qa
 ---
 ## Q
-**带快照与恢复的内存键值存储**｜Medium · TikTok 高频
+**带快照与恢复的内存键值存储**｜Medium · 近一年被问：美国 2 次、国内 0 次 · 最近 2026-10-15（面试记录）
 
 实现内存键值存储 `KVStore`：`put(key, value)`、`get(key)`（不存在返回 `None`）、`delete(key)`（删除成功返回 `True`），再加两个操作：`snapshot()` 把当前全部数据**序列化**成一个字符串返回；`restore(data)` 用 `snapshot` 返回的字符串把存储恢复到快照时刻的状态，覆盖当前内容。序列化格式要自己设计，不能调用现成的 `json` / `pickle`。key 和 value 都是字符串，可以是空串，可以包含冒号、分号、换行、引号等任意字符（包括中文和表情符号）；快照之后的写入不能影响已经取出的快照；传给 `restore` 的数据损坏时要抛 `ValueError`，且原存储保持不变。
 

@@ -4,7 +4,7 @@ node: a.search-a-2d-matrix-ii
 type: qa
 ---
 ## Q
-**LC 240 搜索二维矩阵 II**｜Medium · 字节 高频
+**LC 240 搜索二维矩阵 II**｜Medium · CodeTop 国内累计 43 次 · 最近 2026-02-23（CodeTop）
 
 编写高效算法，在 `m x n` 矩阵 `matrix` 中搜索目标值 `target`。矩阵每行的元素从左到右升序，每列的元素从上到下升序（行与行之间没有大小衔接）。`1 <= m, n <= 300`，`-10^9 <= matrix[i][j], target <= 10^9`。例：`matrix = [[1,4,7,11,15],[2,5,8,12,19],[3,6,9,16,22],[10,13,14,17,24],[18,21,23,26,30]]`，`target = 5` → `true`；`target = 20` → `false`。
 

@@ -4,7 +4,7 @@ node: a.count-of-interesting-subarrays
 type: qa
 ---
 ## Q
-**LC 2845 统计趣味子数组的数目**｜Medium · TikTok 高频
+**LC 2845 统计趣味子数组的数目**｜Medium · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-06-18（面试记录）
 
 给下标从 `0` 开始的整数数组 `nums`，以及整数 `modulo` 和 `k`。如果子数组 `nums[l..r]` 满足：设 `cnt` 为区间 `[l, r]` 内满足 `nums[i] % modulo == k` 的下标 `i` 的个数，并且 `cnt % modulo == k`，就称它为**趣味子数组**。返回趣味子数组的数目。`1 <= nums.length <= 10^5`，`1 <= nums[i] <= 10^9`，`1 <= modulo <= 10^9`，`0 <= k < modulo`。例：`nums = [3,2,4]`，`modulo = 2`，`k = 1` → `3`（`[3]`、`[3,2]`、`[3,2,4]`，各自的 `cnt = 1`）；`nums = [3,1,9,6]`，`modulo = 3`，`k = 0` → `2`（`[3,1,9,6]` 的 `cnt = 3`，`3 % 3 == 0`；`[1]` 的 `cnt = 0`）。
 

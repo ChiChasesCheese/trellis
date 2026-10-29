@@ -4,7 +4,7 @@ node: a.substring-with-concatenation-of-all-words
 type: qa
 ---
 ## Q
-**LC 30 串联所有单词的子串**｜Hard · 字节高频
+**LC 30 串联所有单词的子串**｜Hard · CodeTop 国内累计 7 次 · 最近 2026-10-24（CodeTop）
 
 给字符串 `s` 和字符串数组 `words`，`words` 里所有单词**长度相同**。「串联子串」是 `s` 中恰好由 `words` 的所有单词按**任意顺序**首尾相接而成的子串（`words` 里的重复单词要按次数都用上）。返回所有串联子串的起始下标，顺序任意。`1 <= s.length <= 10^4`，`1 <= words.length <= 5000`，`1 <= words[i].length <= 30`，`words[i]` 和 `s` 由小写英文字母组成。
 

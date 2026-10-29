@@ -4,7 +4,7 @@ node: b.split-message-based-on-limit
 type: qa
 ---
 ## Q
-**LC 2468 根据限制分割消息**｜Hard · TikTok 高频
+**LC 2468 根据限制分割消息**｜Hard · LC TikTok 热度 50/100
 
 给字符串 `message` 和正整数 `limit`。把 `message` 分割成一个或多个部分，每个部分的结尾都是 `"<a/b>"`：`b` 是分割出的总段数，`a` 是当前段的编号（从 `1` 到 `b`）。除了最后一段的长度可以小于等于 `limit` 之外，其他每一段（包括结尾）的长度都必须**等于** `limit`。删掉每段的结尾并按顺序连接，必须得到 `message`。结果数组要尽可能短。返回分割后的数组；无法分割就返回空数组。`1 <= message.length <= 10^4`，`message` 只含小写英文字母和空格，`1 <= limit <= 10^4`。例：`message = "short message"`，`limit = 15` → `["short mess<1/2>","age<2/2>"]`；`message = "this is really a very awesome message"`，`limit = 9` → 14 段，前三段是 `["thi<1/14>","s i<2/14>","s r<3/14>"]`。
 

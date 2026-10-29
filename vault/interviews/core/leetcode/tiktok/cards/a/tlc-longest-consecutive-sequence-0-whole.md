@@ -4,7 +4,7 @@ node: a.longest-consecutive-sequence
 type: qa
 ---
 ## Q
-**LC 128 最长连续序列**｜Medium · TikTok·字节 高频
+**LC 128 最长连续序列**｜Medium · LC TikTok 热度 66/100 · 近一年被问：美国 0 次、国内 1 次 · CodeTop 国内累计 42 次 · 最近 2026-10-17（面试记录）
 
 给一个未排序的整数数组 `nums`，找出数字连续的最长序列（不要求序列元素在原数组中连续）的长度。要求设计并实现时间复杂度 `O(n)` 的算法。
 

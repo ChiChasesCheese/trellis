@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**可删除任务的时间戳调度器（popTask）**｜Medium · TikTok 高频
+**可删除任务的时间戳调度器（popTask）**｜Medium · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-08-20（面试记录）
 
 实现任务调度器：`addTask(taskId, timestamp)` 加入任务；`removeTask(taskId)` 删除尚未被取走的任务；`popTask(num)` 返回时间戳最早的 `num` 个任务并把它们从调度器中移除，时间戳相同的任务按 `taskId` 字典序先后。任务不足 `num` 个时返回全部剩余任务；对已存在的 `taskId` 再次 `addTask` 视为更新时间戳。操作总数不超过 `10^5`。例：`(a,5)`、`(b,3)`、`(c,3)` 后 `popTask(2)` → `['b','c']`。
 

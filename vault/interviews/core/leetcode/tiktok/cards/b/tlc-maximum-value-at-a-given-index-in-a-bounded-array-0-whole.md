@@ -4,7 +4,7 @@ node: b.maximum-value-at-a-given-index-in-a-bounded-array
 type: qa
 ---
 ## Q
-**LC 1802 有界数组中指定下标处的最大值**｜Medium · TikTok 高频
+**LC 1802 有界数组中指定下标处的最大值**｜Medium · LC TikTok 热度 62/100
 
 给三个正整数 `n`、`index` 和 `maxSum`。构造数组 `nums`（下标从 `0` 开始），同时满足：`nums.length == n`；每个 `nums[i]` 都是**正整数**；相邻元素之差的绝对值不超过 `1`，即 `abs(nums[i] - nums[i+1]) <= 1`；所有元素之和不超过 `maxSum`；`nums[index]` 的值被**最大化**。返回所构造数组中的 `nums[index]`。`1 <= n <= maxSum <= 10^9`，`0 <= index < n`。例：`n = 4, index = 2, maxSum = 6` → `2`（`[1,1,2,1]` 和 `[1,2,2,1]` 都满足）；`n = 6, index = 1, maxSum = 10` → `3`。
 

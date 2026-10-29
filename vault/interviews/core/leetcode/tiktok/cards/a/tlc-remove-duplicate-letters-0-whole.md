@@ -4,7 +4,7 @@ node: a.remove-duplicate-letters
 type: qa
 ---
 ## Q
-**LC 316 去除重复字母**｜Medium · TikTok·字节 高频
+**LC 316 去除重复字母**｜Medium · LC TikTok 热度 58/100（近 3 个月） · 近一年被问：美国 2 次、国内 1 次 · CodeTop 国内累计 7 次 · 最近 2026-08-05（面试记录）
 
 给字符串 `s`，去除重复字母，使每个字母只出现一次，并保证结果的字典序最小；不能打乱其余字符的相对顺序（结果是 `s` 的子序列）。`1 <= s.length <= 10^4`，`s` 由小写英文字母组成。例：`"bcabc"` → `"abc"`；`"cbacdcbc"` → `"acdb"`。
 

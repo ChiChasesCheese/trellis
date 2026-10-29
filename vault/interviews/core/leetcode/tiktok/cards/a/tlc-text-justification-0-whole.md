@@ -4,7 +4,7 @@ node: a.text-justification
 type: qa
 ---
 ## Q
-**LC 68 文本左右对齐**｜Hard · TikTok·字节 高频
+**LC 68 文本左右对齐**｜Hard · LC TikTok 热度 81/100（近 6 个月） · CodeTop 国内累计 8 次 · 最近 2025-07-22（CodeTop）
 
 给单词数组 `words` 和宽度 `maxWidth`，把单词排成每行恰好 `maxWidth` 个字符、左右两端对齐的文本。必须用**贪心**：每行尽可能多放单词；用空格补齐。行内单词间的空格要尽量均匀，不能均分时**左边的空档多于右边**。最后一行左对齐，单词之间只放一个空格，右侧补空格；只含一个单词的行同样左对齐。`1 <= words.length <= 300`，`1 <= words[i].length <= 20`，`words[i]` 由小写字母和符号组成，`1 <= maxWidth <= 100`，`words[i].length <= maxWidth`。例：`words = ["This","is","an","example","of","text","justification."]`，`maxWidth = 16` → `["This    is    an","example  of text","justification.  "]`；`["What","must","be","acknowledgment","shall","be"]`，`16` → `["What   must   be","acknowledgment  ","shall be        "]`。
 

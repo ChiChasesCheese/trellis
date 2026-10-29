@@ -41,3 +41,14 @@ Possible next steps (not requested): `/catalog refresh` when new reports appear 
 - 9 new LeetCode problems (all tier B): 328, 389, 478, 593, 889, 912, 986, 1740, 2816. Total 384.
 - Tier A after the audit: 85 seen in 30 days + 15 pattern + score; covers 84.3% of 618 sightings (88.8% weighted;
   95.1% reachable), 81.9% of CodeTop mass, 58.8% of US crowd-tag mass.
+
+## Past-year tier A, order, pace (2026-10-29)
+
+- Tier A = pinned (`catalog/pinned.json`) ∪ everything seen in the past year (reports, CodeTop, US 30d/3m/6m lists)
+  ∪ the top 200 by score ∪ 3 per pattern. 83 China-side past-year problems added with cards (one SQL excluded).
+  468 problems: A 401 / B 67. Deck 24: 724 cards, deck 25: 1965.
+- Card headers carry data via `tools/stamp_headers.py` (re-run after every rebuild).
+- Study order: inside a tier, score percentile + 0.2 for Easy / −0.2 for Hard; tier A is the first sub-deck of
+  deck 24. Still-new notes were deleted and re-imported so Anki follows the order (122 studied notes kept).
+- Anki presets (LeetCode Tops, 24, 25, 26): learning steps 1 h → 6 h, relearning 1 h. Deck 24: 80 new / 500
+  reviews a day; deck 25 paused (0 new); deck 26: 10 new.

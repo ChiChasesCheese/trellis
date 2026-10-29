@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 478 在圆内随机生成点**｜Medium · TikTok 高频
+**LC 478 在圆内随机生成点**｜Medium · 近一年被问：美国 0 次、国内 1 次 · 最近 2026-09-21（面试记录）
 
 实现类 `Solution(radius, x_center, y_center)` 和方法 `randPoint()`，后者返回圆内**均匀分布**的随机点 `[x, y]`（圆周上也算）。`0 < radius <= 10^8`，`-10^7 <= x_center, y_center <= 10^7`，`randPoint` 最多调用 `3 * 10^4` 次。例：`Solution(1.0, 0.0, 0.0)` 后 `randPoint()` 可能返回 `[0.82314, 0.38945]`。
 

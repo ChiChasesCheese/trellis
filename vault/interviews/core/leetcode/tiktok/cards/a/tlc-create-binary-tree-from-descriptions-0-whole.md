@@ -4,7 +4,7 @@ node: a.create-binary-tree-from-descriptions
 type: qa
 ---
 ## Q
-**LC 2196 根据描述创建二叉树**｜Medium · TikTok 高频
+**LC 2196 根据描述创建二叉树**｜Medium · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-08-17（面试记录）
 
 给二维整数数组 `descriptions`，其中 `descriptions[i] = [parent_i, child_i, isLeft_i]` 表示 `parent_i` 是 `child_i` 的父节点，二叉树中各节点的值互不相同；`isLeft_i == 1` 表示 `child_i` 是 `parent_i` 的左子节点，`isLeft_i == 0` 表示右子节点。按描述构造二叉树并返回根节点，测试保证能构造出有效的二叉树。`1 <= descriptions.length <= 10^4`，`descriptions[i].length == 3`，`1 <= parent_i, child_i <= 10^5`，`0 <= isLeft_i <= 1`。例：`[[20,15,1],[20,17,0],[50,20,1],[50,80,0],[80,19,1]]` → 层序 `[50,20,80,15,17,19]`；`[[1,2,1],[2,3,0],[3,4,1]]` → `[1,2,null,null,3,4]`。
 

@@ -4,7 +4,7 @@ node: a.path-sum-ii
 type: qa
 ---
 ## Q
-**LC 113 路径总和 II**｜Medium · 字节 高频
+**LC 113 路径总和 II**｜Medium · CodeTop 国内累计 42 次 · 最近 2026-07-24（CodeTop）
 
 给二叉树的根节点 `root` 和整数 `targetSum`，找出所有**从根节点到叶子节点**、路径上节点值之和等于 `targetSum` 的路径（叶子是没有子节点的节点），每条路径以节点值列表的形式返回。树中节点数在 `[0, 5000]`，`-1000 <= Node.val <= 1000`，`-1000 <= targetSum <= 1000`。例：`root = [5,4,8,11,null,13,4,7,2,null,null,5,1], targetSum = 22` → `[[5,4,11,2],[5,8,4,5]]`；`root = [1,2,3], targetSum = 5` → `[]`；`root = [1,2], targetSum = 0` → `[]`。
 

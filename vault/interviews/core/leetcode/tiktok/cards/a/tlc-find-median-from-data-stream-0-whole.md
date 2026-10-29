@@ -4,7 +4,7 @@ node: a.find-median-from-data-stream
 type: qa
 ---
 ## Q
-**LC 295 数据流的中位数**｜Hard · TikTok 高频
+**LC 295 数据流的中位数**｜Hard · LC TikTok 热度 62/100（近 3 个月） · 近一年被问：美国 3 次、国内 0 次 · CodeTop 国内累计 18 次 · 最近 2026-10-15（面试记录）
 
 中位数是有序整数列表中的中间值；列表大小为偶数时没有中间值，中位数是两个中间值的平均值（`[2,3,4]` 的中位数是 `3`，`[2,3]` 的中位数是 `2.5`）。实现 `MedianFinder` 类：`MedianFinder()` 初始化；`void addNum(int num)` 将数据流中的整数 `num` 加入数据结构；`double findMedian()` 返回到目前为止所有元素的中位数，与实际答案相差 `10^-5` 以内的答案将被接受。`-10^5 <= num <= 10^5`，调用 `findMedian` 之前数据结构中至少有一个元素，最多 `5 * 10^4` 次调用 `addNum` 和 `findMedian`。例：依次 `addNum(1)`、`addNum(2)`、`findMedian()`、`addNum(3)`、`findMedian()` 返回 `1.5`、`2.0`。
 

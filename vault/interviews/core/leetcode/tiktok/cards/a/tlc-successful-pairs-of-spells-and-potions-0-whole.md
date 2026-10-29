@@ -4,7 +4,7 @@ node: a.successful-pairs-of-spells-and-potions
 type: qa
 ---
 ## Q
-**LC 2300 咒语和药水的成功对数**｜Medium · TikTok 高频
+**LC 2300 咒语和药水的成功对数**｜Medium · 近一年被问：美国 1 次、国内 0 次 · 最近 2025-12-13（面试记录）
 
 给两个正整数数组 `spells`（长度 `n`）和 `potions`（长度 `m`），`spells[i]` 是第 `i` 个咒语的能量，`potions[j]` 是第 `j` 瓶药水的能量，再给整数 `success`。咒语和药水的能量**相乘**大于等于 `success`，就是一对「成功」的组合。返回长度为 `n` 的数组 `pairs`，`pairs[i]` 是能与第 `i` 个咒语成功组合的药水数量。`1 <= n, m <= 10^5`，`1 <= spells[i], potions[j] <= 10^5`，`1 <= success <= 10^10`。例：`spells = [5,1,3]`，`potions = [1,2,3,4,5]`，`success = 7` → `[4,0,3]`；`spells = [3,1,2]`，`potions = [8,5,8]`，`success = 16` → `[2,0,2]`。
 

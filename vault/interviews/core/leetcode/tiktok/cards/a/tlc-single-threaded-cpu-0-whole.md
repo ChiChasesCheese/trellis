@@ -4,7 +4,7 @@ node: a.single-threaded-cpu
 type: qa
 ---
 ## Q
-**LC 1834 单线程 CPU**｜Medium · TikTok 高频
+**LC 1834 单线程 CPU**｜Medium · LC TikTok 热度 69/100（近 3 个月）
 
 给二维数组 `tasks`，`tasks[i] = [enqueueTime_i, processingTime_i]` 表示第 `i` 项任务在 `enqueueTime_i` 时刻进入任务队列，需要 `processingTime_i` 的时长执行。单线程 CPU 同一时间最多执行一项任务：空闲且队列里没有任务就保持空闲；空闲且队列非空，就选**执行时间最短**的任务开始，执行时间相同则选**下标最小**的；任务一旦开始必须执行完，完成后可以立刻开始下一个。返回 CPU 处理任务的顺序。`n = tasks.length`，`1 <= n <= 10^5`，`1 <= enqueueTime_i, processingTime_i <= 10^9`。例：`tasks = [[1,2],[2,4],[3,2],[4,1]]` → `[0,2,3,1]`；`tasks = [[7,10],[7,12],[7,5],[7,4],[7,2]]` → `[4,3,2,0,1]`。
 

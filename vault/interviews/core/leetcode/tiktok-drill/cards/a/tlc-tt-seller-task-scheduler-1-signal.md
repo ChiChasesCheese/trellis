@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**卖家任务调度器（轮转 + VIP + 优先级）**｜Medium · TikTok 高频
+**卖家任务调度器（轮转 + VIP + 优先级）**｜Medium · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-09-02（面试记录）
 
 实现任务调度器，任务属于不同卖家。`receive_task(task_id, seller_id, priority, timestamp)` 接收任务；`process_next_task() -> task_id | None` 取出下一个任务。规则：在有任务的卖家之间轮转，每轮处理该卖家一个任务；VIP 卖家（构造时给出）每轮处理两个；同一卖家内按 `priority`（数值小的先）、`timestamp`、接收顺序；卖家任务处理完后退出轮转，再收到任务时重新排到队尾。操作总数不超过 `10^5`。
 

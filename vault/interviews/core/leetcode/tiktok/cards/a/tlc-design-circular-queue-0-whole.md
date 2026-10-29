@@ -4,7 +4,7 @@ node: a.design-circular-queue
 type: qa
 ---
 ## Q
-**LC 622 设计循环队列**｜Medium · TikTok 高频
+**LC 622 设计循环队列**｜Medium · 近一年被问：美国 4 次、国内 0 次 · CodeTop 国内累计 2 次 · 最近 2026-07-06（面试记录）
 
 设计循环队列（环形缓冲器）：先进先出，队尾连接到队首形成环，可以重复利用出队腾出的空间。实现类 `MyCircularQueue(k)`，容量为 `k`，支持：`enQueue(value)` 入队，成功返回 `True`，队满返回 `False`；`deQueue()` 出队，成功返回 `True`，队空返回 `False`；`Front()` 取队首，空则返回 `-1`；`Rear()` 取队尾，空则返回 `-1`；`isEmpty()`、`isFull()`。值在 `0` 到 `1000`，操作数在 `1` 到 `1000`，不要使用内置的队列库。例：容量 `3`，`enQueue(1)`、`enQueue(2)`、`enQueue(3)` 都是 `True`，`enQueue(4)` → `False`，`Rear()` → `3`，`isFull()` → `True`，`deQueue()` → `True`，`enQueue(4)` → `True`，`Rear()` → `4`。
 

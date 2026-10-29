@@ -5,6 +5,9 @@
 Medium；国内字节被问 6 次、最近 2026-01-26。
 
 **Core** — part of the first pass through this subject.
+
+## Cards (1)
+1. [[tlc-predict-the-winner-0-whole]]
 %% trellis:end %%
 
 ## Notes

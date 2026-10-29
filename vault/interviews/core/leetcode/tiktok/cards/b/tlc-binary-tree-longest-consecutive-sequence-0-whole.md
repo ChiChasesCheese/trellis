@@ -4,7 +4,7 @@ node: b.binary-tree-longest-consecutive-sequence
 type: qa
 ---
 ## Q
-**LC 298 二叉树最长连续序列**｜Medium · TikTok 高频
+**LC 298 二叉树最长连续序列**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 2 次 · 最近 2025-03-13（CodeTop）
 
 给二叉树根节点 `root`，求其中**最长连续序列路径**的长度。连续序列路径是依次递增 `1` 的路径，可以从任意节点开始，沿「父 → 子」方向向下走，不能反向。节点数在 `[1, 3 * 10^4]`，`-3 * 10^4 <= Node.val <= 3 * 10^4`。例：`[1,null,3,2,4,null,null,null,5]` → `3`（`3-4-5`）；`[2,null,3,2,null,1]` → `2`（`2-3`；`3-2-1` 是递减，不算）。
 

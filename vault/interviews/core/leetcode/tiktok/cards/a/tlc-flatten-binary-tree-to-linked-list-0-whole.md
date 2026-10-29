@@ -4,7 +4,7 @@ node: a.flatten-binary-tree-to-linked-list
 type: qa
 ---
 ## Q
-**LC 114 二叉树展开为链表**｜Medium · 字节高频
+**LC 114 二叉树展开为链表**｜Medium · CodeTop 国内累计 26 次 · 最近 2026-06-14（CodeTop）
 
 给二叉树的根节点 `root`，原地把它展开成一个单链表：仍用 `TreeNode`，`right` 指向链表的下一个节点，`left` 始终为 `null`，顺序与先序遍历相同。节点数在 `[0, 2000]`，`-100 <= Node.val <= 100`。例：`[1,2,5,3,4,null,6]` → `[1,null,2,null,3,null,4,null,5,null,6]`；`[]` → `[]`；`[0]` → `[0]`。进阶：用 `O(1)` 额外空间。
 

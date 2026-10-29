@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 721 账户合并**｜Medium · TikTok·字节 高频
+**LC 721 账户合并**｜Medium · LC TikTok 热度 38/100 · 近一年被问：美国 2 次、国内 0 次 · CodeTop 国内累计 2 次 · 最近 2026-07-25（面试记录）
 
 `accounts[i]` 的第一个元素是名称，其余是邮箱。两个账户只要有一个共同邮箱就属于同一个人（同名不一定是同一个人）。合并后每个账户是「名称 + 按 ASCII 排序的邮箱」，账户顺序任意。`1 <= accounts.length <= 1000`，`2 <= accounts[i].length <= 10`，`1 <= accounts[i][j].length <= 30`。例：两个 `John` 共享 `johnsmith@mail.com`，合并成一个；第三个 `John` 与他们无关，保持独立。
 

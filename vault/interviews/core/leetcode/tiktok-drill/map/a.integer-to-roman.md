@@ -5,6 +5,12 @@
 Medium；国内字节被问 19 次、最近 2026-07-08。
 
 **Core** — part of the first pass through this subject.
+
+## Cards (4)
+1. [[tlc-integer-to-roman-1-signal]]
+2. [[tlc-integer-to-roman-2-code]]
+3. [[tlc-integer-to-roman-3-why]]
+4. [[tlc-integer-to-roman-4-followup]]
 %% trellis:end %%
 
 ## Notes

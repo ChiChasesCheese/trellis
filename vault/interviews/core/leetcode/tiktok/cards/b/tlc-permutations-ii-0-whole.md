@@ -4,7 +4,7 @@ node: b.permutations-ii
 type: qa
 ---
 ## Q
-**LC 47 全排列 II**｜Medium · TikTok·字节高频
+**LC 47 全排列 II**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 20 次 · 最近 2025-10-20（CodeTop）
 
 给一个**可能含重复数字**的数组 `nums`，按任意顺序返回所有**不重复**的全排列。`1 <= nums.length <= 8`，`-10 <= nums[i] <= 10`。例：`[1,1,2]` → `[[1,1,2],[1,2,1],[2,1,1]]`；`[1,2,3]` → 6 个排列。
 

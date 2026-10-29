@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 212 单词搜索 II**｜Hard · TikTok 高频
+**LC 212 单词搜索 II**｜Hard · LC TikTok 热度 62/100 · 近一年被问：美国 3 次、国内 0 次 · CodeTop 国内累计 1 次 · 最近 2026-05-20（面试记录）
 
 给 `m x n` 的字符网格 `board` 和单词列表 `words`，返回所有能在网格上按相邻（上下左右）格子拼出的单词，同一个格子在一个单词里只能用一次。`1 <= m, n <= 12`，`board[i][j]` 是小写字母，`1 <= words.length <= 3 * 10^4`，`1 <= words[i].length <= 10`，单词互不相同。例：示例网格里 `words = ["oath","pea","eat","rain"]` → `["eat","oath"]`。
 

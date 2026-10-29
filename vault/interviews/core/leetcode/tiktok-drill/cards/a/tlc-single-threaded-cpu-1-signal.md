@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 1834 单线程 CPU**｜Medium · TikTok 高频
+**LC 1834 单线程 CPU**｜Medium · LC TikTok 热度 69/100（近 3 个月）
 
 给二维数组 `tasks`，`tasks[i] = [enqueueTime_i, processingTime_i]`：任务 `i` 在 `enqueueTime_i` 进入队列，需要 `processingTime_i` 时长。单线程 CPU 一次只执行一项任务，空闲且队列非空时选**执行时间最短**的任务（并列选**下标最小**的），开始后必须执行完，完成后可立刻开始下一个。返回处理任务的顺序。`1 <= n <= 10^5`，`1 <= enqueueTime_i, processingTime_i <= 10^9`。例：`tasks = [[1,2],[2,4],[3,2],[4,1]]` → `[0,2,3,1]`。
 

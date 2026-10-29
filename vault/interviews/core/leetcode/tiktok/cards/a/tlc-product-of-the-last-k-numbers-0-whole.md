@@ -4,7 +4,7 @@ node: a.product-of-the-last-k-numbers
 type: qa
 ---
 ## Q
-**LC 1352 最后 K 个数的乘积**｜Medium · TikTok·字节 高频
+**LC 1352 最后 K 个数的乘积**｜Medium · LC TikTok 热度 38/100（近 6 个月）
 
 设计一个接受整数流并能查询最后 `k` 个整数乘积的类 `ProductOfNumbers`：`add(num)` 把 `num` 添加到数字列表末尾；`getProduct(k)` 返回当前列表中最后 `k` 个数字的乘积（保证列表中至少有 `k` 个数字）。任何时候，任意连续数字序列的乘积都在 32 位整数范围内。`0 <= num <= 100`，`1 <= k <= 4 * 10^4`，`add` 与 `getProduct` 合计最多调用 `4 * 10^4` 次。进阶：让 `getProduct` 和 `add` 都是 `O(1)`。例：依次 `add(3)`、`add(0)`、`add(2)`、`add(5)`、`add(4)`，则 `getProduct(2)` 得 `20`，`getProduct(3)` 得 `40`，`getProduct(4)` 得 `0`；再 `add(8)` 后 `getProduct(2)` 得 `32`。
 

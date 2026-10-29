@@ -4,7 +4,7 @@ node: a.shortest-path-with-alternating-colors
 type: qa
 ---
 ## Q
-**LC 1129 颜色交替的最短路径**｜Medium · 字节 高频
+**LC 1129 颜色交替的最短路径**｜Medium · CodeTop 国内累计 3 次 · 最近 2026-09-21（CodeTop）
 
 有向图有 `n` 个结点，编号 `0` 到 `n - 1`。每条边是红色或蓝色，可能有自环和平行边。给定 `red_edges` 和 `blue_edges`：`red_edges[i] = [a, b]` 表示从 `a` 到 `b` 有一条红边，`blue_edges[j] = [u, v]` 表示从 `u` 到 `v` 有一条蓝边。返回长度为 `n` 的数组 `answer`，`answer[x]` 是从结点 `0` 到结点 `x` 的**红蓝边交替出现**的最短路径长度，不存在则为 `-1`。`1 <= n <= 100`，`0 <= red_edges.length, blue_edges.length <= 400`，所有端点在 `[0, n - 1]`。例：`n = 3, red_edges = [[0,1],[1,2]], blue_edges = []` → `[0,1,-1]`；`n = 3, red_edges = [[0,1]], blue_edges = [[2,1]]` → `[0,1,-1]`。
 

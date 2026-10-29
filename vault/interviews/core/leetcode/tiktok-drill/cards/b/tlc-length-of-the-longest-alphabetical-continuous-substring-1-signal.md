@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 2414 最长的字母序连续子字符串的长度**｜Medium · TikTok 高频
+**LC 2414 最长的字母序连续子字符串的长度**｜Medium · LC TikTok 热度 62/100
 
 字母序连续字符串是字母表 `"abcdefghijklmnopqrstuvwxyz"` 的任意子字符串（`"abc"` 是，`"acb"` 和 `"za"` 不是）。给仅由小写英文字母组成的字符串 `s`，返回它最长的字母序连续子字符串的长度。`1 <= s.length <= 10^5`。例：`"abacaba"` → `2`，`"abcde"` → `5`。
 

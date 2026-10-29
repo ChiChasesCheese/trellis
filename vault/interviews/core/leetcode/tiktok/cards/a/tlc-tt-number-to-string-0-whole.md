@@ -4,7 +4,7 @@ node: a.tt-number-to-string
 type: qa
 ---
 ## Q
-**手写数字转字符串**｜Medium · TikTok 高频
+**手写数字转字符串**｜Medium · 近一年被问：美国 0 次、国内 1 次 · 最近 2026-10-22（面试记录）
 
 不使用 `str`、`repr`、`format`、f-string，把数转成十进制字符串（`chr`、`ord`、`divmod`、`"".join` 可以用）。
 

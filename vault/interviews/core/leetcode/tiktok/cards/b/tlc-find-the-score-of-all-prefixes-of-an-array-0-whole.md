@@ -4,7 +4,7 @@ node: b.find-the-score-of-all-prefixes-of-an-array
 type: qa
 ---
 ## Q
-**LC 2640 一个数组所有前缀的分数**｜Medium · TikTok 高频
+**LC 2640 一个数组所有前缀的分数**｜Medium · LC TikTok 热度 62/100
 
 对数组 `arr`，定义转换数组 `conver[i] = arr[i] + max(arr[0..i])`（`max(arr[0..i])` 是前 `i + 1` 个元素的最大值），`arr` 的**分数**是 `conver` 所有元素之和。给长度为 `n` 的数组 `nums`，返回长度为 `n` 的数组 `ans`，其中 `ans[i]` 是前缀 `nums[0..i]` 的分数。`1 <= nums.length <= 10^5`，`1 <= nums[i] <= 10^9`。例：`nums = [2,3,7,5,10]` → `[4,10,24,36,56]`；`nums = [1,1,2,4,8,16]` → `[2,4,8,16,32,64]`。
 

@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 739 每日温度**｜Medium · TikTok·字节 高频
+**LC 739 每日温度**｜Medium · LC TikTok 热度 63/100 · CodeTop 国内累计 26 次 · 最近 2025-09-19（CodeTop）
 
 给整数数组 `temperatures`，`answer[i]` 是第 `i` 天之后要等多少天才会遇到更高的温度，没有则为 `0`。`1 <= temperatures.length <= 10^5`，`30 <= temperatures[i] <= 100`。例：`[73,74,75,71,69,72,76,73]` → `[1,1,4,2,1,1,0,0]`。
 

@@ -4,7 +4,7 @@ node: b.number-of-good-leaf-nodes-pairs
 type: qa
 ---
 ## Q
-**LC 1530 好叶子节点对的数量**｜Medium · TikTok·字节 高频
+**LC 1530 好叶子节点对的数量**｜Medium · LC TikTok 热度 50/100
 
 给二叉树的根节点 `root` 和整数 `distance`。如果二叉树中两个叶节点之间的最短路径长度小于或等于 `distance`，它们就构成一组好叶子节点对。返回树中好叶子节点对的数量。树的节点数在 `[1, 2^10]` 范围内，每个节点的值在 `[1, 100]` 之间，`1 <= distance <= 10`。例：`root = [1,2,3,null,4]`，`distance = 3` → `1`（叶子 `3` 和 `4` 之间的路径长 `3`）；`root = [1,2,3,4,5,6,7]`，`distance = 3` → `2`；`root = [100]`，`distance = 1` → `0`；`root = [1,1,1]`，`distance = 2` → `1`。
 

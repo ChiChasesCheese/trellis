@@ -4,7 +4,7 @@ node: a.binary-tree-level-order-traversal-ii
 type: qa
 ---
 ## Q
-**LC 107 二叉树的层序遍历 II**｜Medium · 字节 高频
+**LC 107 二叉树的层序遍历 II**｜Medium · CodeTop 国内累计 4 次 · 最近 2026-08-06（CodeTop）
 
 给二叉树的根结点 `root`，返回其结点值**自底向上的层序遍历**：从叶子所在层到根所在层，逐层，每层从左到右。树中结点数在 `[0, 2000]`，`-1000 <= Node.val <= 1000`。例：`root = [3,9,20,null,null,15,7]` → `[[15,7],[9,20],[3]]`；`root = [1]` → `[[1]]`；`root = []` → `[]`。
 

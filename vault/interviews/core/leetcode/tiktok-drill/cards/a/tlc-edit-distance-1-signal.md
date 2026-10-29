@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 72 编辑距离**｜Medium · TikTok·字节 高频
+**LC 72 编辑距离**｜Medium · LC TikTok 热度 62/100 · 近一年被问：美国 0 次、国内 1 次 · CodeTop 国内累计 87 次 · 最近 2026-10-09（CodeTop）
 
 给两个单词 `word1` 和 `word2`，返回把 `word1` 转换成 `word2` 所需的最少操作数。每次操作可以插入一个字符、删除一个字符、替换一个字符。`0 <= word1.length, word2.length <= 500`，两个单词都由小写英文字母组成。例：`word1 = "horse"`，`word2 = "ros"` → `3`；`word1 = "intention"`，`word2 = "execution"` → `5`。
 

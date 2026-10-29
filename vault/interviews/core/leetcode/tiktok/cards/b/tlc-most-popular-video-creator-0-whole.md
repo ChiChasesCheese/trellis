@@ -4,7 +4,7 @@ node: b.most-popular-video-creator
 type: qa
 ---
 ## Q
-**LC 2456 最流行的视频创作者**｜Medium · TikTok 高频
+**LC 2456 最流行的视频创作者**｜Medium · LC TikTok 热度 62/100
 
 给两个字符串数组 `creators`、`ids` 和一个整数数组 `views`，长度都是 `n`。第 `i` 个视频的创作者是 `creators[i]`，视频 id 是 `ids[i]`，播放量是 `views[i]`。创作者的**流行度**是他所有视频播放量的总和。找出流行度**最高**的创作者，以及该创作者播放量**最大**的视频 id：流行度最高的创作者有多个时，全部返回；某个创作者有多个播放量最高的视频时，只取**字典序最小**的 id。返回二维字符串数组 `answer`，`answer[i] = [creator_i, id_i]`，可以按任意顺序返回。`n == creators.length == ids.length == views.length`，`1 <= n <= 10^5`，`1 <= creators[i].length, ids[i].length <= 5`，`creators[i]` 和 `ids[i]` 只含小写英文字母，`0 <= views[i] <= 10^5`。例：`creators = ["alice","bob","alice","chris"]`，`ids = ["one","two","three","four"]`，`views = [5,10,5,4]` → `[["alice","one"],["bob","two"]]`；`creators = ["alice","alice","alice"]`，`ids = ["a","b","c"]`，`views = [1,2,2]` → `[["alice","b"]]`。
 

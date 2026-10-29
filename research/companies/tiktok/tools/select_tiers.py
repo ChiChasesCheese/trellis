@@ -79,8 +79,10 @@ def families() -> list[dict]:
         if len(c) < 13 or not c[0].isdigit():
             continue
         name = re.sub(r"\s*\[(custom|OA)\]", "", c[2].replace("**", "")).strip()
+        us = sum(int(x) for x in re.findall(r"(?:US|SG|OTHER) (\d+)", c[8]))
         rows.append({"family": name, "lc": [int(x) for x in re.findall(r"\d+", c[4])], "refs": int(c[7]),
-                     "dates": [c[9]] * int(c[7]), "oa": "[OA]" in c[2]})
+                     "dates": [c[9]] * int(c[7]), "regions": ["US"] * us + ["CN"] * (int(c[7]) - us),
+                     "oa": "[OA]" in c[2]})
     by_name = {r["family"]: r for r in rows}
     for f in sorted(CAT.glob("refresh-*.json")):
         for s in json.loads(f.read_text(encoding="utf-8")).get("sightings", []):
@@ -89,11 +91,13 @@ def families() -> list[dict]:
             lc = [int(x) for x in s.get("lc") or []]
             fam = by_name.get(s.get("family") or "") or next((r for r in rows if lc and lc[0] in r["lc"]), None)
             if fam is None:
-                fam = {"family": s.get("custom") or f"LC {lc[0]}", "lc": lc, "refs": 0, "dates": [], "oa": s.get("round") == "OA"}
+                fam = {"family": s.get("custom") or f"LC {lc[0]}", "lc": lc, "refs": 0, "dates": [], "regions": [],
+                       "oa": s.get("round") == "OA"}
                 rows.append(fam)
                 by_name[fam["family"]] = fam
             fam["refs"] += 1
             fam["dates"].append(s.get("date", ""))
+            fam["regions"].append("CN" if s.get("region") == "CN" else "US")
     return rows
 
 

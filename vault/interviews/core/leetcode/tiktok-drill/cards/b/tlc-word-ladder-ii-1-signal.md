@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 126 单词接龙 II**｜Hard · TikTok 高频
+**LC 126 单词接龙 II**｜Hard · 近一年被问：美国 2 次、国内 1 次 · 最近 2026-10-25（面试记录）
 
 给 `beginWord`、`endWord` 和字典 `wordList`。转换序列要求：相邻单词恰好差一个字母；除 `beginWord` 外每个单词都在 `wordList` 中；最后一个是 `endWord`。返回所有最短转换序列，没有则返回空列表。`1 <= beginWord.length <= 5`，`1 <= wordList.length <= 500`，单词等长、只含小写字母，`beginWord != endWord`，`wordList` 互不相同。例：`"hit"` 到 `"cog"`，字典 `["hot","dot","dog","lot","log","cog"]` → 两条最短序列。
 

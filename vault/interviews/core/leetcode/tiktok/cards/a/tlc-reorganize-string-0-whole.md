@@ -4,7 +4,7 @@ node: a.reorganize-string
 type: qa
 ---
 ## Q
-**LC 767 重构字符串**｜Medium · TikTok 高频
+**LC 767 重构字符串**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 5 次 · 最近 2026-05-20（CodeTop）
 
 给字符串 `s`，判断能否重新排列其中的字母，使任意两个相邻字符都不同。可以就返回任意一种排列，不行就返回空字符串 `""`。`1 <= s.length <= 500`，`s` 只含小写字母。例：`"aab"` → `"aba"`；`"aaab"` → `""`。
 

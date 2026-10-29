@@ -4,7 +4,7 @@ node: b.brightest-position-on-street
 type: qa
 ---
 ## Q
-**LC 2021 街上最亮的位置**｜Medium · TikTok 高频
+**LC 2021 街上最亮的位置**｜Medium · LC TikTok 热度 53/100
 
 一条街上有许多路灯，路灯的坐标由数组 `lights` 给出：`lights[i] = [position, range]` 表示坐标为 `position` 的路灯照亮闭区间 `[position - range, position + range]`。位置 `p` 的亮度等于能照到 `p` 的路灯数量。返回最亮的位置；有多个时返回坐标最小的。`1 <= lights.length <= 10^5`，`-10^8 <= position <= 10^8`，`0 <= range <= 10^8`。例：`[[-3,2],[1,2],[3,3]]` → `-1`（三盏灯照亮 `[-5,-1]`、`[-1,3]`、`[0,6]`，`-1` 被两盏灯照到，`0..3` 也是两盏，取最小的 `-1`）；`[[1,0],[0,1]]` → `1`；`[[1,2]]` → `-1`。
 

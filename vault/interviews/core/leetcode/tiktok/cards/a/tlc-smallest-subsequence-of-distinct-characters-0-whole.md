@@ -4,7 +4,7 @@ node: a.smallest-subsequence-of-distinct-characters
 type: qa
 ---
 ## Q
-**LC 1081 不同字符的最小子序列**｜Medium · 字节 高频
+**LC 1081 不同字符的最小子序列**｜Medium · LC 字节 热度 88/100
 
 返回字符串 `s` 的字典序最小的子序列，要求该子序列包含 `s` 中出现过的每一种字符，且每种恰好一次。`1 <= s.length <= 1000`，`s` 由小写英文字母组成。例：`"bcabc"` → `"abc"`；`"cbacdcbc"` → `"acdb"`。
 

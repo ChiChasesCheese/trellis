@@ -5,6 +5,12 @@
 Medium；国内字节被问 4 次、最近 2026-05-12。
 
 **Core** — part of the first pass through this subject.
+
+## Cards (4)
+1. [[tlc-reconstruct-original-digits-from-english-1-signal]]
+2. [[tlc-reconstruct-original-digits-from-english-2-code]]
+3. [[tlc-reconstruct-original-digits-from-english-3-why]]
+4. [[tlc-reconstruct-original-digits-from-english-4-followup]]
 %% trellis:end %%
 
 ## Notes

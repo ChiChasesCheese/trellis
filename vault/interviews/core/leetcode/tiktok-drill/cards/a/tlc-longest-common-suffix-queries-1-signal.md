@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 3093 最长公共后缀查询**｜Hard · TikTok 高频
+**LC 3093 最长公共后缀查询**｜Hard · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-07-02（面试记录）
 
 给字符串数组 `wordsContainer` 和 `wordsQuery`。对每个查询词，在 `wordsContainer` 中找与它有最长公共后缀的字符串；多个并列时取长度最短的，仍并列取下标最小的。返回每个查询对应的下标数组。`1 <= wordsContainer.length, wordsQuery.length <= 10^4`，每个字符串长度在 `1` 到 `5 * 10^3` 之间，只含小写字母，两个数组各自的长度总和至多 `5 * 10^5`。例：`wordsContainer = ["abcd","bcd","xbcd"]`，`wordsQuery = ["cd","bcd","xyz"]` → `[1,1,1]`。
 

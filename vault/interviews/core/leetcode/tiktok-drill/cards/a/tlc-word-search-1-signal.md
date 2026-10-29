@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 79 单词搜索**｜Medium · TikTok 高频
+**LC 79 单词搜索**｜Medium · LC TikTok 热度 75/100（近 6 个月） · CodeTop 国内累计 41 次 · 最近 2026-06-03（CodeTop）
 
 给 `m x n` 的字符网格 `board` 和字符串 `word`，判断 `word` 是否存在于网格中。单词必须按字母顺序，通过水平或竖直相邻的单元格连成，同一个单元格在一条路径里不能重复使用。`m == board.length`，`n == board[i].length`，`1 <= m, n <= 6`，`1 <= word.length <= 15`，`board` 和 `word` 仅由大小写英文字母组成。例：`board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]]`，`word = "ABCB"` → `false`。
 

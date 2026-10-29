@@ -131,3 +131,8 @@ uses the **full 2-D table** (`dp = [[0] * (n + 1) for _ in range(m + 1)]`), neve
 or a 1-D reduction. Space reduction appears only as one line in 追问 / the `-4-followup` card:「空间可以压到 O(n)：见
 Python 工具箱「DP 降维」」, without code. The technique itself lives in leaf `python.dp-space-compression`. 1-D DP
 (state `dp[i]`) is unaffected.
+
+## Header stats (2026-10-29)
+
+Keep writing the header as `**LC n 中文名**｜<难度> · TikTok 高频`; `tools/stamp_headers.py` then replaces everything after
+the difficulty with the data (company-tag frequency, sightings in the past year, CodeTop count, most recent date).

@@ -4,7 +4,7 @@ node: a.construct-binary-tree-from-preorder-and-inorder-traversal
 type: qa
 ---
 ## Q
-**LC 105 从前序与中序遍历序列构造二叉树**｜Medium · TikTok·字节 高频
+**LC 105 从前序与中序遍历序列构造二叉树**｜Medium · LC TikTok 热度 62/100 · CodeTop 国内累计 62 次 · 最近 2026-06-29（CodeTop）
 
 给两个整数数组 `preorder`（二叉树的前序遍历）和 `inorder`（同一棵树的中序遍历），构造这棵二叉树并返回根节点。`1 <= preorder.length <= 3000`，`inorder.length == preorder.length`，`-3000 <= preorder[i], inorder[i] <= 3000`，两个数组都**无重复元素**，且输入保证合法。例：`preorder = [3,9,20,15,7]`，`inorder = [9,3,15,20,7]` → `[3,9,20,null,null,15,7]`；`preorder = [-1]`，`inorder = [-1]` → `[-1]`。
 

@@ -4,7 +4,7 @@ node: a.partition-equal-subset-sum
 type: qa
 ---
 ## Q
-**LC 416 分割等和子集**｜Medium · TikTok 高频
+**LC 416 分割等和子集**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 11 次 · 最近 2026-07-14（CodeTop）
 
 给一个只包含**正整数**的非空数组 `nums`，判断能否把它分成两个子集，使两个子集的元素和相等。`1 <= nums.length <= 200`，`1 <= nums[i] <= 100`。例：`[1,5,11,5]` → `true`（`[1,5,5]` 与 `[11]`）；`[1,2,3,5]` → `false`。
 

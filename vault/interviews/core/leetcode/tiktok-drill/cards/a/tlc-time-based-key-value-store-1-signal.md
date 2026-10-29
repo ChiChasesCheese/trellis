@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 981 基于时间的键值存储**｜Medium · TikTok 高频
+**LC 981 基于时间的键值存储**｜Medium · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-03-20（面试记录）
 
 设计 `TimeMap`：`set(key, value, timestamp)` 存入键在某个时间戳的值；`get(key, timestamp)` 返回 `timestamp_prev <= timestamp` 中 `timestamp_prev` 最大的那次 `set` 的值，没有则返回 `""`。`set` 的时间戳**严格递增**，`1 <= timestamp <= 10^7`，`set` 与 `get` 合计最多 `2 * 10^5` 次。例：`set("foo","bar",1)` 后 `get("foo",3)` → `"bar"`。
 

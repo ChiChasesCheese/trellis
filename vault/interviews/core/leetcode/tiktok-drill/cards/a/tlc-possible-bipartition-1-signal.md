@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 886 可能的二分法**｜Medium · TikTok 高频
+**LC 886 可能的二分法**｜Medium · LC TikTok 热度 56/100（近 3 个月） · 近一年被问：美国 1 次、国内 0 次 · CodeTop 国内累计 1 次 · 最近 2026-10-14（面试记录）
 
 把编号 `1..n` 的 `n` 个人分进任意大小的两组。给定整数 `n` 和数组 `dislikes`，`dislikes[i] = [ai, bi]` 表示不允许把 `ai` 和 `bi` 分到同一组。当可以用这种方法把所有人分成两组时返回 `true`，否则返回 `false`。`1 <= n <= 2000`，`0 <= dislikes.length <= 10^4`，`dislikes[i].length == 2`，`1 <= dislikes[i][j] <= n`，`ai < bi`，每一组都不同。例：`n = 3, dislikes = [[1,2],[1,3],[2,3]]` → `false`。
 

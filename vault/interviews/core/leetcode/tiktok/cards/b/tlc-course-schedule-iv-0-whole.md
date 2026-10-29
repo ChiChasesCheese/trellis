@@ -4,7 +4,7 @@ node: b.course-schedule-iv
 type: qa
 ---
 ## Q
-**LC 1462 课程表 IV**｜Medium · TikTok 高频
+**LC 1462 课程表 IV**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 1 次 · 最近 2022-07-16（CodeTop）
 
 共有 `numCourses` 门课，编号 `0` 到 `numCourses - 1`。`prerequisites[i] = [ai, bi]` 表示想选 `bi` 必须先选 `ai`。先决条件可以是间接的：`a` 是 `b` 的先决条件，`b` 是 `c` 的先决条件，则 `a` 也是 `c` 的先决条件。给 `queries`，`queries[j] = [uj, vj]`，对每个查询回答 `uj` 是否是 `vj` 的先决条件，返回布尔数组。`2 <= numCourses <= 100`，`0 <= prerequisites.length <= numCourses * (numCourses - 1) / 2`，`ai != bi`，每对 `[ai, bi]` 互不相同，先修关系图中没有环，`1 <= queries.length <= 10^4`，`ui != vi`。例：`numCourses = 2`，`prerequisites = [[1,0]]`，`queries = [[0,1],[1,0]]` → `[false, true]`；`numCourses = 3`，`prerequisites = [[1,2],[1,0],[2,0]]`，`queries = [[1,0],[1,2]]` → `[true, true]`。
 

@@ -4,7 +4,7 @@ node: a.tt-nested-comment-tree
 type: qa
 ---
 ## Q
-**由扁平记录构建嵌套评论树**｜Medium · TikTok 高频
+**由扁平记录构建嵌套评论树**｜Medium · 近一年被问：美国 1 次、国内 1 次 · 最近 2026-08-13（面试记录）
 
 给一个扁平的评论记录列表，每条记录是字典 `{"id": int, "parent_id": int | None, "text": str, "time": int}`，根评论的 `parent_id` 为 `None`。构建嵌套结构：每条评论多一个 `children` 列表，返回所有根评论。要求：（1）记录无序，孩子可能出现在父亲之前；（2）同一个父亲下的孩子按 `(time, id)` 升序；（3）父亲不存在的孤儿评论当作根；（4）记录里有环时抛 `ValueError`；（5）不修改传入的记录。记录数不超过 `10^5`，`id` 互不相同。例：`[{id:3,parent:1,time:30}, {id:1,parent:None,time:10}, {id:2,parent:1,time:20}, {id:4,parent:3,time:40}, {id:9,parent:77,time:5}]` → 根为 `9`（孤儿）和 `1`，`1` 的孩子依次是 `2`、`3`，`3` 的孩子是 `4`。
 

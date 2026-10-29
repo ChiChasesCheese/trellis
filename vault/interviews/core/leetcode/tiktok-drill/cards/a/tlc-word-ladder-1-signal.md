@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 127 单词接龙**｜Hard · TikTok·字节 高频
+**LC 127 单词接龙**｜Hard · LC TikTok 热度 62/100 · 近一年被问：美国 2 次、国内 1 次 · CodeTop 国内累计 6 次 · 最近 2026-10-25（面试记录）
 
 字典 `wordList` 中从 `beginWord` 到 `endWord` 的**转换序列**是一个序列 `beginWord -> s1 -> s2 -> ... -> sk`：相邻两个单词只差一个字母；每个 `si`（`1 <= i <= k`）都在 `wordList` 中（`beginWord` 不需要在字典里）；`sk == endWord`。给 `beginWord`、`endWord` 和 `wordList`，返回从 `beginWord` 到 `endWord` 的**最短转换序列中的单词数目**；不存在则返回 `0`。
 

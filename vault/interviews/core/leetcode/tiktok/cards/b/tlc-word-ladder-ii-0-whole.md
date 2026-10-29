@@ -4,7 +4,7 @@ node: b.word-ladder-ii
 type: qa
 ---
 ## Q
-**LC 126 单词接龙 II**｜Hard · TikTok 高频
+**LC 126 单词接龙 II**｜Hard · 近一年被问：美国 2 次、国内 1 次 · 最近 2026-10-25（面试记录）
 
 给两个单词 `beginWord`、`endWord` 和字典 `wordList`。转换序列是 `beginWord -> s1 -> s2 -> ... -> sk` 的单词序列：相邻两个单词恰好有一个字母不同；`s1` 到 `sk` 都必须在 `wordList` 中（`beginWord` 不必在）；`sk == endWord`。找出并返回所有从 `beginWord` 到 `endWord` 的最短转换序列（每个序列是单词列表 `[beginWord, s1, ..., sk]`），不存在时返回空列表。`1 <= beginWord.length <= 5`，`endWord.length == beginWord.length`，`1 <= wordList.length <= 500`，`wordList[i].length == beginWord.length`，所有单词只含小写字母，`beginWord != endWord`，`wordList` 中的单词互不相同。例：`beginWord = "hit"`，`endWord = "cog"`，`wordList = ["hot","dot","dog","lot","log","cog"]` → `[["hit","hot","dot","dog","cog"],["hit","hot","lot","log","cog"]]`（顺序任意）；`wordList = ["hot","dot","dog","lot","log"]`（没有 `cog`）→ `[]`。
 

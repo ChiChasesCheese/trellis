@@ -4,7 +4,7 @@ node: b.maximize-amount-after-two-days-of-conversions
 type: qa
 ---
 ## Q
-**LC 3387 两天自由外汇交易后的最大货币数**｜Medium · TikTok 高频
+**LC 3387 两天自由外汇交易后的最大货币数**｜Medium · 近一年被问：美国 3 次、国内 0 次 · 最近 2026-01-05（面试记录）
 
 给字符串 `initialCurrency`，表示初始货币，你一开始有 `1.0` 单位。另给四个数组：`pairs1[i] = [start, target]` 表示在**第 1 天**可以按汇率 `rates1[i]` 把 `start` 换成 `target`；`pairs2[i]` 与 `rates2[i]` 表示**第 2 天**的兑换。此外每种 `target` 都可以按汇率 `1 / rate` 换回对应的 `start`。你可以在第 1 天用 `rates1` 兑换任意次（包括 `0` 次），然后在第 2 天用 `rates2` 再兑换任意次。返回两天兑换后**最多能拥有的 `initialCurrency` 数量**。保证两天各自的汇率图内部没有矛盾、没有环。`1 <= initialCurrency.length <= 3`（大写字母），`1 <= pairs1.length, pairs2.length <= 10`，货币名 `1` 到 `3` 个大写字母，`1.0 <= rates1[i], rates2[i] <= 10.0`，输出最大为 `5 * 10^10`。例：`initialCurrency = "EUR"`，`pairs1 = [["EUR","USD"],["USD","JPY"]]`，`rates1 = [2.0, 3.0]`，`pairs2 = [["JPY","USD"],["USD","CHF"],["CHF","EUR"]]`，`rates2 = [4.0, 5.0, 6.0]` → `720.0`；`initialCurrency = "NGN"`，`pairs1 = [["NGN","EUR"]]`，`rates1 = [9.0]`，`pairs2 = [["NGN","EUR"]]`，`rates2 = [6.0]` → `1.5`。
 

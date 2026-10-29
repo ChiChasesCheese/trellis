@@ -4,7 +4,7 @@ node: a.path-sum-iii
 type: qa
 ---
 ## Q
-**LC 437 路径总和 III**｜Medium · TikTok·字节 高频
+**LC 437 路径总和 III**｜Medium · LC TikTok 热度 41/100（近 30 天） · 近一年被问：美国 3 次、国内 3 次 · CodeTop 国内累计 7 次 · 最近 2026-10-07（CodeTop）
 
 给二叉树的根结点 `root` 和整数 `targetSum`，求结点值之和等于 `targetSum` 的**路径**条数。路径不必从根开始、不必在叶子结束，但方向必须向下（只能从父结点走到子结点）。
 

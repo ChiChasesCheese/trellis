@@ -4,7 +4,7 @@ node: a.search-in-rotated-sorted-array
 type: qa
 ---
 ## Q
-**LC 33 搜索旋转排序数组**｜Medium · TikTok·字节 高频
+**LC 33 搜索旋转排序数组**｜Medium · LC TikTok 热度 75/100（近 6 个月） · 近一年被问：美国 3 次、国内 4 次 · CodeTop 国内累计 162 次 · 最近 2026-10-15（CodeTop）
 
 整数数组 `nums` 原本按升序排列且值**互不相同**，在某个未知的下标 `k`（`0 <= k < nums.length`）处向左旋转，变成 `[nums[k], nums[k+1], ..., nums[n-1], nums[0], ..., nums[k-1]]`。给旋转后的 `nums` 和目标值 `target`，返回 `target` 的下标，不存在返回 `-1`，要求 `O(log n)`。`1 <= nums.length <= 5000`，`-10^4 <= nums[i] <= 10^4`，`nums` 中每个值都独一无二，`-10^4 <= target <= 10^4`。例：`[4,5,6,7,0,1,2]`，`target = 0` → `4`；同一个数组 `target = 3` → `-1`；`[1]`，`target = 0` → `-1`。
 

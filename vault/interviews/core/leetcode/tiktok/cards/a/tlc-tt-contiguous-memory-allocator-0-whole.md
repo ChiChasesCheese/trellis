@@ -4,7 +4,7 @@ node: a.tt-contiguous-memory-allocator
 type: qa
 ---
 ## Q
-**连续内存分配器**｜Medium · TikTok 高频
+**连续内存分配器**｜Medium · 近一年被问：美国 2 次、国内 0 次 · 最近 2026-06-11（面试记录）
 
 实现管理一段连续地址空间 `[0, capacity)` 的内存分配器。`alloc(size) -> int`：用 first-fit（最左能放下的空闲块）分配 `size` 个单元，返回起始地址；`size` 为 `0`、负数或大于 `capacity` 时抛 `ValueError`；没有足够大的连续空闲块返回 `-1`。`free(addr)`：释放以 `addr` 开头的那次分配，释放后要与相邻的空闲块合并（coalesce）；对已经释放或从未分配过的地址抛 `ValueError`（double free）。构造函数可选 `alignment`：返回的地址必须是它的倍数（默认 `1`）。`1 <= capacity <= 10^9`，最多 `10^5` 次操作。例：`capacity = 10`，依次 `alloc(3)`、`alloc(4)`、`alloc(2)` → `0, 3, 7`，再 `alloc(2)` → `-1`；`free(3)` 后 `alloc(5)` → `-1`（只有 `4` 个连续单元），`alloc(4)` → `3`。
 

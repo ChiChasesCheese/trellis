@@ -4,7 +4,7 @@ node: a.interleaving-string
 type: qa
 ---
 ## Q
-**LC 97 交错字符串**｜Medium · 字节 高频
+**LC 97 交错字符串**｜Medium · CodeTop 国内累计 12 次 · 最近 2026-10-28（CodeTop）
 
 给三个字符串 `s1`、`s2`、`s3`，判断 `s3` 能否由 `s1` 和 `s2` **交错**组成：把 `s1`、`s2` 各自切成若干非空子串（段数相差不超过 `1`），然后交替拼接，各自内部字符的相对顺序不变。等价地说，`s3` 的每个字符依次取自 `s1` 或 `s2` 的下一个未用字符，且两者恰好用完。`0 <= s1.length, s2.length <= 100`，`0 <= s3.length <= 200`，三个字符串都由小写英文字母组成。进阶：只用 `O(s2.length)` 额外空间。例：`s1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac"` → `true`；`s3 = "aadbbbaccc"` → `false`；三个都是 `""` → `true`。
 

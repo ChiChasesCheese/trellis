@@ -4,7 +4,7 @@ node: a.longest-substring-with-at-most-k-distinct-characters
 type: qa
 ---
 ## Q
-**LC 340 至多包含 K 个不同字符的最长子串**｜Medium · TikTok 高频
+**LC 340 至多包含 K 个不同字符的最长子串**｜Medium · LC TikTok 热度 46/100（近 3 个月） · 近一年被问：美国 2 次、国内 0 次 · CodeTop 国内累计 12 次 · 最近 2026-09-04（面试记录）
 
 给字符串 `s` 和整数 `k`，找出**至多**包含 `k` 个**不同**字符的最长子串，返回它的长度。`1 <= s.length <= 5 * 10^4`，`0 <= k <= 50`。例：`s = "eceba"`，`k = 2` → `3`（`"ece"`）；`s = "aa"`，`k = 1` → `2`（`"aa"`）。
 

@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 1802 有界数组中指定下标处的最大值**｜Medium · TikTok 高频
+**LC 1802 有界数组中指定下标处的最大值**｜Medium · LC TikTok 热度 62/100
 
 给正整数 `n`、`index`、`maxSum`。构造长为 `n` 的正整数数组 `nums`，相邻元素之差的绝对值不超过 `1`，所有元素之和不超过 `maxSum`，并使 `nums[index]` 最大，返回这个最大值。`1 <= n <= maxSum <= 10^9`，`0 <= index < n`。例：`n = 6, index = 1, maxSum = 10` → `3`。
 

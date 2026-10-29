@@ -4,7 +4,7 @@ node: b.reorder-routes-to-make-all-paths-lead-to-the-city-zero
 type: qa
 ---
 ## Q
-**LC 1466 重新规划路线**｜Medium · TikTok 高频
+**LC 1466 重新规划路线**｜Medium · LC TikTok 热度 50/100
 
 有 `n` 座城市，编号 `0` 到 `n - 1`，之间共有 `n - 1` 条路线，任意两座城市之间只有唯一一条路线可走（路线网是一棵树）。`connections[i] = [a, b]` 表示一条从城市 `a` 到城市 `b` 的有向路线。城市 `0` 要举办比赛，请重新规划路线方向，使每座城市都能到达城市 `0`，返回需要变更方向的**最少**路线数。数据保证重新规划后每座城市都能到达城市 `0`。`2 <= n <= 5 * 10^4`，`connections.length == n - 1`，`connections[i].length == 2`，`0 <= connections[i][0], connections[i][1] <= n - 1`，`connections[i][0] != connections[i][1]`。例：`n = 6`，`connections = [[0,1],[1,3],[2,3],[4,0],[4,5]]` → `3`；`n = 5`，`connections = [[1,0],[1,2],[3,2],[3,4]]` → `2`；`n = 3`，`connections = [[1,0],[2,0]]` → `0`。
 

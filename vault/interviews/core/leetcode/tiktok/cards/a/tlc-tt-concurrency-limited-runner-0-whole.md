@@ -4,7 +4,7 @@ node: a.tt-concurrency-limited-runner
 type: qa
 ---
 ## Q
-**限制并发数的异步任务执行器**｜Medium · TikTok 高频
+**限制并发数的异步任务执行器**｜Medium · 近一年被问：美国 0 次、国内 7 次 · 最近 2026-10-26（面试记录）
 
 实现 `async def run_limited(tasks, limit)`：`tasks` 是 `n` 个无参的异步函数（调用后返回协程，`0 <= n <= 10^5`），`limit` 是并发上限。同一时刻最多有 `limit` 个任务在执行，一个结束立刻补上下一个；每个任务恰好被调用一次。返回与输入顺序一致的结果列表，每项是 `("fulfilled", 返回值)` 或 `("rejected", 异常)`：任务抛出的异常（包括调用时同步抛出的）都要被记录，不能让整体失败。`limit` 不是正整数时抛 `ValueError`。
 

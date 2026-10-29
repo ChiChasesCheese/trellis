@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**定长数组实现的双端队列（所有操作 O(1)）**｜Medium · TikTok 高频
+**定长数组实现的双端队列（所有操作 O(1)）**｜Medium · 近一年被问：美国 4 次、国内 0 次 · 最近 2026-07-06（面试记录）
 
 用一个定长数组实现双端结构 `FixedDeque(capacity)`，所有操作 `O(1)`：`push_head(x)`、`push_tail(x)`（成功 `True`，已满 `False`）；`pop_head()`、`pop_tail()`（返回值，空时返回 `None`）；`index(i)` 返回从队首数起第 `i` 个元素（`0` 起），越界返回 `None`。类似 Redis 的 `lpush`、`rpush`、`lpop`、`rpop`、`index`。`1 <= capacity <= 10^5`。例：容量 `3`，`push_tail(1)`、`push_head(2)`、`push_tail(3)`，`index(0..2)` → `2, 1, 3`。
 

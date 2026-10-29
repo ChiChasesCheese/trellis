@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 1352 最后 K 个数的乘积**｜Medium · TikTok·字节 高频
+**LC 1352 最后 K 个数的乘积**｜Medium · LC TikTok 热度 38/100（近 6 个月）
 
 设计类 `ProductOfNumbers`：`add(num)` 把整数加到流的末尾，`getProduct(k)` 返回最后 `k` 个数的乘积（保证至少有 `k` 个数）。任意连续序列的乘积都在 32 位整数内。`0 <= num <= 100`，`1 <= k <= 4 * 10^4`，调用合计至多 `4 * 10^4` 次。进阶：两个操作都 `O(1)`。例：加入 `3, 0, 2, 5, 4` 后，`getProduct(2)` 得 `20`，`getProduct(4)` 得 `0`。
 

@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 3387 两天自由外汇交易后的最大货币数**｜Medium · TikTok 高频
+**LC 3387 两天自由外汇交易后的最大货币数**｜Medium · 近一年被问：美国 3 次、国内 0 次 · 最近 2026-01-05（面试记录）
 
 你有 `1.0` 单位的 `initialCurrency`。第 1 天可按 `pairs1`、`rates1` 兑换任意次，第 2 天按 `pairs2`、`rates2` 兑换任意次；每个 `[start, target]` 的汇率是 `rate`，反向兑换的汇率是 `1 / rate`。返回两天后最多能拥有的 `initialCurrency` 数量。保证每天的汇率图内部没有矛盾和环。`1 <= pairs1.length, pairs2.length <= 10`，`1.0 <= rate <= 10.0`，货币名 `1` 到 `3` 个大写字母，输出最大 `5 * 10^10`。例：`initialCurrency = "NGN"`，`pairs1 = [["NGN","EUR"]]`，`rates1 = [9.0]`，`pairs2 = [["NGN","EUR"]]`，`rates2 = [6.0]` → `1.5`。
 

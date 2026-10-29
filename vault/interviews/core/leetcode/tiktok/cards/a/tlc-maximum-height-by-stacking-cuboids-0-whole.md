@@ -4,7 +4,7 @@ node: a.maximum-height-by-stacking-cuboids
 type: qa
 ---
 ## Q
-**LC 1691 堆叠长方体的最大高度**｜Hard · TikTok 高频
+**LC 1691 堆叠长方体的最大高度**｜Hard · 近一年被问：美国 0 次、国内 3 次 · 最近 2026-10-23（面试记录）
 
 给 `n` 个长方体，`cuboids[i] = [width, length, height]`。从中选一个**子集**堆叠起来：长方体 `i` 能放在 `j` 上，当且仅当 `width_i <= width_j`、`length_i <= length_j`、`height_i <= height_j`；每个长方体可以任意旋转（重新排列长宽高）后再放。返回堆叠后的**最大高度**。`1 <= n <= 100`，`1 <= width_i, length_i, height_i <= 100`。
 

@@ -4,7 +4,7 @@ node: b.bus-routes
 type: qa
 ---
 ## Q
-**LC 815 公交路线**｜Hard · TikTok 高频
+**LC 815 公交路线**｜Hard · LC TikTok 热度 62/100
 
 给数组 `routes`，`routes[i]` 是第 `i` 条公交线路经过的车站序列，这辆公交车在这条线路上循环往复地行驶（比如 `[1, 5, 7]` 表示 `1 -> 5 -> 7 -> 1 -> 5 -> ...`）。你从车站 `source` 出发（一开始不在车上），要去车站 `target`，期间只能乘坐公交车。求最少需要乘坐的公交车数量，到不了返回 `-1`。`1 <= routes.length <= 500`，`1 <= routes[i].length <= 10^5`，`routes[i]` 中的车站互不相同，`sum(routes[i].length) <= 10^5`，`0 <= routes[i][j] < 10^6`，`0 <= source, target < 10^6`。例：`routes = [[1,2,7],[3,6,7]]`，`source = 1`，`target = 6` → `2`（先乘第一辆到 `7`，再换第二辆到 `6`）；`routes = [[7,12],[4,5,15],[6],[15,19],[9,12,13]]`，`source = 15`，`target = 12` → `-1`。
 

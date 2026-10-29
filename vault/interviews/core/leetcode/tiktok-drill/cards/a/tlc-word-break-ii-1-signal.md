@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 140 单词拆分 II**｜Hard · TikTok 高频
+**LC 140 单词拆分 II**｜Hard · LC TikTok 热度 62/100 · 近一年被问：美国 2 次、国内 0 次 · CodeTop 国内累计 6 次 · 最近 2026-06-16（面试记录）
 
 给字符串 `s` 和字典 `wordDict`，在 `s` 中插入空格，使每个单词都在字典中，以任意顺序返回所有可能的句子。同一个单词可重复使用。`1 <= s.length <= 20`，`1 <= wordDict.length <= 1000`，`1 <= wordDict[i].length <= 10`，只含小写字母，字典中的词互不相同。例：`"catsanddog"` + `["cat","cats","and","sand","dog"]` → `["cats and dog","cat sand dog"]`。
 
