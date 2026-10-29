@@ -3,6 +3,11 @@
 *操作系统与网络*
 
 接收窗口就是一个滑动窗口；拥塞窗口的慢启动与加性增乘性减；Linux 默认的 CUBIC 与 BBR。
+
+## Cards (3)
+1. [[uth-os-net-tcp-1-window]]
+2. [[uth-os-net-tcp-2-aimd]]
+3. [[uth-os-net-tcp-3-bbr]]
 %% trellis:end %%
 
 ## Notes

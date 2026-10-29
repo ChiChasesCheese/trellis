@@ -226,7 +226,7 @@ nodes:
     summary: 一致性哈希环 + 虚拟节点；Nginx 的平滑加权轮询；随机挑两个选较空闲的（power of two choices）。
   - id: os-net.rate-limit
     title: 限流：令牌桶与漏桶
-    summary: Guava RateLimiter 的令牌桶（按时间补令牌，不需要定时器）；Nginx limit_req 的漏桶；滑动窗口计数。
+    summary: Guava RateLimiter 的令牌桶（按时间补令牌，不需要定时器）；Nginx limit_req 的漏桶；按 key 保存的限流状态。
 - id: devtools
   order: 9
   title: 开发工具
@@ -246,7 +246,7 @@ nodes:
     summary: Python re、Java、PCRE 用回溯，灾难性回溯可以让匹配变成指数时间；RE2、Go regexp 用自动机保证线性时间，代价是不支持反向引用。
   - id: devtools.editor-buffers
     title: 编辑器与浏览器：缓冲区和撤销
-    summary: gap buffer、piece table（VS Code）、rope；撤销 / 重做是两个栈；浏览器前进后退也是两个栈。
+    summary: gap buffer、piece table（VS Code）、rope；撤销 / 重做是两个栈，Vim 更进一步用撤销树。
   - id: devtools.compression
     title: 压缩：LZ77 滑动窗口 + 哈夫曼
     summary: gzip / zlib 的 DEFLATE 在 32 KB 窗口里找重复串再做哈夫曼编码；zstd 和 LZ4 在速度与压缩率之间的取舍。
