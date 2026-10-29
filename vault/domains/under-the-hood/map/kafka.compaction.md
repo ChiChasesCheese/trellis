@@ -6,10 +6,11 @@
 
 **Core** — part of the first pass through this subject.
 
-## Cards (3)
+## Cards (4)
 1. [[uth-kafka-compaction-1-two-pass]]
-2. [[uth-kafka-compaction-2-tombstone]]
-3. [[uth-kafka-compaction-3-skimpy-probe]]
+2. [[uth-kafka-compaction-4-map-memory]]
+3. [[uth-kafka-compaction-2-tombstone]]
+4. [[uth-kafka-compaction-3-skimpy-probe]]
 %% trellis:end %%
 
 ## Notes

@@ -50,6 +50,22 @@ the end of the card, so the card stays short):
 - If no problem in the decks truly uses the card's idea, keep one line `**对应 LeetCode：** 无直接对应的题` and no example.
   Do not force a match.
 
+## 2c. From zero, cause before term (Chi, 2026-10-29; overrides anything shorter)
+
+Chi has never touched most of these internals. A card that lists terms (token, nibble, FSE, entropy coding, RFC
+window size …) with no cause and effect is unreadable to him. Rules:
+
+1. **Every leaf opens with a from-zero card** (step 1): the problem the tool has to solve in everyday words, the
+   obvious way to do it and where that breaks, then the tool's trick, shown on a **tiny worked example** with a figure
+   (e.g. compression: `abcabcabc` → `abc` + 「往回 3 个、复制 6 个」; then why frequent letters get short codes,
+   with a Huffman tree for a 4-letter string). Use the label `**背景。**` for the problem and its naive fix, before 结构.
+2. **Every term is earned**: the first time a term appears on a card, say what it is in plain words in the same
+   sentence, or drop it. A term needs a job in the story; trivia (bit layouts, RFC numbers, default levels) goes
+   unless the card is about exactly that.
+3. Later cards of a leaf build on the story in order (one new idea per card) and each still restates the 1-line
+   context it needs, so it stands alone. Read like a chain: 问题 → 直觉做法 → 卡在哪 → 工具怎么做 → 代价.
+4. Shorter is not the goal; understandable is. A from-zero card may be longer (≤ 250 字 excluding figure and example).
+
 ## 3. Keep
 
 The facts already verified (do not change numbers or versions; `claims-*.md` holds their sources), the §2b layout, all

@@ -10,6 +10,8 @@ step: 3
 `java.util.Timer` 内部用什么保存任务？一个任务抛异常会发生什么？
 
 ## A
+**背景。** `Timer` 是最早的定时器：一个线程专门按时间顺序执行任务，任务按触发时间放在一个堆里。简单，但所有任务共用这一个线程。
+
 **结构。** `TaskQueue`：一个以 `nextExecutionTime` 排序的平衡二叉堆，从下标 1 开始存，初始数组 128 个槽。
 
 **细节。**
@@ -22,4 +24,4 @@ step: 3
 
 **坑。** 新代码直接用 `ScheduledThreadPoolExecutor`。
 
-**对应 LeetCode：** LC 295 数据流的中位数 · LC 1834 单线程 CPU
+**对应 LeetCode：** 无直接对应的题

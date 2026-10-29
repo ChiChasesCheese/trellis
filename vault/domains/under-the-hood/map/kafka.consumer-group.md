@@ -6,10 +6,11 @@
 
 **Core** — part of the first pass through this subject.
 
-## Cards (3)
-1. [[uth-kafka-consumer-group-1-offsets-topic]]
-2. [[uth-kafka-consumer-group-2-range-vs-roundrobin]]
-3. [[uth-kafka-consumer-group-3-rebalance]]
+## Cards (4)
+1. [[uth-kafka-consumer-group-0-why-group]]
+2. [[uth-kafka-consumer-group-1-offsets-topic]]
+3. [[uth-kafka-consumer-group-2-range-vs-roundrobin]]
+4. [[uth-kafka-consumer-group-3-rebalance]]
 %% trellis:end %%
 
 ## Notes
