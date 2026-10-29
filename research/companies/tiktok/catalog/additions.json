@@ -1347,6 +1347,96 @@
    "sources": [
     "NC 2930628"
    ]
+  },
+  {
+   "key": "all-simple-paths",
+   "title_zh": "枚举有向图中的所有简单路径（含环的情况）",
+   "title_en": "Enumerate all simple directed paths",
+   "refs": 1,
+   "last_seen": "2026-08-23",
+   "regions": {
+    "US": 1
+   },
+   "statement": "给一个有向图（n 个点、边表 edges）和起点 s、终点 t，按任意顺序返回从 s 到 t 的所有简单路径（路径上不能重复经过同一个点）。1 <= n <= 15，边数 <= 60，图里可能有环。例：n = 4，edges = [[0,1],[0,2],[1,2],[2,3],[1,3]]，s = 0，t = 3 → [[0,1,2,3],[0,1,3],[0,2,3]]。追问：如果图保证无环（DAG）可以怎样简化；把所有简单环也列出来。",
+   "note": "Inferred: the input format, the limits and the follow-ups; the report gives only the title (graphs, backtracking).",
+   "sources": [
+    "TI 2026-08-23"
+   ]
+  },
+  {
+   "key": "idempotent-versioned-update",
+   "title_zh": "幂等、带版本号的数据更新",
+   "title_en": "Idempotent versioned database update",
+   "refs": 1,
+   "last_seen": "2026-08-09",
+   "regions": {
+    "US": 1
+   },
+   "statement": "实现一个内存里的键值存储 VersionedStore：update(request_id, key, value, expected_version) 只有当 key 的当前版本等于 expected_version 时才写入，并把版本加 1，返回新版本；版本不对返回冲突。同一个 request_id 重复调用（客户端超时重试）时不能重复写，要原样返回第一次的结果。get(key) 返回 (value, version)，不存在的 key 版本为 0。调用总数 <= 10^5。追问：request_id 表无限增长怎么办；多线程并发怎么加锁；落到真实数据库怎样用一条 SQL 做比较并更新。",
+   "note": "Inferred: the whole statement (the source is locked; only the title is known). The shape follows the standard optimistic-concurrency + idempotency-key design.",
+   "sources": [
+    "PracHub 2026-08-09"
+   ]
+  },
+  {
+   "key": "most-frequent-ties-smaller",
+   "title_zh": "出现次数最多的元素（并列取较小的）",
+   "title_en": "Most frequent element, ties broken by the smaller value",
+   "refs": 1,
+   "last_seen": "2026-07-15",
+   "regions": {
+    "US": 1
+   },
+   "statement": "给整数数组 nums，返回出现次数最多的元素；有多个并列时返回数值最小的那个。1 <= nums.length <= 10^5，-10^9 <= nums[i] <= 10^9。例：[3,1,3,1,2] → 1。追问：数据是流，每来一个数都要能随时回答；还支持删除一个数。",
+   "note": "Inferred: limits and follow-ups; the report names it as an easy warm-up.",
+   "sources": [
+    "TT-013"
+   ]
+  },
+  {
+   "key": "longest-zigzag-grid-path",
+   "title_zh": "网格中最长的之字形递增路径",
+   "title_en": "Longest zigzag path in a grid",
+   "refs": 1,
+   "last_seen": "2026-06-17",
+   "regions": {
+    "US": 1
+   },
+   "statement": "给 m x n 的整数网格。一条路径从任意格子出发，每步走到上下左右相邻的格子，值必须严格增大，并且水平移动和竖直移动必须交替（第一步方向任意）。返回最长路径包含的格子数。1 <= m, n <= 200，0 <= grid[i][j] <= 2^31 - 1。例：[[1,2],[4,3]] → 4（1→2 水平，2→3 竖直，3→4 水平）。追问：输出这条路径；不要求交替时就是 LC 329。",
+   "note": "Inferred: the exact zigzag rule (alternating horizontal / vertical moves with strictly increasing values); the report gives only the title and tags graphs, dynamic programming.",
+   "sources": [
+    "TI 2026-06-17"
+   ]
+  },
+  {
+   "key": "die-beats-probability",
+   "title_zh": "一个骰子掷出更大点数的概率",
+   "title_en": "Probability one fair die beats another",
+   "refs": 1,
+   "last_seen": "2026-04-04",
+   "regions": {
+    "US": 1
+   },
+   "statement": "两个公平的骰子 A、B，各有若干个面，每面写一个整数（面数可以不同，数字可以重复）。各掷一次，求 A 的点数严格大于 B 的概率。1 <= 面数 <= 10^5，面上的数在 [-10^9, 10^9]。例：A = [2,2,6]，B = [1,5,5] → 5/9。追问：平局算一半时怎么改；三个骰子能否出现 A 胜 B、B 胜 C、C 又胜 A（非传递骰子）。",
+   "note": "Inferred: the input format and limits; the report gives the title and the tags sorting, two-pointers.",
+   "sources": [
+    "TI 2026-04-04"
+   ]
+  },
+  {
+   "key": "agent-tool-call-tracer",
+   "title_zh": "Agent 工具调用的事件追踪",
+   "title_en": "Streaming event tracer for agent tool calls",
+   "refs": 1,
+   "last_seen": "2026-08-23",
+   "regions": {
+    "US": 1
+   },
+   "statement": "一个 Agent 会调用外部工具，每次调用属于某个请求，失败后可能重试。事件按到达顺序流入：(time, request_id, call_id, attempt, kind, stage)，kind 是 start / success / failure，failure 带失败阶段 stage（如 timeout、bad_args、http_5xx）。实现 Tracer：on_event(event) 逐条处理；trace(request_id) 返回这个请求每个 call 的尝试次数、最终状态（成功 / 失败 / 进行中）和第一次失败的阶段；flaky(k) 返回重试超过 k 次的 call。事件总数 <= 10^5。追问：事件乱序到达；内存有限时怎样淘汰已结束的请求；把重试规则（最多重试几次、哪些阶段不重试）做成可配置。",
+   "note": "Inferred: the event schema and the queries; the report gives the title (trace and debug agent tool-call failures, rated hard) and that each call belongs to a request, may be retried, one trace record per event in arrival order with request id, attempt id and failure stage.",
+   "sources": [
+    "TI 2026-08-23"
+   ]
   }
  ],
  "system_design": [

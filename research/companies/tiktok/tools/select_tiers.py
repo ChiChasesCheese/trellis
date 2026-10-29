@@ -10,7 +10,7 @@ Called by build_list.py too. Three signals, each turned into a share of its own 
 - US lists (0.4): TikTok + ByteDance company-tag frequency (0-100) from lc_company.py, full weight in the 30-day and
   3-month windows, 0.8 in the 6-month window, 0.5 otherwise.
 
-Tier A = the problems Chi pinned (`catalog/pinned.json`, on top of TARGET), everything seen in the past year in any source (reports, CodeTop, the US 30-day / 3-month / 6-month lists), then the top three problems of every pattern (so tier A
+Tier A = the problems Chi pinned (`catalog/pinned.json`, on top of TARGET), every US sighting of the past year, every problem on the US TikTok / ByteDance company tags, anything seen anywhere in the last 30 days (the China-side long tail stays in B), then the top three problems of every pattern (so tier A
 teaches every technique), then the TARGET highest scores (all of them, whatever else is already in). A family counts as covered when any of
 its problems is in tier A; the report states how much of each signal tier A covers.
 """
@@ -62,6 +62,11 @@ FAMILY_VARIANT = {
     "Convert a number to its string form": "tt-number-to-string",
     "Count inverse pairs": "shu-zu-zhong-de-ni-xu-dui-lcof", "First 10,000 / n-th prime": "count-primes",
     "BFS maze / map shortest path": "shortest-path-in-binary-matrix",
+    "Enumerate all simple directed paths": "tt-all-simple-paths",
+    "Idempotent versioned database update": "tt-idempotent-versioned-update",
+    "Most frequent element, ties": "tt-most-frequent-ties-smaller", "Longest zigzag path in a grid": "tt-longest-zigzag-grid-path",
+    "Probability one fair die beats another": "tt-die-beats-probability",
+    "streaming event tracer for an agent": "tt-agent-tool-call-tracer",
 }
 
 
@@ -127,7 +132,8 @@ def pattern_map() -> dict[int, set[str]]:
 def assign(index: dict[str, dict], today: date | None = None) -> dict:
     """Set p["tier"], p["score"] and p["a_reason"] on every problem of `index`; return the coverage report."""
     today = today or date.today()
-    cut30 = today - timedelta(days=365)  # Chi (2026-10-29): everything seen in the past year goes to tier A
+    cut30 = today - timedelta(days=30)
+    cut1y = today - timedelta(days=365)  # Chi (2026-10-29): every US sighting of the past year goes to tier A
     by_id: dict[int, list[str]] = {}
     for slug, p in index.items():
         if p.get("id"):
@@ -149,6 +155,7 @@ def assign(index: dict[str, dict], today: date | None = None) -> dict:
             rep[s] = rep.get(s, 0) + w * mass
         members.append((fam, [s for s, _ in slugs], mass))
         fam["recent"] = any(day(d) >= cut30 for d in fam["dates"])
+        fam["us_year"] = any(day(d) >= cut1y and r == "US" for d, r in zip(fam["dates"], fam["regions"]))
 
     snap = json.loads((CAT / "codetop.json").read_text(encoding="utf-8"))["rows"]
     ct_all = {r["slug"]: r["reports"] * 0.5 ** ((today - day(r["last_seen"])).days / 365) for r in snap}
@@ -169,21 +176,25 @@ def assign(index: dict[str, dict], today: date | None = None) -> dict:
     for s in json.loads(pinned.read_text(encoding="utf-8"))["A"] if pinned.exists() else []:
         if s in index:
             a[s] = "pinned"
-    for fam, slugs, _ in members:  # 1. seen in the last 30 days
-        if fam["recent"] and slugs:
-            a.setdefault(max(slugs, key=lambda s: index[s]["score"]), "1y")
+    for fam, slugs, _ in members:  # 1. seen anywhere in the last 30 days, or in the US in the past year
+        reason = "us1y" if fam["us_year"] else "30d" if fam["recent"] else ""
+        if reason and slugs:
+            a.setdefault(max(slugs, key=lambda s: index[s]["score"]), reason)
             for s in slugs:  # the TikTok version is what was actually asked
                 if s.startswith("tt-"):
-                    a.setdefault(s, "1y")
+                    a.setdefault(s, reason)
     for f in sorted(CAT.glob("refresh-*.json")):  # every problem a recent report names, follow-ups included
         for row in json.loads(f.read_text(encoding="utf-8")).get("sightings", []):
-            if not row.get("scope", "").startswith("out") and day(row.get("date", "")) >= cut30:
+            recent = day(row.get("date", "")) >= (cut1y if row.get("region") != "CN" else cut30)
+            if not row.get("scope", "").startswith("out") and recent:
                 for n in row.get("lc") or []:
                     for s in by_id.get(int(n), []):
-                        a.setdefault(s, "1y")
-    for s, p in index.items():
-        if s in ct_recent or s in us_recent or p.get("window") in ("30d", "3m", "6m"):
-            a.setdefault(s, "1y")
+                        a.setdefault(s, "us1y" if row.get("region") != "CN" else "30d")
+    for s, p in index.items():  # US company tags (any window) and anything CodeTop saw in the last 30 days
+        if "tiktok" in p["companies"] or "bytedance" in p["companies"]:
+            a.setdefault(s, "ustag")
+        elif s in ct_recent:
+            a.setdefault(s, "30d")
     pats = pattern_map()  # 2. every pattern gets its best problems
     for pat in sorted({x for v in pats.values() for x in v}):
         cands = sorted((s for s, p in index.items() if pat in pats.get(p.get("id") or -1, set())),
@@ -206,7 +217,7 @@ def assign(index: dict[str, dict], today: date | None = None) -> dict:
     covered = [(f, m) for f, slugs, m in members if any(s in a for s in slugs)]
     return {
         "a": len(a), "b": len(index) - len(a), "reasons": {k: sum(1 for v in a.values() if v.startswith(k))
-                                                           for k in ("pinned", "1y", "pattern", "score")},
+                                                           for k in ("pinned", "us1y", "30d", "ustag", "pattern", "score")},
         "reports_weighted": round(100 * sum(m for _, m in covered) / tot["reports"], 1),
         "reports_raw": round(100 * sum(f["refs"] for f, _ in covered) / sum(f["refs"] for f in fams), 1),
         "reports_reachable": round(100 * sum(f["refs"] for f, s, _ in members if s) / sum(f["refs"] for f in fams), 1),

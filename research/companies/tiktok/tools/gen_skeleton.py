@@ -113,9 +113,9 @@ nodes = sorted([
         [{"id": f"python.{a}", "title": t, "summary": s} for a, t, s in PYTHON], True),
  branch(2, "patterns", "模式识别", "从题面信号到解法模式：每个模式的触发信号、Python 模板、正确性来源、常见变形与陷阱。",
         [{"id": f"patterns.{a}", "title": t, "summary": s} for a, t, s in PATTERNS], True),
- branch(1, "a", "A 档：最高频", "先学这一档：TikTok、字节（美国与国内）过去一年出现过的题全部在内，加上热度前 200 和每个模式至少 3 道；高频在前，热度相近时先易后难。",
+ branch(1, "a", "A 档：最高频", "先学这一档：美国 TikTok / 字节过去一年面试出现过的题、美国公司标签上的全部题、任何地方近 30 天出现过的题，加上热度前 200；高频在前，热度相近时先易后难。",
         [{"id": f"a.{p['slug']}", "title": leaf_title(p), "summary": leaf_summary(p)} for p in ordered("A")], True),
- branch(4, "b", "B 档：次高频", "其余题：过去一年没有出现过的；学完 A 档再学；高频在前，先易后难。",
+ branch(4, "b", "B 档：次高频", "其余题：主要是国内偶尔出现的长尾题；面试前可以不看；高频在前，先易后难。",
         [{"id": f"b.{p['slug']}", "title": leaf_title(p), "summary": leaf_summary(p)} for p in ordered("B")], False),
 ], key=lambda n: n["order"])
 sk = {"domain": "tiktok-lc", "title": "TikTok 字节高频 LeetCode · 整题答案",
