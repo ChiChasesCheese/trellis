@@ -6,8 +6,8 @@ Called by build_list.py too. Three signals, each turned into a share of its own 
 
 - reports (weight 0.5): the de-duplicated interview sightings of CATALOG.md §1 plus `catalog/refresh-*.json`, grouped
   into problem families; a sighting counts 0.5^(age / 180 days), so last month's report outweighs last year's.
-- CodeTop (0.3): China-side ByteDance report counts (`catalog/codetop.json`), 0.5^(age of last report / 365 days).
-- US lists (0.2): TikTok + ByteDance company-tag frequency (0-100) from lc_company.py, full weight in the 30-day and
+- CodeTop (0.1): China-side ByteDance report counts (`catalog/codetop.json`), 0.5^(age of last report / 365 days).
+- US lists (0.4): TikTok + ByteDance company-tag frequency (0-100) from lc_company.py, full weight in the 30-day and
   3-month windows, 0.8 in the 6-month window, 0.5 otherwise.
 
 Tier A = everything seen in the last 30 days in any source, then the top three problems of every pattern (so tier A
@@ -28,7 +28,7 @@ PATTERN_CARDS = ROOT / "vault/interviews/core/leetcode/tiktok/cards/patterns"
 COMPANIES = ROOT / "vault/interviews/core/leetcode/companies"
 TARGET = 200
 PER_PATTERN = 3
-MIX = {"reports": 0.5, "codetop": 0.3, "us": 0.2}
+MIX = {"reports": 0.5, "codetop": 0.1, "us": 0.4}
 
 # CATALOG family (name prefix) -> the leaf that teaches it, when the family names no LeetCode number in the deck
 FAMILY_VARIANT = {
