@@ -1,0 +1,252 @@
+# The data structures and algorithms inside the tools a backend engineer uses daily: language runtimes and standard
+# libraries first (Python, Java, C++, Go, Rust), then Redis, Kafka, databases, OS and network, developer tools.
+# A light companion to the LeetCode decks: each card ties one real implementation to the LeetCode pattern it uses.
+domain: under-the-hood
+title: 工具里的数据结构与算法（under the hood）
+lang: zh
+vault: domains/under-the-hood
+study:
+  order: core-first
+  mix: new-first
+  new_per_day: 15
+  reviews_per_day: 100
+nodes:
+- id: python
+  order: 1
+  title: Python 内置类型与标准库
+  summary: 每天都在用的 list、dict、set、str、int、sort、heapq、deque、lru_cache、GC、asyncio 底下是什么数据结构，为什么这样选。
+  core: true
+  children:
+  - id: python.list
+    title: list：动态数组与过度分配
+    summary: 连续的指针数组；append 均摊 O(1) 靠按比例多分配；insert(0)、pop(0) 为什么是 O(n)。
+  - id: python.dict
+    title: dict：紧凑哈希表
+    summary: 3.6 起的紧凑布局（索引数组 + 条目数组）为什么既省内存又保持插入顺序；开放寻址与扰动探测；扩容时机。
+  - id: python.set
+    title: set：开放寻址与哈希随机化
+    summary: set 和 dict 的结构差别；字符串哈希为什么每次启动都不同（防哈希洪水攻击）。
+  - id: python.str-int
+    title: str 与 int：不可变对象的实现
+    summary: 字符串按最宽字符选 1/2/4 字节存储；驻留（interning）；int 是任意精度的数位数组，大数乘法用 Karatsuba。
+  - id: python.sort
+    title: sorted / list.sort：Timsort 与 Powersort
+    summary: 找天然有序的段（run）、二分插入补齐短段、按栈规则归并、galloping；3.11 起归并策略换成 Powersort。
+  - id: python.heapq-bisect
+    title: heapq 与 bisect：数组上的堆与二分
+    summary: heapq 就是 list 上的二叉最小堆，3.14 起才有最大堆函数；bisect 的左右边界；两者都是纯数组算法。
+  - id: python.deque-ordereddict
+    title: deque 与 OrderedDict：块链表与双向链表
+    summary: deque 是固定大小块组成的双向链表，两端 O(1)、中间 O(n)；OrderedDict 在 dict 外再挂一条双向链表。
+  - id: python.lru-cache
+    title: functools.lru_cache：哈希表 + 环形双向链表
+    summary: C 实现里的字典 + 环形链表，命中时移到表头，满了淘汰表尾；和 LC 146 一模一样。
+  - id: python.memory-gc
+    title: 引用计数与分代 GC
+    summary: 引用计数为主、循环垃圾靠图遍历检测；分代假设；为什么 del 不一定立刻释放内存。
+  - id: python.asyncio
+    title: asyncio 事件循环：就绪队列 + 定时器堆
+    summary: 一轮循环做什么：就绪回调的 deque、call_later 的最小堆、selector 等待 I/O；这就是一个最小堆调度器。
+- id: java
+  order: 2
+  title: Java 集合与并发工具
+  summary: ArrayList、HashMap、TreeMap、PriorityQueue、ArrayDeque、ConcurrentHashMap、Arrays.sort、String、ForkJoinPool 的内部结构与关键常数。
+  core: true
+  children:
+  - id: java.arraylist-arraydeque
+    title: ArrayList 与 ArrayDeque：1.5 倍扩容与环形数组
+    summary: ArrayList 的扩容公式；ArrayDeque 用环形数组做栈和队列（下标到头绕回），为什么比 Stack、LinkedList 快。
+  - id: java.hashmap
+    title: HashMap：桶数组、扰动函数与树化
+    summary: h ^ (h >>> 16) 为什么；容量为 2 的幂用位与取模；负载因子 0.75；链表长到 8 转红黑树；扩容时链表一分为二。
+  - id: java.linkedhashmap-treemap
+    title: LinkedHashMap 与 TreeMap
+    summary: LinkedHashMap 的 accessOrder + removeEldestEntry 三行写出 LRU；TreeMap 是红黑树，floorKey / ceilingKey 是 O(log n)。
+  - id: java.priorityqueue
+    title: PriorityQueue 与定时线程池
+    summary: 数组上的二叉堆；ScheduledThreadPoolExecutor 的 DelayedWorkQueue 也是堆；Timer、DelayQueue 怎样按时间取任务。
+  - id: java.concurrenthashmap
+    title: ConcurrentHashMap：CAS + 桶级锁
+    summary: Java 8 起不再分段：空桶用 CAS 放、非空桶锁住桶头；多线程协助扩容；size 用分散计数（LongAdder 思路）。
+  - id: java.sort
+    title: Arrays.sort：双轴快排与 TimSort
+    summary: 基本类型用双轴快排（不稳定、无额外空间），对象用 TimSort（稳定）；为什么两种类型用不同算法。
+  - id: java.string
+    title: String 与 StringBuilder
+    summary: Java 9 起紧凑字符串（Latin-1 一字节）；hashCode 用 31 乘法并缓存；字符串拼接与 StringBuilder 扩容。
+  - id: java.forkjoin
+    title: ForkJoinPool 与并行流：工作窃取
+    summary: 每个线程一个双端队列，自己从一端取、别人从另一端偷；parallelStream 和 CompletableFuture 默认用它。
+- id: cpp
+  order: 3
+  title: C++ 标准库容器与算法
+  summary: vector、std::sort、unordered_map、map、priority_queue、deque、string 的实现选择（以 libstdc++ 和 libc++ 为准，注明两者差别）。
+  core: true
+  children:
+  - id: cpp.vector
+    title: vector：倍增扩容与迭代器失效
+    summary: 容量增长因子（libstdc++ 与 libc++ 为 2，MSVC 为 1.5）、reserve、push_back 均摊 O(1)、扩容后旧指针和迭代器全部失效。
+  - id: cpp.sort
+    title: std::sort：内省排序
+    summary: 快排 + 深度超限改堆排序 + 小区间插入排序，最坏 O(n log n)；stable_sort 是归并；nth_element 是快速选择。
+  - id: cpp.unordered-map
+    title: unordered_map：节点式链地址法
+    summary: 每个元素一个堆上节点、桶里挂链表；最大负载因子 1；为什么比开放寻址的哈希表（如 absl::flat_hash_map）慢。
+  - id: cpp.map-set
+    title: map / set：红黑树
+    summary: 有序关联容器都是红黑树：插入删除 O(log n)、迭代有序、lower_bound；和 Java TreeMap 同一个结构。
+  - id: cpp.priority-queue-deque
+    title: priority_queue 与 deque
+    summary: priority_queue 是 vector 上的 make_heap / push_heap，默认大顶堆；deque 是指向固定大小块的指针数组。
+  - id: cpp.string
+    title: std::string：小字符串优化（SSO）
+    summary: 短字符串直接存在对象内部、不分配堆内存；各实现能放下多长；COW 字符串为什么被 C++11 禁止。
+- id: go-rust
+  order: 4
+  title: Go 与 Rust 的运行时和集合
+  summary: Go 的切片、map、调度器、channel、定时器，Rust 的 Vec、HashMap、BTreeMap，以及现代标准库排序 pdqsort / driftsort。
+  children:
+  - id: go-rust.go-slice-map
+    title: Go 切片扩容与 map
+    summary: append 的扩容规则（小切片翻倍、大切片逐步降到约 1.25 倍）；Go 1.24 起 map 改为 Swiss table。
+  - id: go-rust.go-scheduler
+    title: Go 调度器与定时器：工作窃取与四叉堆
+    summary: G、M、P；每个 P 一个本地运行队列（环形数组）加全局队列，空闲时去别的 P 偷一半；定时器用四叉堆。
+  - id: go-rust.go-channel
+    title: channel：环形缓冲 + 等待队列
+    summary: 有缓冲 channel 是一个环形数组加发送、接收两个等待队列，外加一把锁；无缓冲 channel 直接在两个 goroutine 之间交接。
+  - id: go-rust.rust-collections
+    title: Rust 的 Vec、HashMap 与 BTreeMap
+    summary: HashMap 来自 hashbrown（SwissTable：控制字节 + SIMD 分组探测），默认 SipHash 1-3 防攻击；BTreeMap 是 B 树而不是红黑树，为什么。
+  - id: go-rust.modern-sorts
+    title: 现代排序：pdqsort、driftsort、ipnsort
+    summary: Go 1.19 起 sort 用 pdqsort；Rust 1.81 起稳定排序用 driftsort、不稳定排序用 ipnsort；它们怎样识别有序输入、避开快排最坏情况。
+- id: redis
+  order: 5
+  title: Redis
+  summary: 每种数据类型底下的编码、渐进式 rehash、跳表、近似 LRU、过期采样、HyperLogLog、单线程事件循环与 fork 持久化。
+  core: true
+  children:
+  - id: redis.sds-dict
+    title: SDS 与 dict：渐进式 rehash
+    summary: SDS 记录长度、二进制安全、预分配；dict 有两张哈希表，扩容时每次操作搬一个桶，避免一次性卡顿。
+  - id: redis.zset
+    title: ZSET：跳表 + 哈希表
+    summary: 为什么有序集合用跳表加哈希表而不是红黑树；跳表的层数概率 1/4、最多 32 层；ZRANK 靠跨度（span）字段。
+  - id: redis.compact-encodings
+    title: listpack、quicklist、intset：小数据的紧凑编码
+    summary: 元素少时用一段连续内存存全部元素，超过阈值再转成哈希表或跳表；List 是 listpack 组成的双向链表。
+  - id: redis.eviction-expire
+    title: 近似 LRU / LFU 与过期删除
+    summary: 不维护全局 LRU 链表，而是随机采样几个键、淘汰最久未用的；LFU 用对数计数器加衰减；过期键是惰性删除加定期随机抽查。
+  - id: redis.hyperloglog-bitmap
+    title: HyperLogLog 与位图
+    summary: 16384 个寄存器、约 12 KB 估算任意多元素的基数，标准误差 0.81%；小基数用稀疏编码；SETBIT / BITCOUNT 做签到和活跃统计。
+  - id: redis.event-loop-persistence
+    title: 单线程事件循环与 fork 持久化
+    summary: epoll 驱动的单线程主循环为什么够快；RDB 快照靠 fork 和写时复制；AOF 重写。
+  - id: redis.streams-geo
+    title: Streams 与 GEO
+    summary: Streams 用基数树（rax）按 ID 索引 listpack；GEO 把经纬度编码成 geohash 存进 ZSET，附近查询就是有序集合的范围查询。
+- id: kafka
+  order: 6
+  title: Kafka
+  summary: 分区日志、稀疏索引、零拷贝、分区器、日志压实、ISR、时间轮、消费者组分配。
+  core: true
+  children:
+  - id: kafka.log-index
+    title: 分区日志：分段文件与稀疏索引
+    summary: 每个分区是一串只追加的段文件；偏移量索引每隔约 4 KB 记一条，查找时二分索引再顺序扫描；时间索引同理。
+  - id: kafka.zero-copy
+    title: 页缓存、零拷贝与批量
+    summary: Kafka 不自己做缓存而用操作系统页缓存；消费时 sendfile 直接从页缓存送到网卡；批量 + 压缩把小消息变成大块顺序 I/O。
+  - id: kafka.partitioner
+    title: 分区器：哈希与粘性分区
+    summary: 有 key 时 murmur2 哈希取模；无 key 时粘性分区把一批消息先填满一个分区；增加分区会打乱 key 到分区的映射。
+  - id: kafka.compaction
+    title: 日志压实：每个 key 只留最新值
+    summary: 清理线程为脏段建一个 key 到最新偏移量的哈希表，再重写段文件；墓碑消息（value 为空）表示删除。
+  - id: kafka.replication
+    title: 副本、ISR 与高水位
+    summary: leader 加跟随者；ISR 是跟得上的副本集合；高水位以下的消息才对消费者可见；acks=all 与 min.insync.replicas。
+  - id: kafka.timing-wheel
+    title: 延迟操作：分层时间轮
+    summary: 成千上万个超时请求放进环形的时间格，到点整格处理，插入删除 O(1)；时间范围不够就上一层更粗的轮；时钟不逐毫秒空转，而是靠非空格子的 DelayQueue 推进。
+  - id: kafka.consumer-group
+    title: 消费者组：位点与分区分配
+    summary: 位点存在压实主题 __consumer_offsets；分区分配策略（range、round-robin、sticky、cooperative）；Kafka 4.0 起新协议把分配放到服务端（客户端默认仍是 classic）。
+- id: storage
+  order: 7
+  title: 数据库与搜索引擎
+  summary: B+ 树、LSM 树、布隆过滤器、WAL 与 MVCC、连接算法与外部排序、缓冲池替换、倒排索引。
+  children:
+  - id: storage.btree
+    title: B+ 树：InnoDB 与 SQLite
+    summary: 一页 16 KB、扇出几百，三四层就能装下亿级行；聚簇索引与二级索引回表；范围查询沿叶子链表走。
+  - id: storage.lsm
+    title: LSM 树：RocksDB / LevelDB
+    summary: 写先进内存表（跳表）再顺序刷成有序文件；后台压实就是多路归并；读放大、写放大、空间放大的取舍。
+  - id: storage.bloom
+    title: 布隆过滤器：LSM 的读路径
+    summary: 每个 SST 文件一个布隆过滤器，查不存在的键时跳过整个文件；每个键约 10 位时误判率约 1%。
+  - id: storage.wal-mvcc
+    title: WAL 与 MVCC
+    summary: 先写日志再改数据页，崩溃后重放；MVCC 用版本链让读不阻塞写（InnoDB 的 undo 链、PostgreSQL 的元组多版本）。
+  - id: storage.query-exec
+    title: 查询执行：哈希连接、排序归并、外部排序
+    summary: 两张表连接时建哈希表或先排序再归并；数据大于内存时分块排序再多路归并（LC 23 的放大版）。
+  - id: storage.buffer-pool
+    title: 缓冲池替换：中点 LRU 与时钟扫描
+    summary: InnoDB 把 LRU 链表分成新老两段防止全表扫描冲掉热页；PostgreSQL 用时钟扫描（clock sweep）近似 LRU。
+  - id: storage.inverted-index
+    title: Lucene / Elasticsearch 的倒排索引
+    summary: 词到文档列表的映射、文档列表的分块差值压缩与跳表、词典索引（10.2 及以前是 FST，10.3 起换成专用 trie）、过滤结果用 roaring bitmap。
+- id: os-net
+  order: 8
+  title: 操作系统与网络
+  summary: Linux 调度器、epoll、内存分配器、页缓存、TCP 窗口、负载均衡、限流。
+  children:
+  - id: os-net.scheduler
+    title: Linux 调度器：CFS 的红黑树到 EEVDF
+    summary: 按虚拟运行时间排序的红黑树、取最左节点运行；6.6 起换成 EEVDF，仍然用红黑树。
+  - id: os-net.epoll
+    title: epoll：红黑树 + 就绪链表
+    summary: 关注的 fd 存在红黑树里，就绪的放进链表，epoll_wait 只拷贝就绪的；为什么比 select / poll 的 O(n) 扫描快。
+  - id: os-net.allocators
+    title: 内存分配器：伙伴系统、slab、malloc
+    summary: 内核按 2 的幂分块的伙伴系统、给固定大小对象用的 slab；用户态 jemalloc / tcmalloc 的尺寸分级和线程缓存。
+  - id: os-net.page-cache
+    title: 页缓存与页面回收
+    summary: 文件读写都经过页缓存；活跃 / 不活跃两条 LRU 链表与 MGLRU；为什么 Kafka 和数据库都离不开它。
+  - id: os-net.tcp
+    title: TCP：滑动窗口与拥塞控制
+    summary: 接收窗口就是一个滑动窗口；拥塞窗口的慢启动与加性增乘性减；Linux 默认的 CUBIC 与 BBR。
+  - id: os-net.load-balancing
+    title: 负载均衡：一致性哈希、平滑加权轮询、P2C
+    summary: 一致性哈希环 + 虚拟节点；Nginx 的平滑加权轮询；随机挑两个选较空闲的（power of two choices）。
+  - id: os-net.rate-limit
+    title: 限流：令牌桶与漏桶
+    summary: Guava RateLimiter 的令牌桶（按时间补令牌，不需要定时器）；Nginx limit_req 的漏桶；滑动窗口计数。
+- id: devtools
+  order: 9
+  title: 开发工具
+  summary: git、diff、构建与依赖解析、正则引擎、编辑器缓冲区、压缩算法。
+  children:
+  - id: devtools.git-objects
+    title: git：内容寻址与默克尔 DAG
+    summary: blob、tree、commit 都按内容的哈希命名；提交历史是有向无环图；packfile 用增量压缩相似对象。
+  - id: devtools.diff
+    title: diff：Myers 算法
+    summary: 最短编辑脚本就是最长公共子序列的另一面；Myers 按编辑距离一层层扩展，O((n+m)·d)；git 还提供 patience / histogram。
+  - id: devtools.build-deps
+    title: 构建与依赖解析：拓扑排序与回溯
+    summary: make、Bazel 按依赖图拓扑排序并行构建、检测环；pip、npm 的版本解析是带回溯的约束求解。
+  - id: devtools.regex
+    title: 正则引擎：回溯与自动机
+    summary: Python re、Java、PCRE 用回溯，灾难性回溯可以让匹配变成指数时间；RE2、Go regexp 用自动机保证线性时间，代价是不支持反向引用。
+  - id: devtools.editor-buffers
+    title: 编辑器与浏览器：缓冲区和撤销
+    summary: gap buffer、piece table（VS Code）、rope；撤销 / 重做是两个栈；浏览器前进后退也是两个栈。
+  - id: devtools.compression
+    title: 压缩：LZ77 滑动窗口 + 哈夫曼
+    summary: gzip / zlib 的 DEFLATE 在 32 KB 窗口里找重复串再做哈夫曼编码；zstd 和 LZ4 在速度与压缩率之间的取舍。
