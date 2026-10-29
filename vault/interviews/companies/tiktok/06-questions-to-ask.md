@@ -1,242 +1,231 @@
-# 06 · 反问清单（按面试官类型）
+# 06 · 反问清单（ByteDance Global Payment · FPS）
 
-每一轮最后几分钟轮到你提问。对面是谁，决定你该问什么：招聘官能回答流程和级别，写代码的同事能回答日常工作，HM 能回答范围和级别，HR 能回答薪酬结构。这份清单按面试官类型给出问题，每个问题写了为什么问、好答案和坏答案各透露什么。每场只有 3–5 分钟，挑 **2–3 个**，不要全问。单个回答只能当线索：面试官是一个人，不代表整个组。
+反问有两个用途：拿到只有对方知道的信息（级别、轮次、团队在做什么），以及表明你懂这个团队的业务。对面是谁决定你该问什么：招聘官管流程和级别，写代码的同事知道日常工作和值班，设计轮的面试官知道系统的真实难点，HM 决定级别和你进组后做什么，HR 管薪酬。这份清单按对象分组，每个问题写了为什么问、好答案和坏答案各说明什么。每场最后只有 3–5 分钟，挑 **2–3 个**；单个回答只是线索，面试官是一个人，不代表整个组。
 
 ## 怎么用
 
-- 问题有两个作用：①让对方讲真话，你才能判断这个组值不值得去；②表明你知道这个组在做什么。别为了显得聪明而问。
-- 每场挑 2–3 个，其中**至少一个**是关于他自己的经验（「你最近一次……」），比抽象的「团队文化怎样」得到的信息多。
-- 优先问：级别、名额、换组规则（招聘官）；值班和发布（同事）；范围和成功标准（HM）；薪酬结构（HR）。
-- 除非被问，不要提你读过他的公开文章。
+- 招聘官的问题要在**第一轮之前**问完：级别和轮次一旦定下，后面很难改。最好的办法是周四晚上发一封邮件（模板在 A 节末尾）。
+- 面试官那几轮，至少问一个关于**他自己**经历的问题（「你最近一次……」），比「团队文化怎样」得到的信息多。
+- 优先级：招聘官问级别和设计轮；同事问值班和上线；设计面试官问对账和故障；HM 问范围和级别标准；HR 问 RSU 变现。
+- 薪资、签证不问面试官和 HM，只问招聘官和 HR。
 
 ---
 
-## A · 招聘官（第一通电话）
+## A · 招聘官（第一轮之前）
 
-### 1. 级别和名额
+### 1. 级别，以及要求按 2-2 面
 
-> "Which level is this requisition open at, and is it still open at that level?"
+> "Which level is this requisition open at? I'd like to be considered for 2-2. Could the loop be the 2-2 loop, including a system design round?"
 
-- **为什么好**：岗位说明写 3 年以上，同系列有写 7 年以上的 Senior 岗；级别由 HM 在最后定，名额只剩一级时，强的面试也会降级或转组。越早问越好。
-- **好答案**：说出具体级别区间（2-1 / 2-2 或新编号），并说明名额状态。
-- **坏答案**：「具体级别看面试表现」，没有给区间。意味着你可能走完所有轮次才知道只剩一个低一级的名额。
+- **为什么问**：这个 req 的区间从入门覆盖到 senior。级别由面试表现和名额决定，而没有系统设计轮的面试，结果通常封顶在 2-1。要 2-2，必须在开始前提出来。
+- **好答案**：给出级别区间，并答应安排设计轮。
+- **坏答案**：「级别看面试表现」，且不提设计轮。追一句：「Would adding a design round be possible if the first rounds go well?」
 
-### 2. 属于哪个实体和哪个组
+### 2. 一共几轮，每轮是什么
 
-> "Is this role in TikTok proper or the US joint venture, and which team will I be interviewing for?"
+> "Could you walk me through the rounds — how many, what each one covers, and who the interviewers are?"
 
-- **为什么好**：美国有两条招聘线，流程和业务不同；你的岗位是 Innovative Growth，确认没有被调到别的 req。
-- **好答案**：直接回答，并说明团队的方向。
-- **坏答案**：说不清。意味着 req 可能是一个通用池，进来之后要重新匹配。
+- **为什么问**：这个部门的面试有编码、后端基础（八股）、支付系统设计、类设计、项目深挖、HM 几种组合；轮次一轮一轮地约，有时同一天加轮。
+- **好答案**：轮数、每轮类型、每轮的面试官角色（同事、tech lead、HM）。
+- **坏答案**：「每个面试官不一样」。那就三类都准备，并在每轮开头问面试官这一小时怎么安排。
 
-### 3. 每一轮的形式
+### 3. 周一这一轮的形式
 
-> "Could you walk me through the rounds, which platform the coding rounds use, and whether I can use my own IDE or an AI tool?"
+> "For Monday's round, which platform will we use — HackerRank or Lark — and should I expect a resume discussion before coding? Will I need to write my own test cases?"
 
-- **为什么好**：形式有变化：HackerRank、Lark 代码板，或自己的 IDE 加 AI。提前知道才能按考场条件练。
-- **好答案**：明确的轮数、每轮的类型、平台、语言是否限制。
-- **坏答案**：「每个面试官不同」。你只能准备所有可能。
+- **为什么问**：编码平台没有现成的测试用例，要自己写、自己跑；开头常有一段简历拷问。知道形式才能按考场条件练。
+- **好答案**：平台、时长、是否有简历讨论、是否需要运行代码。
+- **坏答案**：说不清。按「HackerRank、没有用例、先聊项目 15 分钟」准备。
 
-### 4. 换组时通过的轮次保留吗
+### 4. 有没有 AI 辅助编码轮
 
-> "If I pass some rounds and the team's headcount changes, do my passed rounds carry over to another team?"
+> "Does any round use an AI-assisted format, where I share my own IDE with an AI tool? If so, what's expected — working code, tests, or both?"
 
-- **为什么好**：req 会中途关闭，HM 面失败会被转到别的组。
-- **好答案**：有明确的规则（保留若干个月）。
-- **坏答案**：不确定。你要做好重打的准备。
+- **为什么问**：有的团队开始用这种形式：用你自己的 IDE 和 AI 工具现场实现一个小系统，评分看能跑的代码和**写完的测试**。没准备的人常常测试写不完。
+- **好答案**：明确说有或没有；有的话，说明允许的工具和评分重点。
+- **坏答案**：不确定。按「允许 AI，但测试必须写完」准备一次。
 
-### 5. 面试语言和时间
+### 5. 面试官在哪里，用什么语言
 
-> "Will my interviewers be in the US, or should I expect some rounds in Asian time zones, and is there an interview language preference?"
+> "Will my interviewers be based in the US, or in Singapore or China? I'm comfortable interviewing in English or Mandarin."
 
-- **为什么好**：面试官很多在亚洲，轮次可能在晚上；个别 HM 用普通话。
-- **好答案**：说明面试官的位置，并说明英文是默认。
-- **坏答案**：避而不答。
+- **为什么问**：在亚洲的面试官更常问八股，轮次可能排在美国晚上；每一轮可以选语言。主动说你两种都可以，是加分项。
+- **好答案**：说明面试官的位置和时间安排。
+- **坏答案**：回避。那就为晚上的轮次和中文口述各准备一次。
+
+### 6. 雇主实体和团队
+
+> "Is the employer ByteDance Inc.? And within Financial Product and Solution, which product and which markets would I work on — PayLater, credit, insurance, or wallet?"
+
+- **为什么问**：FPS 的产品都在美国以外上线，你要知道自己给哪个市场、哪个产品写系统，才能在面试里把例子说对。合资公司的支付团队是另一条线，不要混。
+- **好答案**：实体、具体产品、市场。
+- **坏答案**：「进来再定」。说明 req 是一个池子，会有组匹配。
+
+### 7. 换组时通过的轮次保留吗
+
+> "If the team's headcount changes during the process, do the rounds I've passed carry over to another Global Payment team?"
+
+- **为什么问**：req 中途关闭、转到别的组重新面都很常见。
+- **好答案**：有明确规则。
+- **坏答案**：不确定。心里做好重面的准备。
+
+### 发给招聘官的邮件（周四晚上发）
+
+> Hi [Name], thank you for scheduling Monday's round. A few questions so I can prepare well:
+> 1. Which level is this role open at? I'd like to be considered for 2-2 — could the loop include a system design round?
+> 2. How many rounds are there in total, and what does each cover?
+> 3. For Monday: HackerRank or Lark, and should I expect a resume discussion before coding?
+> 4. Is there an AI-assisted coding round in this loop?
+> 5. Which product and markets within Financial Product and Solution is this role for?
+> Thanks, Chi
 
 ---
 
-## B · 写代码的同事（编码面、基础面）
+## B · 写代码的同事（编码、八股、项目深挖）
 
-### 6. 一周的值班
+### 8. 值班
 
-> "What does an on-call week look like for the team, and what was the last page that was hard to debug?"
+> "What does an on-call week look like for the team, and what was the last incident that was hard to debug?"
 
-- **为什么好**：你想知道值班的负担，也想听到一个真实的排查案例。你的强项是定位无声的故障，这个问题给你一个接话的机会。
-- **好答案**：具体的轮值、一个真实的故障、根因落在哪一层。
-- **坏答案**：说不出最近一次。要么没有值班，要么没有人认真看。
+- **为什么问**：职位说明写「线上问题定位」；你想知道值班负担，也想听到一个真实的排查。你的值班经历在这里能自然接上。
+- **好答案**：轮值方式、一次真实的事故、根因落在哪一层。
+- **坏答案**：想不起最近一次。
 
-### 7. 一个改动怎么上线
+### 9. 一个改动怎么上线
 
-> "How does a change go from idea to production, who reviews it, and what's the slowest step?"
+> "How does a change to the money path go from code to production — reviews, feature flags, how you roll back?"
 
-- **为什么好**：检验「迭代快」是不是日常；「最慢的一步」暴露流程里的真实摩擦。
-- **好答案**：一个具体的例子，灰度、开关、回滚、实验平台这些词会出现。
-- **坏答案**：「取决于」，没有下文。
+- **为什么问**：钱的路径上，上线方式就是质量控制。你在 PayPal 用「部署和放开分开」的开关上线，可以接话。
+- **好答案**：灰度、开关、对账校验、回滚步骤。
+- **坏答案**：「测完就上」。
 
-### 8. 日常的技术栈
+### 10. 和其他时区怎么协作
 
-> "What's the day-to-day stack for your team — Go, Java, Python — and how do services talk to each other?"
+> "How does the team split work with colleagues in Singapore and China, and how many evening meetings are typical in a week?"
 
-- **为什么好**：公开资料说 Go 是主力。你想知道这个组实际用什么，以及你需要多久上手。
-- **好答案**：点名语言和框架，说明新人怎么上手。
-- **坏答案**：「都有」。意味着技术栈没有统一。
-
-### 9. 和其他时区的协作
-
-> "How does the team work with colleagues in other time zones, and how many evening meetings is typical?"
-
-- **为什么好**：强度和边界是真实问题；这个问题没有攻击性，听起来是在规划。
-- **好答案**：固定的重叠时段、异步文档、会议频率。
+- **为什么问**：部门的重心在新加坡，汇报线可能在亚洲；强度和边界是真实问题，这样问听起来是在规划。
+- **好答案**：固定的重叠时段、文档先行、每周几次。
 - **坏答案**：「随时」。
 
-### 10. AI 工具在团队里怎么用
+### 11. 技术栈和上手
 
-> "How does the team use AI coding tools, and what does review look like for AI-written code?"
+> "What's the day-to-day stack — mostly Go? How long does it usually take a new engineer who comes from Java to ship their first change?"
 
-- **为什么好**：岗位说明偏好 AI 辅助开发和 agent 工作流；你的 S7 经验在这里是优势。
-- **好答案**：具体的工具和审查规则。
-- **坏答案**：没有规则，或者「各人随意」。
+- **为什么问**：你主要写 Java 和 Python，入职要上手 Go 和内部中间件。
+- **好答案**：语言、框架、新人上手的具体做法。
+- **坏答案**：没有上手的安排。
 
 ---
 
 ## C · 系统设计面试官
 
-### 11. 你最近改掉的一个设计
+### 12. 对账发现差异之后
 
-> "What's a design decision your team reversed in the last year, and what made you change your mind?"
+> "When reconciliation finds a mismatch between your ledger and a PSP or bank, what happens next — who looks at it, and how long until it's resolved?"
 
-- **为什么好**：设计面的面试官是写系统的人；他能讲出真实的取舍。
-- **好答案**：说得出一个具体案例和原因（规模、故障、成本）。
+- **为什么问**：对账是你的强项，问这个等于告诉对方你知道真正的难点在差异处理，不在匹配。
+- **好答案**：差异分类、自动修复的边界、人工队列、时限。
+- **坏答案**：「很少出差异」。
+
+### 13. 最近一次推翻的设计
+
+> "What's a design decision the team reversed in the last year, and what made you change your mind?"
+
+- **为什么问**：设计面试官是写系统的人，这能听到真实的取舍。
+- **好答案**：具体案例和原因（规模、故障、牌照、成本）。
 - **坏答案**：「没有什么大的」。
 
-### 12. 什么指标让服务报警
+### 14. 新市场上线
 
-> "What's the one metric that tells you the service is unhealthy, and how did you learn it was the right one?"
+> "When the team launches a product in a new market, what changes in the system — currency, licence, data location, the funding partner?"
 
-- **为什么好**：设计面的评分是「运营而不是画图」；这个问题把话题带到监控。
-- **好答案**：一个具体指标，一次故障让他们学到它。
-- **坏答案**：一串通用指标。
-
-### 13. 精确还是近似
-
-> "Where in your system do you accept approximate numbers, and where must they be exact?"
-
-- **为什么好**：这是设计面的核心评分点，你问的同时展示你知道。
-- **好答案**：金额、账本是精确的；计数、排行榜、观看数是近似的，并说明原因。
-- **坏答案**：「都要精确」。
+- **为什么问**：FPS 的产品按市场逐个上线，每个市场带来新的币种、牌照和资金方。这个问题显示你懂多市场的约束。
+- **好答案**：配置化的部分、需要改代码的部分、合规检查。
+- **坏答案**：每个市场都重写一遍。
 
 ---
 
 ## D · Hiring manager
 
-### 14. 前六个月的成功是什么样
+### 15. 前六个月的成功
 
-> "What does success look like in the first six months for someone in this role, and how will you measure it?"
+> "What would success look like for someone in this role after six months, and how would you measure it?"
 
-- **为什么好**：HM 决定级别；你想知道他期待的范围是否匹配你的故事。
+- **为什么问**：HM 定级别；你想知道他期待的范围是否配得上你的故事。
 - **好答案**：具体的交付物和指标。
-- **坏答案**：「我们看你的表现」。
+- **坏答案**：「看你的表现」。
 
-### 15. 这个级别的区别
+### 16. 2-1 和 2-2 的区别
 
-> "What separates a 2-1 from a 2-2 on your team, and what's one trait all the successful engineers at this level share?"
+> "On your team, what separates a 2-1 engineer from a 2-2?"
 
-- **为什么好**：你拿到了他的评分标准，也能立刻判断自己该强调哪个故事。
-- **好答案**：范围、独立性、跨团队影响这类具体维度。
-- **坏答案**：没有标准，凭感觉。
+- **为什么问**：你拿到他的定级标准，同时提醒他你在按 2-2 面。
+- **好答案**：范围、独立推进、跨团队影响、设计评审这类具体维度。
+- **坏答案**：没有标准。
 
-### 16. 团队的优先级
+### 17. 这半年的重点
 
-> "What are the team's top priorities this half, and how would this role contribute?"
+> "What are the team's top priorities this half — new markets, new products, or stability — and where would this role fit?"
 
-- **为什么好**：Innovative Growth 在做 AIGC、搜索与发现、实验；这个问题让他把岗位和实际路线图连起来。
-- **好答案**：两三个具体优先级，岗位怎么连上。
-- **坏答案**：说不清路线图，或岗位只是补空缺。
+- **为什么问**：把岗位和真实的路线图连起来，也能听出组是在扩张还是在维护。
+- **好答案**：两三个具体重点，岗位怎么接上。
+- **坏答案**：说不清路线图。
 
-### 17. 怎么衡量影响
+### 18. 美国团队的决策权
 
-> "How does the team decide an experiment worked, and who audits the metric definitions?"
+> "Which decisions does the San Jose team own, and which are made with the teams in Singapore or China?"
 
-- **为什么好**：增长组靠指标；你的强项是让数字可信。
-- **好答案**：有实验平台、有指标定义的审核、有回归检查。
-- **坏答案**：「看看仪表盘」。
-
-### 18. 稳定性
-
-> "How stable is the team's roadmap and headcount, given reorganizations?"
-
-- **为什么好**：req 关闭和重组是常见的；你想知道这个组的真实状况。
-- **好答案**：直接说明，并给出稳定性的依据。
-- **坏答案**：回避。
-
----
-
-## E · 总监或部门经理（20 分钟）
-
-### 19. 业务方向
-
-> "How does this team's work connect to the company's growth priorities over the next year?"
-
-- **为什么好**：总监面看你对业务方向的理解；这个问题让你显得是在想长期。
-- **好答案**：与具体业务目标（用户增长、内容分发、AI 搜索）的联系。
-- **坏答案**：泛泛而谈。
-
-### 20. 成长路径
-
-> "What does growth look like for someone at this level here — more scope, a larger system, or leading others?"
-
-- **为什么好**：你想知道晋升的通道和速度。
-- **好答案**：具体的例子，一个人用多长时间到下一级。
-- **坏答案**：「看表现」。
-
-### 21. 美国团队的独立性
-
-> "How much of the team's work is decided locally versus by the teams in Asia?"
-
-- **为什么好**：决策权决定你的 ownership 空间。
-- **好答案**：说清楚哪些是本地决定。
+- **为什么问**：决策权决定你的 ownership 空间，也决定晚上要开多少会。
+- **好答案**：说清哪些本地决定。
 - **坏答案**：「都由总部决定」。
 
 ---
 
-## F · HR（薪酬与流程）
+## E · HR（薪酬与流程）
 
-### 22. 薪酬结构
+### 19. 薪酬结构
 
-> "Could you walk me through the compensation structure: base, bonus, RSU vesting schedule, and sign-on?"
+> "Could you walk me through the full package — base, target bonus, RSU amount and vesting schedule, and sign-on?"
 
-- **为什么好**：总包由 base + 奖金 + RSU 组成；RSU 4 年归属，公司股票没有公开市场，要问清变现方式。
+- **为什么问**：总包由 base、奖金、RSU、签字费组成；RSU 有 4 年和 3 年两种归属方式。
 - **好答案**：每一项都给数字，包括归属比例和 cliff。
-- **坏答案**：只给 base 或笼统的总包。
+- **坏答案**：只给 base。
 
-### 23. 级别和组匹配的流程
+### 20. RSU 怎么变现
 
-> "How do level and team matching work after the interviews, and what happens if the team has headcount at a different level?"
+> "Since the shares aren't publicly traded, how do buybacks work — what was the most recent price, and is there a cap on how much of each vested tranche I can sell?"
 
-- **为什么好**：这是整个流程里最不透明的一步。
-- **好答案**：有清晰的步骤和时间。
+- **为什么问**：股票只能在公司回购时卖出，近年授予的股票可能限制每次可卖的比例。不问清，RSU 的数字没有意义。
+- **好答案**：最近一次回购价、频率、可卖比例。
+- **坏答案**：说不清。按保守值估算这一块。
+
+### 21. 定级和组匹配
+
+> "How are the level and the team decided after the interviews, and what happens if the team only has headcount at a different level?"
+
+- **为什么问**：这是整个流程最不透明的一步。
+- **好答案**：清晰的步骤和时间。
 - **坏答案**：「会再通知你」。
 
-### 24. 时间线
+### 22. 到岗要求
 
-> "What are the next steps and the expected timeline to a decision?"
+> "What is the in-office expectation for this team — five days a week? And is the role based in San Jose or Seattle?"
 
-- **为什么好**：通过之后长时间没消息很常见；你需要一个可以追问的时间点。
-- **好答案**：具体的天数和下一个联系人。
-- **坏答案**：没有时间点。到时候你要主动追。
+- **为什么问**：TikTok 美国多数员工已经每周 5 天到岗；ByteDance Inc. 的支付组是否一样，要问清。
+- **好答案**：天数和地点。
+- **坏答案**：「看组里」。
 
 ---
 
 ## 不问
 
-- 薪资、奖金、签证：不问写代码的同事和 HM；这些留给招聘官和 HR。
-- 公司的法律和政治背景（合资公司、数据安全的争议）：不主动提；被问到时按 [[01-company-brief]] 的公开事实回答。
-- 内部数字（用户数、收入）：他们不一定回答，还显得不懂分寸。
-- 任何你自己没读过原文却想引用的博客内容。
-- 「我需要会中文吗」：这个问题问招聘官，不问面试官。
+- 薪资、签证：不问面试官和 HM。
+- 合资公司的政治背景、牌照的监管细节：不主动提。
+- 支付量、收入这类内部数字：对方不一定能说，问了显得不懂分寸。
+- 「需要会中文吗」：不问面试官；你已经在招聘官那里说过两种语言都可以。
 
 ## 收尾一句（每轮）
 
-> "Thank you — this was very helpful. I'm especially interested in [具体一点], and what you said about [他真的说过的一件事] confirmed that."
+> "Thank you — this was really helpful. What you said about [他真的说过的一件事] makes me even more interested in [具体一点]."
 
-（把方括号换成他在这一小时里**真的说过**的一件事，不要提前写好。）
+方括号里填他在这一小时里**真的说过**的一件事，不要提前写好。

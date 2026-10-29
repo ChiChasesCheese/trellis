@@ -1,8 +1,9 @@
 # 项目深挖演练（两个旗舰项目）
 
-- 简历拷问和 HM 面会拿一个项目问 30 分钟：为什么选这个技术、规模数字、取舍、重来改什么、哪里会坏。下面是你最强的两个项目，各 13 个问题，每题给答案提纲。
+- 简历拷问和 HM 面会拿一个项目问 30 分钟：为什么选这个技术、规模数字、取舍、重来改什么、哪里会坏。下面是你最强的两个项目，各 14 个问题，每题给答案提纲。
+- 支付组的面试官会把你的项目翻译成他们的语汇：**清算与结算、账本、幂等、对账、资金流与信息流**。A14、B14 专门练这种翻译；末尾的表把五条支付追问线对到具体问题上。
 - 项目 A：Amex 结算管线（[[S1_settlement-pipeline-never-drop-bad-data|S1]]）。项目 B：interchange 数据源切换（[[S5_cutover-with-the-production-query|S5]]）。
-- 用法：把 13 个问题连着问自己，每题 45–90 秒；每周一次计时，整套 30 分钟。
+- 用法：把 14 个问题连着问自己，每题 45–90 秒；每周一次计时，整套 30 分钟。
 - 对抗式追问的三招：
   - 有两个选项时，先说**各自的代价**，再选一个，**之后不改口**。
   - 被问到没测过的东西，说**最深已知层 → 边界 → 怎么查**。
@@ -98,6 +99,14 @@
 - **Follow-up: who reviewed the design?** 【待补：评审的人和他们的意见】
 - **Follow-up: data sensitivity / access control?** 【待补：文件里有什么敏感字段，谁能读】
 
+### A14 · 用支付的语汇讲这个项目
+- **Where it sits in the money flow**: after **clearing**, before **payout**: the file is Amex's **settlement** record; we book only what it **confirms** (**good funds**).
+- **As a ledger**: each settled transaction becomes a **fee line** feeding the merchant's **payout**; a reject stays a **separate record**, not an edit.
+- **Idempotency key**: the business key (reference number + reject indicator) at every `MERGE`; the file name at load.
+- **Reconciliation**: internal fee totals vs the **network's own summary record**: an **independent source**.
+- **Follow-up: is this double-entry?** The pipeline computes fee lines; the **ledger postings** happen downstream in payouts. 【待补：下游账务的真实形态，没把握就说「downstream of me」】
+- **Follow-up: what would change for a card network with daily T+1 settlement?** The **source** changes (standard settlement reports), the **keys, error log and reconciliation** stay.
+
 ## 项目 B · interchange 数据源切换（S5）
 
 ### B1 · 30 秒讲清楚这个项目
@@ -180,4 +189,21 @@
 - **Validate with the thing you ship; bound the scan; ship dark.**
 - The **backfill SQL** became the team's **CDC backfill template**.
 - **Follow-up: where did you apply it again?** 【待补：下一个用到同一套做法的项目】
-- **Follow-up: how does it relate to growth work?** Experiments need the same discipline: **a number you can re-run**, and **the time it was read**.
+- **Follow-up: how does it relate to this team?** Any new money product (PayLater, a new market) needs the same cutover discipline: **shadow-compare, parity, ship dark, a fast off**.
+
+### B14 · 用支付的语汇讲这个项目
+- **Interchange**: the fee the **acquirer side pays the issuer**, set by the network by **card type, merchant category and region**; with **scheme fees** and the **acquirer markup** it is what the merchant passes through (**IC++**).
+- **Why the source mattered**: a fee missing at the **payout cutoff** makes a payout **late or wrong**; the **settlement view** arrives earlier than the **transaction view**.
+- **Information flow vs money flow**: the cutover moved which **record** we trust for a fee, not how money moves.
+- **Follow-up: why not compute interchange yourself from the rate tables?** The network's settled number is the **fact** the merchant is charged; a computed one becomes something to **reconcile**, not a source.
+- **Follow-up: what does this teach for a new market?** Pick the **earliest authoritative source**, validate with the **production query**, gate on **upstream readiness**.
+
+## 支付面试官的五条追问线
+
+| 追问线 | 先用哪题 | 故事 | 一句话 |
+|---|---|---|---|
+| 费用算没算对 | A7、B3 | S1、S5、S10 | 事件发生时的规则 + 独立来源对总数 |
+| 结算是否幂等 | A5、B4 | S1、S5 | 三层幂等；at-least-once + 幂等写 |
+| 对账差异 | A7、B3、B9 | S1、S5、S3 | 切片到一行；分时间差和真冲突 |
+| on-call 事故 | A6 | S3、S9 | 先分清预期延迟和回归，再修根因 |
+| 重试下钱是否正确 | A5、B7 | S1、S11、S5 | 两条路径互斥；超时先查询再重试 |

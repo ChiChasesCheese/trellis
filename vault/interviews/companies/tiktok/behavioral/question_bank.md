@@ -1,5 +1,6 @@
-# 行为题和 HM 题库（37 题）
+# 行为题和 HM 题库：Global Payment（46 题）
 
+- 支付组的简历拷问把你的 PayPal 经历当**领域知识**来考：费用算没算对、结算是否幂等、对账差异怎么查、事故怎么处理、重试下钱是否正确。这些在 **F 组**（Q38–Q46），每一场技术面都可能被问到，先练它们。
 - 每题：用哪个故事 · 时长 · 3–4 条可直接说出口的要点（加粗是路标）· 2–4 个追问和一行回答要点。
 - 先讲 L1，停，等追问。故事要 60–90 秒讲完，最长 2 分钟。
 - 【待补：…】 补完前不要口播；每题给了补不出来时的诚实降级。
@@ -40,6 +41,12 @@
 | 自发做的事 | S7 | S8 |
 | 指标 / 实验 | S10 | S5 |
 | AI 使用 | S7 | S6 |
+| 费用计算的正确性 | S10 | S3、S4、S1 |
+| 结算幂等 / 重试下的钱 | S1 | S5、S11 |
+| 对账差异 | S1 | S5、S3 |
+| on-call 事故 | S3 | S9 |
+| 资金流与出款时效 | S9 | S1 |
+| 退款、拒付、多币种 | S4 | S10、S1 |
 
 ## A · 开场与动机
 
@@ -48,7 +55,7 @@
 - **Who**: about **twenty months** full time after an **internship** on the same team; Java, Python, SQL; **Snowflake**, **PostgreSQL**, **Kafka**.
 - **Flagship**: I **built** the **Amex settlement pipeline** from a stub, about **22M transactions** in half a year, and I owned the **interchange-fee track** of the net-settlement program: **13.7M rows** cut over at **>99.9%** parity.
 - **How I work**: every stage **idempotent**, bad data **recorded, never dropped**, validate with the **production query itself**; I'm the **on-call owner** who root-causes quiet data bugs.
-- **Why here**: 【待补：为什么是 TikTok 的增长方向，一句话；建议落在「数字必须可信、系统必须可验证」上】
+- **Why here**: 【待补：为什么是 Global Payment，一句话；建议落在「我已经在做钱的正确性，想在多市场、多币种、消费金融的规模上做」】
 - **Follow-ups**:
   - **Which part was yours?** Everything from the **topology** of the Amex pipeline onward; at the program level I owned the **fee side**, not the whole program.
   - **What's your stack?** **Java, Python, SQL**; Snowflake and PostgreSQL daily; Kafka from my internship.
@@ -64,18 +71,18 @@
   - **What did the internship teach?** Consumer-side **idempotency**: dedup before insert, unique constraint as the backstop; parallelism = **replicas × tasks.max**, capped by **partition count**.
   - **Why the switch into CS?** One sentence; then back to the work.
 
-### Q3 · Why TikTok, and why this team? · 45 秒
-- **A concrete engineering problem**: growth runs on **numbers you can trust**: experiments, attribution, content pipelines; that is the layer I'm good at.
-- **Tie to me**: I **retracted my own number** before anyone acted on it, and I validate changes with the **production query**.
-- **Public facts only**: the team builds **growth and content-optimization systems**; AIGC, search and discovery. Claim nothing beyond the posting.
+### Q3 · Why ByteDance Global Payment, and why this team? · 45 秒
+- **A concrete engineering problem**: one payment platform behind **TikTok Shop, LIVE, ads and subscriptions** in many markets: pay-in, pay-out, **FX**, **reconciliation**; the team I'd join builds **consumer finance** on top (**PayLater**, credit, wallet).
+- **Tie to me**: at PayPal I own **fee calculation and settlement** correctness: the Amex pipeline (**~22M transactions**) and the interchange cutover (**13.7M rows**, **>99.9%** parity). The same problems, **more markets, more currencies, more products**.
+- **Public facts only**: the posting lists acquisitions, disbursements, transaction monitoring, payment-method management, FX, accounting, reconciliation; claim nothing beyond it.
 - 【待补：你个人真正的原因，一句话】
 - **Follow-ups**:
-  - **What do you know about the team?** Only what is public: **growth and content optimization**, **AIGC**, **search and discovery**, Web and Lite platforms.
-  - **Why not a bigger payments team?** See Q5.
-  - **Which TikTok feature do you use, and what would you change?** 【待补：你自己的真实使用和一个具体观察】
+  - **What do you know about the team?** Only what is public: **Global Payment** serves ByteDance platforms outside China; **Financial Product and Solution** builds **PayLater, credit, insurance and wallet** products, mostly for markets outside the US.
+  - **Have you used TikTok Shop or TikTok Pay?** 【待补：你自己的真实使用和一个具体观察，例如结账或退款体验】
+  - **Why consumer finance, not core payments?** It's the same ledger underneath: a loan is a **receivable** with a **schedule**; correctness and reconciliation carry over, and the **credit and interest** side is what I want to learn.
 
 ### Q4 · Why are you leaving PayPal? · 30 秒
-- **Forward-looking**: a **consumer-scale** product, a **faster loop** from idea to measured result, a new class of problems (experiments, AIGC).
+- **Forward-looking**: **many markets and currencies**, a payment platform used by several large products, and **new product lines** (consumer finance) rather than one mature fee system.
 - **Credit the place**: "I owned a **money pipeline end to end** and learned on-call and root-causing there."
 - **Never** badmouth people or process; salary is never the reason.
 - 【待补：真实原因，一句话；签证、地点、团队变化也说真话，简短，然后转向「what I want next」】
@@ -83,13 +90,15 @@
   - **What did you like least there?** Say what you **want next**, not what you disliked.
   - **Would you stay for a promotion?** 【待补：真实情况】
 
-### Q5 · Your background is payments; this is growth. Why the switch? · 45 秒
-- **Same skills**: **data pipelines**, **idempotency**, **reconciliation**, and above all **proving a number is right**.
+### Q5 · You've done fees and settlement; this team builds PayLater and credit. What transfers, what's new? · 45 秒
+- **Transfers directly**: **idempotent** pipelines, **reconciliation** against an independent source, **effective-dated pricing** (S10: resolve the schedule **at fee time**), on-call for a money path.
 - **Evidence**: S10 (**196,274 → 21,923** rows, retracted in public) and S5 (**>99.9%** field parity before cutover).
-- **Honest gap**: 【待补：你做过的 A/B 实验、指标定义或漏斗分析；没有就说「I haven't run a product experiment platform; I know the failure modes of the numbers behind one」】
+- **New to me, said plainly**: **credit decisioning**, **interest accrual**, **delinquency** (days past due, collections); "I know the mechanics; I haven't owned a lending system."
+- **How I'd ramp**: learn the **loan state machine** and the **ledger postings** for disbursement, accrual and repayment first, then the risk side.
 - **Follow-ups**:
-  - **What's a failure mode of an experiment metric?** **Reading state at the wrong time** (the S10 lesson), **double counting**, **late-arriving data**.
-  - **What would you learn first?** The team's **metric definitions** and how an experiment's result is **computed and audited**.
+  - **How would you generate an instalment schedule?** Integer minor units; due dates from the **start date + k months**; the **last instalment absorbs rounding**; principal sums exactly (see [[07-class-design]]).
+  - **What's hard about interest accrual?** **Daily accrual, monthly posting**; one rounding rule; the **repayment waterfall** (fees → interest → principal) must be auditable.
+  - **What would you learn first?** The team's **ledger model** and how a loan is **reconciled** against the funding partner.
 
 ### Q6 · Where do you want to be in 2–3 years? · 30 秒
 - **Own a system** end to end at a larger scale, and be the person who **sets the bar** on correctness.
@@ -107,6 +116,7 @@
 - **Follow-ups**:
   - **Have you led other engineers?** A newer engineer's **three pieces** plug into my platform; I defined the **contracts first**. See Q31.
   - **What would a 2-2 do that you haven't?** 【待补：你自己对差距的诚实判断，一句话，加你的补救计划】
+  - **You have about two years; why 2-2?** "Judge me on **scope and decisions**, not years: I owned a settlement pipeline **end to end** and a **cutover** in a revenue path. I'd like the **design round** to show it."
 
 ## B · 项目与技术深度
 
@@ -343,7 +353,7 @@
 ### Q32 · Can you handle a high-intensity workload? · 30 秒
 - **Honest**: I've been the **on-call owner** of a money pipeline; I know what a **3 a.m.** page costs.
 - **Sustainable**: I fix the **class** of problem (S8) and add **checks that fire first** (S3), so the load goes **down**.
-- **Evening calls with China-based teams**: fine in principle. 【待补：你能接受的具体安排】
+- **Evening calls with Singapore- and China-based teams**: Global Payment's partner teams sit there, so overlap is a US **evening**; fine in principle. 【待补：你能接受的具体安排，例如每周几晚、到几点】
 - **Follow-ups**:
   - **Hours?** Be straight about what you can do; don't promise what you can't.
   - **An example of a crunch?** S9: a formal incident with **three fix owners**.
@@ -364,7 +374,7 @@
 
 ### Q35 · Salary expectations · 15 秒
 - **Defer**: "I'd like to understand the **role and level** first; the **posted range** works for me."
-- The posted base for this Senior role is **$218,400–$387,600**; that is **base only**.
+- The posted base for this req is **$162,000–$387,600** (San Jose), from entry to senior; that is **base only**. The **level** decides where you land: settle it first.
 - Don't name a number or quote third-party data.
 - **Follow-ups**:
   - **Pushed for a number?** Still defer: ask for the **structure**: base, bonus, RSU schedule.
@@ -385,6 +395,94 @@
 - **Follow-ups**:
   - **If he answers briefly?** Follow up on one concrete detail, then close.
   - **If time is short?** Ask the **level and next steps** question.
+
+## F · 支付领域简历拷问
+
+### Q38 · How do you make sure a fee calculation is correct? · S10 / S3 / S1 · 90 秒
+**Hook：「A fee is only correct if it was computed with the rule that was in force when the money moved, and someone independent agrees with the total.」**
+- **Right rule, right time**: S10, the refund-fee path **copied the credit's old schedule id**; the fix resolves the **effective schedule at fee time**.
+- **Fail loudly**: S3, an unmappable `sub_kind` made the fee **silently NULL** for about **200 merchants**; now an unmappable input is an **error**.
+- **Independent anchor**: S1, fee totals reconcile against the **summary record Amex itself sends**; a mismatch **halts** and **pages**.
+- **Integer minor units**, one rounding rule, round **once per line**.
+- **Follow-ups**:
+  - **A pricing change is back-dated. What happens to fees already computed?** Don't edit them: compute with the new version and write **adjustment lines** for the difference.
+  - **How do you test fee logic?** Table-driven cases per rule, plus a **parity run** against production data before release (S5).
+  - **Where does rounding happen?** At the **line** boundary, half-even, never in intermediate steps. 【待补：PayPal 费用线上的真实取整规则】
+  - **Who owns the pricing configuration?** 【待补：配置的归属和变更流程】
+
+### Q39 · Your settlement job runs twice on the same file. What happens? · S1 / S5 · 60 秒
+- **Layer 1**: **file load history**: `COPY INTO` skips a file it has already loaded.
+- **Layer 2**: every stage is a **`MERGE` on a business key** (S1 reference number + reject indicator; S5 prefix + invoice number), so a re-run is a **no-op**.
+- **Layer 3**: rejects go to an **error log**, keyed the same way, so they don't duplicate either.
+- **Say it straight**: "Not exactly-once; **at-least-once plus idempotent writes** is effectively once."
+- **Follow-ups**:
+  - **What if the same transaction arrives in two different files?** The `MERGE` key is the transaction, not the file; the second is a no-op. 【待补：是否真的遇到过】
+  - **What if the job crashes halfway?** Each stage commits in its own **transaction**; the next run picks up from the stream offset and the keys absorb the overlap.
+  - **Where can idempotency still break?** S5: a record reprocessed **after the one-month window** bypasses dedup; it's **documented beside the clause**.
+
+### Q40 · Tell me about a reconciliation break you investigated · S1 / S5 / S3 · 90 秒
+- **Detection is designed in**: S1 reconciles fee totals against Amex's **own summary record**; S3's daily check said **settled transactions had no fee**.
+- **Method**: **slice** the mismatch until one row explains it (S3: one payment type → one row with `sub_kind` NULL); use a **control group** and **age buckets** to rule out "just late".
+- **Classify**: timing (S5's **0.07%** were all one-sided same-day records) vs a real conflict (S5: two field differences, both explained).
+- **Fix**: correct forward with **new entries**; add the test that would have caught it.
+- **Follow-ups**:
+  - **Timing difference or real break: how do you tell?** Re-run after the **settlement window**; a timing difference clears itself, a break doesn't.
+  - **Who gets told, and when?** 【待补：PayPal 对账差异的升级路径和时限】
+  - **How would you reconcile ten million orders a day?** Partition both sides by key, sort, **stream-compare** with two pointers; classify into missing-ours, missing-theirs, amount mismatch.
+
+### Q41 · Walk me through an on-call incident end to end · S3 / S9 · 2 分钟
+- **Detect**: S3, a daily check **I built** said settled transactions had **no fee**; S9, a merchant reported about **$4M** of Amex payouts "missing".
+- **Triage first**: S9, separate **expected latency** (T+7 is our internal SLA, and we pay only after Amex settles to us) from the **regression**.
+- **Root cause**: S9, an **effective-date change** for EU compliance shifted US payouts by a day; S3, SQL **NULL propagation** behind an overloaded function.
+- **Fix and prevent**: S9, I argued for a **region conditional**, not a revert; S3, **four test gaps** closed, one function, an end-to-end test.
+- **Follow-ups**:
+  - **What did you do in the first 30 minutes?** Establish **what is expected** vs broken, size the impact with a **query**, then pick the fix. 【待补：S9 第一个小时的真实时间线】
+  - **Why not just revert?** A revert breaks the **EU change**; the conditional keeps both correct.
+  - **What did you change so it doesn't recur?** A check that says "**data is missing**", not only "machine is down".
+
+### Q42 · A step is retried, or crashes in the middle. Is the money still right? · S1 / S11 / S5 · 60 秒
+- **Assume duplicates**: Kafka and file delivery are **at-least-once**, so every writer is **idempotent**: S11 dedup before insert, **unique constraint** as the backstop.
+- **Make the effect atomic**: S1's fee task computes and writes in **one transaction**; there is no state where half a fee exists.
+- **Make paths exclusive**: S5's old task **skips interchange** when the toggle is on, so two paths can't **double-charge**.
+- **Unknown is not failure**: if a downstream call times out, **query** before retrying with a new id.
+- **Follow-ups**:
+  - **Would you use exactly-once Kafka?** It covers Kafka-to-Kafka; the effect on a database still needs an **idempotent write**.
+  - **Poison message?** S11: the converter returns a **null record** instead of killing the task; bad rows are **recorded, never dropped**.
+  - **How do you prove there were no duplicates?** A **uniqueness check** on the business key, plus **reconciliation** of totals.
+
+### Q43 · How does money move from a card transaction to the merchant's bank, and where does your system sit? · S1 / S9 · 60 秒
+- **Information flow is fast, money is slow**: authorization and capture are real time; **clearing and settlement** come a day or more later.
+- **Closed loop**: Amex sends **one settlement file a day**; we can't book until the file **confirms** settlement (**good-funds model**).
+- **My place**: parse and validate the file, compute **fees**, feed **payouts**; US Amex payouts follow our internal **T+7** pipeline SLA.
+- **Follow-ups**:
+  - **Where is the money between capture and payout?** With the network and acquirer; on our books it's a **receivable**.
+  - **Why does Amex differ from Visa / Mastercard?** It is **issuer and network** at once; no standard settlement view, its own file.
+
+### Q44 · Have you worked with refunds, chargebacks or multiple currencies? · S4 / S10 / S1 · 60 秒
+- **Refunds**: S4, Australian merchants saw **no Amex refund fees**: **1,079,627** US rows vs **0** in AU; the cause was **config** (refund policy `partial`, logic fires only on `full`).
+- **Refund fees**: S10, the refund-fee path used the **credit's old schedule**; real scope **21,923 rows, 30 merchants, $5,854.52**.
+- **Regions**: S1's **EU extension** needed a **second feature flag** and a **separate fee ledger**.
+- **Chargebacks and FX**: 【待补：真实接触过的拒付或多币种工作；没有就说「I know the mechanics, I haven't owned them」，然后讲机制（[[05-payment-domain]] 第 5、6 节）】
+- **Follow-ups**:
+  - **How do partial refunds affect reconciliation?** Reconcile the **original plus its refunds** as a group; cumulative refunds ≤ captured.
+  - **How do you store amounts across currencies?** **Integer minor units with the currency**; JPY has none, some currencies have three.
+
+### Q45 · What is interchange, and why did your cutover matter? · S5 · 60 秒
+- **Interchange**: the fee the **acquirer side pays the issuer**, set by the network, varying by **card type, merchant category and region**; plus **scheme fees** and the **acquirer markup**. Passing them through separately is **IC++**.
+- **The problem**: pass-through fees came from a **transaction view** that sometimes filled **after the payout cutoff**; a **settlement view** arrives earlier.
+- **My track**: move **credit interchange** to the earlier source: **13.7M rows** at **>99.9%** field parity, **+0.224%** row count, **shipped dark**.
+- **Follow-ups**:
+  - **Why does timing matter for a fee?** A fee missing at the **payout cutoff** means the payout is **wrong or late**.
+  - **Blended vs IC++ for the merchant?** Blended is simple to read; IC++ is transparent and tracks the real cost.
+
+### Q46 · If you rebuilt the fee system from scratch, what would you change? · S1 / S10 / S2 · 90 秒
+- **Rules as data**: a **config table** and one generic engine instead of per-format code (S1's six parsers repeat one offset table).
+- **Effective-dated, append-only versions**: every fee line stores **rule id and version**, so any number can be **recomputed** (S10's lesson).
+- **Fees as ledger entries**: corrections are **adjustment entries**, never updates.
+- **Readiness as a contract**: fees wait for a **validated** upstream status, as S2's handshake does.
+- **Follow-ups**:
+  - **What's the cost of rules as data?** **Runtime** errors instead of compile-time; mitigate with **validation on publish** and a **dry-run** against recent traffic.
+  - **How would you migrate?** **Shadow-compute** with the new engine, compare line by line, then switch with a **toggle** (S5).
 
 ## 不要说的
 
