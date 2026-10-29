@@ -32,3 +32,12 @@ Possible next steps (not requested): `/catalog refresh` when new reports appear 
 - 13 new problems with cards (7 LeetCode, 6 TikTok variants). Total 375 problems.
 - Card rule: 2-D DP uses the full table; compression only in leaf `python.dp-space-compression` (CARDS.md). 19 problems
   and the DP pattern cards were rewritten.
+
+## Audit re-sweep 2026-07-17..10-28 (2026-10-28, later)
+
+- `catalog/refresh-2026-10-28-audit-{en,cn}.json`: EN 15 missed sightings (1P3A recall of the first collection about 69%),
+  CN 133 rows from 105 Nowcoder reports (first collection had about a third; CN sweep stopped early on Chi's time limit,
+  07-17..07-31 thin). 15 CN rows (front-end / JS knowledge, SQL, ML) marked out of scope.
+- 9 new LeetCode problems (all tier B): 328, 389, 478, 593, 889, 912, 986, 1740, 2816. Total 384.
+- Tier A after the audit: 85 seen in 30 days + 15 pattern + score; covers 84.3% of 618 sightings (88.8% weighted;
+  95.1% reachable), 81.9% of CodeTop mass, 58.8% of US crowd-tag mass.

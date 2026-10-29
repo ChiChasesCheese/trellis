@@ -565,6 +565,96 @@
    "title": "Shortest Path in Binary Matrix",
    "title_zh": "二进制矩阵中的最短路径",
    "premium": false
+  },
+  {
+   "slug": "interval-list-intersections",
+   "id": 986,
+   "refs": 1,
+   "last_seen": "2026-08-24",
+   "why": "1 report (US 1). e.g. 1P3A 1187245",
+   "title": "Interval List Intersections",
+   "title_zh": "区间列表的交集",
+   "premium": false
+  },
+  {
+   "slug": "construct-binary-tree-from-preorder-and-postorder-traversal",
+   "id": 889,
+   "refs": 1,
+   "last_seen": "2026-08-24",
+   "why": "1 report (US 1). e.g. 1P3A 1187092",
+   "title": "Construct Binary Tree from Preorder and Postorder Traversal",
+   "title_zh": "根据前序和后序遍历构造二叉树",
+   "premium": false
+  },
+  {
+   "slug": "odd-even-linked-list",
+   "id": 328,
+   "refs": 1,
+   "last_seen": "2026-08-06",
+   "why": "1 report(s) (CN). e.g. NC 2885650",
+   "title": "Odd Even Linked List",
+   "title_zh": "奇偶链表",
+   "premium": false
+  },
+  {
+   "slug": "valid-square",
+   "id": 593,
+   "refs": 1,
+   "last_seen": "2026-08-23",
+   "why": "1 report(s) (CN). e.g. NC 2895414",
+   "title": "Valid Square",
+   "title_zh": "有效的正方形",
+   "premium": false
+  },
+  {
+   "slug": "find-the-difference",
+   "id": 389,
+   "refs": 1,
+   "last_seen": "2026-08-24",
+   "why": "1 report(s) (CN). e.g. NC 2896059",
+   "title": "Find the Difference",
+   "title_zh": "找不同",
+   "premium": false
+  },
+  {
+   "slug": "sort-an-array",
+   "id": 912,
+   "refs": 1,
+   "last_seen": "2026-08-26",
+   "why": "1 report(s) (CN). e.g. NC 2897267",
+   "title": "Sort an Array",
+   "title_zh": "排序数组",
+   "premium": false
+  },
+  {
+   "slug": "double-a-number-represented-as-a-linked-list",
+   "id": 2816,
+   "refs": 1,
+   "last_seen": "2026-09-15",
+   "why": "1 report(s) (CN). e.g. NC 2910581",
+   "title": "Double a Number Represented as a Linked List",
+   "title_zh": "翻倍以链表形式表示的数字",
+   "premium": false
+  },
+  {
+   "slug": "find-distance-in-a-binary-tree",
+   "id": 1740,
+   "refs": 1,
+   "last_seen": "2026-09-18",
+   "why": "1 report(s) (CN). e.g. NC 2912872",
+   "title": "Find Distance in a Binary Tree",
+   "title_zh": "找到二叉树中的距离",
+   "premium": true
+  },
+  {
+   "slug": "generate-random-point-in-a-circle",
+   "id": 478,
+   "refs": 1,
+   "last_seen": "2026-09-21",
+   "why": "1 report(s) (CN). e.g. NC 2914658",
+   "title": "Generate Random Point in a Circle",
+   "title_zh": "在圆内随机生成点",
+   "premium": false
   }
  ],
  "variants": [

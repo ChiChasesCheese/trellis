@@ -1,0 +1,1963 @@
+{
+ "collected": "2026-10-28",
+ "half": "audit-cn",
+ "window": [
+  "2026-07-17",
+  "2026-10-28"
+ ],
+ "sightings": [
+  {
+   "date": "2026-07-20",
+   "region": "CN",
+   "source": "NC 908763011521708032",
+   "url": "https://www.nowcoder.com/discuss/908763011521708032",
+   "role": "TikTok Shop backend, R1",
+   "round": "P",
+   "family": null,
+   "lc": [
+    189
+   ],
+   "custom": null,
+   "note": "Rotate Array.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-07-20",
+   "region": "CN",
+   "source": "NC 908764488252329984",
+   "url": "https://www.nowcoder.com/discuss/908764488252329984",
+   "role": "CN ads and trading client dev, R1",
+   "round": "P",
+   "family": "Search in Rotated Sorted Array / find min",
+   "lc": [
+    33
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-07-21",
+   "region": "CN",
+   "source": "NC 2878675",
+   "url": "https://www.nowcoder.com/feed/main/detail/6bb1ad75b88c4498933e6cc6434de4e1",
+   "role": "Agent dev, 2026-07",
+   "round": "?",
+   "family": null,
+   "lc": [
+    143
+   ],
+   "custom": null,
+   "note": "Reorder List; candidate used a list shortcut and was rejected, expected the in-place method.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-07-21",
+   "region": "CN",
+   "source": "NC 2878676",
+   "url": "https://www.nowcoder.com/feed/main/detail/3e22dc2df03d4227ab70ea9c2d896086",
+   "role": "AI app dev, R1",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "Write a deadlock with threads, then a singleton (double-checked locking).",
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-07-21",
+   "region": "CN",
+   "source": "NC 2878676",
+   "url": "https://www.nowcoder.com/feed/main/detail/3e22dc2df03d4227ab70ea9c2d896086",
+   "role": "AI app dev, R1",
+   "round": "P",
+   "family": "Merge Sorted Arrays",
+   "lc": [
+    88
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-07-22",
+   "region": "CN",
+   "source": "NC 909521351524745216",
+   "url": "https://www.nowcoder.com/discuss/909521351524745216",
+   "role": "Feishu bitable frontend, R1 (interview 05-27, posted 07-22)",
+   "round": "P",
+   "family": "Concurrency-limited async task scheduler (JS)",
+   "lc": [],
+   "custom": "JS function with a concurrency limit on async tasks.",
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-07-23",
+   "region": "CN",
+   "source": "NC 2879439",
+   "url": "https://www.nowcoder.com/feed/main/detail/22e7627541634ff8b5dcf123175c0147",
+   "role": "frontend, R1",
+   "round": "P",
+   "family": "Longest Substring Without Repeating Characters (+II)",
+   "lc": [
+    3
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-07-23",
+   "region": "CN",
+   "source": "NC 2879439",
+   "url": "https://www.nowcoder.com/feed/main/detail/22e7627541634ff8b5dcf123175c0147",
+   "role": "frontend, R1",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "Predict the output order of an event-loop snippet.",
+   "note": "",
+   "conf": "medium",
+   "scope": "out: front-end / JavaScript knowledge, SQL, ML or unnamed; not an algorithm-coding problem for the LeetCode deck"
+  },
+  {
+   "date": "2026-07-23",
+   "region": "CN",
+   "source": "NC 2879439",
+   "url": "https://www.nowcoder.com/feed/main/detail/22e7627541634ff8b5dcf123175c0147",
+   "role": "frontend, R1",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "Format a number with thousands separators.",
+   "note": "",
+   "conf": "medium",
+   "scope": "out: front-end / JavaScript knowledge, SQL, ML or unnamed; not an algorithm-coding problem for the LeetCode deck"
+  },
+  {
+   "date": "2026-07-24",
+   "region": "CN",
+   "source": "NC 2879981",
+   "url": "https://www.nowcoder.com/feed/main/detail/eccea78e38b447c9a3ae73570c5d00b6",
+   "role": "agent dev, R2",
+   "round": "O",
+   "family": "Merge Sorted Arrays",
+   "lc": [
+    88
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-07-25",
+   "region": "CN",
+   "source": "NC 2880404",
+   "url": "https://www.nowcoder.com/feed/main/detail/d3bf42da7de1444face03a3f64532be0",
+   "role": "multimodal LLM algorithm, R1",
+   "round": "P",
+   "family": "Longest Common Subsequence / Substring",
+   "lc": [
+    1143
+   ],
+   "custom": null,
+   "note": "LeetCode medium LCS; duplicate post 2880406.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-07-27",
+   "region": "CN",
+   "source": "NC 2880920",
+   "url": "https://www.nowcoder.com/feed/main/detail/09eeb1d5129f44e8a61f533e2fc7de8b",
+   "role": "test dev, R1",
+   "round": "P",
+   "family": "Longest Substring Without Repeating Characters (+II)",
+   "lc": [
+    3
+   ],
+   "custom": null,
+   "note": "Done in a Feishu doc, no way to debug the input.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-07-29",
+   "region": "CN",
+   "source": "NC 2881938",
+   "url": "https://www.nowcoder.com/feed/main/detail/2319e69c4b9443149b97cbc1c815b3b4",
+   "role": "Feishu frontend intern, R1",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "Hand-write promisify.",
+   "note": "",
+   "conf": "medium",
+   "scope": "out: front-end / JavaScript knowledge, SQL, ML or unnamed; not an algorithm-coding problem for the LeetCode deck"
+  },
+  {
+   "date": "2026-07-29",
+   "region": "CN",
+   "source": "NC 2881938",
+   "url": "https://www.nowcoder.com/feed/main/detail/2319e69c4b9443149b97cbc1c815b3b4",
+   "role": "Feishu frontend intern, R1",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "Hand-write Array.prototype.reverse.",
+   "note": "",
+   "conf": "medium",
+   "scope": "out: front-end / JavaScript knowledge, SQL, ML or unnamed; not an algorithm-coding problem for the LeetCode deck"
+  },
+  {
+   "date": "2026-07-29",
+   "region": "CN",
+   "source": "NC 2882075",
+   "url": "https://www.nowcoder.com/feed/main/detail/1623efd3e479401994b355b03e3acf53",
+   "role": "AdsCore ads algorithm, R1",
+   "round": "P",
+   "family": null,
+   "lc": [
+    53
+   ],
+   "custom": null,
+   "note": "Duplicate post 2882076.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-07-30",
+   "region": "CN",
+   "source": "NC 2882337",
+   "url": "https://www.nowcoder.com/feed/main/detail/c591854483f64b269d471ef7da1a7130",
+   "role": "agent evaluation (data), R1",
+   "round": "P",
+   "family": "Longest Substring Without Repeating Characters (+II)",
+   "lc": [
+    3
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-07-30",
+   "region": "CN",
+   "source": "NC 2882424",
+   "url": "https://www.nowcoder.com/feed/main/detail/50b5620b4f5a453382382000add8e38f",
+   "role": "test dev, R1",
+   "round": "P",
+   "family": "Longest Substring Without Repeating Characters (+II)",
+   "lc": [
+    3
+   ],
+   "custom": null,
+   "note": "Plus a GROUP BY SQL question.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-02",
+   "region": "CN",
+   "source": "NC 2883176",
+   "url": "https://www.nowcoder.com/feed/main/detail/6d3fcabf6a144fbe8635fb9d889be555",
+   "role": "backend, 2027 early batch, R1",
+   "round": "P",
+   "family": "Two Sum variants (in-flight movie pair)",
+   "lc": [
+    1
+   ],
+   "custom": null,
+   "note": "Hash-map solution, 5 minutes; template-style post.",
+   "conf": "low"
+  },
+  {
+   "date": "2026-08-03",
+   "region": "CN",
+   "source": "NC 913848724952997888",
+   "url": "https://www.nowcoder.com/discuss/913848724952997888",
+   "role": "AI full-stack, R1",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "Build a binary tree from input in ACM mode, then traverse it.",
+   "note": "",
+   "conf": "low"
+  },
+  {
+   "date": "2026-08-03",
+   "region": "CN",
+   "source": "NC 2883759",
+   "url": "https://www.nowcoder.com/feed/main/detail/ce23c4da42054dbb8d1774847ab6535b",
+   "role": "recommendation algorithm, R1",
+   "round": "P",
+   "family": "Basic Calculator I / II / III",
+   "lc": [
+    224
+   ],
+   "custom": null,
+   "note": "Infix expression with parentheses.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-04",
+   "region": "CN",
+   "source": "NC 2884408",
+   "url": "https://www.nowcoder.com/feed/main/detail/a4cd6f3c704f489881236a4860df3e9e",
+   "role": "Toutiao backend intern, R1",
+   "round": "P",
+   "family": "Reverse Nodes in k-Group (+ variants)",
+   "lc": [
+    25
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-04",
+   "region": "CN",
+   "source": "NC 2884501",
+   "url": "https://www.nowcoder.com/feed/main/detail/8f3bfc31861346c5a71776abc0da9396",
+   "role": "master student, R?",
+   "round": "?",
+   "family": null,
+   "lc": [],
+   "custom": "Thread-safe blocking queue.",
+   "note": "Vibe-coding candidate could not write the locks.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-05",
+   "region": "CN",
+   "source": "NC 2884985",
+   "url": "https://www.nowcoder.com/feed/main/detail/577bbe48f8f846159c5b4400c4f10204",
+   "role": "agent dev",
+   "round": "?",
+   "family": "Remove Duplicate Letters",
+   "lc": [
+    316
+   ],
+   "custom": null,
+   "note": "Lexicographically smallest result, relative order kept.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-06",
+   "region": "CN",
+   "source": "NC 2885650",
+   "url": "https://www.nowcoder.com/feed/main/detail/057523b2ca9d42738360e21b7108fc75",
+   "role": "backend, experienced hire, multiple rounds",
+   "round": "?",
+   "family": null,
+   "lc": [
+    328
+   ],
+   "custom": null,
+   "note": "Odd Even Linked List.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-06",
+   "region": "CN",
+   "source": "NC 2885650",
+   "url": "https://www.nowcoder.com/feed/main/detail/057523b2ca9d42738360e21b7108fc75",
+   "role": "backend, experienced hire, multiple rounds",
+   "round": "?",
+   "family": "Longest Valid Parentheses",
+   "lc": [
+    32
+   ],
+   "custom": null,
+   "note": "Asked to optimise space.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-06",
+   "region": "CN",
+   "source": "NC 2885650",
+   "url": "https://www.nowcoder.com/feed/main/detail/057523b2ca9d42738360e21b7108fc75",
+   "role": "backend, experienced hire, multiple rounds",
+   "round": "?",
+   "family": "Kth Largest Element / QuickSelect",
+   "lc": [
+    215
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-06",
+   "region": "CN",
+   "source": "NC 2885665",
+   "url": "https://www.nowcoder.com/feed/main/detail/49bba1825d4f4b8381740feb8d8d6f8c",
+   "role": "Douyin e-commerce backend, R1",
+   "round": "P",
+   "family": "Minimum Size Subarray Sum",
+   "lc": [
+    209
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-07",
+   "region": "CN",
+   "source": "NC 2886494",
+   "url": "https://www.nowcoder.com/feed/main/detail/4109f0d96dff4a3f93152cfc376febec",
+   "role": "LLM algorithm (aml), R1",
+   "round": "P",
+   "family": "Number of Islands family",
+   "lc": [
+    200
+   ],
+   "custom": null,
+   "note": "DFS first, then BFS; duplicate post 2886495.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-12",
+   "region": "CN",
+   "source": "NC 2889098",
+   "url": "https://www.nowcoder.com/feed/main/detail/fd273a0d0fa2400ba4be1421b24ac3ea",
+   "role": "data infrastructure, R1 (interview 04-24)",
+   "round": "P",
+   "family": null,
+   "lc": [
+    442
+   ],
+   "custom": null,
+   "note": "Print elements occurring at least twice.",
+   "conf": "low"
+  },
+  {
+   "date": "2026-08-13",
+   "region": "CN",
+   "source": "NC 2889552",
+   "url": "https://www.nowcoder.com/feed/main/detail/7b1b40fda3244715a82bcb4a821ca887",
+   "role": "AI Agent dev, R1",
+   "round": "P",
+   "family": "Nested comment tree from flat records",
+   "lc": [],
+   "custom": "Convert a flat list into a tree (JSON).",
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-13",
+   "region": "CN",
+   "source": "NC 2889552",
+   "url": "https://www.nowcoder.com/feed/main/detail/7b1b40fda3244715a82bcb4a821ca887",
+   "role": "AI Agent dev, R1",
+   "round": "P",
+   "family": "Binary tree level order / zigzag traversal",
+   "lc": [
+    103
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-13",
+   "region": "CN",
+   "source": "NC 2889612",
+   "url": "https://www.nowcoder.com/feed/main/detail/8d84590d7efe4c78943b28708b4395f2",
+   "role": "Dongchedi agent dev, R1",
+   "round": "P",
+   "family": "LRU Cache (+TTL / LFU / weighted / thread-safe)",
+   "lc": [
+    146
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-13",
+   "region": "CN",
+   "source": "NC 917561494512861184",
+   "url": "https://www.nowcoder.com/discuss/917561494512861184",
+   "role": "Volcano Ark managed agent, R1",
+   "round": "P",
+   "family": "Design HashMap (+ concurrency)",
+   "lc": [
+    706
+   ],
+   "custom": null,
+   "note": "Map on arrays without a built-in hash table.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-17",
+   "region": "CN",
+   "source": "NC 2891952",
+   "url": "https://www.nowcoder.com/feed/main/detail/e3aff34651494d79b8068fdb559c9f5b",
+   "role": "frontend intern, R1",
+   "round": "P",
+   "family": null,
+   "lc": [
+    70
+   ],
+   "custom": null,
+   "note": "Climbing Stairs.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-17",
+   "region": "CN",
+   "source": "NC 2891952",
+   "url": "https://www.nowcoder.com/feed/main/detail/e3aff34651494d79b8068fdb559c9f5b",
+   "role": "frontend intern, R1",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "Closure counter function.",
+   "note": "",
+   "conf": "medium",
+   "scope": "out: front-end / JavaScript knowledge, SQL, ML or unnamed; not an algorithm-coding problem for the LeetCode deck"
+  },
+  {
+   "date": "2026-08-18",
+   "region": "CN",
+   "source": "NC 2892451",
+   "url": "https://www.nowcoder.com/feed/main/detail/8a553bb6ea8445d0b0abe11e87614cea",
+   "role": "AI Agent intern",
+   "round": "?",
+   "family": null,
+   "lc": [
+    110
+   ],
+   "custom": null,
+   "note": "Balanced Binary Tree.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-19",
+   "region": "CN",
+   "source": "NC 919630488380141568",
+   "url": "https://www.nowcoder.com/discuss/919630488380141568",
+   "role": "backend, R1",
+   "round": "P",
+   "family": "Tree diameter / longest path",
+   "lc": [
+    543
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-22",
+   "region": "CN",
+   "source": "NC 2894779",
+   "url": "https://www.nowcoder.com/feed/main/detail/baef67a32d4c478c832fa712fae181f4",
+   "role": "Android intern, R1",
+   "round": "P",
+   "family": "Reverse Nodes in k-Group (+ variants)",
+   "lc": [
+    25
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-23",
+   "region": "CN",
+   "source": "NC 2895414",
+   "url": "https://www.nowcoder.com/feed/main/detail/a385d6cc457d47c99c03cb8ea752ab89",
+   "role": "Douyin experienced hire, R1",
+   "round": "P",
+   "family": null,
+   "lc": [
+    593
+   ],
+   "custom": null,
+   "note": "Valid Square.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-23",
+   "region": "CN",
+   "source": "NC 2895414",
+   "url": "https://www.nowcoder.com/feed/main/detail/a385d6cc457d47c99c03cb8ea752ab89",
+   "role": "Douyin experienced hire, R1",
+   "round": "P",
+   "family": "Median / Kth of two sorted arrays",
+   "lc": [
+    4
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-24",
+   "region": "CN",
+   "source": "NC 2896059",
+   "url": "https://www.nowcoder.com/feed/main/detail/6dede073825e4ab493fcbce7f598a6c8",
+   "role": "Douyin e-commerce AI dev, R1",
+   "round": "P",
+   "family": null,
+   "lc": [
+    389
+   ],
+   "custom": null,
+   "note": "Stated as \"first different number\"; exact problem unclear, a derived post guesses Find the Difference.",
+   "conf": "low"
+  },
+  {
+   "date": "2026-08-25",
+   "region": "CN",
+   "source": "NC 2896752",
+   "url": "https://www.nowcoder.com/feed/main/detail/698fca814c1a486d951a4dd447087f30",
+   "role": "agent evaluation (data platform), R1",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "Filter users aged 30+ from a JSON string.",
+   "note": "",
+   "conf": "medium",
+   "scope": "out: front-end / JavaScript knowledge, SQL, ML or unnamed; not an algorithm-coding problem for the LeetCode deck"
+  },
+  {
+   "date": "2026-08-25",
+   "region": "CN",
+   "source": "NC 2896752",
+   "url": "https://www.nowcoder.com/feed/main/detail/698fca814c1a486d951a4dd447087f30",
+   "role": "agent evaluation (data platform), R1",
+   "round": "P",
+   "family": "Longest Palindromic Substring",
+   "lc": [
+    5
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-26",
+   "region": "CN",
+   "source": "NC 921927475611869184",
+   "url": "https://www.nowcoder.com/discuss/921927475611869184",
+   "role": "Volcano Ark, R1",
+   "round": "P",
+   "family": "Two Sum variants (in-flight movie pair)",
+   "lc": [
+    1
+   ],
+   "custom": null,
+   "note": "Duplicates allowed, each element used once; sort and two pointers.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-26",
+   "region": "CN",
+   "source": "NC 2897267",
+   "url": "https://www.nowcoder.com/feed/main/detail/0bec32fbb3344ff98f16b97f47c7b857",
+   "role": "app infra agent dev, R1",
+   "round": "P",
+   "family": null,
+   "lc": [
+    912
+   ],
+   "custom": null,
+   "note": "Hand-write a sort.",
+   "conf": ""
+  },
+  {
+   "date": "2026-08-26",
+   "region": "CN",
+   "source": "NC 2897357",
+   "url": "https://www.nowcoder.com/feed/main/detail/bb1f26b7acda4f1bab794740e6d5965d",
+   "role": "test dev, R1",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "Rank ads by average click-through rate (scenario code).",
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-27",
+   "region": "CN",
+   "source": "NC 2898090",
+   "url": "https://www.nowcoder.com/feed/main/detail/d2cf5165d1184b59879eff5793b7b453",
+   "role": "agent dev intern, R1",
+   "round": "P",
+   "family": "Deep merge of two nested JSON objects",
+   "lc": [],
+   "custom": null,
+   "note": "",
+   "conf": "medium",
+   "scope": "out: front-end / JavaScript knowledge, SQL, ML or unnamed; not an algorithm-coding problem for the LeetCode deck"
+  },
+  {
+   "date": "2026-08-28",
+   "region": "CN",
+   "source": "NC 2898881",
+   "url": "https://www.nowcoder.com/feed/main/detail/f45bf39fb1a349dbbff3933871a9d934",
+   "role": "daily intern, R1",
+   "round": "P",
+   "family": "LRU Cache (+TTL / LFU / weighted / thread-safe)",
+   "lc": [
+    146
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-29",
+   "region": "CN",
+   "source": "NC 2899307",
+   "url": "https://www.nowcoder.com/feed/main/detail/a11d3fa3a4284d268cfee44e0b25eba7",
+   "role": "backend, R2 (CN trading and ads, 08-13)",
+   "round": "O",
+   "family": "Longest Common Subsequence / Substring",
+   "lc": [
+    718
+   ],
+   "custom": null,
+   "note": "Return the longest common substring.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-30",
+   "region": "CN",
+   "source": "NC 2899397",
+   "url": "https://www.nowcoder.com/feed/main/detail/21680d9902d64889addd8528a0ab9590",
+   "role": "backend, R2 (international content safety, 07-30)",
+   "round": "O",
+   "family": "K-th node from the end of a list",
+   "lc": [
+    19
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-30",
+   "region": "CN",
+   "source": "NC 2899401",
+   "url": "https://www.nowcoder.com/feed/main/detail/dc19d859ae77482eb9b5107067fc8a6e",
+   "role": "backend, R1 (international content safety, 07-28)",
+   "round": "P",
+   "family": "Binary Tree Right Side View",
+   "lc": [
+    199
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-30",
+   "region": "CN",
+   "source": "NC 2899401",
+   "url": "https://www.nowcoder.com/feed/main/detail/dc19d859ae77482eb9b5107067fc8a6e",
+   "role": "backend, R1 (international content safety, 07-28)",
+   "round": "P",
+   "family": "Largest number below N from a digit set",
+   "lc": [
+    902
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-30",
+   "region": "CN",
+   "source": "NC 2899409",
+   "url": "https://www.nowcoder.com/feed/main/detail/7e8a821479a649fd914e449d312eeb95",
+   "role": "AI app dev, R2",
+   "round": "O",
+   "family": "Longest Substring Without Repeating Characters (+II)",
+   "lc": [
+    3
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-30",
+   "region": "CN",
+   "source": "NC 2899409",
+   "url": "https://www.nowcoder.com/feed/main/detail/7e8a821479a649fd914e449d312eeb95",
+   "role": "AI app dev, R2",
+   "round": "O",
+   "family": null,
+   "lc": [
+    48
+   ],
+   "custom": null,
+   "note": "Rotate Image.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-30",
+   "region": "CN",
+   "source": "NC 2899725",
+   "url": "https://www.nowcoder.com/feed/main/detail/8e05ae62d44247f7b0002b4cd7f394aa",
+   "role": "LLM algorithm, R2",
+   "round": "O",
+   "family": "Largest number below N from a digit set",
+   "lc": [
+    902
+   ],
+   "custom": null,
+   "note": "Duplicate post 2899726.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-31",
+   "region": "CN",
+   "source": "NC 2900328",
+   "url": "https://www.nowcoder.com/feed/main/detail/b34f6902e8544fe2953696ed52e49dba",
+   "role": "AI app dev, R1 (CN trading and ads, interview 08-27)",
+   "round": "P",
+   "family": null,
+   "lc": [
+    407
+   ],
+   "custom": null,
+   "note": "Only the idea was asked.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-31",
+   "region": "CN",
+   "source": "NC 2900328",
+   "url": "https://www.nowcoder.com/feed/main/detail/b34f6902e8544fe2953696ed52e49dba",
+   "role": "AI app dev, R1 (CN trading and ads, interview 08-27)",
+   "round": "P",
+   "family": null,
+   "lc": [
+    184
+   ],
+   "custom": null,
+   "note": "SQL: highest-paid employee per department, ties kept.",
+   "conf": "medium",
+   "scope": "out: front-end / JavaScript knowledge, SQL, ML or unnamed; not an algorithm-coding problem for the LeetCode deck"
+  },
+  {
+   "date": "2026-08-31",
+   "region": "CN",
+   "source": "NC 2900328",
+   "url": "https://www.nowcoder.com/feed/main/detail/b34f6902e8544fe2953696ed52e49dba",
+   "role": "AI app dev, R1 (CN trading and ads, interview 08-27)",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "Executor submit(key, Runnable): same key serial, different keys parallel.",
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-01",
+   "region": "CN",
+   "source": "NC 2900429",
+   "url": "https://www.nowcoder.com/feed/main/detail/034e6ed3a28f463abbc3465dd1e4ad2f",
+   "role": "AI full-stack, R1",
+   "round": "P",
+   "family": "Reverse Linked List",
+   "lc": [
+    206
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-01",
+   "region": "CN",
+   "source": "NC 2900429",
+   "url": "https://www.nowcoder.com/feed/main/detail/034e6ed3a28f463abbc3465dd1e4ad2f",
+   "role": "AI full-stack, R1",
+   "round": "P",
+   "family": null,
+   "lc": [
+    662
+   ],
+   "custom": null,
+   "note": "Maximum Width of Binary Tree.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-01",
+   "region": "CN",
+   "source": "NC 2901041",
+   "url": "https://www.nowcoder.com/feed/main/detail/4656f2e4d5154b5ea21933b798e08ca5",
+   "role": "AI full-stack, R1",
+   "round": "P",
+   "family": null,
+   "lc": [
+    138
+   ],
+   "custom": null,
+   "note": "Copy List with Random Pointer, 20 minutes, not solved.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-01",
+   "region": "CN",
+   "source": "NC 2901151",
+   "url": "https://www.nowcoder.com/feed/main/detail/4264d066d5b04a5494a60bdd2f689650",
+   "role": "LLM algorithm, R3",
+   "round": "O",
+   "family": null,
+   "lc": [
+    136,
+    260
+   ],
+   "custom": null,
+   "note": "2n+1 then 2n+2 array; same set as NC 942006786846883840.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-01",
+   "region": "CN",
+   "source": "NC 2901151",
+   "url": "https://www.nowcoder.com/feed/main/detail/4264d066d5b04a5494a60bdd2f689650",
+   "role": "LLM algorithm, R3",
+   "round": "O",
+   "family": null,
+   "lc": [
+    1691
+   ],
+   "custom": null,
+   "note": "Stack boxes, upper strictly smaller in length and width.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-02",
+   "region": "CN",
+   "source": "NC 2901753",
+   "url": "https://www.nowcoder.com/feed/main/detail/97ca68e97f6143639d4621416c3f337f",
+   "role": "daily intern backend, R1 (CN trading and ads)",
+   "round": "P",
+   "family": "Course Schedule / topological sort family",
+   "lc": [
+    207
+   ],
+   "custom": null,
+   "note": "Detect circular dependencies between services; not hot-100.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-02",
+   "region": "CN",
+   "source": "NC 2902070",
+   "url": "https://www.nowcoder.com/feed/main/detail/ea412d0d063544caa685d02057a73ec1",
+   "role": "data mining intern, R1",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "SQL: latest order per customer.",
+   "note": "",
+   "conf": "medium",
+   "scope": "out: front-end / JavaScript knowledge, SQL, ML or unnamed; not an algorithm-coding problem for the LeetCode deck"
+  },
+  {
+   "date": "2026-09-03",
+   "region": "CN",
+   "source": "NC 925066865183858688",
+   "url": "https://www.nowcoder.com/discuss/925066865183858688",
+   "role": "Douyin e-commerce Agent full-stack, R1",
+   "round": "P",
+   "family": "Largest number below N from a digit set",
+   "lc": [
+    902
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-03",
+   "region": "CN",
+   "source": "NC 925161929348259840",
+   "url": "https://www.nowcoder.com/discuss/925161929348259840",
+   "role": "LLM algorithm, R1",
+   "round": "P",
+   "family": "Dynamic-batching request queue (pseudo-code)",
+   "lc": [],
+   "custom": null,
+   "note": "Inference scheduler with dynamic batching.",
+   "conf": "medium",
+   "scope": "out: front-end / JavaScript knowledge, SQL, ML or unnamed; not an algorithm-coding problem for the LeetCode deck"
+  },
+  {
+   "date": "2026-09-04",
+   "region": "CN",
+   "source": "NC 925342611194286080",
+   "url": "https://www.nowcoder.com/discuss/925342611194286080",
+   "role": "Agent dev, R1 (09-03)",
+   "round": "P",
+   "family": "Largest number below N from a digit set",
+   "lc": [
+    902
+   ],
+   "custom": null,
+   "note": "N=23121, A={2,4,9} -> 22999.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-04",
+   "region": "CN",
+   "source": "NC 2903453",
+   "url": "https://www.nowcoder.com/feed/main/detail/b605b40b8be947a68e67861135490814",
+   "role": "CN trading and ads client, R1",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "Write a deadlock.",
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-04",
+   "region": "CN",
+   "source": "NC 2903453",
+   "url": "https://www.nowcoder.com/feed/main/detail/b605b40b8be947a68e67861135490814",
+   "role": "CN trading and ads client, R1",
+   "round": "P",
+   "family": null,
+   "lc": [
+    136
+   ],
+   "custom": null,
+   "note": "O(n) time, O(1) space.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-04",
+   "region": "CN",
+   "source": "NC 2903596",
+   "url": "https://www.nowcoder.com/feed/main/detail/78bbd297be23460d979fc3428c73c545",
+   "role": "backend, R2",
+   "round": "O",
+   "family": "LRU Cache (+TTL / LFU / weighted / thread-safe)",
+   "lc": [
+    146
+   ],
+   "custom": null,
+   "note": "15 minutes.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-04",
+   "region": "CN",
+   "source": "NC 925525133706432512",
+   "url": "https://www.nowcoder.com/discuss/925525133706432512",
+   "role": "RL algorithm, R1",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "Compute GAE from rewards and values.",
+   "note": "Two further hard/medium problems not named.",
+   "conf": "medium",
+   "scope": "out: front-end / JavaScript knowledge, SQL, ML or unnamed; not an algorithm-coding problem for the LeetCode deck"
+  },
+  {
+   "date": "2026-09-05",
+   "region": "CN",
+   "source": "NC 925803032841842688",
+   "url": "https://www.nowcoder.com/discuss/925803032841842688",
+   "role": "frontend, R1",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "Function currying via closure.",
+   "note": "",
+   "conf": "medium",
+   "scope": "out: front-end / JavaScript knowledge, SQL, ML or unnamed; not an algorithm-coding problem for the LeetCode deck"
+  },
+  {
+   "date": "2026-09-07",
+   "region": "CN",
+   "source": "NC 2904680",
+   "url": "https://www.nowcoder.com/feed/main/detail/c737521a531c42c4b8d4cf823c94d457",
+   "role": "Douyin e-commerce, R1",
+   "round": "P",
+   "family": null,
+   "lc": [
+    104
+   ],
+   "custom": null,
+   "note": "DFS risk and tail recursion follow-ups.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-07",
+   "region": "CN",
+   "source": "NC 926468630819213312",
+   "url": "https://www.nowcoder.com/discuss/926468630819213312",
+   "role": "search algorithm, R1 (09-01)",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "Factory must process in order a,b,c,d; complete the sequence adad with the minimum number of steps.",
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-07",
+   "region": "CN",
+   "source": "NC 2905035",
+   "url": "https://www.nowcoder.com/feed/main/detail/612a1c20eea744a288b142f5b43f57e1",
+   "role": "agent, R1",
+   "round": "P",
+   "family": "LRU Cache (+TTL / LFU / weighted / thread-safe)",
+   "lc": [
+    146
+   ],
+   "custom": null,
+   "note": "Own doubly linked list.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-07",
+   "region": "CN",
+   "source": "NC 2905035",
+   "url": "https://www.nowcoder.com/feed/main/detail/612a1c20eea744a288b142f5b43f57e1",
+   "role": "agent, R1",
+   "round": "P",
+   "family": "Top K Frequent Elements",
+   "lc": [
+    347
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-08",
+   "region": "CN",
+   "source": "NC 2905598",
+   "url": "https://www.nowcoder.com/feed/main/detail/9cfff5310c0942539743f6df34058e69",
+   "role": "autumn, R1",
+   "round": "P",
+   "family": "Remove Nth Node From End",
+   "lc": [
+    19
+   ],
+   "custom": null,
+   "note": "Plus an unsolved SQL question.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-08",
+   "region": "CN",
+   "source": "NC 2905830",
+   "url": "https://www.nowcoder.com/feed/main/detail/2421597fd2a0494dad4a0d74c6876d4d",
+   "role": "TikTok backend, R1 (09-02)",
+   "round": "P",
+   "family": null,
+   "lc": [
+    91
+   ],
+   "custom": null,
+   "note": "Decode Ways.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-08",
+   "region": "CN",
+   "source": "NC 2905864",
+   "url": "https://www.nowcoder.com/feed/main/detail/0a926033572f4a68b8c537f20a013503",
+   "role": "AI full-stack, R2",
+   "round": "O",
+   "family": "House Robber (incl. III on a tree)",
+   "lc": [
+    337
+   ],
+   "custom": null,
+   "note": "Stated as maximum independent set on a tree.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-08",
+   "region": "CN",
+   "source": "NC 2905983",
+   "url": "https://www.nowcoder.com/feed/main/detail/87605a16795e498cba258087f205b3f3",
+   "role": "CapCut frontend, R1",
+   "round": "P",
+   "family": "Concurrency-limited async task scheduler (JS)",
+   "lc": [],
+   "custom": "Concurrency scheduler with a maximum limit.",
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-08",
+   "region": "CN",
+   "source": "NC 2905983",
+   "url": "https://www.nowcoder.com/feed/main/detail/87605a16795e498cba258087f205b3f3",
+   "role": "CapCut frontend, R1",
+   "round": "P",
+   "family": null,
+   "lc": [
+    53
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-09",
+   "region": "CN",
+   "source": "NC 2906682",
+   "url": "https://www.nowcoder.com/feed/main/detail/86647f79824e439c824b76b05ac4f682",
+   "role": "data dev, autumn",
+   "round": "?",
+   "family": null,
+   "lc": [
+    148
+   ],
+   "custom": null,
+   "note": "Build a list and sort it.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-11",
+   "region": "CN",
+   "source": "NC 2908223",
+   "url": "https://www.nowcoder.com/feed/main/detail/300c766d7a92472ca01cffdbd56203b8",
+   "role": "Dongchedi experienced hire, R1",
+   "round": "P",
+   "family": "Trapping Rain Water",
+   "lc": [
+    42
+   ],
+   "custom": null,
+   "note": "Solved quickly.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-14",
+   "region": "CN",
+   "source": "NC 2909782",
+   "url": "https://www.nowcoder.com/feed/main/detail/63b1e403ab244adbbf1285999f745a0e",
+   "role": "embedded, R1",
+   "round": "P",
+   "family": "Longest Palindromic Substring",
+   "lc": [
+    5
+   ],
+   "custom": null,
+   "note": "In C++ with own input handling.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-14",
+   "region": "CN",
+   "source": "NC 2909785",
+   "url": "https://www.nowcoder.com/feed/main/detail/4904c4d490504136bb8f3c612a026388",
+   "role": "embedded, R2",
+   "round": "O",
+   "family": "Reverse Linked List",
+   "lc": [
+    206
+   ],
+   "custom": null,
+   "note": "With a test case.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-14",
+   "region": "CN",
+   "source": "NC 929155461511675904",
+   "url": "https://www.nowcoder.com/discuss/929155461511675904",
+   "role": "international payment, R1 (09-07)",
+   "round": "P",
+   "family": "Reverse Nodes in k-Group (+ variants)",
+   "lc": [
+    25
+   ],
+   "custom": null,
+   "note": "ACM format, iterative version had a bug.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-15",
+   "region": "CN",
+   "source": "NC 2910581",
+   "url": "https://www.nowcoder.com/feed/main/detail/9d9259986b304b749bc8ab07c20365c9",
+   "role": "Douyin e-commerce client, R1 (09-14)",
+   "round": "P",
+   "family": null,
+   "lc": [
+    2816
+   ],
+   "custom": null,
+   "note": "Double an integer stored as a singly linked list, no reversal.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-15",
+   "region": "CN",
+   "source": "NC 2910749",
+   "url": "https://www.nowcoder.com/feed/main/detail/60575b4f72a042378104e0d3d6ec5040",
+   "role": "AI R&D, R1",
+   "round": "P",
+   "family": "Largest number below N from a digit set",
+   "lc": [
+    902
+   ],
+   "custom": null,
+   "note": "Digits from nums joined, maximum value not above target.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-14",
+   "region": "CN",
+   "source": "NC 2909938",
+   "url": "https://www.nowcoder.com/feed/main/detail/a1ce24c561874141abe6ba18a466f982",
+   "role": "AI infra, R1 (09-14)",
+   "round": "P",
+   "family": "LRU Cache (+TTL / LFU / weighted / thread-safe)",
+   "lc": [
+    146
+   ],
+   "custom": null,
+   "note": "KV cache with expiry.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-10",
+   "region": "CN",
+   "source": "NC 2907384",
+   "url": "https://www.nowcoder.com/feed/main/detail/2f38a9773d134e6fa18e00870dd42c59",
+   "role": "R?",
+   "round": "?",
+   "family": "Course Schedule / topological sort family",
+   "lc": [
+    207
+   ],
+   "custom": null,
+   "note": "Topological sort coding task.",
+   "conf": "low"
+  },
+  {
+   "date": "2026-09-16",
+   "region": "CN",
+   "source": "NC 929731481189044224",
+   "url": "https://www.nowcoder.com/discuss/929731481189044224",
+   "role": "Agent, R1 (09-16)",
+   "round": "P",
+   "family": "Subtree of Another Tree",
+   "lc": [
+    572
+   ],
+   "custom": null,
+   "note": "Substructure variant (Offer 26 / LCR 143).",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-16",
+   "region": "CN",
+   "source": "NC 2911553",
+   "url": "https://www.nowcoder.com/feed/main/detail/6d80836574e647d39eb9842dc4131ace",
+   "role": "algorithm (Agent), R?",
+   "round": "?",
+   "family": "Add two signed numeric strings",
+   "lc": [
+    415
+   ],
+   "custom": null,
+   "note": "Big-number addition.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-16",
+   "region": "CN",
+   "source": "NC 2911553",
+   "url": "https://www.nowcoder.com/feed/main/detail/6d80836574e647d39eb9842dc4131ace",
+   "role": "algorithm (Agent), R?",
+   "round": "?",
+   "family": "Queue using two stacks",
+   "lc": [
+    232
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-17",
+   "region": "CN",
+   "source": "NC 930155293864914944",
+   "url": "https://www.nowcoder.com/discuss/930155293864914944",
+   "role": "Agent R&D, AI compute infra",
+   "round": "?",
+   "family": "LRU Cache (+TTL / LFU / weighted / thread-safe)",
+   "lc": [
+    146
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-18",
+   "region": "CN",
+   "source": "NC 2912872",
+   "url": "https://www.nowcoder.com/feed/main/detail/4776f52d366e4a4680542758dc98496f",
+   "role": "R1",
+   "round": "P",
+   "family": null,
+   "lc": [
+    1740
+   ],
+   "custom": null,
+   "note": "Distance between two nodes of a binary tree.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-20",
+   "region": "CN",
+   "source": "NC 2914017",
+   "url": "https://www.nowcoder.com/feed/main/detail/a3ba705bba5b4ca99010bc6317ef2709",
+   "role": "Seed frontend, R1",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "Write a useTimeout hook.",
+   "note": "",
+   "conf": "medium",
+   "scope": "out: front-end / JavaScript knowledge, SQL, ML or unnamed; not an algorithm-coding problem for the LeetCode deck"
+  },
+  {
+   "date": "2026-09-20",
+   "region": "CN",
+   "source": "NC 2914017",
+   "url": "https://www.nowcoder.com/feed/main/detail/a3ba705bba5b4ca99010bc6317ef2709",
+   "role": "Seed frontend, R1",
+   "round": "P",
+   "family": "Concurrency-limited async task scheduler (JS)",
+   "lc": [],
+   "custom": "requestLimit with maximum concurrency 3.",
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-21",
+   "region": "CN",
+   "source": "NC 931555466247700480",
+   "url": "https://www.nowcoder.com/discuss/931555466247700480",
+   "role": "Feishu AI full-stack, R1",
+   "round": "P",
+   "family": "Add two signed numeric strings",
+   "lc": [
+    415
+   ],
+   "custom": null,
+   "note": "Strings up to 100000 digits.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-21",
+   "region": "CN",
+   "source": "NC 2914863",
+   "url": "https://www.nowcoder.com/feed/main/detail/693d50c2a0fe4ff5b304f1786eba5f41",
+   "role": "frontend, R1",
+   "round": "P",
+   "family": "Concurrency-limited async task scheduler (JS)",
+   "lc": [],
+   "custom": "JS async scheduler with a concurrency limit.",
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-22",
+   "region": "CN",
+   "source": "NC 2915415",
+   "url": "https://www.nowcoder.com/feed/main/detail/f0ef75e022c14afbb43f71f561284c96",
+   "role": "frontend, R1",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "Hand-write a publish-subscribe pattern.",
+   "note": "",
+   "conf": "medium",
+   "scope": "out: front-end / JavaScript knowledge, SQL, ML or unnamed; not an algorithm-coding problem for the LeetCode deck"
+  },
+  {
+   "date": "2026-09-22",
+   "region": "CN",
+   "source": "NC 2915705",
+   "url": "https://www.nowcoder.com/feed/main/detail/ffe074f01683402fb85c324430f2877d",
+   "role": "CapCut frontend, R1",
+   "round": "P",
+   "family": "LRU Cache (+TTL / LFU / weighted / thread-safe)",
+   "lc": [
+    146
+   ],
+   "custom": null,
+   "note": "JS Map based.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-23",
+   "region": "CN",
+   "source": "NC 2915895",
+   "url": "https://www.nowcoder.com/feed/main/detail/6b68d99d9ff74e4f920d7527a8fb27c0",
+   "role": "backend, R1",
+   "round": "P",
+   "family": "Reverse Nodes in k-Group (+ variants)",
+   "lc": [
+    25
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-23",
+   "region": "CN",
+   "source": "NC 2915895",
+   "url": "https://www.nowcoder.com/feed/main/detail/6b68d99d9ff74e4f920d7527a8fb27c0",
+   "role": "backend, R1",
+   "round": "P",
+   "family": "Add Two Numbers II",
+   "lc": [
+    445
+   ],
+   "custom": null,
+   "note": "No extra space, output a list.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-23",
+   "region": "CN",
+   "source": "NC 2916316",
+   "url": "https://www.nowcoder.com/feed/main/detail/50a006a639c647b3914858b8ad3c0537",
+   "role": "backend, R1",
+   "round": "P",
+   "family": "Reverse Linked List",
+   "lc": [
+    206
+   ],
+   "custom": null,
+   "note": "ACM mode.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-24",
+   "region": "CN",
+   "source": "NC 932594519835443200",
+   "url": "https://www.nowcoder.com/discuss/932594519835443200",
+   "role": "multimodal LLM, R1",
+   "round": "P",
+   "family": "Longest Common Subsequence / Substring",
+   "lc": [
+    1143
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-24",
+   "region": "CN",
+   "source": "NC 2916812",
+   "url": "https://www.nowcoder.com/feed/main/detail/b352fd7743764c7c879f8cf962ea454e",
+   "role": "R1",
+   "round": "P",
+   "family": "Rate limiter implementation (token bucket / sliding window)",
+   "lc": [],
+   "custom": null,
+   "note": "Token bucket implementation.",
+   "conf": "medium",
+   "scope": "out: front-end / JavaScript knowledge, SQL, ML or unnamed; not an algorithm-coding problem for the LeetCode deck"
+  },
+  {
+   "date": "2026-09-24",
+   "region": "CN",
+   "source": "NC 2916812",
+   "url": "https://www.nowcoder.com/feed/main/detail/b352fd7743764c7c879f8cf962ea454e",
+   "role": "R1",
+   "round": "P",
+   "family": "Binary tree level order / zigzag traversal",
+   "lc": [
+    102
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-24",
+   "region": "CN",
+   "source": "NC 2916812",
+   "url": "https://www.nowcoder.com/feed/main/detail/b352fd7743764c7c879f8cf962ea454e",
+   "role": "R1",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "Hand-write singleflight.",
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-24",
+   "region": "CN",
+   "source": "NC 932657562825027584",
+   "url": "https://www.nowcoder.com/discuss/932657562825027584",
+   "role": "Agent, R2",
+   "round": "O",
+   "family": null,
+   "lc": [
+    470
+   ],
+   "custom": null,
+   "note": "rand7 from rand5.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-21",
+   "region": "CN",
+   "source": "NC 2914658",
+   "url": "https://www.nowcoder.com/feed/main/detail/7204a5c4ddd74a1e8b8e24d96fa54c7e",
+   "role": "game client daily intern, R1",
+   "round": "P",
+   "family": null,
+   "lc": [
+    478
+   ],
+   "custom": null,
+   "note": "Uniform random point in a circle; first attempt was not uniform.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-24",
+   "region": "CN",
+   "source": "NC 2917036",
+   "url": "https://www.nowcoder.com/feed/main/detail/c7bb3d5f19104b4b8d2c0866ca9655b4",
+   "role": "2028 grad intern, rounds with ByteDance (4 rounds)",
+   "round": "?",
+   "family": "LRU Cache (+TTL / LFU / weighted / thread-safe)",
+   "lc": [
+    146
+   ],
+   "custom": null,
+   "note": "Company of the list is inferred from the post.",
+   "conf": "low"
+  },
+  {
+   "date": "2026-09-24",
+   "region": "CN",
+   "source": "NC 2917036",
+   "url": "https://www.nowcoder.com/feed/main/detail/c7bb3d5f19104b4b8d2c0866ca9655b4",
+   "role": "2028 grad intern, rounds with ByteDance (4 rounds)",
+   "round": "?",
+   "family": null,
+   "lc": [],
+   "custom": "Longest balanced substring; minimum inversion pairs in a fixed-length subarray.",
+   "note": "Company inferred.",
+   "conf": "low"
+  },
+  {
+   "date": "2026-10-08",
+   "region": "CN",
+   "source": "NC 2922807",
+   "url": "https://www.nowcoder.com/feed/main/detail/c42ce9e02e5f44c29768841663077d59",
+   "role": "business Data Agent",
+   "round": "?",
+   "family": null,
+   "lc": [
+    380
+   ],
+   "custom": null,
+   "note": "Set with O(1) add, delete and random peek.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-10-11",
+   "region": "CN",
+   "source": "NC 2924305",
+   "url": "https://www.nowcoder.com/feed/main/detail/f73acafa8a1d4123a3ec0324a446691f",
+   "role": "internal transfer, Douyin open platform, R1",
+   "round": "P",
+   "family": null,
+   "lc": [],
+   "custom": "Finite state machine tokenising markdown bold syntax.",
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-10-13",
+   "region": "CN",
+   "source": "NC 2925396",
+   "url": "https://www.nowcoder.com/feed/main/detail/00e3488329c041c5a5a357c14ce138b4",
+   "role": "daily intern, group information systems, R1",
+   "round": "P",
+   "family": "Lowest Common Ancestor of a Binary Tree",
+   "lc": [
+    236
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-10-02",
+   "region": "CN",
+   "source": "NC 2920578",
+   "url": "https://www.nowcoder.com/feed/main/detail/352212c83d3343dfb108738098f5a68a",
+   "role": "autumn summary post, ByteDance round",
+   "round": "?",
+   "family": "Number of Islands family",
+   "lc": [
+    200
+   ],
+   "custom": null,
+   "note": "DFS.",
+   "conf": "low"
+  },
+  {
+   "date": "2026-10-13",
+   "region": "CN",
+   "source": "NC 2925410",
+   "url": "https://www.nowcoder.com/feed/main/detail/e4a2da0378b442f9ae42e65fbbfa1e4d",
+   "role": "autumn summary post, ByteDance R2",
+   "round": "O",
+   "family": "Search in Rotated Sorted Array / find min",
+   "lc": [
+    33
+   ],
+   "custom": null,
+   "note": "One-pass version expected.",
+   "conf": "low"
+  },
+  {
+   "date": "2026-07-20",
+   "region": "CN",
+   "source": "NC 908737508467277824",
+   "url": "https://www.nowcoder.com/discuss/908737508467277824",
+   "role": "international payment summer intern",
+   "round": "?",
+   "family": null,
+   "lc": [
+    72
+   ],
+   "custom": null,
+   "note": "Edit Distance (mirror dates the interview 2026-03).",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-07-20",
+   "region": "CN",
+   "source": "NC 908737508467277824",
+   "url": "https://www.nowcoder.com/discuss/908737508467277824",
+   "role": "international payment summer intern",
+   "round": "?",
+   "family": "Trapping Rain Water",
+   "lc": [
+    42
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-07-20",
+   "region": "CN",
+   "source": "NC 908737508467277824",
+   "url": "https://www.nowcoder.com/discuss/908737508467277824",
+   "role": "international payment summer intern",
+   "round": "?",
+   "family": "Reverse Words in a String (preserve spaces, in place)",
+   "lc": [
+    151
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-07-27",
+   "region": "CN",
+   "source": "NC 2881039",
+   "url": "https://www.nowcoder.com/feed/main/detail/4d9c64a2a33c4711b22e7cd25970f414",
+   "role": "AI full-stack intern, R1",
+   "round": "P",
+   "family": null,
+   "lc": [
+    165
+   ],
+   "custom": null,
+   "note": "Compare Version Numbers.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-08-31",
+   "region": "CN",
+   "source": "NC 2900376",
+   "url": "https://www.nowcoder.com/feed/main/detail/d2715d6c72e945e98a41bc27d29c6857",
+   "role": "backend, R1",
+   "round": "P",
+   "family": "Reverse Nodes in k-Group (+ variants)",
+   "lc": [
+    25
+   ],
+   "custom": null,
+   "note": "10 minutes.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-05",
+   "region": "CN",
+   "source": "NC 2903637",
+   "url": "https://www.nowcoder.com/feed/main/detail/438d130a72d448158b1caf45a3d752de",
+   "role": "international ads CRM, R1",
+   "round": "P",
+   "family": "K-th node from the end of a list",
+   "lc": [
+    19
+   ],
+   "custom": null,
+   "note": "With tests.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-08",
+   "region": "CN",
+   "source": "NC 2905920",
+   "url": "https://www.nowcoder.com/feed/main/detail/c219ca3ea7e649ea9cdde12654336b03",
+   "role": "TikTok backend, R2",
+   "round": "O",
+   "family": "Permutations",
+   "lc": [
+    46
+   ],
+   "custom": null,
+   "note": "Duplicate-handling bug.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-18",
+   "region": "CN",
+   "source": "NC 2913011",
+   "url": "https://www.nowcoder.com/feed/main/detail/a197824e0e6e444297482be3c155b0a8",
+   "role": "AI backend, R2",
+   "round": "O",
+   "family": "Search in Rotated Sorted Array / find min",
+   "lc": [
+    33
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-25",
+   "region": "CN",
+   "source": "NC 933023499399024640",
+   "url": "https://www.nowcoder.com/discuss/933023499399024640",
+   "role": "AI app engineer, R1",
+   "round": "P",
+   "family": "Combinations",
+   "lc": [
+    77
+   ],
+   "custom": null,
+   "note": "Choose k of 1..N.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-10-16",
+   "region": "CN",
+   "source": "NC 2927211",
+   "url": "https://www.nowcoder.com/feed/main/detail/f091d216802a4264a677c65982fb751a",
+   "role": "Dongchedi backend, R1",
+   "round": "P",
+   "family": "Longest Substring Without Repeating Characters (+II)",
+   "lc": [
+    3
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-10-17",
+   "region": "CN",
+   "source": "NC 2927986",
+   "url": "https://www.nowcoder.com/feed/main/detail/d8822fc2b4ae4b2fbdb03c95fa2a427d",
+   "role": "full-stack, R1-R4",
+   "round": "?",
+   "family": null,
+   "lc": [
+    128
+   ],
+   "custom": null,
+   "note": "Longest Consecutive Sequence.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-10-17",
+   "region": "CN",
+   "source": "NC 2927986",
+   "url": "https://www.nowcoder.com/feed/main/detail/d8822fc2b4ae4b2fbdb03c95fa2a427d",
+   "role": "full-stack, R1-R4",
+   "round": "?",
+   "family": "Subtree of Another Tree",
+   "lc": [
+    572
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-10-14",
+   "region": "CN",
+   "source": "NC 2926339",
+   "url": "https://www.nowcoder.com/feed/main/detail/1cf76a70672a4b7f86db1ec773189121",
+   "role": "backend intern, R1",
+   "round": "P",
+   "family": "House Robber (incl. III on a tree)",
+   "lc": [
+    198
+   ],
+   "custom": null,
+   "note": "ACM mode, not solved in time.",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-09",
+   "region": "CN",
+   "source": "NC 927161142194049024",
+   "url": "https://www.nowcoder.com/discuss/927161142194049024",
+   "role": "ads platform, R2",
+   "round": "O",
+   "family": "LRU Cache (+TTL / LFU / weighted / thread-safe)",
+   "lc": [
+    146
+   ],
+   "custom": null,
+   "note": "",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-23",
+   "region": "CN",
+   "source": "NC 932335031505211392",
+   "url": "https://www.nowcoder.com/discuss/932335031505211392",
+   "role": "frontend-leaning full-stack, R1",
+   "round": "P",
+   "family": "Concurrency-limited async task scheduler (JS)",
+   "lc": [],
+   "custom": "Concurrent task scheduler and dependency-ordered parallel batches.",
+   "note": "",
+   "conf": "medium"
+  }
+ ],
+ "bank_changes": [],
+ "skipped": "PARTIAL: stopped on the coordinator's time limit. Nowcoder search API: each query returns at most 60 posts (3 pages), so I ran about 160 query variants (all listed queries plus role/round/month variants) in create-time order; 1208 distinct posts dated 2026-07-17..10-28 were fetched in full via the moment/content detail API, 1135 mention ByteDance/Douyin/TikTok/Feishu/etc. A relevance/hot-order pass meant to reach deeper into 07-17..08-10 crashed once and was killed before finishing, so 07-17..08-10 is thinner than the rest (about 40 posts for 07-17..07-31). Reviewed by hand: the 505 unknown posts with ByteDance in title/lead and a coding keyword (about 410 were non-interview noise, recruiting ads, progress lists, other companies, or AI-farm template posts), plus 108 posts already known to the first collection. Distinct reports with a new sighting: 105 (rows 133). Roughly 60 further posts named a problem that the first collection already held (id in CATALOG sec 1 or raw/forums_cn.md with the problem named); about 35 reports in raw/forums_cn.md sec 3 had 'algo: -' although the body names a problem, so the first-pass extraction missed them (these are rows 'new' here, e.g. NC 908737508467277824, 2900376, 2903637, 2905920, 2913011, 2927211, 2927986). Rough completeness of the first collection on named-problem Nowcoder reports in this window: about 60 recorded vs 105 new reports, i.e. roughly one third (estimate, hand-counted). Dropped: 'zhuanlan' compilation columns (ids 9215-9306, titles ending -NN, AI-polished re-lists of first-hand posts), AI-farm template posts (identical 'no expression interviewer' RL/agent posts 925523582761857024 and copies, 926273296180547584, 926274355078664192, 927512391112323072, 927650577620692992, 933733520864706560 = same event as 925342611194286080), posts that name no problem (e.g. 2894434, 2898126, 2911416, 2925237, 2933530), 2902349 (BIGO), 2893608 (Android: two LCR links, unresolved). Dates are post dates (CST); interview dates are given in role when stated. GitHub: wearzdk/interview-experience shallow clone (3855 files, month precision only; 243 ByteDance-related files for 2026-07..10, all cross-matched to Nowcoder ids; about 35 not found by my search were read from the mirror text: nothing new beyond rows above except 932335031505211392). atomeocean/job-compass: only bozm71 (2026-10-17) falls in the window, already in CATALOG; no new TikTok/ByteDance page. emmazhang-ai-sde/shuyangzhang-leetcode-notes: last commit 2026-10-23, PDF compilation ends 2026-08-12; TT-001..TT-012 (07-18..08-12) are all in CATALOG except TT-006 (binary search, no problem named). Xiaohongshu/Zhihu/CSDN/Juejin via WebSearch (3 queries): returned only old Juejin posts (2020-2021), 1point3acres tag pages, jiangren.com.au, niuqizp recruiting pages and a CSDN gitcode front-end digest (2026-01..04); nothing dated in the window, Xiaohongshu not reachable. bank_changes not computed (time)."
+}

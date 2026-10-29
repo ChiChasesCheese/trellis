@@ -1,0 +1,144 @@
+{
+  "collected": "2026-10-28",
+  "half": "audit-en",
+  "window": ["2026-07-17", "2026-10-28"],
+  "sightings": [
+    {
+      "date": "2026-08-05", "region": "US",
+      "source": "1P3A 1185141",
+      "url": "https://www.1point3acres.com/bbs/thread-1185141-1-1.html",
+      "role": "SWE full-time (phone screen; a reply says the interviewer was on the ads side)", "round": "P",
+      "family": "Merge Intervals", "lc": [56], "custom": null,
+      "note": "visible fragment: self-intro and project talk, then one easy merge-intervals problem, then a harder second question (a reply says the second was a database-update question; same event as the PracHub 'idempotent versioned database update' item of 2026-08-09, already in CATALOG). 1P3A bank record merge-intervals (n=5, 2026-07-23..2026-10-13) probably includes this thread; CATALOG counted only 1183894 by id",
+      "conf": "medium"
+    },
+    {
+      "date": "2026-08-07", "region": "US",
+      "source": "1P3A 1185443 (same event as 1185434, same day)",
+      "url": "https://www.1point3acres.com/bbs/thread-1185443-1-1.html",
+      "role": "SWE full-time", "round": "P",
+      "family": "Longest Palindromic Substring", "lc": [5], "custom": null,
+      "note": "60 min: about 45 min deep resume probing, then palindromic substring where the Manacher algorithm was required (from the 1P3A experience summaries of 1185434 and 1185443). Bank record longest-palindromic-substring (n=2, first 2026-01-29) probably holds this thread",
+      "conf": "medium"
+    },
+    {
+      "date": "2026-08-08", "region": "US",
+      "source": "1P3A 1185560",
+      "url": "https://www.1point3acres.com/bbs/thread-1185560-1-1.html",
+      "role": "SWE full-time (Chinese-language interview)", "round": "P",
+      "family": "Number of Islands family", "lc": [695], "custom": null,
+      "note": "variant of Max Area of Island solved with an explicit stack DFS; follow-up: also return the largest island size. Bank record number-of-islands-family has last-asked 2026-08-08, so this thread is probably inside the bank-residual count already in CATALOG",
+      "conf": "medium"
+    },
+    {
+      "date": "2026-08-08", "region": "US",
+      "source": "1P3A 1185609",
+      "url": "https://www.1point3acres.com/bbs/thread-1185609-1-1.html",
+      "role": "SWE full-time (recruiter-sourced, rejected)", "round": "P",
+      "family": "LRU Cache (+TTL / LFU / weighted / thread-safe)", "lc": [146], "custom": null,
+      "note": "resume deep dive with schema/CAP/indexing/concurrency questions, then plain LeetCode LRU cache. Bank record lru-cache-with-ttl (n=9) may already hold it as a residual",
+      "conf": "medium"
+    },
+    {
+      "date": "2026-08-17", "region": "US",
+      "source": "1P3A 1186469",
+      "url": "https://www.1point3acres.com/bbs/thread-1186469-1-1.html",
+      "role": "SWE full-time (video interview; project was a model offline-evaluation project)", "round": "?",
+      "family": "Merge Intervals", "lc": [56], "custom": null,
+      "note": "given a set of time windows, merge all overlapping ones; the other coding problem of the same interview is the Course Schedule row below",
+      "conf": "medium"
+    },
+    {
+      "date": "2026-08-17", "region": "US",
+      "source": "1P3A 1186469",
+      "url": "https://www.1point3acres.com/bbs/thread-1186469-1-1.html",
+      "role": "SWE full-time (video interview)", "round": "?",
+      "family": "Course Schedule / topological sort family", "lc": [207], "custom": null,
+      "note": "can all courses be completed (true/false); the poster's approach is in-degree topological sort",
+      "conf": "medium"
+    },
+    {
+      "date": "2026-08-24", "region": "US",
+      "source": "1P3A 1187245",
+      "url": "https://www.1point3acres.com/bbs/thread-1187245-1-1.html",
+      "role": "backend SWE full-time (tech phone screen)", "round": "P",
+      "family": null, "lc": [986], "custom": null,
+      "note": "given two lists of intervals return their intersection (Interval List Intersections). Matches 1P3A bank record intersection-of-two-interval-lists (n=1, no dates) that CATALOG left out; the experience summary says the screen was experience talk plus interval problems",
+      "conf": "medium"
+    },
+    {
+      "date": "2026-08-24", "region": "US",
+      "source": "1P3A 1187092",
+      "url": "https://www.1point3acres.com/bbs/thread-1187092-1-1.html",
+      "role": "SWE full-time (video interview, interviewer based in China, backend focus)", "round": "P",
+      "family": null, "lc": [889], "custom": null,
+      "note": "rebuild a binary tree from its preorder and postorder traversals (DFS), asked symbolically at the end after most of the hour went to resume, Kafka/MQ, database and web-protocol questions. Matches 1P3A bank record reconstruct-binary-tree-from-preorder-and-postorder (n=1, no dates) that CATALOG left out",
+      "conf": "medium"
+    },
+    {
+      "date": "2026-09-02", "region": "US",
+      "source": "1P3A 1188286",
+      "url": "https://www.1point3acres.com/bbs/thread-1188286-1-1.html",
+      "role": "USDS SRE (phone screen)", "round": "P",
+      "family": "Valid Parentheses", "lc": [20], "custom": null,
+      "note": "Linux commands and service triage, then an easy LeetCode 20; rejected the next day. Bank record valid-parentheses (n=2, no dates) may hold it",
+      "conf": "medium"
+    },
+    {
+      "date": "2026-09-05", "region": "US",
+      "source": "1P3A 1188597",
+      "url": "https://www.1point3acres.com/bbs/thread-1188597-1-1.html",
+      "role": "SWE full-time, short-video team (tech phone screen)", "round": "P",
+      "family": "Combination Sum", "lc": [40], "custom": null,
+      "note": "the title obfuscates the problem number by homophones (same cipher as 'er ling qi' = 207 in 1192155); read as LC 40 (four-ten) with a twist that negative numbers are allowed, followed by broad ba-gu questions. The number reading is a guess",
+      "conf": "low"
+    },
+    {
+      "date": "2026-09-09", "region": "OTHER",
+      "source": "reddit 1wbe1zi",
+      "url": "https://reddit.com/r/cscareerquestions/comments/1wbe1zi/",
+      "role": "SRE intern (candidate studies in the southern hemisphere)", "round": "P",
+      "family": "Basic Calculator I / II / III", "lc": [772], "custom": null,
+      "note": "live coding, 30 minutes, no AI allowed; LeetCode 772 Basic Calculator III; candidate barely wrote code",
+      "conf": "medium"
+    },
+    {
+      "date": "2026-10-03", "region": "US",
+      "source": "1P3A 1191838",
+      "url": "https://www.1point3acres.com/bbs/thread-1191838-1-1.html",
+      "role": "SWE intern (no OA; interview invitation for a position never applied to)", "round": "P",
+      "family": "LRU Cache (+TTL / LFU / weighted / thread-safe)", "lc": [146], "custom": null,
+      "note": "C++ low-level fundamentals questions, then an LRU cache; the post is dated 2026-10-03 but its text mentions dates 10.10 and 10.12, so the interview date is uncertain",
+      "conf": "low"
+    },
+    {
+      "date": "2026-08-08", "region": "US",
+      "source": "TI 2026-08-08",
+      "url": "https://trueinterview.io/questions/candy-lc-135",
+      "role": "SWE (phone screen)", "round": "P",
+      "family": null, "lc": [135], "custom": null,
+      "note": "Candy: each child gets at least one candy, a child with a higher rating than a neighbour gets more. The TrueInterview record lists ByteDance and Citadel, so the attribution to TikTok is uncertain; absent from CATALOG and from the first-pass TrueInterview list",
+      "conf": "low"
+    },
+    {
+      "date": "2026-08-23", "region": "US",
+      "source": "TI 2026-08-23",
+      "url": "https://trueinterview.io/questions/trace-and-debug-agent-tool-call-failures",
+      "role": "SWE / agent platform (phone screen)", "round": "P",
+      "family": null, "lc": [], "custom": "streaming event tracer for an agent's external tool calls: each call belongs to a request and may be retried, one trace record per event in arrival order with request id, attempt id, failure stage; PracHub lists a design variant (safe logging, explicit retry rules)",
+      "note": "TrueInterview rates it hard; the same title was in the first-pass TrueInterview title list but never became a CATALOG row",
+      "conf": "medium"
+    },
+    {
+      "date": "2026-08-15", "region": "SG",
+      "source": "TI exp 173da5464e4b (posted 2026-10-27)",
+      "url": "https://trueinterview.io/interviews/104dd669-b6bc-4300-b4a7-173da5464e4b",
+      "role": "SWE senior, Singapore, 3 rounds, rejected", "round": "?",
+      "family": "Course Schedule / topological sort family", "lc": [207], "custom": null,
+      "note": "interview write-up labelled Aug 2026 but titled 'Singapore, 2022'; its question list names Course Schedule Cycle Detection plus a project deep dive; the body is behind the daily free-read paywall. Month-only date placed on the 15th",
+      "conf": "low"
+    }
+  ],
+  "bank_changes": [],
+  "skipped": "Per platform (window 2026-07-17..2026-10-28; reports looked at / reports that name an identifiable coding problem / of those already recorded in CATALOG or in refresh-2026-10-28-en|en2 by source id or same event). 1P3A forum tag bytedance pages 1-11 (page 12 starts before the window): about 210 threads in the window, about 91 interview-report threads, 35 name a coding problem, 25 already recorded (3 of them only by the en refresh because they postdate 2026-10-17), 10 not recorded: 1185141, 1185443, 1185560, 1185609, 1186469 (2 problems), 1187092, 1187245, 1188286, 1188597, 1191838. Counting only the 32 named reports posted before the 2026-10-24 collection, 22 were recorded by id or same event and 10 were not (recall about 69 percent by thread). Two of the 10 (1187092, 1187245) are 1P3A bank records in raw/1p3a.md that carry no dates and were therefore dropped from CATALOG; four more (1185141 and 1186469 for merge-intervals, 1185443 for longest-palindromic-substring, 1188286 for valid-parentheses) belong to bank records whose n exceeds the events CATALOG listed by id, so the family may already hold them as 'counted from 1P3A bank' residuals; the rows are given with their own ids so the orchestrator can decide. How the threads were read: tag pages for tids, then each thread's /interview/thread/<tid> summary page (title plus about 300 characters, 404 for posts with no summary), then the bbs page for the date and the visible opening and tail; no tRPC call, no login or paywall circumvention. Hidden bodies: problems are known only from the summaries, hence mostly medium confidence. Reports with no identifiable problem (dropped): 1184431, 1184873, 1182989, 1183128, 1185349 (a binary search task), 1186574 (a simple monotonic-stack task), 1186988, 1187052 (intern OA, four unnamed problems), 1188464 (senior screen, quickselect only mentioned in a reply), 1188610, 1188883, 1189120 (a binary tree problem, unnamed), 1190711 and other DS/SQL threads. 1P3A bank page (79 records, 30-day 12, 90-day 31, 180-day 15; the page header now says 387 coding problems against 381 on 2026-10-24): the per-record n values are the same multiset as raw/1p3a.md (79 cards, sum 238, last asked 2026-10-15 on two cards), so bank_changes is empty; slugs are not visible for members-only cards. TrueInterview GitHub mirror (data/questions.jsonl, 5924 rows, latest commit 2026-10-29): 46 ByteDance records dated in the window, 24 coding-type, 22 already recorded (including Bounded Number = TT-007 and Top K Largest = TT-009 events), 2 new (Candy LC 135, attribution uncertain because the record also lists Citadel; Trace and Debug Agent Tool-Call Failures). TrueInterview site: company page shows 350 questions and 170 experiences; 13 experiences dated Jul-Oct 2026 listed, of which only the Seattle one (posted 2026-10-27) is readable (an unnamed OOD problem with four extensions, no row), the rest hit the daily free-read paywall (not circumvented); one listing names Course Schedule Cycle Detection (SG, row added at low confidence). The month-only 'Oct 2026' labels on the question list still cannot be tied to a report date. Blind: 8 search pages (TikTok interview, ByteDance interview, TikTok coding, TikTok phone screen, TikTok onsite, TikTok leetcode, TikTok senior, TikTok USDS) gave 97 distinct posts, 10 dated in the window (offer comparisons, referrals, a recruiter-screen question, interview-timeline and 'is the bar like TikTok' posts), 0 name a problem. Reddit via Arctic Shift (title/selftext search times out, so I paged whole subreddits by date and filtered on tiktok/bytedance locally): r/leetcode 4359 posts scanned, 16 mention TikTok/ByteDance, none names a problem; r/csMajors 8336 scanned, about 70 mention them, about 25 are interview or OA posts and none names a problem (one says only 'a LeetCode hard'); r/cscareerquestions 5003 scanned, about 9 mention them, 1 names a problem (1wbe1zi, Basic Calculator III in an SRE intern live coding, not in CATALOG, row added; region OTHER because the candidate is in the southern hemisphere); r/ExperiencedDevs 2154, r/singapore 7690 and r/cscareerquestionsEU 1497 scanned, nothing relevant; r/developersIndia not scanned (too large for the rate limit, and India is outside the US/SG scope). Reddit 1w6uktk (SG, 2026-09-03/04) is the only other named-problem report and is already recorded. LeetCode Discuss GraphQL: 2 TikTok posts in the window (8572114 and 8563517, questions only) plus an unrelated hit, 0 named problems. PracHub company pages 1-11 (about 110 questions, no dates on the list; detail pages opened for 16 coding or scheduler items): coding items dated in the window are the heap/course-order item (10-04), paths/cycles and agent-trace items (08-23), the tic-tac-toe, binary-tree-from-descriptions and idempotent database-update items; all already recorded, 0 new; Serialize KV store (May), Merge Overlapping Time Windows (Jan), Maintain the Median (May), Python thread pool (Jul 11) and island counting for huge grids (Jun 19) are all dated before the window. Hello Interview TikTok page (5 visible reports, unchanged from the first pass): 2 coding reports in the window (Accounts Merge late July, Symmetric Tree mid August), both already recorded. Glassdoor: 2 WebSearch queries, snippets are undated or older and name no problem in the window. Not done: Hello Interview ByteDance filter (empty before), Glassdoor direct pages (403), the 1P3A forum body text (points wall)."
+}
