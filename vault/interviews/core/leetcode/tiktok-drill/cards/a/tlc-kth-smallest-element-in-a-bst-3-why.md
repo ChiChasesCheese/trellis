@@ -1,6 +1,6 @@
 ---
 id: tlc-kth-smallest-element-in-a-bst-3-why
-node: b.kth-smallest-element-in-a-bst
+node: a.kth-smallest-element-in-a-bst
 type: qa
 step: 3
 ---

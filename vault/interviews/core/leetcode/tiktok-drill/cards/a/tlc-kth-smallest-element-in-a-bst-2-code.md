@@ -1,6 +1,6 @@
 ---
 id: tlc-kth-smallest-element-in-a-bst-2-code
-node: b.kth-smallest-element-in-a-bst
+node: a.kth-smallest-element-in-a-bst
 type: qa
 step: 2
 ---

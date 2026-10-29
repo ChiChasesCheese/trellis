@@ -1,6 +1,6 @@
 ---
 id: tlc-tt-spiral-matrix-constant-space-3-why
-node: a.tt-spiral-matrix-constant-space
+node: b.tt-spiral-matrix-constant-space
 type: qa
 step: 3
 ---

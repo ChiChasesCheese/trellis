@@ -655,6 +655,16 @@
    "title": "Generate Random Point in a Circle",
    "title_zh": "在圆内随机生成点",
    "premium": false
+  },
+  {
+   "slug": "recover-binary-search-tree",
+   "id": 99,
+   "refs": 0,
+   "last_seen": "",
+   "why": "Chi's pick (2026-10-29): the follow-up of LC 98 on his cards (two swapped nodes in a BST)",
+   "title": "Recover Binary Search Tree",
+   "title_zh": "恢复二叉搜索树",
+   "premium": false
   }
  ],
  "variants": [

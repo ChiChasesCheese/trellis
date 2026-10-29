@@ -1,0 +1,8 @@
+{
+ "A": [
+  "validate-binary-search-tree",
+  "recover-binary-search-tree",
+  "kth-smallest-element-in-a-bst"
+ ],
+ "why": "Chi's picks (2026-10-29): the BST in-order family behind his LC 98 cards (98 validate, 99 recover two swapped nodes, 230 k-th smallest)"
+}

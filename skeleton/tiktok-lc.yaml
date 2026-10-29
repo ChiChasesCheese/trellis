@@ -680,9 +680,6 @@ nodes:
   - id: a.shortest-bridge
     title: LC 934 最短的桥（Shortest Bridge）
     summary: Medium；频率 TikTok 56、字节 75；Array, Depth-First Search, Breadth-First Search, Matrix。
-  - id: a.longest-increasing-path-in-a-matrix
-    title: LC 329 矩阵中的最长递增路径（Longest Increasing Path in a Matrix）
-    summary: Hard；频率 TikTok 62；国内字节被问 29 次、最近 2026-04-23；Array, Dynamic Programming, Depth-First Search, Breadth-First Search, Graph Theory。
   - id: a.distinct-subsequences
     title: LC 115 不同的子序列
     summary: Hard；国内字节被问 5 次、最近 2026-09-23。
@@ -707,15 +704,18 @@ nodes:
   - id: a.single-number-iii
     title: LC 260 只出现一次的数字 III（Single Number III）
     summary: LeetCode 原题；近一年被问 1 次、最近 2026-10-20。
+  - id: a.recover-binary-search-tree
+    title: LC 99 恢复二叉搜索树（Recover Binary Search Tree）
+    summary: LeetCode 原题；近一年被问 1 次、最近 日期不明。
   - id: a.partition-to-k-equal-sum-subsets
     title: LC 698 划分为k个相等的子集
     summary: Medium；国内字节被问 6 次、最近 2026-10-07。
+  - id: a.kth-smallest-element-in-a-bst
+    title: LC 230 二叉搜索树中第K小的元素
+    summary: Medium；国内字节被问 23 次、最近 2024-04-10。
   - id: a.shu-de-zi-jie-gou-lcof
     title: 剑指 Offer 26 树的子结构
     summary: Medium；国内字节被问 48 次、最近 2026-10-27。
-  - id: a.tt-spiral-matrix-constant-space
-    title: 螺旋矩阵：O(1) 额外空间且不修改输入
-    summary: TikTok 变体题；近一年被问 1 次、最近 2026-09-28。
   - id: a.yong-liang-ge-zhan-shi-xian-dui-lie-lcof
     title: 剑指 Offer 09 用两个栈实现队列
     summary: Easy；国内字节被问 25 次、最近 2026-10-09。
@@ -736,6 +736,9 @@ nodes:
   title: B 档：次高频
   summary: 其余高频题：出现次数较少或时间较早，学完 A 档再学；按热度降序。
   children:
+  - id: b.longest-increasing-path-in-a-matrix
+    title: LC 329 矩阵中的最长递增路径（Longest Increasing Path in a Matrix）
+    summary: Hard；频率 TikTok 62；国内字节被问 29 次、最近 2026-04-23；Array, Dynamic Programming, Depth-First Search, Breadth-First Search, Graph Theory。
   - id: b.maximum-swap
     title: LC 670 最大交换（Maximum Swap）
     summary: Medium；频率 TikTok 68；Math, Greedy。
@@ -1034,7 +1037,7 @@ nodes:
     title: LC 240 搜索二维矩阵 II
     summary: Medium；国内字节被问 43 次、最近 2026-02-23。
   - id: b.construct-binary-tree-from-preorder-and-postorder-traversal
-    title: LC 889 从前序与后序遍历序列构造二叉树（Construct Binary Tree from Preorder and Postorder Traversal）
+    title: LC 889 根据前序和后序遍历构造二叉树（Construct Binary Tree from Preorder and Postorder Traversal）
     summary: LeetCode 原题；近一年被问 1 次、最近 2026-08-24。
   - id: b.sort-an-array
     title: LC 912 排序数组（Sort an Array）
@@ -1096,9 +1099,6 @@ nodes:
   - id: b.tt-contiguous-memory-allocator
     title: 连续内存分配器（first-fit、拆分与合并）
     summary: TikTok 变体题；近一年被问 2 次、最近 2026-06-11。
-  - id: b.kth-smallest-element-in-a-bst
-    title: LC 230 二叉搜索树中第K小的元素
-    summary: Medium；国内字节被问 23 次、最近 2024-04-10。
   - id: b.tt-water-jug-shortest-operations
     title: 水壶问题：输出最短操作序列
     summary: TikTok 变体题；近一年被问 2 次、最近 2026-05-08。
@@ -1123,6 +1123,9 @@ nodes:
   - id: b.missing-ranges
     title: LC 163 缺失的区间（Missing Ranges）
     summary: LeetCode 原题；近一年被问 1 次、最近 2026-04-02。
+  - id: b.tt-spiral-matrix-constant-space
+    title: 螺旋矩阵：O(1) 额外空间且不修改输入
+    summary: TikTok 变体题；近一年被问 1 次、最近 2026-09-28。
   - id: b.swim-in-rising-water
     title: LC 778 水位上升的泳池中游泳（Swim in Rising Water）
     summary: LeetCode 原题；近一年被问 1 次、最近 2026-04-01。

@@ -3859,7 +3859,7 @@
    "bytedance_cn": {
     "reports": 40,
     "last_seen": "2026-09-28",
-    "tier": "A"
+    "tier": "B"
    }
   },
   "score": 0.2212,
@@ -4843,7 +4843,7 @@
    }
   },
   "score": 0.1701,
-  "a_reason": "score",
+  "a_reason": "pinned",
   "statement_chars": 302
  },
  "word-break-ii": {
@@ -5271,43 +5271,6 @@
   "title_zh": "最短的桥",
   "statement_chars": 427
  },
- "longest-increasing-path-in-a-matrix": {
-  "id": 329,
-  "title": "Longest Increasing Path in a Matrix",
-  "slug": "longest-increasing-path-in-a-matrix",
-  "difficulty": "Hard",
-  "freq": 62,
-  "recent": false,
-  "tags": [
-   "Array",
-   "Dynamic Programming",
-   "Depth-First Search",
-   "Breadth-First Search",
-   "Graph Theory",
-   "Topological Sort",
-   "Memoization",
-   "Matrix",
-   "Directed Acyclic Graph"
-  ],
-  "companies": {
-   "tiktok": {
-    "freq": 62,
-    "recent": false,
-    "tier": "B"
-   },
-   "bytedance_cn": {
-    "reports": 29,
-    "last_seen": "2026-04-23",
-    "tier": "B"
-   }
-  },
-  "window": "",
-  "tier": "A",
-  "score": 0.1511,
-  "a_reason": "score",
-  "title_zh": "矩阵中的最长递增路径",
-  "statement_chars": 410
- },
  "distinct-subsequences": {
   "id": 115,
   "fid": "115",
@@ -5488,6 +5451,28 @@
   "a_reason": "30d",
   "statement_chars": 342
  },
+ "recover-binary-search-tree": {
+  "id": 99,
+  "title": "Recover Binary Search Tree",
+  "title_zh": "恢复二叉搜索树",
+  "slug": "recover-binary-search-tree",
+  "difficulty": "",
+  "freq": 60,
+  "recent": false,
+  "window": "",
+  "tags": [],
+  "tier": "A",
+  "kind": "leetcode",
+  "companies": {
+   "reports": {
+    "refs": 1,
+    "last_seen": ""
+   }
+  },
+  "score": 0.0753,
+  "a_reason": "pinned",
+  "statement_chars": 391
+ },
  "partition-to-k-equal-sum-subsets": {
   "id": 698,
   "fid": "698",
@@ -5512,6 +5497,30 @@
   "a_reason": "30d",
   "statement_chars": 284
  },
+ "kth-smallest-element-in-a-bst": {
+  "id": 230,
+  "fid": "230",
+  "title": "二叉搜索树中第K小的元素",
+  "title_zh": "二叉搜索树中第K小的元素",
+  "slug": "kth-smallest-element-in-a-bst",
+  "difficulty": "Medium",
+  "freq": 35,
+  "recent": false,
+  "window": "",
+  "tags": [],
+  "tier": "A",
+  "kind": "leetcode",
+  "companies": {
+   "bytedance_cn": {
+    "reports": 23,
+    "last_seen": "2024-04-10",
+    "tier": "B"
+   }
+  },
+  "score": 0.0581,
+  "a_reason": "pinned",
+  "statement_chars": 292
+ },
  "shu-de-zi-jie-gou-lcof": {
   "id": 0,
   "fid": "剑指 Offer 26",
@@ -5535,28 +5544,6 @@
   "score": 0.0549,
   "a_reason": "30d",
   "statement_chars": 330
- },
- "tt-spiral-matrix-constant-space": {
-  "id": 0,
-  "title": "Spiral matrix with O(1) extra space and no mutation",
-  "title_zh": "螺旋矩阵：O(1) 额外空间且不修改输入",
-  "slug": "tt-spiral-matrix-constant-space",
-  "difficulty": "",
-  "freq": 50,
-  "recent": true,
-  "window": "",
-  "tags": [],
-  "tier": "A",
-  "kind": "variant",
-  "companies": {
-   "reports": {
-    "refs": 1,
-    "last_seen": "2026-09-28"
-   }
-  },
-  "score": 0.0466,
-  "a_reason": "30d",
-  "statement_chars": 270
  },
  "yong-liang-ge-zhan-shi-xian-dui-lie-lcof": {
   "id": 0,
@@ -5677,6 +5664,43 @@
   "score": 0.0022,
   "a_reason": "30d",
   "statement_chars": 483
+ },
+ "longest-increasing-path-in-a-matrix": {
+  "id": 329,
+  "title": "Longest Increasing Path in a Matrix",
+  "slug": "longest-increasing-path-in-a-matrix",
+  "difficulty": "Hard",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Dynamic Programming",
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Graph Theory",
+   "Topological Sort",
+   "Memoization",
+   "Matrix",
+   "Directed Acyclic Graph"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   },
+   "bytedance_cn": {
+    "reports": 29,
+    "last_seen": "2026-04-23",
+    "tier": "B"
+   }
+  },
+  "window": "",
+  "tier": "B",
+  "score": 0.1511,
+  "a_reason": "",
+  "title_zh": "矩阵中的最长递增路径",
+  "statement_chars": 410
  },
  "maximum-swap": {
   "id": 670,
@@ -8267,7 +8291,7 @@
  "construct-binary-tree-from-preorder-and-postorder-traversal": {
   "id": 889,
   "title": "Construct Binary Tree from Preorder and Postorder Traversal",
-  "title_zh": "从前序与后序遍历序列构造二叉树",
+  "title_zh": "根据前序和后序遍历构造二叉树",
   "slug": "construct-binary-tree-from-preorder-and-postorder-traversal",
   "difficulty": "",
   "freq": 60,
@@ -8734,30 +8758,6 @@
   "a_reason": "",
   "statement_chars": 621
  },
- "kth-smallest-element-in-a-bst": {
-  "id": 230,
-  "fid": "230",
-  "title": "二叉搜索树中第K小的元素",
-  "title_zh": "二叉搜索树中第K小的元素",
-  "slug": "kth-smallest-element-in-a-bst",
-  "difficulty": "Medium",
-  "freq": 35,
-  "recent": false,
-  "window": "",
-  "tags": [],
-  "tier": "B",
-  "kind": "leetcode",
-  "companies": {
-   "bytedance_cn": {
-    "reports": 23,
-    "last_seen": "2024-04-10",
-    "tier": "B"
-   }
-  },
-  "score": 0.0581,
-  "a_reason": "",
-  "statement_chars": 292
- },
  "tt-water-jug-shortest-operations": {
   "id": 0,
   "title": "Water and Jug with the shortest operation sequence",
@@ -8935,6 +8935,28 @@
   "score": 0.0468,
   "a_reason": "",
   "statement_chars": 535
+ },
+ "tt-spiral-matrix-constant-space": {
+  "id": 0,
+  "title": "Spiral matrix with O(1) extra space and no mutation",
+  "title_zh": "螺旋矩阵：O(1) 额外空间且不修改输入",
+  "slug": "tt-spiral-matrix-constant-space",
+  "difficulty": "",
+  "freq": 50,
+  "recent": true,
+  "window": "",
+  "tags": [],
+  "tier": "B",
+  "kind": "variant",
+  "companies": {
+   "reports": {
+    "refs": 1,
+    "last_seen": "2026-09-28"
+   }
+  },
+  "score": 0.0466,
+  "a_reason": "",
+  "statement_chars": 270
  },
  "swim-in-rising-water": {
   "id": 778,

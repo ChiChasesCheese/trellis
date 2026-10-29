@@ -4,6 +4,7 @@
 其余高频题：出现次数较少或时间较早，学完 A 档再学；按热度降序。
 
 ## Topics
+- [[interviews/core/leetcode/tiktok-drill/map/b.longest-increasing-path-in-a-matrix|LC 329 矩阵中的最长递增路径（Longest Increasing Path in a Matrix）]]
 - [[interviews/core/leetcode/tiktok-drill/map/b.maximum-swap|LC 670 最大交换（Maximum Swap）]]
 - [[interviews/core/leetcode/tiktok-drill/map/b.find-peak-element|LC 162 寻找峰值（Find Peak Element）]]
 - [[interviews/core/leetcode/tiktok-drill/map/b.kth-smallest-element-in-a-sorted-matrix|LC 378 有序矩阵中第 K 小的元素（Kth Smallest Element in a Sorted Matrix）]]
@@ -103,7 +104,7 @@
 - [[interviews/core/leetcode/tiktok-drill/map/b.minimum-number-of-arrows-to-burst-balloons|LC 452 用最少数量的箭引爆气球]]
 - [[interviews/core/leetcode/tiktok-drill/map/b.tt-seller-task-scheduler|卖家任务调度器（轮转 + VIP + 优先级）]]
 - [[interviews/core/leetcode/tiktok-drill/map/b.search-a-2d-matrix-ii|LC 240 搜索二维矩阵 II]]
-- [[interviews/core/leetcode/tiktok-drill/map/b.construct-binary-tree-from-preorder-and-postorder-traversal|LC 889 从前序与后序遍历序列构造二叉树（Construct Binary Tree from Preorder and Postorder Traversal）]]
+- [[interviews/core/leetcode/tiktok-drill/map/b.construct-binary-tree-from-preorder-and-postorder-traversal|LC 889 根据前序和后序遍历构造二叉树（Construct Binary Tree from Preorder and Postorder Traversal）]]
 - [[interviews/core/leetcode/tiktok-drill/map/b.sort-an-array|LC 912 排序数组（Sort an Array）]]
 - [[interviews/core/leetcode/tiktok-drill/map/b.interval-list-intersections|LC 986 区间列表的交集（Interval List Intersections）]]
 - [[interviews/core/leetcode/tiktok-drill/map/b.find-the-difference|LC 389 找不同（Find the Difference）]]
@@ -124,7 +125,6 @@
 - [[interviews/core/leetcode/tiktok-drill/map/b.count-of-interesting-subarrays|LC 2845 统计趣味子数组的数目（Count of Interesting Subarrays）]]
 - [[interviews/core/leetcode/tiktok-drill/map/b.convert-sorted-array-to-binary-search-tree|LC 108 将有序数组转换为二叉搜索树]]
 - [[interviews/core/leetcode/tiktok-drill/map/b.tt-contiguous-memory-allocator|连续内存分配器（first-fit、拆分与合并）]]
-- [[interviews/core/leetcode/tiktok-drill/map/b.kth-smallest-element-in-a-bst|LC 230 二叉搜索树中第K小的元素]]
 - [[interviews/core/leetcode/tiktok-drill/map/b.tt-water-jug-shortest-operations|水壶问题：输出最短操作序列]]
 - [[interviews/core/leetcode/tiktok-drill/map/b.permutation-sequence|LC 60 排列序列（Permutation Sequence）]]
 - [[interviews/core/leetcode/tiktok-drill/map/b.beautiful-arrangement-ii|LC 667 优美的排列 II（Beautiful Arrangement II）]]
@@ -133,6 +133,7 @@
 - [[interviews/core/leetcode/tiktok-drill/map/b.most-frequent-subtree-sum|LC 508 出现次数最多的子树元素和（Most Frequent Subtree Sum）]]
 - [[interviews/core/leetcode/tiktok-drill/map/b.shu-zu-zhong-de-ni-xu-dui-lcof|剑指 Offer 51 数组中的逆序对]]
 - [[interviews/core/leetcode/tiktok-drill/map/b.missing-ranges|LC 163 缺失的区间（Missing Ranges）]]
+- [[interviews/core/leetcode/tiktok-drill/map/b.tt-spiral-matrix-constant-space|螺旋矩阵：O(1) 额外空间且不修改输入]]
 - [[interviews/core/leetcode/tiktok-drill/map/b.swim-in-rising-water|LC 778 水位上升的泳池中游泳（Swim in Rising Water）]]
 - [[interviews/core/leetcode/tiktok-drill/map/b.sum-root-to-leaf-numbers|LC 129 求根到叶子节点数字之和]]
 - [[interviews/core/leetcode/tiktok-drill/map/b.mini-parser|LC 385 迷你语法分析器（Mini Parser）]]

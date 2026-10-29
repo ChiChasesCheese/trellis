@@ -1,6 +1,6 @@
 ---
 id: tlc-longest-increasing-path-in-a-matrix-3-why
-node: a.longest-increasing-path-in-a-matrix
+node: b.longest-increasing-path-in-a-matrix
 type: qa
 step: 3
 ---
