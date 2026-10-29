@@ -224,6 +224,7 @@ TikTok 和字节（美国与国内）面试里最常出现的编程题，按学�
 | [[tlc-longest-happy-string-0-whole\|LC 1405 最长快乐字符串（Longest Happy String）]] | Medium | 字符串、贪心、堆 |
 | [[tlc-sort-colors-0-whole\|LC 75 颜色分类（Sort Colors）]] | Medium | 数组、双指针、排序 |
 | [[tlc-container-with-most-water-0-whole\|LC 11 盛最多水的容器（Container With Most Water）]] | Medium | 数组、双指针、贪心 |
+| [[tlc-valid-square-0-whole\|LC 593 有效的正方形（Valid Square）]] | — | — |
 | [[tlc-coin-change-ii-0-whole\|LC 518 零钱兑换 II]] | Medium | — |
 | [[tlc-pacific-atlantic-water-flow-0-whole\|LC 417 太平洋大西洋水流问题（Pacific Atlantic Water Flow）]] | Medium | 数组、DFS、BFS、矩阵 |
 | [[tlc-simplify-path-0-whole\|LC 71 简化路径（Simplify Path）]] | Medium | 字符串、栈 |
@@ -297,7 +298,10 @@ TikTok 和字节（美国与国内）面试里最常出现的编程题，按学�
 | [[tlc-letter-combinations-of-a-phone-number-0-whole\|LC 17 电话号码的字母组合]] | Medium | — |
 | [[tlc-wildcard-matching-0-whole\|LC 44 通配符匹配]] | Hard | — |
 | [[tlc-word-ladder-ii-0-whole\|LC 126 单词接龙 II（Word Ladder II）]] | — | — |
+| [[tlc-generate-random-point-in-a-circle-0-whole\|LC 478 在圆内随机生成点（Generate Random Point in a Circle）]] | — | — |
+| [[tlc-find-distance-in-a-binary-tree-0-whole\|LC 1740 找到二叉树中的距离（Find Distance in a Binary Tree）]] | — | — |
 | [[tlc-24-game-0-whole\|LC 679 24 点游戏]] | Hard | — |
+| [[tlc-double-a-number-represented-as-a-linked-list-0-whole\|LC 2816 翻倍以链表形式表示的数字（Double a Number Represented as a Linked List）]] | — | — |
 | [[tlc-path-sum-0-whole\|LC 112 路径总和]] | Easy | — |
 | [[tlc-number-of-atoms-0-whole\|LC 726 原子的数量]] | Hard | — |
 | [[tlc-remove-duplicates-from-sorted-array-ii-0-whole\|LC 80 删除排序数组中的重复项 II]] | Medium | — |
@@ -306,6 +310,11 @@ TikTok 和字节（美国与国内）面试里最常出现的编程题，按学�
 | [[tlc-minimum-number-of-arrows-to-burst-balloons-0-whole\|LC 452 用最少数量的箭引爆气球]] | Medium | — |
 | [[tlc-tt-seller-task-scheduler-0-whole\|卖家任务调度器（轮转 + VIP + 优先级）]] | — | — |
 | [[tlc-search-a-2d-matrix-ii-0-whole\|LC 240 搜索二维矩阵 II]] | Medium | — |
+| [[tlc-construct-binary-tree-from-preorder-and-postorder-traversal-0-whole\|LC 889 从前序与后序遍历序列构造二叉树（Construct Binary Tree from Preorder and Postorder Traversal）]] | — | — |
+| [[tlc-sort-an-array-0-whole\|LC 912 排序数组（Sort an Array）]] | — | — |
+| [[tlc-interval-list-intersections-0-whole\|LC 986 区间列表的交集（Interval List Intersections）]] | — | — |
+| [[tlc-find-the-difference-0-whole\|LC 389 找不同（Find the Difference）]] | — | — |
+| [[tlc-odd-even-linked-list-0-whole\|LC 328 奇偶链表（Odd Even Linked List）]] | — | — |
 | [[tlc-tt-removable-timestamp-task-scheduler-0-whole\|可删除任务的时间戳调度器（popTask）]] | — | — |
 | [[tlc-search-insert-position-0-whole\|LC 35 搜索插入位置（Search Insert Position）]] | — | — |
 | [[tlc-tt-pythagorean-triple-in-array-0-whole\|整数数组中的勾股三元组]] | — | — |
