@@ -1,6 +1,6 @@
 ---
 id: tlc-find-peak-element-1-signal
-node: b.find-peak-element
+node: a.find-peak-element
 type: qa
 step: 1
 ---

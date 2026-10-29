@@ -1,6 +1,6 @@
 ---
 id: tlc-maximum-swap-2-code
-node: b.maximum-swap
+node: a.maximum-swap
 type: qa
 step: 2
 ---

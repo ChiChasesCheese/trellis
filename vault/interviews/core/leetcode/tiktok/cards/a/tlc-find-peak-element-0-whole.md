@@ -1,6 +1,6 @@
 ---
 id: tlc-find-peak-element-0-whole
-node: b.find-peak-element
+node: a.find-peak-element
 type: qa
 ---
 ## Q

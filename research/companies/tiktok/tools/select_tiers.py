@@ -10,7 +10,7 @@ Called by build_list.py too. Three signals, each turned into a share of its own 
 - US lists (0.4): TikTok + ByteDance company-tag frequency (0-100) from lc_company.py, full weight in the 30-day and
   3-month windows, 0.8 in the 6-month window, 0.5 otherwise.
 
-Tier A = the problems Chi pinned (`catalog/pinned.json`), everything seen in the last 30 days in any source, then the top three problems of every pattern (so tier A
+Tier A = the problems Chi pinned (`catalog/pinned.json`, on top of TARGET), everything seen in the last 30 days in any source, then the top three problems of every pattern (so tier A
 teaches every technique), then the highest scores until A holds TARGET problems. A family counts as covered when any of
 its problems is in tier A; the report states how much of each signal tier A covers.
 """
@@ -191,8 +191,9 @@ def assign(index: dict[str, dict], today: date | None = None) -> dict:
             if s not in a:
                 a[s] = f"pattern:{pat}"
                 have += 1
+    extra = sum(1 for v in a.values() if v == "pinned")  # pinned problems come on top of TARGET, never in place of one
     for s in sorted(index, key=lambda s: -index[s]["score"]):  # 3. highest scores
-        if len(a) >= TARGET:
+        if len(a) >= TARGET + extra:
             break
         a.setdefault(s, "score")
     for s, p in index.items():

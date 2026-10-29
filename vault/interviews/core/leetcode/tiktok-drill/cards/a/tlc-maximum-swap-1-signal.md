@@ -1,6 +1,6 @@
 ---
 id: tlc-maximum-swap-1-signal
-node: b.maximum-swap
+node: a.maximum-swap
 type: qa
 step: 1
 ---

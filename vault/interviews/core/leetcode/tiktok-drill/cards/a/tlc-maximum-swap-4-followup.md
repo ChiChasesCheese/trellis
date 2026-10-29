@@ -1,6 +1,6 @@
 ---
 id: tlc-maximum-swap-4-followup
-node: b.maximum-swap
+node: a.maximum-swap
 type: qa
 step: 4
 ---

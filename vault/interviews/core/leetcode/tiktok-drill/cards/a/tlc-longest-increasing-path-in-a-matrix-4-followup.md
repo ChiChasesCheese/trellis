@@ -1,6 +1,6 @@
 ---
 id: tlc-longest-increasing-path-in-a-matrix-4-followup
-node: b.longest-increasing-path-in-a-matrix
+node: a.longest-increasing-path-in-a-matrix
 type: qa
 step: 4
 ---

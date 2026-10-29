@@ -1,6 +1,6 @@
 ---
 id: tlc-longest-increasing-path-in-a-matrix-0-whole
-node: b.longest-increasing-path-in-a-matrix
+node: a.longest-increasing-path-in-a-matrix
 type: qa
 ---
 ## Q

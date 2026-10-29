@@ -1,6 +1,6 @@
 ---
 id: tlc-find-peak-element-2-code
-node: b.find-peak-element
+node: a.find-peak-element
 type: qa
 step: 2
 ---

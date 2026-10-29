@@ -189,6 +189,9 @@ TikTok 和字节（美国与国内）面试里最常出现的编程题，按学�
 | [[tlc-tt-nested-comment-tree-0-whole\|由扁平记录构建嵌套评论树]] | — | — |
 | [[tlc-minimum-swaps-to-group-all-1s-together-0-whole\|LC 1151 最少交换次数来组合所有的 1（Minimum Swaps to Group All 1's Together）]] | Medium | 数组、滑动窗口 |
 | [[tlc-shortest-bridge-0-whole\|LC 934 最短的桥（Shortest Bridge）]] | Medium | 数组、DFS、BFS、矩阵 |
+| [[tlc-longest-increasing-path-in-a-matrix-0-whole\|LC 329 矩阵中的最长递增路径（Longest Increasing Path in a Matrix）]] | Hard | 数组、动态规划、DFS、BFS、图、拓扑排序、矩阵 |
+| [[tlc-maximum-swap-0-whole\|LC 670 最大交换（Maximum Swap）]] | Medium | 数学、贪心 |
+| [[tlc-find-peak-element-0-whole\|LC 162 寻找峰值（Find Peak Element）]] | Medium | 数组、二分 |
 | [[tlc-distinct-subsequences-0-whole\|LC 115 不同的子序列]] | Hard | — |
 | [[tlc-tt-number-to-string-0-whole\|手写数字转字符串（含符号与小数）]] | — | — |
 | [[tlc-tt-hyper-operation-0-whole\|手写超运算（加、乘、幂、迭代幂次……）]] | — | — |
@@ -211,9 +214,6 @@ TikTok 和字节（美国与国内）面试里最常出现的编程题，按学�
 
 | 题 | 难度 | 主要考点 |
 |---|---|---|
-| [[tlc-longest-increasing-path-in-a-matrix-0-whole\|LC 329 矩阵中的最长递增路径（Longest Increasing Path in a Matrix）]] | Hard | 数组、动态规划、DFS、BFS、图、拓扑排序、矩阵 |
-| [[tlc-maximum-swap-0-whole\|LC 670 最大交换（Maximum Swap）]] | Medium | 数学、贪心 |
-| [[tlc-find-peak-element-0-whole\|LC 162 寻找峰值（Find Peak Element）]] | Medium | 数组、二分 |
 | [[tlc-kth-smallest-element-in-a-sorted-matrix-0-whole\|LC 378 有序矩阵中第 K 小的元素（Kth Smallest Element in a Sorted Matrix）]] | Medium | 数组、二分、排序、堆、矩阵 |
 | [[tlc-shortest-path-in-binary-matrix-0-whole\|LC 1091 二进制矩阵中的最短路径（Shortest Path in Binary Matrix）]] | — | — |
 | [[tlc-surrounded-regions-0-whole\|LC 130 被围绕的区域（Surrounded Regions）]] | — | — |

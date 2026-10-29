@@ -5271,6 +5271,103 @@
   "title_zh": "最短的桥",
   "statement_chars": 427
  },
+ "longest-increasing-path-in-a-matrix": {
+  "id": 329,
+  "title": "Longest Increasing Path in a Matrix",
+  "slug": "longest-increasing-path-in-a-matrix",
+  "difficulty": "Hard",
+  "freq": 62,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Dynamic Programming",
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Graph Theory",
+   "Topological Sort",
+   "Memoization",
+   "Matrix",
+   "Directed Acyclic Graph"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 62,
+    "recent": false,
+    "tier": "B"
+   },
+   "bytedance_cn": {
+    "reports": 29,
+    "last_seen": "2026-04-23",
+    "tier": "B"
+   }
+  },
+  "window": "",
+  "tier": "A",
+  "score": 0.1511,
+  "a_reason": "score",
+  "title_zh": "矩阵中的最长递增路径",
+  "statement_chars": 410
+ },
+ "maximum-swap": {
+  "id": 670,
+  "title": "Maximum Swap",
+  "slug": "maximum-swap",
+  "difficulty": "Medium",
+  "freq": 68,
+  "recent": false,
+  "tags": [
+   "Math",
+   "Greedy"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 68,
+    "recent": false,
+    "tier": "B"
+   }
+  },
+  "window": "",
+  "tier": "A",
+  "score": 0.1499,
+  "a_reason": "score",
+  "title_zh": "最大交换",
+  "statement_chars": 145
+ },
+ "find-peak-element": {
+  "id": 162,
+  "title": "Find Peak Element",
+  "slug": "find-peak-element",
+  "difficulty": "Medium",
+  "freq": 69,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Binary Search"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 53,
+    "recent": false,
+    "tier": "B"
+   },
+   "bytedance": {
+    "freq": 50,
+    "recent": false,
+    "tier": "B"
+   },
+   "bytedance_cn": {
+    "reports": 49,
+    "last_seen": "2026-04-19",
+    "tier": "B"
+   }
+  },
+  "window": "",
+  "tier": "A",
+  "score": 0.1482,
+  "a_reason": "score",
+  "title_zh": "寻找峰值",
+  "statement_chars": 413
+ },
  "distinct-subsequences": {
   "id": 115,
   "fid": "115",
@@ -5664,103 +5761,6 @@
   "score": 0.0022,
   "a_reason": "30d",
   "statement_chars": 483
- },
- "longest-increasing-path-in-a-matrix": {
-  "id": 329,
-  "title": "Longest Increasing Path in a Matrix",
-  "slug": "longest-increasing-path-in-a-matrix",
-  "difficulty": "Hard",
-  "freq": 62,
-  "recent": false,
-  "tags": [
-   "Array",
-   "Dynamic Programming",
-   "Depth-First Search",
-   "Breadth-First Search",
-   "Graph Theory",
-   "Topological Sort",
-   "Memoization",
-   "Matrix",
-   "Directed Acyclic Graph"
-  ],
-  "companies": {
-   "tiktok": {
-    "freq": 62,
-    "recent": false,
-    "tier": "B"
-   },
-   "bytedance_cn": {
-    "reports": 29,
-    "last_seen": "2026-04-23",
-    "tier": "B"
-   }
-  },
-  "window": "",
-  "tier": "B",
-  "score": 0.1511,
-  "a_reason": "",
-  "title_zh": "矩阵中的最长递增路径",
-  "statement_chars": 410
- },
- "maximum-swap": {
-  "id": 670,
-  "title": "Maximum Swap",
-  "slug": "maximum-swap",
-  "difficulty": "Medium",
-  "freq": 68,
-  "recent": false,
-  "tags": [
-   "Math",
-   "Greedy"
-  ],
-  "companies": {
-   "tiktok": {
-    "freq": 68,
-    "recent": false,
-    "tier": "B"
-   }
-  },
-  "window": "",
-  "tier": "B",
-  "score": 0.1499,
-  "a_reason": "",
-  "title_zh": "最大交换",
-  "statement_chars": 145
- },
- "find-peak-element": {
-  "id": 162,
-  "title": "Find Peak Element",
-  "slug": "find-peak-element",
-  "difficulty": "Medium",
-  "freq": 69,
-  "recent": false,
-  "tags": [
-   "Array",
-   "Binary Search"
-  ],
-  "companies": {
-   "tiktok": {
-    "freq": 53,
-    "recent": false,
-    "tier": "B"
-   },
-   "bytedance": {
-    "freq": 50,
-    "recent": false,
-    "tier": "B"
-   },
-   "bytedance_cn": {
-    "reports": 49,
-    "last_seen": "2026-04-19",
-    "tier": "B"
-   }
-  },
-  "window": "",
-  "tier": "B",
-  "score": 0.1482,
-  "a_reason": "",
-  "title_zh": "寻找峰值",
-  "statement_chars": 413
  },
  "kth-smallest-element-in-a-sorted-matrix": {
   "id": 378,

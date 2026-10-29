@@ -4,9 +4,6 @@
 其余高频题：出现次数较少或时间较早，学完 A 档再学；按热度降序。
 
 ## Topics
-- [[interviews/core/leetcode/tiktok/map/b.longest-increasing-path-in-a-matrix|LC 329 矩阵中的最长递增路径（Longest Increasing Path in a Matrix）]]
-- [[interviews/core/leetcode/tiktok/map/b.maximum-swap|LC 670 最大交换（Maximum Swap）]]
-- [[interviews/core/leetcode/tiktok/map/b.find-peak-element|LC 162 寻找峰值（Find Peak Element）]]
 - [[interviews/core/leetcode/tiktok/map/b.kth-smallest-element-in-a-sorted-matrix|LC 378 有序矩阵中第 K 小的元素（Kth Smallest Element in a Sorted Matrix）]]
 - [[interviews/core/leetcode/tiktok/map/b.shortest-path-in-binary-matrix|LC 1091 二进制矩阵中的最短路径（Shortest Path in Binary Matrix）]]
 - [[interviews/core/leetcode/tiktok/map/b.surrounded-regions|LC 130 被围绕的区域（Surrounded Regions）]]

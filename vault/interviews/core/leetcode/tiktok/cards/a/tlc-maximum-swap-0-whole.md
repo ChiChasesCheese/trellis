@@ -1,6 +1,6 @@
 ---
 id: tlc-maximum-swap-0-whole
-node: b.maximum-swap
+node: a.maximum-swap
 type: qa
 ---
 ## Q
