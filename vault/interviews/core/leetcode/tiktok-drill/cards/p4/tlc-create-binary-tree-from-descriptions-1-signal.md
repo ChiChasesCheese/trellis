@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 2196 根据描述创建二叉树**｜Medium · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-08-17（面试记录）
+**LC 2196 根据描述创建二叉树**｜Medium · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-08-17（美国面试记录）
 
 给二维整数数组 `descriptions`，`descriptions[i] = [parent_i, child_i, isLeft_i]` 表示 `parent_i` 是 `child_i` 的父节点，各节点的值互不相同；`isLeft_i == 1` 时 `child_i` 是左子节点，`isLeft_i == 0` 时是右子节点。按描述构造二叉树并返回根节点，保证构造出的是有效二叉树。`1 <= descriptions.length <= 10^4`，`1 <= parent_i, child_i <= 10^5`，`0 <= isLeft_i <= 1`。例：`[[1,2,1],[2,3,0],[3,4,1]]` → 层序 `[1,2,null,null,3,4]`。
 

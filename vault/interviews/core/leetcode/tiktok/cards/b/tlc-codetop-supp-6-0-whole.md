@@ -4,7 +4,7 @@ node: b.codetop-supp-6
 type: qa
 ---
 ## Q
-**补充题 6 手撕堆排序**｜Medium · CodeTop 国内累计 19 次 · 最近 2026-03-24（CodeTop）
+**补充题 6 手撕堆排序**｜Medium · CodeTop 国内累计 19 次 · 最近 2026-03-24（国内 CodeTop）
 
 给整数数组 `nums`，把它按升序排列。要求手写**堆排序**：原地排序，不调用 `sorted`、`list.sort`，也不使用 `heapq`。`1 <= nums.length <= 50000`，`-50000 <= nums[i] <= 50000`。例：`nums = [5,2,3,1]` → `[1,2,3,5]`；`nums = [5,1,1,2,0,0]` → `[0,0,1,1,2,5]`。
 

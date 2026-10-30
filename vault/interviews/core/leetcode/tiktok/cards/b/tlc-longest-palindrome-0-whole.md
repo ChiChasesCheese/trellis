@@ -4,7 +4,7 @@ node: b.longest-palindrome
 type: qa
 ---
 ## Q
-**LC 409 最长回文串**｜Easy · CodeTop 国内累计 3 次 · 最近 2026-01-15（CodeTop）
+**LC 409 最长回文串**｜Easy · CodeTop 国内累计 3 次 · 最近 2026-01-15（国内 CodeTop）
 
 字符串 `s` 只含大写和小写英文字母。用 `s` 里的字母（每个字母最多用一次，顺序可任意重排）构造回文串，返回最长回文串的长度。**区分大小写**：`"Aa"` 不是回文。`1 <= s.length <= 2000`。例：`"abccccdd"` → `7`（如 `"dccaccd"`）；`"a"` → `1`。
 

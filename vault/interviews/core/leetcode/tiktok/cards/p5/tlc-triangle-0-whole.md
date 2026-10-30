@@ -4,7 +4,7 @@ node: p5.triangle
 type: qa
 ---
 ## Q
-**LC 120 三角形最小路径和**｜Medium · CodeTop 国内累计 18 次 · 最近 2026-08-03（CodeTop）
+**LC 120 三角形最小路径和**｜Medium · CodeTop 国内累计 18 次 · 最近 2026-08-03（国内 CodeTop）
 
 给三角形 `triangle`，求自顶向下的最小路径和。每一步只能移动到下一行中**相邻**的结点：当前在第 `i` 列，下一步可到下一行的第 `i` 列或第 `i + 1` 列。`1 <= triangle.length <= 200`，`triangle[0].length == 1`，`triangle[i].length == triangle[i - 1].length + 1`，`-10^4 <= triangle[i][j] <= 10^4`。例：`[[2],[3,4],[6,5,7],[4,1,8,3]]` → `11`（`2 + 3 + 5 + 1`）；`[[-10]]` → `-10`。进阶：只用 `O(n)` 额外空间（`n` 为总行数）。
 

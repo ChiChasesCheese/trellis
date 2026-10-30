@@ -4,7 +4,7 @@ node: b.lfu-cache
 type: qa
 ---
 ## Q
-**LC 460 LFU 缓存**｜Hard · CodeTop 国内累计 21 次 · 最近 2026-06-20（CodeTop）
+**LC 460 LFU 缓存**｜Hard · CodeTop 国内累计 21 次 · 最近 2026-06-20（国内 CodeTop）
 
 设计最不经常使用（LFU，Least Frequently Used）缓存。实现 `LFUCache(capacity)`、`get(key)`（存在返回值，否则 `-1`）、`put(key, value)`（存在则更新值，不存在则插入；容量已满时，先淘汰**使用次数最少**的键，次数相同则淘汰**最久未使用**的键）。每个键首次插入时使用次数为 `1`，之后每次 `get` 或 `put` 它，次数加一。`get` 和 `put` 必须平均 `O(1)`。`1 <= capacity <= 10^4`，`0 <= key <= 10^5`，`0 <= value <= 10^9`，最多 `2 * 10^5` 次调用。例：`LFUCache(2)`；`put(1,1)`、`put(2,2)`、`get(1)` → `1`、`put(3,3)`（淘汰键 `2`）、`get(2)` → `-1`、`get(3)` → `3`、`put(4,4)`（淘汰键 `1`，它和 `3` 次数相同但更久没用）、`get(1)` → `-1`、`get(3)` → `3`、`get(4)` → `4`。
 

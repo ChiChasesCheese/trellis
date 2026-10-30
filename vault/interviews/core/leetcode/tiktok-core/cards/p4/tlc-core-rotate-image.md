@@ -4,7 +4,7 @@ node: p4.rotate-image
 type: qa
 ---
 ## Q
-**LC 48 旋转图像**｜Medium · LC TikTok 热度 38/100（近 6 个月） · 近一年被问：美国 0 次、国内 1 次 · CodeTop 国内累计 37 次 · 最近 2026-08-30（面试记录） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150
+**LC 48 旋转图像**｜Medium · LC TikTok 热度 38/100（近 6 个月） · 近一年被问：美国 0 次、国内 1 次 · CodeTop 国内累计 37 次 · 最近 2026-08-30（国内面试记录） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150
 
 给一个 `n × n` 的二维矩阵 `matrix` 表示图像，将图像**顺时针**旋转 `90` 度。必须**原地**旋转，即直接修改输入矩阵，不允许另开一个矩阵来旋转。`n == matrix.length == matrix[i].length`，`1 <= n <= 20`，`-1000 <= matrix[i][j] <= 1000`。例：`matrix = [[1,2,3],[4,5,6],[7,8,9]]` → `[[7,4,1],[8,5,2],[9,6,3]]`；`matrix = [[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]]` → `[[15,13,2,5],[14,3,4,1],[12,6,8,9],[16,7,10,11]]`。
 

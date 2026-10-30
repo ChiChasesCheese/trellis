@@ -4,7 +4,7 @@ node: p4.tt-agent-tool-call-tracer
 type: qa
 ---
 ## Q
-**Agent 工具调用的事件追踪**｜Hard · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-08-23（面试记录）
+**Agent 工具调用的事件追踪**｜Hard · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-08-23（美国面试记录）
 
 一个 Agent 会调用外部工具，每次调用（call）属于某个请求（request），失败后可能重试。事件按到达顺序流入，每条是 `(time, request_id, call_id, attempt, kind, stage)`：`attempt` 是尝试编号（从 1 开始，重试时加 1）；`kind` 是 `start` / `success` / `failure`；`failure` 带失败阶段 `stage`（如 `timeout`、`bad_args`、`http_5xx`），其余为 `None`。实现 `Tracer`：
 - `on_event(event)`：逐条处理；

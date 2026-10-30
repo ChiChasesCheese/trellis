@@ -4,7 +4,7 @@ node: b.find-two-non-overlapping-sub-arrays-each-with-target-sum
 type: qa
 ---
 ## Q
-**LC 1477 找两个和为目标值且不重叠的子数组**｜Medium · CodeTop 国内累计 1 次 · 最近 2026-07-15（CodeTop）
+**LC 1477 找两个和为目标值且不重叠的子数组**｜Medium · CodeTop 国内累计 1 次 · 最近 2026-07-15（国内 CodeTop）
 
 给整数数组 `arr` 和整数 `target`，找**两个互不重叠**的子数组，它们的和都等于 `target`，返回两个子数组**长度之和的最小值**；找不到返回 `-1`。`1 <= arr.length <= 10^5`，`1 <= arr[i] <= 1000`，`1 <= target <= 10^8`。例：`arr = [3,2,2,4,3]`，`target = 3` → `2`（`[3]` 和 `[3]`）；`arr = [7,3,4,7]`，`target = 7` → `2`；`arr = [4,3,2,6,2,3,4]`，`target = 6` → `-1`；`arr = [3,1,1,1,5,1,2,1]`，`target = 3` → `3`（`[1,2]` 与 `[2,1]` 重叠，不能同时选）。
 

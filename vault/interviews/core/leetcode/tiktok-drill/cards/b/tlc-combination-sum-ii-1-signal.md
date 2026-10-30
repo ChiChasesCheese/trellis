@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 40 组合总和 II**｜Medium · LC TikTok 热度 38/100 · CodeTop 国内累计 26 次 · 最近 2025-12-09（CodeTop）
+**LC 40 组合总和 II**｜Medium · LC TikTok 热度 38/100 · CodeTop 国内累计 26 次 · 最近 2025-12-09（国内 CodeTop）
 
 给数组 `candidates`（可能有重复元素）和 `target`，找出所有和为 `target` 的组合；每个元素在一个组合里只能用一次，结果里不能有重复的组合。`1 <= candidates.length <= 100`，`1 <= candidates[i] <= 50`，`1 <= target <= 30`。例：`[2,5,2,1,2], 5` → `[[1,2,2],[5]]`。
 

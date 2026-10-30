@@ -4,7 +4,7 @@ node: p4.palindrome-partitioning
 type: qa
 ---
 ## Q
-**LC 131 分割回文串**｜Medium · 近一年被问：美国 0 次、国内 2 次 · CodeTop 国内累计 6 次 · 最近 2026-07（面试记录） · 也在：Amazon、LeetCode Hot 100、NeetCode 150
+**LC 131 分割回文串**｜Medium · 近一年被问：美国 0 次、国内 2 次 · CodeTop 国内累计 6 次 · 最近 2026-07（国内面试记录） · 也在：Amazon、LeetCode Hot 100、NeetCode 150
 
 给字符串 `s`，把它分割成若干子串，使每个子串都是回文串，返回所有可能的分割方案。`1 <= s.length <= 16`，`s` 只含小写英文字母。例：`s = "aab"` → `[["a","a","b"],["aa","b"]]`；`s = "a"` → `[["a"]]`。
 

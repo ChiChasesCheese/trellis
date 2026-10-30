@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**剑指 Offer 22 链表中倒数第k个节点**｜Easy · CodeTop 国内累计 40 次 · 最近 2026-08-04（CodeTop）
+**剑指 Offer 22 链表中倒数第k个节点**｜Easy · CodeTop 国内累计 40 次 · 最近 2026-08-04（国内 CodeTop）
 
 给定头节点为 `head` 的单链表，查找并返回倒数第 `cnt` 个节点。
 

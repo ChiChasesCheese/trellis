@@ -4,7 +4,7 @@ node: p4.longest-mountain-in-array
 type: qa
 ---
 ## Q
-**LC 845 数组中的最长山脉**｜Medium · LC TikTok 热度 50/100（近 3 个月） · CodeTop 国内累计 3 次 · 最近 2026-05-10（CodeTop）
+**LC 845 数组中的最长山脉**｜Medium · LC TikTok 热度 50/100（近 3 个月） · CodeTop 国内累计 3 次 · 最近 2026-05-10（国内 CodeTop）
 
 把满足下列条件的数组 `arr` 称为**山脉数组**：`arr.length >= 3`，并且存在下标 `i`（`0 < i < arr.length - 1`），使得 `arr[0] < arr[1] < ... < arr[i-1] < arr[i]`，且 `arr[i] > arr[i+1] > ... > arr[arr.length-1]`（严格上升再严格下降）。给整数数组 `arr`，返回其中**最长山脉子数组**（连续）的长度，不存在则返回 `0`。`1 <= arr.length <= 10^4`，`0 <= arr[i] <= 10^4`。进阶：能否一趟扫描、`O(1)` 空间？例：`arr = [2,1,4,7,3,2,5]` → `5`（`[1,4,7,3,2]`）；`arr = [2,2,2]` → `0`。
 

@@ -4,7 +4,7 @@ node: b.find-peak-element
 type: qa
 ---
 ## Q
-**LC 162 寻找峰值**｜Medium · LC TikTok 热度 53/100 · CodeTop 国内累计 49 次 · 最近 2026-04-19（CodeTop）
+**LC 162 寻找峰值**｜Medium · LC TikTok 热度 53/100 · CodeTop 国内累计 49 次 · 最近 2026-04-19（国内 CodeTop）
 
 峰值元素是严格大于左右相邻值的元素。给整数数组 `nums`，找到一个峰值元素并返回其下标；数组可能有多个峰值，返回**任意一个**即可。假设 `nums[-1] = nums[n] = -∞`（两端之外视为负无穷）。必须设计 `O(log n)` 的算法。
 

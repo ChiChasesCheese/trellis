@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 14 最长公共前缀**｜Easy · LC TikTok 热度 50/100 · CodeTop 国内累计 24 次 · 最近 2026-01-16（CodeTop）
+**LC 14 最长公共前缀**｜Easy · LC TikTok 热度 50/100 · CodeTop 国内累计 24 次 · 最近 2026-01-16（国内 CodeTop）
 
 编写函数查找字符串数组中的最长公共前缀；如果不存在公共前缀，返回 `""`。
 

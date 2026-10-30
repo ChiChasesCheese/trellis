@@ -4,7 +4,7 @@ node: p3.word-break
 type: qa
 ---
 ## Q
-**LC 139 单词拆分**｜Medium · LC TikTok 热度 56/100 · 近一年被问：美国 2 次、国内 0 次 · CodeTop 国内累计 44 次 · 最近 2026-08-27（CodeTop）
+**LC 139 单词拆分**｜Medium · LC TikTok 热度 56/100 · 近一年被问：美国 2 次、国内 0 次 · CodeTop 国内累计 44 次 · 最近 2026-08-27（国内 CodeTop）
 
 给字符串 `s` 和字符串列表 `wordDict`（字典）。如果能用字典里的一个或多个单词拼接出 `s` 就返回 `true`；单词可以重复使用，也不要求用完字典。`1 <= s.length <= 300`，`1 <= wordDict.length <= 1000`，`1 <= wordDict[i].length <= 20`，`s` 和单词都只含小写字母，字典里的单词互不相同。例：`s = "leetcode", wordDict = ["leet","code"]` → `true`；`s = "applepenapple", wordDict = ["apple","pen"]` → `true`（单词可复用）；`s = "catsandog", wordDict = ["cats","dog","sand","and","cat"]` → `false`。
 

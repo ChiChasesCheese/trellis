@@ -4,7 +4,7 @@ node: b.valid-palindrome
 type: qa
 ---
 ## Q
-**LC 125 验证回文串**｜Easy · CodeTop 国内累计 14 次 · 最近 2026-04-25（CodeTop）
+**LC 125 验证回文串**｜Easy · CodeTop 国内累计 14 次 · 最近 2026-04-25（国内 CodeTop）
 
 把所有大写字母转成小写、并移除所有非字母数字字符之后，字符串正着读和反着读都一样，就称它是回文串（空串也算）。给字符串 `s`，判断它是不是回文串。`1 <= s.length <= 2 * 10^5`，`s` 只由可打印的 ASCII 字符组成。例：`"A man, a plan, a canal: Panama"` → `true`（清洗后是 `"amanaplanacanalpanama"`），`"race a car"` → `false`，`" "` → `true`（清洗后是空串）。
 

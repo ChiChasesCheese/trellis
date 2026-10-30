@@ -4,7 +4,7 @@ node: p4.tt-removable-timestamp-task-scheduler
 type: qa
 ---
 ## Q
-**可删除任务的时间戳调度器（popTask）**｜Medium · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-08-20（面试记录）
+**可删除任务的时间戳调度器（popTask）**｜Medium · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-08-20（美国面试记录）
 
 实现一个任务调度器：`addTask(taskId, timestamp)` 加入任务；`removeTask(taskId)` 删除一个尚未被取走的任务；`popTask(num)` 返回时间戳最早的 `num` 个任务，并把它们从调度器中移除。时间戳相同的任务按 `taskId` 的字典序排先后（确定性）。约定：`popTask` 在任务不足 `num` 个时返回全部剩余任务；对已存在的 `taskId` 再次 `addTask` 视为更新它的时间戳；`removeTask` 返回是否真的删除了任务。`taskId` 是字符串，`timestamp` 是整数，操作总数不超过 `10^5`。例：依次加入 `(a,5)`、`(b,3)`、`(c,3)`，`popTask(2)` → `['b','c']`，再 `popTask(2)` → `['a']`，再 `popTask(2)` → `[]`。
 

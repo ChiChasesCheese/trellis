@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 473 火柴拼正方形**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 3 次 · 最近 2024-04-09（CodeTop）
+**LC 473 火柴拼正方形**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 3 次 · 最近 2024-04-09（国内 CodeTop）
 
 整数数组 `matchsticks`，`matchsticks[i]` 是第 `i` 根火柴的长度。用**所有**火柴拼成正方形：不能折断，可以首尾相连，每根恰好用一次。能拼成返回 `true`。`1 <= matchsticks.length <= 15`，`1 <= matchsticks[i] <= 10^8`。例：`[1,1,2,2,2]` → `true`，`[3,3,3,3,4]` → `false`。
 

@@ -4,7 +4,7 @@ node: p3.edit-distance
 type: qa
 ---
 ## Q
-**LC 72 编辑距离**｜Medium · LC TikTok 热度 62/100 · 近一年被问：美国 0 次、国内 1 次 · CodeTop 国内累计 87 次 · 最近 2026-10-09（CodeTop） · 也在：Amazon、LeetCode Hot 100、NeetCode 150、Top Interview 150
+**LC 72 编辑距离**｜Medium · LC TikTok 热度 62/100 · 近一年被问：美国 0 次、国内 1 次 · CodeTop 国内累计 87 次 · 最近 2026-10-09（国内 CodeTop） · 也在：Amazon、LeetCode Hot 100、NeetCode 150、Top Interview 150
 
 给两个单词 `word1` 和 `word2`，返回把 `word1` 转换成 `word2` 所需的最少操作数。每次操作可以：插入一个字符、删除一个字符、替换一个字符。`0 <= word1.length, word2.length <= 500`，两个单词都由小写英文字母组成。例：`word1 = "horse"`，`word2 = "ros"` → `3`（`horse → rorse → rose → ros`：替换 `h`，删除 `r`，删除 `e`）；`word1 = "intention"`，`word2 = "execution"` → `5`。
 

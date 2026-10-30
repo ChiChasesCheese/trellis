@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 242 有效的字母异位词**｜Easy · CodeTop 国内累计 6 次 · 最近 2026-04-16（CodeTop）
+**LC 242 有效的字母异位词**｜Easy · CodeTop 国内累计 6 次 · 最近 2026-04-16（国内 CodeTop）
 
 判断字符串 `t` 是否是 `s` 的字母异位词（字符种类和每种字符的次数都相同，顺序可不同）。`1 <= s.length, t.length <= 5 * 10^4`，只含小写字母；进阶：含 Unicode 字符时怎么办？例：`"anagram", "nagaram"` → `true`，`"rat", "car"` → `false`。
 

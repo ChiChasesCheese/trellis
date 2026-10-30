@@ -4,7 +4,7 @@ node: b.daily-temperatures
 type: qa
 ---
 ## Q
-**LC 739 每日温度**｜Medium · LC TikTok 热度 63/100 · CodeTop 国内累计 26 次 · 最近 2025-09-19（CodeTop）
+**LC 739 每日温度**｜Medium · LC TikTok 热度 63/100 · CodeTop 国内累计 26 次 · 最近 2025-09-19（国内 CodeTop）
 
 给整数数组 `temperatures`，表示每天的温度。返回数组 `answer`，`answer[i]` 是第 `i` 天之后要等多少天才会出现**更高**的温度；之后再也不会升温则为 `0`。`1 <= temperatures.length <= 10^5`，`30 <= temperatures[i] <= 100`。例：`[73,74,75,71,69,72,76,73]` → `[1,1,4,2,1,1,0,0]`；`[30,40,50,60]` → `[1,1,1,0]`；`[30,60,90]` → `[1,1,0]`。
 

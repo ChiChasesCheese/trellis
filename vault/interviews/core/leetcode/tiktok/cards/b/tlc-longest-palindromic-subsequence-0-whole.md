@@ -4,7 +4,7 @@ node: b.longest-palindromic-subsequence
 type: qa
 ---
 ## Q
-**LC 516 最长回文子序列**｜Medium · CodeTop 国内累计 9 次 · 最近 2026-04-06（CodeTop）
+**LC 516 最长回文子序列**｜Medium · CodeTop 国内累计 9 次 · 最近 2026-04-06（国内 CodeTop）
 
 给字符串 `s`，求其中最长的**回文子序列**的长度。子序列是删去某些字符（或不删）、不改变剩余字符顺序得到的序列，不要求连续。`1 <= s.length <= 1000`，`s` 只含小写英文字母。例：`"bbbab"` → `4`（`"bbbb"`）；`"cbbd"` → `2`（`"bb"`）。
 

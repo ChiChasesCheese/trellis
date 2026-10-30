@@ -4,7 +4,7 @@ node: p4.random-pick-with-weight
 type: qa
 ---
 ## Q
-**LC 528 按权重随机选择**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 12 次 · 最近 2026-09-19（CodeTop） · 也在：Amazon
+**LC 528 按权重随机选择**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 12 次 · 最近 2026-09-19（国内 CodeTop） · 也在：Amazon
 
 给一个下标从 0 开始的正整数数组 `w`，`w[i]` 是下标 `i` 的权重。实现 `Solution(w)` 和 `pickIndex()`：每次调用随机返回 `[0, w.length - 1]` 内的一个下标，返回 `i` 的概率是 `w[i] / sum(w)`。`1 <= w.length <= 10^4`，`1 <= w[i] <= 10^5`，`pickIndex` 至多调用 `10^4` 次。例：`w = [1, 3]` 时下标 `0` 的概率是 `25%`，下标 `1` 是 `75%`；`w = [1]` 时永远返回 `0`。
 

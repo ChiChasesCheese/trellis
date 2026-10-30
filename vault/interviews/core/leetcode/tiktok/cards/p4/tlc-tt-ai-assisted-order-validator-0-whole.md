@@ -4,7 +4,7 @@ node: p4.tt-ai-assisted-order-validator
 type: qa
 ---
 ## Q
-**OrderValidator（规则 DAG）**｜Medium · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-08-06（面试记录）
+**OrderValidator（规则 DAG）**｜Medium · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-08-06（美国面试记录）
 
 实现 `OrderValidator`：订单要依次通过一组校验规则，规则之间有依赖，构成有向无环图（DAG）；按拓扑顺序执行，被依赖的规则先执行，任一规则失败则订单不通过。接口：`add_rule(name, check, depends_on=())` 添加规则（`check` 接收订单字典、返回布尔值；`depends_on` 只能引用已存在的规则，规则名唯一，否则抛 `ValueError`）；`remove_rule(name)` 删除规则，并把它的所有前驱直接连到它的所有后继上，保持「谁必须先于谁」的关系；`validate(order)` 返回 `(是否通过, 第一个失败的规则名或 None)`，遇到失败立即返回。规则数不超过 `10^4`。例：`auth`；`stock` 依赖 `auth`；`price` 依赖 `auth`；`ship` 依赖 `stock` 和 `price`；订单 `{}` 全部通过，订单 `{"price": False}` 在 `price` 处失败，`ship` 不会被执行。
 

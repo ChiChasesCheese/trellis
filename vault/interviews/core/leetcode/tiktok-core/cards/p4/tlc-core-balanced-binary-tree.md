@@ -4,7 +4,7 @@ node: p4.balanced-binary-tree
 type: qa
 ---
 ## Q
-**LC 110 平衡二叉树**｜Easy · 近一年被问：美国 0 次、国内 1 次 · CodeTop 国内累计 29 次 · 最近 2026-09-24（CodeTop） · 也在：Amazon、NeetCode 150
+**LC 110 平衡二叉树**｜Easy · 近一年被问：美国 0 次、国内 1 次 · CodeTop 国内累计 29 次 · 最近 2026-09-24（国内 CodeTop） · 也在：Amazon、NeetCode 150
 
 给定一个二叉树，判断它是否是**高度平衡**的二叉树：树中每个节点的左右两个子树的高度差的绝对值不超过 `1`。树中节点数在 `[0, 5000]`，`-10^4 <= Node.val <= 10^4`。例：`root = [3,9,20,null,null,15,7]` → `true`；`root = [1,2,2,3,3,null,null,4,4]` → `false`；`root = []` → `true`。
 

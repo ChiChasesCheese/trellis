@@ -4,7 +4,7 @@ node: b.continuous-subarray-sum
 type: qa
 ---
 ## Q
-**LC 523 连续的子数组和**｜Medium · CodeTop 国内累计 7 次 · 最近 2026-04-08（CodeTop）
+**LC 523 连续的子数组和**｜Medium · CodeTop 国内累计 7 次 · 最近 2026-04-08（国内 CodeTop）
 
 给整数数组 `nums` 和整数 `k`，判断是否存在一个**好的子数组**：它是连续的，长度**至少为 2**，元素总和是 `k` 的倍数（0 也算 `k` 的倍数）。存在返回 `true`，否则 `false`。`1 <= nums.length <= 10^5`，`0 <= nums[i] <= 10^9`，`0 <= sum(nums[i]) <= 2^31 - 1`，`1 <= k <= 2^31 - 1`。例：`nums = [23,2,4,6,7], k = 6` → `true`（`[2,4]` 的和为 6）；`nums = [23,2,6,4,7], k = 13` → `false`。
 

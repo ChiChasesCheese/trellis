@@ -4,7 +4,7 @@ node: b.car-fleet
 type: qa
 ---
 ## Q
-**LC 853 车队**｜Medium · CodeTop 国内累计 2 次 · 最近 2026-04-24（CodeTop）
+**LC 853 车队**｜Medium · CodeTop 国内累计 2 次 · 最近 2026-04-24（国内 CodeTop）
 
 单行道上有 `n` 辆车开往同一个目的地，目的地在 `target` 英里处。数组 `position[i]`、`speed[i]` 是第 `i` 辆车的位置和速度（英里/小时）。车不能超过前面的车，但可以追上去，并以较慢那辆车的速度并排行驶。**车队**是并排行驶的一辆或几辆车，车队的速度是队内最慢那辆车的速度；即使在 `target` 才追上，也算同一个车队。返回到达目的地的车队数量。`n == position.length == speed.length`，`1 <= n <= 10^5`，`0 < target <= 10^6`，`0 <= position[i] < target`，`position` 中各值互不相同，`0 < speed[i] <= 10^6`。例：`target = 12, position = [10,8,0,5,3], speed = [2,4,1,1,3]` → `3`（位置 `10` 和 `8` 的车在 `12` 处汇合，位置 `0` 的车单独，位置 `5` 和 `3` 的车在 `6` 汇合）；`target = 100, position = [0,2,4], speed = [4,2,1]` → `1`。
 

@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 1074 元素和为目标值的子矩阵数量**｜Hard · CodeTop 国内累计 3 次 · 最近 2026-09-19（CodeTop）
+**LC 1074 元素和为目标值的子矩阵数量**｜Hard · CodeTop 国内累计 3 次 · 最近 2026-09-19（国内 CodeTop）
 
 给矩阵 `matrix` 和目标值 `target`，返回元素总和等于 `target` 的**非空子矩阵**数量（坐标不同就算不同）。`1 <= matrix.length, matrix[0].length <= 100`，`-1000 <= matrix[i][j] <= 1000`，`-10^8 <= target <= 10^8`。例：`matrix = [[1,-1],[-1,1]], target = 0` → `5`（两个 `1x2`、两个 `2x1`、一个 `2x2`）。
 

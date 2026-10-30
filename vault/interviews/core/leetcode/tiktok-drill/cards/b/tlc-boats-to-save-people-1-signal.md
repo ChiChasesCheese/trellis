@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 881 救生艇**｜Medium · CodeTop 国内累计 2 次 · 最近 2026-03-27（CodeTop）
+**LC 881 救生艇**｜Medium · CodeTop 国内累计 2 次 · 最近 2026-03-27（国内 CodeTop）
 
 数组 `people` 中 `people[i]` 是第 `i` 个人的体重；船的数量不限，每艘船最大载重 `limit`，每艘船**最多同时载两人**，且这两人的体重之和不超过 `limit`。返回载所有人所需的最少船数。`1 <= people.length <= 5 * 10^4`，`1 <= people[i] <= limit <= 3 * 10^4`。例：`people = [3,2,2,1], limit = 3` → `3`（`(1,2)`、`(2)`、`(3)`）。
 

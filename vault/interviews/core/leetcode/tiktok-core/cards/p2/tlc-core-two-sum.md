@@ -4,7 +4,7 @@ node: p2.two-sum
 type: qa
 ---
 ## Q
-**LC 1 两数之和**｜Easy · LC TikTok 热度 66/100（近 3 个月） · 近一年被问：美国 1 次、国内 2 次 · CodeTop 国内累计 127 次 · 最近 2026-09-07（CodeTop） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150
+**LC 1 两数之和**｜Easy · LC TikTok 热度 66/100（近 3 个月） · 近一年被问：美国 1 次、国内 2 次 · CodeTop 国内累计 127 次 · 最近 2026-09-07（国内 CodeTop） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150
 
 给整数数组 `nums` 和整数 `target`，找出和为 `target` 的**两个**元素，返回它们的**下标**。同一个元素不能用两次，答案可按任意顺序返回，只会存在一个有效答案。`2 <= nums.length <= 10^4`，`-10^9 <= nums[i] <= 10^9`，`-10^9 <= target <= 10^9`。例：`nums = [2,7,11,15], target = 9` → `[0,1]`；`nums = [3,3], target = 6` → `[0,1]`。进阶：想出时间复杂度小于 `O(n^2)` 的算法。
 

@@ -4,7 +4,7 @@ node: b.longest-common-prefix
 type: qa
 ---
 ## Q
-**LC 14 最长公共前缀**｜Easy · LC TikTok 热度 50/100 · CodeTop 国内累计 24 次 · 最近 2026-01-16（CodeTop）
+**LC 14 最长公共前缀**｜Easy · LC TikTok 热度 50/100 · CodeTop 国内累计 24 次 · 最近 2026-01-16（国内 CodeTop）
 
 编写函数查找字符串数组中的最长公共前缀；如果不存在公共前缀，返回空字符串 `""`。`1 <= strs.length <= 200`，`0 <= strs[i].length <= 200`，`strs[i]` 如果非空，则仅由小写英文字母组成。例：`["flower","flow","flight"]` → `"fl"`；`["dog","racecar","car"]` → `""`。
 

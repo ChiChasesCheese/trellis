@@ -4,7 +4,7 @@ node: b.find-k-th-smallest-pair-distance
 type: qa
 ---
 ## Q
-**LC 719 找出第 k 小的距离对**｜Hard · CodeTop 国内累计 2 次 · 最近 2025-11-18（CodeTop）
+**LC 719 找出第 k 小的距离对**｜Hard · CodeTop 国内累计 2 次 · 最近 2025-11-18（国内 CodeTop）
 
 数对 `(a, b)` 的距离定义为 `|a - b|`。给整数数组 `nums` 和整数 `k`，数对由 `nums[i]` 和 `nums[j]` 组成且 `0 <= i < j < nums.length`，返回所有数对距离中第 `k` 小的距离。`n == nums.length`，`2 <= n <= 10^4`，`0 <= nums[i] <= 10^6`，`1 <= k <= n * (n - 1) / 2`。例：`nums = [1,3,1]`，`k = 1` → `0`（数对距离是 `2, 0, 2`）；`nums = [1,1,1]`，`k = 2` → `0`；`nums = [1,6,1]`，`k = 3` → `5`。
 

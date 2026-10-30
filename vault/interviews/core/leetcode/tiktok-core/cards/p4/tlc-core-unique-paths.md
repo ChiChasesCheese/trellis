@@ -4,7 +4,7 @@ node: p4.unique-paths
 type: qa
 ---
 ## Q
-**LC 62 不同路径**｜Medium · LC TikTok 热度 26/100 · 近一年被问：美国 1 次、国内 1 次 · CodeTop 国内累计 35 次 · 最近 2026-05-06（CodeTop） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150
+**LC 62 不同路径**｜Medium · LC TikTok 热度 26/100 · 近一年被问：美国 1 次、国内 1 次 · CodeTop 国内累计 35 次 · 最近 2026-05-06（国内 CodeTop） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150
 
 一个机器人位于 `m x n` 网格的左上角，每次只能向下或向右移动一步，要走到网格的右下角。问总共有多少条不同的路径？`1 <= m, n <= 100`，题目数据保证答案小于等于 `2 * 10^9`。例：`m = 3, n = 7` → `28`；`m = 3, n = 2` → `3`（右右下 / 下下右 / 下右下）；`m = 7, n = 3` → `28`；`m = 3, n = 3` → `6`。
 

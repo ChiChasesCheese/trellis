@@ -4,7 +4,7 @@ node: b.minimum-moves-to-make-array-complementary
 type: qa
 ---
 ## Q
-**LC 1674 使数组互补的最少操作次数**｜Medium · CodeTop 国内累计 1 次 · 最近 2026-04-30（CodeTop）
+**LC 1674 使数组互补的最少操作次数**｜Medium · CodeTop 国内累计 1 次 · 最近 2026-04-30（国内 CodeTop）
 
 给长度为**偶数** `n` 的整数数组 `nums` 和整数 `limit`。每次操作可以把 `nums` 中任意一个整数替换成 `1` 到 `limit` 之间的另一个整数。若对所有下标 `i`，`nums[i] + nums[n-1-i]` 都等于同一个数，则数组**互补**。求使数组互补的最少操作次数。`2 <= n <= 10^5`，`1 <= nums[i] <= limit <= 10^5`。例：`nums = [1,2,4,3]`，`limit = 4` → `1`（改成 `[1,2,2,3]`，每对和为 `4`）；`nums = [1,2,2,1]`，`limit = 2` → `2`；`nums = [1,2,1,2]`，`limit = 2` → `0`。
 

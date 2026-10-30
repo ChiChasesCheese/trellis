@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 97 交错字符串**｜Medium · CodeTop 国内累计 12 次 · 最近 2026-10-28（CodeTop）
+**LC 97 交错字符串**｜Medium · CodeTop 国内累计 12 次 · 最近 2026-10-28（国内 CodeTop）
 
 给三个字符串 `s1`、`s2`、`s3`，判断 `s3` 能否由 `s1` 和 `s2` **交错**组成：`s1`、`s2` 各自切成若干非空子串（段数相差不超过 `1`）后交替拼接，各自内部字符顺序不变。`0 <= s1.length, s2.length <= 100`，`0 <= s3.length <= 200`，由小写英文字母组成。例：`s1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac"` → `true`；`s3 = "aadbbbaccc"` → `false`。
 

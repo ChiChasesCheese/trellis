@@ -4,7 +4,7 @@ node: b.minimum-distance-between-bst-nodes
 type: qa
 ---
 ## Q
-**LC 783 二叉搜索树节点最小距离**｜Easy · CodeTop 国内累计 2 次 · 最近 2026-05-26（CodeTop）
+**LC 783 二叉搜索树节点最小距离**｜Easy · CodeTop 国内累计 2 次 · 最近 2026-05-26（国内 CodeTop）
 
 给二叉搜索树（BST）的根节点 `root`，返回树中任意两个不同节点值之差的最小值（差取绝对值，是正数）。节点数在 `[2, 100]`，`0 <= Node.val <= 10^5`。例：`root = [4,2,6,1,3]` → `1`，`root = [1,0,48,null,null,12,49]` → `1`。
 

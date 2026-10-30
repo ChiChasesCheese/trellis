@@ -4,7 +4,7 @@ node: p5.palindrome-linked-list
 type: qa
 ---
 ## Q
-**LC 234 回文链表**｜Easy · CodeTop 国内累计 26 次 · 最近 2026-09-09（CodeTop）
+**LC 234 回文链表**｜Easy · CodeTop 国内累计 26 次 · 最近 2026-09-09（国内 CodeTop）
 
 给单链表的头节点 `head`，判断它是否是回文链表（从前往后读和从后往前读一样）。节点数在 `[1, 10^5]`，`0 <= Node.val <= 9`。例：`[1,2,2,1]` → `true`；`[1,2]` → `false`。进阶：`O(n)` 时间、`O(1)` 空间。
 

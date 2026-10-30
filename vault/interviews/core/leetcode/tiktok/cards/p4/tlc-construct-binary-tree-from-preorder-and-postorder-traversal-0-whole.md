@@ -4,7 +4,7 @@ node: p4.construct-binary-tree-from-preorder-and-postorder-traversal
 type: qa
 ---
 ## Q
-**LC 889 从前序与后序遍历序列构造二叉树**｜Medium · 近一年被问：美国 1 次、国内 0 次 · CodeTop 国内累计 6 次 · 最近 2026-08-24（面试记录）
+**LC 889 从前序与后序遍历序列构造二叉树**｜Medium · 近一年被问：美国 1 次、国内 0 次 · CodeTop 国内累计 6 次 · 最近 2026-08-24（美国面试记录）
 
 给两个整数数组 `preorder` 和 `postorder`，`preorder` 是一棵**无重复值**二叉树的前序遍历，`postorder` 是同一棵树的后序遍历，重构并返回这棵二叉树；如果有多个答案，返回任意一个。`1 <= preorder.length <= 30`，`1 <= preorder[i] <= preorder.length`，`preorder` 中所有值不同，`postorder.length == preorder.length`，`1 <= postorder[i] <= postorder.length`，`postorder` 中所有值不同，保证两者是同一棵二叉树的前序和后序。例：`preorder = [1,2,4,5,3,6,7]`，`postorder = [4,5,2,6,7,3,1]` → `[1,2,3,4,5,6,7]`；`[1]`、`[1]` → `[1]`。
 

@@ -4,7 +4,7 @@ node: b.unique-binary-search-trees-ii
 type: qa
 ---
 ## Q
-**LC 95 不同的二叉搜索树 II**｜Medium · CodeTop 国内累计 1 次 · 最近 2026-01-15（CodeTop）
+**LC 95 不同的二叉搜索树 II**｜Medium · CodeTop 国内累计 1 次 · 最近 2026-01-15（国内 CodeTop）
 
 给整数 `n`，生成并返回所有由 `n` 个节点组成、节点值为 `1` 到 `n` 互不相同的**不同二叉搜索树**（BST），可以按任意顺序返回。`1 <= n <= 8`。例：`n = 3` → `[[1,null,2,null,3],[1,null,3,2],[2,1,3],[3,1,null,null,2],[3,2,null,1]]`（共 5 棵）；`n = 1` → `[[1]]`。
 

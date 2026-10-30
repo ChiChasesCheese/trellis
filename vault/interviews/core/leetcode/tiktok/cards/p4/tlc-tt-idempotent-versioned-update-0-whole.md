@@ -4,7 +4,7 @@ node: p4.tt-idempotent-versioned-update
 type: qa
 ---
 ## Q
-**幂等、带版本号的数据更新**｜Medium · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-08-09（面试记录）
+**幂等、带版本号的数据更新**｜Medium · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-08-09（美国面试记录）
 
 实现内存键值存储 `VersionedStore`：
 - `update(request_id, key, value, expected_version)`：只有当 `key` 的当前版本等于 `expected_version` 时才写入，版本加 1，返回 `(True, 新版本)`；版本不对就不写，返回 `(False, 当前版本)`（冲突）。

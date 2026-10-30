@@ -4,7 +4,7 @@ node: b.best-time-to-buy-and-sell-stock-with-transaction-fee
 type: qa
 ---
 ## Q
-**LC 714 买卖股票的最佳时机含手续费**｜Medium · CodeTop 国内累计 3 次 · 最近 2026-01-04（CodeTop）
+**LC 714 买卖股票的最佳时机含手续费**｜Medium · CodeTop 国内累计 3 次 · 最近 2026-01-04（国内 CodeTop）
 
 给整数数组 `prices`，`prices[i]` 是第 `i` 天的股价；整数 `fee` 是每笔交易的手续费。可以交易任意多次，但同一时间最多持有一股（卖出之后才能再买）；一笔交易指「买入并卖出」的整个过程，只付一次手续费。返回能得到的最大利润。`1 <= prices.length <= 5 * 10^4`，`1 <= prices[i] < 5 * 10^4`，`0 <= fee < 5 * 10^4`。例：`prices = [1,3,2,8,4,9], fee = 2` → `8`（第 0 天买、第 3 天卖，第 4 天买、第 5 天卖：`(8 - 1 - 2) + (9 - 4 - 2) = 8`）；`prices = [1,3,7,5,10,3], fee = 3` → `6`。
 

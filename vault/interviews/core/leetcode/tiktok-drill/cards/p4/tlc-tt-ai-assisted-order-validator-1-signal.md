@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**OrderValidator（规则 DAG）**｜Medium · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-08-06（面试记录）
+**OrderValidator（规则 DAG）**｜Medium · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-08-06（美国面试记录）
 
 实现 `OrderValidator`：订单要通过一组有依赖关系的校验规则（构成 DAG），被依赖的规则先执行，任一规则失败则订单不通过。接口：`add_rule(name, check, depends_on=())`，依赖只能引用已存在的规则；`remove_rule(name)`，删除时把它的所有前驱直接连到它的所有后继上；`validate(order)` 返回 `(是否通过, 第一个失败的规则名或 None)`。规则数不超过 `10^4`。例：`ship` 依赖 `stock` 和 `price`，两者都依赖 `auth`。
 

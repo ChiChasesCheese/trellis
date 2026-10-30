@@ -4,7 +4,7 @@ node: p3.sqrtx
 type: qa
 ---
 ## Q
-**LC 69 x 的平方根**｜Easy · LC TikTok 热度 75/100 · 近一年被问：美国 1 次、国内 1 次 · CodeTop 国内累计 69 次 · 最近 2026-08-25（CodeTop） · 也在：Amazon、Top Interview 150
+**LC 69 x 的平方根**｜Easy · LC TikTok 热度 75/100 · 近一年被问：美国 1 次、国内 1 次 · CodeTop 国内累计 69 次 · 最近 2026-08-25（国内 CodeTop） · 也在：Amazon、Top Interview 150
 
 给非负整数 `x`，返回 `x` 的算术平方根，结果只保留整数部分（向下取整）。不允许使用内置的指数函数和运算符，如 `pow(x, 0.5)` 或 `x ** 0.5`。`0 <= x <= 2^31 - 1`。例：`x = 4` → `2`；`x = 8` → `2`（`2.828...` 舍去小数）。
 

@@ -4,7 +4,7 @@ node: p3.linked-list-cycle
 type: qa
 ---
 ## Q
-**LC 141 环形链表**｜Easy · 近一年被问：美国 0 次、国内 2 次 · CodeTop 国内累计 84 次 · 最近 2026-10（面试记录） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150
+**LC 141 环形链表**｜Easy · 近一年被问：美国 0 次、国内 2 次 · CodeTop 国内累计 84 次 · 最近 2026-10（国内面试记录） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150
 
 给链表的头节点 `head`，判断链表中是否有环：如果有某个节点可以通过连续跟踪 `next` 指针再次到达，则存在环。有环返回 `true`，否则返回 `false`。链表中节点的数目范围是 `[0, 10^4]`，`-10^5 <= Node.val <= 10^5`（节点值可以重复）。例：`head = [3,2,0,-4]`，尾节点连回下标 `1` 的节点 → `true`；`head = [1,2]`，尾节点连回下标 `0` → `true`；`head = [1]`，无环 → `false`。进阶：用 `O(1)` 内存解决。
 

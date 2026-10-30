@@ -4,7 +4,7 @@ node: p4.validate-binary-search-tree
 type: qa
 ---
 ## Q
-**LC 98 验证二叉搜索树**｜Medium · 近一年被问：美国 2 次、国内 0 次 · CodeTop 国内累计 46 次 · 最近 2026-07-03（面试记录） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150
+**LC 98 验证二叉搜索树**｜Medium · 近一年被问：美国 2 次、国内 0 次 · CodeTop 国内累计 46 次 · 最近 2026-07-03（美国面试记录） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150
 
 给二叉树的根结点 `root`，判断它是否是有效的二叉搜索树（BST）。有效的定义：结点的左子树只含**严格小于**当前结点的值；右子树只含**严格大于**当前结点的值；所有左、右子树自身也必须是 BST。树中结点数在 `[1, 10^4]`，`-2^31 <= Node.val <= 2^31 - 1`。例：`root = [2,1,3]` → `true`；`root = [5,1,4,null,null,3,6]` → `false`（根是 `5`，右子结点却是 `4`）。
 

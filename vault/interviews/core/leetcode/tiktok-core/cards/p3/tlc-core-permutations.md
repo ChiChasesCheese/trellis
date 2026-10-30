@@ -4,7 +4,7 @@ node: p3.permutations
 type: qa
 ---
 ## Q
-**LC 46 全排列**｜Medium · LC TikTok 热度 50/100 · 近一年被问：美国 0 次、国内 2 次 · CodeTop 国内累计 124 次 · 最近 2026-09（面试记录） · 也在：Amazon、LeetCode Hot 100、NeetCode 150、Top Interview 150
+**LC 46 全排列**｜Medium · LC TikTok 热度 50/100 · 近一年被问：美国 0 次、国内 2 次 · CodeTop 国内累计 124 次 · 最近 2026-09（国内面试记录） · 也在：Amazon、LeetCode Hot 100、NeetCode 150、Top Interview 150
 
 给一个不含重复数字的数组 `nums`，返回其**所有可能的全排列**，答案可以按任意顺序给出。`1 <= nums.length <= 6`，`-10 <= nums[i] <= 10`，`nums` 中的所有整数互不相同。例：`nums = [1,2,3]` → `[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]`；`nums = [0,1]` → `[[0,1],[1,0]]`；`nums = [1]` → `[[1]]`。
 

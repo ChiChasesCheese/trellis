@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 384 打乱数组**｜Medium · CodeTop 国内累计 7 次 · 最近 2026-06-19（CodeTop）
+**LC 384 打乱数组**｜Medium · CodeTop 国内累计 7 次 · 最近 2026-06-19（国内 CodeTop）
 
 设计类 `Solution(nums)`，`reset()` 返回初始数组，`shuffle()` 返回随机打乱的数组，要求所有排列等概率。`1 <= nums.length <= 50`，`-10^6 <= nums[i] <= 10^6`，元素互不相同，`reset` 与 `shuffle` 最多共调用 `10^4` 次。例：`Solution([1,2,3])`，`shuffle()` 可能返回 `[3,1,2]`，`reset()` 返回 `[1,2,3]`。
 

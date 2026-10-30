@@ -4,7 +4,7 @@ node: p2.house-robber
 type: qa
 ---
 ## Q
-**LC 198 打家劫舍**｜Medium · LC TikTok 热度 68/100 · 近一年被问：美国 1 次、国内 5 次 · CodeTop 国内累计 38 次 · 最近 2026-10-17（CodeTop） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150
+**LC 198 打家劫舍**｜Medium · LC TikTok 热度 68/100 · 近一年被问：美国 1 次、国内 5 次 · CodeTop 国内累计 38 次 · 最近 2026-10-17（国内 CodeTop） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150
 
 沿街有一排房屋，`nums[i]` 是第 `i` 间房里的现金。相邻的两间房同一晚上都被偷会触发报警，求不触发警报的前提下一晚最多能偷到多少钱。`1 <= nums.length <= 100`，`0 <= nums[i] <= 400`。例：`nums = [1,2,3,1]` → `4`（偷第 1、3 间，`1 + 3`）；`nums = [2,7,9,3,1]` → `12`（偷第 1、3、5 间，`2 + 9 + 1`）。
 

@@ -4,7 +4,7 @@ node: p5.day-of-the-week
 type: qa
 ---
 ## Q
-**LC 1185 一周中的第几天**｜Easy · CodeTop 国内累计 1 次 · 最近 2026-09-19（CodeTop）
+**LC 1185 一周中的第几天**｜Easy · CodeTop 国内累计 1 次 · 最近 2026-09-19（国内 CodeTop）
 
 给一个日期，输入三个整数 `day`、`month`、`year`，返回它是星期几，结果必须是 `{"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"}` 中的一个。已知 `1971` 年 `1` 月 `1` 日是星期五。给出的日期保证是 `1971` 到 `2100` 年之间的有效日期。例：`day = 31, month = 8, year = 2019` → `"Saturday"`；`day = 18, month = 7, year = 1999` → `"Sunday"`；`day = 15, month = 8, year = 1993` → `"Sunday"`。
 

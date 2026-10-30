@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 30 串联所有单词的子串**｜Hard · CodeTop 国内累计 7 次 · 最近 2026-10-24（CodeTop）
+**LC 30 串联所有单词的子串**｜Hard · CodeTop 国内累计 7 次 · 最近 2026-10-24（国内 CodeTop）
 
 字符串 `s` 和**等长**单词数组 `words`；串联子串是 `words` 所有单词按任意顺序首尾相接得到的子串（重复单词按次数都用）。返回所有起始下标，顺序任意。`1 <= s.length <= 10^4`，`1 <= words.length <= 5000`，`1 <= words[i].length <= 30`，全部小写英文字母。例：`s = "barfoothefoobarman"`，`words = ["foo","bar"]` → `[0,9]`。
 

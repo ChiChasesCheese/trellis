@@ -4,7 +4,7 @@ node: p4.copy-list-with-random-pointer
 type: qa
 ---
 ## Q
-**LC 138 随机链表的复制**｜Medium · 近一年被问：美国 0 次、国内 1 次 · CodeTop 国内累计 27 次 · 最近 2026-09-06（CodeTop） · 也在：Amazon、LeetCode Hot 100、NeetCode 150、Top Interview 150
+**LC 138 随机链表的复制**｜Medium · 近一年被问：美国 0 次、国内 1 次 · CodeTop 国内累计 27 次 · 最近 2026-09-06（国内 CodeTop） · 也在：Amazon、LeetCode Hot 100、NeetCode 150、Top Interview 150
 
 链表每个节点除了 `next` 外还有一个 `random` 指针，可指向链表中任意节点或 `null`。构造这个链表的**深拷贝**：恰好 `n` 个全新节点，值与原节点相同，新节点的 `next` 和 `random` 都指向新链表中的节点，且不能指向原链表的节点。节点数 `0 <= n <= 1000`，`-10^4 <= Node.val <= 10^4`。输入用 `[val, random_index]` 表示，例：`[[7,null],[13,0],[11,4],[10,2],[1,0]]` → 同样的结构（但是全新的节点）。
 

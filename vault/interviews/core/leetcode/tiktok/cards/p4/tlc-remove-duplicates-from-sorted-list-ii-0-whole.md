@@ -4,7 +4,7 @@ node: p4.remove-duplicates-from-sorted-list-ii
 type: qa
 ---
 ## Q
-**LC 82 删除排序链表中的重复元素 II**｜Medium · CodeTop 国内累计 49 次 · 最近 2026-08-05（CodeTop）
+**LC 82 删除排序链表中的重复元素 II**｜Medium · CodeTop 国内累计 49 次 · 最近 2026-08-05（国内 CodeTop）
 
 给一个**已排序**（升序）的链表头结点 `head`，删除所有出现重复数字的结点（重复的数字一个都不保留，只留下只出现一次的数字），返回仍然有序的链表。
 

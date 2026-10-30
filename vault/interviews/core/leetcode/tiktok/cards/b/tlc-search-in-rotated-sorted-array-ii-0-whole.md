@@ -4,7 +4,7 @@ node: b.search-in-rotated-sorted-array-ii
 type: qa
 ---
 ## Q
-**LC 81 搜索旋转排序数组 II**｜Medium · CodeTop 国内累计 3 次 · 最近 2026-04-16（CodeTop）
+**LC 81 搜索旋转排序数组 II**｜Medium · CodeTop 国内累计 3 次 · 最近 2026-04-16（国内 CodeTop）
 
 有一个按**非降序**排列的整数数组 `nums`，值**可能重复**。它在某个未知的下标 `k`（`0 <= k < nums.length`）上被旋转，变成 `[nums[k], ..., nums[n-1], nums[0], ..., nums[k-1]]`，例如 `[0,1,2,4,4,4,5,6,6,7]` 在下标 `5` 旋转后可能是 `[4,5,6,6,7,0,1,2,4,4]`。给旋转后的 `nums` 和整数 `target`，判断 `target` 是否在数组中，返回 `true` 或 `false`，操作步骤尽量少。`1 <= nums.length <= 5000`，`-10^4 <= nums[i] <= 10^4`，`-10^4 <= target <= 10^4`。例：`nums = [2,5,6,0,0,1,2], target = 0` → `true`；`target = 3` → `false`。
 

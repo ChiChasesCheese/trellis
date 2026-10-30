@@ -4,7 +4,7 @@ node: p4.gas-station
 type: qa
 ---
 ## Q
-**LC 134 加油站**｜Medium · LC TikTok 热度 50/100（近 3 个月） · CodeTop 国内累计 10 次 · 最近 2026-04-23（CodeTop） · 也在：Amazon、NeetCode 150、Top Interview 150
+**LC 134 加油站**｜Medium · LC TikTok 热度 50/100（近 3 个月） · CodeTop 国内累计 10 次 · 最近 2026-04-23（国内 CodeTop） · 也在：Amazon、NeetCode 150、Top Interview 150
 
 环形路线上有 `n` 个加油站，第 `i` 个加油站有汽油 `gas[i]` 升。你的油箱容量无限，从第 `i` 个加油站开往第 `i + 1` 个加油站要消耗 `cost[i]` 升汽油（最后一个站开往第 `0` 站）。你从其中一个加油站出发，开始时油箱为空。如果能按顺序绕环路行驶一周，返回出发的加油站编号，否则返回 `-1`；如果存在解，保证它**唯一**。`n == gas.length == cost.length`，`1 <= n <= 10^5`，`0 <= gas[i], cost[i] <= 10^4`。例：`gas = [1,2,3,4,5]`，`cost = [3,4,5,1,2]` → `3`；`gas = [2,3,4]`，`cost = [3,4,3]` → `-1`。
 

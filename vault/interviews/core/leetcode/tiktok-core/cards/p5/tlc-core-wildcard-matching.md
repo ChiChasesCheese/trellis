@@ -4,7 +4,7 @@ node: p5.wildcard-matching
 type: qa
 ---
 ## Q
-**LC 44 通配符匹配**｜Hard · CodeTop 国内累计 15 次 · 最近 2026-08-11（CodeTop） · 也在：Amazon
+**LC 44 通配符匹配**｜Hard · CodeTop 国内累计 15 次 · 最近 2026-08-11（国内 CodeTop） · 也在：Amazon
 
 给输入字符串 `s` 和模式 `p`，实现支持 `?` 和 `*` 的通配符匹配：`?` 匹配任意**单个**字符，`*` 匹配任意字符序列（**包括空序列**）。匹配必须覆盖整个 `s`（不是部分匹配）。`0 <= s.length, p.length <= 2000`；`s` 只含小写英文字母，`p` 只含小写英文字母、`?` 或 `*`。例：`s = "aa", p = "a"` → `false`；`s = "aa", p = "*"` → `true`；`s = "cb", p = "?a"` → `false`。
 

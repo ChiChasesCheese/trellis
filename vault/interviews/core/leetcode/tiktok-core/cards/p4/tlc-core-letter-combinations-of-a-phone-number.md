@@ -4,7 +4,7 @@ node: p4.letter-combinations-of-a-phone-number
 type: qa
 ---
 ## Q
-**LC 17 电话号码的字母组合**｜Medium · 近一年被问：美国 0 次、国内 1 次 · CodeTop 国内累计 14 次 · 最近 2026-09-17（CodeTop） · 也在：Amazon、LeetCode Hot 100、NeetCode 150、Top Interview 150
+**LC 17 电话号码的字母组合**｜Medium · 近一年被问：美国 0 次、国内 1 次 · CodeTop 国内累计 14 次 · 最近 2026-09-17（国内 CodeTop） · 也在：Amazon、LeetCode Hot 100、NeetCode 150、Top Interview 150
 
 给一个只含数字 `2-9` 的字符串 `digits`，返回它能表示的所有字母组合，答案可以按任意顺序返回。数字到字母的映射和电话按键相同：`2` 对应 `abc`，`3` 对应 `def`，`4` 对应 `ghi`，`5` 对应 `jkl`，`6` 对应 `mno`，`7` 对应 `pqrs`，`8` 对应 `tuv`，`9` 对应 `wxyz`；`1` 不对应任何字母。`1 <= digits.length <= 4`，`digits[i]` 是 `['2', '9']` 中的一个数字。例：`digits = "23"` → `["ad","ae","af","bd","be","bf","cd","ce","cf"]`；`digits = "2"` → `["a","b","c"]`。
 

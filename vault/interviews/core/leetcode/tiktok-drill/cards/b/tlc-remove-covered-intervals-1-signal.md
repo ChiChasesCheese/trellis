@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 1288 删除被覆盖区间**｜Medium · CodeTop 国内累计 2 次 · 最近 2026-04-13（CodeTop）
+**LC 1288 删除被覆盖区间**｜Medium · CodeTop 国内累计 2 次 · 最近 2026-04-13（国内 CodeTop）
 
 区间列表 `intervals`，区间 `[a,b)` 被 `[c,d)` 覆盖当且仅当 `c <= a` 且 `b <= d`；删除所有被其他区间覆盖的区间，求剩余数量。`1 <= intervals.length <= 1000`，`0 <= intervals[i][0] < intervals[i][1] <= 10^5`，区间互不相同。例：`[[1,4],[3,6],[2,8]]` → `2`。
 

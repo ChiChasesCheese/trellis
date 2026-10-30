@@ -43,11 +43,13 @@ def facts(index: dict[str, dict], today: date) -> dict[str, dict]:
         if v and v in index:
             slugs.append(v)
         for s in slugs:
-            f = seen.setdefault(s, {"n": 0, "us": 0, "cn": 0, "last": ""})
+            f = seen.setdefault(s, {"n": 0, "us": 0, "cn": 0, "last": "", "last_region": ""})
             f["n"] += len(dates)
             f["us"] += sum(1 for _, r in recent if r == "US")
             f["cn"] += sum(1 for _, r in recent if r == "CN")
-            f["last"] = max([f["last"], *dates], key=st.day)
+            for d, r in recent:
+                if not f["last"] or st.day(d) > st.day(f["last"]):
+                    f["last"], f["last_region"] = d, r
     snap = {r["slug"]: r for r in json.loads((st.CAT / "codetop.json").read_text(encoding="utf-8"))["rows"]}
     out = {}
     for slug, p in index.items():
@@ -59,13 +61,13 @@ def facts(index: dict[str, dict], today: date) -> dict[str, dict]:
                 break
         if slug in seen:
             parts.append(f"近一年被问：美国 {seen[slug]['us']} 次、国内 {seen[slug]['cn']} 次")
-            last.append((seen[slug]["last"], "面试记录"))
+            last.append((seen[slug]["last"], "美国面试记录" if seen[slug]["last_region"] == "US" else "国内面试记录"))
         ct = snap.get(slug) or ({"reports": p["companies"]["bytedance_cn"]["reports"],
                                  "last_seen": p["companies"]["bytedance_cn"]["last_seen"]}
                                 if "bytedance_cn" in p["companies"] else None)
         if ct:
             parts.append(f"CodeTop 国内累计 {ct['reports']} 次")
-            last.append((ct["last_seen"], "CodeTop"))
+            last.append((ct["last_seen"], "国内 CodeTop"))
         if last:
             d, src = max(last, key=lambda x: (st.day(x[0]), len(x[0])))
             parts.append(f"最近 {d}（{src}）")

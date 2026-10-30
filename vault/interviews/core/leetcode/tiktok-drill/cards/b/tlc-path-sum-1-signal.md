@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 112 路径总和**｜Easy · CodeTop 国内累计 47 次 · 最近 2026-04-14（CodeTop）
+**LC 112 路径总和**｜Easy · CodeTop 国内累计 47 次 · 最近 2026-04-14（国内 CodeTop）
 
 给二叉树的根结点 `root` 和整数 `targetSum`，判断树中是否存在**根结点到叶子结点**的路径，使路径上所有结点值之和等于 `targetSum`。叶子结点是没有子结点的结点。
 

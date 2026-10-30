@@ -4,7 +4,7 @@ node: b.combination-sum-ii
 type: qa
 ---
 ## Q
-**LC 40 组合总和 II**｜Medium · LC TikTok 热度 38/100 · CodeTop 国内累计 26 次 · 最近 2025-12-09（CodeTop）
+**LC 40 组合总和 II**｜Medium · LC TikTok 热度 38/100 · CodeTop 国内累计 26 次 · 最近 2025-12-09（国内 CodeTop）
 
 给一个数组 `candidates`（元素可能重复）和目标数 `target`，找出所有和为 `target` 的组合。`candidates` 中每个元素在一个组合里只能用**一次**；结果不能包含重复的组合（元素相同、顺序不同算同一个）。`1 <= candidates.length <= 100`，`1 <= candidates[i] <= 50`，`1 <= target <= 30`。例：`candidates = [10,1,2,7,6,1,5], target = 8` → `[[1,1,6],[1,2,5],[1,7],[2,6]]`；`candidates = [2,5,2,1,2], target = 5` → `[[1,2,2],[5]]`。
 

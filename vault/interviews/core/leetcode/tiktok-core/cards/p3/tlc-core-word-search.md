@@ -4,7 +4,7 @@ node: p3.word-search
 type: qa
 ---
 ## Q
-**LC 79 单词搜索**｜Medium · LC TikTok 热度 75/100（近 6 个月） · CodeTop 国内累计 41 次 · 最近 2026-06-03（CodeTop） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150
+**LC 79 单词搜索**｜Medium · LC TikTok 热度 75/100（近 6 个月） · CodeTop 国内累计 41 次 · 最近 2026-06-03（国内 CodeTop） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150
 
 给 `m x n` 的字符网格 `board` 和字符串 `word`，判断 `word` 是否存在于网格中。单词必须按字母顺序，通过水平或竖直相邻的单元格连成；**同一个单元格内的字母在一条路径里不能重复使用**。`m == board.length`，`n == board[i].length`，`1 <= m, n <= 6`，`1 <= word.length <= 15`，`board` 和 `word` 仅由大小写英文字母组成。进阶：能否用搜索剪枝让更大的 `board` 也跑得快？例：`board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]]`，`word = "ABCCED"` → `true`；`"SEE"` → `true`；`"ABCB"` → `false`。
 

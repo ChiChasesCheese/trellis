@@ -4,7 +4,7 @@ node: p4.serialize-and-deserialize-n-ary-tree
 type: qa
 ---
 ## Q
-**LC 428 序列化和反序列化 N 叉树**｜Hard · LC TikTok 热度 38/100（近 3 个月） · CodeTop 国内累计 1 次 · 最近 2021-08-10（CodeTop）
+**LC 428 序列化和反序列化 N 叉树**｜Hard · LC TikTok 热度 38/100（近 3 个月） · CodeTop 国内累计 1 次 · 最近 2021-08-10（国内 CodeTop）
 
 设计一个把 N 叉树（每个结点有任意多个孩子）转成字符串、再从字符串还原成原树的算法：`serialize(root)` 返回字符串，`deserialize(data)` 返回树，格式自定。算法必须**无状态**——不能用类成员、全局变量或静态变量保存状态。
 

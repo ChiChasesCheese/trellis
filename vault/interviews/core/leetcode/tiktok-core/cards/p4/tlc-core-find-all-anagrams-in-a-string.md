@@ -4,7 +4,7 @@ node: p4.find-all-anagrams-in-a-string
 type: qa
 ---
 ## Q
-**LC 438 找到字符串中所有字母异位词**｜Medium · LC TikTok 热度 38/100（近 6 个月） · 近一年被问：美国 1 次、国内 0 次 · CodeTop 国内累计 8 次 · 最近 2026-02-21（面试记录） · 也在：Amazon、LeetCode Hot 100
+**LC 438 找到字符串中所有字母异位词**｜Medium · LC TikTok 热度 38/100（近 6 个月） · 近一年被问：美国 1 次、国内 0 次 · CodeTop 国内累计 8 次 · 最近 2026-02-21（美国面试记录） · 也在：Amazon、LeetCode Hot 100
 
 给两个字符串 `s` 和 `p`，找出 `s` 中所有是 `p` 的**异位词**（字母相同、次序可以不同）的子串，返回这些子串的起始下标，顺序任意。
 

@@ -4,7 +4,7 @@ node: p3.minimum-window-substring
 type: qa
 ---
 ## Q
-**LC 76 最小覆盖子串**｜Hard · LC TikTok 热度 75/100 · 近一年被问：美国 1 次、国内 0 次 · CodeTop 国内累计 53 次 · 最近 2026-08-30（CodeTop） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150
+**LC 76 最小覆盖子串**｜Hard · LC TikTok 热度 75/100 · 近一年被问：美国 1 次、国内 0 次 · CodeTop 国内累计 53 次 · 最近 2026-08-30（国内 CodeTop） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150
 
 给字符串 `s` 和 `t`，返回 `s` 中**最短**的子串，使该子串包含 `t` 中的每个字符（包括重复字符，出现几次就要覆盖几次）；不存在则返回空字符串 `""`。测试用例保证答案唯一。`m == s.length`，`n == t.length`，`1 <= m, n <= 10^5`，`s` 和 `t` 由英文字母（大小写）组成。进阶：能否做到 `O(m + n)`？例：`s = "ADOBECODEBANC"`，`t = "ABC"` → `"BANC"`；`s = "a"`，`t = "a"` → `"a"`；`s = "a"`，`t = "aa"` → `""`。
 

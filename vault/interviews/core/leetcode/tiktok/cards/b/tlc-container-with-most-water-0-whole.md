@@ -4,7 +4,7 @@ node: b.container-with-most-water
 type: qa
 ---
 ## Q
-**LC 11 盛最多水的容器**｜Medium · LC TikTok 热度 56/100 · CodeTop 国内累计 26 次 · 最近 2026-05-06（CodeTop）
+**LC 11 盛最多水的容器**｜Medium · LC TikTok 热度 56/100 · CodeTop 国内累计 26 次 · 最近 2026-05-06（国内 CodeTop）
 
 给长度为 `n` 的整数数组 `height`，有 `n` 条垂线，第 `i` 条的两个端点是 `(i, 0)` 和 `(i, height[i])`。找出其中两条线，使它们与 `x` 轴构成的容器能容纳最多的水，返回这个最大水量（容器不能倾斜）。`n == height.length`，`2 <= n <= 10^5`，`0 <= height[i] <= 10^4`。例：`[1,8,6,2,5,4,8,3,7]` → `49`（第 1 条和第 8 条线，水位 7、宽 7）；`[1,1]` → `1`。
 

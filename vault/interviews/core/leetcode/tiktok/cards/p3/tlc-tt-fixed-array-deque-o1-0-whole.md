@@ -4,7 +4,7 @@ node: p3.tt-fixed-array-deque-o1
 type: qa
 ---
 ## Q
-**定长数组实现的双端队列（所有操作 O(1)）**｜Medium · 近一年被问：美国 4 次、国内 0 次 · 最近 2026-07-06（面试记录）
+**定长数组实现的双端队列（所有操作 O(1)）**｜Medium · 近一年被问：美国 4 次、国内 0 次 · 最近 2026-07-06（美国面试记录）
 
 用一个定长数组实现双端结构 `FixedDeque(capacity)`，所有操作都要 `O(1)`：`push_head(x)`、`push_tail(x)`（成功返回 `True`，已满返回 `False`）；`pop_head()`、`pop_tail()`（返回弹出的值，空时返回 `None`）；`index(i)` 返回从队首数起第 `i` 个元素（`0` 起），越界返回 `None`。类似 Redis 的 list：`lpush`、`rpush`、`lpop`、`rpop`、`index`。`1 <= capacity <= 10^5`，值为整数。例：容量 `3`，`push_tail(1)`、`push_head(2)`、`push_tail(3)` 都是 `True`，`push_head(4)` → `False`（已满）；此时 `index(0), index(1), index(2), index(3)` → `2, 1, 3, None`；`pop_head()` → `2`，`pop_tail()` → `3`，`pop_tail()` → `1`，`pop_head()` → `None`。
 

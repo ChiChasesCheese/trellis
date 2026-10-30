@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**Agent 工具调用的事件追踪**｜Hard · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-08-23（面试记录）
+**Agent 工具调用的事件追踪**｜Hard · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-08-23（美国面试记录）
 
 Agent 调用外部工具，每次调用（call）属于某个请求，失败后可能重试。事件按到达顺序流入：`(time, request_id, call_id, attempt, kind, stage)`，`attempt` 从 1 开始、重试加 1，`kind` 是 `start` / `success` / `failure`，`failure` 带失败阶段 `stage`（`timeout`、`bad_args`、`http_5xx` 等）。实现 `Tracer`：`on_event(event)` 逐条处理；`trace(request_id)` 返回每个 call 的尝试次数、最终状态（成功 / 失败 / 进行中，由最新一次尝试决定）和第一次失败的阶段；`flaky(k)` 返回重试超过 `k` 次的 call。事件总数 `<= 10^5`。例：`search` 第 1 次 `timeout`、第 2 次 `http_5xx`、第 3 次成功 → `("search", 3, "success", "timeout")`。
 

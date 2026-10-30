@@ -4,7 +4,7 @@ node: p4.search-insert-position
 type: qa
 ---
 ## Q
-**LC 35 搜索插入位置**｜Easy · 近一年被问：美国 2 次、国内 0 次 · CodeTop 国内累计 2 次 · 最近 2026-02-18（面试记录） · 也在：Amazon、LeetCode Hot 100、Top Interview 150
+**LC 35 搜索插入位置**｜Easy · 近一年被问：美国 2 次、国内 0 次 · CodeTop 国内累计 2 次 · 最近 2026-02-18（美国面试记录） · 也在：Amazon、LeetCode Hot 100、Top Interview 150
 
 给一个升序排列、没有重复元素的整数数组 `nums` 和一个目标值 `target`：找到 `target` 就返回它的下标；找不到就返回它按顺序插入后应该在的下标。必须使用 `O(log n)` 时间的算法。`1 <= nums.length <= 10^4`，`-10^4 <= nums[i] <= 10^4`，`-10^4 <= target <= 10^4`。例：`nums = [1,3,5,6]`，`target = 5` → `2`；`target = 2` → `1`；`target = 7` → `4`。
 

@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 45 跳跃游戏 II**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 20 次 · 最近 2026-03-06（CodeTop）
+**LC 45 跳跃游戏 II**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 20 次 · 最近 2026-03-06（国内 CodeTop）
 
 数组 `nums` 长度为 `n`，初始在下标 `0`；`nums[i]` 表示从 `i` 出发最多向后跳 `nums[i]` 格（`0 <= j <= nums[i]` 且 `i + j < n`）。求到达 `n - 1` 的最少跳跃次数，保证可达。`1 <= nums.length <= 10^4`，`0 <= nums[i] <= 1000`。例：`[2,3,1,1,4]` → `2`。
 

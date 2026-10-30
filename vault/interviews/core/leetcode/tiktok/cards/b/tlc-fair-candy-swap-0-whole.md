@@ -4,7 +4,7 @@ node: b.fair-candy-swap
 type: qa
 ---
 ## Q
-**LC 888 公平的糖果交换**｜Easy · CodeTop 国内累计 1 次 · 最近 2026-04-04（CodeTop）
+**LC 888 公平的糖果交换**｜Easy · CodeTop 国内累计 1 次 · 最近 2026-04-04（国内 CodeTop）
 
 爱丽丝和鲍勃拥有不同总数量的糖果。`aliceSizes[i]` 是爱丽丝第 `i` 盒糖果的数量，`bobSizes[j]` 是鲍勃第 `j` 盒的数量。两人要各拿出一盒互相交换，使交换后两人的糖果总数相同。返回 `[爱丽丝给出的那盒的数量, 鲍勃给出的那盒的数量]`；有多个答案返回任意一个，保证至少有一个有效答案。`1 <= aliceSizes.length, bobSizes.length <= 10^4`，`1 <= aliceSizes[i], bobSizes[j] <= 10^5`，两人的糖果总数不同。例：`aliceSizes = [1,1], bobSizes = [2,2]` → `[1,2]`；`aliceSizes = [1,2,5], bobSizes = [2,4]` → `[5,4]`。
 

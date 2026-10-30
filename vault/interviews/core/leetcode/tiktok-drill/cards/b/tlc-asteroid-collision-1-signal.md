@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 735 小行星碰撞**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 1 次 · 最近 2022-03-03（CodeTop）
+**LC 735 小行星碰撞**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 1 次 · 最近 2022-03-03（国内 CodeTop）
 
 数组 `asteroids` 表示同一行上的小行星：绝对值是大小，正数向右、负数向左，速度相同。相撞时较小的爆炸，大小相同都爆炸，同向永不相撞。返回碰撞结束后剩下的小行星。`2 <= asteroids.length <= 10^4`，`-1000 <= asteroids[i] <= 1000`，`asteroids[i] != 0`。例：`[3,5,-6,2,-1,4]` → `[-6,2,4]`。
 

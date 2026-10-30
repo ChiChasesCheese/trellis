@@ -4,7 +4,7 @@ node: p3.design-hashmap
 type: qa
 ---
 ## Q
-**LC 706 设计哈希映射**｜Easy · LC TikTok 热度 62/100（近 6 个月） · 近一年被问：美国 2 次、国内 1 次 · CodeTop 国内累计 3 次 · 最近 2026-08-13（面试记录）
+**LC 706 设计哈希映射**｜Easy · LC TikTok 热度 62/100（近 6 个月） · 近一年被问：美国 2 次、国内 1 次 · CodeTop 国内累计 3 次 · 最近 2026-08-13（国内面试记录）
 
 不使用任何内建的哈希表库设计一个哈希映射（HashMap）。实现 `MyHashMap` 类：`MyHashMap()` 初始化空映射；`void put(int key, int value)` 插入键值对，若 `key` 已存在则更新其值；`int get(int key)` 返回 `key` 对应的 `value`，不存在返回 `-1`；`void remove(key)` 若存在 `key` 的映射则移除它。`0 <= key, value <= 10^6`，最多调用 `10^4` 次 `put`、`get` 和 `remove`。例：依次 `put(1,1)`、`put(2,2)`、`get(1)`、`get(3)`、`put(2,1)`、`get(2)`、`remove(2)`、`get(2)` 返回 `1, -1, 1, -1`。
 

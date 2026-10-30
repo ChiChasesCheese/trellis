@@ -4,7 +4,7 @@ node: b.design-add-and-search-words-data-structure
 type: qa
 ---
 ## Q
-**LC 211 添加与搜索单词 - 数据结构设计**｜Medium · LC TikTok 热度 56/100 · CodeTop 国内累计 2 次 · 最近 2022-09-21（CodeTop）
+**LC 211 添加与搜索单词 - 数据结构设计**｜Medium · LC TikTok 热度 56/100 · CodeTop 国内累计 2 次 · 最近 2022-09-21（国内 CodeTop）
 
 设计一个数据结构，支持添加新单词，以及查找字符串是否与任何先前添加的单词匹配。实现 `WordDictionary` 类：`WordDictionary()` 初始化；`addWord(word)` 把 `word` 加入数据结构；`search(word)` 若存在与 `word` 匹配的字符串则返回 `true`，否则 `false`，其中 `word` 里的 `'.'` 可以表示任意一个字母。`1 <= word.length <= 25`；`addWord` 的 `word` 由小写字母组成；`search` 的 `word` 由 `'.'` 或小写字母组成；`addWord` 与 `search` 合计最多调用 `10^4` 次。例：依次 `addWord("bad")`、`addWord("dad")`、`addWord("mad")`，`search("pad")` → `false`，`search("bad")` → `true`，`search(".ad")` → `true`，`search("b..")` → `true`。
 

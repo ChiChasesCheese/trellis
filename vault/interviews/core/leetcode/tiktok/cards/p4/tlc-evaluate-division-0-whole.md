@@ -4,7 +4,7 @@ node: p4.evaluate-division
 type: qa
 ---
 ## Q
-**LC 399 除法求值**｜Medium · LC TikTok 热度 53/100 · 近一年被问：美国 3 次、国内 0 次 · CodeTop 国内累计 3 次 · 最近 2026-01-05（面试记录）
+**LC 399 除法求值**｜Medium · LC TikTok 热度 53/100 · 近一年被问：美国 3 次、国内 0 次 · CodeTop 国内累计 3 次 · 最近 2026-01-05（美国面试记录）
 
 给变量对数组 `equations` 和实数数组 `values` 作为已知条件：`equations[i] = [Ai, Bi]` 与 `values[i]` 表示 `Ai / Bi = values[i]`，每个变量是一个字符串。再给查询数组 `queries`，`queries[j] = [Cj, Dj]` 表示求 `Cj / Dj`。返回所有查询的答案；无法确定的、或出现了条件里没有的变量，答案用 `-1.0`。输入总是有效的，不会除以零，也没有矛盾。`1 <= equations.length, queries.length <= 20`，`0.0 < values[i] <= 20.0`，变量名长度 `1..5`，由小写字母与数字组成。例：`equations = [["a","b"],["b","c"]], values = [2.0,3.0], queries = [["a","c"],["b","a"],["a","e"],["a","a"],["x","x"]]` → `[6.0, 0.5, -1.0, 1.0, -1.0]`。
 

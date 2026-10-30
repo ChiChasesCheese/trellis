@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**幂等、带版本号的数据更新**｜Medium · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-08-09（面试记录）
+**幂等、带版本号的数据更新**｜Medium · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-08-09（美国面试记录）
 
 实现内存键值存储 `VersionedStore`：`update(request_id, key, value, expected_version)` 只有当 `key` 的当前版本等于 `expected_version` 时才写入并把版本加 1，返回 `(True, 新版本)`，否则返回 `(False, 当前版本)`；同一个 `request_id` 重复调用（客户端超时重试）不能重复写，要原样返回第一次的结果；`get(key)` 返回 `(value, version)`，不存在的 key 为 `(None, 0)`。调用总数 `<= 10^5`。例：`update("r1","a","x",0)` → `(True, 1)`，重试同一调用 → `(True, 1)`。
 

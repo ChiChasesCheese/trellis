@@ -4,7 +4,7 @@ node: b.find-largest-value-in-each-tree-row
 type: qa
 ---
 ## Q
-**LC 515 在每个树行中找最大值**｜Medium · CodeTop 国内累计 2 次 · 最近 2026-06-21（CodeTop）
+**LC 515 在每个树行中找最大值**｜Medium · CodeTop 国内累计 2 次 · 最近 2026-06-21（国内 CodeTop）
 
 给二叉树的根 `root`，返回每一层节点值的最大值组成的列表（从上到下）。节点数在 `[0, 10^4]` 内，`-2^31 <= Node.val <= 2^31 - 1`。例：`[1,3,2,5,3,null,9]` → `[1,3,9]`；`[1,2,3]` → `[1,3]`。
 

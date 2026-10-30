@@ -4,7 +4,7 @@ node: p2.spiral-matrix
 type: qa
 ---
 ## Q
-**LC 54 螺旋矩阵**｜Medium · LC TikTok 热度 75/100（近 3 个月） · 近一年被问：美国 1 次、国内 0 次 · CodeTop 国内累计 139 次 · 最近 2026-10-14（CodeTop） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150
+**LC 54 螺旋矩阵**｜Medium · LC TikTok 热度 75/100（近 3 个月） · 近一年被问：美国 1 次、国内 0 次 · CodeTop 国内累计 139 次 · 最近 2026-10-14（国内 CodeTop） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150
 
 给一个 `m` 行 `n` 列的矩阵 `matrix`，按**顺时针螺旋顺序**返回矩阵中的所有元素。`m == matrix.length`，`n == matrix[i].length`，`1 <= m, n <= 10`，`-100 <= matrix[i][j] <= 100`。例：`[[1,2,3],[4,5,6],[7,8,9]]` → `[1,2,3,6,9,8,7,4,5]`；`[[1,2,3,4],[5,6,7,8],[9,10,11,12]]` → `[1,2,3,4,8,12,11,10,9,5,6,7]`。
 

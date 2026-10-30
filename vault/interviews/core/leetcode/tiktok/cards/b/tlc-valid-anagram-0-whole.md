@@ -4,7 +4,7 @@ node: b.valid-anagram
 type: qa
 ---
 ## Q
-**LC 242 有效的字母异位词**｜Easy · CodeTop 国内累计 6 次 · 最近 2026-04-16（CodeTop）
+**LC 242 有效的字母异位词**｜Easy · CodeTop 国内累计 6 次 · 最近 2026-04-16（国内 CodeTop）
 
 给两个字符串 `s` 和 `t`，判断 `t` 是否是 `s` 的字母异位词（anagram：两者含有的字符种类和每种字符的次数完全相同，只是顺序可能不同）。`1 <= s.length, t.length <= 5 * 10^4`，`s` 和 `t` 只含小写字母。例：`s = "anagram", t = "nagaram"` → `true`；`s = "rat", t = "car"` → `false`。进阶：如果输入含 Unicode 字符，解法要怎样调整？
 

@@ -4,7 +4,7 @@ node: p5.shortest-subarray-with-sum-at-least-k
 type: qa
 ---
 ## Q
-**LC 862 和至少为 K 的最短子数组**｜Hard · CodeTop 国内累计 15 次 · 最近 2026-09-03（CodeTop）
+**LC 862 和至少为 K 的最短子数组**｜Hard · CodeTop 国内累计 15 次 · 最近 2026-09-03（国内 CodeTop）
 
 给整数数组 `nums` 和整数 `k`，找出 `nums` 中**和至少为 `k` 的最短非空子数组**（子数组是连续的一段），返回它的长度；不存在则返回 `-1`。`1 <= nums.length <= 10^5`，`-10^5 <= nums[i] <= 10^5`，`1 <= k <= 10^9`。例：`nums = [1], k = 1` → `1`；`nums = [1,2], k = 4` → `-1`；`nums = [2,-1,2], k = 3` → `3`。
 

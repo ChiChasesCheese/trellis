@@ -4,7 +4,7 @@ node: p2.meeting-rooms-ii
 type: qa
 ---
 ## Q
-**LC 253 会议室 II**｜Medium · LC TikTok 热度 88/100（近 3 个月） · 近一年被问：美国 2 次、国内 1 次 · CodeTop 国内累计 16 次 · 最近 2026-10（面试记录） · 也在：Amazon、Blind 75、NeetCode 150
+**LC 253 会议室 II**｜Medium · LC TikTok 热度 88/100（近 3 个月） · 近一年被问：美国 2 次、国内 1 次 · CodeTop 国内累计 16 次 · 最近 2026-10（美国面试记录） · 也在：Amazon、Blind 75、NeetCode 150
 
 给一个会议时间数组 `intervals`，`intervals[i] = [start_i, end_i]`，返回需要的最少会议室数量。一个会议结束的时刻可以立刻开始下一个会议。`1 <= intervals.length <= 10^4`，`0 <= start_i < end_i <= 10^6`。例：`[[0,30],[5,10],[15,20]]` → `2`；`[[7,10],[2,4]]` → `1`。
 

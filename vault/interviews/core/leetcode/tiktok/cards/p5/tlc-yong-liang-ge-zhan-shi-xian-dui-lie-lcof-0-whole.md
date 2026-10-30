@@ -4,7 +4,7 @@ node: p5.yong-liang-ge-zhan-shi-xian-dui-lie-lcof
 type: qa
 ---
 ## Q
-**剑指 Offer 09 用两个栈实现队列**｜Easy · CodeTop 国内累计 25 次 · 最近 2026-10-09（CodeTop）
+**剑指 Offer 09 用两个栈实现队列**｜Easy · CodeTop 国内累计 25 次 · 最近 2026-10-09（国内 CodeTop）
 
 用两个栈实现一个队列。要实现 `push(bookID)`：把编号 `bookID` 的书归还到队尾（入队）；`pop()`：借出**最早**归还的书并返回它的值，没有书可借时返回 `-1`。栈是后进先出，队列是先进先出，只允许对栈做压入 / 弹出。
 

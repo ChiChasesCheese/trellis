@@ -4,7 +4,7 @@ node: b.remove-covered-intervals
 type: qa
 ---
 ## Q
-**LC 1288 删除被覆盖区间**｜Medium · CodeTop 国内累计 2 次 · 最近 2026-04-13（CodeTop）
+**LC 1288 删除被覆盖区间**｜Medium · CodeTop 国内累计 2 次 · 最近 2026-04-13（国内 CodeTop）
 
 给一个区间列表 `intervals`，删除其中被其他区间**覆盖**的区间，返回剩下的区间数。区间 `[a,b)` 被 `[c,d)` 覆盖，当且仅当 `c <= a` 且 `b <= d`。`1 <= intervals.length <= 1000`，`0 <= intervals[i][0] < intervals[i][1] <= 10^5`，所有区间互不相同。例：`[[1,4],[3,6],[2,8]]` → `2`（`[3,6]` 被 `[2,8]` 覆盖）。
 

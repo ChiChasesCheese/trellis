@@ -4,7 +4,7 @@ node: p4.all-nodes-distance-k-in-binary-tree
 type: qa
 ---
 ## Q
-**LC 863 二叉树中所有距离为 K 的结点**｜Medium · LC TikTok 热度 46/100（近 30 天） · CodeTop 国内累计 10 次 · 最近 2025-09-17（CodeTop）
+**LC 863 二叉树中所有距离为 K 的结点**｜Medium · LC TikTok 热度 46/100（近 30 天） · CodeTop 国内累计 10 次 · 最近 2025-09-17（国内 CodeTop）
 
 给一棵二叉树的根结点 `root`、树中的一个目标结点 `target` 和一个整数 `k`，返回到 `target` 距离恰为 `k` 的所有结点的值（距离 = 两结点间路径的边数，可以向上走也可以向下走），答案顺序任意。
 

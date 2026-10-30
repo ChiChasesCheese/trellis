@@ -4,7 +4,7 @@ node: b.design-a-stack-with-increment-operation
 type: qa
 ---
 ## Q
-**LC 1381 设计一个支持增量操作的栈**｜Medium · CodeTop 国内累计 2 次 · 最近 2026-04-10（CodeTop）
+**LC 1381 设计一个支持增量操作的栈**｜Medium · CodeTop 国内累计 2 次 · 最近 2026-04-10（国内 CodeTop）
 
 实现 `CustomStack`：`CustomStack(maxSize)` 设定栈的容量；`push(x)`：栈未满时把 `x` 压到栈顶，满了就忽略；`pop()`：弹出并返回栈顶，栈空返回 `-1`；`increment(k, val)`：**栈底**的 `k` 个元素都加 `val`，元素不足 `k` 个时全部加 `val`。`1 <= maxSize, x, k <= 1000`，`0 <= val <= 100`，三种操作各最多调用 `1000` 次。例：容量 3，`push(1)`、`push(2)`、`pop()` → `2`，`push(2)`、`push(3)`、`push(4)`（已满，忽略），`increment(5, 100)`、`increment(2, 100)`，之后四次 `pop()` → `103`、`202`、`201`、`-1`。
 

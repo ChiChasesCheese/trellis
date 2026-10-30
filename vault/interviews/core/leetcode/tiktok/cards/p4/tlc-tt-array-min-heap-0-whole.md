@@ -4,7 +4,7 @@ node: p4.tt-array-min-heap
 type: qa
 ---
 ## Q
-**手写最小堆**｜Medium · 近一年被问：美国 2 次、国内 0 次 · 最近 2026-10-04（面试记录）
+**手写最小堆**｜Medium · 近一年被问：美国 2 次、国内 0 次 · 最近 2026-10-04（美国面试记录）
 
 不用 `heapq`，用 Python 列表实现最小堆类 `MinHeap`：`push(x)`、`pop()`（返回并删除最小值）、`peek()`（只看最小值）、`__len__`，以及从一个列表线性建堆的 `heapify`。`push` / `pop` 要 `O(log n)`，建堆要 `O(n)`；堆为空时 `pop` / `peek` 抛 `IndexError`。元素个数至多 `10^5`。
 

@@ -4,7 +4,7 @@ node: b.remove-all-adjacent-duplicates-in-string-ii
 type: qa
 ---
 ## Q
-**LC 1209 删除字符串中的所有相邻重复项 II**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 3 次 · 最近 2024-09-13（CodeTop）
+**LC 1209 删除字符串中的所有相邻重复项 II**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 3 次 · 最近 2024-09-13（国内 CodeTop）
 
 给字符串 `s`，「`k` 倍重复项删除操作」是选择 `s` 中 `k` 个相邻且相等的字母并删除它们，被删去部分的左右两侧连在一起。对 `s` 重复进行这个操作，直到无法继续，返回最终的字符串，答案保证唯一。`1 <= s.length <= 10^5`，`2 <= k <= 10^4`，`s` 只含小写英文字母。例：`("abcd", 2)` → `"abcd"`；`("deeedbbcccbdaa", 3)` → `"aa"`；`("pbbcggttciiippooaais", 2)` → `"ps"`。
 

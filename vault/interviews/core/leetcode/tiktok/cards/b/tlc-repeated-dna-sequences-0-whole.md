@@ -4,7 +4,7 @@ node: b.repeated-dna-sequences
 type: qa
 ---
 ## Q
-**LC 187 重复的DNA序列**｜Medium · CodeTop 国内累计 2 次 · 最近 2025-11-01（CodeTop）
+**LC 187 重复的DNA序列**｜Medium · CodeTop 国内累计 2 次 · 最近 2025-11-01（国内 CodeTop）
 
 DNA 序列由字符 `'A'`、`'C'`、`'G'`、`'T'` 组成。给字符串 `s`，返回所有在 `s` 中出现**不止一次**的、长度为 `10` 的子串，顺序任意（每个只返回一次）。`0 <= s.length <= 10^5`，`s[i]` 是 `A`、`C`、`G`、`T` 之一。例：`"AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"` → `["AAAAACCCCC","CCCCCAAAAA"]`，`"AAAAAAAAAAAAA"` → `["AAAAAAAAAA"]`。
 

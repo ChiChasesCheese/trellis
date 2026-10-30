@@ -4,7 +4,7 @@ node: p4.non-overlapping-intervals
 type: qa
 ---
 ## Q
-**LC 435 无重叠区间**｜Medium · 近一年被问：美国 1 次、国内 0 次 · CodeTop 国内累计 7 次 · 最近 2026-09-02（面试记录） · 也在：Amazon、Blind 75、NeetCode 150
+**LC 435 无重叠区间**｜Medium · 近一年被问：美国 1 次、国内 0 次 · CodeTop 国内累计 7 次 · 最近 2026-09-02（美国面试记录） · 也在：Amazon、Blind 75、NeetCode 150
 
 给一组区间 `intervals`，`intervals[i] = [start_i, end_i]`。返回最少需要移除多少个区间，才能让剩下的区间两两不重叠。只在端点接触的区间不算重叠，例如 `[1,2]` 和 `[2,3]`。`1 <= intervals.length <= 10^5`，`intervals[i].length == 2`，`-5 * 10^4 <= start_i < end_i <= 5 * 10^4`。例：`[[1,2],[2,3],[3,4],[1,3]]` → `1`（移除 `[1,3]`）；`[[1,2],[1,2],[1,2]]` → `2`；`[[1,2],[2,3]]` → `0`。
 

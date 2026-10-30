@@ -4,7 +4,7 @@ node: b.top-k-frequent-words
 type: qa
 ---
 ## Q
-**LC 692 前K个高频单词**｜Medium · CodeTop 国内累计 1 次 · 最近 2026-07-22（CodeTop）
+**LC 692 前K个高频单词**｜Medium · CodeTop 国内累计 1 次 · 最近 2026-07-22（国内 CodeTop）
 
 给单词列表 `words` 和整数 `k`，返回出现次数最多的前 `k` 个单词：按出现次数**从高到低**排序，次数相同的按**字典序**排。`1 <= words.length <= 500`，`1 <= words[i].length <= 10`，`words[i]` 由小写英文字母组成，`k` 的取值范围是 `[1, 不同单词的数量]`。进阶：尝试 `O(n log k)` 时间、`O(n)` 空间。例：`["i","love","leetcode","i","love","coding"], k = 2` → `["i","love"]`（都是 2 次，`"i"` 字典序在前）；`["the","day","is","sunny","the","the","the","sunny","is","is"], k = 4` → `["the","is","sunny","day"]`。
 

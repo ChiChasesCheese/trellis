@@ -4,7 +4,7 @@ node: p3.find-first-and-last-position-of-element-in-sorted-array
 type: qa
 ---
 ## Q
-**LC 34 在排序数组中查找元素的第一个和最后一个位置**｜Medium · LC TikTok 热度 53/100（近 3 个月） · 近一年被问：美国 2 次、国内 0 次 · CodeTop 国内累计 24 次 · 最近 2026-03-30（CodeTop）
+**LC 34 在排序数组中查找元素的第一个和最后一个位置**｜Medium · LC TikTok 热度 53/100（近 3 个月） · 近一年被问：美国 2 次、国内 0 次 · CodeTop 国内累计 24 次 · 最近 2026-03-30（国内 CodeTop）
 
 给一个按**非递减**顺序排列的整数数组 `nums` 和目标值 `target`，找出 `target` 在数组中的开始位置和结束位置，不存在则返回 `[-1, -1]`。必须设计并实现时间复杂度 `O(log n)` 的算法。`0 <= nums.length <= 10^5`，`-10^9 <= nums[i] <= 10^9`，`-10^9 <= target <= 10^9`。例：`nums = [5,7,7,8,8,10]`，`target = 8` → `[3,4]`；`target = 6` → `[-1,-1]`；`nums = []`，`target = 0` → `[-1,-1]`。
 

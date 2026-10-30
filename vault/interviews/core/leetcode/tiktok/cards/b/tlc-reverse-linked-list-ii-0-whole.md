@@ -4,7 +4,7 @@ node: b.reverse-linked-list-ii
 type: qa
 ---
 ## Q
-**LC 92 反转链表 II**｜Medium · LC TikTok 热度 38/100 · CodeTop 国内累计 80 次 · 最近 2026-05-12（CodeTop）
+**LC 92 反转链表 II**｜Medium · LC TikTok 热度 38/100 · CodeTop 国内累计 80 次 · 最近 2026-05-12（国内 CodeTop）
 
 给单链表的头指针 `head` 和两个整数 `left`、`right`（`left <= right`），反转从位置 `left` 到位置 `right` 的链表节点（位置从 `1` 开始），返回反转后的链表。链表节点数 `n` 满足 `1 <= n <= 500`，`-500 <= Node.val <= 500`，`1 <= left <= right <= n`。例：`head = [1,2,3,4,5]`，`left = 2`，`right = 4` → `[1,4,3,2,5]`；`head = [5]`，`left = 1`，`right = 1` → `[5]`。进阶：能否一趟扫描完成。
 

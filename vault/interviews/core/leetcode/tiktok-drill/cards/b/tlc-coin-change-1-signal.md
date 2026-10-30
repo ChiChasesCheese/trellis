@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 322 零钱兑换**｜Medium · LC TikTok 热度 75/100 · CodeTop 国内累计 59 次 · 最近 2026-04-15（CodeTop）
+**LC 322 零钱兑换**｜Medium · LC TikTok 热度 75/100 · CodeTop 国内累计 59 次 · 最近 2026-04-15（国内 CodeTop）
 
 给整数数组 `coins`（不同面额的硬币）和整数 `amount`（总金额），返回凑成总金额所需的**最少**硬币个数；凑不出来返回 `-1`。每种硬币的数量无限。`1 <= coins.length <= 12`，`1 <= coins[i] <= 2^31 - 1`，`0 <= amount <= 10^4`。例：`coins = [1,2,5], amount = 11` → `3`（`5+5+1`）。
 

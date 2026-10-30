@@ -4,7 +4,7 @@ node: b.integer-to-english-words
 type: qa
 ---
 ## Q
-**LC 273 整数转换英文表示**｜Hard · CodeTop 国内累计 3 次 · 最近 2026-07-02（CodeTop）
+**LC 273 整数转换英文表示**｜Hard · CodeTop 国内累计 3 次 · 最近 2026-07-02（国内 CodeTop）
 
 把非负整数 `num` 转成英文读法，单词首字母大写、单词之间一个空格。`0 <= num <= 2^31 - 1`。例：`123` → `"One Hundred Twenty Three"`，`12345` → `"Twelve Thousand Three Hundred Forty Five"`，`1234567` → `"One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven"`。
 

@@ -4,7 +4,7 @@ node: p1.lru-cache
 type: qa
 ---
 ## Q
-**LC 146 LRU 缓存**｜Medium · LC TikTok 热度 100/100（近 30 天） · 近一年被问：美国 14 次、国内 27 次 · CodeTop 国内累计 367 次 · 最近 2026-10（面试记录） · 也在：Amazon、LeetCode Hot 100、NeetCode 150、Top Interview 150
+**LC 146 LRU 缓存**｜Medium · LC TikTok 热度 100/100（近 30 天） · 近一年被问：美国 14 次、国内 27 次 · CodeTop 国内累计 367 次 · 最近 2026-10（美国面试记录） · 也在：Amazon、LeetCode Hot 100、NeetCode 150、Top Interview 150
 
 设计一个 LRU（最近最少使用，Least Recently Used）缓存类 `LRUCache(capacity)`：`get(key)` 在缓存里就返回值，否则返回 `-1`；`put(key, value)` 在 `key` 已存在时更新值，不存在时插入，插入后键的数量超过 `capacity` 就逐出**最久未使用**的键。`get` 和 `put` 都要平均 `O(1)`。`1 <= capacity <= 3000`，`0 <= key <= 10000`，`0 <= value <= 10^5`，最多调用 `2 * 10^5` 次。例：容量 2，`put(1,1)`、`put(2,2)`、`get(1)` 得 `1`、`put(3,3)` 逐出键 `2`、`get(2)` 得 `-1`、`put(4,4)` 逐出键 `1`、`get(1)` 得 `-1`、`get(3)` 得 `3`、`get(4)` 得 `4`。
 

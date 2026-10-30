@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 207 课程表**｜Medium · LC TikTok 热度 88/100（近 30 天） · 近一年被问：美国 15 次、国内 4 次 · CodeTop 国内累计 35 次 · 最近 2026-10-15（面试记录）
+**LC 207 课程表**｜Medium · LC TikTok 热度 88/100（近 30 天） · 近一年被问：美国 15 次、国内 4 次 · CodeTop 国内累计 35 次 · 最近 2026-10-15（美国面试记录）
 
 共有 `numCourses` 门课，编号 `0` 到 `numCourses - 1`。先修关系 `prerequisites[i] = [a, b]` 表示学 `a` 之前必须先学 `b`。判断能否学完所有课程。`1 <= numCourses <= 2000`，`0 <= prerequisites.length <= 5000`，`prerequisites[i].length == 2`，`0 <= a, b < numCourses`，所有先修对互不相同。例：`numCourses = 2, prerequisites = [[1,0],[0,1]]` → `false`。
 

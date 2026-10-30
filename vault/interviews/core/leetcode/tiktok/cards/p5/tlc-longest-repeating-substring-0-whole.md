@@ -4,7 +4,7 @@ node: p5.longest-repeating-substring
 type: qa
 ---
 ## Q
-**LC 1062 最长重复子串**｜Medium · CodeTop 国内累计 1 次 · 最近 2026-08-05（CodeTop）
+**LC 1062 最长重复子串**｜Medium · CodeTop 国内累计 1 次 · 最近 2026-08-05（国内 CodeTop）
 
 给一个字符串 `s`，找出并返回**最长重复子串**的长度：重复子串是在 `s` 中出现至少两次的连续子串（两次出现的位置可以重叠）；不存在重复子串时返回 `0`。`1 <= s.length <= 2000`，`s` 只含小写英文字母。例：`s = "abcd"` → `0`；`s = "abbaba"` → `2`（`"ab"` 和 `"ba"` 都出现两次）；`s = "aabcaabdaab"` → `3`（`"aab"` 出现三次）。
 

@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 416 分割等和子集**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 11 次 · 最近 2026-07-14（CodeTop）
+**LC 416 分割等和子集**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 11 次 · 最近 2026-07-14（国内 CodeTop）
 
 给一个只含正整数的非空数组 `nums`，判断能否分成两个子集使两个子集的元素和相等。`1 <= nums.length <= 200`，`1 <= nums[i] <= 100`。例：`[1,5,11,5]` → `true`，`[1,2,3,5]` → `false`。
 

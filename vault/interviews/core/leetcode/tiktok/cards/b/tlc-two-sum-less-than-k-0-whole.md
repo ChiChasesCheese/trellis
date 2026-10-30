@@ -4,7 +4,7 @@ node: b.two-sum-less-than-k
 type: qa
 ---
 ## Q
-**LC 1099 小于 K 的两数之和**｜Easy · CodeTop 国内累计 2 次 · 最近 2026-05-14（CodeTop）
+**LC 1099 小于 K 的两数之和**｜Easy · CodeTop 国内累计 2 次 · 最近 2026-05-14（国内 CodeTop）
 
 给整数数组 `nums` 和整数 `k`，返回最大的和 `sum`，满足存在 `i < j` 使得 `nums[i] + nums[j] = sum` 且 `sum < k`；如果不存在这样的 `i, j`，返回 `-1`。`1 <= nums.length <= 100`，`1 <= nums[i] <= 1000`，`1 <= k <= 2000`。例：`nums = [34,23,1,24,75,33,54,8]`，`k = 60` → `58`（`34 + 24`）；`nums = [10,20,30]`，`k = 15` → `-1`。
 

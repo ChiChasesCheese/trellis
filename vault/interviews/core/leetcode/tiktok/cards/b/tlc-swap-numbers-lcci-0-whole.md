@@ -4,7 +4,7 @@ node: b.swap-numbers-lcci
 type: qa
 ---
 ## Q
-**面试题 16.01 交换数字**｜Medium · CodeTop 国内累计 1 次 · 最近 2025-12-19（CodeTop）
+**面试题 16.01 交换数字**｜Medium · CodeTop 国内累计 1 次 · 最近 2025-12-19（国内 CodeTop）
 
 编写一个函数，不使用临时变量，直接交换 `numbers = [a, b]` 中 `a` 与 `b` 的值并返回。`numbers.length == 2`，`-2147483647 <= numbers[i] <= 2147483647`。 例：`numbers = [1,2]` → `[2,1]`。
 

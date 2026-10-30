@@ -4,7 +4,7 @@ node: p3.sliding-window-maximum
 type: qa
 ---
 ## Q
-**LC 239 滑动窗口最大值**｜Hard · LC TikTok 热度 50/100 · 近一年被问：美国 3 次、国内 0 次 · CodeTop 国内累计 47 次 · 最近 2026-10-26（面试记录） · 也在：Amazon、LeetCode Hot 100、NeetCode 150
+**LC 239 滑动窗口最大值**｜Hard · LC TikTok 热度 50/100 · 近一年被问：美国 3 次、国内 0 次 · CodeTop 国内累计 47 次 · 最近 2026-10-26（美国面试记录） · 也在：Amazon、LeetCode Hot 100、NeetCode 150
 
 给整数数组 `nums`，一个大小为 `k` 的窗口从数组最左侧每次右移一位直到最右侧；你只能看到窗口内的 `k` 个数。返回每个窗口位置上的最大值组成的数组。
 

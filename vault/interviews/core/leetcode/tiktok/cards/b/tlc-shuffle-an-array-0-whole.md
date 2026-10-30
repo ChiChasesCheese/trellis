@@ -4,7 +4,7 @@ node: b.shuffle-an-array
 type: qa
 ---
 ## Q
-**LC 384 打乱数组**｜Medium · CodeTop 国内累计 7 次 · 最近 2026-06-19（CodeTop）
+**LC 384 打乱数组**｜Medium · CodeTop 国内累计 7 次 · 最近 2026-06-19（国内 CodeTop）
 
 给一个元素互不相同的整数数组 `nums`，设计类 `Solution`：`Solution(nums)` 用 `nums` 初始化；`reset()` 把数组恢复到初始状态并返回；`shuffle()` 返回随机打乱后的数组，**所有排列出现的概率相等**。`1 <= nums.length <= 50`，`-10^6 <= nums[i] <= 10^6`，元素互不相同，`reset` 和 `shuffle` 最多共调用 `10^4` 次。例：`Solution([1,2,3])`，`shuffle()` 可能返回 `[3,1,2]`，`reset()` 返回 `[1,2,3]`，再 `shuffle()` 可能返回 `[1,3,2]`。
 

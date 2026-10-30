@@ -4,7 +4,7 @@ node: p4.generate-random-point-in-a-circle
 type: qa
 ---
 ## Q
-**LC 478 在圆内随机生成点**｜Medium · 近一年被问：美国 0 次、国内 1 次 · 最近 2026-09-21（面试记录）
+**LC 478 在圆内随机生成点**｜Medium · 近一年被问：美国 0 次、国内 1 次 · 最近 2026-09-21（国内面试记录）
 
 实现类 `Solution`：`Solution(radius, x_center, y_center)` 用圆的半径和圆心初始化；`randPoint()` 返回圆内**均匀分布**的一个随机点 `[x, y]`，圆周上的点也算圆内。`0 < radius <= 10^8`，`-10^7 <= x_center, y_center <= 10^7`，`randPoint` 最多调用 `3 * 10^4` 次。例：`Solution(1.0, 0.0, 0.0)` 之后三次 `randPoint()` 可能返回 `[-0.02493, -0.38077]`、`[0.82314, 0.38945]`、`[0.36572, 0.17248]`。
 

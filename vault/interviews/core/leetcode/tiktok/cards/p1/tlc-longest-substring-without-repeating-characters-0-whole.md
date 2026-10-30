@@ -4,7 +4,7 @@ node: p1.longest-substring-without-repeating-characters
 type: qa
 ---
 ## Q
-**LC 3 无重复字符的最长子串**｜Medium · LC TikTok 热度 88/100 · 近一年被问：美国 4 次、国内 21 次 · CodeTop 国内累计 698 次 · 最近 2026-10-26（CodeTop）
+**LC 3 无重复字符的最长子串**｜Medium · LC TikTok 热度 88/100 · 近一年被问：美国 4 次、国内 21 次 · CodeTop 国内累计 698 次 · 最近 2026-10-26（国内 CodeTop）
 
 给字符串 `s`，求其中不含重复字符的**最长子串**的长度（子串必须连续）。`0 <= s.length <= 10^5`，字符是英文字母、数字、符号和空格。例：`"abcabcbb"` → `3`（`"abc"`），`"bbbbb"` → `1`，`"pwwkew"` → `3`（`"wke"`；`"pwke"` 是子序列不是子串）。
 

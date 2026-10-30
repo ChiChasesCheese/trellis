@@ -4,7 +4,7 @@ node: b.unique-paths-ii
 type: qa
 ---
 ## Q
-**LC 63 不同路径 II**｜Medium · CodeTop 国内累计 9 次 · 最近 2026-03-31（CodeTop）
+**LC 63 不同路径 II**｜Medium · CodeTop 国内累计 9 次 · 最近 2026-03-31（国内 CodeTop）
 
 `m x n` 的网格 `obstacleGrid` 里，`1` 是障碍、`0` 是空格。机器人从左上角 `obstacleGrid[0][0]` 出发，每步只能**向下或向右**走一格，要到右下角 `obstacleGrid[m-1][n-1]`，路径上不能有任何障碍格。返回不同路径的数量；保证答案不超过 `2 * 10^9`。`1 <= m, n <= 100`，`obstacleGrid[i][j]` 为 `0` 或 `1`。例：`[[0,0,0],[0,1,0],[0,0,0]]` → `2`（右右下下、下下右右）；`[[0,1],[0,0]]` → `1`。
 

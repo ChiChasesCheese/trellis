@@ -4,7 +4,7 @@ node: p4.longest-common-suffix-queries
 type: qa
 ---
 ## Q
-**LC 3093 最长公共后缀查询**｜Hard · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-07-02（面试记录）
+**LC 3093 最长公共后缀查询**｜Hard · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-07-02（美国面试记录）
 
 给两个字符串数组 `wordsContainer` 和 `wordsQuery`。对每个 `wordsQuery[i]`，在 `wordsContainer` 中找一个与它有最长公共后缀的字符串；如果有多个，取长度最短的；长度也相同，取在 `wordsContainer` 中下标最小的。返回数组 `ans`，`ans[i]` 是对应的下标（没有任何公共后缀时，公共后缀是空串，所有容器字符串都满足，按同样的规则选）。`1 <= wordsContainer.length, wordsQuery.length <= 10^4`，`1 <= wordsContainer[i].length <= 5 * 10^3`，`1 <= wordsQuery[i].length <= 5 * 10^3`，字符串只含小写英文字母，`wordsContainer[i].length` 的总和和 `wordsQuery[i].length` 的总和都至多为 `5 * 10^5`。例：`wordsContainer = ["abcd","bcd","xbcd"]`，`wordsQuery = ["cd","bcd","xyz"]` → `[1,1,1]`；`wordsContainer = ["abcdefgh","poiuygh","ghghgh"]`，`wordsQuery = ["gh","acbfgh","acbfegh"]` → `[2,0,2]`。
 

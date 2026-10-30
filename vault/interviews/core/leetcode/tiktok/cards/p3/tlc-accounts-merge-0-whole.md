@@ -4,7 +4,7 @@ node: p3.accounts-merge
 type: qa
 ---
 ## Q
-**LC 721 账户合并**｜Medium · LC TikTok 热度 38/100 · 近一年被问：美国 2 次、国内 0 次 · CodeTop 国内累计 2 次 · 最近 2026-07-25（面试记录）
+**LC 721 账户合并**｜Medium · LC TikTok 热度 38/100 · 近一年被问：美国 2 次、国内 0 次 · CodeTop 国内累计 2 次 · 最近 2026-07-25（美国面试记录）
 
 给一个列表 `accounts`，每个元素 `accounts[i]` 是一个字符串列表：第一个元素 `accounts[i][0]` 是名称，其余元素是该账户的邮箱。如果两个账户有任何一个共同的邮箱，它们一定属于同一个人；注意同名的账户也可能属于不同的人。合并后按以下格式返回：每个账户的第一个元素是名称，其余是**按 ASCII 顺序排列**的邮箱；账户本身可以按任意顺序返回。`1 <= accounts.length <= 1000`，`2 <= accounts[i].length <= 10`，`1 <= accounts[i][j].length <= 30`，`accounts[i][0]` 由英文字母组成，`accounts[i][j]`（`j > 0`）是有效的邮箱地址。例：`[["John","johnsmith@mail.com","john00@mail.com"],["John","johnnybravo@mail.com"],["John","johnsmith@mail.com","john_newyork@mail.com"],["Mary","mary@mail.com"]]` → `[["John","john00@mail.com","john_newyork@mail.com","johnsmith@mail.com"],["John","johnnybravo@mail.com"],["Mary","mary@mail.com"]]`（第一个和第三个 John 共享邮箱，是同一个人；第二个 John 是另一个人）。
 

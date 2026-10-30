@@ -4,7 +4,7 @@ node: b.reconstruct-original-digits-from-english
 type: qa
 ---
 ## Q
-**LC 423 从英文中重建数字**｜Medium · CodeTop 国内累计 4 次 · 最近 2026-05-12（CodeTop）
+**LC 423 从英文中重建数字**｜Medium · CodeTop 国内累计 4 次 · 最近 2026-05-12（国内 CodeTop）
 
 字符串 `s` 由若干用英文单词表示的数字（`zero` 到 `nine`）把字母顺序打乱后拼成。按**升序**返回原始的数字（每个数字出现几次就写几次）。`1 <= s.length <= 10^5`，`s[i]` 只会是 `e g f i h o n s r u t w v x z` 这些字母，且 `s` 保证合法。例：`"owoztneoer"` → `"012"`；`"fviefuro"` → `"45"`。
 

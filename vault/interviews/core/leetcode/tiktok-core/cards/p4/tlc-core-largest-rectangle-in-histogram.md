@@ -4,7 +4,7 @@ node: p4.largest-rectangle-in-histogram
 type: qa
 ---
 ## Q
-**LC 84 柱状图中最大的矩形**｜Hard · LC TikTok 热度 50/100 · 近一年被问：美国 2 次、国内 0 次 · CodeTop 国内累计 12 次 · 最近 2026-03-01（CodeTop） · 也在：Amazon、LeetCode Hot 100、NeetCode 150
+**LC 84 柱状图中最大的矩形**｜Hard · LC TikTok 热度 50/100 · 近一年被问：美国 2 次、国内 0 次 · CodeTop 国内累计 12 次 · 最近 2026-03-01（国内 CodeTop） · 也在：Amazon、LeetCode Hot 100、NeetCode 150
 
 给 `n` 个非负整数 `heights`，表示柱状图中相邻排列、宽度都为 `1` 的柱子的高度。求图中能勾勒出的**最大矩形面积**（矩形必须完全落在柱子内）。`1 <= heights.length <= 10^5`，`0 <= heights[i] <= 10^4`。例：`[2,1,5,6,2,3]` → `10`（高 `5`、宽 `2`，即 `5,6` 两根），`[2,4]` → `4`。
 

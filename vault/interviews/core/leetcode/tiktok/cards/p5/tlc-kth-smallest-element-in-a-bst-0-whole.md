@@ -4,7 +4,7 @@ node: p5.kth-smallest-element-in-a-bst
 type: qa
 ---
 ## Q
-**LC 230 二叉搜索树中第 K 小的元素**｜Medium · CodeTop 国内累计 23 次 · 最近 2024-04-10（CodeTop）
+**LC 230 二叉搜索树中第 K 小的元素**｜Medium · CodeTop 国内累计 23 次 · 最近 2024-04-10（国内 CodeTop）
 
 给二叉搜索树的根节点 `root` 和整数 `k`，返回树中第 `k` 小的元素（`k` 从 `1` 开始）。节点数 `n`，`1 <= k <= n <= 10^4`，`0 <= Node.val <= 10^4`。例：`root = [3,1,4,null,2]`、`k = 1` → `1`；`root = [5,3,6,2,4,null,null,1]`、`k = 3` → `3`。进阶：树经常被修改（插入 / 删除）且要频繁查第 `k` 小，怎么优化？
 

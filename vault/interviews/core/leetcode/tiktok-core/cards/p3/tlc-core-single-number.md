@@ -4,7 +4,7 @@ node: p3.single-number
 type: qa
 ---
 ## Q
-**LC 136 只出现一次的数字**｜Easy · 近一年被问：美国 0 次、国内 3 次 · CodeTop 国内累计 9 次 · 最近 2026-10-20（面试记录） · 也在：Amazon、LeetCode Hot 100、NeetCode 150、Top Interview 150
+**LC 136 只出现一次的数字**｜Easy · 近一年被问：美国 0 次、国内 3 次 · CodeTop 国内累计 9 次 · 最近 2026-10-20（国内面试记录） · 也在：Amazon、LeetCode Hot 100、NeetCode 150、Top Interview 150
 
 非空整数数组 `nums` 里，除了一个元素只出现一次，其余每个元素都恰好出现两次。找出那个只出现一次的元素。要求**线性时间、常数额外空间**。`1 <= nums.length <= 3 * 10^4`，`-3 * 10^4 <= nums[i] <= 3 * 10^4`。例：`[2,2,1]` → `1`，`[4,1,2,1,2]` → `4`，`[1]` → `1`。
 

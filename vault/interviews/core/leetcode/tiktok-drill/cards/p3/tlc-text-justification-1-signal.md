@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 68 文本左右对齐**｜Hard · LC TikTok 热度 81/100（近 6 个月） · CodeTop 国内累计 8 次 · 最近 2025-07-22（CodeTop）
+**LC 68 文本左右对齐**｜Hard · LC TikTok 热度 81/100（近 6 个月） · CodeTop 国内累计 8 次 · 最近 2025-07-22（国内 CodeTop）
 
 给单词数组 `words` 和宽度 `maxWidth`，排成每行恰好 `maxWidth` 个字符、左右对齐的文本。必须贪心：每行尽可能多放单词，用空格补齐；空格尽量均匀，不能均分时左边的空档多。最后一行以及只有一个单词的行左对齐。`1 <= words.length <= 300`，`1 <= words[i].length <= 20`，`1 <= maxWidth <= 100`，`words[i].length <= maxWidth`。例：`["What","must","be","acknowledgment","shall","be"]`，`16` → `["What   must   be","acknowledgment  ","shall be        "]`。
 
