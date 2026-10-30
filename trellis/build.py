@@ -206,13 +206,17 @@ def _stable_id(name: str) -> int:
     return int(hashlib.md5(name.encode("utf-8")).hexdigest()[:8], 16)
 
 
+_CODE_SPANS = re.compile(r"(^```.*?^```[ \t]*$|``.+?``|`[^`\n]+`)", re.S | re.M)
 _WIKILINK_RE = re.compile(r"\[\[([^\]|]+)(?:\|([^\]]+))?\]\]")
 
 
 def _html(text: str) -> str:
     # Obsidian wikilinks have nowhere to point inside Anki; render the
     # display text as a styled reference instead.
-    text = _WIKILINK_RE.sub(lambda m: f'<span class="ref">{m.group(2) or m.group(1)}</span>', text)
+    # (only outside code: `[[0]] * 3` in a code span is Python, not a link)
+    parts = _CODE_SPANS.split(text)
+    text = "".join(p if i % 2 else _WIKILINK_RE.sub(lambda m: f'<span class="ref">{m.group(2) or m.group(1)}</span>', p)
+                   for i, p in enumerate(parts))
     svgs: list[str] = []
 
     def _stash(m: re.Match) -> str:

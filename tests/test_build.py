@@ -31,3 +31,11 @@ def test_example_section_is_folded_to_the_end():
     assert '<details class="example"><summary><span class="label">例题</span>LC 1 两数之和</summary>' in html
     assert html.rstrip().endswith("</details>")
     assert html.index("因为") < html.index("<details")
+
+
+def test_double_brackets_inside_code_are_not_wikilinks():
+    from trellis.build import _html
+    html = _html("`a = [[0]] * 3` 与 [[note|链接]]\n\n```python\ngrid = [[0] * 3 for _ in range(2)]\nx = [[1]]\n```\n")
+    assert "<code>a = [[0]] * 3</code>" in html
+    assert '<span class="ref">链接</span>' in html
+    assert 'class="ref">1<' not in html
