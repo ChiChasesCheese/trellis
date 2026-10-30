@@ -10,9 +10,10 @@ Called by build_list.py too. Three signals, each turned into a share of its own 
 - US lists (0.4): TikTok + ByteDance company-tag frequency (0-100) from lc_company.py, full weight in the 30-day and
   3-month windows, 0.8 in the 6-month window, 0.5 otherwise.
 
-Tier A = the problems Chi pinned (`catalog/pinned.json`, on top of TARGET), every US sighting of the past year, every problem on the US TikTok / ByteDance company tags, anything seen anywhere in the last 30 days (the China-side long tail stays in B), then the top three problems of every pattern (so tier A
-teaches every technique), then the TARGET highest scores (all of them, whatever else is already in). A family counts as covered when any of
-its problems is in tier A; the report states how much of each signal tier A covers.
+Tier A = evidence (Chi, 2026-10-29): pinned problems (`catalog/pinned.json`), anything a US interview of the past
+year asked (a counted sighting, or the US company tag's 30-day / 3-month / 6-month window), anything asked at least
+twice in the past year anywhere, and anything asked even once in the last three months (reports or CodeTop). The score above only orders problems inside a tier. A family counts as covered when
+any of its problems is in tier A; the report states how much of each signal tier A covers.
 """
 from __future__ import annotations
 
@@ -171,43 +172,41 @@ def assign(index: dict[str, dict], today: date | None = None) -> dict:
                                   + MIX["codetop"] * ct_all.get(slug, 0) / tot["codetop"]
                                   + MIX["us"] * us_all.get(slug, 0) / tot["us"]), 4)
 
+    # Chi (2026-10-29): tier A = evidence, not score. A problem is in tier A when Chi pinned it, when a US interview of
+    # the past year asked it (a counted sighting, or the US company tag lists it in its 30-day / 3-month / 6-month
+    # window), or when it was asked at least twice in the past year anywhere. Counts are the same as on the cards.
+    cut3m = today - timedelta(days=92)
+    seen: dict[str, dict[str, int]] = {}
+    fresh: set[str] = {r["slug"] for r in snap if day(r["last_seen"]) >= cut3m}  # asked once is enough if within 3 months
+    for fam in fams:
+        recent = [r for d, r in zip(fam["dates"], fam["regions"]) if day(d) >= cut1y]
+        if not recent:
+            continue
+        slugs = {s for n in fam["lc"] for s in by_id.get(n, [])}
+        v = next((v for k, v in FAMILY_VARIANT.items() if fam["family"].startswith(k)), None)
+        if v and v in index:
+            slugs.add(v)
+        for s in slugs:
+            c = seen.setdefault(s, {"US": 0, "CN": 0})
+            for r in recent:
+                c[r] += 1
+            if any(day(d) >= cut3m for d in fam["dates"]):
+                fresh.add(s)
     a: dict[str, str] = {}
-    pinned = CAT / "pinned.json"  # 0. problems Chi asked to keep in tier A
+    pinned = CAT / "pinned.json"
     for s in json.loads(pinned.read_text(encoding="utf-8"))["A"] if pinned.exists() else []:
         if s in index:
             a[s] = "pinned"
-    for fam, slugs, _ in members:  # 1. seen anywhere in the last 30 days, or in the US in the past year
-        reason = "us1y" if fam["us_year"] else "30d" if fam["recent"] else ""
-        if reason and slugs:
-            a.setdefault(max(slugs, key=lambda s: index[s]["score"]), reason)
-            for s in slugs:  # the TikTok version is what was actually asked
-                if s.startswith("tt-"):
-                    a.setdefault(s, reason)
-    for f in sorted(CAT.glob("refresh-*.json")):  # every problem a recent report names, follow-ups included
-        for row in json.loads(f.read_text(encoding="utf-8")).get("sightings", []):
-            recent = day(row.get("date", "")) >= (cut1y if row.get("region") != "CN" else cut30)
-            if not row.get("scope", "").startswith("out") and recent:
-                for n in row.get("lc") or []:
-                    for s in by_id.get(int(n), []):
-                        a.setdefault(s, "us1y" if row.get("region") != "CN" else "30d")
-    for s, p in index.items():  # US company tags (any window) and anything CodeTop saw in the last 30 days
-        if "tiktok" in p["companies"] or "bytedance" in p["companies"]:
-            a.setdefault(s, "ustag")
-        elif s in ct_recent:
-            a.setdefault(s, "30d")
-    pats = pattern_map()  # 2. every pattern gets its best problems
-    for pat in sorted({x for v in pats.values() for x in v}):
-        cands = sorted((s for s, p in index.items() if pat in pats.get(p.get("id") or -1, set())),
-                       key=lambda s: -index[s]["score"])
-        have = sum(1 for s in a if pat in pats.get(index[s].get("id") or -1, set()))
-        for s in cands:
-            if have >= PER_PATTERN:
-                break
-            if s not in a:
-                a[s] = f"pattern:{pat}"
-                have += 1
-    for s in sorted(index, key=lambda s: -index[s]["score"])[:TARGET]:  # 3. the TARGET highest scores, always
-        a.setdefault(s, "score")
+    for s, p in index.items():
+        c = seen.get(s, {"US": 0, "CN": 0})
+        if c["US"] >= 1:
+            a.setdefault(s, "us-asked")
+        elif p.get("window") in ("30d", "3m", "6m"):
+            a.setdefault(s, "us-tag-recent")
+        elif c["US"] + c["CN"] >= 2:
+            a.setdefault(s, "asked-twice")
+        elif s in fresh:
+            a.setdefault(s, "asked-3m")
     for s, p in index.items():
         p["tier"] = "A" if s in a else "B"
         p["a_reason"] = a.get(s, "")
@@ -217,7 +216,7 @@ def assign(index: dict[str, dict], today: date | None = None) -> dict:
     covered = [(f, m) for f, slugs, m in members if any(s in a for s in slugs)]
     return {
         "a": len(a), "b": len(index) - len(a), "reasons": {k: sum(1 for v in a.values() if v.startswith(k))
-                                                           for k in ("pinned", "us1y", "30d", "ustag", "pattern", "score")},
+                                                           for k in ("pinned", "us-asked", "us-tag-recent", "asked-twice", "asked-3m")},
         "reports_weighted": round(100 * sum(m for _, m in covered) / tot["reports"], 1),
         "reports_raw": round(100 * sum(f["refs"] for f, _ in covered) / sum(f["refs"] for f in fams), 1),
         "reports_reachable": round(100 * sum(f["refs"] for f, s, _ in members if s) / sum(f["refs"] for f in fams), 1),

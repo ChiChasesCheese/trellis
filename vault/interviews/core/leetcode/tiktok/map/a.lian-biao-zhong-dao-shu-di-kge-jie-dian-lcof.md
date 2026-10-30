@@ -1,0 +1,13 @@
+%% trellis:begin %%
+# 剑指 Offer 22 链表中倒数第k个节点
+*A 档：最高频*
+
+Easy；国内字节被问 40 次、最近 2026-08-04。
+
+**Core** — part of the first pass through this subject.
+
+## Cards (1)
+1. [[tlc-lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof-0-whole]]
+%% trellis:end %%
+
+## Notes

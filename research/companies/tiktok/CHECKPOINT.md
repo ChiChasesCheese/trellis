@@ -52,3 +52,9 @@ Possible next steps (not requested): `/catalog refresh` when new reports appear 
   deck 24. Still-new notes were deleted and re-imported so Anki follows the order (122 studied notes kept).
 - Anki presets (LeetCode Tops, 24, 25, 26): learning steps 1 h → 6 h, relearning 1 h. Deck 24: 80 new / 500
   reviews a day; deck 25 paused (0 new); deck 26: 10 new.
+
+## Tier A by evidence (2026-10-29, Chi)
+
+Tier A = pinned ∪ asked in a US interview in the past year (counted sighting, or the US company tag's 30d / 3m / 6m
+window) ∪ asked at least twice in the past year anywhere ∪ asked at least once in the last three months (reports or
+CodeTop). Score only orders problems inside a tier. A 286 / B 188; US sightings covered about 93%.
