@@ -4,7 +4,9 @@
   "recover-binary-search-tree",
   "kth-smallest-element-in-a-bst",
   "generate-parentheses",
-  "tt-spiral-matrix-constant-space"
+  "tt-spiral-matrix-constant-space",
+  "find-minimum-in-rotated-sorted-array",
+  "find-minimum-in-rotated-sorted-array-ii"
  ],
- "why": "Chi's picks (2026-10-29): the BST in-order family behind his LC 98 cards (98 validate, 99 recover two swapped nodes, 230 k-th smallest); LC 22 generate parentheses (Catalan) and the spiral-matrix variant (Chi, 2026-10-29)"
+ "why": "Chi's picks (2026-10-29): the BST in-order family behind his LC 98 cards (98 validate, 99 recover two swapped nodes, 230 k-th smallest); LC 22 generate parentheses (Catalan) and the spiral-matrix variant (Chi, 2026-10-29); LC 153 / 154 rotated-array minimum (Chi, 2026-10-29)"
 }

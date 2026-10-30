@@ -2804,7 +2804,7 @@
   "window": "",
   "tier": "A",
   "score": 0.2911,
-  "a_reason": "us-asked",
+  "a_reason": "pinned",
   "title_zh": "寻找旋转排序数组中的最小值",
   "statement_chars": 700
  },
@@ -4556,7 +4556,7 @@
    }
   },
   "score": 0.1776,
-  "a_reason": "us-asked",
+  "a_reason": "pinned",
   "statement_chars": 585
  },
  "longest-repeating-character-replacement": {

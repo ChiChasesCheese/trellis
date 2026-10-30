@@ -6,8 +6,10 @@ Medium；频率 TikTok 50；国内字节被问 17 次、最近 2026-04-16；Arra
 
 **Core** — part of the first pass through this subject.
 
-## Cards (1)
-1. [[tlc-find-minimum-in-rotated-sorted-array-0-whole]]
+## Cards (3)
+1. [[tlc-find-minimum-in-rotated-sorted-array-0-intuition-left]]
+2. [[tlc-find-minimum-in-rotated-sorted-array-0-intuition-right]]
+3. [[tlc-find-minimum-in-rotated-sorted-array-0-whole]]
 %% trellis:end %%
 
 ## Notes
