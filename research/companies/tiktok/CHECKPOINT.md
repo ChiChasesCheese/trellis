@@ -58,3 +58,9 @@ Possible next steps (not requested): `/catalog refresh` when new reports appear 
 Tier A = pinned ∪ asked in a US interview in the past year (counted sighting, or the US company tag's 30d / 3m / 6m
 window) ∪ asked at least twice in the past year anywhere ∪ asked at least once in the last three months (reports or
 CodeTop). Score only orders problems inside a tier. A 286 / B 188; US sightings covered about 93%.
+
+## General-core deck (2026-10-30)
+
+`tools/gen_core.py` builds domain `tiktok-core` (deck `LeetCode Tops::27 通用核心`): tier-A problems that are also in
+Chi's Amazon decks or on Blind 75 / NeetCode 150 / LeetCode Hot 100 / Top Interview 150 (`catalog/other_lists.json`),
+146 copies of the whole-answer cards with their own schedule, sub-decks P1..P5. Re-run after any change to deck 24.
