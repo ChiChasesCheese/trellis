@@ -27,7 +27,7 @@ lines = ["# TikTok 字节高频题：总表", "",
          "先刷模式识别 [[interviews/core/leetcode/tiktok/map/patterns|patterns]] 和 Python 工具箱 [[interviews/core/leetcode/tiktok/map/python|python]]。", ""]
 count = 0
 for branch in sk["nodes"]:
-    if branch["id"] not in ("a", "b"):
+    if branch["id"] not in ("a", "b", "p1", "p2", "p3", "p4", "p5"):
         continue
     rows = []
     for leaf in branch["children"]:

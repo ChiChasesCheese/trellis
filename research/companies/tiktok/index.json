@@ -34,7 +34,8 @@
   "score": 4.7315,
   "a_reason": "us-asked",
   "title_zh": "LRU 缓存",
-  "statement_chars": 1008
+  "statement_chars": 1008,
+  "band": "p1"
  },
  "tt-lru-cache-ttl": {
   "id": 0,
@@ -56,7 +57,8 @@
   },
   "score": 3.9384,
   "a_reason": "us-asked",
-  "statement_chars": 956
+  "statement_chars": 956,
+  "band": "p1"
  },
  "longest-substring-without-repeating-characters": {
   "id": 3,
@@ -87,7 +89,8 @@
   "score": 3.3464,
   "a_reason": "us-asked",
   "title_zh": "无重复字符的最长子串",
-  "statement_chars": 356
+  "statement_chars": 356,
+  "band": "p1"
  },
  "number-of-islands": {
   "id": 200,
@@ -125,7 +128,8 @@
   "score": 2.9624,
   "a_reason": "us-asked",
   "title_zh": "岛屿数量",
-  "statement_chars": 459
+  "statement_chars": 459,
+  "band": "p1"
  },
  "reverse-nodes-in-k-group": {
   "id": 25,
@@ -155,7 +159,8 @@
   "score": 2.3986,
   "a_reason": "us-asked",
   "title_zh": "K 个一组翻转链表",
-  "statement_chars": 345
+  "statement_chars": 345,
+  "band": "p1"
  },
  "tt-islands-follow-ups": {
   "id": 0,
@@ -177,7 +182,8 @@
   },
   "score": 2.3388,
   "a_reason": "us-asked",
-  "statement_chars": 599
+  "statement_chars": 599,
+  "band": "p1"
  },
  "course-schedule": {
   "id": 207,
@@ -215,7 +221,8 @@
   "score": 2.223,
   "a_reason": "us-asked",
   "title_zh": "课程表",
-  "statement_chars": 645
+  "statement_chars": 645,
+  "band": "p1"
  },
  "tt-course-schedule-output-path": {
   "id": 0,
@@ -237,7 +244,8 @@
   },
   "score": 1.8231,
   "a_reason": "us-asked",
-  "statement_chars": 597
+  "statement_chars": 597,
+  "band": "p1"
  },
  "tt-reverse-k-group-variants": {
   "id": 0,
@@ -259,7 +267,8 @@
   },
   "score": 1.8187,
   "a_reason": "us-asked",
-  "statement_chars": 456
+  "statement_chars": 456,
+  "band": "p1"
  },
  "longest-palindromic-substring": {
   "id": 5,
@@ -296,7 +305,8 @@
   "score": 1.458,
   "a_reason": "us-asked",
   "title_zh": "最长回文子串",
-  "statement_chars": 161
+  "statement_chars": 161,
+  "band": "p1"
  },
  "reverse-linked-list": {
   "id": 206,
@@ -326,7 +336,8 @@
   "score": 1.433,
   "a_reason": "us-asked",
   "title_zh": "反转链表",
-  "statement_chars": 242
+  "statement_chars": 242,
+  "band": "p1"
  },
  "merge-intervals": {
   "id": 56,
@@ -362,7 +373,8 @@
   "score": 1.4047,
   "a_reason": "us-asked",
   "title_zh": "合并区间",
-  "statement_chars": 482
+  "statement_chars": 482,
+  "band": "p1"
  },
  "kth-largest-element-in-an-array": {
   "id": 215,
@@ -400,7 +412,8 @@
   "score": 1.2026,
   "a_reason": "us-asked",
   "title_zh": "数组中的第K个最大元素",
-  "statement_chars": 265
+  "statement_chars": 265,
+  "band": "p1"
  },
  "binary-tree-level-order-traversal": {
   "id": 102,
@@ -424,7 +437,8 @@
   },
   "score": 1.055,
   "a_reason": "asked-twice",
-  "statement_chars": 236
+  "statement_chars": 236,
+  "band": "p1"
  },
  "top-k-frequent-elements": {
   "id": 347,
@@ -465,7 +479,8 @@
   "score": 1.054,
   "a_reason": "us-asked",
   "title_zh": "前 K 个高频元素",
-  "statement_chars": 383
+  "statement_chars": 383,
+  "band": "p1"
  },
  "numbers-at-most-n-given-digit-set": {
   "id": 902,
@@ -498,7 +513,8 @@
   "score": 1.0429,
   "a_reason": "us-asked",
   "title_zh": "最大为 N 的数字组合",
-  "statement_chars": 667
+  "statement_chars": 667,
+  "band": "p2"
  },
  "search-in-rotated-sorted-array": {
   "id": 33,
@@ -533,7 +549,8 @@
   "score": 1.0105,
   "a_reason": "us-asked",
   "title_zh": "搜索旋转排序数组",
-  "statement_chars": 625
+  "statement_chars": 625,
+  "band": "p2"
  },
  "best-time-to-buy-and-sell-stock": {
   "id": 121,
@@ -568,7 +585,8 @@
   "score": 0.9488,
   "a_reason": "us-asked",
   "title_zh": "买卖股票的最佳时机",
-  "statement_chars": 433
+  "statement_chars": 433,
+  "band": "p2"
  },
  "tt-largest-number-below-n-from-digits": {
   "id": 0,
@@ -590,7 +608,8 @@
   },
   "score": 0.9232,
   "a_reason": "us-asked",
-  "statement_chars": 561
+  "statement_chars": 561,
+  "band": "p2"
  },
  "remove-nth-node-from-end-of-list": {
   "id": 19,
@@ -614,7 +633,8 @@
   },
   "score": 0.8851,
   "a_reason": "us-asked",
-  "statement_chars": 259
+  "statement_chars": 259,
+  "band": "p2"
  },
  "basic-calculator": {
   "id": 224,
@@ -651,7 +671,8 @@
   "score": 0.8771,
   "a_reason": "us-asked",
   "title_zh": "基本计算器",
-  "statement_chars": 397
+  "statement_chars": 397,
+  "band": "p2"
  },
  "binary-tree-right-side-view": {
   "id": 199,
@@ -683,7 +704,8 @@
   "score": 0.8599,
   "a_reason": "us-asked",
   "title_zh": "二叉树的右视图",
-  "statement_chars": 304
+  "statement_chars": 304,
+  "band": "p2"
  },
  "tt-rate-limiter-implementation": {
   "id": 0,
@@ -705,7 +727,8 @@
   },
   "score": 0.7873,
   "a_reason": "asked-twice",
-  "statement_chars": 542
+  "statement_chars": 542,
+  "band": "p2"
  },
  "trapping-rain-water": {
   "id": 42,
@@ -743,7 +766,8 @@
   "score": 0.7708,
   "a_reason": "us-asked",
   "title_zh": "接雨水",
-  "statement_chars": 293
+  "statement_chars": 293,
+  "band": "p2"
  },
  "house-robber": {
   "id": 198,
@@ -778,7 +802,8 @@
   "score": 0.7232,
   "a_reason": "us-asked",
   "title_zh": "打家劫舍",
-  "statement_chars": 428
+  "statement_chars": 428,
+  "band": "p2"
  },
  "lowest-common-ancestor-of-a-binary-tree": {
   "id": 236,
@@ -811,7 +836,8 @@
   "score": 0.7147,
   "a_reason": "us-asked",
   "title_zh": "二叉树的最近公共祖先",
-  "statement_chars": 497
+  "statement_chars": 497,
+  "band": "p2"
  },
  "valid-parentheses": {
   "id": 20,
@@ -847,7 +873,8 @@
   "score": 0.7089,
   "a_reason": "us-asked",
   "title_zh": "有效的括号",
-  "statement_chars": 335
+  "statement_chars": 335,
+  "band": "p2"
  },
  "merge-k-sorted-lists": {
   "id": 23,
@@ -885,7 +912,8 @@
   "score": 0.7018,
   "a_reason": "us-asked",
   "title_zh": "合并 K 个升序链表",
-  "statement_chars": 416
+  "statement_chars": 416,
+  "band": "p2"
  },
  "multiply-strings": {
   "id": 43,
@@ -921,7 +949,8 @@
   "score": 0.6896,
   "a_reason": "us-asked",
   "title_zh": "字符串相乘",
-  "statement_chars": 304
+  "statement_chars": 304,
+  "band": "p2"
  },
  "meeting-rooms-ii": {
   "id": 253,
@@ -955,7 +984,8 @@
   "score": 0.6782,
   "a_reason": "us-asked",
   "title_zh": "会议室 II",
-  "statement_chars": 258
+  "statement_chars": 258,
+  "band": "p2"
  },
  "3sum": {
   "id": 15,
@@ -986,7 +1016,8 @@
   "score": 0.6678,
   "a_reason": "us-asked",
   "title_zh": "三数之和",
-  "statement_chars": 602
+  "statement_chars": 602,
+  "band": "p2"
  },
  "tt-basic-calculator-ladder": {
   "id": 0,
@@ -1008,7 +1039,8 @@
   },
   "score": 0.6547,
   "a_reason": "us-asked",
-  "statement_chars": 523
+  "statement_chars": 523,
+  "band": "p2"
  },
  "longest-increasing-subsequence": {
   "id": 300,
@@ -1045,7 +1077,8 @@
   "score": 0.6545,
   "a_reason": "us-asked",
   "title_zh": "最长递增子序列",
-  "statement_chars": 375
+  "statement_chars": 375,
+  "band": "p2"
  },
  "merge-sorted-array": {
   "id": 88,
@@ -1069,7 +1102,8 @@
   },
   "score": 0.6503,
   "a_reason": "asked-twice",
-  "statement_chars": 808
+  "statement_chars": 808,
+  "band": "p2"
  },
  "binary-tree-maximum-path-sum": {
   "id": 124,
@@ -1102,7 +1136,8 @@
   "score": 0.6459,
   "a_reason": "us-asked",
   "title_zh": "二叉树中的最大路径和",
-  "statement_chars": 367
+  "statement_chars": 367,
+  "band": "p2"
  },
  "tt-concurrency-limited-runner": {
   "id": 0,
@@ -1124,7 +1159,8 @@
   },
   "score": 0.6235,
   "a_reason": "asked-twice",
-  "statement_chars": 413
+  "statement_chars": 413,
+  "band": "p2"
  },
  "two-sum": {
   "id": 1,
@@ -1159,7 +1195,8 @@
   "score": 0.6052,
   "a_reason": "us-asked",
   "title_zh": "两数之和",
-  "statement_chars": 449
+  "statement_chars": 449,
+  "band": "p2"
  },
  "number-of-distinct-islands": {
   "id": 694,
@@ -1190,7 +1227,8 @@
   "score": 0.5968,
   "a_reason": "us-tag-recent",
   "title_zh": "不同岛屿的数量",
-  "statement_chars": 378
+  "statement_chars": 378,
+  "band": "p2"
  },
  "remove-duplicate-letters": {
   "id": 316,
@@ -1227,7 +1265,8 @@
   "score": 0.5846,
   "a_reason": "us-asked",
   "title_zh": "去除重复字母",
-  "statement_chars": 279
+  "statement_chars": 279,
+  "band": "p2"
  },
  "add-strings": {
   "id": 415,
@@ -1258,7 +1297,8 @@
   "score": 0.5745,
   "a_reason": "us-asked",
   "title_zh": "字符串相加",
-  "statement_chars": 338
+  "statement_chars": 338,
+  "band": "p2"
  },
  "find-median-from-data-stream": {
   "id": 295,
@@ -1291,7 +1331,8 @@
   "score": 0.5733,
   "a_reason": "us-asked",
   "title_zh": "数据流的中位数",
-  "statement_chars": 826
+  "statement_chars": 826,
+  "band": "p2"
  },
  "spiral-matrix": {
   "id": 54,
@@ -1322,7 +1363,8 @@
   "score": 0.5575,
   "a_reason": "us-asked",
   "title_zh": "螺旋矩阵",
-  "statement_chars": 309
+  "statement_chars": 309,
+  "band": "p2"
  },
  "making-a-large-island": {
   "id": 827,
@@ -1355,7 +1397,8 @@
   "score": 0.5441,
   "a_reason": "us-tag-recent",
   "title_zh": "最大人工岛",
-  "statement_chars": 397
+  "statement_chars": 397,
+  "band": "p2"
  },
  "longest-common-subsequence": {
   "id": 1143,
@@ -1391,7 +1434,8 @@
   "score": 0.5433,
   "a_reason": "asked-twice",
   "title_zh": "最长公共子序列",
-  "statement_chars": 524
+  "statement_chars": 524,
+  "band": "p2"
  },
  "restore-ip-addresses": {
   "id": 93,
@@ -1426,7 +1470,8 @@
   "score": 0.5333,
   "a_reason": "us-asked",
   "title_zh": "复原 IP 地址",
-  "statement_chars": 517
+  "statement_chars": 517,
+  "band": "p3"
  },
  "min-stack": {
   "id": 155,
@@ -1450,7 +1495,8 @@
   },
   "score": 0.5314,
   "a_reason": "us-asked",
-  "statement_chars": 667
+  "statement_chars": 667,
+  "band": "p3"
  },
  "subarray-sum-equals-k": {
   "id": 560,
@@ -1486,7 +1532,8 @@
   "score": 0.528,
   "a_reason": "us-asked",
   "title_zh": "和为 K 的子数组",
-  "statement_chars": 235
+  "statement_chars": 235,
+  "band": "p3"
  },
  "path-sum-iii": {
   "id": 437,
@@ -1517,7 +1564,8 @@
   "score": 0.5279,
   "a_reason": "us-asked",
   "title_zh": "路径总和 III",
-  "statement_chars": 388
+  "statement_chars": 388,
+  "band": "p3"
  },
  "subtree-of-another-tree": {
   "id": 572,
@@ -1541,7 +1589,8 @@
   },
   "score": 0.507,
   "a_reason": "asked-twice",
-  "statement_chars": 416
+  "statement_chars": 416,
+  "band": "p3"
  },
  "alien-dictionary": {
   "id": 269,
@@ -1571,7 +1620,8 @@
   "score": 0.4472,
   "a_reason": "us-asked",
   "title_zh": "火星词典",
-  "statement_chars": 447
+  "statement_chars": 447,
+  "band": "p3"
  },
  "word-ladder": {
   "id": 127,
@@ -1608,7 +1658,8 @@
   "score": 0.4445,
   "a_reason": "us-asked",
   "title_zh": "单词接龙",
-  "statement_chars": 842
+  "statement_chars": 842,
+  "band": "p3"
  },
  "maximum-subarray": {
   "id": 53,
@@ -1644,7 +1695,8 @@
   "score": 0.4206,
   "a_reason": "asked-twice",
   "title_zh": "最大子数组和",
-  "statement_chars": 325
+  "statement_chars": 325,
+  "band": "p3"
  },
  "max-area-of-island": {
   "id": 695,
@@ -1677,7 +1729,8 @@
   "score": 0.4153,
   "a_reason": "asked-3m",
   "title_zh": "岛屿的最大面积",
-  "statement_chars": 603
+  "statement_chars": 603,
+  "band": "p3"
  },
  "longest-valid-parentheses": {
   "id": 32,
@@ -1709,7 +1762,8 @@
   "score": 0.4126,
   "a_reason": "us-tag-recent",
   "title_zh": "最长有效括号",
-  "statement_chars": 273
+  "statement_chars": 273,
+  "band": "p3"
  },
  "decode-string": {
   "id": 394,
@@ -1745,7 +1799,8 @@
   "score": 0.4112,
   "a_reason": "us-tag-recent",
   "title_zh": "字符串解码",
-  "statement_chars": 512
+  "statement_chars": 512,
+  "band": "p3"
  },
  "permutations": {
   "id": 46,
@@ -1775,7 +1830,8 @@
   "score": 0.4053,
   "a_reason": "asked-twice",
   "title_zh": "全排列",
-  "statement_chars": 278
+  "statement_chars": 278,
+  "band": "p3"
  },
  "binary-tree-zigzag-level-order-traversal": {
   "id": 103,
@@ -1811,7 +1867,8 @@
   "score": 0.3992,
   "a_reason": "asked-3m",
   "title_zh": "二叉树的锯齿形层序遍历",
-  "statement_chars": 255
+  "statement_chars": 255,
+  "band": "p3"
  },
  "design-hashmap": {
   "id": 706,
@@ -1839,7 +1896,8 @@
   "score": 0.3985,
   "a_reason": "us-asked",
   "title_zh": "设计哈希映射",
-  "statement_chars": 1050
+  "statement_chars": 1050,
+  "band": "p3"
  },
  "tt-deep-merge-nested-json": {
   "id": 0,
@@ -1861,7 +1919,8 @@
   },
   "score": 0.3983,
   "a_reason": "asked-twice",
-  "statement_chars": 338
+  "statement_chars": 338,
+  "band": "p3"
  },
  "shortest-path-in-a-grid-with-obstacles-elimination": {
   "id": 1293,
@@ -1887,7 +1946,8 @@
   "score": 0.3931,
   "a_reason": "us-asked",
   "title_zh": "网格中的最短路径",
-  "statement_chars": 569
+  "statement_chars": 569,
+  "band": "p3"
  },
  "regular-expression-matching": {
   "id": 10,
@@ -1918,7 +1978,8 @@
   "score": 0.3926,
   "a_reason": "us-asked",
   "title_zh": "正则表达式匹配",
-  "statement_chars": 498
+  "statement_chars": 498,
+  "band": "p3"
  },
  "sliding-window-maximum": {
   "id": 239,
@@ -1957,7 +2018,8 @@
   "score": 0.3911,
   "a_reason": "us-asked",
   "title_zh": "滑动窗口最大值",
-  "statement_chars": 554
+  "statement_chars": 554,
+  "band": "p3"
  },
  "basic-calculator-ii": {
   "id": 227,
@@ -1993,7 +2055,8 @@
   "score": 0.3867,
   "a_reason": "us-tag-recent",
   "title_zh": "基本计算器 II",
-  "statement_chars": 394
+  "statement_chars": 394,
+  "band": "p3"
  },
  "course-schedule-ii": {
   "id": 210,
@@ -2025,7 +2088,8 @@
   "score": 0.3774,
   "a_reason": "asked-3m",
   "title_zh": "课程表 II",
-  "statement_chars": 787
+  "statement_chars": 787,
+  "band": "p3"
  },
  "implement-trie-prefix-tree": {
   "id": 208,
@@ -2049,7 +2113,8 @@
   },
   "score": 0.3723,
   "a_reason": "asked-twice",
-  "statement_chars": 871
+  "statement_chars": 871,
+  "band": "p3"
  },
  "longest-substring-with-at-most-k-distinct-characters": {
   "id": 340,
@@ -2080,7 +2145,8 @@
   "score": 0.3678,
   "a_reason": "us-asked",
   "title_zh": "至多包含 K 个不同字符的最长子串",
-  "statement_chars": 234
+  "statement_chars": 234,
+  "band": "p3"
  },
  "design-in-memory-file-system": {
   "id": 588,
@@ -2108,7 +2174,8 @@
   "score": 0.3543,
   "a_reason": "us-asked",
   "title_zh": "设计内存文件系统",
-  "statement_chars": 1321
+  "statement_chars": 1321,
+  "band": "p3"
  },
  "tt-max-path-sum-with-path": {
   "id": 0,
@@ -2130,7 +2197,8 @@
   },
   "score": 0.3534,
   "a_reason": "us-asked",
-  "statement_chars": 331
+  "statement_chars": 331,
+  "band": "p3"
  },
  "tt-path-sum-n-ary-prefix-sum": {
   "id": 0,
@@ -2152,7 +2220,8 @@
   },
   "score": 0.3512,
   "a_reason": "us-asked",
-  "statement_chars": 417
+  "statement_chars": 417,
+  "band": "p3"
  },
  "implement-queue-using-stacks": {
   "id": 232,
@@ -2176,7 +2245,8 @@
   },
   "score": 0.3504,
   "a_reason": "us-asked",
-  "statement_chars": 910
+  "statement_chars": 910,
+  "band": "p3"
  },
  "minimum-path-sum": {
   "id": 64,
@@ -2207,7 +2277,8 @@
   "score": 0.3379,
   "a_reason": "asked-twice",
   "title_zh": "最小路径和",
-  "statement_chars": 291
+  "statement_chars": 291,
+  "band": "p3"
  },
  "intersection-of-two-linked-lists": {
   "id": 160,
@@ -2238,7 +2309,8 @@
   "score": 0.337,
   "a_reason": "us-tag-recent",
   "title_zh": "相交链表",
-  "statement_chars": 1541
+  "statement_chars": 1541,
+  "band": "p3"
  },
  "reverse-words-in-a-string": {
   "id": 151,
@@ -2262,7 +2334,8 @@
   },
   "score": 0.3329,
   "a_reason": "us-asked",
-  "statement_chars": 539
+  "statement_chars": 539,
+  "band": "p3"
  },
  "possible-bipartition": {
   "id": 886,
@@ -2291,7 +2364,8 @@
   "score": 0.3303,
   "a_reason": "us-asked",
   "title_zh": "可能的二分法",
-  "statement_chars": 542
+  "statement_chars": 542,
+  "band": "p3"
  },
  "minimum-size-subarray-sum": {
   "id": 209,
@@ -2323,7 +2397,8 @@
   "score": 0.3298,
   "a_reason": "us-asked",
   "title_zh": "长度最小的子数组",
-  "statement_chars": 456
+  "statement_chars": 456,
+  "band": "p3"
  },
  "median-of-two-sorted-arrays": {
   "id": 4,
@@ -2347,7 +2422,8 @@
   },
   "score": 0.3278,
   "a_reason": "us-asked",
-  "statement_chars": 407
+  "statement_chars": 407,
+  "band": "p3"
  },
  "sqrtx": {
   "id": 69,
@@ -2378,7 +2454,8 @@
   "score": 0.323,
   "a_reason": "us-asked",
   "title_zh": "x 的平方根 ",
-  "statement_chars": 236
+  "statement_chars": 236,
+  "band": "p3"
  },
  "rotate-array": {
   "id": 189,
@@ -2409,7 +2486,8 @@
   "score": 0.313,
   "a_reason": "us-tag-recent",
   "title_zh": "轮转数组",
-  "statement_chars": 467
+  "statement_chars": 467,
+  "band": "p3"
  },
  "combination-sum": {
   "id": 39,
@@ -2444,7 +2522,8 @@
   "score": 0.3121,
   "a_reason": "us-asked",
   "title_zh": "组合总和",
-  "statement_chars": 587
+  "statement_chars": 587,
+  "band": "p3"
  },
  "maximal-square": {
   "id": 221,
@@ -2480,7 +2559,8 @@
   "score": 0.312,
   "a_reason": "asked-3m",
   "title_zh": "最大正方形",
-  "statement_chars": 346
+  "statement_chars": 346,
+  "band": "p3"
  },
  "find-first-and-last-position-of-element-in-sorted-array": {
   "id": 34,
@@ -2510,7 +2590,8 @@
   "score": 0.298,
   "a_reason": "us-asked",
   "title_zh": "在排序数组中查找元素的第一个和最后一个位置",
-  "statement_chars": 392
+  "statement_chars": 392,
+  "band": "p3"
  },
  "word-search-ii": {
   "id": 212,
@@ -2538,7 +2619,8 @@
   "score": 0.2968,
   "a_reason": "us-asked",
   "title_zh": "单词搜索 II",
-  "statement_chars": 551
+  "statement_chars": 551,
+  "band": "p3"
  },
  "implement-rand10-using-rand7": {
   "id": 470,
@@ -2562,7 +2644,8 @@
   },
   "score": 0.2963,
   "a_reason": "asked-twice",
-  "statement_chars": 348
+  "statement_chars": 348,
+  "band": "p3"
  },
  "edit-distance": {
   "id": 72,
@@ -2592,7 +2675,8 @@
   "score": 0.2951,
   "a_reason": "asked-3m",
   "title_zh": "编辑距离",
-  "statement_chars": 541
+  "statement_chars": 541,
+  "band": "p3"
  },
  "text-justification": {
   "id": 68,
@@ -2623,7 +2707,8 @@
   "score": 0.2945,
   "a_reason": "us-tag-recent",
   "title_zh": "文本左右对齐",
-  "statement_chars": 1243
+  "statement_chars": 1243,
+  "band": "p3"
  },
  "linked-list-cycle": {
   "id": 141,
@@ -2647,7 +2732,8 @@
   },
   "score": 0.29,
   "a_reason": "asked-twice",
-  "statement_chars": 501
+  "statement_chars": 501,
+  "band": "p3"
  },
  "maximum-height-by-stacking-cuboids": {
   "id": 1691,
@@ -2669,7 +2755,8 @@
   },
   "score": 0.2883,
   "a_reason": "asked-twice",
-  "statement_chars": 840
+  "statement_chars": 840,
+  "band": "p3"
  },
  "generate-parentheses": {
   "id": 22,
@@ -2701,7 +2788,8 @@
   "score": 0.2881,
   "a_reason": "pinned",
   "title_zh": "括号生成",
-  "statement_chars": 167
+  "statement_chars": 167,
+  "band": "p3"
  },
  "serialize-and-deserialize-binary-tree": {
   "id": 297,
@@ -2735,7 +2823,8 @@
   "score": 0.2876,
   "a_reason": "us-asked",
   "title_zh": "二叉树的序列化与反序列化",
-  "statement_chars": 483
+  "statement_chars": 483,
+  "band": "p3"
  },
  "word-break": {
   "id": 139,
@@ -2770,7 +2859,8 @@
   "score": 0.2852,
   "a_reason": "us-asked",
   "title_zh": "单词拆分",
-  "statement_chars": 614
+  "statement_chars": 614,
+  "band": "p3"
  },
  "word-search": {
   "id": 79,
@@ -2803,7 +2893,8 @@
   "score": 0.2829,
   "a_reason": "us-tag-recent",
   "title_zh": "单词搜索",
-  "statement_chars": 621
+  "statement_chars": 621,
+  "band": "p3"
  },
  "longest-consecutive-sequence": {
   "id": 128,
@@ -2834,7 +2925,8 @@
   "score": 0.2814,
   "a_reason": "asked-3m",
   "title_zh": "最长连续序列",
-  "statement_chars": 300
+  "statement_chars": 300,
+  "band": "p3"
  },
  "n-queens": {
   "id": 51,
@@ -2865,7 +2957,8 @@
   "score": 0.2781,
   "a_reason": "us-asked",
   "title_zh": "N 皇后",
-  "statement_chars": 339
+  "statement_chars": 339,
+  "band": "p3"
  },
  "design-tic-tac-toe": {
   "id": 348,
@@ -2887,7 +2980,8 @@
   },
   "score": 0.276,
   "a_reason": "us-asked",
-  "statement_chars": 1144
+  "statement_chars": 1144,
+  "band": "p3"
  },
  "minimum-window-substring": {
   "id": 76,
@@ -2918,7 +3012,8 @@
   "score": 0.2746,
   "a_reason": "us-asked",
   "title_zh": "最小覆盖子串",
-  "statement_chars": 458
+  "statement_chars": 458,
+  "band": "p3"
  },
  "accounts-merge": {
   "id": 721,
@@ -2958,7 +3053,8 @@
   "score": 0.2745,
   "a_reason": "us-asked",
   "title_zh": "账户合并",
-  "statement_chars": 1598
+  "statement_chars": 1598,
+  "band": "p3"
  },
  "count-number-of-nice-subarrays": {
   "id": 1248,
@@ -2986,7 +3082,8 @@
   "score": 0.2711,
   "a_reason": "us-asked",
   "title_zh": "统计「优美子数组」",
-  "statement_chars": 373
+  "statement_chars": 373,
+  "band": "p3"
  },
  "single-number": {
   "id": 136,
@@ -3008,7 +3105,8 @@
   },
   "score": 0.271,
   "a_reason": "asked-twice",
-  "statement_chars": 306
+  "statement_chars": 306,
+  "band": "p3"
  },
  "design-circular-queue": {
   "id": 622,
@@ -3030,7 +3128,8 @@
   },
   "score": 0.2701,
   "a_reason": "us-asked",
-  "statement_chars": 900
+  "statement_chars": 900,
+  "band": "p3"
  },
  "tt-fixed-array-deque-o1": {
   "id": 0,
@@ -3052,7 +3151,8 @@
   },
   "score": 0.27,
   "a_reason": "us-asked",
-  "statement_chars": 463
+  "statement_chars": 463,
+  "band": "p3"
  },
  "sort-list": {
   "id": 148,
@@ -3090,7 +3190,8 @@
   "score": 0.2653,
   "a_reason": "asked-3m",
   "title_zh": "排序链表",
-  "statement_chars": 271
+  "statement_chars": 271,
+  "band": "p3"
  },
  "tt-grid-min-cost-fuel-recharge": {
   "id": 0,
@@ -3112,7 +3213,8 @@
   },
   "score": 0.2638,
   "a_reason": "us-asked",
-  "statement_chars": 658
+  "statement_chars": 658,
+  "band": "p3"
  },
  "maximum-width-of-binary-tree": {
   "id": 662,
@@ -3149,7 +3251,8 @@
   "score": 0.2627,
   "a_reason": "asked-3m",
   "title_zh": "二叉树最大宽度",
-  "statement_chars": 498
+  "statement_chars": 498,
+  "band": "p3"
  },
  "next-permutation": {
   "id": 31,
@@ -3176,7 +3279,8 @@
   "score": 0.2602,
   "a_reason": "asked-3m",
   "title_zh": "下一个排列",
-  "statement_chars": 612
+  "statement_chars": 612,
+  "band": "p3"
  },
  "design-memory-allocator": {
   "id": 2502,
@@ -3208,7 +3312,8 @@
   "score": 0.2587,
   "a_reason": "us-asked",
   "title_zh": "设计内存分配器",
-  "statement_chars": 1634
+  "statement_chars": 1634,
+  "band": "p3"
  },
  "valid-parenthesis-string": {
   "id": 678,
@@ -3241,7 +3346,8 @@
   "score": 0.2577,
   "a_reason": "us-asked",
   "title_zh": "有效的括号字符串",
-  "statement_chars": 367
+  "statement_chars": 367,
+  "band": "p3"
  },
  "climbing-stairs": {
   "id": 70,
@@ -3277,7 +3383,8 @@
   "score": 0.2497,
   "a_reason": "asked-3m",
   "title_zh": "爬楼梯",
-  "statement_chars": 228
+  "statement_chars": 228,
+  "band": "p4"
  },
  "add-two-numbers-ii": {
   "id": 445,
@@ -3301,7 +3408,8 @@
   },
   "score": 0.2478,
   "a_reason": "us-asked",
-  "statement_chars": 329
+  "statement_chars": 329,
+  "band": "p4"
  },
  "combinations": {
   "id": 77,
@@ -3323,7 +3431,8 @@
   "score": 0.2417,
   "a_reason": "us-asked",
   "title_zh": "组合",
-  "statement_chars": 217
+  "statement_chars": 217,
+  "band": "p4"
  },
  "subsets": {
   "id": 78,
@@ -3359,7 +3468,8 @@
   "score": 0.2417,
   "a_reason": "us-asked",
   "title_zh": "子集",
-  "statement_chars": 261
+  "statement_chars": 261,
+  "band": "p4"
  },
  "diameter-of-binary-tree": {
   "id": 543,
@@ -3383,7 +3493,8 @@
   },
   "score": 0.2401,
   "a_reason": "us-asked",
-  "statement_chars": 265
+  "statement_chars": 265,
+  "band": "p4"
  },
  "insert-delete-getrandom-o1": {
   "id": 380,
@@ -3421,7 +3532,8 @@
   "score": 0.2358,
   "a_reason": "asked-3m",
   "title_zh": "O(1) 时间插入、删除和获取随机元素",
-  "statement_chars": 1075
+  "statement_chars": 1075,
+  "band": "p4"
  },
  "group-anagrams": {
   "id": 49,
@@ -3453,7 +3565,8 @@
   "score": 0.2336,
   "a_reason": "us-asked",
   "title_zh": "字母异位词分组",
-  "statement_chars": 446
+  "statement_chars": 446,
+  "band": "p4"
  },
  "unique-paths": {
   "id": 62,
@@ -3489,7 +3602,8 @@
   "score": 0.2303,
   "a_reason": "us-asked",
   "title_zh": "不同路径",
-  "statement_chars": 369
+  "statement_chars": 369,
+  "band": "p4"
  },
  "make-costs-of-paths-equal-in-a-binary-tree": {
   "id": 2673,
@@ -3511,7 +3625,8 @@
   },
   "score": 0.2243,
   "a_reason": "us-asked",
-  "statement_chars": 659
+  "statement_chars": 659,
+  "band": "p4"
  },
  "koko-eating-bananas": {
   "id": 875,
@@ -3536,7 +3651,8 @@
   "score": 0.2227,
   "a_reason": "us-asked",
   "title_zh": "爱吃香蕉的珂珂",
-  "statement_chars": 447
+  "statement_chars": 447,
+  "band": "p4"
  },
  "rotate-image": {
   "id": 48,
@@ -3567,7 +3683,8 @@
   "score": 0.2224,
   "a_reason": "us-tag-recent",
   "title_zh": "旋转图像",
-  "statement_chars": 394
+  "statement_chars": 394,
+  "band": "p4"
  },
  "maximum-product-subarray": {
   "id": 152,
@@ -3591,7 +3708,8 @@
   },
   "score": 0.2212,
   "a_reason": "asked-3m",
-  "statement_chars": 339
+  "statement_chars": 339,
+  "band": "p4"
  },
  "gas-station": {
   "id": 134,
@@ -3621,7 +3739,8 @@
   "score": 0.2142,
   "a_reason": "us-tag-recent",
   "title_zh": "加油站",
-  "statement_chars": 876
+  "statement_chars": 876,
+  "band": "p4"
  },
  "largest-number": {
   "id": 179,
@@ -3645,7 +3764,8 @@
   },
   "score": 0.2134,
   "a_reason": "asked-3m",
-  "statement_chars": 218
+  "statement_chars": 218,
+  "band": "p4"
  },
  "jump-game": {
   "id": 55,
@@ -3681,7 +3801,8 @@
   "score": 0.213,
   "a_reason": "us-asked",
   "title_zh": "跳跃游戏",
-  "statement_chars": 348
+  "statement_chars": 348,
+  "band": "p4"
  },
  "fruit-into-baskets": {
   "id": 904,
@@ -3707,7 +3828,8 @@
   "score": 0.2115,
   "a_reason": "us-asked",
   "title_zh": "水果成篮",
-  "statement_chars": 711
+  "statement_chars": 711,
+  "band": "p4"
  },
  "water-and-jug-problem": {
   "id": 365,
@@ -3737,7 +3859,8 @@
   "score": 0.2113,
   "a_reason": "us-asked",
   "title_zh": "水壶问题",
-  "statement_chars": 597
+  "statement_chars": 597,
+  "band": "p4"
  },
  "evaluate-division": {
   "id": 399,
@@ -3769,7 +3892,8 @@
   "score": 0.2109,
   "a_reason": "us-asked",
   "title_zh": "除法求值",
-  "statement_chars": 1307
+  "statement_chars": 1307,
+  "band": "p4"
  },
  "longest-mountain-in-array": {
   "id": 845,
@@ -3801,7 +3925,8 @@
   "score": 0.2086,
   "a_reason": "us-tag-recent",
   "title_zh": "数组中的最长山脉",
-  "statement_chars": 452
+  "statement_chars": 452,
+  "band": "p4"
  },
  "cheapest-flights-within-k-stops": {
   "id": 787,
@@ -3830,7 +3955,8 @@
   "score": 0.2062,
   "a_reason": "us-tag-recent",
   "title_zh": "K 站中转内最便宜的航班",
-  "statement_chars": 943
+  "statement_chars": 943,
+  "band": "p4"
  },
  "max-consecutive-ones-iii": {
   "id": 1004,
@@ -3854,7 +3980,8 @@
   },
   "score": 0.2062,
   "a_reason": "us-asked",
-  "statement_chars": 396
+  "statement_chars": 396,
+  "band": "p4"
  },
  "tt-kv-store-snapshot-restore": {
   "id": 0,
@@ -3876,7 +4003,8 @@
   },
   "score": 0.1992,
   "a_reason": "us-asked",
-  "statement_chars": 608
+  "statement_chars": 608,
+  "band": "p4"
  },
  "transpose-matrix": {
   "id": 867,
@@ -3898,7 +4026,8 @@
   },
   "score": 0.1992,
   "a_reason": "asked-twice",
-  "statement_chars": 338
+  "statement_chars": 338,
+  "band": "p4"
  },
  "shortest-unsorted-continuous-subarray": {
   "id": 581,
@@ -3932,7 +4061,8 @@
   "score": 0.1976,
   "a_reason": "asked-3m",
   "title_zh": "最短无序连续子数组",
-  "statement_chars": 336
+  "statement_chars": 336,
+  "band": "p4"
  },
  "all-nodes-distance-k-in-binary-tree": {
   "id": 863,
@@ -3960,7 +4090,8 @@
   "score": 0.195,
   "a_reason": "us-tag-recent",
   "title_zh": "二叉树中所有距离为 K 的结点",
-  "statement_chars": 377
+  "statement_chars": 377,
+  "band": "p4"
  },
  "find-the-duplicate-number": {
   "id": 287,
@@ -3984,7 +4115,8 @@
   },
   "score": 0.1945,
   "a_reason": "asked-3m",
-  "statement_chars": 428
+  "statement_chars": 428,
+  "band": "p4"
  },
  "largest-rectangle-in-histogram": {
   "id": 84,
@@ -4016,7 +4148,8 @@
   "score": 0.1911,
   "a_reason": "us-asked",
   "title_zh": "柱状图中最大的矩形",
-  "statement_chars": 234
+  "statement_chars": 234,
+  "band": "p4"
  },
  "tt-array-min-heap": {
   "id": 0,
@@ -4038,7 +4171,8 @@
   },
   "score": 0.1909,
   "a_reason": "us-asked",
-  "statement_chars": 380
+  "statement_chars": 380,
+  "band": "p4"
  },
  "all-oone-data-structure": {
   "id": 432,
@@ -4065,7 +4199,8 @@
   "score": 0.1898,
   "a_reason": "us-tag-recent",
   "title_zh": "全 O(1) 的数据结构",
-  "statement_chars": 958
+  "statement_chars": 958,
+  "band": "p4"
  },
  "trapping-rain-water-ii": {
   "id": 407,
@@ -4087,7 +4222,8 @@
   "score": 0.187,
   "a_reason": "asked-3m",
   "title_zh": "接雨水 II",
-  "statement_chars": 382
+  "statement_chars": 382,
+  "band": "p4"
  },
  "find-all-duplicates-in-an-array": {
   "id": 442,
@@ -4114,7 +4250,8 @@
   "score": 0.1867,
   "a_reason": "asked-3m",
   "title_zh": "数组中重复的数据",
-  "statement_chars": 343
+  "statement_chars": 343,
+  "band": "p4"
  },
  "delete-node-in-a-bst": {
   "id": 450,
@@ -4145,7 +4282,8 @@
   "score": 0.184,
   "a_reason": "us-asked",
   "title_zh": "删除二叉搜索树中的节点",
-  "statement_chars": 583
+  "statement_chars": 583,
+  "band": "p4"
  },
  "subarray-sums-divisible-by-k": {
   "id": 974,
@@ -4176,7 +4314,8 @@
   "score": 0.184,
   "a_reason": "us-tag-recent",
   "title_zh": "和可被 K 整除的子数组",
-  "statement_chars": 347
+  "statement_chars": 347,
+  "band": "p4"
  },
  "count-primes": {
   "id": 204,
@@ -4200,7 +4339,8 @@
   },
   "score": 0.1819,
   "a_reason": "asked-twice",
-  "statement_chars": 168
+  "statement_chars": 168,
+  "band": "p4"
  },
  "symmetric-tree": {
   "id": 101,
@@ -4224,7 +4364,8 @@
   },
   "score": 0.1784,
   "a_reason": "us-asked",
-  "statement_chars": 211
+  "statement_chars": 211,
+  "band": "p4"
  },
  "longest-repeating-character-replacement": {
   "id": 424,
@@ -4255,7 +4396,8 @@
   "score": 0.1775,
   "a_reason": "us-asked",
   "title_zh": "替换后的最长重复字符",
-  "statement_chars": 344
+  "statement_chars": 344,
+  "band": "p4"
  },
  "tt-ring-walk-count": {
   "id": 0,
@@ -4277,7 +4419,8 @@
   },
   "score": 0.1774,
   "a_reason": "asked-twice",
-  "statement_chars": 287
+  "statement_chars": 287,
+  "band": "p4"
  },
  "candy": {
   "id": 135,
@@ -4301,7 +4444,8 @@
   },
   "score": 0.1763,
   "a_reason": "us-asked",
-  "statement_chars": 399
+  "statement_chars": 399,
+  "band": "p4"
  },
  "find-minimum-in-rotated-sorted-array": {
   "id": 153,
@@ -4331,7 +4475,8 @@
   "score": 0.1747,
   "a_reason": "pinned",
   "title_zh": "寻找旋转排序数组中的最小值",
-  "statement_chars": 700
+  "statement_chars": 700,
+  "band": "p4"
  },
  "tt-delete-window-balance-even-odd": {
   "id": 0,
@@ -4353,7 +4498,8 @@
   },
   "score": 0.1747,
   "a_reason": "us-asked",
-  "statement_chars": 382
+  "statement_chars": 382,
+  "band": "p4"
  },
  "merge-two-sorted-lists": {
   "id": 21,
@@ -4377,7 +4523,8 @@
   },
   "score": 0.1711,
   "a_reason": "asked-3m",
-  "statement_chars": 257
+  "statement_chars": 257,
+  "band": "p4"
  },
  "validate-binary-search-tree": {
   "id": 98,
@@ -4401,7 +4548,8 @@
   },
   "score": 0.1701,
   "a_reason": "pinned",
-  "statement_chars": 302
+  "statement_chars": 302,
+  "band": "p4"
  },
  "find-all-anagrams-in-a-string": {
   "id": 438,
@@ -4427,7 +4575,8 @@
   "score": 0.1673,
   "a_reason": "us-asked",
   "title_zh": "找到字符串中所有字母异位词",
-  "statement_chars": 402
+  "statement_chars": 402,
+  "band": "p4"
  },
  "single-element-in-a-sorted-array": {
   "id": 540,
@@ -4457,7 +4606,8 @@
   "score": 0.1665,
   "a_reason": "us-tag-recent",
   "title_zh": "有序数组中的单一元素",
-  "statement_chars": 255
+  "statement_chars": 255,
+  "band": "p4"
  },
  "copy-list-with-random-pointer": {
   "id": 138,
@@ -4481,7 +4631,8 @@
   },
   "score": 0.1657,
   "a_reason": "asked-3m",
-  "statement_chars": 792
+  "statement_chars": 792,
+  "band": "p4"
  },
  "product-of-the-last-k-numbers": {
   "id": 1352,
@@ -4514,7 +4665,8 @@
   "score": 0.1649,
   "a_reason": "us-tag-recent",
   "title_zh": "最后 K 个数的乘积",
-  "statement_chars": 1254
+  "statement_chars": 1254,
+  "band": "p4"
  },
  "non-overlapping-intervals": {
   "id": 435,
@@ -4536,7 +4688,8 @@
   },
   "score": 0.164,
   "a_reason": "us-asked",
-  "statement_chars": 483
+  "statement_chars": 483,
+  "band": "p4"
  },
  "decode-ways": {
   "id": 91,
@@ -4560,7 +4713,8 @@
   },
   "score": 0.1613,
   "a_reason": "asked-3m",
-  "statement_chars": 654
+  "statement_chars": 654,
+  "band": "p4"
  },
  "sparse-matrix-multiplication": {
   "id": 311,
@@ -4582,7 +4736,8 @@
   },
   "score": 0.1581,
   "a_reason": "us-asked",
-  "statement_chars": 380
+  "statement_chars": 380,
+  "band": "p4"
  },
  "stickers-to-spell-word": {
   "id": 691,
@@ -4604,7 +4759,8 @@
   },
   "score": 0.1577,
   "a_reason": "us-asked",
-  "statement_chars": 652
+  "statement_chars": 652,
+  "band": "p4"
  },
  "serialize-and-deserialize-n-ary-tree": {
   "id": 428,
@@ -4631,7 +4787,8 @@
   "score": 0.1567,
   "a_reason": "us-tag-recent",
   "title_zh": "序列化和反序列化 N 叉树",
-  "statement_chars": 889
+  "statement_chars": 889,
+  "band": "p4"
  },
  "partition-array-for-maximum-sum": {
   "id": 1043,
@@ -4656,7 +4813,8 @@
   "score": 0.1567,
   "a_reason": "us-tag-recent",
   "title_zh": "分隔数组以得到最大和",
-  "statement_chars": 370
+  "statement_chars": 370,
+  "band": "p4"
  },
  "tt-nested-comment-tree": {
   "id": 0,
@@ -4678,7 +4836,8 @@
   },
   "score": 0.1563,
   "a_reason": "us-asked",
-  "statement_chars": 321
+  "statement_chars": 321,
+  "band": "p4"
  },
  "kth-smallest-element-in-a-sorted-matrix": {
   "id": 378,
@@ -4711,7 +4870,8 @@
   "score": 0.146,
   "a_reason": "us-asked",
   "title_zh": "有序矩阵中第 K 小的元素",
-  "statement_chars": 550
+  "statement_chars": 550,
+  "band": "p4"
  },
  "shortest-path-in-binary-matrix": {
   "id": 1091,
@@ -4735,7 +4895,8 @@
   },
   "score": 0.1454,
   "a_reason": "us-asked",
-  "statement_chars": 467
+  "statement_chars": 467,
+  "band": "p4"
  },
  "surrounded-regions": {
   "id": 130,
@@ -4757,7 +4918,8 @@
   },
   "score": 0.1441,
   "a_reason": "asked-3m",
-  "statement_chars": 579
+  "statement_chars": 579,
+  "band": "p4"
  },
  "palindrome-partitioning": {
   "id": 131,
@@ -4779,7 +4941,8 @@
   },
   "score": 0.1408,
   "a_reason": "asked-twice",
-  "statement_chars": 183
+  "statement_chars": 183,
+  "band": "p4"
  },
  "random-pick-with-weight": {
   "id": 528,
@@ -4812,7 +4975,8 @@
   "score": 0.1404,
   "a_reason": "asked-3m",
   "title_zh": "按权重随机选择",
-  "statement_chars": 1007
+  "statement_chars": 1007,
+  "band": "p4"
  },
  "valid-square": {
   "id": 593,
@@ -4834,7 +4998,8 @@
   },
   "score": 0.1349,
   "a_reason": "asked-3m",
-  "statement_chars": 416
+  "statement_chars": 416,
+  "band": "p4"
  },
  "coin-change-ii": {
   "id": 518,
@@ -4858,7 +5023,8 @@
   },
   "score": 0.1342,
   "a_reason": "us-asked",
-  "statement_chars": 447
+  "statement_chars": 447,
+  "band": "p4"
  },
  "pacific-atlantic-water-flow": {
   "id": 417,
@@ -4885,7 +5051,8 @@
   "score": 0.1336,
   "a_reason": "us-asked",
   "title_zh": "太平洋大西洋水流问题",
-  "statement_chars": 632
+  "statement_chars": 632,
+  "band": "p4"
  },
  "time-based-key-value-store": {
   "id": 981,
@@ -4907,7 +5074,8 @@
   },
   "score": 0.1229,
   "a_reason": "us-asked",
-  "statement_chars": 1129
+  "statement_chars": 1129,
+  "band": "p4"
  },
  "number-of-connected-components-in-an-undirected-graph": {
   "id": 323,
@@ -4929,7 +5097,8 @@
   },
   "score": 0.1212,
   "a_reason": "us-asked",
-  "statement_chars": 361
+  "statement_chars": 361,
+  "band": "p4"
  },
  "longest-substring-with-at-least-k-repeating-characters": {
   "id": 395,
@@ -4961,7 +5130,8 @@
   "score": 0.1197,
   "a_reason": "asked-3m",
   "title_zh": "至少有 K 个重复字符的最长子串",
-  "statement_chars": 306
+  "statement_chars": 306,
+  "band": "p4"
  },
  "tt-valid-parenthesis-string-print-all": {
   "id": 0,
@@ -4983,7 +5153,8 @@
   },
   "score": 0.119,
   "a_reason": "us-asked",
-  "statement_chars": 316
+  "statement_chars": 316,
+  "band": "p4"
  },
  "maximum-depth-of-binary-tree": {
   "id": 104,
@@ -5007,7 +5178,8 @@
   },
   "score": 0.1165,
   "a_reason": "asked-3m",
-  "statement_chars": 206
+  "statement_chars": 206,
+  "band": "p4"
  },
  "balanced-binary-tree": {
   "id": 110,
@@ -5031,7 +5203,8 @@
   },
   "score": 0.1108,
   "a_reason": "asked-3m",
-  "statement_chars": 218
+  "statement_chars": 218,
+  "band": "p4"
  },
  "distinct-subsequences": {
   "id": 115,
@@ -5055,7 +5228,8 @@
   },
   "score": 0.1049,
   "a_reason": "asked-3m",
-  "statement_chars": 352
+  "statement_chars": 352,
+  "band": "p4"
  },
  "tt-number-to-string": {
   "id": 0,
@@ -5077,7 +5251,8 @@
   },
   "score": 0.1023,
   "a_reason": "asked-3m",
-  "statement_chars": 450
+  "statement_chars": 450,
+  "band": "p4"
  },
  "remove-duplicates-from-sorted-list-ii": {
   "id": 82,
@@ -5101,7 +5276,8 @@
   },
   "score": 0.1014,
   "a_reason": "asked-3m",
-  "statement_chars": 232
+  "statement_chars": 232,
+  "band": "p4"
  },
  "tt-currency-conversion-queries": {
   "id": 0,
@@ -5123,7 +5299,8 @@
   },
   "score": 0.1005,
   "a_reason": "us-asked",
-  "statement_chars": 565
+  "statement_chars": 565,
+  "band": "p4"
  },
  "tt-hyper-operation": {
   "id": 0,
@@ -5145,7 +5322,8 @@
   },
   "score": 0.0996,
   "a_reason": "asked-3m",
-  "statement_chars": 460
+  "statement_chars": 460,
+  "band": "p4"
  },
  "tt-tool-call-success-rate": {
   "id": 0,
@@ -5167,7 +5345,8 @@
   },
   "score": 0.0996,
   "a_reason": "asked-3m",
-  "statement_chars": 332
+  "statement_chars": 332,
+  "band": "p4"
  },
  "flip-string-to-monotone-increasing": {
   "id": 926,
@@ -5189,7 +5368,8 @@
   },
   "score": 0.0996,
   "a_reason": "asked-3m",
-  "statement_chars": 334
+  "statement_chars": 334,
+  "band": "p4"
  },
  "k-th-smallest-in-lexicographical-order": {
   "id": 440,
@@ -5213,7 +5393,8 @@
   },
   "score": 0.0994,
   "a_reason": "asked-3m",
-  "statement_chars": 203
+  "statement_chars": 203,
+  "band": "p4"
  },
  "binary-search": {
   "id": 704,
@@ -5237,7 +5418,8 @@
   },
   "score": 0.0979,
   "a_reason": "asked-3m",
-  "statement_chars": 365
+  "statement_chars": 365,
+  "band": "p4"
  },
  "tt-fish-decaying-ponds": {
   "id": 0,
@@ -5259,7 +5441,8 @@
   },
   "score": 0.0973,
   "a_reason": "us-asked",
-  "statement_chars": 529
+  "statement_chars": 529,
+  "band": "p4"
  },
  "target-sum": {
   "id": 494,
@@ -5283,7 +5466,8 @@
   },
   "score": 0.0943,
   "a_reason": "asked-3m",
-  "statement_chars": 531
+  "statement_chars": 531,
+  "band": "p4"
  },
  "letter-combinations-of-a-phone-number": {
   "id": 17,
@@ -5307,7 +5491,8 @@
   },
   "score": 0.0936,
   "a_reason": "asked-3m",
-  "statement_chars": 272
+  "statement_chars": 272,
+  "band": "p4"
  },
  "generate-random-point-in-a-circle": {
   "id": 478,
@@ -5329,7 +5514,8 @@
   },
   "score": 0.0908,
   "a_reason": "asked-3m",
-  "statement_chars": 672
+  "statement_chars": 672,
+  "band": "p4"
  },
  "find-distance-in-a-binary-tree": {
   "id": 1740,
@@ -5351,7 +5537,8 @@
   },
   "score": 0.0897,
   "a_reason": "asked-3m",
-  "statement_chars": 464
+  "statement_chars": 464,
+  "band": "p4"
  },
  "24-game": {
   "id": 679,
@@ -5375,7 +5562,8 @@
   },
   "score": 0.0894,
   "a_reason": "us-asked",
-  "statement_chars": 585
+  "statement_chars": 585,
+  "band": "p4"
  },
  "double-a-number-represented-as-a-linked-list": {
   "id": 2816,
@@ -5397,7 +5585,8 @@
   },
   "score": 0.0887,
   "a_reason": "asked-3m",
-  "statement_chars": 328
+  "statement_chars": 328,
+  "band": "p4"
  },
  "number-of-atoms": {
   "id": 726,
@@ -5421,7 +5610,8 @@
   },
   "score": 0.0869,
   "a_reason": "asked-3m",
-  "statement_chars": 694
+  "statement_chars": 694,
+  "band": "p4"
  },
  "remove-duplicates-from-sorted-array-ii": {
   "id": 80,
@@ -5445,7 +5635,8 @@
   },
   "score": 0.0866,
   "a_reason": "asked-3m",
-  "statement_chars": 756
+  "statement_chars": 756,
+  "band": "p4"
  },
  "longest-duplicate-substring": {
   "id": 1044,
@@ -5469,7 +5660,8 @@
   },
   "score": 0.0866,
   "a_reason": "asked-3m",
-  "statement_chars": 225
+  "statement_chars": 225,
+  "band": "p4"
  },
  "robot-bounded-in-circle": {
   "id": 1041,
@@ -5495,7 +5687,8 @@
   "score": 0.0859,
   "a_reason": "us-tag-recent",
   "title_zh": "困于环中的机器人",
-  "statement_chars": 1087
+  "statement_chars": 1087,
+  "band": "p4"
  },
  "minimum-number-of-arrows-to-burst-balloons": {
   "id": 452,
@@ -5519,7 +5712,8 @@
   },
   "score": 0.0855,
   "a_reason": "asked-3m",
-  "statement_chars": 736
+  "statement_chars": 736,
+  "band": "p4"
  },
  "tt-seller-task-scheduler": {
   "id": 0,
@@ -5541,7 +5735,8 @@
   },
   "score": 0.0844,
   "a_reason": "us-asked",
-  "statement_chars": 734
+  "statement_chars": 734,
+  "band": "p4"
  },
  "construct-binary-tree-from-preorder-and-postorder-traversal": {
   "id": 889,
@@ -5563,7 +5758,8 @@
   },
   "score": 0.0831,
   "a_reason": "us-asked",
-  "statement_chars": 499
+  "statement_chars": 499,
+  "band": "p4"
  },
  "sort-an-array": {
   "id": 912,
@@ -5585,7 +5781,8 @@
   },
   "score": 0.0822,
   "a_reason": "asked-3m",
-  "statement_chars": 326
+  "statement_chars": 326,
+  "band": "p4"
  },
  "interval-list-intersections": {
   "id": 986,
@@ -5607,7 +5804,8 @@
   },
   "score": 0.0816,
   "a_reason": "us-asked",
-  "statement_chars": 804
+  "statement_chars": 804,
+  "band": "p4"
  },
  "find-the-difference": {
   "id": 389,
@@ -5629,7 +5827,8 @@
   },
   "score": 0.0815,
   "a_reason": "asked-3m",
-  "statement_chars": 249
+  "statement_chars": 249,
+  "band": "p4"
  },
  "odd-even-linked-list": {
   "id": 328,
@@ -5651,7 +5850,8 @@
   },
   "score": 0.0813,
   "a_reason": "asked-3m",
-  "statement_chars": 374
+  "statement_chars": 374,
+  "band": "p4"
  },
  "tt-all-simple-paths": {
   "id": 0,
@@ -5673,7 +5873,8 @@
   },
   "score": 0.0812,
   "a_reason": "us-asked",
-  "statement_chars": 352
+  "statement_chars": 352,
+  "band": "p4"
  },
  "tt-agent-tool-call-tracer": {
   "id": 0,
@@ -5695,7 +5896,8 @@
   },
   "score": 0.0812,
   "a_reason": "us-asked",
-  "statement_chars": 657
+  "statement_chars": 657,
+  "band": "p4"
  },
  "tt-removable-timestamp-task-scheduler": {
   "id": 0,
@@ -5717,7 +5919,8 @@
   },
   "score": 0.0803,
   "a_reason": "us-asked",
-  "statement_chars": 569
+  "statement_chars": 569,
+  "band": "p4"
  },
  "search-insert-position": {
   "id": 35,
@@ -5739,7 +5942,8 @@
   },
   "score": 0.0803,
   "a_reason": "us-asked",
-  "statement_chars": 345
+  "statement_chars": 345,
+  "band": "p4"
  },
  "tt-pythagorean-triple-in-array": {
   "id": 0,
@@ -5761,7 +5965,8 @@
   },
   "score": 0.0793,
   "a_reason": "us-asked",
-  "statement_chars": 371
+  "statement_chars": 371,
+  "band": "p4"
  },
  "create-binary-tree-from-descriptions": {
   "id": 2196,
@@ -5783,7 +5988,8 @@
   },
   "score": 0.0793,
   "a_reason": "us-asked",
-  "statement_chars": 696
+  "statement_chars": 696,
+  "band": "p4"
  },
  "tt-idempotent-versioned-update": {
   "id": 0,
@@ -5805,7 +6011,8 @@
   },
   "score": 0.0769,
   "a_reason": "us-asked",
-  "statement_chars": 473
+  "statement_chars": 473,
+  "band": "p4"
  },
  "tt-ai-assisted-order-validator": {
   "id": 0,
@@ -5827,7 +6034,8 @@
   },
   "score": 0.076,
   "a_reason": "us-asked",
-  "statement_chars": 462
+  "statement_chars": 462,
+  "band": "p4"
  },
  "recover-binary-search-tree": {
   "id": 99,
@@ -5851,7 +6059,8 @@
   },
   "score": 0.0753,
   "a_reason": "pinned",
-  "statement_chars": 391
+  "statement_chars": 391,
+  "band": "p4"
  },
  "flatten-a-multilevel-doubly-linked-list": {
   "id": 430,
@@ -5873,7 +6082,8 @@
   },
   "score": 0.0707,
   "a_reason": "us-asked",
-  "statement_chars": 976
+  "statement_chars": 976,
+  "band": "p4"
  },
  "tt-most-frequent-ties-smaller": {
   "id": 0,
@@ -5895,7 +6105,8 @@
   },
   "score": 0.0699,
   "a_reason": "us-asked",
-  "statement_chars": 225
+  "statement_chars": 225,
+  "band": "p4"
  },
  "longest-common-suffix-queries": {
   "id": 3093,
@@ -5917,7 +6128,8 @@
   },
   "score": 0.0665,
   "a_reason": "us-asked",
-  "statement_chars": 1568
+  "statement_chars": 1568,
+  "band": "p4"
  },
  "maximum-length-of-a-concatenated-string-with-unique-characters": {
   "id": 1239,
@@ -5939,7 +6151,8 @@
   },
   "score": 0.0654,
   "a_reason": "us-asked",
-  "statement_chars": 475
+  "statement_chars": 475,
+  "band": "p4"
  },
  "tt-sorted-array-more-than-n-over-3": {
   "id": 0,
@@ -5961,7 +6174,8 @@
   },
   "score": 0.0652,
   "a_reason": "us-asked",
-  "statement_chars": 433
+  "statement_chars": 433,
+  "band": "p4"
  },
  "count-of-interesting-subarrays": {
   "id": 2845,
@@ -5983,7 +6197,8 @@
   },
   "score": 0.063,
   "a_reason": "us-asked",
-  "statement_chars": 1138
+  "statement_chars": 1138,
+  "band": "p4"
  },
  "tt-longest-zigzag-grid-path": {
   "id": 0,
@@ -6005,7 +6220,8 @@
   },
   "score": 0.0627,
   "a_reason": "us-asked",
-  "statement_chars": 391
+  "statement_chars": 391,
+  "band": "p4"
  },
  "convert-sorted-array-to-binary-search-tree": {
   "id": 108,
@@ -6029,7 +6245,8 @@
   },
   "score": 0.0619,
   "a_reason": "asked-3m",
-  "statement_chars": 296
+  "statement_chars": 296,
+  "band": "p4"
  },
  "tt-contiguous-memory-allocator": {
   "id": 0,
@@ -6051,7 +6268,8 @@
   },
   "score": 0.0613,
   "a_reason": "us-asked",
-  "statement_chars": 621
+  "statement_chars": 621,
+  "band": "p4"
  },
  "find-minimum-in-rotated-sorted-array-ii": {
   "id": 154,
@@ -6073,7 +6291,8 @@
   },
   "score": 0.0611,
   "a_reason": "pinned",
-  "statement_chars": 585
+  "statement_chars": 585,
+  "band": "p5"
  },
  "partition-to-k-equal-sum-subsets": {
   "id": 698,
@@ -6097,7 +6316,8 @@
   },
   "score": 0.0602,
   "a_reason": "asked-3m",
-  "statement_chars": 284
+  "statement_chars": 284,
+  "band": "p5"
  },
  "kth-smallest-element-in-a-bst": {
   "id": 230,
@@ -6121,7 +6341,8 @@
   },
   "score": 0.0581,
   "a_reason": "pinned",
-  "statement_chars": 292
+  "statement_chars": 292,
+  "band": "p5"
  },
  "shu-de-zi-jie-gou-lcof": {
   "id": 0,
@@ -6145,7 +6366,8 @@
   },
   "score": 0.0549,
   "a_reason": "asked-3m",
-  "statement_chars": 330
+  "statement_chars": 330,
+  "band": "p5"
  },
  "tt-water-jug-shortest-operations": {
   "id": 0,
@@ -6167,7 +6389,8 @@
   },
   "score": 0.0538,
   "a_reason": "us-asked",
-  "statement_chars": 341
+  "statement_chars": 341,
+  "band": "p5"
  },
  "minimum-add-to-make-parentheses-valid": {
   "id": 921,
@@ -6189,7 +6412,8 @@
   },
   "score": 0.05,
   "a_reason": "us-asked",
-  "statement_chars": 347
+  "statement_chars": 347,
+  "band": "p5"
  },
  "most-frequent-subtree-sum": {
   "id": 508,
@@ -6211,7 +6435,8 @@
   },
   "score": 0.0485,
   "a_reason": "us-asked",
-  "statement_chars": 258
+  "statement_chars": 258,
+  "band": "p5"
  },
  "shu-zu-zhong-de-ni-xu-dui-lcof": {
   "id": 0,
@@ -6235,7 +6460,8 @@
   },
   "score": 0.0473,
   "a_reason": "asked-3m",
-  "statement_chars": 245
+  "statement_chars": 245,
+  "band": "p5"
  },
  "tt-die-beats-probability": {
   "id": 0,
@@ -6257,7 +6483,8 @@
   },
   "score": 0.0472,
   "a_reason": "us-asked",
-  "statement_chars": 298
+  "statement_chars": 298,
+  "band": "p5"
  },
  "missing-ranges": {
   "id": 163,
@@ -6279,7 +6506,8 @@
   },
   "score": 0.0468,
   "a_reason": "us-asked",
-  "statement_chars": 535
+  "statement_chars": 535,
+  "band": "p5"
  },
  "tt-spiral-matrix-constant-space": {
   "id": 0,
@@ -6301,7 +6529,8 @@
   },
   "score": 0.0466,
   "a_reason": "pinned",
-  "statement_chars": 270
+  "statement_chars": 270,
+  "band": "p5"
  },
  "swim-in-rising-water": {
   "id": 778,
@@ -6323,7 +6552,8 @@
   },
   "score": 0.0466,
   "a_reason": "us-asked",
-  "statement_chars": 712
+  "statement_chars": 712,
+  "band": "p5"
  },
  "mini-parser": {
   "id": 385,
@@ -6345,7 +6575,8 @@
   },
   "score": 0.0411,
   "a_reason": "us-asked",
-  "statement_chars": 500
+  "statement_chars": 500,
+  "band": "p5"
  },
  "tt-login-count-per-user-per-day": {
   "id": 0,
@@ -6367,7 +6598,8 @@
   },
   "score": 0.0406,
   "a_reason": "us-asked",
-  "statement_chars": 281
+  "statement_chars": 281,
+  "band": "p5"
  },
  "wildcard-matching": {
   "id": 44,
@@ -6391,7 +6623,8 @@
   },
   "score": 0.0403,
   "a_reason": "asked-3m",
-  "statement_chars": 426
+  "statement_chars": 426,
+  "band": "p5"
  },
  "number-of-days-between-two-dates": {
   "id": 1360,
@@ -6413,7 +6646,8 @@
   },
   "score": 0.0401,
   "a_reason": "us-asked",
-  "statement_chars": 220
+  "statement_chars": 220,
+  "band": "p5"
  },
  "lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof": {
   "id": 0,
@@ -6437,7 +6671,8 @@
   },
   "score": 0.039,
   "a_reason": "asked-3m",
-  "statement_chars": 190
+  "statement_chars": 190,
+  "band": "p5"
  },
  "remove-duplicates-from-sorted-list": {
   "id": 83,
@@ -6461,7 +6696,8 @@
   },
   "score": 0.0367,
   "a_reason": "us-asked",
-  "statement_chars": 210
+  "statement_chars": 210,
+  "band": "p5"
  },
  "min-cost-climbing-stairs": {
   "id": 746,
@@ -6483,7 +6719,8 @@
   },
   "score": 0.0367,
   "a_reason": "us-asked",
-  "statement_chars": 559
+  "statement_chars": 559,
+  "band": "p5"
  },
  "amount-of-time-for-binary-tree-to-be-infected": {
   "id": 2385,
@@ -6505,7 +6742,8 @@
   },
   "score": 0.0367,
   "a_reason": "us-asked",
-  "statement_chars": 489
+  "statement_chars": 489,
+  "band": "p5"
  },
  "tt-flatten-multilevel-list-skip-empty": {
   "id": 0,
@@ -6527,7 +6765,8 @@
   },
   "score": 0.0353,
   "a_reason": "us-asked",
-  "statement_chars": 321
+  "statement_chars": 321,
+  "band": "p5"
  },
  "kth-smallest-subarray-sum": {
   "id": 1918,
@@ -6549,7 +6788,8 @@
   },
   "score": 0.0339,
   "a_reason": "us-asked",
-  "statement_chars": 638
+  "statement_chars": 638,
+  "band": "p5"
  },
  "populating-next-right-pointers-in-each-node": {
   "id": 116,
@@ -6571,7 +6811,8 @@
   },
   "score": 0.0336,
   "a_reason": "us-asked",
-  "statement_chars": 534
+  "statement_chars": 534,
+  "band": "p5"
  },
  "longest-string-chain": {
   "id": 1048,
@@ -6593,7 +6834,8 @@
   },
   "score": 0.0306,
   "a_reason": "us-asked",
-  "statement_chars": 734
+  "statement_chars": 734,
+  "band": "p5"
  },
  "successful-pairs-of-spells-and-potions": {
   "id": 2300,
@@ -6615,7 +6857,8 @@
   },
   "score": 0.0306,
   "a_reason": "us-asked",
-  "statement_chars": 851
+  "statement_chars": 851,
+  "band": "p5"
  },
  "tt-subarray-max-min-plus-max": {
   "id": 0,
@@ -6637,7 +6880,8 @@
   },
   "score": 0.0287,
   "a_reason": "us-asked",
-  "statement_chars": 398
+  "statement_chars": 398,
+  "band": "p5"
  },
  "minimum-swaps-to-make-strings-equal": {
   "id": 1247,
@@ -6659,7 +6903,8 @@
   },
   "score": 0.0281,
   "a_reason": "us-asked",
-  "statement_chars": 642
+  "statement_chars": 642,
+  "band": "p5"
  },
  "yong-liang-ge-zhan-shi-xian-dui-lie-lcof": {
   "id": 0,
@@ -6683,7 +6928,8 @@
   },
   "score": 0.0276,
   "a_reason": "asked-3m",
-  "statement_chars": 547
+  "statement_chars": 547,
+  "band": "p5"
  },
  "maximum-length-of-repeated-subarray": {
   "id": 718,
@@ -6707,7 +6953,8 @@
   },
   "score": 0.0272,
   "a_reason": "asked-3m",
-  "statement_chars": 276
+  "statement_chars": 276,
+  "band": "p5"
  },
  "palindrome-linked-list": {
   "id": 234,
@@ -6731,7 +6978,8 @@
   },
   "score": 0.0271,
   "a_reason": "asked-3m",
-  "statement_chars": 225
+  "statement_chars": 225,
+  "band": "p5"
  },
  "tt-inorder-string-iterator": {
   "id": 0,
@@ -6753,7 +7001,8 @@
   },
   "score": 0.026,
   "a_reason": "us-asked",
-  "statement_chars": 314
+  "statement_chars": 314,
+  "band": "p5"
  },
  "triangle": {
   "id": 120,
@@ -6777,7 +7026,8 @@
   },
   "score": 0.0175,
   "a_reason": "asked-3m",
-  "statement_chars": 525
+  "statement_chars": 525,
+  "band": "p5"
  },
  "shortest-subarray-with-sum-at-least-k": {
   "id": 862,
@@ -6801,7 +7051,8 @@
   },
   "score": 0.0155,
   "a_reason": "asked-3m",
-  "statement_chars": 294
+  "statement_chars": 294,
+  "band": "p5"
  },
  "interleaving-string": {
   "id": 97,
@@ -6825,7 +7076,8 @@
   },
   "score": 0.0137,
   "a_reason": "asked-3m",
-  "statement_chars": 579
+  "statement_chars": 579,
+  "band": "p5"
  },
  "max-submatrix-lcci": {
   "id": 0,
@@ -6849,7 +7101,8 @@
   },
   "score": 0.0082,
   "a_reason": "asked-3m",
-  "statement_chars": 283
+  "statement_chars": 283,
+  "band": "p5"
  },
  "substring-with-concatenation-of-all-words": {
   "id": 30,
@@ -6873,7 +7126,8 @@
   },
   "score": 0.008,
   "a_reason": "asked-3m",
-  "statement_chars": 1198
+  "statement_chars": 1198,
+  "band": "p5"
  },
  "additive-number": {
   "id": 306,
@@ -6897,7 +7151,8 @@
   },
   "score": 0.0062,
   "a_reason": "asked-3m",
-  "statement_chars": 497
+  "statement_chars": 497,
+  "band": "p5"
  },
  "binary-tree-level-order-traversal-ii": {
   "id": 107,
@@ -6921,7 +7176,8 @@
   },
   "score": 0.0039,
   "a_reason": "asked-3m",
-  "statement_chars": 251
+  "statement_chars": 251,
+  "band": "p5"
  },
  "number-of-submatrices-that-sum-to-target": {
   "id": 1074,
@@ -6945,7 +7201,8 @@
   },
   "score": 0.0032,
   "a_reason": "asked-3m",
-  "statement_chars": 559
+  "statement_chars": 559,
+  "band": "p5"
  },
  "shortest-path-with-alternating-colors": {
   "id": 1129,
@@ -6969,7 +7226,8 @@
   },
   "score": 0.0032,
   "a_reason": "asked-3m",
-  "statement_chars": 602
+  "statement_chars": 602,
+  "band": "p5"
  },
  "last-stone-weight-ii": {
   "id": 1049,
@@ -6993,7 +7251,8 @@
   },
   "score": 0.0031,
   "a_reason": "asked-3m",
-  "statement_chars": 520
+  "statement_chars": 520,
+  "band": "p5"
  },
  "maximum-subarray-sum-with-one-deletion": {
   "id": 1186,
@@ -7017,7 +7276,8 @@
   },
   "score": 0.0022,
   "a_reason": "asked-3m",
-  "statement_chars": 501
+  "statement_chars": 501,
+  "band": "p5"
  },
  "find-the-most-competitive-subsequence": {
   "id": 1673,
@@ -7041,7 +7301,8 @@
   },
   "score": 0.0022,
   "a_reason": "asked-3m",
-  "statement_chars": 483
+  "statement_chars": 483,
+  "band": "p5"
  },
  "xun-bao": {
   "id": 0,
@@ -7065,7 +7326,8 @@
   },
   "score": 0.0019,
   "a_reason": "asked-3m",
-  "statement_chars": 916
+  "statement_chars": 916,
+  "band": "p5"
  },
  "day-of-the-week": {
   "id": 1185,
@@ -7089,7 +7351,8 @@
   },
   "score": 0.0011,
   "a_reason": "asked-3m",
-  "statement_chars": 406
+  "statement_chars": 406,
+  "band": "p5"
  },
  "longest-repeating-substring": {
   "id": 1062,
@@ -7113,7 +7376,8 @@
   },
   "score": 0.001,
   "a_reason": "asked-3m",
-  "statement_chars": 271
+  "statement_chars": 271,
+  "band": "p5"
  },
  "maximum-of-absolute-value-expression": {
   "id": 1131,
@@ -7137,7 +7401,8 @@
   },
   "score": 0.001,
   "a_reason": "asked-3m",
-  "statement_chars": 324
+  "statement_chars": 324,
+  "band": "p5"
  },
  "single-threaded-cpu": {
   "id": 1834,
@@ -7163,7 +7428,8 @@
   "score": 0.0,
   "a_reason": "us-tag-recent",
   "title_zh": "单线程 CPU",
-  "statement_chars": 1402
+  "statement_chars": 1402,
+  "band": "p5"
  },
  "block-placement-queries": {
   "id": 3161,
@@ -7191,7 +7457,8 @@
   "score": 0.0,
   "a_reason": "us-tag-recent",
   "title_zh": "物块放置查询",
-  "statement_chars": 1014
+  "statement_chars": 1014,
+  "band": "p5"
  },
  "lfu-cache": {
   "id": 460,
@@ -7215,7 +7482,8 @@
   },
   "score": 0.491,
   "a_reason": "",
-  "statement_chars": 1553
+  "statement_chars": 1553,
+  "band": "b"
  },
  "reorder-list": {
   "id": 143,
@@ -7247,7 +7515,8 @@
   "score": 0.2752,
   "a_reason": "",
   "title_zh": "重排链表",
-  "statement_chars": 291
+  "statement_chars": 291,
+  "band": "b"
  },
  "compare-version-numbers": {
   "id": 165,
@@ -7277,7 +7546,8 @@
   "score": 0.2392,
   "a_reason": "",
   "title_zh": "比较版本号",
-  "statement_chars": 723
+  "statement_chars": 723,
+  "band": "b"
  },
  "parallel-courses-iii": {
   "id": 2050,
@@ -7299,7 +7569,8 @@
   },
   "score": 0.2359,
   "a_reason": "",
-  "statement_chars": 1172
+  "statement_chars": 1172,
+  "band": "b"
  },
  "number-of-distinct-islands-ii": {
   "id": 711,
@@ -7321,7 +7592,8 @@
   },
   "score": 0.2339,
   "a_reason": "",
-  "statement_chars": 470
+  "statement_chars": 470,
+  "band": "b"
  },
  "basic-calculator-iii": {
   "id": 772,
@@ -7353,7 +7625,8 @@
   "score": 0.2067,
   "a_reason": "",
   "title_zh": "基本计算器 III",
-  "statement_chars": 349
+  "statement_chars": 349,
+  "band": "b"
  },
  "best-time-to-buy-and-sell-stock-ii": {
   "id": 122,
@@ -7384,7 +7657,8 @@
   "score": 0.2051,
   "a_reason": "",
   "title_zh": "买卖股票的最佳时机 II",
-  "statement_chars": 620
+  "statement_chars": 620,
+  "band": "b"
  },
  "coin-change": {
   "id": 322,
@@ -7417,7 +7691,8 @@
   "score": 0.2012,
   "a_reason": "",
   "title_zh": "零钱兑换",
-  "statement_chars": 353
+  "statement_chars": 353,
+  "band": "b"
  },
  "construct-binary-tree-from-preorder-and-inorder-traversal": {
   "id": 105,
@@ -7450,7 +7725,8 @@
   "score": 0.1842,
   "a_reason": "",
   "title_zh": "从前序与中序遍历序列构造二叉树",
-  "statement_chars": 455
+  "statement_chars": 455,
+  "band": "b"
  },
  "reverse-nodes-in-even-length-groups": {
   "id": 2074,
@@ -7472,7 +7748,8 @@
   },
   "score": 0.1819,
   "a_reason": "",
-  "statement_chars": 632
+  "statement_chars": 632,
+  "band": "b"
  },
  "smallest-subsequence-of-distinct-characters": {
   "id": 1081,
@@ -7499,7 +7776,8 @@
   "score": 0.1814,
   "a_reason": "",
   "title_zh": "不同字符的最小子序列",
-  "statement_chars": 230
+  "statement_chars": 230,
+  "band": "b"
  },
  "first-day-where-you-have-been-in-all-the-rooms": {
   "id": 1997,
@@ -7524,7 +7802,8 @@
   "score": 0.1814,
   "a_reason": "",
   "title_zh": "访问完所有房间的第一天",
-  "statement_chars": 887
+  "statement_chars": 887,
+  "band": "b"
  },
  "subarray-with-elements-greater-than-varying-threshold": {
   "id": 2334,
@@ -7546,7 +7825,8 @@
   "score": 0.1814,
   "a_reason": "",
   "title_zh": "元素值大于变化阈值的子数组",
-  "statement_chars": 535
+  "statement_chars": 535,
+  "band": "b"
  },
  "reverse-linked-list-ii": {
   "id": 92,
@@ -7580,7 +7860,8 @@
   "score": 0.1695,
   "a_reason": "",
   "title_zh": "反转链表 II",
-  "statement_chars": 326
+  "statement_chars": 326,
+  "band": "b"
  },
  "add-two-numbers": {
   "id": 2,
@@ -7612,7 +7893,8 @@
   "score": 0.1644,
   "a_reason": "",
   "title_zh": "两数相加",
-  "statement_chars": 374
+  "statement_chars": 374,
+  "band": "b"
  },
  "linked-list-cycle-ii": {
   "id": 142,
@@ -7644,7 +7926,8 @@
   "score": 0.1634,
   "a_reason": "",
   "title_zh": "环形链表 II",
-  "statement_chars": 540
+  "statement_chars": 540,
+  "band": "b"
  },
  "best-time-to-buy-and-sell-stock-iii": {
   "id": 123,
@@ -7668,7 +7951,8 @@
   },
   "score": 0.1586,
   "a_reason": "",
-  "statement_chars": 653
+  "statement_chars": 653,
+  "band": "b"
  },
  "meeting-rooms-iii": {
   "id": 2402,
@@ -7696,7 +7980,8 @@
   "score": 0.1577,
   "a_reason": "",
   "title_zh": "会议室 III",
-  "statement_chars": 1235
+  "statement_chars": 1235,
+  "band": "b"
  },
  "minimum-swaps-to-group-all-1s-together": {
   "id": 1151,
@@ -7721,7 +8006,8 @@
   "score": 0.1547,
   "a_reason": "",
   "title_zh": "最少交换次数来组合所有的 1",
-  "statement_chars": 529
+  "statement_chars": 529,
+  "band": "b"
  },
  "shortest-bridge": {
   "id": 934,
@@ -7753,7 +8039,8 @@
   "score": 0.1546,
   "a_reason": "",
   "title_zh": "最短的桥",
-  "statement_chars": 427
+  "statement_chars": 427,
+  "band": "b"
  },
  "longest-increasing-path-in-a-matrix": {
   "id": 329,
@@ -7790,7 +8077,8 @@
   "score": 0.1511,
   "a_reason": "",
   "title_zh": "矩阵中的最长递增路径",
-  "statement_chars": 410
+  "statement_chars": 410,
+  "band": "b"
  },
  "maximum-swap": {
   "id": 670,
@@ -7820,7 +8108,8 @@
   "score": 0.1499,
   "a_reason": "",
   "title_zh": "最大交换",
-  "statement_chars": 145
+  "statement_chars": 145,
+  "band": "b"
  },
  "best-time-to-buy-and-sell-stock-iv": {
   "id": 188,
@@ -7842,7 +8131,8 @@
   },
   "score": 0.1484,
   "a_reason": "",
-  "statement_chars": 547
+  "statement_chars": 547,
+  "band": "b"
  },
  "find-peak-element": {
   "id": 162,
@@ -7877,7 +8167,8 @@
   "score": 0.1482,
   "a_reason": "",
   "title_zh": "寻找峰值",
-  "statement_chars": 413
+  "statement_chars": 413,
+  "band": "b"
  },
  "word-break-ii": {
   "id": 140,
@@ -7912,7 +8203,8 @@
   "score": 0.1449,
   "a_reason": "",
   "title_zh": "单词拆分 II",
-  "statement_chars": 633
+  "statement_chars": 633,
+  "band": "b"
  },
  "combination-sum-ii": {
   "id": 40,
@@ -7947,7 +8239,8 @@
   "score": 0.1439,
   "a_reason": "",
   "title_zh": "组合总和 II",
-  "statement_chars": 383
+  "statement_chars": 383,
+  "band": "b"
  },
  "daily-temperatures": {
   "id": 739,
@@ -7978,7 +8271,8 @@
   "score": 0.1437,
   "a_reason": "",
   "title_zh": "每日温度",
-  "statement_chars": 368
+  "statement_chars": 368,
+  "band": "b"
  },
  "snapshot-array": {
   "id": 1146,
@@ -8006,7 +8300,8 @@
   "score": 0.1402,
   "a_reason": "",
   "title_zh": "快照数组",
-  "statement_chars": 783
+  "statement_chars": 783,
+  "band": "b"
  },
  "longest-happy-string": {
   "id": 1405,
@@ -8032,7 +8327,8 @@
   "score": 0.1402,
   "a_reason": "",
   "title_zh": "最长快乐字符串",
-  "statement_chars": 444
+  "statement_chars": 444,
+  "band": "b"
  },
  "sort-colors": {
   "id": 75,
@@ -8065,7 +8361,8 @@
   "score": 0.1378,
   "a_reason": "",
   "title_zh": "颜色分类",
-  "statement_chars": 432
+  "statement_chars": 432,
+  "band": "b"
  },
  "container-with-most-water": {
   "id": 11,
@@ -8096,7 +8393,8 @@
   "score": 0.1368,
   "a_reason": "",
   "title_zh": "盛最多水的容器",
-  "statement_chars": 346
+  "statement_chars": 346,
+  "band": "b"
  },
  "house-robber-iii": {
   "id": 337,
@@ -8118,7 +8416,8 @@
   },
   "score": 0.1325,
   "a_reason": "",
-  "statement_chars": 397
+  "statement_chars": 397,
+  "band": "b"
  },
  "simplify-path": {
   "id": 71,
@@ -8143,7 +8442,8 @@
   "score": 0.1325,
   "a_reason": "",
   "title_zh": "简化路径",
-  "statement_chars": 858
+  "statement_chars": 858,
+  "band": "b"
  },
  "permutation-in-string": {
   "id": 567,
@@ -8165,7 +8465,8 @@
   },
   "score": 0.1315,
   "a_reason": "",
-  "statement_chars": 276
+  "statement_chars": 276,
+  "band": "b"
  },
  "remove-all-adjacent-duplicates-in-string-ii": {
   "id": 1209,
@@ -8190,7 +8491,8 @@
   "score": 0.128,
   "a_reason": "",
   "title_zh": "删除字符串中的所有相邻重复项 II",
-  "statement_chars": 436
+  "statement_chars": 436,
+  "band": "b"
  },
  "rotting-oranges": {
   "id": 994,
@@ -8221,7 +8523,8 @@
   "score": 0.1279,
   "a_reason": "",
   "title_zh": "腐烂的橘子",
-  "statement_chars": 464
+  "statement_chars": 464,
+  "band": "b"
  },
  "bus-routes": {
   "id": 815,
@@ -8247,7 +8550,8 @@
   "score": 0.1278,
   "a_reason": "",
   "title_zh": "公交路线",
-  "statement_chars": 643
+  "statement_chars": 643,
+  "band": "b"
  },
  "maximum-value-at-a-given-index-in-a-bounded-array": {
   "id": 1802,
@@ -8273,7 +8577,8 @@
   "score": 0.1278,
   "a_reason": "",
   "title_zh": "有界数组中指定下标处的最大值",
-  "statement_chars": 494
+  "statement_chars": 494,
+  "band": "b"
  },
  "incremental-memory-leak": {
   "id": 1860,
@@ -8298,7 +8603,8 @@
   "score": 0.1278,
   "a_reason": "",
   "title_zh": "增长的内存泄露",
-  "statement_chars": 847
+  "statement_chars": 847,
+  "band": "b"
  },
  "count-the-hidden-sequences": {
   "id": 2145,
@@ -8323,7 +8629,8 @@
   "score": 0.1278,
   "a_reason": "",
   "title_zh": "统计隐藏数组数目",
-  "statement_chars": 986
+  "statement_chars": 986,
+  "band": "b"
  },
  "length-of-the-longest-alphabetical-continuous-substring": {
   "id": 2414,
@@ -8347,7 +8654,8 @@
   "score": 0.1278,
   "a_reason": "",
   "title_zh": "最长的字母序连续子字符串的长度",
-  "statement_chars": 371
+  "statement_chars": 371,
+  "band": "b"
  },
  "most-popular-video-creator": {
   "id": 2456,
@@ -8375,7 +8683,8 @@
   "score": 0.1278,
   "a_reason": "",
   "title_zh": "最流行的视频创作者",
-  "statement_chars": 1071
+  "statement_chars": 1071,
+  "band": "b"
  },
  "closest-prime-numbers-in-range": {
   "id": 2523,
@@ -8403,7 +8712,8 @@
   "score": 0.1278,
   "a_reason": "",
   "title_zh": "范围内最接近的两个质数",
-  "statement_chars": 500
+  "statement_chars": 500,
+  "band": "b"
  },
  "find-the-score-of-all-prefixes-of-an-array": {
   "id": 2640,
@@ -8428,7 +8738,8 @@
   "score": 0.1278,
   "a_reason": "",
   "title_zh": "一个数组所有前缀的分数",
-  "statement_chars": 912
+  "statement_chars": 912,
+  "band": "b"
  },
  "count-complete-subarrays-in-an-array": {
   "id": 2799,
@@ -8454,7 +8765,8 @@
   "score": 0.1278,
   "a_reason": "",
   "title_zh": "统计完全子数组的数目",
-  "statement_chars": 355
+  "statement_chars": 355,
+  "band": "b"
  },
  "minimum-moves-to-pick-k-ones": {
   "id": 3086,
@@ -8481,7 +8793,8 @@
   "score": 0.1278,
   "a_reason": "",
   "title_zh": "拾起 K 个 1 需要的最少行动次数",
-  "statement_chars": 1780
+  "statement_chars": 1780,
+  "band": "b"
  },
  "minimum-operations-to-make-character-frequencies-equal": {
   "id": 3389,
@@ -8509,7 +8822,8 @@
   "score": 0.1278,
   "a_reason": "",
   "title_zh": "使字符频率相等的最少操作次数",
-  "statement_chars": 423
+  "statement_chars": 423,
+  "band": "b"
  },
  "minimum-cost-good-caption": {
   "id": 3441,
@@ -8534,7 +8848,8 @@
   "score": 0.1278,
   "a_reason": "",
   "title_zh": "变成好标题的最少代价",
-  "statement_chars": 1148
+  "statement_chars": 1148,
+  "band": "b"
  },
  "lexicographically-smallest-generated-string": {
   "id": 3474,
@@ -8560,7 +8875,8 @@
   "score": 0.1278,
   "a_reason": "",
   "title_zh": "字典序最小的生成字符串",
-  "statement_chars": 1091
+  "statement_chars": 1091,
+  "band": "b"
  },
  "remove-zero-sum-consecutive-nodes-from-linked-list": {
   "id": 1171,
@@ -8585,7 +8901,8 @@
   "score": 0.1227,
   "a_reason": "",
   "title_zh": "从链表中删去总和值为零的连续节点",
-  "statement_chars": 371
+  "statement_chars": 371,
+  "band": "b"
  },
  "remove-k-digits": {
   "id": 402,
@@ -8622,7 +8939,8 @@
   "score": 0.1224,
   "a_reason": "",
   "title_zh": "移掉 K 位数字",
-  "statement_chars": 387
+  "statement_chars": 387,
+  "band": "b"
  },
  "3sum-closest": {
   "id": 16,
@@ -8653,7 +8971,8 @@
   "score": 0.122,
   "a_reason": "",
   "title_zh": "最接近的三数之和",
-  "statement_chars": 370
+  "statement_chars": 370,
+  "band": "b"
  },
  "jump-game-ii": {
   "id": 45,
@@ -8684,7 +9003,8 @@
   "score": 0.1203,
   "a_reason": "",
   "title_zh": "跳跃游戏 II",
-  "statement_chars": 403
+  "statement_chars": 403,
+  "band": "b"
  },
  "longest-common-prefix": {
   "id": 14,
@@ -8715,7 +9035,8 @@
   "score": 0.1191,
   "a_reason": "",
   "title_zh": "最长公共前缀",
-  "statement_chars": 254
+  "statement_chars": 254,
+  "band": "b"
  },
  "path-sum-ii": {
   "id": 113,
@@ -8739,7 +9060,8 @@
   },
   "score": 0.1184,
   "a_reason": "",
-  "statement_chars": 367
+  "statement_chars": 367,
+  "band": "b"
  },
  "move-zeroes": {
   "id": 283,
@@ -8769,7 +9091,8 @@
   "score": 0.1177,
   "a_reason": "",
   "title_zh": "移动零",
-  "statement_chars": 249
+  "statement_chars": 249,
+  "band": "b"
  },
  "super-egg-drop": {
   "id": 887,
@@ -8800,7 +9123,8 @@
   "score": 0.1176,
   "a_reason": "",
   "title_zh": "鸡蛋掉落",
-  "statement_chars": 504
+  "statement_chars": 504,
+  "band": "b"
  },
  "design-add-and-search-words-data-structure": {
   "id": 211,
@@ -8827,7 +9151,8 @@
   "score": 0.1156,
   "a_reason": "",
   "title_zh": "添加与搜索单词 - 数据结构设计",
-  "statement_chars": 895
+  "statement_chars": 895,
+  "band": "b"
  },
  "permutations-ii": {
   "id": 47,
@@ -8858,7 +9183,8 @@
   "score": 0.1144,
   "a_reason": "",
   "title_zh": "全排列 II",
-  "statement_chars": 237
+  "statement_chars": 237,
+  "band": "b"
  },
  "partition-equal-subset-sum": {
   "id": 416,
@@ -8890,7 +9216,8 @@
   "score": 0.1134,
   "a_reason": "",
   "title_zh": "分割等和子集",
-  "statement_chars": 246
+  "statement_chars": 246,
+  "band": "b"
  },
  "brightest-position-on-street": {
   "id": 2021,
@@ -8917,7 +9244,8 @@
   "score": 0.1093,
   "a_reason": "",
   "title_zh": "街上最亮的位置",
-  "statement_chars": 641
+  "statement_chars": 641,
+  "band": "b"
  },
  "swap-nodes-in-pairs": {
   "id": 24,
@@ -8941,7 +9269,8 @@
   },
   "score": 0.109,
   "a_reason": "",
-  "statement_chars": 223
+  "statement_chars": 223,
+  "band": "b"
  },
  "remove-invalid-parentheses": {
   "id": 301,
@@ -8967,7 +9296,8 @@
   "score": 0.1081,
   "a_reason": "",
   "title_zh": "删除无效的括号",
-  "statement_chars": 277
+  "statement_chars": 277,
+  "band": "b"
  },
  "reorganize-string": {
   "id": 767,
@@ -8994,7 +9324,8 @@
   "score": 0.1073,
   "a_reason": "",
   "title_zh": "重构字符串",
-  "statement_chars": 183
+  "statement_chars": 183,
+  "band": "b"
  },
  "convert-binary-search-tree-to-sorted-doubly-linked-list": {
   "id": 426,
@@ -9024,7 +9355,8 @@
   "score": 0.1049,
   "a_reason": "",
   "title_zh": "将二叉搜索树转化为排序的双向链表",
-  "statement_chars": 382
+  "statement_chars": 382,
+  "band": "b"
  },
  "minimum-remove-to-make-valid-parentheses": {
   "id": 1249,
@@ -9054,7 +9386,8 @@
   "score": 0.1045,
   "a_reason": "",
   "title_zh": "移除无效的括号",
-  "statement_chars": 462
+  "statement_chars": 462,
+  "band": "b"
  },
  "score-of-parentheses": {
   "id": 856,
@@ -9080,7 +9413,8 @@
   "score": 0.1041,
   "a_reason": "",
   "title_zh": "括号的分数",
-  "statement_chars": 269
+  "statement_chars": 269,
+  "band": "b"
  },
  "kth-missing-positive-number": {
   "id": 1539,
@@ -9105,7 +9439,8 @@
   "score": 0.1039,
   "a_reason": "",
   "title_zh": "第 k 个缺失的正整数",
-  "statement_chars": 410
+  "statement_chars": 410,
+  "band": "b"
  },
  "binary-tree-longest-consecutive-sequence": {
   "id": 298,
@@ -9132,7 +9467,8 @@
   "score": 0.1038,
   "a_reason": "",
   "title_zh": "二叉树最长连续序列",
-  "statement_chars": 376
+  "statement_chars": 376,
+  "band": "b"
  },
  "matchsticks-to-square": {
   "id": 473,
@@ -9160,7 +9496,8 @@
   "score": 0.1037,
   "a_reason": "",
   "title_zh": "火柴拼正方形",
-  "statement_chars": 367
+  "statement_chars": 367,
+  "band": "b"
  },
  "capacity-to-ship-packages-within-d-days": {
   "id": 1011,
@@ -9182,7 +9519,8 @@
   "score": 0.1033,
   "a_reason": "",
   "title_zh": "在 D 天内送达包裹的能力",
-  "statement_chars": 679
+  "statement_chars": 679,
+  "band": "b"
  },
  "meeting-rooms": {
   "id": 252,
@@ -9208,7 +9546,8 @@
   "score": 0.1032,
   "a_reason": "",
   "title_zh": "会议室",
-  "statement_chars": 355
+  "statement_chars": 355,
+  "band": "b"
  },
  "walls-and-gates": {
   "id": 286,
@@ -9234,7 +9573,8 @@
   "score": 0.1032,
   "a_reason": "",
   "title_zh": "墙与门",
-  "statement_chars": 620
+  "statement_chars": 620,
+  "band": "b"
  },
  "clone-graph": {
   "id": 133,
@@ -9261,7 +9601,8 @@
   "score": 0.1031,
   "a_reason": "",
   "title_zh": "克隆图",
-  "statement_chars": 792
+  "statement_chars": 792,
+  "band": "b"
  },
  "shortest-distance-from-all-buildings": {
   "id": 317,
@@ -9292,7 +9633,8 @@
   "score": 0.1031,
   "a_reason": "",
   "title_zh": "离建筑物最近的距离",
-  "statement_chars": 559
+  "statement_chars": 559,
+  "band": "b"
  },
  "frog-jump": {
   "id": 403,
@@ -9317,7 +9659,8 @@
   "score": 0.1031,
   "a_reason": "",
   "title_zh": "青蛙过河",
-  "statement_chars": 662
+  "statement_chars": 662,
+  "band": "b"
  },
  "asteroid-collision": {
   "id": 735,
@@ -9343,7 +9686,8 @@
   "score": 0.1031,
   "a_reason": "",
   "title_zh": "小行星碰撞",
-  "statement_chars": 663
+  "statement_chars": 663,
+  "band": "b"
  },
  "minimize-malware-spread": {
   "id": 924,
@@ -9372,7 +9716,8 @@
   "score": 0.1031,
   "a_reason": "",
   "title_zh": "尽量减少恶意软件的传播",
-  "statement_chars": 783
+  "statement_chars": 783,
+  "band": "b"
  },
  "minimum-area-rectangle": {
   "id": 939,
@@ -9394,7 +9739,8 @@
   "score": 0.1031,
   "a_reason": "",
   "title_zh": "最小面积矩形",
-  "statement_chars": 332
+  "statement_chars": 332,
+  "band": "b"
  },
  "greatest-common-divisor-of-strings": {
   "id": 1071,
@@ -9416,7 +9762,8 @@
   "score": 0.1031,
   "a_reason": "",
   "title_zh": "字符串的最大公因子",
-  "statement_chars": 416
+  "statement_chars": 416,
+  "band": "b"
  },
  "course-schedule-iv": {
   "id": 1462,
@@ -9443,7 +9790,8 @@
   "score": 0.1031,
   "a_reason": "",
   "title_zh": "课程表 IV",
-  "statement_chars": 1054
+  "statement_chars": 1054,
+  "band": "b"
  },
  "reorder-routes-to-make-all-paths-lead-to-the-city-zero": {
   "id": 1466,
@@ -9469,7 +9817,8 @@
   "score": 0.1031,
   "a_reason": "",
   "title_zh": "重新规划路线",
-  "statement_chars": 715
+  "statement_chars": 715,
+  "band": "b"
  },
  "number-of-good-leaf-nodes-pairs": {
   "id": 1530,
@@ -9501,7 +9850,8 @@
   "score": 0.1031,
   "a_reason": "",
   "title_zh": "好叶子节点对的数量",
-  "statement_chars": 622
+  "statement_chars": 622,
+  "band": "b"
  },
  "min-cost-to-connect-all-points": {
   "id": 1584,
@@ -9531,7 +9881,8 @@
   "score": 0.1031,
   "a_reason": "",
   "title_zh": "连接所有点的最小费用",
-  "statement_chars": 607
+  "statement_chars": 607,
+  "band": "b"
  },
  "minimum-swaps-to-group-all-1s-together-ii": {
   "id": 2134,
@@ -9558,7 +9909,8 @@
   "score": 0.1031,
   "a_reason": "",
   "title_zh": "最少交换次数来组合所有的 1 II",
-  "statement_chars": 654
+  "statement_chars": 654,
+  "band": "b"
  },
  "split-message-based-on-limit": {
   "id": 2468,
@@ -9583,7 +9935,8 @@
   "score": 0.1031,
   "a_reason": "",
   "title_zh": "根据限制分割消息",
-  "statement_chars": 929
+  "statement_chars": 929,
+  "band": "b"
  },
  "minimum-moves-to-spread-stones-over-grid": {
   "id": 2850,
@@ -9612,7 +9965,8 @@
   "score": 0.1031,
   "a_reason": "",
   "title_zh": "将石头分散到网格图的最少移动次数",
-  "statement_chars": 703
+  "statement_chars": 703,
+  "band": "b"
  },
  "find-the-length-of-the-longest-common-prefix": {
   "id": 3043,
@@ -9639,7 +9993,8 @@
   "score": 0.1031,
   "a_reason": "",
   "title_zh": "最长公共前缀的长度",
-  "statement_chars": 694
+  "statement_chars": 694,
+  "band": "b"
  },
  "minimum-operations-to-write-the-letter-y-on-a-grid": {
   "id": 3071,
@@ -9666,7 +10021,8 @@
   "score": 0.1031,
   "a_reason": "",
   "title_zh": "在矩阵上写出字母 Y 所需的最少操作次数",
-  "statement_chars": 782
+  "statement_chars": 782,
+  "band": "b"
  },
  "house-robber-ii": {
   "id": 213,
@@ -9690,7 +10046,8 @@
   },
   "score": 0.0978,
   "a_reason": "",
-  "statement_chars": 458
+  "statement_chars": 458,
+  "band": "b"
  },
  "integer-to-roman": {
   "id": 12,
@@ -9714,7 +10071,8 @@
   },
   "score": 0.0959,
   "a_reason": "",
-  "statement_chars": 943
+  "statement_chars": 943,
+  "band": "b"
  },
  "search-a-2d-matrix": {
   "id": 74,
@@ -9738,7 +10096,8 @@
   },
   "score": 0.0953,
   "a_reason": "",
-  "statement_chars": 442
+  "statement_chars": 442,
+  "band": "b"
  },
  "valid-palindrome": {
   "id": 125,
@@ -9762,7 +10121,8 @@
   },
   "score": 0.0896,
   "a_reason": "",
-  "statement_chars": 417
+  "statement_chars": 417,
+  "band": "b"
  },
  "path-sum": {
   "id": 112,
@@ -9786,7 +10146,8 @@
   },
   "score": 0.0886,
   "a_reason": "",
-  "statement_chars": 541
+  "statement_chars": 541,
+  "band": "b"
  },
  "valid-palindrome-ii": {
   "id": 680,
@@ -9810,7 +10171,8 @@
   },
   "score": 0.087,
   "a_reason": "",
-  "statement_chars": 226
+  "statement_chars": 226,
+  "band": "b"
  },
  "contiguous-array": {
   "id": 525,
@@ -9834,7 +10196,8 @@
   },
   "score": 0.0857,
   "a_reason": "",
-  "statement_chars": 335
+  "statement_chars": 335,
+  "band": "b"
  },
  "unique-paths-ii": {
   "id": 63,
@@ -9858,7 +10221,8 @@
   },
   "score": 0.0852,
   "a_reason": "",
-  "statement_chars": 511
+  "statement_chars": 511,
+  "band": "b"
  },
  "search-a-2d-matrix-ii": {
   "id": 240,
@@ -9882,7 +10246,8 @@
   },
   "score": 0.0844,
   "a_reason": "",
-  "statement_chars": 498
+  "statement_chars": 498,
+  "band": "b"
  },
  "best-time-to-buy-and-sell-stock-with-transaction-fee": {
   "id": 714,
@@ -9906,7 +10271,8 @@
   },
   "score": 0.0803,
   "a_reason": "",
-  "statement_chars": 513
+  "statement_chars": 513,
+  "band": "b"
  },
  "letter-case-permutation": {
   "id": 784,
@@ -9930,7 +10296,8 @@
   },
   "score": 0.0798,
   "a_reason": "",
-  "statement_chars": 233
+  "statement_chars": 233,
+  "band": "b"
  },
  "merge-in-between-linked-lists": {
   "id": 1669,
@@ -9954,7 +10321,8 @@
   },
   "score": 0.0797,
   "a_reason": "",
-  "statement_chars": 587
+  "statement_chars": 587,
+  "band": "b"
  },
  "unique-binary-search-trees": {
   "id": 96,
@@ -9978,7 +10346,8 @@
   },
   "score": 0.0695,
   "a_reason": "",
-  "statement_chars": 137
+  "statement_chars": 137,
+  "band": "b"
  },
  "diagonal-traverse": {
   "id": 498,
@@ -10002,7 +10371,8 @@
   },
   "score": 0.0683,
   "a_reason": "",
-  "statement_chars": 283
+  "statement_chars": 283,
+  "band": "b"
  },
  "product-of-array-except-self": {
   "id": 238,
@@ -10026,7 +10396,8 @@
   },
   "score": 0.0667,
   "a_reason": "",
-  "statement_chars": 412
+  "statement_chars": 412,
+  "band": "b"
  },
  "first-missing-positive": {
   "id": 41,
@@ -10050,7 +10421,8 @@
   },
   "score": 0.0657,
   "a_reason": "",
-  "statement_chars": 303
+  "statement_chars": 303,
+  "band": "b"
  },
  "number-of-longest-increasing-subsequence": {
   "id": 673,
@@ -10074,7 +10446,8 @@
   },
   "score": 0.0637,
   "a_reason": "",
-  "statement_chars": 267
+  "statement_chars": 267,
+  "band": "b"
  },
  "powx-n": {
   "id": 50,
@@ -10098,7 +10471,8 @@
   },
   "score": 0.0629,
   "a_reason": "",
-  "statement_chars": 308
+  "statement_chars": 308,
+  "band": "b"
  },
  "maximum-profit-in-job-scheduling": {
   "id": 1235,
@@ -10122,7 +10496,8 @@
   },
   "score": 0.0544,
   "a_reason": "",
-  "statement_chars": 749
+  "statement_chars": 749,
+  "band": "b"
  },
  "as-far-from-land-as-possible": {
   "id": 1162,
@@ -10146,7 +10521,8 @@
   },
   "score": 0.0542,
   "a_reason": "",
-  "statement_chars": 515
+  "statement_chars": 515,
+  "band": "b"
  },
  "top-k-frequent-words": {
   "id": 692,
@@ -10170,7 +10546,8 @@
   },
   "score": 0.0525,
   "a_reason": "",
-  "statement_chars": 613
+  "statement_chars": 613,
+  "band": "b"
  },
  "permutation-sequence": {
   "id": 60,
@@ -10192,7 +10569,8 @@
   },
   "score": 0.0523,
   "a_reason": "",
-  "statement_chars": 285
+  "statement_chars": 285,
+  "band": "b"
  },
  "beautiful-arrangement-ii": {
   "id": 667,
@@ -10216,7 +10594,8 @@
   },
   "score": 0.0507,
   "a_reason": "",
-  "statement_chars": 453
+  "statement_chars": 453,
+  "band": "b"
  },
  "set-matrix-zeroes": {
   "id": 73,
@@ -10238,7 +10617,8 @@
   },
   "score": 0.0493,
   "a_reason": "",
-  "statement_chars": 450
+  "statement_chars": 450,
+  "band": "b"
  },
  "sum-root-to-leaf-numbers": {
   "id": 129,
@@ -10262,7 +10642,8 @@
   },
   "score": 0.046,
   "a_reason": "",
-  "statement_chars": 475
+  "statement_chars": 475,
+  "band": "b"
  },
  "word-ladder-ii": {
   "id": 126,
@@ -10284,7 +10665,8 @@
   },
   "score": 0.0303,
   "a_reason": "",
-  "statement_chars": 1039
+  "statement_chars": 1039,
+  "band": "b"
  },
  "single-number-iii": {
   "id": 260,
@@ -10306,7 +10688,8 @@
   },
   "score": 0.0275,
   "a_reason": "",
-  "statement_chars": 342
+  "statement_chars": 342,
+  "band": "b"
  },
  "vertical-order-traversal-of-a-binary-tree": {
   "id": 987,
@@ -10328,7 +10711,8 @@
   },
   "score": 0.0257,
   "a_reason": "",
-  "statement_chars": 855
+  "statement_chars": 855,
+  "band": "b"
  },
  "tt-chat-message-window-merge": {
   "id": 0,
@@ -10350,7 +10734,8 @@
   },
   "score": 0.025,
   "a_reason": "",
-  "statement_chars": 403
+  "statement_chars": 403,
+  "band": "b"
  },
  "tt-percentile-finder": {
   "id": 0,
@@ -10372,7 +10757,8 @@
   },
   "score": 0.025,
   "a_reason": "",
-  "statement_chars": 453
+  "statement_chars": 453,
+  "band": "b"
  },
  "ip-to-cidr": {
   "id": 751,
@@ -10394,7 +10780,8 @@
   },
   "score": 0.0245,
   "a_reason": "",
-  "statement_chars": 1597
+  "statement_chars": 1597,
+  "band": "b"
  },
  "binary-tree-cameras": {
   "id": 968,
@@ -10416,7 +10803,8 @@
   },
   "score": 0.024,
   "a_reason": "",
-  "statement_chars": 268
+  "statement_chars": 268,
+  "band": "b"
  },
  "flatten-binary-tree-to-linked-list": {
   "id": 114,
@@ -10440,7 +10828,8 @@
   },
   "score": 0.023,
   "a_reason": "",
-  "statement_chars": 353
+  "statement_chars": 353,
+  "band": "b"
  },
  "invert-binary-tree": {
   "id": 226,
@@ -10464,7 +10853,8 @@
   },
   "score": 0.0199,
   "a_reason": "",
-  "statement_chars": 212
+  "statement_chars": 212,
+  "band": "b"
  },
  "binary-tree-inorder-traversal": {
   "id": 94,
@@ -10488,7 +10878,8 @@
   },
   "score": 0.0192,
   "a_reason": "",
-  "statement_chars": 220
+  "statement_chars": 220,
+  "band": "b"
  },
  "check-completeness-of-a-binary-tree": {
   "id": 958,
@@ -10512,7 +10903,8 @@
   },
   "score": 0.0175,
   "a_reason": "",
-  "statement_chars": 358
+  "statement_chars": 358,
+  "band": "b"
  },
  "string-to-integer-atoi": {
   "id": 8,
@@ -10536,7 +10928,8 @@
   },
   "score": 0.0151,
   "a_reason": "",
-  "statement_chars": 1290
+  "statement_chars": 1290,
+  "band": "b"
  },
  "rotate-list": {
   "id": 61,
@@ -10560,7 +10953,8 @@
   },
   "score": 0.0151,
   "a_reason": "",
-  "statement_chars": 220
+  "statement_chars": 220,
+  "band": "b"
  },
  "perfect-squares": {
   "id": 279,
@@ -10584,7 +10978,8 @@
   },
   "score": 0.0135,
   "a_reason": "",
-  "statement_chars": 217
+  "statement_chars": 217,
+  "band": "b"
  },
  "maximal-rectangle": {
   "id": 85,
@@ -10608,7 +11003,8 @@
   },
   "score": 0.0129,
   "a_reason": "",
-  "statement_chars": 371
+  "statement_chars": 371,
+  "band": "b"
  },
  "4sum": {
   "id": 18,
@@ -10632,7 +11028,8 @@
   },
   "score": 0.0125,
   "a_reason": "",
-  "statement_chars": 466
+  "statement_chars": 466,
+  "band": "b"
  },
  "tt-weighted-sampler-dynamic-update": {
   "id": 0,
@@ -10654,7 +11051,8 @@
   },
   "score": 0.0123,
   "a_reason": "",
-  "statement_chars": 306
+  "statement_chars": 306,
+  "band": "b"
  },
  "tt-ip-range-to-cidr": {
   "id": 0,
@@ -10676,7 +11074,8 @@
   },
   "score": 0.0122,
   "a_reason": "",
-  "statement_chars": 499
+  "statement_chars": 499,
+  "band": "b"
  },
  "maximize-amount-after-two-days-of-conversions": {
   "id": 3387,
@@ -10698,7 +11097,8 @@
   },
   "score": 0.01,
   "a_reason": "",
-  "statement_chars": 1797
+  "statement_chars": 1797,
+  "band": "b"
  },
  "integer-break": {
   "id": 343,
@@ -10722,7 +11122,8 @@
   },
   "score": 0.0078,
   "a_reason": "",
-  "statement_chars": 207
+  "statement_chars": 207,
+  "band": "b"
  },
  "squares-of-a-sorted-array": {
   "id": 977,
@@ -10746,7 +11147,8 @@
   },
   "score": 0.0074,
   "a_reason": "",
-  "statement_chars": 331
+  "statement_chars": 331,
+  "band": "b"
  },
  "qing-wa-tiao-tai-jie-wen-ti-lcof": {
   "id": 0,
@@ -10770,7 +11172,8 @@
   },
   "score": 0.0071,
   "a_reason": "",
-  "statement_chars": 279
+  "statement_chars": 279,
+  "band": "b"
  },
  "longest-palindromic-subsequence": {
   "id": 516,
@@ -10794,7 +11197,8 @@
   },
   "score": 0.007,
   "a_reason": "",
-  "statement_chars": 236
+  "statement_chars": 236,
+  "band": "b"
  },
  "subsets-ii": {
   "id": 90,
@@ -10818,7 +11222,8 @@
   },
   "score": 0.0067,
   "a_reason": "",
-  "statement_chars": 239
+  "statement_chars": 239,
+  "band": "b"
  },
  "shuffle-an-array": {
   "id": 384,
@@ -10842,7 +11247,8 @@
   },
   "score": 0.0063,
   "a_reason": "",
-  "statement_chars": 680
+  "statement_chars": 680,
+  "band": "b"
  },
  "palindromic-substrings": {
   "id": 647,
@@ -10866,7 +11272,8 @@
   },
   "score": 0.0058,
   "a_reason": "",
-  "statement_chars": 255
+  "statement_chars": 255,
+  "band": "b"
  },
  "maximum-gap": {
   "id": 164,
@@ -10890,7 +11297,8 @@
   },
   "score": 0.0055,
   "a_reason": "",
-  "statement_chars": 300
+  "statement_chars": 300,
+  "band": "b"
  },
  "continuous-subarray-sum": {
   "id": 523,
@@ -10914,7 +11322,8 @@
   },
   "score": 0.0055,
   "a_reason": "",
-  "statement_chars": 564
+  "statement_chars": 564,
+  "band": "b"
  },
  "lowest-common-ancestor-of-a-binary-search-tree": {
   "id": 235,
@@ -10938,7 +11347,8 @@
   },
   "score": 0.0052,
   "a_reason": "",
-  "statement_chars": 449
+  "statement_chars": 449,
+  "band": "b"
  },
  "partition-list": {
   "id": 86,
@@ -10962,7 +11372,8 @@
   },
   "score": 0.0051,
   "a_reason": "",
-  "statement_chars": 272
+  "statement_chars": 272,
+  "band": "b"
  },
  "create-maximum-number": {
   "id": 321,
@@ -10986,7 +11397,8 @@
   },
   "score": 0.0051,
   "a_reason": "",
-  "statement_chars": 500
+  "statement_chars": 500,
+  "band": "b"
  },
  "minimum-depth-of-binary-tree": {
   "id": 111,
@@ -11010,7 +11422,8 @@
   },
   "score": 0.0049,
   "a_reason": "",
-  "statement_chars": 232
+  "statement_chars": 232,
+  "band": "b"
  },
  "summary-ranges": {
   "id": 228,
@@ -11032,7 +11445,8 @@
   },
   "score": 0.0047,
   "a_reason": "",
-  "statement_chars": 562
+  "statement_chars": 562,
+  "band": "b"
  },
  "valid-anagram": {
   "id": 242,
@@ -11056,7 +11470,8 @@
   },
   "score": 0.0047,
   "a_reason": "",
-  "statement_chars": 250
+  "statement_chars": 250,
+  "band": "b"
  },
  "evaluate-reverse-polish-notation": {
   "id": 150,
@@ -11080,7 +11495,8 @@
   },
   "score": 0.0042,
   "a_reason": "",
-  "statement_chars": 1013
+  "statement_chars": 1013,
+  "band": "b"
  },
  "nested-list-weight-sum": {
   "id": 339,
@@ -11102,7 +11518,8 @@
   },
   "score": 0.0041,
   "a_reason": "",
-  "statement_chars": 466
+  "statement_chars": 466,
+  "band": "b"
  },
  "predict-the-winner": {
   "id": 486,
@@ -11126,7 +11543,8 @@
   },
   "score": 0.0041,
   "a_reason": "",
-  "statement_chars": 746
+  "statement_chars": 746,
+  "band": "b"
  },
  "merge-two-binary-trees": {
   "id": 617,
@@ -11150,7 +11568,8 @@
   },
   "score": 0.004,
   "a_reason": "",
-  "statement_chars": 385
+  "statement_chars": 385,
+  "band": "b"
  },
  "greatest-sum-divisible-by-three": {
   "id": 1262,
@@ -11174,7 +11593,8 @@
   },
   "score": 0.0037,
   "a_reason": "",
-  "statement_chars": 315
+  "statement_chars": 315,
+  "band": "b"
  },
  "reconstruct-original-digits-from-english": {
   "id": 423,
@@ -11198,7 +11618,8 @@
   },
   "score": 0.0033,
   "a_reason": "",
-  "statement_chars": 258
+  "statement_chars": 258,
+  "band": "b"
  },
  "largest-perimeter-triangle": {
   "id": 976,
@@ -11222,7 +11643,8 @@
   },
   "score": 0.0032,
   "a_reason": "",
-  "statement_chars": 337
+  "statement_chars": 337,
+  "band": "b"
  },
  "sort-array-by-parity": {
   "id": 905,
@@ -11246,7 +11668,8 @@
   },
   "score": 0.0029,
   "a_reason": "",
-  "statement_chars": 247
+  "statement_chars": 247,
+  "band": "b"
  },
  "nge-tou-zi-de-dian-shu-lcof": {
   "id": 0,
@@ -11270,7 +11693,8 @@
   },
   "score": 0.0027,
   "a_reason": "",
-  "statement_chars": 500
+  "statement_chars": 500,
+  "band": "b"
  },
  "integer-to-english-words": {
   "id": 273,
@@ -11294,7 +11718,8 @@
   },
   "score": 0.0027,
   "a_reason": "",
-  "statement_chars": 277
+  "statement_chars": 277,
+  "band": "b"
  },
  "rabbits-in-forest": {
   "id": 781,
@@ -11318,7 +11743,8 @@
   },
   "score": 0.0026,
   "a_reason": "",
-  "statement_chars": 421
+  "statement_chars": 421,
+  "band": "b"
  },
  "lexicographical-numbers": {
   "id": 386,
@@ -11342,7 +11768,8 @@
   },
   "score": 0.0025,
   "a_reason": "",
-  "statement_chars": 182
+  "statement_chars": 182,
+  "band": "b"
  },
  "search-in-rotated-sorted-array-ii": {
   "id": 81,
@@ -11366,7 +11793,8 @@
   },
   "score": 0.0024,
   "a_reason": "",
-  "statement_chars": 683
+  "statement_chars": 683,
+  "band": "b"
  },
  "longest-subarray-of-1s-after-deleting-one-element": {
   "id": 1493,
@@ -11390,7 +11818,8 @@
   },
   "score": 0.0023,
   "a_reason": "",
-  "statement_chars": 373
+  "statement_chars": 373,
+  "band": "b"
  },
  "longest-palindrome": {
   "id": 409,
@@ -11414,7 +11843,8 @@
   },
   "score": 0.002,
   "a_reason": "",
-  "statement_chars": 268
+  "statement_chars": 268,
+  "band": "b"
  },
  "find-largest-value-in-each-tree-row": {
   "id": 515,
@@ -11438,7 +11868,8 @@
   },
   "score": 0.0018,
   "a_reason": "",
-  "statement_chars": 187
+  "statement_chars": 187,
+  "band": "b"
  },
  "scramble-string": {
   "id": 87,
@@ -11462,7 +11893,8 @@
   },
   "score": 0.0017,
   "a_reason": "",
-  "statement_chars": 1007
+  "statement_chars": 1007,
+  "band": "b"
  },
  "minimum-distance-between-bst-nodes": {
   "id": 783,
@@ -11486,7 +11918,8 @@
   },
   "score": 0.0017,
   "a_reason": "",
-  "statement_chars": 290
+  "statement_chars": 290,
+  "band": "b"
  },
  "two-sum-less-than-k": {
   "id": 1099,
@@ -11510,7 +11943,8 @@
   },
   "score": 0.0017,
   "a_reason": "",
-  "statement_chars": 343
+  "statement_chars": 343,
+  "band": "b"
  },
  "01-matrix": {
   "id": 542,
@@ -11534,7 +11968,8 @@
   },
   "score": 0.0016,
   "a_reason": "",
-  "statement_chars": 365
+  "statement_chars": 365,
+  "band": "b"
  },
  "car-fleet": {
   "id": 853,
@@ -11558,7 +11993,8 @@
   },
   "score": 0.0016,
   "a_reason": "",
-  "statement_chars": 964
+  "statement_chars": 964,
+  "band": "b"
  },
  "remove-covered-intervals": {
   "id": 1288,
@@ -11582,7 +12018,8 @@
   },
   "score": 0.0016,
   "a_reason": "",
-  "statement_chars": 330
+  "statement_chars": 330,
+  "band": "b"
  },
  "design-a-stack-with-increment-operation": {
   "id": 1381,
@@ -11606,7 +12043,8 @@
   },
   "score": 0.0016,
   "a_reason": "",
-  "statement_chars": 1417
+  "statement_chars": 1417,
+  "band": "b"
  },
  "pile-box-lcci": {
   "id": 0,
@@ -11630,7 +12068,8 @@
   },
   "score": 0.0015,
   "a_reason": "",
-  "statement_chars": 279
+  "statement_chars": 279,
+  "band": "b"
  },
  "assign-cookies": {
   "id": 455,
@@ -11654,7 +12093,8 @@
   },
   "score": 0.0015,
   "a_reason": "",
-  "statement_chars": 554
+  "statement_chars": 554,
+  "band": "b"
  },
  "sliding-window-median": {
   "id": 480,
@@ -11678,7 +12118,8 @@
   },
   "score": 0.0015,
   "a_reason": "",
-  "statement_chars": 645
+  "statement_chars": 645,
+  "band": "b"
  },
  "walking-robot-simulation": {
   "id": 874,
@@ -11702,7 +12143,8 @@
   },
   "score": 0.0015,
   "a_reason": "",
-  "statement_chars": 1108
+  "statement_chars": 1108,
+  "band": "b"
  },
  "boats-to-save-people": {
   "id": 881,
@@ -11726,7 +12168,8 @@
   },
   "score": 0.0015,
   "a_reason": "",
-  "statement_chars": 410
+  "statement_chars": 410,
+  "band": "b"
  },
  "distinct-subsequences-ii": {
   "id": 940,
@@ -11750,7 +12193,8 @@
   },
   "score": 0.0015,
   "a_reason": "",
-  "statement_chars": 431
+  "statement_chars": 431,
+  "band": "b"
  },
  "maximum-product-of-splitted-binary-tree": {
   "id": 1339,
@@ -11774,7 +12218,8 @@
   },
   "score": 0.0015,
   "a_reason": "",
-  "statement_chars": 432
+  "statement_chars": 432,
+  "band": "b"
  },
  "ugly-number": {
   "id": 263,
@@ -11798,7 +12243,8 @@
   },
   "score": 0.0014,
   "a_reason": "",
-  "statement_chars": 248
+  "statement_chars": 248,
+  "band": "b"
  },
  "third-maximum-number": {
   "id": 414,
@@ -11822,7 +12268,8 @@
   },
   "score": 0.0013,
   "a_reason": "",
-  "statement_chars": 345
+  "statement_chars": 345,
+  "band": "b"
  },
  "adding-two-negabinary-numbers": {
   "id": 1073,
@@ -11846,7 +12293,8 @@
   },
   "score": 0.0013,
   "a_reason": "",
-  "statement_chars": 527
+  "statement_chars": 527,
+  "band": "b"
  },
  "repeated-dna-sequences": {
   "id": 187,
@@ -11870,7 +12318,8 @@
   },
   "score": 0.0012,
   "a_reason": "",
-  "statement_chars": 371
+  "statement_chars": 371,
+  "band": "b"
  },
  "find-k-th-smallest-pair-distance": {
   "id": 719,
@@ -11894,7 +12343,8 @@
   },
   "score": 0.0012,
   "a_reason": "",
-  "statement_chars": 432
+  "statement_chars": 432,
+  "band": "b"
  },
  "majority-element": {
   "id": 169,
@@ -11918,7 +12368,8 @@
   },
   "score": 0.001,
   "a_reason": "",
-  "statement_chars": 303
+  "statement_chars": 303,
+  "band": "b"
  },
  "maximum-lcci": {
   "id": 0,
@@ -11942,7 +12393,8 @@
   },
   "score": 0.0009,
   "a_reason": "",
-  "statement_chars": 73
+  "statement_chars": 73,
+  "band": "b"
  },
  "reverse-subarray-to-maximize-array-value": {
   "id": 1330,
@@ -11966,7 +12418,8 @@
   },
   "score": 0.0009,
   "a_reason": "",
-  "statement_chars": 348
+  "statement_chars": 348,
+  "band": "b"
  },
  "find-two-non-overlapping-sub-arrays-each-with-target-sum": {
   "id": 1477,
@@ -11990,7 +12443,8 @@
   },
   "score": 0.0009,
   "a_reason": "",
-  "statement_chars": 660
+  "statement_chars": 660,
+  "band": "b"
  },
  "delete-node-in-a-linked-list": {
   "id": 237,
@@ -12014,7 +12468,8 @@
   },
   "score": 0.0008,
   "a_reason": "",
-  "statement_chars": 666
+  "statement_chars": 666,
+  "band": "b"
  },
  "the-maze-iii": {
   "id": 499,
@@ -12038,7 +12493,8 @@
   },
   "score": 0.0008,
   "a_reason": "",
-  "statement_chars": 1166
+  "statement_chars": 1166,
+  "band": "b"
  },
  "super-washing-machines": {
   "id": 517,
@@ -12062,7 +12518,8 @@
   },
   "score": 0.0008,
   "a_reason": "",
-  "statement_chars": 672
+  "statement_chars": 672,
+  "band": "b"
  },
  "array-partition-i": {
   "id": 561,
@@ -12086,7 +12543,8 @@
   },
   "score": 0.0008,
   "a_reason": "",
-  "statement_chars": 546
+  "statement_chars": 546,
+  "band": "b"
  },
  "preimage-size-of-factorial-zeroes-function": {
   "id": 793,
@@ -12110,7 +12568,8 @@
   },
   "score": 0.0008,
   "a_reason": "",
-  "statement_chars": 340
+  "statement_chars": 340,
+  "band": "b"
  },
  "fair-candy-swap": {
   "id": 888,
@@ -12134,7 +12593,8 @@
   },
   "score": 0.0008,
   "a_reason": "",
-  "statement_chars": 676
+  "statement_chars": 676,
+  "band": "b"
  },
  "lowest-common-ancestor-of-deepest-leaves": {
   "id": 1123,
@@ -12158,7 +12618,8 @@
   },
   "score": 0.0008,
   "a_reason": "",
-  "statement_chars": 640
+  "statement_chars": 640,
+  "band": "b"
  },
  "minimum-moves-to-make-array-complementary": {
   "id": 1674,
@@ -12182,7 +12643,8 @@
   },
   "score": 0.0008,
   "a_reason": "",
-  "statement_chars": 768
+  "statement_chars": 768,
+  "band": "b"
  },
  "zui-xiao-tiao-yue-ci-shu": {
   "id": 0,
@@ -12206,7 +12668,8 @@
   },
   "score": 0.0007,
   "a_reason": "",
-  "statement_chars": 475
+  "statement_chars": 475,
+  "band": "b"
  },
  "unique-binary-search-trees-ii": {
   "id": 95,
@@ -12230,7 +12693,8 @@
   },
   "score": 0.0007,
   "a_reason": "",
-  "statement_chars": 213
+  "statement_chars": 213,
+  "band": "b"
  },
  "swap-numbers-lcci": {
   "id": 0,
@@ -12254,7 +12718,8 @@
   },
   "score": 0.0006,
   "a_reason": "",
-  "statement_chars": 147
+  "statement_chars": 147,
+  "band": "b"
  },
  "majority-element-ii": {
   "id": 229,
@@ -12278,7 +12743,8 @@
   },
   "score": 0.0006,
   "a_reason": "",
-  "statement_chars": 249
+  "statement_chars": 249,
+  "band": "b"
  },
  "plus-one-linked-list": {
   "id": 369,
@@ -12302,7 +12768,8 @@
   },
   "score": 0.0006,
   "a_reason": "",
-  "statement_chars": 220
+  "statement_chars": 220,
+  "band": "b"
  },
  "codetop-supp-4": {
   "id": 0,
@@ -12326,7 +12793,8 @@
   },
   "score": 0.0,
   "a_reason": "",
-  "statement_chars": 174
+  "statement_chars": 174,
+  "band": "b"
  },
  "codetop-supp-1": {
   "id": 0,
@@ -12350,7 +12818,8 @@
   },
   "score": 0.0,
   "a_reason": "",
-  "statement_chars": 0
+  "statement_chars": 0,
+  "band": "b"
  },
  "codetop-supp-23": {
   "id": 0,
@@ -12374,7 +12843,8 @@
   },
   "score": 0.0,
   "a_reason": "",
-  "statement_chars": 0
+  "statement_chars": 0,
+  "band": "b"
  },
  "codetop-supp-2": {
   "id": 0,
@@ -12398,7 +12868,8 @@
   },
   "score": 0.0,
   "a_reason": "",
-  "statement_chars": 0
+  "statement_chars": 0,
+  "band": "b"
  },
  "codetop-supp-9": {
   "id": 0,
@@ -12422,7 +12893,8 @@
   },
   "score": 0.0,
   "a_reason": "",
-  "statement_chars": 0
+  "statement_chars": 0,
+  "band": "b"
  },
  "codetop-supp-6": {
   "id": 0,
@@ -12446,7 +12918,8 @@
   },
   "score": 0.0,
   "a_reason": "",
-  "statement_chars": 174
+  "statement_chars": 174,
+  "band": "b"
  },
  "codetop-supp-13": {
   "id": 0,
@@ -12470,6 +12943,7 @@
   },
   "score": 0.0,
   "a_reason": "",
-  "statement_chars": 0
+  "statement_chars": 0,
+  "band": "b"
  }
 }

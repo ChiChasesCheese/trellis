@@ -29,6 +29,7 @@ PATTERN_CARDS = ROOT / "vault/interviews/core/leetcode/tiktok/cards/patterns"
 COMPANIES = ROOT / "vault/interviews/core/leetcode/companies"
 TARGET = 200
 PER_PATTERN = 3
+BANDS = (0.30, 0.50, 0.70, 0.85)  # cumulative frequency share at the end of P1..P4
 MIX = {"reports": 0.5, "codetop": 0.1, "us": 0.4}
 
 # CATALOG family (name prefix) -> the leaf that teaches it, when the family names no LeetCode number in the deck
@@ -210,6 +211,16 @@ def assign(index: dict[str, dict], today: date | None = None) -> dict:
     for s, p in index.items():
         p["tier"] = "A" if s in a else "B"
         p["a_reason"] = a.get(s, "")
+        p["band"] = "b"
+    # Chi (2026-10-29): split tier A into five priorities by cumulative share of the whole deck's frequency mass:
+    # P1 reaches 30 %, P2 50 %, P3 70 %, P4 85 %, P5 is the rest of tier A.
+    mass = sum(p["score"] for p in index.values()) or 1
+    cum, band = 0.0, 1
+    for s in sorted(a, key=lambda s: -index[s]["score"]):
+        index[s]["band"] = f"p{band}"
+        cum += index[s]["score"]
+        while band < 5 and cum / mass >= BANDS[band - 1]:
+            band += 1
 
     def share(weights: dict[str, float], total: float) -> float:
         return round(100 * sum(w for s, w in weights.items() if s in a) / total, 1)

@@ -162,7 +162,7 @@ sequenceDiagram
 - **多币种账本**：每条分录腿带币种，借贷平衡按币种分别成立；跨币种的转换通过一个 FX 中间账户写成两组平衡的腿。
 
 - **面试里要说出口**：整数最小单位 + 币种；只在边界取整一次；分摊余数要守恒；换汇记下汇率和报价编号。
-- **深入**：[[domains/payments/map/correctness.money-representation|金额怎么表示]] · [[domains/payments/map/cross-border.fx-rates|汇率来源与报价锁定]] · [[domains/payments/map/cross-border.multi-currency-pricing|多币种定价与结算币种]] · [[domains/payments/map/ledger.multi-currency-ledger|多币种账务]] · [[interviews/core/leetcode/tiktok/map/a.tt-currency-conversion-queries|汇率换算查询（编码题）]]
+- **深入**：[[domains/payments/map/correctness.money-representation|金额怎么表示]] · [[domains/payments/map/cross-border.fx-rates|汇率来源与报价锁定]] · [[domains/payments/map/cross-border.multi-currency-pricing|多币种定价与结算币种]] · [[domains/payments/map/ledger.multi-currency-ledger|多币种账务]] · [[tlc-tt-currency-conversion-queries-0-whole|汇率换算查询（编码题）]]
 
 ## 7. 消费金融：PayLater、分期、计息、授信
 

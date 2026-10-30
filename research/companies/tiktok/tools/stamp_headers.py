@@ -78,9 +78,9 @@ def main(argv: list[str]) -> int:
     info = facts(index, date.today())
     changed = 0
     for vault in VAULTS:
-        for f in sorted(vault.glob("[ab]/tlc-*.md")):
+        for f in sorted(vault.glob("*/tlc-*.md")):
             text = f.read_text(encoding="utf-8")
-            node = re.search(r"^node: [ab]\.(\S+)$", text, re.M)
+            node = re.search(r"^node: (?:a|b|p[1-5])\.(\S+)$", text, re.M)
             if not node or node.group(1) not in info or not ("-0-whole" in f.name or "-1-signal" in f.name):
                 continue
             q = text.split("## A", 1)

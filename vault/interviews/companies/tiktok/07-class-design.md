@@ -94,7 +94,7 @@ class FeeEngine:
 - **规则热更新、多实例一致？** 规则是版本化数据，实例按版本号拉取；费用行记下版本号，所以即使两个实例短暂不一致也能事后核对。
 - **线程安全？** 读多写少：发布时构造新列表再整体替换引用，读路径不加锁。
 
-**相关**：[[interviews/core/leetcode/tiktok/map/a.time-based-key-value-store|时间戳 KV（同样的二分）]] · [[interviews/core/leetcode/tiktok/map/a.tt-ai-assisted-order-validator|OrderValidator（规则 DAG）]] · [[domains/under-the-hood/map/compose.interceptor-chain|拦截器链：列表 + 游标]]
+**相关**：[[tlc-time-based-key-value-store-0-whole|时间戳 KV（同样的二分）]] · [[tlc-tt-ai-assisted-order-validator-0-whole|OrderValidator（规则 DAG）]] · [[domains/under-the-hood/map/compose.interceptor-chain|拦截器链：列表 + 游标]]
 
 ## 2. 复式账本
 
@@ -165,7 +165,7 @@ class Ledger:
 - **怎么证明账没被改过？** 定期从 `_journal` 重算全部余额和 `_bal` 比对；所有账户总和按币种为 0；分录按块加哈希链。
 - **跨币种转账？** 两组腿，各自平衡：用户 USD 减少、FX 中间账户 USD 增加；FX 中间账户 MYR 减少、对方 MYR 增加。
 
-**相关**：[[domains/under-the-hood/map/compose.k8s-indexer|主存储 + 二级索引]] · [[interviews/core/leetcode/tiktok/map/a.tt-kv-store-snapshot-restore|快照与恢复 KV]] · [[sd09-wallet-ledger]]
+**相关**：[[domains/under-the-hood/map/compose.k8s-indexer|主存储 + 二级索引]] · [[tlc-tt-kv-store-snapshot-restore-0-whole|快照与恢复 KV]] · [[sd09-wallet-ledger]]
 
 ## 3. 幂等转账服务
 
@@ -235,7 +235,7 @@ class TransferService:
 - **多实例部署？** 内存锁换成数据库的唯一约束和行锁；键表和账本在同一个库里，才能同一事务提交。
 - **同一个账户被高并发转出？** 按账户串行化（行锁或按账户分区的队列），检查余额用带条件的更新：`UPDATE … SET balance = balance − x WHERE balance ≥ x`。
 
-**相关**：[[domains/under-the-hood/map/compose.singleflight|singleflight：合并重复请求]] · [[interviews/core/leetcode/tiktok/map/a.tt-idempotent-versioned-update|幂等、带版本号的数据更新]] · [[tiktok-idempotency-transactions]]
+**相关**：[[domains/under-the-hood/map/compose.singleflight|singleflight：合并重复请求]] · [[tlc-tt-idempotent-versioned-update-0-whole|幂等、带版本号的数据更新]] · [[tiktok-idempotency-transactions]]
 
 ## 4. 分期计划生成器
 
@@ -300,7 +300,7 @@ def schedule(principal: int, n: int, apr_bps: int, start: date) -> list[Instalme
 - **到期日遇到节假日？** 计划里保存合同到期日；扣款日另算（顺延到下一个工作日），两者分开存。
 - **按日计息而不是按月？** 利息 = 剩余本金 × APR ÷ 365 × 当期天数，各期天数不同，所以每期还款额不再相等，最后一期仍然吸收误差。
 
-**相关**：[[05-payment-domain]] 第 7 节 · [[interviews/core/leetcode/tiktok/map/a.tt-currency-conversion-queries|汇率换算查询]]
+**相关**：[[05-payment-domain]] 第 7 节 · [[tlc-tt-currency-conversion-queries-0-whole|汇率换算查询]]
 
 ## 5. 按商户限流
 
@@ -369,4 +369,4 @@ class MerchantRateLimiter:
 - **被限流的请求怎么办？** 返回 429 和 `Retry-After`（按缺少的令牌数 ÷ 速率算）；支付请求本身带幂等键，客户端重试是安全的。
 - **商户配置实时修改？** 下一次 `allow` 读到新配置；如果容量变小，把现有令牌截断到新容量。
 
-**相关**：[[interviews/core/leetcode/tiktok/map/a.tt-rate-limiter-implementation|手写限流器]] · [[interviews/core/leetcode/tiktok/map/a.tt-lru-cache-ttl|带 TTL 的 LRU 缓存]] · [[domains/under-the-hood/map/compose.caffeine|Caffeine：哈希表 + 访问队列]] · [[tiktok-service-protection]]
+**相关**：[[tlc-tt-rate-limiter-implementation-0-whole|手写限流器]] · [[tlc-tt-lru-cache-ttl-0-whole|带 TTL 的 LRU 缓存]] · [[domains/under-the-hood/map/compose.caffeine|Caffeine：哈希表 + 访问队列]] · [[tiktok-service-protection]]

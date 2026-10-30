@@ -16,7 +16,7 @@ SPLIT = re.compile(r"^(tlc-.+)-([1-5])-[a-z]+\.md$")
 
 def main(argv: list[str]) -> int:
     moved = 0
-    for branch in ("a", "b"):
+    for branch in ("a", "b", "p1", "p2", "p3", "p4", "p5"):
         folder = SRC / branch
         if not folder.is_dir():
             continue
