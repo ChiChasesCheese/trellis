@@ -101,10 +101,12 @@ def difficulty(p):
 
 
 def ordered(tier):
-    """Study order inside a tier: score percentile (frequency) plus a bonus for easy and a penalty for hard."""
+    """Study order inside a tier (Chi, 2026-10-29: highest frequency first): score percentile in steps of 5 %,
+    easier first only among problems in the same step."""
     ps = sorted((p for p in index.values() if p["tier"] == tier), key=lambda p: p.get("score", 0))
-    pct = {p["slug"]: i / max(len(ps) - 1, 1) for i, p in enumerate(ps)}
-    return sorted(ps, key=lambda p: -(pct[p["slug"]] + EASE.get(difficulty(p), 0.0)))
+    step = {p["slug"]: int(20 * i / max(len(ps), 1)) for i, p in enumerate(ps)}
+    rank = {"Easy": 0, "Medium": 1, "Hard": 2}
+    return sorted(ps, key=lambda p: (-step[p["slug"]], rank.get(difficulty(p), 1), -p.get("score", 0)))
 
 
 problems = list(index.values())

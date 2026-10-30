@@ -4,7 +4,7 @@ node: a.binary-tree-zigzag-level-order-traversal
 type: qa
 ---
 ## Q
-**LC 103 二叉树的锯齿形层序遍历**｜Medium · LC TikTok 热度 50/100 · 近一年被问：美国 0 次、国内 10 次 · CodeTop 国内累计 189 次 · 最近 2026-10（面试记录）
+**LC 103 二叉树的锯齿形层序遍历**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 189 次 · 最近 2026-09-15（CodeTop）
 
 给二叉树的根节点 `root`，返回其节点值的**锯齿形层序遍历**：第一层从左往右，第二层从右往左，之后交替。树中节点数在 `[0, 2000]` 内，`-100 <= Node.val <= 100`。例：`root = [3,9,20,null,null,15,7]` → `[[3],[20,9],[15,7]]`；`root = [1]` → `[[1]]`；`root = []` → `[]`。
 

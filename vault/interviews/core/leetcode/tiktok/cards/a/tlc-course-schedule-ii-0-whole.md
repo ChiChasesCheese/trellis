@@ -4,7 +4,7 @@ node: a.course-schedule-ii
 type: qa
 ---
 ## Q
-**LC 210 课程表 II**｜Medium · LC TikTok 热度 88/100 · 近一年被问：美国 15 次、国内 4 次 · CodeTop 国内累计 13 次 · 最近 2026-10-15（面试记录）
+**LC 210 课程表 II**｜Medium · LC TikTok 热度 88/100 · CodeTop 国内累计 13 次 · 最近 2026-09-15（CodeTop）
 
 共有 `numCourses` 门课，编号 `0` 到 `numCourses - 1`。先修关系 `prerequisites[i] = [a, b]` 表示学 `a` 之前必须先学 `b`。返回一个能学完所有课程的学习顺序，有多个答案返回任意一个；学不完就返回空数组。`1 <= numCourses <= 2000`，`0 <= prerequisites.length <= numCourses * (numCourses - 1)`，`prerequisites[i].length == 2`，`0 <= a, b < numCourses`，`a != b`，所有先修对互不相同。例：`2, [[1,0]]` → `[0,1]`；`4, [[1,0],[2,0],[3,1],[3,2]]` → `[0,1,2,3]` 或 `[0,2,1,3]`；`1, []` → `[0]`。
 

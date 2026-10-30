@@ -38,7 +38,7 @@ def facts(index: dict[str, dict], today: date) -> dict[str, dict]:
         if not recent:
             continue
         dates = [d for d, _ in recent]
-        slugs = [s for n in fam["lc"] for s in by_id.get(n, [])]
+        slugs = [s for n in fam["lc"][:1] for s in by_id.get(n, [])]  # follow-up problems do not inherit the family's count
         v = next((v for k, v in st.FAMILY_VARIANT.items() if fam["family"].startswith(k)), None)
         if v and v in index:
             slugs.append(v)

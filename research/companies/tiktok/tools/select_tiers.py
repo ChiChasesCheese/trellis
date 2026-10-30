@@ -148,7 +148,7 @@ def assign(index: dict[str, dict], today: date | None = None) -> dict:
         mass = sum(0.5 ** ((today - day(d)).days / 180) for d in fam["dates"])
         slugs: list[tuple[str, float]] = []
         for i, n in enumerate(fam["lc"]):
-            slugs += [(s, 1.0 if i == 0 else 0.3) for s in by_id.get(n, [])]
+            slugs += [(s, 1.0 if i == 0 else 0.1) for s in by_id.get(n, [])]
         v = next((v for k, v in FAMILY_VARIANT.items() if fam["family"].startswith(k)), None)
         if v and v in index:
             slugs.append((v, 1.0 if not slugs or fam["refs"] >= 3 else 0.5))
@@ -182,7 +182,7 @@ def assign(index: dict[str, dict], today: date | None = None) -> dict:
         recent = [r for d, r in zip(fam["dates"], fam["regions"]) if day(d) >= cut1y]
         if not recent:
             continue
-        slugs = {s for n in fam["lc"] for s in by_id.get(n, [])}
+        slugs = {s for n in fam["lc"][:1] for s in by_id.get(n, [])}  # the family's own problem, not its follow-ups
         v = next((v for k, v in FAMILY_VARIANT.items() if fam["family"].startswith(k)), None)
         if v and v in index:
             slugs.add(v)
