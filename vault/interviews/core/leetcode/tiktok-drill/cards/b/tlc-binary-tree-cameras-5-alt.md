@@ -22,25 +22,18 @@ from math import inf
 
 
 def min_camera_dp(root: TreeNode | None) -> int:
-    order: list[TreeNode] = []
-    stack = [root]
-    while stack:
-        node = stack.pop()
-        order.append(node)
-        if node.left:
-            stack.append(node.left)
-        if node.right:
-            stack.append(node.right)
-    # f[v] = (a, b, c)：a 在 v 装摄像头；b 不装，但 v 被某个孩子的摄像头覆盖；c 不装，v 等父亲覆盖
-    f: dict[TreeNode | None, tuple[float, float, float]] = {None: (inf, 0, 0)}
-    for node in reversed(order):
-        kids = [f[node.left], f[node.right]]
+    def dp(node: TreeNode | None) -> tuple[float, float, float]:
+        # (a, b, c)：a 在 v 装摄像头；b 不装，但 v 被某个孩子的摄像头覆盖；c 不装，v 等父亲覆盖
+        if node is None:
+            return (inf, 0, 0)
+        kids = [dp(node.left), dp(node.right)]
         a = 1 + sum(min(k) for k in kids)                    # 摄像头覆盖孩子：孩子任意状态都行
         best = [min(k[0], k[1]) for k in kids]               # 孩子自己负责（装摄像头或被其孩子覆盖）
         b = min((k[0] + sum(best) - best[i] for i, k in enumerate(kids) if k[0] < inf), default=inf)
         c = sum(k[1] for k in kids)                          # 孩子都得靠自己的孩子被覆盖
-        f[node] = (a, b, c)
-    a, b, _ = f[root]
+        return (a, b, c)
+
+    a, b, _ = dp(root)
     return int(min(a, b))
 ```
 

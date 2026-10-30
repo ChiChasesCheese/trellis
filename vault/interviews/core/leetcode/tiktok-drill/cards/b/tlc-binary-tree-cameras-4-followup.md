@@ -7,11 +7,38 @@ step: 4
 ## Q
 **LC 968 监控二叉树**｜追问
 
-面试官接着问：（1）要输出摄像头装在哪些节点？（2）每个节点装摄像头的成本不同，求最小总成本？（3）能不能直接说「只在每个叶子的父亲上装」？分别怎么答。
+面试官接着问：（1）要输出摄像头装在哪些节点？（2）每个节点装摄像头的成本不同，求最小总成本？（3）能不能直接说「只在每个叶子的父亲上装」？（4）左斜链让递归爆栈？分别怎么答。
 
 ## A
 1. **输出位置**：在 `state[node] = CAMERA` 的地方同时把 `node` 加进列表；最后若根需要补一个，再加入根。位置集合不唯一，只要数量最少即可。
 2. **带权成本**：贪心的「推迟」论证依赖每个摄像头代价相同，成本不同就不成立了，必须用三状态树形 DP：`a`（当前节点装）、`b`（当前节点不装但被某个孩子覆盖）、`c`（当前节点不装且等父亲覆盖），再在 `a` 里加上当前节点成本；`b` 状态里「恰好选哪个孩子装摄像头」要枚举，取总成本最小的那个。
 3. **只在叶子的父亲上装**：不够。左斜链 `1 - 2 - 3 - 4`（每个节点只有左孩子）只装在叶子 `4` 的父亲 `3` 上，覆盖 `2`、`3`、`4`，根 `1` 没人管；正确答案是 `2`（贪心在根上补一个）。叶子的父亲只解决最底层，上层是否被覆盖要继续往上推。
+4. **递归爆栈**：`1000` 个节点的左斜链深度超过默认上限约 `1000`。调大 `sys.setrecursionlimit`，或先序入栈、倒序处理：
+
+```python
+def min_camera_cover_stack(root: TreeNode | None) -> int:
+    UNCOVERED, COVERED, CAMERA = 0, 1, 2
+    order: list[TreeNode] = []
+    stack = [root]
+    while stack:
+        node = stack.pop()
+        order.append(node)
+        if node.left:
+            stack.append(node.left)
+        if node.right:
+            stack.append(node.right)
+    state: dict[TreeNode | None, int] = {None: COVERED}   # 空节点当作"已被覆盖"
+    cameras = 0
+    for node in reversed(order):                         # 孩子先于父亲
+        l, r = state[node.left], state[node.right]
+        if l == UNCOVERED or r == UNCOVERED:
+            state[node] = CAMERA
+            cameras += 1
+        elif l == CAMERA or r == CAMERA:
+            state[node] = COVERED
+        else:
+            state[node] = UNCOVERED
+    return cameras + (state[root] == UNCOVERED)
+```
 
 **Python 提醒**：用整数 `0 / 1 / 2` 表示状态时，比较和赋值都容易写错，用 `UNCOVERED, COVERED, CAMERA = 0, 1, 2` 三个命名常量，或者 `enum.IntEnum`，既保持整数运算的便利，又让每个分支一眼可读。

@@ -136,3 +136,14 @@ Python 工具箱「DP 降维」」, without code. The technique itself lives in 
 
 Keep writing the header as `**LC n 中文名**｜<难度> · TikTok 高频`; `tools/stamp_headers.py` then replaces everything after
 the difficulty with the data (company-tag frequency, sightings in the past year, CodeTop count, most recent date).
+
+## Recursion first (Chi, 2026-10-30)
+
+For any problem whose natural solution is a recursive DFS (trees, graphs, grids, nested structures, backtracking), the
+whole card and the `-2-code` card show the **most intuitive recursive version** as the main solution — never an
+explicit-stack rewrite made only to dodge Python's recursion limit. Then:
+- **易错点** gets one line: worst-case depth (for example a chain of `n` nodes) and that CPython's default limit is about
+  1000, so a depth above that raises `RecursionError` unless `sys.setrecursionlimit` is raised or the code is iterative.
+- The explicit-stack version goes to **追问** (whole card) and the `-4-followup` card (or `-5-alt`), with its code.
+Solutions where a stack *is* the natural algorithm (expression evaluation, decode string, monotonic stack, an
+explicitly iterative traversal the problem asks for) are unaffected.

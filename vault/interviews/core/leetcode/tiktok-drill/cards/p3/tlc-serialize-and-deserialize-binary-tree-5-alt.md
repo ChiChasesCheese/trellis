@@ -7,45 +7,54 @@ step: 5
 ## Q
 **LC 297 二叉树的序列化与反序列化**｜另一种解法
 
-前序遍历加空位标记的递归写法是怎样的？它和层序版本相比，什么时候该选哪个？
+不用递归的层序（BFS）写法是怎样的？它和前序递归版本相比，什么时候该选哪个？
 
 ## A
-**思路。** 前序：先输出根，再递归输出左子树、右子树；空节点输出 `"#"`。还原时用同一个迭代器按前序消费标记：读到 `"#"` 返回 `None`，否则建节点，先递归建左子树、再递归建右子树。
+**思路。** 层序：序列化时队列里放节点（含 `None`），出队时输出值或 `"null"`，非空节点的左右孩子照原样入队。反序列化：先建根；每出队一个节点，从标记流里取两个，非 `"null"` 的建成左、右孩子并入队。
 
 ```python
-class CodecPreorder:
+from collections import deque
+
+class CodecLevel:
     def serialize(self, root: TreeNode | None) -> str:
         out: list[str] = []
-        def dfs(node: TreeNode | None) -> None:
+        queue = deque([root])
+        while queue:
+            node = queue.popleft()
             if node is None:
-                out.append("#")
-                return
+                out.append("null")                 # 空位也要占一格
+                continue
             out.append(str(node.val))
-            dfs(node.left)
-            dfs(node.right)
-        dfs(root)
+            queue.append(node.left)
+            queue.append(node.right)
         return ",".join(out)
 
     def deserialize(self, data: str) -> TreeNode | None:
         tokens = iter(data.split(","))
-        def build() -> TreeNode | None:
-            tok = next(tokens)
-            if tok == "#":
-                return None
-            node = TreeNode(int(tok))
-            node.left = build()                    # 先左后右，与序列化顺序一致
-            node.right = build()
-            return node
-        return build()
+        first = next(tokens)
+        if first == "null":
+            return None
+        root = TreeNode(int(first))
+        queue = deque([root])
+        while queue:
+            node = queue.popleft()
+            left, right = next(tokens, "null"), next(tokens, "null")   # 每个节点后面跟着它的两个孩子位
+            if left != "null":
+                node.left = TreeNode(int(left))
+                queue.append(node.left)
+            if right != "null":
+                node.right = TreeNode(int(right))
+                queue.append(node.right)
+        return root
 ```
 
-运行：`[1,2,3,null,null,4,5]` → `"1,2,#,#,3,4,#,#,5,#,#"`，还原后相同；`[]` → `"#"`。
+运行：`[1,2,3,null,null,4,5]` → `"1,2,3,null,null,4,5,null,null,null,null"`，还原后相同；`[]` → `"null"`；`[1,2]` → `"1,2,null,null,null"`；深 `10^4` 的链往返后与原树一致，不会 `RecursionError`。
 
-**复杂度。** 时间 `O(n)`；空间 `O(h)` 的调用栈加 `O(n)` 的输出，`h` 为树高。序列也含 `2n + 1` 个标记。
+**复杂度。** 时间 `O(n)`：每个节点入队、出队各一次；空间 `O(n)`：队列最宽时存一层，输出含 `2n + 1` 个标记。
 
 **什么时候选哪个。**
 - 面试默认先写前序递归：十几行，思路最直观，容易说清「前序 + 空位 = 唯一确定」。
-- 树深：题目结点数可达 `10^4`，一条链就是 `10^4` 层，Python 默认递归上限约 `1000`，前序递归版会 `RecursionError`；此时用层序版本，或者先 `sys.setrecursionlimit(20000)`。
+- 树深：题目结点数可达 `10^4`，一条链就是 `10^4` 层，Python 默认递归上限约 `1000`，前序递归版会 `RecursionError`；此时用本卡的层序版本，或者先 `sys.setrecursionlimit(20000)`。
 - 需要和 LeetCode 的输入格式（层序加 `null`）一致，或要边读边建：层序版本更贴近。
 - 对 BST 或要最小化序列长度：前序版本可以丢掉空位标记。
 

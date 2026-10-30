@@ -7,29 +7,39 @@ step: 4
 ## Q
 **LC 508 出现次数最多的子树元素和**｜追问
 
-面试官接着问：（1）只要一个众数，且要最小的那个？（2）树换成多叉树？（3）节点太多，`total` 字典占内存太大怎么办？
+面试官接着问：（1）只要一个众数，且要最小的那个？（2）树换成多叉树？（3）链状树让递归爆栈怎么办？
 
 ## A
 1. **最小的众数**：`top = max(freq.values())` 后，`min(s for s, c in freq.items() if c == top)`；若同时要返回次数，用 `max(freq.items(), key=lambda kv: (kv[1], -kv[0]))`，先比次数、次数相同取和更小的。
-2. **多叉树**：先序栈里把 `children` 全部压栈；倒序处理时 `s = node.val + sum(total[c] for c in node.children)`。其余计数逻辑完全不变。
-3. **省内存**：孩子的和只被父亲读一次，父亲算完就可以 `del total[child]`，字典里同时只保留「已算完、父亲还没处理」的节点；对链状树 `total` 的大小接近 `O(1)`，对满二叉树仍是 `O(n)` 量级。要彻底 `O(h)`，用递归版（返回子树和），代价是递归深度。
-
-递归版只有几行，适合树深有保证的场合：
+2. **多叉树**：递归里 `s = node.val + sum(subtree_sum(c) for c in node.children)`，其余计数逻辑完全不变。
+3. **递归爆栈**：`10^4` 个节点的链，深度超过默认上限约 `1000`。调大 `sys.setrecursionlimit`，或用栈得到先序序列、倒序处理（孩子先于父亲）：
 
 ```python
-def frequent_tree_sum_rec(root: TreeNode | None) -> list[int]:
+from collections import Counter
+
+
+def find_frequent_tree_sum_stack(root: TreeNode | None) -> list[int]:
+    if root is None:
+        return []
+    order: list[TreeNode] = []
+    stack = [root]
+    while stack:                               # 先序：父总在子之前
+        node = stack.pop()
+        order.append(node)
+        if node.left:
+            stack.append(node.left)
+        if node.right:
+            stack.append(node.right)
+    total: dict[TreeNode, int] = {}            # 每个节点的子树和
     freq: Counter[int] = Counter()
-
-    def go(v: TreeNode | None) -> int:
-        if v is None:
-            return 0
-        s = v.val + go(v.left) + go(v.right)
+    for node in reversed(order):               # 倒着扫 = 孩子先于父亲
+        s = node.val + total.get(node.left, 0) + total.get(node.right, 0)
+        total[node] = s
         freq[s] += 1
-        return s
-
-    go(root)
-    top = max(freq.values(), default=0)
+    top = max(freq.values())
     return [s for s, c in freq.items() if c == top]
 ```
 
-**Python 提醒**：`max(freq.values())` 在空 `Counter` 上抛 `ValueError`；节点数至少为 `1` 时不会触发，但处理空树时要写 `default=0`，并且先判断 `root is None`。
+   倒序版把每个孩子的和存在 `total` 里，父亲算完后可以 `del total[child]` 省内存。
+
+**Python 提醒**：`max(freq.values())` 在空 `Counter` 上抛 `ValueError`；处理空树时要写 `default=0`（主解法已写），或先判断 `root is None`。

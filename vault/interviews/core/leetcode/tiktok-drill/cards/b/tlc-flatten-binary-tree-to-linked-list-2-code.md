@@ -7,27 +7,29 @@ step: 2
 ## Q
 **LC 114 二叉树展开为链表**｜写出 Python 实现
 
-二叉树节点数在 `[0, 2000]`，值在 `[-100, 100]`。原地展开成单链表：`right` 指向下一个节点，`left` 全为 `null`，顺序与先序相同。要求 `O(n)` 时间、`O(1)` 额外空间，函数无返回值。
+二叉树节点数在 `[0, 2000]`，值在 `[-100, 100]`。原地展开成单链表：`right` 指向下一个节点，`left` 全为 `null`，顺序与先序相同。要求 `O(n)` 时间，函数无返回值。
 
 ## A
-**思路。** 从根开始，沿 `right` 向下走。遇到有左子树的节点 `cur`：沿左孩子的右链走到末端 `pred`，把 `cur.right` 接到 `pred.right`，再把 `cur.left` 搬到 `cur.right`，`cur.left` 置空。没有左子树就直接走向右。
+**思路。** 递归：`dfs(node)` 把 `node` 的子树展开成链并返回链尾。先分别展开左、右子树；有左子树时，把原右子树接在左链的尾后面，再把左链搬到 `node.right`，`node.left` 置空；返回整条链的尾（右链有尾用右链的，否则左链的，否则自己）。
 
 ```python
 def flatten(root: TreeNode | None) -> None:
-    cur = root
-    while cur:
-        if cur.left:
-            pred = cur.left                # 从左孩子出发，沿右链走到头
-            while pred.right:
-                pred = pred.right
-            pred.right = cur.right         # 先把原右子树接在右链末端
-            cur.right = cur.left           # 再把左子树整体搬到右边
-            cur.left = None
-        cur = cur.right
+    def dfs(node: TreeNode | None) -> TreeNode | None:   # 把 node 子树展开成链，返回链的尾节点
+        if node is None:
+            return None
+        left_tail = dfs(node.left)                       # 左子树展开后的尾
+        right_tail = dfs(node.right)                     # 右子树展开后的尾
+        if left_tail:                                    # 有左子树才需要拼接
+            left_tail.right = node.right                 # 原右子树接在左链后面
+            node.right = node.left                       # 左链搬到右边
+            node.left = None
+        return right_tail or left_tail or node           # 整条链的尾：优先右链，其次左链，最后是自己
+
+    dfs(root)
 ```
 
-运行：`[1,2,5,3,4,null,6]` → `[1,null,2,null,3,null,4,null,5,null,6]`，`[]` → `[]`，`[0]` → `[0]`；深度 2000 的左链展开后，沿 `right` 数到 `2000` 个节点且每个 `left` 都是 `None`。
+运行：`[1,2,5,3,4,null,6]` → `[1,null,2,null,3,null,4,null,5,null,6]`，`[]` → `[]`，`[0]` → `[0]`；深度 2000 的左链在默认递归上限下抛 `RecursionError`，调高上限后展开，沿 `right` 数到 `2000` 个节点且每个 `left` 都是 `None`。
 
-**复杂度。** 时间 `O(n)`：每个节点至多被「沿右链找末端」的内层循环经过一次（搬到主链之后，它只能经 `right` 到达，不会再出现在别的节点的左子树里）；空间 `O(1)`，只有两个指针。
+**复杂度。** 时间 `O(n)`：每个节点只被 `dfs` 访问一次，拼接是常数次指针操作；空间 `O(h)`：递归栈，`h` 是树高，链状树时 `O(n)`（深度 2000 会触到默认递归上限）。
 
-**写法要点。** `while cur:` 同时处理 `root` 为空；`if cur.left` 用节点对象的真值判断非空；两步赋值的顺序不能换（先接右、再搬左）；不返回任何值，修改的是传入的树。想要更短可以写递归「逆后序」，但深度 2000 的树会超过递归上限。
+**写法要点。** 嵌套函数 `dfs` 返回链尾，调用方直接用 `left_tail.right = node.right`，不用再沿右链找末端；`return right_tail or left_tail or node` 用 `or` 的短路取第一个非空的尾；拼接的顺序不能换（先接右、再搬左）；不返回任何值，修改的是传入的树。要 `O(1)` 额外空间属于进阶，需要改写成沿 `right` 走的迭代版。

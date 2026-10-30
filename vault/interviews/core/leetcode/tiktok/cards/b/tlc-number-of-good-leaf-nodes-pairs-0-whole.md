@@ -15,13 +15,49 @@ type: qa
 
 **识别。** 树上两个点的最短路径必经过它们的最近公共祖先（LCA），所以每对叶子恰好在它们的 LCA 处被统计一次。`distance <= 10` 很小，状态可以直接存“各个距离上的叶子数”，距离超过 `distance` 的叶子再也不可能参与配对，数组长度固定为 `11`。
 
-**推导。** 暴力：收集所有叶子，两两用父指针求距离，`O(L^2 · h)`。浪费：每一对叶子独立算路径，没有利用树的结构。洞察：一对叶子的路径长等于各自到 LCA 的距离之和，所以在 LCA 处用“左侧叶子数按距离分布”和“右侧叶子数按距离分布”做一次卷积式的统计即可。右侧用前缀和 `right_prefix[j]`（距离不超过 `j` 的叶子数），左侧每个距离 `i` 贡献 `left[i] * right_prefix[distance - i]`。节点数最多 `1024`，一条链的深度可达 `1023`，超过 Python 默认递归深度，所以不用递归：先层序得到访问顺序，再逆序处理，保证孩子先于父亲。
+**推导。** 暴力：收集所有叶子，两两用父指针求距离，`O(L^2 · h)`。浪费：每一对叶子独立算路径，没有利用树的结构。洞察：一对叶子的路径长等于各自到 LCA 的距离之和，所以在 LCA 处用“左侧叶子数按距离分布”和“右侧叶子数按距离分布”做一次卷积式的统计即可。右侧用前缀和 `right_prefix[j]`（距离不超过 `j` 的叶子数），左侧每个距离 `i` 贡献 `left[i] * right_prefix[distance - i]`。写成后序递归：函数返回 `cnt` 数组，孩子先于父亲。节点数最多 `1024`，一条链的深度可达 `1023`，递归深度见易错点。
 
 ```python
 from itertools import accumulate
 
 
 def count_pairs(root: TreeNode | None, distance: int) -> int:
+    ans = 0
+
+    def dfs(node: TreeNode | None) -> list[int]:    # 返回 cnt：cnt[d] = 子树里距 node 恰好 d 的叶子数（d <= distance）
+        nonlocal ans
+        if node is None:
+            return [0] * (distance + 1)
+        if not node.left and not node.right:
+            return [1] + [0] * distance             # 叶子自己距自己 0
+        left = [0] + dfs(node.left)[:distance]      # 孩子子树的叶子，距 node 都多 1；超过 distance 的丢弃
+        right = [0] + dfs(node.right)[:distance]
+        right_prefix = list(accumulate(right))      # right_prefix[j]：距离 <= j 的右侧叶子数
+        ans += sum(left[i] * right_prefix[distance - i] for i in range(distance + 1))
+        return [a + b for a, b in zip(left, right)]
+
+    dfs(root)
+    return ans
+```
+
+运行：`[1,2,3,null,4]`、`3` → `1`，`[1,2,3,4,5,6,7]`、`3` → `2`，`[7,1,4,6,null,5,3,null,null,null,null,null,2]`、`3` → `1`，`[100]`、`1` → `0`，`[1,1,1]`、`2` → `1`；`1024` 个结点的单链（深度 `1023`）→ `0`（调大递归上限后；默认上限下抛 `RecursionError`）；约 `1000` 个结点的满二叉树、`distance = 10` → `7936`，耗时不到 `1 ms`。
+
+**复杂度。** 时间 `O(n · distance)`；空间 `O(h · distance)`：递归栈上每层存活的数组长 `distance + 1`，链状树时为 `O(n · distance)`。
+
+**易错点。**
+- 把条件写成 `< distance`：`[1,2,3,null,4]`、`distance = 3` 得到 `0`（正确 `1`），`[1,1,1]`、`distance = 2` 得到 `0`（正确 `1`）。题目是“小于或等于”。
+- 递归深度：单链结构深度 `1023`，超过 CPython 默认递归上限约 `1000`，抛 `RecursionError`；节点数上限正好是 `2^10`，测试里常有这种链。要 `sys.setrecursionlimit` 调大，或改成迭代（见追问）。
+- 在节点处同侧配对，或左右各统计一遍：叶子对只在 LCA 处由“左 × 右”统计一次，同一侧内部的叶子对留给更深的祖先。
+
+**追问。**
+- 返回具体的叶子对：数组里存叶子本身而不是个数，空间随叶子数增长。
+- `distance` 很大（可到 `n`）：每个节点合并数组 `O(n)`，总 `O(n^2)`；改用按深度编号的长链剖分或启发式合并，或点分治。
+- 不想动递归上限：层序得到访问顺序，逆序处理（孩子先于父亲）：
+```python
+from itertools import accumulate
+
+
+def count_pairs_iter(root: TreeNode | None, distance: int) -> int:
     if root is None:
         return 0
     order = [root]                         # 层序：父节点一定排在子节点前面
@@ -30,38 +66,25 @@ def count_pairs(root: TreeNode | None, distance: int) -> int:
             order.append(node.left)
         if node.right:
             order.append(node.right)
-    cnt: dict[TreeNode, list[int]] = {}    # cnt[x][d]：x 的子树里，距 x 恰好 d 的叶子数（d <= distance）
+    cnt: dict[TreeNode, list[int]] = {}    # cnt[x][d]：x 的子树里，距 x 恰好 d 的叶子数
     ans = 0
-    for node in reversed(order):           # 逆层序：孩子先于父亲被处理，免去递归
+    for node in reversed(order):           # 逆层序：孩子先于父亲被处理
         if not node.left and not node.right:
-            cnt[node] = [1] + [0] * distance          # 叶子自己距自己 0
+            cnt[node] = [1] + [0] * distance
             continue
         side = []
         for child in (node.left, node.right):
             if child:
                 c = cnt.pop(child)
-                side.append([0] + c[:distance])        # 孩子子树的叶子，距 node 都多 1
+                side.append([0] + c[:distance])
             else:
                 side.append([0] * (distance + 1))
         left, right = side
-        right_prefix = list(accumulate(right))         # right_prefix[j]：距离 <= j 的右侧叶子数
+        right_prefix = list(accumulate(right))
         ans += sum(left[i] * right_prefix[distance - i] for i in range(distance + 1))
         cnt[node] = [a + b for a, b in zip(left, right)]
     return ans
 ```
-
-运行：`[1,2,3,null,4]`、`3` → `1`，`[1,2,3,4,5,6,7]`、`3` → `2`，`[7,1,4,6,null,5,3,null,null,null,null,null,2]`、`3` → `1`，`[100]`、`1` → `0`，`[1,1,1]`、`2` → `1`；`1024` 个结点的单链（深度 `1023`）→ `0`；约 `1000` 个结点的满二叉树、`distance = 10` → `7936`，耗时不到 `1 ms`。
-
-**复杂度。** 时间 `O(n · distance)`；空间 `O(n)`（字典里同时存活的数组数量不超过层序的宽度，每个数组长 `distance + 1`）。
-
-**易错点。**
-- 把条件写成 `< distance`：`[1,2,3,null,4]`、`distance = 3` 得到 `0`（正确 `1`），`[1,1,1]`、`distance = 2` 得到 `0`（正确 `1`）。题目是“小于或等于”。
-- 用递归 DFS：单链结构深度 `1023`，超过默认递归限制 `1000`，抛 `RecursionError`；节点数上限正好是 `2^10`，测试里常有这种链。
-- 在节点处同侧配对，或左右各统计一遍：叶子对只在 LCA 处由“左 × 右”统计一次，同一侧内部的叶子对留给更深的祖先。
-
-**追问。**
-- 返回具体的叶子对：数组里存叶子本身而不是个数，空间随叶子数增长。
-- `distance` 很大（可到 `n`）：每个节点合并数组 `O(n)`，总 `O(n^2)`；改用按深度编号的长链剖分或启发式合并，或点分治。
 - 多叉树：对孩子逐个处理，先用已合并的前缀数组与新孩子配对，再合并进去。
 
 **同模式。** LC 543 二叉树的直径、LC 124 二叉树中的最大路径和、LC 687 最长同值路径、LC 834 树中距离之和。

@@ -10,28 +10,24 @@ step: 2
 `Node` 有 `val: int` 和 `neighbors: list[Node]`。给定无向连通图中的一个节点（可能是 `None`，节点数 `0` 到 `100`，`val` 互不相同），返回整张图的深拷贝。
 
 ## A
-**思路。** BFS。字典 `copies` 把原节点映射到拷贝，入队前先建拷贝并登记。每次出队一个原节点，把它每个邻居对应的拷贝追加到自己拷贝的 `neighbors` 里；遇到没见过的邻居就先建拷贝再入队。
+**思路。** 递归 DFS。字典 `copies` 把原节点映射到拷贝：`dfs(cur)` 若 `cur` 已在表里就直接返回它的拷贝；否则先建拷贝并登记，再把每个邻居递归克隆的结果作为拷贝的邻居列表。
 
 ```python
-from collections import deque
-
 def clone_graph(node: Node | None) -> Node | None:
-    if node is None:
-        return None
-    copies = {node: Node(node.val)}            # 原节点 -> 它的拷贝，同时充当 visited
-    queue = deque([node])
-    while queue:
-        cur = queue.popleft()
-        for nb in cur.neighbors:
-            if nb not in copies:               # 第一次见到：先建拷贝再入队
-                copies[nb] = Node(nb.val)
-                queue.append(nb)
-            copies[cur].neighbors.append(copies[nb])
-    return copies[node]
+    copies: dict[Node, Node] = {}              # 原节点 -> 它的拷贝，同时充当 visited
+
+    def dfs(cur: Node) -> Node:
+        if cur in copies:
+            return copies[cur]                 # 已经克隆过：直接复用，环到这里就断了
+        copies[cur] = clone = Node(cur.val)    # 先登记再递归邻居，遇到环才不会死循环
+        clone.neighbors = [dfs(nb) for nb in cur.neighbors]
+        return clone
+
+    return dfs(node) if node else None
 ```
 
-运行：`[[2,4],[1,3],[2,4],[1,3]]` → `[[2,4],[1,3],[2,4],[1,3]]`，克隆图与原图没有共享任何节点对象；`[[]]` → `[[]]`；空图 → `None`；`5000` 个节点的链状图也能完成（BFS 无递归）。
+运行：`[[2,4],[1,3],[2,4],[1,3]]` → `[[2,4],[1,3],[2,4],[1,3]]`，克隆图与原图没有共享任何节点对象；`[[]]` → `[[]]`；`[[2],[1]]` → `[[2],[1]]`；空图 → `None`。
 
-**复杂度。** 时间 `O(V + E)`：每个节点入队一次，每条边在两端各看一次；空间 `O(V)`：字典和队列。
+**复杂度。** 时间 `O(V + E)`：每个节点只展开一次，每条边在两端各看一次；空间 `O(V)`：字典加递归栈。
 
-**写法要点。** 用节点对象本身当字典的键（默认按身份哈希，不依赖 `val` 唯一）；`deque.popleft()` 是 `O(1)`，`list.pop(0)` 是 `O(n)`；「先登记、后入队」保证每个节点只入队一次；边的连接放在循环里统一做，不分「新节点 / 旧节点」两种情况。
+**写法要点。** 用节点对象本身当字典的键（默认按身份哈希，不依赖 `val` 唯一）；`copies[cur] = clone = Node(cur.val)` 链式赋值一行完成「建拷贝并登记」，必须在递归邻居之前；邻居列表用列表推导式 `[dfs(nb) for nb in cur.neighbors]`，已克隆的邻居直接从字典命中，环就断在这里；`dfs(node) if node else None` 处理空图。深度：节点上千的链状图会超过 CPython 默认递归上限（约 `1000`），题目限定至多 `100` 个节点没有问题，BFS 写法见追问卡。

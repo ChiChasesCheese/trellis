@@ -11,23 +11,23 @@ type: qa
 给出完整的最优解答：识别、推导、代码、复杂度、易错点、追问。
 
 ## A
-**一句话。** 把「展开」和「过滤」分开：先用显式栈按先序（当前 → `child` → `next`）收集所有节点，包括空节点；再按这个顺序线性地重连，跳过 `val` 为 `None` 的节点，其余节点依次接成新链并清空 `child`。`O(n)` 时间，`O(n)` 空间。
+**一句话。** 把「展开」和「过滤」分开：先用递归按先序（当前 → `child` → `next`）收集所有节点，包括空节点；再按这个顺序线性地重连，跳过 `val` 为 `None` 的节点，其余节点依次接成新链并清空 `child`。`O(n)` 时间，`O(n)` 空间。
 
 **识别。** 这是 LC 430 的变体：展开顺序不变，仍是先序；新增的只是一个输出过滤条件。空节点要「不输出、但继续展开它的子链表」，说明遍历和输出是两件事。
 
-**推导。** 直接在 LC 430 的原地拼接里一边展开一边摘除空节点，要同时处理头部是空节点、连续空节点、空节点带 `child` 等多种指针情形，容易出错 → 浪费：把拼接和删除交织在一起，每一种情形都要单独验证 `prev`/`next` → 洞察：先得到不含任何指针改动的先序序列（用栈遍历，只读），再对序列做一次顺序扫描：有值的节点依次连成新链，`prev`、`next`、`child` 都在这一步重设。每个节点只处理两次。
+**推导。** 直接在 LC 430 的原地拼接里一边展开一边摘除空节点，要同时处理头部是空节点、连续空节点、空节点带 `child` 等多种指针情形，容易出错 → 浪费：把拼接和删除交织在一起，每一种情形都要单独验证 `prev`/`next` → 洞察：先得到不含任何指针改动的先序序列（递归遍历，只读），再对序列做一次顺序扫描：有值的节点依次连成新链，`prev`、`next`、`child` 都在这一步重设。每个节点只处理两次。
 
 ```python
 def flatten_skip_empty(head: 'Node | None') -> 'Node | None':
     order: list[Node] = []                   # 先序：当前节点 -> 子链表 -> 后继
-    stack: list[Node] = [head] if head else []
-    while stack:
-        node = stack.pop()
-        order.append(node)
-        if node.next:
-            stack.append(node.next)          # 后压后继，先压不到：子链表先出栈
-        if node.child:
-            stack.append(node.child)
+
+    def collect(node: Node | None) -> None:
+        while node:                          # 沿 next 横着走；只有 child 才递归
+            order.append(node)
+            collect(node.child)              # 整条子链表（含更深层）先于后继
+            node = node.next
+
+    collect(head)
     new_head: Node | None = None
     tail: Node | None = None
     for node in order:
@@ -43,16 +43,43 @@ def flatten_skip_empty(head: 'Node | None') -> 'Node | None':
     return new_head
 ```
 
-运行：`1 - ∅ - 3`，`∅` 带 `7 - 8` → `[1, 7, 8, 3]`；再让 `7` 带 `9` → `[1, 7, 9, 8, 3]`；`∅ - 2`，`∅` 带 `5 - ∅` → `[5, 2]`；单个空节点 → `None`；空链表 → `None`。
+运行：`1 - ∅ - 3`，`∅` 带 `7 - 8` → `[1, 7, 8, 3]`；再让 `7` 带 `9` → `[1, 7, 9, 8, 3]`；`∅ - 2`，`∅` 带 `5 - ∅` → `[5, 2]`；单个空节点 → `None`；空链表 → `None`；每个节点只有一个 `child` 的 `1000` 层嵌套 → 展平成 `1000` 个节点（调大递归上限后；默认上限下抛 `RecursionError`）。
 
-**复杂度。** 时间 `O(n)`；空间 `O(n)`（`order` 与栈）。
+**复杂度。** 时间 `O(n)`；空间 `O(n)`（`order` 与递归栈，栈深等于嵌套层数）。
 
 **易错点。**
 - 把空节点连同它的子链表一起丢掉：`1 - ∅ - 3` 带 `7 - 8`，只遍历有值节点会得到 `[1, 3]`，正确是 `[1, 7, 8, 3]`。
 - 头节点是空节点时仍返回原来的 `head`：`∅ - 2` 的返回值要是第一个有值的节点（`5`），不是 `head`。
+- 递归深度：只有嵌套（`child`）才递归，沿 `next` 走的是循环；但 `1000` 个节点每个只带一个 `child`、嵌套 `1000` 层时，深度超过 CPython 默认递归上限约 `1000`，抛 `RecursionError`；要 `sys.setrecursionlimit` 调大，或改成显式栈（见追问）。
 - 重连时不重设 `prev`：新链里相邻节点之间原来隔着空节点，`prev` 还指着被跳过的节点，从尾往头遍历会走到不该出现的节点。
 
 **追问。**
+- 不想动递归上限：用显式栈收集先序（先压后继、再压子链表，子链表先出栈），重连部分不变：
+```python
+def flatten_skip_empty_stack(head: 'Node | None') -> 'Node | None':
+    order: list[Node] = []                   # 先序：当前节点 -> 子链表 -> 后继
+    stack: list[Node] = [head] if head else []
+    while stack:
+        node = stack.pop()
+        order.append(node)
+        if node.next:
+            stack.append(node.next)          # 后压后继，先压不到：子链表先出栈
+        if node.child:
+            stack.append(node.child)
+    new_head: Node | None = None
+    tail: Node | None = None
+    for node in order:
+        node.child = None
+        if node.val is None:
+            continue
+        node.prev, node.next = tail, None
+        if tail:
+            tail.next = node
+        else:
+            new_head = node
+        tail = node
+    return new_head
+```
 - 只要值的列表、不改指针：写成生成器，先序遍历时对有值节点 `yield node.val`。
 - 要求 `O(1)` 额外空间：先用 LC 430 的拼接把所有层接到一条链上，再扫一遍摘掉 `val` 为 `None` 的节点。
 - 判断「空」要用 `val is None`，不能用 `not val`，否则合法的值 `0` 会被一起删除。

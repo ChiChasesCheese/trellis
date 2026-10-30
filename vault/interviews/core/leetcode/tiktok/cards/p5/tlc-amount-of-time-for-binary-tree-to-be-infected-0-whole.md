@@ -15,7 +15,7 @@ type: qa
 
 **识别。** 「从某个点向四周扩散，每分钟蔓延一圈」是 BFS 按层推进的标准形态，答案是离起点最远的距离。二叉树节点没有父指针，感染要向上走，所以需要把树转成图（或者额外记录父节点）。节点值互不相同，可以直接把值当图里的点编号。
 
-**推导。** 暴力：对每个节点求它到 `start` 的距离，需要找最近公共祖先，复杂 → 只要能「向上走」，问题就是普通图上的单源最短路：遍历一遍树，同时把父子边双向写进邻接表 → 从 `start` 做 BFS，一次处理一整层，层数就是分钟数；`n` 到 `10^5`，树可能是链，建图也用显式栈，避免递归。
+**推导。** 暴力：对每个节点求它到 `start` 的距离，需要找最近公共祖先，复杂 → 只要能「向上走」，问题就是普通图上的单源最短路：遍历一遍树，同时把父子边双向写进邻接表 → 从 `start` 做 BFS，一次处理一整层，层数就是分钟数；建图用递归遍历最直观（`n` 到 `10^5`、树可能是链时的深度问题见易错点）。
 
 ```python
 from collections import defaultdict, deque
@@ -23,14 +23,15 @@ from collections import defaultdict, deque
 
 def amount_of_time(root: TreeNode, start: int) -> int:
     graph: defaultdict[int, list[int]] = defaultdict(list)   # 把树变成无向图：值互不相同，直接用值当点
-    stack = [root]
-    while stack:
-        node = stack.pop()
+
+    def link(node: TreeNode) -> None:                        # 递归遍历，把每条父子边双向写进邻接表
         for child in (node.left, node.right):
             if child:
                 graph[node.val].append(child.val)
                 graph[child.val].append(node.val)
-                stack.append(child)
+                link(child)
+
+    link(root)
     queue = deque([start])
     seen = {start}
     minutes = -1                                   # 第 0 层（起点）不花时间
@@ -45,18 +46,35 @@ def amount_of_time(root: TreeNode, start: int) -> int:
     return minutes
 ```
 
-运行：`[1,5,3,null,4,10,6,9,2]`，`3` → `4`；`[1]`，`1` → `0`；`[1,2]`，`2` → `1`；`[1,2]`，`1` → `1`；`10^5` 个节点的左斜链、`start = 50000` → `50000`。
+运行：`[1,5,3,null,4,10,6,9,2]`，`3` → `4`；`[1]`，`1` → `0`；`[1,2]`，`2` → `1`；`[1,2]`，`1` → `1`；`10^5` 个节点的左斜链、`start = 50000` → `50000`（调大递归上限后；默认上限下抛 `RecursionError`）。
 
-**复杂度。** 时间 `O(n)`；空间 `O(n)`（邻接表、`seen`、队列）。
+**复杂度。** 时间 `O(n)`；空间 `O(n)`（邻接表、`seen`、队列、递归栈）。
 
 **易错点。**
 - 只算 `start` 子树的高度（只向下感染）：示例 1 得到 `1`，正确是 `4`，因为感染也会向上传给父节点，再传到别的分支。
 - 没有 `seen`：无向图里来回走，节点被重复入队，层数膨胀甚至死循环。
 - 层数从 `0` 开始计、没有减一：单节点树返回 `1`，正确是 `0`。起点那一层不花时间。
-- 用递归遍历建图：链状的 `10^5` 个节点会超过 Python 的默认递归深度。
+- 递归建图的深度：链状的 `10^5` 个节点，递归深度 `10^5`，超过 CPython 默认上限约 `1000`，抛 `RecursionError`；要 `sys.setrecursionlimit` 调大，或把建图改成显式栈（见追问）。
 
 **追问。**
 - 不建图的一遍 DFS：后序遍历，每个节点返回子树高度；遇到 `start` 时记录它向下的高度，沿路向上的每个祖先，用「到 `start` 的距离 + 另一侧子树高度」更新答案，`O(n)` 时间、`O(h)` 额外空间。
+- 建图不想碰递归上限：用显式栈遍历，其余不变：
+```python
+from collections import defaultdict
+
+
+def build_graph(root: TreeNode) -> defaultdict[int, list[int]]:
+    graph: defaultdict[int, list[int]] = defaultdict(list)
+    stack = [root]
+    while stack:                                   # 显式栈代替 link 的递归
+        node = stack.pop()
+        for child in (node.left, node.right):
+            if child:
+                graph[node.val].append(child.val)
+                graph[child.val].append(node.val)
+                stack.append(child)
+    return graph
+```
 - 多个起点同时感染：把所有起点一起放进初始队列，其余不变（多源 BFS）。
 - 要每个节点被感染的时刻：BFS 时记录 `dist[v] = dist[u] + 1`。
 

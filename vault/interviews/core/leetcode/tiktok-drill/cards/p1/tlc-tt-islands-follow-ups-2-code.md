@@ -10,7 +10,7 @@ step: 2
 `grid` 是 `m x n` 的 0/1 网格，`1 <= m, n <= 300`，四方向相连的 `1` 构成一座岛。写 `num_islands(grid)`（不修改网格）、`num_distinct_islands(grid)`（只允许平移时形状不同的岛屿数）、`num_distinct_islands_ii(grid)`（允许旋转、翻转）。
 
 ## A
-**思路。** 一个生成器 `components` 用显式栈逐座产出岛屿的格子坐标，`seen` 另存；三个函数都建立在它之上。形状签名是平移到以最小格为原点后排序的坐标元组；允许旋转翻转时对 8 种变换各算一个，取字典序最小的。
+**思路。** 一个生成器 `components` 用递归 DFS 逐座产出岛屿的格子坐标，`seen` 另存；三个函数都建立在它之上。形状签名是平移到以最小格为原点后排序的坐标元组；允许旋转翻转时对 8 种变换各算一个，取字典序最小的。
 
 ```python
 from collections.abc import Iterator
@@ -22,21 +22,21 @@ def components(grid: list[list[int]]) -> Iterator[list[tuple[int, int]]]:
     """逐个产出岛屿的格子列表；不修改 grid，visited 单独记。"""
     m, n = len(grid), len(grid[0])
     seen = [[False] * n for _ in range(m)]
+
+    def dfs(x: int, y: int, cells: list[tuple[int, int]]) -> None:
+        seen[x][y] = True                                   # 进入就标记，每格只访问一次
+        cells.append((x, y))
+        for dx, dy in DIRS:
+            nx, ny = x + dx, y + dy
+            if 0 <= nx < m and 0 <= ny < n and grid[nx][ny] == 1 and not seen[nx][ny]:
+                dfs(nx, ny, cells)
+
     for r in range(m):
         for c in range(n):
-            if grid[r][c] != 1 or seen[r][c]:
-                continue
-            seen[r][c] = True
-            cells, stack = [], [(r, c)]
-            while stack:                                    # 显式栈，不受递归深度限制
-                x, y = stack.pop()
-                cells.append((x, y))
-                for dx, dy in DIRS:
-                    nx, ny = x + dx, y + dy
-                    if 0 <= nx < m and 0 <= ny < n and grid[nx][ny] == 1 and not seen[nx][ny]:
-                        seen[nx][ny] = True                 # 入栈时就标记，避免重复入栈
-                        stack.append((nx, ny))
-            yield cells
+            if grid[r][c] == 1 and not seen[r][c]:
+                cells: list[tuple[int, int]] = []
+                dfs(r, c, cells)                            # 一次 dfs 吃掉一整座岛
+                yield cells
 
 
 def num_islands(grid: list[list[int]]) -> int:
@@ -70,11 +70,12 @@ def num_distinct_islands_ii(grid: list[list[int]]) -> int:
     return len(shapes)
 ```
 
-运行：`[[1,1,0,0,0],[1,1,0,0,0],[0,0,1,0,0],[0,0,0,1,1]]` → `num_islands` 为 `3`，调用后网格不变；`[[1,1,0,1,1],[1,0,0,0,0],[0,0,0,0,1],[1,1,0,1,1]]` → `4`、`3`、`2`；`[[1,1,0,0,0],[1,0,0,0,0],[0,0,0,0,1],[0,0,0,1,1]]` → 平移意义下 `2` 种，允许旋转翻转 `1` 种；`[[0]]` → `0`，`[[1]]` → `1`；`300 x 300` 全 `1` 与蛇形岛屿 → `1`。
+运行：`[[1,1,0,0,0],[1,1,0,0,0],[0,0,1,0,0],[0,0,0,1,1]]` → `num_islands` 为 `3`，调用后网格不变；`[[1,1,0,1,1],[1,0,0,0,0],[0,0,0,0,1],[1,1,0,1,1]]` → `4`、`3`、`2`；`[[1,1,0,0,0],[1,0,0,0,0],[0,0,0,0,1],[0,0,0,1,1]]` → 平移意义下 `2` 种，允许旋转翻转 `1` 种；`[[0]]` → `0`，`[[1]]` → `1`；`300 x 300` 全 `1` 与蛇形岛屿 → `1`（调大递归上限后）；默认上限下 `300 x 300` 全 `1` 抛 `RecursionError`。
 
-**复杂度。** `num_islands` 时间 `O(mn)`、空间 `O(mn)`；形状版本每座岛多一次排序，总计 `O(mn log mn)`，旋转翻转版常数乘 8。
+**复杂度。** `num_islands` 时间 `O(mn)`、空间 `O(mn)`（含最深 `O(mn)` 的递归栈）；形状版本每座岛多一次排序，总计 `O(mn log mn)`，旋转翻转版常数乘 8。
 
 **写法要点。**
+- `dfs` 是嵌套函数，直接读写外层的 `seen`、`grid`，不用 `nonlocal`（只改列表内容，不重新绑定名字）。
 - 生成器 `yield cells`：计数、去重、求面积都复用同一段搜索，调用方想怎么消费就怎么消费。
 - `seen` 用 `[[False] * n for _ in range(m)]`，每行独立；`[[False] * n] * m` 的各行是同一个对象。
 - `min(cells)` 对元组按字典序取最小，正好得到「行优先最小的格子」，不需要手写比较。

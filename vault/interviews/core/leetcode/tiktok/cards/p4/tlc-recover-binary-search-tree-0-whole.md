@@ -22,35 +22,58 @@ type: qa
 
 ```python
 def recover_tree(root: TreeNode | None) -> None:
-    stack: list[TreeNode] = []
     prev: TreeNode | None = None       # 中序遍历中刚访问过的前一个结点
     first = second = None              # 两个被交换的结点
+
+    def inorder(node: TreeNode | None) -> None:
+        nonlocal prev, first, second
+        if node is None:
+            return
+        inorder(node.left)
+        if prev and prev.val > node.val:        # 一处逆序对
+            if first is None:
+                first = prev           # 第一处逆序：较大的那个是被换错的结点
+            second = node              # 最后一处逆序：较小的那个是另一个
+        prev = node
+        inorder(node.right)
+
+    inorder(root)
+    if first and second:
+        first.val, second.val = second.val, first.val
+```
+
+运行：`[1,3,null,null,2]` → `[3,1,null,null,2]`，`[3,1,4,null,null,2]` → `[2,1,4,null,null,3]`，`[1,2]` → `[2,1]`；1000 个结点的单链右斜树，首尾值互换后可恢复（调大递归上限后；默认上限下抛 `RecursionError`）。
+
+**复杂度。** 时间 `O(n)`，每个结点访问一次；空间 `O(h)`（递归栈），`h` 为树高，最坏 `O(n)`。
+
+**易错点。**
+- 把 `second` 只在第一处逆序时赋值：不相邻互换会漏掉第二处。中序 `3,2,1`（示例 1）里，第一处逆序是 `(3,2)`，第二处是 `(2,1)`，只处理第一处会交换 `3` 和 `2`，得到 `2,3,1`，仍不是升序；正确是交换 `3` 和 `1`。
+- 每处逆序都更新 `first`：中序 `1,5,3,4,2,6` 有两处逆序 `(5,3)`、`(4,2)`，应交换 `5` 和 `2`；`first` 被刷新成 `4` 会交换 `4` 和 `2`，得到 `1,5,3,2,4,6`，错误。
+- 交换的是**值**，不是结点指针；用 `first.val, second.val = second.val, first.val` 即可。
+- 递归深度：结点数 `1000` 的单链树，递归深度 `1000` 层以上，超过 CPython 默认递归上限约 `1000`，抛 `RecursionError`；要 `sys.setrecursionlimit` 调大，或改成迭代（见追问）。
+
+**追问。**
+- 迭代中序：把递归换成显式栈，逆序检测逻辑不变，不受递归上限限制：
+```python
+def recover_tree(root: TreeNode | None) -> None:
+    stack: list[TreeNode] = []
+    prev: TreeNode | None = None
+    first = second = None
     node = root
     while stack or node:
         while node:                    # 一路向左压栈
             stack.append(node)
             node = node.left
         node = stack.pop()             # 弹出的顺序就是中序（升序）顺序
-        if prev and prev.val > node.val:        # 一处逆序对
+        if prev and prev.val > node.val:
             if first is None:
-                first = prev           # 第一处逆序：较大的那个是被换错的结点
-            second = node              # 最后一处逆序：较小的那个是另一个
+                first = prev
+            second = node
         prev = node
         node = node.right
     if first and second:
         first.val, second.val = second.val, first.val
 ```
-
-运行：`[1,3,null,null,2]` → `[3,1,null,null,2]`，`[3,1,4,null,null,2]` → `[2,1,4,null,null,3]`，`[1,2]` → `[2,1]`；1000 个结点的单链右斜树，首尾值互换后可恢复。
-
-**复杂度。** 时间 `O(n)`，每个结点入栈出栈一次；空间 `O(h)`（栈），`h` 为树高，最坏 `O(n)`。用迭代而非递归：树高可达 1000，递归会逼近 Python 默认的递归深度上限。
-
-**易错点。**
-- 把 `second` 只在第一处逆序时赋值：不相邻互换会漏掉第二处。中序 `3,2,1`（示例 1）里，第一处逆序是 `(3,2)`，第二处是 `(2,1)`，只处理第一处会交换 `3` 和 `2`，得到 `2,3,1`，仍不是升序；正确是交换 `3` 和 `1`。
-- 每处逆序都更新 `first`：中序 `1,5,3,4,2,6` 有两处逆序 `(5,3)`、`(4,2)`，应交换 `5` 和 `2`；`first` 被刷新成 `4` 会交换 `4` 和 `2`，得到 `1,5,3,2,4,6`，错误。
-- 交换的是**值**，不是结点指针；用 `first.val, second.val = second.val, first.val` 即可。
-
-**追问。**
 - `O(1)` 空间：Morris 遍历（用空闲的右指针临时做线索回到祖先），逆序检测逻辑完全相同，遍历结束时树结构已还原。
 - 不允许改动结点值、只能改指针：要找到两个结点的父指针并交换位置，相邻、父子关系要分情况，面试里通常不要求。
 - 如果被换错的是任意 `k` 个结点：要么排序比较（`O(n log n)`），要么求中序序列里不在最长非降子序列上的结点；已不是单遍扫描的问题。
