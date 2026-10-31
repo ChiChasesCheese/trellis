@@ -47,3 +47,16 @@ def test_several_examples_fold_separately():
     assert html.count('<details class="example">') == 2
     assert html.index("LC 1") < html.index("alpha") < html.index("LC 2") < html.index("beta")
     assert html.index("alpha") < html.index("</details>") < html.index("LC 2")
+
+
+def test_example_opens_inside_the_list_item_that_names_it():
+    from trellis.build import _html
+    md = ("**子集。**\n\n- LC 78 子集\n- LC 90 子集 II（未配例题）\n- 有效括号字符串：判断（高频）\n\n"
+          "**例题：** LC 78 子集\n\n题意。\n\n```python\nalpha = 1\n```\n\n"
+          "**例题：** 有效括号字符串：判断\n\n题意二。\n\n```python\nbeta = 2\n```\n\n"
+          "**例题：** LC 5 最长回文\n\n```python\ngamma = 3\n```\n")
+    html = _html(md)
+    assert '<li><details class="inline-example"><summary>LC 78 子集</summary>' in html
+    assert html.index("alpha") < html.index("LC 90")
+    assert '<summary>有效括号字符串：判断（高频）</summary>' in html
+    assert html.count('<details class="example">') == 1 and html.index("gamma") > html.index("</ul>")

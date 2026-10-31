@@ -51,14 +51,50 @@ def _break_semicolons(html: str) -> str:
 _EXAMPLE_LEAD = '<p><span class="label">例题</span>'
 
 
+_LI = re.compile(r"<li>(.*?)</li>", re.S)
+_LC_NUM = re.compile(r"LC\s*(\d+)")
+
+
+def _example_key(title: str) -> str:
+    m = _LC_NUM.search(title)
+    return f"LC {m.group(1)}" if m else re.sub(r"<[^>]+>", "", title).split("（")[0].strip()
+
+
 def _fold_examples(html: str) -> str:
-    """Each **例题：** paragraph opens a folded block that runs to the next 例题 or the end of the card."""
+    """Each **例题：** paragraph opens a folded block that runs to the next 例题 or the end of the card.
+
+    When a list item on the same card names the problem (its LC number, or the title of a problem without one), the
+    block opens right there: the item itself becomes the summary. Blocks no item names stay folded at the end.
+    """
     head, *examples = html.split(_EXAMPLE_LEAD)
-    folded = []
+    blocks = []
     for ex in examples:
         title, _, body = ex.partition("</p>")
-        folded.append(f'<details class="example"><summary><span class="label">例题</span>{title}</summary>{body}</details>')
-    return head + "".join(folded)
+        blocks.append([_example_key(title), title, body, False])
+
+    def mentions(item: str) -> list:
+        text = re.sub(r"<[^>]+>", "", item)
+        nums = {f"LC {n}" for n in _LC_NUM.findall(text)}
+        return [b for b in blocks if not b[3] and (b[0] in nums or (not b[0].startswith("LC ") and b[0] and b[0] in text))]
+
+    def inline(m: re.Match) -> str:
+        item = m.group(1)
+        if "<details" in item or "<ul" in item or "<ol" in item:
+            return m.group(0)
+        found = mentions(item)
+        for b in found:
+            b[3] = True
+        if len(found) == 1:
+            return f'<li><details class="inline-example"><summary>{item}</summary>{found[0][2]}</details></li>'
+        if found:
+            extra = "".join(f'<details class="inline-example"><summary>{b[1]}</summary>{b[2]}</details>' for b in found)
+            return f"<li>{item}{extra}</li>"
+        return m.group(0)
+
+    head = _LI.sub(inline, head)
+    rest = [f'<details class="example"><summary><span class="label">例题</span>{t}</summary>{body}</details>'
+            for _, t, body, used in blocks if not used]
+    return head + "".join(rest)
 
 
 def _blank_before_lists(text: str) -> str:
@@ -204,6 +240,11 @@ td, th { border: 1px solid var(--rule); padding: 5px 10px; }
 .fig svg { max-width: 100%; height: auto; color: var(--ink); }
 details.example { margin-top: 18px; padding-top: 10px; border-top: 1px solid var(--rule); }
 details.example + details.example { margin-top: 8px; }
+details.inline-example > summary { cursor: pointer; list-style: none; }
+details.inline-example > summary::-webkit-details-marker { display: none; }
+details.inline-example > summary::after { content: " ▸"; color: var(--accent); }
+details.inline-example[open] > summary::after { content: " ▾"; }
+details.inline-example[open] { margin-bottom: 10px; }
 details.example > summary { cursor: pointer; list-style: none; color: var(--accent); }
 details.example > summary::-webkit-details-marker { display: none; }
 details.example > summary::after { content: " ▸"; color: var(--dim); }
