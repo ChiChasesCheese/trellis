@@ -60,3 +60,13 @@ def test_example_opens_inside_the_list_item_that_names_it():
     assert html.index("alpha") < html.index("LC 90")
     assert '<summary>有效括号字符串：判断（高频）</summary>' in html
     assert html.count('<details class="example">') == 1 and html.index("gamma") > html.index("</ul>")
+
+
+def test_related_problems_open_in_place():
+    from trellis.build import _html
+    related = {154: ("LC 154 最小值 II", "<p>题意。</p><pre>code154</pre>"), 33: ("LC 33 搜索", "<p>s</p><pre>code33</pre>")}
+    html = _html("**同模式。** LC 154 最小值 II、LC 33 搜索旋转排序数组、LC 162 峰值。\n\n- LC 33：先判断哪段有序\n- LC 999 未知\n",
+                 related, {153})
+    assert '<ul class="related">' in html and html.count("code154") == 1
+    assert "<li>LC 162 峰值</li>" in html
+    assert html.count("code33") == 2 and "LC 999 未知</li>" in html

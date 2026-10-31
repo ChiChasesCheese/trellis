@@ -58,7 +58,7 @@ for i, band in enumerate(("p1", "p2", "p3", "p4", "p5"), 1):
                                     "summary": "也在：" + "、".join(on) + "。"} for p, on in leaves]})
 sk = {"domain": "tiktok-core", "title": "通用核心：TikTok 高频 × Amazon × 经典题单",
       "deck": "LeetCode Tops::27 通用核心：TikTok 高频 × Amazon × 经典题单",
-      "lang": "zh", "vault": "interviews/core/leetcode/tiktok-core",
+      "lang": "zh", "vault": "interviews/core/leetcode/tiktok-core", "examples_from": "interviews/core/leetcode/tiktok/cards",
       "study": {"order": "core-first", "mix": "new-first", "new_per_day": 60, "reviews_per_day": 300},
       "nodes": nodes}
 hdr = ("# Tier-A TikTok problems that are also on Amazon or classic lists, one copy of each whole-answer card.\n"

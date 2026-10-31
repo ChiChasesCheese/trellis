@@ -132,6 +132,10 @@ class Skeleton:
     # more branch of an existing deck, while `title` stays a plain note name
     # (a `::` in it would end up in the MOC's file name).
     deck: str = ""
+    # A vault folder of whole-answer cards (one problem each, header `**LC n 名字**`). When set, a problem this
+    # domain's cards mention in a 同模式 / 对应 LeetCode line or at the start of a list item opens in place with
+    # that problem's short statement and solution.
+    examples_from: str = ""
 
     @property
     def root_deck(self) -> str:
@@ -268,8 +272,13 @@ def load_skeleton(path: str | Path) -> Skeleton:
         errors.append(f"invalid deck: {deck!r} (want an Anki deck path such as 'Parent::Child')")
         deck = ""
 
+    examples_from = data.get("examples_from", "") or ""
+    if not isinstance(examples_from, str) or (examples_from and not re.match(r"^[a-z0-9_-]+(/[a-z0-9_-]+)*$", examples_from)):
+        errors.append(f"invalid examples_from: {examples_from!r} (want a relative path inside vault/)")
+        examples_from = ""
+
     skeleton = Skeleton(domain=domain, title=title.strip(), roots=roots, by_id={},
-                        lang=lang, folder=folder, deck=deck,
+                        lang=lang, folder=folder, deck=deck, examples_from=examples_from,
                         study=_parse_study(data.get("study"), errors))
     for node in skeleton.walk():
         if node.id in skeleton.by_id:

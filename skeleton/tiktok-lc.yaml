@@ -5,6 +5,7 @@ title: TikTok 字节高频 LeetCode · 整题答案
 deck: LeetCode Tops::24 TikTok 字节高频 · 整题答案（whole answers）
 lang: zh
 vault: interviews/core/leetcode/tiktok
+examples_from: interviews/core/leetcode/tiktok/cards
 study:
   order: core-first
   mix: new-first

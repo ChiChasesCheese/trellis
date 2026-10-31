@@ -97,6 +97,58 @@ def _fold_examples(html: str) -> str:
     return head + "".join(rest)
 
 
+_RELATED_LABELS = ("同模式的题", "同模式", "同类", "对应 LeetCode", "相关题")
+_RELATED_P = re.compile(r'<p>(?:<span class="label">(%s)</span>|<strong>(%s)</strong>[：:])\s*(.*?)</p>'
+                        % ("|".join(_RELATED_LABELS), "|".join(_RELATED_LABELS)), re.S)
+_LI_LEAD_LC = re.compile(r"<li>((?:<strong>)?LC\s*(\d+)(?![\d]).*?)</li>", re.S)
+
+
+def load_related(folder: Path) -> dict[int, tuple[str, str]]:
+    """LC number -> (title, html with a one-line statement and the main solution) from whole-answer cards."""
+    md = markdown.Markdown(extensions=["fenced_code", "tables", "sane_lists", "codehilite"],
+                           extension_configs={"codehilite": {"css_class": "hl", "guess_lang": False}})
+    out: dict[int, tuple[str, str]] = {}
+    for f in sorted(folder.glob("**/*-0-whole.md")):
+        text = f.read_text(encoding="utf-8")
+        q, _, a = text.partition("## A")
+        head = re.search(r"^\*\*(LC (\d+) [^*\n]+)\*\*｜", q, re.M)
+        code = re.search(r"```python\n.*?```", a, re.S)
+        if not head or not code or int(head.group(2)) in out:
+            continue
+        body = q[head.end():].split("\n\n")
+        stmt = next((b.strip() for b in body[1:] if b.strip()), "")
+        stmt = re.split(r"(?<=。)", stmt)[0][:220]
+        md.reset()
+        out[int(head.group(2))] = (head.group(1), md.convert(stmt + "\n\n" + code.group(0)))
+    return out
+
+
+def _expand_related(html: str, related: dict[int, tuple[str, str]], own: set[int]) -> str:
+    def fold(summary: str, n: int) -> str:
+        return f'<details class="inline-example"><summary>{summary}</summary>{related[n][1]}</details>'
+
+    def para(m: re.Match) -> str:
+        label, content = m.group(1) or m.group(2), m.group(3)
+        items = [i.strip() for i in re.split(r"[、，,；;]\s*", content.rstrip("。. ")) if i.strip()]
+        hits = [int(x) for i in items for x in _LC_NUM.findall(re.sub(r"<[^>]+>", "", i))]
+        if not any(n in related and n not in own for n in hits):
+            return m.group(0)
+        lis = []
+        for item in items:
+            nums = [int(x) for x in _LC_NUM.findall(re.sub(r"<[^>]+>", "", item))]
+            n = next((x for x in nums if x in related and x not in own), None)
+            lis.append(f"<li>{fold(item, n)}</li>" if n is not None else f"<li>{item}</li>")
+        return f'<p><span class="label">{label}</span></p><ul class="related">{"".join(lis)}</ul>'
+
+    def item(m: re.Match) -> str:
+        n = int(m.group(2))
+        if "<details" in m.group(1) or n not in related or n in own:
+            return m.group(0)
+        return f"<li>{fold(m.group(1), n)}</li>"
+
+    return _LI_LEAD_LC.sub(item, _RELATED_P.sub(para, html))
+
+
 def _blank_before_lists(text: str) -> str:
     """Markdown needs a blank line before a list; cards often put one right under a bold lead line."""
     out: list[str] = []
@@ -265,7 +317,7 @@ _CODE_SPANS = re.compile(r"(^```.*?^```[ \t]*$|``.+?``|`[^`\n]+`)", re.S | re.M)
 _WIKILINK_RE = re.compile(r"\[\[([^\]|]+)(?:\|([^\]]+))?\]\]")
 
 
-def _html(text: str) -> str:
+def _html(text: str, related: dict | None = None, own: set[int] | None = None) -> str:
     # Obsidian wikilinks have nowhere to point inside Anki; render the
     # display text as a styled reference instead.
     # (only outside code: `[[0]] * 3` in a code span is Python, not a link)
@@ -285,6 +337,8 @@ def _html(text: str) -> str:
     html = _TITLE.sub(lambda m: f'<p class="title">{m.group(1)}<span class="meta">{m.group(2)}</span></p>', html, count=1)
     html = _LABEL.sub(lambda m: f'<p><span class="label">{m.group(1)}</span>', html)
     html = _fold_examples(html)
+    if related:
+        html = _expand_related(html, related, own or set())
     return _break_semicolons(html)
 
 
@@ -365,6 +419,8 @@ def build_package(
 
     note_count = 0
     core = core_leaves(skeleton)
+    related = (load_related(Path(__file__).resolve().parents[1] / "vault" / skeleton.examples_from)
+               if skeleton.examples_from else None)
     # The Sequence leaves out adopted cards — building one would put a second
     # copy of a note another tool owns into the collection. A card's place in
     # it is its new-card position: what a first import studies in. A
@@ -385,10 +441,11 @@ def build_package(
         footer = _sources_html(skeleton, readings, card.node, vault,
                                clippings, cases)
         question, answer = card.render(lang)
+        own = {int(x) for x in _LC_NUM.findall(question.split("\n\n")[0])}
         if card.type == "qa":
             note = genanki.Note(
                 model=qa_model,
-                fields=[_html(question), _html(answer) + footer, crumb],
+                fields=[_html(question), _html(answer, related, own) + footer, crumb],
                 guid=genanki.guid_for(f"trellis:{card.id}"),
                 tags=tags,
                 due=position,

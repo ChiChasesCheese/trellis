@@ -5,6 +5,7 @@ title: TikTok 字节高频 LeetCode · 拆分背诵
 deck: LeetCode Tops::25 TikTok 字节高频 · 拆分背诵（split cards）
 lang: zh
 vault: interviews/core/leetcode/tiktok-drill
+examples_from: interviews/core/leetcode/tiktok/cards
 study:
   order: core-first
   mix: new-first
