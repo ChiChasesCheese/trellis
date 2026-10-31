@@ -64,3 +64,7 @@ CodeTop). Score only orders problems inside a tier. A 286 / B 188; US sightings 
 `tools/gen_core.py` builds domain `tiktok-core` (deck `LeetCode Tops::27 通用核心`): tier-A problems that are also in
 Chi's Amazon decks or on Blind 75 / NeetCode 150 / LeetCode Hot 100 / Top Interview 150 (`catalog/other_lists.json`),
 146 copies of the whole-answer cards with their own schedule, sub-decks P1..P5. Re-run after any change to deck 24.
+
+## US first (2026-10-30)
+
+Tier A = pinned ∪ US sighting in the past year ∪ US company tag 30d / 3m / 6m window ∪ China-side reported at least twice in the past year. A 196 / B 278, split P1..P5 by cumulative frequency share.

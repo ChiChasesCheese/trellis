@@ -1,0 +1,14 @@
+%% trellis:begin %%
+# LC 1186 删除一次得到子数组最大和
+*B 档：次高频*
+
+Medium；国内字节被问 2 次、最近 2026-10-08。
+
+## Cards (4)
+1. [[tlc-maximum-subarray-sum-with-one-deletion-1-signal]]
+2. [[tlc-maximum-subarray-sum-with-one-deletion-2-code]]
+3. [[tlc-maximum-subarray-sum-with-one-deletion-3-why]]
+4. [[tlc-maximum-subarray-sum-with-one-deletion-4-followup]]
+%% trellis:end %%
+
+## Notes

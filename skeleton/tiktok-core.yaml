@@ -125,7 +125,7 @@ nodes:
 - id: p3
   order: 3
   core: true
-  title: P3 常见（50 题）
+  title: P3 常见（51 题）
   summary: TikTok 高频且也在 Amazon 或经典题单里的题，同一优先级里高频在前。
   children:
   - id: p3.min-stack
@@ -149,9 +149,6 @@ nodes:
   - id: p3.maximum-subarray
     title: LC 53 最大子数组和
     summary: 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150。
-  - id: p3.max-area-of-island
-    title: LC 695 岛屿的最大面积
-    summary: 也在：Amazon、NeetCode 150。
   - id: p3.longest-valid-parentheses
     title: LC 32 最长有效括号
     summary: 也在：Amazon、LeetCode Hot 100。
@@ -161,9 +158,6 @@ nodes:
   - id: p3.permutations
     title: LC 46 全排列
     summary: 也在：Amazon、LeetCode Hot 100、NeetCode 150、Top Interview 150。
-  - id: p3.binary-tree-zigzag-level-order-traversal
-    title: LC 103 二叉树的锯齿形层序遍历
-    summary: 也在：Amazon、Top Interview 150。
   - id: p3.shortest-path-in-a-grid-with-obstacles-elimination
     title: LC 1293 网格中的最短路径
     summary: 也在：Amazon。
@@ -176,9 +170,6 @@ nodes:
   - id: p3.basic-calculator-ii
     title: LC 227 基本计算器 II
     summary: 也在：Amazon。
-  - id: p3.course-schedule-ii
-    title: LC 210 课程表 II
-    summary: 也在：Amazon、NeetCode 150、Top Interview 150。
   - id: p3.implement-trie-prefix-tree
     title: LC 208 实现 Trie (前缀树)
     summary: 也在：LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150。
@@ -212,18 +203,12 @@ nodes:
   - id: p3.combination-sum
     title: LC 39 组合总和
     summary: 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150。
-  - id: p3.maximal-square
-    title: LC 221 最大正方形
-    summary: 也在：Top Interview 150。
   - id: p3.find-first-and-last-position-of-element-in-sorted-array
     title: LC 34 在排序数组中查找元素的第一个和最后一个位置
     summary: 也在：Amazon、LeetCode Hot 100、Top Interview 150。
   - id: p3.word-search-ii
     title: LC 212 单词搜索 II
     summary: 也在：Amazon、Blind 75、NeetCode 150、Top Interview 150。
-  - id: p3.edit-distance
-    title: LC 72 编辑距离
-    summary: 也在：Amazon、LeetCode Hot 100、NeetCode 150、Top Interview 150。
   - id: p3.text-justification
     title: LC 68 文本左右对齐
     summary: 也在：Amazon、Top Interview 150。
@@ -241,9 +226,6 @@ nodes:
     summary: 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150。
   - id: p3.word-search
     title: LC 79 单词搜索
-    summary: 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150。
-  - id: p3.longest-consecutive-sequence
-    title: LC 128 最长连续序列
     summary: 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150。
   - id: p3.n-queens
     title: LC 51 N 皇后
@@ -266,66 +248,45 @@ nodes:
   - id: p3.design-circular-queue
     title: LC 622 设计循环队列
     summary: 也在：Amazon。
-  - id: p3.sort-list
-    title: LC 148 排序链表
-    summary: 也在：Amazon、LeetCode Hot 100、Top Interview 150。
-  - id: p3.maximum-width-of-binary-tree
-    title: LC 662 二叉树最大宽度
-    summary: 也在：Amazon。
-  - id: p3.next-permutation
-    title: LC 31 下一个排列
-    summary: 也在：LeetCode Hot 100。
   - id: p3.valid-parenthesis-string
     title: LC 678 有效的括号字符串
     summary: 也在：NeetCode 150。
+  - id: p3.combinations
+    title: LC 77 组合
+    summary: 也在：Amazon、Top Interview 150。
+  - id: p3.subsets
+    title: LC 78 子集
+    summary: 也在：Amazon、LeetCode Hot 100、NeetCode 150。
+  - id: p3.diameter-of-binary-tree
+    title: LC 543 二叉树的直径
+    summary: 也在：Amazon、LeetCode Hot 100、NeetCode 150。
+  - id: p3.group-anagrams
+    title: LC 49 字母异位词分组
+    summary: 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150。
+  - id: p3.unique-paths
+    title: LC 62 不同路径
+    summary: 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150。
+  - id: p3.koko-eating-bananas
+    title: LC 875 爱吃香蕉的珂珂
+    summary: 也在：Amazon、NeetCode 150。
+  - id: p3.rotate-image
+    title: LC 48 旋转图像
+    summary: 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150。
+  - id: p3.gas-station
+    title: LC 134 加油站
+    summary: 也在：Amazon、NeetCode 150、Top Interview 150。
+  - id: p3.jump-game
+    title: LC 55 跳跃游戏
+    summary: 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150。
+  - id: p3.fruit-into-baskets
+    title: LC 904 水果成篮
+    summary: 也在：Amazon。
 - id: p4
   order: 4
   core: true
-  title: P4 较常见（52 题）
+  title: P4 较常见（25 题）
   summary: TikTok 高频且也在 Amazon 或经典题单里的题，同一优先级里高频在前。
   children:
-  - id: p4.climbing-stairs
-    title: LC 70 爬楼梯
-    summary: 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150。
-  - id: p4.combinations
-    title: LC 77 组合
-    summary: 也在：Amazon、Top Interview 150。
-  - id: p4.subsets
-    title: LC 78 子集
-    summary: 也在：Amazon、LeetCode Hot 100、NeetCode 150。
-  - id: p4.diameter-of-binary-tree
-    title: LC 543 二叉树的直径
-    summary: 也在：Amazon、LeetCode Hot 100、NeetCode 150。
-  - id: p4.insert-delete-getrandom-o1
-    title: LC 380 O(1) 时间插入、删除和获取随机元素
-    summary: 也在：Amazon、Top Interview 150。
-  - id: p4.group-anagrams
-    title: LC 49 字母异位词分组
-    summary: 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150。
-  - id: p4.unique-paths
-    title: LC 62 不同路径
-    summary: 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150。
-  - id: p4.koko-eating-bananas
-    title: LC 875 爱吃香蕉的珂珂
-    summary: 也在：Amazon、NeetCode 150。
-  - id: p4.rotate-image
-    title: LC 48 旋转图像
-    summary: 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150。
-  - id: p4.maximum-product-subarray
-    title: LC 152 乘积最大子数组
-    summary: 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150。
-  - id: p4.gas-station
-    title: LC 134 加油站
-    summary: 也在：Amazon、NeetCode 150、Top Interview 150。
-  - id: p4.largest-number
-    title: LC 179 最大数
-    summary: 也在：Amazon。
-  - id: p4.jump-game
-    title: LC 55 跳跃游戏
-    summary: 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150。
-  - id: p4.fruit-into-baskets
-    title: LC 904 水果成篮
-    summary: 也在：Amazon。
   - id: p4.evaluate-division
     title: LC 399 除法求值
     summary: 也在：Amazon、Top Interview 150。
@@ -338,9 +299,6 @@ nodes:
   - id: p4.all-nodes-distance-k-in-binary-tree
     title: LC 863 二叉树中所有距离为 K 的结点
     summary: 也在：Amazon。
-  - id: p4.find-the-duplicate-number
-    title: LC 287 寻找重复数
-    summary: 也在：LeetCode Hot 100、NeetCode 150。
   - id: p4.largest-rectangle-in-histogram
     title: LC 84 柱状图中最大的矩形
     summary: 也在：Amazon、LeetCode Hot 100、NeetCode 150。
@@ -359,9 +317,6 @@ nodes:
   - id: p4.find-minimum-in-rotated-sorted-array
     title: LC 153 寻找旋转排序数组中的最小值
     summary: 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150。
-  - id: p4.merge-two-sorted-lists
-    title: LC 21 合并两个有序链表
-    summary: 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150。
   - id: p4.validate-binary-search-tree
     title: LC 98 验证二叉搜索树
     summary: 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150。
@@ -371,24 +326,12 @@ nodes:
   - id: p4.single-element-in-a-sorted-array
     title: LC 540 有序数组中的单一元素
     summary: 也在：Amazon。
-  - id: p4.copy-list-with-random-pointer
-    title: LC 138 复制带随机指针的链表
-    summary: 也在：Amazon、LeetCode Hot 100、NeetCode 150、Top Interview 150。
   - id: p4.non-overlapping-intervals
     title: LC 435 无重叠区间
     summary: 也在：Amazon、Blind 75、NeetCode 150。
-  - id: p4.decode-ways
-    title: LC 91 解码方法
-    summary: 也在：Blind 75、NeetCode 150。
-  - id: p4.surrounded-regions
-    title: LC 130 被围绕的区域
-    summary: 也在：Amazon、NeetCode 150、Top Interview 150。
   - id: p4.palindrome-partitioning
     title: LC 131 分割回文串
     summary: 也在：Amazon、LeetCode Hot 100、NeetCode 150。
-  - id: p4.random-pick-with-weight
-    title: LC 528 按权重随机选择
-    summary: 也在：Amazon。
   - id: p4.coin-change-ii
     title: LC 518 零钱兑换 II
     summary: 也在：Amazon、NeetCode 150。
@@ -401,81 +344,21 @@ nodes:
   - id: p4.number-of-connected-components-in-an-undirected-graph
     title: LC 323 无向图中连通分量的数目
     summary: 也在：Blind 75、NeetCode 150。
-  - id: p4.longest-substring-with-at-least-k-repeating-characters
-    title: LC 395 至少有 K 个重复字符的最长子串
-    summary: 也在：Amazon。
-  - id: p4.maximum-depth-of-binary-tree
-    title: LC 104 二叉树的最大深度
-    summary: 也在：LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150。
-  - id: p4.balanced-binary-tree
-    title: LC 110 平衡二叉树
-    summary: 也在：Amazon、NeetCode 150。
-  - id: p4.distinct-subsequences
-    title: LC 115 不同的子序列
-    summary: 也在：NeetCode 150。
-  - id: p4.remove-duplicates-from-sorted-list-ii
-    title: LC 82 删除排序链表中的重复元素 II
-    summary: 也在：Top Interview 150。
-  - id: p4.binary-search
-    title: LC 704 二分查找
-    summary: 也在：NeetCode 150。
-  - id: p4.target-sum
-    title: LC 494 目标和
-    summary: 也在：NeetCode 150。
-  - id: p4.letter-combinations-of-a-phone-number
-    title: LC 17 电话号码的字母组合
-    summary: 也在：Amazon、LeetCode Hot 100、NeetCode 150、Top Interview 150。
-  - id: p4.remove-duplicates-from-sorted-array-ii
-    title: LC 80 删除排序数组中的重复项 II
-    summary: 也在：Top Interview 150。
-  - id: p4.minimum-number-of-arrows-to-burst-balloons
-    title: LC 452 用最少数量的箭引爆气球
-    summary: 也在：Top Interview 150。
-  - id: p4.odd-even-linked-list
-    title: LC 328 奇偶链表
-    summary: 也在：Amazon。
   - id: p4.search-insert-position
     title: LC 35 搜索插入位置
     summary: 也在：Amazon、LeetCode Hot 100、Top Interview 150。
-  - id: p4.convert-sorted-array-to-binary-search-tree
-    title: LC 108 将有序数组转换为二叉搜索树
-    summary: 也在：LeetCode Hot 100、Top Interview 150。
-- id: p5
-  order: 5
-  core: true
-  title: P5 A 档其余（11 题）
-  summary: TikTok 高频且也在 Amazon 或经典题单里的题，同一优先级里高频在前。
-  children:
-  - id: p5.kth-smallest-element-in-a-bst
+  - id: p4.kth-smallest-element-in-a-bst
     title: LC 230 二叉搜索树中第K小的元素
     summary: 也在：LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150。
-  - id: p5.swim-in-rising-water
+  - id: p4.swim-in-rising-water
     title: LC 778 水位上升的泳池中游泳
     summary: 也在：NeetCode 150。
-  - id: p5.wildcard-matching
-    title: LC 44 通配符匹配
-    summary: 也在：Amazon。
-  - id: p5.min-cost-climbing-stairs
+  - id: p4.min-cost-climbing-stairs
     title: LC 746 使用最小花费爬楼梯
     summary: 也在：NeetCode 150。
-  - id: p5.populating-next-right-pointers-in-each-node
+  - id: p4.populating-next-right-pointers-in-each-node
     title: LC 116 填充每个节点的下一个右侧节点指针
     summary: 也在：Amazon。
-  - id: p5.palindrome-linked-list
-    title: LC 234 回文链表
-    summary: 也在：Amazon、LeetCode Hot 100。
-  - id: p5.triangle
-    title: LC 120 三角形最小路径和
-    summary: 也在：Top Interview 150。
-  - id: p5.shortest-subarray-with-sum-at-least-k
-    title: LC 862 和至少为 K 的最短子数组
-    summary: 也在：Amazon。
-  - id: p5.interleaving-string
-    title: LC 97 交错字符串
-    summary: 也在：Amazon、NeetCode 150、Top Interview 150。
-  - id: p5.substring-with-concatenation-of-all-words
-    title: LC 30 串联所有单词的子串
-    summary: 也在：Amazon、Top Interview 150。
-  - id: p5.single-threaded-cpu
+  - id: p4.single-threaded-cpu
     title: LC 1834 单线程 CPU
     summary: 也在：Amazon。

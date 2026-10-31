@@ -1,0 +1,72 @@
+---
+id: tlc-core-diameter-of-binary-tree
+node: p3.diameter-of-binary-tree
+type: qa
+---
+## Q
+**LC 543 二叉树的直径**｜Easy · 近一年被问：美国 1 次、国内 1 次 · CodeTop 国内累计 36 次 · 最近 2026-08-19（国内面试记录） · 也在：Amazon、LeetCode Hot 100、NeetCode 150
+
+给一棵二叉树的根节点，返回该树的**直径**：树中任意两个节点之间最长路径的长度，路径可能经过也可能不经过根节点，长度用路径上的**边数**表示。树中节点数在 `[1, 10^4]`，`-100 <= Node.val <= 100`。例：`root = [1,2,3,4,5]` → `3`（路径 `4→2→1→3` 或 `5→2→1→3`）；`root = [1,2]` → `1`。
+
+给出完整的最优解答：识别、推导、代码、复杂度、易错点、追问。
+
+## A
+**一句话。** 后序遍历（postorder）：每个节点的高度 = `1 + max(左高, 右高)`（按节点数）；以该节点为最高点的最长路径的边数 = `左高 + 右高`；全树的最大值就是直径。递归后序：嵌套函数返回高度，`nonlocal` 更新答案。`O(n)`。
+
+**识别。** 「树里最长的路径」：任何一条路径都有唯一的最高点（拐点），枚举每个节点作为拐点，路径长度等于它左右子树的深度之和。自底向上，一次后序同时算出高度并更新全局答案，是树形 DP 的经典写法。
+
+**推导。** 暴力：对每个节点分别递归算左右子树高度，高度被重复计算，链状树上 `O(n^2)`。洞察：高度本来就是后序的副产品，节点的两个孩子处理完时，它们的高度已知，立刻能算出"过我的最长路径"。节点数最多 `10^4`，递归一遍后序就够。
+
+```python
+def diameter_of_binary_tree(root: TreeNode | None) -> int:
+    best = 0
+
+    def height(node: TreeNode | None) -> int:    # 子树高度（按结点数），空树为 0
+        nonlocal best
+        if node is None:
+            return 0
+        lh, rh = height(node.left), height(node.right)
+        best = max(best, lh + rh)                # 经过 node 的最长路径的边数 = 左高 + 右高
+        return 1 + max(lh, rh)
+
+    height(root)
+    return best
+```
+
+**运行。** `[1,2,3,4,5]` → `3`；`[1,2]` → `1`；`[1]` → `0`；`None` → `0`；`10^4` 层的左斜链在默认递归上限下抛 `RecursionError`，调高上限后 → `9999`。
+
+**复杂度。** 时间 `O(n)`：每个节点访问一次；空间 `O(h)`：递归栈，`h` 是树高（平衡树 `O(log n)`，链状树 `O(n)`）。
+
+**易错点。**
+- 直径是边数，不是节点数：写成 `lh + rh + 1`，`[1,2,3,4,5]` 会返回 `4`，正确是 `3`。
+- 只算经过根的路径：`[1,2,null,3,4,5,null,null,6]` 里最长路径 `5→3→2→4→6` 不经过根，只算根得 `3`，正确是 `4`。
+- 递归深度：`10^4` 层的链深度就是 `10^4`，CPython 默认递归上限约 1000，会抛 `RecursionError`；要么 `sys.setrecursionlimit` 并说明风险，要么改成显式栈（见追问）。
+
+**追问。**
+- 深链不想递归：迭代后序，栈里放 `(节点, 是否已处理孩子)`，第一次弹出时把自己以「已访问」压回再压孩子，第二次弹出时孩子的高度都已存进字典：
+```python
+def diameter_stack(root: TreeNode | None) -> int:
+    if root is None:
+        return 0
+    height: dict[TreeNode, int] = {}             # 结点 -> 以它为根的子树高度（按结点数）
+    best = 0
+    stack: list[tuple[TreeNode, bool]] = [(root, False)]
+    while stack:                                 # 迭代后序：孩子都算完再算自己，避免深树时递归爆栈
+        node, visited = stack.pop()
+        if not visited:
+            stack.append((node, True))
+            if node.left:
+                stack.append((node.left, False))
+            if node.right:
+                stack.append((node.right, False))
+        else:
+            lh = height.get(node.left, 0)        # 空孩子不在字典里，高度记 0
+            rh = height.get(node.right, 0)
+            height[node] = 1 + max(lh, rh)
+            best = max(best, lh + rh)            # 经过 node 的最长路径的边数 = 左高 + 右高
+    return best
+```
+- 输出具体路径：记录取到最大值的节点，再沿两侧分别走向更深的孩子。
+- 求最大**路径和**（LC 124）：同一结构，把"高度"换成"带上这一侧能得到的最大收益 `max(0, …)`"。
+
+**同模式。** LC 124 二叉树中的最大路径和、LC 104 二叉树的最大深度、LC 687 最长同值路径、LC 110 平衡二叉树、LC 1522 N 叉树的直径。

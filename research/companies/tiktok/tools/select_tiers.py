@@ -10,10 +10,9 @@ Called by build_list.py too. Three signals, each turned into a share of its own 
 - US lists (0.4): TikTok + ByteDance company-tag frequency (0-100) from lc_company.py, full weight in the 30-day and
   3-month windows, 0.8 in the 6-month window, 0.5 otherwise.
 
-Tier A = evidence (Chi, 2026-10-29): pinned problems (`catalog/pinned.json`), anything a US interview of the past
-year asked (a counted sighting, or the US company tag's 30-day / 3-month / 6-month window), anything asked at least
-twice in the past year anywhere, and anything asked even once in the last three months (reports or CodeTop). The score above only orders problems inside a tier. A family counts as covered when
-any of its problems is in tier A; the report states how much of each signal tier A covers.
+Tier A = evidence, US first (Chi, 2026-10-30): pinned problems (`catalog/pinned.json`), anything a US interview of the
+past year asked (a counted sighting, or the US company tag's 30-day / 3-month / 6-month window), and China-side
+problems asked at least twice in the past year. The score only orders problems inside a tier.
 """
 from __future__ import annotations
 
@@ -198,16 +197,14 @@ def assign(index: dict[str, dict], today: date | None = None) -> dict:
     for s in json.loads(pinned.read_text(encoding="utf-8"))["A"] if pinned.exists() else []:
         if s in index:
             a[s] = "pinned"
-    for s, p in index.items():
+    for s, p in index.items():  # Chi (2026-10-30): US first; China-side needs at least two reports
         c = seen.get(s, {"US": 0, "CN": 0})
         if c["US"] >= 1:
             a.setdefault(s, "us-asked")
         elif p.get("window") in ("30d", "3m", "6m"):
             a.setdefault(s, "us-tag-recent")
-        elif c["US"] + c["CN"] >= 2:
-            a.setdefault(s, "asked-twice")
-        elif s in fresh:
-            a.setdefault(s, "asked-3m")
+        elif c["CN"] >= 2:
+            a.setdefault(s, "cn-twice")
     for s, p in index.items():
         p["tier"] = "A" if s in a else "B"
         p["a_reason"] = a.get(s, "")
@@ -227,7 +224,7 @@ def assign(index: dict[str, dict], today: date | None = None) -> dict:
     covered = [(f, m) for f, slugs, m in members if any(s in a for s in slugs)]
     return {
         "a": len(a), "b": len(index) - len(a), "reasons": {k: sum(1 for v in a.values() if v.startswith(k))
-                                                           for k in ("pinned", "us-asked", "us-tag-recent", "asked-twice", "asked-3m")},
+                                                           for k in ("pinned", "us-asked", "us-tag-recent", "cn-twice")},
         "reports_weighted": round(100 * sum(m for _, m in covered) / tot["reports"], 1),
         "reports_raw": round(100 * sum(f["refs"] for f, _ in covered) / sum(f["refs"] for f in fams), 1),
         "reports_reachable": round(100 * sum(f["refs"] for f, s, _ in members if s) / sum(f["refs"] for f in fams), 1),
