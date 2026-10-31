@@ -2,9 +2,10 @@
 
 同向双指针加一个可增量维护的窗口状态（哈希计数、和、单调队列）。前提是单调：窗口变大条件只会变坏或变好。不单调时退回前缀和；要窗口最大值时配单调队列。
 
-**先做（TikTok P1–P4 与经典题单，16 道）**
+**先做（TikTok P1–P4 与经典题单，17 道）**
 
 - [[tlc-longest-substring-without-repeating-characters-0-whole|LC 3 无重复字符的最长子串]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-longest-increasing-subsequence-0-whole|LC 300 最长递增子序列]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-subarray-sum-equals-k-0-whole|LC 560 和为 K 的子数组]]（中等）· TikTok P3 · Amazon · LeetCode Hot 100
 - [[tlc-sliding-window-maximum-0-whole|LC 239 滑动窗口最大值]]（困难）· TikTok P3 · Amazon · NeetCode 150 · LeetCode Hot 100
 - [[tlc-longest-substring-with-at-most-k-distinct-characters-0-whole|LC 340 至多包含 K 个不同字符的最长子串]]（中等）· TikTok P3

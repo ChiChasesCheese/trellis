@@ -2,13 +2,15 @@
 
 利用有序或单调，把两层循环压成一次扫描：相向夹逼、快慢指针、原地分区。滑动窗口是同向双指针的特例；链表的找中点、判环也是快慢指针；归并排序的合并就是两个指针。
 
-**先做（TikTok P1–P4 与经典题单，40 道）**
+**先做（TikTok P1–P4 与经典题单，43 道）**
 
+- [[tlc-longest-substring-without-repeating-characters-0-whole|LC 3 无重复字符的最长子串]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-longest-palindromic-substring-0-whole|LC 5 最长回文子串]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-remove-nth-node-from-end-of-list-0-whole|LC 19 删除链表的倒数第 N 个结点]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-trapping-rain-water-0-whole|LC 42 接雨水]]（困难）· TikTok P2 · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-meeting-rooms-ii-0-whole|LC 253 会议室 II]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150
 - [[tlc-3sum-0-whole|LC 15 三数之和]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-longest-increasing-subsequence-0-whole|LC 300 最长递增子序列]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-merge-sorted-array-0-whole|LC 88 合并两个有序数组]]（简单）· TikTok P2 · Amazon · Top Interview 150
 - [[tlc-two-sum-0-whole|LC 1 两数之和]]（简单）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-add-strings-0-whole|LC 415 字符串相加]]（简单）· TikTok P2
@@ -38,6 +40,7 @@
 - LC 167 两数之和 II - 输入有序数组（中等）· Amazon · NeetCode 150 · Top Interview 150
 - LC 202 快乐数（简单）· Amazon · NeetCode 150 · Top Interview 150
 - [[tlc-palindrome-linked-list-0-whole|LC 234 回文链表]]（简单）· TikTok B · Amazon · LeetCode Hot 100
+- [[tlc-product-of-array-except-self-0-whole|LC 238 除了自身以外数组的乘积]]（中等）· TikTok B · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-move-zeroes-0-whole|LC 283 移动零]]（简单）· TikTok B · Amazon · LeetCode Hot 100
 - [[tlc-find-the-duplicate-number-0-whole|LC 287 寻找重复数]]（中等）· TikTok B · NeetCode 150 · LeetCode Hot 100
 - LC 392 判断子序列（简单）· Amazon · Top Interview 150
@@ -45,7 +48,7 @@
 - [[tlc-palindromic-substrings-0-whole|LC 647 回文子串]]（中等）· TikTok B · Blind 75 · NeetCode 150
 - LC 763 划分字母区间（中等）· NeetCode 150 · LeetCode Hot 100
 
-**再做（其余牌组里的题，23 道）**
+**再做（其余牌组里的题，24 道）**
 
 - [[tlc-3sum-closest-0-whole|LC 16 最接近的三数之和]]（中等）· TikTok B · Amazon
 - [[tlc-4sum-0-whole|LC 18 四数之和]]（中等）· TikTok B · Amazon
@@ -64,6 +67,7 @@
 - LC 876 链表的中间结点（简单）· 
 - [[tlc-boats-to-save-people-0-whole|LC 881 救生艇]]（中等）· TikTok B · Amazon
 - [[tlc-sort-array-by-parity-0-whole|LC 905 按奇偶排序数组]]（简单）· TikTok B
+- [[tlc-minimum-area-rectangle-0-whole|LC 939 最小面积矩形]]（中等）· TikTok B
 - [[tlc-squares-of-a-sorted-array-0-whole|LC 977 有序数组的平方]]（简单）· TikTok B · Amazon
 - [[tlc-two-sum-less-than-k-0-whole|LC 1099 小于 K 的两数之和]]（简单）· TikTok B
 - LC 1650 二叉树的最近公共祖先 III（中等）· Amazon

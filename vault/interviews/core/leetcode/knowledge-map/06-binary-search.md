@@ -2,7 +2,7 @@
 
 从有序数组上的查找，推广到「答案单调」的判定：最小化最大值、能否在 x 内完成。旋转数组、找边界都是在维护一个不变量。和堆、平衡树一起，是「有序 + log n」的三件套。
 
-**先做（TikTok P1–P4 与经典题单，28 道）**
+**先做（TikTok P1–P4 与经典题单，29 道）**
 
 - [[tlc-numbers-at-most-n-given-digit-set-0-whole|LC 902 最大为 N 的数字组合]]（困难）· TikTok P2
 - [[tlc-search-in-rotated-sorted-array-0-whole|LC 33 搜索旋转排序数组]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
@@ -11,6 +11,7 @@
 - [[tlc-median-of-two-sorted-arrays-0-whole|LC 4 寻找两个正序数组的中位数]]（困难）· TikTok P3 · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-sqrtx-0-whole|LC 69 x 的平方根 ]]（简单）· TikTok P3 · Amazon · Top Interview 150
 - [[tlc-find-first-and-last-position-of-element-in-sorted-array-0-whole|LC 34 在排序数组中查找元素的第一个和最后一个位置]]（中等）· TikTok P3 · Amazon · LeetCode Hot 100 · Top Interview 150
+- [[tlc-word-break-0-whole|LC 139 单词拆分]]（中等）· TikTok P3 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-koko-eating-bananas-0-whole|LC 875 爱吃香蕉的珂珂]]（中等）· TikTok P3 · Amazon · NeetCode 150
 - [[tlc-max-consecutive-ones-iii-0-whole|LC 1004 最大连续1的个数 III]]（中等）· TikTok P4 · Amazon
 - [[tlc-find-minimum-in-rotated-sorted-array-0-whole|LC 153 寻找旋转排序数组中的最小值]]（中等）· TikTok P4 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150

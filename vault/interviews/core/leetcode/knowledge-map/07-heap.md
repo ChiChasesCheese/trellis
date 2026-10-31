@@ -2,16 +2,18 @@
 
 只需要反复取最值时用堆：Top-K、K 路归并、双堆求中位数、按时间调度任务。Dijkstra 的本质就是「堆 + 贪心」；很多设计题（定时器、任务调度）的核心也是堆。
 
-**先做（TikTok P1–P4 与经典题单，20 道）**
+**先做（TikTok P1–P4 与经典题单，22 道）**
 
 - [[tlc-kth-largest-element-in-an-array-0-whole|LC 215 数组中的第K个最大元素]]（中等）· TikTok P1 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-top-k-frequent-elements-0-whole|LC 347 前 K 个高频元素]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100
+- [[tlc-best-time-to-buy-and-sell-stock-0-whole|LC 121 买卖股票的最佳时机]]（简单）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-merge-k-sorted-lists-0-whole|LC 23 合并 K 个升序链表]]（困难）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-meeting-rooms-ii-0-whole|LC 253 会议室 II]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150
 - [[tlc-find-median-from-data-stream-0-whole|LC 295 数据流的中位数]]（困难）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-sliding-window-maximum-0-whole|LC 239 滑动窗口最大值]]（困难）· TikTok P3 · Amazon · NeetCode 150 · LeetCode Hot 100
 - [[tlc-cheapest-flights-within-k-stops-0-whole|LC 787 K 站中转内最便宜的航班]]（中等）· TikTok P4 · NeetCode 150
 - [[tlc-kth-smallest-element-in-a-sorted-matrix-0-whole|LC 378 有序矩阵中第 K 小的元素]]（中等）· TikTok P4
+- [[tlc-time-based-key-value-store-0-whole|LC 981 基于时间的键值存储]]（中等）· TikTok P4 · NeetCode 150
 - [[tlc-swim-in-rising-water-0-whole|LC 778 水位上升的泳池中游泳]]（困难）· TikTok P4 · NeetCode 150
 - [[tlc-single-threaded-cpu-0-whole|LC 1834 单线程 CPU]]（中等）· TikTok P4 · Amazon
 - LC 332 重新安排行程（困难）· Amazon · NeetCode 150
@@ -25,11 +27,12 @@
 - LC 1046 最后一块石头的重量（简单）· NeetCode 150
 - LC 1851 包含每个查询的最小区间（困难）· NeetCode 150
 
-**再做（其余牌组里的题，23 道）**
+**再做（其余牌组里的题，24 道）**
 
 - [[tlc-trapping-rain-water-ii-0-whole|LC 407 接雨水 II]]（困难）· TikTok B
 - [[tlc-sliding-window-median-0-whole|LC 480 滑动窗口中位数]]（困难）· TikTok B · Amazon
 - [[tlc-the-maze-iii-0-whole|LC 499 迷宫 III]]（困难）· TikTok B
+- [[tlc-array-partition-i-0-whole|LC 561 数组拆分]]（简单）· TikTok B · Amazon
 - LC 658 找到 K 个最接近的元素（中等）· Amazon
 - [[tlc-top-k-frequent-words-0-whole|LC 692 前K个高频单词]]（中等）· TikTok B · Amazon
 - LC 759 员工空闲时间（困难）· Amazon

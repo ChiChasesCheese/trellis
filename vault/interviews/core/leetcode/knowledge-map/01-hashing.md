@@ -2,10 +2,11 @@
 
 起点。把「再扫一遍找」变成 O(1) 查表：补数查找、计数、按签名分组、去重。几乎所有后面的模式都会在内部用到哈希：前缀和要用哈希记出现过的前缀，滑动窗口要用哈希计窗口内的字符，图要用哈希存邻接表和访问标记。
 
-**先做（TikTok P1–P4 与经典题单，67 道）**
+**先做（TikTok P1–P4 与经典题单，70 道）**
 
 - [[tlc-lru-cache-0-whole|LC 146 LRU 缓存]]（中等）· TikTok P1 · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-longest-substring-without-repeating-characters-0-whole|LC 3 无重复字符的最长子串]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-merge-intervals-0-whole|LC 56 合并区间]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-top-k-frequent-elements-0-whole|LC 347 前 K 个高频元素]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100
 - [[tlc-two-sum-0-whole|LC 1 两数之和]]（简单）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-number-of-distinct-islands-0-whole|LC 694 不同岛屿的数量]]（中等）· TikTok P2
@@ -35,6 +36,7 @@
 - [[tlc-stickers-to-spell-word-0-whole|LC 691 贴纸拼词]]（困难）· TikTok P4
 - [[tlc-time-based-key-value-store-0-whole|LC 981 基于时间的键值存储]]（中等）· TikTok P4 · NeetCode 150
 - [[tlc-construct-binary-tree-from-preorder-and-postorder-traversal-0-whole|LC 889 从前序与后序遍历序列构造二叉树]]（中等）· TikTok P4
+- [[tlc-search-insert-position-0-whole|LC 35 搜索插入位置]]（简单）· TikTok P4 · Amazon · LeetCode Hot 100 · Top Interview 150
 - [[tlc-create-binary-tree-from-descriptions-0-whole|LC 2196 根据描述创建二叉树]]（中等）· TikTok P4
 - [[tlc-count-of-interesting-subarrays-0-whole|LC 2845 统计趣味子数组的数目]]（中等）· TikTok P4
 - [[tlc-most-frequent-subtree-sum-0-whole|LC 508 出现次数最多的子树元素和]]（中等）· TikTok P4
@@ -54,6 +56,7 @@
 - [[tlc-copy-list-with-random-pointer-0-whole|LC 138 随机链表的复制]]（中等）· TikTok B · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-linked-list-cycle-ii-0-whole|LC 142 环形链表 II]]（中等）· TikTok B · Amazon · LeetCode Hot 100
 - LC 149 直线上最多的点数（困难）· Top Interview 150
+- LC 167 两数之和 II - 输入有序数组（中等）· Amazon · NeetCode 150 · Top Interview 150
 - [[tlc-majority-element-0-whole|LC 169 多数元素]]（简单）· TikTok B · Amazon · LeetCode Hot 100 · Top Interview 150
 - LC 202 快乐数（简单）· Amazon · NeetCode 150 · Top Interview 150
 - LC 205 同构字符串（简单）· Amazon · Top Interview 150
@@ -72,7 +75,7 @@
 - LC 846 一手顺子（中等）· NeetCode 150
 - LC 2013 检测正方形（中等）· NeetCode 150
 
-**再做（其余牌组里的题，66 道）**
+**再做（其余牌组里的题，67 道）**
 
 - LC 37 解数独（困难）· Amazon
 - [[tlc-word-ladder-ii-0-whole|LC 126 单词接龙 II]]（困难）· TikTok B · Amazon
@@ -93,6 +96,7 @@
 - LC 496 下一个更大元素 I（简单）· Amazon
 - [[tlc-continuous-subarray-sum-0-whole|LC 523 连续的子数组和]]（中等）· TikTok B
 - [[tlc-contiguous-array-0-whole|LC 525 连续数组]]（中等）· TikTok B · Amazon
+- [[tlc-valid-square-0-whole|LC 593 有效的正方形]]（中等）· TikTok B
 - LC 645 错误的集合（简单）· Amazon
 - [[tlc-top-k-frequent-words-0-whole|LC 692 前K个高频单词]]（中等）· TikTok B · Amazon
 - [[tlc-number-of-distinct-islands-ii-0-whole|LC 711 不同岛屿的数量 II]]（困难）· TikTok B

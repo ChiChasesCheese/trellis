@@ -2,18 +2,21 @@
 
 栈 / 队列里保持单调，每个元素进出一次：下一个更大元素、柱状图最大矩形、接雨水、滑动窗口最大值。是「找左右第一个比我大 / 小」这一类问题的通用骨架。
 
-**先做（TikTok P1–P4 与经典题单，8 道）**
+**先做（TikTok P1–P4 与经典题单，11 道）**
 
+- [[tlc-best-time-to-buy-and-sell-stock-0-whole|LC 121 买卖股票的最佳时机]]（简单）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-trapping-rain-water-0-whole|LC 42 接雨水]]（困难）· TikTok P2 · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-valid-parentheses-0-whole|LC 20 有效的括号]]（简单）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-remove-duplicate-letters-0-whole|LC 316 去除重复字母]]（中等）· TikTok P2 · Amazon
 - [[tlc-sliding-window-maximum-0-whole|LC 239 滑动窗口最大值]]（困难）· TikTok P3 · Amazon · NeetCode 150 · LeetCode Hot 100
 - [[tlc-largest-rectangle-in-histogram-0-whole|LC 84 柱状图中最大的矩形]]（困难）· TikTok P4 · Amazon · NeetCode 150 · LeetCode Hot 100
+- [[tlc-block-placement-queries-0-whole|LC 3161 物块放置查询]]（困难）· TikTok P4
+- [[tlc-container-with-most-water-0-whole|LC 11 盛最多水的容器]]（中等）· TikTok B · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-daily-temperatures-0-whole|LC 739 每日温度]]（中等）· TikTok B · Amazon · NeetCode 150 · LeetCode Hot 100
 - [[tlc-car-fleet-0-whole|LC 853 车队]]（中等）· TikTok B · NeetCode 150
 - LC 918 环形子数组的最大和（中等）· Amazon · Top Interview 150
 
-**再做（其余牌组里的题，19 道）**
+**再做（其余牌组里的题，20 道）**
 
 - [[tlc-maximal-rectangle-0-whole|LC 85 最大矩形]]（困难）· TikTok B · Amazon
 - [[tlc-create-maximum-number-0-whole|LC 321 拼接最大数]]（困难）· TikTok B
@@ -22,6 +25,7 @@
 - LC 496 下一个更大元素 I（简单）· Amazon
 - LC 503 下一个更大元素 II（中等）· Amazon
 - [[tlc-shortest-unsorted-continuous-subarray-0-whole|LC 581 最短无序连续子数组]]（中等）· TikTok B
+- LC 643 子数组最大平均数 I（简单）· Amazon
 - [[tlc-asteroid-collision-0-whole|LC 735 小行星碰撞]]（中等）· TikTok B · Amazon
 - [[tlc-score-of-parentheses-0-whole|LC 856 括号的分数]]（中等）· TikTok B
 - [[tlc-shortest-subarray-with-sum-at-least-k-0-whole|LC 862 和至少为 K 的最短子数组]]（困难）· TikTok B · Amazon

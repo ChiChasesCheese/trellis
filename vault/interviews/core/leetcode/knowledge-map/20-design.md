@@ -2,11 +2,12 @@
 
 把前面的结构拼成一个类：哈希 + 链表（LRU）、哈希 + 堆、哈希 + 数组（O(1) 随机）、时间版本的键值存储。考的是组合与不变量，不是新算法。
 
-**先做（TikTok P1–P4 与经典题单，21 道）**
+**先做（TikTok P1–P4 与经典题单，22 道）**
 
 - [[tlc-lru-cache-0-whole|LC 146 LRU 缓存]]（中等）· TikTok P1 · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-find-median-from-data-stream-0-whole|LC 295 数据流的中位数]]（困难）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-min-stack-0-whole|LC 155 最小栈]]（中等）· TikTok P3 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-maximum-subarray-0-whole|LC 53 最大子数组和]]（中等）· TikTok P3 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-design-hashmap-0-whole|LC 706 设计哈希映射]]（简单）· TikTok P3
 - [[tlc-implement-trie-prefix-tree-0-whole|LC 208 实现 Trie (前缀树)]]（中等）· TikTok P3 · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-design-in-memory-file-system-0-whole|LC 588 设计内存文件系统]]（困难）· TikTok P3 · Amazon

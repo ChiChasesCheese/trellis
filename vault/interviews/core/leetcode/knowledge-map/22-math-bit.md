@@ -2,7 +2,7 @@
 
 取模与溢出、最大公约数、快速幂、异或去重、矩阵旋转与螺旋、按规则模拟。往往是一个「看出规律」的问题。
 
-**先做（TikTok P1–P4 与经典题单，56 道）**
+**先做（TikTok P1–P4 与经典题单，57 道）**
 
 - [[tlc-numbers-at-most-n-given-digit-set-0-whole|LC 902 最大为 N 的数字组合]]（困难）· TikTok P2
 - [[tlc-basic-calculator-0-whole|LC 224 基本计算器]]（困难）· TikTok P2 · Top Interview 150
@@ -43,6 +43,7 @@
 - LC 67 二进制求和（简单）· Amazon · Top Interview 150
 - [[tlc-climbing-stairs-0-whole|LC 70 爬楼梯]]（简单）· TikTok B · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-subsets-ii-0-whole|LC 90 子集 II]]（中等）· TikTok B · NeetCode 150
+- [[tlc-best-time-to-buy-and-sell-stock-ii-0-whole|LC 122 买卖股票的最佳时机 II]]（中等）· TikTok B · Top Interview 150
 - LC 137 只出现一次的数字 II（中等）· Top Interview 150
 - LC 149 直线上最多的点数（困难）· Top Interview 150
 - [[tlc-evaluate-reverse-polish-notation-0-whole|LC 150 逆波兰表达式求值]]（中等）· TikTok B · Amazon · NeetCode 150 · Top Interview 150

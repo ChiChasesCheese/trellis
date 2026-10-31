@@ -10,42 +10,104 @@ step: 5
 除了合并和会议室，区间题还有哪些常见形态？各自的扫描方式是什么？
 
 ## A
-1. **两个已排序的区间表求交集**（双指针，每次推进右端点更小的那个）：
+1. **两个已排序的区间表求交集**（双指针，每次推进右端点更小的那个）（例：LC 986 区间列表的交集）。输入 `[[0,2],[5,10],[13,23],[24,25]]` 与 `[[1,5],[8,12],[15,24],[25,26]]` 得 `[[1,2],[5,5],[8,10],[15,23],[24,24],[25,25]]`。
+
+2. **可达范围是区间**：维护「当前能到达的最远下标」`far`；若某个下标 `i > far`，说明走不到（例：LC 55 跳跃游戏）。`[2,3,1,1,4]` 得 `True`，`[3,2,1,0,4]` 得 `False`。LC 45 跳跃游戏 II 是同一个思路加「分层」：当前这一跳能到的区间 `[lo, hi]`，扫完这一层就跳数 +1。
+
+3. **稀疏大坐标上的覆盖计数**：用字典记录差分，只对出现过的端点排序，累加得到每个端点之后的覆盖数；见前缀和与差分一组（例：LC 2021 街上最亮的位置）。
+
+4. **资源调度（LC 253、2402）**：排序 + 堆，见堆一组；区别是 LC 2402 需要知道**哪个房间**，所以要用「房间号堆 + 结束时间堆」（例：LC 253 会议室 II）。
+
+5. **选最多互不重叠区间 / 最少箭射爆气球**：按**右端点**排序，贪心选结束最早的；与合并按左端点排序不同（例：LC 435 无重叠区间）。
+
+**例题：** LC 986 区间列表的交集
+
+给两个由**闭区间**组成的列表 `firstList` 和 `secondList`，每个列表内部的区间两两不相交且已按起点排序。返回这两个列表的交集（同样是一组闭区间）。闭区间 `[a, b]` 表示实数 `a <= x <= b`，两个闭区间的交集要么为空，要么是闭区间，例如 `[1,3]` 和 `[2,4]` 的交集是 `[2,3]`。`0 <= firstList.length, secondList.length <= 1000`，两者长度之和 `>= 1`，`0 <= start < end <= 10^9`，同一列表中 `end_i < start_{i+1}`。
 
 ```python
-def interval_intersection(a: list[list[int]], b: list[list[int]]) -> list[list[int]]:
+def interval_intersection(first: list[list[int]], second: list[list[int]]) -> list[list[int]]:
     i = j = 0
-    res: list[list[int]] = []
-    while i < len(a) and j < len(b):
-        lo, hi = max(a[i][0], b[j][0]), min(a[i][1], b[j][1])
-        if lo <= hi:
-            res.append([lo, hi])           # 有交集
-        if a[i][1] < b[j][1]:
-            i += 1                         # 右端点更小的先结束，推进它
+    ans: list[list[int]] = []
+    while i < len(first) and j < len(second):
+        lo = max(first[i][0], second[j][0])      # 交集左端取较大的起点
+        hi = min(first[i][1], second[j][1])      # 右端取较小的终点
+        if lo <= hi:                             # 闭区间：lo == hi 也是一个点
+            ans.append([lo, hi])
+        if first[i][1] < second[j][1]:           # 终点小的那个不可能再与对方后面的区间相交
+            i += 1
         else:
             j += 1
-    return res
-print(interval_intersection([[0,2],[5,10],[13,23],[24,25]], [[1,5],[8,12],[15,24],[25,26]]))
-# [[1, 2], [5, 5], [8, 10], [15, 23], [24, 24], [25, 25]]
+    return ans
 ```
 
-2. **可达范围是区间（LC 55 跳跃游戏）**：维护「当前能到达的最远下标」`far`；若某个下标 `i > far`，说明走不到：
+**例题：** LC 55 跳跃游戏
+
+给非负整数数组 `nums`，你最初位于第一个下标，数组中每个元素是你在该位置**最多**可以向前跳的长度。判断能否到达最后一个下标。`1 <= nums.length <= 10^4`，`0 <= nums[i] <= 10^5`。
 
 ```python
 def can_jump(nums: list[int]) -> bool:
-    far = 0
-    for i, x in enumerate(nums):
-        if i > far:
-            return False
-        far = max(far, i + x)
+    reach = 0                               # 目前能到达的最远下标
+    for i, step in enumerate(nums):
+        if i > reach:
+            return False                    # 连 i 都够不着，后面更不可能
+        reach = max(reach, i + step)
     return True
-print(can_jump([2,3,1,1,4]), can_jump([3,2,1,0,4]))   # True False
 ```
 
-   LC 45 跳跃游戏 II 是同一个思路加「分层」：当前这一跳能到的区间 `[lo, hi]`，扫完这一层就跳数 +1。
+**例题：** LC 2021 街上最亮的位置
 
-3. **稀疏大坐标上的覆盖计数（LC 2021）**：用字典记录差分，只对出现过的端点排序，累加得到每个端点之后的覆盖数；见前缀和与差分一组。
+一条街上有许多路灯，路灯的坐标由数组 `lights` 给出：`lights[i] = [position, range]` 表示坐标为 `position` 的路灯照亮闭区间 `[position - range, position + range]`。位置 `p` 的亮度等于能照到 `p` 的路灯数量。返回最亮的位置；有多个时返回坐标最小的。`1 <= lights.length <= 10^5`，`-10^8 <= position <= 10^8`，`0 <= range <= 10^8`。
 
-4. **资源调度（LC 253、2402）**：排序 + 堆，见堆一组；区别是 LC 2402 需要知道**哪个房间**，所以要用「房间号堆 + 结束时间堆」。
+```python
+from collections import defaultdict
 
-5. **选最多互不重叠区间 / 最少箭射爆气球**：按**右端点**排序，贪心选结束最早的；与合并按左端点排序不同。
+
+def brightest_position(lights: list[list[int]]) -> int:
+    diff: defaultdict[int, int] = defaultdict(int)   # 差分：在坐标 x 处亮度变化多少
+    for pos, rng in lights:
+        diff[pos - rng] += 1                     # 灯照亮 [pos-rng, pos+rng]：左端 +1
+        diff[pos + rng + 1] -= 1                 # 右端的下一格 -1
+    best = cur = 0
+    ans = 0
+    for x in sorted(diff):                       # 亮度只在有事件的坐标处变化，按坐标从小到大扫
+        cur += diff[x]
+        if cur > best:                           # 严格大于：并列时保留坐标更小的
+            best, ans = cur, x
+    return ans
+```
+
+**例题：** LC 253 会议室 II
+
+给一个会议时间数组 `intervals`，`intervals[i] = [start_i, end_i]`，返回需要的最少会议室数量。一个会议结束的时刻可以立刻开始下一个会议。`1 <= intervals.length <= 10^4`，`0 <= start_i < end_i <= 10^6`。
+
+```python
+import heapq
+
+
+def min_meeting_rooms(intervals: list[list[int]]) -> int:
+    ends: list[int] = []                           # 小根堆：每个在用会议室的结束时间
+    for start, end in sorted(intervals):
+        if ends and ends[0] <= start:              # 最早结束的会议已结束：复用它的房间
+            heapq.heapreplace(ends, end)           # 弹出旧结束时间并压入新的，一次 O(log n)
+        else:
+            heapq.heappush(ends, end)              # 没有空房间：新开一间
+    return len(ends)                               # 堆里剩几个 = 同时在用的房间数峰值
+```
+
+**例题：** LC 435 无重叠区间
+
+给一组区间 `intervals`，`intervals[i] = [start_i, end_i]`。返回最少需要移除多少个区间，才能让剩下的区间两两不重叠。只在端点接触的区间不算重叠，例如 `[1,2]` 和 `[2,3]`。`1 <= intervals.length <= 10^5`，`intervals[i].length == 2`，`-5 * 10^4 <= start_i < end_i <= 5 * 10^4`。
+
+```python
+from math import inf
+from operator import itemgetter
+
+
+def erase_overlap_intervals(intervals: list[list[int]]) -> int:
+    kept, end = 0, -inf                                   # 已保留的区间数、最后保留区间的右端点
+    for start, finish in sorted(intervals, key=itemgetter(1)):   # 按右端点升序
+        if start >= end:                                  # 只在端点接触不算重叠，所以是 >=
+            kept += 1
+            end = finish
+    return len(intervals) - kept
+```

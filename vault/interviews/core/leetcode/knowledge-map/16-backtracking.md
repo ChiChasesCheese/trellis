@@ -2,8 +2,9 @@
 
 枚举所有方案的 DFS：子集、组合、排列、分割、N 皇后。选择 / 递归 / 撤销三步，剪枝和去重决定快慢。加上记忆化就变成动态规划。
 
-**先做（TikTok P1–P4 与经典题单，19 道）**
+**先做（TikTok P1–P4 与经典题单，23 道）**
 
+- [[tlc-longest-substring-without-repeating-characters-0-whole|LC 3 无重复字符的最长子串]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-restore-ip-addresses-0-whole|LC 93 复原 IP 地址]]（中等）· TikTok P3
 - [[tlc-permutations-0-whole|LC 46 全排列]]（中等）· TikTok P3 · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-combination-sum-0-whole|LC 39 组合总和]]（中等）· TikTok P3 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
@@ -13,6 +14,8 @@
 - [[tlc-n-queens-0-whole|LC 51 N 皇后]]（困难）· TikTok P3 · Amazon · NeetCode 150 · LeetCode Hot 100
 - [[tlc-combinations-0-whole|LC 77 组合]]（中等）· TikTok P3 · Amazon · Top Interview 150
 - [[tlc-subsets-0-whole|LC 78 子集]]（中等）· TikTok P3 · Amazon · NeetCode 150 · LeetCode Hot 100
+- [[tlc-unique-paths-0-whole|LC 62 不同路径]]（中等）· TikTok P3 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100
+- [[tlc-jump-game-0-whole|LC 55 跳跃游戏]]（中等）· TikTok P3 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-stickers-to-spell-word-0-whole|LC 691 贴纸拼词]]（困难）· TikTok P4
 - [[tlc-palindrome-partitioning-0-whole|LC 131 分割回文串]]（中等）· TikTok P4 · Amazon · NeetCode 150 · LeetCode Hot 100
 - [[tlc-24-game-0-whole|LC 679 24 点游戏]]（困难）· TikTok P4
@@ -22,6 +25,7 @@
 - LC 52 N 皇后 II（困难）· Top Interview 150
 - [[tlc-subsets-ii-0-whole|LC 90 子集 II]]（中等）· TikTok B · NeetCode 150
 - [[tlc-coin-change-0-whole|LC 322 零钱兑换]]（中等）· TikTok B · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-partition-equal-subset-sum-0-whole|LC 416 分割等和子集]]（中等）· TikTok B · Amazon · NeetCode 150 · LeetCode Hot 100
 - [[tlc-target-sum-0-whole|LC 494 目标和]]（中等）· TikTok B · NeetCode 150
 
 **再做（其余牌组里的题，12 道）**

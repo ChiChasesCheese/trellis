@@ -2,13 +2,14 @@
 
 每一步做局部最优，并能用交换论证说明不会更差：跳跃游戏、分发糖果、区间调度。证明不出来时，往往要退回 DP。
 
-**先做（TikTok P1–P4 与经典题单，22 道）**
+**先做（TikTok P1–P4 与经典题单，24 道）**
 
 - [[tlc-merge-intervals-0-whole|LC 56 合并区间]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-house-robber-0-whole|LC 198 打家劫舍]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-meeting-rooms-ii-0-whole|LC 253 会议室 II]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150
 - [[tlc-remove-duplicate-letters-0-whole|LC 316 去除重复字母]]（中等）· TikTok P2 · Amazon
 - [[tlc-valid-parenthesis-string-0-whole|LC 678 有效的括号字符串]]（中等）· TikTok P3 · NeetCode 150
+- [[tlc-subsets-0-whole|LC 78 子集]]（中等）· TikTok P3 · Amazon · NeetCode 150 · LeetCode Hot 100
 - [[tlc-make-costs-of-paths-equal-in-a-binary-tree-0-whole|LC 2673 使二叉树所有路径值相等的最小代价]]（中等）· TikTok P3
 - [[tlc-gas-station-0-whole|LC 134 加油站]]（中等）· TikTok P3 · Amazon · NeetCode 150 · Top Interview 150
 - [[tlc-jump-game-0-whole|LC 55 跳跃游戏]]（中等）· TikTok P3 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
@@ -19,6 +20,7 @@
 - [[tlc-container-with-most-water-0-whole|LC 11 盛最多水的容器]]（中等）· TikTok B · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-jump-game-ii-0-whole|LC 45 跳跃游戏 II]]（中等）· TikTok B · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-best-time-to-buy-and-sell-stock-ii-0-whole|LC 122 买卖股票的最佳时机 II]]（中等）· TikTok B · Top Interview 150
+- [[tlc-perfect-squares-0-whole|LC 279 完全平方数]]（中等）· TikTok B · LeetCode Hot 100
 - [[tlc-coin-change-0-whole|LC 322 零钱兑换]]（中等）· TikTok B · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-minimum-number-of-arrows-to-burst-balloons-0-whole|LC 452 用最少数量的箭引爆气球]]（中等）· TikTok B · Top Interview 150
 - LC 502 IPO（困难）· Top Interview 150

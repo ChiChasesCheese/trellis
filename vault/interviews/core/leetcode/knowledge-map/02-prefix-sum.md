@@ -2,11 +2,13 @@
 
 从哈希长出来：区间和 = 两个前缀相减，「区间和等于 k」就变成「前面出现过某个前缀吗」，正是哈希查找。差分是它的逆运算，处理「很多区间批量加」。和滑动窗口的分界：数组有负数时窗口不单调，只能用前缀和加哈希。
 
-**先做（TikTok P1–P4 与经典题单，10 道）**
+**先做（TikTok P1–P4 与经典题单，12 道）**
 
 - [[tlc-trapping-rain-water-0-whole|LC 42 接雨水]]（困难）· TikTok P2 · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-meeting-rooms-ii-0-whole|LC 253 会议室 II]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150
 - [[tlc-subarray-sum-equals-k-0-whole|LC 560 和为 K 的子数组]]（中等）· TikTok P3 · Amazon · LeetCode Hot 100
+- [[tlc-maximum-subarray-0-whole|LC 53 最大子数组和]]（中等）· TikTok P3 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-sliding-window-maximum-0-whole|LC 239 滑动窗口最大值]]（困难）· TikTok P3 · Amazon · NeetCode 150 · LeetCode Hot 100
 - [[tlc-minimum-size-subarray-sum-0-whole|LC 209 长度最小的子数组]]（中等）· TikTok P3 · Top Interview 150
 - [[tlc-count-number-of-nice-subarrays-0-whole|LC 1248 统计「优美子数组」]]（中等）· TikTok P3 · Amazon
 - [[tlc-max-consecutive-ones-iii-0-whole|LC 1004 最大连续1的个数 III]]（中等）· TikTok P4 · Amazon

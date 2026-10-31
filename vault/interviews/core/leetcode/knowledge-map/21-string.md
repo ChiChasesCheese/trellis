@@ -2,7 +2,7 @@
 
 字符串上的计数、匹配与解析：栈处理计算器和括号、递归下降解析嵌套结构、KMP 与滚动哈希做匹配。
 
-**先做（TikTok P1–P4 与经典题单，73 道）**
+**先做（TikTok P1–P4 与经典题单，74 道）**
 
 - [[tlc-longest-substring-without-repeating-characters-0-whole|LC 3 无重复字符的最长子串]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-longest-palindromic-substring-0-whole|LC 5 最长回文子串]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
@@ -65,6 +65,7 @@
 - [[tlc-interleaving-string-0-whole|LC 97 交错字符串]]（中等）· TikTok B · Amazon · NeetCode 150 · Top Interview 150
 - [[tlc-distinct-subsequences-0-whole|LC 115 不同的子序列]]（困难）· TikTok B · NeetCode 150
 - [[tlc-valid-palindrome-0-whole|LC 125 验证回文串]]（简单）· TikTok B · Amazon · Blind 75 · NeetCode 150 · Top Interview 150
+- [[tlc-evaluate-reverse-polish-notation-0-whole|LC 150 逆波兰表达式求值]]（中等）· TikTok B · Amazon · NeetCode 150 · Top Interview 150
 - LC 205 同构字符串（简单）· Amazon · Top Interview 150
 - [[tlc-design-add-and-search-words-data-structure-0-whole|LC 211 添加与搜索单词 - 数据结构设计]]（中等）· TikTok B · Amazon · Blind 75 · NeetCode 150 · Top Interview 150
 - [[tlc-valid-anagram-0-whole|LC 242 有效的字母异位词]]（简单）· TikTok B · Amazon · Blind 75 · NeetCode 150 · Top Interview 150
