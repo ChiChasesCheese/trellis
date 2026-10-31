@@ -14,20 +14,27 @@ step: 9
 - LC 227 基本计算器 II
 - LC 224 基本计算器
 - LC 772 基本计算器 III
+- 计算器梯度题：先校验再求值（高频）
 
 **嵌套结构**
 - LC 394 字符串解码
 - LC 856 括号的分数
+- LC 385 迷你语法分析器（高频）
 
 **分段比较 / 路径**
 - LC 165 比较版本号
 - LC 71 简化路径
+- LC 151 反转字符串中的单词（高频）
+- LC 1360 日期之间隔几天（高频）
 
 **括号 / 相邻重复的栈**
 - LC 1249 移除无效的括号
 - LC 1209 删除字符串中的所有相邻重复项 II
 - LC 20 有效的括号
 - LC 301 删除无效的括号（回溯或 BFS）
+- LC 921 使括号有效的最少添加（高频）
+- LC 678 有效的括号字符串（高频）
+- LC 32 最长有效括号（高频）
 
 **逐位模拟**
 - LC 415 字符串相加
@@ -409,4 +416,201 @@ def split_message(message: str, limit: int) -> list[str]:
         out.append(message[pos:pos + take] + tail)
         pos += take
     return out
+```
+
+**例题：** 计算器梯度题（先校验再求值）
+
+给一个字符串表达式 `s`，实现整数计算器 `calculate(s)`。面试官逐级加条件：（1）只有 `+ - * /` 和空格，没有括号，要处理优先级，除法是整数除法（向零取整）；（2）再加括号和一元负号；（3）先校验表达式是否合法（空串、非法字符、括号不配对、连续运算符、缺操作数），合法才计算。`1 <= len(s) <= 3 * 10^5`，操作数是非负整数；一元负号只出现在表达式开头或 `(` 之后；除数不会是 `0`。
+
+```python
+import re
+PREC = {"+": 1, "-": 1, "*": 2, "/": 2}
+TOKEN = re.compile(r"\s*(?:(\d+)|(\S))")
+def tokenize(s: str) -> list[int | str]:
+    """数字变成 int，其余单字符原样保留；遇到非法字符抛 ValueError。"""
+    tokens: list[int | str] = []
+    for m in TOKEN.finditer(s):
+        num, ch = m.groups()
+        if num is not None:
+            tokens.append(int(num))
+        elif ch in "+-*/()":
+            tokens.append(ch)
+        else:
+            raise ValueError(f"illegal character {ch!r}")
+    return tokens
+def is_valid(s: str) -> bool:
+    """先校验：空串、非法字符、括号不配对、连续运算符、缺操作数都返回 False。
+    一元负号只允许出现在表达式开头或 '(' 之后。"""
+    try:
+        tokens = tokenize(s)
+    except ValueError:
+        return False
+    depth, want_operand, prev = 0, True, None
+    for tok in tokens:
+        if want_operand:
+            if isinstance(tok, int):
+                want_operand = False
+            elif tok == "(":
+                depth += 1
+            elif tok == "-" and prev in (None, "("):
+                pass
+            else:
+                return False
+        else:
+            if tok == ")":
+                depth -= 1
+                if depth < 0:
+                    return False
+            elif tok in PREC:
+                want_operand = True
+            else:
+                return False
+        prev = tok
+    return bool(tokens) and not want_operand and depth == 0
+def _apply(op: str, a: int, b: int) -> int:
+    if op == "+":
+        return a + b
+    if op == "-":
+        return a - b
+    if op == "*":
+        return a * b
+    q = abs(a) // abs(b)
+    return q if (a < 0) == (b < 0) else -q
+def calculate(s: str) -> int:
+    if not is_valid(s):
+        raise ValueError("invalid expression")
+    nums: list[int] = []
+    ops: list[str] = []
+    def reduce_top() -> None:
+        b, a = nums.pop(), nums.pop()
+        nums.append(_apply(ops.pop(), a, b))
+    prev = None
+    for tok in tokenize(s):
+        if isinstance(tok, int):
+            nums.append(tok)
+        elif tok == "(":
+            ops.append(tok)
+        elif tok == ")":
+            while ops[-1] != "(":
+                reduce_top()
+            ops.pop()
+        else:
+            if tok == "-" and prev in (None, "("):
+                nums.append(0)
+            while ops and ops[-1] != "(" and PREC[ops[-1]] >= PREC[tok]:
+                reduce_top()
+            ops.append(tok)
+        prev = tok
+    while ops:
+        reduce_top()
+    return nums[0]
+```
+
+**例题：** LC 385 迷你语法分析器
+
+给一个字符串 `s`，表示整数的嵌套列表，实现解析器返回对应的 `NestedInteger`。列表里的每个元素只可能是整数，或整数的嵌套列表。`NestedInteger` 接口：`NestedInteger()` 创建空列表，`NestedInteger(v)` 创建单个整数，`add(x)` 把 `x` 追加进列表。`1 <= s.length <= 5 * 10^4`，`s` 只含数字、方括号、负号 `-`、逗号，保证可解析，所有数值在 `[-10^6, 10^6]`。
+
+```python
+import re
+def deserialize(s: str) -> NestedInteger:
+    tokens = iter(re.findall(r"\[|\]|-?\d+", s))
+    def parse(tok: str) -> NestedInteger:
+        if tok != "[":
+            return NestedInteger(int(tok))
+        lst = NestedInteger()
+        for nxt in tokens:
+            if nxt == "]":
+                break
+            lst.add(parse(nxt))
+        return lst
+    return parse(next(tokens))
+```
+
+**例题：** LC 151 反转字符串中的单词
+
+给字符串 `s`，反转其中单词的顺序。单词是由非空格字符组成的串，`s` 里用至少一个空格分隔单词，开头、结尾、单词之间都可能有多余的空格。返回单词顺序颠倒、单词之间只用**一个**空格连接、没有前导或尾随空格的字符串。`1 <= s.length <= 10^4`，`s` 只含英文字母、数字和空格，至少有一个单词。
+
+```python
+def reverse_words(s: str) -> str:
+    words: list[str] = []
+    i = len(s) - 1
+    while i >= 0:
+        if s[i] == " ":
+            i -= 1
+            continue
+        end = i + 1
+        while i >= 0 and s[i] != " ":
+            i -= 1
+        words.append(s[i + 1:end])
+    return " ".join(words)
+```
+
+**例题：** LC 1360 日期之间隔几天
+
+编写程序计算两个日期之间隔了多少天。日期以字符串 `YYYY-MM-DD` 给出，保证是 `1971` 年到 `2100` 年之间的有效日期。
+
+```python
+MONTH_DAYS = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+def days_between_dates(date1: str, date2: str) -> int:
+    def is_leap(y: int) -> bool:
+        return y % 4 == 0 and (y % 100 != 0 or y % 400 == 0)
+    def to_days(s: str) -> int:
+        y, m, d = map(int, s.split("-"))
+        days = sum(365 + is_leap(k) for k in range(1971, y))
+        days += sum(MONTH_DAYS[:m - 1]) + (m > 2 and is_leap(y))
+        return days + d
+    return abs(to_days(date1) - to_days(date2))
+```
+
+**例题：** LC 921 使括号有效的最少添加
+
+括号字符串有效，当且仅当：它是空串；或可写成 `AB`（`A`、`B` 都有效）；或可写成 `(A)`（`A` 有效）。给定只含 `'('` 和 `')'` 的字符串 `s`，每次操作可以在**任意位置**插入一个括号。返回使 `s` 有效所需的**最少插入次数**。`1 <= s.length <= 1000`。
+
+```python
+def min_add_to_make_valid(s: str) -> int:
+    open_cnt = add = 0
+    for ch in s:
+        if ch == "(":
+            open_cnt += 1
+        elif open_cnt:
+            open_cnt -= 1
+        else:
+            add += 1
+    return add + open_cnt
+```
+
+**例题：** LC 678 有效的括号字符串
+
+给一个只含 `'('`、`')'` 和 `'*'` 三种字符的字符串 `s`，判断它是否有效。有效的条件：每个 `'('` 都有对应的 `')'`，每个 `')'` 都有对应的 `'('`，`'('` 必须在对应的 `')'` 之前；`'*'` 可以当作单个 `')'`、单个 `'('` 或空串。`1 <= s.length <= 100`，`s[i]` 只能是 `'('`、`')'`、`'*'`。
+
+```python
+def check_valid_string(s: str) -> bool:
+    lo = hi = 0
+    for ch in s:
+        lo += 1 if ch == '(' else -1
+        hi += 1 if ch != ')' else -1
+        if hi < 0:
+            return False
+        lo = max(lo, 0)
+    return lo == 0
+```
+
+**例题：** LC 32 最长有效括号
+
+给一个只包含 `'('` 和 `')'` 的字符串 `s`，找出最长的有效（格式正确且连续）括号子串的长度。「有效」指每个左括号都有对应的右括号将其闭合，比如 `"(()())"`。`0 <= s.length <= 3 * 10^4`，`s[i]` 为 `'('` 或 `')'`。
+
+```python
+def longest_valid_parentheses(s: str) -> int:
+    stack = [-1]
+    best = 0
+    for i, ch in enumerate(s):
+        if ch == "(":
+            stack.append(i)
+        else:
+            stack.pop()
+            if stack:
+                best = max(best, i - stack[-1])
+            else:
+                stack.append(i)
+    return best
 ```

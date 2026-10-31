@@ -16,11 +16,11 @@ step: 4
 | 求最少硬币，贪心取最大面额 | DP | 局部最优不推出全局：硬币 `[1, 3, 4]` 凑 `6`，贪心是 `4+1+1` 三枚，最优 `3+3` 两枚（例：LC 322 零钱兑换） |
 | 子串，用 DP | 滑动窗口 | 子串**连续**、约束单调时，窗口 `O(n)`，DP 不必要（例：LC 3 无重复字符的最长子串） |
 | 子序列，用滑动窗口 | DP | 子序列不要求连续，窗口的「收缩」没有意义（例：LC 300 最长递增子序列） |
-| 最短路径，用 DFS | BFS（无权）/ Dijkstra（有权） | DFS 先找到的路径不一定最短（例：LC 286 墙与门） |
-| 无权图最短，用 Dijkstra | BFS | 都能对，BFS `O(V+E)` 更简单；第一个碰到的叶子就是最近的（例：LC 111 二叉树的最小深度） |
+| 最短路径，用 DFS | BFS（无权）/ Dijkstra（有权） | DFS 先找到的路径不一定最短（例：LC 286 墙与门；高频：LC 127 单词接龙） |
+| 无权图最短，用 Dijkstra | BFS | 都能对，BFS `O(V+E)` 更简单；第一个碰到的叶子就是最近的（例：LC 111 二叉树的最小深度；高频：LC 1091 二进制矩阵中的最短路径） |
 | 有负权边，用 Dijkstra | Bellman-Ford | Dijkstra 假设弹出即最终最短，负权破坏它（LC 787 限制边数，用 Bellman-Ford 或带状态）（例：LC 787 K 站中转内最便宜的航班） |
-| 有序数组，用哈希 | 双指针 | 有序是信号，哈希浪费空间（例：LC 167 两数之和 II） |
-| 第 `k` 大，排序 | 堆 / 快速选择 | 只要 `k` 个，不必全排；扫一遍只留前三名（例：LC 414 第三大的数） |
+| 有序数组，用哈希 | 双指针 | 有序是信号，哈希浪费空间（例：LC 167 两数之和 II；高频：LC 15 三数之和） |
+| 第 `k` 大，排序 | 堆 / 快速选择 | 只要 `k` 个，不必全排；扫一遍只留前三名（例：LC 414 第三大的数；高频：LC 215 数组中的第 K 个最大元素） |
 | 求「恰好 `k`」，直接做窗口 | 「至多 `k`」减「至多 `k-1`」 | 恰好不单调，至多单调（LC 1248、992）（例：LC 1248 统计「优美子数组」） |
 
 - 判断是否换算法的标准：**这个性质是否单调**（窗口收缩 / 扩张、二分、双指针都依赖单调性），以及**局部选择是否影响后面**（贪心依赖无后效）。
@@ -202,4 +202,113 @@ def number_of_subarrays(nums: list[int], k: int) -> int:
             ans += seen[odd - k]            # 左边前缀的奇数个数为 odd - k，中间恰好 k 个奇数
         seen[odd] += 1
     return ans
+```
+
+**例题：** LC 127 单词接龙
+
+字典 `wordList` 中从 `beginWord` 到 `endWord` 的**转换序列**是一个序列 `beginWord -> s1 -> s2 -> ... -> sk`：相邻两个单词只差一个字母；每个 `si`（`1 <= i <= k`）都在 `wordList` 中（`beginWord` 不需要在字典里）；`sk == endWord`。给 `beginWord`、`endWord` 和 `wordList`，返回从 `beginWord` 到 `endWord` 的**最短转换序列中的单词数目**；不存在则返回 `0`。约束：`1 <= beginWord.length <= 10`，`endWord.length == beginWord.length`，`1 <= wordList.length <= 5000`，`wordList[i].length == beginWord.length`，所有单词由小写英文字母组成，`beginWord != endWord`，`wordList` 中的字符串互不相同。
+
+```python
+import string
+from collections import deque
+
+
+def ladder_length(begin_word: str, end_word: str, word_list: list[str]) -> int:
+    words = set(word_list)             # 还没访问过的词典单词；O(1) 查询
+    if end_word not in words:
+        return 0
+    queue = deque([begin_word])
+    steps = 1                          # 当前这一层的单词所在的序列长度
+    while queue:
+        for _ in range(len(queue)):    # 一次处理完整的一层
+            word = queue.popleft()
+            if word == end_word:
+                return steps
+            for i in range(len(word)):
+                for ch in string.ascii_lowercase:
+                    nxt = word[:i] + ch + word[i + 1:]
+                    if nxt in words:
+                        words.remove(nxt)          # 入队即标记已访问，防止重复入队
+                        queue.append(nxt)
+        steps += 1
+    return 0
+```
+
+**例题：** LC 1091 二进制矩阵中的最短路径
+
+给 `n x n` 的 0/1 矩阵 `grid`，求从左上角 `(0, 0)` 到右下角 `(n-1, n-1)` 的最短**畅通路径**的长度，不存在返回 `-1`。畅通路径要求经过的格子值都是 `0`，相邻格子在 **8 个方向**之一上连通（共边或共角）；路径长度是**经过的格子总数**。`n == grid.length == grid[i].length`，`1 <= n <= 100`，`grid[i][j]` 为 `0` 或 `1`。
+
+```python
+from collections import deque
+from itertools import product
+
+def shortest_path_binary_matrix(grid: list[list[int]]) -> int:
+    n = len(grid)
+    if grid[0][0] or grid[n - 1][n - 1]:
+        return -1                                    # 起点或终点被堵死
+    dirs = [(dr, dc) for dr, dc in product((-1, 0, 1), repeat=2) if dr or dc]   # 8 个方向
+    seen = [row[:] for row in grid]                  # 1 = 障碍或已入队；不改动入参
+    seen[0][0] = 1
+    q = deque([(0, 0, 1)])                           # (行, 列, 路径经过的格子数)
+    while q:
+        r, c, d = q.popleft()
+        if r == n - 1 and c == n - 1:
+            return d
+        for dr, dc in dirs:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < n and 0 <= nc < n and not seen[nr][nc]:
+                seen[nr][nc] = 1                     # 入队时就标记，每格只入队一次
+                q.append((nr, nc, d + 1))
+    return -1
+```
+
+**例题：** LC 15 三数之和
+
+给整数数组 `nums`，返回所有和为 `0` 且**不重复**的三元组 `[nums[i], nums[j], nums[k]]`，要求 `i`、`j`、`k` 互不相同；答案中不能包含重复的三元组，顺序不限。`3 <= nums.length <= 3000`，`-10^5 <= nums[i] <= 10^5`。
+
+```python
+def three_sum(nums: list[int]) -> list[list[int]]:
+    nums = sorted(nums)
+    n = len(nums)
+    result: list[list[int]] = []
+    for i in range(n - 2):
+        if nums[i] > 0:                            # 排好序后最小的数都 > 0，三数之和不可能为 0
+            break
+        if i > 0 and nums[i] == nums[i - 1]:       # 同一个"第一个数"只处理一次，去重
+            continue
+        lo, hi = i + 1, n - 1
+        while lo < hi:
+            total = nums[i] + nums[lo] + nums[hi]
+            if total < 0:
+                lo += 1
+            elif total > 0:
+                hi -= 1
+            else:
+                result.append([nums[i], nums[lo], nums[hi]])
+                lo += 1
+                hi -= 1
+                while lo < hi and nums[lo] == nums[lo - 1]:   # 跳过重复的第二个数；第三个数随之唯一确定
+                    lo += 1
+    return result
+```
+
+**例题：** LC 215 数组中的第 K 个最大元素
+
+给整数数组 `nums` 和整数 `k`，返回数组**排序后**的第 `k` 个最大元素（不是第 `k` 个不同的元素）。必须设计并实现时间复杂度为 `O(n)` 的算法。`1 <= k <= nums.length <= 10^5`，`-10^4 <= nums[i] <= 10^4`。
+
+```python
+import random
+
+def find_kth_largest(nums: list[int], k: int) -> int:
+    while True:
+        pivot = random.choice(nums)
+        bigger = [x for x in nums if x > pivot]
+        equal = nums.count(pivot)
+        if k <= len(bigger):                       # 答案在比 pivot 大的那一堆里
+            nums = bigger
+        elif k <= len(bigger) + equal:             # 落在 pivot 自己这一段
+            return pivot
+        else:                                      # 答案在比 pivot 小的那一堆里
+            k -= len(bigger) + equal
+            nums = [x for x in nums if x < pivot]
 ```

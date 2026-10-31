@@ -13,7 +13,7 @@ step: 1
 **前缀和（Prefix Sum）的信号：**
 - 反复求**区间 `[l, r]` 的和**（或异或、乘积、计数），暴力每次 `O(n)` → 预处理 `pre`，每次 `O(1)`（例：LC 1352 最后 K 个数的乘积）。
 - 问**连续子数组**的和等于 / 被 `k` 整除的**个数**或存在性 → `pre[j] - pre[i] = k`，在哈希表里找 `pre[i] = pre[j] - k`（例：LC 974 和可被 K 整除的子数组）。
-- **数组含负数**，不能用滑动窗口（右端增大和不一定增大）：把 `0` 记成 `-1` 后，窗口和忽大忽小（例：LC 525 连续数组）。
+- **数组含负数**，不能用滑动窗口（右端增大和不一定增大）：把 `0` 记成 `-1` 后，窗口和忽大忽小（例：LC 525 连续数组；高频：LC 560 和为 K 的子数组）。
 - 「**恰好**有 `k` 个奇数 / 1」→ 把元素映射成 0/1，再按子数组和 = `k` 处理（例：LC 1248 统计「优美子数组」）。
 - 二维矩阵的子矩阵和 → 二维前缀和（例：LC 1074 元素和为目标值的子矩阵数量）。
 
@@ -210,5 +210,21 @@ def max_sliding_window(nums: list[int], k: int) -> list[int]:
             window.popleft()
         if i >= k - 1:                 # 窗口满了才记录
             ans.append(nums[window[0]])
+    return ans
+```
+
+**例题：** LC 560 和为 K 的子数组
+
+整数数组 `nums`（含负数）和整数 `k`，返回和为 `k` 的连续子数组个数；`1 <= nums.length <= 2 * 10^4`，`-1000 <= nums[i] <= 1000`。
+
+```python
+from collections import Counter
+def subarray_sum(nums: list[int], k: int) -> int:
+    seen = Counter({0: 1})
+    pre = ans = 0
+    for x in nums:
+        pre += x
+        ans += seen[pre - k]
+        seen[pre] += 1
     return ans
 ```

@@ -28,6 +28,8 @@ step: 7
 - LC 735 小行星碰撞
 - LC 1209 删除字符串中的所有相邻重复项 II（栈存 `(字符, 计数)`）
 - LC 856 括号的分数
+- LC 20 有效的括号（高频）
+- LC 32 最长有效括号（高频）
 
 **单调队列**
 - LC 239 滑动窗口最大值
@@ -252,4 +254,41 @@ def max_sliding_window(nums: list[int], k: int) -> list[int]:
         if i >= k - 1:
             ans.append(nums[window[0]])
     return ans
+```
+
+**例题：** LC 20 有效的括号
+
+给一个只包含 `'('`、`')'`、`'{'`、`'}'`、`'['`、`']'` 的字符串 `s`，判断它是否有效。有效需同时满足：左括号必须用相同类型的右括号闭合；左括号必须以正确的顺序闭合；每个右括号都有对应的同类型左括号。`1 <= s.length <= 10^4`。
+
+```python
+def is_valid(s: str) -> bool:
+    pairs = {")": "(", "]": "[", "}": "{"}     # 右括号 -> 它该配的左括号
+    stack: list[str] = []
+    for ch in s:
+        if ch in pairs:
+            if not stack or stack.pop() != pairs[ch]:   # 栈空，或栈顶类型对不上
+                return False
+        else:
+            stack.append(ch)
+    return not stack                            # 还有没闭合的左括号就是无效
+```
+
+**例题：** LC 32 最长有效括号
+
+给一个只包含 `'('` 和 `')'` 的字符串 `s`，找出最长的有效（格式正确且连续）括号子串的长度。「有效」指每个左括号都有对应的右括号将其闭合，比如 `"(()())"`。`0 <= s.length <= 3 * 10^4`，`s[i]` 为 `'('` 或 `')'`。
+
+```python
+def longest_valid_parentheses(s: str) -> int:
+    stack = [-1]                        # 栈底永远是"最近一个没被匹配的位置"，初始是虚拟的 -1
+    best = 0
+    for i, ch in enumerate(s):
+        if ch == "(":
+            stack.append(i)
+        else:
+            stack.pop()                 # 先尝试匹配：弹掉栈顶
+            if stack:
+                best = max(best, i - stack[-1])     # 当前有效段是 (栈顶, i]
+            else:
+                stack.append(i)         # 栈空：这个 ")" 无法匹配，成为新的分界线
+    return best
 ```

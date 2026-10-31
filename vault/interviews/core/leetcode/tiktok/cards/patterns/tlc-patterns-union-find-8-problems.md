@@ -17,6 +17,7 @@ step: 8
 - LC 721 账户合并
 - LC 128 最长连续序列（`x` 与 `x + 1` 合并，取最大块）
 - LC 924 尽量减少恶意软件的传播
+- LC 323 无向图中连通分量的数目（高频）
 
 **判环与最小生成树**
 - LC 1584 连接所有点的最小费用（Kruskal）
@@ -254,4 +255,25 @@ def calc_equation(equations: list[list[str]], values: list[float], queries: list
         else:
             ans.append(-1.0)                     # 变量没出现过，或不在同一个连通块
     return ans
+```
+
+**例题：** LC 323 无向图中连通分量的数目
+
+`n` 个节点（`0..n-1`）和无向边列表 `edges`，返回连通分量的个数；`1 <= n <= 2000`，`1 <= edges.length <= 5000`。
+
+```python
+def count_components(n: int, edges: list[list[int]]) -> int:
+    parent = list(range(n))
+    def find(x: int) -> int:
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    comps = n
+    for a, b in edges:
+        ra, rb = find(a), find(b)
+        if ra != rb:
+            parent[ra] = rb
+            comps -= 1
+    return comps
 ```

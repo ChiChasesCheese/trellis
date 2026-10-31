@@ -13,12 +13,12 @@ step: 1
 动态规划（Dynamic Programming）适用于：问题能拆成**重叠的子问题**，且大问题的最优解由小问题的最优解组合而成（**最优子结构**）。
 
 **触发信号：**
-- 问**最大 / 最小值**、**方案个数**、**能否做到**，并且暴力枚举是指数级（回溯会超时）（例：LC 322 零钱兑换）。
-- 一维序列，"到第 `i` 个为止"的答案由前面的答案推出：爬楼梯 LC 70、打家劫舍 LC 198、最大子数组和 LC 53（例：LC 70 爬楼梯）。
+- 问**最大 / 最小值**、**方案个数**、**能否做到**，并且暴力枚举是指数级（回溯会超时）（例：LC 322 零钱兑换；高频：LC 518 零钱兑换 II）。
+- 一维序列，"到第 `i` 个为止"的答案由前面的答案推出：爬楼梯 LC 70、打家劫舍 LC 198、最大子数组和 LC 53（例：LC 70 爬楼梯；高频：LC 746 使用最小花费爬楼梯）。
 - **选与不选**的决策、**相邻元素互相约束**（例：LC 198 打家劫舍）。
 - 每一天有几种"状态"（持有 / 不持有股票）：买卖股票 LC 121、122（例：LC 714 买卖股票的最佳时机含手续费）。
 - 把序列切成若干段，每段有代价：分隔数组以得到最大和 LC 1043（例：LC 1043 分隔数组以得到最大和）。
-- 数据范围 `n` 到 `10^3` 到 `10^5`，要求 `O(n)` 或 `O(n k)`（例：LC 188 买卖股票的最佳时机 IV）。
+- 数据范围 `n` 到 `10^3` 到 `10^5`，要求 `O(n)` 或 `O(n k)`（例：LC 188 买卖股票的最佳时机 IV；高频：LC 1043 分隔数组以得到最大和）。
 
 **四步法：**
 1. **状态**：`dp[i]` 表示什么？（"前 `i` 个""以第 `i` 个结尾"）
@@ -168,4 +168,34 @@ def subarrays_div_by_k(nums: list[int], k: int) -> int:
         ans += seen[prefix]                 # 以当前位置结尾、余数相同的前缀每个对应一个合法子数组
         seen[prefix] += 1
     return ans
+```
+
+**例题：** LC 518 零钱兑换 II
+
+给整数数组 `coins`（不同面额的硬币）和整数 `amount`，求能凑成总金额的**硬币组合数**，凑不出返回 `0`；每种面额的硬币有无限个，结果保证在 32 位有符号整数内。`1 <= coins.length <= 300`，`1 <= coins[i] <= 5000`，`coins` 中的值互不相同，`0 <= amount <= 5000`。
+
+```python
+def change(amount: int, coins: list[int]) -> int:
+    m = len(coins)
+    dp = [[0] * (amount + 1) for _ in range(m + 1)]
+    for i in range(m + 1):
+        dp[i][0] = 1
+    for i, coin in enumerate(coins, 1):
+        for a in range(1, amount + 1):
+            dp[i][a] = dp[i - 1][a]
+            if a >= coin:
+                dp[i][a] += dp[i][a - coin]
+    return dp[m][amount]
+```
+
+**例题：** LC 746 使用最小花费爬楼梯
+
+整数数组 `cost`，`cost[i]` 是从第 `i` 级台阶向上爬需要支付的费用。支付后可以向上爬**一级或两级**。你可以选择从下标 `0` 或下标 `1` 的台阶出发。返回到达楼梯顶部（下标 `cost.length`，最后一级之后的位置）的最低总花费。`2 <= cost.length <= 1000`，`0 <= cost[i] <= 999`。
+
+```python
+def min_cost_climbing_stairs(cost: list[int]) -> int:
+    two_back = one_back = 0
+    for i in range(2, len(cost) + 1):
+        two_back, one_back = one_back, min(one_back + cost[i - 1], two_back + cost[i - 2])
+    return one_back
 ```

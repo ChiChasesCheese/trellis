@@ -12,13 +12,13 @@ step: 1
 ## A
 **在下标上二分（数组本身有某种单调结构）：**
 - 数组**有序**，要找值、找边界、找插入位置（例：LC 34 在排序数组中查找元素的第一个和最后一个位置）。
-- 题面写明「时间复杂度 `O(log n)`」：LC 33、153、162、540 都有这句话（例：LC 162 寻找峰值）。
+- 题面写明「时间复杂度 `O(log n)`」：LC 33、153、162、540 都有这句话（例：LC 162 寻找峰值；高频：LC 33 搜索旋转排序数组）。
 - **旋转有序**数组、**峰值**、「只出现一次的数」：虽然整体不有序，但每次能判断答案在哪一半（例：LC 153 寻找旋转排序数组中的最小值）。
 
 **对答案二分（答案在一个范围里，且可行性单调）：**
 - 「**最小化最大值**」「**最大化最小值**」：LC 1011（最低运载能力）、LC 875（最小速度）（例：LC 875 爱吃香蕉的珂珂）。
-- 「能否在 `x` 以内完成」判断函数容易写出来，且 `x` 越大（或越小）越容易 → 单调（例：LC 1802 有界数组中指定下标处的最大值）。
-- 答案是整数，范围已知（`1..max`），第 `k` 小 / 大（LC 378 值域二分）、`sqrt`（LC 69）（例：LC 1539 第 k 个缺失的正整数）。
+- 「能否在 `x` 以内完成」判断函数容易写出来，且 `x` 越大（或越小）越容易 → 单调（例：LC 1802 有界数组中指定下标处的最大值；高频：LC 1918 第 K 小的子数组和）。
+- 答案是整数，范围已知（`1..max`），第 `k` 小 / 大（LC 378 值域二分）、`sqrt`（LC 69）（例：LC 1539 第 k 个缺失的正整数；高频：LC 378 有序矩阵中第 K 小的元素）。
 
 **共同点**：存在一个**判定函数** `ok(x)`，结果是 `False...False True...True`，要找第一个 `True`；每次判定后能丢掉一半。
 
@@ -188,5 +188,81 @@ def my_sqrt(x: int) -> int:
             lo = mid                               # mid 可行：答案至少是 mid
         else:
             hi = mid - 1
+    return lo
+```
+
+**例题：** LC 33 搜索旋转排序数组
+
+整数数组 `nums` 原本按升序排列且值**互不相同**，在某个未知的下标 `k`（`0 <= k < nums.length`）处向左旋转，变成 `[nums[k], nums[k+1], ..., nums[n-1], nums[0], ..., nums[k-1]]`。给旋转后的 `nums` 和目标值 `target`，返回 `target` 的下标，不存在返回 `-1`，要求 `O(log n)`。`1 <= nums.length <= 5000`，`-10^4 <= nums[i] <= 10^4`，`nums` 中每个值都独一无二，`-10^4 <= target <= 10^4`。
+
+```python
+def search(nums: list[int], target: int) -> int:
+    lo, hi = 0, len(nums) - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if nums[mid] == target:
+            return mid
+        if nums[lo] <= nums[mid]:                  # 左半 [lo, mid] 是有序的
+            if nums[lo] <= target < nums[mid]:     # target 落在有序的左半里：去左边
+                hi = mid - 1
+            else:
+                lo = mid + 1
+        else:                                      # 否则右半 [mid, hi] 一定有序
+            if nums[mid] < target <= nums[hi]:
+                lo = mid + 1
+            else:
+                hi = mid - 1
+    return -1
+```
+
+**例题：** LC 1918 第 K 小的子数组和
+
+给长度为 `n` 的整数数组 `nums` 和整数 `k`，返回**第 `k` 小的子数组和**。子数组是数组中非空且连续的一段，子数组和是其中所有元素之和（不同位置的子数组即使和相同也各算一个）。`1 <= n <= 2 * 10^4`，`1 <= nums[i] <= 5 * 10^4`，`1 <= k <= n * (n + 1) / 2`。
+
+```python
+def kth_smallest_subarray_sum(nums: list[int], k: int) -> int:
+    def count_le(x: int) -> int:                  # 和 <= x 的子数组个数（元素全为正，双指针）
+        cnt = left = cur = 0
+        for right, v in enumerate(nums):
+            cur += v
+            while cur > x:                        # 窗口和超标：收缩左端
+                cur -= nums[left]
+                left += 1
+            cnt += right - left + 1               # 以 right 结尾、左端在 [left, right] 的子数组都 <= x
+        return cnt
+
+    lo, hi = min(nums), sum(nums)                 # 答案一定落在 [最小元素, 总和]
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if count_le(mid) >= k:                    # 至少 k 个子数组 <= mid：答案 <= mid
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+```
+
+**例题：** LC 378 有序矩阵中第 K 小的元素
+
+`n × n` 矩阵 `matrix`，每行每列都按非递减顺序排列。找到矩阵中**排序后**的第 `k` 小的元素（重复的值各算一个，不是第 `k` 个不同的值）。要求内存复杂度优于 `O(n^2)`。`1 <= n <= 300`，`-10^9 <= matrix[i][j] <= 10^9`，`1 <= k <= n^2`。
+
+```python
+def kth_smallest(matrix: list[list[int]], k: int) -> int:
+    n = len(matrix)
+
+    def count_le(mid: int) -> int:             # 矩阵中 <= mid 的元素个数，阶梯式 O(n)
+        count, col = 0, n - 1
+        for row in matrix:                     # 行从上到下，每行的列边界只会左移
+            while col >= 0 and row[col] > mid:
+                col -= 1
+            count += col + 1
+        return count
+
+    lo, hi = matrix[0][0], matrix[-1][-1]      # 答案一定落在 [最小值, 最大值]
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if count_le(mid) >= k:                 # 至少有 k 个数 <= mid：答案 <= mid
+            hi = mid
+        else:
+            lo = mid + 1
     return lo
 ```

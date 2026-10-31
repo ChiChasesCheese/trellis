@@ -16,7 +16,7 @@ step: 5
 
 3. **返回单链增益、在节点处合并**（例：LC 124 二叉树中的最大路径和）：每个节点返回「以它为起点向下走的最大和」（负数当 `0`），经过该节点的整条路径 = 左增益 + 右增益 + 自己，用来更新全局答案。同一个骨架也能写「好叶子对」LC 1530：返回叶子到当前节点的距离列表，在节点处把左右两个列表配对计数。
 
-4. **由前序 + 中序建树**（例：LC 105 从前序与中序遍历序列构造二叉树）：前序的第一个是根，在中序中的位置把序列分成左右子树；用字典 `值 -> 中序下标` 做到 `O(1)` 定位，总 `O(n)`；先建左子树，因为前序里左子树排在前面。
+4. **由前序 + 中序建树**（例：LC 105 从前序与中序遍历序列构造二叉树；高频：LC 889 从前序与后序遍历序列构造二叉树）：前序的第一个是根，在中序中的位置把序列分成左右子树；用字典 `值 -> 中序下标` 做到 `O(1)` 定位，总 `O(n)`；先建左子树，因为前序里左子树排在前面。
 
 **例题：** LC 437 路径总和 III
 
@@ -100,4 +100,25 @@ def build_tree(preorder: list[int], inorder: list[int]) -> TreeNode | None:
         return node
 
     return build(0, len(inorder))
+```
+
+**例题：** LC 889 从前序与后序遍历序列构造二叉树
+
+`preorder`、`postorder` 是同一棵无重复值二叉树的前序和后序遍历，重构并返回这棵树（多个答案返回任意一个）；`1 <= preorder.length <= 30`。
+
+```python
+def construct_from_pre_post(preorder: list[int], postorder: list[int]) -> TreeNode | None:
+    post_idx = {v: i for i, v in enumerate(postorder)}
+    def build(pre_lo: int, post_lo: int, size: int) -> TreeNode | None:
+        if size == 0:
+            return None
+        root = TreeNode(preorder[pre_lo])
+        if size == 1:
+            return root
+        left_root = preorder[pre_lo + 1]
+        left_size = post_idx[left_root] - post_lo + 1
+        root.left = build(pre_lo + 1, post_lo, left_size)
+        root.right = build(pre_lo + 1 + left_size, post_lo + left_size, size - 1 - left_size)
+        return root
+    return build(0, 0, len(preorder))
 ```

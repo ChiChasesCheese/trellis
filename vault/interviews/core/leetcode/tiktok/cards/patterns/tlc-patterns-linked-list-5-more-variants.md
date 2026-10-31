@@ -11,7 +11,7 @@ step: 5
 
 ## A
 - **重排**：找中点 → 反转后半 → 交替合并。偶数个时 `slow` 停在前半的最后一个，先断开再反转（例：LC 143 重排链表）。
-- **逐位相加**：`carry, digit = divmod(carry, 10)`；循环条件包含 `carry`，这样最后的进位也会生成节点：`[9,9,9,9,9,9,9] + [9,9,9,9]` → `[8,9,9,9,0,0,0,1]`（例：LC 2 两数相加）。
+- **逐位相加**：`carry, digit = divmod(carry, 10)`；循环条件包含 `carry`，这样最后的进位也会生成节点：`[9,9,9,9,9,9,9] + [9,9,9,9]` → `[8,9,9,9,0,0,0,1]`（例：LC 2 两数相加；高频：LC 445 两数相加 II）。
 - **归并排序**：快指针从 `head.next` 出发，保证偶数个时 `slow` 停在前半末尾；先断开再递归，最后合并两个有序链表。时间 `O(n log n)`，递归深度 `O(log n)`，不会爆栈（例：LC 148 排序链表）。
 - **相交**：`p`、`q` 各走完自己的链再换到对方的头，走过的总长相同，要么同时到交点，要么同时为 `None`；用 `is` 比较节点（例：LC 160 相交链表）。
 - **前缀和删节点**：前缀和 + 字典，同一个前缀和出现两次，中间整段和为 0；字典同一前缀和覆盖，保留最后一次，第二遍遍历时跳过两次相同前缀和之间的整段。`[1,2,-3,3,1]` → `[3,1]`；`[1,2,3,-3,4]` → `[1,2,4]`；`[1,2,3,-3,-2]` → `[1]`（例：LC 1171 从链表中删去总和值为零的连续节点）。
@@ -120,4 +120,27 @@ def remove_zero_sum_sublists(head: ListNode | None) -> ListNode | None:
         node.next = last[s].next
         node = node.next
     return dummy.next
+```
+
+**例题：** LC 445 两数相加 II
+
+给两个**非空**链表，各表示一个非负整数，数字**高位在前**（最高位在链表头），每个结点存一位数字（`0 <= node.val <= 9`，链表长度 `1` 到 `100`）。把两数相加，以同样形式返回和的链表。除了数字 `0` 本身，两个数都没有前导零。进阶：不能翻转输入链表。
+
+```python
+def add_two_numbers(l1: ListNode | None, l2: ListNode | None) -> ListNode | None:
+    s1: list[int] = []
+    s2: list[int] = []
+    while l1:                              # 压栈：栈顶就是个位
+        s1.append(l1.val)
+        l1 = l1.next
+    while l2:
+        s2.append(l2.val)
+        l2 = l2.next
+    head: ListNode | None = None
+    carry = 0
+    while s1 or s2 or carry:               # 最后一个进位也要处理
+        carry += (s1.pop() if s1 else 0) + (s2.pop() if s2 else 0)
+        carry, digit = divmod(carry, 10)
+        head = ListNode(digit, head)       # 头插法：新结点接在已有结果前面
+    return head
 ```

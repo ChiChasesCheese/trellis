@@ -28,7 +28,7 @@ def kth_smallest(matrix: list[list[int]], k: int) -> int:
 print(kth_smallest([[1,5,9],[10,11,13],[12,13,15]], 8))   # 13
 ```
 
-3. **双堆调度（LC 2402 会议室 III）**：空闲房间号的最小堆 + 正在使用的 `(结束时间, 房间号)` 最小堆。每场会议前，先把 `结束时间 <= 开始时间` 的房间还到空闲堆；有空房取编号最小的；没有就取最早结束的房间，会议顺延 `t + (end - start)`（例：LC 2402 会议室 III）。
+3. **双堆调度（LC 2402 会议室 III）**：空闲房间号的最小堆 + 正在使用的 `(结束时间, 房间号)` 最小堆。每场会议前，先把 `结束时间 <= 开始时间` 的房间还到空闲堆；有空房取编号最小的；没有就取最早结束的房间，会议顺延 `t + (end - start)`（例：LC 2402 会议室 III；高频：LC 253 会议室 II）。
 
 ```python
 def best_meeting_room(n: int, meetings: list[list[int]]) -> int:
@@ -138,4 +138,22 @@ def top_k_frequent(nums: list[int], k: int) -> list[int]:
         if len(ans) >= k:
             return ans[:k]
     return ans
+```
+
+**例题：** LC 253 会议室 II
+
+给一个会议时间数组 `intervals`，`intervals[i] = [start_i, end_i]`，返回需要的最少会议室数量。一个会议结束的时刻可以立刻开始下一个会议。`1 <= intervals.length <= 10^4`，`0 <= start_i < end_i <= 10^6`。
+
+```python
+import heapq
+
+
+def min_meeting_rooms(intervals: list[list[int]]) -> int:
+    ends: list[int] = []                           # 小根堆：每个在用会议室的结束时间
+    for start, end in sorted(intervals):
+        if ends and ends[0] <= start:              # 最早结束的会议已结束：复用它的房间
+            heapq.heapreplace(ends, end)           # 弹出旧结束时间并压入新的，一次 O(log n)
+        else:
+            heapq.heappush(ends, end)              # 没有空房间：新开一间
+    return len(ends)                               # 堆里剩几个 = 同时在用的房间数峰值
 ```

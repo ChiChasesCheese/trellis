@@ -24,6 +24,7 @@ step: 7
 **按时间调度（排序 + 堆装结束时间）**
 - LC 253 会议室 II
 - LC 2402 会议室 III
+- LC 1834 单线程 CPU（高频）
 
 **每次取当前最大 / 最小的贪心**
 - LC 767 重构字符串
@@ -34,6 +35,7 @@ step: 7
 
 **堆 + 最短路**
 - LC 787 K 站中转内最便宜的航班（见最短路一组）
+- LC 778 水位上升的泳池中游泳（高频）
 
 提示：先写出「每一步要从剩余的东西里取哪个最值」，再决定存什么键、是否要暂存刚用过的项、是否需要懒删除。
 
@@ -262,4 +264,50 @@ def find_cheapest_price(n: int, flights: list[list[int]], src: int, dst: int, k:
             if dp[t - 1][u] + w < dp[t][v]:
                 dp[t][v] = dp[t - 1][u] + w
     return -1 if dp[k + 1][dst] == inf else int(dp[k + 1][dst])
+```
+
+**例题：** LC 1834 单线程 CPU
+
+`tasks[i] = [enqueueTime, processingTime]`；CPU 空闲时从已到达的任务里选执行时间最短的（并列取下标最小），一次只做一项且不可中断；返回任务的执行顺序；`1 <= n <= 10^5`，时间 `<= 10^9`。
+
+```python
+from heapq import heappop, heappush
+def get_order(tasks: list[list[int]]) -> list[int]:
+    n = len(tasks)
+    order = sorted(range(n), key=lambda i: tasks[i][0])
+    heap: list[tuple[int, int]] = []
+    res: list[int] = []
+    t = p = 0
+    while len(res) < n:
+        if not heap and t < tasks[order[p]][0]:
+            t = tasks[order[p]][0]
+        while p < n and tasks[order[p]][0] <= t:
+            i = order[p]
+            heappush(heap, (tasks[i][1], i))
+            p += 1
+        cost, i = heappop(heap)
+        t += cost
+        res.append(i)
+    return res
+```
+
+**例题：** LC 778 水位上升的泳池中游泳
+
+`n x n` 矩阵 `grid[i][j]` 是平台高度，时刻 `t` 的水位是 `t`，只有水位不低于相邻两平台的高度时才能游过去；返回从 `(0, 0)` 到 `(n-1, n-1)` 的最少时间；`1 <= n <= 50`，高度互不相同。
+
+```python
+from heapq import heappop, heappush
+def swim_in_water(grid: list[list[int]]) -> int:
+    n = len(grid)
+    heap = [(grid[0][0], 0, 0)]
+    seen = {(0, 0)}
+    while heap:
+        t, x, y = heappop(heap)
+        if x == y == n - 1:
+            return t
+        for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
+            if 0 <= nx < n and 0 <= ny < n and (nx, ny) not in seen:
+                seen.add((nx, ny))
+                heappush(heap, (max(t, grid[nx][ny]), nx, ny))
+    return -1
 ```

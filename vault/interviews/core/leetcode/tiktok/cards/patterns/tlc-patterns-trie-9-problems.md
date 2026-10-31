@@ -10,9 +10,9 @@ step: 9
 按变形分类，这个题组里哪些题属于字典树？
 
 ## A
-- 基础与通配符：LC 211 添加与搜索单词
+- 基础与通配符：LC 211 添加与搜索单词、LC 208 实现 Trie (前缀树)（高频）
 - 网格 + 回溯：LC 212 单词搜索 II
-- 前缀：LC 14 最长公共前缀、LC 3043 最长公共前缀的长度
+- 前缀：LC 14 最长公共前缀、LC 3043 最长公共前缀的长度、LC 3093 最长公共后缀查询（高频）
 - 路径树：LC 588 设计内存文件系统
 - 与 DP 搭配：LC 139 单词拆分、LC 140 单词拆分 II（词典可用字典树加速前缀匹配）
 
@@ -178,4 +178,68 @@ def word_break(s: str, word_dict: list[str]) -> list[str]:
                     found.append(f'{word} {rest}' if rest else word)
         return tuple(found)
     return list(sentences(0))
+```
+
+**例题：** LC 208 实现 Trie (前缀树)
+
+实现 `Trie`：`insert(word)` 插入，`search(word)` 判断整词是否存在，`startsWith(prefix)` 判断是否有以 `prefix` 开头的词；长度 `<= 2000`，总调用 `<= 3 * 10^4`。
+
+```python
+class TrieNode:
+    __slots__ = ("children", "end")
+    def __init__(self) -> None:
+        self.children: dict[str, TrieNode] = {}
+        self.end = False
+class Trie:
+    def __init__(self) -> None:
+        self.root = TrieNode()
+    def insert(self, word: str) -> None:
+        node = self.root
+        for ch in word:
+            if ch not in node.children:
+                node.children[ch] = TrieNode()
+            node = node.children[ch]
+        node.end = True
+    def _walk(self, s: str) -> TrieNode | None:
+        node = self.root
+        for ch in s:
+            if (node := node.children.get(ch)) is None:
+                return None
+        return node
+    def search(self, word: str) -> bool:
+        node = self._walk(word)
+        return node is not None and node.end
+    def startsWith(self, prefix: str) -> bool:
+        return self._walk(prefix) is not None
+```
+
+**例题：** LC 3093 最长公共后缀查询
+
+对每个 `wordsQuery[i]`，在 `wordsContainer` 里找与它公共后缀最长的字符串，并列取更短的，再并列取下标小的，返回下标数组；两个数组的总长度都 `<= 5 * 10^5`。
+
+```python
+def string_indices(words_container: list[str], words_query: list[str]) -> list[int]:
+    nxt: list[dict[str, int]] = [{}]
+    best: list[int] = [0]
+    def better(i: int, j: int) -> int:
+        return i if (len(words_container[i]), i) < (len(words_container[j]), j) else j
+    for idx, word in enumerate(words_container):
+        best[0] = better(idx, best[0])
+        u = 0
+        for ch in reversed(word):
+            if ch not in nxt[u]:
+                nxt[u][ch] = len(nxt)
+                nxt.append({})
+                best.append(idx)
+            u = nxt[u][ch]
+            best[u] = better(idx, best[u])
+    ans: list[int] = []
+    for q in words_query:
+        u = 0
+        for ch in reversed(q):
+            if ch not in nxt[u]:
+                break
+            u = nxt[u][ch]
+        ans.append(best[u])
+    return ans
 ```

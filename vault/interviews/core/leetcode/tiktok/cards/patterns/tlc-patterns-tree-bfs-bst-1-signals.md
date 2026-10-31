@@ -11,16 +11,16 @@ step: 1
 
 ## A
 **层序遍历（Level-order BFS）的信号：**
-- 题面按**层**组织输出：「每一层的节点」「锯齿形层序」LC 103、「每层最大宽度」LC 662（例：LC 103 二叉树的锯齿形层序遍历）。
+- 题面按**层**组织输出：「每一层的节点」「锯齿形层序」LC 103、「每层最大宽度」LC 662（例：LC 103 二叉树的锯齿形层序遍历；高频：LC 102 二叉树的层序遍历）。
 - 「从右侧看到的节点」「每层最后一个」（例：LC 199 二叉树的右视图）。
 - 「到最近叶子的深度」「最小深度」：BFS 遇到第一个叶子就停（例：LC 111 二叉树的最小深度）。
-- 把树当**无向图**处理：给节点加父指针，或把边存成邻接表，再从某个点出发做 BFS / DFS：「距离目标节点为 K 的所有节点」LC 863；树形的路网从 `0` 号点出发，数要掉头的边（例：LC 1466 重新规划路线）。
+- 把树当**无向图**处理：给节点加父指针，或把边存成邻接表，再从某个点出发做 BFS / DFS：「距离目标节点为 K 的所有节点」LC 863；树形的路网从 `0` 号点出发，数要掉头的边（例：LC 1466 重新规划路线；高频：LC 863 二叉树中所有距离为 K 的结点）。
 
 **BST 的信号（二叉搜索树：左 < 根 < 右）：**
-- 题面出现「**二叉搜索树**」：**中序遍历是严格递增序列**，是几乎所有 BST 题的钥匙；最小差一定出现在中序相邻的两个节点之间（例：LC 783 二叉搜索树节点最小距离）。
+- 题面出现「**二叉搜索树**」：**中序遍历是严格递增序列**，是几乎所有 BST 题的钥匙；最小差一定出现在中序相邻的两个节点之间（例：LC 783 二叉搜索树节点最小距离；高频：LC 99 恢复二叉搜索树）。
 - 验证 BST：每个节点有一个合法的**取值区间**，从上往下收窄，不能只比较父子（例：LC 98 验证二叉搜索树）。
 - 第 `k` 小：中序遍历数到第 `k` 个，可以提前停（例：LC 230 二叉搜索树中第K小的元素）。
-- 查找 / 插入 / 删除：沿着比较大小的方向走，`O(h)`（LC 450）（例：LC 235 二叉搜索树的最近公共祖先）。
+- 查找 / 插入 / 删除：沿着比较大小的方向走，`O(h)`（LC 450）（例：LC 235 二叉搜索树的最近公共祖先；高频：LC 450 删除二叉搜索树中的节点）。
 - 转成有序双向链表 LC 426：中序遍历中接指针；同类的串链技巧是靠一个尾指针把节点串起来（例：LC 114 二叉树展开为链表）。
 
 **序列化的信号：**
@@ -283,4 +283,108 @@ def level_order_bottom(root: TreeNode | None) -> list[list[int]]:
         ans.append([node.val for node in level])              # 这一层的值，从左到右
         level = [child for node in level for child in (node.left, node.right) if child]   # 下一层
     return ans[::-1]                                          # 自顶向下收集，最后整体反转
+```
+
+**例题：** LC 102 二叉树的层序遍历
+
+给二叉树的根节点 `root`，返回其节点值的**层序遍历**：逐层地，从左到右访问所有节点，每层一个列表。树中节点数在 `[0, 2000]` 内，`-1000 <= Node.val <= 1000`。
+
+```python
+from collections import deque
+
+
+def level_order(root: TreeNode | None) -> list[list[int]]:
+    if root is None:
+        return []
+    res: list[list[int]] = []
+    queue = deque([root])
+    while queue:
+        level: list[int] = []
+        for _ in range(len(queue)):     # 先固定本层的节点数，循环里新入队的是下一层
+            node = queue.popleft()
+            level.append(node.val)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        res.append(level)
+    return res
+```
+
+**例题：** LC 863 二叉树中所有距离为 K 的结点
+
+给一棵二叉树的根结点 `root`、树中的一个目标结点 `target` 和一个整数 `k`，返回到 `target` 距离恰为 `k` 的所有结点的值（距离 = 两结点间路径的边数，可以向上走也可以向下走），答案顺序任意。约束：结点数在 `[1, 500]`，`0 <= Node.val <= 500`，所有 `Node.val` 互不相同，`target` 是树上的结点，`0 <= k <= 1000`。
+
+```python
+def distance_k(root: TreeNode, target: TreeNode, k: int) -> list[int]:
+    parent: dict[TreeNode, TreeNode | None] = {root: None}
+    stack = [root]
+    while stack:                          # 迭代 DFS 给每个结点记父指针（避免递归栈）
+        node = stack.pop()
+        for child in (node.left, node.right):
+            if child:
+                parent[child] = node
+                stack.append(child)
+
+    frontier, seen = [target], {target}   # 从 target 出发的 BFS，一层 = 距离 +1
+    for _ in range(k):
+        nxt: list[TreeNode] = []
+        for node in frontier:
+            for nb in (node.left, node.right, parent[node]):
+                if nb and nb not in seen:  # seen 防止走回刚来的结点
+                    seen.add(nb)
+                    nxt.append(nb)
+        frontier = nxt
+    return [node.val for node in frontier]
+```
+
+**例题：** LC 99 恢复二叉搜索树
+
+给二叉搜索树的根结点 `root`，其中**恰好两个**结点的值被错误地交换了。请在**不改变树结构**的情况下恢复这棵树（原地交换两个结点的值即可）。结点数在 `[2, 1000]`，`-2^31 <= Node.val <= 2^31 - 1`。
+
+```python
+def recover_tree(root: TreeNode | None) -> None:
+    prev: TreeNode | None = None       # 中序遍历中刚访问过的前一个结点
+    first = second = None              # 两个被交换的结点
+
+    def inorder(node: TreeNode | None) -> None:
+        nonlocal prev, first, second
+        if node is None:
+            return
+        inorder(node.left)
+        if prev and prev.val > node.val:        # 一处逆序对
+            if first is None:
+                first = prev           # 第一处逆序：较大的那个是被换错的结点
+            second = node              # 最后一处逆序：较小的那个是另一个
+        prev = node
+        inorder(node.right)
+
+    inorder(root)
+    if first and second:
+        first.val, second.val = second.val, first.val
+```
+
+**例题：** LC 450 删除二叉搜索树中的节点
+
+给二叉搜索树（BST）的根节点 `root` 和一个值 `key`，删除 BST 中值为 `key` 的节点，并保证删除后仍是 BST。返回（可能更新后的）根节点。节点数在 `[0, 10^4]`，`-10^5 <= Node.val <= 10^5`，节点值唯一，`-10^5 <= key <= 10^5`。进阶：时间复杂度 `O(h)`，`h` 为树高。
+
+```python
+def delete_node(root: TreeNode | None, key: int) -> TreeNode | None:
+    if root is None:
+        return None                            # 树里没有 key
+    if key < root.val:
+        root.left = delete_node(root.left, key)      # 目标在左子树：删完用返回值接回来
+    elif key > root.val:
+        root.right = delete_node(root.right, key)
+    else:
+        if root.left is None:
+            return root.right                  # 没有左孩子（含叶子）：右子树顶替自己
+        if root.right is None:
+            return root.left                   # 只有左孩子：左子树顶替自己
+        succ = root.right                      # 两个孩子：用中序后继（右子树最小值）顶替
+        while succ.left:
+            succ = succ.left
+        root.val = succ.val
+        root.right = delete_node(root.right, succ.val)   # 再到右子树里删掉那个后继
+    return root
 ```

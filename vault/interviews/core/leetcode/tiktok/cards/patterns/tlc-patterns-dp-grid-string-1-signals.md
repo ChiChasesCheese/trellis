@@ -13,7 +13,7 @@ step: 1
 **二维 DP 的触发信号：**
 - **网格**，只能向右 / 向下走，问路径数：`dp[r][c]` 只依赖上方和左方（例：LC 62 不同路径）。
 - **两个字符串 / 序列**，问最长公共子序列、能否匹配：`dp[i][j]` 表示 `a` 的前 `i` 个与 `b` 的前 `j` 个（例：LC 1143 最长公共子序列）。
-- **一个字符串**，问回文子序列：`dp[i][j]` 表示子串 `s[i..j]`（区间 DP）（例：LC 516 最长回文子序列）。
+- **一个字符串**，问回文子序列：`dp[i][j]` 表示子串 `s[i..j]`（区间 DP）（例：LC 516 最长回文子序列；高频：LC 131 分割回文串）。
 - **正方形 / 矩形**：以 `(r, c)` 为右下角的最大正方形边长（例：LC 221 最大正方形）。
 - 数据范围：`m, n` 到几百到一千（`<= 500` 或 `<= 1000`），`O(mn)` 即可，约 `10^6` 个状态（例：LC 72 编辑距离）。
 
@@ -191,4 +191,30 @@ def find_length(nums1: list[int], nums2: list[int]) -> int:
                 dp[i][j] = dp[i - 1][j - 1] + 1
                 best = max(best, dp[i][j])
     return best
+```
+
+**例题：** LC 131 分割回文串
+
+把字符串 `s` 分割成若干子串，使每个子串都是回文，返回所有分割方案；`1 <= s.length <= 16`，只含小写字母。
+
+```python
+def partition(s: str) -> list[list[str]]:
+    n = len(s)
+    pal = [[False] * n for _ in range(n)]
+    for i in range(n - 1, -1, -1):
+        for j in range(i, n):
+            pal[i][j] = s[i] == s[j] and (j - i < 2 or pal[i + 1][j - 1])
+    res: list[list[str]] = []
+    path: list[str] = []
+    def dfs(start: int) -> None:
+        if start == n:
+            res.append(path.copy())
+            return
+        for end in range(start, n):
+            if pal[start][end]:
+                path.append(s[start:end + 1])
+                dfs(end + 1)
+                path.pop()
+    dfs(0)
+    return res
 ```

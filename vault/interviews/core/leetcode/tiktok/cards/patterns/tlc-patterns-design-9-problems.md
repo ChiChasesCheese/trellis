@@ -18,6 +18,7 @@ step: 9
 
 **按版本 / 时间存储 + 二分**
 - LC 1146 快照数组
+- LC 981 基于时间的键值存储（高频）
 
 **堆 / 窗口维护的汇总量**
 - LC 295 数据流的中位数（双堆）
@@ -26,10 +27,17 @@ step: 9
 **树 / 路径结构**
 - LC 588 设计内存文件系统（路径树）
 - LC 211 添加与搜索单词（字典树）
+- LC 208 实现 Trie (前缀树)（高频）
 
 **模拟**
 - LC 2502 设计内存分配器
 - LC 1860 增长的内存泄露（按规则模拟）
+- LC 348 设计井字棋（高频）
+
+**栈 / 队列**
+- LC 155 最小栈（高频）
+- LC 232 用栈实现队列（高频）
+- LC 622 设计循环队列（高频）
 
 提示：先列接口和复杂度目标，再逐个操作问需要什么能力，最后写出不变量并在每个方法结束时核对。
 
@@ -362,4 +370,187 @@ def mem_leak(memory1: int, memory2: int) -> list[int]:
             memory2 -= second
         second += 1
     return [second, memory1, memory2]
+```
+
+**例题：** LC 981 基于时间的键值存储
+
+设计一个 `TimeMap` 类：同一个键在不同时间戳可以存多个值，并能按时间戳取值。`set(key, value, timestamp)` 在时间戳 `timestamp` 存入键 `key` 对应的值 `value`；`get(key, timestamp)` 返回此前某次 `set` 中满足 `timestamp_prev <= timestamp` 的值，若有多个，返回 `timestamp_prev` 最大的那个；没有则返回空串 `""`。`1 <= key.length, value.length <= 100`，由小写字母和数字组成，`1 <= timestamp <= 10^7`，所有 `set` 的时间戳**严格递增**，`set` 与 `get` 合计最多 `2 * 10^5` 次调用。
+
+```python
+from bisect import bisect_right
+from collections import defaultdict
+
+
+class TimeMap:
+    def __init__(self) -> None:
+        self.times: defaultdict[str, list[int]] = defaultdict(list)    # key -> 递增的时间戳
+        self.values: defaultdict[str, list[str]] = defaultdict(list)   # key -> 与 times 同下标的值
+
+    def set(self, key: str, value: str, timestamp: int) -> None:
+        self.times[key].append(timestamp)       # 时间戳严格递增：直接 append 就是有序的
+        self.values[key].append(value)
+
+    def get(self, key: str, timestamp: int) -> str:
+        times = self.times.get(key)             # 用 .get：defaultdict 的 [] 会凭空造出空列表
+        if not times:
+            return ""
+        i = bisect_right(times, timestamp)      # 第一个 > timestamp 的位置，i-1 就是最后一个 <= timestamp 的
+        return self.values[key][i - 1] if i else ""
+```
+
+**例题：** LC 208 实现 Trie (前缀树)
+
+实现前缀树（Trie）类：`Trie()` 初始化；`insert(word)` 插入单词；`search(word)` 若 `word` 已被插入返回 `true`，否则 `false`；`startsWith(prefix)` 若某个已插入单词以 `prefix` 为前缀返回 `true`。约束：`1 <= word.length, prefix.length <= 2000`，仅小写英文字母；三种操作总共调用不超过 `3 * 10^4` 次。
+
+```python
+class TrieNode:
+    __slots__ = ("children", "end")
+
+    def __init__(self) -> None:
+        self.children: dict[str, TrieNode] = {}   # 字符 -> 子结点
+        self.end = False                          # 是否有单词恰好在这里结束
+
+
+class Trie:
+    def __init__(self) -> None:
+        self.root = TrieNode()
+
+    def insert(self, word: str) -> None:
+        node = self.root
+        for ch in word:
+            if ch not in node.children:           # 不用 setdefault：它每次都会白造一个结点
+                node.children[ch] = TrieNode()
+            node = node.children[ch]
+        node.end = True
+
+    def _walk(self, s: str) -> TrieNode | None:
+        node = self.root
+        for ch in s:
+            if (node := node.children.get(ch)) is None:
+                return None                       # 路走不通：没有以 s 为前缀的单词
+        return node
+
+    def search(self, word: str) -> bool:
+        node = self._walk(word)
+        return node is not None and node.end      # 路径存在还不够，必须是单词结尾
+
+    def startsWith(self, prefix: str) -> bool:
+        return self._walk(prefix) is not None
+```
+
+**例题：** LC 348 设计井字棋
+
+在 `n x n` 的棋盘上实现井字棋的胜负判定器：两名玩家（编号 `1` 和 `2`）轮流落子，`move(row, col, player)` 在 `(row, col)` 放下 `player` 的棋子，返回落子后获胜的玩家编号，还没有人获胜返回 `0`。同一行、同一列或同一条对角线上全是自己的棋子就获胜。保证每次落子都在棋盘内、落在空格里，有人获胜后游戏不再继续。`2 <= n <= 100`，最多调用 `move` `n^2` 次。进阶：每次 `move` 能否比 `O(n^2)` 更快？
+
+```python
+class TicTacToe:
+    def __init__(self, n: int) -> None:
+        self.n = n
+        self.rows = [0] * n
+        self.cols = [0] * n
+        self.diag = self.anti = 0
+
+    def move(self, row: int, col: int, player: int) -> int:
+        d = 1 if player == 1 else -1            # 玩家 1 记 +1，玩家 2 记 -1
+        self.rows[row] += d
+        self.cols[col] += d
+        if row == col:
+            self.diag += d
+        if row + col == self.n - 1:
+            self.anti += d
+        if self.n in (abs(self.rows[row]), abs(self.cols[col]), abs(self.diag), abs(self.anti)):
+            return player
+        return 0
+```
+
+**例题：** LC 155 最小栈
+
+设计一个支持 `push`、`pop`、`top`，并能在**常数时间**内取到栈中最小元素的栈。实现 `MinStack` 类：`MinStack()` 初始化；`push(val)` 压入元素；`pop()` 删除栈顶；`top()` 返回栈顶；`getMin()` 返回栈中最小元素。`-2^31 <= val <= 2^31 - 1`；`pop`、`top`、`getMin` 总是在非空栈上调用；各操作合计最多调用 `3 * 10^4` 次。
+
+```python
+class MinStack:
+    def __init__(self) -> None:
+        self.stack: list[tuple[int, int]] = []    # 每项 (值, 压入它时栈内的最小值)
+
+    def push(self, val: int) -> None:
+        low = min(val, self.stack[-1][1]) if self.stack else val
+        self.stack.append((val, low))             # 最小值跟着元素一起入栈，随它一起出栈
+
+    def pop(self) -> None:
+        self.stack.pop()
+
+    def top(self) -> int:
+        return self.stack[-1][0]
+
+    def getMin(self) -> int:
+        return self.stack[-1][1]
+```
+
+**例题：** LC 232 用栈实现队列
+
+只用两个栈实现先入先出（FIFO）队列，支持 `push(x)` 把 `x` 放到队尾、`pop()` 移除并返回队首、`peek()` 返回队首、`empty()` 判断队列是否为空。只能使用标准的栈操作（压栈、弹栈、看栈顶、取大小、判空），Python 里可以用 `list` 或 `deque` 模拟栈。`1 <= x <= 9`，最多调用 `100` 次，调用都合法（空队列不会 `pop` / `peek`）。进阶：每个操作**均摊** `O(1)`。
+
+```python
+class MyQueue:
+    def __init__(self) -> None:
+        self.inbox: list[int] = []        # 只负责 push：新元素压在栈顶
+        self.outbox: list[int] = []       # 只负责 pop / peek：栈顶就是队首
+
+    def push(self, x: int) -> None:
+        self.inbox.append(x)
+
+    def _move(self) -> None:
+        if not self.outbox:               # 只有 outbox 空了才倒，倒的时候整个 inbox 一次倒完
+            while self.inbox:
+                self.outbox.append(self.inbox.pop())
+
+    def pop(self) -> int:
+        self._move()
+        return self.outbox.pop()
+
+    def peek(self) -> int:
+        self._move()
+        return self.outbox[-1]
+
+    def empty(self) -> bool:
+        return not self.inbox and not self.outbox
+```
+
+**例题：** LC 622 设计循环队列
+
+设计循环队列（环形缓冲器）：先进先出，队尾连接到队首形成环，可以重复利用出队腾出的空间。实现类 `MyCircularQueue(k)`，容量为 `k`，支持：`enQueue(value)` 入队，成功返回 `True`，队满返回 `False`；`deQueue()` 出队，成功返回 `True`，队空返回 `False`；`Front()` 取队首，空则返回 `-1`；`Rear()` 取队尾，空则返回 `-1`；`isEmpty()`、`isFull()`。值在 `0` 到 `1000`，操作数在 `1` 到 `1000`，不要使用内置的队列库。
+
+```python
+class MyCircularQueue:
+    def __init__(self, k: int) -> None:
+        self.buf = [0] * k
+        self.cap = k
+        self.head = 0                           # 队首下标
+        self.size = 0                           # 元素个数：用 size 区分空和满，不浪费一格
+
+    def enQueue(self, value: int) -> bool:
+        if self.isFull():
+            return False
+        self.buf[(self.head + self.size) % self.cap] = value
+        self.size += 1
+        return True
+
+    def deQueue(self) -> bool:
+        if self.isEmpty():
+            return False
+        self.head = (self.head + 1) % self.cap
+        self.size -= 1
+        return True
+
+    def Front(self) -> int:
+        return -1 if self.isEmpty() else self.buf[self.head]
+
+    def Rear(self) -> int:
+        return -1 if self.isEmpty() else self.buf[(self.head + self.size - 1) % self.cap]
+
+    def isEmpty(self) -> bool:
+        return self.size == 0
+
+    def isFull(self) -> bool:
+        return self.size == self.cap
 ```

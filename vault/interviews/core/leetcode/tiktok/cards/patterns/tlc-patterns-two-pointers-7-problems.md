@@ -19,6 +19,8 @@ step: 7
 **同向快慢指针（原地改写）**
 - LC 283 移动零
 - LC 189 轮转数组（三次反转，反转用相向指针）
+- LC 88 合并两个有序数组（高频）
+- LC 986 区间列表的交集（高频）
 
 **三路分区**
 - LC 75 颜色分类
@@ -32,10 +34,13 @@ step: 7
 - LC 160 相交链表
 - LC 142 环形链表 II
 - LC 143 重排链表（快慢找中点 + 反转 + 合并）
+- LC 141 环形链表（高频）
+- LC 19 删除链表的倒数第 N 个节点（高频）
 
 **字符串双指针**
 - LC 165 比较版本号
 - LC 415 字符串相加（两个数各一个指针，从末尾向前）
+- LC 151 反转字符串中的单词（高频）
 
 提示：先问「数组是否有序 / 能否排序」；有序且问和 → 相向；要原地、保序 → 同向；值域极小 → 分区。
 
@@ -334,4 +339,91 @@ def add_strings(num1: str, num2: str) -> str:
     if carry:
         digits.append("1")
     return "".join(reversed(digits))
+```
+
+**例题：** LC 88 合并两个有序数组
+
+把有序数组 `nums2` 合并进 `nums1`（长度 `m + n`，前 `m` 个有效、后 `n` 个是占位 `0`），原地完成，不返回；`0 <= m, n <= 200`。
+
+```python
+def merge(nums1: list[int], m: int, nums2: list[int], n: int) -> None:
+    i, j, k = m - 1, n - 1, m + n - 1
+    while j >= 0:
+        if i >= 0 and nums1[i] > nums2[j]:
+            nums1[k] = nums1[i]
+            i -= 1
+        else:
+            nums1[k] = nums2[j]
+            j -= 1
+        k -= 1
+```
+
+**例题：** LC 986 区间列表的交集
+
+两个已排序、列表内两两不相交的闭区间列表 `firstList`、`secondList`，返回它们的交集；每个列表长度 `<= 1000`。
+
+```python
+def interval_intersection(first: list[list[int]], second: list[list[int]]) -> list[list[int]]:
+    i = j = 0
+    ans: list[list[int]] = []
+    while i < len(first) and j < len(second):
+        lo = max(first[i][0], second[j][0])
+        hi = min(first[i][1], second[j][1])
+        if lo <= hi:
+            ans.append([lo, hi])
+        if first[i][1] < second[j][1]:
+            i += 1
+        else:
+            j += 1
+    return ans
+```
+
+**例题：** LC 141 环形链表
+
+判断链表中是否有环，要求 `O(1)` 额外空间；结点数 `0..10^4`。
+
+```python
+def has_cycle(head: ListNode | None) -> bool:
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow is fast:
+            return True
+    return False
+```
+
+**例题：** LC 19 删除链表的倒数第 N 个节点
+
+删除链表倒数第 `n` 个结点并返回头结点，要求只扫描一趟；结点数 `1 <= sz <= 30`，`1 <= n <= sz`。
+
+```python
+def remove_nth_from_end(head: ListNode | None, n: int) -> ListNode | None:
+    dummy = ListNode(0, head)
+    fast = slow = dummy
+    for _ in range(n):
+        fast = fast.next
+    while fast.next:
+        fast, slow = fast.next, slow.next
+    slow.next = slow.next.next
+    return dummy.next
+```
+
+**例题：** LC 151 反转字符串中的单词
+
+反转 `s` 中单词的顺序，结果里单词之间只留一个空格、无首尾空格；`1 <= s.length <= 10^4`。
+
+```python
+def reverse_words(s: str) -> str:
+    words: list[str] = []
+    i = len(s) - 1
+    while i >= 0:
+        if s[i] == " ":
+            i -= 1
+            continue
+        end = i + 1
+        while i >= 0 and s[i] != " ":
+            i -= 1
+        words.append(s[i + 1:end])
+    return " ".join(words)
 ```

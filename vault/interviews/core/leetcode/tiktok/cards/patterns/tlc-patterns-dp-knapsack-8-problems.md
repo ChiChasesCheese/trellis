@@ -17,10 +17,12 @@ step: 8
 **完全背包（最少 / 能否）**
 - LC 322 零钱兑换
 - LC 139 单词拆分（"物品"是词典里的词，目标是拼出整个字符串）
+- LC 518 零钱兑换 II（高频）
 
 **以步数 / 次数为状态的计数**
 - LC 887 鸡蛋掉落
 - LC 70 爬楼梯（完全背包的特例：物品是步长 1、2）
+- LC 746 使用最小花费爬楼梯（高频）
 
 **数位计数**
 - LC 902 最大为 N 的数字组合
@@ -145,4 +147,34 @@ def at_most_n_given_digit_set(digits: list[str], n: int) -> int:
         if ch not in digits:
             return total
     return total + 1
+```
+
+**例题：** LC 518 零钱兑换 II
+
+硬币面额数组 `coins`（每种数量无限）和总金额 `amount`，返回凑成 `amount` 的**组合数**，凑不出返回 `0`；`1 <= coins.length <= 300`，`0 <= amount <= 5000`。
+
+```python
+def change(amount: int, coins: list[int]) -> int:
+    m = len(coins)
+    dp = [[0] * (amount + 1) for _ in range(m + 1)]
+    for i in range(m + 1):
+        dp[i][0] = 1
+    for i, coin in enumerate(coins, 1):
+        for a in range(1, amount + 1):
+            dp[i][a] = dp[i - 1][a]
+            if a >= coin:
+                dp[i][a] += dp[i][a - coin]
+    return dp[m][amount]
+```
+
+**例题：** LC 746 使用最小花费爬楼梯
+
+`cost[i]` 是从第 `i` 级台阶向上爬要付的费用，付费后可爬一级或两级，起点可选下标 `0` 或 `1`，求到达楼梯顶部（下标 `len(cost)`）的最低花费；`2 <= cost.length <= 1000`。
+
+```python
+def min_cost_climbing_stairs(cost: list[int]) -> int:
+    two_back = one_back = 0
+    for i in range(2, len(cost) + 1):
+        two_back, one_back = one_back, min(one_back + cost[i - 1], two_back + cost[i - 2])
+    return one_back
 ```

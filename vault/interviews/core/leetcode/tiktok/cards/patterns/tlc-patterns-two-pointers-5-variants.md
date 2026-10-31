@@ -10,13 +10,13 @@ step: 5
 除了三数之和和盛水容器，这个题组里双指针还有哪些变形？每一种怎么改模板？
 
 ## A
-1. **最接近目标**（LC 16 最接近的三数之和）：同样排序后，`while l < r` 里每步比较和与目标的差，更接近就更新答案，`s < target` 左移、`s > target` 右移，恰好相等直接返回；LC 1099 要的是不超过上限的最大和（例：LC 1099 小于 K 的两数之和）。
+1. **最接近目标**（LC 16 最接近的三数之和）：同样排序后，`while l < r` 里每步比较和与目标的差，更接近就更新答案，`s < target` 左移、`s > target` 右移，恰好相等直接返回；LC 1099 要的是不超过上限的最大和（例：LC 1099 小于 K 的两数之和；高频：LC 15 三数之和）。
 2. **数组原地变换**（LC 283、LC 189）：`slow/fast` 覆盖；LC 189 轮转数组 `O(1)` 空间的写法是**三次反转**：整体反转，再分别反转前 `k` 个和后 `n-k` 个（`k %= n`）（例：LC 189 轮转数组）。
 3. **两端各出一个指针扫一遍**：同时维护两个方向的前缀最大（例：LC 42 接雨水）。
 4. **中心向两侧扩展**（LC 845 山脉的「峰顶向两边扩」是同类）：枚举中心，左右指针向外扩，直到不满足条件（例：LC 5 最长回文子串）。
 5. **两个序列同时走**（LC 165 比较版本号、合并有序数组）：每个序列一个指针，各自解析出当前段再比较（例：LC 88 合并两个有序数组）。
 6. **链表双指针**（LC 160 相交、LC 142 环入口、LC 143 重排）：快慢指针找中点，或两个指针走完自己的链再走对方的链，同时到达交点（例：LC 160 相交链表）。
-7. **两遍扫描**（LC 581 最短无序连续子数组）：从左扫一遍累积前缀，再从右扫一遍累积后缀，两遍各自保留一个方向的信息（例：LC 238 除自身以外数组的乘积）。
+7. **两遍扫描**（LC 581 最短无序连续子数组）：从左扫一遍累积前缀，再从右扫一遍累积后缀，两遍各自保留一个方向的信息（例：LC 238 除自身以外数组的乘积；高频：LC 135 分发糖果）。
 
 共同判断标准：能否说出「移动这个指针时，被排除的那些解为什么不可能更优」。
 
@@ -143,4 +143,51 @@ def product_except_self(nums: list[int]) -> list[int]:
         ans[i] *= right
         right *= nums[i]
     return ans
+```
+
+**例题：** LC 15 三数之和
+
+给整数数组 `nums`，返回所有和为 `0` 且**不重复**的三元组 `[nums[i], nums[j], nums[k]]`，要求 `i`、`j`、`k` 互不相同；答案中不能包含重复的三元组，顺序不限。`3 <= nums.length <= 3000`，`-10^5 <= nums[i] <= 10^5`。
+
+```python
+def three_sum(nums: list[int]) -> list[list[int]]:
+    nums = sorted(nums)
+    n = len(nums)
+    result: list[list[int]] = []
+    for i in range(n - 2):
+        if nums[i] > 0:                            # 排好序后最小的数都 > 0，三数之和不可能为 0
+            break
+        if i > 0 and nums[i] == nums[i - 1]:       # 同一个"第一个数"只处理一次，去重
+            continue
+        lo, hi = i + 1, n - 1
+        while lo < hi:
+            total = nums[i] + nums[lo] + nums[hi]
+            if total < 0:
+                lo += 1
+            elif total > 0:
+                hi -= 1
+            else:
+                result.append([nums[i], nums[lo], nums[hi]])
+                lo += 1
+                hi -= 1
+                while lo < hi and nums[lo] == nums[lo - 1]:   # 跳过重复的第二个数；第三个数随之唯一确定
+                    lo += 1
+    return result
+```
+
+**例题：** LC 135 分发糖果
+
+`n` 个孩子站成一排，`ratings[i]` 是第 `i` 个孩子的评分。给每个孩子分糖果：每人至少 `1` 颗；相邻两个孩子中评分**更高**的那个必须获得更多糖果。求最少需要准备多少颗。`1 <= n <= 5 * 10^4`，`0 <= ratings[i] <= 5 * 10^4`。
+
+```python
+def candy(ratings: list[int]) -> int:
+    n = len(ratings)
+    give = [1] * n                                 # 每人至少 1 颗
+    for i in range(1, n):                          # 左到右：只管「比左邻居评分高 -> 比左邻居多」
+        if ratings[i] > ratings[i - 1]:
+            give[i] = give[i - 1] + 1
+    for i in range(n - 2, -1, -1):                 # 右到左：只管「比右邻居评分高 -> 比右邻居多」
+        if ratings[i] > ratings[i + 1]:
+            give[i] = max(give[i], give[i + 1] + 1)    # 取最大，不能破坏第一遍已满足的约束
+    return sum(give)
 ```

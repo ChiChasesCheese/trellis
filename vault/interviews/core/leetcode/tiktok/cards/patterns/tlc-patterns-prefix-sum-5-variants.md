@@ -10,7 +10,7 @@ step: 5
 二维前缀和怎么算？「最亮的位置」类的覆盖计数怎么用差分？隐藏数组计数（LC 2145）和前缀分数（LC 2640）里前缀和起什么作用？
 
 ## A
-**二维前缀和**：`p[r+1][c+1]` = 左上角到 `(r, c)` 的矩形和，容斥原理（例：LC 1074 元素和为目标值的子矩阵数量）。
+**二维前缀和**：`p[r+1][c+1]` = 左上角到 `(r, c)` 的矩形和，容斥原理（例：LC 1074 元素和为目标值的子矩阵数量；高频：LC 560 和为 K 的子数组）。
 
 ```python
 class NumMatrix:
@@ -128,4 +128,20 @@ def min_sub_array_len(target: int, nums: list[int]) -> int:
             total -= nums[left]
             left += 1
     return best if best <= len(nums) else 0
+```
+
+**例题：** LC 560 和为 K 的子数组
+
+给整数数组 `nums` 和整数 `k`，统计并返回该数组中**和为 `k` 的子数组的个数**。子数组是数组中元素的连续非空序列。`1 <= nums.length <= 2 * 10^4`，`-1000 <= nums[i] <= 1000`，`-10^7 <= k <= 10^7`。
+
+```python
+from collections import Counter
+def subarray_sum(nums: list[int], k: int) -> int:
+    seen = Counter({0: 1})
+    pre = ans = 0
+    for x in nums:
+        pre += x
+        ans += seen[pre - k]
+        seen[pre] += 1
+    return ans
 ```

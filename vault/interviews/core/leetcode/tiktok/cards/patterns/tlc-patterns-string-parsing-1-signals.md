@@ -11,9 +11,9 @@ step: 1
 
 ## A
 **用栈解析的信号：**
-- 表达式里有**优先级**（`*` `/` 高于 `+` `-`）或**括号**：计算器 LC 224、227、772；这些题的标准解较长，先用同属「栈求值」的逆波兰表达式把操作数栈的用法练熟（例：LC 150 逆波兰表达式求值）。
+- 表达式里有**优先级**（`*` `/` 高于 `+` `-`）或**括号**：计算器 LC 224、227、772；这些题的标准解较长，先用同属「栈求值」的逆波兰表达式把操作数栈的用法练熟（例：LC 150 逆波兰表达式求值；高频：LC 227 基本计算器 II、LC 224 基本计算器）。
 - 有**嵌套结构**，里层先于外层处理：`3[a2[c]]` 解码 LC 394、括号的分数 LC 856（例：LC 394 字符串解码）。
-- 需要"**撤销最近一步**"或匹配最近的一个：路径 `..` 返回上一级 LC 71，相邻重复项消除 LC 1209，括号配对 LC 20、1249（例：LC 71 简化路径）。
+- 需要"**撤销最近一步**"或匹配最近的一个：路径 `..` 返回上一级 LC 71，相邻重复项消除 LC 1209，括号配对 LC 20、1249（例：LC 71 简化路径；高频：LC 20 有效的括号）。
 - 输入长度 `10^5` 到 `3 * 10^5`（LC 227、224 是 `3 * 10^5`）：必须一次扫描 `O(n)`，不能反复切片（例：LC 1249 移除无效的括号）。
 
 **两种处理方式：**
@@ -201,4 +201,72 @@ def group_anagrams(strs: list[str]) -> list[list[str]]:
             count[ord(ch) - ord("a")] += 1
         groups[tuple(count)].append(s)         # list 不可哈希，转成 tuple 才能当键
     return list(groups.values())
+```
+
+**例题：** LC 227 基本计算器 II
+
+计算只含非负整数、`+ - * /` 和空格的表达式，整数除法向 `0` 取整，不能用 `eval`；`1 <= s.length <= 3 * 10^5`。
+
+```python
+def calculate(s: str) -> int:
+    stack: list[int] = []
+    num, op = 0, "+"
+    for ch in s + "+":
+        if ch == " ":
+            continue
+        if ch.isdigit():
+            num = num * 10 + int(ch)
+            continue
+        if op == "+":
+            stack.append(num)
+        elif op == "-":
+            stack.append(-num)
+        elif op == "*":
+            stack.append(stack.pop() * num)
+        else:
+            stack.append(int(stack.pop() / num))
+        op, num = ch, 0
+    return sum(stack)
+```
+
+**例题：** LC 224 基本计算器
+
+计算含非负整数、`+`、`-`、括号和空格的表达式（`-` 可作一元运算），不能用 `eval`；`1 <= s.length <= 3 * 10^5`。
+
+```python
+def calculate(s: str) -> int:
+    stack: list[tuple[int, int]] = []
+    res, num, sign = 0, 0, 1
+    for ch in s:
+        if ch.isdigit():
+            num = num * 10 + int(ch)
+        elif ch in "+-":
+            res += sign * num
+            num, sign = 0, 1 if ch == "+" else -1
+        elif ch == "(":
+            stack.append((res, sign))
+            res, sign = 0, 1
+        elif ch == ")":
+            res += sign * num
+            num = 0
+            prev_res, prev_sign = stack.pop()
+            res = prev_res + prev_sign * res
+    return res + sign * num
+```
+
+**例题：** LC 20 有效的括号
+
+只含 `()[]{}` 的字符串 `s`，判断括号是否按类型和顺序正确闭合；`1 <= s.length <= 10^4`。
+
+```python
+def is_valid(s: str) -> bool:
+    pairs = {")": "(", "]": "[", "}": "{"}
+    stack: list[str] = []
+    for ch in s:
+        if ch in pairs:
+            if not stack or stack.pop() != pairs[ch]:
+                return False
+        else:
+            stack.append(ch)
+    return not stack
 ```

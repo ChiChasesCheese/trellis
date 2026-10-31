@@ -14,11 +14,14 @@ step: 7
 - LC 206 反转链表
 - LC 92 反转链表 II
 - LC 25 K 个一组翻转链表
+- K 个一组翻转链表的变体（尾部也翻转、从尾部起分组）（高频）
 
 **快慢指针 / 双指针**
 - LC 142 环形链表 II
 - LC 160 相交链表
 - LC 143 重排链表（中点 + 反转 + 交替合并）
+- LC 141 环形链表（高频）
+- LC 19 删除链表的倒数第 N 个节点（高频）
 
 **合并 / 排序**
 - LC 23 合并 K 个升序链表（堆）
@@ -27,11 +30,13 @@ step: 7
 **逐位运算 / 前缀和**
 - LC 2 两数相加
 - LC 1171 从链表中删去总和值为零的连续节点
+- LC 445 两数相加 II（高频）
 
 **链表 + 哈希 / 设计**
 - LC 146 LRU 缓存（哈希 + 双向链表）
 - LC 432 全 O(1) 的数据结构（哈希 + 双向链表）
 - LC 426 将二叉搜索树转化为排序的双向链表（中序遍历中接指针）
+- LC 430 扁平化多级双向链表（高频）
 
 提示：先问有没有可能删头或换头（哑节点）、是否要 `O(1)` 空间（只改指针）、是否涉及中点 / 环（快慢指针）。
 
@@ -369,4 +374,117 @@ def tree_to_doubly_list(root: Node | None) -> Node | None:
     inorder(root)
     first.left, prev.right = prev, first       # 首尾相连成环
     return first
+```
+
+**例题：** K 个一组翻转链表的变体
+
+链表每 `k` 个结点一组翻转，只能改指针、额外空间 `O(1)`：基础版尾部不足 `k` 个保持原样；变体一是不足 `k` 个的一组也翻转，变体二是从链表尾部开始分组；`1 <= n <= 10^5`，`k` 可以大于 `n`。
+
+```python
+from itertools import chain, repeat
+def reverse_k_group(head: ListNode | None, k: int, *, from_tail: bool = False,
+                    reverse_partial: bool = False) -> ListNode | None:
+    """每 k 个节点一组翻转。from_tail：从尾部开始分组；reverse_partial：不足 k 个的那一组也翻转。"""
+    n, node = 0, head
+    while node:
+        n, node = n + 1, node.next
+    full, rest = divmod(n, k)
+    partial = (rest,) if rest else ()
+    sizes = chain(partial, repeat(k, full)) if from_tail else chain(repeat(k, full), partial)
+    dummy = ListNode(0, head)
+    group_prev = dummy
+    for size in sizes:
+        first = group_prev.next
+        if size == k or reverse_partial:
+            prev, cur = None, first
+            for _ in range(size):
+                cur.next, prev, cur = prev, cur, cur.next
+            group_prev.next = prev
+            first.next = cur
+            group_prev = first
+        else:
+            for _ in range(size):
+                group_prev = group_prev.next
+    return dummy.next
+```
+
+**例题：** LC 141 环形链表
+
+判断链表中是否有环，要求 `O(1)` 额外空间；结点数 `0..10^4`。
+
+```python
+def has_cycle(head: ListNode | None) -> bool:
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow is fast:
+            return True
+    return False
+```
+
+**例题：** LC 19 删除链表的倒数第 N 个节点
+
+删除链表倒数第 `n` 个结点并返回头结点，要求只扫描一趟；结点数 `1 <= sz <= 30`，`1 <= n <= sz`。
+
+```python
+def remove_nth_from_end(head: ListNode | None, n: int) -> ListNode | None:
+    dummy = ListNode(0, head)
+    fast = slow = dummy
+    for _ in range(n):
+        fast = fast.next
+    while fast.next:
+        fast, slow = fast.next, slow.next
+    slow.next = slow.next.next
+    return dummy.next
+```
+
+**例题：** LC 445 两数相加 II
+
+两个非空链表各表示一个非负整数，**高位在前**，每个结点一位数字；返回和的链表，不能翻转输入链表；链表长度 `1..100`。
+
+```python
+def add_two_numbers(l1: ListNode | None, l2: ListNode | None) -> ListNode | None:
+    s1: list[int] = []
+    s2: list[int] = []
+    while l1:
+        s1.append(l1.val)
+        l1 = l1.next
+    while l2:
+        s2.append(l2.val)
+        l2 = l2.next
+    head: ListNode | None = None
+    carry = 0
+    while s1 or s2 or carry:
+        carry += (s1.pop() if s1 else 0) + (s2.pop() if s2 else 0)
+        carry, digit = divmod(carry, 10)
+        head = ListNode(digit, head)
+    return head
+```
+
+**例题：** LC 430 扁平化多级双向链表
+
+双向链表的结点除 `prev`、`next` 外还有 `child` 指针，可指向另一条（可继续嵌套的）双向链表；把它扁平化成单层，子链表插在该结点和它的 `next` 之间，`child` 全部置空，返回头结点；结点数 `<= 1000`。
+
+```python
+def flatten(head: 'Node | None') -> 'Node | None':
+    def dfs(node: Node) -> Node:
+        tail = node
+        while node:
+            nxt = node.next
+            tail = node
+            if node.child:
+                child_tail = dfs(node.child)
+                node.next = node.child
+                node.child.prev = node
+                child_tail.next = nxt
+                if nxt:
+                    nxt.prev = child_tail
+                node.child = None
+                tail = child_tail
+            node = nxt
+        return tail
+    if head:
+        dfs(head)
+    return head
 ```

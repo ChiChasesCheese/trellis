@@ -25,9 +25,9 @@ step: 1
 **怎么选**：要分层、要字典序最小（改用堆）、要避免递归 → Kahn；写起来更短或要在 DFS 里顺便做计算 → DFS。
 
 **近似信号：**
-- 无向图的环 → 并查集或 DFS 记父节点，不是拓扑排序（例：LC 1319 连通网络的操作次数）。
+- 无向图的环 → 并查集或 DFS 记父节点，不是拓扑排序（例：LC 1319 连通网络的操作次数；高频：LC 323 无向图中连通分量的数目）。
 - 图本身有环但问最短路 → Dijkstra / BFS（例：LC 787 K 站中转内最便宜的航班）。
-- 只需要判断两点是否连通 → BFS / 并查集（例：LC 547 省份数量）。
+- 只需要判断两点是否连通 → BFS / 并查集（例：LC 547 省份数量；高频：LC 200 岛屿数量）。
 - 数据范围：`numCourses <= 2000`、边 `<= 5000` 这类，`O(V + E)` 绰绰有余（例：LC 207 课程表）。
 
 **例题：** LC 207 课程表
@@ -279,4 +279,53 @@ def find_circle_num(is_connected: list[list[int]]) -> int:
                 if root_i != root_j:
                     parent[root_i] = root_j
     return len({find(i) for i in range(n)})
+```
+
+**例题：** LC 323 无向图中连通分量的数目
+
+无向图有 `n` 个节点，下标 `0` 到 `n - 1`；`edges[i] = [a, b]` 表示 `a` 与 `b` 之间有一条边。返回图中**连通分量**（互相可达的一组节点）的个数。`1 <= n <= 2000`，`1 <= edges.length <= 5000`，`0 <= a <= b < n`，`a != b`，没有重复的边。
+
+```python
+def count_components(n: int, edges: list[list[int]]) -> int:
+    parent = list(range(n))
+
+    def find(x: int) -> int:
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]      # 路径减半：顺手把 x 挂到祖父下面
+            x = parent[x]
+        return x
+
+    comps = n
+    for a, b in edges:
+        ra, rb = find(a), find(b)
+        if ra != rb:                           # 两端本来不连通：合并一次，分量少一个
+            parent[ra] = rb
+            comps -= 1
+    return comps
+```
+
+**例题：** LC 200 岛屿数量
+
+给一个由 `'1'`（陆地）和 `'0'`（水）组成的二维网格 `grid`，数其中岛屿的数量。岛屿由水平或竖直方向相邻的陆地连成，四条边外面都是水。`m == grid.length`，`n == grid[i].length`，`1 <= m, n <= 300`，`grid[i][j]` 是 `'0'` 或 `'1'`。
+
+```python
+def num_islands(grid: list[list[str]]) -> int:
+    rows, cols = len(grid), len(grid[0])
+
+    def sink(r: int, c: int) -> None:
+        if not (0 <= r < rows and 0 <= c < cols) or grid[r][c] != "1":
+            return                                      # 出界或水：这条搜索到头
+        grid[r][c] = "0"                                # 先沉掉再往四周搜，同一格不会被重复进入
+        sink(r + 1, c)
+        sink(r - 1, c)
+        sink(r, c + 1)
+        sink(r, c - 1)
+
+    count = 0
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == "1":
+                count += 1                              # 找到一座新岛：把它整座沉掉
+                sink(r, c)
+    return count
 ```

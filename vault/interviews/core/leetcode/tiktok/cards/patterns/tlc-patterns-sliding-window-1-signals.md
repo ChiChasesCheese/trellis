@@ -18,7 +18,7 @@ step: 1
 - 「包含 `t` 中所有字符的最短子串」→ 覆盖了再尽量缩（LC 76）（例：LC 76 最小覆盖子串）。
 
 **固定窗口**：题面里直接给出窗口长度，或长度由输入确定：
-- 「所有长度为 `m` 的异位词子串」LC 438、「把所有 1 聚到一起」LC 1151（窗口长度 = 1 的总数）（例：LC 1151 最少交换次数来组合所有的 1）。
+- 「所有长度为 `m` 的异位词子串」LC 438、「把所有 1 聚到一起」LC 1151（窗口长度 = 1 的总数）（例：LC 1151 最少交换次数来组合所有的 1；高频：LC 438 找到字符串中所有字母异位词）。
 
 **数据范围**：`n` 到 `10^5`，暴力 `O(n^2)` 不行，要求 `O(n)`（例：LC 1004 最大连续1的个数 III）。
 
@@ -206,4 +206,29 @@ def longest_substring(s: str, k: int) -> int:
     if bad is None:
         return len(s)                          # 整串已经合法
     return max(longest_substring(part, k) for part in s.split(bad))   # 含 bad 的子串一定不合法，按它切开
+```
+
+**例题：** LC 438 找到字符串中所有字母异位词
+
+字符串 `s` 和 `p`，返回 `s` 中所有是 `p` 的异位词的子串起始下标；`1 <= s.length, p.length <= 3 * 10^4`，只含小写字母。
+
+```python
+from collections import Counter
+def find_anagrams(s: str, p: str) -> list[int]:
+    m = len(p)
+    need = Counter(p)
+    unbalanced = len(need)
+    ans: list[int] = []
+    def shift(c: str, d: int) -> int:
+        """窗口增减一个 c，返回 unbalanced 的变化量。"""
+        was = need[c] != 0
+        need[c] += d
+        return (need[c] != 0) - was
+    for right, ch in enumerate(s):
+        unbalanced += shift(ch, -1)
+        if right >= m:
+            unbalanced += shift(s[right - m], +1)
+        if unbalanced == 0:
+            ans.append(right - m + 1)
+    return ans
 ```

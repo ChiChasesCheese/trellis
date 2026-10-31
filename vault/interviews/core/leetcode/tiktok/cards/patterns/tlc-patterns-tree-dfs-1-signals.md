@@ -23,13 +23,13 @@ step: 1
 
 **全局最优（跨节点路径）**：路径可能「拐弯」经过某个节点的两侧，但向上返回时只能延伸一侧 → 用 `nonlocal best` 记录全局，返回单侧收益（例：LC 124 二叉树中的最大路径和）。
 
-**构造类**：给遍历序列还原树，用前序确定根、中序确定左右范围（例：LC 105 从前序与中序遍历序列构造二叉树）。
+**构造类**：给遍历序列还原树，用前序确定根、中序确定左右范围（例：LC 105 从前序与中序遍历序列构造二叉树；高频：LC 889 根据前序和后序遍历构造二叉树）。
 
 **近似信号：**
 - 按**层**处理、右视图 → BFS（例：LC 199 二叉树的右视图）。
 - BST 的有序性相关（验证、第 k 小）→ 中序 / 上下界（例：LC 98 验证二叉搜索树）。
 - 节点数 `10^5` 且树可能退化成链 → 递归深度爆栈（CPython 默认约 1000），改迭代或调高 `sys.setrecursionlimit`（例：LC 94 二叉树的中序遍历，进阶要求迭代）。
-- 要找任意两点的路径 → LCA，或把树当图用 BFS（例：LC 1740 找到二叉树中的距离）。
+- 要找任意两点的路径 → LCA，或把树当图用 BFS（例：LC 1740 找到二叉树中的距离；高频：LC 863 二叉树中所有距离为 K 的结点）。
 
 **例题：** LC 543 二叉树的直径
 
@@ -235,4 +235,54 @@ def find_distance(root: TreeNode | None, p: int, q: int) -> int:
         return -1
     top = lca(root)
     return down(top, p) + down(top, q)
+```
+
+**例题：** LC 889 根据前序和后序遍历构造二叉树
+
+给两个整数数组 `preorder` 和 `postorder`，`preorder` 是一棵**无重复值**二叉树的前序遍历，`postorder` 是同一棵树的后序遍历，重构并返回这棵二叉树；如果有多个答案，返回任意一个。`1 <= preorder.length <= 30`，`1 <= preorder[i] <= preorder.length`，`preorder` 中所有值不同，`postorder.length == preorder.length`，`1 <= postorder[i] <= postorder.length`，`postorder` 中所有值不同，保证两者是同一棵二叉树的前序和后序。
+
+```python
+def construct_from_pre_post(preorder: list[int], postorder: list[int]) -> TreeNode | None:
+    post_idx = {v: i for i, v in enumerate(postorder)}   # 值 -> 它在后序里的下标，O(1) 查左子树大小
+
+    def build(pre_lo: int, post_lo: int, size: int) -> TreeNode | None:
+        if size == 0:
+            return None
+        root = TreeNode(preorder[pre_lo])
+        if size == 1:
+            return root
+        left_root = preorder[pre_lo + 1]                 # 前序里根后面紧跟的是左子树的根
+        left_size = post_idx[left_root] - post_lo + 1    # 后序里左子树根是左子树的最后一个
+        root.left = build(pre_lo + 1, post_lo, left_size)
+        root.right = build(pre_lo + 1 + left_size, post_lo + left_size, size - 1 - left_size)
+        return root
+
+    return build(0, 0, len(preorder))
+```
+
+**例题：** LC 863 二叉树中所有距离为 K 的结点
+
+给一棵二叉树的根结点 `root`、树中的一个目标结点 `target` 和一个整数 `k`，返回到 `target` 距离恰为 `k` 的所有结点的值（距离 = 两结点间路径的边数，可以向上走也可以向下走），答案顺序任意。约束：结点数在 `[1, 500]`，`0 <= Node.val <= 500`，所有 `Node.val` 互不相同，`target` 是树上的结点，`0 <= k <= 1000`。
+
+```python
+def distance_k(root: TreeNode, target: TreeNode, k: int) -> list[int]:
+    parent: dict[TreeNode, TreeNode | None] = {root: None}
+    stack = [root]
+    while stack:                          # 迭代 DFS 给每个结点记父指针（避免递归栈）
+        node = stack.pop()
+        for child in (node.left, node.right):
+            if child:
+                parent[child] = node
+                stack.append(child)
+
+    frontier, seen = [target], {target}   # 从 target 出发的 BFS，一层 = 距离 +1
+    for _ in range(k):
+        nxt: list[TreeNode] = []
+        for node in frontier:
+            for nb in (node.left, node.right, parent[node]):
+                if nb and nb not in seen:  # seen 防止走回刚来的结点
+                    seen.add(nb)
+                    nxt.append(nb)
+        frontier = nxt
+    return [node.val for node in frontier]
 ```

@@ -14,6 +14,7 @@ step: 7
 - LC 560 和为 K 的子数组
 - LC 974 和可被 K 整除的子数组（同余）
 - LC 1248 统计「优美子数组」（奇偶映射成 0/1）
+- LC 2845 统计趣味子数组的数目（高频）
 
 **前缀和 + 二分 / 窗口**
 - LC 209 长度最小的子数组（全正数，窗口或前缀和 + 二分）
@@ -252,4 +253,22 @@ def trap(height: list[int]) -> int:
             water += right_max - height[right]
             right -= 1
     return water
+```
+
+**例题：** LC 2845 统计趣味子数组的数目
+
+给下标从 `0` 开始的整数数组 `nums`，以及整数 `modulo` 和 `k`。如果子数组 `nums[l..r]` 满足：设 `cnt` 为区间 `[l, r]` 内满足 `nums[i] % modulo == k` 的下标 `i` 的个数，并且 `cnt % modulo == k`，就称它为**趣味子数组**。返回趣味子数组的数目。`1 <= nums.length <= 10^5`，`1 <= nums[i] <= 10^9`，`1 <= modulo <= 10^9`，`0 <= k < modulo`。
+
+```python
+from collections import Counter
+
+
+def count_interesting_subarrays(nums: list[int], modulo: int, k: int) -> int:
+    seen: Counter[int] = Counter({0: 1})           # 前缀计数（对 modulo 取模）出现的次数，空前缀算一次
+    pre = ans = 0
+    for x in nums:
+        pre = (pre + (x % modulo == k)) % modulo   # 到当前位置，满足条件的元素个数 mod modulo
+        ans += seen[(pre - k) % modulo]            # 需要某个旧前缀 p 使得 (pre - p) % modulo == k
+        seen[pre] += 1
+    return ans
 ```

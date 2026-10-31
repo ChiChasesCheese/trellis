@@ -21,14 +21,14 @@ step: 1
 | 所有点对 | Floyd | `O(V^3)`，`V <= 100` |
 
 **触发信号：**
-- 「最短 / 最少花费」且各条边的代价不同、都非负：用最小堆，每次取出当前最小代价的点（例：LC 499 迷宫 III）。
+- 「最短 / 最少花费」且各条边的代价不同、都非负：用最小堆，每次取出当前最小代价的点（例：LC 499 迷宫 III；高频：LC 778 水位上升的泳池中游泳）。
 - 「**最多经过 `k` 站**」「最多 `k` 条边」：限制边数 ⇒ Bellman-Ford 按轮松弛，或把"已用边数"放进状态（例：LC 787 K 站中转内最便宜的航班）。
 - 网格里**可以消除 `k` 个障碍**：状态不只是位置，还有"剩余次数"：`(r, c, left)`，在状态图上做 BFS（例：LC 1293 网格中的最短路径）。
 - 状态之间的转移代价相同，但状态里带着额外信息（上一条边的颜色）⇒ 在 `(点, 状态)` 上做普通 BFS（例：LC 1129 颜色交替的最短路径）。
 
 **近似信号：**
 - 只问连通性 ⇒ 并查集 / DFS（例：LC 721 账户合并）。
-- 无权图用 Dijkstra 也对，但 BFS 更简单更快（例：LC 542 01 矩阵）。
+- 无权图用 Dijkstra 也对，但 BFS 更简单更快（例：LC 542 01 矩阵；高频：LC 1091 二进制矩阵中的最短路径）。
 - 有负权环时最短路无定义；Dijkstra 在有负权边时可能出错，有负权就用 Bellman-Ford（例：LC 787 K 站中转内最便宜的航班）。
 - 要最小生成树（连通所有点的最小总边权）⇒ Kruskal / Prim，不是最短路（例：LC 1584 连接所有点的最小费用）。
 - 数据范围 `n <= 100`，且要问任意两点是否可达或距离 ⇒ `O(n^3)` 的 Floyd 传递闭包也可行（例：LC 1462 课程表 IV）。
@@ -234,4 +234,52 @@ def check_if_prerequisite(num_courses: int, prerequisites: list[list[int]], quer
             if indegree[v] == 0:
                 queue.append(v)
     return [bool(pre[v] >> u & 1) for u, v in queries]
+```
+
+**例题：** LC 778 水位上升的泳池中游泳
+
+`n x n` 矩阵 `grid[i][j]` 是平台高度，时刻 `t` 的水位是 `t`，只有水位不低于相邻两平台的高度时才能游过去；返回从 `(0, 0)` 到 `(n-1, n-1)` 的最少时间；`1 <= n <= 50`，高度互不相同。
+
+```python
+from heapq import heappop, heappush
+def swim_in_water(grid: list[list[int]]) -> int:
+    n = len(grid)
+    heap = [(grid[0][0], 0, 0)]
+    seen = {(0, 0)}
+    while heap:
+        t, x, y = heappop(heap)
+        if x == y == n - 1:
+            return t
+        for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
+            if 0 <= nx < n and 0 <= ny < n and (nx, ny) not in seen:
+                seen.add((nx, ny))
+                heappush(heap, (max(t, grid[nx][ny]), nx, ny))
+    return -1
+```
+
+**例题：** LC 1091 二进制矩阵中的最短路径
+
+`n x n` 的 0/1 矩阵，从左上角走到右下角，只能走值为 `0` 的格子，八个方向都可以走，返回最短路径经过的格子数，不存在返回 `-1`；`1 <= n <= 100`。
+
+```python
+from collections import deque
+from itertools import product
+def shortest_path_binary_matrix(grid: list[list[int]]) -> int:
+    n = len(grid)
+    if grid[0][0] or grid[n - 1][n - 1]:
+        return -1
+    dirs = [(dr, dc) for dr, dc in product((-1, 0, 1), repeat=2) if dr or dc]
+    seen = [row[:] for row in grid]
+    seen[0][0] = 1
+    q = deque([(0, 0, 1)])
+    while q:
+        r, c, d = q.popleft()
+        if r == n - 1 and c == n - 1:
+            return d
+        for dr, dc in dirs:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < n and 0 <= nc < n and not seen[nr][nc]:
+                seen[nr][nc] = 1
+                q.append((nr, nc, d + 1))
+    return -1
 ```

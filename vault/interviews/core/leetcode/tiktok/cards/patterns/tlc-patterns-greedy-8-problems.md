@@ -26,11 +26,14 @@ step: 8
 
 **排序 + 扫描**
 - LC 122 买卖股票的最佳时机 II（累加所有上涨）
+- LC 121 买卖股票的最佳时机（高频）
 - LC 56 合并区间、LC 253 会议室 II（区间排序）
+- LC 435 无重叠区间（高频）
 
 **贪心 + 堆**
 - LC 767 重构字符串
 - LC 1405 最长快乐字符串
+- LC 1834 单线程 CPU（高频）
 
 **贪心不成立 ⇒ DP**
 - LC 322 零钱兑换
@@ -312,4 +315,58 @@ def rob(nums: list[int]) -> int:
     for x in nums:
         skip, take = max(skip, take), skip + x
     return max(skip, take)
+```
+
+**例题：** LC 435 无重叠区间
+
+区间数组 `intervals`，返回最少需要移除多少个区间才能让剩下的两两不重叠（只在端点接触不算重叠）；`1 <= intervals.length <= 10^5`。
+
+```python
+from math import inf
+from operator import itemgetter
+def erase_overlap_intervals(intervals: list[list[int]]) -> int:
+    kept, end = 0, -inf
+    for start, finish in sorted(intervals, key=itemgetter(1)):
+        if start >= end:
+            kept += 1
+            end = finish
+    return len(intervals) - kept
+```
+
+**例题：** LC 121 买卖股票的最佳时机
+
+`prices[i]` 是第 `i` 天的股价，选一天买入、之后的某天卖出，返回最大利润，不能获利返回 `0`；`1 <= prices.length <= 10^5`。
+
+```python
+def max_profit(prices: list[int]) -> int:
+    low, best = prices[0], 0
+    for p in prices:
+        low = min(low, p)
+        best = max(best, p - low)
+    return best
+```
+
+**例题：** LC 1834 单线程 CPU
+
+`tasks[i] = [enqueueTime, processingTime]`；CPU 空闲时从已到达的任务里选执行时间最短的（并列取下标最小），一次只做一项且不可中断；返回任务的执行顺序；`1 <= n <= 10^5`，时间 `<= 10^9`。
+
+```python
+from heapq import heappop, heappush
+def get_order(tasks: list[list[int]]) -> list[int]:
+    n = len(tasks)
+    order = sorted(range(n), key=lambda i: tasks[i][0])
+    heap: list[tuple[int, int]] = []
+    res: list[int] = []
+    t = p = 0
+    while len(res) < n:
+        if not heap and t < tasks[order[p]][0]:
+            t = tasks[order[p]][0]
+        while p < n and tasks[order[p]][0] <= t:
+            i = order[p]
+            heappush(heap, (tasks[i][1], i))
+            p += 1
+        cost, i = heappop(heap)
+        t += cost
+        res.append(i)
+    return res
 ```

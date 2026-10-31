@@ -13,6 +13,8 @@ step: 7
 **排序后合并 / 判重叠**
 - LC 56 合并区间
 - LC 252 会议室
+- LC 435 无重叠区间（高频）
+- LC 163 缺失的区间（高频）
 
 **资源数量（事件扫描或堆）**
 - LC 253 会议室 II
@@ -28,6 +30,7 @@ step: 7
 
 **区间求交 / 范围约束**
 - LC 2145 统计隐藏数组数目（起点必须落在由前缀最值得出的区间内）
+- LC 986 区间列表的交集（高频）
 
 提示：先问端点相接算不算重叠；再决定是「排序后扫描」「事件 +1/-1」还是「排序 + 堆」。
 
@@ -172,4 +175,56 @@ def number_of_arrays(differences: list[int], lower: int, upper: int) -> int:
     prefix = [0, *accumulate(differences)]
     spread = max(prefix) - min(prefix)
     return max(0, (upper - lower) - spread + 1)
+```
+
+**例题：** LC 435 无重叠区间
+
+区间数组 `intervals`，返回最少需要移除多少个区间才能让剩下的两两不重叠（只在端点接触不算重叠）；`1 <= intervals.length <= 10^5`。
+
+```python
+from math import inf
+from operator import itemgetter
+def erase_overlap_intervals(intervals: list[list[int]]) -> int:
+    kept, end = 0, -inf
+    for start, finish in sorted(intervals, key=itemgetter(1)):
+        if start >= end:
+            kept += 1
+            end = finish
+    return len(intervals) - kept
+```
+
+**例题：** LC 163 缺失的区间
+
+闭区间 `[lower, upper]` 和升序数组 `nums`（元素互不相同且都在区间内），返回恰好覆盖所有缺失数的最小有序区间列表；`0 <= nums.length <= 100`，`-10^9 <= lower <= upper <= 10^9`。
+
+```python
+from itertools import chain
+def find_missing_ranges(nums: list[int], lower: int, upper: int) -> list[list[int]]:
+    ans: list[list[int]] = []
+    prev = lower - 1
+    for x in chain(nums, (upper + 1,)):
+        if x - prev >= 2:
+            ans.append([prev + 1, x - 1])
+        prev = x
+    return ans
+```
+
+**例题：** LC 986 区间列表的交集
+
+两个已排序、列表内两两不相交的闭区间列表 `firstList`、`secondList`，返回它们的交集；每个列表长度 `<= 1000`。
+
+```python
+def interval_intersection(first: list[list[int]], second: list[list[int]]) -> list[list[int]]:
+    i = j = 0
+    ans: list[list[int]] = []
+    while i < len(first) and j < len(second):
+        lo = max(first[i][0], second[j][0])
+        hi = min(first[i][1], second[j][1])
+        if lo <= hi:
+            ans.append([lo, hi])
+        if first[i][1] < second[j][1]:
+            i += 1
+        else:
+            j += 1
+    return ans
 ```

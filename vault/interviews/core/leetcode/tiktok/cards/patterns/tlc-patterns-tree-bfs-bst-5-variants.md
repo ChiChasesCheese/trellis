@@ -10,7 +10,7 @@ step: 5
 这几道题在基本模板上各改了哪一步？
 
 ## A
-**LC 662 最大宽度**：层内节点按完全二叉树**编号**（左孩子 `2i`，右孩子 `2i+1`），一层的宽度 = 最右编号 − 最左编号 + 1。每层减去最左编号避免数字无限增长（Python 整数不溢出，但数字会变慢）（例：LC 662 二叉树最大宽度）。
+**LC 662 最大宽度**：层内节点按完全二叉树**编号**（左孩子 `2i`，右孩子 `2i+1`），一层的宽度 = 最右编号 − 最左编号 + 1。每层减去最左编号避免数字无限增长（Python 整数不溢出，但数字会变慢）（例：LC 662 二叉树最大宽度；高频：LC 199 二叉树的右视图）。
 
 ```python
 def width_of_binary_tree(root: TreeNode | None) -> int:
@@ -156,4 +156,18 @@ def distance_k(root: TreeNode, target: TreeNode, k: int) -> list[int]:
                     nxt.append(nb)
         frontier = nxt
     return [node.val for node in frontier]
+```
+
+**例题：** LC 199 二叉树的右视图
+
+二叉树的根节点 `root`，返回站在右侧能看到的节点值（从上到下）；节点数 `0..100`。
+
+```python
+def right_side_view(root: TreeNode | None) -> list[int]:
+    ans: list[int] = []
+    level = [root] if root else []
+    while level:
+        ans.append(level[-1].val)
+        level = [kid for node in level for kid in (node.left, node.right) if kid]
+    return ans
 ```

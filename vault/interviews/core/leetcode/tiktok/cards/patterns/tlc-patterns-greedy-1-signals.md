@@ -13,10 +13,10 @@ step: 1
 贪心（Greedy）= 每一步都选当前看起来最好的，且这个选择**不会让后面的选择变差**，最终得到全局最优。它通常比 DP 快（`O(n)` 或 `O(n log n)`）、空间小。
 
 **触发信号：**
-- 问**最大 / 最小值**，并且题目有明显的"排序后一次扫描"结构：区间调度、会议室、任务安排（例：LC 452 用最少数量的箭引爆气球）。
-- 「**能否到达**」「最少几步到达」，每个位置有一个"可达范围"：跳跃游戏 LC 55、45（例：LC 45 跳跃游戏 II）。
+- 问**最大 / 最小值**，并且题目有明显的"排序后一次扫描"结构：区间调度、会议室、任务安排（例：LC 452 用最少数量的箭引爆气球；高频：LC 435 无重叠区间）。
+- 「**能否到达**」「最少几步到达」，每个位置有一个"可达范围"：跳跃游戏 LC 55、45（例：LC 45 跳跃游戏 II；高频：LC 55 跳跃游戏）。
 - 「**环形**路线，累计量不能为负」：加油站 LC 134（例：LC 134 加油站）。
-- 「**字典序最小 / 数值最大**」，从高位到低位逐位决定：最大交换 LC 670、移掉 K 位数字 LC 402（例：LC 670 最大交换）。
+- 「**字典序最小 / 数值最大**」，从高位到低位逐位决定：最大交换 LC 670、移掉 K 位数字 LC 402（例：LC 670 最大交换；高频：LC 316 去除重复字母）。
 - 「括号序列里有通配符」：只维护未匹配数的范围（例：LC 678 有效的括号字符串）。
 
 **怎样判断贪心成立：**
@@ -179,4 +179,56 @@ def max_sum_div_three(nums: list[int]) -> int:
             dp[i][r] = max(dp[i - 1][r],                         # 不选 x
                            dp[i - 1][(r - x) % 3] + x)           # 选 x：上一个余数是 (r - x) % 3
     return dp[n][0]
+```
+
+**例题：** LC 435 无重叠区间
+
+给一组区间 `intervals`，`intervals[i] = [start_i, end_i]`。返回最少需要移除多少个区间，才能让剩下的区间两两不重叠。只在端点接触的区间不算重叠，例如 `[1,2]` 和 `[2,3]`。`1 <= intervals.length <= 10^5`，`intervals[i].length == 2`，`-5 * 10^4 <= start_i < end_i <= 5 * 10^4`。
+
+```python
+from math import inf
+from operator import itemgetter
+
+
+def erase_overlap_intervals(intervals: list[list[int]]) -> int:
+    kept, end = 0, -inf                                   # 已保留的区间数、最后保留区间的右端点
+    for start, finish in sorted(intervals, key=itemgetter(1)):   # 按右端点升序
+        if start >= end:                                  # 只在端点接触不算重叠，所以是 >=
+            kept += 1
+            end = finish
+    return len(intervals) - kept
+```
+
+**例题：** LC 55 跳跃游戏
+
+给非负整数数组 `nums`，你最初位于第一个下标，数组中每个元素是你在该位置**最多**可以向前跳的长度。判断能否到达最后一个下标。`1 <= nums.length <= 10^4`，`0 <= nums[i] <= 10^5`。
+
+```python
+def can_jump(nums: list[int]) -> bool:
+    reach = 0                               # 目前能到达的最远下标
+    for i, step in enumerate(nums):
+        if i > reach:
+            return False                    # 连 i 都够不着，后面更不可能
+        reach = max(reach, i + step)
+    return True
+```
+
+**例题：** LC 316 去除重复字母
+
+给字符串 `s`，去除重复字母，使每个字母只出现一次，并保证结果的字典序最小；不能打乱其余字符的相对顺序（结果是 `s` 的子序列）。`1 <= s.length <= 10^4`，`s` 由小写英文字母组成。
+
+```python
+def remove_duplicate_letters(s: str) -> str:
+    last = {ch: i for i, ch in enumerate(s)}       # 每个字母最后一次出现的下标
+    stack: list[str] = []
+    in_stack: set[str] = set()
+    for i, ch in enumerate(s):
+        if ch in in_stack:                         # 已经放好了，跳过（先放的位置一定不差）
+            continue
+        # 栈顶比 ch 大，且栈顶后面还会再出现：弹掉它，换更小的字母占前面的位置
+        while stack and stack[-1] > ch and last[stack[-1]] > i:
+            in_stack.discard(stack.pop())
+        stack.append(ch)
+        in_stack.add(ch)
+    return "".join(stack)
 ```

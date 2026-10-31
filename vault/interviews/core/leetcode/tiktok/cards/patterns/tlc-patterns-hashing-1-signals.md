@@ -12,15 +12,15 @@ step: 1
 ## A
 **该想到哈希的信号：**
 - 内层循环是「找有没有一个值」：找 `target - x`、找「之前出现过的」、找重复 → 把内层 `O(n)` 查找换成 `O(1)`（例：LC 1 两数之和）。
-- 要**统计次数**、判断「出现次数是否相同」、比较两个多重集 → `Counter`（例：LC 242 有效的字母异位词）。
+- 要**统计次数**、判断「出现次数是否相同」、比较两个多重集 → `Counter`（例：LC 242 有效的字母异位词；高频：LC 438 找到字符串中所有字母异位词）。
 - 要把元素按某个**签名（signature）**分组：排序后的字符串、计数向量、归一化的形状 → `defaultdict(list)`（例：LC 49 字母异位词分组）。
 - 要**去重**或判断是否见过 → `set`（例：LC 217 存在重复元素）。
 - 数据范围到 `10^5`，暴力是 `O(n^2)`，且顺序不重要（例：LC 128 最长连续序列）。
 
 **近似信号（要换别的）：**
 - 要保持**有序**、找前驱 / 后继 → 有序结构或排序 + 二分，哈希不记顺序（例：LC 35 搜索插入位置）。
-- 数组**已有序**，找两数之和 → 双指针，`O(1)` 空间，不用哈希（例：LC 167 两数之和 II - 输入有序数组）。
-- 问的是**连续子数组**的和 / 个数 → 前缀和 + 哈希（哈希只是其中一半）（例：LC 523 连续的子数组和）。
+- 数组**已有序**，找两数之和 → 双指针，`O(1)` 空间，不用哈希（例：LC 167 两数之和 II - 输入有序数组；高频：LC 15 三数之和）。
+- 问的是**连续子数组**的和 / 个数 → 前缀和 + 哈希（哈希只是其中一半）（例：LC 523 连续的子数组和；高频：LC 560 和为 K 的子数组）。
 - 键是**范围**（`x` 落在 `[l, r]`）→ 排序 / 二分 / 区间结构（例：LC 56 合并区间）。
 - 键是浮点数 → 哈希不可靠（精度），改用整数化或排序（例：LC 593 有效的正方形）。
 
@@ -181,4 +181,74 @@ def valid_square(p1: list[int], p2: list[int], p3: list[int], p4: list[int]) -> 
         return (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2   # 平方距离，全程整数
     d = sorted(dist2(a, b) for a, b in combinations((p1, p2, p3, p4), 2))   # 6 条两两距离
     return d[0] > 0 and d[0] == d[3] and d[4] == d[5] == 2 * d[0]
+```
+
+**例题：** LC 438 找到字符串中所有字母异位词
+
+给两个字符串 `s` 和 `p`（长度都在 `1` 到 `3 * 10^4`，只含小写字母），返回 `s` 中所有是 `p` 的异位词（字母相同、次序可以不同）的子串的起始下标，顺序任意。
+
+```python
+def find_anagrams(s: str, p: str) -> list[int]:
+    m = len(p)
+    need = Counter(p)
+    unbalanced = len(need)
+    ans: list[int] = []
+    def shift(c: str, d: int) -> int:
+        """窗口增减一个 c，返回 unbalanced 的变化量。"""
+        was = need[c] != 0
+        need[c] += d
+        return (need[c] != 0) - was
+    for right, ch in enumerate(s):
+        unbalanced += shift(ch, -1)
+        if right >= m:
+            unbalanced += shift(s[right - m], +1)
+        if unbalanced == 0:
+            ans.append(right - m + 1)
+    return ans
+```
+
+**例题：** LC 15 三数之和
+
+给整数数组 `nums`，返回所有和为 `0` 且**不重复**的三元组 `[nums[i], nums[j], nums[k]]`，要求 `i`、`j`、`k` 互不相同；答案中不能包含重复的三元组，顺序不限。`3 <= nums.length <= 3000`，`-10^5 <= nums[i] <= 10^5`。
+
+```python
+def three_sum(nums: list[int]) -> list[list[int]]:
+    nums = sorted(nums)
+    n = len(nums)
+    result: list[list[int]] = []
+    for i in range(n - 2):
+        if nums[i] > 0:
+            break
+        if i > 0 and nums[i] == nums[i - 1]:
+            continue
+        lo, hi = i + 1, n - 1
+        while lo < hi:
+            total = nums[i] + nums[lo] + nums[hi]
+            if total < 0:
+                lo += 1
+            elif total > 0:
+                hi -= 1
+            else:
+                result.append([nums[i], nums[lo], nums[hi]])
+                lo += 1
+                hi -= 1
+                while lo < hi and nums[lo] == nums[lo - 1]:
+                    lo += 1
+    return result
+```
+
+**例题：** LC 560 和为 K 的子数组
+
+给整数数组 `nums` 和整数 `k`，统计并返回该数组中**和为 `k` 的子数组的个数**。子数组是数组中元素的连续非空序列。`1 <= nums.length <= 2 * 10^4`，`-1000 <= nums[i] <= 1000`，`-10^7 <= k <= 10^7`。
+
+```python
+from collections import Counter
+def subarray_sum(nums: list[int], k: int) -> int:
+    seen = Counter({0: 1})
+    pre = ans = 0
+    for x in nums:
+        pre += x
+        ans += seen[pre - k]
+        seen[pre] += 1
+    return ans
 ```

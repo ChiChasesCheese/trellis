@@ -14,12 +14,17 @@ step: 7
 - LC 1 两数之和
 - LC 560 和为 K 的子数组（前缀和 + 哈希）
 - LC 974 和可被 K 整除的子数组（前缀和模 `k` 做键）
+- LC 1248 统计「优美子数组」（高频）
+- LC 2845 统计趣味子数组的数目（高频）
 
 **频次 / 计数**
 - LC 347 前 K 个高频元素（`Counter` + 堆或桶）
 - LC 438 找到字符串中所有字母异位词（窗口计数）
 - LC 76 最小覆盖子串（需求计数）
 - LC 2456 最流行的视频创作者（字典聚合 + 取最大）
+- LC 340 至多包含 K 个不同字符的最长子串（高频）
+- LC 904 水果成篮（高频）
+- LC 424 替换后的最长重复字符（高频）
 
 **签名分组**
 - LC 49 字母异位词分组
@@ -34,6 +39,9 @@ step: 7
 - LC 146 LRU 缓存（哈希 + 链表）
 - LC 380 O(1) 时间插入、删除和获取随机元素（哈希 + 数组）
 - LC 133 克隆图（哈希：旧节点 → 新节点）
+- LC 432 全 O(1) 的数据结构（高频）
+- LC 981 基于时间的键值存储（高频）
+- LC 2196 根据描述创建二叉树（高频）
 
 模板提示：看到「内层在找某个值」就把它改成字典查询；看到「按某种等价分类」就想签名；看到「连续」且含负数就想前缀和 + 哈希。
 
@@ -107,6 +115,8 @@ def top_k_frequent(nums: list[int], k: int) -> list[int]:
 字符串 `s` 和 `p`，返回 `s` 中所有 `p` 的异位词子串的起始下标。`1 <= s.length, p.length <= 3 * 10^4`，只含小写字母。
 
 ```python
+from collections import Counter
+
 def find_anagrams(s: str, p: str) -> list[int]:
     m = len(p)
     need = Counter(p)             # need[c]：窗口里还缺几个 c；负数表示多了
@@ -353,4 +363,203 @@ def clone_graph(node: Node | None) -> Node | None:
         clone.neighbors = [dfs(nb) for nb in cur.neighbors]
         return clone
     return dfs(node) if node else None
+```
+
+**例题：** LC 1248 统计「优美子数组」
+
+整数数组 `nums` 和 `k`，统计**恰好**含 `k` 个奇数的连续子数组个数；`1 <= nums.length <= 50000`，`1 <= nums[i] <= 10^5`。
+
+```python
+def number_of_subarrays(nums: list[int], k: int) -> int:
+    seen = [0] * (len(nums) + 1)
+    seen[0] = 1
+    odd = ans = 0
+    for x in nums:
+        odd += x & 1
+        if odd >= k:
+            ans += seen[odd - k]
+        seen[odd] += 1
+    return ans
+```
+
+**例题：** LC 2845 统计趣味子数组的数目
+
+数组 `nums` 和整数 `modulo`、`k`：子数组里满足 `nums[i] % modulo == k` 的元素个数记为 `cnt`，若 `cnt % modulo == k` 则这个子数组是趣味子数组，返回其数目；`1 <= nums.length <= 10^5`。
+
+```python
+from collections import Counter
+def count_interesting_subarrays(nums: list[int], modulo: int, k: int) -> int:
+    seen: Counter[int] = Counter({0: 1})
+    pre = ans = 0
+    for x in nums:
+        pre = (pre + (x % modulo == k)) % modulo
+        ans += seen[(pre - k) % modulo]
+        seen[pre] += 1
+    return ans
+```
+
+**例题：** LC 340 至多包含 K 个不同字符的最长子串
+
+字符串 `s` 和整数 `k`，返回至多含 `k` 个不同字符的最长子串的长度；`1 <= s.length <= 5 * 10^4`，`0 <= k <= 50`。
+
+```python
+from collections import Counter
+def length_of_longest_substring_k_distinct(s: str, k: int) -> int:
+    count: Counter[str] = Counter()
+    left = best = 0
+    for right, ch in enumerate(s):
+        count[ch] += 1
+        while len(count) > k:
+            out = s[left]
+            count[out] -= 1
+            if count[out] == 0:
+                del count[out]
+            left += 1
+        best = max(best, right - left + 1)
+    return best
+```
+
+**例题：** LC 904 水果成篮
+
+`fruits[i]` 是第 `i` 棵树上的水果种类，两个篮子各装一种水果，从任意一棵树开始依次向右采摘，遇到装不下的种类就停；返回最多能摘的水果数；`1 <= fruits.length <= 10^5`。
+
+```python
+from collections import Counter
+def total_fruit(fruits: list[int]) -> int:
+    count: Counter[int] = Counter()
+    best = left = 0
+    for right, kind in enumerate(fruits):
+        count[kind] += 1
+        while len(count) > 2:
+            gone = fruits[left]
+            count[gone] -= 1
+            if count[gone] == 0:
+                del count[gone]
+            left += 1
+        best = max(best, right - left + 1)
+    return best
+```
+
+**例题：** LC 424 替换后的最长重复字符
+
+大写字母字符串 `s`，最多把 `k` 个字符改成任意字母，返回操作后包含相同字母的最长子串的长度；`1 <= s.length <= 10^5`。
+
+```python
+from collections import Counter
+def character_replacement(s: str, k: int) -> int:
+    count: Counter[str] = Counter()
+    max_freq = left = 0
+    for right, ch in enumerate(s):
+        count[ch] += 1
+        max_freq = max(max_freq, count[ch])
+        if right - left + 1 - max_freq > k:
+            count[s[left]] -= 1
+            left += 1
+    return len(s) - left
+```
+
+**例题：** LC 432 全 O(1) 的数据结构
+
+实现 `AllOne`：`inc(key)`、`dec(key)` 让计数加减 `1`（减到 `0` 就删除），`getMaxKey()`、`getMinKey()` 返回计数最大 / 最小的任一字符串，没有则返回 `""`，每个操作平均 `O(1)`；最多调用 `5 * 10^4` 次。
+
+```python
+class Bucket:
+    __slots__ = ("cnt", "keys", "prev", "next")
+    def __init__(self, cnt: int = 0) -> None:
+        self.cnt = cnt
+        self.keys: set[str] = set()
+        self.prev: Bucket | None = None
+        self.next: Bucket | None = None
+class AllOne:
+    def __init__(self) -> None:
+        self.head, self.tail = Bucket(0), Bucket(-1)
+        self.head.next, self.tail.prev = self.tail, self.head
+        self.where: dict[str, Bucket] = {}
+    def _insert_after(self, node: Bucket, cnt: int) -> Bucket:
+        new = Bucket(cnt)
+        new.prev, new.next = node, node.next
+        node.next.prev = new
+        node.next = new
+        return new
+    def _remove(self, node: Bucket) -> None:
+        node.prev.next, node.next.prev = node.next, node.prev
+    def inc(self, key: str) -> None:
+        cur = self.where.get(key)
+        anchor = self.head if cur is None else cur
+        target = anchor.next
+        new_cnt = anchor.cnt + 1
+        if target.cnt != new_cnt:
+            target = self._insert_after(anchor, new_cnt)
+        target.keys.add(key)
+        self.where[key] = target
+        if cur is not None:
+            cur.keys.discard(key)
+            if not cur.keys:
+                self._remove(cur)
+    def dec(self, key: str) -> None:
+        cur = self.where[key]
+        if cur.cnt == 1:
+            del self.where[key]
+        else:
+            target = cur.prev
+            if target.cnt != cur.cnt - 1:
+                target = self._insert_after(cur.prev, cur.cnt - 1)
+            target.keys.add(key)
+            self.where[key] = target
+        cur.keys.discard(key)
+        if not cur.keys:
+            self._remove(cur)
+    def getMaxKey(self) -> str:
+        if self.tail.prev is self.head:
+            return ""
+        return next(iter(self.tail.prev.keys))
+    def getMinKey(self) -> str:
+        if self.head.next is self.tail:
+            return ""
+        return next(iter(self.head.next.keys))
+```
+
+**例题：** LC 981 基于时间的键值存储
+
+实现 `TimeMap`：`set(key, value, timestamp)` 存值，`get(key, timestamp)` 返回时间戳不超过 `timestamp` 的最近一次 `set` 的值，没有则返回 `""`；同一个键的 `set` 时间戳严格递增，调用总数 `<= 2 * 10^5`。
+
+```python
+from bisect import bisect_right
+from collections import defaultdict
+class TimeMap:
+    def __init__(self) -> None:
+        self.times: defaultdict[str, list[int]] = defaultdict(list)
+        self.values: defaultdict[str, list[str]] = defaultdict(list)
+    def set(self, key: str, value: str, timestamp: int) -> None:
+        self.times[key].append(timestamp)
+        self.values[key].append(value)
+    def get(self, key: str, timestamp: int) -> str:
+        times = self.times.get(key)
+        if not times:
+            return ""
+        i = bisect_right(times, timestamp)
+        return self.values[key][i - 1] if i else ""
+```
+
+**例题：** LC 2196 根据描述创建二叉树
+
+`descriptions[i] = [parent, child, isLeft]` 表示 `child` 是 `parent` 的左（`1`）或右（`0`）孩子，节点值互不相同；构造二叉树并返回根节点；`1 <= descriptions.length <= 10^4`。
+
+```python
+def create_binary_tree(descriptions: list[list[int]]) -> TreeNode | None:
+    nodes: dict[int, TreeNode] = {}
+    parents: set[int] = set()
+    children: set[int] = set()
+    for parent, child, is_left in descriptions:
+        for v in (parent, child):
+            if v not in nodes:
+                nodes[v] = TreeNode(v)
+        if is_left:
+            nodes[parent].left = nodes[child]
+        else:
+            nodes[parent].right = nodes[child]
+        parents.add(parent)
+        children.add(child)
+    (root,) = parents - children
+    return nodes[root]
 ```

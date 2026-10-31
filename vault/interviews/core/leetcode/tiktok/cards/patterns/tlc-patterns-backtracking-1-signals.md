@@ -15,15 +15,15 @@ step: 1
 **触发信号：**
 - 要求**列出所有**方案：子集 LC 78、组合 LC 39 / 77、排列 LC 46、括号生成 LC 22、复原 IP LC 93（例：LC 78 子集）。
 - 在棋盘 / 网格里**找一条路径或一种摆放**：N 皇后 LC 51、单词搜索 LC 79（例：LC 79 单词搜索）。
-- 数据范围很小：`n <= 8` 到 `n <= 20`（LC 51 的 `n <= 9`，LC 473 的 `matchsticks.length <= 15`，LC 78 的 `nums.length <= 10`，LC 22 的 `n <= 8`）。指数级复杂度只有在这种范围才可行（例：LC 784 字母大小写全排列）。
+- 数据范围很小：`n <= 8` 到 `n <= 20`（LC 51 的 `n <= 9`，LC 473 的 `matchsticks.length <= 15`，LC 78 的 `nums.length <= 10`，LC 22 的 `n <= 8`）。指数级复杂度只有在这种范围才可行（例：LC 784 字母大小写全排列；高频：LC 131 分割回文串）。
 - 约束要**边选边检查**：括号必须匹配、皇后不能互攻、和不能超过目标（例：LC 39 组合总和）。
 
 **近似信号：**
 - 只问**方案个数**或**最优值**，且有重叠子问题 ⇒ DP（LC 322、139、62），回溯会超时（例：LC 62 不同路径）。
 - 每步局部最优就能得到全局最优 ⇒ 贪心（例：LC 55 跳跃游戏）。
 - 数据范围到 `10^5` ⇒ 绝不是回溯（例：LC 3 无重复字符的最长子串）。
-- 只要判断"存在"一种可行方案，且分支多 ⇒ 回溯加剪枝，或 DP / 位掩码（例：LC 416 分割等和子集）。
-- 排列 / 组合的个数本身就是指数级：输出规模决定了复杂度下限，不用试图优化到多项式（例：LC 90 子集 II）。
+- 只要判断"存在"一种可行方案，且分支多 ⇒ 回溯加剪枝，或 DP / 位掩码（例：LC 416 分割等和子集；高频：LC 679 24 点游戏）。
+- 排列 / 组合的个数本身就是指数级：输出规模决定了复杂度下限，不用试图优化到多项式（例：LC 90 子集 II；高频：LC 46 全排列）。
 
 **例题：** LC 78 子集
 
@@ -186,5 +186,88 @@ def subsets_with_dup(nums: list[int]) -> list[list[int]]:
             backtrack(i + 1)
             path.pop()
     backtrack(0)
+    return res
+```
+
+**例题：** LC 131 分割回文串
+
+给字符串 `s`，把它分割成若干子串，使每个子串都是回文串，返回所有可能的分割方案。`1 <= s.length <= 16`，`s` 只含小写英文字母。
+
+```python
+def partition(s: str) -> list[list[str]]:
+    n = len(s)
+    pal = [[False] * n for _ in range(n)]    # pal[i][j]：s[i..j] 是否回文
+    for i in range(n - 1, -1, -1):
+        for j in range(i, n):
+            pal[i][j] = s[i] == s[j] and (j - i < 2 or pal[i + 1][j - 1])
+    res: list[list[str]] = []
+    path: list[str] = []
+
+    def dfs(start: int) -> None:
+        if start == n:
+            res.append(path.copy())          # 必须拷贝：path 之后还会被修改
+            return
+        for end in range(start, n):
+            if pal[start][end]:
+                path.append(s[start:end + 1])
+                dfs(end + 1)
+                path.pop()                   # 回溯
+
+    dfs(0)
+    return res
+```
+
+**例题：** LC 679 24 点游戏
+
+给一个长度为 `4` 的整数数组 `cards`，每张卡片上的数字在 `[1, 9]`。用运算符 `+ - * /` 和括号把这四个数字排成表达式，判断能否得到 `24`。规则：除法是**实数除法**（`4 / (1 - 2 / 3) = 12`）；每个运算在两个数字之间，不能用 `-` 作一元负号（`[1,1,1,1]` 不能写 `-1 -1 -1 -1`）；不能把数字拼接（`[1,2,1,2]` 不能写 `12 + 12`）。`cards.length == 4`，`1 <= cards[i] <= 9`。
+
+```python
+from fractions import Fraction
+from itertools import combinations
+
+
+def judge_point24(cards: list[int]) -> bool:
+    def solve(nums: list[Fraction]) -> bool:
+        if len(nums) == 1:
+            return nums[0] == 24
+        for i, j in combinations(range(len(nums)), 2):     # 任选两个数合并成一个
+            a, b = nums[i], nums[j]
+            rest = [x for k, x in enumerate(nums) if k != i and k != j]
+            results = {a + b, a * b, a - b, b - a}         # + 和 * 可交换，- 和 / 要试两个方向
+            if b:
+                results.add(a / b)
+            if a:
+                results.add(b / a)
+            if any(solve([*rest, r]) for r in results):
+                return True
+        return False
+    return solve([Fraction(c) for c in cards])
+```
+
+**例题：** LC 46 全排列
+
+给一个不含重复数字的数组 `nums`，返回其**所有可能的全排列**，答案可以按任意顺序给出。`1 <= nums.length <= 6`，`-10 <= nums[i] <= 10`，`nums` 中的所有整数互不相同。
+
+```python
+def permute(nums: list[int]) -> list[list[int]]:
+    n = len(nums)
+    res: list[list[int]] = []
+    path: list[int] = []                # 当前已选出的前缀
+    used = [False] * n                  # used[i]：nums[i] 是否已在 path 里
+
+    def dfs() -> None:
+        if len(path) == n:
+            res.append(path[:])         # 必须拷贝，path 之后还会被改
+            return
+        for i, x in enumerate(nums):
+            if used[i]:
+                continue
+            used[i] = True
+            path.append(x)
+            dfs()
+            path.pop()                  # 撤销选择，回到上一层的状态
+            used[i] = False
+
+    dfs()
     return res
 ```

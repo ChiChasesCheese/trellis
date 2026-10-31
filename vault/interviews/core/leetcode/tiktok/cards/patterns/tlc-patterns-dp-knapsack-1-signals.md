@@ -29,7 +29,7 @@ step: 1
 **近似信号：**
 - 数据范围 `n <= 15` 且要列出方案 ⇒ 回溯（例：LC 77 组合）。
 - 容量是 `10^9` 级别 ⇒ 背包表开不下，换思路（贪心 / 数学 / 二分）：状态搜索随容量膨胀，而 `gcd(x, y)` 的判断与容量大小无关（例：LC 365 水壶问题）。
-- 物品之间有依赖或次序 ⇒ 不是纯背包：选了父节点就不能选孩子（例：LC 337 打家劫舍 III）。
+- 物品之间有依赖或次序 ⇒ 不是纯背包：选了父节点就不能选孩子（例：LC 337 打家劫舍 III；高频：LC 198 打家劫舍）。
 
 **例题：** LC 416 分割等和子集
 
@@ -174,4 +174,16 @@ def rob(root: TreeNode | None) -> int:
         return take, skip
 
     return max(go(root))
+```
+
+**例题：** LC 198 打家劫舍
+
+沿街有一排房屋，`nums[i]` 是第 `i` 间房里的现金。相邻的两间房同一晚上都被偷会触发报警，求不触发警报的前提下一晚最多能偷到多少钱。`1 <= nums.length <= 100`，`0 <= nums[i] <= 400`。
+
+```python
+def rob(nums: list[int]) -> int:
+    skip = take = 0                         # skip：不偷当前房的最优；take：偷当前房的最优
+    for x in nums:
+        skip, take = max(skip, take), skip + x
+    return max(skip, take)
 ```

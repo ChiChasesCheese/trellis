@@ -15,20 +15,24 @@ step: 9
 - LC 365 水壶问题
 - LC 2523 范围内最接近的两个质数
 - LC 69 x 的平方根
+- LC 204 计数质数（高频）
 
 **位运算 / 原地标记**
 - LC 442 数组中重复的数据
 - LC 78 子集（位掩码写法）
 - LC 31 下一个排列（从右向左找第一个降序的位置）
+- LC 136 只出现一次的数字（高频）
 
 **矩阵与方向模拟**
 - LC 54 螺旋矩阵
 - LC 48 旋转图像
 - LC 1041 困于环中的机器人
+- LC 867 转置矩阵（高频）
 
 **按规则模拟**
 - LC 1860 增长的内存泄露
 - LC 2502 设计内存分配器
+- LC 1360 日期之间隔几天（高频）
 
 **逐位运算 / 排版**
 - LC 415 字符串相加
@@ -36,6 +40,7 @@ step: 9
 - LC 68 文本左右对齐
 - LC 189 轮转数组（三次反转，`k %= n`）
 - LC 670 最大交换
+- LC 151 反转字符串中的单词（高频）
 
 提示：先问数据范围（能否直接模拟）、边界（空 / 单行 / 进位 / 前导零）、整数规则（取模、除法截断）；能用内置（`gcd`、`pow`、`bit_count`、`isqrt`）就先用，再被要求时手写。
 
@@ -333,4 +338,84 @@ def maximum_swap(num: int) -> int:
                 digits[i], digits[last[big]] = digits[last[big]], digits[i]
                 return int("".join(digits))
     return num
+```
+
+**例题：** LC 204 计数质数
+
+给非负整数 `n`，返回**严格小于** `n` 的质数的个数。`0 <= n <= 5 * 10^6`。
+
+```python
+from math import isqrt
+
+def count_primes(n: int) -> int:
+    if n < 3:
+        return 0                                     # n <= 2 时没有小于 n 的质数
+    is_prime = bytearray([1]) * n                    # is_prime[i] == 1 表示 i 目前仍是质数候选
+    is_prime[0] = is_prime[1] = 0
+    for i in range(2, isqrt(n - 1) + 1):             # 只需筛到 sqrt(n-1)
+        if is_prime[i]:
+            # 从 i*i 开始：更小的倍数 i*k (k<i) 已被更小的质因子划掉
+            is_prime[i * i::i] = bytes(len(range(i * i, n, i)))
+    return sum(is_prime)
+```
+
+**例题：** LC 136 只出现一次的数字
+
+非空整数数组 `nums` 里，除了一个元素只出现一次，其余每个元素都恰好出现两次。找出那个只出现一次的元素。要求**线性时间、常数额外空间**。`1 <= nums.length <= 3 * 10^4`，`-3 * 10^4 <= nums[i] <= 3 * 10^4`。
+
+```python
+def single_number(nums: list[int]) -> int:
+    ans = 0
+    for x in nums:
+        ans ^= x                                     # a ^ a == 0，0 ^ x == x，与顺序无关
+    return ans
+```
+
+**例题：** LC 867 转置矩阵
+
+给一个二维整数数组 `matrix`，返回它的转置矩阵：沿主对角线翻转，行下标和列下标互换，即结果的 `res[j][i] = matrix[i][j]`。`m == matrix.length`，`n == matrix[i].length`，`1 <= m, n <= 1000`，`1 <= m * n <= 10^5`，`-10^9 <= matrix[i][j] <= 10^9`。
+
+```python
+def transpose(matrix: list[list[int]]) -> list[list[int]]:
+    return [list(col) for col in zip(*matrix)]     # zip(*rows) 把第 j 列收成一个元组
+```
+
+**例题：** LC 1360 日期之间隔几天
+
+编写程序计算两个日期之间隔了多少天。日期以字符串 `YYYY-MM-DD` 给出，保证是 `1971` 年到 `2100` 年之间的有效日期。
+
+```python
+MONTH_DAYS = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+
+
+def days_between_dates(date1: str, date2: str) -> int:
+    def is_leap(y: int) -> bool:
+        return y % 4 == 0 and (y % 100 != 0 or y % 400 == 0)
+
+    def to_days(s: str) -> int:                       # 距 1970-12-31 的天数
+        y, m, d = map(int, s.split("-"))
+        days = sum(365 + is_leap(k) for k in range(1971, y))     # 整年
+        days += sum(MONTH_DAYS[:m - 1]) + (m > 2 and is_leap(y)) # 整月，闰年 2 月多一天
+        return days + d
+
+    return abs(to_days(date1) - to_days(date2))
+```
+
+**例题：** LC 151 反转字符串中的单词
+
+给字符串 `s`，反转其中单词的顺序。单词是由非空格字符组成的串，`s` 里用至少一个空格分隔单词，开头、结尾、单词之间都可能有多余的空格。返回单词顺序颠倒、单词之间只用**一个**空格连接、没有前导或尾随空格的字符串。`1 <= s.length <= 10^4`，`s` 只含英文字母、数字和空格，至少有一个单词。
+
+```python
+def reverse_words(s: str) -> str:
+    words: list[str] = []
+    i = len(s) - 1
+    while i >= 0:                          # 从右往左扫描
+        if s[i] == " ":
+            i -= 1
+            continue
+        end = i + 1                        # 单词的右开边界
+        while i >= 0 and s[i] != " ":
+            i -= 1
+        words.append(s[i + 1:end])         # i 停在单词左边的空格（或 -1）
+    return " ".join(words)
 ```

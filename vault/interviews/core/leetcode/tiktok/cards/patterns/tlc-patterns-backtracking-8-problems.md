@@ -15,6 +15,7 @@ step: 8
 - LC 77 组合
 - LC 39 组合总和
 - LC 40 组合总和 II（排序 + 同层去重）
+- LC 1239 串联字符串的最大长度（高频）
 
 **排列**
 - LC 46 全排列
@@ -23,6 +24,7 @@ step: 8
 **约束摆放 / 网格**
 - LC 51 N 皇后
 - LC 79 单词搜索
+- 枚举有向图中的所有简单路径（高频）
 - LC 212 单词搜索 II（回溯 + 字典树）
 
 **字符串生成 / 分割**
@@ -30,6 +32,8 @@ step: 8
 - LC 93 复原 IP 地址
 - LC 301 删除无效的括号（回溯或 BFS）
 - LC 140 单词拆分 II（回溯 + 记忆化）
+- LC 131 分割回文串（高频）
+- 有效括号字符串：判断，并输出全部方案（高频）
 
 **分配 / 装箱**
 - LC 473 火柴拼正方形
@@ -412,4 +416,134 @@ def makesquare(matchsticks: list[int]) -> bool:
             sides[j] -= sticks[i]
         return False
     return dfs(0)
+```
+
+**例题：** LC 131 分割回文串
+
+给字符串 `s`，把它分割成若干子串，使每个子串都是回文串，返回所有可能的分割方案。`1 <= s.length <= 16`，`s` 只含小写英文字母。
+
+```python
+def partition(s: str) -> list[list[str]]:
+    n = len(s)
+    pal = [[False] * n for _ in range(n)]
+    for i in range(n - 1, -1, -1):
+        for j in range(i, n):
+            pal[i][j] = s[i] == s[j] and (j - i < 2 or pal[i + 1][j - 1])
+    res: list[list[str]] = []
+    path: list[str] = []
+    def dfs(start: int) -> None:
+        if start == n:
+            res.append(path.copy())
+            return
+        for end in range(start, n):
+            if pal[start][end]:
+                path.append(s[start:end + 1])
+                dfs(end + 1)
+                path.pop()
+    dfs(0)
+    return res
+```
+
+**例题：** LC 1239 串联字符串的最大长度
+
+给字符串数组 `arr`。从中选出若干个字符串（保持原有顺序）连接成字符串 `s`，要求 `s` 中**所有字母各不相同**。返回所有可行的 `s` 中最长的长度（什么都不选时 `s` 为空串，长度 `0`）。`1 <= arr.length <= 16`，`1 <= arr[i].length <= 26`，`arr[i]` 只含小写字母。
+
+```python
+def max_length(arr: list[str]) -> int:
+    masks = {0}
+    best = 0
+    for s in arr:
+        if len(set(s)) < len(s):
+            continue
+        cur = 0
+        for ch in s:
+            cur |= 1 << (ord(ch) - 97)
+        for m in list(masks):
+            if m & cur == 0:
+                masks.add(m | cur)
+                best = max(best, (m | cur).bit_count())
+    return best
+```
+
+**例题：** 枚举有向图中的所有简单路径（含环的情况）
+
+给一个有向图：`n` 个点（编号 `0 .. n-1`）和边表 `edges`（`[u, v]` 表示 `u → v`，没有重边），以及起点 `s`、终点 `t`（`s != t`）。按任意顺序返回从 `s` 到 `t` 的**所有简单路径**：路径上不能重复经过同一个点。`1 <= n <= 15`，边数 `<= 60`，图里**可能有环**。
+
+```python
+from collections import deque
+def all_simple_paths(n: int, edges: list[list[int]], s: int, t: int) -> list[list[int]]:
+    graph: list[list[int]] = [[] for _ in range(n)]
+    rev: list[list[int]] = [[] for _ in range(n)]
+    for u, v in edges:
+        graph[u].append(v)
+        rev[v].append(u)
+    reach = [False] * n
+    reach[t] = True
+    queue = deque([t])
+    while queue:
+        v = queue.popleft()
+        for u in rev[v]:
+            if not reach[u]:
+                reach[u] = True
+                queue.append(u)
+    paths: list[list[int]] = []
+    path = [s]
+    on_path = [False] * n
+    on_path[s] = True
+    def dfs(u: int) -> None:
+        if u == t:
+            paths.append(path.copy())
+            return
+        for v in graph[u]:
+            if not on_path[v] and reach[v]:
+                on_path[v] = True
+                path.append(v)
+                dfs(v)
+                path.pop()
+                on_path[v] = False
+    if reach[s]:
+        dfs(s)
+    return paths
+```
+
+**例题：** 有效括号字符串：判断，并输出全部方案
+
+字符串 `s` 只含 `'('`、`')'` 和 `'*'`，`'*'` 可以当作 `'('`、`')'` 或空串。第一问：判断 `s` 能否变成有效的括号字符串（括号正确配对，空串也有效），`1 <= len(s) <= 100`。第二问：输出所有**不同的**有效字符串（每个 `'*'` 取三种之一，结果去重），按字典序返回，`1 <= len(s) <= 20`。
+
+```python
+from functools import cache
+def check_valid(s: str) -> bool:
+    """LC 678：'*' 可当 '('、')' 或空串。lo..hi 是「未匹配左括号数」所有可能取值的范围（中间的值都能取到）。"""
+    lo = hi = 0
+    for ch in s:
+        if ch == "(":
+            lo, hi = lo + 1, hi + 1
+        elif ch == ")":
+            lo, hi = lo - 1, hi - 1
+        else:
+            lo, hi = lo - 1, hi + 1
+        if hi < 0:
+            return False
+        lo = max(lo, 0)
+    return lo == 0
+def all_valid(s: str) -> list[str]:
+    """所有不同的有效字符串（'*' 替换后的结果），按字典序返回。"""
+    n = len(s)
+    @cache
+    def tails(i: int, bal: int) -> frozenset[str]:
+        """s[i:] 在已有 bal 个未匹配左括号的前提下，所有能配平的替换结果。"""
+        if bal > n - i:
+            return frozenset()
+        if i == n:
+            return frozenset({""}) if bal == 0 else frozenset()
+        ch = s[i]
+        result: set[str] = set()
+        if ch in "(*":
+            result |= {"(" + t for t in tails(i + 1, bal + 1)}
+        if ch in ")*" and bal > 0:
+            result |= {")" + t for t in tails(i + 1, bal - 1)}
+        if ch == "*":
+            result |= tails(i + 1, bal)
+        return frozenset(result)
+    return sorted(tails(0, 0))
 ```

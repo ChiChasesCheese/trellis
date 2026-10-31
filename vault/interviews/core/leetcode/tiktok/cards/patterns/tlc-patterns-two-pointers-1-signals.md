@@ -11,13 +11,13 @@ step: 1
 
 ## A
 **相向双指针（左右夹逼）的信号：**
-- 数组**有序**（或可以先排序），找一对 / 一组满足和或乘积条件的数：固定一个数，其余两个数夹逼（例：LC 16 最接近的三数之和）。
-- 求两端决定的量，且移动哪一端能**排除一批解**：移动较矮的一端（例：LC 11 盛最多水的容器）。
-- 回文判断、反转（例：LC 125 验证回文串）。
+- 数组**有序**（或可以先排序），找一对 / 一组满足和或乘积条件的数：固定一个数，其余两个数夹逼（例：LC 16 最接近的三数之和；高频：LC 15 三数之和）。
+- 求两端决定的量，且移动哪一端能**排除一批解**：移动较矮的一端（例：LC 11 盛最多水的容器；高频：LC 42 接雨水）。
+- 回文判断、反转（例：LC 125 验证回文串；高频：LC 5 最长回文子串）。
 
 **同向双指针（快慢）的信号：**
-- 要**原地**覆盖 / 压缩数组，`O(1)` 额外空间：去重、移动零（例：LC 283 移动零）。
-- 链表找中点、判环、找倒数第 `k` 个（例：LC 142 环形链表 II）。
+- 要**原地**覆盖 / 压缩数组，`O(1)` 额外空间：去重、移动零（例：LC 283 移动零；高频：LC 88 合并两个有序数组）。
+- 链表找中点、判环、找倒数第 `k` 个（例：LC 142 环形链表 II；高频：LC 141 环形链表、LC 19 删除链表的倒数第 N 个节点）。
 
 **分区（partition）的信号：**
 - 值只有少数几种（`0/1/2`），要原地排好：荷兰国旗问题（例：LC 75 颜色分类）。
@@ -204,4 +204,121 @@ def length_of_lis(nums: list[int]) -> int:
         else:
             tails[i] = x
     return len(tails)
+```
+
+**例题：** LC 15 三数之和
+
+给整数数组 `nums`，返回所有和为 `0` 且**不重复**的三元组 `[nums[i], nums[j], nums[k]]`，要求 `i`、`j`、`k` 互不相同；答案中不能包含重复的三元组，顺序不限。`3 <= nums.length <= 3000`，`-10^5 <= nums[i] <= 10^5`。
+
+```python
+def three_sum(nums: list[int]) -> list[list[int]]:
+    nums = sorted(nums)
+    n = len(nums)
+    result: list[list[int]] = []
+    for i in range(n - 2):
+        if nums[i] > 0:
+            break
+        if i > 0 and nums[i] == nums[i - 1]:
+            continue
+        lo, hi = i + 1, n - 1
+        while lo < hi:
+            total = nums[i] + nums[lo] + nums[hi]
+            if total < 0:
+                lo += 1
+            elif total > 0:
+                hi -= 1
+            else:
+                result.append([nums[i], nums[lo], nums[hi]])
+                lo += 1
+                hi -= 1
+                while lo < hi and nums[lo] == nums[lo - 1]:
+                    lo += 1
+    return result
+```
+
+**例题：** LC 42 接雨水
+
+给 `n` 个非负整数表示宽度为 1 的柱子的高度图，求下雨后一共能接多少单位的雨水。`n == height.length`，`1 <= n <= 2 * 10^4`，`0 <= height[i] <= 10^5`。
+
+```python
+def trap(height: list[int]) -> int:
+    left, right = 0, len(height) - 1
+    left_max = right_max = water = 0
+    while left < right:
+        if height[left] < height[right]:
+            left_max = max(left_max, height[left])
+            water += left_max - height[left]
+            left += 1
+        else:
+            right_max = max(right_max, height[right])
+            water += right_max - height[right]
+            right -= 1
+    return water
+```
+
+**例题：** LC 5 最长回文子串
+
+给字符串 `s`，找出其中最长的回文子串（正着读和倒着读一样的**连续**子串）。`1 <= s.length <= 1000`，`s` 仅由数字和英文字母组成。
+
+```python
+def longest_palindrome(s: str) -> str:
+    n = len(s)
+    best_l = best_r = 0
+    for center in range(2 * n - 1):
+        l = center // 2
+        r = l + center % 2
+        while l >= 0 and r < n and s[l] == s[r]:
+            l -= 1
+            r += 1
+        if r - l - 1 > best_r - best_l + 1:
+            best_l, best_r = l + 1, r - 1
+    return s[best_l : best_r + 1]
+```
+
+**例题：** LC 88 合并两个有序数组
+
+给两个按非递减顺序排列的整数数组 `nums1` 和 `nums2`，以及整数 `m`、`n`，分别表示它们的有效元素个数。把 `nums2` 合并到 `nums1` 中，使合并后的数组同样非递减。结果不用返回，直接存放在 `nums1` 里：`nums1` 的长度是 `m + n`，前 `m` 个是有效元素，后 `n` 个是占位的 `0`；`nums2` 的长度是 `n`。`0 <= m, n <= 200`，`1 <= m + n <= 200`，`-10^9 <= nums1[i], nums2[j] <= 10^9`。
+
+```python
+def merge(nums1: list[int], m: int, nums2: list[int], n: int) -> None:
+    i, j, k = m - 1, n - 1, m + n - 1
+    while j >= 0:
+        if i >= 0 and nums1[i] > nums2[j]:
+            nums1[k] = nums1[i]
+            i -= 1
+        else:
+            nums1[k] = nums2[j]
+            j -= 1
+        k -= 1
+```
+
+**例题：** LC 141 环形链表
+
+给链表的头节点 `head`，判断链表中是否有环：如果有某个节点可以通过连续跟踪 `next` 指针再次到达，则存在环。有环返回 `true`，否则返回 `false`。链表中节点的数目范围是 `[0, 10^4]`，`-10^5 <= Node.val <= 10^5`（节点值可以重复）。
+
+```python
+def has_cycle(head: ListNode | None) -> bool:
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow is fast:
+            return True
+    return False
+```
+
+**例题：** LC 19 删除链表的倒数第 N 个节点
+
+给一个链表的头结点 `head`，删除链表的倒数第 `n` 个结点，返回新链表的头结点。链表结点数为 `sz`，`1 <= sz <= 30`，`0 <= Node.val <= 100`，`1 <= n <= sz`。进阶：只扫描一趟。
+
+```python
+def remove_nth_from_end(head: ListNode | None, n: int) -> ListNode | None:
+    dummy = ListNode(0, head)
+    fast = slow = dummy
+    for _ in range(n):
+        fast = fast.next
+    while fast.next:
+        fast, slow = fast.next, slow.next
+    slow.next = slow.next.next
+    return dummy.next
 ```

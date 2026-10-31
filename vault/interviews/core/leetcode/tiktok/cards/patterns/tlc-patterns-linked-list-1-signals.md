@@ -13,11 +13,11 @@ step: 1
 链表题考的是**指针操作的严谨**：每一步都要想清楚「改谁的 `next`、先改哪个」。
 
 **信号与对应技巧：**
-- 可能要**删除头节点**或在头部插入、结果的头不确定（合并、删除、分段）→ **哑节点（dummy node）**：`dummy = ListNode(0, head)`，最后返回 `dummy.next`，统一处理头节点（例：LC 82 删除排序链表中的重复元素 II）。
-- 「**中间节点**」「**倒数第 k 个**」「**是否有环**」「**环的入口**」→ **快慢指针**（LC 142）（例：LC 142 环形链表 II）。
+- 可能要**删除头节点**或在头部插入、结果的头不确定（合并、删除、分段）→ **哑节点（dummy node）**：`dummy = ListNode(0, head)`，最后返回 `dummy.next`，统一处理头节点（例：LC 82 删除排序链表中的重复元素 II；高频：LC 19 删除链表的倒数第 N 个节点）。
+- 「**中间节点**」「**倒数第 k 个**」「**是否有环**」「**环的入口**」→ **快慢指针**（LC 142）（例：LC 142 环形链表 II；高频：LC 141 环形链表）。
 - 「**反转**整个链表 / 一段 / 每 k 个一组」→ 原地反转（LC 206、92、25）（例：LC 206 反转链表）。
 - 「**两个链表相交**」→ 双指针各走完自己再走对方（LC 160）（例：LC 160 相交链表）。
-- 「**合并**有序链表」「**排序**链表」→ 归并（LC 23、148）（例：LC 21 合并两个有序链表）。
+- 「**合并**有序链表」「**排序**链表」→ 归并（LC 23、148）（例：LC 21 合并两个有序链表；高频：LC 23 合并 K 个升序链表）。
 - 「**重排** `L0, Ln, L1, Ln-1...`」→ 找中点 + 反转后半 + 交替合并（LC 143）（例：LC 143 重排链表）。
 - 「删除**连续**和为 0 的节点」→ 前缀和 + 哈希（LC 1171）（例：LC 1171 从链表中删去总和值为零的连续节点）。
 - 「逆序存储的大数相加」→ 逐位加法带进位（LC 2）（例：LC 2 两数相加）。
@@ -241,4 +241,56 @@ class LRUCache:
         self.store[key] = value
         if len(self.store) > self.capacity:
             self.store.popitem(last=False)
+```
+
+**例题：** LC 19 删除链表的倒数第 N 个节点
+
+给一个链表的头结点 `head`，删除链表的倒数第 `n` 个结点，返回新链表的头结点。链表结点数为 `sz`，`1 <= sz <= 30`，`0 <= Node.val <= 100`，`1 <= n <= sz`。进阶：只扫描一趟。
+
+```python
+def remove_nth_from_end(head: ListNode | None, n: int) -> ListNode | None:
+    dummy = ListNode(0, head)
+    fast = slow = dummy
+    for _ in range(n):
+        fast = fast.next
+    while fast.next:
+        fast, slow = fast.next, slow.next
+    slow.next = slow.next.next
+    return dummy.next
+```
+
+**例题：** LC 141 环形链表
+
+给链表的头节点 `head`，判断链表中是否有环：如果有某个节点可以通过连续跟踪 `next` 指针再次到达，则存在环。有环返回 `true`，否则返回 `false`。链表中节点的数目范围是 `[0, 10^4]`，`-10^5 <= Node.val <= 10^5`（节点值可以重复）。
+
+```python
+def has_cycle(head: ListNode | None) -> bool:
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow is fast:
+            return True
+    return False
+```
+
+**例题：** LC 23 合并 K 个升序链表
+
+给一个链表数组 `lists`，每个链表都已按升序排列。把所有链表合并成一个升序链表，返回合并后的链表。`k == lists.length`，`0 <= k <= 10^4`，`0 <= lists[i].length <= 500`，`-10^4 <= lists[i][j] <= 10^4`，所有链表长度之和不超过 `10^4`。
+
+```python
+import heapq
+def merge_k_lists(lists: list[ListNode | None]) -> ListNode | None:
+    heap = [(node.val, i, node) for i, node in enumerate(lists) if node]
+    heapq.heapify(heap)
+    dummy = tail = ListNode()
+    while heap:
+        _, i, node = heap[0]
+        tail.next = node
+        tail = node
+        if node.next:
+            heapq.heapreplace(heap, (node.next.val, i, node.next))
+        else:
+            heapq.heappop(heap)
+    return dummy.next
 ```

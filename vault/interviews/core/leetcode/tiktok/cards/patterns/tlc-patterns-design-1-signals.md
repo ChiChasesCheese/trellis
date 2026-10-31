@@ -28,13 +28,13 @@ step: 1
 **常见组合：**
 - LRU（LC 146）：哈希 + 双向链表（例：LC 146 LRU 缓存）。
 - 随机集合（LC 380）：哈希 + 数组（交换删除）（例：LC 380 O(1) 时间插入、删除和获取随机元素）。
-- 全 O(1)（LC 432）：哈希 + 按计数分桶的双向链表（例：LC 460 LFU缓存）。
+- 全 O(1)（LC 432）：哈希 + 按计数分桶的双向链表（例：LC 460 LFU缓存；高频：LC 432 全 O(1) 的数据结构）。
 - 快照数组（LC 1146）：每个下标一个变更历史 + 二分（例：LC 1146 快照数组）。
 - 数据流中位数（LC 295）：双堆（例：LC 295 数据流的中位数）。
 - 内存分配器（LC 2502）：数组 / 区间表模拟（例：LC 2502 设计内存分配器）。
 
 **近似信号：**
-- 数据范围很小（`<= 1000` 次调用）⇒ 朴素 `O(n)` 的扫描就能过，别过度设计（例：LC 1381 设计一个支持增量操作的栈）。
+- 数据范围很小（`<= 1000` 次调用）⇒ 朴素 `O(n)` 的扫描就能过，别过度设计（例：LC 1381 设计一个支持增量操作的栈；高频：LC 2502 设计内存分配器）。
 - 需要持久化 / 并发 ⇒ 先问面试官是否要考虑（例：限制并发数的异步任务执行器）。
 - 只是一次性计算 ⇒ 普通算法题，不是设计题（例：LC 53 最大子数组和）。
 
@@ -370,4 +370,65 @@ def max_sub_array(nums: list[int]) -> int:
         cur = max(x, cur + x)           # 接在前面后面，或者从 x 重新开始
         best = max(best, cur)
     return best
+```
+
+**例题：** LC 432 全 O(1) 的数据结构
+
+设计一个存储字符串计数的数据结构，并能返回计数最小和最大的字符串。实现类 `AllOne`：`inc(key)` 让 `key` 的计数加 `1`，不存在则插入计数为 `1` 的 `key`；`dec(key)` 让 `key` 的计数减 `1`，减到 `0` 就把它删除（保证调用 `dec` 时 `key` 存在）；`getMaxKey()` 返回任意一个计数最大的字符串，没有元素则返回 `""`；`getMinKey()` 返回任意一个计数最小的字符串，没有元素则返回 `""`。每个函数都要求**平均 `O(1)`** 时间。`1 <= key.length <= 10`，`key` 由小写英文字母组成，最多调用 `5 * 10^4` 次。
+
+```python
+class Bucket:
+    __slots__ = ("cnt", "keys", "prev", "next")
+    def __init__(self, cnt: int = 0) -> None:
+        self.cnt = cnt
+        self.keys: set[str] = set()
+        self.prev: Bucket | None = None
+        self.next: Bucket | None = None
+class AllOne:
+    def __init__(self) -> None:
+        self.head, self.tail = Bucket(0), Bucket(-1)
+        self.head.next, self.tail.prev = self.tail, self.head
+        self.where: dict[str, Bucket] = {}
+    def _insert_after(self, node: Bucket, cnt: int) -> Bucket:
+        new = Bucket(cnt)
+        new.prev, new.next = node, node.next
+        node.next.prev = new
+        node.next = new
+        return new
+    def _remove(self, node: Bucket) -> None:
+        node.prev.next, node.next.prev = node.next, node.prev
+    def inc(self, key: str) -> None:
+        cur = self.where.get(key)
+        anchor = self.head if cur is None else cur
+        target = anchor.next
+        new_cnt = anchor.cnt + 1
+        if target.cnt != new_cnt:
+            target = self._insert_after(anchor, new_cnt)
+        target.keys.add(key)
+        self.where[key] = target
+        if cur is not None:
+            cur.keys.discard(key)
+            if not cur.keys:
+                self._remove(cur)
+    def dec(self, key: str) -> None:
+        cur = self.where[key]
+        if cur.cnt == 1:
+            del self.where[key]
+        else:
+            target = cur.prev
+            if target.cnt != cur.cnt - 1:
+                target = self._insert_after(cur.prev, cur.cnt - 1)
+            target.keys.add(key)
+            self.where[key] = target
+        cur.keys.discard(key)
+        if not cur.keys:
+            self._remove(cur)
+    def getMaxKey(self) -> str:
+        if self.tail.prev is self.head:
+            return ""
+        return next(iter(self.tail.prev.keys))
+    def getMinKey(self) -> str:
+        if self.head.next is self.tail:
+            return ""
+        return next(iter(self.head.next.keys))
 ```

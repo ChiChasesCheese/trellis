@@ -12,16 +12,16 @@ step: 1
 ## A
 **触发信号：**
 - 输入是**网格**（`0/1`、`'1'/'0'`、高度矩阵）并且问「连通块 / 岛屿 / 面积 / 能否到达」→ DFS 或 BFS 染色（例：LC 200 岛屿数量）。
-- 输入是**边列表 / 邻接关系**（先修课、对立关系、道路）→ 先建邻接表，再遍历（例：LC 1466 重新规划路线）。
+- 输入是**边列表 / 邻接关系**（先修课、对立关系、道路）→ 先建邻接表，再遍历（例：LC 1466 重新规划路线；高频：LC 886 可能的二分法）。
 - 问**最少步数 / 最短转换次数**，每步代价相同 → **BFS**，第一次到达就是最短（例：LC 1091 二进制矩阵中的最短路径）。
 - 题面没有"图"字，但**状态之间有转移**：单词改一个字母 → **隐式图**，BFS 里动态生成邻居（例：LC 127 单词接龙）。
 - 「**多个起点同时扩散**」：所有起点一起入队 → **多源 BFS**（例：LC 286 墙与门）。
 - 「从边界反向找」：从海洋出发反向遍历，比从每个格子出发高效（例：LC 417 太平洋大西洋水流问题）。
 
 **DFS 还是 BFS：**
-- 连通块计数、面积、能不能到达 → 都可以，DFS 写起来短；但递归深度可达 `m * n`，Python 默认限制约 1000，网格大时要改显式栈或 BFS（例：LC 695 岛屿的最大面积）。
-- **最短路 / 最少步数 / 按层扩散** → 只能 BFS，按层数就是时间（例：LC 994 腐烂的橘子）。
-- 需要记录路径或回溯 → DFS，进入时加入路径，退出时弹出（例：LC 113 路径总和 II）。
+- 连通块计数、面积、能不能到达 → 都可以，DFS 写起来短；但递归深度可达 `m * n`，Python 默认限制约 1000，网格大时要改显式栈或 BFS（例：LC 695 岛屿的最大面积；高频：LC 827 最大人工岛）。
+- **最短路 / 最少步数 / 按层扩散** → 只能 BFS，按层数就是时间（例：LC 994 腐烂的橘子；高频：LC 2385 感染二叉树需要的总时间）。
+- 需要记录路径或回溯 → DFS，进入时加入路径，退出时弹出（例：LC 113 路径总和 II；高频：LC 79 单词搜索）。
 
 **近似信号：**
 - 边有权重且不相等 → Dijkstra（最短路一组）（例：LC 778 水位上升的泳池中游泳）。
@@ -315,4 +315,125 @@ def find_circle_num(is_connected: list[list[int]]) -> int:
                 if root_i != root_j:
                     parent[root_i] = root_j
     return len({find(i) for i in range(n)})
+```
+
+**例题：** LC 886 可能的二分法
+
+把编号 `1..n` 的人分成两组，`dislikes[i] = [a, b]` 表示 `a` 和 `b` 不能在同一组，判断能否分成功；`1 <= n <= 2000`，`0 <= dislikes.length <= 10^4`。
+
+```python
+from collections import deque
+def possible_bipartition(n: int, dislikes: list[list[int]]) -> bool:
+    graph: list[list[int]] = [[] for _ in range(n + 1)]
+    for a, b in dislikes:
+        graph[a].append(b)
+        graph[b].append(a)
+    color = [0] * (n + 1)
+    for start in range(1, n + 1):
+        if color[start]:
+            continue
+        color[start] = 1
+        queue = deque([start])
+        while queue:
+            u = queue.popleft()
+            for v in graph[u]:
+                if color[v] == color[u]:
+                    return False
+                if color[v] == 0:
+                    color[v] = -color[u]
+                    queue.append(v)
+    return True
+```
+
+**例题：** LC 827 最大人工岛
+
+`n x n` 的 0/1 矩阵 `grid`，最多把一格 `0` 变成 `1`，返回操作后最大的岛屿面积（岛由四方向相连的 `1` 组成）；`1 <= n <= 500`。
+
+```python
+from collections.abc import Iterator
+def largest_island(grid: list[list[int]]) -> int:
+    n = len(grid)
+    label = [[0] * n for _ in range(n)]
+    size: dict[int, int] = {}
+    def neighbors(i: int, j: int) -> Iterator[tuple[int, int]]:
+        for a, b in ((i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)):
+            if 0 <= a < n and 0 <= b < n:
+                yield a, b
+    def dfs(i: int, j: int, tag: int) -> int:
+        label[i][j] = tag
+        area = 1
+        for a, b in neighbors(i, j):
+            if grid[a][b] == 1 and label[a][b] == 0:
+                area += dfs(a, b, tag)
+        return area
+    for i in range(n):
+        for j in range(n):
+            if grid[i][j] == 1 and label[i][j] == 0:
+                tag = len(size) + 1
+                size[tag] = dfs(i, j, tag)
+    best = max(size.values(), default=0)
+    for i in range(n):
+        for j in range(n):
+            if grid[i][j] == 0:
+                tags = {label[a][b] for a, b in neighbors(i, j)}
+                best = max(best, 1 + sum(size.get(t, 0) for t in tags))
+    return best
+```
+
+**例题：** LC 2385 感染二叉树需要的总时间
+
+二叉树各节点的值互不相同，值为 `start` 的节点在第 `0` 分钟被感染，之后每分钟感染与已感染节点相邻（父子）的节点；返回感染整棵树需要的分钟数；节点数 `<= 10^5`。
+
+```python
+from collections import defaultdict, deque
+def amount_of_time(root: TreeNode, start: int) -> int:
+    graph: defaultdict[int, list[int]] = defaultdict(list)
+    def link(node: TreeNode) -> None:
+        for child in (node.left, node.right):
+            if child:
+                graph[node.val].append(child.val)
+                graph[child.val].append(node.val)
+                link(child)
+    link(root)
+    queue = deque([start])
+    seen = {start}
+    minutes = -1
+    while queue:
+        minutes += 1
+        for _ in range(len(queue)):
+            u = queue.popleft()
+            for v in graph[u]:
+                if v not in seen:
+                    seen.add(v)
+                    queue.append(v)
+    return minutes
+```
+
+**例题：** LC 79 单词搜索
+
+在字符网格 `board` 里判断单词 `word` 是否存在：沿水平或竖直相邻的格子依次拼出，同一格在一条路径里不能重复使用；`1 <= m, n <= 6`，`1 <= word.length <= 15`。
+
+```python
+from collections import Counter
+from itertools import chain
+def exist(board: list[list[str]], word: str) -> bool:
+    rows, cols = len(board), len(board[0])
+    board_count = Counter(chain.from_iterable(board))
+    if Counter(word) - board_count:
+        return False
+    if board_count[word[0]] > board_count[word[-1]]:
+        word = word[::-1]
+    def dfs(r: int, c: int, k: int) -> bool:
+        if board[r][c] != word[k]:
+            return False
+        if k == len(word) - 1:
+            return True
+        board[r][c] = "#"
+        found = any(
+            0 <= nr < rows and 0 <= nc < cols and dfs(nr, nc, k + 1)
+            for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1))
+        )
+        board[r][c] = word[k]
+        return found
+    return any(dfs(r, c, 0) for r in range(rows) for c in range(cols))
 ```

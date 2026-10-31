@@ -14,9 +14,12 @@ step: 7
 - LC 199 二叉树的右视图
 - LC 103 二叉树的锯齿形层序遍历
 - LC 662 二叉树最大宽度
+- LC 102 二叉树的层序遍历（高频）
+- LC 116 填充每个节点的下一个右侧节点指针（高频）
 
 **树转图 + BFS**
 - LC 863 二叉树中所有距离为 K 的结点
+- LC 2385 感染二叉树需要的总时间（高频）
 
 **序列化与反序列化**
 - LC 297 二叉树的序列化与反序列化
@@ -25,10 +28,15 @@ step: 7
 **BST 性质**
 - LC 450 删除二叉搜索树中的节点
 - LC 426 将二叉搜索树转化为排序的双向链表（中序）
+- LC 98 验证二叉搜索树（高频）
+- LC 230 二叉搜索树中第 K 小的元素（高频）
+- LC 99 恢复二叉搜索树（高频）
 
 **与树 DFS 相邻**
 - LC 105 从前序与中序遍历序列构造二叉树
 - LC 236 二叉树的最近公共祖先
+- LC 889 从前序与后序遍历序列构造二叉树（高频）
+- LC 2196 根据描述创建二叉树（高频）
 
 提示：看到「按层」就写 `for _ in range(len(q))`；看到「二叉搜索树」先想中序有序和取值区间；看到「序列化」先决定空节点怎么标记。
 
@@ -256,4 +264,185 @@ def lowest_common_ancestor(root: TreeNode | None, p: TreeNode, q: TreeNode) -> T
     if left and right:
         return root
     return left or right
+```
+
+**例题：** LC 102 二叉树的层序遍历
+
+给二叉树的根节点 `root`，返回其节点值的**层序遍历**：逐层地，从左到右访问所有节点，每层一个列表。树中节点数在 `[0, 2000]` 内，`-1000 <= Node.val <= 1000`。
+
+```python
+from collections import deque
+def level_order(root: TreeNode | None) -> list[list[int]]:
+    if root is None:
+        return []
+    res: list[list[int]] = []
+    queue = deque([root])
+    while queue:
+        level: list[int] = []
+        for _ in range(len(queue)):
+            node = queue.popleft()
+            level.append(node.val)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        res.append(level)
+    return res
+```
+
+**例题：** LC 116 填充每个节点的下一个右侧节点指针
+
+给一棵完美二叉树（所有叶子在同一层，每个非叶子节点都有两个孩子），节点有 `val`、`left`、`right`、`next` 四个字段。填充每个节点的 `next` 指针，让它指向同一层中右边紧邻的节点；某层最右边的节点，`next` 为 `None`。初始时所有 `next` 都是 `None`。树中节点数在 `[0, 2^12 - 1]` 范围内，`-1000 <= node.val <= 1000`。进阶：只用常量额外空间；递归实现也算符合，递归栈不计入额外空间。
+
+```python
+def connect(root: 'Node | None') -> 'Node | None':
+    leftmost = root
+    while leftmost and leftmost.left:
+        node = leftmost
+        while node:
+            node.left.next = node.right
+            if node.next:
+                node.right.next = node.next.left
+            node = node.next
+        leftmost = leftmost.left
+    return root
+```
+
+**例题：** LC 2385 感染二叉树需要的总时间
+
+给二叉树的根节点 `root`，树中节点的值**互不相同**，再给整数 `start`。第 `0` 分钟，值为 `start` 的节点开始被感染。之后每分钟，满足下面两个条件的节点会被感染：此前没有被感染；与一个已被感染的节点**相邻**（父子相邻）。返回感染整棵树需要的分钟数。节点数在 `[1, 10^5]`，`1 <= Node.val <= 10^5`，值互不相同，树中一定存在值为 `start` 的节点。
+
+```python
+from collections import defaultdict, deque
+def amount_of_time(root: TreeNode, start: int) -> int:
+    graph: defaultdict[int, list[int]] = defaultdict(list)
+    def link(node: TreeNode) -> None:
+        for child in (node.left, node.right):
+            if child:
+                graph[node.val].append(child.val)
+                graph[child.val].append(node.val)
+                link(child)
+    link(root)
+    queue = deque([start])
+    seen = {start}
+    minutes = -1
+    while queue:
+        minutes += 1
+        for _ in range(len(queue)):
+            u = queue.popleft()
+            for v in graph[u]:
+                if v not in seen:
+                    seen.add(v)
+                    queue.append(v)
+    return minutes
+```
+
+**例题：** LC 98 验证二叉搜索树
+
+给二叉树的根结点 `root`，判断它是否是有效的二叉搜索树（BST）。有效的定义：结点的左子树只含**严格小于**当前结点的值；右子树只含**严格大于**当前结点的值；所有左、右子树自身也必须是 BST。树中结点数在 `[1, 10^4]`，`-2^31 <= Node.val <= 2^31 - 1`。
+
+```python
+def is_valid_bst(root: TreeNode | None) -> bool:
+    prev: int | None = None
+    def inorder(node: TreeNode | None) -> bool:
+        nonlocal prev
+        if node is None:
+            return True
+        if not inorder(node.left):
+            return False
+        if prev is not None and node.val <= prev:
+            return False
+        prev = node.val
+        return inorder(node.right)
+    return inorder(root)
+```
+
+**例题：** LC 230 二叉搜索树中第 K 小的元素
+
+给二叉搜索树的根节点 `root` 和整数 `k`，返回树中第 `k` 小的元素（`k` 从 `1` 开始）。节点数 `n`，`1 <= k <= n <= 10^4`，`0 <= Node.val <= 10^4`。
+
+```python
+def kth_smallest(root: TreeNode | None, k: int) -> int:
+    def dfs(node: TreeNode | None) -> int | None:
+        nonlocal k
+        if node is None:
+            return None
+        if (found := dfs(node.left)) is not None:
+            return found
+        k -= 1
+        if k == 0:
+            return node.val
+        return dfs(node.right)
+    result = dfs(root)
+    if result is None:
+        raise ValueError("k 超过节点数")
+    return result
+```
+
+**例题：** LC 99 恢复二叉搜索树
+
+给二叉搜索树的根结点 `root`，其中**恰好两个**结点的值被错误地交换了。请在**不改变树结构**的情况下恢复这棵树（原地交换两个结点的值即可）。结点数在 `[2, 1000]`，`-2^31 <= Node.val <= 2^31 - 1`。
+
+```python
+def recover_tree(root: TreeNode | None) -> None:
+    prev: TreeNode | None = None
+    first = second = None
+    def inorder(node: TreeNode | None) -> None:
+        nonlocal prev, first, second
+        if node is None:
+            return
+        inorder(node.left)
+        if prev and prev.val > node.val:
+            if first is None:
+                first = prev
+            second = node
+        prev = node
+        inorder(node.right)
+    inorder(root)
+    if first and second:
+        first.val, second.val = second.val, first.val
+```
+
+**例题：** LC 889 从前序与后序遍历序列构造二叉树
+
+给两个整数数组 `preorder` 和 `postorder`，`preorder` 是一棵**无重复值**二叉树的前序遍历，`postorder` 是同一棵树的后序遍历，重构并返回这棵二叉树；如果有多个答案，返回任意一个。`1 <= preorder.length <= 30`，`1 <= preorder[i] <= preorder.length`，`preorder` 中所有值不同，`postorder.length == preorder.length`，`1 <= postorder[i] <= postorder.length`，`postorder` 中所有值不同，保证两者是同一棵二叉树的前序和后序。
+
+```python
+def construct_from_pre_post(preorder: list[int], postorder: list[int]) -> TreeNode | None:
+    post_idx = {v: i for i, v in enumerate(postorder)}
+    def build(pre_lo: int, post_lo: int, size: int) -> TreeNode | None:
+        if size == 0:
+            return None
+        root = TreeNode(preorder[pre_lo])
+        if size == 1:
+            return root
+        left_root = preorder[pre_lo + 1]
+        left_size = post_idx[left_root] - post_lo + 1
+        root.left = build(pre_lo + 1, post_lo, left_size)
+        root.right = build(pre_lo + 1 + left_size, post_lo + left_size, size - 1 - left_size)
+        return root
+    return build(0, 0, len(preorder))
+```
+
+**例题：** LC 2196 根据描述创建二叉树
+
+给二维整数数组 `descriptions`，其中 `descriptions[i] = [parent_i, child_i, isLeft_i]` 表示 `parent_i` 是 `child_i` 的父节点，二叉树中各节点的值互不相同；`isLeft_i == 1` 表示 `child_i` 是 `parent_i` 的左子节点，`isLeft_i == 0` 表示右子节点。按描述构造二叉树并返回根节点，测试保证能构造出有效的二叉树。`1 <= descriptions.length <= 10^4`，`descriptions[i].length == 3`，`1 <= parent_i, child_i <= 10^5`，`0 <= isLeft_i <= 1`。
+
+```python
+def create_binary_tree(descriptions: list[list[int]]) -> TreeNode | None:
+    nodes: dict[int, TreeNode] = {}
+    parents: set[int] = set()
+    children: set[int] = set()
+    for parent, child, is_left in descriptions:
+        for v in (parent, child):
+            if v not in nodes:
+                nodes[v] = TreeNode(v)
+        if is_left:
+            nodes[parent].left = nodes[child]
+        else:
+            nodes[parent].right = nodes[child]
+        parents.add(parent)
+        children.add(child)
+    (root,) = parents - children
+    return nodes[root]
 ```

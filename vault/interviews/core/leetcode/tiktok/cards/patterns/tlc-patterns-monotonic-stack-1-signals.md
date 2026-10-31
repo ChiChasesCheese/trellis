@@ -25,7 +25,7 @@ step: 1
 
 **近似信号：**
 - 只要一次「全局最大 / 最小」→ 一个变量，不要栈（例：LC 121 买卖股票的最佳时机）。
-- 窗口求**和**或**计数** → 普通滑动窗口 / 前缀和（例：LC 643 子数组最大平均数 I）。
+- 窗口求**和**或**计数** → 普通滑动窗口 / 前缀和（例：LC 643 子数组最大平均数 I；高频：LC 209 长度最小的子数组）。
 - 求区间任意最值、任意查询 → 稀疏表（Sparse Table）、线段树；单调栈只回答「最近的更大 / 更小」（例：LC 3161 物块放置查询）。
 - 括号匹配 → 普通栈，不单调（LC 20）（例：LC 20 有效的括号）。
 - 区间不是由「相邻最近」决定、而是任意两点 → 排序 / 双指针（例：LC 11 盛最多水的容器）。
@@ -258,4 +258,21 @@ def max_area(height: list[int]) -> int:
         else:
             right -= 1
     return best
+```
+
+**例题：** LC 209 长度最小的子数组
+
+正整数数组 `nums` 和 `target`，返回和 `>= target` 的最短连续子数组的长度，没有则返回 `0`；`1 <= nums.length <= 10^5`。
+
+```python
+def min_sub_array_len(target: int, nums: list[int]) -> int:
+    best = len(nums) + 1
+    left = total = 0
+    for right, x in enumerate(nums):
+        total += x
+        while total >= target:
+            best = min(best, right - left + 1)
+            total -= nums[left]
+            left += 1
+    return best if best <= len(nums) else 0
 ```

@@ -17,7 +17,7 @@ step: 1
 - 「**合并 `k` 个有序**链表 / 数组」：堆里每路放一个当前头（例：LC 23 合并 K 个升序链表）。
 - 「**数据流的中位数**」：一个最大堆装较小的一半，一个最小堆装较大的一半（例：LC 295 数据流的中位数）。
 - 「**事件按时间顺序处理**」：会议室、任务调度、最早可用的资源：按开始时间排序，堆装结束时间（LC 253、2402）（例：LC 253 会议室 II）。
-- 「**每次取当前最大 / 最小的可用项，再放回**」的贪心：重构字符串 LC 767、最长快乐字符串 LC 1405（例：LC 767 重构字符串）。
+- 「**每次取当前最大 / 最小的可用项，再放回**」的贪心：重构字符串 LC 767、最长快乐字符串 LC 1405（例：LC 767 重构字符串；高频：LC 1834 单线程 CPU）。
 - Dijkstra 的边界选择（见最短路一组）（例：LC 778 水位上升的泳池中游泳）。
 
 **近似信号：**
@@ -235,4 +235,29 @@ class TimeMap:
 def array_pair_sum(nums: list[int]) -> int:
     nums = sorted(nums)                 # 不改调用方的列表
     return sum(nums[::2])               # 相邻两两配对，每对的较小者落在偶数下标
+```
+
+**例题：** LC 1834 单线程 CPU
+
+给二维数组 `tasks`，`tasks[i] = [enqueueTime_i, processingTime_i]` 表示第 `i` 项任务在 `enqueueTime_i` 时刻进入任务队列，需要 `processingTime_i` 的时长执行。单线程 CPU 同一时间最多执行一项任务：空闲且队列里没有任务就保持空闲；空闲且队列非空，就选**执行时间最短**的任务开始，执行时间相同则选**下标最小**的；任务一旦开始必须执行完，完成后可以立刻开始下一个。返回 CPU 处理任务的顺序。`n = tasks.length`，`1 <= n <= 10^5`，`1 <= enqueueTime_i, processingTime_i <= 10^9`。
+
+```python
+from heapq import heappop, heappush
+def get_order(tasks: list[list[int]]) -> list[int]:
+    n = len(tasks)
+    order = sorted(range(n), key=lambda i: tasks[i][0])
+    heap: list[tuple[int, int]] = []
+    res: list[int] = []
+    t = p = 0
+    while len(res) < n:
+        if not heap and t < tasks[order[p]][0]:
+            t = tasks[order[p]][0]
+        while p < n and tasks[order[p]][0] <= t:
+            i = order[p]
+            heappush(heap, (tasks[i][1], i))
+            p += 1
+        cost, i = heappop(heap)
+        t += cost
+        res.append(i)
+    return res
 ```

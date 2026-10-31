@@ -25,11 +25,14 @@ step: 9
 - LC 139 单词拆分
 - LC 32 最长有效括号
 - LC 140 单词拆分 II（DP 判定 + 回溯构造）
+- LC 131 分割回文串（高频）
 
 **相邻：状态里带更多信息**
 - LC 3389 使字符频率相等的最少操作次数（字符计数上的 DP）
 - LC 3441 变成好标题的最少代价（字符串 DP，状态含"当前字符与连续长度"）
 - LC 2850 将石头分散到网格图的最少移动次数
+- LC 691 贴纸拼词（高频）
+- 网格中最长的之字形递增路径（高频）
 
 提示：先定义 `dp[i][j]` 代表"前 `i` 个与前 `j` 个"还是"以 `i`、`j` 结尾"；再看末尾字符相等 / 不等时有哪几种来源；最后写完整二维表，压缩空间见 Python 工具箱「DP 降维」。
 
@@ -305,4 +308,81 @@ def minimum_moves(grid: list[list[int]]) -> int:
         sum(abs(r1 - r2) + abs(c1 - c2) for (r1, c1), (r2, c2) in zip(extra, order))
         for order in permutations(empty)
     )
+```
+
+**例题：** LC 131 分割回文串
+
+给字符串 `s`，把它分割成若干子串，使每个子串都是回文串，返回所有可能的分割方案。`1 <= s.length <= 16`，`s` 只含小写英文字母。
+
+```python
+def partition(s: str) -> list[list[str]]:
+    n = len(s)
+    pal = [[False] * n for _ in range(n)]
+    for i in range(n - 1, -1, -1):
+        for j in range(i, n):
+            pal[i][j] = s[i] == s[j] and (j - i < 2 or pal[i + 1][j - 1])
+    res: list[list[str]] = []
+    path: list[str] = []
+    def dfs(start: int) -> None:
+        if start == n:
+            res.append(path.copy())
+            return
+        for end in range(start, n):
+            if pal[start][end]:
+                path.append(s[start:end + 1])
+                dfs(end + 1)
+                path.pop()
+    dfs(0)
+    return res
+```
+
+**例题：** LC 691 贴纸拼词
+
+有 `n` 种贴纸，每张贴纸上是一个小写英文单词，每种贴纸数量无限。要拼出字符串 `target`：从贴纸上剪下单个字母，再任意重排。返回拼出 `target` 所需的最少贴纸数；做不到返回 `-1`。`n == stickers.length`，`1 <= n <= 50`，`1 <= stickers[i].length <= 10`，`1 <= target.length <= 15`，所有字符串只含小写英文字母。
+
+```python
+from collections import Counter, defaultdict
+from math import inf
+def min_stickers(stickers: list[str], target: str) -> int:
+    n = len(target)
+    full = (1 << n) - 1
+    has_letter: defaultdict[str, list[Counter[str]]] = defaultdict(list)
+    for s in stickers:
+        cnt = Counter(s)
+        for ch in cnt:
+            has_letter[ch].append(cnt)
+    dp = [inf] * (1 << n)
+    dp[0] = 0
+    for mask in range(full):
+        if dp[mask] == inf:
+            continue
+        low = (~mask & (mask + 1)).bit_length() - 1
+        for cnt in has_letter[target[low]]:
+            left, new = cnt.copy(), mask
+            for i, ch in enumerate(target):
+                if not new >> i & 1 and left[ch] > 0:
+                    left[ch] -= 1
+                    new |= 1 << i
+            dp[new] = min(dp[new], dp[mask] + 1)
+    return -1 if dp[full] == inf else dp[full]
+```
+
+**例题：** 网格中最长的之字形递增路径
+
+给 `m x n` 的整数网格 `grid`，一条路径从任意格子出发、每步走到上下左右相邻的格子，要求走到的值严格大于当前格子，且水平移动和竖直移动必须交替（第一步方向任意）。返回最长路径包含的格子数。`1 <= m, n <= 200`，`0 <= grid[i][j] <= 2^31 - 1`。
+
+```python
+H, V = 0, 1
+STEPS = (((0, 1), (0, -1)), ((1, 0), (-1, 0)))
+def longest_zigzag_path(grid: list[list[int]]) -> int:
+    m, n = len(grid), len(grid[0])
+    dp = [[[1] * n for _ in range(m)] for _ in range(2)]
+    cells = sorted(((grid[i][j], i, j) for i in range(m) for j in range(n)), reverse=True)
+    for val, i, j in cells:
+        for d in (H, V):
+            for di, dj in STEPS[d]:
+                ni, nj = i + di, j + dj
+                if 0 <= ni < m and 0 <= nj < n and grid[ni][nj] > val:
+                    dp[d][i][j] = max(dp[d][i][j], 1 + dp[1 - d][ni][nj])
+    return max(max(map(max, layer)) for layer in dp)
 ```

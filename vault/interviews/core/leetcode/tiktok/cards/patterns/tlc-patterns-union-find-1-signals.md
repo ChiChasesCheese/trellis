@@ -14,7 +14,7 @@ step: 1
 
 **触发信号：**
 - 「**是否同一组 / 是否连通**」，且关系是**逐步添加**的（动态连边）：LC 721 账户合并（共享邮箱即同一人）、LC 128 最长连续序列（例：LC 721 账户合并）。
-- 「**连通块个数**」「合并之后还剩几个集合」：LC 200 的 UF 写法、LC 924（例：LC 547 省份数量）。
+- 「**连通块个数**」「合并之后还剩几个集合」：LC 200 的 UF 写法、LC 924（例：LC 547 省份数量；高频：LC 323 无向图中连通分量的数目）。
 - 「**加入这条边会不会成环**」：最小生成树的 Kruskal 算法（LC 1584）（例：LC 1319 连通网络的操作次数）。
 - 「**等价关系**」：传递性的"相等 / 同类"，如除法求值 LC 399、二分图的"敌人的敌人"LC 886（例：LC 399 除法求值）。
 - 要把"相关"的元素归成组再输出（分组聚合）（例：LC 323 无向图中连通分量的数目）。
@@ -26,8 +26,8 @@ step: 1
 - 要**删除**边 → 并查集不支持，需要离线反向处理或其他结构。
 
 **近似信号：**
-- 有向图的可达性 / 先后顺序 → 拓扑排序，并查集处理的是无向关系（例：LC 1466 重新规划路线）。
-- 只问相邻格子的连通 → BFS 即可（例：LC 695 岛屿的最大面积）。
+- 有向图的可达性 / 先后顺序 → 拓扑排序，并查集处理的是无向关系（例：LC 1466 重新规划路线；高频：LC 207 课程表）。
+- 只问相邻格子的连通 → BFS 即可（例：LC 695 岛屿的最大面积；高频：LC 827 最大人工岛）。
 
 **例题：** LC 721 账户合并
 
@@ -269,4 +269,63 @@ def max_area_of_island(grid: list[list[int]]) -> int:
         grid[i][j] = 0                     # 先沉岛再往邻居走：每格只数一次，也不会来回死循环
         return 1 + dfs(i + 1, j) + dfs(i - 1, j) + dfs(i, j + 1) + dfs(i, j - 1)
     return max(dfs(i, j) for i, j in product(range(m), range(n)))
+```
+
+**例题：** LC 207 课程表
+
+共有 `numCourses` 门课，编号 `0` 到 `numCourses - 1`。先修关系 `prerequisites[i] = [a, b]` 表示学 `a` 之前必须先学 `b`。判断能否学完所有课程。`1 <= numCourses <= 2000`，`0 <= prerequisites.length <= 5000`，`prerequisites[i].length == 2`，`0 <= a, b < numCourses`，所有先修对互不相同。
+
+```python
+from collections import deque
+def can_finish(num_courses: int, prerequisites: list[list[int]]) -> bool:
+    graph: list[list[int]] = [[] for _ in range(num_courses)]
+    indegree = [0] * num_courses
+    for course, pre in prerequisites:
+        graph[pre].append(course)
+        indegree[course] += 1
+    queue = deque(i for i, d in enumerate(indegree) if d == 0)
+    taken = 0
+    while queue:
+        cur = queue.popleft()
+        taken += 1
+        for nxt in graph[cur]:
+            indegree[nxt] -= 1
+            if indegree[nxt] == 0:
+                queue.append(nxt)
+    return taken == num_courses
+```
+
+**例题：** LC 827 最大人工岛
+
+给 `n x n` 的二进制矩阵 `grid`，**最多**只能将一格 `0` 变成 `1`。返回执行此操作后，`grid` 中最大的岛屿面积。岛屿由一组上、下、左、右四个方向相连的 `1` 形成。`n == grid.length == grid[i].length`，`1 <= n <= 500`，`grid[i][j]` 为 `0` 或 `1`。
+
+```python
+from collections.abc import Iterator
+def largest_island(grid: list[list[int]]) -> int:
+    n = len(grid)
+    label = [[0] * n for _ in range(n)]
+    size: dict[int, int] = {}
+    def neighbors(i: int, j: int) -> Iterator[tuple[int, int]]:
+        for a, b in ((i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)):
+            if 0 <= a < n and 0 <= b < n:
+                yield a, b
+    def dfs(i: int, j: int, tag: int) -> int:
+        label[i][j] = tag
+        area = 1
+        for a, b in neighbors(i, j):
+            if grid[a][b] == 1 and label[a][b] == 0:
+                area += dfs(a, b, tag)
+        return area
+    for i in range(n):
+        for j in range(n):
+            if grid[i][j] == 1 and label[i][j] == 0:
+                tag = len(size) + 1
+                size[tag] = dfs(i, j, tag)
+    best = max(size.values(), default=0)
+    for i in range(n):
+        for j in range(n):
+            if grid[i][j] == 0:
+                tags = {label[a][b] for a, b in neighbors(i, j)}
+                best = max(best, 1 + sum(size.get(t, 0) for t in tags))
+    return best
 ```

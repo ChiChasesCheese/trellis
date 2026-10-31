@@ -16,6 +16,7 @@ step: 7
 - LC 904 水果成篮（`k = 2` 的 LC 340）
 - LC 424 替换后的最长重复字符
 - LC 845 数组中的最长山脉（可用窗口 / 双指针）
+- LC 1004 最大连续1的个数 III（高频）
 
 **最短（满足约束就缩）**
 - LC 209 长度最小的子数组
@@ -331,4 +332,22 @@ def longest_substring(s: str, k: int) -> int:
     if bad is None:
         return len(s)
     return max(longest_substring(part, k) for part in s.split(bad))
+```
+
+**例题：** LC 1004 最大连续1的个数 III
+
+给一个二进制数组 `nums` 和整数 `k`，最多可以把 `k` 个 `0` 翻成 `1`，求操作后**连续 `1` 的最大个数**。`1 <= nums.length <= 10^5`，`nums[i]` 只能是 `0` 或 `1`，`0 <= k <= nums.length`。
+
+```python
+def longest_ones(nums: list[int], k: int) -> int:
+    best = left = zeros = 0                # 窗口 nums[left : right + 1]，zeros 是窗口内 0 的个数
+    for right, x in enumerate(nums):
+        if x == 0:
+            zeros += 1
+        while zeros > k:                   # 0 太多：缩左端直到窗口合法
+            if nums[left] == 0:
+                zeros -= 1
+            left += 1
+        best = max(best, right - left + 1)
+    return best
 ```

@@ -15,6 +15,7 @@ step: 8
 - LC 198 打家劫舍
 - LC 53 最大子数组和
 - LC 1997 访问完所有房间的第一天
+- LC 746 使用最小花费爬楼梯（高频）
 
 **状态机**
 - LC 121 买卖股票的最佳时机
@@ -22,11 +23,14 @@ step: 8
 
 **分段**
 - LC 1043 分隔数组以得到最大和
+- LC 139 单词拆分（高频）
 
 **以谁结尾 / 带最后一步**
 - LC 300 最长递增子序列
 - LC 403 青蛙过河
 - LC 678 有效的括号字符串（状态：未匹配左括号的可能区间）
+- LC 1048 最长字符串链（高频）
+- LC 1691 堆叠长方体的最大高度（高频）
 
 **可以用 DP 也可以用贪心**
 - LC 55 跳跃游戏
@@ -203,4 +207,58 @@ def jump(nums: list[int]) -> int:
             jumps += 1
             cur_end = farthest          # 下一层的右边界
     return jumps
+```
+
+**例题：** LC 746 使用最小花费爬楼梯
+
+整数数组 `cost`，`cost[i]` 是从第 `i` 级台阶向上爬需要支付的费用。支付后可以向上爬**一级或两级**。你可以选择从下标 `0` 或下标 `1` 的台阶出发。返回到达楼梯顶部（下标 `cost.length`，最后一级之后的位置）的最低总花费。`2 <= cost.length <= 1000`，`0 <= cost[i] <= 999`。
+
+```python
+def min_cost_climbing_stairs(cost: list[int]) -> int:
+    two_back = one_back = 0                    # 到达第 i-2、i-1 级的最小花费；起点 0、1 都免费
+    for i in range(2, len(cost) + 1):
+        two_back, one_back = one_back, min(one_back + cost[i - 1], two_back + cost[i - 2])
+    return one_back
+```
+
+**例题：** LC 139 单词拆分
+
+给字符串 `s` 和字符串列表 `wordDict`（字典）。如果能用字典里的一个或多个单词拼接出 `s` 就返回 `true`；单词可以重复使用，也不要求用完字典。`1 <= s.length <= 300`，`1 <= wordDict.length <= 1000`，`1 <= wordDict[i].length <= 20`，`s` 和单词都只含小写字母，字典里的单词互不相同。
+
+```python
+def word_break(s: str, word_dict: list[str]) -> bool:
+    words = set(word_dict)                       # 哈希集合：判断"切片是不是单词"是 O(L)
+    max_len = max(map(len, words))               # 单词最长 max_len，更长的切片不用试
+    dp = [True] + [False] * len(s)               # dp[i]：前 i 个字符 s[:i] 能否被拆成单词
+    for i in range(1, len(s) + 1):
+        dp[i] = any(dp[j] and s[j:i] in words for j in range(max(0, i - max_len), i))
+    return dp[-1]
+```
+
+**例题：** LC 1048 最长字符串链
+
+给单词数组 `words`，每个单词由小写字母组成。如果可以在 `wordA` 的**任意位置**添加**恰好一个**字母（不改变其他字符的相对顺序）得到 `wordB`，就说 `wordA` 是 `wordB` 的**前身**，例如 `"abc"` 是 `"abac"` 的前身，`"cba"` 不是 `"bcad"` 的前身。**词链**是单词序列 `[word_1, ..., word_k]`（`k >= 1`），其中每个单词是下一个的前身；单个单词本身就是长度为 `1` 的词链。返回从 `words` 里选词能组成的最长词链的长度。`1 <= words.length <= 1000`，`1 <= words[i].length <= 16`。
+
+```python
+def longest_str_chain(words: list[str]) -> int:
+    dp: dict[str, int] = {}                                  # dp[w]：以 w 结尾的最长词链
+    for w in sorted(words, key=len):                         # 短的先处理，前身一定已算好
+        dp[w] = 1 + max((dp.get(w[:i] + w[i + 1:], 0) for i in range(len(w))), default=0)
+    return max(dp.values())
+```
+
+**例题：** LC 1691 堆叠长方体的最大高度
+
+给 `n` 个长方体，`cuboids[i] = [width, length, height]`。从中选一个**子集**堆叠起来：长方体 `i` 能放在 `j` 上，当且仅当 `width_i <= width_j`、`length_i <= length_j`、`height_i <= height_j`；每个长方体可以任意旋转（重新排列长宽高）后再放。返回堆叠后的**最大高度**。`1 <= n <= 100`，`1 <= width_i, length_i, height_i <= 100`。
+
+```python
+def max_height(cuboids: list[list[int]]) -> int:
+    boxes = sorted(sorted(c) for c in cuboids)      # 先让每个长方体 w<=l<=h，再整体按字典序排
+    dp = [0] * len(boxes)                            # dp[i]：以 boxes[i] 为底的最大高度
+    for i, box in enumerate(boxes):
+        dp[i] = box[2] + max(
+            (dp[j] for j in range(i) if all(a <= b for a, b in zip(boxes[j], box))),
+            default=0,                               # 上面放不了任何箱子：只有它自己
+        )
+    return max(dp)
 ```
