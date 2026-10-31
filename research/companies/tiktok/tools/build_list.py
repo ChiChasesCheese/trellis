@@ -30,7 +30,7 @@ ROOT = Path(__file__).resolve().parents[4]
 COMPANIES = ROOT / "vault/interviews/core/leetcode/companies"
 OUT = ROOT / "research/companies/tiktok/index.json"
 STATEMENTS = ROOT / "sources/local/tiktok-lc"
-ROW = re.compile(r"^\| (\d+) \| \[(.+)\]\(https://leetcode\.com/problems/([^/]+)/\) \| (\w+) \| (\d+) \| (✓?) \| (✓?) \| (.*?) \|")
+ROW = re.compile(r"^\| (\d*) \| \[(.+)\]\(https://leetcode\.com/problems/([^/]+)/\) \| (\w+) \| (\d+) \| (✓?) \| (✓?) \| (.*?) \|")
 QUERY = ("query q($s:String!){question(titleSlug:$s){questionFrontendId translatedTitle title difficulty "
          "translatedContent content categoryTitle topicTags{name}}}")
 # Recent windows, newest first: (label, primary-repo file, secondary-repo file)
@@ -45,7 +45,7 @@ def table(company: str) -> dict[str, dict]:
         m = ROW.match(line)
         if m:
             n, title, slug, diff, freq, recent, both, tags = m.groups()
-            out[slug] = {"id": int(n), "title": title, "slug": slug, "difficulty": diff, "freq": int(freq),
+            out[slug] = {"id": int(n or 0), "title": title, "slug": slug, "difficulty": diff, "freq": int(freq),
                          "recent": bool(recent), "tags": [t.strip() for t in tags.split(",") if t.strip()]}
     return out
 
@@ -66,8 +66,15 @@ def fetch(slug: str) -> dict:
     body = json.dumps({"query": QUERY, "variables": {"s": slug}}).encode()
     req = urllib.request.Request("https://leetcode.cn/graphql/", data=body,
                                  headers={"Content-Type": "application/json", "Referer": "https://leetcode.cn"})
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return json.loads(r.read())["data"]["question"] or {}
+    for attempt in range(5):
+        try:
+            with urllib.request.urlopen(req, timeout=30) as r:
+                return json.loads(r.read())["data"]["question"] or {}
+        except OSError:
+            if attempt == 4:
+                raise
+            time.sleep(2 ** attempt)
+    return {}
 
 
 def doocs(pid: int) -> str:
@@ -107,14 +114,18 @@ def windows() -> dict[str, dict]:
         for pdir, sdir in DIRS.values():
             rows = [(r.get("Link", ""), r.get("Frequency", "0")) for r in
                     gh_csv("liquidslr/leetcode-company-wise-problems", f"{pdir}/{pfile}.csv")]
+            primary = len(rows)
             rows += [(r.get("URL", ""), r.get("Frequency %", "0").rstrip("%")) for r in
                      gh_csv("snehasishroy/leetcode-companywise-interview-questions", f"{sdir}/{sfile}.csv")]
-            for url, freq in rows:
+            for i, (url, freq) in enumerate(rows):
                 m = re.search(r"/problems/([^/]+)", url or "")
                 if m:
                     slug = m.group(1)
-                    prev = seen.get(slug, {})
-                    seen[slug] = {"window": label, "freq": max(float(freq or 0), prev.get("freq", 0.0))}
+                    prev = seen.get(slug, {}) if seen.get(slug, {}).get("window") == label else {}
+                    # the secondary repo rescales each window to its own 100, so the card shows the primary's number
+                    lq = float(freq or 0) if i < primary else 0.0
+                    seen[slug] = {"window": label, "freq": max(float(freq or 0), prev.get("freq", 0.0)),
+                                  "lq_freq": max(lq, prev.get("lq_freq", 0.0))}
     return seen
 
 
@@ -180,12 +191,26 @@ def main(argv: list[str]) -> int:
                             "tags": [t["name"] for t in q.get("topicTags") or []],
                             "companies": {"tiktok": {"freq": int(w["freq"]), "recent": True, "tier": "A"}}}
     for slug, p in merged.items():
+        if not p["id"]:  # the all-time file of the primary repo has no problem numbers
+            q = fetch(slug)
+            p["id"] = int(q["questionFrontendId"]) if q else 0
+            if q and q.get("categoryTitle") == "Database":
+                p["tags"].append("Database")
         p["window"] = recent.get(slug, {}).get("window", "")
-    keep = [p for p in merged.values()
-            if (p["window"] or min(c["tier"] for c in p["companies"].values()) in "AB")
-            and "Database" not in p["tags"]]
+        if p["window"]:
+            p["window_freq"] = round(recent[slug]["lq_freq"] or recent[slug]["freq"])
+    # Chi (2026-10-31): every problem the company lists carry is recorded; the low-frequency ones older than six
+    # months form tier C (deck 24 only, after tier B)
+    keep = [p for p in merged.values() if "Database" not in p["tags"]]
+    previous = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
+    for p in keep:  # a problem already in tier A or B stays there
+        if (not p["window"] and min(c["tier"] for c in p["companies"].values()) not in "AB"
+                and previous.get(p["slug"], {}).get("tier", "C") == "C"):
+            p["pool"] = "C"
     for p in keep:
         p["tier"] = "A" if p["window"] else min(c["tier"] for c in p["companies"].values())
+        if p.get("pool") == "C":
+            p["tier"] = "C"
     from datetime import date, timedelta
     cn = codetop(str(date.today()))
     have = {p["slug"] for p in keep}
@@ -200,6 +225,7 @@ def main(argv: list[str]) -> int:
         c = p["companies"].get("bytedance_cn")
         if c:
             p["tier"] = min(p["tier"], c["tier"])
+            p.pop("pool", None) if c["tier"] in "AB" else None
             p["freq"] = max(p["freq"], pct(c["reports"]))
     for slug, c in cn.items():
         if slug in have:
@@ -261,8 +287,8 @@ def main(argv: list[str]) -> int:
             if not p.get(key) and previous.get(p["slug"], {}).get(key):
                 p[key] = previous[p["slug"]][key]
     OUT.write_text(json.dumps({p["slug"]: p for p in keep}, ensure_ascii=False, indent=1), encoding="utf-8")
-    tiers = {k: sum(p["tier"] == k for p in keep) for k in "AB"}
-    print(f"{len(keep)} problems (A {tiers['A']} / B {tiers['B']}) -> {OUT.relative_to(ROOT)}")
+    tiers = {k: sum(p["tier"] == k for p in keep) for k in "ABC"}
+    print(f"{len(keep)} problems (A {tiers['A']} / B {tiers['B']} / C {tiers['C']}) -> {OUT.relative_to(ROOT)}")
     return 0
 
 

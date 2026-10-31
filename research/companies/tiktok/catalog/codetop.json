@@ -1,5 +1,5 @@
 {
-"fetched": "2026-10-29",
+"fetched": "2026-10-31",
 "rows": [
 {
 "fid": "3",
@@ -548,16 +548,16 @@
 "last_seen": "2026-04-16"
 },
 {
+"fid": "560",
+"slug": "subarray-sum-equals-k",
+"reports": 30,
+"last_seen": "2026-10-26"
+},
+{
 "fid": "958",
 "slug": "check-completeness-of-a-binary-tree",
 "reports": 30,
 "last_seen": "2025-11-06"
-},
-{
-"fid": "560",
-"slug": "subarray-sum-equals-k",
-"reports": 29,
-"last_seen": "2026-10-08"
 },
 {
 "fid": "110",
@@ -1628,6 +1628,12 @@
 "last_seen": "2022-05-28"
 },
 {
+"fid": "1262",
+"slug": "greatest-sum-divisible-by-three",
+"reports": 6,
+"last_seen": "2026-10-30"
+},
+{
 "fid": "698",
 "slug": "partition-to-k-equal-sum-subsets",
 "reports": 6,
@@ -1848,12 +1854,6 @@
 "slug": "delete-node-in-a-bst",
 "reports": 5,
 "last_seen": "2026-03-11"
-},
-{
-"fid": "1262",
-"slug": "greatest-sum-divisible-by-three",
-"reports": 5,
-"last_seen": "2026-03-09"
 },
 {
 "fid": "976",

@@ -1,0 +1,5 @@
+# Group C2
+
+Read `research/companies/tiktok/agents/prompt_C_common.md` and follow it. Group name: C2.
+
+**Your leaves:** c.minimum-cost-for-tickets, c.sentence-similarity-iii, c.string-compression, c.task-scheduler, c.is-graph-bipartite, c.delete-and-earn, c.pairs-of-songs-with-total-durations-divisible-by-60, c.maximum-points-you-can-obtain-from-cards, c.heaters, c.design-search-autocomplete-system, c.open-the-lock, c.minimum-difficulty-of-a-job-schedule, c.step-by-step-directions-from-a-binary-tree-node-to-another, c.flatten-deeply-nested-array, c.next-greater-element-ii, c.consecutive-numbers-sum, c.construct-binary-tree-from-inorder-and-postorder-traversal, c.lowest-common-ancestor-of-a-binary-tree-iv, c.subarrays-with-k-different-integers, c.insert-interval, c.word-pattern-ii, c.count-binary-substrings, c.employee-free-time, c.parallel-courses, c.dot-product-of-two-sparse-vectors, c.add-two-integers, c.rearranging-fruits, c.minimum-absolute-difference-between-elements-with-constraint, c.design-task-manager, c.valid-sudoku, c.combination-sum-iv, c.3sum-smaller, c.flip-game-ii, c.arithmetic-slices, c.valid-palindrome-iii, c.count-pairs-of-similar-strings

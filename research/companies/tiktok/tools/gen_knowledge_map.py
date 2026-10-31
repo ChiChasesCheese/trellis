@@ -88,7 +88,7 @@ for pid, name in card_names.items():
 def rank(i: int) -> tuple:
     if i in by_id:
         band = by_id[i][1].get("band", "b")
-        if band != "b":
+        if band not in ("b", "c"):
             return (0, band, -by_id[i][1].get("score", 0))
     if any(i in lists[n] for n in CLASSIC):
         return (1, "", i)
@@ -100,7 +100,7 @@ def line(i: int) -> str:
     marks = []
     if i in by_id:
         s, p = by_id[i]
-        marks.append("TikTok " + (p.get("band", "b").upper() if p.get("band") != "b" else "B"))
+        marks.append("TikTok " + p.get("band", "b").upper())
     if i in lists["Amazon"]:
         marks.append("Amazon")
     marks += [n for n in CLASSIC if i in lists[n]]

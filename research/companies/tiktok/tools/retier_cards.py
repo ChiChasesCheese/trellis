@@ -17,7 +17,7 @@ for vault in ("tiktok", "tiktok-drill"):
     cards = ROOT / "vault/interviews/core/leetcode" / vault / "cards"
     for slug, p in index.items():
         new = p.get("band") or p["tier"].lower()
-        for old in ("a", "b", "p1", "p2", "p3", "p4", "p5"):
+        for old in ("a", "b", "c", "p1", "p2", "p3", "p4", "p5"):
             if old == new:
                 continue
             for f in sorted((cards / old).glob(f"tlc-{slug}-*.md")):

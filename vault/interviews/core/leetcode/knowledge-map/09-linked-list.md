@@ -9,15 +9,15 @@
 - [[tlc-reverse-linked-list-0-whole|LC 206 反转链表]]（简单）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100
 - [[tlc-remove-nth-node-from-end-of-list-0-whole|LC 19 删除链表的倒数第 N 个结点]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-merge-k-sorted-lists-0-whole|LC 23 合并 K 个升序链表]]（困难）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
-- [[tlc-design-hashmap-0-whole|LC 706 设计哈希映射]]（简单）· TikTok P3
-- [[tlc-intersection-of-two-linked-lists-0-whole|LC 160 相交链表]]（简单）· TikTok P3 · LeetCode Hot 100
+- [[tlc-design-hashmap-0-whole|LC 706 设计哈希映射]]（简单）· TikTok P2
+- [[tlc-all-oone-data-structure-0-whole|LC 432 全 O(1) 的数据结构]]（困难）· TikTok P2
+- [[tlc-intersection-of-two-linked-lists-0-whole|LC 160 相交链表]]（简单）· TikTok P2 · LeetCode Hot 100
 - [[tlc-linked-list-cycle-0-whole|LC 141 环形链表]]（简单）· TikTok P3 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-design-circular-queue-0-whole|LC 622 设计循环队列]]（中等）· TikTok P3 · Amazon
 - [[tlc-add-two-numbers-ii-0-whole|LC 445 两数相加 II]]（中等）· TikTok P3
-- [[tlc-all-oone-data-structure-0-whole|LC 432 全 O(1) 的数据结构]]（困难）· TikTok P4
+- [[tlc-populating-next-right-pointers-in-each-node-0-whole|LC 116 填充每个节点的下一个右侧节点指针]]（中等）· TikTok P4 · Amazon
 - [[tlc-flatten-a-multilevel-doubly-linked-list-0-whole|LC 430 扁平化多级双向链表]]（中等）· TikTok P4
 - [[tlc-remove-duplicates-from-sorted-list-0-whole|LC 83 删除排序链表中的重复元素]]（简单）· TikTok P4
-- [[tlc-populating-next-right-pointers-in-each-node-0-whole|LC 116 填充每个节点的下一个右侧节点指针]]（中等）· TikTok P4 · Amazon
 - [[tlc-add-two-numbers-0-whole|LC 2 两数相加]]（中等）· TikTok B · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-merge-two-sorted-lists-0-whole|LC 21 合并两个有序链表]]（简单）· TikTok B · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-swap-nodes-in-pairs-0-whole|LC 24 两两交换链表中的节点]]（中等）· TikTok B · LeetCode Hot 100
@@ -34,7 +34,7 @@
 - [[tlc-palindrome-linked-list-0-whole|LC 234 回文链表]]（简单）· TikTok B · Amazon · LeetCode Hot 100
 - LC 355 设计推特（中等）· NeetCode 150
 
-**再做（其余牌组里的题，12 道）**
+**再做（其余牌组里的题，14 道）**
 
 - LC 109 有序链表转换二叉搜索树（中等）· Amazon
 - [[tlc-delete-node-in-a-linked-list-0-whole|LC 237 删除链表中的节点]]（中等）· TikTok B
@@ -42,6 +42,8 @@
 - [[tlc-plus-one-linked-list-0-whole|LC 369 给单链表加一]]（中等）· TikTok B
 - [[tlc-convert-binary-search-tree-to-sorted-doubly-linked-list-0-whole|LC 426 将二叉搜索树转化为排序的双向链表]]（中等）· TikTok B
 - [[tlc-lfu-cache-0-whole|LC 460 LFU 缓存]]（困难）· TikTok B · Amazon
+- LC 708 循环有序列表的插入（中等）· TikTok C
+- LC 716 最大栈（困难）· TikTok C
 - LC 876 链表的中间结点（简单）· 
 - [[tlc-remove-zero-sum-consecutive-nodes-from-linked-list-0-whole|LC 1171 从链表中删去总和值为零的连续节点]]（中等）· TikTok B
 - LC 1472 设计浏览器历史记录（中等）· Amazon

@@ -108,13 +108,13 @@ def families() -> list[dict]:
 
 
 def us_rows() -> dict[str, dict]:
-    row = re.compile(r"^\| (\d+) \| \[.+\]\(https://leetcode\.com/problems/([^/]+)/\) \| \w+ \| (\d+) \|")
+    row = re.compile(r"^\| (\d*) \| \[.+\]\(https://leetcode\.com/problems/([^/]+)/\) \| \w+ \| (\d+) \|")
     out: dict[str, dict] = {}
     for co in ("tiktok", "bytedance"):
         for line in (COMPANIES / f"{co}.md").read_text(encoding="utf-8").splitlines():
             if m := row.match(line):
                 prev = out.get(m.group(2), {"freq": 0})
-                out[m.group(2)] = {"id": int(m.group(1)), "freq": max(prev["freq"], int(m.group(3)))}
+                out[m.group(2)] = {"id": int(m.group(1) or 0), "freq": max(prev["freq"], int(m.group(3)))}
     return out
 
 
@@ -162,7 +162,8 @@ def assign(index: dict[str, dict], today: date | None = None) -> dict:
     ct_all = {r["slug"]: r["reports"] * 0.5 ** ((today - day(r["last_seen"])).days / 365) for r in snap}
     ct_recent = {r["slug"] for r in snap if day(r["last_seen"]) >= cut30}
     win = {"30d": 1.0, "3m": 1.0, "6m": 0.8}
-    us_all = {s: r["freq"] * win.get(index.get(s, {}).get("window", ""), 0.5) for s, r in us_rows().items()}
+    us_all = {s: (index.get(s, {}).get("window_freq") or r["freq"]) * win.get(index.get(s, {}).get("window", ""), 0.5)
+              for s, r in us_rows().items()}
     us_recent = {s for s, p in index.items() if p.get("window") == "30d"}
 
     tot = {"reports": sum(m for _, _, m in members) or 1, "codetop": sum(ct_all.values()) or 1,
@@ -206,24 +207,29 @@ def assign(index: dict[str, dict], today: date | None = None) -> dict:
         elif c["CN"] >= 2:
             a.setdefault(s, "cn-twice")
     for s, p in index.items():
-        p["tier"] = "A" if s in a else "B"
+        p["tier"] = "A" if s in a else ("C" if p.get("pool") == "C" else "B")
         p["a_reason"] = a.get(s, "")
-        p["band"] = "b"
+        p["band"] = p["tier"].lower() if s not in a else "b"
     # Chi (2026-10-29): split tier A into five priorities by cumulative share of the whole deck's frequency mass:
     # P1 reaches 30 %, P2 50 %, P3 70 %, P4 85 %, P5 is the rest of tier A.
-    mass = sum(p["score"] for p in index.values()) or 1
+    mass = sum(p["score"] for p in index.values() if p["tier"] != "C") or 1  # tier C does not move the bands
     cum, band = 0.0, 1
     for s in sorted(a, key=lambda s: -index[s]["score"]):
         index[s]["band"] = f"p{band}"
         cum += index[s]["score"]
         while band < 5 and cum / mass >= BANDS[band - 1]:
             band += 1
+    # Chi (2026-10-31): whatever the US company lists show in their 30-day / 3-month / 6-month windows is P2 or higher
+    for s in a:
+        if index[s].get("window") in ("30d", "3m", "6m") and index[s]["band"] > "p2":
+            index[s]["band"] = "p2"
 
     def share(weights: dict[str, float], total: float) -> float:
         return round(100 * sum(w for s, w in weights.items() if s in a) / total, 1)
     covered = [(f, m) for f, slugs, m in members if any(s in a for s in slugs)]
     return {
-        "a": len(a), "b": len(index) - len(a), "reasons": {k: sum(1 for v in a.values() if v.startswith(k))
+        "a": len(a), "b": sum(p["tier"] == "B" for p in index.values()),
+        "c": sum(p["tier"] == "C" for p in index.values()), "reasons": {k: sum(1 for v in a.values() if v.startswith(k))
                                                            for k in ("pinned", "us-asked", "us-tag-recent", "cn-twice")},
         "reports_weighted": round(100 * sum(m for _, m in covered) / tot["reports"], 1),
         "reports_raw": round(100 * sum(f["refs"] for f, _ in covered) / sum(f["refs"] for f in fams), 1),

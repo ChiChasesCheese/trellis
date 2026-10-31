@@ -14,7 +14,7 @@ DST = ROOT / "vault/interviews/core/leetcode/tiktok-drill/cards"
 group = sys.argv[1]
 prompt = (ROOT / f"research/companies/tiktok/agents/prompt_{group}.md").read_text(encoding="utf-8")
 line = prompt.split("**You own these leaves**")[1].split("\n")[0]
-for leaf in re.findall(r"`(a|b|p[1-5])\.([a-z0-9-]+)`", line):
+for leaf in re.findall(r"`(a|b|c|p[1-5])\.([a-z0-9-]+)`", line):
     branch, slug = leaf
     (DST / branch).mkdir(parents=True, exist_ok=True)
     for f in (SRC / branch).glob(f"tlc-{slug}-[1-5]-*.md"):

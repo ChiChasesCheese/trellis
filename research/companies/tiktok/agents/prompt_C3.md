@@ -1,0 +1,5 @@
+# Group C3
+
+Read `research/companies/tiktok/agents/prompt_C_common.md` and follow it. Group name: C3.
+
+**Your leaves:** c.robot-room-cleaner, c.roman-to-integer, c.nth-digit, c.max-stack, c.search-suggestions-system, c.champagne-tower, c.tree-diameter, c.number-of-islands-ii, c.add-bold-tag-in-string, c.replace-words, c.snakes-and-ladders, c.furthest-building-you-can-reach, c.find-all-possible-recipes-from-given-supplies, c.validate-ip-address, c.spiral-matrix-ii, c.maximum-sum-circular-subarray, c.rectangle-area, c.maximum-size-subarray-sum-equals-k, c.jump-game-iv, c.encode-and-decode-strings, c.the-maze-ii, c.insert-into-a-sorted-circular-linked-list, c.valid-mountain-array, c.reverse-substrings-between-each-pair-of-parentheses, c.shortest-subarray-to-be-removed-to-make-array-sorted, c.count-the-number-of-good-subarrays, c.number-of-adjacent-elements-with-the-same-color, c.maximum-spending-after-buying-items, c.unit-conversion-ii, c.construct-string-from-binary-tree, c.plus-one, c.graph-valid-tree, c.rearrange-string-k-distance-apart, c.concatenated-words, c.find-positive-integer-solution-for-a-given-equation, c.maximal-score-after-applying-k-operations

@@ -1,6 +1,6 @@
 # TikTok · LeetCode 公司标签题单
 
-> 由 `core/leetcode/lc_company.py` 于 2026-10-23 从 GitHub 生成，**勿手改**（重跑覆盖）。源：[liquidslr/leetcode-company-wise-problems](https://github.com/liquidslr/leetcode-company-wise-problems) · [snehasishroy/leetcode-companywise-interview-questions](https://github.com/snehasishroy/leetcode-companywise-interview-questions)。
+> 由 `core/leetcode/lc_company.py` 于 2026-10-31 从 GitHub 生成，**勿手改**（重跑覆盖）。源：[liquidslr/leetcode-company-wise-problems](https://github.com/liquidslr/leetcode-company-wise-problems) · [snehasishroy/leetcode-companywise-interview-questions](https://github.com/snehasishroy/leetcode-companywise-interview-questions)。
 > 频率是 LeetCode Premium 的相对值（0–100），不是出现次数；这份表只列链接与标签，题解去 LeetCode 看。
 
 **364 题** · A 66 / B 104 / C 194 · 本 kit 已有对应 0 题

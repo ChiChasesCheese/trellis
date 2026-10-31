@@ -56,8 +56,12 @@ def facts(index: dict[str, dict], today: date) -> dict[str, dict]:
         parts, last = [], []
         for key, label in (("tiktok", "TikTok"), ("bytedance", "字节")):
             if key in p["companies"]:
-                parts.append(f"LC {label} 热度 {p['companies'][key]['freq']}/100"
-                             + (f"（{WINDOW[p['window']]}）" if p.get("window") in WINDOW else ""))
+                # Chi (2026-10-31): the recent-window number, not the all-time one, goes first
+                if p.get("window") in WINDOW and p.get("window_freq"):
+                    parts.append(f"LC {label} {WINDOW[p['window']]}热度 {p['window_freq']}/100"
+                                 f"（全时段 {p['companies'][key]['freq']}）")
+                else:
+                    parts.append(f"LC {label} 全时段热度 {p['companies'][key]['freq']}/100")
                 break
         if slug in seen:
             parts.append(f"近一年被问：美国 {seen[slug]['us']} 次、国内 {seen[slug]['cn']} 次")
@@ -82,7 +86,7 @@ def main(argv: list[str]) -> int:
     for vault in VAULTS:
         for f in sorted(vault.glob("*/tlc-*.md")):
             text = f.read_text(encoding="utf-8")
-            node = re.search(r"^node: (?:a|b|p[1-5])\.(\S+)$", text, re.M)
+            node = re.search(r"^node: (?:a|b|c|p[1-5])\.(\S+)$", text, re.M)
             if not node or node.group(1) not in info or not ("-0-whole" in f.name or "-1-signal" in f.name):
                 continue
             q = text.split("## A", 1)
