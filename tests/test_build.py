@@ -39,3 +39,11 @@ def test_double_brackets_inside_code_are_not_wikilinks():
     assert "<code>a = [[0]] * 3</code>" in html
     assert '<span class="ref">链接</span>' in html
     assert 'class="ref">1<' not in html
+
+
+def test_several_examples_fold_separately():
+    from trellis.build import _html
+    html = _html("**信号。** 甲\n\n**例题：** LC 1\n\n```python\nalpha = 1\n```\n\n**例题：** LC 2\n\n```python\nbeta = 2\n```\n")
+    assert html.count('<details class="example">') == 2
+    assert html.index("LC 1") < html.index("alpha") < html.index("LC 2") < html.index("beta")
+    assert html.index("alpha") < html.index("</details>") < html.index("LC 2")

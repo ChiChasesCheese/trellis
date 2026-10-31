@@ -48,6 +48,19 @@ def _break_semicolons(html: str) -> str:
     return "".join(p if i % 2 else p.replace("；", "；<br>") for i, p in enumerate(parts))
 
 
+_EXAMPLE_LEAD = '<p><span class="label">例题</span>'
+
+
+def _fold_examples(html: str) -> str:
+    """Each **例题：** paragraph opens a folded block that runs to the next 例题 or the end of the card."""
+    head, *examples = html.split(_EXAMPLE_LEAD)
+    folded = []
+    for ex in examples:
+        title, _, body = ex.partition("</p>")
+        folded.append(f'<details class="example"><summary><span class="label">例题</span>{title}</summary>{body}</details>')
+    return head + "".join(folded)
+
+
 def _blank_before_lists(text: str) -> str:
     """Markdown needs a blank line before a list; cards often put one right under a bold lead line."""
     out: list[str] = []
@@ -190,6 +203,7 @@ td, th { border: 1px solid var(--rule); padding: 5px 10px; }
 .fig { margin: 12px 0; text-align: center; }
 .fig svg { max-width: 100%; height: auto; color: var(--ink); }
 details.example { margin-top: 18px; padding-top: 10px; border-top: 1px solid var(--rule); }
+details.example + details.example { margin-top: 8px; }
 details.example > summary { cursor: pointer; list-style: none; color: var(--accent); }
 details.example > summary::-webkit-details-marker { display: none; }
 details.example > summary::after { content: " ▸"; color: var(--dim); }
@@ -229,8 +243,7 @@ def _html(text: str) -> str:
         html = html.replace(f"<p>TRELLISSVG{i}</p>", f'<div class="fig">{svg}</div>')
     html = _TITLE.sub(lambda m: f'<p class="title">{m.group(1)}<span class="meta">{m.group(2)}</span></p>', html, count=1)
     html = _LABEL.sub(lambda m: f'<p><span class="label">{m.group(1)}</span>', html)
-    html = _EXAMPLE.sub(lambda m: f'<details class="example"><summary><span class="label">例题</span>{m.group(1)}'
-                                  f'</summary>{m.group(2)}</details>', html)
+    html = _fold_examples(html)
     return _break_semicolons(html)
 
 
