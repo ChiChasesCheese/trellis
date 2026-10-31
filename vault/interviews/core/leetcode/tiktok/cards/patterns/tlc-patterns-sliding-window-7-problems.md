@@ -36,3 +36,299 @@ step: 7
 - LC 395 至少有 K 个重复字符的最长子串（约束不单调，枚举种类数）
 
 提示：先判断**最长还是最短**决定更新位置；再判断约束是否单调，不单调就换前缀和或枚举。
+
+**例题：** LC 3 无重复字符的最长子串
+
+字符串 `s`，求不含重复字符的最长子串的长度；`0 <= s.length <= 10^5`。
+
+```python
+def length_of_longest_substring(s: str) -> int:
+    last: dict[str, int] = {}
+    best = left = 0
+    for right, ch in enumerate(s):
+        if last.get(ch, -1) >= left:
+            left = last[ch] + 1
+        last[ch] = right
+        best = max(best, right - left + 1)
+    return best
+```
+
+**例题：** LC 340 至多包含 K 个不同字符的最长子串
+
+字符串 `s` 和整数 `k`，求至多含 `k` 个不同字符的最长子串的长度；`s.length <= 5 * 10^4`，`0 <= k <= 50`。
+
+```python
+from collections import Counter
+def length_of_longest_substring_k_distinct(s: str, k: int) -> int:
+    count: Counter[str] = Counter()
+    left = best = 0
+    for right, ch in enumerate(s):
+        count[ch] += 1
+        while len(count) > k:
+            out = s[left]
+            count[out] -= 1
+            if count[out] == 0:
+                del count[out]
+            left += 1
+        best = max(best, right - left + 1)
+    return best
+```
+
+**例题：** LC 904 水果成篮
+
+`fruits[i]` 是第 `i` 棵树的水果种类，两个篮子各装一种，从任一棵树起只能向右连续采摘，求最多摘几个；`fruits.length <= 10^5`。
+
+```python
+from collections import Counter
+def total_fruit(fruits: list[int]) -> int:
+    count: Counter[int] = Counter()
+    best = left = 0
+    for right, kind in enumerate(fruits):
+        count[kind] += 1
+        while len(count) > 2:
+            gone = fruits[left]
+            count[gone] -= 1
+            if count[gone] == 0:
+                del count[gone]
+            left += 1
+        best = max(best, right - left + 1)
+    return best
+```
+
+**例题：** LC 424 替换后的最长重复字符
+
+大写字符串 `s`，最多把 `k` 个字符改成任意字母，求能得到的最长相同字母子串的长度；`s.length <= 10^5`，`0 <= k <= s.length`。
+
+```python
+from collections import Counter
+def character_replacement(s: str, k: int) -> int:
+    count: Counter[str] = Counter()
+    max_freq = left = 0
+    for right, ch in enumerate(s):
+        count[ch] += 1
+        max_freq = max(max_freq, count[ch])
+        if right - left + 1 - max_freq > k:
+            count[s[left]] -= 1
+            left += 1
+    return len(s) - left
+```
+
+**例题：** LC 845 数组中的最长山脉
+
+山脉是长度不小于 `3`、先严格上升再严格下降的连续子数组，求 `arr` 中最长山脉的长度，没有返回 `0`；`arr.length <= 10^4`。
+
+```python
+def longest_mountain(arr: list[int]) -> int:
+    n = len(arr)
+    best = 0
+    i = 1
+    while i < n - 1:
+        if arr[i - 1] < arr[i] > arr[i + 1]:
+            left = i - 1
+            while left > 0 and arr[left - 1] < arr[left]:
+                left -= 1
+            right = i + 1
+            while right < n - 1 and arr[right] > arr[right + 1]:
+                right += 1
+            best = max(best, right - left + 1)
+            i = right
+        else:
+            i += 1
+    return best
+```
+
+**例题：** LC 209 长度最小的子数组
+
+正整数数组 `nums` 和 `target`，求和不小于 `target` 的最短连续子数组的长度，没有返回 `0`；`nums.length <= 10^5`。
+
+```python
+def min_sub_array_len(target: int, nums: list[int]) -> int:
+    best = len(nums) + 1
+    left = total = 0
+    for right, x in enumerate(nums):
+        total += x
+        while total >= target:
+            best = min(best, right - left + 1)
+            total -= nums[left]
+            left += 1
+    return best if best <= len(nums) else 0
+```
+
+**例题：** LC 76 最小覆盖子串
+
+字符串 `s` 和 `t`，求 `s` 中包含 `t` 全部字符（含重复次数）的最短子串，没有返回 `""`；`s.length, t.length <= 10^5`。
+
+```python
+from collections import Counter
+def min_window(s: str, t: str) -> str:
+    need = Counter(t)
+    missing = len(t)
+    best_l, best_len = 0, len(s) + 1
+    left = 0
+    for right, ch in enumerate(s):
+        if need[ch] > 0:
+            missing -= 1
+        need[ch] -= 1
+        if missing == 0:
+            while need[s[left]] < 0:
+                need[s[left]] += 1
+                left += 1
+            if right - left + 1 < best_len:
+                best_l, best_len = left, right - left + 1
+            need[s[left]] += 1
+            missing += 1
+            left += 1
+    return "" if best_len > len(s) else s[best_l : best_l + best_len]
+```
+
+**例题：** LC 438 找到字符串中所有字母异位词
+
+字符串 `s` 和 `p`，返回 `s` 中所有 `p` 的异位词子串的起始下标；`s.length, p.length <= 3 * 10^4`，小写字母。
+
+```python
+from collections import Counter
+def find_anagrams(s: str, p: str) -> list[int]:
+    m = len(p)
+    need = Counter(p)
+    unbalanced = len(need)
+    ans: list[int] = []
+    def shift(c: str, d: int) -> int:
+        was = need[c] != 0
+        need[c] += d
+        return (need[c] != 0) - was
+    for right, ch in enumerate(s):
+        unbalanced += shift(ch, -1)
+        if right >= m:
+            unbalanced += shift(s[right - m], +1)
+        if unbalanced == 0:
+            ans.append(right - m + 1)
+    return ans
+```
+
+**例题：** LC 1151 最少交换次数来组合所有的 1
+
+二进制数组 `data`，每次交换任意两个位置，求把所有 `1` 聚成一段的最少交换次数；`data.length <= 10^5`。
+
+```python
+def min_swaps(data: list[int]) -> int:
+    w = sum(data)
+    cur = sum(data[:w])
+    best = cur
+    for i in range(w, len(data)):
+        cur += data[i] - data[i - w]
+        best = max(best, cur)
+    return w - best
+```
+
+**例题：** LC 2134 最少交换次数来组合所有的 1 II
+
+同 LC 1151，但数组是环形的（首尾相邻）；`nums.length <= 10^5`。
+
+```python
+def min_swaps(nums: list[int]) -> int:
+    n, ones = len(nums), sum(nums)
+    window = sum(nums[:ones])
+    best = window
+    for i in range(ones, ones + n - 1):
+        window += nums[i % n] - nums[(i - ones) % n]
+        best = max(best, window)
+    return ones - best
+```
+
+**例题：** LC 1248 统计「优美子数组」
+
+整数数组 `nums` 和 `k`，统计恰好含 `k` 个奇数的连续子数组个数；`nums.length <= 50000`，`1 <= k <= nums.length`。
+
+```python
+def number_of_subarrays(nums: list[int], k: int) -> int:
+    seen = [0] * (len(nums) + 1)
+    seen[0] = 1
+    odd = ans = 0
+    for x in nums:
+        odd += x & 1
+        if odd >= k:
+            ans += seen[odd - k]
+        seen[odd] += 1
+    return ans
+```
+
+**例题：** LC 2799 统计完全子数组的数目
+
+正整数数组 `nums`，统计不同元素个数等于整个数组不同元素个数的子数组数；`nums.length <= 1000`，`nums[i] <= 2000`。
+
+```python
+from collections import Counter
+def count_complete_subarrays(nums: list[int]) -> int:
+    n, total = len(nums), len(set(nums))
+    cnt: Counter[int] = Counter()
+    ans = right = 0
+    for left in range(n):
+        while right < n and len(cnt) < total:
+            cnt[nums[right]] += 1
+            right += 1
+        if len(cnt) < total:
+            break
+        ans += n - right + 1
+        cnt[nums[left]] -= 1
+        if cnt[nums[left]] == 0:
+            del cnt[nums[left]]
+    return ans
+```
+
+**例题：** LC 239 滑动窗口最大值
+
+大小为 `k` 的窗口从左到右滑过 `nums`，返回每个窗口的最大值；`nums.length <= 10^5`，`1 <= k <= nums.length`。
+
+```python
+from collections import deque
+def max_sliding_window(nums: list[int], k: int) -> list[int]:
+    window: deque[int] = deque()
+    ans: list[int] = []
+    for i, x in enumerate(nums):
+        while window and nums[window[-1]] <= x:
+            window.pop()
+        window.append(i)
+        if window[0] <= i - k:
+            window.popleft()
+        if i >= k - 1:
+            ans.append(nums[window[0]])
+    return ans
+```
+
+**例题：** LC 3086 拾起 K 个 1 需要的最少行动次数
+
+二进制数组 `nums`，Alice 站在一个下标，每次行动可把一个 `0` 改成 `1`（至多 `maxChanges` 次）或交换相邻的 `1` 和 `0`，求恰好拾起 `k` 个 `1` 的最少行动数；`2 <= n <= 10^5`，`maxChanges + sum(nums) >= k`。
+
+```python
+from itertools import accumulate, groupby
+def minimum_moves(nums: list[int], k: int, max_changes: int) -> int:
+    longest_run = max((len(list(g)) for v, g in groupby(nums) if v), default=0)
+    c = min(longest_run, 3, k)
+    if max_changes >= k - c:
+        return max(c - 1, 0) + 2 * (k - c)
+    need = k - max_changes
+    pos = [i for i, x in enumerate(nums) if x]
+    pre = list(accumulate(pos, initial=0))
+    def cost(l: int) -> int:
+        r, m = l + need, l + need // 2
+        left = pos[m] * (m - l) - (pre[m] - pre[l])
+        right = (pre[r] - pre[m + 1]) - pos[m] * (r - m - 1)
+        return left + right
+    return 2 * max_changes + min(map(cost, range(len(pos) - need + 1)))
+```
+
+**例题：** LC 395 至少有 K 个重复字符的最长子串
+
+小写字符串 `s` 和 `k`，求最长子串，使其中每个字符出现次数都不少于 `k`，返回长度；`s.length <= 10^4`。
+
+```python
+from collections import Counter
+def longest_substring(s: str, k: int) -> int:
+    if len(s) < k:
+        return 0
+    count = Counter(s)
+    bad = next((ch for ch, c in count.items() if c < k), None)
+    if bad is None:
+        return len(s)
+    return max(longest_substring(part, k) for part in s.split(bad))
+```

@@ -37,3 +37,279 @@ step: 8
 - LC 198 打家劫舍
 
 提示：先找反例；找不到就尝试交换论证；仍不确定就写 DP 兜底。
+
+**例题：** LC 55 跳跃游戏
+
+`nums[i]` 是在下标 `i` 最多能向前跳的距离，从下标 `0` 出发，判断能否到达最后一个下标；`nums.length <= 10^4`。
+
+```python
+def can_jump(nums: list[int]) -> bool:
+    reach = 0
+    for i, step in enumerate(nums):
+        if i > reach:
+            return False
+        reach = max(reach, i + step)
+    return True
+```
+
+**例题：** LC 45 跳跃游戏 II
+
+同跳跃游戏，保证能到达最后一个下标，求最少跳跃次数；`nums.length <= 10^4`，`nums[i] <= 1000`。
+
+```python
+def jump(nums: list[int]) -> int:
+    jumps = cur_end = farthest = 0
+    for i in range(len(nums) - 1):
+        farthest = max(farthest, i + nums[i])
+        if i == cur_end:
+            jumps += 1
+            cur_end = farthest
+    return jumps
+```
+
+**例题：** LC 134 加油站
+
+环形路线上 `gas[i]` 是加油量，`cost[i]` 是到下一站的耗油，油箱无限、起始为空；返回能绕一圈的唯一起点，不存在返回 `-1`；`n <= 10^5`。
+
+```python
+def can_complete_circuit(gas: list[int], cost: list[int]) -> int:
+    total = tank = start = 0
+    for i, (g, c) in enumerate(zip(gas, cost)):
+        diff = g - c
+        total += diff
+        tank += diff
+        if tank < 0:
+            start, tank = i + 1, 0
+    return start if total >= 0 else -1
+```
+
+**例题：** LC 670 最大交换
+
+非负整数 `num`，至多交换其中两位数字一次，返回能得到的最大值；`0 <= num <= 10^8`。
+
+```python
+def maximum_swap(num: int) -> int:
+    digits = list(str(num))
+    last = {d: i for i, d in enumerate(digits)}
+    for i, d in enumerate(digits):
+        for big in "9876543210":
+            if big <= d:
+                break
+            if last.get(big, -1) > i:
+                digits[i], digits[last[big]] = digits[last[big]], digits[i]
+                return int("".join(digits))
+    return num
+```
+
+**例题：** LC 402 移掉 K 位数字
+
+数字字符串 `num` 移掉 `k` 位使剩下的数最小，结果去掉前导零，全移掉返回 `"0"`；`1 <= k <= num.length <= 10^5`。
+
+```python
+def remove_kdigits(num: str, k: int) -> str:
+    stack: list[str] = []
+    for d in num:
+        while k and stack and stack[-1] > d:
+            stack.pop()
+            k -= 1
+        stack.append(d)
+    stack = stack[: len(stack) - k]
+    return "".join(stack).lstrip("0") or "0"
+```
+
+**例题：** LC 316 去除重复字母
+
+小写字符串 `s`，去掉重复字母使每个字母只出现一次，保持相对顺序且字典序最小；`s.length <= 10^4`。
+
+```python
+def remove_duplicate_letters(s: str) -> str:
+    last = {ch: i for i, ch in enumerate(s)}
+    stack: list[str] = []
+    in_stack: set[str] = set()
+    for i, ch in enumerate(s):
+        if ch in in_stack:
+            continue
+        while stack and stack[-1] > ch and last[stack[-1]] > i:
+            in_stack.discard(stack.pop())
+        stack.append(ch)
+        in_stack.add(ch)
+    return "".join(stack)
+```
+
+**例题：** LC 1081 不同字符的最小子序列
+
+返回小写字符串 `s` 的字典序最小的子序列，要求包含 `s` 中每种字符恰好一次（与 LC 316 相同）；`s.length <= 1000`。
+
+```python
+def smallest_subsequence(s: str) -> str:
+    last = {ch: i for i, ch in enumerate(s)}
+    stack: list[str] = []
+    in_stack: set[str] = set()
+    for i, ch in enumerate(s):
+        if ch in in_stack:
+            continue
+        while stack and stack[-1] > ch and last[stack[-1]] > i:
+            in_stack.discard(stack.pop())
+        stack.append(ch)
+        in_stack.add(ch)
+    return "".join(stack)
+```
+
+**例题：** LC 3474 字典序最小的生成字符串
+
+`str1` 只含 `T/F`，`str2` 是小写串；长度 `n + m - 1` 的 `word` 要求：`str1[i]` 为 `T` 时 `word[i..i+m-1] == str2`，为 `F` 时不等。返回字典序最小的 `word`，不存在返回 `""`；`n <= 10^4`，`m <= 500`。
+
+```python
+def generate_string(str1: str, str2: str) -> str:
+    n, m = len(str1), len(str2)
+    word: list[str | None] = [None] * (n + m - 1)
+    for i, flag in enumerate(str1):
+        if flag != "T":
+            continue
+        for j, ch in enumerate(str2):
+            if word[i + j] not in (None, ch):
+                return ""
+            word[i + j] = ch
+    forced = [ch is not None for ch in word]
+    res = [ch or "a" for ch in word]
+    for i, flag in enumerate(str1):
+        if flag == "F" and res[i : i + m] == list(str2):
+            for j in range(i + m - 1, i - 1, -1):
+                if not forced[j]:
+                    res[j] = "b"
+                    break
+            else:
+                return ""
+    return "".join(res)
+```
+
+**例题：** LC 678 有效的括号字符串
+
+字符串只含 `(`、`)`、`*`，其中 `*` 可当 `(`、`)` 或空串，判断是否是有效括号串；`s.length <= 100`。
+
+```python
+def check_valid_string(s: str) -> bool:
+    lo = hi = 0
+    for ch in s:
+        lo += 1 if ch == '(' else -1
+        hi += 1 if ch != ')' else -1
+        if hi < 0:
+            return False
+        lo = max(lo, 0)
+    return lo == 0
+```
+
+**例题：** LC 122 买卖股票的最佳时机 II
+
+`prices[i]` 是第 `i` 天股价，可多次买卖但同时最多持有一股，求最大利润；`prices.length <= 3 * 10^4`。
+
+```python
+from itertools import pairwise
+def max_profit(prices: list[int]) -> int:
+    return sum(max(today - yesterday, 0) for yesterday, today in pairwise(prices))
+```
+
+**例题：** LC 56 合并区间
+
+合并所有重叠区间（端点相接也算重叠），返回互不重叠的区间数组；`intervals.length <= 10^4`，端点 `<= 10^4`。
+
+```python
+def merge(intervals: list[list[int]]) -> list[list[int]]:
+    merged: list[list[int]] = []
+    for start, end in sorted(intervals):
+        if merged and start <= merged[-1][1]:
+            merged[-1][1] = max(merged[-1][1], end)
+        else:
+            merged.append([start, end])
+    return merged
+```
+
+**例题：** LC 253 会议室 II
+
+会议时间 `intervals[i] = [start, end]`，一个会议结束的时刻可立刻开始下一个，求最少需要几间会议室；`intervals.length <= 10^4`。
+
+```python
+import heapq
+def min_meeting_rooms(intervals: list[list[int]]) -> int:
+    ends: list[int] = []
+    for start, end in sorted(intervals):
+        if ends and ends[0] <= start:
+            heapq.heapreplace(ends, end)
+        else:
+            heapq.heappush(ends, end)
+    return len(ends)
+```
+
+**例题：** LC 767 重构字符串
+
+重新排列小写字符串 `s`，使相邻字符都不同，可以就返回任意一种，不行返回 `""`；`s.length <= 500`。
+
+```python
+from collections import Counter
+from heapq import heapify, heappop, heappush
+def reorganize_string(s: str) -> str:
+    heap = [(-cnt, ch) for ch, cnt in Counter(s).items()]
+    heapify(heap)
+    out: list[str] = []
+    held = (0, "")
+    while heap:
+        cnt, ch = heappop(heap)
+        out.append(ch)
+        if held[0]:
+            heappush(heap, held)
+        held = (cnt + 1, ch)
+    return "".join(out) if len(out) == len(s) else ""
+```
+
+**例题：** LC 1405 最长快乐字符串
+
+只用最多 `a` 个 `'a'`、`b` 个 `'b'`、`c` 个 `'c'` 拼出不含 `aaa`、`bbb`、`ccc` 的最长字符串，返回任意一个；`0 <= a, b, c <= 100`。
+
+```python
+import heapq
+def longest_diverse_string(a: int, b: int, c: int) -> str:
+    heap = [(-n, ch) for n, ch in ((a, "a"), (b, "b"), (c, "c")) if n]
+    heapq.heapify(heap)
+    out: list[str] = []
+    while heap:
+        n, ch = heapq.heappop(heap)
+        if out[-2:] == [ch, ch]:
+            if not heap:
+                break
+            n2, ch2 = heapq.heappop(heap)
+            out.append(ch2)
+            if n2 + 1:
+                heapq.heappush(heap, (n2 + 1, ch2))
+            heapq.heappush(heap, (n, ch))
+        else:
+            out.append(ch)
+            if n + 1:
+                heapq.heappush(heap, (n + 1, ch))
+    return "".join(out)
+```
+
+**例题：** LC 322 零钱兑换
+
+`coins` 是面额（每种数量无限），求凑成 `amount` 的最少硬币数，凑不出返回 `-1`；`coins.length <= 12`，`amount <= 10^4`。
+
+```python
+def coin_change(coins: list[int], amount: int) -> int:
+    inf = amount + 1
+    dp = [0] + [inf] * amount
+    for c in coins:
+        for a in range(c, amount + 1):
+            dp[a] = min(dp[a], dp[a - c] + 1)
+    return dp[amount] if dp[amount] < inf else -1
+```
+
+**例题：** LC 198 打家劫舍
+
+一排房屋 `nums[i]` 是现金，相邻两间不能同时偷，求最大金额；`nums.length <= 100`，`nums[i] <= 400`。
+
+```python
+def rob(nums: list[int]) -> int:
+    skip = take = 0
+    for x in nums:
+        skip, take = max(skip, take), skip + x
+    return max(skip, take)
+```

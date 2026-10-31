@@ -38,3 +38,299 @@ step: 9
 - LC 670 最大交换
 
 提示：先问数据范围（能否直接模拟）、边界（空 / 单行 / 进位 / 前导零）、整数规则（取模、除法截断）；能用内置（`gcd`、`pow`、`bit_count`、`isqrt`）就先用，再被要求时手写。
+
+**例题：** LC 1071 字符串的最大公因子
+
+对字符串 `t` 和 `s`，若 `s` 是 `t` 重复若干次，则称 `t` 能除尽 `s`；给 `str1`、`str2`（长度 `<= 1000`，大写字母），返回能同时除尽两者的最长字符串，没有则 `""`。
+
+```python
+from math import gcd
+def gcd_of_strings(str1: str, str2: str) -> str:
+    if str1 + str2 != str2 + str1:
+        return ""
+    return str1[:gcd(len(str1), len(str2))]
+```
+
+**例题：** LC 365 水壶问题
+
+有容量 `x`、`y`（`<= 10^3`）的两个水壶，水源无限，可以装满、清空、互相倾倒；判断能否使两壶水量之和恰好为 `target`。
+
+```python
+from math import gcd
+def can_measure_water(x: int, y: int, target: int) -> bool:
+    return target <= x + y and target % gcd(x, y) == 0
+```
+
+**例题：** LC 2523 范围内最接近的两个质数
+
+给 `1 <= left <= right <= 10^6`，在区间内找差最小的相邻质数对 `num1 < num2`（差相同取 `num1` 最小），不足两个质数返回 `[-1, -1]`。
+
+```python
+from itertools import pairwise
+from math import isqrt
+def closest_primes(left: int, right: int) -> list[int]:
+    sieve = bytearray([1]) * (right + 1)
+    sieve[:2] = b"\x00\x00"
+    for p in range(2, isqrt(right) + 1):
+        if sieve[p]:
+            sieve[p * p :: p] = bytes(len(range(p * p, right + 1, p)))
+    primes = [p for p in range(left, right + 1) if sieve[p]]
+    if len(primes) < 2:
+        return [-1, -1]
+    a, b = min(pairwise(primes), key=lambda pair: pair[1] - pair[0])
+    return [a, b]
+```
+
+**例题：** LC 69 x 的平方根
+
+给非负整数 `x`（`0 <= x <= 2^31 - 1`），返回 `x` 的算术平方根向下取整的整数部分，不得使用内置指数函数或运算符。
+
+```python
+def my_sqrt(x: int) -> int:
+    lo, hi = 0, x
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if mid * mid <= x:
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+```
+
+**例题：** LC 442 数组中重复的数据
+
+长度为 `n` 的数组 `nums`（`n <= 10^5`）里每个数在 `[1, n]` 内且出现一次或两次，找出所有出现两次的数，要求 `O(n)` 时间、只用常数额外空间。
+
+```python
+def find_duplicates(nums: list[int]) -> list[int]:
+    res: list[int] = []
+    for x in nums:
+        i = abs(x) - 1
+        if nums[i] < 0:
+            res.append(abs(x))
+        else:
+            nums[i] = -nums[i]
+    return res
+```
+
+**例题：** LC 78 子集
+
+同 LC 78，用位掩码枚举：第 `mask` 个子集取 `mask` 二进制里为 1 的位对应的元素（`nums` 互不相同，长度 `<= 10`，共 `2^n` 个子集）。
+
+```python
+def subsets(nums: list[int]) -> list[list[int]]:
+    n = len(nums)
+    return [[nums[i] for i in range(n) if mask >> i & 1] for mask in range(1 << n)]
+```
+
+**例题：** LC 31 下一个排列
+
+给数组 `nums`（长度 `<= 100`，元素可重复），原地改成字典序的下一个排列；已是最大排列则改成最小排列，只用常数额外空间。
+
+```python
+def next_permutation(nums: list[int]) -> None:
+    n = len(nums)
+    i = n - 2
+    while i >= 0 and nums[i] >= nums[i + 1]:
+        i -= 1
+    if i >= 0:
+        j = n - 1
+        while nums[j] <= nums[i]:
+            j -= 1
+        nums[i], nums[j] = nums[j], nums[i]
+    lo, hi = i + 1, n - 1
+    while lo < hi:
+        nums[lo], nums[hi] = nums[hi], nums[lo]
+        lo, hi = lo + 1, hi - 1
+```
+
+**例题：** LC 54 螺旋矩阵
+
+给 `m x n` 矩阵（`m, n <= 10`），按顺时针螺旋顺序返回所有元素。
+
+```python
+def spiral_order(matrix: list[list[int]]) -> list[int]:
+    result: list[int] = []
+    top, bottom = 0, len(matrix) - 1
+    left, right = 0, len(matrix[0]) - 1
+    while top <= bottom and left <= right:
+        result.extend(matrix[top][left : right + 1])
+        result.extend(row[right] for row in matrix[top + 1 : bottom + 1])
+        if top < bottom and left < right:
+            result.extend(reversed(matrix[bottom][left:right]))
+            result.extend(matrix[r][left] for r in range(bottom - 1, top, -1))
+        top, bottom, left, right = top + 1, bottom - 1, left + 1, right - 1
+    return result
+```
+
+**例题：** LC 48 旋转图像
+
+给 `n x n` 矩阵（`n <= 20`），原地顺时针旋转 `90` 度，不允许另开矩阵。
+
+```python
+def rotate(matrix: list[list[int]]) -> None:
+    n = len(matrix)
+    for i in range(n):
+        for j in range(i + 1, n):
+            matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+    for row in matrix:
+        row.reverse()
+```
+
+**例题：** LC 1041 困于环中的机器人
+
+机器人从原点面朝北出发，无限循环执行指令串 `instructions`（长度 `<= 100`，`G` 前进一步、`L`/`R` 左右转 `90` 度），判断它是否会被困在某个环里。
+
+```python
+def is_robot_bounded(instructions: str) -> bool:
+    x = y = 0
+    dx, dy = 0, 1
+    for ch in instructions:
+        if ch == "G":
+            x, y = x + dx, y + dy
+        elif ch == "L":
+            dx, dy = -dy, dx
+        else:
+            dx, dy = dy, -dx
+    return (x, y) == (0, 0) or (dx, dy) != (0, 1)
+```
+
+**例题：** LC 1860 增长的内存泄露
+
+给两个内存条的剩余位数 `memory1`、`memory2`（`<= 2^31 - 1`）；第 `i` 秒向剩余更多的那个（相等取第一个）分配 `i` 位，两者都不足时崩溃；返回 `[崩溃时刻, 内存条 1 剩余, 内存条 2 剩余]`。
+
+```python
+def mem_leak(memory1: int, memory2: int) -> list[int]:
+    second = 1
+    while max(memory1, memory2) >= second:
+        if memory1 >= memory2:
+            memory1 -= second
+        else:
+            memory2 -= second
+        second += 1
+    return [second, memory1, memory2]
+```
+
+**例题：** LC 2502 设计内存分配器
+
+实现 `Allocator(n)`（`n <= 1000`）：`allocate(size, mID)` 在最左侧找 `size` 个连续空闲单元并标记为 `mID`，返回起始下标或 `-1`；`freeMemory(mID)` 释放 `mID` 的所有单元并返回个数。
+
+```python
+class Allocator:
+    def __init__(self, n: int) -> None:
+        self.mem = [0] * n
+    def allocate(self, size: int, mID: int) -> int:
+        run = 0
+        for i, owner in enumerate(self.mem):
+            run = run + 1 if owner == 0 else 0
+            if run == size:
+                start = i - size + 1
+                self.mem[start:i + 1] = [mID] * size
+                return start
+        return -1
+    def freeMemory(self, mID: int) -> int:
+        freed = 0
+        for i, owner in enumerate(self.mem):
+            if owner == mID:
+                self.mem[i] = 0
+                freed += 1
+        return freed
+```
+
+**例题：** LC 415 字符串相加
+
+给两个字符串形式的非负整数 `num1`、`num2`（长度 `<= 10^4`，无前导零），返回它们的和（字符串），不能直接转成整数，也不能用大整数库。
+
+```python
+from itertools import zip_longest
+def add_strings(num1: str, num2: str) -> str:
+    digits: list[str] = []
+    carry = 0
+    for a, b in zip_longest(reversed(num1), reversed(num2), fillvalue="0"):
+        carry, d = divmod(int(a) + int(b) + carry, 10)
+        digits.append(str(d))
+    if carry:
+        digits.append("1")
+    return "".join(reversed(digits))
+```
+
+**例题：** LC 43 字符串相乘
+
+给两个字符串形式的非负整数 `num1`、`num2`（长度 `<= 200`），返回乘积（字符串），不能直接转成整数，也不能用大整数库。
+
+```python
+def multiply(num1: str, num2: str) -> str:
+    a = [int(c) for c in reversed(num1)]
+    b = [int(c) for c in reversed(num2)]
+    res = [0] * (len(a) + len(b))
+    for i, x in enumerate(a):
+        for j, y in enumerate(b):
+            res[i + j] += x * y
+    carry = 0
+    for k in range(len(res)):
+        carry, res[k] = divmod(res[k] + carry, 10)
+    while len(res) > 1 and res[-1] == 0:
+        res.pop()
+    return "".join(map(str, reversed(res)))
+```
+
+**例题：** LC 68 文本左右对齐
+
+给单词数组 `words` 和宽度 `maxWidth`（`<= 100`），贪心地每行放尽量多的单词，排成每行恰好 `maxWidth` 个字符的两端对齐文本：空格尽量均匀，多出的空格给左侧；最后一行和只含一个单词的行左对齐。
+
+```python
+def full_justify(words: list[str], max_width: int) -> list[str]:
+    lines: list[str] = []
+    i, n = 0, len(words)
+    while i < n:
+        j, used = i + 1, len(words[i])
+        while j < n and used + 1 + len(words[j]) <= max_width:
+            used += 1 + len(words[j])
+            j += 1
+        line = words[i:j]
+        if j == n or len(line) == 1:
+            lines.append(" ".join(line).ljust(max_width))
+        else:
+            gaps = len(line) - 1
+            spaces = max_width - sum(map(len, line))
+            q, r = divmod(spaces, gaps)
+            parts = [w + " " * (q + (k < r)) for k, w in enumerate(line[:-1])]
+            lines.append("".join(parts) + line[-1])
+        i = j
+    return lines
+```
+
+**例题：** LC 189 轮转数组
+
+给整数数组 `nums`（长度 `<= 10^5`）和 `k`（`0 <= k <= 10^5`），原地把数组向右轮转 `k` 个位置。
+
+```python
+def rotate(nums: list[int], k: int) -> None:
+    n = len(nums)
+    k %= n
+    def reverse(i: int, j: int) -> None:
+        while i < j:
+            nums[i], nums[j] = nums[j], nums[i]
+            i, j = i + 1, j - 1
+    reverse(0, n - 1)
+    reverse(0, k - 1)
+    reverse(k, n - 1)
+```
+
+**例题：** LC 670 最大交换
+
+给非负整数 `num`（`0 <= num <= 10^8`），最多交换其中两位数字一次，返回能得到的最大值。
+
+```python
+def maximum_swap(num: int) -> int:
+    digits = list(str(num))
+    last = {d: i for i, d in enumerate(digits)}
+    for i, d in enumerate(digits):
+        for big in "9876543210":
+            if big <= d:
+                break
+            if last.get(big, -1) > i:
+                digits[i], digits[last[big]] = digits[last[big]], digits[i]
+                return int("".join(digits))
+    return num
+```

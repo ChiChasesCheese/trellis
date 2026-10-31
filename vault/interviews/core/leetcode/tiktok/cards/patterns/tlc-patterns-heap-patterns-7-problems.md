@@ -36,3 +36,230 @@ step: 7
 - LC 787 K 站中转内最便宜的航班（见最短路一组）
 
 提示：先写出「每一步要从剩余的东西里取哪个最值」，再决定存什么键、是否要暂存刚用过的项、是否需要懒删除。
+
+**例题：** LC 215 数组中的第 K 个最大元素
+
+给整数数组 `nums`（长度 `<= 10^5`）和 `k`，返回排序后的第 `k` 个最大元素（重复值各算一个）。
+
+```python
+import random
+def find_kth_largest(nums: list[int], k: int) -> int:
+    while True:
+        pivot = random.choice(nums)
+        bigger = [x for x in nums if x > pivot]
+        equal = nums.count(pivot)
+        if k <= len(bigger):
+            nums = bigger
+        elif k <= len(bigger) + equal:
+            return pivot
+        else:
+            k -= len(bigger) + equal
+            nums = [x for x in nums if x < pivot]
+```
+
+**例题：** LC 347 前 K 个高频元素
+
+给整数数组 `nums`（长度 `<= 10^5`）和 `k`，返回出现次数最多的前 `k` 个元素，顺序任意，答案唯一。
+
+```python
+from collections import Counter
+def top_k_frequent(nums: list[int], k: int) -> list[int]:
+    count = Counter(nums)
+    buckets: list[list[int]] = [[] for _ in range(len(nums) + 1)]
+    for x, c in count.items():
+        buckets[c].append(x)
+    ans: list[int] = []
+    for bucket in reversed(buckets):
+        ans.extend(bucket)
+        if len(ans) >= k:
+            return ans[:k]
+    return ans
+```
+
+**例题：** LC 378 有序矩阵中第 K 小的元素
+
+给 `n x n` 矩阵（`n <= 300`），每行每列都非递减，返回排序后的第 `k` 小的元素（重复值各算一个）。
+
+```python
+def kth_smallest(matrix: list[list[int]], k: int) -> int:
+    n = len(matrix)
+    def count_le(mid: int) -> int:
+        count, col = 0, n - 1
+        for row in matrix:
+            while col >= 0 and row[col] > mid:
+                col -= 1
+            count += col + 1
+        return count
+    lo, hi = matrix[0][0], matrix[-1][-1]
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if count_le(mid) >= k:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+```
+
+**例题：** LC 23 合并 K 个升序链表
+
+给 `k` 个升序链表（`k <= 10^4`，总长度 `<= 10^4`），合并成一个升序链表并返回。
+
+```python
+import heapq
+def merge_k_lists(lists: list[ListNode | None]) -> ListNode | None:
+    heap = [(node.val, i, node) for i, node in enumerate(lists) if node]
+    heapq.heapify(heap)
+    dummy = tail = ListNode()
+    while heap:
+        _, i, node = heap[0]
+        tail.next = node
+        tail = node
+        if node.next:
+            heapq.heapreplace(heap, (node.next.val, i, node.next))
+        else:
+            heapq.heappop(heap)
+    return dummy.next
+```
+
+**例题：** LC 295 数据流的中位数
+
+实现 `MedianFinder`：`addNum(num)` 加入一个整数，`findMedian()` 返回目前所有数的中位数；最多 `5 * 10^4` 次调用。
+
+```python
+from heapq import heappop, heappush, heappushpop
+class MedianFinder:
+    def __init__(self) -> None:
+        self.low: list[int] = []
+        self.high: list[int] = []
+    def addNum(self, num: int) -> None:
+        heappush(self.high, -heappushpop(self.low, -num))
+        if len(self.high) > len(self.low):
+            heappush(self.low, -heappop(self.high))
+    def findMedian(self) -> float:
+        if len(self.low) > len(self.high):
+            return float(-self.low[0])
+        return (-self.low[0] + self.high[0]) / 2
+```
+
+**例题：** LC 253 会议室 II
+
+给会议时间区间 `intervals`（`<= 10^4` 个，`0 <= start < end <= 10^6`），求同时进行的会议数的最大值，即最少需要的会议室数；一个会议结束的时刻可以立刻开始下一个。
+
+```python
+import heapq
+def min_meeting_rooms(intervals: list[list[int]]) -> int:
+    ends: list[int] = []
+    for start, end in sorted(intervals):
+        if ends and ends[0] <= start:
+            heapq.heapreplace(ends, end)
+        else:
+            heapq.heappush(ends, end)
+    return len(ends)
+```
+
+**例题：** LC 2402 会议室 III
+
+`n` 个会议室（`n <= 100`），会议（最多 `10^5` 个，开始时间互不相同）按开始时间到来，分配给编号最小的空闲房间，没有空房就延后到最先空出的房间并保持时长不变；返回举办会议次数最多的房间编号，并列取最小编号。
+
+```python
+from heapq import heappop, heappush
+def most_booked(n: int, meetings: list[list[int]]) -> int:
+    free = list(range(n))
+    busy: list[tuple[int, int]] = []
+    count = [0] * n
+    for start, end in sorted(meetings):
+        while busy and busy[0][0] <= start:
+            heappush(free, heappop(busy)[1])
+        if free:
+            room = heappop(free)
+            finish = end
+        else:
+            ready, room = heappop(busy)
+            finish = ready + (end - start)
+        count[room] += 1
+        heappush(busy, (finish, room))
+    return max(range(n), key=count.__getitem__)
+```
+
+**例题：** LC 767 重构字符串
+
+给小写字母字符串 `s`（长度 `<= 500`），重新排列使相邻字符都不同，返回任意一种排列，不可能则返回 `""`。
+
+```python
+from collections import Counter
+from heapq import heapify, heappop, heappush
+def reorganize_string(s: str) -> str:
+    heap = [(-cnt, ch) for ch, cnt in Counter(s).items()]
+    heapify(heap)
+    out: list[str] = []
+    held = (0, "")
+    while heap:
+        cnt, ch = heappop(heap)
+        out.append(ch)
+        if held[0]:
+            heappush(heap, held)
+        held = (cnt + 1, ch)
+    return "".join(out) if len(out) == len(s) else ""
+```
+
+**例题：** LC 1405 最长快乐字符串
+
+给 `a`、`b`、`c`（各 `<= 100`），构造尽可能长、只含 `a`/`b`/`c`、字符个数不超过给定值且不含 `aaa`、`bbb`、`ccc` 的字符串，返回任意一个最长的。
+
+```python
+import heapq
+def longest_diverse_string(a: int, b: int, c: int) -> str:
+    heap = [(-n, ch) for n, ch in ((a, "a"), (b, "b"), (c, "c")) if n]
+    heapq.heapify(heap)
+    out: list[str] = []
+    while heap:
+        n, ch = heapq.heappop(heap)
+        if out[-2:] == [ch, ch]:
+            if not heap:
+                break
+            n2, ch2 = heapq.heappop(heap)
+            out.append(ch2)
+            if n2 + 1:
+                heapq.heappush(heap, (n2 + 1, ch2))
+            heapq.heappush(heap, (n, ch))
+        else:
+            out.append(ch)
+            if n + 1:
+                heapq.heappush(heap, (n + 1, ch))
+    return "".join(out)
+```
+
+**例题：** LC 2456 最流行的视频创作者
+
+给长度 `n <= 10^5` 的 `creators`、`ids`、`views`，创作者的流行度是其视频播放量之和；返回所有最流行创作者及其播放量最大的视频 id（播放量并列取字典序最小的 id）。
+
+```python
+from collections import defaultdict
+def most_popular_creator(creators: list[str], ids: list[str], views: list[int]) -> list[list[str]]:
+    popularity: defaultdict[str, int] = defaultdict(int)
+    best_video: dict[str, tuple[int, str]] = {}
+    for creator, vid, view in zip(creators, ids, views):
+        popularity[creator] += view
+        candidate = (-view, vid)
+        if creator not in best_video or candidate < best_video[creator]:
+            best_video[creator] = candidate
+    top = max(popularity.values())
+    return [[c, best_video[c][1]] for c, total in popularity.items() if total == top]
+```
+
+**例题：** LC 787 K 站中转内最便宜的航班
+
+`n` 个城市（`n <= 100`）和带价格的有向航班，求从 `src` 到 `dst` 最多经过 `k` 次中转的最便宜价格，不存在返回 `-1`。
+
+```python
+from math import inf
+def find_cheapest_price(n: int, flights: list[list[int]], src: int, dst: int, k: int) -> int:
+    dp: list[list[float]] = [[inf] * n for _ in range(k + 2)]
+    dp[0][src] = 0
+    for t in range(1, k + 2):
+        dp[t] = dp[t - 1][:]
+        for u, v, w in flights:
+            if dp[t - 1][u] + w < dp[t][v]:
+                dp[t][v] = dp[t - 1][u] + w
+    return -1 if dp[k + 1][dst] == inf else int(dp[k + 1][dst])
+```
