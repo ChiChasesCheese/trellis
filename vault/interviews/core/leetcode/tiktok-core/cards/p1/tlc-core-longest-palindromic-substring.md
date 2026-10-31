@@ -4,7 +4,7 @@ node: p1.longest-palindromic-substring
 type: qa
 ---
 ## Q
-**LC 5 最长回文子串**｜Medium · LC TikTok 热度 75/100 · 近一年被问：美国 4 次、国内 8 次 · CodeTop 国内累计 140 次 · 最近 2026-10-29（国内 CodeTop） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150
+**LC 5 最长回文子串**｜Medium · LC TikTok 全时段热度 75/100 · 近一年被问：美国 4 次、国内 8 次 · CodeTop 国内累计 140 次 · 最近 2026-10-29（国内 CodeTop） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150
 
 给字符串 `s`，找出其中最长的回文子串（正着读和倒着读一样的**连续**子串）。`1 <= s.length <= 1000`，`s` 仅由数字和英文字母组成。例：`"babad"` → `"bab"`（`"aba"` 同样合法）；`"cbbd"` → `"bb"`。
 

@@ -4,7 +4,7 @@ node: b.unique-binary-search-trees
 type: qa
 ---
 ## Q
-**LC 96 不同的二叉搜索树**｜Medium · CodeTop 国内累计 20 次 · 最近 2026-04-19（国内 CodeTop）
+**LC 96 不同的二叉搜索树**｜Medium · LC TikTok 全时段热度 26/100 · CodeTop 国内累计 20 次 · 最近 2026-04-19（国内 CodeTop）
 
 给整数 `n`，求恰由 `n` 个节点组成、节点值为 `1` 到 `n` 互不相同的二叉搜索树有多少种。`1 <= n <= 19`。例：`n = 3` → `5`；`n = 1` → `1`。
 

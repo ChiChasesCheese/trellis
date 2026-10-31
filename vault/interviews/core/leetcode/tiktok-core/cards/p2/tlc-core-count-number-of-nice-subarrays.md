@@ -1,0 +1,93 @@
+---
+id: tlc-core-count-number-of-nice-subarrays
+node: p2.count-number-of-nice-subarrays
+type: qa
+---
+## Q
+**LC 1248 统计「优美子数组」**｜Medium · LC TikTok 近 30 天热度 100/100（全时段 50） · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-06-26（美国面试记录） · 也在：Amazon
+
+给整数数组 `nums` 和整数 `k`。如果某个连续子数组中**恰好**有 `k` 个奇数，就称它为「优美子数组」。返回数组中优美子数组的数目。`1 <= nums.length <= 50000`，`1 <= nums[i] <= 10^5`，`1 <= k <= nums.length`。例：`nums = [1,1,2,1,1]`，`k = 3` → `2`（`[1,1,2,1]` 和 `[1,2,1,1]`）；`nums = [2,4,6]`，`k = 1` → `0`；`nums = [2,2,2,1,2,2,1,2,2,2]`，`k = 2` → `16`。
+
+给出完整的最优解答：识别、推导、代码、复杂度、易错点、追问。
+
+## A
+**一句话。** 前缀和变形：只关心每个元素是不是奇数，前缀里奇数的个数 `odd` 就是前缀和；子数组恰好有 `k` 个奇数，等价于它两端前缀的 `odd` 相差 `k`。用数组 `seen[j]` 记「前缀奇数个数为 `j`」出现过几次，每个新前缀累加 `seen[odd - k]`。`O(n)`。
+
+**识别。** 「**恰好**」加「数子数组个数」是**前缀和加计数**的信号，把元素映射成 `0` 或 `1`（偶数 `0`，奇数 `1`），问题就是 LC 560 和为 `k` 的子数组。「恰好 `k`」在滑动窗口里很难直接做（窗口既不能太小也不能太大），常见技巧是 `至多 k 个` 减去 `至多 k-1 个`。`n = 5 * 10^4`，`O(n^2)` 约 `1.25 * 10^9`，超时。
+
+**推导。** 暴力：枚举所有子数组数奇数，`O(n^2)`（前缀计数后）。浪费：固定右端点，只想知道有多少个左端点使得区间内恰好 `k` 个奇数。令 `odd` 为当前前缀的奇数个数，左端点的前缀必须有 `odd - k` 个奇数。前缀奇数个数的取值范围是 `0` 到 `n`，用定长数组计数。
+
+**简单解法。** 暴力：枚举左端点，向右扫并数奇数，数到恰好 `k` 个就计一个，超过 `k` 个就停。
+
+```python
+def number_of_subarrays(nums: list[int], k: int) -> int:
+    ans = 0
+    for left in range(len(nums)):
+        odd = 0
+        for right in range(left, len(nums)):
+            odd += nums[right] & 1                  # 当前子数组里的奇数个数
+            if odd == k:
+                ans += 1
+            elif odd > k:
+                break                               # 奇数只增不减，后面不可能再恰好 k 个
+    return ans
+```
+
+时间 `O(n^2)`，空间 `O(1)`；`n = 5 * 10^4` 时约 `10^9` 步会超时，作开场答案再引到前缀计数。
+
+最优解：
+
+```python
+def number_of_subarrays(nums: list[int], k: int) -> int:
+    seen = [0] * (len(nums) + 1)            # seen[j]：前缀里“恰好有 j 个奇数”的位置有多少个
+    seen[0] = 1                             # 空前缀
+    odd = ans = 0
+    for x in nums:
+        odd += x & 1                        # 前缀里奇数个数
+        if odd >= k:
+            ans += seen[odd - k]            # 左边前缀的奇数个数为 odd - k，中间恰好 k 个奇数
+        seen[odd] += 1
+    return ans
+```
+
+运行：`([1,1,2,1,1], 3)` → `2`，`([2,4,6], 1)` → `0`，`([2,2,2,1,2,2,1,2,2,2], 2)` → `16`，`([1], 1)` → `1`。
+
+**复杂度。** 时间 `O(n)`；空间 `O(n)`：计数数组。
+
+**拓展优化。**
+- 滑动窗口：「恰好 `k`」= 「至多 `k`」减「至多 `k-1`」，两次扫描，`O(1)` 空间：
+```python
+def number_of_subarrays_window(nums: list[int], k: int) -> int:
+    def at_most(limit: int) -> int:                 # 奇数个数 <= limit 的子数组个数
+        if limit < 0:
+            return 0
+        left = odd = total = 0
+        for right, x in enumerate(nums):
+            odd += x & 1
+            while odd > limit:                      # 窗口里奇数太多：左端收缩
+                odd -= nums[left] & 1
+                left += 1
+            total += right - left + 1               # 以 right 结尾、起点在 [left, right] 的都合法
+        return total
+
+    return at_most(k) - at_most(k - 1)
+```
+- 按奇数位置相乘：第 `i` 个奇数作为窗口的第一个奇数时，左边起点数 × 右边终点数，求和：
+```python
+def number_of_subarrays_pos(nums: list[int], k: int) -> int:
+    pos = [-1] + [i for i, x in enumerate(nums) if x & 1] + [len(nums)]   # 两端放哨兵
+    ans = 0
+    for i in range(1, len(pos) - k):                # 窗口恰好包含 pos[i .. i+k-1] 这 k 个奇数
+        ans += (pos[i] - pos[i - 1]) * (pos[i + k] - pos[i + k - 1])   # 左边可选起点 × 右边可选终点
+    return ans
+```
+
+**易错点。**
+- 漏掉 `seen[0] = 1`：从数组开头开始的优美子数组不被计数。`[1,1,2,1,1]`，`k = 3` 得到 `1`，正确是 `2`。
+- 用滑动窗口只数“恰好 `k` 个奇数的窗口”：每个右端点只加 `1`，漏掉了左端点可以有多个的情况。`[2,2,2,1,2,2,1,2,2,2]`，`k = 2` 得到 `4`，正确是 `16`（每个窗口左边的偶数前缀给出多个合法起点）。
+- 判断奇数用 `x & 1` 或 `x % 2 == 1`；`x % 2` 对正数没问题，对负数在其他语言要小心，这里 `nums[i] >= 1`。
+
+**追问。**
+- 推广到「恰好 `k` 个满足某条件的元素」：先映射成 `0/1`，再用同样的前缀计数。
+
+**同模式。** LC 560 和为 K 的子数组、LC 930 和相同的二元子数组、LC 974 和可被 K 整除的子数组、LC 992 K 个不同整数的子数组、LC 1358 包含所有三种字符的子字符串数目。

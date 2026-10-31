@@ -25,3 +25,10 @@ the brute force is the 简单解法.
 **Resume rule:** `ls vault/interviews/core/leetcode/tiktok/cards/c/`; skip leaves that already have their card.
 
 Reply (≤ 8 lines): cards written, problems you translated from English or moved from JavaScript, anything unverified.
+
+## Comments carry the explanation (Chi, 2026-10-31)
+
+Put the reasoning **inside the code as short Chinese comments** (what each block does and why: the invariant, why this
+pointer moves, why this boundary). Clear names and comments replace prose: do not repeat in a paragraph what the code
+and its comments already say. **推导** stays a short paragraph; prose around each code block is at most one or two
+sentences. Lowest reading cost wins.

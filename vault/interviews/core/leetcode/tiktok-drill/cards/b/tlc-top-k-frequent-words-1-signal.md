@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 692 前K个高频单词**｜Medium · CodeTop 国内累计 1 次 · 最近 2026-07-22（国内 CodeTop）
+**LC 692 前K个高频单词**｜Medium · LC TikTok 全时段热度 25/100 · CodeTop 国内累计 1 次 · 最近 2026-07-22（国内 CodeTop）
 
 给单词列表 `words` 和整数 `k`，返回出现次数最多的前 `k` 个单词：按次数从高到低，次数相同的按字典序。`1 <= words.length <= 500`，`1 <= words[i].length <= 10`，小写字母，`k` 在 `[1, 不同单词的数量]` 内。进阶：`O(n log k)` 时间、`O(n)` 空间。例：`["i","love","leetcode","i","love","coding"], k = 2` → `["i","love"]`。
 

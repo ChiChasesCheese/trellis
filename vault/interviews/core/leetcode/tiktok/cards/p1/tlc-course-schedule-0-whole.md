@@ -4,7 +4,7 @@ node: p1.course-schedule
 type: qa
 ---
 ## Q
-**LC 207 课程表**｜Medium · LC TikTok 热度 88/100（近 30 天） · 近一年被问：美国 15 次、国内 4 次 · CodeTop 国内累计 35 次 · 最近 2026-10-15（美国面试记录）
+**LC 207 课程表**｜Medium · LC TikTok 近 30 天热度 100/100（全时段 88） · 近一年被问：美国 15 次、国内 4 次 · CodeTop 国内累计 35 次 · 最近 2026-10-15（美国面试记录）
 
 共有 `numCourses` 门课，编号 `0` 到 `numCourses - 1`。先修关系 `prerequisites[i] = [a, b]` 表示学 `a` 之前必须先学 `b`。判断能否学完所有课程。`1 <= numCourses <= 2000`，`0 <= prerequisites.length <= 5000`，`prerequisites[i].length == 2`，`0 <= a, b < numCourses`，所有先修对互不相同。例：`numCourses = 2, prerequisites = [[1,0]]` → `true`；`numCourses = 2, prerequisites = [[1,0],[0,1]]` → `false`。
 
@@ -16,6 +16,34 @@ type: qa
 **识别。** 「依赖 / 先修 / 必须先于」+「能否全部完成」是有向图判环的信号。`V <= 2000`、`E <= 5000`，线性算法即可；递归 DFS 在 2000 层的链上会触到 Python 默认的 1000 层递归上限，BFS 版本的 Kahn 算法没有这个问题。
 
 **推导。** 暴力：对每门课做一次 DFS 看能否回到自己，`O(V(V + E))`。浪费是每次从头搜。洞察：没有任何未完成先修课的课程（入度为 0）可以立刻学；学完后把它从图里删掉，它的后继课程入度减一，可能又出现新的入度为 0 的课程。如果存在环，环上每个点都有一条来自环内的入边，入度永远降不到 0，永远进不了队列，最终取出的课程数小于 `numCourses`。
+
+**简单解法。** 按定义判环：对每门课做一次 DFS，能走回自己就在环上。
+
+```python
+def can_finish(num_courses: int, prerequisites: list[list[int]]) -> bool:
+    graph: list[list[int]] = [[] for _ in range(num_courses)]
+    for course, pre in prerequisites:
+        graph[pre].append(course)                  # 先修课指向后修课
+
+    def on_cycle(start: int) -> bool:              # start 能否沿边走回自己
+        seen = {start}
+        stack = [start]                            # 显式栈，避开递归深度
+        while stack:
+            cur = stack.pop()
+            for nxt in graph[cur]:
+                if nxt == start:
+                    return True                    # 走回起点：起点在一个环上
+                if nxt not in seen:
+                    seen.add(nxt)
+                    stack.append(nxt)
+        return False
+
+    return not any(on_cycle(i) for i in range(num_courses))
+```
+
+时间 `O(V(V + E))`，空间 `O(V + E)`；约束内实测不到一秒，能过，但每个点重搜一遍，面试官会追问怎样只处理每个点一次。
+
+最优解：
 
 ```python
 from collections import deque
@@ -43,14 +71,55 @@ def can_finish(num_courses: int, prerequisites: list[list[int]]) -> bool:
 
 **复杂度。** 时间 `O(V + E)`：每条边处理一次，每个点出队一次；空间 `O(V + E)`（邻接表和入度数组）。
 
+**拓展优化。**
+- 输出学习顺序（LC 210）：Kahn 的出队顺序就是拓扑序，有环返回空列表：
+```python
+from collections import deque
+
+
+def find_order(num_courses: int, prerequisites: list[list[int]]) -> list[int]:
+    graph: list[list[int]] = [[] for _ in range(num_courses)]
+    indegree = [0] * num_courses
+    for course, pre in prerequisites:
+        graph[pre].append(course)
+        indegree[course] += 1
+    queue = deque(i for i, d in enumerate(indegree) if d == 0)
+    order: list[int] = []
+    while queue:
+        cur = queue.popleft()
+        order.append(cur)                          # 出队顺序即拓扑序
+        for nxt in graph[cur]:
+            indegree[nxt] -= 1
+            if indegree[nxt] == 0:
+                queue.append(nxt)
+    return order if len(order) == num_courses else []   # 没取完说明有环
+```
+- 三色标记 DFS，每个点只搜一次 `O(V + E)`；链很长时递归会超过默认约 1000 层，要调高上限或改迭代：
+```python
+def can_finish_dfs(num_courses: int, prerequisites: list[list[int]]) -> bool:
+    graph: list[list[int]] = [[] for _ in range(num_courses)]
+    for course, pre in prerequisites:
+        graph[pre].append(course)
+    state = [0] * num_courses                      # 0 未访问，1 在当前路径上，2 已完成
+
+    def has_cycle(u: int) -> bool:
+        state[u] = 1
+        for v in graph[u]:
+            if state[v] == 1 or (state[v] == 0 and has_cycle(v)):   # 撞上路径上的点 = 环
+                return True
+        state[u] = 2                               # 子树里没有环：封口，不再重搜
+        return False
+
+    return not any(state[i] == 0 and has_cycle(i) for i in range(num_courses))
+```
+
 **易错点。**
 - 不能用单个 `visited` 集合做 DFS 判环：菱形图（`0` 指向 `1` 和 `2`，二者都指向 `3`）里 `3` 会被访问两次，被误判成环，`4, [[1,0],[2,0],[3,1],[3,2]]` 得到 `False`，正确是 `True`。DFS 判环必须区分"在当前路径上"和"已完成"两种状态（三色标记）。
 - 判断条件是取出的课程数等于 `numCourses`，不是队列为空；孤立课程（不在任何先修对里）也要计入，所以初始队列要扫描全部 `numCourses` 个点的入度。
 - 邻接表别写 `[[]] * n`，所有节点会共享同一个列表。
 
 **追问。**
-- 要输出一个学习顺序：就是 LC 210，出队顺序即是拓扑序。
 - 最少几个学期学完（每学期可并行任意门）：Kahn 按层处理，层数就是学期数；有环返回 `-1`。
-- 用 DFS 做：三色标记，状态 `1` 表示在当前路径上，遇到状态 `1` 的点就有环；链很长时要改成迭代或调大递归上限。
+- 不只判断有没有环，还要报出具体的环（比如报错信息）：DFS 时记录每个点的父节点，遇到状态 `1` 的点时顺着父指针回溯到该点即可。
 
 **同模式。** LC 210 课程表 II、LC 1136 并行课程、LC 269 火星词典、LC 802 找到最终的安全状态、LC 310 最小高度树。

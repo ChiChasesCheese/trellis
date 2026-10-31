@@ -4,7 +4,7 @@ node: b.longest-substring-with-at-least-k-repeating-characters
 type: qa
 ---
 ## Q
-**LC 395 至少有 K 个重复字符的最长子串**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 16 次 · 最近 2026-09-08（国内 CodeTop）
+**LC 395 至少有 K 个重复字符的最长子串**｜Medium · LC TikTok 全时段热度 50/100 · CodeTop 国内累计 16 次 · 最近 2026-09-08（国内 CodeTop）
 
 给字符串 `s` 和整数 `k`，求 `s` 中最长的子串，要求该子串里**每个字符**出现的次数都不少于 `k`。返回这个子串的长度，不存在则返回 `0`。`1 <= s.length <= 10^4`，`s` 仅由小写英文字母组成，`1 <= k <= 10^5`。例：`s = "aaabb", k = 3` → `3`（`"aaa"`）；`s = "ababbc", k = 2` → `5`（`"ababb"`）。
 

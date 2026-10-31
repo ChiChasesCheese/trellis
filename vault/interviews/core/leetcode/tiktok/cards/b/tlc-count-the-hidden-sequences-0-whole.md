@@ -4,7 +4,7 @@ node: b.count-the-hidden-sequences
 type: qa
 ---
 ## Q
-**LC 2145 统计隐藏数组数目**｜Medium · LC TikTok 热度 62/100
+**LC 2145 统计隐藏数组数目**｜Medium · LC TikTok 全时段热度 62/100
 
 给一个下标从 `0` 开始、长度为 `n` 的整数数组 `differences`，它表示长度为 `n + 1` 的**隐藏数组** `hidden` 相邻元素之间的差值，即 `differences[i] = hidden[i + 1] - hidden[i]`。再给两个整数 `lower` 和 `upper`，隐藏数组中所有数字都在闭区间 `[lower, upper]` 内。返回符合要求的隐藏数组的数目，没有则返回 `0`。`n == differences.length`，`1 <= n <= 10^5`，`-10^5 <= differences[i] <= 10^5`，`-10^5 <= lower <= upper <= 10^5`。例：`differences = [1,-3,4]`，`lower = 1`，`upper = 6` → `2`（`[3,4,1,5]` 和 `[4,5,2,6]`）；`differences = [3,-4,5,1,-2]`，`lower = -4`，`upper = 5` → `4`；`differences = [4,-7,2]`，`lower = 3`，`upper = 6` → `0`。
 

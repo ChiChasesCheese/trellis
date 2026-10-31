@@ -4,7 +4,7 @@ node: b.greatest-common-divisor-of-strings
 type: qa
 ---
 ## Q
-**LC 1071 字符串的最大公因子**｜Easy · LC TikTok 热度 50/100
+**LC 1071 字符串的最大公因子**｜Easy · LC TikTok 全时段热度 50/100
 
 对于字符串 `s` 和 `t`，只有 `s = t + t + … + t`（`t` 自身连接一次或多次）时，才说 `t` 能除尽 `s`。给定 `str1` 和 `str2`，返回最长的字符串 `x`，使得 `x` 能同时除尽 `str1` 和 `str2`；不存在就返回 `""`。`1 <= str1.length, str2.length <= 1000`，字符串由大写英文字母组成。例：`("ABCABC", "ABC")` → `"ABC"`；`("ABABAB", "ABAB")` → `"AB"`；`("LEET", "CODE")` → `""`；`("AAAAAB", "AAA")` → `""`。
 

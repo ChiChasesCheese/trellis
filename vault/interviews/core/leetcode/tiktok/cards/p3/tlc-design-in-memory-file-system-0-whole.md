@@ -4,7 +4,7 @@ node: p3.design-in-memory-file-system
 type: qa
 ---
 ## Q
-**LC 588 设计内存文件系统**｜Hard · LC TikTok 热度 50/100 · 近一年被问：美国 3 次、国内 0 次 · 最近 2026-08-31（美国面试记录）
+**LC 588 设计内存文件系统**｜Hard · LC TikTok 全时段热度 50/100 · 近一年被问：美国 3 次、国内 0 次 · 最近 2026-08-31（美国面试记录）
 
 设计内存文件系统类 `FileSystem`：`ls(path)`，`path` 是文件路径时只返回含该文件名的列表，是目录路径时返回目录里所有文件名和子目录名，结果按字典序；`mkdir(path)`，按路径创建目录，中间缺失的目录也要创建；`addContentToFile(filePath, content)`，文件不存在就创建，存在就把 `content` 追加到原内容末尾；`readContentFromFile(filePath)`，返回文件内容。路径都是绝对路径，除根目录 `/` 外都以 `/` 开头、不以 `/` 结尾；`1 <= path.length, filePath.length <= 100`；名字只含小写字母，同一目录下没有重名；操作参数都有效（不会读不存在的文件，`ls` 的路径存在），`addContentToFile` 的父目录一定存在；`1 <= content.length <= 50`；四个方法合计至多调用 `300` 次。例：`ls("/")` → `[]`；`mkdir("/a/b/c")`；`addContentToFile("/a/b/c/d", "hello")`；`ls("/")` → `["a"]`；`readContentFromFile("/a/b/c/d")` → `"hello"`。
 

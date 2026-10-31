@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 460 LFU 缓存**｜Hard · CodeTop 国内累计 21 次 · 最近 2026-06-20（国内 CodeTop）
+**LC 460 LFU 缓存**｜Hard · LC TikTok 全时段热度 38/100 · CodeTop 国内累计 21 次 · 最近 2026-06-20（国内 CodeTop）
 
 设计最不经常使用（LFU）缓存：`LFUCache(capacity)`、`get(key)`（存在返回值，否则 `-1`）、`put(key, value)`（存在则更新，不存在则插入；容量已满时先淘汰**使用次数最少**的键，次数相同则淘汰**最久未使用**的键）。键首次插入次数为 `1`，之后每次 `get` 或 `put` 加一。`get`、`put` 必须平均 `O(1)`。`1 <= capacity <= 10^4`，`0 <= key <= 10^5`，`0 <= value <= 10^9`，最多 `2 * 10^5` 次调用。
 

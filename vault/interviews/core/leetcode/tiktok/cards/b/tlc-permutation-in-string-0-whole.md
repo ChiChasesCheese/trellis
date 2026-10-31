@@ -4,7 +4,7 @@ node: b.permutation-in-string
 type: qa
 ---
 ## Q
-**LC 567 字符串的排列**｜Medium · 近一年被问：美国 0 次、国内 1 次 · CodeTop 国内累计 11 次 · 最近 2026-04（国内面试记录）
+**LC 567 字符串的排列**｜Medium · LC TikTok 全时段热度 38/100 · 近一年被问：美国 0 次、国内 1 次 · CodeTop 国内累计 11 次 · 最近 2026-04（国内面试记录）
 
 给两个字符串 `s1` 和 `s2`，判断 `s2` 是否包含 `s1` 的**排列**（`s1` 的某个排列是 `s2` 的子串）。`1 <= s1.length, s2.length <= 10^4`，两个字符串只含小写字母。例：`s1 = "ab"`，`s2 = "eidbaooo"` → `true`（`"ba"`）；`s1 = "ab"`，`s2 = "eidboaoo"` → `false`。
 

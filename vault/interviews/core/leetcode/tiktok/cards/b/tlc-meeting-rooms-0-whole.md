@@ -4,7 +4,7 @@ node: b.meeting-rooms
 type: qa
 ---
 ## Q
-**LC 252 会议室**｜Easy · LC TikTok 热度 50/100 · CodeTop 国内累计 3 次 · 最近 2022-03-09（国内 CodeTop）
+**LC 252 会议室**｜Easy · LC TikTok 全时段热度 50/100 · CodeTop 国内累计 3 次 · 最近 2022-03-09（国内 CodeTop）
 
 给会议时间数组 `intervals`，`intervals[i] = [start_i, end_i]`。一个人能参加所有会议，当且仅当任意两个会议的时间段不重叠；在时间 `t` 结束的会议和在时间 `t` 开始的会议**不重叠**。能参加全部会议返回 `true`，否则 `false`。`0 <= intervals.length <= 10^4`，`intervals[i].length == 2`，`0 <= start_i < end_i <= 10^6`。例：`[[0,30],[5,10],[15,20]]` → `false`，`[[7,10],[2,4]]` → `true`。
 

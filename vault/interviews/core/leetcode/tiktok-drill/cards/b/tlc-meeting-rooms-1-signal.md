@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 252 会议室**｜Easy · LC TikTok 热度 50/100 · CodeTop 国内累计 3 次 · 最近 2022-03-09（国内 CodeTop）
+**LC 252 会议室**｜Easy · LC TikTok 全时段热度 50/100 · CodeTop 国内累计 3 次 · 最近 2022-03-09（国内 CodeTop）
 
 给会议时间数组 `intervals`，`intervals[i] = [start_i, end_i]`。判断一个人能否参加所有会议（任意两个会议不重叠；在时间 `t` 结束的会议和在时间 `t` 开始的会议不重叠）。`0 <= intervals.length <= 10^4`，`0 <= start_i < end_i <= 10^6`。例：`[[0,30],[5,10],[15,20]]` → `false`。
 

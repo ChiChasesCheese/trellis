@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 2050 并行课程 III**｜Hard · TikTok 高频
+**LC 2050 并行课程 III**｜Hard · LC TikTok 全时段热度 26/100
 
 `n` 门课（编号 `1` 到 `n`），`relations[j] = [prev, next]` 表示课程 `prev` 必须在 `next` 之前完成，`time[i]` 是第 `i + 1` 门课所需月数。先修课都完成后可以随时开始一门课，可以同时上任意多门课。返回完成所有课程所需的最少月数（保证是 DAG）。`1 <= n <= 5 * 10^4`，`relations.length <= 5 * 10^4`，`1 <= time[i] <= 10^4`。例：`n = 3`，`relations = [[1,3],[2,3]]`，`time = [3,2,5]` → `8`。
 

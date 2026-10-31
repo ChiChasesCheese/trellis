@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 1209 删除字符串中的所有相邻重复项 II**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 3 次 · 最近 2024-09-13（国内 CodeTop）
+**LC 1209 删除字符串中的所有相邻重复项 II**｜Medium · LC TikTok 全时段热度 50/100 · CodeTop 国内累计 3 次 · 最近 2024-09-13（国内 CodeTop）
 
 给字符串 `s`，每次可以选 `k` 个相邻且相等的字母删除，两侧连起来，重复直到无法继续，返回最终字符串（答案唯一）。`1 <= s.length <= 10^5`，`2 <= k <= 10^4`，`s` 只含小写英文字母。例：`("deeedbbcccbdaa", 3)` → `"aa"`（先删 `eee`、`ccc`，再删 `bbb`，最后删 `ddd`）。
 

@@ -4,7 +4,7 @@ node: b.insert-delete-getrandom-o1
 type: qa
 ---
 ## Q
-**LC 380 O(1) 时间插入、删除和获取随机元素**｜Medium · LC TikTok 热度 62/100 · 近一年被问：美国 0 次、国内 1 次 · CodeTop 国内累计 15 次 · 最近 2026-10-08（国内面试记录）
+**LC 380 O(1) 时间插入、删除和获取随机元素**｜Medium · LC TikTok 全时段热度 62/100 · 近一年被问：美国 0 次、国内 1 次 · CodeTop 国内累计 15 次 · 最近 2026-10-08（国内面试记录）
 
 实现 `RandomizedSet` 类：`RandomizedSet()` 初始化；`bool insert(int val)` 当 `val` 不存在时插入并返回 `true`，否则返回 `false`；`bool remove(int val)` 当 `val` 存在时删除并返回 `true`，否则返回 `false`；`int getRandom()` 随机返回现有集合中的一项，每个元素被返回的概率相同（调用时集合中至少有一个元素）。每个函数的**平均**时间复杂度必须是 `O(1)`。`-2^31 <= val <= 2^31 - 1`，最多调用 `insert`、`remove`、`getRandom` 共 `2 * 10^5` 次，调用 `getRandom` 时至少存在一个元素。例：依次 `insert(1)` → `true`，`remove(2)` → `false`，`insert(2)` → `true`，`getRandom()` → `1` 或 `2`，`remove(1)` → `true`，`insert(2)` → `false`，`getRandom()` → `2`。
 

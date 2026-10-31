@@ -4,7 +4,7 @@ node: p4.coin-change-ii
 type: qa
 ---
 ## Q
-**LC 518 零钱兑换 II**｜Medium · 近一年被问：美国 1 次、国内 0 次 · CodeTop 国内累计 26 次 · 最近 2026-02-17（美国面试记录） · 也在：Amazon、NeetCode 150
+**LC 518 零钱兑换 II**｜Medium · LC TikTok 全时段热度 38/100 · 近一年被问：美国 1 次、国内 0 次 · CodeTop 国内累计 26 次 · 最近 2026-02-17（美国面试记录） · 也在：Amazon、NeetCode 150
 
 给整数数组 `coins`（不同面额的硬币）和整数 `amount`，求能凑成总金额的**硬币组合数**，凑不出返回 `0`；每种面额的硬币有无限个，结果保证在 32 位有符号整数内。`1 <= coins.length <= 300`，`1 <= coins[i] <= 5000`，`coins` 中的值互不相同，`0 <= amount <= 5000`。例：`amount = 5`、`coins = [1,2,5]` → `4`（`5`、`2+2+1`、`2+1+1+1`、`1*5`）；`amount = 3`、`coins = [2]` → `0`；`amount = 10`、`coins = [10]` → `1`。
 

@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 211 添加与搜索单词 - 数据结构设计**｜Medium · LC TikTok 热度 56/100 · CodeTop 国内累计 2 次 · 最近 2022-09-21（国内 CodeTop）
+**LC 211 添加与搜索单词 - 数据结构设计**｜Medium · LC TikTok 全时段热度 56/100 · CodeTop 国内累计 2 次 · 最近 2022-09-21（国内 CodeTop）
 
 设计 `WordDictionary`：`addWord(word)` 添加单词；`search(word)` 判断是否存在与 `word` 匹配的已添加单词，其中 `word` 里的 `'.'` 可以匹配任意一个字母。
 

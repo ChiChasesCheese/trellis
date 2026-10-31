@@ -4,7 +4,7 @@ node: p3.implement-trie-prefix-tree
 type: qa
 ---
 ## Q
-**LC 208 实现 Trie (前缀树)**｜Medium · 近一年被问：美国 0 次、国内 3 次 · CodeTop 国内累计 18 次 · 最近 2026-10（国内面试记录）
+**LC 208 实现 Trie (前缀树)**｜Medium · LC TikTok 全时段热度 26/100 · 近一年被问：美国 0 次、国内 3 次 · CodeTop 国内累计 18 次 · 最近 2026-10（国内面试记录）
 
 实现前缀树（Trie）类：`Trie()` 初始化；`insert(word)` 插入单词；`search(word)` 若 `word` 已被插入返回 `true`，否则 `false`；`startsWith(prefix)` 若某个已插入单词以 `prefix` 为前缀返回 `true`。
 

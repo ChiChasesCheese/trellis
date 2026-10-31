@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 47 全排列 II**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 20 次 · 最近 2025-10-20（国内 CodeTop）
+**LC 47 全排列 II**｜Medium · LC TikTok 全时段热度 50/100 · CodeTop 国内累计 20 次 · 最近 2025-10-20（国内 CodeTop）
 
 给一个可能含重复数字的数组 `nums`，按任意顺序返回所有不重复的全排列。`1 <= nums.length <= 8`，`-10 <= nums[i] <= 10`。例：`[1,1,2]` → `[[1,1,2],[1,2,1],[2,1,1]]`。
 

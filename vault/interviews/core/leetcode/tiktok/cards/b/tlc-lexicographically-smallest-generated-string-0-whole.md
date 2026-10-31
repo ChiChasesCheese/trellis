@@ -4,7 +4,7 @@ node: b.lexicographically-smallest-generated-string
 type: qa
 ---
 ## Q
-**LC 3474 字典序最小的生成字符串**｜Hard · LC TikTok 热度 62/100
+**LC 3474 字典序最小的生成字符串**｜Hard · LC TikTok 全时段热度 62/100
 
 给两个字符串 `str1`（长度 `n`，只含 `'T'` 和 `'F'`）和 `str2`（长度 `m`，小写字母）。长度为 `n + m - 1` 的字符串 `word` 由它们生成，当且仅当对每个 `0 <= i <= n - 1`：若 `str1[i] == 'T'`，则 `word[i..i+m-1] == str2`；若 `str1[i] == 'F'`，则 `word[i..i+m-1] != str2`。返回可以生成的字典序最小的字符串，不存在则返回 `""`。`1 <= n <= 10^4`，`1 <= m <= 500`。例：`str1 = "TFTF", str2 = "ab"` → `"ababa"`；`str1 = "TFTF", str2 = "abc"` → `""`；`str1 = "F", str2 = "d"` → `"a"`。
 

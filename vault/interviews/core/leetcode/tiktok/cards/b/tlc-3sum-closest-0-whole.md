@@ -4,7 +4,7 @@ node: b.3sum-closest
 type: qa
 ---
 ## Q
-**LC 16 最接近的三数之和**｜Medium · LC 字节 热度 50/100 · CodeTop 国内累计 23 次 · 最近 2026-05-06（国内 CodeTop）
+**LC 16 最接近的三数之和**｜Medium · LC 字节 全时段热度 50/100 · CodeTop 国内累计 23 次 · 最近 2026-05-06（国内 CodeTop）
 
 给长度为 `n` 的整数数组 `nums` 和整数 `target`，从 `nums` 中选出三个**不同下标**的整数，使它们的和与 `target` 最接近，返回这三个数的和。假定每组输入只存在恰好一个解。`3 <= nums.length <= 1000`，`-1000 <= nums[i] <= 1000`，`-10^4 <= target <= 10^4`。例：`nums = [-1,2,1,-4], target = 1` → `2`（`-1 + 2 + 1`）；`nums = [0,0,0], target = 1` → `0`。
 

@@ -4,7 +4,7 @@ node: p2.two-sum
 type: qa
 ---
 ## Q
-**LC 1 两数之和**｜Easy · LC TikTok 热度 66/100（近 3 个月） · 近一年被问：美国 1 次、国内 2 次 · CodeTop 国内累计 127 次 · 最近 2026-09-07（国内 CodeTop）
+**LC 1 两数之和**｜Easy · LC TikTok 近 3 个月热度 81/100（全时段 66） · 近一年被问：美国 1 次、国内 2 次 · CodeTop 国内累计 127 次 · 最近 2026-09-07（国内 CodeTop）
 
 给整数数组 `nums` 和整数 `target`，找出和为 `target` 的**两个**元素，返回它们的**下标**。同一个元素不能用两次，答案可按任意顺序返回，只会存在一个有效答案。`2 <= nums.length <= 10^4`，`-10^9 <= nums[i] <= 10^9`，`-10^9 <= target <= 10^9`。例：`nums = [2,7,11,15], target = 9` → `[0,1]`；`nums = [3,3], target = 6` → `[0,1]`。进阶：想出时间复杂度小于 `O(n^2)` 的算法。
 
@@ -16,6 +16,22 @@ type: qa
 **识别。** 「找一对和为定值」等价于「对每个 `x` 查 `target - x` 在不在」，是查找问题，交给哈希表（hash table）。要的是下标，所以不能先排序；值域 ±10^9 不能用数组当计数桶；进阶要求优于 `O(n^2)`。
 
 **推导。** 暴力枚举所有下标对 `O(n^2)` → 固定 `i` 后线性找 `target - nums[i]`，要找的是确定的值却花了 `O(n)` → 「确定的值在不在」是哈希表的强项，边扫边存，只查前面已出现的元素，每一对在较晚的元素处被发现一次 → `O(n)` 时间、`O(n)` 空间。
+
+**简单解法。** 枚举所有下标对 `(i, j)`，和为 `target` 就返回。
+
+```python
+def two_sum(nums: list[int], target: int) -> list[int]:
+    n = len(nums)
+    for i in range(n):
+        for j in range(i + 1, n):              # j 从 i + 1 开始：同一个元素不会用两次
+            if nums[i] + nums[j] == target:
+                return [i, j]
+    return []
+```
+
+时间 `O(n^2)`、空间 `O(1)`；`n <= 10^4` 约 `5 * 10^7` 次比较，Python 里偏慢，题面进阶也要求优于 `O(n^2)`，只是开场基线。
+
+最优解：
 
 ```python
 def two_sum(nums: list[int], target: int) -> list[int]:
@@ -31,13 +47,31 @@ def two_sum(nums: list[int], target: int) -> list[int]:
 
 **复杂度。** 时间 `O(n)`：每个元素一次字典查询加一次插入，均摊 `O(1)`；空间 `O(n)`。
 
+**拓展优化。**
+- 排序加双指针：返回原下标就对下标排序，和小了左指针右移、和大了右指针左移；`O(n log n)` 时间、`O(n)` 空间，比哈希表慢，输入本来就有序（LC 167）时才能做到 `O(n)`、`O(1)`。
+
+```python
+def two_sum(nums: list[int], target: int) -> list[int]:
+    idx = sorted(range(len(nums)), key=nums.__getitem__)   # 按值排序的下标
+    lo, hi = 0, len(idx) - 1
+    while lo < hi:
+        s = nums[idx[lo]] + nums[idx[hi]]
+        if s == target:
+            return sorted([idx[lo], idx[hi]])
+        if s < target:
+            lo += 1                                        # 和太小：左端换更大的
+        else:
+            hi -= 1                                        # 和太大：右端换更小的
+    return []
+```
+
 **易错点。**
 - 必须先查后存：`[3,2,4]`、`target = 6` 先存后查会返回 `[0, 0]`（`3` 用了两次），正确是 `[1, 2]`。
 - 判断必须写 `is not None`：`[2,7]`、`target = 9` 时查到的下标是 `0`，`if j` 把它当成没找到，返回 `[]`，正确是 `[0, 1]`。
 - 不要先建完整张表再查：重复值的下标会被覆盖，要额外判断 `j != i`。
 
 **追问。**
-- 数组有序且要 `O(1)` 空间：双指针，和小了左指针右移，和大了右指针左移，`O(n)`。
+- 数组本来就有序（LC 167）：不用排序，直接双指针，`O(n)` 时间、`O(1)` 空间。
 - 返回所有不重复的数值对：用 `Counter`，`x` 与 `target - x` 相同时要求出现至少两次。
 - 设计题（反复 `add` 再 `find`）：`add` 做计数 `O(1)`，`find` 遍历键查补数 `O(n)`；读多写少可反过来维护所有和的集合。
 

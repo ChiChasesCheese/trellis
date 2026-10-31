@@ -4,7 +4,7 @@ node: p2.multiply-strings
 type: qa
 ---
 ## Q
-**LC 43 字符串相乘**｜Medium · LC TikTok 热度 50/100（近 6 个月） · 近一年被问：美国 2 次、国内 3 次 · CodeTop 国内累计 49 次 · 最近 2026-09（美国面试记录）
+**LC 43 字符串相乘**｜Medium · LC TikTok 近 6 个月热度 50/100（全时段 50） · 近一年被问：美国 2 次、国内 3 次 · CodeTop 国内累计 49 次 · 最近 2026-09（美国面试记录）
 
 给定两个以字符串形式表示的非负整数 `num1` 和 `num2`，返回它们的乘积，乘积也表示为字符串。不能使用任何内置的 BigInteger 库，也不能直接把输入转换为整数。`1 <= num1.length, num2.length <= 200`，`num1` 和 `num2` 只由数字组成，且都不含前导零（除了数字 `0` 本身）。例：`num1 = "2", num2 = "3"` → `"6"`；`num1 = "123", num2 = "456"` → `"56088"`。
 
@@ -16,6 +16,40 @@ type: qa
 **识别。** 「大整数字符串运算，禁用内置大数」是模拟竖式的信号。长度 `200` → `O(mn)` = 4×10^4 次乘法，绰绰有余。乘积的位数至多 `m + n`，可以预先开好数组。
 
 **推导。** 暴力：把 `num1` 拆成每一位，分别乘整个 `num2` 得到多个中间字符串，再用字符串加法逐个相加 → 浪费：每次都要构造中间字符串、做多轮进位 → 位置规律：第 `i` 位与第 `j` 位相乘只会影响乘积的第 `i + j` 位（及其进位），先全部累加，最后一遍进位即可。
+
+**简单解法。** 只用字符串加法（LC 415）：从 `num2` 最高位起，结果左移一位（补 `0`），再加 `d` 次 `num1`。
+
+```python
+def multiply(num1: str, num2: str) -> str:
+    def add(a: str, b: str) -> str:                 # 字符串加法，低位到高位进位
+        i, j, carry = len(a) - 1, len(b) - 1, 0
+        out: list[str] = []
+        while i >= 0 or j >= 0 or carry:
+            total = carry
+            if i >= 0:
+                total += ord(a[i]) - 48
+                i -= 1
+            if j >= 0:
+                total += ord(b[j]) - 48
+                j -= 1
+            carry, digit = divmod(total, 10)
+            out.append(str(digit))
+        return "".join(reversed(out))
+
+    if num1 == "0" or num2 == "0":
+        return "0"                                  # 避免 "0" 被补零成 "00"
+    result = "0"
+    for ch in num2:                                 # 从最高位处理到个位
+        if result != "0":
+            result += "0"                           # 左移一位 = 乘 10
+        for _ in range(ord(ch) - 48):
+            result = add(result, num1)              # 这一位是 d，就加 d 次 num1
+    return result
+```
+
+时间 `O(9 * n * (m + n))`，空间 `O(m + n)`；两个 200 位的数实测约 0.04 秒，比主解慢几十倍，但约束内够用。
+
+最优解：
 
 ```python
 def multiply(num1: str, num2: str) -> str:
@@ -37,6 +71,29 @@ def multiply(num1: str, num2: str) -> str:
 
 **复杂度。** 时间 `O(mn)`；空间 `O(m + n)`。
 
+**拓展优化。**
+- 分块：每 4 位当一个"大数字"（基数 `10^4`），乘法次数降到 `1/16`，做法与主解完全相同：
+```python
+def multiply_chunks(num1: str, num2: str) -> str:
+    base = 10_000
+
+    def split(s: str) -> list[int]:                 # 每 4 位一块，低位块在前
+        return [int(s[max(0, i - 4):i]) for i in range(len(s), 0, -4)]
+
+    a, b = split(num1), split(num2)
+    res = [0] * (len(a) + len(b))                   # 第 i 块乘第 j 块落在第 i + j 块
+    for i, x in enumerate(a):
+        for j, y in enumerate(b):
+            res[i + j] += x * y
+    carry = 0
+    for k in range(len(res)):                       # 累加完再统一进位
+        carry, res[k] = divmod(res[k] + carry, base)
+    while len(res) > 1 and res[-1] == 0:
+        res.pop()
+    return str(res[-1]) + "".join(f"{x:04d}" for x in reversed(res[:-1]))   # 最高块不补零，其余补足 4 位
+```
+- 数字非常长（几万位）：改用 Karatsuba（一次乘法拆成 3 次一半长度，`O(n^1.585)`）或 FFT（`O(n log n)`）。
+
 **易错点。**
 - 忘记去前导零：`("2", "3")` 的结果数组是 `[6, 0]`，直接拼接得 `"06"`；`("0", "5")` 得 `"00"`，正确是 `"6"` 和 `"0"`。
 - 下标方向：必须统一用「个位在下标 0」（反转后的数组），位权就是 `i + j`；用原始顺序则位置是 `i + j + 1`，容易错一位。
@@ -44,7 +101,6 @@ def multiply(num1: str, num2: str) -> str:
 
 **追问。**
 - 字符串加法（LC 415）：同样从低位进位，`zip_longest(reversed(a), reversed(b), fillvalue="0")` 对齐两个长度不同的串。
-- 数字非常长（几万位）：竖式 `O(mn)` 太慢，改用 Karatsuba（`O(n^1.585)`）或 FFT（`O(n log n)`）。
 - Python 自带 `int` 是任意精度，但字符串与整数互转在 3.11+ 默认限制 4300 位，超出会抛 `ValueError`（可 `sys.set_int_max_str_digits` 调整）。
 
 **同模式。** LC 415 字符串相加、LC 67 二进制求和、LC 2 两数相加、LC 66 加一。

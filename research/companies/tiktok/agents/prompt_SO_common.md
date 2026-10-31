@@ -34,3 +34,11 @@ Gate: `uv run python research/companies/tiktok/tools/gate_cards.py <your files>`
 `uv run python scripts/plain_style.py <your files>` ok, `uv run trellis --domain tiktok-lc validate` 0 errors.
 
 Reply (≤ 8 lines): cards done, cards where the simple solution is the brute force, anything you could not verify.
+
+## Comments carry the explanation (Chi, 2026-10-31)
+
+Put the reasoning **inside the code as short Chinese comments** (what each block does and why: the invariant, why this
+pointer moves, why this boundary). Clear names and comments replace prose: do not repeat in a paragraph what the code
+and its comments already say. Prose around a code block is at most one or two sentences (the idea in one line, the
+complexity, where it stops being enough). Lowest reading cost wins. When you touch a card, also trim existing prose
+that only restates the code, moving any non-obvious point into a comment.

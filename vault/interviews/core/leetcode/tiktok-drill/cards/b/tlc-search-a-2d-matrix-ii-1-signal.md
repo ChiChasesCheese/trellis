@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 240 搜索二维矩阵 II**｜Medium · CodeTop 国内累计 43 次 · 最近 2026-02-23（国内 CodeTop）
+**LC 240 搜索二维矩阵 II**｜Medium · LC TikTok 全时段热度 26/100 · CodeTop 国内累计 43 次 · 最近 2026-02-23（国内 CodeTop）
 
 在 `m x n` 矩阵 `matrix` 中搜索 `target`。每行从左到右升序，每列从上到下升序（行与行之间没有大小衔接）。返回 `target` 是否存在。
 

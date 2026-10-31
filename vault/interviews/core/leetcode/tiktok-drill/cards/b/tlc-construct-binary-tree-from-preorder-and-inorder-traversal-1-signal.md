@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 105 从前序与中序遍历序列构造二叉树**｜Medium · LC TikTok 热度 62/100 · CodeTop 国内累计 62 次 · 最近 2026-06-29（国内 CodeTop）
+**LC 105 从前序与中序遍历序列构造二叉树**｜Medium · LC TikTok 全时段热度 62/100 · CodeTop 国内累计 62 次 · 最近 2026-06-29（国内 CodeTop）
 
 给两个整数数组 `preorder`（二叉树前序遍历）和 `inorder`（同一棵树的中序遍历），构造并返回这棵二叉树。`1 <= preorder.length <= 3000`，`inorder.length == preorder.length`，`-3000 <= preorder[i], inorder[i] <= 3000`，两个数组都无重复元素，输入保证合法。例：`preorder = [3,9,20,15,7]`，`inorder = [9,3,15,20,7]` → `[3,9,20,null,null,15,7]`。
 

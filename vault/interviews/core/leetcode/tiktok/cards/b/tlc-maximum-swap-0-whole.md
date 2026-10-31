@@ -4,7 +4,7 @@ node: b.maximum-swap
 type: qa
 ---
 ## Q
-**LC 670 最大交换**｜Medium · LC TikTok 热度 68/100 · CodeTop 国内累计 15 次 · 最近 2026-01-01（国内 CodeTop）
+**LC 670 最大交换**｜Medium · LC TikTok 全时段热度 68/100 · CodeTop 国内累计 15 次 · 最近 2026-01-01（国内 CodeTop）
 
 给一个非负整数 `num`，你**至多**可以交换其中任意两位数字一次，返回能得到的最大值。
 

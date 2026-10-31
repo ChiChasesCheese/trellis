@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 1462 课程表 IV**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 1 次 · 最近 2022-07-16（国内 CodeTop）
+**LC 1462 课程表 IV**｜Medium · LC TikTok 全时段热度 50/100 · CodeTop 国内累计 1 次 · 最近 2022-07-16（国内 CodeTop）
 
 `numCourses` 门课，`prerequisites[i] = [ai, bi]` 表示想选 `bi` 必须先选 `ai`，先决条件可以是间接的。给 `queries`，`queries[j] = [uj, vj]`，回答 `uj` 是不是 `vj` 的先决条件。`2 <= numCourses <= 100`，`0 <= prerequisites.length <= numCourses * (numCourses - 1) / 2`，先修图无环，`1 <= queries.length <= 10^4`，`ui != vi`。例：`numCourses = 2`，`prerequisites = [[1,0]]`，`queries = [[0,1],[1,0]]` → `[false, true]`。
 

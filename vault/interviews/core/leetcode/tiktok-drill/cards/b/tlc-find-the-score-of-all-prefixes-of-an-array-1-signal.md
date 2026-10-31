@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 2640 一个数组所有前缀的分数**｜Medium · LC TikTok 热度 62/100
+**LC 2640 一个数组所有前缀的分数**｜Medium · LC TikTok 全时段热度 62/100
 
 数组 `arr` 的转换数组 `conver[i] = arr[i] + max(arr[0..i])`，`arr` 的分数是 `conver` 的元素和。给整数数组 `nums`，返回 `ans`，`ans[i]` 是前缀 `nums[0..i]` 的分数。
 

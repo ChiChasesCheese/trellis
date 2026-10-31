@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 210 课程表 II**｜Medium · LC TikTok 热度 88/100 · CodeTop 国内累计 13 次 · 最近 2026-09-15（国内 CodeTop）
+**LC 210 课程表 II**｜Medium · LC TikTok 全时段热度 88/100 · CodeTop 国内累计 13 次 · 最近 2026-09-15（国内 CodeTop）
 
 共有 `numCourses` 门课，编号 `0` 到 `numCourses - 1`。先修关系 `prerequisites[i] = [a, b]` 表示学 `a` 之前必须先学 `b`。返回一个能学完所有课程的顺序，多个答案返回任意一个，学不完返回空数组。`1 <= numCourses <= 2000`，`0 <= prerequisites.length <= numCourses * (numCourses - 1)`，`prerequisites[i].length == 2`，`0 <= a, b < numCourses`，`a != b`，先修对互不相同。例：`2, [[1,0]]` → `[0,1]`。
 

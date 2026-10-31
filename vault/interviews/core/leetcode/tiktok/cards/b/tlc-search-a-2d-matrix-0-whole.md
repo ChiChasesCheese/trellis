@@ -4,7 +4,7 @@ node: b.search-a-2d-matrix
 type: qa
 ---
 ## Q
-**LC 74 搜索二维矩阵**｜Medium · CodeTop 国内累计 20 次 · 最近 2026-05-22（国内 CodeTop）
+**LC 74 搜索二维矩阵**｜Medium · LC TikTok 全时段热度 38/100 · CodeTop 国内累计 20 次 · 最近 2026-05-22（国内 CodeTop）
 
 给 `m x n` 整数矩阵 `matrix`，满足：每行从左到右非严格递增；每行第一个整数大于前一行最后一个整数。判断 `target` 是否在矩阵中，要求时间 `O(log(m * n))`。`1 <= m, n <= 100`，`-10^4 <= matrix[i][j], target <= 10^4`。例：`matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]]`，`target = 3` → `true`；`target = 13` → `false`。
 

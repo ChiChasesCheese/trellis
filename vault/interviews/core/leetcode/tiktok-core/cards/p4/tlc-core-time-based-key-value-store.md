@@ -4,7 +4,7 @@ node: p4.time-based-key-value-store
 type: qa
 ---
 ## Q
-**LC 981 基于时间的键值存储**｜Medium · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-03-20（美国面试记录） · 也在：NeetCode 150
+**LC 981 基于时间的键值存储**｜Medium · LC TikTok 全时段热度 38/100 · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-03-20（美国面试记录） · 也在：NeetCode 150
 
 设计一个 `TimeMap` 类：同一个键在不同时间戳可以存多个值，并能按时间戳取值。`set(key, value, timestamp)` 在时间戳 `timestamp` 存入键 `key` 对应的值 `value`；`get(key, timestamp)` 返回此前某次 `set` 中满足 `timestamp_prev <= timestamp` 的值，若有多个，返回 `timestamp_prev` 最大的那个；没有则返回空串 `""`。`1 <= key.length, value.length <= 100`，由小写字母和数字组成，`1 <= timestamp <= 10^7`，所有 `set` 的时间戳**严格递增**，`set` 与 `get` 合计最多 `2 * 10^5` 次调用。例：`set("foo","bar",1)`；`get("foo",1)` → `"bar"`；`get("foo",3)` → `"bar"`；`set("foo","bar2",4)`；`get("foo",4)` → `"bar2"`；`get("foo",5)` → `"bar2"`。
 

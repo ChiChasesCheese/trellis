@@ -4,7 +4,7 @@ node: b.incremental-memory-leak
 type: qa
 ---
 ## Q
-**LC 1860 增长的内存泄露**｜Medium · LC TikTok 热度 62/100
+**LC 1860 增长的内存泄露**｜Medium · LC TikTok 全时段热度 62/100
 
 给两个整数 `memory1` 和 `memory2`，分别表示两个内存条剩余可用内存的位数。一个程序每秒消耗递增的内存：在第 `i` 秒（从 `1` 开始），有 `i` 位内存被分配给**剩余内存较多**的那个内存条（两者一样多时分给第一个）。如果两个内存条剩余内存都不足 `i` 位，程序意外退出。返回数组 `[crashTime, memory1crash, memory2crash]`，其中 `crashTime` 是程序退出的时刻（秒），后两项是两个内存条最后剩余的位数。`0 <= memory1, memory2 <= 2^31 - 1`。例：`memory1 = 2, memory2 = 2` → `[3, 1, 0]`（第 1 秒内存条 1 被占 1 位；第 2 秒内存条 2 被占 2 位；第 3 秒两者剩 1 和 0，都不足 3 位，退出）；`memory1 = 8, memory2 = 11` → `[6, 0, 4]`。
 

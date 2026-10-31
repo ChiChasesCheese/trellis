@@ -4,7 +4,7 @@ node: p2.number-of-distinct-islands
 type: qa
 ---
 ## Q
-**LC 694 不同岛屿的数量**｜Medium · LC TikTok 热度 88/100（近 30 天） · CodeTop 国内累计 2 次 · 最近 2022-07-18（国内 CodeTop）
+**LC 694 不同岛屿的数量**｜Medium · LC TikTok 近 30 天热度 100/100（全时段 88） · CodeTop 国内累计 2 次 · 最近 2022-07-18（国内 CodeTop）
 
 给一个非空的 0/1 二维网格，岛屿是由上下左右四连通的 `1` 组成的块，网格四周都是水。统计有多少个**形状不同**的岛屿：两个岛屿相同，当且仅当其中一个只通过**平移**（不能旋转、不能翻转）就能和另一个重合。`m == grid.length`，`n == grid[i].length`，`1 <= m, n <= 50`，`grid[i][j]` 只含 `0` 或 `1`。例：`[[1,1,0,0,0],[1,1,0,0,0],[0,0,0,1,1],[0,0,0,1,1]]` → `1`；`[[1,1,0,1,1],[1,0,0,0,0],[0,0,0,0,1],[1,1,0,1,1]]` → `3`。
 
@@ -15,7 +15,41 @@ type: qa
 
 **识别。** 「数连通块」是岛屿题（DFS / BFS）；「形状相同当且仅当平移后重合」说明需要一个**平移不变的签名**（canonical form），再用哈希集合去重。`m, n <= 50` 最多 2500 格，任何线性做法都足够。
 
-**推导。** 暴力：把所有岛屿两两比较，每对都尝试对齐后逐格检查，`O(k^2 * s)`，`k` 是岛屿数，`s` 是岛屿大小。浪费是两两比较。洞察：只要给每座岛算出一个与位置无关的签名，相同形状自然得到相同签名，用集合去重即可。行优先扫描时最先遇到的格子是这座岛最靠上、同一行里最靠左的格子，它在每座岛里的角色相同，拿它当原点，各格相对它的偏移 `(dr, dc)` 就与平移无关。偏移集合用 `frozenset` 保存，不依赖遍历顺序。
+**推导。** 暴力：把所有岛屿两两比较，每对都尝试对齐后逐格检查，`O(k^2 * s)`，`k` 是岛屿数，`s` 是岛屿大小。浪费是两两比较。洞察：只要给每座岛算出一个与位置无关的签名，相同形状自然得到相同签名，用集合去重即可。行优先扫描时最先遇到的格子是这座岛最靠上、同一行里最靠左的格子，它在每座岛里的角色相同，拿它当原点，各格相对它的偏移 `(dr, dc)` 就与平移无关。
+
+**简单解法。** BFS 收集每座岛，坐标减去起点后排序成元组，和已有形状列表逐个比较，没见过才加入。
+
+```python
+from collections import deque
+
+
+def num_distinct_islands(grid: list[list[int]]) -> int:
+    rows, cols = len(grid), len(grid[0])
+    seen = [[False] * cols for _ in range(rows)]
+    shapes: list[tuple[tuple[int, int], ...]] = []
+    for r0 in range(rows):
+        for c0 in range(cols):
+            if grid[r0][c0] != 1 or seen[r0][c0]:
+                continue
+            seen[r0][c0] = True
+            queue = deque([(r0, c0)])
+            cells: list[tuple[int, int]] = []
+            while queue:
+                r, c = queue.popleft()
+                cells.append((r - r0, c - c0))      # 相对起点的偏移，与平移无关
+                for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):
+                    if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == 1 and not seen[nr][nc]:
+                        seen[nr][nc] = True
+                        queue.append((nr, nc))
+            shape = tuple(sorted(cells))            # 排序后与遍历顺序无关
+            if all(shape != other for other in shapes):   # 线性查重；换成 set 就是主解
+                shapes.append(shape)
+    return len(shapes)
+```
+
+时间 `O(mn + k^2 s)`（`k` 座岛，每座大小 `s`），空间 `O(mn)`；约束内能过，去重这步是平方级。
+
+最优解：
 
 ```python
 def num_distinct_islands(grid: list[list[int]]) -> int:
@@ -45,6 +79,32 @@ def num_distinct_islands(grid: list[list[int]]) -> int:
 
 **复杂度。** 时间 `O(mn)`：每格访问一次，每座岛的签名构造与大小成正比；空间 `O(mn)`。
 
+**拓展优化。**
+- 用 DFS 路径字符串做签名：不需要选原点，签名只有 `O(s)` 个字符。蛇形岛的递归深度可达约 `mn / 2`，超过默认约 1000 层要调高 `sys.setrecursionlimit`：
+```python
+def num_distinct_islands_path(grid: list[list[int]]) -> int:
+    rows, cols = len(grid), len(grid[0])
+    seen = [[False] * cols for _ in range(rows)]
+
+    def dfs(r: int, c: int, path: list[str]) -> None:
+        seen[r][c] = True
+        for name, dr, dc in (("d", 1, 0), ("u", -1, 0), ("r", 0, 1), ("l", 0, -1)):
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == 1 and not seen[nr][nc]:
+                path.append(name)                   # 记下走的方向
+                dfs(nr, nc, path)
+        path.append("b")                            # 回溯标记：区分「这里走到头」和「没往这走」，路径才唯一
+
+    shapes: set[str] = set()
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == 1 and not seen[r][c]:
+                path: list[str] = []
+                dfs(r, c, path)
+                shapes.add("".join(path))
+    return len(shapes)
+```
+
 **易错点。**
 - 只比较岛屿的格子数是错的：`[[1,1,1,0,1,0],[0,0,0,0,1,1]]` 里一座是横向三连，一座是拐角形，大小都是 `3`，按大小去重得 `1`，正确是 `2`。
 - 用绝对坐标当签名则每座岛都不同：示例一的两个 2x2 方块会得到 `2`，正确是 `1`。
@@ -52,7 +112,6 @@ def num_distinct_islands(grid: list[list[int]]) -> int:
 
 **追问。**
 - 旋转和翻转也算相同（LC 711）：对每座岛生成 8 种变换，各自平移归一后取字典序最小的作为签名。
-- 不想存整个格子集合：用 DFS 路径字符串，记录每一步方向并在回溯时加一个退出标记，同样能唯一确定形状。
 - 网格很大放不下内存：只对每个岛的签名做哈希，签名本身占用与岛的大小成正比。
 
 **同模式。** LC 200 岛屿数量、LC 695 岛屿的最大面积、LC 711 不同岛屿的数量 II、LC 463 岛屿的周长、LC 1905 统计子岛屿。

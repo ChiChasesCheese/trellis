@@ -4,7 +4,7 @@ node: p2.trapping-rain-water
 type: qa
 ---
 ## Q
-**LC 42 接雨水**｜Hard · LC TikTok 热度 88/100 · 近一年被问：美国 1 次、国内 4 次 · CodeTop 国内累计 130 次 · 最近 2026-10-28（国内面试记录） · 也在：Amazon、LeetCode Hot 100、NeetCode 150、Top Interview 150
+**LC 42 接雨水**｜Hard · LC TikTok 全时段热度 88/100 · 近一年被问：美国 1 次、国内 4 次 · CodeTop 国内累计 130 次 · 最近 2026-10-28（国内面试记录） · 也在：Amazon、LeetCode Hot 100、NeetCode 150、Top Interview 150
 
 给 `n` 个非负整数表示宽度为 1 的柱子的高度图，求下雨后一共能接多少单位的雨水。`n == height.length`，`1 <= n <= 2 * 10^4`，`0 <= height[i] <= 10^5`。例：`height = [0,1,0,2,1,0,1,3,2,1,2,1]` → `6`；`height = [4,2,0,3,2,5]` → `9`。
 

@@ -4,7 +4,7 @@ node: p3.reverse-words-in-a-string
 type: qa
 ---
 ## Q
-**LC 151 反转字符串中的单词**｜Medium · 近一年被问：美国 3 次、国内 1 次 · CodeTop 国内累计 29 次 · 最近 2026-09-06（国内 CodeTop）
+**LC 151 反转字符串中的单词**｜Medium · LC TikTok 全时段热度 41/100 · 近一年被问：美国 3 次、国内 1 次 · CodeTop 国内累计 29 次 · 最近 2026-09-06（国内 CodeTop）
 
 给字符串 `s`，反转其中单词的顺序。单词是由非空格字符组成的串，`s` 里用至少一个空格分隔单词，开头、结尾、单词之间都可能有多余的空格。返回单词顺序颠倒、单词之间只用**一个**空格连接、没有前导或尾随空格的字符串。`1 <= s.length <= 10^4`，`s` 只含英文字母、数字和空格，至少有一个单词。例：`"the sky is blue"` → `"blue is sky the"`；`"  hello world  "` → `"world hello"`；`"a good   example"` → `"example good a"`。进阶：字符串可变时用 `O(1)` 额外空间原地完成。
 

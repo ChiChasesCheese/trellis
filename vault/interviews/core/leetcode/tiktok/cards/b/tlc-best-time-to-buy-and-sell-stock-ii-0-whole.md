@@ -4,7 +4,7 @@ node: b.best-time-to-buy-and-sell-stock-ii
 type: qa
 ---
 ## Q
-**LC 122 买卖股票的最佳时机 II**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 48 次 · 最近 2026-05-12（国内 CodeTop）
+**LC 122 买卖股票的最佳时机 II**｜Medium · LC TikTok 全时段热度 50/100 · CodeTop 国内累计 48 次 · 最近 2026-05-12（国内 CodeTop）
 
 给整数数组 `prices`，`prices[i]` 是某股票第 `i` 天的价格。每天你可以决定买入和 / 或卖出，任何时候**最多持有一股**；可以在同一天先卖再买。返回能获得的最大利润。
 

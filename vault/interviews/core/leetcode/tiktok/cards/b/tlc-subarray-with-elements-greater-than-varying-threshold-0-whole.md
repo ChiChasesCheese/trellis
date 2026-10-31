@@ -4,7 +4,7 @@ node: b.subarray-with-elements-greater-than-varying-threshold
 type: qa
 ---
 ## Q
-**LC 2334 元素值大于变化阈值的子数组**｜Hard · LC TikTok 热度 88/100
+**LC 2334 元素值大于变化阈值的子数组**｜Hard · LC TikTok 全时段热度 88/100
 
 给整数数组 `nums` 和整数 `threshold`。找一个长度为 `k` 的子数组（连续非空），使其中**每个**元素都大于 `threshold / k`。返回任意一个满足要求的子数组的**长度**，不存在则返回 `-1`。`1 <= nums.length <= 10^5`，`1 <= nums[i], threshold <= 10^9`。例：`nums = [1,3,4,3,1], threshold = 6` → `3`（`[3,4,3]`，每个都大于 `6/3 = 2`）；`nums = [6,5,6,5,8], threshold = 7` → 返回 `1` 到 `5` 之间任意满足的长度均可，如 `1`（`8 > 7`）、`2`、`3`。
 

@@ -1,0 +1,108 @@
+---
+id: tlc-possible-bipartition-0-whole
+node: p2.possible-bipartition
+type: qa
+---
+## Q
+**LC 886 可能的二分法**｜Medium · LC TikTok 近 3 个月热度 62/100（全时段 56） · 近一年被问：美国 1 次、国内 0 次 · CodeTop 国内累计 1 次 · 最近 2026-10-14（美国面试记录）
+
+把编号 `1..n` 的 `n` 个人分进任意大小的两组。给定整数 `n` 和数组 `dislikes`，`dislikes[i] = [ai, bi]` 表示不允许把 `ai` 和 `bi` 分到同一组。当可以用这种方法把所有人分成两组时返回 `true`，否则返回 `false`。`1 <= n <= 2000`，`0 <= dislikes.length <= 10^4`，`dislikes[i].length == 2`，`1 <= dislikes[i][j] <= n`，`ai < bi`，`dislikes` 中每一组都不同。例：`n = 4, dislikes = [[1,2],[1,3],[2,4]]` → `true`（`[1,4]` 与 `[2,3]`）；`n = 3, dislikes = [[1,2],[1,3],[2,3]]` → `false`；`n = 5, dislikes = [[1,2],[2,3],[3,4],[4,5],[1,5]]` → `false`。
+
+给出完整的最优解答：识别、推导、代码、复杂度、易错点、追问。
+
+## A
+**一句话。** 把「互相讨厌」建成无向图，问题就是判断图是否为**二分图**（bipartite graph）：用 BFS 给每个连通块染色（相邻点必须异色），遇到相邻点同色就返回 `False`；每个连通块都要查。`O(n + m)`。
+
+**识别。** 「分成两组，某些对不能同组」= 二着色（two-coloring）。等价说法：图里没有长度为奇数的环。`n <= 2000`、边至多 `10^4`，`O(n + m)` 很轻。**图可能不连通**，不能只从 `1` 号开始染。
+
+**推导。** 暴力：枚举 `2^n` 种分组，检查每条边 → 浪费：一旦确定了一个人的组，他所有的「敌人」必须在另一组，选择被强制传播 → 选一个起点任意染色，BFS 逐个把邻居染成相反色；碰到已染色且与自己同色的邻居，说明存在奇数环，直接失败；每个连通块的起点颜色任选，互不影响。
+
+**简单解法。** 递归 DFS 染色：染成一种颜色，递归把每个敌人染成相反色，遇到同色敌人就失败。
+
+```python
+def possible_bipartition(n: int, dislikes: list[list[int]]) -> bool:
+    graph: list[list[int]] = [[] for _ in range(n + 1)]
+    for a, b in dislikes:
+        graph[a].append(b)
+        graph[b].append(a)
+    color = [0] * (n + 1)                          # 0 = 未染色，1 / -1 = 两个组
+
+    def dfs(u: int, c: int) -> bool:
+        color[u] = c
+        for v in graph[u]:
+            if color[v] == c:                      # 敌人和自己同组：矛盾
+                return False
+            if color[v] == 0 and not dfs(v, -c):   # 敌人放另一组，继续往下染
+                return False
+        return True
+
+    return all(color[u] != 0 or dfs(u, 1) for u in range(1, n + 1))   # 每个连通块都要查
+```
+
+时间 `O(n + m)`、空间 `O(n + m)`；最短，但递归深度可达 `n = 2000`，一条链会超过 CPython 默认递归上限约 `1000`，要调高上限或改 BFS（最优解）。
+
+最优解：
+
+```python
+from collections import deque
+
+def possible_bipartition(n: int, dislikes: list[list[int]]) -> bool:
+    graph: list[list[int]] = [[] for _ in range(n + 1)]
+    for a, b in dislikes:
+        graph[a].append(b)
+        graph[b].append(a)
+    color = [0] * (n + 1)                          # 0 = 未分组，1 / -1 = 两个组
+    for start in range(1, n + 1):                  # 图可能不连通：每个连通块都要查
+        if color[start]:
+            continue
+        color[start] = 1
+        queue = deque([start])
+        while queue:
+            u = queue.popleft()
+            for v in graph[u]:
+                if color[v] == color[u]:           # 互相讨厌的人落在同一组
+                    return False
+                if color[v] == 0:
+                    color[v] = -color[u]           # 敌人的敌人放另一组
+                    queue.append(v)
+    return True
+```
+
+运行：`(4, [[1,2],[1,3],[2,4]])` → `True`，`(3, [[1,2],[1,3],[2,3]])` → `False`，`(5, [[1,2],[2,3],[3,4],[4,5],[1,5]])` → `False`，`(1, [])` → `True`；`n = 2000` 的一条链 → `True`。
+
+**复杂度。** 时间 `O(n + m)`：每个点入队一次，每条边检查两次；空间 `O(n + m)`：邻接表与颜色数组。
+
+**拓展优化。**
+- 并查集（Union-Find）：一个人的所有敌人必须同组，把他们合并；自己和某个敌人落在同一集合就矛盾。不建邻接表，适合边在线到来。
+
+```python
+def possible_bipartition(n: int, dislikes: list[list[int]]) -> bool:
+    parent = list(range(n + 1))
+
+    def find(x: int) -> int:
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]          # 路径减半
+            x = parent[x]
+        return x
+
+    enemy = [0] * (n + 1)                          # enemy[u] = 某个已知的敌人，0 表示还没有
+    for a, b in dislikes:
+        for u, v in ((a, b), (b, a)):
+            if find(u) == find(v):                 # 自己和敌人已经被迫同组：失败
+                return False
+            if enemy[u]:
+                parent[find(enemy[u])] = find(v)   # u 的所有敌人必须同组：合并
+            else:
+                enemy[u] = v
+    return True
+```
+
+**易错点。**
+- 必须对每个连通块起一次 BFS：`n = 6`、`dislikes = [[1,2],[3,4],[4,5],[3,5]]` 里 `{3,4,5}` 是一个三角形（奇数环），只从 `1` 出发会得到 `True`，正确是 `False`。
+- 颜色用 `1 / -1` 取反：`color[v] = -color[u]`；若用 `0 / 1` 就不能用 `0` 表示「未染色」。
+- 判断冲突要看「已染色的邻居」：只在未染色时染色而不检查已染色的邻居，会漏掉奇数环。
+
+**追问。**
+- 要输出一种合法分组：把颜色为 `1` 的编号和颜色为 `-1` 的编号分别收集。
+
+**同模式。** LC 785 判断二分图、LC 1042 不邻接植花、LC 802 找到最终的安全状态、LC 261 以图判树。

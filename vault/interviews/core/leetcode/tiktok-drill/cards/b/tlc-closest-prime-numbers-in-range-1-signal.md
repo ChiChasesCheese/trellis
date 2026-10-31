@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 2523 范围内最接近的两个质数**｜Medium · LC TikTok 热度 62/100
+**LC 2523 范围内最接近的两个质数**｜Medium · LC TikTok 全时段热度 62/100
 
 给两个正整数 `left`、`right`，在 `[left, right]` 内找两个质数 `num1 < num2`，使 `num2 - num1` 最小；差相同时取 `num1` 最小的一对；凑不出两个质数就返回 `[-1, -1]`。
 

@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 2021 街上最亮的位置**｜Medium · LC TikTok 热度 53/100
+**LC 2021 街上最亮的位置**｜Medium · LC TikTok 全时段热度 53/100
 
 数组 `lights`，`lights[i] = [position, range]` 表示该路灯照亮闭区间 `[position - range, position + range]`。位置 `p` 的亮度是能照到 `p` 的路灯数量。返回最亮的位置，有多个时取坐标最小的。
 

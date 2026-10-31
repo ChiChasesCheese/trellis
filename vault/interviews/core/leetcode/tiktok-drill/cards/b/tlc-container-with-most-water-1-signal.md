@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 11 盛最多水的容器**｜Medium · LC TikTok 热度 56/100 · CodeTop 国内累计 26 次 · 最近 2026-05-06（国内 CodeTop）
+**LC 11 盛最多水的容器**｜Medium · LC TikTok 全时段热度 56/100 · CodeTop 国内累计 26 次 · 最近 2026-05-06（国内 CodeTop）
 
 长度为 `n` 的整数数组 `height`，第 `i` 条垂线的端点是 `(i, 0)` 和 `(i, height[i])`。选两条线，使它们与 `x` 轴围成的容器盛水最多，返回最大水量；容器不能倾斜。
 

@@ -4,7 +4,7 @@ node: b.maximum-profit-in-job-scheduling
 type: qa
 ---
 ## Q
-**LC 1235 规划兼职工作**｜Hard · CodeTop 国内累计 1 次 · 最近 2026-05-23（国内 CodeTop）
+**LC 1235 规划兼职工作**｜Hard · LC TikTok 全时段热度 26/100 · CodeTop 国内累计 1 次 · 最近 2026-05-23（国内 CodeTop）
 
 有 `n` 份兼职工作，第 `i` 份从 `startTime[i]` 开始、`endTime[i]` 结束，报酬 `profit[i]`。时间上重叠的两份工作不能同时做；在时间 `X` 结束的工作，可以立刻接在 `X` 开始的下一份。求能获得的最大报酬。`1 <= n <= 5 * 10^4`，`1 <= startTime[i] < endTime[i] <= 10^9`，`1 <= profit[i] <= 10^4`。例：`startTime = [1,2,3,3]`，`endTime = [3,4,5,6]`，`profit = [50,10,40,70]` → `120`（做 `[1,3]` 和 `[3,6]`）；`startTime = [1,1,1]`，`endTime = [2,3,4]`，`profit = [5,6,4]` → `6`。
 

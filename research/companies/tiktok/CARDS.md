@@ -153,3 +153,9 @@ explicitly iterative traversal the problem asks for) are unaffected.
 An example on a pattern card is either tier A (bands p1–p4) or a problem that is also on another list (Chi's Amazon or
 topic decks, Blind 75, NeetCode 150, LeetCode Hot 100, Top Interview 150 — `catalog/other_lists.json`). Tier-B problems
 that are on no other list do not appear as examples.
+
+## Comments carry the explanation (Chi, 2026-10-31)
+
+"注意代码里面来点注释 尽量能注释和优秀代码能解释的就不要额外文字段落重复 尽量阅读成本降低." The reasoning lives inside
+the code as short Chinese comments (each block's purpose, the invariant, why a boundary or pointer move is right). Prose
+never restates what the code and its comments already say; around a code block it is one or two sentences at most.

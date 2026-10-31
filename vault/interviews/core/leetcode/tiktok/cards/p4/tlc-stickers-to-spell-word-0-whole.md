@@ -4,7 +4,7 @@ node: p4.stickers-to-spell-word
 type: qa
 ---
 ## Q
-**LC 691 贴纸拼词**｜Hard · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-08-17（美国面试记录）
+**LC 691 贴纸拼词**｜Hard · LC TikTok 全时段热度 38/100 · 近一年被问：美国 1 次、国内 0 次 · 最近 2026-08-17（美国面试记录）
 
 有 `n` 种贴纸，每张贴纸上是一个小写英文单词，每种贴纸数量无限。要拼出字符串 `target`：从贴纸上剪下单个字母，再任意重排。返回拼出 `target` 所需的最少贴纸数；做不到返回 `-1`。`n == stickers.length`，`1 <= n <= 50`，`1 <= stickers[i].length <= 10`，`1 <= target.length <= 15`，所有字符串只含小写英文字母。例：`stickers = ["with","example","science"]`，`target = "thehat"` → `3`（两张 `"with"` 加一张 `"example"`）；`stickers = ["notice","possible"]`，`target = "basicbasic"` → `-1`。
 

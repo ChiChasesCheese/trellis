@@ -4,7 +4,7 @@ node: p4.find-minimum-in-rotated-sorted-array
 type: qa
 ---
 ## Q
-**LC 153 寻找旋转排序数组中的最小值**｜Medium · LC TikTok 热度 50/100 · CodeTop 国内累计 17 次 · 最近 2026-04-16（国内 CodeTop） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150
+**LC 153 寻找旋转排序数组中的最小值**｜Medium · LC TikTok 全时段热度 50/100 · CodeTop 国内累计 17 次 · 最近 2026-04-16（国内 CodeTop） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150
 
 一个元素**互不相同**的升序数组，经过 `1` 到 `n` 次旋转得到 `nums`（旋转一次是把最后一个元素移到最前面，例如 `[0,1,2,4,5,6,7]` 旋转 `4` 次得到 `[4,5,6,7,0,1,2]`，旋转 `n` 次回到原数组）。找出并返回最小元素，必须是 `O(log n)`。`1 <= n <= 5000`，`-5000 <= nums[i] <= 5000`，元素互不相同。例：`[3,4,5,1,2]` → `1`，`[4,5,6,7,0,1,2]` → `0`，`[11,13,15,17]` → `11`。
 

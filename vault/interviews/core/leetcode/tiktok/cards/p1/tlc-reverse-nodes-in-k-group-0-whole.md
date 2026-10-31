@@ -4,7 +4,7 @@ node: p1.reverse-nodes-in-k-group
 type: qa
 ---
 ## Q
-**LC 25 K 个一组翻转链表**｜Hard · LC TikTok 热度 58/100（近 30 天） · 近一年被问：美国 7 次、国内 12 次 · CodeTop 国内累计 305 次 · 最近 2026-10-27（国内面试记录）
+**LC 25 K 个一组翻转链表**｜Hard · LC TikTok 近 30 天热度 100/100（全时段 58） · 近一年被问：美国 7 次、国内 12 次 · CodeTop 国内累计 305 次 · 最近 2026-10-27（国内面试记录）
 
 给链表的头节点 `head`，每 `k` 个节点一组进行翻转，返回修改后的链表。`k` 是正整数，小于或等于链表的长度；如果节点总数不是 `k` 的整数倍，最后剩余的节点保持原有顺序。不能只是改变节点内部的值，需要实际进行节点交换。链表中的节点数目为 `n`，`1 <= k <= n <= 5000`，`0 <= Node.val <= 1000`。例：`head = [1,2,3,4,5], k = 2` → `[2,1,4,3,5]`；`head = [1,2,3,4,5], k = 3` → `[3,2,1,4,5]`。进阶：能否设计一个只用 `O(1)` 额外内存空间的算法？
 
@@ -15,7 +15,29 @@ type: qa
 
 **识别。** 「分段处理链表 + 段内反转」：把 LC 206（反转链表）当子程序，外层负责分组与接线。「不足 `k` 个保持原样」要求**先检查够不够再反转**，否则会错翻最后一组。哑节点让第一组与其他组的接线逻辑一致。`O(1)` 空间排除递归（深度 `n/k`）和用栈。
 
-**推导。** 暴力：把所有节点值读入数组，按组反转后写回 → 违反「不能只改值」，且 `O(n)` 额外空间 → 结构化做法：用 `group_prev` 指向「本组前一个节点」，数 `k` 步得到 `kth`（本组最后一个）和 `group_next`（下一组的头）→ 在 `group_prev.next` 到 `kth` 之间反转，反转时 `prev` 起始值设为 `group_next`，翻完本组的尾（原头）就直接指向下一组 → 把 `group_prev.next` 接到 `kth`（新头），并令 `group_prev` 为本组的尾，进入下一轮。
+**推导。** 暴力：把所有节点值读入数组，按组反转后写回 → 违反「不能只改值」，且 `O(n)` 额外空间 → 原地：先数够 `k` 个确认是完整一组，再用 LC 206 的反转翻这一段；反转的 `prev` 初值取下一组的头，翻完组尾自动连上后面。
+
+**简单解法。** 把节点按顺序放进列表，对每个完整的 `k` 段切片反转，再按新顺序重新接线。
+
+```python
+def reverse_k_group(head: ListNode | None, k: int) -> ListNode | None:
+    nodes: list[ListNode] = []
+    while head:
+        nodes.append(head)
+        head = head.next
+    for i in range(0, len(nodes) - k + 1, k):          # 只处理完整的一组
+        nodes[i:i + k] = nodes[i:i + k][::-1]          # 切片反转：换的是节点本身
+    dummy = cur = ListNode(0)
+    for node in nodes:
+        cur.next = node                                # 按新顺序重新接线
+        cur = node
+    cur.next = None                                    # 新的尾巴必须断开，否则会成环
+    return dummy.next
+```
+
+时间 `O(n)`、空间 `O(n)`；题面进阶要 `O(1)` 额外空间，所以只能当开场答案，再写指针原地版。
+
+最优解：
 
 ```python
 def reverse_k_group(head: ListNode | None, k: int) -> ListNode | None:
@@ -42,13 +64,28 @@ def reverse_k_group(head: ListNode | None, k: int) -> ListNode | None:
 
 **复杂度。** 时间 `O(n)`：每个节点被「数」一次、被「翻」一次；空间 `O(1)`。
 
+**拓展优化。**
+- 递归版：代码短，但递归深度 `n/k`；`k = 2`、`5000` 个节点深度 2500，超过 CPython 默认递归上限。
+
+```python
+def reverse_k_group(head: ListNode | None, k: int) -> ListNode | None:
+    tail = head
+    for _ in range(k):                                 # 数 k 个，不够就保持原样
+        if tail is None:
+            return head
+        tail = tail.next
+    prev, cur = reverse_k_group(tail, k), head         # prev 初值 = 后面已处理好的部分
+    for _ in range(k):
+        cur.next, prev, cur = prev, cur, cur.next      # 经典反转，组尾自动接上后半部分
+    return prev
+```
+
 **易错点。**
 - 先数够 `k` 个再翻：不先检查时，最后不足的一组也被翻掉，`[1,2,3,4,5]`、`k = 3` 会得到 `[3,2,1,5,4]`，正确是 `[3,2,1,4,5]`。
 - 反转的 `prev` 初值要是 `group_next`（下一组的头）：写成 `None` 时，翻完的组尾指向 `None`，后面所有节点丢失，`[1,2,3,4,5]`、`k = 2` 只剩 `[2,1]`，正确是 `[2,1,4,3,5]`。
 - 接线前要先记下本组原来的头（它翻完是组尾，`tail`），否则下一轮不知道从哪里继续。
 
 **追问。**
-- 递归版：先数 `k` 个，递归处理后面的部分，再翻本组并接上；代码短但深度 `n/k`，`k = 2`、`5000` 个节点会超过默认递归上限。
 - 从尾部开始分组（不足的在头部）：先反转整条链表，做一遍，再反转回来；或先求长度，对头部多出的 `n % k` 个跳过。
 - 放宽到 `O(k)` 额外空间：把 `k` 个节点压入栈，弹出时顺次连接，代码更直观。
 

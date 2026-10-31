@@ -4,7 +4,7 @@ node: p2.longest-common-subsequence
 type: qa
 ---
 ## Q
-**LC 1143 最长公共子序列**｜Medium · LC TikTok 热度 38/100 · 近一年被问：美国 0 次、国内 5 次 · CodeTop 国内累计 61 次 · 最近 2026-10-25（国内 CodeTop） · 也在：LeetCode Hot 100、Blind 75、NeetCode 150
+**LC 1143 最长公共子序列**｜Medium · LC TikTok 全时段热度 38/100 · 近一年被问：美国 0 次、国内 5 次 · CodeTop 国内累计 61 次 · 最近 2026-10-25（国内 CodeTop） · 也在：LeetCode Hot 100、Blind 75、NeetCode 150
 
 给两个字符串 `text1` 和 `text2`，返回它们的**最长公共子序列**（longest common subsequence）的长度，不存在则返回 `0`。子序列是在不改变相对顺序的前提下删掉若干字符（可以不删）得到的串，例如 `"ace"` 是 `"abcde"` 的子序列，`"aec"` 不是。`1 <= text1.length, text2.length <= 1000`，只含小写英文字母。例：`text1 = "abcde"`，`text2 = "ace"` → `3`；`"abc"` 与 `"abc"` → `3`；`"abc"` 与 `"def"` → `0`。
 

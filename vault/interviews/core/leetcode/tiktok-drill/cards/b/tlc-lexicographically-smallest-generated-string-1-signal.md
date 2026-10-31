@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 3474 字典序最小的生成字符串**｜Hard · LC TikTok 热度 62/100
+**LC 3474 字典序最小的生成字符串**｜Hard · LC TikTok 全时段热度 62/100
 
 字符串 `str1`（长度 `n`，只含 `'T'`、`'F'`）和 `str2`（长度 `m`，小写字母）。长度 `n + m - 1` 的 `word` 满足：`str1[i] == 'T'` 时 `word[i..i+m-1] == str2`，`str1[i] == 'F'` 时 `word[i..i+m-1] != str2`。返回字典序最小的合法 `word`，不存在返回 `""`。
 

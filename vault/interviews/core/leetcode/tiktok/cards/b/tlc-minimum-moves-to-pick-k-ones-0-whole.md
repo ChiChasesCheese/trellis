@@ -4,7 +4,7 @@ node: b.minimum-moves-to-pick-k-ones
 type: qa
 ---
 ## Q
-**LC 3086 拾起 K 个 1 需要的最少行动次数**｜Hard · LC TikTok 热度 62/100
+**LC 3086 拾起 K 个 1 需要的最少行动次数**｜Hard · LC TikTok 全时段热度 62/100
 
 给下标从 0 开始的二进制数组 `nums`（长度 `n`）、正整数 `k` 和非负整数 `maxChanges`。Alice 先任选一个站立下标 `aliceIndex`；若该位是 `1`，她立即拾起它（该位变 `0`，不算行动）。之后每次行动恰好做下面之一：（1）选一个 `j != aliceIndex` 且 `nums[j] == 0`，把它置为 `1`，这个动作最多做 `maxChanges` 次；（2）选相邻下标 `x, y`，`nums[x] == 1, nums[y] == 0`，交换二者；若 `y == aliceIndex`，Alice 拾起这个 `1`（该位变 `0`）。返回恰好拾起 `k` 个 `1` 的最少行动次数。
 

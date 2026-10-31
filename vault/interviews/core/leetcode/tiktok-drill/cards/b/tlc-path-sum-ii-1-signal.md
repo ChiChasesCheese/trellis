@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 113 路径总和 II**｜Medium · CodeTop 国内累计 42 次 · 最近 2026-07-24（国内 CodeTop）
+**LC 113 路径总和 II**｜Medium · LC TikTok 全时段热度 38/100 · CodeTop 国内累计 42 次 · 最近 2026-07-24（国内 CodeTop）
 
 给二叉树的根节点 `root` 和整数 `targetSum`，找出所有从根节点到叶子节点、路径上节点值之和等于 `targetSum` 的路径，以节点值列表的形式返回（叶子是没有子节点的节点）。
 

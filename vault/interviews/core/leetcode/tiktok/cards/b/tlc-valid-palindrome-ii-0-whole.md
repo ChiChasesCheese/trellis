@@ -4,7 +4,7 @@ node: b.valid-palindrome-ii
 type: qa
 ---
 ## Q
-**LC 680 验证回文字符串 Ⅱ**｜Easy · CodeTop 国内累计 11 次 · 最近 2026-04-15（国内 CodeTop）
+**LC 680 验证回文字符串 Ⅱ**｜Easy · LC TikTok 全时段热度 38/100 · CodeTop 国内累计 11 次 · 最近 2026-04-15（国内 CodeTop）
 
 给字符串 `s`，**最多删除一个字符**，判断能否让它成为回文串（正着读和倒着读一样）。`1 <= s.length <= 10^5`，`s` 只含小写英文字母。例：`"aba"` → `true`；`"abca"` → `true`（删 `'c'` 得 `"aba"`）；`"abc"` → `false`。
 

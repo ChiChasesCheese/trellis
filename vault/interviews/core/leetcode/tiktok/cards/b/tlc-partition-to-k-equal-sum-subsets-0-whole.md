@@ -4,7 +4,7 @@ node: b.partition-to-k-equal-sum-subsets
 type: qa
 ---
 ## Q
-**LC 698 划分为k个相等的子集**｜Medium · CodeTop 国内累计 6 次 · 最近 2026-10-07（国内 CodeTop）
+**LC 698 划分为k个相等的子集**｜Medium · LC TikTok 全时段热度 26/100 · CodeTop 国内累计 6 次 · 最近 2026-10-07（国内 CodeTop）
 
 给整数数组 `nums` 和正整数 `k`，判断能否把数组分成 `k` 个**非空**子集，使它们的元素和都相等（每个元素恰属于一个子集）。
 

@@ -4,7 +4,7 @@ node: p2.search-in-rotated-sorted-array
 type: qa
 ---
 ## Q
-**LC 33 搜索旋转排序数组**｜Medium · LC TikTok 热度 75/100（近 6 个月） · 近一年被问：美国 3 次、国内 4 次 · CodeTop 国内累计 162 次 · 最近 2026-10-15（国内 CodeTop） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150
+**LC 33 搜索旋转排序数组**｜Medium · LC TikTok 近 6 个月热度 53/100（全时段 75） · 近一年被问：美国 3 次、国内 4 次 · CodeTop 国内累计 162 次 · 最近 2026-10-15（国内 CodeTop） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150
 
 整数数组 `nums` 原本按升序排列且值**互不相同**，在某个未知的下标 `k`（`0 <= k < nums.length`）处向左旋转，变成 `[nums[k], nums[k+1], ..., nums[n-1], nums[0], ..., nums[k-1]]`。给旋转后的 `nums` 和目标值 `target`，返回 `target` 的下标，不存在返回 `-1`，要求 `O(log n)`。`1 <= nums.length <= 5000`，`-10^4 <= nums[i] <= 10^4`，`nums` 中每个值都独一无二，`-10^4 <= target <= 10^4`。例：`[4,5,6,7,0,1,2]`，`target = 0` → `4`；同一个数组 `target = 3` → `-1`；`[1]`，`target = 0` → `-1`。
 
@@ -16,6 +16,20 @@ type: qa
 **识别。** 「有序数组（旋转过）」+「要求 `O(log n)`」就是二分。旋转破坏了整体有序，但保留了局部有序；`n <= 5000`，线性扫描能过但不符合题目要求。
 
 **推导。** 暴力：线性扫描 `O(n)`。另一种两步法：先二分找旋转点（最小值的位置），再在某一段上普通二分，两次 `O(log n)`。一步法的洞察：每次取中点后，`[lo, mid]` 和 `[mid, hi]` 中必有一个是普通的升序区间（旋转点只可能在其中一个里）。若左半有序，`target` 在 `[nums[lo], nums[mid])` 内就在左半，否则在右半；若右半有序同理。每次排除一半，对数次结束。
+
+**简单解法。** 忽略旋转，线性扫描找 `target`。
+
+```python
+def search(nums: list[int], target: int) -> int:
+    for i, x in enumerate(nums):        # 不利用有序性：逐个比较，值互不相同，找到即返回
+        if x == target:
+            return i
+    return -1
+```
+
+时间 `O(n)`、空间 `O(1)`；`n <= 5000` 能过，但题面要求 `O(log n)`，只能当正确性基线。
+
+最优解：
 
 ```python
 def search(nums: list[int], target: int) -> int:
@@ -41,6 +55,28 @@ def search(nums: list[int], target: int) -> int:
 
 **复杂度。** 时间 `O(log n)`；空间 `O(1)`。
 
+**拓展优化。**
+- 两步法：先二分找最小值的下标 `pivot`（LC 153），再用 `bisect_left` 的 `key` 在虚拟升序数组 `nums[(pivot + i) % n]` 上二分，不用再分情况讨论。
+
+```python
+from bisect import bisect_left
+
+def search(nums: list[int], target: int) -> int:
+    n = len(nums)
+    lo, hi = 0, n - 1
+    while lo < hi:                                  # 找最小值的下标（旋转点）
+        mid = (lo + hi) // 2
+        if nums[mid] > nums[hi]:
+            lo = mid + 1                            # mid 比右端大：断点在 mid 右边
+        else:
+            hi = mid                                # mid 不比右端大：[mid, hi] 有序，最小值在 mid 或更左
+    pivot = lo
+    i = bisect_left(range(n), target, key=lambda j: nums[(j + pivot) % n])   # 虚拟的升序数组
+    if i < n and nums[(i + pivot) % n] == target:
+        return (i + pivot) % n
+    return -1
+```
+
 **易错点。**
 - 判断左半有序必须用 `nums[lo] <= nums[mid]`（带等号）。写成 `<`，遇到 `lo == mid`（区间只剩两个元素）会误判：`[3,1], target = 1` 得到 `-1`，正确是 `1`。
 - 区间端点的比较要一端闭一端开：左半是 `nums[lo] <= target < nums[mid]`，因为 `mid` 已经检查过不等于 `target`。
@@ -49,6 +85,5 @@ def search(nums: list[int], target: int) -> int:
 **追问。**
 - 有重复元素（LC 81）：当 `nums[lo] == nums[mid] == nums[hi]` 时无法判断哪半有序，只能两端各缩一格，最坏 `O(n)`。
 - 找旋转后数组的最小值（LC 153）：`nums[mid] > nums[hi]` 就往右，否则往左。
-- 用 `bisect` 的 `key` 参数把二分写成两行：先找旋转点，再在"虚拟有序数组"上二分。
 
 **同模式。** LC 81 搜索旋转排序数组 II、LC 153 寻找旋转排序数组中的最小值、LC 34 在排序数组中查找元素的第一个和最后一个位置、LC 162 寻找峰值、LC 74 搜索二维矩阵。

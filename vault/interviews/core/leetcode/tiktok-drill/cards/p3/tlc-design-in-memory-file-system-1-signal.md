@@ -5,7 +5,7 @@ type: qa
 step: 1
 ---
 ## Q
-**LC 588 设计内存文件系统**｜Hard · LC TikTok 热度 50/100 · 近一年被问：美国 3 次、国内 0 次 · 最近 2026-08-31（美国面试记录）
+**LC 588 设计内存文件系统**｜Hard · LC TikTok 全时段热度 50/100 · 近一年被问：美国 3 次、国内 0 次 · 最近 2026-08-31（美国面试记录）
 
 设计类 `FileSystem`，支持：`ls(path)`（文件路径返回只含该文件名的列表，目录路径返回其中所有文件名和子目录名，按字典序）、`mkdir(path)`（中间目录缺失也要创建）、`addContentToFile(filePath, content)`（文件不存在则创建，存在则追加）、`readContentFromFile(filePath)`。路径是以 `/` 开头、不以 `/` 结尾的绝对路径（根目录 `/` 除外），`1 <= path.length, filePath.length <= 100`，名字只含小写字母且同目录不重名，参数都有效，`1 <= content.length <= 50`，四个方法合计至多调用 `300` 次。例：`mkdir("/a/b/c")`，`addContentToFile("/a/b/c/d", "hello")` 之后，`ls("/")` → `["a"]`。
 

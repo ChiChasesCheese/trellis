@@ -4,7 +4,7 @@ node: p2.best-time-to-buy-and-sell-stock
 type: qa
 ---
 ## Q
-**LC 121 买卖股票的最佳时机**｜Easy · LC TikTok 热度 63/100（近 6 个月） · 近一年被问：美国 1 次、国内 6 次 · CodeTop 国内累计 148 次 · 最近 2026-09（美国面试记录）
+**LC 121 买卖股票的最佳时机**｜Easy · LC TikTok 近 6 个月热度 50/100（全时段 63） · 近一年被问：美国 1 次、国内 6 次 · CodeTop 国内累计 148 次 · 最近 2026-09（美国面试记录）
 
 数组 `prices`，`prices[i]` 是某支股票第 `i` 天的价格。你只能选择**某一天**买入，并在**未来的某一天**卖出，求最大利润；如果不能获利，返回 `0`。`1 <= prices.length <= 10^5`，`0 <= prices[i] <= 10^4`。例：`[7,1,5,3,6,4]` → `5`（第 2 天买、第 5 天卖，`6 - 1`；不是 `7 - 1`，因为不能先卖后买）；`[7,6,4,3,1]` → `0`。
 
@@ -16,6 +16,21 @@ type: qa
 **识别。** 「先买后卖，求最大差 `prices[j] - prices[i]`（`j > i`）」是「在前缀上维护一个最优量」的信号：对每个卖出日 `j`，最优买入日就是 `j` 之前价格最低的那天。`n = 10^5` 排除 `O(n^2)`。
 
 **推导。** 暴力枚举所有 `(i, j)` 对 `O(n^2)` → 浪费：对固定的 `j`，只有 `j` 之前的最小值有用，其余买入日都被它支配 → 最小值可以边扫边更新，不用重新找 → 一遍扫描 `O(n)`。
+
+**简单解法。** 暴力：枚举买入日 `i` 和之后的卖出日 `j`，取最大差。
+
+```python
+def max_profit(prices: list[int]) -> int:
+    best = 0                                        # 不能获利时答案是 0
+    for i in range(len(prices)):
+        for j in range(i + 1, len(prices)):         # 卖出日一定在买入日之后
+            best = max(best, prices[j] - prices[i])
+    return best
+```
+
+时间 `O(n^2)`，空间 `O(1)`；`n = 10^5` 会超时，小数据下可当对照答案，开场讲完引到「固定卖出日，只有前面的最低价有用」。
+
+最优解：
 
 ```python
 def max_profit(prices: list[int]) -> int:
@@ -30,13 +45,38 @@ def max_profit(prices: list[int]) -> int:
 
 **复杂度。** 时间 `O(n)`，空间 `O(1)`。
 
+**拓展优化。**
+- 同时返回买入日和卖出日，`[7,1,5,3,6,4]` → `(1, 4)`，`[7,6,4,3,1]` → `None`：
+```python
+def best_days(prices: list[int]) -> tuple[int, int] | None:
+    low_day, best, ans = 0, 0, None
+    for day, p in enumerate(prices):
+        if p < prices[low_day]:
+            low_day = day                           # 最低价所在的下标
+        if p - prices[low_day] > best:              # 严格变大才更新，无利可图时返回 None
+            best = p - prices[low_day]
+            ans = (low_day, day)
+    return ans
+```
+- 另一种经典解法：相邻差分数组上的最大子数组和（Kadane，LC 53），`[7,1,5,3,6,4]` → `5`：
+```python
+from itertools import pairwise
+
+
+def max_profit_kadane(prices: list[int]) -> int:
+    best = cur = 0
+    for a, b in pairwise(prices):
+        cur = max(0, cur + b - a)                   # 以当天结尾的最大连续涨幅，为负就清零重来
+        best = max(best, cur)
+    return best
+```
+
 **易错点。**
 - 不能用「全局最大 - 全局最小」：`[3,10,1]` 会得到 `9`，但最低点在最高点之后，正确是 `7`。
 - 先更新 `low` 再算利润是安全的：当天买当天卖利润是 `0`，不会虚增；不能获利时 `best` 保持初值 `0`，不要初始化成负数。
 - 只能买卖一次；允许多次交易是另一道题，答案是所有上涨段之和。
 
 **追问。**
-- 同时返回买入日和卖出日：记录最低价所在的下标，更新 `best` 时一并记下 `(买, 卖)`。
 - 可以交易任意多次（LC 122）：所有相邻正差之和，`sum(max(0, b - a) for a, b in pairwise(prices))`，例 `[7,1,5,3,6,4]` → `7`。
 - 最多 `k` 次（LC 188）或有冷冻期（LC 309）：改成状态机 DP，每天维护「持有 / 不持有」的最优值。
 
