@@ -24,16 +24,12 @@ step: 7
 
 **固定窗口**
 - LC 438 找到字符串中所有字母异位词
-- LC 1151 最少交换次数来组合所有的 1
-- LC 2134 最少交换次数来组合所有的 1 II（环形）
 
 **至多 `k` 与恰好 `k`**
 - LC 1248 统计「优美子数组」
-- LC 2799 统计完全子数组的数目（窗口里种类数等于全局种类数）
 
 **窗口 + 其他结构**
 - LC 239 滑动窗口最大值（单调队列）
-- LC 3086 拾起 K 个 1 需要的最少行动次数（窗口 + 前缀和）
 - LC 395 至少有 K 个重复字符的最长子串（约束不单调，枚举种类数）
 
 提示：先判断**最长还是最短**决定更新位置；再判断约束是否单调，不单调就换前缀和或枚举。
@@ -206,36 +202,6 @@ def find_anagrams(s: str, p: str) -> list[int]:
     return ans
 ```
 
-**例题：** LC 1151 最少交换次数来组合所有的 1
-
-二进制数组 `data`，每次交换任意两个位置，求把所有 `1` 聚成一段的最少交换次数；`data.length <= 10^5`。
-
-```python
-def min_swaps(data: list[int]) -> int:
-    w = sum(data)
-    cur = sum(data[:w])
-    best = cur
-    for i in range(w, len(data)):
-        cur += data[i] - data[i - w]
-        best = max(best, cur)
-    return w - best
-```
-
-**例题：** LC 2134 最少交换次数来组合所有的 1 II
-
-同 LC 1151，但数组是环形的（首尾相邻）；`nums.length <= 10^5`。
-
-```python
-def min_swaps(nums: list[int]) -> int:
-    n, ones = len(nums), sum(nums)
-    window = sum(nums[:ones])
-    best = window
-    for i in range(ones, ones + n - 1):
-        window += nums[i % n] - nums[(i - ones) % n]
-        best = max(best, window)
-    return ones - best
-```
-
 **例题：** LC 1248 统计「优美子数组」
 
 整数数组 `nums` 和 `k`，统计恰好含 `k` 个奇数的连续子数组个数；`nums.length <= 50000`，`1 <= k <= nums.length`。
@@ -250,29 +216,6 @@ def number_of_subarrays(nums: list[int], k: int) -> int:
         if odd >= k:
             ans += seen[odd - k]
         seen[odd] += 1
-    return ans
-```
-
-**例题：** LC 2799 统计完全子数组的数目
-
-正整数数组 `nums`，统计不同元素个数等于整个数组不同元素个数的子数组数；`nums.length <= 1000`，`nums[i] <= 2000`。
-
-```python
-from collections import Counter
-def count_complete_subarrays(nums: list[int]) -> int:
-    n, total = len(nums), len(set(nums))
-    cnt: Counter[int] = Counter()
-    ans = right = 0
-    for left in range(n):
-        while right < n and len(cnt) < total:
-            cnt[nums[right]] += 1
-            right += 1
-        if len(cnt) < total:
-            break
-        ans += n - right + 1
-        cnt[nums[left]] -= 1
-        if cnt[nums[left]] == 0:
-            del cnt[nums[left]]
     return ans
 ```
 
@@ -294,28 +237,6 @@ def max_sliding_window(nums: list[int], k: int) -> list[int]:
         if i >= k - 1:
             ans.append(nums[window[0]])
     return ans
-```
-
-**例题：** LC 3086 拾起 K 个 1 需要的最少行动次数
-
-二进制数组 `nums`，Alice 站在一个下标，每次行动可把一个 `0` 改成 `1`（至多 `maxChanges` 次）或交换相邻的 `1` 和 `0`，求恰好拾起 `k` 个 `1` 的最少行动数；`2 <= n <= 10^5`，`maxChanges + sum(nums) >= k`。
-
-```python
-from itertools import accumulate, groupby
-def minimum_moves(nums: list[int], k: int, max_changes: int) -> int:
-    longest_run = max((len(list(g)) for v, g in groupby(nums) if v), default=0)
-    c = min(longest_run, 3, k)
-    if max_changes >= k - c:
-        return max(c - 1, 0) + 2 * (k - c)
-    need = k - max_changes
-    pos = [i for i, x in enumerate(nums) if x]
-    pre = list(accumulate(pos, initial=0))
-    def cost(l: int) -> int:
-        r, m = l + need, l + need // 2
-        left = pos[m] * (m - l) - (pre[m] - pre[l])
-        right = (pre[r] - pre[m + 1]) - pos[m] * (r - m - 1)
-        return left + right
-    return 2 * max_changes + min(map(cost, range(len(pos) - need + 1)))
 ```
 
 **例题：** LC 395 至少有 K 个重复字符的最长子串

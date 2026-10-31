@@ -17,7 +17,6 @@ step: 9
 - LC 706 设计哈希映射（桶数组 + 链地址法）
 
 **按版本 / 时间存储 + 二分**
-- LC 1146 快照数组
 - LC 981 基于时间的键值存储（高频）
 
 **堆 / 窗口维护的汇总量**
@@ -31,7 +30,6 @@ step: 9
 
 **模拟**
 - LC 2502 设计内存分配器
-- LC 1860 增长的内存泄露（按规则模拟）
 - LC 348 设计井字棋（高频）
 
 **栈 / 队列**
@@ -207,32 +205,6 @@ class MyHashMap:
                 return
 ```
 
-**例题：** LC 1146 快照数组
-
-实现 `SnapshotArray(length)`，元素初值为 `0`：`set(index, val)` 修改，`snap()` 拍快照并返回快照号（从 `0` 递增），`get(index, snap_id)` 返回该次快照时下标 `index` 的值。`length <= 50000`，总共最多 `50000` 次调用。
-
-```python
-class SnapshotArray:
-    def __init__(self, length: int) -> None:
-        self.snap_id = 0
-        # 每个下标一条历史：(写入时的快照号, 值)，快照号递增；初始值 0 记在快照 0
-        self.history: list[list[tuple[int, int]]] = [[(0, 0)] for _ in range(length)]
-    def set(self, index: int, val: int) -> None:
-        hist = self.history[index]
-        if hist[-1][0] == self.snap_id:        # 同一个快照期内多次写：覆盖即可
-            hist[-1] = (self.snap_id, val)
-        else:
-            hist.append((self.snap_id, val))
-    def snap(self) -> int:
-        self.snap_id += 1                      # 不复制数组，只推进快照号
-        return self.snap_id - 1
-    def get(self, index: int, snap_id: int) -> int:
-        hist = self.history[index]
-        # 找最后一个 “快照号 <= snap_id” 的记录
-        pos = bisect_right(hist, snap_id, key=lambda rec: rec[0]) - 1
-        return hist[pos][1]
-```
-
 **例题：** LC 295 数据流的中位数
 
 实现 `MedianFinder`：`addNum(num)` 加入数据流中的整数，`findMedian()` 返回当前所有数的中位数（偶数个时取中间两数的平均）。`-10^5 <= num <= 10^5`，最多 `5 * 10^4` 次调用。
@@ -354,22 +326,6 @@ class Allocator:
                 self.mem[i] = 0
                 freed += 1
         return freed
-```
-
-**例题：** LC 1860 增长的内存泄露
-
-两个内存条分别剩 `memory1`、`memory2` 位。第 `i` 秒（从 `1` 开始）把 `i` 位分给剩余较多的那个（相等分给第一个）；两个都不足 `i` 位时程序退出。返回 `[退出时刻, 内存条1剩余, 内存条2剩余]`。`0 <= memory1, memory2 <= 2^31 - 1`。
-
-```python
-def mem_leak(memory1: int, memory2: int) -> list[int]:
-    second = 1                                 # 当前要分配的位数，也是秒数
-    while max(memory1, memory2) >= second:     # 至少有一条放得下，程序才没崩
-        if memory1 >= memory2:                 # 相等时给第一条，所以用 >=
-            memory1 -= second
-        else:
-            memory2 -= second
-        second += 1
-    return [second, memory1, memory2]
 ```
 
 **例题：** LC 981 基于时间的键值存储

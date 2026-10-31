@@ -15,10 +15,10 @@ step: 1
 **后序（先递归孩子，再处理自己）——要从子树拿信息：**
 - 高度、节点数、是否平衡、直径、子树和：返回高度，顺手更新答案（例：LC 543 二叉树的直径）。
 - 最近公共祖先：在左右子树里各找一次，看目标出现在哪里（例：LC 236 二叉树的最近公共祖先）。
-- 返回一个数组而不是一个数：好叶子节点对返回「每个叶子到我的距离」的计数（例：LC 1530 好叶子节点对的数量）。
+- 返回一对值（或一个数组）而不是一个数：打家劫舍 III 返回「偷当前节点 / 不偷」两个最优值（例：LC 337 打家劫舍 III）。
 
 **前序（先处理自己，再把信息传给孩子）——需要从根到当前的信息：**
-- 路径和、当前深度、连续长度：把当前长度向下传（例：LC 298 二叉树最长连续序列）。
+- 路径上的数字、路径和、当前深度：把当前累计值向下传（例：LC 129 求根节点到叶节点数字之和）。
 - 路径可以从任意节点开始向下：向下传前缀和，用哈希统计（例：LC 437 路径总和 III）。
 
 **全局最优（跨节点路径）**：路径可能「拐弯」经过某个节点的两侧，但向上返回时只能延伸一侧 → 用 `nonlocal best` 记录全局，返回单侧收益（例：LC 124 二叉树中的最大路径和）。
@@ -29,7 +29,7 @@ step: 1
 - 按**层**处理、右视图 → BFS（例：LC 199 二叉树的右视图）。
 - BST 的有序性相关（验证、第 k 小）→ 中序 / 上下界（例：LC 98 验证二叉搜索树）。
 - 节点数 `10^5` 且树可能退化成链 → 递归深度爆栈（CPython 默认约 1000），改迭代或调高 `sys.setrecursionlimit`（例：LC 94 二叉树的中序遍历，进阶要求迭代）。
-- 要找任意两点的路径 → LCA，或把树当图用 BFS（例：LC 1740 找到二叉树中的距离；高频：LC 863 二叉树中所有距离为 K 的结点）。
+- 要找任意两点的路径 → LCA，或把树当图用 BFS（高频：LC 863 二叉树中所有距离为 K 的结点）。
 
 **例题：** LC 543 二叉树的直径
 
@@ -64,45 +64,37 @@ def lowest_common_ancestor(root: TreeNode | None, p: TreeNode, q: TreeNode) -> T
     return left or right
 ```
 
-**例题：** LC 1530 好叶子节点对的数量
+**例题：** LC 129 求根节点到叶节点数字之和
 
-两个叶子节点之间的最短路径长度 `<= distance` 就是好叶子节点对，返回对数，节点数 `[1, 2^10]`，`1 <= distance <= 10`。
+二叉树每个节点存一个 `0` 到 `9` 的数字，每条从根到叶的路径代表一个数（路径 `1 -> 2 -> 3` 表示 `123`），求所有路径数字之和。树中节点数在 `[1, 1000]`，`0 <= Node.val <= 9`，树的深度不超过 `10`。
 
 ```python
-from itertools import accumulate
-def count_pairs(root: TreeNode | None, distance: int) -> int:
-    ans = 0
-    def dfs(node: TreeNode | None) -> list[int]:
-        nonlocal ans
+def sum_numbers(root: TreeNode | None) -> int:
+    def dfs(node: TreeNode | None, cur: int) -> int:
         if node is None:
-            return [0] * (distance + 1)
-        if not node.left and not node.right:
-            return [1] + [0] * distance
-        left = [0] + dfs(node.left)[:distance]
-        right = [0] + dfs(node.right)[:distance]
-        right_prefix = list(accumulate(right))
-        ans += sum(left[i] * right_prefix[distance - i] for i in range(distance + 1))
-        return [a + b for a, b in zip(left, right)]
-    dfs(root)
-    return ans
+            return 0
+        cur = cur * 10 + node.val          # 把「根到当前节点」的数字往下传
+        if node.left is None and node.right is None:
+            return cur                     # 叶子：这条路径的数字
+        return dfs(node.left, cur) + dfs(node.right, cur)
+    return dfs(root, 0)
 ```
 
-**例题：** LC 298 二叉树最长连续序列
+**例题：** LC 337 打家劫舍 III
 
-计算从父节点到子节点、依次递增 1 的最长路径的长度，节点数 `[1, 3 * 10^4]`。
+小偷面对一棵二叉树形状的房屋，直接相连的两栋房子不能在同一晚都偷，求能偷到的最高金额。节点数在 `[1, 10^4]`，`0 <= Node.val <= 10^4`。
 
 ```python
-def longest_consecutive(root: TreeNode | None) -> int:
-    best = 0
-    def dfs(node: TreeNode, length: int) -> None:
-        nonlocal best
-        best = max(best, length)
-        for child in (node.left, node.right):
-            if child:
-                dfs(child, length + 1 if child.val == node.val + 1 else 1)
-    if root:
-        dfs(root, 1)
-    return best
+def rob(root: TreeNode | None) -> int:
+    def dfs(node: TreeNode | None) -> tuple[int, int]:
+        if node is None:
+            return 0, 0
+        l_take, l_skip = dfs(node.left)
+        r_take, r_skip = dfs(node.right)
+        take = node.val + l_skip + r_skip                       # 偷我：两个孩子都不能偷
+        skip = max(l_take, l_skip) + max(r_take, r_skip)        # 不偷我：孩子各自取更优
+        return take, skip                                       # 返回一对，而不是一个数
+    return max(dfs(root))
 ```
 
 **例题：** LC 437 路径总和 III
@@ -213,28 +205,6 @@ def inorder_traversal(root: TreeNode | None) -> list[int]:
         dfs(node.right)
     dfs(root)
     return result
-```
-
-**例题：** LC 1740 找到二叉树中的距离
-
-返回二叉树中值为 `p` 与值为 `q` 的结点之间的距离（路径上的边数），节点数 `[1, 10^4]`，值唯一。
-
-```python
-def find_distance(root: TreeNode | None, p: int, q: int) -> int:
-    def lca(node: TreeNode | None) -> TreeNode | None:
-        if node is None or node.val in (p, q):
-            return node
-        left, right = lca(node.left), lca(node.right)
-        return node if left and right else left or right
-    def down(node: TreeNode, target: int) -> int:
-        if node.val == target:
-            return 0
-        for child in (node.left, node.right):
-            if child and (d := down(child, target)) >= 0:
-                return d + 1
-        return -1
-    top = lca(root)
-    return down(top, p) + down(top, q)
 ```
 
 **例题：** LC 889 根据前序和后序遍历构造二叉树

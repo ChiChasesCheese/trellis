@@ -28,7 +28,6 @@ step: 7
 **扩展 / 峰值**
 - LC 5 最长回文子串（从中心向两侧扩展的双指针）
 - LC 845 数组中的最长山脉
-- LC 581 最短无序连续子数组（两遍扫描）
 
 **链表双指针**
 - LC 160 相交链表
@@ -38,7 +37,6 @@ step: 7
 - LC 19 删除链表的倒数第 N 个节点（高频）
 
 **字符串双指针**
-- LC 165 比较版本号
 - LC 415 字符串相加（两个数各一个指针，从末尾向前）
 - LC 151 反转字符串中的单词（高频）
 
@@ -230,29 +228,6 @@ def longest_mountain(arr: list[int]) -> int:
     return best
 ```
 
-**例题：** LC 581 最短无序连续子数组
-
-找最短的连续子数组，把它升序排序后整个数组变为升序，返回其长度；`nums.length <= 10^4`，进阶 `O(n)`。
-
-```python
-from math import inf
-def find_unsorted_subarray(nums: list[int]) -> int:
-    n = len(nums)
-    start, end = 0, -1
-    hi, lo = -inf, inf
-    for i in range(n):
-        if nums[i] < hi:
-            end = i
-        else:
-            hi = nums[i]
-        j = n - 1 - i
-        if nums[j] > lo:
-            start = j
-        else:
-            lo = nums[j]
-    return end - start + 1
-```
-
 **例题：** LC 160 相交链表
 
 两个单链表的头节点，返回它们相交的起始节点（同一节点对象），不相交返回 `null`；要求 `O(m + n)` 时间、`O(1)` 空间。
@@ -308,20 +283,6 @@ def reorder_list(head: ListNode | None) -> None:
         first.next = second
         second.next = nxt1
         first, second = nxt1, nxt2
-```
-
-**例题：** LC 165 比较版本号
-
-按点分隔的修订号从左到右比较（忽略前导零，缺失的修订号视为 `0`），返回 `-1`、`0` 或 `1`；版本号长度 `<= 500`。
-
-```python
-from itertools import zip_longest
-def compare_version(version1: str, version2: str) -> int:
-    for a, b in zip_longest(version1.split("."), version2.split("."), fillvalue="0"):
-        x, y = int(a), int(b)
-        if x != y:
-            return -1 if x < y else 1
-    return 0
 ```
 
 **例题：** LC 415 字符串相加

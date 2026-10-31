@@ -14,7 +14,7 @@ step: 5
 2. **频次统计**：`Counter`；比较两个窗口的计数、取前 `k` 大（例：LC 347 前 K 个高频元素）。
 3. **签名分组**：键 = 归一化形状。字母异位词用 26 个字母的计数 `tuple` 当键（排序后的字符串也行）；统计不同形状的岛屿时，DFS 记录每个格子相对起点的偏移，排序后转 `tuple` 放进 `set`（例：LC 49 字母异位词分组）。
 4. **集合判存在 / 去重**：只关心「有没有」，用 `set`；定位序列起点用 `x - 1 not in s`（例：LC 128 最长连续序列）。
-5. **点 / 对作为键**：把坐标 `(x, y)` 放进 `set`，枚举对角线上的两点，检查另两个角是否存在，时间 `O(n^2)`，`n <= 500` 可行（例：LC 939 最小面积矩形）。
+5. **点 / 对作为键**：把「方向」`(dx, dy)` 约去公约数、统一符号后放进 `Counter`，固定一个点、枚举其余所有点，同方向的点共线，时间 `O(n^2)`，`n <= 300` 可行（例：LC 149 直线上最多的点数）。
 
 **例题：** LC 1 两数之和
 
@@ -83,19 +83,26 @@ def longest_consecutive(nums: list[int]) -> int:
     return best
 ```
 
-**例题：** LC 939 最小面积矩形
+**例题：** LC 149 直线上最多的点数
 
-平面上的点（互不相同，`1 <= points.length <= 500`），求边平行于坐标轴的矩形的最小面积，不存在返回 `0`。
+给一个数组 `points`，`points[i] = [xi, yi]` 是平面上的一个点（`1 <= points.length <= 300`，`-10^4 <= xi, yi <= 10^4`，所有点互不相同），返回同在一条直线上的点的最大个数。
 
 ```python
-from itertools import combinations
-def min_area_rect(points: list[list[int]]) -> int:
-    pts = [tuple(p) for p in points]
-    seen = set(pts)
-    areas = (
-        abs(x1 - x2) * abs(y1 - y2)
-        for (x1, y1), (x2, y2) in combinations(pts, 2)
-        if x1 != x2 and y1 != y2 and (x1, y2) in seen and (x2, y1) in seen
-    )
-    return min(areas, default=0)
+from collections import Counter
+from math import gcd
+
+def max_points(points: list[list[int]]) -> int:
+    best = min(len(points), 2)                 # 任意两点必共线
+    for i, (x1, y1) in enumerate(points):
+        direction: Counter[tuple[int, int]] = Counter()
+        for x2, y2 in points[i + 1:]:          # 只看编号更大的点：每条直线从它编号最小的点数起
+            dx, dy = x2 - x1, y2 - y1
+            g = gcd(dx, dy)                    # 约分后同一方向只有一种写法，不用浮点斜率
+            dx, dy = dx // g, dy // g
+            if dx < 0 or (dx == 0 and dy < 0):
+                dx, dy = -dx, -dy              # 统一方向：(1, 2) 和 (-1, -2) 是同一条线
+            direction[(dx, dy)] += 1
+        if direction:
+            best = max(best, max(direction.values()) + 1)   # 加上基准点本身
+    return best
 ```

@@ -21,8 +21,6 @@ step: 8
 **多源 BFS / 分层**
 - LC 994 腐烂的橘子
 - LC 286 墙与门
-- LC 934 最短的桥
-- LC 317 离建筑物最近的距离（从每栋楼各做一次 BFS）
 
 **隐式图的最短步数**
 - LC 127 单词接龙
@@ -34,9 +32,7 @@ step: 8
 **图的建模与染色**
 - LC 133 克隆图（哈希：旧节点 → 新节点）
 - LC 886 可能的二分法（染色）
-- LC 1466 重新规划路线（树形无向图 + 方向标记）
 - LC 399 除法求值（带权图）
-- LC 924 尽量减少恶意软件的传播（连通块）
 - LC 2385 感染二叉树需要的总时间（高频）
 - LC 863 二叉树中所有距离为 K 的结点（高频）
 
@@ -208,77 +204,6 @@ def walls_and_gates(rooms: list[list[int]]) -> None:
                 queue.append((nr, nc))
 ```
 
-**例题：** LC 934 最短的桥
-
-`n x n` 的 0/1 矩阵（`2 <= n <= 100`）里恰好有两座岛（上下左右相连的 `1`），求把两座岛连在一起最少需要翻转的 `0` 的个数。
-
-```python
-from collections.abc import Iterator
-def shortest_bridge(grid: list[list[int]]) -> int:
-    n = len(grid)
-    def neighbors(i: int, j: int) -> Iterator[tuple[int, int]]:
-        for a, b in ((i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)):
-            if 0 <= a < n and 0 <= b < n:
-                yield a, b
-    start = next((i, j) for i in range(n) for j in range(n) if grid[i][j])
-    seen = {start}
-    stack = [start]
-    while stack:
-        x, y = stack.pop()
-        for a, b in neighbors(x, y):
-            if grid[a][b] and (a, b) not in seen:
-                seen.add((a, b))
-                stack.append((a, b))
-    frontier = list(seen)
-    flips = 0
-    while frontier:
-        nxt: list[tuple[int, int]] = []
-        for x, y in frontier:
-            for a, b in neighbors(x, y):
-                if (a, b) not in seen:
-                    if grid[a][b]:
-                        return flips
-                    seen.add((a, b))
-                    nxt.append((a, b))
-        frontier = nxt
-        flips += 1
-    return -1
-```
-
-**例题：** LC 317 离建筑物最近的距离
-
-网格（`m, n <= 50`）中 `0` 空地、`1` 建筑、`2` 障碍，建筑和障碍不能通过；在一块空地上盖房子，使它到所有建筑的步行距离之和最小，返回这个和，不存在返回 `-1`。
-
-```python
-from collections import deque
-def shortest_distance(grid: list[list[int]]) -> int:
-    m, n = len(grid), len(grid[0])
-    total = [[0] * n for _ in range(m)]
-    reach = [[0] * n for _ in range(m)]
-    buildings = 0
-    for br in range(m):
-        for bc in range(n):
-            if grid[br][bc] != 1:
-                continue
-            buildings += 1
-            seen = [[False] * n for _ in range(m)]
-            seen[br][bc] = True
-            queue = deque([(br, bc)])
-            dist = 0
-            while queue:
-                dist += 1
-                for _ in range(len(queue)):
-                    r, c = queue.popleft()
-                    for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):
-                        if 0 <= nr < m and 0 <= nc < n and grid[nr][nc] == 0 and not seen[nr][nc]:
-                            seen[nr][nc] = True
-                            total[nr][nc] += dist
-                            reach[nr][nc] += 1
-                            queue.append((nr, nc))
-    return min((total[r][c] for r in range(m) for c in range(n)
-                if grid[r][c] == 0 and reach[r][c] == buildings), default=-1)
-```
-
 **例题：** LC 127 单词接龙
 
 给 `beginWord`、`endWord` 和字典 `wordList`（最多 `5000` 个、等长小写单词），每步只改一个字母且结果必须在字典里，求最短转换序列的单词数，不存在返回 `0`。
@@ -415,25 +340,6 @@ def possible_bipartition(n: int, dislikes: list[list[int]]) -> bool:
     return True
 ```
 
-**例题：** LC 1466 重新规划路线
-
-`n` 座城市（`n <= 5 * 10^4`）由 `n - 1` 条有向道路连成一棵树，求最少反转多少条道路的方向，才能让所有城市都能到达城市 `0`。
-
-```python
-def min_reorder(n: int, connections: list[list[int]]) -> int:
-    adj: list[list[tuple[int, int]]] = [[] for _ in range(n)]
-    for a, b in connections:
-        adj[a].append((b, 1))
-        adj[b].append((a, 0))
-    def dfs(u: int, parent: int) -> int:
-        flips = 0
-        for v, cost in adj[u]:
-            if v != parent:
-                flips += cost + dfs(v, u)
-        return flips
-    return dfs(0, -1)
-```
-
 **例题：** LC 399 除法求值
 
 给已知等式 `Ai / Bi = values[i]`（最多 `20` 条，`0 < values[i] <= 20`）和若干查询 `Cj / Dj`，返回每个查询的值；无法确定或变量未出现时为 `-1.0`。
@@ -462,34 +368,6 @@ def calc_equation(equations: list[list[str]], values: list[float], queries: list
         else:
             ans.append(-1.0)
     return ans
-```
-
-**例题：** LC 924 尽量减少恶意软件的传播
-
-`n` 个节点（`n <= 300`）的无向图用邻接矩阵给出，`initial` 是初始被感染的节点，感染沿边传播到整个连通块；移除 `initial` 中恰好一个节点，使最终感染节点总数最小，有多个答案返回下标最小的。
-
-```python
-from collections import Counter
-def min_malware_spread(graph: list[list[int]], initial: list[int]) -> int:
-    n = len(graph)
-    parent = list(range(n))
-    def find(x: int) -> int:
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-    for i in range(n):
-        for j in range(i + 1, n):
-            if graph[i][j]:
-                parent[find(i)] = find(j)
-    size = Counter(find(i) for i in range(n))
-    infected = Counter(find(x) for x in initial)
-    best, best_saved = min(initial), 0
-    for x in sorted(initial):
-        root = find(x)
-        if infected[root] == 1 and size[root] > best_saved:
-            best, best_saved = x, size[root]
-    return best
 ```
 
 **例题：** 岛屿数量及其追问集合

@@ -21,7 +21,6 @@ step: 7
 - LC 347 前 K 个高频元素（`Counter` + 堆或桶）
 - LC 438 找到字符串中所有字母异位词（窗口计数）
 - LC 76 最小覆盖子串（需求计数）
-- LC 2456 最流行的视频创作者（字典聚合 + 取最大）
 - LC 340 至多包含 K 个不同字符的最长子串（高频）
 - LC 904 水果成篮（高频）
 - LC 424 替换后的最长重复字符（高频）
@@ -32,7 +31,6 @@ step: 7
 
 **集合 / 存在性**
 - LC 128 最长连续序列
-- LC 939 最小面积矩形（点集）
 - LC 3 无重复字符的最长子串（字典记最近位置）
 
 **哈希 + 其他结构**
@@ -163,24 +161,6 @@ def min_window(s: str, t: str) -> str:
     return "" if best_len > len(s) else s[best_l : best_l + best_len]
 ```
 
-**例题：** LC 2456 最流行的视频创作者
-
-`creators[i]`、`ids[i]`、`views[i]` 描述第 `i` 个视频。创作者的流行度是其视频播放量之和。返回流行度最高的所有创作者，以及各自播放量最高的视频 id（并列取字典序最小）。`1 <= n <= 10^5`，`0 <= views[i] <= 10^5`。
-
-```python
-from collections import defaultdict
-def most_popular_creator(creators: list[str], ids: list[str], views: list[int]) -> list[list[str]]:
-    popularity: defaultdict[str, int] = defaultdict(int)
-    best_video: dict[str, tuple[int, str]] = {}    # 创作者 -> (-播放量, id)，元组越小越好
-    for creator, vid, view in zip(creators, ids, views):
-        popularity[creator] += view
-        candidate = (-view, vid)                   # 播放量大优先，并列取字典序小的 id
-        if creator not in best_video or candidate < best_video[creator]:
-            best_video[creator] = candidate
-    top = max(popularity.values())
-    return [[c, best_video[c][1]] for c, total in popularity.items() if total == top]
-```
-
 **例题：** LC 49 字母异位词分组
 
 字符串数组 `strs`，把字母异位词分到同一组，按任意顺序返回。`1 <= strs.length <= 10^4`，`0 <= strs[i].length <= 100`，只含小写字母。
@@ -241,23 +221,6 @@ def longest_consecutive(nums: list[int]) -> int:
             end += 1
         best = max(best, end - x)
     return best
-```
-
-**例题：** LC 939 最小面积矩形
-
-平面上互不相同的点 `points`，求以这些点为顶点、边平行于坐标轴的矩形的最小面积，不存在返回 `0`。`1 <= points.length <= 500`，`0 <= xi, yi <= 4 * 10^4`。
-
-```python
-from itertools import combinations
-def min_area_rect(points: list[list[int]]) -> int:
-    pts = [tuple(p) for p in points]       # 列表不可哈希，转成元组
-    seen = set(pts)
-    areas = (
-        abs(x1 - x2) * abs(y1 - y2)
-        for (x1, y1), (x2, y2) in combinations(pts, 2)
-        if x1 != x2 and y1 != y2 and (x1, y2) in seen and (x2, y1) in seen   # 另外两个角也在
-    )
-    return min(areas, default=0)           # 没有矩形时返回 0
 ```
 
 **例题：** LC 3 无重复字符的最长子串

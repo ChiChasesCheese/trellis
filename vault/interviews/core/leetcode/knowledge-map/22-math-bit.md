@@ -2,7 +2,7 @@
 
 取模与溢出、最大公约数、快速幂、异或去重、矩阵旋转与螺旋、按规则模拟。往往是一个「看出规律」的问题。
 
-**先做（TikTok P1–P4 与经典题单，57 道）**
+**先做（TikTok P1–P4 与经典题单，60 道）**
 
 - [[tlc-numbers-at-most-n-given-digit-set-0-whole|LC 902 最大为 N 的数字组合]]（困难）· TikTok P2
 - [[tlc-basic-calculator-0-whole|LC 224 基本计算器]]（困难）· TikTok P2 · Top Interview 150
@@ -10,6 +10,7 @@
 - [[tlc-add-strings-0-whole|LC 415 字符串相加]]（简单）· TikTok P2
 - [[tlc-spiral-matrix-0-whole|LC 54 螺旋矩阵]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-basic-calculator-ii-0-whole|LC 227 基本计算器 II]]（中等）· TikTok P3 · Amazon
+- [[tlc-reverse-words-in-a-string-0-whole|LC 151 反转字符串中的单词]]（中等）· TikTok P3 · Top Interview 150
 - [[tlc-sqrtx-0-whole|LC 69 x 的平方根 ]]（简单）· TikTok P3 · Amazon · Top Interview 150
 - [[tlc-rotate-array-0-whole|LC 189 轮转数组]]（中等）· TikTok P3 · Amazon · LeetCode Hot 100 · Top Interview 150
 - [[tlc-implement-rand10-using-rand7-0-whole|LC 470 用 Rand7() 实现 Rand10()]]（中等）· TikTok P3
@@ -22,6 +23,7 @@
 - [[tlc-subsets-0-whole|LC 78 子集]]（中等）· TikTok P3 · Amazon · NeetCode 150 · LeetCode Hot 100
 - [[tlc-unique-paths-0-whole|LC 62 不同路径]]（中等）· TikTok P3 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100
 - [[tlc-rotate-image-0-whole|LC 48 旋转图像]]（中等）· TikTok P3 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-gas-station-0-whole|LC 134 加油站]]（中等）· TikTok P3 · Amazon · NeetCode 150 · Top Interview 150
 - [[tlc-water-and-jug-problem-0-whole|LC 365 水壶问题]]（中等）· TikTok P4
 - [[tlc-transpose-matrix-0-whole|LC 867 转置矩阵]]（简单）· TikTok P4
 - [[tlc-count-primes-0-whole|LC 204 计数质数]]（中等）· TikTok P4 · Amazon
@@ -38,6 +40,7 @@
 - [[tlc-integer-to-roman-0-whole|LC 12 整数转罗马数字]]（中等）· TikTok B · Top Interview 150
 - LC 13 罗马数字转整数（简单）· Amazon · Top Interview 150
 - [[tlc-next-permutation-0-whole|LC 31 下一个排列]]（中等）· TikTok B · LeetCode Hot 100
+- [[tlc-first-missing-positive-0-whole|LC 41 缺失的第一个正数]]（困难）· TikTok B · Amazon · LeetCode Hot 100
 - [[tlc-powx-n-0-whole|LC 50 Pow(x, n)]]（中等）· TikTok B · Amazon · NeetCode 150 · Top Interview 150
 - LC 66 加一（简单）· NeetCode 150 · Top Interview 150
 - LC 67 二进制求和（简单）· Amazon · Top Interview 150

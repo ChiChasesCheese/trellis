@@ -13,7 +13,6 @@ step: 7
 **有序数组上的边界**
 - LC 34 在排序数组中查找元素的第一个和最后一个位置
 - LC 69 x 的平方根
-- LC 1539 第 k 个缺失的正整数
 - LC 35 搜索插入位置（高频）
 - LC 2300 咒语和药水的成功对数（高频）
 
@@ -28,7 +27,6 @@ step: 7
 **对答案二分（最小化最大值）**
 - LC 875 爱吃香蕉的珂珂
 - LC 1011 在 D 天内送达包裹的能力
-- LC 1802 有界数组中指定下标处的最大值
 - LC 378 有序矩阵中第 K 小的元素（值域二分）
 - LC 1918 第 K 小的子数组和（高频）
 
@@ -36,7 +34,6 @@ step: 7
 - LC 209 长度最小的子数组（前缀和 + 二分）
 - LC 528 按权重随机选择（前缀和 + `bisect`）
 - LC 300 最长递增子序列（`tails` 数组上二分）
-- LC 1146 快照数组（按版本号二分）
 - LC 981 基于时间的键值存储（高频）
 
 提示：先看是在**下标**上二分还是对**答案**二分；再写判定函数，确认它是 `False...False True...True`；最后选模板。
@@ -69,22 +66,6 @@ def my_sqrt(x: int) -> int:
         else:
             hi = mid - 1
     return lo
-```
-
-**例题：** LC 1539 第 k 个缺失的正整数
-
-严格升序的正整数数组 `arr`，求缺失的第 `k` 个正整数；`1 <= arr.length, arr[i], k <= 1000`，进阶要求小于 `O(n)`。
-
-```python
-def find_kth_positive(arr: list[int], k: int) -> int:
-    lo, hi = 0, len(arr)
-    while lo < hi:
-        mid = (lo + hi) // 2
-        if arr[mid] - (mid + 1) >= k:
-            hi = mid
-        else:
-            lo = mid + 1
-    return lo + k
 ```
 
 **例题：** LC 33 搜索旋转排序数组
@@ -201,28 +182,6 @@ def ship_within_days(weights: list[int], days: int) -> int:
     return lo
 ```
 
-**例题：** LC 1802 有界数组中指定下标处的最大值
-
-构造长度 `n` 的正整数数组，相邻差的绝对值不超过 `1`，和不超过 `maxSum`，最大化 `nums[index]`；`1 <= n <= maxSum <= 10^9`。
-
-```python
-def max_value(n: int, index: int, max_sum: int) -> int:
-    def side(peak: int, length: int) -> int:
-        if length >= peak - 1:
-            return peak * (peak - 1) // 2 + (length - (peak - 1))
-        return (peak - 1 + peak - length) * length // 2
-    def total(peak: int) -> int:
-        return peak + side(peak, index) + side(peak, n - 1 - index)
-    lo, hi = 1, max_sum
-    while lo < hi:
-        mid = (lo + hi + 1) // 2
-        if total(mid) <= max_sum:
-            lo = mid
-        else:
-            hi = mid - 1
-    return lo
-```
-
 **例题：** LC 378 有序矩阵中第 K 小的元素
 
 `n x n` 矩阵每行每列都非递减，求排序后的第 `k` 小元素（重复值各算一个），内存优于 `O(n^2)`；`n <= 300`。
@@ -296,31 +255,6 @@ def length_of_lis(nums: list[int]) -> int:
         else:
             tails[i] = x
     return len(tails)
-```
-
-**例题：** LC 1146 快照数组
-
-实现 `SnapshotArray`：`set(index, val)` 写入，`snap()` 返回快照号，`get(index, snap_id)` 读取那次快照时的值；`length <= 50000`，操作总数 `<= 50000`。
-
-```python
-from bisect import bisect_right
-class SnapshotArray:
-    def __init__(self, length: int) -> None:
-        self.snap_id = 0
-        self.history: list[list[tuple[int, int]]] = [[(0, 0)] for _ in range(length)]
-    def set(self, index: int, val: int) -> None:
-        hist = self.history[index]
-        if hist[-1][0] == self.snap_id:
-            hist[-1] = (self.snap_id, val)
-        else:
-            hist.append((self.snap_id, val))
-    def snap(self) -> int:
-        self.snap_id += 1
-        return self.snap_id - 1
-    def get(self, index: int, snap_id: int) -> int:
-        hist = self.history[index]
-        pos = bisect_right(hist, snap_id, key=lambda rec: rec[0]) - 1
-        return hist[pos][1]
 ```
 
 **例题：** LC 35 搜索插入位置

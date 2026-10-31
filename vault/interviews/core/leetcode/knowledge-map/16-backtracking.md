@@ -2,7 +2,7 @@
 
 枚举所有方案的 DFS：子集、组合、排列、分割、N 皇后。选择 / 递归 / 撤销三步，剪枝和去重决定快慢。加上记忆化就变成动态规划。
 
-**先做（TikTok P1–P4 与经典题单，23 道）**
+**先做（TikTok P1–P4 与经典题单，24 道）**
 
 - [[tlc-longest-substring-without-repeating-characters-0-whole|LC 3 无重复字符的最长子串]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-restore-ip-addresses-0-whole|LC 93 复原 IP 地址]]（中等）· TikTok P3
@@ -12,6 +12,7 @@
 - [[tlc-generate-parentheses-0-whole|LC 22 括号生成]]（中等）· TikTok P3 · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-word-search-0-whole|LC 79 单词搜索]]（中等）· TikTok P3 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-n-queens-0-whole|LC 51 N 皇后]]（困难）· TikTok P3 · Amazon · NeetCode 150 · LeetCode Hot 100
+- [[tlc-valid-parenthesis-string-0-whole|LC 678 有效的括号字符串]]（中等）· TikTok P3 · NeetCode 150
 - [[tlc-combinations-0-whole|LC 77 组合]]（中等）· TikTok P3 · Amazon · Top Interview 150
 - [[tlc-subsets-0-whole|LC 78 子集]]（中等）· TikTok P3 · Amazon · NeetCode 150 · LeetCode Hot 100
 - [[tlc-unique-paths-0-whole|LC 62 不同路径]]（中等）· TikTok P3 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100

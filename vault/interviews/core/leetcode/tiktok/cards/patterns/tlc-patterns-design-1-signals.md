@@ -29,12 +29,12 @@ step: 1
 - LRU（LC 146）：哈希 + 双向链表（例：LC 146 LRU 缓存）。
 - 随机集合（LC 380）：哈希 + 数组（交换删除）（例：LC 380 O(1) 时间插入、删除和获取随机元素）。
 - 全 O(1)（LC 432）：哈希 + 按计数分桶的双向链表（例：LC 460 LFU缓存；高频：LC 432 全 O(1) 的数据结构）。
-- 快照数组（LC 1146）：每个下标一个变更历史 + 二分（例：LC 1146 快照数组）。
+- 按版本 / 时间回查（LC 981）：每个键一份升序的 `(时间, 值)` 记录 + 二分（例：LC 981 基于时间的键值存储）。
 - 数据流中位数（LC 295）：双堆（例：LC 295 数据流的中位数）。
 - 内存分配器（LC 2502）：数组 / 区间表模拟（例：LC 2502 设计内存分配器）。
 
 **近似信号：**
-- 数据范围很小（`<= 1000` 次调用）⇒ 朴素 `O(n)` 的扫描就能过，别过度设计（例：LC 1381 设计一个支持增量操作的栈；高频：LC 2502 设计内存分配器）。
+- 数据范围很小（`<= 1000` 次调用）⇒ 朴素 `O(n)` 的扫描就能过，别过度设计（例：LC 2502 设计内存分配器）。
 - 需要持久化 / 并发 ⇒ 先问面试官是否要考虑（例：限制并发数的异步任务执行器）。
 - 只是一次性计算 ⇒ 普通算法题，不是设计题（例：LC 53 最大子数组和）。
 
@@ -236,30 +236,6 @@ class LFUCache:
         self.min_freq = 1
 ```
 
-**例题：** LC 1146 快照数组
-
-设计 `SnapshotArray(length)`（`1 <= length <= 50000`）：`set(index, val)` 修改元素，`snap()` 拍快照并返回快照编号，`get(index, snap_id)` 读取拍快照时该下标的值；总调用不超过 50000 次。
-
-```python
-class SnapshotArray:
-    def __init__(self, length: int) -> None:
-        self.snap_id = 0
-        self.history: list[list[tuple[int, int]]] = [[(0, 0)] for _ in range(length)]
-    def set(self, index: int, val: int) -> None:
-        hist = self.history[index]
-        if hist[-1][0] == self.snap_id:        # 同一个快照期内多次写：覆盖即可
-            hist[-1] = (self.snap_id, val)
-        else:
-            hist.append((self.snap_id, val))
-    def snap(self) -> int:
-        self.snap_id += 1                      # 不复制数组，只推进快照号
-        return self.snap_id - 1
-    def get(self, index: int, snap_id: int) -> int:
-        hist = self.history[index]
-        pos = bisect_right(hist, snap_id, key=lambda rec: rec[0]) - 1
-        return hist[pos][1]
-```
-
 **例题：** LC 295 数据流的中位数
 
 设计 `MedianFinder`：`addNum(num)` 向数据流加入一个整数（`-10^5 <= num <= 10^5`），`findMedian()` 返回当前所有数的中位数；总调用不超过 `5 * 10^4` 次。
@@ -304,32 +280,6 @@ class Allocator:
                 self.mem[i] = 0
                 freed += 1
         return freed
-```
-
-**例题：** LC 1381 设计一个支持增量操作的栈
-
-设计 `CustomStack(maxSize)`：`push(x)`（栈满则忽略）、`pop()`（空栈返回 `-1`）、`increment(k, val)` 把栈底的前 `k` 个元素都加 `val`。`1 <= maxSize, x, k <= 1000`，每个方法至多调用 1000 次。
-
-```python
-class CustomStack:
-    def __init__(self, maxSize: int) -> None:
-        self.cap = maxSize
-        self.stack: list[int] = []
-        self.add: list[int] = [0] * maxSize   # add[i]：下标 0..i 的元素都还欠着这笔增量
-    def push(self, x: int) -> None:
-        if len(self.stack) < self.cap:
-            self.stack.append(x)
-    def pop(self) -> int:
-        if not self.stack:
-            return -1
-        i = len(self.stack) - 1
-        inc, self.add[i] = self.add[i], 0     # 取走栈顶的欠账，并把这一格清零
-        if i:
-            self.add[i - 1] += inc            # 欠账往下传给新的栈顶
-        return self.stack.pop() + inc
-    def increment(self, k: int, val: int) -> None:
-        if self.stack:
-            self.add[min(k, len(self.stack)) - 1] += val   # 只记在第 k 个（或栈顶）上
 ```
 
 **例题：** 限制并发数的异步任务执行器

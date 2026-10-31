@@ -2,12 +2,13 @@
 
 起点。把「再扫一遍找」变成 O(1) 查表：补数查找、计数、按签名分组、去重。几乎所有后面的模式都会在内部用到哈希：前缀和要用哈希记出现过的前缀，滑动窗口要用哈希计窗口内的字符，图要用哈希存邻接表和访问标记。
 
-**先做（TikTok P1–P4 与经典题单，70 道）**
+**先做（TikTok P1–P4 与经典题单，71 道）**
 
 - [[tlc-lru-cache-0-whole|LC 146 LRU 缓存]]（中等）· TikTok P1 · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-longest-substring-without-repeating-characters-0-whole|LC 3 无重复字符的最长子串]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-merge-intervals-0-whole|LC 56 合并区间]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-top-k-frequent-elements-0-whole|LC 347 前 K 个高频元素]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100
+- [[tlc-3sum-0-whole|LC 15 三数之和]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-two-sum-0-whole|LC 1 两数之和]]（简单）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-number-of-distinct-islands-0-whole|LC 694 不同岛屿的数量]]（中等）· TikTok P2
 - [[tlc-subarray-sum-equals-k-0-whole|LC 560 和为 K 的子数组]]（中等）· TikTok P3 · Amazon · LeetCode Hot 100
@@ -75,7 +76,7 @@
 - LC 846 一手顺子（中等）· NeetCode 150
 - LC 2013 检测正方形（中等）· NeetCode 150
 
-**再做（其余牌组里的题，67 道）**
+**再做（其余牌组里的题，66 道）**
 
 - LC 37 解数独（困难）· Amazon
 - [[tlc-word-ladder-ii-0-whole|LC 126 单词接龙 II]]（困难）· TikTok B · Amazon
@@ -96,7 +97,6 @@
 - LC 496 下一个更大元素 I（简单）· Amazon
 - [[tlc-continuous-subarray-sum-0-whole|LC 523 连续的子数组和]]（中等）· TikTok B
 - [[tlc-contiguous-array-0-whole|LC 525 连续数组]]（中等）· TikTok B · Amazon
-- [[tlc-valid-square-0-whole|LC 593 有效的正方形]]（中等）· TikTok B
 - LC 645 错误的集合（简单）· Amazon
 - [[tlc-top-k-frequent-words-0-whole|LC 692 前K个高频单词]]（中等）· TikTok B · Amazon
 - [[tlc-number-of-distinct-islands-ii-0-whole|LC 711 不同岛屿的数量 II]]（困难）· TikTok B

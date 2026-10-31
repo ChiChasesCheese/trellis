@@ -17,7 +17,7 @@
 - [[tlc-count-of-interesting-subarrays-0-whole|LC 2845 统计趣味子数组的数目]]（中等）· TikTok P4
 - [[tlc-product-of-array-except-self-0-whole|LC 238 除了自身以外数组的乘积]]（中等）· TikTok B · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 
-**再做（其余牌组里的题，29 道）**
+**再做（其余牌组里的题，28 道）**
 
 - LC 303 区域和检索 - 数组不可变（简单）· Amazon
 - LC 410 分割数组的最大值（困难）· Amazon
@@ -29,7 +29,6 @@
 - [[tlc-number-of-submatrices-that-sum-to-target-0-whole|LC 1074 元素和为目标值的子矩阵数量]]（困难）· TikTok B
 - LC 1094 拼车（中等）· Amazon
 - LC 1140 石子游戏 II（中等）· Amazon
-- [[tlc-minimum-swaps-to-group-all-1s-together-0-whole|LC 1151 最少交换次数来组合所有的 1]]（中等）· TikTok B
 - LC 1423 可获得的最大点数（中等）· Amazon
 - LC 1480 一维数组的动态和（简单）· Amazon
 - [[tlc-minimum-moves-to-make-array-complementary-0-whole|LC 1674 使数组互补的最少操作次数]]（中等）· TikTok B

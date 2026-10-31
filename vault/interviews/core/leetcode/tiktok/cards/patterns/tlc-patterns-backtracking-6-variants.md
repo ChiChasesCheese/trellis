@@ -5,14 +5,14 @@ type: qa
 step: 6
 ---
 ## Q
-**回溯（Backtracking）｜变形：括号生成、复原 IP、火柴拼正方形**
+**回溯（Backtracking）｜变形：括号生成、复原 IP、组合总和 II**
 
 这三题分别用什么约束剪枝？回溯函数的参数里放什么状态？
 
 ## A
 - **用计数约束让每条路径天然合法**：状态是 `(已放左括号数, 已放右括号数)`；左括号还有额度就可以放，右括号只能在**已放左括号更多**时放，不用事后检查。`n = 1..8` 的个数是卡特兰数 `1, 2, 5, 14, 42, 132, 429, 1430`（例：LC 22 括号生成）。
 - **按剩余长度剪枝的分段**：分 4 段，每段 1 到 3 位，不能有前导零（单独的 `0` 除外），值 `<= 255`；剩余字符数必须在 `[剩余段数, 3 * 剩余段数]` 内，否则直接返回。`"25525511135"` → `["255.255.11.135", "255.255.111.35"]`（例：LC 93 复原 IP 地址）。
-- **放进若干个桶，排序加等价状态去重**：把每根火柴放到 4 条边之一。① 总和不能被 4 整除或最长的火柴超过边长则直接 `False`；② **从大到小排序**，更早发现放不下；③ 当前边长度与前面某条边相同的，只试一次。不加剪枝，`15` 根火柴 `4^15 ≈ 10^9`，超时（例：LC 473 火柴拼正方形）。
+- **排序后在同一层跳过相同的数**：先排序让相同的数相邻；每个数只能用一次，所以下一层从 `i + 1` 开始；同一层里 `i > start and nums[i] == nums[i-1]` 就跳过，因为在同一个位置上选两个值相同的数只会得到同一批组合；再加一条 `nums[i] > remain` 就 `break` 的剪枝。`[10,1,2,7,6,1,5]`，目标 `8` → `[[1,1,6],[1,2,5],[1,7],[2,6]]`（例：LC 40 组合总和 II）。
 
 **例题：** LC 22 括号生成
 
@@ -68,32 +68,27 @@ def restore_ip_addresses(s: str) -> list[str]:
     return res
 ```
 
-**例题：** LC 473 火柴拼正方形
+**例题：** LC 40 组合总和 II
 
-用数组 `matchsticks` 里的**所有**火柴拼正方形，不能折断，`1 <= matchsticks.length <= 15`，`1 <= matchsticks[i] <= 10^8`。
+数组 `candidates`（元素可能重复）和目标数 `target`，找出所有和为 `target` 的组合，每个元素在一个组合里最多用一次，结果里不能有重复的组合；`1 <= candidates.length <= 100`，`1 <= candidates[i] <= 50`，`1 <= target <= 30`。
 
 ```python
-def makesquare(matchsticks: list[int]) -> bool:
-    total = sum(matchsticks)
-    if total % 4:
-        return False
-    side = total // 4
-    sticks = sorted(matchsticks, reverse=True)
-    if sticks[0] > side:
-        return False
-    sides = [0] * 4
-    def dfs(i: int) -> bool:
-        if i == len(sticks):
-            return True
-        tried: set[int] = set()
-        for j in range(4):
-            if sides[j] + sticks[i] > side or sides[j] in tried:
+def combination_sum2(candidates: list[int], target: int) -> list[list[int]]:
+    nums = sorted(candidates)
+    result: list[list[int]] = []
+    path: list[int] = []
+    def dfs(start: int, remain: int) -> None:
+        if remain == 0:
+            result.append(path[:])
+            return
+        for i in range(start, len(nums)):
+            if nums[i] > remain:
+                break
+            if i > start and nums[i] == nums[i - 1]:
                 continue
-            tried.add(sides[j])
-            sides[j] += sticks[i]
-            if dfs(i + 1):
-                return True
-            sides[j] -= sticks[i]
-        return False
-    return dfs(0)
+            path.append(nums[i])
+            dfs(i + 1, remain - nums[i])
+            path.pop()
+    dfs(0, target)
+    return result
 ```

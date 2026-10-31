@@ -5,9 +5,9 @@ type: qa
 step: 5
 ---
 ## Q
-**堆（Heap）｜变形：K 路归并、双堆调度（会议室 III）、值域上的堆**
+**堆（Heap）｜变形：K 路归并、就绪堆调度（单线程 CPU）、值域上的堆**
 
-合并 K 个链表、有序矩阵第 `k` 小、会议室 III（LC 2402）分别在堆里放什么？
+合并 K 个链表、有序矩阵第 `k` 小、单线程 CPU（LC 1834）分别在堆里放什么？
 
 ## A
 1. **K 路归并（LC 23）**：堆里每路一个元素 `(值, 路号, 节点)`；弹出最小的，把该路的下一个压入。时间 `O(N log k)`（例：LC 23 合并 K 个升序链表）。
@@ -28,29 +28,30 @@ def kth_smallest(matrix: list[list[int]], k: int) -> int:
 print(kth_smallest([[1,5,9],[10,11,13],[12,13,15]], 8))   # 13
 ```
 
-3. **双堆调度（LC 2402 会议室 III）**：空闲房间号的最小堆 + 正在使用的 `(结束时间, 房间号)` 最小堆。每场会议前，先把 `结束时间 <= 开始时间` 的房间还到空闲堆；有空房取编号最小的；没有就取最早结束的房间，会议顺延 `t + (end - start)`（例：LC 2402 会议室 III；高频：LC 253 会议室 II）。
+3. **就绪堆 + 事件推进（LC 1834 单线程 CPU）**：任务按入队时间排序，用指针推进；CPU 空闲时把此刻已到达的任务压进以 `(执行时间, 下标)` 为键的最小堆，弹出堆顶执行；堆空而下一个任务还没到，时间直接跳到它的到达时刻，不逐秒模拟。每个任务入堆、出堆各一次，`O(n log n)`（例：LC 1834 单线程 CPU；高频：LC 253 会议室 II）。
 
 ```python
-def best_meeting_room(n: int, meetings: list[list[int]]) -> int:
-    meetings.sort()
-    free = list(range(n))
-    busy: list[tuple[int, int]] = []
-    cnt = [0] * n
-    for start, end in meetings:
-        while busy and busy[0][0] <= start:
-            heapq.heappush(free, heapq.heappop(busy)[1])
-        if free:
-            room = heapq.heappop(free)
-            heapq.heappush(busy, (end, room))
-        else:
-            t, room = heapq.heappop(busy)
-            heapq.heappush(busy, (t + end - start, room))
-        cnt[room] += 1
-    return cnt.index(max(cnt))                 # index 返回第一个最大值，即编号最小
-print(best_meeting_room(2, [[0,10],[1,5],[2,7],[3,4]]), best_meeting_room(3, [[1,20],[2,10],[3,5],[4,9],[6,8]]))   # 0 1
+def get_order(tasks: list[list[int]]) -> list[int]:
+    n = len(tasks)
+    order = sorted(range(n), key=lambda i: tasks[i][0])
+    heap: list[tuple[int, int]] = []           # (执行时间, 下标)：元组比较先时间后下标
+    res: list[int] = []
+    t = p = 0
+    while len(res) < n:
+        if not heap and t < tasks[order[p]][0]:
+            t = tasks[order[p]][0]             # 空闲且队列空：时间跳到下一个到达时刻
+        while p < n and tasks[order[p]][0] <= t:
+            i = order[p]
+            heapq.heappush(heap, (tasks[i][1], i))
+            p += 1
+        cost, i = heapq.heappop(heap)
+        t += cost
+        res.append(i)
+    return res
+print(get_order([[1,2],[2,4],[3,2],[4,1]]), get_order([[7,10],[7,12],[7,5],[7,4],[7,2]]))   # [0, 2, 3, 1] [4, 3, 2, 0, 1]
 ```
 
-4. **频次聚合取最值（LC 347、2456）**：`Counter` / 字典聚合后用 `heapq.nlargest(k, cnt, key=cnt.get)`；LC 2456 只需遍历一遍求最大值，堆不是必需（例：LC 347 前 K 个高频元素）。
+4. **频次聚合取最值（LC 347）**：`Counter` / 字典聚合后用 `heapq.nlargest(k, cnt, key=cnt.get)`；只要最大值时遍历一遍即可，堆不是必需（例：LC 347 前 K 个高频元素）。
 
 **例题：** LC 23 合并 K 个升序链表
 
@@ -97,28 +98,29 @@ def kth_smallest(matrix: list[list[int]], k: int) -> int:
     return lo
 ```
 
-**例题：** LC 2402 会议室 III
+**例题：** LC 1834 单线程 CPU
 
-`n` 个会议室（`1 <= n <= 100`）编号 `0..n-1`，`meetings[i] = [start, end)`（至多 `10^5` 场，`start` 互不相同）。每场会议用编号最小的空闲房间；没有空房就延期到有房间空出，时长不变。返回举办会议最多的房间，并列取编号最小。
+`tasks[i] = [enqueueTime, processingTime]`（`1 <= n <= 10^5`，两个值都 `<= 10^9`）：单线程 CPU 空闲时从已入队的任务里选执行时间最短的，并列选下标最小的，任务一旦开始就执行完；返回任务的执行顺序。
 
 ```python
 from heapq import heappop, heappush
-def most_booked(n: int, meetings: list[list[int]]) -> int:
-    free = list(range(n))                      # 空闲房间号的最小堆（升序列表本身就是堆）
-    busy: list[tuple[int, int]] = []           # (结束时间, 房间号) 的最小堆
-    count = [0] * n
-    for start, end in sorted(meetings):        # 按开始时间依次安排
-        while busy and busy[0][0] <= start:    # 区间半开：结束时间 == start 的房间已空
-            heappush(free, heappop(busy)[1])
-        if free:
-            room = heappop(free)               # 编号最小的空房间
-            finish = end
-        else:
-            ready, room = heappop(busy)        # 最早空出来的房间（同时空出取编号小）
-            finish = ready + (end - start)     # 延期：时长不变，从 ready 开始
-        count[room] += 1
-        heappush(busy, (finish, room))
-    return max(range(n), key=count.__getitem__)   # max 取并列里第一个，即编号最小
+def get_order(tasks: list[list[int]]) -> list[int]:
+    n = len(tasks)
+    order = sorted(range(n), key=lambda i: tasks[i][0])   # 任务下标按入队时间排好
+    heap: list[tuple[int, int]] = []                      # (执行时间, 下标)：元组比较天然先时间后下标
+    res: list[int] = []
+    t = p = 0                                             # t：当前时刻；p：下一个还没入队的任务在 order 里的位置
+    while len(res) < n:
+        if not heap and t < tasks[order[p]][0]:
+            t = tasks[order[p]][0]                        # CPU 空闲且队列空：时间直接跳到下一个任务到达
+        while p < n and tasks[order[p]][0] <= t:          # 此刻已到达的任务全部入堆
+            i = order[p]
+            heappush(heap, (tasks[i][1], i))
+            p += 1
+        cost, i = heappop(heap)                           # 取执行时间最短的；并列时下标小的先出
+        t += cost
+        res.append(i)
+    return res
 ```
 
 **例题：** LC 347 前 K 个高频元素

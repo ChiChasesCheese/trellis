@@ -27,7 +27,7 @@ step: 1
 **近似信号：**
 - 数组**无序**且要返回**下标** → 哈希，排序会丢下标（例：LC 1 两数之和）。
 - 要求**连续子数组**满足一个会随窗口变化的条件（和、种类数）→ 滑动窗口，那是同向双指针的特例（例：LC 3 无重复字符的最长子串）。
-- 要所有解对且数组无序、数据小 → 哈希或暴力（例：LC 939 最小面积矩形）。
+- 要所有解对且数组无序、数据小 → 哈希或暴力（例：LC 149 直线上最多的点数）。
 - 问的是**子序列**而不是子数组 → DP（或贪心加二分，折叠里是后者），双指针只适合判断「是不是子序列」（例：LC 300 最长递增子序列）。
 
 **例题：** LC 16 最接近的三数之和
@@ -172,21 +172,27 @@ def length_of_longest_substring(s: str) -> int:
     return best
 ```
 
-**例题：** LC 939 最小面积矩形
+**例题：** LC 149 直线上最多的点数
 
-平面上的点（互不相同，`1 <= points.length <= 500`），求边平行于坐标轴的矩形的最小面积，不存在返回 `0`。
+给平面上 `n` 个互不相同的点 `points`（`1 <= n <= 300`，`-10^4 <= x, y <= 10^4`），求同一条直线上最多有多少个点。
 
 ```python
-from itertools import combinations
-def min_area_rect(points: list[list[int]]) -> int:
-    pts = [tuple(p) for p in points]
-    seen = set(pts)
-    areas = (
-        abs(x1 - x2) * abs(y1 - y2)
-        for (x1, y1), (x2, y2) in combinations(pts, 2)
-        if x1 != x2 and y1 != y2 and (x1, y2) in seen and (x2, y1) in seen
-    )
-    return min(areas, default=0)
+from collections import Counter
+from math import gcd
+def max_points(points: list[list[int]]) -> int:
+    best = 1
+    for i, (x1, y1) in enumerate(points):
+        slopes: Counter[tuple[int, int]] = Counter()
+        for x2, y2 in points[i + 1:]:
+            dx, dy = x2 - x1, y2 - y1
+            g = gcd(dx, dy)                    # 点互不相同，所以 g > 0
+            dx, dy = dx // g, dy // g          # 约分成最简整数方向向量，不用浮点斜率当键
+            if dx < 0 or (dx == 0 and dy < 0):
+                dx, dy = -dx, -dy              # 统一方向：(1, 2) 与 (-1, -2) 是同一条线
+            slopes[(dx, dy)] += 1
+        if slopes:
+            best = max(best, max(slopes.values()) + 1)   # 加上点 i 自己
+    return best
 ```
 
 **例题：** LC 300 最长递增子序列

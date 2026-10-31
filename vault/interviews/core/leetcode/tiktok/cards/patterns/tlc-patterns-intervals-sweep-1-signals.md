@@ -12,7 +12,7 @@ step: 1
 ## A
 **信号：**
 - 输入是一组 `[start, end]` 区间，问**合并**、**是否重叠**（例：LC 56 合并区间）。
-- 「某个点被几个区间覆盖」「最亮的位置」：把每个区间拆成 `+1`（开始）和 `-1`（结束）两个事件，排序后累加（例：LC 2021 街上最亮的位置）。
+- 「某个点被几个区间覆盖」「最多同时有几个」：把每个区间拆成 `+1`（开始）和 `-1`（结束）两个事件，排序后累加（例：LC 1094 拼车）。
 - 「按时间顺序处理事件，每个事件需要最早空闲的资源」，问**最多同时有几个**、**需要几个资源**：排序 + 堆（例：LC 253 会议室 II）。
 - 「用最少的区间覆盖 / 选最多互不重叠的区间」：按右端点（结束时间）排序的贪心（例：LC 435 无重叠区间）。
 - 「跳跃能到达的范围」：可达范围是一个区间，向右延伸（例：LC 55 跳跃游戏）。
@@ -39,26 +39,6 @@ def merge(intervals: list[list[int]]) -> list[list[int]]:
         else:
             merged.append([start, end])
     return merged
-```
-
-**例题：** LC 2021 街上最亮的位置
-
-路灯 `[position, range]` 照亮闭区间 `[position - range, position + range]`，返回被最多路灯照亮的位置，并列取最小，`1 <= lights.length <= 10^5`，`-10^8 <= position <= 10^8`。
-
-```python
-from collections import defaultdict
-def brightest_position(lights: list[list[int]]) -> int:
-    diff: defaultdict[int, int] = defaultdict(int)
-    for pos, rng in lights:
-        diff[pos - rng] += 1
-        diff[pos + rng + 1] -= 1
-    best = cur = 0
-    ans = 0
-    for x in sorted(diff):
-        cur += diff[x]
-        if cur > best:
-            best, ans = cur, x
-    return ans
 ```
 
 **例题：** LC 253 会议室 II

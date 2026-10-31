@@ -13,7 +13,7 @@ step: 1
 **二维 DP 的触发信号：**
 - **网格**，只能向右 / 向下走，问路径数：`dp[r][c]` 只依赖上方和左方（例：LC 62 不同路径）。
 - **两个字符串 / 序列**，问最长公共子序列、能否匹配：`dp[i][j]` 表示 `a` 的前 `i` 个与 `b` 的前 `j` 个（例：LC 1143 最长公共子序列）。
-- **一个字符串**，问回文子序列：`dp[i][j]` 表示子串 `s[i..j]`（区间 DP）（例：LC 516 最长回文子序列；高频：LC 131 分割回文串）。
+- **一个字符串**，问回文相关的判定或最优值：`dp[i][j]` 表示子串 `s[i..j]`（区间 DP），例如先预处理 `pal[i][j]` 再枚举分割点（高频：LC 131 分割回文串）。
 - **正方形 / 矩形**：以 `(r, c)` 为右下角的最大正方形边长（例：LC 221 最大正方形）。
 - 数据范围：`m, n` 到几百到一千（`<= 500` 或 `<= 1000`），`O(mn)` 即可，约 `10^6` 个状态（例：LC 72 编辑距离）。
 
@@ -25,7 +25,7 @@ step: 1
 - 网格里**四个方向都能走** ⇒ 不是单向 DP，用 DFS 加记忆化或 BFS（例：LC 329 矩阵中的最长递增路径）。
 - 要输出**具体方案**（路径本身、编辑操作序列）⇒ 保留完整二维表，再回溯（例：LC 64 最小路径和）。
 - 问子串且 `n` 很大 ⇒ 中心扩展、Manacher，而不是 `O(n^2)` 空间的 DP（例：LC 5 最长回文子串）。
-- 两个字符串的**子串**（连续）⇒ 状态定义为"以 `i`、`j` 结尾"，不匹配就清零（例：LC 718 最长重复子数组）。
+- 两个字符串的**子串**（连续）⇒ 状态定义为"以 `i`、`j` 结尾"，不匹配就清零。
 
 **例题：** LC 62 不同路径
 
@@ -58,24 +58,6 @@ def longest_common_subsequence(text1: str, text2: str) -> int:
             else:
                 dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
     return dp[m][n]
-```
-
-**例题：** LC 516 最长回文子序列
-
-返回字符串 `s` 中最长回文子序列的长度，`1 <= s.length <= 1000`，仅小写字母。
-
-```python
-def longest_palindrome_subseq(s: str) -> int:
-    n = len(s)
-    dp = [[0] * n for _ in range(n)]
-    for i in range(n - 1, -1, -1):
-        dp[i][i] = 1
-        for j in range(i + 1, n):
-            if s[i] == s[j]:
-                dp[i][j] = dp[i + 1][j - 1] + 2
-            else:
-                dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
-    return dp[0][n - 1]
 ```
 
 **例题：** LC 221 最大正方形
@@ -174,23 +156,6 @@ def longest_palindrome(s: str) -> str:
         if r - l - 1 > best_r - best_l + 1:
             best_l, best_r = l + 1, r - 1
     return s[best_l : best_r + 1]
-```
-
-**例题：** LC 718 最长重复子数组
-
-返回两个整数数组 `nums1`、`nums2` 中公共的、最长的**连续**子数组的长度，`1 <= 长度 <= 1000`。
-
-```python
-def find_length(nums1: list[int], nums2: list[int]) -> int:
-    m, n = len(nums1), len(nums2)
-    dp = [[0] * (n + 1) for _ in range(m + 1)]
-    best = 0
-    for i in range(1, m + 1):
-        for j in range(1, n + 1):
-            if nums1[i - 1] == nums2[j - 1]:
-                dp[i][j] = dp[i - 1][j - 1] + 1
-                best = max(best, dp[i][j])
-    return best
 ```
 
 **例题：** LC 131 分割回文串

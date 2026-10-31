@@ -19,7 +19,7 @@ step: 1
 - 「**两个链表相交**」→ 双指针各走完自己再走对方（LC 160）（例：LC 160 相交链表）。
 - 「**合并**有序链表」「**排序**链表」→ 归并（LC 23、148）（例：LC 21 合并两个有序链表；高频：LC 23 合并 K 个升序链表）。
 - 「**重排** `L0, Ln, L1, Ln-1...`」→ 找中点 + 反转后半 + 交替合并（LC 143）（例：LC 143 重排链表）。
-- 「删除**连续**和为 0 的节点」→ 前缀和 + 哈希（LC 1171）（例：LC 1171 从链表中删去总和值为零的连续节点）。
+- 「删除**连续**和为 0 的节点」→ 前缀和 + 哈希：相同前缀和之间的那一段和为 0，可以整段摘掉。
 - 「逆序存储的大数相加」→ 逐位加法带进位（LC 2）（例：LC 2 两数相加）。
 
 **要求 `O(1)` 空间** → 只允许改指针，不能把节点值倒进数组再重建（这是面试官最常追加的限制）（例：LC 234 回文链表）。
@@ -134,27 +134,6 @@ def reorder_list(head: ListNode | None) -> None:
         first.next = second
         second.next = nxt1
         first, second = nxt1, nxt2
-```
-
-**例题：** LC 1171 从链表中删去总和值为零的连续节点
-
-链表有 `1..1000` 个节点（`-1000 <= val <= 1000`），反复删去和为 0 的连续节点序列，返回最终链表的头，答案不唯一时返回任意一个。
-
-```python
-def remove_zero_sum_sublists(head: ListNode | None) -> ListNode | None:
-    dummy = ListNode(0, head)                    # 哨兵：整条链表都被删光时也有地方挂
-    last: dict[int, ListNode] = {}               # 前缀和 -> 最后一个取到这个前缀和的节点
-    s, node = 0, dummy
-    while node:                                  # 第一遍：同一前缀和后出现的覆盖先出现的
-        s += node.val
-        last[s] = node
-        node = node.next
-    s, node = 0, dummy
-    while node:                                  # 第二遍：从 node 直接跳到同前缀和的最后一个节点之后
-        s += node.val
-        node.next = last[s].next                 # (node, last[s]] 这一段总和为 0，整段删掉
-        node = node.next
-    return dummy.next
 ```
 
 **例题：** LC 2 两数相加

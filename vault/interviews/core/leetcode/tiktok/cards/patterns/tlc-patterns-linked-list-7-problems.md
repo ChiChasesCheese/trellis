@@ -29,13 +29,11 @@ step: 7
 
 **逐位运算 / 前缀和**
 - LC 2 两数相加
-- LC 1171 从链表中删去总和值为零的连续节点
 - LC 445 两数相加 II（高频）
 
 **链表 + 哈希 / 设计**
 - LC 146 LRU 缓存（哈希 + 双向链表）
 - LC 432 全 O(1) 的数据结构（哈希 + 双向链表）
-- LC 426 将二叉搜索树转化为排序的双向链表（中序遍历中接指针）
 - LC 430 扁平化多级双向链表（高频）
 
 提示：先问有没有可能删头或换头（哑节点）、是否要 `O(1)` 空间（只改指针）、是否涉及中点 / 环（快慢指针）。
@@ -224,27 +222,6 @@ def add_two_numbers(l1: ListNode | None, l2: ListNode | None) -> ListNode | None
     return dummy.next
 ```
 
-**例题：** LC 1171 从链表中删去总和值为零的连续节点
-
-反复删去链表中和为 `0` 的连续节点序列，直到没有为止，返回头节点（答案不唯一，任一满足即可）。结点数 `1..1000`，`-1000 <= val <= 1000`。
-
-```python
-def remove_zero_sum_sublists(head: ListNode | None) -> ListNode | None:
-    dummy = ListNode(0, head)                    # 哨兵：整条链表都被删光时也有地方挂
-    last: dict[int, ListNode] = {}               # 前缀和 -> 最后一个取到这个前缀和的节点
-    s, node = 0, dummy
-    while node:                                  # 第一遍：同一前缀和后出现的覆盖先出现的
-        s += node.val
-        last[s] = node
-        node = node.next
-    s, node = 0, dummy
-    while node:                                  # 第二遍：从 node 直接跳到同前缀和的最后一个节点之后
-        s += node.val
-        node.next = last[s].next                 # (node, last[s]] 这一段总和为 0，整段删掉
-        node = node.next
-    return dummy.next
-```
-
 **例题：** LC 146 LRU 缓存
 
 设计 `LRUCache(capacity)`：`get(key)` 命中返回值、否则返回 `-1`；`put(key, value)` 写入或更新，写入后键数超过 `capacity` 就逐出最久未使用的键。两个操作平均 `O(1)`。`1 <= capacity <= 3000`，最多调用 `2 * 10^5` 次。
@@ -349,31 +326,6 @@ class AllOne:
         if self.head.next is self.tail:
             return ""
         return next(iter(self.head.next.keys))
-```
-
-**例题：** LC 426 将二叉搜索树转化为排序的双向链表
-
-把二叉搜索树原地转成已排序的循环双向链表（`left` 当前驱、`right` 当后继，首尾相连），返回最小节点。结点数 `0..2000`，值互不相同。
-
-```python
-def tree_to_doubly_list(root: Node | None) -> Node | None:
-    if root is None:
-        return None
-    first = prev = None
-    def inorder(node: Node | None) -> None:    # 中序：左 -> 根 -> 右
-        nonlocal first, prev
-        if node is None:
-            return
-        inorder(node.left)
-        if prev:
-            prev.right, node.left = node, prev # 把上一个节点和当前节点互相连上
-        else:
-            first = node                       # 中序第一个节点就是最小值
-        prev = node
-        inorder(node.right)                    # 此时 node.right 还没被改过
-    inorder(root)
-    first.left, prev.right = prev, first       # 首尾相连成环
-    return first
 ```
 
 **例题：** K 个一组翻转链表的变体

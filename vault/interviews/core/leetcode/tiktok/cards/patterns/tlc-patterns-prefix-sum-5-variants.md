@@ -7,10 +7,10 @@ step: 5
 ## Q
 **前缀和与差分（Prefix Sum）｜变形：二维前缀和、扫描线、前缀最值、值域差分**
 
-二维前缀和怎么算？「最亮的位置」类的覆盖计数怎么用差分？隐藏数组计数（LC 2145）和前缀分数（LC 2640）里前缀和起什么作用？
+二维前缀和怎么算？会议室这类覆盖计数怎么用差分？最大子数组和（LC 53）和接雨水（LC 42）里前缀和、前缀最值起什么作用？
 
 ## A
-**二维前缀和**：`p[r+1][c+1]` = 左上角到 `(r, c)` 的矩形和，容斥原理（例：LC 1074 元素和为目标值的子矩阵数量；高频：LC 560 和为 K 的子数组）。
+**二维前缀和**：`p[r+1][c+1]` = 左上角到 `(r, c)` 的矩形和，容斥原理（高频：LC 560 和为 K 的子数组）。
 
 ```python
 class NumMatrix:
@@ -25,92 +25,71 @@ class NumMatrix:
         return p[r2+1][c2+1] - p[r1][c2+1] - p[r2+1][c1] + p[r1][c1]
 ```
 
-**LC 2021 最亮的位置**：坐标很大，用字典做稀疏差分，排序后扫描（例：LC 2021 街上最亮的位置）：
+**LC 253 会议室 II**：时间点很多，用字典做稀疏差分，开始 `+1`、结束 `-1`，排序后扫描，扫描时的最大累计值就是同时进行的会议数（例：LC 253 会议室 II）：
 
 ```python
 from collections import Counter
-def brightest_position(lights: list[list[int]]) -> int:
+def min_meeting_rooms(intervals: list[list[int]]) -> int:
     diff: Counter[int] = Counter()
-    for p, r in lights:
-        diff[p - r] += 1
-        diff[p + r + 1] -= 1          # 闭区间 [p-r, p+r]，结束点后一位撤掉
-    best = cur = ans = 0
-    for pos in sorted(diff):
-        cur += diff[pos]
-        if cur > best:                # 严格大于：同亮度取最小坐标
-            best, ans = cur, pos
-    return ans
-print(brightest_position([[-3, 2], [1, 2], [3, 3]]), brightest_position([[1, 0], [0, 1]]), brightest_position([[1, 2]]))   # -1 1 -1
+    for start, end in intervals:
+        diff[start] += 1
+        diff[end] -= 1                # 半开区间 [start, end)：结束那一刻房间已经空出来
+    best = cur = 0
+    for t in sorted(diff):
+        cur += diff[t]
+        best = max(best, cur)
+    return best
+print(min_meeting_rooms([[0, 30], [5, 10], [15, 20]]), min_meeting_rooms([[7, 10], [2, 4]]), min_meeting_rooms([[1, 5], [5, 9]]))   # 2 1 1
 ```
 
-- **LC 2145**：`pre = [0, *accumulate(differences)]` 是隐藏数组相对起点的偏移。可行起点个数 = `(upper - lower) - (max(pre) - min(pre)) + 1`，不小于 0（例：LC 2145 统计隐藏数组数目）。
-- **LC 2640**：边扫边维护前缀最大值与累计和，`ans[i]` = 之前累计 + `nums[i] + 当前最大`（例：LC 2640 一个数组所有前缀的分数）。
+- **LC 53**：子数组和 = `pre[j] - pre[i]`，固定右端 `j`，要最大就取 `i < j` 里最小的前缀和，用一个变量 `min_pre` 边扫边维护（例：LC 53 最大子数组和）。
+- **LC 42**：每根柱子上方的水位 = `min(左侧最高, 右侧最高)`，两个方向的前缀最大值各用一次 `accumulate(…, max)` 得到（例：LC 42 接雨水）。
 - **LC 209**：元素全为正 → 前缀和严格递增 → `bisect_left(pre, pre[i] + target)` 找右端，`O(n log n)`（例：LC 209 长度最小的子数组）。
 
-**例题：** LC 1074 元素和为目标值的子矩阵数量
+**例题：** LC 253 会议室 II
 
-`m x n` 整数矩阵（`1 <= m, n <= 100`，`-1000 <= v <= 1000`）和目标值 `target`，统计元素和等于 `target` 的非空子矩阵个数。
+给一个会议时间数组 `intervals`，`intervals[i] = [starti, endi]`，返回所需会议室的最小数量。`1 <= intervals.length <= 10^4`，`0 <= starti < endi <= 10^6`。
 
 ```python
 from collections import Counter
-def num_submatrix_sum_target(matrix: list[list[int]], target: int) -> int:
-    m, n = len(matrix), len(matrix[0])
-    ans = 0
-    for top in range(m):
-        col = [0] * n                      # col[c]：第 top..bottom 行、第 c 列的和
-        for bottom in range(top, m):
-            col = [a + b for a, b in zip(col, matrix[bottom])]
-            seen = Counter({0: 1})         # 前缀和 -> 出现次数；空前缀和为 0
-            s = 0
-            for v in col:                  # 把 col 当一维数组：数和为 target 的子数组
-                s += v
-                ans += seen[s - target]    # 以当前列结尾、前缀和为 s - target 的起点个数
-                seen[s] += 1
-    return ans
-```
-
-**例题：** LC 2021 街上最亮的位置
-
-`lights[i] = [position, range]`（至多 `10^5` 盏，`-10^8 <= position <= 10^8`，`0 <= range <= 10^8`）表示路灯照亮闭区间 `[position - range, position + range]`；位置的亮度是照到它的路灯数。返回最亮的位置，并列时取坐标最小的。
-
-```python
-from collections import defaultdict
-def brightest_position(lights: list[list[int]]) -> int:
-    diff: defaultdict[int, int] = defaultdict(int)   # 差分：在坐标 x 处亮度变化多少
-    for pos, rng in lights:
-        diff[pos - rng] += 1                     # 灯照亮 [pos-rng, pos+rng]：左端 +1
-        diff[pos + rng + 1] -= 1                 # 右端的下一格 -1
+def min_meeting_rooms(intervals: list[list[int]]) -> int:
+    diff: Counter[int] = Counter()               # 差分：在时刻 t，同时进行的会议数变化多少
+    for start, end in intervals:
+        diff[start] += 1                         # 会议开始：需要多一个房间
+        diff[end] -= 1                           # 会议结束：释放一个房间
     best = cur = 0
-    ans = 0
-    for x in sorted(diff):                       # 亮度只在有事件的坐标处变化，按坐标从小到大扫
-        cur += diff[x]
-        if cur > best:                           # 严格大于：并列时保留坐标更小的
-            best, ans = cur, x
-    return ans
+    for t in sorted(diff):                       # 只有事件时刻才会变化，按时间从小到大扫
+        cur += diff[t]
+        best = max(best, cur)                    # 同一时刻的结束与开始先合并成净变化，首尾相接的会议不会多占房间
+    return best
 ```
 
-**例题：** LC 2145 统计隐藏数组数目
+**例题：** LC 53 最大子数组和
 
-隐藏数组 `hidden` 长度为 `n + 1`（`1 <= n <= 10^5`），已知相邻差值数组 `differences`，且 `hidden` 的所有值都在闭区间 `[lower, upper]` 内，求符合要求的隐藏数组个数。
+整数数组 `nums`（`1 <= nums.length <= 10^5`，`-10^4 <= nums[i] <= 10^4`），求和最大的连续子数组（至少一个元素）的和。
+
+```python
+def max_sub_array(nums: list[int]) -> int:
+    best = nums[0]
+    pre = min_pre = 0                      # pre：当前前缀和；min_pre：此前出现过的最小前缀和（含空前缀 0）
+    for x in nums:
+        pre += x
+        best = max(best, pre - min_pre)    # 以当前位置结尾的最大子数组和 = 前缀和 - 之前最小前缀和
+        min_pre = min(min_pre, pre)        # 先用后更新：保证子数组非空
+    return best
+```
+
+**例题：** LC 42 接雨水
+
+`n` 个非负整数表示宽度为 1 的柱子的高度图（`1 <= n <= 2 * 10^4`，`0 <= height[i] <= 10^5`），计算下雨之后能接多少雨水。
 
 ```python
 from itertools import accumulate
-def number_of_arrays(differences: list[int], lower: int, upper: int) -> int:
-    prefix = [0, *accumulate(differences)]     # hidden[i] = hidden[0] + prefix[i]，别漏掉开头的 0
-    spread = max(prefix) - min(prefix)         # 数组内最大值与最小值之差，由 differences 唯一确定
-    return max(0, (upper - lower) - spread + 1)   # 起点 hidden[0] 在区间内能平移多少个位置
-```
 
-**例题：** LC 2640 一个数组所有前缀的分数
-
-数组 `arr` 的转换数组 `conver[i] = arr[i] + max(arr[0..i])`，分数是 `conver` 所有元素之和。给定 `nums`（`1 <= n <= 10^5`，`1 <= v <= 10^9`），返回每个前缀 `nums[0..i]` 的分数。
-
-```python
-from itertools import accumulate
-def find_prefix_score(nums: list[int]) -> list[int]:
-    prefix_max = accumulate(nums, max)                    # 前缀最大值：max(nums[0..i])
-    conver = (x + m for x, m in zip(nums, prefix_max))    # 转换数组 conver[i] = nums[i] + max(nums[0..i])
-    return list(accumulate(conver))                       # 前缀分数 = conver 的前缀和
+def trap(height: list[int]) -> int:
+    left_max = list(accumulate(height, max))                      # left_max[i]：height[0..i] 的最大值
+    right_max = list(accumulate(reversed(height), max))[::-1]     # right_max[i]：height[i..] 的最大值
+    return sum(min(l, r) - h for h, l, r in zip(height, left_max, right_max))   # 水位 = 两侧最高中较矮的一侧，减去柱高
 ```
 
 **例题：** LC 209 长度最小的子数组

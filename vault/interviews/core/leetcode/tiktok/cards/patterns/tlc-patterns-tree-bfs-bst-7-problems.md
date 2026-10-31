@@ -27,7 +27,6 @@ step: 7
 
 **BST 性质**
 - LC 450 删除二叉搜索树中的节点
-- LC 426 将二叉搜索树转化为排序的双向链表（中序）
 - LC 98 验证二叉搜索树（高频）
 - LC 230 二叉搜索树中第 K 小的元素（高频）
 - LC 99 恢复二叉搜索树（高频）
@@ -204,31 +203,6 @@ def delete_node(root: TreeNode | None, key: int) -> TreeNode | None:
         root.val = succ.val
         root.right = delete_node(root.right, succ.val)
     return root
-```
-
-**例题：** LC 426 将二叉搜索树转化为排序的双向链表
-
-把 BST 原地转成排序的循环双向链表（`left` 当前驱、`right` 当后继），返回最小节点；节点数 `<= 2000`，值互不相同。
-
-```python
-def tree_to_doubly_list(root: Node | None) -> Node | None:
-    if root is None:
-        return None
-    first = prev = None
-    def inorder(node: Node | None) -> None:
-        nonlocal first, prev
-        if node is None:
-            return
-        inorder(node.left)
-        if prev:
-            prev.right, node.left = node, prev
-        else:
-            first = node
-        prev = node
-        inorder(node.right)
-    inorder(root)
-    first.left, prev.right = prev, first
-    return first
 ```
 
 **例题：** LC 105 从前序与中序遍历序列构造二叉树

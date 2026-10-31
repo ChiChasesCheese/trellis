@@ -15,11 +15,11 @@ step: 1
 - 问**连续子数组**的和等于 / 被 `k` 整除的**个数**或存在性 → `pre[j] - pre[i] = k`，在哈希表里找 `pre[i] = pre[j] - k`（例：LC 974 和可被 K 整除的子数组）。
 - **数组含负数**，不能用滑动窗口（右端增大和不一定增大）：把 `0` 记成 `-1` 后，窗口和忽大忽小（例：LC 525 连续数组；高频：LC 560 和为 K 的子数组）。
 - 「**恰好**有 `k` 个奇数 / 1」→ 把元素映射成 0/1，再按子数组和 = `k` 处理（例：LC 1248 统计「优美子数组」）。
-- 二维矩阵的子矩阵和 → 二维前缀和（例：LC 1074 元素和为目标值的子矩阵数量）。
+- 二维矩阵的子矩阵和 → 二维前缀和。
 
 **差分（Difference Array）的信号：**
 - 对很多个区间**批量加减**同一个值，最后一次性读出每个位置 → 差分，更新 `O(1)`，还原 `O(n)`（例：LC 1094 拼车）。
-- 「某点被几个区间覆盖」「最亮的位置」「航班预订」→ 差分 / 扫描线（例：LC 2021 街上最亮的位置）。
+- 「某点被几个区间覆盖」「最亮的位置」「航班预订」→ 差分 / 扫描线（例：LC 253 会议室 II）。
 
 **近似信号：**
 - 全是**正数**，求和**至少** `target` 的最短子数组 → 滑动窗口 `O(n)`（LC 209），前缀和 + 二分是另一种 `O(n log n)`（例：LC 209 长度最小的子数组）。
@@ -99,28 +99,6 @@ def number_of_subarrays(nums: list[int], k: int) -> int:
     return ans
 ```
 
-**例题：** LC 1074 元素和为目标值的子矩阵数量
-
-给一个矩阵 `matrix` 和目标值 `target`，返回元素总和等于 `target` 的**非空子矩阵**的数量。子矩阵由 `(x1, y1, x2, y2)` 决定，包含所有满足 `x1 <= x <= x2`、`y1 <= y <= y2` 的单元 `matrix[x][y]`；只要有一个坐标不同就算不同的子矩阵。`1 <= matrix.length, matrix[0].length <= 100`，`-1000 <= matrix[i][j] <= 1000`，`-10^8 <= target <= 10^8`。
-
-```python
-from collections import Counter
-def num_submatrix_sum_target(matrix: list[list[int]], target: int) -> int:
-    m, n = len(matrix), len(matrix[0])
-    ans = 0
-    for top in range(m):
-        col = [0] * n                      # col[c]：第 top..bottom 行、第 c 列的和
-        for bottom in range(top, m):
-            col = [a + b for a, b in zip(col, matrix[bottom])]
-            seen = Counter({0: 1})         # 前缀和 -> 出现次数；空前缀和为 0
-            s = 0
-            for v in col:                  # 把 col 当一维数组：数和为 target 的子数组
-                s += v
-                ans += seen[s - target]    # 以当前列结尾、前缀和为 s - target 的起点个数
-                seen[s] += 1
-    return ans
-```
-
 **例题：** LC 1094 拼车
 
 车有 `capacity` 个座位且只能往一个方向开；`trips[i] = [人数, 上车里程, 下车里程]`，同一位置先下后上。判断途中任意一点是否都不超载。`1 <= trips.length <= 1000`，`0 <= from < to <= 1000`，`1 <= capacity <= 10^5`。
@@ -139,26 +117,22 @@ def car_pooling(trips: list[list[int]], capacity: int) -> bool:
     return True
 ```
 
-**例题：** LC 2021 街上最亮的位置
+**例题：** LC 253 会议室 II
 
-一条街上有许多路灯，路灯的坐标由数组 `lights` 给出：`lights[i] = [position, range]` 表示坐标为 `position` 的路灯照亮闭区间 `[position - range, position + range]`。位置 `p` 的亮度等于能照到 `p` 的路灯数量。返回最亮的位置；有多个时返回坐标最小的。`1 <= lights.length <= 10^5`，`-10^8 <= position <= 10^8`，`0 <= range <= 10^8`。
+给一个会议时间数组 `intervals`，`intervals[i] = [start_i, end_i]`，返回需要的最少会议室数量。一个会议结束的时刻可以立刻开始下一个会议。`1 <= intervals.length <= 10^4`，`0 <= start_i < end_i <= 10^6`。
 
 ```python
 from collections import defaultdict
-
-
-def brightest_position(lights: list[list[int]]) -> int:
-    diff: defaultdict[int, int] = defaultdict(int)   # 差分：在坐标 x 处亮度变化多少
-    for pos, rng in lights:
-        diff[pos - rng] += 1                     # 灯照亮 [pos-rng, pos+rng]：左端 +1
-        diff[pos + rng + 1] -= 1                 # 右端的下一格 -1
+def min_meeting_rooms(intervals: list[list[int]]) -> int:
+    diff: defaultdict[int, int] = defaultdict(int)   # 差分：在时刻 x 处，同时进行的会议数变化多少
+    for start, end in intervals:
+        diff[start] += 1                         # 会议开始：+1
+        diff[end] -= 1                           # 会议结束：-1；同一时刻的 +1 与 -1 先抵消，所以结束即可复用
     best = cur = 0
-    ans = 0
-    for x in sorted(diff):                       # 亮度只在有事件的坐标处变化，按坐标从小到大扫
+    for x in sorted(diff):                       # 场数只在有事件的时刻变化，按时间从小到大扫
         cur += diff[x]
-        if cur > best:                           # 严格大于：并列时保留坐标更小的
-            best, ans = cur, x
-    return ans
+        best = max(best, cur)                    # 同时进行的最大场数 = 最少会议室数
+    return best
 ```
 
 **例题：** LC 209 长度最小的子数组

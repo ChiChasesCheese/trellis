@@ -5,14 +5,14 @@ type: qa
 step: 5
 ---
 ## Q
-**二叉树 DFS（Tree DFS）｜变形：向下传前缀和、向下传长度、返回单链增益、由遍历序列建树**
+**二叉树 DFS（Tree DFS）｜变形：向下传前缀和、向下传当前值、返回单链增益、由遍历序列建树**
 
-路径总和 III（LC 437）、最长连续序列（LC 298）、最大路径和（LC 124）、由前序与中序建树（LC 105）的写法各自怎样？
+路径总和 III（LC 437）、求根到叶子节点数字之和（LC 129）、最大路径和（LC 124）、由前序与中序建树（LC 105）的写法各自怎样？
 
 ## A
 1. **向下传前缀和 + 回溯**（例：LC 437 路径总和 III）：路径必须向下，不必从根开始。`cnt` 记录「根到当前节点这条路径上」每个前缀和出现的次数；进入节点时查 `cnt[pre - target_sum]`，离开节点的子树时要撤销 `cnt[pre] -= 1`。`[10,5,-3,3,2,null,11,3,-2,null,1], 8` → `3`；`[5,4,8,11,null,13,4,7,2,null,null,5,1], 22` → `3`。漏掉回溯：树 `[2,2,3]`、目标 `1` 得 `1`（左兄弟的前缀和泄漏过来），正确是 `0`。
 
-2. **把当前长度向下传**（例：LC 298 二叉树最长连续序列）：`length = length + 1 if node.val == parent_val + 1 else 1`，再 `best = max(best, length)`；`[1,null,3,2,4,null,null,null,5]` → `3`。
+2. **把当前值向下传**（例：LC 129 求根到叶子节点数字之和）：路径上的信息只依赖祖先，当参数一路带下去，不用存路径：`acc = acc * 10 + node.val`，到叶子（左右孩子都为空）返回 `acc`，否则返回左右子树结果之和；`[1,2,3]` → `25`，`[4,9,0,5,1]` → `1026`。
 
 3. **返回单链增益、在节点处合并**（例：LC 124 二叉树中的最大路径和）：每个节点返回「以它为起点向下走的最大和」（负数当 `0`），经过该节点的整条路径 = 左增益 + 右增益 + 自己，用来更新全局答案。同一个骨架也能写「好叶子对」LC 1530：返回叶子到当前节点的距离列表，在节点处把左右两个列表配对计数。
 
@@ -39,24 +39,20 @@ def path_sum(root: TreeNode | None, target_sum: int) -> int:
     return dfs(root, 0)
 ```
 
-**例题：** LC 298 二叉树最长连续序列
+**例题：** LC 129 求根到叶子节点数字之和
 
-给二叉树根节点 `root`，求其中**最长连续序列路径**的长度。连续序列路径是依次递增 `1` 的路径，可以从任意节点开始，沿「父 → 子」方向向下走，不能反向。节点数在 `[1, 3 * 10^4]`，`-3 * 10^4 <= Node.val <= 3 * 10^4`。
+给二叉树的根节点 `root`，每个节点存一个 `0` 到 `9` 的数字，每条从根到叶子的路径代表一个数（路径 `1 -> 2 -> 3` 表示 `123`），返回所有根到叶子路径所表示的数之和。叶子是没有子节点的节点。树中节点数在 `[1, 1000]`，`0 <= Node.val <= 9`，树的深度不超过 `10`。
 
 ```python
-def longest_consecutive(root: TreeNode | None) -> int:
-    best = 0
-
-    def dfs(node: TreeNode, length: int) -> None:
-        nonlocal best
-        best = max(best, length)                 # length：以 node 结尾的连续递增路径长度
-        for child in (node.left, node.right):
-            if child:
-                dfs(child, length + 1 if child.val == node.val + 1 else 1)
-
-    if root:
-        dfs(root, 1)
-    return best
+def sum_numbers(root: TreeNode | None) -> int:
+    def dfs(node: TreeNode | None, acc: int) -> int:
+        if node is None:
+            return 0
+        acc = acc * 10 + node.val                 # 沿路径把数字“接长”一位
+        if node.left is None and node.right is None:
+            return acc                            # 叶子：这条路径生成的数
+        return dfs(node.left, acc) + dfs(node.right, acc)
+    return dfs(root, 0)
 ```
 
 **例题：** LC 124 二叉树中的最大路径和

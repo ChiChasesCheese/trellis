@@ -16,10 +16,8 @@ step: 8
 - LC 134 加油站
 
 **逐位决策（高位优先）**
-- LC 670 最大交换
 - LC 402 移掉 K 位数字（单调栈实现）
 - LC 316 去除重复字母、LC 1081 不同字符的最小子序列（单调栈实现）
-- LC 3474 字典序最小的生成字符串
 
 **带通配符的合法性**
 - LC 678 有效的括号字符串
@@ -32,7 +30,6 @@ step: 8
 
 **贪心 + 堆**
 - LC 767 重构字符串
-- LC 1405 最长快乐字符串
 - LC 1834 单线程 CPU（高频）
 
 **贪心不成立 ⇒ DP**
@@ -84,24 +81,6 @@ def can_complete_circuit(gas: list[int], cost: list[int]) -> int:
         if tank < 0:
             start, tank = i + 1, 0
     return start if total >= 0 else -1
-```
-
-**例题：** LC 670 最大交换
-
-非负整数 `num`，至多交换其中两位数字一次，返回能得到的最大值；`0 <= num <= 10^8`。
-
-```python
-def maximum_swap(num: int) -> int:
-    digits = list(str(num))
-    last = {d: i for i, d in enumerate(digits)}
-    for i, d in enumerate(digits):
-        for big in "9876543210":
-            if big <= d:
-                break
-            if last.get(big, -1) > i:
-                digits[i], digits[last[big]] = digits[last[big]], digits[i]
-                return int("".join(digits))
-    return num
 ```
 
 **例题：** LC 402 移掉 K 位数字
@@ -156,34 +135,6 @@ def smallest_subsequence(s: str) -> str:
         stack.append(ch)
         in_stack.add(ch)
     return "".join(stack)
-```
-
-**例题：** LC 3474 字典序最小的生成字符串
-
-`str1` 只含 `T/F`，`str2` 是小写串；长度 `n + m - 1` 的 `word` 要求：`str1[i]` 为 `T` 时 `word[i..i+m-1] == str2`，为 `F` 时不等。返回字典序最小的 `word`，不存在返回 `""`；`n <= 10^4`，`m <= 500`。
-
-```python
-def generate_string(str1: str, str2: str) -> str:
-    n, m = len(str1), len(str2)
-    word: list[str | None] = [None] * (n + m - 1)
-    for i, flag in enumerate(str1):
-        if flag != "T":
-            continue
-        for j, ch in enumerate(str2):
-            if word[i + j] not in (None, ch):
-                return ""
-            word[i + j] = ch
-    forced = [ch is not None for ch in word]
-    res = [ch or "a" for ch in word]
-    for i, flag in enumerate(str1):
-        if flag == "F" and res[i : i + m] == list(str2):
-            for j in range(i + m - 1, i - 1, -1):
-                if not forced[j]:
-                    res[j] = "b"
-                    break
-            else:
-                return ""
-    return "".join(res)
 ```
 
 **例题：** LC 678 有效的括号字符串
@@ -262,33 +213,6 @@ def reorganize_string(s: str) -> str:
             heappush(heap, held)
         held = (cnt + 1, ch)
     return "".join(out) if len(out) == len(s) else ""
-```
-
-**例题：** LC 1405 最长快乐字符串
-
-只用最多 `a` 个 `'a'`、`b` 个 `'b'`、`c` 个 `'c'` 拼出不含 `aaa`、`bbb`、`ccc` 的最长字符串，返回任意一个；`0 <= a, b, c <= 100`。
-
-```python
-import heapq
-def longest_diverse_string(a: int, b: int, c: int) -> str:
-    heap = [(-n, ch) for n, ch in ((a, "a"), (b, "b"), (c, "c")) if n]
-    heapq.heapify(heap)
-    out: list[str] = []
-    while heap:
-        n, ch = heapq.heappop(heap)
-        if out[-2:] == [ch, ch]:
-            if not heap:
-                break
-            n2, ch2 = heapq.heappop(heap)
-            out.append(ch2)
-            if n2 + 1:
-                heapq.heappush(heap, (n2 + 1, ch2))
-            heapq.heappush(heap, (n, ch))
-        else:
-            out.append(ch)
-            if n + 1:
-                heapq.heappush(heap, (n + 1, ch))
-    return "".join(out)
 ```
 
 **例题：** LC 322 零钱兑换

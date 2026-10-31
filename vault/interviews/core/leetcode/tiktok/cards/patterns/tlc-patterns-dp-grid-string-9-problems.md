@@ -28,9 +28,6 @@ step: 9
 - LC 131 分割回文串（高频）
 
 **相邻：状态里带更多信息**
-- LC 3389 使字符频率相等的最少操作次数（字符计数上的 DP）
-- LC 3441 变成好标题的最少代价（字符串 DP，状态含"当前字符与连续长度"）
-- LC 2850 将石头分散到网格图的最少移动次数
 - LC 691 贴纸拼词（高频）
 - 网格中最长的之字形递增路径（高频）
 
@@ -216,98 +213,6 @@ def word_break(s: str, word_dict: list[str]) -> list[str]:
                     found.append(f'{word} {rest}' if rest else word)
         return tuple(found)
     return list(sentences(0))
-```
-
-**例题：** LC 3389 使字符频率相等的最少操作次数
-
-给小写字母字符串 `s`（长度 `<= 2 * 10^4`），一次操作可以删除一个字符、添加一个字符、或把一个字符变成下一个字母（`'z'` 不能变 `'a'`）；求让所有出现过的字符次数都相等的最少操作数。
-
-```python
-from collections import Counter
-from string import ascii_lowercase
-def make_string_good(s: str) -> int:
-    cnt = Counter(s)
-    freq = [cnt[ch] for ch in ascii_lowercase]
-    best = len(s)
-    for t in range(1, max(freq) + 1):
-        dp = [[0, 0] for _ in range(27)]
-        for i in range(1, 27):
-            c = freq[i - 1]
-            prev = freq[i - 2] if i > 1 else 0
-            short = max(t - c, 0)
-            zero_prev, full_prev = dp[i - 1]
-            dp[i][0] = min(zero_prev, full_prev) + c
-            dp[i][1] = abs(c - t) + min(
-                zero_prev - min(prev, short),
-                full_prev - min(max(prev - t, 0), short),
-            )
-        best = min(best, *dp[26])
-    return best
-```
-
-**例题：** LC 3441 变成好标题的最少代价
-
-给小写字母字符串 `caption`（长度 `<= 5 * 10^4`），每次操作把一个字符改成相邻的前一个或后一个字母；求把它变成「每个字符都在连续至少 3 个相同字符的一组里」的最少操作数，并返回其中字典序最小的结果，做不到返回 `""`。
-
-```python
-from array import array
-INF = 10**9
-def min_cost_good_caption(caption: str) -> str:
-    n = len(caption)
-    if n < 3:
-        return ""
-    cap = [ord(ch) - 97 for ch in caption]
-    W = 26 * 3
-    h = array("i", [INF]) * (n * W)
-    for c in range(26):
-        h[(n - 1) * W + c * 3 + 2] = 0
-    for i in range(n - 2, -1, -1):
-        nxt = (i + 1) * W
-        cost = [abs(cap[i + 1] - c) for c in range(26)]
-        g = sorted((cost[c] + h[nxt + c * 3], c) for c in range(26))
-        (g1, c1), (g2, _) = g[0], g[1]
-        for c in range(26):
-            base = i * W + c * 3
-            for r in range(3):
-                stay = cost[c] + h[nxt + c * 3 + min(r + 1, 2)]
-                switch = (g2 if c == c1 else g1) if r == 2 else INF
-                h[base + r] = min(stay, switch, INF)
-    best = min(abs(cap[0] - c) + h[c * 3] for c in range(26))
-    if best >= INF:
-        return ""
-    out: list[str] = []
-    acc, cur, run = 0, -1, 0
-    for i in range(n):
-        for c in range(26):
-            if i == 0:
-                r = 0
-            elif c == cur:
-                r = min(run, 2)
-            elif run == 3:
-                r = 0
-            else:
-                continue
-            step = abs(cap[i] - c)
-            if acc + step + h[i * W + c * 3 + r] == best:
-                out.append(chr(97 + c))
-                acc, cur, run = acc + step, c, r + 1
-                break
-    return "".join(out)
-```
-
-**例题：** LC 2850 将石头分散到网格图的最少移动次数
-
-`3 x 3` 网格里恰好有 `9` 个石头（一格可以有多个），每次把一个石头移到相邻格；求让每格恰好一个石头的最少移动次数。
-
-```python
-from itertools import permutations
-def minimum_moves(grid: list[list[int]]) -> int:
-    extra = [(r, c) for r in range(3) for c in range(3) for _ in range(grid[r][c] - 1)]
-    empty = [(r, c) for r in range(3) for c in range(3) if grid[r][c] == 0]
-    return min(
-        sum(abs(r1 - r2) + abs(c1 - c2) for (r1, c1), (r2, c2) in zip(extra, order))
-        for order in permutations(empty)
-    )
 ```
 
 **例题：** LC 131 分割回文串

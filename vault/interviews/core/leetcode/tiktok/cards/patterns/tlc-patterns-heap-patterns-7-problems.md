@@ -23,15 +23,12 @@ step: 7
 
 **按时间调度（排序 + 堆装结束时间）**
 - LC 253 会议室 II
-- LC 2402 会议室 III
 - LC 1834 单线程 CPU（高频）
 
 **每次取当前最大 / 最小的贪心**
 - LC 767 重构字符串
-- LC 1405 最长快乐字符串
 
 **聚合后取最值（堆可选）**
-- LC 2456 最流行的视频创作者
 
 **堆 + 最短路**
 - LC 787 K 站中转内最便宜的航班（见最短路一组）
@@ -159,30 +156,6 @@ def min_meeting_rooms(intervals: list[list[int]]) -> int:
     return len(ends)
 ```
 
-**例题：** LC 2402 会议室 III
-
-`n` 个会议室（`n <= 100`），会议（最多 `10^5` 个，开始时间互不相同）按开始时间到来，分配给编号最小的空闲房间，没有空房就延后到最先空出的房间并保持时长不变；返回举办会议次数最多的房间编号，并列取最小编号。
-
-```python
-from heapq import heappop, heappush
-def most_booked(n: int, meetings: list[list[int]]) -> int:
-    free = list(range(n))
-    busy: list[tuple[int, int]] = []
-    count = [0] * n
-    for start, end in sorted(meetings):
-        while busy and busy[0][0] <= start:
-            heappush(free, heappop(busy)[1])
-        if free:
-            room = heappop(free)
-            finish = end
-        else:
-            ready, room = heappop(busy)
-            finish = ready + (end - start)
-        count[room] += 1
-        heappush(busy, (finish, room))
-    return max(range(n), key=count.__getitem__)
-```
-
 **例题：** LC 767 重构字符串
 
 给小写字母字符串 `s`（长度 `<= 500`），重新排列使相邻字符都不同，返回任意一种排列，不可能则返回 `""`。
@@ -202,51 +175,6 @@ def reorganize_string(s: str) -> str:
             heappush(heap, held)
         held = (cnt + 1, ch)
     return "".join(out) if len(out) == len(s) else ""
-```
-
-**例题：** LC 1405 最长快乐字符串
-
-给 `a`、`b`、`c`（各 `<= 100`），构造尽可能长、只含 `a`/`b`/`c`、字符个数不超过给定值且不含 `aaa`、`bbb`、`ccc` 的字符串，返回任意一个最长的。
-
-```python
-import heapq
-def longest_diverse_string(a: int, b: int, c: int) -> str:
-    heap = [(-n, ch) for n, ch in ((a, "a"), (b, "b"), (c, "c")) if n]
-    heapq.heapify(heap)
-    out: list[str] = []
-    while heap:
-        n, ch = heapq.heappop(heap)
-        if out[-2:] == [ch, ch]:
-            if not heap:
-                break
-            n2, ch2 = heapq.heappop(heap)
-            out.append(ch2)
-            if n2 + 1:
-                heapq.heappush(heap, (n2 + 1, ch2))
-            heapq.heappush(heap, (n, ch))
-        else:
-            out.append(ch)
-            if n + 1:
-                heapq.heappush(heap, (n + 1, ch))
-    return "".join(out)
-```
-
-**例题：** LC 2456 最流行的视频创作者
-
-给长度 `n <= 10^5` 的 `creators`、`ids`、`views`，创作者的流行度是其视频播放量之和；返回所有最流行创作者及其播放量最大的视频 id（播放量并列取字典序最小的 id）。
-
-```python
-from collections import defaultdict
-def most_popular_creator(creators: list[str], ids: list[str], views: list[int]) -> list[list[str]]:
-    popularity: defaultdict[str, int] = defaultdict(int)
-    best_video: dict[str, tuple[int, str]] = {}
-    for creator, vid, view in zip(creators, ids, views):
-        popularity[creator] += view
-        candidate = (-view, vid)
-        if creator not in best_video or candidate < best_video[creator]:
-            best_video[creator] = candidate
-    top = max(popularity.values())
-    return [[c, best_video[c][1]] for c, total in popularity.items() if total == top]
 ```
 
 **例题：** LC 787 K 站中转内最便宜的航班

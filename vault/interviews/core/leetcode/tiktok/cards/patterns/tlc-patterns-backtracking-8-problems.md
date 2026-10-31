@@ -19,7 +19,6 @@ step: 8
 
 **排列**
 - LC 46 全排列
-- LC 47 全排列 II（`used` + 去重）
 
 **约束摆放 / 网格**
 - LC 51 N 皇后
@@ -34,9 +33,6 @@ step: 8
 - LC 140 单词拆分 II（回溯 + 记忆化）
 - LC 131 分割回文串（高频）
 - 有效括号字符串：判断，并输出全部方案（高频）
-
-**分配 / 装箱**
-- LC 473 火柴拼正方形
 
 提示：先写出"每一步的选择是什么、终点是什么、怎样剪枝"；再决定下一层的起点（`i` 还是 `i + 1`）、是否需要排序去重、是否能改成 DP。
 
@@ -150,33 +146,6 @@ def permute(nums: list[int]) -> list[list[int]]:
             dfs()
             path.pop()
             used[i] = False
-    dfs()
-    return res
-```
-
-**例题：** LC 47 全排列 II
-
-给可能含重复数字的数组 `nums`（`1 <= nums.length <= 8`），返回所有不重复的全排列，顺序任意。
-
-```python
-from collections import Counter
-def permute_unique(nums: list[int]) -> list[list[int]]:
-    count = Counter(nums)
-    n = len(nums)
-    path: list[int] = []
-    res: list[list[int]] = []
-    def dfs() -> None:
-        if len(path) == n:
-            res.append(path[:])
-            return
-        for x in count:
-            if count[x] == 0:
-                continue
-            count[x] -= 1
-            path.append(x)
-            dfs()
-            path.pop()
-            count[x] += 1
     dfs()
     return res
 ```
@@ -386,36 +355,6 @@ def word_break(s: str, word_dict: list[str]) -> list[str]:
                     found.append(f'{word} {rest}' if rest else word)
         return tuple(found)
     return list(sentences(0))
-```
-
-**例题：** LC 473 火柴拼正方形
-
-给火柴长度数组 `matchsticks`（`1 <= 长度 <= 15`，每根 `<= 10^8`），判断能否用全部火柴首尾相接（不能折断）拼成一个正方形。
-
-```python
-def makesquare(matchsticks: list[int]) -> bool:
-    total = sum(matchsticks)
-    if total % 4:
-        return False
-    side = total // 4
-    sticks = sorted(matchsticks, reverse=True)
-    if sticks[0] > side:
-        return False
-    sides = [0] * 4
-    def dfs(i: int) -> bool:
-        if i == len(sticks):
-            return True
-        tried: set[int] = set()
-        for j in range(4):
-            if sides[j] + sticks[i] > side or sides[j] in tried:
-                continue
-            tried.add(sides[j])
-            sides[j] += sticks[i]
-            if dfs(i + 1):
-                return True
-            sides[j] -= sticks[i]
-        return False
-    return dfs(0)
 ```
 
 **例题：** LC 131 分割回文串

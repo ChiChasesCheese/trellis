@@ -18,7 +18,7 @@ step: 1
 - 「包含 `t` 中所有字符的最短子串」→ 覆盖了再尽量缩（LC 76）（例：LC 76 最小覆盖子串）。
 
 **固定窗口**：题面里直接给出窗口长度，或长度由输入确定：
-- 「所有长度为 `m` 的异位词子串」LC 438、「把所有 1 聚到一起」LC 1151（窗口长度 = 1 的总数）（例：LC 1151 最少交换次数来组合所有的 1；高频：LC 438 找到字符串中所有字母异位词）。
+- 「所有长度为 `m` 的异位词子串」LC 438（窗口长度 = `m`，由输入确定）（例：LC 438 找到字符串中所有字母异位词）。
 
 **数据范围**：`n` 到 `10^5`，暴力 `O(n^2)` 不行，要求 `O(n)`（例：LC 1004 最大连续1的个数 III）。
 
@@ -88,21 +88,6 @@ def min_window(s: str, t: str) -> str:
             if end == 0 or right - left < end - start:
                 start, end = left, right
     return s[start:end]
-```
-
-**例题：** LC 1151 最少交换次数来组合所有的 1
-
-二进制数组 `data`（`1 <= length <= 10^5`），每次交换任意两个位置的值，求把所有 1 聚到一起所需的最少交换次数。
-
-```python
-def min_swaps(data: list[int]) -> int:
-    w = sum(data)                         # 窗口宽度 = 1 的总数
-    cur = sum(data[:w])                   # 第一个窗口里已有的 1
-    best = cur
-    for i in range(w, len(data)):
-        cur += data[i] - data[i - w]      # 右端进一个、左端出一个
-        best = max(best, cur)
-    return w - best                       # 窗口里的 0 的个数 = 需要换进来的 1 的个数
 ```
 
 **例题：** LC 1004 最大连续1的个数 III

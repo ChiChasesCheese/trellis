@@ -21,47 +21,17 @@ step: 1
 | 所有点对 | Floyd | `O(V^3)`，`V <= 100` |
 
 **触发信号：**
-- 「最短 / 最少花费」且各条边的代价不同、都非负：用最小堆，每次取出当前最小代价的点（例：LC 499 迷宫 III；高频：LC 778 水位上升的泳池中游泳）。
+- 「最短 / 最少花费」且各条边的代价不同、都非负：用最小堆，每次取出当前最小代价的点（例：LC 778 水位上升的泳池中游泳）。
 - 「**最多经过 `k` 站**」「最多 `k` 条边」：限制边数 ⇒ Bellman-Ford 按轮松弛，或把"已用边数"放进状态（例：LC 787 K 站中转内最便宜的航班）。
 - 网格里**可以消除 `k` 个障碍**：状态不只是位置，还有"剩余次数"：`(r, c, left)`，在状态图上做 BFS（例：LC 1293 网格中的最短路径）。
-- 状态之间的转移代价相同，但状态里带着额外信息（上一条边的颜色）⇒ 在 `(点, 状态)` 上做普通 BFS（例：LC 1129 颜色交替的最短路径）。
+- 状态之间的转移代价相同，但状态里带着额外信息 ⇒ 在 `(点, 状态)` 上做普通 BFS（例：LC 1293 网格中的最短路径）。
 
 **近似信号：**
 - 只问连通性 ⇒ 并查集 / DFS（例：LC 721 账户合并）。
 - 无权图用 Dijkstra 也对，但 BFS 更简单更快（例：LC 542 01 矩阵；高频：LC 1091 二进制矩阵中的最短路径）。
 - 有负权环时最短路无定义；Dijkstra 在有负权边时可能出错，有负权就用 Bellman-Ford（例：LC 787 K 站中转内最便宜的航班）。
 - 要最小生成树（连通所有点的最小总边权）⇒ Kruskal / Prim，不是最短路（例：LC 1584 连接所有点的最小费用）。
-- 数据范围 `n <= 100`，且要问任意两点是否可达或距离 ⇒ `O(n^3)` 的 Floyd 传递闭包也可行（例：LC 1462 课程表 IV）。
-
-**例题：** LC 499 迷宫 III
-
-球在 0/1 迷宫（`1` 是墙）里朝一个方向滚到撞墙才停，经过洞就掉进去；求让球以最短距离入洞的方向序列（距离相同取字典序最小），到不了输出 `"impossible"`，`1 <= m, n <= 100`。
-
-```python
-import heapq
-def find_shortest_way(maze: list[list[int]], ball: list[int], hole: list[int]) -> str:
-    m, n = len(maze), len(maze[0])
-    dirs = (("d", 1, 0), ("l", 0, -1), ("r", 0, 1), ("u", -1, 0))
-    target = (hole[0], hole[1])
-    heap = [(0, "", ball[0], ball[1])]
-    settled: set[tuple[int, int]] = set()
-    while heap:
-        dist, path, r, c = heapq.heappop(heap)
-        if (r, c) == target:
-            return path
-        if (r, c) in settled:
-            continue
-        settled.add((r, c))
-        for ch, dr, dc in dirs:
-            nr, nc, step = r, c, 0
-            while 0 <= nr + dr < m and 0 <= nc + dc < n and maze[nr + dr][nc + dc] == 0:
-                nr, nc, step = nr + dr, nc + dc, step + 1
-                if (nr, nc) == target:
-                    break
-            if step and (nr, nc) not in settled:
-                heapq.heappush(heap, (dist + step, path + ch, nr, nc))
-    return "impossible"
-```
+- 数据范围 `n <= 100`，且要问任意两点是否可达或距离 ⇒ `O(n^3)` 的 Floyd 传递闭包也可行（例：LC 399 除法求值）。
 
 **例题：** LC 787 K 站中转内最便宜的航班
 
@@ -108,32 +78,6 @@ def shortest_path(grid: list[list[int]], k: int) -> int:
                     best_left[ni][nj] = nleft
                     queue.append((ni, nj, nleft))
     return -1
-```
-
-**例题：** LC 1129 颜色交替的最短路径
-
-有向图里每条边是红色或蓝色（可有自环和平行边），求从节点 0 到每个节点的红蓝边交替出现的最短路径长度，不存在为 `-1`，`1 <= n <= 100`。
-
-```python
-from collections import deque
-def shortest_alternating_paths(n: int, red_edges: list[list[int]], blue_edges: list[list[int]]) -> list[int]:
-    graph: list[list[list[int]]] = [[[] for _ in range(n)] for _ in range(2)]
-    for u, v in red_edges:
-        graph[0][u].append(v)
-    for u, v in blue_edges:
-        graph[1][u].append(v)
-    ans = [-1] * n
-    seen = {(0, 0), (0, 1)}
-    queue = deque([(0, 0, 0), (0, 1, 0)])
-    while queue:
-        u, c, d = queue.popleft()
-        if ans[u] == -1:
-            ans[u] = d
-        for v in graph[c][u]:
-            if (v, 1 - c) not in seen:
-                seen.add((v, 1 - c))
-                queue.append((v, 1 - c, d + 1))
-    return ans
 ```
 
 **例题：** LC 721 账户合并
@@ -212,28 +156,32 @@ def min_cost_connect_points(points: list[list[int]]) -> int:
     return total
 ```
 
-**例题：** LC 1462 课程表 IV
+**例题：** LC 399 除法求值（Floyd 写法）
 
-`a` 是 `b` 的先修课程，先修关系可以是间接的，回答每个查询 `[u, v]`：`u` 是否是 `v` 的先决条件，`2 <= numCourses <= 100`，`1 <= queries.length <= 10^4`。
+给已知等式 `Ai / Bi = values[i]`（`1 <= equations.length <= 20`，`0.0 < values[i] <= 20.0`，变量名长度 `<= 5`）和若干查询 `Cj / Dj`（最多 `20` 个），返回每个查询的值；无法确定或变量没出现过时为 `-1.0`。
 
 ```python
-from collections import deque
-def check_if_prerequisite(num_courses: int, prerequisites: list[list[int]], queries: list[list[int]]) -> list[bool]:
-    graph: list[list[int]] = [[] for _ in range(num_courses)]
-    indegree = [0] * num_courses
-    for a, b in prerequisites:
-        graph[a].append(b)
-        indegree[b] += 1
-    pre = [0] * num_courses
-    queue = deque(i for i in range(num_courses) if indegree[i] == 0)
-    while queue:
-        u = queue.popleft()
-        for v in graph[u]:
-            pre[v] |= pre[u] | (1 << u)
-            indegree[v] -= 1
-            if indegree[v] == 0:
-                queue.append(v)
-    return [bool(pre[v] >> u & 1) for u, v in queries]
+def calc_equation(equations: list[list[str]], values: list[float], queries: list[list[str]]) -> list[float]:
+    names = sorted({v for pair in equations for v in pair})
+    idx = {v: i for i, v in enumerate(names)}
+    n = len(names)
+    ratio = [[0.0] * n for _ in range(n)]            # ratio[i][j]：i / j，0.0 表示还不知道
+    for i in range(n):
+        ratio[i][i] = 1.0
+    for (a, b), v in zip(equations, values):
+        ratio[idx[a]][idx[b]] = v
+        ratio[idx[b]][idx[a]] = 1 / v
+    for k in range(n):                               # Floyd：经过 k 中转，i / j = (i / k) * (k / j)
+        for i in range(n):
+            if ratio[i][k]:
+                for j in range(n):
+                    if ratio[k][j] and not ratio[i][j]:
+                        ratio[i][j] = ratio[i][k] * ratio[k][j]
+    ans: list[float] = []
+    for c, d in queries:
+        r = ratio[idx[c]][idx[d]] if c in idx and d in idx else 0.0
+        ans.append(r or -1.0)
+    return ans
 ```
 
 **例题：** LC 778 水位上升的泳池中游泳

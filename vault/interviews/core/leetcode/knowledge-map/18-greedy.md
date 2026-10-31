@@ -2,9 +2,10 @@
 
 每一步做局部最优，并能用交换论证说明不会更差：跳跃游戏、分发糖果、区间调度。证明不出来时，往往要退回 DP。
 
-**先做（TikTok P1–P4 与经典题单，24 道）**
+**先做（TikTok P1–P4 与经典题单，27 道）**
 
 - [[tlc-merge-intervals-0-whole|LC 56 合并区间]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-best-time-to-buy-and-sell-stock-0-whole|LC 121 买卖股票的最佳时机]]（简单）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-house-robber-0-whole|LC 198 打家劫舍]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-meeting-rooms-ii-0-whole|LC 253 会议室 II]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150
 - [[tlc-remove-duplicate-letters-0-whole|LC 316 去除重复字母]]（中等）· TikTok P2 · Amazon
@@ -17,11 +18,13 @@
 - [[tlc-non-overlapping-intervals-0-whole|LC 435 无重叠区间]]（中等）· TikTok P4 · Amazon · Blind 75 · NeetCode 150
 - [[tlc-minimum-add-to-make-parentheses-valid-0-whole|LC 921 使括号有效的最少添加]]（中等）· TikTok P4
 - [[tlc-minimum-swaps-to-make-strings-equal-0-whole|LC 1247 交换字符使得字符串相同]]（中等）· TikTok P4
+- [[tlc-single-threaded-cpu-0-whole|LC 1834 单线程 CPU]]（中等）· TikTok P4 · Amazon
 - [[tlc-container-with-most-water-0-whole|LC 11 盛最多水的容器]]（中等）· TikTok B · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-jump-game-ii-0-whole|LC 45 跳跃游戏 II]]（中等）· TikTok B · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-best-time-to-buy-and-sell-stock-ii-0-whole|LC 122 买卖股票的最佳时机 II]]（中等）· TikTok B · Top Interview 150
 - [[tlc-perfect-squares-0-whole|LC 279 完全平方数]]（中等）· TikTok B · LeetCode Hot 100
 - [[tlc-coin-change-0-whole|LC 322 零钱兑换]]（中等）· TikTok B · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-partition-equal-subset-sum-0-whole|LC 416 分割等和子集]]（中等）· TikTok B · Amazon · NeetCode 150 · LeetCode Hot 100
 - [[tlc-minimum-number-of-arrows-to-burst-balloons-0-whole|LC 452 用最少数量的箭引爆气球]]（中等）· TikTok B · Top Interview 150
 - LC 502 IPO（困难）· Top Interview 150
 - LC 621 任务调度器（中等）· Amazon · NeetCode 150

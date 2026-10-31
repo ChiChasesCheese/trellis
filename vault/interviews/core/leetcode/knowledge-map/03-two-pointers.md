@@ -2,7 +2,7 @@
 
 利用有序或单调，把两层循环压成一次扫描：相向夹逼、快慢指针、原地分区。滑动窗口是同向双指针的特例；链表的找中点、判环也是快慢指针；归并排序的合并就是两个指针。
 
-**先做（TikTok P1–P4 与经典题单，43 道）**
+**先做（TikTok P1–P4 与经典题单，45 道）**
 
 - [[tlc-longest-substring-without-repeating-characters-0-whole|LC 3 无重复字符的最长子串]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-longest-palindromic-substring-0-whole|LC 5 最长回文子串]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
@@ -20,6 +20,7 @@
 - [[tlc-rotate-array-0-whole|LC 189 轮转数组]]（中等）· TikTok P3 · Amazon · LeetCode Hot 100 · Top Interview 150
 - [[tlc-linked-list-cycle-0-whole|LC 141 环形链表]]（简单）· TikTok P3 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-longest-mountain-in-array-0-whole|LC 845 数组中的最长山脉]]（中等）· TikTok P4
+- [[tlc-candy-0-whole|LC 135 分发糖果]]（困难）· TikTok P4 · Amazon · Top Interview 150
 - [[tlc-interval-list-intersections-0-whole|LC 986 区间列表的交集]]（中等）· TikTok P4
 - [[tlc-successful-pairs-of-spells-and-potions-0-whole|LC 2300 咒语和药水的成功对数]]（中等）· TikTok P4
 - [[tlc-longest-string-chain-0-whole|LC 1048 最长字符串链]]（中等）· TikTok P4
@@ -37,6 +38,7 @@
 - [[tlc-linked-list-cycle-ii-0-whole|LC 142 环形链表 II]]（中等）· TikTok B · Amazon · LeetCode Hot 100
 - [[tlc-reorder-list-0-whole|LC 143 重排链表]]（中等）· TikTok B · Blind 75 · NeetCode 150
 - [[tlc-sort-list-0-whole|LC 148 排序链表]]（中等）· TikTok B · Amazon · LeetCode Hot 100 · Top Interview 150
+- LC 149 直线上最多的点数（困难）· Top Interview 150
 - LC 167 两数之和 II - 输入有序数组（中等）· Amazon · NeetCode 150 · Top Interview 150
 - LC 202 快乐数（简单）· Amazon · NeetCode 150 · Top Interview 150
 - [[tlc-palindrome-linked-list-0-whole|LC 234 回文链表]]（简单）· TikTok B · Amazon · LeetCode Hot 100
@@ -48,7 +50,7 @@
 - [[tlc-palindromic-substrings-0-whole|LC 647 回文子串]]（中等）· TikTok B · Blind 75 · NeetCode 150
 - LC 763 划分字母区间（中等）· NeetCode 150 · LeetCode Hot 100
 
-**再做（其余牌组里的题，24 道）**
+**再做（其余牌组里的题，23 道）**
 
 - [[tlc-3sum-closest-0-whole|LC 16 最接近的三数之和]]（中等）· TikTok B · Amazon
 - [[tlc-4sum-0-whole|LC 18 四数之和]]（中等）· TikTok B · Amazon
@@ -67,7 +69,6 @@
 - LC 876 链表的中间结点（简单）· 
 - [[tlc-boats-to-save-people-0-whole|LC 881 救生艇]]（中等）· TikTok B · Amazon
 - [[tlc-sort-array-by-parity-0-whole|LC 905 按奇偶排序数组]]（简单）· TikTok B
-- [[tlc-minimum-area-rectangle-0-whole|LC 939 最小面积矩形]]（中等）· TikTok B
 - [[tlc-squares-of-a-sorted-array-0-whole|LC 977 有序数组的平方]]（简单）· TikTok B · Amazon
 - [[tlc-two-sum-less-than-k-0-whole|LC 1099 小于 K 的两数之和]]（简单）· TikTok B
 - LC 1650 二叉树的最近公共祖先 III（中等）· Amazon

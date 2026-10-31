@@ -20,9 +20,9 @@ step: 1
 **近似信号（要换别的）：**
 - 要保持**有序**、找前驱 / 后继 → 有序结构或排序 + 二分，哈希不记顺序（例：LC 35 搜索插入位置）。
 - 数组**已有序**，找两数之和 → 双指针，`O(1)` 空间，不用哈希（例：LC 167 两数之和 II - 输入有序数组；高频：LC 15 三数之和）。
-- 问的是**连续子数组**的和 / 个数 → 前缀和 + 哈希（哈希只是其中一半）（例：LC 523 连续的子数组和；高频：LC 560 和为 K 的子数组）。
+- 问的是**连续子数组**的和 / 个数 → 前缀和 + 哈希（哈希只是其中一半）（例：LC 560 和为 K 的子数组）。
 - 键是**范围**（`x` 落在 `[l, r]`）→ 排序 / 二分 / 区间结构（例：LC 56 合并区间）。
-- 键是浮点数 → 哈希不可靠（精度），改用整数化或排序（例：LC 593 有效的正方形）。
+- 键是浮点数 → 哈希不可靠（精度），改用整数化或排序（例：LC 149 直线上最多的点数）。
 
 **代价**：平均 `O(1)`，空间 `O(n)`；最坏情况（大量哈希冲突）退化，但 Python 的 `int` 与 `str` 哈希足够好，面试里不必担心。
 
@@ -139,22 +139,6 @@ def two_sum_sorted(numbers: list[int], target: int) -> list[int]:
     return []
 ```
 
-**例题：** LC 523 连续的子数组和
-
-非负整数数组 `nums`（`1 <= nums.length <= 10^5`）和整数 `k`（`1 <= k <= 2^31 - 1`），判断是否存在长度至少为 2、元素和为 `k` 倍数的连续子数组。
-
-```python
-def check_subarray_sum(nums: list[int], k: int) -> bool:
-    first_seen: dict[int, int] = {0: -1}     # 余数 -> 最早出现的前缀下标；空前缀的余数是 0
-    prefix = 0
-    for i, x in enumerate(nums):
-        prefix = (prefix + x) % k            # 到 nums[i] 为止的前缀和对 k 的余数
-        j = first_seen.setdefault(prefix, i)  # 第一次出现就登记 i，否则返回最早的下标
-        if i - j >= 2:                       # 子数组 nums[j+1 .. i] 的长度 = i - j
-            return True
-    return False
-```
-
 **例题：** LC 56 合并区间
 
 区间数组 `intervals`（`1 <= intervals.length <= 10^4`，`0 <= start <= end <= 10^4`），合并所有重叠区间，返回不重叠且恰好覆盖全部输入的区间数组。
@@ -170,17 +154,27 @@ def merge(intervals: list[list[int]]) -> list[list[int]]:
     return merged
 ```
 
-**例题：** LC 593 有效的正方形
+**例题：** LC 149 直线上最多的点数
 
-给定二维平面上的四个点 `p1..p4`（坐标范围 `-10^4..10^4`，顺序任意），判断它们能否构成正方形。
+给平面上 `n` 个互不相同的点 `points`（`1 <= n <= 300`，`-10^4 <= x, y <= 10^4`），求同一条直线上最多有多少个点。
 
 ```python
-from itertools import combinations
-def valid_square(p1: list[int], p2: list[int], p3: list[int], p4: list[int]) -> bool:
-    def dist2(a: list[int], b: list[int]) -> int:
-        return (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2   # 平方距离，全程整数
-    d = sorted(dist2(a, b) for a, b in combinations((p1, p2, p3, p4), 2))   # 6 条两两距离
-    return d[0] > 0 and d[0] == d[3] and d[4] == d[5] == 2 * d[0]
+from collections import Counter
+from math import gcd
+def max_points(points: list[list[int]]) -> int:
+    best = 1
+    for i, (x1, y1) in enumerate(points):
+        slopes: Counter[tuple[int, int]] = Counter()
+        for x2, y2 in points[i + 1:]:
+            dx, dy = x2 - x1, y2 - y1
+            g = gcd(dx, dy)                    # 点互不相同，所以 g > 0
+            dx, dy = dx // g, dy // g          # 约分成最简整数方向向量，不用浮点斜率当键
+            if dx < 0 or (dx == 0 and dy < 0):
+                dx, dy = -dx, -dy              # 统一方向：(1, 2) 与 (-1, -2) 是同一条线
+            slopes[(dx, dy)] += 1
+        if slopes:
+            best = max(best, max(slopes.values()) + 1)   # 加上点 i 自己
+    return best
 ```
 
 **例题：** LC 438 找到字符串中所有字母异位词

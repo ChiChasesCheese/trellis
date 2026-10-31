@@ -16,7 +16,7 @@ step: 1
 - 问**最大 / 最小值**，并且题目有明显的"排序后一次扫描"结构：区间调度、会议室、任务安排（例：LC 452 用最少数量的箭引爆气球；高频：LC 435 无重叠区间）。
 - 「**能否到达**」「最少几步到达」，每个位置有一个"可达范围"：跳跃游戏 LC 55、45（例：LC 45 跳跃游戏 II；高频：LC 55 跳跃游戏）。
 - 「**环形**路线，累计量不能为负」：加油站 LC 134（例：LC 134 加油站）。
-- 「**字典序最小 / 数值最大**」，从高位到低位逐位决定：最大交换 LC 670、移掉 K 位数字 LC 402（例：LC 670 最大交换；高频：LC 316 去除重复字母）。
+- 「**字典序最小 / 数值最大**」，从高位到低位逐位决定：移掉 K 位数字 LC 402（高频：LC 316 去除重复字母）。
 - 「括号序列里有通配符」：只维护未匹配数的范围（例：LC 678 有效的括号字符串）。
 
 **怎样判断贪心成立：**
@@ -30,7 +30,7 @@ step: 1
 
 **近似信号：**
 - 要列出所有方案 ⇒ 回溯（例：LC 78 子集）。
-- 选与不选互相影响 ⇒ 背包 DP：按余数记录最优和（例：LC 1262 可被三整除的最大和）。
+- 选与不选互相影响 ⇒ 背包 DP：按「已凑出的和」记录状态（例：LC 416 分割等和子集）。
 
 **例题：** LC 452 用最少数量的箭引爆气球
 
@@ -80,24 +80,6 @@ def can_complete_circuit(gas: list[int], cost: list[int]) -> int:
         if tank < 0:                        # 从 start 出发走不到 i+1：start..i 都不能当起点
             start, tank = i + 1, 0
     return start if total >= 0 else -1      # 总油量够，从最后一次重置的位置出发一定可行
-```
-
-**例题：** LC 670 最大交换
-
-给一个非负整数 `num`，至多交换其中任意两位数字一次，返回能得到的最大值。`0 <= num <= 10^8`。
-
-```python
-def maximum_swap(num: int) -> int:
-    digits = list(str(num))
-    last = {d: i for i, d in enumerate(digits)}   # 每个数字最后一次出现的下标（后写覆盖前写）
-    for i, d in enumerate(digits):
-        for big in "9876543210":                  # 从最大的数字开始找
-            if big <= d:
-                break                             # 已经没有比 d 更大的了，这一位不用换
-            if last.get(big, -1) > i:             # 右边有更大的数字：换最右边的那个
-                digits[i], digits[last[big]] = digits[last[big]], digits[i]
-                return int("".join(digits))
-    return num
 ```
 
 **例题：** LC 678 有效的括号字符串
@@ -163,24 +145,6 @@ def subsets(nums: list[int]) -> list[list[int]]:
     return res
 ```
 
-**例题：** LC 1262 可被三整除的最大和
-
-给整数数组 `nums`，从中选出一些元素（可以一个都不选，和为 `0`），使它们的和能被 `3` 整除，返回这个最大和。`1 <= nums.length <= 4 * 10^4`，`1 <= nums[i] <= 10^4`。
-
-```python
-def max_sum_div_three(nums: list[int]) -> int:
-    n = len(nums)
-    NEG = -(10 ** 18)                          # 「这个余数凑不出来」
-    # dp[i][r]：只用前 i 个数、和模 3 等于 r 时的最大和
-    dp = [[NEG] * 3 for _ in range(n + 1)]
-    dp[0][0] = 0                               # 空集：和为 0，余数 0
-    for i, x in enumerate(nums, 1):
-        for r in range(3):
-            dp[i][r] = max(dp[i - 1][r],                         # 不选 x
-                           dp[i - 1][(r - x) % 3] + x)           # 选 x：上一个余数是 (r - x) % 3
-    return dp[n][0]
-```
-
 **例题：** LC 435 无重叠区间
 
 给一组区间 `intervals`，`intervals[i] = [start_i, end_i]`。返回最少需要移除多少个区间，才能让剩下的区间两两不重叠。只在端点接触的区间不算重叠，例如 `[1,2]` 和 `[2,3]`。`1 <= intervals.length <= 10^5`，`intervals[i].length == 2`，`-5 * 10^4 <= start_i < end_i <= 5 * 10^4`。
@@ -231,4 +195,23 @@ def remove_duplicate_letters(s: str) -> str:
         stack.append(ch)
         in_stack.add(ch)
     return "".join(stack)
+```
+
+**例题：** LC 416 分割等和子集
+
+只含正整数的非空数组 `nums`（`1 <= nums.length <= 200`，`1 <= nums[i] <= 100`），判断能否分成两个元素和相等的子集。
+
+```python
+def can_partition(nums: list[int]) -> bool:
+    total = sum(nums)
+    if total % 2:
+        return False                           # 总和是奇数，不可能平分
+    n, half = len(nums), total // 2
+    dp = [[False] * (half + 1) for _ in range(n + 1)]
+    dp[0][0] = True                            # 基础行：一个数都不选，只能凑出 0
+    for i in range(1, n + 1):
+        x = nums[i - 1]
+        for j in range(half + 1):
+            dp[i][j] = dp[i - 1][j] or (j >= x and dp[i - 1][j - x])   # 不选第 i 个 / 选第 i 个
+    return dp[n][half]                         # 答案格：用全部 n 个数，凑出 half
 ```

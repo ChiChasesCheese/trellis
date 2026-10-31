@@ -147,3 +147,9 @@ explicit-stack rewrite made only to dodge Python's recursion limit. Then:
 - The explicit-stack version goes to **追问** (whole card) and the `-4-followup` card (or `-5-alt`), with its code.
 Solutions where a stack *is* the natural algorithm (expression evaluation, decode string, monotonic stack, an
 explicitly iterative traversal the problem asks for) are unaffected.
+
+## Pattern-card examples (Chi, 2026-10-31)
+
+An example on a pattern card is either tier A (bands p1–p4) or a problem that is also on another list (Chi's Amazon or
+topic decks, Blind 75, NeetCode 150, LeetCode Hot 100, Top Interview 150 — `catalog/other_lists.json`). Tier-B problems
+that are on no other list do not appear as examples.

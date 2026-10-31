@@ -17,8 +17,8 @@ step: 1
 
 **对答案二分（答案在一个范围里，且可行性单调）：**
 - 「**最小化最大值**」「**最大化最小值**」：LC 1011（最低运载能力）、LC 875（最小速度）（例：LC 875 爱吃香蕉的珂珂）。
-- 「能否在 `x` 以内完成」判断函数容易写出来，且 `x` 越大（或越小）越容易 → 单调（例：LC 1802 有界数组中指定下标处的最大值；高频：LC 1918 第 K 小的子数组和）。
-- 答案是整数，范围已知（`1..max`），第 `k` 小 / 大（LC 378 值域二分）、`sqrt`（LC 69）（例：LC 1539 第 k 个缺失的正整数；高频：LC 378 有序矩阵中第 K 小的元素）。
+- 「能否在 `x` 以内完成」判断函数容易写出来，且 `x` 越大（或越小）越容易 → 单调（高频：LC 1918 第 K 小的子数组和）。
+- 答案是整数，范围已知（`1..max`），第 `k` 小 / 大（LC 378 值域二分）、`sqrt`（LC 69）（高频：LC 378 有序矩阵中第 K 小的元素）。
 
 **共同点**：存在一个**判定函数** `ok(x)`，结果是 `False...False True...True`，要找第一个 `True`；每次判定后能丢掉一半。
 
@@ -90,44 +90,6 @@ def min_eating_speed(piles: list[int], h: int) -> int:
         else:
             lo = mid + 1                    # mid 太慢，答案在 (mid, hi]
     return lo
-```
-
-**例题：** LC 1802 有界数组中指定下标处的最大值
-
-给三个正整数 `n`、`index` 和 `maxSum`。构造数组 `nums`（下标从 `0` 开始），同时满足：`nums.length == n`；每个 `nums[i]` 都是**正整数**；相邻元素之差的绝对值不超过 `1`，即 `abs(nums[i] - nums[i+1]) <= 1`；所有元素之和不超过 `maxSum`；`nums[index]` 的值被**最大化**。返回所构造数组中的 `nums[index]`。`1 <= n <= maxSum <= 10^9`，`0 <= index < n`。
-
-```python
-def max_value(n: int, index: int, max_sum: int) -> int:
-    def side(peak: int, length: int) -> int:
-        if length >= peak - 1:
-            return peak * (peak - 1) // 2 + (length - (peak - 1))
-        return (peak - 1 + peak - length) * length // 2
-    def total(peak: int) -> int:               # 峰值取 peak 时整个数组的最小和
-        return peak + side(peak, index) + side(peak, n - 1 - index)
-    lo, hi = 1, max_sum                        # 单调：peak 越大 total 越大
-    while lo < hi:
-        mid = (lo + hi + 1) // 2               # 上取整，避免 lo = mid 时死循环
-        if total(mid) <= max_sum:
-            lo = mid                           # mid 放得下，答案至少是 mid
-        else:
-            hi = mid - 1
-    return lo
-```
-
-**例题：** LC 1539 第 k 个缺失的正整数
-
-给一个**严格升序**排列的正整数数组 `arr` 和整数 `k`，找出这个数组里缺失的第 `k` 个正整数。`1 <= arr.length <= 1000`，`1 <= arr[i] <= 1000`，`1 <= k <= 1000`，对所有 `i < j` 有 `arr[i] < arr[j]`。进阶：设计时间复杂度小于 `O(n)` 的算法。
-
-```python
-def find_kth_positive(arr: list[int], k: int) -> int:
-    lo, hi = 0, len(arr)                   # 在 [0, n] 上找第一个下标 i，使 arr[i] 之前缺失的数 >= k
-    while lo < hi:
-        mid = (lo + hi) // 2
-        if arr[mid] - (mid + 1) >= k:      # arr[mid] 之前缺了 arr[mid] - (mid + 1) 个正整数
-            hi = mid
-        else:
-            lo = mid + 1
-    return lo + k                          # 答案前面有 lo 个数在 arr 里：第 k 个缺失数 = k + lo
 ```
 
 **例题：** LC 1235 规划兼职工作

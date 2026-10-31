@@ -17,10 +17,10 @@ step: 4
 | 子串，用 DP | 滑动窗口 | 子串**连续**、约束单调时，窗口 `O(n)`，DP 不必要（例：LC 3 无重复字符的最长子串） |
 | 子序列，用滑动窗口 | DP | 子序列不要求连续，窗口的「收缩」没有意义（例：LC 300 最长递增子序列） |
 | 最短路径，用 DFS | BFS（无权）/ Dijkstra（有权） | DFS 先找到的路径不一定最短（例：LC 286 墙与门；高频：LC 127 单词接龙） |
-| 无权图最短，用 Dijkstra | BFS | 都能对，BFS `O(V+E)` 更简单；第一个碰到的叶子就是最近的（例：LC 111 二叉树的最小深度；高频：LC 1091 二进制矩阵中的最短路径） |
+| 无权图最短，用 Dijkstra | BFS | 都能对，BFS `O(V+E)` 更简单；第一次到达的格子就是最近的（高频：LC 1091 二进制矩阵中的最短路径） |
 | 有负权边，用 Dijkstra | Bellman-Ford | Dijkstra 假设弹出即最终最短，负权破坏它（LC 787 限制边数，用 Bellman-Ford 或带状态）（例：LC 787 K 站中转内最便宜的航班） |
 | 有序数组，用哈希 | 双指针 | 有序是信号，哈希浪费空间（例：LC 167 两数之和 II；高频：LC 15 三数之和） |
-| 第 `k` 大，排序 | 堆 / 快速选择 | 只要 `k` 个，不必全排；扫一遍只留前三名（例：LC 414 第三大的数；高频：LC 215 数组中的第 K 个最大元素） |
+| 第 `k` 大，排序 | 堆 / 快速选择 | 只要 `k` 个，不必全排；扫一遍只留前 `k` 名（高频：LC 215 数组中的第 K 个最大元素） |
 | 求「恰好 `k`」，直接做窗口 | 「至多 `k`」减「至多 `k-1`」 | 恰好不单调，至多单调（LC 1248、992）（例：LC 1248 统计「优美子数组」） |
 
 - 判断是否换算法的标准：**这个性质是否单调**（窗口收缩 / 扩张、二分、双指针都依赖单调性），以及**局部选择是否影响后面**（贪心依赖无后效）。
@@ -112,27 +112,6 @@ def walls_and_gates(rooms: list[list[int]]) -> None:
                 queue.append((nr, nc))
 ```
 
-**例题：** LC 111 二叉树的最小深度
-
-给二叉树的根 `root`，求它的最小深度：从根节点到**最近的叶子节点**的最短路径上的节点数。叶子节点是没有子节点的节点。树中节点数在 `[0, 10^5]` 内，`-1000 <= Node.val <= 1000`。
-
-```python
-from collections import deque
-def min_depth(root: TreeNode | None) -> int:
-    if root is None:
-        return 0
-    queue = deque([(root, 1)])                    # (节点, 它的深度)
-    while queue:
-        node, depth = queue.popleft()
-        if node.left is None and node.right is None:
-            return depth                          # BFS 按层推进：第一个叶子就是最浅的
-        if node.left:
-            queue.append((node.left, depth + 1))
-        if node.right:
-            queue.append((node.right, depth + 1))
-    return 0
-```
-
 **例题：** LC 787 K 站中转内最便宜的航班
 
 有 `n` 个城市通过一些航班连接。给数组 `flights`，`flights[i] = [from_i, to_i, price_i]` 表示从城市 `from_i` 到 `to_i` 的航班，价格 `price_i`。给定出发城市 `src`、目的地 `dst` 和整数 `k`，找出一条**最多经过 `k` 站中转**的路线，使从 `src` 到 `dst` 的价格最便宜，返回该价格；不存在则返回 `-1`。`2 <= n <= 100`，`0 <= flights.length <= n * (n - 1) / 2`，`0 <= from_i, to_i < n`，`from_i != to_i`，`1 <= price_i <= 10^4`，航班没有重复，没有自环，`0 <= src, dst, k < n`，`src != dst`。
@@ -169,22 +148,6 @@ def two_sum_sorted(numbers: list[int], target: int) -> list[int]:
         else:
             right -= 1
     return []
-```
-
-**例题：** LC 414 第三大的数
-
-给整数数组 `nums`，返回其中**第三大的数**；如果不存在，返回最大的数。「第三大」指在所有**不同**数字中排第三。`1 <= nums.length <= 10^4`，`-2^31 <= nums[i] <= 2^31 - 1`。进阶：`O(n)` 时间。
-
-```python
-def third_max(nums: list[int]) -> int:
-    top: list[int] = []                        # 目前见过的最大的至多 3 个不同的值，降序
-    for x in nums:
-        if x in top:                           # 重复的数不占名次
-            continue
-        top.append(x)
-        top.sort(reverse=True)                 # 最多 4 个元素，排序是 O(1)
-        del top[3:]                            # 只留前 3 名
-    return top[2] if len(top) == 3 else top[0]
 ```
 
 **例题：** LC 1248 统计「优美子数组」

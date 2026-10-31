@@ -14,7 +14,6 @@ step: 8
 - LC 70 爬楼梯
 - LC 198 打家劫舍
 - LC 53 最大子数组和
-- LC 1997 访问完所有房间的第一天
 - LC 746 使用最小花费爬楼梯（高频）
 
 **状态机**
@@ -27,7 +26,6 @@ step: 8
 
 **以谁结尾 / 带最后一步**
 - LC 300 最长递增子序列
-- LC 403 青蛙过河
 - LC 678 有效的括号字符串（状态：未匹配左括号的可能区间）
 - LC 1048 最长字符串链（高频）
 - LC 1691 堆叠长方体的最大高度（高频）
@@ -74,22 +72,6 @@ def max_sub_array(nums: list[int]) -> int:
         cur = max(x, cur + x)           # 接在前面后面，或者从 x 重新开始
         best = max(best, cur)
     return best
-```
-
-**例题：** LC 1997 访问完所有房间的第一天
-
-`n` 个房间，第 `0` 天在房间 `0`。若今天访问房间 `i` 后，累计访问它的次数为奇数，次日去 `nextVisit[i]`，为偶数则去 `(i + 1) mod n`。返回第一次访问完所有房间的日期，对 `10^9 + 7` 取余。`2 <= n <= 10^5`，`0 <= nextVisit[i] <= i`。
-
-```python
-def first_day_been_in_all_rooms(next_visit: list[int]) -> int:
-    mod = 10**9 + 7
-    n = len(next_visit)
-    first = [0] * n                                # first[i] = 第一次到达房间 i 的日期
-    for i in range(n - 1):
-        # 第一次到 i（奇数次）-> 回到 nv = next_visit[i]，再走回 i 的时间是 first[i] - first[nv]
-        # 第二次到 i（偶数次）-> 第二天去 i+1
-        first[i + 1] = (2 * first[i] - first[next_visit[i]] + 2) % mod
-    return first[-1]
 ```
 
 **例题：** LC 121 买卖股票的最佳时机
@@ -146,22 +128,6 @@ def length_of_lis(nums: list[int]) -> int:
         else:
             tails[i] = x                           # 让长度 i+1 的结尾变得更小，对后面更有利
     return len(tails)
-```
-
-**例题：** LC 403 青蛙过河
-
-升序石子位置 `stones`，青蛙从位置 `0` 出发，第一步只能跳 `1`；上一步跳 `k`，下一步只能跳 `k - 1`、`k` 或 `k + 1`，只能落在石子上。判断能否到达最后一块石子。`2 <= stones.length <= 2000`，`stones[0] == 0`。
-
-```python
-def can_cross(stones: list[int]) -> bool:
-    jumps: dict[int, set[int]] = {pos: set() for pos in stones}   # 石子位置 -> 能以哪些「最后一跳长度」站上来
-    jumps[0].add(0)                            # 起点：当作上一跳长度 0，于是下一跳只能是 1
-    for pos in stones:
-        for k in jumps[pos]:
-            for step in (k - 1, k, k + 1):
-                if step > 0 and pos + step in jumps:
-                    jumps[pos + step].add(step)
-    return bool(jumps[stones[-1]])
 ```
 
 **例题：** LC 678 有效的括号字符串

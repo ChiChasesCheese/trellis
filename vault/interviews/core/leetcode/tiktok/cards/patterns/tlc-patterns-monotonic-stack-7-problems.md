@@ -12,11 +12,9 @@ step: 7
 ## A
 **下一个更大 / 更小**
 - LC 739 每日温度
-- LC 581 最短无序连续子数组（栈或两遍扫描找边界）
 
 **以每个元素为最值的区间**
 - LC 84 柱状图中最大的矩形
-- LC 2334 元素值大于变化阈值的子数组
 - LC 42 接雨水（单调栈版本，另有双指针 / DP 版本）
 
 **字典序最小 / 删除字符**
@@ -26,8 +24,6 @@ step: 7
 
 **栈模拟（相邻抵消）**
 - LC 735 小行星碰撞
-- LC 1209 删除字符串中的所有相邻重复项 II（栈存 `(字符, 计数)`）
-- LC 856 括号的分数
 - LC 20 有效的括号（高频）
 - LC 32 最长有效括号（高频）
 
@@ -52,29 +48,6 @@ def daily_temperatures(temperatures: list[int]) -> list[int]:
     return answer
 ```
 
-**例题：** LC 581 最短无序连续子数组
-
-找最短的连续子数组，把它升序排序后整个数组变为升序，返回其长度；`nums.length <= 10^4`，进阶 `O(n)`。
-
-```python
-from math import inf
-def find_unsorted_subarray(nums: list[int]) -> int:
-    n = len(nums)
-    start, end = 0, -1
-    hi, lo = -inf, inf
-    for i in range(n):
-        if nums[i] < hi:
-            end = i
-        else:
-            hi = nums[i]
-        j = n - 1 - i
-        if nums[j] > lo:
-            start = j
-        else:
-            lo = nums[j]
-    return end - start + 1
-```
-
 **例题：** LC 84 柱状图中最大的矩形
 
 `heights[i]` 是宽为 `1` 的柱子的高度，求柱状图中最大矩形的面积；`heights.length <= 10^5`，`heights[i] <= 10^4`。
@@ -90,25 +63,6 @@ def largest_rectangle_area(heights: list[int]) -> int:
             best = max(best, height * (i - left - 1))
         stack.append(i)
     return best
-```
-
-**例题：** LC 2334 元素值大于变化阈值的子数组
-
-找一个长度为 `k` 的子数组，其中每个元素都大于 `threshold / k`，返回任意一个满足的长度，没有返回 `-1`；`nums.length <= 10^5`，`nums[i], threshold <= 10^9`。
-
-```python
-from itertools import chain
-def valid_subarray_size(nums: list[int], threshold: int) -> int:
-    stack: list[int] = []
-    for i, x in enumerate(chain(nums, (0,))):
-        while stack and nums[stack[-1]] >= x:
-            h = nums[stack.pop()]
-            left = stack[-1] if stack else -1
-            k = i - left - 1
-            if h * k > threshold:
-                return k
-        stack.append(i)
-    return -1
 ```
 
 **例题：** LC 42 接雨水
@@ -201,39 +155,6 @@ def asteroid_collision(asteroids: list[int]) -> list[int]:
         if alive:
             stack.append(a)
     return stack
-```
-
-**例题：** LC 1209 删除字符串中的所有相邻重复项 II
-
-反复删除 `k` 个相邻且相等的字母，直到不能再删，返回最终字符串；`s.length <= 10^5`，`2 <= k <= 10^4`。
-
-```python
-def remove_duplicates(s: str, k: int) -> str:
-    stack: list[tuple[str, int]] = []
-    for ch in s:
-        if stack and stack[-1][0] == ch:
-            _, cnt = stack.pop()
-            if cnt + 1 < k:
-                stack.append((ch, cnt + 1))
-        else:
-            stack.append((ch, 1))
-    return "".join(ch * cnt for ch, cnt in stack)
-```
-
-**例题：** LC 856 括号的分数
-
-平衡括号串 `s`：`()` 得 `1` 分，`AB` 得 `A + B`，`(A)` 得 `2 * A`，求 `s` 的分数；`2 <= s.length <= 50`。
-
-```python
-def score_of_parentheses(s: str) -> int:
-    stack = [0]
-    for ch in s:
-        if ch == "(":
-            stack.append(0)
-        else:
-            inner = stack.pop()
-            stack[-1] += max(2 * inner, 1)
-    return stack[0]
 ```
 
 **例题：** LC 239 滑动窗口最大值

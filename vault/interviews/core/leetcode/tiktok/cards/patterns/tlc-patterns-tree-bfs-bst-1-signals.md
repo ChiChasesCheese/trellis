@@ -13,11 +13,11 @@ step: 1
 **层序遍历（Level-order BFS）的信号：**
 - 题面按**层**组织输出：「每一层的节点」「锯齿形层序」LC 103、「每层最大宽度」LC 662（例：LC 103 二叉树的锯齿形层序遍历；高频：LC 102 二叉树的层序遍历）。
 - 「从右侧看到的节点」「每层最后一个」（例：LC 199 二叉树的右视图）。
-- 「到最近叶子的深度」「最小深度」：BFS 遇到第一个叶子就停（例：LC 111 二叉树的最小深度）。
-- 把树当**无向图**处理：给节点加父指针，或把边存成邻接表，再从某个点出发做 BFS / DFS：「距离目标节点为 K 的所有节点」LC 863；树形的路网从 `0` 号点出发，数要掉头的边（例：LC 1466 重新规划路线；高频：LC 863 二叉树中所有距离为 K 的结点）。
+- 「到最近叶子的深度」「最小深度」：BFS 遇到第一个叶子就停，不必走完整棵树。
+- 把树当**无向图**处理：给节点加父指针，或把边存成邻接表，再从某个点出发做 BFS / DFS：「距离目标节点为 K 的所有节点」（高频：LC 863 二叉树中所有距离为 K 的结点）。
 
 **BST 的信号（二叉搜索树：左 < 根 < 右）：**
-- 题面出现「**二叉搜索树**」：**中序遍历是严格递增序列**，是几乎所有 BST 题的钥匙；最小差一定出现在中序相邻的两个节点之间（例：LC 783 二叉搜索树节点最小距离；高频：LC 99 恢复二叉搜索树）。
+- 题面出现「**二叉搜索树**」：**中序遍历是严格递增序列**，是几乎所有 BST 题的钥匙（高频：LC 99 恢复二叉搜索树）。
 - 验证 BST：每个节点有一个合法的**取值区间**，从上往下收窄，不能只比较父子（例：LC 98 验证二叉搜索树）。
 - 第 `k` 小：中序遍历数到第 `k` 个，可以提前停（例：LC 230 二叉搜索树中第K小的元素）。
 - 查找 / 插入 / 删除：沿着比较大小的方向走，`O(h)`（LC 450）（例：LC 235 二叉搜索树的最近公共祖先；高频：LC 450 删除二叉搜索树中的节点）。
@@ -29,7 +29,7 @@ step: 1
 **近似信号：**
 - 只需要某种遍历序列、不关心层 → DFS 更简单（例：LC 94 二叉树的中序遍历）。
 - 路径、子树聚合 → 后序 DFS，不是 BFS（例：LC 543 二叉树的直径）。
-- 树的节点数大且可能退化成链 → BFS 用队列没有递归深度问题，是 DFS 的备选（例：LC 107 二叉树的层次遍历 II）。
+- 树的节点数大且可能退化成链 → BFS 用队列没有递归深度问题，是 DFS 的备选（高频：LC 102 二叉树的层序遍历）。
 
 **例题：** LC 103 二叉树的锯齿形层序遍历
 
@@ -63,70 +63,6 @@ def right_side_view(root: TreeNode | None) -> list[int]:
         ans.append(level[-1].val)                  # 这一层最右的节点
         level = [kid for node in level for kid in (node.left, node.right) if kid]
     return ans
-```
-
-**例题：** LC 111 二叉树的最小深度
-
-给二叉树的根 `root`，求它的最小深度：从根节点到**最近的叶子节点**的最短路径上的节点数。叶子节点是没有子节点的节点。树中节点数在 `[0, 10^5]` 内，`-1000 <= Node.val <= 1000`。
-
-```python
-from collections import deque
-def min_depth(root: TreeNode | None) -> int:
-    if root is None:
-        return 0
-    queue = deque([(root, 1)])                    # (节点, 它的深度)
-    while queue:
-        node, depth = queue.popleft()
-        if node.left is None and node.right is None:
-            return depth                          # BFS 按层推进：第一个叶子就是最浅的
-        if node.left:
-            queue.append((node.left, depth + 1))
-        if node.right:
-            queue.append((node.right, depth + 1))
-    return 0
-```
-
-**例题：** LC 1466 重新规划路线
-
-有 `n` 座城市，编号 `0` 到 `n - 1`，之间共有 `n - 1` 条路线，任意两座城市之间只有唯一一条路线可走（路线网是一棵树）。`connections[i] = [a, b]` 表示一条从城市 `a` 到城市 `b` 的有向路线。城市 `0` 要举办比赛，请重新规划路线方向，使每座城市都能到达城市 `0`，返回需要变更方向的**最少**路线数。数据保证重新规划后每座城市都能到达城市 `0`。`2 <= n <= 5 * 10^4`，`connections.length == n - 1`，`connections[i].length == 2`，`0 <= connections[i][0], connections[i][1] <= n - 1`，`connections[i][0] != connections[i][1]`。
-
-```python
-def min_reorder(n: int, connections: list[list[int]]) -> int:
-    adj: list[list[tuple[int, int]]] = [[] for _ in range(n)]
-    for a, b in connections:
-        adj[a].append((b, 1))              # 从 a 走到 b：顺着原方向，即背离城市 0，这条边要反转
-        adj[b].append((a, 0))              # 从 b 走到 a：逆着原方向，即朝向城市 0，不用动
-
-    def dfs(u: int, parent: int) -> int:   # 以 u 为根的子树里需要反转的边数
-        flips = 0
-        for v, cost in adj[u]:
-            if v != parent:                # 树没有环：只要不走回父亲，就不会重复访问
-                flips += cost + dfs(v, u)  # 进入 v 的这条边的代价 + v 子树里的代价
-        return flips
-
-    return dfs(0, -1)
-```
-
-**例题：** LC 783 二叉搜索树节点最小距离
-
-给二叉搜索树（BST）的根节点 `root`，返回树中任意两个不同节点值之差的最小值（差取绝对值，是正数）。节点数在 `[2, 100]`，`0 <= Node.val <= 10^5`。
-
-```python
-from math import inf
-def min_diff_in_bst(root: TreeNode | None) -> int:
-    best = inf
-    prev: int | None = None              # 中序遍历中上一个节点的值
-    def inorder(node: TreeNode | None) -> None:
-        nonlocal best, prev
-        if node is None:
-            return
-        inorder(node.left)
-        if prev is not None:             # 中序是升序：只需和前一个值比
-            best = min(best, node.val - prev)
-        prev = node.val
-        inorder(node.right)
-    inorder(root)
-    return best
 ```
 
 **例题：** LC 98 验证二叉搜索树
@@ -269,20 +205,6 @@ def diameter_of_binary_tree(root: TreeNode | None) -> int:
 
     height(root)
     return best
-```
-
-**例题：** LC 107 二叉树的层次遍历 II
-
-给二叉树的根结点 `root`，返回其结点值**自底向上的层序遍历**：从叶子所在层到根所在层，逐层，每层从左到右。树中结点数在 `[0, 2000]`，`-1000 <= Node.val <= 1000`。
-
-```python
-def level_order_bottom(root: TreeNode | None) -> list[list[int]]:
-    ans: list[list[int]] = []
-    level = [root] if root else []
-    while level:
-        ans.append([node.val for node in level])              # 这一层的值，从左到右
-        level = [child for node in level for child in (node.left, node.right) if child]   # 下一层
-    return ans[::-1]                                          # 自顶向下收集，最后整体反转
 ```
 
 **例题：** LC 102 二叉树的层序遍历

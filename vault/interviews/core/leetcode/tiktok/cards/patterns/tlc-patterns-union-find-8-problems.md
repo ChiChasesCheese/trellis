@@ -16,7 +16,6 @@ step: 8
 - LC 827 最大人工岛（合并后读取相邻块的大小）
 - LC 721 账户合并
 - LC 128 最长连续序列（`x` 与 `x + 1` 合并，取最大块）
-- LC 924 尽量减少恶意软件的传播
 - LC 323 无向图中连通分量的数目（高频）
 
 **判环与最小生成树**
@@ -143,34 +142,6 @@ def longest_consecutive(nums: list[int]) -> int:
         while end in seen:             # 从起点向右数下去
             end += 1
         best = max(best, end - x)
-    return best
-```
-
-**例题：** LC 924 尽量减少恶意软件的传播
-
-`n x n` 邻接矩阵 `graph` 和初始被感染的节点 `initial`，相连的节点只要一个被感染就会全部感染。从 `initial` 中恰好移除一个节点，使最终感染总数最小，返回该节点（并列取下标最小）。`2 <= n <= 300`。
-
-```python
-from collections import Counter
-def min_malware_spread(graph: list[list[int]], initial: list[int]) -> int:
-    n = len(graph)
-    parent = list(range(n))
-    def find(x: int) -> int:
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]      # 路径折半
-            x = parent[x]
-        return x
-    for i in range(n):
-        for j in range(i + 1, n):
-            if graph[i][j]:
-                parent[find(i)] = find(j)      # 合并连通块
-    size = Counter(find(i) for i in range(n))                 # 每个连通块的大小
-    infected = Counter(find(x) for x in initial)              # 每个连通块里的初始感染数
-    best, best_saved = min(initial), 0                        # 救不了任何节点时，返回下标最小的
-    for x in sorted(initial):                                 # 升序遍历，严格大于才替换 -> 并列取最小下标
-        root = find(x)
-        if infected[root] == 1 and size[root] > best_saved:   # 块里只有它一个感染源：移除它能救整个块
-            best, best_saved = x, size[root]
     return best
 ```
 

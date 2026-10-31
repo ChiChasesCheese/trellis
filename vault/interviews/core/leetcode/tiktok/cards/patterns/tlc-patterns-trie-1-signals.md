@@ -16,9 +16,9 @@ step: 1
 - 反复查询"有没有以某串**开头**的单词"（前缀）：自动补全、`startsWith`（例：LC 1268 搜索推荐系统；高频：LC 208 实现 Trie (前缀树)）。
 - 查询带**通配符**：`"b.."`、`".ad"`（LC 211）——哈希表无法处理，字典树可以在每层分叉（例：LC 211 添加与搜索单词 - 数据结构设计）。
 - 在棋盘上**一次搜很多个单词**：LC 212。把单词放进字典树，沿着棋盘走的同时沿着树走，走不通立即剪枝（例：LC 212 单词搜索 II）。
-- 多个字符串的**最长公共前缀**（LC 14、3043）（例：LC 3043 最长公共前缀的长度；高频：LC 3093 最长公共后缀查询）。
+- 多个字符串的**最长公共前缀**（LC 14）（高频：LC 3093 最长公共后缀查询）。
 - 按路径分层的结构：文件系统 LC 588，每一层是一个目录名（例：LC 588 设计内存文件系统）。
-- 数字的**二进制位**当作"字符"：最大异或对（LC 421），每一层是一个比特（例：LC 421 数组中两个数的最大异或值）。
+- 数字的**二进制位**当作"字符"：每一层是一个比特，查询时每层优先走与当前位相反的分支，就能凑出最大异或。
 
 **它比哈希表多的能力**：哈希表只回答"整个串在不在"，字典树能回答"有没有以它为前缀的串"，并且共享公共前缀以节省空间。
 
@@ -27,7 +27,7 @@ step: 1
 **近似信号：**
 - 只需判断整串是否存在 ⇒ `set`（例：LC 139 单词拆分）。
 - 单词不多且只比较一次 ⇒ 排序后比较相邻即可（例：LC 14 最长公共前缀）。
-- 要找子串（不一定从开头）⇒ 后缀树 / 滚动哈希 / KMP（例：LC 187 重复的DNA序列）。
+- 要找子串（不一定从开头）⇒ 后缀树 / 滚动哈希 / KMP（例：LC 28 找出字符串中第一个匹配项的下标）。
 
 **例题：** LC 1268 搜索推荐系统
 
@@ -106,26 +106,6 @@ def find_words(board: list[list[str]], words: list[str]) -> list[str]:
     return found
 ```
 
-**例题：** LC 3043 最长公共前缀的长度
-
-两个正整数数组 `arr1`、`arr2`（长度各至多 `5 * 10^4`，元素 `1..10^8`），在所有 `(x, y)` 数对中求 `x` 与 `y` 十进制公共前缀的最大长度，没有公共前缀返回 `0`。
-
-```python
-def longest_common_prefix(arr1: list[int], arr2: list[int]) -> int:
-    prefixes: set[int] = set()
-    for x in arr1:
-        while x and x not in prefixes:     # 已经在集合里说明它的更短前缀也都在，可以提前停
-            prefixes.add(x)
-            x //= 10                       # 去掉最后一位 = 取前一个前缀
-    best = 0
-    for y in arr2:
-        while y and y not in prefixes:     # 从最长的前缀往短处找第一个命中的
-            y //= 10
-        if y:
-            best = max(best, len(str(y)))
-    return best
-```
-
 **例题：** LC 588 设计内存文件系统
 
 设计内存文件系统：`ls(path)` 列出目录内容（文件路径则只返回文件名，结果按字典序），`mkdir(path)` 逐级建目录，`addContentToFile(path, content)` 追加内容（文件不存在则创建），`readContentFromFile(path)` 读取内容。
@@ -160,31 +140,6 @@ class FileSystem:
         return self._walk(filePath).content or ""
 ```
 
-**例题：** LC 421 数组中两个数的最大异或值
-
-非负整数数组 `nums`（`1 <= nums.length <= 2 * 10^5`，`0 <= nums[i] <= 2^31 - 1`），求任意两个数异或的最大值。
-
-```python
-def find_maximum_xor(nums: list[int]) -> int:
-    root: dict = {}                                # 01 字典树：每个数按高位到低位插入 31 位
-    for x in nums:
-        node = root
-        for i in range(30, -1, -1):
-            node = node.setdefault(x >> i & 1, {})
-    best = 0
-    for x in nums:
-        node, cur = root, 0
-        for i in range(30, -1, -1):
-            bit = x >> i & 1
-            if 1 - bit in node:                    # 贪心：每一位尽量走相反的比特
-                cur |= 1 << i
-                node = node[1 - bit]
-            else:
-                node = node[bit]
-        best = max(best, cur)
-    return best
-```
-
 **例题：** LC 139 单词拆分
 
 字符串 `s`（`1 <= s.length <= 300`）和字典 `wordDict`（至多 1000 个词，每词长 `1..20`，词可重复使用），判断 `s` 能否拆成字典中的单词序列。
@@ -213,26 +168,29 @@ def longest_common_prefix(strs: list[str]) -> str:
     return strs[0][:size]
 ```
 
-**例题：** LC 187 重复的DNA序列
+**例题：** LC 28 找出字符串中第一个匹配项的下标
 
-DNA 字符串 `s`（`0 <= s.length <= 10^5`，只含 `A C G T`），返回所有出现不止一次、长度为 10 的子串，顺序不限。
+给字符串 `haystack` 和 `needle`，返回 `needle` 在 `haystack` 中第一次出现的下标（从 0 开始），不存在就返回 `-1`。`1 <= haystack.length, needle.length <= 10^4`，两个字符串都只含小写英文字母。
 
 ```python
-from collections import Counter
-def find_repeated_dna_sequences(s: str) -> list[str]:
-    L = 10
-    code = {"A": 0, "C": 1, "G": 2, "T": 3}     # 每个碱基 2 位
-    mask = (1 << 2 * L) - 1                      # 只保留最近 10 个碱基的 20 位
-    count: Counter[int] = Counter()
-    res: list[str] = []
-    window = 0
-    for i, ch in enumerate(s):
-        window = ((window << 2) | code[ch]) & mask   # 左移挤掉最老的碱基，低位放新碱基
-        if i >= L - 1:                               # 窗口满 10 个才开始计数
-            count[window] += 1
-            if count[window] == 2:                   # 恰好第二次出现时收集，避免重复
-                res.append(s[i - L + 1 : i + 1])
-    return res
+def str_str(haystack: str, needle: str) -> int:
+    fail = [0] * len(needle)                   # fail[i]：needle[:i+1] 最长的「既是前缀又是后缀」的真前缀长度
+    k = 0
+    for i in range(1, len(needle)):
+        while k and needle[i] != needle[k]:
+            k = fail[k - 1]                    # 失配：退到次长的公共前后缀
+        if needle[i] == needle[k]:
+            k += 1
+        fail[i] = k
+    k = 0                                      # 当前已匹配 needle 的前 k 个字符
+    for i, ch in enumerate(haystack):
+        while k and ch != needle[k]:
+            k = fail[k - 1]                    # haystack 的下标 i 永不回退
+        if ch == needle[k]:
+            k += 1
+        if k == len(needle):
+            return i - k + 1
+    return -1
 ```
 
 **例题：** LC 208 实现 Trie (前缀树)

@@ -13,7 +13,7 @@ step: 1
 这一类题没有统一的"算法"，考的是**细节与边界**。按信号分：
 
 **数论（Number Theory）：**
-- 「最大公约数 / 最小公倍数 / 整除」：LC 1071、365；题面出现"能得到多少升水""循环节"时想 `gcd`（例：LC 1071 字符串的最大公因子；高频：LC 365 水壶问题）。
+- 「最大公约数 / 最小公倍数 / 整除」：题面出现"能得到多少升水""循环节"时想 `gcd`（高频：LC 365 水壶问题）。
 - 「质数」「范围 `10^6`」：埃氏筛（例：LC 204 计数质数）。
 - 「取模 `10^9 + 7`」「幂」：快速幂，每步取模（例：LC 50 Pow(x, n)）。
 - 「整数平方根」：二分（LC 69）或 `math.isqrt`（例：LC 69 x 的平方根）。
@@ -21,12 +21,12 @@ step: 1
 **位运算：**
 - 「只出现一次的数」「成对抵消」：异或 `^`（例：LC 136 只出现一次的数字）。
 - 「集合 / 子集 / 状态」且元素数 `<= 20`：用一个整数的二进制位表示集合（位掩码）（例：LC 1239 串联字符串的最大长度）。
-- 「数 1 的个数」「是不是 2 的幂」：`n & (n - 1)` 清掉最低位的 1；`n & -n` 取出最低位的 1，用来把两个只出现一次的数分到两组（例：LC 260 只出现一次的数字 III）。
-- 「值域是 `1..n` 且要 `O(1)` 空间」：用正负号或下标原地标记（例：LC 442 数组中重复的数据）。
+- 「数 1 的个数」「是不是 2 的幂」：`n & (n - 1)` 清掉最低位的 1；`n & -n` 取出最低位的 1（例：LC 231 2 的幂）。
+- 「值域是 `1..n` 且要 `O(1)` 空间」：用正负号或下标原地标记（例：LC 41 缺失的第一个正数）。
 
 **矩阵与模拟：**
 - 「螺旋」「旋转」「蛇形」：维护四个边界或用转置加反转（LC 54、48）（例：LC 54 螺旋矩阵）。
-- 「按规则一步一步变化」：机器人、内存泄漏——直接模拟，先估算步数（例：LC 1860 增长的内存泄露；高频：LC 1041 困于环中的机器人）。
+- 「按规则一步一步变化」：机器人——直接模拟，先估算步数（高频：LC 1041 困于环中的机器人）。
 - 「大数加法 / 乘法」「文本排版」：逐位模拟（LC 415、43、68）（例：LC 415 字符串相加）。
 
 **难点**：边界（空、单行、单列、进位、前导零）、整数范围、方向表示。
@@ -34,20 +34,6 @@ step: 1
 **近似信号：**
 - 步数达到 `10^9` 级别的模拟 ⇒ 要找规律或数学公式，不能硬模拟：指令重复无限次，模拟一轮后看位置和朝向就能判定（例：LC 1041 困于环中的机器人）。
 - 要找最优 ⇒ 贪心 / DP，而非模拟（例：LC 122 买卖股票的最佳时机 II；高频：LC 134 加油站）。
-
-**例题：** LC 1071 字符串的最大公因子
-
-对于字符串 `s` 和 `t`，只有 `s = t + t + … + t`（`t` 自身连接一次或多次）时，才说 `t` 能除尽 `s`。给定 `str1` 和 `str2`，返回最长的字符串 `x`，使得 `x` 能同时除尽 `str1` 和 `str2`；不存在就返回 `""`。`1 <= str1.length, str2.length <= 1000`，字符串由大写英文字母组成。
-
-```python
-from math import gcd
-
-
-def gcd_of_strings(str1: str, str2: str) -> str:
-    if str1 + str2 != str2 + str1:         # 有公因子串 <=> 两种拼接顺序结果一致
-        return ""
-    return str1[:gcd(len(str1), len(str2))]
-```
 
 **例题：** LC 204 计数质数
 
@@ -134,37 +120,33 @@ def max_length(arr: list[str]) -> int:
     return best
 ```
 
-**例题：** LC 260 只出现一次的数字 III
+**例题：** LC 231 2 的幂
 
-整数数组 `nums` 里恰好有**两个**元素只出现一次，其余所有元素都恰好出现两次。找出这两个元素，顺序任意。要求线性时间、常数额外空间。`2 <= nums.length <= 3 * 10^4`，`-2^31 <= nums[i] <= 2^31 - 1`。
+给一个整数 `n`，判断是否存在整数 `x` 使得 `n == 2^x`；`-2^31 <= n <= 2^31 - 1`。
 
 ```python
-def single_number_iii(nums: list[int]) -> list[int]:
-    both = 0
-    for x in nums:
-        both ^= x                                    # both == a ^ b，且 a != b 所以 both != 0
-    low = both & -both                               # 最低位的 1：a、b 在这一位不同
-    a = 0
-    for x in nums:
-        if x & low:                                  # 只异或这一位为 1 的那一组
-            a ^= x
-    return [a, both ^ a]                             # 另一个由 a ^ b ^ a 得到，不用再扫一遍
+def is_power_of_two(n: int) -> bool:
+    return n > 0 and n & (n - 1) == 0
 ```
 
-**例题：** LC 442 数组中重复的数据
+**例题：** LC 41 缺失的第一个正数
 
-给长度为 `n` 的整数数组 `nums`，其中每个整数都在 `[1, n]` 内，且每个整数出现**一次或两次**。找出所有出现两次的整数，以数组形式返回。必须设计 `O(n)` 时间、**仅用常量额外空间**（不含输出）的算法。`n == nums.length`，`1 <= n <= 10^5`，`1 <= nums[i] <= n`。
+未排序整数数组 `nums`，找出其中没有出现的最小正整数，要求 `O(n)` 时间、`O(1)` 额外空间；`1 <= nums.length <= 10^5`，`-2^31 <= nums[i] <= 2^31 - 1`。
 
 ```python
-def find_duplicates(nums: list[int]) -> list[int]:
-    res: list[int] = []
-    for x in nums:
-        i = abs(x) - 1                         # 值 x 对应的「标记位置」；x 可能已被前面的标记取负
-        if nums[i] < 0:
-            res.append(abs(x))                 # 这个位置已经被标记过：x 是第二次出现
-        else:
-            nums[i] = -nums[i]                 # 第一次出现：把 nums[i] 取负做记号
-    return res
+def first_missing_positive(nums: list[int]) -> int:
+    n = len(nums)
+    for i in range(n):
+        if nums[i] <= 0 or nums[i] > n:
+            nums[i] = n + 1                    # 越界的值不可能是答案，换成占位值
+    for i in range(n):
+        v = abs(nums[i])
+        if v <= n and nums[v - 1] > 0:
+            nums[v - 1] = -nums[v - 1]         # 值 v 出现过：把下标 v - 1 处取负做记号
+    for i in range(n):
+        if nums[i] > 0:
+            return i + 1                       # 第一个没被标记的位置
+    return n + 1
 ```
 
 **例题：** LC 54 螺旋矩阵
@@ -184,22 +166,6 @@ def spiral_order(matrix: list[list[int]]) -> list[int]:
             result.extend(matrix[r][left] for r in range(bottom - 1, top, -1))  # 左边：下 -> 上
         top, bottom, left, right = top + 1, bottom - 1, left + 1, right - 1
     return result
-```
-
-**例题：** LC 1860 增长的内存泄露
-
-给两个整数 `memory1` 和 `memory2`，分别表示两个内存条剩余可用内存的位数。一个程序每秒消耗递增的内存：在第 `i` 秒（从 `1` 开始），有 `i` 位内存被分配给**剩余内存较多**的那个内存条（两者一样多时分给第一个）。如果两个内存条剩余内存都不足 `i` 位，程序意外退出。返回数组 `[crashTime, memory1crash, memory2crash]`，其中 `crashTime` 是程序退出的时刻（秒），后两项是两个内存条最后剩余的位数。`0 <= memory1, memory2 <= 2^31 - 1`。
-
-```python
-def mem_leak(memory1: int, memory2: int) -> list[int]:
-    second = 1                                 # 当前要分配的位数，也是秒数
-    while max(memory1, memory2) >= second:     # 至少有一条放得下，程序才没崩
-        if memory1 >= memory2:                 # 相等时给第一条，所以用 >=
-            memory1 -= second
-        else:
-            memory2 -= second
-        second += 1
-    return [second, memory1, memory2]
 ```
 
 **例题：** LC 415 字符串相加

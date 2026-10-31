@@ -11,7 +11,7 @@ step: 1
 
 ## A
 **触发信号：**
-- 事物之间有**先后依赖**：先修课程、任务前置、编译顺序（LC 207、210、1462）（例：LC 207 课程表）。
+- 事物之间有**先后依赖**：先修课程、任务前置、编译顺序（LC 207、210）（例：LC 207 课程表）。
 - 问「能否全部完成」= **有向图是否有环**（LC 207）（例：检测循环依赖）。
 - 要「输出一个合法顺序」（LC 210）（例：LC 210 课程表 II）。
 - 从**元素之间的偏序**还原全序：火星词典（LC 269），相邻单词的第一个不同字母给出一条边（例：LC 269 火星词典）。
@@ -19,7 +19,7 @@ step: 1
 - 「分层 / 最少几轮」：每一轮取出所有入度为 0 的点（并行学期数）（例：LC 2050 并行课程 III）。
 
 **两种实现：**
-- **Kahn 算法**（BFS，入度表）：反复取出入度为 0 的点；`O(V + E)`；环的判定很自然：取出的点数 `< V`（例：LC 1462 课程表 IV）。
+- **Kahn 算法**（BFS，入度表）：反复取出入度为 0 的点；`O(V + E)`；环的判定很自然：取出的点数 `< V`（例：LC 210 课程表 II）。
 - **DFS 三色法**（0 未访问 / 1 在当前路径 / 2 已完成）：遇到状态 1 的点即有环；完成时入列表，反转得到拓扑序（例：LC 332 重新安排行程）。
 
 **怎么选**：要分层、要字典序最小（改用堆）、要避免递归 → Kahn；写起来更短或要在 DFS 里顺便做计算 → DFS。
@@ -176,30 +176,6 @@ def minimum_time(n: int, relations: list[list[int]], time: list[int]) -> int:
             if indegree[nxt] == 0:
                 queue.append(nxt)
     return max(finish)
-```
-
-**例题：** LC 1462 课程表 IV
-
-`numCourses` 门课（`2 <= numCourses <= 100`，先修关系无环），`prerequisites[i] = [a, b]` 表示 `a` 是 `b` 的先修课（可以是间接先修），回答一批 `queries[j] = [u, v]`：`u` 是否是 `v` 的先修课。
-
-```python
-from collections import deque
-def check_if_prerequisite(num_courses: int, prerequisites: list[list[int]], queries: list[list[int]]) -> list[bool]:
-    graph: list[list[int]] = [[] for _ in range(num_courses)]
-    indegree = [0] * num_courses
-    for a, b in prerequisites:             # a 是 b 的先修课：边 a -> b
-        graph[a].append(b)
-        indegree[b] += 1
-    pre = [0] * num_courses                # pre[v]：位集，第 u 位为 1 表示 u 是 v 的（直接或间接）先修课
-    queue = deque(i for i in range(num_courses) if indegree[i] == 0)
-    while queue:                           # 拓扑序：处理 u 时，它的所有先修课都已并入 pre[u]
-        u = queue.popleft()
-        for v in graph[u]:
-            pre[v] |= pre[u] | (1 << u)
-            indegree[v] -= 1
-            if indegree[v] == 0:
-                queue.append(v)
-    return [bool(pre[v] >> u & 1) for u, v in queries]
 ```
 
 **例题：** LC 332 重新安排行程

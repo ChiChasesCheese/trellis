@@ -24,8 +24,6 @@ step: 7
 - LC 815 公交路线
 - LC 994 腐烂的橘子（多源）
 - LC 286 墙与门（多源）
-- LC 934 最短的桥（多源）
-- LC 317 离建筑物最近的距离（对每栋楼各做一次 BFS）
 - LC 1091 二进制矩阵中的最短路径（高频）
 - 量水问题：最短操作序列（高频）
 
@@ -212,77 +210,6 @@ def walls_and_gates(rooms: list[list[int]]) -> None:
             if 0 <= nr < m and 0 <= nc < n and rooms[nr][nc] == INF:
                 rooms[nr][nc] = rooms[r][c] + 1
                 queue.append((nr, nc))
-```
-
-**例题：** LC 934 最短的桥
-
-`n x n` 的 0/1 矩阵（`2 <= n <= 100`）里恰好有两座岛（上下左右相连的 `1`），求把两座岛连在一起最少需要翻转的 `0` 的个数。
-
-```python
-from collections.abc import Iterator
-def shortest_bridge(grid: list[list[int]]) -> int:
-    n = len(grid)
-    def neighbors(i: int, j: int) -> Iterator[tuple[int, int]]:
-        for a, b in ((i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)):
-            if 0 <= a < n and 0 <= b < n:
-                yield a, b
-    start = next((i, j) for i in range(n) for j in range(n) if grid[i][j])
-    seen = {start}
-    stack = [start]
-    while stack:
-        x, y = stack.pop()
-        for a, b in neighbors(x, y):
-            if grid[a][b] and (a, b) not in seen:
-                seen.add((a, b))
-                stack.append((a, b))
-    frontier = list(seen)
-    flips = 0
-    while frontier:
-        nxt: list[tuple[int, int]] = []
-        for x, y in frontier:
-            for a, b in neighbors(x, y):
-                if (a, b) not in seen:
-                    if grid[a][b]:
-                        return flips
-                    seen.add((a, b))
-                    nxt.append((a, b))
-        frontier = nxt
-        flips += 1
-    return -1
-```
-
-**例题：** LC 317 离建筑物最近的距离
-
-网格（`m, n <= 50`）中 `0` 空地、`1` 建筑、`2` 障碍，建筑和障碍不能通过；在一块空地上盖房子，使它到所有建筑的步行距离之和最小，返回这个和，不存在返回 `-1`。
-
-```python
-from collections import deque
-def shortest_distance(grid: list[list[int]]) -> int:
-    m, n = len(grid), len(grid[0])
-    total = [[0] * n for _ in range(m)]
-    reach = [[0] * n for _ in range(m)]
-    buildings = 0
-    for br in range(m):
-        for bc in range(n):
-            if grid[br][bc] != 1:
-                continue
-            buildings += 1
-            seen = [[False] * n for _ in range(m)]
-            seen[br][bc] = True
-            queue = deque([(br, bc)])
-            dist = 0
-            while queue:
-                dist += 1
-                for _ in range(len(queue)):
-                    r, c = queue.popleft()
-                    for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):
-                        if 0 <= nr < m and 0 <= nc < n and grid[nr][nc] == 0 and not seen[nr][nc]:
-                            seen[nr][nc] = True
-                            total[nr][nc] += dist
-                            reach[nr][nc] += 1
-                            queue.append((nr, nc))
-    return min((total[r][c] for r in range(m) for c in range(n)
-                if grid[r][c] == 0 and reach[r][c] == buildings), default=-1)
 ```
 
 **例题：** LC 1584 连接所有点的最小费用

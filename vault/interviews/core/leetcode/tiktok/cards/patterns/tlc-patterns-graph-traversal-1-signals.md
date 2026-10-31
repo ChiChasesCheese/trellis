@@ -12,7 +12,7 @@ step: 1
 ## A
 **触发信号：**
 - 输入是**网格**（`0/1`、`'1'/'0'`、高度矩阵）并且问「连通块 / 岛屿 / 面积 / 能否到达」→ DFS 或 BFS 染色（例：LC 200 岛屿数量）。
-- 输入是**边列表 / 邻接关系**（先修课、对立关系、道路）→ 先建邻接表，再遍历（例：LC 1466 重新规划路线；高频：LC 886 可能的二分法）。
+- 输入是**边列表 / 邻接关系**（先修课、对立关系、道路）→ 先建邻接表，再遍历（高频：LC 886 可能的二分法）。
 - 问**最少步数 / 最短转换次数**，每步代价相同 → **BFS**，第一次到达就是最短（例：LC 1091 二进制矩阵中的最短路径）。
 - 题面没有"图"字，但**状态之间有转移**：单词改一个字母 → **隐式图**，BFS 里动态生成邻居（例：LC 127 单词接龙）。
 - 「**多个起点同时扩散**」：所有起点一起入队 → **多源 BFS**（例：LC 286 墙与门）。
@@ -21,7 +21,7 @@ step: 1
 **DFS 还是 BFS：**
 - 连通块计数、面积、能不能到达 → 都可以，DFS 写起来短；但递归深度可达 `m * n`，Python 默认限制约 1000，网格大时要改显式栈或 BFS（例：LC 695 岛屿的最大面积；高频：LC 827 最大人工岛）。
 - **最短路 / 最少步数 / 按层扩散** → 只能 BFS，按层数就是时间（例：LC 994 腐烂的橘子；高频：LC 2385 感染二叉树需要的总时间）。
-- 需要记录路径或回溯 → DFS，进入时加入路径，退出时弹出（例：LC 113 路径总和 II；高频：LC 79 单词搜索）。
+- 需要记录路径或回溯 → DFS，进入时加入路径，退出时弹出（高频：LC 79 单词搜索）。
 
 **近似信号：**
 - 边有权重且不相等 → Dijkstra（最短路一组）（例：LC 778 水位上升的泳池中游泳）。
@@ -51,25 +51,6 @@ def num_islands(grid: list[list[str]]) -> int:
                 count += 1
                 sink(r, c)
     return count
-```
-
-**例题：** LC 1466 重新规划路线
-
-`n` 座城市由 `n - 1` 条有向路线连成一棵树，求最少改变几条路线方向，才能让所有城市都能到达城市 0，`2 <= n <= 5 * 10^4`。
-
-```python
-def min_reorder(n: int, connections: list[list[int]]) -> int:
-    adj: list[list[tuple[int, int]]] = [[] for _ in range(n)]
-    for a, b in connections:
-        adj[a].append((b, 1))
-        adj[b].append((a, 0))
-    def dfs(u: int, parent: int) -> int:
-        flips = 0
-        for v, cost in adj[u]:
-            if v != parent:
-                flips += cost + dfs(v, u)
-        return flips
-    return dfs(0, -1)
 ```
 
 **例题：** LC 1091 二进制矩阵中的最短路径
@@ -205,28 +186,6 @@ def oranges_rotting(grid: list[list[int]]) -> int:
                     fresh -= 1
                     queue.append((ni, nj))
     return -1 if fresh else minutes
-```
-
-**例题：** LC 113 路径总和 II
-
-在二叉树里找出所有从根到叶子、节点值之和等于 `targetSum` 的路径，节点数 `[0, 5000]`。
-
-```python
-def path_sum(root: TreeNode | None, target_sum: int) -> list[list[int]]:
-    res: list[list[int]] = []
-    path: list[int] = []
-    def dfs(node: TreeNode | None, rest: int) -> None:
-        if node is None:
-            return
-        path.append(node.val)
-        rest -= node.val
-        if node.left is None and node.right is None and rest == 0:
-            res.append(path[:])
-        dfs(node.left, rest)
-        dfs(node.right, rest)
-        path.pop()
-    dfs(root, target_sum)
-    return res
 ```
 
 **例题：** LC 778 水位上升的泳池中游泳

@@ -11,7 +11,7 @@ step: 5
 
 ## A
 - **固定窗口（比较计数）**：先装满再每步「进一个、出一个」；用计数表记录窗口与目标的差，差全为 0 时窗口就是一个字母异位词（例：LC 438 找到字符串中所有字母异位词）。
-- **固定窗口（求窗口内的和）**：窗口长度由数据决定，把 1 聚在一起的窗口长度是 `sum(data)`，最少交换次数 = 窗口长度减去任意窗口里 1 的最大个数；环形版（LC 2134）把数组拼上自己的前 `w - 1` 个元素（例：LC 1151 最少交换次数来组合所有的 1）。
+- **固定窗口（求窗口内的和）**：窗口长度由题意转化而来：从两端共取 `k` 张，等价于留下中间连续的 `n - k` 张，所以窗口长度是 `n - k`，最大点数 = 总和减去任意一个这样的窗口的最小和（例：LC 1423 可获得的最大点数）。
 - **恰好 `k` = 至多 `k` − 至多 `k-1`**：「至多」满足单调性，可用窗口，以 `right` 结尾的合法子数组有 `right - left + 1` 个；折叠里的解把这个差分写成「前缀里奇数个数为 `odd - k` 的位置有几个」，和前缀和是同一个思路（例：LC 1248 统计「优美子数组」）。
 - **非收缩窗口**：窗口只会变长或平移，`max_freq`（历史最大频次）只增不减，窗口长度最终就是答案；`max_freq` 过时不影响正确性，因为只有 `max_freq` 变大才可能让窗口变长（例：LC 424 替换后的最长重复字符）。
 
@@ -40,19 +40,19 @@ def find_anagrams(s: str, p: str) -> list[int]:
     return ans
 ```
 
-**例题：** LC 1151 最少交换次数来组合所有的 1
+**例题：** LC 1423 可获得的最大点数
 
-二进制数组 `data`，通过交换位置把所有 1 组合到一起，返回最少交换次数，`1 <= data.length <= 10^5`。
+`cardPoints` 排成一行，每次操作从行首或行尾拿一张，必须恰好拿 `k` 张，求能拿到的最大点数之和。`1 <= cardPoints.length <= 10^5`，`1 <= cardPoints[i] <= 10^4`，`1 <= k <= cardPoints.length`。
 
 ```python
-def min_swaps(data: list[int]) -> int:
-    w = sum(data)
-    cur = sum(data[:w])
-    best = cur
-    for i in range(w, len(data)):
-        cur += data[i] - data[i - w]
-        best = max(best, cur)
-    return w - best
+def max_score(card_points: list[int], k: int) -> int:
+    w = len(card_points) - k                      # 没被拿走的牌是中间连续 w 张
+    window = sum(card_points[:w])
+    smallest = window
+    for i in range(w, len(card_points)):
+        window += card_points[i] - card_points[i - w]   # 窗口右移一格：进一张、出一张
+        smallest = min(smallest, window)
+    return sum(card_points) - smallest            # 拿走的和 = 总和 - 留下的最小窗口和
 ```
 
 **例题：** LC 1248 统计「优美子数组」

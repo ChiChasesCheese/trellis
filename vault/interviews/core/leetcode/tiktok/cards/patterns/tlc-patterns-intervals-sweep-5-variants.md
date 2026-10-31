@@ -5,7 +5,7 @@ type: qa
 step: 5
 ---
 ## Q
-**区间与扫描线｜变形：两个区间表求交、跳跃游戏的可达范围、稀疏坐标上的覆盖计数**
+**区间与扫描线｜变形：两个区间表求交、跳跃游戏的可达范围、区间上的覆盖计数**
 
 除了合并和会议室，区间题还有哪些常见形态？各自的扫描方式是什么？
 
@@ -14,9 +14,9 @@ step: 5
 
 2. **可达范围是区间**：维护「当前能到达的最远下标」`far`；若某个下标 `i > far`，说明走不到（例：LC 55 跳跃游戏）。`[2,3,1,1,4]` 得 `True`，`[3,2,1,0,4]` 得 `False`。LC 45 跳跃游戏 II 是同一个思路加「分层」：当前这一跳能到的区间 `[lo, hi]`，扫完这一层就跳数 +1。
 
-3. **稀疏大坐标上的覆盖计数**：用字典记录差分，只对出现过的端点排序，累加得到每个端点之后的覆盖数；见前缀和与差分一组（例：LC 2021 街上最亮的位置）。
+3. **区间上的覆盖计数**：每个区间在起点 `+1`、终点之后 `-1` 记成差分，累加得到每处的覆盖数；坐标很大时用字典记差分、只对出现过的端点排序；见前缀和与差分一组（例：LC 1094 拼车）。
 
-4. **资源调度（LC 253、2402）**：排序 + 堆，见堆一组；区别是 LC 2402 需要知道**哪个房间**，所以要用「房间号堆 + 结束时间堆」（例：LC 253 会议室 II）。
+4. **资源调度（LC 253）**：排序 + 堆，见堆一组（例：LC 253 会议室 II）。
 
 5. **选最多互不重叠区间 / 最少箭射爆气球**：按**右端点**排序，贪心选结束最早的；与合并按左端点排序不同（例：LC 435 无重叠区间）。
 
@@ -54,26 +54,22 @@ def can_jump(nums: list[int]) -> bool:
     return True
 ```
 
-**例题：** LC 2021 街上最亮的位置
+**例题：** LC 1094 拼车
 
-一条街上有许多路灯，路灯的坐标由数组 `lights` 给出：`lights[i] = [position, range]` 表示坐标为 `position` 的路灯照亮闭区间 `[position - range, position + range]`。位置 `p` 的亮度等于能照到 `p` 的路灯数量。返回最亮的位置；有多个时返回坐标最小的。`1 <= lights.length <= 10^5`，`-10^8 <= position <= 10^8`，`0 <= range <= 10^8`。
+车有 `capacity` 个座位且只能往一个方向开；`trips[i] = [人数, 上车里程, 下车里程]`，同一位置先下后上。判断途中任意一点是否都不超载。`1 <= trips.length <= 1000`，`0 <= from < to <= 1000`，`1 <= capacity <= 10^5`。
 
 ```python
-from collections import defaultdict
-
-
-def brightest_position(lights: list[list[int]]) -> int:
-    diff: defaultdict[int, int] = defaultdict(int)   # 差分：在坐标 x 处亮度变化多少
-    for pos, rng in lights:
-        diff[pos - rng] += 1                     # 灯照亮 [pos-rng, pos+rng]：左端 +1
-        diff[pos + rng + 1] -= 1                 # 右端的下一格 -1
-    best = cur = 0
-    ans = 0
-    for x in sorted(diff):                       # 亮度只在有事件的坐标处变化，按坐标从小到大扫
-        cur += diff[x]
-        if cur > best:                           # 严格大于：并列时保留坐标更小的
-            best, ans = cur, x
-    return ans
+def car_pooling(trips: list[list[int]], capacity: int) -> bool:
+    change = [0] * 1001  # 里程 0..1000 上的人数变化量
+    for passengers, start, end in trips:
+        change[start] += passengers
+        change[end] -= passengers
+    current = 0
+    for delta in change:
+        current += delta
+        if current > capacity:
+            return False
+    return True
 ```
 
 **例题：** LC 253 会议室 II

@@ -15,7 +15,7 @@ step: 1
 **触发信号：**
 - 要求**列出所有**方案：子集 LC 78、组合 LC 39 / 77、排列 LC 46、括号生成 LC 22、复原 IP LC 93（例：LC 78 子集）。
 - 在棋盘 / 网格里**找一条路径或一种摆放**：N 皇后 LC 51、单词搜索 LC 79（例：LC 79 单词搜索）。
-- 数据范围很小：`n <= 8` 到 `n <= 20`（LC 51 的 `n <= 9`，LC 473 的 `matchsticks.length <= 15`，LC 78 的 `nums.length <= 10`，LC 22 的 `n <= 8`）。指数级复杂度只有在这种范围才可行（例：LC 784 字母大小写全排列；高频：LC 131 分割回文串）。
+- 数据范围很小：`n <= 8` 到 `n <= 20`（LC 51 的 `n <= 9`，LC 473 的 `matchsticks.length <= 15`，LC 78 的 `nums.length <= 10`，LC 22 的 `n <= 8`）。指数级复杂度只有在这种范围才可行（高频：LC 131 分割回文串）。
 - 约束要**边选边检查**：括号必须匹配、皇后不能互攻、和不能超过目标（例：LC 39 组合总和）。
 
 **近似信号：**
@@ -60,27 +60,6 @@ def exist(board: list[list[str]], word: str) -> bool:
         board[r][c] = temp
         return found
     return any(backtrack(r, c, 0) for r in range(rows) for c in range(cols))
-```
-
-**例题：** LC 784 字母大小写全排列
-
-给定字符串 `s`（`1 <= s.length <= 12`，由字母和数字组成），把其中每个字母独立地转成大写或小写，返回所有可能得到的字符串，顺序不限。
-
-```python
-def letter_case_permutation(s: str) -> list[str]:
-    res: list[str] = []
-    path = list(s)                      # 原地改字符，回溯时改回来
-    def dfs(i: int) -> None:
-        if i == len(path):
-            res.append("".join(path))
-            return
-        dfs(i + 1)                      # 这一位保持原样
-        if path[i].isalpha():           # 只有字母才有第二个分支
-            path[i] = path[i].swapcase()
-            dfs(i + 1)
-            path[i] = path[i].swapcase()   # 回溯：还原
-    dfs(0)
-    return res
 ```
 
 **例题：** LC 39 组合总和

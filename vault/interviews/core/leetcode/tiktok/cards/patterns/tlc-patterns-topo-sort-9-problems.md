@@ -20,12 +20,10 @@ step: 9
 - LC 269 火星词典
 
 **DAG 上的传递关系 / 动态规划**
-- LC 1462 课程表 IV
 - LC 329 矩阵中的最长递增路径
 - 网格中最长的之字形递增路径（高频）
 
 **相邻：图的方向与遍历**
-- LC 1466 重新规划路线（树形图，遍历时统计需要改向的边）
 - LC 399 除法求值（带权图）
 
 提示：看到"先后顺序 / 依赖 / 能否全部完成"先画出"谁指向谁"，并写下 `[a, b]` 到底是 `a -> b` 还是 `b -> a`；再选 Kahn（分层、字典序、非递归）或 DFS 三色法。
@@ -110,30 +108,6 @@ def alien_order(words: list[str]) -> str:
     return "".join(order) if len(order) == len(graph) else ""
 ```
 
-**例题：** LC 1462 课程表 IV
-
-`numCourses` 门课（`<= 100`）的先修关系构成无环图，先修可以是间接的；对每个查询 `[u, v]`（最多 `10^4` 个）回答 `u` 是否是 `v` 的（直接或间接）先修课。
-
-```python
-from collections import deque
-def check_if_prerequisite(num_courses: int, prerequisites: list[list[int]], queries: list[list[int]]) -> list[bool]:
-    graph: list[list[int]] = [[] for _ in range(num_courses)]
-    indegree = [0] * num_courses
-    for a, b in prerequisites:
-        graph[a].append(b)
-        indegree[b] += 1
-    pre = [0] * num_courses
-    queue = deque(i for i in range(num_courses) if indegree[i] == 0)
-    while queue:
-        u = queue.popleft()
-        for v in graph[u]:
-            pre[v] |= pre[u] | (1 << u)
-            indegree[v] -= 1
-            if indegree[v] == 0:
-                queue.append(v)
-    return [bool(pre[v] >> u & 1) for u, v in queries]
-```
-
 **例题：** LC 329 矩阵中的最长递增路径
 
 给整数矩阵（`m, n <= 200`），求沿上下左右移动、数值严格递增的最长路径的长度。
@@ -152,25 +126,6 @@ def longest_increasing_path(matrix: list[list[int]]) -> int:
         memo[i][j] = best
         return best
     return max(dfs(i, j) for i in range(m) for j in range(n))
-```
-
-**例题：** LC 1466 重新规划路线
-
-`n` 座城市（`n <= 5 * 10^4`）由 `n - 1` 条有向道路连成一棵树，求最少反转多少条道路的方向，才能让所有城市都能到达城市 `0`。
-
-```python
-def min_reorder(n: int, connections: list[list[int]]) -> int:
-    adj: list[list[tuple[int, int]]] = [[] for _ in range(n)]
-    for a, b in connections:
-        adj[a].append((b, 1))
-        adj[b].append((a, 0))
-    def dfs(u: int, parent: int) -> int:
-        flips = 0
-        for v, cost in adj[u]:
-            if v != parent:
-                flips += cost + dfs(v, u)
-        return flips
-    return dfs(0, -1)
 ```
 
 **例题：** LC 399 除法求值

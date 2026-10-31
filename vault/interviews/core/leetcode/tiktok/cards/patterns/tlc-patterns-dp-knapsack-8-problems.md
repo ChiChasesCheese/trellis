@@ -12,7 +12,6 @@ step: 8
 ## A
 **0-1 背包（能否 / 方案数）**
 - LC 416 分割等和子集
-- LC 473 火柴拼正方形（装箱：回溯加剪枝，位掩码 DP 也可）
 
 **完全背包（最少 / 能否）**
 - LC 322 零钱兑换
@@ -20,7 +19,6 @@ step: 8
 - LC 518 零钱兑换 II（高频）
 
 **以步数 / 次数为状态的计数**
-- LC 887 鸡蛋掉落
 - LC 70 爬楼梯（完全背包的特例：物品是步长 1、2）
 - LC 746 使用最小花费爬楼梯（高频）
 
@@ -46,36 +44,6 @@ def can_partition(nums: list[int]) -> bool:
         for j in range(half + 1):
             dp[i][j] = dp[i - 1][j] or (j >= x and dp[i - 1][j - x])
     return dp[n][half]
-```
-
-**例题：** LC 473 火柴拼正方形
-
-`matchsticks[i]` 是火柴长度，每根恰好用一次、不可折断，判断能否拼成正方形；`1 <= matchsticks.length <= 15`，`matchsticks[i] <= 10^8`。
-
-```python
-def makesquare(matchsticks: list[int]) -> bool:
-    total = sum(matchsticks)
-    if total % 4:
-        return False
-    side = total // 4
-    sticks = sorted(matchsticks, reverse=True)
-    if sticks[0] > side:
-        return False
-    sides = [0] * 4
-    def dfs(i: int) -> bool:
-        if i == len(sticks):
-            return True
-        tried: set[int] = set()
-        for j in range(4):
-            if sides[j] + sticks[i] > side or sides[j] in tried:
-                continue
-            tried.add(sides[j])
-            sides[j] += sticks[i]
-            if dfs(i + 1):
-                return True
-            sides[j] -= sticks[i]
-        return False
-    return dfs(0)
 ```
 
 **例题：** LC 322 零钱兑换
@@ -104,21 +72,6 @@ def word_break(s: str, word_dict: list[str]) -> bool:
     for i in range(1, len(s) + 1):
         dp[i] = any(dp[j] and s[j:i] in words for j in range(max(0, i - max_len), i))
     return dp[-1]
-```
-
-**例题：** LC 887 鸡蛋掉落
-
-`k` 个鸡蛋、`n` 层楼，求最坏情况下确定临界楼层的最少操作次数；`1 <= k <= 100`，`1 <= n <= 10^4`。
-
-```python
-def super_egg_drop(k: int, n: int) -> int:
-    dp = [[0] * (k + 1)]
-    while dp[-1][k] < n:
-        m = len(dp)
-        dp.append([0] * (k + 1))
-        for j in range(1, k + 1):
-            dp[m][j] = dp[m - 1][j - 1] + dp[m - 1][j] + 1
-    return len(dp) - 1
 ```
 
 **例题：** LC 70 爬楼梯

@@ -11,14 +11,11 @@ step: 9
 
 ## A
 **数论**
-- LC 1071 字符串的最大公因子
 - LC 365 水壶问题
-- LC 2523 范围内最接近的两个质数
 - LC 69 x 的平方根
 - LC 204 计数质数（高频）
 
 **位运算 / 原地标记**
-- LC 442 数组中重复的数据
 - LC 78 子集（位掩码写法）
 - LC 31 下一个排列（从右向左找第一个降序的位置）
 - LC 136 只出现一次的数字（高频）
@@ -30,7 +27,6 @@ step: 9
 - LC 867 转置矩阵（高频）
 
 **按规则模拟**
-- LC 1860 增长的内存泄露
 - LC 2502 设计内存分配器
 - LC 1360 日期之间隔几天（高频）
 
@@ -39,22 +35,9 @@ step: 9
 - LC 43 字符串相乘
 - LC 68 文本左右对齐
 - LC 189 轮转数组（三次反转，`k %= n`）
-- LC 670 最大交换
 - LC 151 反转字符串中的单词（高频）
 
 提示：先问数据范围（能否直接模拟）、边界（空 / 单行 / 进位 / 前导零）、整数规则（取模、除法截断）；能用内置（`gcd`、`pow`、`bit_count`、`isqrt`）就先用，再被要求时手写。
-
-**例题：** LC 1071 字符串的最大公因子
-
-对字符串 `t` 和 `s`，若 `s` 是 `t` 重复若干次，则称 `t` 能除尽 `s`；给 `str1`、`str2`（长度 `<= 1000`，大写字母），返回能同时除尽两者的最长字符串，没有则 `""`。
-
-```python
-from math import gcd
-def gcd_of_strings(str1: str, str2: str) -> str:
-    if str1 + str2 != str2 + str1:
-        return ""
-    return str1[:gcd(len(str1), len(str2))]
-```
 
 **例题：** LC 365 水壶问题
 
@@ -64,26 +47,6 @@ def gcd_of_strings(str1: str, str2: str) -> str:
 from math import gcd
 def can_measure_water(x: int, y: int, target: int) -> bool:
     return target <= x + y and target % gcd(x, y) == 0
-```
-
-**例题：** LC 2523 范围内最接近的两个质数
-
-给 `1 <= left <= right <= 10^6`，在区间内找差最小的相邻质数对 `num1 < num2`（差相同取 `num1` 最小），不足两个质数返回 `[-1, -1]`。
-
-```python
-from itertools import pairwise
-from math import isqrt
-def closest_primes(left: int, right: int) -> list[int]:
-    sieve = bytearray([1]) * (right + 1)
-    sieve[:2] = b"\x00\x00"
-    for p in range(2, isqrt(right) + 1):
-        if sieve[p]:
-            sieve[p * p :: p] = bytes(len(range(p * p, right + 1, p)))
-    primes = [p for p in range(left, right + 1) if sieve[p]]
-    if len(primes) < 2:
-        return [-1, -1]
-    a, b = min(pairwise(primes), key=lambda pair: pair[1] - pair[0])
-    return [a, b]
 ```
 
 **例题：** LC 69 x 的平方根
@@ -100,22 +63,6 @@ def my_sqrt(x: int) -> int:
         else:
             hi = mid - 1
     return lo
-```
-
-**例题：** LC 442 数组中重复的数据
-
-长度为 `n` 的数组 `nums`（`n <= 10^5`）里每个数在 `[1, n]` 内且出现一次或两次，找出所有出现两次的数，要求 `O(n)` 时间、只用常数额外空间。
-
-```python
-def find_duplicates(nums: list[int]) -> list[int]:
-    res: list[int] = []
-    for x in nums:
-        i = abs(x) - 1
-        if nums[i] < 0:
-            res.append(abs(x))
-        else:
-            nums[i] = -nums[i]
-    return res
 ```
 
 **例题：** LC 78 子集
@@ -198,22 +145,6 @@ def is_robot_bounded(instructions: str) -> bool:
         else:
             dx, dy = dy, -dx
     return (x, y) == (0, 0) or (dx, dy) != (0, 1)
-```
-
-**例题：** LC 1860 增长的内存泄露
-
-给两个内存条的剩余位数 `memory1`、`memory2`（`<= 2^31 - 1`）；第 `i` 秒向剩余更多的那个（相等取第一个）分配 `i` 位，两者都不足时崩溃；返回 `[崩溃时刻, 内存条 1 剩余, 内存条 2 剩余]`。
-
-```python
-def mem_leak(memory1: int, memory2: int) -> list[int]:
-    second = 1
-    while max(memory1, memory2) >= second:
-        if memory1 >= memory2:
-            memory1 -= second
-        else:
-            memory2 -= second
-        second += 1
-    return [second, memory1, memory2]
 ```
 
 **例题：** LC 2502 设计内存分配器
@@ -320,24 +251,6 @@ def rotate(nums: list[int], k: int) -> None:
     reverse(0, n - 1)
     reverse(0, k - 1)
     reverse(k, n - 1)
-```
-
-**例题：** LC 670 最大交换
-
-给非负整数 `num`（`0 <= num <= 10^8`），最多交换其中两位数字一次，返回能得到的最大值。
-
-```python
-def maximum_swap(num: int) -> int:
-    digits = list(str(num))
-    last = {d: i for i, d in enumerate(digits)}
-    for i, d in enumerate(digits):
-        for big in "9876543210":
-            if big <= d:
-                break
-            if last.get(big, -1) > i:
-                digits[i], digits[last[big]] = digits[last[big]], digits[i]
-                return int("".join(digits))
-    return num
 ```
 
 **例题：** LC 204 计数质数

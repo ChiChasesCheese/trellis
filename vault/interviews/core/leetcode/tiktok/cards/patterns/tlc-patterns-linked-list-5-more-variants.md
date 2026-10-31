@@ -14,7 +14,7 @@ step: 5
 - **逐位相加**：`carry, digit = divmod(carry, 10)`；循环条件包含 `carry`，这样最后的进位也会生成节点：`[9,9,9,9,9,9,9] + [9,9,9,9]` → `[8,9,9,9,0,0,0,1]`（例：LC 2 两数相加；高频：LC 445 两数相加 II）。
 - **归并排序**：快指针从 `head.next` 出发，保证偶数个时 `slow` 停在前半末尾；先断开再递归，最后合并两个有序链表。时间 `O(n log n)`，递归深度 `O(log n)`，不会爆栈（例：LC 148 排序链表）。
 - **相交**：`p`、`q` 各走完自己的链再换到对方的头，走过的总长相同，要么同时到交点，要么同时为 `None`；用 `is` 比较节点（例：LC 160 相交链表）。
-- **前缀和删节点**：前缀和 + 字典，同一个前缀和出现两次，中间整段和为 0；字典同一前缀和覆盖，保留最后一次，第二遍遍历时跳过两次相同前缀和之间的整段。`[1,2,-3,3,1]` → `[3,1]`；`[1,2,3,-3,4]` → `[1,2,4]`；`[1,2,3,-3,-2]` → `[1]`（例：LC 1171 从链表中删去总和值为零的连续节点）。
+- **前缀和删节点**：前缀和 + 字典，同一个前缀和出现两次，中间整段和为 0；字典同一前缀和覆盖，保留最后一次，第二遍遍历时跳过两次相同前缀和之间的整段。
 
 **例题：** LC 143 重排链表
 
@@ -99,27 +99,6 @@ def get_intersection_node(head_a: ListNode | None, head_b: ListNode | None) -> L
         a = a.next if a else head_b
         b = b.next if b else head_a
     return a
-```
-
-**例题：** LC 1171 从链表中删去总和值为零的连续节点
-
-反复删去链表中总和为 0 的连续节点序列，直到不存在，返回最终链表的头，节点数 `1..1000`，值 `-1000..1000`。
-
-```python
-def remove_zero_sum_sublists(head: ListNode | None) -> ListNode | None:
-    dummy = ListNode(0, head)
-    last: dict[int, ListNode] = {}
-    s, node = 0, dummy
-    while node:
-        s += node.val
-        last[s] = node
-        node = node.next
-    s, node = 0, dummy
-    while node:
-        s += node.val
-        node.next = last[s].next
-        node = node.next
-    return dummy.next
 ```
 
 **例题：** LC 445 两数相加 II

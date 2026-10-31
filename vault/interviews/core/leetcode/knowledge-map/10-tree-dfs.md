@@ -2,7 +2,7 @@
 
 递归思维的主战场：后序返回子树信息（高度、路径和、是否平衡），前序向下传参数，全局量记录跨节点的答案。是回溯、树形 DP、图 DFS 的共同起点。
 
-**先做（TikTok P1–P4 与经典题单，42 道）**
+**先做（TikTok P1–P4 与经典题单，43 道）**
 
 - [[tlc-binary-tree-level-order-traversal-0-whole|LC 102 二叉树的层序遍历]]（中等）· TikTok P1 · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-binary-tree-right-side-view-0-whole|LC 199 二叉树的右视图]]（中等）· TikTok P2 · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
@@ -21,6 +21,7 @@
 - [[tlc-construct-binary-tree-from-preorder-and-postorder-traversal-0-whole|LC 889 从前序与后序遍历序列构造二叉树]]（中等）· TikTok P4
 - [[tlc-create-binary-tree-from-descriptions-0-whole|LC 2196 根据描述创建二叉树]]（中等）· TikTok P4
 - [[tlc-recover-binary-search-tree-0-whole|LC 99 恢复二叉搜索树]]（中等）· TikTok P4
+- [[tlc-flatten-a-multilevel-doubly-linked-list-0-whole|LC 430 扁平化多级双向链表]]（中等）· TikTok P4
 - [[tlc-kth-smallest-element-in-a-bst-0-whole|LC 230 二叉搜索树中第 K 小的元素]]（中等）· TikTok P4 · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-most-frequent-subtree-sum-0-whole|LC 508 出现次数最多的子树元素和]]（中等）· TikTok P4
 - [[tlc-amount-of-time-for-binary-tree-to-be-infected-0-whole|LC 2385 感染二叉树需要的总时间]]（中等）· TikTok P4

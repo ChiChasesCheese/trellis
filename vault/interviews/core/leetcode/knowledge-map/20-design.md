@@ -27,7 +27,7 @@
 - LC 703 数据流中的第 K 大元素（简单）· NeetCode 150
 - LC 2013 检测正方形（中等）· NeetCode 150
 
-**再做（其余牌组里的题，9 道）**
+**再做（其余牌组里的题，8 道）**
 
 - LC 303 区域和检索 - 数组不可变（简单）· Amazon
 - LC 341 扁平化嵌套列表迭代器（中等）· Amazon
@@ -37,4 +37,3 @@
 - [[tlc-snapshot-array-0-whole|LC 1146 快照数组]]（中等）· TikTok B
 - [[tlc-design-a-stack-with-increment-operation-0-whole|LC 1381 设计一个支持增量操作的栈]]（中等）· TikTok B
 - LC 1472 设计浏览器历史记录（中等）· Amazon
-- [[tlc-incremental-memory-leak-0-whole|LC 1860 增长的内存泄露]]（中等）· TikTok B

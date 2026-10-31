@@ -12,8 +12,6 @@ step: 7
 ## A
 **后序返回子树信息 + 全局最优**
 - LC 124 二叉树中的最大路径和
-- LC 1530 好叶子节点对的数量
-- LC 298 二叉树最长连续序列
 - LC 543 二叉树的直径（高频）
 - LC 508 出现次数最多的子树元素和（高频）
 - LC 2673 使二叉树所有路径值相等的最小代价（高频）
@@ -36,7 +34,6 @@ step: 7
 - LC 2196 根据描述创建二叉树（高频）
 
 **树 + 双向链表**
-- LC 426 将二叉搜索树转化为排序的双向链表（中序 DFS，接前驱指针）
 - LC 430 扁平化多级双向链表（高频）
 - 展平多级链表（值为空的嵌套节点要排除）（高频）
 
@@ -64,47 +61,6 @@ def max_path_sum(root: TreeNode | None) -> int:
         best = max(best, node.val + left + right)  # 以 node 为最高点的路径：两侧都可以带
         return node.val + max(left, right)         # 往父亲返回时只能选一边
     gain(root)
-    return best
-```
-
-**例题：** LC 1530 好叶子节点对的数量
-
-二叉树和整数 `distance`，两个叶子之间的最短路径长度 `<= distance` 就算一对好叶子对，返回好叶子对的数量。结点数 `1..2^10`，`1 <= distance <= 10`。
-
-```python
-from itertools import accumulate
-def count_pairs(root: TreeNode | None, distance: int) -> int:
-    ans = 0
-    def dfs(node: TreeNode | None) -> list[int]:    # 返回 cnt：cnt[d] = 子树里距 node 恰好 d 的叶子数（d <= distance）
-        nonlocal ans
-        if node is None:
-            return [0] * (distance + 1)
-        if not node.left and not node.right:
-            return [1] + [0] * distance             # 叶子自己距自己 0
-        left = [0] + dfs(node.left)[:distance]      # 孩子子树的叶子，距 node 都多 1；超过 distance 的丢弃
-        right = [0] + dfs(node.right)[:distance]
-        right_prefix = list(accumulate(right))      # right_prefix[j]：距离 <= j 的右侧叶子数
-        ans += sum(left[i] * right_prefix[distance - i] for i in range(distance + 1))
-        return [a + b for a, b in zip(left, right)]
-    dfs(root)
-    return ans
-```
-
-**例题：** LC 298 二叉树最长连续序列
-
-返回二叉树中最长的连续递增路径（每步值加 `1`，只能由父到子）的长度，起点任意。结点数 `1..3 * 10^4`。
-
-```python
-def longest_consecutive(root: TreeNode | None) -> int:
-    best = 0
-    def dfs(node: TreeNode, length: int) -> None:
-        nonlocal best
-        best = max(best, length)                 # length：以 node 结尾的连续递增路径长度
-        for child in (node.left, node.right):
-            if child:
-                dfs(child, length + 1 if child.val == node.val + 1 else 1)
-    if root:
-        dfs(root, 1)
     return best
 ```
 
@@ -243,31 +199,6 @@ class Codec:
                 node.children.append(build())
             return node
         return build()
-```
-
-**例题：** LC 426 将二叉搜索树转化为排序的双向链表
-
-把二叉搜索树原地转成已排序的循环双向链表（`left` 当前驱、`right` 当后继，首尾相连），返回最小节点。结点数 `0..2000`，值互不相同。
-
-```python
-def tree_to_doubly_list(root: Node | None) -> Node | None:
-    if root is None:
-        return None
-    first = prev = None
-    def inorder(node: Node | None) -> None:    # 中序：左 -> 根 -> 右
-        nonlocal first, prev
-        if node is None:
-            return
-        inorder(node.left)
-        if prev:
-            prev.right, node.left = node, prev # 把上一个节点和当前节点互相连上
-        else:
-            first = node                       # 中序第一个节点就是最小值
-        prev = node
-        inorder(node.right)                    # 此时 node.right 还没被改过
-    inorder(root)
-    first.left, prev.right = prev, first       # 首尾相连成环
-    return first
 ```
 
 **例题：** LC 450 删除二叉搜索树中的节点

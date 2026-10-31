@@ -12,7 +12,7 @@ step: 9
 ## A
 - 基础与通配符：LC 211 添加与搜索单词、LC 208 实现 Trie (前缀树)（高频）
 - 网格 + 回溯：LC 212 单词搜索 II
-- 前缀：LC 14 最长公共前缀、LC 3043 最长公共前缀的长度、LC 3093 最长公共后缀查询（高频）
+- 前缀：LC 14 最长公共前缀、LC 3093 最长公共后缀查询（高频）
 - 路径树：LC 588 设计内存文件系统
 - 与 DP 搭配：LC 139 单词拆分、LC 140 单词拆分 II（词典可用字典树加速前缀匹配）
 
@@ -88,26 +88,6 @@ def longest_common_prefix(strs: list[str]) -> str:
             break
         size += 1
     return strs[0][:size]
-```
-
-**例题：** LC 3043 最长公共前缀的长度
-
-给两个正整数数组 `arr1`、`arr2`（各 `<= 5 * 10^4` 个，值 `<= 10^8`），在 `arr1` 的某个数和 `arr2` 的某个数之间求最长公共数字前缀的位数，没有则为 `0`。
-
-```python
-def longest_common_prefix(arr1: list[int], arr2: list[int]) -> int:
-    prefixes: set[int] = set()
-    for x in arr1:
-        while x and x not in prefixes:
-            prefixes.add(x)
-            x //= 10
-    best = 0
-    for y in arr2:
-        while y and y not in prefixes:
-            y //= 10
-        if y:
-            best = max(best, len(str(y)))
-    return best
 ```
 
 **例题：** LC 588 设计内存文件系统

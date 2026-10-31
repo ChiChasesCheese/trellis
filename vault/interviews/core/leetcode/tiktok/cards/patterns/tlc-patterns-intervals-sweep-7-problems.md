@@ -18,10 +18,8 @@ step: 7
 
 **资源数量（事件扫描或堆）**
 - LC 253 会议室 II
-- LC 2402 会议室 III（房间号堆 + 结束时间堆）
 
 **差分 / 覆盖计数**
-- LC 2021 街上最亮的位置
 
 **可达范围是区间的贪心**
 - LC 55 跳跃游戏
@@ -29,7 +27,6 @@ step: 7
 - LC 134 加油站（环上的累计量，可看成扫描一遍并在亏空处重置起点）
 
 **区间求交 / 范围约束**
-- LC 2145 统计隐藏数组数目（起点必须落在由前缀最值得出的区间内）
 - LC 986 区间列表的交集（高频）
 
 提示：先问端点相接算不算重叠；再决定是「排序后扫描」「事件 +1/-1」还是「排序 + 堆」。
@@ -76,50 +73,6 @@ def min_meeting_rooms(intervals: list[list[int]]) -> int:
     return len(ends)
 ```
 
-**例题：** LC 2402 会议室 III
-
-`n` 个会议室，会议按开始时间依次分配到编号最小的空闲房间，没有空房就延期到最早空出时开始（时长不变），求举办次数最多的房间（并列取编号小）；`n <= 100`，`meetings.length <= 10^5`，`start` 互不相同。
-
-```python
-from heapq import heappop, heappush
-def most_booked(n: int, meetings: list[list[int]]) -> int:
-    free = list(range(n))
-    busy: list[tuple[int, int]] = []
-    count = [0] * n
-    for start, end in sorted(meetings):
-        while busy and busy[0][0] <= start:
-            heappush(free, heappop(busy)[1])
-        if free:
-            room = heappop(free)
-            finish = end
-        else:
-            ready, room = heappop(busy)
-            finish = ready + (end - start)
-        count[room] += 1
-        heappush(busy, (finish, room))
-    return max(range(n), key=count.__getitem__)
-```
-
-**例题：** LC 2021 街上最亮的位置
-
-路灯 `[position, range]` 照亮闭区间 `[position - range, position + range]`，求被最多路灯照到的位置（并列取最小）；`lights.length <= 10^5`，坐标绝对值 `<= 10^8`。
-
-```python
-from collections import defaultdict
-def brightest_position(lights: list[list[int]]) -> int:
-    diff: defaultdict[int, int] = defaultdict(int)
-    for pos, rng in lights:
-        diff[pos - rng] += 1
-        diff[pos + rng + 1] -= 1
-    best = cur = 0
-    ans = 0
-    for x in sorted(diff):
-        cur += diff[x]
-        if cur > best:
-            best, ans = cur, x
-    return ans
-```
-
 **例题：** LC 55 跳跃游戏
 
 `nums[i]` 是在下标 `i` 最多能向前跳的距离，从下标 `0` 出发，判断能否到达最后一个下标；`nums.length <= 10^4`。
@@ -163,18 +116,6 @@ def can_complete_circuit(gas: list[int], cost: list[int]) -> int:
         if tank < 0:
             start, tank = i + 1, 0
     return start if total >= 0 else -1
-```
-
-**例题：** LC 2145 统计隐藏数组数目
-
-已知隐藏数组相邻元素的差 `differences`，且所有元素都在 `[lower, upper]` 内，求可能的隐藏数组个数；`differences.length <= 10^5`。
-
-```python
-from itertools import accumulate
-def number_of_arrays(differences: list[int], lower: int, upper: int) -> int:
-    prefix = [0, *accumulate(differences)]
-    spread = max(prefix) - min(prefix)
-    return max(0, (upper - lower) - spread + 1)
 ```
 
 **例题：** LC 435 无重叠区间
