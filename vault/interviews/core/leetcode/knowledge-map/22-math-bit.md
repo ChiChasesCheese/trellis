@@ -38,11 +38,11 @@
 - LC 7 整数反转（中等）· Amazon · NeetCode 150
 - LC 9 回文数（简单）· Amazon · Top Interview 150
 - [[tlc-integer-to-roman-0-whole|LC 12 整数转罗马数字]]（中等）· TikTok B · Top Interview 150
-- LC 13 罗马数字转整数（简单）· TikTok C · Amazon · Top Interview 150
+- [[tlc-roman-to-integer-0-whole|LC 13 罗马数字转整数]]（简单）· TikTok C · Amazon · Top Interview 150
 - [[tlc-next-permutation-0-whole|LC 31 下一个排列]]（中等）· TikTok B · LeetCode Hot 100
 - [[tlc-first-missing-positive-0-whole|LC 41 缺失的第一个正数]]（困难）· TikTok B · Amazon · LeetCode Hot 100
 - [[tlc-powx-n-0-whole|LC 50 Pow(x, n)]]（中等）· TikTok B · Amazon · NeetCode 150 · Top Interview 150
-- LC 66 加一（简单）· TikTok C · NeetCode 150 · Top Interview 150
+- [[tlc-plus-one-0-whole|LC 66 加一]]（简单）· TikTok C · NeetCode 150 · Top Interview 150
 - LC 67 二进制求和（简单）· Amazon · Top Interview 150
 - [[tlc-climbing-stairs-0-whole|LC 70 爬楼梯]]（简单）· TikTok B · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-subsets-ii-0-whole|LC 90 子集 II]]（中等）· TikTok B · NeetCode 150
@@ -54,7 +54,7 @@
 - LC 190 颠倒二进制位（简单）· Blind 75 · NeetCode 150 · Top Interview 150
 - LC 191 位1的个数（简单）· Blind 75 · NeetCode 150 · Top Interview 150
 - LC 201 数字范围按位与（中等）· Top Interview 150
-- LC 202 快乐数（简单）· TikTok C · Amazon · NeetCode 150 · Top Interview 150
+- [[tlc-happy-number-0-whole|LC 202 快乐数]]（简单）· TikTok C · Amazon · NeetCode 150 · Top Interview 150
 - LC 222 完全二叉树的节点个数（中等）· Top Interview 150
 - LC 268 丢失的数字（简单）· Amazon · Blind 75 · NeetCode 150
 - [[tlc-perfect-squares-0-whole|LC 279 完全平方数]]（中等）· TikTok B · LeetCode Hot 100
@@ -67,26 +67,26 @@
 
 **再做（其余牌组里的题，79 道）**
 
-- LC 59 螺旋矩阵 II（中等）· TikTok C
+- [[tlc-spiral-matrix-ii-0-whole|LC 59 螺旋矩阵 II]]（中等）· TikTok C
 - [[tlc-permutation-sequence-0-whole|LC 60 排列序列]]（困难）· TikTok B
 - [[tlc-unique-binary-search-trees-0-whole|LC 96 不同的二叉搜索树]]（中等）· TikTok B
 - [[tlc-repeated-dna-sequences-0-whole|LC 187 重复的DNA序列]]（中等）· TikTok B
-- LC 223 矩形面积（中等）· TikTok C
+- [[tlc-rectangle-area-0-whole|LC 223 矩形面积]]（中等）· TikTok C
 - LC 231 2 的幂（简单）· Amazon
 - LC 258 各位相加（简单）· Amazon
 - [[tlc-single-number-iii-0-whole|LC 260 只出现一次的数字 III]]（中等）· TikTok B
 - [[tlc-ugly-number-0-whole|LC 263 丑数]]（简单）· TikTok B
 - [[tlc-integer-to-english-words-0-whole|LC 273 整数转换英文表示]]（困难）· TikTok B · Amazon
-- LC 282 给表达式添加运算符（困难）· TikTok C
-- LC 294 翻转游戏 II（中等）· TikTok C
+- [[tlc-expression-add-operators-0-whole|LC 282 给表达式添加运算符]]（困难）· TikTok C
+- [[tlc-flip-game-ii-0-whole|LC 294 翻转游戏 II]]（中等）· TikTok C
 - LC 319 灯泡开关（中等）· Amazon
 - [[tlc-integer-break-0-whole|LC 343 整数拆分]]（中等）· TikTok B
 - LC 368 最大整除子集（中等）· Amazon
 - [[tlc-plus-one-linked-list-0-whole|LC 369 给单链表加一]]（中等）· TikTok B
-- LC 381 O(1) 时间插入、删除和获取随机元素 - 允许重复（困难）· TikTok C
+- [[tlc-insert-delete-getrandom-o1-duplicates-allowed-0-whole|LC 381 O(1) 时间插入、删除和获取随机元素 - 允许重复]]（困难）· TikTok C
 - [[tlc-shuffle-an-array-0-whole|LC 384 打乱数组]]（中等）· TikTok B
 - [[tlc-find-the-difference-0-whole|LC 389 找不同]]（简单）· TikTok B
-- LC 400 第 N 位数字（中等）· TikTok C
+- [[tlc-nth-digit-0-whole|LC 400 第 N 位数字]]（中等）· TikTok C
 - [[tlc-reconstruct-original-digits-from-english-0-whole|LC 423 从英文中重建数字]]（中等）· TikTok B
 - [[tlc-find-all-duplicates-in-an-array-0-whole|LC 442 数组中重复的数据]]（中等）· TikTok B
 - [[tlc-matchsticks-to-square-0-whole|LC 473 火柴拼正方形]]（中等）· TikTok B
@@ -98,20 +98,20 @@
 - [[tlc-random-pick-with-weight-0-whole|LC 528 按权重随机选择]]（中等）· TikTok B · Amazon
 - LC 573 松鼠模拟（中等）· Amazon
 - [[tlc-valid-square-0-whole|LC 593 有效的正方形]]（中等）· TikTok B
-- LC 628 三个数的最大乘积（简单）· TikTok C · Amazon
+- [[tlc-maximum-product-of-three-numbers-0-whole|LC 628 三个数的最大乘积]]（简单）· TikTok C · Amazon
 - LC 645 错误的集合（简单）· Amazon
-- LC 650 两个键的键盘（中等）· TikTok C
+- [[tlc-2-keys-keyboard-0-whole|LC 650 两个键的键盘]]（中等）· TikTok C
 - [[tlc-beautiful-arrangement-ii-0-whole|LC 667 优美的排列 II]]（中等）· TikTok B
 - [[tlc-maximum-swap-0-whole|LC 670 最大交换]]（中等）· TikTok B
 - [[tlc-partition-to-k-equal-sum-subsets-0-whole|LC 698 划分为k个相等的子集]]（中等）· TikTok B
-- LC 723 粉碎糖果（中等）· TikTok C
+- [[tlc-candy-crush-0-whole|LC 723 粉碎糖果]]（中等）· TikTok C
 - [[tlc-asteroid-collision-0-whole|LC 735 小行星碰撞]]（中等）· TikTok B · Amazon
 - [[tlc-ip-to-cidr-0-whole|LC 751 IP 到 CIDR]]（中等）· TikTok B
 - [[tlc-basic-calculator-iii-0-whole|LC 772 基本计算器 III]]（困难）· TikTok B
 - [[tlc-rabbits-in-forest-0-whole|LC 781 森林中的兔子]]（中等）· TikTok B
 - [[tlc-letter-case-permutation-0-whole|LC 784 字母大小写全排列]]（中等）· TikTok B
 - [[tlc-preimage-size-of-factorial-zeroes-function-0-whole|LC 793 阶乘函数后 K 个零]]（困难）· TikTok B
-- LC 829 连续整数求和（困难）· TikTok C
+- [[tlc-consecutive-numbers-sum-0-whole|LC 829 连续整数求和]]（困难）· TikTok C
 - [[tlc-walking-robot-simulation-0-whole|LC 874 模拟行走机器人]]（中等）· TikTok B
 - [[tlc-super-egg-drop-0-whole|LC 887 鸡蛋掉落]]（困难）· TikTok B
 - [[tlc-minimum-area-rectangle-0-whole|LC 939 最小面积矩形]]（中等）· TikTok B
@@ -122,7 +122,7 @@
 - [[tlc-maximum-of-absolute-value-expression-0-whole|LC 1131 绝对值表达式的最大值]]（中等）· TikTok B
 - LC 1140 石子游戏 II（中等）· Amazon
 - [[tlc-day-of-the-week-0-whole|LC 1185 一周中的第几天]]（简单）· TikTok B
-- LC 1237 找出给定方程的正整数解（中等）· TikTok C
+- [[tlc-find-positive-integer-solution-for-a-given-equation-0-whole|LC 1237 找出给定方程的正整数解]]（中等）· TikTok C
 - [[tlc-reverse-subarray-to-maximize-array-value-0-whole|LC 1330 翻转子数组得到最大的数组值]]（困难）· TikTok B · Amazon
 - LC 1344 时钟指针的夹角（中等）· Amazon
 - LC 1478 安排邮筒（困难）· Amazon
@@ -131,17 +131,17 @@
 - [[tlc-incremental-memory-leak-0-whole|LC 1860 增长的内存泄露]]（中等）· TikTok B
 - LC 1929 数组串联（简单）· Amazon
 - LC 2149 按符号重排数组（中等）· Amazon
-- LC 2235 两整数相加（简单）· TikTok C
+- [[tlc-add-two-integers-0-whole|LC 2235 两整数相加]]（简单）· TikTok C
 - LC 2357 使数组中所有元素都等于零（简单）· Amazon
 - LC 2365 任务调度器 II（中等）· Amazon
 - [[tlc-meeting-rooms-iii-0-whole|LC 2402 会议室 III]]（困难）· TikTok B
 - LC 2469 温度转换（简单）· Amazon
-- LC 2506 统计相似字符串对的数目（简单）· TikTok C
+- [[tlc-count-pairs-of-similar-strings-0-whole|LC 2506 统计相似字符串对的数目]]（简单）· TikTok C
 - [[tlc-closest-prime-numbers-in-range-0-whole|LC 2523 范围内最接近的两个质数]]（中等）· TikTok B
 - [[tlc-double-a-number-represented-as-a-linked-list-0-whole|LC 2816 翻倍以链表形式表示的数字]]（中等）· TikTok B
 - [[tlc-minimum-moves-to-spread-stones-over-grid-0-whole|LC 2850 将石头分散到网格图的最少移动次数]]（中等）· TikTok B
 - LC 3514 不同 XOR 三元组的数目 II（中等）· Amazon
-- LC 3535 单位转换 II（中等）· TikTok C
+- [[tlc-unit-conversion-ii-0-whole|LC 3535 单位转换 II]]（中等）· TikTok C
 - LC 3612 用特殊操作处理字符串 I（中等）· Amazon
 - LC 3733 完成所有送货任务的最少时间（中等）· Amazon
 - LC 3754 连接非零数字并乘以其数字和 I（简单）· Amazon

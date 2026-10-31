@@ -18,10 +18,10 @@
 - [[tlc-word-break-ii-0-whole|LC 140 单词拆分 II]]（困难）· TikTok B · Amazon
 - [[tlc-lexicographical-numbers-0-whole|LC 386 字典序排数]]（中等）· TikTok B
 - [[tlc-k-th-smallest-in-lexicographical-order-0-whole|LC 440 字典序的第K小数字]]（困难）· TikTok B
-- LC 472 连接词（困难）· TikTok C · Amazon
-- LC 616 给字符串添加加粗标签（中等）· TikTok C
-- LC 642 设计搜索自动补全系统（困难）· TikTok C
-- LC 648 单词替换（中等）· TikTok C
+- [[tlc-concatenated-words-0-whole|LC 472 连接词]]（困难）· TikTok C · Amazon
+- [[tlc-add-bold-tag-in-string-0-whole|LC 616 给字符串添加加粗标签]]（中等）· TikTok C
+- [[tlc-design-search-autocomplete-system-0-whole|LC 642 设计搜索自动补全系统]]（困难）· TikTok C
+- [[tlc-replace-words-0-whole|LC 648 单词替换]]（中等）· TikTok C
 - [[tlc-top-k-frequent-words-0-whole|LC 692 前K个高频单词]]（中等）· TikTok B · Amazon
-- LC 1268 搜索推荐系统（中等）· TikTok C · Amazon
+- [[tlc-search-suggestions-system-0-whole|LC 1268 搜索推荐系统]]（中等）· TikTok C · Amazon
 - [[tlc-find-the-length-of-the-longest-common-prefix-0-whole|LC 3043 最长公共前缀的长度]]（中等）· TikTok B

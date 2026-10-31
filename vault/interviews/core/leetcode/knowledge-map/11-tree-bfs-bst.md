@@ -34,7 +34,7 @@
 - [[tlc-unique-binary-search-trees-ii-0-whole|LC 95 不同的二叉搜索树 II]]（中等）· TikTok B
 - [[tlc-unique-binary-search-trees-0-whole|LC 96 不同的二叉搜索树]]（中等）· TikTok B
 - LC 109 有序链表转换二叉搜索树（中等）· Amazon
-- LC 255 验证二叉搜索树的前序遍历序列（中等）· TikTok C
+- [[tlc-verify-preorder-sequence-in-binary-search-tree-0-whole|LC 255 验证二叉搜索树的前序遍历序列]]（中等）· TikTok C
 - [[tlc-convert-binary-search-tree-to-sorted-doubly-linked-list-0-whole|LC 426 将二叉搜索树转化为排序的双向链表]]（中等）· TikTok B
 - [[tlc-maximum-width-of-binary-tree-0-whole|LC 662 二叉树最大宽度]]（中等）· TikTok B · Amazon
 - [[tlc-minimum-distance-between-bst-nodes-0-whole|LC 783 二叉搜索树节点最小距离]]（简单）· TikTok B

@@ -20,7 +20,7 @@
 - LC 355 设计推特（中等）· NeetCode 150
 - LC 373 查找和最小的 K 对数字（中等）· Amazon · Top Interview 150
 - LC 502 IPO（困难）· Top Interview 150
-- LC 621 任务调度器（中等）· TikTok C · Amazon · NeetCode 150
+- [[tlc-task-scheduler-0-whole|LC 621 任务调度器]]（中等）· TikTok C · Amazon · NeetCode 150
 - LC 703 数据流中的第 K 大元素（简单）· NeetCode 150
 - LC 743 网络延迟时间（中等）· NeetCode 150
 - LC 973 最接近原点的 K 个点（中等）· NeetCode 150
@@ -29,37 +29,37 @@
 
 **再做（其余牌组里的题，34 道）**
 
-- LC 358 K 距离间隔重排字符串（困难）· TikTok C
+- [[tlc-rearrange-string-k-distance-apart-0-whole|LC 358 K 距离间隔重排字符串]]（困难）· TikTok C
 - [[tlc-trapping-rain-water-ii-0-whole|LC 407 接雨水 II]]（困难）· TikTok B
 - [[tlc-sliding-window-median-0-whole|LC 480 滑动窗口中位数]]（困难）· TikTok B · Amazon
 - [[tlc-the-maze-iii-0-whole|LC 499 迷宫 III]]（困难）· TikTok B
-- LC 505 迷宫 II（中等）· TikTok C
+- [[tlc-the-maze-ii-0-whole|LC 505 迷宫 II]]（中等）· TikTok C
 - [[tlc-array-partition-i-0-whole|LC 561 数组拆分]]（简单）· TikTok B · Amazon
-- LC 642 设计搜索自动补全系统（困难）· TikTok C
-- LC 658 找到 K 个最接近的元素（中等）· TikTok C · Amazon
+- [[tlc-design-search-autocomplete-system-0-whole|LC 642 设计搜索自动补全系统]]（困难）· TikTok C
+- [[tlc-find-k-closest-elements-0-whole|LC 658 找到 K 个最接近的元素]]（中等）· TikTok C · Amazon
 - [[tlc-top-k-frequent-words-0-whole|LC 692 前K个高频单词]]（中等）· TikTok B · Amazon
-- LC 759 员工空闲时间（困难）· TikTok C · Amazon
+- [[tlc-employee-free-time-0-whole|LC 759 员工空闲时间]]（困难）· TikTok C · Amazon
 - [[tlc-reorganize-string-0-whole|LC 767 重构字符串]]（中等）· TikTok B · Amazon
 - [[tlc-shortest-subarray-with-sum-at-least-k-0-whole|LC 862 和至少为 K 的最短子数组]]（困难）· TikTok B · Amazon
 - LC 871 最低加油次数（困难）· Amazon
 - [[tlc-sort-an-array-0-whole|LC 912 排序数组]]（中等）· TikTok B
 - LC 1094 拼车（中等）· Amazon
 - LC 1167 连接木棍的最低费用（中等）· Amazon
-- LC 1268 搜索推荐系统（中等）· TikTok C · Amazon
-- LC 1353 最多可以参加的会议数目（中等）· TikTok C
-- LC 1383 最大的团队表现值（困难）· TikTok C
+- [[tlc-search-suggestions-system-0-whole|LC 1268 搜索推荐系统]]（中等）· TikTok C · Amazon
+- [[tlc-maximum-number-of-events-that-can-be-attended-0-whole|LC 1353 最多可以参加的会议数目]]（中等）· TikTok C
+- [[tlc-maximum-performance-of-a-team-0-whole|LC 1383 最大的团队表现值]]（困难）· TikTok C
 - [[tlc-longest-happy-string-0-whole|LC 1405 最长快乐字符串]]（中等）· TikTok B
-- LC 1642 可以到达的最远建筑（中等）· TikTok C
+- [[tlc-furthest-building-you-can-reach-0-whole|LC 1642 可以到达的最远建筑]]（中等）· TikTok C
 - LC 2357 使数组中所有元素都等于零（简单）· Amazon
 - [[tlc-meeting-rooms-iii-0-whole|LC 2402 会议室 III]]（困难）· TikTok B
 - [[tlc-most-popular-video-creator-0-whole|LC 2456 最流行的视频创作者]]（中等）· TikTok B
-- LC 2530 执行 K 次操作后的最大分数（中等）· TikTok C
+- [[tlc-maximal-score-after-applying-k-operations-0-whole|LC 2530 执行 K 次操作后的最大分数]]（中等）· TikTok C
 - LC 2542 最大子序列的分数（中等）· Amazon
-- LC 2551 将珠子放入背包中（困难）· TikTok C
+- [[tlc-put-marbles-in-bags-0-whole|LC 2551 将珠子放入背包中]]（困难）· TikTok C
 - LC 2762 不间断子数组（中等）· Amazon
 - LC 2812 找出最安全路径（中等）· Amazon
-- LC 2931 购买物品的最大开销（困难）· TikTok C
+- [[tlc-maximum-spending-after-buying-items-0-whole|LC 2931 购买物品的最大开销]]（困难）· TikTok C
 - LC 3286 穿越网格图的安全路径（中等）· Amazon
-- LC 3408 设计任务管理器（中等）· TikTok C
+- [[tlc-design-task-manager-0-whole|LC 3408 设计任务管理器]]（中等）· TikTok C
 - LC 3607 电网维护（中等）· Amazon
 - LC 3620 恢复网络路径（困难）· Amazon

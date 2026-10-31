@@ -24,19 +24,19 @@
 
 **再做（其余牌组里的题，29 道）**
 
-- LC 159 至多包含两个不同字符的最长子串（中等）· TikTok C
+- [[tlc-longest-substring-with-at-most-two-distinct-characters-0-whole|LC 159 至多包含两个不同字符的最长子串]]（中等）· TikTok C
 - [[tlc-repeated-dna-sequences-0-whole|LC 187 重复的DNA序列]]（中等）· TikTok B
 - [[tlc-longest-substring-with-at-least-k-repeating-characters-0-whole|LC 395 至少有 K 个重复字符的最长子串]]（中等）· TikTok B · Amazon
-- LC 413 等差数列划分（中等）· TikTok C
+- [[tlc-arithmetic-slices-0-whole|LC 413 等差数列划分]]（中等）· TikTok C
 - [[tlc-sliding-window-median-0-whole|LC 480 滑动窗口中位数]]（困难）· TikTok B · Amazon
 - LC 643 子数组最大平均数 I（简单）· Amazon
-- LC 658 找到 K 个最接近的元素（中等）· TikTok C · Amazon
+- [[tlc-find-k-closest-elements-0-whole|LC 658 找到 K 个最接近的元素]]（中等）· TikTok C · Amazon
 - [[tlc-maximum-length-of-repeated-subarray-0-whole|LC 718 最长重复子数组]]（中等）· TikTok B
 - [[tlc-shortest-subarray-with-sum-at-least-k-0-whole|LC 862 和至少为 K 的最短子数组]]（困难）· TikTok B · Amazon
-- LC 992 K 个不同整数的子数组（困难）· TikTok C · Amazon
+- [[tlc-subarrays-with-k-different-integers-0-whole|LC 992 K 个不同整数的子数组]]（困难）· TikTok C · Amazon
 - [[tlc-longest-duplicate-substring-0-whole|LC 1044 最长重复子串]]（困难）· TikTok B
 - [[tlc-minimum-swaps-to-group-all-1s-together-0-whole|LC 1151 最少交换次数来组合所有的 1]]（中等）· TikTok B
-- LC 1423 可获得的最大点数（中等）· TikTok C · Amazon
+- [[tlc-maximum-points-you-can-obtain-from-cards-0-whole|LC 1423 可获得的最大点数]]（中等）· TikTok C · Amazon
 - [[tlc-find-two-non-overlapping-sub-arrays-each-with-target-sum-0-whole|LC 1477 找两个和为目标值且不重叠的子数组]]（中等）· TikTok B
 - [[tlc-longest-subarray-of-1s-after-deleting-one-element-0-whole|LC 1493 删掉一个元素以后全为 1 的最长子数组]]（中等）· TikTok B
 - LC 1703 得到连续 K 个 1 的最少相邻交换次数（困难）· Amazon
@@ -45,11 +45,11 @@
 - [[tlc-minimum-swaps-to-group-all-1s-together-ii-0-whole|LC 2134 最少交换次数来组合所有的 1 II]]（中等）· TikTok B
 - LC 2271 毯子覆盖的最多白色砖块数（中等）· Amazon
 - LC 2461 长度为 K 子数组中的最大和（中等）· Amazon
-- LC 2537 统计好子数组的数目（中等）· TikTok C
+- [[tlc-count-the-number-of-good-subarrays-0-whole|LC 2537 统计好子数组的数目]]（中等）· TikTok C
 - LC 2762 不间断子数组（中等）· Amazon
 - [[tlc-count-complete-subarrays-in-an-array-0-whole|LC 2799 统计完全子数组的数目]]（中等）· TikTok B
 - LC 2958 最多 K 个重复元素的最长子数组（中等）· Amazon
 - [[tlc-minimum-moves-to-pick-k-ones-0-whole|LC 3086 拾起 K 个 1 需要的最少行动次数]]（困难）· TikTok B
 - LC 3090 每个字符最多出现两次的最长子字符串（简单）· Amazon
 - LC 3413 收集连续 K 个袋子可以获得的最多硬币数量（中等）· Amazon
-- LC 3652 按策略买卖股票的最佳时机（中等）· TikTok C
+- [[tlc-best-time-to-buy-and-sell-stock-using-strategy-0-whole|LC 3652 按策略买卖股票的最佳时机]]（中等）· TikTok C

@@ -19,7 +19,7 @@
 **再做（其余牌组里的题，6 道）**
 
 - [[tlc-the-maze-iii-0-whole|LC 499 迷宫 III]]（困难）· TikTok B
-- LC 505 迷宫 II（中等）· TikTok C
+- [[tlc-the-maze-ii-0-whole|LC 505 迷宫 II]]（中等）· TikTok C
 - [[tlc-01-matrix-0-whole|LC 542 01 矩阵]]（中等）· TikTok B
 - [[tlc-bus-routes-0-whole|LC 815 公交路线]]（困难）· TikTok B · Amazon
 - LC 3286 穿越网格图的安全路径（中等）· Amazon

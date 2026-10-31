@@ -20,7 +20,7 @@
 **再做（其余牌组里的题，32 道）**
 
 - LC 303 区域和检索 - 数组不可变（简单）· Amazon
-- LC 325 和等于 k 的最长子数组长度（中等）· TikTok C
+- [[tlc-maximum-size-subarray-sum-equals-k-0-whole|LC 325 和等于 k 的最长子数组长度]]（中等）· TikTok C
 - LC 410 分割数组的最大值（困难）· Amazon
 - [[tlc-continuous-subarray-sum-0-whole|LC 523 连续的子数组和]]（中等）· TikTok B
 - [[tlc-contiguous-array-0-whole|LC 525 连续数组]]（中等）· TikTok B · Amazon
@@ -30,11 +30,11 @@
 - [[tlc-number-of-submatrices-that-sum-to-target-0-whole|LC 1074 元素和为目标值的子矩阵数量]]（困难）· TikTok B
 - LC 1094 拼车（中等）· Amazon
 - LC 1140 石子游戏 II（中等）· Amazon
-- LC 1423 可获得的最大点数（中等）· TikTok C · Amazon
+- [[tlc-maximum-points-you-can-obtain-from-cards-0-whole|LC 1423 可获得的最大点数]]（中等）· TikTok C · Amazon
 - LC 1480 一维数组的动态和（简单）· Amazon
 - [[tlc-minimum-moves-to-make-array-complementary-0-whole|LC 1674 使数组互补的最少操作次数]]（中等）· TikTok B
 - LC 1703 得到连续 K 个 1 的最少相邻交换次数（困难）· Amazon
-- LC 1769 移动所有球到每个盒子所需的最小操作数（中等）· TikTok C
+- [[tlc-minimum-number-of-operations-to-move-all-balls-to-each-box-0-whole|LC 1769 移动所有球到每个盒子所需的最小操作数]]（中等）· TikTok C
 - LC 1838 最高频元素的频数（中等）· Amazon
 - [[tlc-brightest-position-on-street-0-whole|LC 2021 街上最亮的位置]]（中等）· TikTok B
 - LC 2024 考试的最大困扰度（中等）· Amazon
@@ -44,10 +44,10 @@
 - LC 2281 巫师的总力量和（困难）· Amazon
 - LC 2448 使数组相等的最小开销（困难）· Amazon
 - [[tlc-find-the-score-of-all-prefixes-of-an-array-0-whole|LC 2640 一个数组所有前缀的分数]]（中等）· TikTok B
-- LC 2945 找到最大非递减数组的长度（困难）· TikTok C
+- [[tlc-find-maximum-non-decreasing-array-length-0-whole|LC 2945 找到最大非递减数组的长度]]（困难）· TikTok C
 - [[tlc-minimum-moves-to-pick-k-ones-0-whole|LC 3086 拾起 K 个 1 需要的最少行动次数]]（困难）· TikTok B
 - LC 3413 收集连续 K 个袋子可以获得的最多硬币数量（中等）· Amazon
 - LC 3434 子数组操作后的最大频率（中等）· Amazon
-- LC 3652 按策略买卖股票的最佳时机（中等）· TikTok C
+- [[tlc-best-time-to-buy-and-sell-stock-using-strategy-0-whole|LC 3652 按策略买卖股票的最佳时机]]（中等）· TikTok C
 - LC 3737 统计主要元素子数组数目 I（中等）· Amazon
 - LC 3756 连接非零数字并乘以其数字和 II（中等）· Amazon

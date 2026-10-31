@@ -21,7 +21,7 @@
 - [[tlc-time-based-key-value-store-0-whole|LC 981 基于时间的键值存储]]（中等）· TikTok P4 · NeetCode 150
 - LC 173 二叉搜索树迭代器（中等）· Top Interview 150
 - [[tlc-design-add-and-search-words-data-structure-0-whole|LC 211 添加与搜索单词 - 数据结构设计]]（中等）· TikTok B · Amazon · Blind 75 · NeetCode 150 · Top Interview 150
-- LC 271 字符串的编码与解码（中等）· TikTok C · Blind 75 · NeetCode 150
+- [[tlc-encode-and-decode-strings-0-whole|LC 271 字符串的编码与解码]]（中等）· TikTok C · Blind 75 · NeetCode 150
 - LC 355 设计推特（中等）· NeetCode 150
 - [[tlc-insert-delete-getrandom-o1-0-whole|LC 380 O(1) 时间插入、删除和获取随机元素]]（中等）· TikTok B · Amazon · Top Interview 150
 - LC 703 数据流中的第 K 大元素（简单）· NeetCode 150
@@ -31,15 +31,15 @@
 
 - LC 303 区域和检索 - 数组不可变（简单）· Amazon
 - LC 341 扁平化嵌套列表迭代器（中等）· Amazon
-- LC 381 O(1) 时间插入、删除和获取随机元素 - 允许重复（困难）· TikTok C
+- [[tlc-insert-delete-getrandom-o1-duplicates-allowed-0-whole|LC 381 O(1) 时间插入、删除和获取随机元素 - 允许重复]]（困难）· TikTok C
 - [[tlc-shuffle-an-array-0-whole|LC 384 打乱数组]]（中等）· TikTok B
 - [[tlc-lfu-cache-0-whole|LC 460 LFU 缓存]]（困难）· TikTok B · Amazon
-- LC 642 设计搜索自动补全系统（困难）· TikTok C
-- LC 716 最大栈（困难）· TikTok C
-- LC 729 我的日程安排表 I（中等）· TikTok C
+- [[tlc-design-search-autocomplete-system-0-whole|LC 642 设计搜索自动补全系统]]（困难）· TikTok C
+- [[tlc-max-stack-0-whole|LC 716 最大栈]]（困难）· TikTok C
+- [[tlc-my-calendar-i-0-whole|LC 729 我的日程安排表 I]]（中等）· TikTok C
 - LC 901 股票价格跨度（中等）· Amazon
 - [[tlc-snapshot-array-0-whole|LC 1146 快照数组]]（中等）· TikTok B
 - [[tlc-design-a-stack-with-increment-operation-0-whole|LC 1381 设计一个支持增量操作的栈]]（中等）· TikTok B
 - LC 1472 设计浏览器历史记录（中等）· Amazon
-- LC 1570 两个稀疏向量的点积（中等）· TikTok C
-- LC 3408 设计任务管理器（中等）· TikTok C
+- [[tlc-dot-product-of-two-sparse-vectors-0-whole|LC 1570 两个稀疏向量的点积]]（中等）· TikTok C
+- [[tlc-design-task-manager-0-whole|LC 3408 设计任务管理器]]（中等）· TikTok C

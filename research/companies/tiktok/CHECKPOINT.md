@@ -68,3 +68,13 @@ Chi's Amazon decks or on Blind 75 / NeetCode 150 / LeetCode Hot 100 / Top Interv
 ## US first (2026-10-30)
 
 Tier A = pinned ∪ US sighting in the past year ∪ US company tag 30d / 3m / 6m window ∪ China-side reported at least twice in the past year. A 196 / B 278, split P1..P5 by cumulative frequency share.
+
+## Everything recorded, recent first (2026-10-31)
+
+- `build_list.py` keeps every problem of the US company lists (liquidslr + snehasishroy, TikTok + ByteDance, all
+  windows); the low-frequency ones older than six months are tier C (108, deck 24 only, after B). Only 2 SQL problems
+  stay out. CodeTop's full snapshot (873 rows) is in `catalog/codetop.json`; China-only problems still need two reports.
+- Headers show the recent-window frequency (`近 30 天热度 82/100（全时段 50）`); the US score uses it too.
+- Every problem in a US 30d / 3m / 6m window is P2 or higher (56). Bands: P1 15 / P2 64 / P3 37 / P4 80.
+- Their whole cards carry 简单解法 only where the main solution has an optional refinement (17 of 56) and 拓展优化 with
+  code; explanations live in code comments (CARDS.md rules of 2026-10-31).

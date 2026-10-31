@@ -52,7 +52,7 @@
 - [[tlc-minimum-swaps-to-make-strings-equal-0-whole|LC 1247 交换字符使得字符串相同]]（中等）· TikTok P4
 - LC 6 Z 字形变换（中等）· Amazon · Top Interview 150
 - [[tlc-integer-to-roman-0-whole|LC 12 整数转罗马数字]]（中等）· TikTok B · Top Interview 150
-- LC 13 罗马数字转整数（简单）· TikTok C · Amazon · Top Interview 150
+- [[tlc-roman-to-integer-0-whole|LC 13 罗马数字转整数]]（简单）· TikTok C · Amazon · Top Interview 150
 - [[tlc-longest-common-prefix-0-whole|LC 14 最长公共前缀]]（简单）· TikTok B · Amazon · Top Interview 150
 - [[tlc-letter-combinations-of-a-phone-number-0-whole|LC 17 电话号码的字母组合]]（中等）· TikTok B · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - LC 28 找出字符串中第一个匹配项的下标（简单）· Amazon · Top Interview 150
@@ -69,7 +69,7 @@
 - LC 205 同构字符串（简单）· Amazon · Top Interview 150
 - [[tlc-design-add-and-search-words-data-structure-0-whole|LC 211 添加与搜索单词 - 数据结构设计]]（中等）· TikTok B · Amazon · Blind 75 · NeetCode 150 · Top Interview 150
 - [[tlc-valid-anagram-0-whole|LC 242 有效的字母异位词]]（简单）· TikTok B · Amazon · Blind 75 · NeetCode 150 · Top Interview 150
-- LC 271 字符串的编码与解码（中等）· TikTok C · Blind 75 · NeetCode 150
+- [[tlc-encode-and-decode-strings-0-whole|LC 271 字符串的编码与解码]]（中等）· TikTok C · Blind 75 · NeetCode 150
 - LC 290 单词规律（简单）· Top Interview 150
 - LC 332 重新安排行程（困难）· Amazon · NeetCode 150
 - LC 383 赎金信（简单）· Amazon · Top Interview 150
@@ -86,44 +86,44 @@
 - [[tlc-scramble-string-0-whole|LC 87 扰乱字符串]]（困难）· TikTok B
 - [[tlc-word-ladder-ii-0-whole|LC 126 单词接龙 II]]（困难）· TikTok B · Amazon
 - [[tlc-word-break-ii-0-whole|LC 140 单词拆分 II]]（困难）· TikTok B · Amazon
-- LC 159 至多包含两个不同字符的最长子串（中等）· TikTok C
+- [[tlc-longest-substring-with-at-most-two-distinct-characters-0-whole|LC 159 至多包含两个不同字符的最长子串]]（中等）· TikTok C
 - [[tlc-compare-version-numbers-0-whole|LC 165 比较版本号]]（中等）· TikTok B
 - [[tlc-largest-number-0-whole|LC 179 最大数]]（中等）· TikTok B · Amazon
 - [[tlc-repeated-dna-sequences-0-whole|LC 187 重复的DNA序列]]（中等）· TikTok B
 - [[tlc-integer-to-english-words-0-whole|LC 273 整数转换英文表示]]（困难）· TikTok B · Amazon
-- LC 282 给表达式添加运算符（困难）· TikTok C
-- LC 291 单词规律 II（中等）· TikTok C
+- [[tlc-expression-add-operators-0-whole|LC 282 给表达式添加运算符]]（困难）· TikTok C
+- [[tlc-word-pattern-ii-0-whole|LC 291 单词规律 II]]（中等）· TikTok C
 - LC 299 猜数字游戏（中等）· Amazon
 - [[tlc-remove-invalid-parentheses-0-whole|LC 301 删除无效的括号]]（困难）· TikTok B
 - [[tlc-additive-number-0-whole|LC 306 累加数]]（中等）· TikTok B
 - LC 344 反转字符串（简单）· Amazon
-- LC 358 K 距离间隔重排字符串（困难）· TikTok C
+- [[tlc-rearrange-string-k-distance-apart-0-whole|LC 358 K 距离间隔重排字符串]]（困难）· TikTok C
 - LC 387 字符串中的第一个唯一字符（简单）· Amazon
 - [[tlc-find-the-difference-0-whole|LC 389 找不同]]（简单）· TikTok B
 - [[tlc-longest-substring-with-at-least-k-repeating-characters-0-whole|LC 395 至少有 K 个重复字符的最长子串]]（中等）· TikTok B · Amazon
 - [[tlc-remove-k-digits-0-whole|LC 402 移掉 K 位数字]]（中等）· TikTok B · Amazon
-- LC 408 有效单词缩写（简单）· TikTok C
+- [[tlc-valid-word-abbreviation-0-whole|LC 408 有效单词缩写]]（简单）· TikTok C
 - [[tlc-longest-palindrome-0-whole|LC 409 最长回文串]]（简单）· TikTok B
 - [[tlc-reconstruct-original-digits-from-english-0-whole|LC 423 从英文中重建数字]]（中等）· TikTok B
-- LC 443 压缩字符串（中等）· TikTok C · Amazon
-- LC 468 验证IP地址（中等）· TikTok C
-- LC 472 连接词（困难）· TikTok C · Amazon
+- [[tlc-string-compression-0-whole|LC 443 压缩字符串]]（中等）· TikTok C · Amazon
+- [[tlc-validate-ip-address-0-whole|LC 468 验证IP地址]]（中等）· TikTok C
+- [[tlc-concatenated-words-0-whole|LC 472 连接词]]（困难）· TikTok C · Amazon
 - LC 474 一和零（中等）· Amazon
 - [[tlc-the-maze-iii-0-whole|LC 499 迷宫 III]]（困难）· TikTok B
 - [[tlc-longest-palindromic-subsequence-0-whole|LC 516 最长回文子序列]]（中等）· TikTok B
 - LC 557 反转字符串中的单词 III（简单）· Amazon
-- LC 606 根据二叉树创建字符串（中等）· TikTok C
-- LC 616 给字符串添加加粗标签（中等）· TikTok C
-- LC 642 设计搜索自动补全系统（困难）· TikTok C
-- LC 648 单词替换（中等）· TikTok C
+- [[tlc-construct-string-from-binary-tree-0-whole|LC 606 根据二叉树创建字符串]]（中等）· TikTok C
+- [[tlc-add-bold-tag-in-string-0-whole|LC 616 给字符串添加加粗标签]]（中等）· TikTok C
+- [[tlc-design-search-autocomplete-system-0-whole|LC 642 设计搜索自动补全系统]]（困难）· TikTok C
+- [[tlc-replace-words-0-whole|LC 648 单词替换]]（中等）· TikTok C
 - [[tlc-valid-palindrome-ii-0-whole|LC 680 验证回文串 II]]（简单）· TikTok B · Amazon
 - [[tlc-top-k-frequent-words-0-whole|LC 692 前K个高频单词]]（中等）· TikTok B · Amazon
-- LC 696 计数二进制子串（简单）· TikTok C
+- [[tlc-count-binary-substrings-0-whole|LC 696 计数二进制子串]]（简单）· TikTok C
 - [[tlc-maximum-length-of-repeated-subarray-0-whole|LC 718 最长重复子数组]]（中等）· TikTok B
 - [[tlc-number-of-atoms-0-whole|LC 726 原子的数量]]（困难）· TikTok B
 - LC 736 Lisp 语法解析（困难）· Amazon
 - [[tlc-ip-to-cidr-0-whole|LC 751 IP 到 CIDR]]（中等）· TikTok B
-- LC 752 打开转盘锁（中等）· TikTok C
+- [[tlc-open-the-lock-0-whole|LC 752 打开转盘锁]]（中等）· TikTok C
 - [[tlc-reorganize-string-0-whole|LC 767 重构字符串]]（中等）· TikTok B · Amazon
 - [[tlc-basic-calculator-iii-0-whole|LC 772 基本计算器 III]]（困难）· TikTok B
 - [[tlc-letter-case-permutation-0-whole|LC 784 字母大小写全排列]]（中等）· TikTok B
@@ -139,26 +139,26 @@
 - [[tlc-smallest-subsequence-of-distinct-characters-0-whole|LC 1081 不同字符的最小子序列]]（中等）· TikTok B · Amazon
 - LC 1152 用户网站访问行为分析（中等）· Amazon
 - LC 1189 “气球” 的最大数量（简单）· Amazon
-- LC 1190 反转每对括号间的子串（中等）· TikTok C
+- [[tlc-reverse-substrings-between-each-pair-of-parentheses-0-whole|LC 1190 反转每对括号间的子串]]（中等）· TikTok C
 - [[tlc-remove-all-adjacent-duplicates-in-string-ii-0-whole|LC 1209 删除字符串中的所有相邻重复项 II]]（中等）· TikTok B
-- LC 1216 验证回文串 III（困难）· TikTok C
+- [[tlc-valid-palindrome-iii-0-whole|LC 1216 验证回文串 III]]（困难）· TikTok C
 - [[tlc-minimum-remove-to-make-valid-parentheses-0-whole|LC 1249 移除无效的括号]]（中等）· TikTok B
-- LC 1268 搜索推荐系统（中等）· TikTok C · Amazon
+- [[tlc-search-suggestions-system-0-whole|LC 1268 搜索推荐系统]]（中等）· TikTok C · Amazon
 - [[tlc-longest-happy-string-0-whole|LC 1405 最长快乐字符串]]（中等）· TikTok B
 - LC 1768 交替合并字符串（简单）· Amazon
-- LC 1769 移动所有球到每个盒子所需的最小操作数（中等）· TikTok C
-- LC 1813 句子相似性 III（中等）· TikTok C
+- [[tlc-minimum-number-of-operations-to-move-all-balls-to-each-box-0-whole|LC 1769 移动所有球到每个盒子所需的最小操作数]]（中等）· TikTok C
+- [[tlc-sentence-similarity-iii-0-whole|LC 1813 句子相似性 III]]（中等）· TikTok C
 - LC 1967 作为子字符串出现在单词中的字符串数目（简单）· Amazon
 - LC 2024 考试的最大困扰度（中等）· Amazon
 - LC 2055 蜡烛之间的盘子（中等）· Amazon
-- LC 2096 从二叉树一个节点到另一个节点每一步的方向（中等）· TikTok C
-- LC 2115 从给定原材料中找到所有可以做出的菜（中等）· TikTok C · Amazon
+- [[tlc-step-by-step-directions-from-a-binary-tree-node-to-another-0-whole|LC 2096 从二叉树一个节点到另一个节点每一步的方向]]（中等）· TikTok C
+- [[tlc-find-all-possible-recipes-from-given-supplies-0-whole|LC 2115 从给定原材料中找到所有可以做出的菜]]（中等）· TikTok C · Amazon
 - LC 2213 由单个字符重复的最长子字符串（困难）· Amazon
 - [[tlc-length-of-the-longest-alphabetical-continuous-substring-0-whole|LC 2414 最长的字母序连续子字符串的长度]]（中等）· TikTok B
 - [[tlc-most-popular-video-creator-0-whole|LC 2456 最流行的视频创作者]]（中等）· TikTok B
 - [[tlc-split-message-based-on-limit-0-whole|LC 2468 根据限制分割消息]]（困难）· TikTok B
 - LC 2484 统计回文子序列数目（困难）· 
-- LC 2506 统计相似字符串对的数目（简单）· TikTok C
+- [[tlc-count-pairs-of-similar-strings-0-whole|LC 2506 统计相似字符串对的数目]]（简单）· TikTok C
 - LC 2938 区分黑球与白球（中等）· Amazon
 - LC 3016 输入单词需要的最少按键次数 II（中等）· Amazon
 - [[tlc-find-the-length-of-the-longest-common-prefix-0-whole|LC 3043 最长公共前缀的长度]]（中等）· TikTok B

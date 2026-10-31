@@ -500,3 +500,116 @@ TikTok 和字节（美国与国内）面试里最常出现的编程题，按学�
 | [[tlc-codetop-supp-13-0-whole\|补充题13 中文数字转阿拉伯数字]] | Medium | — |
 | [[tlc-the-maze-iii-0-whole\|LC 499 迷宫 III]] | Hard | — |
 | [[tlc-zui-xiao-tiao-yue-ci-shu-0-whole\|LCP 09 最小跳跃次数]] | Hard | — |
+
+## C 档：半年以前出现过
+
+| 题 | 难度 | 主要考点 |
+|---|---|---|
+| [[tlc-longest-substring-with-at-most-two-distinct-characters-0-whole\|LC 159 Longest Substring with At Most Two Distinct Characters]] | Medium | 哈希、字符串、滑动窗口 |
+| [[tlc-minimum-cost-for-tickets-0-whole\|LC 983 Minimum Cost For Tickets]] | Medium | 数组、动态规划 |
+| [[tlc-regions-cut-by-slashes-0-whole\|LC 959 Regions Cut By Slashes]] | Medium | 数组、哈希、DFS、BFS、并查集、矩阵 |
+| [[tlc-sentence-similarity-iii-0-whole\|LC 1813 Sentence Similarity III]] | Medium | 数组、双指针、字符串 |
+| [[tlc-robot-room-cleaner-0-whole\|LC 489 Robot Room Cleaner]] | Hard | 回溯 |
+| [[tlc-roman-to-integer-0-whole\|LC 13 Roman to Integer]] | Easy | 哈希、数学、字符串 |
+| [[tlc-find-k-closest-elements-0-whole\|LC 658 Find K Closest Elements]] | Medium | 数组、双指针、二分、滑动窗口、排序、堆 |
+| [[tlc-string-compression-0-whole\|LC 443 String Compression]] | Medium | 双指针、字符串 |
+| [[tlc-nth-digit-0-whole\|LC 400 Nth Digit]] | Medium | 数学、二分 |
+| [[tlc-sum-of-subarray-minimums-0-whole\|LC 907 Sum of Subarray Minimums]] | Medium | 数组、动态规划、栈、单调栈 |
+| [[tlc-task-scheduler-0-whole\|LC 621 Task Scheduler]] | Medium | 数组、哈希、贪心、排序、堆 |
+| [[tlc-is-graph-bipartite-0-whole\|LC 785 Is Graph Bipartite?]] | Medium | DFS、BFS、并查集、图 |
+| [[tlc-search-suggestions-system-0-whole\|LC 1268 Search Suggestions System]] | Medium | 数组、字符串、二分、字典树、排序、堆 |
+| [[tlc-maximum-points-you-can-obtain-from-cards-0-whole\|LC 1423 Maximum Points You Can Obtain from Cards]] | Medium | 数组、滑动窗口、前缀和 |
+| [[tlc-max-stack-0-whole\|LC 716 Max Stack]] | Hard | 链表、栈、设计 |
+| [[tlc-insert-delete-getrandom-o1-duplicates-allowed-0-whole\|LC 381 Insert Delete GetRandom O(1) - Duplicates allowed]] | Hard | 数组、哈希、数学、设计 |
+| [[tlc-champagne-tower-0-whole\|LC 799 Champagne Tower]] | Medium | 动态规划 |
+| [[tlc-minimum-increment-to-make-array-unique-0-whole\|LC 945 Minimum Increment to Make Array Unique]] | Medium | 数组、贪心、排序 |
+| [[tlc-pairs-of-songs-with-total-durations-divisible-by-60-0-whole\|LC 1010 Pairs of Songs With Total Durations Divisible by 60]] | Medium | 数组、哈希 |
+| [[tlc-tree-diameter-0-whole\|LC 1245 Tree Diameter]] | Medium | 树、DFS、BFS、图、拓扑排序 |
+| [[tlc-deepest-leaves-sum-0-whole\|LC 1302 Deepest Leaves Sum]] | Medium | 树、DFS、BFS |
+| [[tlc-my-calendar-i-0-whole\|LC 729 My Calendar I]] | Medium | — |
+| [[tlc-delete-and-earn-0-whole\|LC 740 Delete and Earn]] | Medium | 数组、哈希、动态规划 |
+| [[tlc-step-by-step-directions-from-a-binary-tree-node-to-another-0-whole\|LC 2096 Step-By-Step Directions From a Binary Tree Node to Another]] | Medium | 字符串、树、DFS |
+| [[tlc-find-all-possible-recipes-from-given-supplies-0-whole\|LC 2115 Find All Possible Recipes from Given Supplies]] | Medium | 数组、哈希、字符串、图、拓扑排序 |
+| [[tlc-merge-operations-to-turn-array-into-a-palindrome-0-whole\|LC 2422 Merge Operations to Turn Array Into a Palindrome]] | Medium | — |
+| [[tlc-flatten-deeply-nested-array-0-whole\|LC 2625 Flatten Deeply Nested Array]] | Medium | — |
+| [[tlc-snakes-and-ladders-0-whole\|LC 909 Snakes and Ladders]] | Medium | 数组、BFS、矩阵 |
+| [[tlc-maximum-width-ramp-0-whole\|LC 962 Maximum Width Ramp]] | Medium | 数组、双指针、栈、单调栈 |
+| [[tlc-furthest-building-you-can-reach-0-whole\|LC 1642 Furthest Building You Can Reach]] | Medium | 数组、贪心、堆 |
+| [[tlc-minimum-difficulty-of-a-job-schedule-0-whole\|LC 1335 Minimum Difficulty of a Job Schedule]] | Hard | — |
+| [[tlc-number-of-visible-people-in-a-queue-0-whole\|LC 1944 Number of Visible People in a Queue]] | Hard | — |
+| [[tlc-maximum-product-of-three-numbers-0-whole\|LC 628 Maximum Product of Three Numbers]] | Easy | — |
+| [[tlc-replace-words-0-whole\|LC 648 Replace Words]] | Medium | 数组、哈希、字符串、字典树 |
+| [[tlc-2-keys-keyboard-0-whole\|LC 650 2 Keys Keyboard]] | Medium | 数学、动态规划 |
+| [[tlc-open-the-lock-0-whole\|LC 752 Open the Lock]] | Medium | 数组、哈希、字符串、BFS |
+| [[tlc-design-search-autocomplete-system-0-whole\|LC 642 Design Search Autocomplete System]] | Hard | — |
+| [[tlc-happy-number-0-whole\|LC 202 Happy Number]] | Easy | 哈希、数学、双指针 |
+| [[tlc-best-time-to-buy-and-sell-stock-with-cooldown-0-whole\|LC 309 Best Time to Buy and Sell Stock with Cooldown]] | Medium | 数组、动态规划 |
+| [[tlc-heaters-0-whole\|LC 475 Heaters]] | Medium | 数组、双指针、二分、排序 |
+| [[tlc-add-bold-tag-in-string-0-whole\|LC 616 Add Bold Tag in String]] | Medium | 数组、哈希、字符串、字典树 |
+| [[tlc-validate-ip-address-0-whole\|LC 468 Validate IP Address]] | Medium | — |
+| [[tlc-number-of-islands-ii-0-whole\|LC 305 Number of Islands II]] | Hard | — |
+| [[tlc-next-greater-element-ii-0-whole\|LC 503 Next Greater Element II]] | Medium | 数组、栈、单调栈 |
+| [[tlc-spiral-matrix-ii-0-whole\|LC 59 Spiral Matrix II]] | Medium | — |
+| [[tlc-two-sum-ii-input-array-is-sorted-0-whole\|LC 167 Two Sum II - Input Array Is Sorted]] | Medium | 数组、双指针、二分 |
+| [[tlc-maximum-sum-circular-subarray-0-whole\|LC 918 Maximum Sum Circular Subarray]] | Medium | 数组、分治、动态规划 |
+| [[tlc-consecutive-numbers-sum-0-whole\|LC 829 Consecutive Numbers Sum]] | Hard | 数学 |
+| [[tlc-next-greater-element-i-0-whole\|LC 496 Next Greater Element I]] | Easy | 数组、哈希、栈、单调栈 |
+| [[tlc-construct-binary-tree-from-inorder-and-postorder-traversal-0-whole\|LC 106 Construct Binary Tree from Inorder and Postorder Traversal]] | Medium | 数组、哈希、分治、树 |
+| [[tlc-rectangle-area-0-whole\|LC 223 矩形面积（Rectangle Area）]] | Medium | 数学 |
+| [[tlc-lowest-common-ancestor-of-a-binary-tree-iii-0-whole\|LC 1650 二叉树的最近公共祖先 III（Lowest Common Ancestor of a Binary Tree III）]] | Medium | 哈希、双指针、树 |
+| [[tlc-lowest-common-ancestor-of-a-binary-tree-iv-0-whole\|LC 1676 Lowest Common Ancestor of a Binary Tree IV]] | Medium | 哈希、树、DFS |
+| [[tlc-russian-doll-envelopes-0-whole\|LC 354 俄罗斯套娃信封问题（Russian Doll Envelopes）]] | Hard | 数组、二分、动态规划、排序 |
+| [[tlc-maximum-size-subarray-sum-equals-k-0-whole\|LC 325 Maximum Size Subarray Sum Equals k]] | Medium | 数组、哈希、前缀和 |
+| [[tlc-maximum-number-of-events-that-can-be-attended-0-whole\|LC 1353 Maximum Number of Events That Can Be Attended]] | Medium | 数组、贪心、排序、堆 |
+| [[tlc-best-time-to-buy-and-sell-stock-using-strategy-0-whole\|LC 3652 按策略买卖股票的最佳时机（Best Time to Buy and Sell Stock using Strategy）]] | Medium | 数组、滑动窗口、前缀和 |
+| [[tlc-subarrays-with-k-different-integers-0-whole\|LC 992 Subarrays with K Different Integers]] | Hard | 数组、哈希、滑动窗口 |
+| [[tlc-jump-game-iv-0-whole\|LC 1345 跳跃游戏 IV（Jump Game IV）]] | Hard | 数组、哈希、BFS |
+| [[tlc-minimum-absolute-difference-between-elements-with-constraint-0-whole\|LC 2817 Minimum Absolute Difference Between Elements With Constraint]] | Medium | 数组、二分 |
+| [[tlc-design-task-manager-0-whole\|LC 3408 设计任务管理器（Design Task Manager）]] | Medium | 哈希、设计、堆 |
+| [[tlc-unit-conversion-ii-0-whole\|LC 3535 Unit Conversion II]] | Medium | 数组、数学、DFS、BFS、图 |
+| [[tlc-maximum-spending-after-buying-items-0-whole\|LC 2931 Maximum Spending After Buying Items]] | Hard | 数组、贪心、排序、堆、矩阵 |
+| [[tlc-find-maximum-non-decreasing-array-length-0-whole\|LC 2945 Find Maximum Non-decreasing Array Length]] | Hard | 数组、二分、动态规划、栈、单调栈、前缀和 |
+| [[tlc-add-two-integers-0-whole\|LC 2235 Add Two Integers]] | Easy | 数学 |
+| [[tlc-count-the-number-of-good-subarrays-0-whole\|LC 2537 Count the Number of Good Subarrays]] | Medium | 数组、哈希、滑动窗口 |
+| [[tlc-number-of-adjacent-elements-with-the-same-color-0-whole\|LC 2672 Number of Adjacent Elements With the Same Color]] | Medium | 数组 |
+| [[tlc-event-emitter-0-whole\|LC 2694 Event Emitter]] | Medium | — |
+| [[tlc-put-marbles-in-bags-0-whole\|LC 2551 Put Marbles in Bags]] | Hard | 数组、贪心、排序、堆 |
+| [[tlc-rearranging-fruits-0-whole\|LC 2561 Rearranging Fruits]] | Hard | 数组、哈希、贪心 |
+| [[tlc-minimum-operations-to-make-the-array-increasing-0-whole\|LC 1827 Minimum Operations to Make the Array Increasing]] | Easy | 数组、贪心 |
+| [[tlc-reverse-substrings-between-each-pair-of-parentheses-0-whole\|LC 1190 反转每对括号间的子串（Reverse Substrings Between Each Pair of Parentheses）]] | Medium | 字符串、栈 |
+| [[tlc-dot-product-of-two-sparse-vectors-0-whole\|LC 1570 Dot Product of Two Sparse Vectors]] | Medium | 数组、哈希、双指针、设计 |
+| [[tlc-shortest-subarray-to-be-removed-to-make-array-sorted-0-whole\|LC 1574 Shortest Subarray to be Removed to Make Array Sorted]] | Medium | 数组、双指针、二分、栈、单调栈 |
+| [[tlc-maximum-performance-of-a-team-0-whole\|LC 1383 Maximum Performance of a Team]] | Hard | 数组、贪心、排序、堆 |
+| [[tlc-valid-mountain-array-0-whole\|LC 941 Valid Mountain Array]] | Easy | 数组 |
+| [[tlc-insert-into-a-sorted-circular-linked-list-0-whole\|LC 708 Insert into a Sorted Circular Linked List]] | Medium | 链表 |
+| [[tlc-candy-crush-0-whole\|LC 723 Candy Crush]] | Medium | 数组、双指针、矩阵、模拟 |
+| [[tlc-two-city-scheduling-0-whole\|LC 1029 两地调度（Two City Scheduling）]] | Medium | 数组、贪心、排序 |
+| [[tlc-parallel-courses-0-whole\|LC 1136 Parallel Courses]] | Medium | 图、拓扑排序 |
+| [[tlc-employee-free-time-0-whole\|LC 759 Employee Free Time]] | Hard | 数组、排序、堆 |
+| [[tlc-count-binary-substrings-0-whole\|LC 696 Count Binary Substrings]] | Easy | 双指针、字符串 |
+| [[tlc-wiggle-sort-0-whole\|LC 280 Wiggle Sort]] | Medium | 数组、贪心、排序 |
+| [[tlc-word-pattern-ii-0-whole\|LC 291 Word Pattern II]] | Medium | 哈希、字符串、回溯 |
+| [[tlc-the-maze-ii-0-whole\|LC 505 The Maze II]] | Medium | 数组、DFS、BFS、图、堆、矩阵 |
+| [[tlc-minesweeper-0-whole\|LC 529 Minesweeper]] | Medium | 数组、DFS、BFS、矩阵 |
+| [[tlc-insert-interval-0-whole\|LC 57 Insert Interval]] | Medium | 数组 |
+| [[tlc-encode-and-decode-strings-0-whole\|LC 271 Encode and Decode Strings]] | Medium | 数组、字符串、设计 |
+| [[tlc-valid-sudoku-0-whole\|LC 36 Valid Sudoku]] | Medium | — |
+| [[tlc-construct-string-from-binary-tree-0-whole\|LC 606 Construct String from Binary Tree]] | Medium | — |
+| [[tlc-find-the-celebrity-0-whole\|LC 277 Find the Celebrity]] | Medium | — |
+| [[tlc-count-pairs-of-similar-strings-0-whole\|LC 2506 Count Pairs Of Similar Strings]] | Easy | — |
+| [[tlc-combination-sum-iv-0-whole\|LC 377 Combination Sum IV]] | Medium | — |
+| [[tlc-find-positive-integer-solution-for-a-given-equation-0-whole\|LC 1237 Find Positive Integer Solution for a Given Equation]] | Medium | — |
+| [[tlc-minimum-number-of-operations-to-move-all-balls-to-each-box-0-whole\|LC 1769 Minimum Number of Operations to Move All Balls to Each Box]] | Medium | — |
+| [[tlc-maximal-score-after-applying-k-operations-0-whole\|LC 2530 Maximal Score After Applying K Operations]] | Medium | — |
+| [[tlc-valid-palindrome-iii-0-whole\|LC 1216 Valid Palindrome III]] | Hard | — |
+| [[tlc-valid-word-abbreviation-0-whole\|LC 408 Valid Word Abbreviation]] | Easy | — |
+| [[tlc-arithmetic-slices-0-whole\|LC 413 Arithmetic Slices]] | Medium | — |
+| [[tlc-valid-tic-tac-toe-state-0-whole\|LC 794 Valid Tic-Tac-Toe State]] | Medium | — |
+| [[tlc-rearrange-string-k-distance-apart-0-whole\|LC 358 Rearrange String k Distance Apart]] | Hard | — |
+| [[tlc-concatenated-words-0-whole\|LC 472 Concatenated Words]] | Hard | — |
+| [[tlc-plus-one-0-whole\|LC 66 Plus One]] | Easy | — |
+| [[tlc-verify-preorder-sequence-in-binary-search-tree-0-whole\|LC 255 Verify Preorder Sequence in Binary Search Tree]] | Medium | — |
+| [[tlc-3sum-smaller-0-whole\|LC 259 3Sum Smaller]] | Medium | — |
+| [[tlc-graph-valid-tree-0-whole\|LC 261 Graph Valid Tree]] | Medium | — |
+| [[tlc-flip-game-ii-0-whole\|LC 294 Flip Game II]] | Medium | — |
+| [[tlc-expression-add-operators-0-whole\|LC 282 Expression Add Operators]] | Hard | — |

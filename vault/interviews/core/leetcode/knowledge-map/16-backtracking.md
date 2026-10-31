@@ -37,13 +37,13 @@
 - [[tlc-path-sum-ii-0-whole|LC 113 路径总和 II]]（中等）· TikTok B
 - [[tlc-word-ladder-ii-0-whole|LC 126 单词接龙 II]]（困难）· TikTok B · Amazon
 - [[tlc-word-break-ii-0-whole|LC 140 单词拆分 II]]（困难）· TikTok B · Amazon
-- LC 282 给表达式添加运算符（困难）· TikTok C
-- LC 291 单词规律 II（中等）· TikTok C
-- LC 294 翻转游戏 II（中等）· TikTok C
+- [[tlc-expression-add-operators-0-whole|LC 282 给表达式添加运算符]]（困难）· TikTok C
+- [[tlc-word-pattern-ii-0-whole|LC 291 单词规律 II]]（中等）· TikTok C
+- [[tlc-flip-game-ii-0-whole|LC 294 翻转游戏 II]]（中等）· TikTok C
 - [[tlc-remove-invalid-parentheses-0-whole|LC 301 删除无效的括号]]（困难）· TikTok B
 - [[tlc-additive-number-0-whole|LC 306 累加数]]（中等）· TikTok B
 - [[tlc-matchsticks-to-square-0-whole|LC 473 火柴拼正方形]]（中等）· TikTok B
-- LC 489 扫地机器人（困难）· TikTok C
+- [[tlc-robot-room-cleaner-0-whole|LC 489 扫地机器人]]（困难）· TikTok C
 - [[tlc-partition-to-k-equal-sum-subsets-0-whole|LC 698 划分为k个相等的子集]]（中等）· TikTok B
 - [[tlc-letter-case-permutation-0-whole|LC 784 字母大小写全排列]]（中等）· TikTok B
 - [[tlc-minimum-moves-to-spread-stones-over-grid-0-whole|LC 2850 将石头分散到网格图的最少移动次数]]（中等）· TikTok B

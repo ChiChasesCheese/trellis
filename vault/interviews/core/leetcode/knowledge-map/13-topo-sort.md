@@ -18,11 +18,11 @@
 
 - LC 310 最小高度树（中等）· 
 - LC 547 省份数量（中等）· Amazon
-- LC 1136 并行课程（中等）· TikTok C
-- LC 1245 树的直径（中等）· TikTok C
+- [[tlc-parallel-courses-0-whole|LC 1136 并行课程]]（中等）· TikTok C
+- [[tlc-tree-diameter-0-whole|LC 1245 树的直径]]（中等）· TikTok C
 - LC 1319 连通网络的操作次数（中等）· Amazon
 - [[tlc-course-schedule-iv-0-whole|LC 1462 课程表 IV]]（中等）· TikTok B
 - [[tlc-parallel-courses-iii-0-whole|LC 2050 并行课程 III]]（困难）· TikTok B · Amazon
-- LC 2115 从给定原材料中找到所有可以做出的菜（中等）· TikTok C · Amazon
+- [[tlc-find-all-possible-recipes-from-given-supplies-0-whole|LC 2115 从给定原材料中找到所有可以做出的菜]]（中等）· TikTok C · Amazon
 - LC 2603 收集树中金币（困难）· 
 - LC 3620 恢复网络路径（困难）· Amazon

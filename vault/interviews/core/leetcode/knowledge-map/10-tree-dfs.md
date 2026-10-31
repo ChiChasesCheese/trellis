@@ -31,7 +31,7 @@
 - [[tlc-binary-tree-zigzag-level-order-traversal-0-whole|LC 103 二叉树的锯齿形层序遍历]]（中等）· TikTok B · Amazon · Top Interview 150
 - [[tlc-maximum-depth-of-binary-tree-0-whole|LC 104 二叉树的最大深度]]（简单）· TikTok B · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-construct-binary-tree-from-preorder-and-inorder-traversal-0-whole|LC 105 从前序与中序遍历序列构造二叉树]]（中等）· TikTok B · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
-- LC 106 从中序与后序遍历序列构造二叉树（中等）· TikTok C · Top Interview 150
+- [[tlc-construct-binary-tree-from-inorder-and-postorder-traversal-0-whole|LC 106 从中序与后序遍历序列构造二叉树]]（中等）· TikTok C · Top Interview 150
 - [[tlc-convert-sorted-array-to-binary-search-tree-0-whole|LC 108 将有序数组转换为二叉搜索树]]（简单）· TikTok B · LeetCode Hot 100 · Top Interview 150
 - [[tlc-balanced-binary-tree-0-whole|LC 110 平衡二叉树]]（简单）· TikTok B · Amazon · NeetCode 150
 - [[tlc-path-sum-0-whole|LC 112 路径总和]]（简单）· TikTok B · Top Interview 150
@@ -56,13 +56,13 @@
 - LC 109 有序链表转换二叉搜索树（中等）· Amazon
 - [[tlc-minimum-depth-of-binary-tree-0-whole|LC 111 二叉树的最小深度]]（简单）· TikTok B
 - [[tlc-path-sum-ii-0-whole|LC 113 路径总和 II]]（中等）· TikTok B
-- LC 255 验证二叉搜索树的前序遍历序列（中等）· TikTok C
+- [[tlc-verify-preorder-sequence-in-binary-search-tree-0-whole|LC 255 验证二叉搜索树的前序遍历序列]]（中等）· TikTok C
 - [[tlc-binary-tree-longest-consecutive-sequence-0-whole|LC 298 二叉树最长连续序列]]（中等）· TikTok B
 - [[tlc-house-robber-iii-0-whole|LC 337 打家劫舍 III]]（中等）· TikTok B · Amazon
 - LC 341 扁平化嵌套列表迭代器（中等）· Amazon
 - [[tlc-convert-binary-search-tree-to-sorted-doubly-linked-list-0-whole|LC 426 将二叉搜索树转化为排序的双向链表]]（中等）· TikTok B
 - [[tlc-find-largest-value-in-each-tree-row-0-whole|LC 515 在每个树行中找最大值]]（中等）· TikTok B
-- LC 606 根据二叉树创建字符串（中等）· TikTok C
+- [[tlc-construct-string-from-binary-tree-0-whole|LC 606 根据二叉树创建字符串]]（中等）· TikTok C
 - [[tlc-merge-two-binary-trees-0-whole|LC 617 合并二叉树]]（简单）· TikTok B
 - [[tlc-maximum-width-of-binary-tree-0-whole|LC 662 二叉树最大宽度]]（中等）· TikTok B · Amazon
 - [[tlc-minimum-distance-between-bst-nodes-0-whole|LC 783 二叉搜索树节点最小距离]]（简单）· TikTok B
@@ -71,14 +71,14 @@
 - [[tlc-vertical-order-traversal-of-a-binary-tree-0-whole|LC 987 二叉树的垂序遍历]]（困难）· TikTok B · Amazon
 - LC 1038 从二叉搜索树到更大和树（中等）· Amazon
 - [[tlc-lowest-common-ancestor-of-deepest-leaves-0-whole|LC 1123 最深叶节点的最近公共祖先]]（中等）· TikTok B
-- LC 1245 树的直径（中等）· TikTok C
-- LC 1302 层数最深叶子节点的和（中等）· TikTok C
+- [[tlc-tree-diameter-0-whole|LC 1245 树的直径]]（中等）· TikTok C
+- [[tlc-deepest-leaves-sum-0-whole|LC 1302 层数最深叶子节点的和]]（中等）· TikTok C
 - [[tlc-maximum-product-of-splitted-binary-tree-0-whole|LC 1339 分裂二叉树的最大乘积]]（中等）· TikTok B
 - LC 1373 二叉搜索子树的最大键值和（困难）· Amazon
 - LC 1376 通知所有员工所需的时间（中等）· Amazon
 - [[tlc-number-of-good-leaf-nodes-pairs-0-whole|LC 1530 好叶子节点对的数量]]（中等）· TikTok B
-- LC 1650 二叉树的最近公共祖先 III（中等）· TikTok C · Amazon
-- LC 1676 二叉树的最近公共祖先 IV（中等）· TikTok C
+- [[tlc-lowest-common-ancestor-of-a-binary-tree-iii-0-whole|LC 1650 二叉树的最近公共祖先 III]]（中等）· TikTok C · Amazon
+- [[tlc-lowest-common-ancestor-of-a-binary-tree-iv-0-whole|LC 1676 二叉树的最近公共祖先 IV]]（中等）· TikTok C
 - [[tlc-find-distance-in-a-binary-tree-0-whole|LC 1740 找到二叉树中的距离]]（中等）· TikTok B
-- LC 2096 从二叉树一个节点到另一个节点每一步的方向（中等）· TikTok C
+- [[tlc-step-by-step-directions-from-a-binary-tree-node-to-another-0-whole|LC 2096 从二叉树一个节点到另一个节点每一步的方向]]（中等）· TikTok C
 - LC 2603 收集树中金币（困难）· 

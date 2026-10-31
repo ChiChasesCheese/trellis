@@ -26,7 +26,7 @@
 - [[tlc-successful-pairs-of-spells-and-potions-0-whole|LC 2300 咒语和药水的成功对数]]（中等）· TikTok P4
 - [[tlc-search-a-2d-matrix-0-whole|LC 74 搜索二维矩阵]]（中等）· TikTok B · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-find-peak-element-0-whole|LC 162 寻找峰值]]（中等）· TikTok B · Top Interview 150
-- LC 167 两数之和 II - 输入有序数组（中等）· TikTok C · Amazon · NeetCode 150 · Top Interview 150
+- [[tlc-two-sum-ii-input-array-is-sorted-0-whole|LC 167 两数之和 II - 输入有序数组]]（中等）· TikTok C · Amazon · NeetCode 150 · Top Interview 150
 - LC 222 完全二叉树的节点个数（中等）· Top Interview 150
 - [[tlc-search-a-2d-matrix-ii-0-whole|LC 240 搜索二维矩阵 II]]（中等）· TikTok B · Amazon · LeetCode Hot 100
 - LC 268 丢失的数字（简单）· Amazon · Blind 75 · NeetCode 150
@@ -37,20 +37,20 @@
 **再做（其余牌组里的题，45 道）**
 
 - [[tlc-search-in-rotated-sorted-array-ii-0-whole|LC 81 搜索旋转排序数组 II]]（中等）· TikTok B
-- LC 259 较小的三数之和（中等）· TikTok C
+- [[tlc-3sum-smaller-0-whole|LC 259 较小的三数之和]]（中等）· TikTok C
 - LC 278 第一个错误的版本（简单）· 
 - LC 349 两个数组的交集（简单）· Amazon
-- LC 354 俄罗斯套娃信封问题（困难）· TikTok C
-- LC 400 第 N 位数字（中等）· TikTok C
+- [[tlc-russian-doll-envelopes-0-whole|LC 354 俄罗斯套娃信封问题]]（困难）· TikTok C
+- [[tlc-nth-digit-0-whole|LC 400 第 N 位数字]]（中等）· TikTok C
 - LC 410 分割数组的最大值（困难）· Amazon
 - LC 456 132 模式（中等）· Amazon
-- LC 475 供暖器（中等）· TikTok C
+- [[tlc-heaters-0-whole|LC 475 供暖器]]（中等）· TikTok C
 - LC 493 翻转对（困难）· Amazon
 - [[tlc-random-pick-with-weight-0-whole|LC 528 按权重随机选择]]（中等）· TikTok B · Amazon
-- LC 658 找到 K 个最接近的元素（中等）· TikTok C · Amazon
+- [[tlc-find-k-closest-elements-0-whole|LC 658 找到 K 个最接近的元素]]（中等）· TikTok C · Amazon
 - [[tlc-maximum-length-of-repeated-subarray-0-whole|LC 718 最长重复子数组]]（中等）· TikTok B
 - [[tlc-find-k-th-smallest-pair-distance-0-whole|LC 719 找出第 K 小的数对距离]]（困难）· TikTok B
-- LC 729 我的日程安排表 I（中等）· TikTok C
+- [[tlc-my-calendar-i-0-whole|LC 729 我的日程安排表 I]]（中等）· TikTok C
 - [[tlc-preimage-size-of-factorial-zeroes-function-0-whole|LC 793 阶乘函数后 K 个零]]（困难）· TikTok B
 - LC 852 山脉数组的峰顶索引（中等）· Amazon
 - [[tlc-shortest-subarray-with-sum-at-least-k-0-whole|LC 862 和至少为 K 的最短子数组]]（困难）· TikTok B · Amazon
@@ -62,13 +62,13 @@
 - [[tlc-two-sum-less-than-k-0-whole|LC 1099 小于 K 的两数之和]]（简单）· TikTok B
 - [[tlc-snapshot-array-0-whole|LC 1146 快照数组]]（中等）· TikTok B
 - [[tlc-maximum-profit-in-job-scheduling-0-whole|LC 1235 规划兼职工作]]（困难）· TikTok B · Amazon
-- LC 1237 找出给定方程的正整数解（中等）· TikTok C
-- LC 1268 搜索推荐系统（中等）· TikTok C · Amazon
+- [[tlc-find-positive-integer-solution-for-a-given-equation-0-whole|LC 1237 找出给定方程的正整数解]]（中等）· TikTok C
+- [[tlc-search-suggestions-system-0-whole|LC 1268 搜索推荐系统]]（中等）· TikTok C · Amazon
 - [[tlc-find-two-non-overlapping-sub-arrays-each-with-target-sum-0-whole|LC 1477 找两个和为目标值且不重叠的子数组]]（中等）· TikTok B
 - LC 1482 制作 m 束花所需的最少天数（中等）· Amazon
 - [[tlc-kth-missing-positive-number-0-whole|LC 1539 第 k 个缺失的正整数]]（简单）· TikTok B
 - LC 1552 两球之间的磁力（中等）· Amazon
-- LC 1574 删除最短的子数组使剩余数组有序（中等）· TikTok C
+- [[tlc-shortest-subarray-to-be-removed-to-make-array-sorted-0-whole|LC 1574 删除最短的子数组使剩余数组有序]]（中等）· TikTok C
 - [[tlc-maximum-value-at-a-given-index-in-a-bounded-array-0-whole|LC 1802 有界数组中指定下标处的最大值]]（中等）· TikTok B
 - LC 1838 最高频元素的频数（中等）· Amazon
 - LC 2024 考试的最大困扰度（中等）· Amazon
@@ -76,8 +76,8 @@
 - LC 2271 毯子覆盖的最多白色砖块数（中等）· Amazon
 - LC 2448 使数组相等的最小开销（困难）· Amazon
 - LC 2812 找出最安全路径（中等）· Amazon
-- LC 2817 限制条件下元素之间的最小绝对差（中等）· TikTok C
-- LC 2945 找到最大非递减数组的长度（困难）· TikTok C
+- [[tlc-minimum-absolute-difference-between-elements-with-constraint-0-whole|LC 2817 限制条件下元素之间的最小绝对差]]（中等）· TikTok C
+- [[tlc-find-maximum-non-decreasing-array-length-0-whole|LC 2945 找到最大非递减数组的长度]]（困难）· TikTok C
 - LC 3413 收集连续 K 个袋子可以获得的最多硬币数量（中等）· Amazon
 - LC 3620 恢复网络路径（困难）· Amazon
 - LC 3733 完成所有送货任务的最少时间（中等）· Amazon

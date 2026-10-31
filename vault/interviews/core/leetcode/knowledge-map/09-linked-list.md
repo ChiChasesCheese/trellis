@@ -42,8 +42,8 @@
 - [[tlc-plus-one-linked-list-0-whole|LC 369 给单链表加一]]（中等）· TikTok B
 - [[tlc-convert-binary-search-tree-to-sorted-doubly-linked-list-0-whole|LC 426 将二叉搜索树转化为排序的双向链表]]（中等）· TikTok B
 - [[tlc-lfu-cache-0-whole|LC 460 LFU 缓存]]（困难）· TikTok B · Amazon
-- LC 708 循环有序列表的插入（中等）· TikTok C
-- LC 716 最大栈（困难）· TikTok C
+- [[tlc-insert-into-a-sorted-circular-linked-list-0-whole|LC 708 循环有序列表的插入]]（中等）· TikTok C
+- [[tlc-max-stack-0-whole|LC 716 最大栈]]（困难）· TikTok C
 - LC 876 链表的中间结点（简单）· 
 - [[tlc-remove-zero-sum-consecutive-nodes-from-linked-list-0-whole|LC 1171 从链表中删去总和值为零的连续节点]]（中等）· TikTok B
 - LC 1472 设计浏览器历史记录（中等）· Amazon
