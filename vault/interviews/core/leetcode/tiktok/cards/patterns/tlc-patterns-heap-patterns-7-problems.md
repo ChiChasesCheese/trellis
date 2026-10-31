@@ -34,6 +34,12 @@ step: 7
 - LC 787 K 站中转内最便宜的航班（见最短路一组）
 - LC 778 水位上升的泳池中游泳（高频）
 
+**TikTok 变体**
+- 带 TTL 的 LRU 缓存（有序字典管使用顺序，带版本号的最小堆按到期时刻清过期）
+- 手写最小堆（数组存完全二叉树，上浮 / 下沉，线性建堆）
+- 卖家任务调度器（卖家轮转队列 + 每个卖家一个最小堆）
+- 可删除任务的时间戳调度器（最小堆 + 字典做懒删除）
+
 提示：先写出「每一步要从剩余的东西里取哪个最值」，再决定存什么键、是否要暂存刚用过的项、是否需要懒删除。
 
 **例题：** LC 215 数组中的第 K 个最大元素
@@ -238,4 +244,174 @@ def swim_in_water(grid: list[list[int]]) -> int:
                 seen.add((nx, ny))
                 heappush(heap, (max(t, grid[nx][ny]), nx, ny))
     return -1
+```
+
+**例题：** 带 TTL 的 LRU 缓存（含 LFU / 加权 / 线程安全追问）
+
+设计固定容量 `capacity` 的 LRU 缓存，`put(key, value, ttl)` 为每条设置存活时间，`get(key)` 读到过期条目时当作不存在并删除；新 key 写入时容量已满，先清掉所有已过期的条目，仍满再淘汰最久未使用的；时间来自可注入的 `clock()`。
+
+```python
+import heapq
+import time
+from collections import OrderedDict
+from collections.abc import Callable
+class LRUCacheTTL:
+    def __init__(self, capacity: int, clock: Callable[[], float] = time.monotonic) -> None:
+        self.cap = capacity
+        self.clock = clock
+        self.data: OrderedDict[int, tuple[int, float]] = OrderedDict()
+        self.expiry: list[tuple[float, int, int]] = []
+        self.version: dict[int, int] = {}
+        self.counter = 0
+    def get(self, key: int) -> int:
+        item = self.data.get(key)
+        if item is None:
+            return -1
+        value, expire_at = item
+        if self.clock() >= expire_at:
+            self._drop(key)
+            return -1
+        self.data.move_to_end(key)
+        return value
+    def put(self, key: int, value: int, ttl: float) -> None:
+        now = self.clock()
+        if key not in self.data and len(self.data) >= self.cap:
+            self._purge_expired(now)
+            if len(self.data) >= self.cap:
+                oldest = next(iter(self.data))
+                self._drop(oldest)
+        self.counter += 1
+        self.data[key] = (value, now + ttl)
+        self.data.move_to_end(key)
+        self.version[key] = self.counter
+        heapq.heappush(self.expiry, (now + ttl, self.counter, key))
+        if len(self.expiry) > 4 * self.cap + 16:
+            self.expiry = [(e, self.version[k], k) for k, (_, e) in self.data.items()]
+            heapq.heapify(self.expiry)
+    def _drop(self, key: int) -> None:
+        del self.data[key]
+        del self.version[key]
+    def _purge_expired(self, now: float) -> None:
+        while self.expiry and self.expiry[0][0] <= now:
+            _, ver, key = heapq.heappop(self.expiry)
+            if self.version.get(key) == ver:
+                self._drop(key)
+```
+
+**例题：** 用数组手写最小堆（并用它按先修关系排课）
+
+不用 `heapq`，用列表实现 `MinHeap`：`push`、`pop`、`peek`、`__len__` 和线性建堆的 `heapify`；`push` / `pop` 为 `O(log n)`，建堆 `O(n)`，空堆 `pop` / `peek` 抛 `IndexError`。
+
+```python
+from collections.abc import Iterable
+class MinHeap[T]:
+    """数组存完全二叉树：下标 i 的父节点是 (i - 1) // 2，子节点是 2i + 1、2i + 2。元素需支持 <。"""
+    def __init__(self, items: Iterable[T] = ()) -> None:
+        self.a: list[T] = []
+        self.heapify(items)
+    def __len__(self) -> int:
+        return len(self.a)
+    def peek(self) -> T:
+        if not self.a:
+            raise IndexError("peek from empty heap")
+        return self.a[0]
+    def push(self, x: T) -> None:
+        self.a.append(x)
+        self._sift_up(len(self.a) - 1)
+    def pop(self) -> T:
+        if not self.a:
+            raise IndexError("pop from empty heap")
+        last = self.a.pop()
+        if not self.a:
+            return last
+        top, self.a[0] = self.a[0], last
+        self._sift_down(0)
+        return top
+    def heapify(self, items: Iterable[T]) -> None:
+        self.a = list(items)
+        for i in range(len(self.a) // 2 - 1, -1, -1):
+            self._sift_down(i)
+    def _sift_up(self, i: int) -> None:
+        a, x = self.a, self.a[i]
+        while i > 0:
+            parent = (i - 1) // 2
+            if not x < a[parent]:
+                break
+            a[i] = a[parent]
+            i = parent
+        a[i] = x
+    def _sift_down(self, i: int) -> None:
+        a, n, x = self.a, len(self.a), self.a[i]
+        while (child := 2 * i + 1) < n:
+            if child + 1 < n and a[child + 1] < a[child]:
+                child += 1
+            if not a[child] < x:
+                break
+            a[i] = a[child]
+            i = child
+        a[i] = x
+```
+
+**例题：** 卖家任务调度器（轮转 + VIP + 优先级）
+
+任务属于不同卖家：`process_next_task()` 在有任务的卖家之间轮转，每次处理一个卖家的一个任务（VIP 卖家每轮两个）；同一卖家内部按 `priority`、`timestamp`、接收顺序依次取；卖家的任务处理完后退出轮转，再收到任务时排到队尾。
+
+```python
+import heapq
+from collections import deque
+from itertools import count
+class SellerScheduler:
+    def __init__(self, vip_sellers: set[str] | None = None) -> None:
+        self._vip = set(vip_sellers or ())
+        self._heaps: dict[str, list[tuple[int, int, int, str]]] = {}
+        self._ring: deque[str] = deque()
+        self._served = 0
+        self._seq = count()
+    def receive_task(self, task_id: str, seller_id: str, priority: int, timestamp: int) -> None:
+        heap = self._heaps.get(seller_id)
+        if heap is None:
+            heap = self._heaps[seller_id] = []
+            self._ring.append(seller_id)
+        heapq.heappush(heap, (priority, timestamp, next(self._seq), task_id))
+    def process_next_task(self) -> str | None:
+        if not self._ring:
+            return None
+        seller = self._ring[0]
+        heap = self._heaps[seller]
+        task_id = heapq.heappop(heap)[-1]
+        self._served += 1
+        if not heap:
+            self._ring.popleft()
+            del self._heaps[seller]
+            self._served = 0
+        elif self._served == (2 if seller in self._vip else 1):
+            self._ring.rotate(-1)
+            self._served = 0
+        return task_id
+```
+
+**例题：** 可删除任务的时间戳调度器（popTask）
+
+实现 `addTask(taskId, timestamp)`（重复 id 视为更新时间戳）、`removeTask(taskId)`（返回是否真的删除）、`popTask(num)`（取走时间戳最早的 `num` 个任务，相同时间戳按 `taskId` 字典序）；操作总数 `<= 10^5`。
+
+```python
+import heapq
+class TaskScheduler:
+    def __init__(self) -> None:
+        self._heap: list[tuple[int, str]] = []
+        self._alive: dict[str, int] = {}
+    def addTask(self, task_id: str, timestamp: int) -> None:
+        self._alive[task_id] = timestamp
+        heapq.heappush(self._heap, (timestamp, task_id))
+    def removeTask(self, task_id: str) -> bool:
+        return self._alive.pop(task_id, None) is not None
+    def popTask(self, num: int) -> list[str]:
+        out: list[str] = []
+        while self._heap and len(out) < num:
+            timestamp, task_id = heapq.heappop(self._heap)
+            if self._alive.get(task_id) != timestamp:
+                continue
+            del self._alive[task_id]
+            out.append(task_id)
+        return out
 ```

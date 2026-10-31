@@ -40,6 +40,9 @@ step: 7
 - LC 415 字符串相加（两个数各一个指针，从末尾向前）
 - LC 151 反转字符串中的单词（高频）
 
+**TikTok 变体**
+- 整数数组中的勾股三元组（平方后排序，固定斜边加相向双指针）
+
 提示：先问「数组是否有序 / 能否排序」；有序且问和 → 相向；要原地、保序 → 同向；值域极小 → 分区。
 
 **例题：** LC 15 三数之和
@@ -387,4 +390,24 @@ def reverse_words(s: str) -> str:
             i -= 1
         words.append(s[i + 1:end])
     return " ".join(words)
+```
+
+**例题：** 整数数组中的勾股三元组
+
+判断整数数组 `nums` 中是否有三个不同下标 `i, j, k` 满足 `nums[i]^2 + nums[j]^2 == nums[k]^2`（元素可为负、可重复），时间 `O(n^2)`；`n <= 3000`。
+
+```python
+def has_pythagorean_triple(nums: list[int]) -> bool:
+    sq = sorted(x * x for x in nums)
+    for k in range(len(sq) - 1, 1, -1):
+        i, j = 0, k - 1
+        while i < j:
+            s = sq[i] + sq[j]
+            if s == sq[k]:
+                return True
+            if s < sq[k]:
+                i += 1
+            else:
+                j -= 1
+    return False
 ```

@@ -43,6 +43,14 @@ step: 7
 - LC 230 二叉搜索树中第 K 小的元素（高频）
 - LC 99 恢复二叉搜索树（高频）
 
+**两棵树同步比较**
+- LC 572 另一个树的子树（高频）
+- LC 101 对称二叉树（高频）
+
+**TikTok 变体**
+- 合并两个嵌套 JSON（递归按键的并集合并，字典递归、列表拼接）
+- 二叉树中序字符迭代器（显式栈懒加载中序遍历，加当前字符串与读取位置）
+
 提示：先问「这个节点要向父节点报告什么」（高度、单侧收益、距离列表）；再问「是否有跨过当前节点的路径」（需要全局变量）；最后确认空树和退化链的处理。
 
 **例题：** LC 124 二叉树中的最大路径和
@@ -526,4 +534,97 @@ def recover_tree(root: TreeNode | None) -> None:
     inorder(root)
     if first and second:
         first.val, second.val = second.val, first.val
+```
+
+**例题：** LC 572 另一个树的子树
+
+给两棵二叉树 `root` 和 `subRoot`，判断 `root` 中是否有一棵子树与 `subRoot` 结构和节点值都完全相同（`root` 自己也算子树）；`root` 节点数 `<= 2000`，`subRoot` 节点数 `<= 1000`。
+
+```python
+def is_same(a: TreeNode | None, b: TreeNode | None) -> bool:
+    if a is None or b is None:
+        return a is b
+    return a.val == b.val and is_same(a.left, b.left) and is_same(a.right, b.right)
+def is_subtree(root: TreeNode | None, sub_root: TreeNode | None) -> bool:
+    if root is None:
+        return False
+    return is_same(root, sub_root) or is_subtree(root.left, sub_root) or is_subtree(root.right, sub_root)
+```
+
+**例题：** LC 101 对称二叉树
+
+给二叉树的根节点 `root`，判断它是否轴对称（左右两半互为镜像）；节点数 `<= 1000`。
+
+```python
+def is_symmetric(root: TreeNode | None) -> bool:
+    if root is None:
+        return True
+    stack = [(root.left, root.right)]
+    while stack:
+        a, b = stack.pop()
+        if a is None and b is None:
+            continue
+        if a is None or b is None or a.val != b.val:
+            return False
+        stack.append((a.left, b.right))
+        stack.append((a.right, b.left))
+    return True
+```
+
+**例题：** 合并两个嵌套 JSON
+
+实现 `merge(a, b)` 合并两个嵌套 JSON 并返回新结构：两边都是字典就递归合并，两边都是列表就拼接，同类标量取 `b`，类型冲突按 `on_conflict`（`"later"` 取 `b`、`"error"` 抛 `TypeError`）；不修改输入。
+
+```python
+from typing import Any
+Json = dict[str, Any] | list[Any] | str | int | float | bool | None
+def merge(a: Json, b: Json, on_conflict: str = "later") -> Json:
+    """合并两个嵌套 JSON，返回新结构，不修改 a、b。
+    dict + dict 递归合并；list + list 拼接；类型不同按 on_conflict 处理（"later" 取 b，"error" 抛 TypeError）；
+    同类型的标量取 b。"""
+    def walk(x: Json, y: Json, where: str) -> Json:
+        if isinstance(x, dict) and isinstance(y, dict):
+            out: dict[str, Any] = {}
+            for key in {**x, **y}:
+                if key not in y:
+                    out[key] = x[key]
+                elif key not in x:
+                    out[key] = y[key]
+                else:
+                    out[key] = walk(x[key], y[key], key)
+            return out
+        if isinstance(x, list) and isinstance(y, list):
+            return x + y
+        if type(x) is type(y) or on_conflict == "later":
+            return y
+        raise TypeError(f"conflict at {where!r}: {type(x).__name__} vs {type(y).__name__}")
+    return walk(a, b, "<root>")
+```
+
+**例题：** 二叉树中序字符迭代器
+
+二叉树每个节点存一个字符串：实现迭代器，`next()` 按中序逐字符返回、`hasNext()` 判断是否还有字符；不能在构造时展开整棵树，额外空间与树高成正比，空串节点要跳过。
+
+```python
+class InorderCharIterator:
+    def __init__(self, root: TreeNode | None) -> None:
+        self._stack: list[TreeNode] = []
+        self._s, self._i = "", 0
+        self._push_left(root)
+    def _push_left(self, node: TreeNode | None) -> None:
+        while node:
+            self._stack.append(node)
+            node = node.left
+    def hasNext(self) -> bool:
+        while self._i >= len(self._s) and self._stack:
+            node = self._stack.pop()
+            self._push_left(node.right)
+            self._s, self._i = node.val, 0
+        return self._i < len(self._s)
+    def next(self) -> str:
+        if not self.hasNext():
+            raise StopIteration
+        ch = self._s[self._i]
+        self._i += 1
+        return ch
 ```

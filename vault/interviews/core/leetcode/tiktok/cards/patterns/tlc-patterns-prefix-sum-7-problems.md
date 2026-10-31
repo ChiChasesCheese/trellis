@@ -27,6 +27,9 @@ step: 7
 - LC 1352 最后 K 个数的乘积（前缀积）
 - LC 42 接雨水（前缀最大 / 后缀最大）
 
+**TikTok 变体**
+- 删除长度 k 的窗口使奇偶下标和相等（按原下标奇偶加符号的前缀和）
+
 提示：每道题先写出 `pre` 的定义（前缀和、前缀乘积、前缀最大、奇数个数），再把条件翻译成 `pre[j] - pre[i]` 的关系。
 
 **例题：** LC 560 和为 K 的子数组
@@ -183,4 +186,23 @@ def count_interesting_subarrays(nums: list[int], modulo: int, k: int) -> int:
         ans += seen[(pre - k) % modulo]            # 需要某个旧前缀 p 使得 (pre - p) % modulo == k
         seen[pre] += 1
     return ans
+```
+
+**例题：** 删除长度 k 的窗口使奇偶下标和相等
+
+删除数组 `nums` 里一段长度恰为 `k` 的连续子数组，剩余元素重新编号后要求偶数下标之和等于奇数下标之和，返回最小的删除起点，没有返回 `-1`；`n <= 10^5`。
+
+```python
+from itertools import accumulate
+def min_balanced_deletion(nums: list[int], k: int) -> int:
+    """删除一段长度 k 的连续子数组，使剩余数组偶数下标之和等于奇数下标之和；返回最小起点，没有则返回 -1。"""
+    n = len(nums)
+    pre = list(accumulate((x if i % 2 == 0 else -x for i, x in enumerate(nums)), initial=0))
+    flip = -1 if k % 2 else 1
+    for i in range(n - k + 1):
+        left = pre[i]
+        right = flip * (pre[n] - pre[i + k])
+        if left + right == 0:
+            return i
+    return -1
 ```

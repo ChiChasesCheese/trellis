@@ -37,6 +37,15 @@ step: 9
 - LC 189 轮转数组（三次反转，`k %= n`）
 - LC 151 反转字符串中的单词（高频）
 
+**随机 / 概率**
+- LC 470 用 Rand7() 实现 Rand10()（高频）
+
+**奇偶 / 配对计数**
+- LC 1247 交换字符使得字符串相同（高频）
+
+**TikTok 变体**
+- 螺旋矩阵：O(1) 额外空间且不修改输入（上下左右四条边界逐圈向里收）
+
 提示：先问数据范围（能否直接模拟）、边界（空 / 单行 / 进位 / 前导零）、整数规则（取模、除法截断）；能用内置（`gcd`、`pow`、`bit_count`、`isqrt`）就先用，再被要求时手写。
 
 **例题：** LC 365 水壶问题
@@ -331,4 +340,58 @@ def reverse_words(s: str) -> str:
             i -= 1
         words.append(s[i + 1:end])         # i 停在单词左边的空格（或 -1）
     return " ".join(words)
+```
+
+**例题：** LC 470 用 Rand7() 实现 Rand10()
+
+已给等概率返回 `[1, 7]` 的 `rand7()`，只准调用它实现等概率返回 `[1, 10]` 的 `rand10()`；`rand10()` 最多被调用 `10^5` 次。
+
+```python
+import random
+def rand7() -> int:
+    return random.randint(1, 7)
+def rand10() -> int:
+    while True:
+        idx = (rand7() - 1) * 7 + rand7()
+        if idx <= 40:
+            return (idx - 1) % 10 + 1
+```
+
+**例题：** LC 1247 交换字符使得字符串相同
+
+两个等长且只含 `'x'`、`'y'` 的字符串 `s1`、`s2`，每次交换必须是 `s1[i]` 与 `s2[j]`（不能在同一个字符串内部交换），求使两串相同的最少交换次数，做不到返回 `-1`；长度 `<= 1000`。
+
+```python
+def minimum_swap(s1: str, s2: str) -> int:
+    xy = yx = 0
+    for a, b in zip(s1, s2):
+        if a != b:
+            if a == "x":
+                xy += 1
+            else:
+                yx += 1
+    if (xy + yx) % 2:
+        return -1
+    return xy // 2 + yx // 2 + 2 * (xy % 2)
+```
+
+**例题：** 螺旋矩阵：O(1) 额外空间且不修改输入
+
+按顺时针螺旋顺序返回 `m x n` 矩阵的所有元素，额外空间 `O(1)`，不能用 `visited` 数组，也不能修改输入；要处理空矩阵、单行、单列。
+
+```python
+def spiral_order(matrix: list[list[int]]) -> list[int]:
+    if not matrix or not matrix[0]:
+        return []
+    top, bottom, left, right = 0, len(matrix) - 1, 0, len(matrix[0]) - 1
+    out: list[int] = []
+    while top <= bottom and left <= right:
+        out.extend(matrix[top][c] for c in range(left, right + 1))
+        out.extend(matrix[r][right] for r in range(top + 1, bottom + 1))
+        if top < bottom:
+            out.extend(matrix[bottom][c] for c in range(right - 1, left - 1, -1))
+        if left < right:
+            out.extend(matrix[r][left] for r in range(bottom - 1, top, -1))
+        top, bottom, left, right = top + 1, bottom - 1, left + 1, right - 1
+    return out
 ```

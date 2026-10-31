@@ -32,6 +32,9 @@ step: 7
 - LC 239 滑动窗口最大值（单调队列）
 - LC 395 至少有 K 个重复字符的最长子串（约束不单调，枚举种类数）
 
+**TikTok 变体**
+- 长度至少为 2 的子数组最大化 min + max（只看长度为 2 的窗口，即相邻两数之和）
+
 提示：先判断**最长还是最短**决定更新位置；再判断约束是否单调，不单调就换前缀和或枚举。
 
 **例题：** LC 3 无重复字符的最长子串
@@ -271,4 +274,14 @@ def longest_ones(nums: list[int], k: int) -> int:
             left += 1
         best = max(best, right - left + 1)
     return best
+```
+
+**例题：** 长度至少为 2 的子数组，最大化 min + max
+
+给 `n` 个正整数的数组，找长度至少为 `2` 的连续子数组，使其最小值与最大值之和最大，返回这个和；`n <= 10^5`，线性时间。
+
+```python
+from itertools import pairwise
+def max_min_plus_max(nums: list[int]) -> int:
+    return max(a + b for a, b in pairwise(nums))
 ```

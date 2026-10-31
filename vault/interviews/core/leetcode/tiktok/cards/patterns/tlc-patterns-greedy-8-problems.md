@@ -36,6 +36,9 @@ step: 8
 - LC 322 零钱兑换
 - LC 198 打家劫舍
 
+**TikTok 变体**
+- 用给定数字组成小于 N 的最大数（高位优先，从最长公共前缀往回找第一个能变小的位）
+
 提示：先找反例；找不到就尝试交换论证；仍不确定就写 DP 兜底。
 
 **例题：** LC 55 跳跃游戏
@@ -293,4 +296,29 @@ def get_order(tasks: list[list[int]]) -> list[int]:
         t += cost
         res.append(i)
     return res
+```
+
+**例题：** 用给定数字组成小于 N 的最大数
+
+给正整数 `N` 和数字数组 `digits`（每个数字可重复使用），拼出严格小于 `N` 的最大整数，无前导零，拼不出返回 `-1`；`N <= 10^18`。
+
+```python
+from bisect import bisect_left
+def largest_below(n: int, digits: list[int]) -> int:
+    """由 digits 中的数字（可重复使用）拼出严格小于 n 的最大非负整数，没有则返回 -1。"""
+    allowed = sorted(set(digits))
+    top = allowed[-1]
+    s = str(n)
+    length = len(s)
+    usable = set(allowed)
+    p = 0
+    while p < length and int(s[p]) in usable:
+        p += 1
+    for i in range(min(p, length - 1), -1, -1):
+        j = bisect_left(allowed, int(s[i]))
+        if j and (allowed[j - 1] or i or length == 1):
+            return int(s[:i] + str(allowed[j - 1]) + str(top) * (length - i - 1))
+    if length > 1:
+        return int(str(top) * (length - 1))
+    return -1
 ```

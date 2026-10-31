@@ -25,6 +25,9 @@ step: 8
 **数位计数**
 - LC 902 最大为 N 的数字组合
 
+**TikTok 变体**
+- 环上走 n 步回到起点的方案数（以「已走步数」为轮、「停在哪个点」为状态的计数 DP）
+
 提示：先问"每个物品用几次"决定方向，再问"求最优 / 能否 / 方案数"决定转移和初值，最后问"顺序算不算"决定循环嵌套。
 
 **例题：** LC 416 分割等和子集
@@ -130,4 +133,18 @@ def min_cost_climbing_stairs(cost: list[int]) -> int:
     for i in range(2, len(cost) + 1):
         two_back, one_back = one_back, min(one_back + cost[i - 1], two_back + cost[i - 2])
     return one_back
+```
+
+**例题：** 环上走 n 步回到起点的方案数
+
+环上有 `10` 个点（编号 `0..9`），从 `0` 出发每步顺时针或逆时针走一格，求恰好走 `n` 步回到 `0` 的走法数，对 `10^9 + 7` 取模；`n <= 10^5`。
+
+```python
+MOD = 10**9 + 7
+def ring_walks(n: int, size: int = 10, mod: int = MOD) -> int:
+    """环上 size 个点，从 0 出发每步顺时针或逆时针走一格，恰好 n 步回到 0 的走法数（对 mod 取模）。"""
+    ways = [1] + [0] * (size - 1)
+    for _ in range(n):
+        ways = [(ways[p - 1] + ways[(p + 1) % size]) % mod for p in range(size)]
+    return ways[0]
 ```

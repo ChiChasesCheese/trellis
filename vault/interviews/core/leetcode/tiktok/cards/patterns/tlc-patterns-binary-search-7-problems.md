@@ -36,6 +36,11 @@ step: 7
 - LC 300 最长递增子序列（`tails` 数组上二分）
 - LC 981 基于时间的键值存储（高频）
 
+**TikTok 变体**
+- 鱼塘捕鱼（对「最后一次捕到的产量」阈值二分，已选部分用等差数列求和）
+- 有序数组中出现次数超过 n/3 的数（候选只在间隔 n/3 的下标上，每个用两次二分数个数）
+- 一个骰子掷出更大点数的概率（B 排序，对 A 的每一面 `bisect_left` 数出赢的面数）
+
 提示：先看是在**下标**上二分还是对**答案**二分；再写判定函数，确认它是 `False...False True...True`；最后选模板。
 
 **例题：** LC 34 在排序数组中查找元素的第一个和最后一个位置
@@ -378,4 +383,77 @@ class TimeMap:
             return ""
         i = bisect_right(times, timestamp)
         return self.values[key][i - 1] if i else ""
+```
+
+**例题：** 鱼塘捕鱼：产量递减时的最大收获
+
+`n` 个鱼塘，第 `i` 个首次捕到 `fish[i]` 条，之后每捕一次下次减少 `decay[i]` 条（不低于 `0`），共 `t` 个时间单位、每次选一个鱼塘，求最多捞到多少条；`n <= 10^5`，`t <= 10^9`。
+
+```python
+def count_at_least(ponds: list[tuple[int, int]], x: int, cap: int) -> int:
+    """单次产量 >= x 的捕鱼机会共有多少个（数到 cap 就停）。ponds 按首捞量降序。"""
+    total = 0
+    for f, d in ponds:
+        if f < x:
+            break
+        if d == 0:
+            return cap
+        total += (f - x) // d + 1
+        if total >= cap:
+            return cap
+    return total
+def find_threshold(ponds: list[tuple[int, int]], t: int) -> int:
+    """最大的 x >= 1，使得 count_at_least(x) >= t；所有正产量加起来都不足 t 次时返回 0。"""
+    if count_at_least(ponds, 1, t) < t:
+        return 0
+    lo, hi = 1, ponds[0][0]
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if count_at_least(ponds, mid, t) >= t:
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+def max_fish(fish: list[int], decay: list[int], t: int) -> int:
+    ponds = sorted(((f, d) for f, d in zip(fish, decay) if f > 0), reverse=True)
+    if not ponds:
+        return 0
+    x = find_threshold(ponds, t)
+    taken = total = 0
+    for f, d in ponds:
+        if f <= x:
+            break
+        k = (f - x - 1) // d + 1
+        taken += k
+        total += k * f - d * k * (k - 1) // 2
+    return total + (t - taken) * x
+```
+
+**例题：** 有序数组中出现次数超过 n/3 的数
+
+非递减有序数组 `nums`（`n >= 3`），找出所有出现次数大于 `n / 3` 的数并按升序返回，要求时间低于 `O(n)`；`n <= 10^6`。
+
+```python
+from bisect import bisect_left, bisect_right
+def more_than_third(nums: list[int]) -> list[int]:
+    n = len(nums)
+    step = n // 3
+    ans: list[int] = []
+    for v in sorted({nums[i] for i in range(0, n, step)}):
+        if 3 * (bisect_right(nums, v) - bisect_left(nums, v)) > n:
+            ans.append(v)
+    return ans
+```
+
+**例题：** 一个骰子掷出更大点数的概率
+
+两个公平骰子 `A`、`B`，面数可以不同、面上的数可以重复，各掷一次，求 `A` 的点数严格大于 `B` 的概率，返回精确分数；面数 `<= 10^5`。
+
+```python
+from bisect import bisect_left
+from fractions import Fraction
+def beat_probability(a: list[int], b: list[int]) -> Fraction:
+    sorted_b = sorted(b)
+    wins = sum(bisect_left(sorted_b, x) for x in a)
+    return Fraction(wins, len(a) * len(b))
 ```

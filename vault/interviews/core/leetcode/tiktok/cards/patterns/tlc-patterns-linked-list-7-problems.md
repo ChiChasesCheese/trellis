@@ -36,6 +36,9 @@ step: 7
 - LC 432 全 O(1) 的数据结构（哈希 + 双向链表）
 - LC 430 扁平化多级双向链表（高频）
 
+**原地删除节点**
+- LC 83 删除排序链表中的重复元素（高频）
+
 提示：先问有没有可能删头或换头（哑节点）、是否要 `O(1)` 空间（只改指针）、是否涉及中点 / 环（快慢指针）。
 
 **例题：** LC 206 反转链表
@@ -438,5 +441,20 @@ def flatten(head: 'Node | None') -> 'Node | None':
         return tail
     if head:
         dfs(head)
+    return head
+```
+
+**例题：** LC 83 删除排序链表中的重复元素
+
+给升序链表的头节点 `head`，删除所有重复元素使每个值只出现一次，返回仍然有序的链表；节点数 `<= 300`。
+
+```python
+def delete_duplicates(head: ListNode | None) -> ListNode | None:
+    cur = head
+    while cur and cur.next:
+        if cur.val == cur.next.val:
+            cur.next = cur.next.next
+        else:
+            cur = cur.next
     return head
 ```

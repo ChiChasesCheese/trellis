@@ -37,6 +37,15 @@ step: 9
 - LC 232 用栈实现队列（高频）
 - LC 622 设计循环队列（高频）
 
+**TikTok 变体**
+- 带 TTL 的 LRU 缓存（哈希表 + 双向链表管使用顺序，最小堆按到期时刻清过期）
+- 手写限流器（每个 key 一个时间戳队列，或一对 (令牌数, 上次补充时刻)）
+- 限制并发数的异步任务执行器（信号量限流，结果按下标写回）
+- 定长数组实现双端队列（环形缓冲区：数组 + 队首下标 + 元素个数）
+- 内存 KV 存储：快照与恢复（哈希表 + 长度前缀序列化）
+- 幂等、带版本号的数据更新（哈希表存 (值, 版本)，再加一张请求结果表）
+- 连续内存分配器（按地址排序的空闲块列表，二分定位后与相邻块合并）
+
 提示：先列接口和复杂度目标，再逐个操作问需要什么能力，最后写出不变量并在每个方法结束时核对。
 
 **例题：** LC 146 LRU 缓存
@@ -509,4 +518,274 @@ class MyCircularQueue:
 
     def isFull(self) -> bool:
         return self.size == self.cap
+```
+
+**例题：** 带 TTL 的 LRU 缓存（含 LFU / 加权 / 线程安全追问）
+
+设计固定容量 `capacity` 的 LRU 缓存，`put(key, value, ttl)` 为每条设置存活时间，`get(key)` 读到过期条目时当作不存在并删除；新 key 写入时容量已满，先清掉所有已过期的条目，仍满再淘汰最久未使用的；`get` 与 `put` 均摊 `O(1)`（堆清理为 `O(log n)`），时间来自可注入的 `clock()`。
+
+```python
+import heapq
+import time
+from collections import OrderedDict
+from collections.abc import Callable
+class LRUCacheTTL:
+    def __init__(self, capacity: int, clock: Callable[[], float] = time.monotonic) -> None:
+        self.cap = capacity
+        self.clock = clock
+        self.data: OrderedDict[int, tuple[int, float]] = OrderedDict()
+        self.expiry: list[tuple[float, int, int]] = []
+        self.version: dict[int, int] = {}
+        self.counter = 0
+    def get(self, key: int) -> int:
+        item = self.data.get(key)
+        if item is None:
+            return -1
+        value, expire_at = item
+        if self.clock() >= expire_at:
+            self._drop(key)
+            return -1
+        self.data.move_to_end(key)
+        return value
+    def put(self, key: int, value: int, ttl: float) -> None:
+        now = self.clock()
+        if key not in self.data and len(self.data) >= self.cap:
+            self._purge_expired(now)
+            if len(self.data) >= self.cap:
+                oldest = next(iter(self.data))
+                self._drop(oldest)
+        self.counter += 1
+        self.data[key] = (value, now + ttl)
+        self.data.move_to_end(key)
+        self.version[key] = self.counter
+        heapq.heappush(self.expiry, (now + ttl, self.counter, key))
+        if len(self.expiry) > 4 * self.cap + 16:
+            self.expiry = [(e, self.version[k], k) for k, (_, e) in self.data.items()]
+            heapq.heapify(self.expiry)
+    def _drop(self, key: int) -> None:
+        del self.data[key]
+        del self.version[key]
+    def _purge_expired(self, now: float) -> None:
+        while self.expiry and self.expiry[0][0] <= now:
+            _, ver, key = heapq.heappop(self.expiry)
+            if self.version.get(key) == ver:
+                self._drop(key)
+```
+
+**例题：** 手写限流器（滑动窗口 / 令牌桶）
+
+实现 `allow(key, now) -> bool`：每个 `key` 每秒最多放行 `r` 次请求，突发上限为 `b`；先用滑动窗口，再用令牌桶重写；key 的数量可达 `10^6`。
+
+```python
+from collections import defaultdict, deque
+class SlidingWindowLimiter:
+    """滑动窗口日志：每个 key 最多保留窗口内被放行的时间戳。"""
+    def __init__(self, rate: int, window: float = 1.0) -> None:
+        self.rate, self.window = rate, window
+        self.logs: defaultdict[str, deque[float]] = defaultdict(deque)
+    def allow(self, key: str, now: float) -> bool:
+        log = self.logs[key]
+        while log and log[0] <= now - self.window:
+            log.popleft()
+        if len(log) >= self.rate:
+            return False
+        log.append(now)
+        return True
+class TokenBucketLimiter:
+    """令牌桶：桶容量 burst，每秒补 rate 个令牌，一次请求消耗 1 个。"""
+    def __init__(self, rate: float, burst: int) -> None:
+        self.rate, self.burst = rate, burst
+        self.state: dict[str, tuple[float, float]] = {}
+    def allow(self, key: str, now: float) -> bool:
+        tokens, last = self.state.get(key, (float(self.burst), now))
+        tokens = min(self.burst, tokens + max(0.0, now - last) * self.rate)
+        ok = tokens >= 1.0
+        self.state[key] = (tokens - 1.0 if ok else tokens, max(now, last))
+        return ok
+```
+
+**例题：** 限制并发数的异步任务执行器
+
+实现 `async def run_limited(tasks, limit)`：同一时刻最多执行 `limit` 个异步任务，一个结束立刻补上下一个，每个任务恰好调用一次；返回与输入顺序一致的 `("fulfilled", 值)` 或 `("rejected", 异常)` 列表，`limit` 不是正整数时抛 `ValueError`。
+
+```python
+import asyncio
+from collections.abc import Awaitable, Callable
+from typing import Any
+type Outcome = tuple[str, Any]
+async def run_limited[T](tasks: list[Callable[[], Awaitable[T]]], limit: int) -> list[Outcome]:
+    if isinstance(limit, bool) or not isinstance(limit, int) or limit <= 0:
+        raise ValueError(f"limit 必须是正整数，收到 {limit!r}")
+    results: list[Outcome] = [("rejected", None)] * len(tasks)
+    sem = asyncio.Semaphore(limit)
+    async def run_one(i: int, task: Callable[[], Awaitable[T]]) -> None:
+        async with sem:
+            try:
+                results[i] = ("fulfilled", await task())
+            except Exception as exc:
+                results[i] = ("rejected", exc)
+    async with asyncio.TaskGroup() as tg:
+        for i, task in enumerate(tasks):
+            tg.create_task(run_one(i, task))
+    return results
+```
+
+**例题：** 定长数组实现双端队列 / 列表（全部操作 O(1)）
+
+用一个定长数组实现 `FixedDeque(capacity)`：`push_head`、`push_tail`（已满返回 `False`）、`pop_head`、`pop_tail`（空时返回 `None`）、`index(i)`（从队首数第 `i` 个，越界返回 `None`），全部操作 `O(1)`。
+
+```python
+class FixedDeque:
+    """定长数组实现的双端队列：五个操作全部 O(1)。"""
+    def __init__(self, capacity: int) -> None:
+        self.buf: list[int | None] = [None] * capacity
+        self.cap = capacity
+        self.head = 0
+        self.size = 0
+    def push_head(self, x: int) -> bool:
+        if self.size == self.cap:
+            return False
+        self.head = (self.head - 1) % self.cap
+        self.buf[self.head] = x
+        self.size += 1
+        return True
+    def push_tail(self, x: int) -> bool:
+        if self.size == self.cap:
+            return False
+        self.buf[(self.head + self.size) % self.cap] = x
+        self.size += 1
+        return True
+    def pop_head(self) -> int | None:
+        if self.size == 0:
+            return None
+        x = self.buf[self.head]
+        self.buf[self.head] = None
+        self.head = (self.head + 1) % self.cap
+        self.size -= 1
+        return x
+    def pop_tail(self) -> int | None:
+        if self.size == 0:
+            return None
+        tail = (self.head + self.size - 1) % self.cap
+        x = self.buf[tail]
+        self.buf[tail] = None
+        self.size -= 1
+        return x
+    def index(self, i: int) -> int | None:
+        """第 i 个元素（从队首数，0 起）；越界返回 None。"""
+        if not 0 <= i < self.size:
+            return None
+        return self.buf[(self.head + i) % self.cap]
+```
+
+**例题：** 内存 KV 存储：快照与恢复（序列化）
+
+实现 `KVStore` 的 `put`、`get`、`delete`，再加 `snapshot()`（把全部数据序列化成字符串）和 `restore(data)`（恢复到快照时刻）；不能用现成的 `json` / `pickle`，key 和 value 可以含任意字符，数据损坏时 `restore` 抛 `ValueError` 且原存储不变。
+
+```python
+def _encode_str(s: str) -> str:
+    return f"{len(s)}:{s}"
+def _read_str(data: str, pos: int) -> tuple[str, int]:
+    colon = data.find(":", pos)
+    if colon == -1 or not data[pos:colon].isdecimal():
+        raise ValueError(f"bad length at {pos}")
+    end = colon + 1 + int(data[pos:colon])
+    if end > len(data):
+        raise ValueError("truncated data")
+    return data[colon + 1:end], end
+class KVStore:
+    def __init__(self) -> None:
+        self.data: dict[str, str] = {}
+    def put(self, key: str, value: str) -> None:
+        self.data[key] = value
+    def get(self, key: str) -> str | None:
+        return self.data.get(key)
+    def delete(self, key: str) -> bool:
+        return self.data.pop(key, None) is not None
+    def snapshot(self) -> str:
+        """格式：先写条目数，再依次写 key、value，每个字符串都是 长度:内容。"""
+        parts = [_encode_str(str(len(self.data)))]
+        for key, value in self.data.items():
+            parts.append(_encode_str(key))
+            parts.append(_encode_str(value))
+        return "".join(parts)
+    def restore(self, snap: str) -> None:
+        """先解析到临时字典，全部成功才替换：数据损坏时原存储不变。"""
+        count_text, pos = _read_str(snap, 0)
+        if not count_text.isdecimal():
+            raise ValueError("bad count")
+        loaded: dict[str, str] = {}
+        for _ in range(int(count_text)):
+            key, pos = _read_str(snap, pos)
+            value, pos = _read_str(snap, pos)
+            loaded[key] = value
+        if pos != len(snap):
+            raise ValueError("trailing data")
+        self.data = loaded
+```
+
+**例题：** 幂等、带版本号的数据更新
+
+实现 `VersionedStore.update(request_id, key, value, expected_version)`：当前版本等于 `expected_version` 才写入并版本加 `1`，返回 `(True, 新版本)`，否则返回 `(False, 当前版本)`；同一个 `request_id` 重试时原样返回第一次的结果、不重复写；`get(key)` 对不存在的 key 返回 `(None, 0)`。
+
+```python
+class VersionedStore:
+    def __init__(self) -> None:
+        self.data: dict[str, tuple[str, int]] = {}
+        self.done: dict[str, tuple[bool, int]] = {}
+    def get(self, key: str) -> tuple[str | None, int]:
+        return self.data.get(key, (None, 0))
+    def update(self, request_id: str, key: str, value: str, expected_version: int) -> tuple[bool, int]:
+        """返回 (是否写入, 版本)：成功时是新版本，冲突时是当前版本。"""
+        if (prev := self.done.get(request_id)) is not None:
+            return prev
+        _, version = self.get(key)
+        if version == expected_version:
+            self.data[key] = (value, version + 1)
+            result = (True, version + 1)
+        else:
+            result = (False, version)
+        self.done[request_id] = result
+        return result
+```
+
+**例题：** 连续内存分配器（first-fit、拆分与合并）
+
+管理地址空间 `[0, capacity)`：`alloc(size)` 用 first-fit 返回起始地址（放不下返回 `-1`，`size` 非法抛 `ValueError`），`free(addr)` 释放后与相邻空闲块合并（重复释放抛 `ValueError`），支持可选的对齐 `alignment`；`capacity <= 10^9`，最多 `10^5` 次操作。
+
+```python
+from bisect import bisect_left
+class Allocator:
+    def __init__(self, capacity: int, alignment: int = 1) -> None:
+        self.capacity, self.align = capacity, alignment
+        self.free_list: list[tuple[int, int]] = [(0, capacity)]
+        self.used: dict[int, int] = {}
+    def alloc(self, size: int) -> int:
+        if size <= 0 or size > self.capacity:
+            raise ValueError(f"illegal size {size}")
+        for idx, (start, length) in enumerate(self.free_list):
+            addr = -(-start // self.align) * self.align
+            pad = addr - start
+            if length >= pad + size:
+                tail = length - pad - size
+                pieces = ([(start, pad)] if pad else []) + ([(addr + size, tail)] if tail else [])
+                self.free_list[idx:idx + 1] = pieces
+                self.used[addr] = size
+                return addr
+        return -1
+    def free(self, addr: int) -> None:
+        if addr not in self.used:
+            raise ValueError(f"invalid or double free at {addr}")
+        size = self.used.pop(addr)
+        free_list = self.free_list
+        idx = bisect_left(free_list, (addr, 0))
+        start, length = addr, size
+        if idx < len(free_list) and free_list[idx][0] == addr + size:
+            length += free_list.pop(idx)[1]
+        if idx:
+            left_start, left_len = free_list[idx - 1]
+            if left_start + left_len == addr:
+                free_list.pop(idx - 1)
+                start, length, idx = left_start, length + left_len, idx - 1
+        free_list.insert(idx, (start, length))
 ```

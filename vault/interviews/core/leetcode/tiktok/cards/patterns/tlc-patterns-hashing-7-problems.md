@@ -40,6 +40,13 @@ step: 7
 - LC 432 全 O(1) 的数据结构（高频）
 - LC 981 基于时间的键值存储（高频）
 - LC 2196 根据描述创建二叉树（高频）
+- LC 311 稀疏矩阵的乘法（高频）
+
+**TikTok 变体**
+- 日志流中统计每个用户每天登录次数（`Counter` 以 (用户, 日期) 为键）
+- 出现次数最多的元素（`Counter` + `(-次数, 数值)` 复合键）
+- Agent 工具调用的事件追踪（请求 → 调用的两层字典，逐事件增量聚合）
+- 由扁平记录构建嵌套评论树（`id` → 节点的字典，两遍扫描挂接）
 
 模板提示：看到「内层在找某个值」就把它改成字典查询；看到「按某种等价分类」就想签名；看到「连续」且含负数就想前缀和 + 哈希。
 
@@ -525,4 +532,127 @@ def create_binary_tree(descriptions: list[list[int]]) -> TreeNode | None:
         children.add(child)
     (root,) = parents - children
     return nodes[root]
+```
+
+**例题：** LC 311 稀疏矩阵的乘法
+
+给稀疏矩阵 `mat1`（`m x k`）和 `mat2`（`k x n`），返回 `mat1 x mat2`；`m, n, k <= 100`，元素在 `[-100, 100]`。
+
+```python
+def multiply(mat1: list[list[int]], mat2: list[list[int]]) -> list[list[int]]:
+    m, n = len(mat1), len(mat2[0])
+    rows2 = [[(j, b) for j, b in enumerate(row) if b] for row in mat2]
+    res = [[0] * n for _ in range(m)]
+    for i, row in enumerate(mat1):
+        for k, a in enumerate(row):
+            if a == 0:
+                continue
+            for j, b in rows2[k]:
+                res[i][j] += a * b
+    return res
+```
+
+**例题：** 日志流中统计每个用户每天登录次数
+
+日志逐行到达，格式 `"YYYY-MM-DD HH:MM:SS 用户名"`：输出每个用户每天的登录次数（按用户、日期排序），格式不对或日期时间不存在的行不计数、单独返回。
+
+```python
+import re
+from collections import Counter
+from collections.abc import Iterable
+from datetime import date, time
+LINE = re.compile(r"(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2}) (\S+)", re.ASCII)
+def login_counts(lines: Iterable[str]) -> tuple[list[tuple[str, str, int]], list[str]]:
+    counts: Counter[tuple[str, str]] = Counter()
+    invalid: list[str] = []
+    for line in lines:
+        m = LINE.fullmatch(line.strip())
+        if m is None:
+            invalid.append(line)
+            continue
+        y, mo, d, h, mi, s = map(int, m.group(1, 2, 3, 4, 5, 6))
+        try:
+            day = date(y, mo, d)
+            time(h, mi, s)
+        except ValueError:
+            invalid.append(line)
+            continue
+        counts[m.group(7), day.isoformat()] += 1
+    result = [(user, day, n) for (user, day), n in sorted(counts.items())]
+    return result, invalid
+```
+
+**例题：** 出现次数最多的元素（并列取较小的）
+
+给整数数组 `nums`，返回出现次数最多的元素，并列时返回数值最小的；`n <= 10^5`。
+
+```python
+from collections import Counter
+def most_frequent(nums: list[int]) -> int:
+    count = Counter(nums)
+    return min(count, key=lambda x: (-count[x], x))
+```
+
+**例题：** Agent 工具调用的事件追踪
+
+事件流 `(time, request_id, call_id, attempt, kind, stage)`，`kind` 为 `start` / `success` / `failure`：实现 `on_event`、`trace(request_id)`（每个 call 的尝试次数、最终状态、第一次失败的阶段）和 `flaky(k)`（重试次数超过 `k` 的 call）；事件数 `<= 10^5`。
+
+```python
+Event = tuple[int, str, str, int, str, str | None]
+STATUS = {"start": "running", "success": "success", "failure": "failed"}
+class CallTrace:
+    __slots__ = ("call_id", "attempts", "status", "first_failure")
+    def __init__(self, call_id: str) -> None:
+        self.call_id = call_id
+        self.attempts = 0
+        self.status = "running"
+        self.first_failure: tuple[int, str] | None = None
+class Tracer:
+    def __init__(self) -> None:
+        self.requests: dict[str, dict[str, CallTrace]] = {}
+    def on_event(self, event: Event) -> None:
+        _time, request_id, call_id, attempt, kind, stage = event
+        calls = self.requests.setdefault(request_id, {})
+        if (call := calls.get(call_id)) is None:
+            call = calls[call_id] = CallTrace(call_id)
+        if kind == "failure" and stage is not None:
+            if call.first_failure is None or attempt < call.first_failure[0]:
+                call.first_failure = (attempt, stage)
+        if attempt > call.attempts:
+            call.attempts, call.status = attempt, STATUS[kind]
+        elif attempt == call.attempts and kind != "start" and call.status == "running":
+            call.status = STATUS[kind]
+    def trace(self, request_id: str) -> list[tuple[str, int, str, str | None]]:
+        return [(c.call_id, c.attempts, c.status, c.first_failure[1] if c.first_failure else None)
+                for c in self.requests.get(request_id, {}).values()]
+    def flaky(self, k: int) -> list[tuple[str, str]]:
+        """重试次数 = 尝试次数 - 1；返回重试超过 k 次的 (request_id, call_id)。"""
+        return [(rid, c.call_id) for rid, calls in self.requests.items()
+                for c in calls.values() if c.attempts - 1 > k]
+```
+
+**例题：** 由扁平记录构建嵌套评论树
+
+给无序的扁平评论记录 `{id, parent_id, text, time}`，构建带 `children` 的嵌套结构并返回所有根：同一父亲下的孩子按 `(time, id)` 升序，父亲不存在的孤儿当作根，有环抛 `ValueError`，不修改输入；记录数 `<= 10^5`。
+
+```python
+from operator import itemgetter
+def build_comment_tree(records: list[dict]) -> list[dict]:
+    ordered = sorted(records, key=itemgetter("time", "id"))
+    nodes = {r["id"]: {**r, "children": []} for r in ordered}
+    roots: list[dict] = []
+    for r in ordered:
+        node = nodes[r["id"]]
+        parent = nodes.get(r["parent_id"])
+        if parent is None:
+            roots.append(node)
+        else:
+            parent["children"].append(node)
+    seen, stack = 0, roots[:]
+    while stack:
+        seen += 1
+        stack.extend(stack.pop()["children"])
+    if seen != len(nodes):
+        raise ValueError("comment records contain a cycle")
+    return roots
 ```

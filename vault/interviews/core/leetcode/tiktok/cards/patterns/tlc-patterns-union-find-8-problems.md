@@ -25,6 +25,9 @@ step: 8
 - LC 886 可能的二分法（拆点：A 组 / B 组）
 - LC 399 除法求值（带权并查集）
 
+**TikTok 变体**
+- 汇率换算查询（带权并查集记每个币种到根的比率）
+
 提示：看到"逐步合并 / 是否同组 / 加边是否成环"就想并查集；再确认是否需要权重、是否要统计块大小、节点是否需要先映射成编号。
 
 **例题：** LC 200 岛屿数量
@@ -247,4 +250,37 @@ def count_components(n: int, edges: list[list[int]]) -> int:
             parent[ra] = rb
             comps -= 1
     return comps
+```
+
+**例题：** 汇率换算查询（多跳 / 无解返回 -1）
+
+给货币对 `pairs[i] = (a, b)` 和汇率 `rates[i]`（`1` 个 `a` 换 `rates[i]` 个 `b`，反向为倒数），回答查询 `(from, to)` 的换算比率，可经多个币种相乘，不连通或没出现过的币种返回 `-1.0`；对数和查询数 `<= 10^5`。
+
+```python
+def convert(pairs: list[tuple[str, str]], rates: list[float], queries: list[tuple[str, str]]) -> list[float]:
+    parent: dict[str, str] = {}
+    ratio: dict[str, float] = {}
+    def find(x: str) -> str:
+        if parent[x] != x:
+            root = find(parent[x])
+            ratio[x] *= ratio[parent[x]]
+            parent[x] = root
+        return parent[x]
+    for a, b in pairs:
+        parent.setdefault(a, a)
+        ratio.setdefault(a, 1.0)
+        parent.setdefault(b, b)
+        ratio.setdefault(b, 1.0)
+    for (a, b), rate in zip(pairs, rates):
+        ra, rb = find(a), find(b)
+        if ra != rb:
+            parent[ra] = rb
+            ratio[ra] = rate * ratio[b] / ratio[a]
+    out: list[float] = []
+    for a, b in queries:
+        if a not in parent or b not in parent or find(a) != find(b):
+            out.append(-1.0)
+        else:
+            out.append(ratio[a] / ratio[b])
+    return out
 ```
