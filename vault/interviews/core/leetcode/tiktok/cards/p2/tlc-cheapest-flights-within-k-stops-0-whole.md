@@ -17,35 +17,6 @@ type: qa
 
 **推导。** 暴力：深度优先枚举所有至多 `k + 1` 条边的路径，指数级。想要多项式解，用动态规划：状态是（边数 `t`，城市 `v`），只有 `(k + 2) * n` 个。第 `t` 行的最优路线，要么不需要第 `t` 趟航班（沿用 `dp[t-1][v]`），要么最后一趟是 `u → v`，前面是至多 `t - 1` 趟到 `u` 的最优（`dp[t-1][u] + w`），两者取小。所以一行只读上一行、写本行。
 
-**简单解法。** 按层 BFS：第 `r` 层是「坐了 `r` 趟航班能到的城市」，只保留变便宜的到达，扩展 `k + 1` 层，答案是 `best[dst]`。
-
-```python
-from collections import defaultdict
-from math import inf
-
-
-def find_cheapest_price(n: int, flights: list[list[int]], src: int, dst: int, k: int) -> int:
-    graph: defaultdict[int, list[tuple[int, int]]] = defaultdict(list)
-    for u, v, w in flights:
-        graph[u].append((v, w))
-    best = [inf] * n                                # best[v]：目前见过的到 v 的最低价格
-    best[src] = 0
-    level = [(src, 0)]                              # 当前层：(城市, 到这里的价格)
-    for _ in range(k + 1):                          # 最多 k 个中转 = 最多 k + 1 趟航班
-        nxt: list[tuple[int, int]] = []
-        for u, cost in level:
-            for v, w in graph[u]:
-                if cost + w < best[v]:              # 只有更便宜才值得继续走：航班数更多且更贵的路径被占优
-                    best[v] = cost + w
-                    nxt.append((v, cost + w))
-        level = nxt
-    return -1 if best[dst] == inf else int(best[dst])
-```
-
-时间最坏 `O(k * E)`，空间 `O(n + E)`；约束内够用，也是常见的面试写法，只是「为什么可以丢掉更贵的到达」需要说清楚。
-
-最优解：
-
 ```python
 from math import inf
 

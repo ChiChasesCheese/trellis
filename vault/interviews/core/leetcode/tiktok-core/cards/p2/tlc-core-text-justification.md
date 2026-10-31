@@ -17,37 +17,6 @@ type: qa
 
 **推导。** 分成两步想，不要一把写。第一步断行：从行首单词 `i` 开始，用 `used` 记录单词总长加最少空格（每多一个单词多占 `1 + len(word)`），只要加上下一个单词仍不超过 `maxWidth` 就继续放。第二步排版：总空格数 `divmod` 空档数，商是每个空档的下限，余数从左边的空档各多一个；最后一行和单词的行没有可均分的空档，左对齐。
 
-**简单解法。** 拆成两步：先贪心分组成行，再逐行排版；多余空格不用 `divmod`，而是从左到右每个空档轮流加一个。
-
-```python
-def full_justify(words: list[str], max_width: int) -> list[str]:
-    rows: list[list[str]] = []
-    row: list[str] = []
-    length = 0                                     # 当前行的单词总长，不含空格
-    for w in words:
-        if length + len(w) + len(row) > max_width:     # len(row) = 放下 w 后至少需要的空档数
-            rows.append(row)
-            row, length = [], 0
-        row.append(w)
-        length += len(w)
-    rows.append(row)
-
-    lines: list[str] = []
-    for k, row in enumerate(rows):
-        if k == len(rows) - 1 or len(row) == 1:    # 最后一行或只有一个词：左对齐
-            lines.append(" ".join(row).ljust(max_width))
-            continue
-        gaps = [1] * (len(row) - 1)                # 每个空档先放 1 个空格
-        for i in range(max_width - sum(map(len, row)) - len(gaps)):
-            gaps[i % len(gaps)] += 1               # 多出的空格从左往右轮流分：左边的空档自然多
-        lines.append("".join(w + " " * g for w, g in zip(row, gaps)) + row[-1])
-    return lines
-```
-
-时间 `O(L)`、空间 `O(L)`（`L` 是单词总长）；多一个中间列表，比 `divmod` 稍慢，但每步对应题面一句话，不容易写错。
-
-最优解：
-
 ```python
 def full_justify(words: list[str], max_width: int) -> list[str]:
     lines: list[str] = []

@@ -17,32 +17,6 @@ type: qa
 
 **推导。** 暴力：字典 `key → 计数`，`getMax` / `getMin` 用 `max(d, key=d.get)` 扫描，`O(n)`，`5 * 10^4` 次调用时超时。想要 `O(1)`：必须能立刻拿到最大和最小，就要维护一个按计数有序的结构；用数组按计数下标会太稀疏，用堆每次 `±1` 要 `O(log n)`。观察：计数相同的 key 可以放进同一个桶，桶按计数排序成链表；`inc` 把 key 从计数 `c` 的桶挪到计数 `c + 1` 的桶——这个桶要么就是链表里紧邻的下一个，要么不存在、新建并插在旁边，`dec` 对称。桶清空后立刻摘掉，这样链表头一定是非空桶。头尾各用一个哨兵（sentinel）节点，省掉空链表的特判。
 
-**简单解法。** 一个字典 `key -> 计数`；`getMaxKey` / `getMinKey` 直接对字典扫描取最大最小。
-
-```python
-class AllOne:
-    def __init__(self) -> None:
-        self.cnt: dict[str, int] = {}               # key -> 当前计数
-
-    def inc(self, key: str) -> None:
-        self.cnt[key] = self.cnt.get(key, 0) + 1
-
-    def dec(self, key: str) -> None:
-        self.cnt[key] -= 1
-        if self.cnt[key] == 0:
-            del self.cnt[key]                       # 减到 0 就删除，保证只剩正计数
-
-    def getMaxKey(self) -> str:
-        return max(self.cnt, key=self.cnt.get, default="")   # 扫描取最大，空结构返回 ""
-
-    def getMinKey(self) -> str:
-        return min(self.cnt, key=self.cnt.get, default="")
-```
-
-`inc` / `dec` 为 `O(1)`，`getMaxKey` / `getMinKey` 为 `O(n)`；约 `5 * 10^4` 次调用最坏约 `10^9` 步，会超时，不满足「全 `O(1)`」，只作为正确性的起点。
-
-最优解：
-
 ```python
 class Bucket:
     __slots__ = ("cnt", "keys", "prev", "next")

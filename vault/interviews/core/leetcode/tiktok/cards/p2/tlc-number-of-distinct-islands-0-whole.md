@@ -17,40 +17,6 @@ type: qa
 
 **推导。** 暴力：把所有岛屿两两比较，每对都尝试对齐后逐格检查，`O(k^2 * s)`，`k` 是岛屿数，`s` 是岛屿大小。浪费是两两比较。洞察：只要给每座岛算出一个与位置无关的签名，相同形状自然得到相同签名，用集合去重即可。行优先扫描时最先遇到的格子是这座岛最靠上、同一行里最靠左的格子，它在每座岛里的角色相同，拿它当原点，各格相对它的偏移 `(dr, dc)` 就与平移无关。
 
-**简单解法。** BFS 收集每座岛，坐标减去起点后排序成元组，和已有形状列表逐个比较，没见过才加入。
-
-```python
-from collections import deque
-
-
-def num_distinct_islands(grid: list[list[int]]) -> int:
-    rows, cols = len(grid), len(grid[0])
-    seen = [[False] * cols for _ in range(rows)]
-    shapes: list[tuple[tuple[int, int], ...]] = []
-    for r0 in range(rows):
-        for c0 in range(cols):
-            if grid[r0][c0] != 1 or seen[r0][c0]:
-                continue
-            seen[r0][c0] = True
-            queue = deque([(r0, c0)])
-            cells: list[tuple[int, int]] = []
-            while queue:
-                r, c = queue.popleft()
-                cells.append((r - r0, c - c0))      # 相对起点的偏移，与平移无关
-                for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):
-                    if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == 1 and not seen[nr][nc]:
-                        seen[nr][nc] = True
-                        queue.append((nr, nc))
-            shape = tuple(sorted(cells))            # 排序后与遍历顺序无关
-            if all(shape != other for other in shapes):   # 线性查重；换成 set 就是主解
-                shapes.append(shape)
-    return len(shapes)
-```
-
-时间 `O(mn + k^2 s)`（`k` 座岛，每座大小 `s`），空间 `O(mn)`；约束内能过，去重这步是平方级。
-
-最优解：
-
 ```python
 def num_distinct_islands(grid: list[list[int]]) -> int:
     rows, cols = len(grid), len(grid[0])

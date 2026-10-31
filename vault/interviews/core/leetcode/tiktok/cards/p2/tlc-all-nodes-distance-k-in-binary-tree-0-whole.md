@@ -21,36 +21,6 @@ type: qa
 
 **推导。** 暴力：对每个结点算它到 `target` 的距离（找两者的最近公共祖先再加深度差），`O(n^2)`。浪费在于每次都重新找路径，而「到同一个 `target` 的距离」本来就是一次单源最短路。关键洞察：把树看成无向图，边权都是 1，那么「距离 `k`」就是 BFS 的第 `k` 层。树里没有现成的向上边，所以先 DFS 记 `parent`，BFS 扩 `k` 层。
 
-**简单解法。** 对每个结点单独算它到 `target` 的距离：记下每个结点从根出发的路径，两路径的公共前缀长度 `c` 对应最近公共祖先，距离 `= len(A) + len(B) - 2c`。
-
-```python
-def distance_k(root: TreeNode, target: TreeNode, k: int) -> list[int]:
-    paths: dict[TreeNode, list[TreeNode]] = {}     # 每个结点：从根到它的路径
-
-    def dfs(node: TreeNode | None, path: list[TreeNode]) -> None:
-        if node is None:
-            return
-        path = path + [node]
-        paths[node] = path
-        dfs(node.left, path)
-        dfs(node.right, path)
-
-    dfs(root, [])
-    t = paths[target]
-    res: list[int] = []
-    for node, p in paths.items():
-        c = 0
-        while c < min(len(p), len(t)) and p[c] is t[c]:   # 公共前缀的长度，最后一个公共结点是最近公共祖先
-            c += 1
-        if len(p) + len(t) - 2 * c == k:           # 先上到公共祖先再下来：两段深度之和
-            res.append(node.val)
-    return res
-```
-
-时间 `O(n·h)`、空间 `O(n·h)`；`n <= 500` 完全能过，但对每个结点重复比较路径，BFS 一遍单源搜索就够。
-
-最优解：
-
 ```python
 def distance_k(root: TreeNode, target: TreeNode, k: int) -> list[int]:
     parent: dict[TreeNode, TreeNode | None] = {root: None}

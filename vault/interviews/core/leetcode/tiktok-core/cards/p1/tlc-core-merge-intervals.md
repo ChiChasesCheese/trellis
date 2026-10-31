@@ -17,31 +17,6 @@ type: qa
 
 **推导。** 暴力：反复找到任意一对重叠的区间合并成一个，直到没有重叠为止，最坏 `O(n^2)` 甚至更差。浪费在于区间是乱序的，必须反复找。洞察：按起点排好后，若当前区间 `[s, e]` 与已合并的最后一个区间 `[ls, le]` 不重叠（`s > le`），那么它之后的所有区间起点也 `>= s > le`，也不会和 `[ls, le]` 重叠，这一段就封口；若重叠则 `le = max(le, e)`。一次线性扫描。
 
-**简单解法。** 不排序：反复找任意一对重叠的区间合并，直到没有重叠。
-
-```python
-def merge(intervals: list[list[int]]) -> list[list[int]]:
-    items = [list(x) for x in intervals]            # 复制一份，不改输入
-    changed = True
-    while changed:                                  # 一轮里发生过合并就从头再找
-        changed = False
-        for i in range(len(items)):
-            for j in range(i + 1, len(items)):
-                a, b = items[i], items[j]
-                if a[0] <= b[1] and b[0] <= a[1]:    # 两段重叠（端点相接也算）
-                    items[i] = [min(a[0], b[0]), max(a[1], b[1])]
-                    items.pop(j)
-                    changed = True
-                    break
-            if changed:
-                break
-    return sorted(items)
-```
-
-时间最坏 `O(n^3)`，空间 `O(n)`；`n = 10^4` 个互不重叠的区间实测 1.4 秒，勉强能过但没有保证，适合做开场再引出「先排序」。
-
-最优解：
-
 ```python
 def merge(intervals: list[list[int]]) -> list[list[int]]:
     merged: list[list[int]] = []

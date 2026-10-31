@@ -17,36 +17,6 @@ type: qa
 
 **推导。** 暴力：对每个陆地格各做一次搜索并不记录哪些格已经搜过，同一座岛的每一格都当一次起点，岛被重复数很多次。浪费在「搜过的格子没有留下记号」。洞察：第一次碰到一座岛时顺手把它整个标成已访问，之后扫描再遇到这座岛的格子就会跳过；每格最多被标记一次，总共 `O(mn)`。
 
-**简单解法。** BFS 加 `seen` 集合，不改输入网格。
-
-```python
-from collections import deque
-
-
-def num_islands(grid: list[list[str]]) -> int:
-    rows, cols = len(grid), len(grid[0])
-    seen: set[tuple[int, int]] = set()              # 已访问的陆地；代替"原地沉岛"，不破坏输入
-    count = 0
-    for r0 in range(rows):
-        for c0 in range(cols):
-            if grid[r0][c0] != "1" or (r0, c0) in seen:
-                continue
-            count += 1                              # 扫描遇到没访问过的陆地 = 一座新岛
-            seen.add((r0, c0))
-            queue = deque([(r0, c0)])
-            while queue:                            # 把整座岛标成已访问，之后扫描会跳过它
-                r, c = queue.popleft()
-                for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):
-                    if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == "1" and (nr, nc) not in seen:
-                        seen.add((nr, nc))          # 入队时就标记，同一格不会入队两次
-                        queue.append((nr, nc))
-    return count
-```
-
-时间、空间 `O(mn)`；没有递归深度问题，作为开场答案够用，只是比原地沉岛多一份 `seen`。
-
-最优解：
-
 ```python
 def num_islands(grid: list[list[str]]) -> int:
     rows, cols = len(grid), len(grid[0])

@@ -17,32 +17,6 @@ type: qa
 
 **推导。** 暴力：枚举 `2^n` 种分组，检查每条边 → 浪费：一旦确定了一个人的组，他所有的「敌人」必须在另一组，选择被强制传播 → 选一个起点任意染色，BFS 逐个把邻居染成相反色；碰到已染色且与自己同色的邻居，说明存在奇数环，直接失败；每个连通块的起点颜色任选，互不影响。
 
-**简单解法。** 递归 DFS 染色：染成一种颜色，递归把每个敌人染成相反色，遇到同色敌人就失败。
-
-```python
-def possible_bipartition(n: int, dislikes: list[list[int]]) -> bool:
-    graph: list[list[int]] = [[] for _ in range(n + 1)]
-    for a, b in dislikes:
-        graph[a].append(b)
-        graph[b].append(a)
-    color = [0] * (n + 1)                          # 0 = 未染色，1 / -1 = 两个组
-
-    def dfs(u: int, c: int) -> bool:
-        color[u] = c
-        for v in graph[u]:
-            if color[v] == c:                      # 敌人和自己同组：矛盾
-                return False
-            if color[v] == 0 and not dfs(v, -c):   # 敌人放另一组，继续往下染
-                return False
-        return True
-
-    return all(color[u] != 0 or dfs(u, 1) for u in range(1, n + 1))   # 每个连通块都要查
-```
-
-时间 `O(n + m)`、空间 `O(n + m)`；最短，但递归深度可达 `n = 2000`，一条链会超过 CPython 默认递归上限约 `1000`，要调高上限或改 BFS（最优解）。
-
-最优解：
-
 ```python
 from collections import deque
 

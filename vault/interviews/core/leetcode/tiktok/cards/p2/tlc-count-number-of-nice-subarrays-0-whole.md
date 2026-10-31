@@ -17,26 +17,6 @@ type: qa
 
 **推导。** 暴力：枚举所有子数组数奇数，`O(n^2)`（前缀计数后）。浪费：固定右端点，只想知道有多少个左端点使得区间内恰好 `k` 个奇数。令 `odd` 为当前前缀的奇数个数，左端点的前缀必须有 `odd - k` 个奇数。前缀奇数个数的取值范围是 `0` 到 `n`，用定长数组计数。
 
-**简单解法。** 暴力：枚举左端点，向右扫并数奇数，数到恰好 `k` 个就计一个，超过 `k` 个就停。
-
-```python
-def number_of_subarrays(nums: list[int], k: int) -> int:
-    ans = 0
-    for left in range(len(nums)):
-        odd = 0
-        for right in range(left, len(nums)):
-            odd += nums[right] & 1                  # 当前子数组里的奇数个数
-            if odd == k:
-                ans += 1
-            elif odd > k:
-                break                               # 奇数只增不减，后面不可能再恰好 k 个
-    return ans
-```
-
-时间 `O(n^2)`，空间 `O(1)`；`n = 5 * 10^4` 时约 `10^9` 步会超时，作开场答案再引到前缀计数。
-
-最优解：
-
 ```python
 def number_of_subarrays(nums: list[int], k: int) -> int:
     seen = [0] * (len(nums) + 1)            # seen[j]：前缀里“恰好有 j 个奇数”的位置有多少个

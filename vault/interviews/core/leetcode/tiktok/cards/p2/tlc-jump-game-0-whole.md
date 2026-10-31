@@ -17,22 +17,6 @@ type: qa
 
 **推导。** 暴力：深度优先或动态规划，`dp[j]` 表示下标 `j` 可达，对每个可达的 `i` 把 `i+1..i+nums[i]` 全部标记，`O(n * 最大跳跃长度)`，最坏 `10^4 * 10^5`，超时。浪费：同一个下标被不同的起点重复标记；而且可达集合是连续前缀，不需要逐格标记。只需维护 `reach = max(i + nums[i])`，扫描到 `i` 时，若 `i <= reach`，`i` 可达，用它扩展 `reach`；若 `i > reach` 则 `i` 以及之后全部不可达。
 
-**简单解法。** 从后往前 DP：`good[i]` 表示从 `i` 能到终点，`i` 能跳到的区间里只要有一个 `good` 就行。
-
-```python
-def can_jump(nums: list[int]) -> bool:
-    n = len(nums)
-    good = [False] * n
-    good[-1] = True                                 # 终点自己能到终点
-    for i in range(n - 2, -1, -1):
-        good[i] = any(good[i + 1:i + nums[i] + 1])  # 能跳到的区间 [i+1, i+nums[i]]，切片越界会自动截断
-    return good[0]
-```
-
-时间最坏 `O(n * 最大跳跃长度)`（每个 `i` 扫一段切片，`n = 10^4` 时切片在 C 里扫，很快），空间 `O(n)`；约束内能过，开场答案，再引到「可达集合是前缀，只记最远值」。
-
-最优解：
-
 ```python
 def can_jump(nums: list[int]) -> bool:
     reach = 0                               # 目前能到达的最远下标

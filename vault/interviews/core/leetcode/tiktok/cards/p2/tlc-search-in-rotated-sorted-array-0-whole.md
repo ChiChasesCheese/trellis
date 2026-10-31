@@ -17,20 +17,6 @@ type: qa
 
 **推导。** 暴力：线性扫描 `O(n)`。另一种两步法：先二分找旋转点（最小值的位置），再在某一段上普通二分，两次 `O(log n)`。一步法的洞察：每次取中点后，`[lo, mid]` 和 `[mid, hi]` 中必有一个是普通的升序区间（旋转点只可能在其中一个里）。若左半有序，`target` 在 `[nums[lo], nums[mid])` 内就在左半，否则在右半；若右半有序同理。每次排除一半，对数次结束。
 
-**简单解法。** 忽略旋转，线性扫描找 `target`。
-
-```python
-def search(nums: list[int], target: int) -> int:
-    for i, x in enumerate(nums):        # 不利用有序性：逐个比较，值互不相同，找到即返回
-        if x == target:
-            return i
-    return -1
-```
-
-时间 `O(n)`、空间 `O(1)`；`n <= 5000` 能过，但题面要求 `O(log n)`，只能当正确性基线。
-
-最优解：
-
 ```python
 def search(nums: list[int], target: int) -> int:
     lo, hi = 0, len(nums) - 1

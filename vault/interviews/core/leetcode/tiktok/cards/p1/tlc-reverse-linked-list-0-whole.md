@@ -17,26 +17,6 @@ type: qa
 
 **推导。** 暴力：把所有节点的值读进数组，反向写回 → 浪费：`O(n)` 额外空间，且题目的重点是改指针 → 边走边反转，只改指针方向。
 
-**简单解法。** 两遍扫描：先把所有值存进列表，再从后往前写回每个节点。
-
-```python
-def reverse_list(head: ListNode | None) -> ListNode | None:
-    vals: list[int] = []
-    cur = head
-    while cur:
-        vals.append(cur.val)
-        cur = cur.next
-    cur = head
-    while cur:
-        cur.val = vals.pop()          # 从列表尾巴取值，写回链表头部开始的每个节点
-        cur = cur.next
-    return head
-```
-
-时间 `O(n)`、空间 `O(n)`；只改了值、没动指针，面试官通常不接受，只能当热身。
-
-最优解：
-
 ```python
 def reverse_list(head: ListNode | None) -> ListNode | None:
     prev: ListNode | None = None

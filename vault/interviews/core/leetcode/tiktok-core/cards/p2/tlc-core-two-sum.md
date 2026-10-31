@@ -17,22 +17,6 @@ type: qa
 
 **推导。** 暴力枚举所有下标对 `O(n^2)` → 固定 `i` 后线性找 `target - nums[i]`，要找的是确定的值却花了 `O(n)` → 「确定的值在不在」是哈希表的强项，边扫边存，只查前面已出现的元素，每一对在较晚的元素处被发现一次 → `O(n)` 时间、`O(n)` 空间。
 
-**简单解法。** 枚举所有下标对 `(i, j)`，和为 `target` 就返回。
-
-```python
-def two_sum(nums: list[int], target: int) -> list[int]:
-    n = len(nums)
-    for i in range(n):
-        for j in range(i + 1, n):              # j 从 i + 1 开始：同一个元素不会用两次
-            if nums[i] + nums[j] == target:
-                return [i, j]
-    return []
-```
-
-时间 `O(n^2)`、空间 `O(1)`；`n <= 10^4` 约 `5 * 10^7` 次比较，Python 里偏慢，题面进阶也要求优于 `O(n^2)`，只是开场基线。
-
-最优解：
-
 ```python
 def two_sum(nums: list[int], target: int) -> list[int]:
     seen: dict[int, int] = {}                  # 值 -> 下标

@@ -17,27 +17,6 @@ type: qa
 
 **推导。** 暴力：存下整个列表，`getProduct` 时对最后 `k` 个现乘，`O(k)`。改用前缀积：`prefix = [1, a1, a1*a2, ...]`，区间积 = 两个前缀相除。障碍：数里有 `0` 时，所有后续前缀都是 `0`，除法会 `0 / 0`。办法：遇到 `0`，之前的所有前缀对以后的查询都没用（任何覆盖这个 `0` 的区间乘积都是 `0`），所以直接清空，`prefix = [1]` 重新开始；查询时只要 `k` 超出了清空后的长度，就一定覆盖了最近的 `0`，返回 `0`。
 
-**简单解法。** 存下整个列表，`getProduct` 时对最后 `k` 个现乘。
-
-```python
-import math
-
-
-class ProductOfNumbers:
-    def __init__(self) -> None:
-        self.nums: list[int] = []
-
-    def add(self, num: int) -> None:
-        self.nums.append(num)
-
-    def getProduct(self, k: int) -> int:
-        return math.prod(self.nums[-k:])            # 最后 k 个现乘；含 0 时自然是 0
-```
-
-`add` 为 `O(1)`，`getProduct` 为 `O(k)`；两万次 `add` 加两万次 `k = 20000` 的查询实测约 1 秒，约束内能过，但不满足进阶的 `O(1)`，所以要引到前缀积。
-
-最优解：
-
 ```python
 class ProductOfNumbers:
     def __init__(self) -> None:

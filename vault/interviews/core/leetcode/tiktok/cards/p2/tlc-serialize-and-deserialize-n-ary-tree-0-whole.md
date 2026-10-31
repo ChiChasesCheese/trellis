@@ -21,30 +21,6 @@ type: qa
 
 **推导。** 朴素想法：只记先序的值——`1→[2,3]` 与 `1→2→3` 都是 `1 2 3`，不可逆。补救：用括号 / 层序加分隔 `null`（题面给的格式）能用，但解析要处理嵌套或队列。更紧凑：先序时把每个结点写成 `值 孩子数`，整串是自描述的——读到一个结点，就知道后面紧跟着多少棵子树。解码就是读到孩子数 `c`，递归建 `c` 棵子树。
 
-**简单解法。** 借 `json`：每个结点写成嵌套列表 `[值, [孩子...]]`，`dumps` / `loads` 各一行，再递归还原成结点。
-
-```python
-import json
-
-class Codec:
-    def serialize(self, root: Node | None) -> str:
-        def to_list(node: Node) -> list:
-            return [node.val, [to_list(c) for c in node.children]]   # 嵌套列表本身就带结构，不需要孩子个数
-
-        return json.dumps(to_list(root) if root else [])   # 空树写成 []
-
-    def deserialize(self, data: str) -> Node | None:
-        def build(arr: list) -> Node:
-            return Node(arr[0], [build(c) for c in arr[1]])   # 与 to_list 一一对应
-
-        arr = json.loads(data)
-        return build(arr) if arr else None                 # [] 对应空树
-```
-
-时间 `O(n)`、空间 `O(n)`；输出体积约是主解法的 2 倍，树高 `1000` 时也会碰到递归上限，只适合当开场答案。
-
-最优解：
-
 ```python
 class Codec:
     def serialize(self, root: Node | None) -> str:

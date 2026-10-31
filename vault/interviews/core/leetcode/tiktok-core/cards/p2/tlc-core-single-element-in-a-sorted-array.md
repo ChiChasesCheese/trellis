@@ -17,20 +17,6 @@ type: qa
 
 **推导。** 暴力：线性扫描每次跳两格，找第一个 `nums[i] != nums[i+1]`，`O(n)`；异或也是 `O(n)`。能二分的前提是找到一个对下标**单调**的条件。观察：在单一元素之前，第 `2k` 个下标与第 `2k+1` 个下标相等；单一元素之后，这个相等关系变成 `nums[2k] != nums[2k+1]`（因为整体错位了一格）。所以对偶数下标 `m`，条件「`nums[m] != nums[m+1]`」是先假后真的单调谓词，分界点就是单一元素的位置。
 
-**简单解法。** 全体异或：成对的数两两抵消，剩下的就是答案，不管有序。
-
-```python
-from functools import reduce
-from operator import xor
-
-def single_non_duplicate(nums: list[int]) -> int:
-    return reduce(xor, nums)                       # a ^ a = 0，a ^ 0 = a：成对的数全部抵消
-```
-
-时间 `O(n)`、空间 `O(1)`；没用上有序性，题面要求 `O(log n)`，只是基线。
-
-最优解：
-
 ```python
 def single_non_duplicate(nums: list[int]) -> int:
     lo, hi = 0, len(nums) - 1               # 偶数下标：n 为奇数，n-1 是偶数；之后 lo=mid+2、hi=mid 也保持偶数

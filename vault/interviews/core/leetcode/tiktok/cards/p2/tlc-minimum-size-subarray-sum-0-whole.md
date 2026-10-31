@@ -17,25 +17,6 @@ type: qa
 
 **推导。** 暴力：枚举所有起点终点，累加求和，`O(n^3)`；前缀和优化后 `O(n^2)`。浪费：固定右端 `r` 后，满足条件的最大起点 `l(r)` 随 `r` 增大只会不降（正数使和单调），对每个 `r` 从头找起点是重复劳动。所以右端前进时，窗口和够了就一路缩左端并记录，缩到刚好不够为止；下一个右端接着用这个左端。每个下标进出窗口各一次，`O(n)`。
 
-**简单解法。** 暴力：枚举左端点，右端点向右累加，和第一次 `>= target` 就记长度并停（元素都是正数，再往右只会更长）。
-
-```python
-def min_sub_array_len(target: int, nums: list[int]) -> int:
-    best = len(nums) + 1                            # 哨兵：比任何合法长度都大
-    for left in range(len(nums)):
-        total = 0
-        for right in range(left, len(nums)):
-            total += nums[right]
-            if total >= target:
-                best = min(best, right - left + 1)
-                break                               # 正数：再往右只会更长，不必继续
-    return best if best <= len(nums) else 0
-```
-
-时间 `O(n^2)`，空间 `O(1)`；`n = 10^5` 时最坏约 `5 * 10^9` 步会超时，作开场答案，再引到「左端点也只前进不回退」。
-
-最优解：
-
 ```python
 def min_sub_array_len(target: int, nums: list[int]) -> int:
     best = len(nums) + 1                    # 哨兵：比任何合法长度都大

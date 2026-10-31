@@ -32,3 +32,12 @@ Put the reasoning **inside the code as short Chinese comments** (what each block
 pointer moves, why this boundary). Clear names and comments replace prose: do not repeat in a paragraph what the code
 and its comments already say. **推导** stays a short paragraph; prose around each code block is at most one or two
 sentences. Lowest reading cost wins.
+## What 简单解法 is (Chi, 2026-10-31, replaces the earlier wording)
+
+"不不不这种就不需要暴力解了！我的意思是不必要的 或者比较细节的优化 比如不 dfs 而是先建 trie 或者先 bfs 记录 valid 点那几个".
+`**简单解法。**` exists only when the main solution carries an optimisation that is optional or detail-heavy (a trie built
+first instead of plain DFS, a BFS pre-pass that records valid cells, pruning, an extra index structure, a constant-space
+trick, a hand-made linked list where `OrderedDict` would do). The simple solution is the same core idea **without** that
+refinement, still an acceptable interview answer. When the main solution is already the most direct correct one, write
+**no** 简单解法 section and no 「最优解：」 lead — never fill it with an exhaustive brute force or a worse algorithm nobody
+would write.

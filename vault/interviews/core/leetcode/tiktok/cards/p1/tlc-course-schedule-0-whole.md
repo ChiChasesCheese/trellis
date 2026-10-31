@@ -17,34 +17,6 @@ type: qa
 
 **推导。** 暴力：对每门课做一次 DFS 看能否回到自己，`O(V(V + E))`。浪费是每次从头搜。洞察：没有任何未完成先修课的课程（入度为 0）可以立刻学；学完后把它从图里删掉，它的后继课程入度减一，可能又出现新的入度为 0 的课程。如果存在环，环上每个点都有一条来自环内的入边，入度永远降不到 0，永远进不了队列，最终取出的课程数小于 `numCourses`。
 
-**简单解法。** 按定义判环：对每门课做一次 DFS，能走回自己就在环上。
-
-```python
-def can_finish(num_courses: int, prerequisites: list[list[int]]) -> bool:
-    graph: list[list[int]] = [[] for _ in range(num_courses)]
-    for course, pre in prerequisites:
-        graph[pre].append(course)                  # 先修课指向后修课
-
-    def on_cycle(start: int) -> bool:              # start 能否沿边走回自己
-        seen = {start}
-        stack = [start]                            # 显式栈，避开递归深度
-        while stack:
-            cur = stack.pop()
-            for nxt in graph[cur]:
-                if nxt == start:
-                    return True                    # 走回起点：起点在一个环上
-                if nxt not in seen:
-                    seen.add(nxt)
-                    stack.append(nxt)
-        return False
-
-    return not any(on_cycle(i) for i in range(num_courses))
-```
-
-时间 `O(V(V + E))`，空间 `O(V + E)`；约束内实测不到一秒，能过，但每个点重搜一遍，面试官会追问怎样只处理每个点一次。
-
-最优解：
-
 ```python
 from collections import deque
 

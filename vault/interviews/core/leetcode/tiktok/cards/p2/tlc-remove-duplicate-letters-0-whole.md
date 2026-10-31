@@ -17,24 +17,6 @@ type: qa
 
 **推导。** 暴力：枚举所有包含每种字母恰好一次的子序列，取最小，指数级。洞察一：字典序先比较靠前的字符，所以前面的位置要尽量放小的字母。洞察二：栈顶字母 `t` 比当前字母 `c` 大，且 `t` 在后面还出现（`last[t] > i`），那么弹掉 `t`，让 `c` 站到更前的位置只会更好，`t` 以后还能补回来；如果 `t` 后面不再出现，就绝不能弹，否则字母丢失。已经在栈里的字母不再入栈：它先出现的位置总不会更差。
 
-**简单解法。** 贪心加递归：第一个字母取「按字母表从小到大试，第一个满足其首次出现之后的后缀仍含全部种类」的字母，后缀里删掉它再递归。
-
-```python
-def remove_duplicate_letters(s: str) -> str:
-    if not s:
-        return ""
-    for ch in sorted(set(s)):                      # 字典序小的字母优先尝试
-        suffix = s[s.index(ch):]                   # 取 ch 第一次出现之后的后缀
-        if set(suffix) == set(s):                  # 后缀还包含全部种类：选 ch 不会丢字母
-            # ch 已经用掉：后缀里的 ch 全删，剩下的字母同样问题递归，深度至多 26
-            return ch + remove_duplicate_letters(suffix.replace(ch, ""))
-    return ""
-```
-
-时间 `O(26n)`、空间 `O(n)`；能过，只是常数大，单调栈一遍扫描更漂亮。
-
-最优解：
-
 ```python
 def remove_duplicate_letters(s: str) -> str:
     last = {ch: i for i, ch in enumerate(s)}       # 每个字母最后一次出现的下标

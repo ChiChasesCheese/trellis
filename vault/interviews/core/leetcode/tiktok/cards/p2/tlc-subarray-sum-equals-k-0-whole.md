@@ -17,24 +17,6 @@ type: qa
 
 **推导。** 暴力枚举所有 `(i, j)` 并求和，`O(n^3)`；用前缀和 `O(1)` 求区间和，`O(n^2)` → 浪费：固定右端 `j` 后，在左端里一个个找 `pre[i-1] = pre[j] - k` → 这是一个「确定的值出现过几次」的查询，哈希表 `O(1)` 回答 → 边扫边查边存，`O(n)`。
 
-**简单解法。** 暴力：固定左端点，右端点向右走并累加，和等于 `k` 就计数；不能提前停，因为有负数。
-
-```python
-def subarray_sum(nums: list[int], k: int) -> int:
-    ans = 0
-    for left in range(len(nums)):
-        total = 0
-        for right in range(left, len(nums)):
-            total += nums[right]                    # [left, right] 的和，边走边累加
-            if total == k:
-                ans += 1                            # 有负数，后面还可能再回到 k，所以继续走
-    return ans
-```
-
-时间 `O(n^2)`，空间 `O(1)`；`n` 到 `2 * 10^4` 量级时约 `2 * 10^8` 步，Python 里会超时，作开场答案，再引到「固定右端点，查前缀和 `pre - k` 出现过几次」。
-
-最优解：
-
 ```python
 from collections import Counter
 

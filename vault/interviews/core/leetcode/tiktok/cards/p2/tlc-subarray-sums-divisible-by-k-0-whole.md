@@ -17,24 +17,6 @@ type: qa
 
 **推导。** 暴力：枚举所有起点终点，前缀和相减后取模，`O(n^2)`。浪费：固定终点后，对每个起点都重新判断。性质：`(pre[j+1] - pre[i]) % k == 0` 等价于 `pre[j+1] % k == pre[i] % k`，所以对每个终点只要知道“前面有多少个前缀的余数与我相同”。哈希表存余数的出现次数。
 
-**简单解法。** 暴力：固定左端点，右端点向右累加，和 `% k == 0` 就计数。
-
-```python
-def subarrays_div_by_k(nums: list[int], k: int) -> int:
-    ans = 0
-    for left in range(len(nums)):
-        total = 0
-        for right in range(left, len(nums)):
-            total += nums[right]                    # [left, right] 的和
-            if total % k == 0:                      # Python 的 % 对负数也安全：0 就是整除
-                ans += 1
-    return ans
-```
-
-时间 `O(n^2)`，空间 `O(1)`；`n = 3 * 10^4` 时约 `4.5 * 10^8` 步会超时，作开场答案，再引到「余数相同的两个前缀」。
-
-最优解：
-
 ```python
 from collections import Counter
 

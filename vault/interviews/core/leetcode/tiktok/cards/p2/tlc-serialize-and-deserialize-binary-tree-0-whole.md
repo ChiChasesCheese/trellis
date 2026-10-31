@@ -17,7 +17,43 @@ type: qa
 
 **推导。** 暴力：存中序 + 前序两个遍历序（值互不相同才可逆，题目值可重复，不可行）→ 观察：在遍历序里把每个空孩子也记成一个占位符，树和序列一一对应 → 选前序：序列化时「先写根，再递归写左、右子树，空孩子写 `#`」，反序列化时「读一个标记：`#` 是空，否则建节点，递归建左、右子树」。序列里每个真实节点后面紧跟着它左、右子树的完整编码，所以不需要知道子树多大。
 
-**简单解法。** 层序（BFS）：队列逐个取出结点写值，空孩子写 `"null"` 占一格；读回时队首结点依次领走接下来的两个标记作左右孩子。
+```python
+class Codec:
+    def serialize(self, root: TreeNode | None) -> str:
+        out: list[str] = []
+
+        def dfs(node: TreeNode | None) -> None:
+            if node is None:
+                out.append("#")                    # 空位也要占一格
+                return
+            out.append(str(node.val))
+            dfs(node.left)
+            dfs(node.right)
+
+        dfs(root)
+        return ",".join(out)
+
+    def deserialize(self, data: str) -> TreeNode | None:
+        tokens = iter(data.split(","))             # 标记流只被顺序消费一次
+
+        def build() -> TreeNode | None:
+            tok = next(tokens)
+            if tok == "#":
+                return None
+            node = TreeNode(int(tok))
+            node.left = build()                    # 先左后右，与序列化的顺序一致
+            node.right = build()
+            return node
+
+        return build()
+```
+
+运行：`[1,2,3,null,null,4,5]` 序列化为 `"1,2,#,#,3,4,#,#,5,#,#"`，还原后与原树逐节点一致；`[]` → `"#"`；`[1]` → `"1,#,#"`；`[1,2]` → `"1,2,#,#,#"`；`[1,null,2]` → `"1,#,2,#,#"`；一条深 `10^4` 的链在默认递归上限下抛 `RecursionError`，调高上限后序列化出 `20001` 个标记，还原后与原树一致。
+
+**复杂度。** 时间 `O(n)`；空间 `O(n)`（输出含 `2n + 1` 个标记）加 `O(h)` 的递归栈，`h` 为树高，链状树时 `O(n)`。
+
+**拓展优化。**
+- 层序（BFS）版本：两边都是循环，链状深树也不会爆递归栈；空孩子写 `"null"` 占位，读回时队首结点依次领走后面两个标记作左右孩子。
 
 ```python
 from collections import deque
@@ -55,46 +91,6 @@ class Codec:
         return root
 ```
 
-时间 `O(n)`、空间 `O(n)`；两边都是循环，不会爆递归栈，足够当最终答案；先序递归版更短，是下面的主解法。
-
-最优解：
-
-```python
-class Codec:
-    def serialize(self, root: TreeNode | None) -> str:
-        out: list[str] = []
-
-        def dfs(node: TreeNode | None) -> None:
-            if node is None:
-                out.append("#")                    # 空位也要占一格
-                return
-            out.append(str(node.val))
-            dfs(node.left)
-            dfs(node.right)
-
-        dfs(root)
-        return ",".join(out)
-
-    def deserialize(self, data: str) -> TreeNode | None:
-        tokens = iter(data.split(","))             # 标记流只被顺序消费一次
-
-        def build() -> TreeNode | None:
-            tok = next(tokens)
-            if tok == "#":
-                return None
-            node = TreeNode(int(tok))
-            node.left = build()                    # 先左后右，与序列化的顺序一致
-            node.right = build()
-            return node
-
-        return build()
-```
-
-运行：`[1,2,3,null,null,4,5]` 序列化为 `"1,2,#,#,3,4,#,#,5,#,#"`，还原后与原树逐节点一致；`[]` → `"#"`；`[1]` → `"1,#,#"`；`[1,2]` → `"1,2,#,#,#"`；`[1,null,2]` → `"1,#,2,#,#"`；一条深 `10^4` 的链在默认递归上限下抛 `RecursionError`，调高上限后序列化出 `20001` 个标记，还原后与原树一致。
-
-**复杂度。** 时间 `O(n)`；空间 `O(n)`（输出含 `2n + 1` 个标记）加 `O(h)` 的递归栈，`h` 为树高，链状树时 `O(n)`。
-
-**拓展优化。**
 - 保证是二叉搜索树（BST，LC 449）时不写空位，只存先序的值，标记数从 `2n + 1` 降到 `n`；还原时用「值必须落在 `(lo, hi)` 内」判断归属。
 
 ```python
@@ -132,7 +128,7 @@ class CodecBST:
 - 只写前序、不标空位会有歧义：根为 `1` 的两棵树，一棵只有左孩子 `2`，一棵只有右孩子 `2`，都被写成 `"1,2"`，无法区分。
 - 空树不能漏：`[]` 序列化为 `"#"`，`build()` 读到 `#` 直接返回 `None`；若序列化时对空根不输出占位符，反序列化 `next(tokens)` 会抛 `StopIteration`。
 - 负数和多位数：用 `str(node.val)` 与 `int(token)` 配合分隔符 `,`，不要逐字符解析，否则 `-1000` 会被拆开。
-- 递归深度：链状树深度为 `n = 10^4`，CPython 默认递归上限约 1000，序列化和反序列化都会抛 `RecursionError`；要么 `sys.setrecursionlimit`，要么改成不递归的层序版本（参考简单解法）。
+- 递归深度：链状树深度为 `n = 10^4`，CPython 默认递归上限约 1000，序列化和反序列化都会抛 `RecursionError`；要么 `sys.setrecursionlimit`，要么改成不递归的层序版本（见拓展优化的层序版本）。
 
 **追问。**
 - 结点值是任意字符串（可能含逗号）：对整个标记列表做 `json.dumps`，或给每个标记加长度前缀。

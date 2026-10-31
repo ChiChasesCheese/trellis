@@ -21,19 +21,6 @@ type: qa
 
 **推导。** 暴力：对每个起点取长 `m` 的子串，排序后与 `sorted(p)` 比较，`O(n·m log m)`。改进一：用计数代替排序，`Counter(window) == Counter(p)`，`O(n·m)`。浪费在于相邻两个窗口只差一进一出，却整个重新计数。洞察：窗口右移一格，只有两个字母的计数变了——增量更新。再进一步，每次比较两张计数表仍是 `O(Σ)`；维护「计数不平衡的字母种数」，一进一出只会让它变化 `-1/0/+1`，判断「是否异位词」降到 `O(1)`。
 
-**简单解法。** 对每个起点取长 `len(p)` 的子串，数一遍字母，和 `p` 的计数比较。
-
-```python
-def find_anagrams(s: str, p: str) -> list[int]:
-    m = len(p)
-    need = Counter(p)
-    return [i for i in range(len(s) - m + 1) if Counter(s[i:i + m]) == need]   # 窗口计数 == p 的计数
-```
-
-时间 `O(n·m)`、空间 `O(Σ)`；每个窗口都重新数一遍，而相邻窗口只差一进一出，增量更新能把每个窗口压到 `O(1)`。
-
-最优解：
-
 ```python
 def find_anagrams(s: str, p: str) -> list[int]:
     m = len(p)

@@ -42,3 +42,12 @@ pointer moves, why this boundary). Clear names and comments replace prose: do no
 and its comments already say. Prose around a code block is at most one or two sentences (the idea in one line, the
 complexity, where it stops being enough). Lowest reading cost wins. When you touch a card, also trim existing prose
 that only restates the code, moving any non-obvious point into a comment.
+## What 简单解法 is (Chi, 2026-10-31, replaces the earlier wording)
+
+"不不不这种就不需要暴力解了！我的意思是不必要的 或者比较细节的优化 比如不 dfs 而是先建 trie 或者先 bfs 记录 valid 点那几个".
+`**简单解法。**` exists only when the main solution carries an optimisation that is optional or detail-heavy (a trie built
+first instead of plain DFS, a BFS pre-pass that records valid cells, pruning, an extra index structure, a constant-space
+trick, a hand-made linked list where `OrderedDict` would do). The simple solution is the same core idea **without** that
+refinement, still an acceptable interview answer. When the main solution is already the most direct correct one, write
+**no** 简单解法 section and no 「最优解：」 lead — never fill it with an exhaustive brute force or a worse algorithm nobody
+would write.

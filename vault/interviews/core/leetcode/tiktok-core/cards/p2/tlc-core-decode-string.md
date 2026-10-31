@@ -17,22 +17,6 @@ type: qa
 
 **推导。** 暴力：反复用正则替换最内层的 `k[...]`，直到没有括号——每一轮都要重新扫描整个字符串 → 浪费：嵌套越深重复扫描越多 → 括号配对的顺序就是栈的出入顺序。
 
-**简单解法。** 正则反复替换：每轮只匹配方括号里没有方括号的最内层 `k[abc]` 并展开，直到没有 `[`。
-
-```python
-import re
-
-def decode_string(s: str) -> str:
-    inner = re.compile(r"(\d+)\[([a-z]*)\]")       # 方括号里只有字母 = 最内层
-    while "[" in s:
-        s = inner.sub(lambda m: m.group(2) * int(m.group(1)), s)   # 一轮展开所有最内层
-    return s
-```
-
-时间 `O(嵌套深度 * 串长)`、空间 `O(输出长度)`；`s.length <= 30` 足够，但每轮都重扫整串，嵌套深、输出长时慢，栈只扫一遍。
-
-最优解：
-
 ```python
 def decode_string(s: str) -> str:
     stack: list[tuple[str, int]] = []     # (进入 [ 之前已拼好的前缀, 这一层的重复次数)

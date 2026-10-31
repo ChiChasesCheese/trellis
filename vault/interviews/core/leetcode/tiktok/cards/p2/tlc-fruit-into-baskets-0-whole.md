@@ -21,25 +21,6 @@ type: qa
 
 **推导。** 暴力：每个起点向右扩，用集合记种类，超过 2 种就停，`O(n^2)`。浪费在于：从起点 `i` 扩到第三种出现的位置 `j`，起点 `i+1, i+2, …` 中许多会在同一处停下，重复扫描了大段。洞察：右端固定在 `j` 时，合法的最左起点是唯一确定的，且随 `j` 增大只会右移（单调）。所以右端逐个前进，种类超了就右移左端。每个下标被两个指针各经过一次，`O(n)`。
 
-**简单解法。** 暴力：枚举起点，向右扩，用集合记种类，出现第三种就停。
-
-```python
-def total_fruit(fruits: list[int]) -> int:
-    best = 0
-    for start in range(len(fruits)):
-        kinds: set[int] = set()
-        for end in range(start, len(fruits)):
-            kinds.add(fruits[end])
-            if len(kinds) > 2:
-                break                               # 第三种出现：这个起点到此为止
-            best = max(best, end - start + 1)
-    return best
-```
-
-时间 `O(n^2)`，空间 `O(1)`；`n = 10^5` 时最坏约 `5 * 10^9` 步会超时，作开场答案，再引到「左端点也只前进」。
-
-最优解：
-
 ```python
 def total_fruit(fruits: list[int]) -> int:
     count: Counter[int] = Counter()        # 窗口内 种类 -> 数量

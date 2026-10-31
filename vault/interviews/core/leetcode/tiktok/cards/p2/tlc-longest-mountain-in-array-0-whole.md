@@ -17,30 +17,6 @@ type: qa
 
 **推导。** 暴力：枚举每个子数组，检查是否为山脉，`O(n^3)`；先枚举起点向右走“升再降”，`O(n^2)`。浪费：山脉由山顶唯一确定，起点只需要从山顶往左沿上坡走；终点同理往右沿下坡走。扩展的总代价：一座山的上坡和下坡在别的山里不会再被走一遍（别的山顶落在这座山的右脚之后），所以直接令 `i = right` 跳过已经走过的整座山，总共 `O(n)`。
 
-**简单解法。** 暴力：枚举起点，先沿严格上坡走，再沿严格下坡走，上下都至少一步才是山脉。
-
-```python
-def longest_mountain(arr: list[int]) -> int:
-    n = len(arr)
-    best = 0
-    for start in range(n - 2):
-        i = start
-        while i + 1 < n and arr[i] < arr[i + 1]:
-            i += 1                                  # 上坡
-        if i == start:
-            continue                                # 没有上坡，不是山脚
-        peak = i
-        while i + 1 < n and arr[i] > arr[i + 1]:
-            i += 1                                  # 下坡
-        if i > peak:                                # 山顶两侧都至少一步
-            best = max(best, i - start + 1)
-    return best
-```
-
-时间 `O(n^2)`，空间 `O(1)`；`n = 10^4` 的严格递增数组约 `5 * 10^7` 步，实测 1.1 秒，勉强能过，作开场答案，再引到「山脉由山顶唯一确定，扫过的坡不必再扫」。
-
-最优解：
-
 ```python
 def longest_mountain(arr: list[int]) -> int:
     n = len(arr)

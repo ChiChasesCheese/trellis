@@ -17,29 +17,6 @@ type: qa
 
 **推导。** 暴力：只沿着右孩子一路往下走 → 浪费/错误：当右子树比左子树浅时，更深的层只有左子树的节点，它们同样会被看到 → 正确定义：每层最右边的节点 → 一层一层展开，每层取最后一个。
 
-**简单解法。** 前序 DFS 带着深度，把每层所有节点值从左到右收进 `levels[depth]`，最后取每层最后一个。
-
-```python
-def right_side_view(root: TreeNode | None) -> list[int]:
-    levels: list[list[int]] = []                    # levels[d]：深度 d 的节点值，从左到右
-
-    def dfs(node: TreeNode | None, depth: int) -> None:
-        if node is None:
-            return
-        if depth == len(levels):
-            levels.append([])
-        levels[depth].append(node.val)
-        dfs(node.left, depth + 1)                   # 先左后右：每层最后收进去的就是最右的
-        dfs(node.right, depth + 1)
-
-    dfs(root, 0)
-    return [level[-1] for level in levels]
-```
-
-时间 `O(n)`，空间 `O(n)`；节点数 `<= 100` 没有问题，只是白存了每层除最右以外的值。
-
-最优解：
-
 ```python
 def right_side_view(root: TreeNode | None) -> list[int]:
     ans: list[int] = []

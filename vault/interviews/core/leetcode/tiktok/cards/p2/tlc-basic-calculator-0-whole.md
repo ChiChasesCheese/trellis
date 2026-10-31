@@ -17,34 +17,6 @@ type: qa
 
 **推导。** 暴力：递归求值——遇到 `(` 递归，括号内的值再乘符号 → 浪费：Python 递归深度默认约 1000，深嵌套直接 `RecursionError` → 用显式栈代替调用栈，进括号保存外层现场。
 
-**简单解法。** 递归下降（recursive descent）：`helper(i)` 从位置 `i` 累加到 `)` 或末尾，遇到 `(` 递归求括号内的值，返回「结果, 下一个位置」。
-
-```python
-def calculate(s: str) -> int:
-    def helper(i: int) -> tuple[int, int]:         # 返回 (这一层的值, 停下的位置)
-        res, num, sign = 0, 0, 1                   # res 已结算的和，num 正在读的数，sign 它的符号
-        while i < len(s):
-            ch = s[i]
-            if ch.isdigit():
-                num = num * 10 + int(ch)           # 多位数逐位累加
-            elif ch in "+-":
-                res += sign * num                  # 遇到运算符才结算上一个数
-                num, sign = 0, 1 if ch == "+" else -1
-            elif ch == "(":
-                val, i = helper(i + 1)             # 括号里的值，i 停在对应的 ')'
-                num = val                          # 当成一个数，等遇到下一个运算符再结算
-            elif ch == ")":
-                break                              # 这一层结束，把位置交还给调用者
-            i += 1
-        return res + sign * num, i
-
-    return helper(0)[0]
-```
-
-时间 `O(n)`、空间 `O(嵌套深度)`；嵌套深度可达 `1.5 * 10^5`，超过 CPython 默认递归上限约 `1000` 会 `RecursionError`，所以只是开场答案，下面的显式栈版才不怕深嵌套。
-
-最优解：
-
 ```python
 def calculate(s: str) -> int:
     stack: list[tuple[int, int]] = []     # 进括号前保存 (已累计的结果, 括号前的符号)

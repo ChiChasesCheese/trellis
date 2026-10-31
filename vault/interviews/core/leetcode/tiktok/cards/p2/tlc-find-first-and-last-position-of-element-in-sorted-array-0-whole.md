@@ -17,23 +17,6 @@ type: qa
 
 **推导。** 暴力：线性扫描 `O(n)`，不满足要求。普通二分找到一个 `target` 后，向左右扩张找边界，在全是 `target` 的数组里退化成 `O(n)`。所以把两个边界各自当成一个“单调条件的分界点”：`lo = 第一个 >= target 的下标`，`hi = 第一个 > target 的下标 - 1`。标准库 `bisect_left` 就是下界，`bisect_right` 就是第一个 `> target` 的位置。
 
-**简单解法。** 线性扫描：第一次遇到 `target` 记 `first`，之后每遇到一次更新 `last`。
-
-```python
-def search_range(nums: list[int], target: int) -> list[int]:
-    first = last = -1
-    for i, x in enumerate(nums):
-        if x == target:
-            if first == -1:
-                first = i                          # 第一次遇到
-            last = i                               # 每次遇到都刷新最后一个
-    return [first, last]
-```
-
-时间 `O(n)`、空间 `O(1)`；没用上有序性，题面要求 `O(log n)`，只是基线。
-
-最优解：
-
 ```python
 from bisect import bisect_left, bisect_right
 

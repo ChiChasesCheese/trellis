@@ -17,21 +17,6 @@ type: qa
 
 **推导。** 暴力枚举所有 `(i, j)` 对 `O(n^2)` → 浪费：对固定的 `j`，只有 `j` 之前的最小值有用，其余买入日都被它支配 → 最小值可以边扫边更新，不用重新找 → 一遍扫描 `O(n)`。
 
-**简单解法。** 暴力：枚举买入日 `i` 和之后的卖出日 `j`，取最大差。
-
-```python
-def max_profit(prices: list[int]) -> int:
-    best = 0                                        # 不能获利时答案是 0
-    for i in range(len(prices)):
-        for j in range(i + 1, len(prices)):         # 卖出日一定在买入日之后
-            best = max(best, prices[j] - prices[i])
-    return best
-```
-
-时间 `O(n^2)`，空间 `O(1)`；`n = 10^5` 会超时，小数据下可当对照答案，开场讲完引到「固定卖出日，只有前面的最低价有用」。
-
-最优解：
-
 ```python
 def max_profit(prices: list[int]) -> int:
     low, best = prices[0], 0          # low：迄今最低价

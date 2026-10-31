@@ -17,28 +17,6 @@ type: qa
 
 **推导。** 暴力：枚举所有点对，求路径和，`O(n^2)` 个点对（还要算路径）→ 浪费：路径可以按最高点归类，每个节点只需要知道左右两边「向下最好能走多远」 → 子树只需向父亲汇报一个数（单链的最大和），父亲再把左右两个汇报合并成「穿过自己的路径」的候选答案。
 
-**简单解法。** 枚举最高点：对每个结点现算左右两条向下单链（`down`，负的舍弃），不复用结果。
-
-```python
-def max_path_sum(root: TreeNode | None) -> int:
-    def down(node: TreeNode | None) -> int:        # 从 node 往下走的最大单链和，现算、不缓存
-        if node is None:
-            return 0
-        return node.val + max(down(node.left), down(node.right), 0)
-
-    def dfs(node: TreeNode | None) -> int:         # 每个结点都当一次最高点
-        if node is None:
-            return -(10 ** 9)
-        through = node.val + max(down(node.left), 0) + max(down(node.right), 0)
-        return max(through, dfs(node.left), dfs(node.right))
-
-    return dfs(root)
-```
-
-时间 `O(n·h)`、最坏单链 `O(n^2)`，空间 `O(h)`；`down` 被反复重算，链状的 `3 * 10^4` 结点会超时，后序一遍把单链和顺手返回就是最优解。
-
-最优解：
-
 ```python
 def max_path_sum(root: TreeNode | None) -> int:
     best = root.val                                # 初值不能是 0：全负树的答案是负数

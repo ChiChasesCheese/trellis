@@ -17,26 +17,6 @@ type: qa
 
 **推导。** 暴力：枚举每个时刻统计有多少会议覆盖它，取最大值，时间 `O(时间范围 * n)`，范围到 `10^6` 不可行；或者对每个会议统计与它重叠的会议数，`O(n^2)`。洞察：答案等于同一时刻最多重叠的会议数。按开始时间依次处理，只需要知道"现有房间里最早空出来的是哪间"，小根堆正好 `O(log n)` 回答；堆顶都还没结束，说明所有房间都在用，必须新开。
 
-**简单解法。** 开始记 `+1`、结束记 `-1`，事件排序后累加，累加值的最大值就是答案。
-
-```python
-def min_meeting_rooms(intervals: list[list[int]]) -> int:
-    events: list[tuple[int, int]] = []
-    for start, end in intervals:
-        events.append((start, 1))                   # 开始：占一间
-        events.append((end, -1))                    # 结束：放一间
-    events.sort()                                   # 同一时刻 -1 排在 +1 前：刚结束就开始不多算
-    rooms = best = 0
-    for _, delta in events:
-        rooms += delta
-        best = max(best, rooms)
-    return best
-```
-
-时间 `O(n log n)`，空间 `O(n)`；复杂度与堆解法相同，也可作最终答案，要记住同一时刻结束事件排前面。
-
-最优解：
-
 ```python
 import heapq
 

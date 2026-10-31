@@ -17,27 +17,6 @@ type: qa
 
 **推导。** 暴力：用一个 `[key, value]` 列表存所有键值对，每次线性扫描，`O(n)` → 浪费：每次都扫全部 → 用哈希函数把键映射到一个桶，只扫桶里的少数元素 → 桶数取质数（`1009`）。
 
-**简单解法。** 键只在 `0..10^6`，直接寻址（direct addressing）：数组下标就是 `key`，`-1` 表示不存在。
-
-```python
-class MyHashMap:
-    def __init__(self) -> None:
-        self.table = [-1] * (10 ** 6 + 1)          # table[key] = value，-1 = 不存在（value >= 0）
-
-    def put(self, key: int, value: int) -> None:
-        self.table[key] = value                    # 键就是下标，没有冲突，插入和更新是同一个赋值
-
-    def get(self, key: int) -> int:
-        return self.table[key]
-
-    def remove(self, key: int) -> None:
-        self.table[key] = -1
-```
-
-三个操作都是 `O(1)`，空间 `O(10^6)`；最多 `10^4` 次调用却常驻一百万格，而且面试官考的是哈希函数加冲突处理，只能当开场，随后写拉链法。
-
-最优解：
-
 ```python
 class MyHashMap:
     SIZE = 1009                               # 质数个桶：key 有规律时也分得开

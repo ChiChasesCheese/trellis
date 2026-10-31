@@ -17,27 +17,6 @@ type: qa
 
 **推导。** 暴力：每个起点模拟一圈，`O(n^2)`。第一个观察：总净油量 `< 0` 一定无解，`>= 0` 一定有解（题目保证唯一）。第二个观察：从 `start` 出发在第 `i` 站首次油量为负，则 `start..i` 之间任何站 `k` 作起点也会失败——到达 `k` 时从 `start` 带来的油量 `>= 0`，从 `k` 白手起家只会更少，到 `i` 时一样会为负。所以可以一次跳过整段，下一个候选是 `i + 1`，每个站只扫描一次。
 
-**简单解法。** 对每个站当起点真的开一圈，油量掉到负数就放弃这个起点。
-
-```python
-def can_complete_circuit(gas: list[int], cost: list[int]) -> int:
-    n = len(gas)
-    for start in range(n):
-        tank = 0
-        for step in range(n):                      # 从 start 出发，最多走 n 个站
-            i = (start + step) % n                 # 环形：下标取模
-            tank += gas[i] - cost[i]
-            if tank < 0:                           # 到不了下一站：这个起点作废
-                break
-        else:
-            return start                           # 整圈没有 break：走完了
-    return -1
-```
-
-时间 `O(n^2)`、空间 `O(1)`；`n = 10^5` 约 `10^10` 步，必超时，只是照题意的基线。
-
-最优解：
-
 ```python
 def can_complete_circuit(gas: list[int], cost: list[int]) -> int:
     total = tank = start = 0

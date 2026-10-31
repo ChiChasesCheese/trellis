@@ -17,40 +17,6 @@ type: qa
 
 **推导。** 暴力：把 `num1` 拆成每一位，分别乘整个 `num2` 得到多个中间字符串，再用字符串加法逐个相加 → 浪费：每次都要构造中间字符串、做多轮进位 → 位置规律：第 `i` 位与第 `j` 位相乘只会影响乘积的第 `i + j` 位（及其进位），先全部累加，最后一遍进位即可。
 
-**简单解法。** 只用字符串加法（LC 415）：从 `num2` 最高位起，结果左移一位（补 `0`），再加 `d` 次 `num1`。
-
-```python
-def multiply(num1: str, num2: str) -> str:
-    def add(a: str, b: str) -> str:                 # 字符串加法，低位到高位进位
-        i, j, carry = len(a) - 1, len(b) - 1, 0
-        out: list[str] = []
-        while i >= 0 or j >= 0 or carry:
-            total = carry
-            if i >= 0:
-                total += ord(a[i]) - 48
-                i -= 1
-            if j >= 0:
-                total += ord(b[j]) - 48
-                j -= 1
-            carry, digit = divmod(total, 10)
-            out.append(str(digit))
-        return "".join(reversed(out))
-
-    if num1 == "0" or num2 == "0":
-        return "0"                                  # 避免 "0" 被补零成 "00"
-    result = "0"
-    for ch in num2:                                 # 从最高位处理到个位
-        if result != "0":
-            result += "0"                           # 左移一位 = 乘 10
-        for _ in range(ord(ch) - 48):
-            result = add(result, num1)              # 这一位是 d，就加 d 次 num1
-    return result
-```
-
-时间 `O(9 * n * (m + n))`，空间 `O(m + n)`；两个 200 位的数实测约 0.04 秒，比主解慢几十倍，但约束内够用。
-
-最优解：
-
 ```python
 def multiply(num1: str, num2: str) -> str:
     a = [int(c) for c in reversed(num1)]  # 个位在下标 0

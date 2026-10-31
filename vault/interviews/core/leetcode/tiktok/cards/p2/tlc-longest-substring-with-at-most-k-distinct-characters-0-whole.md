@@ -17,25 +17,6 @@ type: qa
 
 **推导。** 暴力：枚举所有子串，用集合数种类，`O(n^3)`；固定起点向右扩直到种类超过 `k`，`O(n^2)`。浪费：起点换到下一个后，上一个起点已经扩到的部分重新扩展一遍。窗口 `[left, right]` 合法时，右端再前进一格只可能让种类增加；一旦超了，不需要从头来，只要把左端往右推直到种类降回 `k`。每个下标进窗口一次、出窗口一次，`O(n)`。
 
-**简单解法。** 枚举每个起点向右扩，用集合记种类，超过 `k` 就停。
-
-```python
-def length_of_longest_substring_k_distinct(s: str, k: int) -> int:
-    best = 0
-    for i in range(len(s)):
-        seen: set[str] = set()
-        for j in range(i, len(s)):
-            seen.add(s[j])
-            if len(seen) > k:                      # 再往右只会更多，这个起点到此为止
-                break
-            best = max(best, j - i + 1)
-    return best
-```
-
-时间 `O(n^2)`、空间 `O(k)`；全是同一个字母时 `n = 5 * 10^4` 约 `1.25 * 10^9` 次，必超时，浪费在换起点后重扫，滑动窗口压到 `O(n)`。
-
-最优解：
-
 ```python
 from collections import Counter
 

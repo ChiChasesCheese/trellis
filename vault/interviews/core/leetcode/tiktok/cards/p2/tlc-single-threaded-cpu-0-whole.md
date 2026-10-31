@@ -17,33 +17,6 @@ type: qa
 
 **推导。** 暴力：循环里每次扫描所有任务，找出已到达、未执行、执行时间最短的，`O(n^2)`，`10^5` 个任务约 `10^10` 次，超时。浪费在重复扫描已经比较过的任务。按到达时间排序后，任务按顺序“进入候选池”，每个任务只进池一次；池里要反复取最小，用堆，取出 `O(log n)`。
 
-**简单解法。** 直接模拟：CPU 空闲时扫描全部任务，挑出已到达、未执行、`(执行时间, 下标)` 最小的一个；没有可选的就把时间跳到最早的未执行任务。
-
-```python
-def get_order(tasks: list[list[int]]) -> list[int]:
-    n = len(tasks)
-    done = [False] * n
-    res: list[int] = []
-    t = 0
-    while len(res) < n:
-        pick = -1
-        for i in range(n):                          # 每次选任务都扫描全部
-            if not done[i] and tasks[i][0] <= t:
-                if pick == -1 or (tasks[i][1], i) < (tasks[pick][1], pick):
-                    pick = i                        # 元组比较：先看执行时间，再看下标
-        if pick == -1:                              # 没有已到达的任务：时间跳到最早的未执行任务
-            t = min(tasks[i][0] for i in range(n) if not done[i])
-            continue
-        done[pick] = True
-        res.append(pick)
-        t += tasks[pick][1]
-    return res
-```
-
-时间 `O(n^2)`，空间 `O(n)`；`n = 10^5` 约 `10^10` 步会超时，作开场答案，再引到「用最小堆避免重复扫描」。
-
-最优解：
-
 ```python
 from heapq import heappop, heappush
 
