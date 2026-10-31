@@ -1,0 +1,73 @@
+# 贪心
+
+每一步做局部最优，并能用交换论证说明不会更差：跳跃游戏、分发糖果、区间调度。证明不出来时，往往要退回 DP。
+
+**先做（TikTok P1–P4 与经典题单，22 道）**
+
+- [[tlc-merge-intervals-0-whole|LC 56 合并区间]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-house-robber-0-whole|LC 198 打家劫舍]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-meeting-rooms-ii-0-whole|LC 253 会议室 II]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150
+- [[tlc-remove-duplicate-letters-0-whole|LC 316 去除重复字母]]（中等）· TikTok P2 · Amazon
+- [[tlc-valid-parenthesis-string-0-whole|LC 678 有效的括号字符串]]（中等）· TikTok P3 · NeetCode 150
+- [[tlc-make-costs-of-paths-equal-in-a-binary-tree-0-whole|LC 2673 使二叉树所有路径值相等的最小代价]]（中等）· TikTok P3
+- [[tlc-gas-station-0-whole|LC 134 加油站]]（中等）· TikTok P3 · Amazon · NeetCode 150 · Top Interview 150
+- [[tlc-jump-game-0-whole|LC 55 跳跃游戏]]（中等）· TikTok P3 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-candy-0-whole|LC 135 分发糖果]]（困难）· TikTok P4 · Amazon · Top Interview 150
+- [[tlc-non-overlapping-intervals-0-whole|LC 435 无重叠区间]]（中等）· TikTok P4 · Amazon · Blind 75 · NeetCode 150
+- [[tlc-minimum-add-to-make-parentheses-valid-0-whole|LC 921 使括号有效的最少添加]]（中等）· TikTok P4
+- [[tlc-minimum-swaps-to-make-strings-equal-0-whole|LC 1247 交换字符使得字符串相同]]（中等）· TikTok P4
+- [[tlc-container-with-most-water-0-whole|LC 11 盛最多水的容器]]（中等）· TikTok B · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-jump-game-ii-0-whole|LC 45 跳跃游戏 II]]（中等）· TikTok B · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-best-time-to-buy-and-sell-stock-ii-0-whole|LC 122 买卖股票的最佳时机 II]]（中等）· TikTok B · Top Interview 150
+- [[tlc-coin-change-0-whole|LC 322 零钱兑换]]（中等）· TikTok B · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-minimum-number-of-arrows-to-burst-balloons-0-whole|LC 452 用最少数量的箭引爆气球]]（中等）· TikTok B · Top Interview 150
+- LC 502 IPO（困难）· Top Interview 150
+- LC 621 任务调度器（中等）· Amazon · NeetCode 150
+- LC 763 划分字母区间（中等）· NeetCode 150 · LeetCode Hot 100
+- LC 846 一手顺子（中等）· NeetCode 150
+- LC 1899 合并若干三元组以形成目标三元组（中等）· NeetCode 150
+
+**再做（其余牌组里的题，42 道）**
+
+- [[tlc-wildcard-matching-0-whole|LC 44 通配符匹配]]（困难）· TikTok B · Amazon
+- [[tlc-largest-number-0-whole|LC 179 最大数]]（中等）· TikTok B · Amazon
+- [[tlc-create-maximum-number-0-whole|LC 321 拼接最大数]]（困难）· TikTok B
+- [[tlc-remove-k-digits-0-whole|LC 402 移掉 K 位数字]]（中等）· TikTok B · Amazon
+- [[tlc-longest-palindrome-0-whole|LC 409 最长回文串]]（简单）· TikTok B
+- LC 410 分割数组的最大值（困难）· Amazon
+- [[tlc-assign-cookies-0-whole|LC 455 分发饼干]]（简单）· TikTok B
+- [[tlc-super-washing-machines-0-whole|LC 517 超级洗衣机]]（困难）· TikTok B · Amazon
+- [[tlc-array-partition-i-0-whole|LC 561 数组拆分]]（简单）· TikTok B · Amazon
+- [[tlc-shortest-unsorted-continuous-subarray-0-whole|LC 581 最短无序连续子数组]]（中等）· TikTok B
+- [[tlc-maximum-swap-0-whole|LC 670 最大交换]]（中等）· TikTok B
+- [[tlc-valid-palindrome-ii-0-whole|LC 680 验证回文串 II]]（简单）· TikTok B · Amazon
+- [[tlc-best-time-to-buy-and-sell-stock-with-transaction-fee-0-whole|LC 714 买卖股票的最佳时机含手续费]]（中等）· TikTok B
+- [[tlc-reorganize-string-0-whole|LC 767 重构字符串]]（中等）· TikTok B · Amazon
+- [[tlc-rabbits-in-forest-0-whole|LC 781 森林中的兔子]]（中等）· TikTok B
+- LC 871 最低加油次数（困难）· Amazon
+- [[tlc-boats-to-save-people-0-whole|LC 881 救生艇]]（中等）· TikTok B · Amazon
+- [[tlc-largest-perimeter-triangle-0-whole|LC 976 三角形的最大周长]]（简单）· TikTok B
+- [[tlc-smallest-subsequence-of-distinct-characters-0-whole|LC 1081 不同字符的最小子序列]]（中等）· TikTok B · Amazon
+- LC 1167 连接木棍的最低费用（中等）· Amazon
+- [[tlc-greatest-sum-divisible-by-three-0-whole|LC 1262 可被三整除的最大和]]（中等）· TikTok B
+- LC 1326 灌溉花园的最少水龙头数目（困难）· Amazon
+- [[tlc-reverse-subarray-to-maximize-array-value-0-whole|LC 1330 翻转子数组得到最大的数组值]]（困难）· TikTok B · Amazon
+- [[tlc-longest-happy-string-0-whole|LC 1405 最长快乐字符串]]（中等）· TikTok B
+- [[tlc-find-the-most-competitive-subsequence-0-whole|LC 1673 找出最具竞争力的子序列]]（中等）· TikTok B
+- LC 1703 得到连续 K 个 1 的最少相邻交换次数（困难）· Amazon
+- [[tlc-maximum-value-at-a-given-index-in-a-bounded-array-0-whole|LC 1802 有界数组中指定下标处的最大值]]（中等）· TikTok B
+- LC 1833 雪糕的最大数量（中等）· Amazon
+- LC 1838 最高频元素的频数（中等）· Amazon
+- LC 1846 减小和重新排列数组后的最大元素（中等）· Amazon
+- LC 2214 通关游戏所需的最低生命值（中等）· Amazon
+- LC 2271 毯子覆盖的最多白色砖块数（中等）· Amazon
+- LC 2357 使数组中所有元素都等于零（简单）· Amazon
+- LC 2448 使数组相等的最小开销（困难）· Amazon
+- LC 2542 最大子序列的分数（中等）· Amazon
+- LC 2938 区分黑球与白球（中等）· Amazon
+- LC 3016 输入单词需要的最少按键次数 II（中等）· Amazon
+- [[tlc-minimum-moves-to-pick-k-ones-0-whole|LC 3086 拾起 K 个 1 需要的最少行动次数]]（困难）· TikTok B
+- LC 3413 收集连续 K 个袋子可以获得的最多硬币数量（中等）· Amazon
+- LC 3434 子数组操作后的最大频率（中等）· Amazon
+- [[tlc-lexicographically-smallest-generated-string-0-whole|LC 3474 字典序最小的生成字符串]]（困难）· TikTok B
+- LC 3914 使数组非递减需要的最小累计值（中等）· Amazon

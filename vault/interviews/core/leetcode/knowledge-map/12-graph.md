@@ -1,0 +1,154 @@
+# 图与网格的 BFS / DFS
+
+把树的遍历推广到有环、有多个起点的结构：岛屿、连通分量、多源 BFS、最短步数。需要访问标记，这是和树遍历唯一的本质区别。
+
+**先做（TikTok P1–P4 与经典题单，83 道）**
+
+- [[tlc-number-of-islands-0-whole|LC 200 岛屿数量]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-course-schedule-0-whole|LC 207 课程表]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-binary-tree-level-order-traversal-0-whole|LC 102 二叉树的层序遍历]]（中等）· TikTok P1 · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-binary-tree-right-side-view-0-whole|LC 199 二叉树的右视图]]（中等）· TikTok P2 · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-lowest-common-ancestor-of-a-binary-tree-0-whole|LC 236 二叉树的最近公共祖先]]（中等）· TikTok P2 · Amazon · LeetCode Hot 100 · Top Interview 150
+- [[tlc-binary-tree-maximum-path-sum-0-whole|LC 124 二叉树中的最大路径和]]（困难）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-number-of-distinct-islands-0-whole|LC 694 不同岛屿的数量]]（中等）· TikTok P2
+- [[tlc-spiral-matrix-0-whole|LC 54 螺旋矩阵]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-making-a-large-island-0-whole|LC 827 最大人工岛]]（困难）· TikTok P2 · Amazon
+- [[tlc-path-sum-iii-0-whole|LC 437 路径总和 III]]（中等）· TikTok P3 · Amazon · LeetCode Hot 100
+- [[tlc-subtree-of-another-tree-0-whole|LC 572 另一棵树的子树]]（简单）· TikTok P3 · Blind 75 · NeetCode 150
+- [[tlc-alien-dictionary-0-whole|LC 269 火星词典]]（困难）· TikTok P3 · Amazon · Blind 75 · NeetCode 150
+- [[tlc-word-ladder-0-whole|LC 127 单词接龙]]（困难）· TikTok P3 · Amazon · NeetCode 150 · Top Interview 150
+- [[tlc-shortest-path-in-a-grid-with-obstacles-elimination-0-whole|LC 1293 网格中的最短路径]]（困难）· TikTok P3 · Amazon
+- [[tlc-minimum-path-sum-0-whole|LC 64 最小路径和]]（中等）· TikTok P3 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-possible-bipartition-0-whole|LC 886 可能的二分法]]（中等）· TikTok P3
+- [[tlc-word-search-ii-0-whole|LC 212 单词搜索 II]]（困难）· TikTok P3 · Amazon · Blind 75 · NeetCode 150 · Top Interview 150
+- [[tlc-serialize-and-deserialize-binary-tree-0-whole|LC 297 二叉树的序列化与反序列化]]（困难）· TikTok P3 · Amazon · Blind 75 · NeetCode 150
+- [[tlc-word-search-0-whole|LC 79 单词搜索]]（中等）· TikTok P3 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-design-tic-tac-toe-0-whole|LC 348 设计井字棋]]（中等）· TikTok P3 · Amazon
+- [[tlc-accounts-merge-0-whole|LC 721 账户合并]]（中等）· TikTok P3 · Amazon
+- [[tlc-diameter-of-binary-tree-0-whole|LC 543 二叉树的直径]]（简单）· TikTok P3 · Amazon · NeetCode 150 · LeetCode Hot 100
+- [[tlc-rotate-image-0-whole|LC 48 旋转图像]]（中等）· TikTok P3 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-water-and-jug-problem-0-whole|LC 365 水壶问题]]（中等）· TikTok P4
+- [[tlc-evaluate-division-0-whole|LC 399 除法求值]]（中等）· TikTok P4 · Amazon · Top Interview 150
+- [[tlc-cheapest-flights-within-k-stops-0-whole|LC 787 K 站中转内最便宜的航班]]（中等）· TikTok P4 · NeetCode 150
+- [[tlc-transpose-matrix-0-whole|LC 867 转置矩阵]]（简单）· TikTok P4
+- [[tlc-all-nodes-distance-k-in-binary-tree-0-whole|LC 863 二叉树中所有距离为 K 的结点]]（中等）· TikTok P4 · Amazon
+- [[tlc-symmetric-tree-0-whole|LC 101 对称二叉树]]（简单）· TikTok P4 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-validate-binary-search-tree-0-whole|LC 98 验证二叉搜索树]]（中等）· TikTok P4 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-sparse-matrix-multiplication-0-whole|LC 311 稀疏矩阵的乘法]]（中等）· TikTok P4
+- [[tlc-serialize-and-deserialize-n-ary-tree-0-whole|LC 428 序列化和反序列化 N 叉树]]（困难）· TikTok P4
+- [[tlc-kth-smallest-element-in-a-sorted-matrix-0-whole|LC 378 有序矩阵中第 K 小的元素]]（中等）· TikTok P4
+- [[tlc-shortest-path-in-binary-matrix-0-whole|LC 1091 二进制矩阵中的最短路径]]（中等）· TikTok P4
+- [[tlc-pacific-atlantic-water-flow-0-whole|LC 417 太平洋大西洋水流问题]]（中等）· TikTok P4 · Amazon · Blind 75 · NeetCode 150
+- [[tlc-number-of-connected-components-in-an-undirected-graph-0-whole|LC 323 无向图中连通分量的数目]]（中等）· TikTok P4 · Blind 75 · NeetCode 150
+- [[tlc-recover-binary-search-tree-0-whole|LC 99 恢复二叉搜索树]]（中等）· TikTok P4
+- [[tlc-flatten-a-multilevel-doubly-linked-list-0-whole|LC 430 扁平化多级双向链表]]（中等）· TikTok P4
+- [[tlc-kth-smallest-element-in-a-bst-0-whole|LC 230 二叉搜索树中第 K 小的元素]]（中等）· TikTok P4 · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-most-frequent-subtree-sum-0-whole|LC 508 出现次数最多的子树元素和]]（中等）· TikTok P4
+- [[tlc-swim-in-rising-water-0-whole|LC 778 水位上升的泳池中游泳]]（困难）· TikTok P4 · NeetCode 150
+- [[tlc-mini-parser-0-whole|LC 385 迷你语法分析器]]（中等）· TikTok P4
+- [[tlc-amount-of-time-for-binary-tree-to-be-infected-0-whole|LC 2385 感染二叉树需要的总时间]]（中等）· TikTok P4
+- [[tlc-populating-next-right-pointers-in-each-node-0-whole|LC 116 填充每个节点的下一个右侧节点指针]]（中等）· TikTok P4 · Amazon
+- LC 36 有效的数独（中等）· Amazon · NeetCode 150 · Top Interview 150
+- [[tlc-unique-paths-ii-0-whole|LC 63 不同路径 II]]（中等）· TikTok B · Top Interview 150
+- [[tlc-set-matrix-zeroes-0-whole|LC 73 矩阵置零]]（中等）· TikTok B · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-search-a-2d-matrix-0-whole|LC 74 搜索二维矩阵]]（中等）· TikTok B · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-binary-tree-inorder-traversal-0-whole|LC 94 二叉树的中序遍历]]（简单）· TikTok B · Amazon · LeetCode Hot 100
+- LC 100 相同的树（简单）· Amazon · Blind 75 · NeetCode 150 · Top Interview 150
+- [[tlc-binary-tree-zigzag-level-order-traversal-0-whole|LC 103 二叉树的锯齿形层序遍历]]（中等）· TikTok B · Amazon · Top Interview 150
+- [[tlc-maximum-depth-of-binary-tree-0-whole|LC 104 二叉树的最大深度]]（简单）· TikTok B · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-balanced-binary-tree-0-whole|LC 110 平衡二叉树]]（简单）· TikTok B · Amazon · NeetCode 150
+- [[tlc-path-sum-0-whole|LC 112 路径总和]]（简单）· TikTok B · Top Interview 150
+- [[tlc-flatten-binary-tree-to-linked-list-0-whole|LC 114 二叉树展开为链表]]（中等）· TikTok B · LeetCode Hot 100 · Top Interview 150
+- LC 117 填充每个节点的下一个右侧节点指针 II（中等）· Top Interview 150
+- [[tlc-sum-root-to-leaf-numbers-0-whole|LC 129 求根节点到叶节点数字之和]]（中等）· TikTok B · Top Interview 150
+- [[tlc-surrounded-regions-0-whole|LC 130 被围绕的区域]]（中等）· TikTok B · Amazon · NeetCode 150 · Top Interview 150
+- [[tlc-clone-graph-0-whole|LC 133 克隆图]]（中等）· TikTok B · Blind 75 · NeetCode 150 · Top Interview 150
+- [[tlc-course-schedule-ii-0-whole|LC 210 课程表 II]]（中等）· TikTok B · Amazon · NeetCode 150 · Top Interview 150
+- [[tlc-design-add-and-search-words-data-structure-0-whole|LC 211 添加与搜索单词 - 数据结构设计]]（中等）· TikTok B · Amazon · Blind 75 · NeetCode 150 · Top Interview 150
+- [[tlc-maximal-square-0-whole|LC 221 最大正方形]]（中等）· TikTok B · Top Interview 150
+- [[tlc-invert-binary-tree-0-whole|LC 226 翻转二叉树]]（简单）· TikTok B · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-lowest-common-ancestor-of-a-binary-search-tree-0-whole|LC 235 二叉搜索树的最近公共祖先]]（中等）· TikTok B · Amazon · Blind 75 · NeetCode 150
+- [[tlc-search-a-2d-matrix-ii-0-whole|LC 240 搜索二维矩阵 II]]（中等）· TikTok B · Amazon · LeetCode Hot 100
+- LC 261 以图判树（中等）· Blind 75 · NeetCode 150
+- [[tlc-perfect-squares-0-whole|LC 279 完全平方数]]（中等）· TikTok B · LeetCode Hot 100
+- [[tlc-walls-and-gates-0-whole|LC 286 墙与门]]（中等）· TikTok B · NeetCode 150
+- LC 289 生命游戏（中等）· Top Interview 150
+- [[tlc-coin-change-0-whole|LC 322 零钱兑换]]（中等）· TikTok B · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-longest-increasing-path-in-a-matrix-0-whole|LC 329 矩阵中的最长递增路径]]（困难）· TikTok B · NeetCode 150
+- LC 332 重新安排行程（困难）· Amazon · NeetCode 150
+- LC 427 建立四叉树（中等）· Top Interview 150
+- LC 433 最小基因变化（中等）· Top Interview 150
+- LC 530 二叉搜索树的最小绝对差（简单）· Top Interview 150
+- LC 637 二叉树的层平均值（简单）· Top Interview 150
+- LC 684 冗余连接（中等）· NeetCode 150
+- [[tlc-max-area-of-island-0-whole|LC 695 岛屿的最大面积]]（中等）· TikTok B · Amazon · NeetCode 150
+- LC 743 网络延迟时间（中等）· NeetCode 150
+- LC 909 蛇梯棋（中等）· Top Interview 150
+- [[tlc-rotting-oranges-0-whole|LC 994 腐烂的橘子]]（中等）· TikTok B · Amazon · NeetCode 150 · LeetCode Hot 100
+- LC 1448 统计二叉树中好节点的数目（中等）· NeetCode 150
+- [[tlc-min-cost-to-connect-all-points-0-whole|LC 1584 连接所有点的最小费用]]（中等）· TikTok B · NeetCode 150
+
+**再做（其余牌组里的题，62 道）**
+
+- LC 37 解数独（困难）· Amazon
+- [[tlc-maximal-rectangle-0-whole|LC 85 最大矩形]]（困难）· TikTok B · Amazon
+- [[tlc-binary-tree-level-order-traversal-ii-0-whole|LC 107 二叉树的层序遍历 II]]（中等）· TikTok B
+- [[tlc-minimum-depth-of-binary-tree-0-whole|LC 111 二叉树的最小深度]]（简单）· TikTok B
+- [[tlc-path-sum-ii-0-whole|LC 113 路径总和 II]]（中等）· TikTok B
+- [[tlc-word-ladder-ii-0-whole|LC 126 单词接龙 II]]（困难）· TikTok B · Amazon
+- LC 277 搜寻名人（中等）· Amazon
+- [[tlc-binary-tree-longest-consecutive-sequence-0-whole|LC 298 二叉树最长连续序列]]（中等）· TikTok B
+- [[tlc-remove-invalid-parentheses-0-whole|LC 301 删除无效的括号]]（困难）· TikTok B
+- LC 310 最小高度树（中等）· 
+- [[tlc-shortest-distance-from-all-buildings-0-whole|LC 317 离建筑物最近的距离]]（困难）· TikTok B
+- [[tlc-house-robber-iii-0-whole|LC 337 打家劫舍 III]]（中等）· TikTok B · Amazon
+- [[tlc-nested-list-weight-sum-0-whole|LC 339 嵌套列表加权和]]（中等）· TikTok B
+- LC 341 扁平化嵌套列表迭代器（中等）· Amazon
+- [[tlc-lexicographical-numbers-0-whole|LC 386 字典序排数]]（中等）· TikTok B
+- [[tlc-trapping-rain-water-ii-0-whole|LC 407 接雨水 II]]（困难）· TikTok B
+- [[tlc-convert-binary-search-tree-to-sorted-doubly-linked-list-0-whole|LC 426 将二叉搜索树转化为排序的双向链表]]（中等）· TikTok B
+- LC 472 连接词（困难）· Amazon
+- LC 490 迷宫（中等）· Amazon
+- [[tlc-diagonal-traverse-0-whole|LC 498 对角线遍历]]（中等）· TikTok B
+- [[tlc-the-maze-iii-0-whole|LC 499 迷宫 III]]（困难）· TikTok B
+- [[tlc-find-largest-value-in-each-tree-row-0-whole|LC 515 在每个树行中找最大值]]（中等）· TikTok B
+- [[tlc-01-matrix-0-whole|LC 542 01 矩阵]]（中等）· TikTok B
+- LC 547 省份数量（中等）· Amazon
+- [[tlc-merge-two-binary-trees-0-whole|LC 617 合并二叉树]]（简单）· TikTok B
+- [[tlc-maximum-width-of-binary-tree-0-whole|LC 662 二叉树最大宽度]]（中等）· TikTok B · Amazon
+- [[tlc-number-of-distinct-islands-ii-0-whole|LC 711 不同岛屿的数量 II]]（困难）· TikTok B
+- LC 733 图像渲染（简单）· 
+- [[tlc-minimum-distance-between-bst-nodes-0-whole|LC 783 二叉搜索树节点最小距离]]（简单）· TikTok B
+- [[tlc-bus-routes-0-whole|LC 815 公交路线]]（困难）· TikTok B · Amazon
+- [[tlc-minimize-malware-spread-0-whole|LC 924 尽量减少恶意软件的传播]]（困难）· TikTok B
+- [[tlc-shortest-bridge-0-whole|LC 934 最短的桥]]（中等）· TikTok B
+- [[tlc-check-completeness-of-a-binary-tree-0-whole|LC 958 二叉树的完全性检验]]（中等）· TikTok B
+- [[tlc-binary-tree-cameras-0-whole|LC 968 监控二叉树]]（困难）· TikTok B
+- [[tlc-vertical-order-traversal-of-a-binary-tree-0-whole|LC 987 二叉树的垂序遍历]]（困难）· TikTok B · Amazon
+- LC 1038 从二叉搜索树到更大和树（中等）· Amazon
+- [[tlc-number-of-submatrices-that-sum-to-target-0-whole|LC 1074 元素和为目标值的子矩阵数量]]（困难）· TikTok B
+- [[tlc-lowest-common-ancestor-of-deepest-leaves-0-whole|LC 1123 最深叶节点的最近公共祖先]]（中等）· TikTok B
+- [[tlc-shortest-path-with-alternating-colors-0-whole|LC 1129 颜色交替的最短路径]]（中等）· TikTok B
+- [[tlc-as-far-from-land-as-possible-0-whole|LC 1162 地图分析]]（中等）· TikTok B
+- LC 1197 进击的骑士（中等）· Amazon
+- LC 1319 连通网络的操作次数（中等）· Amazon
+- [[tlc-maximum-product-of-splitted-binary-tree-0-whole|LC 1339 分裂二叉树的最大乘积]]（中等）· TikTok B
+- LC 1373 二叉搜索子树的最大键值和（困难）· Amazon
+- LC 1376 通知所有员工所需的时间（中等）· Amazon
+- [[tlc-course-schedule-iv-0-whole|LC 1462 课程表 IV]]（中等）· TikTok B
+- [[tlc-reorder-routes-to-make-all-paths-lead-to-the-city-zero-0-whole|LC 1466 重新规划路线]]（中等）· TikTok B
+- [[tlc-number-of-good-leaf-nodes-pairs-0-whole|LC 1530 好叶子节点对的数量]]（中等）· TikTok B
+- [[tlc-find-distance-in-a-binary-tree-0-whole|LC 1740 找到二叉树中的距离]]（中等）· TikTok B
+- LC 1958 检查操作是否合法（中等）· Amazon
+- [[tlc-parallel-courses-iii-0-whole|LC 2050 并行课程 III]]（困难）· TikTok B · Amazon
+- LC 2115 从给定原材料中找到所有可以做出的菜（中等）· Amazon
+- LC 2603 收集树中金币（困难）· 
+- LC 2643 一最多的行（简单）· Amazon
+- LC 2812 找出最安全路径（中等）· Amazon
+- [[tlc-minimum-moves-to-spread-stones-over-grid-0-whole|LC 2850 将石头分散到网格图的最少移动次数]]（中等）· TikTok B
+- [[tlc-minimum-operations-to-write-the-letter-y-on-a-grid-0-whole|LC 3071 在矩阵上写出字母 Y 所需的最少操作次数]]（中等）· TikTok B
+- LC 3286 穿越网格图的安全路径（中等）· Amazon
+- LC 3310 移除可疑的方法（中等）· Amazon
+- [[tlc-maximize-amount-after-two-days-of-conversions-0-whole|LC 3387 两天自由外汇交易后的最大货币数]]（中等）· TikTok B
+- LC 3607 电网维护（中等）· Amazon
+- LC 3620 恢复网络路径（困难）· Amazon
