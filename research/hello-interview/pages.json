@@ -1,0 +1,857 @@
+[
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/in-a-hurry/introduction",
+  "track": "system-design",
+  "section": "in-a-hurry",
+  "page": "introduction",
+  "title": "System Design in a Hurry",
+  "premium": false,
+  "chars": 14541
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/in-a-hurry/how-to-prepare",
+  "track": "system-design",
+  "section": "in-a-hurry",
+  "page": "how-to-prepare",
+  "title": "How to Prepare for System Design Interviews",
+  "premium": false,
+  "chars": 5915
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/in-a-hurry/delivery",
+  "track": "system-design",
+  "section": "in-a-hurry",
+  "page": "delivery",
+  "title": "System Design Delivery Framework",
+  "premium": false,
+  "chars": 18722
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/in-a-hurry/core-concepts",
+  "track": "system-design",
+  "section": "in-a-hurry",
+  "page": "core-concepts",
+  "title": "Core Concepts for System Design Interviews",
+  "premium": false,
+  "chars": 27140
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/in-a-hurry/key-technologies",
+  "track": "system-design",
+  "section": "in-a-hurry",
+  "page": "key-technologies",
+  "title": "System Design Key Technologies",
+  "premium": false,
+  "chars": 43487
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/in-a-hurry/patterns",
+  "track": "system-design",
+  "section": "in-a-hurry",
+  "page": "patterns",
+  "title": "System Design Interview Patterns",
+  "premium": false,
+  "chars": 14387
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/in-a-hurry/problem-breakdowns",
+  "track": "system-design",
+  "section": "in-a-hurry",
+  "page": "problem-breakdowns",
+  "title": "Bitly",
+  "premium": false,
+  "chars": 4192
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/core-concepts/networking-essentials",
+  "track": "system-design",
+  "section": "core-concepts",
+  "page": "networking-essentials",
+  "title": "Networking Essentials for System Design Interviews",
+  "premium": false,
+  "chars": 70250
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/core-concepts/api-design",
+  "track": "system-design",
+  "section": "core-concepts",
+  "page": "api-design",
+  "title": "API Design for System Design Interviews",
+  "premium": false,
+  "chars": 38429
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/core-concepts/data-modeling",
+  "track": "system-design",
+  "section": "core-concepts",
+  "page": "data-modeling",
+  "title": "Data Modeling for System Design Interviews",
+  "premium": false,
+  "chars": 21910
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/core-concepts/caching",
+  "track": "system-design",
+  "section": "core-concepts",
+  "page": "caching",
+  "title": "Caching for System Design Interviews",
+  "premium": false,
+  "chars": 23572
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/core-concepts/sharding",
+  "track": "system-design",
+  "section": "core-concepts",
+  "page": "sharding",
+  "title": "Sharding in System Design Interviews",
+  "premium": false,
+  "chars": 25703
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/core-concepts/consistent-hashing",
+  "track": "system-design",
+  "section": "core-concepts",
+  "page": "consistent-hashing",
+  "title": "Consistent Hashing for System Design Interviews",
+  "premium": false,
+  "chars": 15908
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/core-concepts/cap-theorem",
+  "track": "system-design",
+  "section": "core-concepts",
+  "page": "cap-theorem",
+  "title": "CAP Theorem for System Design Interviews",
+  "premium": false,
+  "chars": 12944
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/core-concepts/db-indexing",
+  "track": "system-design",
+  "section": "core-concepts",
+  "page": "db-indexing",
+  "title": "Database Indexing for System Design Interviews",
+  "premium": true,
+  "chars": 12763
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/core-concepts/numbers-to-know",
+  "track": "system-design",
+  "section": "core-concepts",
+  "page": "numbers-to-know",
+  "title": "Numbers to Know for System Design Interviews",
+  "premium": true,
+  "chars": 6120
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/bitly",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "bitly",
+  "title": "Design a URL Shortener Like Bitly",
+  "premium": false,
+  "chars": 38614
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/dropbox",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "dropbox",
+  "title": "Design a File Storage Service Like Dropbox",
+  "premium": false,
+  "chars": 52853
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/gopuff",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "gopuff",
+  "title": "Design a Local Delivery Service like Gopuff",
+  "premium": false,
+  "chars": 27882
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/ticketmaster",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "ticketmaster",
+  "title": "Design a Ticket Booking Site Like Ticketmaster",
+  "premium": false,
+  "chars": 52822
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/fb-news-feed",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "fb-news-feed",
+  "title": "Design Facebook's News Feed",
+  "premium": false,
+  "chars": 34415
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/tinder",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "tinder",
+  "title": "Design a Dating App Like Tinder",
+  "premium": false,
+  "chars": 45621
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/leetcode",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "leetcode",
+  "title": "Design a Coding Platform Like LeetCode",
+  "premium": false,
+  "chars": 42659
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/whatsapp",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "whatsapp",
+  "title": "Design a Messaging App Like WhatsApp",
+  "premium": false,
+  "chars": 50655
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/distributed-rate-limiter",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "distributed-rate-limiter",
+  "title": "Design a Distributed Rate Limiter",
+  "premium": false,
+  "chars": 47318
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/youtube",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "youtube",
+  "title": "Design a Video Streaming Platform Like YouTube",
+  "premium": false,
+  "chars": 38730
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/fb-live-comments",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "fb-live-comments",
+  "title": "Design Facebook's Live Comments System",
+  "premium": false,
+  "chars": 41826
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/top-k",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "top-k",
+  "title": "Design YouTube's Top K Videos Feature",
+  "premium": false,
+  "chars": 59446
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/uber",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "uber",
+  "title": "Design a Ride-Sharing Service Like Uber",
+  "premium": false,
+  "chars": 50773
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/web-crawler",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "web-crawler",
+  "title": "Design a Web Crawler",
+  "premium": false,
+  "chars": 43517
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/ad-click-aggregator",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "ad-click-aggregator",
+  "title": "Design an Ad Click Aggregator",
+  "premium": false,
+  "chars": 39561
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/fb-post-search",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "fb-post-search",
+  "title": "Design Facebook's Post Search",
+  "premium": false,
+  "chars": 36838
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/yelp",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "yelp",
+  "title": "Design a Local Business Review Site Like Yelp",
+  "premium": true,
+  "chars": 6500
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/instagram",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "instagram",
+  "title": "Design a Photo Sharing App Like Instagram",
+  "premium": true,
+  "chars": 5910
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/strava",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "strava",
+  "title": "Design a Fitness Tracking App Like Strava",
+  "premium": true,
+  "chars": 5418
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/distributed-cache",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "distributed-cache",
+  "title": "Design a Distributed Cache Like Redis",
+  "premium": true,
+  "chars": 6514
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/online-auction",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "online-auction",
+  "title": "Design an Online Auction Platform Like eBay",
+  "premium": true,
+  "chars": 6021
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/job-scheduler",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "job-scheduler",
+  "title": "Design a Distributed Job Scheduler Like Airflow",
+  "premium": true,
+  "chars": 5560
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/google-news",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "google-news",
+  "title": "Design a News Aggregator like Google News",
+  "premium": true,
+  "chars": 5721
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/camelcamelcamel",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "camelcamelcamel",
+  "title": "Design a Price Tracking Service like CamelCamelCamel",
+  "premium": true,
+  "chars": 6433
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/notification-system",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "notification-system",
+  "title": "Design a Notification System",
+  "premium": true,
+  "chars": 6739
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/robinhood",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "robinhood",
+  "title": "Design a Stock Trading Platform Like Robinhood",
+  "premium": true,
+  "chars": 6834
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/google-docs",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "google-docs",
+  "title": "Design a Collaborative Document Editor Like Google Docs",
+  "premium": true,
+  "chars": 5268
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/payment-system",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "payment-system",
+  "title": "Design a Payment System like Stripe",
+  "premium": true,
+  "chars": 6055
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/metrics-monitoring",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "metrics-monitoring",
+  "title": "Design a Metrics Monitoring Platform like Datadog",
+  "premium": true,
+  "chars": 7874
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/online-chess",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "online-chess",
+  "title": "Design an Online Chess Platform",
+  "premium": true,
+  "chars": 6817
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/chatgpt",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "chatgpt",
+  "title": "Design ChatGPT",
+  "premium": true,
+  "chars": 6680
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/problem-breakdowns/flash-sale",
+  "track": "system-design",
+  "section": "problem-breakdowns",
+  "page": "flash-sale",
+  "title": "Design a Flash Sale System",
+  "premium": true,
+  "chars": 5888
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/patterns/realtime-updates",
+  "track": "system-design",
+  "section": "patterns",
+  "page": "realtime-updates",
+  "title": "Real-time Updates Pattern for System Design Interviews",
+  "premium": true,
+  "chars": 9391
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/patterns/dealing-with-contention",
+  "track": "system-design",
+  "section": "patterns",
+  "page": "dealing-with-contention",
+  "title": "Dealing with Contention Pattern for System Design Interviews",
+  "premium": true,
+  "chars": 5409
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/patterns/multi-step-processes",
+  "track": "system-design",
+  "section": "patterns",
+  "page": "multi-step-processes",
+  "title": "Multi-step Processes Pattern for System Design Interviews",
+  "premium": true,
+  "chars": 6766
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/patterns/scaling-reads",
+  "track": "system-design",
+  "section": "patterns",
+  "page": "scaling-reads",
+  "title": "How to scale reads in your system design interview",
+  "premium": true,
+  "chars": 5965
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/patterns/scaling-writes",
+  "track": "system-design",
+  "section": "patterns",
+  "page": "scaling-writes",
+  "title": "How to scale writes in your system design interview",
+  "premium": true,
+  "chars": 5859
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/patterns/large-blobs",
+  "track": "system-design",
+  "section": "patterns",
+  "page": "large-blobs",
+  "title": "Handling Large Blobs Pattern for System Design Interviews",
+  "premium": true,
+  "chars": 5032
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/patterns/long-running-tasks",
+  "track": "system-design",
+  "section": "patterns",
+  "page": "long-running-tasks",
+  "title": "Managing Long Running Tasks Pattern for System Design Interviews",
+  "premium": true,
+  "chars": 5323
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/deep-dives/redis",
+  "track": "system-design",
+  "section": "deep-dives",
+  "page": "redis",
+  "title": "Redis Deep Dive for System Design Interviews",
+  "premium": false,
+  "chars": 27867
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/deep-dives/elasticsearch",
+  "track": "system-design",
+  "section": "deep-dives",
+  "page": "elasticsearch",
+  "title": "Elasticsearch Deep Dive for System Design Interviews",
+  "premium": false,
+  "chars": 43173
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/deep-dives/kafka",
+  "track": "system-design",
+  "section": "deep-dives",
+  "page": "kafka",
+  "title": "Kafka Deep Dive for System Design Interviews",
+  "premium": false,
+  "chars": 33460
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/deep-dives/temporal",
+  "track": "system-design",
+  "section": "deep-dives",
+  "page": "temporal",
+  "title": "Temporal Deep Dive",
+  "premium": false,
+  "chars": 29126
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/deep-dives/api-gateway",
+  "track": "system-design",
+  "section": "deep-dives",
+  "page": "api-gateway",
+  "title": "API Gateway Deep Dive for System Design Interviews",
+  "premium": false,
+  "chars": 13984
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/deep-dives/cassandra",
+  "track": "system-design",
+  "section": "deep-dives",
+  "page": "cassandra",
+  "title": "Cassandra Deep Dive for System Design Interviews",
+  "premium": false,
+  "chars": 36723
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/deep-dives/dynamodb",
+  "track": "system-design",
+  "section": "deep-dives",
+  "page": "dynamodb",
+  "title": "DynamoDB Deep Dive for System Design Interviews",
+  "premium": false,
+  "chars": 33777
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/deep-dives/postgres",
+  "track": "system-design",
+  "section": "deep-dives",
+  "page": "postgres",
+  "title": "PostgreSQL Deep Dive for System Design Interviews",
+  "premium": true,
+  "chars": 8677
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/deep-dives/flink",
+  "track": "system-design",
+  "section": "deep-dives",
+  "page": "flink",
+  "title": "Flink Deep Dive for System Design Interviews",
+  "premium": true,
+  "chars": 6354
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/deep-dives/zookeeper",
+  "track": "system-design",
+  "section": "deep-dives",
+  "page": "zookeeper",
+  "title": "ZooKeeper Deep Dive for System Design Interviews",
+  "premium": true,
+  "chars": 5424
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/deep-dives/proximity-search",
+  "track": "system-design",
+  "section": "deep-dives",
+  "page": "proximity-search",
+  "title": "Proximity Search in System Design Interviews",
+  "premium": false,
+  "chars": 22839
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/deep-dives/vector-databases",
+  "track": "system-design",
+  "section": "deep-dives",
+  "page": "vector-databases",
+  "title": "Vector Databases Deep Dive for System Design Interviews",
+  "premium": false,
+  "chars": 41689
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/deep-dives/time-series-databases",
+  "track": "system-design",
+  "section": "deep-dives",
+  "page": "time-series-databases",
+  "title": "Time Series Databases for System Design Interviews",
+  "premium": false,
+  "chars": 32510
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/deep-dives/data-structures-for-big-data",
+  "track": "system-design",
+  "section": "deep-dives",
+  "page": "data-structures-for-big-data",
+  "title": "Data Structures for Big Data in System Design Interviews",
+  "premium": true,
+  "chars": 9339
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/deep-dives/change-data-capture",
+  "track": "system-design",
+  "section": "deep-dives",
+  "page": "change-data-capture",
+  "title": "Change Data Capture in System Design Interviews",
+  "premium": true,
+  "chars": 4917
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/in-the-wild",
+  "track": "system-design",
+  "section": "",
+  "page": "in-the-wild",
+  "title": "In the Wild - Real-World System Design from Engineering Blogs",
+  "premium": false,
+  "chars": 3098
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/in-the-wild/shopify-inventory-reservations",
+  "track": "system-design",
+  "section": "in-the-wild",
+  "page": "shopify-inventory-reservations",
+  "title": "How Shopify Moved Inventory Reservations from Redis to MySQL",
+  "premium": false,
+  "chars": 21101
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/in-the-wild/discord-messages-scylladb",
+  "track": "system-design",
+  "section": "in-the-wild",
+  "page": "discord-messages-scylladb",
+  "title": "How Discord Moved Trillions of Messages to ScyllaDB",
+  "premium": false,
+  "chars": 13967
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/in-the-wild/slack-job-queue",
+  "track": "system-design",
+  "section": "in-the-wild",
+  "page": "slack-job-queue",
+  "title": "How Slack Put Kafka in Front of Its Redis Job Queue",
+  "premium": false,
+  "chars": 14983
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/in-the-wild/figma-multiplayer",
+  "track": "system-design",
+  "section": "in-the-wild",
+  "page": "figma-multiplayer",
+  "title": "How Figma Built Multiplayer Editing on Simplified CRDTs",
+  "premium": false,
+  "chars": 17639
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/in-the-wild/spotify-data-lake-point-queries",
+  "track": "system-design",
+  "section": "in-the-wild",
+  "page": "spotify-data-lake-point-queries",
+  "title": "How Spotify Serves Point Queries from an Exabyte Data Lake",
+  "premium": false,
+  "chars": 19168
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/system-design/in-the-wild/meta-zgateway-zippydb",
+  "track": "system-design",
+  "section": "in-the-wild",
+  "page": "meta-zgateway-zippydb",
+  "title": "5 Techniques Meta Uses to Scale a Database to Millions of Clients",
+  "premium": false,
+  "chars": 13901
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/low-level-design/in-a-hurry/introduction",
+  "track": "low-level-design",
+  "section": "in-a-hurry",
+  "page": "introduction",
+  "title": "Low Level Design in a Hurry",
+  "premium": false,
+  "chars": 12307
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/low-level-design/in-a-hurry/delivery",
+  "track": "low-level-design",
+  "section": "in-a-hurry",
+  "page": "delivery",
+  "title": "Low Level Design Interview Delivery Framework",
+  "premium": false,
+  "chars": 19024
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/low-level-design/in-a-hurry/design-principles",
+  "track": "low-level-design",
+  "section": "in-a-hurry",
+  "page": "design-principles",
+  "title": "Design Principles",
+  "premium": false,
+  "chars": 20590
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/low-level-design/in-a-hurry/oop-concepts",
+  "track": "low-level-design",
+  "section": "in-a-hurry",
+  "page": "oop-concepts",
+  "title": "OOP Concepts",
+  "premium": false,
+  "chars": 15715
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/low-level-design/in-a-hurry/patterns",
+  "track": "low-level-design",
+  "section": "in-a-hurry",
+  "page": "patterns",
+  "title": "Design Patterns",
+  "premium": false,
+  "chars": 26175
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/low-level-design/concurrency/intro",
+  "track": "low-level-design",
+  "section": "concurrency",
+  "page": "intro",
+  "title": "Introduction to Concurrency",
+  "premium": false,
+  "chars": 12373
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/low-level-design/concurrency/correctness",
+  "track": "low-level-design",
+  "section": "concurrency",
+  "page": "correctness",
+  "title": "Correctness in Low Level Design",
+  "premium": true,
+  "chars": 4429
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/low-level-design/concurrency/coordination",
+  "track": "low-level-design",
+  "section": "concurrency",
+  "page": "coordination",
+  "title": "Coordination in Low Level Design",
+  "premium": true,
+  "chars": 5886
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/low-level-design/concurrency/scarcity",
+  "track": "low-level-design",
+  "section": "concurrency",
+  "page": "scarcity",
+  "title": "Scarcity in Low Level Design",
+  "premium": true,
+  "chars": 4867
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/low-level-design/problem-breakdowns/connect-four",
+  "track": "low-level-design",
+  "section": "problem-breakdowns",
+  "page": "connect-four",
+  "title": "Connect Four Low Level Design",
+  "premium": false,
+  "chars": 44018
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/low-level-design/problem-breakdowns/amazon-locker",
+  "track": "low-level-design",
+  "section": "problem-breakdowns",
+  "page": "amazon-locker",
+  "title": "Amazon Locker Low Level Design",
+  "premium": false,
+  "chars": 45376
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/low-level-design/problem-breakdowns/elevator",
+  "track": "low-level-design",
+  "section": "problem-breakdowns",
+  "page": "elevator",
+  "title": "Elevator Low Level Design",
+  "premium": false,
+  "chars": 61105
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/low-level-design/problem-breakdowns/parking-lot",
+  "track": "low-level-design",
+  "section": "problem-breakdowns",
+  "page": "parking-lot",
+  "title": "Parking Lot Low Level Design",
+  "premium": true,
+  "chars": 7249
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/low-level-design/problem-breakdowns/file-system",
+  "track": "low-level-design",
+  "section": "problem-breakdowns",
+  "page": "file-system",
+  "title": "File System Low Level Design",
+  "premium": true,
+  "chars": 5958
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/low-level-design/problem-breakdowns/bookmyshow",
+  "track": "low-level-design",
+  "section": "problem-breakdowns",
+  "page": "bookmyshow",
+  "title": "Movie Ticket Booking Low Level Design",
+  "premium": true,
+  "chars": 7325
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/low-level-design/problem-breakdowns/logging-service",
+  "track": "low-level-design",
+  "section": "problem-breakdowns",
+  "page": "logging-service",
+  "title": "Logging Service Low Level Design",
+  "premium": true,
+  "chars": 9201
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/low-level-design/problem-breakdowns/rate-limiter",
+  "track": "low-level-design",
+  "section": "problem-breakdowns",
+  "page": "rate-limiter",
+  "title": "Rate Limiter Low Level Design",
+  "premium": true,
+  "chars": 7944
+ },
+ {
+  "url": "https://www.hellointerview.com/learn/low-level-design/problem-breakdowns/inventory-management",
+  "track": "low-level-design",
+  "section": "problem-breakdowns",
+  "page": "inventory-management",
+  "title": "Inventory Management Low Level Design",
+  "premium": true,
+  "chars": 7244
+ }
+]
