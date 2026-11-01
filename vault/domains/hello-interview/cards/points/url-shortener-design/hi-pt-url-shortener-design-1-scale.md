@@ -1,6 +1,6 @@
 ---
 id: hi-pt-url-shortener-design-1-scale
-node: points.url-shortener-design
+node: qb.sd.url-shortener-design.points
 type: qa
 step: 1
 ---
