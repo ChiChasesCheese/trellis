@@ -9,8 +9,6 @@ examples_from: interviews/core/leetcode/tops/cards,interviews/core/leetcode/tikt
 study:
   order: core-first
   mix: new-first
-  new_per_day: 20
-  reviews_per_day: 300
 nodes:
 - id: arrays-hashing
   order: 1

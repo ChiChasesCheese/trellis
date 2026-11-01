@@ -1,4 +1,7 @@
-"""Check the LC numbers and names in the 同模式 line of every daily card against LeetCode (prints only mismatches)."""
+"""Check the LC numbers and names in the 同模式 / 核心题 lines of cards against LeetCode (prints only mismatches).
+
+    python3 scripts/check_daily_refs.py [card files ...]   # default: every daily card
+"""
 import re,glob,json,urllib.request
 meta=json.load(open("research/companies/tiktok/catalog/lc_meta.json"))
 def lookup(n):
@@ -10,15 +13,17 @@ def lookup(n):
             if x["frontendQuestionId"]==str(n): return x["titleCn"] or x["title"]
     except Exception as e: return f"?{e}"
     return "?"
-for f in sorted(glob.glob("vault/interviews/core/leetcode/daily/cards/**/*.md",recursive=True)):
+import sys
+files=sys.argv[1:] or sorted(glob.glob("vault/interviews/core/leetcode/daily/cards/**/*.md",recursive=True))
+for f in files:
     t=open(f).read()
     m=re.search(r"\*\*同模式。\*\*(.*)",t)
     if not m: print("NO 同模式",f); continue
     core=re.search(r"\*\*核心题。\*\*\n\n((?:- .*\n?)+)",t)
-    if not core: print("NO 核心题",f)
+    if not core and "/daily/" in f: print("NO 核心题",f)
     refs=m.group(1)+"、"+(core.group(1) if core else "")
     for n,name in re.findall(r"LC (\d+) ([^、，。（(：\n]+)",refs):
         real=lookup(int(n))
         norm=lambda x: re.sub(r"[\s「」“”\"'·]","",x or "")
         ok = real and (norm(name)[:3] in norm(real) or norm(real)[:3] in norm(name))
-        if not ok: print(f.split("tlc-daily-")[1][:40], "| card:",n,name.strip(),"| real:",real)
+        if not ok: print(f.rsplit("/",1)[1][:50], "| card:",n,name.strip(),"| real:",real)

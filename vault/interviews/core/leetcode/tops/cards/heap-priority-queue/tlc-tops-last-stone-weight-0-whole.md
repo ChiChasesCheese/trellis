@@ -1,0 +1,45 @@
+---
+id: tlc-tops-last-stone-weight-0-whole
+node: heap-priority-queue.last-stone-weight
+type: qa
+---
+## Q
+**LC 1046 最后一块石头的重量（Last Stone Weight）**｜Easy · 全公司热度第 329 名 · NeetCode 150
+
+有一堆石头，每块石头的重量都是正整数。每一回合，从中选出两块最重的石头，然后将它们一起粉碎。假设石头的重量分别为 `x` 和 `y`，且 `x <= y`：如果 `x == y`，两块石头都会被完全粉碎；如果 `x != y`，重量为 `x` 的石头完全粉碎，重量为 `y` 的石头新重量为 `y - x`。最后最多只会剩下一块石头。返回此石头的重量；如果没有石头剩下，就返回 `0`。`1 <= stones.length <= 30`，`1 <= stones[i] <= 1000`。例：`stones = [2,7,4,1,8,1]` → `1`；`stones = [1]` → `1`。
+
+给出完整的最优解答：考点、识别、推导、代码、复杂度、易错点。
+
+## A
+**考点。** 大根堆（max-heap）模拟：反复取最大的两个。
+
+**一句话。** 用堆反复取出最重的两块，差值非零就放回去，直到堆里至多剩一块。
+
+**识别。** 「每次取当前最大/最小」且元素会动态加入：优先队列（priority queue）。`n <= 30` 很小，但面试看的是用对数据结构。
+
+**推导。** 每回合排序一次，`O(n² log n)`；堆让每回合取最大和放回都是 `O(log n)`，共至多 `n - 1` 回合。`heapq` 只有小根堆，存负数当大根堆。
+
+```python
+import heapq
+
+
+def last_stone_weight(stones: list[int]) -> int:
+    heap = [-s for s in stones]                   # heapq 只有小根堆：取负当大根堆用
+    heapq.heapify(heap)
+    while len(heap) > 1:
+        y = -heapq.heappop(heap)                  # 最重
+        x = -heapq.heappop(heap)                  # 次重
+        if y != x:
+            heapq.heappush(heap, -(y - x))        # 剩下的碎块放回去
+    return -heap[0] if heap else 0
+```
+
+运行：`[2,7,4,1,8,1]` → `1`，`[1]` → `1`，`[3,3]` → `0`，`[10,4,3]` → `3`。
+
+**复杂度。** 时间 `O(n log n)`，空间 `O(n)`。
+
+**易错点。**
+- 忘记取负，直接对原数组做小根堆：取到的是最轻的两块，`[2,7,4,1,8,1]` 得到 `3`，正确 `1`。
+- 最后直接返回 `-heap[0]`：两块石头相等全部粉碎后堆为空，`[3,3]` 抛 `IndexError`，要判断堆是否为空。
+
+**同模式。** LC 703 数据流中的第 K 大元素、LC 215 数组中的第 K 个最大元素、LC 295 数据流的中位数、LC 1962 移除石子使总数最小。

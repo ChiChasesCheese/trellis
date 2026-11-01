@@ -44,3 +44,7 @@ small inputs whenever one is writable. Never write the testing process on the ca
 `uv run python research/companies/tiktok/tools/gate_cards.py <your files>` (0 problems),
 `uv run python scripts/plain_style.py <your files>` (ok), `uv run trellis --domain classic-lists validate` (0 errors).
 Reply in ≤ 6 lines: cards written, anything unverified.
+
+**Retired (2026-11-01):** Chi wanted no separate deck. The 76 cards of the selected problems were adopted into the
+LeetCode Tops topic decks (`research/leetcode-tops/`); this folder keeps only `build.py`, `index.json` and
+`points.json`, which `research/leetcode-tops/select.py` still reads.

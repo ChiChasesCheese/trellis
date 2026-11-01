@@ -87,4 +87,4 @@ def suggested_products_trie(products: list[str], searchWord: str) -> list[list[s
 - 输入过程中可以退格：Trie 版本保存路径节点栈即可。
 - 产品太多放不进内存：按首字母或分片的有序文件做二分，Trie 版本换成前缀分片的缓存。
 
-**同模式。** LC 208 实现前缀树、LC 648 单词替换、LC 211 添加与搜索单词、LC 642 设计搜索自动补全系统、LC 14 最长公共前缀。
+**同模式。** LC 208 实现 Trie (前缀树)、LC 648 单词替换、LC 211 添加与搜索单词、LC 642 设计搜索自动补全系统、LC 14 最长公共前缀。

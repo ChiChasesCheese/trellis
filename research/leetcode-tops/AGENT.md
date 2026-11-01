@@ -20,7 +20,7 @@ type: qa
 
 Statement: `sources/local/leetcode-tops/<slug>.txt` (copy constraints from it; translate faithfully if English). Lists and
 difficulty: `research/leetcode-tops/selection.json` (by slug: `lists`, `rank` = rank by company-tag frequency). If the problem already has a whole card in
-`vault/interviews/core/leetcode/tiktok/cards/*/tlc-<slug>-0-whole.md` or `vault/interviews/core/leetcode/classic/cards/tlc-classic-<slug>-0-whole.md`, read it for verified facts, then **rewrite**
+`vault/interviews/core/leetcode/tiktok/cards/*/tlc-<slug>-0-whole.md`, read it for verified facts, then **rewrite**
 to the rules below (do not copy its prose).
 
 Rules: `research/companies/tiktok/CARDS.md`, all of it — recursion first; 2-D DP as a full table (compression only as

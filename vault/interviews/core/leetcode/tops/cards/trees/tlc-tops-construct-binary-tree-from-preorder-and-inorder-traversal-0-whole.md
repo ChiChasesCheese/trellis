@@ -50,4 +50,4 @@ def build_tree(preorder: list[int], inorder: list[int]) -> TreeNode | None:
 - 每次用 `inorder.index(val)` 查找、再用切片 `inorder[:k]` 递归：每层复制和查找 `O(n)`，总 `O(n^2)`。
 - 先序是 `[1,2,3,...,3000]`、中序是 `[1,2,3,...,3000]` 的单链：递归深度 `3000`，超过 CPython 默认上限约 `1000`，会抛 `RecursionError`；`sys.setrecursionlimit` 调高即可。
 
-**同模式。** LC 106 从中序与后序遍历序列构造二叉树、LC 889 根据前序和后序遍历构造二叉树、LC 108 将有序数组转换为二叉搜索树、LC 297 二叉树的序列化与反序列化。
+**同模式。** LC 106 从中序与后序遍历序列构造二叉树、LC 889 从前序与后序遍历序列构造二叉树、LC 108 将有序数组转换为二叉搜索树、LC 297 二叉树的序列化与反序列化。
