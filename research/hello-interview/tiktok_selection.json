@@ -1,0 +1,29 @@
+{
+ "note": "TikTok / ByteDance high-frequency design questions, payments first then general (research/companies/tiktok/catalog/system_design.md and vault/interviews/companies/tiktok/07-class-design.md). reuse = an existing shared body under vault/interviews/core/design-questions/; new = written for this sub-deck.",
+ "questions": [
+  {"slug": "payment-batch-processing", "track": "sd", "reuse": true, "title": "支付系统（收单、扣款、确认）", "why": "TikTok 报告 6 次 · 支付方向第一"},
+  {"slug": "tt-live-gift-coin-settlement", "track": "sd", "reuse": false, "title_en": "TikTok LIVE virtual gifting: coin tracking and weekly creator settlement", "title": "直播虚拟礼物：金币记账与主播结算", "why": "TikTok 高级岗报告 · 钱包团队方向"},
+  {"slug": "tt-wallet-ledger-service", "track": "sd", "reuse": false, "title_en": "Wallet and double-entry ledger service (balances, holds, transfers, multi-currency)", "title": "钱包与复式账本服务", "why": "支付方向通用题"},
+  {"slug": "tt-payment-reconciliation", "track": "sd", "reuse": false, "title_en": "Payment reconciliation against PSP and bank settlement files", "title": "支付对账系统", "why": "支付追问高频：对账、退款不破坏对账"},
+  {"slug": "tt-merchant-webhook-delivery", "track": "sd", "reuse": false, "title_en": "Merchant webhook delivery (at-least-once, retries, ordering, signing)", "title": "商户回调（Webhook）投递系统", "why": "支付追问：异步结算与回调丢失、重复"},
+  {"slug": "top-k-counts", "track": "sd", "reuse": true, "title": "Top-K 排行榜（按国家热歌、滑动窗口热帖）", "why": "TikTok 报告 3 次"},
+  {"slug": "video-moderation-system", "track": "sd", "reuse": true, "title": "内容 / 视频审核系统", "why": "TikTok 报告 7 次"},
+  {"slug": "tt-flash-sale-ticketing", "track": "sd", "reuse": false, "title_en": "Ticket booking under flash-sale traffic (waiting room, rate limiting, no oversell)", "title": "秒杀抢票（排队、限流、防超卖）", "why": "TikTok 报告 2 次"},
+  {"slug": "tt-realtime-auction-bidding", "track": "sd", "reuse": false, "title_en": "Real-time auction bidding (atomic bids, exactly-once, live push)", "title": "实时竞价拍卖", "why": "TikTok 报告 2 次"},
+  {"slug": "job-scheduler-cron-history", "track": "sd", "reuse": true, "title": "分布式任务调度器", "why": "TikTok 报告 2 次 · 失败处理是评分点"},
+  {"slug": "metrics-monitoring-alerts", "track": "sd", "reuse": true, "title": "监控告警 / 指标聚合", "why": "TikTok 报告 3 次"},
+  {"slug": "tt-for-you-feed", "track": "sd", "reuse": false, "title_en": "Short-video For You feed (candidate generation, ranking, serving, cold start)", "title": "短视频推荐信息流（For You）", "why": "TikTok 报告 3 次"},
+  {"slug": "messenger-chat-system", "track": "sd", "reuse": true, "title": "直播评论 / 聊天系统", "why": "TikTok 报告 2–3 次"},
+  {"slug": "tt-cache-consistency-hot-keys", "track": "sd", "reuse": false, "title_en": "Cache consistency and hot keys inside a design round (cache-aside, stampede, penetration, avalanche, distributed locks)", "title": "缓存一致性与热点 Key", "why": "TikTok 设计轮常见追问"},
+  {"slug": "url-shortener-design", "track": "sd", "reuse": true, "title": "短链接", "why": "TikTok 电面报告"},
+  {"slug": "distributed-rate-limiter", "track": "sd", "reuse": true, "title": "全局 API 限流器", "why": "TikTok 报告"},
+  {"slug": "notification-system-scale", "track": "sd", "reuse": true, "title": "通知推送（百万设备扇出）", "why": "TikTok 报告"},
+  {"slug": "tt-billing-tax-engine", "track": "lld", "reuse": false, "title_en": "Billing / tax engine with per-merchant rule versions effective by time", "title": "计费 / 计税引擎", "why": "支付类设计练习"},
+  {"slug": "tt-double-entry-ledger", "track": "lld", "reuse": false, "title_en": "Double-entry ledger class design (append-only entries, balance index)", "title": "复式账本（类设计）", "why": "支付类设计练习"},
+  {"slug": "tt-idempotent-transfer", "track": "lld", "reuse": false, "title_en": "Idempotent transfer service (idempotency-key table, in-flight merging)", "title": "幂等转账服务", "why": "支付类设计练习"},
+  {"slug": "tt-installment-plan", "track": "lld", "reuse": false, "title_en": "Installment plan generator (pure function, rounding, schedules)", "title": "分期计划生成器", "why": "支付类设计练习 · PayLater"},
+  {"slug": "tt-per-merchant-rate-limit", "track": "lld", "reuse": false, "title_en": "Per-merchant rate limiter (token buckets kept in an LRU)", "title": "按商户限流", "why": "支付类设计练习"},
+  {"slug": "rate-limiter-system", "track": "lld", "reuse": true, "title": "限流器（单机类设计）", "why": "通用"},
+  {"slug": "event-ticket-booking", "track": "lld", "reuse": true, "title": "活动票务预订（防超卖）", "why": "与秒杀抢票对应的类设计"}
+ ]
+}

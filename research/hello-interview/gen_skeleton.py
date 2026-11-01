@@ -97,37 +97,75 @@ def main() -> None:
             home[rel] = m.group(1)
     home_path.write_text(json.dumps(home, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
     placed: dict[str, str] = {}      # course leaf -> prerequisite leaf under a question
+    where: dict[str, str] = {}       # prerequisite leaf -> title of the question it sits under
+    extra = {}
+    for f in sorted((ROOT / "research/hello-interview").glob("*_meta_*.json")):  # zh titles + requires from the agents
+        extra.update(json.loads(f.read_text(encoding="utf-8")))
+    card_meta: dict[str, str] = {}   # stub path -> header meta
+
+    def question_branch(prefix: str, track: str, items: list[dict]) -> list[dict]:
+        """One node per question: its new prerequisite pages (first come, first placed), then the answer."""
+        leaves = []
+        for q in items:
+            e = extra.get(q["slug"], {})
+            title = q.get("title_zh") or e.get("title") or q["title"]
+            qid = f"{prefix}.{track}.{q['slug']}"
+            pre = []
+            for c in e.get("requires", []):
+                if c in placed or c not in set(home.values()):
+                    continue  # already a prerequisite of an earlier question, or a page without cards
+                placed[c] = f"{qid}.pre-{c.replace('.', '-')}"
+                where[placed[c]] = title
+                key = next((pk for pk in ZH if pk.endswith("/" + c.split(".")[-1]) and pk.startswith(
+                    "system-design" if c.startswith("sd.") else "low-level-design")), "")
+                pre.append({"id": placed[c], "title": "先修 · " + ZH.get(key, c.split(".")[-1]), "summary": f"{title} 用到的概念。"})
+            answer = {"id": f"{qid}.answer", "title": "解答 · " + title, "summary": q.get("why") or f"被报告 {q['reports']} 次。"}
+            later = [placed[c] for c in e.get("requires", []) if c in placed and not placed[c].startswith(qid + ".")]
+            if later:
+                answer["requires"] = later  # prerequisites that sit under an earlier question
+            elsewhere = list(dict.fromkeys(where[x] for x in later))
+            card_meta[q["stub"]] = q["meta"] + (f" · 先修见：{'、'.join(elsewhere)}" if elsewhere else "")
+            leaves.append({"id": qid, "title": title, "summary": answer["summary"], "children": pre + [answer]})
+        return leaves
+
     if qb_path.exists():
-        extra = {}
-        for f in sorted((ROOT / "research/hello-interview").glob("qb_meta_*.json")):  # zh titles + requires from the card agents
-            extra.update(json.loads(f.read_text(encoding="utf-8")))
         qb = json.loads(qb_path.read_text(encoding="utf-8"))
         kids = []
         for track, title in (("sd", "系统设计高频题"), ("lld", "低层设计高频题")):
-            leaves = []
-            for q in [q for q in qb if q["track"] == track]:
-                e = extra.get(q["slug"], {})
-                qid = f"qb.{track}.{q['slug']}"
-                pre = []
-                for c in e.get("requires", []):
-                    if c in placed or c not in {v for v in home.values()}:
-                        continue  # already a prerequisite of a more frequent question, or a page without cards
-                    placed[c] = f"{qid}.pre-{c.replace('.', '-')}"
-                    key = next((pk for pk in ZH if pk.endswith("/" + c.split(".")[-1]) and pk.startswith(
-                        "system-design" if c.startswith("sd.") else "low-level-design")), "")
-                    pre.append({"id": placed[c], "title": "先修 · " + ZH.get(key, c.split(".")[-1]),
-                                "summary": f"{e.get('title') or q['title']} 用到的概念。"})
-                answer = {"id": f"{qid}.answer", "title": "解答 · " + (e.get("title") or q["title"]),
-                          "summary": f"被报告 {q['reports']} 次；{q['title']}。"}
-                later = [placed[c] for c in e.get("requires", []) if c in placed and not placed[c].startswith(qid + ".")]
-                if later:
-                    answer["requires"] = later  # prerequisites that sit under an earlier question
-                leaves.append({"id": qid, "title": e.get("title") or q["title"],
-                               "summary": f"被报告 {q['reports']} 次。", "children": pre + [answer]})
-            kids.append({"id": f"qb.{track}", "title": title, "summary": f"{title}：按被报告次数从高到低。", "children": leaves})
+            items = []
+            for q in qb:
+                if q["track"] != track:
+                    continue
+                comp = "、".join(q["companies"][:5]) + (" 等" if len(q["companies"]) > 5 else "")
+                items.append({**q, "stub": f"qb/{track}/hi-qb-{q['slug']}.md",
+                              "meta": f"被报告 {q['reports']} 次" + (f" · {comp}" if comp else "") + (f" · 最近 {q['last'][:7]}" if q["last"] else "")})
+            kids.append({"id": f"qb.{track}", "title": title, "summary": f"{title}：按被报告次数从高到低。",
+                         "children": question_branch("qb", track, items)})
         nodes.append({"id": "qb", "order": 1, "core": True, "title": "高频真题（Question Bank）",
                       "summary": "Hello Interview 题库里被报告最多的设计题，每题一张完整解答；课程部分是它们的先修。", "children": kids})
-    for ti, (track, ttitle) in enumerate(TRACKS, 2):
+    # TikTok / ByteDance: payments first, then general (Chi, 2026-11-01). Reused questions point at the same shared body.
+    tt_path = ROOT / "research/hello-interview/tiktok_selection.json"
+    if tt_path.exists():
+        kids = []
+        for track, title in (("sd", "TikTok 系统设计"), ("lld", "TikTok 低层设计")):
+            items = []
+            for q in json.loads(tt_path.read_text(encoding="utf-8"))["questions"]:
+                if q["track"] != track:
+                    continue
+                body = ROOT / f"vault/interviews/core/design-questions/{q['slug']}.md"
+                stub = cards_dir / f"tt/{track}/hi-tt-{q['slug']}.md"
+                if body.exists():
+                    stub.parent.mkdir(parents=True, exist_ok=True)
+                    stub.write_text(f"---\nid: hi-tt-{q['slug']}\nnode: tt.{track}.{q['slug']}.answer\ntype: qa\n"
+                                    f"body: interviews/core/design-questions/{q['slug']}\nmeta: \"\"\n---\n", encoding="utf-8")
+                items.append({**q, "title_zh": q["title"], "title": q.get("title_en", q["title"]), "reports": 0,
+                              "stub": f"tt/{track}/hi-tt-{q['slug']}.md", "meta": q["why"]})
+            kids.append({"id": f"tt.{track}", "title": title, "summary": f"{title}：支付方向在前，其后是通用高频题。",
+                         "children": question_branch("tt", track, items)})
+        nodes.append({"id": "tt", "order": 2, "core": True, "title": "TikTok 高频设计题",
+                      "summary": "TikTok / 字节面经里的设计题，支付方向优先；和题库重复的题共用同一份解答，先修指向它第一次出现的位置。",
+                      "children": kids})
+    for ti, (track, ttitle) in enumerate(TRACKS, 3):
         tid = "sd" if track == "system-design" else "lld"
         secs = []
         for si, (sec, stitle) in enumerate(SECTIONS[track], 1):
@@ -178,10 +216,13 @@ def main() -> None:
             new = re.sub(r"^node: \S+$", f"node: {placed.get(course_leaf, course_leaf)}", text, count=1, flags=re.M)
             if new != text:
                 f.write_text(new, encoding="utf-8")
-    for f in cards_dir.glob("qb/*/*.md"):  # the answer stubs hang under their question
+    for f in [*cards_dir.glob("qb/*/*.md"), *cards_dir.glob("tt/*/*.md")]:  # answer stubs: node under the question, meta
+        rel = str(f.relative_to(cards_dir))
         text = f.read_text(encoding="utf-8")
-        f.write_text(re.sub(r"^node: (qb\.\w+\.[a-z0-9-]+?)(\.answer)?$", r"node: \1.answer", text, count=1, flags=re.M),
-                     encoding="utf-8")
+        text = re.sub(r"^node: ((?:qb|tt)\.\w+\.[a-z0-9-]+?)(\.answer)?$", r"node: \1.answer", text, count=1, flags=re.M)
+        if rel in card_meta:
+            text = re.sub(r"^meta: .*$", "meta: " + json.dumps(card_meta[rel], ensure_ascii=False), text, count=1, flags=re.M)
+        f.write_text(text, encoding="utf-8")
     print(len(placed), "concept pages placed under questions;", len(locked), "locked")
 
 
