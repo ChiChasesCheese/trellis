@@ -25,6 +25,11 @@ LeetCode becomes one card, so that years later he can pick up the core idea agai
    `git pull -q --rebase && git push -q git@github.com:ChiChasesCheese/trellis.git HEAD:main`. `git checkout uv.lock`
    if uv touched it. Never commit `sources/local/`.
 
+## Every run, last step (even when nothing was pending)
+
+`uv run python scripts/lc_mustread.py` rebuilds `LeetCode Tops::00 必读（每天自动更新）` from Chi's latest Anki history and
+recent solves, pushes it and drops what left the list. Its files are gitignored (personal stats); never commit them.
+
 ## The card
 
 One body per problem, shared by every deck (Chi, 2026-11-01): write `vault/interviews/core/leetcode/problems/<slug>.md`
