@@ -1,10 +1,10 @@
 ---
 id: tlc-daily-minimum-operations-to-sort-with-locked-indices-0-whole
-node: 2026-10.minimum-operations-to-sort-with-locked-indices
+node: sorting-permutation.minimum-operations-to-sort-with-locked-indices
 type: qa
 ---
 ## Q
-**LC 4099 将锁定数组排序的最少操作次数**｜Medium · 2026-10-31 解出
+**LC 4099 将锁定数组排序的最少操作次数**｜Medium
 
 给你一个长度为 `n` 的整数数组 `nums`，其中 `nums` 是范围 `[1, n]` 内整数的一个排列。同时给你一个长度为 `n` 的二进制数组 `locked` 和一个整数 `k`。`locked[i] = 1` 表示下标 `i` 已锁定，`locked[i] = 0` 表示下标 `i` 已解锁。可以按任意顺序执行两种操作：**交换**，选择下标 `i`，要求 `i` 和 `i + 1` 当前都处于解锁状态，交换 `nums[i]` 和 `nums[i + 1]`；**解锁**，选择一个 `locked[i] = 1` 的下标 `i`，把它永久解锁。交换次数不限，解锁最多 `k` 次。返回把 `nums` 整理为严格递增顺序所需的最小总操作次数；如果不可能，返回 `-1`。`1 <= n == nums.length == locked.length <= 2000`，`1 <= nums[i] <= n`，`0 <= locked[i] <= 1`，`nums` 是 `[1, n]` 的排列，`0 <= k <= n`。
 
@@ -14,6 +14,10 @@ type: qa
 
 ## A
 **考点。** 逆序对（相邻交换排序的最少次数）+ 「前缀最大值等于下标」的分块条件，决定哪些锁必须解开。
+
+**核心题。**
+
+- LC 148 排序链表（Hot 100、Top Interview 150）：归并排序合并时累计跨边逆序对就是数逆序对的标准办法
 
 **一句话。** 相邻交换排序的最少次数是逆序对数，必须解锁的下标是那些「不是固定分隔点」的锁，答案是 `必须解锁数 + 逆序对数`，必须解锁数超过 `k` 则为 `-1`：下标 `i` 是固定分隔点，当且仅当 `nums[i] == i + 1` 且前缀 `nums[0..i]` 的最大值也是 `i + 1`。
 

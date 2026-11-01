@@ -1,10 +1,10 @@
 ---
 id: tlc-daily-minimize-the-maximum-value-of-gcd-connected-array-0-whole
-node: 2026-10.minimize-the-maximum-value-of-gcd-connected-array
+node: math-bit-sim.minimize-the-maximum-value-of-gcd-connected-array
 type: qa
 ---
 ## Q
-**LC 4098 最小化 GCD 连通数组的最大值**｜Medium · 2026-10-31 解出
+**LC 4098 最小化 GCD 连通数组的最大值**｜Medium
 
 给你三个整数 `n`、`index` 和 `value`。长度为 `n` 的整数数组 `nums` 若满足以下条件，称为 GCD 连通数组：`nums[i] > 0`；`nums[i] < nums[i + 1]`（严格递增）；`nums[index] = value`；对 `0 <= i <= n - 2` 有 `gcd(nums[i], nums[i + 1]) > 1`。在所有 GCD 连通数组中，返回最大元素 `nums[n - 1]` 可能的最小值；不存在这样的数组则返回 `-1`。`2 <= n <= 10^9`，`1 <= value <= 10^9`，`0 <= index <= n - 1`。例：`n = 4, index = 2, value = 8` → `10`（`[2,4,8,10]`）；`n = 2, index = 1, value = 3` → `-1`；`n = 2, index = 0, value = 3` → `6`。
 
@@ -12,6 +12,11 @@ type: qa
 
 ## A
 **考点。** 数论 + 贪心的上下界论证：相邻 `gcd > 1` 的严格递增链，每步至少增加「最小质因子」，之后全是偶数步长 `2`。
+
+**核心题。**
+
+- LC 149 直线上最多的点数（Top Interview 150）：同样靠 gcd 的整除性质做数论化简
+- LC 135 分发糖果（Top Interview 150）：同样从固定点向两侧贪心构造满足相邻约束的最小取值
 
 **一句话。** 左边只关心「放得下吗」，右边只关心「最后一个最小是多少」，两边互不干扰：偶数 `value` 两边都走步长 `2`；奇数 `value` 的第一步（向上 `+p`、向下 `-p`，`p` 是最小质因子）落到偶数，之后都走步长 `2`。
 

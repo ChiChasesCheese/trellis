@@ -7,8 +7,13 @@ LeetCode's public GraphQL (`recentAcSubmissionList`) lists a user's last 20 acce
 the submitted code itself needs a login, so cards carry a best-practice solution, not Chi's own code. The username and
 the set of problems already taken live in `sources/local/leetcode-daily/state.json` (gitignored: the repo is public).
 A problem that already has a whole-answer card in another LeetCode deck is recorded but gets no second card.
-Leaves go under one branch per month in `skeleton/leetcode-daily.yaml`; cards are written by the daily session that
-follows `research/leetcode-daily/AGENT.md`.
+Sub-decks are knowledge points (Chi, 2026-10-31), the same ones as the TikTok deck's pattern branches: `fetch` puts a
+new leaf in `inbox`, and the session that writes its card moves it with `place <slug> <knowledge point>` (a new
+knowledge point gets a title). Cards live flat in the cards folder, so a move only rewrites the `node:` line. The steps
+are in `research/leetcode-daily/AGENT.md`.
+
+    uv run python scripts/leetcode_daily.py place <slug> <point-id> ["中文标题"]   # move a leaf to a knowledge point
+    uv run python scripts/leetcode_daily.py points                               # knowledge points in use / available
 """
 from __future__ import annotations
 
@@ -27,11 +32,23 @@ ROOT = Path(__file__).resolve().parents[1]
 LOCAL = ROOT / "sources/local/leetcode-daily"
 STATE = LOCAL / "state.json"
 SKELETON = ROOT / "skeleton/leetcode-daily.yaml"
-CARDS = ROOT / "vault/interviews/core/leetcode/daily/cards"
+CARDS = ROOT / "vault/interviews/core/leetcode/daily/cards"  # flat: tlc-daily-<slug>-0-whole.md
 OTHER_CARDS = [ROOT / "vault/interviews/core/leetcode/tiktok/cards"]
 IN_DECKS = ROOT / "sources/local/lc-in-decks.json"
-HEADER = ("# LeetCode problems Chi solved, one whole-answer card each, one branch per month.\n"
-          "# Leaves are appended by scripts/leetcode_daily.py fetch; cards follow research/leetcode-daily/AGENT.md.\n")
+HEADER = ("# LeetCode problems Chi solved, one whole-answer card each, one branch per knowledge point.\n"
+          "# Leaves are added by scripts/leetcode_daily.py fetch / place; cards follow research/leetcode-daily/AGENT.md.\n")
+# The TikTok deck's pattern branches, in the same order (research/companies/tiktok/tools/gen_skeleton.py PATTERNS)
+POINTS = [
+    ("hashing", "哈希：查找、计数与分组"), ("prefix-sum", "前缀和与差分"), ("two-pointers", "双指针"),
+    ("sliding-window", "滑动窗口"), ("monotonic-stack", "单调栈与单调队列"), ("binary-search", "二分查找：在下标上与在答案上"),
+    ("heap-patterns", "堆：Top-K、多路归并与双堆"), ("intervals-sweep", "区间与扫描线"), ("linked-list", "链表技巧"),
+    ("tree-dfs", "二叉树 DFS：返回值与全局量"), ("tree-bfs-bst", "二叉树 BFS 与 BST 性质"), ("graph-traversal", "图与网格的 BFS / DFS"),
+    ("topo-sort", "拓扑排序"), ("union-find", "并查集"), ("shortest-path", "最短路：Dijkstra 与其变体"), ("backtracking", "回溯"),
+    ("dp-linear", "动态规划：线性与状态机"), ("dp-grid-string", "动态规划：网格、双串与区间"), ("dp-knapsack", "动态规划：背包与计数"),
+    ("greedy", "贪心"), ("trie", "字典树"), ("design", "数据结构设计题"), ("string-parsing", "字符串处理与表达式解析"),
+    ("math-bit-sim", "数学、位运算与模拟"),
+]
+INBOX = ("inbox", "未归类（待放进知识点）")
 
 
 def gql(host: str, query: str, variables: dict) -> dict:
@@ -85,7 +102,7 @@ def existing_card(slug: str, pid: str) -> str:
 def load_skeleton() -> dict:
     if SKELETON.exists():
         return yaml.safe_load(SKELETON.read_text(encoding="utf-8"))
-    return {"domain": "leetcode-daily", "title": "LeetCode 每日刷题", "deck": "LeetCode Tops::28 Daily（每日刷题）",
+    return {"domain": "leetcode-daily", "title": "LeetCode Daily：按知识点", "deck": "LeetCode Tops::28 Daily（按知识点）",
             "lang": "zh", "vault": "interviews/core/leetcode/daily",
             "examples_from": "interviews/core/leetcode/tiktok/cards,interviews/core/leetcode/daily/cards",
             "study": {"order": "core-first", "mix": "new-first", "new_per_day": 10, "reviews_per_day": 200},
@@ -116,36 +133,78 @@ def fetch() -> int:
             continue
         LOCAL.mkdir(parents=True, exist_ok=True)
         (LOCAL / f"{slug}.txt").write_text(to_text(q.get("translatedContent") or q.get("content") or ""), encoding="utf-8")
-        month = day[:7]
-        branch = next((n for n in sk["nodes"] if n["id"] == month), None)
-        if branch is None:
-            branch = {"id": month, "order": 0, "title": f"{month} 解出的题", "summary": f"{month} 在 LeetCode 上解出的题，按解出时间排。",
-                      "children": []}
-            sk["nodes"].append(branch)
+        branch = ensure_branch(sk, *INBOX)
         name = f"LC {pid} {title_zh}" + (f"（{q['title']}）" if title_zh != q["title"] else "")
-        branch["children"].append({"id": f"{month}.{slug}", "title": name,
-                                   "summary": f"{q.get('difficulty', '')}；{day} 解出；{', '.join(seen[slug]['tags'][:4])}。"})
-        print(f"new {month}.{slug} ({day})")
+        branch["children"].append({"id": f"inbox.{slug}", "title": name,
+                                   "summary": f"{q.get('difficulty', '')}；{', '.join(seen[slug]['tags'][:4])}。"})
+        print(f"new inbox.{slug}")
         added += 1
         time.sleep(0.4)
-    sk["nodes"].sort(key=lambda n: n["id"], reverse=True)  # newest month first
+    save(sk)
+    STATE.write_text(json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(f"{added} new leaf/leaves")
+    return 0
+
+
+def ensure_branch(sk: dict, bid: str, title: str) -> dict:
+    branch = next((n for n in sk["nodes"] if n["id"] == bid), None)
+    if branch is None:
+        branch = {"id": bid, "order": 0, "title": title, "summary": f"{title}：Chi 解过的题，按知识点归在一起。", "children": []}
+        sk["nodes"].append(branch)
+    return branch
+
+
+def save(sk: dict) -> None:
+    rank = {pid: i for i, (pid, _) in enumerate(POINTS)}
+    sk["nodes"] = [n for n in sk["nodes"] if n["children"]]  # an emptied knowledge point leaves the deck
+    sk["nodes"].sort(key=lambda n: (n["id"] == "inbox", rank.get(n["id"], len(POINTS)), n["id"]))
     for i, n in enumerate(sk["nodes"], 1):
         n["order"] = i
         n["core"] = True
     SKELETON.write_text(HEADER + yaml.safe_dump(sk, allow_unicode=True, sort_keys=False, width=200), encoding="utf-8")
-    STATE.write_text(json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8")
-    print(f"{added} new leaf/leaves")
+
+
+def place(slug: str, point: str, title: str = "") -> int:
+    sk = load_skeleton()
+    title = title or dict(POINTS).get(point, "")
+    if not title:
+        sys.exit(f"{point} is a new knowledge point: give its Chinese title as the third argument")
+    leaf = None
+    for n in sk["nodes"]:
+        for c in list(n["children"]):
+            if c["id"].split(".", 1)[1] == slug:
+                n["children"].remove(c)
+                leaf = c
+    if leaf is None:
+        sys.exit(f"no leaf for {slug}")
+    leaf["id"] = f"{point}.{slug}"
+    ensure_branch(sk, point, title)["children"].append(leaf)
+    save(sk)
+    card = CARDS / f"tlc-daily-{slug}-0-whole.md"
+    if card.exists():
+        card.write_text(re.sub(r"^node: .*$", f"node: {leaf['id']}", card.read_text(encoding="utf-8"), count=1, flags=re.M),
+                        encoding="utf-8")
+    print(f"{slug} -> {leaf['id']}")
+    return 0
+
+
+def points() -> int:
+    sk = load_skeleton()
+    used = {n["id"]: len(n["children"]) for n in sk["nodes"]}
+    for pid, title in POINTS + [(n["id"], n["title"]) for n in sk["nodes"] if n["id"] not in dict(POINTS)]:
+        print(f"{pid:16} {used.get(pid, 0):3}  {title}")
     return 0
 
 
 def pending() -> int:
     sk = load_skeleton()
     todo = [leaf["id"] for n in sk["nodes"] for leaf in n["children"]
-            if not (CARDS / n["id"] / f"tlc-daily-{leaf['id'].split('.', 1)[1]}-0-whole.md").exists()]
+            if n["id"] == "inbox" or not (CARDS / f"tlc-daily-{leaf['id'].split('.', 1)[1]}-0-whole.md").exists()]
     print("\n".join(todo) or "nothing pending")
     return 0
 
 
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "fetch"
-    sys.exit({"fetch": fetch, "pending": pending}[cmd]())
+    args = sys.argv[2:]
+    sys.exit({"fetch": fetch, "pending": pending, "place": place, "points": points}[cmd](*args))

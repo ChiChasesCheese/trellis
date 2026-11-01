@@ -1,10 +1,10 @@
 ---
 id: tlc-daily-find-target-indices-after-sorting-array-0-whole
-node: 2026-10.find-target-indices-after-sorting-array
+node: sorting-permutation.find-target-indices-after-sorting-array
 type: qa
 ---
 ## Q
-**LC 2089 找出数组排序后的目标下标**｜Easy · 2026-10-18 解出
+**LC 2089 找出数组排序后的目标下标**｜Easy
 
 给你一个下标从 0 开始的整数数组 `nums` 和一个目标元素 `target`。目标下标是满足 `nums[i] == target` 的下标 `i`。将 `nums` 按非递减顺序排序后，返回由 `nums` 中目标下标组成的列表（指排序后数组中的下标）；若不存在目标下标，返回空列表。返回的列表必须按递增顺序排列。`1 <= nums.length <= 100`，`1 <= nums[i], target <= 100`。
 
@@ -14,6 +14,10 @@ type: qa
 
 ## A
 **考点。** 计数代替排序：排序后一个值的位置区间由「比它小的个数」决定。
+
+**核心题。**
+
+- LC 75 颜色分类（Hot 100）：同一个计数排序：先数每个值的个数再按前缀和定位置
 
 **一句话。** 排序后 `target` 占据一段连续下标，起点是数组里**小于** `target` 的元素个数 `less`，长度是 `target` 出现的次数 `equal`，答案就是 `range(less, less + equal)`。
 

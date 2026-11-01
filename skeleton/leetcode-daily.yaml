@@ -1,8 +1,8 @@
-# LeetCode problems Chi solved, one whole-answer card each, one branch per month.
-# Leaves are appended by scripts/leetcode_daily.py fetch; cards follow research/leetcode-daily/AGENT.md.
+# LeetCode problems Chi solved, one whole-answer card each, one branch per knowledge point.
+# Leaves are added by scripts/leetcode_daily.py fetch / place; cards follow research/leetcode-daily/AGENT.md.
 domain: leetcode-daily
-title: LeetCode 每日刷题
-deck: LeetCode Tops::28 Daily（每日刷题）
+title: LeetCode Daily：按知识点
+deck: LeetCode Tops::28 Daily（按知识点）
 lang: zh
 vault: interviews/core/leetcode/daily
 examples_from: interviews/core/leetcode/tiktok/cards,interviews/core/leetcode/daily/cards
@@ -12,57 +12,99 @@ study:
   new_per_day: 10
   reviews_per_day: 200
 nodes:
-- id: 2026-10
+- id: prefix-sum
   order: 1
-  title: 2026-10 解出的题
-  summary: 2026-10 在 LeetCode 上解出的题，按解出时间排。
+  title: 前缀和与差分
+  summary: 前缀和与差分：Chi 解过的题，按知识点归在一起。
   children:
-  - id: 2026-10.design-bus-seat-booking-system
-    title: LC 4080 设计公交车座位预订系统（Design Bus Seat Booking System）
-    summary: Medium；2026-10-10 解出；。
-  - id: 2026-10.minimum-swaps-to-sort-by-digit-sum
-    title: LC 3551 数位和排序需要的最小交换次数（Minimum Swaps to Sort by Digit Sum）
-    summary: Medium；2026-10-16 解出；Array, Hash Table, Sorting。
-  - id: 2026-10.find-target-indices-after-sorting-array
-    title: LC 2089 找出数组排序后的目标下标（Find Target Indices After Sorting Array）
-    summary: Easy；2026-10-18 解出；Array, Binary Search, Sorting。
-  - id: 2026-10.minimum-operations-to-sort-a-permutation
-    title: LC 3942 排序排列的最少操作数（Minimum Operations to Sort a Permutation）
-    summary: Medium；2026-10-21 解出；Array。
-  - id: 2026-10.count-days-spent-together
-    title: LC 2409 统计共同度过的日子数（Count Days Spent Together）
-    summary: Easy；2026-10-23 解出；Math, String。
-  - id: 2026-10.number-of-closed-islands
-    title: LC 1254 统计封闭岛屿的数目（Number of Closed Islands）
-    summary: Medium；2026-10-24 解出；Depth-First Search, Breadth-First Search, Union Find, Array。
-  - id: 2026-10.count-islands-with-total-value-divisible-by-k
-    title: LC 3619 总价值可以被 K 整除的岛屿数目（Count Islands With Total Value Divisible by K）
-    summary: Medium；2026-10-25 解出；Depth-First Search, Breadth-First Search, Union Find, Array。
-  - id: 2026-10.binary-digit-score
-    title: LC 4092 二进制位得分（Binary Digit Score）
-    summary: Easy；2026-10-26 解出；。
-  - id: 2026-10.maximize-sum-after-at-most-k-digit-rearrangements
-    title: LC 4093 至多 K 次数字重排后的最大和（Maximize Sum After At Most K Digit Rearrangements）
-    summary: Medium；2026-10-26 解出；。
-  - id: 2026-10.count-frequency-staircase-subarrays-i
+  - id: prefix-sum.count-frequency-staircase-subarrays-i
     title: LC 4094 统计频次阶梯子数组的数目 I（Count Frequency Staircase Subarrays I）
-    summary: Medium；2026-10-26 解出；。
-  - id: 2026-10.twisted-mirror-path-count
+    summary: Medium；。
+  core: true
+- id: intervals-sweep
+  order: 2
+  title: 区间与扫描线
+  summary: 区间与扫描线：Chi 解过的题，按知识点归在一起。
+  children:
+  - id: intervals-sweep.count-days-spent-together
+    title: LC 2409 统计共同度过的日子数（Count Days Spent Together）
+    summary: Easy；Math, String。
+  core: true
+- id: graph-traversal
+  order: 3
+  title: 图与网格的 BFS / DFS
+  summary: 图与网格的 BFS / DFS：Chi 解过的题，按知识点归在一起。
+  children:
+  - id: graph-traversal.count-islands-with-total-value-divisible-by-k
+    title: LC 3619 总价值可以被 K 整除的岛屿数目（Count Islands With Total Value Divisible by K）
+    summary: Medium；Depth-First Search, Breadth-First Search, Union Find, Array。
+  - id: graph-traversal.number-of-closed-islands
+    title: LC 1254 统计封闭岛屿的数目（Number of Closed Islands）
+    summary: Medium；Depth-First Search, Breadth-First Search, Union Find, Array。
+  core: true
+- id: dp-grid-string
+  order: 4
+  title: 动态规划：网格、双串与区间
+  summary: 动态规划：网格、双串与区间：Chi 解过的题，按知识点归在一起。
+  children:
+  - id: dp-grid-string.twisted-mirror-path-count
     title: LC 3665 统计镜子反射路径数目（Twisted Mirror Path Count）
-    summary: Medium；2026-10-30 解出；Array, Dynamic Programming, Matrix。
-  - id: 2026-10.minimum-moves-to-equal-array-elements
-    title: LC 453 最小操作次数使数组元素相等（Minimum Moves to Equal Array Elements）
-    summary: Medium；2026-10-31 解出；Array, Math。
-  - id: 2026-10.minimum-value-of-merged-integers
-    title: LC 4097 合并整数后的最小值（Minimum Value of Merged Integers）
-    summary: Easy；2026-10-31 解出；。
-  - id: 2026-10.minimize-the-maximum-value-of-gcd-connected-array
+    summary: Medium；Array, Dynamic Programming, Matrix。
+  core: true
+- id: greedy
+  order: 5
+  title: 贪心
+  summary: 贪心：Chi 解过的题，按知识点归在一起。
+  children:
+  - id: greedy.maximize-sum-after-at-most-k-digit-rearrangements
+    title: LC 4093 至多 K 次数字重排后的最大和（Maximize Sum After At Most K Digit Rearrangements）
+    summary: Medium；。
+  core: true
+- id: design
+  order: 6
+  title: 数据结构设计题
+  summary: 数据结构设计题：Chi 解过的题，按知识点归在一起。
+  children:
+  - id: design.design-bus-seat-booking-system
+    title: LC 4080 设计公交车座位预订系统（Design Bus Seat Booking System）
+    summary: Medium；。
+  core: true
+- id: math-bit-sim
+  order: 7
+  title: 数学、位运算与模拟
+  summary: 数学、位运算与模拟：Chi 解过的题，按知识点归在一起。
+  children:
+  - id: math-bit-sim.binary-digit-score
+    title: LC 4092 二进制位得分（Binary Digit Score）
+    summary: Easy；。
+  - id: math-bit-sim.minimize-the-maximum-value-of-gcd-connected-array
     title: LC 4098 最小化 GCD 连通数组的最大值（Minimize the Maximum Value of GCD-Connected Array）
-    summary: Medium；2026-10-31 解出；。
-  - id: 2026-10.minimum-operations-to-sort-with-locked-indices
-    title: LC 4099 将锁定数组排序的最少操作次数（Minimum Operations to Sort With Locked Indices）
-    summary: Medium；2026-10-31 解出；。
-  - id: 2026-10.minimum-cost-path-with-even-xor-parity
+    summary: Medium；。
+  - id: math-bit-sim.minimum-cost-path-with-even-xor-parity
     title: LC 4100 平衡异或路径的最小开销（Minimum Cost Path With Even XOR Parity）
-    summary: Hard；2026-10-31 解出；。
+    summary: Hard；。
+  - id: math-bit-sim.minimum-moves-to-equal-array-elements
+    title: LC 453 最小操作次数使数组元素相等（Minimum Moves to Equal Array Elements）
+    summary: Medium；Array, Math。
+  core: true
+- id: sorting-permutation
+  order: 8
+  title: 排序、置换环与逆序对
+  summary: 排序、置换环与逆序对：Chi 解过的题，按知识点归在一起。
+  children:
+  - id: sorting-permutation.find-target-indices-after-sorting-array
+    title: LC 2089 找出数组排序后的目标下标（Find Target Indices After Sorting Array）
+    summary: Easy；Array, Binary Search, Sorting。
+  - id: sorting-permutation.minimum-operations-to-sort-a-permutation
+    title: LC 3942 排序排列的最少操作数（Minimum Operations to Sort a Permutation）
+    summary: Medium；Array。
+  - id: sorting-permutation.minimum-operations-to-sort-with-locked-indices
+    title: LC 4099 将锁定数组排序的最少操作次数（Minimum Operations to Sort With Locked Indices）
+    summary: Medium；。
+  - id: sorting-permutation.minimum-swaps-to-sort-by-digit-sum
+    title: LC 3551 数位和排序需要的最小交换次数（Minimum Swaps to Sort by Digit Sum）
+    summary: Medium；Array, Hash Table, Sorting。
+  - id: sorting-permutation.minimum-value-of-merged-integers
+    title: LC 4097 合并整数后的最小值（Minimum Value of Merged Integers）
+    summary: Easy；。
   core: true

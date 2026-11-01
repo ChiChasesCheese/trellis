@@ -1,10 +1,10 @@
 ---
 id: tlc-daily-minimum-value-of-merged-integers-0-whole
-node: 2026-10.minimum-value-of-merged-integers
+node: sorting-permutation.minimum-value-of-merged-integers
 type: qa
 ---
 ## Q
-**LC 4097 合并整数后的最小值**｜Easy · 2026-10-31 解出
+**LC 4097 合并整数后的最小值**｜Easy
 
 给你一个长度为偶数 `n` 的整数数组 `nums`。需要将 `nums` 中的元素两两合并：`nums[0]` 与 `nums[1]` 合并，`nums[2]` 与 `nums[3]` 合并，依此类推，直到 `nums[n - 2]` 与 `nums[n - 1]` 合并。返回所有合并后得到的整数中的最小值。合并两个整数，是指将第二个整数的所有十进制数位拼接在第一个整数的所有十进制数位之后。`2 <= n == nums.length <= 100`，`n` 为偶数，`1 <= nums[i] <= 1000`。
 
@@ -14,6 +14,10 @@ type: qa
 
 ## A
 **考点。** 模拟 + 数字拼接，比较的是**整数值**而不是字符串字典序。
+
+**核心题。**
+
+- LC 179 最大数（不在题单）：拼接后比的是整数大小，排序时用「a + b 与 b + a 谁大」比较
 
 **一句话。** 每两个相邻元素拼成一个整数（前一个在高位），在所有拼出的整数里取最小值。
 

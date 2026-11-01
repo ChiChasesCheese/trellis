@@ -10,7 +10,7 @@ def lookup(n):
             if x["frontendQuestionId"]==str(n): return x["titleCn"] or x["title"]
     except Exception as e: return f"?{e}"
     return "?"
-for f in sorted(glob.glob("vault/interviews/core/leetcode/daily/cards/*/*.md")):
+for f in sorted(glob.glob("vault/interviews/core/leetcode/daily/cards/**/*.md",recursive=True)):
     t=open(f).read()
     m=re.search(r"\*\*同模式。\*\*(.*)",t)
     if not m: print("NO 同模式",f); continue

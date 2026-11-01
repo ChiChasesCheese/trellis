@@ -1,10 +1,10 @@
 ---
 id: tlc-daily-minimum-moves-to-equal-array-elements-0-whole
-node: 2026-10.minimum-moves-to-equal-array-elements
+node: math-bit-sim.minimum-moves-to-equal-array-elements
 type: qa
 ---
 ## Q
-**LC 453 最小操作次数使数组元素相等**｜Medium · 2026-10-31 解出
+**LC 453 最小操作次数使数组元素相等**｜Medium
 
 给你一个长度为 `n` 的整数数组，每次操作使 `n - 1` 个元素增加 `1`。返回让数组所有元素相等的最小操作次数。`n == nums.length`，`1 <= nums.length <= 10^5`，`-10^9 <= nums[i] <= 10^9`，答案保证符合 32 位整数。例：`nums = [1,2,3]` → `3`（`[1,2,3] → [2,3,3] → [3,4,3] → [4,4,4]`）；`nums = [1,1,1]` → `0`。
 
@@ -12,6 +12,10 @@ type: qa
 
 ## A
 **考点。** 换一个等价操作（逆向 / 相对差思维）：让 `n - 1` 个数加 `1`，等价于让 `1` 个数减 `1`。
+
+**核心题。**
+
+- LC 1827 最少操作使数组递增（不在题单）：同样把操作次数化成逐元素差值求和
 
 **一句话。** 把「其余 `n - 1` 个数加 `1`」看成「被排除的那个数相对减 `1`」，目标是所有数降到最小值，次数 = `sum(nums) - n * min(nums)`。
 

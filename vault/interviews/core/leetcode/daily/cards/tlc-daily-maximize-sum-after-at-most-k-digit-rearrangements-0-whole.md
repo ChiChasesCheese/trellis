@@ -1,10 +1,10 @@
 ---
 id: tlc-daily-maximize-sum-after-at-most-k-digit-rearrangements-0-whole
-node: 2026-10.maximize-sum-after-at-most-k-digit-rearrangements
+node: greedy.maximize-sum-after-at-most-k-digit-rearrangements
 type: qa
 ---
 ## Q
-**LC 4093 至多 K 次数字重排后的最大和**｜Medium · 2026-10-26 解出
+**LC 4093 至多 K 次数字重排后的最大和**｜Medium
 
 给你一个长度为 `n` 的整数数组 `nums` 和一个整数 `k`。在一次操作中，你可以选择 `nums` 中的任意一个元素，并以任意顺序重新排列其十进制数字，组成一个新的整数。返回在执行至多 `k` 次操作后，数组元素之和的最大值。`1 <= n == nums.length <= 10^5`，`1 <= nums[i] <= 10^9`，`1 <= k <= n`。
 
@@ -14,6 +14,11 @@ type: qa
 
 ## A
 **考点。** 贪心：各元素的收益互相独立，取收益最大的 `k` 个（Top-K）。
+
+**核心题。**
+
+- LC 215 数组中的第K个最大元素（NeetCode 150、Hot 100、Top Interview 150）：同样只取最大的 `k` 个：这里取的是每个元素重排后的收益
+- LC 122 买卖股票的最佳时机 II（Top Interview 150）：同一个贪心：各段收益互相独立时只取有利的
 
 **一句话。** 每个元素重排的最优结果是把数字从大到小排列，收益 `gain = 降序重排后的值 - 原值 >= 0`；操作之间互不影响，所以答案是原数组之和加上最大的 `k` 个收益之和。
 

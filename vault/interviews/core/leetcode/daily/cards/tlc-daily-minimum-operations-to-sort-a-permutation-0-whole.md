@@ -1,10 +1,10 @@
 ---
 id: tlc-daily-minimum-operations-to-sort-a-permutation-0-whole
-node: 2026-10.minimum-operations-to-sort-a-permutation
+node: sorting-permutation.minimum-operations-to-sort-a-permutation
 type: qa
 ---
 ## Q
-**LC 3942 排序排列的最少操作数**｜Medium · 2026-10-21 解出
+**LC 3942 排序排列的最少操作数**｜Medium
 
 给你长度为 `n` 的整数数组 `nums`，它是区间 `[0..n-1]` 内所有数字的一个排列。你**只能**执行两种操作：**反转**整个数组；**左旋一位**（把第一个元素移到末尾，其余整体左移一位）。返回把数组按递增顺序排好所需的**最少**操作次数；如果只用这两种操作无法排好，返回 `-1`。`1 <= n == nums.length <= 10^5`，`0 <= nums[i] <= n - 1`，`nums` 是 `0` 到 `n-1` 的排列。例：`nums = [0,2,1]` → `2`（左旋得 `[2,1,0]`，再反转）；`nums = [1,0,2]` → `2`（反转得 `[2,0,1]`，再左旋）；`nums = [2,0,1,3]` → `-1`。
 
@@ -12,6 +12,10 @@ type: qa
 
 ## A
 **考点。** 旋转与翻转构成的二面体结构（dihedral group）：操作不会改变「环上的相邻关系」，所以先判断环形顺序，再用等价变换（`R L R = 右旋`）算最短操作数。
+
+**核心题。**
+
+- LC 189 轮转数组（Hot 100、Top Interview 150）：同一个旋转结构：三次反转即是旋转
 
 **一句话。** 能排好当且仅当数组是 `0,1,…,n-1` 的循环升序或循环降序；设 `0` 在下标 `p`，循环升序的代价是 `min(p, n - p + 2)`，循环降序的代价是 `1 + min(b, n - b)`，其中 `b = (p + 1) % n`。
 

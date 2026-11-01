@@ -1,10 +1,10 @@
 ---
 id: tlc-daily-count-days-spent-together-0-whole
-node: 2026-10.count-days-spent-together
+node: intervals-sweep.count-days-spent-together
 type: qa
 ---
 ## Q
-**LC 2409 统计共同度过的日子数**｜Easy · 2026-10-23 解出
+**LC 2409 统计共同度过的日子数**｜Easy
 
 Alice 和 Bob 计划分别去罗马开会。给你四个字符串 `arriveAlice`、`leaveAlice`、`arriveBob`、`leaveBob`：Alice 在日期 `arriveAlice` 到 `leaveAlice` 之间在城市里（闭区间），Bob 在 `arriveBob` 到 `leaveBob` 之间在城市里（闭区间）。每个字符串含 5 个字符，格式 `"MM-DD"`。返回 Alice 和 Bob 同时在罗马的天数。
 
@@ -16,6 +16,10 @@ Alice 和 Bob 计划分别去罗马开会。给你四个字符串 `arriveAlice`�
 
 ## A
 **考点。** 区间交集长度：把日期映射成一维整数，再用 `max(0, min(右端) - max(左端) + 1)`。
+
+**核心题。**
+
+- LC 56 合并区间（Blind 75、NeetCode 150、Hot 100、Top Interview 150）：同一个重叠判定：两区间相交当且仅当 `max(左端) <= min(右端)`
 
 **一句话。** 把 `"MM-DD"` 换算成「一年中的第几天」，两个闭区间的交集长度就是 `max(0, min(两个离开日) - max(两个到达日) + 1)`。
 

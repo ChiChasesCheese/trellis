@@ -1,10 +1,10 @@
 ---
 id: tlc-daily-binary-digit-score-0-whole
-node: 2026-10.binary-digit-score
+node: math-bit-sim.binary-digit-score
 type: qa
 ---
 ## Q
-**LC 4092 二进制位得分**｜Easy · 2026-10-26 解出
+**LC 4092 二进制位得分**｜Easy
 
 给你两个整数 `a` 和 `b`。设 `s1` 和 `s2` 分别为 `a` 和 `b` 的二进制表示中置位（值为 `1` 的位）的数量。两个整数的得分定义为：若 `s1 >= s2`，得分为 `s1 * s2`；否则得分为 `s2 / s1`，其中除法为整数除法。返回 `a` 和 `b` 的得分。`1 <= a, b <= 100`。例：`a = 14, b = 6`（`1110`、`110`，`s1 = 3, s2 = 2`）→ `6`；`a = 5, b = 15`（`s1 = 2, s2 = 4`）→ `2`。
 
@@ -12,6 +12,10 @@ type: qa
 
 ## A
 **考点。** 位计数（popcount）与条件分支，没有算法技巧。
+
+**核心题。**
+
+- LC 191 位1的个数（Blind 75、NeetCode 150、Top Interview 150）：同一个模型：数二进制中的置位个数
 
 **一句话。** 用 `int.bit_count()` 得到两个置位数，按 `s1 >= s2` 分支返回乘积或整除商。
 

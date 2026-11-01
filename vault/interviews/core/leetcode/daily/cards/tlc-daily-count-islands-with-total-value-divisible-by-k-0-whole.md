@@ -1,10 +1,10 @@
 ---
 id: tlc-daily-count-islands-with-total-value-divisible-by-k-0-whole
-node: 2026-10.count-islands-with-total-value-divisible-by-k
+node: graph-traversal.count-islands-with-total-value-divisible-by-k
 type: qa
 ---
 ## Q
-**LC 3619 总价值可以被 K 整除的岛屿数目**｜Medium · 2026-10-25 解出
+**LC 3619 总价值可以被 K 整除的岛屿数目**｜Medium
 
 给你一个 `m x n` 的矩阵 `grid` 和一个正整数 `k`。一个岛屿是由**正**整数（表示陆地）组成的，陆地间四周（水平或垂直）连通。岛屿的总价值是该岛屿中所有单元格的值之和。返回总价值可以被 `k` 整除的岛屿数量。`m == grid.length`，`n == grid[i].length`，`1 <= m, n <= 1000`，`1 <= m * n <= 10^5`，`0 <= grid[i][j] <= 10^6`，`1 <= k <= 10^6`。
 
@@ -14,6 +14,10 @@ type: qa
 
 ## A
 **考点。** 网格连通块（Flood Fill）+ 每个连通块累加一个值，最后对块总和取模判断。
+
+**核心题。**
+
+- LC 200 岛屿数量（Blind 75、NeetCode 150、Hot 100、Top Interview 150）：同一个 flood fill：这里多了每个连通块累加格子值再对 `k` 取模
 
 **一句话。** 扫描网格，遇到没访问过的陆地就从它出发做一次 DFS，沿途把格子值累加并把格子清零（标记已访问），DFS 返回时得到整座岛屿的总价值，总价值 `% k == 0` 就计一座。
 
