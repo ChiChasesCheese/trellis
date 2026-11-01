@@ -1,0 +1,97 @@
+# Concept index for 题库 cards: leaf id · title · reading note to wikilink · free/premium · kind
+
+- `sd.in-a-hurry.introduction` · 系统设计速成：总览 · `[[hi-system-design-in-a-hurry-introduction|系统设计速成：总览]]` · free · concept
+- `sd.in-a-hurry.how-to-prepare` · 怎样准备系统设计面试 · `[[hi-system-design-in-a-hurry-how-to-prepare|怎样准备系统设计面试]]` · free · concept
+- `sd.in-a-hurry.delivery` · 答题框架（Delivery Framework） · `[[hi-system-design-in-a-hurry-delivery|答题框架（Delivery Framework）]]` · free · concept
+- `sd.in-a-hurry.core-concepts` · 核心概念速览 · `[[hi-system-design-in-a-hurry-core-concepts|核心概念速览]]` · free · concept
+- `sd.in-a-hurry.key-technologies` · 关键技术速览 · `[[hi-system-design-in-a-hurry-key-technologies|关键技术速览]]` · free · concept
+- `sd.in-a-hurry.patterns` · 常见模式速览 · `[[hi-system-design-in-a-hurry-patterns|常见模式速览]]` · free · concept
+- `sd.in-a-hurry.problem-breakdowns` · 经典题拆解怎么用 · `[[hi-system-design-in-a-hurry-problem-breakdowns|经典题拆解怎么用]]` · free · concept
+- `sd.core-concepts.networking-essentials` · 网络基础 · `[[hi-system-design-core-concepts-networking-essentials|网络基础]]` · free · concept
+- `sd.core-concepts.api-design` · API 设计 · `[[hi-system-design-core-concepts-api-design|API 设计]]` · free · concept
+- `sd.core-concepts.data-modeling` · 数据建模 · `[[hi-system-design-core-concepts-data-modeling|数据建模]]` · free · concept
+- `sd.core-concepts.caching` · 缓存 · `[[hi-system-design-core-concepts-caching|缓存]]` · free · concept
+- `sd.core-concepts.sharding` · 分片（Sharding） · `[[hi-system-design-core-concepts-sharding|分片（Sharding）]]` · free · concept
+- `sd.core-concepts.consistent-hashing` · 一致性哈希 · `[[hi-system-design-core-concepts-consistent-hashing|一致性哈希]]` · free · concept
+- `sd.core-concepts.cap-theorem` · CAP 定理 · `[[hi-system-design-core-concepts-cap-theorem|CAP 定理]]` · free · concept
+- `sd.core-concepts.db-indexing` · 数据库索引 · `[[hi-system-design-core-concepts-db-indexing|数据库索引]]` · premium · concept
+- `sd.core-concepts.numbers-to-know` · 必须知道的数字 · `[[hi-system-design-core-concepts-numbers-to-know|必须知道的数字]]` · premium · concept
+- `sd.problem-breakdowns.bitly` · 短链接服务（Bitly） · `[[hi-system-design-problem-breakdowns-bitly|短链接服务（Bitly）]]` · free · example
+- `sd.problem-breakdowns.dropbox` · 文件存储（Dropbox） · `[[hi-system-design-problem-breakdowns-dropbox|文件存储（Dropbox）]]` · free · example
+- `sd.problem-breakdowns.gopuff` · 本地配送（Gopuff） · `[[hi-system-design-problem-breakdowns-gopuff|本地配送（Gopuff）]]` · free · example
+- `sd.problem-breakdowns.ticketmaster` · 票务预订（Ticketmaster） · `[[hi-system-design-problem-breakdowns-ticketmaster|票务预订（Ticketmaster）]]` · free · example
+- `sd.problem-breakdowns.fb-news-feed` · Facebook 信息流 · `[[hi-system-design-problem-breakdowns-fb-news-feed|Facebook 信息流]]` · free · example
+- `sd.problem-breakdowns.tinder` · 约会应用（Tinder） · `[[hi-system-design-problem-breakdowns-tinder|约会应用（Tinder）]]` · free · example
+- `sd.problem-breakdowns.leetcode` · 在线判题平台（LeetCode） · `[[hi-system-design-problem-breakdowns-leetcode|在线判题平台（LeetCode）]]` · free · example
+- `sd.problem-breakdowns.whatsapp` · 即时通讯（WhatsApp） · `[[hi-system-design-problem-breakdowns-whatsapp|即时通讯（WhatsApp）]]` · free · example
+- `sd.problem-breakdowns.distributed-rate-limiter` · 分布式限流器 · `[[hi-system-design-problem-breakdowns-distributed-rate-limiter|分布式限流器]]` · free · example
+- `sd.problem-breakdowns.youtube` · 视频平台（YouTube） · `[[hi-system-design-problem-breakdowns-youtube|视频平台（YouTube）]]` · free · example
+- `sd.problem-breakdowns.fb-live-comments` · Facebook 直播评论 · `[[hi-system-design-problem-breakdowns-fb-live-comments|Facebook 直播评论]]` · free · example
+- `sd.problem-breakdowns.top-k` · YouTube 热门 Top K · `[[hi-system-design-problem-breakdowns-top-k|YouTube 热门 Top K]]` · free · example
+- `sd.problem-breakdowns.uber` · 网约车（Uber） · `[[hi-system-design-problem-breakdowns-uber|网约车（Uber）]]` · free · example
+- `sd.problem-breakdowns.web-crawler` · 网络爬虫 · `[[hi-system-design-problem-breakdowns-web-crawler|网络爬虫]]` · free · example
+- `sd.problem-breakdowns.ad-click-aggregator` · 广告点击聚合 · `[[hi-system-design-problem-breakdowns-ad-click-aggregator|广告点击聚合]]` · free · example
+- `sd.problem-breakdowns.fb-post-search` · Facebook 帖子搜索 · `[[hi-system-design-problem-breakdowns-fb-post-search|Facebook 帖子搜索]]` · free · example
+- `sd.problem-breakdowns.yelp` · 商户点评（Yelp） · `[[hi-system-design-problem-breakdowns-yelp|商户点评（Yelp）]]` · premium · example
+- `sd.problem-breakdowns.instagram` · 图片分享（Instagram） · `[[hi-system-design-problem-breakdowns-instagram|图片分享（Instagram）]]` · premium · example
+- `sd.problem-breakdowns.strava` · 运动记录（Strava） · `[[hi-system-design-problem-breakdowns-strava|运动记录（Strava）]]` · premium · example
+- `sd.problem-breakdowns.distributed-cache` · 分布式缓存（Redis） · `[[hi-system-design-problem-breakdowns-distributed-cache|分布式缓存（Redis）]]` · premium · example
+- `sd.problem-breakdowns.online-auction` · 在线拍卖（eBay） · `[[hi-system-design-problem-breakdowns-online-auction|在线拍卖（eBay）]]` · premium · example
+- `sd.problem-breakdowns.job-scheduler` · 分布式任务调度（Airflow） · `[[hi-system-design-problem-breakdowns-job-scheduler|分布式任务调度（Airflow）]]` · premium · example
+- `sd.problem-breakdowns.google-news` · 新闻聚合（Google News） · `[[hi-system-design-problem-breakdowns-google-news|新闻聚合（Google News）]]` · premium · example
+- `sd.problem-breakdowns.camelcamelcamel` · 价格追踪（CamelCamelCamel） · `[[hi-system-design-problem-breakdowns-camelcamelcamel|价格追踪（CamelCamelCamel）]]` · premium · example
+- `sd.problem-breakdowns.notification-system` · 通知系统 · `[[hi-system-design-problem-breakdowns-notification-system|通知系统]]` · premium · example
+- `sd.problem-breakdowns.robinhood` · 股票交易（Robinhood） · `[[hi-system-design-problem-breakdowns-robinhood|股票交易（Robinhood）]]` · premium · example
+- `sd.problem-breakdowns.google-docs` · 协同文档（Google Docs） · `[[hi-system-design-problem-breakdowns-google-docs|协同文档（Google Docs）]]` · premium · example
+- `sd.problem-breakdowns.payment-system` · 支付系统（Stripe） · `[[hi-system-design-problem-breakdowns-payment-system|支付系统（Stripe）]]` · premium · example
+- `sd.problem-breakdowns.metrics-monitoring` · 指标监控（Datadog） · `[[hi-system-design-problem-breakdowns-metrics-monitoring|指标监控（Datadog）]]` · premium · example
+- `sd.problem-breakdowns.online-chess` · 在线国际象棋 · `[[hi-system-design-problem-breakdowns-online-chess|在线国际象棋]]` · premium · example
+- `sd.problem-breakdowns.chatgpt` · ChatGPT · `[[hi-system-design-problem-breakdowns-chatgpt|ChatGPT]]` · premium · example
+- `sd.problem-breakdowns.flash-sale` · 秒杀系统 · `[[hi-system-design-problem-breakdowns-flash-sale|秒杀系统]]` · premium · example
+- `sd.patterns.realtime-updates` · 实时更新 · `[[hi-system-design-patterns-realtime-updates|实时更新]]` · premium · concept
+- `sd.patterns.dealing-with-contention` · 处理争用（Contention） · `[[hi-system-design-patterns-dealing-with-contention|处理争用（Contention）]]` · premium · concept
+- `sd.patterns.multi-step-processes` · 多步骤流程 · `[[hi-system-design-patterns-multi-step-processes|多步骤流程]]` · premium · concept
+- `sd.patterns.scaling-reads` · 扩展读 · `[[hi-system-design-patterns-scaling-reads|扩展读]]` · premium · concept
+- `sd.patterns.scaling-writes` · 扩展写 · `[[hi-system-design-patterns-scaling-writes|扩展写]]` · premium · concept
+- `sd.patterns.large-blobs` · 大文件（Blob）处理 · `[[hi-system-design-patterns-large-blobs|大文件（Blob）处理]]` · premium · concept
+- `sd.patterns.long-running-tasks` · 长时间运行的任务 · `[[hi-system-design-patterns-long-running-tasks|长时间运行的任务]]` · premium · concept
+- `sd.deep-dives.redis` · Redis · `[[hi-system-design-deep-dives-redis|Redis]]` · free · concept
+- `sd.deep-dives.elasticsearch` · Elasticsearch · `[[hi-system-design-deep-dives-elasticsearch|Elasticsearch]]` · free · concept
+- `sd.deep-dives.kafka` · Kafka · `[[hi-system-design-deep-dives-kafka|Kafka]]` · free · concept
+- `sd.deep-dives.temporal` · Temporal · `[[hi-system-design-deep-dives-temporal|Temporal]]` · free · concept
+- `sd.deep-dives.api-gateway` · API 网关 · `[[hi-system-design-deep-dives-api-gateway|API 网关]]` · free · concept
+- `sd.deep-dives.cassandra` · Cassandra · `[[hi-system-design-deep-dives-cassandra|Cassandra]]` · free · concept
+- `sd.deep-dives.dynamodb` · DynamoDB · `[[hi-system-design-deep-dives-dynamodb|DynamoDB]]` · free · concept
+- `sd.deep-dives.postgres` · PostgreSQL · `[[hi-system-design-deep-dives-postgres|PostgreSQL]]` · premium · concept
+- `sd.deep-dives.flink` · Flink · `[[hi-system-design-deep-dives-flink|Flink]]` · premium · concept
+- `sd.deep-dives.zookeeper` · ZooKeeper · `[[hi-system-design-deep-dives-zookeeper|ZooKeeper]]` · premium · concept
+- `sd.deep-dives.proximity-search` · 邻近搜索（Proximity Search） · `[[hi-system-design-deep-dives-proximity-search|邻近搜索（Proximity Search）]]` · free · concept
+- `sd.deep-dives.vector-databases` · 向量数据库 · `[[hi-system-design-deep-dives-vector-databases|向量数据库]]` · free · concept
+- `sd.deep-dives.time-series-databases` · 时序数据库 · `[[hi-system-design-deep-dives-time-series-databases|时序数据库]]` · free · concept
+- `sd.deep-dives.data-structures-for-big-data` · 大数据数据结构 · `[[hi-system-design-deep-dives-data-structures-for-big-data|大数据数据结构]]` · premium · concept
+- `sd.deep-dives.change-data-capture` · 变更数据捕获（CDC） · `[[hi-system-design-deep-dives-change-data-capture|变更数据捕获（CDC）]]` · premium · concept
+- `sd.in-the-wild.in-the-wild` · 真实系统案例：总览 · `[[hi-system-design-in-the-wild|真实系统案例：总览]]` · free · example
+- `sd.in-the-wild.shopify-inventory-reservations` · Shopify 库存预留：从 Redis 到 MySQL · `[[hi-system-design-in-the-wild-shopify-inventory-reservations|Shopify 库存预留：从 Redis 到 MySQL]]` · free · example
+- `sd.in-the-wild.discord-messages-scylladb` · Discord 万亿消息迁到 ScyllaDB · `[[hi-system-design-in-the-wild-discord-messages-scylladb|Discord 万亿消息迁到 ScyllaDB]]` · free · example
+- `sd.in-the-wild.slack-job-queue` · Slack 在 Redis 任务队列前加 Kafka · `[[hi-system-design-in-the-wild-slack-job-queue|Slack 在 Redis 任务队列前加 Kafka]]` · free · example
+- `sd.in-the-wild.figma-multiplayer` · Figma 多人编辑与简化 CRDT · `[[hi-system-design-in-the-wild-figma-multiplayer|Figma 多人编辑与简化 CRDT]]` · free · example
+- `sd.in-the-wild.spotify-data-lake-point-queries` · Spotify 在 EB 级数据湖上做点查 · `[[hi-system-design-in-the-wild-spotify-data-lake-point-queries|Spotify 在 EB 级数据湖上做点查]]` · free · example
+- `sd.in-the-wild.meta-zgateway-zippydb` · Meta 把数据库扩展到百万客户端的 5 个技巧 · `[[hi-system-design-in-the-wild-meta-zgateway-zippydb|Meta 把数据库扩展到百万客户端的 5 个技巧]]` · free · example
+- `lld.in-a-hurry.introduction` · 低层设计速成：总览 · `[[hi-low-level-design-in-a-hurry-introduction|低层设计速成：总览]]` · free · concept
+- `lld.in-a-hurry.delivery` · 答题框架（Delivery Framework） · `[[hi-low-level-design-in-a-hurry-delivery|答题框架（Delivery Framework）]]` · free · concept
+- `lld.in-a-hurry.design-principles` · 设计原则 · `[[hi-low-level-design-in-a-hurry-design-principles|设计原则]]` · free · concept
+- `lld.in-a-hurry.oop-concepts` · 面向对象概念 · `[[hi-low-level-design-in-a-hurry-oop-concepts|面向对象概念]]` · free · concept
+- `lld.in-a-hurry.patterns` · 设计模式 · `[[hi-low-level-design-in-a-hurry-patterns|设计模式]]` · free · concept
+- `lld.concurrency.intro` · 并发入门 · `[[hi-low-level-design-concurrency-intro|并发入门]]` · free · concept
+- `lld.concurrency.correctness` · 并发正确性 · `[[hi-low-level-design-concurrency-correctness|并发正确性]]` · premium · concept
+- `lld.concurrency.coordination` · 线程协调 · `[[hi-low-level-design-concurrency-coordination|线程协调]]` · premium · concept
+- `lld.concurrency.scarcity` · 稀缺资源 · `[[hi-low-level-design-concurrency-scarcity|稀缺资源]]` · premium · concept
+- `lld.problem-breakdowns.connect-four` · 四子棋（Connect Four） · `[[hi-low-level-design-problem-breakdowns-connect-four|四子棋（Connect Four）]]` · free · example
+- `lld.problem-breakdowns.amazon-locker` · Amazon 快递柜 · `[[hi-low-level-design-problem-breakdowns-amazon-locker|Amazon 快递柜]]` · free · example
+- `lld.problem-breakdowns.elevator` · 电梯 · `[[hi-low-level-design-problem-breakdowns-elevator|电梯]]` · free · example
+- `lld.problem-breakdowns.parking-lot` · 停车场 · `[[hi-low-level-design-problem-breakdowns-parking-lot|停车场]]` · premium · example
+- `lld.problem-breakdowns.file-system` · 文件系统 · `[[hi-low-level-design-problem-breakdowns-file-system|文件系统]]` · premium · example
+- `lld.problem-breakdowns.bookmyshow` · 电影票预订（BookMyShow） · `[[hi-low-level-design-problem-breakdowns-bookmyshow|电影票预订（BookMyShow）]]` · premium · example
+- `lld.problem-breakdowns.logging-service` · 日志服务 · `[[hi-low-level-design-problem-breakdowns-logging-service|日志服务]]` · premium · example
+- `lld.problem-breakdowns.rate-limiter` · 限流器 · `[[hi-low-level-design-problem-breakdowns-rate-limiter|限流器]]` · premium · example
+- `lld.problem-breakdowns.inventory-management` · 库存管理 · `[[hi-low-level-design-problem-breakdowns-inventory-management|库存管理]]` · premium · example

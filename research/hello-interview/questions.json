@@ -1,0 +1,4216 @@
+{
+ "companies_seen": 121,
+ "totals": {
+  "ALL": 1903,
+  "Robinhood": 6,
+  "DoorDash": 55,
+  "NVIDIA": 23,
+  "Airbnb": 40,
+  "LinkedIn": 112,
+  "Microsoft": 217,
+  "Lyft": 20,
+  "Roblox": 39,
+  "Okta": 7,
+  "Snowflake": 30,
+  "Google": 214,
+  "Datology": 5,
+  "Bolt": 1,
+  "walt disney": 2,
+  "Goldman Sachs": 29,
+  "Apple": 71,
+  "Cursor": 2,
+  "PhonePe": 2,
+  "skit": 1,
+  "DigitalOcean": 7,
+  "Figma": 4,
+  "Headout": 6,
+  "Meta": 528,
+  "Databricks": 33,
+  "Netflix": 38,
+  "Wise": 11,
+  "Rippling": 15,
+  "ripping": 3,
+  "Amazon": 377,
+  "Walmart": 16,
+  "Oracle": 100,
+  "Reddit": 9,
+  "Other": 8,
+  "Anthropic": 33,
+  "Uber": 109,
+  "Higgsfield": 2,
+  "OpenAI": 65,
+  "StubHub": 2,
+  "HyperFace": 1,
+  "Whatnot": 7,
+  "Anduril": 26,
+  "Snapchat": 15,
+  "Crusoe": 3,
+  "Freelancer": 5,
+  "MongoDB": 19,
+  "Monzo": 24,
+  "Addepar": 2,
+  "Coupang": 21,
+  "Metropolis": 1,
+  "Bloomberg": 69,
+  "Autodesk": 6,
+  "Pinterest": 33,
+  "Fora": 2,
+  "pocket FM": 1,
+  "Calendly": 1,
+  "Duolingo": 2,
+  "Loop": 2,
+  "eBay": 29,
+  "Visa": 19,
+  "Slice": 2,
+  "tekion": 1,
+  "Navan": 2,
+  "PayPal": 9,
+  "JPMorgan Chase": 15,
+  "lloyds": 1,
+  "Parloa": 1,
+  "Vercel": 6,
+  "BuildOps": 4,
+  "Nielsen": 5,
+  "Palo Alto Networks": 14,
+  "Weave": 1,
+  "reverb": 1,
+  "Salesforce": 50,
+  "Rakuten": 1,
+  "Bending Spoons": 1,
+  "ServiceTitan": 9,
+  "Zscaler": 15,
+  "Macquarie Group": 4,
+  "Roku": 5,
+  "Nova Credit": 1,
+  "Netapp": 3,
+  "Plaid": 4,
+  "Adobe": 6,
+  "CrowdStrike": 17,
+  "Cloudflare": 4,
+  "Atlassian": 36,
+  "FanDuel": 3,
+  "Antithesis": 1,
+  "Stripe": 30,
+  "Rubrik": 14,
+  "Expedia": 42,
+  "TikTok": 13,
+  "Fusion Health": 3,
+  "SoFi": 19,
+  "checkout": 5,
+  "Adyen": 3,
+  "Capital One": 38,
+  "Agoda": 15,
+  "Grab": 9,
+  "Geminus Tech": 1,
+  "ZoomInfo": 1,
+  "Glean": 6,
+  "Shopify": 4,
+  "Revolut": 12,
+  "airwallex": 2,
+  "Zoom": 1,
+  "Carta": 3,
+  "Toast": 9,
+  "Upstart": 18,
+  "Harness": 2,
+  "Nubank": 10,
+  "Confluent": 12,
+  "IBM": 3,
+  "Assort": 2,
+  "trade republic": 1,
+  "1001": 1,
+  "other": 8,
+  "Stubhub": 2,
+  "crusoe": 3,
+  "Checkout": 5
+ },
+ "questions": [
+  {
+   "id": "cm4szunov00303g2e2gomqo2j",
+   "slug": "messenger-chat-system",
+   "title": "Design a Chat/Messaging System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 190,
+   "breakdown": "/learn/system-design/problem-breakdowns/whatsapp",
+   "url": "https://www.hellointerview.com/community/questions/messenger-chat-system/cm4szunov00303g2e2gomqo2j",
+   "companies": [
+    "Addepar",
+    "Airbnb",
+    "Amazon",
+    "Anduril",
+    "Anthropic",
+    "Crusoe",
+    "Databricks",
+    "Freelancer",
+    "Google",
+    "Higgsfield",
+    "HyperFace",
+    "Lyft",
+    "Meta",
+    "Microsoft",
+    "MongoDB",
+    "Monzo",
+    "OpenAI",
+    "Roblox",
+    "Snapchat",
+    "StubHub",
+    "Uber",
+    "Whatnot"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cm7w828yv00sejmejlmofwtvp",
+   "slug": "job-scheduler-cron-history",
+   "title": "Design a Job Scheduler",
+   "type": "SYSTEM_DESIGN",
+   "reports": 180,
+   "breakdown": "/learn/system-design/problem-breakdowns/job-scheduler",
+   "url": "https://www.hellointerview.com/community/questions/job-scheduler-cron-history/cm7w828yv00sejmejlmofwtvp",
+   "companies": [
+    "Airbnb",
+    "Apple",
+    "Bolt",
+    "Cursor",
+    "Databricks",
+    "Datology",
+    "DigitalOcean",
+    "DoorDash",
+    "Figma",
+    "Goldman Sachs",
+    "Google",
+    "Headout",
+    "LinkedIn",
+    "Lyft",
+    "Meta",
+    "Microsoft",
+    "NVIDIA",
+    "Netflix",
+    "Okta",
+    "PhonePe",
+    "Robinhood",
+    "Roblox",
+    "Snowflake",
+    "Wise",
+    "skit",
+    "walt disney"
+   ],
+   "last": "2026-10-10"
+  },
+  {
+   "id": "cm4szywgj003ivszmblm3pmoa",
+   "slug": "online-chess-platform",
+   "title": "Design Online Chess",
+   "type": "SYSTEM_DESIGN",
+   "reports": 155,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/online-chess-platform/cm4szywgj003ivszmblm3pmoa",
+   "companies": [
+    "Airbnb",
+    "Google",
+    "Meta",
+    "OpenAI",
+    "Upstart"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cm96lh25n0039ad08067audlg",
+   "slug": "news-aggregator-feed",
+   "title": "Design a News Aggregator System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 109,
+   "breakdown": "/learn/system-design/problem-breakdowns/google-news",
+   "url": "https://www.hellointerview.com/community/questions/news-aggregator-feed/cm96lh25n0039ad08067audlg",
+   "companies": [
+    "Amazon",
+    "Google",
+    "Microsoft",
+    "Oracle",
+    "Other",
+    "Reddit",
+    "Rippling",
+    "Walmart",
+    "ripping"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cm4t0twp0004pvszmvb2qeg0u",
+   "slug": "top-k-counts",
+   "title": "Design a Top-K System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 106,
+   "breakdown": "/learn/system-design/problem-breakdowns/top-k",
+   "url": "https://www.hellointerview.com/community/questions/top-k-counts/cm4t0twp0004pvszmvb2qeg0u",
+   "companies": [
+    "Amazon",
+    "Atlassian",
+    "Bloomberg",
+    "Figma",
+    "Google",
+    "Harness",
+    "LinkedIn",
+    "Meta",
+    "Microsoft",
+    "Monzo",
+    "Nubank",
+    "Oracle",
+    "Uber",
+    "eBay"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cm8j5hkhi009ouxg8w34ni7nd",
+   "slug": "book-seller-platform",
+   "title": "Design a Book Seller Platform",
+   "type": "SYSTEM_DESIGN",
+   "reports": 105,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/book-seller-platform/cm8j5hkhi009ouxg8w34ni7nd",
+   "companies": [
+    "Amazon",
+    "Databricks"
+   ],
+   "last": "2026-10-20"
+  },
+  {
+   "id": "cmavpegdk0067ad08ujhdbrjk",
+   "slug": "payment-batch-processing",
+   "title": "Design a Payment System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 93,
+   "breakdown": "/learn/system-design/problem-breakdowns/payment-system",
+   "url": "https://www.hellointerview.com/community/questions/payment-batch-processing/cmavpegdk0067ad08ujhdbrjk",
+   "companies": [
+    "Adyen",
+    "Agoda",
+    "Amazon",
+    "Capital One",
+    "Grab",
+    "OpenAI",
+    "SoFi",
+    "checkout"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cm5eh7nrh04ok838oa0xi845w",
+   "slug": "merge-intervals",
+   "title": "Leetcode 56. Merge Intervals",
+   "type": "CODING",
+   "reports": 80,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/merge-intervals/cm5eh7nrh04ok838oa0xi845w",
+   "companies": [
+    "Amazon",
+    "Antithesis",
+    "Apple",
+    "Atlassian",
+    "Bloomberg",
+    "FanDuel",
+    "Google",
+    "Meta",
+    "MongoDB",
+    "Oracle",
+    "Salesforce"
+   ],
+   "last": "2026-10-10"
+  },
+  {
+   "id": "cm758vf17024kalw2qn7e57xs",
+   "slug": "notification-system-scale",
+   "title": "Design a Notification System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 78,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/notification-system-scale/cm758vf17024kalw2qn7e57xs",
+   "companies": [
+    "Airbnb",
+    "Amazon",
+    "Autodesk",
+    "Bloomberg",
+    "Calendly",
+    "Coupang",
+    "Duolingo",
+    "Fora",
+    "LinkedIn",
+    "Loop",
+    "Meta",
+    "Metropolis",
+    "Microsoft",
+    "Navan",
+    "Oracle",
+    "Other",
+    "Pinterest",
+    "Reddit",
+    "Slice",
+    "Uber",
+    "Visa",
+    "Walmart",
+    "eBay",
+    "pocket FM",
+    "tekion"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cm5svnaco01dqxszbok7e1lk1",
+   "slug": "url-shortener-design",
+   "title": "Design a URL Shortener",
+   "type": "SYSTEM_DESIGN",
+   "reports": 76,
+   "breakdown": "/learn/system-design/problem-breakdowns/bitly",
+   "url": "https://www.hellointerview.com/community/questions/url-shortener-design/cm5svnaco01dqxszbok7e1lk1",
+   "companies": [
+    "Amazon",
+    "Anduril",
+    "Apple",
+    "Bending Spoons",
+    "BuildOps",
+    "DigitalOcean",
+    "Headout",
+    "JPMorgan Chase",
+    "Macquarie Group",
+    "Meta",
+    "Microsoft",
+    "Netflix",
+    "Nielsen",
+    "Okta",
+    "OpenAI",
+    "Oracle",
+    "Palo Alto Networks",
+    "Parloa",
+    "PayPal",
+    "Rakuten",
+    "Salesforce",
+    "ServiceTitan",
+    "Vercel",
+    "Weave",
+    "Zscaler",
+    "lloyds",
+    "reverb"
+   ],
+   "last": "2026-10-20"
+  },
+  {
+   "id": "cmbdisew101kuad08fuuiky5v",
+   "slug": "donations-website-charities",
+   "title": "Design a Donations Website",
+   "type": "SYSTEM_DESIGN",
+   "reports": 70,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/donations-website-charities/cmbdisew101kuad08fuuiky5v",
+   "companies": [
+    "DoorDash",
+    "Lyft",
+    "Whatnot"
+   ],
+   "last": "2026-10-10"
+  },
+  {
+   "id": "cm80gligm049vtvyjklc6gxdw",
+   "slug": "web-crawler-design",
+   "title": "Design a Web Crawler",
+   "type": "SYSTEM_DESIGN",
+   "reports": 64,
+   "breakdown": "/learn/system-design/problem-breakdowns/web-crawler",
+   "url": "https://www.hellointerview.com/community/questions/web-crawler-design/cm80gligm049vtvyjklc6gxdw",
+   "companies": [
+    "Amazon",
+    "Atlassian",
+    "Expedia",
+    "Glean",
+    "Google",
+    "Meta",
+    "Microsoft",
+    "Monzo",
+    "Walmart",
+    "ZoomInfo"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cm6i9mhd800nz41cd0xx20r8p",
+   "slug": "distributed-rate-limiter",
+   "title": "Design a Rate Limiter",
+   "type": "SYSTEM_DESIGN",
+   "reports": 63,
+   "breakdown": "/learn/system-design/problem-breakdowns/distributed-rate-limiter",
+   "url": "https://www.hellointerview.com/community/questions/distributed-rate-limiter/cm6i9mhd800nz41cd0xx20r8p",
+   "companies": [
+    "Amazon",
+    "Apple",
+    "Goldman Sachs",
+    "JPMorgan Chase",
+    "LinkedIn",
+    "Meta",
+    "Microsoft",
+    "Nova Credit",
+    "OpenAI",
+    "Oracle",
+    "Palo Alto Networks",
+    "Pinterest",
+    "Roku",
+    "Uber",
+    "Visa"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmdckvv0i008qad08os5l6gv2",
+   "slug": "dasher-payout-classes",
+   "title": "Design Dasher Payout Calculation System Based on Delivery Events",
+   "type": "CODING",
+   "reports": 60,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/dasher-payout-classes/cmdckvv0i008qad08os5l6gv2",
+   "companies": [
+    "DoorDash"
+   ],
+   "last": "2026-10-10"
+  },
+  {
+   "id": "cm8yfscj300uwad08cpbxpvjc",
+   "slug": "food-item-reviews",
+   "title": "Design a Review App for Food Items",
+   "type": "SYSTEM_DESIGN",
+   "reports": 55,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/food-item-reviews/cm8yfscj300uwad08cpbxpvjc",
+   "companies": [
+    "1001",
+    "DoorDash"
+   ],
+   "last": "2026-10-20"
+  },
+  {
+   "id": "cm80nptng04jg2pu4cq8rpxzm",
+   "slug": "hotel-booking-system",
+   "title": "Design a Hotel Booking System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 45,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/hotel-booking-system/cm80nptng04jg2pu4cq8rpxzm",
+   "companies": [
+    "Amazon",
+    "Carta",
+    "Expedia",
+    "JPMorgan Chase",
+    "Meta",
+    "Oracle",
+    "Revolut",
+    "Rippling",
+    "Toast",
+    "Zoom",
+    "airwallex",
+    "ripping"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cm6k7xmwh024f11hvvc0uq1e5",
+   "slug": "metrics-monitoring-alerts",
+   "title": "Design a System Metrics Monitoring and Alerting Platform",
+   "type": "SYSTEM_DESIGN",
+   "reports": 44,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/metrics-monitoring-alerts/cm6k7xmwh024f11hvvc0uq1e5",
+   "companies": [
+    "Amazon",
+    "Databricks",
+    "DigitalOcean",
+    "Expedia",
+    "Fusion Health",
+    "LinkedIn",
+    "Meta",
+    "Microsoft",
+    "MongoDB",
+    "Oracle",
+    "Rubrik",
+    "Stripe",
+    "TikTok",
+    "Uber"
+   ],
+   "last": "2026-10-10"
+  },
+  {
+   "id": "cm5g8rosg000513om5kznhe49",
+   "slug": "file-sync-system",
+   "title": "Design DropBox",
+   "type": "PRODUCT_DESIGN",
+   "reports": 43,
+   "breakdown": "/learn/system-design/problem-breakdowns/dropbox",
+   "url": "https://www.hellointerview.com/community/questions/file-sync-system/cm5g8rosg000513om5kznhe49",
+   "companies": [
+    "Meta"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cmb8nw8vo00ybad08tftfys92",
+   "slug": "feature-flag-service",
+   "title": "Design a Feature Flag Service",
+   "type": "SYSTEM_DESIGN",
+   "reports": 39,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/feature-flag-service/cmb8nw8vo00ybad08tftfys92",
+   "companies": [
+    "Stripe"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cm5eh7nri04x4838opzm4x7hx",
+   "slug": "nested-list-weight-sum",
+   "title": "Leetcode 364. Nested List Weight Sum II",
+   "type": "CODING",
+   "reports": 30,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/nested-list-weight-sum/cm5eh7nri04x4838opzm4x7hx",
+   "companies": [
+    "LinkedIn"
+   ],
+   "last": "2026-10-20"
+  },
+  {
+   "id": "cm9hikxgs0002426p4xzxgl94",
+   "slug": "like-unlike-system",
+   "title": "Design a Like/Unlike Feature",
+   "type": "SYSTEM_DESIGN",
+   "reports": 30,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/like-unlike-system/cm9hikxgs0002426p4xzxgl94",
+   "companies": [
+    "Roblox"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmj4jzavk00je08adwpqygvow",
+   "slug": "image-transform-pipeline",
+   "title": "Image Transform Pipeline with Scaling",
+   "type": "CODING",
+   "reports": 27,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/image-transform-pipeline/cmj4jzavk00je08adwpqygvow",
+   "companies": [
+    "Anthropic"
+   ],
+   "last": "2026-10-10"
+  },
+  {
+   "id": "cmni1bvsy02uw0dadl09u4g1r",
+   "slug": "sliding-window-rate-limiter",
+   "title": "Sliding Window Rate Limiter",
+   "type": "CODING",
+   "reports": 23,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/sliding-window-rate-limiter/cmni1bvsy02uw0dadl09u4g1r",
+   "companies": [
+    "Adobe",
+    "Amazon",
+    "Cloudflare",
+    "CrowdStrike",
+    "MongoDB",
+    "Netapp",
+    "Plaid",
+    "Roblox"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmobtcld30s420fadjyp8zgv3",
+   "slug": "follow-graph-recommendations",
+   "title": "Implement Follow Graph with Snapshots and Recommendations",
+   "type": "CODING",
+   "reports": 23,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/follow-graph-recommendations/cmobtcld30s420fadjyp8zgv3",
+   "companies": [
+    "OpenAI"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cmk5b2t4p00xh08advuhtl6x6",
+   "slug": "circuit-breaker-client",
+   "title": "Circuit Breaker Pattern Implementation",
+   "type": "CODING",
+   "reports": 19,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/circuit-breaker-client/cmk5b2t4p00xh08advuhtl6x6",
+   "companies": [
+    "Databricks",
+    "Uber",
+    "Wise"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "112756e1-20fc-4f02-9959-6fe4b3b55dcf",
+   "slug": "maximum-coins-from-k-consecutive-bags",
+   "title": "Leetcode 3413. Maximum Coins From K Consecutive Bags",
+   "type": "CODING",
+   "reports": 18,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/maximum-coins-from-k-consecutive-bags/112756e1-20fc-4f02-9959-6fe4b3b55dcf",
+   "companies": [
+    "Amazon"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmk5avhlo00x708adxjp1vuil",
+   "slug": "lru-cache-implementation",
+   "title": "Implement LRU Cache",
+   "type": "AI_ENABLED_CODING",
+   "reports": 13,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/lru-cache-implementation/cmk5avhlo00x708adxjp1vuil",
+   "companies": [
+    "LinkedIn",
+    "Shopify"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmnbz8oyk01uo0dadn40oq74u",
+   "slug": "challenging-project",
+   "title": "Tell me about your most challenging project",
+   "type": "BEHAVIORAL",
+   "reports": 13,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/challenging-project/cmnbz8oyk01uo0dadn40oq74u",
+   "companies": [
+    "Amazon",
+    "Anduril",
+    "Assort",
+    "Bloomberg",
+    "Coupang",
+    "Meta",
+    "Oracle",
+    "Reddit",
+    "Revolut",
+    "Roblox",
+    "Salesforce",
+    "trade republic"
+   ],
+   "last": "2026-10-10"
+  },
+  {
+   "id": "cmbzeshg200003p6wbg45hbsi",
+   "slug": "stock-trading-platform",
+   "title": "Design a stock trading platform",
+   "type": "SYSTEM_DESIGN",
+   "reports": 13,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/stock-trading-platform/cmbzeshg200003p6wbg45hbsi",
+   "companies": [
+    "Robinhood"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmjxixyya02aj07adok8leqq5",
+   "slug": "key-value-ttl",
+   "title": "Implement In-Memory Key-Value Store With Expiration",
+   "type": "CODING",
+   "reports": 12,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/key-value-ttl/cmjxixyya02aj07adok8leqq5",
+   "companies": [
+    "Airbnb",
+    "Geminus Tech",
+    "NVIDIA",
+    "Netflix"
+   ],
+   "last": "2026-10-10"
+  },
+  {
+   "id": "cm4szs6ae002w3g2e09amf982",
+   "slug": "coding-contest-platform",
+   "title": "Design LeetCode",
+   "type": "SYSTEM_DESIGN",
+   "reports": 11,
+   "breakdown": "/learn/system-design/problem-breakdowns/leetcode",
+   "url": "https://www.hellointerview.com/community/questions/coding-contest-platform/cm4szs6ae002w3g2e09amf982",
+   "companies": [
+    "Whatnot"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cmpon4z90017i0eadm2gyepjz",
+   "slug": "merchant-product-listings",
+   "title": "Design a Merchant Product Listing System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 11,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/merchant-product-listings/cmpon4z90017i0eadm2gyepjz",
+   "companies": [
+    "Pinterest"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmpbyfgwt0n4l09ad0tvpkd8c",
+   "slug": "disposable-email",
+   "title": "Design a temporary mailbox system",
+   "type": "SYSTEM_DESIGN",
+   "reports": 10,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/disposable-email/cmpbyfgwt0n4l09ad0tvpkd8c",
+   "companies": [
+    "Confluent",
+    "IBM"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmkoudbop0kuj08adzolpty17",
+   "slug": "most-called-function",
+   "title": "Find Most Called Function in Stack Trace",
+   "type": "CODING",
+   "reports": 10,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/most-called-function/cmkoudbop0kuj08adzolpty17",
+   "companies": [
+    "Roblox"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cm5eguhab02gq838obxubceit",
+   "slug": "file-system-design",
+   "title": "Leetcode 588. Design In-Memory File System",
+   "type": "CODING",
+   "reports": 10,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/file-system-design/cm5eguhab02gq838obxubceit",
+   "companies": [
+    "Snowflake"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cmou3jp0m13rl0cadz84s19xd",
+   "slug": "http-route-matching",
+   "title": "Implement HTTP Route Matching for a Web Framework",
+   "type": "CODING",
+   "reports": 10,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/http-route-matching/cmou3jp0m13rl0cadz84s19xd",
+   "companies": [
+    "Google"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cm5eh7nri04x2838ob5n06oin",
+   "slug": "hit-counter",
+   "title": "Leetcode 362. Design Hit Counter",
+   "type": "CODING",
+   "reports": 10,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/hit-counter/cm5eh7nri04x2838ob5n06oin",
+   "companies": [
+    "Apple"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmnnzk0b50ay208adj2tf2d89",
+   "slug": "order-assignment-system",
+   "title": "Online Food Order Assignment System",
+   "type": "AI_ENABLED_CODING",
+   "reports": 10,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/order-assignment-system/cmnnzk0b50ay208adj2tf2d89",
+   "companies": [
+    "Meta"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmrmeg60g1ket08adn37p58uy",
+   "slug": "rule-based-fraud-detection",
+   "title": "Rule-Based Fraud Transaction Detection",
+   "type": "AI_ENABLED_CODING",
+   "reports": 10,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/rule-based-fraud-detection/cmrmeg60g1ket08adn37p58uy",
+   "companies": [
+    "Stripe"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cmml4xl9203dk09addygku1vx",
+   "slug": "rover-2d-navigation",
+   "title": "Rover CLI Navigation System",
+   "type": "AI_ENABLED_CODING",
+   "reports": 10,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/rover-2d-navigation/cmml4xl9203dk09addygku1vx",
+   "companies": [
+    "Shopify"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cm73qnhcq00033b6rmrv2qdhv",
+   "slug": "employee-underperformance",
+   "title": "Tell me about a time you had to deal with underperformance",
+   "type": "PEOPLE_MANAGEMENT",
+   "reports": 9,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/employee-underperformance/cm73qnhcq00033b6rmrv2qdhv",
+   "companies": [
+    "DoorDash"
+   ],
+   "last": "2026-08-01"
+  },
+  {
+   "id": "cmd219wwh00iiad08p20bmm7s",
+   "slug": "stock-price-alerts",
+   "title": "Design Stock price alerting system",
+   "type": "SYSTEM_DESIGN",
+   "reports": 9,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/stock-price-alerts/cmd219wwh00iiad08p20bmm7s",
+   "companies": [
+    "Uber"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cmqfkucpd04h90dad898ywzb6",
+   "slug": "optimal-overnight-stops",
+   "title": "Minimize Longest Daily Hike Duration",
+   "type": "CODING",
+   "reports": 9,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/optimal-overnight-stops/cmqfkucpd04h90dad898ywzb6",
+   "companies": [
+    "Pinterest"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cmg6up3jj030x08adrb73umuk",
+   "slug": "chatbot-design",
+   "title": "Design ChatGPT",
+   "type": "SYSTEM_DESIGN",
+   "reports": 9,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/chatbot-design/cmg6up3jj030x08adrb73umuk",
+   "companies": [
+    "Plaid"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cm5eh7nrh04oh838o5z1fve9c",
+   "slug": "maximum-subarray",
+   "title": "Leetcode 53. Maximum Subarray",
+   "type": "CODING",
+   "reports": 9,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/maximum-subarray/cm5eh7nrh04oh838o5z1fve9c",
+   "companies": [
+    "Upstart"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cmh0cg9yt06l508adhm2ezw3g",
+   "slug": "inverted-index-implementation",
+   "title": "Implement an Inverted Index",
+   "type": "CODING",
+   "reports": 9,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/inverted-index-implementation/cmh0cg9yt06l508adhm2ezw3g",
+   "companies": [
+    "Confluent"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cmj4k51r300kw08ado0weux4y",
+   "slug": "kv-store-eviction",
+   "title": "Design a key-value store",
+   "type": "OBJECT_ORIENTED_DESIGN",
+   "reports": 8,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/kv-store-eviction/cmj4k51r300kw08ado0weux4y",
+   "companies": [
+    "Microsoft"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cm5eh7nrh04p4838owhtrqcnp",
+   "slug": "minimum-window-substring",
+   "title": "Leetcode 76. Minimum Window Substring",
+   "type": "CODING",
+   "reports": 8,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/minimum-window-substring/cm5eh7nrh04p4838owhtrqcnp",
+   "companies": [
+    "Lyft"
+   ],
+   "last": "2026-08-01"
+  },
+  {
+   "id": "cmpms25sx188l0eadvi7igzjb",
+   "slug": "crowdfunding-share-purchase",
+   "title": "Design a share purchasing system for a limited-time company crowdfunding event",
+   "type": "SYSTEM_DESIGN",
+   "reports": 8,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/crowdfunding-share-purchase/cmpms25sx188l0eadvi7igzjb",
+   "companies": [
+    "Wise"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cmb0e6tyz00vrad08zhe69frf",
+   "slug": "social-feed-generation",
+   "title": "Design a Social Media Feed Generation System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 7,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/social-feed-generation/cmb0e6tyz00vrad08zhe69frf",
+   "companies": [
+    "Meta"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmlqk9ze50cnw08adznmdd3a2",
+   "slug": "rle-bitpacking-encoder",
+   "title": "Implement RLE and Bit Packing Encoder",
+   "type": "CODING",
+   "reports": 7,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/rle-bitpacking-encoder/cmlqk9ze50cnw08adznmdd3a2",
+   "companies": [
+    "Databricks"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cm5eh7nrh04sk838olttm8wc3",
+   "slug": "number-islands",
+   "title": "Leetcode 200. Number of Islands",
+   "type": "CODING",
+   "reports": 6,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/number-islands/cm5eh7nrh04sk838olttm8wc3",
+   "companies": [
+    "Oracle"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cm5eguhac02kk838o03vkjz0r",
+   "slug": "count-atoms",
+   "title": "Leetcode 726. Number of Atoms",
+   "type": "CODING",
+   "reports": 6,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/count-atoms/cm5eguhac02kk838o03vkjz0r",
+   "companies": [
+    "Agoda"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmnrni5cb0kex0fadbkp70qju",
+   "slug": "driver-earnings-api",
+   "title": "Design a Driver Earnings Tracker with Incremental Payment Processing",
+   "type": "CODING",
+   "reports": 5,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/driver-earnings-api/cmnrni5cb0kex0fadbkp70qju",
+   "companies": [
+    "Rippling"
+   ],
+   "last": "2026-10-10"
+  },
+  {
+   "id": "cm6ffozaw00023b6pwf95drvs",
+   "slug": "biggest-failure",
+   "title": "What's your biggest failure",
+   "type": "PEOPLE_MANAGEMENT",
+   "reports": 5,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/biggest-failure/cm6ffozaw00023b6pwf95drvs",
+   "companies": [
+    "OpenAI"
+   ],
+   "last": "2026-03-01"
+  },
+  {
+   "id": "cmr9bt8nh3yq807ad7gjs3ovu",
+   "slug": "babysitter-pay-calculator",
+   "title": "Babysitter Pay Calculator",
+   "type": "CODING",
+   "reports": 5,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/babysitter-pay-calculator/cmr9bt8nh3yq807ad7gjs3ovu",
+   "companies": [
+    "Upstart"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cmv9t4s3e0msu01adckozuvlp",
+   "slug": "poker-card-game",
+   "title": "Poker Card Game",
+   "type": "AI_ENABLED_CODING",
+   "reports": 4,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/poker-card-game/cmv9t4s3e0msu01adckozuvlp",
+   "companies": [
+    "Rippling"
+   ],
+   "last": "2026-10-20"
+  },
+  {
+   "id": "cm5ehcf6e0599838oop9wivfq",
+   "slug": "coworker-conflict-resolution",
+   "title": "Tell me about a time you had a conflict with a coworker. How did you resolve it?",
+   "type": "BEHAVIORAL",
+   "reports": 4,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/coworker-conflict-resolution/cm5ehcf6e0599838oop9wivfq",
+   "companies": [
+    "DoorDash"
+   ],
+   "last": "2026-08-01"
+  },
+  {
+   "id": "cm6jwzhtl00vlui4bkj7k4lcd",
+   "slug": "impactful-project",
+   "title": "Describe your most impactful project",
+   "type": "BEHAVIORAL",
+   "reports": 4,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/impactful-project/cm6jwzhtl00vlui4bkj7k4lcd",
+   "companies": [
+    "LinkedIn"
+   ],
+   "last": "2026-09-10"
+  },
+  {
+   "id": "cm64elslu000k3d5zi3aqpu9g",
+   "slug": "missed-project-deadline",
+   "title": "Tell me about a time where you failed to deliver a project on time",
+   "type": "BEHAVIORAL",
+   "reports": 4,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/missed-project-deadline/cm64elslu000k3d5zi3aqpu9g",
+   "companies": [
+    "Amazon"
+   ],
+   "last": "2026-10-10"
+  },
+  {
+   "id": "cmqzz0s3j08q608adl4hinyc1",
+   "slug": "contrarian-tech-opinion",
+   "title": "What is a contrarian tech opinion you have?",
+   "type": "BEHAVIORAL",
+   "reports": 4,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/contrarian-tech-opinion/cmqzz0s3j08q608adl4hinyc1",
+   "companies": [
+    "Plaid"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cm7jsn3bt0082fh44ia25k8tf",
+   "slug": "video-moderation-system",
+   "title": "Design a Video Moderation System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 4,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/video-moderation-system/cm7jsn3bt0082fh44ia25k8tf",
+   "companies": [
+    "TikTok"
+   ],
+   "last": "2026-04-20"
+  },
+  {
+   "id": "cmqo58osk0wqc09adkzqvpiwr",
+   "slug": "flight-search-system",
+   "title": "Design a flight search system",
+   "type": "SYSTEM_DESIGN",
+   "reports": 4,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/flight-search-system/cmqo58osk0wqc09adkzqvpiwr",
+   "companies": [
+    "Agoda"
+   ],
+   "last": "2026-07-20"
+  },
+  {
+   "id": "cm5eguhac02oo838oxjb7sxoi",
+   "slug": "walking-robot-simulation",
+   "title": "Leetcode 874. Walking Robot Simulation",
+   "type": "CODING",
+   "reports": 4,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/walking-robot-simulation/cm5eguhac02oo838oxjb7sxoi",
+   "companies": [
+    "Shopify"
+   ],
+   "last": "2026-02-10"
+  },
+  {
+   "id": "cm5eguhaf03b1838orsnw2cn5",
+   "slug": "k-sum-pairs",
+   "title": "Leetcode 1679. Max Number of K-Sum Pairs",
+   "type": "CODING",
+   "reports": 3,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/k-sum-pairs/cm5eguhaf03b1838orsnw2cn5",
+   "companies": [
+    "NVIDIA"
+   ],
+   "last": "2026-06-10"
+  },
+  {
+   "id": "cm5eh7nrh04su838oru71jy4v",
+   "slug": "course-schedule-ii",
+   "title": "Leetcode 210. Course Schedule II",
+   "type": "CODING",
+   "reports": 3,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/course-schedule-ii/cm5eh7nrh04su838oru71jy4v",
+   "companies": [
+    "Microsoft"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cmpvp6cd149tl09adgyacm8lz",
+   "slug": "threadsafe-banking-service",
+   "title": "Thread-Safe Banking Service Implementation",
+   "type": "CODING",
+   "reports": 3,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/threadsafe-banking-service/cmpvp6cd149tl09adgyacm8lz",
+   "companies": [
+    "Okta"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmkbgr2qp08d108adu0khqo6o",
+   "slug": "photo-storage-sharing",
+   "title": "Design Google Photos",
+   "type": "SYSTEM_DESIGN",
+   "reports": 3,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/photo-storage-sharing/cmkbgr2qp08d108adu0khqo6o",
+   "companies": [
+    "Snowflake"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cmt51t3y80h1507adkk4ghxt6",
+   "slug": "feature-flags-service",
+   "title": "Build a Feature Flag Service",
+   "type": "SYSTEM_DESIGN",
+   "reports": 3,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/feature-flags-service/cmt51t3y80h1507adkk4ghxt6",
+   "companies": [
+    "Snowflake"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cmgtewc2l041r09adnq8cq3eo",
+   "slug": "mobile-chat-app",
+   "title": "Design a chat application",
+   "type": "MOBILE_SYSTEM_DESIGN",
+   "reports": 3,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/mobile-chat-app/cmgtewc2l041r09adnq8cq3eo",
+   "companies": [
+    "Apple"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cmrissmzv30r308adfb14sbyu",
+   "slug": "ai-model-release-criteria",
+   "title": "If you were in charge of deciding whether to release a new AI model, what criteria would you use to make that decision?",
+   "type": "BEHAVIORAL",
+   "reports": 3,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/ai-model-release-criteria/cmrissmzv30r308adfb14sbyu",
+   "companies": [
+    "OpenAI"
+   ],
+   "last": "2026-08-01"
+  },
+  {
+   "id": "cm5hhhbeh00092a6ews5zh18w",
+   "slug": "mentorship-colleague",
+   "title": "Tell me about a time where you mentored a colleague",
+   "type": "BEHAVIORAL",
+   "reports": 3,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/mentorship-colleague/cm5hhhbeh00092a6ews5zh18w",
+   "companies": [
+    "Monzo"
+   ],
+   "last": "2026-08-01"
+  },
+  {
+   "id": "cmdijs6wn041jad08o1e215d9",
+   "slug": "social-graph-distance",
+   "title": "Design a Social Graph Distance Service",
+   "type": "SYSTEM_DESIGN",
+   "reports": 3,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/social-graph-distance/cmdijs6wn041jad08o1e215d9",
+   "companies": [
+    "Rubrik"
+   ],
+   "last": "2026-08-20"
+  },
+  {
+   "id": "cm5eh7nrh04o1838ogvlg5013",
+   "slug": "sudoku-solver",
+   "title": "Leetcode 37. Sudoku Solver",
+   "type": "CODING",
+   "reports": 3,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/sudoku-solver/cm5eh7nrh04o1838ogvlg5013",
+   "companies": [
+    "Confluent"
+   ],
+   "last": "2026-10-10"
+  },
+  {
+   "id": "1e7f6517-eba7-4ce5-ab36-7847dfd27dd6",
+   "slug": "top-k-frequent-words",
+   "title": "Leetcode 692. Top K Frequent Words",
+   "type": "CODING",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/top-k-frequent-words/1e7f6517-eba7-4ce5-ab36-7847dfd27dd6",
+   "companies": [
+    "Robinhood"
+   ],
+   "last": "2026-10-20"
+  },
+  {
+   "id": "cmtisc3wa0ygk07ad0ny4isli",
+   "slug": "load-factor-dag",
+   "title": "Calculate Worst-Case Load Factor for Each Service in a DAG",
+   "type": "CODING",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/load-factor-dag/cmtisc3wa0ygk07ad0ny4isli",
+   "companies": [
+    "Robinhood"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cmmz3vla91fgx08adslyagdpy",
+   "slug": "stock-price-ingestion",
+   "title": "Design a Live Stock Price Ingestion System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/stock-price-ingestion/cmmz3vla91fgx08adslyagdpy",
+   "companies": [
+    "Robinhood"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cmfaaq59n06o908ade35jn3x3",
+   "slug": "pastebin-monitoring",
+   "title": "Design Paste Bin with Monitoring",
+   "type": "SYSTEM_DESIGN",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/pastebin-monitoring/cmfaaq59n06o908ade35jn3x3",
+   "companies": [
+    "NVIDIA"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cm5eguhad02rn838o3ttrkt0w",
+   "slug": "time-key-value-store",
+   "title": "Leetcode 981. Time Based Key-Value Store",
+   "type": "CODING",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/time-key-value-store/cm5eguhad02rn838o3ttrkt0w",
+   "companies": [
+    "NVIDIA"
+   ],
+   "last": "2026-07-20"
+  },
+  {
+   "id": "cmn8iiyno0zy80eadwn50cdeu",
+   "slug": "customer-support-platform",
+   "title": "Design a Customer Support Platform",
+   "type": "SYSTEM_DESIGN",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/customer-support-platform/cmn8iiyno0zy80eadwn50cdeu",
+   "companies": [
+    "Airbnb"
+   ],
+   "last": "2026-10-20"
+  },
+  {
+   "id": "cmdooh3zd0aovad08rch9uti4",
+   "slug": "fraud-detection-system",
+   "title": "Design Fraud detection system",
+   "type": "ML_SYSTEM_DESIGN",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/fraud-detection-system/cmdooh3zd0aovad08rch9uti4",
+   "companies": [
+    "Airbnb"
+   ],
+   "last": "2026-04-01"
+  },
+  {
+   "id": "cm5ehcf6e059c838okykjrwwq",
+   "slug": "project-pride",
+   "title": "What project are you most proud of?",
+   "type": "BEHAVIORAL",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/project-pride/cm5ehcf6e059c838okykjrwwq",
+   "companies": [
+    "Microsoft"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cmqg4xkja0clq09adozxf00m3",
+   "slug": "ab-testing-bugs",
+   "title": "Fix 5 Bugs in an A/B Testing Analytics Platform",
+   "type": "AI_ENABLED_CODING",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/ab-testing-bugs/cmqg4xkja0clq09adozxf00m3",
+   "companies": [
+    "Microsoft"
+   ],
+   "last": "2026-07-10"
+  },
+  {
+   "id": "cmbhko677005iad09y02ykfyv",
+   "slug": "work-conflict-perspectives",
+   "title": "Tell me about a conflict you had at work.",
+   "type": "BEHAVIORAL",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/work-conflict-perspectives/cmbhko677005iad09y02ykfyv",
+   "companies": [
+    "Roblox"
+   ],
+   "last": "2026-10-10"
+  },
+  {
+   "id": "cmdziqnwr08kiad08zdqvntda",
+   "slug": "internal-job-scheduler",
+   "title": "Internal Job scheduler",
+   "type": "PRODUCT_DESIGN",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/internal-job-scheduler/cmdziqnwr08kiad08zdqvntda",
+   "companies": [
+    "Okta"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cm5eguhad02vy838o7aock8d0",
+   "slug": "parallel-courses",
+   "title": "Leetcode 1136. Parallel Courses",
+   "type": "CODING",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/parallel-courses/cm5eguhad02vy838o7aock8d0",
+   "companies": [
+    "Snowflake"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cm5g8rogj000013omsh2wi26a",
+   "slug": "ticket-booking-service",
+   "title": "Design a Ticket Booking System",
+   "type": "PRODUCT_DESIGN",
+   "reports": 2,
+   "breakdown": "/learn/system-design/problem-breakdowns/ticketmaster",
+   "url": "https://www.hellointerview.com/community/questions/ticket-booking-service/cm5g8rogj000013omsh2wi26a",
+   "companies": [
+    "Google"
+   ],
+   "last": "2026-09-10"
+  },
+  {
+   "id": "cm5eguhac02kq838oagi8ywa7",
+   "slug": "my-calendar-3",
+   "title": "Leetcode 732. My Calendar III",
+   "type": "CODING",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/my-calendar-3/cm5eguhac02kq838oagi8ywa7",
+   "companies": [
+    "Datology"
+   ],
+   "last": "2026-07-20"
+  },
+  {
+   "id": "cm4t0kxb6004488il22wqa2nn",
+   "slug": "ad-click-aggregator",
+   "title": "Design an Ad Click Aggregator",
+   "type": "SYSTEM_DESIGN",
+   "reports": 2,
+   "breakdown": "/learn/system-design/problem-breakdowns/ad-click-aggregator",
+   "url": "https://www.hellointerview.com/community/questions/ad-click-aggregator/cm4t0kxb6004488il22wqa2nn",
+   "companies": [
+    "walt disney"
+   ],
+   "last": "2026-10-10"
+  },
+  {
+   "id": "cmuibf4kc2ryx09ad0ptfugy6",
+   "slug": "magic-potion-compression",
+   "title": "Shortest String Compression Using a Doubling Macro Character",
+   "type": "CODING",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/magic-potion-compression/cmuibf4kc2ryx09ad0ptfugy6",
+   "companies": [
+    "Goldman Sachs"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cmjkhme9h067o07adskd8m7av",
+   "slug": "realtime-polling-system",
+   "title": "Design a polling system",
+   "type": "SYSTEM_DESIGN",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/realtime-polling-system/cmjkhme9h067o07adskd8m7av",
+   "companies": [
+    "Figma"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmup6e6jb0n9o01adggvsmanm",
+   "slug": "retail-pos-stockout-forecast",
+   "title": "Design a Retail POS Ingestion and Next-Day Stockout Forecasting System",
+   "type": "ML_SYSTEM_DESIGN",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/retail-pos-stockout-forecast/cmup6e6jb0n9o01adggvsmanm",
+   "companies": [
+    "Databricks"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmkr2w9l80cph08adwuu5vnfh",
+   "slug": "beverage-vending-system",
+   "title": "Design a vending machine system",
+   "type": "OBJECT_ORIENTED_DESIGN",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/beverage-vending-system/cmkr2w9l80cph08adwuu5vnfh",
+   "companies": [
+    "Netflix"
+   ],
+   "last": "2026-01-20"
+  },
+  {
+   "id": "cmmdxeycq096408advzuiu0u7",
+   "slug": "payment-order-service",
+   "title": "Fix Payment Order Service Implementation",
+   "type": "CODING",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/payment-order-service/cmmdxeycq096408advzuiu0u7",
+   "companies": [
+    "Wise"
+   ],
+   "last": "2026-06-20"
+  },
+  {
+   "id": "cmut6jkhq0ril01ad087lufwq",
+   "slug": "interest-accrual-system",
+   "title": "Design an Interest Accrual System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/interest-accrual-system/cmut6jkhq0ril01ad087lufwq",
+   "companies": [
+    "Wise"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmm2uxnib0ka90dad42h1wrfq",
+   "slug": "rate-limiter-system",
+   "title": "Design a Rate Limiter",
+   "type": "OBJECT_ORIENTED_DESIGN",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/rate-limiter-system/cmm2uxnib0ka90dad42h1wrfq",
+   "companies": [
+    "Amazon"
+   ],
+   "last": "2026-10-20"
+  },
+  {
+   "id": "cm5eh7nri04wn838o9sazfr53",
+   "slug": "top-k-frequent-elements",
+   "title": "Leetcode 347. Top K Frequent Elements",
+   "type": "CODING",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/top-k-frequent-elements/cm5eh7nri04wn838o9sazfr53",
+   "companies": [
+    "Walmart"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cmrwnh5jp2l0r08ad5rjfau71",
+   "slug": "elevator-design",
+   "title": "Design an Elevator System",
+   "type": "OBJECT_ORIENTED_DESIGN",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/elevator-design/cmrwnh5jp2l0r08ad5rjfau71",
+   "companies": [
+    "Oracle"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmttghdfe1mas08adwul3b0c3",
+   "slug": "video-surveillance-system",
+   "title": "Design a Video Surveillance System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/video-surveillance-system/cmttghdfe1mas08adwul3b0c3",
+   "companies": [
+    "Bloomberg"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cm5eguhae037u838o9cwpnqft",
+   "slug": "put-boxes-warehouse",
+   "title": "Leetcode 1564. Put Boxes Into the Warehouse I",
+   "type": "CODING",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/put-boxes-warehouse/cm5eguhae037u838o9cwpnqft",
+   "companies": [
+    "Pinterest"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmq6ea7211htn08ad4qf26bxz",
+   "slug": "event-ticket-booking",
+   "title": "Design an Event Ticket Booking System",
+   "type": "OBJECT_ORIENTED_DESIGN",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/event-ticket-booking/cmq6ea7211htn08ad4qf26bxz",
+   "companies": [
+    "Slice"
+   ],
+   "last": "2026-08-01"
+  },
+  {
+   "id": "cmc52raln0000336yk999ddhx",
+   "slug": "scalable-auth-system",
+   "title": "Design a Basic Auth System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/scalable-auth-system/cmc52raln0000336yk999ddhx",
+   "companies": [
+    "PayPal"
+   ],
+   "last": "2026-06-01"
+  },
+  {
+   "id": "cmblpcwha004j08ad6blc9q6a",
+   "slug": "online-bookstore-design",
+   "title": "Design an Online Bookstore",
+   "type": "SYSTEM_DESIGN",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/online-bookstore-design/cmblpcwha004j08ad6blc9q6a",
+   "companies": [
+    "JPMorgan Chase"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmq6f6u941iyn09ad4z9lpgmz",
+   "slug": "flash-sale-system",
+   "title": "Design a Flash Sale System for an E-Commerce Platform",
+   "type": "SYSTEM_DESIGN",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/flash-sale-system/cmq6f6u941iyn09ad4z9lpgmz",
+   "companies": [
+    "Salesforce"
+   ],
+   "last": "2026-07-10"
+  },
+  {
+   "id": "cmjx0422s06rh08adql5axut1",
+   "slug": "grocery-subscription-orders",
+   "title": "Design a grocery subscription service",
+   "type": "OBJECT_ORIENTED_DESIGN",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/grocery-subscription-orders/cmjx0422s06rh08adql5axut1",
+   "companies": [
+    "Roku"
+   ],
+   "last": "2026-07-20"
+  },
+  {
+   "id": "cm5eguhah042q838omclnsw9w",
+   "slug": "leetcode-2676-throttle",
+   "title": "Leetcode 2676. Throttle",
+   "type": "CODING",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/leetcode-2676-throttle/cm5eguhah042q838omclnsw9w",
+   "companies": [
+    "Plaid"
+   ],
+   "last": "2026-07-20"
+  },
+  {
+   "id": "cm6zh0pli00053b6qfm6cd9bu",
+   "slug": "twitter-amazon-product",
+   "title": "Design Twitter",
+   "type": "SYSTEM_DESIGN",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/twitter-amazon-product/cm6zh0pli00053b6qfm6cd9bu",
+   "companies": [
+    "Cloudflare"
+   ],
+   "last": "2026-01-20"
+  },
+  {
+   "id": "cm6ffp48000033b6prbe7nexz",
+   "slug": "engineer-promotion-story",
+   "title": "Tell me a time you helped an engineer promote",
+   "type": "PEOPLE_MANAGEMENT",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/engineer-promotion-story/cm6ffp48000033b6prbe7nexz",
+   "companies": [
+    "Stripe"
+   ],
+   "last": "2026-10-10"
+  },
+  {
+   "id": "cmkqghpe80p2208adaw1y9hjd",
+   "slug": "payment-invoice-reconciliation",
+   "title": "Match Payments to Invoices via Memo Line",
+   "type": "CODING",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/payment-invoice-reconciliation/cmkqghpe80p2208adaw1y9hjd",
+   "companies": [
+    "Stripe"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cmgyk6ajj04la08adtu9g0vzv",
+   "slug": "api-trace-bug",
+   "title": "Debug a Deeply Embedded Bug in a Python Library",
+   "type": "CODE_REVIEW",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/api-trace-bug/cmgyk6ajj04la08adtu9g0vzv",
+   "companies": [
+    "Stripe"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cmu2pivr830gs09ad2rppqnm3",
+   "slug": "even-product-triplets",
+   "title": "Count Even-Product Triplets",
+   "type": "CODING",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/even-product-triplets/cmu2pivr830gs09ad2rppqnm3",
+   "companies": [
+    "Expedia"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cmuyffqie01ln01ad3nwckest",
+   "slug": "virtual-card-tradeoffs",
+   "title": "Virtual Card Tradeoffs, Transaction Rule Evaluation, and Code Debugging",
+   "type": "BUSINESS_CASE",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/virtual-card-tradeoffs/cmuyffqie01ln01ad3nwckest",
+   "companies": [
+    "Capital One"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmku2shqh0t4k08adurl86l5r",
+   "slug": "java-account-transfer-postgresql",
+   "title": "Thread-Safe Account Transfer with Java and PostgreSQL",
+   "type": "CODING",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/java-account-transfer-postgresql/cmku2shqh0t4k08adurl86l5r",
+   "companies": [
+    "Revolut"
+   ],
+   "last": "2026-07-20"
+  },
+  {
+   "id": "cm6quatd204qcv55h3308vp46",
+   "slug": "restaurant-booking-service",
+   "title": "Design a Restaurant Booking Service",
+   "type": "SYSTEM_DESIGN",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/restaurant-booking-service/cm6quatd204qcv55h3308vp46",
+   "companies": [
+    "Toast"
+   ],
+   "last": "2026-08-01"
+  },
+  {
+   "id": "cmr9bukfv3yk307adxqcik4fu",
+   "slug": "polling-system",
+   "title": "Implement a Polling System",
+   "type": "AI_ENABLED_CODING",
+   "reports": 2,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/polling-system/cmr9bukfv3yk307adxqcik4fu",
+   "companies": [
+    "Upstart"
+   ],
+   "last": "2026-08-01"
+  },
+  {
+   "id": "cmvlab62d1lrm01adxqu54z6u",
+   "slug": "store-menu-detail",
+   "title": "Build a Master-Detail App with Store List and Menu Details",
+   "type": "MOBILE_SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/store-menu-detail/cmvlab62d1lrm01adxqu54z6u",
+   "companies": [
+    "DoorDash"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmmnt8r0a07o908ad7njylgn5",
+   "slug": "technology-adaptation",
+   "title": "Tell me about a time you had to adapt to a significant change in technology or tools you were using",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/technology-adaptation/cmmnt8r0a07o908ad7njylgn5",
+   "companies": [
+    "NVIDIA"
+   ],
+   "last": "2026-03-10"
+  },
+  {
+   "id": "cmgil7yj102hu08adykf6m450",
+   "slug": "distributed-task-scheduler",
+   "title": "Design a distributed task scheduler",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/distributed-task-scheduler/cmgil7yj102hu08adykf6m450",
+   "companies": [
+    "NVIDIA"
+   ],
+   "last": "2026-08-10"
+  },
+  {
+   "id": "cm5eh7nrh04ow838ouz9m4tic",
+   "slug": "text-justification",
+   "title": "Leetcode 68. Text Justification",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/text-justification/cm5eh7nrh04ow838ouz9m4tic",
+   "companies": [
+    "Airbnb"
+   ],
+   "last": "2026-10-20"
+  },
+  {
+   "id": "cmg02dznt019908adburt40fy",
+   "slug": "team-conflict-resolution",
+   "title": "Resolving Team Conflict",
+   "type": "PEOPLE_MANAGEMENT",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/team-conflict-resolution/cmg02dznt019908adburt40fy",
+   "companies": [
+    "Airbnb"
+   ],
+   "last": "2025-07-20"
+  },
+  {
+   "id": "cmho85un400c309adaswwxtmv",
+   "slug": "improve-team-morale",
+   "title": "Motivating a team with low morale",
+   "type": "PEOPLE_MANAGEMENT",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/improve-team-morale/cmho85un400c309adaswwxtmv",
+   "companies": [
+    "LinkedIn"
+   ],
+   "last": "2026-07-20"
+  },
+  {
+   "id": "cm5ehcf6e059a838oalybqmyb",
+   "slug": "manager-decision-disagreement",
+   "title": "What was a situation where you didn't agree with your manager or superior's decision?",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/manager-decision-disagreement/cm5ehcf6e059a838oalybqmyb",
+   "companies": [
+    "Lyft"
+   ],
+   "last": "2026-05-10"
+  },
+  {
+   "id": "cmuip7zk03jen07ad50yqqz0r",
+   "slug": "date-time-management",
+   "title": "Design a Date and Time Library",
+   "type": "OBJECT_ORIENTED_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/date-time-management/cmuip7zk03jen07ad50yqqz0r",
+   "companies": [
+    "Roblox"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cmuxkhuak18ue01ad78s4wu0d",
+   "slug": "payment-reconciliation-system",
+   "title": "Design a Payment Reconciliation System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/payment-reconciliation-system/cmuxkhuak18ue01ad78s4wu0d",
+   "companies": [
+    "Okta"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cm5eguhag03l5838orse1253f",
+   "slug": "bank-system",
+   "title": "Leetcode 2043. Simple Bank System",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/bank-system/cm5eguhag03l5838orse1253f",
+   "companies": [
+    "Okta"
+   ],
+   "last": "2026-06-01"
+  },
+  {
+   "id": "cmvvo88cr1rl901ad7oo0zly8",
+   "slug": "distributed-lock-service",
+   "title": "Design a Distributed Lock Service",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/distributed-lock-service/cmvvo88cr1rl901ad7oo0zly8",
+   "companies": [
+    "Google"
+   ],
+   "last": "2026-10-20"
+  },
+  {
+   "id": "cmvoqbzus47gv01ad30emmqbn",
+   "slug": "proud-feature-work",
+   "title": "Tell me about a feature you worked on that you're particularly proud of and what made it great",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/proud-feature-work/cmvoqbzus47gv01ad30emmqbn",
+   "companies": [
+    "Google"
+   ],
+   "last": "2026-10-20"
+  },
+  {
+   "id": "cmsuf4dj10k0108adn1c0e8uq",
+   "slug": "token-bucket-limiter",
+   "title": "Token Bucket Rate Limiter (Go Code Review)",
+   "type": "CODE_REVIEW",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/token-bucket-limiter/cmsuf4dj10k0108adn1c0e8uq",
+   "companies": [
+    "Google"
+   ],
+   "last": "2026-08-10"
+  },
+  {
+   "id": "cmpzpav8z0gt208admcqanpg1",
+   "slug": "work-datology",
+   "title": "Why do you want to work at Datology?",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/work-datology/cmpzpav8z0gt208admcqanpg1",
+   "companies": [
+    "Datology"
+   ],
+   "last": "2026-06-01"
+  },
+  {
+   "id": "cmryd6cyh5a7l08adl5b4nmxq",
+   "slug": "mnist-classifier-debug",
+   "title": "Debug and Tune an MNIST Image Classifier",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/mnist-classifier-debug/cmryd6cyh5a7l08adl5b4nmxq",
+   "companies": [
+    "Datology"
+   ],
+   "last": "2026-07-20"
+  },
+  {
+   "id": "cm730xpyt00023b6r54v44ctj",
+   "slug": "project-failure-retrospective",
+   "title": "Tell me about a project where you failed",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/project-failure-retrospective/cm730xpyt00023b6r54v44ctj",
+   "companies": [
+    "Datology"
+   ],
+   "last": "2026-05-10"
+  },
+  {
+   "id": "cmvcyizw40r5601adljpor21q",
+   "slug": "project-delivery-issue",
+   "title": "Tell me about a time you encountered an issue that would slow project delivery.",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/project-delivery-issue/cmvcyizw40r5601adljpor21q",
+   "companies": [
+    "Goldman Sachs"
+   ],
+   "last": "2026-10-10"
+  },
+  {
+   "id": "cmn4x12bn01l10dadvt3tdurn",
+   "slug": "problem-solution",
+   "title": "Describe a complex problem you faced and how you solved it",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/problem-solution/cmn4x12bn01l10dadvt3tdurn",
+   "companies": [
+    "Goldman Sachs"
+   ],
+   "last": "2026-07-20"
+  },
+  {
+   "id": "cmazmemqc00013b6wnvg3uz1y",
+   "slug": "pipeline-tasks-stages",
+   "title": "Design a Ci/Cd Pipeline",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/pipeline-tasks-stages/cmazmemqc00013b6wnvg3uz1y",
+   "companies": [
+    "Apple"
+   ],
+   "last": "2026-10-20"
+  },
+  {
+   "id": "cms3p2din252608adkuzpfba5",
+   "slug": "problem-ownership-results",
+   "title": "Tell me about a time you had to dive deep into a problem, take ownership, and drive results",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/problem-ownership-results/cms3p2din252608adkuzpfba5",
+   "companies": [
+    "Apple"
+   ],
+   "last": "2026-07-20"
+  },
+  {
+   "id": "cmmmozzdx00ht07ade785rs7k",
+   "slug": "technical-project-overview",
+   "title": "Past Project Technical Overview",
+   "type": "TECHNICAL_PROJECT_RETROSPECTIVE",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/technical-project-overview/cmmmozzdx00ht07ade785rs7k",
+   "companies": [
+    "Apple"
+   ],
+   "last": "2026-07-20"
+  },
+  {
+   "id": "cm75600bg01xh14jjz6nq5nvg",
+   "slug": "scheduler-event-staging",
+   "title": "Design a Scheduler System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/scheduler-event-staging/cm75600bg01xh14jjz6nq5nvg",
+   "companies": [
+    "Cursor"
+   ],
+   "last": "2026-08-01"
+  },
+  {
+   "id": "cm5eguhad02wu838ofrqyvi5u",
+   "slug": "water-distribution-village",
+   "title": "Leetcode 1168. Optimize Water Distribution in a Village",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/water-distribution-village/cm5eguhad02wu838ofrqyvi5u",
+   "companies": [
+    "PhonePe"
+   ],
+   "last": "2026-08-20"
+  },
+  {
+   "id": "cm5eguhag03pv838oehyjzxxl",
+   "slug": "repeating-character-substring",
+   "title": "Leetcode 2213. Longest Substring of One Repeating Character",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/repeating-character-substring/cm5eguhag03pv838oehyjzxxl",
+   "companies": [
+    "DigitalOcean"
+   ],
+   "last": "2026-08-20"
+  },
+  {
+   "id": "cm5eh7nrh04sx838oi3tunubo",
+   "slug": "house-robber-2",
+   "title": "Leetcode 213. House Robber II",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/house-robber-2/cm5eh7nrh04sx838oi3tunubo",
+   "companies": [
+    "DigitalOcean"
+   ],
+   "last": "2026-08-20"
+  },
+  {
+   "id": "cmd0yw0nd04rlad08b4n8bu49",
+   "slug": "figma-draw-api",
+   "title": "Design a Drawing API for a Vector Graphics Editor",
+   "type": "OBJECT_ORIENTED_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/figma-draw-api/cmd0yw0nd04rlad08b4n8bu49",
+   "companies": [
+    "Figma"
+   ],
+   "last": "2025-07-10"
+  },
+  {
+   "id": "cmgfco6rf05in08adz2rut2nw",
+   "slug": "twitter-clone-feed",
+   "title": "Design Twitter",
+   "type": "OBJECT_ORIENTED_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/twitter-clone-feed/cmgfco6rf05in08adz2rut2nw",
+   "companies": [
+    "Headout"
+   ],
+   "last": "2026-06-20"
+  },
+  {
+   "id": "cmnjwf6v60i2309ad05tez4v4",
+   "slug": "difficult-situation-example",
+   "title": "Tell me about a time you faced a difficult situation and how you handled it",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/difficult-situation-example/cmnjwf6v60i2309ad05tez4v4",
+   "companies": [
+    "Headout"
+   ],
+   "last": "2026-07-01"
+  },
+  {
+   "id": "cmvbypsl50csi01adqo34gwnm",
+   "slug": "count-element-occurrences",
+   "title": "Count Occurrences of an Element in a Sorted Array",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/count-element-occurrences/cmvbypsl50csi01adqo34gwnm",
+   "companies": [
+    "Meta"
+   ],
+   "last": "2026-10-10"
+  },
+  {
+   "id": "cm6jx0jmc0141ui4b2wfelwo3",
+   "slug": "above-beyond-help",
+   "title": "Describe going above and beyond to help someone",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/above-beyond-help/cm6jx0jmc0141ui4b2wfelwo3",
+   "companies": [
+    "Meta"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cmtguy6001byt08adk8i49brj",
+   "slug": "scheduler-system-design",
+   "title": "Design a Task Scheduler",
+   "type": "OBJECT_ORIENTED_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/scheduler-system-design/cmtguy6001byt08adk8i49brj",
+   "companies": [
+    "Databricks"
+   ],
+   "last": "2026-08-20"
+  },
+  {
+   "id": "cm5ya84oq000crfqr8uligo10",
+   "slug": "judgment-error",
+   "title": "Tell me about a time when you made an error in judgment.",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/judgment-error/cm5ya84oq000crfqr8uligo10",
+   "companies": [
+    "Databricks"
+   ],
+   "last": "2026-08-20"
+  },
+  {
+   "id": "cmuvnchbe1pbk01adsy1xkg00",
+   "slug": "event-driven-ingestion-enrichment",
+   "title": "Design a Comment Ingestion and Sentiment Classification Platform",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/event-driven-ingestion-enrichment/cmuvnchbe1pbk01adsy1xkg00",
+   "companies": [
+    "Netflix"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cmql6ibn10uhn09ad6ah612il",
+   "slug": "handling-customer-complaints",
+   "title": "Tell me about a time you received a complaint and how you handled it",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/handling-customer-complaints/cmql6ibn10uhn09ad6ah612il",
+   "companies": [
+    "Netflix"
+   ],
+   "last": "2026-06-10"
+  },
+  {
+   "id": "cmd0fdmg4060mad08miqrqqod",
+   "slug": "managing-asshole-superstars",
+   "title": "How do you handle Asshole Superstars ?",
+   "type": "PEOPLE_MANAGEMENT",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/managing-asshole-superstars/cmd0fdmg4060mad08miqrqqod",
+   "companies": [
+    "Netflix"
+   ],
+   "last": "2025-07-10"
+  },
+  {
+   "id": "cmoc009f205410ead0y1dvs7w",
+   "slug": "third-party-observability-app",
+   "title": "How would you add third-party observability to an application that customers are asking for?",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/third-party-observability-app/cmoc009f205410ead0y1dvs7w",
+   "companies": [
+    "Wise"
+   ],
+   "last": "2026-04-20"
+  },
+  {
+   "id": "cm755yj2y01zualw2r9jswa4g",
+   "slug": "airbnb-reservations-api",
+   "title": "Design a Reservation System for Airbnb",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/airbnb-reservations-api/cm755yj2y01zualw2r9jswa4g",
+   "companies": [
+    "ripping"
+   ],
+   "last": "2026-03-01"
+  },
+  {
+   "id": "cmuxl7ij91bkk01adzhvqriof",
+   "slug": "file-system-replication",
+   "title": "Design a File System Data Replication Service",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/file-system-replication/cmuxl7ij91bkk01adzhvqriof",
+   "companies": [
+    "Amazon"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmuh31w9k1b1f09adc29o6onh",
+   "slug": "dag-execution-order",
+   "title": "Debug DAG Execution Order Code",
+   "type": "CODE_REVIEW",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/dag-execution-order/cmuh31w9k1b1f09adc29o6onh",
+   "companies": [
+    "Amazon"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cm91up5px00c2ad08jd1c5pvw",
+   "slug": "parking-lot-system",
+   "title": "Design a Parking Lot Management System",
+   "type": "OBJECT_ORIENTED_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/parking-lot-system/cm91up5px00c2ad08jd1c5pvw",
+   "companies": [
+    "Walmart"
+   ],
+   "last": "2026-02-10"
+  },
+  {
+   "id": "cm5ya86el0016rfqrourant14",
+   "slug": "customer-service-story",
+   "title": "Tell me about a time when you went above and beyond for a customer.",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/customer-service-story/cm5ya86el0016rfqrourant14",
+   "companies": [
+    "Oracle"
+   ],
+   "last": "2026-08-01"
+  },
+  {
+   "id": "cmmlcpcr40b5y0fadtiamz5er",
+   "slug": "order-management-assistant",
+   "title": "Design an Order Management AI Assistant",
+   "type": "ML_SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/order-management-assistant/cmmlcpcr40b5y0fadtiamz5er",
+   "companies": [
+    "Oracle"
+   ],
+   "last": "2026-03-10"
+  },
+  {
+   "id": "cmtna234g170w07adtjqh4iqq",
+   "slug": "modern-search-experience",
+   "title": "Redesign a Legacy Keyword Search into a Modern Typeahead Experience",
+   "type": "PRODUCT_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/modern-search-experience/cmtna234g170w07adtjqh4iqq",
+   "companies": [
+    "Reddit"
+   ],
+   "last": "2026-08-01"
+  },
+  {
+   "id": "cm5ya8957002irfqrdd7b2gt8",
+   "slug": "tough-feedback-example",
+   "title": "Give me an example of a tough or critical piece of feedback you received.",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/tough-feedback-example/cm5ya8957002irfqrdd7b2gt8",
+   "companies": [
+    "Reddit"
+   ],
+   "last": "2026-07-20"
+  },
+  {
+   "id": "cmj91hwwm01b408adkioh0xyh",
+   "slug": "api-circuit-breaker",
+   "title": "Design a Circuit Breaker",
+   "type": "OBJECT_ORIENTED_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/api-circuit-breaker/cmj91hwwm01b408adkioh0xyh",
+   "companies": [
+    "Reddit"
+   ],
+   "last": "2026-07-01"
+  },
+  {
+   "id": "cmnj96n6b00dv07adsrhigou7",
+   "slug": "pinned-language-dropdown",
+   "title": "Pinned Priority Dropdown",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/pinned-language-dropdown/cmnj96n6b00dv07adsrhigou7",
+   "companies": [
+    "other"
+   ],
+   "last": "2026-04-01"
+  },
+  {
+   "id": "cm5ehcf6e059d838o2l2fhwy4",
+   "slug": "overcome-setback-example",
+   "title": "Give an example of a situation where you had to overcome a significant setback or obstacle to achieve a goal",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/overcome-setback-example/cm5ehcf6e059d838o2l2fhwy4",
+   "companies": [
+    "other"
+   ],
+   "last": "2026-04-01"
+  },
+  {
+   "id": "cm6wu2x3y0000356pl299toa0",
+   "slug": "creator-viewer-paths",
+   "title": "Design YouTube",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "/learn/system-design/problem-breakdowns/youtube",
+   "url": "https://www.hellointerview.com/community/questions/creator-viewer-paths/cm6wu2x3y0000356pl299toa0",
+   "companies": [
+    "other"
+   ],
+   "last": "2026-03-10"
+  },
+  {
+   "id": "cmnj96jwv00dr07ad0fe64w9k",
+   "slug": "project-role",
+   "title": "Tell me about a project you worked on and what your role was",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/project-role/cmnj96jwv00dr07ad0fe64w9k",
+   "companies": [
+    "other"
+   ],
+   "last": "2026-04-01"
+  },
+  {
+   "id": "cmrdsufau4irq08add4qeotnn",
+   "slug": "role-motivation",
+   "title": "Why do you want this role?",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/role-motivation/cmrdsufau4irq08add4qeotnn",
+   "companies": [
+    "Anthropic"
+   ],
+   "last": "2026-09-10"
+  },
+  {
+   "id": "cmc7xjfuo00003b6f7u8vgkzs",
+   "slug": "debug-inference-pipeline",
+   "title": "This inference pipeline is slow. Explain how you would debug it.",
+   "type": "ML_SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/debug-inference-pipeline/cmc7xjfuo00003b6f7u8vgkzs",
+   "companies": [
+    "Anthropic"
+   ],
+   "last": "2025-06-01"
+  },
+  {
+   "id": "cm5eguhah03xx838oitstn1pm",
+   "slug": "grid-points-queries",
+   "title": "Leetcode 2503. Maximum Number of Points From Grid Queries",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/grid-points-queries/cm5eguhah03xx838oitstn1pm",
+   "companies": [
+    "Uber"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cm6jwycq100mtui4b52kaj184",
+   "slug": "started-innovative-project",
+   "title": "Describe experience working on an innovative project you started or became part of",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/started-innovative-project/cm6jwycq100mtui4b52kaj184",
+   "companies": [
+    "Uber"
+   ],
+   "last": "2026-08-01"
+  },
+  {
+   "id": "cm6jw35u5001rdar92glbujyw",
+   "slug": "recently-viewed-items",
+   "title": "Design a System to Track Recently Viewed Items",
+   "type": "OBJECT_ORIENTED_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/recently-viewed-items/cm6jw35u5001rdar92glbujyw",
+   "companies": [
+    "Uber"
+   ],
+   "last": "2026-07-20"
+  },
+  {
+   "id": "cmom3tsvi0rtx07adx1vemucn",
+   "slug": "room-scheduler",
+   "title": "Meeting Room Scheduler",
+   "type": "AI_ENABLED_CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/room-scheduler/cmom3tsvi0rtx07adx1vemucn",
+   "companies": [
+    "Uber"
+   ],
+   "last": "2026-04-20"
+  },
+  {
+   "id": "cm83bglrk00veoh5fhcw0g5lf",
+   "slug": "gpu-llm-checkpoint",
+   "title": "Design LLM Checkpointing System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/gpu-llm-checkpoint/cm83bglrk00veoh5fhcw0g5lf",
+   "companies": [
+    "Higgsfield"
+   ],
+   "last": "2026-04-20"
+  },
+  {
+   "id": "cmq19p2nx17gr09adc5axoi9j",
+   "slug": "production-incident-response",
+   "title": "Describe a production incident you handled, including how you diagnosed the issue, mitigated the impact, communicated with stakeholders, and prevented recurrence.",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/production-incident-response/cmq19p2nx17gr09adc5axoi9j",
+   "companies": [
+    "Stubhub"
+   ],
+   "last": "2026-05-01"
+  },
+  {
+   "id": "cm5eh7nri04wz838onqhny0wc",
+   "slug": "logger-rate-limiter",
+   "title": "Leetcode 359. Logger Rate Limiter",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/logger-rate-limiter/cm5eh7nri04wz838onqhny0wc",
+   "companies": [
+    "Whatnot"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cm5eguhad02xz838oiddaz8xx",
+   "slug": "remove-adjacent-duplicates-string",
+   "title": "Leetcode 1209. Remove All Adjacent Duplicates in String II",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/remove-adjacent-duplicates-string/cm5eguhad02xz838oiddaz8xx",
+   "companies": [
+    "Whatnot"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cmvpjg62q1hda01adzpxdmh81",
+   "slug": "jet-plane-metrics-reporting",
+   "title": "Design a Jet Plane Metrics Reporting System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/jet-plane-metrics-reporting/cmvpjg62q1hda01adzpxdmh81",
+   "companies": [
+    "Anduril"
+   ],
+   "last": "2026-10-20"
+  },
+  {
+   "id": "cm5eh7nrh04w8838oqbbhjhi0",
+   "slug": "reconstruct-itinerary",
+   "title": "Leetcode 332. Reconstruct Itinerary",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/reconstruct-itinerary/cm5eh7nrh04w8838oqbbhjhi0",
+   "companies": [
+    "Anduril"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmrp7jsbl05hx08adm80m77fe",
+   "slug": "command-control-system",
+   "title": "Design a Command and Control System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/command-control-system/cmrp7jsbl05hx08adm80m77fe",
+   "companies": [
+    "Anduril"
+   ],
+   "last": "2026-07-10"
+  },
+  {
+   "id": "cm5eguhae034r838oebqqg1qz",
+   "slug": "darts-inside-dartboard",
+   "title": "Leetcode 1453. Maximum Number of Darts Inside of a Circular Dartboard",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/darts-inside-dartboard/cm5eguhae034r838oebqqg1qz",
+   "companies": [
+    "Anduril"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmtyo1w3w1uvm08adkz1a284m",
+   "slug": "five-minute-counter",
+   "title": "Design a Hit Counter",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/five-minute-counter/cmtyo1w3w1uvm08adkz1a284m",
+   "companies": [
+    "Snapchat"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cm5eh7nrh04wd838oly2zvvnc",
+   "slug": "house-robber-3",
+   "title": "Leetcode 337. House Robber III",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/house-robber-3/cm5eh7nrh04wd838oly2zvvnc",
+   "companies": [
+    "Snapchat"
+   ],
+   "last": "2026-08-01"
+  },
+  {
+   "id": "cmum5fqv50svn08adl6asa69v",
+   "slug": "service-dependency-notification",
+   "title": "Service Dependency Notification System",
+   "type": "AI_ENABLED_CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/service-dependency-notification/cmum5fqv50svn08adl6asa69v",
+   "companies": [
+    "Snapchat"
+   ],
+   "last": "2026-08-01"
+  },
+  {
+   "id": "cm5eh7nrh04q9838o3p540xkb",
+   "slug": "populating-next-right-pointers",
+   "title": "Leetcode 117. Populating Next Right Pointers in Each Node II",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/populating-next-right-pointers/cm5eh7nrh04q9838o3p540xkb",
+   "companies": [
+    "Crusoe"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmndphyzx0c760fad03dd54ej",
+   "slug": "usage-billing-calculator",
+   "title": "Usage-Based Billing Calculator",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/usage-billing-calculator/cmndphyzx0c760fad03dd54ej",
+   "companies": [
+    "crusoe"
+   ],
+   "last": "2026-03-20"
+  },
+  {
+   "id": "cm6jx0jvr0149ui4bxu052o43",
+   "slug": "change-colleague-opinion",
+   "title": "Describe changing a colleague's opinion from negative to positive",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/change-colleague-opinion/cm6jx0jvr0149ui4bxu052o43",
+   "companies": [
+    "Freelancer"
+   ],
+   "last": "2025-06-20"
+  },
+  {
+   "id": "cm5eh7nrh04od838oi2p9pzk1",
+   "slug": "group-anagrams",
+   "title": "Leetcode 49. Group Anagrams",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/group-anagrams/cm5eh7nrh04od838oi2p9pzk1",
+   "companies": [
+    "Freelancer"
+   ],
+   "last": "2025-06-20"
+  },
+  {
+   "id": "cmr4c7csm03pm09adqaimpjgj",
+   "slug": "job-queue-consumers",
+   "title": "Job Queue with Multiple Consumers",
+   "type": "CODE_REVIEW",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/job-queue-consumers/cmr4c7csm03pm09adqaimpjgj",
+   "companies": [
+    "MongoDB"
+   ],
+   "last": "2026-07-01"
+  },
+  {
+   "id": "cmr4c5y4z03xv0eadea89t6yx",
+   "slug": "metrics-variation-tracking",
+   "title": "Design a Metrics Variation Tracking System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/metrics-variation-tracking/cmr4c5y4z03xv0eadea89t6yx",
+   "companies": [
+    "MongoDB"
+   ],
+   "last": "2026-07-01"
+  },
+  {
+   "id": "cm5eguhad02yq838onz7xeyjk",
+   "slug": "leetcode-1236-web-crawler",
+   "title": "Leetcode 1236. Web Crawler",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/leetcode-1236-web-crawler/cm5eguhad02yq838onz7xeyjk",
+   "companies": [
+    "Monzo"
+   ],
+   "last": "2026-08-10"
+  },
+  {
+   "id": "cmilz804803c908adcoojz47e",
+   "slug": "system-scaling-100x",
+   "title": "How Would You Scale Your System by 100x?",
+   "type": "TECHNICAL_PROJECT_RETROSPECTIVE",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/system-scaling-100x/cmilz804803c908adcoojz47e",
+   "companies": [
+    "Monzo"
+   ],
+   "last": "2025-11-20"
+  },
+  {
+   "id": "cmjbmcrvk05z508adherha2jo",
+   "slug": "stock-transactions-portfolio",
+   "title": "Process Stock Transactions to Generate Portfolio",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/stock-transactions-portfolio/cmjbmcrvk05z508adherha2jo",
+   "companies": [
+    "Addepar"
+   ],
+   "last": "2025-12-10"
+  },
+  {
+   "id": "cm5eguhac02op838oh1ru6xrs",
+   "slug": "koko-eating-bananas",
+   "title": "Leetcode 875. Koko Eating Bananas",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/koko-eating-bananas/cm5eguhac02op838oh1ru6xrs",
+   "companies": [
+    "Coupang"
+   ],
+   "last": "2026-10-10"
+  },
+  {
+   "id": "cm8begg0i00fcwu376lp27agc",
+   "slug": "warehouse-inventory-architecture",
+   "title": "Design a Warehouse Management System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/warehouse-inventory-architecture/cm8begg0i00fcwu376lp27agc",
+   "companies": [
+    "Coupang"
+   ],
+   "last": "2026-10-10"
+  },
+  {
+   "id": "cmvs2iw6x36p801ad6b4ml6r9",
+   "slug": "ai-thoughts",
+   "title": "What do you think about AI?",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/ai-thoughts/cmvs2iw6x36p801ad6b4ml6r9",
+   "companies": [
+    "Bloomberg"
+   ],
+   "last": "2026-10-20"
+  },
+  {
+   "id": "cm5eguhac02mj838oka5kwpjj",
+   "slug": "all-paths-source-target",
+   "title": "Leetcode 797. All Paths From Source to Target",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/all-paths-source-target/cm5eguhac02mj838oka5kwpjj",
+   "companies": [
+    "Bloomberg"
+   ],
+   "last": "2026-10-20"
+  },
+  {
+   "id": "cmu4wzylc2zl608ad6gzz97wa",
+   "slug": "garage-management-system",
+   "title": "Garage Management System",
+   "type": "CODE_REVIEW",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/garage-management-system/cmu4wzylc2zl608ad6gzz97wa",
+   "companies": [
+    "Bloomberg"
+   ],
+   "last": "2026-09-10"
+  },
+  {
+   "id": "cmjkgvb1306v808adokiwpzl3",
+   "slug": "product-team-experience",
+   "title": "Tell me about a time you worked with a product team",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/product-team-experience/cmjkgvb1306v808adokiwpzl3",
+   "companies": [
+    "Bloomberg"
+   ],
+   "last": "2026-10-20"
+  },
+  {
+   "id": "cmmy9fmqt0mh80eadrc5oni6v",
+   "slug": "room-booking-system",
+   "title": "Design a meeting room booking system",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/room-booking-system/cmmy9fmqt0mh80eadrc5oni6v",
+   "companies": [
+    "Autodesk"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cm5eh7nrh04n3838oxavsnhul",
+   "slug": "longest-substring",
+   "title": "Leetcode 3. Longest Substring Without Repeating Characters",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/longest-substring/cm5eh7nrh04n3838oxavsnhul",
+   "companies": [
+    "Autodesk"
+   ],
+   "last": "2026-05-01"
+  },
+  {
+   "id": "cmm44nj5c03ge08adlj0vimk8",
+   "slug": "job-board-platform",
+   "title": "Design a job board system",
+   "type": "OBJECT_ORIENTED_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/job-board-platform/cmm44nj5c03ge08adlj0vimk8",
+   "companies": [
+    "Autodesk"
+   ],
+   "last": "2026-02-20"
+  },
+  {
+   "id": "cmpkvp4ik30jh08adtpzix2sq",
+   "slug": "api-request-monitoring",
+   "title": "Design an API Request Monitoring System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/api-request-monitoring/cmpkvp4ik30jh08adtpzix2sq",
+   "companies": [
+    "Autodesk"
+   ],
+   "last": "2026-05-20"
+  },
+  {
+   "id": "cm5ya87lh001rrfqr8yfx3ns7",
+   "slug": "project-tight-deadline",
+   "title": "Give me an example of a time when you were able to deliver an important project under a tight deadline.",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/project-tight-deadline/cm5ya87lh001rrfqr8yfx3ns7",
+   "companies": [
+    "Pinterest"
+   ],
+   "last": "2026-07-01"
+  },
+  {
+   "id": "cmp0d7c5j2d9k0dadscjj7pe2",
+   "slug": "course-learning-platform",
+   "title": "Design a course learning platform",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/course-learning-platform/cmp0d7c5j2d9k0dadscjj7pe2",
+   "companies": [
+    "Fora"
+   ],
+   "last": "2026-05-10"
+  },
+  {
+   "id": "cmku2gez30sm208adn716ew6p",
+   "slug": "manager-feedback-response",
+   "title": "Tell me about a time you received critical feedback from your manager. How did you respond to it, and what did you learn?",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/manager-feedback-response/cmku2gez30sm208adn716ew6p",
+   "companies": [
+    "Duolingo"
+   ],
+   "last": "2026-04-10"
+  },
+  {
+   "id": "cm5eguhab02dj838o1bydqbzn",
+   "slug": "matchsticks-square",
+   "title": "Leetcode 473. Matchsticks to Square",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/matchsticks-square/cm5eguhab02dj838o1bydqbzn",
+   "companies": [
+    "eBay"
+   ],
+   "last": "2026-09-10"
+  },
+  {
+   "id": "cmt4kix3x0g9n09ad9xnhpe1v",
+   "slug": "credit-card-statements",
+   "title": "Design a credit card statement generation and serving system",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/credit-card-statements/cmt4kix3x0g9n09ad9xnhpe1v",
+   "companies": [
+    "eBay"
+   ],
+   "last": "2026-08-20"
+  },
+  {
+   "id": "cm6jwyd6m00ndui4b9m8e6l4b",
+   "slug": "complex-project-experience",
+   "title": "Describe experience working on a complex project",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/complex-project-experience/cm6jwyd6m00ndui4b9m8e6l4b",
+   "companies": [
+    "eBay"
+   ],
+   "last": "2026-07-20"
+  },
+  {
+   "id": "cm5eh7nri04x6838o1f4f8f5b",
+   "slug": "binary-tree-leaves",
+   "title": "Leetcode 366. Find Leaves of Binary Tree",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/binary-tree-leaves/cm5eh7nri04x6838o1f4f8f5b",
+   "companies": [
+    "eBay"
+   ],
+   "last": "2026-07-20"
+  },
+  {
+   "id": "cmry84oyr54gz08adr4mjl6gd",
+   "slug": "scalable-cache-layer",
+   "title": "Design a caching layer for a high-traffic application",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/scalable-cache-layer/cmry84oyr54gz08adr4mjl6gd",
+   "companies": [
+    "eBay"
+   ],
+   "last": "2026-07-20"
+  },
+  {
+   "id": "cm5eh7nrh04nf838ocigb85ve",
+   "slug": "3sum-triplets",
+   "title": "Leetcode 15. 3Sum",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/3sum-triplets/cm5eh7nrh04nf838ocigb85ve",
+   "companies": [
+    "Visa"
+   ],
+   "last": "2026-09-10"
+  },
+  {
+   "id": "cmtduzjua0ncg08adcm1r0lf7",
+   "slug": "rate-limiting",
+   "title": "Rate Limiting",
+   "type": "AI_ENABLED_CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/rate-limiting/cmtduzjua0ncg08adcm1r0lf7",
+   "companies": [
+    "Visa"
+   ],
+   "last": "2026-07-20"
+  },
+  {
+   "id": "cmned1oez121b07adgpfuxe5j",
+   "slug": "shared-goal",
+   "title": "Tell me about a time you collaborated with others to achieve a shared goal",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/shared-goal/cmned1oez121b07adgpfuxe5j",
+   "companies": [
+    "Visa"
+   ],
+   "last": "2026-07-20"
+  },
+  {
+   "id": "cms3ph2vm23in07adi4qja9op",
+   "slug": "rag-pipeline-design",
+   "title": "Design a RAG Pipeline",
+   "type": "ML_SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/rag-pipeline-design/cms3ph2vm23in07adi4qja9op",
+   "companies": [
+    "Visa"
+   ],
+   "last": "2026-07-20"
+  },
+  {
+   "id": "cmh0842z605yy07ad70b5u3d1",
+   "slug": "longest-common-anagram",
+   "title": "Longest Common Anagram Substring in Two Strings",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/longest-common-anagram/cmh0842z605yy07ad70b5u3d1",
+   "companies": [
+    "Navan"
+   ],
+   "last": "2025-10-20"
+  },
+  {
+   "id": "cm5eguhai049v838o1wpr6reg",
+   "slug": "high-access-employees",
+   "title": "Leetcode 2933. High-Access Employees",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/high-access-employees/cm5eguhai049v838o1wpr6reg",
+   "companies": [
+    "PayPal"
+   ],
+   "last": "2026-03-01"
+  },
+  {
+   "id": "cm5eguhac02n1838otbvx0v6q",
+   "slug": "bus-routes-815",
+   "title": "Leetcode 815. Bus Routes",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/bus-routes-815/cm5eguhac02n1838otbvx0v6q",
+   "companies": [
+    "PayPal"
+   ],
+   "last": "2026-02-01"
+  },
+  {
+   "id": "cmpsexroz0lar09ad79tx4i9l",
+   "slug": "payment-orchestration-layer",
+   "title": "Design a Payment Orchestration Layer",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/payment-orchestration-layer/cmpsexroz0lar09ad79tx4i9l",
+   "companies": [
+    "PayPal"
+   ],
+   "last": "2026-05-20"
+  },
+  {
+   "id": "cm5eh7nrh04n1838os7sfzdx9",
+   "slug": "leetcode-two-sum",
+   "title": "Leetcode 1. Two Sum",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/leetcode-two-sum/cm5eh7nrh04n1838os7sfzdx9",
+   "companies": [
+    "JPMorgan Chase"
+   ],
+   "last": "2026-06-10"
+  },
+  {
+   "id": "cm5ya87rt001urfqr75beyd44",
+   "slug": "obstacles-goal-achievement",
+   "title": "Tell me about a time when you had significant, unanticipated obstacles to overcome in achieving a key goal.",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/obstacles-goal-achievement/cm5ya87rt001urfqr75beyd44",
+   "companies": [
+    "JPMorgan Chase"
+   ],
+   "last": "2026-03-20"
+  },
+  {
+   "id": "cm5eguhac02kt838o4qw0x2kf",
+   "slug": "asteroid-collision",
+   "title": "Leetcode 735. Asteroid Collision",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/asteroid-collision/cm5eguhac02kt838o4qw0x2kf",
+   "companies": [
+    "JPMorgan Chase"
+   ],
+   "last": "2026-03-20"
+  },
+  {
+   "id": "67257ab0-683b-481d-bfd2-f7e63258056e",
+   "slug": "design-search-autocomplete-system",
+   "title": "Leetcode 642. Design Search Autocomplete System",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/design-search-autocomplete-system/67257ab0-683b-481d-bfd2-f7e63258056e",
+   "companies": [
+    "Vercel"
+   ],
+   "last": "2026-05-01"
+  },
+  {
+   "id": "cmohhxbvh159n07adk60d79g6",
+   "slug": "challenge-solution",
+   "title": "Tell me about a technical challenge you faced and how you overcame it.",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/challenge-solution/cmohhxbvh159n07adk60d79g6",
+   "companies": [
+    "BuildOps"
+   ],
+   "last": "2026-04-20"
+  },
+  {
+   "id": "cmm6kq3fe0slg08admp8rf995",
+   "slug": "stakeholder-communication-technical",
+   "title": "How do you communicate with stakeholders who don't have the same kind of technical understanding?",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/stakeholder-communication-technical/cmm6kq3fe0slg08admp8rf995",
+   "companies": [
+    "BuildOps"
+   ],
+   "last": "2026-04-20"
+  },
+  {
+   "id": "cm5eh7nrh04ss838ocn49y15g",
+   "slug": "prefix-trie",
+   "title": "Leetcode 208. Implement Trie (Prefix Tree)",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/prefix-trie/cm5eh7nrh04ss838ocn49y15g",
+   "companies": [
+    "Nielsen"
+   ],
+   "last": "2026-04-20"
+  },
+  {
+   "id": "cmvo1j14z23fx01add45keef7",
+   "slug": "key-encryption-decryption",
+   "title": "Complete a Multi-File Key Encryption and Decryption Implementation Using AI-Assisted Coding",
+   "type": "AI_ENABLED_CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/key-encryption-decryption/cmvo1j14z23fx01add45keef7",
+   "companies": [
+    "Palo Alto Networks"
+   ],
+   "last": "2026-10-20"
+  },
+  {
+   "id": "cmvo1izub1yhe01adi137ysn4",
+   "slug": "token-rate-limiter",
+   "title": "Token Rate Limiter: Debugging and Testing",
+   "type": "CODE_REVIEW",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/token-rate-limiter/cmvo1izub1yhe01adi137ysn4",
+   "companies": [
+    "Palo Alto Networks"
+   ],
+   "last": "2026-10-20"
+  },
+  {
+   "id": "cmvo1ixf21yhc01adv12wd4im",
+   "slug": "code-quality-deadlines",
+   "title": "How would you balance code quality and delivery deadlines when AI-generated code works but doesn't meet your team's standards?",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/code-quality-deadlines/cmvo1ixf21yhc01adv12wd4im",
+   "companies": [
+    "Palo Alto Networks"
+   ],
+   "last": "2026-10-20"
+  },
+  {
+   "id": "cmesloqfu042nad08j5wxj9az",
+   "slug": "rate-limiter-concurrency",
+   "title": "Design a rate limiter",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/rate-limiter-concurrency/cmesloqfu042nad08j5wxj9az",
+   "companies": [
+    "Palo Alto Networks"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cmn8ig07p0zju08adw1u7kty2",
+   "slug": "multithreaded-logging-framework",
+   "title": "Design a multi-threaded logging framework",
+   "type": "OBJECT_ORIENTED_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/multithreaded-logging-framework/cmn8ig07p0zju08adw1u7kty2",
+   "companies": [
+    "Salesforce"
+   ],
+   "last": "2026-07-10"
+  },
+  {
+   "id": "cm4szwvht003pnqlrkhad2xjd",
+   "slug": "ticket-booking-system",
+   "title": "Design a Ticket Booking System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "/learn/system-design/problem-breakdowns/ticketmaster",
+   "url": "https://www.hellointerview.com/community/questions/ticket-booking-system/cm4szwvht003pnqlrkhad2xjd",
+   "companies": [
+    "ServiceTitan"
+   ],
+   "last": "2026-08-01"
+  },
+  {
+   "id": "cmjhhi2o000fu08ad34716jf5",
+   "slug": "multimap-implementation",
+   "title": "Multi Map Implementation",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/multimap-implementation/cmjhhi2o000fu08ad34716jf5",
+   "companies": [
+    "ServiceTitan"
+   ],
+   "last": "2025-12-20"
+  },
+  {
+   "id": "cmjhhfe3a00ej08adwa91m9y5",
+   "slug": "new-member-speaking",
+   "title": "Tell me about a time you had to speak up or share an idea as a new member of a team",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/new-member-speaking/cmjhhfe3a00ej08adwa91m9y5",
+   "companies": [
+    "ServiceTitan"
+   ],
+   "last": "2025-12-20"
+  },
+  {
+   "id": "cmjhhglg300f308adbtdvd5ze",
+   "slug": "payments-idempotency-design",
+   "title": "How would you implement idempotency in a payments system?",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/payments-idempotency-design/cmjhhglg300f308adbtdvd5ze",
+   "companies": [
+    "ServiceTitan"
+   ],
+   "last": "2025-12-20"
+  },
+  {
+   "id": "cmv4bez0n2ujb01adnwthvq8q",
+   "slug": "interesting-project-work",
+   "title": "Tell me about something you find interesting when working on a project",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/interesting-project-work/cmv4bez0n2ujb01adnwthvq8q",
+   "companies": [
+    "Zscaler"
+   ],
+   "last": "2026-10-10"
+  },
+  {
+   "id": "cmv4bey2h2uj901adqzuj492i",
+   "slug": "policy-delivery-system",
+   "title": "Design a Policy Delivery System for Cloud and Mobile Endpoints",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/policy-delivery-system/cmv4bey2h2uj901adqzuj492i",
+   "companies": [
+    "Zscaler"
+   ],
+   "last": "2026-10-10"
+  },
+  {
+   "id": "cm5eh7nrh04r2838os7lk8nwf",
+   "slug": "lru-cache",
+   "title": "Leetcode 146. LRU Cache",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/lru-cache/cm5eh7nrh04r2838os7lk8nwf",
+   "companies": [
+    "Zscaler"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cmo31y1lh0mnw08adm1fi3513",
+   "slug": "agentic-ai-frameworks",
+   "title": "Tell me about your experience working with agentic AI frameworks",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/agentic-ai-frameworks/cmo31y1lh0mnw08adm1fi3513",
+   "companies": [
+    "Zscaler"
+   ],
+   "last": "2026-04-10"
+  },
+  {
+   "id": "cmv4bewos2yx801ad4mkxj7br",
+   "slug": "siem-log-ingestion",
+   "title": "Design a Log Ingestion System for a SIEM Server",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/siem-log-ingestion/cmv4bewos2yx801ad4mkxj7br",
+   "companies": [
+    "Zscaler"
+   ],
+   "last": "2026-10-10"
+  },
+  {
+   "id": "cm5ehcf6e059l838o8zot1vkk",
+   "slug": "last-constructive-criticism",
+   "title": "What is the last constructive criticism you received?",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/last-constructive-criticism/cm5ehcf6e059l838o8zot1vkk",
+   "companies": [
+    "Macquarie Group"
+   ],
+   "last": "2025-06-20"
+  },
+  {
+   "id": "cm5hhcz1s00082a6ef233z8ex",
+   "slug": "failure-management",
+   "title": "Describe a time you failed and how you managed the situation",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/failure-management/cm5hhcz1s00082a6ef233z8ex",
+   "companies": [
+    "Macquarie Group"
+   ],
+   "last": "2025-06-20"
+  },
+  {
+   "id": "cm5eh7nrh04uw838ou8cu699b",
+   "slug": "peeking-iterator",
+   "title": "Leetcode 284. Peeking Iterator",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/peeking-iterator/cm5eh7nrh04uw838ou8cu699b",
+   "companies": [
+    "Roku"
+   ],
+   "last": "2026-05-01"
+  },
+  {
+   "id": "cmou4d4j214im0cadlgs83rxb",
+   "slug": "video-view-counter",
+   "title": "Design a video view counter",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/video-view-counter/cmou4d4j214im0cadlgs83rxb",
+   "companies": [
+    "Roku"
+   ],
+   "last": "2026-04-01"
+  },
+  {
+   "id": "cm5eh7nrh04n5838ozf12xrr3",
+   "slug": "palindromic-substring",
+   "title": "Leetcode 5. Longest Palindromic Substring",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/palindromic-substring/cm5eh7nrh04n5838ozf12xrr3",
+   "companies": [
+    "Netapp"
+   ],
+   "last": "2026-08-01"
+  },
+  {
+   "id": "cm5eh7nrh04of838op3jvfbk4",
+   "slug": "n-queens-backtracking",
+   "title": "Leetcode 51. N-Queens",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/n-queens-backtracking/cm5eh7nrh04of838op3jvfbk4",
+   "companies": [
+    "Netapp"
+   ],
+   "last": "2026-06-01"
+  },
+  {
+   "id": "cmjxx8grr054e08ad89haxp4a",
+   "slug": "password-reset-system",
+   "title": "Design a password reset system",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/password-reset-system/cmjxx8grr054e08ad89haxp4a",
+   "companies": [
+    "Adobe"
+   ],
+   "last": "2026-01-01"
+  },
+  {
+   "id": "cmsfoknm80v4l08adttl2wc0w",
+   "slug": "longest-k-distinct-substring",
+   "title": "Longest Substring with K Distinct Characters",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/longest-k-distinct-substring/cmsfoknm80v4l08adttl2wc0w",
+   "companies": [
+    "Adobe"
+   ],
+   "last": "2026-07-01"
+  },
+  {
+   "id": "cm4szy2qa003b3g2ee8l466qa",
+   "slug": "instagram-auction-system",
+   "title": "Design Online Auction System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "/learn/system-design/problem-breakdowns/online-auction",
+   "url": "https://www.hellointerview.com/community/questions/instagram-auction-system/cm4szy2qa003b3g2ee8l466qa",
+   "companies": [
+    "Adobe"
+   ],
+   "last": "2025-09-10"
+  },
+  {
+   "id": "cmpur6qcs2vpf08add6sojxo6",
+   "slug": "nested-tree-iterator",
+   "title": "Flatten Nested Tree Iterator",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/nested-tree-iterator/cmpur6qcs2vpf08add6sojxo6",
+   "companies": [
+    "Adobe"
+   ],
+   "last": "2026-06-01"
+  },
+  {
+   "id": "cmubb7lto0ahh08adaok8o480",
+   "slug": "cross-functional-project-lead",
+   "title": "Tell me about a time when you led a complex project and had to manage multiple cross-functional teams.",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/cross-functional-project-lead/cmubb7lto0ahh08adaok8o480",
+   "companies": [
+    "CrowdStrike"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cmji4tayd047u08ad82bcsmy6",
+   "slug": "drive-file-scanner",
+   "title": "Design a Google Drive security scanner",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/drive-file-scanner/cmji4tayd047u08ad82bcsmy6",
+   "companies": [
+    "CrowdStrike"
+   ],
+   "last": "2026-09-10"
+  },
+  {
+   "id": "cm6jwyl1100p7ui4bkmhhy3rt",
+   "slug": "teammates-conflict-resolution",
+   "title": "Discuss a time when you had conflicting perspectives with teammates and how you handled it",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/teammates-conflict-resolution/cm6jwyl1100p7ui4bkmhhy3rt",
+   "companies": [
+    "CrowdStrike"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cmnb6ubgk1zmo08ad5wkj9vo6",
+   "slug": "malware-analysis-system",
+   "title": "Design a Malware Analysis System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/malware-analysis-system/cmnb6ubgk1zmo08ad5wkj9vo6",
+   "companies": [
+    "CrowdStrike"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cmt3718oi013g08ad9na1lm3d",
+   "slug": "token-bucket-rate",
+   "title": "Token Bucket Rate Limiter (Java Code Review)",
+   "type": "CODE_REVIEW",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/token-bucket-rate/cmt3718oi013g08ad9na1lm3d",
+   "companies": [
+    "Cloudflare"
+   ],
+   "last": "2026-07-20"
+  },
+  {
+   "id": "cm5eh7nrh04sr838owqmqti1p",
+   "slug": "course-schedule",
+   "title": "Leetcode 207. Course Schedule",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/course-schedule/cm5eh7nrh04sr838owqmqti1p",
+   "companies": [
+    "Cloudflare"
+   ],
+   "last": "2026-02-20"
+  },
+  {
+   "id": "cmvthsgyq17eb01ad1cqtchpt",
+   "slug": "banking-pin-validation",
+   "title": "Banking System PIN Validation",
+   "type": "AI_ENABLED_CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/banking-pin-validation/cmvthsgyq17eb01ad1cqtchpt",
+   "companies": [
+    "Atlassian"
+   ],
+   "last": "2026-09-20"
+  },
+  {
+   "id": "cmunmslyx0off08adyxg79zgn",
+   "slug": "project-status-agent",
+   "title": "Design a Project Status Agent",
+   "type": "ML_SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/project-status-agent/cmunmslyx0off08adyxg79zgn",
+   "companies": [
+    "Atlassian"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cm5eh7nrh04ol838om7clw2in",
+   "slug": "insert-interval",
+   "title": "Leetcode 57. Insert Interval",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/insert-interval/cm5eh7nrh04ol838om7clw2in",
+   "companies": [
+    "FanDuel"
+   ],
+   "last": "2026-01-01"
+  },
+  {
+   "id": "cmk5t0s8c09dc08ad78c19goh",
+   "slug": "betting-slip-feed",
+   "title": "Design a sports betting slip sharing feed",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/betting-slip-feed/cmk5t0s8c09dc08ad78c19goh",
+   "companies": [
+    "FanDuel"
+   ],
+   "last": "2026-01-01"
+  },
+  {
+   "id": "cmn6zwicx0yx807adtbpejt58",
+   "slug": "multithreaded-file-copy",
+   "title": "Multithreaded File Copy Command",
+   "type": "AI_ENABLED_CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/multithreaded-file-copy/cmn6zwicx0yx807adtbpejt58",
+   "companies": [
+    "Rubrik"
+   ],
+   "last": "2026-03-20"
+  },
+  {
+   "id": "cm5eh7nrh04v9838oxpx10yoc",
+   "slug": "serialize-binary-tree",
+   "title": "Leetcode 297. Serialize and Deserialize Binary Tree",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/serialize-binary-tree/cm5eh7nrh04v9838oxpx10yoc",
+   "companies": [
+    "Rubrik"
+   ],
+   "last": "2026-03-01"
+  },
+  {
+   "id": "cmqzq090900iq08adwjraz5bw",
+   "slug": "hotel-concierge-agent",
+   "title": "Design an AI-powered hotel concierge agent",
+   "type": "ML_SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/hotel-concierge-agent/cmqzq090900iq08adwjraz5bw",
+   "companies": [
+    "Expedia"
+   ],
+   "last": "2026-06-20"
+  },
+  {
+   "id": "cm78h7tyk02kgl7b16admv2nz",
+   "slug": "metrics-aggregator",
+   "title": "Design a Metrics Aggregator",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/metrics-aggregator/cm78h7tyk02kgl7b16admv2nz",
+   "companies": [
+    "TikTok"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cm5eh7nrh04pt838o9tb1q1l8",
+   "slug": "symmetric-tree",
+   "title": "Leetcode 101. Symmetric Tree",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/symmetric-tree/cm5eh7nrh04pt838o9tb1q1l8",
+   "companies": [
+    "TikTok"
+   ],
+   "last": "2026-08-20"
+  },
+  {
+   "id": "cmtz76hxj2sxb08ad22bhtk6a",
+   "slug": "tiktok-live-coin-tracking",
+   "title": "Design a TikTok Live Coin Tracking System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/tiktok-live-coin-tracking/cmtz76hxj2sxb08ad22bhtk6a",
+   "companies": [
+    "TikTok"
+   ],
+   "last": "2026-09-10"
+  },
+  {
+   "id": "cm5eguhac02kf838ox3fg55a5",
+   "slug": "accounts-merge",
+   "title": "Leetcode 721. Accounts Merge",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/accounts-merge/cm5eguhac02kf838ox3fg55a5",
+   "companies": [
+    "TikTok"
+   ],
+   "last": "2026-08-01"
+  },
+  {
+   "id": "cmkr8bj9h0jx608adv0g2lnj5",
+   "slug": "duplicate-detection-system",
+   "title": "Design a duplicate detection system",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/duplicate-detection-system/cmkr8bj9h0jx608adv0g2lnj5",
+   "companies": [
+    "Fusion Health"
+   ],
+   "last": "2026-01-20"
+  },
+  {
+   "id": "cm6jx0kdw014tui4b19yqvv87",
+   "slug": "team-work-styles",
+   "title": "Describe working with team members with different work styles",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/team-work-styles/cm6jx0kdw014tui4b19yqvv87",
+   "companies": [
+    "Fusion Health"
+   ],
+   "last": "2026-01-20"
+  },
+  {
+   "id": "cm5eguhac02ll838o8xuw4puv",
+   "slug": "partition-labels",
+   "title": "Leetcode 763. Partition Labels",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/partition-labels/cm5eguhac02ll838o8xuw4puv",
+   "companies": [
+    "SoFi"
+   ],
+   "last": "2026-05-20"
+  },
+  {
+   "id": "cmn3i33gy00un07adhjva67sw",
+   "slug": "ambiguity-uncertainty-project",
+   "title": "Tell me about a time you had to navigate ambiguity or uncertainty in a project or role",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/ambiguity-uncertainty-project/cmn3i33gy00un07adhjva67sw",
+   "companies": [
+    "SoFi"
+   ],
+   "last": "2026-03-20"
+  },
+  {
+   "id": "cm7cmtpya02at19rh5fd1u3k8",
+   "slug": "stock-trading-service",
+   "title": "Design a Stock Trading Service",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/stock-trading-service/cm7cmtpya02at19rh5fd1u3k8",
+   "companies": [
+    "SoFi"
+   ],
+   "last": "2026-04-10"
+  },
+  {
+   "id": "cmnanvdb41f5d08ad6b2gkd57",
+   "slug": "team-lead-example",
+   "title": "Tell me about a time when you had to lead a team or project",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/team-lead-example/cmnanvdb41f5d08ad6b2gkd57",
+   "companies": [
+    "Checkout"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cm5ya8daj004irfqr4mygiseu",
+   "slug": "cross-team-initiative",
+   "title": "Tell me about a time when you took on something significant outside your area of responsibility.",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/cross-team-initiative/cm5ya8daj004irfqr4mygiseu",
+   "companies": [
+    "Checkout"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cmni1bzo002v20dadvhhkr8gk",
+   "slug": "decision-pushback",
+   "title": "Tell me about a time when you pushed back on a decision or request.",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/decision-pushback/cmni1bzo002v20dadvhhkr8gk",
+   "companies": [
+    "Checkout"
+   ],
+   "last": "2026-08-10"
+  },
+  {
+   "id": "cmn7uj74b0bjj0eadoh80ds3x",
+   "slug": "constructive-feedback-response",
+   "title": "Tell me about a time when you received constructive feedback and how you responded to it",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/constructive-feedback-response/cmn7uj74b0bjj0eadoh80ds3x",
+   "companies": [
+    "Checkout"
+   ],
+   "last": "2026-08-10"
+  },
+  {
+   "id": "cm9sy6o5x004nad08hwz07r6s",
+   "slug": "merchant-payout-system",
+   "title": "Design a Merchant Payout System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/merchant-payout-system/cm9sy6o5x004nad08hwz07r6s",
+   "companies": [
+    "Adyen"
+   ],
+   "last": "2026-03-10"
+  },
+  {
+   "id": "cmvpzlskd2j7101adyibrk2zb",
+   "slug": "monolith-migration-architecture",
+   "title": "Evaluate a Monolithic Architecture and Propose Alternative Architectures",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/monolith-migration-architecture/cmvpzlskd2j7101adyibrk2zb",
+   "companies": [
+    "Capital One"
+   ],
+   "last": "2026-10-20"
+  },
+  {
+   "id": "cmla19joj073207adl76kuukn",
+   "slug": "self-introduction",
+   "title": "Tell me about yourself",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/self-introduction/cmla19joj073207adl76kuukn",
+   "companies": [
+    "Capital One"
+   ],
+   "last": "2026-10-01"
+  },
+  {
+   "id": "cmg5dw90l034g07adhw6sxmw6",
+   "slug": "virtual-credit-card-payment",
+   "title": "Review Virtual Credit Card Payment System",
+   "type": "CODE_REVIEW",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/virtual-credit-card-payment/cmg5dw90l034g07adhw6sxmw6",
+   "companies": [
+    "Capital One"
+   ],
+   "last": "2026-02-10"
+  },
+  {
+   "id": "cmu03ssqk43yp08adscf87cnx",
+   "slug": "agoda-bangkok-relocation",
+   "title": "Why do you want to join Agoda and relocate to Bangkok?",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/agoda-bangkok-relocation/cmu03ssqk43yp08adscf87cnx",
+   "companies": [
+    "Agoda"
+   ],
+   "last": "2026-09-10"
+  },
+  {
+   "id": "cmspdh8cq07gu08adtaltarsf",
+   "slug": "fox-river-jumps",
+   "title": "Count Distinct Ways to Cross a River with Jumps of Up to 3",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/fox-river-jumps/cmspdh8cq07gu08adtaltarsf",
+   "companies": [
+    "Agoda"
+   ],
+   "last": "2026-08-10"
+  },
+  {
+   "id": "cmspdh6mh07jt08adjdsd234f",
+   "slug": "self-managed-vs-managed",
+   "title": "Can you explain the business ramifications of choosing a self-managed versus a managed version of a software in your stack?",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/self-managed-vs-managed/cmspdh6mh07jt08adjdsd234f",
+   "companies": [
+    "Agoda"
+   ],
+   "last": "2026-08-10"
+  },
+  {
+   "id": "0b9169c6-1f7c-49bd-a824-926c063af52b",
+   "slug": "path-sum-iv",
+   "title": "Leetcode 666. Path Sum IV",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/path-sum-iv/0b9169c6-1f7c-49bd-a824-926c063af52b",
+   "companies": [
+    "Grab"
+   ],
+   "last": "2026-10-20"
+  },
+  {
+   "id": "cm5eh7nrh04ty838oz8j83hle",
+   "slug": "count-univalue-subtrees",
+   "title": "Leetcode 250. Count Univalue Subtrees",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/count-univalue-subtrees/cm5eh7nrh04ty838oz8j83hle",
+   "companies": [
+    "Grab"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cmuyqeik30lzu01adzysm55nx",
+   "slug": "2048-game-backend",
+   "title": "2048 Game Backend",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/2048-game-backend/cmuyqeik30lzu01adzysm55nx",
+   "companies": [
+    "Glean"
+   ],
+   "last": "2026-09-01"
+  },
+  {
+   "id": "cmoaerew41f1507adp6cs6nd3",
+   "slug": "wikipedia-link-crawl",
+   "title": "Design a Wikipedia Crawler",
+   "type": "AI_ENABLED_CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/wikipedia-link-crawl/cmoaerew41f1507adp6cs6nd3",
+   "companies": [
+    "Glean"
+   ],
+   "last": "2026-04-20"
+  },
+  {
+   "id": "cm5eh7nrh04sw838o1tr5hk57",
+   "slug": "leetcode-212-word-search",
+   "title": "Leetcode 212. Word Search II",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/leetcode-212-word-search/cm5eh7nrh04sw838o1tr5hk57",
+   "companies": [
+    "Glean"
+   ],
+   "last": "2026-04-01"
+  },
+  {
+   "id": "cm4szyih6003fvszm9k340332",
+   "slug": "wikipedia-crawler",
+   "title": "Design Wikipedia Crawler",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/wikipedia-crawler/cm4szyih6003fvszm9k340332",
+   "companies": [
+    "Glean"
+   ],
+   "last": "2026-04-01"
+  },
+  {
+   "id": "cmmzfh4bh1sja07adqjnu9ukw",
+   "slug": "product-taxonomy-classifier",
+   "title": "Design a Product Taxonomy Classification System",
+   "type": "ML_SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/product-taxonomy-classifier/cmmzfh4bh1sja07adqjnu9ukw",
+   "companies": [
+    "Shopify"
+   ],
+   "last": "2026-03-20"
+  },
+  {
+   "id": "cml9zuj3s05s608adbj86dndi",
+   "slug": "banking-account-system",
+   "title": "Design a Banking System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/banking-account-system/cml9zuj3s05s608adbj86dndi",
+   "companies": [
+    "Revolut"
+   ],
+   "last": "2026-10-20"
+  },
+  {
+   "id": "cmudjf1ri47t208ad74gkpjhb",
+   "slug": "digital-wallet-system",
+   "title": "Design a Digital Wallet",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/digital-wallet-system/cmudjf1ri47t208ad74gkpjhb",
+   "companies": [
+    "Revolut"
+   ],
+   "last": "2026-10-20"
+  },
+  {
+   "id": "cm5eh7nri04wo838oitc9peu4",
+   "slug": "design-tic-tac-toe",
+   "title": "Leetcode 348. Design Tic-Tac-Toe",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/design-tic-tac-toe/cm5eh7nri04wo838oitc9peu4",
+   "companies": [
+    "airwallex"
+   ],
+   "last": "2026-10-20"
+  },
+  {
+   "id": "cm7duae3n00wlgd7zpcpaupt9",
+   "slug": "work-collaboration-story",
+   "title": "Tell me about a time you had to work closely with someone.",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/work-collaboration-story/cm7duae3n00wlgd7zpcpaupt9",
+   "companies": [
+    "Carta"
+   ],
+   "last": "2025-12-20"
+  },
+  {
+   "id": "cm5ehcf6e059h838op4fgiik2",
+   "slug": "changing-requirements-project",
+   "title": "Tell me about a project where the requirements were not clear or kept changing. How did you adapt and maintain productivity?",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/changing-requirements-project/cm5ehcf6e059h838op4fgiik2",
+   "companies": [
+    "Toast"
+   ],
+   "last": "2025-08-10"
+  },
+  {
+   "id": "cmrm7h8at10mc07ad1l4qtqee",
+   "slug": "lexicographical-range-store",
+   "title": "Design a lexicographical range key retrieval store",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/lexicographical-range-store/cmrm7h8at10mc07ad1l4qtqee",
+   "companies": [
+    "Harness"
+   ],
+   "last": "2026-07-10"
+  },
+  {
+   "id": "cmt3abgda07uw08ad4fldq1hp",
+   "slug": "capital-gains-tax",
+   "title": "Capital Gains Tax Calculator",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/capital-gains-tax/cmt3abgda07uw08ad4fldq1hp",
+   "companies": [
+    "Nubank"
+   ],
+   "last": "2026-08-20"
+  },
+  {
+   "id": "cms8c32ao058408ad7phptydu",
+   "slug": "finance-calculator-json-parser",
+   "title": "Debug and Extend a JSON File Parser for a Finance Calculator",
+   "type": "AI_ENABLED_CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/finance-calculator-json-parser/cms8c32ao058408ad7phptydu",
+   "companies": [
+    "Nubank"
+   ],
+   "last": "2026-07-20"
+  },
+  {
+   "id": "cmg018vtg00xf08adbsx3dwoo",
+   "slug": "cross-functional-relationships",
+   "title": "Tell me about a time you worked on a complex cross-functional project and had to leverage your relationships to ensure its success",
+   "type": "BEHAVIORAL",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/cross-functional-relationships/cmg018vtg00xf08adbsx3dwoo",
+   "companies": [
+    "Nubank"
+   ],
+   "last": "2026-07-20"
+  },
+  {
+   "id": "cmopz20o00vks0dadufxyfifg",
+   "slug": "nested-transactions-database",
+   "title": "Implement a Database with Commit and Rollback",
+   "type": "CODING",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/nested-transactions-database/cmopz20o00vks0dadufxyfifg",
+   "companies": [
+    "IBM"
+   ],
+   "last": "2026-05-01"
+  },
+  {
+   "id": "cmgsdjdqq00r707adsq128i76",
+   "slug": "elevator-scheduling-system",
+   "title": "Design an Elevator Control System",
+   "type": "SYSTEM_DESIGN",
+   "reports": 1,
+   "breakdown": "",
+   "url": "https://www.hellointerview.com/community/questions/elevator-scheduling-system/cmgsdjdqq00r707adsq128i76",
+   "companies": [
+    "IBM"
+   ],
+   "last": "2026-04-10"
+  }
+ ]
+}

@@ -80,7 +80,27 @@ ZH = {
 def main() -> None:
     pages = json.loads((ROOT / "research/hello-interview/pages.json").read_text(encoding="utf-8"))
     nodes = []
-    for ti, (track, ttitle) in enumerate(TRACKS, 1):
+    # 高频题库 first (Chi, 2026-11-01: the questions matter most; the courses are their prerequisites)
+    qb_path = ROOT / "research/hello-interview/qb_selection.json"
+    if qb_path.exists():
+        extra = {}
+        for f in sorted((ROOT / "research/hello-interview").glob("qb_meta_*.json")):  # zh titles + requires from the card agents
+            extra.update(json.loads(f.read_text(encoding="utf-8")))
+        qb = json.loads(qb_path.read_text(encoding="utf-8"))
+        kids = []
+        for track, title in (("sd", "系统设计高频题"), ("lld", "低层设计高频题")):
+            leaves = []
+            for q in [q for q in qb if q["track"] == track]:
+                e = extra.get(q["slug"], {})
+                leaf = {"id": f"qb.{track}.{q['slug']}", "title": e.get("title") or q["title"],
+                        "summary": f"被报告 {q['reports']} 次；{q['title']}。"}
+                if e.get("requires"):
+                    leaf["requires"] = e["requires"]
+                leaves.append(leaf)
+            kids.append({"id": f"qb.{track}", "title": title, "summary": f"{title}：按被报告次数从高到低。", "children": leaves})
+        nodes.append({"id": "qb", "order": 1, "core": True, "title": "高频真题（Question Bank）",
+                      "summary": "Hello Interview 题库里被报告最多的设计题，每题一张完整解答；课程部分是它们的先修。", "children": kids})
+    for ti, (track, ttitle) in enumerate(TRACKS, 2):
         tid = "sd" if track == "system-design" else "lld"
         secs = []
         for si, (sec, stitle) in enumerate(SECTIONS[track], 1):
@@ -95,7 +115,7 @@ def main() -> None:
             if leaves:
                 secs.append({"id": f"{tid}.{sec}", "title": stitle, "summary": f"{ttitle} · {stitle}，按 Hello Interview 的顺序。",
                              "children": leaves})
-        nodes.append({"id": tid, "order": ti, "core": True, "title": ttitle,
+        nodes.append({"id": tid, "order": ti, "title": ttitle,
                       "summary": f"Hello Interview 的{ttitle}课程，结构与原站一致。", "children": secs})
     sk = {"domain": "hello-interview", "title": "Hello Interview", "deck": "Hello Interview", "lang": "zh",
           "vault": "domains/hello-interview", "study": {"order": "core-first", "mix": "new-first", "new_per_day": 15, "reviews_per_day": 200},

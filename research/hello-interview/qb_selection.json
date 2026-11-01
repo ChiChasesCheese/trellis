@@ -1,0 +1,1079 @@
+[
+ {
+  "id": "cm4szunov00303g2e2gomqo2j",
+  "slug": "messenger-chat-system",
+  "title": "Design a Chat/Messaging System",
+  "type": "SYSTEM_DESIGN",
+  "reports": 190,
+  "breakdown": "/learn/system-design/problem-breakdowns/whatsapp",
+  "url": "https://www.hellointerview.com/community/questions/messenger-chat-system/cm4szunov00303g2e2gomqo2j",
+  "companies": [
+   "Addepar",
+   "Airbnb",
+   "Amazon",
+   "Anduril",
+   "Anthropic",
+   "Crusoe",
+   "Databricks",
+   "Freelancer",
+   "Google",
+   "Higgsfield",
+   "HyperFace",
+   "Lyft",
+   "Meta",
+   "Microsoft",
+   "MongoDB",
+   "Monzo",
+   "OpenAI",
+   "Roblox",
+   "Snapchat",
+   "StubHub",
+   "Uber",
+   "Whatnot"
+  ],
+  "last": "2026-10-01",
+  "track": "sd",
+  "levels": [
+   "MANAGER",
+   "MID_LEVEL",
+   "PRINCIPAL",
+   "SENIOR",
+   "SENIOR_MANAGER",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cm7w828yv00sejmejlmofwtvp",
+  "slug": "job-scheduler-cron-history",
+  "title": "Design a Job Scheduler",
+  "type": "SYSTEM_DESIGN",
+  "reports": 180,
+  "breakdown": "/learn/system-design/problem-breakdowns/job-scheduler",
+  "url": "https://www.hellointerview.com/community/questions/job-scheduler-cron-history/cm7w828yv00sejmejlmofwtvp",
+  "companies": [
+   "Airbnb",
+   "Apple",
+   "Bolt",
+   "Cursor",
+   "Databricks",
+   "Datology",
+   "DigitalOcean",
+   "DoorDash",
+   "Figma",
+   "Goldman Sachs",
+   "Google",
+   "Headout",
+   "LinkedIn",
+   "Lyft",
+   "Meta",
+   "Microsoft",
+   "NVIDIA",
+   "Netflix",
+   "Okta",
+   "PhonePe",
+   "Robinhood",
+   "Roblox",
+   "Snowflake",
+   "Wise",
+   "skit",
+   "walt disney"
+  ],
+  "last": "2026-10-10",
+  "track": "sd",
+  "levels": [
+   "JUNIOR",
+   "MANAGER",
+   "MID_LEVEL",
+   "PRINCIPAL",
+   "SENIOR",
+   "SENIOR_MANAGER",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cm4szywgj003ivszmblm3pmoa",
+  "slug": "online-chess-platform",
+  "title": "Design Online Chess",
+  "type": "SYSTEM_DESIGN",
+  "reports": 155,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/online-chess-platform/cm4szywgj003ivszmblm3pmoa",
+  "companies": [
+   "Airbnb",
+   "Google",
+   "Meta",
+   "OpenAI",
+   "Upstart"
+  ],
+  "last": "2026-09-01",
+  "track": "sd",
+  "levels": [
+   "JUNIOR",
+   "MANAGER",
+   "MID_LEVEL",
+   "PRINCIPAL",
+   "SENIOR",
+   "SENIOR_MANAGER",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cm96lh25n0039ad08067audlg",
+  "slug": "news-aggregator-feed",
+  "title": "Design a News Aggregator System",
+  "type": "SYSTEM_DESIGN",
+  "reports": 109,
+  "breakdown": "/learn/system-design/problem-breakdowns/google-news",
+  "url": "https://www.hellointerview.com/community/questions/news-aggregator-feed/cm96lh25n0039ad08067audlg",
+  "companies": [
+   "Amazon",
+   "Google",
+   "Microsoft",
+   "Oracle",
+   "Other",
+   "Reddit",
+   "Rippling",
+   "Walmart",
+   "ripping"
+  ],
+  "last": "2026-10-01",
+  "track": "sd",
+  "levels": [
+   "JUNIOR",
+   "MANAGER",
+   "MID_LEVEL",
+   "PRINCIPAL",
+   "SENIOR",
+   "SENIOR_MANAGER",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cm4t0twp0004pvszmvb2qeg0u",
+  "slug": "top-k-counts",
+  "title": "Design a Top-K System",
+  "type": "SYSTEM_DESIGN",
+  "reports": 106,
+  "breakdown": "/learn/system-design/problem-breakdowns/top-k",
+  "url": "https://www.hellointerview.com/community/questions/top-k-counts/cm4t0twp0004pvszmvb2qeg0u",
+  "companies": [
+   "Amazon",
+   "Atlassian",
+   "Bloomberg",
+   "Figma",
+   "Google",
+   "Harness",
+   "LinkedIn",
+   "Meta",
+   "Microsoft",
+   "Monzo",
+   "Nubank",
+   "Oracle",
+   "Uber",
+   "eBay"
+  ],
+  "last": "2026-10-01",
+  "track": "sd",
+  "levels": [
+   "INTERN",
+   "JUNIOR",
+   "MANAGER",
+   "MID_LEVEL",
+   "PRINCIPAL",
+   "SENIOR",
+   "SENIOR_MANAGER",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cm8j5hkhi009ouxg8w34ni7nd",
+  "slug": "book-seller-platform",
+  "title": "Design a Book Seller Platform",
+  "type": "SYSTEM_DESIGN",
+  "reports": 105,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/book-seller-platform/cm8j5hkhi009ouxg8w34ni7nd",
+  "companies": [
+   "Amazon",
+   "Databricks"
+  ],
+  "last": "2026-10-20",
+  "track": "sd",
+  "levels": [
+   "MANAGER",
+   "MID_LEVEL",
+   "PRINCIPAL",
+   "SENIOR",
+   "SENIOR_MANAGER",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cmavpegdk0067ad08ujhdbrjk",
+  "slug": "payment-batch-processing",
+  "title": "Design a Payment System",
+  "type": "SYSTEM_DESIGN",
+  "reports": 93,
+  "breakdown": "/learn/system-design/problem-breakdowns/payment-system",
+  "url": "https://www.hellointerview.com/community/questions/payment-batch-processing/cmavpegdk0067ad08ujhdbrjk",
+  "companies": [
+   "Adyen",
+   "Agoda",
+   "Amazon",
+   "Capital One",
+   "Grab",
+   "OpenAI",
+   "SoFi",
+   "checkout"
+  ],
+  "last": "2026-09-20",
+  "track": "sd",
+  "levels": [
+   "INTERN",
+   "JUNIOR",
+   "MANAGER",
+   "MID_LEVEL",
+   "PRINCIPAL",
+   "SENIOR",
+   "SENIOR_MANAGER",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cm758vf17024kalw2qn7e57xs",
+  "slug": "notification-system-scale",
+  "title": "Design a Notification System",
+  "type": "SYSTEM_DESIGN",
+  "reports": 78,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/notification-system-scale/cm758vf17024kalw2qn7e57xs",
+  "companies": [
+   "Airbnb",
+   "Amazon",
+   "Autodesk",
+   "Bloomberg",
+   "Calendly",
+   "Coupang",
+   "Duolingo",
+   "Fora",
+   "LinkedIn",
+   "Loop",
+   "Meta",
+   "Metropolis",
+   "Microsoft",
+   "Navan",
+   "Oracle",
+   "Other",
+   "Pinterest",
+   "Reddit",
+   "Slice",
+   "Uber",
+   "Visa",
+   "Walmart",
+   "eBay",
+   "pocket FM",
+   "tekion"
+  ],
+  "last": "2026-10-01",
+  "track": "sd",
+  "levels": [
+   "JUNIOR",
+   "MANAGER",
+   "MID_LEVEL",
+   "PRINCIPAL",
+   "SENIOR",
+   "SENIOR_MANAGER",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cm5svnaco01dqxszbok7e1lk1",
+  "slug": "url-shortener-design",
+  "title": "Design a URL Shortener",
+  "type": "SYSTEM_DESIGN",
+  "reports": 76,
+  "breakdown": "/learn/system-design/problem-breakdowns/bitly",
+  "url": "https://www.hellointerview.com/community/questions/url-shortener-design/cm5svnaco01dqxszbok7e1lk1",
+  "companies": [
+   "Amazon",
+   "Anduril",
+   "Apple",
+   "Bending Spoons",
+   "BuildOps",
+   "DigitalOcean",
+   "Headout",
+   "JPMorgan Chase",
+   "Macquarie Group",
+   "Meta",
+   "Microsoft",
+   "Netflix",
+   "Nielsen",
+   "Okta",
+   "OpenAI",
+   "Oracle",
+   "Palo Alto Networks",
+   "Parloa",
+   "PayPal",
+   "Rakuten",
+   "Salesforce",
+   "ServiceTitan",
+   "Vercel",
+   "Weave",
+   "Zscaler",
+   "lloyds",
+   "reverb"
+  ],
+  "last": "2026-10-20",
+  "track": "sd",
+  "levels": [
+   "JUNIOR",
+   "MANAGER",
+   "MID_LEVEL",
+   "PRINCIPAL",
+   "SENIOR",
+   "SENIOR_MANAGER",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cmbdisew101kuad08fuuiky5v",
+  "slug": "donations-website-charities",
+  "title": "Design a Donations Website",
+  "type": "SYSTEM_DESIGN",
+  "reports": 70,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/donations-website-charities/cmbdisew101kuad08fuuiky5v",
+  "companies": [
+   "DoorDash",
+   "Lyft",
+   "Whatnot"
+  ],
+  "last": "2026-10-10",
+  "track": "sd",
+  "levels": [
+   "MANAGER",
+   "MID_LEVEL",
+   "SENIOR",
+   "SENIOR_MANAGER",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cm80gligm049vtvyjklc6gxdw",
+  "slug": "web-crawler-design",
+  "title": "Design a Web Crawler",
+  "type": "SYSTEM_DESIGN",
+  "reports": 64,
+  "breakdown": "/learn/system-design/problem-breakdowns/web-crawler",
+  "url": "https://www.hellointerview.com/community/questions/web-crawler-design/cm80gligm049vtvyjklc6gxdw",
+  "companies": [
+   "Amazon",
+   "Atlassian",
+   "Expedia",
+   "Glean",
+   "Google",
+   "Meta",
+   "Microsoft",
+   "Monzo",
+   "Walmart",
+   "ZoomInfo"
+  ],
+  "last": "2026-10-01",
+  "track": "sd",
+  "levels": [
+   "JUNIOR",
+   "MANAGER",
+   "MID_LEVEL",
+   "PRINCIPAL",
+   "SENIOR",
+   "SENIOR_MANAGER",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cm6i9mhd800nz41cd0xx20r8p",
+  "slug": "distributed-rate-limiter",
+  "title": "Design a Rate Limiter",
+  "type": "SYSTEM_DESIGN",
+  "reports": 63,
+  "breakdown": "/learn/system-design/problem-breakdowns/distributed-rate-limiter",
+  "url": "https://www.hellointerview.com/community/questions/distributed-rate-limiter/cm6i9mhd800nz41cd0xx20r8p",
+  "companies": [
+   "Amazon",
+   "Apple",
+   "Goldman Sachs",
+   "JPMorgan Chase",
+   "LinkedIn",
+   "Meta",
+   "Microsoft",
+   "Nova Credit",
+   "OpenAI",
+   "Oracle",
+   "Palo Alto Networks",
+   "Pinterest",
+   "Roku",
+   "Uber",
+   "Visa"
+  ],
+  "last": "2026-10-01",
+  "track": "sd",
+  "levels": [
+   "JUNIOR",
+   "MANAGER",
+   "MID_LEVEL",
+   "PRINCIPAL",
+   "SENIOR",
+   "SENIOR_MANAGER",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cm8yfscj300uwad08cpbxpvjc",
+  "slug": "food-item-reviews",
+  "title": "Design a Review App for Food Items",
+  "type": "SYSTEM_DESIGN",
+  "reports": 55,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/food-item-reviews/cm8yfscj300uwad08cpbxpvjc",
+  "companies": [
+   "1001",
+   "DoorDash"
+  ],
+  "last": "2026-10-20",
+  "track": "sd",
+  "levels": [
+   "MANAGER",
+   "MID_LEVEL",
+   "SENIOR",
+   "SENIOR_MANAGER",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cm80nptng04jg2pu4cq8rpxzm",
+  "slug": "hotel-booking-system",
+  "title": "Design a Hotel Booking System",
+  "type": "SYSTEM_DESIGN",
+  "reports": 45,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/hotel-booking-system/cm80nptng04jg2pu4cq8rpxzm",
+  "companies": [
+   "Amazon",
+   "Carta",
+   "Expedia",
+   "JPMorgan Chase",
+   "Meta",
+   "Oracle",
+   "Revolut",
+   "Rippling",
+   "Toast",
+   "Zoom",
+   "airwallex",
+   "ripping"
+  ],
+  "last": "2026-10-01",
+  "track": "sd",
+  "levels": [
+   "MANAGER",
+   "MID_LEVEL",
+   "PRINCIPAL",
+   "SENIOR",
+   "SENIOR_MANAGER",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cm6k7xmwh024f11hvvc0uq1e5",
+  "slug": "metrics-monitoring-alerts",
+  "title": "Design a System Metrics Monitoring and Alerting Platform",
+  "type": "SYSTEM_DESIGN",
+  "reports": 44,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/metrics-monitoring-alerts/cm6k7xmwh024f11hvvc0uq1e5",
+  "companies": [
+   "Amazon",
+   "Databricks",
+   "DigitalOcean",
+   "Expedia",
+   "Fusion Health",
+   "LinkedIn",
+   "Meta",
+   "Microsoft",
+   "MongoDB",
+   "Oracle",
+   "Rubrik",
+   "Stripe",
+   "TikTok",
+   "Uber"
+  ],
+  "last": "2026-10-10",
+  "track": "sd",
+  "levels": [
+   "JUNIOR",
+   "MANAGER",
+   "MID_LEVEL",
+   "SENIOR",
+   "SENIOR_MANAGER",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cm5g8rosg000513om5kznhe49",
+  "slug": "file-sync-system",
+  "title": "Design DropBox",
+  "type": "PRODUCT_DESIGN",
+  "reports": 43,
+  "breakdown": "/learn/system-design/problem-breakdowns/dropbox",
+  "url": "https://www.hellointerview.com/community/questions/file-sync-system/cm5g8rosg000513om5kznhe49",
+  "companies": [
+   "Meta"
+  ],
+  "last": "2026-09-20",
+  "track": "sd",
+  "levels": [
+   "JUNIOR",
+   "MANAGER",
+   "MID_LEVEL",
+   "SENIOR",
+   "SENIOR_MANAGER",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cmb8nw8vo00ybad08tftfys92",
+  "slug": "feature-flag-service",
+  "title": "Design a Feature Flag Service",
+  "type": "SYSTEM_DESIGN",
+  "reports": 39,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/feature-flag-service/cmb8nw8vo00ybad08tftfys92",
+  "companies": [
+   "Stripe"
+  ],
+  "last": "2026-10-01",
+  "track": "sd",
+  "levels": [
+   "MANAGER",
+   "MID_LEVEL",
+   "PRINCIPAL",
+   "SENIOR",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cm9hikxgs0002426p4xzxgl94",
+  "slug": "like-unlike-system",
+  "title": "Design a Like/Unlike Feature",
+  "type": "SYSTEM_DESIGN",
+  "reports": 30,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/like-unlike-system/cm9hikxgs0002426p4xzxgl94",
+  "companies": [
+   "Roblox"
+  ],
+  "last": "2026-10-01",
+  "track": "sd",
+  "levels": [
+   "MANAGER",
+   "MID_LEVEL",
+   "PRINCIPAL",
+   "SENIOR",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cmbzeshg200003p6wbg45hbsi",
+  "slug": "stock-trading-platform",
+  "title": "Design a stock trading platform",
+  "type": "SYSTEM_DESIGN",
+  "reports": 13,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/stock-trading-platform/cmbzeshg200003p6wbg45hbsi",
+  "companies": [
+   "Robinhood"
+  ],
+  "last": "2026-10-01",
+  "track": "sd",
+  "levels": [
+   "MANAGER",
+   "MID_LEVEL",
+   "SENIOR",
+   "SENIOR_MANAGER",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cm4szs6ae002w3g2e09amf982",
+  "slug": "coding-contest-platform",
+  "title": "Design LeetCode",
+  "type": "SYSTEM_DESIGN",
+  "reports": 11,
+  "breakdown": "/learn/system-design/problem-breakdowns/leetcode",
+  "url": "https://www.hellointerview.com/community/questions/coding-contest-platform/cm4szs6ae002w3g2e09amf982",
+  "companies": [
+   "Whatnot"
+  ],
+  "last": "2026-09-20",
+  "track": "sd",
+  "levels": [
+   "MANAGER",
+   "MID_LEVEL",
+   "SENIOR",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cmpon4z90017i0eadm2gyepjz",
+  "slug": "merchant-product-listings",
+  "title": "Design a Merchant Product Listing System",
+  "type": "SYSTEM_DESIGN",
+  "reports": 11,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/merchant-product-listings/cmpon4z90017i0eadm2gyepjz",
+  "companies": [
+   "Pinterest"
+  ],
+  "last": "2026-10-01",
+  "track": "sd",
+  "levels": [
+   "MID_LEVEL",
+   "SENIOR"
+  ]
+ },
+ {
+  "id": "cmpbyfgwt0n4l09ad0tvpkd8c",
+  "slug": "disposable-email",
+  "title": "Design a temporary mailbox system",
+  "type": "SYSTEM_DESIGN",
+  "reports": 10,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/disposable-email/cmpbyfgwt0n4l09ad0tvpkd8c",
+  "companies": [
+   "Confluent",
+   "IBM"
+  ],
+  "last": "2026-10-01",
+  "track": "sd",
+  "levels": [
+   "MANAGER",
+   "MID_LEVEL",
+   "SENIOR",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cmd219wwh00iiad08p20bmm7s",
+  "slug": "stock-price-alerts",
+  "title": "Design Stock price alerting system",
+  "type": "SYSTEM_DESIGN",
+  "reports": 9,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/stock-price-alerts/cmd219wwh00iiad08p20bmm7s",
+  "companies": [
+   "Uber"
+  ],
+  "last": "2026-09-20",
+  "track": "sd",
+  "levels": [
+   "MID_LEVEL",
+   "SENIOR",
+   "SENIOR_MANAGER",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cmg6up3jj030x08adrb73umuk",
+  "slug": "chatbot-design",
+  "title": "Design ChatGPT",
+  "type": "SYSTEM_DESIGN",
+  "reports": 9,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/chatbot-design/cmg6up3jj030x08adrb73umuk",
+  "companies": [
+   "Plaid"
+  ],
+  "last": "2026-10-01",
+  "track": "sd",
+  "levels": [
+   "JUNIOR",
+   "MANAGER",
+   "MID_LEVEL",
+   "SENIOR",
+   "SENIOR_MANAGER",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cmpms25sx188l0eadvi7igzjb",
+  "slug": "crowdfunding-share-purchase",
+  "title": "Design a share purchasing system for a limited-time company crowdfunding event",
+  "type": "SYSTEM_DESIGN",
+  "reports": 8,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/crowdfunding-share-purchase/cmpms25sx188l0eadvi7igzjb",
+  "companies": [
+   "Wise"
+  ],
+  "last": "2026-09-20",
+  "track": "sd",
+  "levels": [
+   "MID_LEVEL",
+   "SENIOR"
+  ]
+ },
+ {
+  "id": "cmb0e6tyz00vrad08zhe69frf",
+  "slug": "social-feed-generation",
+  "title": "Design a Social Media Feed Generation System",
+  "type": "SYSTEM_DESIGN",
+  "reports": 7,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/social-feed-generation/cmb0e6tyz00vrad08zhe69frf",
+  "companies": [
+   "Meta"
+  ],
+  "last": "2026-10-01",
+  "track": "sd",
+  "levels": [
+   "MANAGER",
+   "MID_LEVEL",
+   "SENIOR",
+   "SENIOR_MANAGER",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cm7jsn3bt0082fh44ia25k8tf",
+  "slug": "video-moderation-system",
+  "title": "Design a Video Moderation System",
+  "type": "SYSTEM_DESIGN",
+  "reports": 4,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/video-moderation-system/cm7jsn3bt0082fh44ia25k8tf",
+  "companies": [
+   "TikTok"
+  ],
+  "last": "2026-04-20",
+  "track": "sd",
+  "levels": [
+   "MANAGER",
+   "SENIOR"
+  ]
+ },
+ {
+  "id": "cmqo58osk0wqc09adkzqvpiwr",
+  "slug": "flight-search-system",
+  "title": "Design a flight search system",
+  "type": "SYSTEM_DESIGN",
+  "reports": 4,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/flight-search-system/cmqo58osk0wqc09adkzqvpiwr",
+  "companies": [
+   "Agoda"
+  ],
+  "last": "2026-07-20",
+  "track": "sd",
+  "levels": [
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cmkbgr2qp08d108adu0khqo6o",
+  "slug": "photo-storage-sharing",
+  "title": "Design Google Photos",
+  "type": "SYSTEM_DESIGN",
+  "reports": 3,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/photo-storage-sharing/cmkbgr2qp08d108adu0khqo6o",
+  "companies": [
+   "Snowflake"
+  ],
+  "last": "2026-09-20",
+  "track": "sd",
+  "levels": [
+   "JUNIOR",
+   "MID_LEVEL",
+   "SENIOR"
+  ]
+ },
+ {
+  "id": "cmt51t3y80h1507adkk4ghxt6",
+  "slug": "feature-flags-service",
+  "title": "Build a Feature Flag Service",
+  "type": "SYSTEM_DESIGN",
+  "reports": 3,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/feature-flags-service/cmt51t3y80h1507adkk4ghxt6",
+  "companies": [
+   "Snowflake"
+  ],
+  "last": "2026-09-01",
+  "track": "sd",
+  "levels": [
+   "MID_LEVEL",
+   "SENIOR",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cmj4k51r300kw08ado0weux4y",
+  "slug": "kv-store-eviction",
+  "title": "Design a key-value store",
+  "type": "OBJECT_ORIENTED_DESIGN",
+  "reports": 8,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/kv-store-eviction/cmj4k51r300kw08ado0weux4y",
+  "companies": [
+   "Microsoft"
+  ],
+  "last": "2026-09-01",
+  "track": "lld",
+  "levels": [
+   "JUNIOR",
+   "MID_LEVEL",
+   "SENIOR",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cmkr2w9l80cph08adwuu5vnfh",
+  "slug": "beverage-vending-system",
+  "title": "Design a vending machine system",
+  "type": "OBJECT_ORIENTED_DESIGN",
+  "reports": 2,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/beverage-vending-system/cmkr2w9l80cph08adwuu5vnfh",
+  "companies": [
+   "Netflix"
+  ],
+  "last": "2026-01-20",
+  "track": "lld",
+  "levels": [
+   "INTERN",
+   "SENIOR"
+  ]
+ },
+ {
+  "id": "cmm2uxnib0ka90dad42h1wrfq",
+  "slug": "rate-limiter-system",
+  "title": "Design a Rate Limiter",
+  "type": "OBJECT_ORIENTED_DESIGN",
+  "reports": 2,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/rate-limiter-system/cmm2uxnib0ka90dad42h1wrfq",
+  "companies": [
+   "Amazon"
+  ],
+  "last": "2026-10-20",
+  "track": "lld",
+  "levels": [
+   "MID_LEVEL",
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cmrwnh5jp2l0r08ad5rjfau71",
+  "slug": "elevator-design",
+  "title": "Design an Elevator System",
+  "type": "OBJECT_ORIENTED_DESIGN",
+  "reports": 2,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/elevator-design/cmrwnh5jp2l0r08ad5rjfau71",
+  "companies": [
+   "Oracle"
+  ],
+  "last": "2026-10-01",
+  "track": "lld",
+  "levels": [
+   "PRINCIPAL",
+   "SENIOR"
+  ]
+ },
+ {
+  "id": "cmq6ea7211htn08ad4qf26bxz",
+  "slug": "event-ticket-booking",
+  "title": "Design an Event Ticket Booking System",
+  "type": "OBJECT_ORIENTED_DESIGN",
+  "reports": 2,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/event-ticket-booking/cmq6ea7211htn08ad4qf26bxz",
+  "companies": [
+   "Slice"
+  ],
+  "last": "2026-08-01",
+  "track": "lld",
+  "levels": [
+   "SENIOR"
+  ]
+ },
+ {
+  "id": "cmjx0422s06rh08adql5axut1",
+  "slug": "grocery-subscription-orders",
+  "title": "Design a grocery subscription service",
+  "type": "OBJECT_ORIENTED_DESIGN",
+  "reports": 2,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/grocery-subscription-orders/cmjx0422s06rh08adql5axut1",
+  "companies": [
+   "Roku"
+  ],
+  "last": "2026-07-20",
+  "track": "lld",
+  "levels": [
+   "SENIOR"
+  ]
+ },
+ {
+  "id": "cmuip7zk03jen07ad50yqqz0r",
+  "slug": "date-time-management",
+  "title": "Design a Date and Time Library",
+  "type": "OBJECT_ORIENTED_DESIGN",
+  "reports": 1,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/date-time-management/cmuip7zk03jen07ad50yqqz0r",
+  "companies": [
+   "Roblox"
+  ],
+  "last": "2026-09-20",
+  "track": "lld",
+  "levels": [
+   "PRINCIPAL"
+  ]
+ },
+ {
+  "id": "cmd0yw0nd04rlad08b4n8bu49",
+  "slug": "figma-draw-api",
+  "title": "Design a Drawing API for a Vector Graphics Editor",
+  "type": "OBJECT_ORIENTED_DESIGN",
+  "reports": 1,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/figma-draw-api/cmd0yw0nd04rlad08b4n8bu49",
+  "companies": [
+   "Figma"
+  ],
+  "last": "2025-07-10",
+  "track": "lld",
+  "levels": [
+   "SENIOR"
+  ]
+ },
+ {
+  "id": "cmgfco6rf05in08adz2rut2nw",
+  "slug": "twitter-clone-feed",
+  "title": "Design Twitter",
+  "type": "OBJECT_ORIENTED_DESIGN",
+  "reports": 1,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/twitter-clone-feed/cmgfco6rf05in08adz2rut2nw",
+  "companies": [
+   "Headout"
+  ],
+  "last": "2026-06-20",
+  "track": "lld",
+  "levels": [
+   "SENIOR"
+  ]
+ },
+ {
+  "id": "cmtguy6001byt08adk8i49brj",
+  "slug": "scheduler-system-design",
+  "title": "Design a Task Scheduler",
+  "type": "OBJECT_ORIENTED_DESIGN",
+  "reports": 1,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/scheduler-system-design/cmtguy6001byt08adk8i49brj",
+  "companies": [
+   "Databricks"
+  ],
+  "last": "2026-08-20",
+  "track": "lld",
+  "levels": [
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cm91up5px00c2ad08jd1c5pvw",
+  "slug": "parking-lot-system",
+  "title": "Design a Parking Lot Management System",
+  "type": "OBJECT_ORIENTED_DESIGN",
+  "reports": 1,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/parking-lot-system/cm91up5px00c2ad08jd1c5pvw",
+  "companies": [
+   "Walmart"
+  ],
+  "last": "2026-02-10",
+  "track": "lld",
+  "levels": [
+   "STAFF"
+  ]
+ },
+ {
+  "id": "cmj91hwwm01b408adkioh0xyh",
+  "slug": "api-circuit-breaker",
+  "title": "Design a Circuit Breaker",
+  "type": "OBJECT_ORIENTED_DESIGN",
+  "reports": 1,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/api-circuit-breaker/cmj91hwwm01b408adkioh0xyh",
+  "companies": [
+   "Reddit"
+  ],
+  "last": "2026-07-01",
+  "track": "lld",
+  "levels": [
+   "SENIOR"
+  ]
+ },
+ {
+  "id": "cm6jw35u5001rdar92glbujyw",
+  "slug": "recently-viewed-items",
+  "title": "Design a System to Track Recently Viewed Items",
+  "type": "OBJECT_ORIENTED_DESIGN",
+  "reports": 1,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/recently-viewed-items/cm6jw35u5001rdar92glbujyw",
+  "companies": [
+   "Uber"
+  ],
+  "last": "2026-07-20",
+  "track": "lld",
+  "levels": [
+   "MID_LEVEL"
+  ]
+ },
+ {
+  "id": "cmm44nj5c03ge08adlj0vimk8",
+  "slug": "job-board-platform",
+  "title": "Design a job board system",
+  "type": "OBJECT_ORIENTED_DESIGN",
+  "reports": 1,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/job-board-platform/cmm44nj5c03ge08adlj0vimk8",
+  "companies": [
+   "Autodesk"
+  ],
+  "last": "2026-02-20",
+  "track": "lld",
+  "levels": [
+   "SENIOR"
+  ]
+ },
+ {
+  "id": "cmn8ig07p0zju08adw1u7kty2",
+  "slug": "multithreaded-logging-framework",
+  "title": "Design a multi-threaded logging framework",
+  "type": "OBJECT_ORIENTED_DESIGN",
+  "reports": 1,
+  "breakdown": "",
+  "url": "https://www.hellointerview.com/community/questions/multithreaded-logging-framework/cmn8ig07p0zju08adw1u7kty2",
+  "companies": [
+   "Salesforce"
+  ],
+  "last": "2026-07-10",
+  "track": "lld",
+  "levels": [
+   "MID_LEVEL"
+  ]
+ }
+]
