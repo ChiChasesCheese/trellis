@@ -11,7 +11,7 @@ LeetCode becomes one card, so that years later he can pick up the core idea agai
    If nothing is pending, stop (no commit, no push).
 3. Write one card per pending leaf (rules below). More than 6 pending: split the leaves among up to 3 `sonnet`
    subagents, each told to read this file; otherwise write them yourself.
-4. Gate: `uv run python research/companies/tiktok/tools/gate_cards.py vault/interviews/core/leetcode/daily/cards/*/*.md`
+4. Gate: `python3 scripts/check_daily_refs.py` (every printed line is a wrong LC number or name; fix it), `uv run python research/companies/tiktok/tools/gate_cards.py vault/interviews/core/leetcode/daily/cards/*/*.md`
    (0 problems), `uv run python scripts/plain_style.py <new cards>` ok, `uv run trellis --domain leetcode-daily validate`
    0 errors.
 5. `uv run trellis --domain leetcode-daily anki-push` (desktop Anki must be running; if AnkiConnect does not answer,
