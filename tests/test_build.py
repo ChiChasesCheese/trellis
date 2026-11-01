@@ -70,3 +70,10 @@ def test_related_problems_open_in_place():
     assert '<ul class="related">' in html and html.count("code154") == 1
     assert "<li>LC 162 峰值</li>" in html
     assert html.count("code33") == 2 and "LC 999 未知</li>" in html
+
+
+def test_core_problem_list_opens_in_place():
+    from trellis.build import _html
+    related = {315: ("LC 315 右侧小于当前元素的个数", "<p>题意。</p><pre>code315</pre>")}
+    html = _html("**核心题。**\n\n- LC 315 右侧小于当前元素的个数（Hot 100）：逆序对计数的模板\n", related, {4099})
+    assert '<details class="inline-example"><summary>' in html and "code315" in html

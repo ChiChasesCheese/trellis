@@ -152,3 +152,10 @@ def test_deck_files_a_domain_under_an_existing_deck(tmp_path):
     sk = load_skeleton(p)
     assert sk.title == "TikTok Top"
     assert sk.deck_name(sk.by_id["a.x"]) == "LeetCode Tops::24 TikTok::01 A::X"
+
+
+def test_examples_from_takes_several_folders(tmp_path):
+    s = load_skeleton(write(tmp_path, GOOD + "examples_from: a/cards,b/cards\n"))
+    assert s.examples_from == "a/cards,b/cards"
+    with pytest.raises(SkeletonError):
+        load_skeleton(write(tmp_path, GOOD + "examples_from: a/cards,,b\n"))

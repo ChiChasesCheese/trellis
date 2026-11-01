@@ -97,7 +97,7 @@ def _fold_examples(html: str) -> str:
     return head + "".join(rest)
 
 
-_RELATED_LABELS = ("同模式的题", "同模式", "同类", "对应 LeetCode", "相关题")
+_RELATED_LABELS = ("同模式的题", "同模式", "同类", "对应 LeetCode", "相关题", "核心题")
 _RELATED_P = re.compile(r'<p>(?:<span class="label">(%s)</span>|<strong>(%s)</strong>[：:])\s*(.*?)</p>'
                         % ("|".join(_RELATED_LABELS), "|".join(_RELATED_LABELS)), re.S)
 _LI_LEAD_LC = re.compile(r"<li>((?:<strong>)?LC\s*(\d+)(?![\d]).*?)</li>", re.S)
@@ -419,8 +419,12 @@ def build_package(
 
     note_count = 0
     core = core_leaves(skeleton)
-    related = (load_related(Path(__file__).resolve().parents[1] / "vault" / skeleton.examples_from)
-               if skeleton.examples_from else None)
+    related = None
+    if skeleton.examples_from:  # comma-separated folders; the first card found for an LC number wins
+        related = {}
+        for folder in skeleton.examples_from.split(","):
+            for n, v in load_related(Path(__file__).resolve().parents[1] / "vault" / folder).items():
+                related.setdefault(n, v)
     # The Sequence leaves out adopted cards — building one would put a second
     # copy of a note another tool owns into the collection. A card's place in
     # it is its new-card position: what a first import studies in. A

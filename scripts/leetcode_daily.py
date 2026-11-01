@@ -87,7 +87,7 @@ def load_skeleton() -> dict:
         return yaml.safe_load(SKELETON.read_text(encoding="utf-8"))
     return {"domain": "leetcode-daily", "title": "LeetCode 每日刷题", "deck": "LeetCode Tops::28 Daily（每日刷题）",
             "lang": "zh", "vault": "interviews/core/leetcode/daily",
-            "examples_from": "interviews/core/leetcode/tiktok/cards",
+            "examples_from": "interviews/core/leetcode/tiktok/cards,interviews/core/leetcode/daily/cards",
             "study": {"order": "core-first", "mix": "new-first", "new_per_day": 10, "reviews_per_day": 200},
             "nodes": []}
 

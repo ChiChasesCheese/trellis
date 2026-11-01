@@ -14,7 +14,11 @@ for f in sorted(glob.glob("vault/interviews/core/leetcode/daily/cards/*/*.md")):
     t=open(f).read()
     m=re.search(r"\*\*同模式。\*\*(.*)",t)
     if not m: print("NO 同模式",f); continue
-    for n,name in re.findall(r"LC (\d+) ([^、，。（(]+)",m.group(1)):
+    core=re.search(r"\*\*核心题。\*\*\n\n((?:- .*\n?)+)",t)
+    if not core: print("NO 核心题",f)
+    refs=m.group(1)+"、"+(core.group(1) if core else "")
+    for n,name in re.findall(r"LC (\d+) ([^、，。（(：\n]+)",refs):
         real=lookup(int(n))
-        ok = real and (name.strip()[:3] in real or real[:3] in name)
+        norm=lambda x: re.sub(r"[\s「」“”\"'·]","",x or "")
+        ok = real and (norm(name)[:3] in norm(real) or norm(real)[:3] in norm(name))
         if not ok: print(f.split("tlc-daily-")[1][:40], "| card:",n,name.strip(),"| real:",real)

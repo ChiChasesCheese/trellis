@@ -273,8 +273,8 @@ def load_skeleton(path: str | Path) -> Skeleton:
         deck = ""
 
     examples_from = data.get("examples_from", "") or ""
-    if not isinstance(examples_from, str) or (examples_from and not re.match(r"^[a-z0-9_-]+(/[a-z0-9_-]+)*$", examples_from)):
-        errors.append(f"invalid examples_from: {examples_from!r} (want a relative path inside vault/)")
+    if not isinstance(examples_from, str) or (examples_from and not re.match(r"^[a-z0-9_-]+(/[a-z0-9_-]+)*(,[a-z0-9_-]+(/[a-z0-9_-]+)*)*$", examples_from)):
+        errors.append(f"invalid examples_from: {examples_from!r} (want relative paths inside vault/, comma-separated)")
         examples_from = ""
 
     skeleton = Skeleton(domain=domain, title=title.strip(), roots=roots, by_id={},

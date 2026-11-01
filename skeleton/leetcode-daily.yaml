@@ -5,7 +5,7 @@ title: LeetCode 每日刷题
 deck: LeetCode Tops::28 Daily（每日刷题）
 lang: zh
 vault: interviews/core/leetcode/daily
-examples_from: interviews/core/leetcode/tiktok/cards
+examples_from: interviews/core/leetcode/tiktok/cards,interviews/core/leetcode/daily/cards
 study:
   order: core-first
   mix: new-first
