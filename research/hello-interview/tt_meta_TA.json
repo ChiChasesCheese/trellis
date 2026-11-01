@@ -1,0 +1,45 @@
+{
+  "tt-live-gift-coin-settlement": {
+    "title": "直播虚拟礼物：金币记账与主播结算",
+    "requires": [
+      "sd.core-concepts.api-design",
+      "sd.deep-dives.kafka",
+      "sd.deep-dives.redis",
+      "sd.core-concepts.sharding",
+      "sd.core-concepts.cap-theorem"
+    ]
+  },
+  "tt-wallet-ledger-service": {
+    "title": "钱包与复式账本服务",
+    "requires": [
+      "sd.core-concepts.data-modeling",
+      "sd.core-concepts.sharding",
+      "sd.core-concepts.api-design",
+      "sd.core-concepts.caching"
+    ]
+  },
+  "tt-payment-reconciliation": {
+    "title": "支付对账系统",
+    "requires": [
+      "sd.core-concepts.data-modeling",
+      "sd.core-concepts.sharding",
+      "sd.deep-dives.kafka"
+    ]
+  },
+  "tt-merchant-webhook-delivery": {
+    "title": "商户回调（Webhook）投递系统",
+    "requires": [
+      "sd.core-concepts.api-design",
+      "sd.deep-dives.kafka",
+      "sd.core-concepts.networking-essentials"
+    ]
+  },
+  "tt-flash-sale-ticketing": {
+    "title": "秒杀抢票（排队、限流、防超卖）",
+    "requires": [
+      "sd.deep-dives.redis",
+      "sd.core-concepts.caching",
+      "sd.in-a-hurry.patterns"
+    ]
+  }
+}

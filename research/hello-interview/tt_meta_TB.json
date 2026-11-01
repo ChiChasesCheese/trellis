@@ -1,0 +1,76 @@
+{
+ "tt-realtime-auction-bidding": {
+  "title": "实时竞价拍卖",
+  "requires": [
+   "sd.core-concepts.networking-essentials",
+   "sd.deep-dives.kafka",
+   "sd.deep-dives.redis",
+   "sd.core-concepts.consistent-hashing",
+   "sd.core-concepts.api-design"
+  ]
+ },
+ "tt-for-you-feed": {
+  "title": "短视频推荐信息流（For You）",
+  "requires": [
+   "sd.core-concepts.caching",
+   "sd.deep-dives.vector-databases",
+   "sd.deep-dives.kafka",
+   "sd.core-concepts.sharding",
+   "sd.deep-dives.redis"
+  ]
+ },
+ "tt-cache-consistency-hot-keys": {
+  "title": "缓存一致性与热点 Key",
+  "requires": [
+   "sd.core-concepts.caching",
+   "sd.deep-dives.redis",
+   "sd.core-concepts.consistent-hashing",
+   "sd.core-concepts.sharding"
+  ]
+ },
+ "tt-billing-tax-engine": {
+  "title": "计费 / 计税引擎",
+  "requires": [
+   "lld.in-a-hurry.patterns",
+   "lld.in-a-hurry.design-principles",
+   "lld.in-a-hurry.oop-concepts",
+   "sd.core-concepts.data-modeling"
+  ]
+ },
+ "tt-double-entry-ledger": {
+  "title": "复式账本（类设计）",
+  "requires": [
+   "lld.in-a-hurry.oop-concepts",
+   "lld.in-a-hurry.design-principles",
+   "lld.concurrency.intro",
+   "sd.core-concepts.data-modeling"
+  ]
+ },
+ "tt-idempotent-transfer": {
+  "title": "幂等转账服务",
+  "requires": [
+   "lld.concurrency.intro",
+   "lld.in-a-hurry.patterns",
+   "lld.in-a-hurry.design-principles",
+   "sd.core-concepts.data-modeling"
+  ]
+ },
+ "tt-installment-plan": {
+  "title": "分期计划生成器",
+  "requires": [
+   "lld.in-a-hurry.design-principles",
+   "lld.in-a-hurry.oop-concepts",
+   "lld.in-a-hurry.patterns",
+   "lld.in-a-hurry.delivery"
+  ]
+ },
+ "tt-per-merchant-rate-limit": {
+  "title": "按商户限流",
+  "requires": [
+   "lld.in-a-hurry.patterns",
+   "lld.concurrency.intro",
+   "sd.deep-dives.redis",
+   "sd.core-concepts.caching"
+  ]
+ }
+}

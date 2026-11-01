@@ -1,6 +1,6 @@
 ---
 id: hi-sd-patterns-7-multi-step
-node: sd.in-a-hurry.patterns
+node: tt.sd.tt-flash-sale-ticketing.pre-sd-in-a-hurry-patterns
 type: qa
 step: 7
 ---

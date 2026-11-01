@@ -1,6 +1,6 @@
 ---
 id: hi-sd-patterns-6-large-blobs
-node: sd.in-a-hurry.patterns
+node: tt.sd.tt-flash-sale-ticketing.pre-sd-in-a-hurry-patterns
 type: qa
 step: 6
 ---

@@ -648,6 +648,12 @@ nodes:
       - id: tt.sd.tt-live-gift-coin-settlement.answer
         title: 解答 · 直播虚拟礼物：金币记账与主播结算
         summary: TikTok 高级岗报告 · 钱包团队方向
+        requires:
+        - qb.sd.book-seller-platform.pre-sd-core-concepts-api-design
+        - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
+        - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
+        - qb.sd.distributed-rate-limiter.pre-sd-core-concepts-cap-theorem
     - id: tt.sd.tt-wallet-ledger-service
       title: 钱包与复式账本服务
       summary: 支付方向通用题
@@ -655,6 +661,11 @@ nodes:
       - id: tt.sd.tt-wallet-ledger-service.answer
         title: 解答 · 钱包与复式账本服务
         summary: 支付方向通用题
+        requires:
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
+        - qb.sd.book-seller-platform.pre-sd-core-concepts-api-design
+        - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
     - id: tt.sd.tt-payment-reconciliation
       title: 支付对账系统
       summary: 支付追问高频：对账、退款不破坏对账
@@ -662,6 +673,10 @@ nodes:
       - id: tt.sd.tt-payment-reconciliation.answer
         title: 解答 · 支付对账系统
         summary: 支付追问高频：对账、退款不破坏对账
+        requires:
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
+        - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
     - id: tt.sd.tt-merchant-webhook-delivery
       title: 商户回调（Webhook）投递系统
       summary: 支付追问：异步结算与回调丢失、重复
@@ -669,6 +684,10 @@ nodes:
       - id: tt.sd.tt-merchant-webhook-delivery.answer
         title: 解答 · 商户回调（Webhook）投递系统
         summary: 支付追问：异步结算与回调丢失、重复
+        requires:
+        - qb.sd.book-seller-platform.pre-sd-core-concepts-api-design
+        - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-networking-essentials
     - id: tt.sd.top-k-counts
       title: Top-K 排行榜（按国家热歌、滑动窗口热帖）
       summary: TikTok 报告 3 次
@@ -697,9 +716,15 @@ nodes:
       title: 秒杀抢票（排队、限流、防超卖）
       summary: TikTok 报告 2 次
       children:
+      - id: tt.sd.tt-flash-sale-ticketing.pre-sd-in-a-hurry-patterns
+        title: 先修 · 常见模式速览
+        summary: 秒杀抢票（排队、限流、防超卖） 用到的概念。
       - id: tt.sd.tt-flash-sale-ticketing.answer
         title: 解答 · 秒杀抢票（排队、限流、防超卖）
         summary: TikTok 报告 2 次
+        requires:
+        - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
+        - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
     - id: tt.sd.tt-realtime-auction-bidding
       title: 实时竞价拍卖
       summary: TikTok 报告 2 次
@@ -707,6 +732,12 @@ nodes:
       - id: tt.sd.tt-realtime-auction-bidding.answer
         title: 解答 · 实时竞价拍卖
         summary: TikTok 报告 2 次
+        requires:
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-networking-essentials
+        - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
+        - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
+        - qb.sd.online-chess-platform.pre-sd-core-concepts-consistent-hashing
+        - qb.sd.book-seller-platform.pre-sd-core-concepts-api-design
     - id: tt.sd.job-scheduler-cron-history
       title: 分布式任务调度器
       summary: TikTok 报告 2 次 · 失败处理是评分点
@@ -739,6 +770,12 @@ nodes:
       - id: tt.sd.tt-for-you-feed.answer
         title: 解答 · 短视频推荐信息流（For You）
         summary: TikTok 报告 3 次
+        requires:
+        - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
+        - qb.sd.chatbot-design.pre-sd-deep-dives-vector-databases
+        - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
+        - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
     - id: tt.sd.messenger-chat-system
       title: 直播评论 / 聊天系统
       summary: TikTok 报告 2–3 次
@@ -759,6 +796,11 @@ nodes:
       - id: tt.sd.tt-cache-consistency-hot-keys.answer
         title: 解答 · 缓存一致性与热点 Key
         summary: TikTok 设计轮常见追问
+        requires:
+        - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
+        - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
+        - qb.sd.online-chess-platform.pre-sd-core-concepts-consistent-hashing
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
     - id: tt.sd.url-shortener-design
       title: 短链接
       summary: TikTok 电面报告
@@ -809,6 +851,11 @@ nodes:
       - id: tt.lld.tt-billing-tax-engine.answer
         title: 解答 · 计费 / 计税引擎
         summary: 支付类设计练习
+        requires:
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
     - id: tt.lld.tt-double-entry-ledger
       title: 复式账本（类设计）
       summary: 支付类设计练习
@@ -816,6 +863,11 @@ nodes:
       - id: tt.lld.tt-double-entry-ledger.answer
         title: 解答 · 复式账本（类设计）
         summary: 支付类设计练习
+        requires:
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
+        - qb.lld.kv-store-eviction.pre-lld-concurrency-intro
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
     - id: tt.lld.tt-idempotent-transfer
       title: 幂等转账服务
       summary: 支付类设计练习
@@ -823,6 +875,11 @@ nodes:
       - id: tt.lld.tt-idempotent-transfer.answer
         title: 解答 · 幂等转账服务
         summary: 支付类设计练习
+        requires:
+        - qb.lld.kv-store-eviction.pre-lld-concurrency-intro
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
     - id: tt.lld.tt-installment-plan
       title: 分期计划生成器
       summary: 支付类设计练习 · PayLater
@@ -830,6 +887,11 @@ nodes:
       - id: tt.lld.tt-installment-plan.answer
         title: 解答 · 分期计划生成器
         summary: 支付类设计练习 · PayLater
+        requires:
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
+        - qb.lld.beverage-vending-system.pre-lld-in-a-hurry-delivery
     - id: tt.lld.tt-per-merchant-rate-limit
       title: 按商户限流
       summary: 支付类设计练习
@@ -837,6 +899,11 @@ nodes:
       - id: tt.lld.tt-per-merchant-rate-limit.answer
         title: 解答 · 按商户限流
         summary: 支付类设计练习
+        requires:
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
+        - qb.lld.kv-store-eviction.pre-lld-concurrency-intro
+        - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
+        - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
     - id: tt.lld.rate-limiter-system
       title: 限流器（单机类设计）
       summary: 通用
@@ -885,9 +952,6 @@ nodes:
     - id: sd.in-a-hurry.key-technologies
       title: 关键技术速览
       summary: Hello Interview：System Design Key Technologies。
-    - id: sd.in-a-hurry.patterns
-      title: 常见模式速览
-      summary: Hello Interview：System Design Interview Patterns。
     - id: sd.in-a-hurry.problem-breakdowns
       title: 经典题拆解怎么用
       summary: Hello Interview：Bitly。
