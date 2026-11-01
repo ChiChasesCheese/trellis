@@ -38,6 +38,37 @@ _LABEL = re.compile(r"<p><strong>([^<]{1,12}?)[。:：]</strong>\s*")
 _CODE_OR_TAG = re.compile(r"(<pre>.*?</pre>|<code>.*?</code>|<svg.*?</svg>|<[^>]+>)", re.S)
 # A fenced ```svg block is a diagram: it goes into the card as inline SVG, so it can use the theme's colours.
 _SVG_FENCE = re.compile(r"^```svg[ \t]*\n(.*?)^```[ \t]*$", re.S | re.M)
+_MERMAID_FENCE = re.compile(r"^```mermaid[ \t]*\n(.*?)^```[ \t]*$", re.S | re.M)
+_MERMAID_CACHE = Path(__file__).resolve().parents[1] / "sources/local/mermaid-cache"
+
+
+def _mermaid_svg(src: str) -> str | None:
+    """Anki cannot run mermaid: render the diagram to SVG once (cached by content hash) with mermaid-cli. None when
+    rendering is unavailable, so the block stays as code rather than failing the build."""
+    import hashlib
+    import json as _json
+    import subprocess
+    import tempfile
+    key = hashlib.sha1(src.encode("utf-8")).hexdigest()[:16]
+    cached = _MERMAID_CACHE / f"{key}.svg"
+    if cached.exists():
+        return cached.read_text(encoding="utf-8")
+    with tempfile.TemporaryDirectory() as tmp:
+        mmd, svg, cfg = Path(tmp) / "d.mmd", Path(tmp) / "d.svg", Path(tmp) / "p.json"
+        mmd.write_text(src, encoding="utf-8")
+        cfg.write_text(_json.dumps({"args": ["--no-sandbox"]}), encoding="utf-8")
+        try:
+            subprocess.run(["npx", "-y", "@mermaid-js/mermaid-cli@12.0.0", "-q", "-p", str(cfg), "-t", "neutral",
+                            "-b", "transparent", "-i", str(mmd), "-o", str(svg)], capture_output=True, timeout=120)
+        except (OSError, subprocess.TimeoutExpired):
+            return None
+        if not svg.is_file():
+            return None
+        out = re.sub(r"<\?xml[^>]*>", "", svg.read_text(encoding="utf-8"))
+        out = re.sub(r'(<svg[^>]*?) style="max-width:[^"]*"', r'\1 style="max-width:100%;height:auto;background:#fff;border-radius:8px;padding:6px"', out, count=1)
+    _MERMAID_CACHE.mkdir(parents=True, exist_ok=True)
+    cached.write_text(out, encoding="utf-8")
+    return out
 # **例题：** opens a worked problem at the end of an answer; it is folded so the card stays short.
 _EXAMPLE = re.compile(r'<p><span class="label">例题</span>(.*?)</p>(.*)\Z', re.S)
 
@@ -332,6 +363,14 @@ def _html(text: str, related: dict | None = None, own: set[int] | None = None) -
         svgs.append(m.group(1).strip())
         return f"\n\nTRELLISSVG{len(svgs) - 1}\n\n"
     text = _SVG_FENCE.sub(_stash, text)
+
+    def _mermaid(m: re.Match) -> str:
+        svg = _mermaid_svg(m.group(1))
+        if svg is None:
+            return m.group(0)
+        svgs.append(svg)
+        return f"\n\nTRELLISSVG{len(svgs) - 1}\n\n"
+    text = _MERMAID_FENCE.sub(_mermaid, text)
     _MD.reset()
     html = _MD.convert(_blank_before_lists(text))
     for i, svg in enumerate(svgs):

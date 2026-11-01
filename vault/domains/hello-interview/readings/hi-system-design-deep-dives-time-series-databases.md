@@ -1,5 +1,5 @@
 ---
-nodes: [sd.deep-dives.time-series-databases]
+nodes: [qb.sd.top-k-counts.pre-sd-deep-dives-time-series-databases]
 url: https://www.hellointerview.com/learn/system-design/deep-dives/time-series-databases
 tags: [no-archive]
 ---

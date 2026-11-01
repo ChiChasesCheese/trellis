@@ -1,6 +1,6 @@
 ---
 id: hi-sd-redis-5-lock
-node: sd.deep-dives.redis
+node: qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
 type: qa
 step: 5
 ---

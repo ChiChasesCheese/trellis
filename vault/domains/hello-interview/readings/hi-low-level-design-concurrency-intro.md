@@ -1,5 +1,5 @@
 ---
-nodes: [lld.concurrency.intro]
+nodes: [qb.lld.kv-store-eviction.pre-lld-concurrency-intro]
 url: https://www.hellointerview.com/learn/low-level-design/concurrency/intro
 tags: [no-archive]
 ---

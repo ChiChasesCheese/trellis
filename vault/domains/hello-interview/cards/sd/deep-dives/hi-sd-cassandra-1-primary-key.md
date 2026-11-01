@@ -1,6 +1,6 @@
 ---
 id: hi-sd-cassandra-1-primary-key
-node: sd.deep-dives.cassandra
+node: qb.sd.notification-system-scale.pre-sd-deep-dives-cassandra
 type: qa
 step: 1
 ---

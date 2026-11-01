@@ -1,6 +1,6 @@
 ---
 id: hi-sd-networking-essentials-5-lb-types
-node: sd.core-concepts.networking-essentials
+node: qb.sd.messenger-chat-system.pre-sd-core-concepts-networking-essentials
 type: qa
 step: 5
 ---

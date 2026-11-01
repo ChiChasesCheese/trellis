@@ -1,6 +1,6 @@
 ---
 id: hi-sd-caching-2-where-to-cache
-node: sd.core-concepts.caching
+node: qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
 type: qa
 step: 2
 ---

@@ -1,6 +1,6 @@
 ---
 id: hi-sd-time-series-databases-7-data-model-query
-node: sd.deep-dives.time-series-databases
+node: qb.sd.top-k-counts.pre-sd-deep-dives-time-series-databases
 type: qa
 step: 7
 ---

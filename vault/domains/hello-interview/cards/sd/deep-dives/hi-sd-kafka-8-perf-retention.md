@@ -1,6 +1,6 @@
 ---
 id: hi-sd-kafka-8-perf-retention
-node: sd.deep-dives.kafka
+node: qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
 type: qa
 step: 8
 ---

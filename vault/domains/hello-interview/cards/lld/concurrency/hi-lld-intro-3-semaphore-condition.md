@@ -1,6 +1,6 @@
 ---
 id: hi-lld-intro-3-semaphore-condition
-node: lld.concurrency.intro
+node: qb.lld.kv-store-eviction.pre-lld-concurrency-intro
 type: qa
 step: 3
 ---

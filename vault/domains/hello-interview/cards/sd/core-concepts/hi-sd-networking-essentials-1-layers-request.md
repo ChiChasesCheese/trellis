@@ -1,6 +1,6 @@
 ---
 id: hi-sd-networking-essentials-1-layers-request
-node: sd.core-concepts.networking-essentials
+node: qb.sd.messenger-chat-system.pre-sd-core-concepts-networking-essentials
 type: qa
 step: 1
 ---

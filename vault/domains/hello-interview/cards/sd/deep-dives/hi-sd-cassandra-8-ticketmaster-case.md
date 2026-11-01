@@ -1,6 +1,6 @@
 ---
 id: hi-sd-cassandra-8-ticketmaster-case
-node: sd.deep-dives.cassandra
+node: qb.sd.notification-system-scale.pre-sd-deep-dives-cassandra
 type: qa
 step: 8
 ---

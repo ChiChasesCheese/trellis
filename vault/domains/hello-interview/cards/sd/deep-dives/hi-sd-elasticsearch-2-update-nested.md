@@ -1,6 +1,6 @@
 ---
 id: hi-sd-elasticsearch-2-update-nested
-node: sd.deep-dives.elasticsearch
+node: qb.sd.hotel-booking-system.pre-sd-deep-dives-elasticsearch
 type: qa
 step: 2
 ---

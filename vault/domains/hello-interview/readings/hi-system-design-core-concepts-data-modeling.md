@@ -1,5 +1,5 @@
 ---
-nodes: [sd.core-concepts.data-modeling]
+nodes: [qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling]
 url: https://www.hellointerview.com/learn/system-design/core-concepts/data-modeling
 tags: [no-archive]
 ---

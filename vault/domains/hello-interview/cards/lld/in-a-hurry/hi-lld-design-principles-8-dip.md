@@ -1,6 +1,6 @@
 ---
 id: hi-lld-design-principles-8-dip
-node: lld.in-a-hurry.design-principles
+node: qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
 type: qa
 step: 8
 ---

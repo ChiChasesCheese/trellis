@@ -1,6 +1,6 @@
 ---
 id: hi-lld-intro-5-three-types
-node: lld.concurrency.intro
+node: qb.lld.kv-store-eviction.pre-lld-concurrency-intro
 type: qa
 step: 5
 ---

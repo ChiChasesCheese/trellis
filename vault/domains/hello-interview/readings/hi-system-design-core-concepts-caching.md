@@ -1,5 +1,5 @@
 ---
-nodes: [sd.core-concepts.caching]
+nodes: [qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching]
 url: https://www.hellointerview.com/learn/system-design/core-concepts/caching
 tags: [no-archive]
 ---

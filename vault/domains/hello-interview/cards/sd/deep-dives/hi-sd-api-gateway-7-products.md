@@ -1,6 +1,6 @@
 ---
 id: hi-sd-api-gateway-7-products
-node: sd.deep-dives.api-gateway
+node: qb.sd.distributed-rate-limiter.pre-sd-deep-dives-api-gateway
 type: qa
 step: 7
 ---

@@ -1,5 +1,5 @@
 ---
-nodes: [sd.core-concepts.api-design]
+nodes: [qb.sd.book-seller-platform.pre-sd-core-concepts-api-design]
 url: https://www.hellointerview.com/learn/system-design/core-concepts/api-design
 tags: [no-archive]
 ---

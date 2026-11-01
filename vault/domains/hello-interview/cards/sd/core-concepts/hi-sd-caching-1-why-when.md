@@ -1,6 +1,6 @@
 ---
 id: hi-sd-caching-1-why-when
-node: sd.core-concepts.caching
+node: qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
 type: qa
 step: 1
 ---

@@ -1,6 +1,6 @@
 ---
 id: hi-sd-cap-theorem-2-partition-example
-node: sd.core-concepts.cap-theorem
+node: qb.sd.distributed-rate-limiter.pre-sd-core-concepts-cap-theorem
 type: qa
 step: 2
 ---

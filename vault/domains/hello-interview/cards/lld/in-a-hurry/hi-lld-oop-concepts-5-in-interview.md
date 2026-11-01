@@ -1,6 +1,6 @@
 ---
 id: hi-lld-oop-concepts-5-in-interview
-node: lld.in-a-hurry.oop-concepts
+node: qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
 type: qa
 step: 5
 ---

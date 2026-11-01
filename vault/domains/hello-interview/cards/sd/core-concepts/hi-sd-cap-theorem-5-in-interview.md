@@ -1,6 +1,6 @@
 ---
 id: hi-sd-cap-theorem-5-in-interview
-node: sd.core-concepts.cap-theorem
+node: qb.sd.distributed-rate-limiter.pre-sd-core-concepts-cap-theorem
 type: qa
 step: 5
 ---

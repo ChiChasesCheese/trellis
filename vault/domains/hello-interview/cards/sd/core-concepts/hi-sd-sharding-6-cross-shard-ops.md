@@ -1,6 +1,6 @@
 ---
 id: hi-sd-sharding-6-cross-shard-ops
-node: sd.core-concepts.sharding
+node: qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
 type: qa
 step: 6
 ---

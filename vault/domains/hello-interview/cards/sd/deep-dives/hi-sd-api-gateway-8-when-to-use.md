@@ -1,6 +1,6 @@
 ---
 id: hi-sd-api-gateway-8-when-to-use
-node: sd.deep-dives.api-gateway
+node: qb.sd.distributed-rate-limiter.pre-sd-deep-dives-api-gateway
 type: qa
 step: 8
 ---

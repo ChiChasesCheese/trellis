@@ -1,6 +1,6 @@
 ---
 id: hi-sd-cassandra-2-partitioning
-node: sd.deep-dives.cassandra
+node: qb.sd.notification-system-scale.pre-sd-deep-dives-cassandra
 type: qa
 step: 2
 ---

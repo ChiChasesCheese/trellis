@@ -1,6 +1,6 @@
 ---
 id: hi-sd-kafka-6-durability
-node: sd.deep-dives.kafka
+node: qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
 type: qa
 step: 6
 ---

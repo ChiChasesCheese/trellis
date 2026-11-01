@@ -1,6 +1,6 @@
 ---
 id: hi-sd-temporal-1-durable-replay
-node: sd.deep-dives.temporal
+node: qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-temporal
 type: qa
 step: 1
 ---

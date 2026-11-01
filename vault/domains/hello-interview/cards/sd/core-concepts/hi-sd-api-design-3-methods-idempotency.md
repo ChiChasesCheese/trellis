@@ -1,6 +1,6 @@
 ---
 id: hi-sd-api-design-3-methods-idempotency
-node: sd.core-concepts.api-design
+node: qb.sd.book-seller-platform.pre-sd-core-concepts-api-design
 type: qa
 step: 3
 ---

@@ -1,6 +1,6 @@
 ---
 id: hi-sd-kafka-5-partition-key
-node: sd.deep-dives.kafka
+node: qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
 type: qa
 step: 5
 ---

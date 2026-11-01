@@ -1,6 +1,6 @@
 ---
 id: hi-sd-api-gateway-5-caching
-node: sd.deep-dives.api-gateway
+node: qb.sd.distributed-rate-limiter.pre-sd-deep-dives-api-gateway
 type: qa
 step: 5
 ---

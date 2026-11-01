@@ -1,5 +1,5 @@
 ---
-nodes: [sd.deep-dives.redis]
+nodes: [qb.sd.messenger-chat-system.pre-sd-deep-dives-redis]
 url: https://www.hellointerview.com/learn/system-design/deep-dives/redis
 tags: [no-archive]
 ---

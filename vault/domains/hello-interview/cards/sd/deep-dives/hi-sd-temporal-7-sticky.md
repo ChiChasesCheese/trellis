@@ -1,6 +1,6 @@
 ---
 id: hi-sd-temporal-7-sticky
-node: sd.deep-dives.temporal
+node: qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-temporal
 type: qa
 step: 7
 ---

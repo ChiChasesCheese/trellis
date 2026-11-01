@@ -1,5 +1,5 @@
 ---
-nodes: [sd.core-concepts.sharding]
+nodes: [qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding]
 url: https://www.hellointerview.com/learn/system-design/core-concepts/sharding
 tags: [no-archive]
 ---

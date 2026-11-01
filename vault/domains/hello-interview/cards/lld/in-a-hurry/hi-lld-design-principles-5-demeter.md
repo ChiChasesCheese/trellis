@@ -1,6 +1,6 @@
 ---
 id: hi-lld-design-principles-5-demeter
-node: lld.in-a-hurry.design-principles
+node: qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
 type: qa
 step: 5
 ---

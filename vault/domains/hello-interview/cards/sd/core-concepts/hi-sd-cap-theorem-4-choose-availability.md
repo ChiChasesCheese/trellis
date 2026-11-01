@@ -1,6 +1,6 @@
 ---
 id: hi-sd-cap-theorem-4-choose-availability
-node: sd.core-concepts.cap-theorem
+node: qb.sd.distributed-rate-limiter.pre-sd-core-concepts-cap-theorem
 type: qa
 step: 4
 ---

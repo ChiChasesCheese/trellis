@@ -1,6 +1,6 @@
 ---
 id: hi-sd-data-modeling-5-entities-keys
-node: sd.core-concepts.data-modeling
+node: qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
 type: qa
 step: 5
 ---

@@ -1,6 +1,6 @@
 ---
 id: hi-sd-consistent-hashing-7-interview-use
-node: sd.core-concepts.consistent-hashing
+node: qb.sd.online-chess-platform.pre-sd-core-concepts-consistent-hashing
 type: qa
 step: 7
 ---

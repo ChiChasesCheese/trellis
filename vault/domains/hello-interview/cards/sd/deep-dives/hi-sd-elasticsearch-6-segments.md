@@ -1,6 +1,6 @@
 ---
 id: hi-sd-elasticsearch-6-segments
-node: sd.deep-dives.elasticsearch
+node: qb.sd.hotel-booking-system.pre-sd-deep-dives-elasticsearch
 type: qa
 step: 6
 ---

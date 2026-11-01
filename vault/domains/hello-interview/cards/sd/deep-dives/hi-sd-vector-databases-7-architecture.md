@@ -1,6 +1,6 @@
 ---
 id: hi-sd-vector-databases-7-architecture
-node: sd.deep-dives.vector-databases
+node: qb.sd.chatbot-design.pre-sd-deep-dives-vector-databases
 type: qa
 step: 7
 ---

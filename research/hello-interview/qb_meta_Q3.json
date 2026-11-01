@@ -1,0 +1,17 @@
+{
+  "online-chess-platform": {"title": "在线国际象棋平台", "requires": ["sd.core-concepts.networking-essentials", "sd.deep-dives.redis", "sd.core-concepts.consistent-hashing", "sd.deep-dives.kafka"]},
+  "book-seller-platform": {"title": "图书比价代购平台", "requires": ["sd.core-concepts.api-design", "sd.core-concepts.data-modeling", "sd.core-concepts.caching", "sd.deep-dives.kafka"]},
+  "url-shortener-design": {"title": "短链接服务", "requires": ["sd.core-concepts.caching", "sd.core-concepts.sharding", "sd.core-concepts.api-design", "sd.deep-dives.redis", "sd.core-concepts.consistent-hashing"]},
+  "distributed-rate-limiter": {"title": "分布式限流器", "requires": ["sd.deep-dives.redis", "sd.core-concepts.sharding", "sd.core-concepts.consistent-hashing", "sd.deep-dives.api-gateway", "sd.core-concepts.cap-theorem"]},
+  "metrics-monitoring-alerts": {"title": "指标监控与告警平台", "requires": ["sd.deep-dives.time-series-databases", "sd.deep-dives.kafka", "sd.core-concepts.sharding", "sd.core-concepts.data-modeling"]},
+  "like-unlike-system": {"title": "点赞与取消点赞系统", "requires": ["sd.core-concepts.caching", "sd.core-concepts.sharding", "sd.deep-dives.dynamodb", "sd.deep-dives.kafka"]},
+  "merchant-product-listings": {"title": "商家商品上架与更新系统", "requires": ["sd.core-concepts.caching", "sd.deep-dives.kafka", "sd.deep-dives.elasticsearch", "sd.core-concepts.data-modeling"]},
+  "chatbot-design": {"title": "对话式 AI 聊天服务", "requires": ["sd.core-concepts.api-design", "sd.core-concepts.data-modeling", "sd.core-concepts.networking-essentials", "sd.deep-dives.vector-databases"]},
+  "video-moderation-system": {"title": "视频内容审核系统", "requires": ["sd.deep-dives.kafka", "sd.core-concepts.data-modeling", "sd.deep-dives.temporal"]},
+  "feature-flags-service": {"title": "功能开关服务", "requires": ["sd.core-concepts.api-design", "sd.core-concepts.caching", "sd.core-concepts.consistent-hashing", "sd.core-concepts.cap-theorem"]},
+  "rate-limiter-system": {"title": "限流器（单机类设计）", "requires": ["lld.in-a-hurry.patterns", "lld.in-a-hurry.design-principles", "lld.concurrency.intro", "lld.in-a-hurry.oop-concepts"]},
+  "grocery-subscription-orders": {"title": "生鲜订阅转订单服务", "requires": ["lld.in-a-hurry.delivery", "lld.in-a-hurry.patterns", "lld.in-a-hurry.oop-concepts", "lld.concurrency.intro"]},
+  "twitter-clone-feed": {"title": "微博客与个性化信息流", "requires": ["sd.core-concepts.caching", "sd.core-concepts.sharding", "sd.deep-dives.redis", "sd.deep-dives.kafka"]},
+  "api-circuit-breaker": {"title": "熔断器", "requires": ["lld.in-a-hurry.patterns", "lld.concurrency.intro", "lld.in-a-hurry.design-principles", "lld.in-a-hurry.oop-concepts"]},
+  "multithreaded-logging-framework": {"title": "多线程日志框架", "requires": ["lld.concurrency.intro", "lld.in-a-hurry.patterns", "lld.in-a-hurry.design-principles"]}
+}

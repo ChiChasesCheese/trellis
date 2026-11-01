@@ -1,6 +1,6 @@
 ---
 id: hi-sd-time-series-databases-2-append-lsm
-node: sd.deep-dives.time-series-databases
+node: qb.sd.top-k-counts.pre-sd-deep-dives-time-series-databases
 type: qa
 step: 2
 ---

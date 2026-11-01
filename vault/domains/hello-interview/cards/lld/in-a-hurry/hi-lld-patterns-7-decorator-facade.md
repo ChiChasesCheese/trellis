@@ -1,6 +1,6 @@
 ---
 id: hi-lld-patterns-7-decorator-facade
-node: lld.in-a-hurry.patterns
+node: qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
 type: qa
 step: 7
 ---

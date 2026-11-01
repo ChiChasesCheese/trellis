@@ -1,5 +1,5 @@
 ---
-nodes: [sd.deep-dives.dynamodb]
+nodes: [qb.sd.messenger-chat-system.pre-sd-deep-dives-dynamodb]
 url: https://www.hellointerview.com/learn/system-design/deep-dives/dynamodb
 tags: [no-archive]
 ---

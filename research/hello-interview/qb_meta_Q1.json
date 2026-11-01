@@ -1,0 +1,138 @@
+{
+ "messenger-chat-system": {
+  "title": "聊天与即时通讯系统",
+  "requires": [
+   "sd.core-concepts.networking-essentials",
+   "sd.deep-dives.dynamodb",
+   "sd.deep-dives.redis",
+   "sd.core-concepts.sharding",
+   "sd.core-concepts.data-modeling"
+  ]
+ },
+ "news-aggregator-feed": {
+  "title": "新闻聚合信息流",
+  "requires": [
+   "sd.core-concepts.caching",
+   "sd.deep-dives.redis",
+   "sd.deep-dives.kafka",
+   "sd.deep-dives.dynamodb",
+   "sd.core-concepts.data-modeling"
+  ]
+ },
+ "payment-batch-processing": {
+  "title": "支付处理系统（冻结加每日批量结算）",
+  "requires": [
+   "sd.core-concepts.api-design",
+   "sd.deep-dives.temporal",
+   "sd.core-concepts.sharding",
+   "sd.core-concepts.data-modeling"
+  ]
+ },
+ "donations-website-charities": {
+  "title": "限时慈善捐款网站",
+  "requires": [
+   "sd.core-concepts.api-design",
+   "sd.deep-dives.kafka",
+   "sd.core-concepts.data-modeling"
+  ]
+ },
+ "food-item-reviews": {
+  "title": "带打赏的菜品评价系统",
+  "requires": [
+   "sd.core-concepts.data-modeling",
+   "sd.core-concepts.caching",
+   "sd.deep-dives.kafka",
+   "sd.core-concepts.api-design"
+  ]
+ },
+ "file-sync-system": {
+  "title": "云盘与文件同步系统",
+  "requires": [
+   "sd.core-concepts.data-modeling",
+   "sd.core-concepts.sharding",
+   "sd.core-concepts.caching",
+   "sd.core-concepts.api-design",
+   "sd.core-concepts.networking-essentials"
+  ]
+ },
+ "stock-trading-platform": {
+  "title": "简化版股票交易平台",
+  "requires": [
+   "sd.core-concepts.data-modeling",
+   "sd.core-concepts.api-design",
+   "sd.core-concepts.networking-essentials"
+  ]
+ },
+ "disposable-email": {
+  "title": "临时邮箱服务",
+  "requires": [
+   "sd.core-concepts.networking-essentials",
+   "sd.deep-dives.redis",
+   "sd.deep-dives.cassandra",
+   "sd.core-concepts.data-modeling"
+  ]
+ },
+ "crowdfunding-share-purchase": {
+  "title": "限时众筹购股系统",
+  "requires": [
+   "sd.deep-dives.redis",
+   "sd.core-concepts.api-design",
+   "sd.core-concepts.sharding",
+   "sd.core-concepts.data-modeling"
+  ]
+ },
+ "flight-search-system": {
+  "title": "机票搜索系统（按调用计费的多供应商聚合）",
+  "requires": [
+   "sd.core-concepts.caching",
+   "sd.deep-dives.redis",
+   "sd.core-concepts.api-design"
+  ]
+ },
+ "kv-store-eviction": {
+  "title": "可配置淘汰策略的内存键值存储",
+  "requires": [
+   "lld.in-a-hurry.patterns",
+   "lld.in-a-hurry.design-principles",
+   "lld.in-a-hurry.oop-concepts",
+   "lld.concurrency.intro",
+   "sd.core-concepts.caching"
+  ]
+ },
+ "elevator-design": {
+  "title": "电梯系统",
+  "requires": [
+   "lld.in-a-hurry.delivery",
+   "lld.in-a-hurry.patterns",
+   "lld.in-a-hurry.oop-concepts",
+   "lld.concurrency.intro"
+  ]
+ },
+ "date-time-management": {
+  "title": "日期时间库",
+  "requires": [
+   "lld.in-a-hurry.delivery",
+   "lld.in-a-hurry.oop-concepts",
+   "lld.in-a-hurry.design-principles",
+   "lld.in-a-hurry.patterns"
+  ]
+ },
+ "scheduler-system-design": {
+  "title": "任务调度器",
+  "requires": [
+   "lld.in-a-hurry.patterns",
+   "lld.concurrency.intro",
+   "lld.in-a-hurry.delivery",
+   "sd.deep-dives.temporal"
+  ]
+ },
+ "recently-viewed-items": {
+  "title": "最近浏览记录",
+  "requires": [
+   "lld.in-a-hurry.delivery",
+   "lld.in-a-hurry.oop-concepts",
+   "lld.concurrency.intro",
+   "sd.core-concepts.caching"
+  ]
+ }
+}

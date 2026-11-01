@@ -1,6 +1,6 @@
 ---
 id: hi-sd-networking-essentials-7-region-latency
-node: sd.core-concepts.networking-essentials
+node: qb.sd.messenger-chat-system.pre-sd-core-concepts-networking-essentials
 type: qa
 step: 7
 ---

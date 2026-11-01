@@ -1,6 +1,6 @@
 ---
 id: hi-sd-cap-theorem-1-three-properties
-node: sd.core-concepts.cap-theorem
+node: qb.sd.distributed-rate-limiter.pre-sd-core-concepts-cap-theorem
 type: qa
 step: 1
 ---

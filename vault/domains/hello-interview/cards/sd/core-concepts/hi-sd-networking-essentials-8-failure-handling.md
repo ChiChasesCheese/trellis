@@ -1,6 +1,6 @@
 ---
 id: hi-sd-networking-essentials-8-failure-handling
-node: sd.core-concepts.networking-essentials
+node: qb.sd.messenger-chat-system.pre-sd-core-concepts-networking-essentials
 type: qa
 step: 8
 ---

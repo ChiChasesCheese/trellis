@@ -1,5 +1,5 @@
 ---
-nodes: [sd.deep-dives.cassandra]
+nodes: [qb.sd.notification-system-scale.pre-sd-deep-dives-cassandra]
 url: https://www.hellointerview.com/learn/system-design/deep-dives/cassandra
 tags: [no-archive]
 ---

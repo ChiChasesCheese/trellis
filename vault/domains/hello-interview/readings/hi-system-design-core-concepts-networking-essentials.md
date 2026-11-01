@@ -1,5 +1,5 @@
 ---
-nodes: [sd.core-concepts.networking-essentials]
+nodes: [qb.sd.messenger-chat-system.pre-sd-core-concepts-networking-essentials]
 url: https://www.hellointerview.com/learn/system-design/core-concepts/networking-essentials
 tags: [no-archive]
 ---

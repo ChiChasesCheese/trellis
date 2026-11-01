@@ -1,6 +1,6 @@
 ---
 id: hi-sd-cap-theorem-7-consistency-spectrum
-node: sd.core-concepts.cap-theorem
+node: qb.sd.distributed-rate-limiter.pre-sd-core-concepts-cap-theorem
 type: qa
 step: 7
 ---

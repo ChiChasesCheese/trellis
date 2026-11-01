@@ -1,5 +1,5 @@
 ---
-nodes: [sd.deep-dives.api-gateway]
+nodes: [qb.sd.distributed-rate-limiter.pre-sd-deep-dives-api-gateway]
 url: https://www.hellointerview.com/learn/system-design/deep-dives/api-gateway
 tags: [no-archive]
 ---

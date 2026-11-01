@@ -1,6 +1,6 @@
 ---
 id: hi-lld-delivery-7-extensibility
-node: lld.in-a-hurry.delivery
+node: qb.lld.beverage-vending-system.pre-lld-in-a-hurry-delivery
 type: qa
 step: 7
 ---

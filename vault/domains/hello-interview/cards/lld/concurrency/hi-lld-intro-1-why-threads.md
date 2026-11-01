@@ -1,6 +1,6 @@
 ---
 id: hi-lld-intro-1-why-threads
-node: lld.concurrency.intro
+node: qb.lld.kv-store-eviction.pre-lld-concurrency-intro
 type: qa
 step: 1
 ---

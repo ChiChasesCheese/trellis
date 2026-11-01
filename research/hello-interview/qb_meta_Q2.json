@@ -1,0 +1,149 @@
+{
+ "job-scheduler-cron-history": {
+  "title": "分布式任务调度器（含 cron 与一年执行历史）",
+  "requires": [
+   "sd.core-concepts.sharding",
+   "sd.core-concepts.data-modeling",
+   "sd.deep-dives.kafka",
+   "sd.deep-dives.redis",
+   "sd.deep-dives.temporal"
+  ]
+ },
+ "top-k-counts": {
+  "title": "Top-K 热门榜（视频播放、歌曲、话题标签）",
+  "requires": [
+   "sd.core-concepts.sharding",
+   "sd.core-concepts.caching",
+   "sd.deep-dives.kafka",
+   "sd.deep-dives.redis",
+   "sd.deep-dives.time-series-databases"
+  ]
+ },
+ "notification-system-scale": {
+  "title": "通知系统（支持单发与群发，百万级每秒）",
+  "requires": [
+   "sd.deep-dives.kafka",
+   "sd.deep-dives.redis",
+   "sd.core-concepts.api-design",
+   "sd.core-concepts.data-modeling",
+   "sd.deep-dives.cassandra"
+  ]
+ },
+ "web-crawler-design": {
+  "title": "网络爬虫（Web Crawler）",
+  "requires": [
+   "sd.core-concepts.sharding",
+   "sd.core-concepts.consistent-hashing",
+   "sd.core-concepts.networking-essentials",
+   "sd.deep-dives.kafka",
+   "sd.deep-dives.dynamodb"
+  ]
+ },
+ "hotel-booking-system": {
+  "title": "酒店预订系统（Expedia 型聚合与自营）",
+  "requires": [
+   "sd.core-concepts.data-modeling",
+   "sd.core-concepts.sharding",
+   "sd.core-concepts.caching",
+   "sd.deep-dives.elasticsearch"
+  ]
+ },
+ "feature-flag-service": {
+  "title": "功能开关服务（Feature Flag Service）",
+  "requires": [
+   "sd.core-concepts.caching",
+   "sd.core-concepts.api-design",
+   "sd.core-concepts.data-modeling",
+   "sd.core-concepts.networking-essentials",
+   "sd.core-concepts.cap-theorem"
+  ]
+ },
+ "coding-contest-platform": {
+  "title": "在线判题与编程竞赛平台（LeetCode）",
+  "requires": [
+   "sd.deep-dives.redis",
+   "sd.core-concepts.api-design",
+   "sd.core-concepts.data-modeling",
+   "sd.core-concepts.caching",
+   "sd.core-concepts.cap-theorem"
+  ]
+ },
+ "stock-price-alerts": {
+  "title": "股票价格提醒系统",
+  "requires": [
+   "sd.deep-dives.kafka",
+   "sd.deep-dives.redis",
+   "sd.core-concepts.sharding",
+   "sd.core-concepts.data-modeling",
+   "sd.deep-dives.dynamodb"
+  ]
+ },
+ "social-feed-generation": {
+  "title": "社交信息流生成系统（News Feed）",
+  "requires": [
+   "sd.core-concepts.caching",
+   "sd.core-concepts.sharding",
+   "sd.core-concepts.api-design",
+   "sd.deep-dives.redis",
+   "sd.deep-dives.kafka"
+  ]
+ },
+ "photo-storage-sharing": {
+  "title": "照片存储与分享系统（Google Photos）",
+  "requires": [
+   "sd.core-concepts.data-modeling",
+   "sd.core-concepts.sharding",
+   "sd.core-concepts.caching",
+   "sd.core-concepts.api-design",
+   "sd.deep-dives.dynamodb"
+  ]
+ },
+ "beverage-vending-system": {
+  "title": "多地点饮品自助售卖系统",
+  "requires": [
+   "lld.in-a-hurry.delivery",
+   "lld.in-a-hurry.design-principles",
+   "lld.in-a-hurry.oop-concepts",
+   "lld.in-a-hurry.patterns",
+   "lld.concurrency.intro"
+  ]
+ },
+ "event-ticket-booking": {
+  "title": "活动票务预订后端（防超卖的 REST 服务）",
+  "requires": [
+   "lld.in-a-hurry.delivery",
+   "lld.concurrency.intro",
+   "lld.in-a-hurry.oop-concepts",
+   "sd.core-concepts.api-design"
+  ]
+ },
+ "figma-draw-api": {
+  "title": "矢量图形编辑器的绘图 API（类 Figma）",
+  "requires": [
+   "lld.in-a-hurry.delivery",
+   "lld.in-a-hurry.patterns",
+   "lld.in-a-hurry.oop-concepts",
+   "sd.core-concepts.networking-essentials"
+  ]
+ },
+ "parking-lot-system": {
+  "title": "停车场管理系统",
+  "requires": [
+   "lld.in-a-hurry.delivery",
+   "lld.in-a-hurry.oop-concepts",
+   "lld.in-a-hurry.design-principles",
+   "lld.in-a-hurry.patterns",
+   "lld.concurrency.intro"
+  ]
+ },
+ "job-board-platform": {
+  "title": "招聘信息平台（Job Board）",
+  "requires": [
+   "lld.in-a-hurry.delivery",
+   "lld.in-a-hurry.oop-concepts",
+   "lld.in-a-hurry.design-principles",
+   "lld.in-a-hurry.patterns",
+   "lld.concurrency.intro"
+  ]
+ }
+}

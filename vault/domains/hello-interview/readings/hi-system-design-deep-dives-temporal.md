@@ -1,5 +1,5 @@
 ---
-nodes: [sd.deep-dives.temporal]
+nodes: [qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-temporal]
 url: https://www.hellointerview.com/learn/system-design/deep-dives/temporal
 tags: [no-archive]
 ---

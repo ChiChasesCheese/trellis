@@ -1,6 +1,6 @@
 ---
 id: hi-sd-vector-databases-1-why-ann
-node: sd.deep-dives.vector-databases
+node: qb.sd.chatbot-design.pre-sd-deep-dives-vector-databases
 type: qa
 step: 1
 ---

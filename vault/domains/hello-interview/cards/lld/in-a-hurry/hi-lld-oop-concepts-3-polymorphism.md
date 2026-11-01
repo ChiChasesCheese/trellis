@@ -1,6 +1,6 @@
 ---
 id: hi-lld-oop-concepts-3-polymorphism
-node: lld.in-a-hurry.oop-concepts
+node: qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
 type: qa
 step: 3
 ---

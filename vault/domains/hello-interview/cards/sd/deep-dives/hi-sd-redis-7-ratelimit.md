@@ -1,6 +1,6 @@
 ---
 id: hi-sd-redis-7-ratelimit
-node: sd.deep-dives.redis
+node: qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
 type: qa
 step: 7
 ---

@@ -1,0 +1,7 @@
+---
+id: hi-qb-book-seller-platform
+node: qb.sd.book-seller-platform.answer
+type: qa
+body: interviews/core/design-questions/book-seller-platform
+meta: "被报告 105 次 · Amazon、Databricks · 最近 2026-10"
+---

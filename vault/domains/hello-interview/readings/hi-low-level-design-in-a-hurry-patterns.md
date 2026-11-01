@@ -1,5 +1,5 @@
 ---
-nodes: [lld.in-a-hurry.patterns]
+nodes: [qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns]
 url: https://www.hellointerview.com/learn/low-level-design/in-a-hurry/patterns
 tags: [no-archive]
 ---

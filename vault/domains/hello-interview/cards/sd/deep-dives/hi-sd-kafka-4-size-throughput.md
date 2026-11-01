@@ -1,6 +1,6 @@
 ---
 id: hi-sd-kafka-4-size-throughput
-node: sd.deep-dives.kafka
+node: qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
 type: qa
 step: 4
 ---

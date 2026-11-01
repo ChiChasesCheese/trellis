@@ -1,5 +1,5 @@
 ---
-nodes: [lld.in-a-hurry.design-principles]
+nodes: [qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles]
 url: https://www.hellointerview.com/learn/low-level-design/in-a-hurry/design-principles
 tags: [no-archive]
 ---

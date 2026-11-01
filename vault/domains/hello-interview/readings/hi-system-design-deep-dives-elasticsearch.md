@@ -1,5 +1,5 @@
 ---
-nodes: [sd.deep-dives.elasticsearch]
+nodes: [qb.sd.hotel-booking-system.pre-sd-deep-dives-elasticsearch]
 url: https://www.hellointerview.com/learn/system-design/deep-dives/elasticsearch
 tags: [no-archive]
 ---

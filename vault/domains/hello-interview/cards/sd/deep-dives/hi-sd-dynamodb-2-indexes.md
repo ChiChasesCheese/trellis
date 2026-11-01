@@ -1,6 +1,6 @@
 ---
 id: hi-sd-dynamodb-2-indexes
-node: sd.deep-dives.dynamodb
+node: qb.sd.messenger-chat-system.pre-sd-deep-dives-dynamodb
 type: qa
 step: 2
 ---

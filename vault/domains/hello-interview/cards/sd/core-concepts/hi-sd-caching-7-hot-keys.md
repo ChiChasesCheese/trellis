@@ -1,6 +1,6 @@
 ---
 id: hi-sd-caching-7-hot-keys
-node: sd.core-concepts.caching
+node: qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
 type: qa
 step: 7
 ---
