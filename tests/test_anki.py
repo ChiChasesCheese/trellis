@@ -203,3 +203,26 @@ def test_align_deletes_only_the_topmost_stale_decks(tmp_path):
     result = align(load_skeleton(sk), call=call)
     assert deleted == ["D::02 Old"]
     assert set(result["deleted"]) >= {"D::02 Old", "D::02 Old::Leaf"}
+
+
+def test_apply_study_leaves_other_domains_under_the_same_root_alone(tmp_path):
+    from trellis.anki import apply_study
+    from trellis.skeleton import load_skeleton
+    p = tmp_path / "s.yaml"
+    p.write_text("domain: d\ntitle: T\ndeck: Root\nnodes:\n  - id: a\n    order: 1\n    title: A\n", encoding="utf-8")
+    sk = load_skeleton(p)
+    seen = {}
+
+    def call(action, url=None, **params):
+        if action == "deckNames":
+            return ["Root", "Root::01 A", "Root::24 Other domain", "Root::24 Other domain::x"]
+        if action == "getDeckConfig":
+            return {"id": 1, "name": "Default", "new": {"perDay": 20}, "rev": {"perDay": 200}}
+        if action == "cloneDeckConfigId":
+            return 7
+        if action == "setDeckConfigId":
+            seen["decks"] = params["decks"]
+        return None
+
+    apply_study(sk, sk.study, call=call)
+    assert seen["decks"] == ["Root", "Root::01 A"]

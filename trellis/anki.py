@@ -256,7 +256,10 @@ def apply_study(skeleton: Skeleton, study: Study, call: Callable = invoke,
     the rest of the collection usually shares, is never written to.
     """
     root = skeleton.root_deck
-    decks = [d for d in call("deckNames", url) if d == root or d.startswith(root + "::")]
+    # only the decks this skeleton owns: other domains may live under the same root (LeetCode Tops::24, ::28 ...)
+    # and keep their own presets
+    owned = {root} | {skeleton.deck_name(n) for n in skeleton.walk()}
+    decks = [d for d in call("deckNames", url) if d in owned]
     if not decks:
         return "no decks yet"
     name = PRESET_PREFIX + skeleton.title
