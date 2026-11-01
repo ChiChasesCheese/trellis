@@ -1,0 +1,1344 @@
+{
+ "patterns": [
+  {
+   "id": "idempotency-keys",
+   "track": "sd",
+   "title": "幂等键与只生效一次 (Idempotency Keys / Exactly-once Effect)",
+   "summary": "用唯一约束先原子占住一个由业务意图决定的键，再把业务动作与结果保存放进同一事务，让重试和并发重复请求合并成一次生效。",
+   "questions": [
+    {
+     "slug": "tt-idempotent-transfer",
+     "how": "转账请求带客户端生成的幂等键，先用唯一约束插入“进行中”记录，业务动作和保存结果在同一事务里提交，重复请求读出第一次的响应。",
+     "differs": "这是幂等本身的教科书题，重点是“进行中”状态与并发合并、同键不同请求要拒绝、业务拒绝要不要被记住。"
+    },
+    {
+     "slug": "payment-batch-processing",
+     "how": "支付请求先写库再调网络，用幂等键和支付唯一标识在客户端、服务端、对网络三层防止重复冻结与重复结算。",
+     "differs": "键的作用范围延伸到对外部卡组织的调用和每日批量，所以还要处理超时后“钱到底冻没冻”的未知结果。"
+    },
+    {
+     "slug": "donations-website-charities",
+     "how": "前端为每次捐款生成 UUID 作为幂等键，用户双击、PSP 超时重发时都落在同一条捐款记录上。",
+     "differs": "键由前端生成是因为服务端生成的 ID 在用户重发时无法关联，同时 PSP 自己也要接收同一个键保证对方不重复扣款。"
+    },
+    {
+     "slug": "crowdfunding-share-purchase",
+     "how": "扣款调用用同一个幂等键重试，库存预留和确认也按购买单 ID 去重，超时后可以安全地重发。",
+     "differs": "余额服务不归我们管，必须依赖它支持幂等键；若它不支持就只能先查询再重试，这是本题特有的追问。"
+    },
+    {
+     "slug": "tt-live-gift-coin-settlement",
+     "how": "每份礼物用 gift_id 作主键，主键冲突即表示已处理，直接读出第一次的结果；充值用 (平台, 交易号) 做主键。",
+     "differs": "除了扣币路径，下游的收益聚合器也要按 gift_id 去重来吸收发件箱的至少一次投递，两处幂等各管一段。"
+    },
+    {
+     "slug": "tt-realtime-auction-bidding",
+     "how": "每次出价带客户端出价 ID，在同一事务里判重并更新最高价，崩溃重试不会让同一次出价生效两次。",
+     "differs": "幂等和“价格不能倒退”叠加，需要用世代号和单一写者给同一场拍卖的出价排出唯一的先后。"
+    },
+    {
+     "slug": "book-seller-platform",
+     "how": "对书商的下单请求使用稳定的采购请求 ID，顾客重复提交和对书商的重试都不会重复购买。",
+     "differs": "对方是不可靠的第三方，既可能重复响应也可能不支持幂等，所以要加“先查询后下单”和补偿退款。"
+    },
+    {
+     "slug": "job-scheduler-cron-history",
+     "how": "每次触发用 (任务, 计划时间) 作为执行标识，worker 重试和调度器故障转移时靠它避免同一次触发被执行两遍。",
+     "differs": "保证的是“至少一次执行且不会同时执行两次”，幂等由租约、围栏令牌和任务自身的幂等共同提供，而不是单个键表。"
+    },
+    {
+     "slug": "messenger-chat-system",
+     "how": "消息带客户端消息 ID 与会话内序号，发送重试和断线补收时服务端按 ID 去重，保证收件人不会看到重复消息。",
+     "differs": "去重的对象是消息而不是资金，代价低，用会话内序号加游标即可，并不需要在事务里保存完整响应。"
+    }
+   ]
+  },
+  {
+   "id": "append-only-ledger",
+   "track": "sd",
+   "title": "只追加账本与派生余额 (Append-only Ledger / Double-entry)",
+   "summary": "把借贷平衡的只追加分录当作唯一事实，余额与历史余额只是同事务更新的派生投影，纠错只靠新的冲正分录。",
+   "questions": [
+    {
+     "slug": "tt-double-entry-ledger",
+     "how": "用日志加派生余额索引代替一个可变的余额字段，三条不变量是分录平衡、余额等于腿之和、纠错只靠新分录。",
+     "differs": "这是类设计层面的版本，重点在带符号金额、冻结与可用余额、用 (账户,币种,序号) 做索引的实现。"
+    },
+    {
+     "slug": "tt-wallet-ledger-service",
+     "how": "钱包余额只是账本的投影，同步路径用条件更新扣款并同事务写分录，其余汇总全部异步。",
+     "differs": "关注服务级问题：分片、热点账户、跨分片转账走“在途”账户加幂等，而不用分布式事务。"
+    },
+    {
+     "slug": "tt-live-gift-coin-settlement",
+     "how": "观众侧用强一致钱包流水扣币，主播侧收益从事件重算，退款到达时写负的冲销流水而不是改旧行。",
+     "differs": "把“同步的钱”和“异步的账”拆成两条路径，实时展示可以是估计值，周结算靠重算对上每一分钱。"
+    },
+    {
+     "slug": "payment-batch-processing",
+     "how": "授权冻结、清算、结算每一步都记账成交易行，批量结算以账本为准做净额汇总。",
+     "differs": "账本要面对外部卡组织的净额和费用，重点是批量不漏不重，而不是余额读写的热点。"
+    },
+    {
+     "slug": "food-item-reviews",
+     "how": "把里程碑达成写成一张里程碑账本，用唯一约束保证每个里程碑只付一次，付款动作与高频投票解耦。",
+     "differs": "账本只记录低频的付款里程碑，高频票数本身可丢可重算，不进账本。"
+    },
+    {
+     "slug": "tt-installment-plan",
+     "how": "分期计划是合同的一部分，任何变更都生成新计划并保留旧计划，同样遵循“只追加不改旧行”。",
+     "differs": "追加的对象是计划版本而不是分录，重点是各期本金之和守恒，取整误差由最后一期吸收。"
+    },
+    {
+     "slug": "stock-trading-platform",
+     "how": "下单时冻结资金、成交时按执行报告记账，资金与持仓的变化都落成流水。",
+     "differs": "流水要与外部交易所的执行报告对上，所以更强调有状态订单机和与交易所之间的对账。"
+    }
+   ]
+  },
+  {
+   "id": "reserve-confirm-saga",
+   "track": "sd",
+   "title": "先预留再确认与补偿 (Reserve-Confirm / Saga instead of 2PC)",
+   "summary": "跨两个系统时先做可撤销的预留，再做不可逆的动作，最后确认；任何一步失败都有明确的释放或补偿，而不依赖分布式事务。",
+   "questions": [
+    {
+     "slug": "crowdfunding-share-purchase",
+     "how": "先原子预留股份，再调用余额服务扣款，成功后确认，失败或超时则释放预留。",
+     "differs": "明确回答“为什么不用 2PC”：余额服务是别人的，2PC 持锁时间长，所以用幂等加补偿。"
+    },
+    {
+     "slug": "hotel-booking-system",
+     "how": "房型×夜晚的库存行带 TTL 地预留，支付后确认，用状态机 HELD→PAID→PENDING_SUPPLIER→CONFIRMED 驱动恢复。",
+     "differs": "对接外部供应商，要加“待供应商确认”这个中间态，并用发件箱而不是两阶段提交驱动。"
+    },
+    {
+     "slug": "event-ticket-booking",
+     "how": "保留—购买—过期三态，用一条条件更新占住库存，慢的付款调用放在数据库事务之外。",
+     "differs": "所有释放动作都要幂等，避免同一份库存被过期任务和取消同时释放两次。"
+    },
+    {
+     "slug": "tt-flash-sale-ticketing",
+     "how": "预占返回 hold_id，占位 10 分钟内有效，付款回调确认，迟到的成功走恢复或退款。",
+     "differs": "预占之前还有多层准入，真相落在数据库，预占的生命周期要覆盖排队积压与支付回调延迟。"
+    },
+    {
+     "slug": "beverage-vending-system",
+     "how": "下单先在目标机器预留原料，制作成功才真正扣减，失败则释放。",
+     "differs": "预留的是一台机器上的物理原料，订单与机器各自是状态机，机器故障时要改派或退款。"
+    },
+    {
+     "slug": "grocery-subscription-orders",
+     "how": "订阅转订单要同时扣库存和钱包，步骤有固定顺序，失败时按顺序补偿。",
+     "differs": "是类设计层面的小事务，重点在每用户一把锁、条件更新和任务重跑时不重复下单。"
+    },
+    {
+     "slug": "stock-trading-platform",
+     "how": "先在本地数据库冻结资金、写订单，再经发件箱发往交易所，成交后释放或结转。",
+     "differs": "第二个系统是交易所，取消与成交会竞争，所以预留的结果最终由执行报告决定。"
+    },
+    {
+     "slug": "book-seller-platform",
+     "how": "对多家书商询价后只向一家下单，付款分“先授权后捕获”，下单失败则撤销授权。",
+     "differs": "预留的是顾客的授权额度，对方（书商）可能涨价或卖光，所以要有价格上限和降级到次优书商。"
+    }
+   ]
+  },
+  {
+   "id": "unknown-outcome-and-reconciliation",
+   "track": "sd",
+   "title": "结果未知与对账修复 (Unknown Outcome / Reconciliation)",
+   "summary": "跨系统调用超时时不知道对方到底成没成，所以先写本地记录、保留 UNKNOWN 状态、用查询回查，并让独立来源的记录定期互相印证来发现和修复差异。",
+   "questions": [
+    {
+     "slug": "payment-batch-processing",
+     "how": "先写库再调网络，超时进入 UNKNOWN，靠查询或对账确认钱到底冻没冻。",
+     "differs": "还要覆盖一天一次的巨型批处理被拒后怎么重试、转人工或向商户追索。"
+    },
+    {
+     "slug": "tt-payment-reconciliation",
+     "how": "拿内部账本、PSP 结算文件、银行流水三方互相印证，把时间差和真差异分开分类。",
+     "differs": "这是对账本身：银行只给汇总不给明细，所以要分层匹配，并防止上游故障一下产生百万条差异。"
+    },
+    {
+     "slug": "donations-website-charities",
+     "how": "PSP 超时或 webhook 丢了时，用同步确认和轮询查询拿到结果，不确定的捐款标为 UNKNOWN 再对账。",
+     "differs": "重点是“最多扣一次钱且系统最终知道”，包括 PSP 挂了时备用支付方式的安全切换规则。"
+    },
+    {
+     "slug": "stock-trading-platform",
+     "how": "订单发给交易所后没有响应时，靠唯一引用号加执行报告对账确认真实状态。",
+     "differs": "对方是交易所，状态会在取消与成交的竞争中变化，所以对账要处理部分成交和延迟的报告。"
+    },
+    {
+     "slug": "tt-live-gift-coin-settlement",
+     "how": "流式路径出的实时数字只是估计，周结算由批处理从事件重算，差异超阈值就报警。",
+     "differs": "对账的是自己的两条路径，用来发现流式路径丢事件或有 bug，而不是对外部方。"
+    },
+    {
+     "slug": "tt-wallet-ledger-service",
+     "how": "每天比对新账本推出的余额与老系统余额，以及两侧购买计数，发现差异再修复。",
+     "differs": "场景是迁移与持续校验，借贷平衡本身就是持续运行的自检。"
+    },
+    {
+     "slug": "tt-merchant-webhook-delivery",
+     "how": "商户说没收到时，靠控制台查 Attempt、按游标补拉事件日志、手动重发来对齐两边。",
+     "differs": "这里的“对账”是让接收方追上事件日志，而不是金额核对，目标是不丢事件。"
+    },
+    {
+     "slug": "like-unlike-system",
+     "how": "总数是派生值，允许漂移，定期从事实表重算校正。",
+     "differs": "漂移的代价很低，不需要账务级对账，重算频率由准确性要求决定。"
+    }
+   ]
+  },
+  {
+   "id": "entity-state-machine",
+   "track": "both",
+   "title": "实体状态机与合法迁移 (Entity State Machine)",
+   "summary": "把业务实体建成有限状态机，迁移表声明合法的跳转，用条件更新或单线程执行迁移，让重试、过期和并发都只能走合法路径。",
+   "questions": [
+    {
+     "slug": "event-ticket-booking",
+     "how": "票据按保留—购买—过期三态流转，每次迁移是一条带条件的原子更新。",
+     "differs": "释放动作要幂等，状态机是防止同一份库存被释放两次的核心。"
+    },
+    {
+     "slug": "hotel-booking-system",
+     "how": "HELD→PAID→PENDING_SUPPLIER→CONFIRMED，每一步在本地事务内改状态，崩溃后由状态驱动恢复。",
+     "differs": "用状态机代替分布式事务，状态里要显式表示对外部供应商的等待。"
+    },
+    {
+     "slug": "online-chess-platform",
+     "how": "一局棋是一个小而强一致的状态机，走子、悔棋、超时、认输都由唯一写者串行迁移。",
+     "differs": "事件来自两位玩家和计时器，所以重点在单写者归属与宕机后的恢复，而不是吞吐。"
+    },
+    {
+     "slug": "stock-trading-platform",
+     "how": "订单从已提交到已发送、部分成交、已成交、已取消，取消与成交会竞争。",
+     "differs": "状态由外部交易所的执行报告推进，要处理乱序与部分成交。"
+    },
+    {
+     "slug": "job-board-platform",
+     "how": "申请有合法迁移表，且同一求职者对同一职位只能有一个有效申请，迁移还带权限。",
+     "differs": "迁移的触发方分角色（求职者、雇主），所以状态机里要带谁可以做哪个迁移。"
+    },
+    {
+     "slug": "beverage-vending-system",
+     "how": "订单和机器各自是状态机，机器故障时订单据此改派或失败。",
+     "differs": "两个状态机相互影响，库存预留跨在它们之间。"
+    },
+    {
+     "slug": "elevator-design",
+     "how": "单部电梯是一个小状态机（空闲、上行、下行、开门），所有状态变化收在一个线程里。",
+     "differs": "状态机与可替换的调度策略分离，并发靠单线程而不是加锁。"
+    },
+    {
+     "slug": "api-circuit-breaker",
+     "how": "熔断器是闭合、打开、半开的状态机，下游持续失败时快速失败再探测恢复。",
+     "differs": "难点是并发下迁移的正确性：半开期只放少量探测，迟到的旧结果不能污染新状态。"
+    }
+   ]
+  },
+  {
+   "id": "transactional-outbox",
+   "track": "sd",
+   "title": "事务外盒与可靠发布事件 (Transactional Outbox)",
+   "summary": "把业务状态变更和要发出的事件放进同一个本地事务，再由中继进程把它们至少一次地投递到队列，消除“库改了消息没发”的双写问题。",
+   "questions": [
+    {
+     "slug": "tt-merchant-webhook-delivery",
+     "how": "支付服务在更新状态的同一事务里写 Event，扇出到各商户的投递表，保证“状态变了而事件没发”不可能出现。",
+     "differs": "下游是外部商户，所以后面还有指数退避、按端点隔离的并发额度和商户去重。"
+    },
+    {
+     "slug": "tt-live-gift-coin-settlement",
+     "how": "礼物事务同时写事件、钱包、币流水和发件箱，中继把事件投递给收益聚合器。",
+     "differs": "消费者要按 gift_id 去重，因为发件箱只保证至少一次。"
+    },
+    {
+     "slug": "tt-wallet-ledger-service",
+     "how": "每笔业务在本片的一个事务里写分录和发件箱，跨分片转账靠发件箱把事件送到对方分片。",
+     "differs": "发件箱承担了跨分片转账的第二半步，接收方分片用同一个 transfer_id 幂等入账。"
+    },
+    {
+     "slug": "tt-realtime-auction-bidding",
+     "how": "出价和“出价已接受”事件在同一事务里写入 outbox，再投递到按 auction_id 分区的 Kafka。",
+     "differs": "被超越的通知可以丢，只有赢家和付款相关消息才必须经 outbox 保证送达。"
+    },
+    {
+     "slug": "stock-trading-platform",
+     "how": "订单提交与发件箱记录同事务，进程在发出前崩溃，重启后继续发。",
+     "differs": "投递的对象是交易所下单，所以必须配合唯一引用号避免重复发单。"
+    },
+    {
+     "slug": "hotel-booking-system",
+     "how": "状态变更与调用供应商的消息一起写入 outbox，由中继进程投递。",
+     "differs": "对应的是对外部供应商的确认调用，结合状态机做恢复。"
+    },
+    {
+     "slug": "donations-website-charities",
+     "how": "支付成功时状态更新与发件箱记录同事务，由投递器异步触发回执邮件。",
+     "differs": "下游只是通知，失败不影响捐款结果，所以只需要最简单的至少一次。"
+    },
+    {
+     "slug": "food-item-reviews",
+     "how": "票的差值通过发件箱写入事件流，聚合器按 reviewId 分区批量更新计数。",
+     "differs": "发件箱还承担削峰：热点评论一秒内的多次投票合并成一次更新。"
+    }
+   ]
+  },
+  {
+   "id": "retry-backoff-dead-letter",
+   "track": "sd",
+   "title": "至少一次、重试退避与死信 (At-least-once / Retry / Backoff / DLQ)",
+   "summary": "对不可靠的下游只能保证至少一次，用指数退避加抖动、重试上限、死信队列和接收方去重来换取不丢，并避免重试风暴。",
+   "questions": [
+    {
+     "slug": "tt-merchant-webhook-delivery",
+     "how": "商户端点失败后指数退避加抖动，超限进入死信并支持手动重发，接收方按事件号去重。",
+     "differs": "明确说“对外部服务器没有恰好一次”，还要保证平台自己的重试不会变成对商户的 DDoS。"
+    },
+    {
+     "slug": "notification-system-scale",
+     "how": "对第三方推送、邮件、短信通道做按通道限速、失败重试和降级到备用通道。",
+     "differs": "关键通知与群发促销物理隔离，每条消息都带过期时间，发送前再检查一次。"
+    },
+    {
+     "slug": "job-scheduler-cron-history",
+     "how": "worker 随时会死，所以靠租约和心跳检测超时，把任务重新放回队列，至少执行一次。",
+     "differs": "同时要保证“不会同时执行两次”，因此还需要围栏令牌，而不是只重试。"
+    },
+    {
+     "slug": "scheduler-system-design",
+     "how": "任务失败按重试策略再次入堆，优先级队列带老化来防饥饿。",
+     "differs": "是类设计层面的重试策略与持久化恢复，重点是失败后下一次触发时间的计算。"
+    },
+    {
+     "slug": "video-moderation-system",
+     "how": "流水线中每一阶段的消费都至少一次，下架这类副作用靠幂等键保证重试下恰好生效一次。",
+     "differs": "重试的是模型推理与处置动作，处置必须全程可审计。"
+    },
+    {
+     "slug": "web-crawler-design",
+     "how": "抓取失败重新入队并带退避，进度持久化，爬虫崩溃后不会丢失进度。",
+     "differs": "重试还要尊重礼貌约束和每站点速率，重试次数过多的站点要降权。"
+    },
+    {
+     "slug": "messenger-chat-system",
+     "how": "消息经收件箱兜底，网关宕机或发布订阅丢消息时客户端带游标补收。",
+     "differs": "有序和幂等同时要求：重试不能改变会话内顺序，也不能重复显示。"
+    },
+    {
+     "slug": "payment-batch-processing",
+     "how": "被拒绝的批次进入重试批次，多次失败转人工或向商户追索。",
+     "differs": "重试对象是金额级的批量，必须保证幂等且可对账。"
+    }
+   ]
+  },
+  {
+   "id": "downstream-protection",
+   "track": "both",
+   "title": "下游保护：熔断、隔离与扇出预算 (Circuit Breaker / Bulkhead / Fan-out Budget)",
+   "summary": "对慢的、坏的、按调用计费的下游，用熔断快速失败、按下游隔离并发额度、缓存合并重复请求和调用预算，既保护对方也保护自己。",
+   "questions": [
+    {
+     "slug": "api-circuit-breaker",
+     "how": "连续失败或失败率超阈值后熔断，半开期用少量探测请求判断恢复。",
+     "differs": "是类设计，重点是线程安全、不持锁调用下游，以及慢调用也算失败。"
+    },
+    {
+     "slug": "tt-merchant-webhook-delivery",
+     "how": "每个商户端点有独立的并发额度和熔断器，积压恢复后慢启动逐步放出。",
+     "differs": "隔离的目的是让一个坏商户不拖垮别家，且恢复时不能变成对商户的冲击。"
+    },
+    {
+     "slug": "flight-search-system",
+     "how": "对多个按调用计费的供应商，用缓存、请求合并和按期望收益选供应商控制成本，并给每次搜索设预算。",
+     "differs": "保护的不只是延迟，还有供应商账单，所以把昂贵的最终确认价格推迟到用户真正选中行程时。"
+    },
+    {
+     "slug": "book-seller-platform",
+     "how": "对一堆不可靠的书商扇出询价，设超时和降级，避免扇出放大把书商压垮。",
+     "differs": "除了保护自己，还要保证最终只向一家书商成交一次。"
+    },
+    {
+     "slug": "notification-system-scale",
+     "how": "对第三方通道设限速与熔断，通道故障时切换备用通道。",
+     "differs": "保护对象是外部服务商，还要避免群发洪峰占满关键通知的通道。"
+    },
+    {
+     "slug": "web-crawler-design",
+     "how": "前沿队列按主机组织，每个站点串行且限速，让成千上万站点并行而不打垮单个站点。",
+     "differs": "保护的是被爬取的第三方（礼貌与 robots.txt），瓶颈是礼貌而不是计算。"
+    },
+    {
+     "slug": "chatbot-design",
+     "how": "大模型推理容量有限，用排队、限流和上下文长度管理保护 GPU，并支持中途取消。",
+     "differs": "被保护的下游是昂贵的 GPU 资源，所以重点是容量排队和流式中取消。"
+    }
+   ]
+  },
+  {
+   "id": "rate-limiting",
+   "track": "both",
+   "title": "限流算法与原子计数 (Rate Limiting)",
+   "summary": "限流是对海量计数器做低延迟的原子读改写，核心取舍是算法（令牌桶/滑动窗口）、状态放哪里与分片，以及限流器自身故障时放行还是拒绝。",
+   "questions": [
+    {
+     "slug": "distributed-rate-limiter",
+     "how": "比较固定窗口、滑动窗口日志、滑动窗口计数和令牌桶，用 Redis 的原子脚本做读改写并分片扛百万次每秒。",
+     "differs": "关注分布式规模：状态分片、为什么允许最终一致、多规则组合和限流器故障时放行或拒绝。"
+    },
+    {
+     "slug": "rate-limiter-system",
+     "how": "把算法做成可替换的策略，只管单个 key 的状态，外层负责按 key 管理与并发。",
+     "differs": "是单机类设计，重点是策略模式、死锁风险、单调时钟和注入假时钟。"
+    },
+    {
+     "slug": "tt-per-merchant-rate-limit",
+     "how": "令牌桶惰性补充让每次判定 O(1) 且不需要定时器，LRU 限制几十万商户的内存，分段加锁管并发。",
+     "differs": "多实例时把桶放进 Redis 用 Lua 原子完成，限流失败的默认取向按场景定：支付倾向拒绝。"
+    },
+    {
+     "slug": "tt-flash-sale-ticketing",
+     "how": "限流是逐层便宜地拒绝的一环，准入之后才让极少数请求碰到库存。",
+     "differs": "限流的目的是保护库存与数据库，99.6% 的请求注定失败，所以要在最外层拒绝。"
+    },
+    {
+     "slug": "web-crawler-design",
+     "how": "对每个站点限速，保持礼貌，遵守 robots.txt。",
+     "differs": "限的是出向请求，按主机限速而不是按调用方限速。"
+    },
+    {
+     "slug": "notification-system-scale",
+     "how": "对第三方通道设置限速，群发时懒扇出以免压垮通道。",
+     "differs": "限流是出向的、按通道的，而且关键通知必须不被群发挤占。"
+    },
+    {
+     "slug": "chatbot-design",
+     "how": "按用户和全局对推理请求限流，再加排队保护 GPU。",
+     "differs": "限的是昂贵的推理资源，常按 token 数而不是请求数计费限速。"
+    }
+   ]
+  },
+  {
+   "id": "fan-out-write-vs-read",
+   "track": "sd",
+   "title": "写扩散与读聚合 (Fan-out on Write vs on Read)",
+   "summary": "一份内容要到达很多接收者时，在写入时推到每个人的收件箱（快读、贵写）或在读取时再聚合（便宜写、贵读），大扇出的热点对象单独走混合方案。",
+   "questions": [
+    {
+     "slug": "twitter-clone-feed",
+     "how": "普通用户写时扇出到粉丝的 Redis 时间线，明星用户读时再拉，最后合并，形成混合方案。",
+     "differs": "时间线存的是 ID 的有序集合并限制长度，核心是粉丝数极不均匀下发推延迟与存储成本。"
+    },
+    {
+     "slug": "social-feed-generation",
+     "how": "普通用户的帖子推进粉丝收件箱，名人读时拉取，排序与广告放在读取时对少量候选做。",
+     "differs": "比 Twitter 题更强调排序放哪里、已读去重和分页稳定性。"
+    },
+    {
+     "slug": "news-aggregator-feed",
+     "how": "同一分类全员共享，所以读时归并几个分类的列表并几乎全部用缓存吃掉，而不做每用户写扩散。",
+     "differs": "正因读者共享同一内容，反而选读聚合：写扩散会让每篇文章要写很多份。"
+    },
+    {
+     "slug": "messenger-chat-system",
+     "how": "群聊消息扇出到每个成员的收件箱，在线成员通过各自网关推送。",
+     "differs": "扇出要路由到“收件人此刻连在哪台机器”，大群有成员数上限，可靠靠收件箱游标。"
+    },
+    {
+     "slug": "notification-system-scale",
+     "how": "群发在系统内部懒扇出，按分块并行发送，并在发送前检查过期。",
+     "differs": "扇出的对象是外部通道而不是自己的存储，重点是不让促销洪峰压住关键通知。"
+    },
+    {
+     "slug": "stock-price-alerts",
+     "how": "热门股票一次触发要扇出到上百万用户，分块并行发送，避免一次触发压垮发送端。",
+     "differs": "触发判断按股票分区做，扇出只发生在触发之后，而且要防抖避免重复提醒。"
+    },
+    {
+     "slug": "tt-realtime-auction-bidding",
+     "how": "最新价格以几百毫秒内的延迟推给几万个连接，按拍卖分区广播。",
+     "differs": "扇出的是一个数值，丢一次不要紧，下一次更新会覆盖，所以不需要持久收件箱。"
+    }
+   ]
+  },
+  {
+   "id": "realtime-push-connections",
+   "track": "sd",
+   "title": "实时推送与有状态连接 (WebSocket / Real-time Push)",
+   "summary": "有状态的长连接需要路由（对方在哪台网关）、断线重连后用游标补收，以及在推送不可靠时用拉取兜底。",
+   "questions": [
+    {
+     "slug": "messenger-chat-system",
+     "how": "会话目录记录用户连在哪台网关，消息按目录路由到对的网关，Redis 挂了由收件箱兜底。",
+     "differs": "同时要保证有序、幂等和离线补收，三者在上百亿条每天的规模下同时成立。"
+    },
+    {
+     "slug": "online-chess-platform",
+     "how": "两位玩家通过 WebSocket 连接到同一局的唯一写者，走子和计时事件实时下发。",
+     "differs": "规模不大但强一致，重点在宕机后重连到新写者和不判错时间。"
+    },
+    {
+     "slug": "tt-realtime-auction-bidding",
+     "how": "最新价格几百毫秒内推给几万个连接，状态页以快照为准。",
+     "differs": "推送允许丢，因为只关心最新价；出价本身走单独的强一致路径。"
+    },
+    {
+     "slug": "file-sync-system",
+     "how": "每个客户端一条连接，里面复用多个命名空间的通知，通知只负责降低延迟。",
+     "differs": "推送有损，所以仍然要轮询：游标是幂等的追赶机制，推送只是加速。"
+    },
+    {
+     "slug": "stock-trading-platform",
+     "how": "行情通过 WebSocket 按代码发布订阅，服务端对同一代码聚合后广播。",
+     "differs": "行情只是读数据，可以合并更新降低频率，订单状态才需要可靠通知。"
+    },
+    {
+     "slug": "chatbot-design",
+     "how": "回复用流式输出返回，并支持中途取消和断线后恢复。",
+     "differs": "是单向的流，连接占用 GPU 几秒到几十秒，重点是取消的及时回收资源。"
+    },
+    {
+     "slug": "coding-contest-platform",
+     "how": "提交结果是否用 WebSocket 推送是追问，默认用异步判题加轮询或推送通知。",
+     "differs": "结果是一次性的、尖峰时同时刷新，所以讨论的是推送与轮询的成本取舍。"
+    }
+   ]
+  },
+  {
+   "id": "hot-key-contention",
+   "track": "sd",
+   "title": "热点键与竞争 (Hot Keys / Sharded Counters)",
+   "summary": "单个计数器、账户、拍品或缓存键被集中读写时，把它拆成子计数器或批量合并，或让它由单一写者串行处理，并接受读侧的少量延迟。",
+   "questions": [
+    {
+     "slug": "like-unlike-system",
+     "how": "热门内容的点赞计数拆成多个子计数器再汇总，计数是派生值，事实表另存。",
+     "differs": "计数允许近似、可延迟，热点的代价只是不准一点点。"
+    },
+    {
+     "slug": "top-k-counts",
+     "how": "写入量太大时先在内存里局部聚合再批量写入，避免每次播放都打到同一个计数器。",
+     "differs": "热点是写入侧的海量事件，用近似算法（Count-Min Sketch）换内存和吞吐。"
+    },
+    {
+     "slug": "tt-live-gift-coin-settlement",
+     "how": "每秒 5000 份礼物冲一个主播，不做同步更新，而是 1 秒本地预聚合后写入子计数器。",
+     "differs": "观众扣币是强一致的钱，主播侧收益是可异步汇总的，热点只出现在后者。"
+    },
+    {
+     "slug": "food-item-reviews",
+     "how": "热点评论的票数一秒合并成一次更新，付款不在高频路径上。",
+     "differs": "票可丢可重算，付款不能错，所以热点处理只作用在票数这一侧。"
+    },
+    {
+     "slug": "tt-realtime-auction-bidding",
+     "how": "最后几秒同一拍品的出价是同一计数器上的高并发读改写，由同一场拍卖的唯一写者串行处理。",
+     "differs": "这个计数器是钱，不能拆分或近似，只能靠单写者和批量提交扛住。"
+    },
+    {
+     "slug": "tt-cache-consistency-hot-keys",
+     "how": "单个热点 key 的流量用本地缓存、副本拆分或加后缀分散，不落到某一个缓存节点。",
+     "differs": "热点在读侧，重点是缓存失效时不把数据库压垮（击穿）。"
+    },
+    {
+     "slug": "tt-wallet-ledger-service",
+     "how": "热点账户（平台、清算账户）按分片各拆一份，同步路径只做最少的事。",
+     "differs": "热点账户是账本自己的系统账户，必须保持借贷平衡，所以拆分成每片一份。"
+    },
+    {
+     "slug": "hotel-booking-system",
+     "how": "热门酒店的库存行被集中争用，用排队或批量处理减轻行锁竞争。",
+     "differs": "热点是库存行，扣减必须绝不超卖，所以只能排队不能近似。"
+    }
+   ]
+  },
+  {
+   "id": "single-writer-ordering",
+   "track": "sd",
+   "title": "单写者、序号与版本排序 (Single Writer / Sequence Numbers / Versioning)",
+   "summary": "同一实体的事件要有唯一的先后：用分区键保证单写者，用递增序号或版本号让乱序、重复和迟到的消息可以被识别和丢弃。",
+   "questions": [
+    {
+     "slug": "online-chess-platform",
+     "how": "同一局的所有事件由唯一写者串行处理，宕机后由新写者接管。",
+     "differs": "写者归属本身是难点：怎么保证任何时刻只有一个写者，以及玩家换设备后如何路由。"
+    },
+    {
+     "slug": "tt-realtime-auction-bidding",
+     "how": "同一场拍卖的出价按 auction_id 分区，用拥有者租约和世代号防双主，价格不倒退。",
+     "differs": "世代号（fencing token）用来拒绝旧写者的迟到写入，是本题最强的追问点。"
+    },
+    {
+     "slug": "messenger-chat-system",
+     "how": "同一会话的消息带会话内递增序号，客户端按序号显示并用游标补收。",
+     "differs": "只需要会话内有序，不需要全局有序，序号可以在会话分区内分配。"
+    },
+    {
+     "slug": "merchant-product-listings",
+     "how": "同一商品的更新带版本号，乱序到达的旧更新被丢弃，同一批里重复出现的商品只保留最新。",
+     "differs": "还要处理批量对单条更新的挤压，让单条更新也能公平地被处理。"
+    },
+    {
+     "slug": "tt-merchant-webhook-delivery",
+     "how": "同一商户的事件按顺序投递，队列按端点哈希分区，商户靠事件号去重和排序。",
+     "differs": "顺序是尽力的，重试会让后一个事件先到，所以需要事件号让商户自己处理乱序。"
+    },
+    {
+     "slug": "file-sync-system",
+     "how": "元数据提交是单分片事务加版本比较，客户端带游标追着元数据变更日志走。",
+     "differs": "冲突由版本比较发现，之后保留两份冲突副本，而不是自动合并。"
+    },
+    {
+     "slug": "stock-trading-platform",
+     "how": "订单按代码或账户分区，保证同一账户的下单与撤单顺序。",
+     "differs": "下游交易所的执行报告可能乱序，用订单引用号与累计数量去重和排序。"
+    },
+    {
+     "slug": "multithreaded-logging-framework",
+     "how": "单个接入线程加单个写入线程天然保证 FIFO，时间戳取自调用方，序号取自接入线程。",
+     "differs": "是进程内的版本：用专职线程代替加锁，也说明了为什么不是线程池。"
+    },
+    {
+     "slug": "figma-draw-api",
+     "how": "协作编辑时只有提交的操作进入同步，按（对象，属性）合并后批量发送，冲突与顺序用 OT 或 CRDT 解决。",
+     "differs": "多个写者同时编辑同一对象，所以不是去掉并发而是用合并算法收敛，瞬时预览则只在本地。"
+    }
+   ]
+  },
+  {
+   "id": "atomic-conditional-update",
+   "track": "both",
+   "title": "原子条件更新与防超卖 (Conditional Update / Optimistic Concurrency)",
+   "summary": "用一条带条件的原子更新（影响行数为 0 即失败）或乐观版本号同时完成“检查够不够”和“占住”，在不持有长锁的情况下避免超卖和超额占用。",
+   "questions": [
+    {
+     "slug": "event-ticket-booking",
+     "how": "比较悲观锁、乐观版本号和条件更新三种做法，选用一条条件更新同时检查和占住库存。",
+     "differs": "为什么库存计数不放 Redis：真相要在数据库，且释放需要幂等保护。"
+    },
+    {
+     "slug": "hotel-booking-system",
+     "how": "对“房型×每个晚上”的库存行做原子扣减，多晚一次要在同一事务里全部成功。",
+     "differs": "数据模型是按房型和日期聚合的行，而不是一个房间一行，否则会有 365 亿行。"
+    },
+    {
+     "slug": "tt-flash-sale-ticketing",
+     "how": "准入之后用 Redis 脚本或数据库条件更新扣库存，真相落在数据库。",
+     "differs": "只有 1000 张票时，准入缩小到约 20 人，数据库条件更新就够，行锁其实可用。"
+    },
+    {
+     "slug": "crowdfunding-share-purchase",
+     "how": "全局有限股份用原子扣减，绝不超卖。",
+     "differs": "库存争用还要和单人限购、Redis 宕机一起考虑。"
+    },
+    {
+     "slug": "tt-wallet-ledger-service",
+     "how": "同一用户同时发两笔消费、余额只够一笔，条件更新是原子的，一个成功另一个影响行数为 0。",
+     "differs": "只有退款路径能把余额打成负，消费路径的条件更新永不允许透支。"
+    },
+    {
+     "slug": "stock-trading-platform",
+     "how": "并发下单时用条件更新冻结资金，防止同一笔钱被占用两次。",
+     "differs": "冻结的金额市价单要用保守估价，成交后才结转。"
+    },
+    {
+     "slug": "parking-lot-system",
+     "how": "车位的占用与释放是并发下唯一需要保护的共享状态，必须原子，离场先缴费成功才释放。",
+     "differs": "是内存中的类设计，原子性靠锁或 CAS，而不是数据库条件更新。"
+    },
+    {
+     "slug": "grocery-subscription-orders",
+     "how": "库存与余额的更新用数据库条件更新，每个用户一把锁让检查和扣减在同一临界区。",
+     "differs": "同一用户的多个订阅同时转换是它特有的竞争场景。"
+    }
+   ]
+  },
+  {
+   "id": "admission-control-queue",
+   "track": "sd",
+   "title": "准入控制、排队与削峰 (Admission Control / Queue-based Load Leveling)",
+   "summary": "面对远超容量的尖峰，不是想办法处理所有请求，而是逐层便宜地拒绝、把必须处理的放进队列平滑消费，并提前预热扩容。",
+   "questions": [
+    {
+     "slug": "tt-flash-sale-ticketing",
+     "how": "50 万请求每秒对 1000 张票，逐层便宜地拒绝，只让极少数请求碰到库存，并用抽签或先到先得决定谁进入。",
+     "differs": "99.6% 的请求注定失败，所以主线是准入而不是处理，队列积压只延迟建单。"
+    },
+    {
+     "slug": "crowdfunding-share-purchase",
+     "how": "需求远大于供给时，除了先到先得还可以抽签，保护余额服务不被打爆。",
+     "differs": "被保护的是别人的余额服务，所以对它的调用要限流和排队。"
+    },
+    {
+     "slug": "coding-contest-platform",
+     "how": "比赛瞬间 10 万人同时提交，用异步判题队列削峰，并按比赛计划预扩容判题机。",
+     "differs": "尖峰是可预知的，所以按计划预扩容，而不是靠自动伸缩追赶。"
+    },
+    {
+     "slug": "stock-trading-platform",
+     "how": "开盘激增时订单进队列平滑发往交易所，保证不重发、不漏。",
+     "differs": "激增是每天固定时刻，限制因素是交易所的接入限额。"
+    },
+    {
+     "slug": "donations-website-charities",
+     "how": "限时捐款活动的流量尖峰用排队和降级吸收，并在对 PSP 的调用上加保护。",
+     "differs": "尖峰集中在活动结束前几分钟，重点是别让 PSP 成为瓶颈。"
+    },
+    {
+     "slug": "chatbot-design",
+     "how": "GPU 容量有限，请求排队、限流，并在排队时间过长时拒绝。",
+     "differs": "单个请求占用资源很久，所以排队的单位是推理时长而不是请求数。"
+    },
+    {
+     "slug": "notification-system-scale",
+     "how": "关键通知与群发促销按优先级物理隔离，各走独立队列。",
+     "differs": "削峰要保证重要消息不被洪峰压在后面，而不是单纯平滑。"
+    },
+    {
+     "slug": "event-ticket-booking",
+     "how": "热点活动用限流和等候队列保护库存更新。",
+     "differs": "相比秒杀题规模更小，等候队列更像是排队体验问题。"
+    }
+   ]
+  },
+  {
+   "id": "caching-invalidation",
+   "track": "sd",
+   "title": "缓存、失效与一致性窗口 (Caching / Invalidation)",
+   "summary": "缓存把一个正确的数据库变成两份会分叉的副本，所以要把不一致窗口压小并有兜底，同时防止缓存失效时压垮数据库。",
+   "questions": [
+    {
+     "slug": "tt-cache-consistency-hot-keys",
+     "how": "旁路缓存选择先更新库再删缓存，删除失败靠 CDC 或重试兜底，并防击穿、穿透和雪崩。",
+     "differs": "这是缓存本身的专题，重点是各种读写顺序下的竞态窗口和为什么选删除而不是更新。"
+    },
+    {
+     "slug": "url-shortener-design",
+     "how": "跳转读路径靠数据库索引、缓存逐层加速，读写比约 1000 比 1。",
+     "differs": "映射几乎不变，所以缓存几乎没有一致性问题，主要是命中率与容量。"
+    },
+    {
+     "slug": "news-aggregator-feed",
+     "how": "同一分类全员共享，读端几乎全部靠缓存吃掉。",
+     "differs": "缓存的是共享内容，所以失效时机由摄取的新鲜度决定，突发新闻要提前刷新。"
+    },
+    {
+     "slug": "flight-search-system",
+     "how": "缓存价格并合并重复请求，热门航线预热，价格确认延后到选中行程时。",
+     "differs": "缓存的新鲜度直接换成供应商账单，值不值得缓存要用实验验证。"
+    },
+    {
+     "slug": "twitter-clone-feed",
+     "how": "时间线用 Redis 有序集合只存推文 ID，内容另取，热点读走缓存。",
+     "differs": "缓存只存 ID 还是存完整内容是追问点，影响一致性与内存。"
+    },
+    {
+     "slug": "merchant-product-listings",
+     "how": "商品更新后缓存和搜索索引通过事件流跟上，关注它们多快多准地更新。",
+     "differs": "读侧缓存和索引是派生视图，靠事件而不是请求时失效。"
+    },
+    {
+     "slug": "hotel-booking-system",
+     "how": "搜索走可略微过期的预聚合索引，下单才核对真实库存。",
+     "differs": "接受搜索结果过期，在下单时做最终核验，把一致性只放在写路径。"
+    },
+    {
+     "slug": "recently-viewed-items",
+     "how": "每个客户一个定长 LRU，真实系统中放在 Redis 之类的缓存里。",
+     "differs": "是类设计，重点是 O(1) 摘除与重新插入，而不是分布式缓存一致性。"
+    }
+   ]
+  },
+  {
+   "id": "facts-vs-derived-views",
+   "track": "sd",
+   "title": "事实与派生视图 (Source of Truth vs Derived Views / CQRS)",
+   "summary": "把“发生了什么”的事实存成可重放的真相，把计数、搜索索引、排行榜、时间线等读优化的视图做成派生数据，由事件流或批处理更新，必要时可重建。",
+   "questions": [
+    {
+     "slug": "like-unlike-system",
+     "how": "事实表存谁赞了什么，总数是派生统计，计数按需重算并异步更新。",
+     "differs": "必须保留事实表才能支持点查、用户列表与去重，不能只存计数。"
+    },
+    {
+     "slug": "merchant-product-listings",
+     "how": "写侧是可校验、可重放的批量摄入，读侧是为浏览优化的派生视图，中间用事件流连接。",
+     "differs": "难点是更新顺序、批量挤压以及缓存与索引多快跟上。"
+    },
+    {
+     "slug": "hotel-booking-system",
+     "how": "搜索走预聚合索引，库存是真相，两者通过数据过期与最终核验衔接。",
+     "differs": "读极多写极少，所以读视图可以偏旧，写路径才需要精确。"
+    },
+    {
+     "slug": "tt-payment-reconciliation",
+     "how": "对账结果是派生数据，可以由账本、PSP 文件和银行流水重算。",
+     "differs": "派生是为了出错时可重跑，不用修改历史输入。"
+    },
+    {
+     "slug": "photo-storage-sharing",
+     "how": "分析查询不放在线上库，通过变更流导出到分析存储。",
+     "differs": "派生的目的是保护线上元数据库，而不是加速读。"
+    },
+    {
+     "slug": "metrics-monitoring-alerts",
+     "how": "原始点追加写入，按时间降采样预聚合，让长范围查询不扫全量。",
+     "differs": "视图的粒度随时间变粗，是用精度换扫描量。"
+    },
+    {
+     "slug": "top-k-counts",
+     "how": "把 Top-K 的计算从查询路径挪到写入之后的预计算里。",
+     "differs": "视图是窗口化的聚合，精确与近似的选择决定整套架构。"
+    },
+    {
+     "slug": "tt-live-gift-coin-settlement",
+     "how": "主播的实时收益是事件的汇总视图，周结算由事件重算。",
+     "differs": "视图明确标注为预估，真相是事件而不是汇总值。"
+    }
+   ]
+  },
+  {
+   "id": "versioned-rules-config",
+   "track": "both",
+   "title": "版本化规则与配置分发 (Versioned Rules / Control Plane vs Data Plane)",
+   "summary": "把规则或配置做成带版本号和生效时间的数据，控制面集中管理，数据面本地求值并可回滚、可复现，而不是每次请求都远程判定。",
+   "questions": [
+    {
+     "slug": "feature-flag-service",
+     "how": "把规则集可靠、快速、可回滚地分发到每个 SDK，百万次每秒的取值只在进程内本地完成。",
+     "differs": "重点是变更传播、失败时的默认行为和同一用户在同一开关上的结果稳定。"
+    },
+    {
+     "slug": "feature-flags-service",
+     "how": "配置集中管理，判定在客户端 SDK 用确定性哈希完成，粘性靠哈希而不是存储。",
+     "differs": "百分比放量的单调性，以及不同开关用不同哈希输入（加 salt）避免同一批用户总被选中。"
+    },
+    {
+     "slug": "tt-billing-tax-engine",
+     "how": "每个商户的规则版本按生效时间排序后二分查找，费用按事件发生时的规则算。",
+     "differs": "发错规则不改旧行而是追加更正，退款按原交易所属的规则版本计算。"
+    },
+    {
+     "slug": "video-moderation-system",
+     "how": "运营频繁改规则，并用历史分数回放验证新规则，规则与模型打分分离。",
+     "differs": "规则改动要能先回放评估，再上线，规则引擎的表达能力也是追问。"
+    },
+    {
+     "slug": "tt-per-merchant-rate-limit",
+     "how": "配置实时修改，下一次 allow 读到新配置。",
+     "differs": "配置只是限速参数，不涉及历史版本和回放。"
+    },
+    {
+     "slug": "distributed-rate-limiter",
+     "how": "限流规则可配置（如每用户每分钟 100 次、搜索接口每 IP 每分钟 10 次），多条规则同时生效。",
+     "differs": "规则要在多台服务器间一致生效，允许短暂的最终一致，多规则组合时各规则独立计数。"
+    }
+   ]
+  },
+  {
+   "id": "blob-metadata-split",
+   "track": "sd",
+   "title": "字节与元数据分离 (Blob vs Metadata Split)",
+   "summary": "大而不可变的字节放进对象存储并经 CDN 或直传，小而常变的元数据放进分片数据库，两者的一致性与扩展方式完全不同。",
+   "questions": [
+    {
+     "slug": "file-sync-system",
+     "how": "字节按内容寻址切块、去重放对象存储，元数据强一致放分片数据库，客户端追元数据游标。",
+     "differs": "重点是切块、重命名移动的元数据设计、冲突与端到端同步。"
+    },
+    {
+     "slug": "photo-storage-sharing",
+     "how": "照片字节直传对象存储加 CDN，不经过应用服务器，元数据按用户分片。",
+     "differs": "重点是时间线的游标分页、集合的多对多关系和缩略图，而不是同步。"
+    },
+    {
+     "slug": "disposable-email",
+     "how": "邮件正文放宽列库并按 TTL 过期，小而热的邮箱状态才放 Redis。",
+     "differs": "数据按到期时间便宜地消失，入口处就拒绝不存在的地址。"
+    },
+    {
+     "slug": "messenger-chat-system",
+     "how": "消息元数据与大的附件分开，长期历史放在可搜索的存储里。",
+     "differs": "主体是文本消息，附件只是旁路，重点在收件箱而不是对象存储。"
+    },
+    {
+     "slug": "chatbot-design",
+     "how": "消息文本存储与上下文拼装分离，旧消息可摘要以控制上下文长度。",
+     "differs": "存储本身简单，难点在把历史压缩进上下文窗口。"
+    }
+   ]
+  },
+  {
+   "id": "timers-scheduling-time",
+   "track": "both",
+   "title": "定时触发、到期查找与时间语义 (Timers / Cron / Time Semantics)",
+   "summary": "在海量待定任务中找出现在到期的那一小撮，用时间排序的结构分级，并处理 cron、时区、夏令时与月末等时间语义。",
+   "questions": [
+    {
+     "slug": "job-scheduler-cron-history",
+     "how": "亿级待定任务按时间分桶，亚秒级找到到期任务，并把一年历史与热的调度状态分开存放。",
+     "differs": "同时要处理 cron 语义细节、租约防止重复执行、租户突发和优先级饿死。"
+    },
+    {
+     "slug": "scheduler-system-design",
+     "how": "按时间排序的定时堆加按优先级排序的就绪队列两级结构，下一次触发抽象为可替换的触发规则。",
+     "differs": "是单机类设计，cancel 用惰性删除会让堆积累垃圾，时区与夏令时也是追问。"
+    },
+    {
+     "slug": "date-time-management",
+     "how": "把时间点、墙上读数、时区规则、Duration 与 Period 分开，夏令时的间隙与重叠要有明确语义。",
+     "differs": "是底层的值对象库，其他题的时间 bug 大多来自把这些概念混为一谈。"
+    },
+    {
+     "slug": "online-chess-platform",
+     "how": "对局的计时与超时判负由服务端记时，网络抖动和宕机重启后不判错时间。",
+     "differs": "计时器属于单局的写者，精度与公平性比吞吐更重要。"
+    },
+    {
+     "slug": "grocery-subscription-orders",
+     "how": "订阅按计划转订单，调度器任务重跑时不能重复下单，时区决定哪天下单。",
+     "differs": "每个订阅有自己的下一次时间，重点是幂等与崩溃恢复。"
+    },
+    {
+     "slug": "tt-installment-plan",
+     "how": "到期日从起始日一次性算出而不是逐期累加，避免月末漂移（1 月 31 日、闰年 2 月 29 日）。",
+     "differs": "是纯函数，重点是日期计算和金额取整的守恒。"
+    },
+    {
+     "slug": "notification-system-scale",
+     "how": "按用户本地时间发送，并给每条消息设过期时间，在真正发送前再检查。",
+     "differs": "时间语义用于“何时发”和“是否还有意义”。"
+    }
+   ]
+  },
+  {
+   "id": "ranking-and-leaderboards",
+   "track": "sd",
+   "title": "排序、排行榜与 Top-K (Ranking / Leaderboards / Top-K)",
+   "summary": "排序要么在读取时对少量候选做（漏斗），要么在写入后预计算成有序集合或滑动窗口聚合，选择取决于基数、实时性和精确或近似。",
+   "questions": [
+    {
+     "slug": "top-k-counts",
+     "how": "把 Top-K 挪到写入之后预计算，比较滚动窗口与对齐窗口、精确与近似（Count-Min Sketch）。",
+     "differs": "先与面试官对齐精确还是近似，这个选择会换掉整套架构。"
+    },
+    {
+     "slug": "coding-contest-platform",
+     "how": "排行榜用 Redis 有序集合，比赛时每次提交更新分数，并支持看自己的名次。",
+     "differs": "规模小但要求实时，按解题数排名、并列按完成时间，罚时在计算分数时加入而不改数据结构。"
+    },
+    {
+     "slug": "online-chess-platform",
+     "how": "排行榜按评分排序，对局结束后更新评分。",
+     "differs": "评分更新是对局结束的事件，不是高频写入。"
+    },
+    {
+     "slug": "tt-for-you-feed",
+     "how": "把 10 亿视频逐层缩减的漏斗：召回、粗排、精排，每层用越来越贵的模型。",
+     "differs": "还要让新用户和新视频有机会被试出价值，并保证训练与线上特征一致。"
+    },
+    {
+     "slug": "social-feed-generation",
+     "how": "排序和广告插入放在读取时的少量候选上做，而不是对全部帖子预先排序。",
+     "differs": "是读时排序，候选来自收件箱和名人帖子，重点是分页稳定性。"
+    },
+    {
+     "slug": "twitter-clone-feed",
+     "how": "时间线按推文 ID 的时间序排序，更复杂的排序放在读取时。",
+     "differs": "默认按时间序，排序是追问，核心仍是扇出。"
+    },
+    {
+     "slug": "job-board-platform",
+     "how": "搜索条件用规格模式组合后排序，排序策略可替换。",
+     "differs": "是内存规模的类设计，排序是可替换的比较策略。"
+    }
+   ]
+  },
+  {
+   "id": "search-index-filtering",
+   "track": "sd",
+   "title": "检索：倒排索引、预聚合搜索与过滤 (Search Index / Filtering)",
+   "summary": "搜索走为读优化、可略微过期的派生索引，按条件组合过滤，下单或查看详情时再回到真相核验。",
+   "questions": [
+    {
+     "slug": "hotel-booking-system",
+     "how": "搜索走预聚合的酒店索引，库存的准确数字到下单时才核验。",
+     "differs": "接受搜索结果略微过期，并追问为什么搜索不直接查库存表。"
+    },
+    {
+     "slug": "flight-search-system",
+     "how": "多供应商聚合的搜索结果经缓存和合并返回，弹性日期与日历视图是预计算。",
+     "differs": "搜索的瓶颈是供应商调用成本，而不是索引本身。"
+    },
+    {
+     "slug": "merchant-product-listings",
+     "how": "商品更新通过事件流写进搜索索引，关注索引多快跟上。",
+     "differs": "搜索是众多派生视图之一，更新顺序决定最终正确性。"
+    },
+    {
+     "slug": "job-board-platform",
+     "how": "用规格模式组合搜索条件，内存索引足够，规模大时换专用搜索引擎。",
+     "differs": "是类设计，重点是新增筛选项不改搜索主流程。"
+    },
+    {
+     "slug": "messenger-chat-system",
+     "how": "长期历史与搜索（5 年、可搜索）作为变体，需要单独的搜索索引。",
+     "differs": "端到端加密会使服务端无法搜索，是特有的权衡。"
+    },
+    {
+     "slug": "news-aggregator-feed",
+     "how": "新闻按分类存取，同一事件的多家报道要去重或聚类。",
+     "differs": "聚类决定展示什么，是摄取阶段的任务而不是查询阶段。"
+    }
+   ]
+  },
+  {
+   "id": "consistency-tradeoffs",
+   "track": "sd",
+   "title": "强一致与最终一致的取舍 (Strong vs Eventual Consistency)",
+   "summary": "按数据的含义分级：钱和库存必须强一致、恰好一次，点赞数、搜索结果、展示余额可以最终一致，并明确每一层的可容忍窗口。",
+   "questions": [
+    {
+     "slug": "tt-wallet-ledger-service",
+     "how": "余额扣减强一致（条件更新加账本），汇总和审计异步。",
+     "differs": "同一个服务里同步路径只做最少的事，其余全部异步，强弱一致共存。"
+    },
+    {
+     "slug": "like-unlike-system",
+     "how": "自己的点赞状态要立即可见，总数允许最终一致且可近似。",
+     "differs": "是“实时只对自己的那一票有意义”的典型。"
+    },
+    {
+     "slug": "food-item-reviews",
+     "how": "票数几秒延迟用户感觉不到，付款必须恰好一次。",
+     "differs": "同一系统内高频低价值的数据放松，低频高价值的数据收紧。"
+    },
+    {
+     "slug": "file-sync-system",
+     "how": "元数据提交强一致，设备之间的视图最终一致，靠追游标收敛。",
+     "differs": "强一致只放在单分片的提交点上，其余靠游标收敛。"
+    },
+    {
+     "slug": "hotel-booking-system",
+     "how": "搜索允许过期，下单时对库存强一致。",
+     "differs": "把一致性边界收窄到写路径的最后一步。"
+    },
+    {
+     "slug": "tt-live-gift-coin-settlement",
+     "how": "观众钱包强一致，主播收益的展示是预估，结算再重算。",
+     "differs": "为什么不用 Redis 记余额：异步复制故障转移会丢扣减。"
+    },
+    {
+     "slug": "url-shortener-design",
+     "how": "短码映射一旦创建就不变，所以强一致只需要在创建时保证短码唯一。",
+     "differs": "追问强一致还是最终一致，答案是读可以最终一致、写需要唯一。"
+    },
+    {
+     "slug": "tt-cache-consistency-hot-keys",
+     "how": "缓存与数据库两份副本的不一致窗口只能压小，强一致需求要绕过缓存。",
+     "differs": "把“强一致怎么办”作为追问，答案是读主库或版本化缓存。"
+    }
+   ]
+  },
+  {
+   "id": "async-pipeline-backpressure",
+   "track": "both",
+   "title": "异步流水线、背压与批量 (Async Pipeline / Backpressure / Batching)",
+   "summary": "用有界队列把调用方的低延迟与下游的慢处理隔开，处理背压、批量、写成功才确认和优雅关闭，让阶段可以独立扩展与重放。",
+   "questions": [
+    {
+     "slug": "multithreaded-logging-framework",
+     "how": "三个专职线程加有界队列隔开调用方与磁盘写入，批量刷盘，写成功后才确认，关闭时不丢一条。",
+     "differs": "是单进程的生产者-消费者，背压选择是阻塞、丢弃还是降级。"
+    },
+    {
+     "slug": "video-moderation-system",
+     "how": "事件驱动的多阶段流水线，昂贵的模型推理并行完成，处置动作幂等且可审计。",
+     "differs": "每个阶段的成本和优先级不同，打分结果还要能被规则回放。"
+    },
+    {
+     "slug": "coding-contest-platform",
+     "how": "提交进入异步判题队列，沙箱执行不可信代码，队列平滑尖峰。",
+     "differs": "为什么不用同步直连容器：判题时间长且资源受限，需要排队与公平。"
+    },
+    {
+     "slug": "merchant-product-listings",
+     "how": "批量摄入经校验后进事件流，消费者更新缓存与索引，有背压。",
+     "differs": "批量对单条更新的挤压要做公平调度，部分失败也要可重放。"
+    },
+    {
+     "slug": "metrics-monitoring-alerts",
+     "how": "每秒百万点先进 Kafka 再写入时序存储，告警链路比被监控系统更可靠。",
+     "differs": "追加写、几乎不读，推与拉的采集方式决定了丢点处理。"
+    },
+    {
+     "slug": "web-crawler-design",
+     "how": "爬取流水线按主机分前沿队列，进度持久化，抓取、解析、去重分阶段。",
+     "differs": "瓶颈是礼貌而不是算力，作业型变体还要有可恢复的进度。"
+    },
+    {
+     "slug": "chatbot-design",
+     "how": "推理请求排队，流式输出并在中途取消时回收资源。",
+     "differs": "单个请求占用很久，所以背压体现为排队时长和拒绝。"
+    },
+    {
+     "slug": "notification-system-scale",
+     "how": "按优先级分离多条管道，每个渠道独立队列并在发送前检查过期。",
+     "differs": "背压要保证关键通知不被群发压住，而不仅是平滑。"
+    },
+    {
+     "slug": "figma-draw-api",
+     "how": "高频指针事件每帧最多处理一次，只有提交的操作才进入撤销栈、持久化和同步，并批量发送。",
+     "differs": "批处理的对象是前端手势事件，目标是控制渲染和网络的频率，而不是后端队列的深度。"
+    }
+   ]
+  },
+  {
+   "id": "strategy-pattern",
+   "track": "lld",
+   "title": "策略模式：把变化点做成可替换部件 (Strategy Pattern)",
+   "summary": "把会变化的规则（分配、计费、淘汰、调度、限流算法）抽成接口后注入，核心流程不变，扩展新规则不改主流程。",
+   "questions": [
+    {
+     "slug": "parking-lot-system",
+     "how": "车位分配策略和计费规则做成两个可替换的策略，并回答为什么不用继承。",
+     "differs": "两个变化点各自独立，策略只回答选哪个车位、收多少钱。"
+    },
+    {
+     "slug": "rate-limiter-system",
+     "how": "限流算法是可替换的只管单个 key 的状态机，外层管按 key 管理与并发。",
+     "differs": "策略有状态，所以并发和时间源注入必须在策略边界上定义清楚。"
+    },
+    {
+     "slug": "kv-store-eviction",
+     "how": "数据存储、数据结构操作、淘汰策略三个部件互不知道对方内部，淘汰策略只回答谁是下一个受害者。",
+     "differs": "淘汰策略要能运行时切换，还要区分淘汰与过期是两回事。"
+    },
+    {
+     "slug": "elevator-design",
+     "how": "单部电梯用 LOOK 扫描，多部电梯用代价函数分配，调度策略可替换。",
+     "differs": "策略分两层：单梯的路线策略和多梯的分配策略。"
+    },
+    {
+     "slug": "tt-billing-tax-engine",
+     "how": "规则是可调用对象排成链，加一种费用或税不改引擎，封顶和保底用装饰器包装。",
+     "differs": "规则链按顺序组合（税在费用后面），并且规则带生效时间的版本。"
+    },
+    {
+     "slug": "scheduler-system-design",
+     "how": "“下一次什么时候触发”抽象为可替换的触发规则，周期任务各种规则统一。",
+     "differs": "策略产出的是时间，而不是选择，与定时堆配合。"
+    },
+    {
+     "slug": "job-board-platform",
+     "how": "搜索条件用规格模式（Specification）组合，新增筛选项不改搜索主流程。",
+     "differs": "策略是可组合的布尔条件，而不是互斥的单选。"
+    }
+   ]
+  },
+  {
+   "id": "observer-pubsub",
+   "track": "both",
+   "title": "观察者与发布订阅 (Observer / Pub-Sub)",
+   "summary": "把“发生了什么”和“谁关心”解耦：状态变化发布事件，订阅者各自响应（补货、提醒、通知），主流程不依赖订阅者。",
+   "questions": [
+    {
+     "slug": "beverage-vending-system",
+     "how": "补货是对库存水位的监听（观察者模式），而不是人工巡检。",
+     "differs": "水位低于阈值才触发，通知补货员，类设计层面的观察者。"
+    },
+    {
+     "slug": "stock-price-alerts",
+     "how": "价格按股票分区进入内存状态机，穿过阈值时发布提醒，防抖用滞回加冷却。",
+     "differs": "订阅者数量极大（上百万），所以扇出要分块并行。"
+    },
+    {
+     "slug": "job-board-platform",
+     "how": "申请状态变化后通知雇主和求职者，通知与主流程解耦。",
+     "differs": "是类设计层面的通知，不涉及送达保证。"
+    },
+    {
+     "slug": "notification-system-scale",
+     "how": "业务方发布事件，通知系统统一订阅并选通道，而不是各自直接调用服务商。",
+     "differs": "是平台级发布订阅，带优先级、去重、过期与送达保证。"
+    },
+    {
+     "slug": "messenger-chat-system",
+     "how": "网关之间用发布订阅路由消息，丢消息时由收件箱兜底。",
+     "differs": "发布订阅只是加速通道，不是可靠性的来源。"
+    },
+    {
+     "slug": "tt-merchant-webhook-delivery",
+     "how": "商户订阅事件类型，平台把事件扇出到各商户端点的投递表。",
+     "differs": "订阅者是外部服务器，所以带签名、重试和顺序。"
+    }
+   ]
+  },
+  {
+   "id": "lld-concurrency-locking",
+   "track": "lld",
+   "title": "类设计中的并发：锁粒度与线程模型 (Locking / Thread-safety)",
+   "summary": "识别唯一需要保护的共享状态，选择合适的锁粒度（全局锁、分段锁、每用户锁、读写锁）或单线程模型，不持锁调用慢操作，并避免死锁。",
+   "questions": [
+    {
+     "slug": "tt-per-merchant-rate-limit",
+     "how": "按商户分段加锁，令牌桶惰性补充，LRU 的访问也要加锁。",
+     "differs": "几十万商户下，分段锁的粒度与 LRU 的内存上限要同时考虑。"
+    },
+    {
+     "slug": "rate-limiter-system",
+     "how": "单个 key 的状态用锁保护，外层的 key 管理也需要并发安全，要注意死锁风险。",
+     "differs": "两层锁的顺序是死锁来源，所以明确层次。"
+    },
+    {
+     "slug": "kv-store-eviction",
+     "how": "get 也会改变淘汰顺序，所以要拿写锁，淘汰与数据结构操作在同一临界区。",
+     "differs": "为什么 get 也要写锁是特有追问，读写锁的收益有限。"
+    },
+    {
+     "slug": "recently-viewed-items",
+     "how": "每客户一个 LRU，用锁保护有序字典的摘除与插入，客户很多时按客户分片。",
+     "differs": "锁保护的是单客户的小结构，竞争很低。"
+    },
+    {
+     "slug": "api-circuit-breaker",
+     "how": "状态迁移加锁，但不持锁调用下游，迟到的旧结果不能污染新状态。",
+     "differs": "关键陷阱是不持锁调用下游，以及半开期的惊群。"
+    },
+    {
+     "slug": "event-ticket-booking",
+     "how": "悲观锁、乐观版本号与条件更新三种做法，慢的付款调用放在事务之外。",
+     "differs": "并发控制落在数据库，而不是进程内锁。"
+    },
+    {
+     "slug": "elevator-design",
+     "how": "所有状态变化收在一个线程里，用队列接收请求，避免加锁。",
+     "differs": "用线程封闭代替锁，是并发的另一种答案。"
+    },
+    {
+     "slug": "multithreaded-logging-framework",
+     "how": "单写线程代替多线程写同一个文件加锁，保证顺序和批量刷盘。",
+     "differs": "并发模型本身就是设计：专职线程加有界队列。"
+    }
+   ]
+  },
+  {
+   "id": "ordered-structures-lru",
+   "track": "lld",
+   "title": "数据结构选型：哈希表加链表、堆与有序结构 (LRU / Heap / Ordered Structures)",
+   "summary": "用哈希表加双向链表（有序字典）做到 O(1) 的查找与摘除重排，用堆或有序集合做到按时间或优先级取最小，并说清各自的惰性删除和内存代价。",
+   "questions": [
+    {
+     "slug": "kv-store-eviction",
+     "how": "LRU、LFU、FIFO 三种淘汰策略都做到 O(1)，淘汰与过期是两回事。",
+     "differs": "LFU 需要频次桶，近似算法（采样）是追问。"
+    },
+    {
+     "slug": "recently-viewed-items",
+     "how": "每客户一个定长 LRU，重复浏览是摘下来放队尾，超限丢队头；“第一个唯一值”是同一思路。",
+     "differs": "客户数量巨大时的内存是追问，还有限制可在运行时调整。"
+    },
+    {
+     "slug": "tt-per-merchant-rate-limit",
+     "how": "按访问顺序排序的哈希表（LRU）限制几十万商户令牌桶的内存上限。",
+     "differs": "LRU 的受害者是不活跃商户的桶，丢了可以重建。"
+    },
+    {
+     "slug": "scheduler-system-design",
+     "how": "按触发时间排序的最小堆，cancel 采用惰性删除，就绪队列按优先级排序。",
+     "differs": "惰性删除会在堆里积累垃圾，需要定期清理。"
+    },
+    {
+     "slug": "elevator-design",
+     "how": "每部电梯维护按楼层排序的请求集合，沿方向走到最远请求再掉头。",
+     "differs": "有序结构服务于扫描策略，复杂度由楼层数决定。"
+    },
+    {
+     "slug": "top-k-counts",
+     "how": "用有序集合或小顶堆维护窗口内的 Top-K。",
+     "differs": "规模大到要用近似数据结构，而不是精确的有序结构。"
+    }
+   ]
+  },
+  {
+   "id": "injected-clock-testability",
+   "track": "lld",
+   "title": "时间注入与可测试性 (Injected Clock / Deterministic Tests)",
+   "summary": "把时间做成构造参数注入，用单调时钟而不是墙钟，测试里用可手动拨动的假时钟，避免 sleep，得到快且确定的测试。",
+   "questions": [
+    {
+     "slug": "rate-limiter-system",
+     "how": "使用单调时钟（time.monotonic）而不用墙钟，时钟作为构造参数注入。",
+     "differs": "令牌补充与窗口滑动全部依赖时间，所以是最典型的场景。"
+    },
+    {
+     "slug": "tt-per-merchant-rate-limit",
+     "how": "惰性补充只在 allow 时读时间，用假时钟验证边界和突发。",
+     "differs": "没有定时器，所以只要注入时钟就能确定性地测试。"
+    },
+    {
+     "slug": "scheduler-system-design",
+     "how": "计时堆依赖当前时间，用假时钟拨动来验证触发顺序和精度。",
+     "differs": "还要覆盖时区与夏令时的触发，是日期库的消费者。"
+    },
+    {
+     "slug": "api-circuit-breaker",
+     "how": "打开后的冷却时间与半开期探测依赖时间，用假时钟拨过去。",
+     "differs": "测试重点是并发下的状态迁移，而不仅是时间。"
+    },
+    {
+     "slug": "date-time-management",
+     "how": "时间点、墙钟读数和时区规则分开，使时间相关逻辑可以明确指定输入。",
+     "differs": "是提供时间抽象的库本身，夏令时与闰秒要有正确性验证。"
+    },
+    {
+     "slug": "stock-price-alerts",
+     "how": "如何测试时序问题：用可控时钟验证防抖、冷却与价格跳空。",
+     "differs": "时序行为是产品行为的一部分，冷却期和滞回要精确验证。"
+    }
+   ]
+  },
+  {
+   "id": "money-value-objects-rounding",
+   "track": "lld",
+   "title": "金额、取整与不可变值对象 (Money / Rounding / Immutable Value Objects)",
+   "summary": "金额用整数或定点小数，取整只在边界一次，吸收误差的位置明确，对象不可变，使任何一行金额都能被复现并通过守恒检查。",
+   "questions": [
+    {
+     "slug": "tt-installment-plan",
+     "how": "各期本金之和必须恰好等于本金，取整误差由最后一期吸收，全程用整数和定点小数而不用浮点。",
+     "differs": "是纯函数问题，各币种小数位不同，利息按天数计算。"
+    },
+    {
+     "slug": "tt-billing-tax-engine",
+     "how": "金额只在边界取整一次，每行费用可复现，记录它所用的规则版本。",
+     "differs": "取整位置影响多条规则链，需要考虑税在费用之后。"
+    },
+    {
+     "slug": "tt-double-entry-ledger",
+     "how": "用带符号金额使得分录和为零成为最简单的不变量，跨币种用 FX 中间账户。",
+     "differs": "守恒是对一组分录的约束，而不是对一次计算。"
+    },
+    {
+     "slug": "date-time-management",
+     "how": "全部做成不可变的值对象，可作键、线程安全，月份运算有明确语义。",
+     "differs": "不可变的是时间概念而不是金额，代价是每次运算产生新对象。"
+    },
+    {
+     "slug": "tt-live-gift-coin-settlement",
+     "how": "整数 micro 单位只取整一次，保证实时展示和周结算的分账能对上。",
+     "differs": "取整要在事件重算和流式路径之间保持一致。"
+    },
+    {
+     "slug": "tt-wallet-ledger-service",
+     "how": "多币种钱包的账本按币种各自平衡，分录金额用整数。",
+     "differs": "币种决定了小数位，余额按币种分别维护。"
+    }
+   ]
+  }
+ ]
+}

@@ -96,6 +96,12 @@ def main() -> None:
         if m:
             home[rel] = m.group(1)
     home_path.write_text(json.dumps(home, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
+    pat_path = ROOT / "research/hello-interview/patterns.json"
+    patterns = json.loads(pat_path.read_text(encoding="utf-8"))["patterns"] if pat_path.exists() else []
+    pattern_of: dict[str, list[str]] = {}  # body slug -> titles of the cross-question patterns it appears in
+    for x in patterns:
+        for q in x["questions"]:
+            pattern_of.setdefault(q["slug"], []).append(re.sub(r"\s*[（(].*?[）)]", "", x["title"]))
     placed: dict[str, str] = {}      # course leaf -> prerequisite leaf under a question
     where: dict[str, str] = {}       # prerequisite leaf -> title of the question it sits under
     extra = {}
@@ -125,7 +131,9 @@ def main() -> None:
             if later:
                 answer["requires"] = later  # prerequisites that sit under an earlier question
             elsewhere = list(dict.fromkeys(where[x] for x in later))
-            card_meta[q["stub"]] = q["meta"] + (f" · 先修见：{'、'.join(elsewhere)}" if elsewhere else "")
+            pats = pattern_of.get(q.get("body_slug", q["slug"]), [])
+            card_meta[q["stub"]] = (q["meta"] + (f" · 先修见：{'、'.join(elsewhere)}" if elsewhere else "")
+                                    + (f" · 模式：{'、'.join(pats[:5])}" if pats else ""))
             kids = pre + [answer]
             body_slug = q.get("body_slug", q["slug"])
             if body_slug not in points_home and any((cards_dir / "points" / body_slug).glob("*.md")):
@@ -175,6 +183,12 @@ def main() -> None:
     for ti, (track, ttitle) in enumerate(TRACKS, 3):
         tid = "sd" if track == "system-design" else "lld"
         secs = []
+        pats = [x for x in patterns if (x["track"] in ("sd", "both")) == (tid == "sd")]
+        if pats:  # Chi (2026-11-01): cards that connect questions sharing one mechanism, as the shared core
+            secs.append({"id": f"{tid}.cross", "title": "跨题模式（Patterns across questions）",
+                         "summary": "多道题共用的机制：在每道题里怎么用、为什么不同、新题该选哪种。",
+                         "children": [{"id": f"{tid}.cross.{x['id']}", "title": x["title"],
+                                       "summary": x["summary"] + f"（涉及 {len(x['questions'])} 题）"} for x in pats]})
         for si, (sec, stitle) in enumerate(SECTIONS[track], 1):
             leaves = []
             for p in pages:

@@ -1,0 +1,1 @@
+append-only-ledger, entity-state-machine, downstream-protection, realtime-push-connections, atomic-conditional-update, facts-vs-derived-views, timers-scheduling-time, consistency-tradeoffs, observer-pubsub, injected-clock-testability

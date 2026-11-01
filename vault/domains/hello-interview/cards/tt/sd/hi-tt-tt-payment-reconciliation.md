@@ -3,5 +3,5 @@ id: hi-tt-tt-payment-reconciliation
 node: tt.sd.tt-payment-reconciliation.answer
 type: qa
 body: interviews/core/design-questions/tt-payment-reconciliation
-meta: "支付追问高频：对账、退款不破坏对账 · 先修见：聊天与即时通讯系统、分布式任务调度器（含 cron 与一年执行历史）"
+meta: "支付追问高频：对账、退款不破坏对账 · 先修见：聊天与即时通讯系统、分布式任务调度器（含 cron 与一年执行历史） · 模式：结果未知与对账修复、事实与派生视图"
 ---

@@ -1108,6 +1108,85 @@ nodes:
   title: 系统设计（System Design）
   summary: Hello Interview 的系统设计（System Design）课程，结构与原站一致。
   children:
+  - id: sd.cross
+    title: 跨题模式（Patterns across questions）
+    summary: 多道题共用的机制：在每道题里怎么用、为什么不同、新题该选哪种。
+    children:
+    - id: sd.cross.idempotency-keys
+      title: 幂等键与只生效一次 (Idempotency Keys / Exactly-once Effect)
+      summary: 用唯一约束先原子占住一个由业务意图决定的键，再把业务动作与结果保存放进同一事务，让重试和并发重复请求合并成一次生效。（涉及 9 题）
+    - id: sd.cross.append-only-ledger
+      title: 只追加账本与派生余额 (Append-only Ledger / Double-entry)
+      summary: 把借贷平衡的只追加分录当作唯一事实，余额与历史余额只是同事务更新的派生投影，纠错只靠新的冲正分录。（涉及 7 题）
+    - id: sd.cross.reserve-confirm-saga
+      title: 先预留再确认与补偿 (Reserve-Confirm / Saga instead of 2PC)
+      summary: 跨两个系统时先做可撤销的预留，再做不可逆的动作，最后确认；任何一步失败都有明确的释放或补偿，而不依赖分布式事务。（涉及 8 题）
+    - id: sd.cross.unknown-outcome-and-reconciliation
+      title: 结果未知与对账修复 (Unknown Outcome / Reconciliation)
+      summary: 跨系统调用超时时不知道对方到底成没成，所以先写本地记录、保留 UNKNOWN 状态、用查询回查，并让独立来源的记录定期互相印证来发现和修复差异。（涉及 8 题）
+    - id: sd.cross.entity-state-machine
+      title: 实体状态机与合法迁移 (Entity State Machine)
+      summary: 把业务实体建成有限状态机，迁移表声明合法的跳转，用条件更新或单线程执行迁移，让重试、过期和并发都只能走合法路径。（涉及 8 题）
+    - id: sd.cross.transactional-outbox
+      title: 事务外盒与可靠发布事件 (Transactional Outbox)
+      summary: 把业务状态变更和要发出的事件放进同一个本地事务，再由中继进程把它们至少一次地投递到队列，消除“库改了消息没发”的双写问题。（涉及 8 题）
+    - id: sd.cross.retry-backoff-dead-letter
+      title: 至少一次、重试退避与死信 (At-least-once / Retry / Backoff / DLQ)
+      summary: 对不可靠的下游只能保证至少一次，用指数退避加抖动、重试上限、死信队列和接收方去重来换取不丢，并避免重试风暴。（涉及 8 题）
+    - id: sd.cross.downstream-protection
+      title: 下游保护：熔断、隔离与扇出预算 (Circuit Breaker / Bulkhead / Fan-out Budget)
+      summary: 对慢的、坏的、按调用计费的下游，用熔断快速失败、按下游隔离并发额度、缓存合并重复请求和调用预算，既保护对方也保护自己。（涉及 7 题）
+    - id: sd.cross.rate-limiting
+      title: 限流算法与原子计数 (Rate Limiting)
+      summary: 限流是对海量计数器做低延迟的原子读改写，核心取舍是算法（令牌桶/滑动窗口）、状态放哪里与分片，以及限流器自身故障时放行还是拒绝。（涉及 7 题）
+    - id: sd.cross.fan-out-write-vs-read
+      title: 写扩散与读聚合 (Fan-out on Write vs on Read)
+      summary: 一份内容要到达很多接收者时，在写入时推到每个人的收件箱（快读、贵写）或在读取时再聚合（便宜写、贵读），大扇出的热点对象单独走混合方案。（涉及 7 题）
+    - id: sd.cross.realtime-push-connections
+      title: 实时推送与有状态连接 (WebSocket / Real-time Push)
+      summary: 有状态的长连接需要路由（对方在哪台网关）、断线重连后用游标补收，以及在推送不可靠时用拉取兜底。（涉及 7 题）
+    - id: sd.cross.hot-key-contention
+      title: 热点键与竞争 (Hot Keys / Sharded Counters)
+      summary: 单个计数器、账户、拍品或缓存键被集中读写时，把它拆成子计数器或批量合并，或让它由单一写者串行处理，并接受读侧的少量延迟。（涉及 8 题）
+    - id: sd.cross.single-writer-ordering
+      title: 单写者、序号与版本排序 (Single Writer / Sequence Numbers / Versioning)
+      summary: 同一实体的事件要有唯一的先后：用分区键保证单写者，用递增序号或版本号让乱序、重复和迟到的消息可以被识别和丢弃。（涉及 9 题）
+    - id: sd.cross.atomic-conditional-update
+      title: 原子条件更新与防超卖 (Conditional Update / Optimistic Concurrency)
+      summary: 用一条带条件的原子更新（影响行数为 0 即失败）或乐观版本号同时完成“检查够不够”和“占住”，在不持有长锁的情况下避免超卖和超额占用。（涉及 8 题）
+    - id: sd.cross.admission-control-queue
+      title: 准入控制、排队与削峰 (Admission Control / Queue-based Load Leveling)
+      summary: 面对远超容量的尖峰，不是想办法处理所有请求，而是逐层便宜地拒绝、把必须处理的放进队列平滑消费，并提前预热扩容。（涉及 8 题）
+    - id: sd.cross.caching-invalidation
+      title: 缓存、失效与一致性窗口 (Caching / Invalidation)
+      summary: 缓存把一个正确的数据库变成两份会分叉的副本，所以要把不一致窗口压小并有兜底，同时防止缓存失效时压垮数据库。（涉及 8 题）
+    - id: sd.cross.facts-vs-derived-views
+      title: 事实与派生视图 (Source of Truth vs Derived Views / CQRS)
+      summary: 把“发生了什么”的事实存成可重放的真相，把计数、搜索索引、排行榜、时间线等读优化的视图做成派生数据，由事件流或批处理更新，必要时可重建。（涉及 8 题）
+    - id: sd.cross.versioned-rules-config
+      title: 版本化规则与配置分发 (Versioned Rules / Control Plane vs Data Plane)
+      summary: 把规则或配置做成带版本号和生效时间的数据，控制面集中管理，数据面本地求值并可回滚、可复现，而不是每次请求都远程判定。（涉及 6 题）
+    - id: sd.cross.blob-metadata-split
+      title: 字节与元数据分离 (Blob vs Metadata Split)
+      summary: 大而不可变的字节放进对象存储并经 CDN 或直传，小而常变的元数据放进分片数据库，两者的一致性与扩展方式完全不同。（涉及 5 题）
+    - id: sd.cross.timers-scheduling-time
+      title: 定时触发、到期查找与时间语义 (Timers / Cron / Time Semantics)
+      summary: 在海量待定任务中找出现在到期的那一小撮，用时间排序的结构分级，并处理 cron、时区、夏令时与月末等时间语义。（涉及 7 题）
+    - id: sd.cross.ranking-and-leaderboards
+      title: 排序、排行榜与 Top-K (Ranking / Leaderboards / Top-K)
+      summary: 排序要么在读取时对少量候选做（漏斗），要么在写入后预计算成有序集合或滑动窗口聚合，选择取决于基数、实时性和精确或近似。（涉及 7 题）
+    - id: sd.cross.search-index-filtering
+      title: 检索：倒排索引、预聚合搜索与过滤 (Search Index / Filtering)
+      summary: 搜索走为读优化、可略微过期的派生索引，按条件组合过滤，下单或查看详情时再回到真相核验。（涉及 6 题）
+    - id: sd.cross.consistency-tradeoffs
+      title: 强一致与最终一致的取舍 (Strong vs Eventual Consistency)
+      summary: 按数据的含义分级：钱和库存必须强一致、恰好一次，点赞数、搜索结果、展示余额可以最终一致，并明确每一层的可容忍窗口。（涉及 8 题）
+    - id: sd.cross.async-pipeline-backpressure
+      title: 异步流水线、背压与批量 (Async Pipeline / Backpressure / Batching)
+      summary: 用有界队列把调用方的低延迟与下游的慢处理隔开，处理背压、批量、写成功才确认和优雅关闭，让阶段可以独立扩展与重放。（涉及 9 题）
+    - id: sd.cross.observer-pubsub
+      title: 观察者与发布订阅 (Observer / Pub-Sub)
+      summary: 把“发生了什么”和“谁关心”解耦：状态变化发布事件，订阅者各自响应（补货、提醒、通知），主流程不依赖订阅者。（涉及 6 题）
   - id: sd.in-a-hurry
     title: 速成（In a Hurry）
     summary: 系统设计（System Design） · 速成（In a Hurry），按 Hello Interview 的顺序。
@@ -1317,6 +1396,25 @@ nodes:
   title: 低层设计（Low-Level Design）
   summary: Hello Interview 的低层设计（Low-Level Design）课程，结构与原站一致。
   children:
+  - id: lld.cross
+    title: 跨题模式（Patterns across questions）
+    summary: 多道题共用的机制：在每道题里怎么用、为什么不同、新题该选哪种。
+    children:
+    - id: lld.cross.strategy-pattern
+      title: 策略模式：把变化点做成可替换部件 (Strategy Pattern)
+      summary: 把会变化的规则（分配、计费、淘汰、调度、限流算法）抽成接口后注入，核心流程不变，扩展新规则不改主流程。（涉及 7 题）
+    - id: lld.cross.lld-concurrency-locking
+      title: 类设计中的并发：锁粒度与线程模型 (Locking / Thread-safety)
+      summary: 识别唯一需要保护的共享状态，选择合适的锁粒度（全局锁、分段锁、每用户锁、读写锁）或单线程模型，不持锁调用慢操作，并避免死锁。（涉及 8 题）
+    - id: lld.cross.ordered-structures-lru
+      title: 数据结构选型：哈希表加链表、堆与有序结构 (LRU / Heap / Ordered Structures)
+      summary: 用哈希表加双向链表（有序字典）做到 O(1) 的查找与摘除重排，用堆或有序集合做到按时间或优先级取最小，并说清各自的惰性删除和内存代价。（涉及 6 题）
+    - id: lld.cross.injected-clock-testability
+      title: 时间注入与可测试性 (Injected Clock / Deterministic Tests)
+      summary: 把时间做成构造参数注入，用单调时钟而不是墙钟，测试里用可手动拨动的假时钟，避免 sleep，得到快且确定的测试。（涉及 6 题）
+    - id: lld.cross.money-value-objects-rounding
+      title: 金额、取整与不可变值对象 (Money / Rounding / Immutable Value Objects)
+      summary: 金额用整数或定点小数，取整只在边界一次，吸收误差的位置明确，对象不可变，使任何一行金额都能被复现并通过守恒检查。（涉及 6 题）
   - id: lld.in-a-hurry
     title: 速成（In a Hurry）
     summary: 低层设计（Low-Level Design） · 速成（In a Hurry），按 Hello Interview 的顺序。
