@@ -1,0 +1,1 @@
+moves.stepback.stepback-baifo-drive, moves.finish.sidestep-finish, moves.finish.gyro-step, moves.midrange.derozan-jab-pump-fadeaway

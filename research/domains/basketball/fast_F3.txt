@@ -1,0 +1,1 @@
+moves.stepback.one-leg-stepback, moves.combo.rondo-fake, moves.finish.wrong-foot-finish, moves.finish.decel-shot-fake-finish

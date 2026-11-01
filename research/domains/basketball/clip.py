@@ -71,9 +71,12 @@ def main(argv: list[str]) -> None:
         subprocess.run([FF, "-y", "-loglevel", "error", "-ss", str(start), "-i", str(raw), "-t", str(min(dur, MAX_SECONDS)),
                         "-vf", "scale=640:-2", "-c:v", "libx264", "-profile:v", "baseline", "-pix_fmt", "yuv420p", "-crf", "30",
                         "-preset", "veryfast", "-c:a", "aac", "-b:a", "64k", "-movflags", "+faststart", str(out)], check=True)
-    log = json.loads(LOG.read_text(encoding="utf-8")) if LOG.exists() else {}
-    log[slug] = {"url": url, "start": start, "end": end}
-    LOG.write_text(json.dumps(log, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
+    import fcntl  # several agents append at once
+    with open(str(LOG) + ".lock", "w") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        log = json.loads(LOG.read_text(encoding="utf-8")) if LOG.exists() else {}
+        log[slug] = {"url": url, "start": start, "end": end}
+        LOG.write_text(json.dumps(log, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
     print(out, f"{out.stat().st_size / 1e6:.1f} MB")
 
 
