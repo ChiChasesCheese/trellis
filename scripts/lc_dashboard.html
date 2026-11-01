@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0d12">
+<title>LeetCode 学习看板</title>
+<link rel="icon" href="data:,">
+<style>
+:root{--bg:#0b0d12;--card:#12151c;--card2:#161a23;--line:#222836;--text:#e8eaf0;--mute:#8a92a6;--dim:#5b6375;
+--acc:#3dd6b0;--acc2:#6aa8ff;--warn:#f5b84b;--bad:#ff6b6b;--r:14px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 -apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC",system-ui,sans-serif}
+body{padding:calc(env(safe-area-inset-top) + 14px) 14px calc(env(safe-area-inset-bottom) + 80px)}
+h1{font-size:22px;margin:4px 2px 2px;letter-spacing:.2px}
+.sub{color:var(--mute);font-size:12px;margin:0 2px 14px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:760px){.grid{grid-template-columns:repeat(4,1fr)}body{max-width:1100px;margin:auto}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.kpi .v{font-size:26px;font-weight:650;letter-spacing:-.5px}
+.kpi .l{color:var(--mute);font-size:12px}
+.kpi .s{color:var(--dim);font-size:12px;margin-top:2px}
+.sec{margin:18px 2px 8px;font-size:13px;color:var(--mute);letter-spacing:.6px;text-transform:uppercase}
+.tabs{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:space-around;padding:8px 6px calc(env(safe-area-inset-bottom) + 8px);
+background:rgba(11,13,18,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);z-index:5}
+.tabs button{flex:1;background:none;border:0;color:var(--dim);font:inherit;font-size:12px;padding:6px 0;border-radius:10px}
+.tabs button b{display:block;font-size:17px;line-height:1.2}
+.tabs button.on{color:var(--acc)}
+.page{display:none}.page.on{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.heat{overflow-x:auto;padding-bottom:4px}
+.heat svg{display:block}
+.legend{display:flex;gap:4px;align-items:center;color:var(--dim);font-size:11px;margin-top:6px}
+.legend i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.row{display:flex;align-items:center;gap:10px}
+.area{padding:12px 14px;border-bottom:1px solid var(--line)}
+.area:last-child{border-bottom:0}
+.area .t{flex:1;font-weight:560}
+.area .n{color:var(--mute);font-size:12px}
+.bar{height:8px;background:#1b202b;border-radius:6px;overflow:hidden;position:relative;margin-top:7px}
+.bar i{position:absolute;top:0;bottom:0;left:0;border-radius:6px}
+.pct{font-variant-numeric:tabular-nums;font-weight:600;min-width:44px;text-align:right}
+.probs{display:none;margin-top:10px}
+.area.open .probs{display:block}
+.p{display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px dashed #1d2230;font-size:13.5px}
+.p .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dot{width:9px;height:9px;border-radius:50%;flex:none}
+.chip{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;background:#1b202b;color:var(--mute);margin:2px 4px 2px 0;border:1px solid transparent}
+.chip.on{color:var(--bg);background:var(--acc)}
+.chips{display:flex;flex-wrap:wrap;margin:4px 0 10px}
+.weak{padding:12px 14px;border-bottom:1px solid var(--line)}
+.weak:last-child{border-bottom:0}
+.weak .top{display:flex;gap:8px;align-items:baseline}
+.weak .nm{flex:1;font-weight:560}
+.weak .meta{color:var(--mute);font-size:12px;margin-top:3px}
+.weak .k{color:#c6cbe0;font-size:13px;margin-top:6px;display:none}
+.weak.open .k{display:block}
+.badge{font-size:11px;font-weight:650;padding:1px 7px;border-radius:6px}
+.mat{display:grid;grid-template-columns:96px repeat(12,1fr);gap:3px;font-size:11px;align-items:center}
+.mat .h{color:var(--dim);text-align:center}
+.mat .lab{color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mat .c{height:20px;border-radius:4px;background:#161b25}
+.cov{padding:12px 14px;border-bottom:1px solid var(--line)}
+.cov:last-child{border-bottom:0}
+.stack{display:flex;height:10px;border-radius:6px;overflow:hidden;background:#1b202b;margin-top:8px}
+.stack i{display:block;height:100%}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 76px);transform:translateX(-50%);background:#202634;border:1px solid #2c3445;
+padding:7px 12px;border-radius:10px;font-size:12.5px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9;white-space:nowrap}
+.toast.on{opacity:1}
+.muted{color:var(--mute)}
+.spark{width:100%;height:120px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+td{padding:8px 0;border-bottom:1px solid var(--line)}
+td.r{text-align:right;color:var(--mute);white-space:nowrap}
+.seg{display:flex;background:#151923;border:1px solid var(--line);border-radius:10px;padding:3px;margin-bottom:10px}
+.seg button{flex:1;border:0;background:none;color:var(--mute);font:inherit;font-size:12.5px;padding:6px;border-radius:8px}
+.seg button.on{background:#232a38;color:var(--text)}
+</style>
+</head>
+<body>
+<h1>LeetCode 学习看板</h1>
+<div class="sub" id="gen"></div>
+
+<section class="page on" id="p-home">
+  <div class="grid" id="kpis"></div>
+  <div class="sec">Anki 复习热力图（LeetCode 牌组）</div>
+  <div class="card"><div class="heat" id="heat-anki"></div><div class="legend" id="leg-anki"></div></div>
+  <div class="sec">LeetCode 提交热力图</div>
+  <div class="card"><div class="heat" id="heat-lc"></div><div class="legend" id="leg-lc"></div></div>
+  <div class="sec">最近一周卡住的题</div>
+  <div class="card" style="padding:0" id="recent-weak"></div>
+</section>
+
+<section class="page" id="p-area">
+  <div class="sec">各领域掌握度（LeetCode Tops 01–17）</div>
+  <div class="muted" style="font-size:12px;margin:0 2px 8px">掌握度 = 学过的比例 × 记得的牢度；绿色条是整体掌握度，浅色条是已学题的牢度。点一行展开题目。</div>
+  <div class="card" style="padding:0" id="areas"></div>
+  <div class="sec">领域 × 周 · 复习正确率热力图（近 12 周）</div>
+  <div class="card"><div class="mat" id="matrix"></div><div class="legend" id="leg-mat"></div></div>
+  <div class="sec">LeetCode 已解题目 · 按标签</div>
+  <div class="card" id="tags"></div>
+</section>
+
+<section class="page" id="p-lists">
+  <div class="sec">题单覆盖</div>
+  <div class="muted" style="font-size:12px;margin:0 2px 8px">深绿 = 已熟（间隔 ≥ 21 天）· 浅绿 = 学过 · 灰 = 没学过。</div>
+  <div class="card" style="padding:0" id="cover"></div>
+  <div class="sec">高频但还没学的题（按全公司热度）</div>
+  <div class="card" style="padding:0" id="unseen"></div>
+</section>
+
+<section class="page" id="p-weak">
+  <div class="seg" id="weak-mode"><button class="on" data-m="30">近 30 天</button><button data-m="all">全部</button></div>
+  <div class="chips" id="weak-chips"></div>
+  <div class="card" style="padding:0" id="weak"></div>
+</section>
+
+<section class="page" id="p-lc">
+  <div class="sec">周赛分数</div>
+  <div class="card"><svg class="spark" id="spark" viewBox="0 0 320 120" preserveAspectRatio="none"></svg><div class="muted" id="spark-note" style="font-size:12px"></div></div>
+  <div class="sec">最近解出的题</div>
+  <div class="card"><table id="recent"></table></div>
+</section>
+
+<nav class="tabs" id="tabs">
+  <button class="on" data-p="home"><b>◎</b>总览</button>
+  <button data-p="area"><b>▦</b>领域</button>
+  <button data-p="lists"><b>☰</b>题单</button>
+  <button data-p="weak"><b>⚑</b>弱项</button>
+  <button data-p="lc"><b>⌁</b>刷题</button>
+</nav>
+<div class="toast" id="toast"></div>
+
+<script>
+const D = /*__DATA__*/null;
+const $ = s => document.querySelector(s), esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pct = x => Math.round(x * 100) + "%";
+const AREA = Object.fromEntries(D.areas.map(a => [a.id, a.t]));
+let toastT;
+function toast(t){const e=$("#toast");e.textContent=t;e.classList.add("on");clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove("on"),1800)}
+$("#gen").textContent = "更新于 " + D.generated + " · 共 " + D.rows.length + " 道题";
+document.querySelectorAll("#tabs button").forEach(b => b.onclick = () => {
+  document.querySelectorAll("#tabs button").forEach(x => x.classList.toggle("on", x === b));
+  document.querySelectorAll(".page").forEach(p => p.classList.toggle("on", p.id === "p-" + b.dataset.p));
+  window.scrollTo({top:0});
+});
+const mcol = (m, seen = m > 0) => m >= .75 ? "#3dd6b0" : m >= .5 ? "#8fd16a" : m >= .25 ? "#f5b84b" : seen ? "#ff6b6b" : "#3a4152";
+
+// KPIs
+(() => {
+  const s = D.solved, today = new Date(), iso = d => d.toISOString().slice(0, 10);
+  let r30 = 0, a30 = 0, r7 = 0;
+  for (let i = 0; i < 30; i++) { const d = new Date(today - i * 864e5), v = D.anki[iso(d)]; if (v) { r30 += v[0]; a30 += v[1]; if (i < 7) r7 += v[0]; } }
+  const tops = D.rows.filter(r => r.a), seen = tops.filter(r => r.rv), m = tops.reduce((x, r) => x + r.m, 0) / tops.length;
+  const tt = D.rows.filter(r => /^p/.test(r.tt)), ttSeen = tt.filter(r => r.rv).length;
+  const c = D.contest || {};
+  const k = [
+    ["LeetCode 已解", s.All, `简单 ${s.Easy} · 中等 ${s.Medium} · 困难 ${s.Hard}`],
+    ["周赛分", c.rating ? Math.round(c.rating) : "—", c.rating ? `前 ${c.topPercentage}% · ${c.attendedContestsCount} 场` : ""],
+    ["近 30 天复习", r30, `正确率 ${r30 ? pct(1 - a30 / r30) : "—"} · 近 7 天 ${r7}`],
+    ["连续刷题", D.streak + " 天", `今年活跃 ${D.active} 天`],
+    ["Tops 已学", `${seen.length}/${tops.length}`, `整体掌握度 ${pct(m)}`],
+    ["TikTok P1–P4", `${ttSeen}/${tt.length}`, "已学 / 总数"],
+  ];
+  $("#kpis").innerHTML = k.map(([l, v, s]) => `<div class="card kpi"><div class="l">${l}</div><div class="v">${v}</div><div class="s">${s}</div></div>`).join("");
+})();
+
+// GitHub-style calendar heatmap
+function calendar(el, legEl, data, weeks, colors, label) {
+  const cell = 13, gap = 3, today = new Date(); today.setHours(0,0,0,0);
+  const start = new Date(today - ((weeks - 1) * 7 + today.getDay()) * 864e5);
+  const vals = Object.values(data).map(v => Array.isArray(v) ? v[0] : v).filter(v => v > 0).sort((a, b) => a - b);
+  const q = p => vals.length ? vals[Math.min(vals.length - 1, Math.floor(p * vals.length))] : 1;
+  const th = [q(.25), q(.5), q(.75), q(.9)];
+  const lvl = v => !v ? 0 : v <= th[0] ? 1 : v <= th[1] ? 2 : v <= th[2] ? 3 : 4;
+  let svg = `<svg width="${weeks * (cell + gap) + 22}" height="${7 * (cell + gap) + 18}">`, lastM = -1;
+  for (let w = 0; w < weeks; w++) for (let d = 0; d < 7; d++) {
+    const day = new Date(+start + (w * 7 + d) * 864e5); if (day > today) continue;
+    const key = day.toISOString().slice(0, 10), v = data[key], n = Array.isArray(v) ? v[0] : (v || 0);
+    if (d === 0 && day.getMonth() !== lastM) { lastM = day.getMonth(); svg += `<text x="${22 + w * (cell + gap)}" y="10" fill="#5b6375" font-size="10">${day.getMonth() + 1}月</text>`; }
+    const tip = Array.isArray(v) ? `${key}：复习 ${n} 张，忘记 ${v[1]}` : `${key}：${label} ${n}`;
+    svg += `<rect x="${22 + w * (cell + gap)}" y="${16 + d * (cell + gap)}" width="${cell}" height="${cell}" rx="3" fill="${colors[lvl(n)]}" data-t="${tip}"/>`;
+  }
+  ["", "一", "", "三", "", "五", ""].forEach((t, d) => svg += `<text x="0" y="${26 + d * (cell + gap)}" fill="#5b6375" font-size="10">${t}</text>`);
+  el.innerHTML = svg + "</svg>";
+  el.querySelectorAll("rect").forEach(r => r.onclick = () => toast(r.dataset.t));
+  el.scrollLeft = 1e5;
+  legEl.innerHTML = "少 " + colors.map(c => `<i style="background:${c}"></i>`).join("") + " 多";
+}
+const GREEN = ["#171c26", "#0f3b33", "#13664f", "#1f9c74", "#3dd6b0"], BLUE = ["#171c26", "#14284a", "#1d4687", "#2f6fd0", "#6aa8ff"];
+calendar($("#heat-anki"), $("#leg-anki"), D.anki, 26, GREEN, "");
+calendar($("#heat-lc"), $("#leg-lc"), D.lc, 52, BLUE, "提交");
+
+// weak scoring
+const weakScore = (r, recent) => recent ? r.ag30 * 3 + (1 - r.m) : r.ag * 2 + r.lp + (1 - r.m) * 2;
+function weakRow(r) {
+  const col = mcol(r.m, r.rv > 0);
+  return `<div class="weak" onclick="this.classList.toggle('open')"><div class="top"><span class="dot" style="background:${col};align-self:center"></span>
+  <span class="nm">${r.id ? "LC " + r.id + " " : ""}${esc(r.n)}</span><span class="badge" style="background:${col}22;color:${col}">${pct(r.m)}</span></div>
+  <div class="meta">${r.a ? AREA[r.a] + " · " : ""}${r.d || ""} · 复习 ${r.rv} 次，忘记 ${r.ag} 次${r.ag30 ? `（近 30 天 ${r.ag30}）` : ""} · 最长间隔 ${r.iv} 天${r.last ? " · 上次 " + r.last : ""}</div>
+  <div class="k">${esc(r.k)}<br><span class="muted">${r.dk.join(" · ")}${r.r ? " · 全公司热度第 " + r.r + " 名" : ""}${r.l.length ? " · " + r.l.join("、") : ""}</span></div></div>`;
+}
+(() => {
+  const wk = D.rows.filter(r => r.ag30 > 0).sort((a, b) => b.ag30 - a.ag30 || a.m - b.m).slice(0, 8);
+  $("#recent-weak").innerHTML = wk.length ? wk.map(weakRow).join("") : `<div class="weak muted">近一周没有忘记的题，稳。</div>`;
+})();
+
+// areas
+(() => {
+  const by = {}; D.rows.forEach(r => { if (r.a) (by[r.a] ||= []).push(r); });
+  $("#areas").innerHTML = [...D.areas].sort((a, b) => a.m - b.m).map(a => {
+    const ps = by[a.id].sort((x, y) => (x.r || 9999) - (y.r || 9999));
+    return `<div class="area"><div class="row" onclick="this.parentNode.classList.toggle('open')"><span class="t">${a.t}</span>
+      <span class="n">${a.seen}/${a.n} 已学 · ${a.mature} 熟</span><span class="pct" style="color:${mcol(a.m)}">${pct(a.m)}</span></div>
+      <div class="bar"><i style="width:${a.seen / a.n * 100}%;background:#2a4a44"></i><i style="width:${a.m * 100}%;background:${mcol(a.m)}"></i></div>
+      <div class="probs">${ps.map(r => `<div class="p"><span class="dot" style="background:${mcol(r.m, r.rv > 0)}"></span><span class="nm">LC ${r.id} ${esc(r.n)}</span>
+        <span class="muted" style="font-size:11.5px">${r.rv ? `${pct(r.m)} · 忘 ${r.ag}` : "未学"}${r.r ? " · #" + r.r : ""}</span></div>`).join("")}</div></div>`;
+  }).join("");
+  // area x week matrix: colour = recall, opacity = volume
+  const maxv = Math.max(1, ...D.areas.flatMap(a => a.weeks.map(w => w[0])));
+  let h = `<div></div>` + Array.from({length: 12}, (_, i) => `<div class="h">${i === 11 ? "本周" : i % 3 === 2 ? "-" + (11 - i) : ""}</div>`).join("");
+  D.areas.forEach(a => {
+    h += `<div class="lab">${a.t}</div>`;
+    a.weeks.forEach(([n, ag], i) => {
+      const rec = n ? 1 - ag / n : 0, col = !n ? "#161b25" : rec >= .9 ? "#3dd6b0" : rec >= .75 ? "#8fd16a" : rec >= .6 ? "#f5b84b" : "#ff6b6b";
+      const op = n ? .35 + .65 * Math.sqrt(n / maxv) : 1;
+      h += `<div class="c" style="background:${col};opacity:${op}" data-t="${a.t} · ${11 - i ? (11 - i) + " 周前" : "本周"}：复习 ${n}，正确率 ${n ? pct(rec) : "—"}"></div>`;
+    });
+  });
+  $("#matrix").innerHTML = h;
+  $("#matrix").querySelectorAll(".c").forEach(c => c.onclick = () => toast(c.dataset.t));
+  $("#leg-mat").innerHTML = `正确率 <i style="background:#ff6b6b"></i>&lt;60% <i style="background:#f5b84b"></i>60–75% <i style="background:#8fd16a"></i>75–90% <i style="background:#3dd6b0"></i>≥90% · 越亮复习越多`;
+  const mx = Math.max(...D.tags.map(t => t.problemsSolved));
+  $("#tags").innerHTML = D.tags.map(t => `<div class="row" style="margin:6px 0;font-size:13px"><span style="width:118px;color:var(--mute)">${esc(t.tagName)}</span>
+    <div class="bar" style="flex:1;margin:0"><i style="width:${t.problemsSolved / mx * 100}%;background:var(--acc2)"></i></div><span class="pct">${t.problemsSolved}</span></div>`).join("");
+})();
+
+// list coverage
+(() => {
+  const row = Object.fromEntries(D.rows.map(r => [r.s, r]));
+  $("#cover").innerHTML = D.cover.map(c => {
+    const learning = c.seen - c.mature, un = c.n - c.seen;
+    return `<div class="cov"><div class="row"><span class="t" style="flex:1;font-weight:560">${c.t}</span><span class="muted" style="font-size:12px">${c.seen}/${c.n} 学过 · ${c.mature} 熟</span>
+      <span class="pct" style="color:${mcol(c.m)}">${pct(c.m)}</span></div>
+      <div class="stack"><i style="width:${c.mature / c.n * 100}%;background:#3dd6b0"></i><i style="width:${learning / c.n * 100}%;background:#1f6b58"></i><i style="width:${un / c.n * 100}%;background:#262c39"></i></div></div>`;
+  }).join("");
+  const un = D.rows.filter(r => r.r && !r.rv).sort((a, b) => a.r - b.r).slice(0, 25);
+  $("#unseen").innerHTML = un.map(r => `<div class="weak"><div class="top"><span class="badge" style="background:#6aa8ff22;color:#6aa8ff">#${r.r}</span>
+    <span class="nm">LC ${r.id} ${esc(r.n)}</span><span class="muted" style="font-size:12px">${r.d}</span></div><div class="meta">${AREA[r.a] || ""}${r.l.length ? " · " + r.l.join("、") : ""}</div></div>`).join("");
+})();
+
+// weak list with filters
+(() => {
+  let mode = "30", area = "";
+  const draw = () => {
+    let rs = D.rows.filter(r => r.rv && (mode === "30" ? r.ag30 > 0 : r.ag > 0 || r.m < .5) && (!area || r.a === area));
+    rs.sort((a, b) => weakScore(b, mode === "30") - weakScore(a, mode === "30"));
+    $("#weak").innerHTML = rs.slice(0, 60).map(weakRow).join("") || `<div class="weak muted">这里没有弱项。</div>`;
+  };
+  const areas = [["", "全部"], ...D.areas.map(a => [a.id, a.t])];
+  $("#weak-chips").innerHTML = areas.map(([id, t]) => `<span class="chip${id === "" ? " on" : ""}" data-a="${id}">${t}</span>`).join("");
+  $("#weak-chips").onclick = e => { const c = e.target.closest(".chip"); if (!c) return; area = c.dataset.a;
+    document.querySelectorAll("#weak-chips .chip").forEach(x => x.classList.toggle("on", x === c)); draw(); };
+  $("#weak-mode").onclick = e => { const b = e.target.closest("button"); if (!b) return; mode = b.dataset.m;
+    document.querySelectorAll("#weak-mode button").forEach(x => x.classList.toggle("on", x === b)); draw(); };
+  draw();
+})();
+
+// contest sparkline + recent solves
+(() => {
+  const cs = D.contests;
+  if (cs.length > 1) {
+    const rs = cs.map(c => c.r), lo = Math.min(...rs) - 30, hi = Math.max(...rs) + 30;
+    const pts = cs.map((c, i) => [i / (cs.length - 1) * 310 + 5, 110 - (c.r - lo) / (hi - lo) * 100]);
+    $("#spark").innerHTML = `<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3dd6b0" stop-opacity=".35"/><stop offset="1" stop-color="#3dd6b0" stop-opacity="0"/></linearGradient></defs>
+      <path d="M${pts.map(p => p.join(",")).join(" L")} L315,120 L5,120 Z" fill="url(#g)"/>
+      <path d="M${pts.map(p => p.join(",")).join(" L")}" fill="none" stroke="#3dd6b0" stroke-width="2" vector-effect="non-scaling-stroke"/>` +
+      pts.map((p, i) => `<circle cx="${p[0]}" cy="${p[1]}" r="3" fill="#3dd6b0" data-t="${cs[i].d} ${esc(cs[i].t)}：${cs[i].r}"/>`).join("");
+    $("#spark").querySelectorAll("circle").forEach(c => c.onclick = () => toast(c.dataset.t));
+    $("#spark-note").textContent = `最近 ${cs.length} 场：${rs[0]} → ${rs[rs.length - 1]}（点圆点看场次）`;
+  }
+  const row = Object.fromEntries(D.rows.map(r => [r.s, r]));
+  $("#recent").innerHTML = D.recent.slice(0, 30).map(x => { const r = row[x.s];
+    return `<tr><td><div>LC ${x.id} ${esc(x.n)}</div><div class="muted" style="font-size:12px">${r ? esc(r.k) : ""}</div></td><td class="r">${x.d.slice(5)}<br>${x.diff}</td></tr>`; }).join("");
+})();
+</script>
+</body>
+</html>
