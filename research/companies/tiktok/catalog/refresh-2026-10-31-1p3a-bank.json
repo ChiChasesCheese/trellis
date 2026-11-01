@@ -1,0 +1,53 @@
+{
+ "collected": "2026-10-31",
+ "half": "1p3a-bank",
+ "sightings": [
+  {
+   "date": "2026-03-05",
+   "region": "US",
+   "source": "1P3A bank (thread ids hidden behind the points wall)",
+   "url": "https://www.1point3acres.com/interview/company/ByteDance",
+   "role": "SWE phone screen",
+   "round": "P",
+   "family": null,
+   "lc": [
+    547
+   ],
+   "custom": null,
+   "note": "bank record friend-circles-photo-groups (n=1): friend circles / photo groups, union-find or DFS",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-09-25",
+   "region": "US",
+   "source": "1P3A bank (thread ids hidden behind the points wall)",
+   "url": "https://www.1point3acres.com/interview/company/ByteDance",
+   "role": "SWE phone screen / onsite coding",
+   "round": "P",
+   "family": null,
+   "lc": [
+    794
+   ],
+   "custom": null,
+   "note": "bank record tic-tac-toe-game-state-check (n=2, 2026-09-25 .. 2026-10-13): check a tic-tac-toe board state; complexity and tests discussed",
+   "conf": "medium"
+  },
+  {
+   "date": "2026-10-13",
+   "region": "US",
+   "source": "1P3A bank (thread ids hidden behind the points wall)",
+   "url": "https://www.1point3acres.com/interview/company/ByteDance",
+   "role": "SWE phone screen / onsite coding",
+   "round": "P",
+   "family": null,
+   "lc": [
+    794
+   ],
+   "custom": null,
+   "note": "bank record tic-tac-toe-game-state-check (n=2, 2026-09-25 .. 2026-10-13): check a tic-tac-toe board state; complexity and tests discussed",
+   "conf": "medium"
+  }
+ ],
+ "bank_changes": [],
+ "skipped": []
+}

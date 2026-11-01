@@ -84,12 +84,12 @@ nodes:
   - id: p2.lowest-common-ancestor-of-a-binary-tree
     title: LC 236 二叉树的最近公共祖先
     summary: 也在：Amazon、LeetCode Hot 100、Top Interview 150。
-  - id: p2.merge-sorted-array
-    title: LC 88 合并两个有序数组
-    summary: 也在：Amazon、Top Interview 150。
   - id: p2.valid-parentheses
     title: LC 20 有效的括号
     summary: 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150。
+  - id: p2.merge-sorted-array
+    title: LC 88 合并两个有序数组
+    summary: 也在：Amazon、Top Interview 150。
   - id: p2.merge-k-sorted-lists
     title: LC 23 合并 K 个升序链表
     summary: 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150。
@@ -285,7 +285,7 @@ nodes:
 - id: p4
   order: 4
   core: true
-  title: P4 较常见（25 题）
+  title: P4 较常见（26 题）
   summary: TikTok 高频且也在 Amazon 或经典题单里的题，同一优先级里高频在前。
   children:
   - id: p4.diameter-of-binary-tree
@@ -321,12 +321,12 @@ nodes:
   - id: p4.candy
     title: LC 135 分发糖果
     summary: 也在：Amazon、Top Interview 150。
-  - id: p4.validate-binary-search-tree
-    title: LC 98 验证二叉搜索树
-    summary: 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150。
   - id: p4.longest-repeating-character-replacement
     title: LC 424 替换后的最长重复字符
     summary: 也在：Blind 75、NeetCode 150。
+  - id: p4.validate-binary-search-tree
+    title: LC 98 验证二叉搜索树
+    summary: 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150。
   - id: p4.find-minimum-in-rotated-sorted-array
     title: LC 153 寻找旋转排序数组中的最小值
     summary: 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150。
@@ -360,6 +360,9 @@ nodes:
   - id: p4.swim-in-rising-water
     title: LC 778 水位上升的泳池中游泳
     summary: 也在：NeetCode 150。
+  - id: p4.number-of-provinces
+    title: LC 547 省份数量
+    summary: 也在：Amazon。
   - id: p4.min-cost-climbing-stairs
     title: LC 746 使用最小花费爬楼梯
     summary: 也在：NeetCode 150。

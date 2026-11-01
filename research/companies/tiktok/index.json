@@ -32,7 +32,7 @@
   "window": "30d",
   "window_freq": 100,
   "tier": "A",
-  "score": 4.7012,
+  "score": 4.6828,
   "a_reason": "us-asked",
   "band": "p1",
   "title_zh": "LRU 缓存",
@@ -56,7 +56,7 @@
     "last_seen": "2026-10"
    }
   },
-  "score": 3.9384,
+  "score": 3.9202,
   "a_reason": "us-asked",
   "band": "p1",
   "statement_chars": 956
@@ -87,7 +87,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 3.3327,
+  "score": 3.3216,
   "a_reason": "us-asked",
   "band": "p1",
   "title_zh": "无重复字符的最长子串",
@@ -127,7 +127,7 @@
   "window": "30d",
   "window_freq": 100,
   "tier": "A",
-  "score": 2.9322,
+  "score": 2.9213,
   "a_reason": "us-asked",
   "band": "p1",
   "title_zh": "岛屿数量",
@@ -159,7 +159,7 @@
   "window": "30d",
   "window_freq": 100,
   "tier": "A",
-  "score": 2.5415,
+  "score": 2.533,
   "a_reason": "us-asked",
   "band": "p1",
   "title_zh": "K 个一组翻转链表",
@@ -183,7 +183,7 @@
     "last_seen": "2026-07-08"
    }
   },
-  "score": 2.3388,
+  "score": 2.328,
   "a_reason": "us-asked",
   "band": "p1",
   "statement_chars": 599
@@ -222,7 +222,7 @@
   "window": "30d",
   "window_freq": 100,
   "tier": "A",
-  "score": 2.2423,
+  "score": 2.2338,
   "a_reason": "us-asked",
   "band": "p1",
   "title_zh": "课程表",
@@ -246,7 +246,7 @@
     "last_seen": "2026-08-15"
    }
   },
-  "score": 1.8231,
+  "score": 1.8147,
   "a_reason": "us-asked",
   "band": "p1",
   "statement_chars": 597
@@ -269,7 +269,7 @@
     "last_seen": "2026-09-15"
    }
   },
-  "score": 1.8187,
+  "score": 1.8103,
   "a_reason": "us-asked",
   "band": "p1",
   "statement_chars": 456
@@ -306,7 +306,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 1.4466,
+  "score": 1.4413,
   "a_reason": "us-asked",
   "band": "p1",
   "title_zh": "最长回文子串",
@@ -338,7 +338,7 @@
   "window": "6m",
   "window_freq": 53,
   "tier": "A",
-  "score": 1.3904,
+  "score": 1.3859,
   "a_reason": "us-asked",
   "band": "p1",
   "title_zh": "反转链表",
@@ -376,7 +376,7 @@
   "window": "3m",
   "window_freq": 81,
   "tier": "A",
-  "score": 1.3514,
+  "score": 1.347,
   "a_reason": "us-asked",
   "band": "p1",
   "title_zh": "合并区间",
@@ -416,7 +416,7 @@
   "window": "6m",
   "window_freq": 50,
   "tier": "A",
-  "score": 1.1476,
+  "score": 1.144,
   "a_reason": "us-asked",
   "band": "p1",
   "title_zh": "数组中的第K个最大元素",
@@ -448,7 +448,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 1.1046,
+  "score": 1.1001,
   "a_reason": "cn-twice",
   "band": "p1",
   "title_zh": "二叉树的层序遍历",
@@ -482,7 +482,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 1.0354,
+  "score": 1.0311,
   "a_reason": "us-asked",
   "band": "p1",
   "title_zh": "最大为 N 的数字组合",
@@ -525,7 +525,7 @@
   "window": "6m",
   "window_freq": 50,
   "tier": "A",
-  "score": 0.9595,
+  "score": 0.9558,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "前 K 个高频元素",
@@ -562,7 +562,7 @@
   "window": "6m",
   "window_freq": 53,
   "tier": "A",
-  "score": 0.925,
+  "score": 0.9223,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "搜索旋转排序数组",
@@ -586,7 +586,7 @@
     "last_seen": "2026-10-15"
    }
   },
-  "score": 0.9232,
+  "score": 0.9189,
   "a_reason": "us-asked",
   "band": "p2",
   "statement_chars": 561
@@ -622,7 +622,7 @@
   "window": "6m",
   "window_freq": 50,
   "tier": "A",
-  "score": 0.8938,
+  "score": 0.8909,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "买卖股票的最佳时机",
@@ -653,7 +653,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.8793,
+  "score": 0.8758,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "删除链表的倒数第N个节点",
@@ -692,7 +692,7 @@
   "window": "6m",
   "window_freq": 50,
   "tier": "A",
-  "score": 0.8254,
+  "score": 0.8224,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "基本计算器",
@@ -731,7 +731,7 @@
   "window": "6m",
   "window_freq": 53,
   "tier": "A",
-  "score": 0.8174,
+  "score": 0.8147,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "二叉树的右视图",
@@ -755,7 +755,7 @@
     "last_seen": "2026-08"
    }
   },
-  "score": 0.7873,
+  "score": 0.7837,
   "a_reason": "cn-twice",
   "band": "p2",
   "statement_chars": 542
@@ -793,7 +793,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.7574,
+  "score": 0.7553,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "接雨水",
@@ -826,7 +826,7 @@
   "window": "30d",
   "window_freq": 100,
   "tier": "A",
-  "score": 0.741,
+  "score": 0.7394,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "路径总和 III",
@@ -862,7 +862,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.7129,
+  "score": 0.7104,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "打家劫舍",
@@ -896,43 +896,11 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.7066,
+  "score": 0.7045,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "二叉树的最近公共祖先",
   "statement_chars": 497
- },
- "merge-sorted-array": {
-  "id": 88,
-  "title": "Merge Sorted Array",
-  "slug": "merge-sorted-array",
-  "difficulty": "Easy",
-  "freq": 93,
-  "recent": false,
-  "tags": [
-   "Array",
-   "Two Pointers",
-   "Sorting"
-  ],
-  "companies": {
-   "tiktok": {
-    "freq": 26,
-    "recent": false,
-    "tier": "C"
-   },
-   "bytedance_cn": {
-    "reports": 97,
-    "last_seen": "2026-10-08",
-    "tier": "A"
-   }
-  },
-  "window": "",
-  "tier": "A",
-  "score": 0.6999,
-  "a_reason": "cn-twice",
-  "band": "p2",
-  "title_zh": "合并两个有序数组",
-  "statement_chars": 808
  },
  "valid-parentheses": {
   "id": 20,
@@ -965,11 +933,43 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.6996,
+  "score": 0.6973,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "有效的括号",
   "statement_chars": 335
+ },
+ "merge-sorted-array": {
+  "id": 88,
+  "title": "Merge Sorted Array",
+  "slug": "merge-sorted-array",
+  "difficulty": "Easy",
+  "freq": 93,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Two Pointers",
+   "Sorting"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 26,
+    "recent": false,
+    "tier": "C"
+   },
+   "bytedance_cn": {
+    "reports": 97,
+    "last_seen": "2026-10-08",
+    "tier": "A"
+   }
+  },
+  "window": "",
+  "tier": "A",
+  "score": 0.6973,
+  "a_reason": "cn-twice",
+  "band": "p2",
+  "title_zh": "合并两个有序数组",
+  "statement_chars": 808
  },
  "merge-k-sorted-lists": {
   "id": 23,
@@ -1004,7 +1004,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.6922,
+  "score": 0.6901,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "合并 K 个升序链表",
@@ -1040,7 +1040,7 @@
   "window": "3m",
   "window_freq": 95,
   "tier": "A",
-  "score": 0.6784,
+  "score": 0.6771,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "会议室 II",
@@ -1077,7 +1077,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.6564,
+  "score": 0.655,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "三数之和",
@@ -1101,7 +1101,7 @@
     "last_seen": "2026-06-24"
    }
   },
-  "score": 0.6547,
+  "score": 0.6517,
   "a_reason": "us-asked",
   "band": "p2",
   "statement_chars": 523
@@ -1137,7 +1137,7 @@
   "window": "3m",
   "window_freq": 81,
   "tier": "A",
-  "score": 0.6425,
+  "score": 0.6416,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "两数之和",
@@ -1175,7 +1175,7 @@
   "window": "6m",
   "window_freq": 50,
   "tier": "A",
-  "score": 0.6379,
+  "score": 0.6358,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "字符串相乘",
@@ -1214,7 +1214,7 @@
   "window": "6m",
   "window_freq": 88,
   "tier": "A",
-  "score": 0.6332,
+  "score": 0.6321,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "最长递增子序列",
@@ -1238,7 +1238,7 @@
     "last_seen": "2026-10-26"
    }
   },
-  "score": 0.6235,
+  "score": 0.6206,
   "a_reason": "cn-twice",
   "band": "p2",
   "statement_chars": 413
@@ -1270,7 +1270,7 @@
   "window": "30d",
   "window_freq": 100,
   "tier": "A",
-  "score": 0.6162,
+  "score": 0.6151,
   "a_reason": "us-tag-recent",
   "band": "p2",
   "title_zh": "不同岛屿的数量",
@@ -1305,7 +1305,7 @@
   "window": "6m",
   "window_freq": 53,
   "tier": "A",
-  "score": 0.6033,
+  "score": 0.6017,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "二叉树中的最大路径和",
@@ -1340,7 +1340,7 @@
   "window": "3m",
   "window_freq": 70,
   "tier": "A",
-  "score": 0.5852,
+  "score": 0.5838,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "数据流的中位数",
@@ -1372,7 +1372,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.5651,
+  "score": 0.5634,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "字符串相加",
@@ -1405,7 +1405,7 @@
   "window": "3m",
   "window_freq": 81,
   "tier": "A",
-  "score": 0.5577,
+  "score": 0.5573,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "螺旋矩阵",
@@ -1440,7 +1440,7 @@
   "window": "30d",
   "window_freq": 82,
   "tier": "A",
-  "score": 0.5483,
+  "score": 0.5472,
   "a_reason": "us-tag-recent",
   "band": "p2",
   "title_zh": "最大人工岛",
@@ -1451,7 +1451,7 @@
   "title": "Longest Common Subsequence",
   "slug": "longest-common-subsequence",
   "difficulty": "Medium",
-  "freq": 84,
+  "freq": 85,
   "recent": false,
   "tags": [
    "String",
@@ -1470,14 +1470,14 @@
     "tier": "B"
    },
    "bytedance_cn": {
-    "reports": 61,
-    "last_seen": "2026-10-25",
+    "reports": 62,
+    "last_seen": "2026-10-27",
     "tier": "A"
    }
   },
   "window": "",
   "tier": "A",
-  "score": 0.5339,
+  "score": 0.5337,
   "a_reason": "cn-twice",
   "band": "p2",
   "title_zh": "最长公共子序列",
@@ -1503,7 +1503,7 @@
     "tier": "B"
    }
   },
-  "score": 0.5314,
+  "score": 0.529,
   "a_reason": "us-asked",
   "band": "p2",
   "statement_chars": 667
@@ -1538,7 +1538,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.5239,
+  "score": 0.5223,
   "a_reason": "us-asked",
   "band": "p3",
   "title_zh": "复原 IP 地址",
@@ -1564,7 +1564,7 @@
     "tier": "B"
    }
   },
-  "score": 0.507,
+  "score": 0.5048,
   "a_reason": "cn-twice",
   "band": "p3",
   "statement_chars": 416
@@ -1602,7 +1602,7 @@
   "window": "3m",
   "window_freq": 70,
   "tier": "A",
-  "score": 0.4893,
+  "score": 0.4883,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "去除重复字母",
@@ -1632,7 +1632,7 @@
   "window": "30d",
   "window_freq": 100,
   "tier": "A",
-  "score": 0.4471,
+  "score": 0.4468,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "统计「优美子数组」",
@@ -1665,7 +1665,7 @@
   "window": "3m",
   "window_freq": 70,
   "tier": "A",
-  "score": 0.4457,
+  "score": 0.4449,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "至多包含 K 个不同字符的最长子串",
@@ -1696,7 +1696,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.4392,
+  "score": 0.4376,
   "a_reason": "us-asked",
   "band": "p3",
   "title_zh": "火星词典",
@@ -1734,7 +1734,7 @@
   "window": "6m",
   "window_freq": 50,
   "tier": "A",
-  "score": 0.4357,
+  "score": 0.4345,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "和为 K 的子数组",
@@ -1772,7 +1772,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.4346,
+  "score": 0.4332,
   "a_reason": "us-asked",
   "band": "p3",
   "title_zh": "单词接龙",
@@ -1810,7 +1810,7 @@
   "window": "3m",
   "window_freq": 81,
   "tier": "A",
-  "score": 0.4115,
+  "score": 0.4113,
   "a_reason": "us-tag-recent",
   "band": "p2",
   "title_zh": "字符串解码",
@@ -1847,7 +1847,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.4112,
+  "score": 0.4104,
   "a_reason": "cn-twice",
   "band": "p3",
   "title_zh": "最大子数组和",
@@ -1881,34 +1881,11 @@
   "window": "6m",
   "window_freq": 50,
   "tier": "A",
-  "score": 0.4005,
+  "score": 0.3997,
   "a_reason": "us-tag-recent",
   "band": "p2",
   "title_zh": "最长有效括号",
   "statement_chars": 273
- },
- "tt-deep-merge-nested-json": {
-  "id": 0,
-  "title": "Deep merge of two nested JSON objects",
-  "title_zh": "合并两个嵌套 JSON",
-  "slug": "tt-deep-merge-nested-json",
-  "difficulty": "",
-  "freq": 80,
-  "recent": true,
-  "window": "",
-  "tags": [],
-  "tier": "A",
-  "kind": "variant",
-  "companies": {
-   "reports": {
-    "refs": 4,
-    "last_seen": "2026-10-15"
-   }
-  },
-  "score": 0.3983,
-  "a_reason": "cn-twice",
-  "band": "p3",
-  "statement_chars": 338
  },
  "permutations": {
   "id": 46,
@@ -1935,11 +1912,34 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.3977,
+  "score": 0.3969,
   "a_reason": "cn-twice",
   "band": "p3",
   "title_zh": "全排列",
   "statement_chars": 278
+ },
+ "tt-deep-merge-nested-json": {
+  "id": 0,
+  "title": "Deep merge of two nested JSON objects",
+  "title_zh": "合并两个嵌套 JSON",
+  "slug": "tt-deep-merge-nested-json",
+  "difficulty": "",
+  "freq": 80,
+  "recent": true,
+  "window": "",
+  "tags": [],
+  "tier": "A",
+  "kind": "variant",
+  "companies": {
+   "reports": {
+    "refs": 4,
+    "last_seen": "2026-10-15"
+   }
+  },
+  "score": 0.3965,
+  "a_reason": "cn-twice",
+  "band": "p3",
+  "statement_chars": 338
  },
  "shortest-path-in-a-grid-with-obstacles-elimination": {
   "id": 1293,
@@ -1962,7 +1962,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.3838,
+  "score": 0.3825,
   "a_reason": "us-asked",
   "band": "p3",
   "title_zh": "网格中的最短路径",
@@ -2002,7 +2002,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.3836,
+  "score": 0.3824,
   "a_reason": "us-asked",
   "band": "p3",
   "title_zh": "滑动窗口最大值",
@@ -2034,7 +2034,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.3832,
+  "score": 0.382,
   "a_reason": "us-asked",
   "band": "p3",
   "title_zh": "正则表达式匹配",
@@ -2067,7 +2067,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.3684,
+  "score": 0.367,
   "a_reason": "cn-twice",
   "band": "p3",
   "title_zh": "实现 Trie (前缀树)",
@@ -2105,7 +2105,7 @@
   "window": "6m",
   "window_freq": 88,
   "tier": "A",
-  "score": 0.3661,
+  "score": 0.3657,
   "a_reason": "us-tag-recent",
   "band": "p2",
   "title_zh": "旋转图像",
@@ -2129,7 +2129,7 @@
     "last_seen": "2026-02-18"
    }
   },
-  "score": 0.3534,
+  "score": 0.3518,
   "a_reason": "us-asked",
   "band": "p3",
   "statement_chars": 331
@@ -2152,7 +2152,7 @@
     "last_seen": "2026-05-30"
    }
   },
-  "score": 0.3512,
+  "score": 0.3495,
   "a_reason": "us-asked",
   "band": "p3",
   "statement_chars": 417
@@ -2184,7 +2184,7 @@
   "window": "3m",
   "window_freq": 70,
   "tier": "A",
-  "score": 0.3496,
+  "score": 0.3493,
   "a_reason": "us-tag-recent",
   "band": "p2",
   "title_zh": "轮转数组",
@@ -2214,7 +2214,7 @@
   "window": "6m",
   "window_freq": 50,
   "tier": "A",
-  "score": 0.3469,
+  "score": 0.346,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "设计哈希映射",
@@ -2243,7 +2243,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.3467,
+  "score": 0.3456,
   "a_reason": "us-asked",
   "band": "p3",
   "title_zh": "设计内存文件系统",
@@ -2275,7 +2275,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.3465,
+  "score": 0.3453,
   "a_reason": "us-asked",
   "band": "p3",
   "title_zh": "用栈实现队列",
@@ -2313,7 +2313,7 @@
   "window": "3m",
   "window_freq": 70,
   "tier": "A",
-  "score": 0.345,
+  "score": 0.3447,
   "a_reason": "us-tag-recent",
   "band": "p2",
   "title_zh": "基本计算器 II",
@@ -2403,7 +2403,7 @@
   "window": "3m",
   "window_freq": 62,
   "tier": "A",
-  "score": 0.3363,
+  "score": 0.3359,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "可能的二分法",
@@ -2436,7 +2436,7 @@
   "window": "6m",
   "window_freq": 53,
   "tier": "A",
-  "score": 0.3341,
+  "score": 0.3338,
   "a_reason": "us-tag-recent",
   "band": "p2",
   "title_zh": "相交链表",
@@ -2468,7 +2468,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.3304,
+  "score": 0.3295,
   "a_reason": "cn-twice",
   "band": "p3",
   "title_zh": "最小路径和",
@@ -2499,7 +2499,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.3267,
+  "score": 0.3257,
   "a_reason": "us-asked",
   "band": "p3",
   "title_zh": "翻转字符串里的单词",
@@ -2531,7 +2531,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.3238,
+  "score": 0.3229,
   "a_reason": "us-asked",
   "band": "p3",
   "title_zh": "寻找两个正序数组的中位数",
@@ -2595,7 +2595,7 @@
   "window": "6m",
   "window_freq": 53,
   "tier": "A",
-  "score": 0.317,
+  "score": 0.3165,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "长度最小的子数组",
@@ -2627,7 +2627,7 @@
   "window": "3m",
   "window_freq": 62,
   "tier": "A",
-  "score": 0.3164,
+  "score": 0.3161,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "在排序数组中查找元素的第一个和最后一个位置",
@@ -2690,7 +2690,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.3117,
+  "score": 0.3112,
   "a_reason": "us-asked",
   "band": "p3",
   "title_zh": "x 的平方根 ",
@@ -2726,7 +2726,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.3008,
+  "score": 0.3002,
   "a_reason": "us-asked",
   "band": "p3",
   "title_zh": "组合总和",
@@ -2764,6 +2764,34 @@
   "title_zh": "加油站",
   "statement_chars": 876
  },
+ "fruit-into-baskets": {
+  "id": 904,
+  "title": "Fruit Into Baskets",
+  "slug": "fruit-into-baskets",
+  "difficulty": "Medium",
+  "freq": 38,
+  "recent": true,
+  "tags": [
+   "Array",
+   "Hash Table",
+   "Sliding Window"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 38,
+    "recent": true,
+    "tier": "A"
+   }
+  },
+  "window": "3m",
+  "window_freq": 62,
+  "tier": "A",
+  "score": 0.2915,
+  "a_reason": "us-asked",
+  "band": "p2",
+  "title_zh": "水果成篮",
+  "statement_chars": 711
+ },
  "implement-rand10-using-rand7": {
   "id": 470,
   "title": "Implement Rand10() Using Rand7()",
@@ -2791,39 +2819,11 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.2923,
+  "score": 0.2914,
   "a_reason": "cn-twice",
   "band": "p3",
   "title_zh": "用 Rand7() 实现 Rand10()",
   "statement_chars": 348
- },
- "fruit-into-baskets": {
-  "id": 904,
-  "title": "Fruit Into Baskets",
-  "slug": "fruit-into-baskets",
-  "difficulty": "Medium",
-  "freq": 38,
-  "recent": true,
-  "tags": [
-   "Array",
-   "Hash Table",
-   "Sliding Window"
-  ],
-  "companies": {
-   "tiktok": {
-    "freq": 38,
-    "recent": true,
-    "tier": "A"
-   }
-  },
-  "window": "3m",
-  "window_freq": 62,
-  "tier": "A",
-  "score": 0.2918,
-  "a_reason": "us-asked",
-  "band": "p2",
-  "title_zh": "水果成篮",
-  "statement_chars": 711
  },
  "linked-list-cycle": {
   "id": 141,
@@ -2845,7 +2845,7 @@
     "tier": "A"
    }
   },
-  "score": 0.29,
+  "score": 0.289,
   "a_reason": "cn-twice",
   "band": "p3",
   "statement_chars": 501
@@ -2868,7 +2868,7 @@
     "last_seen": "2026-10-23"
    }
   },
-  "score": 0.2883,
+  "score": 0.2869,
   "a_reason": "cn-twice",
   "band": "p3",
   "statement_chars": 840
@@ -2896,7 +2896,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.2875,
+  "score": 0.2867,
   "a_reason": "us-asked",
   "band": "p3",
   "title_zh": "单词搜索 II",
@@ -2934,7 +2934,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.2786,
+  "score": 0.2781,
   "a_reason": "pinned",
   "band": "p3",
   "title_zh": "括号生成",
@@ -2970,34 +2970,11 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.2768,
+  "score": 0.2762,
   "a_reason": "us-asked",
   "band": "p3",
   "title_zh": "单词拆分",
   "statement_chars": 614
- },
- "single-number": {
-  "id": 136,
-  "title": "Single Number",
-  "title_zh": "只出现一次的数字",
-  "slug": "single-number",
-  "difficulty": "",
-  "freq": 60,
-  "recent": true,
-  "window": "",
-  "tags": [],
-  "tier": "A",
-  "kind": "leetcode",
-  "companies": {
-   "reports": {
-    "refs": 1,
-    "last_seen": "2026-10-20"
-   }
-  },
-  "score": 0.271,
-  "a_reason": "cn-twice",
-  "band": "p3",
-  "statement_chars": 306
  },
  "single-element-in-a-sorted-array": {
   "id": 540,
@@ -3031,6 +3008,29 @@
   "title_zh": "有序数组中的单一元素",
   "statement_chars": 255
  },
+ "single-number": {
+  "id": 136,
+  "title": "Single Number",
+  "title_zh": "只出现一次的数字",
+  "slug": "single-number",
+  "difficulty": "",
+  "freq": 60,
+  "recent": true,
+  "window": "",
+  "tags": [],
+  "tier": "A",
+  "kind": "leetcode",
+  "companies": {
+   "reports": {
+    "refs": 1,
+    "last_seen": "2026-10-20"
+   }
+  },
+  "score": 0.2697,
+  "a_reason": "cn-twice",
+  "band": "p3",
+  "statement_chars": 306
+ },
  "design-tic-tac-toe": {
   "id": 348,
   "title": "Design Tic-Tac-Toe",
@@ -3054,7 +3054,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.2702,
+  "score": 0.2693,
   "a_reason": "us-asked",
   "band": "p3",
   "title_zh": "设计井字棋",
@@ -3078,7 +3078,7 @@
     "last_seen": "2026-07-06"
    }
   },
-  "score": 0.2701,
+  "score": 0.2688,
   "a_reason": "us-asked",
   "band": "p3",
   "statement_chars": 900
@@ -3101,7 +3101,7 @@
     "last_seen": "2026-03-25"
    }
   },
-  "score": 0.27,
+  "score": 0.2687,
   "a_reason": "us-asked",
   "band": "p3",
   "statement_chars": 463
@@ -3160,7 +3160,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.2667,
+  "score": 0.2662,
   "a_reason": "us-asked",
   "band": "p3",
   "title_zh": "N 皇后",
@@ -3198,7 +3198,7 @@
   "window": "6m",
   "window_freq": 62,
   "tier": "A",
-  "score": 0.2663,
+  "score": 0.2661,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "子集",
@@ -3239,34 +3239,11 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.2652,
+  "score": 0.2645,
   "a_reason": "us-asked",
   "band": "p3",
   "title_zh": "账户合并",
   "statement_chars": 1598
- },
- "tt-grid-min-cost-fuel-recharge": {
-  "id": 0,
-  "title": "Grid minimum-cost path with blocked cells, recharge cells and fuel K",
-  "title_zh": "网格最小代价路径（障碍 / 加油站 / 油量 K）",
-  "slug": "tt-grid-min-cost-fuel-recharge",
-  "difficulty": "",
-  "freq": 60,
-  "recent": true,
-  "window": "",
-  "tags": [],
-  "tier": "A",
-  "kind": "variant",
-  "companies": {
-   "reports": {
-    "refs": 2,
-    "last_seen": "2026-04-09"
-   }
-  },
-  "score": 0.2638,
-  "a_reason": "us-asked",
-  "band": "p3",
-  "statement_chars": 658
  },
  "minimum-window-substring": {
   "id": 76,
@@ -3294,11 +3271,34 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.2632,
+  "score": 0.2629,
   "a_reason": "us-asked",
   "band": "p3",
   "title_zh": "最小覆盖子串",
   "statement_chars": 458
+ },
+ "tt-grid-min-cost-fuel-recharge": {
+  "id": 0,
+  "title": "Grid minimum-cost path with blocked cells, recharge cells and fuel K",
+  "title_zh": "网格最小代价路径（障碍 / 加油站 / 油量 K）",
+  "slug": "tt-grid-min-cost-fuel-recharge",
+  "difficulty": "",
+  "freq": 60,
+  "recent": true,
+  "window": "",
+  "tags": [],
+  "tier": "A",
+  "kind": "variant",
+  "companies": {
+   "reports": {
+    "refs": 2,
+    "last_seen": "2026-04-09"
+   }
+  },
+  "score": 0.2626,
+  "a_reason": "us-asked",
+  "band": "p3",
+  "statement_chars": 658
  },
  "design-memory-allocator": {
   "id": 2502,
@@ -3327,7 +3327,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.2487,
+  "score": 0.2481,
   "a_reason": "us-asked",
   "band": "p3",
   "title_zh": "设计内存分配器",
@@ -3361,7 +3361,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.2479,
+  "score": 0.2474,
   "a_reason": "us-asked",
   "band": "p3",
   "title_zh": "有效的括号字符串",
@@ -3389,7 +3389,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.244,
+  "score": 0.2432,
   "a_reason": "us-asked",
   "band": "p3",
   "title_zh": "两数相加 II",
@@ -3428,6 +3428,30 @@
   "band": "p2",
   "title_zh": "数组中的最长山脉",
   "statement_chars": 452
+ },
+ "valid-tic-tac-toe-state": {
+  "id": 794,
+  "title": "Valid Tic-Tac-Toe State",
+  "slug": "valid-tic-tac-toe-state",
+  "difficulty": "Medium",
+  "freq": 25,
+  "recent": false,
+  "tags": [],
+  "companies": {
+   "tiktok": {
+    "freq": 25,
+    "recent": false,
+    "tier": "C"
+   }
+  },
+  "window": "",
+  "pool": "C",
+  "tier": "A",
+  "score": 0.2379,
+  "a_reason": "us-asked",
+  "band": "p3",
+  "title_zh": "",
+  "statement_chars": 579
  },
  "serialize-and-deserialize-n-ary-tree": {
   "id": 428,
@@ -3515,7 +3539,7 @@
   "window": "6m",
   "window_freq": 50,
   "tier": "A",
-  "score": 0.2359,
+  "score": 0.2356,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "二叉树的序列化与反序列化",
@@ -3548,7 +3572,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.2344,
+  "score": 0.2338,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "二叉树的直径",
@@ -3571,7 +3595,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.2341,
+  "score": 0.2335,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "组合",
@@ -3604,7 +3628,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.2261,
+  "score": 0.2255,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "字母异位词分组",
@@ -3641,7 +3665,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.2227,
+  "score": 0.2222,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "不同路径",
@@ -3670,7 +3694,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.2181,
+  "score": 0.2174,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "使二叉树所有路径值相等的最小代价",
@@ -3696,7 +3720,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.2152,
+  "score": 0.2147,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "爱吃香蕉的珂珂",
@@ -3727,7 +3751,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.2038,
+  "score": 0.2033,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "水壶问题",
@@ -3760,7 +3784,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.2029,
+  "score": 0.2025,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "除法求值",
@@ -3798,7 +3822,7 @@
   "window": "6m",
   "window_freq": 50,
   "tier": "A",
-  "score": 0.201,
+  "score": 0.2008,
   "a_reason": "us-tag-recent",
   "band": "p2",
   "title_zh": "跳跃游戏",
@@ -3831,7 +3855,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.2005,
+  "score": 0.2,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "最大连续1的个数 III",
@@ -3855,7 +3879,7 @@
     "last_seen": "2026-10-15"
    }
   },
-  "score": 0.1992,
+  "score": 0.1982,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 608
@@ -3878,7 +3902,7 @@
     "last_seen": "2026-10"
    }
   },
-  "score": 0.1992,
+  "score": 0.1982,
   "a_reason": "cn-twice",
   "band": "p4",
   "statement_chars": 338
@@ -3905,7 +3929,7 @@
   "window": "6m",
   "window_freq": 50,
   "tier": "A",
-  "score": 0.1949,
+  "score": 0.1947,
   "a_reason": "us-asked",
   "band": "p2",
   "title_zh": "找到字符串中所有字母异位词",
@@ -3929,7 +3953,7 @@
     "last_seen": "2026-10-04"
    }
   },
-  "score": 0.1909,
+  "score": 0.19,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 380
@@ -3996,7 +4020,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.1836,
+  "score": 0.1832,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "柱状图中最大的矩形",
@@ -4022,7 +4046,7 @@
     "tier": "B"
    }
   },
-  "score": 0.1819,
+  "score": 0.181,
   "a_reason": "cn-twice",
   "band": "p4",
   "statement_chars": 168
@@ -4054,7 +4078,7 @@
   "window": "6m",
   "window_freq": 50,
   "tier": "A",
-  "score": 0.1802,
+  "score": 0.1801,
   "a_reason": "us-tag-recent",
   "band": "p2",
   "title_zh": "文本左右对齐",
@@ -4078,7 +4102,7 @@
     "last_seen": "2026-09-15"
    }
   },
-  "score": 0.1774,
+  "score": 0.1766,
   "a_reason": "cn-twice",
   "band": "p4",
   "statement_chars": 287
@@ -4109,34 +4133,11 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.1765,
+  "score": 0.1761,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "删除二叉搜索树中的节点",
   "statement_chars": 583
- },
- "tt-delete-window-balance-even-odd": {
-  "id": 0,
-  "title": "Delete a k-window so even-index and odd-index sums match",
-  "title_zh": "删除长度 k 的窗口使奇偶下标和相等",
-  "slug": "tt-delete-window-balance-even-odd",
-  "difficulty": "",
-  "freq": 60,
-  "recent": true,
-  "window": "",
-  "tags": [],
-  "tier": "A",
-  "kind": "variant",
-  "companies": {
-   "reports": {
-    "refs": 2,
-    "last_seen": "2026-09-11"
-   }
-  },
-  "score": 0.1747,
-  "a_reason": "us-asked",
-  "band": "p4",
-  "statement_chars": 382
  },
  "symmetric-tree": {
   "id": 101,
@@ -4160,11 +4161,34 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.1746,
+  "score": 0.1742,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "对称二叉树",
   "statement_chars": 211
+ },
+ "tt-delete-window-balance-even-odd": {
+  "id": 0,
+  "title": "Delete a k-window so even-index and odd-index sums match",
+  "title_zh": "删除长度 k 的窗口使奇偶下标和相等",
+  "slug": "tt-delete-window-balance-even-odd",
+  "difficulty": "",
+  "freq": 60,
+  "recent": true,
+  "window": "",
+  "tags": [],
+  "tier": "A",
+  "kind": "variant",
+  "companies": {
+   "reports": {
+    "refs": 2,
+    "last_seen": "2026-09-11"
+   }
+  },
+  "score": 0.1739,
+  "a_reason": "us-asked",
+  "band": "p4",
+  "statement_chars": 382
  },
  "subarray-sums-divisible-by-k": {
   "id": 974,
@@ -4224,36 +4248,11 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.1705,
+  "score": 0.1702,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "分发糖果",
   "statement_chars": 399
- },
- "validate-binary-search-tree": {
-  "id": 98,
-  "fid": "98",
-  "title": "验证二叉搜索树",
-  "title_zh": "验证二叉搜索树",
-  "slug": "validate-binary-search-tree",
-  "difficulty": "Medium",
-  "freq": 77,
-  "recent": false,
-  "window": "",
-  "tags": [],
-  "tier": "A",
-  "kind": "leetcode",
-  "companies": {
-   "bytedance_cn": {
-    "reports": 46,
-    "last_seen": "2026-04-20",
-    "tier": "B"
-   }
-  },
-  "score": 0.1701,
-  "a_reason": "pinned",
-  "band": "p4",
-  "statement_chars": 302
  },
  "longest-repeating-character-replacement": {
   "id": 424,
@@ -4281,11 +4280,36 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.17,
+  "score": 0.1697,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "替换后的最长重复字符",
   "statement_chars": 344
+ },
+ "validate-binary-search-tree": {
+  "id": 98,
+  "fid": "98",
+  "title": "验证二叉搜索树",
+  "title_zh": "验证二叉搜索树",
+  "slug": "validate-binary-search-tree",
+  "difficulty": "Medium",
+  "freq": 77,
+  "recent": false,
+  "window": "",
+  "tags": [],
+  "tier": "A",
+  "kind": "leetcode",
+  "companies": {
+   "bytedance_cn": {
+    "reports": 46,
+    "last_seen": "2026-04-20",
+    "tier": "B"
+   }
+  },
+  "score": 0.1694,
+  "a_reason": "pinned",
+  "band": "p4",
+  "statement_chars": 302
  },
  "find-minimum-in-rotated-sorted-array": {
   "id": 153,
@@ -4312,7 +4336,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.1672,
+  "score": 0.1669,
   "a_reason": "pinned",
   "band": "p4",
   "title_zh": "寻找旋转排序数组中的最小值",
@@ -4340,7 +4364,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.1583,
+  "score": 0.1579,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "无重叠区间",
@@ -4364,7 +4388,7 @@
     "last_seen": "2026-08-13"
    }
   },
-  "score": 0.1563,
+  "score": 0.1555,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 321
@@ -4391,7 +4415,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.1542,
+  "score": 0.1537,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "稀疏矩阵的乘法",
@@ -4486,7 +4510,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.152,
+  "score": 0.1516,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "贴纸拼词",
@@ -4510,7 +4534,7 @@
     "last_seen": "2026-07"
    }
   },
-  "score": 0.1408,
+  "score": 0.1402,
   "a_reason": "cn-twice",
   "band": "p4",
   "statement_chars": 183
@@ -4541,7 +4565,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.1396,
+  "score": 0.1393,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "二进制矩阵中的最短路径",
@@ -4575,7 +4599,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.1385,
+  "score": 0.1383,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "有序矩阵中第 K 小的元素",
@@ -4604,7 +4628,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.1323,
+  "score": 0.1321,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "感染二叉树需要的总时间",
@@ -4637,7 +4661,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.1285,
+  "score": 0.1283,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "零钱兑换 II",
@@ -4665,7 +4689,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.1261,
+  "score": 0.126,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "太平洋大西洋水流问题",
@@ -4689,7 +4713,7 @@
     "last_seen": "2026-02-18"
    }
   },
-  "score": 0.119,
+  "score": 0.1185,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 316
@@ -4716,7 +4740,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.1171,
+  "score": 0.1169,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "基于时间的键值存储",
@@ -4744,7 +4768,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.1155,
+  "score": 0.1153,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "无向图中连通分量的数目",
@@ -4768,7 +4792,7 @@
     "last_seen": "2026-10-15"
    }
   },
-  "score": 0.1005,
+  "score": 0.1,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 565
@@ -4791,7 +4815,7 @@
     "last_seen": "2026-10-09"
    }
   },
-  "score": 0.0973,
+  "score": 0.0969,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 529
@@ -4822,7 +4846,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.0855,
+  "score": 0.0854,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "24 点游戏",
@@ -4846,7 +4870,7 @@
     "last_seen": "2026-09-02"
    }
   },
-  "score": 0.0844,
+  "score": 0.084,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 734
@@ -4874,7 +4898,7 @@
   },
   "window": "",
   "tier": "A",
-  "score": 0.0833,
+  "score": 0.0832,
   "a_reason": "us-asked",
   "band": "p4",
   "title_zh": "填充每个节点的下一个右侧节点指针",
@@ -4898,7 +4922,7 @@
     "last_seen": "2026-08-24"
    }
   },
-  "score": 0.0831,
+  "score": 0.0827,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 499
@@ -4921,7 +4945,7 @@
     "last_seen": "2026-08-24"
    }
   },
-  "score": 0.0816,
+  "score": 0.0813,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 804
@@ -4944,7 +4968,7 @@
     "last_seen": "2026-08-23"
    }
   },
-  "score": 0.0812,
+  "score": 0.0808,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 352
@@ -4967,7 +4991,7 @@
     "last_seen": "2026-08-23"
    }
   },
-  "score": 0.0812,
+  "score": 0.0808,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 657
@@ -4990,7 +5014,7 @@
     "last_seen": "2026-08-20"
    }
   },
-  "score": 0.0803,
+  "score": 0.0799,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 569
@@ -5013,7 +5037,7 @@
     "last_seen": "2026-02-18"
    }
   },
-  "score": 0.0803,
+  "score": 0.0799,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 345
@@ -5036,7 +5060,7 @@
     "last_seen": "2026-08-17"
    }
   },
-  "score": 0.0793,
+  "score": 0.079,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 371
@@ -5059,7 +5083,7 @@
     "last_seen": "2026-08-17"
    }
   },
-  "score": 0.0793,
+  "score": 0.079,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 696
@@ -5082,7 +5106,7 @@
     "last_seen": "2026-08-09"
    }
   },
-  "score": 0.0769,
+  "score": 0.0766,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 473
@@ -5105,7 +5129,7 @@
     "last_seen": "2026-08-06"
    }
   },
-  "score": 0.076,
+  "score": 0.0757,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 462
@@ -5128,7 +5152,7 @@
     "last_seen": "2026-07-18"
    }
   },
-  "score": 0.0707,
+  "score": 0.0704,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 976
@@ -5184,7 +5208,7 @@
     "last_seen": "2026-07-15"
    }
   },
-  "score": 0.0699,
+  "score": 0.0695,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 225
@@ -5207,7 +5231,7 @@
     "last_seen": "2026-07-02"
    }
   },
-  "score": 0.0665,
+  "score": 0.0662,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 1568
@@ -5230,7 +5254,7 @@
     "last_seen": "2026-06-28"
    }
   },
-  "score": 0.0654,
+  "score": 0.0651,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 475
@@ -5253,7 +5277,7 @@
     "last_seen": "2026-06-27"
    }
   },
-  "score": 0.0652,
+  "score": 0.0649,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 433
@@ -5276,7 +5300,7 @@
     "last_seen": "2026-06-18"
    }
   },
-  "score": 0.063,
+  "score": 0.0627,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 1138
@@ -5299,7 +5323,7 @@
     "last_seen": "2026-06-17"
    }
   },
-  "score": 0.0627,
+  "score": 0.0624,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 391
@@ -5322,7 +5346,7 @@
     "last_seen": "2026-06-11"
    }
   },
-  "score": 0.0613,
+  "score": 0.061,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 621
@@ -5345,7 +5369,7 @@
     "last_seen": "2025-10-15"
    }
   },
-  "score": 0.0611,
+  "score": 0.0609,
   "a_reason": "pinned",
   "band": "p4",
   "statement_chars": 585
@@ -5401,7 +5425,7 @@
     "last_seen": "2026-05-08"
    }
   },
-  "score": 0.0538,
+  "score": 0.0535,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 341
@@ -5424,7 +5448,7 @@
     "last_seen": "2026-04-19"
    }
   },
-  "score": 0.05,
+  "score": 0.0497,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 347
@@ -5447,7 +5471,7 @@
     "last_seen": "2026-04-11"
    }
   },
-  "score": 0.0485,
+  "score": 0.0482,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 258
@@ -5470,7 +5494,7 @@
     "last_seen": "2026-04-04"
    }
   },
-  "score": 0.0472,
+  "score": 0.047,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 298
@@ -5493,7 +5517,7 @@
     "last_seen": "2026-04-02"
    }
   },
-  "score": 0.0468,
+  "score": 0.0466,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 535
@@ -5516,7 +5540,7 @@
     "last_seen": "2026-09-28"
    }
   },
-  "score": 0.0466,
+  "score": 0.0464,
   "a_reason": "pinned",
   "band": "p4",
   "statement_chars": 270
@@ -5539,10 +5563,33 @@
     "last_seen": "2026-04-01"
    }
   },
-  "score": 0.0466,
+  "score": 0.0464,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 712
+ },
+ "number-of-provinces": {
+  "id": 547,
+  "title": "Number of Provinces",
+  "title_zh": "省份数量",
+  "slug": "number-of-provinces",
+  "difficulty": "",
+  "freq": 60,
+  "recent": true,
+  "window": "",
+  "tags": [],
+  "tier": "A",
+  "kind": "leetcode",
+  "companies": {
+   "reports": {
+    "refs": 1,
+    "last_seen": "2026-03-05"
+   }
+  },
+  "score": 0.0426,
+  "a_reason": "us-asked",
+  "band": "p4",
+  "statement_chars": 526
  },
  "mini-parser": {
   "id": 385,
@@ -5562,7 +5609,7 @@
     "last_seen": "2026-02-27"
    }
   },
-  "score": 0.0411,
+  "score": 0.0409,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 500
@@ -5585,7 +5632,7 @@
     "last_seen": "2026-02-24"
    }
   },
-  "score": 0.0406,
+  "score": 0.0404,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 281
@@ -5608,7 +5655,7 @@
     "last_seen": "2026-02-21"
    }
   },
-  "score": 0.0401,
+  "score": 0.0399,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 220
@@ -5633,7 +5680,7 @@
     "tier": "B"
    }
   },
-  "score": 0.0367,
+  "score": 0.0366,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 210
@@ -5656,7 +5703,7 @@
     "last_seen": "2026-01-28"
    }
   },
-  "score": 0.0367,
+  "score": 0.0365,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 559
@@ -5679,7 +5726,7 @@
     "last_seen": "2026-07-18"
    }
   },
-  "score": 0.0353,
+  "score": 0.0352,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 321
@@ -5702,7 +5749,7 @@
     "last_seen": "2026-01-08"
    }
   },
-  "score": 0.0339,
+  "score": 0.0337,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 638
@@ -5725,7 +5772,7 @@
     "last_seen": "2025-12-13"
    }
   },
-  "score": 0.0306,
+  "score": 0.0305,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 734
@@ -5748,7 +5795,7 @@
     "last_seen": "2025-12-13"
    }
   },
-  "score": 0.0306,
+  "score": 0.0305,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 851
@@ -5771,7 +5818,7 @@
     "last_seen": "2025-11-26"
    }
   },
-  "score": 0.0287,
+  "score": 0.0286,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 398
@@ -5794,7 +5841,7 @@
     "last_seen": "2025-11-20"
    }
   },
-  "score": 0.0281,
+  "score": 0.0279,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 642
@@ -5817,7 +5864,7 @@
     "last_seen": "2025-10-31"
    }
   },
-  "score": 0.026,
+  "score": 0.0259,
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 314
@@ -5849,7 +5896,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.4852,
+  "score": 0.4834,
   "a_reason": "",
   "band": "b",
   "title_zh": "LFU缓存",
@@ -5883,7 +5930,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.4059,
+  "score": 0.4049,
   "a_reason": "",
   "band": "b",
   "title_zh": "岛屿的最大面积",
@@ -5920,7 +5967,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.3916,
+  "score": 0.3911,
   "a_reason": "",
   "band": "b",
   "title_zh": "二叉树的锯齿形层序遍历",
@@ -5953,7 +6000,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.3642,
+  "score": 0.3633,
   "a_reason": "",
   "band": "b",
   "title_zh": "课程表 II",
@@ -5990,7 +6037,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.3007,
+  "score": 0.3002,
   "a_reason": "",
   "band": "b",
   "title_zh": "最大正方形",
@@ -6021,7 +6068,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.2858,
+  "score": 0.2854,
   "a_reason": "",
   "band": "b",
   "title_zh": "编辑距离",
@@ -6053,7 +6100,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.2714,
+  "score": 0.271,
   "a_reason": "",
   "band": "b",
   "title_zh": "最长连续序列",
@@ -6086,7 +6133,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.2658,
+  "score": 0.2655,
   "a_reason": "",
   "band": "b",
   "title_zh": "重排链表",
@@ -6125,7 +6172,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.2578,
+  "score": 0.2574,
   "a_reason": "",
   "band": "b",
   "title_zh": "排序链表",
@@ -6163,7 +6210,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.2534,
+  "score": 0.253,
   "a_reason": "",
   "band": "b",
   "title_zh": "二叉树最大宽度",
@@ -6191,7 +6238,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.2526,
+  "score": 0.2523,
   "a_reason": "",
   "band": "b",
   "title_zh": "下一个排列",
@@ -6228,7 +6275,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.2403,
+  "score": 0.24,
   "a_reason": "",
   "band": "b",
   "title_zh": "爬楼梯",
@@ -6264,7 +6311,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.2384,
+  "score": 0.2379,
   "a_reason": "",
   "band": "b",
   "title_zh": "乘积最大子数组",
@@ -6288,7 +6335,7 @@
     "last_seen": "2025-11-19"
    }
   },
-  "score": 0.2339,
+  "score": 0.2328,
   "a_reason": "",
   "band": "b",
   "statement_chars": 470
@@ -6316,7 +6363,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.232,
+  "score": 0.2312,
   "a_reason": "",
   "band": "b",
   "title_zh": "并行课程 III",
@@ -6347,7 +6394,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.2312,
+  "score": 0.2309,
   "a_reason": "",
   "band": "b",
   "title_zh": "比较版本号",
@@ -6386,7 +6433,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.2265,
+  "score": 0.226,
   "a_reason": "",
   "band": "b",
   "title_zh": "O(1) 时间插入、删除和获取随机元素",
@@ -6419,7 +6466,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.2076,
+  "score": 0.2071,
   "a_reason": "",
   "band": "b",
   "title_zh": "最大数",
@@ -6451,7 +6498,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.1975,
+  "score": 0.1972,
   "a_reason": "",
   "band": "b",
   "title_zh": "买卖股票的最佳时机 II",
@@ -6484,11 +6531,45 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.1967,
+  "score": 0.1964,
   "a_reason": "",
   "band": "b",
   "title_zh": "基本计算器 III",
   "statement_chars": 349
+ },
+ "coin-change": {
+  "id": 322,
+  "title": "Coin Change",
+  "slug": "coin-change",
+  "difficulty": "Medium",
+  "freq": 84,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Dynamic Programming",
+   "Breadth-First Search",
+   "Knapsack Problem",
+   "Complete Knapsack"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 75,
+    "recent": false,
+    "tier": "A"
+   },
+   "bytedance_cn": {
+    "reports": 59,
+    "last_seen": "2026-04-15",
+    "tier": "A"
+   }
+  },
+  "window": "",
+  "tier": "B",
+  "score": 0.1898,
+  "a_reason": "",
+  "band": "b",
+  "title_zh": "零钱兑换",
+  "statement_chars": 353
  },
  "shortest-unsorted-continuous-subarray": {
   "id": 581,
@@ -6519,45 +6600,11 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.1901,
+  "score": 0.1897,
   "a_reason": "",
   "band": "b",
   "title_zh": "最短无序连续子数组",
   "statement_chars": 336
- },
- "coin-change": {
-  "id": 322,
-  "title": "Coin Change",
-  "slug": "coin-change",
-  "difficulty": "Medium",
-  "freq": 84,
-  "recent": false,
-  "tags": [
-   "Array",
-   "Dynamic Programming",
-   "Breadth-First Search",
-   "Knapsack Problem",
-   "Complete Knapsack"
-  ],
-  "companies": {
-   "tiktok": {
-    "freq": 75,
-    "recent": false,
-    "tier": "A"
-   },
-   "bytedance_cn": {
-    "reports": 59,
-    "last_seen": "2026-04-15",
-    "tier": "A"
-   }
-  },
-  "window": "",
-  "tier": "B",
-  "score": 0.1899,
-  "a_reason": "",
-  "band": "b",
-  "title_zh": "零钱兑换",
-  "statement_chars": 353
  },
  "find-the-duplicate-number": {
   "id": 287,
@@ -6588,7 +6635,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.1887,
+  "score": 0.1883,
   "a_reason": "",
   "band": "b",
   "title_zh": "寻找重复数",
@@ -6612,7 +6659,7 @@
     "last_seen": "2025-12-23"
    }
   },
-  "score": 0.1819,
+  "score": 0.181,
   "a_reason": "",
   "band": "b",
   "statement_chars": 632
@@ -6634,7 +6681,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.1795,
+  "score": 0.1791,
   "a_reason": "",
   "band": "b",
   "title_zh": "接雨水 II",
@@ -6662,7 +6709,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.1792,
+  "score": 0.1788,
   "a_reason": "",
   "band": "b",
   "title_zh": "数组中重复的数据",
@@ -6870,7 +6917,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.1617,
+  "score": 0.1613,
   "a_reason": "",
   "band": "b",
   "title_zh": "复制带随机指针的链表",
@@ -6901,7 +6948,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.1574,
+  "score": 0.157,
   "a_reason": "",
   "band": "b",
   "title_zh": "解码方法",
@@ -6934,7 +6981,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.1558,
+  "score": 0.1557,
   "a_reason": "",
   "band": "b",
   "title_zh": "环形链表 II",
@@ -6967,7 +7014,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.1551,
+  "score": 0.155,
   "a_reason": "",
   "band": "b",
   "title_zh": "两数相加",
@@ -6998,7 +7045,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.1529,
+  "score": 0.1526,
   "a_reason": "",
   "band": "b",
   "title_zh": "买卖股票的最佳时机 III",
@@ -7027,7 +7074,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.1483,
+  "score": 0.1482,
   "a_reason": "",
   "band": "b",
   "title_zh": "会议室 III",
@@ -7112,7 +7159,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.1426,
+  "score": 0.1423,
   "a_reason": "",
   "band": "b",
   "title_zh": "买卖股票的最佳时机 IV",
@@ -7156,35 +7203,6 @@
   "title_zh": "矩阵中的最长递增路径",
   "statement_chars": 410
  },
- "surrounded-regions": {
-  "id": 130,
-  "title": "Surrounded Regions",
-  "slug": "surrounded-regions",
-  "difficulty": "Medium",
-  "freq": 26,
-  "recent": false,
-  "tags": [
-   "Array",
-   "Depth-First Search",
-   "Breadth-First Search",
-   "Union-Find",
-   "Matrix"
-  ],
-  "companies": {
-   "tiktok": {
-    "freq": 26,
-    "recent": false,
-    "tier": "C"
-   }
-  },
-  "window": "",
-  "tier": "B",
-  "score": 0.1402,
-  "a_reason": "",
-  "band": "b",
-  "title_zh": "被围绕的区域",
-  "statement_chars": 579
- },
  "find-peak-element": {
   "id": 162,
   "title": "Find Peak Element",
@@ -7220,6 +7238,35 @@
   "band": "b",
   "title_zh": "寻找峰值",
   "statement_chars": 413
+ },
+ "surrounded-regions": {
+  "id": 130,
+  "title": "Surrounded Regions",
+  "slug": "surrounded-regions",
+  "difficulty": "Medium",
+  "freq": 26,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Depth-First Search",
+   "Breadth-First Search",
+   "Union-Find",
+   "Matrix"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 26,
+    "recent": false,
+    "tier": "C"
+   }
+  },
+  "window": "",
+  "tier": "B",
+  "score": 0.1398,
+  "a_reason": "",
+  "band": "b",
+  "title_zh": "被围绕的区域",
+  "statement_chars": 579
  },
  "maximum-swap": {
   "id": 670,
@@ -7282,7 +7329,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.1356,
+  "score": 0.1355,
   "a_reason": "",
   "band": "b",
   "title_zh": "单词拆分 II",
@@ -7384,7 +7431,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.1328,
+  "score": 0.1327,
   "a_reason": "",
   "band": "b",
   "title_zh": "按权重随机选择",
@@ -7416,7 +7463,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.1319,
+  "score": 0.1315,
   "a_reason": "",
   "band": "b",
   "title_zh": "排序数组",
@@ -7442,7 +7489,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.131,
+  "score": 0.1306,
   "a_reason": "",
   "band": "b",
   "title_zh": "有效的正方形",
@@ -7504,38 +7551,6 @@
   "title_zh": "快照数组",
   "statement_chars": 783
  },
- "container-with-most-water": {
-  "id": 11,
-  "title": "Container With Most Water",
-  "slug": "container-with-most-water",
-  "difficulty": "Medium",
-  "freq": 65,
-  "recent": false,
-  "tags": [
-   "Array",
-   "Two Pointers",
-   "Greedy"
-  ],
-  "companies": {
-   "tiktok": {
-    "freq": 56,
-    "recent": false,
-    "tier": "B"
-   },
-   "bytedance_cn": {
-    "reports": 26,
-    "last_seen": "2026-05-06",
-    "tier": "B"
-   }
-  },
-  "window": "",
-  "tier": "B",
-  "score": 0.1284,
-  "a_reason": "",
-  "band": "b",
-  "title_zh": "盛最多水的容器",
-  "statement_chars": 346
- },
  "sort-colors": {
   "id": 75,
   "title": "Sort Colors",
@@ -7570,6 +7585,38 @@
   "title_zh": "颜色分类",
   "statement_chars": 432
  },
+ "container-with-most-water": {
+  "id": 11,
+  "title": "Container With Most Water",
+  "slug": "container-with-most-water",
+  "difficulty": "Medium",
+  "freq": 65,
+  "recent": false,
+  "tags": [
+   "Array",
+   "Two Pointers",
+   "Greedy"
+  ],
+  "companies": {
+   "tiktok": {
+    "freq": 56,
+    "recent": false,
+    "tier": "B"
+   },
+   "bytedance_cn": {
+    "reports": 26,
+    "last_seen": "2026-05-06",
+    "tier": "B"
+   }
+  },
+  "window": "",
+  "tier": "B",
+  "score": 0.1283,
+  "a_reason": "",
+  "band": "b",
+  "title_zh": "盛最多水的容器",
+  "statement_chars": 346
+ },
  "house-robber-iii": {
   "id": 337,
   "title": "House Robber III",
@@ -7593,7 +7640,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.1268,
+  "score": 0.1265,
   "a_reason": "",
   "band": "b",
   "title_zh": "打家劫舍 III",
@@ -7616,7 +7663,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.1258,
+  "score": 0.1255,
   "a_reason": "",
   "band": "b",
   "title_zh": "字符串的排列",
@@ -7668,7 +7715,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.1205,
+  "score": 0.1204,
   "a_reason": "",
   "band": "b",
   "title_zh": "删除字符串中的所有相邻重复项 II",
@@ -8078,7 +8125,7 @@
     "tier": "B"
    }
   },
-  "score": 0.1165,
+  "score": 0.1161,
   "a_reason": "",
   "band": "b",
   "statement_chars": 206
@@ -8108,7 +8155,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.1163,
+  "score": 0.1161,
   "a_reason": "",
   "band": "b",
   "title_zh": "除自身以外数组的乘积",
@@ -8236,7 +8283,7 @@
   },
   "window": "",
   "tier": "B",
-  "score": 0.1128,
+  "score": 0.1127,
   "a_reason": "",
   "band": "b",
   "title_zh": "跳跃游戏 II",
@@ -8360,7 +8407,7 @@
     "tier": "B"
    }
   },
-  "score": 0.1108,
+  "score": 0.1104,
   "a_reason": "",
   "band": "b",
   "statement_chars": 218
@@ -8541,7 +8588,7 @@
     "tier": "B"
    }
   },
-  "score": 0.1049,
+  "score": 0.1045,
   "a_reason": "",
   "band": "b",
   "statement_chars": 352
@@ -8595,7 +8642,7 @@
     "last_seen": "2026-10-22"
    }
   },
-  "score": 0.1023,
+  "score": 0.1018,
   "a_reason": "",
   "band": "b",
   "statement_chars": 450
@@ -8683,6 +8730,29 @@
   "title_zh": "重构字符串",
   "statement_chars": 183
  },
+ "flip-string-to-monotone-increasing": {
+  "id": 926,
+  "title": "Flip String to Monotone Increasing",
+  "title_zh": "将字符串翻转到单调递增",
+  "slug": "flip-string-to-monotone-increasing",
+  "difficulty": "",
+  "freq": 60,
+  "recent": true,
+  "window": "",
+  "tags": [],
+  "tier": "B",
+  "kind": "leetcode",
+  "companies": {
+   "reports": {
+    "refs": 1,
+    "last_seen": "2026-10"
+   }
+  },
+  "score": 0.0992,
+  "a_reason": "",
+  "band": "b",
+  "statement_chars": 334
+ },
  "tt-hyper-operation": {
   "id": 0,
   "title": "Hyper-operation (addition, multiplication, power, tetration ...)",
@@ -8701,7 +8771,7 @@
     "last_seen": "2026-10"
    }
   },
-  "score": 0.0996,
+  "score": 0.0991,
   "a_reason": "",
   "band": "b",
   "statement_chars": 460
@@ -8724,58 +8794,10 @@
     "last_seen": "2026-10"
    }
   },
-  "score": 0.0996,
+  "score": 0.0991,
   "a_reason": "",
   "band": "b",
   "statement_chars": 332
- },
- "flip-string-to-monotone-increasing": {
-  "id": 926,
-  "title": "Flip String to Monotone Increasing",
-  "title_zh": "将字符串翻转到单调递增",
-  "slug": "flip-string-to-monotone-increasing",
-  "difficulty": "",
-  "freq": 60,
-  "recent": true,
-  "window": "",
-  "tags": [],
-  "tier": "B",
-  "kind": "leetcode",
-  "companies": {
-   "reports": {
-    "refs": 1,
-    "last_seen": "2026-10"
-   }
-  },
-  "score": 0.0996,
-  "a_reason": "",
-  "band": "b",
-  "statement_chars": 334
- },
- "binary-search": {
-  "id": 704,
-  "fid": "704",
-  "title": "二分查找",
-  "title_zh": "二分查找",
-  "slug": "binary-search",
-  "difficulty": "Easy",
-  "freq": 65,
-  "recent": false,
-  "window": "",
-  "tags": [],
-  "tier": "B",
-  "kind": "leetcode",
-  "companies": {
-   "bytedance_cn": {
-    "reports": 26,
-    "last_seen": "2025-02-13",
-    "tier": "B"
-   }
-  },
-  "score": 0.0978,
-  "a_reason": "",
-  "band": "b",
-  "statement_chars": 365
  },
  "remove-duplicates-from-sorted-list-ii": {
   "id": 82,
@@ -8838,6 +8860,31 @@
   "band": "b",
   "title_zh": "将二叉搜索树转化为排序的双向链表",
   "statement_chars": 382
+ },
+ "binary-search": {
+  "id": 704,
+  "fid": "704",
+  "title": "二分查找",
+  "title_zh": "二分查找",
+  "slug": "binary-search",
+  "difficulty": "Easy",
+  "freq": 65,
+  "recent": false,
+  "window": "",
+  "tags": [],
+  "tier": "B",
+  "kind": "leetcode",
+  "companies": {
+   "bytedance_cn": {
+    "reports": 26,
+    "last_seen": "2025-02-13",
+    "tier": "B"
+   }
+  },
+  "score": 0.0974,
+  "a_reason": "",
+  "band": "b",
+  "statement_chars": 365
  },
  "minimum-remove-to-make-valid-parentheses": {
   "id": 1249,
@@ -9593,7 +9640,7 @@
     "tier": "B"
    }
   },
-  "score": 0.0943,
+  "score": 0.0939,
   "a_reason": "",
   "band": "b",
   "statement_chars": 531
@@ -9618,7 +9665,7 @@
     "tier": "B"
    }
   },
-  "score": 0.0936,
+  "score": 0.0932,
   "a_reason": "",
   "band": "b",
   "statement_chars": 272
@@ -9672,7 +9719,7 @@
     "last_seen": "2026-09-21"
    }
   },
-  "score": 0.0908,
+  "score": 0.0904,
   "a_reason": "",
   "band": "b",
   "statement_chars": 672
@@ -9709,29 +9756,6 @@
   "title_zh": "整数转罗马数字",
   "statement_chars": 943
  },
- "find-distance-in-a-binary-tree": {
-  "id": 1740,
-  "title": "Find Distance in a Binary Tree",
-  "title_zh": "找到二叉树中的距离",
-  "slug": "find-distance-in-a-binary-tree",
-  "difficulty": "",
-  "freq": 60,
-  "recent": true,
-  "window": "",
-  "tags": [],
-  "tier": "B",
-  "kind": "leetcode",
-  "companies": {
-   "reports": {
-    "refs": 1,
-    "last_seen": "2026-09-18"
-   }
-  },
-  "score": 0.0897,
-  "a_reason": "",
-  "band": "b",
-  "statement_chars": 464
- },
  "search-a-2d-matrix": {
   "id": 74,
   "title": "Search a 2D Matrix",
@@ -9764,6 +9788,29 @@
   "title_zh": "搜索二维矩阵",
   "statement_chars": 442
  },
+ "find-distance-in-a-binary-tree": {
+  "id": 1740,
+  "title": "Find Distance in a Binary Tree",
+  "title_zh": "找到二叉树中的距离",
+  "slug": "find-distance-in-a-binary-tree",
+  "difficulty": "",
+  "freq": 60,
+  "recent": true,
+  "window": "",
+  "tags": [],
+  "tier": "B",
+  "kind": "leetcode",
+  "companies": {
+   "reports": {
+    "refs": 1,
+    "last_seen": "2026-09-18"
+   }
+  },
+  "score": 0.0893,
+  "a_reason": "",
+  "band": "b",
+  "statement_chars": 464
+ },
  "double-a-number-represented-as-a-linked-list": {
   "id": 2816,
   "title": "Double a Number Represented as a Linked List",
@@ -9782,7 +9829,7 @@
     "last_seen": "2026-09-15"
    }
   },
-  "score": 0.0887,
+  "score": 0.0883,
   "a_reason": "",
   "band": "b",
   "statement_chars": 328
@@ -9846,52 +9893,6 @@
   "title_zh": "验证回文串",
   "statement_chars": 417
  },
- "find-the-difference": {
-  "id": 389,
-  "title": "Find the Difference",
-  "title_zh": "找不同",
-  "slug": "find-the-difference",
-  "difficulty": "",
-  "freq": 60,
-  "recent": true,
-  "window": "",
-  "tags": [],
-  "tier": "B",
-  "kind": "leetcode",
-  "companies": {
-   "reports": {
-    "refs": 1,
-    "last_seen": "2026-08-24"
-   }
-  },
-  "score": 0.0815,
-  "a_reason": "",
-  "band": "b",
-  "statement_chars": 249
- },
- "odd-even-linked-list": {
-  "id": 328,
-  "title": "Odd Even Linked List",
-  "title_zh": "奇偶链表",
-  "slug": "odd-even-linked-list",
-  "difficulty": "",
-  "freq": 60,
-  "recent": true,
-  "window": "",
-  "tags": [],
-  "tier": "B",
-  "kind": "leetcode",
-  "companies": {
-   "reports": {
-    "refs": 1,
-    "last_seen": "2026-08-06"
-   }
-  },
-  "score": 0.0813,
-  "a_reason": "",
-  "band": "b",
-  "statement_chars": 374
- },
  "valid-palindrome-ii": {
   "id": 680,
   "title": "Valid Palindrome II",
@@ -9924,6 +9925,29 @@
   "title_zh": "验证回文字符串 Ⅱ",
   "statement_chars": 226
  },
+ "find-the-difference": {
+  "id": 389,
+  "title": "Find the Difference",
+  "title_zh": "找不同",
+  "slug": "find-the-difference",
+  "difficulty": "",
+  "freq": 60,
+  "recent": true,
+  "window": "",
+  "tags": [],
+  "tier": "B",
+  "kind": "leetcode",
+  "companies": {
+   "reports": {
+    "refs": 1,
+    "last_seen": "2026-08-24"
+   }
+  },
+  "score": 0.0812,
+  "a_reason": "",
+  "band": "b",
+  "statement_chars": 249
+ },
  "number-of-atoms": {
   "id": 726,
   "title": "Number of Atoms",
@@ -9951,6 +9975,29 @@
   "band": "b",
   "title_zh": "原子的数量",
   "statement_chars": 694
+ },
+ "odd-even-linked-list": {
+  "id": 328,
+  "title": "Odd Even Linked List",
+  "title_zh": "奇偶链表",
+  "slug": "odd-even-linked-list",
+  "difficulty": "",
+  "freq": 60,
+  "recent": true,
+  "window": "",
+  "tags": [],
+  "tier": "B",
+  "kind": "leetcode",
+  "companies": {
+   "reports": {
+    "refs": 1,
+    "last_seen": "2026-08-06"
+   }
+  },
+  "score": 0.081,
+  "a_reason": "",
+  "band": "b",
+  "statement_chars": 374
  },
  "remove-duplicates-from-sorted-array-ii": {
   "id": 80,
@@ -10506,7 +10553,7 @@
     "last_seen": "2026-04"
    }
   },
-  "score": 0.0523,
+  "score": 0.0521,
   "a_reason": "",
   "band": "b",
   "statement_chars": 285
@@ -10531,7 +10578,7 @@
     "tier": "B"
    }
   },
-  "score": 0.0507,
+  "score": 0.0505,
   "a_reason": "",
   "band": "b",
   "statement_chars": 453
@@ -10587,7 +10634,7 @@
     "last_seen": "2026-04"
    }
   },
-  "score": 0.0493,
+  "score": 0.0491,
   "a_reason": "",
   "band": "b",
   "statement_chars": 450
@@ -10640,7 +10687,7 @@
     "tier": "B"
    }
   },
-  "score": 0.0473,
+  "score": 0.0471,
   "a_reason": "",
   "band": "b",
   "statement_chars": 245
@@ -10690,7 +10737,7 @@
     "tier": "B"
    }
   },
-  "score": 0.0403,
+  "score": 0.0402,
   "a_reason": "",
   "band": "b",
   "statement_chars": 426
@@ -10738,7 +10785,7 @@
     "last_seen": "2026-04-12"
    }
   },
-  "score": 0.0303,
+  "score": 0.0301,
   "a_reason": "",
   "band": "b",
   "statement_chars": 1039
@@ -10786,7 +10833,7 @@
     "last_seen": "2026-10-20"
    }
   },
-  "score": 0.0275,
+  "score": 0.0274,
   "a_reason": "",
   "band": "b",
   "statement_chars": 342
@@ -10859,7 +10906,7 @@
     "last_seen": "2025-10-20"
    }
   },
-  "score": 0.0257,
+  "score": 0.0256,
   "a_reason": "",
   "band": "b",
   "statement_chars": 855
@@ -10882,7 +10929,7 @@
     "last_seen": "2025-10-21"
    }
   },
-  "score": 0.025,
+  "score": 0.0249,
   "a_reason": "",
   "band": "b",
   "statement_chars": 403
@@ -10905,7 +10952,7 @@
     "last_seen": "2025-10-21"
    }
   },
-  "score": 0.025,
+  "score": 0.0249,
   "a_reason": "",
   "band": "b",
   "statement_chars": 453
@@ -10928,7 +10975,7 @@
     "last_seen": "2025-10-14"
    }
   },
-  "score": 0.0245,
+  "score": 0.0244,
   "a_reason": "",
   "band": "b",
   "statement_chars": 1597
@@ -10951,7 +10998,7 @@
     "last_seen": "2025-10-09"
    }
   },
-  "score": 0.024,
+  "score": 0.0239,
   "a_reason": "",
   "band": "b",
   "statement_chars": 268
@@ -11274,7 +11321,7 @@
     "last_seen": "2025-10-16"
    }
   },
-  "score": 0.0123,
+  "score": 0.0122,
   "a_reason": "",
   "band": "b",
   "statement_chars": 306
@@ -11297,7 +11344,7 @@
     "last_seen": "2025-10-14"
    }
   },
-  "score": 0.0122,
+  "score": 0.0121,
   "a_reason": "",
   "band": "b",
   "statement_chars": 499
@@ -11520,7 +11567,7 @@
     "tier": "B"
    }
   },
-  "score": 0.0067,
+  "score": 0.0066,
   "a_reason": "",
   "band": "b",
   "statement_chars": 239
@@ -16315,30 +16362,6 @@
   "band": "c",
   "title_zh": "",
   "statement_chars": 608
- },
- "valid-tic-tac-toe-state": {
-  "id": 794,
-  "title": "Valid Tic-Tac-Toe State",
-  "slug": "valid-tic-tac-toe-state",
-  "difficulty": "Medium",
-  "freq": 25,
-  "recent": false,
-  "tags": [],
-  "companies": {
-   "tiktok": {
-    "freq": 25,
-    "recent": false,
-    "tier": "C"
-   }
-  },
-  "window": "",
-  "pool": "C",
-  "tier": "C",
-  "score": 0.0478,
-  "a_reason": "",
-  "band": "c",
-  "title_zh": "",
-  "statement_chars": 579
  },
  "valid-palindrome-iii": {
   "id": 1216,

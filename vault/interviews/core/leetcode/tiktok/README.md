@@ -38,8 +38,8 @@ TikTok 和字节（美国与国内）面试里最常出现的编程题，按学�
 | [[tlc-path-sum-iii-0-whole\|LC 437 路径总和 III（Path Sum III）]] | Medium | 树、DFS |
 | [[tlc-house-robber-0-whole\|LC 198 打家劫舍（House Robber）]] | Medium | 数组、动态规划 |
 | [[tlc-lowest-common-ancestor-of-a-binary-tree-0-whole\|LC 236 二叉树的最近公共祖先（Lowest Common Ancestor of a Binary Tree）]] | Medium | 树、DFS |
-| [[tlc-merge-sorted-array-0-whole\|LC 88 合并两个有序数组（Merge Sorted Array）]] | Easy | 数组、双指针、排序 |
 | [[tlc-valid-parentheses-0-whole\|LC 20 有效的括号（Valid Parentheses）]] | Easy | 字符串、栈 |
+| [[tlc-merge-sorted-array-0-whole\|LC 88 合并两个有序数组（Merge Sorted Array）]] | Easy | 数组、双指针、排序 |
 | [[tlc-meeting-rooms-ii-0-whole\|LC 253 会议室 II（Meeting Rooms II）]] | Medium | 数组、双指针、贪心、排序、堆、前缀和 |
 | [[tlc-merge-k-sorted-lists-0-whole\|LC 23 合并 K 个升序链表（Merge k Sorted Lists）]] | Hard | 链表、分治、堆 |
 | [[tlc-two-sum-0-whole\|LC 1 两数之和（Two Sum）]] | Easy | 数组、哈希 |
@@ -91,7 +91,7 @@ TikTok 和字节（美国与国内）面试里最常出现的编程题，按学�
 | [[tlc-product-of-the-last-k-numbers-0-whole\|LC 1352 最后 K 个数的乘积（Product of the Last K Numbers）]] | Medium | 数组、数学、设计、前缀和 |
 | [[tlc-text-justification-0-whole\|LC 68 文本左右对齐（Text Justification）]] | Hard | 数组、字符串、模拟 |
 
-## P3 常见（37 题，累计覆盖约 77%）
+## P3 常见（38 题，累计覆盖约 77%）
 
 | 题 | 难度 | 主要考点 |
 |---|---|---|
@@ -100,40 +100,41 @@ TikTok 和字节（美国与国内）面试里最常出现的编程题，按学�
 | [[tlc-alien-dictionary-0-whole\|LC 269 火星词典（Alien Dictionary）]] | Hard | 数组、字符串、DFS、BFS、图、拓扑排序 |
 | [[tlc-maximum-subarray-0-whole\|LC 53 最大子数组和（Maximum Subarray）]] | Medium | 数组、分治、动态规划 |
 | [[tlc-word-ladder-0-whole\|LC 127 单词接龙（Word Ladder）]] | Hard | 哈希、字符串、BFS |
-| [[tlc-tt-deep-merge-nested-json-0-whole\|合并两个嵌套 JSON]] | — | — |
 | [[tlc-permutations-0-whole\|LC 46 全排列（Permutations）]] | Medium | 数组、回溯 |
+| [[tlc-tt-deep-merge-nested-json-0-whole\|合并两个嵌套 JSON]] | — | — |
 | [[tlc-shortest-path-in-a-grid-with-obstacles-elimination-0-whole\|LC 1293 网格中的最短路径（Shortest Path in a Grid with Obstacles Elimination）]] | Hard | 数组、BFS、矩阵 |
 | [[tlc-sliding-window-maximum-0-whole\|LC 239 滑动窗口最大值（Sliding Window Maximum）]] | Hard | 数组、滑动窗口、堆 |
 | [[tlc-implement-trie-prefix-tree-0-whole\|LC 208 实现 Trie (前缀树)（Implement Trie (Prefix Tree)）]] | Medium | 哈希、字符串、设计、字典树 |
 | [[tlc-regular-expression-matching-0-whole\|LC 10 正则表达式匹配（Regular Expression Matching）]] | Hard | 字符串、动态规划、递归 |
-| [[tlc-tt-max-path-sum-with-path-0-whole\|二叉树最大路径和并还原 / 打印路径]] | — | — |
 | [[tlc-tt-path-sum-n-ary-prefix-sum-0-whole\|N 叉树路径和计数（暴力被拒，要前缀和）]] | — | — |
-| [[tlc-design-in-memory-file-system-0-whole\|LC 588 设计内存文件系统（Design In-Memory File System）]] | Hard | 哈希、字符串、设计、字典树、排序 |
+| [[tlc-tt-max-path-sum-with-path-0-whole\|二叉树最大路径和并还原 / 打印路径]] | — | — |
 | [[tlc-implement-queue-using-stacks-0-whole\|LC 232 用栈实现队列（Implement Queue using Stacks）]] | Easy | 栈、设计 |
+| [[tlc-design-in-memory-file-system-0-whole\|LC 588 设计内存文件系统（Design In-Memory File System）]] | Hard | 哈希、字符串、设计、字典树、排序 |
 | [[tlc-minimum-path-sum-0-whole\|LC 64 最小路径和（Minimum Path Sum）]] | Medium | 数组、动态规划、矩阵 |
 | [[tlc-reverse-words-in-a-string-0-whole\|LC 151 翻转字符串里的单词（Reverse Words in a String）]] | Medium | 双指针、字符串 |
-| [[tlc-median-of-two-sorted-arrays-0-whole\|LC 4 寻找两个正序数组的中位数（Median of Two Sorted Arrays）]] | Hard | 数组、二分、分治 |
 | [[tlc-sqrtx-0-whole\|LC 69 x 的平方根 （Sqrt(x)）]] | Easy | 数学、二分 |
+| [[tlc-median-of-two-sorted-arrays-0-whole\|LC 4 寻找两个正序数组的中位数（Median of Two Sorted Arrays）]] | Hard | 数组、二分、分治 |
 | [[tlc-combination-sum-0-whole\|LC 39 组合总和（Combination Sum）]] | Medium | 数组、回溯 |
 | [[tlc-linked-list-cycle-0-whole\|LC 141 环形链表]] | Easy | — |
 | [[tlc-implement-rand10-using-rand7-0-whole\|LC 470 用 Rand7() 实现 Rand10()（Implement Rand10() Using Rand7()）]] | Medium | 数学 |
 | [[tlc-maximum-height-by-stacking-cuboids-0-whole\|LC 1691 堆叠长方体的最大高度（Maximum Height by Stacking Cuboids）]] | — | — |
 | [[tlc-word-search-ii-0-whole\|LC 212 单词搜索 II（Word Search II）]] | Hard | 数组、字符串、回溯、字典树、矩阵 |
 | [[tlc-generate-parentheses-0-whole\|LC 22 括号生成（Generate Parentheses）]] | Medium | 字符串、动态规划、回溯 |
-| [[tlc-single-number-0-whole\|LC 136 只出现一次的数字（Single Number）]] | — | — |
 | [[tlc-word-break-0-whole\|LC 139 单词拆分（Word Break）]] | Medium | 数组、哈希、字符串、动态规划、字典树 |
+| [[tlc-single-number-0-whole\|LC 136 只出现一次的数字（Single Number）]] | — | — |
 | [[tlc-design-tic-tac-toe-0-whole\|LC 348 设计井字棋（Design Tic-Tac-Toe）]] | Medium | 数组、哈希、设计、矩阵、模拟 |
 | [[tlc-design-circular-queue-0-whole\|LC 622 设计循环队列（Design Circular Queue）]] | — | — |
 | [[tlc-tt-fixed-array-deque-o1-0-whole\|定长数组实现双端队列 / 列表（全部操作 O(1)）]] | — | — |
-| [[tlc-n-queens-0-whole\|LC 51 N 皇后（N-Queens）]] | Hard | 数组、回溯 |
 | [[tlc-accounts-merge-0-whole\|LC 721 账户合并（Accounts Merge）]] | Medium | 数组、哈希、字符串、DFS、BFS、并查集、排序 |
+| [[tlc-n-queens-0-whole\|LC 51 N 皇后（N-Queens）]] | Hard | 数组、回溯 |
+| [[tlc-minimum-window-substring-0-whole\|LC 76 最小覆盖子串（Minimum Window Substring）]] | Hard | 哈希、字符串、滑动窗口 |
 | [[tlc-tt-grid-min-cost-fuel-recharge-0-whole\|网格最小代价路径（障碍 / 加油站 / 油量 K）]] | — | — |
 | [[tlc-design-memory-allocator-0-whole\|LC 2502 设计内存分配器（Design Memory Allocator）]] | Medium | 数组、哈希、设计、模拟 |
-| [[tlc-minimum-window-substring-0-whole\|LC 76 最小覆盖子串（Minimum Window Substring）]] | Hard | 哈希、字符串、滑动窗口 |
 | [[tlc-valid-parenthesis-string-0-whole\|LC 678 有效的括号字符串（Valid Parenthesis String）]] | Medium | 字符串、动态规划、栈、贪心 |
 | [[tlc-add-two-numbers-ii-0-whole\|LC 445 两数相加 II（Add Two Numbers II）]] | Medium | — |
+| [[tlc-valid-tic-tac-toe-state-0-whole\|LC 794 Valid Tic-Tac-Toe State]] | Medium | — |
 
-## P4 较常见（80 题，累计覆盖约 85%）
+## P4 较常见（81 题，累计覆盖约 85%）
 
 | 题 | 难度 | 主要考点 |
 |---|---|---|
@@ -155,9 +156,9 @@ TikTok 和字节（美国与国内）面试里最常出现的编程题，按学�
 | [[tlc-largest-rectangle-in-histogram-0-whole\|LC 84 柱状图中最大的矩形（Largest Rectangle in Histogram）]] | Hard | 数组、栈、单调栈 |
 | [[tlc-symmetric-tree-0-whole\|LC 101 对称二叉树（Symmetric Tree）]] | Easy | — |
 | [[tlc-tt-delete-window-balance-even-odd-0-whole\|删除长度 k 的窗口使奇偶下标和相等]] | — | — |
-| [[tlc-validate-binary-search-tree-0-whole\|LC 98 验证二叉搜索树]] | Medium | — |
-| [[tlc-candy-0-whole\|LC 135 分发糖果（Candy）]] | Hard | 数组、贪心 |
 | [[tlc-longest-repeating-character-replacement-0-whole\|LC 424 替换后的最长重复字符（Longest Repeating Character Replacement）]] | Medium | 哈希、字符串、滑动窗口 |
+| [[tlc-candy-0-whole\|LC 135 分发糖果（Candy）]] | Hard | 数组、贪心 |
+| [[tlc-validate-binary-search-tree-0-whole\|LC 98 验证二叉搜索树]] | Medium | — |
 | [[tlc-find-minimum-in-rotated-sorted-array-0-whole\|LC 153 寻找旋转排序数组中的最小值（Find Minimum in Rotated Sorted Array）]] | Medium | 数组、二分 |
 | [[tlc-non-overlapping-intervals-0-whole\|LC 435 无重叠区间（Non-overlapping Intervals）]] | Medium | 数组、动态规划、贪心、排序 |
 | [[tlc-tt-nested-comment-tree-0-whole\|由扁平记录构建嵌套评论树]] | — | — |
@@ -207,14 +208,15 @@ TikTok 和字节（美国与国内）面试里最常出现的编程题，按学�
 | [[tlc-swim-in-rising-water-0-whole\|LC 778 水位上升的泳池中游泳（Swim in Rising Water）]] | — | — |
 | [[tlc-tt-login-count-per-user-per-day-0-whole\|日志流中统计每个用户每天登录次数]] | — | — |
 | [[tlc-number-of-days-between-two-dates-0-whole\|LC 1360 日期之间隔几天（Number of Days Between Two Dates）]] | — | — |
-| [[tlc-min-cost-climbing-stairs-0-whole\|LC 746 使用最小花费爬楼梯（Min Cost Climbing Stairs）]] | — | — |
+| [[tlc-number-of-provinces-0-whole\|LC 547 省份数量（Number of Provinces）]] | — | — |
 | [[tlc-mini-parser-0-whole\|LC 385 迷你语法分析器（Mini Parser）]] | — | — |
 | [[tlc-remove-duplicates-from-sorted-list-0-whole\|LC 83 删除排序链表中的重复元素]] | Easy | — |
+| [[tlc-min-cost-climbing-stairs-0-whole\|LC 746 使用最小花费爬楼梯（Min Cost Climbing Stairs）]] | — | — |
 | [[tlc-tt-flatten-multilevel-list-skip-empty-0-whole\|展平多级链表（值为空的嵌套节点要排除）]] | — | — |
 | [[tlc-kth-smallest-subarray-sum-0-whole\|LC 1918 第 K 小的子数组和（Kth Smallest Subarray Sum）]] | — | — |
-| [[tlc-successful-pairs-of-spells-and-potions-0-whole\|LC 2300 咒语和药水的成功对数（Successful Pairs of Spells and Potions）]] | — | — |
 | [[tlc-tt-subarray-max-min-plus-max-0-whole\|长度至少为 2 的子数组，最大化 min + max]] | — | — |
 | [[tlc-longest-string-chain-0-whole\|LC 1048 最长字符串链（Longest String Chain）]] | — | — |
+| [[tlc-successful-pairs-of-spells-and-potions-0-whole\|LC 2300 咒语和药水的成功对数（Successful Pairs of Spells and Potions）]] | — | — |
 | [[tlc-minimum-swaps-to-make-strings-equal-0-whole\|LC 1247 交换字符使得字符串相同（Minimum Swaps to Make Strings Equal）]] | — | — |
 | [[tlc-tt-inorder-string-iterator-0-whole\|二叉树中序字符迭代器]] | — | — |
 
@@ -239,8 +241,8 @@ TikTok 和字节（美国与国内）面试里最常出现的编程题，按学�
 | [[tlc-insert-delete-getrandom-o1-0-whole\|LC 380 O(1) 时间插入、删除和获取随机元素（Insert Delete GetRandom O(1)）]] | Medium | 数组、哈希、数学、设计 |
 | [[tlc-largest-number-0-whole\|LC 179 最大数（Largest Number）]] | Medium | 数组、字符串、贪心、排序 |
 | [[tlc-best-time-to-buy-and-sell-stock-ii-0-whole\|LC 122 买卖股票的最佳时机 II（Best Time to Buy and Sell Stock II）]] | Medium | 数组、动态规划、贪心 |
-| [[tlc-shortest-unsorted-continuous-subarray-0-whole\|LC 581 最短无序连续子数组（Shortest Unsorted Continuous Subarray）]] | Medium | 数组、双指针、栈、贪心、排序、单调栈 |
 | [[tlc-coin-change-0-whole\|LC 322 零钱兑换（Coin Change）]] | Medium | 数组、动态规划、BFS |
+| [[tlc-shortest-unsorted-continuous-subarray-0-whole\|LC 581 最短无序连续子数组（Shortest Unsorted Continuous Subarray）]] | Medium | 数组、双指针、栈、贪心、排序、单调栈 |
 | [[tlc-find-the-duplicate-number-0-whole\|LC 287 寻找重复数（Find the Duplicate Number）]] | Medium | 数组、双指针、二分、位运算 |
 | [[tlc-reverse-nodes-in-even-length-groups-0-whole\|LC 2074 反转偶数长度组的节点（Reverse Nodes in Even Length Groups）]] | — | — |
 | [[tlc-find-all-duplicates-in-an-array-0-whole\|LC 442 数组中重复的数据（Find All Duplicates in an Array）]] | Medium | — |
@@ -263,8 +265,8 @@ TikTok 和字节（美国与国内）面试里最常出现的编程题，按学�
 | [[tlc-best-time-to-buy-and-sell-stock-iii-0-whole\|LC 123 买卖股票的最佳时机 III（Best Time to Buy and Sell Stock III）]] | Hard | 数组、动态规划 |
 | [[tlc-meeting-rooms-iii-0-whole\|LC 2402 会议室 III（Meeting Rooms III）]] | Hard | 数组、哈希、排序、堆、模拟 |
 | [[tlc-best-time-to-buy-and-sell-stock-iv-0-whole\|LC 188 买卖股票的最佳时机 IV（Best Time to Buy and Sell Stock IV）]] | Hard | 数组、动态规划 |
-| [[tlc-surrounded-regions-0-whole\|LC 130 被围绕的区域（Surrounded Regions）]] | Medium | 数组、DFS、BFS、并查集、矩阵 |
 | [[tlc-find-peak-element-0-whole\|LC 162 寻找峰值（Find Peak Element）]] | Medium | 数组、二分 |
+| [[tlc-surrounded-regions-0-whole\|LC 130 被围绕的区域（Surrounded Regions）]] | Medium | 数组、DFS、BFS、并查集、矩阵 |
 | [[tlc-maximum-swap-0-whole\|LC 670 最大交换（Maximum Swap）]] | Medium | 数学、贪心 |
 | [[tlc-combination-sum-ii-0-whole\|LC 40 组合总和 II（Combination Sum II）]] | Medium | 数组、回溯 |
 | [[tlc-daily-temperatures-0-whole\|LC 739 每日温度（Daily Temperatures）]] | Medium | 数组、栈、单调栈 |
@@ -273,8 +275,8 @@ TikTok 和字节（美国与国内）面试里最常出现的编程题，按学�
 | [[tlc-valid-square-0-whole\|LC 593 有效的正方形（Valid Square）]] | Medium | 数学 |
 | [[tlc-longest-happy-string-0-whole\|LC 1405 最长快乐字符串（Longest Happy String）]] | Medium | 字符串、贪心、堆 |
 | [[tlc-snapshot-array-0-whole\|LC 1146 快照数组（Snapshot Array）]] | Medium | 数组、哈希、二分、设计 |
-| [[tlc-container-with-most-water-0-whole\|LC 11 盛最多水的容器（Container With Most Water）]] | Medium | 数组、双指针、贪心 |
 | [[tlc-sort-colors-0-whole\|LC 75 颜色分类（Sort Colors）]] | Medium | 数组、双指针、排序 |
+| [[tlc-container-with-most-water-0-whole\|LC 11 盛最多水的容器（Container With Most Water）]] | Medium | 数组、双指针、贪心 |
 | [[tlc-longest-increasing-path-in-a-matrix-0-whole\|LC 329 矩阵中的最长递增路径（Longest Increasing Path in a Matrix）]] | Hard | 数组、动态规划、DFS、BFS、图、拓扑排序、矩阵 |
 | [[tlc-word-break-ii-0-whole\|LC 140 单词拆分 II（Word Break II）]] | Hard | 数组、哈希、字符串、动态规划、回溯、字典树 |
 | [[tlc-house-robber-iii-0-whole\|LC 337 打家劫舍 III（House Robber III）]] | Medium | 动态规划、树、DFS |
@@ -349,18 +351,19 @@ TikTok 和字节（美国与国内）面试里最常出现的编程题，按学�
 | [[tlc-split-message-based-on-limit-0-whole\|LC 2468 根据限制分割消息（Split Message Based on Limit）]] | Hard | 字符串 |
 | [[tlc-path-sum-0-whole\|LC 112 路径总和（Path Sum）]] | Easy | — |
 | [[tlc-valid-palindrome-0-whole\|LC 125 验证回文串（Valid Palindrome）]] | Easy | 双指针、字符串 |
-| [[tlc-find-the-difference-0-whole\|LC 389 找不同（Find the Difference）]] | — | — |
 | [[tlc-valid-palindrome-ii-0-whole\|LC 680 验证回文字符串 Ⅱ（Valid Palindrome II）]] | Easy | 双指针、字符串、贪心 |
+| [[tlc-find-the-difference-0-whole\|LC 389 找不同（Find the Difference）]] | — | — |
 | [[tlc-target-sum-0-whole\|LC 494 目标和]] | Medium | — |
 | [[tlc-letter-combinations-of-a-phone-number-0-whole\|LC 17 电话号码的字母组合]] | Medium | — |
 | [[tlc-house-robber-ii-0-whole\|LC 213 打家劫舍 II（House Robber II）]] | Medium | 数组、动态规划 |
 | [[tlc-generate-random-point-in-a-circle-0-whole\|LC 478 在圆内随机生成点（Generate Random Point in a Circle）]] | — | — |
 | [[tlc-integer-to-roman-0-whole\|LC 12 整数转罗马数字（Integer to Roman）]] | Medium | 哈希、数学、字符串 |
-| [[tlc-find-distance-in-a-binary-tree-0-whole\|LC 1740 找到二叉树中的距离（Find Distance in a Binary Tree）]] | — | — |
 | [[tlc-search-a-2d-matrix-0-whole\|LC 74 搜索二维矩阵（Search a 2D Matrix）]] | Medium | 数组、二分、矩阵 |
+| [[tlc-find-distance-in-a-binary-tree-0-whole\|LC 1740 找到二叉树中的距离（Find Distance in a Binary Tree）]] | — | — |
 | [[tlc-double-a-number-represented-as-a-linked-list-0-whole\|LC 2816 翻倍以链表形式表示的数字（Double a Number Represented as a Linked List）]] | — | — |
-| [[tlc-odd-even-linked-list-0-whole\|LC 328 奇偶链表（Odd Even Linked List）]] | — | — |
 | [[tlc-shortest-distance-from-all-buildings-0-whole\|LC 317 离建筑物最近的距离（Shortest Distance from All Buildings）]] | Hard | 数组、BFS、矩阵 |
+| [[tlc-number-of-atoms-0-whole\|LC 726 原子的数量（Number of Atoms）]] | Hard | — |
+| [[tlc-odd-even-linked-list-0-whole\|LC 328 奇偶链表（Odd Even Linked List）]] | — | — |
 | [[tlc-remove-duplicates-from-sorted-array-ii-0-whole\|LC 80 删除排序数组中的重复项 II（Remove Duplicates from Sorted Array II）]] | Medium | 数组、双指针 |
 | [[tlc-search-a-2d-matrix-ii-0-whole\|LC 240 搜索二维矩阵 II（Search a 2D Matrix II）]] | Medium | 数组、二分、分治、矩阵 |
 | [[tlc-contiguous-array-0-whole\|LC 525 连续数组（Contiguous Array）]] | Medium | 数组、哈希、前缀和 |
@@ -371,7 +374,6 @@ TikTok 和字节（美国与国内）面试里最常出现的编程题，按学�
 | [[tlc-merge-in-between-linked-lists-0-whole\|LC 1669 合并两个链表（Merge In Between Linked Lists）]] | Medium | 链表 |
 | [[tlc-unique-binary-search-trees-0-whole\|LC 96 不同的二叉搜索树（Unique Binary Search Trees）]] | Medium | 数学、动态规划、树 |
 | [[tlc-diagonal-traverse-0-whole\|LC 498 对角线遍历（Diagonal Traverse）]] | Medium | — |
-| [[tlc-number-of-atoms-0-whole\|LC 726 原子的数量（Number of Atoms）]] | Hard | — |
 | [[tlc-longest-duplicate-substring-0-whole\|LC 1044 最长重复子串（Longest Duplicate Substring）]] | Hard | 字符串、二分、滑动窗口 |
 | [[tlc-first-missing-positive-0-whole\|LC 41 缺失的第一个正数]] | Hard | — |
 | [[tlc-convert-sorted-array-to-binary-search-tree-0-whole\|LC 108 将有序数组转换为二叉搜索树（Convert Sorted Array to Binary Search Tree）]] | Easy | 数组、分治、树 |
@@ -528,13 +530,13 @@ TikTok 和字节（美国与国内）面试里最常出现的编程题，按学�
 | [[tlc-deepest-leaves-sum-0-whole\|LC 1302 Deepest Leaves Sum]] | Medium | 树、DFS、BFS |
 | [[tlc-my-calendar-i-0-whole\|LC 729 My Calendar I]] | Medium | — |
 | [[tlc-delete-and-earn-0-whole\|LC 740 Delete and Earn]] | Medium | 数组、哈希、动态规划 |
-| [[tlc-step-by-step-directions-from-a-binary-tree-node-to-another-0-whole\|LC 2096 Step-By-Step Directions From a Binary Tree Node to Another]] | Medium | 字符串、树、DFS |
 | [[tlc-find-all-possible-recipes-from-given-supplies-0-whole\|LC 2115 Find All Possible Recipes from Given Supplies]] | Medium | 数组、哈希、字符串、图、拓扑排序 |
 | [[tlc-merge-operations-to-turn-array-into-a-palindrome-0-whole\|LC 2422 Merge Operations to Turn Array Into a Palindrome]] | Medium | — |
 | [[tlc-flatten-deeply-nested-array-0-whole\|LC 2625 Flatten Deeply Nested Array]] | Medium | — |
 | [[tlc-snakes-and-ladders-0-whole\|LC 909 Snakes and Ladders]] | Medium | 数组、BFS、矩阵 |
 | [[tlc-maximum-width-ramp-0-whole\|LC 962 Maximum Width Ramp]] | Medium | 数组、双指针、栈、单调栈 |
 | [[tlc-furthest-building-you-can-reach-0-whole\|LC 1642 Furthest Building You Can Reach]] | Medium | 数组、贪心、堆 |
+| [[tlc-step-by-step-directions-from-a-binary-tree-node-to-another-0-whole\|LC 2096 Step-By-Step Directions From a Binary Tree Node to Another]] | Medium | 字符串、树、DFS |
 | [[tlc-minimum-difficulty-of-a-job-schedule-0-whole\|LC 1335 Minimum Difficulty of a Job Schedule]] | Hard | — |
 | [[tlc-number-of-visible-people-in-a-queue-0-whole\|LC 1944 Number of Visible People in a Queue]] | Hard | — |
 | [[tlc-maximum-product-of-three-numbers-0-whole\|LC 628 Maximum Product of Three Numbers]] | Easy | — |
@@ -542,12 +544,12 @@ TikTok 和字节（美国与国内）面试里最常出现的编程题，按学�
 | [[tlc-2-keys-keyboard-0-whole\|LC 650 2 Keys Keyboard]] | Medium | 数学、动态规划 |
 | [[tlc-open-the-lock-0-whole\|LC 752 Open the Lock]] | Medium | 数组、哈希、字符串、BFS |
 | [[tlc-design-search-autocomplete-system-0-whole\|LC 642 Design Search Autocomplete System]] | Hard | — |
-| [[tlc-happy-number-0-whole\|LC 202 Happy Number]] | Easy | 哈希、数学、双指针 |
 | [[tlc-best-time-to-buy-and-sell-stock-with-cooldown-0-whole\|LC 309 Best Time to Buy and Sell Stock with Cooldown]] | Medium | 数组、动态规划 |
 | [[tlc-heaters-0-whole\|LC 475 Heaters]] | Medium | 数组、双指针、二分、排序 |
 | [[tlc-add-bold-tag-in-string-0-whole\|LC 616 Add Bold Tag in String]] | Medium | 数组、哈希、字符串、字典树 |
 | [[tlc-validate-ip-address-0-whole\|LC 468 Validate IP Address]] | Medium | — |
 | [[tlc-number-of-islands-ii-0-whole\|LC 305 Number of Islands II]] | Hard | — |
+| [[tlc-happy-number-0-whole\|LC 202 Happy Number]] | Easy | 哈希、数学、双指针 |
 | [[tlc-next-greater-element-ii-0-whole\|LC 503 Next Greater Element II]] | Medium | 数组、栈、单调栈 |
 | [[tlc-spiral-matrix-ii-0-whole\|LC 59 Spiral Matrix II]] | Medium | — |
 | [[tlc-two-sum-ii-input-array-is-sorted-0-whole\|LC 167 Two Sum II - Input Array Is Sorted]] | Medium | 数组、双指针、二分 |
@@ -558,55 +560,54 @@ TikTok 和字节（美国与国内）面试里最常出现的编程题，按学�
 | [[tlc-rectangle-area-0-whole\|LC 223 矩形面积（Rectangle Area）]] | Medium | 数学 |
 | [[tlc-lowest-common-ancestor-of-a-binary-tree-iii-0-whole\|LC 1650 二叉树的最近公共祖先 III（Lowest Common Ancestor of a Binary Tree III）]] | Medium | 哈希、双指针、树 |
 | [[tlc-lowest-common-ancestor-of-a-binary-tree-iv-0-whole\|LC 1676 Lowest Common Ancestor of a Binary Tree IV]] | Medium | 哈希、树、DFS |
-| [[tlc-russian-doll-envelopes-0-whole\|LC 354 俄罗斯套娃信封问题（Russian Doll Envelopes）]] | Hard | 数组、二分、动态规划、排序 |
 | [[tlc-maximum-size-subarray-sum-equals-k-0-whole\|LC 325 Maximum Size Subarray Sum Equals k]] | Medium | 数组、哈希、前缀和 |
 | [[tlc-maximum-number-of-events-that-can-be-attended-0-whole\|LC 1353 Maximum Number of Events That Can Be Attended]] | Medium | 数组、贪心、排序、堆 |
-| [[tlc-best-time-to-buy-and-sell-stock-using-strategy-0-whole\|LC 3652 按策略买卖股票的最佳时机（Best Time to Buy and Sell Stock using Strategy）]] | Medium | 数组、滑动窗口、前缀和 |
+| [[tlc-russian-doll-envelopes-0-whole\|LC 354 俄罗斯套娃信封问题（Russian Doll Envelopes）]] | Hard | 数组、二分、动态规划、排序 |
 | [[tlc-subarrays-with-k-different-integers-0-whole\|LC 992 Subarrays with K Different Integers]] | Hard | 数组、哈希、滑动窗口 |
 | [[tlc-jump-game-iv-0-whole\|LC 1345 跳跃游戏 IV（Jump Game IV）]] | Hard | 数组、哈希、BFS |
 | [[tlc-minimum-absolute-difference-between-elements-with-constraint-0-whole\|LC 2817 Minimum Absolute Difference Between Elements With Constraint]] | Medium | 数组、二分 |
 | [[tlc-design-task-manager-0-whole\|LC 3408 设计任务管理器（Design Task Manager）]] | Medium | 哈希、设计、堆 |
 | [[tlc-unit-conversion-ii-0-whole\|LC 3535 Unit Conversion II]] | Medium | 数组、数学、DFS、BFS、图 |
+| [[tlc-best-time-to-buy-and-sell-stock-using-strategy-0-whole\|LC 3652 按策略买卖股票的最佳时机（Best Time to Buy and Sell Stock using Strategy）]] | Medium | 数组、滑动窗口、前缀和 |
 | [[tlc-maximum-spending-after-buying-items-0-whole\|LC 2931 Maximum Spending After Buying Items]] | Hard | 数组、贪心、排序、堆、矩阵 |
 | [[tlc-find-maximum-non-decreasing-array-length-0-whole\|LC 2945 Find Maximum Non-decreasing Array Length]] | Hard | 数组、二分、动态规划、栈、单调栈、前缀和 |
-| [[tlc-add-two-integers-0-whole\|LC 2235 Add Two Integers]] | Easy | 数学 |
 | [[tlc-count-the-number-of-good-subarrays-0-whole\|LC 2537 Count the Number of Good Subarrays]] | Medium | 数组、哈希、滑动窗口 |
 | [[tlc-number-of-adjacent-elements-with-the-same-color-0-whole\|LC 2672 Number of Adjacent Elements With the Same Color]] | Medium | 数组 |
 | [[tlc-event-emitter-0-whole\|LC 2694 Event Emitter]] | Medium | — |
 | [[tlc-put-marbles-in-bags-0-whole\|LC 2551 Put Marbles in Bags]] | Hard | 数组、贪心、排序、堆 |
 | [[tlc-rearranging-fruits-0-whole\|LC 2561 Rearranging Fruits]] | Hard | 数组、哈希、贪心 |
 | [[tlc-minimum-operations-to-make-the-array-increasing-0-whole\|LC 1827 Minimum Operations to Make the Array Increasing]] | Easy | 数组、贪心 |
-| [[tlc-reverse-substrings-between-each-pair-of-parentheses-0-whole\|LC 1190 反转每对括号间的子串（Reverse Substrings Between Each Pair of Parentheses）]] | Medium | 字符串、栈 |
+| [[tlc-add-two-integers-0-whole\|LC 2235 Add Two Integers]] | Easy | 数学 |
 | [[tlc-dot-product-of-two-sparse-vectors-0-whole\|LC 1570 Dot Product of Two Sparse Vectors]] | Medium | 数组、哈希、双指针、设计 |
 | [[tlc-shortest-subarray-to-be-removed-to-make-array-sorted-0-whole\|LC 1574 Shortest Subarray to be Removed to Make Array Sorted]] | Medium | 数组、双指针、二分、栈、单调栈 |
 | [[tlc-maximum-performance-of-a-team-0-whole\|LC 1383 Maximum Performance of a Team]] | Hard | 数组、贪心、排序、堆 |
 | [[tlc-valid-mountain-array-0-whole\|LC 941 Valid Mountain Array]] | Easy | 数组 |
-| [[tlc-insert-into-a-sorted-circular-linked-list-0-whole\|LC 708 Insert into a Sorted Circular Linked List]] | Medium | 链表 |
 | [[tlc-candy-crush-0-whole\|LC 723 Candy Crush]] | Medium | 数组、双指针、矩阵、模拟 |
 | [[tlc-two-city-scheduling-0-whole\|LC 1029 两地调度（Two City Scheduling）]] | Medium | 数组、贪心、排序 |
 | [[tlc-parallel-courses-0-whole\|LC 1136 Parallel Courses]] | Medium | 图、拓扑排序 |
+| [[tlc-reverse-substrings-between-each-pair-of-parentheses-0-whole\|LC 1190 反转每对括号间的子串（Reverse Substrings Between Each Pair of Parentheses）]] | Medium | 字符串、栈 |
 | [[tlc-employee-free-time-0-whole\|LC 759 Employee Free Time]] | Hard | 数组、排序、堆 |
 | [[tlc-count-binary-substrings-0-whole\|LC 696 Count Binary Substrings]] | Easy | 双指针、字符串 |
-| [[tlc-wiggle-sort-0-whole\|LC 280 Wiggle Sort]] | Medium | 数组、贪心、排序 |
 | [[tlc-word-pattern-ii-0-whole\|LC 291 Word Pattern II]] | Medium | 哈希、字符串、回溯 |
 | [[tlc-the-maze-ii-0-whole\|LC 505 The Maze II]] | Medium | 数组、DFS、BFS、图、堆、矩阵 |
 | [[tlc-minesweeper-0-whole\|LC 529 Minesweeper]] | Medium | 数组、DFS、BFS、矩阵 |
+| [[tlc-insert-into-a-sorted-circular-linked-list-0-whole\|LC 708 Insert into a Sorted Circular Linked List]] | Medium | 链表 |
 | [[tlc-insert-interval-0-whole\|LC 57 Insert Interval]] | Medium | 数组 |
 | [[tlc-encode-and-decode-strings-0-whole\|LC 271 Encode and Decode Strings]] | Medium | 数组、字符串、设计 |
+| [[tlc-wiggle-sort-0-whole\|LC 280 Wiggle Sort]] | Medium | 数组、贪心、排序 |
 | [[tlc-valid-sudoku-0-whole\|LC 36 Valid Sudoku]] | Medium | — |
 | [[tlc-construct-string-from-binary-tree-0-whole\|LC 606 Construct String from Binary Tree]] | Medium | — |
-| [[tlc-find-the-celebrity-0-whole\|LC 277 Find the Celebrity]] | Medium | — |
 | [[tlc-count-pairs-of-similar-strings-0-whole\|LC 2506 Count Pairs Of Similar Strings]] | Easy | — |
+| [[tlc-find-the-celebrity-0-whole\|LC 277 Find the Celebrity]] | Medium | — |
 | [[tlc-combination-sum-iv-0-whole\|LC 377 Combination Sum IV]] | Medium | — |
 | [[tlc-find-positive-integer-solution-for-a-given-equation-0-whole\|LC 1237 Find Positive Integer Solution for a Given Equation]] | Medium | — |
 | [[tlc-minimum-number-of-operations-to-move-all-balls-to-each-box-0-whole\|LC 1769 Minimum Number of Operations to Move All Balls to Each Box]] | Medium | — |
 | [[tlc-maximal-score-after-applying-k-operations-0-whole\|LC 2530 Maximal Score After Applying K Operations]] | Medium | — |
-| [[tlc-valid-palindrome-iii-0-whole\|LC 1216 Valid Palindrome III]] | Hard | — |
 | [[tlc-valid-word-abbreviation-0-whole\|LC 408 Valid Word Abbreviation]] | Easy | — |
 | [[tlc-arithmetic-slices-0-whole\|LC 413 Arithmetic Slices]] | Medium | — |
-| [[tlc-valid-tic-tac-toe-state-0-whole\|LC 794 Valid Tic-Tac-Toe State]] | Medium | — |
 | [[tlc-rearrange-string-k-distance-apart-0-whole\|LC 358 Rearrange String k Distance Apart]] | Hard | — |
 | [[tlc-concatenated-words-0-whole\|LC 472 Concatenated Words]] | Hard | — |
+| [[tlc-valid-palindrome-iii-0-whole\|LC 1216 Valid Palindrome III]] | Hard | — |
 | [[tlc-plus-one-0-whole\|LC 66 Plus One]] | Easy | — |
 | [[tlc-verify-preorder-sequence-in-binary-search-tree-0-whole\|LC 255 Verify Preorder Sequence in Binary Search Tree]] | Medium | — |
 | [[tlc-3sum-smaller-0-whole\|LC 259 3Sum Smaller]] | Medium | — |
