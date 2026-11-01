@@ -75,7 +75,12 @@ td{padding:8px 0;border-bottom:1px solid var(--line)} td.r{text-align:right;colo
 <body>
 <div class="head"><div style="flex:1"><h1>LeetCode 学习看板</h1><div class="sub" id="gen"></div></div><button class="refresh" id="refresh">↻ 刷新</button></div>
 
-<section class="page on" id="p-home">
+<section class="page on" id="p-must">
+  <div class="card" id="must-head" style="margin-bottom:10px"></div>
+  <div class="card" style="padding:0" id="must"></div>
+</section>
+
+<section class="page" id="p-home">
   <div class="grid" id="kpis"></div>
   <div class="sec">根据你最近的作答</div>
   <div class="card" style="padding:0" id="feedback"></div>
@@ -119,11 +124,12 @@ td{padding:8px 0;border-bottom:1px solid var(--line)} td.r{text-align:right;colo
 </section>
 
 <nav class="tabs" id="tabs">
-  <button class="on" data-p="home"><b>◎</b>总览</button>
+  <button class="on" data-p="must"><b>★</b>必读</button>
+  <button data-p="home"><b>◎</b>总览</button>
   <button data-p="area"><b>▦</b>领域</button>
   <button data-p="lists"><b>☰</b>题单</button>
   <button data-p="weak"><b>⚑</b>弱项</button>
-  <button data-p="lc"><b>⌁</b>LeetCode</button>
+  <button data-p="lc"><b>⌁</b>LC</button>
 </nav>
 <div class="toast" id="toast"></div>
 
@@ -225,6 +231,15 @@ function render() {
   $("#unseen").innerHTML = D.rows.filter(r => r.r && !r.rv).sort((a, b) => a.r - b.r).slice(0, 25).map(r =>
     `<div class="item"><div class="row"><span class="badge" style="background:#6aa8ff22;color:#6aa8ff">#${r.r}</span><span class="t">${esc(name(r.s))}</span><span class="n">${r.d}</span></div>
      <div class="meta">${G[r.a] || ""}${r.l.length ? " · " + r.l.join("、") : ""}</div></div>`).join("");
+
+  // 必读: picked automatically from Anki history and recent LeetCode solves
+  $("#must-head").innerHTML = `<div style="font-weight:600">${D.gap >= 3 ? `你已经 ${D.gap} 天没复习了，先看这几道` : "现在最该看的题"}</div>
+    <div class="meta">按每道题「多久没看 × 平时忘得多不多 × 有多高频」自动挑选，不用你标记。点开看考点。</div>`;
+  $("#must").innerHTML = D.must.map((m, i) => { const r = R[m.s] || {n: m.s, id: 0}, col = m.recall == null ? "#6aa8ff" : mcol(m.recall, true);
+    return `<div class="item" onclick="this.classList.toggle('open')"><div class="row"><span class="badge" style="background:${col}22;color:${col}">${i + 1}</span>
+      <span class="t">${esc(name(m.s))}</span>${m.recall == null ? "" : `<span class="n">记得 ${pct(m.recall)}</span>`}</div>
+      <div class="chips" style="margin:6px 0 0">${m.why.map(w => `<span class="chip">${w}</span>`).join("")}</div>
+      <div class="more"><div class="k">${esc(r.k || "")}</div><div class="meta">${r.a ? (D.groups.find(g => g.id === r.a) || {}).t + " · " : ""}${r.d || ""}${r.dk ? " · " + r.dk.join(" · ") : ""}</div></div></div>`; }).join("");
 
   drawWeak();
   drawLC();

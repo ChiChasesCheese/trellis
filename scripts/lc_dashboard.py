@@ -236,7 +236,43 @@ def collect_anki() -> dict:
                 "worst": [{"g": gtitle.get(g, g), "rate": round(x, 3), "n": n} for g, x, n in worst],
                 "handwrite": [r["s"] for r in handwrite], "unseen_hot": [r["s"] for r in unseen_hot]}
 
+    # 必读: computed, never asked. Chi studies in bursts, so each problem's recall is estimated from the time since its
+    # last review against its longest interval (power forgetting curve R = (1 + t / 9S)^-1, S ~ interval), then weighed
+    # by how often he forgets it, how recently, and how much it matters; hard problems he just solved on LeetCode and has
+    # not yet reviewed join the list.
+    last_any = max((r["last"] for r in rows if r["last"]), default="")
+    gap = (today - date.fromisoformat(last_any)).days if last_any else 0
+    must = []
+    for r in rows:
+        if not r["rv"]:
+            continue
+        stab = max(r["iv"], 1)
+        elapsed = (today - date.fromisoformat(r["last"])).days if r["last"] else 0
+        recall = (1 + elapsed / (9 * stab)) ** -1
+        lapse = (r["ag"] + 1) / (r["rv"] + 2)
+        weight = 1 + (0.5 if tt.get(r["s"], {}).get("band", "").startswith("p") else 0) + (0.3 if (r["r"] or 999) <= 150 else 0)
+        score = weight * ((1 - recall) + lapse) + 0.6 * r["ag14"]
+        why = []
+        if r["ag14"]:
+            why.append(f"14 天内忘了 {r['ag14']} 次")
+        if lapse >= 0.34 and r["ag"] >= 2:
+            why.append(f"总共忘了 {r['ag']}/{r['rv']} 次")
+        if recall < 0.85:
+            why.append(f"{elapsed} 天没看，估计还记得 {round(recall * 100)}%")
+        if weight > 1.4:
+            why.append("高频")
+        must.append({"s": r["s"], "score": round(score, 3), "recall": round(recall, 2), "why": why})
+    must.sort(key=lambda x: -x["score"])
+    must = [m for m in must if m["why"]][:15]
+    user = json.loads((ROOT / "sources/local/leetcode-daily/state.json").read_text(encoding="utf-8"))
+    for slug, v in sorted(user["seen"].items(), key=lambda kv: kv[1]["solved"], reverse=True):
+        if (today - date.fromisoformat(v["solved"])).days <= 7 and v.get("difficulty") in ("Hard", "Medium") \
+                and slug in row and not row[slug]["rv"]:
+            must.append({"s": slug, "score": 0, "recall": None,
+                         "why": [f"{v['solved'][5:]} 在 LeetCode 解出（{'困难' if v['difficulty'] == 'Hard' else '中等'}），还没复习过"]})
+
     return {"generated": datetime.now().strftime("%Y-%m-%d %H:%M"), "rows": rows, "groups": groups, "cover": cover,
+            "must": must, "gap": gap,
             "decks": decks, "byday": {k: v for k, v in sorted(by_day.items())}, "streak": streak, "w7": w7, "w7p": w7p,
             "today": t0, "due_all": sum(d["due"] for d in decks), "new_all": sum(d["new"] for d in decks),
             "feedback": feedback, "total_items": len(rows)}
