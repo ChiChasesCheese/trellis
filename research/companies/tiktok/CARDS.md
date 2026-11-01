@@ -168,3 +168,13 @@ trick, a hand-made linked list where `OrderedDict` would do). The simple solutio
 refinement, still an acceptable interview answer. When the main solution is already the most direct correct one, write
 **no** 简单解法 section and no 「最优解：」 lead — never fill it with an exhaustive brute force or a worse algorithm nobody
 would write.
+
+
+## One body per problem (Chi, 2026-11-01)
+
+Every whole-answer card's statement and answer live once, in `vault/interviews/core/leetcode/problems/<slug>.md`
+(frontmatter `slug:`; header `**LC n 中文名**｜<difficulty>`). Each deck that teaches the problem (24 TikTok, 27 core,
+LeetCode Tops 01–17, 28 Daily) has a stub card with its own id and node, `body: interviews/core/leetcode/problems/<slug>`
+and `meta:` for its header facts, so every deck keeps its own Anki schedule while an edit to the body reaches all of
+them. Edit the body, never a deck copy; `uv run python scripts/lc_problems.py where <slug>` lists who uses it. Split
+cards (deck 25), pattern and toolkit cards are not problem bodies and stay as they are.

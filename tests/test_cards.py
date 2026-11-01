@@ -187,3 +187,17 @@ def test_a_duplicate_pasted_underneath_is_flagged(tmp_path):
     dup = QA + "\n## Q zh\nX 是什么？\n\n## A zh\nX 是 **Y**。\n\nX 是什么？\nX 是 **Y**。\n" \
                 "X 是什么？\nX 是 **Y**。\nX 是什么？\nX 是 **Y**。\n"
     assert suspect_translations(parse_card(write(tmp_path, "my-card.md", dup))) == ["zh"]
+
+
+def test_a_card_can_share_its_body_with_other_decks(tmp_path):
+    from trellis.cards import parse_card
+    vault = tmp_path / "vault"
+    (vault / "problems").mkdir(parents=True)
+    (vault / "deck").mkdir()
+    (vault / "problems" / "two-sum.md").write_text(
+        "---\ntitle: two-sum\n---\n## Q\n**LC 1 两数之和**｜Easy\n\n题意。\n\n## A\n哈希表。\n", encoding="utf-8")
+    stub = vault / "deck" / "c.md"
+    stub.write_text("---\nid: tlc-tops-two-sum-0-whole\nnode: a.two-sum\ntype: qa\nbody: problems/two-sum\n"
+                    "meta: Easy · 全公司热度第 1 名\n---\n", encoding="utf-8")
+    card = parse_card(stub)
+    assert "**LC 1 两数之和**｜Easy · 全公司热度第 1 名" in card.question and card.answer.strip() == "哈希表。"

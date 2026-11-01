@@ -2,55 +2,6 @@
 id: tlc-tops-remove-duplicates-from-sorted-array-0-whole
 node: two-pointers.remove-duplicates-from-sorted-array
 type: qa
+body: interviews/core/leetcode/problems/remove-duplicates-from-sorted-array
+meta: "Easy · 全公司热度第 74 名 · Top Interview 150"
 ---
-## Q
-**LC 26 删除有序数组中的重复项（Remove Duplicates from Sorted Array）**｜Easy · 全公司热度第 74 名 · Top Interview 150
-
-给你一个非严格递增排列的数组 `nums`，请你**原地**删除重复出现的元素，使每个元素只出现一次，元素的相对顺序保持一致，返回 `nums` 中唯一元素的个数 `k`。`nums` 的前 `k` 个元素应包含排序后的唯一数字，下标 `k - 1` 之后的剩余元素可以忽略。`1 <= nums.length <= 3 * 10^4`，`-100 <= nums[i] <= 100`，`nums` 已按非递减顺序排列。例：`nums = [1,1,2]` → `2`，`nums` 前两个元素为 `[1,2]`；`nums = [0,0,1,1,1,2,2,3,3,4]` → `5`，前五个元素为 `[0,1,2,3,4]`。
-
-给出完整的最优解答：考点、识别、推导、代码、复杂度、易错点。
-
-## A
-**考点。** 快慢指针（read / write pointer）原地压缩有序数组。
-
-**一句话。** 快指针扫描，慢指针 `k` 指向「下一个写入位置」；有序数组里，只要当前元素和已保留的最后一个元素不同，就是新值，写到 `nums[k]`。
-
-**识别。** 「有序」+「原地」+「去重」：重复值相邻，只需和已保留部分的最后一个比较；不能开新数组，所以用写指针覆盖。`O(n)` 时间、`O(1)` 空间。
-
-**推导。** 遇到重复就 `del nums[i]` 或 `pop`：每次删除后面整体前移 `O(n)`，总共 `O(n^2)`，而且删除时下标会跳过元素。换成「把需要保留的元素往前拷贝」：每个元素读一次、至多写一次。
-
-```python
-def remove_duplicates(nums: list[int]) -> int:
-    k = 1                                  # nums[:k] 是已去重的部分；nums[0] 一定保留
-    for i in range(1, len(nums)):
-        if nums[i] != nums[k - 1]:         # 有序数组：只需和已保留的最后一个比较，不同就是新值
-            nums[k] = nums[i]
-            k += 1
-    return k
-```
-
-运行：`[1,1,2]` → `2`，前 `k` 项 `[1, 2]`；`[0,0,1,1,1,2,2,3,3,4]` → `5`，`[0, 1, 2, 3, 4]`；`[5]` → `1`，`[5]`。
-
-**复杂度。** 时间 `O(n)`，空间 `O(1)`。
-
-**拓展优化。**
-- 每个值最多保留 `t` 个（LC 80 是 `t = 2`）：和已保留部分的**倒数第 `t` 个**比较，主问题就是 `t = 1`。
-
-```python
-def remove_duplicates_at_most(nums: list[int], t: int) -> int:   # 每个值最多保留 t 个；t = 1 就是原题，t = 2 是 LC 80
-    k = 0
-    for x in nums:
-        if k < t or x != nums[k - t]:      # 和已保留部分倒数第 t 个比：相同说明该值已经有 t 个了
-            nums[k] = x
-            k += 1
-    return k
-```
-
-例：`t = 2`，`[0,0,1,1,1,1,2,3,3]` → `7`，前 7 项 `[0, 0, 1, 1, 2, 3, 3]`。
-
-**易错点。**
-- 只返回 `len(set(nums))`：个数对，但 `nums` 没有被修改，判题检查前 `k` 项，`[0,0,1,1]` 前两项仍是 `[0, 0]`。
-- `k` 从 `0` 开始、比较 `nums[k - 1]`：`k - 1 = -1` 在 Python 里是最后一个元素，`[1,1,1]` 会返回 `0`，正确 `1`。
-- 用 `del nums[i]` 边遍历边删除：下标错位会漏掉相邻重复，复杂度也变成 `O(n^2)`。
-
-**同模式。** LC 80 删除有序数组中的重复项 II、LC 27 移除元素、LC 283 移动零、LC 82 删除排序链表中的重复元素 II。

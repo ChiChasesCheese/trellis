@@ -108,11 +108,13 @@ def load_related(folder: Path) -> dict[int, tuple[str, str]]:
     md = markdown.Markdown(extensions=["fenced_code", "tables", "sane_lists", "codehilite"],
                            extension_configs={"codehilite": {"css_class": "hl", "guess_lang": False}})
     out: dict[int, tuple[str, str]] = {}
-    for f in sorted(folder.glob("**/*-0-whole.md")):
+    for f in sorted(folder.glob("**/*.md")):  # whole-answer cards, or the shared problem files they point to
         text = f.read_text(encoding="utf-8")
         q, _, a = text.partition("## A")
         head = re.search(r"^\*\*(LC (\d+) [^*\n]+)\*\*｜", q, re.M)
-        code = re.search(r"```python\n.*?```", a, re.S)
+        # the main solution: the first block after the 「最优解：」 lead when a card opens with a 简单解法
+        main = a.split("最优解：", 1)[1] if "最优解：" in a else a
+        code = re.search(r"```python\n.*?```", main, re.S)
         if not head or not code or int(head.group(2)) in out:
             continue
         body = q[head.end():].split("\n\n")

@@ -89,6 +89,17 @@ def main(argv: list[str]) -> int:
             node = re.search(r"^node: (?:a|b|c|p[1-5])\.(\S+)$", text, re.M)
             if not node or node.group(1) not in info or not ("-0-whole" in f.name or "-1-signal" in f.name):
                 continue
+            stub = re.search(r'^meta: "(.*)"$', text, re.M)  # whole cards are stubs over problems/<slug>.md
+            if stub:
+                old = stub.group(1)
+                d = DIFF.match(old)
+                diff = d.group(1) if d else info[node.group(1)]["difficulty"]
+                meta = " · ".join(x for x in (diff, info[node.group(1)]["stats"]) if x)
+                if meta != old:
+                    changed += 1
+                    if "--dry-run" not in argv:
+                        f.write_text(text[:stub.start(1)] + meta.replace('"', "'") + text[stub.end(1):], encoding="utf-8")
+                continue
             q = text.split("## A", 1)
             m = HEADER.search(q[0])
             if not m:

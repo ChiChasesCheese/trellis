@@ -6,7 +6,8 @@
 LeetCode's public GraphQL (`recentAcSubmissionList`) lists a user's last 20 accepted submissions without logging in;
 the submitted code itself needs a login, so cards carry a best-practice solution, not Chi's own code. The username and
 the set of problems already taken live in `sources/local/leetcode-daily/state.json` (gitignored: the repo is public).
-A problem that already has a whole-answer card in another LeetCode deck is recorded but gets no second card.
+Every problem has one body in vault/interviews/core/leetcode/problems/<slug>.md shared by all decks; this deck's card
+is a stub over it (written at once when the body already exists, otherwise after the daily session writes the body).
 Sub-decks are knowledge points (Chi, 2026-10-31), the same ones as the TikTok deck's pattern branches: `fetch` puts a
 new leaf in `inbox`, and the session that writes its card moves it with `place <slug> <knowledge point>` (a new
 knowledge point gets a title). Cards live flat in the cards folder, so a move only rewrites the `node:` line. The steps
@@ -32,9 +33,8 @@ ROOT = Path(__file__).resolve().parents[1]
 LOCAL = ROOT / "sources/local/leetcode-daily"
 STATE = LOCAL / "state.json"
 SKELETON = ROOT / "skeleton/leetcode-daily.yaml"
-CARDS = ROOT / "vault/interviews/core/leetcode/daily/cards"  # flat: tlc-daily-<slug>-0-whole.md
-OTHER_CARDS = [ROOT / "vault/interviews/core/leetcode/tiktok/cards"]
-IN_DECKS = ROOT / "sources/local/lc-in-decks.json"
+CARDS = ROOT / "vault/interviews/core/leetcode/daily/cards"  # flat stubs: tlc-daily-<slug>-0-whole.md
+SHARED = ROOT / "vault/interviews/core/leetcode/problems"    # one body per problem, shared by every deck
 HEADER = ("# LeetCode problems Chi solved, one whole-answer card each, one branch per knowledge point.\n"
           "# Leaves are added by scripts/leetcode_daily.py fetch / place; cards follow research/leetcode-daily/AGENT.md.\n")
 # The TikTok deck's pattern branches, in the same order (research/companies/tiktok/tools/gen_skeleton.py PATTERNS)
@@ -88,15 +88,11 @@ def to_text(raw: str) -> str:
     return re.sub(r"\n{3,}", "\n\n", html.unescape(text)).strip()
 
 
-def existing_card(slug: str, pid: str) -> str:
-    for folder in OTHER_CARDS:
-        for f in folder.glob(f"*/tlc-{slug}-0-whole.md"):
-            return str(f.relative_to(ROOT))
-    if IN_DECKS.exists() and pid.isdigit():
-        hits = json.loads(IN_DECKS.read_text(encoding="utf-8")).get(pid) or []
-        if hits:
-            return hits[0].get("source") or hits[0].get("deck", "")
-    return ""
+def write_stub(slug: str, point: str, difficulty: str) -> None:
+    CARDS.mkdir(parents=True, exist_ok=True)
+    (CARDS / f"tlc-daily-{slug}-0-whole.md").write_text(
+        f"---\nid: tlc-daily-{slug}-0-whole\nnode: {point}.{slug}\ntype: qa\nbody: interviews/core/leetcode/problems/{slug}\n"
+        f"meta: {json.dumps(difficulty.title(), ensure_ascii=False)}\n---\n", encoding="utf-8")
 
 
 def load_skeleton() -> dict:
@@ -104,7 +100,7 @@ def load_skeleton() -> dict:
         return yaml.safe_load(SKELETON.read_text(encoding="utf-8"))
     return {"domain": "leetcode-daily", "title": "LeetCode Daily：按知识点", "deck": "LeetCode Tops::28 Daily（按知识点）",
             "lang": "zh", "vault": "interviews/core/leetcode/daily",
-            "examples_from": "interviews/core/leetcode/tiktok/cards,interviews/core/leetcode/daily/cards",
+            "examples_from": "interviews/core/leetcode/problems",
             "study": {"order": "core-first", "mix": "new-first", "new_per_day": 10, "reviews_per_day": 200},
             "nodes": []}
 
@@ -125,12 +121,12 @@ def fetch() -> int:
         day = datetime.fromtimestamp(int(sub["timestamp"])).strftime("%Y-%m-%d")
         pid = str(q.get("questionFrontendId") or "")
         title_zh = q.get("translatedTitle") or q["title"]
-        other = existing_card(slug, pid)
+        shared = SHARED / f"{slug}.md"
         seen[slug] = {"id": pid, "title": q["title"], "title_zh": title_zh, "difficulty": q.get("difficulty", ""),
-                      "tags": [t["name"] for t in q.get("topicTags") or []], "solved": day, "covered_by": other}
-        if other:
-            print(f"covered {slug} ({day}): {other}")
-            continue
+                      "tags": [t["name"] for t in q.get("topicTags") or []], "solved": day,
+                      "shared": shared.exists()}
+        if shared.exists():  # one body per problem: another deck already wrote it, this deck only needs a stub
+            write_stub(slug, "inbox", q.get("difficulty", ""))
         LOCAL.mkdir(parents=True, exist_ok=True)
         (LOCAL / f"{slug}.txt").write_text(to_text(q.get("translatedContent") or q.get("content") or ""), encoding="utf-8")
         branch = ensure_branch(sk, *INBOX)
@@ -181,6 +177,9 @@ def place(slug: str, point: str, title: str = "") -> int:
     ensure_branch(sk, point, title)["children"].append(leaf)
     save(sk)
     card = CARDS / f"tlc-daily-{slug}-0-whole.md"
+    if not card.exists() and (SHARED / f"{slug}.md").exists():  # the body was just written: add this deck's stub
+        seen = json.loads(STATE.read_text(encoding="utf-8")).get("seen", {}).get(slug, {})
+        write_stub(slug, leaf["id"].split(".", 1)[0], seen.get("difficulty", ""))
     if card.exists():
         card.write_text(re.sub(r"^node: .*$", f"node: {leaf['id']}", card.read_text(encoding="utf-8"), count=1, flags=re.M),
                         encoding="utf-8")

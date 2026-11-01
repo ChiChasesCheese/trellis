@@ -2,48 +2,6 @@
 id: tlc-binary-tree-inorder-traversal-0-whole
 node: b.binary-tree-inorder-traversal
 type: qa
+body: interviews/core/leetcode/problems/binary-tree-inorder-traversal
+meta: "Easy · CodeTop 国内累计 45 次 · 最近 2025-05-26（国内 CodeTop）"
 ---
-## Q
-**LC 94 二叉树的中序遍历**｜Easy · CodeTop 国内累计 45 次 · 最近 2025-05-26（国内 CodeTop）
-
-给二叉树的根结点 `root`，返回它的**中序**（左、根、右）遍历结果。树中结点数在 `[0, 100]`，`-100 <= Node.val <= 100`。进阶：递归算法很简单，能用迭代完成吗？例：`root = [1,null,2,3]` → `[1,3,2]`；`root = []` → `[]`；`root = [1]` → `[1]`。
-
-给出完整的最优解答：识别、推导、代码、复杂度、易错点、追问。
-
-## A
-**一句话。** 递归：先递归左子树，再访问当前结点，最后递归右子树；访问夹在两次递归之间就是中序。`O(n)` 时间，`O(h)` 栈空间，`h` 是树高。
-
-**识别。** 中序遍历是树的基础，「访问顺序是左 → 根 → 右」正好是递归的结构：一棵树的中序 = 左子树的中序 + 根 + 右子树的中序。进阶问的是迭代版，放在追问。
-
-**推导。** 把整棵树的问题拆成三段：左子树（同样的问题）、根、右子树（同样的问题）。三行递归直接对应定义：`dfs(left)`、访问、`dfs(right)`；访问放在两次递归之间，放前面是前序，放后面是后序。每个结点访问一次，`O(n)`。
-
-```python
-def inorder_traversal(root: TreeNode | None) -> list[int]:
-    result: list[int] = []
-
-    def dfs(node: TreeNode | None) -> None:
-        if node is None:
-            return
-        dfs(node.left)                 # 先把整个左子树走完
-        result.append(node.val)        # 再访问自己：夹在左右之间就是中序
-        dfs(node.right)                # 最后走右子树
-
-    dfs(root)
-    return result
-```
-
-运行：`[1,null,2,3]` → `[1, 3, 2]`，`[]` → `[]`，`[1]` → `[1]`。
-
-**复杂度。** 时间 `O(n)`；空间 `O(h)`：递归栈深度等于树高，链状树为 `O(n)`。
-
-**易错点。**
-- 访问的位置放错：放在两次递归之前是前序，`[1,null,2,3]` 得到 `[1, 2, 3]`；放在之后是后序，得到 `[3, 2, 1]`；正确是 `[1, 3, 2]`。
-- 空结点必须直接返回：漏掉 `if node is None: return`，叶子的孩子会触发 `AttributeError`。
-- 深度：递归深度等于树高。题目限定至多 `100` 个结点，没有问题；但退化成链的大树（例如 `1500` 个结点的左斜链）会超过 CPython 默认递归上限（约 `1000`）而抛 `RecursionError`，要么 `sys.setrecursionlimit` 调高，要么用迭代（见追问）。
-
-**追问。**
-- 进阶，迭代：用显式栈模拟递归。从当前结点一路向左把沿途结点压栈，到头后弹出一个结点并访问它，然后转向它的右子树；循环条件是 `while node or stack`。`O(n)` 时间，`O(h)` 空间，深链安全。
-- `O(1)` 额外空间：莫里斯遍历（Morris traversal）。临时把「左子树最右结点」的右指针指向当前结点，用线索代替栈；第二次回到该结点时说明左子树走完，拆线并访问。每条边最多走常数次，仍是 `O(n)`。
-- 做成惰性迭代器（`yield`）：把 `result.append` 换成 `yield`，调用方按需取，适合只要前 `k` 个（LC 230）。
-
-**同模式。** LC 144 前序遍历、LC 145 后序遍历、LC 98 验证二叉搜索树、LC 230 BST 中第 K 小的元素、LC 173 二叉搜索树迭代器。

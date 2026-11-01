@@ -17,10 +17,11 @@ import sys
 files=sys.argv[1:] or sorted(glob.glob("vault/interviews/core/leetcode/daily/cards/**/*.md",recursive=True))
 for f in files:
     t=open(f).read()
+    ref=re.search(r"^body: (\S+)$",t,re.M)  # a stub: check the shared problem body it points to
+    if ref: f="vault/"+ref.group(1)+".md"; t=open(f).read()
     m=re.search(r"\*\*同模式。\*\*(.*)",t)
     if not m: print("NO 同模式",f); continue
     core=re.search(r"\*\*核心题。\*\*\n\n((?:- .*\n?)+)",t)
-    if not core and "/daily/" in f: print("NO 核心题",f)
     refs=m.group(1)+"、"+(core.group(1) if core else "")
     for n,name in re.findall(r"LC (\d+) ([^、，。（(：\n]+)",refs):
         real=lookup(int(n))

@@ -2,40 +2,6 @@
 id: tlc-tops-merge-triplets-to-form-target-triplet-0-whole
 node: greedy.merge-triplets-to-form-target-triplet
 type: qa
+body: interviews/core/leetcode/problems/merge-triplets-to-form-target-triplet
+meta: "Medium · 全公司热度第 2906 名 · NeetCode 150"
 ---
-## Q
-**LC 1899 合并若干三元组以形成目标三元组**｜Medium · 全公司热度第 2906 名 · NeetCode 150
-
-三元组是一个由三个整数组成的数组。给你一个二维整数数组 `triplets`，其中 `triplets[i] = [a_i, b_i, c_i]` 表示第 `i` 个三元组，同时给你一个整数数组 `target = [x, y, z]`，表示想要得到的三元组。你可以对 `triplets` 执行下面的操作任意次（可能零次）：选出两个下标 `i` 和 `j`（`i != j`），并更新 `triplets[j]` 为 `[max(a_i, a_j), max(b_i, b_j), max(c_i, c_j)]`。如果通过这些操作可以使 `target` 成为 `triplets` 的一个元素，返回 `true`，否则返回 `false`。`1 <= triplets.length <= 10^5`，`triplets[i].length == target.length == 3`，`1 <= a_i, b_i, c_i, x, y, z <= 1000`。例：`triplets = [[2,5,3],[1,8,4],[1,7,5]], target = [2,7,5]` → `true`；`triplets = [[3,4,5],[4,5,6]], target = [3,2,5]` → `false`。
-
-给出完整的最优解答：考点、识别、推导、代码、复杂度、易错点。
-
-## A
-**考点。** 贪心 + 只增不减的操作（`max`）：先筛掉不可能有用的元素。
-
-**一句话。** 操作只会让每个分量变大，所以任何某个分量超过目标的三元组都不能用；剩下的可用三元组全部合并，每个分量取最大值，如果能恰好凑出 `target` 的三个分量就成功。
-
-**识别。** 「用 `max` 合并任意多次」：结果的每个分量是参与者的最大值，单调不减，没有撤销。目标某个分量一旦被超过就回不去了。`10^5` 个三元组，线性扫描。
-
-**推导。** 暴力：枚举参与合并的子集，指数级。因为 `max` 满足交换律和结合律，合并任意多个三元组的结果就是逐分量的最大值，顺序无关。参与合并的每个三元组都不能有任何分量大于 `target` 的对应分量（否则最大值会超过目标且无法降低），这样的三元组全部丢弃。在剩下的"安全"三元组里，把全体合并等价于分量取最大；只要三个分量都能被某个安全三元组恰好达到目标值，就能凑出 `target`。
-
-```python
-def merge_triplets(triplets: list[list[int]], target: list[int]) -> bool:
-    # 任何分量超过目标的三元组会把最大值抬过目标，且无法回退：直接丢弃
-    good = [t for t in triplets if all(a <= b for a, b in zip(t, target))]
-    # 每个分量都要有一个安全三元组恰好等于目标值
-    return all(any(t[i] == target[i] for t in good) for i in range(3))
-```
-
-运行：`([[2,5,3],[1,8,4],[1,7,5]], [2,7,5])` → `True`，`([[1,3,4],[2,5,8]], [2,5,8])` → `True`，`([[2,5,3],[2,3,4],[1,2,5],[5,2,3]], [5,5,5])` → `True`，`([[3,4,5],[4,5,6]], [3,2,5])` → `False`，`([[1,1,1]], [2,2,2])` → `False`。
-
-**复杂度。** 时间 `O(n)`（`3n` 次比较），空间 `O(n)`（过滤后的列表）。
-
-**拓展优化。**
-- 一遍扫描、`O(1)` 空间：遇到安全三元组就更新三个标志位 `got[i] |= t[i] == target[i]`，最后检查是否全真。
-
-**易错点。**
-- 不过滤直接对所有三元组取分量最大值：示例一的所有三元组取最大是 `[2,8,5]`，与 `[2,7,5]` 不等，返回 `False`（正确 `True`）。
-- 只检查有没有某个三元组整体等于目标：示例三的 `[5,5,5]` 不在初始集合中，要靠合并得到，这种写法返回 `False`（正确 `True`）。
-
-**同模式。** LC 55 跳跃游戏、LC 134 加油站、LC 763 划分字母区间、LC 678 有效的括号字符串。

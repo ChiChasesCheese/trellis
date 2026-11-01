@@ -5,7 +5,7 @@ title: LeetCode Tops
 deck: LeetCode Tops
 lang: zh
 vault: interviews/core/leetcode/tops
-examples_from: interviews/core/leetcode/tops/cards,interviews/core/leetcode/tiktok/cards
+examples_from: interviews/core/leetcode/problems
 study:
   order: core-first
   mix: new-first

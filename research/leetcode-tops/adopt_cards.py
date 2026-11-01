@@ -2,9 +2,9 @@
 
     uv run python research/leetcode-tops/adopt_cards.py      # writes cards/<branch>/tlc-tops-<slug>-0-whole.md
 
-Source, first found: the classic-lists card (written to the newest rules), else the TikTok whole card. The body is kept;
-the id, node and header line are rewritten for this deck (difficulty · company-tag rank · lists). Existing tops cards
-are never overwritten.
+Every card is a stub over the shared problem file `vault/interviews/core/leetcode/problems/<slug>.md` (one body per
+problem, see scripts/lc_problems.py) with this deck's id, node and header meta (difficulty · company-tag rank · lists).
+Existing tops cards are never overwritten.
 """
 from __future__ import annotations
 
@@ -31,15 +31,10 @@ def main() -> None:
         dest = OUT / b / f"tlc-tops-{s}-0-whole.md"
         if dest.exists():
             continue
-        src = [ROOT / f"vault/interviews/core/leetcode/classic/cards/tlc-classic-{s}-0-whole.md",
-               *map(Path, glob.glob(str(ROOT / f"vault/interviews/core/leetcode/tiktok/cards/*/tlc-{s}-0-whole.md")))]
-        src = next((f for f in src if f.exists()), None)
-        if src is None:
-            continue
-        text = src.read_text(encoding="utf-8")
-        text = re.sub(r"^id: .*$", f"id: tlc-tops-{s}-0-whole", text, count=1, flags=re.M)
-        text = re.sub(r"^node: .*$", f"node: {b}.{s}", text, count=1, flags=re.M)
-        text = re.sub(r"^\*\*LC [^\n]*?\*\*｜.*$", lambda _: header(p, meta[s]), text, count=1, flags=re.M)
+        if not (ROOT / f"vault/interviews/core/leetcode/problems/{s}.md").exists():
+            continue  # no shared body yet: a card agent writes it
+        text = (f"---\nid: tlc-tops-{s}-0-whole\nnode: {b}.{s}\ntype: qa\nbody: interviews/core/leetcode/problems/{s}\n"
+                f"meta: {json.dumps(header(p, meta[s]).split('｜', 1)[1], ensure_ascii=False)}\n---\n")
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_text(text, encoding="utf-8")
         made += 1

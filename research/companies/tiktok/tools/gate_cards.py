@@ -11,6 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[4]
 CARDS = ROOT / "vault/interviews/core/leetcode/tiktok/cards"
 DRILL = ROOT / "vault/interviews/core/leetcode/tiktok-drill/cards"
+PROBLEMS = ROOT / "vault/interviews/core/leetcode/problems"  # shared problem bodies; deck cards are stubs pointing here
 BLOCK = re.compile(r"```python\n(.*?)```", re.S)
 FORBIDDEN = ["本题", "这道题", "本文", "如上所述", "见上", "对拍", "验证过程", "随机测试", "我测了"]
 PRELUDE = ("from __future__ import annotations\nimport bisect, collections, functools, heapq, itertools, math, "
@@ -25,7 +26,7 @@ PRELUDE = ("from __future__ import annotations\nimport bisect, collections, func
 def problems(path: Path) -> list[str]:
     text = path.read_text(encoding="utf-8")
     out = []
-    if not re.search(r"^id: tlc-[a-z0-9-]+$", text, re.M):
+    if not re.search(r"^id: tlc-[a-z0-9-]+$", text, re.M) and not re.search(r"^slug: [a-z0-9-]+$", text, re.M):
         out.append("id must start with tlc-")
     for word in FORBIDDEN:
         if word in text:
@@ -51,7 +52,7 @@ def problems(path: Path) -> list[str]:
 
 
 def main(argv: list[str]) -> int:
-    files = [Path(a).resolve() for a in argv] or sorted([*CARDS.rglob("*.md"), *DRILL.rglob("*.md")])
+    files = [Path(a).resolve() for a in argv] or sorted([*CARDS.rglob("*.md"), *DRILL.rglob("*.md"), *PROBLEMS.glob("*.md")])
     bad = 0
     for f in files:
         for p in problems(f):

@@ -2,50 +2,6 @@
 id: tlc-tops-diameter-of-binary-tree-0-whole
 node: trees.diameter-of-binary-tree
 type: qa
+body: interviews/core/leetcode/problems/diameter-of-binary-tree
+meta: "Easy · 全公司热度第 104 名 · NeetCode 150、Hot 100"
 ---
-## Q
-**LC 543 二叉树的直径**｜Easy · 全公司热度第 104 名 · NeetCode 150、Hot 100
-
-给你一棵二叉树的根节点，返回该树的**直径**：树中任意两个节点之间最长路径的**长度**（用边数计），这条路径可能经过也可能不经过根节点。节点数在 `[1, 10^4]`，`-100 <= Node.val <= 100`。例：`root = [1,2,3,4,5]` → `3`（路径 `[4,2,1,3]` 或 `[5,2,1,3]`）；`root = [1,2]` → `1`。
-
-给出完整的最优解答：考点、识别、推导、代码、复杂度、易错点。
-
-## A
-**考点。** 树形 DP / 后序 DFS：递归返回「向下的单链」，用它在每个节点更新「拐弯经过该节点」的全局答案。
-
-**一句话。** 经过节点 `x` 的最长路径 = 左子树高度 + 右子树高度（边数）；对每个节点算一遍取最大，高度顺带由同一次后序递归返回。
-
-**识别。** 「树里任意两点的最长路径」，路径可以在某个节点「拐弯」：每条路径都有唯一的最高点，枚举最高点就枚举了所有路径。子树的高度可以由左右孩子的高度合并，所以一次后序遍历 `O(n)`。`n <= 10^4`，一次遍历。
-
-**推导。** 对每个节点单独求左右高度再相加，每次求高度 `O(n)`，总 `O(n^2)`。浪费在于高度被重复计算。洞察：求高度的递归本身已经拿到了左、右高度，在返回之前顺手用 `左 + 右` 更新答案；返回给父节点的只能是「单边」的高度，因为路径向上走时不能同时带着左右两条臂。
-
-```python
-def diameter_of_binary_tree(root: TreeNode | None) -> int:
-    best = 0
-
-    def height(node: TreeNode | None) -> int:      # 返回以 node 为根的子树高度（节点数）
-        nonlocal best
-        if node is None:
-            return 0
-        left = height(node.left)
-        right = height(node.right)
-        best = max(best, left + right)             # 以 node 为最高点的路径：左臂 + 右臂（边数）
-        return 1 + max(left, right)                # 向上只能带一条臂
-
-    height(root)
-    return best
-```
-
-运行：`[1,2,3,4,5]` → `3`；`[1,2]` → `1`；`[1]` → `0`；`[1,2,null,3,4,5,null,null,6]` → `4`（`5-3-2-4-6`，不经过根）。
-
-**复杂度。** 时间 `O(n)`；空间 `O(h)`，递归栈。
-
-**拓展优化。**
-- 带权边或节点值（LC 124 二叉树中的最大路径和）：同一个骨架，把「高度」换成「向下的最大和」，并且负的臂要截断为 `0`。
-
-**易错点。**
-- 只算经过根的路径 `height(root.left) + height(root.right)`：`[1,2,null,3,4,5,null,null,6]` 得 `3`，正确是 `4`，最长路径不经过根。
-- 把答案算成节点数：`best = max(best, left + right + 1)`，`[1,2]` 得 `2`，正确是 `1`。`left + right` 已经是边数，不要再加 `1`。
-- 树退化成链时递归深度达 `n`，`n = 10^4` 超过 CPython 默认上限约 `1000`，会抛 `RecursionError`；需 `sys.setrecursionlimit` 或改成显式栈的后序遍历。
-
-**同模式。** LC 124 二叉树中的最大路径和、LC 104 二叉树的最大深度、LC 687 最长同值路径、LC 110 平衡二叉树。

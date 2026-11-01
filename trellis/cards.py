@@ -218,6 +218,27 @@ def _split_qa(sections: dict[str, str], path: Path) -> tuple[str, str]:
     return question, answer
 
 
+_HEADER_RE = re.compile(r"^(\*\*[^*\n]+\*\*)｜.*$", re.M)
+
+
+def _shared_body(path: Path, ref: object, header_meta: object) -> str:
+    """The body of a card that several decks share (`body: <path in the vault, no .md>`). One problem, one file: each
+    deck keeps a stub with its own id and node, and may replace the text after ｜ on the first bold header line with its
+    own `meta:` (difficulty, frequency, ...)."""
+    if not isinstance(ref, str) or not ref or ref.startswith("/") or ".." in ref:
+        raise CardError(f"{path}: body must be a path inside the vault, got {ref!r}")
+    vault = next((p for p in path.resolve().parents if p.name == "vault"), None)
+    if vault is None:
+        raise CardError(f"{path}: body needs the card to sit inside a vault/ folder")
+    shared = vault / f"{ref}.md"
+    if not shared.exists():
+        raise CardError(f"{path}: body {ref!r} not found")
+    _, text = _split_frontmatter(shared.read_text(encoding="utf-8"), shared)
+    if header_meta:
+        text = _HEADER_RE.sub(lambda m: f"{m.group(1)}｜{header_meta}", text, count=1)
+    return text
+
+
 def parse_card(path: str | Path) -> Card:
     path = Path(path)
     meta, body = _split_frontmatter(path.read_text(encoding="utf-8"), path)
@@ -234,9 +255,11 @@ def parse_card(path: str | Path) -> Card:
     tags = meta.get("tags", []) or []
     if not (isinstance(tags, list) and all(isinstance(t, str) for t in tags)):
         raise CardError(f"{path}: tags must be a list of strings")
-    unknown = set(meta) - {"id", "node", "type", "tags", "source", "anki", "step"}
+    unknown = set(meta) - {"id", "node", "type", "tags", "source", "anki", "step", "body", "meta"}
     if unknown:
         raise CardError(f"{path}: unknown frontmatter keys {sorted(unknown)}")
+    if meta.get("body"):
+        body = _shared_body(path, meta["body"], meta.get("meta"))
     anki = meta.get("anki", 0) or 0
     if not isinstance(anki, int):
         raise CardError(f"{path}: anki must be the note's integer id")

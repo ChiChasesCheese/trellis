@@ -38,7 +38,8 @@ for p, on in core:
     text = src.read_text(encoding="utf-8")
     text = re.sub(r"^id: .*$", f"id: tlc-core-{p['slug']}", text, count=1, flags=re.M)
     text = re.sub(r"^node: .*$", f"node: {p['band']}.{p['slug']}", text, count=1, flags=re.M)
-    text = re.sub(r"^(\*\*[^*\n]+\*\*｜[^\n]*)$", lambda m: m.group(1) + " · 也在：" + "、".join(on), text, count=1, flags=re.M)
+    # cards are stubs over vault/interviews/core/leetcode/problems/<slug>.md: the extra lists go into the header meta
+    text = re.sub(r'^meta: "(.*)"$', lambda m: 'meta: "' + m.group(1) + " · 也在：" + "、".join(on) + '"', text, count=1, flags=re.M)
     dest = OUT / p["band"] / f"tlc-core-{p['slug']}.md"
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(text, encoding="utf-8")
@@ -58,7 +59,7 @@ for i, band in enumerate(("p1", "p2", "p3", "p4", "p5"), 1):
                                     "summary": "也在：" + "、".join(on) + "。"} for p, on in leaves]})
 sk = {"domain": "tiktok-core", "title": "通用核心：TikTok 高频 × Amazon × 经典题单",
       "deck": "LeetCode Tops::27 通用核心：TikTok 高频 × Amazon × 经典题单",
-      "lang": "zh", "vault": "interviews/core/leetcode/tiktok-core", "examples_from": "interviews/core/leetcode/tiktok/cards",
+      "lang": "zh", "vault": "interviews/core/leetcode/tiktok-core", "examples_from": "interviews/core/leetcode/problems",
       "study": {"order": "core-first", "mix": "new-first", "new_per_day": 60, "reviews_per_day": 300},
       "nodes": nodes}
 hdr = ("# Tier-A TikTok problems that are also on Amazon or classic lists, one copy of each whole-answer card.\n"

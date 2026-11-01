@@ -2,46 +2,6 @@
 id: tlc-tops-convert-sorted-array-to-binary-search-tree-0-whole
 node: trees.convert-sorted-array-to-binary-search-tree
 type: qa
+body: interviews/core/leetcode/problems/convert-sorted-array-to-binary-search-tree
+meta: "Easy · 全公司热度第 396 名 · Hot 100、Top Interview 150"
 ---
-## Q
-**LC 108 将有序数组转换为二叉搜索树**｜Easy · 全公司热度第 396 名 · Hot 100、Top Interview 150
-
-给你一个整数数组 `nums`，其中元素已经按**升序**排列，请你将其转换为一棵**高度平衡**的二叉搜索树（任意节点左右子树高度差不超过 `1`）。`1 <= nums.length <= 10^4`，`-10^4 <= nums[i] <= 10^4`，`nums` 严格递增。例：`nums = [-10,-3,0,5,9]` → `[0,-3,9,-10,null,5]`（`[0,-10,5,null,-3,null,9]` 也正确）；`nums = [1,3]` → `[3,1]`（`[1,null,3]` 也正确）。
-
-给出完整的最优解答：考点、识别、推导、代码、复杂度、易错点。
-
-## A
-**考点。** 分治建树（二叉搜索树的中序是升序；取中点作根得到平衡）。
-
-**一句话。** 取区间中点作根，左半递归建左子树、右半递归建右子树；两边元素个数至多差 `1`，高度自然平衡。
-
-**识别。** 「有序数组 ↔ BST」：BST 的中序遍历就是升序数组，所以数组里任何一个位置都可以当根，左边的是左子树、右边的是右子树。「平衡」要求两边尽量一样大，中点就是答案。`n <= 10^4`，递归深度只有 `O(log n)`，不会爆栈。
-
-**推导。** 依次插入数组元素会得到一条链（有序输入的最坏情形）；平衡要求每一步都让两边大小相近。区间 `[lo, hi)` 的中点作根，左右各剩 `⌊len/2⌋` 与 `⌈len/2⌉ - 1` 个，高度之差不超过 `1`。用下标表示区间，避免切片复制。
-
-```python
-def sorted_array_to_bst(nums: list[int]) -> TreeNode | None:
-    def build(lo: int, hi: int) -> TreeNode | None:  # 用 nums[lo:hi] 建树，左闭右开
-        if lo >= hi:
-            return None                            # 区间为空：没有节点
-        mid = (lo + hi) // 2                       # 中点作根，两边个数至多差 1
-        node = TreeNode(nums[mid])
-        node.left = build(lo, mid)                 # 左半都比 nums[mid] 小
-        node.right = build(mid + 1, hi)            # 右半都比它大
-        return node
-
-    return build(0, len(nums))
-```
-
-运行：`[-10,-3,0,5,9]` → `[0,-3,9,-10,null,5]`；`[1,3]` → `[3,1]`；`[7]` → `[7]`；`[1,2,3,4,5,6,7]` → `[4,2,6,1,3,5,7]`。
-
-**复杂度。** 时间 `O(n)`，每个元素建一个节点；空间 `O(log n)`，递归深度（输出的树不计）。
-
-**拓展优化。**
-- 变体：有序**链表**转平衡 BST（LC 109）。链表没有随机访问，不能直接取中点：按中序顺序建树，维护一个全局指针依次消耗链表节点，先建左子树，再取当前节点作根，再建右子树，总时间 `O(n)`。
-
-**易错点。**
-- 用切片 `nums[:mid]`、`nums[mid+1:]` 递归：每层复制数组，总时间 `O(n log n)`、额外空间也更多；传下标。
-- 偶数个元素时取偏左中点或偏右中点都合法，两个例子的输出因此不唯一；判题按「是 BST 且平衡」而不是逐点相等。
-
-**同模式。** LC 109 有序链表转换二叉搜索树、LC 105 从前序与中序遍历序列构造二叉树、LC 98 验证二叉搜索树、LC 1382 将二叉搜索树变平衡。

@@ -65,7 +65,7 @@ def main() -> None:
                       "summary": f"{title}：按全公司出题频率从高到低，频率相近时先易后难；每题一张整题卡。", "children": leaves})
     sk = {"domain": "leetcode-tops", "title": "LeetCode Tops", "deck": "LeetCode Tops", "lang": "zh",
           "vault": "interviews/core/leetcode/tops",
-          "examples_from": "interviews/core/leetcode/tops/cards,interviews/core/leetcode/tiktok/cards",
+          "examples_from": "interviews/core/leetcode/problems",
           # no per-day limits: the root preset is shared with decks 18-20 and stays as Chi set it
           "study": {"order": "core-first", "mix": "new-first"}, "nodes": nodes}
     (ROOT / "skeleton/leetcode-tops.yaml").write_text(

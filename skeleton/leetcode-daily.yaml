@@ -5,15 +5,24 @@ title: LeetCode Daily：按知识点
 deck: LeetCode Tops::28 Daily（按知识点）
 lang: zh
 vault: interviews/core/leetcode/daily
-examples_from: interviews/core/leetcode/tiktok/cards,interviews/core/leetcode/daily/cards
+examples_from: interviews/core/leetcode/problems
 study:
   order: core-first
   mix: new-first
   new_per_day: 10
   reviews_per_day: 200
 nodes:
-- id: prefix-sum
+- id: hashing
   order: 1
+  title: 哈希：查找、计数与分组
+  summary: 哈希：查找、计数与分组：Chi 解过的题，按知识点归在一起。
+  children:
+  - id: hashing.minimum-area-rectangle
+    title: LC 939 最小面积矩形（Minimum Area Rectangle）
+    summary: Medium；Geometry, Array, Hash Table, Math。
+  core: true
+- id: prefix-sum
+  order: 2
   title: 前缀和与差分
   summary: 前缀和与差分：Chi 解过的题，按知识点归在一起。
   children:
@@ -21,8 +30,26 @@ nodes:
     title: LC 4094 统计频次阶梯子数组的数目 I（Count Frequency Staircase Subarrays I）
     summary: Medium；。
   core: true
+- id: binary-search
+  order: 3
+  title: 二分查找：在下标上与在答案上
+  summary: 二分查找：在下标上与在答案上：Chi 解过的题，按知识点归在一起。
+  children:
+  - id: binary-search.search-in-rotated-sorted-array-ii
+    title: LC 81 搜索旋转排序数组 II（Search in Rotated Sorted Array II）
+    summary: Medium；Array, Binary Search。
+  core: true
+- id: heap-patterns
+  order: 4
+  title: 堆：Top-K、多路归并与双堆
+  summary: 堆：Top-K、多路归并与双堆：Chi 解过的题，按知识点归在一起。
+  children:
+  - id: heap-patterns.task-scheduler
+    title: LC 621 任务调度器（Task Scheduler）
+    summary: Medium；Greedy, Array, Hash Table, Counting。
+  core: true
 - id: intervals-sweep
-  order: 2
+  order: 5
   title: 区间与扫描线
   summary: 区间与扫描线：Chi 解过的题，按知识点归在一起。
   children:
@@ -30,8 +57,17 @@ nodes:
     title: LC 2409 统计共同度过的日子数（Count Days Spent Together）
     summary: Easy；Math, String。
   core: true
+- id: linked-list
+  order: 6
+  title: 链表技巧
+  summary: 链表技巧：Chi 解过的题，按知识点归在一起。
+  children:
+  - id: linked-list.reverse-nodes-in-k-group
+    title: LC 25 K 个一组翻转链表（Reverse Nodes in k-Group）
+    summary: Hard；Recursion, Linked List。
+  core: true
 - id: graph-traversal
-  order: 3
+  order: 7
   title: 图与网格的 BFS / DFS
   summary: 图与网格的 BFS / DFS：Chi 解过的题，按知识点归在一起。
   children:
@@ -43,7 +79,7 @@ nodes:
     summary: Medium；Depth-First Search, Breadth-First Search, Union Find, Array。
   core: true
 - id: dp-grid-string
-  order: 4
+  order: 8
   title: 动态规划：网格、双串与区间
   summary: 动态规划：网格、双串与区间：Chi 解过的题，按知识点归在一起。
   children:
@@ -52,7 +88,7 @@ nodes:
     summary: Medium；Array, Dynamic Programming, Matrix。
   core: true
 - id: greedy
-  order: 5
+  order: 9
   title: 贪心
   summary: 贪心：Chi 解过的题，按知识点归在一起。
   children:
@@ -61,7 +97,7 @@ nodes:
     summary: Medium；。
   core: true
 - id: design
-  order: 6
+  order: 10
   title: 数据结构设计题
   summary: 数据结构设计题：Chi 解过的题，按知识点归在一起。
   children:
@@ -70,7 +106,7 @@ nodes:
     summary: Medium；。
   core: true
 - id: math-bit-sim
-  order: 7
+  order: 11
   title: 数学、位运算与模拟
   summary: 数学、位运算与模拟：Chi 解过的题，按知识点归在一起。
   children:
@@ -88,7 +124,7 @@ nodes:
     summary: Medium；Array, Math。
   core: true
 - id: sorting-permutation
-  order: 8
+  order: 12
   title: 排序、置换环与逆序对
   summary: 排序、置换环与逆序对：Chi 解过的题，按知识点归在一起。
   children:

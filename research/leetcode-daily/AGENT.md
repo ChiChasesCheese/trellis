@@ -9,29 +9,33 @@ LeetCode becomes one card, so that years later he can pick up the core idea agai
 2. `uv run python scripts/leetcode_daily.py fetch` (new accepted problems → leaves in `skeleton/leetcode-daily.yaml`,
    statements in `sources/local/leetcode-daily/<slug>.txt`). Then `uv run python scripts/leetcode_daily.py pending`.
    If nothing is pending, stop (no commit, no push).
-3. Write one card per pending leaf (rules below), then file it under its knowledge point:
+3. For each pending leaf whose shared body `vault/interviews/core/leetcode/problems/<slug>.md` already exists (another
+   deck wrote it), only file it (below). Otherwise write the body (rules below) to that path, then file it:
    `uv run python scripts/leetcode_daily.py place <slug> <point-id>` (`points` lists them; they are the TikTok deck's
    pattern branches). When none fits, open a new one: `place <slug> <new-id> "中文标题"` (Chi, 2026-10-31: sub-decks are
    knowledge points or new groups, never dates). Nothing may stay in `inbox`. More than 6 pending: split the leaves among up to 3 `sonnet`
    subagents, each told to read this file; otherwise write them yourself.
-4. Gate: `python3 scripts/check_daily_refs.py` (every printed line is a wrong LC number or name; fix it), `uv run python research/companies/tiktok/tools/gate_cards.py vault/interviews/core/leetcode/daily/cards/*.md`
+4. Gate: `python3 scripts/check_daily_refs.py` (every printed line is a wrong LC number or name; fix it), `uv run python research/companies/tiktok/tools/gate_cards.py vault/interviews/core/leetcode/problems/<new slugs>.md`
    (0 problems), `uv run python scripts/plain_style.py <new cards>` ok, `uv run trellis --domain leetcode-daily validate`
    0 errors.
 5. `uv run trellis --domain leetcode-daily anki-push` (desktop Anki must be running; if AnkiConnect does not answer,
    skip this step and say so — the next run pushes).
-6. Commit only `skeleton/leetcode-daily.yaml` and `vault/interviews/core/leetcode/daily/`, message
+6. Commit only `skeleton/leetcode-daily.yaml`, `vault/interviews/core/leetcode/daily/` and the new files in `vault/interviews/core/leetcode/problems/`, message
    `Daily LeetCode deck: <n> card(s)`, then
    `git pull -q --rebase && git push -q git@github.com:ChiChasesCheese/trellis.git HEAD:main`. `git checkout uv.lock`
    if uv touched it. Never commit `sources/local/`.
 
 ## The card
 
-File `vault/interviews/core/leetcode/daily/cards/tlc-daily-<slug>-0-whole.md` (flat folder), frontmatter `id: tlc-daily-<slug>-0-whole`, `node: <leaf id>`, `type: qa`, no `step:`. Shape and every rule
+One body per problem, shared by every deck (Chi, 2026-11-01): write `vault/interviews/core/leetcode/problems/<slug>.md`
+with frontmatter `slug: <slug>` only. `place` then writes this deck's stub
+`vault/interviews/core/leetcode/daily/cards/tlc-daily-<slug>-0-whole.md` (id, node, `body:`, `meta:`); never copy a
+body into a deck folder, and improve an existing body in place instead of writing a second one. Shape and every rule
 follow the TikTok whole-answer cards: read `research/companies/tiktok/CARDS.md` (recursion first; 2-D DP as a full
 table; comments carry the explanation; "What 简单解法 is") and copy the shape of
 `vault/interviews/core/leetcode/tiktok/cards/p2/tlc-cheapest-flights-within-k-stops-0-whole.md`.
 
-- Front: `**LC n 中文名**｜<Easy|Medium|Hard>` (no solve date, no 「每日」 wording anywhere on the card), the full statement in Chinese with all constraints
+- Front: `**LC n 中文名**｜<Easy|Medium|Hard>` (decks add their own facts after ｜ through `meta:`; no solve date, no 「每日」 wording anywhere on the card), the full statement in Chinese with all constraints
   (copied from the statement file; translate faithfully when it is English) and 1–2 examples, then
   「给出完整的最优解答：考点、识别、推导、代码、复杂度、易错点。」
 - Back, in order: **考点** (one or two lines: the core concept the problem tests, named so it can be searched, e.g.

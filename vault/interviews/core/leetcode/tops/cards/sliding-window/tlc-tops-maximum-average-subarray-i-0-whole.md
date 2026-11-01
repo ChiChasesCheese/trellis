@@ -2,40 +2,6 @@
 id: tlc-tops-maximum-average-subarray-i-0-whole
 node: sliding-window.maximum-average-subarray-i
 type: qa
+body: interviews/core/leetcode/problems/maximum-average-subarray-i
+meta: "Easy · 全公司热度第 225 名 · LeetCode 75"
 ---
-## Q
-**LC 643 子数组最大平均数 I**｜Easy · 全公司热度第 225 名 · LeetCode 75
-
-给你由 `n` 个元素组成的整数数组 `nums` 和整数 `k`。找出平均数最大且**长度为 `k`** 的连续子数组，并输出该最大平均数；误差小于 `10^-5` 的答案都视为正确。`n == nums.length`，`1 <= k <= n <= 10^5`，`-10^4 <= nums[i] <= 10^4`。例：`nums = [1,12,-5,-6,50,3]`, `k = 4` → `12.75`（`(12-5-6+50)/4`）；`nums = [5]`, `k = 1` → `5.0`。
-
-给出完整的最优解答：考点、识别、推导、代码、复杂度、易错点。
-
-## A
-**考点。** 定长滑动窗口（fixed-size sliding window）：窗口右移时增量更新窗口和。
-
-**一句话。** 窗口长度固定，平均数最大等价于窗口和最大；右移一格时加上新进来的、减去滑出的。
-
-**识别。** 「连续子数组 + 固定长度 `k` + 求最值」= 定长滑动窗口；`n = 10^5` 排除每个窗口重新求和的 `O(nk)`。
-
-**推导。** 暴力：对每个起点 `sum(nums[i:i+k])`，总共 `O(nk)`。相邻两个窗口只差一头一尾，重复求和是浪费，用 `window += 进 - 出` 做到 `O(1)` 更新。长度固定，所以比较和即可，最后只除一次 `k`，也避免了浮点误差的累积。
-
-```python
-def find_max_average(nums: list[int], k: int) -> float:
-    window = sum(nums[:k])  # 第一个窗口的和
-    best = window
-    for i in range(k, len(nums)):
-        window += nums[i] - nums[i - k]  # 窗口右移一格：进来 nums[i]，出去 nums[i-k]
-        best = max(best, window)
-    return best / k  # 窗口长度固定，平均数最大 <=> 和最大；整数和比较，最后除一次
-```
-
-运行：`([1,12,-5,-6,50,3], 4)` → `12.75`；`([5], 1)` → `5.0`；`([-1], 1)` → `-1.0`。
-
-**复杂度。** 时间 `O(n)`，空间 `O(1)`。
-
-**易错点。**
-- `best` 初始化为 `0` 会在全为负数时出错：`[-1]`, `k = 1` 会返回 `0.0`，正确是 `-1.0`；应以第一个窗口的和初始化。
-- 滑出的下标是 `i - k`，不是 `i - k + 1` 或 `i - 1`。
-- 对每个窗口都做除法并比较浮点数没有必要，整数和更精确。
-
-**同模式。** LC 1456 定长子串中元音的最大数目、LC 438 找到字符串中所有字母异位词、LC 567 字符串的排列、LC 239 滑动窗口最大值。

@@ -8,15 +8,10 @@ the old 3–6 fragment cards per problem are replaced by one whole card in the T
 
 ## The card
 
-File `vault/interviews/core/leetcode/tops/cards/<branch>/tlc-tops-<slug>-0-whole.md` (branch = leaf id before the dot), frontmatter exactly:
-
-```
----
-id: tlc-tops-<slug>-0-whole
-node: <leaf id from skeleton/leetcode-tops.yaml>
-type: qa
----
-```
+One body per problem, shared by every deck (Chi, 2026-11-01): write `vault/interviews/core/leetcode/problems/<slug>.md`
+with frontmatter `slug: <slug>` only and the header `**LC n 中文名**｜<Easy|Medium|Hard>`. Then
+`uv run python research/leetcode-tops/adopt_cards.py` writes this deck's stub (id, node, header meta). If the shared
+body already exists, improve it in place; never write a second body.
 
 Statement: `sources/local/leetcode-tops/<slug>.txt` (copy constraints from it; translate faithfully if English). Lists and
 difficulty: `research/leetcode-tops/selection.json` (by slug: `lists`, `rank` = rank by company-tag frequency). If the problem already has a whole card in
@@ -26,7 +21,7 @@ to the rules below (do not copy its prose).
 Rules: `research/companies/tiktok/CARDS.md`, all of it — recursion first; 2-D DP as a full table (compression only as
 one line); main problem first; comments carry the explanation; "What 简单解法 is". Shape:
 
-- Front: `**LC n 中文名**｜<Easy|Medium|Hard> · 全公司热度第 <rank> 名 · <lists joined by 、>` (omit the lists part when empty), the full statement in Chinese with all
+- Front: `**LC n 中文名**｜<Easy|Medium|Hard>` (the deck adds rank and lists through the stub's `meta:`), the full statement in Chinese with all
   constraints and 1–2 examples, then 「给出完整的最优解答：考点、识别、推导、代码、复杂度、易错点。」
 - Back, in order: **考点** (one line naming the core concept, searchable) · **一句话** · **识别** (statement signals →
   technique, incl. what `n` allows) · **推导** (short: obvious approach → why it fails → key insight) · optional

@@ -77,3 +77,13 @@ def test_core_problem_list_opens_in_place():
     related = {315: ("LC 315 右侧小于当前元素的个数", "<p>题意。</p><pre>code315</pre>")}
     html = _html("**核心题。**\n\n- LC 315 右侧小于当前元素的个数（Hot 100）：逆序对计数的模板\n", related, {4099})
     assert '<details class="inline-example"><summary>' in html and "code315" in html
+
+
+def test_related_problem_shows_the_main_solution_not_the_simple_one(tmp_path):
+    from trellis.build import load_related
+    (tmp_path / "x").mkdir()
+    (tmp_path / "x" / "tlc-k-0-whole.md").write_text(
+        "---\nid: tlc-k-0-whole\nnode: a.k\ntype: qa\n---\n## Q\n**LC 215 第 K 大**｜Medium\n\n题意。\n\n## A\n"
+        "**简单解法。** 排序。\n\n```python\nsimple = 1\n```\n\n最优解：\n\n```python\nquick = 2\n```\n", encoding="utf-8")
+    html = load_related(tmp_path)[215][1]
+    assert "quick" in html and "simple" not in html
