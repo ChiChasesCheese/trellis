@@ -1,0 +1,1 @@
+moves.spin.half-spin, moves.spin.spin-pull-up, moves.combo.decel-drive, moves.combo.shammgod, moves.combo.rondo-fake, moves.stepback.stepback-baifo-between-legs, moves.stepback.side-step-three, moves.stepback.brake-stepback, moves.post.up-and-under, moves.post.pivot-foot-switch, moves.midrange.hesi-pull-up-jimbo, moves.finish.gyro-step, moves.finish.wrong-foot-finish

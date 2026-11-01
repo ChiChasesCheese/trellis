@@ -12,70 +12,291 @@ study:
   new_per_day: 10
   reviews_per_day: 100
 nodes:
-  - id: skills
-    order: 1
-    core: true
-    title: 技能包（过人招式）
-    summary: 持球过人和终结的主要招式：动作要领、什么时候用、怎么读防守。
+- id: moves
+  order: 1
+  core: true
+  title: 技能包（Signature moves）
+  summary: 高阶连招和球星招牌动作，不是基本功。
+  children:
+  - id: moves.spin
+    title: Spin 系列
+    summary: Spin 系列：高阶招式和球星招牌动作。
     children:
-      - id: skills.dribble
-        title: 运球变向
-        summary: 靠运球改变方向和节奏。
-        children:
-          - {id: skills.dribble.crossover, title: 体前变向（Crossover）, summary: 最基础的换手变向；降重心、压肩、低而快地换手。}
-          - {id: skills.dribble.in-and-out, title: 内外运球（In-and-Out）, summary: 假装变向再推回同侧，骗防守重心。}
-          - {id: skills.dribble.between-legs, title: 胯下运球与剪刀步（Between the Legs）, summary: 球从胯下换手，双脚交替的剪刀步保护球并连接下一步动作。}
-          - {id: skills.dribble.behind-back, title: 背后运球（Behind the Back）, summary: 身体挡住防守，贴身时安全换手。}
-          - {id: skills.dribble.spin, title: 转身（Spin Move）, summary: 贴身被堵时用身体护球转向，中枢脚和翻球是要点。}
-          - {id: skills.dribble.hesitation, title: 犹豫步（Hesitation）, summary: 突然减速抬眼假装停下或投篮，防守直起身再加速。}
-          - {id: skills.dribble.double-crossover, title: 连续变向（Double Crossover）, summary: 两次换手连接，第二次才是真正的突破方向。}
-          - {id: skills.dribble.snatch-back, title: 回拉（Snatch Back / Pull-Back）, summary: 突破中向后拉球拉开空间，接投篮或变向。}
-          - {id: skills.dribble.shammgod, title: 山姆高德（Shammgod）, summary: 向前推球再用另一只手拉回，骗防守伸手。}
-      - id: skills.footwork
-        title: 脚步与突破
-        summary: 不靠运球花样，靠脚步和第一步。
-        children:
-          - {id: skills.footwork.first-step, title: 瞬步突破（Explosive First Step）, summary: 爆发性的第一步抢肩位，接球或持球启动直接过人。}
-          - {id: skills.footwork.jab-step, title: 试探步（Jab Step）, summary: 三威胁姿势下用小步试探防守反应，再决定投或突。}
-          - {id: skills.footwork.rip-through, title: 交叉步突破（Rip Through / Crossover Step）, summary: 接球后从身前抡球过防守，用交叉步抢位。}
-          - {id: skills.footwork.step-back, title: 后撤步（Step-Back）, summary: 突破中向后跳出空间投篮，降重心、收球、落地平衡。}
-          - {id: skills.footwork.side-step, title: 侧步（Side Step）, summary: 横向跨出一步躲开补防，直接出手。}
-          - {id: skills.footwork.pump-fake, title: 假动作与上下步（Pump Fake / Up-and-Under）, summary: 投篮假动作骗起跳，再从下方跨步进攻。}
-      - id: skills.finishing
-        title: 终结
-        summary: 进入禁区后怎么把球放进去。
-        children:
-          - {id: skills.finishing.euro-step, title: 欧洲步（Euro Step）, summary: 两步大幅变向绕开护框，合法节奏是要点。}
-          - {id: skills.finishing.hop-step, title: 跳步（Hop Step）, summary: 双脚同时落地急停，两侧都可起步，对抗中保持平衡。}
-          - {id: skills.finishing.floater, title: 抛投（Floater）, summary: 在护框者封盖前从罚球线附近高抛出手。}
-          - {id: skills.finishing.reverse-layup, title: 反手上篮（Reverse Layup）, summary: 借篮筐挡住封盖，从另一侧放球。}
-  - id: tactics
-    order: 2
-    title: 战术
-    summary: 主要的进攻和防守战术：怎么跑、读什么、对方怎么防。
+    - id: moves.spin.nick-young-spin
+      title: Nick Young's consecutive spin (double spin)（尼克杨转身）
+      summary: Nick Young
+    - id: moves.spin.half-spin
+      title: Half spin (half-turn hesitation)（半转身）
+      summary: Jalen Brunson · Anthony Edwards · Isaiah Thomas
+    - id: moves.spin.fake-spin
+      title: Fake spin (spin hesitation)（假转身）
+      summary: DeMar DeRozan · Isaiah Thomas
+    - id: moves.spin.lull-and-spin
+      title: Slow-roll then spin (misdirection spin)（转身误导）
+      summary: Tony Parker
+    - id: moves.spin.spin-pull-up
+      title: One-dribble spin into pull-up（转身急停跳投）
+      summary: Shai Gilgeous-Alexander · Kobe Bryant
+    - id: moves.spin.fake-pass-spin
+      title: Fake pass, spin and pivot-foot switch（假传转身换轴心脚）
+      summary: Nikola Jokic · Victor Wembanyama
+    - id: moves.spin.spin-back-half-spin-chain
+      title: Spin-back into repeated half-spins（回转接连续半转身）
+      summary: Anthony Edwards
+  - id: moves.stepback
+    title: Step-back 系列
+    summary: Step-back 系列：高阶招式和球星招牌动作。
     children:
-      - id: tactics.offense
-        title: 进攻战术
-        summary: 常见的进攻配合和体系。
-        children:
-          - {id: tactics.offense.pick-and-roll, title: 挡拆（Pick and Roll）, summary: 最核心的二人配合：掩护、下顺，持球人读防守。}
-          - {id: tactics.offense.pick-and-pop, title: 挡拆外弹（Pick and Pop）, summary: 掩护后外弹到三分线接球投篮，拉开护框者。}
-          - {id: tactics.offense.dribble-handoff, title: 手递手（Dribble Handoff）, summary: 运球交接并顺势掩护，比挡拆更快启动。}
-          - {id: tactics.offense.spain-pnr, title: 西班牙挡拆（Spain Pick and Roll）, summary: 挡拆后第三人给下顺球员的防守人做背掩护。}
-          - {id: tactics.offense.horns, title: 牛角战术（Horns）, summary: 两名内线站肘区的落位，能衍生多种挡拆和手递手。}
-          - {id: tactics.offense.drive-and-kick, title: 突分（Drive and Kick）, summary: 突破吸引协防后分给外线空位。}
-          - {id: tactics.offense.backdoor-cut, title: 反跑（Backdoor Cut）, summary: 防守过度贴防时，切向篮下接球。}
-          - {id: tactics.offense.flex, title: 弹性进攻（Flex Offense）, summary: 底线横掩护接下掩护的循环。}
-          - {id: tactics.offense.princeton, title: 普林斯顿（Princeton Offense）, summary: 高位传球、反跑和手递手组成的移动进攻。}
-          - {id: tactics.offense.five-out, title: 五外动态进攻（5-Out Motion）, summary: 五人都站外线拉开，靠切入和传球制造机会。}
-          - {id: tactics.offense.triangle, title: 三角进攻（Triangle Offense）, summary: 一侧三人成三角，读防守决定传切。}
-          - {id: tactics.offense.staggered-screens, title: 交错掩护（Staggered Screens / Floppy）, summary: 连续掩护帮射手摆脱接球投篮。}
-          - {id: tactics.offense.zone-offense, title: 破联防（Beating a 2-3 Zone）, summary: 站在防守缝里、打高位和底线、快速转移。}
-      - id: tactics.defense
-        title: 防守战术
-        summary: 挡拆防守和整体防守体系。
-        children:
-          - {id: tactics.defense.pnr-coverages, title: 挡拆防守（Drop / Hedge / Switch / Blitz / ICE）, summary: 五种常见的挡拆防法，各自放掉什么。}
-          - {id: tactics.defense.help-rotation, title: 协防与轮转（Help and Rotation）, summary: 收缩、补防、再补防的顺序和位置。}
-          - {id: tactics.defense.zone-23, title: 2-3 联防（2-3 Zone）, summary: 保护禁区、放外线的区域防守及其弱点。}
-          - {id: tactics.defense.full-court-press, title: 全场紧逼（Full-Court Press）, summary: 从底线开始施压、包夹和抢断传球路线。}
+    - id: moves.stepback.stepback-baifo-drive
+      title: Step-back into pump fake into drive（后撤拜佛突破）
+      summary: James Harden
+    - id: moves.stepback.stepback-baifo-between-legs
+      title: Step-back, pump fake, between-the-legs drive（后撤拜佛胯下过人）
+      summary: James Harden
+    - id: moves.stepback.double-stepback
+      title: Double step-back（连续后撤步）
+      summary: James Harden
+    - id: moves.stepback.one-leg-stepback
+      title: One-legged step-back three（单腿后撤步三分）
+      summary: James Harden
+    - id: moves.stepback.side-step-three
+      title: Side-step three（侧步三分）
+      summary: James Harden · Stephen Curry
+    - id: moves.stepback.jab-stepback
+      title: Jab step into step-back（试探步接后撤步）
+      summary: Stephen Curry
+    - id: moves.stepback.in-and-out-stepback
+      title: In-and-out dribble into step-back（虚晃运球接后撤步）
+      summary: Jalen Brunson · Paul Pierce
+    - id: moves.stepback.brake-stepback
+      title: Brake-and-step-back (stop then step-back)（急停后撤步）
+      summary: Tyrese Maxey
+    - id: moves.stepback.bump-stepback
+      title: Bump-and-step-back (off-arm bump into step-back)（顶肩后撤步）
+      summary: Shai Gilgeous-Alexander
+  - id: moves.combo
+    title: Dribble combos
+    summary: Dribble combos：高阶招式和球星招牌动作。
+    children:
+    - id: moves.combo.decel-drive
+      title: Deceleration drive (slowing down into burst)（急刹减速过人）
+      summary: Luka Doncic · Anthony Edwards · Shai Gilgeous-Alexander
+    - id: moves.combo.hesitation-between-legs-chain
+      title: Hesitation into between-the-legs chain（犹豫步接胯下连招）
+      summary: Kyrie Irving
+    - id: moves.combo.double-hesitation
+      title: Double hesitation into jumper（双重犹豫步）
+      summary: Stephen Curry
+    - id: moves.combo.shammgod
+      title: Shammgod and its follow-ups（沙姆格德运球及其接续）
+      summary: Kyrie Irving · Will Bynum · Tony Wroten
+    - id: moves.combo.fake-sham-hesi
+      title: Fake sham into hesitation（假沙姆格德接犹豫步）
+      summary: Will Bynum
+    - id: moves.combo.double-behind-back
+      title: Double behind-the-back crossover（双背后运球）
+      summary: Jamal Crawford
+    - id: moves.combo.rondo-fake
+      title: Rondo fake (behind-the-back ball fake)（朗多背后假传）
+      summary: Isaiah Thomas · Rajon Rondo
+    - id: moves.combo.baifo-drive
+      title: Pump-fake drive (the shot-fake setup behind 拜佛)（拜佛过人）
+      summary: James Harden · Stephen Curry · DeMar DeRozan
+  - id: moves.post
+    title: Post moves
+    summary: Post moves：高阶招式和球星招牌动作。
+    children:
+    - id: moves.post.dream-shake
+      title: Dream Shake（梦幻脚步）
+      summary: Victor Wembanyama · Joel Embiid · Hakeem Olajuwon
+    - id: moves.post.up-and-under
+      title: Up-and-under（上步虚晃接下步）
+      summary: Hakeem Olajuwon · Kevin McHale
+    - id: moves.post.sombor-shuffle
+      title: Sombor Shuffle（约基奇的 Sombor Shuffle）
+      summary: Nikola Jokic
+    - id: moves.post.one-legged-fadeaway
+      title: One-legged fadeaway（单腿后仰）
+      summary: Victor Wembanyama · Kevin Durant · Nikola Jokic
+    - id: moves.post.pivot-foot-switch
+      title: Pivot-foot switch (Kobe pivot switch)（换轴心脚）
+      summary: Nikola Jokic · Kobe Bryant
+    - id: moves.post.block-stepback-turnaround
+      title: Block step-back turnaround（低位后撤转身跳投）
+      summary: LaMarcus Aldridge
+    - id: moves.post.slow-motion-shot-fake
+      title: Slow-motion shot fake（慢动作假投）
+      summary: Al Jefferson
+  - id: moves.midrange
+    title: Mid-range
+    summary: Mid-range：高阶招式和球星招牌动作。
+    children:
+    - id: moves.midrange.hesi-pull-up-jimbo
+      title: Hesi pull-up jimbo（杜兰特犹豫步急停跳投）
+      summary: Kevin Durant
+    - id: moves.midrange.derozan-jab-pump-fadeaway
+      title: Jab, pump fake, pivot, fadeaway（试探步假投转身后仰）
+      summary: DeMar DeRozan · Kobe Bryant
+    - id: moves.midrange.pump-fake-step-through
+      title: Pump fake step-through（假投后跨步突破）
+      summary: DeMar DeRozan · Dwyane Wade · Kobe Bryant
+  - id: moves.finish
+    title: Finishes
+    summary: Finishes：高阶招式和球星招牌动作。
+    children:
+    - id: moves.finish.gyro-step
+      title: Gyro step（陀螺步）
+      summary: Giannis Antetokounmpo
+    - id: moves.finish.360-reverse-layup
+      title: 360 spin reverse layup（360度转身反手上篮）
+      summary: Nick Young
+    - id: moves.finish.reverse-pivot-finish
+      title: Reverse-pivot finish（反向转身拉开防守上篮）
+      summary: Kobe Bryant
+    - id: moves.finish.wrong-foot-finish
+      title: Wrong-foot layup（错脚上篮）
+      summary: Trae Young · Tyrese Maxey · Tony Parker
+    - id: moves.finish.decel-shot-fake-finish
+      title: Decel step then shot fake finish（急停假投终结）
+      summary: Anthony Edwards · Luka Garza
+    - id: moves.finish.sidestep-finish
+      title: Sidestep around the defender into the finish（侧步绕过终结）
+      summary: Shai Gilgeous-Alexander
+- id: tactics
+  order: 2
+  title: 战术
+  summary: 主要的进攻和防守战术：怎么跑、读什么、对方怎么防。
+  children:
+  - id: tactics.offense
+    title: 进攻战术
+    summary: 常见的进攻配合和体系。
+    children:
+    - id: tactics.offense.pick-and-roll
+      title: 挡拆（Pick and Roll）
+      summary: 最核心的二人配合：掩护、下顺，持球人读防守。
+    - id: tactics.offense.pick-and-pop
+      title: 挡拆外弹（Pick and Pop）
+      summary: 掩护后外弹到三分线接球投篮，拉开护框者。
+    - id: tactics.offense.dribble-handoff
+      title: 手递手（Dribble Handoff）
+      summary: 运球交接并顺势掩护，比挡拆更快启动。
+    - id: tactics.offense.spain-pnr
+      title: 西班牙挡拆（Spain Pick and Roll）
+      summary: 挡拆后第三人给下顺球员的防守人做背掩护。
+    - id: tactics.offense.horns
+      title: 牛角战术（Horns）
+      summary: 两名内线站肘区的落位，能衍生多种挡拆和手递手。
+    - id: tactics.offense.drive-and-kick
+      title: 突分（Drive and Kick）
+      summary: 突破吸引协防后分给外线空位。
+    - id: tactics.offense.backdoor-cut
+      title: 反跑（Backdoor Cut）
+      summary: 防守过度贴防时，切向篮下接球。
+    - id: tactics.offense.flex
+      title: 弹性进攻（Flex Offense）
+      summary: 底线横掩护接下掩护的循环。
+    - id: tactics.offense.princeton
+      title: 普林斯顿（Princeton Offense）
+      summary: 高位传球、反跑和手递手组成的移动进攻。
+    - id: tactics.offense.five-out
+      title: 五外动态进攻（5-Out Motion）
+      summary: 五人都站外线拉开，靠切入和传球制造机会。
+    - id: tactics.offense.triangle
+      title: 三角进攻（Triangle Offense）
+      summary: 一侧三人成三角，读防守决定传切。
+    - id: tactics.offense.staggered-screens
+      title: 交错掩护（Staggered Screens / Floppy）
+      summary: 连续掩护帮射手摆脱接球投篮。
+    - id: tactics.offense.zone-offense
+      title: 破联防（Beating a 2-3 Zone）
+      summary: 站在防守缝里、打高位和底线、快速转移。
+  - id: tactics.defense
+    title: 防守战术
+    summary: 挡拆防守和整体防守体系。
+    children:
+    - id: tactics.defense.pnr-coverages
+      title: 挡拆防守（Drop / Hedge / Switch / Blitz / ICE）
+      summary: 五种常见的挡拆防法，各自放掉什么。
+    - id: tactics.defense.help-rotation
+      title: 协防与轮转（Help and Rotation）
+      summary: 收缩、补防、再补防的顺序和位置。
+    - id: tactics.defense.zone-23
+      title: 2-3 联防（2-3 Zone）
+      summary: 保护禁区、放外线的区域防守及其弱点。
+    - id: tactics.defense.full-court-press
+      title: 全场紧逼（Full-Court Press）
+      summary: 从底线开始施压、包夹和抢断传球路线。
+- id: skills
+  order: 3
+  title: 基本功（Fundamentals）
+  summary: 持球过人和终结的主要招式：动作要领、什么时候用、怎么读防守。
+  children:
+  - id: skills.dribble
+    title: 运球变向
+    summary: 靠运球改变方向和节奏。
+    children:
+    - id: skills.dribble.crossover
+      title: 体前变向（Crossover）
+      summary: 最基础的换手变向；降重心、压肩、低而快地换手。
+    - id: skills.dribble.in-and-out
+      title: 内外运球（In-and-Out）
+      summary: 假装变向再推回同侧，骗防守重心。
+    - id: skills.dribble.between-legs
+      title: 胯下运球与剪刀步（Between the Legs）
+      summary: 球从胯下换手，双脚交替的剪刀步保护球并连接下一步动作。
+    - id: skills.dribble.behind-back
+      title: 背后运球（Behind the Back）
+      summary: 身体挡住防守，贴身时安全换手。
+    - id: skills.dribble.spin
+      title: 转身（Spin Move）
+      summary: 贴身被堵时用身体护球转向，中枢脚和翻球是要点。
+    - id: skills.dribble.hesitation
+      title: 犹豫步（Hesitation）
+      summary: 突然减速抬眼假装停下或投篮，防守直起身再加速。
+    - id: skills.dribble.double-crossover
+      title: 连续变向（Double Crossover）
+      summary: 两次换手连接，第二次才是真正的突破方向。
+    - id: skills.dribble.snatch-back
+      title: 回拉（Snatch Back / Pull-Back）
+      summary: 突破中向后拉球拉开空间，接投篮或变向。
+    - id: skills.dribble.shammgod
+      title: 山姆高德（Shammgod）
+      summary: 向前推球再用另一只手拉回，骗防守伸手。
+  - id: skills.footwork
+    title: 脚步与突破
+    summary: 不靠运球花样，靠脚步和第一步。
+    children:
+    - id: skills.footwork.first-step
+      title: 瞬步突破（Explosive First Step）
+      summary: 爆发性的第一步抢肩位，接球或持球启动直接过人。
+    - id: skills.footwork.jab-step
+      title: 试探步（Jab Step）
+      summary: 三威胁姿势下用小步试探防守反应，再决定投或突。
+    - id: skills.footwork.rip-through
+      title: 交叉步突破（Rip Through / Crossover Step）
+      summary: 接球后从身前抡球过防守，用交叉步抢位。
+    - id: skills.footwork.step-back
+      title: 后撤步（Step-Back）
+      summary: 突破中向后跳出空间投篮，降重心、收球、落地平衡。
+    - id: skills.footwork.side-step
+      title: 侧步（Side Step）
+      summary: 横向跨出一步躲开补防，直接出手。
+    - id: skills.footwork.pump-fake
+      title: 假动作与上下步（Pump Fake / Up-and-Under）
+      summary: 投篮假动作骗起跳，再从下方跨步进攻。
+  - id: skills.finishing
+    title: 终结
+    summary: 进入禁区后怎么把球放进去。
+    children:
+    - id: skills.finishing.euro-step
+      title: 欧洲步（Euro Step）
+      summary: 两步大幅变向绕开护框，合法节奏是要点。
+    - id: skills.finishing.hop-step
+      title: 跳步（Hop Step）
+      summary: 双脚同时落地急停，两侧都可起步，对抗中保持平衡。
+    - id: skills.finishing.floater
+      title: 抛投（Floater）
+      summary: 在护框者封盖前从罚球线附近高抛出手。
+    - id: skills.finishing.reverse-layup
+      title: 反手上篮（Reverse Layup）
+      summary: 借篮筐挡住封盖，从另一侧放球。

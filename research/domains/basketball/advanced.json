@@ -1,0 +1,833 @@
+{
+ "moves": [
+  {
+   "id": "nick-young-spin",
+   "group": "spin",
+   "zh": "尼克杨转身（连续转身）",
+   "en": "Nick Young's consecutive spin (double spin)",
+   "players": [
+    "Nick Young"
+   ],
+   "sequence": "Jab step or push-dribble across, hard plant, spin off the pivot foot with the ball on the far hip, keep turning, rise into a fadeaway.",
+   "fools": "Defender chases the first turn, is cleared out by the second, and the shooter lands with a full step of separation.",
+   "search": [
+    "Nick Young spin move Drew League",
+    "尼克杨转身 教学",
+    "尼克杨 连续转身 后仰跳投",
+    "Swaggy P spin cycle"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "half-spin",
+   "group": "spin",
+   "zh": "半转身",
+   "en": "Half spin (half-turn hesitation)",
+   "players": [
+    "Jalen Brunson",
+    "Anthony Edwards",
+    "Isaiah Thomas",
+    "Dirk Nowitzki"
+   ],
+   "sequence": "Attack the defender, plant and turn only half a rotation as if retreating, shield the ball, then reverse out into a drive, pull-up or fadeaway.",
+   "fools": "Defender relaxes or follows the retreat, so the reversal beats his recovery.",
+   "search": [
+    "Isaiah Thomas half turn hesitation",
+    "半转身 教学 小托马斯",
+    "Jalen Brunson half spin footwork",
+    "half spin hesitation basketball move"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "fake-spin",
+   "group": "spin",
+   "zh": "假转身",
+   "en": "Fake spin (spin hesitation)",
+   "players": [
+    "DeMar DeRozan",
+    "Isaiah Thomas"
+   ],
+   "sequence": "Dribble at the defender, start the turn with head, shoulder and hip as if spinning, then stop and continue forward the original way.",
+   "fools": "Defender shifts his weight to the spin side and gets frozen or left behind.",
+   "search": [
+    "假转身 篮球 过人",
+    "fake spin hesitation basketball move",
+    "DeRozan fake spin hesi",
+    "Isaiah Thomas shoulder hesitation"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "lull-and-spin",
+   "group": "spin",
+   "zh": "转身误导（慢带诱敌后转身）",
+   "en": "Slow-roll then spin (misdirection spin)",
+   "players": [
+    "Tony Parker"
+   ],
+   "sequence": "Slow the dribble to lull the defender, then accelerate into a quick spin past him toward the rim.",
+   "fools": "Defender settles on the slow pace and cannot react to the sudden direction change.",
+   "search": [
+    "Tony Parker spin move",
+    "转身误导 篮球 过人",
+    "slow dribble then spin move basketball",
+    "Tony Parker footwork spin finish"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "spin-pull-up",
+   "group": "spin",
+   "zh": "转身急停跳投",
+   "en": "One-dribble spin into pull-up",
+   "players": [
+    "Shai Gilgeous-Alexander",
+    "Kobe Bryant"
+   ],
+   "sequence": "One hard dribble, plant, spin off the pivot foot back to the middle, rise into the jumper before the defender recovers.",
+   "fools": "Defender braced for the drive to the rim turns with the spin and is a step late on the contest.",
+   "search": [
+    "Shai Gilgeous-Alexander spin move pull-up",
+    "Kobe Bryant spinning into midrange jumpers",
+    "转身急停跳投 教学",
+    "SGA spin jumper"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "baseline-spin",
+   "group": "spin",
+   "zh": "底线转身",
+   "en": "Baseline spin",
+   "players": [
+    "Carmelo Anthony"
+   ],
+   "sequence": "Drive along the baseline, hard stop at the block, spin back to the middle with the ball tucked, finish or fade.",
+   "fools": "Defender is pinned to the baseline side, the spin takes him out of the play and the rim helper is late.",
+   "search": [
+    "Carmelo Anthony baseline spin",
+    "Melo baseline spin jumper",
+    "甜瓜 底线转身",
+    "baseline spin move basketball"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "fake-pass-spin",
+   "group": "spin",
+   "zh": "假传转身换轴心脚",
+   "en": "Fake pass, spin and pivot-foot switch",
+   "players": [
+    "Nikola Jokic",
+    "Victor Wembanyama"
+   ],
+   "sequence": "Fake a pass, spin away from the defender, switch pivot feet, launch a fadeaway or finish.",
+   "fools": "Defender reacts to the pass fake, then loses the shooter's body line when the pivot foot switches.",
+   "search": [
+    "Jokic fake pass spin fadeaway Wembanyama",
+    "Jokic pivot foot switch footwork",
+    "约基奇 假传 转身 后仰",
+    "Wembanyama fake spin post move"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "spin-back-half-spin-chain",
+   "group": "spin",
+   "zh": "回转接连续半转身",
+   "en": "Spin-back into repeated half-spins",
+   "players": [
+    "Anthony Edwards"
+   ],
+   "sequence": "Spin back toward the sideline, add two more half-spins, finish with a step-through or a fake step-through.",
+   "fools": "Defender is turned in circles and never gets a set stance, so the final step-through is open.",
+   "search": [
+    "Anthony Edwards footwork vs Pistons spins",
+    "Anthony Edwards half spin step through",
+    "爱德华兹 转身 脚步 活塞",
+    "Anthony Edwards spin move"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "decel-drive",
+   "group": "combo",
+   "zh": "急刹减速过人（Decel）",
+   "en": "Deceleration drive (slowing down into burst)",
+   "players": [
+    "Luka Doncic",
+    "Anthony Edwards",
+    "Shai Gilgeous-Alexander",
+    "Nikola Jokic",
+    "Jalen Williams"
+   ],
+   "sequence": "Full-speed drive, brake hard on the last one or two steps, let the defender's momentum carry him past, then finish or shoot in the gap.",
+   "fools": "Defender is committed to a chase pace and flies by the ball handler.",
+   "search": [
+    "NBA decel move slowing down Luka Edwards Jokic",
+    "Anthony Edwards decel Luka Garza",
+    "急刹 减速 过人 篮球",
+    "slow-mo drive NBA Jokic layup"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "hesitation-between-legs-chain",
+   "group": "combo",
+   "zh": "犹豫步接胯下连招",
+   "en": "Hesitation into between-the-legs chain",
+   "players": [
+    "Kyrie Irving"
+   ],
+   "sequence": "Hard dribble, hesitation step, delayed between-the-legs, behind-the-back change of direction, pull up or finish.",
+   "fools": "Defender cannot read the timing, freezes on the hesitation, then is beaten by the late change of direction.",
+   "search": [
+    "Kyrie Irving hesitation between the legs",
+    "Kyrie Irving dribble combo",
+    "欧文 犹豫步 胯下 连招",
+    "Kyrie Irving ankle breaker combination"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "double-hesitation",
+   "group": "combo",
+   "zh": "双重犹豫步",
+   "en": "Double hesitation into jumper",
+   "players": [
+    "Stephen Curry"
+   ],
+   "sequence": "Explosive first break, first hesitation, second hesitation, then pull up.",
+   "fools": "Defender settles after the first pause and gets caught flat-footed by the second.",
+   "search": [
+    "Stephen Curry hesitation pull-up",
+    "Stephen Curry stutter step hesitation jumper",
+    "库里 犹豫步 投篮",
+    "Curry double hesitation"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "shammgod",
+   "group": "combo",
+   "zh": "沙姆格德运球及其接续",
+   "en": "Shammgod and its follow-ups",
+   "players": [
+    "Kyrie Irving",
+    "Will Bynum",
+    "Tony Wroten"
+   ],
+   "sequence": "Push the ball out one-handed as if giving it away, snatch it back across the body, then cross or hesitate off the defender's lunge.",
+   "fools": "Defender jumps at the pushed-out ball and is then a step behind the snatch-back.",
+   "search": [
+    "Kyrie Irving Shammgod Taj Gibson",
+    "God Shammgod dribble tutorial",
+    "沙姆格德 运球 欧文",
+    "Shammgod crossover combo Big3"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "fake-sham-hesi",
+   "group": "combo",
+   "zh": "假沙姆格德接犹豫步",
+   "en": "Fake sham into hesitation",
+   "players": [
+    "Will Bynum"
+   ],
+   "sequence": "Start the Shammgod push-out, turn it into a hesitation dribble instead of the snatch-back, then go.",
+   "fools": "Defender anticipating the sham jumps to the snatch side, then the hesitation freezes him again.",
+   "search": [
+    "Will Bynum fake sham hesi Big3",
+    "Bynum Fake with Will Bynum",
+    "Will Bynum half a sham",
+    "威尔 拜纳姆 沙姆格德 犹豫步"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "double-behind-back",
+   "group": "combo",
+   "zh": "双背后运球（Shake and Bake）",
+   "en": "Double behind-the-back crossover",
+   "players": [
+    "Jamal Crawford"
+   ],
+   "sequence": "Behind-the-back crossover twice in a row with the ball stretched wide, shoulder shimmy, then pull up or drive.",
+   "fools": "Defender plants for the first cross, turns his hips, and is wrong-footed by the second.",
+   "search": [
+    "Jamal Crawford double behind the back tutorial",
+    "Jamal Crawford shake and bake",
+    "克劳福德 双背后 运球",
+    "Jamal Crawford crossover compilation"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "rondo-fake",
+   "group": "combo",
+   "zh": "朗多背后假传",
+   "en": "Rondo fake (behind-the-back ball fake)",
+   "players": [
+    "Isaiah Thomas",
+    "Rajon Rondo"
+   ],
+   "sequence": "Swing the ball behind the back as if passing, hold it, then drive or shoot while the defender reacts to the pass.",
+   "fools": "Defender jumps the pass lane or drops off, giving up the lane or the shot.",
+   "search": [
+    "Rajon Rondo fake behind the back tutorial",
+    "Rondo fake Isaiah Thomas Towns",
+    "朗多 背后假动作",
+    "Rondo behind the back fake gets to the rack"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "baifo-drive",
+   "group": "combo",
+   "zh": "拜佛过人（投篮假动作）",
+   "en": "Pump-fake drive (the shot-fake setup behind 拜佛)",
+   "players": [
+    "James Harden",
+    "Stephen Curry",
+    "DeMar DeRozan",
+    "Dwyane Wade"
+   ],
+   "sequence": "Hold the dribble, bring the ball up to shooting position with both hands, eyes on the rim, pull the feet in, then drive past the defender who jumps.",
+   "fools": "Defender leaves the floor to contest and the ball handler drives past his balance point.",
+   "search": [
+    "拜佛过人 教学 哈登",
+    "拜佛 篮球 假动作 库里",
+    "Harden pump fake Paul George drive",
+    "pump fake drive basketball move"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "stepback-baifo-drive",
+   "group": "stepback",
+   "zh": "后撤拜佛突破",
+   "en": "Step-back into pump fake into drive",
+   "players": [
+    "James Harden"
+   ],
+   "sequence": "Step back to create space, pump the ball up as the defender closes, then drive past him as he jumps.",
+   "fools": "Defender closes hard on the step-back and leaves the ground on the fake.",
+   "search": [
+    "后撤拜佛 篮球",
+    "撤步拜佛 过人 教学",
+    "Harden step back fake drive",
+    "step back pump fake drive basketball"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "stepback-baifo-between-legs",
+   "group": "stepback",
+   "zh": "后撤拜佛胯下过人",
+   "en": "Step-back, pump fake, between-the-legs drive",
+   "players": [
+    "James Harden"
+   ],
+   "sequence": "Step back, pump fake to pull the defender up, between-the-legs dribble to go past him.",
+   "fools": "Defender is pulled up by the fake and the between-the-legs changes the direction as he lands.",
+   "search": [
+    "胯下撤步拜佛过人",
+    "后撤拜佛 胯下",
+    "撤步拜佛 实战",
+    "step back pump fake between the legs drive"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "double-stepback",
+   "group": "stepback",
+   "zh": "连续后撤步",
+   "en": "Double step-back",
+   "players": [
+    "James Harden"
+   ],
+   "sequence": "Step back, gather again and step back a second time before rising for the jumper.",
+   "fools": "Defender follows the first retreat step and is left a full extra step behind after the second.",
+   "search": [
+    "James Harden Double Step Back",
+    "Harden step back step back travel",
+    "哈登 连续后撤步",
+    "double step back jumper NBA"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "one-leg-stepback",
+   "group": "stepback",
+   "zh": "单腿后撤步三分",
+   "en": "One-legged step-back three",
+   "players": [
+    "James Harden"
+   ],
+   "sequence": "Step back, then shoot off the single push-off foot with the free leg raised, fading away.",
+   "fools": "Defender prepares for the usual two-foot step-back and misjudges the timing of the one-footed release.",
+   "search": [
+    "James Harden one-legged step back three",
+    "哈登 单腿 后撤步 三分",
+    "Harden new move one legged 3",
+    "one legged step back jumper"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "side-step-three",
+   "group": "stepback",
+   "zh": "侧步三分",
+   "en": "Side-step three",
+   "players": [
+    "James Harden",
+    "Stephen Curry"
+   ],
+   "sequence": "Dribble, fake or cross one way, then take a lateral step the other way and rise for the shot.",
+   "fools": "Defender is pulled the wrong way by the fake and cannot close out sideways in time.",
+   "search": [
+    "Stephen Curry side step three",
+    "James Harden side step three",
+    "哈登 侧步 三分",
+    "Steph side step Olympic gold medal"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "jab-stepback",
+   "group": "stepback",
+   "zh": "试探步接后撤步",
+   "en": "Jab step into step-back",
+   "players": [
+    "Stephen Curry"
+   ],
+   "sequence": "Jab step with head and shoulder fake toward the defender, retreat step, step-back shot.",
+   "fools": "Defender bites on the jab, shifts his weight forward, and cannot recover to the shot.",
+   "search": [
+    "Stephen Curry jab step back",
+    "库里 试探步 后撤步",
+    "Curry jab step ankle breaker",
+    "jab step step back three tutorial"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "in-and-out-stepback",
+   "group": "stepback",
+   "zh": "虚晃运球接后撤步",
+   "en": "In-and-out dribble into step-back",
+   "players": [
+    "Jalen Brunson",
+    "Paul Pierce"
+   ],
+   "sequence": "Show an in-and-out dribble to sell a drive one way, then take the step-back and fade to shoot.",
+   "fools": "Defender buys the in-and-out and moves with it, leaving the step-back uncontested.",
+   "search": [
+    "Paul Pierce in and out dribble step back",
+    "Jalen Brunson in and out step back",
+    "虚晃 后撤步 皮尔斯",
+    "in and out dribble stepback jumper"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "brake-stepback",
+   "group": "stepback",
+   "zh": "急停后撤步",
+   "en": "Brake-and-step-back (stop then step-back)",
+   "players": [
+    "Tyrese Maxey"
+   ],
+   "sequence": "Downhill at speed, sudden stop, step back far enough to create separation, rise.",
+   "fools": "Defender is committed to stopping the drive and cannot adjust once the ball handler backs out.",
+   "search": [
+    "Tyrese Maxey signature step back",
+    "Maxey stop and step back jumper",
+    "马克西 急停 后撤步",
+    "stop on a dime step back NBA"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "bump-stepback",
+   "group": "stepback",
+   "zh": "顶肩后撤步",
+   "en": "Bump-and-step-back (off-arm bump into step-back)",
+   "players": [
+    "Shai Gilgeous-Alexander"
+   ],
+   "sequence": "Attack the defender, bump with the shoulder or off-arm to create space, step back, rise.",
+   "fools": "Defender is nudged off his spot and cannot contest the release.",
+   "search": [
+    "Shai Gilgeous-Alexander signature shoulder bump move",
+    "SGA push off step back",
+    "谢伊 顶肩 后撤步",
+    "SGA midrange step back bump"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "dream-shake",
+   "group": "post",
+   "zh": "梦幻脚步（Dream Shake）",
+   "en": "Dream Shake",
+   "players": [
+    "Victor Wembanyama",
+    "Joel Embiid",
+    "Hakeem Olajuwon"
+   ],
+   "sequence": "Back-down, shoulder or head fake one way, turn the other way and fade or finish, with a further fake or up-and-under as needed.",
+   "fools": "Defender flinches on the first fake, then is turned the wrong way by the reverse.",
+   "search": [
+    "Hakeem Olajuwon Dream Shake",
+    "梦幻脚步 篮球 教学",
+    "Embiid Dream Shake",
+    "Wembanyama Hakeem Olajuwon dream shake training"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "up-and-under",
+   "group": "post",
+   "zh": "上步虚晃接下步（Up-and-under）",
+   "en": "Up-and-under",
+   "players": [
+    "Hakeem Olajuwon",
+    "Kevin McHale"
+   ],
+   "sequence": "Up-fake sending the defender off his feet, step under him with the pivot foot planted, and finish with the shot.",
+   "fools": "Defender jumps at the shot fake and is passed as he comes down.",
+   "search": [
+    "Kevin McHale up and under",
+    "up and under post move",
+    "麦克海尔 上步 虚晃 下步",
+    "Hakeem up and under"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "sombor-shuffle",
+   "group": "post",
+   "zh": "约基奇的 Sombor Shuffle（单腿后仰）",
+   "en": "Sombor Shuffle",
+   "players": [
+    "Nikola Jokic"
+   ],
+   "sequence": "Rhythm dribble, lean back, shoot a high one-footed fadeaway off the right foot, launched from behind the head.",
+   "fools": "Defender cannot time the unusual release point and tempo, and cannot contest the high arc.",
+   "search": [
+    "Jokic Sombor Shuffle",
+    "约基奇 索姆博尔 摇摆步",
+    "Sombor Shuffle compilation",
+    "Jokic signature shot explained"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "one-legged-fadeaway",
+   "group": "post",
+   "zh": "单腿后仰",
+   "en": "One-legged fadeaway",
+   "players": [
+    "Victor Wembanyama",
+    "Kevin Durant",
+    "Nikola Jokic",
+    "Kobe Bryant",
+    "Dirk Nowitzki"
+   ],
+   "sequence": "One or two hard dribbles, half-spin, pivot away from the defender, hop off the back foot into a leaning jumper with the other knee raised.",
+   "fools": "Defender cannot reach the release point, which stays over his arms whichever way he leans.",
+   "search": [
+    "Dirk Nowitzki one-legged fadeaway",
+    "Kevin Durant one legged fadeaway",
+    "德克 单腿 后仰",
+    "Wembanyama one-legged fadeaway"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "pivot-foot-switch",
+   "group": "post",
+   "zh": "换轴心脚",
+   "en": "Pivot-foot switch (Kobe pivot switch)",
+   "players": [
+    "Nikola Jokic",
+    "Kobe Bryant"
+   ],
+   "sequence": "Pivot off one foot, then rotate and plant on the other to re-pin the defender and open a new shooting angle.",
+   "fools": "Defender gets set for one angle and the shooter relocates his body line for the shot.",
+   "search": [
+    "Kobe Bryant pivot switch",
+    "Kobe footwork pivot",
+    "科比 换轴心脚",
+    "Jokic switch pivot foot"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "block-stepback-turnaround",
+   "group": "post",
+   "zh": "低位后撤转身跳投",
+   "en": "Block step-back turnaround",
+   "players": [
+    "LaMarcus Aldridge"
+   ],
+   "sequence": "From the left block, drop-step to move the defender, then step back and turn into a mid-range jumper.",
+   "fools": "Defender is moved off his line by the drop step and cannot recover to contest.",
+   "search": [
+    "LaMarcus Aldridge left block step back turnaround",
+    "Aldridge turnaround jumper",
+    "奥尔德里奇 低位 转身 跳投",
+    "post step back turnaround jumper"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "slow-motion-shot-fake",
+   "group": "post",
+   "zh": "慢动作假投",
+   "en": "Slow-motion shot fake",
+   "players": [
+    "Al Jefferson"
+   ],
+   "sequence": "Barely bend the knees and raise the arms slowly as if shooting, then drive past the defender once he freezes.",
+   "fools": "Defender is sold by the lack of speed, expecting a shot, and does not jump or pivot to cover the drive.",
+   "search": [
+    "Al Jefferson shot fake drive",
+    "Al Jefferson post moves",
+    "杰弗森 假动作 低位",
+    "slow shot fake post move"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "hesi-pull-up-jimbo",
+   "group": "midrange",
+   "zh": "杜兰特犹豫步急停跳投（Hesi pull-up）",
+   "en": "Hesi pull-up jimbo",
+   "players": [
+    "Kevin Durant"
+   ],
+   "sequence": "Hesitation dribble, sometimes with a between-the-legs, sell the drive, then rise for the pull-up.",
+   "fools": "Defender sinks to stop the drive and the long-armed shooter rises over him.",
+   "search": [
+    "Kevin Durant hesi pull-up jimbo",
+    "Durant hesitation pull-up breakdown",
+    "杜兰特 犹豫步 急停跳投",
+    "KD signature hesi pull-up compilation"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "derozan-jab-pump-fadeaway",
+   "group": "midrange",
+   "zh": "试探步假投转身后仰",
+   "en": "Jab, pump fake, pivot, fadeaway",
+   "players": [
+    "DeMar DeRozan",
+    "Kobe Bryant"
+   ],
+   "sequence": "Jab step, pump fake with the eyes on the rim, pivot away, then fade back for the jumper.",
+   "fools": "Defender is moved by the jab, jumps at the pump fake, and cannot contest the fade.",
+   "search": [
+    "DeMar DeRozan footwork pump fake",
+    "DeRozan jab step pump fake fadeaway",
+    "德罗赞 假动作 脚步",
+    "DeRozan footwork is a work of art"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "pump-fake-step-through",
+   "group": "midrange",
+   "zh": "假投后跨步突破",
+   "en": "Pump fake step-through",
+   "players": [
+    "DeMar DeRozan",
+    "Dwyane Wade",
+    "Kobe Bryant"
+   ],
+   "sequence": "Pump fake to jump the defender, then step through to the rim, draw the foul or take a dribble to the side.",
+   "fools": "Defender leaves his feet and is passed as he comes down.",
+   "search": [
+    "Kobe Bryant pump fake and step through",
+    "Dwyane Wade pump fake jumper",
+    "科比 假投 跨步",
+    "Kobe best pump fake maker"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "turnaround-fadeaway",
+   "group": "midrange",
+   "zh": "转身后仰（Jordan/Kobe式）",
+   "en": "Turnaround fadeaway",
+   "players": [
+    "Joel Embiid",
+    "Kobe Bryant",
+    "Michael Jordan"
+   ],
+   "sequence": "Back to the defender on the elbow or post, turn over the shoulder, fade backward and shoot from the top of the jump.",
+   "fools": "Defender is shaded by the turn and the fade pushes the release out of reach.",
+   "search": [
+    "Kobe Bryant turnaround fadeaway",
+    "Embiid fadeaway Kobe Jordan",
+    "科比 转身 后仰",
+    "Jordan fadeaway breakdown"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "gyro-step",
+   "group": "finish",
+   "zh": "陀螺步（Giannis）",
+   "en": "Gyro step",
+   "players": [
+    "Giannis Antetokounmpo"
+   ],
+   "sequence": "Start beyond the three-point line, take a Euro-step style first step that is not a gather, then two more long steps to the rim.",
+   "fools": "Defender cannot predict the step pattern or direction and is out of position before the shot is released.",
+   "search": [
+    "Giannis gyro step",
+    "Giannis Eurostep highlights",
+    "字母哥 陀螺步",
+    "Giannis Antetokounmpo ankle breaker eurostep"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "360-reverse-layup",
+   "group": "finish",
+   "zh": "360度转身反手上篮",
+   "en": "360 spin reverse layup",
+   "players": [
+    "Nick Young"
+   ],
+   "sequence": "Attack the basket, rotate a full turn in the air or on the last step, and finish with a reverse layup.",
+   "fools": "Defender and helper lose track of the ball and the takeoff.",
+   "search": [
+    "Nick Young 360 reverse layup",
+    "尼克杨 360 反手上篮",
+    "Swaggy P 360 layup Mavericks",
+    "spin 360 layup NBA"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "reverse-pivot-finish",
+   "group": "finish",
+   "zh": "反向转身拉开防守上篮",
+   "en": "Reverse-pivot finish",
+   "players": [
+    "Kobe Bryant"
+   ],
+   "sequence": "Stop at the rim, reverse pivot to turn away from the defender, shield the ball, and finish with a reverse or twisting layup.",
+   "fools": "Defender's shot-block timing is thrown off by the rotation and the shielded ball.",
+   "search": [
+    "Kobe Bryant reverse pivot",
+    "Kobe double pump fake reverse pivot",
+    "科比 反向 转身 上篮",
+    "reverse pivot finish layup"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "wrong-foot-finish",
+   "group": "finish",
+   "zh": "错脚上篮",
+   "en": "Wrong-foot layup",
+   "players": [
+    "Trae Young",
+    "Tyrese Maxey",
+    "Tony Parker",
+    "Steve Nash"
+   ],
+   "sequence": "Jump off the same-side foot as the shooting hand, so the shooting arm and hip shield the ball from the shot blocker.",
+   "fools": "Defender times a block for the usual left-right takeoff and is early or late on the off-pattern jump.",
+   "search": [
+    "Trae Young wrong foot layup",
+    "Maxey wrong foot floater",
+    "错脚上篮 教学",
+    "Steve Nash wrong foot"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "decel-shot-fake-finish",
+   "group": "finish",
+   "zh": "急停假投终结",
+   "en": "Decel step then shot fake finish",
+   "players": [
+    "Anthony Edwards",
+    "Luka Garza"
+   ],
+   "sequence": "Fast drive, brake on the second step, add a shot fake after it, then finish.",
+   "fools": "Defender chasing from behind either flies by or jumps at the fake.",
+   "search": [
+    "Anthony Edwards decel Luka Garza",
+    "decel shot fake finish",
+    "急刹 假投 上篮",
+    "slow-mo finish at the rim NBA"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "teardrop-floater",
+   "group": "finish",
+   "zh": "泪珠投篮（Teardrop）",
+   "en": "Teardrop floater",
+   "players": [
+    "Tyrese Maxey",
+    "Tony Parker"
+   ],
+   "sequence": "Float the ball high off one hand over the shot blocker in the paint, from a stop or on the move.",
+   "fools": "Defender is the long way from the rim and cannot reach the high-arc release.",
+   "search": [
+    "Tony Parker floater technique",
+    "Tyrese Maxey floater",
+    "托尼帕克 抛投",
+    "teardrop floater technique NBA"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "sidestep-finish",
+   "group": "finish",
+   "zh": "侧步绕过终结",
+   "en": "Sidestep around the defender into the finish",
+   "players": [
+    "Shai Gilgeous-Alexander"
+   ],
+   "sequence": "Drive at the defender, take a sidestep around his body, finish or float over the helper.",
+   "fools": "Defender cannot reset his feet to cut off the angle.",
+   "search": [
+    "Shai Gilgeous-Alexander greatest 1-on-1 moments",
+    "SGA sidestep finish at the rim",
+    "谢伊 侧步 突破",
+    "SGA scoring breakdown"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "spin-move-finish",
+   "group": "finish",
+   "zh": "转身冲击终结",
+   "en": "Spin move into finish",
+   "players": [
+    "Giannis Antetokounmpo",
+    "Anthony Edwards"
+   ],
+   "sequence": "Drive toward the double team, plant, spin away off the pivot foot toward the open side, finish or dunk.",
+   "fools": "Defender and helper commit to the original line and the spin takes the ball past them.",
+   "search": [
+    "Giannis Antetokounmpo signature spin-moves",
+    "Top 10 Giannis spins and finishes",
+    "字母哥 转身 暴扣",
+    "Anthony Edwards spin move finish"
+   ],
+   "confidence": "high"
+  }
+ ]
+}
