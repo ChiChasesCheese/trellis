@@ -42,3 +42,6 @@ vault/interviews/core/stories/raw/
 # Daily must-read deck: rebuilt from personal Anki stats by scripts/lc_mustread.py; never committed (public repo)
 skeleton/leetcode-mustread.yaml
 vault/interviews/core/leetcode/mustread/
+
+# Video / image clips embedded in cards (personal study copies; shipped to Anki inside the .apkg, synced by Obsidian)
+vault/domains/basketball/media/

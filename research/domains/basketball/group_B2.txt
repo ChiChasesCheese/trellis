@@ -1,0 +1,1 @@
+skills.dribble.in-and-out, skills.dribble.spin, skills.dribble.snatch-back, skills.footwork.jab-step, skills.footwork.side-step, skills.finishing.hop-step, tactics.offense.pick-and-roll, tactics.offense.spain-pnr, tactics.offense.backdoor-cut, tactics.offense.five-out, tactics.offense.zone-offense, tactics.defense.zone-23

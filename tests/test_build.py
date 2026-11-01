@@ -103,3 +103,14 @@ def test_fold_turns_sections_and_bullets_into_an_outline():
 def test_two_space_sub_bullets_nest_without_fold():
     from trellis.build import _html
     assert "<li>b</li>" in _html("- a\n  - b\n")
+
+
+def test_video_embed_plays_in_anki(monkeypatch, tmp_path):
+    import trellis.build as b
+    clip = tmp_path / "bb-euro-step.mp4"
+    clip.write_bytes(b"\x00")
+    monkeypatch.setattr(b, "_VAULT_MEDIA", {"bb-euro-step.mp4": clip})
+    b._MEDIA_USED.clear()
+    h = b._html("要点。\n\n![[bb-euro-step.mp4]]\n")
+    assert '<video class="clip" src="bb-euro-step.mp4"' in h and clip in b._MEDIA_USED
+    assert '<span class="ref">nope.mp4</span>' in b._html("![[nope.mp4]]")

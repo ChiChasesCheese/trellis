@@ -1,317 +1,81 @@
-# The Basketball skeleton: the game as a body of knowledge, not a highlight
-# reel. Study order top-to-bottom; `requires` edges mark real prerequisites.
-#
-# The bias throughout is toward what an advanced amateur does NOT pick up by
-# playing more: the geometry of advantage, what a screen defender's stance is
-# telling you, why a rotation arrives from where it does, and the decision
-# rules behind actions that look like instinct. Mechanics are here only where
-# they carry tactical meaning.
+# Basketball: moves and tactics, each with a short focused video clip on the card (rebuilt 2026-11-01).
+# Clips live in vault/domains/basketball/media/ (gitignored) and ship inside the .apkg; research/domains/basketball/clips.json
+# records where each came from.
 domain: basketball
-title: Basketball
-lang: en
+title: 篮球
+deck: 篮球（Basketball）
+lang: zh
 vault: domains/basketball
+study:
+  order: core-first
+  mix: new-first
+  new_per_day: 10
+  reviews_per_day: 100
 nodes:
-  - id: foundations
-    order: 1
-    title: Foundations
-    summary: The court's vocabulary and the arithmetic underneath every possession — read this before any tactic.
-    children:
-      - id: foundations.court-map
-        title: Court Map & Vocabulary
-        summary: Slot, wing, corner, elbow, nail, short corner, dunker spot — the named places coaches speak in, and why each matters.
-      - id: foundations.efficiency
-        title: Efficiency & Points Per Possession
-        summary: PPP as the only scoreboard that compares actions; eFG% and TS% versus raw FG%; why pace never changes who is better.
-      - id: foundations.shot-value
-        title: The Shot Value Hierarchy
-        summary: Rim, free throw, corner three, above-break three, long two — the expected-value ladder that governs shot selection.
-      - id: foundations.advantage
-        title: Advantage & Disadvantage
-        summary: The central concept — creating an advantage, keeping it alive, and the fact that most offense is transporting one, not creating five.
-      - id: foundations.spacing
-        title: Spacing as the Master Variable
-        summary: Why 12-15 feet between players, what a defender guarding two people means, and how one bad spot collapses an offense.
-      - id: foundations.possession-math
-        title: Possession Math
-        summary: Possessions as the unit of the game; the four factors; why a turnover costs more than a missed shot.
-
   - id: skills
-    order: 2
-    title: Individual Skills That Carry Tactics
-    summary: Mechanics only where they change what is tactically available to you.
+    order: 1
+    core: true
+    title: 技能包（过人招式）
+    summary: 持球过人和终结的主要招式：动作要领、什么时候用、怎么读防守。
     children:
+      - id: skills.dribble
+        title: 运球变向
+        summary: 靠运球改变方向和节奏。
+        children:
+          - {id: skills.dribble.crossover, title: 体前变向（Crossover）, summary: 最基础的换手变向；降重心、压肩、低而快地换手。}
+          - {id: skills.dribble.in-and-out, title: 内外运球（In-and-Out）, summary: 假装变向再推回同侧，骗防守重心。}
+          - {id: skills.dribble.between-legs, title: 胯下运球与剪刀步（Between the Legs）, summary: 球从胯下换手，双脚交替的剪刀步保护球并连接下一步动作。}
+          - {id: skills.dribble.behind-back, title: 背后运球（Behind the Back）, summary: 身体挡住防守，贴身时安全换手。}
+          - {id: skills.dribble.spin, title: 转身（Spin Move）, summary: 贴身被堵时用身体护球转向，中枢脚和翻球是要点。}
+          - {id: skills.dribble.hesitation, title: 犹豫步（Hesitation）, summary: 突然减速抬眼假装停下或投篮，防守直起身再加速。}
+          - {id: skills.dribble.double-crossover, title: 连续变向（Double Crossover）, summary: 两次换手连接，第二次才是真正的突破方向。}
+          - {id: skills.dribble.snatch-back, title: 回拉（Snatch Back / Pull-Back）, summary: 突破中向后拉球拉开空间，接投篮或变向。}
+          - {id: skills.dribble.shammgod, title: 山姆高德（Shammgod）, summary: 向前推球再用另一只手拉回，骗防守伸手。}
       - id: skills.footwork
-        title: Footwork & the Pivot
-        summary: The gather, 1-2 stop versus hop, pivot-foot rules as an offensive weapon, and inside-foot versus outside-foot catches.
-      - id: skills.shooting
-        title: Shooting Mechanics
-        summary: Base, alignment, one-motion versus two-motion, and the difference between a rhythm shot and a rushed one.
+        title: 脚步与突破
+        summary: 不靠运球花样，靠脚步和第一步。
+        children:
+          - {id: skills.footwork.first-step, title: 瞬步突破（Explosive First Step）, summary: 爆发性的第一步抢肩位，接球或持球启动直接过人。}
+          - {id: skills.footwork.jab-step, title: 试探步（Jab Step）, summary: 三威胁姿势下用小步试探防守反应，再决定投或突。}
+          - {id: skills.footwork.rip-through, title: 交叉步突破（Rip Through / Crossover Step）, summary: 接球后从身前抡球过防守，用交叉步抢位。}
+          - {id: skills.footwork.step-back, title: 后撤步（Step-Back）, summary: 突破中向后跳出空间投篮，降重心、收球、落地平衡。}
+          - {id: skills.footwork.side-step, title: 侧步（Side Step）, summary: 横向跨出一步躲开补防，直接出手。}
+          - {id: skills.footwork.pump-fake, title: 假动作与上下步（Pump Fake / Up-and-Under）, summary: 投篮假动作骗起跳，再从下方跨步进攻。}
       - id: skills.finishing
-        title: Finishing at the Rim
-        summary: The finishing package — inside hand, Euro, floater, two-foot versus one-foot takeoff — chosen by where the help is.
-      - id: skills.handle
-        title: Ball Handling with Purpose
-        summary: Change of pace and direction as advantage-creators, functional handle versus dribbling for its own sake, protecting the ball.
-      - id: skills.passing
-        title: Passing Types & Timing
-        summary: Pocket pass, skip, wrap-around, lob, drop-off — which pass each defensive reaction opens, and passing a teammate open.
-
-  - id: oneonone
-    order: 3
-    title: One-on-One
-    summary: Beating the man in front of you, on purpose and repeatably.
-    requires: [foundations.advantage]
+        title: 终结
+        summary: 进入禁区后怎么把球放进去。
+        children:
+          - {id: skills.finishing.euro-step, title: 欧洲步（Euro Step）, summary: 两步大幅变向绕开护框，合法节奏是要点。}
+          - {id: skills.finishing.hop-step, title: 跳步（Hop Step）, summary: 双脚同时落地急停，两侧都可起步，对抗中保持平衡。}
+          - {id: skills.finishing.floater, title: 抛投（Floater）, summary: 在护框者封盖前从罚球线附近高抛出手。}
+          - {id: skills.finishing.reverse-layup, title: 反手上篮（Reverse Layup）, summary: 借篮筐挡住封盖，从另一侧放球。}
+  - id: tactics
+    order: 2
+    title: 战术
+    summary: 主要的进攻和防守战术：怎么跑、读什么、对方怎么防。
     children:
-      - id: oneonone.triple-threat
-        title: Triple Threat & the First Move
-        summary: The stance that keeps all three options alive, jab-step reads, and why the first move happens before the catch.
-      - id: oneonone.attack-angles
-        title: Attack Angles & Half a Step
-        summary: Shoulder past hip, playing off the defender's top foot, and turning half a step into a finished drive.
-      - id: oneonone.change-of-pace
-        title: Change of Pace & Direction
-        summary: Why speed differential beats top speed, hesitation and stop-start, and the decelerate-to-accelerate principle.
-      - id: oneonone.counters
-        title: Counters & Second Actions
-        summary: Reading the defender's recovery to pick the counter — crossover back, spin, step-back, re-attack — instead of guessing.
-      - id: oneonone.post-play
-        title: Post Play
-        summary: Sealing and position before the catch, reading the fronting or baseline-side defender, and the classic turn-and-finish menu.
-      - id: oneonone.iso-reads
-        title: Isolation Reads
-        summary: Scoring versus playmaking out of an iso — what the help defenders' positions decide for you before you dribble.
-
-  - id: twoman
-    order: 4
-    title: Two-Man Game
-    summary: The engine of modern offense — two players creating an advantage the other three convert.
-    requires: [foundations.spacing, oneonone.attack-angles]
-    children:
-      - id: twoman.screening
-        title: Setting a Screen That Works
-        summary: Angle, timing, contact, and screening the defender's body rather than the space he occupies; re-screen and slip triggers.
-      - id: twoman.pnr-handler
-        title: Pick & Roll — Ball Handler Reads
-        summary: Reading the big's coverage in real time and the decision tree it produces — turn the corner, snake, split, reject, pull.
-      - id: twoman.pnr-screener
-        title: Pick & Roll — Screener Reads
-        summary: Roll versus pop, the short roll as a 4-on-3 launcher, slip and ghost screens, and rolling to a spot rather than a person.
-      - id: twoman.handoff
-        title: Handoffs & Pistol
-        summary: DHO mechanics, why a handoff is a screen with the ball, keep-versus-give reads, and the pistol series.
-      - id: twoman.offball-screens
-        title: Off-Ball Screens
-        summary: Down screen, pin-down, flare, back screen, cross screen — what each attacks and how the cutter reads it.
-      - id: twoman.cutting
-        title: Cutting & Give-and-Go
-        summary: Basket cut, backdoor, 45-cut and the cardinal rule that a cut ends — the cheapest advantage in basketball.
-      - id: twoman.relocation
-        title: Relocation, Drift & Lift
-        summary: What the two players not in the action must do — moving to keep the passing angle alive and the help defender honest.
-
-  - id: offense
-    order: 5
-    title: Team Offense
-    summary: Turning one player's advantage into the best shot available to five.
-    requires: [twoman.pnr-handler]
-    children:
-      - id: offense.principles
-        title: Offensive Principles & the 0.5 Rule
-        summary: Reading rather than memorizing, shoot-pass-drive within half a second, and why ball movement without player movement fails.
-      - id: offense.drive-and-kick
-        title: Drive & Kick
-        summary: Collapsing the defense and beating the rotation with one extra pass; the corner as the release valve.
-      - id: offense.paint-touch
-        title: Paint Touches & Rim Pressure
-        summary: Why a paint touch changes every defender's position, and the ways to generate one when the drive is not there.
-      - id: offense.transition
-        title: Transition Offense
-        summary: Lanes, rim run, trailer and drag screen, deciding to push or pull it out — the highest-efficiency offense in the game.
-      - id: offense.zone-attack
-        title: Attacking Zone Defense
-        summary: Gaps over passes around, the high post and short corner, overloading a side, and finding the zone's true seams.
-      - id: offense.press-break
-        title: Breaking Pressure
-        summary: Beating full-court pressure with spacing and the middle of the floor, not with dribbling; the sideline trap trap.
-      - id: offense.offensive-rebounding
-        title: Offensive Rebounding
-        summary: Crash-or-retreat as a team decision, angles off the miss, and why the second-chance possession is worth what it is.
-
-  - id: systems
-    order: 6
-    title: Offensive Systems
-    summary: The named frameworks — what each was designed to solve, so you recognize them rather than memorize them.
-    requires: [offense.principles]
-    children:
-      - id: systems.motion
-        title: Motion Offense
-        summary: Rules instead of plays — pass-and-cut, screen-away, fill behind; five-out and four-out-one-in structures.
-      - id: systems.princeton
-        title: The Princeton Offense
-        summary: The high-post hub, the backdoor as a punishment for overplaying, chin and point series, and why it beats more athletic teams.
-      - id: systems.triangle
-        title: The Triangle
-        summary: The sideline triangle and two-man game away from it, spacing by geometry, and reading the defense from the strong-side post.
-      - id: systems.sets
-        title: Set Vocabulary — Horns, Spain, Stack
-        summary: The common set shapes and the actions they hide; how a set manufactures the two-man game you actually want.
-      - id: systems.flow
-        title: Early Offense & Flow
-        summary: Flowing from transition into an action without a call, delay/drag entries, and playing before the defense is set.
-      - id: systems.modern
-        title: The Modern Five-Out Game
-        summary: Gravity, empty-side actions, the death of the long two, and why spacing beat post-up basketball on the numbers.
-
-  - id: defense
-    order: 7
-    title: Defense
-    summary: Where advanced amateurs lose games — the half of basketball that is almost entirely learned, not natural.
-    children:
-      - id: defense.stance-closeout
-        title: Stance & Closeout
-        summary: The defensive stance that lets you move, the sprint-then-chop closeout, and taking away the shot without giving the drive.
-      - id: defense.onball
-        title: On-Ball Defense
-        summary: Forcing to a side and a hand, staying attached without reaching, and the containment mindset over the steal.
-      - id: defense.offball
-        title: Off-Ball Position & Help
-        summary: Ball-you-man, the I-line, one pass away versus two, and seeing both your man and the ball without turning your head.
-      - id: defense.pnr-coverages
-        title: Pick & Roll Coverages
-        summary: Drop, ICE/blue, hedge, switch, blitz — what each protects, what each concedes, and the guard's job in every one.
-      - id: defense.rotations
-        title: Rotations & Helping the Helper
-        summary: Low man, x-out, next rotation, and why the second rotation is the one that actually gets broken.
-      - id: defense.post-defense
-        title: Post Defense
-        summary: Playing the catch before it happens, fronting versus three-quartering, and digging without losing your shooter.
-      - id: defense.rebounding
-        title: Defensive Rebounding
-        summary: Box out as contact then pursuit, the 45-degree rule, and why guards deciding to rebound wins possessions.
-      - id: defense.transition-d
-        title: Transition Defense
-        summary: Building the wall, protecting the rim before the ball, matching up rather than finding "your" man.
-      - id: defense.zone
-        title: Zone Defense
-        summary: 2-3 and 1-3-1 responsibilities, guarding areas with the ball as the trigger, and the weaknesses each shape accepts.
-      - id: defense.pressure
-        title: Pressing & Trapping
-        summary: Full-court and half-court traps, the trap as a timing device, and what the three players away from the ball owe.
-      - id: defense.scheme-choice
-        title: Choosing a Scheme
-        summary: Picking coverage by the opponent's personnel — the shooting big, the downhill guard, the non-shooter you can help off.
-
-  - id: reads
-    order: 8
-    title: Reads & Decision Making
-    summary: Basketball IQ made explicit — the rules good players follow without being able to say them out loud.
-    requires: [defense.rotations, offense.drive-and-kick]
-    children:
-      - id: reads.numbers
-        title: Playing the Numbers Advantage
-        summary: 2-on-1, 3-on-2 and 4-on-3 rules; committing the defender before passing; why the extra pass sometimes gives it back.
-      - id: reads.help-recognition
-        title: Reading the Help
-        summary: Identifying the low man and the tagger before you drive, and letting the help's position choose your finish.
-      - id: reads.shot-selection
-        title: Shot Selection
-        summary: A good shot defined by shooter, situation and score, not by whether it went in; the shot-quality checklist.
-      - id: reads.timing
-        title: Timing & Rhythm
-        summary: Being early, on time, or late as an actual skill — screen timing, cut timing, and playing to the pass rather than to the ball.
-      - id: reads.clock
-        title: Clock & Game Management
-        summary: Shot-clock awareness by zone, the two-for-one, and how time changes which shot is correct.
-
-  - id: situations
-    order: 9
-    title: Special Situations
-    summary: The scripted moments that decide close games and are almost never practiced by amateurs.
-    requires: [reads.clock]
-    children:
-      - id: situations.inbounds
-        title: Inbounds — BLOB & SLOB
-        summary: Baseline and sideline out-of-bounds principles, screening the screener, and the inbounder as a live threat.
-      - id: situations.late-game-offense
-        title: Late-Game Offense
-        summary: Down two versus down three, playing for the last shot, and the two-possession arithmetic that decides which.
-      - id: situations.fouling
-        title: Fouling & Foul Management
-        summary: The intentional-foul decision, fouling up three, bonus awareness, and managing your own foul trouble.
-      - id: situations.after-timeout
-        title: After-Timeout Execution
-        summary: Why ATO plays score at a higher rate, the counter to the obvious first option, and reading the switch you just forced.
-
-  - id: analytics
-    order: 10
-    title: Analytics You Can Play With
-    summary: The numbers that actually change decisions on the floor, and the ones that only sound smart.
-    requires: [foundations.possession-math]
-    children:
-      - id: analytics.four-factors
-        title: The Four Factors
-        summary: Shooting, turnovers, rebounding, free throws — their real weights and what each tells you to fix first.
-      - id: analytics.shot-quality
-        title: Shot Quality & Expected Value
-        summary: Reading a shot chart, expected points per shot by zone, and separating shot quality from shot-making.
-      - id: analytics.lineups
-        title: Lineups & On-Off
-        summary: Why lineup data lies in small samples, on-off as a hypothesis rather than a verdict, and fit over talent.
-      - id: analytics.tracking
-        title: Tracking-Era Concepts
-        summary: Gravity, rim deterrence, passing that leads to a pass — what tracking data added that box scores never had.
-
-  - id: physical
-    order: 11
-    title: Physical Preparation
-    summary: The athletic base that makes the tactics executable, and the durability that keeps you playing.
-    children:
-      - id: physical.movement
-        title: Athleticism for Basketball
-        summary: Deceleration and change of direction over vertical leap; elastic versus strength qualities and what each one buys you.
-      - id: physical.strength
-        title: Strength & Robustness
-        summary: Training for contact and repeatability rather than size; the posterior chain and the core's real job on court.
-      - id: physical.injury
-        title: Injury Prevention
-        summary: Ankle and ACL mechanisms and the specific work that lowers the risk; landing mechanics and warm-up that earns its time.
-      - id: physical.recovery
-        title: Load & Recovery
-        summary: Managing volume across a week, sleep as the primary recovery tool, and the signs you are accumulating rather than adapting.
-
-  - id: practice
-    order: 12
-    title: Practice Design
-    summary: How skill actually transfers to games — the largest gap between amateur and professional development.
-    requires: [skills.handle]
-    children:
-      - id: practice.deliberate
-        title: Deliberate Practice at Game Speed
-        summary: Blocked versus random practice, why comfortable reps feel productive and transfer poorly, and reps with a defender.
-      - id: practice.constraints
-        title: Constraints & Small-Sided Games
-        summary: Changing the rules to force the read — the constraint-led approach and why 3-on-3 teaches more than 5-on-5.
-      - id: practice.film
-        title: Film Study of Yourself
-        summary: Watching your own game with a question, counting decisions rather than outcomes, and the two-clip habit.
-      - id: practice.workout
-        title: Designing a Solo Workout
-        summary: Building a session that ends in decisions, shot volume that means something, and tracking that survives a bad day.
-
-  - id: rules
-    order: 13
-    title: Rules That Change Decisions
-    summary: The rule details advanced amateurs get wrong — each one changes what you are allowed to do.
-    children:
-      - id: rules.travel-gather
-        title: The Gather & Travelling
-        summary: What the gather step actually permits, the legal step-through, and the moves refereed as travels that are not.
-      - id: rules.contact
-        title: Legal Contact & Fouls
-        summary: Cylinder, verticality, the restricted area and charge/block, and freedom-of-movement rules on cutters and handlers.
-      - id: rules.goaltending
-        title: Goaltending & Basket Interference
-        summary: The two distinct violations, the cylinder above the rim, and when a ball on the rim is live.
-      - id: rules.variants
-        title: NBA vs FIBA vs NCAA
-        summary: Defensive three seconds, court and arc dimensions, timeout and reset rules — the differences that change tactics.
+      - id: tactics.offense
+        title: 进攻战术
+        summary: 常见的进攻配合和体系。
+        children:
+          - {id: tactics.offense.pick-and-roll, title: 挡拆（Pick and Roll）, summary: 最核心的二人配合：掩护、下顺，持球人读防守。}
+          - {id: tactics.offense.pick-and-pop, title: 挡拆外弹（Pick and Pop）, summary: 掩护后外弹到三分线接球投篮，拉开护框者。}
+          - {id: tactics.offense.dribble-handoff, title: 手递手（Dribble Handoff）, summary: 运球交接并顺势掩护，比挡拆更快启动。}
+          - {id: tactics.offense.spain-pnr, title: 西班牙挡拆（Spain Pick and Roll）, summary: 挡拆后第三人给下顺球员的防守人做背掩护。}
+          - {id: tactics.offense.horns, title: 牛角战术（Horns）, summary: 两名内线站肘区的落位，能衍生多种挡拆和手递手。}
+          - {id: tactics.offense.drive-and-kick, title: 突分（Drive and Kick）, summary: 突破吸引协防后分给外线空位。}
+          - {id: tactics.offense.backdoor-cut, title: 反跑（Backdoor Cut）, summary: 防守过度贴防时，切向篮下接球。}
+          - {id: tactics.offense.flex, title: 弹性进攻（Flex Offense）, summary: 底线横掩护接下掩护的循环。}
+          - {id: tactics.offense.princeton, title: 普林斯顿（Princeton Offense）, summary: 高位传球、反跑和手递手组成的移动进攻。}
+          - {id: tactics.offense.five-out, title: 五外动态进攻（5-Out Motion）, summary: 五人都站外线拉开，靠切入和传球制造机会。}
+          - {id: tactics.offense.triangle, title: 三角进攻（Triangle Offense）, summary: 一侧三人成三角，读防守决定传切。}
+          - {id: tactics.offense.staggered-screens, title: 交错掩护（Staggered Screens / Floppy）, summary: 连续掩护帮射手摆脱接球投篮。}
+          - {id: tactics.offense.zone-offense, title: 破联防（Beating a 2-3 Zone）, summary: 站在防守缝里、打高位和底线、快速转移。}
+      - id: tactics.defense
+        title: 防守战术
+        summary: 挡拆防守和整体防守体系。
+        children:
+          - {id: tactics.defense.pnr-coverages, title: 挡拆防守（Drop / Hedge / Switch / Blitz / ICE）, summary: 五种常见的挡拆防法，各自放掉什么。}
+          - {id: tactics.defense.help-rotation, title: 协防与轮转（Help and Rotation）, summary: 收缩、补防、再补防的顺序和位置。}
+          - {id: tactics.defense.zone-23, title: 2-3 联防（2-3 Zone）, summary: 保护禁区、放外线的区域防守及其弱点。}
+          - {id: tactics.defense.full-court-press, title: 全场紧逼（Full-Court Press）, summary: 从底线开始施压、包夹和抢断传球路线。}

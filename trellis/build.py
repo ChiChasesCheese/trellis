@@ -323,6 +323,7 @@ td, th { border: 1px solid var(--rule); padding: 5px 10px; }
 
 .fig { margin: 12px 0; text-align: center; }
 .fig svg { max-width: 100%; height: auto; color: var(--ink); }
+video.clip, img.clip { display: block; width: 100%; max-width: 560px; margin: 8px auto; border-radius: 10px; background: #000; }
 details.sec { margin: 8px 0; border-left: 3px solid var(--accent); padding: 2px 0 2px 10px; }
 details.sec > summary { cursor: pointer; font-weight: 600; list-style-position: outside; }
 details.sec[open] > summary { margin-bottom: 6px; }
@@ -468,11 +469,38 @@ def _fold_bullets(md: str) -> str:
     return "\n\n".join(o.strip("\n") for o in out if o.strip())
 
 
+_EMBED = re.compile(r"!\[\[([^\]|]+\.(mp4|webm|mov|gif|png|jpe?g|webp))(?:\|[^\]]*)?\]\]", re.I)
+_MEDIA_USED: set[Path] = set()   # media files the current build embedded; build_package ships them in the .apkg
+_VAULT_MEDIA: dict[str, Path] = {}
+
+
+def _media_index() -> dict[str, Path]:
+    if not _VAULT_MEDIA:
+        vault = Path(__file__).resolve().parents[1] / "vault"
+        for f in vault.rglob("*"):
+            if f.suffix.lower() in (".mp4", ".webm", ".mov", ".gif", ".png", ".jpg", ".jpeg", ".webp"):
+                _VAULT_MEDIA.setdefault(f.name, f)
+    return _VAULT_MEDIA
+
+
+def _embed(m: re.Match) -> str:
+    """Obsidian embeds (`![[clip.mp4]]`) become playable media in Anki; the file travels inside the package."""
+    name, ext = m.group(1).rsplit("/", 1)[-1], m.group(2).lower()
+    f = _media_index().get(name)
+    if f is None:
+        return f'<span class="ref">{name}</span>'
+    _MEDIA_USED.add(f)
+    if ext in ("mp4", "webm", "mov"):
+        return (f'<video class="clip" src="{name}" controls playsinline loop preload="metadata"></video>')
+    return f'<img class="clip" src="{name}">'
+
+
 def _html(text: str, related: dict | None = None, own: set[int] | None = None, fold: bool = False) -> str:
     # Obsidian wikilinks have nowhere to point inside Anki; render the
     # display text as a styled reference instead.
     # (only outside code: `[[0]] * 3` in a code span is Python, not a link)
     parts = _CODE_SPANS.split(text)
+    parts = [p if i % 2 else _EMBED.sub(lambda m: "\n\n" + _embed(m) + "\n\n", p) for i, p in enumerate(parts)]
     text = "".join(p if i % 2 else _WIKILINK_RE.sub(lambda m: f'<span class="ref">{m.group(2) or m.group(1)}</span>', p)
                    for i, p in enumerate(parts))
     svgs: list[str] = []
@@ -569,6 +597,7 @@ def build_package(
     order: str = CORE_FIRST,
 ) -> dict:
     """Write the .apkg. Returns {'notes': int, 'decks': int, 'path': str}."""
+    _MEDIA_USED.clear()
     readings = readings or []
     qa_model, cloze_model = _qa_model(), _cloze_model()
     decks: dict[str, genanki.Deck] = {}
@@ -629,5 +658,7 @@ def build_package(
 
     out_path = Path(out_path)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    genanki.Package(list(decks.values())).write_to_file(out_path)
+    package = genanki.Package(list(decks.values()))
+    package.media_files = sorted(str(f) for f in _MEDIA_USED)
+    package.write_to_file(out_path)
     return {"notes": note_count, "decks": len(decks), "path": str(out_path)}
