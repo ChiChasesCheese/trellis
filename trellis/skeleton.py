@@ -136,6 +136,7 @@ class Skeleton:
     # domain's cards mention in a 同模式 / 对应 LeetCode line or at the start of a list item opens in place with
     # that problem's short statement and solution.
     examples_from: str = ""
+    fold: bool = False  # answers render as a foldable outline (sections, then bullets)
 
     @property
     def root_deck(self) -> str:
@@ -278,7 +279,7 @@ def load_skeleton(path: str | Path) -> Skeleton:
         examples_from = ""
 
     skeleton = Skeleton(domain=domain, title=title.strip(), roots=roots, by_id={},
-                        lang=lang, folder=folder, deck=deck, examples_from=examples_from,
+                        lang=lang, folder=folder, deck=deck, examples_from=examples_from, fold=bool(data.get("fold", False)),
                         study=_parse_study(data.get("study"), errors))
     for node in skeleton.walk():
         if node.id in skeleton.by_id:

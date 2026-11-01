@@ -87,3 +87,19 @@ def test_related_problem_shows_the_main_solution_not_the_simple_one(tmp_path):
         "**简单解法。** 排序。\n\n```python\nsimple = 1\n```\n\n最优解：\n\n```python\nquick = 2\n```\n", encoding="utf-8")
     html = load_related(tmp_path)[215][1]
     assert "quick" in html and "simple" not in html
+
+
+def test_fold_turns_sections_and_bullets_into_an_outline():
+    from trellis.build import _html
+    md = ("**一句话。** 难点。\n\n**需求。**\n- 功能：发消息\n- 估算（1 亿日活）：每天 100 亿条，平均 11.6 万条/秒，峰值 35 万条/秒，"
+          "历史必须分层存储，单台网关扛 25 万连接。\n  - 子项一\n\n**深入。**\n1. 顺序：同一会话按 seq 排序。\n  - 细节\n")
+    h = _html(md, fold=True)
+    assert '<details class="sec"' in h and "<summary><span class=\"label\">需求</span>" in h
+    assert '<details class="pt"' in h and "<summary>估算（1 亿日活）</summary>" in h
+    assert "<li>子项一</li>" in h  # 2-space sub-bullets nest instead of running into the parent text
+    assert "功能：发消息" in h  # short bullets stay plain
+
+
+def test_two_space_sub_bullets_nest_without_fold():
+    from trellis.build import _html
+    assert "<li>b</li>" in _html("- a\n  - b\n")

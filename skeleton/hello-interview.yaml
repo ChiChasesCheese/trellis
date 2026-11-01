@@ -4,6 +4,7 @@ domain: hello-interview
 title: Hello Interview
 deck: Hello Interview
 lang: zh
+fold: true
 vault: domains/hello-interview
 study:
   order: core-first

@@ -102,6 +102,7 @@ def main() -> None:
     for f in sorted((ROOT / "research/hello-interview").glob("*_meta_*.json")):  # zh titles + requires from the agents
         extra.update(json.loads(f.read_text(encoding="utf-8")))
     card_meta: dict[str, str] = {}   # stub path -> header meta
+    points_home: dict[str, str] = {}  # shared body slug -> the leaf holding its granular cards
 
     def question_branch(prefix: str, track: str, items: list[dict]) -> list[dict]:
         """One node per question: its new prerequisite pages (first come, first placed), then the answer."""
@@ -125,7 +126,13 @@ def main() -> None:
                 answer["requires"] = later  # prerequisites that sit under an earlier question
             elsewhere = list(dict.fromkeys(where[x] for x in later))
             card_meta[q["stub"]] = q["meta"] + (f" · 先修见：{'、'.join(elsewhere)}" if elsewhere else "")
-            leaves.append({"id": qid, "title": title, "summary": answer["summary"], "children": pre + [answer]})
+            kids = pre + [answer]
+            body_slug = q.get("body_slug", q["slug"])
+            if body_slug not in points_home and any((cards_dir / "points" / body_slug).glob("*.md")):
+                points_home[body_slug] = f"{qid}.points"  # granular cards live under the first question using the body
+                kids.append({"id": f"{qid}.points", "title": "要点 · " + title,
+                             "summary": "从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。"})
+            leaves.append({"id": qid, "title": title, "summary": answer["summary"], "children": kids})
         return leaves
 
     if qb_path.exists():
@@ -182,7 +189,7 @@ def main() -> None:
                              "children": leaves})
         nodes.append({"id": tid, "order": ti, "title": ttitle,
                       "summary": f"Hello Interview 的{ttitle}课程，结构与原站一致。", "children": secs})
-    sk = {"domain": "hello-interview", "title": "Hello Interview", "deck": "Hello Interview", "lang": "zh",
+    sk = {"domain": "hello-interview", "title": "Hello Interview", "deck": "Hello Interview", "lang": "zh", "fold": True,
           "vault": "domains/hello-interview", "study": {"order": "core-first", "mix": "new-first", "new_per_day": 15, "reviews_per_day": 200},
           "nodes": nodes}
     (ROOT / "skeleton/hello-interview.yaml").write_text(
@@ -223,7 +230,12 @@ def main() -> None:
         if rel in card_meta:
             text = re.sub(r"^meta: .*$", "meta: " + json.dumps(card_meta[rel], ensure_ascii=False), text, count=1, flags=re.M)
         f.write_text(text, encoding="utf-8")
-    print(len(placed), "concept pages placed under questions;", len(locked), "locked")
+    for f in cards_dir.glob("points/*/*.md"):  # granular cards follow their question
+        leaf = points_home.get(f.parent.name)
+        if leaf:
+            text = f.read_text(encoding="utf-8")
+            f.write_text(re.sub(r"^node: \S+$", f"node: {leaf}", text, count=1, flags=re.M), encoding="utf-8")
+    print(len(placed), "concept pages placed under questions;", len(points_home), "questions with granular cards;", len(locked), "locked")
 
 
 if __name__ == "__main__":

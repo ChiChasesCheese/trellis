@@ -25,7 +25,7 @@ from .skeleton import Skeleton
 from .traces import ID_TAG_PREFIX
 
 _MD = markdown.Markdown(
-    extensions=["fenced_code", "tables", "sane_lists", "codehilite"],
+    extensions=["fenced_code", "tables", "sane_lists", "codehilite", "md_in_html"],
     extension_configs={"codehilite": {"css_class": "hl", "guess_lang": False}},
 )
 
@@ -323,6 +323,12 @@ td, th { border: 1px solid var(--rule); padding: 5px 10px; }
 
 .fig { margin: 12px 0; text-align: center; }
 .fig svg { max-width: 100%; height: auto; color: var(--ink); }
+details.sec { margin: 8px 0; border-left: 3px solid var(--accent); padding: 2px 0 2px 10px; }
+details.sec > summary { cursor: pointer; font-weight: 600; list-style-position: outside; }
+details.sec[open] > summary { margin-bottom: 6px; }
+details.pt { margin: 4px 0 4px 6px; }
+details.pt > summary { cursor: pointer; }
+details.pt[open] > summary { color: var(--accent); }
 details.example { margin-top: 18px; padding-top: 10px; border-top: 1px solid var(--rule); }
 details.example + details.example { margin-top: 8px; }
 details.inline-example > summary { cursor: pointer; list-style: none; }
@@ -350,7 +356,119 @@ _CODE_SPANS = re.compile(r"(^```.*?^```[ \t]*$|``.+?``|`[^`\n]+`)", re.S | re.M)
 _WIKILINK_RE = re.compile(r"\[\[([^\]|]+)(?:\|([^\]]+))?\]\]")
 
 
-def _html(text: str, related: dict | None = None, own: set[int] | None = None) -> str:
+_FENCE_LINE = re.compile(r"^\s*```")
+_MARKER = re.compile(r"^( *)((?:[-*+]|\d+\.)\s)")
+_SECTION = re.compile(r"^\*\*([^*\n]{1,14})。\*\*\s*(.*)$")
+
+
+def _nested_indent(text: str) -> str:
+    """Python-Markdown nests a list only under 4 spaces; cards often indent sub-bullets by 2. Double such indents
+    (outside code fences) so a sub-bullet renders as a nested list instead of running into its parent's text."""
+    out, fence = [], False
+    for line in text.split("\n"):
+        if _FENCE_LINE.match(line):
+            fence = not fence
+        m = None if fence else _MARKER.match(line)
+        if m and m.group(1) and len(m.group(1)) % 4:
+            line = " " * (len(m.group(1)) * 2) + line[len(m.group(1)):]
+        out.append(line)
+    return "\n".join(out)
+
+
+def _inline(s: str) -> str:
+    s = s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    s = re.sub(r'&lt;(/?)span( class="ref")?&gt;', r"<\1span\2>", s)  # wikilinks already rendered as references
+    s = re.sub(r"`([^`]+)`", r"<code>\1</code>", s)
+    return re.sub(r"\*\*([^*]+)\*\*", r"<b>\1</b>", s)
+
+
+def _head(text: str) -> tuple[str, str]:
+    """Split one bullet into (summary, rest): the phrase before the first colon, else the first sentence."""
+    m = re.match(r"^(.{2,28}?)[：:]\s*(.+)$", text, re.S)
+    if m:
+        return m.group(1), m.group(2)
+    m = re.match(r"^(.{4,56}?[。；;?？])\s*(.*)$", text, re.S)
+    if m and m.group(2).strip():
+        return m.group(1), m.group(2)
+    if len(text) <= 60:
+        return text, ""
+    return text[:40] + "…", text
+
+
+def _outline(text: str) -> str:
+    """Long answers as an outline (skeleton `fold: true`): every labelled section folds to its label and gist, and
+    every top-level bullet inside folds to its head. The reader sees the structure first and opens what to recall."""
+    lines, fence, sections, cur = text.split("\n"), False, [], None
+    pre: list[str] = []
+    for line in lines:
+        if _FENCE_LINE.match(line):
+            fence = not fence
+        m = None if fence else _SECTION.match(line)
+        if m:
+            cur = [m.group(1), m.group(2), []]
+            sections.append(cur)
+        elif cur is None:
+            pre.append(line)
+        else:
+            cur[2].append(line)
+    if len(sections) < 3:
+        return text
+    out = ["\n".join(pre)]
+    for label, first, body in sections:
+        body_md = _fold_bullets("\n".join(body).strip("\n"))
+        if not body_md.strip():  # a one-paragraph section folds only when it is long prose, never a line of links
+            gist, rest = _head(first) if len(first) > 60 and 'class="ref"' not in first else (first, "")
+            body_md = rest
+        else:
+            n = sum(1 for l in body if re.match(r"^(?:[-*+]|\d+\.)\s", l))
+            gist = _head(first)[0] if first else (f"（{n} 条）" if n else "")
+            body_md = (first + "\n\n" + body_md) if first else body_md
+        if not body_md.strip():
+            out.append(f'<p><span class="label">{label}</span>{_inline(gist)}</p>')
+            continue
+        opened = " open" if label == "一句话" else ""
+        out.append(f'<details class="sec"{opened} markdown="1"><summary><span class="label">{label}</span>{_inline(gist)}</summary>'
+                   f"\n\n{body_md}\n\n</details>")
+    return "\n\n".join(out)
+
+
+def _fold_bullets(md: str) -> str:
+    """Each top-level bullet with more than a line of content becomes a foldable item: its head, then the rest."""
+    lines, fence, items, buf = md.split("\n"), False, [], []
+    for line in lines:
+        if _FENCE_LINE.match(line) and not line.startswith(" "):
+            fence = not fence
+        if not fence and re.match(r"^(?:[-*+]|\d+\.)\s", line):
+            items.append(buf)
+            buf = [line]
+        elif not fence and buf and buf[0] and re.match(r"^(?:[-*+]|\d+\.)\s", buf[0]) and line and not line.startswith(" ") \
+                and not _FENCE_LINE.match(line):
+            items.append(buf)  # a paragraph after the list ends the item
+            buf = [line]
+        else:
+            buf.append(line)
+    items.append(buf)
+    out = []
+    for item in items:
+        if not item:
+            continue
+        m = re.match(r"^((?:[-*+]|\d+\.)\s+)(.*)$", item[0])
+        cont = [re.sub(r"^ {1,4}", "", l) for l in item[1:]]
+        if not m:
+            out.append("\n".join(item))
+            continue
+        text = m.group(2)
+        if len(text) <= 60 and not any(c.strip() for c in cont):
+            out.append(item[0])
+            continue
+        head, rest = _head(text)
+        num = m.group(1).strip() if m.group(1)[0].isdigit() else ""
+        body = "\n".join([rest] + cont if rest else cont).strip("\n")
+        out.append(f'<details class="pt" markdown="1"><summary>{num + " " if num else ""}{_inline(head)}</summary>\n\n{body}\n\n</details>')
+    return "\n\n".join(o.strip("\n") for o in out if o.strip())
+
+
+def _html(text: str, related: dict | None = None, own: set[int] | None = None, fold: bool = False) -> str:
     # Obsidian wikilinks have nowhere to point inside Anki; render the
     # display text as a styled reference instead.
     # (only outside code: `[[0]] * 3` in a code span is Python, not a link)
@@ -371,6 +489,9 @@ def _html(text: str, related: dict | None = None, own: set[int] | None = None) -
         svgs.append(svg)
         return f"\n\nTRELLISSVG{len(svgs) - 1}\n\n"
     text = _MERMAID_FENCE.sub(_mermaid, text)
+    text = _nested_indent(text)
+    if fold:
+        text = _outline(text)
     _MD.reset()
     html = _MD.convert(_blank_before_lists(text))
     for i, svg in enumerate(svgs):
@@ -490,7 +611,7 @@ def build_package(
         if card.type == "qa":
             note = genanki.Note(
                 model=qa_model,
-                fields=[_html(question), _html(answer, related, own) + footer, crumb],
+                fields=[_html(question), _html(answer, related, own, fold=skeleton.fold) + footer, crumb],
                 guid=genanki.guid_for(f"trellis:{card.id}"),
                 tags=tags,
                 due=position,
