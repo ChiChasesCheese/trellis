@@ -23,143 +23,323 @@ nodes:
     children:
     - id: qb.sd.messenger-chat-system
       title: Design a Chat/Messaging System
-      summary: 被报告 190 次；Design a Chat/Messaging System。
+      summary: 被报告 190 次。
+      children:
+      - id: qb.sd.messenger-chat-system.answer
+        title: 解答 · Design a Chat/Messaging System
+        summary: 被报告 190 次；Design a Chat/Messaging System。
     - id: qb.sd.job-scheduler-cron-history
       title: Design a Job Scheduler
-      summary: 被报告 180 次；Design a Job Scheduler。
+      summary: 被报告 180 次。
+      children:
+      - id: qb.sd.job-scheduler-cron-history.answer
+        title: 解答 · Design a Job Scheduler
+        summary: 被报告 180 次；Design a Job Scheduler。
     - id: qb.sd.online-chess-platform
       title: Design Online Chess
-      summary: 被报告 155 次；Design Online Chess。
+      summary: 被报告 155 次。
+      children:
+      - id: qb.sd.online-chess-platform.answer
+        title: 解答 · Design Online Chess
+        summary: 被报告 155 次；Design Online Chess。
     - id: qb.sd.news-aggregator-feed
       title: Design a News Aggregator System
-      summary: 被报告 109 次；Design a News Aggregator System。
+      summary: 被报告 109 次。
+      children:
+      - id: qb.sd.news-aggregator-feed.answer
+        title: 解答 · Design a News Aggregator System
+        summary: 被报告 109 次；Design a News Aggregator System。
     - id: qb.sd.top-k-counts
       title: Design a Top-K System
-      summary: 被报告 106 次；Design a Top-K System。
+      summary: 被报告 106 次。
+      children:
+      - id: qb.sd.top-k-counts.answer
+        title: 解答 · Design a Top-K System
+        summary: 被报告 106 次；Design a Top-K System。
     - id: qb.sd.book-seller-platform
       title: Design a Book Seller Platform
-      summary: 被报告 105 次；Design a Book Seller Platform。
+      summary: 被报告 105 次。
+      children:
+      - id: qb.sd.book-seller-platform.answer
+        title: 解答 · Design a Book Seller Platform
+        summary: 被报告 105 次；Design a Book Seller Platform。
     - id: qb.sd.payment-batch-processing
       title: Design a Payment System
-      summary: 被报告 93 次；Design a Payment System。
+      summary: 被报告 93 次。
+      children:
+      - id: qb.sd.payment-batch-processing.answer
+        title: 解答 · Design a Payment System
+        summary: 被报告 93 次；Design a Payment System。
     - id: qb.sd.notification-system-scale
       title: Design a Notification System
-      summary: 被报告 78 次；Design a Notification System。
+      summary: 被报告 78 次。
+      children:
+      - id: qb.sd.notification-system-scale.answer
+        title: 解答 · Design a Notification System
+        summary: 被报告 78 次；Design a Notification System。
     - id: qb.sd.url-shortener-design
       title: Design a URL Shortener
-      summary: 被报告 76 次；Design a URL Shortener。
+      summary: 被报告 76 次。
+      children:
+      - id: qb.sd.url-shortener-design.answer
+        title: 解答 · Design a URL Shortener
+        summary: 被报告 76 次；Design a URL Shortener。
     - id: qb.sd.donations-website-charities
       title: Design a Donations Website
-      summary: 被报告 70 次；Design a Donations Website。
+      summary: 被报告 70 次。
+      children:
+      - id: qb.sd.donations-website-charities.answer
+        title: 解答 · Design a Donations Website
+        summary: 被报告 70 次；Design a Donations Website。
     - id: qb.sd.web-crawler-design
       title: Design a Web Crawler
-      summary: 被报告 64 次；Design a Web Crawler。
+      summary: 被报告 64 次。
+      children:
+      - id: qb.sd.web-crawler-design.answer
+        title: 解答 · Design a Web Crawler
+        summary: 被报告 64 次；Design a Web Crawler。
     - id: qb.sd.distributed-rate-limiter
       title: Design a Rate Limiter
-      summary: 被报告 63 次；Design a Rate Limiter。
+      summary: 被报告 63 次。
+      children:
+      - id: qb.sd.distributed-rate-limiter.answer
+        title: 解答 · Design a Rate Limiter
+        summary: 被报告 63 次；Design a Rate Limiter。
     - id: qb.sd.food-item-reviews
       title: Design a Review App for Food Items
-      summary: 被报告 55 次；Design a Review App for Food Items。
+      summary: 被报告 55 次。
+      children:
+      - id: qb.sd.food-item-reviews.answer
+        title: 解答 · Design a Review App for Food Items
+        summary: 被报告 55 次；Design a Review App for Food Items。
     - id: qb.sd.hotel-booking-system
       title: Design a Hotel Booking System
-      summary: 被报告 45 次；Design a Hotel Booking System。
+      summary: 被报告 45 次。
+      children:
+      - id: qb.sd.hotel-booking-system.answer
+        title: 解答 · Design a Hotel Booking System
+        summary: 被报告 45 次；Design a Hotel Booking System。
     - id: qb.sd.metrics-monitoring-alerts
       title: Design a System Metrics Monitoring and Alerting Platform
-      summary: 被报告 44 次；Design a System Metrics Monitoring and Alerting Platform。
+      summary: 被报告 44 次。
+      children:
+      - id: qb.sd.metrics-monitoring-alerts.answer
+        title: 解答 · Design a System Metrics Monitoring and Alerting Platform
+        summary: 被报告 44 次；Design a System Metrics Monitoring and Alerting Platform。
     - id: qb.sd.file-sync-system
       title: Design DropBox
-      summary: 被报告 43 次；Design DropBox。
+      summary: 被报告 43 次。
+      children:
+      - id: qb.sd.file-sync-system.answer
+        title: 解答 · Design DropBox
+        summary: 被报告 43 次；Design DropBox。
     - id: qb.sd.feature-flag-service
       title: Design a Feature Flag Service
-      summary: 被报告 39 次；Design a Feature Flag Service。
+      summary: 被报告 39 次。
+      children:
+      - id: qb.sd.feature-flag-service.answer
+        title: 解答 · Design a Feature Flag Service
+        summary: 被报告 39 次；Design a Feature Flag Service。
     - id: qb.sd.like-unlike-system
       title: Design a Like/Unlike Feature
-      summary: 被报告 30 次；Design a Like/Unlike Feature。
+      summary: 被报告 30 次。
+      children:
+      - id: qb.sd.like-unlike-system.answer
+        title: 解答 · Design a Like/Unlike Feature
+        summary: 被报告 30 次；Design a Like/Unlike Feature。
     - id: qb.sd.stock-trading-platform
       title: Design a stock trading platform
-      summary: 被报告 13 次；Design a stock trading platform。
+      summary: 被报告 13 次。
+      children:
+      - id: qb.sd.stock-trading-platform.answer
+        title: 解答 · Design a stock trading platform
+        summary: 被报告 13 次；Design a stock trading platform。
     - id: qb.sd.coding-contest-platform
       title: Design LeetCode
-      summary: 被报告 11 次；Design LeetCode。
+      summary: 被报告 11 次。
+      children:
+      - id: qb.sd.coding-contest-platform.answer
+        title: 解答 · Design LeetCode
+        summary: 被报告 11 次；Design LeetCode。
     - id: qb.sd.merchant-product-listings
       title: Design a Merchant Product Listing System
-      summary: 被报告 11 次；Design a Merchant Product Listing System。
+      summary: 被报告 11 次。
+      children:
+      - id: qb.sd.merchant-product-listings.answer
+        title: 解答 · Design a Merchant Product Listing System
+        summary: 被报告 11 次；Design a Merchant Product Listing System。
     - id: qb.sd.disposable-email
       title: Design a temporary mailbox system
-      summary: 被报告 10 次；Design a temporary mailbox system。
+      summary: 被报告 10 次。
+      children:
+      - id: qb.sd.disposable-email.answer
+        title: 解答 · Design a temporary mailbox system
+        summary: 被报告 10 次；Design a temporary mailbox system。
     - id: qb.sd.stock-price-alerts
       title: Design Stock price alerting system
-      summary: 被报告 9 次；Design Stock price alerting system。
+      summary: 被报告 9 次。
+      children:
+      - id: qb.sd.stock-price-alerts.answer
+        title: 解答 · Design Stock price alerting system
+        summary: 被报告 9 次；Design Stock price alerting system。
     - id: qb.sd.chatbot-design
       title: Design ChatGPT
-      summary: 被报告 9 次；Design ChatGPT。
+      summary: 被报告 9 次。
+      children:
+      - id: qb.sd.chatbot-design.answer
+        title: 解答 · Design ChatGPT
+        summary: 被报告 9 次；Design ChatGPT。
     - id: qb.sd.crowdfunding-share-purchase
       title: Design a share purchasing system for a limited-time company crowdfunding event
-      summary: 被报告 8 次；Design a share purchasing system for a limited-time company crowdfunding event。
+      summary: 被报告 8 次。
+      children:
+      - id: qb.sd.crowdfunding-share-purchase.answer
+        title: 解答 · Design a share purchasing system for a limited-time company crowdfunding event
+        summary: 被报告 8 次；Design a share purchasing system for a limited-time company crowdfunding event。
     - id: qb.sd.social-feed-generation
       title: Design a Social Media Feed Generation System
-      summary: 被报告 7 次；Design a Social Media Feed Generation System。
+      summary: 被报告 7 次。
+      children:
+      - id: qb.sd.social-feed-generation.answer
+        title: 解答 · Design a Social Media Feed Generation System
+        summary: 被报告 7 次；Design a Social Media Feed Generation System。
     - id: qb.sd.video-moderation-system
       title: Design a Video Moderation System
-      summary: 被报告 4 次；Design a Video Moderation System。
+      summary: 被报告 4 次。
+      children:
+      - id: qb.sd.video-moderation-system.answer
+        title: 解答 · Design a Video Moderation System
+        summary: 被报告 4 次；Design a Video Moderation System。
     - id: qb.sd.flight-search-system
       title: Design a flight search system
-      summary: 被报告 4 次；Design a flight search system。
+      summary: 被报告 4 次。
+      children:
+      - id: qb.sd.flight-search-system.answer
+        title: 解答 · Design a flight search system
+        summary: 被报告 4 次；Design a flight search system。
     - id: qb.sd.photo-storage-sharing
       title: Design Google Photos
-      summary: 被报告 3 次；Design Google Photos。
+      summary: 被报告 3 次。
+      children:
+      - id: qb.sd.photo-storage-sharing.answer
+        title: 解答 · Design Google Photos
+        summary: 被报告 3 次；Design Google Photos。
     - id: qb.sd.feature-flags-service
       title: Build a Feature Flag Service
-      summary: 被报告 3 次；Build a Feature Flag Service。
+      summary: 被报告 3 次。
+      children:
+      - id: qb.sd.feature-flags-service.answer
+        title: 解答 · Build a Feature Flag Service
+        summary: 被报告 3 次；Build a Feature Flag Service。
   - id: qb.lld
     title: 低层设计高频题
     summary: 低层设计高频题：按被报告次数从高到低。
     children:
     - id: qb.lld.kv-store-eviction
       title: Design a key-value store
-      summary: 被报告 8 次；Design a key-value store。
+      summary: 被报告 8 次。
+      children:
+      - id: qb.lld.kv-store-eviction.answer
+        title: 解答 · Design a key-value store
+        summary: 被报告 8 次；Design a key-value store。
     - id: qb.lld.beverage-vending-system
       title: Design a vending machine system
-      summary: 被报告 2 次；Design a vending machine system。
+      summary: 被报告 2 次。
+      children:
+      - id: qb.lld.beverage-vending-system.answer
+        title: 解答 · Design a vending machine system
+        summary: 被报告 2 次；Design a vending machine system。
     - id: qb.lld.rate-limiter-system
       title: Design a Rate Limiter
-      summary: 被报告 2 次；Design a Rate Limiter。
+      summary: 被报告 2 次。
+      children:
+      - id: qb.lld.rate-limiter-system.answer
+        title: 解答 · Design a Rate Limiter
+        summary: 被报告 2 次；Design a Rate Limiter。
     - id: qb.lld.elevator-design
       title: Design an Elevator System
-      summary: 被报告 2 次；Design an Elevator System。
+      summary: 被报告 2 次。
+      children:
+      - id: qb.lld.elevator-design.answer
+        title: 解答 · Design an Elevator System
+        summary: 被报告 2 次；Design an Elevator System。
     - id: qb.lld.event-ticket-booking
       title: Design an Event Ticket Booking System
-      summary: 被报告 2 次；Design an Event Ticket Booking System。
+      summary: 被报告 2 次。
+      children:
+      - id: qb.lld.event-ticket-booking.answer
+        title: 解答 · Design an Event Ticket Booking System
+        summary: 被报告 2 次；Design an Event Ticket Booking System。
     - id: qb.lld.grocery-subscription-orders
       title: Design a grocery subscription service
-      summary: 被报告 2 次；Design a grocery subscription service。
+      summary: 被报告 2 次。
+      children:
+      - id: qb.lld.grocery-subscription-orders.answer
+        title: 解答 · Design a grocery subscription service
+        summary: 被报告 2 次；Design a grocery subscription service。
     - id: qb.lld.date-time-management
       title: Design a Date and Time Library
-      summary: 被报告 1 次；Design a Date and Time Library。
+      summary: 被报告 1 次。
+      children:
+      - id: qb.lld.date-time-management.answer
+        title: 解答 · Design a Date and Time Library
+        summary: 被报告 1 次；Design a Date and Time Library。
     - id: qb.lld.figma-draw-api
       title: Design a Drawing API for a Vector Graphics Editor
-      summary: 被报告 1 次；Design a Drawing API for a Vector Graphics Editor。
+      summary: 被报告 1 次。
+      children:
+      - id: qb.lld.figma-draw-api.answer
+        title: 解答 · Design a Drawing API for a Vector Graphics Editor
+        summary: 被报告 1 次；Design a Drawing API for a Vector Graphics Editor。
     - id: qb.lld.twitter-clone-feed
       title: Design Twitter
-      summary: 被报告 1 次；Design Twitter。
+      summary: 被报告 1 次。
+      children:
+      - id: qb.lld.twitter-clone-feed.answer
+        title: 解答 · Design Twitter
+        summary: 被报告 1 次；Design Twitter。
     - id: qb.lld.scheduler-system-design
       title: Design a Task Scheduler
-      summary: 被报告 1 次；Design a Task Scheduler。
+      summary: 被报告 1 次。
+      children:
+      - id: qb.lld.scheduler-system-design.answer
+        title: 解答 · Design a Task Scheduler
+        summary: 被报告 1 次；Design a Task Scheduler。
     - id: qb.lld.parking-lot-system
       title: Design a Parking Lot Management System
-      summary: 被报告 1 次；Design a Parking Lot Management System。
+      summary: 被报告 1 次。
+      children:
+      - id: qb.lld.parking-lot-system.answer
+        title: 解答 · Design a Parking Lot Management System
+        summary: 被报告 1 次；Design a Parking Lot Management System。
     - id: qb.lld.api-circuit-breaker
       title: Design a Circuit Breaker
-      summary: 被报告 1 次；Design a Circuit Breaker。
+      summary: 被报告 1 次。
+      children:
+      - id: qb.lld.api-circuit-breaker.answer
+        title: 解答 · Design a Circuit Breaker
+        summary: 被报告 1 次；Design a Circuit Breaker。
     - id: qb.lld.recently-viewed-items
       title: Design a System to Track Recently Viewed Items
-      summary: 被报告 1 次；Design a System to Track Recently Viewed Items。
+      summary: 被报告 1 次。
+      children:
+      - id: qb.lld.recently-viewed-items.answer
+        title: 解答 · Design a System to Track Recently Viewed Items
+        summary: 被报告 1 次；Design a System to Track Recently Viewed Items。
     - id: qb.lld.job-board-platform
       title: Design a job board system
-      summary: 被报告 1 次；Design a job board system。
+      summary: 被报告 1 次。
+      children:
+      - id: qb.lld.job-board-platform.answer
+        title: 解答 · Design a job board system
+        summary: 被报告 1 次；Design a job board system。
     - id: qb.lld.multithreaded-logging-framework
       title: Design a multi-threaded logging framework
-      summary: 被报告 1 次；Design a multi-threaded logging framework。
+      summary: 被报告 1 次。
+      children:
+      - id: qb.lld.multithreaded-logging-framework.answer
+        title: 解答 · Design a multi-threaded logging framework
+        summary: 被报告 1 次；Design a multi-threaded logging framework。
 - id: sd
   order: 2
   title: 系统设计（System Design）

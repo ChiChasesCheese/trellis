@@ -10,6 +10,7 @@ low-level-design domains (research/hello-interview/BUILD.md).
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 import yaml
@@ -82,6 +83,20 @@ def main() -> None:
     nodes = []
     # 高频题库 first (Chi, 2026-11-01: the questions matter most; the courses are their prerequisites)
     qb_path = ROOT / "research/hello-interview/qb_selection.json"
+    # Chi (2026-11-01): each question's prerequisites are a sub-deck of that question. A concept page lives once, under
+    # the most-reported question that needs it; the course branches keep only pages no question uses.
+    cards_dir = ROOT / "vault/domains/hello-interview/cards"
+    home_path = ROOT / "research/hello-interview/concept_home.json"
+    home = json.loads(home_path.read_text(encoding="utf-8")) if home_path.exists() else {}
+    for f in sorted(cards_dir.glob("*/*/*.md")):  # course cards: remember the course leaf each one was written for
+        rel = str(f.relative_to(cards_dir))
+        if rel.startswith("qb/") or rel in home:
+            continue
+        m = re.search(r"^node: (\S+)$", f.read_text(encoding="utf-8"), re.M)
+        if m:
+            home[rel] = m.group(1)
+    home_path.write_text(json.dumps(home, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
+    placed: dict[str, str] = {}      # course leaf -> prerequisite leaf under a question
     if qb_path.exists():
         extra = {}
         for f in sorted((ROOT / "research/hello-interview").glob("qb_meta_*.json")):  # zh titles + requires from the card agents
@@ -92,11 +107,23 @@ def main() -> None:
             leaves = []
             for q in [q for q in qb if q["track"] == track]:
                 e = extra.get(q["slug"], {})
-                leaf = {"id": f"qb.{track}.{q['slug']}", "title": e.get("title") or q["title"],
-                        "summary": f"被报告 {q['reports']} 次；{q['title']}。"}
-                if e.get("requires"):
-                    leaf["requires"] = e["requires"]
-                leaves.append(leaf)
+                qid = f"qb.{track}.{q['slug']}"
+                pre = []
+                for c in e.get("requires", []):
+                    if c in placed or c not in {v for v in home.values()}:
+                        continue  # already a prerequisite of a more frequent question, or a page without cards
+                    placed[c] = f"{qid}.pre-{c.replace('.', '-')}"
+                    key = next((pk for pk in ZH if pk.endswith("/" + c.split(".")[-1]) and pk.startswith(
+                        "system-design" if c.startswith("sd.") else "low-level-design")), "")
+                    pre.append({"id": placed[c], "title": "先修 · " + ZH.get(key, c.split(".")[-1]),
+                                "summary": f"{e.get('title') or q['title']} 用到的概念。"})
+                answer = {"id": f"{qid}.answer", "title": "解答 · " + (e.get("title") or q["title"]),
+                          "summary": f"被报告 {q['reports']} 次；{q['title']}。"}
+                later = [placed[c] for c in e.get("requires", []) if c in placed and not placed[c].startswith(qid + ".")]
+                if later:
+                    answer["requires"] = later  # prerequisites that sit under an earlier question
+                leaves.append({"id": qid, "title": e.get("title") or q["title"],
+                               "summary": f"被报告 {q['reports']} 次。", "children": pre + [answer]})
             kids.append({"id": f"qb.{track}", "title": title, "summary": f"{title}：按被报告次数从高到低。", "children": leaves})
         nodes.append({"id": "qb", "order": 1, "core": True, "title": "高频真题（Question Bank）",
                       "summary": "Hello Interview 题库里被报告最多的设计题，每题一张完整解答；课程部分是它们的先修。", "children": kids})
@@ -108,7 +135,7 @@ def main() -> None:
             for p in pages:
                 key = p["url"].split("/learn/", 1)[1]
                 in_sec = p["track"] == track and (p["section"] == sec or (not p["section"] and p["page"] == sec))
-                if not in_sec:
+                if not in_sec or f"{tid}.{p['section'] or p['page']}.{p['page']}" in placed:
                     continue
                 leaves.append({"id": f"{tid}.{sec}.{p['page']}", "title": ZH.get(key, p["title"]),
                                "summary": ("会员内容，待解锁。" if p["premium"] else "") + f"Hello Interview：{p['title']}。"})
@@ -132,6 +159,7 @@ def main() -> None:
         key = p["url"].split("/learn/", 1)[1]
         tid = "sd" if p["track"] == "system-design" else "lld"
         leaf = f"{tid}.{p['section'] or p['page']}.{p['page']}"
+        leaf = placed.get(leaf, leaf)
         tags = ["no-archive"] + (["premium"] if p["premium"] else [])
         (rd / f"hi-{key.replace('/', '-')}.md").write_text(
             f"---\nnodes: [{leaf}]\nurl: {p['url']}\ntags: [{', '.join(tags)}]\n---\n# {ZH.get(key, p['title'])}（Hello Interview）\n\n"
@@ -143,7 +171,18 @@ def main() -> None:
         "# 待解锁的会员内容\n\nHello Interview 的这些页面需要会员才能看全。结构已经在牌组里占好位置，"
         "拿到权限后重新抓取，就能给它们补卡。\n\n| 页面 | 原标题 | 链接 |\n|---|---|---|\n" + "\n".join(locked) + "\n",
         encoding="utf-8")
-    print(sum(len(s["children"]) for n in nodes for s in n["children"]), "leaves;", len(locked), "locked")
+    for rel, course_leaf in home.items():  # move each course card to where its page now lives
+        f = cards_dir / rel
+        if f.exists():
+            text = f.read_text(encoding="utf-8")
+            new = re.sub(r"^node: \S+$", f"node: {placed.get(course_leaf, course_leaf)}", text, count=1, flags=re.M)
+            if new != text:
+                f.write_text(new, encoding="utf-8")
+    for f in cards_dir.glob("qb/*/*.md"):  # the answer stubs hang under their question
+        text = f.read_text(encoding="utf-8")
+        f.write_text(re.sub(r"^node: (qb\.\w+\.[a-z0-9-]+?)(\.answer)?$", r"node: \1.answer", text, count=1, flags=re.M),
+                     encoding="utf-8")
+    print(len(placed), "concept pages placed under questions;", len(locked), "locked")
 
 
 if __name__ == "__main__":
