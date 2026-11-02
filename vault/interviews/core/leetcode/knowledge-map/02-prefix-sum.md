@@ -4,9 +4,9 @@
 
 **先做（TikTok P1–P4 与经典题单，12 道）**
 
-- [[tlc-trapping-rain-water-0-whole|LC 42 接雨水]]（困难）· TikTok P2 · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-trapping-rain-water-0-whole|LC 42 接雨水]]（困难）· TikTok P1 · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-count-number-of-nice-subarrays-0-whole|LC 1248 统计「优美子数组」]]（中等）· TikTok P1 · Amazon
 - [[tlc-meeting-rooms-ii-0-whole|LC 253 会议室 II]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150
-- [[tlc-count-number-of-nice-subarrays-0-whole|LC 1248 统计「优美子数组」]]（中等）· TikTok P2 · Amazon
 - [[tlc-subarray-sum-equals-k-0-whole|LC 560 和为 K 的子数组]]（中等）· TikTok P2 · Amazon · LeetCode Hot 100
 - [[tlc-minimum-size-subarray-sum-0-whole|LC 209 长度最小的子数组]]（中等）· TikTok P2 · Top Interview 150
 - [[tlc-subarray-sums-divisible-by-k-0-whole|LC 974 和可被 K 整除的子数组]]（中等）· TikTok P2

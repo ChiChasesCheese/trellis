@@ -224,6 +224,13 @@ def assign(index: dict[str, dict], today: date | None = None) -> dict:
         if index[s].get("window") in ("30d", "3m", "6m") and index[s]["band"] > "p2":
             index[s]["band"] = "p2"
 
+    # Chi (2026-11-01): his final-pass list is P1 whatever the score says
+    p1_path = CAT / "pinned_p1.json"
+    for s in json.loads(p1_path.read_text(encoding="utf-8"))["slugs"] if p1_path.exists() else []:
+        if s in index:
+            a.setdefault(s, "pinned")
+            index[s].update(tier="A", a_reason=a[s], band="p1")
+
     def share(weights: dict[str, float], total: float) -> float:
         return round(100 * sum(w for s, w in weights.items() if s in a) / total, 1)
     covered = [(f, m) for f, slugs, m in members if any(s in a for s in slugs)]

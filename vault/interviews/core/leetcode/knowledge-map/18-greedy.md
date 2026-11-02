@@ -5,8 +5,8 @@
 **先做（TikTok P1–P4 与经典题单，27 道）**
 
 - [[tlc-merge-intervals-0-whole|LC 56 合并区间]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
-- [[tlc-best-time-to-buy-and-sell-stock-0-whole|LC 121 买卖股票的最佳时机]]（简单）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
-- [[tlc-house-robber-0-whole|LC 198 打家劫舍]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-best-time-to-buy-and-sell-stock-0-whole|LC 121 买卖股票的最佳时机]]（简单）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-house-robber-0-whole|LC 198 打家劫舍]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-meeting-rooms-ii-0-whole|LC 253 会议室 II]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150
 - [[tlc-remove-duplicate-letters-0-whole|LC 316 去除重复字母]]（中等）· TikTok P2 · Amazon
 - [[tlc-gas-station-0-whole|LC 134 加油站]]（中等）· TikTok P2 · Amazon · NeetCode 150 · Top Interview 150

@@ -5,7 +5,7 @@
 **先做（TikTok P1–P4 与经典题单，29 道）**
 
 - [[tlc-numbers-at-most-n-given-digit-set-0-whole|LC 902 最大为 N 的数字组合]]（困难）· TikTok P1
-- [[tlc-search-in-rotated-sorted-array-0-whole|LC 33 搜索旋转排序数组]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-search-in-rotated-sorted-array-0-whole|LC 33 搜索旋转排序数组]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-longest-increasing-subsequence-0-whole|LC 300 最长递增子序列]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-block-placement-queries-0-whole|LC 3161 物块放置查询]]（困难）· TikTok P2
 - [[tlc-minimum-size-subarray-sum-0-whole|LC 209 长度最小的子数组]]（中等）· TikTok P2 · Top Interview 150

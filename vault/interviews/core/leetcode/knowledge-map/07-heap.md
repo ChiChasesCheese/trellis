@@ -5,12 +5,12 @@
 **先做（TikTok P1–P4 与经典题单，22 道）**
 
 - [[tlc-kth-largest-element-in-an-array-0-whole|LC 215 数组中的第K个最大元素]]（中等）· TikTok P1 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
-- [[tlc-top-k-frequent-elements-0-whole|LC 347 前 K 个高频元素]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100
-- [[tlc-best-time-to-buy-and-sell-stock-0-whole|LC 121 买卖股票的最佳时机]]（简单）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-top-k-frequent-elements-0-whole|LC 347 前 K 个高频元素]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100
+- [[tlc-best-time-to-buy-and-sell-stock-0-whole|LC 121 买卖股票的最佳时机]]（简单）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-cheapest-flights-within-k-stops-0-whole|LC 787 K 站中转内最便宜的航班]]（中等）· TikTok P1 · NeetCode 150
 - [[tlc-merge-k-sorted-lists-0-whole|LC 23 合并 K 个升序链表]]（困难）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-meeting-rooms-ii-0-whole|LC 253 会议室 II]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150
 - [[tlc-find-median-from-data-stream-0-whole|LC 295 数据流的中位数]]（困难）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
-- [[tlc-cheapest-flights-within-k-stops-0-whole|LC 787 K 站中转内最便宜的航班]]（中等）· TikTok P2 · NeetCode 150
 - [[tlc-single-threaded-cpu-0-whole|LC 1834 单线程 CPU]]（中等）· TikTok P2 · Amazon
 - [[tlc-sliding-window-maximum-0-whole|LC 239 滑动窗口最大值]]（困难）· TikTok P3 · Amazon · NeetCode 150 · LeetCode Hot 100
 - [[tlc-kth-smallest-element-in-a-sorted-matrix-0-whole|LC 378 有序矩阵中第 K 小的元素]]（中等）· TikTok P4

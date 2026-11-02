@@ -5,11 +5,11 @@
 **先做（TikTok P1–P4 与经典题单，43 道）**
 
 - [[tlc-binary-tree-level-order-traversal-0-whole|LC 102 二叉树的层序遍历]]（中等）· TikTok P1 · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
-- [[tlc-binary-tree-right-side-view-0-whole|LC 199 二叉树的右视图]]（中等）· TikTok P2 · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
-- [[tlc-path-sum-iii-0-whole|LC 437 路径总和 III]]（中等）· TikTok P2 · Amazon · LeetCode Hot 100
+- [[tlc-binary-tree-right-side-view-0-whole|LC 199 二叉树的右视图]]（中等）· TikTok P1 · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-path-sum-iii-0-whole|LC 437 路径总和 III]]（中等）· TikTok P1 · Amazon · LeetCode Hot 100
+- [[tlc-all-nodes-distance-k-in-binary-tree-0-whole|LC 863 二叉树中所有距离为 K 的结点]]（中等）· TikTok P1 · Amazon
 - [[tlc-lowest-common-ancestor-of-a-binary-tree-0-whole|LC 236 二叉树的最近公共祖先]]（中等）· TikTok P2 · Amazon · LeetCode Hot 100 · Top Interview 150
 - [[tlc-binary-tree-maximum-path-sum-0-whole|LC 124 二叉树中的最大路径和]]（困难）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
-- [[tlc-all-nodes-distance-k-in-binary-tree-0-whole|LC 863 二叉树中所有距离为 K 的结点]]（中等）· TikTok P2 · Amazon
 - [[tlc-serialize-and-deserialize-n-ary-tree-0-whole|LC 428 序列化和反序列化 N 叉树]]（困难）· TikTok P2
 - [[tlc-serialize-and-deserialize-binary-tree-0-whole|LC 297 二叉树的序列化与反序列化]]（困难）· TikTok P2 · Amazon · Blind 75 · NeetCode 150
 - [[tlc-subtree-of-another-tree-0-whole|LC 572 另一棵树的子树]]（简单）· TikTok P3 · Blind 75 · NeetCode 150

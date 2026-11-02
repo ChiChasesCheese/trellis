@@ -7,17 +7,17 @@
 - [[tlc-lru-cache-0-whole|LC 146 LRU 缓存]]（中等）· TikTok P1 · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-longest-substring-without-repeating-characters-0-whole|LC 3 无重复字符的最长子串]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-merge-intervals-0-whole|LC 56 合并区间]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
-- [[tlc-top-k-frequent-elements-0-whole|LC 347 前 K 个高频元素]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100
+- [[tlc-top-k-frequent-elements-0-whole|LC 347 前 K 个高频元素]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100
+- [[tlc-number-of-distinct-islands-0-whole|LC 694 不同岛屿的数量]]（中等）· TikTok P1
+- [[tlc-count-number-of-nice-subarrays-0-whole|LC 1248 统计「优美子数组」]]（中等）· TikTok P1 · Amazon
+- [[tlc-all-nodes-distance-k-in-binary-tree-0-whole|LC 863 二叉树中所有距离为 K 的结点]]（中等）· TikTok P1 · Amazon
 - [[tlc-3sum-0-whole|LC 15 三数之和]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-two-sum-0-whole|LC 1 两数之和]]（简单）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
-- [[tlc-number-of-distinct-islands-0-whole|LC 694 不同岛屿的数量]]（中等）· TikTok P2
-- [[tlc-count-number-of-nice-subarrays-0-whole|LC 1248 统计「优美子数组」]]（中等）· TikTok P2 · Amazon
 - [[tlc-longest-substring-with-at-most-k-distinct-characters-0-whole|LC 340 至多包含 K 个不同字符的最长子串]]（中等）· TikTok P2
 - [[tlc-subarray-sum-equals-k-0-whole|LC 560 和为 K 的子数组]]（中等）· TikTok P2 · Amazon · LeetCode Hot 100
 - [[tlc-design-hashmap-0-whole|LC 706 设计哈希映射]]（简单）· TikTok P2
 - [[tlc-all-oone-data-structure-0-whole|LC 432 全 O(1) 的数据结构]]（困难）· TikTok P2
 - [[tlc-intersection-of-two-linked-lists-0-whole|LC 160 相交链表]]（简单）· TikTok P2 · LeetCode Hot 100
-- [[tlc-all-nodes-distance-k-in-binary-tree-0-whole|LC 863 二叉树中所有距离为 K 的结点]]（中等）· TikTok P2 · Amazon
 - [[tlc-fruit-into-baskets-0-whole|LC 904 水果成篮]]（中等）· TikTok P2 · Amazon
 - [[tlc-find-all-anagrams-in-a-string-0-whole|LC 438 找到字符串中所有字母异位词]]（中等）· TikTok P2 · Amazon · LeetCode Hot 100
 - [[tlc-subarray-sums-divisible-by-k-0-whole|LC 974 和可被 K 整除的子数组]]（中等）· TikTok P2

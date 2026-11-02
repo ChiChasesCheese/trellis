@@ -527,7 +527,7 @@
   "tier": "A",
   "score": 0.9558,
   "a_reason": "us-asked",
-  "band": "p2",
+  "band": "p1",
   "title_zh": "前 K 个高频元素",
   "statement_chars": 383
  },
@@ -564,7 +564,7 @@
   "tier": "A",
   "score": 0.9223,
   "a_reason": "us-asked",
-  "band": "p2",
+  "band": "p1",
   "title_zh": "搜索旋转排序数组",
   "statement_chars": 625
  },
@@ -624,7 +624,7 @@
   "tier": "A",
   "score": 0.8909,
   "a_reason": "us-asked",
-  "band": "p2",
+  "band": "p1",
   "title_zh": "买卖股票的最佳时机",
   "statement_chars": 433
  },
@@ -655,7 +655,7 @@
   "tier": "A",
   "score": 0.8758,
   "a_reason": "us-asked",
-  "band": "p2",
+  "band": "p1",
   "title_zh": "删除链表的倒数第N个节点",
   "statement_chars": 259
  },
@@ -694,7 +694,7 @@
   "tier": "A",
   "score": 0.8224,
   "a_reason": "us-asked",
-  "band": "p2",
+  "band": "p1",
   "title_zh": "基本计算器",
   "statement_chars": 397
  },
@@ -733,7 +733,7 @@
   "tier": "A",
   "score": 0.8147,
   "a_reason": "us-asked",
-  "band": "p2",
+  "band": "p1",
   "title_zh": "二叉树的右视图",
   "statement_chars": 304
  },
@@ -795,7 +795,7 @@
   "tier": "A",
   "score": 0.7553,
   "a_reason": "us-asked",
-  "band": "p2",
+  "band": "p1",
   "title_zh": "接雨水",
   "statement_chars": 293
  },
@@ -828,7 +828,7 @@
   "tier": "A",
   "score": 0.7394,
   "a_reason": "us-asked",
-  "band": "p2",
+  "band": "p1",
   "title_zh": "路径总和 III",
   "statement_chars": 388
  },
@@ -864,7 +864,7 @@
   "tier": "A",
   "score": 0.7104,
   "a_reason": "us-asked",
-  "band": "p2",
+  "band": "p1",
   "title_zh": "打家劫舍",
   "statement_chars": 428
  },
@@ -1272,7 +1272,7 @@
   "tier": "A",
   "score": 0.6151,
   "a_reason": "us-tag-recent",
-  "band": "p2",
+  "band": "p1",
   "title_zh": "不同岛屿的数量",
   "statement_chars": 378
  },
@@ -1442,7 +1442,7 @@
   "tier": "A",
   "score": 0.5472,
   "a_reason": "us-tag-recent",
-  "band": "p2",
+  "band": "p1",
   "title_zh": "最大人工岛",
   "statement_chars": 397
  },
@@ -1634,7 +1634,7 @@
   "tier": "A",
   "score": 0.4468,
   "a_reason": "us-asked",
-  "band": "p2",
+  "band": "p1",
   "title_zh": "统计「优美子数组」",
   "statement_chars": 373
  },
@@ -2563,7 +2563,7 @@
   "tier": "A",
   "score": 0.3187,
   "a_reason": "us-tag-recent",
-  "band": "p2",
+  "band": "p1",
   "title_zh": "二叉树中所有距离为 K 的结点",
   "statement_chars": 377
  },
@@ -2660,7 +2660,7 @@
   "tier": "A",
   "score": 0.3134,
   "a_reason": "us-tag-recent",
-  "band": "p2",
+  "band": "p1",
   "title_zh": "K 站中转内最便宜的航班",
   "statement_chars": 943
  },
@@ -5845,29 +5845,6 @@
   "a_reason": "us-asked",
   "band": "p4",
   "statement_chars": 642
- },
- "tt-inorder-string-iterator": {
-  "id": 0,
-  "title": "In-order character iterator over a string-valued tree",
-  "title_zh": "二叉树中序字符迭代器",
-  "slug": "tt-inorder-string-iterator",
-  "difficulty": "",
-  "freq": 50,
-  "recent": true,
-  "window": "",
-  "tags": [],
-  "tier": "A",
-  "kind": "variant",
-  "companies": {
-   "reports": {
-    "refs": 1,
-    "last_seen": "2025-10-31"
-   }
-  },
-  "score": 0.0259,
-  "a_reason": "us-asked",
-  "band": "p4",
-  "statement_chars": 314
  },
  "lfu-cache": {
   "id": 460,
@@ -10887,6 +10864,29 @@
   "a_reason": "",
   "band": "b",
   "statement_chars": 225
+ },
+ "tt-inorder-string-iterator": {
+  "id": 0,
+  "title": "In-order character iterator over a string-valued tree",
+  "title_zh": "二叉树中序字符迭代器",
+  "slug": "tt-inorder-string-iterator",
+  "difficulty": "",
+  "freq": 50,
+  "recent": true,
+  "window": "",
+  "tags": [],
+  "tier": "B",
+  "kind": "variant",
+  "companies": {
+   "reports": {
+    "refs": 1,
+    "last_seen": "2025-10-31"
+   }
+  },
+  "score": 0.0259,
+  "a_reason": "",
+  "band": "b",
+  "statement_chars": 314
  },
  "vertical-order-traversal-of-a-binary-tree": {
   "id": 987,

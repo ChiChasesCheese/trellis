@@ -7,7 +7,7 @@
 - [[tlc-lru-cache-0-whole|LC 146 LRU 缓存]]（中等）· TikTok P1 · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-reverse-nodes-in-k-group-0-whole|LC 25 K 个一组翻转链表]]（困难）· TikTok P1 · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-reverse-linked-list-0-whole|LC 206 反转链表]]（简单）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100
-- [[tlc-remove-nth-node-from-end-of-list-0-whole|LC 19 删除链表的倒数第 N 个结点]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-remove-nth-node-from-end-of-list-0-whole|LC 19 删除链表的倒数第 N 个结点]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-merge-k-sorted-lists-0-whole|LC 23 合并 K 个升序链表]]（困难）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-design-hashmap-0-whole|LC 706 设计哈希映射]]（简单）· TikTok P2
 - [[tlc-all-oone-data-structure-0-whole|LC 432 全 O(1) 的数据结构]]（困难）· TikTok P2

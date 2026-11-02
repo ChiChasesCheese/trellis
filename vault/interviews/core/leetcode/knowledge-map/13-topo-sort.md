@@ -6,7 +6,7 @@
 
 - [[tlc-number-of-islands-0-whole|LC 200 岛屿数量]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-course-schedule-0-whole|LC 207 课程表]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
-- [[tlc-cheapest-flights-within-k-stops-0-whole|LC 787 K 站中转内最便宜的航班]]（中等）· TikTok P2 · NeetCode 150
+- [[tlc-cheapest-flights-within-k-stops-0-whole|LC 787 K 站中转内最便宜的航班]]（中等）· TikTok P1 · NeetCode 150
 - [[tlc-alien-dictionary-0-whole|LC 269 火星词典]]（困难）· TikTok P3 · Amazon · Blind 75 · NeetCode 150
 - [[tlc-evaluate-division-0-whole|LC 399 除法求值]]（中等）· TikTok P4 · Amazon · Top Interview 150
 - [[tlc-number-of-connected-components-in-an-undirected-graph-0-whole|LC 323 无向图中连通分量的数目]]（中等）· TikTok P4 · Blind 75 · NeetCode 150

@@ -4,8 +4,8 @@
 
 **先做（TikTok P1–P4 与经典题单，13 道）**
 
-- [[tlc-best-time-to-buy-and-sell-stock-0-whole|LC 121 买卖股票的最佳时机]]（简单）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
-- [[tlc-trapping-rain-water-0-whole|LC 42 接雨水]]（困难）· TikTok P2 · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-best-time-to-buy-and-sell-stock-0-whole|LC 121 买卖股票的最佳时机]]（简单）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-trapping-rain-water-0-whole|LC 42 接雨水]]（困难）· TikTok P1 · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-valid-parentheses-0-whole|LC 20 有效的括号]]（简单）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-remove-duplicate-letters-0-whole|LC 316 去除重复字母]]（中等）· TikTok P2 · Amazon
 - [[tlc-longest-valid-parentheses-0-whole|LC 32 最长有效括号]]（困难）· TikTok P2 · Amazon · LeetCode Hot 100

@@ -6,8 +6,8 @@
 
 - [[tlc-number-of-islands-0-whole|LC 200 岛屿数量]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-course-schedule-0-whole|LC 207 课程表]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
-- [[tlc-number-of-distinct-islands-0-whole|LC 694 不同岛屿的数量]]（中等）· TikTok P2
-- [[tlc-making-a-large-island-0-whole|LC 827 最大人工岛]]（困难）· TikTok P2 · Amazon
+- [[tlc-number-of-distinct-islands-0-whole|LC 694 不同岛屿的数量]]（中等）· TikTok P1
+- [[tlc-making-a-large-island-0-whole|LC 827 最大人工岛]]（困难）· TikTok P1 · Amazon
 - [[tlc-possible-bipartition-0-whole|LC 886 可能的二分法]]（中等）· TikTok P2
 - [[tlc-accounts-merge-0-whole|LC 721 账户合并]]（中等）· TikTok P3 · Amazon
 - [[tlc-evaluate-division-0-whole|LC 399 除法求值]]（中等）· TikTok P4 · Amazon · Top Interview 150

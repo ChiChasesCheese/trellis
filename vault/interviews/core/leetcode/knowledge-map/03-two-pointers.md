@@ -6,8 +6,8 @@
 
 - [[tlc-longest-substring-without-repeating-characters-0-whole|LC 3 无重复字符的最长子串]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-longest-palindromic-substring-0-whole|LC 5 最长回文子串]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
-- [[tlc-remove-nth-node-from-end-of-list-0-whole|LC 19 删除链表的倒数第 N 个结点]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
-- [[tlc-trapping-rain-water-0-whole|LC 42 接雨水]]（困难）· TikTok P2 · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-remove-nth-node-from-end-of-list-0-whole|LC 19 删除链表的倒数第 N 个结点]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-trapping-rain-water-0-whole|LC 42 接雨水]]（困难）· TikTok P1 · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-merge-sorted-array-0-whole|LC 88 合并两个有序数组]]（简单）· TikTok P2 · Amazon · Top Interview 150
 - [[tlc-meeting-rooms-ii-0-whole|LC 253 会议室 II]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150
 - [[tlc-3sum-0-whole|LC 15 三数之和]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150

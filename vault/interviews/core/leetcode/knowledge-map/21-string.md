@@ -7,7 +7,7 @@
 - [[tlc-longest-substring-without-repeating-characters-0-whole|LC 3 无重复字符的最长子串]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-longest-palindromic-substring-0-whole|LC 5 最长回文子串]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-numbers-at-most-n-given-digit-set-0-whole|LC 902 最大为 N 的数字组合]]（困难）· TikTok P1
-- [[tlc-basic-calculator-0-whole|LC 224 基本计算器]]（困难）· TikTok P2 · Top Interview 150
+- [[tlc-basic-calculator-0-whole|LC 224 基本计算器]]（困难）· TikTok P1 · Top Interview 150
 - [[tlc-valid-parentheses-0-whole|LC 20 有效的括号]]（简单）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-multiply-strings-0-whole|LC 43 字符串相乘]]（中等）· TikTok P2 · Amazon · NeetCode 150
 - [[tlc-add-strings-0-whole|LC 415 字符串相加]]（简单）· TikTok P2

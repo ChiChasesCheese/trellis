@@ -4,7 +4,7 @@
 
 **先做（TikTok P1–P4 与经典题单，11 道）**
 
-- [[tlc-cheapest-flights-within-k-stops-0-whole|LC 787 K 站中转内最便宜的航班]]（中等）· TikTok P2 · NeetCode 150
+- [[tlc-cheapest-flights-within-k-stops-0-whole|LC 787 K 站中转内最便宜的航班]]（中等）· TikTok P1 · NeetCode 150
 - [[tlc-word-ladder-0-whole|LC 127 单词接龙]]（困难）· TikTok P3 · Amazon · NeetCode 150 · Top Interview 150
 - [[tlc-shortest-path-in-a-grid-with-obstacles-elimination-0-whole|LC 1293 网格中的最短路径]]（困难）· TikTok P3 · Amazon
 - [[tlc-accounts-merge-0-whole|LC 721 账户合并]]（中等）· TikTok P3 · Amazon

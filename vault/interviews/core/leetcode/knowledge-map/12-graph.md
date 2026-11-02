@@ -7,17 +7,17 @@
 - [[tlc-number-of-islands-0-whole|LC 200 岛屿数量]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-course-schedule-0-whole|LC 207 课程表]]（中等）· TikTok P1 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-binary-tree-level-order-traversal-0-whole|LC 102 二叉树的层序遍历]]（中等）· TikTok P1 · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
-- [[tlc-binary-tree-right-side-view-0-whole|LC 199 二叉树的右视图]]（中等）· TikTok P2 · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
-- [[tlc-path-sum-iii-0-whole|LC 437 路径总和 III]]（中等）· TikTok P2 · Amazon · LeetCode Hot 100
+- [[tlc-binary-tree-right-side-view-0-whole|LC 199 二叉树的右视图]]（中等）· TikTok P1 · Amazon · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
+- [[tlc-path-sum-iii-0-whole|LC 437 路径总和 III]]（中等）· TikTok P1 · Amazon · LeetCode Hot 100
+- [[tlc-number-of-distinct-islands-0-whole|LC 694 不同岛屿的数量]]（中等）· TikTok P1
+- [[tlc-making-a-large-island-0-whole|LC 827 最大人工岛]]（困难）· TikTok P1 · Amazon
+- [[tlc-all-nodes-distance-k-in-binary-tree-0-whole|LC 863 二叉树中所有距离为 K 的结点]]（中等）· TikTok P1 · Amazon
+- [[tlc-cheapest-flights-within-k-stops-0-whole|LC 787 K 站中转内最便宜的航班]]（中等）· TikTok P1 · NeetCode 150
 - [[tlc-lowest-common-ancestor-of-a-binary-tree-0-whole|LC 236 二叉树的最近公共祖先]]（中等）· TikTok P2 · Amazon · LeetCode Hot 100 · Top Interview 150
-- [[tlc-number-of-distinct-islands-0-whole|LC 694 不同岛屿的数量]]（中等）· TikTok P2
 - [[tlc-binary-tree-maximum-path-sum-0-whole|LC 124 二叉树中的最大路径和]]（困难）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-spiral-matrix-0-whole|LC 54 螺旋矩阵]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
-- [[tlc-making-a-large-island-0-whole|LC 827 最大人工岛]]（困难）· TikTok P2 · Amazon
 - [[tlc-rotate-image-0-whole|LC 48 旋转图像]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-possible-bipartition-0-whole|LC 886 可能的二分法]]（中等）· TikTok P2
-- [[tlc-all-nodes-distance-k-in-binary-tree-0-whole|LC 863 二叉树中所有距离为 K 的结点]]（中等）· TikTok P2 · Amazon
-- [[tlc-cheapest-flights-within-k-stops-0-whole|LC 787 K 站中转内最便宜的航班]]（中等）· TikTok P2 · NeetCode 150
 - [[tlc-serialize-and-deserialize-n-ary-tree-0-whole|LC 428 序列化和反序列化 N 叉树]]（困难）· TikTok P2
 - [[tlc-serialize-and-deserialize-binary-tree-0-whole|LC 297 二叉树的序列化与反序列化]]（困难）· TikTok P2 · Amazon · Blind 75 · NeetCode 150
 - [[tlc-word-search-0-whole|LC 79 单词搜索]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150

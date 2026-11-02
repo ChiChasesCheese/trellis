@@ -5,11 +5,11 @@
 **先做（TikTok P1–P4 与经典题单，60 道）**
 
 - [[tlc-numbers-at-most-n-given-digit-set-0-whole|LC 902 最大为 N 的数字组合]]（困难）· TikTok P1
-- [[tlc-basic-calculator-0-whole|LC 224 基本计算器]]（困难）· TikTok P2 · Top Interview 150
+- [[tlc-basic-calculator-0-whole|LC 224 基本计算器]]（困难）· TikTok P1 · Top Interview 150
+- [[tlc-count-number-of-nice-subarrays-0-whole|LC 1248 统计「优美子数组」]]（中等）· TikTok P1 · Amazon
 - [[tlc-multiply-strings-0-whole|LC 43 字符串相乘]]（中等）· TikTok P2 · Amazon · NeetCode 150
 - [[tlc-add-strings-0-whole|LC 415 字符串相加]]（简单）· TikTok P2
 - [[tlc-spiral-matrix-0-whole|LC 54 螺旋矩阵]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
-- [[tlc-count-number-of-nice-subarrays-0-whole|LC 1248 统计「优美子数组」]]（中等）· TikTok P2 · Amazon
 - [[tlc-rotate-image-0-whole|LC 48 旋转图像]]（中等）· TikTok P2 · Amazon · Blind 75 · NeetCode 150 · LeetCode Hot 100 · Top Interview 150
 - [[tlc-rotate-array-0-whole|LC 189 轮转数组]]（中等）· TikTok P2 · Amazon · LeetCode Hot 100 · Top Interview 150
 - [[tlc-basic-calculator-ii-0-whole|LC 227 基本计算器 II]]（中等）· TikTok P2 · Amazon
