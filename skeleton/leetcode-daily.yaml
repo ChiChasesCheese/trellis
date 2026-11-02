@@ -30,8 +30,17 @@ nodes:
     title: LC 4094 统计频次阶梯子数组的数目 I（Count Frequency Staircase Subarrays I）
     summary: Medium；。
   core: true
-- id: binary-search
+- id: sliding-window
   order: 3
+  title: 滑动窗口
+  summary: 滑动窗口：Chi 解过的题，按知识点归在一起。
+  children:
+  - id: sliding-window.longest-substring-without-repeating-characters
+    title: LC 3 无重复字符的最长子串（Longest Substring Without Repeating Characters）
+    summary: Medium；Hash Table, String, Sliding Window。
+  core: true
+- id: binary-search
+  order: 4
   title: 二分查找：在下标上与在答案上
   summary: 二分查找：在下标上与在答案上：Chi 解过的题，按知识点归在一起。
   children:
@@ -40,7 +49,7 @@ nodes:
     summary: Medium；Array, Binary Search。
   core: true
 - id: heap-patterns
-  order: 4
+  order: 5
   title: 堆：Top-K、多路归并与双堆
   summary: 堆：Top-K、多路归并与双堆：Chi 解过的题，按知识点归在一起。
   children:
@@ -49,7 +58,7 @@ nodes:
     summary: Medium；Greedy, Array, Hash Table, Counting。
   core: true
 - id: intervals-sweep
-  order: 5
+  order: 6
   title: 区间与扫描线
   summary: 区间与扫描线：Chi 解过的题，按知识点归在一起。
   children:
@@ -58,7 +67,7 @@ nodes:
     summary: Easy；Math, String。
   core: true
 - id: linked-list
-  order: 6
+  order: 7
   title: 链表技巧
   summary: 链表技巧：Chi 解过的题，按知识点归在一起。
   children:
@@ -67,7 +76,7 @@ nodes:
     summary: Hard；Recursion, Linked List。
   core: true
 - id: graph-traversal
-  order: 7
+  order: 8
   title: 图与网格的 BFS / DFS
   summary: 图与网格的 BFS / DFS：Chi 解过的题，按知识点归在一起。
   children:
@@ -77,9 +86,21 @@ nodes:
   - id: graph-traversal.number-of-closed-islands
     title: LC 1254 统计封闭岛屿的数目（Number of Closed Islands）
     summary: Medium；Depth-First Search, Breadth-First Search, Union Find, Array。
+  - id: graph-traversal.number-of-islands
+    title: LC 200 岛屿数量（Number of Islands）
+    summary: Medium；Depth-First Search, Breadth-First Search, Union Find, Array。
+  core: true
+- id: shortest-path
+  order: 9
+  title: 最短路：Dijkstra 与其变体
+  summary: 最短路：Dijkstra 与其变体：Chi 解过的题，按知识点归在一起。
+  children:
+  - id: shortest-path.cheapest-flights-within-k-stops
+    title: LC 787 K 站中转内最便宜的航班（Cheapest Flights Within K Stops）
+    summary: Medium；Depth-First Search, Breadth-First Search, Graph, Dynamic Programming。
   core: true
 - id: dp-grid-string
-  order: 8
+  order: 10
   title: 动态规划：网格、双串与区间
   summary: 动态规划：网格、双串与区间：Chi 解过的题，按知识点归在一起。
   children:
@@ -88,7 +109,7 @@ nodes:
     summary: Medium；Array, Dynamic Programming, Matrix。
   core: true
 - id: greedy
-  order: 9
+  order: 11
   title: 贪心
   summary: 贪心：Chi 解过的题，按知识点归在一起。
   children:
@@ -97,16 +118,22 @@ nodes:
     summary: Medium；。
   core: true
 - id: design
-  order: 10
+  order: 12
   title: 数据结构设计题
   summary: 数据结构设计题：Chi 解过的题，按知识点归在一起。
   children:
   - id: design.design-bus-seat-booking-system
     title: LC 4080 设计公交车座位预订系统（Design Bus Seat Booking System）
     summary: Medium；。
+  - id: design.lru-cache
+    title: LC 146 LRU 缓存（LRU Cache）
+    summary: Medium；Design, Hash Table, Linked List, Doubly-Linked List。
+  - id: design.design-task-manager
+    title: LC 3408 设计任务管理器（Design Task Manager）
+    summary: Medium；Design, Hash Table, Ordered Set, Heap (Priority Queue)。
   core: true
 - id: math-bit-sim
-  order: 11
+  order: 13
   title: 数学、位运算与模拟
   summary: 数学、位运算与模拟：Chi 解过的题，按知识点归在一起。
   children:
@@ -122,9 +149,12 @@ nodes:
   - id: math-bit-sim.minimum-moves-to-equal-array-elements
     title: LC 453 最小操作次数使数组元素相等（Minimum Moves to Equal Array Elements）
     summary: Medium；Array, Math。
+  - id: math-bit-sim.minimum-moves-to-equal-array-elements-ii
+    title: LC 462 最小操作次数使数组元素相等 II（Minimum Moves to Equal Array Elements II）
+    summary: Medium；Array, Math, Sorting。
   core: true
 - id: sorting-permutation
-  order: 12
+  order: 14
   title: 排序、置换环与逆序对
   summary: 排序、置换环与逆序对：Chi 解过的题，按知识点归在一起。
   children:
