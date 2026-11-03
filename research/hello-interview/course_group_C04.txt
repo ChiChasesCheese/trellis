@@ -1,0 +1,7 @@
+sd.patterns.dealing-with-contention system-design__patterns__dealing-with-contention
+sd.patterns.multi-step-processes system-design__patterns__multi-step-processes
+sd.patterns.scaling-reads system-design__patterns__scaling-reads
+sd.patterns.scaling-writes system-design__patterns__scaling-writes
+sd.patterns.large-blobs system-design__patterns__large-blobs
+sd.patterns.long-running-tasks system-design__patterns__long-running-tasks
+sd.core-concepts.networking-essentials system-design__core-concepts__networking-essentials

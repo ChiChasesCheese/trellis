@@ -1,6 +1,6 @@
 ---
 id: hi-sd-uber-6-driver-lock
-node: sd.problem-breakdowns.uber
+node: sd.problem-breakdowns.uber.exam
 type: qa
 step: 6
 ---

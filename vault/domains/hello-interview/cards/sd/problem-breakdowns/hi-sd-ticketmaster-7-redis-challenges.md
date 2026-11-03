@@ -1,6 +1,6 @@
 ---
 id: hi-sd-ticketmaster-7-redis-challenges
-node: sd.problem-breakdowns.ticketmaster
+node: sd.problem-breakdowns.ticketmaster.exam
 type: qa
 step: 7
 ---

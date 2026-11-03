@@ -1,5 +1,5 @@
 ---
-nodes: [sd.problem-breakdowns.fb-live-comments]
+nodes: [sd.problem-breakdowns.fb-live-comments.notes, sd.problem-breakdowns.fb-live-comments.exam, sd.problem-breakdowns.fb-live-comments.beyond]
 url: https://www.hellointerview.com/learn/system-design/problem-breakdowns/fb-live-comments
 tags: [no-archive]
 ---

@@ -1,0 +1,51 @@
+{
+ "delayed-payment-scheduler": {
+  "requires": [
+   "sd.patterns.dealing-with-contention",
+   "sd.patterns.long-running-tasks",
+   "sd.core-concepts.db-indexing",
+   "sd.core-concepts.sharding",
+   "sd.deep-dives.temporal"
+  ]
+ },
+ "metrics-aggregator": {
+  "requires": [
+   "sd.deep-dives.kafka",
+   "sd.deep-dives.flink",
+   "sd.deep-dives.time-series-databases",
+   "sd.patterns.scaling-writes"
+  ]
+ },
+ "realtime-game-leaderboard": {
+  "requires": [
+   "sd.deep-dives.redis",
+   "sd.patterns.scaling-reads",
+   "sd.core-concepts.sharding",
+   "sd.core-concepts.caching"
+  ]
+ },
+ "global-ip-blocking": {
+  "requires": [
+   "sd.core-concepts.caching",
+   "sd.patterns.scaling-reads",
+   "sd.deep-dives.api-gateway",
+   "sd.deep-dives.data-structures-for-big-data"
+  ]
+ },
+ "tiktok-meeting-room-booking": {
+  "requires": [
+   "sd.patterns.dealing-with-contention",
+   "sd.core-concepts.data-modeling",
+   "sd.core-concepts.db-indexing",
+   "sd.deep-dives.postgres"
+  ]
+ },
+ "typeahead-search-system": {
+  "requires": [
+   "sd.core-concepts.caching",
+   "sd.patterns.scaling-reads",
+   "sd.core-concepts.sharding",
+   "sd.deep-dives.kafka"
+  ]
+ }
+}

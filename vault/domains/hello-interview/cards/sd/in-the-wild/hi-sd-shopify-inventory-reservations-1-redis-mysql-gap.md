@@ -1,6 +1,6 @@
 ---
 id: hi-sd-shopify-inventory-reservations-1-redis-mysql-gap
-node: sd.in-the-wild.shopify-inventory-reservations
+node: sd.in-the-wild.shopify-inventory-reservations.exam
 type: qa
 step: 1
 ---

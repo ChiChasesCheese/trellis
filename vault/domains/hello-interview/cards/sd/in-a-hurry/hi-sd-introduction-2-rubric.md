@@ -1,6 +1,6 @@
 ---
 id: hi-sd-introduction-2-rubric
-node: sd.in-a-hurry.introduction
+node: sd.in-a-hurry.introduction.exam
 type: qa
 step: 2
 ---

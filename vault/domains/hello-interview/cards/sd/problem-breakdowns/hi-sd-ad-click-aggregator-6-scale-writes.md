@@ -1,6 +1,6 @@
 ---
 id: hi-sd-ad-click-aggregator-6-scale-writes
-node: sd.problem-breakdowns.ad-click-aggregator
+node: sd.problem-breakdowns.ad-click-aggregator.exam
 type: qa
 step: 6
 ---

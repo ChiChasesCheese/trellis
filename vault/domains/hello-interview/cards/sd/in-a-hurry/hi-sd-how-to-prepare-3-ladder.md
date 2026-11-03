@@ -1,6 +1,6 @@
 ---
 id: hi-sd-how-to-prepare-3-ladder
-node: sd.in-a-hurry.how-to-prepare
+node: sd.in-a-hurry.how-to-prepare.exam
 type: qa
 step: 3
 ---

@@ -1,5 +1,5 @@
 ---
-nodes: [qb.lld.beverage-vending-system.pre-lld-in-a-hurry-delivery]
+nodes: [qb.lld.beverage-vending-system.pre-lld-in-a-hurry-delivery, lld.in-a-hurry.delivery.notes, lld.in-a-hurry.delivery.exam, lld.in-a-hurry.delivery.beyond]
 url: https://www.hellointerview.com/learn/low-level-design/in-a-hurry/delivery
 tags: [no-archive]
 ---

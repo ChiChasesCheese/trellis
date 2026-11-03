@@ -1,6 +1,6 @@
 ---
 id: hi-sd-delivery-4-estimation
-node: sd.in-a-hurry.delivery
+node: sd.in-a-hurry.delivery.exam
 type: qa
 step: 4
 ---

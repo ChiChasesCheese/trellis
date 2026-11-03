@@ -1,0 +1,8 @@
+sd.deep-dives.time-series-databases system-design__deep-dives__time-series-databases
+sd.deep-dives.data-structures-for-big-data system-design__deep-dives__data-structures-for-big-data
+sd.deep-dives.change-data-capture system-design__deep-dives__change-data-capture
+sd.problem-breakdowns.bitly system-design__problem-breakdowns__bitly
+sd.problem-breakdowns.dropbox system-design__problem-breakdowns__dropbox
+sd.problem-breakdowns.gopuff system-design__problem-breakdowns__gopuff
+sd.problem-breakdowns.ticketmaster system-design__problem-breakdowns__ticketmaster
+sd.problem-breakdowns.fb-news-feed system-design__problem-breakdowns__fb-news-feed

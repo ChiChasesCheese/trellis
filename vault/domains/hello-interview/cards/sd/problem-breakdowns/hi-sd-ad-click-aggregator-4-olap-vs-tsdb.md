@@ -1,6 +1,6 @@
 ---
 id: hi-sd-ad-click-aggregator-4-olap-vs-tsdb
-node: sd.problem-breakdowns.ad-click-aggregator
+node: sd.problem-breakdowns.ad-click-aggregator.exam
 type: qa
 step: 4
 ---

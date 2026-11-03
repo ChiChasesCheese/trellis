@@ -1,6 +1,6 @@
 ---
 id: hi-sd-tinder-6-single-partition
-node: sd.problem-breakdowns.tinder
+node: sd.problem-breakdowns.tinder.exam
 type: qa
 step: 6
 ---

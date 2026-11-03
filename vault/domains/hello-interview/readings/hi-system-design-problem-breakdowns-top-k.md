@@ -1,5 +1,5 @@
 ---
-nodes: [sd.problem-breakdowns.top-k]
+nodes: [sd.problem-breakdowns.top-k.notes, sd.problem-breakdowns.top-k.exam, sd.problem-breakdowns.top-k.beyond]
 url: https://www.hellointerview.com/learn/system-design/problem-breakdowns/top-k
 tags: [no-archive]
 ---

@@ -1,6 +1,6 @@
 ---
 id: hi-sd-leetcode-10-levels
-node: sd.problem-breakdowns.leetcode
+node: sd.problem-breakdowns.leetcode.exam
 type: qa
 step: 10
 ---

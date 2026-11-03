@@ -1,6 +1,6 @@
 ---
 id: hi-sd-discord-messages-scylladb-2-noisy-neighbor
-node: sd.in-the-wild.discord-messages-scylladb
+node: sd.in-the-wild.discord-messages-scylladb.exam
 type: qa
 step: 2
 ---

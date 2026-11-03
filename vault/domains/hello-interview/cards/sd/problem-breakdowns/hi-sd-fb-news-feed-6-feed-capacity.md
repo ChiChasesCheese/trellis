@@ -1,6 +1,6 @@
 ---
 id: hi-sd-fb-news-feed-6-feed-capacity
-node: sd.problem-breakdowns.fb-news-feed
+node: sd.problem-breakdowns.fb-news-feed.exam
 type: qa
 step: 6
 ---

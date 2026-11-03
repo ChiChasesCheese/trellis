@@ -1,5 +1,5 @@
 ---
-nodes: [sd.problem-breakdowns.fb-news-feed]
+nodes: [sd.problem-breakdowns.fb-news-feed.notes, sd.problem-breakdowns.fb-news-feed.exam, sd.problem-breakdowns.fb-news-feed.beyond]
 url: https://www.hellointerview.com/learn/system-design/problem-breakdowns/fb-news-feed
 tags: [no-archive]
 ---

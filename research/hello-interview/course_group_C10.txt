@@ -1,0 +1,6 @@
+sd.problem-breakdowns.top-k system-design__problem-breakdowns__top-k
+sd.problem-breakdowns.uber system-design__problem-breakdowns__uber
+sd.problem-breakdowns.web-crawler system-design__problem-breakdowns__web-crawler
+sd.problem-breakdowns.ad-click-aggregator system-design__problem-breakdowns__ad-click-aggregator
+sd.problem-breakdowns.fb-post-search system-design__problem-breakdowns__fb-post-search
+sd.problem-breakdowns.yelp system-design__problem-breakdowns__yelp

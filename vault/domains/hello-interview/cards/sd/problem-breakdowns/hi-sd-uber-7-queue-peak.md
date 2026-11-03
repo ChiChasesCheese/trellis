@@ -1,6 +1,6 @@
 ---
 id: hi-sd-uber-7-queue-peak
-node: sd.problem-breakdowns.uber
+node: sd.problem-breakdowns.uber.exam
 type: qa
 step: 7
 ---

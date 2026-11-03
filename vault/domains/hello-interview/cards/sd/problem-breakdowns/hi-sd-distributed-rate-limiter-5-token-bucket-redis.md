@@ -1,6 +1,6 @@
 ---
 id: hi-sd-distributed-rate-limiter-5-token-bucket-redis
-node: sd.problem-breakdowns.distributed-rate-limiter
+node: sd.problem-breakdowns.distributed-rate-limiter.exam
 type: qa
 step: 5
 ---

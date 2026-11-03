@@ -1,5 +1,5 @@
 ---
-nodes: [sd.in-a-hurry.how-to-prepare]
+nodes: [sd.in-a-hurry.how-to-prepare.notes, sd.in-a-hurry.how-to-prepare.exam, sd.in-a-hurry.how-to-prepare.beyond]
 url: https://www.hellointerview.com/learn/system-design/in-a-hurry/how-to-prepare
 tags: [no-archive]
 ---

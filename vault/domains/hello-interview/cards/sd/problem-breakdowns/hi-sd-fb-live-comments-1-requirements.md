@@ -1,6 +1,6 @@
 ---
 id: hi-sd-fb-live-comments-1-requirements
-node: sd.problem-breakdowns.fb-live-comments
+node: sd.problem-breakdowns.fb-live-comments.exam
 type: qa
 step: 1
 ---

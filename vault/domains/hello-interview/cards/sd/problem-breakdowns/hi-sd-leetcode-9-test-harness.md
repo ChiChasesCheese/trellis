@@ -1,6 +1,6 @@
 ---
 id: hi-sd-leetcode-9-test-harness
-node: sd.problem-breakdowns.leetcode
+node: sd.problem-breakdowns.leetcode.exam
 type: qa
 step: 9
 ---

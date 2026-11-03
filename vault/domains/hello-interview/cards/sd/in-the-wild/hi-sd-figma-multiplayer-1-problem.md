@@ -1,6 +1,6 @@
 ---
 id: hi-sd-figma-multiplayer-1-problem
-node: sd.in-the-wild.figma-multiplayer
+node: sd.in-the-wild.figma-multiplayer.exam
 type: qa
 step: 1
 ---

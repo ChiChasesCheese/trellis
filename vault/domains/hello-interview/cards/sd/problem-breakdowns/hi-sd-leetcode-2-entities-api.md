@@ -1,6 +1,6 @@
 ---
 id: hi-sd-leetcode-2-entities-api
-node: sd.problem-breakdowns.leetcode
+node: sd.problem-breakdowns.leetcode.exam
 type: qa
 step: 2
 ---

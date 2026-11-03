@@ -1,0 +1,14 @@
+sd.in-a-hurry.key-technologies system-design__in-a-hurry__key-technologies
+sd.in-a-hurry.patterns system-design__in-a-hurry__patterns
+sd.in-a-hurry.problem-breakdowns system-design__in-a-hurry__problem-breakdowns
+sd.in-the-wild.in-the-wild system-design__in-the-wild
+sd.in-the-wild.shopify-inventory-reservations system-design__in-the-wild__shopify-inventory-reservations
+sd.in-the-wild.discord-messages-scylladb system-design__in-the-wild__discord-messages-scylladb
+sd.in-the-wild.slack-job-queue system-design__in-the-wild__slack-job-queue
+sd.in-the-wild.figma-multiplayer system-design__in-the-wild__figma-multiplayer
+sd.in-the-wild.spotify-data-lake-point-queries system-design__in-the-wild__spotify-data-lake-point-queries
+sd.in-the-wild.meta-zgateway-zippydb system-design__in-the-wild__meta-zgateway-zippydb
+sd.deep-dives.redis system-design__deep-dives__redis
+sd.deep-dives.elasticsearch system-design__deep-dives__elasticsearch
+sd.deep-dives.kafka system-design__deep-dives__kafka
+sd.deep-dives.temporal system-design__deep-dives__temporal

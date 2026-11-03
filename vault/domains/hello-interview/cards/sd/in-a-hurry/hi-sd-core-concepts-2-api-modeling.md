@@ -1,6 +1,6 @@
 ---
 id: hi-sd-core-concepts-2-api-modeling
-node: sd.in-a-hurry.core-concepts
+node: sd.in-a-hurry.core-concepts.exam
 type: qa
 step: 2
 ---

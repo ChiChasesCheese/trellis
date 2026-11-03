@@ -1,6 +1,6 @@
 ---
 id: hi-sd-uber-9-geo-shard-scale
-node: sd.problem-breakdowns.uber
+node: sd.problem-breakdowns.uber.exam
 type: qa
 step: 9
 ---

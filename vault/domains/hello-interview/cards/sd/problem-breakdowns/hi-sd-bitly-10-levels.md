@@ -1,6 +1,6 @@
 ---
 id: hi-sd-bitly-10-levels
-node: sd.problem-breakdowns.bitly
+node: sd.problem-breakdowns.bitly.exam
 type: qa
 step: 10
 ---

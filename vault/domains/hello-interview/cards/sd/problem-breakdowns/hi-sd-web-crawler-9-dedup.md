@@ -1,6 +1,6 @@
 ---
 id: hi-sd-web-crawler-9-dedup
-node: sd.problem-breakdowns.web-crawler
+node: sd.problem-breakdowns.web-crawler.exam
 type: qa
 step: 9
 ---

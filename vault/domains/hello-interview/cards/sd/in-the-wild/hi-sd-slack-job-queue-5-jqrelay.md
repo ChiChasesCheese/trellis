@@ -1,6 +1,6 @@
 ---
 id: hi-sd-slack-job-queue-5-jqrelay
-node: sd.in-the-wild.slack-job-queue
+node: sd.in-the-wild.slack-job-queue.exam
 type: qa
 step: 5
 ---

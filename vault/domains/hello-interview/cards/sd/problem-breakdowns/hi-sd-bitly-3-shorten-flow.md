@@ -1,6 +1,6 @@
 ---
 id: hi-sd-bitly-3-shorten-flow
-node: sd.problem-breakdowns.bitly
+node: sd.problem-breakdowns.bitly.exam
 type: qa
 step: 3
 ---

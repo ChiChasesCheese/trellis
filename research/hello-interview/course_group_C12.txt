@@ -1,0 +1,6 @@
+sd.problem-breakdowns.camelcamelcamel system-design__problem-breakdowns__camelcamelcamel
+sd.problem-breakdowns.notification-system system-design__problem-breakdowns__notification-system
+sd.problem-breakdowns.robinhood system-design__problem-breakdowns__robinhood
+sd.problem-breakdowns.google-docs system-design__problem-breakdowns__google-docs
+sd.problem-breakdowns.payment-system system-design__problem-breakdowns__payment-system
+sd.problem-breakdowns.metrics-monitoring system-design__problem-breakdowns__metrics-monitoring

@@ -1,5 +1,5 @@
 ---
-nodes: [sd.in-the-wild.shopify-inventory-reservations]
+nodes: [sd.in-the-wild.shopify-inventory-reservations.notes, sd.in-the-wild.shopify-inventory-reservations.exam, sd.in-the-wild.shopify-inventory-reservations.beyond]
 url: https://www.hellointerview.com/learn/system-design/in-the-wild/shopify-inventory-reservations
 tags: [no-archive]
 ---

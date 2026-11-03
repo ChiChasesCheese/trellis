@@ -1,6 +1,6 @@
 ---
 id: hi-lld-connect-four-1-requirements
-node: lld.problem-breakdowns.connect-four
+node: lld.problem-breakdowns.connect-four.exam
 type: qa
 step: 1
 ---

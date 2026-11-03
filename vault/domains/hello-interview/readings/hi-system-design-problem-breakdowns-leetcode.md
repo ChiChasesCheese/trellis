@@ -1,5 +1,5 @@
 ---
-nodes: [sd.problem-breakdowns.leetcode]
+nodes: [sd.problem-breakdowns.leetcode.notes, sd.problem-breakdowns.leetcode.exam, sd.problem-breakdowns.leetcode.beyond]
 url: https://www.hellointerview.com/learn/system-design/problem-breakdowns/leetcode
 tags: [no-archive]
 ---

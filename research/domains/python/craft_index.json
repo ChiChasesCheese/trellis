@@ -1,0 +1,6059 @@
+{
+"problems": [
+{
+"slug": "airline",
+"lines": 741,
+"path": "vault/domains/low-level-design/problems/airline/solution.py"
+},
+{
+"slug": "amazon-locker",
+"lines": 590,
+"path": "vault/domains/low-level-design/problems/amazon-locker/solution.py"
+},
+{
+"slug": "amz-aws-billing",
+"lines": 244,
+"path": "vault/domains/low-level-design/problems/amz-aws-billing/solution.py"
+},
+{
+"slug": "amz-closest-store",
+"lines": 273,
+"path": "vault/domains/low-level-design/problems/amz-closest-store/solution.py"
+},
+{
+"slug": "amz-configurable-cache",
+"lines": 385,
+"path": "vault/domains/low-level-design/problems/amz-configurable-cache/solution.py"
+},
+{
+"slug": "amz-dag-runner",
+"lines": 209,
+"path": "vault/domains/low-level-design/problems/amz-dag-runner/solution.py"
+},
+{
+"slug": "amz-discount-engine",
+"lines": 277,
+"path": "vault/domains/low-level-design/problems/amz-discount-engine/solution.py"
+},
+{
+"slug": "amz-emergency-pubsub",
+"lines": 290,
+"path": "vault/domains/low-level-design/problems/amz-emergency-pubsub/solution.py"
+},
+{
+"slug": "amz-file-watcher",
+"lines": 232,
+"path": "vault/domains/low-level-design/problems/amz-file-watcher/solution.py"
+},
+{
+"slug": "amz-in-memory-db",
+"lines": 586,
+"path": "vault/domains/low-level-design/problems/amz-in-memory-db/solution.py"
+},
+{
+"slug": "amz-linux-find",
+"lines": 290,
+"path": "vault/domains/low-level-design/problems/amz-linux-find/solution.py"
+},
+{
+"slug": "amz-occupancy-tracker",
+"lines": 234,
+"path": "vault/domains/low-level-design/problems/amz-occupancy-tracker/solution.py"
+},
+{
+"slug": "amz-parking-fees",
+"lines": 315,
+"path": "vault/domains/low-level-design/problems/amz-parking-fees/solution.py"
+},
+{
+"slug": "amz-pizza-order",
+"lines": 360,
+"path": "vault/domains/low-level-design/problems/amz-pizza-order/solution.py"
+},
+{
+"slug": "amz-robot-restaurant",
+"lines": 361,
+"path": "vault/domains/low-level-design/problems/amz-robot-restaurant/solution.py"
+},
+{
+"slug": "amz-train-fare",
+"lines": 228,
+"path": "vault/domains/low-level-design/problems/amz-train-fare/solution.py"
+},
+{
+"slug": "atm",
+"lines": 633,
+"path": "vault/domains/low-level-design/problems/atm/solution.py"
+},
+{
+"slug": "bank-account",
+"lines": 346,
+"path": "vault/domains/low-level-design/problems/bank-account/solution.py"
+},
+{
+"slug": "bounded-blocking-queue",
+"lines": 209,
+"path": "vault/domains/low-level-design/problems/bounded-blocking-queue/solution.py"
+},
+{
+"slug": "car-rental",
+"lines": 669,
+"path": "vault/domains/low-level-design/problems/car-rental/solution.py"
+},
+{
+"slug": "chat-room",
+"lines": 381,
+"path": "vault/domains/low-level-design/problems/chat-room/solution.py"
+},
+{
+"slug": "chess",
+"lines": 500,
+"path": "vault/domains/low-level-design/problems/chess/solution.py"
+},
+{
+"slug": "coffee-machine",
+"lines": 308,
+"path": "vault/domains/low-level-design/problems/coffee-machine/solution.py"
+},
+{
+"slug": "cricinfo",
+"lines": 476,
+"path": "vault/domains/low-level-design/problems/cricinfo/solution.py"
+},
+{
+"slug": "deck-of-cards",
+"lines": 537,
+"path": "vault/domains/low-level-design/problems/deck-of-cards/solution.py"
+},
+{
+"slug": "digital-wallet",
+"lines": 361,
+"path": "vault/domains/low-level-design/problems/digital-wallet/solution.py"
+},
+{
+"slug": "elevator",
+"lines": 500,
+"path": "vault/domains/low-level-design/problems/elevator/solution.py"
+},
+{
+"slug": "food-delivery",
+"lines": 648,
+"path": "vault/domains/low-level-design/problems/food-delivery/solution.py"
+},
+{
+"slug": "hotel-booking",
+"lines": 563,
+"path": "vault/domains/low-level-design/problems/hotel-booking/solution.py"
+},
+{
+"slug": "in-memory-file-system",
+"lines": 302,
+"path": "vault/domains/low-level-design/problems/in-memory-file-system/solution.py"
+},
+{
+"slug": "kv-store",
+"lines": 261,
+"path": "vault/domains/low-level-design/problems/kv-store/solution.py"
+},
+{
+"slug": "library",
+"lines": 618,
+"path": "vault/domains/low-level-design/problems/library/solution.py"
+},
+{
+"slug": "linkedin",
+"lines": 640,
+"path": "vault/domains/low-level-design/problems/linkedin/solution.py"
+},
+{
+"slug": "logger",
+"lines": 611,
+"path": "vault/domains/low-level-design/problems/logger/solution.py"
+},
+{
+"slug": "lru-cache",
+"lines": 344,
+"path": "vault/domains/low-level-design/problems/lru-cache/solution.py"
+},
+{
+"slug": "meeting-scheduler",
+"lines": 540,
+"path": "vault/domains/low-level-design/problems/meeting-scheduler/solution.py"
+},
+{
+"slug": "movie-booking",
+"lines": 594,
+"path": "vault/domains/low-level-design/problems/movie-booking/solution.py"
+},
+{
+"slug": "music-streaming",
+"lines": 641,
+"path": "vault/domains/low-level-design/problems/music-streaming/solution.py"
+},
+{
+"slug": "notification-service",
+"lines": 676,
+"path": "vault/domains/low-level-design/problems/notification-service/solution.py"
+},
+{
+"slug": "online-auction",
+"lines": 502,
+"path": "vault/domains/low-level-design/problems/online-auction/solution.py"
+},
+{
+"slug": "online-shopping",
+"lines": 642,
+"path": "vault/domains/low-level-design/problems/online-shopping/solution.py"
+},
+{
+"slug": "parking-lot",
+"lines": 328,
+"path": "vault/domains/low-level-design/problems/parking-lot/solution.py"
+},
+{
+"slug": "pub-sub",
+"lines": 641,
+"path": "vault/domains/low-level-design/problems/pub-sub/solution.py"
+},
+{
+"slug": "rate-limiter",
+"lines": 464,
+"path": "vault/domains/low-level-design/problems/rate-limiter/solution.py"
+},
+{
+"slug": "restaurant",
+"lines": 668,
+"path": "vault/domains/low-level-design/problems/restaurant/solution.py"
+},
+{
+"slug": "ride-sharing",
+"lines": 734,
+"path": "vault/domains/low-level-design/problems/ride-sharing/solution.py"
+},
+{
+"slug": "snake-and-ladder",
+"lines": 661,
+"path": "vault/domains/low-level-design/problems/snake-and-ladder/solution.py"
+},
+{
+"slug": "social-network",
+"lines": 524,
+"path": "vault/domains/low-level-design/problems/social-network/solution.py"
+},
+{
+"slug": "splitwise",
+"lines": 546,
+"path": "vault/domains/low-level-design/problems/splitwise/solution.py"
+},
+{
+"slug": "stack-overflow",
+"lines": 605,
+"path": "vault/domains/low-level-design/problems/stack-overflow/solution.py"
+},
+{
+"slug": "stock-brokerage",
+"lines": 684,
+"path": "vault/domains/low-level-design/problems/stock-brokerage/solution.py"
+},
+{
+"slug": "task-management",
+"lines": 579,
+"path": "vault/domains/low-level-design/problems/task-management/solution.py"
+},
+{
+"slug": "task-scheduler",
+"lines": 350,
+"path": "vault/domains/low-level-design/problems/task-scheduler/solution.py"
+},
+{
+"slug": "text-editor",
+"lines": 558,
+"path": "vault/domains/low-level-design/problems/text-editor/solution.py"
+},
+{
+"slug": "thread-pool",
+"lines": 251,
+"path": "vault/domains/low-level-design/problems/thread-pool/solution.py"
+},
+{
+"slug": "tic-tac-toe",
+"lines": 487,
+"path": "vault/domains/low-level-design/problems/tic-tac-toe/solution.py"
+},
+{
+"slug": "traffic-signal",
+"lines": 493,
+"path": "vault/domains/low-level-design/problems/traffic-signal/solution.py"
+},
+{
+"slug": "ttl-cache",
+"lines": 471,
+"path": "vault/domains/low-level-design/problems/ttl-cache/solution.py"
+},
+{
+"slug": "vending-machine",
+"lines": 495,
+"path": "vault/domains/low-level-design/problems/vending-machine/solution.py"
+},
+{
+"slug": "api-circuit-breaker",
+"lines": 203,
+"path": "vault/interviews/core/low-level-design/problems/api-circuit-breaker/solution.py"
+},
+{
+"slug": "battleship-game",
+"lines": 201,
+"path": "vault/interviews/core/low-level-design/problems/battleship-game/solution.py"
+},
+{
+"slug": "billing-tax-engine",
+"lines": 274,
+"path": "vault/interviews/core/low-level-design/problems/billing-tax-engine/solution.py"
+},
+{
+"slug": "connect-four",
+"lines": 388,
+"path": "vault/interviews/core/low-level-design/problems/connect-four/solution.py"
+},
+{
+"slug": "credit-token-balance",
+"lines": 164,
+"path": "vault/interviews/core/low-level-design/problems/credit-token-balance/solution.py"
+},
+{
+"slug": "dasher-payout",
+"lines": 234,
+"path": "vault/interviews/core/low-level-design/problems/dasher-payout/solution.py"
+},
+{
+"slug": "double-entry-ledger",
+"lines": 286,
+"path": "vault/interviews/core/low-level-design/problems/double-entry-ledger/solution.py"
+},
+{
+"slug": "idempotent-transfer",
+"lines": 206,
+"path": "vault/interviews/core/low-level-design/problems/idempotent-transfer/solution.py"
+},
+{
+"slug": "image-transform-pipeline",
+"lines": 252,
+"path": "vault/interviews/core/low-level-design/problems/image-transform-pipeline/solution.py"
+},
+{
+"slug": "inventory-management",
+"lines": 306,
+"path": "vault/interviews/core/low-level-design/problems/inventory-management/solution.py"
+},
+{
+"slug": "query-condition-parser",
+"lines": 313,
+"path": "vault/interviews/core/low-level-design/problems/query-condition-parser/solution.py"
+},
+{
+"slug": "restaurant-waitlist",
+"lines": 174,
+"path": "vault/interviews/core/low-level-design/problems/restaurant-waitlist/solution.py"
+},
+{
+"slug": "spreadsheet-engine",
+"lines": 300,
+"path": "vault/interviews/core/low-level-design/problems/spreadsheet-engine/solution.py"
+}
+],
+"index": {
+"__future__.annotations": {
+"airline": [
+11
+],
+"amazon-locker": [
+11
+],
+"amz-aws-billing": [
+11
+],
+"amz-closest-store": [
+11
+],
+"amz-configurable-cache": [
+9
+],
+"amz-dag-runner": [
+10
+],
+"amz-discount-engine": [
+11
+],
+"amz-emergency-pubsub": [
+8
+],
+"amz-file-watcher": [
+11
+],
+"amz-in-memory-db": [
+11
+],
+"amz-linux-find": [
+11
+],
+"amz-occupancy-tracker": [
+11
+],
+"amz-parking-fees": [
+14
+],
+"amz-pizza-order": [
+11
+],
+"amz-robot-restaurant": [
+11
+],
+"amz-train-fare": [
+11
+],
+"atm": [
+11
+],
+"bank-account": [
+11
+],
+"bounded-blocking-queue": [
+12
+],
+"car-rental": [
+10
+],
+"chat-room": [
+9
+],
+"chess": [
+12
+],
+"coffee-machine": [
+11
+],
+"cricinfo": [
+13
+],
+"deck-of-cards": [
+11
+],
+"digital-wallet": [
+11
+],
+"elevator": [
+12
+],
+"food-delivery": [
+16
+],
+"hotel-booking": [
+12
+],
+"in-memory-file-system": [
+13
+],
+"kv-store": [
+11
+],
+"library": [
+11
+],
+"linkedin": [
+14
+],
+"logger": [
+8
+],
+"lru-cache": [
+7
+],
+"meeting-scheduler": [
+12
+],
+"movie-booking": [
+12
+],
+"music-streaming": [
+13
+],
+"notification-service": [
+9
+],
+"online-auction": [
+10
+],
+"online-shopping": [
+11
+],
+"parking-lot": [
+14
+],
+"pub-sub": [
+9
+],
+"rate-limiter": [
+9
+],
+"restaurant": [
+13
+],
+"ride-sharing": [
+16
+],
+"snake-and-ladder": [
+12
+],
+"social-network": [
+8
+],
+"splitwise": [
+13
+],
+"stack-overflow": [
+12
+],
+"stock-brokerage": [
+10
+],
+"task-management": [
+11
+],
+"task-scheduler": [
+13
+],
+"text-editor": [
+8
+],
+"thread-pool": [
+12
+],
+"tic-tac-toe": [
+13
+],
+"traffic-signal": [
+11
+],
+"ttl-cache": [
+9
+],
+"vending-machine": [
+11
+],
+"api-circuit-breaker": [
+16
+],
+"battleship-game": [
+10
+],
+"billing-tax-engine": [
+15
+],
+"connect-four": [
+12
+],
+"credit-token-balance": [
+10
+],
+"dasher-payout": [
+10
+],
+"double-entry-ledger": [
+15
+],
+"idempotent-transfer": [
+13
+],
+"image-transform-pipeline": [
+9
+],
+"inventory-management": [
+17
+],
+"query-condition-parser": [
+14
+],
+"restaurant-waitlist": [
+9
+],
+"spreadsheet-engine": [
+10
+]
+},
+"class(Exception)": {
+"airline": [
+25
+],
+"amazon-locker": [
+40
+],
+"amz-aws-billing": [
+22
+],
+"amz-closest-store": [
+22
+],
+"amz-configurable-cache": [
+26
+],
+"amz-dag-runner": [
+19
+],
+"amz-discount-engine": [
+21
+],
+"amz-emergency-pubsub": [
+26
+],
+"amz-file-watcher": [
+22
+],
+"amz-in-memory-db": [
+25
+],
+"amz-linux-find": [
+22
+],
+"amz-occupancy-tracker": [
+22
+],
+"amz-parking-fees": [
+25
+],
+"amz-pizza-order": [
+20
+],
+"amz-robot-restaurant": [
+20
+],
+"amz-train-fare": [
+20
+],
+"atm": [
+79
+],
+"bank-account": [
+19
+],
+"bounded-blocking-queue": [
+22
+],
+"car-rental": [
+23
+],
+"chat-room": [
+25
+],
+"chess": [
+22
+],
+"coffee-machine": [
+23
+],
+"cricinfo": [
+26
+],
+"deck-of-cards": [
+23
+],
+"digital-wallet": [
+20
+],
+"elevator": [
+56
+],
+"food-delivery": [
+31
+],
+"hotel-booking": [
+26
+],
+"in-memory-file-system": [
+19
+],
+"kv-store": [
+17
+],
+"library": [
+25
+],
+"linkedin": [
+26
+],
+"logger": [
+34
+],
+"meeting-scheduler": [
+26
+],
+"movie-booking": [
+26
+],
+"music-streaming": [
+37
+],
+"notification-service": [
+33
+],
+"online-auction": [
+24
+],
+"online-shopping": [
+22
+],
+"parking-lot": [
+45
+],
+"pub-sub": [
+35
+],
+"rate-limiter": [
+33
+],
+"restaurant": [
+31
+],
+"ride-sharing": [
+32
+],
+"snake-and-ladder": [
+25
+],
+"social-network": [
+25
+],
+"splitwise": [
+28
+],
+"stack-overflow": [
+25
+],
+"stock-brokerage": [
+25
+],
+"task-management": [
+33,
+65
+],
+"task-scheduler": [
+36
+],
+"text-editor": [
+14
+],
+"thread-pool": [
+24
+],
+"tic-tac-toe": [
+26
+],
+"traffic-signal": [
+24
+],
+"ttl-cache": [
+35
+],
+"vending-machine": [
+73
+],
+"api-circuit-breaker": [
+38
+],
+"battleship-game": [
+31
+],
+"billing-tax-engine": [
+25
+],
+"connect-four": [
+31
+],
+"credit-token-balance": [
+18
+],
+"dasher-payout": [
+40
+],
+"double-entry-ledger": [
+46
+],
+"idempotent-transfer": [
+24
+],
+"image-transform-pipeline": [
+16
+],
+"inventory-management": [
+33
+],
+"restaurant-waitlist": [
+16
+],
+"spreadsheet-engine": [
+17
+]
+},
+"dataclasses.dataclass": {
+"airline": [
+17
+],
+"amazon-locker": [
+18
+],
+"amz-aws-billing": [
+16
+],
+"amz-configurable-cache": [
+19
+],
+"amz-dag-runner": [
+15
+],
+"amz-discount-engine": [
+15
+],
+"amz-emergency-pubsub": [
+14
+],
+"amz-file-watcher": [
+17
+],
+"amz-in-memory-db": [
+18
+],
+"amz-linux-find": [
+18
+],
+"amz-occupancy-tracker": [
+17
+],
+"amz-parking-fees": [
+19
+],
+"amz-pizza-order": [
+15
+],
+"amz-robot-restaurant": [
+16
+],
+"amz-train-fare": [
+15
+],
+"atm": [
+16
+],
+"bank-account": [
+15
+],
+"car-rental": [
+16
+],
+"chat-room": [
+13
+],
+"chess": [
+16
+],
+"coffee-machine": [
+16
+],
+"cricinfo": [
+18
+],
+"deck-of-cards": [
+15
+],
+"digital-wallet": [
+16
+],
+"elevator": [
+16
+],
+"food-delivery": [
+22
+],
+"hotel-booking": [
+18
+],
+"in-memory-file-system": [
+16
+],
+"kv-store": [
+14
+],
+"library": [
+18
+],
+"linkedin": [
+18
+],
+"logger": [
+15
+],
+"meeting-scheduler": [
+17
+],
+"movie-booking": [
+17
+],
+"music-streaming": [
+20
+],
+"notification-service": [
+17
+],
+"online-auction": [
+15
+],
+"online-shopping": [
+14
+],
+"parking-lot": [
+19
+],
+"pub-sub": [
+16
+],
+"rate-limiter": [
+18
+],
+"restaurant": [
+19
+],
+"ride-sharing": [
+22
+],
+"snake-and-ladder": [
+17
+],
+"social-network": [
+13
+],
+"splitwise": [
+18
+],
+"stack-overflow": [
+16
+],
+"stock-brokerage": [
+16
+],
+"task-management": [
+16
+],
+"task-scheduler": [
+20
+],
+"text-editor": [
+11
+],
+"thread-pool": [
+18
+],
+"tic-tac-toe": [
+17
+],
+"traffic-signal": [
+15
+],
+"ttl-cache": [
+18
+],
+"vending-machine": [
+15
+],
+"api-circuit-breaker": [
+23
+],
+"battleship-game": [
+13
+],
+"billing-tax-engine": [
+20
+],
+"connect-four": [
+19
+],
+"credit-token-balance": [
+13
+],
+"dasher-payout": [
+13
+],
+"double-entry-ledger": [
+21
+],
+"idempotent-transfer": [
+20
+],
+"image-transform-pipeline": [
+12
+],
+"inventory-management": [
+25
+],
+"query-condition-parser": [
+19
+],
+"restaurant-waitlist": [
+12
+],
+"spreadsheet-engine": [
+14
+]
+},
+"@dataclass(frozen=True, slots=True)": {
+"airline": [
+62,
+78,
+104,
+305,
+325,
+362
+],
+"amazon-locker": [
+68,
+147,
+165
+],
+"amz-configurable-cache": [
+226,
+250
+],
+"amz-dag-runner": [
+117,
+124
+],
+"amz-discount-engine": [
+50,
+95,
+182,
+188,
+198
+],
+"amz-emergency-pubsub": [
+42,
+62,
+73
+],
+"amz-file-watcher": [
+30,
+47,
+100
+],
+"amz-linux-find": [
+77
+],
+"amz-parking-fees": [
+69,
+77,
+103,
+113,
+121,
+131
+],
+"amz-pizza-order": [
+91,
+150,
+282,
+288,
+298
+],
+"amz-robot-restaurant": [
+48,
+80,
+90,
+127
+],
+"amz-train-fare": [
+127,
+142,
+152
+],
+"atm": [
+147,
+164
+],
+"bank-account": [
+82
+],
+"car-rental": [
+46,
+75,
+85,
+313,
+321,
+333
+],
+"chat-room": [
+53,
+61,
+71
+],
+"chess": [
+215
+],
+"coffee-machine": [
+49,
+73,
+82,
+91
+],
+"cricinfo": [
+80,
+145,
+160,
+175,
+193,
+418
+],
+"deck-of-cards": [
+80,
+188,
+404,
+464
+],
+"digital-wallet": [
+82,
+168
+],
+"elevator": [
+72,
+84,
+100
+],
+"food-delivery": [
+57,
+69,
+81,
+212,
+297,
+307
+],
+"hotel-booking": [
+66,
+79
+],
+"kv-store": [
+37
+],
+"library": [
+68,
+85,
+97,
+109,
+120,
+184
+],
+"linkedin": [
+140,
+156,
+167
+],
+"logger": [
+56,
+78,
+99
+],
+"meeting-scheduler": [
+54,
+70,
+155,
+164
+],
+"movie-booking": [
+64,
+80,
+97,
+109,
+130,
+143
+],
+"music-streaming": [
+73,
+79,
+292
+],
+"notification-service": [
+74,
+90,
+113,
+141,
+333
+],
+"online-auction": [
+76,
+91,
+103
+],
+"online-shopping": [
+55,
+64,
+132,
+182,
+318,
+332
+],
+"parking-lot": [
+57,
+87,
+162,
+204
+],
+"pub-sub": [
+67,
+82
+],
+"rate-limiter": [
+44,
+393
+],
+"restaurant": [
+74,
+115,
+130,
+139
+],
+"ride-sharing": [
+64,
+94,
+114,
+124,
+138,
+153
+],
+"snake-and-ladder": [
+114,
+124,
+142,
+152,
+167,
+385
+],
+"social-network": [
+69,
+87,
+99
+],
+"splitwise": [
+44,
+121,
+131,
+150,
+170,
+189
+],
+"stack-overflow": [
+102,
+111,
+226,
+257,
+272
+],
+"stock-brokerage": [
+132,
+143
+],
+"task-management": [
+110
+],
+"task-scheduler": [
+55,
+80
+],
+"text-editor": [
+133
+],
+"tic-tac-toe": [
+298,
+315
+],
+"traffic-signal": [
+69,
+95,
+160,
+218
+],
+"ttl-cache": [
+52,
+65,
+81
+],
+"vending-machine": [
+97,
+273,
+282
+],
+"api-circuit-breaker": [
+42
+],
+"battleship-game": [
+55
+],
+"billing-tax-engine": [
+45,
+54,
+84,
+101,
+115,
+187
+],
+"connect-four": [
+208,
+215
+],
+"credit-token-balance": [
+43,
+51
+],
+"dasher-payout": [
+64,
+84,
+104,
+118
+],
+"double-entry-ledger": [
+70,
+77,
+84
+],
+"idempotent-transfer": [
+44,
+51,
+62
+],
+"image-transform-pipeline": [
+31,
+59,
+71,
+85,
+106,
+117
+],
+"inventory-management": [
+68,
+74,
+296
+],
+"query-condition-parser": [
+74,
+90,
+102,
+117,
+126,
+136
+],
+"spreadsheet-engine": [
+53,
+58,
+63,
+68,
+75
+]
+},
+"@property": {
+"airline": [
+72,
+197,
+202,
+207,
+314,
+319
+],
+"amazon-locker": [
+81,
+85,
+195,
+199,
+203,
+207
+],
+"amz-aws-billing": [
+165,
+190,
+199
+],
+"amz-configurable-cache": [
+102,
+259,
+296,
+302
+],
+"amz-dag-runner": [
+63,
+132
+],
+"amz-discount-engine": [
+62,
+87,
+193,
+203,
+207,
+212
+],
+"amz-emergency-pubsub": [
+101,
+146,
+258,
+264
+],
+"amz-file-watcher": [
+146,
+151
+],
+"amz-in-memory-db": [
+56,
+74,
+93,
+110,
+122,
+135
+],
+"amz-linux-find": [
+84
+],
+"amz-occupancy-tracker": [
+103,
+189
+],
+"amz-parking-fees": [
+238
+],
+"amz-pizza-order": [
+99,
+155,
+178,
+293,
+303,
+307
+],
+"amz-robot-restaurant": [
+113,
+243,
+248,
+253,
+258
+],
+"amz-train-fare": [
+75,
+189,
+203
+],
+"atm": [
+175,
+196,
+201,
+429
+],
+"bank-account": [
+196,
+202
+],
+"bounded-blocking-queue": [
+58,
+62,
+68,
+73,
+78,
+83
+],
+"car-rental": [
+57,
+118,
+123,
+228,
+327,
+344
+],
+"chess": [
+40,
+50,
+79,
+167,
+171,
+281
+],
+"coffee-machine": [
+219,
+225,
+229
+],
+"cricinfo": [
+103,
+108,
+115,
+120,
+125,
+132
+],
+"deck-of-cards": [
+90,
+146,
+225,
+230,
+235,
+289
+],
+"digital-wallet": [
+111,
+310
+],
+"elevator": [
+32,
+116,
+253,
+257,
+261,
+265
+],
+"food-delivery": [
+90,
+114,
+247,
+252,
+257,
+262
+],
+"hotel-booking": [
+94,
+196,
+285
+],
+"kv-store": [
+62,
+67
+],
+"library": [
+164,
+204,
+209,
+303,
+402,
+409
+],
+"linkedin": [
+150,
+200,
+205,
+214,
+225,
+247
+],
+"logger": [
+140,
+209,
+213,
+219,
+252,
+256
+],
+"lru-cache": [
+142,
+202,
+262
+],
+"meeting-scheduler": [
+89,
+210,
+215,
+328,
+334,
+373
+],
+"movie-booking": [
+74,
+267,
+272
+],
+"music-streaming": [
+178,
+182,
+262,
+317,
+321,
+325
+],
+"notification-service": [
+107,
+124,
+179,
+196,
+236,
+240
+],
+"online-auction": [
+61,
+178,
+183,
+188,
+193,
+199
+],
+"online-shopping": [
+151,
+155,
+228,
+327,
+358,
+362
+],
+"parking-lot": [
+78
+],
+"pub-sub": [
+99,
+150,
+154,
+158,
+162,
+168
+],
+"rate-limiter": [
+166,
+200,
+309,
+313,
+419
+],
+"restaurant": [
+99,
+125,
+180,
+187,
+338,
+342
+],
+"ride-sharing": [
+147,
+241,
+246,
+251,
+256,
+261
+],
+"snake-and-ladder": [
+100,
+105,
+135,
+160,
+216,
+221
+],
+"splitwise": [
+66,
+241,
+428
+],
+"stack-overflow": [
+143,
+148,
+153,
+167,
+184,
+200
+],
+"stock-brokerage": [
+68,
+94,
+121,
+126,
+177,
+254
+],
+"task-management": [
+229,
+233,
+237,
+241,
+245,
+249
+],
+"task-scheduler": [
+103,
+109,
+219,
+224
+],
+"text-editor": [
+45,
+50,
+55,
+149,
+172,
+176
+],
+"thread-pool": [
+134,
+138,
+143,
+148
+],
+"tic-tac-toe": [
+85,
+89,
+182,
+229,
+233,
+237
+],
+"traffic-signal": [
+50,
+81,
+85,
+90,
+132,
+136
+],
+"ttl-cache": [
+75,
+118,
+259,
+263,
+270,
+276
+],
+"vending-machine": [
+38,
+128,
+200,
+204,
+224,
+228
+],
+"api-circuit-breaker": [
+127,
+133
+],
+"battleship-game": [
+67,
+79
+],
+"billing-tax-engine": [
+230,
+234
+],
+"connect-four": [
+95,
+102,
+108,
+144,
+167
+],
+"dasher-payout": [
+72
+],
+"image-transform-pipeline": [
+45,
+49
+],
+"inventory-management": [
+91
+]
+},
+"collections.abc.Callable": {
+"airline": [
+15
+],
+"amazon-locker": [
+17
+],
+"amz-configurable-cache": [
+18
+],
+"amz-dag-runner": [
+13
+],
+"amz-emergency-pubsub": [
+13
+],
+"amz-file-watcher": [
+16
+],
+"amz-in-memory-db": [
+17
+],
+"amz-linux-find": [
+17
+],
+"amz-parking-fees": [
+18
+],
+"amz-robot-restaurant": [
+15
+],
+"amz-train-fare": [
+14
+],
+"atm": [
+15
+],
+"car-rental": [
+15
+],
+"chat-room": [
+12
+],
+"coffee-machine": [
+15
+],
+"cricinfo": [
+17
+],
+"deck-of-cards": [
+14
+],
+"digital-wallet": [
+15
+],
+"elevator": [
+15
+],
+"food-delivery": [
+21
+],
+"hotel-booking": [
+17
+],
+"kv-store": [
+13
+],
+"library": [
+17
+],
+"logger": [
+14
+],
+"movie-booking": [
+16
+],
+"notification-service": [
+16
+],
+"online-auction": [
+14
+],
+"online-shopping": [
+13
+],
+"parking-lot": [
+18
+],
+"pub-sub": [
+15
+],
+"rate-limiter": [
+16
+],
+"ride-sharing": [
+21
+],
+"snake-and-ladder": [
+16
+],
+"social-network": [
+12
+],
+"splitwise": [
+17
+],
+"stock-brokerage": [
+15
+],
+"task-scheduler": [
+18
+],
+"tic-tac-toe": [
+16
+],
+"traffic-signal": [
+14
+],
+"ttl-cache": [
+17
+],
+"vending-machine": [
+14
+],
+"api-circuit-breaker": [
+22
+],
+"connect-four": [
+17
+],
+"double-entry-ledger": [
+20
+],
+"idempotent-transfer": [
+18
+],
+"inventory-management": [
+24
+],
+"restaurant-waitlist": [
+11
+],
+"spreadsheet-engine": [
+13
+]
+},
+"import threading": {
+"airline": [
+14
+],
+"amazon-locker": [
+16
+],
+"amz-aws-billing": [
+13
+],
+"amz-closest-store": [
+15
+],
+"amz-configurable-cache": [
+15
+],
+"amz-emergency-pubsub": [
+11
+],
+"amz-file-watcher": [
+14
+],
+"amz-occupancy-tracker": [
+15
+],
+"amz-parking-fees": [
+17
+],
+"amz-robot-restaurant": [
+13
+],
+"amz-train-fare": [
+13
+],
+"atm": [
+14
+],
+"bounded-blocking-queue": [
+14
+],
+"car-rental": [
+14
+],
+"coffee-machine": [
+14
+],
+"cricinfo": [
+16
+],
+"digital-wallet": [
+14
+],
+"elevator": [
+14
+],
+"food-delivery": [
+20
+],
+"hotel-booking": [
+15
+],
+"library": [
+15
+],
+"linkedin": [
+17
+],
+"logger": [
+12
+],
+"lru-cache": [
+9
+],
+"meeting-scheduler": [
+15
+],
+"movie-booking": [
+15
+],
+"music-streaming": [
+17
+],
+"notification-service": [
+13
+],
+"online-auction": [
+13
+],
+"parking-lot": [
+17
+],
+"pub-sub": [
+12
+],
+"rate-limiter": [
+12
+],
+"restaurant": [
+16
+],
+"ride-sharing": [
+20
+],
+"stack-overflow": [
+15
+],
+"stock-brokerage": [
+14
+],
+"task-management": [
+14
+],
+"task-scheduler": [
+17
+],
+"thread-pool": [
+17
+],
+"ttl-cache": [
+14
+],
+"vending-machine": [
+13
+],
+"api-circuit-breaker": [
+19
+],
+"billing-tax-engine": [
+17
+],
+"connect-four": [
+15
+],
+"double-entry-ledger": [
+17
+],
+"idempotent-transfer": [
+15
+],
+"inventory-management": [
+21
+]
+},
+"with self._lock": {
+"airline": [
+227,
+232,
+259,
+276,
+292,
+297
+],
+"amazon-locker": [
+285,
+291,
+296,
+301,
+311,
+323
+],
+"amz-aws-billing": [
+155,
+167,
+172
+],
+"amz-closest-store": [
+197,
+202,
+207,
+214,
+218,
+228
+],
+"amz-configurable-cache": [
+293,
+299,
+304,
+325,
+336,
+362
+],
+"amz-discount-engine": [
+75,
+83,
+89
+],
+"amz-emergency-pubsub": [
+103,
+114,
+117,
+122,
+220,
+230
+],
+"amz-file-watcher": [
+135,
+141,
+148,
+162,
+193,
+199
+],
+"amz-occupancy-tracker": [
+140,
+163,
+168,
+175,
+181,
+191
+],
+"amz-parking-fees": [
+240,
+244,
+254,
+262,
+268,
+287
+],
+"amz-pizza-order": [
+170,
+174,
+180
+],
+"amz-robot-restaurant": [
+245,
+250,
+255,
+260,
+264,
+275
+],
+"amz-train-fare": [
+68,
+72,
+77,
+82,
+101,
+123
+],
+"atm": [
+362,
+434,
+439,
+443,
+448,
+461
+],
+"bounded-blocking-queue": [
+65,
+70,
+75,
+80,
+87,
+93
+],
+"car-rental": [
+231,
+246,
+252,
+262,
+275,
+284
+],
+"coffee-machine": [
+126,
+134,
+142,
+154,
+170
+],
+"cricinfo": [
+316,
+321,
+326,
+338,
+390,
+398
+],
+"elevator": [
+396,
+401,
+410,
+422,
+438,
+476
+],
+"food-delivery": [
+117,
+122,
+127,
+132,
+137,
+146
+],
+"hotel-booking": [
+199,
+214,
+222,
+232,
+248,
+262
+],
+"library": [
+393,
+405,
+416,
+422,
+428,
+434
+],
+"linkedin": [
+392,
+399,
+404,
+409,
+415,
+424
+],
+"logger": [
+147,
+157,
+191,
+216,
+221,
+298
+],
+"lru-cache": [
+267,
+271,
+275,
+279,
+283
+],
+"meeting-scheduler": [
+218,
+223,
+229,
+236,
+248,
+294
+],
+"movie-booking": [
+299,
+305,
+314,
+341,
+362,
+370
+],
+"music-streaming": [
+231,
+237,
+241,
+246,
+251,
+256
+],
+"notification-service": [
+198,
+203,
+208,
+212,
+243,
+249
+],
+"online-auction": [
+170,
+196,
+202,
+208,
+213,
+218
+],
+"online-shopping": [
+215,
+219,
+224,
+231,
+237,
+255
+],
+"parking-lot": [
+271,
+286,
+301
+],
+"pub-sub": [
+165,
+171,
+177,
+182,
+188,
+193
+],
+"restaurant": [
+169,
+173,
+183,
+190,
+207,
+219
+],
+"ride-sharing": [
+390,
+395,
+404,
+418,
+429,
+441
+],
+"splitwise": [
+431,
+435,
+439,
+469,
+497,
+505
+],
+"stack-overflow": [
+421,
+432,
+444,
+452,
+463,
+476
+],
+"stock-brokerage": [
+438,
+443,
+449,
+455,
+460,
+465
+],
+"task-management": [
+319,
+323,
+333,
+340,
+366,
+375
+],
+"task-scheduler": [
+106,
+112,
+117,
+125,
+139,
+155
+],
+"thread-pool": [
+70,
+85,
+140,
+152,
+163,
+168
+],
+"ttl-cache": [
+266,
+273,
+279,
+285,
+291,
+296
+],
+"vending-machine": [
+338,
+342,
+353,
+366,
+377,
+396
+],
+"api-circuit-breaker": [
+130,
+136,
+141,
+155,
+196
+],
+"double-entry-ledger": [
+40
+],
+"inventory-management": [
+101
+]
+},
+"enum.Enum": {
+"airline": [
+19
+],
+"amazon-locker": [
+20
+],
+"amz-discount-engine": [
+17
+],
+"amz-emergency-pubsub": [
+16
+],
+"amz-file-watcher": [
+18
+],
+"amz-linux-find": [
+19
+],
+"amz-parking-fees": [
+21
+],
+"amz-robot-restaurant": [
+17
+],
+"atm": [
+18
+],
+"bank-account": [
+16
+],
+"car-rental": [
+18
+],
+"chess": [
+17
+],
+"cricinfo": [
+19
+],
+"deck-of-cards": [
+16
+],
+"elevator": [
+18
+],
+"food-delivery": [
+24
+],
+"hotel-booking": [
+20
+],
+"library": [
+20
+],
+"linkedin": [
+20
+],
+"meeting-scheduler": [
+19
+],
+"movie-booking": [
+19
+],
+"music-streaming": [
+22
+],
+"notification-service": [
+19
+],
+"online-auction": [
+17
+],
+"online-shopping": [
+16
+],
+"parking-lot": [
+22
+],
+"pub-sub": [
+18
+],
+"restaurant": [
+21
+],
+"ride-sharing": [
+24
+],
+"snake-and-ladder": [
+18
+],
+"social-network": [
+15
+],
+"splitwise": [
+21
+],
+"stack-overflow": [
+18
+],
+"stock-brokerage": [
+18
+],
+"task-management": [
+18
+],
+"task-scheduler": [
+22
+],
+"tic-tac-toe": [
+18
+],
+"traffic-signal": [
+17
+],
+"ttl-cache": [
+19
+],
+"vending-machine": [
+16
+],
+"api-circuit-breaker": [
+24
+],
+"battleship-game": [
+14
+],
+"connect-four": [
+20
+],
+"dasher-payout": [
+16
+],
+"inventory-management": [
+26
+]
+},
+"class(Enum)": {
+"airline": [
+393
+],
+"amazon-locker": [
+101,
+123,
+131,
+138
+],
+"amz-discount-engine": [
+217
+],
+"amz-emergency-pubsub": [
+57
+],
+"amz-file-watcher": [
+41
+],
+"amz-linux-find": [
+36
+],
+"amz-parking-fees": [
+61
+],
+"amz-robot-restaurant": [
+56,
+64,
+71
+],
+"atm": [
+40,
+49,
+111,
+128,
+139
+],
+"bank-account": [
+60,
+76
+],
+"car-rental": [
+66,
+407
+],
+"chess": [
+37,
+65,
+399
+],
+"cricinfo": [
+55,
+64,
+361
+],
+"deck-of-cards": [
+43,
+57,
+181,
+323
+],
+"elevator": [
+37,
+50
+],
+"food-delivery": [
+167,
+180,
+288
+],
+"hotel-booking": [
+57,
+343
+],
+"library": [
+52,
+60
+],
+"linkedin": [
+105,
+112,
+117
+],
+"meeting-scheduler": [
+45,
+148
+],
+"movie-booking": [
+122,
+156
+],
+"music-streaming": [
+273,
+279
+],
+"notification-service": [
+57
+],
+"online-auction": [
+49,
+67
+],
+"online-shopping": [
+299
+],
+"parking-lot": [
+199
+],
+"pub-sub": [
+59
+],
+"restaurant": [
+66,
+84,
+298,
+306
+],
+"ride-sharing": [
+82,
+174,
+185
+],
+"snake-and-ladder": [
+53,
+60,
+71,
+79
+],
+"social-network": [
+53,
+61
+],
+"splitwise": [
+363
+],
+"stack-overflow": [
+68,
+76,
+84,
+91
+],
+"stock-brokerage": [
+62,
+74,
+81
+],
+"task-management": [
+94
+],
+"task-scheduler": [
+48
+],
+"tic-tac-toe": [
+70
+],
+"traffic-signal": [
+40,
+56,
+61
+],
+"ttl-cache": [
+43
+],
+"vending-machine": [
+30,
+44
+],
+"api-circuit-breaker": [
+32
+],
+"battleship-game": [
+19,
+25
+],
+"connect-four": [
+25
+],
+"dasher-payout": [
+22,
+28
+],
+"inventory-management": [
+61
+]
+},
+"~clock-injection": {
+"airline": [
+448,
+721
+],
+"amazon-locker": [
+244
+],
+"amz-configurable-cache": [
+278,
+369
+],
+"amz-emergency-pubsub": [
+205
+],
+"amz-parking-fees": [
+230
+],
+"amz-train-fare": [
+172,
+227
+],
+"atm": [
+406
+],
+"car-rental": [
+481,
+648
+],
+"chat-room": [
+101,
+158,
+267
+],
+"coffee-machine": [
+203
+],
+"digital-wallet": [
+190,
+348
+],
+"elevator": [
+235,
+379,
+491,
+492,
+493
+],
+"food-delivery": [
+384,
+636
+],
+"hotel-booking": [
+396,
+544
+],
+"library": [
+376,
+599
+],
+"linkedin": [
+619
+],
+"logger": [
+406,
+457,
+528,
+530,
+561
+],
+"lru-cache": [
+294
+],
+"movie-booking": [
+255,
+424,
+572,
+575
+],
+"music-streaming": [
+402,
+498
+],
+"notification-service": [
+227,
+286,
+400,
+408,
+656
+],
+"online-auction": [
+135,
+415,
+482
+],
+"online-shopping": [
+203,
+497,
+633,
+636
+],
+"parking-lot": [
+257,
+321
+],
+"pub-sub": [
+133,
+498
+],
+"rate-limiter": [
+300,
+411,
+442,
+445,
+446,
+454
+],
+"restaurant": [
+159,
+531,
+657,
+660
+],
+"ride-sharing": [
+383,
+500,
+717,
+722
+],
+"social-network": [
+263,
+404
+],
+"splitwise": [
+415,
+532
+],
+"stack-overflow": [
+588
+],
+"stock-brokerage": [
+423,
+667
+],
+"task-management": [
+417
+],
+"task-scheduler": [
+204,
+337
+],
+"traffic-signal": [
+251
+],
+"ttl-cache": [
+239,
+446,
+447,
+460
+],
+"api-circuit-breaker": [
+62
+],
+"connect-four": [
+238
+],
+"idempotent-transfer": [
+87
+],
+"inventory-management": [
+114
+],
+"restaurant-waitlist": [
+74
+]
+},
+"datetime.datetime": {
+"airline": [
+18
+],
+"amazon-locker": [
+19
+],
+"amz-aws-billing": [
+17
+],
+"amz-emergency-pubsub": [
+15
+],
+"amz-parking-fees": [
+20
+],
+"amz-train-fare": [
+16
+],
+"atm": [
+17
+],
+"car-rental": [
+17
+],
+"chat-room": [
+14
+],
+"coffee-machine": [
+17
+],
+"digital-wallet": [
+17
+],
+"elevator": [
+17
+],
+"food-delivery": [
+23
+],
+"hotel-booking": [
+19
+],
+"library": [
+19
+],
+"linkedin": [
+19
+],
+"logger": [
+16
+],
+"meeting-scheduler": [
+18
+],
+"movie-booking": [
+18
+],
+"music-streaming": [
+21
+],
+"notification-service": [
+18
+],
+"online-auction": [
+16
+],
+"online-shopping": [
+15
+],
+"parking-lot": [
+20
+],
+"pub-sub": [
+17
+],
+"restaurant": [
+20
+],
+"ride-sharing": [
+23
+],
+"social-network": [
+14
+],
+"splitwise": [
+19
+],
+"stack-overflow": [
+17
+],
+"stock-brokerage": [
+17
+],
+"task-management": [
+17
+],
+"task-scheduler": [
+21
+],
+"traffic-signal": [
+16
+],
+"credit-token-balance": [
+14
+],
+"dasher-payout": [
+14
+],
+"restaurant-waitlist": [
+13
+]
+},
+"import itertools": {
+"airline": [
+13
+],
+"amz-parking-fees": [
+16
+],
+"bank-account": [
+14
+],
+"car-rental": [
+12
+],
+"chat-room": [
+11
+],
+"cricinfo": [
+15
+],
+"digital-wallet": [
+13
+],
+"food-delivery": [
+18
+],
+"hotel-booking": [
+14
+],
+"library": [
+13
+],
+"linkedin": [
+16
+],
+"meeting-scheduler": [
+14
+],
+"movie-booking": [
+14
+],
+"music-streaming": [
+15
+],
+"notification-service": [
+12
+],
+"online-auction": [
+12
+],
+"parking-lot": [
+16
+],
+"pub-sub": [
+11
+],
+"restaurant": [
+15
+],
+"ride-sharing": [
+18
+],
+"social-network": [
+10
+],
+"stack-overflow": [
+14
+],
+"stock-brokerage": [
+13
+],
+"task-management": [
+13
+],
+"task-scheduler": [
+16
+],
+"thread-pool": [
+14
+],
+"traffic-signal": [
+13
+],
+"ttl-cache": [
+12
+],
+"connect-four": [
+14
+],
+"inventory-management": [
+20
+]
+},
+"collections.abc.Mapping": {
+"airline": [
+15
+],
+"amz-dag-runner": [
+13
+],
+"amz-parking-fees": [
+18
+],
+"atm": [
+15
+],
+"car-rental": [
+15
+],
+"chess": [
+15
+],
+"coffee-machine": [
+15
+],
+"cricinfo": [
+17
+],
+"deck-of-cards": [
+14
+],
+"food-delivery": [
+21
+],
+"hotel-booking": [
+17
+],
+"library": [
+17
+],
+"logger": [
+14
+],
+"movie-booking": [
+16
+],
+"music-streaming": [
+19
+],
+"notification-service": [
+16
+],
+"online-shopping": [
+13
+],
+"parking-lot": [
+18
+],
+"pub-sub": [
+15
+],
+"restaurant": [
+18
+],
+"ride-sharing": [
+21
+],
+"snake-and-ladder": [
+16
+],
+"splitwise": [
+17
+],
+"stock-brokerage": [
+15
+],
+"task-management": [
+15
+],
+"traffic-signal": [
+14
+],
+"vending-machine": [
+14
+],
+"billing-tax-engine": [
+19
+],
+"dasher-payout": [
+12
+],
+"inventory-management": [
+24
+]
+},
+"collections.abc.Sequence": {
+"airline": [
+15
+],
+"amz-discount-engine": [
+14
+],
+"amz-in-memory-db": [
+17
+],
+"amz-parking-fees": [
+18
+],
+"amz-pizza-order": [
+14
+],
+"amz-robot-restaurant": [
+15
+],
+"amz-train-fare": [
+14
+],
+"car-rental": [
+15
+],
+"cricinfo": [
+17
+],
+"deck-of-cards": [
+14
+],
+"elevator": [
+15
+],
+"food-delivery": [
+21
+],
+"meeting-scheduler": [
+16
+],
+"movie-booking": [
+16
+],
+"music-streaming": [
+19
+],
+"online-auction": [
+14
+],
+"online-shopping": [
+13
+],
+"rate-limiter": [
+16
+],
+"restaurant": [
+18
+],
+"ride-sharing": [
+21
+],
+"snake-and-ladder": [
+16
+],
+"splitwise": [
+17
+],
+"stock-brokerage": [
+15
+],
+"text-editor": [
+10
+],
+"tic-tac-toe": [
+16
+],
+"traffic-signal": [
+14
+],
+"battleship-game": [
+12
+],
+"billing-tax-engine": [
+19
+],
+"connect-four": [
+17
+],
+"restaurant-waitlist": [
+11
+]
+},
+"~topo-cycle": {
+"amazon-locker": [
+429
+],
+"amz-dag-runner": [
+4,
+5,
+23,
+24,
+26,
+27
+],
+"amz-file-watcher": [
+62
+],
+"amz-linux-find": [
+8,
+225,
+237,
+251
+],
+"amz-parking-fees": [
+64,
+297,
+302
+],
+"bounded-blocking-queue": [
+86
+],
+"car-rental": [
+137
+],
+"digital-wallet": [
+225
+],
+"elevator": [
+446
+],
+"hotel-booking": [
+228
+],
+"in-memory-file-system": [
+6,
+191
+],
+"music-streaming": [
+7,
+429
+],
+"online-shopping": [
+47
+],
+"parking-lot": [
+37,
+318
+],
+"pub-sub": [
+87
+],
+"rate-limiter": [
+231
+],
+"ride-sharing": [
+380
+],
+"snake-and-ladder": [
+8,
+9,
+72,
+171,
+194,
+406
+],
+"task-scheduler": [
+92
+],
+"thread-pool": [
+7
+],
+"traffic-signal": [
+222,
+236,
+344,
+404
+],
+"billing-tax-engine": [
+38,
+259,
+269,
+270
+],
+"dasher-payout": [
+7,
+35,
+167,
+181
+],
+"idempotent-transfer": [
+139
+],
+"spreadsheet-engine": [
+1,
+7,
+29,
+30,
+245,
+246
+]
+},
+"@dataclass(slots=True)": {
+"airline": [
+414
+],
+"amazon-locker": [
+110
+],
+"amz-robot-restaurant": [
+119
+],
+"atm": [
+279
+],
+"bank-account": [
+95
+],
+"car-rental": [
+428
+],
+"digital-wallet": [
+62
+],
+"hotel-booking": [
+362
+],
+"library": [
+147
+],
+"linkedin": [
+256,
+335,
+348
+],
+"meeting-scheduler": [
+134
+],
+"movie-booking": [
+165
+],
+"music-streaming": [
+86
+],
+"parking-lot": [
+65
+],
+"social-network": [
+77
+],
+"stock-brokerage": [
+100
+],
+"task-management": [
+122,
+162
+],
+"vending-machine": [
+105,
+218,
+245
+],
+"battleship-game": [
+62,
+72
+],
+"connect-four": [
+227
+],
+"double-entry-ledger": [
+92
+],
+"idempotent-transfer": [
+72
+],
+"inventory-management": [
+86
+],
+"restaurant-waitlist": [
+36
+]
+},
+"datetime.timedelta": {
+"airline": [
+18
+],
+"amazon-locker": [
+19
+],
+"amz-parking-fees": [
+20
+],
+"amz-train-fare": [
+16
+],
+"car-rental": [
+17
+],
+"elevator": [
+484
+],
+"food-delivery": [
+23
+],
+"hotel-booking": [
+19
+],
+"library": [
+19
+],
+"meeting-scheduler": [
+18
+],
+"movie-booking": [
+18
+],
+"notification-service": [
+18
+],
+"online-auction": [
+16
+],
+"online-shopping": [
+15
+],
+"parking-lot": [
+20
+],
+"restaurant": [
+20
+],
+"ride-sharing": [
+23
+],
+"stock-brokerage": [
+664
+],
+"task-scheduler": [
+21
+],
+"traffic-signal": [
+476
+],
+"dasher-payout": [
+14
+],
+"restaurant-waitlist": [
+13
+]
+},
+"dataclasses.field": {
+"airline": [
+17
+],
+"amz-aws-billing": [
+16
+],
+"amz-dag-runner": [
+15
+],
+"amz-linux-find": [
+18
+],
+"amz-pizza-order": [
+15
+],
+"atm": [
+16
+],
+"digital-wallet": [
+16
+],
+"in-memory-file-system": [
+16
+],
+"library": [
+18
+],
+"logger": [
+15
+],
+"notification-service": [
+17
+],
+"online-shopping": [
+14
+],
+"parking-lot": [
+19
+],
+"pub-sub": [
+16
+],
+"splitwise": [
+18
+],
+"stack-overflow": [
+16
+],
+"task-management": [
+16
+],
+"thread-pool": [
+18
+],
+"vending-machine": [
+15
+],
+"battleship-game": [
+13
+],
+"idempotent-transfer": [
+20
+]
+},
+"collections.abc.Iterable": {
+"amazon-locker": [
+17
+],
+"amz-dag-runner": [
+13
+],
+"amz-file-watcher": [
+16
+],
+"amz-occupancy-tracker": [
+16
+],
+"amz-robot-restaurant": [
+15
+],
+"amz-train-fare": [
+14
+],
+"car-rental": [
+15
+],
+"deck-of-cards": [
+14
+],
+"elevator": [
+15
+],
+"hotel-booking": [
+17
+],
+"movie-booking": [
+16
+],
+"online-shopping": [
+13
+],
+"parking-lot": [
+18
+],
+"restaurant": [
+18
+],
+"ride-sharing": [
+21
+],
+"snake-and-ladder": [
+16
+],
+"splitwise": [
+17
+],
+"task-management": [
+15
+],
+"traffic-signal": [
+14
+],
+"vending-machine": [
+14
+]
+},
+"typing.Protocol": {
+"amz-aws-billing": [
+19
+],
+"amz-closest-store": [
+17
+],
+"amz-configurable-cache": [
+21
+],
+"amz-file-watcher": [
+19
+],
+"amz-parking-fees": [
+22
+],
+"amz-train-fare": [
+17
+],
+"atm": [
+20
+],
+"chat-room": [
+15
+],
+"logger": [
+20
+],
+"lru-cache": [
+12
+],
+"notification-service": [
+21
+],
+"online-shopping": [
+19
+],
+"tic-tac-toe": [
+19
+],
+"traffic-signal": [
+19
+],
+"ttl-cache": [
+20
+],
+"vending-machine": [
+18
+],
+"billing-tax-engine": [
+22
+],
+"image-transform-pipeline": [
+13
+],
+"query-condition-parser": [
+22
+]
+},
+"~transition-table": {
+"airline": [
+403,
+433,
+633
+],
+"amz-robot-restaurant": [
+153,
+173
+],
+"atm": [
+65,
+462,
+470,
+478,
+488,
+503
+],
+"car-rental": [
+417,
+454,
+571
+],
+"food-delivery": [
+4,
+189,
+224,
+273,
+276
+],
+"hotel-booking": [
+352,
+380,
+497
+],
+"linkedin": [
+126,
+350,
+511,
+516,
+526,
+606
+],
+"music-streaming": [
+285,
+423,
+424,
+449,
+588,
+589
+],
+"online-shopping": [
+309,
+342,
+381
+],
+"restaurant": [
+316,
+348,
+350,
+438,
+473,
+616
+],
+"ride-sharing": [
+193,
+225,
+271,
+552,
+678,
+708
+],
+"task-management": [
+155,
+442,
+478,
+479,
+570
+],
+"task-scheduler": [
+115,
+321
+],
+"vending-machine": [
+3,
+63,
+354,
+367,
+378,
+397
+],
+"api-circuit-breaker": [
+52,
+186
+],
+"battleship-game": [
+57,
+108
+],
+"query-condition-parser": [
+161,
+199,
+205,
+222,
+227,
+230
+]
+},
+"class(Protocol)": {
+"amz-aws-billing": [
+56
+],
+"amz-closest-store": [
+49
+],
+"amz-configurable-cache": [
+45,
+150
+],
+"amz-file-watcher": [
+55
+],
+"amz-parking-fees": [
+154
+],
+"amz-train-fare": [
+136
+],
+"atm": [
+310
+],
+"chat-room": [
+89
+],
+"logger": [
+72,
+116
+],
+"notification-service": [
+129
+],
+"online-shopping": [
+449,
+464
+],
+"tic-tac-toe": [
+82,
+128
+],
+"traffic-signal": [
+174
+],
+"vending-machine": [
+197
+],
+"billing-tax-engine": [
+62
+],
+"image-transform-pipeline": [
+54
+],
+"query-condition-parser": [
+68
+]
+},
+"datetime.UTC": {
+"car-rental": [
+641
+],
+"digital-wallet": [
+345
+],
+"elevator": [
+484
+],
+"food-delivery": [
+627
+],
+"hotel-booking": [
+536
+],
+"library": [
+586
+],
+"linkedin": [
+616
+],
+"movie-booking": [
+566
+],
+"online-auction": [
+479
+],
+"online-shopping": [
+608
+],
+"parking-lot": [
+313
+],
+"restaurant": [
+654
+],
+"ride-sharing": [
+714
+],
+"splitwise": [
+529
+],
+"stack-overflow": [
+585
+],
+"stock-brokerage": [
+664
+],
+"task-scheduler": [
+334
+]
+},
+"types.MappingProxyType": {
+"atm": [
+19
+],
+"coffee-machine": [
+18
+],
+"deck-of-cards": [
+17
+],
+"logger": [
+19
+],
+"notification-service": [
+20
+],
+"parking-lot": [
+23
+],
+"pub-sub": [
+19
+],
+"snake-and-ladder": [
+19
+],
+"splitwise": [
+25
+],
+"traffic-signal": [
+18
+],
+"vending-machine": [
+17
+],
+"api-circuit-breaker": [
+25
+],
+"dasher-payout": [
+19
+],
+"query-condition-parser": [
+21
+]
+},
+"~callback-outside-lock": {
+"amazon-locker": [
+512
+],
+"amz-emergency-pubsub": [
+177
+],
+"amz-file-watcher": [
+8,
+185
+],
+"amz-parking-fees": [
+261
+],
+"coffee-machine": [
+7,
+152,
+198
+],
+"elevator": [
+472
+],
+"movie-booking": [
+488
+],
+"online-auction": [
+394
+],
+"splitwise": [
+10,
+479,
+481,
+510,
+521
+],
+"stock-brokerage": [
+7,
+420,
+656
+],
+"ttl-cache": [
+417
+],
+"vending-machine": [
+481
+],
+"api-circuit-breaker": [
+94,
+195
+]
+},
+"__post_init__": {
+"amz-discount-engine": [
+58
+],
+"amz-robot-restaurant": [
+103
+],
+"car-rental": [
+53
+],
+"cricinfo": [
+97
+],
+"hotel-booking": [
+90
+],
+"meeting-scheduler": [
+81
+],
+"parking-lot": [
+228
+],
+"pub-sub": [
+92
+],
+"snake-and-ladder": [
+96
+],
+"splitwise": [
+158,
+178,
+210
+],
+"billing-tax-engine": [
+199
+],
+"dasher-payout": [
+90
+],
+"image-transform-pipeline": [
+37,
+92,
+133,
+150
+]
+},
+"collections.deque": {
+"amz-emergency-pubsub": [
+12
+],
+"amz-file-watcher": [
+15
+],
+"amz-robot-restaurant": [
+14
+],
+"bounded-blocking-queue": [
+16
+],
+"library": [
+16
+],
+"music-streaming": [
+18
+],
+"notification-service": [
+15
+],
+"pub-sub": [
+14
+],
+"rate-limiter": [
+15
+],
+"restaurant": [
+17
+],
+"snake-and-ladder": [
+15
+],
+"social-network": [
+11
+],
+"api-circuit-breaker": [
+21
+]
+},
+"walrus": {
+"amz-in-memory-db": [
+426
+],
+"chess": [
+396,
+486
+],
+"elevator": [
+443
+],
+"movie-booking": [
+324
+],
+"online-auction": [
+471
+],
+"tic-tac-toe": [
+337
+],
+"ttl-cache": [
+404
+],
+"billing-tax-engine": [
+264
+],
+"credit-token-balance": [
+134
+],
+"double-entry-ledger": [
+122,
+241
+],
+"image-transform-pipeline": [
+188
+],
+"query-condition-parser": [
+284
+],
+"spreadsheet-engine": [
+213
+]
+},
+"@staticmethod": {
+"amz-aws-billing": [
+41
+],
+"amz-closest-store": [
+190
+],
+"amz-discount-engine": [
+232
+],
+"amz-in-memory-db": [
+260,
+297,
+305
+],
+"amz-pizza-order": [
+324
+],
+"car-rental": [
+132
+],
+"movie-booking": [
+286
+],
+"rate-limiter": [
+318,
+345
+],
+"splitwise": [
+109
+],
+"stock-brokerage": [
+357
+],
+"connect-four": [
+306,
+311,
+315
+],
+"dasher-payout": [
+154
+]
+},
+"import time": {
+"amz-configurable-cache": [
+16
+],
+"bounded-blocking-queue": [
+15
+],
+"lru-cache": [
+10
+],
+"notification-service": [
+14
+],
+"pub-sub": [
+13
+],
+"rate-limiter": [
+13
+],
+"ttl-cache": [
+15
+],
+"api-circuit-breaker": [
+20
+],
+"connect-four": [
+16
+],
+"idempotent-transfer": [
+16
+],
+"inventory-management": [
+22
+]
+},
+"~event-replay": {
+"amz-occupancy-tracker": [
+5,
+6,
+47,
+90
+],
+"chess": [
+217
+],
+"cricinfo": [
+6,
+162,
+195,
+250,
+320
+],
+"kv-store": [
+7
+],
+"lru-cache": [
+288
+],
+"pub-sub": [
+4,
+71,
+192,
+212,
+405
+],
+"snake-and-ladder": [
+259
+],
+"text-editor": [
+23,
+164,
+256
+],
+"tic-tac-toe": [
+465
+],
+"credit-token-balance": [
+4,
+5,
+6,
+63,
+65,
+132
+],
+"double-entry-ledger": [
+1,
+101
+]
+},
+"dataclasses.replace": {
+"car-rental": [
+16
+],
+"chat-room": [
+13
+],
+"cricinfo": [
+18
+],
+"food-delivery": [
+22
+],
+"meeting-scheduler": [
+17
+],
+"movie-booking": [
+17
+],
+"notification-service": [
+17
+],
+"rate-limiter": [
+18
+],
+"ride-sharing": [
+22
+],
+"credit-token-balance": [
+13
+],
+"inventory-management": [
+25
+]
+},
+"~lazy-deletion": {
+"airline": [
+605,
+607,
+610
+],
+"car-rental": [
+207,
+208,
+210,
+212
+],
+"chess": [
+403,
+450
+],
+"hotel-booking": [
+263,
+264,
+266
+],
+"library": [
+283,
+284,
+286
+],
+"meeting-scheduler": [
+238,
+239
+],
+"notification-service": [
+274,
+275,
+277,
+324,
+325,
+327
+],
+"ride-sharing": [
+596,
+597,
+599
+],
+"ttl-cache": [
+29,
+112,
+136,
+137,
+146,
+159
+],
+"billing-tax-engine": [
+33,
+131,
+138
+]
+},
+"import heapq": {
+"amazon-locker": [
+13
+],
+"amz-dag-runner": [
+12
+],
+"amz-emergency-pubsub": [
+10
+],
+"bank-account": [
+13
+],
+"notification-service": [
+11
+],
+"splitwise": [
+15
+],
+"task-scheduler": [
+15
+],
+"ttl-cache": [
+11
+],
+"credit-token-balance": [
+12
+],
+"inventory-management": [
+19
+]
+},
+"collections.abc.Iterator": {
+"amz-closest-store": [
+16
+],
+"amz-linux-find": [
+17
+],
+"chess": [
+15
+],
+"hotel-booking": [
+17
+],
+"meeting-scheduler": [
+16
+],
+"rate-limiter": [
+16
+],
+"ttl-cache": [
+17
+],
+"connect-four": [
+17
+],
+"idempotent-transfer": [
+18
+],
+"spreadsheet-engine": [
+13
+]
+},
+"enum.IntEnum": {
+"airline": [
+19
+],
+"amz-emergency-pubsub": [
+16
+],
+"atm": [
+18
+],
+"elevator": [
+18
+],
+"logger": [
+17
+],
+"movie-booking": [
+19
+],
+"notification-service": [
+19
+],
+"parking-lot": [
+22
+],
+"vending-machine": [
+16
+]
+},
+"class(IntEnum)": {
+"airline": [
+53
+],
+"amz-emergency-pubsub": [
+34
+],
+"atm": [
+25
+],
+"elevator": [
+23
+],
+"logger": [
+42
+],
+"movie-booking": [
+56
+],
+"notification-service": [
+49
+],
+"parking-lot": [
+30
+],
+"vending-machine": [
+21
+]
+},
+"import math": {
+"amazon-locker": [
+14
+],
+"atm": [
+13
+],
+"car-rental": [
+13
+],
+"food-delivery": [
+19
+],
+"library": [
+14
+],
+"rate-limiter": [
+11
+],
+"ride-sharing": [
+19
+],
+"thread-pool": [
+15
+],
+"ttl-cache": [
+13
+]
+},
+"__len__": {
+"amz-closest-store": [
+52,
+81,
+122,
+213
+],
+"amz-configurable-cache": [
+48,
+62,
+96,
+153,
+165,
+192
+],
+"amz-train-fare": [
+67
+],
+"bounded-blocking-queue": [
+96
+],
+"deck-of-cards": [
+151,
+344
+],
+"lru-cache": [
+44,
+102,
+124,
+184,
+206,
+278
+],
+"text-editor": [
+42,
+181
+],
+"ttl-cache": [
+114,
+282
+],
+"image-transform-pipeline": [
+169
+]
+},
+"yield": {
+"amz-closest-store": [
+259,
+265
+],
+"amz-linux-find": [
+234
+],
+"chess": [
+95,
+112,
+115,
+129,
+178,
+181
+],
+"hotel-booking": [
+103
+],
+"meeting-scheduler": [
+182
+],
+"rate-limiter": [
+340
+],
+"connect-four": [
+304
+],
+"idempotent-transfer": [
+177
+],
+"spreadsheet-engine": [
+171
+]
+},
+"~condition-wait": {
+"amz-emergency-pubsub": [
+172,
+186
+],
+"amz-file-watcher": [
+212
+],
+"bounded-blocking-queue": [
+40,
+178,
+181
+],
+"notification-service": [
+625
+],
+"pub-sub": [
+253,
+287,
+400,
+445
+],
+"task-scheduler": [
+325
+],
+"thread-pool": [
+56,
+64
+],
+"ttl-cache": [
+381
+],
+"idempotent-transfer": [
+135
+]
+},
+"~heap-tiebreak": {
+"amazon-locker": [
+461
+],
+"amz-emergency-pubsub": [
+164
+],
+"bank-account": [
+289
+],
+"notification-service": [
+583
+],
+"splitwise": [
+344,
+346,
+357,
+359
+],
+"task-scheduler": [
+187
+],
+"credit-token-balance": [
+79
+],
+"inventory-management": [
+218,
+240
+]
+},
+"abc.ABC": {
+"amz-discount-engine": [
+13
+],
+"amz-in-memory-db": [
+15
+],
+"amz-linux-find": [
+16
+],
+"amz-pizza-order": [
+13
+],
+"chess": [
+14
+],
+"logger": [
+13
+],
+"rate-limiter": [
+14
+],
+"splitwise": [
+16
+]
+},
+"abc.abstractmethod": {
+"amz-discount-engine": [
+13
+],
+"amz-in-memory-db": [
+15
+],
+"amz-linux-find": [
+16
+],
+"amz-pizza-order": [
+13
+],
+"chess": [
+14
+],
+"logger": [
+13
+],
+"rate-limiter": [
+14
+],
+"splitwise": [
+16
+]
+},
+"class(ABC)": {
+"amz-discount-engine": [
+106,
+151
+],
+"amz-in-memory-db": [
+53
+],
+"amz-linux-find": [
+91
+],
+"amz-pizza-order": [
+186,
+231
+],
+"chess": [
+72
+],
+"logger": [
+127
+],
+"rate-limiter": [
+64
+],
+"splitwise": [
+90
+]
+},
+"@abstractmethod": {
+"amz-discount-engine": [
+116,
+157,
+160
+],
+"amz-in-memory-db": [
+57,
+60
+],
+"amz-linux-find": [
+94
+],
+"amz-pizza-order": [
+195,
+237,
+240
+],
+"chess": [
+84
+],
+"logger": [
+161
+],
+"rate-limiter": [
+86,
+90,
+94
+],
+"splitwise": [
+104
+]
+},
+"datetime.timezone": {
+"amz-emergency-pubsub": [
+15
+],
+"chat-room": [
+14
+],
+"logger": [
+16
+],
+"music-streaming": [
+21
+],
+"notification-service": [
+18
+],
+"pub-sub": [
+17
+],
+"social-network": [
+14
+],
+"task-management": [
+17
+]
+},
+"typing.TypeVar": {
+"bounded-blocking-queue": [
+17
+],
+"lru-cache": [
+12
+],
+"rate-limiter": [
+19
+],
+"thread-pool": [
+19
+],
+"ttl-cache": [
+20
+],
+"api-circuit-breaker": [
+26
+],
+"double-entry-ledger": [
+23
+],
+"inventory-management": [
+28
+]
+},
+"datetime.date": {
+"airline": [
+18
+],
+"amz-parking-fees": [
+20
+],
+"amz-train-fare": [
+16
+],
+"hotel-booking": [
+19
+],
+"meeting-scheduler": [
+18
+],
+"task-management": [
+17
+],
+"dasher-payout": [
+14
+]
+},
+"decimal.Decimal": {
+"amz-aws-billing": [
+18
+],
+"amz-discount-engine": [
+16
+],
+"amz-pizza-order": [
+16
+],
+"parking-lot": [
+21
+],
+"splitwise": [
+20
+],
+"billing-tax-engine": [
+21
+],
+"dasher-payout": [
+15
+]
+},
+"~money-integer": {
+"amz-aws-billing": [
+18,
+38,
+44,
+49,
+52,
+53
+],
+"amz-discount-engine": [
+16,
+33,
+35,
+38,
+39,
+40
+],
+"amz-parking-fees": [
+45,
+48,
+51,
+54,
+55,
+170
+],
+"amz-pizza-order": [
+16,
+36,
+38,
+41,
+42,
+43
+],
+"amz-train-fare": [
+36,
+39,
+42,
+45,
+91,
+113
+],
+"billing-tax-engine": [
+21,
+74
+],
+"dasher-payout": [
+113,
+169
+]
+},
+"typing.Any": {
+"amz-configurable-cache": [
+21
+],
+"amz-dag-runner": [
+16
+],
+"amz-in-memory-db": [
+19
+],
+"thread-pool": [
+19
+],
+"double-entry-ledger": [
+23
+],
+"inventory-management": [
+28
+],
+"query-condition-parser": [
+22
+]
+},
+"__repr__": {
+"bounded-blocking-queue": [
+184
+],
+"deck-of-cards": [
+100,
+382
+],
+"logger": [
+516
+],
+"lru-cache": [
+246
+],
+"rate-limiter": [
+389
+],
+"text-editor": [
+534
+],
+"ttl-cache": [
+440
+]
+},
+"@dataclass(frozen=True)": {
+"amz-aws-billing": [
+62,
+72,
+78,
+96,
+107,
+116
+],
+"amz-in-memory-db": [
+43,
+68,
+88,
+106,
+118,
+131
+],
+"amz-linux-find": [
+112,
+121,
+130,
+138,
+147,
+169
+],
+"amz-occupancy-tracker": [
+38
+],
+"amz-pizza-order": [
+48,
+54,
+60
+],
+"chess": [
+71,
+134,
+139,
+144,
+149,
+155
+]
+},
+"~snapshot": {
+"amz-file-watcher": [
+38,
+58,
+64,
+67,
+89,
+123
+],
+"elevator": [
+101,
+146,
+149,
+156,
+164,
+190
+],
+"in-memory-file-system": [
+75,
+269,
+275,
+279,
+290
+],
+"online-auction": [
+172,
+176,
+224,
+225,
+227,
+269
+],
+"online-shopping": [
+320
+],
+"inventory-management": [
+290
+]
+},
+"match": {
+"api-circuit-breaker": [
+159
+],
+"credit-token-balance": [
+76
+],
+"image-transform-pipeline": [
+201
+],
+"inventory-management": [
+159,
+177
+],
+"query-condition-parser": [
+299
+],
+"spreadsheet-engine": [
+176,
+191,
+201,
+214
+]
+},
+"@classmethod": {
+"airline": [
+86,
+235
+],
+"amz-linux-find": [
+175
+],
+"chess": [
+54,
+270
+],
+"movie-booking": [
+87
+],
+"connect-four": [
+176
+]
+},
+"collections.defaultdict": {
+"amz-aws-billing": [
+15
+],
+"amz-in-memory-db": [
+16
+],
+"double-entry-ledger": [
+19
+],
+"idempotent-transfer": [
+17
+],
+"inventory-management": [
+23
+]
+},
+"__str__": {
+"amz-aws-billing": [
+51
+],
+"amz-parking-fees": [
+53
+],
+"amz-train-fare": [
+44
+],
+"online-shopping": [
+410
+],
+"snake-and-ladder": [
+110
+]
+},
+"__contains__": {
+"amz-closest-store": [
+210
+],
+"amz-configurable-cache": [
+49,
+65,
+99
+],
+"amz-train-fare": [
+71
+],
+"lru-cache": [
+47,
+209,
+282,
+322
+],
+"ttl-cache": [
+294
+]
+},
+"@dataclass(frozen=True, slots=True, order=True)": {
+"amz-parking-fees": [
+41
+],
+"amz-train-fare": [
+32
+],
+"chess": [
+44
+],
+"snake-and-ladder": [
+86
+],
+"tic-tac-toe": [
+62
+]
+},
+"typing.Generic": {
+"bounded-blocking-queue": [
+17
+],
+"lru-cache": [
+12
+],
+"rate-limiter": [
+19
+],
+"thread-pool": [
+19
+],
+"ttl-cache": [
+20
+]
+},
+"typing.Callable": {
+"lru-cache": [
+12
+],
+"music-streaming": [
+23
+],
+"restaurant": [
+22
+],
+"task-management": [
+19
+],
+"thread-pool": [
+19
+]
+},
+"datetime.time": {
+"airline": [
+18
+],
+"amz-parking-fees": [
+20
+],
+"meeting-scheduler": [
+18
+],
+"dasher-payout": [
+14
+]
+},
+"@dataclass": {
+"amz-aws-billing": [
+207
+],
+"amz-linux-find": [
+42,
+50,
+59,
+207
+],
+"in-memory-file-system": [
+53,
+62
+],
+"parking-lot": [
+216
+]
+},
+"__add__": {
+"amz-aws-billing": [
+46
+],
+"amz-parking-fees": [
+47
+],
+"amz-train-fare": [
+38
+],
+"image-transform-pipeline": [
+166
+]
+},
+"import re": {
+"amz-in-memory-db": [
+14
+],
+"amz-linux-find": [
+15
+],
+"query-condition-parser": [
+18
+],
+"spreadsheet-engine": [
+12
+]
+},
+"__call__": {
+"amz-in-memory-db": [
+61,
+78,
+97,
+114,
+126,
+139
+],
+"parking-lot": [
+173
+],
+"snake-and-ladder": [
+279
+],
+"splitwise": [
+395
+]
+},
+"~recursive-descent": {
+"amz-in-memory-db": [
+342,
+367
+],
+"rate-limiter": [
+366
+],
+"query-condition-parser": [
+4,
+41,
+156,
+158,
+168,
+175
+],
+"spreadsheet-engine": [
+85,
+102,
+106,
+114,
+121,
+127
+]
+},
+"import random": {
+"deck-of-cards": [
+13
+],
+"music-streaming": [
+16
+],
+"snake-and-ladder": [
+14
+],
+"tic-tac-toe": [
+15
+]
+},
+"bisect.bisect_right": {
+"amz-aws-billing": [
+14
+],
+"billing-tax-engine": [
+18
+],
+"double-entry-ledger": [
+18
+]
+},
+"decimal.ROUND_HALF_UP": {
+"amz-aws-billing": [
+18
+],
+"amz-discount-engine": [
+16
+],
+"amz-pizza-order": [
+16
+]
+},
+"~version-cas": {
+"amz-aws-billing": [
+221,
+222,
+224
+],
+"logger": [
+603
+],
+"billing-tax-engine": [
+58,
+156,
+160,
+162,
+164,
+168
+]
+},
+"import bisect": {
+"amz-closest-store": [
+13
+],
+"amz-occupancy-tracker": [
+13
+],
+"stock-brokerage": [
+12
+]
+},
+"~bisect-sorted": {
+"amz-closest-store": [
+85,
+88,
+95,
+98,
+102
+],
+"amz-occupancy-tracker": [
+109,
+114,
+115
+],
+"stock-brokerage": [
+290,
+301
+]
+},
+"import os": {
+"amz-configurable-cache": [
+13
+],
+"amz-file-watcher": [
+13
+],
+"amz-linux-find": [
+14
+]
+},
+"collections.OrderedDict": {
+"amz-configurable-cache": [
+17
+],
+"ttl-cache": [
+16
+],
+"image-transform-pipeline": [
+11
+]
+},
+"collections.Counter": {
+"amz-in-memory-db": [
+16
+],
+"hotel-booking": [
+16
+],
+"music-streaming": [
+18
+]
+},
+"import queue": {
+"coffee-machine": [
+13
+],
+"logger": [
+11
+],
+"thread-pool": [
+16
+]
+},
+"~idempotency": {
+"digital-wallet": [
+49,
+196,
+197,
+246,
+247,
+250
+],
+"notification-service": [
+3,
+108,
+280,
+401,
+409,
+494
+],
+"online-shopping": [
+452,
+459,
+461,
+613,
+614,
+616
+]
+},
+"collections.abc.Hashable": {
+"lru-cache": [
+11
+],
+"rate-limiter": [
+16
+],
+"ttl-cache": [
+17
+]
+},
+"contextlib.contextmanager": {
+"rate-limiter": [
+17
+],
+"connect-four": [
+18
+],
+"idempotent-transfer": [
+19
+]
+},
+"@contextmanager": {
+"rate-limiter": [
+326
+],
+"connect-four": [
+296
+],
+"idempotent-transfer": [
+173
+]
+},
+"fractions.Fraction": {
+"ride-sharing": [
+25
+],
+"splitwise": [
+22
+],
+"dasher-payout": [
+17
+]
+},
+"typing.Mapping": {
+"stack-overflow": [
+19
+],
+"idempotent-transfer": [
+21
+],
+"query-condition-parser": [
+22
+]
+},
+"contextlib.ExitStack": {
+"airline": [
+16
+],
+"rate-limiter": [
+17
+]
+},
+"with ExitStack()": {
+"airline": [
+245
+],
+"rate-limiter": [
+426
+]
+},
+"import json": {
+"amz-configurable-cache": [
+12
+],
+"logger": [
+10
+]
+},
+"import tempfile": {
+"amz-configurable-cache": [
+14
+],
+"amz-file-watcher": [
+224
+]
+},
+"pathlib.Path": {
+"amz-configurable-cache": [
+20
+],
+"logger": [
+18
+]
+},
+"concurrent.futures.ThreadPoolExecutor": {
+"amz-dag-runner": [
+14
+],
+"task-scheduler": [
+19
+]
+},
+"threading.Lock": {
+"amz-discount-engine": [
+18
+],
+"amz-pizza-order": [
+17
+]
+},
+"import operator": {
+"amz-in-memory-db": [
+13
+],
+"query-condition-parser": [
+17
+]
+},
+"import fnmatch": {
+"amz-linux-find": [
+13
+],
+"in-memory-file-system": [
+15
+]
+},
+"__sub__": {
+"amz-parking-fees": [
+50
+],
+"amz-train-fare": [
+41
+]
+},
+"with self._not_full": {
+"bounded-blocking-queue": [
+106
+],
+"pub-sub": [
+200,
+223
+]
+},
+"with self._not_empty": {
+"bounded-blocking-queue": [
+125,
+148
+],
+"pub-sub": [
+277
+]
+},
+"with self._state_lock": {
+"logger": [
+336,
+342,
+356,
+378,
+389
+],
+"pub-sub": [
+365,
+371,
+377,
+382,
+419,
+436
+]
+},
+"__getitem__": {
+"lru-cache": [
+237
+],
+"ttl-cache": [
+428
+]
+},
+"__setitem__": {
+"lru-cache": [
+240
+],
+"ttl-cache": [
+431
+]
+},
+"__delitem__": {
+"lru-cache": [
+243
+],
+"ttl-cache": [
+434
+]
+},
+"itertools.count": {
+"online-shopping": [
+17
+],
+"splitwise": [
+23
+]
+},
+"threading.RLock": {
+"online-shopping": [
+18
+],
+"splitwise": [
+24
+]
+},
+"with self._mu": {
+"connect-four": [
+250,
+299
+],
+"idempotent-transfer": [
+119,
+158,
+191
+]
+},
+"typing.NamedTuple": {
+"credit-token-balance": [
+15
+],
+"double-entry-ledger": [
+23
+]
+},
+"class(NamedTuple)": {
+"credit-token-balance": [
+38
+],
+"double-entry-ledger": [
+28
+]
+},
+"functools.wraps": {
+"double-entry-ledger": [
+22
+],
+"inventory-management": [
+27
+]
+},
+"@wraps(method)": {
+"double-entry-ledger": [
+38
+],
+"inventory-management": [
+99
+]
+},
+"import secrets": {
+"amazon-locker": [
+15
+]
+},
+"@dataclass(frozen=True, order=True)": {
+"amz-aws-billing": [
+34
+]
+},
+"import enum": {
+"amz-closest-store": [
+14
+]
+},
+"import hashlib": {
+"amz-configurable-cache": [
+11
+]
+},
+"with os.fdopen(fd, 'w', encoding='u": {
+"amz-configurable-cache": [
+210
+]
+},
+"concurrent.futures.FIRST_COMPLETED": {
+"amz-dag-runner": [
+14
+]
+},
+"concurrent.futures.Future": {
+"amz-dag-runner": [
+14
+]
+},
+"concurrent.futures.wait": {
+"amz-dag-runner": [
+14
+]
+},
+"with ThreadPoolExecutor(max_workers": {
+"amz-dag-runner": [
+178
+]
+},
+"collections.abc.Collection": {
+"amz-emergency-pubsub": [
+13
+]
+},
+"with self._cond": {
+"amz-emergency-pubsub": [
+148,
+153,
+170,
+180,
+185,
+189
+]
+},
+"with tempfile.TemporaryDirectory()": {
+"amz-file-watcher": [
+226
+]
+},
+"with open(os.path.join(tmp, 'a.txt'": {
+"amz-file-watcher": [
+230
+]
+},
+"__and__": {
+"amz-linux-find": [
+97
+]
+},
+"__or__": {
+"amz-linux-find": [
+100
+]
+},
+"__invert__": {
+"amz-linux-find": [
+103
+]
+},
+"with os.scandir(path)": {
+"amz-linux-find": [
+268
+]
+},
+"import sqlite3": {
+"amz-occupancy-tracker": [
+14
+]
+},
+"with self.lock": {
+"atm": [
+293,
+305
+]
+},
+"typing.ClassVar": {
+"chess": [
+18
+]
+},
+"with self._stats_lock": {
+"coffee-machine": [
+232,
+265
+]
+},
+"with self._menu_lock": {
+"coffee-machine": [
+237,
+246,
+275
+]
+},
+"__lt__": {
+"deck-of-cards": [
+95
+]
+},
+"with self._registry_lock": {
+"digital-wallet": [
+206
+]
+},
+"with lo.lock": {
+"digital-wallet": [
+244
+]
+},
+"with account.lock": {
+"digital-wallet": [
+288,
+326
+]
+},
+"with self._idempotency_lock": {
+"digital-wallet": [
+246,
+262,
+337
+]
+},
+"typing.TextIO": {
+"logger": [
+20
+]
+},
+"with _DEFAULT_LOCK": {
+"logger": [
+583
+]
+},
+"import sys": {
+"logger": [
+595
+]
+},
+"zoneinfo.ZoneInfo": {
+"meeting-scheduler": [
+20
+]
+},
+"dataclasses.InitVar": {
+"parking-lot": [
+19
+]
+},
+"__bool__": {
+"rate-limiter": [
+60
+]
+},
+"with shard.lock": {
+"rate-limiter": [
+320,
+334,
+375,
+383
+]
+},
+"with self.reserve(key, now)": {
+"rate-limiter": [
+362,
+369
+]
+},
+"@dataclass(order=True, frozen=True, slots=True)": {
+"task-scheduler": [
+66
+]
+},
+"with self._cv": {
+"task-scheduler": [
+283,
+303,
+318
+]
+},
+"@dataclass(order=True)": {
+"thread-pool": [
+92
+]
+},
+"__enter__": {
+"thread-pool": [
+197
+]
+},
+"__exit__": {
+"thread-pool": [
+200
+]
+},
+"with ThreadPool(num_workers=4)": {
+"thread-pool": [
+240
+]
+},
+"__iter__": {
+"ttl-cache": [
+437
+]
+},
+"import logging": {
+"api-circuit-breaker": [
+18
+]
+},
+"decimal.ROUND_HALF_EVEN": {
+"billing-tax-engine": [
+21
+]
+},
+"with self._publish_lock": {
+"billing-tax-engine": [
+135
+]
+},
+"enum.StrEnum": {
+"connect-four": [
+20
+]
+},
+"class(StrEnum)": {
+"connect-four": [
+201
+]
+},
+"with self._locked(game_id)": {
+"connect-four": [
+262,
+275,
+284
+]
+},
+"with match.lock": {
+"connect-four": [
+303
+]
+},
+"itertools.pairwise": {
+"dasher-payout": [
+18
+]
+},
+"@_synchronized": {
+"double-entry-ledger": [
+113,
+145,
+150,
+166,
+179,
+194
+]
+},
+"typing.Literal": {
+"idempotent-transfer": [
+21
+]
+},
+"with self._money": {
+"idempotent-transfer": [
+143,
+148,
+156,
+179
+]
+},
+"with self._owning(k, rec, mine)": {
+"idempotent-transfer": [
+153
+]
+},
+"@_op": {
+"inventory-management": [
+124,
+130,
+135,
+140,
+152,
+173
+]
+},
+"import copy": {
+"query-condition-parser": [
+16
+]
+},
+"functools.lru_cache": {
+"query-condition-parser": [
+20
+]
+},
+"typing.Sequence": {
+"query-condition-parser": [
+22
+]
+},
+"@lru_cache(maxsize=256)": {
+"query-condition-parser": [
+243
+]
+}
+}
+}

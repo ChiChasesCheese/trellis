@@ -1,6 +1,6 @@
 ---
 id: hi-sd-fb-live-comments-4-push
-node: sd.problem-breakdowns.fb-live-comments
+node: sd.problem-breakdowns.fb-live-comments.exam
 type: qa
 step: 4
 ---

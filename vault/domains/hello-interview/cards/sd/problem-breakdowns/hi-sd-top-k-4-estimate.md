@@ -1,6 +1,6 @@
 ---
 id: hi-sd-top-k-4-estimate
-node: sd.problem-breakdowns.top-k
+node: sd.problem-breakdowns.top-k.exam
 type: qa
 step: 4
 ---

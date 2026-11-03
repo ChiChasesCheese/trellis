@@ -1,6 +1,6 @@
 ---
 id: hi-sd-leetcode-4-code-exec
-node: sd.problem-breakdowns.leetcode
+node: sd.problem-breakdowns.leetcode.exam
 type: qa
 step: 4
 ---

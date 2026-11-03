@@ -1,6 +1,6 @@
 ---
 id: hi-sd-proximity-search-5-geohash
-node: sd.deep-dives.proximity-search
+node: sd.deep-dives.proximity-search.exam
 type: qa
 step: 5
 ---

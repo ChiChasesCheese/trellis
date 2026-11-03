@@ -1,6 +1,6 @@
 ---
 id: hi-sd-figma-multiplayer-6-tradeoff
-node: sd.in-the-wild.figma-multiplayer
+node: sd.in-the-wild.figma-multiplayer.exam
 type: qa
 step: 6
 ---

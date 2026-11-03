@@ -1,6 +1,6 @@
 ---
 id: hi-sd-whatsapp-5-route-servers
-node: sd.problem-breakdowns.whatsapp
+node: sd.problem-breakdowns.whatsapp.exam
 type: qa
 step: 5
 ---

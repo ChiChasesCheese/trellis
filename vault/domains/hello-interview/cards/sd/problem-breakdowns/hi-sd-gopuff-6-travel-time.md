@@ -1,6 +1,6 @@
 ---
 id: hi-sd-gopuff-6-travel-time
-node: sd.problem-breakdowns.gopuff
+node: sd.problem-breakdowns.gopuff.exam
 type: qa
 step: 6
 ---

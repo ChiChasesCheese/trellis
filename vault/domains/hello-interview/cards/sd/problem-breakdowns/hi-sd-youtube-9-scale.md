@@ -1,6 +1,6 @@
 ---
 id: hi-sd-youtube-9-scale
-node: sd.problem-breakdowns.youtube
+node: sd.problem-breakdowns.youtube.exam
 type: qa
 step: 9
 ---

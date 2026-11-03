@@ -1,6 +1,6 @@
 ---
 id: hi-sd-meta-zgateway-zippydb-4-coalescing
-node: sd.in-the-wild.meta-zgateway-zippydb
+node: sd.in-the-wild.meta-zgateway-zippydb.exam
 type: qa
 step: 4
 ---

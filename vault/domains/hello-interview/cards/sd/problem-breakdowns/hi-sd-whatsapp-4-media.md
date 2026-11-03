@@ -1,6 +1,6 @@
 ---
 id: hi-sd-whatsapp-4-media
-node: sd.problem-breakdowns.whatsapp
+node: sd.problem-breakdowns.whatsapp.exam
 type: qa
 step: 4
 ---

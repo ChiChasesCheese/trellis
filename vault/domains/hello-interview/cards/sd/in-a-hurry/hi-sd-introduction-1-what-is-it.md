@@ -1,6 +1,6 @@
 ---
 id: hi-sd-introduction-1-what-is-it
-node: sd.in-a-hurry.introduction
+node: sd.in-a-hurry.introduction.exam
 type: qa
 step: 1
 ---

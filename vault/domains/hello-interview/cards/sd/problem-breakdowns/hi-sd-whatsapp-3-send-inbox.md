@@ -1,6 +1,6 @@
 ---
 id: hi-sd-whatsapp-3-send-inbox
-node: sd.problem-breakdowns.whatsapp
+node: sd.problem-breakdowns.whatsapp.exam
 type: qa
 step: 3
 ---

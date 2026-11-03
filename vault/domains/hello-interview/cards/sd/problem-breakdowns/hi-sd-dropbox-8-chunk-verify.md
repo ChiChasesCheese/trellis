@@ -1,6 +1,6 @@
 ---
 id: hi-sd-dropbox-8-chunk-verify
-node: sd.problem-breakdowns.dropbox
+node: sd.problem-breakdowns.dropbox.exam
 type: qa
 step: 8
 ---

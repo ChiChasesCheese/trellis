@@ -1,6 +1,6 @@
 ---
 id: hi-sd-fb-post-search-7-write-post
-node: sd.problem-breakdowns.fb-post-search
+node: sd.problem-breakdowns.fb-post-search.exam
 type: qa
 step: 7
 ---

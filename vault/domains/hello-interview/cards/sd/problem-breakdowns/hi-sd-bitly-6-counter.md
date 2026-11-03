@@ -1,6 +1,6 @@
 ---
 id: hi-sd-bitly-6-counter
-node: sd.problem-breakdowns.bitly
+node: sd.problem-breakdowns.bitly.exam
 type: qa
 step: 6
 ---

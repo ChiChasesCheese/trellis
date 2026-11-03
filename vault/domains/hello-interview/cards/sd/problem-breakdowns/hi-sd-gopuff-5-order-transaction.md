@@ -1,6 +1,6 @@
 ---
 id: hi-sd-gopuff-5-order-transaction
-node: sd.problem-breakdowns.gopuff
+node: sd.problem-breakdowns.gopuff.exam
 type: qa
 step: 5
 ---

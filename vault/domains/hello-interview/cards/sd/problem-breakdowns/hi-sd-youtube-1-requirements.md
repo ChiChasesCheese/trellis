@@ -1,6 +1,6 @@
 ---
 id: hi-sd-youtube-1-requirements
-node: sd.problem-breakdowns.youtube
+node: sd.problem-breakdowns.youtube.exam
 type: qa
 step: 1
 ---

@@ -1,6 +1,6 @@
 ---
 id: hi-sd-key-technologies-4-gateway-lb
-node: sd.in-a-hurry.key-technologies
+node: sd.in-a-hurry.key-technologies.exam
 type: qa
 step: 4
 ---

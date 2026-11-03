@@ -1,6 +1,6 @@
 ---
 id: hi-sd-key-technologies-2-blob-storage
-node: sd.in-a-hurry.key-technologies
+node: sd.in-a-hurry.key-technologies.exam
 type: qa
 step: 2
 ---

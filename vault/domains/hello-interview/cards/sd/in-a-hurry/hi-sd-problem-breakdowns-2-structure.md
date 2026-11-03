@@ -1,6 +1,6 @@
 ---
 id: hi-sd-problem-breakdowns-2-structure
-node: sd.in-a-hurry.problem-breakdowns
+node: sd.in-a-hurry.problem-breakdowns.exam
 type: qa
 step: 2
 ---

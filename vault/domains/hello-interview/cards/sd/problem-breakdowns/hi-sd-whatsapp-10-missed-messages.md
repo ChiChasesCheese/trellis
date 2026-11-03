@@ -1,6 +1,6 @@
 ---
 id: hi-sd-whatsapp-10-missed-messages
-node: sd.problem-breakdowns.whatsapp
+node: sd.problem-breakdowns.whatsapp.exam
 type: qa
 step: 10
 ---

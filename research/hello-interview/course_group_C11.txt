@@ -1,0 +1,6 @@
+sd.problem-breakdowns.instagram system-design__problem-breakdowns__instagram
+sd.problem-breakdowns.strava system-design__problem-breakdowns__strava
+sd.problem-breakdowns.distributed-cache system-design__problem-breakdowns__distributed-cache
+sd.problem-breakdowns.online-auction system-design__problem-breakdowns__online-auction
+sd.problem-breakdowns.job-scheduler system-design__problem-breakdowns__job-scheduler
+sd.problem-breakdowns.google-news system-design__problem-breakdowns__google-news

@@ -1,6 +1,6 @@
 ---
 id: hi-sd-fb-post-search-5-read-scale
-node: sd.problem-breakdowns.fb-post-search
+node: sd.problem-breakdowns.fb-post-search.exam
 type: qa
 step: 5
 ---

@@ -513,6 +513,127 @@ nodes:
       - id: qb.sd.feature-flags-service.points
         title: 要点 · 功能开关服务
         summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
+    - id: qb.sd.realtime-game-leaderboard
+      title: 在线游戏排行榜
+      summary: 在线游戏排行榜：完整解答。
+      children:
+      - id: qb.sd.realtime-game-leaderboard.answer
+        title: 解答 · 在线游戏排行榜
+        summary: 在线游戏排行榜：完整解答。
+        requires:
+        - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
+        - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
+      - id: qb.sd.realtime-game-leaderboard.points
+        title: 要点 · 在线游戏排行榜
+        summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
+    - id: qb.sd.github-cicd-workflow
+      title: CI/CD 流水线平台（GitHub Actions）
+      summary: CI/CD 流水线平台（GitHub Actions）：完整解答。
+      children:
+      - id: qb.sd.github-cicd-workflow.answer
+        title: 解答 · CI/CD 流水线平台（GitHub Actions）
+        summary: CI/CD 流水线平台（GitHub Actions）：完整解答。
+    - id: qb.sd.metrics-aggregator
+      title: 指标聚合系统
+      summary: 指标聚合系统：完整解答。
+      children:
+      - id: qb.sd.metrics-aggregator.answer
+        title: 解答 · 指标聚合系统
+        summary: 指标聚合系统：完整解答。
+        requires:
+        - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
+        - qb.sd.top-k-counts.pre-sd-deep-dives-time-series-databases
+      - id: qb.sd.metrics-aggregator.points
+        title: 要点 · 指标聚合系统
+        summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
+    - id: qb.sd.global-ip-blocking
+      title: 分布式黑名单封禁系统
+      summary: 分布式黑名单封禁系统：完整解答。
+      children:
+      - id: qb.sd.global-ip-blocking.answer
+        title: 解答 · 分布式黑名单封禁系统
+        summary: 分布式黑名单封禁系统：完整解答。
+        requires:
+        - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
+        - qb.sd.distributed-rate-limiter.pre-sd-deep-dives-api-gateway
+      - id: qb.sd.global-ip-blocking.points
+        title: 要点 · 分布式黑名单封禁系统
+        summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
+    - id: qb.sd.web-crawler-restricted-communication
+      title: 节点不能通信的网络爬虫
+      summary: 节点不能通信的网络爬虫：完整解答。
+      children:
+      - id: qb.sd.web-crawler-restricted-communication.answer
+        title: 解答 · 节点不能通信的网络爬虫
+        summary: 节点不能通信的网络爬虫：完整解答。
+    - id: qb.sd.driver-heatmap-backend
+      title: 司机实时热力图
+      summary: 司机实时热力图：完整解答。
+      children:
+      - id: qb.sd.driver-heatmap-backend.answer
+        title: 解答 · 司机实时热力图
+        summary: 司机实时热力图：完整解答。
+    - id: qb.sd.distributed-file-system
+      title: 分布式文件系统
+      summary: 分布式文件系统：完整解答。
+      children:
+      - id: qb.sd.distributed-file-system.answer
+        title: 解答 · 分布式文件系统
+        summary: 分布式文件系统：完整解答。
+    - id: qb.sd.key-value-store
+      title: 分布式键值存储
+      summary: 分布式键值存储：完整解答。
+      children:
+      - id: qb.sd.key-value-store.answer
+        title: 解答 · 分布式键值存储
+        summary: 分布式键值存储：完整解答。
+    - id: qb.sd.nearby-restaurants-app
+      title: 外卖平台（Uber Eats）
+      summary: 外卖平台（Uber Eats）：完整解答。
+      children:
+      - id: qb.sd.nearby-restaurants-app.answer
+        title: 解答 · 外卖平台（Uber Eats）
+        summary: 外卖平台（Uber Eats）：完整解答。
+    - id: qb.sd.delayed-payment-scheduler
+      title: 延迟支付调度服务
+      summary: 延迟支付调度服务：完整解答。
+      children:
+      - id: qb.sd.delayed-payment-scheduler.answer
+        title: 解答 · 延迟支付调度服务
+        summary: 延迟支付调度服务：完整解答。
+        requires:
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
+        - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-temporal
+      - id: qb.sd.delayed-payment-scheduler.points
+        title: 要点 · 延迟支付调度服务
+        summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
+    - id: qb.sd.typeahead-search-system
+      title: 搜索联想（Typeahead）
+      summary: 搜索联想（Typeahead）：完整解答。
+      children:
+      - id: qb.sd.typeahead-search-system.answer
+        title: 解答 · 搜索联想（Typeahead）
+        summary: 搜索联想（Typeahead）：完整解答。
+        requires:
+        - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
+        - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
+      - id: qb.sd.typeahead-search-system.points
+        title: 要点 · 搜索联想（Typeahead）
+        summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
+    - id: qb.sd.tiktok-meeting-room-booking
+      title: 会议室预订系统
+      summary: 会议室预订系统：完整解答。
+      children:
+      - id: qb.sd.tiktok-meeting-room-booking.answer
+        title: 解答 · 会议室预订系统
+        summary: 会议室预订系统：完整解答。
+        requires:
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
+      - id: qb.sd.tiktok-meeting-room-booking.points
+        title: 要点 · 会议室预订系统
+        summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
   - id: qb.lld
     title: 低层设计高频题
     summary: 低层设计高频题：按被报告次数从高到低。
@@ -755,6 +876,48 @@ nodes:
       - id: qb.lld.multithreaded-logging-framework.points
         title: 要点 · 多线程日志框架
         summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
+    - id: qb.lld.spreadsheet-engine
+      title: 电子表格引擎
+      summary: 电子表格引擎：完整解答。
+      children:
+      - id: qb.lld.spreadsheet-engine.answer
+        title: 解答 · 电子表格引擎
+        summary: 电子表格引擎：完整解答。
+    - id: qb.lld.battleship-game-design
+      title: 海战棋（Battleship）
+      summary: 海战棋（Battleship）：完整解答。
+      children:
+      - id: qb.lld.battleship-game-design.answer
+        title: 解答 · 海战棋（Battleship）
+        summary: 海战棋（Battleship）：完整解答。
+    - id: qb.lld.restaurant-waitlist-api
+      title: 餐厅候位 API
+      summary: 餐厅候位 API：完整解答。
+      children:
+      - id: qb.lld.restaurant-waitlist-api.answer
+        title: 解答 · 餐厅候位 API
+        summary: 餐厅候位 API：完整解答。
+    - id: qb.lld.dasher-payout
+      title: 配送员结算（按配送事件计算报酬）
+      summary: 配送员结算（按配送事件计算报酬）：完整解答。
+      children:
+      - id: qb.lld.dasher-payout.answer
+        title: 解答 · 配送员结算（按配送事件计算报酬）
+        summary: 配送员结算（按配送事件计算报酬）：完整解答。
+    - id: qb.lld.image-transform-pipeline
+      title: 图片变换流水线
+      summary: 图片变换流水线：完整解答。
+      children:
+      - id: qb.lld.image-transform-pipeline.answer
+        title: 解答 · 图片变换流水线
+        summary: 图片变换流水线：完整解答。
+    - id: qb.lld.credit-token-balance
+      title: 用户额度与令牌余额服务
+      summary: 用户额度与令牌余额服务：完整解答。
+      children:
+      - id: qb.lld.credit-token-balance.answer
+        title: 解答 · 用户额度与令牌余额服务
+        summary: 用户额度与令牌余额服务：完整解答。
 - id: tt
   order: 2
   core: true
@@ -1000,6 +1163,25 @@ nodes:
         - qb.sd.book-seller-platform.pre-sd-core-concepts-api-design
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
         - qb.sd.notification-system-scale.pre-sd-deep-dives-cassandra
+    - id: tt.sd.metrics-aggregator
+      title: 指标聚合系统
+      summary: 指标聚合系统：完整解答。
+      children:
+      - id: tt.sd.metrics-aggregator.answer
+        title: 解答 · 指标聚合系统
+        summary: 指标聚合系统：完整解答。
+        requires:
+        - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
+        - qb.sd.top-k-counts.pre-sd-deep-dives-time-series-databases
+    - id: tt.sd.tiktok-meeting-room-booking
+      title: 会议室预订系统
+      summary: 会议室预订系统：完整解答。
+      children:
+      - id: tt.sd.tiktok-meeting-room-booking.answer
+        title: 解答 · 会议室预订系统
+        summary: 会议室预订系统：完整解答。
+        requires:
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
   - id: tt.lld
     title: TikTok 低层设计
     summary: TikTok 低层设计：支付方向在前，其后是通用高频题。
@@ -1117,6 +1299,28 @@ nodes:
         - qb.lld.kv-store-eviction.pre-lld-concurrency-intro
         - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
         - qb.sd.book-seller-platform.pre-sd-core-concepts-api-design
+  - id: tt.lc
+    title: TikTok 算法题
+    summary: 报告过的算法题，共用 LeetCode 牌组的同一份解答。
+    children:
+    - id: tt.lc.symmetric-tree
+      title: LC 101 对称二叉树
+      summary: TikTok 面试里被报告过的算法题。
+    - id: tt.lc.accounts-merge
+      title: LC 721 账户合并
+      summary: TikTok 面试里被报告过的算法题。
+    - id: tt.lc.lowest-common-ancestor-of-a-binary-tree
+      title: LC 236 二叉树的最近公共祖先
+      summary: TikTok 面试里被报告过的算法题。
+    - id: tt.lc.number-of-distinct-islands
+      title: LC 694 不同岛屿的数量
+      summary: TikTok 面试里被报告过的算法题。
+    - id: tt.lc.number-of-islands
+      title: LC 200 岛屿数量
+      summary: TikTok 面试里被报告过的算法题。
+    - id: tt.lc.implement-trie-prefix-tree
+      title: LC 208 实现 Trie (前缀树)
+      summary: TikTok 面试里被报告过的算法题。
 - id: sd
   order: 3
   title: 系统设计（System Design）
@@ -1208,78 +1412,509 @@ nodes:
     - id: sd.in-a-hurry.introduction
       title: 系统设计速成：总览
       summary: Hello Interview：System Design in a Hurry。
+      children:
+      - id: sd.in-a-hurry.introduction.notes
+        title: 摘要 · 系统设计速成：总览
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.in-a-hurry.introduction.exam
+        title: 考点 · 系统设计速成：总览
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.in-a-hurry.introduction.beyond
+        title: 拓展 · 系统设计速成：总览
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.in-a-hurry.how-to-prepare
       title: 怎样准备系统设计面试
       summary: Hello Interview：How to Prepare for System Design Interviews。
+      children:
+      - id: sd.in-a-hurry.how-to-prepare.notes
+        title: 摘要 · 怎样准备系统设计面试
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.in-a-hurry.how-to-prepare.exam
+        title: 考点 · 怎样准备系统设计面试
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.in-a-hurry.how-to-prepare.beyond
+        title: 拓展 · 怎样准备系统设计面试
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.in-a-hurry.delivery
       title: 答题框架（Delivery Framework）
       summary: Hello Interview：System Design Delivery Framework。
+      children:
+      - id: sd.in-a-hurry.delivery.notes
+        title: 摘要 · 答题框架（Delivery Framework）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.in-a-hurry.delivery.exam
+        title: 考点 · 答题框架（Delivery Framework）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.in-a-hurry.delivery.beyond
+        title: 拓展 · 答题框架（Delivery Framework）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.in-a-hurry.core-concepts
       title: 核心概念速览
       summary: Hello Interview：Core Concepts for System Design Interviews。
+      children:
+      - id: sd.in-a-hurry.core-concepts.notes
+        title: 摘要 · 核心概念速览
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.in-a-hurry.core-concepts.exam
+        title: 考点 · 核心概念速览
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.in-a-hurry.core-concepts.beyond
+        title: 拓展 · 核心概念速览
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.in-a-hurry.key-technologies
       title: 关键技术速览
       summary: Hello Interview：System Design Key Technologies。
+      children:
+      - id: sd.in-a-hurry.key-technologies.notes
+        title: 摘要 · 关键技术速览
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.in-a-hurry.key-technologies.exam
+        title: 考点 · 关键技术速览
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.in-a-hurry.key-technologies.beyond
+        title: 拓展 · 关键技术速览
+        summary: 这一章没讲、但 senior 面试会追问的内容。
+    - id: sd.in-a-hurry.patterns
+      title: 常见模式速览
+      summary: Hello Interview：System Design Interview Patterns。
+      children:
+      - id: sd.in-a-hurry.patterns.notes
+        title: 摘要 · 常见模式速览
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.in-a-hurry.patterns.exam
+        title: 考点 · 常见模式速览
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.in-a-hurry.patterns.beyond
+        title: 拓展 · 常见模式速览
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.in-a-hurry.problem-breakdowns
       title: 经典题拆解怎么用
       summary: Hello Interview：Bitly。
+      children:
+      - id: sd.in-a-hurry.problem-breakdowns.notes
+        title: 摘要 · 经典题拆解怎么用
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.in-a-hurry.problem-breakdowns.exam
+        title: 考点 · 经典题拆解怎么用
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.in-a-hurry.problem-breakdowns.beyond
+        title: 拓展 · 经典题拆解怎么用
+        summary: 这一章没讲、但 senior 面试会追问的内容。
   - id: sd.core-concepts
     title: 核心概念（Core Concepts）
     summary: 系统设计（System Design） · 核心概念（Core Concepts），按 Hello Interview 的顺序。
     children:
+    - id: sd.core-concepts.networking-essentials
+      title: 网络基础
+      summary: Hello Interview：Networking Essentials for System Design Interviews。
+      children:
+      - id: sd.core-concepts.networking-essentials.notes
+        title: 摘要 · 网络基础
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.core-concepts.networking-essentials.exam
+        title: 考点 · 网络基础
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.core-concepts.networking-essentials.beyond
+        title: 拓展 · 网络基础
+        summary: 这一章没讲、但 senior 面试会追问的内容。
+    - id: sd.core-concepts.api-design
+      title: API 设计
+      summary: Hello Interview：API Design for System Design Interviews。
+      children:
+      - id: sd.core-concepts.api-design.notes
+        title: 摘要 · API 设计
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.core-concepts.api-design.exam
+        title: 考点 · API 设计
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.core-concepts.api-design.beyond
+        title: 拓展 · API 设计
+        summary: 这一章没讲、但 senior 面试会追问的内容。
+    - id: sd.core-concepts.data-modeling
+      title: 数据建模
+      summary: Hello Interview：Data Modeling for System Design Interviews。
+      children:
+      - id: sd.core-concepts.data-modeling.notes
+        title: 摘要 · 数据建模
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.core-concepts.data-modeling.exam
+        title: 考点 · 数据建模
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.core-concepts.data-modeling.beyond
+        title: 拓展 · 数据建模
+        summary: 这一章没讲、但 senior 面试会追问的内容。
+    - id: sd.core-concepts.caching
+      title: 缓存
+      summary: Hello Interview：Caching for System Design Interviews。
+      children:
+      - id: sd.core-concepts.caching.notes
+        title: 摘要 · 缓存
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.core-concepts.caching.exam
+        title: 考点 · 缓存
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.core-concepts.caching.beyond
+        title: 拓展 · 缓存
+        summary: 这一章没讲、但 senior 面试会追问的内容。
+    - id: sd.core-concepts.sharding
+      title: 分片（Sharding）
+      summary: Hello Interview：Sharding in System Design Interviews。
+      children:
+      - id: sd.core-concepts.sharding.notes
+        title: 摘要 · 分片（Sharding）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.core-concepts.sharding.exam
+        title: 考点 · 分片（Sharding）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.core-concepts.sharding.beyond
+        title: 拓展 · 分片（Sharding）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
+    - id: sd.core-concepts.consistent-hashing
+      title: 一致性哈希
+      summary: Hello Interview：Consistent Hashing for System Design Interviews。
+      children:
+      - id: sd.core-concepts.consistent-hashing.notes
+        title: 摘要 · 一致性哈希
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.core-concepts.consistent-hashing.exam
+        title: 考点 · 一致性哈希
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.core-concepts.consistent-hashing.beyond
+        title: 拓展 · 一致性哈希
+        summary: 这一章没讲、但 senior 面试会追问的内容。
+    - id: sd.core-concepts.cap-theorem
+      title: CAP 定理
+      summary: Hello Interview：CAP Theorem for System Design Interviews。
+      children:
+      - id: sd.core-concepts.cap-theorem.notes
+        title: 摘要 · CAP 定理
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.core-concepts.cap-theorem.exam
+        title: 考点 · CAP 定理
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.core-concepts.cap-theorem.beyond
+        title: 拓展 · CAP 定理
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.core-concepts.db-indexing
       title: 数据库索引
-      summary: 会员内容，待解锁。Hello Interview：Database Indexing for System Design Interviews。
+      summary: Hello Interview：Database Indexing for System Design Interviews。
+      children:
+      - id: sd.core-concepts.db-indexing.notes
+        title: 摘要 · 数据库索引
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.core-concepts.db-indexing.exam
+        title: 考点 · 数据库索引
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.core-concepts.db-indexing.beyond
+        title: 拓展 · 数据库索引
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.core-concepts.numbers-to-know
       title: 必须知道的数字
-      summary: 会员内容，待解锁。Hello Interview：Numbers to Know for System Design Interviews。
+      summary: Hello Interview：Numbers to Know for System Design Interviews。
+      children:
+      - id: sd.core-concepts.numbers-to-know.notes
+        title: 摘要 · 必须知道的数字
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.core-concepts.numbers-to-know.exam
+        title: 考点 · 必须知道的数字
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.core-concepts.numbers-to-know.beyond
+        title: 拓展 · 必须知道的数字
+        summary: 这一章没讲、但 senior 面试会追问的内容。
   - id: sd.patterns
     title: 常见模式（Patterns）
     summary: 系统设计（System Design） · 常见模式（Patterns），按 Hello Interview 的顺序。
     children:
     - id: sd.patterns.realtime-updates
       title: 实时更新
-      summary: 会员内容，待解锁。Hello Interview：Real-time Updates Pattern for System Design Interviews。
+      summary: Hello Interview：Real-time Updates Pattern for System Design Interviews。
+      children:
+      - id: sd.patterns.realtime-updates.notes
+        title: 摘要 · 实时更新
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.patterns.realtime-updates.exam
+        title: 考点 · 实时更新
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.patterns.realtime-updates.beyond
+        title: 拓展 · 实时更新
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.patterns.dealing-with-contention
       title: 处理争用（Contention）
-      summary: 会员内容，待解锁。Hello Interview：Dealing with Contention Pattern for System Design Interviews。
+      summary: Hello Interview：Dealing with Contention Pattern for System Design Interviews。
+      children:
+      - id: sd.patterns.dealing-with-contention.notes
+        title: 摘要 · 处理争用（Contention）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.patterns.dealing-with-contention.exam
+        title: 考点 · 处理争用（Contention）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.patterns.dealing-with-contention.beyond
+        title: 拓展 · 处理争用（Contention）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.patterns.multi-step-processes
       title: 多步骤流程
-      summary: 会员内容，待解锁。Hello Interview：Multi-step Processes Pattern for System Design Interviews。
+      summary: Hello Interview：Multi-step Processes Pattern for System Design Interviews。
+      children:
+      - id: sd.patterns.multi-step-processes.notes
+        title: 摘要 · 多步骤流程
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.patterns.multi-step-processes.exam
+        title: 考点 · 多步骤流程
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.patterns.multi-step-processes.beyond
+        title: 拓展 · 多步骤流程
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.patterns.scaling-reads
       title: 扩展读
-      summary: 会员内容，待解锁。Hello Interview：How to scale reads in your system design interview。
+      summary: Hello Interview：How to scale reads in your system design interview。
+      children:
+      - id: sd.patterns.scaling-reads.notes
+        title: 摘要 · 扩展读
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.patterns.scaling-reads.exam
+        title: 考点 · 扩展读
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.patterns.scaling-reads.beyond
+        title: 拓展 · 扩展读
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.patterns.scaling-writes
       title: 扩展写
-      summary: 会员内容，待解锁。Hello Interview：How to scale writes in your system design interview。
+      summary: Hello Interview：How to scale writes in your system design interview。
+      children:
+      - id: sd.patterns.scaling-writes.notes
+        title: 摘要 · 扩展写
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.patterns.scaling-writes.exam
+        title: 考点 · 扩展写
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.patterns.scaling-writes.beyond
+        title: 拓展 · 扩展写
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.patterns.large-blobs
       title: 大文件（Blob）处理
-      summary: 会员内容，待解锁。Hello Interview：Handling Large Blobs Pattern for System Design Interviews。
+      summary: Hello Interview：Handling Large Blobs Pattern for System Design Interviews。
+      children:
+      - id: sd.patterns.large-blobs.notes
+        title: 摘要 · 大文件（Blob）处理
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.patterns.large-blobs.exam
+        title: 考点 · 大文件（Blob）处理
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.patterns.large-blobs.beyond
+        title: 拓展 · 大文件（Blob）处理
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.patterns.long-running-tasks
       title: 长时间运行的任务
-      summary: 会员内容，待解锁。Hello Interview：Managing Long Running Tasks Pattern for System Design Interviews。
+      summary: Hello Interview：Managing Long Running Tasks Pattern for System Design Interviews。
+      children:
+      - id: sd.patterns.long-running-tasks.notes
+        title: 摘要 · 长时间运行的任务
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.patterns.long-running-tasks.exam
+        title: 考点 · 长时间运行的任务
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.patterns.long-running-tasks.beyond
+        title: 拓展 · 长时间运行的任务
+        summary: 这一章没讲、但 senior 面试会追问的内容。
   - id: sd.deep-dives
     title: 关键技术深入（Key Technologies）
     summary: 系统设计（System Design） · 关键技术深入（Key Technologies），按 Hello Interview 的顺序。
     children:
+    - id: sd.deep-dives.redis
+      title: Redis
+      summary: Hello Interview：Redis Deep Dive for System Design Interviews。
+      children:
+      - id: sd.deep-dives.redis.notes
+        title: 摘要 · Redis
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.deep-dives.redis.exam
+        title: 考点 · Redis
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.deep-dives.redis.beyond
+        title: 拓展 · Redis
+        summary: 这一章没讲、但 senior 面试会追问的内容。
+    - id: sd.deep-dives.elasticsearch
+      title: Elasticsearch
+      summary: Hello Interview：Elasticsearch Deep Dive for System Design Interviews。
+      children:
+      - id: sd.deep-dives.elasticsearch.notes
+        title: 摘要 · Elasticsearch
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.deep-dives.elasticsearch.exam
+        title: 考点 · Elasticsearch
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.deep-dives.elasticsearch.beyond
+        title: 拓展 · Elasticsearch
+        summary: 这一章没讲、但 senior 面试会追问的内容。
+    - id: sd.deep-dives.kafka
+      title: Kafka
+      summary: Hello Interview：Kafka Deep Dive for System Design Interviews。
+      children:
+      - id: sd.deep-dives.kafka.notes
+        title: 摘要 · Kafka
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.deep-dives.kafka.exam
+        title: 考点 · Kafka
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.deep-dives.kafka.beyond
+        title: 拓展 · Kafka
+        summary: 这一章没讲、但 senior 面试会追问的内容。
+    - id: sd.deep-dives.temporal
+      title: Temporal
+      summary: Hello Interview：Temporal Deep Dive。
+      children:
+      - id: sd.deep-dives.temporal.notes
+        title: 摘要 · Temporal
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.deep-dives.temporal.exam
+        title: 考点 · Temporal
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.deep-dives.temporal.beyond
+        title: 拓展 · Temporal
+        summary: 这一章没讲、但 senior 面试会追问的内容。
+    - id: sd.deep-dives.api-gateway
+      title: API 网关
+      summary: Hello Interview：API Gateway Deep Dive for System Design Interviews。
+      children:
+      - id: sd.deep-dives.api-gateway.notes
+        title: 摘要 · API 网关
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.deep-dives.api-gateway.exam
+        title: 考点 · API 网关
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.deep-dives.api-gateway.beyond
+        title: 拓展 · API 网关
+        summary: 这一章没讲、但 senior 面试会追问的内容。
+    - id: sd.deep-dives.cassandra
+      title: Cassandra
+      summary: Hello Interview：Cassandra Deep Dive for System Design Interviews。
+      children:
+      - id: sd.deep-dives.cassandra.notes
+        title: 摘要 · Cassandra
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.deep-dives.cassandra.exam
+        title: 考点 · Cassandra
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.deep-dives.cassandra.beyond
+        title: 拓展 · Cassandra
+        summary: 这一章没讲、但 senior 面试会追问的内容。
+    - id: sd.deep-dives.dynamodb
+      title: DynamoDB
+      summary: Hello Interview：DynamoDB Deep Dive for System Design Interviews。
+      children:
+      - id: sd.deep-dives.dynamodb.notes
+        title: 摘要 · DynamoDB
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.deep-dives.dynamodb.exam
+        title: 考点 · DynamoDB
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.deep-dives.dynamodb.beyond
+        title: 拓展 · DynamoDB
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.deep-dives.postgres
       title: PostgreSQL
-      summary: 会员内容，待解锁。Hello Interview：PostgreSQL Deep Dive for System Design Interviews。
+      summary: Hello Interview：PostgreSQL Deep Dive for System Design Interviews。
+      children:
+      - id: sd.deep-dives.postgres.notes
+        title: 摘要 · PostgreSQL
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.deep-dives.postgres.exam
+        title: 考点 · PostgreSQL
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.deep-dives.postgres.beyond
+        title: 拓展 · PostgreSQL
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.deep-dives.flink
       title: Flink
-      summary: 会员内容，待解锁。Hello Interview：Flink Deep Dive for System Design Interviews。
+      summary: Hello Interview：Flink Deep Dive for System Design Interviews。
+      children:
+      - id: sd.deep-dives.flink.notes
+        title: 摘要 · Flink
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.deep-dives.flink.exam
+        title: 考点 · Flink
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.deep-dives.flink.beyond
+        title: 拓展 · Flink
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.deep-dives.zookeeper
       title: ZooKeeper
-      summary: 会员内容，待解锁。Hello Interview：ZooKeeper Deep Dive for System Design Interviews。
+      summary: Hello Interview：ZooKeeper Deep Dive for System Design Interviews。
+      children:
+      - id: sd.deep-dives.zookeeper.notes
+        title: 摘要 · ZooKeeper
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.deep-dives.zookeeper.exam
+        title: 考点 · ZooKeeper
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.deep-dives.zookeeper.beyond
+        title: 拓展 · ZooKeeper
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.deep-dives.proximity-search
       title: 邻近搜索（Proximity Search）
       summary: Hello Interview：Proximity Search in System Design Interviews。
+      children:
+      - id: sd.deep-dives.proximity-search.notes
+        title: 摘要 · 邻近搜索（Proximity Search）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.deep-dives.proximity-search.exam
+        title: 考点 · 邻近搜索（Proximity Search）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.deep-dives.proximity-search.beyond
+        title: 拓展 · 邻近搜索（Proximity Search）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
+    - id: sd.deep-dives.vector-databases
+      title: 向量数据库
+      summary: Hello Interview：Vector Databases Deep Dive for System Design Interviews。
+      children:
+      - id: sd.deep-dives.vector-databases.notes
+        title: 摘要 · 向量数据库
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.deep-dives.vector-databases.exam
+        title: 考点 · 向量数据库
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.deep-dives.vector-databases.beyond
+        title: 拓展 · 向量数据库
+        summary: 这一章没讲、但 senior 面试会追问的内容。
+    - id: sd.deep-dives.time-series-databases
+      title: 时序数据库
+      summary: Hello Interview：Time Series Databases for System Design Interviews。
+      children:
+      - id: sd.deep-dives.time-series-databases.notes
+        title: 摘要 · 时序数据库
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.deep-dives.time-series-databases.exam
+        title: 考点 · 时序数据库
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.deep-dives.time-series-databases.beyond
+        title: 拓展 · 时序数据库
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.deep-dives.data-structures-for-big-data
       title: 大数据数据结构
-      summary: 会员内容，待解锁。Hello Interview：Data Structures for Big Data in System Design Interviews。
+      summary: Hello Interview：Data Structures for Big Data in System Design Interviews。
+      children:
+      - id: sd.deep-dives.data-structures-for-big-data.notes
+        title: 摘要 · 大数据数据结构
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.deep-dives.data-structures-for-big-data.exam
+        title: 考点 · 大数据数据结构
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.deep-dives.data-structures-for-big-data.beyond
+        title: 拓展 · 大数据数据结构
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.deep-dives.change-data-capture
       title: 变更数据捕获（CDC）
-      summary: 会员内容，待解锁。Hello Interview：Change Data Capture in System Design Interviews。
+      summary: Hello Interview：Change Data Capture in System Design Interviews。
+      children:
+      - id: sd.deep-dives.change-data-capture.notes
+        title: 摘要 · 变更数据捕获（CDC）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.deep-dives.change-data-capture.exam
+        title: 考点 · 变更数据捕获（CDC）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.deep-dives.change-data-capture.beyond
+        title: 拓展 · 变更数据捕获（CDC）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
   - id: sd.problem-breakdowns
     title: 经典题拆解（Problem Breakdowns）
     summary: 系统设计（System Design） · 经典题拆解（Problem Breakdowns），按 Hello Interview 的顺序。
@@ -1287,99 +1922,419 @@ nodes:
     - id: sd.problem-breakdowns.bitly
       title: 短链接服务（Bitly）
       summary: Hello Interview：Design a URL Shortener Like Bitly。
+      children:
+      - id: sd.problem-breakdowns.bitly.notes
+        title: 摘要 · 短链接服务（Bitly）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.bitly.exam
+        title: 考点 · 短链接服务（Bitly）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.bitly.beyond
+        title: 拓展 · 短链接服务（Bitly）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.dropbox
       title: 文件存储（Dropbox）
       summary: Hello Interview：Design a File Storage Service Like Dropbox。
+      children:
+      - id: sd.problem-breakdowns.dropbox.notes
+        title: 摘要 · 文件存储（Dropbox）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.dropbox.exam
+        title: 考点 · 文件存储（Dropbox）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.dropbox.beyond
+        title: 拓展 · 文件存储（Dropbox）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.gopuff
       title: 本地配送（Gopuff）
       summary: Hello Interview：Design a Local Delivery Service like Gopuff。
+      children:
+      - id: sd.problem-breakdowns.gopuff.notes
+        title: 摘要 · 本地配送（Gopuff）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.gopuff.exam
+        title: 考点 · 本地配送（Gopuff）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.gopuff.beyond
+        title: 拓展 · 本地配送（Gopuff）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.ticketmaster
       title: 票务预订（Ticketmaster）
       summary: Hello Interview：Design a Ticket Booking Site Like Ticketmaster。
+      children:
+      - id: sd.problem-breakdowns.ticketmaster.notes
+        title: 摘要 · 票务预订（Ticketmaster）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.ticketmaster.exam
+        title: 考点 · 票务预订（Ticketmaster）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.ticketmaster.beyond
+        title: 拓展 · 票务预订（Ticketmaster）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.fb-news-feed
       title: Facebook 信息流
       summary: Hello Interview：Design Facebook's News Feed。
+      children:
+      - id: sd.problem-breakdowns.fb-news-feed.notes
+        title: 摘要 · Facebook 信息流
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.fb-news-feed.exam
+        title: 考点 · Facebook 信息流
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.fb-news-feed.beyond
+        title: 拓展 · Facebook 信息流
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.tinder
       title: 约会应用（Tinder）
       summary: Hello Interview：Design a Dating App Like Tinder。
+      children:
+      - id: sd.problem-breakdowns.tinder.notes
+        title: 摘要 · 约会应用（Tinder）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.tinder.exam
+        title: 考点 · 约会应用（Tinder）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.tinder.beyond
+        title: 拓展 · 约会应用（Tinder）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.leetcode
       title: 在线判题平台（LeetCode）
       summary: Hello Interview：Design a Coding Platform Like LeetCode。
+      children:
+      - id: sd.problem-breakdowns.leetcode.notes
+        title: 摘要 · 在线判题平台（LeetCode）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.leetcode.exam
+        title: 考点 · 在线判题平台（LeetCode）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.leetcode.beyond
+        title: 拓展 · 在线判题平台（LeetCode）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.whatsapp
       title: 即时通讯（WhatsApp）
       summary: Hello Interview：Design a Messaging App Like WhatsApp。
+      children:
+      - id: sd.problem-breakdowns.whatsapp.notes
+        title: 摘要 · 即时通讯（WhatsApp）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.whatsapp.exam
+        title: 考点 · 即时通讯（WhatsApp）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.whatsapp.beyond
+        title: 拓展 · 即时通讯（WhatsApp）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.distributed-rate-limiter
       title: 分布式限流器
       summary: Hello Interview：Design a Distributed Rate Limiter。
+      children:
+      - id: sd.problem-breakdowns.distributed-rate-limiter.notes
+        title: 摘要 · 分布式限流器
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.distributed-rate-limiter.exam
+        title: 考点 · 分布式限流器
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.distributed-rate-limiter.beyond
+        title: 拓展 · 分布式限流器
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.youtube
       title: 视频平台（YouTube）
       summary: Hello Interview：Design a Video Streaming Platform Like YouTube。
+      children:
+      - id: sd.problem-breakdowns.youtube.notes
+        title: 摘要 · 视频平台（YouTube）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.youtube.exam
+        title: 考点 · 视频平台（YouTube）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.youtube.beyond
+        title: 拓展 · 视频平台（YouTube）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.fb-live-comments
       title: Facebook 直播评论
       summary: Hello Interview：Design Facebook's Live Comments System。
+      children:
+      - id: sd.problem-breakdowns.fb-live-comments.notes
+        title: 摘要 · Facebook 直播评论
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.fb-live-comments.exam
+        title: 考点 · Facebook 直播评论
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.fb-live-comments.beyond
+        title: 拓展 · Facebook 直播评论
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.top-k
       title: YouTube 热门 Top K
       summary: Hello Interview：Design YouTube's Top K Videos Feature。
+      children:
+      - id: sd.problem-breakdowns.top-k.notes
+        title: 摘要 · YouTube 热门 Top K
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.top-k.exam
+        title: 考点 · YouTube 热门 Top K
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.top-k.beyond
+        title: 拓展 · YouTube 热门 Top K
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.uber
       title: 网约车（Uber）
       summary: Hello Interview：Design a Ride-Sharing Service Like Uber。
+      children:
+      - id: sd.problem-breakdowns.uber.notes
+        title: 摘要 · 网约车（Uber）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.uber.exam
+        title: 考点 · 网约车（Uber）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.uber.beyond
+        title: 拓展 · 网约车（Uber）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.web-crawler
       title: 网络爬虫
       summary: Hello Interview：Design a Web Crawler。
+      children:
+      - id: sd.problem-breakdowns.web-crawler.notes
+        title: 摘要 · 网络爬虫
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.web-crawler.exam
+        title: 考点 · 网络爬虫
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.web-crawler.beyond
+        title: 拓展 · 网络爬虫
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.ad-click-aggregator
       title: 广告点击聚合
       summary: Hello Interview：Design an Ad Click Aggregator。
+      children:
+      - id: sd.problem-breakdowns.ad-click-aggregator.notes
+        title: 摘要 · 广告点击聚合
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.ad-click-aggregator.exam
+        title: 考点 · 广告点击聚合
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.ad-click-aggregator.beyond
+        title: 拓展 · 广告点击聚合
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.fb-post-search
       title: Facebook 帖子搜索
       summary: Hello Interview：Design Facebook's Post Search。
+      children:
+      - id: sd.problem-breakdowns.fb-post-search.notes
+        title: 摘要 · Facebook 帖子搜索
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.fb-post-search.exam
+        title: 考点 · Facebook 帖子搜索
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.fb-post-search.beyond
+        title: 拓展 · Facebook 帖子搜索
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.yelp
       title: 商户点评（Yelp）
-      summary: 会员内容，待解锁。Hello Interview：Design a Local Business Review Site Like Yelp。
+      summary: Hello Interview：Design a Local Business Review Site Like Yelp。
+      children:
+      - id: sd.problem-breakdowns.yelp.notes
+        title: 摘要 · 商户点评（Yelp）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.yelp.exam
+        title: 考点 · 商户点评（Yelp）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.yelp.beyond
+        title: 拓展 · 商户点评（Yelp）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.instagram
       title: 图片分享（Instagram）
-      summary: 会员内容，待解锁。Hello Interview：Design a Photo Sharing App Like Instagram。
+      summary: Hello Interview：Design a Photo Sharing App Like Instagram。
+      children:
+      - id: sd.problem-breakdowns.instagram.notes
+        title: 摘要 · 图片分享（Instagram）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.instagram.exam
+        title: 考点 · 图片分享（Instagram）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.instagram.beyond
+        title: 拓展 · 图片分享（Instagram）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.strava
       title: 运动记录（Strava）
-      summary: 会员内容，待解锁。Hello Interview：Design a Fitness Tracking App Like Strava。
+      summary: Hello Interview：Design a Fitness Tracking App Like Strava。
+      children:
+      - id: sd.problem-breakdowns.strava.notes
+        title: 摘要 · 运动记录（Strava）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.strava.exam
+        title: 考点 · 运动记录（Strava）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.strava.beyond
+        title: 拓展 · 运动记录（Strava）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.distributed-cache
       title: 分布式缓存（Redis）
-      summary: 会员内容，待解锁。Hello Interview：Design a Distributed Cache Like Redis。
+      summary: Hello Interview：Design a Distributed Cache Like Redis。
+      children:
+      - id: sd.problem-breakdowns.distributed-cache.notes
+        title: 摘要 · 分布式缓存（Redis）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.distributed-cache.exam
+        title: 考点 · 分布式缓存（Redis）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.distributed-cache.beyond
+        title: 拓展 · 分布式缓存（Redis）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.online-auction
       title: 在线拍卖（eBay）
-      summary: 会员内容，待解锁。Hello Interview：Design an Online Auction Platform Like eBay。
+      summary: Hello Interview：Design an Online Auction Platform Like eBay。
+      children:
+      - id: sd.problem-breakdowns.online-auction.notes
+        title: 摘要 · 在线拍卖（eBay）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.online-auction.exam
+        title: 考点 · 在线拍卖（eBay）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.online-auction.beyond
+        title: 拓展 · 在线拍卖（eBay）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.job-scheduler
       title: 分布式任务调度（Airflow）
-      summary: 会员内容，待解锁。Hello Interview：Design a Distributed Job Scheduler Like Airflow。
+      summary: Hello Interview：Design a Distributed Job Scheduler Like Airflow。
+      children:
+      - id: sd.problem-breakdowns.job-scheduler.notes
+        title: 摘要 · 分布式任务调度（Airflow）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.job-scheduler.exam
+        title: 考点 · 分布式任务调度（Airflow）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.job-scheduler.beyond
+        title: 拓展 · 分布式任务调度（Airflow）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.google-news
       title: 新闻聚合（Google News）
-      summary: 会员内容，待解锁。Hello Interview：Design a News Aggregator like Google News。
+      summary: Hello Interview：Design a News Aggregator like Google News。
+      children:
+      - id: sd.problem-breakdowns.google-news.notes
+        title: 摘要 · 新闻聚合（Google News）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.google-news.exam
+        title: 考点 · 新闻聚合（Google News）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.google-news.beyond
+        title: 拓展 · 新闻聚合（Google News）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.camelcamelcamel
       title: 价格追踪（CamelCamelCamel）
-      summary: 会员内容，待解锁。Hello Interview：Design a Price Tracking Service like CamelCamelCamel。
+      summary: Hello Interview：Design a Price Tracking Service like CamelCamelCamel。
+      children:
+      - id: sd.problem-breakdowns.camelcamelcamel.notes
+        title: 摘要 · 价格追踪（CamelCamelCamel）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.camelcamelcamel.exam
+        title: 考点 · 价格追踪（CamelCamelCamel）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.camelcamelcamel.beyond
+        title: 拓展 · 价格追踪（CamelCamelCamel）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.notification-system
       title: 通知系统
-      summary: 会员内容，待解锁。Hello Interview：Design a Notification System。
+      summary: Hello Interview：Design a Notification System。
+      children:
+      - id: sd.problem-breakdowns.notification-system.notes
+        title: 摘要 · 通知系统
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.notification-system.exam
+        title: 考点 · 通知系统
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.notification-system.beyond
+        title: 拓展 · 通知系统
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.robinhood
       title: 股票交易（Robinhood）
-      summary: 会员内容，待解锁。Hello Interview：Design a Stock Trading Platform Like Robinhood。
+      summary: Hello Interview：Design a Stock Trading Platform Like Robinhood。
+      children:
+      - id: sd.problem-breakdowns.robinhood.notes
+        title: 摘要 · 股票交易（Robinhood）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.robinhood.exam
+        title: 考点 · 股票交易（Robinhood）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.robinhood.beyond
+        title: 拓展 · 股票交易（Robinhood）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.google-docs
       title: 协同文档（Google Docs）
-      summary: 会员内容，待解锁。Hello Interview：Design a Collaborative Document Editor Like Google Docs。
+      summary: Hello Interview：Design a Collaborative Document Editor Like Google Docs。
+      children:
+      - id: sd.problem-breakdowns.google-docs.notes
+        title: 摘要 · 协同文档（Google Docs）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.google-docs.exam
+        title: 考点 · 协同文档（Google Docs）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.google-docs.beyond
+        title: 拓展 · 协同文档（Google Docs）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.payment-system
       title: 支付系统（Stripe）
-      summary: 会员内容，待解锁。Hello Interview：Design a Payment System like Stripe。
+      summary: Hello Interview：Design a Payment System like Stripe。
+      children:
+      - id: sd.problem-breakdowns.payment-system.notes
+        title: 摘要 · 支付系统（Stripe）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.payment-system.exam
+        title: 考点 · 支付系统（Stripe）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.payment-system.beyond
+        title: 拓展 · 支付系统（Stripe）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.metrics-monitoring
       title: 指标监控（Datadog）
-      summary: 会员内容，待解锁。Hello Interview：Design a Metrics Monitoring Platform like Datadog。
+      summary: Hello Interview：Design a Metrics Monitoring Platform like Datadog。
+      children:
+      - id: sd.problem-breakdowns.metrics-monitoring.notes
+        title: 摘要 · 指标监控（Datadog）
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.metrics-monitoring.exam
+        title: 考点 · 指标监控（Datadog）
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.metrics-monitoring.beyond
+        title: 拓展 · 指标监控（Datadog）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.online-chess
       title: 在线国际象棋
-      summary: 会员内容，待解锁。Hello Interview：Design an Online Chess Platform。
+      summary: Hello Interview：Design an Online Chess Platform。
+      children:
+      - id: sd.problem-breakdowns.online-chess.notes
+        title: 摘要 · 在线国际象棋
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.online-chess.exam
+        title: 考点 · 在线国际象棋
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.online-chess.beyond
+        title: 拓展 · 在线国际象棋
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.chatgpt
       title: ChatGPT
-      summary: 会员内容，待解锁。Hello Interview：Design ChatGPT。
+      summary: Hello Interview：Design ChatGPT。
+      children:
+      - id: sd.problem-breakdowns.chatgpt.notes
+        title: 摘要 · ChatGPT
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.chatgpt.exam
+        title: 考点 · ChatGPT
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.chatgpt.beyond
+        title: 拓展 · ChatGPT
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.problem-breakdowns.flash-sale
       title: 秒杀系统
-      summary: 会员内容，待解锁。Hello Interview：Design a Flash Sale System。
+      summary: Hello Interview：Design a Flash Sale System。
+      children:
+      - id: sd.problem-breakdowns.flash-sale.notes
+        title: 摘要 · 秒杀系统
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.problem-breakdowns.flash-sale.exam
+        title: 考点 · 秒杀系统
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.problem-breakdowns.flash-sale.beyond
+        title: 拓展 · 秒杀系统
+        summary: 这一章没讲、但 senior 面试会追问的内容。
   - id: sd.in-the-wild
     title: 真实系统案例（In the Wild）
     summary: 系统设计（System Design） · 真实系统案例（In the Wild），按 Hello Interview 的顺序。
@@ -1387,24 +2342,94 @@ nodes:
     - id: sd.in-the-wild.in-the-wild
       title: 真实系统案例：总览
       summary: Hello Interview：In the Wild - Real-World System Design from Engineering Blogs。
+      children:
+      - id: sd.in-the-wild.in-the-wild.notes
+        title: 摘要 · 真实系统案例：总览
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.in-the-wild.in-the-wild.exam
+        title: 考点 · 真实系统案例：总览
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.in-the-wild.in-the-wild.beyond
+        title: 拓展 · 真实系统案例：总览
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.in-the-wild.shopify-inventory-reservations
       title: Shopify 库存预留：从 Redis 到 MySQL
       summary: Hello Interview：How Shopify Moved Inventory Reservations from Redis to MySQL。
+      children:
+      - id: sd.in-the-wild.shopify-inventory-reservations.notes
+        title: 摘要 · Shopify 库存预留：从 Redis 到 MySQL
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.in-the-wild.shopify-inventory-reservations.exam
+        title: 考点 · Shopify 库存预留：从 Redis 到 MySQL
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.in-the-wild.shopify-inventory-reservations.beyond
+        title: 拓展 · Shopify 库存预留：从 Redis 到 MySQL
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.in-the-wild.discord-messages-scylladb
       title: Discord 万亿消息迁到 ScyllaDB
       summary: Hello Interview：How Discord Moved Trillions of Messages to ScyllaDB。
+      children:
+      - id: sd.in-the-wild.discord-messages-scylladb.notes
+        title: 摘要 · Discord 万亿消息迁到 ScyllaDB
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.in-the-wild.discord-messages-scylladb.exam
+        title: 考点 · Discord 万亿消息迁到 ScyllaDB
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.in-the-wild.discord-messages-scylladb.beyond
+        title: 拓展 · Discord 万亿消息迁到 ScyllaDB
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.in-the-wild.slack-job-queue
       title: Slack 在 Redis 任务队列前加 Kafka
       summary: Hello Interview：How Slack Put Kafka in Front of Its Redis Job Queue。
+      children:
+      - id: sd.in-the-wild.slack-job-queue.notes
+        title: 摘要 · Slack 在 Redis 任务队列前加 Kafka
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.in-the-wild.slack-job-queue.exam
+        title: 考点 · Slack 在 Redis 任务队列前加 Kafka
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.in-the-wild.slack-job-queue.beyond
+        title: 拓展 · Slack 在 Redis 任务队列前加 Kafka
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.in-the-wild.figma-multiplayer
       title: Figma 多人编辑与简化 CRDT
       summary: Hello Interview：How Figma Built Multiplayer Editing on Simplified CRDTs。
+      children:
+      - id: sd.in-the-wild.figma-multiplayer.notes
+        title: 摘要 · Figma 多人编辑与简化 CRDT
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.in-the-wild.figma-multiplayer.exam
+        title: 考点 · Figma 多人编辑与简化 CRDT
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.in-the-wild.figma-multiplayer.beyond
+        title: 拓展 · Figma 多人编辑与简化 CRDT
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.in-the-wild.spotify-data-lake-point-queries
       title: Spotify 在 EB 级数据湖上做点查
       summary: Hello Interview：How Spotify Serves Point Queries from an Exabyte Data Lake。
+      children:
+      - id: sd.in-the-wild.spotify-data-lake-point-queries.notes
+        title: 摘要 · Spotify 在 EB 级数据湖上做点查
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.in-the-wild.spotify-data-lake-point-queries.exam
+        title: 考点 · Spotify 在 EB 级数据湖上做点查
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.in-the-wild.spotify-data-lake-point-queries.beyond
+        title: 拓展 · Spotify 在 EB 级数据湖上做点查
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: sd.in-the-wild.meta-zgateway-zippydb
       title: Meta 把数据库扩展到百万客户端的 5 个技巧
       summary: Hello Interview：5 Techniques Meta Uses to Scale a Database to Millions of Clients。
+      children:
+      - id: sd.in-the-wild.meta-zgateway-zippydb.notes
+        title: 摘要 · Meta 把数据库扩展到百万客户端的 5 个技巧
+        summary: 按小节总结这一章的核心内容。
+      - id: sd.in-the-wild.meta-zgateway-zippydb.exam
+        title: 考点 · Meta 把数据库扩展到百万客户端的 5 个技巧
+        summary: 这一章里的内容会怎么被问到。
+      - id: sd.in-the-wild.meta-zgateway-zippydb.beyond
+        title: 拓展 · Meta 把数据库扩展到百万客户端的 5 个技巧
+        summary: 这一章没讲、但 senior 面试会追问的内容。
 - id: lld
   order: 4
   title: 低层设计（Low-Level Design）
@@ -1436,19 +2461,124 @@ nodes:
     - id: lld.in-a-hurry.introduction
       title: 低层设计速成：总览
       summary: Hello Interview：Low Level Design in a Hurry。
+      children:
+      - id: lld.in-a-hurry.introduction.notes
+        title: 摘要 · 低层设计速成：总览
+        summary: 按小节总结这一章的核心内容。
+      - id: lld.in-a-hurry.introduction.exam
+        title: 考点 · 低层设计速成：总览
+        summary: 这一章里的内容会怎么被问到。
+      - id: lld.in-a-hurry.introduction.beyond
+        title: 拓展 · 低层设计速成：总览
+        summary: 这一章没讲、但 senior 面试会追问的内容。
+    - id: lld.in-a-hurry.delivery
+      title: 答题框架（Delivery Framework）
+      summary: Hello Interview：Low Level Design Interview Delivery Framework。
+      children:
+      - id: lld.in-a-hurry.delivery.notes
+        title: 摘要 · 答题框架（Delivery Framework）
+        summary: 按小节总结这一章的核心内容。
+      - id: lld.in-a-hurry.delivery.exam
+        title: 考点 · 答题框架（Delivery Framework）
+        summary: 这一章里的内容会怎么被问到。
+      - id: lld.in-a-hurry.delivery.beyond
+        title: 拓展 · 答题框架（Delivery Framework）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
+    - id: lld.in-a-hurry.design-principles
+      title: 设计原则
+      summary: Hello Interview：Design Principles。
+      children:
+      - id: lld.in-a-hurry.design-principles.notes
+        title: 摘要 · 设计原则
+        summary: 按小节总结这一章的核心内容。
+      - id: lld.in-a-hurry.design-principles.exam
+        title: 考点 · 设计原则
+        summary: 这一章里的内容会怎么被问到。
+      - id: lld.in-a-hurry.design-principles.beyond
+        title: 拓展 · 设计原则
+        summary: 这一章没讲、但 senior 面试会追问的内容。
+    - id: lld.in-a-hurry.oop-concepts
+      title: 面向对象概念
+      summary: Hello Interview：OOP Concepts。
+      children:
+      - id: lld.in-a-hurry.oop-concepts.notes
+        title: 摘要 · 面向对象概念
+        summary: 按小节总结这一章的核心内容。
+      - id: lld.in-a-hurry.oop-concepts.exam
+        title: 考点 · 面向对象概念
+        summary: 这一章里的内容会怎么被问到。
+      - id: lld.in-a-hurry.oop-concepts.beyond
+        title: 拓展 · 面向对象概念
+        summary: 这一章没讲、但 senior 面试会追问的内容。
+    - id: lld.in-a-hurry.patterns
+      title: 设计模式
+      summary: Hello Interview：Design Patterns。
+      children:
+      - id: lld.in-a-hurry.patterns.notes
+        title: 摘要 · 设计模式
+        summary: 按小节总结这一章的核心内容。
+      - id: lld.in-a-hurry.patterns.exam
+        title: 考点 · 设计模式
+        summary: 这一章里的内容会怎么被问到。
+      - id: lld.in-a-hurry.patterns.beyond
+        title: 拓展 · 设计模式
+        summary: 这一章没讲、但 senior 面试会追问的内容。
   - id: lld.concurrency
     title: 并发（Concurrency）
     summary: 低层设计（Low-Level Design） · 并发（Concurrency），按 Hello Interview 的顺序。
     children:
+    - id: lld.concurrency.intro
+      title: 并发入门
+      summary: Hello Interview：Introduction to Concurrency。
+      children:
+      - id: lld.concurrency.intro.notes
+        title: 摘要 · 并发入门
+        summary: 按小节总结这一章的核心内容。
+      - id: lld.concurrency.intro.exam
+        title: 考点 · 并发入门
+        summary: 这一章里的内容会怎么被问到。
+      - id: lld.concurrency.intro.beyond
+        title: 拓展 · 并发入门
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: lld.concurrency.correctness
       title: 并发正确性
-      summary: 会员内容，待解锁。Hello Interview：Correctness in Low Level Design。
+      summary: Hello Interview：Correctness in Low Level Design。
+      children:
+      - id: lld.concurrency.correctness.notes
+        title: 摘要 · 并发正确性
+        summary: 按小节总结这一章的核心内容。
+      - id: lld.concurrency.correctness.exam
+        title: 考点 · 并发正确性
+        summary: 这一章里的内容会怎么被问到。
+      - id: lld.concurrency.correctness.beyond
+        title: 拓展 · 并发正确性
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: lld.concurrency.coordination
       title: 线程协调
-      summary: 会员内容，待解锁。Hello Interview：Coordination in Low Level Design。
+      summary: Hello Interview：Coordination in Low Level Design。
+      children:
+      - id: lld.concurrency.coordination.notes
+        title: 摘要 · 线程协调
+        summary: 按小节总结这一章的核心内容。
+      - id: lld.concurrency.coordination.exam
+        title: 考点 · 线程协调
+        summary: 这一章里的内容会怎么被问到。
+      - id: lld.concurrency.coordination.beyond
+        title: 拓展 · 线程协调
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: lld.concurrency.scarcity
       title: 稀缺资源
-      summary: 会员内容，待解锁。Hello Interview：Scarcity in Low Level Design。
+      summary: Hello Interview：Scarcity in Low Level Design。
+      children:
+      - id: lld.concurrency.scarcity.notes
+        title: 摘要 · 稀缺资源
+        summary: 按小节总结这一章的核心内容。
+      - id: lld.concurrency.scarcity.exam
+        title: 考点 · 稀缺资源
+        summary: 这一章里的内容会怎么被问到。
+      - id: lld.concurrency.scarcity.beyond
+        title: 拓展 · 稀缺资源
+        summary: 这一章没讲、但 senior 面试会追问的内容。
   - id: lld.problem-breakdowns
     title: 经典题拆解（Problem Breakdowns）
     summary: 低层设计（Low-Level Design） · 经典题拆解（Problem Breakdowns），按 Hello Interview 的顺序。
@@ -1456,27 +2586,117 @@ nodes:
     - id: lld.problem-breakdowns.connect-four
       title: 四子棋（Connect Four）
       summary: Hello Interview：Connect Four Low Level Design。
+      children:
+      - id: lld.problem-breakdowns.connect-four.notes
+        title: 摘要 · 四子棋（Connect Four）
+        summary: 按小节总结这一章的核心内容。
+      - id: lld.problem-breakdowns.connect-four.exam
+        title: 考点 · 四子棋（Connect Four）
+        summary: 这一章里的内容会怎么被问到。
+      - id: lld.problem-breakdowns.connect-four.beyond
+        title: 拓展 · 四子棋（Connect Four）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: lld.problem-breakdowns.amazon-locker
       title: Amazon 快递柜
       summary: Hello Interview：Amazon Locker Low Level Design。
+      children:
+      - id: lld.problem-breakdowns.amazon-locker.notes
+        title: 摘要 · Amazon 快递柜
+        summary: 按小节总结这一章的核心内容。
+      - id: lld.problem-breakdowns.amazon-locker.exam
+        title: 考点 · Amazon 快递柜
+        summary: 这一章里的内容会怎么被问到。
+      - id: lld.problem-breakdowns.amazon-locker.beyond
+        title: 拓展 · Amazon 快递柜
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: lld.problem-breakdowns.elevator
       title: 电梯
       summary: Hello Interview：Elevator Low Level Design。
+      children:
+      - id: lld.problem-breakdowns.elevator.notes
+        title: 摘要 · 电梯
+        summary: 按小节总结这一章的核心内容。
+      - id: lld.problem-breakdowns.elevator.exam
+        title: 考点 · 电梯
+        summary: 这一章里的内容会怎么被问到。
+      - id: lld.problem-breakdowns.elevator.beyond
+        title: 拓展 · 电梯
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: lld.problem-breakdowns.parking-lot
       title: 停车场
-      summary: 会员内容，待解锁。Hello Interview：Parking Lot Low Level Design。
+      summary: Hello Interview：Parking Lot Low Level Design。
+      children:
+      - id: lld.problem-breakdowns.parking-lot.notes
+        title: 摘要 · 停车场
+        summary: 按小节总结这一章的核心内容。
+      - id: lld.problem-breakdowns.parking-lot.exam
+        title: 考点 · 停车场
+        summary: 这一章里的内容会怎么被问到。
+      - id: lld.problem-breakdowns.parking-lot.beyond
+        title: 拓展 · 停车场
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: lld.problem-breakdowns.file-system
       title: 文件系统
-      summary: 会员内容，待解锁。Hello Interview：File System Low Level Design。
+      summary: Hello Interview：File System Low Level Design。
+      children:
+      - id: lld.problem-breakdowns.file-system.notes
+        title: 摘要 · 文件系统
+        summary: 按小节总结这一章的核心内容。
+      - id: lld.problem-breakdowns.file-system.exam
+        title: 考点 · 文件系统
+        summary: 这一章里的内容会怎么被问到。
+      - id: lld.problem-breakdowns.file-system.beyond
+        title: 拓展 · 文件系统
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: lld.problem-breakdowns.bookmyshow
       title: 电影票预订（BookMyShow）
-      summary: 会员内容，待解锁。Hello Interview：Movie Ticket Booking Low Level Design。
+      summary: Hello Interview：Movie Ticket Booking Low Level Design。
+      children:
+      - id: lld.problem-breakdowns.bookmyshow.notes
+        title: 摘要 · 电影票预订（BookMyShow）
+        summary: 按小节总结这一章的核心内容。
+      - id: lld.problem-breakdowns.bookmyshow.exam
+        title: 考点 · 电影票预订（BookMyShow）
+        summary: 这一章里的内容会怎么被问到。
+      - id: lld.problem-breakdowns.bookmyshow.beyond
+        title: 拓展 · 电影票预订（BookMyShow）
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: lld.problem-breakdowns.logging-service
       title: 日志服务
-      summary: 会员内容，待解锁。Hello Interview：Logging Service Low Level Design。
+      summary: Hello Interview：Logging Service Low Level Design。
+      children:
+      - id: lld.problem-breakdowns.logging-service.notes
+        title: 摘要 · 日志服务
+        summary: 按小节总结这一章的核心内容。
+      - id: lld.problem-breakdowns.logging-service.exam
+        title: 考点 · 日志服务
+        summary: 这一章里的内容会怎么被问到。
+      - id: lld.problem-breakdowns.logging-service.beyond
+        title: 拓展 · 日志服务
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: lld.problem-breakdowns.rate-limiter
       title: 限流器
-      summary: 会员内容，待解锁。Hello Interview：Rate Limiter Low Level Design。
+      summary: Hello Interview：Rate Limiter Low Level Design。
+      children:
+      - id: lld.problem-breakdowns.rate-limiter.notes
+        title: 摘要 · 限流器
+        summary: 按小节总结这一章的核心内容。
+      - id: lld.problem-breakdowns.rate-limiter.exam
+        title: 考点 · 限流器
+        summary: 这一章里的内容会怎么被问到。
+      - id: lld.problem-breakdowns.rate-limiter.beyond
+        title: 拓展 · 限流器
+        summary: 这一章没讲、但 senior 面试会追问的内容。
     - id: lld.problem-breakdowns.inventory-management
       title: 库存管理
-      summary: 会员内容，待解锁。Hello Interview：Inventory Management Low Level Design。
+      summary: Hello Interview：Inventory Management Low Level Design。
+      children:
+      - id: lld.problem-breakdowns.inventory-management.notes
+        title: 摘要 · 库存管理
+        summary: 按小节总结这一章的核心内容。
+      - id: lld.problem-breakdowns.inventory-management.exam
+        title: 考点 · 库存管理
+        summary: 这一章里的内容会怎么被问到。
+      - id: lld.problem-breakdowns.inventory-management.beyond
+        title: 拓展 · 库存管理
+        summary: 这一章没讲、但 senior 面试会追问的内容。

@@ -1,5 +1,5 @@
 ---
-nodes: [sd.in-the-wild.slack-job-queue]
+nodes: [sd.in-the-wild.slack-job-queue.notes, sd.in-the-wild.slack-job-queue.exam, sd.in-the-wild.slack-job-queue.beyond]
 url: https://www.hellointerview.com/learn/system-design/in-the-wild/slack-job-queue
 tags: [no-archive]
 ---

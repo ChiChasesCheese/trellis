@@ -1,6 +1,6 @@
 ---
 id: hi-lld-introduction-3-assessment
-node: lld.in-a-hurry.introduction
+node: lld.in-a-hurry.introduction.exam
 type: qa
 step: 3
 ---

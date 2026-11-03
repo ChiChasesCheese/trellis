@@ -1,6 +1,6 @@
 ---
 id: hi-sd-top-k-8-approx
-node: sd.problem-breakdowns.top-k
+node: sd.problem-breakdowns.top-k.exam
 type: qa
 step: 8
 ---

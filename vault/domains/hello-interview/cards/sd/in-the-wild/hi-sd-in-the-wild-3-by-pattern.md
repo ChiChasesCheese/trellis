@@ -1,6 +1,6 @@
 ---
 id: hi-sd-in-the-wild-3-by-pattern
-node: sd.in-the-wild.in-the-wild
+node: sd.in-the-wild.in-the-wild.exam
 type: qa
 step: 3
 ---

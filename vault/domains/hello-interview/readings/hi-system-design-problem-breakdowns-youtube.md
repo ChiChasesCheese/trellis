@@ -1,5 +1,5 @@
 ---
-nodes: [sd.problem-breakdowns.youtube]
+nodes: [sd.problem-breakdowns.youtube.notes, sd.problem-breakdowns.youtube.exam, sd.problem-breakdowns.youtube.beyond]
 url: https://www.hellointerview.com/learn/system-design/problem-breakdowns/youtube
 tags: [no-archive]
 ---

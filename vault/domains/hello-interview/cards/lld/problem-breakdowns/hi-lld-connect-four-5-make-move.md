@@ -1,6 +1,6 @@
 ---
 id: hi-lld-connect-four-5-make-move
-node: lld.problem-breakdowns.connect-four
+node: lld.problem-breakdowns.connect-four.exam
 type: qa
 step: 5
 ---

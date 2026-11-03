@@ -1,0 +1,6 @@
+spreadsheet-engine          your own: set and get cells, formulas with references, recalculation in dependency order, cycle detection
+battleship-game             your own: two players, N x N board, ship placement rules, shots, sunk and win detection
+restaurant-waitlist         your own: join, leave, seat the first party that fits a table, wait estimates
+dasher-payout               your own: delivery events, base pay per minute by state, peak hour multipliers, payout per driver
+image-transform-pipeline    your own: composable steps on a pixel grid, scaling, order of steps, validation and caching
+credit-token-balance        your own: grants with expiry, debit earliest expiring first, idempotent charges, out-of-order timestamps

@@ -1,6 +1,6 @@
 ---
 id: hi-sd-distributed-rate-limiter-2-entities-identify
-node: sd.problem-breakdowns.distributed-rate-limiter
+node: sd.problem-breakdowns.distributed-rate-limiter.exam
 type: qa
 step: 2
 ---

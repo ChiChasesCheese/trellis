@@ -1,6 +1,6 @@
 ---
 id: hi-sd-youtube-4-upload-metadata
-node: sd.problem-breakdowns.youtube
+node: sd.problem-breakdowns.youtube.exam
 type: qa
 step: 4
 ---

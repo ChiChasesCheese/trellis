@@ -1,5 +1,5 @@
 ---
-nodes: [sd.in-a-hurry.introduction]
+nodes: [sd.in-a-hurry.introduction.notes, sd.in-a-hurry.introduction.exam, sd.in-a-hurry.introduction.beyond]
 url: https://www.hellointerview.com/learn/system-design/in-a-hurry/introduction
 tags: [no-archive]
 ---

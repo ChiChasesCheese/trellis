@@ -1,6 +1,6 @@
 ---
 id: hi-sd-delivery-2-functional
-node: sd.in-a-hurry.delivery
+node: sd.in-a-hurry.delivery.exam
 type: qa
 step: 2
 ---

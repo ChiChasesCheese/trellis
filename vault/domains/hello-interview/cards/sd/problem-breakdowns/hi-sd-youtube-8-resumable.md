@@ -1,6 +1,6 @@
 ---
 id: hi-sd-youtube-8-resumable
-node: sd.problem-breakdowns.youtube
+node: sd.problem-breakdowns.youtube.exam
 type: qa
 step: 8
 ---

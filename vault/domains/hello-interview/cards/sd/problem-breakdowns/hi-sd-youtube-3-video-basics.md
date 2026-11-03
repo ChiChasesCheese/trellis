@@ -1,6 +1,6 @@
 ---
 id: hi-sd-youtube-3-video-basics
-node: sd.problem-breakdowns.youtube
+node: sd.problem-breakdowns.youtube.exam
 type: qa
 step: 3
 ---

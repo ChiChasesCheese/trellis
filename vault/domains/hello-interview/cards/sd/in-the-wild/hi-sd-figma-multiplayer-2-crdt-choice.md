@@ -1,6 +1,6 @@
 ---
 id: hi-sd-figma-multiplayer-2-crdt-choice
-node: sd.in-the-wild.figma-multiplayer
+node: sd.in-the-wild.figma-multiplayer.exam
 type: qa
 step: 2
 ---

@@ -1,5 +1,5 @@
 ---
-nodes: [sd.problem-breakdowns.ad-click-aggregator]
+nodes: [sd.problem-breakdowns.ad-click-aggregator.notes, sd.problem-breakdowns.ad-click-aggregator.exam, sd.problem-breakdowns.ad-click-aggregator.beyond]
 url: https://www.hellointerview.com/learn/system-design/problem-breakdowns/ad-click-aggregator
 tags: [no-archive]
 ---

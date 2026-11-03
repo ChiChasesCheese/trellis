@@ -1,0 +1,6 @@
+spreadsheet-engine          drill: spreadsheet-engine
+battleship-game-design      drill: battleship-game
+restaurant-waitlist-api     drill: restaurant-waitlist
+dasher-payout               drill: dasher-payout
+image-transform-pipeline    drill: image-transform-pipeline
+credit-token-balance        drill: credit-token-balance

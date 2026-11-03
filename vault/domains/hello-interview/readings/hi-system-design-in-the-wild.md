@@ -1,5 +1,5 @@
 ---
-nodes: [sd.in-the-wild.in-the-wild]
+nodes: [sd.in-the-wild.in-the-wild.notes, sd.in-the-wild.in-the-wild.exam, sd.in-the-wild.in-the-wild.beyond]
 url: https://www.hellointerview.com/learn/system-design/in-the-wild
 tags: [no-archive]
 ---

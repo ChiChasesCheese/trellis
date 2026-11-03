@@ -1,0 +1,419 @@
+{
+ "stages": [
+  {
+   "id": "s0",
+   "title": "阶段 0 · 起步",
+   "days": "2 天",
+   "goal": "知道一场 LLD 面试怎么走、怎么被打分，跑通一次完整的练习流程。",
+   "skills": [
+    "答题节奏",
+    "评分标准",
+    "练习流程"
+   ],
+   "exit": "不看资料说出答题框架的每一步和时间分配；drill.py 的 start、test、status 都用过。",
+   "tasks": [
+    {
+     "id": "s0-read",
+     "title": "读答题框架和评分标准",
+     "open": [
+      "[[method.delivery|作答节奏]]",
+      "[[method.evaluation|评分标准]]",
+      "https://www.hellointerview.com/learn/low-level-design/in-a-hurry/introduction",
+      "https://www.hellointerview.com/learn/low-level-design/in-a-hurry/delivery"
+     ],
+     "anki": [
+      "低层设计（LLD）::01 作答方法（Machine Coding Method）",
+      "04 低层设计（Low-Level Design）::速成（In a Hurry）"
+     ]
+    },
+    {
+     "drill": "tic-tac-toe",
+     "title": "井字棋：第一次走完整流程，可以边写边查",
+     "minutes": 40
+    }
+   ]
+  },
+  {
+   "id": "s1",
+   "title": "阶段 1 · 把需求变成对象",
+   "days": "1 周",
+   "goal": "从一段需求里找出对象、职责和关系，用 Python 的方式写出来，不写 Java 式的继承树。",
+   "skills": [
+    "对象建模",
+    "组合优于继承",
+    "dataclass 与 Enum",
+    "Protocol 与 ABC"
+   ],
+   "exit": "4 道题都在限时内全绿；能说清每个类为什么存在，以及为什么没有用继承。",
+   "tasks": [
+    {
+     "id": "s1-read",
+     "title": "读对象建模和设计原则",
+     "open": [
+      "[[method.modeling|从需求到对象]]",
+      "[[oop.relationships|类之间的关系]]",
+      "[[principles.solid|SOLID]]",
+      "[[principles.composition|组合优于继承]]",
+      "[[python.dataclasses-enums|dataclass 与 Enum]]",
+      "[[python.protocols-abc|Protocol、ABC 与鸭子类型]]",
+      "https://www.hellointerview.com/learn/low-level-design/in-a-hurry/oop-concepts",
+      "https://www.hellointerview.com/learn/low-level-design/in-a-hurry/design-principles"
+     ],
+     "anki": [
+      "低层设计（LLD）::03 对象建模（Object Modeling）",
+      "低层设计（LLD）::04 设计原则（Design Principles）",
+      "低层设计（LLD）::02 Python 对象模型与惯用法（Pythonic Design）"
+     ]
+    },
+    {
+     "drill": "deck-of-cards",
+     "title": "一副牌：建模热身",
+     "minutes": 40
+    },
+    {
+     "drill": "connect-four",
+     "title": "四子棋：棋盘、规则和胜负判断分开",
+     "minutes": 45
+    },
+    {
+     "drill": "battleship-game",
+     "title": "海战棋：两个玩家的状态和合法性校验",
+     "minutes": 45
+    },
+    {
+     "drill": "amz-pizza-order",
+     "title": "披萨订单：组合式计价",
+     "minutes": 45
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "title": "阶段 2 · 模式与状态机",
+   "days": "10 天",
+   "goal": "遇到变化点时知道该用哪个模式、什么时候不该用，并能把状态转换写得不漏分支。",
+   "skills": [
+    "策略",
+    "观察者",
+    "状态机",
+    "命令",
+    "模式选择"
+   ],
+   "exit": "6 道题全绿；第 2 关的改动不需要修改第 1 关已经通过的类；能说出每个模式换来了什么、付出了什么。",
+   "tasks": [
+    {
+     "id": "s2-read",
+     "title": "读设计模式和状态机",
+     "open": [
+      "[[patterns.strategy|策略]]",
+      "[[patterns.observer|观察者]]",
+      "[[patterns.state|状态]]",
+      "[[patterns.command|命令]]",
+      "[[patterns.selection|模式选择]]",
+      "[[structure.state-machines|状态机]]",
+      "https://www.hellointerview.com/learn/low-level-design/in-a-hurry/patterns"
+     ],
+     "anki": [
+      "低层设计（LLD）::05 设计模式（Design Patterns）"
+     ]
+    },
+    {
+     "drill": "vending-machine",
+     "title": "售货机：状态机的基本功",
+     "minutes": 50
+    },
+    {
+     "drill": "parking-lot",
+     "title": "停车场：可替换的分配和计费策略",
+     "minutes": 60
+    },
+    {
+     "drill": "amazon-locker",
+     "title": "快递柜：取件码、过期和格口分配",
+     "minutes": 60
+    },
+    {
+     "drill": "elevator",
+     "title": "电梯：调度策略和状态转换",
+     "minutes": 60
+    },
+    {
+     "drill": "restaurant-waitlist",
+     "title": "餐厅候位：有序结构和匹配规则",
+     "minutes": 45
+    },
+    {
+     "drill": "amz-discount-engine",
+     "title": "购物车折扣引擎：规则的组合和优先级",
+     "minutes": 60
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "title": "阶段 3 · 基础组件",
+   "days": "10 天",
+   "goal": "把数据结构选型讲清楚，写出边界完整、可测试的组件。这是高频 LLD 题最集中的一类。",
+   "skills": [
+    "数据结构选型",
+    "时间注入",
+    "API 设计",
+    "解析与求值",
+    "错误处理"
+   ],
+   "exit": "10 道题全绿，其中至少 7 道不超时；每道题能说出每个操作的复杂度和用这个结构的原因。",
+   "tasks": [
+    {
+     "id": "s3-read",
+     "title": "读 API 设计、存储和可测试性",
+     "open": [
+      "[[structure.api|API 设计]]",
+      "[[structure.storage|存储]]",
+      "[[quality.testability|可测试性]]",
+      "[[quality.errors|错误处理]]"
+     ],
+     "anki": [
+      "低层设计（LLD）::08 API 与程序结构（Program Structure）",
+      "低层设计（LLD）::06 代码质量（Code Quality）"
+     ]
+    },
+    {
+     "drill": "lru-cache",
+     "title": "LRU / LFU 缓存",
+     "minutes": 45
+    },
+    {
+     "drill": "ttl-cache",
+     "title": "带过期的缓存",
+     "minutes": 45
+    },
+    {
+     "drill": "kv-store",
+     "title": "可配置淘汰策略的键值存储",
+     "minutes": 60
+    },
+    {
+     "drill": "in-memory-file-system",
+     "title": "内存文件系统",
+     "minutes": 60
+    },
+    {
+     "drill": "amz-linux-find",
+     "title": "find 命令 API：可组合的过滤条件",
+     "minutes": 50
+    },
+    {
+     "drill": "spreadsheet-engine",
+     "title": "电子表格：依赖图和循环检测",
+     "minutes": 60
+    },
+    {
+     "drill": "image-transform-pipeline",
+     "title": "图片变换流水线",
+     "minutes": 45
+    },
+    {
+     "drill": "rate-limiter",
+     "title": "限流器：多种算法同一接口",
+     "minutes": 60
+    },
+    {
+     "drill": "api-circuit-breaker",
+     "title": "熔断器：状态机加时钟",
+     "minutes": 50
+    },
+    {
+     "drill": "query-condition-parser",
+     "title": "条件解析与内存表查询",
+     "minutes": 60
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "阶段 4 · 并发",
+   "days": "10 天",
+   "goal": "说清楚一把锁到底保护什么，能写出生产者消费者和线程池，能在预订类题里防超卖。",
+   "skills": [
+    "GIL 与竞态",
+    "锁的粒度",
+    "条件变量",
+    "生产者消费者",
+    "防超卖"
+   ],
+   "exit": "7 道题全绿且并发测试稳定；能指出每把锁保护的不变量，并说出去掉它会发生什么。",
+   "tasks": [
+    {
+     "id": "s4-read",
+     "title": "读并发",
+     "open": [
+      "[[concurrency.model|并发模型与 GIL]]",
+      "[[concurrency.primitives|同步原语]]",
+      "[[concurrency.hazards|并发风险]]",
+      "[[concurrency.patterns|并发模式]]",
+      "https://www.hellointerview.com/learn/low-level-design/concurrency/intro",
+      "https://www.hellointerview.com/learn/low-level-design/concurrency/correctness",
+      "https://www.hellointerview.com/learn/low-level-design/concurrency/coordination",
+      "https://www.hellointerview.com/learn/low-level-design/concurrency/scarcity"
+     ],
+     "anki": [
+      "低层设计（LLD）::07 并发（Concurrency）",
+      "04 低层设计（Low-Level Design）::并发（Concurrency）"
+     ]
+    },
+    {
+     "drill": "bounded-blocking-queue",
+     "title": "有界阻塞队列",
+     "minutes": 40
+    },
+    {
+     "drill": "thread-pool",
+     "title": "线程池",
+     "minutes": 60
+    },
+    {
+     "drill": "logger",
+     "title": "多线程日志框架",
+     "minutes": 60
+    },
+    {
+     "drill": "pub-sub",
+     "title": "发布订阅",
+     "minutes": 60
+    },
+    {
+     "drill": "task-scheduler",
+     "title": "任务调度器",
+     "minutes": 60
+    },
+    {
+     "drill": "movie-booking",
+     "title": "电影票预订：座位锁和超时释放",
+     "minutes": 60
+    },
+    {
+     "drill": "inventory-management",
+     "title": "库存管理：预留、过期和防超卖",
+     "minutes": 60
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "title": "阶段 5 · 业务与支付",
+   "days": "10 天",
+   "goal": "金额、幂等和一致性不出错。这一块和 TikTok 支付方向直接相关，也最能体现 senior 的判断。",
+   "skills": [
+    "金额与舍入",
+    "幂等",
+    "复式记账",
+    "规则引擎",
+    "事件驱动计算"
+   ],
+   "exit": "9 道题全绿；金额全程不用浮点；重复请求不会重复生效，并能讲清楚为什么。",
+   "tasks": [
+    {
+     "id": "s5-read",
+     "title": "读 TikTok 低层设计的解答",
+     "open": [],
+     "anki": [
+      "02 TikTok 高频设计题::TikTok 低层设计",
+      "04 低层设计（Low-Level Design）::跨题模式（Patterns across questions）"
+     ]
+    },
+    {
+     "drill": "double-entry-ledger",
+     "title": "复式账本",
+     "minutes": 50
+    },
+    {
+     "drill": "idempotent-transfer",
+     "title": "幂等转账",
+     "minutes": 50
+    },
+    {
+     "drill": "credit-token-balance",
+     "title": "额度与令牌余额",
+     "minutes": 50
+    },
+    {
+     "drill": "billing-tax-engine",
+     "title": "计费计税引擎",
+     "minutes": 60
+    },
+    {
+     "drill": "dasher-payout",
+     "title": "配送员结算",
+     "minutes": 50
+    },
+    {
+     "drill": "digital-wallet",
+     "title": "数字钱包",
+     "minutes": 60
+    },
+    {
+     "drill": "splitwise",
+     "title": "分账",
+     "minutes": 60
+    },
+    {
+     "drill": "online-auction",
+     "title": "在线拍卖",
+     "minutes": 60
+    },
+    {
+     "drill": "meeting-scheduler",
+     "title": "会议调度",
+     "minutes": 60
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "title": "阶段 6 · 模拟面试",
+   "days": "1 周",
+   "goal": "用没做过的题按真实节奏走完整场，把速度和表达练稳。",
+   "skills": [
+    "时间管理",
+    "边写边讲",
+    "回答追问"
+   ],
+   "exit": "连续 3 道没做过的题在 60 分钟内通过前 3 关，并能回答验收清单的全部问题。",
+   "tasks": [
+    {
+     "drill": "chess",
+     "title": "模拟：国际象棋",
+     "minutes": 60
+    },
+    {
+     "drill": "hotel-booking",
+     "title": "模拟：酒店预订",
+     "minutes": 60
+    },
+    {
+     "drill": "notification-service",
+     "title": "模拟：通知服务",
+     "minutes": 60
+    },
+    {
+     "drill": "food-delivery",
+     "title": "模拟：外卖平台",
+     "minutes": 60
+    },
+    {
+     "drill": "stock-brokerage",
+     "title": "模拟：股票经纪",
+     "minutes": 60
+    },
+    {
+     "id": "s6-check",
+     "title": "过一遍验收清单，没过的回到对应阶段",
+     "open": [
+      "[[03-readiness-checklist|验收清单]]"
+     ],
+     "anki": []
+    }
+   ]
+  }
+ ]
+}

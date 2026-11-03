@@ -1,6 +1,6 @@
 ---
 id: hi-lld-elevator-8-scan-step
-node: lld.problem-breakdowns.elevator
+node: lld.problem-breakdowns.elevator.exam
 type: qa
 step: 8
 ---

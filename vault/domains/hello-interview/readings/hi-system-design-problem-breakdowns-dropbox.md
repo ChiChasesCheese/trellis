@@ -1,5 +1,5 @@
 ---
-nodes: [sd.problem-breakdowns.dropbox]
+nodes: [sd.problem-breakdowns.dropbox.notes, sd.problem-breakdowns.dropbox.exam, sd.problem-breakdowns.dropbox.beyond]
 url: https://www.hellointerview.com/learn/system-design/problem-breakdowns/dropbox
 tags: [no-archive]
 ---

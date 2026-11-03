@@ -1,6 +1,6 @@
 ---
 id: hi-sd-shopify-inventory-reservations-6-takeaways
-node: sd.in-the-wild.shopify-inventory-reservations
+node: sd.in-the-wild.shopify-inventory-reservations.exam
 type: qa
 step: 6
 ---

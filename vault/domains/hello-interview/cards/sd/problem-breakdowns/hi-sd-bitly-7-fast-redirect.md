@@ -1,6 +1,6 @@
 ---
 id: hi-sd-bitly-7-fast-redirect
-node: sd.problem-breakdowns.bitly
+node: sd.problem-breakdowns.bitly.exam
 type: qa
 step: 7
 ---

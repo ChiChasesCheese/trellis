@@ -1,5 +1,5 @@
 ---
-nodes: [sd.problem-breakdowns.uber]
+nodes: [sd.problem-breakdowns.uber.notes, sd.problem-breakdowns.uber.exam, sd.problem-breakdowns.uber.beyond]
 url: https://www.hellointerview.com/learn/system-design/problem-breakdowns/uber
 tags: [no-archive]
 ---

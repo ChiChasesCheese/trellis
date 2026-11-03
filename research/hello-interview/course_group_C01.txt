@@ -1,0 +1,10 @@
+lld.in-a-hurry.introduction low-level-design__in-a-hurry__introduction
+lld.in-a-hurry.delivery low-level-design__in-a-hurry__delivery
+lld.in-a-hurry.design-principles low-level-design__in-a-hurry__design-principles
+lld.in-a-hurry.oop-concepts low-level-design__in-a-hurry__oop-concepts
+lld.in-a-hurry.patterns low-level-design__in-a-hurry__patterns
+lld.concurrency.intro low-level-design__concurrency__intro
+lld.concurrency.correctness low-level-design__concurrency__correctness
+lld.concurrency.coordination low-level-design__concurrency__coordination
+lld.concurrency.scarcity low-level-design__concurrency__scarcity
+lld.problem-breakdowns.connect-four low-level-design__problem-breakdowns__connect-four

@@ -1,6 +1,6 @@
 ---
 id: hi-sd-figma-multiplayer-4-reparent-order
-node: sd.in-the-wild.figma-multiplayer
+node: sd.in-the-wild.figma-multiplayer.exam
 type: qa
 step: 4
 ---

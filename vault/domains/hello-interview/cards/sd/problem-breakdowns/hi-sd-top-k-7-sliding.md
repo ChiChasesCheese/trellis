@@ -1,6 +1,6 @@
 ---
 id: hi-sd-top-k-7-sliding
-node: sd.problem-breakdowns.top-k
+node: sd.problem-breakdowns.top-k.exam
 type: qa
 step: 7
 ---

@@ -1,6 +1,6 @@
 ---
 id: hi-sd-distributed-rate-limiter-7-scale-shard
-node: sd.problem-breakdowns.distributed-rate-limiter
+node: sd.problem-breakdowns.distributed-rate-limiter.exam
 type: qa
 step: 7
 ---

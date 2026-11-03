@@ -1,6 +1,6 @@
 ---
 id: hi-sd-tinder-3-hld-swipe
-node: sd.problem-breakdowns.tinder
+node: sd.problem-breakdowns.tinder.exam
 type: qa
 step: 3
 ---

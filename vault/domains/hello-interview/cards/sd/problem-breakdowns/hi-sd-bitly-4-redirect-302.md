@@ -1,6 +1,6 @@
 ---
 id: hi-sd-bitly-4-redirect-302
-node: sd.problem-breakdowns.bitly
+node: sd.problem-breakdowns.bitly.exam
 type: qa
 step: 4
 ---

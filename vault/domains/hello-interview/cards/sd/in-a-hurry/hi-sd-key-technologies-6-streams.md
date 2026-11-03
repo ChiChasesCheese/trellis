@@ -1,6 +1,6 @@
 ---
 id: hi-sd-key-technologies-6-streams
-node: sd.in-a-hurry.key-technologies
+node: sd.in-a-hurry.key-technologies.exam
 type: qa
 step: 6
 ---

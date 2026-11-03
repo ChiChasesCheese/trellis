@@ -1,6 +1,6 @@
 ---
 id: hi-sd-discord-messages-scylladb-1-hot-partition
-node: sd.in-the-wild.discord-messages-scylladb
+node: sd.in-the-wild.discord-messages-scylladb.exam
 type: qa
 step: 1
 ---

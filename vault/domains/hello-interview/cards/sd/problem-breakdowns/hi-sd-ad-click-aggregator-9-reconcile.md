@@ -1,6 +1,6 @@
 ---
 id: hi-sd-ad-click-aggregator-9-reconcile
-node: sd.problem-breakdowns.ad-click-aggregator
+node: sd.problem-breakdowns.ad-click-aggregator.exam
 type: qa
 step: 9
 ---

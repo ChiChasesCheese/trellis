@@ -1,6 +1,6 @@
 ---
 id: hi-lld-amazon-locker-6-availability
-node: lld.problem-breakdowns.amazon-locker
+node: lld.problem-breakdowns.amazon-locker.exam
 type: qa
 step: 6
 ---

@@ -1,6 +1,6 @@
 ---
 id: hi-sd-tinder-10-no-reshow
-node: sd.problem-breakdowns.tinder
+node: sd.problem-breakdowns.tinder.exam
 type: qa
 step: 10
 ---

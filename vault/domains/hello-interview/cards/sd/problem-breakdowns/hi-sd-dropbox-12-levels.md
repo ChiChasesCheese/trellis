@@ -1,6 +1,6 @@
 ---
 id: hi-sd-dropbox-12-levels
-node: sd.problem-breakdowns.dropbox
+node: sd.problem-breakdowns.dropbox.exam
 type: qa
 step: 12
 ---

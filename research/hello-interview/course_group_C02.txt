@@ -1,0 +1,5 @@
+lld.problem-breakdowns.amazon-locker low-level-design__problem-breakdowns__amazon-locker
+lld.problem-breakdowns.elevator low-level-design__problem-breakdowns__elevator
+lld.problem-breakdowns.parking-lot low-level-design__problem-breakdowns__parking-lot
+lld.problem-breakdowns.file-system low-level-design__problem-breakdowns__file-system
+lld.problem-breakdowns.bookmyshow low-level-design__problem-breakdowns__bookmyshow

@@ -1,6 +1,6 @@
 ---
 id: hi-sd-spotify-data-lake-point-queries-2-prune
-node: sd.in-the-wild.spotify-data-lake-point-queries
+node: sd.in-the-wild.spotify-data-lake-point-queries.exam
 type: qa
 step: 2
 ---

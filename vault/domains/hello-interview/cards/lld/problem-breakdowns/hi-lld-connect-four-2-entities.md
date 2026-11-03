@@ -1,6 +1,6 @@
 ---
 id: hi-lld-connect-four-2-entities
-node: lld.problem-breakdowns.connect-four
+node: lld.problem-breakdowns.connect-four.exam
 type: qa
 step: 2
 ---

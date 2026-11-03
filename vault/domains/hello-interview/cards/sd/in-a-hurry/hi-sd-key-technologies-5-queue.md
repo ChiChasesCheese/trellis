@@ -1,6 +1,6 @@
 ---
 id: hi-sd-key-technologies-5-queue
-node: sd.in-a-hurry.key-technologies
+node: sd.in-a-hurry.key-technologies.exam
 type: qa
 step: 5
 ---

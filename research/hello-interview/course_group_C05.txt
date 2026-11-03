@@ -1,0 +1,12 @@
+sd.core-concepts.api-design system-design__core-concepts__api-design
+sd.core-concepts.data-modeling system-design__core-concepts__data-modeling
+sd.core-concepts.caching system-design__core-concepts__caching
+sd.core-concepts.sharding system-design__core-concepts__sharding
+sd.core-concepts.consistent-hashing system-design__core-concepts__consistent-hashing
+sd.core-concepts.cap-theorem system-design__core-concepts__cap-theorem
+sd.core-concepts.db-indexing system-design__core-concepts__db-indexing
+sd.core-concepts.numbers-to-know system-design__core-concepts__numbers-to-know
+sd.in-a-hurry.introduction system-design__in-a-hurry__introduction
+sd.in-a-hurry.how-to-prepare system-design__in-a-hurry__how-to-prepare
+sd.in-a-hurry.delivery system-design__in-a-hurry__delivery
+sd.in-a-hurry.core-concepts system-design__in-a-hurry__core-concepts

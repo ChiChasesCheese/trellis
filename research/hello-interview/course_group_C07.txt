@@ -1,0 +1,8 @@
+sd.deep-dives.api-gateway system-design__deep-dives__api-gateway
+sd.deep-dives.cassandra system-design__deep-dives__cassandra
+sd.deep-dives.dynamodb system-design__deep-dives__dynamodb
+sd.deep-dives.postgres system-design__deep-dives__postgres
+sd.deep-dives.flink system-design__deep-dives__flink
+sd.deep-dives.zookeeper system-design__deep-dives__zookeeper
+sd.deep-dives.proximity-search system-design__deep-dives__proximity-search
+sd.deep-dives.vector-databases system-design__deep-dives__vector-databases

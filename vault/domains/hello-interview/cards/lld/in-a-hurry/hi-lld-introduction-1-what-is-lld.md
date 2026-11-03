@@ -1,6 +1,6 @@
 ---
 id: hi-lld-introduction-1-what-is-lld
-node: lld.in-a-hurry.introduction
+node: lld.in-a-hurry.introduction.exam
 type: qa
 step: 1
 ---

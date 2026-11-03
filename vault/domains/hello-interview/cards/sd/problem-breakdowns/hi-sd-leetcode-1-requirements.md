@@ -1,6 +1,6 @@
 ---
 id: hi-sd-leetcode-1-requirements
-node: sd.problem-breakdowns.leetcode
+node: sd.problem-breakdowns.leetcode.exam
 type: qa
 step: 1
 ---

@@ -1,6 +1,6 @@
 ---
 id: hi-sd-distributed-rate-limiter-12-levels
-node: sd.problem-breakdowns.distributed-rate-limiter
+node: sd.problem-breakdowns.distributed-rate-limiter.exam
 type: qa
 step: 12
 ---

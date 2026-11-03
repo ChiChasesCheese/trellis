@@ -1,6 +1,6 @@
 ---
 id: hi-sd-leetcode-8-scale-queue
-node: sd.problem-breakdowns.leetcode
+node: sd.problem-breakdowns.leetcode.exam
 type: qa
 step: 8
 ---

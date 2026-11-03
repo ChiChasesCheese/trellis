@@ -1,6 +1,6 @@
 ---
 id: hi-sd-tinder-5-swipe-race
-node: sd.problem-breakdowns.tinder
+node: sd.problem-breakdowns.tinder.exam
 type: qa
 step: 5
 ---

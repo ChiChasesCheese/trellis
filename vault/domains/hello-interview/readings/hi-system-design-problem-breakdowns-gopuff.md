@@ -1,5 +1,5 @@
 ---
-nodes: [sd.problem-breakdowns.gopuff]
+nodes: [sd.problem-breakdowns.gopuff.notes, sd.problem-breakdowns.gopuff.exam, sd.problem-breakdowns.gopuff.beyond]
 url: https://www.hellointerview.com/learn/system-design/problem-breakdowns/gopuff
 tags: [no-archive]
 ---

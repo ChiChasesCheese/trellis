@@ -1,0 +1,7 @@
+query-condition-parser      from vault/interviews/core/design-questions/tt-query-condition-parser.md
+double-entry-ledger         from vault/interviews/core/design-questions/tt-double-entry-ledger.md
+idempotent-transfer         from vault/interviews/core/design-questions/tt-idempotent-transfer.md
+billing-tax-engine          from vault/interviews/core/design-questions/tt-billing-tax-engine.md
+api-circuit-breaker         from vault/interviews/core/design-questions/api-circuit-breaker.md
+connect-four                your own design
+inventory-management        your own design: multi-warehouse stock, reservations with expiry, concurrent reserve without overselling

@@ -1,6 +1,6 @@
 ---
 id: hi-sd-core-concepts-3-indexing
-node: sd.in-a-hurry.core-concepts
+node: sd.in-a-hurry.core-concepts.exam
 type: qa
 step: 3
 ---

@@ -1,5 +1,5 @@
 ---
-nodes: [sd.problem-breakdowns.tinder]
+nodes: [sd.problem-breakdowns.tinder.notes, sd.problem-breakdowns.tinder.exam, sd.problem-breakdowns.tinder.beyond]
 url: https://www.hellointerview.com/learn/system-design/problem-breakdowns/tinder
 tags: [no-archive]
 ---

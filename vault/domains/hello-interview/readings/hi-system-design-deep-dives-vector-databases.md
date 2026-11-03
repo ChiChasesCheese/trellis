@@ -1,5 +1,5 @@
 ---
-nodes: [qb.sd.chatbot-design.pre-sd-deep-dives-vector-databases]
+nodes: [qb.sd.chatbot-design.pre-sd-deep-dives-vector-databases, sd.deep-dives.vector-databases.notes, sd.deep-dives.vector-databases.exam, sd.deep-dives.vector-databases.beyond]
 url: https://www.hellointerview.com/learn/system-design/deep-dives/vector-databases
 tags: [no-archive]
 ---

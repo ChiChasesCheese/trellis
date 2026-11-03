@@ -46,3 +46,12 @@ vault/interviews/core/leetcode/mustread/
 # Video / image clips embedded in cards (personal study copies; shipped to Anki inside the .apkg, synced by Obsidian)
 vault/domains/basketball/media/
 research/domains/basketball/clips.json.lock
+
+# Hello Interview cards written from logged-in pages: commercial site, public repo. Local vault and Anki only.
+vault/domains/hello-interview/cards/premium/
+vault/domains/hello-interview/premium/
+
+# LLD study plan: personal attempts and progress
+vault/interviews/core/low-level-design/work/
+vault/interviews/core/low-level-design/progress.jsonl
+vault/interviews/core/low-level-design/PROGRESS.md

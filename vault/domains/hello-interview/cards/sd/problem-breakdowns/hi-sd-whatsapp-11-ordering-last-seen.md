@@ -1,6 +1,6 @@
 ---
 id: hi-sd-whatsapp-11-ordering-last-seen
-node: sd.problem-breakdowns.whatsapp
+node: sd.problem-breakdowns.whatsapp.exam
 type: qa
 step: 11
 ---

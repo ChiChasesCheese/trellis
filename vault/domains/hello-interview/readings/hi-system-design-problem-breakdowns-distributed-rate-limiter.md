@@ -1,5 +1,5 @@
 ---
-nodes: [sd.problem-breakdowns.distributed-rate-limiter]
+nodes: [sd.problem-breakdowns.distributed-rate-limiter.notes, sd.problem-breakdowns.distributed-rate-limiter.exam, sd.problem-breakdowns.distributed-rate-limiter.beyond]
 url: https://www.hellointerview.com/learn/system-design/problem-breakdowns/distributed-rate-limiter
 tags: [no-archive]
 ---

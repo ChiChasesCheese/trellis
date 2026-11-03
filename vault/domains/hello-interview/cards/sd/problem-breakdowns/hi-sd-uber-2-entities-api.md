@@ -1,6 +1,6 @@
 ---
 id: hi-sd-uber-2-entities-api
-node: sd.problem-breakdowns.uber
+node: sd.problem-breakdowns.uber.exam
 type: qa
 step: 2
 ---

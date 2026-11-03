@@ -1,6 +1,6 @@
 ---
 id: hi-sd-youtube-7-pipeline-dag
-node: sd.problem-breakdowns.youtube
+node: sd.problem-breakdowns.youtube.exam
 type: qa
 step: 7
 ---

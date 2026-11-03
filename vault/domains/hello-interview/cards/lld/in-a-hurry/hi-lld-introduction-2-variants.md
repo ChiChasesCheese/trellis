@@ -1,6 +1,6 @@
 ---
 id: hi-lld-introduction-2-variants
-node: lld.in-a-hurry.introduction
+node: lld.in-a-hurry.introduction.exam
 type: qa
 step: 2
 ---

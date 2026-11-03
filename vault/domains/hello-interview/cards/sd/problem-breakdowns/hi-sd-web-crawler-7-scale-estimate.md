@@ -1,6 +1,6 @@
 ---
 id: hi-sd-web-crawler-7-scale-estimate
-node: sd.problem-breakdowns.web-crawler
+node: sd.problem-breakdowns.web-crawler.exam
 type: qa
 step: 7
 ---

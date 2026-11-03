@@ -2,8 +2,10 @@
 
 Chi (2026-11-01): learn Hello Interview's system design and low-level design courses in the site's own order as one
 Anki deck (`Hello Interview`, sub-decks 系统设计 / 低层设计 with the site's sections), then merge the leaves into the
-`system-design` and `low-level-design` domains once learned. Premium pages are leaves without cards until Chi grants
-access (`vault/domains/hello-interview/locked/README.md`); nothing is fetched behind a login.
+`system-design` and `low-level-design` domains once learned.
+
+Chi (2026-11-03) logged in to his own Chrome and asked to use it. The current plan and state are in `PREMIUM_PLAN.md`; what
+comes from logged-in pages stays out of git.
 
 | Step | Command | State |
 |---|---|---|

@@ -1,6 +1,6 @@
 ---
 id: hi-sd-figma-multiplayer-5-process-per-doc
-node: sd.in-the-wild.figma-multiplayer
+node: sd.in-the-wild.figma-multiplayer.exam
 type: qa
 step: 5
 ---

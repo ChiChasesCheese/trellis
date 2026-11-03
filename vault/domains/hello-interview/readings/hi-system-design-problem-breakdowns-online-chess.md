@@ -1,8 +1,8 @@
 ---
-nodes: [sd.problem-breakdowns.online-chess]
+nodes: [sd.problem-breakdowns.online-chess.notes, sd.problem-breakdowns.online-chess.exam, sd.problem-breakdowns.online-chess.beyond]
 url: https://www.hellointerview.com/learn/system-design/problem-breakdowns/online-chess
 tags: [no-archive, premium]
 ---
 # 在线国际象棋（Hello Interview）
 
-原文：Design an Online Chess Platform。会员内容，解锁后补卡。
+原文：Design an Online Chess Platform。

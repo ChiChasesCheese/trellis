@@ -1,6 +1,6 @@
 ---
 id: hi-sd-gopuff-4-order-locking
-node: sd.problem-breakdowns.gopuff
+node: sd.problem-breakdowns.gopuff.exam
 type: qa
 step: 4
 ---

@@ -1,6 +1,6 @@
 ---
 id: hi-sd-meta-zgateway-zippydb-1-problem
-node: sd.in-the-wild.meta-zgateway-zippydb
+node: sd.in-the-wild.meta-zgateway-zippydb.exam
 type: qa
 step: 1
 ---

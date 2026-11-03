@@ -1,6 +1,6 @@
 ---
 id: hi-sd-ticketmaster-5-reserve-implicit
-node: sd.problem-breakdowns.ticketmaster
+node: sd.problem-breakdowns.ticketmaster.exam
 type: qa
 step: 5
 ---

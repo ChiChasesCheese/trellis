@@ -2,9 +2,8 @@
 
     uv run python research/hello-interview/gen_skeleton.py
 
-Two sub-decks, System Design and Low-Level Design, each with Hello Interview's sections in its order and one leaf per
-page. Premium pages are leaves too (summary says 会员内容，待解锁) so the structure is complete; they get cards once Chi
-gives access. After the material is learned, these leaves are meant to merge into the system-design and
+Two sub-decks, System Design and Low-Level Design, each with Hello Interview's sections in its order and one node per
+page, split into 摘要 / 考点 / 拓展 leaves. After the material is learned, these leaves are meant to merge into the system-design and
 low-level-design domains (research/hello-interview/BUILD.md).
 """
 from __future__ import annotations
@@ -16,6 +15,9 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
+PAGE_PARTS = [("notes", "摘要", "按小节总结这一章的核心内容。"),
+              ("exam", "考点", "这一章里的内容会怎么被问到。"),
+              ("beyond", "拓展", "这一章没讲、但 senior 面试会追问的内容。")]
 TRACKS = [("system-design", "系统设计（System Design）"), ("low-level-design", "低层设计（Low-Level Design）")]
 SECTIONS = {
     "system-design": [("in-a-hurry", "速成（In a Hurry）"), ("core-concepts", "核心概念（Core Concepts）"),
@@ -90,7 +92,7 @@ def main() -> None:
     home = json.loads(home_path.read_text(encoding="utf-8")) if home_path.exists() else {}
     for f in sorted(cards_dir.glob("*/*/*.md")):  # course cards: remember the course leaf each one was written for
         rel = str(f.relative_to(cards_dir))
-        if rel.startswith("qb/") or rel in home:
+        if rel.startswith(("qb/", "premium/")) or rel in home:
             continue
         m = re.search(r"^node: (\S+)$", f.read_text(encoding="utf-8"), re.M)
         if m:
@@ -136,12 +138,37 @@ def main() -> None:
                                     + (f" · 模式：{'、'.join(pats[:5])}" if pats else ""))
             kids = pre + [answer]
             body_slug = q.get("body_slug", q["slug"])
-            if body_slug not in points_home and any((cards_dir / "points" / body_slug).glob("*.md")):
+            if body_slug not in points_home and any(x for d in ("points", "premium/points") for x in (cards_dir / d / body_slug).glob("*.md")):
                 points_home[body_slug] = f"{qid}.points"  # granular cards live under the first question using the body
                 kids.append({"id": f"{qid}.points", "title": "要点 · " + title,
                              "summary": "从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。"})
             leaves.append({"id": qid, "title": title, "summary": answer["summary"], "children": kids})
         return leaves
+
+    more = json.loads((ROOT / "research/hello-interview/more_selection.json").read_text(encoding="utf-8"))
+    bank_path = ROOT / "sources/local/hello-interview/premium/questions.json"
+    bank = json.loads(bank_path.read_text(encoding="utf-8")) if bank_path.exists() else []
+
+    def more_items(track: str, tiktok: bool) -> list[dict]:
+        """Questions from the full bank. Their answers and stubs stay in the gitignored premium folder."""
+        out = []
+        for q in more["questions"]:
+            if q["track"] != track or (tiktok and not q.get("tiktok")):
+                continue
+            rec = next((b for b in bank if b["slug"] == q["slug"] or b["title"] == q.get("search")), {})
+            ups = rec.get("upvotes") or []
+            comp = sorted({u["company"] for u in ups if u.get("company")})
+            last = max((u.get("approxAskedOn") or "")[:7] for u in ups) if ups else ""
+            meta = f"被报告 {len(ups)} 次" + (f" · {'、'.join(comp[:5])}" if comp else "") + (f" · 最近 {last}" if last else "")
+            prefix = "tt" if tiktok else "qb"
+            stub = cards_dir / f"premium/{prefix}/{track}/hi-{prefix}-{q['slug']}.md"
+            if (ROOT / f"vault/domains/hello-interview/premium/bodies/{q['slug']}.md").exists():
+                stub.parent.mkdir(parents=True, exist_ok=True)
+                stub.write_text(f"---\nid: hi-{prefix}-{q['slug']}\nnode: {prefix}.{track}.{q['slug']}.answer\ntype: qa\n"
+                                f"body: domains/hello-interview/premium/bodies/{q['slug']}\nmeta: \"\"\n---\n", encoding="utf-8")
+            out.append({**q, "title": rec.get("title", q["title_zh"]), "reports": len(ups), "why": f"{q['title_zh']}：完整解答。", "meta": meta,  # the counts stay in the gitignored stub
+                        "stub": str(stub.relative_to(cards_dir))})
+        return out
 
     if qb_path.exists():
         qb = json.loads(qb_path.read_text(encoding="utf-8"))
@@ -154,6 +181,7 @@ def main() -> None:
                 comp = "、".join(q["companies"][:5]) + (" 等" if len(q["companies"]) > 5 else "")
                 items.append({**q, "stub": f"qb/{track}/hi-qb-{q['slug']}.md",
                               "meta": f"被报告 {q['reports']} 次" + (f" · {comp}" if comp else "") + (f" · 最近 {q['last'][:7]}" if q["last"] else "")})
+            items += more_items(track, False)
             kids.append({"id": f"qb.{track}", "title": title, "summary": f"{title}：按被报告次数从高到低。",
                          "children": question_branch("qb", track, items)})
         nodes.append({"id": "qb", "order": 1, "core": True, "title": "高频真题（Question Bank）",
@@ -175,8 +203,21 @@ def main() -> None:
                                     f"body: interviews/core/design-questions/{q['slug']}\nmeta: \"\"\n---\n", encoding="utf-8")
                 items.append({**q, "title_zh": q["title"], "title": q.get("title_en", q["title"]), "reports": 0,
                               "stub": f"tt/{track}/hi-tt-{q['slug']}.md", "meta": q["why"]})
+            items += more_items(track, True)
             kids.append({"id": f"tt.{track}", "title": title, "summary": f"{title}：支付方向在前，其后是通用高频题。",
                          "children": question_branch("tt", track, items)})
+        lc_kids = []
+        for slug in more["tiktok_leetcode"]:  # the same shared problem body as every LeetCode deck
+            body = ROOT / f"vault/interviews/core/leetcode/problems/{slug}.md"
+            if not body.exists():
+                continue
+            name = re.search(r"^\*\*(LC .+?)\*\*", body.read_text(encoding="utf-8"), re.M)
+            stub = cards_dir / f"tt/lc/hi-tt-lc-{slug}.md"
+            stub.parent.mkdir(parents=True, exist_ok=True)
+            stub.write_text(f"---\nid: hi-tt-lc-{slug}\nnode: tt.lc.{slug}\ntype: qa\nbody: interviews/core/leetcode/problems/{slug}\n"
+                            "meta: TikTok 面试报告\n---\n", encoding="utf-8")
+            lc_kids.append({"id": f"tt.lc.{slug}", "title": name.group(1) if name else slug, "summary": "TikTok 面试里被报告过的算法题。"})
+        kids.append({"id": "tt.lc", "title": "TikTok 算法题", "summary": "报告过的算法题，共用 LeetCode 牌组的同一份解答。", "children": lc_kids})
         nodes.append({"id": "tt", "order": 2, "core": True, "title": "TikTok 高频设计题",
                       "summary": "TikTok / 字节面经里的设计题，支付方向优先；和题库重复的题共用同一份解答，先修指向它第一次出现的位置。",
                       "children": kids})
@@ -193,11 +234,12 @@ def main() -> None:
             leaves = []
             for p in pages:
                 key = p["url"].split("/learn/", 1)[1]
-                in_sec = p["track"] == track and (p["section"] == sec or (not p["section"] and p["page"] == sec))
-                if not in_sec or f"{tid}.{p['section'] or p['page']}.{p['page']}" in placed:
+                if not (p["track"] == track and (p["section"] == sec or (not p["section"] and p["page"] == sec))):
                     continue
-                leaves.append({"id": f"{tid}.{sec}.{p['page']}", "title": ZH.get(key, p["title"]),
-                               "summary": ("会员内容，待解锁。" if p["premium"] else "") + f"Hello Interview：{p['title']}。"})
+                pid, zh = f"{tid}.{sec}.{p['page']}", ZH.get(key, p["title"])
+                # Chi (2026-11-03): every chapter is summary cards, then questions from the page, then questions beyond it
+                leaves.append({"id": pid, "title": zh, "summary": f"Hello Interview：{p['title']}。", "children": [
+                    {"id": f"{pid}.{part}", "title": f"{label} · {zh}", "summary": why} for part, label, why in PAGE_PARTS]})
             if leaves:
                 secs.append({"id": f"{tid}.{sec}", "title": stitle, "summary": f"{ttitle} · {stitle}，按 Hello Interview 的顺序。",
                              "children": leaves})
@@ -213,43 +255,38 @@ def main() -> None:
     # one reading per page: the card footers and Obsidian link back to the original (never clipped: commercial site)
     rd = ROOT / "vault/domains/hello-interview/readings"
     rd.mkdir(parents=True, exist_ok=True)
-    locked = []
     for p in pages:
         key = p["url"].split("/learn/", 1)[1]
         tid = "sd" if p["track"] == "system-design" else "lld"
         leaf = f"{tid}.{p['section'] or p['page']}.{p['page']}"
-        leaf = placed.get(leaf, leaf)
+        nodes_of = ([placed[leaf]] if leaf in placed else []) + [f"{leaf}.{part}" for part, _, _ in PAGE_PARTS]
         tags = ["no-archive"] + (["premium"] if p["premium"] else [])
         (rd / f"hi-{key.replace('/', '-')}.md").write_text(
-            f"---\nnodes: [{leaf}]\nurl: {p['url']}\ntags: [{', '.join(tags)}]\n---\n# {ZH.get(key, p['title'])}（Hello Interview）\n\n"
-            f"原文：{p['title']}。" + ("会员内容，解锁后补卡。" if p["premium"] else "") + "\n", encoding="utf-8")
-        if p["premium"]:
-            locked.append(f"| {ZH.get(key, p['title'])} | {p['title']} | {p['url']} |")
-    (ROOT / "vault/domains/hello-interview/locked").mkdir(parents=True, exist_ok=True)
-    (ROOT / "vault/domains/hello-interview/locked/README.md").write_text(
-        "# 待解锁的会员内容\n\nHello Interview 的这些页面需要会员才能看全。结构已经在牌组里占好位置，"
-        "拿到权限后重新抓取，就能给它们补卡。\n\n| 页面 | 原标题 | 链接 |\n|---|---|---|\n" + "\n".join(locked) + "\n",
-        encoding="utf-8")
+            f"---\nnodes: [{', '.join(nodes_of)}]\nurl: {p['url']}\ntags: [{', '.join(tags)}]\n---\n# {ZH.get(key, p['title'])}（Hello Interview）\n\n"
+            f"原文：{p['title']}。\n", encoding="utf-8")
+    page_ids = {f"{'sd' if p['track'] == 'system-design' else 'lld'}.{p['section'] or p['page']}.{p['page']}" for p in pages}
     for rel, course_leaf in home.items():  # move each course card to where its page now lives
         f = cards_dir / rel
         if f.exists():
             text = f.read_text(encoding="utf-8")
-            new = re.sub(r"^node: \S+$", f"node: {placed.get(course_leaf, course_leaf)}", text, count=1, flags=re.M)
+            target = placed.get(course_leaf) or (f"{course_leaf}.exam" if course_leaf in page_ids else course_leaf)
+            new = re.sub(r"^node: \S+$", f"node: {target}", text, count=1, flags=re.M)
             if new != text:
                 f.write_text(new, encoding="utf-8")
-    for f in [*cards_dir.glob("qb/*/*.md"), *cards_dir.glob("tt/*/*.md")]:  # answer stubs: node under the question, meta
+    for f in [*cards_dir.glob("qb/*/*.md"), *[x for x in cards_dir.glob("tt/*/*.md") if x.parent.name != "lc"],
+              *cards_dir.glob("premium/qb/*/*.md"), *cards_dir.glob("premium/tt/*/*.md")]:  # answer stubs: node under the question, meta
         rel = str(f.relative_to(cards_dir))
         text = f.read_text(encoding="utf-8")
         text = re.sub(r"^node: ((?:qb|tt)\.\w+\.[a-z0-9-]+?)(\.answer)?$", r"node: \1.answer", text, count=1, flags=re.M)
         if rel in card_meta:
             text = re.sub(r"^meta: .*$", "meta: " + json.dumps(card_meta[rel], ensure_ascii=False), text, count=1, flags=re.M)
         f.write_text(text, encoding="utf-8")
-    for f in cards_dir.glob("points/*/*.md"):  # granular cards follow their question
+    for f in [*cards_dir.glob("points/*/*.md"), *cards_dir.glob("premium/points/*/*.md")]:  # granular cards follow their question
         leaf = points_home.get(f.parent.name)
         if leaf:
             text = f.read_text(encoding="utf-8")
             f.write_text(re.sub(r"^node: \S+$", f"node: {leaf}", text, count=1, flags=re.M), encoding="utf-8")
-    print(len(placed), "concept pages placed under questions;", len(points_home), "questions with granular cards;", len(locked), "locked")
+    print(len(placed), "concept pages placed under questions;", len(points_home), "questions with granular cards")
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 ---
 id: hi-sd-proximity-search-7-which-one
-node: sd.deep-dives.proximity-search
+node: sd.deep-dives.proximity-search.exam
 type: qa
 step: 7
 ---

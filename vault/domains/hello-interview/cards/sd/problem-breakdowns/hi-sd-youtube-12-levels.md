@@ -1,6 +1,6 @@
 ---
 id: hi-sd-youtube-12-levels
-node: sd.problem-breakdowns.youtube
+node: sd.problem-breakdowns.youtube.exam
 type: qa
 step: 12
 ---

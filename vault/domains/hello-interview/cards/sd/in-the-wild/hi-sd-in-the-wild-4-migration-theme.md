@@ -1,6 +1,6 @@
 ---
 id: hi-sd-in-the-wild-4-migration-theme
-node: sd.in-the-wild.in-the-wild
+node: sd.in-the-wild.in-the-wild.exam
 type: qa
 step: 4
 ---

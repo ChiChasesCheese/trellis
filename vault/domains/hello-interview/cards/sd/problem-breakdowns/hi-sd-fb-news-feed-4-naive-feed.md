@@ -1,6 +1,6 @@
 ---
 id: hi-sd-fb-news-feed-4-naive-feed
-node: sd.problem-breakdowns.fb-news-feed
+node: sd.problem-breakdowns.fb-news-feed.exam
 type: qa
 step: 4
 ---

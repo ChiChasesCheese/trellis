@@ -1,6 +1,6 @@
 ---
 id: hi-lld-connect-four-6-place-disc
-node: lld.problem-breakdowns.connect-four
+node: lld.problem-breakdowns.connect-four.exam
 type: qa
 step: 6
 ---

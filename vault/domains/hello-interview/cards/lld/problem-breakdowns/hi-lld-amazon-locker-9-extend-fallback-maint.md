@@ -1,6 +1,6 @@
 ---
 id: hi-lld-amazon-locker-9-extend-fallback-maint
-node: lld.problem-breakdowns.amazon-locker
+node: lld.problem-breakdowns.amazon-locker.exam
 type: qa
 step: 9
 ---

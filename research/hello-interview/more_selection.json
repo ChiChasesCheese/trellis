@@ -1,0 +1,23 @@
+{"note": "Questions added once the full bank was visible (2026-11-03). Cut: 70% of reports per type, minus questions with a course breakdown, an existing answer or an existing drill; plus every TikTok question. Details are read from the local bank at generation time.",
+ "questions": [
+  {"slug": "realtime-game-leaderboard", "track": "sd", "title_zh": "在线游戏排行榜"},
+  {"slug": "github-cicd-workflow", "track": "sd", "title_zh": "CI/CD 流水线平台（GitHub Actions）"},
+  {"slug": "metrics-aggregator", "track": "sd", "title_zh": "指标聚合系统", "tiktok": true},
+  {"slug": "global-ip-blocking", "track": "sd", "title_zh": "分布式黑名单封禁系统"},
+  {"slug": "web-crawler-restricted-communication", "track": "sd", "title_zh": "节点不能通信的网络爬虫"},
+  {"slug": "driver-heatmap-backend", "track": "sd", "title_zh": "司机实时热力图"},
+  {"slug": "distributed-file-system", "track": "sd", "title_zh": "分布式文件系统"},
+  {"slug": "key-value-store", "track": "sd", "title_zh": "分布式键值存储"},
+  {"slug": "nearby-restaurants-app", "track": "sd", "title_zh": "外卖平台（Uber Eats）"},
+  {"slug": "delayed-payment-scheduler", "track": "sd", "title_zh": "延迟支付调度服务"},
+  {"slug": "typeahead-search-system", "track": "sd", "title_zh": "搜索联想（Typeahead）"},
+  {"slug": "tiktok-meeting-room-booking", "track": "sd", "title_zh": "会议室预订系统", "tiktok": true, "search": "Design a meeting room booking system"},
+  {"slug": "spreadsheet-engine", "track": "lld", "title_zh": "电子表格引擎"},
+  {"slug": "battleship-game-design", "track": "lld", "title_zh": "海战棋（Battleship）"},
+  {"slug": "restaurant-waitlist-api", "track": "lld", "title_zh": "餐厅候位 API"},
+  {"slug": "dasher-payout", "track": "lld", "title_zh": "配送员结算（按配送事件计算报酬）", "search": "Design Dasher Payout Calculation System Based on Delivery Events"},
+  {"slug": "image-transform-pipeline", "track": "lld", "title_zh": "图片变换流水线", "search": "Image Transform Pipeline with Scaling"},
+  {"slug": "credit-token-balance", "track": "lld", "title_zh": "用户额度与令牌余额服务", "search": "Design a credit tracking service for user token balances"}
+ ],
+ "tiktok_leetcode": ["symmetric-tree", "accounts-merge", "lowest-common-ancestor-of-a-binary-tree", "number-of-distinct-islands", "nearest-exit-from-entrance-in-maze", "number-of-islands", "implement-trie-prefix-tree"]
+}

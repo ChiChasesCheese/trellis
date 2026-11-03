@@ -1,6 +1,6 @@
 ---
 id: hi-sd-distributed-rate-limiter-1-requirements
-node: sd.problem-breakdowns.distributed-rate-limiter
+node: sd.problem-breakdowns.distributed-rate-limiter.exam
 type: qa
 step: 1
 ---

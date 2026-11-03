@@ -1,6 +1,6 @@
 ---
 id: hi-sd-top-k-1-requirements
-node: sd.problem-breakdowns.top-k
+node: sd.problem-breakdowns.top-k.exam
 type: qa
 step: 1
 ---

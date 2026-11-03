@@ -1,5 +1,5 @@
 ---
-nodes: [lld.in-a-hurry.introduction]
+nodes: [lld.in-a-hurry.introduction.notes, lld.in-a-hurry.introduction.exam, lld.in-a-hurry.introduction.beyond]
 url: https://www.hellointerview.com/learn/low-level-design/in-a-hurry/introduction
 tags: [no-archive]
 ---

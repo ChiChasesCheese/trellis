@@ -1,6 +1,6 @@
 ---
 id: hi-sd-proximity-search-2-quadtree
-node: sd.deep-dives.proximity-search
+node: sd.deep-dives.proximity-search.exam
 type: qa
 step: 2
 ---

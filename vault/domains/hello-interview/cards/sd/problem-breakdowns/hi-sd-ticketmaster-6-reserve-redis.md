@@ -1,6 +1,6 @@
 ---
 id: hi-sd-ticketmaster-6-reserve-redis
-node: sd.problem-breakdowns.ticketmaster
+node: sd.problem-breakdowns.ticketmaster.exam
 type: qa
 step: 6
 ---

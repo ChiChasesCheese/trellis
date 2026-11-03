@@ -1,0 +1,4 @@
+lld.problem-breakdowns.logging-service low-level-design__problem-breakdowns__logging-service
+lld.problem-breakdowns.rate-limiter low-level-design__problem-breakdowns__rate-limiter
+lld.problem-breakdowns.inventory-management low-level-design__problem-breakdowns__inventory-management
+sd.patterns.realtime-updates system-design__patterns__realtime-updates

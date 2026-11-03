@@ -1,6 +1,6 @@
 ---
 id: hi-sd-top-k-2-baseline
-node: sd.problem-breakdowns.top-k
+node: sd.problem-breakdowns.top-k.exam
 type: qa
 step: 2
 ---

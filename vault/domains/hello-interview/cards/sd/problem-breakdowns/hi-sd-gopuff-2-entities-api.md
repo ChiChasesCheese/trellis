@@ -1,6 +1,6 @@
 ---
 id: hi-sd-gopuff-2-entities-api
-node: sd.problem-breakdowns.gopuff
+node: sd.problem-breakdowns.gopuff.exam
 type: qa
 step: 2
 ---

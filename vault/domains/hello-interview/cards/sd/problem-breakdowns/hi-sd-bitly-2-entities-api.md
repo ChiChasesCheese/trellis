@@ -1,6 +1,6 @@
 ---
 id: hi-sd-bitly-2-entities-api
-node: sd.problem-breakdowns.bitly
+node: sd.problem-breakdowns.bitly.exam
 type: qa
 step: 2
 ---

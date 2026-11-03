@@ -1,6 +1,6 @@
 ---
 id: hi-sd-fb-live-comments-2-post-store
-node: sd.problem-breakdowns.fb-live-comments
+node: sd.problem-breakdowns.fb-live-comments.exam
 type: qa
 step: 2
 ---

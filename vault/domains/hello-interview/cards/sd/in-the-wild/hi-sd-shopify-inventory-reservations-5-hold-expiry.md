@@ -1,6 +1,6 @@
 ---
 id: hi-sd-shopify-inventory-reservations-5-hold-expiry
-node: sd.in-the-wild.shopify-inventory-reservations
+node: sd.in-the-wild.shopify-inventory-reservations.exam
 type: qa
 step: 5
 ---

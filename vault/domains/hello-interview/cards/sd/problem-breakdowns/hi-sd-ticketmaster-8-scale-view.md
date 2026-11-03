@@ -1,6 +1,6 @@
 ---
 id: hi-sd-ticketmaster-8-scale-view
-node: sd.problem-breakdowns.ticketmaster
+node: sd.problem-breakdowns.ticketmaster.exam
 type: qa
 step: 8
 ---

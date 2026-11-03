@@ -1,6 +1,6 @@
 ---
 id: hi-sd-whatsapp-7-partition-by-user-or-chat
-node: sd.problem-breakdowns.whatsapp
+node: sd.problem-breakdowns.whatsapp.exam
 type: qa
 step: 7
 ---

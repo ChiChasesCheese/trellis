@@ -1,6 +1,6 @@
 ---
 id: hi-sd-dropbox-2-entities-api
-node: sd.problem-breakdowns.dropbox
+node: sd.problem-breakdowns.dropbox.exam
 type: qa
 step: 2
 ---
