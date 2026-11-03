@@ -134,7 +134,7 @@
    "reuse": false,
    "title_en": "Parse a SQL-style condition and query an in-memory table or document store",
    "title": "条件解析与内存表查询（SQL 风格）",
-   "why": "重点题 · 解析器 + 内存表"
+   "why": "重点题 · 解析器 + 内存表 · 60 分钟内"
   },
   {
    "slug": "tt-billing-tax-engine",

@@ -1006,11 +1006,11 @@ nodes:
     children:
     - id: tt.lld.tt-query-condition-parser
       title: 条件解析与内存表查询（SQL 风格）
-      summary: 重点题 · 解析器 + 内存表
+      summary: 重点题 · 解析器 + 内存表 · 60 分钟内
       children:
       - id: tt.lld.tt-query-condition-parser.answer
         title: 解答 · 条件解析与内存表查询（SQL 风格）
-        summary: 重点题 · 解析器 + 内存表
+        summary: 重点题 · 解析器 + 内存表 · 60 分钟内
         requires:
         - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
         - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
