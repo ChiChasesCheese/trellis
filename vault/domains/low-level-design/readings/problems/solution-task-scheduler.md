@@ -260,11 +260,18 @@ import threading
 from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from enum import Enum
 
 Callback = Callable[[], None]
 Clock = Callable[[], datetime]
+
+
+def utc_now() -> datetime:
+    """默认时钟。带时区：`due` 与 `now` 的比较和相减只在两边都带时区（或都不带）时才有定义，
+    而且不带时区的 `datetime.now()` 在夏令时切换时会倒退，调度器会把任务多跑或漏跑。"""
+    return datetime.now(UTC)
+
 ErrorHook = Callable[[int, BaseException], None]
 
 _COMPACT_FLOOR = 64
@@ -443,7 +450,7 @@ class Scheduler:
     落后，会在下一次真正被看到时**连续追赶**，而不是被悄悄跳过或无限期推迟。
     """
 
-    def __init__(self, *, clock: Clock = datetime.now, workers: int = 4,
+    def __init__(self, *, clock: Clock = utc_now, workers: int = 4,
                  max_wait: timedelta = timedelta(seconds=1),
                  on_error: ErrorHook | None = None) -> None:
         if workers <= 0:

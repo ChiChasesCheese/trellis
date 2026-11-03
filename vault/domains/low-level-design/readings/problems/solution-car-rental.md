@@ -73,8 +73,10 @@ tags: [solution]
 
 这一条不变量同时把三件事说完了：**不重叠**（两段交叠时后一段的开始时刻落在前一段结束之前，
 被周转条件挡住）、**接得上**（门店链首尾相接）、**周转**（缓冲写在同一个判断里）。于是"这辆车能不能
-接这一单"就是一句话：把候选段插进链里排好序，再检查整条链是否仍然自洽。代码里就是
-`accepts(leg)` 调 `_consistent(_ordered(legs + [leg]))`，两行。
+接这一单"就是一句话：把候选段插进链里排好序，再检查整条链是否仍然自洽。链本来就是排好序、
+自洽的，所以插入只会影响左右两个邻居：`accepts(leg)` 用 `bisect_left` 二分找到插入点，把
+`前一段 → 候选 → 后一段` 这个窗口交给 `_consistent` 复查，O(log n)。它是每次 `claim` 对每辆车
+都要问一遍的热路径，所以不能每问一次就把整条链重排重查一遍。
 
 ### 位置是算出来的，不是存下来的
 
@@ -370,6 +372,7 @@ from __future__ import annotations
 import itertools
 import math
 import threading
+from bisect import bisect_left, insort
 from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass, replace
 from datetime import datetime, timedelta
@@ -457,6 +460,11 @@ class ScheduleLeg:
 # --------------------------------------------------------------------------
 # VehicleSchedule：这道题的核心——一辆车的时间轴与它唯一的一条不变量。
 
+def _order_key(leg: ScheduleLeg) -> tuple[datetime, datetime]:
+    """行程链的排序键：先看开始、再看结束。`bisect`/`insort` 用 `key=` 直接拿它定位。"""
+    return leg.period.start, leg.period.end
+
+
 class VehicleSchedule:
     """一辆车按开始时间排好的行程链。
 
@@ -489,11 +497,11 @@ class VehicleSchedule:
 
     @staticmethod
     def _ordered(legs: Iterable[ScheduleLeg]) -> list[ScheduleLeg]:
-        return sorted(legs, key=lambda leg: (leg.period.start, leg.period.end))
+        return sorted(legs, key=_order_key)
 
-    def _consistent(self, legs: Sequence[ScheduleLeg]) -> bool:
-        """一条按时间排好的行程链是否自洽——重叠、周转缓冲、门店接续三件事写在一个循环里。"""
-        where: str = self._base
+    def _consistent(self, legs: Sequence[ScheduleLeg], where: str) -> bool:
+        """一条按时间排好的行程链，从停在 `where` 的位置出发，是否自洽——重叠、周转缓冲、
+        门店接续三件事写在一个循环里。"""
         previous_end: datetime | None = None
         for leg in legs:
             if leg.origin != where:
@@ -520,14 +528,27 @@ class VehicleSchedule:
         return where
 
     def accepts(self, leg: ScheduleLeg) -> bool:
-        """把这一段插进来之后整条链是否仍然自洽。"""
-        return self._consistent(self._ordered([*self._legs, leg]))
+        """把这一段插进来之后整条链是否仍然自洽。
+
+        链本来就是排好序且自洽的，所以插入只可能影响它的左右邻居：用 `bisect` 在 O(log n)
+        里找到插入点，只复查 `前一段 → 这一段 → 后一段` 这个窗口，不用把整条链重排重查。
+        （`add` 和 `force` 都保证链自洽，所以邻居自洽就等于整条链自洽。）
+        """
+        at = bisect_left(self._legs, _order_key(leg), key=_order_key)
+        before = self._legs[at - 1] if at else None
+        after = self._legs[at] if at < len(self._legs) else None
+        window = [x for x in (before, leg, after) if x is not None]
+        return self._consistent(window, before.origin if before else self._base)
+
+    def _fits_by_rebuild(self, leg: ScheduleLeg) -> bool:
+        """慢路径：整条重排、整条重查。只有链本身暂时不自洽时（见 `force`）才用。"""
+        return self._consistent(self._ordered([*self._legs, leg]), self._base)
 
     def add(self, leg: ScheduleLeg) -> None:
         """排进一段行程；排不下就抛 `NoVehicleAvailableError`。"""
         if not self.accepts(leg):
             raise NoVehicleAvailableError(f"{self.vehicle.plate} cannot serve {leg.ref}")
-        self._legs = self._ordered([*self._legs, leg])
+        insort(self._legs, leg, key=_order_key)
 
     def remove(self, ref: str) -> bool:
         """取消一段行程，返回是否真的删掉了。删的是整段，不留空壳。"""
@@ -548,9 +569,13 @@ class VehicleSchedule:
                   if not leg.rental or leg.period.start < forced.period.start}
         self._legs = self._ordered([leg for leg in rest if leg.ref in pinned] + [forced])
         displaced: list[str] = []
+        # `accepts` 只复查邻居，前提是现有的链本身自洽；强行写入的这一段可能让它暂时不自洽
+        # （要等中间那几段租约放回来才接得上），所以先整条查一次（force 本来就罕见）：
+        # 不自洽就退回整条重排重查的慢路径。
+        fits = self.accepts if self._consistent(self._legs, self._base) else self._fits_by_rebuild
         for leg in self._ordered(leg for leg in rest if leg.ref not in pinned):
-            if self.accepts(leg):
-                self._legs = self._ordered([*self._legs, leg])
+            if fits(leg):
+                insort(self._legs, leg, key=_order_key)
             else:
                 displaced.append(leg.ref)
         return tuple(displaced)

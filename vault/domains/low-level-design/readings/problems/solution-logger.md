@@ -64,7 +64,7 @@ handler；队列满时要么阻塞要么丢弃，丢弃必须**可观测**。
 | `Handler`（`Protocol`） | `Logger` 眼里"一个目的地"需要的三个方法 | 不持有数据，纯角色 |
 | `BaseHandler`（`ABC`） | 同步目的地的公共骨架：阈值、过滤器、格式化、加锁 | 同一时刻只有一个线程在 `emit` |
 | `StreamHandler` / `MemoryHandler` / `RotatingFileHandler` | 三种具体目的地 | `MemoryHandler` 条目数有上限；`RotatingFileHandler` 备份文件数有上限 |
-| `AsyncHandler` | 把任意 handler 变成异步：队列 + 工作线程 + 丢弃计数 | `close()` 之前入队的记录一条不少；之后来的一律拒收并计数 |
+| `AsyncHandler` | 把任意 handler 变成异步：队列 + 工作线程 + 丢弃计数 | `close()` 之前被接纳的记录（含卡在满队列上的）一条不少；之后来的一律拒收并计数 |
 | `Logger` | 决定"要不要记"，并把记录沿祖先链分发 | `handlers` 只以元组整体替换，读者永远看到一个完整的快照 |
 | `LoggerManager` | 按名字登记 logger，把点分名字接成树 | 同名永远同一个对象；`a.b.c` 存在则 `a.b` 与 `a` 必然存在 |
 
@@ -310,8 +310,11 @@ handler.add_filter(lambda record: record.context.get("path") != "/healthz")
 那几条——最值钱的那几条。
 
 这里还有一个**竞态**值得讲出来：如果"检查是否已关闭"和"入队"不是一个原子步骤，那么一个线程可能
-在哨兵入队之后才把记录放进队列，这条记录就永远没人消费了。本文的做法是把这两步放进同一把
-`_state_lock`：
+在哨兵入队之后才把记录放进队列，这条记录就永远没人消费了。最直觉的补法是把这两步放进同一把
+锁里——但队列满时 `put` 会阻塞，**持着锁阻塞**就是个陷阱：内层 handler 一抛异常，工作线程要
+拿同一把锁给 `error_count` 记账，而生产者正拿着锁等工作线程腾位置，两边互相等死。本文的做法是
+把"接纳"和"入队"拆成两步：先在锁内检查 `_closed` 并登记 `_inflight`，出锁后再做可能阻塞的
+`put`，最后注销；`close()` 先置 `_closed`、再等 `_inflight` 归零才放哨兵：
 
 ```python
 def handle(self, record):
@@ -319,12 +322,20 @@ def handle(self, record):
         if self._closed:
             self._dropped += 1
             return False
-        self._queue.put(record)
-        return True
+        self._inflight += 1          # 已被接纳
+    try:
+        self._queue.put(record)      # 可能阻塞，此刻不持有任何锁
+    finally:
+        with self._drained:          # 注销，归零时唤醒 close
+            self._inflight -= 1
+            if self._inflight == 0:
+                self._drained.notify_all()
+    return True
 ```
 
-于是每条记录要么明确排在哨兵之前，要么被明确拒收并计数，不存在第三种结局。代价是生产者之间多了
-一次串行化，但队列本身就是瓶颈，这点开销可以忽略。
+于是每条被接纳的记录都排在哨兵之前，关闭之后的新记录被明确拒收并计数，不存在第三种结局；而锁
+只保护几个计数和状态位，临界区都是常数时间。规则可以记成一句：**永远不要持锁做可能无限期
+阻塞的调用**（`put`、`get`、`join`、网络 I/O）。
 
 **GIL 帮了什么忙？** 帮的忙比多数人以为的少。GIL 保证单条字节码不会被切开，但 `self._dropped += 1`
 是"读—加—写"三条字节码，中间随时可能切换线程；`list.append` 恰好是原子的（它是一次 C 调用），
@@ -658,8 +669,10 @@ class AsyncHandler:
     默认阻塞（业务线程变慢，但一条不丢），`drop_when_full=True` 则丢弃并计数
     （业务线程不受影响，代价是日志出现无声的空洞——所以必须有 `dropped_count` 可观测）。
 
-    关闭契约：`close()` 保证在它之前**已经入队**的记录全部写出（排空、汇合、再关内层），
-    之后再来的记录一律拒收并计入 `dropped_count`；它不承诺和仍在运行的生产者线程赛跑。
+    关闭契约：`close()` 保证在它之前**已经被接纳**的记录全部写出（包括此刻还卡在满队列上
+    等位置的生产者；排空、汇合、再关内层），之后再来的记录一律拒收并计入 `dropped_count`。
+    锁只保护几个计数和状态位，**绝不**跨着一次可能阻塞的 `put` 持有——否则内层 handler
+    一抛异常、工作线程去抢这把锁记账，就和卡在满队列上的生产者互相等死。
     """
 
     def __init__(self, target: Handler, max_queue: int = 1024, drop_when_full: bool = False, name: str = "log-worker") -> None:
@@ -671,7 +684,9 @@ class AsyncHandler:
         self._dropped = 0
         self._errors = 0
         self._closed = False
-        self._state_lock = threading.RLock()
+        self._inflight = 0                       # 已被接纳、但 put 还没返回的生产者数
+        self._state_lock = threading.Lock()
+        self._drained = threading.Condition(self._state_lock)   # inflight 归零时唤醒 close
         self._worker = threading.Thread(target=self._run, name=name, daemon=True)
         self._worker.start()
 
@@ -695,21 +710,30 @@ class AsyncHandler:
         return self._worker.is_alive()
 
     def handle(self, record: LogRecord) -> bool:
-        """入队即返回。整段放在 `_state_lock` 里，是为了让"关闭"和"入队"不会交错：
-        要么这条记录已经排在哨兵之前，要么它被明确拒收，不存在"入了队却没人消费"。"""
+        """入队即返回。"关闭"和"入队"靠两步登记不交错：先在锁内检查 `_closed` 并把自己
+        记进 `_inflight`（被接纳），出锁后再做可能阻塞的 `put`，最后在锁内注销。
+        `close()` 先置 `_closed`、再等 `_inflight` 归零才放哨兵——于是每条被接纳的记录都
+        排在哨兵之前，不存在"入了队却没人消费"；而锁从不跨着阻塞的 `put` 持有。"""
         with self._state_lock:
             if self._closed:
                 self._dropped += 1
                 return False
-            if self._drop_when_full:
+            if self._drop_when_full:               # 非阻塞，可以放在锁内
                 try:
                     self._queue.put_nowait(record)
                 except queue.Full:
                     self._dropped += 1
                     return False
-            else:
-                self._queue.put(record)
-            return True
+                return True
+            self._inflight += 1
+        try:
+            self._queue.put(record)                # 可能阻塞：此刻不持有任何锁
+        finally:
+            with self._drained:
+                self._inflight -= 1
+                if self._inflight == 0:
+                    self._drained.notify_all()
+        return True
 
     def _run(self) -> None:
         while True:
@@ -730,11 +754,13 @@ class AsyncHandler:
         self._target.flush()
 
     def close(self) -> None:
-        with self._state_lock:
+        with self._drained:
             if self._closed:
                 return
-            self._closed = True
-            self._queue.put(None)
+            self._closed = True                    # 此后 handle 一律拒收
+            while self._inflight:                  # 等已被接纳的生产者把记录放进队列
+                self._drained.wait()
+        self._queue.put(None)                      # 哨兵排在所有被接纳的记录之后
         self._worker.join()
         self._target.close()
 

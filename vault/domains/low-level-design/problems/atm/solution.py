@@ -14,12 +14,22 @@ import math
 import threading
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import UTC, datetime
 from enum import Enum, IntEnum
 from types import MappingProxyType
 from typing import Protocol
 
 YUAN = 100  # 金额一律用整数分；面额、余额都是分
+
+
+def utc_now() -> datetime:
+    """默认时钟。带时区：流水时间戳要跨时区、跨夏令时对账，不带时区的 `datetime.now()` 做不到。"""
+    return datetime.now(UTC)
+
+
+def utc_now() -> datetime:
+    """默认时钟。带时区：流水时间戳要跨时区、跨夏令时对账，不带时区的 `datetime.now()` 做不到。"""
+    return datetime.now(UTC)
 
 
 class Note(IntEnum):
@@ -403,7 +413,7 @@ class ATM:
 
     def __init__(self, network: BankNetwork, cassette: Cassette, *,
                  selector: NoteSelector = fewest_notes,
-                 clock: Callable[[], datetime] = datetime.now,
+                 clock: Callable[[], datetime] = utc_now,
                  machine_id: str = "ATM-01") -> None:
         self._network = network
         self._cassette = cassette

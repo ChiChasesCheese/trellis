@@ -12,6 +12,7 @@
 from __future__ import annotations
 
 import itertools
+import logging
 import math
 import queue
 import threading
@@ -19,6 +20,8 @@ from dataclasses import dataclass, field
 from typing import Any, Callable, Generic, TypeVar
 
 R = TypeVar("R")
+
+_log = logging.getLogger(__name__)
 
 
 class ThreadPoolError(Exception):
@@ -37,8 +40,9 @@ class Future(Generic[R]):
     """一次异步调用的句柄：携带最终的结果或者异常，可以查询、等待、注册完成回调。
 
     不变式：只经历"未完成 → 完成"一次性的状态迁移，之后永远保持完成；每个回调只被
-    调用一次；"判断是否已完成"和"取出回调列表并清空它"必须是同一次加锁下的原子操作，
-    否则一次 `add_done_callback` 可能插在两步中间，被静静地漏掉。
+    调用一次，回调抛出的异常只记日志、不影响其余回调和调用它的线程；"判断是否已完成"
+    和"取出回调列表并清空它"必须是同一次加锁下的原子操作，否则一次 `add_done_callback`
+    可能插在两步中间，被静静地漏掉。
     """
 
     def __init__(self) -> None:
@@ -71,7 +75,7 @@ class Future(Generic[R]):
             if not self._done.is_set():
                 self._callbacks.append(callback)
                 return
-        callback(self)
+        self._invoke(callback)
 
     def _set_result(self, value: R) -> None:
         self._result = value
@@ -86,7 +90,15 @@ class Future(Generic[R]):
             self._done.set()
             callbacks, self._callbacks = self._callbacks, []
         for callback in callbacks:
+            self._invoke(callback)
+
+    def _invoke(self, callback: Callable[[Future[R]], None]) -> None:
+        """回调自己的失败只记日志，绝不外抛——否则它会沿着 `_finish` 一路冲出去，
+        杀死正在跑回调的工作线程（和标准库 `concurrent.futures` 一样处理）。"""
+        try:
             callback(self)
+        except Exception:
+            _log.exception("exception calling callback for %r", self)
 
 
 @dataclass(order=True)

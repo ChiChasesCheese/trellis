@@ -1,0 +1,2 @@
+architecture explicit-non-goals-and-simplifications
+architecture observability-as-design

@@ -172,6 +172,21 @@ def test_history_is_bounded_and_drops_the_oldest_unit() -> None:
     assert len(editor.text) == 15
 
 
+def test_history_drops_the_oldest_unit_in_constant_time() -> None:
+    """撤销栈满了丢最旧的一个：必须是 O(1) 的 `deque(maxlen=...)`，不是 `list` 的 `del [0]`（O(n)）。"""
+    history = impl.History(limit=3)
+    assert getattr(history._undo, "maxlen", None) == 3
+    document = impl.Document("")
+    for ch in "abcde":
+        edit = document.make_edit(len(document.text), 0, ch)
+        document.apply(edit)
+        history.record(edit)
+    assert history.undo_depth == 3
+    undone = [history.undo()[0].removed for _ in range(3)]   # 逆编辑把插入的字符删掉
+    assert undone == ["e", "d", "c"]                          # 最旧的 a、b 已被挤掉
+    assert not history.can_undo
+
+
 def test_replaying_an_edit_against_changed_text_is_refused() -> None:
     document = impl.Document("hello")
     edit = document.make_edit(0, 5, "bye")

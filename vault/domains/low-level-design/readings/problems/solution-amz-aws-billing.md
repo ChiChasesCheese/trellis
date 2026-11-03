@@ -134,7 +134,7 @@ classDiagram
 - **选项甲，改 `RatePlan` 的字段**：直接把费率改掉。之前的用量会被追溯改价，同一张账单重新生成就变了。
 - **选项乙，每个 (服务, 指标) 保存按生效时间排序的价格版本**：`PriceBook.version_at(service, metric, at)` 用二分查找取 `at` 时刻生效的版本；账单按 (服务, 指标, 版本) 聚合，一个版本一行。
 
-选择：乙。费率类保持不可变，不知道自己什么时候生效；「什么时候生效」是价格本的事。取价用 `bisect_right` 而不是线性扫描：版本数很少时二者没差别，但 `bisect_right` 的含义（最后一个生效时间不晚于 `at` 的版本）正好是需求本身，写出来比一个 `for` 加 `break` 更不容易错。
+选择：乙。费率类保持不可变，不知道自己什么时候生效；「什么时候生效」是价格本的事。取价用 `bisect_right` 而不是线性扫描：版本数很少时二者没差别，但 `bisect_right` 的含义（最后一个生效时间不晚于 `at` 的版本）正好是需求本身，写出来比一个 `for` 加 `break` 更不容易错；`key=` 参数让它直接在版本列表上二分，不用每次现建一份生效时间的列表。
 
 有一个必须说出口的约定：**阶梯价在每个价格版本内分别重新计量**。10 月 1–15 日用的 30,000 GB 和 16–31 日用的 30,000 GB 各自按各自的版本分档，而不是接着累加。如果业务要求整月累计，就要让 `charge` 接收「已经用掉的量」，这是更大的改动，应当作为澄清问题抛给面试官。币种同理：每个价格版本带币种，`Invoice.totals` 按币种分别求和，`Money` 之间币种不同就抛错，从根上杜绝把美元和欧元相加。
 
@@ -157,7 +157,7 @@ classDiagram
 from __future__ import annotations
 
 import threading
-from bisect import bisect_right
+from bisect import bisect_right, insort
 from collections import defaultdict
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -275,12 +275,12 @@ class PriceBook:
     def set_price(self, service: str, metric: str, plan: RatePlan,
                   effective_from: datetime, currency: str = "USD") -> None:
         versions = self._versions.setdefault((service, metric), [])
-        versions.append(PriceVersion(effective_from, plan, currency))
-        versions.sort(key=lambda v: v.effective_from)
+        insort(versions, PriceVersion(effective_from, plan, currency), key=lambda v: v.effective_from)
 
     def version_at(self, service: str, metric: str, at: datetime) -> PriceVersion:
         versions = self._versions.get((service, metric), [])
-        i = bisect_right([v.effective_from for v in versions], at) - 1
+        # key= 让 bisect 直接在版本列表上二分，不必每次现建一份生效时间的列表（O(n)）
+        i = bisect_right(versions, at, key=lambda v: v.effective_from) - 1
         if i < 0:
             raise UnknownServiceError(f"{service}/{metric} 在 {at} 没有价格")
         return versions[i]

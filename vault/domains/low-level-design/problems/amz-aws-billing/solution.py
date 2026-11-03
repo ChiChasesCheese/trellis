@@ -11,7 +11,7 @@
 from __future__ import annotations
 
 import threading
-from bisect import bisect_right
+from bisect import bisect_right, insort
 from collections import defaultdict
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -129,12 +129,12 @@ class PriceBook:
     def set_price(self, service: str, metric: str, plan: RatePlan,
                   effective_from: datetime, currency: str = "USD") -> None:
         versions = self._versions.setdefault((service, metric), [])
-        versions.append(PriceVersion(effective_from, plan, currency))
-        versions.sort(key=lambda v: v.effective_from)
+        insort(versions, PriceVersion(effective_from, plan, currency), key=lambda v: v.effective_from)
 
     def version_at(self, service: str, metric: str, at: datetime) -> PriceVersion:
         versions = self._versions.get((service, metric), [])
-        i = bisect_right([v.effective_from for v in versions], at) - 1
+        # key= 让 bisect 直接在版本列表上二分，不必每次现建一份生效时间的列表（O(n)）
+        i = bisect_right(versions, at, key=lambda v: v.effective_from) - 1
         if i < 0:
             raise UnknownServiceError(f"{service}/{metric} 在 {at} 没有价格")
         return versions[i]

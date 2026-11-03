@@ -59,7 +59,7 @@ tags: [solution]
 | 类 | 单一职责 | 它拥有的不变式 |
 |---|---|---|
 | `ThreadPool` | 固定数量的 worker 线程、任务分发、优雅关闭 | 同时运行的任务数 ≤ worker 数；任务异常不终结 worker；`shutdown()` 后拒绝新提交 |
-| `Future` | 一次异步调用的结果句柄 | 只经历一次"未完成 → 完成"的迁移；每个回调只跑一次 |
+| `Future` | 一次异步调用的结果句柄 | 只经历一次"未完成 → 完成"的迁移；每个回调只跑一次，回调抛出的异常只记日志 |
 | `_QueuedTask` | 队列里的一条记录：任务体 + 优先级 + 序号 + 它的 `Future` | 排序只看优先级和序号，任务体和 `Future` 不参与比较 |
 | `ThreadPoolError` 及其子类 | 描述"没有发生"的原因 | 不携带可变状态 |
 
@@ -200,6 +200,7 @@ Python 没有安全终止一个正在运行的线程的官方 API——`ctypes` 
 from __future__ import annotations
 
 import itertools
+import logging
 import math
 import queue
 import threading
@@ -207,6 +208,8 @@ from dataclasses import dataclass, field
 from typing import Any, Callable, Generic, TypeVar
 
 R = TypeVar("R")
+
+_log = logging.getLogger(__name__)
 
 
 class ThreadPoolError(Exception):
@@ -225,8 +228,9 @@ class Future(Generic[R]):
     """一次异步调用的句柄：携带最终的结果或者异常，可以查询、等待、注册完成回调。
 
     不变式：只经历"未完成 → 完成"一次性的状态迁移，之后永远保持完成；每个回调只被
-    调用一次；"判断是否已完成"和"取出回调列表并清空它"必须是同一次加锁下的原子操作，
-    否则一次 `add_done_callback` 可能插在两步中间，被静静地漏掉。
+    调用一次，回调抛出的异常只记日志、不影响其余回调和调用它的线程；"判断是否已完成"
+    和"取出回调列表并清空它"必须是同一次加锁下的原子操作，否则一次 `add_done_callback`
+    可能插在两步中间，被静静地漏掉。
     """
 
     def __init__(self) -> None:
@@ -259,7 +263,7 @@ class Future(Generic[R]):
             if not self._done.is_set():
                 self._callbacks.append(callback)
                 return
-        callback(self)
+        self._invoke(callback)
 
     def _set_result(self, value: R) -> None:
         self._result = value
@@ -274,7 +278,15 @@ class Future(Generic[R]):
             self._done.set()
             callbacks, self._callbacks = self._callbacks, []
         for callback in callbacks:
+            self._invoke(callback)
+
+    def _invoke(self, callback: Callable[[Future[R]], None]) -> None:
+        """回调自己的失败只记日志，绝不外抛——否则它会沿着 `_finish` 一路冲出去，
+        杀死正在跑回调的工作线程（和标准库 `concurrent.futures` 一样处理）。"""
+        try:
             callback(self)
+        except Exception:
+            _log.exception("exception calling callback for %r", self)
 
 
 @dataclass(order=True)
@@ -450,7 +462,10 @@ if __name__ == "__main__":
 运行"的并发度（并发度已经被 worker 数量本身限制住了，见决策一和它对应的并发测试）。
 `Future._finish` 里"设置完成标志"和"取出回调列表并清空"写在同一次加锁里，避免
 `add_done_callback` 插在两步中间被漏掉——这是一个纯粹的 check-then-act 竞态，和
-`self._served += 1` 不是原子操作是同一类问题的另一个变体。
+`self._served += 1` 不是原子操作是同一类问题的另一个变体。回调是调用方写的代码，
+`_invoke` 因此把它包在 `try/except` 里、失败只记日志：回调在 worker 线程里被调用，如果让它的
+异常冲出 `_finish`，抛出的异常会沿着 `_run` 一路杀死这个 worker，之后排队的任务永远不会完成——
+标准库 `concurrent.futures` 同样只记日志、继续跑下一个回调。
 
 ## 测试与自检
 

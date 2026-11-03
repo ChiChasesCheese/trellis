@@ -7,6 +7,7 @@
 
 from __future__ import annotations
 
+from collections import deque
 from collections.abc import Sequence
 from dataclasses import dataclass
 
@@ -197,7 +198,7 @@ class History:
             raise ValueError(f"max_run must be positive, got {max_run}")
         self._limit = limit
         self._max_run = max_run
-        self._undo: list[tuple[Edit, ...]] = []
+        self._undo: deque[tuple[Edit, ...]] = deque(maxlen=limit)
         self._redo: list[tuple[Edit, ...]] = []
         self._run_open = False
 
@@ -231,9 +232,6 @@ class History:
         换行是天然的撤销边界；长度上限保证一次撤销不会抹掉一整段——两者都是"用户心里的一步"
         的近似，而不是代码结构的产物。
         """
-        raise NotImplementedError
-
-    def _push(self, unit: tuple[Edit, ...]) -> None:
         raise NotImplementedError
 
     def record(self, edit: Edit, coalesce: bool = False) -> None:

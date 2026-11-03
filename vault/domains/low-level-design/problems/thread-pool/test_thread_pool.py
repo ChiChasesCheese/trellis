@@ -306,3 +306,23 @@ def test_equal_priority_tasks_run_in_submission_order():
     release.set()
     pool.shutdown(wait=True)
     assert order == ["a", "b", "c"]
+
+
+def test_a_raising_done_callback_does_not_kill_the_worker():
+    pool = impl.ThreadPool(num_workers=1)
+    release = threading.Event()
+    first = pool.submit(release.wait, 2)
+
+    def bad(_future):
+        raise RuntimeError("回调自己的问题")
+
+    ran_after = threading.Event()
+    first.add_done_callback(bad)                       # 先注册会抛的回调
+    first.add_done_callback(lambda f: ran_after.set())  # 之后的回调照样要跑
+    release.set()
+    assert ran_after.wait(timeout=2)
+    # 唯一的工作线程还活着：后面的任务照常完成
+    assert pool.submit(lambda: 42).result(timeout=2) == 42
+    # 已完成的 Future 上注册会抛的回调：同样不外抛给调用者
+    first.add_done_callback(bad)
+    pool.shutdown()

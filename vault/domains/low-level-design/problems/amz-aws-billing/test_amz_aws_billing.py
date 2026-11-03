@@ -220,3 +220,22 @@ def test_ledger_hands_out_a_snapshot():
     snap = b.ledger.between(START, END)
     b.record(use("u2", "ec2", "hours", "1"))
     assert len(snap) == 1 and len(b.ledger.between(START, END)) == 2
+
+
+def test_version_at_binary_searches_the_stored_versions_without_copying_them(monkeypatch):
+    """`version_at` 在账单热路径上（每条用量一次）：要在已排序的版本列表上直接二分，
+    不能每次现建一份生效时间的列表。"""
+    book = impl.PriceBook()
+    for n in (20, 1, 10):                                 # 乱序登记，登记后仍须有序
+        book.set_price("ec2", "hours", impl.FlatRate(D(str(n))), datetime(2026, 10, n))
+    stored = book._versions[("ec2", "hours")]
+    assert [v.effective_from.day for v in stored] == [1, 10, 20]
+
+    import bisect
+    searched = []
+    real = bisect.bisect_right
+    monkeypatch.setattr(impl, "bisect_right", lambda a, *args, **kw: searched.append(a) or real(a, *args, **kw))
+    assert book.version_at("ec2", "hours", datetime(2026, 10, 15)).effective_from.day == 10
+    assert searched == [stored] and searched[0] is stored
+    with pytest.raises(impl.UnknownServiceError):
+        book.version_at("ec2", "hours", datetime(2026, 9, 30))

@@ -22,7 +22,7 @@ from dataclasses import dataclass
 from functools import wraps
 from typing import Any, NamedTuple, TypeVar
 
-F = TypeVar("F", bound=Callable[..., Any])
+_F = TypeVar("_F", bound=Callable[..., Any])
 
 
 class Key(NamedTuple):

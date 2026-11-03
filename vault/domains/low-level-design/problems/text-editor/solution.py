@@ -7,6 +7,7 @@
 
 from __future__ import annotations
 
+from collections import deque
 from collections.abc import Sequence
 from dataclasses import dataclass
 
@@ -264,7 +265,8 @@ class History:
             raise ValueError(f"max_run must be positive, got {max_run}")
         self._limit = limit
         self._max_run = max_run
-        self._undo: list[tuple[Edit, ...]] = []
+        # maxlen 满了再 append 会在 O(1) 里自动挤掉最左（最旧）的一个；list 的 del [0] 是 O(n)
+        self._undo: deque[tuple[Edit, ...]] = deque(maxlen=limit)
         self._redo: list[tuple[Edit, ...]] = []
         self._run_open = False
 
@@ -307,11 +309,6 @@ class History:
             return False
         return sum(len(e.inserted) for e in unit) + len(edit.inserted) <= self._max_run
 
-    def _push(self, unit: tuple[Edit, ...]) -> None:
-        self._undo.append(unit)
-        if len(self._undo) > self._limit:
-            del self._undo[0]
-
     def record(self, edit: Edit, coalesce: bool = False) -> None:
         """记一次编辑。`coalesce=True` 表示"这是一次键盘输入"，允许并进上一个单元。
 
@@ -322,7 +319,7 @@ class History:
         if coalesce and self._run_open and self._undo and self._can_merge(self._undo[-1], edit):
             self._undo[-1] = (*self._undo[-1], edit)
             return
-        self._push((edit,))
+        self._undo.append((edit,))
         self._run_open = coalesce
 
     def record_group(self, edits: Sequence[Edit]) -> None:
@@ -330,7 +327,7 @@ class History:
         if not edits:
             return
         self._redo.clear()
-        self._push(tuple(edits))
+        self._undo.append(tuple(edits))
         self._run_open = False
 
     def undo(self) -> tuple[Edit, ...]:

@@ -155,8 +155,9 @@ def balance(self, account_id: str) -> int:
 class Account:
     balance: int   # 每次 _move 里同步更新
 def reconcile(self, account_id: str) -> bool:
-    derived = self._ledger.derived_balance(account_id)
-    ...  # 不一致就用账本的值纠正缓存
+    with account.lock:   # 推导和比较都在账户锁内，否则会拿过期值覆盖缓存
+        derived = self._ledger.derived_balance(account_id)
+        ...  # 不一致就用账本的值纠正缓存
 ```
 
 选项 A **最诚实**——余额永远是账本的直接投影，不可能不一致，天然支持"账本之外什么都不用
@@ -170,7 +171,9 @@ def reconcile(self, account_id: str) -> bool:
 不会"不等于"永远不需要核对"：进程重启后从账本重放、一次未来的手工修数据、一次尚未发现
 的并发 bug，都可能让缓存和账本对不上。`Wallet.reconcile` 因此存在——它不是防御性编程的
 装饰，是"缓存并核对"这条设计承诺里"核对"两个字的字面实现：从账本重新推导出真值，和缓存
-比较，不一致就用账本覆盖缓存，返回值告诉调用方这次核对有没有发现问题。测试里
+比较，不一致就用账本覆盖缓存，返回值告诉调用方这次核对有没有发现问题。推导和覆盖必须在
+同一次持有账户锁的临界区里完成：转账是在账户锁内同时改账本和缓存的，先推导、后拿锁的话，
+两步之间插进来的一笔转账会让这次“纠正”把一个健康的缓存写回成过期值。测试里
 `test_ledger_sums_to_zero_after_a_randomised_session` 在几百次随机操作之后对每个账户都
 跑一次 `reconcile`，断言返回 `False`——缓存全程没有漂移过，这是对"改动余额只能通过
 `_move`"这条纪律的验证，而不是一句自然成立、不必测的话。
@@ -468,7 +471,7 @@ class Ledger:
         self._entries: list[LedgerEntry] = []
         self._by_account: dict[str, list[LedgerEntry]] = {}
         self._by_transfer: dict[str, list[LedgerEntry]] = {}
-        self._ids = (f"L{n}" for n in itertools.count(1))
+        self._ids = itertools.count(1)   # `next()` 在 C 里一步完成；生成器表达式并发会抛 ValueError
 
     @property
     def entry_count(self) -> int:
@@ -486,8 +489,8 @@ class Ledger:
             raise LedgerIntegrityError(
                 f"分录不平：{debit_delta} + {credit_delta} != 0")
         entries = (
-            LedgerEntry(next(self._ids), transfer_id, debit_account, debit_delta, memo, at),
-            LedgerEntry(next(self._ids), transfer_id, credit_account, credit_delta, memo, at),
+            LedgerEntry(f"L{next(self._ids)}", transfer_id, debit_account, debit_delta, memo, at),
+            LedgerEntry(f"L{next(self._ids)}", transfer_id, credit_account, credit_delta, memo, at),
         )
         for entry in entries:
             self._entries.append(entry)
@@ -557,7 +560,7 @@ class Wallet:
         self._ledger = Ledger()
         self._idempotency: dict[str, TransferReceipt] = {}
         self._idempotency_lock = threading.Lock()
-        self._ids = (f"T{n}" for n in itertools.count(1))
+        self._ids = itertools.count(1)   # 不同账户对的转账并发取号，不能用生成器
 
     def open_account(self, account_id: str, opening_balance: int = 0) -> None:
         """开一个新账户，可带一笔起始余额——起始余额同样是一笔"外部注入"，走的是
@@ -614,7 +617,7 @@ class Wallet:
                     return cached
             if not a.reserved and a.balance < amount:
                 raise InsufficientFundsError(from_id, a.balance, amount)
-            transfer_id = next(self._ids)
+            transfer_id = f"T{next(self._ids)}"
             at = self._clock()
             self._ledger.record_pair(transfer_id, (from_id, -amount), (to_id, amount), memo, at)
             a.balance -= amount
@@ -684,8 +687,10 @@ class Wallet:
         账本永远是被信任的一方，缓存只是它的一个投影，漂移了就被它覆盖。
         """
         account = self._account(account_id)
-        derived = self._ledger.derived_balance(account_id)
         with account.lock:
+            # 推导必须在锁内：转账在持有账户锁时同时改账本和缓存，所以锁内读到的两边一定同步；
+            # 锁外先推导，推导完到拿锁之间若插进一笔转账，缓存就会被一个过期值“纠正”坏。
+            derived = self._ledger.derived_balance(account_id)
             if account.balance == derived:
                 return False
             account.balance = derived

@@ -333,3 +333,29 @@ def test_public_api_of_the_schedule_is_read_only():
     assert isinstance(snapshot, tuple) and schedule.leg_count == 1
     with pytest.raises((AttributeError, TypeError)):
         snapshot[0].destination = NKG  # type: ignore[misc]
+
+
+def test_accepts_does_not_re_sort_the_schedule_and_stays_correct_on_a_long_one_in_any_insertion_order(monkeypatch):
+    """可用性检查是热路径：每次 `claim` 要对每辆车问一遍。链早就排好序了，检查一个新段只该
+    二分找到插入点、看左右邻居，而不是把整条链重排重查。"""
+    import random
+
+    schedule = impl.VehicleSchedule(impl.Vehicle("B1", impl.VehicleCategory.SUV, PVG))
+    starts = list(range(0, 600, 3))                       # 每段 2 小时、段间留 1 小时周转
+    random.Random(7).shuffle(starts)                      # 乱序插入：插入点必须找对
+    for start in starts:
+        schedule.add(impl.ScheduleLeg(f"R{start}", period(start, start + 2), PVG, PVG))
+    assert [leg.period.start for leg in schedule.legs()] == [hours(s) for s in sorted(starts)]
+
+    calls = []
+    real_sorted = sorted
+    monkeypatch.setattr(impl, "sorted", lambda *a, **k: calls.append(1) or real_sorted(*a, **k), raising=False)
+    probe = lambda start, end, dest=PVG: impl.ScheduleLeg("P", period(start, end), PVG, dest)  # noqa: E731
+    assert schedule.accepts(probe(600, 602)) is True      # 排在最后：只看前一段
+    assert schedule.accepts(probe(1, 2)) is False         # 压在第一段上
+    assert schedule.accepts(probe(2, 3)) is False         # 紧贴前一段，没有周转时间
+    assert schedule.accepts(probe(300, 301)) is False     # 落在中间某段里
+    assert schedule.accepts(probe(-5, -3)) is True        # 排在最前
+    assert schedule.accepts(probe(-5, 0)) is False        # 与第一段首尾相接，没有周转时间
+    assert schedule.accepts(probe(-5, -3, NKG)) is False  # 把车开走，第一段在浦东的取车就接不上
+    assert calls == []

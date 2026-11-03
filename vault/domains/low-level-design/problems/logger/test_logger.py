@@ -416,3 +416,99 @@ def test_manager_close_closes_every_handler_in_the_tree(tmp_path) -> None:
     manager.close()
     assert asynchronous.is_running is False
     assert [r.message for r in sink.records] == ["最后一条"]
+
+
+def _gated_failing_target():
+    """内层 handler：每条记录先在门口等放行，放行后抛异常——模拟"磁盘满了"的目的地。"""
+
+    class GatedFailing:
+        def __init__(self) -> None:
+            self.gate = threading.Event()
+            self.entered = threading.Event()
+            self.seen: list[str] = []
+
+        def handle(self, record) -> bool:
+            self.entered.set()
+            self.gate.wait(timeout=5)
+            self.seen.append(record.message)
+            raise OSError("磁盘满了")
+
+        def flush(self) -> None:
+            pass
+
+        def close(self) -> None:
+            pass
+
+    return GatedFailing()
+
+
+def _record(message: str):
+    return impl.LogRecord("svc", impl.LogLevel.INFO, message, FrozenClock()(), "main")
+
+
+def test_a_failing_target_with_a_full_queue_does_not_deadlock_a_blocked_producer() -> None:
+    target = _gated_failing_target()
+    asynchronous = impl.AsyncHandler(target, max_queue=1)
+    asynchronous.handle(_record("r1"))
+    assert target.entered.wait(timeout=2)           # 工作线程取走 r1，卡在门口
+    asynchronous.handle(_record("r2"))              # 队列（容量 1）现在满了
+    producer = threading.Thread(target=asynchronous.handle, args=(_record("r3"),), daemon=True)
+    producer.start()                                # r3 卡在满队列上
+    producer.join(timeout=0.2)
+    assert producer.is_alive()
+    target.gate.set()                               # 放行：r1 抛异常，工作线程要记账
+    producer.join(timeout=2)
+    assert not producer.is_alive(), "生产者与工作线程互相等死"
+    closer = threading.Thread(target=asynchronous.close, daemon=True)
+    closer.start()
+    closer.join(timeout=2)
+    assert not closer.is_alive(), "close 卡死"
+    assert asynchronous.error_count == 3
+    assert target.seen == ["r1", "r2", "r3"]
+
+
+def test_close_waits_for_a_producer_already_blocked_on_a_full_queue() -> None:
+    sink = impl.MemoryHandler()
+
+    class Gated:
+        def __init__(self) -> None:
+            self.gate = threading.Event()
+            self.entered = threading.Event()
+
+        def handle(self, record) -> bool:
+            self.entered.set()
+            self.gate.wait(timeout=5)
+            return sink.handle(record)
+
+        def flush(self) -> None:
+            sink.flush()
+
+        def close(self) -> None:
+            sink.close()
+
+    target = Gated()
+    asynchronous = impl.AsyncHandler(target, max_queue=1)
+    asynchronous.handle(_record("r1"))
+    assert target.entered.wait(timeout=2)
+    asynchronous.handle(_record("r2"))
+    results: list[bool] = []
+    producer = threading.Thread(target=lambda: results.append(asynchronous.handle(_record("r3"))), daemon=True)
+    producer.start()
+    producer.join(timeout=0.2)
+    assert producer.is_alive()                      # r3 已被接纳，仍卡在 put 上
+    closer = threading.Thread(target=asynchronous.close, daemon=True)
+    closer.start()
+    closer.join(timeout=0.2)
+    assert closer.is_alive()                        # close 必须等 r3 入队，不能丢它
+    late: list[bool] = []                           # 关闭之后的新记录立刻被拒收，不必等满队列腾位置
+    rejecter = threading.Thread(target=lambda: late.append(asynchronous.handle(_record("late"))), daemon=True)
+    rejecter.start()
+    rejecter.join(timeout=1)
+    assert late == [False]
+    target.gate.set()
+    producer.join(timeout=2)
+    closer.join(timeout=2)
+    assert not producer.is_alive() and not closer.is_alive()
+    assert results == [True]
+    assert [r.message for r in sink.records] == ["r1", "r2", "r3"]
+    assert asynchronous.dropped_count == 1

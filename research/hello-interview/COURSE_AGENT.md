@@ -35,7 +35,7 @@ step: <NN>
    section's content in tight bullets, keeping every mechanism, number, option and trade-off that matters. Header
    `**<章名> · <小节>**｜摘要 · 必会` (or 追问 / 加分 for side material).
 2. **考点 (`exam`, `x`).** How the chapter gets tested: apply it to a scenario, choose between options the page weighs, predict
-   a failure, spot the mistake, say what a senior adds over a mid-level answer. Not a rephrased summary. Fill what the
+   a failure, spot the mistake, say what a senior adds over a mid-level answer. An exam card must make the reader do something new with the material: if its answer could be pasted from a summary card, change the scenario, add numbers or a twist, or drop it. Fill what the
    existing cards miss; together about 6–10 for a concept page, 8–12 for a problem breakdown, 3–5 for a short overview.
    Header `**<章名> · <要点>**｜考点 · 必会`.
 3. **拓展 (`beyond`, `b`).** What a senior interviewer pushes on that the page does not cover: production failure modes,

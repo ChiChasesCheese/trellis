@@ -305,3 +305,64 @@ def test_purge_idempotency_before_cutoff_removes_only_old_receipts(wallet, clock
     # 旧回执被清掉后，同一个 key 会被当成一笔新的移动重新执行。
     wallet.transfer("alice", "bob", 100, client_key="old")
     assert wallet.balance("bob") == 5_000 + 100 + 100 + 100
+
+
+def test_transfers_between_disjoint_account_pairs_get_unique_ids_under_contention(clock):
+    # 不同账户对的转账不共享任何账户锁，所以会真正并发地取转账号与分录号；
+    # 把线程切换间隔压到极小，让生成器表达式式的取号法几乎必然撞车。
+    import sys
+
+    pairs = 12
+    w = impl.Wallet(clock=clock)
+    for i in range(2 * pairs):
+        w.open_account(f"a{i}", opening_balance=1_000_000)
+    barrier = threading.Barrier(pairs)
+    errors: list[BaseException] = []
+    receipts: list = []
+
+    def run(i: int) -> None:
+        barrier.wait()
+        try:
+            for _ in range(1_500):
+                receipts.append(w.transfer(f"a{2 * i}", f"a{2 * i + 1}", 1))
+        except BaseException as exc:                # noqa: BLE001 — 要的就是看见任何异常
+            errors.append(exc)
+
+    old = sys.getswitchinterval()
+    sys.setswitchinterval(1e-6)
+    try:
+        threads = [threading.Thread(target=run, args=(i,)) for i in range(pairs)]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join(timeout=30)
+    finally:
+        sys.setswitchinterval(old)
+    assert errors == []
+    ids = [r.transfer_id for r in receipts]
+    assert len(ids) == pairs * 1_500 and len(set(ids)) == len(ids)
+    assert w.ledger_total() == 0
+
+
+def test_reconcile_never_overwrites_the_cache_with_a_value_derived_before_a_concurrent_transfer(wallet):
+    # 在 reconcile 推导出账本值之后、写回缓存之前，插进一笔转账：缓存必须仍然等于账本。
+    ledger = wallet._ledger
+    real_derived = ledger.derived_balance
+    transfer_done = threading.Event()
+    injected = []
+
+    def derive_then_race(account_id: str) -> int:
+        value = real_derived(account_id)
+        if not injected:
+            injected.append(True)
+            t = threading.Thread(target=lambda: (wallet.transfer("alice", "bob", 1_000), transfer_done.set()))
+            t.start()
+            transfer_done.wait(timeout=0.3)     # 正确实现里转账会被账户锁挡住，这里等不到
+        return value
+
+    ledger.derived_balance = derive_then_race
+    wallet.reconcile("bob")
+    assert transfer_done.wait(timeout=2)
+    ledger.derived_balance = real_derived
+    assert wallet.balance("bob") == real_derived("bob") == 6_000
+    assert wallet.reconcile("bob") is False

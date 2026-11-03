@@ -59,3 +59,5 @@ Order: `research/domains/python/craft_index.py` → agent per `CRAFT_MINE_AGENT.
 ## Queue
 
 Three agents at once, counting any agent resumed for rework. Next, in order: Q2, Q3 (needs K2), M (mining, needs K1 and K2), C02…C13, X (craft cards after M is reviewed), I1.
+
+State 2026-11-03: drills K1 K2 done, committed. Q1 Q2 done. C01 C02 reviewed. Craft map reviewed (90 leaves, 6 card groups in `research/domains/python/craft_group_X*.txt`). Next after the running agents: F (`research/domains/python/FIX_AGENT.md`) before the craft cards, then alternate X1…X6 with C05…C13, then I1.

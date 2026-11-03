@@ -303,3 +303,12 @@ def test_run_pending_reports_the_ids_it_actually_executed() -> None:
     executed = scheduler.run_pending(T0)
     assert executed == (a,)
     assert b not in executed
+
+
+def test_default_clock_is_timezone_aware() -> None:
+    # 不注入时钟：默认时钟必须带时区，否则和带时区的 `due`/`now` 一比较就抛 TypeError。
+    scheduler = impl.Scheduler()
+    ran = []
+    scheduler.schedule_after(lambda: ran.append("x"), timedelta(seconds=10))
+    scheduler.run_pending(datetime.now(UTC) + timedelta(hours=1))
+    assert ran == ["x"]

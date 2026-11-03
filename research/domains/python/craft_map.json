@@ -1,0 +1,5863 @@
+{
+ "branches": [
+  {
+   "id": "idioms",
+   "leaves": [
+    {
+     "id": "frozen-value-objects",
+     "title": "不可变值对象（frozen + slots dataclass as value object）",
+     "summary": "事件、配置、快照、键都写成 @dataclass(frozen=True, slots=True)：免费得到 ==、hash 和只读。",
+     "why": "63/72 题的数据对象都是它。普通类要手写 __eq__/__hash__，漏了 hash 就不能当缓存键或指纹；可变对象一旦交出去，别处就能改它。冻结之后「幂等 = 同 ID 同内容 `!=`」「缓存键 = 对象本身」都是一行。代价：改状态要造新对象（见 replace-for-state-change）；frozen 只冻结字段绑定，不是深不可变，字段必须是 tuple/frozenset 才算数。",
+     "language_leaves": [
+      "classes.dataclasses",
+      "model.hash-eq",
+      "model.mutability"
+     ],
+     "seen_in": [
+      {
+       "slug": "idempotent-transfer",
+       "lines": [
+        63,
+        63
+       ],
+       "how": "请求指纹：同键是不是同一个请求就是一个 `!=`"
+      },
+      {
+       "slug": "image-transform-pipeline",
+       "lines": [
+        32,
+        34
+       ],
+       "how": "像素存 tuple[tuple]，既不可变又可哈希，所以 (图像, 步骤前缀) 能当缓存键"
+      },
+      {
+       "slug": "double-entry-ledger",
+       "lines": [
+        78,
+        81
+       ],
+       "how": "分录冻结，重复提交判断 `journal[seq-1] != entry`"
+      },
+      {
+       "slug": "pub-sub",
+       "lines": [
+        68,
+        70
+       ],
+       "how": "冻结的消息可同时交给任意多订阅者而不加锁"
+      },
+      {
+       "slug": "credit-token-balance",
+       "lines": [
+        44,
+        46
+       ],
+       "how": "额度事件冻结，幂等判断就是 `old != new`"
+      }
+     ],
+     "scales": {
+      "leetcode": "group-anagrams",
+      "lld": "idempotent-transfer",
+      "system_design": "幂等键 + 请求指纹：服务端存请求体摘要，同键不同体返回 422（Stripe 式 Idempotency-Key）"
+     },
+     "card_ideas": [
+      "幂等转账为什么用一个 frozen dataclass 当指纹，而不是 (src,dst,amount,currency) 元组或手写拼接字符串？各自的失败模式是什么？",
+      "frozen=True 为什么不等于深不可变？Image 为什么存 tuple[tuple[int,...],...]，并在 __post_init__ 里把传入的 list 转成 tuple？",
+      "eq=True 且 frozen=False 的 dataclass，__hash__ 是什么？为什么 dataclass 要这样设计？",
+      "事件对象（Message、Grant）为什么必须冻结：跨线程交给多个订阅者而不加锁，依赖的是哪一条性质？",
+      "slots=True 对 frozen dataclass 省了什么、又妨碍了什么（cached_property、动态属性、弱引用）？"
+     ]
+    },
+    {
+     "id": "exception-family",
+     "title": "异常家族：基类 + 多重继承 + 携带数据（typed errors）",
+     "summary": "每个模块一个基类；再混入 ValueError/LookupError/KeyError 保持标准库兼容；异常带字段，不让调用方去解析消息。",
+     "why": "70/72 题都有 XxxError(Exception) 基类：调用方可以只 catch 一个，也可以细分。混入 ValueError/LookupError 让 `except KeyError` 这类既有代码继续工作。OutOfStock 带 sku/requested/available，调用方不必解析字符串。区分「值」与「异常」：被限流、余额不足这类正常业务结果用返回值（Decision、TransferResult('rejected')），调用方 bug 才抛（KeyReuse）。",
+     "language_leaves": [
+      "runtime.exceptions",
+      "engineering.robustness"
+     ],
+     "seen_in": [
+      {
+       "slug": "inventory-management",
+       "lines": [
+        41,
+        46
+       ],
+       "how": "异常带 sku/requested/available 属性"
+      },
+      {
+       "slug": "billing-tax-engine",
+       "lines": [
+        29,
+        29
+       ],
+       "how": "BillingError + LookupError：宁可报错也不悄悄按 0 收费"
+      },
+      {
+       "slug": "pub-sub",
+       "lines": [
+        39,
+        39
+       ],
+       "how": "同时继承 PubSubError 与 KeyError"
+      },
+      {
+       "slug": "idempotent-transfer",
+       "lines": [
+        28,
+        28
+       ],
+       "how": "TransferError + ValueError；业务拒绝却走返回值"
+      },
+      {
+       "slug": "image-transform-pipeline",
+       "lines": [
+        20,
+        25
+       ],
+       "how": "带 index/step/reason，并用 raise ... from err 保留原因"
+      },
+      {
+       "slug": "online-shopping",
+       "lines": [
+        401,
+        409
+       ],
+       "how": "补偿自己失败的异常也收进字段，不吞"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "inventory-management",
+      "system_design": "错误码分类：可重试（5xx/429）与不可重试（4xx）要在协议里区分"
+     },
+     "card_ideas": [
+      "为什么每个模块有一个 XxxError(Exception) 基类，还要再多继承 ValueError/LookupError？调用方多了什么能力？",
+      "OutOfStock 带属性而不只带 message：调用方拿它做什么？这样设计的代价是什么（pickle、构造参数）？",
+      "余额不足、被限流何时该返回值（Decision、TransferResult rejected）而不是抛异常？判据是什么？",
+      "`raise X from None` 与 `raise X from err`：UnknownReservation 用前者，Pipeline 用后者，判据是什么？",
+      "继承 KeyError 有什么坑（str(exc) 带引号）？TopicNotFoundError 为什么仍然选它？",
+      "except Exception 与 except BaseException：thread-pool 的 _run 捕获后者，熔断器只捕获前者，各自的理由和风险？"
+     ]
+    },
+    {
+     "id": "protocol-callable-abc",
+     "title": "策略接口三选一：Callable / Protocol / ABC",
+     "summary": "只有一个行为用函数别名；多方法但不共享代码用 Protocol；共享算法骨架或操作符混入才用 ABC。",
+     "why": "按「到底共享了什么」选，不按习惯选。airline 的超售/退款/票价策略是 Callable 别名；file-watcher 的 FileSystem、billing 的 Rule 是 Protocol （节点是 frozen dataclass，不必为接口多一层继承，测试里写一个临时对象就行）；splitwise 的 Split、rate-limiter 的 RateLimitAlgorithm 共享取整/判定骨架，所以是带模板方法的 ABC；linux-find 的 Filter 要在基类上放 & | ~，也只能是 ABC。选错的代价：给单方法写 ABC 是仪式，给要共享骨架的写 Protocol 会复制粘贴。",
+     "language_leaves": [
+      "classes.abc-protocols",
+      "types.protocols-generics",
+      "functions.first-class"
+     ],
+     "seen_in": [
+      {
+       "slug": "airline",
+       "lines": [
+        126,
+        129
+       ],
+       "how": "单行为策略：Callable 别名 + 普通函数"
+      },
+      {
+       "slug": "amz-file-watcher",
+       "lines": [
+        55,
+        55
+       ],
+       "how": "唯一能力 scan：Protocol，测试换内存假实现"
+      },
+      {
+       "slug": "billing-tax-engine",
+       "lines": [
+        62,
+        62
+       ],
+       "how": "规则是 frozen dataclass，结构化类型免继承"
+      },
+      {
+       "slug": "splitwise",
+       "lines": [
+        90,
+        90
+       ],
+       "how": "共享取整 + 最大余数算法，所以是模板方法 ABC"
+      },
+      {
+       "slug": "rate-limiter",
+       "lines": [
+        64,
+        64
+       ],
+       "how": "四种算法共享 check/try_acquire 骨架"
+      },
+      {
+       "slug": "amz-linux-find",
+       "lines": [
+        91,
+        91
+       ],
+       "how": "基类提供 __and__/__or__/__invert__"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "rate-limiter",
+      "system_design": "SPI / 插件接口：通知渠道、存储后端用稳定的最小接口接入"
+     },
+     "card_ideas": [
+      "单方法的策略（超售、退款、涨价）为什么写成 Callable 别名而不是 ABC？出现什么信号说明该升级成类？",
+      "Splitwise 的 Split 用 ABC，停车场计费策略用普通函数：判据是什么？",
+      "Rule/_Node 这类「实现者是 frozen dataclass」的接口，Protocol 比 ABC 好在哪？",
+      "BaseHandler.handle 是具体方法、emit 是抽象方法（模板方法）：子类忘了实现 emit 会在什么时候报错？",
+      "Protocol 不在运行时检查：@runtime_checkable 为什么很少该用，isinstance 检查 Protocol 有什么陷阱？"
+     ]
+    },
+    {
+     "id": "validated-construction",
+     "title": "构造即校验与规范化（__post_init__ + object.__setattr__）",
+     "summary": "让「存在的实例一定合法」：校验和规范化放进构造，下游不再重复检查。",
+     "why": "校验散落在调用点就总有一个被漏掉。放进 __post_init__ 后，非法状态根本造不出来。冻结类里要规范化（list→tuple、拷贝成只读视图）只能用 object.__setattr__。代价：跨对象的不变量（阶梯与币种、价格与菜单）构造期查不到；解决方式见 architecture 的「谁拥有不变量」。反例：Crop、Resize、LineItem 各写一份几乎相同的「必须是正整数」，没有共享。",
+     "language_leaves": [
+      "classes.dataclasses",
+      "classes.pythonic-object",
+      "runtime.exceptions"
+     ],
+     "seen_in": [
+      {
+       "slug": "image-transform-pipeline",
+       "lines": [
+        43,
+        43
+       ],
+       "how": "冻结对象里规范化像素为 tuple，校验矩形和 0..255"
+      },
+      {
+       "slug": "dasher-payout",
+       "lines": [
+        90,
+        100
+       ],
+       "how": "PayPlan：校验费率集合、窗口不重叠，并把 rates 拷成 MappingProxyType"
+      },
+      {
+       "slug": "billing-tax-engine",
+       "lines": [
+        199,
+        205
+       ],
+       "how": "Tiered：阶梯上限严格递增且最后一档是 None，否则 InvalidRuleSet"
+      },
+      {
+       "slug": "amz-discount-engine",
+       "lines": [
+        58,
+        60
+       ],
+       "how": "LineItem：数量必须为正，单价不能为负"
+      },
+      {
+       "slug": "pub-sub",
+       "lines": [
+        92,
+        97
+       ],
+       "how": "TopicPattern：空段与 # 不在末尾在构造时就拒绝"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "image-transform-pipeline",
+      "system_design": "在 API 边界做 schema 校验（parse, don't validate），内部只流转已校验的类型"
+     },
+     "card_ideas": [
+      "冻结 dataclass 的 __post_init__ 里想把 list 规范化成 tuple，为什么不能写 self.pixels = ...？object.__setattr__ 在这里安全的前提是什么？",
+      "PayPlan 在 __post_init__ 里把 rates 拷成 MappingProxyType：这同时解决了哪两个问题？只做其中一个会怎样？",
+      "校验放在构造函数和放在每个使用它的方法里，各自的失败模式是什么？什么不变量构造期校验不了？",
+      "Crop 和 Resize 重复同样的「正整数」校验：什么时候值得抽成共享函数或描述符，什么时候重复反而更好？",
+      "校验失败抛 ValueError 子类还是领域错误？InvalidRuleSet(BillingError, ValueError) 这种双重继承带来什么？"
+     ]
+    },
+    {
+     "id": "read-only-views-and-snapshots",
+     "title": "只读视图与快照返回（MappingProxyType / tuple / frozenset）",
+     "summary": "内部容器永不外交：对外给 tuple 快照或只读视图，模块级常量表用 MappingProxyType 包住。",
+     "why": "返回内部 list/dict 等于把锁和不变量交给调用方。关键区分：MappingProxyType 是「视图」（底层变它跟着变），tuple(...) 是「快照」（拷贝，之后不变）。有锁保护的状态必须给快照；只在构造时写一次、之后不再变的才能直接给视图。反例：vending-machine 的 TRANSITIONS 与 airline/ride-sharing 的 ALLOWED_TRANSITIONS 是普通 dict，运行时可被改写，而 api-circuit-breaker 用 MappingProxyType 包了。",
+     "language_leaves": [
+      "model.mutability",
+      "model.copy",
+      "classes.dataclasses"
+     ],
+     "seen_in": [
+      {
+       "slug": "vending-machine",
+       "lines": [
+        126,
+        126
+       ],
+       "how": "币箱每次交出的是拷贝后的只读视图（快照语义）"
+      },
+      {
+       "slug": "dasher-payout",
+       "lines": [
+        91,
+        91
+       ],
+       "how": "构造时拷贝再包装：既切断别名又只读"
+      },
+      {
+       "slug": "api-circuit-breaker",
+       "lines": [
+        52,
+        52
+       ],
+       "how": "模块级转换表只读"
+      },
+      {
+       "slug": "logger",
+       "lines": [
+        427,
+        427
+       ],
+       "how": "上下文只读；handlers 用 tuple 整体替换，读路径无锁"
+      },
+      {
+       "slug": "ride-sharing",
+       "lines": [
+        247,
+        249
+       ],
+       "how": "Trip.legs 返回 tuple 快照，内部用 list 追加"
+      },
+      {
+       "slug": "vending-machine",
+       "lines": [
+        63,
+        63
+       ],
+       "how": "反例：转换表是普通 dict，运行时可被改"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "vending-machine",
+      "system_design": "对外只暴露只读 API / 物化视图，不暴露内部存储的可变引用"
+     },
+     "card_ideas": [
+      "MappingProxyType 是视图不是快照：底层 dict 之后改了，代理会怎样？CoinBank.counts 为什么必须 MappingProxyType(dict(self._counts)) 而不是直接包 self._counts？",
+      "Trip.legs 返回 tuple(self._legs)，Logger.handlers 直接返回内部 tuple：两者都安全，依据分别是什么？",
+      "模块级常量表用 MappingProxyType 能防住什么、防不住什么（嵌套的可变值）？为什么值要用 frozenset 而不是 set？",
+      "vending-machine 的 TRANSITIONS 是普通 dict，api-circuit-breaker 用 MappingProxyType：这个差别在什么场景下有实际后果？",
+      "每次返回 tuple(...) 是 O(n)：什么时候该换成版本号 + 不可变持久结构，什么时候这点拷贝根本不值得省？"
+     ]
+    },
+    {
+     "id": "context-managers-for-invariants",
+     "title": "上下文管理器守不变量：@contextmanager 与 ExitStack",
+     "summary": "把「获取—使用—善后」写成 with：每个出口都做对的收尾，调用方不用记得 try/finally。",
+     "why": "idempotent-transfer 的 _owning：失败时释放键、无论如何唤醒等待者，_run 里只剩业务。connect-four 的 _locked(game_id)：先在全局锁下取对局、立刻放掉，再持有这一局的锁并 yield。rate-limiter.reserve 在退出时顺手做摊还回收。需要「个数不定」的多把锁时用 ExitStack（airline.reserve_across、CompositeLimiter）。@contextmanager 的生成器必须 re-raise 异常；except BaseException 后别忘了 raise。",
+     "language_leaves": [
+      "iteration.context-managers",
+      "concurrency.locks-races"
+     ],
+     "seen_in": [
+      {
+       "slug": "idempotent-transfer",
+       "lines": [
+        174,
+        185
+       ],
+       "how": "失败释放键、finally 唤醒等待者，集中在一处"
+      },
+      {
+       "slug": "connect-four",
+       "lines": [
+        297,
+        304
+       ],
+       "how": "先查字典（全局锁）、再持局锁并 yield"
+      },
+      {
+       "slug": "rate-limiter",
+       "lines": [
+        327,
+        342
+       ],
+       "how": "持分片锁取状态，退出时摊还回收"
+      },
+      {
+       "slug": "airline",
+       "lines": [
+        245,
+        245
+       ],
+       "how": "按序依次进入数量不定的实例锁"
+      },
+      {
+       "slug": "rate-limiter",
+       "lines": [
+        426,
+        426
+       ],
+       "how": "组合限流器：先锁住所有规则的状态再统一决定"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "idempotent-transfer",
+      "system_design": "事务/租约/分布式锁的 try-finally 模板；资源作用域 = RAII"
+     },
+     "card_ideas": [
+      "_owning 为什么用 @contextmanager，而不是在每个出口手写 try/except/finally？漏掉一条路径会出什么 bug？",
+      "@contextmanager 里 except BaseException 之后为什么必须 raise？不 raise 会发生什么？",
+      "_locked 先在全局锁下取对局、再放掉、再持局锁：为什么不在全局锁里一直持有？",
+      "ExitStack 比嵌套 with 解决了什么（数量不定的锁）？它的退出顺序是什么，为什么对锁重要？",
+      "在 with 块里 yield 出被锁保护的对象（_Match）有什么风险？"
+     ]
+    },
+    {
+     "id": "heapq-tuple-ordering",
+     "title": "heapq 的元组序与 tie-break：计数器、负号、dataclass(order=True)",
+     "summary": "堆元素是 (主键, 次键, 序号, 载荷)：序号保证稳定与不比较载荷，负号做大顶堆，None 要包一层。",
+     "why": "heapq 只有小顶堆且直接比较元素。载荷（函数、对象、可能不可比较的 key）进入比较会抛 TypeError，所以要在载荷前放单调序号（ttl-cache 的 counter、thread-pool 的 sequence、splitwise 的 tie）。大顶堆用负号（splitwise、Mailbox 的 -severity）。永不过期排最后用 (expires_at is None, expires_at, ...)，避免 None 与 datetime 比较（credit-token 的 _expiry_key）。@dataclass(order=True) 把字段声明顺序当比较顺序，不参与比较的字段 compare=False（task-scheduler、thread-pool）。同一技巧出现在 LeetCode 的 Meeting Rooms II、Number of Orders in the Backlog、Merge k Sorted Lists。",
+     "language_leaves": [
+      "runtime.stdlib-map",
+      "performance.containers",
+      "classes.dataclasses"
+     ],
+     "seen_in": [
+      {
+       "slug": "credit-token-balance",
+       "lines": [
+        58,
+        60
+       ],
+       "how": "(is None, 到期时间, 发放时间, id)：None 排最后且不与 datetime 比较"
+      },
+      {
+       "slug": "task-scheduler",
+       "lines": [
+        74,
+        84
+       ],
+       "how": "order=True：字段顺序 = 到期时间 → 优先级 → 序号 → id"
+      },
+      {
+       "slug": "ttl-cache",
+       "lines": [
+        126,
+        126
+       ],
+       "how": "第二项自增序号保证不会比较到不可比较的 key"
+      },
+      {
+       "slug": "thread-pool",
+       "lines": [
+        105,
+        113
+       ],
+       "how": "order=True，fn/future 用 compare=False；哨兵优先级 inf"
+      },
+      {
+       "slug": "splitwise",
+       "lines": [
+        344,
+        344
+       ],
+       "how": "负号做大顶堆 + tie 计数器"
+      },
+      {
+       "slug": "amz-emergency-pubsub",
+       "lines": [
+        139,
+        139
+       ],
+       "how": "(-严重度, 序号, 事件)：严重度高者先，同级先到先出"
+      }
+     ],
+     "scales": {
+      "leetcode": "single-threaded-cpu",
+      "lld": "task-scheduler",
+      "system_design": "延迟队列/定时器：按到期时间排序的优先队列（Redis ZSET、时间轮的软实现）"
+     },
+     "card_ideas": [
+      "为什么 ttl-cache 的堆元素是 [deadline, counter, key]？去掉 counter 在什么输入下会抛 TypeError？",
+      "@dataclass(order=True) 的比较顺序由什么决定？thread-pool 的 fn 字段为什么要 compare=False？",
+      "credit-token 的 _expiry_key 为什么写成 (g.expires_at is None, g.expires_at, ...)？直接把 None 放进元组会怎样？",
+      "heapq 没有大顶堆：splitwise 与 Mailbox 各自用什么技巧？对非数值键怎么办？",
+      "序号 tie-break 带来的稳定性，在 task-scheduler 里怎样保证「同一时刻先提交的先执行」？"
+     ]
+    },
+    {
+     "id": "event-wait-and-handoff",
+     "title": "Event / Condition 的惯用法：中断式睡眠、结果交接、截止时间",
+     "summary": "Event.wait(interval) 当可中断的 sleep；一次性结果交接用 Event；等待永远写 while 谓词 + 剩余时间。",
+     "why": "file-watcher 的 _stop.wait(interval) 既是 sleep 又能被 stop() 立刻叫醒；idempotent-transfer 的 rec.done 让重复请求等第一个请求出结果；bounded-blocking-queue 的 _wait_for 用绝对截止时间 deadline 算剩余等待，虚假唤醒后总时长不被拉长。统一规则：被唤醒不代表谓词成立，所以 while + 重新检查。领跑者必须先写结果再 set()，且无论成败都 set（ttl-cache 的 finally）。",
+     "language_leaves": [
+      "concurrency.locks-races",
+      "concurrency.queues",
+      "concurrency.threads"
+     ],
+     "seen_in": [
+      {
+       "slug": "amz-file-watcher",
+       "lines": [
+        212,
+        212
+       ],
+       "how": "可被 stop() 立刻中断的 sleep"
+      },
+      {
+       "slug": "idempotent-transfer",
+       "lines": [
+        135,
+        135
+       ],
+       "how": "重复请求等第一个结果，超时 StillRunning"
+      },
+      {
+       "slug": "bounded-blocking-queue",
+       "lines": [
+        169,
+        182
+       ],
+       "how": "绝对截止时间 → 剩余时间；虚假唤醒不拉长总等待"
+      },
+      {
+       "slug": "ttl-cache",
+       "lines": [
+        381,
+        381
+       ],
+       "how": "后到者在 Event 上等领跑者"
+      },
+      {
+       "slug": "thread-pool",
+       "lines": [
+        49,
+        49
+       ],
+       "how": "Future 的完成信号"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "bounded-blocking-queue",
+      "system_design": "长轮询 / 等待结果：带超时与重试的 await"
+     },
+     "card_ideas": [
+      "为什么 Event.wait(interval) 比 time.sleep(interval) 更适合后台轮询线程？stop() 怎么做到立刻返回？",
+      "_wait_for 为什么传绝对 deadline 而不是 timeout？虚假唤醒后用完整 timeout 重新等会怎样？",
+      "领跑者为什么必须「先写结果、后 set()」，并且在 finally 里无条件 set？",
+      "被 Event 唤醒的重复请求为什么要回到循环重新竞争，而不是假定一定有结果？"
+     ]
+    },
+    {
+     "id": "money-types",
+     "title": "金额类型选型：整数分 / 基点 / Decimal / Fraction",
+     "summary": "钱不用 float：整数最小单位做存储，比例用整数基点，需要精确中间值时用 Decimal 或 Fraction。",
+     "why": "float 连 0.1 都表示不了。选型看中间值：整数分 + 基点最快最简单（discount-engine）；费率要小数时用 Decimal 并从字符串构造；除以 60 这类会产生循环小数的用 Fraction 精确算到最后一步再舍入（dasher-payout）；倍数乘进金额用 Fraction（ride-sharing）。Money 值对象币种不同直接报错。与 lld.cross.money-value-objects-rounding 互补：这里只讲 Python 里的类型机制。",
+     "language_leaves": [
+      "model.numbers",
+      "engineering.money-time"
+     ],
+     "seen_in": [
+      {
+       "slug": "amz-discount-engine",
+       "lines": [
+        33,
+        35
+       ],
+       "how": "Decimal(字符串) 精确转成分，绝不经过 float"
+      },
+      {
+       "slug": "billing-tax-engine",
+       "lines": [
+        77,
+        78
+       ],
+       "how": "金额 x 基点，全精度 Decimal，取整留给 _to_minor"
+      },
+      {
+       "slug": "dasher-payout",
+       "lines": [
+        195,
+        195
+       ],
+       "how": "分钟费率 Fraction 精确，避免 /60 的循环小数"
+      },
+      {
+       "slug": "ride-sharing",
+       "lines": [
+        145,
+        145
+       ],
+       "how": "涨价倍数是 Fraction，不是 1.2 的 float"
+      },
+      {
+       "slug": "amz-aws-billing",
+       "lines": [
+        35,
+        49
+       ],
+       "how": "整数分值对象，币种不同的相加直接报错"
+      },
+      {
+       "slug": "stock-brokerage",
+       "lines": [
+        3,
+        3
+       ],
+       "how": "整数分 + 整数股，成交只搬运不产生"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "amz-discount-engine",
+      "system_design": "账务系统存最小货币单位的整数 + 币种；汇率与费率用定点小数"
+     },
+     "card_ideas": [
+      "为什么 Decimal(0.1) 与 Decimal('0.1') 不同？to_cents 为什么从字符串走？",
+      "dasher-payout 为什么用 Fraction 而不是 Decimal 算每分钟费率？Decimal 在除以 60 时具体会错在哪里？",
+      "整数分 + 基点（bps）相对 Decimal 的优势和限制是什么？8.5% 怎么变成整数？",
+      "Money 值对象为什么对不同币种的 __add__ 直接抛错，而不是返回其中一个币种？",
+      "ride-sharing 把 surge 存成 Fraction 并在下单时锁死，这样做避免了哪类对账差错？"
+     ]
+    },
+    {
+     "id": "round-once-at-the-boundary",
+     "title": "取整点：Decimal.quantize、ROUND_HALF_EVEN 与整数四舍五入",
+     "summary": "全精度算到最后一步，在唯一的取整函数里舍入一次；知道各舍入模式的差别。",
+     "why": "多次取整的误差会累计，取整点分散则换舍入规则要改很多处。billing-tax-engine 有唯一的 _to_minor（银行家舍入），dasher-payout 每单只舍入一次，parking-fees 每个日历日取整一次再封顶。Python 细节：round() 对 float 也是银行家舍入；Decimal.quantize 需要显式 rounding；纯整数四舍五入除法可写成 (2n+d)//(2d)。「各行取整后的和 != 总和取整」要用最大余数法把差额分配出去（splitwise）。",
+     "language_leaves": [
+      "model.numbers",
+      "engineering.money-time"
+     ],
+     "seen_in": [
+      {
+       "slug": "billing-tax-engine",
+       "lines": [
+        72,
+        74
+       ],
+       "how": "全系统唯一取整点，ROUND_HALF_EVEN"
+      },
+      {
+       "slug": "dasher-payout",
+       "lines": [
+        113,
+        115
+       ],
+       "how": "每单最后只舍入一次（0.5 进位）"
+      },
+      {
+       "slug": "amz-discount-engine",
+       "lines": [
+        43,
+        45
+       ],
+       "how": "纯整数四舍五入除法，不引入 float/Decimal"
+      },
+      {
+       "slug": "amz-parking-fees",
+       "lines": [
+        211,
+        211
+       ],
+       "how": "每个日历日取整一次，再套当天封顶"
+      },
+      {
+       "slug": "splitwise",
+       "lines": [
+        75,
+        87
+       ],
+       "how": "向下取整后按小数部分大小分配损失的最小单位"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "billing-tax-engine",
+      "system_design": "对账：分账/分润必须守恒，余数分配规则要确定并可复现"
+     },
+     "card_ideas": [
+      "billing-tax-engine 为什么要一个唯一的 _to_minor？如果每条规则各自取整，换成 HALF_UP 要改多少处、会引入什么错误？",
+      "ROUND_HALF_EVEN 与 HALF_UP 在 2.5/3.5 上的结果，以及为什么银行家舍入在大量求和时偏差更小？",
+      "(2*n + d) // (2*d) 为什么等价于非负整数的四舍五入除法？负数时怎么办？",
+      "各行分别取整后的和不等于总和取整：splitwise 怎么用最大余数法保证分账守恒？",
+      "Python 内置 round() 对 .5 的行为是什么？为什么金额代码里不该用它？"
+     ]
+    },
+    {
+     "id": "time-types",
+     "title": "时间类型选型：monotonic / aware datetime / 整数时间戳",
+     "summary": "持续时间与租约用 monotonic；日历、账单、静默时段用带时区的 datetime；纯逻辑用调用方给的整数时间戳。",
+     "why": "三种时间解决三种问题：time.monotonic 不受系统校时影响，适合限流窗口、租约、超时；datetime.now(UTC) 带时区才能做日历运算和跨机器比较；整数时间戳（kv-store、occupancy-tracker 的 timestamp 参数）让整个类不读任何时钟。naive 与 aware datetime 比较会直接 TypeError。task-scheduler 与 atm 的默认 clock 是 utc_now()（datetime.now(UTC)，带时区）；它们曾经默认 naive 的 datetime.now，与带时区的 due/now 一比较就 TypeError，已修复。",
+     "language_leaves": [
+      "engineering.money-time",
+      "runtime.stdlib-map"
+     ],
+     "seen_in": [
+      {
+       "slug": "rate-limiter",
+       "lines": [
+        23,
+        23
+       ],
+       "how": "单调秒数的 Clock 别名，永远从外部注入"
+      },
+      {
+       "slug": "notification-service",
+       "lines": [
+        28,
+        30
+       ],
+       "how": "默认时钟带时区，静默时段才可能跨时区算对"
+      },
+      {
+       "slug": "dasher-payout",
+       "lines": [
+        127,
+        129
+       ],
+       "how": "合成当天第 N 秒时沿用 like.tzinfo，避免 naive/aware 混用"
+      },
+      {
+       "slug": "kv-store",
+       "lines": [
+        144,
+        144
+       ],
+       "how": "整数时间戳作为每个方法的第一个参数，类内不读任何时钟"
+      },
+      {
+       "slug": "task-scheduler",
+       "lines": [
+        211,
+        211
+       ],
+       "how": "默认时钟 utc_now()：datetime.now(UTC) 带时区，可与带时区的 due/now 比较"
+      },
+      {
+       "slug": "atm",
+       "lines": [
+        416,
+        416
+       ],
+       "how": "默认时钟同样是 utc_now()，流水时间戳带时区"
+      }
+     ],
+     "scales": {
+      "leetcode": "logger-rate-limiter",
+      "lld": "rate-limiter",
+      "system_design": "分布式里没有统一墙钟：用单调序号/混合逻辑时钟排序，墙钟只用于展示"
+     },
+     "card_ideas": [
+      "限流窗口和租约为什么用 time.monotonic，而账单周期、静默时段为什么必须用带时区的 datetime？",
+      "naive 与 aware datetime 比较会怎样？dasher-payout 的 _at 为什么要把 like.tzinfo 带过去？",
+      "task-scheduler 默认 clock=datetime.now，会在什么真实场景下出错（NTP 回拨、夏令时）？应该怎么改？",
+      "kv-store 与 occupancy-tracker 把整数 timestamp 当参数而不注入 clock：这种「时间作为数据」相对注入 Clock 的利弊？",
+      "「每天重复的窗口」和「跨午夜的静默时段」在代码里怎么表示才不会出夏令时/跨天错误？"
+     ]
+    },
+    {
+     "id": "match-structural",
+     "title": "结构化模式匹配：对 dataclass 与枚举的 match / case",
+     "summary": "用 case Bin(op, l, r)、case Grant() 一行完成「判类型 + 取字段」，每个分支一条规则。",
+     "why": "6 个题用了 match：语法树求值（spreadsheet）、事件重放（credit-token）、化简规则（image-transform）、状态分支（inventory、circuit-breaker）、索引选择（query-condition-parser 带守卫）。比 isinstance 链短，也更容易看出漏了哪种节点。陷阱：case 里的裸名字是「捕获」不是比较，比较枚举必须写 State.CLOSED 这种带点的值模式；dataclass 的位置模式依赖自动生成的 __match_args__。",
+     "language_leaves": [
+      "iteration.pattern-matching",
+      "classes.dataclasses"
+     ],
+     "seen_in": [
+      {
+       "slug": "spreadsheet-engine",
+       "lines": [
+        199,
+        202
+       ],
+       "how": "按节点类型求值，字段直接拆出"
+      },
+      {
+       "slug": "credit-token-balance",
+       "lines": [
+        77,
+        77
+       ],
+       "how": "事件重放按类型分派"
+      },
+      {
+       "slug": "image-transform-pipeline",
+       "lines": [
+        206,
+        210
+       ],
+       "how": "同时匹配两个步骤的类型，守卫写在规则旁边"
+      },
+      {
+       "slug": "query-condition-parser",
+       "lines": [
+        300,
+        302
+       ],
+       "how": "关键字模式 + 字面量 + 守卫，选择索引策略"
+      },
+      {
+       "slug": "inventory-management",
+       "lines": [
+        159,
+        171
+       ],
+       "how": "每个状态一个 case，漏掉哪个一眼可见"
+      },
+      {
+       "slug": "api-circuit-breaker",
+       "lines": [
+        159,
+        159
+       ],
+       "how": "回报结果按状态分支"
+      }
+     ],
+     "scales": {
+      "leetcode": "basic-calculator",
+      "lld": "spreadsheet-engine",
+      "system_design": "事件类型路由：按事件种类分派到处理器（订阅表 vs match）"
+     },
+     "card_ideas": [
+      "case Bin(op, left, right) 为什么能按位置取字段？@dataclass 为你生成了什么？",
+      "`case CLOSED:` 与 `case State.CLOSED:` 差在哪？写错会发生什么，且不会报错？",
+      "match 和 isinstance 链相比，什么时候 match 更差（性能、可读性、需要子类扩展时）？",
+      "image-transform-pipeline 的 _merge 同时 match 两个值（case Rotate(n), Rotate(m)）：这相对双重分派有什么好处？",
+      "query-condition-parser 的 case _And(left=l, right=r) 用关键字模式，什么时候必须用关键字而不是位置？"
+     ]
+    },
+    {
+     "id": "exhaustive-match-assert-never",
+     "title": "穷尽性：match 加 assert_never（解法没用，应该用）",
+     "summary": "所有 match/if-elif 都没有穷尽性保护；加一个新枚举成员时，漏处理的分支会静默通过。",
+     "why": "inventory.confirm 的 match 覆盖了四个 Status，但没有 `case _: assert_never(...)`；以后新增状态，confirm 会什么都不做地返回。spreadsheet.evaluate 的内层 match op 用 `case _:` 兜底成除法，任何未知运算符都被当成 `/`。typing.assert_never（3.11+）让类型检查器在编译期证明分支穷尽，运行时则抛 AssertionError。72 个解法一个都没用，这是最容易补的一个高回报习惯。",
+     "language_leaves": [
+      "iteration.pattern-matching",
+      "types.gradual-typing"
+     ],
+     "seen_in": [
+      {
+       "slug": "inventory-management",
+       "lines": [
+        159,
+        171
+       ],
+       "how": "四个状态都列了，但缺 case _: assert_never"
+      },
+      {
+       "slug": "spreadsheet-engine",
+       "lines": [
+        208,
+        208
+       ],
+       "how": "内层 match op 的兜底分支把任何未知运算符当除法"
+      },
+      {
+       "slug": "spreadsheet-engine",
+       "lines": [
+        219,
+        219
+       ],
+       "how": "match name 的兜底分支把任何未知函数名当 MAX"
+      },
+      {
+       "slug": "api-circuit-breaker",
+       "lines": [
+        159,
+        159
+       ],
+       "how": "CLOSED/HALF_OPEN 之外的状态静默忽略（OPEN 被代号挡掉，但没有断言）"
+      },
+      {
+       "slug": "credit-token-balance",
+       "lines": [
+        76,
+        76
+       ],
+       "how": "新增事件类型会被静默跳过"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "inventory-management",
+      "system_design": "协议演进：新增事件类型/枚举值时，消费者要显式失败而不是静默丢弃"
+     },
+     "card_ideas": [
+      "给 inventory.confirm 的 match 加 case _: assert_never(entry.status)，类型检查器和运行时分别会做什么？",
+      "spreadsheet.evaluate 的 case _ 把未知运算符当除法：用 assert_never 或显式 case \"/\" 修复，各自的效果？",
+      "Python 的 match 没有默认穷尽检查，和 Rust/OCaml 的差别是什么？assert_never 补的是哪一半？",
+      "if/elif 链怎样写出等价的穷尽性检查？",
+      "新增枚举成员时，哪些位置会静默漏处理？怎样用测试（遍历 list(Status)）兜底？"
+     ]
+    },
+    {
+     "id": "replace-for-state-change",
+     "title": "用 dataclasses.replace 整体替换，而不是原地改（immutable record swap）",
+     "summary": "状态变化 = 造新对象换进字典；交出去的旧快照永远不变，「检查再替换」可以做成锁内比较并交换。",
+     "why": "原地改会让已经交给调用方的对象悄悄变化，还得另写 snapshot() 复制一份。replace 换整条记录，既让每个观察者看到一致的版本，又让 `driver.held_by != offer_id` 这类 CAS 判断没有缝隙。代价：每次变化一次分配；热路径、或字段很多、状态单一归属一把锁的实体（Booking）更适合可变 slots dataclass + transition_to。注意 replace 会重新执行 __post_init__。",
+     "language_leaves": [
+      "classes.dataclasses",
+      "model.mutability"
+     ],
+     "seen_in": [
+      {
+       "slug": "inventory-management",
+       "lines": [
+        165,
+        165
+       ],
+       "how": "预留状态变化：换新对象，已交出的快照不变"
+      },
+      {
+       "slug": "ride-sharing",
+       "lines": [
+        433,
+        433
+       ],
+       "how": "DriverPool.hold：锁内校验 + 整条替换 = 比较并交换"
+      },
+      {
+       "slug": "credit-token-balance",
+       "lines": [
+        164,
+        164
+       ],
+       "how": "作废额度包 = 改到期时间，重放时自然生效"
+      },
+      {
+       "slug": "chat-room",
+       "lines": [
+        138,
+        138
+       ],
+       "how": "编辑消息产生新版本，历史不被改写"
+      },
+      {
+       "slug": "notification-service",
+       "lines": [
+        581,
+        581
+       ],
+       "how": "重试 = 新信封 attempt+1，不改正在投递的那封"
+      },
+      {
+       "slug": "airline",
+       "lines": [
+        415,
+        418
+       ],
+       "how": "对照：Booking 是可变 slots 实体，用 transition_to 受检转移"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "inventory-management",
+      "system_design": "乐观并发：带版本号整行替换（compare-and-swap UPDATE ... WHERE version = ?）"
+     },
+     "card_ideas": [
+      "库存预留 Reservation 为什么是 frozen，状态变化要 replace 后换进字典？已经返回给调用方的预留会发生什么？",
+      "DriverPool 的 hold/release 说是「锁内比较并交换」：replace 怎样让「查 held_by 再整条替换」之间没有缝隙？",
+      "什么时候不该用 replace？airline 的 Booking 为什么是可变 slots dataclass + transition_to，而 Driver 是 frozen？",
+      "replace 会重新跑 __post_init__，对带校验/规范化的类意味着什么？",
+      "不可变记录 + 整体替换，和「每次读都 snapshot() 一份」在内存和一致性上各自的代价？"
+     ]
+    },
+    {
+     "id": "decorators-for-cross-cutting-locks",
+     "title": "装饰器做横切关注点：@_synchronized / @_op 与 functools.wraps",
+     "summary": "整个方法体都是临界区时，把锁（和「先结清过期」）写在方法头的装饰器里，不会漏一个方法。",
+     "why": "double-entry-ledger 的 @_synchronized 与 inventory 的 @_op 都是：拿锁、（结清过期）、再执行。优点是锁作用域一眼看全；缺点是整个方法都在锁里，无法在方法中途放锁去调外部代码。RLock 才允许 reverse 重入 post。functools.wraps 必须带，否则 __name__/文档丢失。类型层面应该用 ParamSpec；解法用 TypeVar(bound=Callable) 加 # type: ignore。double-entry 的 _synchronized 签名曾写 `_F` 而模块里只定义了 `F`，靠 `from __future__ import annotations` 才没在导入时炸，typing.get_type_hints 会 NameError；已把 TypeVar 改名为 `_F` 并加测试。",
+     "language_leaves": [
+      "functions.decorators",
+      "functions.decorator-patterns",
+      "concurrency.locks-races"
+     ],
+     "seen_in": [
+      {
+       "slug": "double-entry-ledger",
+       "lines": [
+        35,
+        43
+       ],
+       "how": "整个方法一个临界区；注意 _F 未定义"
+      },
+      {
+       "slug": "inventory-management",
+       "lines": [
+        96,
+        105
+       ],
+       "how": "拿锁 + 结清已到点的预留，再做自己的事"
+      },
+      {
+       "slug": "double-entry-ledger",
+       "lines": [
+        25,
+        25
+       ],
+       "how": "只定义了 F，却在签名里写 _F"
+      },
+      {
+       "slug": "double-entry-ledger",
+       "lines": [
+        109,
+        109
+       ],
+       "how": "RLock：reverse 重入 post"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "double-entry-ledger",
+      "system_design": "面向切面：鉴权/限流/重试/追踪放在中间件，而不是每个 handler 手写"
+     },
+     "card_ideas": [
+      "为什么 @_op 的装饰器把「拿锁」和「结清过期」绑在一起？漏掉其中一个方法会怎样？",
+      "整个方法体都在锁里的装饰器写法，什么时候不适用（需要锁外调用外部代码时）？",
+      "为什么装饰器内要写 @wraps(method)？不写会丢什么，对测试/日志有什么影响？",
+      "double-entry 的 _synchronized 签名里用了未定义的 _F：为什么运行时没报错，却会让 get_type_hints 失败？",
+      "用 ParamSpec 重写这个装饰器的类型标注，能去掉哪个 type: ignore？"
+     ]
+    },
+    {
+     "id": "bisect-sorted-lists",
+     "title": "bisect 与有序列表：floor/ceiling、key=、只查邻居",
+     "summary": "有序列表 + bisect 回答「最后一个 ≤ x」「第一个 ≥ x」；key= 参数省掉并行列表；区间冲突只需检查两个邻居。",
+     "why": "bisect_right(…)-1 是 floor，bisect_left 是 ceiling。生效版本、时间线人数、对账单分页、订单簿价位都是它。3.10 起 key= 让你不再维护并行列表（double-entry）。insort 是 O(n) 搬移但常数极小，几万条以内比手写平衡树快。car-rental 的 VehicleSchedule.accepts 用 bisect_left(key=) 找到插入点，只复查前后两个邻居（曾每次整条重排再整体校验）；aws-billing 的 PriceBook.version_at 用 bisect_right(key=) 直接在版本列表上二分（曾每次调用重建 effective_from 列表）。LeetCode 里对应 Time Based Key-Value Store、My Calendar I、Find K Closest Elements。",
+     "language_leaves": [
+      "performance.containers",
+      "runtime.stdlib-map",
+      "model.sequences"
+     ],
+     "seen_in": [
+      {
+       "slug": "double-entry-ledger",
+       "lines": [
+        198,
+        198
+       ],
+       "how": "key= 直接按字段二分，不另存序号列表"
+      },
+      {
+       "slug": "billing-tax-engine",
+       "lines": [
+        149,
+        149
+       ],
+       "how": "恰好等于生效时间属于新版本 = bisect_right"
+      },
+      {
+       "slug": "amz-occupancy-tracker",
+       "lines": [
+        109,
+        109
+       ],
+       "how": "floor：最后一个 time ≤ ts"
+      },
+      {
+       "slug": "stock-brokerage",
+       "lines": [
+        290,
+        290
+       ],
+       "how": "价位表有序，取最优价是取端点"
+      },
+      {
+       "slug": "amz-closest-store",
+       "lines": [
+        62,
+        64
+       ],
+       "how": "SortedListIndex.floor/ceiling 都是 bisect"
+      },
+      {
+       "slug": "car-rental",
+       "lines": [
+        170,
+        181
+       ],
+       "how": "bisect 找插入点，只复查前后邻居，不再整条重排后整体校验"
+      },
+      {
+       "slug": "amz-aws-billing",
+       "lines": [
+        135,
+        137
+       ],
+       "how": "bisect_right(key=) 直接在版本列表上二分，不每次重建列表"
+      }
+     ],
+     "scales": {
+      "leetcode": "time-based-key-value-store",
+      "lld": "amz-occupancy-tracker",
+      "system_design": "按时间点查生效配置/价格：有序版本表 + 二分；大规模用 B 树索引 / 区间查询"
+     },
+     "card_ideas": [
+      "「恰好等于生效时间属于新版本」应该用 bisect_left 还是 bisect_right？写出 floor 和 ceiling 各自的表达式。",
+      "bisect_right(hist, seq, key=lambda line: line.seq) 相比另存 seqs 列表省掉了什么风险？",
+      "bisect.insort 是 O(n)，为什么在这些题里仍然合理？到多大规模该换结构？",
+      "VehicleSchedule.accepts 为什么只需要检查插入位置的前后两个邻居？现在的整条重排有什么代价？",
+      "PriceBook.version_at 每次重建 [v.effective_from ...] 列表有什么问题，怎样修？"
+     ]
+    },
+    {
+     "id": "generators-lazy-traversal",
+     "title": "生成器管线与显式栈：惰性遍历 + pairwise / islice",
+     "summary": "遍历写成 yield 的生成器，用显式栈替代递归：取第一个结果不必走完整棵树，深目录不撞递归上限。",
+     "why": "linux-find 的 find() 前序遍历用 (entry, 祖先链) 栈，逆序压栈保证弹出升序；FindStats 让测试证明「惰性」「剪枝」真的发生。closest-store 用两个生成器 _runs_down/_runs_up 从目标向两侧归并。dasher-payout 用 itertools.pairwise 遍历相邻边界。生成器只能消费一次；需要多次遍历时要么返回 list，要么每次重新创建。其中 k_closest 手写的双指针归并本该用 heapq.merge。",
+     "language_leaves": [
+      "iteration.generators",
+      "iteration.itertools",
+      "iteration.iterator-protocol"
+     ],
+     "seen_in": [
+      {
+       "slug": "amz-linux-find",
+       "lines": [
+        219,
+        241
+       ],
+       "how": "显式栈 + yield：惰性、不受递归限制，祖先链只用于符号链接环"
+      },
+      {
+       "slug": "spreadsheet-engine",
+       "lines": [
+        168,
+        171
+       ],
+       "how": "区间按需产出格子名，refs_of 与 evaluate 共用"
+      },
+      {
+       "slug": "amz-closest-store",
+       "lines": [
+        255,
+        260
+       ],
+       "how": "两个生成器从目标向两侧产出（值, 个数）"
+      },
+      {
+       "slug": "dasher-payout",
+       "lines": [
+        190,
+        190
+       ],
+       "how": "pairwise 遍历相邻切点，比 zip(xs, xs[1:]) 少一次切片拷贝"
+      },
+      {
+       "slug": "pub-sub",
+       "lines": [
+        294,
+        294
+       ],
+       "how": "islice 切 deque：O(offset) 而不是 O(1)，注意代价"
+      }
+     ],
+     "scales": {
+      "leetcode": "flatten-nested-list-iterator",
+      "lld": "amz-linux-find",
+      "system_design": "流式处理：游标/分页迭代而不是一次性物化全部结果"
+     },
+     "card_ideas": [
+      "find() 为什么用显式栈 + yield，而不是递归生成器（yield from）？深目录和惰性各自是怎么受益的？",
+      "逆序压栈（sorted(..., reverse=True)）为什么能让弹出顺序是升序？",
+      "FindStats.visited 这个计数器为什么是测试「惰性」的正确手段？",
+      "生成器只能遍历一次：什么 API 该返回 list、什么该返回迭代器？paths() 为什么包了一层 list？",
+      "itertools.islice 作用在 deque 上的成本是多少？Topic.read 什么时候会因此变慢？"
+     ]
+    },
+    {
+     "id": "default-forms",
+     "title": "省掉标志变量：next(…, None) / min(default=) / for-else / 海象运算符",
+     "summary": "用带默认值的内置函数表达「找不到」，用 for-else 表达「没 break」，用 := 表达「取值并判断」。",
+     "why": "restaurant-waitlist 的 _best_fit 一行 min((容量, 桌号) …, default=None) 同时解决「最小够用」和「编号小优先」；_drain 用 for-else 表达「整队都没人能坐」；billing 的拓扑排序用 next((r for r in pending if …), None) 一行表达「找到就跑，找不到就是有环」。ttl-cache 的 while (key := pop_due()) is not None 是 loop-and-a-half 的标准解。共同点：少一个可变标志变量，少一种漏更新的 bug。",
+     "language_leaves": [
+      "iteration.comprehensions",
+      "iteration.generators",
+      "functions.first-class"
+     ],
+     "seen_in": [
+      {
+       "slug": "restaurant-waitlist",
+       "lines": [
+        45,
+        45
+       ],
+       "how": "min(…, default=None) + 元组键一次比较两条规则"
+      },
+      {
+       "slug": "restaurant-waitlist",
+       "lines": [
+        69,
+        69
+       ],
+       "how": "for-else：整队都没人能坐就结束，不用标志变量"
+      },
+      {
+       "slug": "billing-tax-engine",
+       "lines": [
+        268,
+        268
+       ],
+       "how": "next(生成器, None) 找第一个能跑的，找不到即有环"
+      },
+      {
+       "slug": "ttl-cache",
+       "lines": [
+        404,
+        404
+       ],
+       "how": "海象：取值并判断，loop-and-a-half"
+      },
+      {
+       "slug": "double-entry-ledger",
+       "lines": [
+        122,
+        122
+       ],
+       "how": "海象：查到就用，不重复 get"
+      }
+     ],
+     "scales": {
+      "leetcode": "course-schedule",
+      "lld": "restaurant-waitlist",
+      "system_design": ""
+     },
+     "card_ideas": [
+      "for-else 的 else 什么时候执行？_drain 里用它代替了什么标志变量？",
+      "min(…, default=None) 与 min 空序列抛 ValueError 的差别；元组键 (容量, 桌号) 一次表达了哪两条规则？",
+      "next((r for …), None) 找第一个满足条件的元素，相对 for+break+标志变量好在哪？什么时候反而更难读？",
+      "海象运算符在 while 条件里解决了什么重复？它在推导式里的作用域规则是什么？",
+      "这些写法有没有被滥用的边界？一个写成一行的 next(...) 嵌套多层时怎么办？"
+     ]
+    },
+    {
+     "id": "closure-factory-policies",
+     "title": "闭包工厂做策略（closure factory）",
+     "summary": "工厂函数接收配置、返回策略函数：配置只处理一次，调用时只剩纯计算。",
+     "why": "tiered_refund 在外层把 tiers 排好序，内层只遍历；demand_surge 同理；weighted_score 把三个权重固化。比起写一个类，它没有样板，且天然无状态。代价：闭包没有好的 repr、不能 pickle、延迟绑定（循环里创建闭包的经典坑）；一旦策略需要状态或多个方法，就该升级为类。策略签名把完整上下文（request, waiting, available）都传进去，是为了以后加新策略不改调用方。",
+     "language_leaves": [
+      "functions.scope-closure",
+      "functions.first-class",
+      "functions.functools"
+     ],
+     "seen_in": [
+      {
+       "slug": "airline",
+       "lines": [
+        137,
+        143
+       ],
+       "how": "按舱位百分比超售，闭包捕获 by_cabin"
+      },
+      {
+       "slug": "airline",
+       "lines": [
+        160,
+        172
+       ],
+       "how": "外层排序一次，内层只扫描"
+      },
+      {
+       "slug": "ride-sharing",
+       "lines": [
+        329,
+        341
+       ],
+       "how": "涨价档位在外层排序，内层用 Fraction 比较"
+      },
+      {
+       "slug": "ride-sharing",
+       "lines": [
+        350,
+        365
+       ],
+       "how": "三个权重固化进闭包"
+      },
+      {
+       "slug": "vending-machine",
+       "lines": [
+        154,
+        154
+       ],
+       "how": "找零算法是 (金额, 币箱) -> 凑法 的纯函数，构造时注入"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "ride-sharing",
+      "system_design": "可配置的限流/路由/定价规则：配置中心下发参数，规则引擎只执行"
+     },
+     "card_ideas": [
+      "tiered_refund 为什么在外层排序、内层只遍历？把排序放进内层函数会有什么后果？",
+      "闭包工厂、functools.partial、带 __call__ 的小类三者，什么时候选哪个（repr、pickle、状态、可测试性）？",
+      "在循环里创建闭包时的 late binding 陷阱是什么？策略工厂里如何避免？",
+      "策略函数的签名为什么要把完整上下文 (request, waiting, available) 都传进去，而不是只传它这次用到的参数？",
+      "什么信号说明一个闭包策略该升级成有状态对象？"
+     ]
+    },
+    {
+     "id": "enum-behaviour",
+     "title": "Enum 的行为：IntEnum 排序、属性、StrEnum 与生命周期顺序",
+     "summary": "IntEnum 让优先级/严重度/舱位可以直接比较；Enum 上挂 @property 代替每个状态一个子类。",
+     "why": "Priority(IntEnum) 表达「至少多重要我才收」，Severity 同时是优先队列的排序键，CabinClass 的数值就是票价/拒载顺序。State.prompt 用一张表代替一状态一个类。list(EventType) 直接当生命周期顺序。代价：IntEnum 会和普通 int 相等（Priority.MARKETING == 10），序列化时丢掉名字；不需要比较的状态用普通 Enum，避免被当成数字用。",
+     "language_leaves": [
+      "classes.enums"
+     ],
+     "seen_in": [
+      {
+       "slug": "airline",
+       "lines": [
+        53,
+        53
+       ],
+       "how": "数值越大越贵：超售额度、票价、拒载顺序都按这把标尺"
+      },
+      {
+       "slug": "notification-service",
+       "lines": [
+        49,
+        49
+       ],
+       "how": "偏好里的最低优先级门槛需要比较"
+      },
+      {
+       "slug": "amz-emergency-pubsub",
+       "lines": [
+        34,
+        34
+       ],
+       "how": "严重度既是过滤条件也是 Mailbox 优先队列的排序依据"
+      },
+      {
+       "slug": "vending-machine",
+       "lines": [
+        21,
+        21
+       ],
+       "how": "面值就是枚举值，可参与算术"
+      },
+      {
+       "slug": "vending-machine",
+       "lines": [
+        39,
+        39
+       ],
+       "how": "给 Enum 加 @property，一张表代替每状态一个类"
+      },
+      {
+       "slug": "dasher-payout",
+       "lines": [
+        35,
+        35
+       ],
+       "how": "枚举定义顺序当生命周期顺序"
+      },
+      {
+       "slug": "connect-four",
+       "lines": [
+        201,
+        201
+       ],
+       "how": "StrEnum：序列化友好，值就是字符串"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "notification-service",
+      "system_design": "优先级队列/分级告警：数值化的等级贯穿路由、限流和 SLO"
+     },
+     "card_ideas": [
+      "什么时候用 IntEnum，什么时候用普通 Enum？Priority.MARKETING == 10 为真会带来什么隐患？",
+      "State.prompt 用 @property 查表，而不是每个状态一个子类：什么情况下该改成状态模式（State pattern）？",
+      "Enum 成员做 dict 键、做 (State, Event) 元组键：和字符串常量相比好在哪？",
+      "list(EventType) 直接当生命周期顺序依赖了什么保证？在枚举里插入一个新成员会发生什么？",
+      "StrEnum 与 str+Enum 混入相比差在哪？序列化到 JSON 时各自怎样？"
+     ]
+    },
+    {
+     "id": "id-generation",
+     "title": "ID 生成：itertools.count、next 与生成器表达式的陷阱",
+     "summary": "用 next(itertools.count(1)) 生成单调 ID；不要把它包进生成器表达式在锁外共享。",
+     "why": "16 个解法写 `self._ids = (f\"R{n}\" for n in itertools.count(1))`：生成器对象不可重入，两个线程同时 next 会抛 ValueError('generator already executing')。这些解法都在同一把服务锁里调用（或本来就是单线程），所以安全；digital-wallet 的 Ledger._ids 与 Wallet._ids 曾是在各自的账户锁（不是同一把）下调用，真的会抛，现已改成 itertools.count 并在取号处拼 f-string。更简单的写法：self._ids = itertools.count(1)，f\"R{next(self._ids)}\"，CPython 里 count.__next__ 是单个 C 调用。另一个设计选择：幂等场景的 ID 必须由调用方提供（notification_id），因为只有调用方知道「两次调用是不是同一件事」。 修复前可复现：sys.setswitchinterval(1e-6) 下，多个线程在互不相交的账户对上各转几千笔，digital-wallet 稳定抛出 ValueError('generator already executing')；默认切换间隔下只是概率很低，不是不存在。回归测试 test_transfers_between_disjoint_account_pairs_get_unique_ids_under_contention。",
+     "language_leaves": [
+      "iteration.generators",
+      "concurrency.locks-races",
+      "concurrency.gil"
+     ],
+     "seen_in": [
+      {
+       "slug": "digital-wallet",
+       "lines": [
+        109,
+        109
+       ],
+       "how": "Ledger._ids 直接是 itertools.count(1)，取号处拼 f\"L{next(...)}\"；不同账户锁下并发取号也安全"
+      },
+      {
+       "slug": "digital-wallet",
+       "lines": [
+        198,
+        198
+       ],
+       "how": "Wallet._ids 同样用 itertools.count；不同账户对的转账互不互斥却都要取号"
+      },
+      {
+       "slug": "airline",
+       "lines": [
+        464,
+        464
+       ],
+       "how": "同款写法，在 service 锁下调用时安全"
+      },
+      {
+       "slug": "connect-four",
+       "lines": [
+        242,
+        242
+       ],
+       "how": "对照：直接 count + next，在 _mu 下取值"
+      },
+      {
+       "slug": "inventory-management",
+       "lines": [
+        119,
+        119
+       ],
+       "how": "对照：count + f\"r{next(self._ids)}\""
+      },
+      {
+       "slug": "notification-service",
+       "lines": [
+        78,
+        78
+       ],
+       "how": "幂等 ID 必须由调用方给"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "digital-wallet",
+      "system_design": "分布式 ID：雪花 ID / 数据库序列 / UUIDv7，单机 counter 在多实例下会冲突"
+     },
+     "card_ideas": [
+      "(f'R{n}' for n in itertools.count(1)) 被两个线程同时 next，会发生什么？为什么在同一把锁里调用就安全？",
+      "digital-wallet 的转账 ID 生成器在「按账户 id 排序加锁」的临界区里被调用，为什么这不足以保护它？",
+      "next(itertools.count()) 在 CPython 里为什么通常是原子的？自由线程（3.13t）下还成立吗？",
+      "幂等通知的 notification_id 为什么必须由调用方提供，而不是服务端生成 UUID？",
+      "测试里为什么偏爱确定性的计数器 ID，而不是 uuid4？生产里又该换成什么？",
+      "digital-wallet 的并发转账测试怎样才能复现 `generator already executing`（降低 sys.setswitchinterval）？修复的最小改动是什么？"
+     ]
+    },
+    {
+     "id": "dunder-protocols-that-pay",
+     "title": "值得写的特殊方法：__bool__ / __len__ / __contains__ / __and__ / __call__ / __enter__",
+     "summary": "只在它让调用点更自然或让升级无感时才写：Decision 的 __bool__、Filter 的 & | ~、观察者的 __call__。",
+     "why": "Decision.__bool__ 让 `if limiter.allow(key):` 在从 bool 升级成结构化结果后一行不用改（代价：`if decision` 会掩盖 retry_after 的存在）。Filter 重载 & | ~ 让组合读起来像查询。splitwise 的通知器实现 __call__，可以直接当观察者传入。ThreadPool 的 __enter__/__exit__ 保证关闭。TTLCache 实现 __getitem__/__contains__/__iter__ 语义对齐 dict。判据：不写 __eq__ 之类会改变语义的魔法方法。",
+     "language_leaves": [
+      "model.dunder-protocols",
+      "classes.operator-overloading",
+      "classes.pythonic-object"
+     ],
+     "seen_in": [
+      {
+       "slug": "rate-limiter",
+       "lines": [
+        60,
+        61
+       ],
+       "how": "Decision 可当 bool 用，升级无感"
+      },
+      {
+       "slug": "amz-linux-find",
+       "lines": [
+        97,
+        98
+       ],
+       "how": "Filter 用 & | ~ 组合，返回新对象"
+      },
+      {
+       "slug": "image-transform-pipeline",
+       "lines": [
+        166,
+        167
+       ],
+       "how": "Pipeline 相加 = 步骤拼接"
+      },
+      {
+       "slug": "amz-in-memory-db",
+       "lines": [
+        61,
+        61
+       ],
+       "how": "谓词对象可直接调用，返回三值逻辑"
+      },
+      {
+       "slug": "splitwise",
+       "lines": [
+        395,
+        395
+       ],
+       "how": "通知器可直接作为观察者"
+      },
+      {
+       "slug": "thread-pool",
+       "lines": [
+        209,
+        209
+       ],
+       "how": "with 保证 shutdown(wait=True)"
+      },
+      {
+       "slug": "ttl-cache",
+       "lines": [
+        428,
+        428
+       ],
+       "how": "语义对齐 dict 的语法糖"
+      }
+     ],
+     "scales": {
+      "leetcode": "design-circular-queue",
+      "lld": "amz-linux-find",
+      "system_design": ""
+     },
+     "card_ideas": [
+      "Decision 为什么要实现 __bool__？它让哪类升级无感，又会掩盖什么（调用者忽略 retry_after）？",
+      "Filter 重载 & | ~ 与提供 .and_() 方法相比：优先级和 Python 的 and/or 不可重载这两点分别意味着什么？",
+      "观察者实现 __call__ 与传 lambda 相比有什么好处？什么时候反而该写成普通函数？",
+      "TTLCache 的 __len__/__contains__ 为什么要先 sweep？这和 dict 的语义有什么差异？",
+      "哪些特殊方法不该为了好看去重载（__eq__、__hash__、__getattr__）？举一个本题库里没有而你会拒绝的例子。"
+     ]
+    },
+    {
+     "id": "sentinels",
+     "title": "哨兵值：object()、math.inf、毒丸与「None 是合法值」",
+     "summary": "当 None 本身是合法取值时，用模块级 object() 或枚举单例做哨兵；队列里的哨兵任务叫毒丸。",
+     "why": "image-transform 的 _merge 返回 None 表示「两步抵消」，所以用 _NO_MERGE = object() 表示「不能合并」；notification 的 _PENDING 表示「占了坑但还没结果」；ttl-cache 的 _REMOVED 是堆里的墓碑。math.inf 表示永不可重试（retry_after）、thread-pool 的毒丸优先级 inf 让它排在所有真实任务之后。对照：UNLIMITED = 1 << 30 是个魔法数，None 或 math.inf 更诚实。",
+     "language_leaves": [
+      "model.names-objects",
+      "model.numbers"
+     ],
+     "seen_in": [
+      {
+       "slug": "image-transform-pipeline",
+       "lines": [
+        196,
+        196
+       ],
+       "how": "None 是合法的合并结果（抵消），所以另立哨兵"
+      },
+      {
+       "slug": "ttl-cache",
+       "lines": [
+        28,
+        28
+       ],
+       "how": "堆里的墓碑标记：entry[2] = _REMOVED"
+      },
+      {
+       "slug": "notification-service",
+       "lines": [
+        330,
+        330
+       ],
+       "how": "占坑未出结果的哨兵结果"
+      },
+      {
+       "slug": "notification-service",
+       "lines": [
+        25,
+        25
+       ],
+       "how": "反例：魔法数代替 None/inf"
+      },
+      {
+       "slug": "thread-pool",
+       "lines": [
+        203,
+        203
+       ],
+       "how": "毒丸：优先级 inf，排在所有真实任务之后"
+      },
+      {
+       "slug": "rate-limiter",
+       "lines": [
+        108,
+        108
+       ],
+       "how": "单次开销超上限：retry_after = inf，不给调用方一个会骗它的时间"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "ttl-cache",
+      "system_design": "毒丸消息 / tombstone：Kafka 压缩主题里的 null value 删除标记"
+     },
+     "card_ideas": [
+      "什么时候不能用 None 当「没有」？image-transform 的 _merge 是怎么用 _NO_MERGE 区分「不能合并」和「合并成抵消」的？",
+      "为什么哨兵比较要用 is 而不是 ==？",
+      "thread-pool 的毒丸任务优先级为什么是 math.inf？换成 0 会出什么 bug？",
+      "retry_after 对「永远不会通过」的请求返回 inf：相比返回一个很大的有限数，对调用方更安全在哪？",
+      "UNLIMITED = 1 << 30 作为「无上限」有什么隐患，应该怎么改？"
+     ]
+    },
+    {
+     "id": "dispatch-tables",
+     "title": "数据驱动的分派表：operator 表、方向表、转换表",
+     "summary": "把「若干 if 分支」写成 dict：_OPS、_DIRECTIONS、TRANSITIONS、CANCELLABLE_BY、PolicyTable.overrides。",
+     "why": "query-condition-parser 的 _OPS 把 '=' 映射到 operator.eq；connect-four 的 _DIRECTIONS 让四个方向共用一段代码，改连子规则只改表；vending 的 (State, Event) → State 表可被穷举测试盖满。library 的 PolicyTable 按 (读者类型, 介质) 查，加一种读者就是加一行。数据即文档、即测试用例。需要按类型分派且需要扩展时再考虑 functools.singledispatch（解法里没用）。",
+     "language_leaves": [
+      "functions.first-class",
+      "model.dict-set-internals",
+      "functions.functools"
+     ],
+     "seen_in": [
+      {
+       "slug": "query-condition-parser",
+       "lines": [
+        33,
+        33
+       ],
+       "how": "比较运算符表，调用 operator.eq/lt…"
+      },
+      {
+       "slug": "connect-four",
+       "lines": [
+        52,
+        52
+       ],
+       "how": "四个方向共用一段「两个符号向两边延伸」的代码"
+      },
+      {
+       "slug": "vending-machine",
+       "lines": [
+        63,
+        63
+       ],
+       "how": "(状态, 事件) → 新状态"
+      },
+      {
+       "slug": "ride-sharing",
+       "lines": [
+        202,
+        202
+       ],
+       "how": "第二张表：谁在哪个状态下有权取消"
+      },
+      {
+       "slug": "library",
+       "lines": [
+        129,
+        129
+       ],
+       "how": "政策表 (读者类型, 介质) → 借阅政策"
+      },
+      {
+       "slug": "amz-linux-find",
+       "lines": [
+        157,
+        157
+       ],
+       "how": "单位表：KB/MB/GB → 倍数"
+      }
+     ],
+     "scales": {
+      "leetcode": "string-to-integer-atoi",
+      "lld": "vending-machine",
+      "system_design": "规则引擎 / 配置驱动路由：把策略放进数据，发布不改代码"
+     },
+     "card_ideas": [
+      "_DIRECTIONS = ((0,1),(1,0),(1,1),(1,-1)) 为什么只取四个方向？另一半方向怎么来？",
+      "转换表为什么比 if 链更适合做穷举测试？怎样写这个测试？",
+      "PolicyTable 按 (读者类型, 介质) 查，缺省回退怎么设计？加一种新读者需要改什么？",
+      "什么时候表驱动反而更糟（逻辑有副作用、规则间有依赖、需要解释为什么）？",
+      "functools.singledispatch 相比 match 与分派表，在扩展点上有什么不同？"
+     ]
+    },
+    {
+     "id": "bounded-deque",
+     "title": "deque(maxlen) 做有界历史；list 头部删除是 O(n)",
+     "summary": "死信、通知历史、失败记录、滑动窗口都用 deque(maxlen=N)：自动淘汰最旧，内存有上界。",
+     "why": "emergency-pubsub 的 dead_letter_limit、notification 的 history、file-watcher 的 failures、circuit-breaker 的 window 都是 deque(maxlen)，「每个容器都有出口」的最小实现。text-editor 的撤销栈也是 deque(maxlen=limit)，满了自动丢最旧的（曾是 list 加 `del self._undo[0]`，O(n)）；反例：pub-sub 的日志是 deque 但 islice 要走 offset 步。deque 两端 O(1)，中间索引 O(n)。",
+     "language_leaves": [
+      "performance.containers",
+      "runtime.stdlib-map"
+     ],
+     "seen_in": [
+      {
+       "slug": "amz-emergency-pubsub",
+       "lines": [
+        208,
+        208
+       ],
+       "how": "死信有上界，内存可控"
+      },
+      {
+       "slug": "notification-service",
+       "lines": [
+        413,
+        413
+       ],
+       "how": "历史有上界"
+      },
+      {
+       "slug": "amz-file-watcher",
+       "lines": [
+        127,
+        127
+       ],
+       "how": "失败记录有上界"
+      },
+      {
+       "slug": "api-circuit-breaker",
+       "lines": [
+        90,
+        90
+       ],
+       "how": "滑动窗口：满了自动挤掉最旧"
+      },
+      {
+       "slug": "text-editor",
+       "lines": [
+        268,
+        269
+       ],
+       "how": "撤销栈 deque(maxlen=limit)：满了 append 自动丢最旧，O(1)"
+      }
+     ],
+     "scales": {
+      "leetcode": "design-hit-counter",
+      "lld": "notification-service",
+      "system_design": "有界缓冲：环形缓冲区、日志保留窗口（Kafka retention）"
+     },
+     "card_ideas": [
+      "deque(maxlen=N) 满了再 append 会发生什么？这在死信/历史记录里为什么是想要的行为？",
+      "text-editor 的撤销栈 `del self._undo[0]` 是 O(n)，换成 deque(maxlen) 要改哪里、要注意什么（其他位置的索引）？",
+      "deque 与 list 在两端/中间操作上的复杂度；Topic.read 里对 deque 做 islice 的代价是多少？",
+      "「每个只增不减的容器都必须有出口」：列出本题库里至少三种出口机制（maxlen、purge、compact）。"
+     ]
+    },
+    {
+     "id": "copy-in-copy-out",
+     "title": "边界拷贝：进来拷、出去拷（deepcopy / tuple / 回放式 copy）",
+     "summary": "可变数据穿过边界时拷贝一次：Table.insert 存副本，select 返回副本；Game.copy 用落子序列回放。",
+     "why": "query-condition-parser 的 Table 在 insert 与 select 两端都 deepcopy，调用方改自己的行不影响表。Cart.lines 返回 tuple。connect-four 的 Game.copy 用 from_moves 回放而不是逐字段复制：只依赖公开的 drop，不会漏拷内部状态；代价是 O(步数)。拷贝有成本：热路径用冻结类型代替拷贝（见 frozen-value-objects）。",
+     "language_leaves": [
+      "model.copy",
+      "model.mutability"
+     ],
+     "seen_in": [
+      {
+       "slug": "query-condition-parser",
+       "lines": [
+        261,
+        261
+       ],
+       "how": "进来拷贝一次"
+      },
+      {
+       "slug": "query-condition-parser",
+       "lines": [
+        294,
+        294
+       ],
+       "how": "出去再拷贝"
+      },
+      {
+       "slug": "connect-four",
+       "lines": [
+        174,
+        174
+       ],
+       "how": "用回放实现 copy，不依赖内部字段"
+      },
+      {
+       "slug": "amz-discount-engine",
+       "lines": [
+        90,
+        90
+       ],
+       "how": "购物车对外只给 tuple 快照"
+      }
+     ],
+     "scales": {
+      "leetcode": "clone-graph",
+      "lld": "query-condition-parser",
+      "system_design": "快照隔离：读者拿到的是一致的副本/版本，而不是共享的可变状态"
+     },
+     "card_ideas": [
+      "Table 在 insert 和 select 两边都 deepcopy：只做一边会泄漏什么？",
+      "Game.copy 用回放（from_moves）而不是复制字段，好处和代价各是什么？",
+      "浅拷贝在嵌套 dict 行上会出什么错？什么时候 dict(row) 就够？",
+      "拷贝 vs 冻结类型：什么情况下应该把「到处拷贝」改成「一次性不可变」？"
+     ]
+    },
+    {
+     "id": "memoize-on-frozen",
+     "title": "记忆化：lru_cache 要求参数可哈希、结果不可变",
+     "summary": "query-condition-parser 把「条件字符串 → 语法树」用 lru_cache 缓存；之所以安全，是因为树节点全是 frozen。",
+     "why": "lru_cache 需要可哈希参数；缓存的返回值如果可变，一个调用者改了它所有人都受影响。节点冻结之后同一棵树可被所有表、所有线程共享。key 里要带上会影响结果的一切（columns）。没有解法用的：functools.partial（本可替代若干 lambda）、cached_property（slots 类里用不了，Itinerary 的派生属性每次重算）。",
+     "language_leaves": [
+      "functions.functools",
+      "model.hash-eq",
+      "classes.properties-descriptors"
+     ],
+     "seen_in": [
+      {
+       "slug": "query-condition-parser",
+       "lines": [
+        243,
+        246
+       ],
+       "how": "条件字符串 + 列集合 → 语法树；结果不可变所以可共享"
+      },
+      {
+       "slug": "airline",
+       "lines": [
+        347,
+        347
+       ],
+       "how": "Itinerary（frozen+slots）的派生属性每次重算；cached_property 在 slots 类里用不了"
+      }
+     ],
+     "scales": {
+      "leetcode": "word-break",
+      "lld": "query-condition-parser",
+      "system_design": "编译结果缓存：SQL 预编译语句 / 路由表缓存"
+     },
+     "card_ideas": [
+      "_compile 的缓存键为什么要带 columns？漏了会出什么 bug？",
+      "lru_cache 返回的可变对象被一个调用者修改，会怎样？冻结节点怎样让共享变安全？",
+      "lru_cache 是线程安全的吗？同一个 key 的函数会不会被并发执行两次？",
+      "cached_property 与 slots=True 不兼容的原因；怎样给 frozen+slots 的类做延迟派生值？"
+     ]
+    },
+    {
+     "id": "kw-only-positional-only",
+     "title": "参数形态：仅位置 `/`、仅关键字 `*`、kw_only dataclass",
+     "summary": "尾随 **kwargs 收用户数据的 API，前面的形参应是仅位置的；一串同类型的配置参数应是仅关键字的。",
+     "why": "logger.log(level, message, /, **context)：否则调用方想记名叫 message 或 level 的业务字段就会撞名 TypeError。CircuitBreaker 的 is_failure、window_size 等放在 `*,` 之后，防止把 failure_threshold 与 open_timeout 位置调换。没有解法用 dataclass(kw_only=True)：Booking、Notification 这种 8–10 个字段的记录，构造点其实都在用关键字，kw_only 能去掉字段顺序依赖。",
+     "language_leaves": [
+      "functions.arguments",
+      "classes.dataclasses"
+     ],
+     "seen_in": [
+      {
+       "slug": "logger",
+       "lines": [
+        479,
+        479
+       ],
+       "how": "仅位置参数避免与业务字段撞名"
+      },
+      {
+       "slug": "logger",
+       "lines": [
+        467,
+        467
+       ],
+       "how": "bind 的 self 也仅位置"
+      },
+      {
+       "slug": "api-circuit-breaker",
+       "lines": [
+        62,
+        62
+       ],
+       "how": "三个数值型参数在前，其余全部仅关键字"
+      },
+      {
+       "slug": "rate-limiter",
+       "lines": [
+        300,
+        300
+       ],
+       "how": "clock/name/shards 仅关键字"
+      },
+      {
+       "slug": "airline",
+       "lines": [
+        415,
+        425
+       ],
+       "how": "10 个字段的记录，构造点其实都在用关键字，应当 kw_only"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "logger",
+      "system_design": "API 兼容性：新增可选参数只能加关键字，不能改位置语义"
+     },
+     "card_ideas": [
+      "log(level, message, /, **context) 里的 `/` 防的是哪一个具体 bug？",
+      "为什么配置型构造函数的参数适合 `*,` 之后的仅关键字？举出位置调换会静默出错的参数对。",
+      "dataclass(kw_only=True) 解决了什么问题（字段顺序、带默认值的字段必须靠后）？哪些记录该用？",
+      "给已发布函数加参数，仅关键字相对位置参数为什么向后兼容更好？"
+     ]
+    },
+    {
+     "id": "slots-and-memory",
+     "title": "__slots__ 与 slots=True：该用在哪、不能用在哪",
+     "summary": "大量小对象（节点、记录）用 slots 省掉 __dict__；内部可变记录和对外冻结值对象都可以 slots。",
+     "why": "lru-cache 的链表 _Node、rate-limiter 的 _Shard 手写 __slots__；其余记录用 @dataclass(slots=True)。slots=True 会重新创建类，带来三个后果：没有 __dict__（不能动态加属性）、默认没有 __weakref__、与 functools.cached_property 不兼容。restaurant-waitlist 的 _Waiting 是 slots 但可变（要累加被插队次数），只在模块内使用：内部可变、外部只读。",
+     "language_leaves": [
+      "classes.dataclasses",
+      "memory.object-size",
+      "performance.less-ram"
+     ],
+     "seen_in": [
+      {
+       "slug": "lru-cache",
+       "lines": [
+        23,
+        23
+       ],
+       "how": "手写 slots 的链表节点"
+      },
+      {
+       "slug": "rate-limiter",
+       "lines": [
+        283,
+        283
+       ],
+       "how": "分片对象：一把锁 + 状态字典"
+      },
+      {
+       "slug": "restaurant-waitlist",
+       "lines": [
+        36,
+        36
+       ],
+       "how": "可变但仅模块内使用的记录"
+      },
+      {
+       "slug": "idempotent-transfer",
+       "lines": [
+        72,
+        72
+       ],
+       "how": "_Record：可变（result、attempt）的内部记录"
+      }
+     ],
+     "scales": {
+      "leetcode": "lru-cache",
+      "lld": "lru-cache",
+      "system_design": "对象头开销 × 百万 key：缓存内存预算要按实例大小估算"
+     },
+     "card_ideas": [
+      "slots=True 具体去掉了什么？对一个有百万实例的节点类，大概能省多少内存的量级？",
+      "@dataclass(slots=True) 为什么会「重新创建类」？它对 super() 零参调用和类引用有什么影响？",
+      "slots 与 cached_property、弱引用、多继承各有什么冲突？",
+      "什么时候不值得用 slots（实例很少、需要动态属性、需要 pickle 兼容）？"
+     ]
+    },
+    {
+     "id": "namedtuple-for-keys",
+     "title": "NamedTuple 做复合键与轻量返回值",
+     "summary": "需要「仍是 tuple（可作键、可拆包、可比较）但字段有名字」时用 NamedTuple；需要校验或方法时用 dataclass。",
+     "why": "Key(account, currency) 仍是 tuple 可以作 dict 键，key.account 比 key[0] 不会看错；Allocation(grant_id, amount) 能像元组一样拆包。与 frozen dataclass 的区别：NamedTuple 与同长度普通 tuple 相等（Key('a','USD') == ('a','USD')），且没有 __post_init__。idempotent-transfer 的键 (client, key) 是裸元组，两个 str 一换顺序毫无提示。",
+     "language_leaves": [
+      "classes.dataclasses",
+      "model.sequences",
+      "model.hash-eq"
+     ],
+     "seen_in": [
+      {
+       "slug": "double-entry-ledger",
+       "lines": [
+        28,
+        28
+       ],
+       "how": "(账户, 币种) 复合键"
+      },
+      {
+       "slug": "credit-token-balance",
+       "lines": [
+        38,
+        38
+       ],
+       "how": "扣费分配的返回值，可拆包可比较"
+      },
+      {
+       "slug": "idempotent-transfer",
+       "lines": [
+        97,
+        97
+       ],
+       "how": "对照：裸 (client, key) 元组，两个 str 无名字"
+      }
+     ],
+     "scales": {
+      "leetcode": "detect-squares",
+      "lld": "double-entry-ledger",
+      "system_design": "复合主键 / 分区键 + 排序键"
+     },
+     "card_ideas": [
+      "Key(account, currency) 用 NamedTuple 而不是 frozen dataclass，换来什么、失去什么（校验、相等语义）？",
+      "NamedTuple 与同长度普通 tuple 比较相等会带来什么隐患？",
+      "裸 (client, key) 元组做字典键，什么时候会引入「两个 str 换顺序也能跑」的 bug？",
+      "NamedTuple 与 dataclass(frozen, slots, order) 在内存、哈希、排序上的差别？"
+     ]
+    },
+    {
+     "id": "literal-and-closed-sets",
+     "title": "封闭取值集：Literal / Enum / StrEnum 的选型",
+     "summary": "status 只有两个取值时 Literal 足够；要遍历、带行为、做键时用 Enum；要 JSON 友好用 StrEnum。",
+     "why": "idempotent-transfer 的 TransferResult.status: Literal['succeeded','rejected'] 运行时仍是 str，测试和 JSON 无需转换，类型检查器能拦住拼写错误；更重的 Enum 在这里没有收益。connect-four 的 Reason(StrEnum) 则需要遍历与值。没有解法用 NewType 给 ID 加类型（account_id 与 client_id 混用无提示）或 Final 标常量。Literal 不做运行时校验：外部输入仍需显式检查。",
+     "language_leaves": [
+      "types.typeddict-literal",
+      "classes.enums"
+     ],
+     "seen_in": [
+      {
+       "slug": "idempotent-transfer",
+       "lines": [
+        46,
+        46
+       ],
+       "how": "两个取值的结果状态：Literal"
+      },
+      {
+       "slug": "connect-four",
+       "lines": [
+        201,
+        201
+       ],
+       "how": "需要遍历与序列化：StrEnum"
+      },
+      {
+       "slug": "dasher-payout",
+       "lines": [
+        22,
+        22
+       ],
+       "how": "需要稳定迭代与做 dict 键：Enum"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "idempotent-transfer",
+      "system_design": "API 里的枚举字段：开放 vs 封闭枚举，新增取值的兼容性"
+     },
+     "card_ideas": [
+      "Literal['succeeded','rejected'] 与 Enum 各自在类型检查、运行时、JSON 序列化上的差别？",
+      "Literal 为什么不能代替对外部输入的运行时校验？",
+      "NewType('AccountId', str) 能防住什么 bug？解法里 src/dst/client 全是 str，会混用到什么程度？",
+      "StrEnum 与 (str, Enum) 混入的区别是什么？"
+     ]
+    },
+    {
+     "id": "generics-and-type-aliases",
+     "title": "泛型与类型别名：Generic/TypeVar、Clock 别名、Self 与 override",
+     "summary": "容器类参数化键值类型；把 Clock = Callable[[], X] 之类的别名统一；copy()/__enter__ 返回 Self；模板方法钩子标 @override。",
+     "why": "rate-limiter、ttl-cache、lru-cache、bounded-blocking-queue、thread-pool 都用 Generic[T]/TypeVar；Clock 别名在 27 个解法里各自重写一遍，且有 float 与 datetime 两种口径。解法一律是旧式 TypeVar 语法，3.12 的 `class Cache[K, V]:` 与 `type Clock = Callable[[], float]` 更短；connect-four 的 Game.copy() -> Game、ThreadPool.__enter__ -> ThreadPool 应写 Self，BaseHandler.emit 这类模板方法钩子应写 @override。",
+     "language_leaves": [
+      "types.protocols-generics",
+      "types.basics",
+      "types.gradual-typing"
+     ],
+     "seen_in": [
+      {
+       "slug": "ttl-cache",
+       "lines": [
+        229,
+        229
+       ],
+       "how": "两个类型参数的容器"
+      },
+      {
+       "slug": "thread-pool",
+       "lines": [
+        39,
+        39
+       ],
+       "how": "Future 参数化结果类型"
+      },
+      {
+       "slug": "bounded-blocking-queue",
+       "lines": [
+        34,
+        34
+       ],
+       "how": "元素类型参数化"
+      },
+      {
+       "slug": "rate-limiter",
+       "lines": [
+        23,
+        23
+       ],
+       "how": "Clock 别名，27 个解法各自定义"
+      },
+      {
+       "slug": "connect-four",
+       "lines": [
+        172,
+        172
+       ],
+       "how": "返回自身类型，应当用 Self"
+      },
+      {
+       "slug": "thread-pool",
+       "lines": [
+        209,
+        209
+       ],
+       "how": "同上"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "ttl-cache",
+      "system_design": ""
+     },
+     "card_ideas": [
+      "ttl-cache 里 K = TypeVar('K', bound=Hashable) 的 bound 约束在检查什么？",
+      "3.12 的 class Cache[K, V] 与旧式 TypeVar 写法在作用域和可读性上的差别？",
+      "为什么 Game.copy() -> Game 在子类化时是错的，Self 解决了什么？",
+      "把重复的 Clock 别名放到共享模块有什么利弊？float 秒与 datetime 两种 Clock 该不该统一？"
+     ]
+    },
+    {
+     "id": "descriptors-where-they-earn",
+     "title": "描述符：什么时候值得（共享字段规则），什么时候不值得",
+     "summary": "同一条字段规则（正整数、非空、范围）在三个以上的类里重复时，才值得写一个 __set_name__ 描述符。",
+     "why": "image-transform-pipeline 的 Crop、Resize 与 inventory 的 _check_quantity/_check_ttl、discount-engine 的 LineItem 各自写一份「必须是正整数」。描述符（__set_name__ + __set__）能把规则声明在字段上，但与 frozen dataclass 配合困难、增加理解成本；solutions 一律选了 __post_init__。结论：绝大多数情况下 __post_init__ 就够，描述符只在字段规则多且跨类共享时才划算。这个叶子的价值是知道边界，不是推广。",
+     "language_leaves": [
+      "classes.properties-descriptors",
+      "classes.attribute-lookup"
+     ],
+     "seen_in": [
+      {
+       "slug": "image-transform-pipeline",
+       "lines": [
+        86,
+        94
+       ],
+       "how": "Crop.__post_init__ 的非负/正整数检查"
+      },
+      {
+       "slug": "image-transform-pipeline",
+       "lines": [
+        127,
+        135
+       ],
+       "how": "Resize.__post_init__ 重复同样的检查"
+      },
+      {
+       "slug": "inventory-management",
+       "lines": [
+        108,
+        110
+       ],
+       "how": "共享的模块级校验函数（描述符的轻量替代）"
+      },
+      {
+       "slug": "amz-discount-engine",
+       "lines": [
+        58,
+        58
+       ],
+       "how": "LineItem 的 qty > 0 检查"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "inventory-management",
+      "system_design": "schema 里声明字段约束（JSON Schema / protobuf validate），而不是每个 handler 手写"
+     },
+     "card_ideas": [
+      "property 与描述符的核心差别是什么？为什么描述符可以在多个类间共享一条字段规则？",
+      "__set_name__ 解决了什么问题（描述符怎么知道它挂在哪个属性名上）？",
+      "为什么 frozen dataclass 与描述符做校验的组合很别扭？",
+      "三个类里各有一份 `qty > 0`：共享函数、描述符、基类校验，各自的取舍？"
+     ]
+    },
+    {
+     "id": "init-subclass-registry",
+     "title": "__init_subclass__ 注册表 vs 手写 dict（create_cache 的取舍）",
+     "summary": "按名字创建实现（'lru'、'file'）时，注册表可以靠 __init_subclass__ 自动维护，也可以手写一个 dict。",
+     "why": "amz-configurable-cache 手写 POLICIES / BACKENDS 两个 dict，新增一种策略要「写类 + 登记」两步，漏登记就是运行时 ConfigError。__init_subclass__(cls, name=...) 能让登记随类定义发生。但显式 dict 可 grep、导入顺序无关、没有隐式副作用，在只有少数实现时更好。判据：是否需要第三方插件扩展、是否跨模块分散定义。",
+     "language_leaves": [
+      "classes.metaprogramming",
+      "classes.inheritance-mro"
+     ],
+     "seen_in": [
+      {
+       "slug": "amz-configurable-cache",
+       "lines": [
+        238,
+        242
+       ],
+       "how": "手写后端注册表"
+      },
+      {
+       "slug": "amz-configurable-cache",
+       "lines": [
+        369,
+        376
+       ],
+       "how": "按名字查表装配，未知名字 ConfigError"
+      },
+      {
+       "slug": "notification-service",
+       "lines": [
+        201,
+        201
+       ],
+       "how": "模板库按名字登记，运行期注册"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "amz-configurable-cache",
+      "system_design": "插件注册 / 服务发现：显式注册 vs 约定扫描"
+     },
+     "card_ideas": [
+      "__init_subclass__ 在子类定义时被调用，它能代替手写注册 dict 的哪一步？",
+      "显式 dict 注册和 __init_subclass__ 自动注册，在可读性、导入顺序和测试隔离上的取舍？",
+      "元类、类装饰器、__init_subclass__ 三种方式做注册表，什么时候只需要最轻的一个？",
+      "create_cache 遇到未知名字抛 ConfigError 并列出已知名字，这个错误信息设计有什么价值？"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "patterns",
+   "leaves": [
+    {
+     "id": "validate-then-commit",
+     "title": "先校验后提交：失败不留痕迹（validate-then-commit）",
+     "summary": "所有可能失败的检查排在任何写入之前；提交段只做「不会再失败」的赋值。",
+     "why": "边写边查的版本失败时要手工回滚，而回滚路径本身最容易出 bug。double-entry-ledger.post 先去重、校验平衡、查冲正、查下限，才进入「以下是提交：不会再失败」；spreadsheet.set 先 parse_raw、再 _reaches 查环、最后才改状态；inventory.reserve_many 先为每个 sku 算好 plan，再统一 _commit；CompositeLimiter 先对所有规则 check，全过才逐个 commit。amz-configurable-cache 把「会失败的一步」（写存储）放最前。它是 ACID 里原子性在单进程里的最小实现。",
+     "language_leaves": [
+      "runtime.exceptions",
+      "engineering.robustness"
+     ],
+     "seen_in": [
+      {
+       "slug": "double-entry-ledger",
+       "lines": [
+        126,
+        134
+       ],
+       "how": "校验、查冲正、查下限都在 journal.append 之前"
+      },
+      {
+       "slug": "spreadsheet-engine",
+       "lines": [
+        243,
+        247
+       ],
+       "how": "先解析、先查环，失败时表格原样"
+      },
+      {
+       "slug": "inventory-management",
+       "lines": [
+        267,
+        268
+       ],
+       "how": "为每个 sku 先算好计划，再统一提交"
+      },
+      {
+       "slug": "rate-limiter",
+       "lines": [
+        423,
+        437
+       ],
+       "how": "组合限流：先全部 check，全过才全部 commit"
+      },
+      {
+       "slug": "amz-configurable-cache",
+       "lines": [
+        338,
+        338
+       ],
+       "how": "会失败的一步放最前；淘汰失败要撤回新值"
+      },
+      {
+       "slug": "battleship-game",
+       "lines": [
+        136,
+        136
+       ],
+       "how": "校验与施加拆成两步，齐射因此可先整体检查"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "double-entry-ledger",
+      "system_design": "事务的两阶段：prepare（校验、锁定）再 commit；2PC / outbox"
+     },
+     "card_ideas": [
+      "double-entry-ledger.post 的「提交段」为什么要求不会再失败？它依赖了哪些前置检查？",
+      "spreadsheet.set 把 parse_raw 和环检测排在所有写入之前，相比写入后发现有环再回滚，节省了什么？",
+      "CompositeLimiter 如果边检查边扣额度，被接口规则拒绝的请求会造成什么副作用？",
+      "「先校验后提交」在有并发时还需要什么前提（同一把锁覆盖校验与提交）？",
+      "amz-configurable-cache.put 把 store.put 放在 policy 更新之前，如果顺序反过来会留下什么不一致？"
+     ]
+    },
+    {
+     "id": "atomic-claim-check-then-act",
+     "title": "原子占位：检查与占用在同一个临界区（claim, not check-then-act）",
+     "summary": "「先查空闲再写占用」永远有竞态；把查和占合成一个锁内的比较并交换，输家得到明确的失败。",
+     "why": "ride-sharing.DriverPool.hold：AVAILABLE→OFFERED 是锁内的比较并交换，两位乘客不可能匹配到同一位司机；idempotent-transfer 用 (调用方, 键) 原子占位；notification 的 IdempotencyStore.claim 注释写明「先 if key in store 再 store[key]=...」是典型 check-then-act 竞态；movie-booking.Show.hold 在一把锁内检查所有座位再全部占上。判据：任何「查询可用」+「占用」之间如果能插进别的线程，就要么合并，要么上租约/版本。",
+     "language_leaves": [
+      "concurrency.locks-races",
+      "concurrency.gil"
+     ],
+     "seen_in": [
+      {
+       "slug": "ride-sharing",
+       "lines": [
+        423,
+        434
+       ],
+       "how": "锁内验证状态与占用者，再整条替换"
+      },
+      {
+       "slug": "idempotent-transfer",
+       "lines": [
+        120,
+        125
+       ],
+       "how": "占键：查与插入在 _mu 内一次完成"
+      },
+      {
+       "slug": "notification-service",
+       "lines": [
+        298,
+        301
+       ],
+       "how": "检查加占坑，一把锁内"
+      },
+      {
+       "slug": "movie-booking",
+       "lines": [
+        331,
+        351
+       ],
+       "how": "全有或全无：检查与占座在同一把锁内"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "ride-sharing",
+      "system_design": "数据库 INSERT ... ON CONFLICT / SELECT FOR UPDATE / Redis SETNX：把查与占合成一个原子操作"
+     },
+     "card_ideas": [
+      "为什么要给司机一个 OFFERED 状态？没有它，派单只能先查后写，会出现什么时间线？",
+      "check-then-act 竞态在 Python 里为什么 GIL 也救不了？举出 dict 查询与赋值之间被切换的例子。",
+      "movie-booking.hold 为什么要对所有座位全有或全无？部分占座在失败时怎么清理？",
+      "在数据库里，同一个想法对应哪些原语（唯一约束、SELECT FOR UPDATE、CAS UPDATE）？"
+     ]
+    },
+    {
+     "id": "idempotency-key-stores-result",
+     "title": "幂等键存结果：占位 → 执行 → 保存，重复请求拿到第一次的结果",
+     "summary": "用 (调用方, 键) 原子地占一条记录；重复请求等拥有者出结果，原样返回；同键不同内容报错；失败要释放。",
+     "why": "幂等不是「检查一下做没做过」。两个同时到的请求都查不到记录就各执行一次。正确做法：原子占位（相当于唯一键插入），第一个成为拥有者，其余等它；结果（包括业务拒绝）一并存下；同键不同请求内容抛 KeyReuse；失败时释放键让重试可行；记录有保留期，否则表无限增长。其余题里的变体：double-entry 的同 ID 同内容返回原序号；digital-wallet 的 client_key 回执；aws-billing 的 usage_id 去重（至少一次投递）；notification 的 notification_id × channel；online-shopping 的支付以订单号为幂等键。作用域应是 (调用方, 键)，digital-wallet 的全局 client_key 命名空间是个弱点。",
+     "language_leaves": [
+      "concurrency.locks-races",
+      "engineering.robustness"
+     ],
+     "seen_in": [
+      {
+       "slug": "idempotent-transfer",
+       "lines": [
+        119,
+        131
+       ],
+       "how": "占键原子化；拥有者/重复请求分流"
+      },
+      {
+       "slug": "digital-wallet",
+       "lines": [
+        247,
+        253
+       ],
+       "how": "同 client_key 返回回执；参数不同抛 IdempotencyConflictError"
+      },
+      {
+       "slug": "double-entry-ledger",
+       "lines": [
+        122,
+        125
+       ],
+       "how": "同 ID 同内容返回原序号；同 ID 不同内容 ConflictError"
+      },
+      {
+       "slug": "notification-service",
+       "lines": [
+        298,
+        312
+       ],
+       "how": "claim 是原子的检查加占坑，带 TTL 与 purge"
+      },
+      {
+       "slug": "amz-aws-billing",
+       "lines": [
+        151,
+        163
+       ],
+       "how": "usage_id 去重：内容相同忽略，不同抛错"
+      },
+      {
+       "slug": "credit-token-balance",
+       "lines": [
+        113,
+        115
+       ],
+       "how": "同参数重复提交是幂等的，不同参数 ConflictError"
+      }
+     ],
+     "scales": {
+      "leetcode": "tt-idempotent-versioned-update",
+      "lld": "idempotent-transfer",
+      "system_design": "Stripe Idempotency-Key / Kafka 幂等生产者 / 消费端去重表：同一语义在分布式下靠唯一约束实现"
+     },
+     "card_ideas": [
+      "为什么「先查有没有做过，再执行」不是幂等？两个并发请求会怎样？",
+      "idempotent-transfer 里重复请求为什么要「等拥有者出结果」而不是各自再执行一遍？拥有者失败时等待者怎么办？",
+      "业务拒绝（余额不足）的结果为什么也要被记住？",
+      "同一个键配了不同的请求内容，为什么应该报错而不是返回旧结果？对应 HTTP 状态码是什么？",
+      "幂等记录的保留期（ttl）要怎么选？太短和太长各有什么代价？",
+      "digital-wallet 的 client_key 是全局命名空间，idempotent-transfer 用 (client, key)：这个差别会在什么场景出事故？"
+     ]
+    },
+    {
+     "id": "notify-outside-the-lock",
+     "title": "锁内记事件、锁外派发（collect under lock, dispatch outside）",
+     "summary": "状态变化在锁内完成并记录事件；回调订阅者在释放锁之后。慢订阅者或回头调用本对象的订阅者就不会死锁。",
+     "why": "持锁调外部代码有两个后果：一个慢回调卡住所有人；回调里再进入同一对象则死锁（非可重入锁）或意外重入（RLock）。circuit-breaker 的 _events 列表 + _dispatch；ttl-cache 的 _publish；stock-brokerage 的 _publish；amazon-locker 把事件收进 events 列表再 _publish；file-watcher 的 _dispatch；elevator、coffee-machine、splitwise 同理。事件要自带全部信息，订阅者不需要回头查状态；订阅者列表本身在锁内拍快照（tuple）。代价：事件在锁释放后才到达，订阅者看到的可能已不是「最新状态」，所以事件必须是事实快照。",
+     "language_leaves": [
+      "concurrency.locks-races",
+      "classes.dataclasses"
+     ],
+     "seen_in": [
+      {
+       "slug": "api-circuit-breaker",
+       "lines": [
+        194,
+        203
+       ],
+       "how": "锁内 swap 掉事件列表，锁外逐个回调；回调异常只记日志"
+      },
+      {
+       "slug": "ttl-cache",
+       "lines": [
+        416,
+        424
+       ],
+       "how": "监听者是外部代码，持锁回调等于把锁交给不认识的人"
+      },
+      {
+       "slug": "stock-brokerage",
+       "lines": [
+        655,
+        660
+       ],
+       "how": "行情快照锁外推送：慢订阅者不能让全场停摆"
+      },
+      {
+       "slug": "amazon-locker",
+       "lines": [
+        511,
+        514
+       ],
+       "how": "事件先收进 events 列表，出锁后通知"
+      },
+      {
+       "slug": "amz-file-watcher",
+       "lines": [
+        184,
+        194
+       ],
+       "how": "锁外回调；一个回调抛异常只记录，不影响别人"
+      },
+      {
+       "slug": "elevator",
+       "lines": [
+        472,
+        472
+       ],
+       "how": "梯群在锁外转发轿厢事件"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "api-circuit-breaker",
+      "system_design": "Outbox 模式：事务内写 outbox 表，事务后由中继发布；避免在事务里调外部服务"
+     },
+     "card_ideas": [
+      "circuit-breaker 的 _dispatch 为什么先在锁内 swap 掉 _events 列表、再在锁外遍历？",
+      "回调里再调用 breaker.state 或 call：在持锁派发和锁外派发下分别会发生什么？",
+      "stock-brokerage 的 place_order 在锁内算出 TopOfBook 事件、锁外才 _publish：事件为什么必须是快照对象而不是引用？",
+      "锁外派发牺牲了什么（订阅者可能看到乱序/过期事件）？怎样用 seq 位点缓解？",
+      "订阅者列表为什么要在锁内拷成 tuple 再遍历？退订发生在遍历中会怎样？"
+     ]
+    },
+    {
+     "id": "external-call-outside-the-lock",
+     "title": "外部调用不持锁：占位 → 调用 → 提交（claim, call, commit）",
+     "summary": "慢 IO（支付、风控、回源、下游服务）永远在锁外；前后两段持锁，中间用租约/占位保证窗口内不被抢。",
+     "why": "movie-booking.confirm：先把座位持有期延到 payment_window，出锁后付款，再入锁把 HELD 翻成 BOOKED，窗口里即使超时也抛错而不是覆盖别人的座位；idempotent-transfer 的 on_execute（风控）在占键之后、动钱之前，两把锁都不持；ttl-cache.get_or_load 的 loader 在锁外；circuit-breaker 的 call 拆成 拿许可（持锁）→ 调下游（不持锁）→ 回报结果（持锁）。三段的关键是中间态必须是可恢复的：占位有过期、有人接手、失败有补偿。",
+     "language_leaves": [
+      "concurrency.locks-races",
+      "concurrency.queues"
+     ],
+     "seen_in": [
+      {
+       "slug": "movie-booking",
+       "lines": [
+        487,
+        517
+       ],
+       "how": "延长持有期 → 锁外支付 → 锁内落单；超时抛错并提示退款"
+      },
+      {
+       "slug": "idempotent-transfer",
+       "lines": [
+        155,
+        155
+       ],
+       "how": "外部步骤：不持有任何锁"
+      },
+      {
+       "slug": "ttl-cache",
+       "lines": [
+        384,
+        386
+       ],
+       "how": "回源在锁外，领跑者之后才 put"
+      },
+      {
+       "slug": "api-circuit-breaker",
+       "lines": [
+        106,
+        108
+       ],
+       "how": "拿许可 → 调下游 → 回报，慢调用不锁线程"
+      },
+      {
+       "slug": "logger",
+       "lines": [
+        156,
+        158
+       ],
+       "how": "格式化（纯计算）在锁外，只有写出那一步持锁"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "movie-booking",
+      "system_design": "不要在数据库事务里调外部 HTTP；用状态机 + 重试 + 对账补偿（支付网关两阶段）"
+     },
+     "card_ideas": [
+      "movie-booking.confirm 为什么在付款前先延长持有期？如果付款完成但持有已超时，代码为什么抛错而不是覆盖座位？",
+      "把支付放在座位锁里会出现什么故障（网关一慢全场卡死）？",
+      "circuit-breaker.call 为什么拆成三段？中间态靠什么保证迟到的结果不会破坏新状态？",
+      "idempotent-transfer 的 on_execute 在占键后、动钱前调用：它抛异常时，键为什么要释放？",
+      "「锁外调用」的窗口里，有哪些不变量必须由占位/租约/代号来守？"
+     ]
+    },
+    {
+     "id": "transition-table-state-machine",
+     "title": "转移表状态机：把「哪个状态能去哪」写成数据（State machine as a table）",
+     "summary": "合法转移是一张表，非法转移统一拒绝；表有三种编码，守卫（数据够不够）与转移（流程合不合法）分开。",
+     "why": "10 道题的实体都有生命周期。把规则写进表里：新增状态改一行，非法转移不在每个方法里重写 if，整张表可以被穷举测试盖满。三种编码：state→允许的下一状态集合（airline、hotel、car-rental、online-shopping、ride-sharing、circuit-breaker）；(state, event)→新状态（vending、atm）；state→{目标→允许的角色}（food-delivery）。转移表只回答「流程上合不合法」；「余额够不够、库存有没有」是另一类守卫，在转移之前检查，失败时状态原地不动。最低成本的实现是 entity.transition_to(target)，里面查表，不合法抛异常，绝不静默忽略。",
+     "language_leaves": [
+      "classes.enums",
+      "model.dict-set-internals",
+      "runtime.exceptions"
+     ],
+     "seen_in": [
+      {
+       "slug": "airline",
+       "lines": [
+        403,
+        411
+       ],
+       "how": "state → frozenset 的允许集合；CHECKED_IN → TICKETED 表示拒载"
+      },
+      {
+       "slug": "vending-machine",
+       "lines": [
+        63,
+        70
+       ],
+       "how": "(state, event) → state；守卫（余额、库存、找零）在转移前另行检查"
+      },
+      {
+       "slug": "api-circuit-breaker",
+       "lines": [
+        185,
+        190
+       ],
+       "how": "转换表 + 断言 + 代号加一，非法转换立刻 AssertionError"
+      },
+      {
+       "slug": "ride-sharing",
+       "lines": [
+        193,
+        201
+       ],
+       "how": "转移表之外再加一张「谁有权取消」许可表 CANCELLABLE_BY"
+      },
+      {
+       "slug": "food-delivery",
+       "lines": [
+        189,
+        192
+       ],
+       "how": "嵌套表：当前态 → {目标态: 允许的角色}"
+      },
+      {
+       "slug": "atm",
+       "lines": [
+        75,
+        77
+       ],
+       "how": "会话 (状态, 动作) → 新状态，非法动作按名字拒绝"
+      },
+      {
+       "slug": "amz-robot-restaurant",
+       "lines": [
+        153,
+        157
+       ],
+       "how": "机器人状态转移表，非法转移抛异常"
+      }
+     ],
+     "scales": {
+      "leetcode": "string-to-integer-atoi",
+      "lld": "vending-machine",
+      "system_design": "订单/支付/工作流状态机：转移表 + 事件溯源 + 乐观锁防止并发非法转移"
+     },
+     "card_ideas": [
+      "为什么说转移表只回答「流程合不合法」，余额不足、缺货必须是另一类守卫？把两者混进一张表会出什么问题？",
+      "state→允许集合 与 (state,event)→state 两种编码，什么时候选哪个？food-delivery 为什么还要加「角色」这一维？",
+      "Trip.transition_to 遇到非法转移为什么必须抛异常而不是静默忽略？举出被吞掉的非法转移造成的具体 bug。",
+      "为什么 ride-sharing 要分开「转移表」和「取消许可表」？能不能合成一张？",
+      "怎样写一个穷举测试覆盖整张转移表（所有 (状态, 事件) 组合）？",
+      "circuit-breaker 的 _move 用 assert 守住转换表，而其他题抛领域异常：这两种选择的区别（-O 下 assert 被删除）？"
+     ]
+    },
+    {
+     "id": "injected-clock-three-forms",
+     "title": "注入时钟的三种形态：Clock 参数 / 时间戳参数 / tick 步进",
+     "summary": "逻辑里永远不读系统时间：要么构造时注入 clock，要么每个方法收 timestamp，要么由测试推进离散 tick。",
+     "why": "41 个解法里出现 clock 参数或赋值（注入的时钟）：测试推时钟而不是 sleep，边界（恰好到点）可以精确测，也不会因机器慢而偶发失败。三种形态：①构造注入 Clock（rate-limiter、ttl-cache、inventory）；②时间作为方法参数（kv-store、bank-account 的 _advance(timestamp)、occupancy-tracker）：整个类没有时钟，适合机考式「每个操作带时间戳」；③离散 tick（elevator.step、robot-restaurant.tick）和 run_pending(now) 驱动（task-scheduler）。三者的共同目的：把时间变成输入。与 lld.cross.injected-clock-testability 重合的部分只作为引子，这里重点是三种形态的取舍与「后台线程怎么办」。",
+     "language_leaves": [
+      "engineering.testing",
+      "engineering.money-time"
+     ],
+     "seen_in": [
+      {
+       "slug": "rate-limiter",
+       "lines": [
+        300,
+        300
+       ],
+       "how": "①构造注入，默认单调时钟"
+      },
+      {
+       "slug": "kv-store",
+       "lines": [
+        144,
+        144
+       ],
+       "how": "②时间戳是每个方法的第一个参数，类内不读任何时钟"
+      },
+      {
+       "slug": "bank-account",
+       "lines": [
+        181,
+        189
+       ],
+       "how": "②每次调用经 _advance 把到期的返现结清"
+      },
+      {
+       "slug": "amz-occupancy-tracker",
+       "lines": [
+        40,
+        40
+       ],
+       "how": "②追踪器从不读系统时钟"
+      },
+      {
+       "slug": "elevator",
+       "lines": [
+        319,
+        321
+       ],
+       "how": "③tick：一次 step 走一格，没有 sleep"
+      },
+      {
+       "slug": "task-scheduler",
+       "lines": [
+        266,
+        269
+       ],
+       "how": "③测试直接调用 run_pending(now) 推进，不开线程"
+      },
+      {
+       "slug": "amz-robot-restaurant",
+       "lines": [
+        292,
+        292
+       ],
+       "how": "③离散 tick 推进所有机器人"
+      }
+     ],
+     "scales": {
+      "leetcode": "logger-rate-limiter",
+      "lld": "rate-limiter",
+      "system_design": "确定性模拟与回放：用事件时间重放，而不是处理时间；Jepsen 式测试需要可控时钟"
+     },
+     "card_ideas": [
+      "注入 Clock 和「每个方法收 timestamp」两种形态，各自在什么场景更合适？kv-store 为什么选后者？",
+      "任务调度器为什么要把「调度逻辑」(_SchedulerCore) 与「线程」(Scheduler) 分开，让 run_pending(now) 可以直接驱动？",
+      "tick 步进（elevator.step）相对注入 Clock 解决了什么问题（多个对象的同步推进）？代价是什么？",
+      "用假时钟测试「恰好到点」的边界，为什么 sleep 做不到？",
+      "bank-account 的 _advance 在每次调用时结清到期返现，没有后台线程：这个设计引入了什么隐含约定（时间只能前进）？"
+     ]
+    },
+    {
+     "id": "append-only-log-derived-state",
+     "title": "只追加日志 + 派生状态：事实不可变，余额/视图可重算（event-sourced state）",
+     "summary": "只存事实（分录、事件、时间点），余额、剩余额度、人数、应付金额都从事实现算或随写入同步更新。",
+     "why": "乱序、重复、更正是现实世界的常态。把钱累加进余额的写法遇到这些就要回滚旧账；只存事实则「事实表对了，钱就对」。double-entry-ledger：journal 是唯一事实来源，余额/历史是随写入同步的派生索引，纠错只靠追加冲正。credit-token-balance：账本只存 Grant/Charge，余额与分配是 _replay 的结果。dasher-payout：只存每单四个时间点，钱现算。occupancy-tracker：存进出事件，人数是前缀和。atm 的流水只增不改。代价：读要重放（所以要缓存/索引，并在写入时同步更新）。",
+     "language_leaves": [
+      "engineering.serialization",
+      "classes.dataclasses"
+     ],
+     "seen_in": [
+      {
+       "slug": "double-entry-ledger",
+       "lines": [
+        101,
+        106
+       ],
+       "how": "唯一事实来源，只追加；余额与历史是派生索引"
+      },
+      {
+       "slug": "credit-token-balance",
+       "lines": [
+        63,
+        67
+       ],
+       "how": "余额与每笔扣费的分配都是事件重放的纯函数结果"
+      },
+      {
+       "slug": "dasher-payout",
+       "lines": [
+        163,
+        169
+       ],
+       "how": "钱现算：不累加进余额，乱序/重复/更正都不用回滚"
+      },
+      {
+       "slug": "amz-occupancy-tracker",
+       "lines": [
+        89,
+        91
+       ],
+       "how": "存进出事件，任一时刻人数是前缀和"
+      },
+      {
+       "slug": "atm",
+       "lines": [
+        434,
+        434
+       ],
+       "how": "流水只增不改；取款失败用冲正而不是删除"
+      },
+      {
+       "slug": "bank-account",
+       "lines": [
+        110,
+        122
+       ],
+       "how": "每个账户的事件日志是真相，余额按时间戳从日志算"
+      }
+     ],
+     "scales": {
+      "leetcode": "snapshot-array",
+      "lld": "double-entry-ledger",
+      "system_design": "事件溯源 / CQRS / Kafka 日志 + 物化视图；账务系统的 immutable ledger + 对账"
+     },
+     "card_ideas": [
+      "为什么说「余额只是日志的缓存，不是独立的事实」？它带来了哪些可验证的不变量？",
+      "纠错为什么只能追加冲正分录而不能改历史？对审计和并发各有什么好处？",
+      "credit-token-balance 把扣费分配做成重放的纯函数，乱序到达的事件会怎样自然生效？",
+      "dasher-payout 为什么不把应付金额累加存起来？事件更正时这样做会出什么问题？",
+      "只追加日志的读成本怎么降下来（随写入同步的派生索引、快照）？这些索引与日志的一致性靠什么保证？"
+     ]
+    },
+    {
+     "id": "lazy-expiry-settle-on-access",
+     "title": "惰性过期：每次访问先结清，不起后台线程（settle on access）",
+     "summary": "过期不靠定时器：每个公开操作开头先把已到点的东西结清，读到的数字永远已经算过期。",
+     "why": "后台线程要处理关闭、竞态、测试 sleep；惰性结清让「读」本身保证一致：inventory 的 @_op、ttl-cache 的 _purge_locked、connect-four 的 _settle、kv-store 的 _touch、library 的 _sweep、online-auction 的 _tick 都是这个模式。代价：一个没人再访问的条目要么一直占内存（所以要配堆索引 + 显式 purge），要么被下一次访问顺手清掉；到期事件的通知发生在下一次访问时，不是准点。",
+     "language_leaves": [
+      "engineering.testing",
+      "concurrency.threads"
+     ],
+     "seen_in": [
+      {
+       "slug": "inventory-management",
+       "lines": [
+        243,
+        251
+       ],
+       "how": "每个公开操作先结清到点的预留"
+      },
+      {
+       "slug": "ttl-cache",
+       "lines": [
+        401,
+        407
+       ],
+       "how": "每次操作先摘掉堆顶所有到期条目"
+      },
+      {
+       "slug": "connect-four",
+       "lines": [
+        319,
+        324
+       ],
+       "how": "没有后台线程，任何访问都先看一眼回合是否超时"
+      },
+      {
+       "slug": "kv-store",
+       "lines": [
+        122,
+        139
+       ],
+       "how": "访问 key 前先清掉到期的字段，清理动作本身可撤销"
+      },
+      {
+       "slug": "library",
+       "lines": [
+        459,
+        467
+       ],
+       "how": "归还、过期、新进书都只改事实再调用它"
+      },
+      {
+       "slug": "online-auction",
+       "lines": [
+        304,
+        310
+       ],
+       "how": "结束由锁内一次状态翻转裁定，恰好一次不依赖定时器"
+      },
+      {
+       "slug": "idempotent-transfer",
+       "lines": [
+        197,
+        200
+       ],
+       "how": "只有已完成的记录才会过期；执行中的归租约管"
+      }
+     ],
+     "scales": {
+      "leetcode": "design-authentication-manager",
+      "lld": "ttl-cache",
+      "system_design": "Redis 的惰性删除 + 周期抽样删除；DynamoDB TTL 后台异步清理"
+     },
+     "card_ideas": [
+      "惰性过期相对后台清理线程，在关闭、竞态、测试三方面各省了什么？",
+      "为什么纯惰性过期还不够，ttl-cache 要额外维护一个到期堆？没有它，一条写入后再没人读的数据会怎样？",
+      "inventory 的 @_op 把「结清」放进装饰器而不是每个方法手写，防的是哪类 bug？",
+      "online-auction 的「恰好一次结算」在没有定时器时靠什么保证？",
+      "惰性过期下，到期通知（淘汰事件）会在什么时候发出，这对监听者意味着什么？"
+     ]
+    },
+    {
+     "id": "lazy-deletion-heap",
+     "title": "惰性删除堆：墓碑 + 压实（lazy deletion with tombstones and compaction）",
+     "summary": "堆不能删中间元素：作废的条目留在堆里，弹出时发现无效就丢；墓碑过多时一次性压实重建。",
+     "why": "heapq 只有 push/pop。延期、取消、确认都要「删除堆里某一项」：标记它无效，等它浮到堆顶再丢。有效性判据可以是任务表里不存在（task-scheduler）、状态/到期时间对不上（inventory `entry.expires_at == at`）、条目被标成 _REMOVED（ttl-cache）。裸惰性删除的隐患是墓碑堆积：一个被反复覆写的 key 能在堆里留下几十万个死条目。所以要有压实：ttl-cache 在墓碑超过一半时重建，task-scheduler 按取消次数。heapq 文档里就有这个配方（priority queue implementation notes）。同一配方也是 LeetCode 里「堆 + 惰性删除」一类题的标准解（Stock Price Fluctuation、Design a Food Rating System、Seat Reservation Manager、Max Stack）。",
+     "language_leaves": [
+      "runtime.stdlib-map",
+      "performance.containers"
+     ],
+     "seen_in": [
+      {
+       "slug": "credit-token-balance",
+       "lines": [
+        86,
+        86
+       ],
+       "how": "时间只往前走，过期的包浮到堆顶才弹，每个包最多进出各一次"
+      },
+      {
+       "slug": "inventory-management",
+       "lines": [
+        249,
+        252
+       ],
+       "how": "条目对不上（被延期/确认/取消）就丢掉"
+      },
+      {
+       "slug": "task-scheduler",
+       "lines": [
+        167,
+        168
+       ],
+       "how": "任务表里没了 = 墓碑，弹出时跳过"
+      },
+      {
+       "slug": "task-scheduler",
+       "lines": [
+        196,
+        199
+       ],
+       "how": "按取消次数压实，连续取消一百万个堆也不会涨到一百万"
+      },
+      {
+       "slug": "ttl-cache",
+       "lines": [
+        155,
+        159
+       ],
+       "how": "墓碑超过一半时一次性重建堆，摊还 O(1)"
+      },
+      {
+       "slug": "amazon-locker",
+       "lines": [
+        461,
+        461
+       ],
+       "how": "到期时间另存小顶堆，弹出时丢弃陈旧条目"
+      }
+     ],
+     "scales": {
+      "leetcode": "max-stack",
+      "lld": "task-scheduler",
+      "system_design": "延迟队列的取消：Kafka/Redis ZSET 里打删除标记，消费时过滤；LSM 树的 tombstone + compaction"
+     },
+     "card_ideas": [
+      "为什么堆里「删除中间元素」要用惰性删除？有效性判据在 task-scheduler、inventory、ttl-cache 里各是什么？",
+      "ttl-cache 的 ExpiryIndex 为什么要在墓碑超过一半时压实？不压实，「缓存只有 1000 条」的承诺怎么被悄悄打破？",
+      "compact 的触发条件为什么按「取消次数」而不是「堆大小」？连续取消一百万个未到期任务时两者的差别？",
+      "压实是 O(n)，为什么摊还下仍是 O(1)？",
+      "inventory 里延期会 push 一个新条目而不删旧条目：弹出旧条目时怎么知道它已无效？如果新旧到期时间恰好相同呢？",
+      "credit-token 的惰性删除依赖「时间单调向前」：如果允许乱序事件，这个判断还成立吗？它是怎么解决的（重放）？"
+     ]
+    },
+    {
+     "id": "generation-token-stale-detection",
+     "title": "代号/版本令牌：识别并拒绝迟到的旧结果（generation token / fencing）",
+     "summary": "每次状态转换让代号加一；许可带着领取时的代号，回报时代号不一致就只计数、不改状态。",
+     "why": "异步系统里「迟到的结果」是常态：慢调用在熔断器已经重新打开之后才返回，旧租约的拥有者在被夺走租约之后继续写。circuit-breaker 的 _gen；idempotent-transfer 的 attempt/mine（旧一轮不能再动钱，也不唤醒等待者）；ride-sharing 的 release(driver_id, offer_id) 只在 held_by 仍等于该要约时才释放；inventory 的堆条目要求 entry.expires_at == at。共同点：把「这个结果属于哪一轮」显式带在令牌里，比较一次就够。分布式里这就是 fencing token / epoch。",
+     "language_leaves": [
+      "concurrency.locks-races"
+     ],
+     "seen_in": [
+      {
+       "slug": "api-circuit-breaker",
+       "lines": [
+        157,
+        158
+       ],
+       "how": "迟到的旧结果只计数，不改变状态"
+      },
+      {
+       "slug": "api-circuit-breaker",
+       "lines": [
+        188,
+        188
+       ],
+       "how": "每次转换代号加一，所有在途许可作废"
+      },
+      {
+       "slug": "idempotent-transfer",
+       "lines": [
+        184,
+        185
+       ],
+       "how": "被夺走租约的旧拥有者不唤醒等待者"
+      },
+      {
+       "slug": "ride-sharing",
+       "lines": [
+        443,
+        448
+       ],
+       "how": "只在仍被这张要约持有时才释放，不会把跑下一单的司机打回空闲"
+      },
+      {
+       "slug": "inventory-management",
+       "lines": [
+        249,
+        249
+       ],
+       "how": "堆条目带着当时的到期时间，对不上就丢弃"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "api-circuit-breaker",
+      "system_design": "Fencing token（Chubby/ZooKeeper 租约）/ Raft term / 乐观锁版本号：拒绝来自旧领导者或旧版本的写"
+     },
+     "card_ideas": [
+      "熔断器为什么需要 _gen？举出一个没有它、旧请求的失败被错记为「这一轮探测失败」的时间线。",
+      "idempotent-transfer 的租约被夺走后，旧拥有者为什么不能再动钱？代码里靠哪两道检查保证钱最多动一次？",
+      "ride-sharing 的 release(driver_id, offer_id) 为什么要带 offer_id？只带 driver_id 会怎样？",
+      "这个模式在分布式系统里对应什么（fencing token、epoch、乐观锁版本）？",
+      "为什么回报旧结果时仍要计入指标，但不改变状态？"
+     ]
+    },
+    {
+     "id": "hash-map-plus-ordered-structure",
+     "title": "哈希表 + 有序结构：O(1) 定位，O(log n) 或 O(1) 取序",
+     "summary": "dict 管「按 key 找到」，另一个结构（链表、堆、有序列表、dict 插入序）管「按顺序取下一个」，两者同步增删。",
+     "why": "LRU = dict + 双向链表（按 key 摘除并重排 O(1)）；TTL = dict + 到期堆（取最早到期）；订单簿 = 价位 dict + 升序价位列表 + dict 插入序（同价位 FIFO，撤单 O(1)）；图像前缀缓存 = OrderedDict 的 move_to_end/popitem。选择取决于：要删中间吗、要按什么序取、取序的代价是否可摊还。两份结构必须在同一把锁内同步增删，不变式要写出来（BookSide：_levels 与 _prices 键集合永远相等）。与 lld.cross.ordered-structures-lru 重合处只作引子。",
+     "language_leaves": [
+      "performance.containers",
+      "model.dict-set-internals",
+      "runtime.stdlib-map"
+     ],
+     "seen_in": [
+      {
+       "slug": "lru-cache",
+       "lines": [
+        31,
+        34
+       ],
+       "how": "哨兵头尾的双向链表 + dict 节点索引，append/remove/move_to_end 都 O(1)"
+      },
+      {
+       "slug": "ttl-cache",
+       "lines": [
+        97,
+        100
+       ],
+       "how": "dict key→堆条目 + 小顶堆，支持改期与撤销"
+      },
+      {
+       "slug": "stock-brokerage",
+       "lines": [
+        241,
+        249
+       ],
+       "how": "价位 dict + 升序价位列表；dict 插入序就是同价位 FIFO"
+      },
+      {
+       "slug": "image-transform-pipeline",
+       "lines": [
+        230,
+        230
+       ],
+       "how": "OrderedDict 的 move_to_end/popitem(last=False) 两个调用就是 LRU"
+      },
+      {
+       "slug": "amz-closest-store",
+       "lines": [
+        75,
+        77
+       ],
+       "how": "有序列表 + bisect，floor/ceiling 都是二分"
+      },
+      {
+       "slug": "amz-configurable-cache",
+       "lines": [
+        268,
+        271
+       ],
+       "how": "Store 存值，Policy 只记元数据，两个接口互不引用"
+      }
+     ],
+     "scales": {
+      "leetcode": "lru-cache",
+      "lld": "lru-cache",
+      "system_design": "分布式缓存的淘汰：Redis 近似 LRU（采样）、Caffeine 的 TinyLFU；订单簿的 price-time priority"
+     },
+     "card_ideas": [
+      "LRU 为什么用 dict + 双向链表，而不是 dict + 有序列表？去掉哪个结构复杂度会退化到什么？",
+      "订单簿一侧为什么是「价位 dict + 升序价位列表」，同价位的 FIFO 又为什么靠 dict 插入序而不用 deque？撤单分别是什么复杂度？",
+      "BookSide 的不变式 `_levels 与 _prices 键集合相等` 靠什么维护？空价位为什么必须立刻两边同时删除？",
+      "ttl-cache 里「到期堆」和「淘汰策略」各管什么？为什么不能让一个结构兼顾？",
+      "OrderedDict.move_to_end 与手写链表相比，什么时候够用、什么时候不够（LFU）？"
+     ]
+    },
+    {
+     "id": "condition-wait-predicate-loop",
+     "title": "条件变量：谓词 while 循环 + 精确通知（Condition wait loop）",
+     "summary": "等待永远写成 `while 谓词不成立: cond.wait()`；两类等待者各配一个 Condition；超时用绝对截止时间。",
+     "why": "被唤醒不代表谓词成立：虚假唤醒，或者被叫醒的瞬间别的线程已抢先改了状态。bounded-blocking-queue 用 not_full / not_empty 两个共用一把锁的 Condition，只 notify 该醒的那一类；close() 是广播式关闭，唤醒所有等待者；pub-sub 的 BLOCK 策略等的是「最慢游标越过队头」而不是「日志变短」；emergency-pubsub 的 Mailbox 用 wait_for 谓词；task-scheduler 的调度线程在 Condition 上带超时等。常犯的错：if 代替 while、notify 错了类、忘记在 close/退订时 notify_all。",
+     "language_leaves": [
+      "concurrency.locks-races",
+      "concurrency.queues"
+     ],
+     "seen_in": [
+      {
+       "slug": "bounded-blocking-queue",
+       "lines": [
+        107,
+        114
+       ],
+       "how": "满则等：谓词在 while 里，put 后只 notify not_empty"
+      },
+      {
+       "slug": "pub-sub",
+       "lines": [
+        249,
+        257
+       ],
+       "how": "BLOCK 的等待条件是最慢游标越过队头，不是日志变短"
+      },
+      {
+       "slug": "amz-emergency-pubsub",
+       "lines": [
+        186,
+        186
+       ],
+       "how": "wait_for 把谓词交给条件变量"
+      },
+      {
+       "slug": "task-scheduler",
+       "lines": [
+        332,
+        332
+       ],
+       "how": "调度线程：睡到下一个到期点，新任务到来时 notify_all 重算"
+      },
+      {
+       "slug": "pub-sub",
+       "lines": [
+        287,
+        287
+       ],
+       "how": "read：带截止时间的等待，关闭或超时返回空批"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "bounded-blocking-queue",
+      "system_design": "阻塞队列/长轮询/信号量背压；Kafka consumer poll 超时"
+     },
+     "card_ideas": [
+      "为什么等待必须写成 while 而不是 if？举出虚假唤醒之外的另一种导致谓词不成立的情形。",
+      "not_full 与 not_empty 共用同一把锁却是两个 Condition：相比一个 Condition + notify_all，省掉了什么？",
+      "close() 为什么要对两个 Condition 都 notify_all？漏掉一个会出现什么现象？",
+      "pub-sub BLOCK 策略的等待条件为什么不是「日志变短」？谁会让它变短？",
+      "超时等待用绝对 deadline，多次唤醒下总等待时间怎么保证不被拉长？"
+     ]
+    },
+    {
+     "id": "ordered-multi-lock-acquisition",
+     "title": "按全局固定顺序拿多把锁（lock ordering）",
+     "summary": "需要同时持有多把锁时，按稳定的全局顺序（账户 id、实例 key）进入，不按参数顺序。",
+     "why": "A→B 与 B→A 两个转账若按参数顺序加锁就是经典环形等待。digital-wallet._move 按账户 id 字典序取锁；airline.reserve_across 把若干航班实例按 key 排序后用 ExitStack 依次进入，一条中转行程要么全订要么全不订；CompositeLimiter 的规则顺序固定，并在构造时拒绝同一个 RateLimiter 出现两次来守住前提。这是不死锁的唯一理由，不是优化。与之配套的是另一条纪律：服务锁 → 池锁单向，池从不回调服务（ride-sharing）。",
+     "language_leaves": [
+      "concurrency.locks-races"
+     ],
+     "seen_in": [
+      {
+       "slug": "digital-wallet",
+       "lines": [
+        243,
+        244
+       ],
+       "how": "按账户 id 排序，不按 (from, to) 参数顺序"
+      },
+      {
+       "slug": "airline",
+       "lines": [
+        244,
+        248
+       ],
+       "how": "按实例 key 排序后 ExitStack 依次进入"
+      },
+      {
+       "slug": "rate-limiter",
+       "lines": [
+        414,
+        414
+       ],
+       "how": "构造时拒绝重复限流器，守住固定拿锁顺序的前提"
+      },
+      {
+       "slug": "ride-sharing",
+       "lines": [
+        379,
+        379
+       ],
+       "how": "锁序只有一个方向（服务锁 → 池锁），无环"
+      },
+      {
+       "slug": "airline",
+       "lines": [
+        444,
+        444
+       ],
+       "how": "服务锁绝不在持有它时去拿实例锁"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "digital-wallet",
+      "system_design": "分布式事务里的锁顺序：按主键排序加行锁防死锁；2PL + 死锁检测超时"
+     },
+     "card_ideas": [
+      "digital-wallet._move 为什么按账户 id 而不是按 (from, to) 的顺序加锁？画出不这样做时两个方向转账的死锁时间线。",
+      "airline.reserve_across 为什么用 ExitStack？锁数量不定时还有别的写法吗？",
+      "CompositeLimiter 构造时为什么要拒绝同一个 RateLimiter 出现两次？",
+      "「服务锁绝不在持有它时去拿实例锁」这条纪律和 lock ordering 是什么关系？",
+      "如果两把锁的顺序依赖 key 而 key 又在锁内才能知道，该怎么办？"
+     ]
+    },
+    {
+     "id": "per-key-and-sharded-locks",
+     "title": "每个对象一把锁与分片锁：把竞争限制在真正冲突的范围",
+     "summary": "全局锁只用于查表；每局/每场次/每航班实例持有自己的锁。key 数量巨大时用固定数量的分片锁。",
+     "why": "movie-booking 的 Show 私有锁（不同场次不互相阻塞）、connect-four 的每局一把锁（先在全局锁下查出对局、立刻放掉）、airline 的 FlightInstance 锁（同一天同一班的旅客才抢同一批座位）。rate-limiter 用分片：锁的数量是常数（不随 key 增长，也就不需要回收锁本身），竞争大约是全局锁的 1/N。共同原则：锁的粒度跟着不变量走，不变量覆盖什么，锁就覆盖什么。与 lld.cross.lld-concurrency-locking 重合处不重复，这里强调「锁在哪个对象上」。",
+     "language_leaves": [
+      "concurrency.locks-races",
+      "concurrency.gil"
+     ],
+     "seen_in": [
+      {
+       "slug": "movie-booking",
+       "lines": [
+        264,
+        264
+       ],
+       "how": "Show 私有锁，不同场次不互相阻塞"
+      },
+      {
+       "slug": "connect-four",
+       "lines": [
+        231,
+        231
+       ],
+       "how": "每局一把锁，全局 _mu 只保护登记与查找"
+      },
+      {
+       "slug": "airline",
+       "lines": [
+        195,
+        195
+       ],
+       "how": "锁放在 FlightInstance 而不是航班"
+      },
+      {
+       "slug": "rate-limiter",
+       "lines": [
+        276,
+        286
+       ],
+       "how": "分片锁：常数个锁，闲置 key 摊还回收"
+      },
+      {
+       "slug": "digital-wallet",
+       "lines": [
+        63,
+        73
+       ],
+       "how": "每个账户一把锁，转账时按 id 顺序取"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "rate-limiter",
+      "system_design": "分片（sharding）：按 key 哈希把热点分散到多个独立的锁/分区/节点"
+     },
+     "card_ideas": [
+      "airline 为什么把锁放在 FlightInstance 而不是 Flight？放在 Flight 上会错在哪里？",
+      "connect-four 的 _locked 为什么先在全局锁下取对局、立刻放掉，再持有该局的锁？",
+      "rate-limiter 用分片锁而不是「每个 key 一把锁」，省掉了什么问题？分片数怎么选？",
+      "分片锁下，需要同时更新两个 key（跨分片）的操作怎么办？",
+      "锁的粒度「跟着不变量走」是什么意思？举一个粒度太粗和太细各自出问题的例子。"
+     ]
+    },
+    {
+     "id": "immutable-snapshot-publish",
+     "title": "不可变快照 + 整体替换发布（copy-on-write publish）",
+     "summary": "读者拿一次引用，之后读到的是完整的某一版；写者在锁里造新快照再换引用。读路径不加锁。",
+     "why": "billing-tax-engine 每个商户的版本表是不可变 _Schedule，publish 在锁里造新快照换引用，quote 一次读取后不再受并发发布影响；logger 的 handlers 是 tuple，add_handler 整体替换，分发路径一把锁都不用；ride-sharing 的 Driver 用 replace 整条换；pub-sub 的 Subscription._topics 同理。读多写少的配置/路由表最适合。Python 里引用赋值是原子的，所以「先读一次引用」是关键，不能读了又读。代价：写是 O(n) 拷贝。",
+     "language_leaves": [
+      "concurrency.gil",
+      "model.mutability",
+      "classes.dataclasses"
+     ],
+     "seen_in": [
+      {
+       "slug": "billing-tax-engine",
+       "lines": [
+        139,
+        140
+       ],
+       "how": "发布 = 造新快照换引用"
+      },
+      {
+       "slug": "billing-tax-engine",
+       "lines": [
+        148,
+        148
+       ],
+       "how": "读路径只读一次引用，之后用同一份完整版本表"
+      },
+      {
+       "slug": "logger",
+       "lines": [
+        461,
+        461
+       ],
+       "how": "整体替换 tuple，分发路径不加锁"
+      },
+      {
+       "slug": "ride-sharing",
+       "lines": [
+        433,
+        433
+       ],
+       "how": "司机记录整条替换"
+      },
+      {
+       "slug": "pub-sub",
+       "lines": [
+        386,
+        386
+       ],
+       "how": "订阅的主题元组整体替换，读路径不加锁"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "billing-tax-engine",
+      "system_design": "配置热更新：原子换指针的 RCU 式发布；不可变的路由表/特性开关快照"
+     },
+     "card_ideas": [
+      "billing-tax-engine 的 quote 为什么「先取一次引用」就能不加锁？如果写成两次读 starts 与 versions 会出什么错？",
+      "为什么 _Schedule 里 starts 与 versions 要放进同一个不可变对象，而不是两个独立属性？",
+      "整体替换 tuple 的写者仍然要加锁（_lock 或 _publish_lock），为什么？",
+      "copy-on-write 的写成本是 O(n)，什么时候它不再划算，改用什么？",
+      "「读者看到旧版或新版，不会看到半个」在 Python 里依赖的是 GIL 的什么保证？自由线程版本下还成立吗？"
+     ]
+    },
+    {
+     "id": "reserve-hold-confirm-with-ttl",
+     "title": "预留—确认—过期：带 TTL 的持有（hold / confirm / expire）",
+     "summary": "先占住库存但不扣减（持有），在期限内确认才真正扣，否则自动放回；预留的每一步都只是在两个数上做加减。",
+     "why": "库存管理 reserved/on_hand 两个数、可售 = 在架 − 预留；订票 SeatHold；订座 HELD → TICKETED；快递柜取件码有过期；司机被要约独占。共同结构：占用有 id、有过期时间、过期自动放回（惰性），确认是持有 → 已成交的一次受检转移，取消/过期/重复确认的语义要提前说清（幂等、无操作还是报错）。反例：只有「占」没有「过期」会让库存被放弃的购物车永久吃掉。",
+     "language_leaves": [
+      "engineering.robustness"
+     ],
+     "seen_in": [
+      {
+       "slug": "inventory-management",
+       "lines": [
+        141,
+        150
+       ],
+       "how": "reserved += n；确认：on_hand/reserved 同减；取消/过期：reserved −= n"
+      },
+      {
+       "slug": "movie-booking",
+       "lines": [
+        144,
+        152
+       ],
+       "how": "持有收据带过期时间；过期判断永远按注入时钟惰性算"
+      },
+      {
+       "slug": "airline",
+       "lines": [
+        393,
+        400
+       ],
+       "how": "HELD → TICKETED，hold_ttl 内未出票自动清扫"
+      },
+      {
+       "slug": "amazon-locker",
+       "lines": [
+        450,
+        462
+       ],
+       "how": "取件码带 expires_at；过期回收柜格，码表同步变小"
+      },
+      {
+       "slug": "online-shopping",
+       "lines": [
+        258,
+        262
+       ],
+       "how": "预留已过期就直接失败；补偿 release 必须幂等"
+      },
+      {
+       "slug": "library",
+       "lines": [
+        459,
+        461
+       ],
+       "how": "预约队首摘下，副本进取书架并带到期时刻；逾期不取则下架"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "inventory-management",
+      "system_design": "库存预占（Reserve → Confirm/Cancel → TTL 回收），TCC（Try-Confirm-Cancel）分布式事务"
+     },
+     "card_ideas": [
+      "reserved 与 on_hand 为什么是两个数？可售数量、确认发货、取消各自对这两个数做什么？",
+      "预留过期没有后台线程时，谁来把库存放回去？读到的可售数量为什么不会错？",
+      "重复确认、取消已过期的预留、取消已发货的预留，各自应该是无操作还是报错？inventory 是怎么选的，依据是什么？",
+      "TCC 与单进程的 hold/confirm/cancel 是什么关系？Confirm/Cancel 为什么必须幂等？",
+      "reserve_many 为什么要先算出全部 plan 再提交？"
+     ]
+    },
+    {
+     "id": "saga-idempotent-compensation",
+     "title": "Saga 与幂等补偿：反向撤销，补偿不能失败也不能重复生效",
+     "summary": "跨多个会失败参与方的操作：逐步执行，失败时对失败步和之前所有步按逆序补偿；补偿必须幂等。",
+     "why": "online-shopping 的 Saga：每个 SagaStep 成对声明 action 与 compensation；失败的那一步自己也要补偿（动作不是原子的：钱已扣、记账抛异常）；补偿自己失败不能掩盖原始异常，收进 SagaFailure.compensation_errors。atm 的顺序定为 先抽钞票 → 再请银行扣账 → 最后出钞：失败时本地那一半回滚，远端那一半用冲正。release/cancel 类方法在所有解法里都被写成幂等且永不抛（airline.release、movie-booking.release、ride-sharing.release），因为它们总跑在失败路径上。",
+     "language_leaves": [
+      "runtime.exceptions",
+      "engineering.robustness"
+     ],
+     "seen_in": [
+      {
+       "slug": "online-shopping",
+       "lines": [
+        414,
+        441
+       ],
+       "how": "逆序补偿；失败步自己也补偿；补偿失败收集不吞"
+      },
+      {
+       "slug": "atm",
+       "lines": [
+        338,
+        339
+       ],
+       "how": "冲正：远端那一半用补偿动作抵消，落在只增不改的流水里"
+      },
+      {
+       "slug": "movie-booking",
+       "lines": [
+        374,
+        377
+       ],
+       "how": "失败路径上的释放：幂等且不抛异常"
+      },
+      {
+       "slug": "airline",
+       "lines": [
+        257,
+        260
+       ],
+       "how": "幂等：它总跑在失败路径和取消路径上"
+      },
+      {
+       "slug": "ride-sharing",
+       "lines": [
+        438,
+        438
+       ],
+       "how": "幂等且永不抛异常，它总跑在失败路径上"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "amz-dag-runner",
+      "system_design": "Saga / TCC：长事务拆成带补偿的本地事务；补偿幂等、可重试、可观测"
+     },
+     "card_ideas": [
+      "Saga 为什么要把失败的那一步也补偿？举出「动作做了一半」的例子。",
+      "补偿动作为什么必须幂等，而且要能容忍「什么都还没发生」？",
+      "补偿过程自己失败时怎么办？SagaFailure.compensation_errors 为什么不能吞掉？",
+      "atm 为什么把顺序定成 先抽钞 → 再扣账 → 最后出钞？换成先扣账会怎样？",
+      "release/cancel 这类失败路径上的方法，为什么应该幂等且永不抛异常？"
+     ]
+    },
+    {
+     "id": "dry-run-on-a-copy",
+     "title": "在副本上试运行：预测与实际共用同一份逻辑",
+     "summary": "要预测或验证一次改动，就把状态复制一份，用与真实路径相同的函数跑一遍；通过才替换真实状态。",
+     "why": "restaurant-waitlist 把「谁坐哪张桌」集中在纯函数 _drain：真实 join/finish 传真状态，estimate_wait 传复制品往前推演，策略只写一遍，预测与实际就不会各说各话。credit-token-balance._commit 先把新事件放进副本，_replay 能全额扣下才替换，已接受的扣费不会被迟到事件饿死。connect-four.best_move 在 game.copy() 上 drop/undo 搜索，不碰调用方的棋局；billing-tax-engine.reprice 用更正后的规则重算一遍再和旧行比。前提：核心逻辑是不读实例状态的纯函数（见 architecture 的 functional-core）。",
+     "language_leaves": [
+      "model.copy",
+      "functions.first-class"
+     ],
+     "seen_in": [
+      {
+       "slug": "restaurant-waitlist",
+       "lines": [
+        49,
+        52
+       ],
+       "how": "纯函数：就地改传入的 queue/free，真实与模拟共用"
+      },
+      {
+       "slug": "restaurant-waitlist",
+       "lines": [
+        149,
+        161
+       ],
+       "how": "复制品上往前推演时间，用同一个 _drain"
+      },
+      {
+       "slug": "credit-token-balance",
+       "lines": [
+        136,
+        141
+       ],
+       "how": "先在副本上重放，所有扣费仍能全额扣下才替换"
+      },
+      {
+       "slug": "connect-four",
+       "lines": [
+        340,
+        340
+       ],
+       "how": "搜索在副本上进行，调用方的棋局原样不动"
+      },
+      {
+       "slug": "billing-tax-engine",
+       "lines": [
+        156,
+        165
+       ],
+       "how": "用更正后的规则重算，只返回有差额的调整行"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "restaurant-waitlist",
+      "system_design": "影子流量/金丝雀、what-if 预估、数据库的 EXPLAIN / 事务内先试后提交"
+     },
+     "card_ideas": [
+      "estimate_wait 为什么要复制 queue 和 free 再调用同一个 _drain？如果预测另写一份逻辑，迟早会怎样？",
+      "credit-token 的 _commit 为什么要在副本上先重放？失败时账本为什么「原封不动」是免费的？",
+      "_drain 就地修改传入参数而不是返回新对象，这个设计在真实路径和模拟路径上分别怎么用？",
+      "best_move 用 copy() 加 drop/undo，而不是每个节点复制棋盘：两种做法的成本差别？",
+      "这个模式要求核心逻辑不读实例状态，为什么？"
+     ]
+    },
+    {
+     "id": "dependency-graph-cycle-detection",
+     "title": "依赖图与环检测：拓扑排序、可达性、祖先链",
+     "summary": "依赖关系都是图：Kahn 算法给出执行序并报出具体的环；改动前用可达性拒绝成环的赋值；遍历时用祖先链检测环。",
+     "why": "amz-dag-runner 的 Graph.order 用 Kahn 算法 + 小顶堆保证确定顺序，剩下的入度非零节点必有环，沿前置依赖走必撞上走过的点，从而报出具体的环 a→b→a；spreadsheet-engine 在 set 时先 _reaches 检查新公式能否走回自己，再按 users 边做拓扑序重算受影响格子；billing-tax-engine 的规则 needs 做稳定拓扑排序；linux-find 跟随符号链接时只用「当前祖先链」检测环，不用全局 visited（否则漏掉合法的第二条路径）。关键细节：环检测放在改动之前；报告环要给路径，不是一句「有环」。LeetCode 里对应 Course Schedule I/II、Parallel Courses、Design Excel Sum Formula（LC 631，重算受影响格子）。",
+     "language_leaves": [
+      "runtime.stdlib-map",
+      "model.dict-set-internals"
+     ],
+     "seen_in": [
+      {
+       "slug": "amz-dag-runner",
+       "lines": [
+        81,
+        98
+       ],
+       "how": "Kahn + 确定顺序（首次出现序号的小顶堆），有环抛 CycleError"
+      },
+      {
+       "slug": "amz-dag-runner",
+       "lines": [
+        100,
+        109
+       ],
+       "how": "沿 stuck 内的前置依赖走，必然撞上走过的点"
+      },
+      {
+       "slug": "spreadsheet-engine",
+       "lines": [
+        259,
+        269
+       ],
+       "how": "新公式依赖能否走回自己，改动之前查"
+      },
+      {
+       "slug": "billing-tax-engine",
+       "lines": [
+        258,
+        274
+       ],
+       "how": "稳定拓扑排序：能先跑的按原顺序，剩下的互相等待即有环"
+      },
+      {
+       "slug": "amz-linux-find",
+       "lines": [
+        236,
+        236
+       ],
+       "how": "符号链接环：只用祖先链，不用全局 visited"
+      }
+     ],
+     "scales": {
+      "leetcode": "course-schedule-ii",
+      "lld": "amz-dag-runner",
+      "system_design": "构建系统/工作流引擎（Airflow DAG）、包依赖解析、Excel 重算引擎、数据血缘"
+     },
+     "card_ideas": [
+      "Kahn 算法结束时 len(out) != len(nodes) 为什么说明有环？怎样从剩下的节点里还原出一个具体的环？",
+      "spreadsheet.set 为什么要在改任何状态之前检查环？边改边查的版本失败后要回滚什么？",
+      "linux-find 跟随符号链接时为什么用「祖先链」而不是全局 visited 集合？全局 visited 会漏掉什么？",
+      "同时可选的节点怎样保证输出顺序确定（dag-runner 用首次出现序号入堆）？这对测试有什么价值？",
+      "拓扑序重算：只重算被改格子及其下游、每格恰好一次，靠什么保证？"
+     ]
+    },
+    {
+     "id": "recursive-descent-parsing",
+     "title": "递归下降解析：优先级 = 调用层次，分词与求值分离",
+     "summary": "词法（正则切 token）→ 语法（每个优先级一个函数，低优先级先调用）→ 语法树（frozen 节点）→ 求值。",
+     "why": "spreadsheet 的公式、query-condition-parser 的 WHERE、amz-in-memory-db 的迷你 SQL 都是同一个骨架：expr → term → unary → atom，AND 比 OR 紧、NOT 比 AND 紧「就是调用层次」。词法不能用 split（引号里的 AND 不是关键字）；长运算符要排在短运算符前（<= 在 < 之前）；括号让优先级从最低重新开始。解析与存储/求值互不知道对方，所以换存储不用改解析。解析错误要在 set/select 时当场抛，状态保持原样。LeetCode 里对应 Basic Calculator I/II/III、Number of Atoms、Decode String、Parse Lisp Expression。",
+     "language_leaves": [
+      "iteration.pattern-matching",
+      "classes.dataclasses"
+     ],
+     "seen_in": [
+      {
+       "slug": "spreadsheet-engine",
+       "lines": [
+        96,
+        104
+       ],
+       "how": "expr 管 + -，term 管 * /，unary 管负号，atom 管数字/引用/括号/函数"
+      },
+      {
+       "slug": "query-condition-parser",
+       "lines": [
+        144,
+        156
+       ],
+       "how": "or_expr → and_expr → not_expr → primary，文法写在 docstring"
+      },
+      {
+       "slug": "amz-in-memory-db",
+       "lines": [
+        363,
+        366
+       ],
+       "how": "SQL 文本是另一层：分词器 + 递归下降只负责翻译成 Python 调用"
+      },
+      {
+       "slug": "query-condition-parser",
+       "lines": [
+        36,
+        37
+       ],
+       "how": "长运算符写前面；引号内整段算一个 token"
+      }
+     ],
+     "scales": {
+      "leetcode": "basic-calculator-iii",
+      "lld": "query-condition-parser",
+      "system_design": "SQL 解析器 / 规则表达式引擎 / 配置 DSL：词法-语法-语义三层"
+     },
+     "card_ideas": [
+      "为什么「AND 比 OR 紧」就是 _or 调用 _and、_and 调用 _not 的调用层次？加一个新的优先级要改哪里？",
+      "分词为什么不能 split？正则里长运算符为什么要写在短运算符之前？",
+      "括号为什么让优先级「从最低重新开始」？代码里哪一行体现了它？",
+      "解析（语法错误）和求值（类型/列错误）的报错时机怎么设计，才能保证「错误只取决于条件和表结构，不取决于表里有没有数据」？",
+      "把语法树节点写成 frozen dataclass，对缓存和线程共享有什么好处？"
+     ]
+    },
+    {
+     "id": "rule-chain-pipeline",
+     "title": "规则链/流水线：统一接口，引擎只负责按序跑",
+     "summary": "每个步骤/规则/折扣实现同一个小接口；引擎遍历、钳位、记账；加新规则不改引擎。",
+     "why": "billing-tax-engine 的 apply(txn, prior) 看得到前面已经取整的各行（税建在费用之上）；discount-engine 的 PriceEngine 只做遍历、把每笔减免钳在剩余价格以内、记账；image-transform-pipeline 把流水线写成步骤元组，从左到右折叠，并能不碰像素先推演形状；amz-in-memory-db 的 select 是 FROM → JOIN → WHERE → ORDER BY → LIMIT → 投影。共同点：数据在步骤之间流动的类型固定；流水线本身是值（可比较、可拼接、可缓存前缀）。",
+     "language_leaves": [
+      "functions.first-class",
+      "iteration.generators"
+     ],
+     "seen_in": [
+      {
+       "slug": "billing-tax-engine",
+       "lines": [
+        168,
+        174
+       ],
+       "how": "规则按序跑，prior 是已取整的各行；None = 不适用"
+      },
+      {
+       "slug": "amz-discount-engine",
+       "lines": [
+        222,
+        230
+       ],
+       "how": "遍历、钳位、记账，不认识任何具体折扣"
+      },
+      {
+       "slug": "image-transform-pipeline",
+       "lines": [
+        147,
+        153
+       ],
+       "how": "步骤元组折叠；then/+ 返回新流水线"
+      },
+      {
+       "slug": "amz-in-memory-db",
+       "lines": [
+        279,
+        279
+       ],
+       "how": "select 的 FROM → JOIN → WHERE → ORDER BY → LIMIT 管线"
+      },
+      {
+       "slug": "logger",
+       "lines": [
+        498,
+        502
+       ],
+       "how": "记录沿祖先链向上交给沿途每个 handler"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "billing-tax-engine",
+      "system_design": "中间件链 / 过滤器链 / ETL 管线 / 规则引擎（Drools）"
+     },
+     "card_ideas": [
+      "billing-tax-engine 的规则为什么要看见前面各行（prior）？税规则怎样按 kind 汇总而不是靠名字猜？",
+      "PriceEngine 把每笔减免钳在剩余价格以内：这条规则放在引擎里而不放进各折扣里，防的是哪类 bug？",
+      "流水线是值（frozen、可相加）有什么好处？CachedRunner 的前缀缓存依赖了它的哪个性质？",
+      "output_size 先推演形状再执行，把「非法流水线」的拒绝提前到哪里？",
+      "stacking 策略（叠加/只取最大）为什么是引擎的一个枚举参数，而不是第二个引擎类？"
+     ]
+    },
+    {
+     "id": "policy-seam",
+     "title": "策略接缝：把会变的规则做成注入的纯函数/对象",
+     "summary": "核心流程固定，变化点（超售、涨价、匹配、淘汰、找零、叠加）在构造时注入；默认值是策略的下界。",
+     "why": "airline 的 OverbookingPolicy / FarePolicy / RefundPolicy，ride-sharing 的 SurgePolicy / MatchPolicy，vending 的 ChangeMaker 与 Tender，ttl-cache 的 EvictionPolicy，robot-restaurant 的 AssignmentPolicy。判据：这条规则会不会换、换时是否想不碰库存/状态机。no_overbooking、no_surge、no_refund 这类「不作为」的默认值给测试一个最省心的基线。不要过度：只有一种实现、也想不出第二种的地方不要抽接口。与 lld.cross.strategy-pattern 重合，这里补充「接缝放在哪儿」的判断。",
+     "language_leaves": [
+      "functions.first-class",
+      "classes.abc-protocols"
+     ],
+     "seen_in": [
+      {
+       "slug": "airline",
+       "lines": [
+        132,
+        134
+       ],
+       "how": "默认策略 = 不超售，是策略的下界"
+      },
+      {
+       "slug": "ride-sharing",
+       "lines": [
+        319,
+        320
+       ],
+       "how": "涨价与匹配是两个独立注入的函数"
+      },
+      {
+       "slug": "vending-machine",
+       "lines": [
+        312,
+        312
+       ],
+       "how": "找零算法构造时注入，默认用精确背包"
+      },
+      {
+       "slug": "ttl-cache",
+       "lines": [
+        162,
+        166
+       ],
+       "how": "淘汰策略四个方法，缓存不关心内部怎么记账"
+      },
+      {
+       "slug": "amz-robot-restaurant",
+       "lines": [
+        138,
+        138
+       ],
+       "how": "哪台机器人接单是可替换策略函数"
+      },
+      {
+       "slug": "amz-discount-engine",
+       "lines": [
+        217,
+        219
+       ],
+       "how": "叠加策略是枚举参数而非第二个引擎"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "airline",
+      "system_design": "可配置的限流/路由/定价/调度策略：feature flag 与规则引擎"
+     },
+     "card_ideas": [
+      "怎样判断一个变化点值得做成策略接缝？no_overbooking 这类默认策略有什么用？",
+      "vending-machine 的找零默认用 exact_change 而不是 greedy_change：贪心在什么条件下会失败（币箱缺货），举一个具体金额。",
+      "ride-sharing 把「涨价」和「匹配」分成两个策略而不是一个：合并后会怎样？",
+      "策略签名里放的上下文太少或太多各有什么问题？",
+      "什么情况下不该抽策略接口（YAGNI）？"
+     ]
+    },
+    {
+     "id": "effective-dated-versions",
+     "title": "生效时间版本表：按事件发生时刻取规则（effective-dated lookup）",
+     "summary": "规则/价格/政策按生效时间排成升序版本；用事件时间二分取版本，而不是当前配置，历史交易可精确重算。",
+     "why": "一个月前的交易今天重算，数字必须一模一样。billing-tax-engine 用 bisect_right 取版本，StaleVersion 保证生效时间严格递增，更正历史靠发布新版本加调整行，不改旧版本；aws-billing 的 PriceBook 按生效时间保存每个 (服务, 指标) 的价格；double-entry-ledger.balance_at 是序号版本的同一个想法；occupancy-tracker.count_at 是时间版本。要点：用事件时间不用处理时间；边界（恰好等于生效时间）归新版本；没有生效版本时报错而不是按 0 收费。",
+     "language_leaves": [
+      "runtime.stdlib-map",
+      "engineering.money-time"
+     ],
+     "seen_in": [
+      {
+       "slug": "billing-tax-engine",
+       "lines": [
+        149,
+        152
+       ],
+       "how": "bisect_right：恰好等于生效时间属于新版本；v==0 抛 NoActiveRules"
+      },
+      {
+       "slug": "billing-tax-engine",
+       "lines": [
+        137,
+        138
+       ],
+       "how": "生效时间必须严格晚于上一版，否则 StaleVersion"
+      },
+      {
+       "slug": "amz-aws-billing",
+       "lines": [
+        123,
+        140
+       ],
+       "how": "(服务, 指标) → 按生效时间排序的价格版本；月中调价只是多一个版本"
+      },
+      {
+       "slug": "double-entry-ledger",
+       "lines": [
+        195,
+        199
+       ],
+       "how": "第 seq 条分录之后的余额：序号版本上的二分"
+      },
+      {
+       "slug": "amz-occupancy-tracker",
+       "lines": [
+        107,
+        110
+       ],
+       "how": "ts 这一秒结束时的人数：前缀和上的 floor"
+      }
+     ],
+     "scales": {
+      "leetcode": "time-based-key-value-store",
+      "lld": "billing-tax-engine",
+      "system_design": "SCD Type 2 缓慢变化维 / 价格目录版本 / 配置的时间旅行查询（as-of join）"
+     },
+     "card_ideas": [
+      "为什么 quote 用交易发生时间而不是当前配置取规则？更正历史为什么靠「发布新版本 + 调整行」？",
+      "「恰好等于生效时间属于新版本」对应 bisect_left 还是 bisect_right？写出判断 v == 0 的含义。",
+      "StaleVersion 为什么要求生效时间严格晚于上一版？允许乱序发布会出什么问题？",
+      "aws-billing 的用量按发生时刻取价格版本、同一 (服务, 指标) 跨版本分别聚合：为什么不能先全量聚合再套当前价？",
+      "事件时间 vs 处理时间：迟到的交易在这个设计里怎样自然得到正确价格？"
+     ]
+    },
+    {
+     "id": "single-flight-coalescing",
+     "title": "单飞/请求合并：同一件事只做一次，后到者等结果",
+     "summary": "热点 key 同时未命中时只回源一次；重复请求并入第一个请求；占了坑但没结果时返回「进行中」。",
+     "why": "缓存踩踏：热点 key 一过期，所有线程同时打后端。ttl-cache.get_or_load：领跑者在 Event 上登记、后到者等；领跑者先写缓存再 set，无论成败 finally 里移交。idempotent-transfer：重复请求等拥有者出结果而不是各自再执行；notification 的 claim 对「占了坑还没结果」的 key 返回 _PENDING。实现要点：登记 inflight 与判断领跑者在同一把锁里；领跑者失败时等待者要能重新竞争（回到循环），不能假设一定有结果。",
+     "language_leaves": [
+      "concurrency.locks-races",
+      "concurrency.executors"
+     ],
+     "seen_in": [
+      {
+       "slug": "ttl-cache",
+       "lines": [
+        363,
+        392
+       ],
+       "how": "inflight 表 + Event：领跑者回源，后到者等待后重新 get"
+      },
+      {
+       "slug": "idempotent-transfer",
+       "lines": [
+        135,
+        140
+       ],
+       "how": "合并：等第一个请求，而不是再执行一次"
+      },
+      {
+       "slug": "notification-service",
+       "lines": [
+        308,
+        308
+       ],
+       "how": "占坑未出结果时返回「进行中」哨兵"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "ttl-cache",
+      "system_design": "缓存击穿保护（singleflight）/ 请求合并（request coalescing）/ 分布式锁 + 双检"
+     },
+     "card_ideas": [
+      "get_or_load 里领跑者为什么要「先写缓存、后唤醒」？反过来会发生什么？",
+      "领跑者的 loader 抛异常时，inflight 条目必须在 finally 里移除并 set()，否则会怎样？等待者醒来后做什么？",
+      "判断「我是不是领跑者」和登记 inflight 为什么必须在同一次加锁里？",
+      "单飞与幂等键的区别：前者合并进行中的重复，后者还要记住已完成的结果。"
+     ]
+    },
+    {
+     "id": "bounded-containers-every-dict-has-an-exit",
+     "title": "每个只增不减的容器都要有出口：purge / sweep / compact / maxlen",
+     "summary": "任何随 key 数、请求数增长的容器都要有回收机制和可观测的大小指标，否则是保证会发生的 OOM。",
+     "why": "rate-limiter 的 _purge 门槛定死为「扫完之后还剩多少」（而不是和当前条目数比，否则每次操作都新 key 时永远追不上）；ttl-cache 的 expiry_heap_size / inflight_count；kv-store 的 expiring_key_count（「先设 key 级 TTL 再手动删光字段」曾真实泄漏）；notification 的 RateLimiter.tracked_keys 与 IdempotencyStore.purge；pub-sub 的 cursor_count（退订必须减一，否则 BLOCK 被幽灵游标卡死）。共同做法：容器旁边放一个公开的大小属性，测试断言「回收做对了它不会单调增长」。这是把「内存泄漏」变成可测试性质的设计。",
+     "language_leaves": [
+      "memory.leaks-tracemalloc",
+      "memory.weakref",
+      "performance.containers"
+     ],
+     "seen_in": [
+      {
+       "slug": "rate-limiter",
+       "lines": [
+        346,
+        356
+       ],
+       "how": "下一次扫描门槛 = 扫完之后的规模，才是摊还 O(1)"
+      },
+      {
+       "slug": "ttl-cache",
+       "lines": [
+        271,
+        274
+       ],
+       "how": "暴露堆大小，用来断言墓碑没有无限堆积"
+      },
+      {
+       "slug": "kv-store",
+       "lines": [
+        68,
+        72
+       ],
+       "how": "key 级过期表必须随字段删空而缩小"
+      },
+      {
+       "slug": "notification-service",
+       "lines": [
+        241,
+        244
+       ],
+       "how": "窗口内没有记录的 key 会被删掉"
+      },
+      {
+       "slug": "pub-sub",
+       "lines": [
+        186,
+        189
+       ],
+       "how": "退订必须让游标数减一，否则 BLOCK 被幽灵游标卡死"
+      }
+     ],
+     "scales": {
+      "leetcode": "lru-cache",
+      "lld": "rate-limiter",
+      "system_design": "缓存容量与淘汰、日志保留期、限流器 key 的 TTL；监控「基数爆炸」"
+     },
+     "card_ideas": [
+      "rate-limiter 的 _purge 为什么把下一次门槛定为「扫完之后还剩多少条」，而不是和当前条目数比？每次操作都带一个新 key 时两种写法的差别？",
+      "tracked_keys / expiry_heap_size / cursor_count 这些公开计数属性的意义是什么？测试怎样用它们证明「没有泄漏」？",
+      "kv-store 里「先设 key 级 TTL，再手动删光字段」为什么会泄漏？修复在 _write_field 的最后两行做了什么？",
+      "pub-sub 的 unregister 为什么要 notify_all？漏掉会让 BLOCK 策略怎样永久卡死？",
+      "用 weakref / WeakValueDictionary 做回收，和显式 purge 相比，各自适合哪类容器？"
+     ]
+    },
+    {
+     "id": "backpressure-overflow-policy",
+     "title": "背压与溢出策略：丢最旧 / 阻塞 / 拒绝，必须当场选并可观测",
+     "summary": "有界队列满了怎么办是一等设计决策：丢弃（要计数）、阻塞（反压上游）、拒绝（让调用方决定）。",
+     "why": "pub-sub 的 OverflowPolicy 三选一写在主题属性上：DROP_OLDEST（发布者永不阻塞，落后订阅者丢消息，lagged_count 可查）、BLOCK（一条不丢，最慢订阅者反压所有发布者）、REJECT（BackpressureError）。thread-pool 的背压是 submit 前面的信号量，队列本身无界，这样关闭时投递哨兵永不被队满卡住；logger.AsyncHandler 的 drop_when_full；emergency-pubsub 的 Mailbox 满了挤掉「最不重要且最旧」的。共同要求：丢弃必须计数，否则是静默丢数据。 反例（已修复）：logger.AsyncHandler.handle 曾在持有 _state_lock 时调用阻塞的 queue.put；内层 handler 一抛异常，工作线程要拿同一把锁计数，生产者却握着锁等队列腾位置：队列满时死锁。现在锁内只做「检查 _closed + 登记 _inflight」，put 在锁外，close 等 _inflight 归零再放哨兵。",
+     "language_leaves": [
+      "concurrency.queues",
+      "concurrency.locks-races"
+     ],
+     "seen_in": [
+      {
+       "slug": "pub-sub",
+       "lines": [
+        59,
+        64
+       ],
+       "how": "三种溢出策略的代价当场说清"
+      },
+      {
+       "slug": "thread-pool",
+       "lines": [
+        136,
+        136
+       ],
+       "how": "背压放在 submit 前的信号量，队列本身无界"
+      },
+      {
+       "slug": "logger",
+       "lines": [
+        357,
+        381
+       ],
+       "how": "AsyncHandler：丢弃并计数 vs 阻塞；阻塞的 put 不在锁内，close 等已接纳的生产者"
+      },
+      {
+       "slug": "amz-emergency-pubsub",
+       "lines": [
+        157,
+        167
+       ],
+       "how": "满了挤掉最不重要且最旧的一条"
+      },
+      {
+       "slug": "bounded-blocking-queue",
+       "lines": [
+        99,
+        101
+       ],
+       "how": "满则阻塞，超时抛 QueueTimeout，关闭抛 QueueClosed"
+      }
+     ],
+     "scales": {
+      "leetcode": "design-circular-queue",
+      "lld": "pub-sub",
+      "system_design": "消息队列背压：Kafka 配额/Linger、TCP 窗口、HTTP 429、负载 shedding"
+     },
+     "card_ideas": [
+      "三种溢出策略各自的代价是什么？DROP_OLDEST 为什么必须配 lagged_count？",
+      "thread-pool 为什么把背压放在 submit 前的信号量，而不是给队列设上限？关闭时投递哨兵会怎样？",
+      "BLOCK 策略下，没有任何订阅者时发布者会被永久挂住吗？_min_cursor 为什么在无游标时视为「全读完了」？",
+      "Mailbox 满了挤掉最不重要且最旧的：CRITICAL 事件什么时候会被丢，为什么这样设计？",
+      "AsyncHandler 在 drop_when_full=False 时阻塞 put，会和内部错误计数的锁产生什么死锁风险？",
+      "AsyncHandler.handle 持有 _state_lock 去 put 一个满队列，什么条件下与工作线程的错误计数互相等待？怎样改成不在锁内阻塞？"
+     ]
+    },
+    {
+     "id": "retry-backoff-dead-letter",
+     "title": "重试、退避与死信：可靠性写一份，渠道只管怎么发",
+     "summary": "区分可重试与不可重试；指数退避带上限；重试用尽进死信；订阅者的故障不能拖垮发布者。",
+     "why": "notification-service：Provider 只回答「怎么发」，失败抛 TransientDeliveryError（可重试）或 PermanentDeliveryError；重试、退避（RetryPolicy.delay_for = min(base × mult^(n−1), max)）、死信写在派发器里一份，不按渠道复制。emergency-pubsub 的 Subscription.deliver 把任何 Exception 吞成 DeadLetter；pub-sub 的 failure_policy；circuit-breaker 的 backoff_factor 让冷却时间指数增长到 max_open_timeout。jitter 留成参数：测试要可重复，生产要防惊群。",
+     "language_leaves": [
+      "runtime.exceptions",
+      "engineering.robustness"
+     ],
+     "seen_in": [
+      {
+       "slug": "notification-service",
+       "lines": [
+        334,
+        344
+       ],
+       "how": "指数退避带上限；jitter 留成参数"
+      },
+      {
+       "slug": "notification-service",
+       "lines": [
+        550,
+        573
+       ],
+       "how": "永久失败直接死信，瞬时失败按次数重试"
+      },
+      {
+       "slug": "amz-emergency-pubsub",
+       "lines": [
+        108,
+        120
+       ],
+       "how": "订阅者异常变成 DeadLetter，不打断发布线程"
+      },
+      {
+       "slug": "pub-sub",
+       "lines": [
+        448,
+        472
+       ],
+       "how": "重试若干次仍失败交给失败策略；异常是数据不是控制流"
+      },
+      {
+       "slug": "api-circuit-breaker",
+       "lines": [
+        163,
+        163
+       ],
+       "how": "探测失败后冷却时间指数增长到上限"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "notification-service",
+      "system_design": "重试 + 指数退避 + 抖动 + 死信队列（SQS DLQ）；幂等是重试的前提"
+     },
+     "card_ideas": [
+      "为什么要把异常分成 Transient 与 Permanent？只有一种 DeliveryError 会导致什么？",
+      "RetryPolicy.delay_for 为什么要有 max_delay？加 jitter 解决什么问题，为什么本实现把 jitter 留成参数？",
+      "重试逻辑放在派发器而不是每个渠道里，加一个新渠道时少写什么？",
+      "emergency-pubsub 的 deliver 为什么 `except Exception` 而不是 BaseException？KeyboardInterrupt 该怎样处理？",
+      "重试与幂等的关系：没有幂等键的重试会造成什么？"
+     ]
+    },
+    {
+     "id": "derived-not-stored",
+     "title": "派生状态不存储：算出来，不要存一份第二真相",
+     "summary": "能从事实算出来的就算：sunk = len(hits) == len(cells)、started_at 从状态轨迹读、车辆位置从行程链算。",
+     "why": "存两份真相就要在每次变更时同步，漏一处就不一致。battleship 的沉没由 len(hits) == len(cells) 现算（@property），不另存布尔；ride-sharing 的 started_at 直接从状态轨迹读；car-rental 的 location_at 是「最后一段在此之前结束的行程的还车门店」，存一个 current_branch 就对未来预约无法表达；dasher-payout 的钱现算；airline 里座位号不放在 Segment 上，因为改签换班后座位号会留下一份过期副本。例外：为性能而缓存时，要写清谁是真相、有对账（见 conservation-invariant-reconcile）。",
+     "language_leaves": [
+      "classes.properties-descriptors",
+      "classes.pythonic-object"
+     ],
+     "seen_in": [
+      {
+       "slug": "battleship-game",
+       "lines": [
+        68,
+        69
+       ],
+       "how": "沉没现算，不另存布尔"
+      },
+      {
+       "slug": "ride-sharing",
+       "lines": [
+        262,
+        264
+       ],
+       "how": "上车时刻从状态轨迹里读，不另存字段"
+      },
+      {
+       "slug": "car-rental",
+       "lines": [
+        156,
+        168
+       ],
+       "how": "位置是算出来的，不是存下来的"
+      },
+      {
+       "slug": "dasher-payout",
+       "lines": [
+        163,
+        166
+       ],
+       "how": "钱从两端时间点现算"
+      },
+      {
+       "slug": "airline",
+       "lines": [
+        306,
+        309
+       ],
+       "how": "座位号不在 Segment 上，避免改签后留下过期副本"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "battleship-game",
+      "system_design": "CQRS 里读模型是派生的；物化视图 vs 实时计算；缓存失效是「第二真相」的典型成本"
+     },
+     "card_ideas": [
+      "为什么沉没由 @property 现算更安全？存布尔在什么情况下会出错？",
+      "car-rental 为什么不存 current_branch？对「下周这辆车在哪」这个问题它为什么无能为力？",
+      "ride-sharing.started_at 从 history 里读而不是存字段，防的是哪种不一致？",
+      "什么时候必须存派生值（性能），这时应该配上什么机制？",
+      "airline 把座位号放在 FlightInstance 的座位图而不是 Segment，改签时哪份数据会过期？"
+     ]
+    },
+    {
+     "id": "conservation-invariant-reconcile",
+     "title": "守恒不变量与对账：总和恒为零、钞票守恒、缓存可核对",
+     "summary": "把「钱/货只搬运不产生」写成可随时验证的函数；缓存（余额）与真相（账本）之间有 reconcile。",
+     "why": "double-entry-ledger.total(currency) 恒为 0；digital-wallet.ledger_total() 恒为 0，reconcile 用账本推导值核对并纠正缓存余额；atm.cash_up() 验证 装钞总额 = 钞箱 + 出钞口 + 回收箱 + 已取走；stock-brokerage 的 total_cash/total_shares 在成交前后不变。这类函数是测试里最强的断言，也是生产里对账作业的原型。digital-wallet.reconcile 的推导和覆盖在同一次持有账户锁的临界区里完成（曾在锁外先算 derived，并发转账插进来时会把余额「纠正」回旧值，已修复）。",
+     "language_leaves": [
+      "engineering.testing",
+      "engineering.robustness"
+     ],
+     "seen_in": [
+      {
+       "slug": "double-entry-ledger",
+       "lines": [
+        151,
+        153
+       ],
+       "how": "某币种全部账户余额之和；账本正确时恒为 0"
+      },
+      {
+       "slug": "digital-wallet",
+       "lines": [
+        319,
+        332
+       ],
+       "how": "用账本推导值核对缓存；注意 derived 在持锁之前算"
+      },
+      {
+       "slug": "atm",
+       "lines": [
+        456,
+        461
+       ],
+       "how": "钞票守恒：钞箱 + 出钞口 + 回收箱 + 已取走 = 装钞总额"
+      },
+      {
+       "slug": "stock-brokerage",
+       "lines": [
+        458,
+        461
+       ],
+       "how": "成交只在两个账户间搬运，总现金不变"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "double-entry-ledger",
+      "system_design": "财务对账（reconciliation）、账务试算平衡、库存盘点；分布式系统的端到端校验作业"
+     },
+     "card_ideas": [
+      "ledger.total(currency) 恒为 0 是哪条不变量的推论？它在测试里能抓住哪些 bug？",
+      "digital-wallet.reconcile 里 derived 在持锁之前计算，并发转账时会怎样？怎么改？",
+      "atm.cash_up 的四项守恒为什么要包括回收箱和出钞口？漏掉一项会让哪种故障看不出来？",
+      "缓存余额与账本的真相关系：谁是真相？漂移后以谁为准？",
+      "把守恒检查放进每个并发测试的结尾，为什么比单独断言结果更有效？"
+     ]
+    },
+    {
+     "id": "make-unmake-undo-log",
+     "title": "可逆变更：make/unmake、撤销日志、Edit.invert",
+     "summary": "每次真正改动之前记下「怎么变回去」：撤销闭包栈（kv-store）、对调字段的逆操作（text-editor）、落子/撤子（connect-four、chess）。",
+     "why": "kv-store 的 _log(undo)：每次改物理存储前把「怎么变回去」记成闭包；begin 开新一层日志，commit 并入上一层，rollback 逆序重放；不在事务里时日志根本不记录，读写路径零成本。text-editor 的 Edit 是冻结的 splice，invert() 只是把 removed/inserted 对调，所以撤销不需要任何子类。connect-four 的 best_move 用 drop/undo 复用同一个对象，搜索树里不复制棋盘。chess 把被覆盖的旧值（易位权、吃过路兵目标格、五十步计数）随 Move 存下，悔棋是精确回滚而不是重新推演。",
+     "language_leaves": [
+      "functions.scope-closure",
+      "classes.dataclasses"
+     ],
+     "seen_in": [
+      {
+       "slug": "kv-store",
+       "lines": [
+        83,
+        86
+       ],
+       "how": "不在事务里时不记录，读写路径零开销"
+      },
+      {
+       "slug": "kv-store",
+       "lines": [
+        104,
+        104
+       ],
+       "how": "默认参数捕获 prior：避免闭包的 late binding"
+      },
+      {
+       "slug": "text-editor",
+       "lines": [
+        155,
+        157
+       ],
+       "how": "逆操作 = 对调 removed/inserted，撤销不需要子类"
+      },
+      {
+       "slug": "connect-four",
+       "lines": [
+        347,
+        347
+       ],
+       "how": "落子-递归-撤子，复用同一个 Game"
+      },
+      {
+       "slug": "chess",
+       "lines": [
+        481,
+        493
+       ],
+       "how": "着法保存被覆盖的旧值，悔棋精确回滚"
+      }
+     ],
+     "scales": {
+      "leetcode": "n-queens",
+      "lld": "kv-store",
+      "system_design": "数据库的 undo log / WAL 回滚；命令模式的 undo-redo；编辑器 OT/CRDT 的操作可逆性"
+     },
+     "card_ideas": [
+      "kv-store 的撤销日志为什么用闭包 lambda prior=prior 而不是 lambda: ...(prior)？不加默认参数会发生什么？",
+      "嵌套事务：begin/commit/rollback 三个操作对日志栈各做什么？内层 commit 后外层 rollback 为什么还能撤销内层改动？",
+      "text-editor 的 Edit.invert 只对调两个字段：这要求 Edit 满足什么性质（它是一次完整的 splice）？",
+      "make/unmake 与「每步复制整个状态」相比，成本和风险（忘记 undo）各是什么？",
+      "kv-store 的惰性清理动作本身也走 _write_field，回滚它会让过期数据复活吗？代码里是怎么避免的？"
+     ]
+    },
+    {
+     "id": "boundary-slicing-and-marginal-tiers",
+     "title": "边界切分与边际阶梯：沿规则变化点切段，每段单价固定",
+     "summary": "阶梯价只对落在本档的那部分收本档的价；跨高峰/跨日的区间在边界处切开，各算各的，最后一次取整。",
+     "why": "billing-tax-engine.Tiered 与 aws-billing.TieredRate 是同一个边际累进（税率档位的算法）：top = min(amount, upper)，只对 top − lower 收费；dasher-payout 把 [start, end) 在高峰窗口边界处切开，取每小段的中点判断落在哪个窗口（边界属于左还是右就不用操心）；parking-fees 沿 Tariff.next_change 切段，每个日历日取整一次再套当天封顶。逐分钟循环既慢又在秒级精度上不准。",
+     "language_leaves": [
+      "iteration.itertools",
+      "model.numbers"
+     ],
+     "seen_in": [
+      {
+       "slug": "billing-tax-engine",
+       "lines": [
+        188,
+        218
+       ],
+       "how": "((档上限, 费率), ...)：每档只对落在本档的部分收费"
+      },
+      {
+       "slug": "amz-aws-billing",
+       "lines": [
+        79,
+        93
+       ],
+       "how": "边际阶梯，不是整体按档"
+      },
+      {
+       "slug": "dasher-payout",
+       "lines": [
+        186,
+        196
+       ],
+       "how": "在窗口边界处切开，取中点判断窗口"
+      },
+      {
+       "slug": "amz-parking-fees",
+       "lines": [
+        201,
+        203
+       ],
+       "how": "沿价格下一次可能变化的时刻切段"
+      }
+     ],
+     "scales": {
+      "leetcode": "interval-list-intersections",
+      "lld": "billing-tax-engine",
+      "system_design": "分段计费（云账单阶梯价）、分时电价、税率档位；扫描线求区间交"
+     },
+     "card_ideas": [
+      "边际阶梯（marginal）与整体阶梯（whole）的计费结果差在哪里？写出 100 元在 (0-50: 10%, 50+: 5%) 下的两种结果。",
+      "dasher-payout 为什么用小区间的中点去判断落在哪个窗口？",
+      "Tiered.__post_init__ 要求阶梯上限严格递增、最后一档为 None：每个条件挡住哪类错误配置？",
+      "parking-fees 为什么每个日历日取整一次再套封顶，而不是整个停留时间取整一次？",
+      "沿变化点切段的方法和逐分钟循环相比，在精度和性能上各差多少？"
+     ]
+    },
+    {
+     "id": "prefix-sum-bisect-timeline",
+     "title": "前缀和 + 二分：把「某一时刻/某一站的累计值」变成 O(log n)/O(1)",
+     "summary": "事件只追加，所以累计值数组也只追加；查询用 bisect 找位置，再读前缀。",
+     "why": "occupancy-tracker 的 Timeline：counts[i] 是处理完第 i 个事件之后的人数，count_at(ts) = bisect_right 之后读 counts，区间最大值用只追加的线段树；train-fare 的 prefix[i] 使任意两站票价 = 两个前缀和的差；double-entry-ledger 每个账户的 hist 存 balance_after，balance_at 二分。共同想法：不存「当前值」而存「每次变动后的值」，历史查询和区间查询都免费。LeetCode 里对应 Range Sum Query、My Calendar III、Corporate Flight Bookings、Car Pooling。",
+     "language_leaves": [
+      "performance.containers",
+      "iteration.itertools"
+     ],
+     "seen_in": [
+      {
+       "slug": "amz-occupancy-tracker",
+       "lines": [
+        89,
+        111
+       ],
+       "how": "times[i] 与 counts[i] 同下标，append 只追加"
+      },
+      {
+       "slug": "amz-train-fare",
+       "lines": [
+        91,
+        91
+       ],
+       "how": "票价 = |prefix[a] − prefix[b]|，O(1)"
+      },
+      {
+       "slug": "double-entry-ledger",
+       "lines": [
+        137,
+        137
+       ],
+       "how": "每次变动后的余额，供 balance_at 二分"
+      }
+     ],
+     "scales": {
+      "leetcode": "meeting-rooms-ii",
+      "lld": "amz-occupancy-tracker",
+      "system_design": "时间序列数据库的累计指标；对账单的 running balance；日志偏移量的区间查询"
+     },
+     "card_ideas": [
+      "为什么 Timeline 存「每个事件之后的人数」而不是每个事件的 ±1？区间最大值查询因此变成什么？",
+      "train-fare 的 fare(a, b) = |prefix[a] − prefix[b]|：为什么可以忽略 a、b 的先后？",
+      "max_in(start, end) 为什么要把「区间开始时的人数」count_at(start) 也算进候选？",
+      "事件必须按时间不递减到达（OutOfOrder）：这个约束让哪个结构可以只追加？乱序必须支持时怎么办？",
+      "itertools.accumulate 能替代手写前缀和吗？train-fare 没用它是否有理由？"
+     ]
+    },
+    {
+     "id": "predicate-algebra-three-valued",
+     "title": "谓词代数与三值逻辑：可组合的小对象 + NULL 传播",
+     "summary": "每个条件是一个只会 matches(row) 的小对象；& | ~ 组合；NULL 参与的比较是「未知」，只留结果为 True 的行。",
+     "why": "linux-find 的 Filter 用 & | ~ 组合（Specification 模式），新增条件只新增子类；query-condition-parser 与 amz-in-memory-db 的 matches 返回 True/False/None，AND/OR/NOT 按 SQL 规则传播：有一个确定为假则 AND 为假、有一个确定为真则 OR 为真，WHERE 只保留 is True，所以 NOT age >= 18 不会把 age 为 NULL 的行带进来。IS NULL 是唯一不返回「未知」的谓词。索引候选集必须是真实结果的超集，最后复查（Or 只在两边都能缩小时才用索引）。",
+     "language_leaves": [
+      "classes.abc-protocols",
+      "model.dunder-protocols",
+      "classes.operator-overloading"
+     ],
+     "seen_in": [
+      {
+       "slug": "amz-linux-find",
+       "lines": [
+        113,
+        118
+       ],
+       "how": "frozen dataclass 组合子，短路：便宜的条件放左边"
+      },
+      {
+       "slug": "query-condition-parser",
+       "lines": [
+        91,
+        99
+       ],
+       "how": "有一个确定为假，整体为假，哪怕另一边未知"
+      },
+      {
+       "slug": "query-condition-parser",
+       "lines": [
+        118,
+        123
+       ],
+       "how": "未知取反还是未知"
+      },
+      {
+       "slug": "amz-in-memory-db",
+       "lines": [
+        22,
+        22
+       ],
+       "how": "True / False / None(UNKNOWN)，WHERE 只留 is True"
+      },
+      {
+       "slug": "amz-discount-engine",
+       "lines": [
+        96,
+        103
+       ],
+       "how": "Scope.covers：折扣适用哪些行的小谓词"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "query-condition-parser",
+      "system_design": "查询优化器：谓词下推、索引选择；规则引擎中的条件组合；SQL 三值逻辑"
+     },
+     "card_ideas": [
+      "为什么 `NOT age >= 18` 不能把 age 为 NULL 的行选进来？写出 AND/OR/NOT 的三值真值表。",
+      "_Cmp 遇到 NULL 返回 None 而不是 False：区别在 NOT 之下会怎样体现？",
+      "索引只能缩小候选集（超集）而不能直接作结果：为什么最后必须复查？Or 为什么要求两边都能缩小才用索引？",
+      "Filter 的组合子返回新对象而不是修改原对象，对复用和线程共享有什么好处？",
+      "短路求值下「便宜的条件放左边」的前提是什么（无副作用）？"
+     ]
+    },
+    {
+     "id": "deterministic-tie-break",
+     "title": "确定性 tie-break：排序键里写全规则，输出可复现",
+     "summary": "所有「选一个」的地方都把平局规则写进键：(-可售数, 仓库名)、(容量, 桌号)、(到期时间, 发放时间, id)、首次出现序号。",
+     "why": "结果依赖 set/dict 迭代顺序或线程时序就无法测试，也无法在面试里解释。inventory._plan 按 (−free, 仓库名) 排；restaurant._best_fit 的键是 (容量, 桌号)，一次比较同时解决「最小够用」和「编号小的优先」；credit-token 的 _expiry_key；dag-runner 用首次出现序号让同时可选节点的顺序确定；notification 的 target_channels 按名字排序；file-watcher 的 diff 按路径排序。原则：任何影响输出的排序都不能留给 hash 顺序。",
+     "language_leaves": [
+      "model.dict-set-internals",
+      "model.hash-eq"
+     ],
+     "seen_in": [
+      {
+       "slug": "inventory-management",
+       "lines": [
+        199,
+        199
+       ],
+       "how": "先取可售最多的仓库，同样多取名字小的"
+      },
+      {
+       "slug": "restaurant-waitlist",
+       "lines": [
+        45,
+        45
+       ],
+       "how": "(容量, 桌号) 一个元组表达两条规则"
+      },
+      {
+       "slug": "amz-dag-runner",
+       "lines": [
+        84,
+        85
+       ],
+       "how": "同时可选节点按首次出现序号，测试不依赖线程时序"
+      },
+      {
+       "slug": "notification-service",
+       "lines": [
+        182,
+        182
+       ],
+       "how": "扇出顺序可预测，测试不必迁就 set 的迭代顺序"
+      },
+      {
+       "slug": "amz-file-watcher",
+       "lines": [
+        94,
+        94
+       ],
+       "how": "diff 按路径排序，结果是确定的"
+      }
+     ],
+     "scales": {
+      "leetcode": "top-k-frequent-words",
+      "lld": "inventory-management",
+      "system_design": "分布式排序/分页必须有稳定的全序（含主键作最后的 tie-break）"
+     },
+     "card_ideas": [
+      "restaurant 的 _best_fit 用 (容量, 桌号) 元组的 min，为什么同时实现了「最小够用」和「编号小优先」？",
+      "inventory._plan 的排序键 (−free, 仓库名) 里负号和名字各起什么作用？去掉名字会有什么现象？",
+      "set 迭代顺序依赖什么（哈希、插入）？为什么它不能作为输出顺序？",
+      "分页接口为什么必须在排序键末尾加唯一的主键作 tie-break？"
+     ]
+    },
+    {
+     "id": "half-open-intervals",
+     "title": "区间一律左闭右开：[start, end)",
+     "summary": "时间窗口、入住日期、到期时刻都用半开区间：相邻区间首尾相接不重叠，到点即过期。",
+     "why": "hotel-booking 的入住是 [check_in, check_out)：3 号退房和 3 号入住不冲突；dasher-payout 的 PeakWindow 是 [start, end)；inventory 的 _expire_due 注释「有效期是左闭右开」，到点（==）即过期；credit-token 的 Grant 到期时间「不含」；meeting-scheduler 的 Interval.overlaps。半开区间让长度 = end − start、切分不重叠、相邻拼接无缝，是消除 off-by-one 的最省事建模选择。闭区间只在业务语义明确时用（max_in 的 [start, end]）。",
+     "language_leaves": [
+      "engineering.money-time",
+      "model.sequences"
+     ],
+     "seen_in": [
+      {
+       "slug": "hotel-booking",
+       "lines": [
+        83,
+        85
+       ],
+       "how": "入住区间半开，退房当天不算占用"
+      },
+      {
+       "slug": "dasher-payout",
+       "lines": [
+        76,
+        77
+       ],
+       "how": "窗口 [start, end)：_secs(start) <= t < end"
+      },
+      {
+       "slug": "inventory-management",
+       "lines": [
+        244,
+        244
+       ],
+       "how": "有效期左闭右开，到点即过期"
+      },
+      {
+       "slug": "credit-token-balance",
+       "lines": [
+        48,
+        48
+       ],
+       "how": "到期时刻不含"
+      },
+      {
+       "slug": "meeting-scheduler",
+       "lines": [
+        85,
+        87
+       ],
+       "how": "半开区间重叠判断：a.start < b.end and b.start < a.end"
+      }
+     ],
+     "scales": {
+      "leetcode": "meeting-rooms",
+      "lld": "hotel-booking",
+      "system_design": "时间分区（[t0,t1) 的分桶）、窗口聚合；Kafka offset 区间；HTTP Range 是闭区间的反例"
+     },
+     "card_ideas": [
+      "为什么入住日期用 [check_in, check_out)？3 号退房和 3 号入住用闭区间会出什么冲突？",
+      "半开区间的重叠判断 a.start < b.end and b.start < a.end 为什么不需要 ≤？",
+      "到期时刻的语义（含/不含）怎样决定「恰好到点」的测试用例？inventory 里是哪一边？",
+      "闭区间 [start, end] 在什么业务里更自然（max_in）？混用时怎样避免 off-by-one？"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "architecture",
+   "leaves": [
+    {
+     "id": "functional-core-imperative-shell",
+     "title": "函数式核心 + 命令式外壳（functional core, imperative shell）",
+     "summary": "决策逻辑写成不读实例状态的纯函数；有状态的外壳负责加锁、取时间、改真实状态、发通知。",
+     "why": "纯核心可以在副本上试跑（预测）、可以单独穷举测试、可以被多个调用方复用而不重复。restaurant-waitlist 的 _drain、credit-token 的 _replay、spreadsheet 的 evaluate(node, read)、discount-engine 的 PriceEngine.compute（不可变规则集 + 纯函数，可被多线程共享）、billing-tax-engine 的 quote → _run、file-watcher 的 diff 都是这样。外壳薄：拿锁 → 调核心 → 提交 → 锁外通知。这是把「并发正确」和「业务正确」分开验证的最有效方法。",
+     "language_leaves": [
+      "functions.first-class",
+      "engineering.testing"
+     ],
+     "seen_in": [
+      {
+       "slug": "restaurant-waitlist",
+       "lines": [
+        49,
+        52
+       ],
+       "how": "纯函数：真实路径与模拟路径共用，策略只写一遍"
+      },
+      {
+       "slug": "credit-token-balance",
+       "lines": [
+        63,
+        67
+       ],
+       "how": "输入事件表，输出分配和剩余额度，不碰 self"
+      },
+      {
+       "slug": "spreadsheet-engine",
+       "lines": [
+        189,
+        191
+       ],
+       "how": "read 作为函数参数传入，求值不知道格子存在哪"
+      },
+      {
+       "slug": "amz-discount-engine",
+       "lines": [
+        223,
+        223
+       ],
+       "how": "compute 同一购物车算多少次都得到同一张账单"
+      },
+      {
+       "slug": "amz-file-watcher",
+       "lines": [
+        89,
+        94
+       ],
+       "how": "两张快照的差是纯函数，Watcher 只负责拍快照与派发"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "restaurant-waitlist",
+      "system_design": "事件处理器的幂等纯函数 reducer；批处理作业的无状态转换；Elm/Redux 架构"
+     },
+     "card_ideas": [
+      "restaurant-waitlist 把「谁坐哪张桌」写成 _drain 纯函数，得到了哪三种好处（预测、测试、不重复）？",
+      "为什么 spreadsheet 的 evaluate 要接收 read 函数而不是直接访问 self._val？第 1 关与第 3 关的缓存策略因此怎么共用？",
+      "PriceEngine 不可变规则集 + 纯函数 compute，对并发和测试意味着什么？",
+      "「纯核心」里允许就地修改传入参数吗？_drain 修改传入的副本算不算纯？边界在哪？",
+      "外壳应该薄到什么程度？列出外壳必须做、核心不能做的事。"
+     ]
+    },
+    {
+     "id": "lock-lives-with-the-invariant",
+     "title": "锁跟着不变量走：谁拥有不变量，谁拥有锁（aggregate owns its lock）",
+     "summary": "一个不变量涉及哪些数据，就把它们放进同一个对象并由同一把锁保护；服务层只保护目录。",
+     "why": "airline：「任一舱位名单人数 ≤ 座位数 + 超售额度」→ 锁放在 FlightInstance 上（不是 Flight）；pub-sub：游标由 Topic 拥有，因为只有日志自己知道谁读到哪才能实现 BLOCK 反压；ride-sharing：Trip「自己不带锁——行程永远在 DispatchService 的锁里被改」，多一把锁只会多一个锁序问题；DriverPool 的独占持有集中在一个类里。判据：能否用一句话说清这把锁保护的不变量。说不清，就是锁在错的地方，或者粒度错了。",
+     "language_leaves": [
+      "concurrency.locks-races"
+     ],
+     "seen_in": [
+      {
+       "slug": "airline",
+       "lines": [
+        178,
+        192
+       ],
+       "how": "不变量：任一舱位名单人数 ≤ 座位数 + 超售；锁放在实例上"
+      },
+      {
+       "slug": "pub-sub",
+       "lines": [
+        129,
+        130
+       ],
+       "how": "游标归 Topic 管，BLOCK 反压才可能实现"
+      },
+      {
+       "slug": "ride-sharing",
+       "lines": [
+        226,
+        227
+       ],
+       "how": "实体不带锁，永远在服务锁里被改"
+      },
+      {
+       "slug": "ride-sharing",
+       "lines": [
+        372,
+        378
+       ],
+       "how": "不变量：一位司机任一时刻至多被一张要约或一趟行程占着"
+      },
+      {
+       "slug": "inventory-management",
+       "lines": [
+        13,
+        13
+       ],
+       "how": "一把锁覆盖 on_hand/reserved/堆/预留表：同一组不变量"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "airline",
+      "system_design": "分区 / 聚合根：一个聚合在一个分区里串行处理（Actor 模型、Kafka 同 key 同分区）"
+     },
+     "card_ideas": [
+      "airline 的锁为什么在 FlightInstance 而不在 Flight？用一句话说出这把锁保护的不变量。",
+      "pub-sub 为什么让 Topic 拥有所有订阅游标，而不是让每个 Subscription 自己管游标？",
+      "ride-sharing 的 Trip 不带锁、由 DispatchService 的锁保护：为什么「多一把锁只会多一个锁序问题」？",
+      "怎么判断锁粒度错了？给出一个「说不清保护的不变量」的症状。",
+      "「单分区串行处理」的 Actor 模型和这里的「一个对象一把锁」有什么对应关系？"
+     ]
+    },
+    {
+     "id": "lock-as-transaction-boundary",
+     "title": "一把锁就是一个事务：临界区边界 = 原子性边界",
+     "summary": "单进程里，一把锁圈住的区间就是数据库事务的替身：检查、修改、写日志要么都在里面，要么都不在。",
+     "why": "double-entry-ledger 注释「代替数据库事务；reverse 会重入 post」；idempotent-transfer 的 _money 锁「检查余额 + 扣款 + 存结果，代替账户行锁」、_keys 表「生产里是唯一约束」；inventory 与 stock-brokerage 的 place_order「全程在一把锁里」；atm 明确选一把粗锁：一台机器只有一个出钞口，细化锁只换来死锁风险。要点：把外部调用排除在事务之外；写出每把锁在生产里对应什么（行锁 / 唯一约束 / 乐观版本 / 分布式锁）；粗锁不是错，错的是没想过它为什么够用。",
+     "language_leaves": [
+      "concurrency.locks-races",
+      "concurrency.choosing"
+     ],
+     "seen_in": [
+      {
+       "slug": "double-entry-ledger",
+       "lines": [
+        109,
+        109
+       ],
+       "how": "RLock 圈住日志、去重表、余额、历史、冻结"
+      },
+      {
+       "slug": "idempotent-transfer",
+       "lines": [
+        102,
+        102
+       ],
+       "how": "两把锁：_mu 保护键表，_money 保护余额检查+扣款+存结果"
+      },
+      {
+       "slug": "stock-brokerage",
+       "lines": [
+        482,
+        486
+       ],
+       "how": "校验 → 预留 → 撮合 → 逐笔结算 → 释放剩余预留，全程一把锁"
+      },
+      {
+       "slug": "atm",
+       "lines": [
+        410,
+        410
+       ],
+       "how": "粗锁是有意选择：没有并行度可榨"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "double-entry-ledger",
+      "system_design": "单库事务 vs 分布式事务（2PC/Saga）；行锁、乐观锁、唯一约束；事务隔离级别的选择"
+     },
+     "card_ideas": [
+      "idempotent-transfer 里每把锁在生产里分别对应什么（唯一约束、账户行锁）？",
+      "为什么 ATM 选一把粗锁？「细化锁只换来死锁风险」在什么前提下成立？",
+      "stock-brokerage.place_order 把预留、撮合、结算放在同一把锁里，并让撮合与结算「不会再失败一次」：这个设计依赖了哪个前置步骤？",
+      "把外部调用放进事务的后果是什么？本库里谁是反例、谁做对了？",
+      "单进程的锁模型换成分布式后，哪些保证丢了、需要用什么补回来？"
+     ]
+    },
+    {
+     "id": "dependency-direction-consumer-owns-interface",
+     "title": "依赖方向：接口由使用方定义，核心不依赖基础设施",
+     "summary": "Watcher 定义自己需要的 FileSystem.scan；业务核心不 import 磁盘/网络/时间；基础设施去适配核心。",
+     "why": "file-watcher 把「读磁盘」藏在只有一个方法的 FileSystem 协议后面，DiskFileSystem 和测试的内存假实现是两个适配器；online-shopping 的 PaymentGateway/Fulfilment 协议由下单流程定义，契约写明幂等语义（同一个键重复扣款只扣一次）；atm 的 BankNetwork 协议里没有「直查账户」，ATM 走不到；stock-brokerage 的 OrderBook 只认股数不认钱。判据：核心的 import 列表里不应出现 os/socket/time/requests；接口里的方法数是消费者实际用到的最小集合。",
+     "language_leaves": [
+      "classes.abc-protocols",
+      "types.protocols-generics"
+     ],
+     "seen_in": [
+      {
+       "slug": "amz-file-watcher",
+       "lines": [
+        55,
+        58
+       ],
+       "how": "消费者定义的最小接口：scan 一个方法"
+      },
+      {
+       "slug": "online-shopping",
+       "lines": [
+        449,
+        461
+       ],
+       "how": "契约包含幂等语义：同键重复扣款只扣一次，对没扣过的键退款是无操作"
+      },
+      {
+       "slug": "atm",
+       "lines": [
+        320,
+        320
+       ],
+       "how": "银行协议没有「直查账户」，ATM 走不到测试用的后门"
+      },
+      {
+       "slug": "stock-brokerage",
+       "lines": [
+        309,
+        316
+       ],
+       "how": "簿子只认股数不认钱，资金规则换了不动撮合"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "amz-file-watcher",
+      "system_design": "六边形架构 / ports & adapters；防腐层（anti-corruption layer）；消费者驱动契约测试"
+     },
+     "card_ideas": [
+      "FileSystem 协议为什么由 Watcher 一侧定义，而不是由磁盘实现一侧定义？这对测试意味着什么？",
+      "PaymentGateway 的契约要求「用同一个键重复扣款只扣一次」，这条写在 Protocol 的 docstring 里有什么意义？",
+      "OrderBook 只认股数不认钱：如果让它也管资金，撮合测试会多出哪些依赖？",
+      "怎样用 import 列表快速判断一个模块是不是干净的「核心」？",
+      "ATM 为什么不能直接查账户余额（BankNetwork 里故意没有这个方法）？"
+     ]
+    },
+    {
+     "id": "source-of-truth-and-derived-caches",
+     "title": "真相与派生缓存：谁是真相、谁是投影、漂移怎么办",
+     "summary": "每份数据只能有一个真相来源；其余是可重建的投影，投影与真相之间要有核对手段。",
+     "why": "double-entry-ledger：「余额只是日志的缓存，不是独立的事实」；digital-wallet：账户余额是账本的缓存投影，reconcile 以账本为准；query-condition-parser：_rows 是真相，_index 在同一个方法里同步更新；spreadsheet：_node 是真相，_deps/_users 两张边表与 _val 缓存都可重建；atm：账户余额与钞箱存量是两个权威，取款跨两个权威没有原子性可言，顺序和冲正代替原子性。写入路径要同步更新所有投影（同一个临界区），读路径只信投影但可用 reconcile 抽查。",
+     "language_leaves": [
+      "model.mutability",
+      "engineering.robustness"
+     ],
+     "seen_in": [
+      {
+       "slug": "double-entry-ledger",
+       "lines": [
+        103,
+        104
+       ],
+       "how": "派生索引：当前余额，随写入同步更新"
+      },
+      {
+       "slug": "digital-wallet",
+       "lines": [
+        319,
+        320
+       ],
+       "how": "账本永远是被信任的一方，缓存漂移就被它覆盖"
+      },
+      {
+       "slug": "query-condition-parser",
+       "lines": [
+        255,
+        255
+       ],
+       "how": "索引与行在同一个方法里更新，不会对不上"
+      },
+      {
+       "slug": "spreadsheet-engine",
+       "lines": [
+        230,
+        232
+       ],
+       "how": "_deps/_users 两张边表由 set 同时维护"
+      },
+      {
+       "slug": "atm",
+       "lines": [
+        5,
+        6
+       ],
+       "how": "两个权威（账户、钞箱）没有原子性可言"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "digital-wallet",
+      "system_design": "CQRS 读模型；缓存与数据库一致性（cache-aside、write-through）；对账与最终一致"
+     },
+     "card_ideas": [
+      "digital-wallet 里余额缓存和账本哪个是真相？reconcile 的方向为什么只能是「账本覆盖缓存」？",
+      "Table 的 _index 为什么要在 insert 里同步更新？漏了一处会出现什么症状？",
+      "ATM 取款跨「账户」与「钞箱」两个权威：为什么说没有原子性可言？顺序定死后失败时分别回滚哪一半？",
+      "spreadsheet 的 _deps 与 _users 是同一信息的两种方向：维护它们的不变量是什么？",
+      "什么信号表明系统里存在「两份真相」？"
+     ]
+    },
+    {
+     "id": "interface-only-when-earned",
+     "title": "接口是挣来的：什么时候不抽象",
+     "summary": "只有一个实现、一个方法、想不出第二种的地方，不抽接口、不加抽象基类；真有两种行为不同的实现才抽。",
+     "why": "vending-machine 的 Tender 注释：「真有两种行为不同的实现，所以这里的协议是挣来的，不是摆设」（硬币托管 vs 刷卡授权）；pub-sub 写明「只有一个方法的角色不值得一个抽象基类」，处理器就是函数；airline 的三个策略是函数别名；splitwise 说明为什么这里却需要 ABC（共享算法）。反过来，该抽的地方没抽：notification 在一个文件里重写了 RateLimiter 与 IdempotencyStore，与单独的 rate-limiter、idempotent-transfer 题目重复，说明「可复用小部件」没有被抽成共享模块（单题自包含的代价）。",
+     "language_leaves": [
+      "classes.abc-protocols",
+      "functions.first-class"
+     ],
+     "seen_in": [
+      {
+       "slug": "vending-machine",
+       "lines": [
+        197,
+        198
+       ],
+       "how": "两种行为不同的支付方式，协议是挣来的"
+      },
+      {
+       "slug": "pub-sub",
+       "lines": [
+        21,
+        22
+       ],
+       "how": "处理器就是函数，不值得一个抽象基类"
+      },
+      {
+       "slug": "airline",
+       "lines": [
+        126,
+        129
+       ],
+       "how": "三个策略都是函数别名"
+      },
+      {
+       "slug": "splitwise",
+       "lines": [
+        90,
+        94
+       ],
+       "how": "反例的反面：共享算法所以是 ABC"
+      },
+      {
+       "slug": "notification-service",
+       "lines": [
+        220,
+        220
+       ],
+       "how": "同一概念在多个题里各写一份，没有共享"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "vending-machine",
+      "system_design": "接口隔离与「规则三」：第三次重复再抽象；平台化时机的判断"
+     },
+     "card_ideas": [
+      "Tender 的协议为什么说是「挣来的」？两个实现各自有什么真正不同的行为？",
+      "pub-sub 的 Handler 为什么是 Callable 而不是 ABC？出现什么需求才值得升级？",
+      "notification-service 自带了 RateLimiter 和 IdempotencyStore，与独立题目重复：什么时候该抽成共享模块，什么时候单题自包含更好？",
+      "「为将来的扩展预留接口」的成本是什么？怎样判断某个接口是仪式而不是价值？"
+     ]
+    },
+    {
+     "id": "entity-vs-value-object",
+     "title": "实体 vs 值对象：身份、可变性与谁拥有状态",
+     "summary": "有身份、有生命周期、被锁保护的是实体；只由属性定义、可以随便共享的是值。同一个现实物件常常要拆成两半。",
+     "why": "airline：Seat 是值（座位的物理属性），占用属于 FlightInstance 的座位图；Booking 是可变实体 + 转移表；chess：棋子是值，位置只由 Board 的稀疏字典说了算（杜绝两份真源）；library：Title 与 Copy 分开（搜索挂书目，借还挂副本，预约挂书目）；movie-booking：Seat 被所有场次共用且不可变，每场的占用状态在 Show 里；ride-sharing：Driver 是 frozen 记录，Trip 是有状态实体。判据：这个属性是它自己的，还是它「在某个上下文里」的？后者应放在上下文里，放错就产生两份真相。",
+     "language_leaves": [
+      "classes.dataclasses",
+      "model.names-objects",
+      "model.hash-eq"
+     ],
+     "seen_in": [
+      {
+       "slug": "airline",
+       "lines": [
+        63,
+        71
+       ],
+       "how": "座位是物理椅子（值）；占用状态在 FlightInstance._seats"
+      },
+      {
+       "slug": "airline",
+       "lines": [
+        178,
+        181
+       ],
+       "how": "实体：持有库存、座位图和一把私有锁"
+      },
+      {
+       "slug": "chess",
+       "lines": [
+        3,
+        3
+       ],
+       "how": "棋子不知道自己在哪；位置只在 Board 的字典里"
+      },
+      {
+       "slug": "library",
+       "lines": [
+        69,
+        69
+       ],
+       "how": "书目与副本分开，三句话决定全部数据结构"
+      },
+      {
+       "slug": "movie-booking",
+       "lines": [
+        245,
+        248
+       ],
+       "how": "Seat 全场次共用且不可变；每场的占用状态由 Show 持有"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "airline",
+      "system_design": "DDD 的实体/值对象/聚合；数据建模中「物理资产」与「库存占用」两张表"
+     },
+     "card_ideas": [
+      "为什么座位号不放在 Segment 上、也不放在 Seat 上，而放在 FlightInstance 的座位图里？放错会留下什么过期副本？",
+      "chess 里棋子是值、位置由 Board 说了算：把 position 存在 Piece 上会出现什么不一致？",
+      "library 的 Title 与 Copy 为什么要分开？搜索、借还、预约各挂在哪一个上？",
+      "判断一个属性属于对象本身还是属于它所在的上下文，有什么简单的判据？",
+      "值对象可以被所有场次/航班共享，这对内存和并发各有什么好处？"
+     ]
+    },
+    {
+     "id": "error-boundaries-and-failure-taxonomy",
+     "title": "错误边界与失败分类：哪些吞、哪些抛、哪些变成值",
+     "summary": "订阅者/回调的异常在边界处隔离；业务拒绝变成带原因的值；可重试与不可重试分类；补偿失败不能被吞。",
+     "why": "每个 Subscription.deliver 吞下订阅者异常，换成 DeadLetter；file-watcher 一个回调抛异常只记录；circuit-breaker 的 on_state_change 回调失败只写日志；notification 的 DeliveryStatus 有 11 种终局，每一种「没发出去」都有名字（调用方才知道要不要重试、要不要告诉用户）；spreadsheet 把 EvalError 存进缓存当值，下游读到会重新抛出；Saga 的补偿失败收进字段。规则：边界上隔离别人的故障，边界内保留自己的失败原因。 thread-pool 的 Future._invoke 同样隔离 done-callback：回调在 worker 线程里执行，抛异常只 log.exception，不杀 worker（曾直接调用，回调一抛就让单 worker 池之后所有任务永远不完成，已修复）。",
+     "language_leaves": [
+      "runtime.exceptions",
+      "engineering.robustness"
+     ],
+     "seen_in": [
+      {
+       "slug": "amz-emergency-pubsub",
+       "lines": [
+        111,
+        113
+       ],
+       "how": "吞异常，换成 DeadLetter；BaseException 放行"
+      },
+      {
+       "slug": "amz-file-watcher",
+       "lines": [
+        192,
+        192
+       ],
+       "how": "一个回调抛异常只被记录、不影响别人"
+      },
+      {
+       "slug": "notification-service",
+       "lines": [
+        57,
+        71
+       ],
+       "how": "每一种「没发出去」都必须有自己的名字"
+      },
+      {
+       "slug": "spreadsheet-engine",
+       "lines": [
+        294,
+        294
+       ],
+       "how": "错误即值：出错状态存进缓存，下游读取时重新抛出"
+      },
+      {
+       "slug": "online-shopping",
+       "lines": [
+        403,
+        403
+       ],
+       "how": "补偿自己失败也要报告，不能吞"
+      },
+      {
+       "slug": "thread-pool",
+       "lines": [
+        95,
+        101
+       ],
+       "how": "done-callback 抛异常只记日志，不杀 worker 线程，也不影响其余回调"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "notification-service",
+      "system_design": "HTTP 状态码语义、gRPC 错误码、可重试/不可重试分类、死信与告警"
+     },
+     "card_ideas": [
+      "为什么 Subscription.deliver 吞掉订阅者异常却放行 BaseException？",
+      "DeliveryStatus 把「没发出去」分成 9 种名字，只用一个 FAILED 会丢掉什么决策信息？",
+      "spreadsheet 把 EvalError 实例存进缓存而不是让重算抛出：不这样做，下游格子会处于什么状态？",
+      "什么错误该吞（边界上隔离）、什么错误该抛、什么错误该变成返回值？给出判据。",
+      "吞异常之后至少要留下什么（计数、死信、日志），为什么？",
+      "thread-pool 里 add_done_callback 的回调抛异常，为什么会让工作线程死掉？应该在哪一层捕获、捕获后记录到哪里？"
+     ]
+    },
+    {
+     "id": "seams-for-testing",
+     "title": "测试接缝：时钟、文件系统、sleep、可观测计数器",
+     "summary": "设计时就把「可替换的外部依赖」和「可断言的内部状态」留成接缝，让测试不需要 sleep、不需要猜、不需要私有属性。",
+     "why": "注入的 clock；FileSystem 假实现；pub-sub 的 sleep 注入；task-scheduler 的 run_pending(now)；以及一批只为测试存在的计数器：bounded-blocking-queue.waiting_putters（「测试用它确认一个线程真的已经阻塞，而不是靠猜一个 sleep」）、thread-pool.waiting_submitters、linux-find 的 FindStats、Table.last_scan_count（证明索引真的缩小了扫描）、spreadsheet.eval_count、CachedRunner.steps_executed。这些让「惰性」「剪枝」「缓存命中」这类性能性质变成可断言的确定性事实。",
+     "language_leaves": [
+      "engineering.testing",
+      "concurrency.threads"
+     ],
+     "seen_in": [
+      {
+       "slug": "bounded-blocking-queue",
+       "lines": [
+        84,
+        88
+       ],
+       "how": "测试靠它确认线程真的阻塞，而不是猜 sleep"
+      },
+      {
+       "slug": "amz-linux-find",
+       "lines": [
+        208,
+        211
+       ],
+       "how": "证明惰性和剪枝真的发生"
+      },
+      {
+       "slug": "query-condition-parser",
+       "lines": [
+        289,
+        289
+       ],
+       "how": "证明索引真的缩小了扫描行数"
+      },
+      {
+       "slug": "spreadsheet-engine",
+       "lines": [
+        290,
+        290
+       ],
+       "how": "证明只重算受影响的格子，每格恰好一次"
+      },
+      {
+       "slug": "image-transform-pipeline",
+       "lines": [
+        248,
+        248
+       ],
+       "how": "证明前缀缓存命中后少跑了几步"
+      },
+      {
+       "slug": "task-scheduler",
+       "lines": [
+        266,
+        269
+       ],
+       "how": "不开线程、不 sleep 地驱动调度逻辑"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "bounded-blocking-queue",
+      "system_design": "可观测性：把内部状态暴露为指标（队列深度、缓存命中率）；混沌/确定性模拟测试"
+     },
+     "card_ideas": [
+      "waiting_putters 这个只为测试存在的属性，解决了并发测试里的什么问题？生产里它还有什么用？",
+      "Table.last_scan_count 为什么是测试「索引生效」的正确断言，而不是只比较查询结果？",
+      "sleep 注入（pub-sub 的 sleep 参数）与时钟注入分别消除了测试里的哪种等待？",
+      "为测试暴露内部计数器会不会破坏封装？怎样的暴露方式是可接受的（只读属性、快照）？"
+     ]
+    },
+    {
+     "id": "in-process-to-distributed",
+     "title": "从单进程到分布式：每个原语在生产里换成什么",
+     "summary": "锁、Condition、堆、字典、日志、时钟，各自在分布式里有对应物；哪些保证会丢，用什么补。",
+     "why": "solutions 的注释常常点明生产对应物：idempotent-transfer 的 _keys「生产里是唯一约束」、_money「代替账户行锁」；double-entry 的 RLock「代替数据库事务」；pub-sub 的保留日志 + 游标 ≈ Kafka 分区与消费者位点；rate-limiter 的分片锁 ≈ 按 key 分片到 Redis（Lua 原子脚本）；ttl-cache 的到期堆 ≈ Redis 过期 + 惰性删除；熔断器的状态是每实例的，分布式需要决定是否共享；单机 counter 的 ID 在多实例冲突。关键是每个对应关系丢了什么：原子性、顺序、时钟、故障独立性。",
+     "language_leaves": [
+      "concurrency.choosing",
+      "concurrency.multiprocessing"
+     ],
+     "seen_in": [
+      {
+       "slug": "idempotent-transfer",
+       "lines": [
+        97,
+        97
+       ],
+       "how": "键表 → 数据库唯一约束"
+      },
+      {
+       "slug": "idempotent-transfer",
+       "lines": [
+        102,
+        102
+       ],
+       "how": "_money 锁 → 账户行锁 / 乐观版本"
+      },
+      {
+       "slug": "pub-sub",
+       "lines": [
+        124,
+        130
+       ],
+       "how": "有界保留日志 + 游标 ≈ Kafka 分区 + 消费位点"
+      },
+      {
+       "slug": "rate-limiter",
+       "lines": [
+        276,
+        282
+       ],
+       "how": "分片 ≈ 按 key 分片的 Redis 实例"
+      },
+      {
+       "slug": "ttl-cache",
+       "lines": [
+        97,
+        105
+       ],
+       "how": "到期堆 ≈ Redis 的过期键索引"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "idempotent-transfer",
+      "system_design": "整个题目的系统设计版本：分布式限流、分布式幂等、消息队列、分布式缓存、支付账本"
+     },
+     "card_ideas": [
+      "idempotent-transfer 的两把锁在生产里分别对应什么？换成分布式后，丢掉了什么保证？",
+      "pub-sub 的保留日志 + 游标和 Kafka 的分区 + 消费位点是什么对应关系？drop-oldest 对应 Kafka 的什么机制？",
+      "进程内的令牌桶变成多机限流有哪几种做法（集中式 Redis、本地配额 + 同步、近似）？各自的误差来源？",
+      "熔断器的状态是每实例的还是全局共享的？各自的利弊？",
+      "单机自增 ID 在多实例下怎么办？"
+     ]
+    },
+    {
+     "id": "event-time-vs-processing-time",
+     "title": "事件时间 vs 处理时间：乱序、重复、迟到的事实",
+     "summary": "用事件发生的时间做所有计算，处理时间永远不进业务逻辑；乱序和重复靠存事实 + 重放吸收。",
+     "why": "billing-tax-engine 的 Txn.ts 注释「永远不用处理时间」，一个月前的交易今天重算数字不变；credit-token-balance 的事件按时间戳排序后重放，迟到事件插进去，分配自然变化；dasher-payout 的事件可乱序到达、重复上报被忽略、事后更正不需要回滚；occupancy-tracker 把倒流的事件拒绝（OutOfOrder）并把重复事件当成功忽略；aws-billing 的用量按发生时刻取价格版本。判据：这个系统接受乱序吗？接受就存事实重放；不接受就明确拒绝并写在契约里。",
+     "language_leaves": [
+      "engineering.money-time"
+     ],
+     "seen_in": [
+      {
+       "slug": "billing-tax-engine",
+       "lines": [
+        51,
+        51
+       ],
+       "how": "交易发生时间，永远不用处理时间"
+      },
+      {
+       "slug": "credit-token-balance",
+       "lines": [
+        69,
+        69
+       ],
+       "how": "按 (时间, 先额度包后扣费, id) 排序后重放，乱序到达无所谓"
+      },
+      {
+       "slug": "dasher-payout",
+       "lines": [
+        140,
+        151
+       ],
+       "how": "乱序到达、重复上报忽略、冲突报错"
+      },
+      {
+       "slug": "amz-occupancy-tracker",
+       "lines": [
+        150,
+        150
+       ],
+       "how": "倒流的事件被拒绝；与上一事件完全相同的重试返回 False"
+      },
+      {
+       "slug": "amz-aws-billing",
+       "lines": [
+        221,
+        221
+       ],
+       "how": "用量按发生时刻取当时生效的价格"
+      }
+     ],
+     "scales": {
+      "leetcode": "time-based-key-value-store",
+      "lld": "credit-token-balance",
+      "system_design": "流处理的 event time / watermark / late data（Flink、Beam）；账务系统的 as-of 时间"
+     },
+     "card_ideas": [
+      "为什么说计费逻辑里「永远不用处理时间」？一个晚到的事件在这个设计里自然得到正确结果的机制是什么？",
+      "occupancy-tracker 为什么选择拒绝倒流事件（OutOfOrder）而不是支持乱序？这换来了什么数据结构上的简化？",
+      "dasher-payout 的事件更正（correct_event）为什么不需要重算旧账？",
+      "重复上报应该被忽略还是报错？dasher 对「完全相同的重复」与「同类事件不同时间」分别怎么处理，依据是什么？",
+      "乱序重放如何保证已接受的扣费不会被迟到的额度事件「饿死」？"
+     ]
+    },
+    {
+     "id": "order-side-effects-by-reversibility",
+     "title": "按可逆性给副作用排序：先做会失败的、可回滚的，最后做不可撤销的",
+     "summary": "多步操作的顺序不是随意的：把最可能失败、最容易撤销的放前面，把无法撤销（出钞、发货、通知）的放最后。",
+     "why": "atm 取款：先从钞箱抽出钞票（本地、可放回）→ 再请银行扣账（远端、可冲正）→ 最后交到出钞口（物理、不可撤销）；失败时回滚本地那一半，远端那一半发冲正。movie-booking.confirm：付款前先延长持有期，付款失败释放座位；amz-configurable-cache.put：会失败的 store.put 放最前，策略更新在后；idempotent-transfer：外部风控在动钱之前。online-shopping 的 Saga 把这件事通用化：每步成对声明 action 与 compensation。",
+     "language_leaves": [
+      "runtime.exceptions"
+     ],
+     "seen_in": [
+      {
+       "slug": "atm",
+       "lines": [
+        402,
+        406
+       ],
+       "how": "顺序：钞箱抽钞 → 银行扣账 → 出钞口；失败回滚本地、冲正远端"
+      },
+      {
+       "slug": "movie-booking",
+       "lines": [
+        487,
+        488
+       ],
+       "how": "先延长持有期，再锁外付款，最后落单"
+      },
+      {
+       "slug": "amz-configurable-cache",
+       "lines": [
+        334,
+        337
+       ],
+       "how": "会失败的写存储在前，成功之后才动策略"
+      },
+      {
+       "slug": "idempotent-transfer",
+       "lines": [
+        154,
+        155
+       ],
+       "how": "外部步骤在动钱之前"
+      },
+      {
+       "slug": "online-shopping",
+       "lines": [
+        392,
+        396
+       ],
+       "how": "成对声明 action 与 compensation"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "atm",
+      "system_design": "两阶段提交的 prepare 先做可回滚的；outbox 把不可撤销的通知放到事务提交之后"
+     },
+     "card_ideas": [
+      "atm 为什么把出钞放在最后一步？如果先出钞再扣账，失败时无法挽回什么？",
+      "取款的「本地一半」与「远端一半」为什么回滚方式不同？",
+      "amz-configurable-cache.put 为什么先写存储再动策略？淘汰失败时怎样撤回新值？",
+      "给一个多步操作排序时，怎样判断每一步的可逆性和失败概率？",
+      "通知（邮件/短信）为什么应当放在事务提交之后，而不是事务之内？"
+     ]
+    },
+    {
+     "id": "thin-service-fat-domain",
+     "title": "服务层薄、领域对象厚：编排者不持有不变量",
+     "summary": "Service/Facade 管目录、算钱、走生命周期、串步骤；库存、座位、订单簿这类带不变量的状态在领域对象里。",
+     "why": "airline.AirlineService 「库存一个字节都不存」，只管目录和订单表，库存在 FlightInstance；stock-brokerage 的 Brokerage 管钱与结算，OrderBook 管撮合；movie-booking 的服务不保存座位，Show 保存；amz-parking-fees 里 Tariff（纯数据）→ FeeEngine（切段计算）→ FeeDesk（票的有状态入口）三层；notification 的 NotificationService「只负责把这些串起来」。好处：服务层测试只测编排，领域对象测试不需要服务；锁纪律更简单（服务锁与对象锁不嵌套）。",
+     "language_leaves": [
+      "classes.pythonic-object"
+     ],
+     "seen_in": [
+      {
+       "slug": "airline",
+       "lines": [
+        439,
+        439
+       ],
+       "how": "服务管目录、算钱、走生命周期"
+      },
+      {
+       "slug": "stock-brokerage",
+       "lines": [
+        414,
+        420
+       ],
+       "how": "钱在这里动；OrderBook 只管撮合"
+      },
+      {
+       "slug": "movie-booking",
+       "lines": [
+        523,
+        528
+       ],
+       "how": "服务只拍场次快照，逐场清扫，不嵌套锁"
+      },
+      {
+       "slug": "amz-parking-fees",
+       "lines": [
+        227,
+        233
+       ],
+       "how": "有状态入口：开着的票只在一张表里，结算时锁内取走"
+      },
+      {
+       "slug": "notification-service",
+       "lines": [
+        393,
+        397
+       ],
+       "how": "只负责把偏好、限额、队列、重试串起来"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "airline",
+      "system_design": "API 网关/BFF 只编排，领域服务拥有数据；Saga 编排者不持有业务状态"
+     },
+     "card_ideas": [
+      "AirlineService 为什么「库存一个字节都不存」？把库存放在服务里会如何影响锁纪律？",
+      "FeeEngine 与 FeeDesk 分开，各自可以单独测试什么？",
+      "movie-booking.release_expired_holds 先拍场次快照、出锁后再逐场加锁：这避免了什么嵌套？",
+      "怎样识别一个 Service 类「过胖」（它在持有不变量）？"
+     ]
+    },
+    {
+     "id": "lock-hierarchy-and-reentrancy",
+     "title": "调用方向与可重入：谁能调谁，回调时手里不能有锁",
+     "summary": "整个调用图画成单向的层次：服务→池→对象，下层从不回调上层；观察者永远在锁外被调用。",
+     "why": "ride-sharing 的纪律：「池子从不回调 DispatchService。锁序因此只有一个方向（服务锁 → 池锁）」；airline 的服务锁绝不在持有时去拿 FlightInstance 的锁；movie-booking 先拍场次快照再逐场加锁；splitwise 的注释「在锁内回调等于把自己的临界区交给别人的代码决定长短」；double-entry-ledger 用 RLock 是因为 reverse 要重入 post（有意识的重入，不是图省事）。RLock 能掩盖设计问题：可重入只在「同一线程内部的自调用」成立，一旦回调到外部代码就可能把不变量暴露在半状态。",
+     "language_leaves": [
+      "concurrency.locks-races"
+     ],
+     "seen_in": [
+      {
+       "slug": "ride-sharing",
+       "lines": [
+        379,
+        380
+       ],
+       "how": "锁序只有一个方向，不存在环"
+      },
+      {
+       "slug": "airline",
+       "lines": [
+        444,
+        446
+       ],
+       "how": "服务锁绝不在持有时去拿实例锁"
+      },
+      {
+       "slug": "movie-booking",
+       "lines": [
+        523,
+        528
+       ],
+       "how": "先拍场次快照，出锁后逐场加锁，不形成嵌套"
+      },
+      {
+       "slug": "splitwise",
+       "lines": [
+        480,
+        482
+       ],
+       "how": "锁外通知，事件自带全部信息"
+      },
+      {
+       "slug": "double-entry-ledger",
+       "lines": [
+        109,
+        109
+       ],
+       "how": "RLock 是为了 reverse 重入 post，有意识的重入"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "ride-sharing",
+      "system_design": "微服务调用图无环；避免同步循环依赖；分层架构的依赖规则"
+     },
+     "card_ideas": [
+      "ride-sharing 为什么要规定「池子从不回调 DispatchService」？违反时会出现什么死锁时间线？",
+      "ledger 用 RLock 是为了 reverse 重入 post；RLock 在什么情况下反而掩盖设计缺陷？",
+      "在持有锁时调用观察者，会同时带来哪两类风险（死锁、暴露半状态）？",
+      "怎样把服务层、对象层的锁关系画成一张单向图，并在 code review 里检查它？"
+     ]
+    },
+    {
+     "id": "command-event-fact",
+     "title": "命令、事件与事实：过去式、自带全部信息、不可变",
+     "summary": "命令是请求（可被拒绝）；事件是已发生的事实（不可变、过去式、自带上下文）；订阅者永远不需要回头问现状。",
+     "why": "splitwise 的 SplitwiseEvent「订阅者从这一条记录本身就能知道发生了什么」，所以锁外通知不会读到半成品状态；notification 的 Envelope 带齐渠道需要的一切（地址、标题、正文）；credit-token 的 Grant/Charge、dasher-payout 的 EventType 都是事实，状态是重放结果；stock-brokerage 的 TopOfBook 事件是快照。命令（place_order、transfer）可能失败并留痕（REJECTED 订单也是事实）；事件不能失败。把两者混为一谈会让回调里的「现状查询」撕裂。",
+     "language_leaves": [
+      "classes.dataclasses",
+      "engineering.serialization"
+     ],
+     "seen_in": [
+      {
+       "slug": "splitwise",
+       "lines": [
+        369,
+        379
+       ],
+       "how": "事件自带全部信息，订阅者不回头访问账本"
+      },
+      {
+       "slug": "notification-service",
+       "lines": [
+        91,
+        105
+       ],
+       "how": "冻结的信封：provider 不必回头问服务任何事"
+      },
+      {
+       "slug": "stock-brokerage",
+       "lines": [
+        144,
+        144
+       ],
+       "how": "盘口事件是快照对象，锁外推送"
+      },
+      {
+       "slug": "credit-token-balance",
+       "lines": [
+        52,
+        54
+       ],
+       "how": "扣费是事实，分配是重放结果"
+      },
+      {
+       "slug": "dasher-payout",
+       "lines": [
+        28,
+        32
+       ],
+       "how": "四种生命周期事件；钱不存，现算"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "splitwise",
+      "system_design": "事件驱动架构：事件携带足够负载（event-carried state transfer）；命令 vs 事件的命名与幂等"
+     },
+     "card_ideas": [
+      "splitwise 的通知在锁外发出，订阅者为什么「不会读到半成品状态」？事件里必须放什么？",
+      "被风控拒掉的订单为什么也要留痕成 REJECTED 订单？命令的失败也是一种事实吗？",
+      "Envelope 为什么要带齐地址、标题、正文，provider 才不必回头去问服务？",
+      "事件命名用过去式的意义是什么？事件和命令的校验、重试语义有何不同？"
+     ]
+    },
+    {
+     "id": "extension-points-worth-paying-for",
+     "title": "扩展点值得付费的地方：数据代替代码、从第一天就预留的字段",
+     "summary": "「加第 N 关不改老代码」是设计质量的检验：把会变的东西做成数据（菜单、政策表），把未来要用的维度从第一天放进数据结构。",
+     "why": "pizza-order 的 Menu 是数据，新增配料只加一行；library 的 PolicyTable 按 (读者类型, 介质) 查；thread-pool 与 task-scheduler 的优先级从第一天就是队列条目的字段，第 4 关只是把它开放成可选参数；ride-sharing 的拼车只是往 Trip 追加一条 RideLeg，状态机一行不改；pub-sub 的通配订阅与死信建在游标之上，没动投递路径。反面：不为想象的需求付费——amazon-locker 的就近是刻意的线性扫描，ride-sharing 的地理刻意只做直线距离，都在文件头明说。",
+     "language_leaves": [
+      "classes.dataclasses",
+      "functions.first-class"
+     ],
+     "seen_in": [
+      {
+       "slug": "amz-pizza-order",
+       "lines": [
+        61,
+        64
+       ],
+       "how": "菜单是数据：新增配料只加一行，不加类"
+      },
+      {
+       "slug": "library",
+       "lines": [
+        121,
+        133
+       ],
+       "how": "政策表按 (读者类型, 介质) 查，加一种读者就是加一行"
+      },
+      {
+       "slug": "task-scheduler",
+       "lines": [
+        74,
+        78
+       ],
+       "how": "优先级从第 1 关签名起就存在，扩展只是元组多一栏"
+      },
+      {
+       "slug": "ride-sharing",
+       "lines": [
+        154,
+        156
+       ],
+       "how": "一个人和拼车是同一种东西（一条腿 vs 两条腿）"
+      },
+      {
+       "slug": "pub-sub",
+       "lines": [
+        6,
+        6
+       ],
+       "how": "没有动投递路径一行"
+      },
+      {
+       "slug": "amazon-locker",
+       "lines": [
+        8,
+        8
+       ],
+       "how": "刻意不优化，并在文件头说明"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "amz-pizza-order",
+      "system_design": "配置化/数据驱动系统（规则引擎、feature flag）；向后兼容的 schema 演进"
+     },
+     "card_ideas": [
+      "task-scheduler 的 _HeapEntry 为什么从第 1 关就带 priority 字段？这怎样证明「扩展不改堆」？",
+      "ride-sharing 把「一个人的行程」和「拼车」统一成 RideLeg，第 4 关为什么不需要改状态机？",
+      "Menu/PolicyTable 这类数据驱动的设计，和为每种配料/读者写一个子类相比，扩展成本差在哪里？",
+      "怎样判断一个扩展点值得预先付费？amazon-locker 的线性扫描为什么故意不优化？",
+      "「加第 N 关不改老代码」可以作为设计评审的什么检查？"
+     ]
+    },
+    {
+     "id": "unit-of-inventory-modeling",
+     "title": "库存的单位怎么选：房型夜、车的行程段、场次座位、航班实例",
+     "summary": "先问「到底是什么被卖掉了」。选对库存单位，并发、超卖、异地还车、改签都变成这个单位上的同一个不变量。",
+     "why": "hotel-booking：单位是「一个房型的一晚」，不是一间房，物理房间入住时才分配，库存不被碎片化；car-rental：单位是「一辆具体的车在时间轴上的一段行程」，异地还车使可用性变成时间的函数；movie-booking：座位在影厅共用，占用状态按场次独立；airline：Flight（排班规则）与 FlightInstance（某一天的那一班）分开，库存只长在后者；inventory-management：(仓库 × 商品) 的格子。选错单位的症状：需要大量特判才能表达「同一把椅子不同场次」「这辆车下周在哪」。",
+     "language_leaves": [
+      "model.dict-set-internals",
+      "classes.dataclasses"
+     ],
+     "seen_in": [
+      {
+       "slug": "hotel-booking",
+       "lines": [
+        178,
+        183
+       ],
+       "how": "(房型, 日期) → 已订数；多晚预订全有或全无"
+      },
+      {
+       "slug": "car-rental",
+       "lines": [
+        108,
+        115
+       ],
+       "how": "一辆车的行程链：每段取车门店等于上一段还车门店"
+      },
+      {
+       "slug": "movie-booking",
+       "lines": [
+        245,
+        248
+       ],
+       "how": "座位占用按场次独立，不同场次不互相阻塞"
+      },
+      {
+       "slug": "airline",
+       "lines": [
+        105,
+        108
+       ],
+       "how": "排班规则没有日期；FlightInstance 才是可卖的东西"
+      },
+      {
+       "slug": "inventory-management",
+       "lines": [
+        116,
+        116
+       ],
+       "how": "商品 → 仓库 → 格子；可售 = on_hand − reserved"
+      }
+     ],
+     "scales": {
+      "leetcode": "meeting-rooms-ii",
+      "lld": "hotel-booking",
+      "system_design": "库存系统的 SKU × 仓库 × 时间维度；订座系统的 slot 建模；容量规划的粒度"
+     },
+     "card_ideas": [
+      "hotel-booking 为什么把库存单位定为「房型的一晚」而不是「一间房」？物理房间什么时候分配，为什么？",
+      "car-rental 的可用性为什么是「插入这一段后整条行程链是否自洽」，而不是「这辆车这段时间空不空」？",
+      "airline 把 Flight 和 FlightInstance 拆开，哪些东西（库存、座位图、锁）长在后者？",
+      "movie-booking 的 Seat 为什么不可变且被所有场次共用？",
+      "选错库存单位的典型症状是什么？"
+     ]
+    },
+    {
+     "id": "composition-of-independent-axes",
+     "title": "独立变化轴的组合：N×M 个组合只写 N+M 个小类",
+     "summary": "先找出互相独立的变化方向，每个方向一个接口，互不引用；用配置把名字翻译成对象。",
+     "why": "amz-configurable-cache：淘汰策略（只记元数据）与存储后端（只存值）是两条独立的轴，2×2 只写 4 个小类；logger：Formatter × Handler × Filter 三者各自独立变化，LogRecord 是它们之间唯一的事件对象；rate-limiter：算法 × 分片锁 × 组合规则；billing-tax-engine：规则 × 版本 × 商户。判据：两个接口互不 import 对方；如果互相需要对方的内部结构，就不是独立的轴。",
+     "language_leaves": [
+      "classes.inheritance-mro",
+      "classes.abc-protocols"
+     ],
+     "seen_in": [
+      {
+       "slug": "amz-configurable-cache",
+       "lines": [
+        1,
+        1
+       ],
+       "how": "策略与后端互不引用，2×2 只写 4 个小类"
+      },
+      {
+       "slug": "logger",
+       "lines": [
+        127,
+        129
+       ],
+       "how": "格式化、阈值、过滤器、锁都归 handler 自己管"
+      },
+      {
+       "slug": "rate-limiter",
+       "lines": [
+        292,
+        298
+       ],
+       "how": "算法、分片、组合规则三个独立的层"
+      },
+      {
+       "slug": "billing-tax-engine",
+       "lines": [
+        123,
+        125
+       ],
+       "how": "规则 × 版本 × 商户 三者独立"
+      }
+     ],
+     "scales": {
+      "leetcode": "lfu-cache",
+      "lld": "amz-configurable-cache",
+      "system_design": "可插拔存储引擎 + 可插拔淘汰（Redis maxmemory-policy）；中间件栈"
+     },
+     "card_ideas": [
+      "configurable-cache 里 EvictionPolicy 与 Store 为什么「互不引用」才能 2×2 只写 4 个小类？",
+      "Logger / Handler / Formatter 之间唯一的共享对象是 LogRecord：为什么需要这样一个冻结的事件对象？",
+      "怎样判断两个变化方向是否真的独立？举出一个看似独立实则耦合的反例。",
+      "create_cache 把名字翻译成对象：配置层放在哪儿合适？"
+     ]
+    },
+    {
+     "id": "explicit-non-goals-and-simplifications",
+     "title": "明说的简化与非目标：说清楚没做什么、接缝在哪",
+     "summary": "每个解法的文件头都应说明刻意没做的部分和换成真实版本时只动哪里。这是 senior 与 mid 在面试里最明显的差别。",
+     "why": "rate-limiter「进程内的库级组件，不是分布式限流架构」；task-scheduler「进程内……不是分布式任务队列」；ride-sharing 「地理刻意做到最简……换成路网只影响这一个方法」；amazon-locker 「就近是刻意的线性扫描」；splitwise 「贪心不保证最优——NP-hard，必须诚实地说给面试官听」；pub-sub 「自动提交 offset；手动提交对进程内组件用不到」。写下非目标，等于告诉读者哪些地方是有意的，并预先回答「如果规模大十倍怎么办」。",
+     "language_leaves": [],
+     "seen_in": [
+      {
+       "slug": "rate-limiter",
+       "lines": [
+        1,
+        1
+       ],
+       "how": "开篇就划定范围"
+      },
+      {
+       "slug": "task-scheduler",
+       "lines": [
+        1,
+        1
+       ],
+       "how": "开篇划定范围"
+      },
+      {
+       "slug": "ride-sharing",
+       "lines": [
+        12,
+        14
+       ],
+       "how": "换成路网只影响 distance_to 一个方法"
+      },
+      {
+       "slug": "splitwise",
+       "lines": [
+        331,
+        331
+       ],
+       "how": "贪心保证不超过 n−1 笔但不保证最优；必须诚实地说"
+      },
+      {
+       "slug": "pub-sub",
+       "lines": [
+        274,
+        274
+       ],
+       "how": "自动提交 vs 手动提交的取舍与为何这里不需要"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "splitwise",
+      "system_design": "容量估算与「先做单机、再说分片」；ADR 里的 non-goals 小节"
+     },
+     "card_ideas": [
+      "为什么要在文件头写「刻意没做什么」？对面试官的追问有什么预防作用？",
+      "ride-sharing 说「换成路网只影响 distance_to 一个方法」：这个接缝是怎样保证的？",
+      "splitwise 的贪心不保证最优，应当怎样「诚实地说」，并给出反例（[+3,+2,-3,+2,-4]）？",
+      "你会怎样回答「这个限流器要扩展到多机」？本题库里的哪些接缝能直接复用？"
+     ]
+    },
+    {
+     "id": "observability-as-design",
+     "title": "可观测性是设计的一部分：丢弃必须计数，状态变化必须留痕",
+     "summary": "任何会丢、会拒、会重试、会降级的地方都要有计数或事件，否则线上只能靠猜。",
+     "why": "pub-sub 的 lagged_count（「丢弃必须可观测，否则 DROP_OLDEST 就是静默丢数据」）、failed_count、evicted_count；logger 的 dropped_count/error_count；ttl-cache 的 CacheStats（不可变快照）；circuit-breaker 的 Metrics 与 on_state_change；emergency-pubsub 的 SubscriptionStats 与 dead_letters；ride-sharing 的 StateChange（「客服每天都要回答这单几点被谁取消的——只能靠事中记录，不能事后推算」）。指标对象是冻结快照，读到的数字不会自己变。",
+     "language_leaves": [
+      "engineering.logging-config",
+      "engineering.testing"
+     ],
+     "seen_in": [
+      {
+       "slug": "pub-sub",
+       "lines": [
+        369,
+        372
+       ],
+       "how": "丢弃必须可观测"
+      },
+      {
+       "slug": "logger",
+       "lines": [
+        339,
+        341
+       ],
+       "how": "AsyncHandler 丢弃与内部错误都计数"
+      },
+      {
+       "slug": "ttl-cache",
+       "lines": [
+        66,
+        78
+       ],
+       "how": "不可变统计快照 + hit_rate"
+      },
+      {
+       "slug": "api-circuit-breaker",
+       "lines": [
+        43,
+        48
+       ],
+       "how": "成功/失败/拒绝的不可变快照"
+      },
+      {
+       "slug": "ride-sharing",
+       "lines": [
+        210,
+        218
+       ],
+       "how": "事中留痕：什么时候、从哪到哪、谁干的、为什么"
+      }
+     ],
+     "scales": {
+      "leetcode": "",
+      "lld": "pub-sub",
+      "system_design": "指标/日志/追踪三件套；SLO 里的丢弃率、重试率；审计日志"
+     },
+     "card_ideas": [
+      "为什么说 DROP_OLDEST 必须配 lagged_count，否则就是静默丢数据？",
+      "StateChange 为什么要事中记录，而不能事后从当前状态推算？",
+      "指标快照为什么做成冻结 dataclass，而不是直接暴露内部计数器？",
+      "列出本题库里「会丢/会拒/会重试」的三处，并说出各自应该打什么指标。"
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -425,3 +425,13 @@ def test_part4_exchange_respects_the_floor():
     with pytest.raises(impl.InsufficientFunds):
         led.exchange("x1", "alice", "USD", 101, "MYR", 400)
     assert led.balance("alice", "MYR") == 0
+
+
+def test_type_hints_of_the_decorated_api_resolve():
+    # `_synchronized` 的注解曾引用一个不存在的类型变量名；`from __future__ import annotations`
+    # 让它在导入时不报错，只有在真去解析注解（IDE、pydantic、mypy 之外的工具）时才炸。
+    import typing
+
+    assert typing.get_type_hints(impl._synchronized)
+    for name in ("post", "reverse", "balance", "total"):
+        typing.get_type_hints(getattr(impl.Ledger, name))

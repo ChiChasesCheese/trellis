@@ -1,0 +1,16 @@
+idioms closure-factory-policies
+idioms enum-behaviour
+idioms id-generation
+idioms dunder-protocols-that-pay
+idioms sentinels
+idioms dispatch-tables
+idioms bounded-deque
+idioms copy-in-copy-out
+idioms memoize-on-frozen
+idioms kw-only-positional-only
+idioms slots-and-memory
+idioms namedtuple-for-keys
+idioms literal-and-closed-sets
+idioms generics-and-type-aliases
+idioms descriptors-where-they-earn
+idioms init-subclass-registry

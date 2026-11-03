@@ -3,7 +3,7 @@
 import importlib
 import os
 import threading
-from datetime import datetime
+from datetime import UTC, datetime, timedelta
 
 import pytest
 
@@ -16,7 +16,7 @@ PIN = "1234"
 
 def clock():
     """固定时钟：流水要带时间戳，而测试不该因为"现在几点"而不同。"""
-    return lambda: datetime(2025, 3, 1, 9, 0)
+    return lambda: datetime(2025, 3, 1, 9, 0, tzinfo=UTC)
 
 
 # --------------------------------------------------------------------------
@@ -472,3 +472,13 @@ def test_concurrent_withdrawals_on_two_machines_never_oversell_one_account():
     assert len(dispensed) == 1 and len(errors) == 1      # 只有一个人取得到
     assert bank.account("1001").balance == 500 * Y - sum(dispensed)
     assert all(atm.cash_up().balanced for atm in machines)
+
+
+def test_default_clock_stamps_the_journal_with_an_aware_utc_time():
+    bank = make_bank()
+    atm = impl.ATM(bank, impl.Cassette({impl.Note.HUNDRED: 10}))   # 不注入时钟：用默认时钟
+    signed_in(atm)
+    atm.withdraw(100 * Y)
+    atm.collect_cash()
+    (entry,) = atm.journal()
+    assert entry.at.utcoffset() == timedelta(0)                     # 带时区，且是 UTC

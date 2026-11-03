@@ -286,6 +286,7 @@ editor.insert(3, "def")   # 相邻！但这是两个独立的操作，绝不该�
 
 from __future__ import annotations
 
+from collections import deque
 from collections.abc import Sequence
 from dataclasses import dataclass
 
@@ -543,7 +544,8 @@ class History:
             raise ValueError(f"max_run must be positive, got {max_run}")
         self._limit = limit
         self._max_run = max_run
-        self._undo: list[tuple[Edit, ...]] = []
+        # maxlen 满了再 append 会在 O(1) 里自动挤掉最左（最旧）的一个；list 的 del [0] 是 O(n)
+        self._undo: deque[tuple[Edit, ...]] = deque(maxlen=limit)
         self._redo: list[tuple[Edit, ...]] = []
         self._run_open = False
 
@@ -586,11 +588,6 @@ class History:
             return False
         return sum(len(e.inserted) for e in unit) + len(edit.inserted) <= self._max_run
 
-    def _push(self, unit: tuple[Edit, ...]) -> None:
-        self._undo.append(unit)
-        if len(self._undo) > self._limit:
-            del self._undo[0]
-
     def record(self, edit: Edit, coalesce: bool = False) -> None:
         """记一次编辑。`coalesce=True` 表示"这是一次键盘输入"，允许并进上一个单元。
 
@@ -601,7 +598,7 @@ class History:
         if coalesce and self._run_open and self._undo and self._can_merge(self._undo[-1], edit):
             self._undo[-1] = (*self._undo[-1], edit)
             return
-        self._push((edit,))
+        self._undo.append((edit,))
         self._run_open = coalesce
 
     def record_group(self, edits: Sequence[Edit]) -> None:
@@ -609,7 +606,7 @@ class History:
         if not edits:
             return
         self._redo.clear()
-        self._push(tuple(edits))
+        self._undo.append(tuple(edits))
         self._run_open = False
 
     def undo(self) -> tuple[Edit, ...]:
@@ -848,7 +845,8 @@ if __name__ == "__main__":
   离光标很远的文字——这个 bug 只有在演示时才会暴露，而且看起来像是玄学。
 - `Editor.cut` 之后撤销，文本回来了，**剪贴板不会回来**。这不是疏漏：撤销撤的是文档，不是系统
   剪贴板，真实编辑器都是这个行为。把它写进测试，是为了防止后来的人"顺手修好"它。
-- `History._push` 超限时 `del self._undo[0]`，丢的是**最旧**的单元。丢最新的等于偷偷吃掉用户刚
+- 撤销栈是 `deque(maxlen=limit)`，满了再 `append` 会自动从另一端丢**最旧**的单元，O(1)；
+  `list` 的 `del self._undo[0]` 要把后面的元素整体前移，是 O(n)。丢最新的等于偷偷吃掉用户刚
   做的事，是一个比内存泄漏更糟的 bug。
 
 ## 测试与自检

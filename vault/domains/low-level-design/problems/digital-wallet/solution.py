@@ -106,7 +106,7 @@ class Ledger:
         self._entries: list[LedgerEntry] = []
         self._by_account: dict[str, list[LedgerEntry]] = {}
         self._by_transfer: dict[str, list[LedgerEntry]] = {}
-        self._ids = (f"L{n}" for n in itertools.count(1))
+        self._ids = itertools.count(1)   # `next()` 在 C 里一步完成；生成器表达式并发会抛 ValueError
 
     @property
     def entry_count(self) -> int:
@@ -124,8 +124,8 @@ class Ledger:
             raise LedgerIntegrityError(
                 f"分录不平：{debit_delta} + {credit_delta} != 0")
         entries = (
-            LedgerEntry(next(self._ids), transfer_id, debit_account, debit_delta, memo, at),
-            LedgerEntry(next(self._ids), transfer_id, credit_account, credit_delta, memo, at),
+            LedgerEntry(f"L{next(self._ids)}", transfer_id, debit_account, debit_delta, memo, at),
+            LedgerEntry(f"L{next(self._ids)}", transfer_id, credit_account, credit_delta, memo, at),
         )
         for entry in entries:
             self._entries.append(entry)
@@ -195,7 +195,7 @@ class Wallet:
         self._ledger = Ledger()
         self._idempotency: dict[str, TransferReceipt] = {}
         self._idempotency_lock = threading.Lock()
-        self._ids = (f"T{n}" for n in itertools.count(1))
+        self._ids = itertools.count(1)   # 不同账户对的转账并发取号，不能用生成器
 
     def open_account(self, account_id: str, opening_balance: int = 0) -> None:
         """开一个新账户，可带一笔起始余额——起始余额同样是一笔"外部注入"，走的是
@@ -252,7 +252,7 @@ class Wallet:
                     return cached
             if not a.reserved and a.balance < amount:
                 raise InsufficientFundsError(from_id, a.balance, amount)
-            transfer_id = next(self._ids)
+            transfer_id = f"T{next(self._ids)}"
             at = self._clock()
             self._ledger.record_pair(transfer_id, (from_id, -amount), (to_id, amount), memo, at)
             a.balance -= amount
@@ -322,8 +322,10 @@ class Wallet:
         账本永远是被信任的一方，缓存只是它的一个投影，漂移了就被它覆盖。
         """
         account = self._account(account_id)
-        derived = self._ledger.derived_balance(account_id)
         with account.lock:
+            # 推导必须在锁内：转账在持有账户锁时同时改账本和缓存，所以锁内读到的两边一定同步；
+            # 锁外先推导，推导完到拿锁之间若插进一笔转账，缓存就会被一个过期值“纠正”坏。
+            derived = self._ledger.derived_balance(account_id)
             if account.balance == derived:
                 return False
             account.balance = derived
