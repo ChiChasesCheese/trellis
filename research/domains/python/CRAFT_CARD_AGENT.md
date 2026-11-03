@@ -27,6 +27,8 @@ step: <n>
 - **Architecture:** the decision, both options, what each costs, and a real problem where it went each way.
 - **Tie the scales together** when `scales` is filled: the same mechanism in a LeetCode problem, a low-level design and a distributed system, and what changes at each step (one process and a lock → many machines and a lease). Include one card like that where it fits.
 - **Code:** Python 3.11+, type hints, comments carry the reasoning, prose never repeats the code. Keep excerpts under about 25 lines. Run every snippet longer than 5 lines in your scratch folder, and show real output.
+- **Quoted output must match the code on the card:** every line of output comes from code the reader can see. Do not show output of snippets you cut.
+- The front never says 参考解 or 这份解法: describe the situation itself, naming the problem (分账, 库存预留) where it helps.
 - Every claim about CPython behaviour must be true for 3.11+; state the version where it matters. Do not invent numbers.
 
 ## Style
