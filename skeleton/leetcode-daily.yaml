@@ -90,8 +90,17 @@ nodes:
     title: LC 200 岛屿数量（Number of Islands）
     summary: Medium；Depth-First Search, Breadth-First Search, Union Find, Array。
   core: true
-- id: shortest-path
+- id: topo-sort
   order: 9
+  title: 拓扑排序
+  summary: 拓扑排序：Chi 解过的题，按知识点归在一起。
+  children:
+  - id: topo-sort.course-schedule
+    title: LC 207 课程表（Course Schedule）
+    summary: Medium；Depth-First Search, Breadth-First Search, Graph, Topological Sort。
+  core: true
+- id: shortest-path
+  order: 10
   title: 最短路：Dijkstra 与其变体
   summary: 最短路：Dijkstra 与其变体：Chi 解过的题，按知识点归在一起。
   children:
@@ -100,7 +109,7 @@ nodes:
     summary: Medium；Depth-First Search, Breadth-First Search, Graph, Dynamic Programming。
   core: true
 - id: dp-grid-string
-  order: 10
+  order: 11
   title: 动态规划：网格、双串与区间
   summary: 动态规划：网格、双串与区间：Chi 解过的题，按知识点归在一起。
   children:
@@ -109,7 +118,7 @@ nodes:
     summary: Medium；Array, Dynamic Programming, Matrix。
   core: true
 - id: greedy
-  order: 11
+  order: 12
   title: 贪心
   summary: 贪心：Chi 解过的题，按知识点归在一起。
   children:
@@ -118,7 +127,7 @@ nodes:
     summary: Medium；。
   core: true
 - id: design
-  order: 12
+  order: 13
   title: 数据结构设计题
   summary: 数据结构设计题：Chi 解过的题，按知识点归在一起。
   children:
@@ -133,7 +142,7 @@ nodes:
     summary: Medium；Design, Hash Table, Ordered Set, Heap (Priority Queue)。
   core: true
 - id: math-bit-sim
-  order: 13
+  order: 14
   title: 数学、位运算与模拟
   summary: 数学、位运算与模拟：Chi 解过的题，按知识点归在一起。
   children:
@@ -152,9 +161,12 @@ nodes:
   - id: math-bit-sim.minimum-moves-to-equal-array-elements-ii
     title: LC 462 最小操作次数使数组元素相等 II（Minimum Moves to Equal Array Elements II）
     summary: Medium；Array, Math, Sorting。
+  - id: math-bit-sim.minimum-moves-to-equal-array-elements-iii
+    title: LC 3736 最小操作次数使数组元素相等 III（Minimum Moves to Equal Array Elements III）
+    summary: Easy；Array, Math。
   core: true
 - id: sorting-permutation
-  order: 14
+  order: 15
   title: 排序、置换环与逆序对
   summary: 排序、置换环与逆序对：Chi 解过的题，按知识点归在一起。
   children:
