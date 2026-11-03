@@ -2,10 +2,10 @@
 id: hi-pt-notification-system-scale-4-lazy-fanout
 node: qb.sd.notification-system-scale.points
 type: qa
-step: 4
+step: 5
 ---
 ## Q
-**百万级通知系统 · 懒扇出**｜出自：百万级通知系统 › 深入 2
+**百万级通知系统 · 懒扇出**｜必会 · 出自：百万级通知系统 › 深入 2
 
 通知系统一次促销要发给 5 万甚至千万用户。为什么不在请求进来时就同步展开？怎么做？
 

@@ -5,7 +5,7 @@ type: qa
 step: 3
 ---
 ## Q
-**对话式 AI 聊天服务 · 为什么用 SSE 而不是 WebSocket**｜出自：对话式 AI 聊天服务 › 整体设计
+**对话式 AI 聊天服务 · 为什么用 SSE 而不是 WebSocket**｜必会 · 出自：对话式 AI 聊天服务 › 整体设计
 
 聊天回复需要逐词元推送给浏览器。应该选 SSE（Server-Sent Events）还是 WebSocket？接口上如何组织发送、停止和重新生成？
 

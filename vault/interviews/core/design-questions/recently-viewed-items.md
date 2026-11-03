@@ -12,6 +12,16 @@ kind: low-level-design
 ## A
 **一句话。** "最近浏览"就是每个客户一个定长的 LRU：用"按插入顺序排列且能 O(1) 摘除任意元素"的结构（哈希表加双向链表，语言里的有序字典），重复浏览是"摘下来放到队尾"，超限是"丢掉队头"；"第一个唯一值"是同一个思路——有序字典当队列，出现第二次就摘掉。
 
+**60 分钟路线。**
+
+| 时间 | 做什么 |
+|---|---|
+| 0–8 分 | 问清需求，定接口：`view`、`recent`，`limit` 的校验 |
+| 8–12 分 | 讲数据结构：每客户一个有序字典，重复浏览提前，超限丢队头 |
+| 12–40 分 | 写核心实现：`RecentlyViewed` 一个类，一把锁 |
+| 40–45 分 | 跑例子：`limit=3` 浏览 a、b、c、b、d |
+| 45–60 分 | 追问：分段锁和外层 LRU、「第一个唯一值」、Redis |
+
 **需求。**
 - 功能：
   - 构造时给定 `limit`（正整数）；
@@ -31,55 +41,99 @@ kind: low-level-design
 - `FirstUnique`：`visit(customer)`、`first()`；内部是"只出现一次的候选"（有序字典，按首次出现顺序）加"见过的集合"。
 - 模式：组合（LRU 套 LRU：每位客户一个，外层再限制客户数）；分段锁用于降低并发争用。
 
-**整体设计。**
+**整体设计。** 外层 `customer → 有序字典`，字典的顺序就是最近使用顺序，队尾最新。`view` 先查重：已看过就 `move_to_end`，否则追加，超限 `popitem(last=False)` 丢最老的；`recent` 反向遍历，最新的在前。
+
+**核心实现。** 27 行。用一把全局锁先保证线程安全。
 
 ```python
-from __future__ import annotations
-
 import threading
 from collections import OrderedDict
-from typing import Hashable, Optional
+from typing import Hashable
 
 
 class RecentlyViewed:
-    """每个客户一个定长、按最近访问排序的列表：重复浏览只"提前"，不重复占位；超过 limit 丢最老的。"""
-    def __init__(self, limit: int, max_customers: int = 1_000_000, stripes: int = 64) -> None:
+    """每个客户一个定长、按最近访问排序的字典：重复浏览只"提前"，不重复占位；超过 limit 丢最老的。"""
+    def __init__(self, limit: int) -> None:
         if limit <= 0:
             raise ValueError("limit must be positive")
-        self._limit, self._max_customers = limit, max_customers
-        # 外层也是 LRU：不活跃的客户整体被挤出，内存有上界（冷客户的最近浏览回源到存储）
-        self._by_customer: OrderedDict[str, OrderedDict[Hashable, None]] = OrderedDict()
-        self._locks = [threading.Lock() for _ in range(stripes)]   # 分段锁：不同客户互不阻塞
-        self._outer = threading.Lock()
-
-    def _lock_for(self, customer: str) -> threading.Lock:
-        return self._locks[hash(customer) % len(self._locks)]
+        self._limit = limit
+        self._by_customer: dict[str, OrderedDict[Hashable, None]] = {}  # 字典的顺序就是最近使用顺序，队尾最新
+        self._lock = threading.Lock()  # 先用一把全局锁，保证正确；争用问题见逐步扩展 1
 
     def view(self, customer: str, item: Hashable) -> None:
-        with self._outer:                                          # 只保护外层 map 的结构变化，持锁极短
-            items = self._by_customer.get(customer)
-            if items is None:
-                items = self._by_customer[customer] = OrderedDict()
-                if len(self._by_customer) > self._max_customers:
-                    self._by_customer.popitem(last=False)
-            else:
-                self._by_customer.move_to_end(customer)
-        with self._lock_for(customer):
+        with self._lock:
+            items = self._by_customer.setdefault(customer, OrderedDict())
             if item in items:
-                items.move_to_end(item)                            # 已看过：移到最新，O(1)
+                items.move_to_end(item)  # 已看过：移到最新，O(1)
             else:
                 items[item] = None
                 if len(items) > self._limit:
-                    items.popitem(last=False)                      # 淘汰最久未看的，O(1)
+                    items.popitem(last=False)  # 淘汰最久未看的，O(1)
 
     def recent(self, customer: str) -> list[Hashable]:
-        with self._lock_for(customer):
-            items = self._by_customer.get(customer)
-            return list(reversed(items)) if items else []          # 最新的在前
+        with self._lock:
+            return list(reversed(self._by_customer.get(customer, ())))  # 最新的在前
+```
 
+**运行。**
 
+```python
+rv = RecentlyViewed(3)
+for x in "abcbd":
+    rv.view("u1", x)
+```
+
+- `rv.recent("u1")` → `['d', 'b', 'c']`：浏览 b 时 b 提前成 a、c、b；浏览 d 超限，丢掉最老的 a。
+- `rv.recent("nobody")` → `[]`。
+- `limit=1` 时依次浏览 a、b、b → `['b']`；`RecentlyViewed(0)` → `ValueError`。
+- 8 个线程对同一客户浏览 2000 次、`limit=5` → 最后恰好 5 条。
+
+**复杂度。** `view` 是 `O(1)`，`recent` 是 `O(返回个数)`，每客户内存 `O(limit)`。
+
+**逐步扩展。**
+1. 【追问再讲】分段锁和外层 LRU：一把全局锁让所有客户互相阻塞；客户有上亿时内存也放不下。外层也做成 LRU 限制活跃客户数，内层用按客户哈希的分段锁。把 `__init__`、`view`、`recent` 换成下面的版本。
+
+```python
+def __init__(self, limit: int, max_customers: int = 1_000_000, stripes: int = 64) -> None:
+    if limit <= 0:
+        raise ValueError("limit must be positive")
+    self._limit, self._max_customers = limit, max_customers
+    # 外层也是 LRU：不活跃的客户整体被挤出，内存有上界（冷客户的最近浏览回源到存储）
+    self._by_customer: OrderedDict[str, OrderedDict[Hashable, None]] = OrderedDict()
+    self._locks = [threading.Lock() for _ in range(stripes)]  # 分段锁：不同客户互不阻塞
+    self._outer = threading.Lock()
+
+def _lock_for(self, customer: str) -> threading.Lock:
+    return self._locks[hash(customer) % len(self._locks)]
+
+def view(self, customer: str, item: Hashable) -> None:
+    with self._outer:  # 只保护外层 map 的结构变化，持锁极短
+        items = self._by_customer.get(customer)
+        if items is None:
+            items = self._by_customer[customer] = OrderedDict()
+            if len(self._by_customer) > self._max_customers:
+                self._by_customer.popitem(last=False)
+        else:
+            self._by_customer.move_to_end(customer)
+    with self._lock_for(customer):
+        if item in items:
+            items.move_to_end(item)
+        else:
+            items[item] = None
+            if len(items) > self._limit:
+                items.popitem(last=False)
+
+def recent(self, customer: str) -> list[Hashable]:
+    with self._lock_for(customer):
+        return list(reversed(self._by_customer.get(customer, ())))
+```
+
+`max_customers=2`：浏览完 u1 的 a、b、c、b、d，再浏览 u2、u3 → u1 被挤出，`recent("u1")` 是 `[]`，`recent("u3")` 是 `['y']`。4 个客户、8 个线程各浏览 1000 次、`limit=5` → 每人恰好 5 条。
+
+2. 【追问再讲】变体「到目前为止第一个只访问过一次的客户」：有序字典当候选队列，`seen` 集合记录见过的，全部操作 `O(1)`。
+
+```python
 class FirstUnique:
-    """到目前为止"只出现过一次"的第一个值：dict 保持插入序当队列，seen 记录出现过的。全部操作 O(1)。"""
     def __init__(self) -> None:
         self._unique: dict[Hashable, None] = {}
         self._seen: set[Hashable] = set()
@@ -89,52 +143,45 @@ class FirstUnique:
         with self._lock:
             if customer not in self._seen:
                 self._seen.add(customer)
-                self._unique[customer] = None                      # 第一次出现：进候选队尾
+                self._unique[customer] = None  # 第一次出现：进候选队尾
             else:
-                self._unique.pop(customer, None)                   # 第二次及以后：永久出局
+                self._unique.pop(customer, None)  # 第二次及以后：永久出局
 
-    def first(self) -> Optional[Hashable]:
+    def first(self) -> Hashable | None:
         with self._lock:
             return next(iter(self._unique), None)
 ```
 
-流程：
-1. `view`：先在外层找到（或创建）该客户的有序字典，并把客户在外层挪到最新位置；若客户总数超过上限，淘汰最久没活动的客户。
-2. 再在该客户自己的锁内更新：商品已存在则 `move_to_end`，否则追加并在超限时 `popitem(last=False)` 丢掉最老的。
-3. `recent` 反向遍历有序字典，最新的在前。
-4. `FirstUnique.visit`：第一次见到的客户追加到候选队尾并加入"见过"集合；第二次起从候选里摘掉，且因为"见过"集合不删，之后再来也不会回到候选，所以"唯一"的判定是永久的。`first()` 取候选的第一个，O(1)。
-
-示例：`limit=3`，依次浏览 a、b、c、b、d：浏览 b 时 b 被提前，列表是 a、c、b；浏览 d 时超限，丢掉最老的 a，结果（最新在前）是 d、b、c。
+依次访问 a、b、a、c、b：`first()` 依次是 a、a、b、b、c；再访问 c → `None`。
 
 **深入。**
-1. 数据结构选择：
-   - 列表（数组）：查重和移动是 O(limit)，limit 小时可用，但不是 O(1)；
-   - 哈希表 + 双向链表（有序字典）：查找、摘除、追加、丢队头全是 O(1)，这就是 LRU 的标准结构；
-   - 选有序字典。若面试官要求自己实现，就手写哈希表加双向链表，哨兵头尾节点简化边界。
-2. 线程安全与并发：
-   - 一把全局锁：简单，但所有客户互相阻塞；
-   - 每个客户一把锁：锁数量与客户数相同，内存代价大；
-   - 分段锁：固定 N 段（例如 64），按客户哈希选锁，不同客户大概率落在不同的段，争用低、内存小；
-   - 外层字典的结构变化（新增客户、淘汰客户）用另一把短锁保护，持有时间极短；
-   - 一个可接受的竞态：客户刚被外层淘汰，正好另一线程还拿着旧的有序字典写入，这次写入丢失。对"最近浏览"这种尽力而为的数据没有问题；如果不能容忍，则外层和内层用同一把锁。
-3. 客户数量巨大时的内存：每位客户至多 `limit` 条，但客户有上亿时仍然放不下，所以外层再套一层 LRU，限制活跃客户数；被挤出的客户的数据可以回源到持久层。真实系统里更常见的做法是直接放 Redis。
-4. 真实系统放在哪里：
-   - Redis 有序集合：键为 `recent:{customer}`，成员是商品，分数是浏览时间戳；浏览时 `ZADD`（已存在则更新分数，等于提前）加 `ZREMRANGEBYRANK key 0 -(limit+1)` 裁掉多余的老数据，读取用 `ZREVRANGE key 0 limit-1`，每个键设过期时间（如 30 天）；
-   - 浏览事件量大时，不要每次都同步写：客户端或服务端先合并同一商品的重复上报，再批量写；
-   - 登录前后的合并：匿名设备的记录在登录时与账号的记录按时间合并后再裁剪。
-5. "第一个唯一值"变体的另一种做法：队列加计数表，`first()` 时从队头开始跳过计数大于 1 的元素（惰性清理），摊还 O(1)；而用有序字典可以在第二次出现时就摘掉，`first()` 严格 O(1)，代码也更短。内存是 O(不同客户数)；要限制内存只能放弃精确性（例如用布隆过滤器判断是否见过，会有误判）。
+1. 【必讲】数据结构选择。
+   - 数组：查重和移动是 `O(limit)`，`limit` 小时可用，但不是 `O(1)`。
+   - 哈希表加双向链表（有序字典）：查找、摘除、追加、丢队头全是 `O(1)`，这是 LRU 的标准结构。
+   - 选有序字典。面试官要求自己实现时，手写哈希表加双向链表，用哨兵头尾节点简化边界。
+2. 【必讲】线程安全与并发。
+   - 一把全局锁：简单，但所有客户互相阻塞。
+   - 每客户一把锁：锁数量等于客户数，内存代价大。
+   - 分段锁：固定 N 段（例如 64），按客户哈希选锁，争用低、内存小；外层字典的结构变化用另一把短锁保护。
+3. 【追问再讲】客户数量巨大时的内存：每客户至多 `limit` 条，但客户有上亿时仍放不下，所以外层再套一层 LRU（LRU 套 LRU）限制活跃客户数，被挤出的客户回源到持久层。真实系统更常见的是直接放 Redis。
+4. 【追问再讲】可接受的竞态：客户刚被外层淘汰，另一线程还拿着旧的有序字典写入，这次写入丢失。对「最近浏览」这种尽力而为的数据可以接受；不能容忍时外层和内层用同一把锁，代价是争用变高。
+5. 【追问再讲】「第一个唯一值」的另一种做法：队列加计数表，`first()` 时从队头跳过计数大于 1 的元素，摊还 `O(1)`。有序字典在第二次出现时就摘掉，`first()` 严格 `O(1)`，代码也更短。内存是 `O(不同客户数)`；要限制内存只能放弃精确性（布隆过滤器会有误判）。
+6. 【加分】真实系统放在哪里。
+   - Redis 有序集合：键 `recent:{customer}`，成员是商品，分数是浏览时间戳；浏览时 `ZADD`（已存在则更新分数，等于提前）加 `ZREMRANGEBYRANK key 0 -(limit+1)` 裁掉多余，读取用 `ZREVRANGE key 0 limit-1`，键设过期（如 30 天）。
+   - 事件量大时，先合并同一商品的重复上报，再批量写。
+   - 登录前后：匿名设备的记录在登录时与账号的记录按时间合并后再裁剪。
 
-**取舍与追问。**
-- `limit` 改成运行时可调：缩小时要立刻裁剪所有客户的列表（惰性：下次访问该客户时裁剪）。
-- 要不要记录时间戳：需要"最近 7 天"之类的语义时，字典的值存时间戳，读取时过滤过期的。
-- 浏览同一商品要不要计数：如果要，值改为（次数，最后时间），顺序仍按最后时间；这会演变成另一个题（带频次的缓存）。
-- 持久化与多实例：同一客户的请求粘性路由到同一实例，或统一放 Redis，避免各实例视图不一致。
+**取舍与追问。** 按被问到的可能性排，通常口述就够：
+- `limit` 改成运行时可调：缩小时要裁剪所有客户的列表，可以惰性处理，下次访问该客户时裁剪。
+- 要不要时间戳：需要「最近 7 天」时，字典的值存时间戳，读取时过滤过期的。
+- 浏览同一商品要不要计频次：值改为（次数，最后时间），顺序仍按最后时间；这会演变成带频次的缓存。
+- 多实例：同一客户请求粘性路由到同一实例，或统一放 Redis，避免各实例视图不一致。
 - 测试点：重复浏览提前、恰好达到上限、超限丢最老、不存在的客户返回空列表、`limit=1`、并发浏览同一客户。
 
 **级别期望。**
-- 中级：用有序字典或列表实现 `view` 与 `recent`，处理重复和上限，指出时间复杂度。
-- 高级：O(1) 结构的原理（哈希表 + 双向链表）、分段锁、客户级内存上界、讲出 Redis 有序集合的真实方案。
-- 资深/专家：竞态的取舍、事件合并与批量写、登录合并、容量与过期策略，以及"第一个唯一值"的摊还分析与内存精确性的权衡。
+- 中级：用有序字典或列表实现 `view` 与 `recent`，处理重复和上限，指出时间复杂度；核心实现能跑通例子。
+- 高级：`O(1)` 结构的原理（哈希表加双向链表）、分段锁、客户级内存上界、讲出 Redis 有序集合的真实方案。
+- 资深/专家：竞态的取舍、事件合并与批量写、登录合并、容量与过期策略，以及「第一个唯一值」的摊还分析与内存精确性的权衡。
 
 **先修概念。**
 - [[hi-low-level-design-in-a-hurry-delivery|答题框架（Delivery Framework）]]

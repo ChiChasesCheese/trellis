@@ -2,10 +2,10 @@
 id: hi-pt-notification-system-scale-10-frequency-digest
 node: qb.sd.notification-system-scale.points
 type: qa
-step: 10
+step: 9
 ---
 ## Q
-**百万级通知系统 · 多业务轰炸与摘要**｜出自：百万级通知系统 › 取舍与追问
+**百万级通知系统 · 多业务轰炸与摘要**｜追问 · 出自：百万级通知系统 › 取舍与追问
 
 同一用户被多个业务方同时通知，通知系统怎么办？为什么不让业务方各自调用服务商？
 

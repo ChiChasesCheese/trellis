@@ -2,10 +2,10 @@
 id: hi-pt-online-chess-platform-8-clock-server
 node: qb.sd.online-chess-platform.points
 type: qa
-step: 8
+step: 7
 ---
 ## Q
-**在线国际象棋平台 · 服务端时钟与超时判负**｜出自：在线国际象棋平台 › 深入 2
+**在线国际象棋平台 · 服务端时钟与超时判负**｜必会 · 出自：在线国际象棋平台 › 深入 2
 
 计时为什么不能信客户端，也不能完全按服务端收到消息的时间算？服务端怎么记账，超时怎么检测？
 

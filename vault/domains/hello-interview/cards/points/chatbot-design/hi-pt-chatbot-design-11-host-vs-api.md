@@ -2,10 +2,10 @@
 id: hi-pt-chatbot-design-11-host-vs-api
 node: qb.sd.chatbot-design.points
 type: qa
-step: 11
+step: 10
 ---
 ## Q
-**对话式 AI 聊天服务 · 自托管模型还是调用 API**｜出自：对话式 AI 聊天服务 › 取舍与追问
+**对话式 AI 聊天服务 · 自托管模型还是调用 API**｜追问 · 出自：对话式 AI 聊天服务 › 取舍与追问
 
 聊天服务的推理层可以自托管 GPU 模型，也可以调用模型提供商的 API。两种选择的取舍是什么？简单版建议怎样选？
 

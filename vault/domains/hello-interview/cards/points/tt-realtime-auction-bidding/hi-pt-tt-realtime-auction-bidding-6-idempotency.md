@@ -2,10 +2,10 @@
 id: hi-pt-tt-realtime-auction-bidding-6-idempotency
 node: tt.sd.tt-realtime-auction-bidding.points
 type: qa
-step: 6
+step: 5
 ---
 ## Q
-**实时竞价拍卖 · 出价幂等与同价并发**｜出自：实时竞价拍卖 › 深入 2
+**实时竞价拍卖 · 出价幂等与同价并发**｜必会 · 出自：实时竞价拍卖 › 深入 2
 
 手机超时重试同一出价，第一次其实已生效，第二次会被当「金额太低」拒绝，用户看到失败。怎么处理？同价并发谁赢？
 

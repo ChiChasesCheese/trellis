@@ -2,10 +2,10 @@
 id: hi-pt-tt-payment-reconciliation-8-refund-match
 node: tt.sd.tt-payment-reconciliation.points
 type: qa
-step: 8
+step: 10
 ---
 ## Q
-**支付对账系统 · 退款与部分退款**｜出自：支付对账系统 › 深入 2
+**支付对账系统 · 退款与部分退款**｜追问 · 出自：支付对账系统 › 深入 5
 
 对账系统里退款、部分退款、一笔授权多次请款，怎么不破坏对账？
 

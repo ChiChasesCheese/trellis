@@ -2,10 +2,10 @@
 id: hi-pt-top-k-counts-10-variants
 node: qb.sd.top-k-counts.points
 type: qa
-step: 10
+step: 9
 ---
 ## Q
-**Top-K 热门榜 · 常见变体的架构切换**｜出自：Top-K 热门榜 › 取舍与追问
+**Top-K 热门榜 · 常见变体的架构切换**｜追问 · 出自：Top-K 热门榜 › 取舍与追问
 
 追问：用户最近 7 天听得最多的 10 首歌、趋势话题标签（越新权重越高）怎么做？
 

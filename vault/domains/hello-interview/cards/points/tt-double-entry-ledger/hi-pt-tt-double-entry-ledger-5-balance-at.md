@@ -2,10 +2,10 @@
 id: hi-pt-tt-double-entry-ledger-5-balance-at
 node: tt.lld.tt-double-entry-ledger.points
 type: qa
-step: 5
+step: 6
 ---
 ## Q
-**复式账本（类设计） · 历史余额的二分**｜出自：复式账本（类设计） › 整体设计
+**复式账本（类设计） · 历史余额的二分**｜追问 · 出自：复式账本（类设计） › 逐步扩展 1
 
 `balance_at(account, currency, seq)` 怎么做到 O(log n)？
 

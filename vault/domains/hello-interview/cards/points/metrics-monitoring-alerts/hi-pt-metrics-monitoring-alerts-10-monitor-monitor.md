@@ -2,10 +2,10 @@
 id: hi-pt-metrics-monitoring-alerts-10-monitor-monitor
 node: qb.sd.metrics-monitoring-alerts.points
 type: qa
-step: 10
+step: 11
 ---
 ## Q
-**指标监控与告警平台 · 监控的监控**｜出自：指标监控与告警平台 › 深入 3
+**指标监控与告警平台 · 监控的监控**｜加分 · 出自：指标监控与告警平台 › 深入 6
 
 指标监控平台自己的告警链路坏了怎么发现？
 

@@ -2,10 +2,10 @@
 id: hi-pt-notification-system-scale-8-channel-queues
 node: qb.sd.notification-system-scale.points
 type: qa
-step: 8
+step: 3
 ---
 ## Q
-**百万级通知系统 · 渠道队列与回执**｜出自：百万级通知系统 › 整体设计
+**百万级通知系统 · 渠道队列与回执**｜必会 · 出自：百万级通知系统 › 整体设计
 
 通知系统的处理流水线如何分层，为什么推送、短信、邮件各自一个队列？回执怎么用？
 

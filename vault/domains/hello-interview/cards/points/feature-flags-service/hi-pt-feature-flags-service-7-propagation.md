@@ -2,10 +2,10 @@
 id: hi-pt-feature-flags-service-7-propagation
 node: qb.sd.feature-flags-service.points
 type: qa
-step: 7
+step: 4
 ---
 ## Q
-**功能开关服务 · 配置传播与快照**｜出自：功能开关服务 › 深入 3
+**功能开关服务 · 配置传播与快照**｜必会 · 出自：功能开关服务 › 深入 2
 
 改了开关多快生效？SDK 怎么拿到并更新规则？为什么快照要有版本号、做成不可变对象？
 

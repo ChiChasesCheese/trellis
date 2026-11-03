@@ -2,10 +2,10 @@
 id: hi-pt-crowdfunding-share-purchase-3-atomic-reserve
 node: qb.sd.crowdfunding-share-purchase.points
 type: qa
-step: 3
+step: 2
 ---
 ## Q
-**限时众筹购股系统 · 原子扣库存**｜出自：限时众筹购股系统 › 整体设计
+**限时众筹购股系统 · 原子扣库存**｜必会 · 出自：限时众筹购股系统 › 整体设计
 
 众筹购股开抢后，大量请求同时扣减同一个全局剩余股数。怎样保证绝不超卖？
 

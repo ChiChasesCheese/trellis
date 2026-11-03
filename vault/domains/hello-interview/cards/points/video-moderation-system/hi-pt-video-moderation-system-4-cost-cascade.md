@@ -2,10 +2,10 @@
 id: hi-pt-video-moderation-system-4-cost-cascade
 node: qb.sd.video-moderation-system.points
 type: qa
-step: 4
+step: 7
 ---
 ## Q
-**视频内容审核系统 · 级联与成本**｜出自：视频内容审核系统 › 深入 1
+**视频内容审核系统 · 级联与成本**｜追问 · 出自：视频内容审核系统 › 深入 4
 
 视频审核峰值 300 条/秒，每条几十帧、几个模型，GPU 成本高。怎么降本？
 

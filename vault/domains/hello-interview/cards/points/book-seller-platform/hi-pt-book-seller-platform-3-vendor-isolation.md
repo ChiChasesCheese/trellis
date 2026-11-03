@@ -2,10 +2,10 @@
 id: hi-pt-book-seller-platform-3-vendor-isolation
 node: qb.sd.book-seller-platform.points
 type: qa
-step: 3
+step: 6
 ---
 ## Q
-**图书比价代购平台 · 书商隔离**｜出自：图书比价代购平台 › 深入 1
+**图书比价代购平台 · 书商隔离**｜必会 · 出自：图书比价代购平台 › 深入 2
 
 图书平台里某家书商接口变慢甚至挂掉。平台怎样保证它不拖垮其他书商和整张订单？说出具体机制。
 

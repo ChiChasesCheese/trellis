@@ -2,10 +2,10 @@
 id: hi-pt-top-k-counts-9-cms-landing
 node: qb.sd.top-k-counts.points
 type: qa
-step: 9
+step: 10
 ---
 ## Q
-**Top-K 热门榜 · 草图落地与专用存储**｜出自：Top-K 热门榜 › 深入 6
+**Top-K 热门榜 · 草图落地与专用存储**｜加分 · 出自：Top-K 热门榜 › 深入 5、6
 
 草图放 Redis 还是 Flink 状态？时间序列库、OLAP 库适合 Top-K 吗？
 

@@ -2,10 +2,10 @@
 id: hi-pt-tt-double-entry-ledger-9-fx
 node: tt.lld.tt-double-entry-ledger.points
 type: qa
-step: 9
+step: 10
 ---
 ## Q
-**复式账本（类设计） · 跨币种转账**｜出自：复式账本（类设计） › 取舍与追问
+**复式账本（类设计） · 跨币种转账**｜加分 · 出自：复式账本（类设计） › 取舍与追问
 
 追问：跨币种转账怎么记？
 

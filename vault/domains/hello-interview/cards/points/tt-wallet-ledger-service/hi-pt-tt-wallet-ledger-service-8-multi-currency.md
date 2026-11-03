@@ -2,10 +2,10 @@
 id: hi-pt-tt-wallet-ledger-service-8-multi-currency
 node: tt.sd.tt-wallet-ledger-service.points
 type: qa
-step: 8
+step: 9
 ---
 ## Q
-**钱包与复式账本服务 · 多币种与换汇**｜出自：钱包与复式账本服务 › 深入 2
+**钱包与复式账本服务 · 多币种与换汇**｜追问 · 出自：钱包与复式账本服务 › 深入 6
 
 钱包支持美元、林吉特、平台金币，换汇时借贷相等怎么成立？
 

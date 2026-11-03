@@ -2,10 +2,10 @@
 id: hi-pt-tt-installment-plan-3-conservation
 node: tt.lld.tt-installment-plan.points
 type: qa
-step: 3
+step: 5
 ---
 ## Q
-**分期计划生成器 · 守恒分摊**｜出自：分期计划生成器 › 深入 2
+**分期计划生成器 · 守恒分摊**｜必会 · 出自：分期计划生成器 › 深入 2
 
 免息分期把 10000 分分 3 期，每期独立四舍五入会少 1 分。怎么做到各期之和恰好等于本金？
 

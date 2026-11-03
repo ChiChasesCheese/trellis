@@ -2,10 +2,10 @@
 id: hi-pt-tt-merchant-webhook-delivery-3-outbox-fanout
 node: tt.sd.tt-merchant-webhook-delivery.points
 type: qa
-step: 3
+step: 2
 ---
 ## Q
-**商户回调（Webhook）投递系统 · 发件箱与扇出**｜出自：商户回调（Webhook）投递系统 › 整体设计
+**商户回调（Webhook）投递系统 · 发件箱与扇出**｜必会 · 出自：商户回调（Webhook）投递系统 › 整体设计
 
 怎样保证「状态变了而事件没发」不可能出现？事件怎样变成对每个端点的投递？
 

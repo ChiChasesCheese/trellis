@@ -2,10 +2,10 @@
 id: hi-pt-figma-draw-api-1-preview-vs-commit
 node: qb.lld.figma-draw-api.points
 type: qa
-step: 1
+step: 3
 ---
 ## Q
-**矢量图形编辑器绘图 API · 预览与提交分离**｜出自：矢量图形编辑器绘图 API › 整体设计
+**矢量图形编辑器绘图 API · 预览与提交分离**｜必会 · 出自：矢量图形编辑器绘图 API › 深入 1
 
 设计类 Figma 的矢量编辑器：用户拖动鼠标会产生每秒上百个指针事件。核心设计思路是什么？
 

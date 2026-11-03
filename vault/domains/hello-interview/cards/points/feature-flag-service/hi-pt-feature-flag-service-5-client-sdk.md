@@ -2,10 +2,10 @@
 id: hi-pt-feature-flag-service-5-client-sdk
 node: qb.sd.feature-flag-service.points
 type: qa
-step: 5
+step: 9
 ---
 ## Q
-**功能开关服务 · 客户端 SDK 不下发规则**｜出自：功能开关服务 › 整体设计
+**功能开关服务 · 客户端 SDK 不下发规则**｜追问 · 出自：功能开关服务 › 整体设计
 
 浏览器和手机端的 SDK 为什么不能像服务端 SDK 那样下载整份规则集？它们怎么拿到开关取值？
 

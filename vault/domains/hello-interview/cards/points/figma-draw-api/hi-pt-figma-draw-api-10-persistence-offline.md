@@ -2,10 +2,10 @@
 id: hi-pt-figma-draw-api-10-persistence-offline
 node: qb.lld.figma-draw-api.points
 type: qa
-step: 10
+step: 9
 ---
 ## Q
-**矢量图形编辑器绘图 API · 持久化与离线**｜出自：矢量图形编辑器绘图 API › 深入 7
+**矢量图形编辑器绘图 API · 持久化与离线**｜追问 · 出自：矢量图形编辑器绘图 API › 深入 6
 
 矢量编辑器的服务器怎么保存文档，新客户端怎么加载，离线编辑怎么处理？
 

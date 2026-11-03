@@ -2,10 +2,10 @@
 id: hi-pt-figma-draw-api-4-op-command
 node: qb.lld.figma-draw-api.points
 type: qa
-step: 4
+step: 2
 ---
 ## Q
-**矢量图形编辑器绘图 API · 统一为 Op 与命令模式**｜出自：矢量图形编辑器绘图 API › 核心实体与接口
+**矢量图形编辑器绘图 API · 统一为 Op 与命令模式**｜必会 · 出自：矢量图形编辑器绘图 API › 核心实现
 
 矢量编辑器的撤销、同步、持久化、协作要怎么共用一条管道？Document.apply 的返回值有什么用？
 

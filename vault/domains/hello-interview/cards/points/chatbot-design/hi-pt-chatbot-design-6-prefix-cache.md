@@ -2,10 +2,10 @@
 id: hi-pt-chatbot-design-6-prefix-cache
 node: qb.sd.chatbot-design.points
 type: qa
-step: 6
+step: 11
 ---
 ## Q
-**对话式 AI 聊天服务 · 稳定前缀复用 KV cache**｜出自：对话式 AI 聊天服务 › 深入 1
+**对话式 AI 聊天服务 · 稳定前缀复用 KV cache**｜加分 · 出自：对话式 AI 聊天服务 › 深入 6
 
 多轮对话每次都要把历史重新送给模型，延迟随上下文增长。怎样利用提示词结构降低首词元延迟？
 

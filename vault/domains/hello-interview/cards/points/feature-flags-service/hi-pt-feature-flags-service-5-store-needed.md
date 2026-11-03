@@ -2,10 +2,10 @@
 id: hi-pt-feature-flags-service-5-store-needed
 node: qb.sd.feature-flags-service.points
 type: qa
-step: 5
+step: 8
 ---
 ## Q
-**功能开关服务 · 何时才需要存储分配**｜出自：功能开关服务 › 深入 1
+**功能开关服务 · 何时才需要存储分配**｜追问 · 出自：功能开关服务 › 深入 4
 
 哈希分桶是默认路径，哪些场景仍然要把分配结果存下来？
 

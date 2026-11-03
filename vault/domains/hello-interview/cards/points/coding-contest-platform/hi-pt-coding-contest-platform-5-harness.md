@@ -2,10 +2,10 @@
 id: hi-pt-coding-contest-platform-5-harness
 node: qb.sd.coding-contest-platform.points
 type: qa
-step: 5
+step: 8
 ---
 ## Q
-**在线判题与编程竞赛平台 · 与语言无关的测试数据**｜出自：在线判题与编程竞赛平台 › 深入 2
+**在线判题与编程竞赛平台 · 与语言无关的测试数据**｜追问 · 出自：在线判题与编程竞赛平台 › 深入 5
 
 同一道题要支持多种语言，测试数据和判题怎么组织？答案不唯一怎么判？
 

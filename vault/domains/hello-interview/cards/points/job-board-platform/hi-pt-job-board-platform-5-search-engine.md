@@ -2,10 +2,10 @@
 id: hi-pt-job-board-platform-5-search-engine
 node: qb.lld.job-board-platform.points
 type: qa
-step: 5
+step: 10
 ---
 ## Q
-**招聘信息平台 · 演进到搜索引擎**｜出自：招聘信息平台 › 深入 2
+**招聘信息平台 · 演进到搜索引擎**｜加分 · 出自：招聘信息平台 › 深入 6
 
 招聘平台职位量上到百万级后，内存倒排索引不够了。怎么演进？
 

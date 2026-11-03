@@ -2,10 +2,10 @@
 id: hi-pt-tt-merchant-webhook-delivery-6-isolation
 node: tt.sd.tt-merchant-webhook-delivery.points
 type: qa
-step: 6
+step: 5
 ---
 ## Q
-**商户回调（Webhook）投递系统 · 按端点隔离与熔断**｜出自：商户回调（Webhook）投递系统 › 深入 2
+**商户回调（Webhook）投递系统 · 按端点隔离与熔断**｜必会 · 出自：商户回调（Webhook）投递系统 › 深入 2
 
 某个端点每次超时 10 秒，工人线程被占满，其他商户首次投递变慢。怎么隔离？
 

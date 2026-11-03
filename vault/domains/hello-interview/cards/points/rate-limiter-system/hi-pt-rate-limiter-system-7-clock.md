@@ -2,10 +2,10 @@
 id: hi-pt-rate-limiter-system-7-clock
 node: qb.lld.rate-limiter-system.points
 type: qa
-step: 7
+step: 8
 ---
 ## Q
-**限流器（单机类设计） · 单调时钟与时钟注入**｜出自：限流器（单机类设计） › 深入 2
+**限流器（单机类设计） · 单调时钟与时钟注入**｜必会 · 出自：限流器（单机类设计） › 深入 3
 
 限流器该用 `time.time` 还是 `time.monotonic`？测试怎么避免 sleep？
 

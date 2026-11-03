@@ -2,10 +2,10 @@
 id: hi-pt-tt-payment-reconciliation-9-break-workflow
 node: tt.sd.tt-payment-reconciliation.points
 type: qa
-step: 9
+step: 6
 ---
 ## Q
-**支付对账系统 · 差异分类与案例聚合**｜出自：支付对账系统 › 深入 3
+**支付对账系统 · 差异分类与案例聚合**｜必会 · 出自：支付对账系统 › 深入 2
 
 对账系统每天有几千个真差异。怎么分类处置，为什么按案例而不是按行处理？
 

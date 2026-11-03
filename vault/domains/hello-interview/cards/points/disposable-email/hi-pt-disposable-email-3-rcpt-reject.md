@@ -2,10 +2,10 @@
 id: hi-pt-disposable-email-3-rcpt-reject
 node: qb.sd.disposable-email.points
 type: qa
-step: 3
+step: 5
 ---
 ## Q
-**临时邮箱服务 · RCPT 阶段拒绝无效地址**｜出自：临时邮箱服务 › 整体设计
+**临时邮箱服务 · RCPT 阶段拒绝无效地址**｜必会 · 出自：临时邮箱服务 › 深入 3
 
 对外开放的 SMTP 入口会收到大量发往不存在地址的垃圾邮件。怎么保证只为活着的邮箱存信？
 

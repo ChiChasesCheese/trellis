@@ -2,10 +2,10 @@
 id: hi-pt-tt-double-entry-ledger-2-signed
 node: tt.lld.tt-double-entry-ledger.points
 type: qa
-step: 2
+step: 1
 ---
 ## Q
-**复式账本（类设计） · 带符号金额的约定**｜出自：复式账本（类设计） › 核心实体与接口
+**复式账本（类设计） · 带符号金额的约定**｜必会 · 出自：复式账本（类设计） › 核心实体与接口
 
 `Posting(account, currency, amount)` 里金额为什么用带符号整数？借贷方向怎么约定，用户钱包的余额怎么展示？
 

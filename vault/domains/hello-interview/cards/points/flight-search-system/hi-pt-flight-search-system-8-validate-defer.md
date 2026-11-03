@@ -2,10 +2,10 @@
 id: hi-pt-flight-search-system-8-validate-defer
 node: qb.sd.flight-search-system.points
 type: qa
-step: 8
+step: 7
 ---
 ## Q
-**机票搜索系统 · 价格确认延后**｜出自：机票搜索系统 › 深入 4
+**机票搜索系统 · 价格确认延后**｜必会 · 出自：机票搜索系统 › 深入 3
 
 搜索阶段的价格为什么只给「约」价，点击行程才实时确认？这对供应商的搜索预订比有什么帮助？
 

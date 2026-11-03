@@ -2,10 +2,10 @@
 id: hi-pt-food-item-reviews-7-anti-fraud
 node: qb.sd.food-item-reviews.points
 type: qa
-step: 7
+step: 8
 ---
 ## Q
-**带打赏的菜品评价系统 · 抗刷票**｜出自：带打赏的菜品评价系统 › 深入 3
+**带打赏的菜品评价系统 · 抗刷票**｜追问 · 出自：带打赏的菜品评价系统 › 深入 4
 
 菜品评价按票数付钱，一定有人刷票。有哪些防线？
 

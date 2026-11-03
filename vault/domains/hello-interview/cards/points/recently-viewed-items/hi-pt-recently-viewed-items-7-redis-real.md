@@ -2,10 +2,10 @@
 id: hi-pt-recently-viewed-items-7-redis-real
 node: qb.lld.recently-viewed-items.points
 type: qa
-step: 7
+step: 10
 ---
 ## Q
-**"最近浏览"记录 · 真实系统用 Redis**｜出自："最近浏览"记录 › 深入 4
+**"最近浏览"记录 · 真实系统用 Redis**｜加分 · 出自："最近浏览"记录 › 深入 6
 
 "最近浏览"在真实系统里一般怎么放？每次浏览同步写有什么问题？
 

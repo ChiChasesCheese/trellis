@@ -2,10 +2,10 @@
 id: hi-pt-food-item-reviews-4-hot-counter
 node: qb.sd.food-item-reviews.points
 type: qa
-step: 4
+step: 6
 ---
 ## Q
-**带打赏的菜品评价系统 · 热点评论计数**｜出自：带打赏的菜品评价系统 › 深入 1
+**带打赏的菜品评价系统 · 热点评论计数**｜必会 · 出自：带打赏的菜品评价系统 › 深入 2
 
 菜品评价里一条爆款评论每秒几百票，直接 UPDATE 赞数 +1 会在同一行排队加锁。有哪些方案，怎么选？
 

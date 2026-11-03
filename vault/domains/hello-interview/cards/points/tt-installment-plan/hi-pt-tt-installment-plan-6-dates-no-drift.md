@@ -2,10 +2,10 @@
 id: hi-pt-tt-installment-plan-6-dates-no-drift
 node: tt.lld.tt-installment-plan.points
 type: qa
-step: 6
+step: 7
 ---
 ## Q
-**分期计划生成器 · 日期不漂移**｜出自：分期计划生成器 › 深入 3
+**分期计划生成器 · 日期不漂移**｜必会 · 出自：分期计划生成器 › 深入 3
 
 分期计划按月推进到期日，从 1 月 31 日起算，为什么不能"上一期加一个月"？应该怎么算？
 

@@ -2,10 +2,10 @@
 id: hi-pt-url-shortener-design-8-cache-layers
 node: qb.sd.url-shortener-design.points
 type: qa
-step: 8
+step: 7
 ---
 ## Q
-**短链接服务 · 跳转加速的三层**｜出自：短链接服务 › 深入 2
+**短链接服务 · 跳转加速的三层**｜必会 · 出自：短链接服务 › 深入 2
 
 跳转要在 100ms 内、峰值 6 万次/秒，数据库点查压不住。逐层说明加速手段，并估算热集缓存大小。
 

@@ -2,10 +2,10 @@
 id: hi-pt-scheduler-system-design-7-timer-structure
 node: qb.lld.scheduler-system-design.points
 type: qa
-step: 7
+step: 5
 ---
 ## Q
-**任务调度器（定时、周期、带优先级） · 计时的数据结构**｜出自：任务调度器（定时、周期、带优先级） › 深入 1
+**任务调度器（定时、周期、带优先级） · 计时的数据结构**｜必会 · 出自：任务调度器（定时、周期、带优先级） › 深入 1
 
 定时堆和时间轮各自的复杂度与适用场景是什么？选哪个？
 

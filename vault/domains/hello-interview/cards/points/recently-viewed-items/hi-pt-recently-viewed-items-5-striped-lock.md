@@ -2,10 +2,10 @@
 id: hi-pt-recently-viewed-items-5-striped-lock
 node: qb.lld.recently-viewed-items.points
 type: qa
-step: 5
+step: 4
 ---
 ## Q
-**"最近浏览"记录 · 分段锁**｜出自："最近浏览"记录 › 深入 2
+**"最近浏览"记录 · 分段锁**｜必会 · 出自："最近浏览"记录 › 深入 2
 
 "最近浏览"要线程安全。全局锁、每客户一把锁、分段锁各有什么问题？
 

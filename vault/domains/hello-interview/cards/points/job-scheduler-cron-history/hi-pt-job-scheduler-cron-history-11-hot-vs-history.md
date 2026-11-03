@@ -2,10 +2,10 @@
 id: hi-pt-job-scheduler-cron-history-11-hot-vs-history
 node: qb.sd.job-scheduler-cron-history.points
 type: qa
-step: 11
+step: 9
 ---
 ## Q
-**分布式任务调度器 · 热表与历史库分离**｜出自：分布式任务调度器 › 深入 5
+**分布式任务调度器 · 热表与历史库分离**｜必会 · 出自：分布式任务调度器 › 深入 3
 
 为什么执行历史不能和热的调度状态放同一张表？历史库怎么建模、怎么过期？
 

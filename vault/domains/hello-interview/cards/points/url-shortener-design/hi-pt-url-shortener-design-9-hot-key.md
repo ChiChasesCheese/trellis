@@ -2,10 +2,10 @@
 id: hi-pt-url-shortener-design-9-hot-key
 node: qb.sd.url-shortener-design.points
 type: qa
-step: 9
+step: 10
 ---
 ## Q
-**短链接服务 · 热点 key**｜出自：短链接服务 › 深入 2
+**短链接服务 · 热点 key**｜追问 · 出自：短链接服务 › 深入 4
 
 个别病毒式传播的短码会压垮单个缓存分片，怎么办？
 

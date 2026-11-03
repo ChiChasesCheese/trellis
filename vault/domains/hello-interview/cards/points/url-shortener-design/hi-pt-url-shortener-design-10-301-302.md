@@ -2,10 +2,10 @@
 id: hi-pt-url-shortener-design-10-301-302
 node: qb.sd.url-shortener-design.points
 type: qa
-step: 10
+step: 8
 ---
 ## Q
-**短链接服务 · 301 还是 302**｜出自：短链接服务 › 深入 2
+**短链接服务 · 301 还是 302**｜必会 · 出自：短链接服务 › 深入 2
 
 跳转该用 301 还是 302？各自的代价是什么？
 

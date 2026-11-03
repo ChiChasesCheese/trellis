@@ -2,10 +2,10 @@
 id: hi-pt-online-chess-platform-9-undo-race
 node: qb.sd.online-chess-platform.points
 type: qa
-step: 9
+step: 8
 ---
 ## Q
-**在线国际象棋平台 · 悔棋与走子的竞态**｜出自：在线国际象棋平台 › 深入 3
+**在线国际象棋平台 · 悔棋与走子的竞态**｜必会 · 出自：在线国际象棋平台 › 深入 3
 
 走子方悔棋时对手正好落子，怎么处理？悔棋要不要对手同意？
 

@@ -2,10 +2,10 @@
 id: hi-pt-tt-merchant-webhook-delivery-10-ssrf
 node: tt.sd.tt-merchant-webhook-delivery.points
 type: qa
-step: 10
+step: 11
 ---
 ## Q
-**商户回调（Webhook）投递系统 · 防 SSRF**｜出自：商户回调（Webhook）投递系统 › 深入 4
+**商户回调（Webhook）投递系统 · 防 SSRF**｜加分 · 出自：商户回调（Webhook）投递系统 › 深入 7
 
 商户可以填任意回调 URL，平台怎么避免被利用访问内网？
 

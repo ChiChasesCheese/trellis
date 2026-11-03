@@ -2,10 +2,10 @@
 id: hi-pt-parking-lot-system-10-testing
 node: qb.lld.parking-lot-system.points
 type: qa
-step: 10
+step: 9
 ---
 ## Q
-**停车场管理系统 · 可测试性与多停车场**｜出自：停车场管理系统 › 取舍与追问
+**停车场管理系统 · 可测试性与多停车场**｜追问 · 出自：停车场管理系统 › 取舍与追问
 
 追问：怎么测试？高并发入口怎么扩展？设计支持多个停车场吗？
 

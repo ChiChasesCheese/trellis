@@ -2,10 +2,10 @@
 id: hi-pt-rate-limiter-system-8-algo-choice
 node: qb.lld.rate-limiter-system.points
 type: qa
-step: 8
+step: 7
 ---
 ## Q
-**限流器（单机类设计） · 算法怎么选**｜出自：限流器（单机类设计） › 深入 3
+**限流器（单机类设计） · 算法怎么选**｜必会 · 出自：限流器（单机类设计） › 深入 2
 
 面试里被问「选哪种限流算法」，依据是什么？
 

@@ -2,10 +2,10 @@
 id: hi-pt-hotel-booking-system-5-hotspot
 node: qb.sd.hotel-booking-system.points
 type: qa
-step: 5
+step: 6
 ---
 ## Q
-**酒店预订系统 · 热门酒店的热点**｜出自：酒店预订系统 › 深入 2
+**酒店预订系统 · 热门酒店的热点**｜追问 · 出自：酒店预订系统 › 深入 4
 
 活动日一个热门酒店被大量抢订，请求集中到少数几行库存。怎么缓解？
 

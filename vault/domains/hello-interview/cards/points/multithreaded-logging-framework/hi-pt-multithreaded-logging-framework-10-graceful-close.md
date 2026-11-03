@@ -2,10 +2,10 @@
 id: hi-pt-multithreaded-logging-framework-10-graceful-close
 node: qb.lld.multithreaded-logging-framework.points
 type: qa
-step: 10
+step: 9
 ---
 ## Q
-**多线程日志框架 · 优雅关闭与崩溃边界**｜出自：多线程日志框架 › 深入 5
+**多线程日志框架 · 优雅关闭与崩溃边界**｜追问 · 出自：多线程日志框架 › 深入 4
 
 如何保证关闭时已接收的日志全部写完？进程被强制终止又会怎样？
 

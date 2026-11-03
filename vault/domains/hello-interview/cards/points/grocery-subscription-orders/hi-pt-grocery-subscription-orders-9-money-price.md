@@ -2,10 +2,10 @@
 id: hi-pt-grocery-subscription-orders-9-money-price
 node: qb.lld.grocery-subscription-orders.points
 type: qa
-step: 9
+step: 10
 ---
 ## Q
-**生鲜订阅转订单服务 · 金额与价格**｜出自：生鲜订阅转订单服务 › 深入 4
+**生鲜订阅转订单服务 · 金额与价格**｜加分 · 出自：生鲜订阅转订单服务 › 深入 4
 
 订阅服务中金额怎么表示？订阅创建时要不要锁定价格？
 

@@ -2,10 +2,10 @@
 id: hi-pt-disposable-email-4-create-mailbox
 node: qb.sd.disposable-email.points
 type: qa
-step: 4
+step: 3
 ---
 ## Q
-**临时邮箱服务 · 创建邮箱与 TTL**｜出自：临时邮箱服务 › 整体设计
+**临时邮箱服务 · 创建邮箱与 TTL**｜必会 · 出自：临时邮箱服务 › 整体设计
 
 创建邮箱时怎么保证不覆盖已有地址，并让它 5 小时后自动失效？
 

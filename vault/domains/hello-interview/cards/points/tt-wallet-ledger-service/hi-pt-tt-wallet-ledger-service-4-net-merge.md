@@ -2,10 +2,10 @@
 id: hi-pt-tt-wallet-ledger-service-4-net-merge
 node: tt.sd.tt-wallet-ledger-service.points
 type: qa
-step: 4
+step: 5
 ---
 ## Q
-**钱包与复式账本服务 · 窗口净额合并**｜出自：钱包与复式账本服务 › 深入 3
+**钱包与复式账本服务 · 窗口净额合并**｜必会 · 出自：钱包与复式账本服务 › 深入 2
 
 钱包账本的热点系统账户怎么扛？直接更新余额、拆子账户、只追加加快照各有什么问题？
 

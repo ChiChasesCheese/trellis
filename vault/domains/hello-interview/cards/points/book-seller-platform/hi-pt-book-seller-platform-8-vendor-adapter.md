@@ -2,10 +2,10 @@
 id: hi-pt-book-seller-platform-8-vendor-adapter
 node: qb.sd.book-seller-platform.points
 type: qa
-step: 8
+step: 9
 ---
 ## Q
-**图书比价代购平台 · 书商适配层**｜出自：图书比价代购平台 › 深入 3
+**图书比价代购平台 · 书商适配层**｜追问 · 出自：图书比价代购平台 › 深入 5
 
 图书平台要接入许多接口各异的书商（REST、SOAP、文件，字段名与错误码都不同），怎么设计注册与适配，让平台不为每家写死逻辑？
 

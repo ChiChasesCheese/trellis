@@ -2,10 +2,10 @@
 id: hi-pt-disposable-email-5-realtime
 node: qb.sd.disposable-email.points
 type: qa
-step: 5
+step: 4
 ---
 ## Q
-**临时邮箱服务 · 实时展示新邮件**｜出自：临时邮箱服务 › 整体设计
+**临时邮箱服务 · 实时展示新邮件**｜必会 · 出自：临时邮箱服务 › 整体设计
 
 新邮件要几秒内出现在网页上。后端和前端怎么配合？
 

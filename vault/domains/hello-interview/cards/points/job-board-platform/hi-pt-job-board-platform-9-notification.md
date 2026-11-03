@@ -2,10 +2,10 @@
 id: hi-pt-job-board-platform-9-notification
 node: qb.lld.job-board-platform.points
 type: qa
-step: 9
+step: 6
 ---
 ## Q
-**招聘信息平台 · 通知解耦**｜出自：招聘信息平台 › 深入 6
+**招聘信息平台 · 通知解耦**｜追问 · 出自：招聘信息平台 › 逐步扩展 2
 
 招聘平台新申请要通知雇主、状态变化要通知求职者，渠道有邮件、站内信、推送。怎么设计才不影响核心流程？
 

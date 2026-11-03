@@ -2,10 +2,10 @@
 id: hi-pt-tt-payment-reconciliation-3-scale-funnel
 node: tt.sd.tt-payment-reconciliation.points
 type: qa
-step: 3
+step: 2
 ---
 ## Q
-**支付对账系统 · 规模与匹配漏斗**｜出自：支付对账系统 › 需求
+**支付对账系统 · 规模与匹配漏斗**｜必会 · 出自：支付对账系统 › 需求
 
 对账系统每天约 3,273 万对账项，8 家 PSP、15 种币种。估算分区数和匹配漏斗，驱动设计的数字是什么？
 

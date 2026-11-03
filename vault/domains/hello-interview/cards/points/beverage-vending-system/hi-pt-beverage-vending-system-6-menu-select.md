@@ -2,10 +2,10 @@
 id: hi-pt-beverage-vending-system-6-menu-select
 node: qb.lld.beverage-vending-system.points
 type: qa
-step: 6
+step: 5
 ---
 ## Q
-**多地点饮品自助售卖系统 · 菜单推导与选机策略**｜出自：多地点饮品自助售卖系统 › 深入 3
+**多地点饮品自助售卖系统 · 菜单推导与选机策略**｜追问 · 出自：多地点饮品自助售卖系统 › 逐步扩展 1
 
 菜单是单独维护还是由库存推导？为什么下单时还要以 `reserve` 为准？机器选择规则怎么留出变化空间？
 

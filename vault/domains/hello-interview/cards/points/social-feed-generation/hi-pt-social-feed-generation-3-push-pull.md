@@ -2,10 +2,10 @@
 id: hi-pt-social-feed-generation-3-push-pull
 node: qb.sd.social-feed-generation.points
 type: qa
-step: 3
+step: 4
 ---
 ## Q
-**社交信息流生成系统 · 推、拉与混合扩散**｜出自：社交信息流生成系统 › 深入 1
+**社交信息流生成系统 · 推、拉与混合扩散**｜必会 · 出自：社交信息流生成系统 › 深入 1
 
 写时推送、读时拉取各有什么代价？名人账号怎么处理，最终选哪种？
 

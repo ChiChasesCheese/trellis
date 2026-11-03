@@ -2,10 +2,10 @@
 id: hi-pt-notification-system-scale-6-at-least-once-dedup
 node: qb.sd.notification-system-scale.points
 type: qa
-step: 6
+step: 7
 ---
 ## Q
-**百万级通知系统 · 至少一次与去重**｜出自：百万级通知系统 › 深入 4
+**百万级通知系统 · 至少一次与去重**｜追问 · 出自：百万级通知系统 › 深入 4
 
 通知系统要保证送达，又尽量不让用户收到重复通知。怎么设计重试与去重？
 

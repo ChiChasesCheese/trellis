@@ -2,10 +2,10 @@
 id: hi-pt-tt-double-entry-ledger-1-invariants
 node: tt.lld.tt-double-entry-ledger.points
 type: qa
-step: 1
+step: 2
 ---
 ## Q
-**复式账本（类设计） · 日志加派生索引与三条不变量**｜出自：复式账本（类设计） › 整体设计
+**复式账本（类设计） · 日志加派生索引与三条不变量**｜必会 · 出自：复式账本（类设计） › 整体设计
 
 复式账本为什么不是「一个余额字段」？它的结构和三条不变量是什么？
 

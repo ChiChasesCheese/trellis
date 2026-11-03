@@ -2,10 +2,10 @@
 id: hi-pt-kv-store-eviction-8-transaction
 node: qb.lld.kv-store-eviction.points
 type: qa
-step: 8
+step: 10
 ---
 ## Q
-**可配置淘汰策略的内存键值存储 · 事务的快照回滚**｜出自：可配置淘汰策略的内存键值存储 › 深入 5
+**可配置淘汰策略的内存键值存储 · 事务的快照回滚**｜加分 · 出自：可配置淘汰策略的内存键值存储 › 深入 7
 
 怎么实现 MULTI/EXEC 事务，保证要么全部生效、要么全不生效？它和淘汰有什么相互作用？
 

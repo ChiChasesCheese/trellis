@@ -2,10 +2,10 @@
 id: hi-pt-recently-viewed-items-8-first-unique
 node: qb.lld.recently-viewed-items.points
 type: qa
-step: 8
+step: 6
 ---
 ## Q
-**"最近浏览"记录 · 第一个只访问一次的客户**｜出自："最近浏览"记录 › 深入 5
+**"最近浏览"记录 · 第一个只访问一次的客户**｜追问 · 出自："最近浏览"记录 › 逐步扩展 2
 
 变体：客户多次访问门户，随时回答"到目前为止第一个只访问过一次的客户是谁"。怎么做到 first() 严格 O(1)？
 

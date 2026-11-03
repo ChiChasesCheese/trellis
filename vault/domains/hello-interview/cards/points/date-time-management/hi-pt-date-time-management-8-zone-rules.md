@@ -2,10 +2,10 @@
 id: hi-pt-date-time-management-8-zone-rules
 node: qb.lld.date-time-management.points
 type: qa
-step: 8
+step: 9
 ---
 ## Q
-**日期时间库 · 时区规则存储与未来事件**｜出自：日期时间库 › 深入 4
+**日期时间库 · 时区规则存储与未来事件**｜追问 · 出自：日期时间库 › 深入 6
 
 时区规则会被政府更新。库内部怎样存规则并查偏移量？数据库里存未来事件应该存什么，已发生的事件呢？
 

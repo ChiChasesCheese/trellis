@@ -2,10 +2,10 @@
 id: hi-pt-tt-merchant-webhook-delivery-2-at-least-once
 node: tt.sd.tt-merchant-webhook-delivery.points
 type: qa
-step: 2
+step: 3
 ---
 ## Q
-**商户回调（Webhook）投递系统 · 只能至少一次**｜出自：商户回调（Webhook）投递系统 › 深入 1
+**商户回调（Webhook）投递系统 · 只能至少一次**｜必会 · 出自：商户回调（Webhook）投递系统 › 深入 1
 
 能做到恰好一次吗？为什么？平台和商户各自承担什么？
 

@@ -2,10 +2,10 @@
 id: hi-pt-book-seller-platform-9-external-stock
 node: qb.sd.book-seller-platform.points
 type: qa
-step: 9
+step: 10
 ---
 ## Q
-**图书比价代购平台 · 库存在系统之外**｜出自：图书比价代购平台 › 深入 4
+**图书比价代购平台 · 库存在系统之外**｜追问 · 出自：图书比价代购平台 › 深入 6
 
 书商也在平台之外卖书，所以平台查到的报价和库存可能在下单时已经失效。这对图书平台的设计和对顾客的承诺意味着什么？
 

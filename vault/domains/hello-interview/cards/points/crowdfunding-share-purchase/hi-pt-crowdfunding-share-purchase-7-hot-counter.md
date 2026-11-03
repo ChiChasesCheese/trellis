@@ -2,10 +2,10 @@
 id: hi-pt-crowdfunding-share-purchase-7-hot-counter
 node: qb.sd.crowdfunding-share-purchase.points
 type: qa
-step: 7
+step: 8
 ---
 ## Q
-**限时众筹购股系统 · 库存热点与分段**｜出自：限时众筹购股系统 › 深入 4
+**限时众筹购股系统 · 库存热点与分段**｜追问 · 出自：限时众筹购股系统 › 深入 5
 
 众筹购股的剩余股数是一个全局热点计数器。什么情况下需要拆分它？拆分的代价是什么？
 

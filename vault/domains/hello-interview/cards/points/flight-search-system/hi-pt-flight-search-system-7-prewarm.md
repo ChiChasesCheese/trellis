@@ -2,10 +2,10 @@
 id: hi-pt-flight-search-system-7-prewarm
 node: qb.sd.flight-search-system.points
 type: qa
-step: 7
+step: 8
 ---
 ## Q
-**机票搜索系统 · 预热的经济性**｜出自：机票搜索系统 › 深入 3
+**机票搜索系统 · 预热的经济性**｜追问 · 出自：机票搜索系统 › 深入 4
 
 热门航线日期可以预热缓存。什么值得预热，要避免什么？
 

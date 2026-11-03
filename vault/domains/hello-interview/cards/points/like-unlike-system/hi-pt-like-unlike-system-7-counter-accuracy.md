@@ -2,10 +2,10 @@
 id: hi-pt-like-unlike-system-7-counter-accuracy
 node: qb.sd.like-unlike-system.points
 type: qa
-step: 7
+step: 8
 ---
 ## Q
-**点赞与取消点赞系统 · 计数准确性与对账**｜出自：点赞与取消点赞系统 › 深入 1
+**点赞与取消点赞系统 · 计数准确性与对账**｜必会 · 出自：点赞与取消点赞系统 › 深入 3
 
 点赞系统的增量事件至少一次投递，消费者重启可能重复处理。怎样保证计数不漂移？
 

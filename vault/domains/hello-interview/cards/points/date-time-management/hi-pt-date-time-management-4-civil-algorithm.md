@@ -2,10 +2,10 @@
 id: hi-pt-date-time-management-4-civil-algorithm
 node: qb.lld.date-time-management.points
 type: qa
-step: 4
+step: 5
 ---
 ## Q
-**日期时间库 · 年月日与纪元日的换算**｜出自：日期时间库 › 整体设计
+**日期时间库 · 年月日与纪元日的换算**｜必会 · 出自：日期时间库 › 核心实现
 
 年月日与纪元日互转，可以循环逐年累加，也可以用民用历算法。后者的关键技巧是什么？
 

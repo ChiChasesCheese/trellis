@@ -2,10 +2,10 @@
 id: hi-pt-online-chess-platform-6-owner-failover
 node: qb.sd.online-chess-platform.points
 type: qa
-step: 6
+step: 9
 ---
 ## Q
-**在线国际象棋平台 · 所有者宕机恢复**｜出自：在线国际象棋平台 › 整体设计
+**在线国际象棋平台 · 所有者宕机恢复**｜追问 · 出自：在线国际象棋平台 › 整体设计
 
 对局所有者节点宕机后，这一局怎样继续？为什么选日志在外部、状态在内存？
 

@@ -2,10 +2,10 @@
 id: hi-pt-tt-double-entry-ledger-6-freeze
 node: tt.lld.tt-double-entry-ledger.points
 type: qa
-step: 6
+step: 5
 ---
 ## Q
-**复式账本（类设计） · 冻结、可用余额与不透支**｜出自：复式账本（类设计） › 深入 2
+**复式账本（类设计） · 冻结、可用余额与不透支**｜必会 · 出自：复式账本（类设计） › 深入 2
 
 转账处理期间金额要先占住，用户钱包不能透支。怎么设计冻结，检查怎么写才不被并发击穿？
 

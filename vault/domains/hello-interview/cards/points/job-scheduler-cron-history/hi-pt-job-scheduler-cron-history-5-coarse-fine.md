@@ -2,10 +2,10 @@
 id: hi-pt-job-scheduler-cron-history-5-coarse-fine
 node: qb.sd.job-scheduler-cron-history.points
 type: qa
-step: 5
+step: 7
 ---
 ## Q
-**分布式任务调度器 · 粗筛加精筛找到期任务**｜出自：分布式任务调度器 › 深入 1
+**分布式任务调度器 · 粗筛加精筛找到期任务**｜必会 · 出自：分布式任务调度器 › 深入 1
 
 亿级待定任务里怎样亚秒级找到到期任务？全表每秒扫、时间分桶、数据库加内存堆三种方案各有什么问题？选哪个？
 

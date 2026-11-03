@@ -2,10 +2,10 @@
 id: hi-pt-coding-contest-platform-8-pre-scale
 node: qb.sd.coding-contest-platform.points
 type: qa
-step: 8
+step: 5
 ---
 ## Q
-**在线判题与编程竞赛平台 · 比赛尖峰与预扩容**｜出自：在线判题与编程竞赛平台 › 深入 4
+**在线判题与编程竞赛平台 · 比赛尖峰与预扩容**｜必会 · 出自：在线判题与编程竞赛平台 › 深入 2
 
 比赛开始瞬间 10 万人同时提交和拉题。为什么不等指标触发扩容？题目内容怎么提前准备？
 

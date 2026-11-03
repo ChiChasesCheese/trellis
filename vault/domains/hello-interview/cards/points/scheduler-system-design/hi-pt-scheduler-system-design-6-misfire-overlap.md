@@ -2,10 +2,10 @@
 id: hi-pt-scheduler-system-design-6-misfire-overlap
 node: qb.lld.scheduler-system-design.points
 type: qa
-step: 6
+step: 7
 ---
 ## Q
-**任务调度器（定时、周期、带优先级） · 错过触发与重叠策略**｜出自：任务调度器（定时、周期、带优先级） › 整体设计
+**任务调度器（定时、周期、带优先级） · 错过触发与重叠策略**｜必会 · 出自：任务调度器（定时、周期、带优先级） › 深入 2
 
 进程卡了好几个周期，`FixedRate` 怎么处理错过的触发？上一轮没跑完下一轮又到点怎么办？
 

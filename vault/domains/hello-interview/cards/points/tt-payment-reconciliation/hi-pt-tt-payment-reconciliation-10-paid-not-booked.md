@@ -2,10 +2,10 @@
 id: hi-pt-tt-payment-reconciliation-10-paid-not-booked
 node: tt.sd.tt-payment-reconciliation.points
 type: qa
-step: 10
+step: 9
 ---
 ## Q
-**支付对账系统 · 渠道已扣款订单未支付**｜出自：支付对账系统 › 深入 3
+**支付对账系统 · 渠道已扣款订单未支付**｜追问 · 出自：支付对账系统 › 深入 4
 
 对账发现某笔款项渠道已扣但订单仍是未支付，怎么处理？
 

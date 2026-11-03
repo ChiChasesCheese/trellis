@@ -2,10 +2,10 @@
 id: hi-pt-tt-installment-plan-7-strategy-step
 node: tt.lld.tt-installment-plan.points
 type: qa
-step: 7
+step: 2
 ---
 ## Q
-**分期计划生成器 · 到期日策略注入**｜出自：分期计划生成器 › 核心实体与接口
+**分期计划生成器 · 到期日策略注入**｜必会 · 出自：分期计划生成器 › 核心实体与接口
 
 分期计划生成器要支持按月、按两周等不同节奏，接口怎么设计才能加新节奏不改主函数？
 

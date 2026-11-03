@@ -2,10 +2,10 @@
 id: hi-pt-job-scheduler-cron-history-10-long-multistage
 node: qb.sd.job-scheduler-cron-history.points
 type: qa
-step: 10
+step: 11
 ---
 ## Q
-**分布式任务调度器 · 长任务、多阶段与资源匹配**｜出自：分布式任务调度器 › 深入 4
+**分布式任务调度器 · 长任务、多阶段与资源匹配**｜追问 · 出自：分布式任务调度器 › 深入 5
 
 任务可能跑数周、分多阶段且不能丢进度、还声明了 CPU 内存需求，调度器各怎么应对？
 

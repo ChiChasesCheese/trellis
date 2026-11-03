@@ -2,10 +2,10 @@
 id: hi-pt-chatbot-design-7-cancel-stream
 node: qb.sd.chatbot-design.points
 type: qa
-step: 7
+step: 5
 ---
 ## Q
-**对话式 AI 聊天服务 · 流式输出的取消与断线**｜出自：对话式 AI 聊天服务 › 深入 2
+**对话式 AI 聊天服务 · 流式输出的取消与断线**｜必会 · 出自：对话式 AI 聊天服务 › 深入 1
 
 一次生成持续几十秒，期间网络可能断开，用户也可能点停止或关闭页面。服务端应当如何处理，才不浪费 GPU？断线续传又怎么做？
 

@@ -2,10 +2,10 @@
 id: hi-pt-video-moderation-system-6-rules-as-data
 node: qb.sd.video-moderation-system.points
 type: qa
-step: 6
+step: 4
 ---
 ## Q
-**视频内容审核系统 · 规则存成数据**｜出自：视频内容审核系统 › 深入 2
+**视频内容审核系统 · 规则存成数据**｜必会 · 出自：视频内容审核系统 › 深入 2
 
 视频审核的规则由运营维护且常改。规则应该写成代码还是数据？怎么发布？
 

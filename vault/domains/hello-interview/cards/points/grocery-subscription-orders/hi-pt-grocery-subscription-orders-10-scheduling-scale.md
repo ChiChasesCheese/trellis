@@ -2,10 +2,10 @@
 id: hi-pt-grocery-subscription-orders-10-scheduling-scale
 node: qb.lld.grocery-subscription-orders.points
 type: qa
-step: 10
+step: 9
 ---
 ## Q
-**生鲜订阅转订单服务 · 调度、时区与订阅修改**｜出自：生鲜订阅转订单服务 › 取舍与追问
+**生鲜订阅转订单服务 · 调度、时区与订阅修改**｜追问 · 出自：生鲜订阅转订单服务 › 取舍与追问
 
 订阅服务的调度规模变大后怎么并行？`next_run` 用哪个时区？转换期间用户修改订阅怎么办？
 

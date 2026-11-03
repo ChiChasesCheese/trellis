@@ -2,10 +2,10 @@
 id: hi-pt-tt-live-gift-coin-settlement-8-hot-creator
 node: tt.sd.tt-live-gift-coin-settlement.points
 type: qa
-step: 8
+step: 7
 ---
 ## Q
-**直播礼物金币记账与主播结算 · 热门主播不做同步更新**｜出自：直播礼物金币记账与主播结算 › 深入 3
+**直播礼物金币记账与主播结算 · 热门主播不做同步更新**｜必会 · 出自：直播礼物金币记账与主播结算 › 深入 2
 
 最热主播每秒 5,000 份礼物，收益怎么记才不卡？事件流按什么分区？
 

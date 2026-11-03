@@ -2,10 +2,10 @@
 id: hi-pt-photo-storage-sharing-7-collection-model
 node: qb.sd.photo-storage-sharing.points
 type: qa
-step: 7
+step: 6
 ---
 ## Q
-**照片存储与分享系统 · 集合层级与多对多**｜出自：照片存储与分享系统 › 深入 3
+**照片存储与分享系统 · 集合层级与多对多**｜必会 · 出自：照片存储与分享系统 › 深入 2
 
 集合支持移动、删除和层级，怎么建模？删除集合会删照片吗？每个集合的照片数怎么得到？
 

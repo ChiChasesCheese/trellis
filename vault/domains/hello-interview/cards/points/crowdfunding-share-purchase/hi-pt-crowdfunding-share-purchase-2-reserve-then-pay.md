@@ -2,10 +2,10 @@
 id: hi-pt-crowdfunding-share-purchase-2-reserve-then-pay
 node: qb.sd.crowdfunding-share-purchase.points
 type: qa
-step: 2
+step: 4
 ---
 ## Q
-**限时众筹购股系统 · 先预留后扣款**｜出自：限时众筹购股系统 › 深入 1
+**限时众筹购股系统 · 先预留后扣款**｜必会 · 出自：限时众筹购股系统 › 深入 1
 
 众筹购股要完成两件事：抢到一份股份、从余额服务扣钱。为什么先预留股份再扣款，而不是先扣款再抢股？
 

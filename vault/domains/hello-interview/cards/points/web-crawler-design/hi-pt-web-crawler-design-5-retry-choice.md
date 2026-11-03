@@ -2,10 +2,10 @@
 id: hi-pt-web-crawler-design-5-retry-choice
 node: qb.sd.web-crawler-design.points
 type: qa
-step: 5
+step: 6
 ---
 ## Q
-**网络爬虫 · 重试机制的选择**｜出自：网络爬虫 › 深入 1
+**网络爬虫 · 重试机制的选择**｜必会 · 出自：网络爬虫 › 深入 2
 
 爬虫下载重试用进程内定时器、Kafka 还是带可见性超时的托管队列？分别有什么问题？
 

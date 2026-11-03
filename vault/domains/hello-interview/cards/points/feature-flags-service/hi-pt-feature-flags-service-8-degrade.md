@@ -2,10 +2,10 @@
 id: hi-pt-feature-flags-service-8-degrade
 node: qb.sd.feature-flags-service.points
 type: qa
-step: 8
+step: 5
 ---
 ## Q
-**功能开关服务 · 降级与跨服务一致**｜出自：功能开关服务 › 深入 3
+**功能开关服务 · 降级与跨服务一致**｜必会 · 出自：功能开关服务 › 深入 2
 
 控制面或 CDN 不可用、进程冷启动拿不到配置时怎么办？不同服务短暂看到不同值能接受吗？
 

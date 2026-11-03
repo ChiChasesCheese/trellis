@@ -2,10 +2,10 @@
 id: hi-pt-tt-payment-reconciliation-2-three-way
 node: tt.sd.tt-payment-reconciliation.points
 type: qa
-step: 2
+step: 3
 ---
 ## Q
-**支付对账系统 · 为什么三方**｜出自：支付对账系统 › 取舍与追问
+**支付对账系统 · 为什么三方**｜必会 · 出自：支付对账系统 › 整体设计
 
 对账为什么要内部账本、PSP 报告、银行流水三方，而不是账本对银行或账本对 PSP 两方？
 

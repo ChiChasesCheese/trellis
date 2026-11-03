@@ -2,10 +2,10 @@
 id: hi-pt-distributed-rate-limiter-9-dynamic-rules
 node: qb.sd.distributed-rate-limiter.points
 type: qa
-step: 9
+step: 10
 ---
 ## Q
-**分布式限流器 · 动态规则下发**｜出自：分布式限流器 › 深入 6
+**分布式限流器 · 动态规则下发**｜加分 · 出自：分布式限流器 › 深入 6
 
 分布式限流器的规则要能动态修改、不用发版。轮询和推送两种下发方式各有什么问题，怎么选？
 

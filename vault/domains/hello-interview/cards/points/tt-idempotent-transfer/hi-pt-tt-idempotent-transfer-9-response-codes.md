@@ -2,10 +2,10 @@
 id: hi-pt-tt-idempotent-transfer-9-response-codes
 node: tt.lld.tt-idempotent-transfer.points
 type: qa
-step: 9
+step: 7
 ---
 ## Q
-**幂等转账服务 · 返回码与响应丢失**｜出自：幂等转账服务 › 取舍与追问
+**幂等转账服务 · 返回码与响应丢失**｜追问 · 出自：幂等转账服务 › 取舍与追问
 
 追问：转账已成功但响应丢了怎么办？各种情况返回什么状态码？
 

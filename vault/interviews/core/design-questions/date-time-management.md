@@ -12,6 +12,16 @@ kind: low-level-design
 ## A
 **一句话。** 时间库最大的设计原则是把四个常被混在一起的概念分开：时间线上的一个点（Instant）、墙上的钟表读数（LocalDateTime，没有时区）、时区规则（偏移量随日期变化）、时间的量（精确时长 Duration 与日历时长 Period），并全部做成不可变的值对象；绝大多数日期时间 bug 都来自把它们混为一谈。
 
+**60 分钟路线。**
+
+| 时间 | 做什么 |
+|---|---|
+| 0–8 分 | 问清范围（只公历？要时区吗？），口述四个概念要分开，定 `LocalDate` 的接口 |
+| 8–40 分 | 写 `LocalDate`：纪元日、`of` 校验、年月日互转、`plus_days`、`plus_months` |
+| 40–45 分 | 跑例子：闰日、月末、星期几、非法日期 |
+| 45–58 分 | 追问：`ZoneRules` 和 `ZonedDateTime`、`Duration` 与日历天、夏令时间隙和重叠 |
+| 58–60 分 | 口述日历系统抽象、格式化和解析 |
+
 **需求。**
 - 功能：
   - 从年月日、时分秒构造并校验（非法日期如 2 月 30 日必须被拒绝）；
@@ -60,17 +70,14 @@ classDiagram
 3. 年月日与纪元日之间用经典的民用历算法互转（先把 1、2 月归入上一年，让闰日落在年末，再按 400 年一个周期换算），不依赖循环逐年累加。
 4. 偏移量不存在 `ZonedDateTime` 里，而是由 `ZoneRules` 根据 UTC 时间点现算，避免规则更新后存量数据变脏。
 
+**核心实现。** 约 50 行，只做 `LocalDate`：所有日历算法都落到「纪元日」这个整数上，其余类型都建立在它之上。
+
 ```python
 from __future__ import annotations
 
-import bisect
 from dataclasses import dataclass
-from typing import Sequence
-
-SEC_PER_DAY = 86_400
 
 
-# ---------- 日历算法：全部落到"纪元日"（自 1970-01-01 起的天数）这个整数上 ----------
 def is_leap(y: int) -> bool:
     return y % 4 == 0 and (y % 100 != 0 or y % 400 == 0)
 
@@ -101,9 +108,9 @@ def civil_from_days(z: int) -> tuple[int, int, int]:
     return y + (m <= 2), m, d
 
 
-@dataclass(frozen=True, order=True)               # 不可变值对象：线程安全，可作 dict 的 key
+@dataclass(frozen=True, order=True)               # 不可变值对象：线程安全，可作 dict 的 key，比较就是整数比较
 class LocalDate:
-    epoch_day: int
+    epoch_day: int                                # 自 1970-01-01 起的天数
 
     @staticmethod
     def of(y: int, m: int, d: int) -> "LocalDate":
@@ -120,9 +127,29 @@ class LocalDate:
         t = y * 12 + (m - 1) + n
         y, m = divmod(t, 12)
         return LocalDate.of(y, m + 1, min(d, month_len(y, m + 1)))   # 1 月 31 日 + 1 月 = 2 月末，而不是报错
+```
+
+**运行。**
+
+```python
+print(LocalDate.of(2024, 1, 31).plus_months(1).ymd())   # (2024, 2, 29)
+print(LocalDate.of(2023, 1, 31).plus_months(1).ymd())   # (2023, 2, 28)
+print(LocalDate.of(2024, 3, 9).day_of_week())           # 6，周六
+LocalDate.of(2024, 2, 30)                               # ValueError: invalid date 2024-2-30
+```
+
+**复杂度。** 所有核心运算是 `O(1)` 的整数运算。
+
+**逐步扩展。**
+1. 【追问再讲】时区：偏移量不是常数，而是时间轴上的分段函数，`ZoneRules` 存「在哪个 UTC 秒偏移变成多少」，二分查找。`ZonedDateTime` 只存 UTC 秒，展示用的偏移由规则现算。`Duration` 是精确秒数，在时间轴上加。
+
+```python
+import bisect
+from typing import Sequence
+
+SEC_PER_DAY = 86_400
 
 
-# ---------- 时区：偏移量不是常数，而是"时间轴上的分段函数" ----------
 class ZoneRules:
     def __init__(self, initial: int, transitions: Sequence[tuple[int, int]]) -> None:
         self._at = [t for t, _ in transitions]       # 转换发生的 UTC 秒，升序
@@ -130,17 +157,6 @@ class ZoneRules:
 
     def offset_at(self, utc_sec: int) -> int:
         return self._off[bisect.bisect_right(self._at, utc_sec)]
-
-    def resolve_local(self, local_sec: int) -> tuple[int, int]:
-        """本地墙钟 -> (UTC 秒, 偏移)。夏令时间隙：顺延到间隙之后；重叠：取较早的那次（较大的偏移）。"""
-        valid = sorted({o for o in self._off if self.offset_at(local_sec - o) == o}, reverse=True)
-        if valid:
-            return local_sec - valid[0], valid[0]
-        for i, t in enumerate(self._at):             # 落在间隙里：找到那次"拨快"
-            before, after = self._off[i], self._off[i + 1]
-            if t + before <= local_sec < t + after:
-                return local_sec - before, after    # 墙钟 +间隙长度 = 该点在 UTC 轴上的位置不变
-        raise AssertionError("unreachable")
 
 
 @dataclass(frozen=True)
@@ -155,11 +171,6 @@ class ZonedDateTime:
     utc_sec: int                                  # 真正的"时间点"只存这一个数
     rules: ZoneRules                              # 展示用的偏移由规则现算，不存
 
-    @staticmethod
-    def of(local_date: LocalDate, sec_of_day: int, rules: ZoneRules) -> "ZonedDateTime":
-        utc, _ = rules.resolve_local(local_date.epoch_day * SEC_PER_DAY + sec_of_day)
-        return ZonedDateTime(utc, rules)
-
     def offset(self) -> int: return self.rules.offset_at(self.utc_sec)
     def _local(self) -> int: return self.utc_sec + self.offset()
     def local_date(self) -> LocalDate: return LocalDate(self._local() // SEC_PER_DAY)
@@ -169,36 +180,73 @@ class ZonedDateTime:
 
     def plus(self, d: Duration) -> "ZonedDateTime":              # 精确时长：在时间轴上加，跨夏令时墙钟会"跳"
         return ZonedDateTime(self.utc_sec + d.seconds, self.rules)
+```
 
-    def plus_days(self, n: int) -> "ZonedDateTime":              # 日历天数：在墙钟上加，再重新解析偏移，保持"同一钟点"
+2. 【追问再讲】本地读数转时间点，以及「加一个日历天」：夏令时的间隙里读数不存在，重叠里出现两次，所以要在 `ZoneRules` 里加 `resolve_local`；`ZonedDateTime` 再加 `of` 和 `plus_days`，后者在墙钟上加，再重新解析偏移，保持「同一钟点」。
+
+```python
+# 加到 ZoneRules 里
+    def resolve_local(self, local_sec: int) -> tuple[int, int]:
+        """本地墙钟 -> (UTC 秒, 偏移)。夏令时间隙：顺延到间隙之后；重叠：取较早的那次（较大的偏移）。"""
+        valid = sorted({o for o in self._off if self.offset_at(local_sec - o) == o}, reverse=True)
+        if valid:
+            return local_sec - valid[0], valid[0]
+        for i, t in enumerate(self._at):             # 落在间隙里：找到那次"拨快"
+            before, after = self._off[i], self._off[i + 1]
+            if t + before <= local_sec < t + after:
+                return local_sec - before, after    # 墙钟 + 间隙长度 = 该点在 UTC 轴上的位置不变
+        raise AssertionError("unreachable")
+
+
+# 加到 ZonedDateTime 里
+    @staticmethod
+    def of(local_date: LocalDate, sec_of_day: int, rules: ZoneRules) -> "ZonedDateTime":
+        utc, _ = rules.resolve_local(local_date.epoch_day * SEC_PER_DAY + sec_of_day)
+        return ZonedDateTime(utc, rules)
+
+    def plus_days(self, n: int) -> "ZonedDateTime":              # 日历天数：在墙钟上加，保持同一钟点
         h, m, s = self.local_time()
         return ZonedDateTime.of(self.local_date().plus_days(n), h * 3600 + m * 60 + s, self.rules)
 ```
 
-**深入。**
-1. 月份运算：1 月 31 日加一个月是几号？
-   - 报错：不友好；
-   - 溢出到 3 月 2 日或 3 日：结果不可预期，而且 `加一个月再减一个月` 回不到原日期；
-   - 截断到月末（2 月 29 日或 28 日）：被主流库采用，结果合理；
-   - 选截断，并在文档里写明"加月后日号不超过目标月的天数"。因此月份加法不满足结合律（先加两个月和连加两次一个月可能不同），这是必须让使用者知道的事实。
-2. Duration 与 Period 为什么必须分开：夏令时当天只有 23 小时（春季拨快）或 25 小时（秋季拨慢）。2024 年 3 月 9 日中午加"1 天"（Period，日历天）得到 3 月 10 日中午，实际过去了 23 小时；加"24 小时"（Duration）得到 3 月 10 日 13:00。两种语义都有用——"明天同一时间开会"用日历天，"24 小时后到期"用精确时长。ZonedDateTime 的 `plus_days` 在墙钟上加再重新解析偏移，`plus(Duration)` 在时间线上加。
-3. 夏令时的间隙与重叠：
-   - 间隙（春季拨快）：本地时间 02:30 根本不存在。常见处理：顺延间隙长度（得到 03:30），也可以抛异常让调用方决定；
-   - 重叠（秋季拨慢）：本地时间 01:30 出现两次。默认取较早的一次（第一次出现，偏移量更大），并提供"取较晚一次"的选项；
-   - 实现上：对每个可能的偏移量 `o`，检查"本地时间减去 `o` 得到的 UTC 时刻，在规则里的偏移量是否正好是 `o`"，符合的偏移量集合大小是 0（间隙）、1（正常）、2（重叠）。
-4. 时区规则存储：IANA 时区数据库给出历史上的转换点和未来的规则（如"三月第二个星期日"）；内部用按时间排序的转换点列表，二分查找某一 UTC 时刻的偏移量，O(log n)；未来规则按年份惰性展开。规则会更新（政府改夏令时），所以存数据库的未来事件应该存"本地时间 + 时区名"，不要只存 UTC，否则规则变化后事件的墙钟时间会错；已经发生的事件存 UTC 就够了。
-5. 日历系统扩展：把"纪元日 ↔ 年月日"抽成 `Chronology` 策略，公历、儒略历、伊斯兰历、佛历各一个实现；`LocalDate` 保存纪元日，不依赖具体日历，因此跨日历转换天然成立：先转成纪元日，再用目标日历展开。星期、两日期相差天数这类运算只依赖纪元日，所有日历共用。
-6. 格式化与解析：格式模式拆成单元（年、月、日、时、分、字面量），用建造者组合成格式化器，格式化与解析是同一个单元序列的两个方向。解析要严格：位数、范围、歧义（如两位数年份）都要有明确规则，并返回错误位置；本地化（月份名称、星期名称）通过 locale 数据注入。
-7. 闰秒：POSIX 时间忽略闰秒，每天固定 86,400 秒；多数系统用"闰秒涂抹"（在一天里均匀拉长）处理。库里不建模闰秒，在文档中说明即可。
-8. 正确性验证：与参考实现做大规模随机对照（例如对三百万天范围内的随机日期，比较纪元日与年月日互转、星期几），再针对边界日期（闰日、世纪年 1900/2000、月末、夏令时转换当天）写固定用例。
+用 2024 年美国东部时间（3 月 10 日拨快、11 月 3 日拨慢）跑：
 
-**取舍与追问。**
-- 为什么不直接存 "年、月、日" 三个字段？比较、差值、加减天数都需要先换算，而且容易存出非法组合；存纪元日后，加减天是整数加减，差值是整数减法，年月日只在展示时现算。
-- 为什么用不可变对象？共享安全（线程安全、可作键）、没有"改了一个对象影响另一处"的别名问题；代价是每次运算产生新对象，对这类小对象可忽略。
-- `LocalDateTime` 和 `ZonedDateTime` 的区别在哪里？前者只是一个读数，没有对应的时间点，不能直接比较先后，也不能转成 UTC；后者有时区，才对应唯一的时间点。把两者混用是最常见的 bug 来源。
+```python
+ny = ZoneRules(-18000, [(1710054000, -14400), (1730613600, -18000)])
+noon = ZonedDateTime.of(LocalDate.of(2024, 3, 9), 12 * 3600, ny)
+print(noon.plus_days(1).local_time())              # (12, 0, 0)，实际过了 23 小时
+print(noon.plus(Duration.of_hours(24)).local_time())   # (13, 0, 0)
+print(ZonedDateTime.of(LocalDate.of(2024, 3, 10), 2 * 3600 + 1800, ny).local_time())   # (3, 30, 0)，间隙顺延
+print(ZonedDateTime.of(LocalDate.of(2024, 11, 3), 1 * 3600 + 1800, ny).offset())       # -14400，重叠取较早的一次
+```
+
+
+**深入。**
+1. 【必讲】四个概念要分开：
+   - `Instant` 是时间线上的一个点，存「自纪元起的秒 + 纳秒」。不能只用一个 64 位纳秒整数，它只覆盖 1970 年前后约 292 年（约 1677–2262 年）。
+   - `LocalDateTime` 只是一个读数，没有对应的时间点，不能直接比较先后，也不能转成 UTC；`ZonedDateTime` 带时区，才对应唯一的时间点。把两者混用是最常见的 bug 来源。
+   - `Duration` 是精确时长，`Period` 是日历时长（见深入 4）。
+   - 全部做成不可变值对象：共享安全（线程安全、可作键），没有别名问题；代价是每次运算产生新对象，对这类小对象可忽略。
+2. 【必讲】为什么存纪元日而不存年月日三个字段：三字段的比较、差值、加减都要先换算，还容易存出非法组合；存纪元日后，加减天是整数加减，差值是整数减法，年月日只在展示时现算。配合「构造即校验」（`of` 拒绝 2 月 30 日），系统里不存在非法日期。年月日与纪元日之间用民用历算法互转：先把 1、2 月归入上一年，让闰日落在年末，再按 400 年一个周期换算，不循环逐年累加。
+3. 【必讲】月份运算：1 月 31 日加一个月是几号？
+   - 报错：不友好；
+   - 溢出到 3 月 2 日或 3 日：结果不可预期，而且「加一个月再减一个月」回不到原日期；
+   - 截断到月末（2 月 29 日或 28 日）：主流库采用。选截断，并在文档里写明「加月后日号不超过目标月的天数」。因此月份加法不满足结合律（先加两个月和连加两次一个月可能不同），要让使用者知道。
+4. 【追问再讲】`Duration` 与 `Period` 为什么必须分开：夏令时当天只有 23 小时（春季拨快）或 25 小时（秋季拨慢）。2024 年 3 月 9 日中午加「1 天」（`Period`，日历天）得到 3 月 10 日中午，实际过去了 23 小时；加「24 小时」（`Duration`）得到 3 月 10 日 13:00。「明天同一时间开会」用日历天，「24 小时后到期」用精确时长。`plus_days` 在墙钟上加再重新解析偏移，`plus(Duration)` 在时间线上加。
+5. 【追问再讲】夏令时的间隙与重叠：
+   - 间隙（春季拨快）：本地时间 02:30 根本不存在。顺延间隙长度（得到 03:30），或抛异常让调用方决定；
+   - 重叠（秋季拨慢）：01:30 出现两次。默认取较早的一次（偏移量更大），并提供取较晚一次的选项；
+   - 实现上：对每个可能的偏移量 `o`，检查「本地时间减去 `o` 得到的 UTC 时刻，在规则里的偏移量是否正好是 `o`」，符合的偏移量集合大小是 0（间隙）、1（正常）、2（重叠）。
+6. 【追问再讲】时区规则存储：IANA 时区数据库给出历史上的转换点和未来的规则（如「三月第二个星期日」）；内部用按时间排序的转换点列表，二分查找某一 UTC 时刻的偏移量，`O(log n)`；未来规则按年份惰性展开。规则会更新（政府改夏令时），所以数据库里的未来事件应该存「本地时间 + 时区名」，不要只存 UTC，否则规则变化后事件的墙钟时间会错；已经发生的事件存 UTC 就够了。
+7. 【追问再讲】正确性验证：与参考实现做大规模随机对照（例如对三百万天范围内的随机日期，比较纪元日与年月日互转、星期几），再针对边界日期（闰日、世纪年 1900/2000、月末、夏令时转换当天）写固定用例。
+8. 【加分】日历系统扩展：把「纪元日 ↔ 年月日」抽成 `Chronology` 策略，公历、儒略历、伊斯兰历、佛历各一个实现；`LocalDate` 保存纪元日，不依赖具体日历，所以跨日历转换天然成立：先转成纪元日，再用目标日历展开。星期、两日期相差天数只依赖纪元日，所有日历共用。
+9. 【加分】格式化与解析：格式模式拆成单元（年、月、日、时、分、字面量），用建造者组合成格式化器，格式化与解析是同一个单元序列的两个方向。解析要严格：位数、范围、歧义（如两位数年份）都要有明确规则，并返回错误位置；本地化（月份名称、星期名称）通过 locale 数据注入。
+10. 【加分】闰秒：POSIX 时间忽略闰秒，每天固定 86,400 秒；多数系统用「闰秒涂抹」在一天里均匀拉长。库里不建模闰秒，文档里说明即可。
+
+**取舍与追问。** 按被问到的可能性排，通常口述就够：
 - 时区转换的接口：`zdt.with_zone(other)` 保持时间点不变，只改变展示；`zdt.with_local_same(other)` 保持墙钟读数不变，改变时间点。两个语义容易混淆，应该用不同的方法名。
 - 周数与周起始日：ISO 周以周一为周起始、第一周包含该年第一个星期四；美国习惯以周日为起始，这是 locale 相关的，放在 `WeekFields` 一类的对象里，不放进核心类型。
-- 性能：所有核心运算是整数运算，热点路径（排序、比较）零分配；时区规则的二分查找可以缓存"当前偏移量段"。
+- 性能：所有核心运算是整数运算，热点路径（排序、比较）零分配；时区规则的二分查找可以缓存「当前偏移量段」。
 
 **级别期望。**
 - 中级：类划分清晰（日期、时间、时长），构造校验，闰年与月末处理，基本格式化。

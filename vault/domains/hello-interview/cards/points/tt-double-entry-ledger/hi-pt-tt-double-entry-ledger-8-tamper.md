@@ -2,10 +2,10 @@
 id: hi-pt-tt-double-entry-ledger-8-tamper
 node: tt.lld.tt-double-entry-ledger.points
 type: qa
-step: 8
+step: 9
 ---
 ## Q
-**复式账本（类设计） · 如何证明账没被改过**｜出自：复式账本（类设计） › 深入 4
+**复式账本（类设计） · 如何证明账没被改过**｜加分 · 出自：复式账本（类设计） › 逐步扩展 2、深入 4
 
 面试官问「怎么证明账没有被改过」，有哪几层手段？
 

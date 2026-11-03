@@ -2,10 +2,10 @@
 id: hi-pt-job-board-platform-6-state-machine
 node: qb.lld.job-board-platform.points
 type: qa
-step: 6
+step: 4
 ---
 ## Q
-**招聘信息平台 · 申请状态机与权限**｜出自：招聘信息平台 › 深入 3
+**招聘信息平台 · 申请状态机与权限**｜必会 · 出自：招聘信息平台 › 深入 2
 
 招聘平台的申请有已提交、已查看、入围、拒绝、录用、撤回几种状态。迁移和权限怎么设计？
 

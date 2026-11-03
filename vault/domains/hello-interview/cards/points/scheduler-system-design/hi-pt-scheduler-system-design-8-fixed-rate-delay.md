@@ -2,10 +2,10 @@
 id: hi-pt-scheduler-system-design-8-fixed-rate-delay
 node: qb.lld.scheduler-system-design.points
 type: qa
-step: 8
+step: 6
 ---
 ## Q
-**任务调度器（定时、周期、带优先级） · 固定频率与固定延迟**｜出自：任务调度器（定时、周期、带优先级） › 深入 2
+**任务调度器（定时、周期、带优先级） · 固定频率与固定延迟**｜必会 · 出自：任务调度器（定时、周期、带优先级） › 深入 2
 
 周期任务的"下一次"有固定频率、固定延迟、cron 三种算法，区别是什么？
 

@@ -2,10 +2,10 @@
 id: hi-pt-tt-payment-reconciliation-11-automation-aging
 node: tt.sd.tt-payment-reconciliation.points
 type: qa
-step: 11
+step: 12
 ---
 ## Q
-**支付对账系统 · 自动化率与账龄**｜出自：支付对账系统 › 深入 3
+**支付对账系统 · 自动化率与账龄**｜加分 · 出自：支付对账系统 › 深入 7
 
 对账系统的人工量怎么由自动化率决定？差异的账龄怎么管理？
 

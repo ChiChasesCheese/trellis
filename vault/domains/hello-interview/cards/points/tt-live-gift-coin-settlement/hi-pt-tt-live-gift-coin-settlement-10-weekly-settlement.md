@@ -2,10 +2,10 @@
 id: hi-pt-tt-live-gift-coin-settlement-10-weekly-settlement
 node: tt.sd.tt-live-gift-coin-settlement.points
 type: qa
-step: 10
+step: 9
 ---
 ## Q
-**直播礼物金币记账与主播结算 · 周结算的冻结与对账不变量**｜出自：直播礼物金币记账与主播结算 › 深入 4
+**直播礼物金币记账与主播结算 · 周结算的冻结与对账不变量**｜必会 · 出自：直播礼物金币记账与主播结算 › 深入 3
 
 每周结算怎么切分、冻结？晚到事件怎么办？重跑怎么保证结果相同？打款前要检查哪三条不变量？
 

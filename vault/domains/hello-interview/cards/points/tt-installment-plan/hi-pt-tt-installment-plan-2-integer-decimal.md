@@ -2,10 +2,10 @@
 id: hi-pt-tt-installment-plan-2-integer-decimal
 node: tt.lld.tt-installment-plan.points
 type: qa
-step: 2
+step: 4
 ---
 ## Q
-**分期计划生成器 · 整数加 Decimal**｜出自：分期计划生成器 › 深入 1
+**分期计划生成器 · 整数加 Decimal**｜必会 · 出自：分期计划生成器 › 深入 1
 
 分期计划里的金额为什么用整数最小货币单位加 Decimal，而不是浮点？取整怎么处理？
 

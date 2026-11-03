@@ -2,10 +2,10 @@
 id: hi-pt-notification-system-scale-3-isolation
 node: qb.sd.notification-system-scale.points
 type: qa
-step: 3
+step: 4
 ---
 ## Q
-**百万级通知系统 · 关键与促销如何隔离**｜出自：百万级通知系统 › 深入 1
+**百万级通知系统 · 关键与促销如何隔离**｜必会 · 出自：百万级通知系统 › 深入 1
 
 通知系统让关键通知和群发促销不互相拖累，有三种做法：单队列加优先级字段、同主题多分区分级、物理隔离。怎么选？
 

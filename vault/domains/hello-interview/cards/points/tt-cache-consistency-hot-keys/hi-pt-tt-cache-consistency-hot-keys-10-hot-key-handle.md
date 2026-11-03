@@ -2,10 +2,10 @@
 id: hi-pt-tt-cache-consistency-hot-keys-10-hot-key-handle
 node: tt.sd.tt-cache-consistency-hot-keys.points
 type: qa
-step: 10
+step: 7
 ---
 ## Q
-**缓存一致性与热点 Key · 热 key 的处理方案**｜出自：缓存一致性与热点 Key › 深入 3
+**缓存一致性与热点 Key · 热 key 的处理方案**｜必会 · 出自：缓存一致性与热点 Key › 深入 3
 
 热 key 读流量怎么分散？热点写（点赞数、库存计数）又怎么办？优先选哪个？
 

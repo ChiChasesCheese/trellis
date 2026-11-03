@@ -2,10 +2,10 @@
 id: hi-pt-book-seller-platform-6-saga-payment
 node: qb.sd.book-seller-platform.points
 type: qa
-step: 6
+step: 7
 ---
 ## Q
-**图书比价代购平台 · 支付 Saga**｜出自：图书比价代购平台 › 深入 2
+**图书比价代购平台 · 支付 Saga**｜追问 · 出自：图书比价代购平台 › 深入 3
 
 图书平台由平台代收款：顾客付款、书商成交、可能失败。支付与购买两步怎样编排，才能让每一步失败时都能回退？
 

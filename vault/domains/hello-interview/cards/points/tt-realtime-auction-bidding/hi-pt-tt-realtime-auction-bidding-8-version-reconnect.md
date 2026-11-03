@@ -2,10 +2,10 @@
 id: hi-pt-tt-realtime-auction-bidding-8-version-reconnect
 node: tt.sd.tt-realtime-auction-bidding.points
 type: qa
-step: 8
+step: 7
 ---
 ## Q
-**实时竞价拍卖 · 版本号与断线重连**｜出自：实时竞价拍卖 › 深入 3
+**实时竞价拍卖 · 版本号与断线重连**｜必会 · 出自：实时竞价拍卖 › 深入 3
 
 推送乱序、重复，客户端断线重连后怎么追上状态？为什么不补发中间的每次出价？
 

@@ -2,10 +2,10 @@
 id: hi-pt-tt-billing-tax-engine-4-publish-append
 node: tt.lld.tt-billing-tax-engine.points
 type: qa
-step: 4
+step: 3
 ---
 ## Q
-**计费与计税引擎 · 版本只追加**｜出自：计费与计税引擎 › 整体设计
+**计费与计税引擎 · 版本只追加**｜必会 · 出自：计费与计税引擎 › 整体设计
 
 计费引擎发布新规则版本时，为什么要求生效时间严格大于上一个版本？想修正历史定价怎么办？
 

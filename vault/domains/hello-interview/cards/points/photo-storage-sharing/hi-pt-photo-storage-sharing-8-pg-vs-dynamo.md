@@ -2,10 +2,10 @@
 id: hi-pt-photo-storage-sharing-8-pg-vs-dynamo
 node: qb.sd.photo-storage-sharing.points
 type: qa
-step: 8
+step: 7
 ---
 ## Q
-**照片存储与分享系统 · 元数据库选 PostgreSQL 还是 DynamoDB**｜出自：照片存储与分享系统 › 深入 4
+**照片存储与分享系统 · 元数据库选 PostgreSQL 还是 DynamoDB**｜必会 · 出自：照片存储与分享系统 › 深入 3
 
 照片元数据服务应选分片 PostgreSQL 还是 DynamoDB？各自在哪些访问模式上顺手或别扭？倾向哪个？
 

@@ -2,10 +2,10 @@
 id: hi-pt-distributed-rate-limiter-1-placement
 node: qb.sd.distributed-rate-limiter.points
 type: qa
-step: 1
+step: 2
 ---
 ## Q
-**分布式限流器 · 限流放在哪一层**｜出自：分布式限流器 › 整体设计
+**分布式限流器 · 限流放在哪一层**｜必会 · 出自：分布式限流器 › 整体设计
 
 设计分布式限流器时，限流逻辑可以放在业务进程内、独立限流服务或 API 网关。各自的问题是什么，通常选哪个？
 

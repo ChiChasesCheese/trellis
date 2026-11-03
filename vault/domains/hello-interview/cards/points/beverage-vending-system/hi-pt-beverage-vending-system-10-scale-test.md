@@ -2,10 +2,10 @@
 id: hi-pt-beverage-vending-system-10-scale-test
 node: qb.lld.beverage-vending-system.points
 type: qa
-step: 10
+step: 9
 ---
 ## Q
-**多地点饮品自助售卖系统 · 扩展与测试**｜出自：多地点饮品自助售卖系统 › 取舍与追问
+**多地点饮品自助售卖系统 · 扩展与测试**｜追问 · 出自：多地点饮品自助售卖系统 › 取舍与追问
 
 追问：几千台机器怎么扩展？并发逻辑怎么测？机器一次能做多杯怎么建模？
 

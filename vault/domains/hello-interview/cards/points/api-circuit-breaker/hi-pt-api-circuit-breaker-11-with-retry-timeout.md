@@ -2,10 +2,10 @@
 id: hi-pt-api-circuit-breaker-11-with-retry-timeout
 node: qb.lld.api-circuit-breaker.points
 type: qa
-step: 11
+step: 9
 ---
 ## Q
-**熔断器 · 与重试、超时的组合顺序**｜出自：熔断器 › 取舍与追问
+**熔断器 · 与重试、超时的组合顺序**｜追问 · 出自：熔断器 › 取舍与追问
 
 熔断器要和限流、超时、重试一起使用。它们的组合顺序大致怎样？重试放错位置会出什么问题？
 

@@ -2,10 +2,10 @@
 id: hi-pt-hotel-booking-system-11-idempotent-room
 node: qb.sd.hotel-booking-system.points
 type: qa
-step: 11
+step: 10
 ---
 ## Q
-**酒店预订系统 · 重复点击与会议室缩小版**｜出自：酒店预订系统 › 取舍与追问
+**酒店预订系统 · 重复点击与会议室缩小版**｜追问 · 出自：酒店预订系统 › 取舍与追问
 
 追问：用户重复点击下单怎么办？会议室预订的缩小版怎么做？
 

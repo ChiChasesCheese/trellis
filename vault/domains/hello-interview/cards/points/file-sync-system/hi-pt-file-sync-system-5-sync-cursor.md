@@ -2,10 +2,10 @@
 id: hi-pt-file-sync-system-5-sync-cursor
 node: qb.sd.file-sync-system.points
 type: qa
-step: 5
+step: 4
 ---
 ## Q
-**云盘与文件同步系统 · 变更日志与游标同步**｜出自：云盘与文件同步系统 › 整体设计
+**云盘与文件同步系统 · 变更日志与游标同步**｜必会 · 出自：云盘与文件同步系统 › 整体设计
 
 多设备间远端变化怎样到达本地？变更日志和游标各起什么作用？设备收到通知后做什么？
 

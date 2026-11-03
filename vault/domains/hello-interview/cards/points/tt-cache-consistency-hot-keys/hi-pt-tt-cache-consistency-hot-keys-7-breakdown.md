@@ -2,10 +2,10 @@
 id: hi-pt-tt-cache-consistency-hot-keys-7-breakdown
 node: tt.sd.tt-cache-consistency-hot-keys.points
 type: qa
-step: 7
+step: 6
 ---
 ## Q
-**缓存一致性与热点 Key · 缓存击穿**｜出自：缓存一致性与热点 Key › 深入 2
+**缓存一致性与热点 Key · 缓存击穿**｜必会 · 出自：缓存一致性与热点 Key › 深入 2
 
 热 key 过期的瞬间成千上万请求同时回源，怎么防？进程内合并、跨进程互斥、逻辑过期各有什么特点？
 

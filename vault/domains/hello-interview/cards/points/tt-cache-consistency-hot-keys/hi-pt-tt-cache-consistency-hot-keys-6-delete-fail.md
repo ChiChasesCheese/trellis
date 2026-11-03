@@ -2,10 +2,10 @@
 id: hi-pt-tt-cache-consistency-hot-keys-6-delete-fail
 node: tt.sd.tt-cache-consistency-hot-keys.points
 type: qa
-step: 6
+step: 5
 ---
 ## Q
-**缓存一致性与热点 Key · 删除失败的三层兜底**｜出自：缓存一致性与热点 Key › 深入 1
+**缓存一致性与热点 Key · 删除失败的三层兜底**｜必会 · 出自：缓存一致性与热点 Key › 深入 1
 
 缓存删除失败怎么办？不一致的上限是多少？价格、库存这类数据在关键路径怎么读？
 

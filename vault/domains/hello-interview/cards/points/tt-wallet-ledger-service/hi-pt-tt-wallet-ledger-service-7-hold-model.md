@@ -2,10 +2,10 @@
 id: hi-pt-tt-wallet-ledger-service-7-hold-model
 node: tt.sd.tt-wallet-ledger-service.points
 type: qa
-step: 7
+step: 6
 ---
 ## Q
-**钱包与复式账本服务 · 冻结、确认、释放**｜出自：钱包与复式账本服务 › 深入 3
+**钱包与复式账本服务 · 冻结、确认、释放**｜必会 · 出自：钱包与复式账本服务 › 深入 3
 
 钱包的冻结（hold）怎么设计？冻结 100 只确认 80 会怎样？要不要写分录？
 

@@ -2,10 +2,10 @@
 id: hi-pt-feature-flag-service-9-propagation
 node: qb.sd.feature-flag-service.points
 type: qa
-step: 9
+step: 7
 ---
 ## Q
-**功能开关服务 · 变更传播的推与拉**｜出自：功能开关服务 › 深入 3
+**功能开关服务 · 变更传播的推与拉**｜必会 · 出自：功能开关服务 › 深入 2
 
 变更传播用纯轮询还是推送？十万个 SDK 轮询对服务端压力有多大？大规则集如何避免全量下发？
 

@@ -2,10 +2,10 @@
 id: hi-pt-job-scheduler-cron-history-6-cas-dispatch
 node: qb.sd.job-scheduler-cron-history.points
 type: qa
-step: 6
+step: 5
 ---
 ## Q
-**分布式任务调度器 · CAS 保证只分发一次**｜出自：分布式任务调度器 › 整体设计
+**分布式任务调度器 · CAS 保证只分发一次**｜必会 · 出自：分布式任务调度器 › 整体设计
 
 调度器分片属主切换时可能出现两个调度器同时处理同一行。怎样保证同一次触发只分发一次？
 

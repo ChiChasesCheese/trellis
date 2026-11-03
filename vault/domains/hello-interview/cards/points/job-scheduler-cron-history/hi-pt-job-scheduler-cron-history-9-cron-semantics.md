@@ -2,10 +2,10 @@
 id: hi-pt-job-scheduler-cron-history-9-cron-semantics
 node: qb.sd.job-scheduler-cron-history.points
 type: qa
-step: 9
+step: 10
 ---
 ## Q
-**分布式任务调度器 · cron 的语义细节**｜出自：分布式任务调度器 › 深入 3
+**分布式任务调度器 · cron 的语义细节**｜追问 · 出自：分布式任务调度器 › 深入 4
 
 cron 调度有哪些高频追问？夏令时、错过的触发、上次未跑完下次又到点、整点扎堆，各自怎么处理？
 

@@ -2,10 +2,10 @@
 id: hi-pt-hotel-booking-system-10-approval-overbook
 node: qb.sd.hotel-booking-system.points
 type: qa
-step: 10
+step: 11
 ---
 ## Q
-**酒店预订系统 · 酒店审批与超额预订**｜出自：酒店预订系统 › 取舍与追问
+**酒店预订系统 · 酒店审批与超额预订**｜加分 · 出自：酒店预订系统 › 深入 7
 
 追问：酒店需要审批预订怎么处理？酒店业的主动超订怎么支持？
 

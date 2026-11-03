@@ -2,10 +2,10 @@
 id: hi-pt-distributed-rate-limiter-10-multi-rule
 node: qb.sd.distributed-rate-limiter.points
 type: qa
-step: 10
+step: 9
 ---
 ## Q
-**分布式限流器 · 多规则与同分片**｜出自：分布式限流器 › 取舍与追问
+**分布式限流器 · 多规则与同分片**｜追问 · 出自：分布式限流器 › 取舍与追问
 
 分布式限流器要同时满足"每秒 10 次且每天 1 万次"两条规则。怎么实现，要注意什么？
 

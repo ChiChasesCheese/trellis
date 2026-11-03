@@ -2,10 +2,10 @@
 id: hi-pt-beverage-vending-system-1-reserve-commit
 node: qb.lld.beverage-vending-system.points
 type: qa
-step: 1
+step: 2
 ---
 ## Q
-**多地点饮品自助售卖系统 · 库存预留与提交分离**｜出自：多地点饮品自助售卖系统 › 深入 1
+**多地点饮品自助售卖系统 · 库存预留与提交分离**｜必会 · 出自：多地点饮品自助售卖系统 › 深入 1
 
 多地点饮品售卖系统里，两个订单同时读到「还剩一杯的原料」，先查后扣会超卖。库存怎么设计才能不超卖，制作失败时怎么办？
 

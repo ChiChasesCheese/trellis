@@ -2,10 +2,10 @@
 id: hi-pt-figma-draw-api-8-freehand
 node: qb.lld.figma-draw-api.points
 type: qa
-step: 8
+step: 10
 ---
 ## Q
-**矢量图形编辑器绘图 API · 自由笔迹的简化**｜出自：矢量图形编辑器绘图 API › 深入 5
+**矢量图形编辑器绘图 API · 自由笔迹的简化**｜加分 · 出自：矢量图形编辑器绘图 API › 深入 7
 
 矢量编辑器的自由画笔产生密集的点流，直接存储太大。怎么变成矢量路径？
 

@@ -2,10 +2,10 @@
 id: hi-pt-kv-store-eviction-6-expire-vs-evict
 node: qb.lld.kv-store-eviction.points
 type: qa
-step: 6
+step: 5
 ---
 ## Q
-**可配置淘汰策略的内存键值存储 · 过期与淘汰是两回事**｜出自：可配置淘汰策略的内存键值存储 › 深入 2
+**可配置淘汰策略的内存键值存储 · 过期与淘汰是两回事**｜必会 · 出自：可配置淘汰策略的内存键值存储 › 深入 2
 
 过期（expire）和淘汰（evict）有什么区别？过期为什么必须惰性加主动并用？
 

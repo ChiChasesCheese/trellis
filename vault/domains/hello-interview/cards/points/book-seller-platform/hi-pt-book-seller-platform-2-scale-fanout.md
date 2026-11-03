@@ -2,10 +2,10 @@
 id: hi-pt-book-seller-platform-2-scale-fanout
 node: qb.sd.book-seller-platform.points
 type: qa
-step: 2
+step: 5
 ---
 ## Q
-**图书比价代购平台 · 扇出放大**｜出自：图书比价代购平台 › 深入 1
+**图书比价代购平台 · 扇出放大**｜必会 · 出自：图书比价代购平台 › 深入 2
 
 图书平台峰值 1 万 QPS 下单，共注册 50 家书商，每家书商有速率限制。如果每单都向全部书商实时询价，会出现什么问题？应该怎么设计询价路径？
 

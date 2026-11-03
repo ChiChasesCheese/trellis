@@ -2,10 +2,10 @@
 id: hi-pt-tt-wallet-ledger-service-6-cross-shard-transfer
 node: tt.sd.tt-wallet-ledger-service.points
 type: qa
-step: 6
+step: 7
 ---
 ## Q
-**钱包与复式账本服务 · 跨分片转账**｜出自：钱包与复式账本服务 › 深入 1
+**钱包与复式账本服务 · 跨分片转账**｜追问 · 出自：钱包与复式账本服务 › 深入 4
 
 钱包转账双方在不同分片，不用分布式事务怎么保证不丢不重？
 

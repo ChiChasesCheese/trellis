@@ -2,10 +2,10 @@
 id: hi-pt-metrics-monitoring-alerts-3-push-pull
 node: qb.sd.metrics-monitoring-alerts.points
 type: qa
-step: 3
+step: 8
 ---
 ## Q
-**指标监控与告警平台 · 推与拉**｜出自：指标监控与告警平台 › 深入 1
+**指标监控与告警平台 · 推与拉**｜追问 · 出自：指标监控与告警平台 › 深入 4
 
 指标采集用拉模式（Prometheus 式）还是推模式（Agent 上报）？30 万台规模怎么选？
 

@@ -2,10 +2,10 @@
 id: hi-pt-tt-cache-consistency-hot-keys-9-hot-key-detect
 node: tt.sd.tt-cache-consistency-hot-keys.points
 type: qa
-step: 9
+step: 10
 ---
 ## Q
-**缓存一致性与热点 Key · 热 key 的发现**｜出自：缓存一致性与热点 Key › 深入 3
+**缓存一致性与热点 Key · 热 key 的发现**｜追问 · 出自：缓存一致性与热点 Key › 深入 6
 
 一个爆款占 100 万 QPS 的 20%（20 万 QPS）。为什么加机器没用？怎么发现热 key？
 

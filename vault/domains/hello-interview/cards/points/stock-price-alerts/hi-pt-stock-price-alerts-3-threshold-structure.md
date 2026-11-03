@@ -2,10 +2,10 @@
 id: hi-pt-stock-price-alerts-3-threshold-structure
 node: qb.sd.stock-price-alerts.points
 type: qa
-step: 3
+step: 4
 ---
 ## Q
-**股票价格提醒系统 · 阈值有序结构**｜出自：股票价格提醒系统 › 深入 1
+**股票价格提醒系统 · 阈值有序结构**｜必会 · 出自：股票价格提醒系统 › 深入 1
 
 股价提醒系统中用户自定义阈值很多，怎么在价格到来时快速找出被穿越的规则，而不查数据库？
 

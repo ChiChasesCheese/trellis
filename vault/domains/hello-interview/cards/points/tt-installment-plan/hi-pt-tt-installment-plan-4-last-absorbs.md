@@ -2,10 +2,10 @@
 id: hi-pt-tt-installment-plan-4-last-absorbs
 node: tt.lld.tt-installment-plan.points
 type: qa
-step: 4
+step: 6
 ---
 ## Q
-**分期计划生成器 · 最后一期吸收误差**｜出自：分期计划生成器 › 深入 2
+**分期计划生成器 · 最后一期吸收误差**｜必会 · 出自：分期计划生成器 › 深入 2
 
 有息的等额本息分期，每期还款额和利息各自取整，误差会累积。怎么保证总本金不差一分？
 

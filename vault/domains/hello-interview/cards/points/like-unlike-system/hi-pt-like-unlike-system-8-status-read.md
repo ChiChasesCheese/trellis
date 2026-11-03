@@ -2,10 +2,10 @@
 id: hi-pt-like-unlike-system-8-status-read
 node: qb.sd.like-unlike-system.points
 type: qa
-step: 8
+step: 7
 ---
 ## Q
-**点赞与取消点赞系统 · 百万 QPS 状态查询**｜出自：点赞与取消点赞系统 › 深入 2
+**点赞与取消点赞系统 · 百万 QPS 状态查询**｜必会 · 出自：点赞与取消点赞系统 › 深入 2
 
 点赞系统每个内容列表页要为一页 20 到 50 个内容各问一次"我是否点赞"，100 万 QPS 全打数据库代价很高。怎么压？
 

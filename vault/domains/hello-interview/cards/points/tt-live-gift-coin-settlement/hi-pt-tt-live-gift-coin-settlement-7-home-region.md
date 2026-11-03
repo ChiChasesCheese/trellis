@@ -2,10 +2,10 @@
 id: hi-pt-tt-live-gift-coin-settlement-7-home-region
 node: tt.sd.tt-live-gift-coin-settlement.points
 type: qa
-step: 7
+step: 10
 ---
 ## Q
-**直播礼物金币记账与主播结算 · 全球钱包归属区域单点写入**｜出自：直播礼物金币记账与主播结算 › 深入 2
+**直播礼物金币记账与主播结算 · 全球钱包归属区域单点写入**｜追问 · 出自：直播礼物金币记账与主播结算 › 深入 4
 
 钱包遍布全球，余额不为负是全局约束。多主复制、全球强一致、区域额度切片为什么不选？最终怎么做，区域故障的敞口多大？
 

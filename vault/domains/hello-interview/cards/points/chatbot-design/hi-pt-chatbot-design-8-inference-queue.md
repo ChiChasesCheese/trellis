@@ -2,10 +2,10 @@
 id: hi-pt-chatbot-design-8-inference-queue
 node: qb.sd.chatbot-design.points
 type: qa
-step: 8
+step: 7
 ---
 ## Q
-**对话式 AI 聊天服务 · 推理容量与排队准入**｜出自：对话式 AI 聊天服务 › 深入 3
+**对话式 AI 聊天服务 · 推理容量与排队准入**｜必会 · 出自：对话式 AI 聊天服务 › 深入 3
 
 GPU 昂贵且容量固定，并发流超过容量时不能让所有人都慢到不可用。推理层应该怎样做并发控制与排队？副本数怎么估？
 

@@ -2,10 +2,10 @@
 id: hi-pt-parking-lot-system-9-extensions
 node: qb.lld.parking-lot-system.points
 type: qa
-step: 9
+step: 10
 ---
 ## Q
-**停车场管理系统 · 扩展点**｜出自：停车场管理系统 › 深入 5
+**停车场管理系统 · 扩展点**｜加分 · 出自：停车场管理系统 › 深入 6
 
 再加电动车充电位、预约车位、无障碍位，怎么改？
 

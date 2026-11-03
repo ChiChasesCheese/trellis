@@ -2,10 +2,10 @@
 id: hi-pt-multithreaded-logging-framework-9-db-appender
 node: qb.lld.multithreaded-logging-framework.points
 type: qa
-step: 9
+step: 10
 ---
 ## Q
-**多线程日志框架 · 文件滚动与日志落库优化**｜出自：多线程日志框架 › 深入 4
+**多线程日志框架 · 文件滚动与日志落库优化**｜加分 · 出自：多线程日志框架 › 深入 6
 
 日志要写进数据库时应该怎么优化？文件滚动在哪个线程做？Appender 抽象长什么样？
 

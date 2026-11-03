@@ -2,10 +2,10 @@
 id: hi-pt-payment-batch-processing-5-two-layer-idem
 node: qb.sd.payment-batch-processing.points
 type: qa
-step: 5
+step: 6
 ---
 ## Q
-**支付处理系统（授权冻结加每日批量结算） · 两层幂等**｜出自：支付处理系统（授权冻结加每日批量结算） › 深入 1
+**支付处理系统（授权冻结加每日批量结算） · 两层幂等**｜必会 · 出自：支付处理系统（授权冻结加每日批量结算） › 深入 2
 
 支付处理器怎样保证重复请求绝不重复扣款？
 

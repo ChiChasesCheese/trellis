@@ -2,10 +2,10 @@
 id: hi-pt-kv-store-eviction-9-locking
 node: qb.lld.kv-store-eviction.points
 type: qa
-step: 9
+step: 7
 ---
 ## Q
-**可配置淘汰策略的内存键值存储 · 并发：全局锁与分段锁**｜出自：可配置淘汰策略的内存键值存储 › 深入 6
+**可配置淘汰策略的内存键值存储 · 并发：全局锁与分段锁**｜追问 · 出自：可配置淘汰策略的内存键值存储 › 深入 5
 
 存储线程安全用一把全局锁还是分段锁？为什么 `get` 也要拿写锁？
 

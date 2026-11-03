@@ -2,10 +2,10 @@
 id: hi-pt-figma-draw-api-9-rendering
 node: qb.lld.figma-draw-api.points
 type: qa
-step: 9
+step: 8
 ---
 ## Q
-**矢量图形编辑器绘图 API · 渲染与空间索引**｜出自：矢量图形编辑器绘图 API › 深入 6
+**矢量图形编辑器绘图 API · 渲染与空间索引**｜追问 · 出自：矢量图形编辑器绘图 API › 深入 5
 
 矢量画布有数万个对象仍要流畅平移缩放。渲染和点击命中怎么做？
 

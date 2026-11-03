@@ -2,10 +2,10 @@
 id: hi-pt-recently-viewed-items-10-multi-instance-test
 node: qb.lld.recently-viewed-items.points
 type: qa
-step: 10
+step: 9
 ---
 ## Q
-**"最近浏览"记录 · 多实例与测试点**｜出自："最近浏览"记录 › 取舍与追问
+**"最近浏览"记录 · 多实例与测试点**｜追问 · 出自："最近浏览"记录 › 取舍与追问
 
 "最近浏览"部署多实例时视图会不一致吗？测试要覆盖哪些点？
 

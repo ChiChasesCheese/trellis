@@ -2,10 +2,10 @@
 id: hi-pt-tt-wallet-ledger-service-9-audit-chain
 node: tt.sd.tt-wallet-ledger-service.points
 type: qa
-step: 9
+step: 8
 ---
 ## Q
-**钱包与复式账本服务 · 审计与封块**｜出自：钱包与复式账本服务 › 深入 4
+**钱包与复式账本服务 · 审计与封块**｜追问 · 出自：钱包与复式账本服务 › 深入 5
 
 钱包账本怎么证明账是平的、历史没被改？
 

@@ -2,10 +2,10 @@
 id: hi-pt-crowdfunding-share-purchase-8-reconcile-expire
 node: qb.sd.crowdfunding-share-purchase.points
 type: qa
-step: 8
+step: 7
 ---
 ## Q
-**限时众筹购股系统 · 对账与预留过期**｜出自：限时众筹购股系统 › 整体设计
+**限时众筹购股系统 · 对账与预留过期**｜追问 · 出自：限时众筹购股系统 › 深入 4
 
 众筹购股里有些购买卡在 RESERVED 或 PAYING，Redis 里的剩余数也可能和实际不一致。系统靠什么兜底？
 

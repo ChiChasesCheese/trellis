@@ -2,10 +2,10 @@
 id: hi-pt-job-scheduler-cron-history-8-retry-unified
 node: qb.sd.job-scheduler-cron-history.points
 type: qa
-step: 8
+step: 6
 ---
 ## Q
-**分布式任务调度器 · 重试统一成更晚的到期**｜出自：分布式任务调度器 › 整体设计
+**分布式任务调度器 · 重试统一成更晚的到期**｜必会 · 出自：分布式任务调度器 › 整体设计
 
 任务执行失败或租约过期时如何重试？为什么不单独做一条重试路径？超过次数怎么办？
 

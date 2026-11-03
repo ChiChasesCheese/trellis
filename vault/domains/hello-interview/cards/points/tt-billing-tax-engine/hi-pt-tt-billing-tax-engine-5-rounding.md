@@ -2,10 +2,10 @@
 id: hi-pt-tt-billing-tax-engine-5-rounding
 node: tt.lld.tt-billing-tax-engine.points
 type: qa
-step: 5
+step: 6
 ---
 ## Q
-**计费与计税引擎 · 取整一次**｜出自：计费与计税引擎 › 深入 2
+**计费与计税引擎 · 取整一次**｜必会 · 出自：计费与计税引擎 › 深入 2
 
 计费引擎里每个中间步骤都取整会怎样？应该怎么取整，用什么舍入方式？
 

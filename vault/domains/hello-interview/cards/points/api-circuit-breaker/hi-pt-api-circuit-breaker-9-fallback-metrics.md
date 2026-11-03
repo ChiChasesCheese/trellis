@@ -2,10 +2,10 @@
 id: hi-pt-api-circuit-breaker-9-fallback-metrics
 node: qb.lld.api-circuit-breaker.points
 type: qa
-step: 9
+step: 8
 ---
 ## Q
-**熔断器 · 降级与可观测**｜出自：熔断器 › 深入 4
+**熔断器 · 降级与可观测**｜追问 · 出自：熔断器 › 深入 4
 
 熔断器的降级结果应该满足什么要求？应该暴露哪些指标，监控上对什么设告警？
 

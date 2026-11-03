@@ -2,10 +2,10 @@
 id: hi-pt-job-board-platform-7-apply-atomic
 node: qb.lld.job-board-platform.points
 type: qa
-step: 7
+step: 5
 ---
 ## Q
-**招聘信息平台 · 投递的原子性**｜出自：招聘信息平台 › 深入 4
+**招聘信息平台 · 投递的原子性**｜必会 · 出自：招聘信息平台 › 深入 3
 
 招聘平台并发重复点击投递，要保证只产生一条申请，且已关闭或过期的职位不能投。怎么实现 apply？
 

@@ -2,10 +2,10 @@
 id: hi-pt-elevator-design-8-state-pattern
 node: qb.lld.elevator-design.points
 type: qa
-step: 8
+step: 9
 ---
 ## Q
-**电梯系统 · 何时升级为状态模式**｜出自：电梯系统 › 取舍与追问
+**电梯系统 · 何时升级为状态模式**｜加分 · 出自：电梯系统 › 取舍与追问
 
 追问：当前只用方向枚举加到站判断建模，什么时候该改成状态模式？
 

@@ -2,10 +2,10 @@
 id: hi-pt-chatbot-design-5-context-truncation
 node: qb.sd.chatbot-design.points
 type: qa
-step: 5
+step: 6
 ---
 ## Q
-**对话式 AI 聊天服务 · 上下文截断与词元预算**｜出自：对话式 AI 聊天服务 › 深入 1
+**对话式 AI 聊天服务 · 上下文截断与词元预算**｜必会 · 出自：对话式 AI 聊天服务 › 深入 2
 
 大模型有上下文窗口上限，对话越来越长。滑动窗口、摘要、检索式记忆三种方案各有什么取舍？简单版选哪个，提示词怎么拼？
 

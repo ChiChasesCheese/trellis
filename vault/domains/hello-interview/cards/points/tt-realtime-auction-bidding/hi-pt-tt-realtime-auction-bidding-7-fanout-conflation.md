@@ -2,10 +2,10 @@
 id: hi-pt-tt-realtime-auction-bidding-7-fanout-conflation
 node: tt.sd.tt-realtime-auction-bidding.points
 type: qa
-step: 7
+step: 6
 ---
 ## Q
-**实时竞价拍卖 · 扇出与合并推送**｜出自：实时竞价拍卖 › 深入 3
+**实时竞价拍卖 · 扇出与合并推送**｜必会 · 出自：实时竞价拍卖 › 深入 3
 
 最后一刻每秒 1000 次出价、5 万观众，每次都推要多少消息？怎么降下来？
 

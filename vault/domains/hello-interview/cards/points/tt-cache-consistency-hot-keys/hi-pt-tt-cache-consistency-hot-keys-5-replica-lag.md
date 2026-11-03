@@ -2,10 +2,10 @@
 id: hi-pt-tt-cache-consistency-hot-keys-5-replica-lag
 node: tt.sd.tt-cache-consistency-hot-keys.points
 type: qa
-step: 5
+step: 8
 ---
 ## Q
-**缓存一致性与热点 Key · 从库延迟与版本号保护**｜出自：缓存一致性与热点 Key › 深入 1
+**缓存一致性与热点 Key · 从库延迟与版本号保护**｜追问 · 出自：缓存一致性与热点 Key › 深入 4
 
 即使 A 已删除缓存，回填为什么还会写入旧值？有哪些办法防止旧版本覆盖新版本？
 

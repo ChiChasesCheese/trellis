@@ -2,10 +2,10 @@
 id: hi-pt-date-time-management-9-chronology
 node: qb.lld.date-time-management.points
 type: qa
-step: 9
+step: 10
 ---
 ## Q
-**日期时间库 · 日历系统抽象**｜出自：日期时间库 › 深入 5
+**日期时间库 · 日历系统抽象**｜加分 · 出自：日期时间库 › 深入 8
 
 库要支持公历、农历、伊斯兰历等多种日历。日期类应该怎样设计，才能让跨日历转换和星期计算自然成立？
 

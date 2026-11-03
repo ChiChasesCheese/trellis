@@ -2,10 +2,10 @@
 id: hi-pt-date-time-management-2-instant-repr
 node: qb.lld.date-time-management.points
 type: qa
-step: 2
+step: 3
 ---
 ## Q
-**日期时间库 · Instant 为什么不用单个纳秒整数**｜出自：日期时间库 › 核心实体与接口
+**日期时间库 · Instant 为什么不用单个纳秒整数**｜必会 · 出自：日期时间库 › 深入 1
 
 日期时间库里 Instant 表示时间线上的一个点。能不能只用一个 64 位纳秒整数存"自纪元起的纳秒"？应该怎么存？
 

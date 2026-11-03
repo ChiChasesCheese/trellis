@@ -2,10 +2,10 @@
 id: hi-pt-hotel-booking-system-6-hold-ttl
 node: qb.sd.hotel-booking-system.points
 type: qa
-step: 6
+step: 5
 ---
 ## Q
-**酒店预订系统 · 保留 TTL 与支付两阶段**｜出自：酒店预订系统 › 深入 3
+**酒店预订系统 · 保留 TTL 与支付两阶段**｜必会 · 出自：酒店预订系统 › 深入 3
 
 先保留库存、后支付，怎么防库存被占着不成交？支付回调迟到怎么办？
 

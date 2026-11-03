@@ -2,10 +2,10 @@
 id: hi-pt-api-circuit-breaker-8-backoff-cooldown
 node: qb.lld.api-circuit-breaker.points
 type: qa
-step: 8
+step: 11
 ---
 ## Q
-**熔断器 · 半开策略与指数退避**｜出自：熔断器 › 深入 3
+**熔断器 · 半开策略与指数退避**｜加分 · 出自：熔断器 › 逐步扩展 3
 
 半开期有两个参数：`half_open_max_calls` 和 `success_threshold`，另外冷却时间可以固定也可以退避。它们各自控制什么？下游长时间故障时冷却时间怎么调？
 

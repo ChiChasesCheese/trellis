@@ -2,10 +2,10 @@
 id: hi-pt-stock-price-alerts-4-conflation
 node: qb.sd.stock-price-alerts.points
 type: qa
-step: 4
+step: 3
 ---
 ## Q
-**股票价格提醒系统 · 合并与分区**｜出自：股票价格提醒系统 › 整体设计
+**股票价格提醒系统 · 合并与分区**｜必会 · 出自：股票价格提醒系统 › 整体设计
 
 股价提醒系统每只活跃股票每秒数十次更新。判断节点怎么减少无用计算又不漏报？
 

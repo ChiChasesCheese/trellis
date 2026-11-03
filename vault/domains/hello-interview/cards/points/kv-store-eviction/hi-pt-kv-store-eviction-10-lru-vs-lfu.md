@@ -2,10 +2,10 @@
 id: hi-pt-kv-store-eviction-10-lru-vs-lfu
 node: qb.lld.kv-store-eviction.points
 type: qa
-step: 10
+step: 9
 ---
 ## Q
-**可配置淘汰策略的内存键值存储 · LRU 与 LFU 的取舍**｜出自：可配置淘汰策略的内存键值存储 › 取舍与追问
+**可配置淘汰策略的内存键值存储 · LRU 与 LFU 的取舍**｜追问 · 出自：可配置淘汰策略的内存键值存储 › 取舍与追问
 
 追问：LRU 和 LFU 怎么选？精确 LRU 在高并发下有什么问题？
 

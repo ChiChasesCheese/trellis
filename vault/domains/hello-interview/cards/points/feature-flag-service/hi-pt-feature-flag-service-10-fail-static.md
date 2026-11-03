@@ -2,10 +2,10 @@
 id: hi-pt-feature-flag-service-10-fail-static
 node: qb.sd.feature-flag-service.points
 type: qa
-step: 10
+step: 8
 ---
 ## Q
-**功能开关服务 · 控制面故障时的行为**｜出自：功能开关服务 › 深入 4
+**功能开关服务 · 控制面故障时的行为**｜必会 · 出自：功能开关服务 › 深入 3
 
 功能开关控制面完全宕机时，已运行的和新启动的服务各怎么办？从未成功加载过配置时返回什么？
 

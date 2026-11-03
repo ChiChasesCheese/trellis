@@ -2,10 +2,10 @@
 id: hi-pt-tt-live-gift-coin-settlement-9-session-precise
 node: tt.sd.tt-live-gift-coin-settlement.points
 type: qa
-step: 9
+step: 8
 ---
 ## Q
-**直播礼物金币记账与主播结算 · 每场精确收益与取整**｜出自：直播礼物金币记账与主播结算 › 深入 4
+**直播礼物金币记账与主播结算 · 每场精确收益与取整**｜必会 · 出自：直播礼物金币记账与主播结算 › 深入 3
 
 每场直播的收益实时是估计、事后要精确。session 归属怎么定？批处理怎么重算？7 个币 35% 为什么不能逐份取整？
 

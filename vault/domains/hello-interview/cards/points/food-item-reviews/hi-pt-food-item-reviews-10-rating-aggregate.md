@@ -2,10 +2,10 @@
 id: hi-pt-food-item-reviews-10-rating-aggregate
 node: qb.sd.food-item-reviews.points
 type: qa
-step: 10
+step: 9
 ---
 ## Q
-**带打赏的菜品评价系统 · 平均星级与需求澄清**｜出自：带打赏的菜品评价系统 › 取舍与追问
+**带打赏的菜品评价系统 · 平均星级与需求澄清**｜追问 · 出自：带打赏的菜品评价系统 › 取舍与追问
 
 菜品评价要展示菜品平均星级，怎么算才不用每次扫描所有评论？需求很宽时开场该问什么？
 

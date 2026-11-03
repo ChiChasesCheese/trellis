@@ -2,10 +2,10 @@
 id: hi-pt-feature-flag-service-7-hash-properties
 node: qb.sd.feature-flag-service.points
 type: qa
-step: 7
+step: 6
 ---
 ## Q
-**功能开关服务 · 哈希的独立性与单调性**｜出自：功能开关服务 › 深入 1
+**功能开关服务 · 哈希的独立性与单调性**｜必会 · 出自：功能开关服务 › 深入 1
 
 稳定哈希灰度为什么要把开关 key 放进哈希？5% 调到 20% 或回滚时，已命中的用户会怎样？多变体怎么分配？
 

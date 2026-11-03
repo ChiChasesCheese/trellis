@@ -2,10 +2,10 @@
 id: hi-pt-top-k-counts-6-window-tables
 node: qb.sd.top-k-counts.points
 type: qa
-step: 6
+step: 7
 ---
 ## Q
-**Top-K 热门榜 · 窗口怎么算才快**｜出自：Top-K 热门榜 › 深入 3
+**Top-K 热门榜 · 窗口怎么算才快**｜追问 · 出自：Top-K 热门榜 › 深入 4
 
 查最近 1 小时/1 天/1 个月前 K，朴素 `GROUP BY` 为什么慢？怎么改？
 

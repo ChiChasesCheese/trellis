@@ -2,10 +2,10 @@
 id: hi-pt-date-time-management-5-month-add
 node: qb.lld.date-time-management.points
 type: qa
-step: 5
+step: 6
 ---
 ## Q
-**日期时间库 · 1 月 31 日加一个月**｜出自：日期时间库 › 深入 1
+**日期时间库 · 1 月 31 日加一个月**｜必会 · 出自：日期时间库 › 深入 3
 
 日期库中 1 月 31 日加一个月应该得到几号？报错、溢出和截断三种方案各有什么问题，它带来什么性质上的后果？
 

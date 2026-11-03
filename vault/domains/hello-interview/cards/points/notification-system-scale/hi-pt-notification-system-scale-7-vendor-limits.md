@@ -2,10 +2,10 @@
 id: hi-pt-notification-system-scale-7-vendor-limits
 node: qb.sd.notification-system-scale.points
 type: qa
-step: 7
+step: 8
 ---
 ## Q
-**百万级通知系统 · 第三方限速与故障**｜出自：百万级通知系统 › 深入 5
+**百万级通知系统 · 第三方限速与故障**｜追问 · 出自：百万级通知系统 › 深入 5
 
 通知系统依赖 APNs、FCM、短信与邮件服务商，它们有速率限制也会故障。网关怎么应对？
 

@@ -2,10 +2,10 @@
 id: hi-pt-top-k-counts-7-tumbling-sliding
 node: qb.sd.top-k-counts.points
 type: qa
-step: 7
+step: 6
 ---
 ## Q
-**Top-K 热门榜 · 对齐窗口与滑动窗口**｜出自：Top-K 热门榜 › 深入 4
+**Top-K 热门榜 · 对齐窗口与滑动窗口**｜必会 · 出自：Top-K 热门榜 › 深入 3
 
 对齐（tumbling）窗口和滑动窗口怎么选？为什么不直接用步长 1 分钟的原生滑动窗口？
 

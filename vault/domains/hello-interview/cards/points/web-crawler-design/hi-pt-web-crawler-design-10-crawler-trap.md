@@ -2,10 +2,10 @@
 id: hi-pt-web-crawler-design-10-crawler-trap
 node: qb.sd.web-crawler-design.points
 type: qa
-step: 10
+step: 9
 ---
 ## Q
-**网络爬虫 · 爬虫陷阱**｜出自：网络爬虫 › 深入 5
+**网络爬虫 · 爬虫陷阱**｜追问 · 出自：网络爬虫 › 深入 4
 
 日历页面无限翻页、会话 ID 嵌入 URL、动态生成无限层级链接，怎么防？
 

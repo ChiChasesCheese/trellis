@@ -2,10 +2,10 @@
 id: hi-pt-tt-idempotent-transfer-7-outbox-channel
 node: tt.lld.tt-idempotent-transfer.points
 type: qa
-step: 7
+step: 9
 ---
 ## Q
-**幂等转账服务 · 外部支付渠道与事务外盒**｜出自：幂等转账服务 › 深入 3
+**幂等转账服务 · 外部支付渠道与事务外盒**｜加分 · 出自：幂等转账服务 › 深入 5
 
 第二步要调用外部支付渠道，不能放进数据库事务，怎么保证不重复扣款？
 

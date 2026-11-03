@@ -2,10 +2,10 @@
 id: hi-pt-online-chess-platform-7-matchmaking
 node: qb.sd.online-chess-platform.points
 type: qa
-step: 7
+step: 6
 ---
 ## Q
-**在线国际象棋平台 · Elo 匹配与窗口放宽**｜出自：在线国际象棋平台 › 深入 1
+**在线国际象棋平台 · Elo 匹配与窗口放宽**｜必会 · 出自：在线国际象棋平台 › 深入 1
 
 按 Elo 匹配对手，严格相等几乎匹配不上，全池扫描又太贵。怎么设计队列和窗口？两个匹配器挑中同一个人怎么办？
 

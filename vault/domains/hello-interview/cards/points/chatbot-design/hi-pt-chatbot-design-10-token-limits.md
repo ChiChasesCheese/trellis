@@ -2,10 +2,10 @@
 id: hi-pt-chatbot-design-10-token-limits
 node: qb.sd.chatbot-design.points
 type: qa
-step: 10
+step: 8
 ---
 ## Q
-**对话式 AI 聊天服务 · 按词元限流与预算**｜出自：对话式 AI 聊天服务 › 深入 4
+**对话式 AI 聊天服务 · 按词元限流与预算**｜追问 · 出自：对话式 AI 聊天服务 › 深入 4
 
 大模型服务的限流应该以请求数还是词元数为单位？应该限制哪些维度？为什么？
 

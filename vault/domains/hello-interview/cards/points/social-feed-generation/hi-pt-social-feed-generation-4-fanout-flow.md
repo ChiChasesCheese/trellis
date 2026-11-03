@@ -2,10 +2,10 @@
 id: hi-pt-social-feed-generation-4-fanout-flow
 node: qb.sd.social-feed-generation.points
 type: qa
-step: 4
+step: 3
 ---
 ## Q
-**社交信息流生成系统 · 发帖到读取的整体流程**｜出自：社交信息流生成系统 › 整体设计
+**社交信息流生成系统 · 发帖到读取的整体流程**｜必会 · 出自：社交信息流生成系统 › 整体设计
 
 从发帖到用户读到信息流，整条链路怎么走？
 

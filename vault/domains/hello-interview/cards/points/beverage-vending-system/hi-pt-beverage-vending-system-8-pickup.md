@@ -2,10 +2,10 @@
 id: hi-pt-beverage-vending-system-8-pickup
 node: qb.lld.beverage-vending-system.points
 type: qa
-step: 8
+step: 6
 ---
 ## Q
-**多地点饮品自助售卖系统 · 取货码与超时作废**｜出自：多地点饮品自助售卖系统 › 深入 5
+**多地点饮品自助售卖系统 · 取货码与超时作废**｜追问 · 出自：多地点饮品自助售卖系统 › 逐步扩展 2
 
 顾客凭取货码取走饮品。取货码怎么设计？超时未取怎么处理？
 

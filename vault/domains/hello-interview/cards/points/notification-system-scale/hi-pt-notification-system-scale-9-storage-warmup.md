@@ -2,10 +2,10 @@
 id: hi-pt-notification-system-scale-9-storage-warmup
 node: qb.sd.notification-system-scale.points
 type: qa
-step: 9
+step: 10
 ---
 ## Q
-**百万级通知系统 · 存储与大促预热**｜出自：百万级通知系统 › 深入 6
+**百万级通知系统 · 存储与大促预热**｜加分 · 出自：百万级通知系统 › 深入 6
 
 通知系统的投递记录、偏好、模板、设备令牌怎么选存储？大促前要注意什么？
 

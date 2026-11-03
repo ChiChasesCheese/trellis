@@ -2,10 +2,10 @@
 id: hi-pt-web-crawler-design-8-url-dedup
 node: qb.sd.web-crawler-design.points
 type: qa
-step: 8
+step: 7
 ---
 ## Q
-**网络爬虫 · URL 去重**｜出自：网络爬虫 › 深入 4
+**网络爬虫 · URL 去重**｜必会 · 出自：网络爬虫 › 深入 3
 
 URL 去重前要先做什么？100 亿个 URL 的已见集合用多大？布隆过滤器的代价是什么，判重怎么做到原子？
 

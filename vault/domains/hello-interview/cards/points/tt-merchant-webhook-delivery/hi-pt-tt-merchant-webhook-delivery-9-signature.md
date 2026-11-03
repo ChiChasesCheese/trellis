@@ -2,10 +2,10 @@
 id: hi-pt-tt-merchant-webhook-delivery-9-signature
 node: tt.sd.tt-merchant-webhook-delivery.points
 type: qa
-step: 9
+step: 6
 ---
 ## Q
-**商户回调（Webhook）投递系统 · 签名、重放与密钥轮换**｜出自：商户回调（Webhook）投递系统 › 深入 4
+**商户回调（Webhook）投递系统 · 签名、重放与密钥轮换**｜必会 · 出自：商户回调（Webhook）投递系统 › 深入 3
 
 商户怎么验证通知确实来自平台？怎么防重放？密钥怎么轮换？
 

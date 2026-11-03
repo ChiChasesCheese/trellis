@@ -2,10 +2,10 @@
 id: hi-pt-tt-wallet-ledger-service-5-exactly-once-credit
 node: tt.sd.tt-wallet-ledger-service.points
 type: qa
-step: 5
+step: 4
 ---
 ## Q
-**钱包与复式账本服务 · 充值恰好一次**｜出自：钱包与复式账本服务 › 深入 1
+**钱包与复式账本服务 · 充值恰好一次**｜必会 · 出自：钱包与复式账本服务 › 深入 1
 
 商店支付通知会重发、乱序、延迟几天。钱包怎么保证充值只入账一次？
 

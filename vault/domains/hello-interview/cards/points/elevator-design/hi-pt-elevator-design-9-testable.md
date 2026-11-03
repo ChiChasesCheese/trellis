@@ -2,10 +2,10 @@
 id: hi-pt-elevator-design-9-testable
 node: qb.lld.elevator-design.points
 type: qa
-step: 9
+step: 8
 ---
 ## Q
-**电梯系统 · 可测试的时钟与高峰优化**｜出自：电梯系统 › 取舍与追问
+**电梯系统 · 可测试的时钟与高峰优化**｜追问 · 出自：电梯系统 › 取舍与追问
 
 追问：怎么测电梯的停靠顺序？高峰期怎么优化？
 

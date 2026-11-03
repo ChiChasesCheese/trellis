@@ -2,10 +2,10 @@
 id: hi-pt-metrics-monitoring-alerts-11-query-path
 node: qb.sd.metrics-monitoring-alerts.points
 type: qa
-step: 11
+step: 7
 ---
 ## Q
-**指标监控与告警平台 · 查询与仪表盘**｜出自：指标监控与告警平台 › 深入 4
+**指标监控与告警平台 · 查询与仪表盘**｜必会 · 出自：指标监控与告警平台 › 深入 3
 
 指标监控的仪表盘查询一年范围时怎么保证 1 秒到几秒出结果？
 

@@ -2,10 +2,10 @@
 id: hi-pt-video-moderation-system-5-task-idempotency
 node: qb.sd.video-moderation-system.points
 type: qa
-step: 5
+step: 8
 ---
 ## Q
-**视频内容审核系统 · 审核任务幂等**｜出自：视频内容审核系统 › 深入 1
+**视频内容审核系统 · 审核任务幂等**｜追问 · 出自：视频内容审核系统 › 深入 5
 
 视频审核收到重复的发布事件或视频被编辑，怎么避免重复审核或沿用旧结论？
 

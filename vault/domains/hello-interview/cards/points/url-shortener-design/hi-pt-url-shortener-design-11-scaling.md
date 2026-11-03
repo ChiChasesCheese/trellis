@@ -2,10 +2,10 @@
 id: hi-pt-url-shortener-design-11-scaling
 node: qb.sd.url-shortener-design.points
 type: qa
-step: 11
+step: 9
 ---
 ## Q
-**短链接服务 · 读写与跨区域扩展**｜出自：短链接服务 › 深入 3
+**短链接服务 · 读写与跨区域扩展**｜必会 · 出自：短链接服务 › 深入 3
 
 短链接服务怎么扩展：读、写、跨区域、过期清理各怎么做？
 

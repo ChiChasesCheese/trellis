@@ -2,10 +2,10 @@
 id: hi-pt-tt-installment-plan-5-annuity
 node: tt.lld.tt-installment-plan.points
 type: qa
-step: 5
+step: 3
 ---
 ## Q
-**分期计划生成器 · 等额本息计算**｜出自：分期计划生成器 › 整体设计
+**分期计划生成器 · 等额本息计算**｜必会 · 出自：分期计划生成器 › 整体设计
 
 分期计划生成器怎么算有息等额本息的每期还款额和每期的本金与利息？
 

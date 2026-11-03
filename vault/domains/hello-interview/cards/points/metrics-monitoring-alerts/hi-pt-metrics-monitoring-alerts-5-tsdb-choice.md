@@ -2,10 +2,10 @@
 id: hi-pt-metrics-monitoring-alerts-5-tsdb-choice
 node: qb.sd.metrics-monitoring-alerts.points
 type: qa
-step: 5
+step: 3
 ---
 ## Q
-**指标监控与告警平台 · 存储选型**｜出自：指标监控与告警平台 › 深入 2
+**指标监控与告警平台 · 存储选型**｜必会 · 出自：指标监控与告警平台 › 深入 1
 
 指标监控每秒百万点追加写且数据无限增长，存储为什么选专用时序库，而不是关系库或通用宽表库？
 

@@ -2,10 +2,10 @@
 id: hi-pt-job-board-platform-4-search-flow
 node: qb.lld.job-board-platform.points
 type: qa
-step: 4
+step: 7
 ---
 ## Q
-**招聘信息平台 · 搜索流程与分页**｜出自：招聘信息平台 › 整体设计
+**招聘信息平台 · 搜索流程与分页**｜追问 · 出自：招聘信息平台 › 逐步扩展 3
 
 招聘平台内存版的搜索怎么先缩小候选集，再排序分页？
 

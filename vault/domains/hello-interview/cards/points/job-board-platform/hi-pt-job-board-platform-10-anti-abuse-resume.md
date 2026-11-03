@@ -2,10 +2,10 @@
 id: hi-pt-job-board-platform-10-anti-abuse-resume
 node: qb.lld.job-board-platform.points
 type: qa
-step: 10
+step: 9
 ---
 ## Q
-**招聘信息平台 · 防刷与简历存储**｜出自：招聘信息平台 › 取舍与追问
+**招聘信息平台 · 防刷与简历存储**｜追问 · 出自：招聘信息平台 › 取舍与追问
 
 招聘平台被问到防刷投递，以及简历文件怎么存。怎么回答？
 

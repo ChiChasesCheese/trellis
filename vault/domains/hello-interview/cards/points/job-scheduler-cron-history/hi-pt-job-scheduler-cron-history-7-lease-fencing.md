@@ -2,10 +2,10 @@
 id: hi-pt-job-scheduler-cron-history-7-lease-fencing
 node: qb.sd.job-scheduler-cron-history.points
 type: qa
-step: 7
+step: 8
 ---
 ## Q
-**分布式任务调度器 · 租约与围栏令牌**｜出自：分布式任务调度器 › 深入 2
+**分布式任务调度器 · 租约与围栏令牌**｜必会 · 出自：分布式任务调度器 › 深入 2
 
 worker 随时可能死，怎样保证至少执行一次？旧 worker 只是网络卡住并没有死，醒来后会出什么问题，如何防？
 

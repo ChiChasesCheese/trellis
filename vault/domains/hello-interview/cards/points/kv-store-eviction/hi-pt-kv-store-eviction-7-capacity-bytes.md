@@ -2,10 +2,10 @@
 id: hi-pt-kv-store-eviction-7-capacity-bytes
 node: qb.lld.kv-store-eviction.points
 type: qa
-step: 7
+step: 8
 ---
 ## Q
-**可配置淘汰策略的内存键值存储 · 容量按键数还是字节**｜出自：可配置淘汰策略的内存键值存储 › 深入 3
+**可配置淘汰策略的内存键值存储 · 容量按键数还是字节**｜追问 · 出自：可配置淘汰策略的内存键值存储 › 深入 6
 
 容量上限按键数算有什么问题？更真实的做法和代价是什么？
 

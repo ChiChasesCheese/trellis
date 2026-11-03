@@ -2,10 +2,10 @@
 id: hi-pt-book-seller-platform-7-outbox
 node: qb.sd.book-seller-platform.points
 type: qa
-step: 7
+step: 8
 ---
 ## Q
-**图书比价代购平台 · Outbox 双写**｜出自：图书比价代购平台 › 深入 2
+**图书比价代购平台 · Outbox 双写**｜追问 · 出自：图书比价代购平台 › 深入 4
 
 图书平台订单状态已写入数据库，但"通知编排器、发回调"的消息没发出去（进程在两步之间崩溃）。怎么避免这种双写不一致？
 

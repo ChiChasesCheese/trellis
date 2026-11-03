@@ -2,10 +2,10 @@
 id: hi-pt-tt-payment-reconciliation-7-no-subset-sum
 node: tt.sd.tt-payment-reconciliation.points
 type: qa
-step: 7
+step: 5
 ---
 ## Q
-**支付对账系统 · 不做子集和**｜出自：支付对账系统 › 深入 2
+**支付对账系统 · 不做子集和**｜必会 · 出自：支付对账系统 › 深入 1
 
 对账系统里银行一条入账等于几万笔明细之和，没有批次号怎么找哪些交易加起来等于这个数？
 

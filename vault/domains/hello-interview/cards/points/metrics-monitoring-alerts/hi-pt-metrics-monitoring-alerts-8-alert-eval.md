@@ -2,10 +2,10 @@
 id: hi-pt-metrics-monitoring-alerts-8-alert-eval
 node: qb.sd.metrics-monitoring-alerts.points
 type: qa
-step: 8
+step: 4
 ---
 ## Q
-**指标监控与告警平台 · 告警评估方式**｜出自：指标监控与告警平台 › 深入 3
+**指标监控与告警平台 · 告警评估方式**｜必会 · 出自：指标监控与告警平台 › 深入 2
 
 指标监控的告警规则怎么评估：周期性查询还是流式？怎么选？
 

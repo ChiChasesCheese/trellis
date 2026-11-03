@@ -2,10 +2,10 @@
 id: hi-pt-scheduler-system-design-4-timer-wakeup
 node: qb.lld.scheduler-system-design.points
 type: qa
-step: 4
+step: 8
 ---
 ## Q
-**任务调度器（定时、周期、带优先级） · 计时线程的精确唤醒**｜出自：任务调度器（定时、周期、带优先级） › 整体设计
+**任务调度器（定时、周期、带优先级） · 计时线程的精确唤醒**｜追问 · 出自：任务调度器（定时、周期、带优先级） › 逐步扩展 1
 
 计时线程怎样睡眠？有人提交了比堆顶更早的任务时怎么办？
 

@@ -2,10 +2,10 @@
 id: hi-pt-tt-payment-reconciliation-6-layered-match
 node: tt.sd.tt-payment-reconciliation.points
 type: qa
-step: 6
+step: 4
 ---
 ## Q
-**支付对账系统 · 分层匹配与消耗式**｜出自：支付对账系统 › 深入 2
+**支付对账系统 · 分层匹配与消耗式**｜必会 · 出自：支付对账系统 › 深入 1
 
 对账引擎怎么分轮匹配，为什么每行只能匹配一次？
 

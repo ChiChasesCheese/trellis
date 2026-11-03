@@ -2,10 +2,10 @@
 id: hi-pt-video-moderation-system-7-backtest
 node: qb.sd.video-moderation-system.points
 type: qa
-step: 7
+step: 5
 ---
 ## Q
-**视频内容审核系统 · 回放验证与存量复评**｜出自：视频内容审核系统 › 深入 2
+**视频内容审核系统 · 回放验证与存量复评**｜必会 · 出自：视频内容审核系统 › 深入 2
 
 视频审核的新规则上线前，怎么看到影响面？政策收紧时对存量视频怎么处理？
 

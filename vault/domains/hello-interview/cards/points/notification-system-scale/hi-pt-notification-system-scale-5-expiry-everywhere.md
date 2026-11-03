@@ -2,10 +2,10 @@
 id: hi-pt-notification-system-scale-5-expiry-everywhere
 node: qb.sd.notification-system-scale.points
 type: qa
-step: 5
+step: 6
 ---
 ## Q
-**百万级通知系统 · 每个环节检查过期**｜出自：百万级通知系统 › 深入 3
+**百万级通知系统 · 每个环节检查过期**｜必会 · 出自：百万级通知系统 › 深入 3
 
 通知系统的促销过期后不能再发。只在入口检查过期时间够吗？
 

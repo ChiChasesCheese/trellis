@@ -2,10 +2,10 @@
 id: hi-pt-book-seller-platform-5-order-idempotency-key
 node: qb.sd.book-seller-platform.points
 type: qa
-step: 5
+step: 3
 ---
 ## Q
-**图书比价代购平台 · 下单幂等键**｜出自：图书比价代购平台 › 深入 2
+**图书比价代购平台 · 下单幂等键**｜必会 · 出自：图书比价代购平台 › 深入 1
 
 顾客在图书平台点了两次下单，或客户端网络重试，导致同一请求到达两次。接口层怎么保证不会触发第二次购买？
 

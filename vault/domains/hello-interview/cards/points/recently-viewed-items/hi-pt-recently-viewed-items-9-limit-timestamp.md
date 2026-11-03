@@ -2,10 +2,10 @@
 id: hi-pt-recently-viewed-items-9-limit-timestamp
 node: qb.lld.recently-viewed-items.points
 type: qa
-step: 9
+step: 8
 ---
 ## Q
-**"最近浏览"记录 · limit 调整与时间语义**｜出自："最近浏览"记录 › 取舍与追问
+**"最近浏览"记录 · limit 调整与时间语义**｜追问 · 出自："最近浏览"记录 › 取舍与追问
 
 "最近浏览"被追问：limit 要能运行时调整、要支持"最近 7 天"，怎么改？
 

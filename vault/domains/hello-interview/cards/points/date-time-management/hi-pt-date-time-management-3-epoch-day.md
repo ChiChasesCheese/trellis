@@ -2,10 +2,10 @@
 id: hi-pt-date-time-management-3-epoch-day
 node: qb.lld.date-time-management.points
 type: qa
-step: 3
+step: 4
 ---
 ## Q
-**日期时间库 · 为什么存纪元日而不是年月日三字段**｜出自：日期时间库 › 整体设计
+**日期时间库 · 为什么存纪元日而不是年月日三字段**｜必会 · 出自：日期时间库 › 深入 2
 
 日期类 LocalDate 内部应该存年、月、日三个字段，还是一个规范化整数？这对比较、加减和合法性有什么影响？
 

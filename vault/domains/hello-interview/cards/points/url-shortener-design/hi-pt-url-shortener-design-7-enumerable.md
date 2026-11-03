@@ -2,10 +2,10 @@
 id: hi-pt-url-shortener-design-7-enumerable
 node: qb.sd.url-shortener-design.points
 type: qa
-step: 7
+step: 11
 ---
 ## Q
-**短链接服务 · 短码可枚举**｜出自：短链接服务 › 深入 1
+**短链接服务 · 短码可枚举**｜追问 · 出自：短链接服务 › 深入 5
 
 计数器方案的短码是递增的，别人能猜出下一个。如果要求短链接不可枚举，怎么改？多区域部署时计数器怎么办？
 

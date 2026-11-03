@@ -2,10 +2,10 @@
 id: hi-pt-figma-draw-api-2-frame-coalesce
 node: qb.lld.figma-draw-api.points
 type: qa
-step: 2
+step: 4
 ---
 ## Q
-**矢量图形编辑器绘图 API · 按帧合并事件**｜出自：矢量图形编辑器绘图 API › 深入 1
+**矢量图形编辑器绘图 API · 按帧合并事件**｜必会 · 出自：矢量图形编辑器绘图 API › 深入 1
 
 矢量编辑器的指针事件可达每秒 120 到 240 次，而渲染预算是 60 帧每秒、单帧约 16 毫秒。拖动时事件怎么处理？
 

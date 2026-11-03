@@ -2,10 +2,10 @@
 id: hi-pt-photo-storage-sharing-6-thumbnails-dedup
 node: qb.sd.photo-storage-sharing.points
 type: qa
-step: 6
+step: 8
 ---
 ## Q
-**照片存储与分享系统 · 多档缩略图与去重**｜出自：照片存储与分享系统 › 深入 2
+**照片存储与分享系统 · 多档缩略图与去重**｜追问 · 出自：照片存储与分享系统 › 深入 4
 
 为什么要生成多档缩略图并分前缀存储？跨用户全局去重有什么风险，多数产品怎么做？
 

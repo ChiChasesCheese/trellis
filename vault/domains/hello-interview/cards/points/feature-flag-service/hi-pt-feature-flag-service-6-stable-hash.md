@@ -2,10 +2,10 @@
 id: hi-pt-feature-flag-service-6-stable-hash
 node: qb.sd.feature-flag-service.points
 type: qa
-step: 6
+step: 5
 ---
 ## Q
-**功能开关服务 · 百分比灰度的稳定哈希**｜出自：功能开关服务 › 深入 1
+**功能开关服务 · 百分比灰度的稳定哈希**｜必会 · 出自：功能开关服务 › 深入 1
 
 百分比灰度怎么给用户分配？随机数、存储每个用户结果、稳定哈希三种方案各有什么问题？稳定哈希怎么算？
 

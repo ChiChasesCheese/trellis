@@ -2,10 +2,10 @@
 id: hi-pt-tt-merchant-webhook-delivery-11-fallback-pull
 node: tt.sd.tt-merchant-webhook-delivery.points
 type: qa
-step: 11
+step: 10
 ---
 ## Q
-**商户回调（Webhook）投递系统 · 兜底：事件日志与重发**｜出自：商户回调（Webhook）投递系统 › 取舍与追问
+**商户回调（Webhook）投递系统 · 兜底：事件日志与重发**｜追问 · 出自：商户回调（Webhook）投递系统 › 深入 6
 
 追问：商户说没收到通知，平台怎么补？webhook 在整体里是什么地位？
 

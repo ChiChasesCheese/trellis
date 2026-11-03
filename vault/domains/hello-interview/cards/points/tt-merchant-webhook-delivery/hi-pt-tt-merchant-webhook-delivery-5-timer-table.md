@@ -2,10 +2,10 @@
 id: hi-pt-tt-merchant-webhook-delivery-5-timer-table
 node: tt.sd.tt-merchant-webhook-delivery.points
 type: qa
-step: 5
+step: 9
 ---
 ## Q
-**商户回调（Webhook）投递系统 · 重试计时用投递表**｜出自：商户回调（Webhook）投递系统 › 深入 1
+**商户回调（Webhook）投递系统 · 重试计时用投递表**｜追问 · 出自：商户回调（Webhook）投递系统 › 深入 6
 
 重试的等待放在队列延迟消息里，还是投递表？
 

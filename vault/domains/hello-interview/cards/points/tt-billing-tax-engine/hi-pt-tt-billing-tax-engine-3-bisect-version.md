@@ -2,10 +2,10 @@
 id: hi-pt-tt-billing-tax-engine-3-bisect-version
 node: tt.lld.tt-billing-tax-engine.points
 type: qa
-step: 3
+step: 5
 ---
 ## Q
-**计费与计税引擎 · 按生效时间二分**｜出自：计费与计税引擎 › 深入 1
+**计费与计税引擎 · 按生效时间二分**｜必会 · 出自：计费与计税引擎 › 深入 1
 
 计费引擎为什么不保存"当前配置"，而要按生效时间查版本？边界时间属于哪个版本？
 

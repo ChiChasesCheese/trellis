@@ -2,10 +2,10 @@
 id: hi-pt-metrics-monitoring-alerts-7-cardinality
 node: qb.sd.metrics-monitoring-alerts.points
 type: qa
-step: 7
+step: 9
 ---
 ## Q
-**指标监控与告警平台 · 基数爆炸**｜出自：指标监控与告警平台 › 深入 2
+**指标监控与告警平台 · 基数爆炸**｜追问 · 出自：指标监控与告警平台 › 深入 5
 
 有人把 user_id 或 request_id 当指标标签，会发生什么？平台如何防护？
 

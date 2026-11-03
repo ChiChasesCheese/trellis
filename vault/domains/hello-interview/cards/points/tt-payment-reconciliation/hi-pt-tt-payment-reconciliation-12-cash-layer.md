@@ -2,10 +2,10 @@
 id: hi-pt-tt-payment-reconciliation-12-cash-layer
 node: tt.sd.tt-payment-reconciliation.points
 type: qa
-step: 12
+step: 11
 ---
 ## Q
-**支付对账系统 · 现金层与应收清零**｜出自：支付对账系统 › 深入 4
+**支付对账系统 · 现金层与应收清零**｜追问 · 出自：支付对账系统 › 深入 6
 
 对账系统怎么把银行一条汇总入账拆回明细？整体不变量是什么？
 

@@ -2,10 +2,10 @@
 id: hi-pt-date-time-management-10-local-vs-zoned
 node: qb.lld.date-time-management.points
 type: qa
-step: 10
+step: 2
 ---
 ## Q
-**日期时间库 · LocalDateTime 与 ZonedDateTime 的区别**｜出自：日期时间库 › 取舍与追问
+**日期时间库 · LocalDateTime 与 ZonedDateTime 的区别**｜必会 · 出自：日期时间库 › 深入 1
 
 LocalDateTime 和 ZonedDateTime 有什么区别？时区转换接口为什么要提供两个不同的方法？
 

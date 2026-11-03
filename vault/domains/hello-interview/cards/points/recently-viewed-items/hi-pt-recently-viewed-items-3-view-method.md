@@ -2,10 +2,10 @@
 id: hi-pt-recently-viewed-items-3-view-method
 node: qb.lld.recently-viewed-items.points
 type: qa
-step: 3
+step: 2
 ---
 ## Q
-**"最近浏览"记录 · view 的关键方法**｜出自："最近浏览"记录 › 整体设计
+**"最近浏览"记录 · view 的关键方法**｜必会 · 出自："最近浏览"记录 › 核心实现
 
 "最近浏览"的 view(customer, item) 在客户自己的有序字典里怎么更新？用 limit=3 浏览 a、b、c、b、d 结果是什么？
 

@@ -2,10 +2,10 @@
 id: hi-pt-tt-payment-reconciliation-5-cutoff
 node: tt.sd.tt-payment-reconciliation.points
 type: qa
-step: 5
+step: 8
 ---
 ## Q
-**支付对账系统 · 截止点对齐**｜出自：支付对账系统 › 深入 1
+**支付对账系统 · 截止点对齐**｜必会 · 出自：支付对账系统 › 深入 3
 
 对账系统里账本按系统时间入账，PSP 按自己的时区切业务日，截止点前后的交易会怎样？怎么处理？
 

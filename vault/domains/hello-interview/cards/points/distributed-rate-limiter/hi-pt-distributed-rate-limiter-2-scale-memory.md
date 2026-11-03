@@ -2,10 +2,10 @@
 id: hi-pt-distributed-rate-limiter-2-scale-memory
 node: qb.sd.distributed-rate-limiter.points
 type: qa
-step: 2
+step: 1
 ---
 ## Q
-**分布式限流器 · 规模与内存估算**｜出自：分布式限流器 › 需求
+**分布式限流器 · 规模与内存估算**｜必会 · 出自：分布式限流器 › 需求
 
 分布式限流器要支撑 1 亿日活、峰值 100 万请求/秒，每次检查增加的延迟要小于 10ms。状态放得下吗？
 

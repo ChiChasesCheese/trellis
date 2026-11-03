@@ -2,10 +2,10 @@
 id: hi-pt-book-seller-platform-10-sync-async
 node: qb.sd.book-seller-platform.points
 type: qa
-step: 10
+step: 2
 ---
 ## Q
-**图书比价代购平台 · 同步与异步接口**｜出自：图书比价代购平台 › 整体设计
+**图书比价代购平台 · 同步与异步接口**｜必会 · 出自：图书比价代购平台 › 整体设计
 
 图书平台要同时提供同步接口（等结果）和异步接口（立即返回订单号），且订单完成 p99 约 5 秒。怎么用一套后台逻辑实现两种接口？
 

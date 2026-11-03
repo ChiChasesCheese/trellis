@@ -2,10 +2,10 @@
 id: hi-pt-metrics-monitoring-alerts-9-alert-state
 node: qb.sd.metrics-monitoring-alerts.points
 type: qa
-step: 9
+step: 5
 ---
 ## Q
-**指标监控与告警平台 · 告警状态机与去重**｜出自：指标监控与告警平台 › 深入 3
+**指标监控与告警平台 · 告警状态机与去重**｜必会 · 出自：指标监控与告警平台 › 深入 2
 
 指标监控的告警如何避免抖动和告警风暴？
 

@@ -2,10 +2,10 @@
 id: hi-pt-video-moderation-system-8-action-outbox
 node: qb.sd.video-moderation-system.points
 type: qa
-step: 8
+step: 6
 ---
 ## Q
-**视频内容审核系统 · 处置的可靠性**｜出自：视频内容审核系统 › 深入 3
+**视频内容审核系统 · 处置的可靠性**｜必会 · 出自：视频内容审核系统 › 深入 3
 
 视频审核判定违规后要调用域服务下架，调用可能超时或服务暂不可用。怎么保证恰好生效一次？
 

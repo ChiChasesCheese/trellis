@@ -2,10 +2,10 @@
 id: hi-pt-beverage-vending-system-4-order-fsm
 node: qb.lld.beverage-vending-system.points
 type: qa
-step: 4
+step: 3
 ---
 ## Q
-**多地点饮品自助售卖系统 · 订单状态机与幂等**｜出自：多地点饮品自助售卖系统 › 深入 2
+**多地点饮品自助售卖系统 · 订单状态机与幂等**｜必会 · 出自：多地点饮品自助售卖系统 › 深入 2
 
 支付回调、机器回调可能重复到达，订单状态怎么管理才不重复产生副作用？
 

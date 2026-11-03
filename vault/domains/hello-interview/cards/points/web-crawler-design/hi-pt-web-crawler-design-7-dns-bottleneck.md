@@ -2,10 +2,10 @@
 id: hi-pt-web-crawler-design-7-dns-bottleneck
 node: qb.sd.web-crawler-design.points
 type: qa
-step: 7
+step: 10
 ---
 ## Q
-**网络爬虫 · DNS 瓶颈**｜出自：网络爬虫 › 深入 3
+**网络爬虫 · DNS 瓶颈**｜追问 · 出自：网络爬虫 › 深入 5
 
 爬虫规模下 DNS 为什么常被忽略却可能成瓶颈？怎么缓解？
 

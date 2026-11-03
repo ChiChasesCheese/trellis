@@ -2,10 +2,10 @@
 id: hi-pt-metrics-monitoring-alerts-4-why-kafka
 node: qb.sd.metrics-monitoring-alerts.points
 type: qa
-step: 4
+step: 10
 ---
 ## Q
-**指标监控与告警平台 · 为什么中间放 Kafka**｜出自：指标监控与告警平台 › 取舍与追问
+**指标监控与告警平台 · 为什么中间放 Kafka**｜追问 · 出自：指标监控与告警平台 › 取舍与追问
 
 指标监控平台里收集器和时序库之间为什么放一层 Kafka？代价是什么？
 

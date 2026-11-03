@@ -2,10 +2,10 @@
 id: hi-pt-date-time-management-6-duration-period
 node: qb.lld.date-time-management.points
 type: qa
-step: 6
+step: 7
 ---
 ## Q
-**日期时间库 · Duration 与 Period 为何分开**｜出自：日期时间库 › 深入 2
+**日期时间库 · Duration 与 Period 为何分开**｜追问 · 出自：日期时间库 › 深入 4
 
 夏令时当天只有 23 或 25 小时。2024 年 3 月 9 日中午加"1 天"和加"24 小时"，结果有何不同？库为什么要把 Duration 和 Period 分开？
 

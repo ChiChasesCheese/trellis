@@ -2,10 +2,10 @@
 id: hi-pt-feature-flag-service-8-eval-order
 node: qb.sd.feature-flag-service.points
 type: qa
-step: 8
+step: 10
 ---
 ## Q
-**功能开关服务 · 规则求值顺序与数据结构**｜出自：功能开关服务 › 深入 2
+**功能开关服务 · 规则求值顺序与数据结构**｜追问 · 出自：功能开关服务 › 深入 4
 
 开关取值时规则按什么顺序匹配？属性缺失怎么处理？规则集在内存里用什么形式才能做到零分配、无锁？
 

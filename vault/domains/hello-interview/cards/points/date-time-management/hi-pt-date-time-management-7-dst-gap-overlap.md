@@ -2,10 +2,10 @@
 id: hi-pt-date-time-management-7-dst-gap-overlap
 node: qb.lld.date-time-management.points
 type: qa
-step: 7
+step: 8
 ---
 ## Q
-**日期时间库 · 夏令时的间隙与重叠**｜出自：日期时间库 › 深入 3
+**日期时间库 · 夏令时的间隙与重叠**｜追问 · 出自：日期时间库 › 深入 5
 
 夏令时拨快时本地时间 02:30 不存在，拨慢时 01:30 出现两次。库应该怎么处理这两种情况？实现上怎么判定？
 

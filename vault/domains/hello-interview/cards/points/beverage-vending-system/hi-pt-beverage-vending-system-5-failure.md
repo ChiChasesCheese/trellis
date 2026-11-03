@@ -2,10 +2,10 @@
 id: hi-pt-beverage-vending-system-5-failure
 node: qb.lld.beverage-vending-system.points
 type: qa
-step: 5
+step: 4
 ---
 ## Q
-**多地点饮品自助售卖系统 · 制作失败与机器离线**｜出自：多地点饮品自助售卖系统 › 深入 2
+**多地点饮品自助售卖系统 · 制作失败与机器离线**｜追问 · 出自：多地点饮品自助售卖系统 › 深入 3
 
 制作失败、机器离线、中心与机器断网，订单、库存、退款各怎么处理？
 

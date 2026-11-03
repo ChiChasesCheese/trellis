@@ -2,10 +2,10 @@
 id: hi-pt-file-sync-system-4-resume-upload
 node: qb.sd.file-sync-system.points
 type: qa
-step: 4
+step: 6
 ---
 ## Q
-**云盘与文件同步系统 · 断点续传**｜出自：云盘与文件同步系统 › 整体设计
+**云盘与文件同步系统 · 断点续传**｜必会 · 出自：云盘与文件同步系统 › 整体设计
 
 客户端在大文件上传中途重启，怎样只补传缺失的部分？未完成的上传怎么清理？
 

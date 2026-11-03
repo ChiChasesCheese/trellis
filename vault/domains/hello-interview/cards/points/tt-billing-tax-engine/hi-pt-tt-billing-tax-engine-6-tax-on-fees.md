@@ -2,10 +2,10 @@
 id: hi-pt-tt-billing-tax-engine-6-tax-on-fees
 node: tt.lld.tt-billing-tax-engine.points
 type: qa
-step: 6
+step: 4
 ---
 ## Q
-**计费与计税引擎 · 税建在费用之上**｜出自：计费与计税引擎 › 整体设计
+**计费与计税引擎 · 税建在费用之上**｜必会 · 出自：计费与计税引擎 › 整体设计
 
 计费引擎里"税算在费用之上"怎么实现，需要特殊逻辑吗？
 
