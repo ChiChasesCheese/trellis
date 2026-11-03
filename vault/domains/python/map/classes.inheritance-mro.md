@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/python/map/classes.pythonic-object|Pythonic 对象：`__init__`、`__repr__`、`__eq__`、`classmethod` vs `staticmethod`]]
 
-**Unlocks:** [[domains/python/map/classes.metaprogramming|类装饰器、`__init_subclass__` 与元类（metaclass）]]
+**Unlocks:** [[domains/python/map/classes.metaprogramming|类装饰器、`__init_subclass__` 与元类（metaclass）]], [[domains/python/map/craft.idioms.init-subclass-registry|__init_subclass__ 注册表 vs 手写 dict（create_cache 的取舍）]], [[domains/python/map/craft.architecture.composition-of-independent-axes|独立变化轴的组合：N×M 个组合只写 N+M 个小类]]
 
 ## Readings
 - [[effective-07-classes-interfaces|Effective Python 3e · 第 7 章 类与接口]]

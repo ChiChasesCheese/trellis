@@ -25,6 +25,8 @@ if ready is None:                       # 剩下的每条都在等别的剩下�
     raise InvalidRuleSet(f"规则依赖成环: {[r.rule_id for r in pending]}")
 ```
 
+以上各题的代码是节选：省略了类型标注、文档字符串和 `...` 处的细节，个别行为讲解而合并成一行，不是逐字摘抄。
+
 **不变的。** 「排不下去 = 有环」这个判据；以及都要在使用图之前拒绝，而不是执行到一半才发现。**变化的。** 规则只有十来条时，反复扫 `pending` 找下一条能跑的，比维护入度更短、顺序天然稳定（保留输入顺序）；节点成千上万时，必须上入度和堆。
 
 **见于。** course-schedule-ii、amz-dag-runner、spreadsheet-engine、billing-tax-engine、amz-linux-find。

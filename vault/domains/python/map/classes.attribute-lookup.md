@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/python/map/classes.pythonic-object|Pythonic 对象：`__init__`、`__repr__`、`__eq__`、`classmethod` vs `staticmethod`]]
 
-**Unlocks:** [[domains/python/map/classes.properties-descriptors|`property` 与描述符协议（`__get__`/`__set__`/`__set_name__`）]]
+**Unlocks:** [[domains/python/map/classes.properties-descriptors|`property` 与描述符协议（`__get__`/`__set__`/`__set_name__`）]], [[domains/python/map/craft.idioms.descriptors-where-they-earn|描述符：什么时候值得（共享字段规则），什么时候不值得]]
 
 ## Readings
 - [[effective-08-metaclasses-attributes|Effective Python 3e · 第 8 章 元类与属性]]

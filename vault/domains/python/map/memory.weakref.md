@@ -8,6 +8,8 @@
 
 **Requires:** [[domains/python/map/memory.refcounting|引用计数：`ob_refcnt`、即时释放与 `sys.getrefcount`]]
 
+**Unlocks:** [[domains/python/map/craft.patterns.bounded-containers-every-dict-has-an-exit|每个只增不减的容器都要有出口：purge / sweep / compact / maxlen]]
+
 ## Readings
 - [[fluent-06-references-mutability|Fluent Python 2e · 第 6 章 对象引用、可变性与垃圾回收]]
 - [[pydocs-weakref-module|weakref 模块：弱引用]]

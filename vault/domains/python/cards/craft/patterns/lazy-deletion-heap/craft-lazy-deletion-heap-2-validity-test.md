@@ -26,6 +26,8 @@ if entry.status is Status.ACTIVE and entry.expires_at == at:
 self._heap = [e for e in self._heap if e[2] is not _REMOVED]
 ```
 
+以上各题的代码是节选：省略了类型标注、文档字符串和 `...` 处的细节，个别行为讲解而合并成一行，不是逐字摘抄。
+
 预留在 t=10 到期，t=5 延期到 100，到 t=10 时弹出旧条目：
 
 ```

@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/python/map/functions.scope-closure|作用域（LEGB）、闭包与 `nonlocal`]]
 
-**Unlocks:** [[domains/python/map/functions.decorator-patterns|带参数的装饰器、类装饰器与常见实例（retry、memoize、timing、rate limit）]], [[domains/python/map/functions.functools|`functools`：`lru_cache`、`partial`、`singledispatch`、`cached_property`]]
+**Unlocks:** [[domains/python/map/functions.decorator-patterns|带参数的装饰器、类装饰器与常见实例（retry、memoize、timing、rate limit）]], [[domains/python/map/functions.functools|`functools`：`lru_cache`、`partial`、`singledispatch`、`cached_property`]], [[domains/python/map/craft.idioms.decorators-for-cross-cutting-locks|装饰器做横切关注点：@_synchronized / @_op 与 functools.wraps]]
 
 ## Readings
 - [[effective-05-functions|Effective Python 3e · 第 5 章 函数]]

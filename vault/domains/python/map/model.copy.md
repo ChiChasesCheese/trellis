@@ -8,6 +8,8 @@
 
 **Requires:** [[domains/python/map/model.mutability|可变与不可变对象：list vs tuple、可变默认参数、别名（aliasing）]]
 
+**Unlocks:** [[domains/python/map/craft.patterns.dry-run-on-a-copy|在副本上试运行：预测与实际共用同一份逻辑]], [[domains/python/map/craft.idioms.read-only-views-and-snapshots|只读视图与快照返回（MappingProxyType / tuple / frozenset）]], [[domains/python/map/craft.idioms.copy-in-copy-out|边界拷贝：进来拷、出去拷（deepcopy / tuple / 回放式 copy）]]
+
 ## Readings
 - [[fluent-06-references-mutability|Fluent Python 2e · 第 6 章 对象引用、可变性与垃圾回收]]
 - [[pydocs-copy-module|copy 模块：浅拷贝与深拷贝]]

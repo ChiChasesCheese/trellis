@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/python/map/concurrency.threads|线程：`threading.Thread`、守护线程与线程适用的场景]], [[domains/python/map/concurrency.multiprocessing|多进程：`multiprocessing`、fork vs spawn、pickle 边界与共享内存]]
 
-**Unlocks:** [[domains/python/map/concurrency.choosing|选型：I/O 密集 vs CPU 密集、线程 / 进程 / asyncio 的决策树]], [[domains/python/map/asyncio.blocking-and-threads|阻塞调用与线程的交界：`to_thread`、`run_in_executor`、`run_coroutine_threadsafe`]]
+**Unlocks:** [[domains/python/map/concurrency.choosing|选型：I/O 密集 vs CPU 密集、线程 / 进程 / asyncio 的决策树]], [[domains/python/map/asyncio.blocking-and-threads|阻塞调用与线程的交界：`to_thread`、`run_in_executor`、`run_coroutine_threadsafe`]], [[domains/python/map/craft.patterns.single-flight-coalescing|单飞/请求合并：同一件事只做一次，后到者等结果]]
 
 ## Readings
 - [[effective-09-concurrency-parallelism|Effective Python 3e · 第 9 章 并发与并行]]

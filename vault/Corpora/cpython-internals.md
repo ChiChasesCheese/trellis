@@ -4,7 +4,7 @@
 CPython core developers · free-online · [[Python MOC|Python]]
 [Home ↗](https://github.com/python/cpython/tree/main/InternalDocs)
 
-16 sections · 13 readings · 81 cards · 16/79 leaves reached
+16 sections · 13 readings · 81 cards · 16/169 leaves reached
 
 ## Outline
 - CPython InternalDocs — *skipped*
@@ -24,7 +24,7 @@ CPython core developers · free-online · [[Python MOC|Python]]
 - **List Sort Algorithm (Timsort)** — [[cpy-timsort|Timsort：为什么 list.sort() 对“已经有点顺序”的数据特别快]] → [[performance.containers|内建容器的性能：list 追加/插入、dict/set 查找、deque 与 bisect]] · 6 cards
 - **Dict Implementation Notes** — [[cpy-dict-notes|dict 的键值分离设计：为什么同一个类的实例能共享一张键表]] → [[model.dict-set-internals|dict 与 set 的实现：哈希表、开放寻址、紧凑布局与插入序]], [[memory.object-size|对象的真实大小：`sys.getsizeof`、`__slots__`、int/str/list 的开销]] · 11 cards
 
-## Leaves this corpus never reached (63)
+## Leaves this corpus never reached (153)
 Your reading list: the map says these exist and the book does not teach them.
 - [[model.mutability|可变与不可变对象：list vs tuple、可变默认参数、别名（aliasing）]] — 掌握可变性如何决定函数参数的副作用、`def f(x, acc=[])` 为什么共享状态、tuple 为什么能做字典键，以及 `+=` 在两类对象上的不同行为。
 - [[model.copy|浅拷贝、深拷贝与切片复制]] — 理解 `copy.copy`、切片、`list()` 只复制一层，`copy.deepcopy` 递归复制并处理环，以及什么时候别名反而是想要的。
@@ -89,6 +89,96 @@ Your reading list: the map says these exist and the book does not teach them.
 - [[engineering.packaging-env|依赖与环境：虚拟环境、`pyproject.toml`、锁文件与 uv/pip]] — 掌握隔离环境为何必要、`pyproject.toml` 作为单一配置源、锁文件保证可复现，以及 `python -m` 运行模块的好处。
 - [[engineering.serialization|序列化：`json`、`pickle` 的安全与版本、`copyreg` 与 dataclass 的转换]] — 理解 pickle 可执行任意代码故不可反序列化不可信数据、类改名后旧 pickle 失效的处理、json 与 Decimal/datetime 的自定义编码。
 - [[engineering.logging-config|日志与配置：logging 层级、处理器与格式、结构化日志、环境变量配置]] — 掌握 logger 的层级传播、每个模块 `getLogger(__name__)`、处理器与格式器分离、在库里不配置根 logger，以及配置从环境变量/文件读取的模式。
+- [[craft.patterns.validate-then-commit|先校验后提交：失败不留痕迹（validate-then-commit）]] — 所有可能失败的检查排在任何写入之前；提交段只做「不会再失败」的赋值。
+- [[craft.patterns.atomic-claim-check-then-act|原子占位：检查与占用在同一个临界区（claim, not check-then-act）]] — 「先查空闲再写占用」永远有竞态；把查和占合成一个锁内的比较并交换，输家得到明确的失败。
+- [[craft.patterns.idempotency-key-stores-result|幂等键存结果：占位 → 执行 → 保存，重复请求拿到第一次的结果]] — 用 (调用方, 键) 原子地占一条记录；重复请求等拥有者出结果，原样返回；同键不同内容报错；失败要释放。
+- [[craft.patterns.notify-outside-the-lock|锁内记事件、锁外派发（collect under lock, dispatch outside）]] — 状态变化在锁内完成并记录事件；回调订阅者在释放锁之后。慢订阅者或回头调用本对象的订阅者就不会死锁。
+- [[craft.patterns.external-call-outside-the-lock|外部调用不持锁：占位 → 调用 → 提交（claim, call, commit）]] — 慢 IO（支付、风控、回源、下游服务）永远在锁外；前后两段持锁，中间用租约/占位保证窗口内不被抢。
+- [[craft.patterns.transition-table-state-machine|转移表状态机：把「哪个状态能去哪」写成数据（State machine as a table）]] — 合法转移是一张表，非法转移统一拒绝；表有三种编码，守卫（数据够不够）与转移（流程合不合法）分开。
+- [[craft.patterns.injected-clock-three-forms|注入时钟的三种形态：Clock 参数 / 时间戳参数 / tick 步进]] — 逻辑里永远不读系统时间：要么构造时注入 clock，要么每个方法收 timestamp，要么由测试推进离散 tick。
+- [[craft.patterns.append-only-log-derived-state|只追加日志 + 派生状态：事实不可变，余额/视图可重算（event-sourced state）]] — 只存事实（分录、事件、时间点），余额、剩余额度、人数、应付金额都从事实现算或随写入同步更新。
+- [[craft.patterns.lazy-expiry-settle-on-access|惰性过期：每次访问先结清，不起后台线程（settle on access）]] — 过期不靠定时器：每个公开操作开头先把已到点的东西结清，读到的数字永远已经算过期。
+- [[craft.patterns.lazy-deletion-heap|惰性删除堆：墓碑 + 压实（lazy deletion with tombstones and compaction）]] — 堆不能删中间元素：作废的条目留在堆里，弹出时发现无效就丢；墓碑过多时一次性压实重建。
+- [[craft.patterns.generation-token-stale-detection|代号/版本令牌：识别并拒绝迟到的旧结果（generation token / fencing）]] — 每次状态转换让代号加一；许可带着领取时的代号，回报时代号不一致就只计数、不改状态。
+- [[craft.patterns.hash-map-plus-ordered-structure|哈希表 + 有序结构：O(1) 定位，O(log n) 或 O(1) 取序]] — dict 管「按 key 找到」，另一个结构（链表、堆、有序列表、dict 插入序）管「按顺序取下一个」，两者同步增删。
+- [[craft.patterns.condition-wait-predicate-loop|条件变量：谓词 while 循环 + 精确通知（Condition wait loop）]] — 等待永远写成 `while 谓词不成立: cond.wait()`；两类等待者各配一个 Condition；超时用绝对截止时间。
+- [[craft.patterns.ordered-multi-lock-acquisition|按全局固定顺序拿多把锁（lock ordering）]] — 需要同时持有多把锁时，按稳定的全局顺序（账户 id、实例 key）进入，不按参数顺序。
+- [[craft.patterns.per-key-and-sharded-locks|每个对象一把锁与分片锁：把竞争限制在真正冲突的范围]] — 全局锁只用于查表；每局/每场次/每航班实例持有自己的锁。key 数量巨大时用固定数量的分片锁。
+- [[craft.patterns.immutable-snapshot-publish|不可变快照 + 整体替换发布（copy-on-write publish）]] — 读者拿一次引用，之后读到的是完整的某一版；写者在锁里造新快照再换引用。读路径不加锁。
+- [[craft.patterns.reserve-hold-confirm-with-ttl|预留—确认—过期：带 TTL 的持有（hold / confirm / expire）]] — 先占住库存但不扣减（持有），在期限内确认才真正扣，否则自动放回；预留的每一步都只是在两个数上做加减。
+- [[craft.patterns.saga-idempotent-compensation|Saga 与幂等补偿：反向撤销，补偿不能失败也不能重复生效]] — 跨多个会失败参与方的操作：逐步执行，失败时对失败步和之前所有步按逆序补偿；补偿必须幂等。
+- [[craft.patterns.dry-run-on-a-copy|在副本上试运行：预测与实际共用同一份逻辑]] — 要预测或验证一次改动，就把状态复制一份，用与真实路径相同的函数跑一遍；通过才替换真实状态。
+- [[craft.patterns.dependency-graph-cycle-detection|依赖图与环检测：拓扑排序、可达性、祖先链]] — 依赖关系都是图：Kahn 算法给出执行序并报出具体的环；改动前用可达性拒绝成环的赋值；遍历时用祖先链检测环。
+- [[craft.patterns.recursive-descent-parsing|递归下降解析：优先级 = 调用层次，分词与求值分离]] — 词法（正则切 token）→ 语法（每个优先级一个函数，低优先级先调用）→ 语法树（frozen 节点）→ 求值。
+- [[craft.patterns.rule-chain-pipeline|规则链/流水线：统一接口，引擎只负责按序跑]] — 每个步骤/规则/折扣实现同一个小接口；引擎遍历、钳位、记账；加新规则不改引擎。
+- [[craft.patterns.policy-seam|策略接缝：把会变的规则做成注入的纯函数/对象]] — 核心流程固定，变化点（超售、涨价、匹配、淘汰、找零、叠加）在构造时注入；默认值是策略的下界。
+- [[craft.patterns.effective-dated-versions|生效时间版本表：按事件发生时刻取规则（effective-dated lookup）]] — 规则/价格/政策按生效时间排成升序版本；用事件时间二分取版本，而不是当前配置，历史交易可精确重算。
+- [[craft.patterns.single-flight-coalescing|单飞/请求合并：同一件事只做一次，后到者等结果]] — 热点 key 同时未命中时只回源一次；重复请求并入第一个请求；占了坑但没结果时返回「进行中」。
+- [[craft.patterns.bounded-containers-every-dict-has-an-exit|每个只增不减的容器都要有出口：purge / sweep / compact / maxlen]] — 任何随 key 数、请求数增长的容器都要有回收机制和可观测的大小指标，否则是保证会发生的 OOM。
+- [[craft.patterns.backpressure-overflow-policy|背压与溢出策略：丢最旧 / 阻塞 / 拒绝，必须当场选并可观测]] — 有界队列满了怎么办是一等设计决策：丢弃（要计数）、阻塞（反压上游）、拒绝（让调用方决定）。
+- [[craft.patterns.retry-backoff-dead-letter|重试、退避与死信：可靠性写一份，渠道只管怎么发]] — 区分可重试与不可重试；指数退避带上限；重试用尽进死信；订阅者的故障不能拖垮发布者。
+- [[craft.patterns.derived-not-stored|派生状态不存储：算出来，不要存一份第二真相]] — 能从事实算出来的就算：sunk = len(hits) == len(cells)、started_at 从状态轨迹读、车辆位置从行程链算。
+- [[craft.patterns.conservation-invariant-reconcile|守恒不变量与对账：总和恒为零、钞票守恒、缓存可核对]] — 把「钱/货只搬运不产生」写成可随时验证的函数；缓存（余额）与真相（账本）之间有 reconcile。
+- [[craft.patterns.make-unmake-undo-log|可逆变更：make/unmake、撤销日志、Edit.invert]] — 每次真正改动之前记下「怎么变回去」：撤销闭包栈（kv-store）、对调字段的逆操作（text-editor）、落子/撤子（connect-four、chess）。
+- [[craft.patterns.boundary-slicing-and-marginal-tiers|边界切分与边际阶梯：沿规则变化点切段，每段单价固定]] — 阶梯价只对落在本档的那部分收本档的价；跨高峰/跨日的区间在边界处切开，各算各的，最后一次取整。
+- [[craft.patterns.prefix-sum-bisect-timeline|前缀和 + 二分：把「某一时刻/某一站的累计值」变成 O(log n)/O(1)]] — 事件只追加，所以累计值数组也只追加；查询用 bisect 找位置，再读前缀。
+- [[craft.patterns.predicate-algebra-three-valued|谓词代数与三值逻辑：可组合的小对象 + NULL 传播]] — 每个条件是一个只会 matches(row) 的小对象；& | ~ 组合；NULL 参与的比较是「未知」，只留结果为 True 的行。
+- [[craft.patterns.deterministic-tie-break|确定性 tie-break：排序键里写全规则，输出可复现]] — 所有「选一个」的地方都把平局规则写进键：(-可售数, 仓库名)、(容量, 桌号)、(到期时间, 发放时间, id)、首次出现序号。
+- [[craft.patterns.half-open-intervals|区间一律左闭右开：[start, end)]] — 时间窗口、入住日期、到期时刻都用半开区间：相邻区间首尾相接不重叠，到点即过期。
+- [[craft.idioms.frozen-value-objects|不可变值对象（frozen + slots dataclass as value object）]] — 事件、配置、快照、键都写成 @dataclass(frozen=True, slots=True)：免费得到 ==、hash 和只读。
+- [[craft.idioms.exception-family|异常家族：基类 + 多重继承 + 携带数据（typed errors）]] — 每个模块一个基类；再混入 ValueError/LookupError/KeyError 保持标准库兼容；异常带字段，不让调用方去解析消息。
+- [[craft.idioms.protocol-callable-abc|策略接口三选一：Callable / Protocol / ABC]] — 只有一个行为用函数别名；多方法但不共享代码用 Protocol；共享算法骨架或操作符混入才用 ABC。
+- [[craft.idioms.validated-construction|构造即校验与规范化（__post_init__ + object.__setattr__）]] — 让「存在的实例一定合法」：校验和规范化放进构造，下游不再重复检查。
+- [[craft.idioms.read-only-views-and-snapshots|只读视图与快照返回（MappingProxyType / tuple / frozenset）]] — 内部容器永不外交：对外给 tuple 快照或只读视图，模块级常量表用 MappingProxyType 包住。
+- [[craft.idioms.context-managers-for-invariants|上下文管理器守不变量：@contextmanager 与 ExitStack]] — 把「获取—使用—善后」写成 with：每个出口都做对的收尾，调用方不用记得 try/finally。
+- [[craft.idioms.heapq-tuple-ordering|heapq 的元组序与 tie-break：计数器、负号、dataclass(order=True)]] — 堆元素是 (主键, 次键, 序号, 载荷)：序号保证稳定与不比较载荷，负号做大顶堆，None 要包一层。
+- [[craft.idioms.event-wait-and-handoff|Event / Condition 的惯用法：中断式睡眠、结果交接、截止时间]] — Event.wait(interval) 当可中断的 sleep；一次性结果交接用 Event；等待永远写 while 谓词 + 剩余时间。
+- [[craft.idioms.money-types|金额类型选型：整数分 / 基点 / Decimal / Fraction]] — 钱不用 float：整数最小单位做存储，比例用整数基点，需要精确中间值时用 Decimal 或 Fraction。
+- [[craft.idioms.round-once-at-the-boundary|取整点：Decimal.quantize、ROUND_HALF_EVEN 与整数四舍五入]] — 全精度算到最后一步，在唯一的取整函数里舍入一次；知道各舍入模式的差别。
+- [[craft.idioms.time-types|时间类型选型：monotonic / aware datetime / 整数时间戳]] — 持续时间与租约用 monotonic；日历、账单、静默时段用带时区的 datetime；纯逻辑用调用方给的整数时间戳。
+- [[craft.idioms.match-structural|结构化模式匹配：对 dataclass 与枚举的 match / case]] — 用 case Bin(op, l, r)、case Grant() 一行完成「判类型 + 取字段」，每个分支一条规则。
+- [[craft.idioms.exhaustive-match-assert-never|穷尽性：match 加 assert_never（解法没用，应该用）]] — 所有 match/if-elif 都没有穷尽性保护；加一个新枚举成员时，漏处理的分支会静默通过。
+- [[craft.idioms.replace-for-state-change|用 dataclasses.replace 整体替换，而不是原地改（immutable record swap）]] — 状态变化 = 造新对象换进字典；交出去的旧快照永远不变，「检查再替换」可以做成锁内比较并交换。
+- [[craft.idioms.decorators-for-cross-cutting-locks|装饰器做横切关注点：@_synchronized / @_op 与 functools.wraps]] — 整个方法体都是临界区时，把锁（和「先结清过期」）写在方法头的装饰器里，不会漏一个方法。
+- [[craft.idioms.bisect-sorted-lists|bisect 与有序列表：floor/ceiling、key=、只查邻居]] — 有序列表 + bisect 回答「最后一个 ≤ x」「第一个 ≥ x」；key= 参数省掉并行列表；区间冲突只需检查两个邻居。
+- [[craft.idioms.generators-lazy-traversal|生成器管线与显式栈：惰性遍历 + pairwise / islice]] — 遍历写成 yield 的生成器，用显式栈替代递归：取第一个结果不必走完整棵树，深目录不撞递归上限。
+- [[craft.idioms.default-forms|省掉标志变量：next(…, None) / min(default=) / for-else / 海象运算符]] — 用带默认值的内置函数表达「找不到」，用 for-else 表达「没 break」，用 := 表达「取值并判断」。
+- [[craft.idioms.closure-factory-policies|闭包工厂做策略（closure factory）]] — 工厂函数接收配置、返回策略函数：配置只处理一次，调用时只剩纯计算。
+- [[craft.idioms.enum-behaviour|Enum 的行为：IntEnum 排序、属性、StrEnum 与生命周期顺序]] — IntEnum 让优先级/严重度/舱位可以直接比较；Enum 上挂 @property 代替每个状态一个子类。
+- [[craft.idioms.id-generation|ID 生成：itertools.count、next 与生成器表达式的陷阱]] — 用 next(itertools.count(1)) 生成单调 ID；不要把它包进生成器表达式在锁外共享。
+- [[craft.idioms.dunder-protocols-that-pay|值得写的特殊方法：__bool__ / __len__ / __contains__ / __and__ / __call__ / __enter__]] — 只在它让调用点更自然或让升级无感时才写：Decision 的 __bool__、Filter 的 & | ~、观察者的 __call__。
+- [[craft.idioms.sentinels|哨兵值：object()、math.inf、毒丸与「None 是合法值」]] — 当 None 本身是合法取值时，用模块级 object() 或枚举单例做哨兵；队列里的哨兵任务叫毒丸。
+- [[craft.idioms.dispatch-tables|数据驱动的分派表：operator 表、方向表、转换表]] — 把「若干 if 分支」写成 dict：_OPS、_DIRECTIONS、TRANSITIONS、CANCELLABLE_BY、PolicyTable.overrides。
+- [[craft.idioms.bounded-deque|deque(maxlen) 做有界历史；list 头部删除是 O(n)]] — 死信、通知历史、失败记录、滑动窗口都用 deque(maxlen=N)：自动淘汰最旧，内存有上界。
+- [[craft.idioms.copy-in-copy-out|边界拷贝：进来拷、出去拷（deepcopy / tuple / 回放式 copy）]] — 可变数据穿过边界时拷贝一次：Table.insert 存副本，select 返回副本；Game.copy 用落子序列回放。
+- [[craft.idioms.memoize-on-frozen|记忆化：lru_cache 要求参数可哈希、结果不可变]] — query-condition-parser 把「条件字符串 → 语法树」用 lru_cache 缓存；之所以安全，是因为树节点全是 frozen。
+- [[craft.idioms.kw-only-positional-only|参数形态：仅位置 `/`、仅关键字 `*`、kw_only dataclass]] — 尾随 **kwargs 收用户数据的 API，前面的形参应是仅位置的；一串同类型的配置参数应是仅关键字的。
+- [[craft.idioms.slots-and-memory|__slots__ 与 slots=True：该用在哪、不能用在哪]] — 大量小对象（节点、记录）用 slots 省掉 __dict__；内部可变记录和对外冻结值对象都可以 slots。
+- [[craft.idioms.namedtuple-for-keys|NamedTuple 做复合键与轻量返回值]] — 需要「仍是 tuple（可作键、可拆包、可比较）但字段有名字」时用 NamedTuple；需要校验或方法时用 dataclass。
+- [[craft.idioms.literal-and-closed-sets|封闭取值集：Literal / Enum / StrEnum 的选型]] — status 只有两个取值时 Literal 足够；要遍历、带行为、做键时用 Enum；要 JSON 友好用 StrEnum。
+- [[craft.idioms.generics-and-type-aliases|泛型与类型别名：Generic/TypeVar、Clock 别名、Self 与 override]] — 容器类参数化键值类型；把 Clock = Callable[[], X] 之类的别名统一；copy()/__enter__ 返回 Self；模板方法钩子标 @override。
+- [[craft.idioms.descriptors-where-they-earn|描述符：什么时候值得（共享字段规则），什么时候不值得]] — 同一条字段规则（正整数、非空、范围）在三个以上的类里重复时，才值得写一个 __set_name__ 描述符。
+- [[craft.idioms.init-subclass-registry|__init_subclass__ 注册表 vs 手写 dict（create_cache 的取舍）]] — 按名字创建实现（'lru'、'file'）时，注册表可以靠 __init_subclass__ 自动维护，也可以手写一个 dict。
+- [[craft.architecture.functional-core-imperative-shell|函数式核心 + 命令式外壳（functional core, imperative shell）]] — 决策逻辑写成不读实例状态的纯函数；有状态的外壳负责加锁、取时间、改真实状态、发通知。
+- [[craft.architecture.lock-lives-with-the-invariant|锁跟着不变量走：谁拥有不变量，谁拥有锁（aggregate owns its lock）]] — 一个不变量涉及哪些数据，就把它们放进同一个对象并由同一把锁保护；服务层只保护目录。
+- [[craft.architecture.lock-as-transaction-boundary|一把锁就是一个事务：临界区边界 = 原子性边界]] — 单进程里，一把锁圈住的区间就是数据库事务的替身：检查、修改、写日志要么都在里面，要么都不在。
+- [[craft.architecture.dependency-direction-consumer-owns-interface|依赖方向：接口由使用方定义，核心不依赖基础设施]] — Watcher 定义自己需要的 FileSystem.scan；业务核心不 import 磁盘/网络/时间；基础设施去适配核心。
+- [[craft.architecture.source-of-truth-and-derived-caches|真相与派生缓存：谁是真相、谁是投影、漂移怎么办]] — 每份数据只能有一个真相来源；其余是可重建的投影，投影与真相之间要有核对手段。
+- [[craft.architecture.interface-only-when-earned|接口是挣来的：什么时候不抽象]] — 只有一个实现、一个方法、想不出第二种的地方，不抽接口、不加抽象基类；真有两种行为不同的实现才抽。
+- [[craft.architecture.entity-vs-value-object|实体 vs 值对象：身份、可变性与谁拥有状态]] — 有身份、有生命周期、被锁保护的是实体；只由属性定义、可以随便共享的是值。同一个现实物件常常要拆成两半。
+- [[craft.architecture.error-boundaries-and-failure-taxonomy|错误边界与失败分类：哪些吞、哪些抛、哪些变成值]] — 订阅者/回调的异常在边界处隔离；业务拒绝变成带原因的值；可重试与不可重试分类；补偿失败不能被吞。
+- [[craft.architecture.seams-for-testing|测试接缝：时钟、文件系统、sleep、可观测计数器]] — 设计时就把「可替换的外部依赖」和「可断言的内部状态」留成接缝，让测试不需要 sleep、不需要猜、不需要私有属性。
+- [[craft.architecture.in-process-to-distributed|从单进程到分布式：每个原语在生产里换成什么]] — 锁、Condition、堆、字典、日志、时钟，各自在分布式里有对应物；哪些保证会丢，用什么补。
+- [[craft.architecture.event-time-vs-processing-time|事件时间 vs 处理时间：乱序、重复、迟到的事实]] — 用事件发生的时间做所有计算，处理时间永远不进业务逻辑；乱序和重复靠存事实 + 重放吸收。
+- [[craft.architecture.order-side-effects-by-reversibility|按可逆性给副作用排序：先做会失败的、可回滚的，最后做不可撤销的]] — 多步操作的顺序不是随意的：把最可能失败、最容易撤销的放前面，把无法撤销（出钞、发货、通知）的放最后。
+- [[craft.architecture.thin-service-fat-domain|服务层薄、领域对象厚：编排者不持有不变量]] — Service/Facade 管目录、算钱、走生命周期、串步骤；库存、座位、订单簿这类带不变量的状态在领域对象里。
+- [[craft.architecture.lock-hierarchy-and-reentrancy|调用方向与可重入：谁能调谁，回调时手里不能有锁]] — 整个调用图画成单向的层次：服务→池→对象，下层从不回调上层；观察者永远在锁外被调用。
+- [[craft.architecture.command-event-fact|命令、事件与事实：过去式、自带全部信息、不可变]] — 命令是请求（可被拒绝）；事件是已发生的事实（不可变、过去式、自带上下文）；订阅者永远不需要回头问现状。
+- [[craft.architecture.extension-points-worth-paying-for|扩展点值得付费的地方：数据代替代码、从第一天就预留的字段]] — 「加第 N 关不改老代码」是设计质量的检验：把会变的东西做成数据（菜单、政策表），把未来要用的维度从第一天放进数据结构。
+- [[craft.architecture.unit-of-inventory-modeling|库存的单位怎么选：房型夜、车的行程段、场次座位、航班实例]] — 先问「到底是什么被卖掉了」。选对库存单位，并发、超卖、异地还车、改签都变成这个单位上的同一个不变量。
+- [[craft.architecture.composition-of-independent-axes|独立变化轴的组合：N×M 个组合只写 N+M 个小类]] — 先找出互相独立的变化方向，每个方向一个接口，互不引用；用配置把名字翻译成对象。
+- [[craft.architecture.explicit-non-goals-and-simplifications|明说的简化与非目标：说清楚没做什么、接缝在哪]] — 每个解法的文件头都应说明刻意没做的部分和换成真实版本时只动哪里。这是 senior 与 mid 在面试里最明显的差别。
+- [[craft.architecture.observability-as-design|可观测性是设计的一部分：丢弃必须计数，状态变化必须留痕]] — 任何会丢、会拒、会重试、会降级的地方都要有计数或事件，否则线上只能靠猜。
 %% trellis:end %%
 
 ## Notes

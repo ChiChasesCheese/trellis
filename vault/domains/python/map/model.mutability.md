@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/python/map/model.names-objects|名字绑定、对象身份与 `is` vs `==`]]
 
-**Unlocks:** [[domains/python/map/model.copy|浅拷贝、深拷贝与切片复制]], [[domains/python/map/model.sequences|序列类型：list、tuple、array、memoryview 与切片语义]], [[domains/python/map/functions.arguments|参数传递：`*args`/`**kwargs`、仅关键字与仅位置参数、默认值求值时机]]
+**Unlocks:** [[domains/python/map/model.copy|浅拷贝、深拷贝与切片复制]], [[domains/python/map/model.sequences|序列类型：list、tuple、array、memoryview 与切片语义]], [[domains/python/map/functions.arguments|参数传递：`*args`/`**kwargs`、仅关键字与仅位置参数、默认值求值时机]], [[domains/python/map/craft.patterns.immutable-snapshot-publish|不可变快照 + 整体替换发布（copy-on-write publish）]], [[domains/python/map/craft.idioms.frozen-value-objects|不可变值对象（frozen + slots dataclass as value object）]], [[domains/python/map/craft.idioms.read-only-views-and-snapshots|只读视图与快照返回（MappingProxyType / tuple / frozenset）]], [[domains/python/map/craft.idioms.replace-for-state-change|用 dataclasses.replace 整体替换，而不是原地改（immutable record swap）]], [[domains/python/map/craft.idioms.copy-in-copy-out|边界拷贝：进来拷、出去拷（deepcopy / tuple / 回放式 copy）]], [[domains/python/map/craft.architecture.source-of-truth-and-derived-caches|真相与派生缓存：谁是真相、谁是投影、漂移怎么办]]
 
 ## Readings
 - [[fluent-06-references-mutability|Fluent Python 2e · 第 6 章 对象引用、可变性与垃圾回收]]

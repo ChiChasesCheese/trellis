@@ -6,7 +6,7 @@
 
 **Requires:** [[domains/python/map/types.basics|类型提示基础：`Optional`、`Union`/`|`、泛型容器与运行时零约束]]
 
-**Unlocks:** [[domains/python/map/types.protocols-generics|`Protocol`、`TypeVar`、`ParamSpec` 与泛型类]]
+**Unlocks:** [[domains/python/map/types.protocols-generics|`Protocol`、`TypeVar`、`ParamSpec` 与泛型类]], [[domains/python/map/craft.idioms.exhaustive-match-assert-never|穷尽性：match 加 assert_never（解法没用，应该用）]], [[domains/python/map/craft.idioms.generics-and-type-aliases|泛型与类型别名：Generic/TypeVar、Clock 别名、Self 与 override]]
 
 ## Readings
 - [[effective-14-collaboration|Effective Python 3e · 第 14 章 协作]]

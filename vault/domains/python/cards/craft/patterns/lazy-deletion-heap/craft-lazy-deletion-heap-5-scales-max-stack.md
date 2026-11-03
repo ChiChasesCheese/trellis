@@ -5,7 +5,7 @@ type: qa
 step: 5
 ---
 ## Q
-**惰性删除堆 · 从 Max Stack 到延迟队列和 LSM 树**｜架构
+**惰性删除堆 · 从 Max Stack 到延迟队列和 LSM 树**｜模式
 
 LeetCode 的 Max Stack 要支持 `popMax`（删掉最大值，且是最近的那个）。栈和堆里各存一份元素时，删除怎么做？同样的想法在延迟队列和存储引擎里叫什么？
 

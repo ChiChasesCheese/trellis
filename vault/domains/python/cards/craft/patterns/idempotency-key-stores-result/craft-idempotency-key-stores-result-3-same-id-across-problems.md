@@ -37,6 +37,8 @@ if old is not None:
     return                              # 结果 = 无
 ```
 
+以上各题的代码是节选：省略了类型标注、文档字符串和 `...` 处的细节，个别行为讲解而合并成一行，不是逐字摘抄。
+
 判重所以便宜，因为数据对象是冻结的值对象：`old != new` 一个运算符就完成「内容是否相同」。
 
 **见于。** idempotent-transfer、digital-wallet、double-entry-ledger、notification-service、amz-aws-billing、credit-token-balance。

@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/python/map/model.dunder-protocols|特殊方法与语言协议：`__repr__`、`__len__`、`__getitem__`、`__call__`]]
 
-**Unlocks:** [[domains/python/map/classes.dataclasses|`dataclass`、`NamedTuple` 与 `__slots__`]], [[domains/python/map/classes.attribute-lookup|属性查找：实例字典、类字典、`__getattr__` 与 `__getattribute__`]], [[domains/python/map/classes.abc-protocols|鸭子类型、抽象基类（ABC）与 `typing.Protocol`]], [[domains/python/map/classes.inheritance-mro|继承、多重继承、MRO（C3 线性化）与 `super()`]]
+**Unlocks:** [[domains/python/map/classes.dataclasses|`dataclass`、`NamedTuple` 与 `__slots__`]], [[domains/python/map/classes.attribute-lookup|属性查找：实例字典、类字典、`__getattr__` 与 `__getattribute__`]], [[domains/python/map/classes.abc-protocols|鸭子类型、抽象基类（ABC）与 `typing.Protocol`]], [[domains/python/map/classes.inheritance-mro|继承、多重继承、MRO（C3 线性化）与 `super()`]], [[domains/python/map/craft.patterns.derived-not-stored|派生状态不存储：算出来，不要存一份第二真相]], [[domains/python/map/craft.idioms.validated-construction|构造即校验与规范化（__post_init__ + object.__setattr__）]], [[domains/python/map/craft.idioms.dunder-protocols-that-pay|值得写的特殊方法：__bool__ / __len__ / __contains__ / __and__ / __call__ / __enter__]], [[domains/python/map/craft.architecture.thin-service-fat-domain|服务层薄、领域对象厚：编排者不持有不变量]]
 
 ## Readings
 - [[effective-07-classes-interfaces|Effective Python 3e · 第 7 章 类与接口]]

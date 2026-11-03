@@ -6,7 +6,7 @@
 
 **Core** — part of the first pass through this subject.
 
-**Unlocks:** [[domains/python/map/types.gradual-typing|渐进类型（gradual typing）、`Any` 与 mypy/pyright 的检查模型]], [[domains/python/map/types.typeddict-literal|`TypedDict`、`Literal`、`NewType` 与 dataclass 注解]]
+**Unlocks:** [[domains/python/map/types.gradual-typing|渐进类型（gradual typing）、`Any` 与 mypy/pyright 的检查模型]], [[domains/python/map/types.typeddict-literal|`TypedDict`、`Literal`、`NewType` 与 dataclass 注解]], [[domains/python/map/craft.idioms.generics-and-type-aliases|泛型与类型别名：Generic/TypeVar、Clock 别名、Self 与 override]]
 
 ## Readings
 - [[fluent-08-type-hints-functions|Fluent Python 2e · 第 8 章 函数中的类型提示]]

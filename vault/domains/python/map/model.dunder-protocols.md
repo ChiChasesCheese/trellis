@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/python/map/model.names-objects|名字绑定、对象身份与 `is` vs `==`]]
 
-**Unlocks:** [[domains/python/map/model.hash-eq|`__hash__` 与 `__eq__` 的契约]], [[domains/python/map/iteration.iterator-protocol|可迭代对象与迭代器：`__iter__`、`__next__`、`StopIteration`]], [[domains/python/map/classes.pythonic-object|Pythonic 对象：`__init__`、`__repr__`、`__eq__`、`classmethod` vs `staticmethod`]], [[domains/python/map/classes.operator-overloading|运算符重载：`__add__`/`__radd__`、就地运算符与比较运算]]
+**Unlocks:** [[domains/python/map/model.hash-eq|`__hash__` 与 `__eq__` 的契约]], [[domains/python/map/iteration.iterator-protocol|可迭代对象与迭代器：`__iter__`、`__next__`、`StopIteration`]], [[domains/python/map/classes.pythonic-object|Pythonic 对象：`__init__`、`__repr__`、`__eq__`、`classmethod` vs `staticmethod`]], [[domains/python/map/classes.operator-overloading|运算符重载：`__add__`/`__radd__`、就地运算符与比较运算]], [[domains/python/map/craft.patterns.predicate-algebra-three-valued|谓词代数与三值逻辑：可组合的小对象 + NULL 传播]], [[domains/python/map/craft.idioms.dunder-protocols-that-pay|值得写的特殊方法：__bool__ / __len__ / __contains__ / __and__ / __call__ / __enter__]]
 
 ## Readings
 - [[fluent-01-data-model|Fluent Python 2e · 第 1 章 Python 数据模型]]

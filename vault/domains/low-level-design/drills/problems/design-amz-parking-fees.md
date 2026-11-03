@@ -1,5 +1,5 @@
 ---
-nodes: [amazon.amz-parking-fees, patterns.strategy, problems.machines.parking-lot]
+nodes: [amazon.amz-parking-fees, patterns.strategy]
 tags: [problem]
 ---
 # Drill：停车场计费（Parking Lot Fees）

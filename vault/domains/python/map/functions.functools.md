@@ -8,6 +8,8 @@
 
 **Requires:** [[domains/python/map/functions.decorators|装饰器：`@` 语法糖、`functools.wraps` 与执行时机]]
 
+**Unlocks:** [[domains/python/map/craft.idioms.closure-factory-policies|闭包工厂做策略（closure factory）]], [[domains/python/map/craft.idioms.dispatch-tables|数据驱动的分派表：operator 表、方向表、转换表]], [[domains/python/map/craft.idioms.memoize-on-frozen|记忆化：lru_cache 要求参数可哈希、结果不可变]]
+
 ## Readings
 - [[fluent-09-decorators-closures|Fluent Python 2e · 第 9 章 装饰器与闭包]]
 - [[pydocs-functional-howto|函数式编程 HOWTO]]

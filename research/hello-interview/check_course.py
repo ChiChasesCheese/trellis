@@ -21,7 +21,7 @@ BASE = "https://www.hellointerview.com/learn/"
 MIN_H3 = 1200
 SHORT_PAGE = 5000
 MIN_SUMMARY = 60
-LEANS = re.compile(r"页面|原文|本章|这一章|这一节|本节|课程里|上面|前面提到")
+LEANS = re.compile(r"页面|原文|本章|这一章|这一节|(?<!副)本节|课程里|上面|前面提到")
 
 
 def headings(text: str) -> list[str]:

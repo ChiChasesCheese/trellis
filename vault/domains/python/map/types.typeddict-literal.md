@@ -6,6 +6,8 @@
 
 **Requires:** [[domains/python/map/types.basics|类型提示基础：`Optional`、`Union`/`|`、泛型容器与运行时零约束]]
 
+**Unlocks:** [[domains/python/map/craft.idioms.literal-and-closed-sets|封闭取值集：Literal / Enum / StrEnum 的选型]]
+
 ## Readings
 - [[fluent-15-more-type-hints|Fluent Python 2e · 第 15 章 深入类型提示]]
 - [[pydocs-typing-module|typing 模块：类型提示完整参考]]

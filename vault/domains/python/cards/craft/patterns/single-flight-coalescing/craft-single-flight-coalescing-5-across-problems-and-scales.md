@@ -21,6 +21,8 @@ if not rec.done.wait(self._wait): raise StillRunning(...)
 return entry[1] if entry[1] is not None else _PENDING
 ```
 
+以上各题的代码是节选：省略了类型标注、文档字符串和 `...` 处的细节，个别行为讲解而合并成一行，不是逐字摘抄。
+
 **见于。** ttl-cache、idempotent-transfer、notification-service。
 
 **不变的。** 「登记 + 判断是不是第一个」必须在同一个临界区；要有失败时的交接（`finally` 移交，或可被接手的租约）；登记表自己有生命周期（过期、容量上限）。**变化的。** 后到者等还是返回占位；是否存结果；要不要比对请求指纹。

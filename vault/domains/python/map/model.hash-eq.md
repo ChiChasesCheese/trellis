@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/python/map/model.dunder-protocols|特殊方法与语言协议：`__repr__`、`__len__`、`__getitem__`、`__call__`]]
 
-**Unlocks:** [[domains/python/map/model.dict-set-internals|dict 与 set 的实现：哈希表、开放寻址、紧凑布局与插入序]], [[domains/python/map/classes.dataclasses|`dataclass`、`NamedTuple` 与 `__slots__`]]
+**Unlocks:** [[domains/python/map/model.dict-set-internals|dict 与 set 的实现：哈希表、开放寻址、紧凑布局与插入序]], [[domains/python/map/classes.dataclasses|`dataclass`、`NamedTuple` 与 `__slots__`]], [[domains/python/map/craft.patterns.deterministic-tie-break|确定性 tie-break：排序键里写全规则，输出可复现]], [[domains/python/map/craft.idioms.frozen-value-objects|不可变值对象（frozen + slots dataclass as value object）]], [[domains/python/map/craft.idioms.memoize-on-frozen|记忆化：lru_cache 要求参数可哈希、结果不可变]], [[domains/python/map/craft.idioms.namedtuple-for-keys|NamedTuple 做复合键与轻量返回值]], [[domains/python/map/craft.architecture.entity-vs-value-object|实体 vs 值对象：身份、可变性与谁拥有状态]]
 
 ## Readings
 - [[fluent-03-dict-set|Fluent Python 2e · 第 3 章 字典与集合]]

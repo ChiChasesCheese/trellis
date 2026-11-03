@@ -1,6 +1,6 @@
 ---
 id: hi-sd-proximity-search-7-which-one
-node: sd.deep-dives.proximity-search.exam
+node: qb.sd.driver-heatmap-backend.pre-sd-deep-dives-proximity-search
 type: qa
 step: 7
 ---

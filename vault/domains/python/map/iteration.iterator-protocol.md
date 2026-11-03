@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/python/map/model.dunder-protocols|特殊方法与语言协议：`__repr__`、`__len__`、`__getitem__`、`__call__`]]
 
-**Unlocks:** [[domains/python/map/iteration.generators|生成器函数与生成器表达式：惰性、O(1) 内存与一次性]]
+**Unlocks:** [[domains/python/map/iteration.generators|生成器函数与生成器表达式：惰性、O(1) 内存与一次性]], [[domains/python/map/craft.idioms.generators-lazy-traversal|生成器管线与显式栈：惰性遍历 + pairwise / islice]]
 
 ## Readings
 - [[effective-03-loops-iterators|Effective Python 3e · 第 3 章 循环与迭代器]]

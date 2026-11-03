@@ -28,6 +28,8 @@ grant = AccessGrant(code=code, locker_id=locker.locker_id, ...,
 heapq.heappush(self._deadlines, (grant.expires_at, code))
 ```
 
+以上各题的代码是节选：省略了类型标注、文档字符串和 `...` 处的细节，个别行为讲解而合并成一行，不是逐字摘抄。
+
 不变：到期时间存在凭证里，由注入的时钟惰性判断，到期堆负责在没人访问时也能回收。变化：凭证是数量快照、收据、取件码；回收的资源是库存、座位、柜格；确认后的状态是已发货、已出票、已取走。
 
 **见于。** inventory-management、movie-booking、airline（HELD → TICKETED）、amazon-locker、online-shopping、library。

@@ -137,6 +137,7 @@ class Skeleton:
     # that problem's short statement and solution.
     examples_from: str = ""
     fold: bool = False  # answers render as a foldable outline (sections, then bullets)
+    fold_code: int = 0  # code blocks longer than this many lines open on a tap; 0 keeps them open
 
     @property
     def root_deck(self) -> str:
@@ -279,7 +280,7 @@ def load_skeleton(path: str | Path) -> Skeleton:
         examples_from = ""
 
     skeleton = Skeleton(domain=domain, title=title.strip(), roots=roots, by_id={},
-                        lang=lang, folder=folder, deck=deck, examples_from=examples_from, fold=bool(data.get("fold", False)),
+                        lang=lang, folder=folder, deck=deck, examples_from=examples_from, fold=bool(data.get("fold", False)), fold_code=int(data.get("fold_code", 0) or 0),
                         study=_parse_study(data.get("study"), errors))
     for node in skeleton.walk():
         if node.id in skeleton.by_id:

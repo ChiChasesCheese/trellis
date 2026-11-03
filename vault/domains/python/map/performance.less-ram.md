@@ -6,6 +6,8 @@
 
 **Requires:** [[domains/python/map/memory.object-size|对象的真实大小：`sys.getsizeof`、`__slots__`、int/str/list 的开销]]
 
+**Unlocks:** [[domains/python/map/craft.idioms.slots-and-memory|__slots__ 与 slots=True：该用在哪、不能用在哪]]
+
 ## Readings
 - [[hpp-05-iterators-generators|High Performance Python 2e · 第 5 章 迭代器与生成器]]
 - [[hpp-11-using-less-ram|High Performance Python 2e · 第 11 章 减少内存占用]]

@@ -6,7 +6,7 @@
 
 **Core** — part of the first pass through this subject.
 
-**Unlocks:** [[domains/python/map/engineering.robustness|健壮性：短 `try` 块、不吞 `Exception`、自定义异常层次与 `warnings`]]
+**Unlocks:** [[domains/python/map/engineering.robustness|健壮性：短 `try` 块、不吞 `Exception`、自定义异常层次与 `warnings`]], [[domains/python/map/craft.patterns.validate-then-commit|先校验后提交：失败不留痕迹（validate-then-commit）]], [[domains/python/map/craft.patterns.transition-table-state-machine|转移表状态机：把「哪个状态能去哪」写成数据（State machine as a table）]], [[domains/python/map/craft.patterns.saga-idempotent-compensation|Saga 与幂等补偿：反向撤销，补偿不能失败也不能重复生效]], [[domains/python/map/craft.patterns.retry-backoff-dead-letter|重试、退避与死信：可靠性写一份，渠道只管怎么发]], [[domains/python/map/craft.idioms.exception-family|异常家族：基类 + 多重继承 + 携带数据（typed errors）]], [[domains/python/map/craft.idioms.validated-construction|构造即校验与规范化（__post_init__ + object.__setattr__）]], [[domains/python/map/craft.architecture.error-boundaries-and-failure-taxonomy|错误边界与失败分类：哪些吞、哪些抛、哪些变成值]], [[domains/python/map/craft.architecture.order-side-effects-by-reversibility|按可逆性给副作用排序：先做会失败的、可回滚的，最后做不可撤销的]]
 
 ## Readings
 - [[cpy-code-objects|代码对象：字节码之外还带着什么]]

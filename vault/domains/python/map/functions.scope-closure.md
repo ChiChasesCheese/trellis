@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/python/map/model.names-objects|名字绑定、对象身份与 `is` vs `==`]]
 
-**Unlocks:** [[domains/python/map/functions.decorators|装饰器：`@` 语法糖、`functools.wraps` 与执行时机]], [[domains/python/map/runtime.namespaces-execution|执行模型：命名空间、`global`、代码块与 `exec`/`eval` 的风险]]
+**Unlocks:** [[domains/python/map/functions.decorators|装饰器：`@` 语法糖、`functools.wraps` 与执行时机]], [[domains/python/map/runtime.namespaces-execution|执行模型：命名空间、`global`、代码块与 `exec`/`eval` 的风险]], [[domains/python/map/craft.patterns.make-unmake-undo-log|可逆变更：make/unmake、撤销日志、Edit.invert]], [[domains/python/map/craft.idioms.closure-factory-policies|闭包工厂做策略（closure factory）]]
 
 ## Readings
 - [[effective-05-functions|Effective Python 3e · 第 5 章 函数]]

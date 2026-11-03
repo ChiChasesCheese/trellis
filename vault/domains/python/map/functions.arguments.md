@@ -8,6 +8,8 @@
 
 **Requires:** [[domains/python/map/model.mutability|可变与不可变对象：list vs tuple、可变默认参数、别名（aliasing）]]
 
+**Unlocks:** [[domains/python/map/craft.idioms.kw-only-positional-only|参数形态：仅位置 `/`、仅关键字 `*`、kw_only dataclass]]
+
 ## Readings
 - [[effective-05-functions|Effective Python 3e · 第 5 章 函数]]
 - [[pydocs-programming-faq|编程 FAQ：作用域、参数与可变性高频坑]]

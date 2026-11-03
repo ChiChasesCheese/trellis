@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/python/map/concurrency.gil|全局解释器锁（GIL）：它保护什么、何时释放、切换间隔]]
 
-**Unlocks:** [[domains/python/map/concurrency.executors|`concurrent.futures`：`ThreadPoolExecutor` vs `ProcessPoolExecutor`、`map` 与 `as_completed`]]
+**Unlocks:** [[domains/python/map/concurrency.executors|`concurrent.futures`：`ThreadPoolExecutor` vs `ProcessPoolExecutor`、`map` 与 `as_completed`]], [[domains/python/map/craft.architecture.in-process-to-distributed|从单进程到分布式：每个原语在生产里换成什么]]
 
 ## Readings
 - [[cpyint-04-parallelism-concurrency|CPython Internals · 并行与并发]]

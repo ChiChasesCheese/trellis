@@ -30,6 +30,8 @@ value = loader()
 self.put(key, value, ttl)
 ```
 
+以上各题的代码是节选：省略了类型标注、文档字符串和 `...` 处的细节，个别行为讲解而合并成一行，不是逐字摘抄。
+
 不变：外部调用一行一定不在 `with lock` 里；变化：占位的凭证不同，失败的补救不同（释放座位、记一次失败、唤醒等待者）。
 
 **见于。** movie-booking、idempotent-transfer（风控 `on_execute` 在占键后、动钱前，两把锁都不持）、ttl-cache、api-circuit-breaker、logger。

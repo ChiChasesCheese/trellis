@@ -8,6 +8,8 @@
 
 **Requires:** [[domains/python/map/memory.cyclic-gc|循环垃圾回收：分代（generations）、阈值与增量回收]]
 
+**Unlocks:** [[domains/python/map/craft.patterns.bounded-containers-every-dict-has-an-exit|每个只增不减的容器都要有出口：purge / sweep / compact / maxlen]]
+
 ## Readings
 - [[effective-13-testing-debugging|Effective Python 3e · 第 13 章 测试与调试]]
 - [[hpp-02-profiling|High Performance Python 2e · 第 2 章 性能分析]]

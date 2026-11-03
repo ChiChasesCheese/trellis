@@ -8,6 +8,8 @@
 
 **Requires:** [[domains/python/map/model.dunder-protocols|特殊方法与语言协议：`__repr__`、`__len__`、`__getitem__`、`__call__`]]
 
+**Unlocks:** [[domains/python/map/craft.patterns.predicate-algebra-three-valued|谓词代数与三值逻辑：可组合的小对象 + NULL 传播]], [[domains/python/map/craft.idioms.dunder-protocols-that-pay|值得写的特殊方法：__bool__ / __len__ / __contains__ / __and__ / __call__ / __enter__]]
+
 ## Readings
 - [[fluent-16-operator-overloading|Fluent Python 2e · 第 16 章 运算符重载]]
 - [[py-pydocs-data-model|数据模型（Data Model）参考]]

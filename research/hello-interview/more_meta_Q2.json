@@ -1,0 +1,54 @@
+{
+ "github-cicd-workflow": {
+  "requires": [
+   "sd.patterns.long-running-tasks",
+   "sd.patterns.multi-step-processes",
+   "sd.deep-dives.kafka",
+   "sd.patterns.realtime-updates",
+   "sd.patterns.dealing-with-contention"
+  ]
+ },
+ "web-crawler-restricted-communication": {
+  "requires": [
+   "sd.core-concepts.consistent-hashing",
+   "sd.core-concepts.sharding",
+   "sd.deep-dives.data-structures-for-big-data",
+   "sd.core-concepts.networking-essentials"
+  ]
+ },
+ "driver-heatmap-backend": {
+  "requires": [
+   "sd.deep-dives.proximity-search",
+   "sd.deep-dives.kafka",
+   "sd.deep-dives.flink",
+   "sd.deep-dives.time-series-databases",
+   "sd.patterns.scaling-writes"
+  ]
+ },
+ "distributed-file-system": {
+  "requires": [
+   "sd.patterns.large-blobs",
+   "sd.core-concepts.sharding",
+   "sd.core-concepts.cap-theorem",
+   "sd.core-concepts.data-modeling"
+  ]
+ },
+ "key-value-store": {
+  "requires": [
+   "sd.core-concepts.consistent-hashing",
+   "sd.core-concepts.sharding",
+   "sd.core-concepts.cap-theorem",
+   "sd.patterns.large-blobs",
+   "sd.deep-dives.data-structures-for-big-data"
+  ]
+ },
+ "nearby-restaurants-app": {
+  "requires": [
+   "sd.deep-dives.proximity-search",
+   "sd.deep-dives.elasticsearch",
+   "sd.core-concepts.caching",
+   "sd.patterns.scaling-reads",
+   "sd.deep-dives.change-data-capture"
+  ]
+ }
+}

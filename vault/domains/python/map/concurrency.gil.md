@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/python/map/memory.refcounting|引用计数：`ob_refcnt`、即时释放与 `sys.getrefcount`]]
 
-**Unlocks:** [[domains/python/map/concurrency.threads|线程：`threading.Thread`、守护线程与线程适用的场景]], [[domains/python/map/concurrency.multiprocessing|多进程：`multiprocessing`、fork vs spawn、pickle 边界与共享内存]], [[domains/python/map/concurrency.free-threading|自由线程（PEP 703，3.13 实验版）与子解释器（PEP 734）]]
+**Unlocks:** [[domains/python/map/concurrency.threads|线程：`threading.Thread`、守护线程与线程适用的场景]], [[domains/python/map/concurrency.multiprocessing|多进程：`multiprocessing`、fork vs spawn、pickle 边界与共享内存]], [[domains/python/map/concurrency.free-threading|自由线程（PEP 703，3.13 实验版）与子解释器（PEP 734）]], [[domains/python/map/craft.patterns.atomic-claim-check-then-act|原子占位：检查与占用在同一个临界区（claim, not check-then-act）]], [[domains/python/map/craft.patterns.per-key-and-sharded-locks|每个对象一把锁与分片锁：把竞争限制在真正冲突的范围]], [[domains/python/map/craft.patterns.immutable-snapshot-publish|不可变快照 + 整体替换发布（copy-on-write publish）]], [[domains/python/map/craft.idioms.id-generation|ID 生成：itertools.count、next 与生成器表达式的陷阱]]
 
 ## Readings
 - [[cpyint-04-parallelism-concurrency|CPython Internals · 并行与并发]]

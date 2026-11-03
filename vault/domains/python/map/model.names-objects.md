@@ -6,7 +6,7 @@
 
 **Core** — part of the first pass through this subject.
 
-**Unlocks:** [[domains/python/map/model.mutability|可变与不可变对象：list vs tuple、可变默认参数、别名（aliasing）]], [[domains/python/map/model.dunder-protocols|特殊方法与语言协议：`__repr__`、`__len__`、`__getitem__`、`__call__`]], [[domains/python/map/functions.scope-closure|作用域（LEGB）、闭包与 `nonlocal`]], [[domains/python/map/memory.refcounting|引用计数：`ob_refcnt`、即时释放与 `sys.getrefcount`]]
+**Unlocks:** [[domains/python/map/model.mutability|可变与不可变对象：list vs tuple、可变默认参数、别名（aliasing）]], [[domains/python/map/model.dunder-protocols|特殊方法与语言协议：`__repr__`、`__len__`、`__getitem__`、`__call__`]], [[domains/python/map/functions.scope-closure|作用域（LEGB）、闭包与 `nonlocal`]], [[domains/python/map/memory.refcounting|引用计数：`ob_refcnt`、即时释放与 `sys.getrefcount`]], [[domains/python/map/craft.idioms.sentinels|哨兵值：object()、math.inf、毒丸与「None 是合法值」]], [[domains/python/map/craft.architecture.entity-vs-value-object|实体 vs 值对象：身份、可变性与谁拥有状态]]
 
 ## Readings
 - [[cpy-string-interning|字符串驻留与不朽对象：is 比较为什么能又快又准]]

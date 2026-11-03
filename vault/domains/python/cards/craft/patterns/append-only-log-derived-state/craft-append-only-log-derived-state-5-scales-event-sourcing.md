@@ -5,7 +5,7 @@ type: qa
 step: 5
 ---
 ## Q
-**只追加日志 + 派生状态 · 从快照数组到事件溯源和 Kafka**｜架构
+**只追加日志 + 派生状态 · 从快照数组到事件溯源和 Kafka**｜模式
 
 LeetCode 的快照数组、LLD 的账本、分布式的事件溯源（event sourcing）看起来是三件事，它们共享什么结构？放大到多台机器时什么变了？
 
@@ -13,15 +13,30 @@ LeetCode 的快照数组、LLD 的账本、分布式的事件溯源（event sour
 **要点。** 都是「追加事实 + 在其上读出视图」。快照数组每格存 (版本, 值) 的追加列表，`snap()` 什么也不复制，只把版本号加一；读时对版本二分。
 
 ```python
-def set(self, i, v):
-    h = self.hist[i]
-    if h[-1][0] == self.snap_id: h[-1] = (self.snap_id, v)   # 同一版本内覆盖
-    else:                        h.append((self.snap_id, v)) # 新版本：追加事实
+class SnapshotArray:
+    def __init__(self, length: int) -> None:
+        self.snap_id = 0
+        self.hist: list[list[tuple[int, int]]] = [[(0, 0)] for _ in range(length)]   # 每格只追加 (版本, 值)
 
-def get(self, i, snap_id):
-    h = self.hist[i]
-    j = bisect.bisect_right(h, (snap_id, float("inf"))) - 1  # 最后一个版本 <= snap_id
-    return h[j][1]
+    def set(self, i: int, v: int) -> None:
+        h = self.hist[i]
+        if h[-1][0] == self.snap_id:
+            h[-1] = (self.snap_id, v)                   # 同一版本内的覆盖
+        else:
+            h.append((self.snap_id, v))                 # 新版本：追加事实
+
+    def snap(self) -> int:
+        self.snap_id += 1
+        return self.snap_id - 1                         # 快照 O(1)：什么都不复制
+
+    def get(self, i: int, snap_id: int) -> int:
+        h = self.hist[i]
+        j = bisect.bisect_right(h, (snap_id, float("inf"))) - 1  # 最后一个版本 <= snap_id
+        return h[j][1]
+
+a = SnapshotArray(3)
+a.set(0, 5); s0 = a.snap(); a.set(0, 6)
+print(a.get(0, s0), a.get(0, s0 + 1), "（快照 0 里是 5，之后写入的 6 不影响它）")
 ```
 
 写 5，快照，再写 6，实际输出：

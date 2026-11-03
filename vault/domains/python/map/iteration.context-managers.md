@@ -8,6 +8,8 @@
 
 **Requires:** [[domains/python/map/iteration.generators|生成器函数与生成器表达式：惰性、O(1) 内存与一次性]]
 
+**Unlocks:** [[domains/python/map/craft.idioms.context-managers-for-invariants|上下文管理器守不变量：@contextmanager 与 ExitStack]]
+
 ## Readings
 - [[effective-10-robustness|Effective Python 3e · 第 10 章 健壮性]]
 - [[fluent-18-with-match-else|Fluent Python 2e · 第 18 章 with、match 与 else 语句块]]

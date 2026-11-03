@@ -21,6 +21,8 @@ class EvictionPolicy(Protocol[K]): ...
 class Stacking(Enum): STACK = "stack"; BEST_ONLY = "best_only"
 ```
 
+以上各题的代码是节选：省略了类型标注、文档字符串和 `...` 处的细节，个别行为讲解而合并成一行，不是逐字摘抄。
+
 **见于。** airline（超售、票价、退票）、ride-sharing（加价、匹配）、vending-machine（找零算法，默认精确背包）、ttl-cache（淘汰）、amz-robot-restaurant（分派）、amz-discount-engine（叠加）。
 
 **不变的。** 默认值是策略的下界（不超售、不加价、不退款）；核心只依赖一个窄接口。**变化的。** 形状（函数 / 对象 / 枚举），以及接缝上的校验强度：像分派这种返回值会驱动动作的接缝，核心要校验策略的输出。

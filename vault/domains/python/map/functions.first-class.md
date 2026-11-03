@@ -6,6 +6,8 @@
 
 **Core** — part of the first pass through this subject.
 
+**Unlocks:** [[domains/python/map/craft.patterns.dry-run-on-a-copy|在副本上试运行：预测与实际共用同一份逻辑]], [[domains/python/map/craft.patterns.rule-chain-pipeline|规则链/流水线：统一接口，引擎只负责按序跑]], [[domains/python/map/craft.patterns.policy-seam|策略接缝：把会变的规则做成注入的纯函数/对象]], [[domains/python/map/craft.idioms.protocol-callable-abc|策略接口三选一：Callable / Protocol / ABC]], [[domains/python/map/craft.idioms.default-forms|省掉标志变量：next(…, None) / min(default=) / for-else / 海象运算符]], [[domains/python/map/craft.idioms.closure-factory-policies|闭包工厂做策略（closure factory）]], [[domains/python/map/craft.idioms.dispatch-tables|数据驱动的分派表：operator 表、方向表、转换表]], [[domains/python/map/craft.architecture.functional-core-imperative-shell|函数式核心 + 命令式外壳（functional core, imperative shell）]], [[domains/python/map/craft.architecture.interface-only-when-earned|接口是挣来的：什么时候不抽象]], [[domains/python/map/craft.architecture.extension-points-worth-paying-for|扩展点值得付费的地方：数据代替代码、从第一天就预留的字段]]
+
 ## Readings
 - [[fluent-07-first-class-functions|Fluent Python 2e · 第 7 章 一等函数]]
 - [[fluent-10-design-patterns-functions|Fluent Python 2e · 第 10 章 一等函数实现的设计模式]]

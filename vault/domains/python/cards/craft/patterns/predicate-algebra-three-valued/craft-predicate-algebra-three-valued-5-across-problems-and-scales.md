@@ -22,6 +22,8 @@ return ((self.skus is None or line.sku in self.skus)
         and (self.categories is None or line.category in self.categories))
 ```
 
+以上各题的代码是节选：省略了类型标注、文档字符串和 `...` 处的细节，个别行为讲解而合并成一行，不是逐字摘抄。
+
 **见于。** amz-linux-find、query-condition-parser、amz-in-memory-db、amz-discount-engine。
 
 **不变的。** 谓词是不可变的值；组合子本身也是谓词；恒真元素让"没有条件"成为一个合法的条件；返回值只有 `True` 才放行。**变化的。** 两值还是三值；谓词是否带 `refs` 之类的元信息；组合时的短路顺序。

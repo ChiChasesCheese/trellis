@@ -8,6 +8,8 @@
 
 **Requires:** [[domains/python/map/model.dict-set-internals|dict 与 set 的实现：哈希表、开放寻址、紧凑布局与插入序]]
 
+**Unlocks:** [[domains/python/map/craft.patterns.lazy-deletion-heap|惰性删除堆：墓碑 + 压实（lazy deletion with tombstones and compaction）]], [[domains/python/map/craft.patterns.hash-map-plus-ordered-structure|哈希表 + 有序结构：O(1) 定位，O(log n) 或 O(1) 取序]], [[domains/python/map/craft.patterns.bounded-containers-every-dict-has-an-exit|每个只增不减的容器都要有出口：purge / sweep / compact / maxlen]], [[domains/python/map/craft.patterns.prefix-sum-bisect-timeline|前缀和 + 二分：把「某一时刻/某一站的累计值」变成 O(log n)/O(1)]], [[domains/python/map/craft.idioms.heapq-tuple-ordering|heapq 的元组序与 tie-break：计数器、负号、dataclass(order=True)]], [[domains/python/map/craft.idioms.bisect-sorted-lists|bisect 与有序列表：floor/ceiling、key=、只查邻居]], [[domains/python/map/craft.idioms.bounded-deque|deque(maxlen) 做有界历史；list 头部删除是 O(n)]]
+
 ## Readings
 - [[cpy-timsort|Timsort：为什么 list.sort() 对“已经有点顺序”的数据特别快]]
 - [[effective-12-data-structures-algorithms|Effective Python 3e · 第 12 章 数据结构与算法]]

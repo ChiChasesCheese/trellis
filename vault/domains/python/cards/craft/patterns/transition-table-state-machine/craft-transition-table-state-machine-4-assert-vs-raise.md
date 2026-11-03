@@ -5,7 +5,7 @@ type: qa
 step: 4
 ---
 ## Q
-**转移表状态机 · 转移不合法时用 assert 还是抛领域异常**｜写法
+**转移表状态机 · 转移不合法时用 assert 还是抛领域异常**｜模式
 
 熔断器的内部 `_move` 用 `assert new in _TRANSITIONS[self._state]` 守住转移表，而航班、叫车题对非法转移抛领域异常。这两种选择差别在哪？为什么不全用 assert？
 

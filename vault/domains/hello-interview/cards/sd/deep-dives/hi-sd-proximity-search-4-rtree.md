@@ -1,6 +1,6 @@
 ---
 id: hi-sd-proximity-search-4-rtree
-node: sd.deep-dives.proximity-search.exam
+node: qb.sd.driver-heatmap-backend.pre-sd-deep-dives-proximity-search
 type: qa
 step: 4
 ---

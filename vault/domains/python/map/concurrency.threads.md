@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/python/map/concurrency.gil|全局解释器锁（GIL）：它保护什么、何时释放、切换间隔]]
 
-**Unlocks:** [[domains/python/map/concurrency.locks-races|竞态条件与同步原语：`Lock`、`RLock`、`Condition`、`Event`、`Semaphore`]], [[domains/python/map/concurrency.executors|`concurrent.futures`：`ThreadPoolExecutor` vs `ProcessPoolExecutor`、`map` 与 `as_completed`]]
+**Unlocks:** [[domains/python/map/concurrency.locks-races|竞态条件与同步原语：`Lock`、`RLock`、`Condition`、`Event`、`Semaphore`]], [[domains/python/map/concurrency.executors|`concurrent.futures`：`ThreadPoolExecutor` vs `ProcessPoolExecutor`、`map` 与 `as_completed`]], [[domains/python/map/craft.patterns.lazy-expiry-settle-on-access|惰性过期：每次访问先结清，不起后台线程（settle on access）]], [[domains/python/map/craft.idioms.event-wait-and-handoff|Event / Condition 的惯用法：中断式睡眠、结果交接、截止时间]], [[domains/python/map/craft.architecture.seams-for-testing|测试接缝：时钟、文件系统、sleep、可观测计数器]]
 
 ## Readings
 - [[cpyint-04-parallelism-concurrency|CPython Internals · 并行与并发]]

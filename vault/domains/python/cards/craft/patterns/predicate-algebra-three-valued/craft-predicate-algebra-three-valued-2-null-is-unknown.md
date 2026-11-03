@@ -5,7 +5,7 @@ type: qa
 step: 2
 ---
 ## Q
-**谓词代数与三值逻辑 · `WHERE NOT (age > 30)` 为什么不应该返回年龄为 NULL 的行**｜写法
+**谓词代数与三值逻辑 · `WHERE NOT (age > 30)` 为什么不应该返回年龄为 NULL 的行**｜模式
 
 迷你数据库的 `WHERE` 支持 `AND`、`OR`、`NOT`。表里有一行 `age` 是 NULL（没填）。条件 `age > 30` 对这一行该返回什么？`NOT (age > 30)` 呢？如果实现里把 NULL 比较当 False 处理，会有什么后果？
 

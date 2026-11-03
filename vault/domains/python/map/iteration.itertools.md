@@ -8,6 +8,8 @@
 
 **Requires:** [[domains/python/map/iteration.generators|生成器函数与生成器表达式：惰性、O(1) 内存与一次性]]
 
+**Unlocks:** [[domains/python/map/craft.patterns.boundary-slicing-and-marginal-tiers|边界切分与边际阶梯：沿规则变化点切段，每段单价固定]], [[domains/python/map/craft.patterns.prefix-sum-bisect-timeline|前缀和 + 二分：把「某一时刻/某一站的累计值」变成 O(log n)/O(1)]], [[domains/python/map/craft.idioms.generators-lazy-traversal|生成器管线与显式栈：惰性遍历 + pairwise / islice]]
+
 ## Readings
 - [[effective-03-loops-iterators|Effective Python 3e · 第 3 章 循环与迭代器]]
 - [[pydocs-functional-howto|函数式编程 HOWTO]]

@@ -534,6 +534,11 @@ nodes:
       - id: qb.sd.github-cicd-workflow.answer
         title: 解答 · CI/CD 流水线平台（GitHub Actions）
         summary: CI/CD 流水线平台（GitHub Actions）：完整解答。
+        requires:
+        - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
+      - id: qb.sd.github-cicd-workflow.points
+        title: 要点 · CI/CD 流水线平台（GitHub Actions）
+        summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
     - id: qb.sd.metrics-aggregator
       title: 指标聚合系统
       summary: 指标聚合系统：完整解答。
@@ -567,13 +572,29 @@ nodes:
       - id: qb.sd.web-crawler-restricted-communication.answer
         title: 解答 · 节点不能通信的网络爬虫
         summary: 节点不能通信的网络爬虫：完整解答。
+        requires:
+        - qb.sd.online-chess-platform.pre-sd-core-concepts-consistent-hashing
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-networking-essentials
+      - id: qb.sd.web-crawler-restricted-communication.points
+        title: 要点 · 节点不能通信的网络爬虫
+        summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
     - id: qb.sd.driver-heatmap-backend
       title: 司机实时热力图
       summary: 司机实时热力图：完整解答。
       children:
+      - id: qb.sd.driver-heatmap-backend.pre-sd-deep-dives-proximity-search
+        title: 先修 · 邻近搜索（Proximity Search）
+        summary: 司机实时热力图 用到的概念。
       - id: qb.sd.driver-heatmap-backend.answer
         title: 解答 · 司机实时热力图
         summary: 司机实时热力图：完整解答。
+        requires:
+        - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
+        - qb.sd.top-k-counts.pre-sd-deep-dives-time-series-databases
+      - id: qb.sd.driver-heatmap-backend.points
+        title: 要点 · 司机实时热力图
+        summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
     - id: qb.sd.distributed-file-system
       title: 分布式文件系统
       summary: 分布式文件系统：完整解答。
@@ -581,6 +602,13 @@ nodes:
       - id: qb.sd.distributed-file-system.answer
         title: 解答 · 分布式文件系统
         summary: 分布式文件系统：完整解答。
+        requires:
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
+        - qb.sd.distributed-rate-limiter.pre-sd-core-concepts-cap-theorem
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
+      - id: qb.sd.distributed-file-system.points
+        title: 要点 · 分布式文件系统
+        summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
     - id: qb.sd.key-value-store
       title: 分布式键值存储
       summary: 分布式键值存储：完整解答。
@@ -588,6 +616,13 @@ nodes:
       - id: qb.sd.key-value-store.answer
         title: 解答 · 分布式键值存储
         summary: 分布式键值存储：完整解答。
+        requires:
+        - qb.sd.online-chess-platform.pre-sd-core-concepts-consistent-hashing
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
+        - qb.sd.distributed-rate-limiter.pre-sd-core-concepts-cap-theorem
+      - id: qb.sd.key-value-store.points
+        title: 要点 · 分布式键值存储
+        summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
     - id: qb.sd.nearby-restaurants-app
       title: 外卖平台（Uber Eats）
       summary: 外卖平台（Uber Eats）：完整解答。
@@ -595,6 +630,13 @@ nodes:
       - id: qb.sd.nearby-restaurants-app.answer
         title: 解答 · 外卖平台（Uber Eats）
         summary: 外卖平台（Uber Eats）：完整解答。
+        requires:
+        - qb.sd.driver-heatmap-backend.pre-sd-deep-dives-proximity-search
+        - qb.sd.hotel-booking-system.pre-sd-deep-dives-elasticsearch
+        - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
+      - id: qb.sd.nearby-restaurants-app.points
+        title: 要点 · 外卖平台（Uber Eats）
+        summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
     - id: qb.sd.delayed-payment-scheduler
       title: 延迟支付调度服务
       summary: 延迟支付调度服务：完整解答。
@@ -883,6 +925,14 @@ nodes:
       - id: qb.lld.spreadsheet-engine.answer
         title: 解答 · 电子表格引擎
         summary: 电子表格引擎：完整解答。
+        requires:
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
+      - id: qb.lld.spreadsheet-engine.points
+        title: 要点 · 电子表格引擎
+        summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
     - id: qb.lld.battleship-game-design
       title: 海战棋（Battleship）
       summary: 海战棋（Battleship）：完整解答。
@@ -890,6 +940,14 @@ nodes:
       - id: qb.lld.battleship-game-design.answer
         title: 解答 · 海战棋（Battleship）
         summary: 海战棋（Battleship）：完整解答。
+        requires:
+        - qb.lld.beverage-vending-system.pre-lld-in-a-hurry-delivery
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
+      - id: qb.lld.battleship-game-design.points
+        title: 要点 · 海战棋（Battleship）
+        summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
     - id: qb.lld.restaurant-waitlist-api
       title: 餐厅候位 API
       summary: 餐厅候位 API：完整解答。
@@ -897,6 +955,14 @@ nodes:
       - id: qb.lld.restaurant-waitlist-api.answer
         title: 解答 · 餐厅候位 API
         summary: 餐厅候位 API：完整解答。
+        requires:
+        - qb.lld.beverage-vending-system.pre-lld-in-a-hurry-delivery
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
+        - qb.lld.kv-store-eviction.pre-lld-concurrency-intro
+      - id: qb.lld.restaurant-waitlist-api.points
+        title: 要点 · 餐厅候位 API
+        summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
     - id: qb.lld.dasher-payout
       title: 配送员结算（按配送事件计算报酬）
       summary: 配送员结算（按配送事件计算报酬）：完整解答。
@@ -904,6 +970,14 @@ nodes:
       - id: qb.lld.dasher-payout.answer
         title: 解答 · 配送员结算（按配送事件计算报酬）
         summary: 配送员结算（按配送事件计算报酬）：完整解答。
+        requires:
+        - qb.lld.beverage-vending-system.pre-lld-in-a-hurry-delivery
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
+      - id: qb.lld.dasher-payout.points
+        title: 要点 · 配送员结算（按配送事件计算报酬）
+        summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
     - id: qb.lld.image-transform-pipeline
       title: 图片变换流水线
       summary: 图片变换流水线：完整解答。
@@ -911,6 +985,13 @@ nodes:
       - id: qb.lld.image-transform-pipeline.answer
         title: 解答 · 图片变换流水线
         summary: 图片变换流水线：完整解答。
+        requires:
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
+        - qb.lld.kv-store-eviction.pre-lld-concurrency-intro
+      - id: qb.lld.image-transform-pipeline.points
+        title: 要点 · 图片变换流水线
+        summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
     - id: qb.lld.credit-token-balance
       title: 用户额度与令牌余额服务
       summary: 用户额度与令牌余额服务：完整解答。
@@ -918,6 +999,14 @@ nodes:
       - id: qb.lld.credit-token-balance.answer
         title: 解答 · 用户额度与令牌余额服务
         summary: 用户额度与令牌余额服务：完整解答。
+        requires:
+        - qb.lld.beverage-vending-system.pre-lld-in-a-hurry-delivery
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
+      - id: qb.lld.credit-token-balance.points
+        title: 要点 · 用户额度与令牌余额服务
+        summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
 - id: tt
   order: 2
   core: true

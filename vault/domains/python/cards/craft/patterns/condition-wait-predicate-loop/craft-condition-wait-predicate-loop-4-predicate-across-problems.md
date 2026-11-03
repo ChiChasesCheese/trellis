@@ -28,6 +28,8 @@ while self._min_cursor() <= self._start_seq:
 return self._cond.wait_for(lambda: not self._heap and not self._in_flight, timeout)
 ```
 
+以上各题的代码是节选：省略了类型标注、文档字符串和 `...` 处的细节，个别行为讲解而合并成一行，不是逐字摘抄。
+
 每次醒来都用完整的 timeout 重新等，被频繁 notify 时可能永远不返回；绝对截止每次只等剩余时间：
 
 ```

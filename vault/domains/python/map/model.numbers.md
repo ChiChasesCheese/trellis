@@ -6,7 +6,7 @@
 
 **Core** — part of the first pass through this subject.
 
-**Unlocks:** [[domains/python/map/engineering.money-time|金额与时间：`Decimal` 舍入模式、整数分、时区感知 `datetime`]]
+**Unlocks:** [[domains/python/map/engineering.money-time|金额与时间：`Decimal` 舍入模式、整数分、时区感知 `datetime`]], [[domains/python/map/craft.patterns.boundary-slicing-and-marginal-tiers|边界切分与边际阶梯：沿规则变化点切段，每段单价固定]], [[domains/python/map/craft.idioms.money-types|金额类型选型：整数分 / 基点 / Decimal / Fraction]], [[domains/python/map/craft.idioms.round-once-at-the-boundary|取整点：Decimal.quantize、ROUND_HALF_EVEN 与整数四舍五入]], [[domains/python/map/craft.idioms.sentinels|哨兵值：object()、math.inf、毒丸与「None 是合法值」]]
 
 ## Readings
 - [[py-pydocs-data-model|数据模型（Data Model）参考]]

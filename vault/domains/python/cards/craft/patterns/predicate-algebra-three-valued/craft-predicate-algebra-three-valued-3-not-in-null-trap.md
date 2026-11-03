@@ -5,7 +5,7 @@ type: qa
 step: 3
 ---
 ## Q
-**谓词代数与三值逻辑 · `x NOT IN (1, 2, NULL)` 为什么一行都不返回**｜写法
+**谓词代数与三值逻辑 · `x NOT IN (1, 2, NULL)` 为什么一行都不返回**｜模式
 
 黑名单列表 `(1, 2, NULL)` 里混进了一个 NULL（比如某条记录没填）。`WHERE x NOT IN (...)` 在 Python 里的 `x not in banned` 会返回 3 和 4，在 SQL 里却一行也不返回。这是 bug 吗？谓词的三值逻辑里，`IN` 该怎么定义才自洽？
 

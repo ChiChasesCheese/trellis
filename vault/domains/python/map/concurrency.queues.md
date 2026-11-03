@@ -8,6 +8,8 @@
 
 **Requires:** [[domains/python/map/concurrency.locks-races|竞态条件与同步原语：`Lock`、`RLock`、`Condition`、`Event`、`Semaphore`]]
 
+**Unlocks:** [[domains/python/map/craft.patterns.external-call-outside-the-lock|外部调用不持锁：占位 → 调用 → 提交（claim, call, commit）]], [[domains/python/map/craft.patterns.condition-wait-predicate-loop|条件变量：谓词 while 循环 + 精确通知（Condition wait loop）]], [[domains/python/map/craft.patterns.backpressure-overflow-policy|背压与溢出策略：丢最旧 / 阻塞 / 拒绝，必须当场选并可观测]], [[domains/python/map/craft.idioms.event-wait-and-handoff|Event / Condition 的惯用法：中断式睡眠、结果交接、截止时间]]
+
 ## Readings
 - [[effective-09-concurrency-parallelism|Effective Python 3e · 第 9 章 并发与并行]]
 - [[fowler-12-asynchronous-queues|Python Concurrency with asyncio · 第 12 章 异步队列]]

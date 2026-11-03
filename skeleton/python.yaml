@@ -7,6 +7,7 @@
 domain: python
 title: Python
 lang: zh
+fold_code: 25
 vault: domains/python
 study:
   order: core-first

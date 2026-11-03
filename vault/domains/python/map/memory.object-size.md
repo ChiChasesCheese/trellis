@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/python/map/memory.allocator|pymalloc：arena / pool / block 与为何内存不还给操作系统]]
 
-**Unlocks:** [[domains/python/map/performance.less-ram|省内存：生成器、`array`、`memoryview`、`__slots__` 与稀疏结构]]
+**Unlocks:** [[domains/python/map/performance.less-ram|省内存：生成器、`array`、`memoryview`、`__slots__` 与稀疏结构]], [[domains/python/map/craft.idioms.slots-and-memory|__slots__ 与 slots=True：该用在哪、不能用在哪]]
 
 ## Readings
 - [[cpy-dict-notes|dict 的键值分离设计：为什么同一个类的实例能共享一张键表]]

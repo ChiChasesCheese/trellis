@@ -24,6 +24,8 @@ self._levels: dict[int, dict[str, Order]] = {}
 self._prices: list[int] = []   # 键集合永远与 _levels 相等
 ```
 
+以上各题的代码是节选：省略了类型标注、文档字符串和 `...` 处的细节，个别行为讲解而合并成一行，不是逐字摘抄。
+
 | 需要 | 结构 |
 |---|---|
 | 取最久未用，常删中间 | dict + 双向链表（或 OrderedDict） |

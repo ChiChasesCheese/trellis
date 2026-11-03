@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/python/map/classes.pythonic-object|Pythonic 对象：`__init__`、`__repr__`、`__eq__`、`classmethod` vs `staticmethod`]]
 
-**Unlocks:** [[domains/python/map/types.protocols-generics|`Protocol`、`TypeVar`、`ParamSpec` 与泛型类]]
+**Unlocks:** [[domains/python/map/types.protocols-generics|`Protocol`、`TypeVar`、`ParamSpec` 与泛型类]], [[domains/python/map/craft.patterns.policy-seam|策略接缝：把会变的规则做成注入的纯函数/对象]], [[domains/python/map/craft.patterns.predicate-algebra-three-valued|谓词代数与三值逻辑：可组合的小对象 + NULL 传播]], [[domains/python/map/craft.idioms.protocol-callable-abc|策略接口三选一：Callable / Protocol / ABC]], [[domains/python/map/craft.architecture.dependency-direction-consumer-owns-interface|依赖方向：接口由使用方定义，核心不依赖基础设施]], [[domains/python/map/craft.architecture.interface-only-when-earned|接口是挣来的：什么时候不抽象]], [[domains/python/map/craft.architecture.composition-of-independent-axes|独立变化轴的组合：N×M 个组合只写 N+M 个小类]]
 
 ## Readings
 - [[effective-07-classes-interfaces|Effective Python 3e · 第 7 章 类与接口]]

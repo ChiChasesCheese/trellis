@@ -15,14 +15,16 @@ step: 5
 ```python
 # billing-tax-engine / amz-aws-billing：沿金额或用量轴，用 lower 追踪上一个边界
 top = amount if upper is None else min(amount, upper)
-if top > lower: total += (top - lower) * rate
+if top > lower: total += _bps(top - lower, bps)   # 此处 bps 是该档费率（基点）
 # dasher-payout：沿时间轴，在窗口边界切开，用中点定倍率
-points = sorted({start, end, *(c for c in cuts if start < c < end)})
+points = sorted({start, end, *(c for c in self._boundaries(start, end) if start < c < end)})
 # amz-parking-fees：沿时间轴，在价格变化时刻切开，按日累加，每日取整一次
 end = min(self._tariff.next_change(at), exited)
 # LeetCode 986 区间列表的交集：两个指针，重叠段 = 起点取大、终点取小
 lo, hi = max(a[i][0], b[j][0]), min(a[i][1], b[j][1])
 ```
+
+以上各题的代码是节选：省略了类型标注、文档字符串和 `...` 处的细节，个别行为讲解而合并成一行，不是逐字摘抄。
 
 **见于。** billing-tax-engine、amz-aws-billing、dasher-payout、amz-parking-fees、interval-list-intersections。
 

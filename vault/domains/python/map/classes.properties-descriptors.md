@@ -8,6 +8,8 @@
 
 **Requires:** [[domains/python/map/classes.attribute-lookup|属性查找：实例字典、类字典、`__getattr__` 与 `__getattribute__`]]
 
+**Unlocks:** [[domains/python/map/craft.patterns.derived-not-stored|派生状态不存储：算出来，不要存一份第二真相]], [[domains/python/map/craft.idioms.memoize-on-frozen|记忆化：lru_cache 要求参数可哈希、结果不可变]], [[domains/python/map/craft.idioms.descriptors-where-they-earn|描述符：什么时候值得（共享字段规则），什么时候不值得]]
+
 ## Readings
 - [[effective-08-metaclasses-attributes|Effective Python 3e · 第 8 章 元类与属性]]
 - [[fluent-22-dynamic-attributes-properties|Fluent Python 2e · 第 22 章 动态属性与特性]]

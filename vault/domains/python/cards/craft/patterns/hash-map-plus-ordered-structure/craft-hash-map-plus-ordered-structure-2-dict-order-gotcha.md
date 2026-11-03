@@ -5,7 +5,7 @@ type: qa
 step: 2
 ---
 ## Q
-**哈希表 + 有序结构 · 能不能只用普通 dict 当 LRU**｜写法
+**哈希表 + 有序结构 · 能不能只用普通 dict 当 LRU**｜模式
 
 Python 3.7 起 dict 保证插入顺序。于是有人用 `d[k] = d.pop(k)` 把 key 移到末尾，用 `next(iter(d))` 取最旧的 key，不就是 LRU 了吗？为什么还需要 `OrderedDict`？
 

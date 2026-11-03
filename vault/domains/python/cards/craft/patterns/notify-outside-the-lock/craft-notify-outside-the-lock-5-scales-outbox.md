@@ -5,7 +5,7 @@ type: qa
 step: 5
 ---
 ## Q
-**锁内记事件、锁外派发 · 从事件列表到发件箱（outbox）**｜架构
+**锁内记事件、锁外派发 · 从事件列表到发件箱（outbox）**｜模式
 
 进程内，事件列表在锁内追加、锁外派发。放到服务里，「状态变更」是数据库事务，「通知」是发消息到 Kafka。如果在事务里直接发消息，会有什么问题？同样的结构怎么搬过去？
 
@@ -13,15 +13,29 @@ step: 5
 **要点。** 同构：事务内只写状态和一行「待发事件」（发件箱表 outbox），事务提交后由中继（relay）把事件发出去并标记已发。事务里不调外部系统，原因和锁里不调回调一样：外部系统慢、失败、或者回头读自己。
 
 ```python
+db = sqlite3.connect(":memory:")
+db.executescript("""
+CREATE TABLE orders (id INTEGER PRIMARY KEY, status TEXT);
+CREATE TABLE outbox (id INTEGER PRIMARY KEY AUTOINCREMENT, topic TEXT, payload TEXT, sent INTEGER DEFAULT 0);
+""")
+
 with db:                                # 一个事务
     db.execute("INSERT INTO orders VALUES (1, 'PAID')")
-    db.execute("INSERT INTO outbox (topic, payload) VALUES ('order.paid', '{...}')")
+    db.execute("INSERT INTO outbox (topic, payload) VALUES ('order.paid', '{\"id\": 1}')")
 
-def relay():
-    for row_id, topic, payload in db.execute("SELECT ... WHERE sent=0"):
-        publish(payload)                # 事务外调用外部系统
+published: list[str] = []
+
+def relay(crash_before_mark: bool = False) -> None:
+    for row_id, topic, payload in db.execute("SELECT id, topic, payload FROM outbox WHERE sent=0").fetchall():
+        published.append(payload)       # 事务外调用外部系统
+        if crash_before_mark:
+            return                      # 发出去了但还没标记：进程挂了
         with db:
             db.execute("UPDATE outbox SET sent=1 WHERE id=?", (row_id,))
+
+relay(crash_before_mark=True)
+relay()                                 # 重启后再发一次
+print("发布次数", len(published), "-> 至少一次，消费者要去重")
 ```
 
 relay 在发出之后、标记之前崩溃，重启后再跑一次，实际输出：

@@ -38,6 +38,8 @@ with self._lock:
         self._slots[label] = _Slot(SeatStatus.HELD, hold_id=receipt.id, ...)
 ```
 
+以上各题的代码是节选：省略了类型标注、文档字符串和 `...` 处的细节，个别行为讲解而合并成一行，不是逐字摘抄。
+
 **不变。** 一把锁、判断与写入在同一块、写入的内容让别人能看出「已被占」。**变化。** 司机返回 `bool`（赢了没有）；去重返回上一次的结果；订票对一批对象全有或全无，失败时什么都没写，所以不需要清理。
 
 **见于。** ride-sharing、idempotent-transfer、notification-service、movie-booking。

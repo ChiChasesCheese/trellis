@@ -24,6 +24,8 @@ self._admission = threading.Semaphore(queue_capacity) if queue_capacity else Non
 class OverflowPolicy(Enum): DROP_OLDEST; BLOCK; REJECT
 ```
 
+以上各题的代码是节选：省略了类型标注、文档字符串和 `...` 处的细节，个别行为讲解而合并成一行，不是逐字摘抄。
+
 **见于。** design-circular-queue、pub-sub、thread-pool、logger、amz-emergency-pubsub、bounded-blocking-queue。
 
 **不变的。** 缓冲区一定有上限；满了的行为是显式的策略；丢弃一定留下计数或死信；阻塞一定有超时和被关闭唤醒的出口。**变化的。** 谁来承受代价（生产者、消费者、被丢掉的数据），以及丢哪一条（最老、最不重要）。

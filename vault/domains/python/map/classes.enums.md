@@ -6,6 +6,8 @@
 
 **Core** — part of the first pass through this subject.
 
+**Unlocks:** [[domains/python/map/craft.patterns.transition-table-state-machine|转移表状态机：把「哪个状态能去哪」写成数据（State machine as a table）]], [[domains/python/map/craft.idioms.enum-behaviour|Enum 的行为：IntEnum 排序、属性、StrEnum 与生命周期顺序]], [[domains/python/map/craft.idioms.literal-and-closed-sets|封闭取值集：Literal / Enum / StrEnum 的选型]]
+
 ## Readings
 - [[pydocs-enum-howto|Enum HOWTO：枚举成员是类的单例实例]]
 

@@ -128,3 +128,13 @@ def test_fold_keeps_indentation_of_an_indented_fence():
     from trellis.build import _fold_bullets
     out = _fold_bullets("- 这一条很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长\n\n    ```python\n    def f() -> int:\n        return 1\n    ```\n")
     assert "\n    return 1\n" in out
+
+
+def test_long_code_folds_only_past_the_limit():
+    from trellis.build import _html
+    short = "```python\nx = 1\n```"
+    long = "```python\n" + "\n".join(f"x{i} = {i}" for i in range(30)) + "\n```"
+    assert "<details" not in _html(short, fold_code=25)
+    assert '<summary>代码（30 行）</summary>' in _html(long, fold_code=25)
+    assert "<details" not in _html(long)
+

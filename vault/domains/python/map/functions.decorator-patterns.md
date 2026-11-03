@@ -8,6 +8,8 @@
 
 **Requires:** [[domains/python/map/functions.decorators|装饰器：`@` 语法糖、`functools.wraps` 与执行时机]]
 
+**Unlocks:** [[domains/python/map/craft.idioms.decorators-for-cross-cutting-locks|装饰器做横切关注点：@_synchronized / @_op 与 functools.wraps]]
+
 ## Readings
 - [[fluent-09-decorators-closures|Fluent Python 2e · 第 9 章 装饰器与闭包]]
 

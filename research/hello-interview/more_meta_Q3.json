@@ -1,0 +1,51 @@
+{
+ "spreadsheet-engine": {
+  "requires": [
+   "lld.in-a-hurry.patterns",
+   "lld.in-a-hurry.oop-concepts",
+   "lld.in-a-hurry.design-principles",
+   "sd.core-concepts.data-modeling"
+  ]
+ },
+ "battleship-game-design": {
+  "requires": [
+   "lld.in-a-hurry.delivery",
+   "lld.in-a-hurry.oop-concepts",
+   "lld.in-a-hurry.design-principles",
+   "lld.in-a-hurry.patterns"
+  ]
+ },
+ "restaurant-waitlist-api": {
+  "requires": [
+   "lld.in-a-hurry.delivery",
+   "lld.in-a-hurry.oop-concepts",
+   "lld.in-a-hurry.design-principles",
+   "lld.concurrency.intro"
+  ]
+ },
+ "dasher-payout": {
+  "requires": [
+   "lld.in-a-hurry.delivery",
+   "lld.in-a-hurry.oop-concepts",
+   "lld.in-a-hurry.design-principles",
+   "sd.core-concepts.data-modeling"
+  ]
+ },
+ "image-transform-pipeline": {
+  "requires": [
+   "lld.in-a-hurry.patterns",
+   "lld.in-a-hurry.oop-concepts",
+   "lld.concurrency.intro",
+   "sd.patterns.scaling-writes",
+   "sd.patterns.long-running-tasks"
+  ]
+ },
+ "credit-token-balance": {
+  "requires": [
+   "lld.in-a-hurry.delivery",
+   "lld.in-a-hurry.oop-concepts",
+   "lld.in-a-hurry.design-principles",
+   "sd.core-concepts.data-modeling"
+  ]
+ }
+}

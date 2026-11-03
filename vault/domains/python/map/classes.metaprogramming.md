@@ -8,6 +8,8 @@
 
 **Requires:** [[domains/python/map/classes.inheritance-mro|继承、多重继承、MRO（C3 线性化）与 `super()`]]
 
+**Unlocks:** [[domains/python/map/craft.idioms.init-subclass-registry|__init_subclass__ 注册表 vs 手写 dict（create_cache 的取舍）]]
+
 ## Readings
 - [[effective-08-metaclasses-attributes|Effective Python 3e · 第 8 章 元类与属性]]
 - [[fluent-24-class-metaprogramming|Fluent Python 2e · 第 24 章 类元编程]]

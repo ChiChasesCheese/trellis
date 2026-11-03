@@ -6,6 +6,8 @@
 
 **Core** — part of the first pass through this subject.
 
+**Unlocks:** [[domains/python/map/craft.patterns.recursive-descent-parsing|递归下降解析：优先级 = 调用层次，分词与求值分离]], [[domains/python/map/craft.idioms.match-structural|结构化模式匹配：对 dataclass 与枚举的 match / case]], [[domains/python/map/craft.idioms.exhaustive-match-assert-never|穷尽性：match 加 assert_never（解法没用，应该用）]]
+
 ## Readings
 - [[peps-pattern-matching-tutorial|PEP 636：结构化模式匹配教程]]
 

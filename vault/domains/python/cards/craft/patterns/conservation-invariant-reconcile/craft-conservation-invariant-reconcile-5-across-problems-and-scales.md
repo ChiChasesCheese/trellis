@@ -23,6 +23,8 @@ return self.loaded == self.in_cassette + self.on_tray + self.in_reject_bin + sel
 return sum(a.cash for a in self._accounts.values())
 ```
 
+以上各题的代码是节选：省略了类型标注、文档字符串和 `...` 处的细节，个别行为讲解而合并成一行，不是逐字摘抄。
+
 **见于。** double-entry-ledger、digital-wallet、atm、stock-brokerage。
 
 **不变的。** 变化只通过「成对的搬运」发生；不变量是只读查询，不参与业务；真相（账本）与投影（缓存）分开，冲突时真相覆盖投影。**变化的。** 守恒的量（币种余额、钞票、现金与股票）和检查的时机（写入时校验、定时对账、测试收尾）。

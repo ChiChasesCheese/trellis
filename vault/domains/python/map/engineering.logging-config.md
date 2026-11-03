@@ -4,10 +4,15 @@
 
 掌握 logger 的层级传播、每个模块 `getLogger(__name__)`、处理器与格式器分离、在库里不配置根 logger，以及配置从环境变量/文件读取的模式。
 
+**Unlocks:** [[domains/python/map/craft.architecture.observability-as-design|可观测性是设计的一部分：丢弃必须计数，状态变化必须留痕]]
+
 ## Readings
 - [[effective-14-collaboration|Effective Python 3e · 第 14 章 协作]]
 - [[pydocs-logging-howto|日志 HOWTO：从基础用法到多模块配置]]
 - [[pydocs-logging-module-ref|logging 模块：完整 API 参考]]
+
+## Drills
+- [[engineering-harden-a-payment-script|Drill：把一段收款脚本改成生产可用的版本]]
 
 ## Cards (6)
 1. [[logging-getlogger-name-convention]]

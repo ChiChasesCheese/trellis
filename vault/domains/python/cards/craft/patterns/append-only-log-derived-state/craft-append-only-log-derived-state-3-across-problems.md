@@ -27,6 +27,8 @@ class Timeline:
     """times[i] 是第 i 个事件的时间，counts[i] 是处理完它之后的人数。"""
 ```
 
+以上各题的代码是节选：省略了类型标注、文档字符串和 `...` 处的细节，个别行为讲解而合并成一行，不是逐字摘抄。
+
 重放的版本中，乱序到达的事件只需要被排进正确位置，分配自然重算；银行事件表里一个账户被合并掉，只是不再有新事件写进它的历史，历史本身一直在，所以合并后依然能回答历史时点的余额，不需要专门代码。
 
 **见于。** double-entry-ledger、credit-token-balance、dasher-payout、amz-occupancy-tracker、atm（流水只增不改）、bank-account。

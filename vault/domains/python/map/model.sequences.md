@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/python/map/model.mutability|可变与不可变对象：list vs tuple、可变默认参数、别名（aliasing）]]
 
-**Unlocks:** [[domains/python/map/performance.numpy-vectorization|NumPy 向量化与内存布局：ndarray、广播、连续内存与视图]]
+**Unlocks:** [[domains/python/map/performance.numpy-vectorization|NumPy 向量化与内存布局：ndarray、广播、连续内存与视图]], [[domains/python/map/craft.patterns.half-open-intervals|区间一律左闭右开：[start, end)]], [[domains/python/map/craft.idioms.bisect-sorted-lists|bisect 与有序列表：floor/ceiling、key=、只查邻居]], [[domains/python/map/craft.idioms.namedtuple-for-keys|NamedTuple 做复合键与轻量返回值]]
 
 ## Readings
 - [[effective-02-strings-slicing|Effective Python 3e · 第 2 章 字符串与切片]]

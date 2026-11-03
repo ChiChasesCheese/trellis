@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/python/map/model.hash-eq|`__hash__` 与 `__eq__` 的契约]]
 
-**Unlocks:** [[domains/python/map/performance.containers|内建容器的性能：list 追加/插入、dict/set 查找、deque 与 bisect]]
+**Unlocks:** [[domains/python/map/performance.containers|内建容器的性能：list 追加/插入、dict/set 查找、deque 与 bisect]], [[domains/python/map/craft.patterns.transition-table-state-machine|转移表状态机：把「哪个状态能去哪」写成数据（State machine as a table）]], [[domains/python/map/craft.patterns.hash-map-plus-ordered-structure|哈希表 + 有序结构：O(1) 定位，O(log n) 或 O(1) 取序]], [[domains/python/map/craft.patterns.dependency-graph-cycle-detection|依赖图与环检测：拓扑排序、可达性、祖先链]], [[domains/python/map/craft.patterns.deterministic-tie-break|确定性 tie-break：排序键里写全规则，输出可复现]], [[domains/python/map/craft.idioms.dispatch-tables|数据驱动的分派表：operator 表、方向表、转换表]], [[domains/python/map/craft.architecture.unit-of-inventory-modeling|库存的单位怎么选：房型夜、车的行程段、场次座位、航班实例]]
 
 ## Readings
 - [[cpy-dict-notes|dict 的键值分离设计：为什么同一个类的实例能共享一张键表]]

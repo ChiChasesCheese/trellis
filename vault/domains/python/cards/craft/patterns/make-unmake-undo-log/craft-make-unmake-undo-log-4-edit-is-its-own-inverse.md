@@ -5,7 +5,7 @@ type: qa
 step: 4
 ---
 ## Q
-**做/撤销与撤销日志 · 文本编辑器：插入、删除、替换为什么只要一种 Edit**｜架构
+**做/撤销与撤销日志 · 文本编辑器：插入、删除、替换为什么只要一种 Edit**｜模式
 
 编辑器要支持撤销和重做。常见的命令模式（command pattern）会写 `InsertCommand`、`DeleteCommand`、`ReplaceCommand` 三个类，每个带 `execute` 和 `undo`。有没有更小的设计？
 

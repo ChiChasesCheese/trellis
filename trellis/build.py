@@ -503,7 +503,18 @@ def _embed(m: re.Match) -> str:
     return f'<img class="clip" src="{name}">'
 
 
-def _html(text: str, related: dict | None = None, own: set[int] | None = None, fold: bool = False) -> str:
+_CODE_BLOCK = re.compile(r'<div class="hl"><pre>.*?</pre></div>', re.S)
+
+
+def _fold_long_code(html: str, limit: int) -> str:
+    """A code block longer than `limit` lines (skeleton `fold_code`) opens on a tap, so a phone card stays readable."""
+    def wrap(m: re.Match) -> str:
+        n = m.group(0).count("\n")
+        return m.group(0) if n <= limit else f'<details class="inline-example"><summary>代码（{n} 行）</summary>{m.group(0)}</details>'
+    return _CODE_BLOCK.sub(wrap, html)
+
+
+def _html(text: str, related: dict | None = None, own: set[int] | None = None, fold: bool = False, fold_code: int = 0) -> str:
     # Obsidian wikilinks have nowhere to point inside Anki; render the
     # display text as a styled reference instead.
     # (only outside code: `[[0]] * 3` in a code span is Python, not a link)
@@ -535,6 +546,8 @@ def _html(text: str, related: dict | None = None, own: set[int] | None = None, f
     html = _TITLE.sub(lambda m: f'<p class="title">{m.group(1)}<span class="meta">{m.group(2)}</span></p>', html, count=1)
     html = _LABEL.sub(lambda m: f'<p><span class="label">{m.group(1)}</span>', html)
     html = _fold_examples(html)
+    if fold_code:
+        html = _fold_long_code(html, fold_code)
     if related:
         html = _expand_related(html, related, own or set())
     return _break_semicolons(html)
@@ -648,7 +661,7 @@ def build_package(
         if card.type == "qa":
             note = genanki.Note(
                 model=qa_model,
-                fields=[_html(question), _html(answer, related, own, fold=skeleton.fold) + footer, crumb],
+                fields=[_html(question), _html(answer, related, own, fold=skeleton.fold, fold_code=skeleton.fold_code) + footer, crumb],
                 guid=genanki.guid_for(f"trellis:{card.id}"),
                 tags=tags,
                 due=position,

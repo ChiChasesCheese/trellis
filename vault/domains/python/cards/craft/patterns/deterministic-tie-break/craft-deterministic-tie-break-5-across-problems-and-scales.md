@@ -23,6 +23,8 @@ min(((sizes[t], t) for t in free if sizes[t] >= size), default=None)
 ready = [self._index[n] for n, c in waiting.items() if c == 0]
 ```
 
+以上各题的代码是节选：省略了类型标注、文档字符串和 `...` 处的细节，个别行为讲解而合并成一行，不是逐字摘抄。
+
 **见于。** top-k-frequent-words、inventory-management、restaurant-waitlist、amz-dag-runner、notification-service、amz-file-watcher。
 
 **不变的。** 键是元组，主标准在前，平局规则在后；方向相反的项取负；输出前对来自集合的数据排序。**变化的。** 平局规则的业务含义：字典序、编号小优先、先来后到、最少使用。

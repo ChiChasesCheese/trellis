@@ -6,6 +6,8 @@
 
 **Requires:** [[domains/python/map/types.gradual-typing|渐进类型（gradual typing）、`Any` 与 mypy/pyright 的检查模型]], [[domains/python/map/classes.abc-protocols|鸭子类型、抽象基类（ABC）与 `typing.Protocol`]]
 
+**Unlocks:** [[domains/python/map/craft.idioms.protocol-callable-abc|策略接口三选一：Callable / Protocol / ABC]], [[domains/python/map/craft.idioms.generics-and-type-aliases|泛型与类型别名：Generic/TypeVar、Clock 别名、Self 与 override]], [[domains/python/map/craft.architecture.dependency-direction-consumer-owns-interface|依赖方向：接口由使用方定义，核心不依赖基础设施]]
+
 ## Readings
 - [[fluent-15-more-type-hints|Fluent Python 2e · 第 15 章 深入类型提示]]
 - [[peps-pep544-protocols|PEP 544：Protocol 与结构化子类型]]

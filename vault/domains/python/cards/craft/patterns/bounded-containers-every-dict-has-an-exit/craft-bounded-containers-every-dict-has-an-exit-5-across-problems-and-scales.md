@@ -22,6 +22,8 @@ for key in [k for k, s in shard.states.items() if s.is_idle(now)]: del shard.sta
 if len(self._entries) >= self._capacity: self._purge_locked(now)
 ```
 
+以上各题的代码是节选：省略了类型标注、文档字符串和 `...` 处的细节，个别行为讲解而合并成一行，不是逐字摘抄。
+
 **见于。** lru-cache、rate-limiter、ttl-cache、kv-store、notification-service、pub-sub。
 
 **不变的。** 谁创建这一项，谁负责说明它什么时候消失；清理的触发条件不能依赖会无限增长的量；主表与旁路结构一起清；用计数属性把「有界」变成可测试的断言。**变化的。** 出口的种类，和清理的执行时机（访问时、摊还、定时）。

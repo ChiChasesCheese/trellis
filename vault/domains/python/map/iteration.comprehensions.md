@@ -6,6 +6,8 @@
 
 **Core** — part of the first pass through this subject.
 
+**Unlocks:** [[domains/python/map/craft.idioms.default-forms|省掉标志变量：next(…, None) / min(default=) / for-else / 海象运算符]]
+
 ## Readings
 - [[effective-01-pythonic-thinking|Effective Python 3e · 第 1 章 Python 化思维]]
 - [[fluent-02-sequences|Fluent Python 2e · 第 2 章 序列构成的数组]]

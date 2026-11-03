@@ -24,6 +24,8 @@ at: datetime                       # 从这一刻起可用（含）
 expires_at: datetime | None = None  # 到这一刻失效（不含）
 ```
 
+以上各题的代码是节选：省略了类型标注、文档字符串和 `...` 处的细节，个别行为讲解而合并成一行，不是逐字摘抄。
+
 **见于。** meeting-rooms、hotel-booking、dasher-payout、inventory-management、credit-token-balance、meeting-scheduler。
 
 **不变的。** 起点含、终点不含；所有判断由 `<` 而不是 `<=` 写成；非法（空或反向）区间在构造时拒绝。**变化的。** 区间的轴（日期、时刻、一天里的秒数、序号）。

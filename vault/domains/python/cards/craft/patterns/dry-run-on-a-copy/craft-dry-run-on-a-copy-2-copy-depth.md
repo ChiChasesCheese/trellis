@@ -5,7 +5,7 @@ type: qa
 step: 2
 ---
 ## Q
-**在副本上试运行 · 复制到多深才算「副本」**｜写法
+**在副本上试运行 · 复制到多深才算「副本」**｜模式
 
 `estimate_wait` 里复制队列时写的是 `[_Waiting(w.id, w.size, w.skipped) for w in queue]`，而不是看起来更简洁的 `list(queue)`。为什么？写成后者，预测一次会发生什么？
 

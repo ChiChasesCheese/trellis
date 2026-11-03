@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/python/map/iteration.iterator-protocol|可迭代对象与迭代器：`__iter__`、`__next__`、`StopIteration`]]
 
-**Unlocks:** [[domains/python/map/iteration.yield-from|`yield from` 与生成器的 `send`/`throw`/`close`]], [[domains/python/map/iteration.itertools|`itertools` 与迭代器组合：`chain`、`groupby`、`islice`、`accumulate`]], [[domains/python/map/iteration.context-managers|上下文管理器：`__enter__`/`__exit__`、`contextlib.contextmanager` 与 `ExitStack`]]
+**Unlocks:** [[domains/python/map/iteration.yield-from|`yield from` 与生成器的 `send`/`throw`/`close`]], [[domains/python/map/iteration.itertools|`itertools` 与迭代器组合：`chain`、`groupby`、`islice`、`accumulate`]], [[domains/python/map/iteration.context-managers|上下文管理器：`__enter__`/`__exit__`、`contextlib.contextmanager` 与 `ExitStack`]], [[domains/python/map/craft.patterns.rule-chain-pipeline|规则链/流水线：统一接口，引擎只负责按序跑]], [[domains/python/map/craft.idioms.generators-lazy-traversal|生成器管线与显式栈：惰性遍历 + pairwise / islice]], [[domains/python/map/craft.idioms.default-forms|省掉标志变量：next(…, None) / min(default=) / for-else / 海象运算符]], [[domains/python/map/craft.idioms.id-generation|ID 生成：itertools.count、next 与生成器表达式的陷阱]]
 
 ## Readings
 - [[cpy-generators-internals|生成器对象怎么把一次函数调用变成可以反复挂起的执行]]

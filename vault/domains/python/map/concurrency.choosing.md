@@ -8,7 +8,7 @@
 
 **Requires:** [[domains/python/map/concurrency.executors|`concurrent.futures`：`ThreadPoolExecutor` vs `ProcessPoolExecutor`、`map` 与 `as_completed`]]
 
-**Unlocks:** [[domains/python/map/performance.pandas-at-scale|pandas 大表：分块读取、dtype 与 category、`groupby` 与合并、写时复制]]
+**Unlocks:** [[domains/python/map/performance.pandas-at-scale|pandas 大表：分块读取、dtype 与 category、`groupby` 与合并、写时复制]], [[domains/python/map/craft.architecture.lock-as-transaction-boundary|一把锁就是一个事务：临界区边界 = 原子性边界]], [[domains/python/map/craft.architecture.in-process-to-distributed|从单进程到分布式：每个原语在生产里换成什么]]
 
 ## Readings
 - [[fluent-19-concurrency-models|Fluent Python 2e · 第 19 章 Python 的并发模型]]

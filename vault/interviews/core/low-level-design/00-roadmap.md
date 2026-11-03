@@ -45,6 +45,16 @@
   - Anki：`低层设计（LLD）::03 对象建模（Object Modeling）`
   - Anki：`低层设计（LLD）::04 设计原则（Design Principles）`
   - Anki：`低层设计（LLD）::02 Python 对象模型与惯用法（Pythonic Design）`
+- [ ] 编码功力：这一阶段反复用到的模式和写法，做题时留意它们出现在哪：`python3 drill.py done s1-craft`
+  - 打开：[[craft.idioms.frozen-value-objects|不可变值对象]]
+  - 打开：[[craft.idioms.validated-construction|构造即校验与规范化]]
+  - 打开：[[craft.idioms.exception-family|异常家族]]
+  - 打开：[[craft.idioms.protocol-callable-abc|策略接口三选一]]
+  - 打开：[[craft.architecture.entity-vs-value-object|实体 vs 值对象]]
+  - 打开：[[craft.architecture.interface-only-when-earned|接口是挣来的]]
+  - 打开：[[craft.architecture.thin-service-fat-domain|服务层薄、领域对象厚]]
+  - Anki：`Python::12 编码功力（Coding Craft）::高级写法（Idioms）`
+  - Anki：`Python::12 编码功力（Coding Craft）::架构理解（Architecture）`
 - [ ] 一副牌：建模热身（40 分钟）：`python3 drill.py start deck-of-cards -m 40`
 - [ ] 四子棋：棋盘、规则和胜负判断分开（45 分钟）：`python3 drill.py start connect-four -m 45`
 - [ ] 海战棋：两个玩家的状态和合法性校验（45 分钟）：`python3 drill.py start battleship-game -m 45`
@@ -65,6 +75,19 @@
   - 打开：[[structure.state-machines|状态机]]
   - 打开：https://www.hellointerview.com/learn/low-level-design/in-a-hurry/patterns
   - Anki：`低层设计（LLD）::05 设计模式（Design Patterns）`
+- [ ] 编码功力：这一阶段反复用到的模式和写法，做题时留意它们出现在哪：`python3 drill.py done s2-craft`
+  - 打开：[[craft.patterns.transition-table-state-machine|转移表状态机]]
+  - 打开：[[craft.patterns.policy-seam|策略接缝]]
+  - 打开：[[craft.patterns.rule-chain-pipeline|规则链/流水线]]
+  - 打开：[[craft.patterns.validate-then-commit|先校验后提交]]
+  - 打开：[[craft.idioms.match-structural|结构化模式匹配]]
+  - 打开：[[craft.idioms.exhaustive-match-assert-never|穷尽性]]
+  - 打开：[[craft.idioms.closure-factory-policies|闭包工厂做策略]]
+  - 打开：[[craft.architecture.extension-points-worth-paying-for|扩展点值得付费的地方]]
+  - 打开：[[craft.architecture.composition-of-independent-axes|独立变化轴的组合]]
+  - Anki：`Python::12 编码功力（Coding Craft）::跨题模式（Patterns）`
+  - Anki：`Python::12 编码功力（Coding Craft）::高级写法（Idioms）`
+  - Anki：`Python::12 编码功力（Coding Craft）::架构理解（Architecture）`
 - [ ] 售货机：状态机的基本功（50 分钟）：`python3 drill.py start vending-machine -m 50`
 - [ ] 停车场：可替换的分配和计费策略（60 分钟）：`python3 drill.py start parking-lot -m 60`
 - [ ] 快递柜：取件码、过期和格口分配（60 分钟）：`python3 drill.py start amazon-locker -m 60`
@@ -85,6 +108,21 @@
   - 打开：[[quality.errors|错误处理]]
   - Anki：`低层设计（LLD）::08 API 与程序结构（Program Structure）`
   - Anki：`低层设计（LLD）::06 代码质量（Code Quality）`
+- [ ] 编码功力：这一阶段反复用到的模式和写法，做题时留意它们出现在哪：`python3 drill.py done s3-craft`
+  - 打开：[[craft.patterns.hash-map-plus-ordered-structure|哈希表 + 有序结构]]
+  - 打开：[[craft.patterns.lazy-expiry-settle-on-access|惰性过期]]
+  - 打开：[[craft.patterns.lazy-deletion-heap|惰性删除堆]]
+  - 打开：[[craft.patterns.injected-clock-three-forms|注入时钟的三种形态]]
+  - 打开：[[craft.patterns.dependency-graph-cycle-detection|依赖图与环检测]]
+  - 打开：[[craft.patterns.recursive-descent-parsing|递归下降解析]]
+  - 打开：[[craft.idioms.heapq-tuple-ordering|heapq 的元组序与 tie-break]]
+  - 打开：[[craft.idioms.bisect-sorted-lists|bisect 与有序列表]]
+  - 打开：[[craft.idioms.generators-lazy-traversal|生成器管线与显式栈]]
+  - 打开：[[craft.architecture.functional-core-imperative-shell|函数式核心 + 命令式外壳]]
+  - 打开：[[craft.architecture.seams-for-testing|测试接缝]]
+  - Anki：`Python::12 编码功力（Coding Craft）::跨题模式（Patterns）`
+  - Anki：`Python::12 编码功力（Coding Craft）::高级写法（Idioms）`
+  - Anki：`Python::12 编码功力（Coding Craft）::架构理解（Architecture）`
 - [ ] LRU / LFU 缓存（45 分钟）：`python3 drill.py start lru-cache -m 45`
 - [ ] 带过期的缓存（45 分钟）：`python3 drill.py start ttl-cache -m 45`
 - [ ] 可配置淘汰策略的键值存储（60 分钟）：`python3 drill.py start kv-store -m 60`
@@ -113,6 +151,21 @@
   - 打开：https://www.hellointerview.com/learn/low-level-design/concurrency/scarcity
   - Anki：`低层设计（LLD）::07 并发（Concurrency）`
   - Anki：`04 低层设计（Low-Level Design）::并发（Concurrency）`
+- [ ] 编码功力：这一阶段反复用到的模式和写法，做题时留意它们出现在哪：`python3 drill.py done s4-craft`
+  - 打开：[[craft.patterns.atomic-claim-check-then-act|原子占位]]
+  - 打开：[[craft.patterns.notify-outside-the-lock|锁内记事件、锁外派发]]
+  - 打开：[[craft.patterns.external-call-outside-the-lock|外部调用不持锁]]
+  - 打开：[[craft.patterns.condition-wait-predicate-loop|条件变量]]
+  - 打开：[[craft.patterns.ordered-multi-lock-acquisition|按全局固定顺序拿多把锁]]
+  - 打开：[[craft.patterns.per-key-and-sharded-locks|每个对象一把锁与分片锁]]
+  - 打开：[[craft.patterns.reserve-hold-confirm-with-ttl|预留—确认—过期]]
+  - 打开：[[craft.idioms.context-managers-for-invariants|上下文管理器守不变量]]
+  - 打开：[[craft.idioms.event-wait-and-handoff|Event / Condition 的惯用法]]
+  - 打开：[[craft.architecture.lock-lives-with-the-invariant|锁跟着不变量走]]
+  - 打开：[[craft.architecture.lock-hierarchy-and-reentrancy|调用方向与可重入]]
+  - Anki：`Python::12 编码功力（Coding Craft）::跨题模式（Patterns）`
+  - Anki：`Python::12 编码功力（Coding Craft）::高级写法（Idioms）`
+  - Anki：`Python::12 编码功力（Coding Craft）::架构理解（Architecture）`
 - [ ] 有界阻塞队列（40 分钟）：`python3 drill.py start bounded-blocking-queue -m 40`
 - [ ] 线程池（60 分钟）：`python3 drill.py start thread-pool -m 60`
 - [ ] 多线程日志框架（60 分钟）：`python3 drill.py start logger -m 60`
@@ -130,6 +183,21 @@
 - [ ] 读 TikTok 低层设计的解答：`python3 drill.py done s5-read`
   - Anki：`02 TikTok 高频设计题::TikTok 低层设计`
   - Anki：`04 低层设计（Low-Level Design）::跨题模式（Patterns across questions）`
+- [ ] 编码功力：这一阶段反复用到的模式和写法，做题时留意它们出现在哪：`python3 drill.py done s5-craft`
+  - 打开：[[craft.patterns.idempotency-key-stores-result|幂等键存结果]]
+  - 打开：[[craft.patterns.append-only-log-derived-state|只追加日志 + 派生状态]]
+  - 打开：[[craft.patterns.conservation-invariant-reconcile|守恒不变量与对账]]
+  - 打开：[[craft.patterns.saga-idempotent-compensation|Saga 与幂等补偿]]
+  - 打开：[[craft.patterns.effective-dated-versions|生效时间版本表]]
+  - 打开：[[craft.idioms.money-types|金额类型选型]]
+  - 打开：[[craft.idioms.round-once-at-the-boundary|取整点]]
+  - 打开：[[craft.idioms.time-types|时间类型选型]]
+  - 打开：[[craft.architecture.source-of-truth-and-derived-caches|真相与派生缓存]]
+  - 打开：[[craft.architecture.event-time-vs-processing-time|事件时间 vs 处理时间]]
+  - 打开：[[craft.architecture.in-process-to-distributed|从单进程到分布式]]
+  - Anki：`Python::12 编码功力（Coding Craft）::跨题模式（Patterns）`
+  - Anki：`Python::12 编码功力（Coding Craft）::高级写法（Idioms）`
+  - Anki：`Python::12 编码功力（Coding Craft）::架构理解（Architecture）`
 - [ ] 复式账本（50 分钟）：`python3 drill.py start double-entry-ledger -m 50`
 - [ ] 幂等转账（50 分钟）：`python3 drill.py start idempotent-transfer -m 50`
 - [ ] 额度与令牌余额（50 分钟）：`python3 drill.py start credit-token-balance -m 50`

@@ -28,6 +28,8 @@ OrderState.SCHEDULED: {
 },
 ```
 
+以上各题的代码是节选：省略了类型标注、文档字符串和 `...` 处的细节，个别行为讲解而合并成一行，不是逐字摘抄。
+
 不变：规则是数据，终态是空集（或没有出边），非法组合抛异常。变化：键的形状。叫车题里还把转移表和「谁可以取消」的许可表分成两张，因为两个问题的变化速度不同，合并后每加一种角色都要改转移表。
 
 **见于。** airline、vending-machine、atm、ride-sharing、food-delivery、api-circuit-breaker、amz-robot-restaurant。

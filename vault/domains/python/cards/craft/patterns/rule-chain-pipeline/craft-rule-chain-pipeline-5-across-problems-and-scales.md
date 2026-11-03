@@ -28,6 +28,8 @@ while node is not None:
     if not node.propagate: break
 ```
 
+以上各题的代码是节选：省略了类型标注、文档字符串和 `...` 处的细节，个别行为讲解而合并成一行，不是逐字摘抄。
+
 **见于。** billing-tax-engine、amz-discount-engine、image-transform-pipeline、amz-in-memory-db（select 的 FROM → JOIN → WHERE → ORDER BY → LIMIT → 投影）、logger。
 
 **不变的。** 固定的数据类型、统一接口、引擎持有不变量。**变化的。** 步骤的可见范围：只看上一步的输出（图像）、看全部历史（账单行）、看剩余量（折扣）；以及能不能中断（日志的 `propagate`，折扣的「前一条把小计压到门槛以下，这一条就不再适用」）。

@@ -23,6 +23,8 @@ for undo in reversed(self._frames.pop()): undo()
 self._en_passant, self._rights, self._halfmove = (move.prev_en_passant, move.prev_rights, move.prev_halfmove)
 ```
 
+以上各题的代码是节选：省略了类型标注、文档字符串和 `...` 处的细节，个别行为讲解而合并成一行，不是逐字摘抄。
+
 **见于。** n-queens、kv-store、text-editor、connect-four（`drop` 的逆操作是 `undo`，搜索里用它）、chess。
 
 **不变的。** 逆操作必须精确；撤销信息 = 正向会丢掉的东西；多步撤销按逆序；撤销后与派生结构（局面计数、孤立的过期表）一起恢复。**变化的。** 撤销信息的存放位置，以及撤销的粒度（一步、一层事务）。

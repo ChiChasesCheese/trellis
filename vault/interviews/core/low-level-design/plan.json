@@ -66,6 +66,23 @@
      ]
     },
     {
+     "id": "s1-craft",
+     "title": "编码功力：这一阶段反复用到的模式和写法，做题时留意它们出现在哪",
+     "open": [
+      "[[craft.idioms.frozen-value-objects|不可变值对象]]",
+      "[[craft.idioms.validated-construction|构造即校验与规范化]]",
+      "[[craft.idioms.exception-family|异常家族]]",
+      "[[craft.idioms.protocol-callable-abc|策略接口三选一]]",
+      "[[craft.architecture.entity-vs-value-object|实体 vs 值对象]]",
+      "[[craft.architecture.interface-only-when-earned|接口是挣来的]]",
+      "[[craft.architecture.thin-service-fat-domain|服务层薄、领域对象厚]]"
+     ],
+     "anki": [
+      "Python::12 编码功力（Coding Craft）::高级写法（Idioms）",
+      "Python::12 编码功力（Coding Craft）::架构理解（Architecture）"
+     ]
+    },
+    {
      "drill": "deck-of-cards",
      "title": "一副牌：建模热身",
      "minutes": 40
@@ -115,6 +132,26 @@
      ],
      "anki": [
       "低层设计（LLD）::05 设计模式（Design Patterns）"
+     ]
+    },
+    {
+     "id": "s2-craft",
+     "title": "编码功力：这一阶段反复用到的模式和写法，做题时留意它们出现在哪",
+     "open": [
+      "[[craft.patterns.transition-table-state-machine|转移表状态机]]",
+      "[[craft.patterns.policy-seam|策略接缝]]",
+      "[[craft.patterns.rule-chain-pipeline|规则链/流水线]]",
+      "[[craft.patterns.validate-then-commit|先校验后提交]]",
+      "[[craft.idioms.match-structural|结构化模式匹配]]",
+      "[[craft.idioms.exhaustive-match-assert-never|穷尽性]]",
+      "[[craft.idioms.closure-factory-policies|闭包工厂做策略]]",
+      "[[craft.architecture.extension-points-worth-paying-for|扩展点值得付费的地方]]",
+      "[[craft.architecture.composition-of-independent-axes|独立变化轴的组合]]"
+     ],
+     "anki": [
+      "Python::12 编码功力（Coding Craft）::跨题模式（Patterns）",
+      "Python::12 编码功力（Coding Craft）::高级写法（Idioms）",
+      "Python::12 编码功力（Coding Craft）::架构理解（Architecture）"
      ]
     },
     {
@@ -175,6 +212,28 @@
      "anki": [
       "低层设计（LLD）::08 API 与程序结构（Program Structure）",
       "低层设计（LLD）::06 代码质量（Code Quality）"
+     ]
+    },
+    {
+     "id": "s3-craft",
+     "title": "编码功力：这一阶段反复用到的模式和写法，做题时留意它们出现在哪",
+     "open": [
+      "[[craft.patterns.hash-map-plus-ordered-structure|哈希表 + 有序结构]]",
+      "[[craft.patterns.lazy-expiry-settle-on-access|惰性过期]]",
+      "[[craft.patterns.lazy-deletion-heap|惰性删除堆]]",
+      "[[craft.patterns.injected-clock-three-forms|注入时钟的三种形态]]",
+      "[[craft.patterns.dependency-graph-cycle-detection|依赖图与环检测]]",
+      "[[craft.patterns.recursive-descent-parsing|递归下降解析]]",
+      "[[craft.idioms.heapq-tuple-ordering|heapq 的元组序与 tie-break]]",
+      "[[craft.idioms.bisect-sorted-lists|bisect 与有序列表]]",
+      "[[craft.idioms.generators-lazy-traversal|生成器管线与显式栈]]",
+      "[[craft.architecture.functional-core-imperative-shell|函数式核心 + 命令式外壳]]",
+      "[[craft.architecture.seams-for-testing|测试接缝]]"
+     ],
+     "anki": [
+      "Python::12 编码功力（Coding Craft）::跨题模式（Patterns）",
+      "Python::12 编码功力（Coding Craft）::高级写法（Idioms）",
+      "Python::12 编码功力（Coding Craft）::架构理解（Architecture）"
      ]
     },
     {
@@ -262,6 +321,28 @@
      ]
     },
     {
+     "id": "s4-craft",
+     "title": "编码功力：这一阶段反复用到的模式和写法，做题时留意它们出现在哪",
+     "open": [
+      "[[craft.patterns.atomic-claim-check-then-act|原子占位]]",
+      "[[craft.patterns.notify-outside-the-lock|锁内记事件、锁外派发]]",
+      "[[craft.patterns.external-call-outside-the-lock|外部调用不持锁]]",
+      "[[craft.patterns.condition-wait-predicate-loop|条件变量]]",
+      "[[craft.patterns.ordered-multi-lock-acquisition|按全局固定顺序拿多把锁]]",
+      "[[craft.patterns.per-key-and-sharded-locks|每个对象一把锁与分片锁]]",
+      "[[craft.patterns.reserve-hold-confirm-with-ttl|预留—确认—过期]]",
+      "[[craft.idioms.context-managers-for-invariants|上下文管理器守不变量]]",
+      "[[craft.idioms.event-wait-and-handoff|Event / Condition 的惯用法]]",
+      "[[craft.architecture.lock-lives-with-the-invariant|锁跟着不变量走]]",
+      "[[craft.architecture.lock-hierarchy-and-reentrancy|调用方向与可重入]]"
+     ],
+     "anki": [
+      "Python::12 编码功力（Coding Craft）::跨题模式（Patterns）",
+      "Python::12 编码功力（Coding Craft）::高级写法（Idioms）",
+      "Python::12 编码功力（Coding Craft）::架构理解（Architecture）"
+     ]
+    },
+    {
      "drill": "bounded-blocking-queue",
      "title": "有界阻塞队列",
      "minutes": 40
@@ -319,6 +400,28 @@
      "anki": [
       "02 TikTok 高频设计题::TikTok 低层设计",
       "04 低层设计（Low-Level Design）::跨题模式（Patterns across questions）"
+     ]
+    },
+    {
+     "id": "s5-craft",
+     "title": "编码功力：这一阶段反复用到的模式和写法，做题时留意它们出现在哪",
+     "open": [
+      "[[craft.patterns.idempotency-key-stores-result|幂等键存结果]]",
+      "[[craft.patterns.append-only-log-derived-state|只追加日志 + 派生状态]]",
+      "[[craft.patterns.conservation-invariant-reconcile|守恒不变量与对账]]",
+      "[[craft.patterns.saga-idempotent-compensation|Saga 与幂等补偿]]",
+      "[[craft.patterns.effective-dated-versions|生效时间版本表]]",
+      "[[craft.idioms.money-types|金额类型选型]]",
+      "[[craft.idioms.round-once-at-the-boundary|取整点]]",
+      "[[craft.idioms.time-types|时间类型选型]]",
+      "[[craft.architecture.source-of-truth-and-derived-caches|真相与派生缓存]]",
+      "[[craft.architecture.event-time-vs-processing-time|事件时间 vs 处理时间]]",
+      "[[craft.architecture.in-process-to-distributed|从单进程到分布式]]"
+     ],
+     "anki": [
+      "Python::12 编码功力（Coding Craft）::跨题模式（Patterns）",
+      "Python::12 编码功力（Coding Craft）::高级写法（Idioms）",
+      "Python::12 编码功力（Coding Craft）::架构理解（Architecture）"
      ]
     },
     {
