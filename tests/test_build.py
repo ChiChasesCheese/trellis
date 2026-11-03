@@ -114,3 +114,17 @@ def test_video_embed_plays_in_anki(monkeypatch, tmp_path):
     h = b._html("要点。\n\n![[bb-euro-step.mp4]]\n")
     assert '<video class="clip" src="bb-euro-step.mp4"' in h and clip in b._MEDIA_USED
     assert '<span class="ref">nope.mp4</span>' in b._html("![[nope.mp4]]")
+
+
+def test_fold_keeps_code_indentation_under_a_bullet():
+    from trellis.build import _html
+    md = ("**一句话。** 难点。\n\n**需求。** 短。\n\n**实现。**\n1. 词法：把字符串切成 token，这一步要处理引号、数字和关键字，长度超过阈值所以会折叠起来显示。\n\n"
+          "```python\ndef f() -> int:\n    return 1\n```\n")
+    h = _html(md, fold=True)
+    assert "    <span" in h or "\n    " in h, h
+
+
+def test_fold_keeps_indentation_of_an_indented_fence():
+    from trellis.build import _fold_bullets
+    out = _fold_bullets("- 这一条很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长\n\n    ```python\n    def f() -> int:\n        return 1\n    ```\n")
+    assert "\n    return 1\n" in out

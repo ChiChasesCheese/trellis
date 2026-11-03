@@ -1,0 +1,10 @@
+{
+ "tt-query-condition-parser": {
+  "title": "条件解析与内存表查询（SQL 风格）",
+  "requires": [
+   "lld.in-a-hurry.patterns",
+   "lld.in-a-hurry.oop-concepts",
+   "sd.core-concepts.data-modeling"
+  ]
+ }
+}

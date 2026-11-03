@@ -1004,6 +1004,20 @@ nodes:
     title: TikTok 低层设计
     summary: TikTok 低层设计：支付方向在前，其后是通用高频题。
     children:
+    - id: tt.lld.tt-query-condition-parser
+      title: 条件解析与内存表查询（SQL 风格）
+      summary: 重点题 · 解析器 + 内存表
+      children:
+      - id: tt.lld.tt-query-condition-parser.answer
+        title: 解答 · 条件解析与内存表查询（SQL 风格）
+        summary: 重点题 · 解析器 + 内存表
+        requires:
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
+        - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
+      - id: tt.lld.tt-query-condition-parser.points
+        title: 要点 · 条件解析与内存表查询（SQL 风格）
+        summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
     - id: tt.lld.tt-billing-tax-engine
       title: 计费 / 计税引擎
       summary: 支付类设计练习

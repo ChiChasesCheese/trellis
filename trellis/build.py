@@ -454,7 +454,15 @@ def _fold_bullets(md: str) -> str:
         if not item:
             continue
         m = re.match(r"^((?:[-*+]|\d+\.)\s+)(.*)$", item[0])
-        cont = [re.sub(r"^ {1,4}", "", l) for l in item[1:]]
+        cont, in_code, base = [], False, 0
+        for l in item[1:]:  # undo the list indent, but never eat a code block's own indentation
+            if _FENCE_LINE.match(l):
+                if not in_code:
+                    base = min(len(l) - len(l.lstrip()), 4)
+                in_code = not in_code
+                cont.append(l[base:])
+            else:
+                cont.append(l[base:] if in_code else re.sub(r"^ {1,4}", "", l))
         if not m:
             out.append("\n".join(item))
             continue
