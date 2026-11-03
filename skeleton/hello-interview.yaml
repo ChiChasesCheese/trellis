@@ -1404,6 +1404,9 @@ nodes:
     - id: tt.lc.number-of-distinct-islands
       title: LC 694 不同岛屿的数量
       summary: TikTok 面试里被报告过的算法题。
+    - id: tt.lc.nearest-exit-from-entrance-in-maze
+      title: LC 1926 迷宫中离入口最近的出口
+      summary: TikTok 面试里被报告过的算法题。
     - id: tt.lc.number-of-islands
       title: LC 200 岛屿数量
       summary: TikTok 面试里被报告过的算法题。
