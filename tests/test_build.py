@@ -173,3 +173,9 @@ def test_short_card_bullets_are_phrases_too():
     h = _html("- **摘要要点：** 这里是具体内容\n- 第二点 → 也放进折叠\n", fold=True)
     assert "<summary>摘要要点</summary>" in h and "<summary>第二点</summary>" in h and "具体内容" in h
 
+
+def test_a_question_with_english_terms_is_still_a_phrase():
+    from trellis.build import _head
+    head, rest = _head("Function Calling 是模型在调函数吗？ → 不是。模型只生成调用意图。")
+    assert head == "Function Calling 是模型在调函数吗？" and rest.startswith("不是")
+

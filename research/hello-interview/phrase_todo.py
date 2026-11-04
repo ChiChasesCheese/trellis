@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from trellis import build as B  # noqa: E402
 
-ROOTS = ["vault/domains/bagu/cards", "vault/domains/hello-interview/cards", "vault/interviews/core/design-questions",
+ROOTS = ["vault/domains/python/cards", "vault/domains/bagu/cards", "vault/domains/hello-interview/cards", "vault/interviews/core/design-questions",
          "vault/domains/hello-interview/premium/bodies"]
 
 

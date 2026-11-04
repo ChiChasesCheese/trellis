@@ -426,7 +426,8 @@ def _head(text: str) -> tuple[str, str]:
         return m.group(1).rstrip("：:。，, "), m.group(2)
     if "→" in text:
         before, after = text.split("→", 1)
-        if _width(before) <= PHRASE_MAX + 6:
+        before = before.strip()
+        if _width(before) <= PHRASE_MAX + 6 or (before.endswith(("？", "?")) and _width(before) <= 44):  # a question is a fine phrase
             return before.strip(), after.strip()
     for seps in ("：:", "，,；;。"):
         parts = _split_at(text, seps)
