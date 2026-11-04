@@ -383,6 +383,7 @@ def _nested_indent(text: str) -> str:
 def _inline(s: str) -> str:
     s = s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
     s = re.sub(r'&lt;(/?)span( class="ref")?&gt;', r"<\1span\2>", s)  # wikilinks already rendered as references
+    s = re.sub(r'&lt;a class="ref" href="([^"]*)"&gt;', r'<a class="ref" href="\1">', s).replace("&lt;/a&gt;", "</a>")
     s = re.sub(r"`([^`]+)`", r"<code>\1</code>", s)
     return re.sub(r"\*\*([^*]+)\*\*", r"<b>\1</b>", s)
 
@@ -456,6 +457,9 @@ def _outline(text: str) -> str:
         return _fold_bullets(text)
     out = ["\n".join(pre)]
     for label, first, body in sections:
+        if label in _RELATED_LABELS:  # expands into the problems it names, so it must stay one paragraph
+            out.append(f"**{label}。** {first}")
+            continue
         body_md = _fold_bullets("\n".join(body).strip("\n"))
         gist, rest = (first, "") if _width(first) <= PHRASE_MAX else _head(first)
         if _width(gist) > PHRASE_MAX:  # no phrase to lead with: the label stands alone and the prose goes inside

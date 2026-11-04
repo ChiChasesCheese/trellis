@@ -179,3 +179,10 @@ def test_a_question_with_english_terms_is_still_a_phrase():
     head, rest = _head("Function Calling 是模型在调函数吗？ → 不是。模型只生成调用意图。")
     assert head == "Function Calling 是模型在调函数吗？" and rest.startswith("不是")
 
+
+def test_a_link_in_a_fold_title_is_a_link_not_text():
+    from trellis.build import _html
+    links = {"links.top-k": {"node": "links.top-k", "tag": "bagu::links::top-k", "answer": "地图"}}
+    h = _html("**基本回答。** 短。\n\n**业务场景。** 短。\n\n**系统设计。** [[links.top-k|Top-K 榜]]：怎么分片再合并，第一步按用户分桶\n", fold=True, links=links, node="a.x")
+    assert "&lt;a" not in h and 'class="ref" href="anki://' in h
+
