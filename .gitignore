@@ -55,3 +55,8 @@ vault/domains/hello-interview/premium/
 vault/interviews/core/low-level-design/work/
 vault/interviews/core/low-level-design/progress.jsonl
 vault/interviews/core/low-level-design/PROGRESS.md
+
+# Bagu deck: draws directly on third-party material, so it stays on this machine and in Anki
+skeleton/bagu.yaml
+vault/domains/bagu/
+research/domains/bagu/

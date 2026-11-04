@@ -34,7 +34,7 @@ Redis 是一个把数据放在内存里的键值数据库（key-value store）�
 |---|---|---|---|
 | String | embstr / int | raw（SDS，简单动态字符串） | SDS 记录长度，O(1) 取长度，二进制安全；单值上限 512MB |
 | List | listpack | quicklist（链表，每个节点是一个 listpack） | 3.2 起 quicklist，7.0 起 listpack 取代 ziplist |
-| Hash | listpack | hashtable | 阈值默认 128 个字段、单值 64 字节 |
+| Hash | listpack | hashtable | 阈值默认 512 个字段、单值 64 字节 |
 | Set | intset（全整数）/ listpack | hashtable | 元素全是整数且少时用 intset |
 | ZSet | listpack | skiplist + dict | dict 做 member 到 score 的 O(1) 查找，跳表做排序和范围 |
 
@@ -54,14 +54,14 @@ Redis 是一个把数据放在内存里的键值数据库（key-value store）�
 
 - **RDB**（快照）：`fork` 子进程，利用写时复制（copy-on-write, COW）把某一时刻的内存写成二进制文件。恢复快、文件小；缺点是两次快照之间的数据会丢（分钟级）。
 - **AOF**（append-only file）：把每条写命令追加到日志。`appendfsync` 三档：`always`（每条都刷盘，最安全最慢）、`everysec`（默认，最多丢约 1 秒）、`no`（交给操作系统，通常 30 秒以内）。文件会变大，所以有 AOF 重写（rewrite）：按当前内存状态重新生成最短的命令序列。
-- **混合持久化**（4.0 起 `aof-use-rdb-preamble yes`）：重写时前半部分是 RDB 格式、后面追加增量命令，兼顾恢复速度和数据完整。7.0 起 AOF 拆成「基础文件 + 增量文件 + 清单」（multi-part AOF）。
+- **混合持久化**（4.0 引入 `aof-use-rdb-preamble`，5.0 起默认开启）：重写时前半部分是 RDB 格式、后面追加增量命令，兼顾恢复速度和数据完整。7.0 起 AOF 拆成「基础文件 + 增量文件 + 清单」（multi-part AOF）。
 - **选择**：只做缓存可以都关；要保数据用 AOF everysec + 混合；极致不丢数据 Redis 本身做不到，要落到数据库。
 - **追问 · fork 有什么风险？** fork 要复制页表，实例越大越慢（10GB 级可能阻塞几十到上百毫秒）；快照期间写入多会触发大量 COW，内存峰值最坏接近翻倍。对策：单实例控制在 10–20GB 内，关闭透明大页（THP），预留内存，在从库上做备份。
 - **追问 · 重启时先读哪个？** 开了 AOF 就读 AOF（它更完整），没开才读 RDB。
 
 ## Q5. 过期键怎么删？内存满了怎么办？
 
-- **过期删除**：惰性删除（访问时才检查，过期就删）+ 定期删除（每秒 10 次，每次从设了过期时间的键里随机抽 20 个，删掉过期的，如果过期比例超过 25% 就继续抽）。两者都不保证过期键立刻消失，内存不会精确释放。
+- **过期删除**：惰性删除（访问时才检查，过期就删）+ 定期删除（每秒 10 次，每次从设了过期时间的键里随机抽 20 个，删掉过期的，如果过期比例超过 阈值（文档写 25%，6.0 起源码常量是 10%） 就继续抽）。两者都不保证过期键立刻消失，内存不会精确释放。
 - **淘汰**（`maxmemory` 达到上限时按 `maxmemory-policy`）：默认 `noeviction`（写入报错）；常用 `allkeys-lru`、`allkeys-lfu`、`volatile-lru`、`volatile-ttl`、`allkeys-random`。
 - **近似 LRU**：不维护全局链表，随机抽 `maxmemory-samples`（默认 5）个键，淘汰其中最久未访问的；样本越大越接近真 LRU，CPU 越多。
 - **LFU**：8 位计数器，对数递增，随时间衰减；能抵抗一次性扫描把热数据挤掉的问题。
