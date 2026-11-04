@@ -33,7 +33,7 @@ kind: system-design
 非功能（先和面试官确认规模，下面是一组可辩护的假设）：
 - 约 1000 万日活，峰值 100 万局同时进行，即约 200 万条长连接（WebSocket）。
 - 每局约 80 个半步，闪电棋 10 分钟内走完，单局约 0.13 步/秒，峰值总写入约 13 万步/秒（80/600×100 万）。
-- 走子端到端延迟目标 p99 < 200ms；规则校验和计时必须可信，客户端不可信。
+- **走子 p99 小于 200ms：** 走子端到端延迟目标 p99 < 200ms；规则校验和计时必须可信，客户端不可信。
 - 一局的存储约 2KB（走子序列加每步用时），1000 万局/天约 20GB/天，一年约 7TB，冷热分离即可。
 - 一致性：单局内强一致（不能出现两方看到不同的棋盘）；排行榜、对局历史最终一致即可。
 
@@ -41,9 +41,9 @@ kind: system-design
 实体：`User(id, rating, ...)`；`Game(id, white, black, timeControl, status, result, startedAt)`；`Move(gameId, moveNo, from, to, promotion, san, spentMs, serverTs)`；`Clock(gameId, whiteMs, blackMs, turn, turnStartedAt)`；`QueueTicket(userId, timeControl, rating, enqueuedAt)`。
 
 接口：
-- `POST /matchmaking/tickets {timeControl}` → 入队；匹配成功后经长连接推送 `game_started {gameId, color}`。
+- **匹配入队接口：** `POST /matchmaking/tickets {timeControl}` → 入队；匹配成功后经长连接推送 `game_started {gameId, color}`。
 - WebSocket 消息：`move {gameId, moveNo, from, to, promotion}`、`undo_request`、`undo_reply`、`resign`、`draw_offer`；服务端推送 `move_applied`、`clock_sync`、`game_over`。
-- `GET /games/{id}`（当前局面加走子序列，用于重连和换设备）；`GET /users/{id}/games`（历史）；`GET /leaderboard?timeControl=&limit=100`。
+- **对局与历史接口：** `GET /games/{id}`（当前局面加走子序列，用于重连和换设备）；`GET /users/{id}/games`（历史）；`GET /leaderboard?timeControl=&limit=100`。
 
 走子消息带 `moveNo`（期望的下一步序号）是关键：它让重复发送和乱序到达都能被幂等地拒绝或忽略。
 
@@ -82,7 +82,7 @@ flowchart TD
 - 问题：客户端自带的倒计时只用于显示。如果信任它，作弊者可以暂停时钟；如果完全按服务端收到消息的时间计，高延迟玩家被吃掉时间。
 - 方案：服务端只存"这一步开始的服务端时间 `turnStartedAt`"和双方剩余毫秒。收到走子时：`spent = now − turnStartedAt`，可补偿一个上限（如 min(网络延迟估计, 200ms)）再扣，`remaining = remaining − spent + increment`。不需要每秒扣减，所以没有"每局每秒一次写"的负载。
 - 超时检测：所有者为"当前轮到的一方"设一个延迟任务（定时器轮或延迟队列），到期时先重新读时钟再判，防止走子和超时的竞态；因为每局事件串行，竞态不会产生双重结果。节点宕机时延迟任务随之消失，所以新所有者接手后必须从日志重算并重新挂定时器。
-- 客户端展示用 `clock_sync` 周期性校正（例如每 5 到 10 秒或每步后），不是权威。
+- **clock_sync 只做展示：** 客户端展示用 `clock_sync` 周期性校正（例如每 5 到 10 秒或每步后），不是权威。
 3. 【必讲】悔棋（undo）：撤回己方上一步，仅当对手还没走。
 - 问题：走子和悔棋并发——对手正好在此刻落子。
 - 方案：因为每局事件串行，只有两种顺序。先处理悔棋：校验"最后一步是请求者走的"，弹出该步，把时钟恢复到走子前的快照（每步都存了前后的剩余时间），广播 `move_undone`；之后对手那一条 `move` 带的 `moveNo` 已过期，被拒绝，客户端回滚到最新局面。先处理对手走子：悔棋请求的前置条件不成立，直接拒绝。

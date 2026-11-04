@@ -27,7 +27,7 @@ kind: system-design
 1. 书商注册：声明接口地址、鉴权方式、能力（是否支持预留、是否推送价格）；平台能适配不同书商接口。
 2. 顾客下单（书名、最高价、收货地址、支付凭证），平台选出不超过最高价的最低报价并代为购买。
 3. 返回结果：买到则给出书商与成交价；买不到则给出最低价及书商，或"无货"。
-4. 同步接口（等结果）与异步接口（立即返回订单号，之后查询或回调）。
+4. **同步与异步两种接口：** 同步接口（等结果）与异步接口（立即返回订单号，之后查询或回调）。
 5. 查询订单状态；顾客可看到每一步的进展。
 
 非功能：
@@ -41,7 +41,7 @@ kind: system-design
 实体：`Seller(id, endpoint, authConfig, capabilities, rateLimit, status)`；`Offer(bookId, sellerId, price, qty, asOf)`；`Order(id, customerId, bookId, maxPrice, idempotencyKey, status, chosenSeller, paidPrice, paymentRef)`；`Attempt(orderId, sellerId, quotedPrice, status, sellerOrderRef)`；`PaymentIntent(orderId, authorizedAmount, status)`。
 
 接口：
-- `POST /orders {bookId, maxPrice, shipTo, paymentToken}` + 请求头 `Idempotency-Key` → 同步模式在 5 秒内返回结果，超时返回 `202 {orderId}`；`?mode=async` 直接 `202`。
+- **5 秒内返回，否则 202：** `POST /orders {bookId, maxPrice, shipTo, paymentToken}` + 请求头 `Idempotency-Key` → 同步模式在 5 秒内返回结果，超时返回 `202 {orderId}`；`?mode=async` 直接 `202`。
 - `GET /orders/{id}`；可选的回调地址 `callbackUrl`。
 - 书商注册：`POST /sellers`（含适配声明）；平台希望书商实现的标准接口只有三个：`quote(bookId)`、`purchase(bookId, maxPrice, orderRef)`、`status(orderRef)`，并要求 `purchase` 按 `orderRef` 幂等。
 
@@ -64,12 +64,12 @@ flowchart TD
 ```
 
 订单的主流程（状态机 `CREATED → QUOTING → PURCHASING → COMPLETED / FAILED_PRICE / FAILED_NO_STOCK / UNKNOWN`）：
-1. 接口层用 `Idempotency-Key` 在订单库里 `INSERT ... ON CONFLICT`：重复请求返回同一订单，不再触发第二次购买。订单落库后入队（落库与入队用 Outbox，见下）。
+1. **Idempotency-Key 防重复下单：** 接口层用 `Idempotency-Key` 在订单库里 `INSERT ... ON CONFLICT`：重复请求返回同一订单，不再触发第二次购买。订单落库后入队（落库与入队用 Outbox，见下）。
 2. 编排器取到订单，先查"报价索引"：`Offer` 表按 `bookId` 取全部书商报价，过滤出价格不超过最高价的，按价格升序。索引由书商推送（webhook、文件）和周期性拉取更新，是扇出的缓存层。
-3. 若索引没有命中或报价太旧（`asOf` 超过 TTL，如 60 秒），对相关书商做一次实时 `quote`（并行，单书商超时 1 到 1.5 秒，用熔断器和舱壁隔离）。
+3. **索引过期则实时 quote：** 若索引没有命中或报价太旧（`asOf` 超过 TTL，如 60 秒），对相关书商做一次实时 `quote`（并行，单书商超时 1 到 1.5 秒，用熔断器和舱壁隔离）。
 4. 从最低价开始尝试购买：对书商调用 `purchase(bookId, maxPrice, orderRef=orderId+attemptNo)`。书商返回 `accepted(price)` 就成交；返回涨价、缺货或拒绝，就记录失败并换下一家。成交价以书商返回为准，并校验仍不超过最高价。
 5. 全部失败：把最低价（实时询到的）与书商返回给顾客，状态置为 `FAILED_PRICE` 或 `FAILED_NO_STOCK`。
-6. 支付（见深入 2）和通知（回调、邮件）都由事件驱动。
+6. **支付通知由事件驱动：** 支付（见深入 2）和通知（回调、邮件）都由事件驱动。
 
 同步与异步共用同一条后台流水线：同步接口只是"提交订单后等待订单进入终态，最多等 5 秒"，到时仍未终态就改为返回 `202`，顾客再轮询或等回调。这样不需要维护两套逻辑，也避免长时间占住连接。
 
@@ -80,14 +80,14 @@ flowchart TD
 - 订单入口：`Idempotency-Key` 在订单库 `INSERT ... ON CONFLICT`，重复请求返回同一订单。
 - 书商入口：每次尝试有稳定的 `orderRef`（订单号加尝试序号），要求书商按它幂等；超时不当成失败，进入 `UNKNOWN`，用 `status(orderRef)` 确认；查到才定成败，查不到再用同一个 `orderRef` 重试。
 - 并发：同一订单同一时刻只一个编排器处理（行级版本号，或按 `orderId` 分区的队列）。
-- 对账任务定期扫描长时间停在 `PURCHASING` 或 `UNKNOWN` 的订单，向书商查询后推进或回滚，是最后一道防线。
+- **对账任务是最后防线：** 对账任务定期扫描长时间停在 `PURCHASING` 或 `UNKNOWN` 的订单，向书商查询后推进或回滚，是最后一道防线。
 
 2. 【必讲】扇出与书商隔离：1 万 QPS 乘 50 家书商，不能每单都扇出。
 - 问题：每单向全部书商询价等于 50 万次/秒外部调用，书商有速率限制，延迟还由最慢的一家决定。
 - 选项：(a) 全量实时扇出，最新但最慢最贵；(b) 只用缓存报价，最快但可能买到过期价；(c) 报价索引做排序，实时只验证候选。
 - 选 (c)：热书请求合并（singleflight），同一种书的并发询价共享一次刷新；最终以书商返回的结果裁决。
 - 隔离：每家书商一个令牌桶限速加独立线程池或信号量（舱壁），慢书商只耗尽自己的资源；按健康度熔断，断开期间从候选里剔除，整单降级为用剩下的书商比价。询价超时 1 到 1.5 秒，并行发出。
-- 1000 QPS、20 QPS 的版本可以省掉索引和异步化，保留编排与幂等。
+- **低 QPS 版可省索引与异步：** 1000 QPS、20 QPS 的版本可以省掉索引和异步化，保留编排与幂等。
 
 3. 【追问再讲】支付 Saga。
 - 形态一，书商自己收款：平台只传令牌，没有资金风险，只对订单状态负责。

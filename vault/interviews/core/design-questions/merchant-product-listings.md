@@ -24,7 +24,7 @@ kind: system-design
 
 **需求。**
 功能：
-1. 商家创建、修改、下架商品（标题、描述、价格、库存、图片、类目）。
+1. **商家商品增删改：** 商家创建、修改、下架商品（标题、描述、价格、库存、图片、类目）。
 2. 单条更新：同步生效，商家立刻能看到结果。
 3. 批量更新：上传文件（CSV、JSON Lines）或调用批量接口，异步处理，可查看进度和逐行错误。
 4. 用户浏览商品详情、列表和搜索结果，看到的是近实时的最新信息。
@@ -40,9 +40,9 @@ kind: system-design
 **核心实体与接口。**
 实体：`Merchant`；`Product(productId, merchantId, fields..., version, updatedAt, status)`；`BulkJob(jobId, merchantId, fileRef, status, total, succeeded, failed, errorFileRef)`；`ProductEvent(productId, version, changeType, payload)`。
 接口：
-- `PUT /merchants/{m}/products/{id}`（带 `If-Match: version`，同步，返回新版本）；`DELETE` 同理。
-- `POST /merchants/{m}/bulk-jobs`：返回一个预签名上传地址和 `jobId`；商家把文件传到对象存储后调用 `POST /bulk-jobs/{id}/start`；`GET /bulk-jobs/{id}` 查进度和错误文件。
-- 读：`GET /products/{id}`、`GET /search?q=&category=`、`GET /merchants/{m}/products`（商家后台）。
+- **PUT 带 If-Match 版本：** `PUT /merchants/{m}/products/{id}`（带 `If-Match: version`，同步，返回新版本）；`DELETE` 同理。
+- **bulk-jobs 预签名上传：** `POST /merchants/{m}/bulk-jobs`：返回一个预签名上传地址和 `jobId`；商家把文件传到对象存储后调用 `POST /bulk-jobs/{id}/start`；`GET /bulk-jobs/{id}` 查进度和错误文件。
+- **读接口：详情、搜索、后台：** 读：`GET /products/{id}`、`GET /search?q=&category=`、`GET /merchants/{m}/products`（商家后台）。
 
 **整体设计。**
 

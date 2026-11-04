@@ -45,7 +45,7 @@ kind: system-design
   - Wallet：`user_id` 分片键；`balance`、`held`、`version`；可用额 = `balance` − `held`。
   - Account（资产、负债、收入、费用；系统账户每个分片一份，如 `clearing@07`）；Journal（一次业务，`business_key` 唯一，`reverses_id` 指向被冲销的那条）与 LedgerLine（借或贷、正整数最小单位、币种；只追加）。
   - Hold（状态 held / captured / released / expired，`expires_at`）；Transfer（状态机）；FxQuote（编号、汇率、有效期）。
-- 接口（所有写接口都带业务键，键加请求内容哈希一起保存：同键同内容返回第一次的结果，同键不同内容返回 409）：
+- **写接口都带业务键：** 接口（所有写接口都带业务键，键加请求内容哈希一起保存：同键同内容返回第一次的结果，同键不同内容返回 409）：
   - `POST /wallets/{id}/credits`：`{source, source_txn_id, amount, currency}`，重复时返回第一次的结果并标 `duplicate`。
   - `POST /wallets/{id}/debits`：`{spend_id, amount, currency}`，402 余额不足。
   - `POST /holds`，`POST /holds/{id}/capture`（可只确认一部分），`POST /holds/{id}/release`；`POST /transfers`；`POST /fx/convert`。
@@ -98,7 +98,7 @@ flowchart TB
    - 同分片就是一个本地事务两条腿。跨分片时，在转出方分片的事务里借转出方、贷「转账在途」账户，以 `transfer_id` 为业务键，发件箱投递事件；转入方分片用同一个 `transfer_id` 幂等入账。
    - 状态机 `PENDING → DEBITED → CREDITED`，或 `DEBITED → REFUNDED`。转入失败（账户已冻结或关闭）则回到转出方做反向分录补偿；任何一步用同一个键重放。
 
-5. 【追问再讲】怎么证明账是对的、历史没被改。
+5. **【追问再讲】账对且历史未改：** 怎么证明账是对的、历史没被改。
    - 持续检查的不变量：每个 Journal 每个币种借贷相等（写入时检查）；钱包 `balance` 等于该用户账户流水之和（一周滚动校验全部 3 亿个钱包，每天约 4,286 万个）；发行账户借方余额等于所有金币账户贷方余额之和；`held` 等于有效冻结额之和；清算账户余额接近 0。
    - 防篡改：数据库账号对账本表只有 `INSERT` 和 `SELECT` 权限。再加封块：每分钟对每片新分录算哈希汇成块，块含上一块哈希形成链，写入开启保留锁定的对象存储。哈希链放在异步封块器里，而不是写入时更新，否则所有写入会串行化到同一个「上一个哈希」上。
    - 余额和快照都可以从分录重放重建；在线保留 90 天，更老的按月转列式文件归档。

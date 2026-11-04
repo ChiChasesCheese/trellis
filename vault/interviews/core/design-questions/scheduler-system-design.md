@@ -153,7 +153,7 @@ class Scheduler:
 ```
 
 要点：
-- `FixedRate` 在落后时（例如进程卡了好几个周期）直接跳到下一个网格点，只补跑一次而不是连跑好几次，这叫错过触发的合并（misfire 策略）；不想合并的话，可以让 `after` 返回错过的每一个时间点。
+- **FixedRate 落后只补跑一次：** `FixedRate` 在落后时（例如进程卡了好几个周期）直接跳到下一个网格点，只补跑一次而不是连跑好几次，这叫错过触发的合并（misfire 策略）；不想合并的话，可以让 `after` 返回错过的每一个时间点。
 - `cancel` 只打标记，堆里的旧记录弹出时再丢。
 - 执行任务时不持锁，否则慢任务会阻塞调度。
 
@@ -258,9 +258,9 @@ s.run_pending(100); print(out)                     # ['later']
 7. 【加分】优先级饥饿：低优先级任务可能被源源不断的高优先级任务挤住。办法是老化（aging）：就绪队列里的任务等待越久，有效优先级越高；或者给每个优先级保留最低份额的工作线程。
 
 **取舍与追问。** 按被问到的可能性排，通常口述就够：
-- 用现成的线程池定时执行器（如 Java 的 `ScheduledThreadPoolExecutor`）不就行了吗？它解决了单机计时，但不支持优先级就绪队列、自定义 misfire、持久化、分布式领取；面试是要看你理解它内部的模型（延迟队列 + 工作线程）。
+- **为何不用现成线程池执行器：** 用现成的线程池定时执行器（如 Java 的 `ScheduledThreadPoolExecutor`）不就行了吗？它解决了单机计时，但不支持优先级就绪队列、自定义 misfire、持久化、分布式领取；面试是要看你理解它内部的模型（延迟队列 + 工作线程）。
 - 精度：条件变量等待的精度受操作系统调度影响，毫秒级足够；需要微秒级精度时要用专用的实时机制，一般业务调度不需要。
-- 任务很多时 `cancel` 惰性删除会让堆里积累垃圾：当已取消条目超过堆大小的一半时重建堆。
+- **cancel 惰性删除要重建堆：** 任务很多时 `cancel` 惰性删除会让堆里积累垃圾：当已取消条目超过堆大小的一半时重建堆。
 - 时区与夏令时：绝对时间点用 UTC 存储；cron 类触发规则带时区计算本地时间，夏令时跳变日要定义"缺失的那个小时"和"重复的那个小时"如何处理。
 - 观测：每个任务的计划时间与实际开始时间之差（调度延迟）、执行时长、失败次数、队列长度。
 
@@ -273,7 +273,7 @@ s.run_pending(100); print(out)                     # ['later']
 - [[hi-low-level-design-in-a-hurry-patterns|设计模式]]
 - [[hi-low-level-design-concurrency-intro|并发入门]]
 - [[hi-low-level-design-concurrency-coordination|线程协调]]
-- [[hi-low-level-design-in-a-hurry-delivery|答题框架（Delivery Framework）]]
+- **答题框架：** [[hi-low-level-design-in-a-hurry-delivery|答题框架（Delivery Framework）]]
 - [[hi-system-design-deep-dives-temporal|Temporal]]
 
 **同类题。**

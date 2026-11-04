@@ -199,9 +199,9 @@ t.insert({"id": 3, "name": "Cat", "age": 25, "city": "NYC"})
 t.insert({"id": 4, "name": "Dan", "age": 45, "city": "LA"})
 ```
 
-- `age >= 18 AND city = 'NYC'` → Ann、Cat。
-- `city = 'SF' OR age > 40 AND city = 'LA'` → Bob、Dan（`AND` 先结合）。
-- `(city = 'SF' OR age > 40) AND city = 'LA'` → Dan（括号改变结合）。
+- **例：两条件 AND：** `age >= 18 AND city = 'NYC'` → Ann、Cat。
+- **例：AND 先于 OR 结合：** `city = 'SF' OR age > 40 AND city = 'LA'` → Bob、Dan（`AND` 先结合）。
+- **例：括号改变结合：** `(city = 'SF' OR age > 40) AND city = 'LA'` → Dan（括号改变结合）。
 - `a > 1 OR`、`(a > 1`、`a ~ 1` → `ValueError`。
 
 **复杂度。**

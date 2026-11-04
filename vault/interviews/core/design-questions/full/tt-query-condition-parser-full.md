@@ -27,7 +27,7 @@ kind: low-level-design
 **核心实体与接口。**
 - `tokenize(text)`：字符串变 token 列表。
 - `Parser`：`parse_condition()` 和 `parse_select()`，token 变语法树。
-- 语法树节点 `Cmp / In / IsNull / Like / And / Or / Not`，每个节点实现 `eval(row)`，这就是解释器模式（Interpreter Pattern）：加一种运算符只加一个类，其他代码不动。
+- **语法树节点即解释器模式：** 语法树节点 `Cmp / In / IsNull / Like / And / Or / Not`，每个节点实现 `eval(row)`，这就是解释器模式（Interpreter Pattern）：加一种运算符只加一个类，其他代码不动。
 - `Table`：`insert(row)`、`delete(where)`、`select(query)`，内部管行和索引。
 - `Database`：`create(name, columns, indexed)`、`query(sql)`，按表名分发。
 
@@ -457,13 +457,13 @@ for r in [{"id": 1, "name": "Ann", "age": 30, "city": "NYC", "vip": 1},
     users.insert(r)
 ```
 
-- `WHERE age >= 18 AND (city = 'NYC' OR vip = 1)` → Ann。
-- `WHERE city = 'NYC' OR age < 18 AND vip = 0` → Ann、Bob、Cat（`AND` 先结合）。
+- **例：括号里的 OR：** `WHERE age >= 18 AND (city = 'NYC' OR vip = 1)` → Ann。
+- **例：AND 先于 OR 结合：** `WHERE city = 'NYC' OR age < 18 AND vip = 0` → Ann、Bob、Cat（`AND` 先结合）。
 - `WHERE NOT age >= 18` → 只有 Bob。Cat 的 `age` 是 `NULL`，`NOT 未知` 还是未知，不返回。
-- `WHERE age IS NULL OR name = 'O''Neil'` → Cat、O'Neil（两个单引号表示一个单引号）。
-- `WHERE age BETWEEN 18 AND 40 ORDER BY age DESC LIMIT 1` → Ann, 30。
+- **例：IS NULL 与转义引号：** `WHERE age IS NULL OR name = 'O''Neil'` → Cat、O'Neil（两个单引号表示一个单引号）。
+- **例：BETWEEN 加 LIMIT：** `WHERE age BETWEEN 18 AND 40 ORDER BY age DESC LIMIT 1` → Ann, 30。
 - `WHERE salary > 1` → `QueryError: 未知字段`；`WHERE name = 'x'; DROP TABLE users` → `QueryError: 无法识别的字符`。
-- 文档模型 `db.create("docs")` 不传字段：`WHERE address.city = 'NYC'` 能查嵌套字段；没有 `address` 的文档满足 `address.city IS NULL`。
+- **文档模型查嵌套字段：** 文档模型 `db.create("docs")` 不传字段：`WHERE address.city = 'NYC'` 能查嵌套字段；没有 `address` 的文档满足 `address.city IS NULL`。
 
 **复杂度。**
 - 解析：`O(L)`，`L` 是查询长度，每个 token 只看一次。
@@ -473,7 +473,7 @@ for r in [{"id": 1, "name": "Ann", "age": 30, "city": "NYC", "vip": 1},
 **深入。**
 1. 优先级怎么实现：调用层次就是优先级。`or_expr` 调 `and_expr`，`and_expr` 调 `not_expr`，所以 `AND` 先把操作数收走，自然比 `OR` 绑得紧；括号回到 `or_expr`，优先级重新开始。方案对比：正则或 `split` 最快写，但处理不了括号，也分不清字符串里的 `AND`；调度场算法（Shunting-yard）不用递归，但遇到 `BETWEEN`、`IN` 这种多段语法很别扭；普拉特解析（Pratt Parser）适合运算符特别多的语言。这里选递归下降，文法和代码一一对应，最容易在面试中讲清楚和扩展。
 2. 为什么不用 `eval`：查询字符串不可信，`eval` 等于让对方执行任意代码。把字符串转成 Python 表达式也处理不了 `NULL` 和 `LIKE`。语法树只有我们定义的几种节点，`; DROP TABLE` 在词法这一步就被拒绝。
-3. `NULL` 的三值逻辑（Three-valued Logic）：和 `NULL` 比较的结果是「未知」，既不是真也不是假。`WHERE` 只保留结果为 `True` 的行。最容易错的是 `NOT`：把 `None` 当 `False` 的话，`NOT age >= 18` 会多返回 `age` 为 `NULL` 的 Cat。短路也要按三值来：`False AND 未知 = False`，`True OR 未知 = True`。
+3. **`NULL` 的三值逻辑**（Three-valued Logic）：和 `NULL` 比较的结果是「未知」，既不是真也不是假。`WHERE` 只保留结果为 `True` 的行。最容易错的是 `NOT`：把 `None` 当 `False` 的话，`NOT age >= 18` 会多返回 `age` 为 `NULL` 的 Cat。短路也要按三值来：`False AND 未知 = False`，`True OR 未知 = True`。
 4. 索引怎么用才不漏行：不变量是「候选集必须是真实结果的超集」，所以最后一定复查。`AND` 只要一边能用索引就够，两边都能就取交集；`OR` 必须两边都能用，否则只能全表扫描，不然会漏掉另一边匹配的行。`NOT`、范围、`LIKE` 用不上哈希索引。`NULL` 不进索引，因为 `=` 和 `IN` 永远匹配不到它。删除时主数据和所有索引必须一起改。
 5. 关系表和文档怎么统一：解析和求值完全一样，只差下面几处。
 
@@ -486,7 +486,7 @@ for r in [{"id": 1, "name": "Ann", "age": 30, "city": "NYC", "vip": 1},
 
 **取舍与追问。**
 - 范围查询要走索引：哈希索引改成有序结构。用 `bisect` 维护 `(值, rowid)` 的有序列表，插入 `O(n)`、查询 `O(log n + 结果数)`；真实数据库用 B+ 树。
-- 查询很频繁：把语法树编译成闭包，或者缓存「查询字符串 → 语法树」，避免重复解析；解析结果不可变（`frozen=True`），可以安全共享。
+- **频繁查询编译或缓存语法树：** 查询很频繁：把语法树编译成闭包，或者缓存「查询字符串 → 语法树」，避免重复解析；解析结果不可变（`frozen=True`），可以安全共享。
 - 多个索引选哪个：统计每个值的行数，先用最小的候选集（基于代价的优化，Cost-based Optimizer）。这里 `AND` 直接求交集，简单但不一定最快。
 - 参数化查询：支持 `age > ?`，值单独传入，同一条语法树可以复用，也从根上避免注入。
 - 并发：读多写少用读写锁；写操作要把行和索引一起放在锁内，否则读到半更新的索引。

@@ -193,8 +193,8 @@ j2 = b.post_job("acme", "Go Engineer", 150, now + 1)
 j3 = b.post_job("beta", "Python Intern", 60, now + 2)
 ```
 
-- `b.search(now + 3, SalarySpec(100))` → Go Engineer、Python Engineer（最新的在前）。
-- `b.search(now + 31 * 86400)` → `[]`，30 天后全部过期，不需要定时任务。
+- **搜索结果最新在前：** `b.search(now + 3, SalarySpec(100))` → Go Engineer、Python Engineer（最新的在前）。
+- **30 天后全部过期：** `b.search(now + 31 * 86400)` → `[]`，30 天后全部过期，不需要定时任务。
 - 8 个线程同时用 `"ann"` 投 `j1` → 8 次返回同一条申请，`len(b.apps) == 1`。
 - 雇主 `acme` 把它改成 `VIEWED` 成功；`beta` 改 `SHORTLISTED` → `PermissionError`；`acme` 直接改 `HIRED` → `ValueError`（`VIEWED -> HIRED 不允许`）；`ann` 撤回成功，再改任何状态都是 `ValueError`。
 

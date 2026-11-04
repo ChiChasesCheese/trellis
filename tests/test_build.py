@@ -97,7 +97,7 @@ def test_fold_turns_sections_and_bullets_into_an_outline():
     assert '<details class="sec"' in h and "<summary><span class=\"label\">需求</span>" in h
     assert '<details class="pt"' in h and "<summary>估算（1 亿日活）</summary>" in h
     assert "<li>子项一</li>" in h  # 2-space sub-bullets nest instead of running into the parent text
-    assert "功能：发消息" in h  # short bullets stay plain
+    assert "<summary>功能</summary>" in h and "发消息" in h  # the phrase is what shows, the rest opens from it
 
 
 def test_two_space_sub_bullets_nest_without_fold():
@@ -137,4 +137,39 @@ def test_long_code_folds_only_past_the_limit():
     assert "<details" not in _html(short, fold_code=25)
     assert '<summary>代码（30 行）</summary>' in _html(long, fold_code=25)
     assert "<details" not in _html(long)
+
+
+def test_bullet_head_is_a_phrase_never_cut_or_repeated():
+    from trellis.build import _head
+    ref = '<span class="ref">Elasticsearch 倒排索引</span>'
+    head, rest = _head(f"为什么搜索快、新帖多久可见 → 倒排索引，1 秒 refresh 的准实时，{ref}")
+    assert head == "为什么搜索快、新帖多久可见"
+    assert rest.startswith("倒排索引") and ref in rest and "…" not in head + rest
+    assert _head("**幂等键：** 客户端生成，服务端唯一约束") == ("幂等键", "客户端生成，服务端唯一约束")
+    long = "一" * 40 + "，" + "二" * 40  # no phrase to lead with: stays whole, never truncated
+    assert _head(long) == (long, "")
+    assert _head("`a，b` 的取舍：看场景")[0] == "`a，b` 的取舍"  # separators inside code do not split
+
+
+def test_outline_sections_open_and_details_closed():
+    from trellis.build import _html
+    md = "**基本回答。** 短答案。\n\n**为什么。**\n- 第一点是什么：解释第一点的原因和细节\n\n**扩展点。**\n- 第二点：细节\n"
+    h = _html(md, fold=True)
+    assert '<details class="sec" open' in h and '<details class="pt">' in h and "<summary>第一点是什么</summary>" in h
+
+
+def test_wikilink_to_a_card_jumps_and_lists_it_at_the_end():
+    from trellis.build import _html
+    links = {"a.redis.zset": {"node": "a.redis.zset", "tag": "bagu::a::redis::zset", "answer": "跳表加哈希。"}}
+    h = _html("**基本回答。** 见 [[a.redis.zset|ZSet 与跳表]]，还有 [[nowhere|别处]]。", links=links, node="links.top-k")
+    assert 'href="anki://x-callback-url/search?query=tag%3Abagu%3A%3Aa%3A%3Aredis%3A%3Azset"' in h
+    assert '<span class="ref">别处</span>' in h  # a note with no card stays plain text
+    assert "相关知识点" in h and "跳表加哈希" in h
+    assert "相关知识点" not in _html("见 [[a.redis.zset|自己]]。", links=links, node="a.redis.zset")  # a card never lists itself
+
+
+def test_short_card_bullets_are_phrases_too():
+    from trellis.build import _html
+    h = _html("- **摘要要点：** 这里是具体内容\n- 第二点 → 也放进折叠\n", fold=True)
+    assert "<summary>摘要要点</summary>" in h and "<summary>第二点</summary>" in h and "具体内容" in h
 

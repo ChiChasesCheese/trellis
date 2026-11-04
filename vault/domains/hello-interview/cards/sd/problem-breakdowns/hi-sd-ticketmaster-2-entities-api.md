@@ -17,8 +17,8 @@ step: 2
 **Booking。** 可以并入 Ticket，但一次买多张票时，单独的订单实体能把它们归到同一笔订单、共享支付状态和总价。
 
 **接口。**
-- `GET /events/:eventId` 返回活动、场馆、艺人和票列表
-- `GET /events/search?keyword&start&end&pageSize&page`
+- **GET /events/:id 返回详情：** `GET /events/:eventId` 返回活动、场馆、艺人和票列表
+- **GET /events/search 搜索：** `GET /events/search?keyword&start&end&pageSize&page`
 - `POST /bookings/:eventId`，带 ticketIds 与支付信息，返回 bookingId
 
 **演化。** 先给最简接口，并声明之后会拆成「预订」与「确认购买」两个接口。

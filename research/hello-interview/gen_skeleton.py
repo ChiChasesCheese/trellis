@@ -245,7 +245,7 @@ def main() -> None:
                              "children": leaves})
         nodes.append({"id": tid, "order": ti, "title": ttitle,
                       "summary": f"Hello Interview 的{ttitle}课程，结构与原站一致。", "children": secs})
-    sk = {"domain": "hello-interview", "title": "Hello Interview", "deck": "Hello Interview", "lang": "zh", "fold": True,
+    sk = {"domain": "hello-interview", "title": "Hello Interview", "deck": "Hello Interview", "lang": "zh", "fold": True, "fold_code": 25,
           "vault": "domains/hello-interview", "study": {"order": "core-first", "mix": "new-first", "new_per_day": 15, "reviews_per_day": 200},
           "nodes": nodes}
     (ROOT / "skeleton/hello-interview.yaml").write_text(

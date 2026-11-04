@@ -13,7 +13,7 @@ step: 1
 **要点。** 默认 REST：基于 HTTP 方法和 URL 操作资源，天然对应数据库的增删改查，工具成熟，约九成场景适用，拿不准就说“用 REST”然后继续。
 
 **换协议的信号。**
-- 面试官提到“灵活取数”“避免 over-fetching / under-fetching”（取多了或取少了），想到 GraphQL
+- **灵活取数选 GraphQL：** 面试官提到“灵活取数”“避免 over-fetching / under-fetching”（取多了或取少了），想到 GraphQL
 - 提到微服务、内部接口、高性能、多语言，想到 RPC（如 gRPC）
 - 通知、聊天、实时推送，这不是传统 API，是持久连接，用 WebSocket 或 SSE
 

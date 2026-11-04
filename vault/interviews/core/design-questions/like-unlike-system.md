@@ -24,10 +24,10 @@ kind: system-design
 
 **需求。**
 功能：
-1. 点赞、取消点赞（幂等：重复点赞不改变结果）。
-2. 查询当前用户是否点赞了某内容（常按一页内容批量查）。
+1. **点赞与取消幂等：** 点赞、取消点赞（幂等：重复点赞不改变结果）。
+2. **批量查是否点赞：** 查询当前用户是否点赞了某内容（常按一页内容批量查）。
 3. 查询某内容的点赞总数。
-4. 查询当前用户点赞过的内容列表（按时间倒序，分页）。
+4. **点赞列表倒序分页：** 查询当前用户点赞过的内容列表（按时间倒序，分页）。
 
 非功能：
 - 读：状态查询 100 万 QPS，计数查询 100 万 QPS；延迟 p99 < 50ms（它们挂在内容展示页上，不能拖慢首屏）。
@@ -38,10 +38,10 @@ kind: system-design
 **核心实体与接口。**
 实体：`Favorite(userId, itemId, createdAt)`（事实表）；`ItemCounter(itemId, count)`（派生值）。
 接口：
-- `PUT /items/{itemId}/favorite`、`DELETE /items/{itemId}/favorite`（幂等，状态变化与否都返回当前状态）。
-- `GET /favorites/status?itemIds=a,b,c`（批量，返回每个是否已点赞）。
-- `GET /items/{itemId}/favorite-count`；通常再并进内容详情里。
-- `GET /users/me/favorites?cursor=`（按 `createdAt` 倒序分页，游标是（时间，内容 ID））。
+- **点赞与取消接口：** `PUT /items/{itemId}/favorite`、`DELETE /items/{itemId}/favorite`（幂等，状态变化与否都返回当前状态）。
+- **批量状态接口：** `GET /favorites/status?itemIds=a,b,c`（批量，返回每个是否已点赞）。
+- **点赞数接口：** `GET /items/{itemId}/favorite-count`；通常再并进内容详情里。
+- **点赞列表接口：** `GET /users/me/favorites?cursor=`（按 `createdAt` 倒序分页，游标是（时间，内容 ID））。
 
 **整体设计。**
 

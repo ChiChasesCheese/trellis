@@ -13,6 +13,7 @@ from __future__ import annotations
 import hashlib
 import re
 from pathlib import Path
+from urllib.parse import quote
 
 import genanki
 import markdown
@@ -324,12 +325,15 @@ td, th { border: 1px solid var(--rule); padding: 5px 10px; }
 .fig { margin: 12px 0; text-align: center; }
 .fig svg { max-width: 100%; height: auto; color: var(--ink); }
 video.clip, img.clip { display: block; width: 100%; max-width: 560px; margin: 8px auto; border-radius: 10px; background: #000; }
-details.sec { margin: 8px 0; border-left: 3px solid var(--accent); padding: 2px 0 2px 10px; }
+details.sec { margin: 6px 0; border-left: 1px solid var(--rule); padding: 0 0 0 10px; }
 details.sec > summary { cursor: pointer; font-weight: 600; list-style-position: outside; }
 details.sec[open] > summary { margin-bottom: 6px; }
-details.pt { margin: 4px 0 4px 6px; }
+details.pt { margin: 3px 0; }
 details.pt > summary { cursor: pointer; }
-details.pt[open] > summary { color: var(--accent); }
+a.ref { text-decoration: none; }
+p.linked { margin: 3px 0; }
+details.pt > summary::marker { color: var(--dim); }
+details.pt > :not(summary) { margin-left: 10px; color: var(--dim); }
 details.example { margin-top: 18px; padding-top: 10px; border-top: 1px solid var(--rule); }
 details.example + details.example { margin-top: 8px; }
 details.inline-example > summary { cursor: pointer; list-style: none; }
@@ -383,17 +387,52 @@ def _inline(s: str) -> str:
     return re.sub(r"\*\*([^*]+)\*\*", r"<b>\1</b>", s)
 
 
+PHRASE_MAX = 24  # a bullet's head is a phrase to recite from; longer than this and it needs writing, never cutting
+_TAG = re.compile(r"<[^>]+>")
+_OPEN = {"（": "）", "(": ")", "「": "」", "《": "》", "`": "`", "<": ">", "“": "”"}
+
+
+def _width(text: str) -> int:
+    return len(re.sub(r"【[^】]*】", "", _TAG.sub("", text)).replace("*", "").replace("`", ""))  # a priority tag is not part of the phrase
+
+
+def _split_at(text: str, seps: str) -> tuple[str, str] | None:
+    """The first separator that sits outside brackets, code and tags, as (before, after)."""
+    closer = None
+    span = 0
+    i = 0
+    while i < len(text):
+        c = text[i]
+        if text.startswith(("<span", "<a "), i):
+            span += 1
+        elif text.startswith(("</span>", "</a>"), i):
+            span -= 1
+        if closer:
+            if c == closer:
+                closer = None
+        elif c in _OPEN:
+            closer = _OPEN[c]
+        elif not span and c in seps:
+            return text[:i], text[i + 1:]
+        i += 1
+    return None
+
+
 def _head(text: str) -> tuple[str, str]:
-    """Split one bullet into (summary, rest): the phrase before the first colon, else the first sentence."""
-    m = re.match(r"^(.{2,28}?)[：:]\s*(.+)$", text, re.S)
-    if m:
-        return m.group(1), m.group(2)
-    m = re.match(r"^(.{4,56}?[。；;?？])\s*(.*)$", text, re.S)
-    if m and m.group(2).strip():
-        return m.group(1), m.group(2)
-    if len(text) <= 60:
-        return text, ""
-    return text[:40] + "…", text
+    """Split one bullet into (phrase, rest). Nothing is cut and nothing is repeated: a bullet with no phrase stays whole."""
+    text = text.strip()
+    m = re.match(r"^\*\*(.+?)\*\*\s*[：:。，,]?\s*(.*)$", text, re.S)
+    if m and m.group(2) and _width(m.group(1)) <= PHRASE_MAX:
+        return m.group(1).rstrip("：:。，, "), m.group(2)
+    if "→" in text:
+        before, after = text.split("→", 1)
+        if _width(before) <= PHRASE_MAX + 6:
+            return before.strip(), after.strip()
+    for seps in ("：:", "，,；;。"):
+        parts = _split_at(text, seps)
+        if parts and parts[1].strip() and 2 <= _width(parts[0]) <= PHRASE_MAX:
+            return parts[0].strip(), parts[1].strip()
+    return text, ""
 
 
 def _outline(text: str) -> str:
@@ -412,22 +451,20 @@ def _outline(text: str) -> str:
             pre.append(line)
         else:
             cur[2].append(line)
-    if len(sections) < 3:
-        return text
+    if len(sections) < 3:  # a short card has no outline to fold, but its bullets are still phrases to recite from
+        return _fold_bullets(text)
     out = ["\n".join(pre)]
     for label, first, body in sections:
         body_md = _fold_bullets("\n".join(body).strip("\n"))
-        if not body_md.strip():  # a one-paragraph section folds only when it is long prose, never a line of links
-            gist, rest = _head(first) if len(first) > 60 and 'class="ref"' not in first else (first, "")
-            body_md = rest
-        else:
-            n = sum(1 for l in body if re.match(r"^(?:[-*+]|\d+\.)\s", l))
-            gist = _head(first)[0] if first else (f"（{n} 条）" if n else "")
-            body_md = (first + "\n\n" + body_md) if first else body_md
+        gist, rest = (first, "") if _width(first) <= PHRASE_MAX else _head(first)
+        if _width(gist) > PHRASE_MAX:  # no phrase to lead with: the label stands alone and the prose goes inside
+            gist, rest = "", first
+        body_md = "\n\n".join(x for x in (rest, body_md) if x.strip())
         if not body_md.strip():
             out.append(f'<p><span class="label">{label}</span>{_inline(gist)}</p>')
             continue
-        opened = " open" if label == "一句话" else ""
+        # Chi (2026-11-04): recite from the phrases, so sections stay open and the details behind each phrase stay closed
+        opened = "" if "```" in body_md else " open"
         out.append(f'<details class="sec"{opened} markdown="1"><summary><span class="label">{label}</span>{_inline(gist)}</summary>'
                    f"\n\n{body_md}\n\n</details>")
     return "\n\n".join(out)
@@ -467,10 +504,10 @@ def _fold_bullets(md: str) -> str:
             out.append("\n".join(item))
             continue
         text = m.group(2)
-        if len(text) <= 60 and not any(c.strip() for c in cont):
+        head, rest = _head(text)
+        if not rest and not any(c.strip() for c in cont):
             out.append(item[0])
             continue
-        head, rest = _head(text)
         num = m.group(1).strip() if m.group(1)[0].isdigit() else ""
         body = "\n".join([rest] + cont if rest else cont).strip("\n")
         out.append(f'<details class="pt" markdown="1"><summary>{num + " " if num else ""}{_inline(head)}</summary>\n\n{body}\n\n</details>')
@@ -514,14 +551,56 @@ def _fold_long_code(html: str, limit: int) -> str:
     return _CODE_BLOCK.sub(wrap, html)
 
 
-def _html(text: str, related: dict | None = None, own: set[int] | None = None, fold: bool = False, fold_code: int = 0) -> str:
+_BASIC_ANSWER = re.compile(r"\*\*基本回答。\*\*(.*?)(?=\n\*\*[^*\n]{1,8}。\*\*|\Z)", re.S)
+
+
+def _link_index(skeleton: Skeleton, cards: list[Card], readings: list, lang: str | None) -> dict[str, dict]:
+    """Everything a wikilink can name in this domain -> where it opens: the Anki tag, and a short answer to show in place."""
+    first: dict[str, Card] = {}
+    for card in sorted(cards, key=lambda c: (c.step or 0)):
+        first.setdefault(card.node, card)
+    index: dict[str, dict] = {}
+
+    def add(name: str, node_id: str) -> None:
+        card = first.get(node_id) or next((c for n, c in first.items() if n.startswith(node_id + ".")), None)
+        if card is None:
+            return
+        m = _BASIC_ANSWER.search(card.render(lang)[1])
+        index.setdefault(name, {"node": node_id, "tag": f"{skeleton.domain}::{node_id.replace('.', '::')}", "answer": m.group(1).strip() if m else ""})
+
+    for node_id in skeleton.by_id:
+        add(node_id, node_id)
+        add(node_id.rsplit(".", 1)[-1], node_id)  # a design question is linked by its slug
+    for r in readings:  # a course page is linked by its reading note; open the page, not one of its parts
+        nodes = list(getattr(r, "nodes", []) or [])
+        course = next((n.rsplit(".", 1)[0] for n in nodes if n.endswith(".notes")), nodes[0] if nodes else None)
+        if course:
+            add(Path(r.path).stem, course)
+    return index
+
+
+def _anchor(tag: str, text: str) -> str:
+    return f'<a class="ref" href="anki://x-callback-url/search?query={quote("tag:" + tag, safe="")}">{text}</a>'
+
+
+def _html(text: str, related: dict | None = None, own: set[int] | None = None, fold: bool = False, fold_code: int = 0,
+          links: dict | None = None, node: str = "") -> str:
     # Obsidian wikilinks have nowhere to point inside Anki; render the
     # display text as a styled reference instead.
     # (only outside code: `[[0]] * 3` in a code span is Python, not a link)
     parts = _CODE_SPANS.split(text)
     parts = [p if i % 2 else _EMBED.sub(lambda m: "\n\n" + _embed(m) + "\n\n", p) for i, p in enumerate(parts)]
-    text = "".join(p if i % 2 else _WIKILINK_RE.sub(lambda m: f'<span class="ref">{m.group(2) or m.group(1)}</span>', p)
-                   for i, p in enumerate(parts))
+    used: dict[str, tuple[str, str]] = {}
+
+    def _ref(m: re.Match) -> str:
+        name, label = m.group(1).rstrip("\\"), m.group(2) or m.group(1)
+        target = (links or {}).get(name)
+        if not target:
+            return f'<span class="ref">{label}</span>'
+        if target["node"] != node and not node.startswith(target["node"] + "."):
+            used.setdefault(target["node"], (label, name))
+        return _anchor(target["tag"], label)
+    text = "".join(p if i % 2 else _WIKILINK_RE.sub(_ref, p) for i, p in enumerate(parts))
     svgs: list[str] = []
 
     def _stash(m: re.Match) -> str:
@@ -550,7 +629,23 @@ def _html(text: str, related: dict | None = None, own: set[int] | None = None, f
         html = _fold_long_code(html, fold_code)
     if related:
         html = _expand_related(html, related, own or set())
-    return _break_semicolons(html)
+    return _break_semicolons(html) + _related_notes(used, links or {})
+
+
+def _related_notes(used: dict[str, tuple[str, str]], links: dict) -> str:
+    """The cards this answer points at, at its end: open in place on any device, or jump where Anki allows it."""
+    if not used:
+        return ""
+    rows = []
+    for label, name in used.values():
+        target = links[name]
+        jump = _anchor(target["tag"], "跳转")
+        if target["answer"]:
+            body = _html(target["answer"])
+            rows.append(f'<details class="pt"><summary>{label} · {jump}</summary>{body}</details>')
+        else:
+            rows.append(f'<p class="linked">{label} · {jump}</p>')
+    return f'<details class="sec related-notes"><summary><span class="label">相关知识点</span></summary>{"".join(rows)}</details>'
 
 
 def _qa_model() -> genanki.Model:
@@ -642,6 +737,7 @@ def build_package(
     # it is its new-card position: what a first import studies in. A
     # collection that already has the card keeps its old position through an
     # import, which is why `anki-push` sets it again afterwards (ADR 0010).
+    links = _link_index(skeleton, cards, readings, lang) if skeleton.fold else {}
     for position, card in enumerate(sequence(skeleton, cards, order), start=1):
         node = skeleton.by_id[card.node]
         crumb = " › ".join(n.title for n in node.path())
@@ -661,7 +757,7 @@ def build_package(
         if card.type == "qa":
             note = genanki.Note(
                 model=qa_model,
-                fields=[_html(question), _html(answer, related, own, fold=skeleton.fold, fold_code=skeleton.fold_code) + footer, crumb],
+                fields=[_html(question), _html(answer, related, own, fold=skeleton.fold, fold_code=skeleton.fold_code, links=links, node=card.node) + footer, crumb],
                 guid=genanki.guid_for(f"trellis:{card.id}"),
                 tags=tags,
                 due=position,

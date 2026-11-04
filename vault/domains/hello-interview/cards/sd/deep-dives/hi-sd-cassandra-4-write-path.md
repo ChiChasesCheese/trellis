@@ -13,7 +13,7 @@ step: 4
 **要点。** 底层是 LSM 树（log-structured merge tree），写入几乎全是追加：
 
 1. 先顺序追加到提交日志（commit log），相当于预写日志（WAL），保证宕机不丢。
-2. 再写入内存里按主键排序的 memtable。
+2. **排序后写入 memtable：** 再写入内存里按主键排序的 memtable。
 3. 达到大小或时间阈值后，memtable 刷成磁盘上不可变的 SSTable，对应的 commit log 即可清理。
 
 删除也只是追加一条墓碑（tombstone）。

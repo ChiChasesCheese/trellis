@@ -40,8 +40,8 @@ kind: system-design
 
 **核心实体与接口。**
 实体：
-- `Auction(id, seller_id, item_id, start_price, min_increment, start_at, end_at, status, highest_amount, highest_bidder, version)`。金额用整数最小货币单位（分），避免浮点。`version` 每接受一次出价加 1，同时是"当前状态序号"，推送和重连都靠它。
-- `Bid(auction_id, seq, bidder_id, amount, idempotency_key, accepted_at)`。`seq` 是该拍卖内从 1 开始的接受序号，`(auction_id, seq)` 唯一；`(auction_id, bidder_id, idempotency_key)` 也唯一。只有被接受的出价才写入，被拒绝的出价只记日志。
+- **Auction 状态加 version：** `Auction(id, seller_id, item_id, start_price, min_increment, start_at, end_at, status, highest_amount, highest_bidder, version)`。金额用整数最小货币单位（分），避免浮点。`version` 每接受一次出价加 1，同时是"当前状态序号"，推送和重连都靠它。
+- **Bid 只记被接受的出价：** `Bid(auction_id, seq, bidder_id, amount, idempotency_key, accepted_at)`。`seq` 是该拍卖内从 1 开始的接受序号，`(auction_id, seq)` 唯一；`(auction_id, bidder_id, idempotency_key)` 也唯一。只有被接受的出价才写入，被拒绝的出价只记日志。
 - `Winner`/`Order`：拍卖结束后生成的订单，键为 `auction_id`，保证一场拍卖只产生一张订单。
 
 接口：
@@ -64,8 +64,8 @@ flowchart TB
 ```
 
 1. 买家点击出价，客户端生成幂等键，请求经网关按 `auction_id` 一致性哈希路由到出价服务的某个分片。同一场拍卖在同一时刻只有一个"拥有者"实例处理出价（拥有关系靠租约加世代号 epoch 保证，旧拥有者的写入会被数据库拒绝）。
-2. 拥有者实例在内存里持有这场拍卖的状态（最高价、增幅、结束时间、版本号）。校验是纯内存操作：拍卖进行中、金额达标。通过后在数据库里执行一个带条件的事务：插入 `Bid`、更新 `Auction` 的最高价和版本号，条件是 `version` 等于它内存里的版本。事务提交后才算接受，然后回复买家。
-3. 提交成功后写一条"出价已接受"事件到 Kafka（分区键为 `auction_id`，保证同一场内有序）；采用事务外盒（outbox）：事件和出价在同一事务里写入 outbox 表，由后台进程投递，保证"数据库里有就一定会发出事件"。
+2. **拥有者内存校验后条件事务：** 拥有者实例在内存里持有这场拍卖的状态（最高价、增幅、结束时间、版本号）。校验是纯内存操作：拍卖进行中、金额达标。通过后在数据库里执行一个带条件的事务：插入 `Bid`、更新 `Auction` 的最高价和版本号，条件是 `version` 等于它内存里的版本。事务提交后才算接受，然后回复买家。
+3. **outbox 保证事件必发：** 提交成功后写一条"出价已接受"事件到 Kafka（分区键为 `auction_id`，保证同一场内有序）；采用事务外盒（outbox）：事件和出价在同一事务里写入 outbox 表，由后台进程投递，保证"数据库里有就一定会发出事件"。
 4. 推送服务消费事件，按 `auction_id` 找到订阅这场拍卖的网关节点，合并后推送给观众；被超越的前任最高出价者收到单独的通知。
 5. 拍卖到点：拥有者实例按数据库里的 `end_at` 设置定时器；时间到后先把状态置为 `closed`（带条件更新），再生成订单事件。结算服务消费事件，向赢家收款。
 

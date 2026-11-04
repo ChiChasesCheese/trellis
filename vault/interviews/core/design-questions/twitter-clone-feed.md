@@ -27,7 +27,7 @@ kind: system-design
 1. 关注、取消关注。
 2. 发布推文（文本，可带图片或视频的引用）。
 3. 读主页时间线：我关注的人的最新推文，按时间倒序，分页，下拉加载更多。
-4. 读某个用户的个人页推文列表（用户时间线）。
+4. **读个人页用户时间线：** 读某个用户的个人页推文列表（用户时间线）。
 5. 范围外：推荐算法排序、搜索、转发与点赞的完整体系、私信（可作为扩展）。
 
 非功能（容量假设）：
@@ -40,9 +40,9 @@ kind: system-design
 **核心实体与接口。**
 实体：`User(id, name, followerCount)`；`Follow(followerId, followeeId, createdAt)`；`Tweet(id, authorId, text, mediaRefs, createdAt)`；`Timeline`（每个用户的推文 ID 列表，派生数据）。推文 ID 用带时间的全局唯一 ID（雪花式），保证按 ID 排序约等于按时间排序。
 接口：
-- `POST /follow/{userId}`、`DELETE /follow/{userId}`。
-- `POST /tweets {text, media}`。
-- `GET /timeline/home?cursor=&limit=20`、`GET /users/{id}/tweets?cursor=`。
+- **关注与取关接口：** `POST /follow/{userId}`、`DELETE /follow/{userId}`。
+- **发推接口 POST /tweets：** `POST /tweets {text, media}`。
+- **首页与个人页时间线接口：** `GET /timeline/home?cursor=&limit=20`、`GET /users/{id}/tweets?cursor=`。
 游标是上一页最后一条的推文 ID，而不是页码偏移，因为新推文不断插入，偏移会造成重复和遗漏。
 
 **整体设计。**
@@ -63,7 +63,7 @@ flowchart TD
 ```
 
 1. 发推：推文服务把推文写入推文库（按推文 ID 或作者分片的键值/宽表存储），然后发事件到 Kafka，立即向作者返回成功。扇出不在请求路径上。
-2. 扇出（写时扇出，fan-out on write）：扇出 Worker 消费事件，读取作者的粉丝列表，对每个粉丝的时间线缓存（Redis 的有序列表或有序集合）执行"插入这条推文 ID，并裁剪到最近 800 条"。
+2. **写时扇出**（fan-out on write）：扇出 Worker 消费事件，读取作者的粉丝列表，对每个粉丝的时间线缓存（Redis 的有序列表或有序集合）执行"插入这条推文 ID，并裁剪到最近 800 条"。
 3. 读时间线：时间线服务取出用户缓存里的一页推文 ID，批量到推文库（及缓存）取内容，补全作者信息、点赞数等，返回。因为缓存里只存 ID，推文被删除或编辑时只要改推文库，不必改每个粉丝的缓存；读取时遇到已删除的 ID 就过滤。
 4. 关注：关注关系存两份（正向：我关注了谁；反向：谁关注了我），分别服务于"读时聚合"和"扇出"；关注时可以异步把对方最近几条推文回填进自己的时间线，取消关注则把对方的推文从缓存里过滤掉（读时过滤即可）。
 

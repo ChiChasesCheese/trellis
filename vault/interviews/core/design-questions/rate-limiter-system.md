@@ -35,7 +35,7 @@ kind: low-level-design
 **核心实体与接口。**
 - `Decision`：不可变值对象，`allowed`、`remaining`、`retry_after`。
 - `Limiter`（抽象类）：单个 key 的状态和判定，`try_acquire(now) -> Decision`。算法差异全在子类里。
-- `FixedWindow`、`SlidingWindowLog`、`TokenBucket`：三种策略实现。
+- **三种策略实现：** `FixedWindow`、`SlidingWindowLog`、`TokenBucket`：三种策略实现。
 - `RateLimiter`：入口，持有"key 到（锁，Limiter）"的映射和时钟；`allow(key)` 取出对应 Limiter，加该 key 的锁后调用。
 - 模式：策略（Strategy）——算法可替换；简单工厂/工厂函数——`RateLimiter` 通过 `factory` 为新 key 创建 Limiter；依赖注入——时钟可替换。
 
@@ -140,7 +140,7 @@ class RateLimiter:
 - 窗口边界突发：8、8.1、8.2 秒和 10、10.1、10.2 秒共 6 个请求全部放行。同样的请求给 `SlidingWindowLog(3, 10)`，后三个被拒，到 18.05 秒才放行。
 - `TokenBucket(2, 1)`：0 秒放行两次，第三次被拒，`retry_after` 是 1.0；1 秒后放行一次。
 - 额度为 1 的 key `a` 第二次被拒，key `b` 不受影响。
-- 额度 100 的 key 被 130 个线程同时调用：恰好 100 个放行。
+- **130 线程恰好放行 100：** 额度 100 的 key 被 130 个线程同时调用：恰好 100 个放行。
 
 **深入。**
 1. 【必讲】并发正确性：

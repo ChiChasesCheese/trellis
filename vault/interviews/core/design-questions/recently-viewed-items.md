@@ -86,7 +86,7 @@ for x in "abcbd":
 - `rv.recent("u1")` → `['d', 'b', 'c']`：浏览 b 时 b 提前成 a、c、b；浏览 d 超限，丢掉最老的 a。
 - `rv.recent("nobody")` → `[]`。
 - `limit=1` 时依次浏览 a、b、b → `['b']`；`RecentlyViewed(0)` → `ValueError`。
-- 8 个线程对同一客户浏览 2000 次、`limit=5` → 最后恰好 5 条。
+- **并发浏览测试：** 8 个线程对同一客户浏览 2000 次、`limit=5` → 最后恰好 5 条。
 
 **复杂度。** `view` 是 `O(1)`，`recent` 是 `O(返回个数)`，每客户内存 `O(limit)`。
 
@@ -130,7 +130,7 @@ def recent(self, customer: str) -> list[Hashable]:
 
 `max_customers=2`：浏览完 u1 的 a、b、c、b、d，再浏览 u2、u3 → u1 被挤出，`recent("u1")` 是 `[]`，`recent("u3")` 是 `['y']`。4 个客户、8 个线程各浏览 1000 次、`limit=5` → 每人恰好 5 条。
 
-2. 【追问再讲】变体「到目前为止第一个只访问过一次的客户」：有序字典当候选队列，`seen` 集合记录见过的，全部操作 `O(1)`。
+2. **【追问再讲】首个只访问一次的变体：** 变体「到目前为止第一个只访问过一次的客户」：有序字典当候选队列，`seen` 集合记录见过的，全部操作 `O(1)`。
 
 ```python
 class FirstUnique:
@@ -184,7 +184,7 @@ class FirstUnique:
 - 资深/专家：竞态的取舍、事件合并与批量写、登录合并、容量与过期策略，以及「第一个唯一值」的摊还分析与内存精确性的权衡。
 
 **先修概念。**
-- [[hi-low-level-design-in-a-hurry-delivery|答题框架（Delivery Framework）]]
+- **答题框架：** [[hi-low-level-design-in-a-hurry-delivery|答题框架（Delivery Framework）]]
 - [[hi-low-level-design-in-a-hurry-oop-concepts|面向对象概念]]
 - [[hi-low-level-design-concurrency-intro|并发入门]]
 - [[hi-system-design-core-concepts-caching|缓存]]

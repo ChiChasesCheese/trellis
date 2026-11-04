@@ -17,9 +17,9 @@ step: 3
 - 已熟悉部分核心概念，或工作经验较多：有人不到一周就准备好
 
 **时间很紧时的优先级。**
-1. 交付框架（Delivery Framework）
-2. 快速浏览关键技术（Key Technologies）
-3. 剩余时间学习核心概念（Core Concepts）
+1. **交付框架**（Delivery Framework）
+2. **快速浏览关键技术**（Key Technologies）
+3. **剩余时间学核心概念**（Core Concepts）
 
 **可以做的事。** 面试日期太近时，可以请招聘方推后；多数招聘方更希望你通过，而不是早点面。
 

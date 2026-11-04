@@ -37,7 +37,7 @@ kind: low-level-design
 **核心实体与接口。**
 - `Dir`：枚举 UP、DOWN、IDLE。
 - `Elevator`：一部电梯，持有当前楼层、方向、三组待服务楼层：轿厢内选择（`inside`）、分配给它的上行外呼、下行外呼。对外提供 `tick()`（推进一个时间片）、`eta(floor, dir)`（调度用的代价估计）。
-- `Dispatcher`（抽象）与 `NearestCar`：策略模式，`pick(cars, floor, dir)` 返回负责这次呼叫的电梯。
+- **Dispatcher 是策略模式：** `Dispatcher`（抽象）与 `NearestCar`：策略模式，`pick(cars, floor, dir)` 返回负责这次呼叫的电梯。
 - `Controller`：对外入口，`hall_call(floor, dir)`、`cabin_call(car_id, floor)`、`tick()`。
 - 可扩展的类（只口述，不写）：`Door`（开关门计时）、`Display`（观察者，订阅楼层变化）、`Request`（命令对象，便于日志与重放）。
 - 使用的模式：策略（调度算法）、状态（方向 + 门状态；状态增多时把 `Dir` 升级为状态类）、观察者（楼层显示）。
@@ -58,7 +58,7 @@ classDiagram
 流程：
 1. 乘客按下楼层外呼 → `Controller.hall_call(floor, dir)` → 调度器对每部电梯调用 `eta`，选代价最小的一部 → 把楼层加入那部电梯的对应方向集合。一旦分配就不再改派，避免来回抖动。
 2. 轿厢内按键 → `cabin_call(car_id, floor)` → 加入该电梯的 `inside` 集合（轿厢内的选择属于这部电梯，不经过调度）。
-3. 控制器的 `tick()` 驱动每部电梯 `tick()`：到站条件满足就开门并清除该楼层请求，否则朝当前方向走一层；前方没有请求时才掉头；没有请求就变成 IDLE。
+3. **tick() 驱动每部电梯：** 控制器的 `tick()` 驱动每部电梯 `tick()`：到站条件满足就开门并清除该楼层请求，否则朝当前方向走一层；前方没有请求时才掉头；没有请求就变成 IDLE。
 4. `eta` 的估算：空闲电梯是楼层距离；运行方向相同且顺路是楼层距离；否则要先跑到当前方向上最远的请求，再折返；每个待停靠站再加固定的开关门代价。
 
 **核心实现。** 约 32 分钟，一个代码块写完：`Elevator`（LOOK 的 `tick`、`eta`）、可替换的 `Dispatcher`、`Controller`。
@@ -192,7 +192,7 @@ class Controller:
 - 资深/专家：代价函数与调度策略对比、故障转移时的重新分配、状态模式的演进、目的楼层调度的取舍、可测试的时钟设计。
 
 **先修概念。**
-- [[hi-low-level-design-in-a-hurry-delivery|答题框架（Delivery Framework）]]
+- **答题框架：** [[hi-low-level-design-in-a-hurry-delivery|答题框架（Delivery Framework）]]
 - [[hi-low-level-design-in-a-hurry-patterns|设计模式]]
 - [[hi-low-level-design-in-a-hurry-oop-concepts|面向对象概念]]
 - [[hi-low-level-design-concurrency-intro|并发入门]]

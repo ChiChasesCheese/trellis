@@ -14,7 +14,7 @@ step: 3
 
 **发送流程。**
 1. 发送方发 `sendMessage`
-2. 服务器查 ChatParticipant 得到所有成员
+2. **查成员得收件人：** 服务器查 ChatParticipant 得到所有成员
 3. 把消息写入 Message 表，并给每个接收者在 Inbox 表写一条
 4. 向发送方返回成功和 messageId
 5. 对在线的接收者推 `newMessage`；客户端回 ack 后，服务器删掉对应 Inbox 条目

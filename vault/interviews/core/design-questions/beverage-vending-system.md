@@ -191,9 +191,9 @@ class OrderService:
 机器开始制作时要先调用 `order.move(Status.BREWING)`，之后才能 `on_brewed`。
 
 **运行。** 一台咖啡机在 `SF`，牛奶 `200`，拿铁要牛奶 `150`：
-- 第一单 `place_order("SF", "latte")` 成功，第二单抛 `LookupError`：可用牛奶只剩 `50`，预留挡住了超卖。
+- **第一单成功、第二单抛错：** 第一单 `place_order("SF", "latte")` 成功，第二单抛 `LookupError`：可用牛奶只剩 `50`，预留挡住了超卖。
 - 第一单开始制作后失败，`on_brewed(id, False)` 后订单为 `FAILED`，预留归还，再下单成功。
-- 重复调用 `on_brewed(id, False)` 不再释放第二次。
+- **重复 on_brewed 不再释放：** 重复调用 `on_brewed(id, False)` 不再释放第二次。
 - 32 个线程同时抢最后一杯：只有 1 个成功。
 
 **逐步扩展。**

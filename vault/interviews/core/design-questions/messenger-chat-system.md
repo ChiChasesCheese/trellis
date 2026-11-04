@@ -34,7 +34,7 @@ kind: system-design
 
 **核心实体与接口。**
 - 实体：用户（User）；设备/客户端（Client，一个用户多个）；会话（Chat，2–100 人）；会话成员（ChatParticipant）；消息（Message）；收件箱条目（Inbox，指向"某设备还没确认收到的消息"）；附件（Attachment）。
-- 接口走 WebSocket（高频双向推送，REST 轮询太贵），每条指令带 `requestId`：
+- **WebSocket 加 requestId：** 接口走 WebSocket（高频双向推送，REST 轮询太贵），每条指令带 `requestId`：
   - `sendMessage {chatId, clientMsgId, text, attachments[]}` → `{messageId, seq, status}`；`clientMsgId` 由客户端生成，是幂等键。
   - `ack {messageId}`：客户端确认"我收到了"，服务端才删收件箱条目。
   - `createChat {participants[], name}`；`modifyParticipants {chatId, userId, ADD|REMOVE}`。
@@ -57,8 +57,8 @@ flowchart TB
     G2 --> C2[接收方]
 ```
 
-1. 客户端经 L4 负载均衡（WebSocket 不需要 L7 的路径/头部路由，L4 更快）连到某台网关（Gateway）。网关只做三件事：认证、维护"用户 → 连接"的内存表、转发指令。网关不存业务状态，挂了客户端重连即可。
-2. 网关把 `sendMessage` 交给聊天服务（Chat Service，无状态，可水平扩）。聊天服务按顺序做：
+1. **L4 到网关，网关无状态：** 客户端经 L4 负载均衡（WebSocket 不需要 L7 的路径/头部路由，L4 更快）连到某台网关（Gateway）。网关只做三件事：认证、维护"用户 → 连接"的内存表、转发指令。网关不存业务状态，挂了客户端重连即可。
+2. **聊天服务按顺序做：** 网关把 `sendMessage` 交给聊天服务（Chat Service，无状态，可水平扩）。聊天服务按顺序做：
    - 用 `(chatId, clientMsgId)` 去重，重复请求直接返回上次结果；
    - 分配会话内序号 `seq`；
    - 把消息写入消息库一次（正文只存一份）；
@@ -88,9 +88,9 @@ flowchart TB
 6. 【加分】长期历史与搜索（5 年、可搜索的变体）：热数据（近 3 个月）留在消息库；老数据按 `(chatId, 月份)` 归档成列式文件放对象存储，回看时按需读；全文搜索用 Elasticsearch，按用户分片建索引，只索引发给自己和自己发的消息；成本是索引体积，必要时只索引近一年。
 
 **取舍与追问。** 按被问到的可能性排，通常口述就够：
-- Redis 挂了怎么办？会话目录可以重建（网关重新注册所有本机连接），发布订阅丢消息由收件箱兜底，所以 Redis 只影响延迟不影响正确性。
+- **Redis 挂了只影响延迟：** Redis 挂了怎么办？会话目录可以重建（网关重新注册所有本机连接），发布订阅丢消息由收件箱兜底，所以 Redis 只影响延迟不影响正确性。
 - 网关机器宕机：客户端检测到断开 → 重连另一台 → 带 `cursor` 补收；该网关上的连接记录靠 TTL 过期。
-- 为什么不用 HTTP 轮询或长轮询？空轮询浪费 99% 的请求，延迟取决于轮询间隔；WebSocket 一次握手后双向推送，延迟最低，但换来了"有状态连接"的路由问题。
+- **为何不用轮询：** 为什么不用 HTTP 轮询或长轮询？空轮询浪费 99% 的请求，延迟取决于轮询间隔；WebSocket 一次握手后双向推送，延迟最低，但换来了"有状态连接"的路由问题。
 - 只做 1 对 1：不需要扇出，会话就是两个人的 `(smallerId, largerId)` 对，存储和路由都更简单，但仍然要有设计成"群聊特例"的实体，方便以后扩展。
 - 画表写 SQL：`chat(chat_id, name, created_at)`、`chat_member(chat_id, user_id, joined_at, last_read_seq)`、`message(chat_id, seq, sender_id, body, created_at)`；未读数 = 会话最大 `seq` − `last_read_seq`。
 - 删除、撤回、阅后即焚：删除写墓碑（tombstone）而不是物理删；"为所有人删除"要向所有成员设备下发一条删除指令；阅后即焚用消息 TTL，加上客户端本地擦除；群解散把会话标记为关闭并停止扇出。

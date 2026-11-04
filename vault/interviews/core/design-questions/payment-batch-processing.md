@@ -46,7 +46,7 @@ kind: system-design
   - 账本分录（LedgerEntry：借贷双方，只追加）。
   - Hold 状态：`PENDING → APPROVED | DECLINED | UNKNOWN`；`APPROVED → CAPTURED | RELEASED(过期)`。
   - Charge 状态：`RECEIVED → BATCHED → SUBMITTED → SETTLED | REJECTED`。
-- 接口（REST，商户用 API Key 认证）：
+- **REST 接口**（商户用 API Key 认证）：
   - `POST /holds`（头 `Idempotency-Key`；体：卡令牌、金额、币种、商户引用）→ `{holdId, status}`；
   - `POST /holds/{id}/charges`（头 `Idempotency-Key`；体：金额、小费）→ `{chargeId, status: RECEIVED}`；
   - `DELETE /holds/{id}`（主动释放）；
@@ -69,17 +69,17 @@ flowchart TB
 ```
 
 冻结路径（同步）：
-1. API 网关做认证（API Key + 请求签名）、限流、TLS 终结。卡号在最边缘就被换成令牌（tokenization）：真实卡号只存在隔离的 PCI 保险库里，我们的数据库只见令牌和末四位。
-2. 冻结服务先在数据库里落一行 `PENDING` 的 hold（同时登记 `Idempotency-Key` 的唯一约束），再去调网络。先写意图再调外部，这样无论之后进程崩在哪一步，数据库里都有这笔交易的痕迹，可以被恢复流程找到。
+1. **网关认证限流并令牌化卡号：** API 网关做认证（API Key + 请求签名）、限流、TLS 终结。卡号在最边缘就被换成令牌（tokenization）：真实卡号只存在隔离的 PCI 保险库里，我们的数据库只见令牌和末四位。
+2. **先落 PENDING hold 再调网络：** 冻结服务先在数据库里落一行 `PENDING` 的 hold（同时登记 `Idempotency-Key` 的唯一约束），再去调网络。先写意图再调外部，这样无论之后进程崩在哪一步，数据库里都有这笔交易的痕迹，可以被恢复流程找到。
 3. 适配器调用网络，把 `holdId` 作为网络侧的唯一引用号。返回批准/拒绝后，更新 hold 状态并写账本分录，再返回给商户。
 4. 超时（网络没有在 3 秒内应答）：状态记为 `UNKNOWN`，不要自己猜。异步恢复任务按引用号向网络查询结果；查不到或网络不支持查询就发"冲正"（reversal，释放可能已经冻住的额度，冲正本身是幂等的）。商户先得到"失败，请重试"，重试会用新的 `Idempotency-Key`，不会和那笔未知交易冲突。
 
 扣款路径（异步）：
-1. 扣款服务校验 hold 为 `APPROVED`、未过期、金额合规，写入 Charge（`RECEIVED`）并立即返回成功给商户，不等网络。
+1. **扣款服务立即返回成功：** 扣款服务校验 hold 为 `APPROVED`、未过期、金额合规，写入 Charge（`RECEIVED`）并立即返回成功给商户，不等网络。
 2. `batchDate` 由扣款创建时间确定性地算出：晚上 10 点（网络的截止时间）之前归当天，之后归次日。因为它只是 `createdAt` 的函数，不需要一个"当前批次指针"，也就没有切换时刻的竞争。
 
 每晚批处理（用工作流引擎或带领导者选举的调度器驱动）：
-1. 截止时间过后再等一小段宽限（如 30 秒，让在途写入落地），按 `(network, batchDate)` 分区把所有 `RECEIVED` 的扣款读出来，流式写成文件，每个文件约 100 万行，附带清单（行数、总金额、校验和）。
+1. **宽限后按网络分区出文件：** 截止时间过后再等一小段宽限（如 30 秒，让在途写入落地），按 `(network, batchDate)` 分区把所有 `RECEIVED` 的扣款读出来，流式写成文件，每个文件约 100 万行，附带清单（行数、总金额、校验和）。
 2. 上传到网络（SFTP 或批量接口），批次 id 和文件校验和作为幂等键：重复提交同一批次，网络会识别并拒绝重复处理。
 3. 网络返回逐笔结果文件。逐行回写：接受的 → `SETTLED`，写账本；被拒的 → `REJECTED` 带原因，可重试的进下一批。
 4. 对账：我们账本的应收总额、网络结算报告、银行实际到账三方比对，差异进人工队列。

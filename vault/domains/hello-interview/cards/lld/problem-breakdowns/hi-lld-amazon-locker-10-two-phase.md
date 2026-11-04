@@ -12,9 +12,9 @@ step: 10
 ## A
 **做法。** 把存件拆成两阶段（two-phase）：
 
-- `reserve_compartment(size)`：找格口，标为已预留（RESERVED），开门，返回预约号
-- 快递员放入包裹后调用 `confirm_deposit(reservation_id)`：标为占用，生成取件码并存表，删除预约
-- `cancel_reservation(reservation_id)`：放弃时释放
+- **reserve_compartment 先预留：** `reserve_compartment(size)`：找格口，标为已预留（RESERVED），开门，返回预约号
+- **confirm_deposit 确认入柜：** 快递员放入包裹后调用 `confirm_deposit(reservation_id)`：标为占用，生成取件码并存表，删除预约
+- **cancel_reservation 释放：** `cancel_reservation(reservation_id)`：放弃时释放
 
 格口状态增加 RESERVED；Locker 另维护预约号到格口的映射。预约要有超时（比如 2 到 3 分钟没确认就自动取消并释放），避免格口被卡住。
 

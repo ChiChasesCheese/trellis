@@ -24,11 +24,11 @@ kind: low-level-design
 
 **需求。**
 功能：
-1. `publish(merchant, effective_from, rules)`：为商户发布一个新版本的规则集，从某个时间点起生效。
+1. **publish 发布规则新版本：** `publish(merchant, effective_from, rules)`：为商户发布一个新版本的规则集，从某个时间点起生效。
 2. `quote(txn)`：按交易发生的时间找到当时生效的版本，依次运行规则，返回每一行（规则 ID、种类、版本、金额）。
-3. 税规则能引用前面的费用行（税算在费用之上）。
+3. **税可引用费用行：** 税规则能引用前面的费用行（税算在费用之上）。
 4. 没有生效版本时明确报错。
-5. 加一种新规则（阶梯、封顶、保底）不修改引擎。
+5. **新规则不改引擎：** 加一种新规则（阶梯、封顶、保底）不修改引擎。
 
 非功能：
 - 金额是整数最小货币单位；规则内部用 `Decimal` 全精度，**每一行只取整一次**，取整方式（银行家舍入）全系统一致。
@@ -36,8 +36,8 @@ kind: low-level-design
 - 查询 O(log V)，V 为该商户的版本数；读多写少，读路径不加锁。
 
 **核心实体与接口。**
-- `Txn(id, merchant, amount, currency, ts)`：不可变，`ts` 是交易发生时间。
-- `Line(rule_id, kind, version, amount)`：费用的一行，`kind` 区分费用与税，让税规则按种类汇总。
+- **Txn 不可变：** `Txn(id, merchant, amount, currency, ts)`：不可变，`ts` 是交易发生时间。
+- **Line 区分费用与税：** `Line(rule_id, kind, version, amount)`：费用的一行，`kind` 区分费用与税，让税规则按种类汇总。
 - `Rule`（抽象类）：`apply(txn, prior_lines) -> Decimal | None`；`PercentPlusFixed`、`TaxOnFees` 是两个实现，`Capped` 见逐步扩展 1。
 - `FeeEngine`：每个商户一对同下标的列表：生效时间 `starts` 和规则集 `versions`；`publish` 追加，`quote` 二分后运行规则链。
 - 模式：策略（每条规则一种计算）、责任链（规则按顺序运行，后面的规则看得到前面的结果）、装饰器（`Capped` 包住任意规则）。
