@@ -155,7 +155,7 @@ ORDER BY id DESC
 LIMIT 20;
 ```
 
-  走索引直接定位，复杂度与页码无关。排序列不唯一时用元组比较：`WHERE (created_at, id) < (:t, :id) ORDER BY created_at DESC, id DESC`，索引建 `(created_at, id)`。缺点：不能跳到任意页，只能上一页下一页；这对信息流本来就合适。
+  走索引直接定位，复杂度与页码无关。排序列不唯一时写成 `WHERE created_at < :t OR (created_at = :t AND id < :id) ORDER BY created_at DESC, id DESC`，索引建 `(created_at, id)`。MySQL 不会对元组比较 `(created_at, id) < (:t, :id)` 走范围扫描，实测 640 万行时要扫 100 万行、1.5 秒，上面的写法只要 1.4 毫秒。缺点：不能跳到任意页，只能上一页下一页；这对信息流本来就合适。
 - **方案二：延迟关联**（deferred join），先在覆盖索引上找出 id，再回表：
 
 ```sql

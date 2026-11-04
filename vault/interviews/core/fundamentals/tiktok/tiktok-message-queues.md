@@ -84,9 +84,9 @@
 - **解决**：
   1. 缩短每批处理时间：减小 `max.poll.records`，或把耗时处理交给线程池后再提交；
   2. 合理增大 `max.poll.interval.ms`；
-  3. **协作式粘性分配**（`CooperativeStickyAssignor`）：只迁移需要移动的分区，其余继续消费；
+  3. **协作式粘性分配**（`CooperativeStickyAssignor`）：只迁移需要移动的分区，其余继续消费；3.0 起默认列表里 Range 排在它前面，要用它得显式配置；
   4. **静态成员**（`group.instance.id`）：消费者重启时在 `session.timeout.ms` 内回来就保留原来的分区，滚动发布不触发重平衡；
-  5. Kafka 4.0 的新消费者协议（KIP-848）把分配逻辑放到服务端，增量式，不再有全组暂停。
+  5. Kafka 4.0 的新消费者协议（KIP-848）把分配逻辑放到服务端，增量式，不再有全组暂停；默认仍是 classic，要显式设 `group.protocol=consumer`。
 - **追问 · 重平衡后为什么会重复消费？** 已处理但未提交的消息，新的所有者从上次提交的 offset 开始读。所以要在 `ConsumerRebalanceListener.onPartitionsRevoked` 里提交已处理的 offset，并做幂等。
 
 ## Q8. 副本、ISR、高水位（HW）是什么？

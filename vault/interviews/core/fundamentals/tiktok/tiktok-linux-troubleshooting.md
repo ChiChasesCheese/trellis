@@ -131,7 +131,7 @@ awk '{print $1}' access.log | sort | uniq -c | sort -nr | head -10
 awk '$9 ~ /^5/ {print substr($4, 2, 17)}' access.log | sort | uniq -c
 
 # 最慢的 10 个请求（假设最后一列是耗时）
-sort -k NF -nr access.log | head -10
+awk '{print $NF, $0}' access.log | sort -nr | head -10
 
 # 实时过滤错误
 tail -F app.log | grep --line-buffered -i error
