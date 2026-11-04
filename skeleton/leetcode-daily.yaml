@@ -75,8 +75,17 @@ nodes:
     title: LC 25 K 个一组翻转链表（Reverse Nodes in k-Group）
     summary: Hard；Recursion, Linked List。
   core: true
-- id: graph-traversal
+- id: tree-dfs
   order: 8
+  title: 二叉树 DFS：返回值与全局量
+  summary: 二叉树 DFS：返回值与全局量：Chi 解过的题，按知识点归在一起。
+  children:
+  - id: tree-dfs.symmetric-tree
+    title: LC 101 对称二叉树（Symmetric Tree）
+    summary: Easy；Tree, Depth-First Search, Breadth-First Search, Binary Tree。
+  core: true
+- id: graph-traversal
+  order: 9
   title: 图与网格的 BFS / DFS
   summary: 图与网格的 BFS / DFS：Chi 解过的题，按知识点归在一起。
   children:
@@ -91,7 +100,7 @@ nodes:
     summary: Medium；Depth-First Search, Breadth-First Search, Union Find, Array。
   core: true
 - id: topo-sort
-  order: 9
+  order: 10
   title: 拓扑排序
   summary: 拓扑排序：Chi 解过的题，按知识点归在一起。
   children:
@@ -99,8 +108,17 @@ nodes:
     title: LC 207 课程表（Course Schedule）
     summary: Medium；Depth-First Search, Breadth-First Search, Graph, Topological Sort。
   core: true
+- id: union-find
+  order: 11
+  title: 并查集
+  summary: 并查集：Chi 解过的题，按知识点归在一起。
+  children:
+  - id: union-find.accounts-merge
+    title: LC 721 账户合并（Accounts Merge）
+    summary: Medium；Depth-First Search, Breadth-First Search, Union Find, Array。
+  core: true
 - id: shortest-path
-  order: 10
+  order: 12
   title: 最短路：Dijkstra 与其变体
   summary: 最短路：Dijkstra 与其变体：Chi 解过的题，按知识点归在一起。
   children:
@@ -109,7 +127,7 @@ nodes:
     summary: Medium；Depth-First Search, Breadth-First Search, Graph, Dynamic Programming。
   core: true
 - id: dp-grid-string
-  order: 11
+  order: 13
   title: 动态规划：网格、双串与区间
   summary: 动态规划：网格、双串与区间：Chi 解过的题，按知识点归在一起。
   children:
@@ -118,7 +136,7 @@ nodes:
     summary: Medium；Array, Dynamic Programming, Matrix。
   core: true
 - id: greedy
-  order: 12
+  order: 14
   title: 贪心
   summary: 贪心：Chi 解过的题，按知识点归在一起。
   children:
@@ -127,7 +145,7 @@ nodes:
     summary: Medium；。
   core: true
 - id: design
-  order: 13
+  order: 15
   title: 数据结构设计题
   summary: 数据结构设计题：Chi 解过的题，按知识点归在一起。
   children:
@@ -142,7 +160,7 @@ nodes:
     summary: Medium；Design, Hash Table, Ordered Set, Heap (Priority Queue)。
   core: true
 - id: math-bit-sim
-  order: 14
+  order: 16
   title: 数学、位运算与模拟
   summary: 数学、位运算与模拟：Chi 解过的题，按知识点归在一起。
   children:
@@ -166,7 +184,7 @@ nodes:
     summary: Easy；Array, Math。
   core: true
 - id: sorting-permutation
-  order: 15
+  order: 17
   title: 排序、置换环与逆序对
   summary: 排序、置换环与逆序对：Chi 解过的题，按知识点归在一起。
   children:
