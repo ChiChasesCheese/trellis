@@ -423,7 +423,7 @@ def _head(text: str) -> tuple[str, str]:
     """Split one bullet into (phrase, rest). Nothing is cut and nothing is repeated: a bullet with no phrase stays whole."""
     text = text.strip()
     m = re.match(r"^\*\*(.+?)\*\*\s*[：:。，,]?\s*(.*)$", text, re.S)
-    if m and m.group(2) and _width(m.group(1)) <= PHRASE_MAX:
+    if m and m.group(2) and _width(m.group(1)) <= PHRASE_MAX + 12:  # an author's own bold cue may run a little long
         return m.group(1).rstrip("：:。，, "), m.group(2)
     if "→" in text:
         before, after = text.split("→", 1)

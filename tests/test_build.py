@@ -186,3 +186,9 @@ def test_a_link_in_a_fold_title_is_a_link_not_text():
     h = _html("**基本回答。** 短。\n\n**业务场景。** 短。\n\n**系统设计。** [[links.top-k|Top-K 榜]]：怎么分片再合并，第一步按用户分桶\n", fold=True, links=links, node="a.x")
     assert "&lt;a" not in h and 'class="ref" href="anki://' in h
 
+
+def test_a_longer_bold_cue_still_folds():
+    from trellis.build import _head
+    head, rest = _head("**以为 MCP 取代了 Function Calling：**MCP 管工具怎么接入")
+    assert head == "以为 MCP 取代了 Function Calling" and rest.startswith("MCP 管")
+

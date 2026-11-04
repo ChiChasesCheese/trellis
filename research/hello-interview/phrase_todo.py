@@ -27,7 +27,7 @@ def bullets(path: Path) -> list[str]:
         m = re.match(r"^(?:[-*+]|\d+\.)\s+(.*)$", line)
         if m:
             head, rest = B._head(m.group(1))
-            if B._width(head) > B.PHRASE_MAX or (not rest and B._width(head) > 20):
+            if not rest and B._width(head) > 20:  # a split bullet is fine; a long one that could not split has no phrase
                 out.append(m.group(1))
     return out
 
