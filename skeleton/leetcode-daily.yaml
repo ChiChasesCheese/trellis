@@ -47,6 +47,9 @@ nodes:
   - id: binary-search.search-in-rotated-sorted-array-ii
     title: LC 81 搜索旋转排序数组 II（Search in Rotated Sorted Array II）
     summary: Medium；Array, Binary Search。
+  - id: binary-search.find-the-distance-value-between-two-arrays
+    title: LC 1385 两个数组间的距离值（Find the Distance Value Between Two Arrays）
+    summary: Easy；Array, Two Pointers, Binary Search, Sorting。
   core: true
 - id: heap-patterns
   order: 5
