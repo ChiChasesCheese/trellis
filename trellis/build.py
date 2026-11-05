@@ -264,6 +264,8 @@ hr#answer { border: none; border-top: 2px solid var(--accent); margin: 18px 0 16
 /* ---- code ---- */
 code, pre, .hl { font-family: "SF Mono", Menlo, Consolas, monospace; }
 code {
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
   font-size: 0.86em;
   background: var(--chip);
   border-radius: 4px;
@@ -290,9 +292,10 @@ pre code, .hl code {
   background: none;
   padding: 0;
   font-size: inherit;
-  white-space: pre;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
-.hl .c, .hl .c1, .hl .cm, .hl .ch { color: #6a9955; font-style: italic; }
+.hl .c, .hl .c1, .hl .cm, .hl .ch { color: #6a9955; font-style: normal; }
 .hl .k, .hl .kn, .hl .kc, .hl .kd, .hl .ow, .hl .kr { color: #a626a4; }
 .hl .nf, .hl .fm { color: #4078f2; }
 .hl .nc, .hl .nn { color: #c18401; }
@@ -314,7 +317,7 @@ pre code, .hl code {
 table { border-collapse: collapse; margin: 0 0 1em; font-size: 0.92em; }
 td, th { border: 1px solid var(--rule); padding: 5px 10px; }
 .cloze { font-weight: 650; color: var(--accent); }
-.ref { color: var(--accent); font-style: italic; }
+.ref { color: var(--accent); }
 .sources {
   margin-top: 22px; padding-top: 10px; border-top: 1px solid var(--rule);
   font-size: 13px; color: var(--dim);
@@ -545,6 +548,94 @@ def _embed(m: re.Match) -> str:
     return f'<img class="clip" src="{name}">'
 
 
+CODE_COLUMNS = 44  # what fits a phone at the card's code size
+_COMMENT_MARK = {"python": "#", "py": "#", "bash": "#", "sh": "#", "shell": "#", "yaml": "#", "ruby": "#",
+                 "java": "//", "go": "//", "cpp": "//", "c": "//", "js": "//", "ts": "//", "javascript": "//",
+                 "typescript": "//", "rust": "//", "kotlin": "//", "sql": "--", "lua": "--"}
+_CODE_FENCE = re.compile(r"^(```)([A-Za-z0-9+]+)[ \t]*\n(.*?)^```[ \t]*$", re.S | re.M)
+
+
+def _columns(text: str) -> int:
+    return sum(2 if ord(c) > 0x2E7F else 1 for c in text)
+
+
+def _comment_at(line: str, mark: str) -> int:
+    """Where a trailing comment starts, skipping strings. -1 if the line has none, or is only a comment."""
+    quote = None
+    i = 0
+    while i < len(line):
+        c = line[i]
+        if quote:
+            if c == "\\":
+                i += 1
+            elif c == quote:
+                quote = None
+        elif c in "\"'`":
+            quote = c
+        elif line.startswith(mark, i):
+            return i if line[:i].strip() else -1
+        i += 1
+    return -1
+
+
+def _lift_comments(code: str, mark: str) -> str:
+    """A trailing comment that would run off a phone moves to its own line above; aligned padding collapses."""
+    out = []
+    for line in code.split("\n"):
+        at = _comment_at(line, mark)
+        if at < 0:
+            out.append(line)
+            continue
+        body, comment = line[:at].rstrip(), line[at:].rstrip()
+        if _columns(body) + 2 + _columns(comment) <= CODE_COLUMNS:
+            out.append(f"{body}  {comment}")
+        else:
+            out.append(" " * (len(body) - len(body.lstrip())) + comment)
+            out.append(body)
+    return "\n".join(out)
+
+
+def _fit_code(text: str) -> str:
+    def fit(m: re.Match) -> str:
+        mark = _COMMENT_MARK.get(m.group(2).lower())
+        return f"```{m.group(2)}\n{_lift_comments(m.group(3), mark) if mark else m.group(3)}```"
+    return _CODE_FENCE.sub(fit, text)
+
+
+_LC_TITLES: dict[str, str] = {}
+_LC_MENTION = re.compile(r"LC\s*(\d+)((?:[、,，/]\s*(?:LC\s*)?\d+)*)")
+
+
+def _lc_titles() -> dict[str, str]:
+    if not _LC_TITLES:
+        folder = Path(__file__).resolve().parents[1] / "vault/interviews/core/leetcode/problems"
+        for f in folder.glob("*.md"):
+            m = re.search(r"^\*\*LC (\d+) ([^*\n｜]+)\*\*", f.read_text(encoding="utf-8"), re.M)
+            if m:
+                _LC_TITLES.setdefault(m.group(1), m.group(2).strip())
+    return _LC_TITLES
+
+
+def _name_problems(text: str) -> str:
+    """`LC 787、743` says nothing on a phone: give each number its title, unless the title already follows."""
+    titles = _lc_titles()
+
+    def name(m: re.Match) -> str:
+        nums = re.findall(r"\d+", m.group(0))
+        after = text_part[m.end():m.end() + 40].lstrip()
+        if len(nums) == 1 and titles.get(nums[0]) and after.startswith(titles[nums[0]][:3]):
+            return m.group(0)
+        if len(nums) == 1 and re.match(r"[\u4e00-\u9fffA-Za-z]", after) and after[0] not in "的和与或里中是就也用这那等及":
+            return m.group(0)  # followed by the author's own name for it
+        return "、".join(f"LC {n} {titles[n]}" if n in titles else f"LC {n}" for n in nums)
+
+    parts = _CODE_SPANS.split(text)
+    for i in range(0, len(parts), 2):
+        text_part = parts[i]
+        parts[i] = _LC_MENTION.sub(name, text_part)
+    return "".join(parts)
+
+
 _CODE_BLOCK = re.compile(r'<div class="hl"><pre>.*?</pre></div>', re.S)
 
 
@@ -593,6 +684,9 @@ def _html(text: str, related: dict | None = None, own: set[int] | None = None, f
     # Obsidian wikilinks have nowhere to point inside Anki; render the
     # display text as a styled reference instead.
     # (only outside code: `[[0]] * 3` in a code span is Python, not a link)
+    text = _fit_code(text)
+    if links is not None:  # answers only: a title in a question's header is already named
+        text = _name_problems(text)
     parts = _CODE_SPANS.split(text)
     parts = [p if i % 2 else _EMBED.sub(lambda m: "\n\n" + _embed(m) + "\n\n", p) for i, p in enumerate(parts)]
     used: dict[str, tuple[str, str]] = {}

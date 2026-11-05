@@ -192,3 +192,19 @@ def test_a_longer_bold_cue_still_folds():
     head, rest = _head("**以为 MCP 取代了 Function Calling：**MCP 管工具怎么接入")
     assert head == "以为 MCP 取代了 Function Calling" and rest.startswith("MCP 管")
 
+
+def test_long_trailing_comment_moves_above_on_a_phone():
+    from trellis.build import _lift_comments
+    code = "dead: Counter[int] = Counter()                 # 值 -> 还要丢弃几个\nx = 1  # 短\ns = '# 不是注释' + y\n"
+    out = _lift_comments(code, "#").split("\n")
+    assert out[0] == "# 值 -> 还要丢弃几个" and out[1] == "dead: Counter[int] = Counter()"
+    assert out[2] == "x = 1  # 短" and out[3] == "s = '# 不是注释' + y"
+
+
+def test_bare_problem_numbers_get_titles():
+    from trellis import build as B
+    B._LC_TITLES.update({"787": "K 站中转内最便宜的航班", "743": "网络延迟时间"})
+    assert B._name_problems("例题（LC 787、743）。") == "例题（LC 787 K 站中转内最便宜的航班、LC 743 网络延迟时间）。"
+    assert B._name_problems("LC 743 网络延迟时间") == "LC 743 网络延迟时间"  # already named
+    assert "K 站" not in B._name_problems("`LC 787`")  # code stays as written
+
