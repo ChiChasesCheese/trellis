@@ -3,7 +3,8 @@
     uv run --with scikit-learn python research/hello-interview/sdx/candidates.py
 
 Writes sources/local/hello-interview/sdx/candidates.json (gitignored: it points into premium cards):
-{sd_card_id: {"path", "sd_node", "home", "page_cards": [...], "hi_top": [...], "bagu_top": [...], "pay_top": [...]}}.
+{sd_card_id: {"path", "sd_node", "home", "page_cards": [...], "hi_top": [...], "bagu_top": [...], "pay_top": [...], "other_top": [...]}}.
+other_top: the HFT, Kafka, LLD and Snowflake decks.
 Similarity is TF-IDF over Chinese character bigrams and English words of question + answer (Chinese where a card has it).
 """
 from __future__ import annotations
@@ -20,6 +21,8 @@ SD = ROOT / "vault/domains/system-design/cards"
 HI = ROOT / "vault/domains/hello-interview/cards"
 BAGU = ROOT / "vault/domains/bagu/cards"
 PAY = ROOT / "vault/domains/payments/cards"
+# other Chinese decks Chi studies in Anki (Chi, 2026-11-06); cdn-content is English and does not count
+OTHER = [ROOT / f"vault/domains/{d}/cards" for d in ("hft", "kafka", "low-level-design", "snowflake")]
 BODIES = [ROOT / "vault/interviews/core/design-questions", ROOT / "vault/domains/hello-interview/premium/bodies"]
 OUT = ROOT / "sources/local/hello-interview/sdx/candidates.json"
 
@@ -33,6 +36,9 @@ def sd_text(text: str) -> str:
     """The Chinese question and answer where the card has them, else the English ones."""
     parts = re.split(r"^## ", text, flags=re.M)
     sec = {p.split("\n", 1)[0].strip(): p.split("\n", 1)[1] if "\n" in p else "" for p in parts[1:]}
+    if "zh" in sec or not parts[1:]:  # a cloze card: its text sits before the first heading, the Chinese under "## zh"
+        body = re.sub(r"^---\n.*?\n---\n", "", parts[0], flags=re.S)
+        return sec.get("zh") or body
     return (sec.get("Q zh") or sec.get("Q", "")) + "\n" + (sec.get("A zh") or sec.get("A", ""))
 
 
@@ -57,7 +63,7 @@ def main() -> None:
     for folder in BODIES:
         for f in sorted(folder.glob("*.md")):
             docs.append(("hi", str(f.relative_to(ROOT)), "", f.read_text(encoding="utf-8")))
-    for kind, folder in (("bagu", BAGU), ("pay", PAY)):
+    for kind, folder in [("bagu", BAGU), ("pay", PAY)] + [("other", f) for f in OTHER]:
         for f in sorted(folder.rglob("*.md")):
             t = f.read_text(encoding="utf-8")
             docs.append((kind, str(f.relative_to(ROOT)), front(t, "node") or "", t))
@@ -73,9 +79,11 @@ def main() -> None:
         hi_top = [docs[j][1] for j in order if docs[j][0] == "hi"][:8]
         bagu_top = [docs[j][1] for j in order if docs[j][0] == "bagu"][:4]
         pay_top = [docs[j][1] for j in order if docs[j][0] == "pay"][:3]
+        other_top = [docs[j][1] for j in order if docs[j][0] == "other"][:4]
         page_cards = sorted(d[1] for d in docs if page and d[0] == "hi" and d[2].startswith(page + "."))
         out[s["id"]] = {"path": s["path"], "sd_node": s["node"], "home": target,
-                        "page_cards": page_cards, "hi_top": hi_top, "bagu_top": bagu_top, "pay_top": pay_top}
+                        "page_cards": page_cards, "hi_top": hi_top, "bagu_top": bagu_top, "pay_top": pay_top,
+                        "other_top": other_top}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"{len(out)} SD cards, {len(docs)} existing cards indexed -> {OUT.relative_to(ROOT)}")

@@ -14,9 +14,10 @@ time every day for months; a missing point costs him a round. Both matter.
 - `sources/local/hello-interview/sdx/groups/<G>.txt`: your SD card ids, ordered by SD leaf.
 - `sources/local/hello-interview/sdx/candidates.json`: per SD card its `path`, its `home` (the Hello Interview leaf its
   new cards go to), `page_cards` (every existing card on that page), and the most similar existing cards: `hi_top`
-  (Hello Interview cards and question bodies), `bagu_top` (八股), `pay_top` (支付系统核心). Similarity is lexical, so it
-  misses paraphrases: also `grep -rl` the key terms (English and Chinese) in `vault/domains/hello-interview/cards`,
-  `vault/domains/bagu/cards`, `vault/domains/payments/cards` and `vault/interviews/core/design-questions`.
+  (Hello Interview cards and question bodies), `bagu_top` (八股), `pay_top` (支付系统核心), `other_top` (the HFT 低延迟交易系统,
+  Kafka, 低层设计 and Snowflake decks, which Chi also studies). Similarity is lexical, so it misses paraphrases: also
+  `grep -rl` the key terms (English and Chinese) in `vault/domains/{hello-interview,bagu,payments,hft,kafka,low-level-design,snowflake}/cards`
+  and `vault/interviews/core/design-questions`. The English cdn-content and system-design decks do not count as coverage.
 - `research/hello-interview/sdx/map.json`: SD leaf → home (for orientation; the home in candidates.json is the same).
 - The model: `vault/domains/hello-interview/cards/premium/sdx/sd.problem-breakdowns.robinhood.more/hi-sdx-exchange-sequencer-journal.md`
   (two SD cards merged into one new card) and `sources/local/hello-interview/sdx/model_ledger.jsonl` (that merge plus two
@@ -24,7 +25,8 @@ time every day for months; a missing point costs him a round. Both matter.
 
 ## Per SD card
 
-1. **Read it**, both the English (the original) and the `zh` translation (sometimes looser).
+1. **Read it**, both the English (the original) and the `zh` translation (sometimes looser). A cloze card (`type: cloze`)
+   has its text before the first heading and the Chinese under `## zh`; `{{c1::…}}` marks the tested part.
 2. **Look for it.** Open the page cards' questions and the top candidates that look related; grep as above. Read the
    answers of the ones that might cover it.
 3. **Verdict**, one line in `sources/local/hello-interview/sdx/ledger/<G>.jsonl` (append as you go):

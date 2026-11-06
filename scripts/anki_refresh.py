@@ -3,6 +3,7 @@
     uv run python scripts/anki_refresh.py [--dry-run] <domain> [<domain> ...]
     uv run python scripts/anki_refresh.py --style                # push the card CSS to the note types
     uv run python scripts/anki_refresh.py --add <id-prefix> <domain>   # also add built notes missing from Anki whose id starts so
+    uv run python scripts/anki_refresh.py --add @ids.txt <domain>      # ... or exactly the ids listed in a file
 
 `anki-push` imports the whole package, which brings back any card Chi has deleted in Anki and can move cards he has moved.
 This only rewrites the fields of notes that already exist and differ: it moves nothing and leaves scheduling alone.
@@ -114,7 +115,9 @@ def refresh(domain: str, dry: bool, add: str | None = None) -> None:
         fields = {k: v for k, v in zip(names, new) if note["fields"][k]["value"] != v}
         if fields:
             changes.append({"id": note["noteId"], "fields": fields})
-    additions = sorted((i for i in built if add and i.startswith(add) and i not in present), key=lambda i: built[i]["due"])
+    wanted = set(Path(add[1:]).read_text().split()) if add and add.startswith("@") else None  # @file: exactly these ids
+    additions = sorted((i for i in built if add and (i in wanted if wanted is not None else i.startswith(add)) and i not in present),
+                       key=lambda i: built[i]["due"])
     print(f"{domain}: {len(built)} built, {len(info)} in Anki, {len(changes)} to update, {len(additions)} to add", flush=True)
     if not dry:
         for i in range(0, len(changes), BATCH):
