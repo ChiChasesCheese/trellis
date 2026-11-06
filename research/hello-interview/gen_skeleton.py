@@ -80,6 +80,11 @@ ZH = {
 }
 
 
+def more_leaf(pid: str, title: str) -> dict:
+    """Cards merged in from the System Design deck for this page or question (premium/sdx/<pid>.more/)."""
+    return {"id": f"{pid}.more", "title": f"补充 · {title}", "summary": "细节、故障场景和追问，补本页没讲到的。"}
+
+
 def main() -> None:
     pages = json.loads((ROOT / "research/hello-interview/pages.json").read_text(encoding="utf-8"))
     nodes = []
@@ -159,6 +164,8 @@ def main() -> None:
                              "summary": "从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。"})
             if (cards_dir / "premium/mock" / body_slug).is_dir():
                 kids.append({"id": f"{qid}.mock", "title": "模拟面试 · " + title, "summary": "按面试的真实进程一问一答：每一步说什么、白板画到哪。"})
+            if (cards_dir / "premium/sdx" / f"{qid}.more").is_dir():
+                kids.append(more_leaf(qid, title))
             leaves.append({"id": qid, "title": title, "summary": answer["summary"], "children": kids})
         return leaves
 
@@ -258,12 +265,22 @@ def main() -> None:
                 kids = [{"id": f"{pid}.{part}", "title": f"{label} · {zh}", "summary": why} for part, label, why in PAGE_PARTS]
                 if (cards_dir / "premium/mock" / p["page"]).is_dir():  # Chi (2026-11-05): the round as it is spoken, step by step
                     kids.append({"id": f"{pid}.mock", "title": f"模拟面试 · {zh}", "summary": "按面试的真实进程一问一答：每一步说什么、白板画到哪。"})
+                if (cards_dir / "premium/sdx" / f"{pid}.more").is_dir():
+                    kids.append(more_leaf(pid, zh))
                 leaves.append({"id": pid, "title": zh, "summary": f"Hello Interview：{p['title']}。", "children": kids})
             if leaves:
                 secs.append({"id": f"{tid}.{sec}", "title": stitle, "summary": f"{ttitle} · {stitle}，按 Hello Interview 的顺序。",
                              "children": leaves})
         nodes.append({"id": tid, "order": ti, "title": ttitle,
                       "summary": f"Hello Interview 的{ttitle}课程，结构与原站一致。", "children": secs})
+    # Chi (2026-11-06): the System Design deck's cards, deduplicated against this deck, 八股 and payments, merged in.
+    # Topics this deck has no page for get one here, last.
+    sdx_map = json.loads((ROOT / "research/hello-interview/sdx/map.json").read_text(encoding="utf-8"))
+    extra = [{"id": k, "title": t, "summary": f"补充：{t}。"} for k, t in sdx_map["extra_pages"].items()
+             if any((cards_dir / "premium/sdx" / k).glob("*.md"))]
+    if extra:
+        nodes.append({"id": "more", "order": 5, "title": "补充：题目与概念（More）",
+                      "summary": "本 deck 没有对应页面的题目和概念：服务架构、可靠性、安全、AI 系统等。", "children": extra})
     sk = {"domain": "hello-interview", "title": "Hello Interview", "deck": "Hello Interview", "lang": "zh", "fold": True, "fold_code": 25,
           "vault": "domains/hello-interview", "study": {"order": "core-first", "mix": "new-first", "new_per_day": 15, "reviews_per_day": 200},
           "nodes": nodes}

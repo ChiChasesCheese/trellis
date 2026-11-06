@@ -2383,6 +2383,9 @@ nodes:
       - id: sd.problem-breakdowns.robinhood.beyond
         title: 拓展 · 股票交易（Robinhood）
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.robinhood.more
+        title: 补充 · 股票交易（Robinhood）
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.problem-breakdowns.google-docs
       title: 协同文档（Google Docs）
       summary: Hello Interview：Design a Collaborative Document Editor Like Google Docs。
