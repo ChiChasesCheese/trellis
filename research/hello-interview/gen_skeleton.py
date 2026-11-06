@@ -142,6 +142,8 @@ def main() -> None:
                 points_home[body_slug] = f"{qid}.points"  # granular cards live under the first question using the body
                 kids.append({"id": f"{qid}.points", "title": "要点 · " + title,
                              "summary": "从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。"})
+            if (cards_dir / "premium/mock" / body_slug).is_dir():
+                kids.append({"id": f"{qid}.mock", "title": "模拟面试 · " + title, "summary": "按面试的真实进程一问一答：每一步说什么、白板画到哪。"})
             leaves.append({"id": qid, "title": title, "summary": answer["summary"], "children": kids})
         return leaves
 
@@ -238,8 +240,10 @@ def main() -> None:
                     continue
                 pid, zh = f"{tid}.{sec}.{p['page']}", ZH.get(key, p["title"])
                 # Chi (2026-11-03): every chapter is summary cards, then questions from the page, then questions beyond it
-                leaves.append({"id": pid, "title": zh, "summary": f"Hello Interview：{p['title']}。", "children": [
-                    {"id": f"{pid}.{part}", "title": f"{label} · {zh}", "summary": why} for part, label, why in PAGE_PARTS]})
+                kids = [{"id": f"{pid}.{part}", "title": f"{label} · {zh}", "summary": why} for part, label, why in PAGE_PARTS]
+                if (cards_dir / "premium/mock" / p["page"]).is_dir():  # Chi (2026-11-05): the round as it is spoken, step by step
+                    kids.append({"id": f"{pid}.mock", "title": f"模拟面试 · {zh}", "summary": "按面试的真实进程一问一答：每一步说什么、白板画到哪。"})
+                leaves.append({"id": pid, "title": zh, "summary": f"Hello Interview：{p['title']}。", "children": kids})
             if leaves:
                 secs.append({"id": f"{tid}.{sec}", "title": stitle, "summary": f"{ttitle} · {stitle}，按 Hello Interview 的顺序。",
                              "children": leaves})

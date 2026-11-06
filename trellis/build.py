@@ -404,9 +404,14 @@ def _split_at(text: str, seps: str) -> tuple[str, str] | None:
     """The first separator that sits outside brackets, code and tags, as (before, after)."""
     closer = None
     span = 0
+    bold = False
     i = 0
     while i < len(text):
         c = text[i]
+        if not closer and text.startswith("**", i):  # never split inside bold: its markers would come apart
+            bold = not bold
+            i += 2
+            continue
         if text.startswith(("<span", "<a "), i):
             span += 1
         elif text.startswith(("</span>", "</a>"), i):
@@ -416,7 +421,7 @@ def _split_at(text: str, seps: str) -> tuple[str, str] | None:
                 closer = None
         elif c in _OPEN:
             closer = _OPEN[c]
-        elif not span and c in seps:
+        elif not span and not bold and c in seps:
             return text[:i], text[i + 1:]
         i += 1
     return None
@@ -425,6 +430,9 @@ def _split_at(text: str, seps: str) -> tuple[str, str] | None:
 def _head(text: str) -> tuple[str, str]:
     """Split one bullet into (phrase, rest). Nothing is cut and nothing is repeated: a bullet with no phrase stays whole."""
     text = text.strip()
+    whole = re.fullmatch(r"\*\*([^*\n]+?)[：:。，,]?\*\*", text)
+    if whole:  # a bullet that is all bold is itself the phrase; what folds under it is its sub-list
+        return whole.group(1), ""
     m = re.match(r"^\*\*(.+?)\*\*\s*[：:。，,]?\s*(.*)$", text, re.S)
     if m and m.group(2) and _width(m.group(1)) <= PHRASE_MAX + 12:  # an author's own bold cue may run a little long
         return m.group(1).rstrip("：:。，, "), m.group(2)

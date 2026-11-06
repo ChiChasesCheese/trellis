@@ -208,3 +208,11 @@ def test_bare_problem_numbers_get_titles():
     assert B._name_problems("LC 743 网络延迟时间") == "LC 743 网络延迟时间"  # already named
     assert "K 站" not in B._name_problems("`LC 787`")  # code stays as written
 
+
+def test_bold_is_never_split_by_its_own_comma():
+    from trellis.build import _head, _html
+    assert _head("**深入一，位置存储（必讲）**") == ("深入一，位置存储（必讲）", "")
+    assert _head("**写多读少，用 LSM** 而不是 B+ 树，原因是顺序写")[0] == "写多读少，用 LSM"
+    h = _html("**深入。**\n- **深入一，位置存储（必讲）**\n  - 1000 万司机每 5 秒上报\n  - 用 Redis 地理类型\n", fold=True)
+    assert "**" not in h and "<summary>深入一，位置存储（必讲）</summary>" in h
+

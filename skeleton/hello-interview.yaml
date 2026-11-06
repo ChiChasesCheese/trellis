@@ -2181,6 +2181,9 @@ nodes:
       - id: sd.problem-breakdowns.uber.beyond
         title: 拓展 · 网约车（Uber）
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.uber.mock
+        title: 模拟面试 · 网约车（Uber）
+        summary: 按面试的真实进程一问一答：每一步说什么、白板画到哪。
     - id: sd.problem-breakdowns.web-crawler
       title: 网络爬虫
       summary: Hello Interview：Design a Web Crawler。
