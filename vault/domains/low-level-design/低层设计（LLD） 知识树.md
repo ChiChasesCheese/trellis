@@ -1,6 +1,6 @@
 ---
 markmap:
-  initialExpandLevel: 2
+  initialExpandLevel: 3
   colorFreezeLevel: 2
   maxWidth: 260
 tags: [知识树]

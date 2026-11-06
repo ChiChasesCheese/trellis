@@ -1,6 +1,6 @@
 ---
 markmap:
-  initialExpandLevel: 2
+  initialExpandLevel: 3
   colorFreezeLevel: 2
   maxWidth: 260
 tags: [知识树]
@@ -316,7 +316,7 @@ tags: [知识树]
     - LC 1926 迷宫中离入口最近的出口 · 1
     - LC 200 岛屿数量 · 1
     - LC 208 实现 Trie (前缀树) · 1
-- 系统设计（System Design） · 2371
+- 系统设计（System Design） · 2379
   - 跨题模式（Patterns across questions） · 101
     - 幂等键与只生效一次 (Idempotency Keys / Exactly-once Effect) · 4
     - 只追加账本与派生余额 (Append-only Ledger / Double-entry) · 4
@@ -452,7 +452,7 @@ tags: [知识树]
       - 摘要 · 长时间运行的任务 · 16
       - 考点 · 长时间运行的任务 · 12
       - 拓展 · 长时间运行的任务 · 4
-  - 关键技术深入（Key Technologies） · 469
+  - 关键技术深入（Key Technologies） · 474
     - Redis · 30
       - 摘要 · Redis · 18
       - 考点 · Redis · 8
@@ -461,11 +461,11 @@ tags: [知识树]
       - 摘要 · Elasticsearch · 18
       - 考点 · Elasticsearch · 8
       - 拓展 · Elasticsearch · 4
-    - Kafka · 31
+    - Kafka · 32
       - 摘要 · Kafka · 14
       - 考点 · Kafka · 8
       - 拓展 · Kafka · 4
-      - 补充 · Kafka · 5
+      - 补充 · Kafka · 6
     - Temporal · 28
       - 摘要 · Temporal · 16
       - 考点 · Temporal · 8
@@ -493,11 +493,11 @@ tags: [知识树]
       - 考点 · Flink · 9
       - 拓展 · Flink · 5
       - 补充 · Flink · 1
-    - ZooKeeper · 42
+    - ZooKeeper · 46
       - 摘要 · ZooKeeper · 23
       - 考点 · ZooKeeper · 10
       - 拓展 · ZooKeeper · 4
-      - 补充 · ZooKeeper · 5
+      - 补充 · ZooKeeper · 9
     - 邻近搜索（Proximity Search） · 29
       - 摘要 · 邻近搜索（Proximity Search） · 16
       - 考点 · 邻近搜索（Proximity Search） · 9
@@ -519,7 +519,7 @@ tags: [知识树]
       - 考点 · 变更数据捕获（CDC） · 8
       - 拓展 · 变更数据捕获（CDC） · 5
       - 补充 · 变更数据捕获（CDC） · 3
-  - 经典题拆解（Problem Breakdowns） · 1035
+  - 经典题拆解（Problem Breakdowns） · 1038
     - 短链接服务（Bitly） · 26
       - 摘要 · 短链接服务（Bitly） · 11
       - 考点 · 短链接服务（Bitly） · 12
@@ -557,11 +557,11 @@ tags: [知识树]
       - 考点 · 即时通讯（WhatsApp） · 12
       - 拓展 · 即时通讯（WhatsApp） · 5
       - 补充 · 即时通讯（WhatsApp） · 1
-    - 分布式限流器 · 34
+    - 分布式限流器 · 37
       - 摘要 · 分布式限流器 · 15
       - 考点 · 分布式限流器 · 12
       - 拓展 · 分布式限流器 · 5
-      - 补充 · 分布式限流器 · 2
+      - 补充 · 分布式限流器 · 5
     - 视频平台（YouTube） · 34
       - 摘要 · 视频平台（YouTube） · 13
       - 考点 · 视频平台（YouTube） · 12
