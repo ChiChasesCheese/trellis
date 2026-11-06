@@ -299,6 +299,9 @@ nodes:
       - id: qb.sd.hotel-booking-system.points
         title: 要点 · 酒店预订系统（Expedia 型聚合与自营）
         summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
+      - id: qb.sd.hotel-booking-system.more
+        title: 补充 · 酒店预订系统（Expedia 型聚合与自营）
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: qb.sd.metrics-monitoring-alerts
       title: 指标监控与告警平台
       summary: 被报告 44 次。
@@ -558,6 +561,9 @@ nodes:
       - id: qb.sd.realtime-game-leaderboard.points
         title: 要点 · 在线游戏排行榜
         summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
+      - id: qb.sd.realtime-game-leaderboard.more
+        title: 补充 · 在线游戏排行榜
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: qb.sd.github-cicd-workflow
       title: CI/CD 流水线平台（GitHub Actions）
       summary: CI/CD 流水线平台（GitHub Actions）：完整解答。
@@ -668,6 +674,9 @@ nodes:
       - id: qb.sd.nearby-restaurants-app.points
         title: 要点 · 外卖平台（Uber Eats）
         summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
+      - id: qb.sd.nearby-restaurants-app.more
+        title: 补充 · 外卖平台（Uber Eats）
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: qb.sd.delayed-payment-scheduler
       title: 延迟支付调度服务
       summary: 延迟支付调度服务：完整解答。
@@ -695,6 +704,9 @@ nodes:
       - id: qb.sd.typeahead-search-system.points
         title: 要点 · 搜索联想（Typeahead）
         summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
+      - id: qb.sd.typeahead-search-system.more
+        title: 补充 · 搜索联想（Typeahead）
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: qb.sd.tiktok-meeting-room-booking
       title: 会议室预订系统
       summary: 会议室预订系统：完整解答。
@@ -1091,6 +1103,9 @@ nodes:
       - id: tt.sd.tt-wallet-ledger-service.points
         title: 要点 · 钱包与复式账本服务
         summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
+      - id: tt.sd.tt-wallet-ledger-service.more
+        title: 补充 · 钱包与复式账本服务
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: tt.sd.tt-payment-reconciliation
       title: 支付对账系统
       summary: 支付追问高频：对账、退款不破坏对账
@@ -1571,6 +1586,9 @@ nodes:
       - id: sd.in-a-hurry.delivery.beyond
         title: 拓展 · 答题框架（Delivery Framework）
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.in-a-hurry.delivery.more
+        title: 补充 · 答题框架（Delivery Framework）
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.in-a-hurry.core-concepts
       title: 核心概念速览
       summary: Hello Interview：Core Concepts for System Design Interviews。
@@ -1584,6 +1602,9 @@ nodes:
       - id: sd.in-a-hurry.core-concepts.beyond
         title: 拓展 · 核心概念速览
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.in-a-hurry.core-concepts.more
+        title: 补充 · 核心概念速览
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.in-a-hurry.key-technologies
       title: 关键技术速览
       summary: Hello Interview：System Design Key Technologies。
@@ -1640,6 +1661,9 @@ nodes:
       - id: sd.core-concepts.networking-essentials.beyond
         title: 拓展 · 网络基础
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.core-concepts.networking-essentials.more
+        title: 补充 · 网络基础
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.core-concepts.api-design
       title: API 设计
       summary: Hello Interview：API Design for System Design Interviews。
@@ -1666,6 +1690,9 @@ nodes:
       - id: sd.core-concepts.data-modeling.beyond
         title: 拓展 · 数据建模
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.core-concepts.data-modeling.more
+        title: 补充 · 数据建模
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.core-concepts.caching
       title: 缓存
       summary: Hello Interview：Caching for System Design Interviews。
@@ -1679,6 +1706,9 @@ nodes:
       - id: sd.core-concepts.caching.beyond
         title: 拓展 · 缓存
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.core-concepts.caching.more
+        title: 补充 · 缓存
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.core-concepts.sharding
       title: 分片（Sharding）
       summary: Hello Interview：Sharding in System Design Interviews。
@@ -1692,6 +1722,9 @@ nodes:
       - id: sd.core-concepts.sharding.beyond
         title: 拓展 · 分片（Sharding）
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.core-concepts.sharding.more
+        title: 补充 · 分片（Sharding）
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.core-concepts.consistent-hashing
       title: 一致性哈希
       summary: Hello Interview：Consistent Hashing for System Design Interviews。
@@ -1705,6 +1738,9 @@ nodes:
       - id: sd.core-concepts.consistent-hashing.beyond
         title: 拓展 · 一致性哈希
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.core-concepts.consistent-hashing.more
+        title: 补充 · 一致性哈希
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.core-concepts.cap-theorem
       title: CAP 定理
       summary: Hello Interview：CAP Theorem for System Design Interviews。
@@ -1718,6 +1754,9 @@ nodes:
       - id: sd.core-concepts.cap-theorem.beyond
         title: 拓展 · CAP 定理
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.core-concepts.cap-theorem.more
+        title: 补充 · CAP 定理
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.core-concepts.db-indexing
       title: 数据库索引
       summary: Hello Interview：Database Indexing for System Design Interviews。
@@ -1731,6 +1770,9 @@ nodes:
       - id: sd.core-concepts.db-indexing.beyond
         title: 拓展 · 数据库索引
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.core-concepts.db-indexing.more
+        title: 补充 · 数据库索引
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.core-concepts.numbers-to-know
       title: 必须知道的数字
       summary: Hello Interview：Numbers to Know for System Design Interviews。
@@ -1744,6 +1786,9 @@ nodes:
       - id: sd.core-concepts.numbers-to-know.beyond
         title: 拓展 · 必须知道的数字
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.core-concepts.numbers-to-know.more
+        title: 补充 · 必须知道的数字
+        summary: 细节、故障场景和追问，补本页没讲到的。
   - id: sd.patterns
     title: 常见模式（Patterns）
     summary: 系统设计（System Design） · 常见模式（Patterns），按 Hello Interview 的顺序。
@@ -1774,6 +1819,9 @@ nodes:
       - id: sd.patterns.dealing-with-contention.beyond
         title: 拓展 · 处理争用（Contention）
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.patterns.dealing-with-contention.more
+        title: 补充 · 处理争用（Contention）
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.patterns.multi-step-processes
       title: 多步骤流程
       summary: Hello Interview：Multi-step Processes Pattern for System Design Interviews。
@@ -1787,6 +1835,9 @@ nodes:
       - id: sd.patterns.multi-step-processes.beyond
         title: 拓展 · 多步骤流程
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.patterns.multi-step-processes.more
+        title: 补充 · 多步骤流程
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.patterns.scaling-reads
       title: 扩展读
       summary: Hello Interview：How to scale reads in your system design interview。
@@ -1800,6 +1851,9 @@ nodes:
       - id: sd.patterns.scaling-reads.beyond
         title: 拓展 · 扩展读
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.patterns.scaling-reads.more
+        title: 补充 · 扩展读
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.patterns.scaling-writes
       title: 扩展写
       summary: Hello Interview：How to scale writes in your system design interview。
@@ -1826,6 +1880,9 @@ nodes:
       - id: sd.patterns.large-blobs.beyond
         title: 拓展 · 大文件（Blob）处理
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.patterns.large-blobs.more
+        title: 补充 · 大文件（Blob）处理
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.patterns.long-running-tasks
       title: 长时间运行的任务
       summary: Hello Interview：Managing Long Running Tasks Pattern for System Design Interviews。
@@ -1882,6 +1939,9 @@ nodes:
       - id: sd.deep-dives.kafka.beyond
         title: 拓展 · Kafka
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.deep-dives.kafka.more
+        title: 补充 · Kafka
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.deep-dives.temporal
       title: Temporal
       summary: Hello Interview：Temporal Deep Dive。
@@ -1908,6 +1968,9 @@ nodes:
       - id: sd.deep-dives.api-gateway.beyond
         title: 拓展 · API 网关
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.deep-dives.api-gateway.more
+        title: 补充 · API 网关
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.deep-dives.cassandra
       title: Cassandra
       summary: Hello Interview：Cassandra Deep Dive for System Design Interviews。
@@ -1947,6 +2010,9 @@ nodes:
       - id: sd.deep-dives.postgres.beyond
         title: 拓展 · PostgreSQL
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.deep-dives.postgres.more
+        title: 补充 · PostgreSQL
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.deep-dives.flink
       title: Flink
       summary: Hello Interview：Flink Deep Dive for System Design Interviews。
@@ -1960,6 +2026,9 @@ nodes:
       - id: sd.deep-dives.flink.beyond
         title: 拓展 · Flink
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.deep-dives.flink.more
+        title: 补充 · Flink
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.deep-dives.zookeeper
       title: ZooKeeper
       summary: Hello Interview：ZooKeeper Deep Dive for System Design Interviews。
@@ -1973,6 +2042,9 @@ nodes:
       - id: sd.deep-dives.zookeeper.beyond
         title: 拓展 · ZooKeeper
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.deep-dives.zookeeper.more
+        title: 补充 · ZooKeeper
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.deep-dives.proximity-search
       title: 邻近搜索（Proximity Search）
       summary: Hello Interview：Proximity Search in System Design Interviews。
@@ -2038,6 +2110,9 @@ nodes:
       - id: sd.deep-dives.change-data-capture.beyond
         title: 拓展 · 变更数据捕获（CDC）
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.deep-dives.change-data-capture.more
+        title: 补充 · 变更数据捕获（CDC）
+        summary: 细节、故障场景和追问，补本页没讲到的。
   - id: sd.problem-breakdowns
     title: 经典题拆解（Problem Breakdowns）
     summary: 系统设计（System Design） · 经典题拆解（Problem Breakdowns），按 Hello Interview 的顺序。
@@ -2068,6 +2143,9 @@ nodes:
       - id: sd.problem-breakdowns.dropbox.beyond
         title: 拓展 · 文件存储（Dropbox）
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.dropbox.more
+        title: 补充 · 文件存储（Dropbox）
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.problem-breakdowns.gopuff
       title: 本地配送（Gopuff）
       summary: Hello Interview：Design a Local Delivery Service like Gopuff。
@@ -2107,6 +2185,9 @@ nodes:
       - id: sd.problem-breakdowns.fb-news-feed.beyond
         title: 拓展 · Facebook 信息流
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.fb-news-feed.more
+        title: 补充 · Facebook 信息流
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.problem-breakdowns.tinder
       title: 约会应用（Tinder）
       summary: Hello Interview：Design a Dating App Like Tinder。
@@ -2120,6 +2201,9 @@ nodes:
       - id: sd.problem-breakdowns.tinder.beyond
         title: 拓展 · 约会应用（Tinder）
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.tinder.more
+        title: 补充 · 约会应用（Tinder）
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.problem-breakdowns.leetcode
       title: 在线判题平台（LeetCode）
       summary: Hello Interview：Design a Coding Platform Like LeetCode。
@@ -2133,6 +2217,9 @@ nodes:
       - id: sd.problem-breakdowns.leetcode.beyond
         title: 拓展 · 在线判题平台（LeetCode）
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.leetcode.more
+        title: 补充 · 在线判题平台（LeetCode）
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.problem-breakdowns.whatsapp
       title: 即时通讯（WhatsApp）
       summary: Hello Interview：Design a Messaging App Like WhatsApp。
@@ -2146,6 +2233,9 @@ nodes:
       - id: sd.problem-breakdowns.whatsapp.beyond
         title: 拓展 · 即时通讯（WhatsApp）
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.whatsapp.more
+        title: 补充 · 即时通讯（WhatsApp）
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.problem-breakdowns.distributed-rate-limiter
       title: 分布式限流器
       summary: Hello Interview：Design a Distributed Rate Limiter。
@@ -2159,6 +2249,9 @@ nodes:
       - id: sd.problem-breakdowns.distributed-rate-limiter.beyond
         title: 拓展 · 分布式限流器
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.distributed-rate-limiter.more
+        title: 补充 · 分布式限流器
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.problem-breakdowns.youtube
       title: 视频平台（YouTube）
       summary: Hello Interview：Design a Video Streaming Platform Like YouTube。
@@ -2172,6 +2265,9 @@ nodes:
       - id: sd.problem-breakdowns.youtube.beyond
         title: 拓展 · 视频平台（YouTube）
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.youtube.more
+        title: 补充 · 视频平台（YouTube）
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.problem-breakdowns.fb-live-comments
       title: Facebook 直播评论
       summary: Hello Interview：Design Facebook's Live Comments System。
@@ -2185,6 +2281,9 @@ nodes:
       - id: sd.problem-breakdowns.fb-live-comments.beyond
         title: 拓展 · Facebook 直播评论
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.fb-live-comments.more
+        title: 补充 · Facebook 直播评论
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.problem-breakdowns.top-k
       title: YouTube 热门 Top K
       summary: Hello Interview：Design YouTube's Top K Videos Feature。
@@ -2198,6 +2297,9 @@ nodes:
       - id: sd.problem-breakdowns.top-k.beyond
         title: 拓展 · YouTube 热门 Top K
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.top-k.more
+        title: 补充 · YouTube 热门 Top K
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.problem-breakdowns.uber
       title: 网约车（Uber）
       summary: Hello Interview：Design a Ride-Sharing Service Like Uber。
@@ -2214,6 +2316,9 @@ nodes:
       - id: sd.problem-breakdowns.uber.mock
         title: 模拟面试 · 网约车（Uber）
         summary: 按面试的真实进程一问一答：每一步说什么、白板画到哪。
+      - id: sd.problem-breakdowns.uber.more
+        title: 补充 · 网约车（Uber）
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.problem-breakdowns.web-crawler
       title: 网络爬虫
       summary: Hello Interview：Design a Web Crawler。
@@ -2227,6 +2332,9 @@ nodes:
       - id: sd.problem-breakdowns.web-crawler.beyond
         title: 拓展 · 网络爬虫
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.web-crawler.more
+        title: 补充 · 网络爬虫
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.problem-breakdowns.ad-click-aggregator
       title: 广告点击聚合
       summary: Hello Interview：Design an Ad Click Aggregator。
@@ -2240,6 +2348,9 @@ nodes:
       - id: sd.problem-breakdowns.ad-click-aggregator.beyond
         title: 拓展 · 广告点击聚合
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.ad-click-aggregator.more
+        title: 补充 · 广告点击聚合
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.problem-breakdowns.fb-post-search
       title: Facebook 帖子搜索
       summary: Hello Interview：Design Facebook's Post Search。
@@ -2253,6 +2364,9 @@ nodes:
       - id: sd.problem-breakdowns.fb-post-search.beyond
         title: 拓展 · Facebook 帖子搜索
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.fb-post-search.more
+        title: 补充 · Facebook 帖子搜索
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.problem-breakdowns.yelp
       title: 商户点评（Yelp）
       summary: Hello Interview：Design a Local Business Review Site Like Yelp。
@@ -2266,6 +2380,9 @@ nodes:
       - id: sd.problem-breakdowns.yelp.beyond
         title: 拓展 · 商户点评（Yelp）
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.yelp.more
+        title: 补充 · 商户点评（Yelp）
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.problem-breakdowns.instagram
       title: 图片分享（Instagram）
       summary: Hello Interview：Design a Photo Sharing App Like Instagram。
@@ -2279,6 +2396,9 @@ nodes:
       - id: sd.problem-breakdowns.instagram.beyond
         title: 拓展 · 图片分享（Instagram）
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.instagram.more
+        title: 补充 · 图片分享（Instagram）
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.problem-breakdowns.strava
       title: 运动记录（Strava）
       summary: Hello Interview：Design a Fitness Tracking App Like Strava。
@@ -2344,6 +2464,9 @@ nodes:
       - id: sd.problem-breakdowns.google-news.beyond
         title: 拓展 · 新闻聚合（Google News）
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.google-news.more
+        title: 补充 · 新闻聚合（Google News）
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.problem-breakdowns.camelcamelcamel
       title: 价格追踪（CamelCamelCamel）
       summary: Hello Interview：Design a Price Tracking Service like CamelCamelCamel。
@@ -2370,6 +2493,9 @@ nodes:
       - id: sd.problem-breakdowns.notification-system.beyond
         title: 拓展 · 通知系统
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.notification-system.more
+        title: 补充 · 通知系统
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.problem-breakdowns.robinhood
       title: 股票交易（Robinhood）
       summary: Hello Interview：Design a Stock Trading Platform Like Robinhood。
@@ -2399,6 +2525,9 @@ nodes:
       - id: sd.problem-breakdowns.google-docs.beyond
         title: 拓展 · 协同文档（Google Docs）
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.google-docs.more
+        title: 补充 · 协同文档（Google Docs）
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.problem-breakdowns.payment-system
       title: 支付系统（Stripe）
       summary: Hello Interview：Design a Payment System like Stripe。
@@ -2425,6 +2554,9 @@ nodes:
       - id: sd.problem-breakdowns.metrics-monitoring.beyond
         title: 拓展 · 指标监控（Datadog）
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.metrics-monitoring.more
+        title: 补充 · 指标监控（Datadog）
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.problem-breakdowns.online-chess
       title: 在线国际象棋
       summary: Hello Interview：Design an Online Chess Platform。
@@ -2438,6 +2570,9 @@ nodes:
       - id: sd.problem-breakdowns.online-chess.beyond
         title: 拓展 · 在线国际象棋
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.online-chess.more
+        title: 补充 · 在线国际象棋
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.problem-breakdowns.chatgpt
       title: ChatGPT
       summary: Hello Interview：Design ChatGPT。
@@ -2451,6 +2586,9 @@ nodes:
       - id: sd.problem-breakdowns.chatgpt.beyond
         title: 拓展 · ChatGPT
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.chatgpt.more
+        title: 补充 · ChatGPT
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.problem-breakdowns.flash-sale
       title: 秒杀系统
       summary: Hello Interview：Design a Flash Sale System。
@@ -2464,6 +2602,9 @@ nodes:
       - id: sd.problem-breakdowns.flash-sale.beyond
         title: 拓展 · 秒杀系统
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.flash-sale.more
+        title: 补充 · 秒杀系统
+        summary: 细节、故障场景和追问，补本页没讲到的。
   - id: sd.in-the-wild
     title: 真实系统案例（In the Wild）
     summary: 系统设计（System Design） · 真实系统案例（In the Wild），按 Hello Interview 的顺序。
@@ -2829,3 +2970,62 @@ nodes:
       - id: lld.problem-breakdowns.inventory-management.beyond
         title: 拓展 · 库存管理
         summary: 这一章没讲、但 senior 面试会追问的内容。
+- id: more
+  order: 5
+  title: 补充：题目与概念（More）
+  summary: 本 deck 没有对应页面的题目和概念：服务架构、可靠性、安全、AI 系统等。
+  children:
+  - id: more.reddit
+    title: 论坛与楼中楼评论（Reddit）
+    summary: 补充：论坛与楼中楼评论（Reddit）。
+  - id: more.social-graph
+    title: 社交图谱与好友搜索
+    summary: 补充：社交图谱与好友搜索。
+  - id: more.email-service
+    title: 邮件服务（Gmail）
+    summary: 补充：邮件服务（Gmail）。
+  - id: more.video-conferencing
+    title: 视频会议（Zoom）
+    summary: 补充：视频会议（Zoom）。
+  - id: more.google-maps
+    title: 地图与导航（Google Maps）
+    summary: 补充：地图与导航（Google Maps）。
+  - id: more.calendar
+    title: 日历与排期（Google Calendar）
+    summary: 补充：日历与排期（Google Calendar）。
+  - id: more.e-commerce
+    title: 电商平台（Amazon）
+    summary: 补充：电商平台（Amazon）。
+  - id: more.encoding
+    title: 编码与模式演进（Encoding & Evolution）
+    summary: 补充：编码与模式演进（Encoding & Evolution）。
+  - id: more.replication
+    title: 复制（Replication）
+    summary: 补充：复制（Replication）。
+  - id: more.clocks
+    title: 时钟、顺序与故障检测
+    summary: 补充：时钟、顺序与故障检测。
+  - id: more.analytics
+    title: 分析型系统：OLAP、数仓与批处理
+    summary: 补充：分析型系统：OLAP、数仓与批处理。
+  - id: more.architecture
+    title: 服务架构：微服务、服务发现、Serverless
+    summary: 补充：服务架构：微服务、服务发现、Serverless。
+  - id: more.reliability
+    title: 可靠性：可用性、超时重试、故障隔离、SLO
+    summary: 补充：可靠性：可用性、超时重试、故障隔离、SLO。
+  - id: more.observability
+    title: 可观测性（Observability）
+    summary: 补充：可观测性（Observability）。
+  - id: more.multi-region
+    title: 多区域部署（Multi-Region）
+    summary: 补充：多区域部署（Multi-Region）。
+  - id: more.infra
+    title: 平台基础设施：容器、服务网格、发布
+    summary: 补充：平台基础设施：容器、服务网格、发布。
+  - id: more.security
+    title: 安全：认证、OAuth、密码、授权
+    summary: 补充：安全：认证、OAuth、密码、授权。
+  - id: more.ai-systems
+    title: AI 系统：LLM、RAG、推理服务、评测
+    summary: 补充：AI 系统：LLM、RAG、推理服务、评测。

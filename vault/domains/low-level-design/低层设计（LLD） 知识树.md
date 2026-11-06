@@ -1,0 +1,135 @@
+---
+markmap:
+  initialExpandLevel: 2
+  colorFreezeLevel: 2
+  maxWidth: 260
+tags: [知识树]
+---
+
+# 低层设计（LLD）
+
+- 作答方法（Machine Coding Method） · 20
+  - 作答节奏（Delivery Framework） · 5
+  - 评分标准（Evaluation Rubric） · 5
+  - 从需求到对象（Requirements to Objects） · 5
+  - 白板上的 UML（Class & Sequence Diagrams） · 5
+- Python 对象模型与惯用法（Pythonic Design） · 42
+  - 数据模型与特殊方法（Data Model） · 6
+  - dataclass 与 Enum · 6
+  - Protocol、ABC 与鸭子类型 · 6
+  - 一等函数、闭包与装饰器 · 6
+  - 上下文管理器、迭代器与生成器 · 6
+  - 类型注解作为设计工具 · 6
+  - 模块、包与依赖方向 · 6
+- 对象建模（Object Modeling） · 20
+  - OOP 四大特性的实际用法 · 5
+  - 类之间的关系（Class Relationships） · 5
+  - 接口与抽象基类 · 5
+  - 值对象与不可变性（Value Objects） · 5
+- 设计原则（Design Principles） · 21
+  - SOLID · 6
+  - 组合优于继承 · 5
+  - 耦合、内聚与依赖注入 · 5
+  - DRY、KISS、YAGNI · 5
+- 设计模式（Design Patterns） · 50
+  - 策略模式与可替换算法（Strategy） · 6
+  - 观察者与事件（Observer） · 6
+  - 状态模式（State） · 6
+  - 命令与撤销重做（Command） · 6
+  - 创建型模式（Creational） · 6
+  - 结构型模式（Structural） · 7
+  - 其余行为型模式（Behavioral） · 7
+  - 选择与拒绝模式 · 6
+- 代码质量（Code Quality） · 24
+  - 代码坏味道（Code Smells） · 6
+  - 核心重构手法 · 4
+  - 为测试而设计 · 4
+  - 适应度函数（Fitness Functions） · 4
+  - 错误处理设计 · 6
+- 并发（Concurrency） · 30
+  - 线程、GIL 与内存模型 · 6
+  - 同步原语（threading） · 5
+  - 死锁及其亲戚 · 6
+  - 并发模式 · 7
+  - asyncio 与协程 · 6
+- API 与程序结构（Program Structure） · 13
+  - 进程内 API 设计 · 4
+  - 状态机（State Machines） · 5
+  - 内存持久化（In-Memory Persistence） · 4
+- 设计题（Design Problems） · 381
+  - 设备与状态机 · 65
+    - 停车场（Parking Lot） · 8
+    - 电梯系统（Elevator System） · 8
+    - 自动售货机（Vending Machine） · 8
+    - ATM 取款机 · 12
+    - 快递柜（Amazon Locker） · 8
+    - 咖啡机（Coffee Machine） · 13
+    - 交通信号灯（Traffic Signal） · 8
+  - 预订与库存 · 57
+    - 电影订票（BookMyShow） · 8
+    - 酒店预订（Hotel Booking） · 8
+    - 租车系统（Car Rental） · 8
+    - 图书馆管理（Library Management） · 8
+    - 航班管理（Airline Management） · 8
+    - 会议室预订（Meeting Scheduler） · 8
+    - 餐厅管理（Restaurant Management） · 9
+  - 游戏与规则 · 42
+    - 国际象棋（Chess） · 8
+    - 井字棋（Tic-Tac-Toe） · 8
+    - 蛇梯棋（Snake and Ladder） · 9
+    - 体育比分系统（Cricinfo） · 8
+    - 扑克牌与二十一点（Deck of Cards / Blackjack） · 9
+  - 交易与撮合 · 66
+    - 分账（Splitwise） · 9
+    - 在线购物（Amazon） · 9
+    - 网约车（Uber） · 8
+    - 股票交易系统（Stock Brokerage） · 8
+    - 外卖配送（Food Delivery） · 8
+    - 在线拍卖（Online Auction） · 8
+    - 数字钱包（Digital Wallet） · 8
+    - 银行账户系统（Bank Account System） · 8
+  - 社区与内容 · 48
+    - 社交网络（Social Network） · 8
+    - 职业社交（LinkedIn） · 8
+    - 问答社区（Stack Overflow） · 8
+    - 聊天室（Chat Room） · 8
+    - 任务看板（Trello / Jira） · 8
+    - 音乐流媒体（Spotify） · 8
+  - 基础组件 · 103
+    - LRU / LFU 缓存 · 8
+    - 日志框架（Logging Framework） · 9
+    - 内存文件系统（In-Memory File System） · 8
+    - 通知服务（Notification Service） · 10
+    - 发布订阅与事件总线（Pub-Sub） · 10
+    - 限流器（Rate Limiter） · 8
+    - 任务调度器（Task Scheduler） · 8
+    - 文本编辑器与撤销重做（Text Editor） · 10
+    - 带过期时间的缓存（TTL Cache） · 8
+    - 内存键值存储（In-Memory Key-Value Store） · 8
+    - 线程池（Thread Pool） · 8
+    - 有界阻塞队列（Bounded Blocking Queue） · 8
+- Amazon 专项（Amazon OOD） · 187
+  - Amazon 的 LLD 轮怎么打（Amazon OOD Round） · 7
+  - 增删查最近值（Add / Remove / Closest） · 9
+  - 火车线路票价（Train Fare Calculator） · 9
+  - 购物车折扣引擎（Checkout Price Engine） · 9
+  - 披萨订单（Pizza Order） · 9
+  - Linux find 命令 API（File Search API） · 9
+  - 应急事件发布订阅（Emergency Pub/Sub） · 9
+  - 可配置缓存（Configurable Cache） · 9
+  - 停车场计费（Parking Lot Fees） · 9
+  - Amazon 现场版快递柜（Amazon Locker, onsite） · 6
+  - 机器人餐厅（Robot Restaurant） · 9
+  - 文件监听器（File Watcher） · 9
+  - DAG 执行器与依赖安装（DAG Runner） · 9
+  - 内存数据库（In-Memory Database） · 9
+  - AWS 账单服务（AWS Billing Service）（low priority） · 9
+  - 办公室人数追踪（Occupancy Tracker）（low priority） · 9
+  - 限流器（Rate Limiter）（low priority） · 6
+  - 日志框架（Logger）（low priority） · 6
+  - 分账（Splitwise）（low priority） · 6
+  - 任务调度器（Task Scheduler）（low priority） · 6
+  - 播放列表与推荐（Playlist DJ）（low priority） · 6
+  - 钱包与账户（Wallet / Bank Account）（low priority） · 6
+  - DNS 解析器（DNS Resolver）（low priority） · 6
+  - 视频目录与续播（Video Catalogue）（low priority） · 6
