@@ -6,8 +6,8 @@
 
 `anki-push` imports the whole package, which brings back any card Chi has deleted in Anki and can move cards he has moved.
 This only rewrites the fields of notes that already exist and differ: it moves nothing and leaves scheduling alone.
-It creates nothing unless `--add` names an id prefix; then only new notes with that prefix are added, so a deleted card
-outside it stays deleted.
+It creates nothing unless `--add` names an id prefix; then only new notes with that prefix are imported, from a package
+trimmed to them, so they keep the package's deal order and a deleted card outside the prefix stays deleted.
 """
 from __future__ import annotations
 
@@ -55,13 +55,39 @@ def built_notes(domain: str, folder: Path) -> dict[str, dict]:
     models = {int(k): v["name"] for k, v in json.loads(models_json).items()}
     decks = {int(k): v["name"] for k, v in json.loads(decks_json).items()}
     deck_of = dict(db.execute("select nid, did from cards"))
+    due_of = dict(db.execute("select nid, min(due) from cards group by nid"))  # the deal position the package sets
     out = {}
     for nid, mid, flds, tags in db.execute("select id, mid, flds, tags from notes"):
         ident = next((t[4:] for t in tags.split() if t.startswith("id::")), None)
         if ident:
-            out[ident] = {"fields": flds.split(SEP), "tags": tags.split(), "deck": decks[deck_of[nid]], "model": models[mid]}
+            out[ident] = {"fields": flds.split(SEP), "tags": tags.split(), "deck": decks[deck_of[nid]], "model": models[mid],
+                          "due": due_of[nid], "nid": nid}
     db.close()
     return out
+
+
+def domain_root(built: dict[str, dict]) -> str:
+    return next(iter(built.values()))["deck"].split("::")[0]
+
+
+def add_subset(folder: Path, nids: list[int]) -> None:
+    """Import a copy of the package holding only these notes. Anki numbers a note it has never seen by the package's
+    position, so the new cards are dealt in the package's order; addNote would number them by the preset's insertion
+    order, which is random. Notes outside the subset are not in the file, so nothing deleted comes back."""
+    db_path = folder / "subset.anki2"
+    shutil.copy(folder / "collection.anki2", db_path)
+    db = sqlite3.connect(db_path)
+    keep = ",".join(str(n) for n in nids)
+    db.execute(f"delete from cards where nid not in ({keep})")
+    db.execute(f"delete from notes where id not in ({keep})")
+    db.commit()
+    db.execute("vacuum")
+    db.close()
+    apkg = folder / "subset.apkg"
+    with zipfile.ZipFile(apkg, "w", zipfile.ZIP_DEFLATED) as z:
+        z.write(db_path, "collection.anki2")
+        z.writestr("media", "{}")
+    call("importPackage", path=str(apkg))
 
 
 def refresh(domain: str, dry: bool, add: str | None = None) -> None:
@@ -88,17 +114,17 @@ def refresh(domain: str, dry: bool, add: str | None = None) -> None:
         fields = {k: v for k, v in zip(names, new) if note["fields"][k]["value"] != v}
         if fields:
             changes.append({"id": note["noteId"], "fields": fields})
-    additions = sorted(i for i in built if add and i.startswith(add) and i not in present)
+    additions = sorted((i for i in built if add and i.startswith(add) and i not in present), key=lambda i: built[i]["due"])
     print(f"{domain}: {len(built)} built, {len(info)} in Anki, {len(changes)} to update, {len(additions)} to add", flush=True)
     if not dry:
         for i in range(0, len(changes), BATCH):
             call("multi", actions=[{"action": "updateNoteFields", "params": {"note": c}} for c in changes[i:i + BATCH]])
-        for ident in additions:  # in id order, which is the order the cards are dealt
-            b = built[ident]
-            call("createDeck", deck=b["deck"])
-            names = call("modelFieldNames", modelName=b["model"])
-            call("addNote", note={"deckName": b["deck"], "modelName": b["model"], "tags": b["tags"],
-                                  "fields": dict(zip(names, b["fields"])), "options": {"allowDuplicate": True}})
+        if additions:
+            add_subset(folder, [built[i]["nid"] for i in additions])
+            root = call("getDeckConfig", deck=domain_root(built))
+            for deck in sorted({built[i]["deck"] for i in additions}):
+                if call("getDeckConfig", deck=deck)["id"] != root["id"]:  # a deck the import created starts on Default
+                    call("setDeckConfigId", decks=[deck], configId=root["id"])
     shutil.rmtree(folder, ignore_errors=True)
 
 

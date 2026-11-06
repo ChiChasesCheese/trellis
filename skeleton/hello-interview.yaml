@@ -20,15 +20,8 @@ nodes:
   summary: 按常见薄弱点组织：每个模式先讲机制，再放进多道题里练。
   children:
   - id: fix.gofundme
-    title: GoFundMe
-    summary: GoFundMe：先逐条练常见追问，再完整走一遍。
-    children:
-    - id: fix.gofundme.review
-      title: GoFundMe：逐条改进
-      summary: 常见追问：弱回答、差在哪、应该怎么说、白板怎么改。
-    - id: fix.gofundme.mock
-      title: 模拟面试 · GoFundMe
-      summary: 按面试的真实进程一问一答：每一步说什么、白板画到哪。
+    title: GoFundMe：逐条改进
+    summary: GoFundMe 常见追问：弱回答、差在哪、应该怎么说、白板怎么改。
   - id: fix.retry-key
     title: 副作用之前先定重试键
     summary: 扣款、下单、抢票之前，先让客户端拿到一个每次重试都带上的键。
@@ -44,6 +37,9 @@ nodes:
   - id: fix.scope-math
     title: 范围和估算
     summary: 面试官划掉的范围不再花时间；估算当场算对，并用它推出设计。
+  - id: fix.gofundme-mock
+    title: 模拟面试 · GoFundMe
+    summary: 按面试的真实进程一问一答：每一步说什么、白板画到哪。
 - id: qb
   order: 1
   core: true
