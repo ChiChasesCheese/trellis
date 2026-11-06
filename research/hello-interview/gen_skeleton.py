@@ -107,6 +107,23 @@ def main() -> None:
     placed: dict[str, str] = {}      # course leaf -> prerequisite leaf under a question
     where: dict[str, str] = {}       # prerequisite leaf -> title of the question it sits under
     extra = {}
+    # Weak-spot drills come first. Cards stay in the gitignored premium/fix/ folder;
+    # the node titles name only the patterns.
+    if (cards_dir / "premium/fix").is_dir():
+        fix = [("gofundme", "GoFundMe", "GoFundMe：先逐条练常见追问，再完整走一遍。"),
+               ("retry-key", "副作用之前先定重试键", "扣款、下单、抢票之前，先让客户端拿到一个每次重试都带上的键。"),
+               ("apply-once", "派生状态只应用一次", "总额、计数、库存这类派生值：队列会重放，用已应用表保证每个事件只加一次。"),
+               ("bounded-read", "热点页面读有界的小结构", "最近 N 条、最大 N 条、排行榜：每个字段对应一个裁剪到固定长度的结构。"),
+               ("component-cost", "加组件先说职责和新问题", "加 Redis、队列、分片之前，说清它做什么、带来什么新故障、怎么处理。"),
+               ("scope-math", "范围和估算", "面试官划掉的范围不再花时间；估算当场算对，并用它推出设计。")]
+        kids = [{"id": f"fix.{k}", "title": t, "summary": s} for k, t, s in fix]
+        kids[0]["children"] = [{"id": "fix.gofundme.review", "title": "GoFundMe：逐条改进",
+                                "summary": "常见追问：弱回答、差在哪、应该怎么说、白板怎么改。"}]
+        if (cards_dir / "premium/mock/gofundme").is_dir():
+            kids[0]["children"].append({"id": "fix.gofundme.mock", "title": "模拟面试 · GoFundMe",
+                                        "summary": "按面试的真实进程一问一答：每一步说什么、白板画到哪。"})
+        nodes.append({"id": "fix", "order": 0, "core": True, "title": "重点补强（Weak Spots）",
+                      "summary": "按常见薄弱点组织：每个模式先讲机制，再放进多道题里练。", "children": kids})
     for f in sorted((ROOT / "research/hello-interview").glob("*_meta_*.json")):  # zh titles + requires from the agents
         extra.update(json.loads(f.read_text(encoding="utf-8")))
     card_meta: dict[str, str] = {}   # stub path -> header meta

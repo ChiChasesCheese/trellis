@@ -13,6 +13,37 @@ study:
   new_per_day: 15
   reviews_per_day: 200
 nodes:
+- id: fix
+  order: 0
+  core: true
+  title: 重点补强（Weak Spots）
+  summary: 按常见薄弱点组织：每个模式先讲机制，再放进多道题里练。
+  children:
+  - id: fix.gofundme
+    title: GoFundMe
+    summary: GoFundMe：先逐条练常见追问，再完整走一遍。
+    children:
+    - id: fix.gofundme.review
+      title: GoFundMe：逐条改进
+      summary: 常见追问：弱回答、差在哪、应该怎么说、白板怎么改。
+    - id: fix.gofundme.mock
+      title: 模拟面试 · GoFundMe
+      summary: 按面试的真实进程一问一答：每一步说什么、白板画到哪。
+  - id: fix.retry-key
+    title: 副作用之前先定重试键
+    summary: 扣款、下单、抢票之前，先让客户端拿到一个每次重试都带上的键。
+  - id: fix.apply-once
+    title: 派生状态只应用一次
+    summary: 总额、计数、库存这类派生值：队列会重放，用已应用表保证每个事件只加一次。
+  - id: fix.bounded-read
+    title: 热点页面读有界的小结构
+    summary: 最近 N 条、最大 N 条、排行榜：每个字段对应一个裁剪到固定长度的结构。
+  - id: fix.component-cost
+    title: 加组件先说职责和新问题
+    summary: 加 Redis、队列、分片之前，说清它做什么、带来什么新故障、怎么处理。
+  - id: fix.scope-math
+    title: 范围和估算
+    summary: 面试官划掉的范围不再花时间；估算当场算对，并用它推出设计。
 - id: qb
   order: 1
   core: true
@@ -201,6 +232,9 @@ nodes:
       - id: qb.sd.donations-website-charities.points
         title: 要点 · 限时慈善捐款网站
         summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
+      - id: qb.sd.donations-website-charities.mock
+        title: 模拟面试 · 限时慈善捐款网站
+        summary: 按面试的真实进程一问一答：每一步说什么、白板画到哪。
     - id: qb.sd.web-crawler-design
       title: 网络爬虫（Web Crawler）
       summary: 被报告 64 次。
