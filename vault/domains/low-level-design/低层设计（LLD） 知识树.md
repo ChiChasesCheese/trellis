@@ -1,11 +1,3 @@
----
-markmap:
-  initialExpandLevel: 3
-  colorFreezeLevel: 2
-  maxWidth: 260
-tags: [知识树]
----
-
 # 低层设计（LLD）
 
 - 作答方法（Machine Coding Method） · 20
@@ -57,7 +49,7 @@ tags: [知识树]
   - 状态机（State Machines） · 5
   - 内存持久化（In-Memory Persistence） · 4
 - 设计题（Design Problems） · 381
-  - 设备与状态机 · 65
+  - 设备与状态机 · 65 <!-- markmap: fold -->
     - 停车场（Parking Lot） · 8
     - 电梯系统（Elevator System） · 8
     - 自动售货机（Vending Machine） · 8
@@ -65,7 +57,7 @@ tags: [知识树]
     - 快递柜（Amazon Locker） · 8
     - 咖啡机（Coffee Machine） · 13
     - 交通信号灯（Traffic Signal） · 8
-  - 预订与库存 · 57
+  - 预订与库存 · 57 <!-- markmap: fold -->
     - 电影订票（BookMyShow） · 8
     - 酒店预订（Hotel Booking） · 8
     - 租车系统（Car Rental） · 8
@@ -73,13 +65,13 @@ tags: [知识树]
     - 航班管理（Airline Management） · 8
     - 会议室预订（Meeting Scheduler） · 8
     - 餐厅管理（Restaurant Management） · 9
-  - 游戏与规则 · 42
+  - 游戏与规则 · 42 <!-- markmap: fold -->
     - 国际象棋（Chess） · 8
     - 井字棋（Tic-Tac-Toe） · 8
     - 蛇梯棋（Snake and Ladder） · 9
     - 体育比分系统（Cricinfo） · 8
     - 扑克牌与二十一点（Deck of Cards / Blackjack） · 9
-  - 交易与撮合 · 66
+  - 交易与撮合 · 66 <!-- markmap: fold -->
     - 分账（Splitwise） · 9
     - 在线购物（Amazon） · 9
     - 网约车（Uber） · 8
@@ -88,14 +80,14 @@ tags: [知识树]
     - 在线拍卖（Online Auction） · 8
     - 数字钱包（Digital Wallet） · 8
     - 银行账户系统（Bank Account System） · 8
-  - 社区与内容 · 48
+  - 社区与内容 · 48 <!-- markmap: fold -->
     - 社交网络（Social Network） · 8
     - 职业社交（LinkedIn） · 8
     - 问答社区（Stack Overflow） · 8
     - 聊天室（Chat Room） · 8
     - 任务看板（Trello / Jira） · 8
     - 音乐流媒体（Spotify） · 8
-  - 基础组件 · 103
+  - 基础组件 · 103 <!-- markmap: fold -->
     - LRU / LFU 缓存 · 8
     - 日志框架（Logging Framework） · 9
     - 内存文件系统（In-Memory File System） · 8

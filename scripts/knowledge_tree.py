@@ -18,14 +18,10 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from trellis.skeleton import load_skeleton  # noqa: E402
 
-HEADER = """---
-markmap:
-  initialExpandLevel: 2
-  colorFreezeLevel: 2
-  maxWidth: 260
-tags: [知识树]
----
-"""
+# No YAML frontmatter: on mobile the plugin's YAML parser reads process.env and the map renders blank. Folding is set
+# per node with markmap's inline comment instead, which works on every platform.
+FOLD = " <!-- markmap: fold -->"
+FOLD_FROM = 1  # depth from which a node with children starts folded: decks and their sections show, the rest on tap
 
 
 def card_nodes(folder: Path) -> Counter:
@@ -50,12 +46,13 @@ def write(domain: str) -> Path | None:
         total[n.id] = direct.get(n.id, 0) + sum(count(k) for k in n.children)
         return total[n.id]
 
-    lines = [HEADER, f"# {sk.title}", ""]
+    lines = [f"# {sk.title}", ""]
 
     def emit(n, depth: int) -> None:
         if total[n.id] == 0:
             return
-        lines.append("  " * depth + f"- {n.title} · {total[n.id]}")
+        fold = FOLD if depth >= FOLD_FROM and any(total[k.id] for k in n.children) else ""
+        lines.append("  " * depth + f"- {n.title} · {total[n.id]}{fold}")
         for k in n.children:
             emit(k, depth + 1)
 
